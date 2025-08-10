@@ -19,9 +19,12 @@ def main( color = False, fixed_pos = False ):
       V = {k:' '.join(l[1:]) for k, l in pos.aux.items()}
    else:
       V = {k:' '.join(l) for k, l in pos.aux.items()}
-   print('graph g{')
-   print('\tepsilon=0.000001')
-   print('\tmaxiter=2000')
+
+   print(
+      'graph g{\n'
+      '\tepsilon=0.000001\n'
+      '\tmaxiter=2000\n'
+   )
 
    # 1inch=72pt
    if fixed_pos:
@@ -31,13 +34,14 @@ def main( color = False, fixed_pos = False ):
       print('\tgraph [overlap=false]')  #'\toverlap=voronoi'
       factor = 0.7
 
-   print('\tinputscale=72')
-   print('\tnotranslate=true') # don't make upper left at 0,0
-   print('\tnode[fixedsize=true,shape=circle,penwidth=0,color=white,fillcolor=grey,style="filled"]')
    reflen = 0.5
-   print('\tnode[width=0.5]')
-   print('\tedge[len=' + str(reflen) + ']')
-
+   print(
+      '\tinputscale=72\n'
+      '\tnotranslate=true\n' # don't make upper left at 0,0
+      '\tnode[fixedsize=true,shape=circle,penwidth=0,color=white,fillcolor=grey,style="filled"]\n'
+      '\tnode[width=0.5]\n'
+      '\tedge[len=' + str(reflen) + ']'
+   )
    if fixed_pos:
       print('\tnode[pin=true]')
 
@@ -118,8 +122,10 @@ def main( color = False, fixed_pos = False ):
             suff = '[' + ';'.join(suff) + ']' if suff else ''
             print('"'.join(['\t', i, '--', dst, suff]))
 
-   print('\tedge[len=' + str(reflen) + ']')
-   print('\tedge[style="dashed";color="grey";penwidth=1.5]')
+   print(
+      '\tedge[len=' + str(reflen) + ']\n'
+      '\tedge[style="dashed";color="grey";penwidth=1.5]'
+   )
    for f, k in E.items():
       for t, aux in k.items():
          if fixed_pos or 'virtual' not in aux:

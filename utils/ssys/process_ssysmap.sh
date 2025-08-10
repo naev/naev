@@ -4,17 +4,21 @@ N_ITER=5
 
 trap 'exit 0' SIGINT
 DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+DAT=$(realpath --relative-to="$PWD" "${DIR}/../../dat")
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
    DOC=(
-      "usage:  $(basename "$0") [-H] [-f] [-v]"
+      "usage:  $(basename "$0") [OPIONS] [-c] [-n] [-f]"
       "  Applies the whole remap process. See the script content."
+      "  If -c is set, cleans up data/ dir before starting."
       "  Unless -f is set, does not save anything."
-      "  If -H is set, pov outputs are 1080p."
-      "  If -F is set, final pov output is 1080p and other outputs disabled."
-      "  If -v is set, povray output is displayed."
       "  If -n is set, no povray preview."
+      "options:"
+      "  If -C is set, applies -c and quits."
       "  If -N is set, no picture generated."
+      "  If -F is set, only final pov is generated; other povs are disabled."
+      "  If -H is set, pov outputs are 1080p."
+      "  If -v is set, povray output is printed."
       "  If -S is set, no spoilers on pictures."
       "  If -E is set, early game map."
    )
@@ -30,8 +34,13 @@ S_FILTER="$DIR"/graph_unspoil.sh
 for i in "$@" ; do
    if [ "$i" = "-f" ] ; then
       FORCE=1
+   elif [ "$i" = "-c" ] || [ "$i" == "-C" ] ; then
+      git clean -fd "$DAT"
+      git checkout "$DAT"
+      if [ "$i" == "-C" ] ; then
+         exit 0
+      fi
    elif [ "$i" = "-F" ] ; then
-      POVF+=("-H")
       NOPIC=2
    elif [ "$i" = "-H" ] ; then
       POVF+=("-H")
@@ -56,9 +65,7 @@ for i in "$@" ; do
    fi
 done
 
-BAS=$(realpath --relative-to="$PWD" "${DIR}/../../dat")
-DST="$BAS/ssys"
-
+DST="$DAT/ssys"
 "$DIR"/repos.sh -C || exit 1
 "$DIR"/apply_pot.sh -C || exit 1
 "$DIR"/gen_decorators.sh -C || exit 1
@@ -112,7 +119,7 @@ read -ra ALMOST_ALMOST_ALL <<< "$("$DIR"/all_ssys_but.sh "${SPIR[@]}" "${ABH[@]}
 msg ""
 # Ok, let's go!
 if [ -n "$FORCE" ] ; then
-   #git checkout "$BAS/spob" "$DST"
+   #git checkout "$DAT/spob" "$DST"
    msg "freeze non-nempty"
    echo -e "\e[32m$(
       "$DIR"/ssys_empty.py -r "$DST"/*.xml |
