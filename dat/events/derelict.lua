@@ -110,10 +110,24 @@ function create ()
       dship = dospecial.ship
    end
    if not dship then
-      local ships = { 'Hyena', 'Shark', 'Gawain', 'Schroedinger', 'Llama', 'Koala', 'Quicksilver', 'Mule', 'Rhino' }
-      if system.cur():presences()["Frontier"] or system.cur():presences()["FLF"] then ships = tmerge( ships, { 'Tristan', 'Bedivere' }) end
-      if system.cur():presences()["Dvaered"] or system.cur():presences()["Goddard"] then table.insert( ships, 'Ancestor' ) end
-      if system.cur():presences()["Dvaered"] then table.insert( ships, 'Vendetta' ) end
+      local ships = {
+         'Hyena', 'Shark', 'Gawain', 'Llama',
+         'Koala', 'Quicksilver',
+         'Mule', 'Rhino',
+      }
+      local prs = system.cur():presences()
+      if prs["Frontier"] or prs["FLF"] then
+         ships = tmerge( ships, { 'Tristan', 'Bedivere' })
+      end
+      if prs["Sirius"] then
+         table.insert( ships, "Schroedinger" )
+      end
+      if prs["Dvaered"] or prs["Goddard"] then
+         table.insert( ships, 'Ancestor' )
+      end
+      if prs["Dvaered"] then
+         table.insert( ships, 'Vendetta' )
+      end
       dship = ships[ rnd.rnd( 1, #ships ) ]
    end
 
