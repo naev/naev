@@ -43,14 +43,14 @@ NON_SSYS=($(grep -v '\<ssys/' <<< "${NON_OUTFITS[*]}"))
 
 {
    "$SCRIPT_DIR"/naev_xml.py -i "${NON_SSYS[@]}"
-   echo -e "\tformat_xml: ${#NON_SSYS[@]} others" >&2
+   echo -n "[${#NON_SSYS[@]} others] " >&2
 } & {
    OUTFITS=($(grep '\<outfits/' <<< "${NON_COMMENTED[*]}"))
    "$SCRIPT_DIR"/outfits/outfit.py -i "${OUTFITS[@]}"
-   echo -e "\tformat_xml: ${#OUTFITS[@]} outfits" >&2
+   echo -n "[${#OUTFITS[@]} outfits] " >&2
    SSYS=($(grep '\<ssys/' <<< "${NON_OUTFITS[*]}"))
    "$SCRIPT_DIR"/ssys/ssys.py -i "${SSYS[@]}"
-   echo -e "\tformat_xml: ${#SSYS[@]} ssys" >&2
+   echo -n "[${#SSYS[@]} ssys] " >&2
 } & {
    COMMENTED=($(grep -l "<!--" "${ARGS[@]}"))
    unset IFS
@@ -73,12 +73,13 @@ NON_SSYS=($(grep -v '\<ssys/' <<< "${NON_OUTFITS[*]}"))
          mv "$RES" "$i"
       else
          mv "$RES" "$i.patch"
-         echo -e "$i: \e[31mmerge conflict\e[0m, see $i.patch"
+         echo -e "\n$i: \e[31mmerge conflict\e[0m, see $i.patch" >&2
          res=1
       fi
    done
    rm -fr "$TMP"
-   echo -e "\tformat_xml: ${#COMMENTED[@]} files with comments." >&2
+   echo -n "[${#COMMENTED[@]} commented] " >&2
 }
 wait
+echo >&2
 exit "$res"

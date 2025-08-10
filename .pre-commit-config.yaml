@@ -56,15 +56,15 @@ repos:
       files: '^src/nlua_*.c'
       types: [c]
       language: script
-    - id: xml_format
-      name: format xml
-      entry: utils/xml_format.sh
-      files: dat/.*\.xml$
-      types: [xml]
-      language: script
     - id: rem_xml_head
       name: remove unnecessary XML 1.0 headers
       entry: utils/rem_xml_head.sh
+      files: dat/.*\.xml$
+      types: [xml]
+      language: script
+    - id: xml_format
+      name: format xml
+      entry: utils/xml_format.sh
       files: dat/.*\.xml$
       types: [xml]
       language: script
