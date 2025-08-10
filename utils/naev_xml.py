@@ -253,23 +253,45 @@ class naev_xml( xml_node ):
       if self.w and not self._uptodate and self._filename != devnull:
          stderr.write('Warning: unsaved file "' + self._filename + '" at exit.\n')
 
-if __name__ == '__main__':
+def xml_parser( constr, qualifier= '' ):
+   from pathlib import Path
    from sys import argv
+   from os import path
+   from pathlib import Path
 
-   if inplace := '-i' in argv[1:]:
-      argv.remove('-i')
+   args = argv[1:]
+   if inplace := '-i' in args:
+      args.remove('-i')
 
-   if '-h' in argv[1:]:
+   if clone := '-c' in args:
+      args.remove('-c')
+      src, dst = (args + [None, None])[:2]
+      args = args[2:]
+
+   if args == [] or '-h' in args or (clone and inplace):
       stderr.write(
-         'usage: ' + argv[0].split('/')[-1] + '  -i  [ file.xml.. ]\n'
-         '  Reads a xml file, formats it and outputs the result.\n'
-         '  If -i is set, does it in place.\n'
+         'usage: ' + argv[0].split('/')[-1] + ' [ -i | (-c <src_path> <dst_path>)] [ file.xml.. ]\n'
+         '  Reads a ' + qualifier + 'xml file, formats it and outputs the result.\n'
+         '  If -i (in-place) is set, does it in place.\n'
+         '  If -c (clone) is set, for each <file.xml>, produces an uncommented version\n'
+         '  that is written to a file that has the same position in <dst_path> that\n'
+         '  <file.xml> has in <src_path>.\n'
       )
       exit(0)
-   for i in argv[1:]:
-      n = naev_xml(i)
+   for arg in args:
+      x = constr(arg)
       if inplace:
-         n.touch()
+         x.touch()
+      elif clone:
+         if (rel := path.relpath(path.realpath(arg), src))[:2] == '..':
+            stderr.write('\033[31merror:\033[0m file "' + arg + '" not in "' + src +'"\n')
+            exit(1)
+         oarg = path.join(dst, rel)
+         Path(path.split(oarg)[0]).mkdir(parents= True, exist_ok= True)
+         x.save_as(oarg)
       else:
-         n.save_as('-')
-      n.save()
+         x.save_as('-')
+      x.save()
+
+if __name__ == '__main__':
+   xml_parser(naev_xml)

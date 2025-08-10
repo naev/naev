@@ -5,7 +5,6 @@ if [ "$1" = "-st" ] ; then
    shift
 fi
 
-#TODO: optimize the commented part (much can be done without repeated invocations)
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ -z "$*" ]; then
    DOC=(
       "usage:  $(basename "$0") [-st] <xml_file>.."
@@ -29,7 +28,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ -z "$*" ]; then
       "  as a new version (a) of its commentless version (o) and the formatted version"
       "  as a another new version (b) of (o). diff3 allows to merge."
       "  In case of conflict, the file with annotated conflicting parts of (b) and (a)"
-      "  is written as <filename.xml.patch>, and a non-zero value is returned."
+      "  is written as <filename.xml.diff>, and a non-zero value is returned."
       ""
       "  However, this is terribly slow compared to the no-comment case, so only"
       "  commented files are processed this way."
@@ -39,6 +38,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ -z "$*" ]; then
 fi
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+NAEV_DIR="$(realpath "${SCRIPT_DIR}/../")"
 
 res=0
 ARGS=("$@")
@@ -59,39 +59,58 @@ readarray -t NON_SSYS <<< "$(grep -v '\<ssys/' <<< "${NON_OUTFITS[*]}")"
       "$SCRIPT_DIR"/ssys/ssys.py -i "${SSYS[@]}"
       echo -n "[${#SSYS[@]} ssys] " >&2
    fi
-
+) & if [ -n "$ST" ] ; then wait ; fi ; (
    if [ -n "${NON_SSYS[*]}" ] ; then
       "$SCRIPT_DIR"/naev_xml.py -i "${NON_SSYS[@]}"
       echo -n "[${#NON_SSYS[@]} others] " >&2
    fi
 ) & if [ -n "$ST" ] ; then wait ; fi ; (
    readarray -t COMMENTED <<< "$(grep -l "<!--" "${ARGS[@]}")"
-   unset IFS
 
-   TMP="$(mktemp -d)"
-   PARS="$TMP"/parsed.xml
-   UNCO="$TMP"/no_commment.xml
-   RES="$TMP"/res.xml
+   UNCOM_DIR="$(mktemp -d)"
+   PARSE_DIR="$(mktemp -d)"
+   RES="$(mktemp)"
+
+   readarray -t UNCOM_RES <<< "$("$SCRIPT_DIR"/xml_uncomment.py "$PWD" "$UNCOM_DIR" "${COMMENTED[@]}")"
+   sed '/^[[:space:]]*$/d' -i "${UNCOM_RES[@]}"
+
+   readarray -t OUTFITS <<< "$(grep '\<outfits/' <<< "${COMMENTED[*]}")"
+   if [ -n "${OUTFITS[*]}" ] ; then
+      "$SCRIPT_DIR"/outfits/outfit.py -c "$PWD" "$PARSE_DIR" "${OUTFITS[@]}"
+      echo -n "[${#OUTFITS[@]} comm. outfits] " >&2
+   fi
+
+   readarray -t NON_OUTFITS <<< "$(grep -v '\<outfits/' <<< "${COMMENTED[*]}")"
+   readarray -t SSYS <<< "$(grep '\<ssys/' <<< "${NON_OUTFITS[*]}")"
+   if [ -n "${SSYS[*]}" ] ; then
+      "$SCRIPT_DIR"/ssys/ssys.py -c "$PWD" "$PARSE_DIR" "${SSYS[@]}"
+      echo -n "[${#SSYS[@]} comm. ssys] " >&2
+   fi
+
+   readarray -t NON_SSYS <<< "$(grep -v '\<ssys/' <<< "${NON_OUTFITS[*]}")"
+   if [ -n "${NON_SSYS[*]}" ] ; then
+      "$SCRIPT_DIR"/naev_xml.py -c "$PWD" "$PARSE_DIR" "${NON_SSYS[@]}"
+      echo -n "[${#NON_SSYS[@]} comm. others] " >&2
+   fi
+
+   res=0
    for i in "${COMMENTED[@]}" ; do
-      if grep -q '\<outfits/' <<< "$i" ; then
-         "$SCRIPT_DIR"/outfits/outfit.py "$i" > "$PARS"
-      elif grep -q '\<ssys/' <<< "$i" ; then
-         "$SCRIPT_DIR"/ssys/ssys.py "$i" > "$PARS"
-      else
-         "$SCRIPT_DIR"/naev_xml.py "$i" > "$PARS"
-      fi
-      "$SCRIPT_DIR"/uncomment_xml.py < "$i" | sed '/^[[:space:]]*$/d' > "$UNCO"
+      P="$(realpath --relative-to="$PWD" "$i")"
+      UNCO="$UNCOM_DIR/""$P"
+      PARS="$PARSE_DIR/""$P"
       diff3 -m "$PARS" "$UNCO" "$i" | sed -z 's/|\{7\}.*\(=\{7\}\)/\1/' > "$RES"
       if ! grep -q  '<<<<<<<' "$RES" ; then
          mv "$RES" "$i"
       else
-         mv "$RES" "$i.patch"
-         echo -e "\n$i: \e[31mmerge conflict\e[0m, see $i.patch" >&2
-         res=1
+         mv "$RES" "$i.diff"
+         echo -e "\n$i: \e[31mmerge conflict\e[0m, see $i.diff" >&2
+         res=$((res + 1))
       fi
    done
-   rm -fr "$TMP"
-   echo -n "[${#COMMENTED[@]} commented] " >&2
+   if [ ! "$res" = 0 ] ; then
+      echo -e "\n[\e[31m$res conflict(s)]\e[0m "
+   fi
+   rm -fr "$RES" "$UNCOM_DIR" "$PARSE_DIR"
 )
 wait
 echo >&2

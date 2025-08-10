@@ -266,23 +266,5 @@ class outfit(naev_xml):
       self._uptodate = True
 
 if __name__ == '__main__':
-   from sys import argv
-
-   if inplace := '-i' in argv[1:]:
-      argv.remove('-i')
-
-   if '-h' in argv[1:]:
-      stderr.write(
-         'usage: ' + argv[0].split('/')[-1] + '  -i  [ file.xml.. ]\n'
-         '  Reads a outfit xml file, formats it and outputs the result.\n'
-         '  If -i is set, does it in place.\n'
-      )
-      exit(0)
-
-   for i in argv[1:]:
-      o = outfit(i)
-      if inplace:
-         o.touch()
-      else:
-         o.save_as('-')
-      o.save()
+   from naev_xml import xml_parser
+   xml_parser(outfit, 'outfit ')
