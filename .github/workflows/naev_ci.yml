@@ -10,7 +10,7 @@ permissions: {}
 jobs:
   "Linux_Compile_Naev":
     permissions:
-      contents: read
+      contents: write
     strategy:
       fail-fast: false
       matrix:
@@ -25,7 +25,7 @@ jobs:
 
   "Windows_Compile_Naev":
     permissions:
-      contents: read
+      contents: write
     strategy:
       fail-fast: false
       matrix:
@@ -40,7 +40,7 @@ jobs:
 
   "Darwin_Compile_Naev":
     permissions:
-      contents: read
+      contents: write
     strategy:
       fail-fast: false
       matrix:
