@@ -262,7 +262,7 @@ jobs:
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf source.tar.xz -C source --strip 1
+          tar -xf naev-*.tar.xz -C source --strip 1
 
       - name: Configure Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1
