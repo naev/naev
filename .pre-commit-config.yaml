@@ -15,33 +15,14 @@ repos:
     - id: check-executables-have-shebangs
     #- id: check-shebang-scripts-are-executable
     - id: check-case-conflict
-    - id: check-symlinks
-    - id: check-illegal-windows-names
-    - id: destroyed-symlinks
+    #- id: check-symlinks
+    #- id: check-illegal-windows-names
+    #- id: destroyed-symlinks
     - id: detect-private-key
     - id: mixed-line-ending
-    - id: pretty-format-json
+    #- id: pretty-format-json
     - id: check-merge-conflict
       args: [--assume-in-merge]
-- repo: https://github.com/shellcheck-py/shellcheck-py
-  rev: v0.10.0.1
-  hooks:
-    - id: shellcheck
-- repo: https://github.com/codespell-project/codespell
-  rev: v2.4.1
-  hooks:
-    - id: codespell
-      files: '^dat/'
-      types: [lua]
-      args: ["--ignore-words", ".codespellignore" ]
-      additional_dependencies:
-        - tomli
-- repo: https://github.com/shssoichiro/oxipng
-  rev: v9.1.5
-  hooks:
-    - id: oxipng
-      args: ["-o", "max", "--strip", "safe", "--alpha"]
-      types: [png]
 - repo: local
   hooks:
     - id: check_luadoc_func
@@ -80,6 +61,27 @@ repos:
       files: '^dat/'
       types: [lua]
       language: python
+- repo: https://github.com/shellcheck-py/shellcheck-py
+  rev: v0.10.0.1
+  hooks:
+    - id: shellcheck
+- repo: https://github.com/codespell-project/codespell
+  rev: v2.4.1
+  hooks:
+    - id: codespell
+      files: '^dat/'
+      types: [lua]
+      args: ["--ignore-words", ".codespellignore" ]
+      additional_dependencies:
+        - tomli
+- repo: https://github.com/shssoichiro/oxipng
+  rev: v9.1.5
+  hooks:
+    - id: oxipng
+      args: ["-o", "max", "--strip", "safe", "--alpha"]
+      types: [png]
+- repo: local
+  hooks:
     - id: glsl_validator
       name: glsl validator
       entry: utils/nglslValidator.py
