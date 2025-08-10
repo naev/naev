@@ -36,6 +36,7 @@ function create ()
       if pos then
          sm( pos, nil, sysfct, {
             hostile = true,
+            primed = 0, -- Already primed
          } )
       end
    end

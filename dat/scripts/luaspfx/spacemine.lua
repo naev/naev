@@ -78,8 +78,8 @@ local function update( s, dt )
       end
       mod = (ew - d.trackmin) / (d.trackmax - d.trackmin)
       -- Have to see if it triggers now
-      local dst = p:pos():dist( sp )
-      if d.range < dst * mod then
+      local dst = p:pos():dist2( sp )
+      if dst < math.max(d.range*mod, d.rangemin)^2 then
          trigger( s, d )
          return
       end
@@ -99,10 +99,10 @@ local function render( sp, x, y, z )
 
    -- Render for player
    local pp = player.pilot()
-   local ew = pp:signature()
-   if d.hostile or not d.fct or d.fct:areEnemies(pp:faction()) then
+   if pp:exists() and (d.hostile or not d.fct or d.fct:areEnemies(pp:faction())) then
+      local ew = pp:signature()
       if ew > d.trackmin then
-         local r = math.min( (ew - d.trackmin) / (d.trackmax - d.trackmin), 1 ) * d.range * z
+         local r = math.max( (ew - d.trackmin) / (d.trackmax - d.trackmin) * d.range, d.rangemin) * z
          lg.setShader( highlight_shader )
          lg.setColour( {1, 0, 0, 0.1} )
          love_shaders.img:draw( x-r, y-r, 0, 2*r )
@@ -137,20 +137,21 @@ local function spacemine( pos, vel, fct, params )
 
    -- Other params
    local duration = params.duration or 90
-   local range = 300
+   local RANGE = 300
 
    -- Sound is handled separately in outfit
-   local s  = spfx.new( duration, update, render, nil, nil, pos, vel, nil, range )
+   local s  = spfx.new( duration, update, render, nil, nil, pos, vel, nil, RANGE )
    local d  = s:data()
    d.timer  = 0
    d.check  = rnd.rnd() * CHECK_INTERVAL
-   d.range  = range
+   d.range  = RANGE
+   d.rangemin = 100
    d.explosion = 500
    d.fct    = fct
    d.damage = params.damage or 1000
    d.penetration = params.penetration or 50
-   d.trackmax  = params.trackmax or 10e3
-   d.trackmin = params.trackmin or 3e3
+   d.trackmax  = params.trackmax or 5e3
+   d.trackmin = params.trackmin or 0e3
    d.pilot  = params.pilot
    d.primed = params.primed or 5
    d.hostile = params.hostile
