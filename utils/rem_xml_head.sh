@@ -2,7 +2,7 @@
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-if [ "$*" = "" ] ; then
+if [ -z "$*" ] ; then
    DAT=$(realpath --relative-to="$PWD" "${SCRIPT_DIR}/../dat")
    ARGS=( "-r" "$DAT/spob" "$DAT/ssys" )
 else
