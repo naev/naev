@@ -32,9 +32,13 @@ Used as follows:
   # o['$speed'] *= 1.2
   # o['$thing'] = 2.0 * 0.5 # will save 1 instead of 1.0
 
-  #  3. You get warnings in the following cases:
-  #    - the dict gets garbage collected while with unsaved changes.
-  #    - the dict gets saved while its destination is already up-to-date.
+  #  3. At init, you can specify the r and w flags (both True by default).
+  #     You get errors in the following cases:
+  #      - r is True and the input file can't be openened
+  #      - w is False and you attempt to save
+  #     You get warnings in the following cases:
+  #      - w is true the dict gets garbage collected while with unsaved changes.
+  #      - the dict gets saved while its destination is already up-to-date.
 
   # This optional call allows to change the destination.
   # If not called, save destination is the same as input.
@@ -173,23 +177,28 @@ def unparse( d , indent= 0 ):
    return out
 
 class naev_xml( xml_node ):
-   def __init__( self, fnam= None, read_only= False ):
+   def __init__( self, fnam= None, r= True, w= True):
       fnam = fnam or devnull
       self._uptodate = True
+      self.w, self.r = w, r
       if type(fnam) != type('') or (not fnam.endswith('.xml') and fnam != devnull):
          raise Exception('Invalid xml filename ' + repr(fnam))
+      self._filename = fnam
+
       self.short = False
       _trusted_node.__init__(self, {}, None, None)
-      if fnam != devnull:
+      if r and self._filename != devnull:
          try:
-            T = ET.parse(fnam).getroot()
+            T = ET.parse(self._filename).getroot()
             dict.__setitem__(self, T.tag, _parse(T, self, T.tag))
+         except FileNotFoundError:
+            raise FileNotFoundError
          except:
-            stderr.write('OOPS '+fnam+'\n')
-
-      self._filename = devnull if read_only else fnam
+            raise Exception('Invalid xml file "' + repr(self._filename) + '"')
 
    def save( self, if_needed= False ):
+      if not self.w:
+         raise Exception('Attempt to save read-only "' + repr(self._filenam) + '"')
       if self._uptodate:
          if if_needed:
             return False
@@ -205,9 +214,15 @@ class naev_xml( xml_node ):
       self._uptodate = True
       return True
 
-   def save_as( self, filename ):
-      self._uptodate = (self._uptodate and filename == self._filename) or filename == devnull
-      self._filename = filename
+   def save_as( self, filename= None ):
+      filename = filename or devnull
+      if not self.w:
+         raise Exception('Attempt to save read-only "' + repr(self._filenam) + '"')
+      if filename == self._filename:
+         stderr.write('Warning: save destination was already "' + self._filename + '".\n')
+      else:
+         self._uptodate = filename == devnull
+         self._filename = filename
 
    def find( self, key, ref = False):
       for d, k in self.nodes(lookfor = { key }):
@@ -235,7 +250,7 @@ class naev_xml( xml_node ):
       return not self._uptodate
 
    def __del__( self ):
-      if not self._uptodate and self._filename != devnull:
+      if self.w and not self._uptodate and self._filename != devnull:
          stderr.write('Warning: unsaved file "' + self._filename + '" at exit.\n')
 
 if __name__ == '__main__':

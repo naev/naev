@@ -45,7 +45,7 @@ virtual_edges = [
    ('baitas', 'tasopa'), ('percival', 'jommel'),
    ('flow', 'katami'), ('nava', 'flow'),
    ('katami', 'eisenhorn'), ('vean', 'basel'),
-   ('alpha_centauri', 'tasopa'),('syndania', 'padonia'),
+   ('alpha_centauri', 'tasopa'),
    ('veses', 'protera'), ('syndania', 'stint'),
    ('sagittarius', 'alpha_centauri'), ('protera', 'scholzs_star'),
    ('ngc18451', 'felzen'), ('ngc6057', 'xeric'), ('ngc1098', 'westhaven'),

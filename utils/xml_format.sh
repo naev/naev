@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#TODO: optimize the commented part (much can be done without repeated invocations)
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
    DOC=(
       "usage:  $(basename "$0") <xml_file>.."

@@ -98,7 +98,6 @@ These are designed to manage the **internal geometry of systems**, that might ge
 
 # TODO
  - implement xml_list dunders (and simplify ssys_relax accordingly) +
- - naev_xml/ssys_xml/outfit should understand a string with 'r'/'w'/'c'.
  - `reposition.c`:
     - crash when empty input with 4 args or more *
     - penalty map +

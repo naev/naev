@@ -4,7 +4,7 @@ from ssys import ssys_xml
 
 
 def ssys_empty( sys ):
-   T = ssys_xml(sys, read_only= True)['ssys']
+   T = ssys_xml(sys, w= False)['ssys']
 
    if not('general' in T and 'nolanes' in T['general']):
       return False

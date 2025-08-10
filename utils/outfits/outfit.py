@@ -104,9 +104,9 @@ def un_multicore( o ):
 
 class outfit(naev_xml):
    # None means auto
-   def __init__( self, fnam= None, is_multi= None, read_only= False ):
+   def __init__( self, fnam= None, is_multi= None, **kwargs):
       self.pri = None
-      naev_xml.__init__(self, fnam= fnam, read_only= read_only)
+      naev_xml.__init__(self, fnam= fnam, **kwargs)
       if fnam is None:
          self['outfit'] = {}
       elif 'outfit' not in self:
@@ -221,8 +221,7 @@ class outfit(naev_xml):
          d[k] = v
 
    def copy( self ):
-      out = naev_xml()
-      out.save_as(self._filename)
+      out = naev_xml(self._filename, r= False)
       out['outfit'] = self['outfit']
       return out
 

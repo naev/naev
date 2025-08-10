@@ -207,7 +207,7 @@ def gen_line( params ):
 
    for i, s in enumerate(['Small', 'Medium', 'Large']):
       engine = engine_dir.replace('small', s.lower())
-      o = outfit(engine, is_multi = True)
+      o = outfit(engine, w= False)
 
       if o is None:
          err('Beat up small engine, used as dummy, was not found!')

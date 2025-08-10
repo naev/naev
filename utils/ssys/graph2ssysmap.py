@@ -25,8 +25,7 @@ if help_f or (argv[1:] and do_write):
    exit(0 if help_f else 1)
 
 def new_ssys(name, basenam, ssys_pos, jmp):
-   xml = naev_xml()
-   xml.save_as(name)
+   xml = naev_xml(name, r= False)
    Nam = ssys_nam(ssys_pos, basenam)
    if Nam and nam2base(Nam) != basenam:
       stderr.write('Warning: basename "' + basenam + '" does not match provided name "' + Nam  + '"\n')
@@ -62,6 +61,7 @@ for n, v in ssys_pos.items():
    try:
       xml = ssys_xml(name)
    except FileNotFoundError:
-      xml = new_ssys(name, n, ssys_pos, ssys_jmp[n])
+      xml = None
+   xml = new_ssys(name, n, ssys_pos, ssys_jmp[n]) if xml is None else xml
    xml['ssys']['pos'] = vec_to_pos(v)
    xml.save()
