@@ -1,10 +1,16 @@
 #!/bin/bash
 
+if [ "$1" = "-st" ] ; then
+   ST=1
+   shift
+fi
+
 #TODO: optimize the commented part (much can be done without repeated invocations)
-if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
+if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ -z "$*" ]; then
    DOC=(
-      "usage:  $(basename "$0") <xml_file>.."
+      "usage:  $(basename "$0") [-st] <xml_file>.."
       "  Formats the xml file provided in input."
+      "  If -st is set, uses a single thread (e.g. for using with pre-commit)."
       "  Based on its path, a xml file is considered either:"
       "   - outfit: uses the outfits/outfit.py formatter."
       "     This one expects that the file defines an outfit."
@@ -41,23 +47,24 @@ readarray -t NON_COMMENTED <<< "$(grep -L "<!--" "${ARGS[@]}")"
 readarray -t NON_OUTFITS <<< "$(grep -v '\<outfits/' <<< "${NON_COMMENTED[*]}")"
 readarray -t NON_SSYS <<< "$(grep -v '\<ssys/' <<< "${NON_OUTFITS[*]}")"
 
-{
-   if [ -n "${NON_SSYS[*]}" ] ; then
-      "$SCRIPT_DIR"/naev_xml.py -i "${NON_SSYS[@]}"
-   fi
-   echo -n "[${#NON_SSYS[@]} others] " >&2
-} & {
+(
    readarray -t OUTFITS <<< "$(grep '\<outfits/' <<< "${NON_COMMENTED[*]}")"
    if [ -n "${OUTFITS[*]}" ] ; then
       "$SCRIPT_DIR"/outfits/outfit.py -i "${OUTFITS[@]}"
+      echo -n "[${#OUTFITS[@]} outfits] " >&2
    fi
-   echo -n "[${#OUTFITS[@]} outfits] " >&2
+
    readarray -t SSYS <<< "$(grep '\<ssys/' <<< "${NON_OUTFITS[*]}")"
    if [ -n "${SSYS[*]}" ] ; then
       "$SCRIPT_DIR"/ssys/ssys.py -i "${SSYS[@]}"
+      echo -n "[${#SSYS[@]} ssys] " >&2
    fi
-   echo -n "[${#SSYS[@]} ssys] " >&2
-} & {
+
+   if [ -n "${NON_SSYS[*]}" ] ; then
+      "$SCRIPT_DIR"/naev_xml.py -i "${NON_SSYS[@]}"
+      echo -n "[${#NON_SSYS[@]} others] " >&2
+   fi
+) & if [ -n "$ST" ] ; then wait ; fi ; (
    readarray -t COMMENTED <<< "$(grep -l "<!--" "${ARGS[@]}")"
    unset IFS
 
@@ -85,7 +92,7 @@ readarray -t NON_SSYS <<< "$(grep -v '\<ssys/' <<< "${NON_OUTFITS[*]}")"
    done
    rm -fr "$TMP"
    echo -n "[${#COMMENTED[@]} commented] " >&2
-}
+)
 wait
 echo >&2
 exit "$res"

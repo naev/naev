@@ -46,21 +46,34 @@ repos:
     - id: xml_format
       name: format xml
       entry: utils/xml_format.sh
+      args: ["-st"]
       files: dat/.*\.xml$
       types: [xml]
       language: script
-    - id: nluacheck
-      name: wrapper for luacheck that understands Naev hooks
-      entry: utils/nluacheck.py
-      files: '^dat/'
-      types: [lua]
-      language: python
     - id: check_fmt_f_usage
-      name: Lua f-string validation
+      name: lua f-string validation
       entry: utils/check_fmt_f_usage.py
       files: '^dat/'
       types: [lua]
       language: python
+    - id: potfiles
+      name: check for stale POTFILES.in
+      entry: utils/update-po.sh . . --pre-commit
+      language: script
+      always_run: true
+      pass_filenames: false
+    - id: glsl_validator
+      name: glsl validator
+      entry: utils/nglslValidator.py
+      files: dat/.*\.(frag|vert)$
+      language: python
+    - id: rustfmt
+      name: Rust formatter
+      entry: rustfmt
+      types: [rust]
+      files: '^src/'
+      args: ["--edition", "2021"]
+      language: system
 - repo: https://github.com/shellcheck-py/shellcheck-py
   rev: v0.10.0.1
   hooks:
@@ -82,27 +95,15 @@ repos:
       types: [png]
 - repo: local
   hooks:
-    - id: glsl_validator
-      name: glsl validator
-      entry: utils/nglslValidator.py
-      files: dat/.*\.(frag|vert)$
-      language: python
-    - id: potfiles
-      name: check for stale POTFILES.in
-      entry: utils/update-po.sh . . --pre-commit
-      language: script
-      always_run: true
-      pass_filenames: false
     - id: clang-format
       name: Clang formatter
       entry: clang-format -i
       types: [c]
       files: '^src/'
       language: system
-    - id: rustfmt
-      name: Rust formatter
-      entry: rustfmt
-      types: [rust]
-      files: '^src/'
-      args: ["--edition", "2021"]
-      language: system
+    - id: nluacheck
+      name: wrapper for luacheck that understands Naev hooks
+      entry: utils/nluacheck.py
+      files: '^dat/'
+      types: [lua]
+      language: python

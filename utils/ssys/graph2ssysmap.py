@@ -28,7 +28,7 @@ def new_ssys(name, basenam, ssys_pos, jmp):
    xml = naev_xml(name, r= False)
    Nam = ssys_nam(ssys_pos, basenam)
    fast_small_ship = 400
-   fuel_regen_factor = 2
+   fuel_regen_factor = 1 + 2
    rad = 100.0 / fuel_regen_factor * fast_small_ship / 2 # 1 diameter == 2 radiuses :-)
    if Nam and nam2base(Nam) != basenam:
       stderr.write('Warning: basename "' + basenam + '" does not match provided name "' + Nam  + '"\n')
