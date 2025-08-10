@@ -19,7 +19,7 @@ permissions: {}
 
 jobs:
   source_build:
-    if: github.event.inputs.platform == 'source'
+    if: ${{ inputs.platform == 'source' }}
     permissions:
       contents: read
     runs-on: ubuntu-latest
@@ -125,7 +125,7 @@ jobs:
   docs_luacheck:
     permissions:
       contents: write
-    if: github.event.inputs.platform == 'docs'
+    if: ${{ inputs.platform == 'docs' }}
     runs-on: ubuntu-latest
     container:
       image: "ghcr.io/naev/naev-steamruntime:latest"
@@ -186,7 +186,7 @@ jobs:
     needs: "docs_luacheck"
     permissions:
       contents: write
-    if: github.event.inputs.platform == 'docs'
+    if: ${{ inputs.platform == 'docs' }}
     runs-on: ubuntu-latest
     container:
       image: "ghcr.io/naev/naev-docs:latest"
@@ -244,7 +244,7 @@ jobs:
   windows_build:
     permissions:
       contents: write
-    if: github.event.inputs.platform == 'windows'
+    if: ${{ inputs.platform == 'windows' }}
     runs-on: ubuntu-latest
     container:
       image: "ghcr.io/naev/naev-windows:latest"
@@ -313,7 +313,7 @@ jobs:
   macos_build:
     permissions:
       contents: write
-    if: github.event.inputs.platform == 'macos'
+    if: ${{ inputs.platform == 'macos' }}
     strategy:
       fail-fast: false
       matrix:
@@ -449,7 +449,7 @@ jobs:
   linux_build:
     permissions:
       contents: write
-    if: github.event.inputs.platform == 'linux'
+    if: ${{ inputs.platform == 'linux' }}
     runs-on: ubuntu-latest
     container:
       image: "ghcr.io/naev/naev-steamruntime:latest"
@@ -595,7 +595,7 @@ jobs:
 
   linux_package:
     needs: linux_build
-    if: github.event.inputs.release
+    if: ${{ inputs.release }}
     runs-on: ubuntu-latest
     container:
       image: "ghcr.io/naev/naev-release:latest"
@@ -627,7 +627,7 @@ jobs:
 
   macos_package:
     needs: macos_build
-    if: github.event.inputs.release
+    if: ${{ inputs.release }}
     runs-on: ubuntu-latest
     container:
       image: "ghcr.io/naev/naev-macos:latest"
