@@ -1,5 +1,4 @@
 #!/bin/bash
-#shellcheck disable=SC2207
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
    DOC=(
@@ -35,24 +34,30 @@ fi
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 res=0
+ARGS=("$@")
 IFS=$'\n'
-ARGS=($(cat <<< "$*"))
-NON_COMMENTED=($(grep -L "<!--" "${ARGS[@]}"))
-NON_OUTFITS=($(grep -v '\<outfits/' <<< "${NON_COMMENTED[*]}"))
-NON_SSYS=($(grep -v '\<ssys/' <<< "${NON_OUTFITS[*]}"))
+readarray -t NON_COMMENTED <<< "$(grep -L "<!--" "${ARGS[@]}")"
+readarray -t NON_OUTFITS <<< "$(grep -v '\<outfits/' <<< "${NON_COMMENTED[*]}")"
+readarray -t NON_SSYS <<< "$(grep -v '\<ssys/' <<< "${NON_OUTFITS[*]}")"
 
 {
-   "$SCRIPT_DIR"/naev_xml.py -i "${NON_SSYS[@]}"
+   if [ -n "${NON_SSYS[*]}" ] ; then
+      "$SCRIPT_DIR"/naev_xml.py -i "${NON_SSYS[@]}"
+   fi
    echo -n "[${#NON_SSYS[@]} others] " >&2
 } & {
-   OUTFITS=($(grep '\<outfits/' <<< "${NON_COMMENTED[*]}"))
-   "$SCRIPT_DIR"/outfits/outfit.py -i "${OUTFITS[@]}"
+   readarray -t OUTFITS <<< "$(grep '\<outfits/' <<< "${NON_COMMENTED[*]}")"
+   if [ -n "${OUTFITS[*]}" ] ; then
+      "$SCRIPT_DIR"/outfits/outfit.py -i "${OUTFITS[@]}"
+   fi
    echo -n "[${#OUTFITS[@]} outfits] " >&2
-   SSYS=($(grep '\<ssys/' <<< "${NON_OUTFITS[*]}"))
-   "$SCRIPT_DIR"/ssys/ssys.py -i "${SSYS[@]}"
+   readarray -t SSYS <<< "$(grep '\<ssys/' <<< "${NON_OUTFITS[*]}")"
+   if [ -n "${SSYS[*]}" ] ; then
+      "$SCRIPT_DIR"/ssys/ssys.py -i "${SSYS[@]}"
+   fi
    echo -n "[${#SSYS[@]} ssys] " >&2
 } & {
-   COMMENTED=($(grep -l "<!--" "${ARGS[@]}"))
+   readarray -t COMMENTED <<< "$(grep -l "<!--" "${ARGS[@]}")"
    unset IFS
 
    TMP="$(mktemp -d)"

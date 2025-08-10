@@ -183,9 +183,9 @@ class naev_xml( xml_node ):
       if fnam != devnull:
          try:
             T = ET.parse(fnam).getroot()
+            dict.__setitem__(self, T.tag, _parse(T, self, T.tag))
          except:
             stderr.write('OOPS '+fnam+'\n')
-         dict.__setitem__(self, T.tag, _parse(T, self, T.tag))
 
       self._filename = devnull if read_only else fnam
 
