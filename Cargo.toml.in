@@ -79,7 +79,7 @@ roxmltree = { workspace = true }
 image = { workspace = true }
 constcat = "0"
 derive_more = { version = "2", features = ["from", "into"] }
-rand = "0"
+rand = "0.9"
 rayon = "1" # parallel computation
 static_assertions = "1"
 palette = "0" # Colour conversion
