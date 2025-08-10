@@ -8,7 +8,7 @@ on:
         type: string
       build_type:
         description: 'Build type (e.g. Debug, Release)'
-        required: true
+        required: false
         type: string
       release:
         description: 'Build release'
@@ -19,6 +19,7 @@ permissions: {}
 
 jobs:
   source_build:
+    if: github.event.inputs.platform == 'source'
     permissions:
       contents: read
     runs-on: ubuntu-latest
@@ -122,7 +123,6 @@ jobs:
           include-hidden-files: true
 
   docs_luacheck:
-    needs: "source_build"
     permissions:
       contents: write
     if: github.event.inputs.platform == 'docs'
@@ -242,7 +242,6 @@ jobs:
           client_payload: '{ "publish_type": "docs" }'
 
   windows_build:
-    needs: "source_build"
     permissions:
       contents: write
     if: github.event.inputs.platform == 'windows'
@@ -312,7 +311,6 @@ jobs:
           if-no-files-found: error
 
   macos_build:
-    needs: "source_build"
     permissions:
       contents: write
     if: github.event.inputs.platform == 'macos'
@@ -449,7 +447,6 @@ jobs:
           if-no-files-found: error
 
   linux_build:
-    needs: "source_build"
     permissions:
       contents: write
     if: github.event.inputs.platform == 'linux'
