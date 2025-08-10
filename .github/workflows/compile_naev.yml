@@ -121,6 +121,126 @@ jobs:
           if-no-files-found: error
           include-hidden-files: true
 
+  docs_luacheck:
+    needs: "source_build"
+    permissions:
+      contents: write
+    if: github.event.inputs.platform == 'docs'
+    runs-on: ubuntu-latest
+    container:
+      image: "ghcr.io/naev/naev-steamruntime:latest"
+
+    steps:
+      - name: Get Source
+        uses: actions/download-artifact@v4
+        with:
+          name: naev-dist-${{ github.sha }}
+
+      - name: Extract Source
+        run: |
+          mkdir source
+          tar -xf naev-*.tar.xz -C source --strip 1
+
+      - name: Configure Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          target: "x86_64-unknown-linux-gnu"
+          override: true
+          rustflags: ""
+
+      - name: Install bindgen-cli
+        uses: baptiste0928/cargo-install@v3
+        with:
+          crate: bindgen-cli
+
+      - name: Meson Setup
+        id: setup
+        run: |
+          meson setup build source \
+              --native-file='source/utils/build/linux.ini' \
+              --buildtype=debug \
+              -Dinstaller=false \
+              -Db_lto=true \
+              -Dauto_features=enabled \
+              -Ddocs_c=disabled \
+              -Ddocs_lua=disabled
+
+      - name: Meson Compile
+        id: compile
+        run: |
+          meson compile -C build
+
+      - name: Meson Test
+        id: test
+        run: |
+          meson test luacheck -C build
+
+      - name: Upload Test Log
+        uses: actions/upload-artifact@v4
+        if: ${{ success() || steps.test.outcome == 'failure' }}
+        with:
+          name: ${{ github.sha }}-lualint-testlog
+          path: ${{ github.workspace }}/build/meson-logs/testlog.txt
+
+  docs_build:
+    needs: "docs_luacheck"
+    permissions:
+      contents: write
+    if: github.event.inputs.platform == 'docs'
+    runs-on: ubuntu-latest
+    container:
+      image: "ghcr.io/naev/naev-docs:latest"
+
+    steps:
+      - name: Get Source
+        uses: actions/download-artifact@v4
+        with:
+          name: naev-dist-${{ github.sha }}
+
+      - name: Extract Source
+        run: |
+          mkdir source
+          tar -xf naev-*.tar.xz -C source --strip 1
+
+      - name: Configure Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          target: "x86_64-unknown-linux-gnu"
+          override: true
+          rustflags: ""
+
+      - name: Install bindgen-cli
+        uses: baptiste0928/cargo-install@v3
+        with:
+          crate: bindgen-cli
+
+      - name: Meson Setup
+        run: |
+          meson setup build source \
+              -Dexecutable=disabled
+
+      - name: Meson Compile
+        id: compile
+        run: |
+          meson compile -C build
+
+      - name: Upload Compile Log
+        uses: actions/upload-artifact@v4
+        if: ${{ steps.compile.outcome == 'failure' }}
+        with:
+          name: ${{ github.sha }}-ldoc-log
+          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
+
+      - name: Trigger API Documentation Update
+        if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' && github.ref == 'refs/heads/main' }}
+        uses: convictional/trigger-workflow-and-wait@v1.6.5
+        with:
+          owner: naev
+          repo: naev.github.io
+          github_token: ${{ secrets.WEBSITE_ACCESS_TOKEN }}
+          workflow_file_name: website_publish.yml
+          client_payload: '{ "publish_type": "docs" }'
+
   windows_build:
     needs: "source_build"
     permissions:
