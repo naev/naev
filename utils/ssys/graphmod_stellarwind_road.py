@@ -52,13 +52,13 @@ else:
    ssys_pos |= output
    ssys_pos.aux |= {i: ["default::stellarwind:spoiler:new", i.upper().replace('W','W-')] for i in output}
 
-   road = ['c59'] + names + ['sollav']
-   for i, j in zip(road[:-1], road[1:]):
-      ssys_jmp[i][j] = ['new'] + (['hidden'] if i == road[0] else [])
-      ssys_jmp[j][i] = ['new'] + (['hidden'] if j == road[-1] else [])
-
    ssys_jmp['mason']['c59'] = ['new', 'hidden']
    ssys_jmp['c59']['mason'] = ['new', 'hidden']
+
+   road = ['c59'] + names + ['sollav']
+   for i, j in zip(road[:-1], road[1:]):
+      ssys_jmp[i][j] = ['new']
+      ssys_jmp[j][i] = ['new']
 
    ssys_jmp[road[3]] |= {'chloe': ['new']}
    ssys_jmp[road[5]] |= {'flok': ['new']}
@@ -67,6 +67,11 @@ else:
    ssys_jmp['ngc4746'] |= {road[9]: ['new', 'hidden']}
    ssys_jmp[road[11]] |= {'octavian': ['new']}
    ssys_jmp[road[13]] |= {'olympus': ['new']}
+
+   ssys_jmp[road[-1]][road[-2]] += ['hidden']
+   for i, j in zip(road[:-1], road[1:]):
+      if len(ssys_jmp[i]) > 2 or i == road[0]:
+         ssys_jmp[i][j] += ['hidden']
 
    ssys_pos['wolf'] = symmetry(ssys_pos['chloe'], ssys_pos['zemur']) (ssys_pos['wolf'])
    ssys_pos['defa'] += 0.05 * (ssys_pos['taiomi'] - ssys_pos['defa'])

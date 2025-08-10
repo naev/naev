@@ -27,6 +27,9 @@ if help_f or (argv[1:] and do_write):
 def new_ssys(name, basenam, ssys_pos, jmp):
    xml = naev_xml(name, r= False)
    Nam = ssys_nam(ssys_pos, basenam)
+   fast_small_ship = 400
+   fuel_regen_factor = 2
+   rad = 100.0 / fuel_regen_factor * fast_small_ship / 2 # 1 diameter == 2 radiuses :-)
    if Nam and nam2base(Nam) != basenam:
       stderr.write('Warning: basename "' + basenam + '" does not match provided name "' + Nam  + '"\n')
    mk_jump = lambda dst, aux: {
@@ -37,7 +40,7 @@ def new_ssys(name, basenam, ssys_pos, jmp):
    }
    xml['ssys'] = {
       '@name': Nam or ' '.join([s[0].upper() + s[1:] for s in basenam.split('_')]),
-      'general': {'radius': 5000, 'spacedust': 300, 'interference': 0},
+      'general': {'radius': rad, 'spacedust': 300, 'interference': 0},
       'pos': vec_to_pos(v),
       'spobs': {},
       'jumps': {'jump': [mk_jump(k, v) for k, v in jmp.items()]},
