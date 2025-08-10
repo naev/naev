@@ -2,10 +2,6 @@ on: [push, pull_request]
 
 name: CI
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
-  cancel-in-progress: true
-
 permissions: {}
 jobs:
   "Package_Source":
