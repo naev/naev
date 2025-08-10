@@ -811,7 +811,7 @@ int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
       map.nosys = map.nsys;
 
    qsort(map.jumps, map.njumps, sizeof(struct s_edge), edge_cmp);
-   int w = 1;
+   int w = map.njumps && 1;
    for (int i = 1; i < map.njumps; i++)
       if (edge_cmp((const void *) (map.jumps + i),
                    (const void *) (map.jumps + w - 1)))

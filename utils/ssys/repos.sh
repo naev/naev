@@ -1,6 +1,7 @@
 #!/bin/bash
 
 #FLAGS=("-pg" "-O1")
+#FLAGS=("-ggdb" "-Og")
 FLAGS=("-Ofast")
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
