@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-#TODO: introduce new list wrapper to fix list breach
 """
 An elementTree-based implementation of xmltodict. 10% slower than pure elementTree,
 but 2x faster than xmltodict with more functionality and correct output
@@ -59,6 +58,36 @@ def _numify( s ):
    except:
       pass
 
+def _intify( s ):
+   if isinstance(s, str):
+      if s[0] == '@':
+         s = s[1:]
+      s = int(s)
+   return s
+
+class _xml_list(list):
+   def __delitem__(self, sl):
+      list.__delitem__(self, _intify(s))
+
+   def __getitem__(self, sl):
+      return list.__getitem__(self, _intify(s))
+
+   def __setitem__(self, key, value):
+      list.__set_item__(self, key, xml_node(value))
+
+   def insert(self, index, elt):
+      list.insert(self, index, xml_node(elt))
+
+   def append(self, elt):
+      list.append(self, xml_node(elt))
+
+   def extend(self, other):
+      for e in other:
+         self.append(e)
+   __iadd__ = extend
+   __imul__ = None
+   __rmul__ = None
+
 class xml_node( dict ):
    def __init__ ( self, mapping, parent= None, key= None ):
       self._parent = parent
@@ -102,7 +131,7 @@ class xml_node( dict ):
             raise ValueError(str(val) + ' is not a number.')
          key = key[1:]
       elif isinstance(val, list):
-         val = [xml_node(e, self, key) if isinstance(e, dict) else e for e in val]
+         val = _xml_list([xml_node(e, self, key) if isinstance(e, dict) else e for e in val])
       elif isinstance(val, dict):
          val = xml_node(val, self, key)
       if key[:1] == '@':
@@ -135,8 +164,8 @@ def _parse( node, par, key ):
    for e in node:
       if dict.__contains__(d, e.tag):
          if not isinstance(d[e.tag], list):
-            dict.__setitem__(d, e.tag, [dict.__getitem__(d, e.tag)])
-         dict.__setitem__(d, e.tag, dict.__getitem__(d, e.tag) + [_parse(e, d, e.tag)])
+            dict.__setitem__(d, e.tag, _xml_list([dict.__getitem__(d, e.tag)]))
+         dict.__setitem__(d, e.tag, list.__add__(dict.__getitem__(d, e.tag), [_parse(e, d, e.tag)]))
       else:
          dict.__setitem__(d, e.tag, _parse(e, d, e.tag))
 
