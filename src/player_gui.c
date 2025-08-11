@@ -12,6 +12,7 @@
 
 #include "SDL_PhysFS.h"
 #include <SDL3/SDL_iostream.h>
+#include <stdib.h>
 
 #include "player_gui.h"
 
