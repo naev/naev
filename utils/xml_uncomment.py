@@ -7,11 +7,11 @@ from pathlib import Path
 if __name__ != '__main__':
    raise Exception('I am a teapot')
 
-args = argv[1:]
+my_name, *args = argv
 
 if '-h' in args or len(args) < 2:
    stderr.write(
-      'usage: ' + argv[0] + '<src_path> <dst_path> <file.xml>...\n'
+      'usage: ' + my_name + '<src_path> <dst_path> <file.xml>...\n'
       'for each <file.xml>, produces an uncommented version that is written to a file\n'
       'that has the same position in <dst_path> that <file.xml> has in <src_path>.\n'
       'The output filename is written to stdout.\n'
@@ -27,20 +27,21 @@ for arg in args:
    if (rel := path.relpath(path.realpath(arg), src))[:2] == '..':
       stderr.write('\033[31merror:\033[0m file ' + repr(arg) + ' not in ' + repr(src) + '\n')
       exit(1)
-   with open(arg, 'r') as fp:
-      s = fp.read()
+
    oarg = path.join(dst, rel)
    Path(path.split(oarg)[0]).mkdir(parents= True, exist_ok= True)
-   with open(oarg, 'w') as fp:
-      n = s.find('<!--')
-      while n!=-1:
-         fp.write(s[:n].rstrip(' '))
-         s = s[n + 4:]
-         n = s.find('-->')
-         if n == -1:
+   with open(arg, 'r') as fpr, open(oarg, 'w') as fpw:
+      s = fpr.read()
+      bef, *aft = s.split('<!--', 1)
+      while aft:
+         fpw.write(bef.rstrip(' '))
+         s, = aft
+         bef, *aft = s.split('-->', 1)
+         if not aft:
             stderr.write('\033[31merror:\033[0m "<!--" not followed by "-->"')
             exit(-1)
-         s = s[n + 3:].lstrip(' ')
-         n = s.find('<!--')
-      fp.write(s)
+         s, = aft
+         s = s.lstrip(' ')
+         bef, *aft = s.split('<!--', 1)
+      fpw.write(s)
    stdout.write(oarg + '\n')
