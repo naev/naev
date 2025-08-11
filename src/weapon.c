@@ -2407,16 +2407,19 @@ static void weapon_createBolt( Weapon *w, const Outfit *outfit, double dir,
       rdir += RNG_1SIGMA() * dispersion;
 
    /* Stat modifiers. */
+   double speed_mod = parent->stats.weapon_speed;
    if ( outfit_type( outfit ) == OUTFIT_TYPE_TURRET_BOLT ) {
       w->dam_mod *= parent->stats.tur_damage * parent->stats.weapon_damage;
       /* dam_as_dis is computed as multiplier, must be corrected. */
       w->dam_as_dis_mod = parent->stats.tur_dam_as_dis - 1.;
       w->range_mod      = parent->stats.tur_range * parent->stats.weapon_range;
+      speed_mod *= parent->stats.tur_speed;
    } else {
       w->dam_mod *= parent->stats.fwd_damage * parent->stats.weapon_damage;
       /* dam_as_dis is computed as multiplier, must be corrected. */
       w->dam_as_dis_mod = parent->stats.fwd_dam_as_dis - 1.;
       w->range_mod      = parent->stats.fwd_range * parent->stats.weapon_range;
+      speed_mod *= parent->stats.fwd_speed;
    }
    /* Clamping, but might not actually be necessary if weird things want to be
     * done. */
@@ -2427,14 +2430,15 @@ static void weapon_createBolt( Weapon *w, const Outfit *outfit, double dir,
 
    mass = 1.; /* Lasers are presumed to have unitary mass, just like the real
                  world. */
+   double speed            = outfit_speed( outfit ) * speed_mod;
    v                       = *vel;
-   m                       = outfit_speed( outfit );
+   m                       = speed;
    double speed_dispersion = outfit_speed_dispersion( outfit );
    if ( speed_dispersion > 0. )
       m += RNG_1SIGMA() * speed_dispersion;
    vec2_cadd( &v, m * cos( rdir ), m * sin( rdir ) );
-   w->timer   = outfit_range( outfit ) / outfit_speed( outfit ) * w->range_mod;
-   w->falloff = w->timer - outfit_falloff( outfit ) / outfit_speed( outfit );
+   w->timer   = outfit_range( outfit ) / speed * w->range_mod;
+   w->falloff = w->timer - outfit_falloff( outfit ) / speed;
    solid_init( &w->solid, mass, rdir, pos, &v, SOLID_UPDATE_EULER );
    w->voice = sound_playPos( outfit_sound( w->outfit ), w->solid.pos.x,
                              w->solid.pos.y, w->solid.vel.x, w->solid.vel.y );
@@ -2501,7 +2505,8 @@ static void weapon_createAmmo( Weapon *w, const Outfit *outfit, double dir,
    /* Set up ammo details. */
    mass     = outfit_massAmmo( w->outfit );
    w->timer = outfit_launcherDuration( w->outfit ) *
-              parent->stats.launch_range * parent->stats.weapon_range;
+              parent->stats.launch_range * parent->stats.weapon_range /
+              w->speed_mod;
    solid_init( &w->solid, mass, rdir, pos, &v, SOLID_UPDATE_EULER );
    w->solid.aerodynamics = w->speed_mod;
 

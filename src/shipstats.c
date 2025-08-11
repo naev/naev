@@ -168,6 +168,8 @@ static const ShipStatsLookup ss_lookup[] = {
             N_( "Weapon Fire Rate" ) ),
    DI_ELEM( SS_TYPE_D_WEAPON_ENERGY, weapon_energy,
             N_( "Weapon Energy Usage" ) ),
+   D__ELEM( SS_TYPE_D_WEAPON_SPEED, weapon_speed,
+            N_( "Weapon Munition Speed" ) ),
 
    D__ELEM( SS_TYPE_D_LAUNCH_RATE, launch_rate, N_( "Fire Rate (Launcher)" ) ),
    D__ELEM( SS_TYPE_D_LAUNCH_RANGE, launch_range, N_( "Launch Range" ) ),
@@ -199,6 +201,8 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_FORWARD_DAMAGE_AS_DISABLE, fwd_dam_as_dis,
             N_( "Damage as Disable (Cannon)" ) ),
    D__ELEM( SS_TYPE_D_FORWARD_RANGE, fwd_range, N_( "Weapon Range (Cannon)" ) ),
+   D__ELEM( SS_TYPE_D_FORWARD_SPEED, fwd_speed,
+            N_( "Munition Speed (Cannon)" ) ),
 
    D__ELEM( SS_TYPE_D_TURRET_DAMAGE, tur_damage, N_( "Damage (Turret)" ) ),
    D__ELEM( SS_TYPE_D_TURRET_TRACKING, tur_tracking,
@@ -210,6 +214,8 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_TURRET_DAMAGE_AS_DISABLE, tur_dam_as_dis,
             N_( "Damage as Disable (Turret)" ) ),
    D__ELEM( SS_TYPE_D_TURRET_RANGE, tur_range, N_( "Weapon Range (Turret)" ) ),
+   D__ELEM( SS_TYPE_D_TURRET_SPEED, tur_speed,
+            N_( "Munition Speed (Turret)" ) ),
 
    D__ELEM( SS_TYPE_D_STRESS_DISSIPATION, stress_dissipation,
             N_( "Stress Dissipation" ) ),

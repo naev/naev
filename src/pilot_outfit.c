@@ -982,10 +982,11 @@ double pilot_outfitRange( const Pilot *p, const Outfit *o )
       double speed     = outfit_launcherSpeed( o );
       double speed_max = outfit_launcherSpeedMax( o );
       if ( p != NULL ) {
+         double speed_mod = p->stats.launch_speed * p->stats.weapon_speed;
          duration *= p->stats.launch_range * p->stats.weapon_range;
-         speed *= p->stats.launch_speed;
+         speed *= speed_mod;
          accel *= p->stats.launch_accel;
-         speed_max *= p->stats.launch_speed;
+         speed_max *= speed_mod;
       }
       if ( outfit_launcherAccel( o ) != 0. ) {
          double speedinc;
@@ -1591,18 +1592,27 @@ const char *pilot_outfitSummary( const Pilot *p, const Outfit *o, int withname,
  */
 double pilot_outfitSpeed( const Pilot *p, const Outfit *o )
 {
-   if ( outfit_isBolt( o ) )
-      return outfit_boltSpeed( o );
-   else if ( outfit_isLauncher( o ) ) {
+   if ( outfit_isBolt( o ) ) {
+      double speed = outfit_boltSpeed( o );
+      if ( p != NULL ) {
+         speed *= p->stats.weapon_speed;
+         if ( outfit_isForward( o ) )
+            speed *= p->stats.fwd_speed;
+         else
+            speed *= p->stats.tur_speed;
+      }
+      return speed;
+   } else if ( outfit_isLauncher( o ) ) {
       double t;
       double accel     = outfit_launcherAccel( o );
       double speed     = outfit_launcherSpeed( o );
       double speed_max = outfit_launcherSpeedMax( o );
       double duration  = outfit_launcherDuration( o );
       if ( p != NULL ) {
-         speed *= p->stats.launch_speed;
+         double speed_mod = p->stats.launch_speed * p->stats.weapon_speed;
+         speed *= speed_mod;
          accel *= p->stats.launch_accel;
-         speed_max *= p->stats.launch_speed;
+         speed_max *= speed_mod;
          duration *= p->stats.launch_range * p->stats.weapon_range;
       }
 
