@@ -189,21 +189,27 @@ class naev_xml( xml_node ):
       _trusted_node.__init__(self, {}, None, None)
       if r and self._filename != devnull:
          try:
-            T = ET.parse(self._filename).getroot()
+            P = ET.parse(self._filename)
+            # Can raise:
+            #  - FileNotFoundError
+            #  - xml.etree.ElementTree.ParseError: ...
+         except Exception as e:
+            raise Exception('Invalid xml file ' + repr(self._filename)) from e
+
+         T = P.getroot()
+         try:
             dict.__setitem__(self, T.tag, _parse(T, self, T.tag))
-         except FileNotFoundError:
-            raise FileNotFoundError
          except:
-            raise Exception('Invalid xml file "' + repr(self._filename) + '"')
+            raise Exception('Invalid xml file ' + repr(self._filename))
 
    def save( self, if_needed= False ):
       if not self.w:
-         raise Exception('Attempt to save read-only "' + repr(self._filenam) + '"')
+         raise Exception('Attempt to save read-only ' + repr(self._filenam))
       if self._uptodate:
          if if_needed:
             return False
          else:
-            stderr.write('Warning: saving unchanged file "' + self._filename + '".\n')
+            stderr.write('Warning: saving unchanged file ' + repr(self._filename) + '.\n')
 
       if self._filename == '-':
          stdout.write(unparse(self))
@@ -217,9 +223,9 @@ class naev_xml( xml_node ):
    def save_as( self, filename= None ):
       filename = filename or devnull
       if not self.w:
-         raise Exception('Attempt to save read-only "' + repr(self._filenam) + '"')
+         raise Exception('Attempt to save read-only ' + repr(self._filenam))
       if filename == self._filename:
-         stderr.write('Warning: save destination was already "' + self._filename + '".\n')
+         stderr.write('Warning: save destination was already ' + repr(self._filename) + '.\n')
       else:
          self._uptodate = filename == devnull
          self._filename = filename
@@ -251,7 +257,7 @@ class naev_xml( xml_node ):
 
    def __del__( self ):
       if self.w and not self._uptodate and self._filename != devnull:
-         stderr.write('Warning: unsaved file "' + self._filename + '" at exit.\n')
+         stderr.write('Warning: unsaved file ' + repr(self._filename) + ' at exit.\n')
 
 def xml_parser( constr, qualifier= '' ):
    from pathlib import Path
@@ -284,7 +290,7 @@ def xml_parser( constr, qualifier= '' ):
          x.touch()
       elif clone:
          if (rel := path.relpath(path.realpath(arg), src))[:2] == '..':
-            stderr.write('\033[31merror:\033[0m file "' + arg + '" not in "' + src +'"\n')
+            stderr.write('\033[31merror:\033[0m file ' + repr(arg) + ' not in ' + repr(src) +'\n')
             exit(1)
          oarg = path.join(dst, rel)
          Path(path.split(oarg)[0]).mkdir(parents= True, exist_ok= True)

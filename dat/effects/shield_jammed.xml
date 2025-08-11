@@ -1,6 +1,7 @@
 <effect name="Shield Jammed">
  <description>Shield regeneration is jammed!</description>
- <duration>6</duration><!-- actually increased due to taint -->
+ <!-- actually increased due to taint -->
+ <duration>6</duration>
  <overwrite>shield_jammed</overwrite>
  <icon>/gfx/misc/icons/cracked-shield.webp</icon>
  <!--<shader>effects/shield_jammed.frag</shader>-->

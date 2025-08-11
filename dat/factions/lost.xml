@@ -23,7 +23,8 @@
   <enemy>Traders Society</enemy>
   <enemy>Thurion</enemy>
   <enemy>Za'lek</enemy>
-  <enemy>Derelict</enemy><!-- So they don't land on the Proteron Hypergate -->
+  <!-- So they don't land on the Proteron Hypergate -->
+  <enemy>Derelict</enemy>
  </enemies>
  <tags/>
 </faction>

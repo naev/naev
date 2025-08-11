@@ -65,11 +65,13 @@ readarray -t NON_SSYS <<< "$(grep -v '\<ssys/' <<< "${NON_OUTFITS[*]}")"
       echo -n "[${#NON_SSYS[@]} others] " >&2
    fi
 ) & if [ -n "$ST" ] ; then wait ; fi ; (
-   readarray -t COMMENTED <<< "$(grep -l "<!--" "${ARGS[@]}")"
-
    UNCOM_DIR="$(mktemp -d)"
    PARSE_DIR="$(mktemp -d)"
    RES="$(mktemp)"
+   trap 'rm -fr "$RES" "$UNCOM_DIR" "$PARSE_DIR"' EXIT
+
+   readarray -t COMMENTED <<< "$(grep -l "<!--" "${ARGS[@]}")"
+   sed -i 's/^\([[:space:]]*\)\(.*[^[:space:]]\)[[:space:]]*\(<!--.*-->\)[[:space:]]*\(.*\)$/\1\3\n\1\2\4/' "${COMMENTED[@]}"
 
    readarray -t UNCOM_RES <<< "$("$SCRIPT_DIR"/xml_uncomment.py "$PWD" "$UNCOM_DIR" "${COMMENTED[@]}")"
    sed '/^[[:space:]]*$/d' -i "${UNCOM_RES[@]}"
@@ -77,22 +79,34 @@ readarray -t NON_SSYS <<< "$(grep -v '\<ssys/' <<< "${NON_OUTFITS[*]}")"
    readarray -t OUTFITS <<< "$(grep '\<outfits/' <<< "${COMMENTED[*]}")"
    if [ -n "${OUTFITS[*]}" ] ; then
       "$SCRIPT_DIR"/outfits/outfit.py -c "$PWD" "$PARSE_DIR" "${OUTFITS[@]}"
-      echo -n "[${#OUTFITS[@]} comm. outfits] " >&2
+      res1="$?"
+      if [ "$res1" = 0 ] ; then
+         echo -n "[${#OUTFITS[@]} comm. outfits] " >&2
+      fi
    fi
 
    readarray -t NON_OUTFITS <<< "$(grep -v '\<outfits/' <<< "${COMMENTED[*]}")"
    readarray -t SSYS <<< "$(grep '\<ssys/' <<< "${NON_OUTFITS[*]}")"
    if [ -n "${SSYS[*]}" ] ; then
       "$SCRIPT_DIR"/ssys/ssys.py -c "$PWD" "$PARSE_DIR" "${SSYS[@]}"
-      echo -n "[${#SSYS[@]} comm. ssys] " >&2
+      res2="$?"
+      if [ "$res2" = 0 ] ; then
+         echo -n "[${#SSYS[@]} comm. ssys] " >&2
+      fi
    fi
 
    readarray -t NON_SSYS <<< "$(grep -v '\<ssys/' <<< "${NON_OUTFITS[*]}")"
    if [ -n "${NON_SSYS[*]}" ] ; then
       "$SCRIPT_DIR"/naev_xml.py -c "$PWD" "$PARSE_DIR" "${NON_SSYS[@]}"
-      echo -n "[${#NON_SSYS[@]} comm. others] " >&2
+      res3="$?"
+      if [ "$res3" = 0 ] ; then
+         echo -n "[${#NON_SSYS[@]} comm. others] " >&2
+      fi
    fi
 
+   if [ ! "$res1" = 0 ] || [ ! "$res2" = 0 ] || [ ! "$res3" = 0 ] ; then
+      exit 1
+   fi
    res=0
    for i in "${COMMENTED[@]}" ; do
       P="$(realpath --relative-to="$PWD" "$i")"
@@ -110,7 +124,6 @@ readarray -t NON_SSYS <<< "$(grep -v '\<ssys/' <<< "${NON_OUTFITS[*]}")"
    if [ ! "$res" = 0 ] ; then
       echo -e "\n[\e[31m$res conflict(s)]\e[0m "
    fi
-   rm -fr "$RES" "$UNCOM_DIR" "$PARSE_DIR"
 )
 wait
 echo >&2

@@ -31,7 +31,7 @@ class ssys_xml(naev_xml):
       if fnam is None or not r:
          self['ssys'] = {}
       elif 'ssys' not in self:
-         raise Exception('Invalid ssys filename "' + fnam + '"')
+         raise Exception('No ssys found in ' + repr(fnam))
       s = self['ssys']
       for f in AVAILABLE_FIELDS:
          fs = f + 's'

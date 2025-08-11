@@ -110,7 +110,7 @@ class outfit(naev_xml):
       if fnam is None:
          self['outfit'] = {}
       elif 'outfit' not in self:
-         raise Exception('Invalid outfit filename "' + repr(fnam) + '"')
+         raise Exception('No outfit found in ' + repr(fnam))
       self.short = None
       self.is_multi = False
       if is_multi or is_multi is None:
@@ -118,7 +118,7 @@ class outfit(naev_xml):
             self.is_multi = True
             self._uptodate = True
          elif is_multi:
-            raise ValueError('"' + filename +'" is not a valid multicore.')
+            raise ValueError(repr(filename) +' is not a valid multicore.')
 
    def can_pri_sec( self ):
       if self.pri is None:

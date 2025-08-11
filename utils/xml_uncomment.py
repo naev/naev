@@ -25,7 +25,7 @@ src, dst, *args = args
 
 for arg in args:
    if (rel := path.relpath(path.realpath(arg), src))[:2] == '..':
-      stderr.write('\033[31merror:\033[0m file "' + arg + '" not in "' + src +'"\n')
+      stderr.write('\033[31merror:\033[0m file ' + repr(arg) + ' not in ' + repr(src) + '\n')
       exit(1)
    with open(arg, 'r') as fp:
       s = fp.read()
