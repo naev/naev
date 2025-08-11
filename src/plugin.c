@@ -109,6 +109,7 @@ static int plugin_parse( plugin_t *plg, const char *file, const char *path,
       xmlr_strd( node, "version", plg->version );
       xmlr_strd( node, "description", plg->description );
       xmlr_strd( node, "compatibility", plg->compatibility );
+      xmlr_strd( node, "naev_version", plg->naev_version );
       xmlr_int( node, "priority", plg->priority );
       xmlr_strd( node, "source", plg->source );
       if ( xml_isNode( node, "blacklist" ) ) {
@@ -160,6 +161,13 @@ static int plugin_parse( plugin_t *plg, const char *file, const char *path,
 
    xmlFreeDoc( doc );
 
+   if ( plg->compatibility != NULL ) {
+      WARN( "Plugin '%s' uses deprecated <compatibility> that will be removed "
+            "in 0.14.0. Use <naev_version> with semver requirements "
+            "instead:\n<naev_version>&gt;=0.13.0</naev_version>.",
+            plg->name );
+   }
+
 #define MELEMENT( o, s )                                                       \
    if ( o )                                                                    \
    WARN( _( "Plugin '%s' missing/invalid '%s' element" ), plg->name,           \
@@ -167,7 +175,7 @@ static int plugin_parse( plugin_t *plg, const char *file, const char *path,
    MELEMENT( plg->author == NULL, "author" );
    MELEMENT( plg->version == NULL, "version" );
    MELEMENT( plg->description == NULL, "description" );
-   MELEMENT( plg->compatibility == NULL, "compatibility" );
+   MELEMENT( plg->naev_version == NULL, "naev_version" );
    MELEMENT( plg->source == NULL, "source" );
 #undef MELEMENT
 
@@ -343,46 +351,57 @@ int plugin_check( void )
    int         failed  = 0;
    const char *version = naev_version( 0 );
    for ( int i = 0; i < array_size( plugins ); i++ ) {
-      int               errornumber;
-      PCRE2_SIZE        erroroffset;
-      pcre2_code       *re;
-      pcre2_match_data *match_data;
+      plugin_t *plg = &plugins[i];
 
-      if ( plugins[i].compatibility == NULL )
-         continue;
+      /* Check deprecated compatibility first. */
+      if ( plg->compatibility != NULL ) {
+         int               errornumber;
+         PCRE2_SIZE        erroroffset;
+         pcre2_match_data *match_data;
+         pcre2_code       *re = pcre2_compile( (PCRE2_SPTR)plg->compatibility,
+                                               PCRE2_ZERO_TERMINATED, 0, &errornumber,
+                                               &erroroffset, NULL );
+         if ( re == NULL ) {
+            PCRE2_UCHAR buffer[256];
+            pcre2_get_error_message( errornumber, buffer, sizeof( buffer ) );
+            WARN( _( "Plugin '%s' PCRE2 compilation failed at offset %d: %s" ),
+                  plugin_name( plg ), (int)erroroffset, buffer );
+            failed++;
+            continue;
+         }
 
-      re = pcre2_compile( (PCRE2_SPTR)plugins[i].compatibility,
-                          PCRE2_ZERO_TERMINATED, 0, &errornumber, &erroroffset,
-                          NULL );
-      if ( re == NULL ) {
-         PCRE2_UCHAR buffer[256];
-         pcre2_get_error_message( errornumber, buffer, sizeof( buffer ) );
-         WARN( _( "Plugin '%s' PCRE2 compilation failed at offset %d: %s" ),
-               plugin_name( &plugins[i] ), (int)erroroffset, buffer );
-         failed++;
-         continue;
+         match_data = pcre2_match_data_create_from_pattern( re, NULL );
+         int rc = pcre2_match( re, (PCRE2_SPTR)version, strlen( version ), 0, 0,
+                               match_data, NULL );
+         pcre2_match_data_free( match_data );
+         if ( rc < 0 ) {
+            switch ( rc ) {
+            case PCRE2_ERROR_NOMATCH:
+               WARN( "Plugin '%s' does not support Naev version '%s'.",
+                     plugin_name( plg ), version );
+               failed++;
+               break;
+            default:
+               WARN( _( "Matching error %d" ), rc );
+               failed++;
+               break;
+            }
+         } else
+            plg->compatible = 1;
+
+         pcre2_code_free( re );
       }
 
-      match_data = pcre2_match_data_create_from_pattern( re, NULL );
-      int rc = pcre2_match( re, (PCRE2_SPTR)version, strlen( version ), 0, 0,
-                            match_data, NULL );
-      pcre2_match_data_free( match_data );
-      if ( rc < 0 ) {
-         switch ( rc ) {
-         case PCRE2_ERROR_NOMATCH:
+      /* New more proper way to test version. */
+      if ( plg->naev_version ) {
+         int compat = naev_versionMatchReq( version, plg->naev_version );
+         if ( !compat ) {
             WARN( "Plugin '%s' does not support Naev version '%s'.",
-                  plugin_name( &plugins[i] ), version );
+                  plugin_name( plg ), version );
             failed++;
-            break;
-         default:
-            WARN( _( "Matching error %d" ), rc );
-            failed++;
-            break;
          }
-      } else
-         plugins[i].compatible = 1;
-
-      pcre2_code_free( re );
+         plg->compatible = compat;
+      }
    }
 
    return failed;
