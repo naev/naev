@@ -1,4 +1,4 @@
-name: "Compile Naev" 
+name: "Compile Naev"
 on:
   workflow_call:
     inputs:
