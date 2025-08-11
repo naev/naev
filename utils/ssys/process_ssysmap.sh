@@ -68,8 +68,9 @@ done
 DST="$DAT/ssys"
 "$DIR"/repos.sh -C || exit 1
 "$DIR"/apply_pot.sh -C || exit 1
-"$DIR"/gen_decorators.sh -C || exit 1
-
+if [ ! "$NOPIC" = "1" ] ; then
+   "$DIR"/gen_decorators.sh -C || exit 1
+fi
 
 msg() {
    echo -e "$1" | while read -r line; do

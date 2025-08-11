@@ -24,7 +24,7 @@ if help_f or (argv[1:] and do_write):
       msg(l)
    exit(0 if help_f else 1)
 
-def new_ssys(name, basenam, ssys_pos, jmp):
+def new_ssys( name, basenam, ssys_pos, jmp ):
    xml = naev_xml(name, r= False)
    Nam = ssys_nam(ssys_pos, basenam)
    fast_small_ship = 400
@@ -36,7 +36,7 @@ def new_ssys(name, basenam, ssys_pos, jmp):
       '@target': ssys_nam(ssys_pos, dst),
       'autopos': {},
       'hide': 1,
-      'tags': {'tag': aux},
+      'tags': {'tag': list(set(aux) - {'new'})},
    }
    xml['ssys'] = {
       '@name': Nam or ' '.join([s[0].upper() + s[1:] for s in basenam.split('_')]),

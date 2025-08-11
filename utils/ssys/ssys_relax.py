@@ -4,7 +4,7 @@
 from sys import stdout, stderr
 from os.path import basename
 from geometry import transf, vec
-from ssys import nam2base, starmap, spob_fil, ssys_xml, vec_to_pos, pos_to_vec, xml_node, naev_xml
+from ssys import nam2base, starmap, spob_fil, ssys_xml, vec_to_pos, pos_to_vec, naev_xml
 from math import sin, pi
 from minimize_angle_stretch import relax_dir
 from xml_name import end_xml_name
@@ -101,8 +101,7 @@ def ssys_relax( sys, quiet = True, graph = False ):
          for t in ['jump', 'asteroid', 'waypoint']:
             for i, e in enumerate(T[t + 's'][t]):
                d, k = (T[t + 's'][t], i) if t == 'waypoint' else (e, "pos")
-               # because of the list defect
-               d[k] = xml_node(d[k]| vec_to_pos(func(pos_to_vec(d[k]))))
+               d[k] = d[k] | vec_to_pos(func(pos_to_vec(d[k])))
          p.save()
          return True
    return False

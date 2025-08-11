@@ -58,35 +58,45 @@ def _numify( s ):
    except:
       pass
 
-def _intify( s ):
-   if isinstance(s, str):
-      if s[0] == '@':
-         s = s[1:]
-      s = int(s)
-   return s
+class _xml_list( list ):
+   def __init__( self, parent, key, L=[] ):
+      self._parent = parent
+      self._key = key
+      list.__init__(self, [_xml_ify(i, parent, key) for i in L])
 
-class _xml_list(list):
-   def __delitem__(self, sl):
-      list.__delitem__(self, _intify(s))
+   def _change( self ):
+      self._parent._change()
 
-   def __getitem__(self, sl):
-      return list.__getitem__(self, _intify(s))
+   def __setitem__( self, key, value ):
+      if isinstance(key, slice):
+         list.__setitem__(self, key, _xml_list(self._parent, self._key, value))
+      else:
+         list.__setitem__(self, key, _xml_ify(value, self._parent, self._key))
+      self._change()
 
-   def __setitem__(self, key, value):
-      list.__set_item__(self, key, xml_node(value))
+   def insert( self, index, elt ):
+      list.insert(self, index, _xml_ify(elt, self._parent, self._key))
+      self._change()
 
-   def insert(self, index, elt):
-      list.insert(self, index, xml_node(elt))
+   def append( self, elt ):
+      list.append(self, _xml_ify(elt, self._parent, self._key))
+      self._change()
 
-   def append(self, elt):
-      list.append(self, xml_node(elt))
+   def extend( self, other ):
+      list.extend(self, _xml_list(self._parent, self._key, other))
+      self._change()
 
-   def extend(self, other):
-      for e in other:
-         self.append(e)
    __iadd__ = extend
-   __imul__ = None
-   __rmul__ = None
+
+   """
+   Unmanaged methods that should call self._change() afterwards:
+      clear
+      pop
+      remove
+      reverse
+      sort
+      __delitem__
+   """
 
 class xml_node( dict ):
    def __init__ ( self, mapping, parent= None, key= None ):
@@ -131,7 +141,7 @@ class xml_node( dict ):
             raise ValueError(str(val) + ' is not a number.')
          key = key[1:]
       elif isinstance(val, list):
-         val = _xml_list([xml_node(e, self, key) if isinstance(e, dict) else e for e in val])
+         val = _xml_list(self, key, val)
       elif isinstance(val, dict):
          val = xml_node(val, self, key)
       if key[:1] == '@':
@@ -145,11 +155,33 @@ class xml_node( dict ):
          del self.attr[key]
       else:
          dict.__delitem__(self, key)
+      self._change()
 
    def __repr__( self ):
       return dict.__repr__(self.attr | self)
 
    __str__ = __repr__
+
+   def clear(self):
+      dict.clear(self)
+      self.attr.clear()
+      self._change()
+
+   # Do these make any sense in this context ?
+   pop = None
+   popitem = None
+
+   """
+   Unmanaged methods that should call self._change() afterwards:
+      __reversed__
+      setdefault
+   Unmanaged methods that maybe should do more than that:
+      update
+      __ior__
+   """
+
+def _xml_ify( elt, par, k ):
+   return xml_node(elt, par, k) if isinstance(elt, dict) else elt
 
 class _trusted_node( xml_node ):
    def __init__ ( self, attr, parent= None, key= None ):
@@ -163,9 +195,12 @@ def _parse( node, par, key ):
 
    for e in node:
       if dict.__contains__(d, e.tag):
-         if not isinstance(d[e.tag], list):
-            dict.__setitem__(d, e.tag, _xml_list([dict.__getitem__(d, e.tag)]))
-         dict.__setitem__(d, e.tag, list.__add__(dict.__getitem__(d, e.tag), [_parse(e, d, e.tag)]))
+         crt = dict.__getitem__(d, e.tag)
+         if not isinstance(crt, list):
+            l = _xml_list(d, e.tag)
+            list.append(l, crt)
+            dict.__setitem__(d, e.tag, l)
+         list.append(dict.__getitem__(d, e.tag), _parse(e, d, e.tag))
       else:
          dict.__setitem__(d, e.tag, _parse(e, d, e.tag))
 
@@ -207,8 +242,10 @@ def unparse( d , indent= 0 ):
 
 class naev_xml( xml_node ):
    def __init__( self, fnam= None, r= True, w= True):
-      fnam = fnam or devnull
-      self._uptodate = True
+      if fnam is None:
+         r = False
+         fnam = devnull
+      self._uptodate = r
       self.w, self.r = w, r
       if type(fnam) != type('') or (not fnam.endswith('.xml') and fnam != devnull):
          raise Exception('Invalid xml filename ' + repr(fnam))
@@ -219,9 +256,10 @@ class naev_xml( xml_node ):
       if r and self._filename != devnull:
          try:
             P = ET.parse(self._filename)
-            # Can raise:
-            #  - FileNotFoundError
-            #  - xml.etree.ElementTree.ParseError: ...
+         except FileNotFoundError as e:
+            raise e
+         # Can also raise:
+         #  - xml.etree.ElementTree.ParseError: ...
          except Exception as e:
             raise Exception('Invalid xml file ' + repr(self._filename)) from e
 

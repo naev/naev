@@ -11,7 +11,7 @@ script_dir = os.path.dirname(__file__)
 path.append(getpath(script_dir, '..'))
 
 from xml_name import xml_name as nam2base
-from naev_xml import naev_xml, xml_node
+from naev_xml import naev_xml
 
 PATH = getpath(script_dir, '..', '..', 'dat')
 

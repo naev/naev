@@ -97,7 +97,6 @@ These are designed to manage the **internal geometry of systems**, that might ge
  - `ssysmap_{push, pop, dequeue}.sh` apply the corresponding operations to ssys map position history.
 
 # TODO
- - implement xml_list dunders (and simplify ssys_relax accordingly) +
  - `reposition.c`:
     - penalty map +
     - fixed point algorithm
