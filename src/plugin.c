@@ -162,10 +162,11 @@ static int plugin_parse( plugin_t *plg, const char *file, const char *path,
    xmlFreeDoc( doc );
 
    if ( plg->compatibility != NULL ) {
-      WARN( "Plugin '%s' uses deprecated <compatibility> that will be removed "
-            "in 0.14.0. Use <naev_version> with semver requirements "
-            "instead:\n<naev_version>&gt;=0.13.0</naev_version>.",
-            plg->name );
+      WARN(
+         "Plugin '%s' uses deprecated <compatibility> that will be removed "
+         "in 0.14.0. Use <naev_version> with semver requirements "
+         "instead:\n<naev_version>&gt;=0.13.0-0, &lt;0.14.0-0</naev_version>.",
+         plg->name );
    }
 
 #define MELEMENT( o, s )                                                       \
