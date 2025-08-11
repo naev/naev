@@ -9,10 +9,23 @@ local spacemine_shader, highlight_shader, spacemine_sfx
 
 local CHECK_INTERVAL = 0.1 -- How often to check activations in seconds
 local ACTIVATE_DELAY = 1.5 -- Time to blow up once activated in seconds
+local RANGE          = 300 -- Range of detection
+local RANGE_MIN      = 100 -- Minimum range of detection
+local RANGE_EXP      = 500 -- Range of the explosion
+local DAMAGE         = 1000 -- Default damage
+local PENETRATION    = 50 -- Default penetration
+local TRACKMIN       = 0 -- Default minimum tracking
+local TRACKMAX       = 5e3 -- Default maximum tracking
+local PRIME          = 5 -- Default time to prime
 
 local function trigger( s, d )
    d.triggered = d.timer + ACTIVATE_DELAY
    luasfx( s:pos(), s:vel(), spacemine_sfx )
+end
+
+local function get_range( ew, d )
+   local mod = (ew - d.trackmin) / (d.trackmax - d.trackmin)
+   return math.max( d.rangemin, d.range*mod )
 end
 
 local function update( s, dt )
@@ -76,10 +89,9 @@ local function update( s, dt )
          trigger( s, d )
          return
       end
-      mod = (ew - d.trackmin) / (d.trackmax - d.trackmin)
       -- Have to see if it triggers now
       local dst = p:pos():dist2( sp )
-      if dst < math.max(d.range*mod, d.rangemin)^2 then
+      if dst < get_range(ew,d)^2 then
          trigger( s, d )
          return
       end
@@ -102,7 +114,7 @@ local function render( sp, x, y, z )
    if pp:exists() and (d.hostile or not d.fct or d.fct:areEnemies(pp:faction())) then
       local ew = pp:signature()
       if ew > d.trackmin then
-         local r = math.max( (ew - d.trackmin) / (d.trackmax - d.trackmin) * d.range, d.rangemin) * z
+         local r = get_range( ew, d ) * z
          lg.setShader( highlight_shader )
          lg.setColour( {1, 0, 0, 0.1} )
          love_shaders.img:draw( x-r, y-r, 0, 2*r )
@@ -137,24 +149,23 @@ local function spacemine( pos, vel, fct, params )
 
    -- Other params
    local duration = params.duration or 90
-   local RANGE = 300
 
    -- Sound is handled separately in outfit
    local s  = spfx.new( duration, update, render, nil, nil, pos, vel, nil, RANGE )
    local d  = s:data()
-   d.timer  = 0
-   d.check  = rnd.rnd() * CHECK_INTERVAL
-   d.range  = RANGE
-   d.rangemin = 100
-   d.explosion = 500
-   d.fct    = fct
-   d.damage = params.damage or 1000
-   d.penetration = params.penetration or 50
-   d.trackmax  = params.trackmax or 5e3
-   d.trackmin = params.trackmin or 0e3
-   d.pilot  = params.pilot
-   d.primed = params.primed or 5
-   d.hostile = params.hostile
+   d.timer     = 0
+   d.check     = rnd.rnd() * CHECK_INTERVAL
+   d.range     = RANGE
+   d.rangemin  = RANGE_MIN
+   d.explosion = RANGE_EXP
+   d.fct       = fct
+   d.damage    = params.damage or DAMAGE
+   d.penetration = params.penetration or PENETRATION
+   d.trackmax  = params.trackmax or TRACKMAX
+   d.trackmin  = params.trackmin or TRACKMIN
+   d.pilot     = params.pilot
+   d.primed    = params.primed or PRIME
+   d.hostile   = params.hostile
    return s
 end
 
