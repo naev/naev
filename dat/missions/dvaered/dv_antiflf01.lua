@@ -20,9 +20,10 @@
         3 - The player has found the FLF base for the Dvaered, or has betrayed the FLF after rescuing the agent. Conditional for dv_antiflf03
 --]]
 local dv = require "common.dvaered"
+local fcts = require "factions"
 
 function create()
-   faction.get("FLF"):setKnown(true)
+   fcts.setKnown( faction.get("FLF"), true )
 
    -- Note: this mission makes no system claims.
    misn.accept()
