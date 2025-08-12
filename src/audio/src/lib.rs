@@ -7,7 +7,7 @@ use crate::openal::*;
 
 use anyhow::Result;
 use gettext::gettext;
-use log::{debug, warn, warn_err};
+use log::{debug, debugx, warn, warn_err};
 use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
 use std::ffi::{CStr, CString};
 use std::sync::atomic::{AtomicPtr, Ordering};
@@ -364,17 +364,17 @@ impl AudioSystem {
             alDistanceModel(AL_INVERSE_DISTANCE_CLAMPED);
         }
 
-        debug!(gettext("OpenAL started: {} Hz"), freq);
-        debug!(gettext("Renderer: %s"), al::get_parameter_str(AL_RENDERER));
+        debugx!(gettext("OpenAL started: {} Hz"), freq);
+        debugx!(gettext("Renderer: %s"), al::get_parameter_str(AL_RENDERER));
         if let Some((major, minor)) = efx_version {
-            debug!(
+            debugx!(
                 gettext("Version: {} with EFX {}.{}"),
                 al::get_parameter_str(AL_VERSION),
                 major,
                 minor
             );
         } else {
-            debug!(
+            debugx!(
                 gettext("Version: {} without EFX"),
                 al::get_parameter_str(AL_VERSION)
             );
