@@ -26,12 +26,14 @@ args = parser.parse_args()
 ignore_camp = not args.campaigns
 ignore_tier = not args.tiers
 
-tierNames = ["Automatic",
-             "Basic piloting",
-             "Advanced piloting",
-             "Basic combat",
-             "Advanced combat",
-             "Plot-related"]
+tierNames = [
+    "Automatic",
+    "Basic piloting",
+    "Advanced piloting",
+    "Basic combat",
+    "Advanced combat",
+    "Plot-related",
+]
 
 
 i = 0

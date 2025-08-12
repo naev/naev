@@ -13,7 +13,7 @@ from multiprocessing import Pool
 """
 " Set up ALE plugin used plugged
 call plug#begin('~/.vim/plugged')
- Plug 'dense-analysis/ale'
+    Plug 'dense-analysis/ale'
 call plug#end()
 " ALE Lua settingsshould use luacheck by default
 " Remember to change the below paths to your Naev directory

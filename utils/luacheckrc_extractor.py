@@ -27,12 +27,12 @@ def generate_api( modname, filename ):
         apilist += f"            {a} = {{}},\n"
 
     return f"""stds.{modname} = {{
-   read_globals = {{
-      {modname} = {{
-         fields = {{
+    read_globals = {{
+        {modname} = {{
+            fields = {{
 {apilist}         }},
-      }},
-   }}
+        }},
+    }}
 }}"""
 
 if __name__ == "__main__":

@@ -45,10 +45,10 @@ for k,v in imgdict.items():
 with open( "spob_gfx.html", "w" ) as out:
     out.write( """
 <html>
-<head>
- <title>Naev Spob Graphic Used Status</title>
-</head>
-<body>
+ <head>
+  <title>Naev Spob Graphic Used Status</title>
+ </head>
+ <body>
     """ )
     for k in sorted( imgdict, key=lambda x: imgdict[x], reverse=True ):
         path = prefix+"/artwork/gfx/spob/space/"+k
@@ -57,11 +57,10 @@ with open( "spob_gfx.html", "w" ) as out:
   <div>
    <img width="128" height="128" src='{path}' />
    <span>{k}: {v[0]}</span><br/>
-   <span>{', '.join(v[1])}</span>
-  </div>
+   <span>{', '.join(v[1])}</span>\n  </div>
 """)
     out.write( """
-</body>
+ </body>
 </html>
     """ )
 

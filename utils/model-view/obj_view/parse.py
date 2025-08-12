@@ -100,9 +100,9 @@ def parse_mtl(path):
             # XXX handle s
             opts, rest = mtl_getopt(l[1:], {'s': 3, 'bm': 1})
             if 'bm' in opts:
-               cur_material.bm = float(opts['bm'][0])
+                cur_material.bm = float(opts['bm'][0])
             else:
-               cur_material.bm = 1.0
+                cur_material.bm = 1.0
             map_Bump = ' '.join(rest)
             cur_material.map_Bump = loadTexture(os.path.dirname(path) + '/' + map_Bump)
         # Illumination mode

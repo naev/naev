@@ -21,7 +21,7 @@ anbh = [ 'ngc11935', 'ngc5483', 'ngc7078', 'ngc7533', 'octavian',
 
 del_edges = [
 #   {'titus', 'vedalus'},
-    {'kelvos', 'mason'},
+   {'kelvos', 'mason'},
 #   {'khaas', 'diadem'},
 ]
 

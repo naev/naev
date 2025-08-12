@@ -16,7 +16,7 @@ Below is a chunk from an example vimrc of getting this to work with vim
 ```
 " Set up ALE plugin used plugged
 call plug#begin('~/.vim/plugged')
- Plug 'dense-analysis/ale'
+    Plug 'dense-analysis/ale'
 call plug#end()
 
 " Create the Lua linter

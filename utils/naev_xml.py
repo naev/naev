@@ -6,45 +6,45 @@ but 2x faster than xmltodict with more functionality and correct output
 (empty element folding, new lines, no useless xml 1.0 header, etc.).
 
 Used as follows:
-  o = naev_xml('input.xml')
-  # Here o is just the regular xmltodict-generated dictionary, except:
+   o = naev_xml('input.xml')
+   # Here o is just the regular xmltodict-generated dictionary, except:
 
-  #  1. the subtrees you insert are deep-copied. This prevents accidentally turning
-  #     your tree into a dag. The "downside":
-  t = {'a': '1', 'z': '26'}
-  o['new_child'] = t
-  t['a'] = '2'
-  # !!! here o['new_child']['a'] is still '1'
+   #  1. the subtrees you insert are deep-copied. This prevents accidentally turning
+   #     your tree into a dag. The "downside":
+   t = {'a': '1', 'z': '26'}
+   o['new_child'] = t
+   t['a'] = '2'
+   # !!! here o['new_child']['a'] is still '1'
 
-  #  2. You can use an additional '$' character in you tag names:
-  o['nums'] = {'fst': '1', 'snd': '2.0', 'thd': '3.14', 'fth': 'zero'}
-  # in that case:
-  # o['nums']['$fst'] -> 1
-  # o['nums']['$snd'] -> 2
-  # o['nums']['$thd'] -> 3.14
-  # o['nums']['$fth'] -> exception (attempt to use non-value str as a value)
-  o['nums']['$fst'] = 1     # saves 1
-  o['nums']['$snd'] = 2.0   # saves 2
-  o['nums']['$thd'] = 3.14  # saves 3.14
-  o['nums']['$fth'] = '1.0' # raises an exception
-  # this allows:
-  # o['$speed'] *= 1.2
-  # o['$thing'] = 2.0 * 0.5 # will save 1 instead of 1.0
+   #  2. You can use an additional '$' character in you tag names:
+   o['nums'] = {'fst': '1', 'snd': '2.0', 'thd': '3.14', 'fth': 'zero'}
+   # in that case:
+   # o['nums']['$fst'] -> 1
+   # o['nums']['$snd'] -> 2
+   # o['nums']['$thd'] -> 3.14
+   # o['nums']['$fth'] -> exception (attempt to use non-value str as a value)
+   o['nums']['$fst'] = 1     # saves 1
+   o['nums']['$snd'] = 2.0   # saves 2
+   o['nums']['$thd'] = 3.14  # saves 3.14
+   o['nums']['$fth'] = '1.0' # raises an exception
+   # this allows:
+   # o['$speed'] *= 1.2
+   # o['$thing'] = 2.0 * 0.5 # will save 1 instead of 1.0
 
-  #  3. At init, you can specify the r and w flags (both True by default).
-  #     You get errors in the following cases:
-  #      - r is True and the input file can't be openened
-  #      - w is False and you attempt to save
-  #     You get warnings in the following cases:
-  #      - w is true the dict gets garbage collected while with unsaved changes.
-  #      - the dict gets saved while its destination is already up-to-date.
+   #  3. At init, you can specify the r and w flags (both True by default).
+   #     You get errors in the following cases:
+   #      - r is True and the input file can't be openened
+   #      - w is False and you attempt to save
+   #     You get warnings in the following cases:
+   #      - w is true the dict gets garbage collected while with unsaved changes.
+   #      - the dict gets saved while its destination is already up-to-date.
 
-  # This optional call allows to change the destination.
-  # If not called, save destination is the same as input.
-  o.save_as('output.xml')
-  o.save()
-  # xmltodict's unparse was missing a final newline and unable to fold empty
-  # tags. This has been fixed.
+   # This optional call allows to change the destination.
+   # If not called, save destination is the same as input.
+   o.save_as('output.xml')
+   o.save()
+   # xmltodict's unparse was missing a final newline and unable to fold empty
+   # tags. This has been fixed.
 """
 
 import xml.etree.ElementTree as ET

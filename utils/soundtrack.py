@@ -174,7 +174,7 @@ if __name__ == "__main__":
         output = f"naev-{version}-soundtrack"
 
     print(f"Generating {output}.zip with "
-          f"{args.workers if args.workers else (os.cpu_count() or 4)} workers...")
+        f"{args.workers if args.workers else (os.cpu_count() or 4)} workers...")
 
     generate_soundtrack(
         source_dir=args.source_dir,

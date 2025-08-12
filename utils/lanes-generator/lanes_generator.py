@@ -173,7 +173,7 @@ def buildStiffness( problem, activated, systems ):
 @timed
 def compute_PPts_QtQ( problem, utilde, systems ):
     '''Gives the matrix that computes penibility form potentials.
-      By chance, this does not depend on the presence of lane.'''
+        By chance, this does not depend on the presence of lane.'''
     nfact = len(systems.presences[0])
     nass = len(systems.ass2g)
 
@@ -242,7 +242,7 @@ def compute_PPts_QtQ( problem, utilde, systems ):
 @timed
 def getGradient( problem, u, lamt, PPl, pres_0, activated, systems, iters_done ):
     '''Get the gradient from state and adjoint state.
-       Luckily, this does not depend on the stiffness itself (by linearity wrt. stiffness).'''
+        Luckily, this does not depend on the stiffness itself (by linearity wrt. stiffness).'''
     si, sj, sv = problem.internal_lanes[:3]
     sr = problem.internal_lanes[6] # Tells who has right to build on each lane
     sy = problem.internal_lanes[7] # Tells the system

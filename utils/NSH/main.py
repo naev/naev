@@ -193,13 +193,13 @@ if __name__ == "__main__":
 
     usage="Usage: %prog OUTPUTPATH"
     parser = OptionParser(usage=usage, version="%prog "+__version__,
-                          description="Nice looking generator for naev ships")
+        description="Nice looking generator for naev ships")
 #    parser.add_option("-o", "--output-path", dest="output", metavar="PATH",
-#                      help="Path in whitch files goes.")
-    parser.add_option("-t", "--template-path", dest="templates",
-                      default='./templates', metavar="PATH",
-                      help="""Uses template in that PATH
-                              instead of the default one""")
+#        help="Path in whitch files goes.")
+        parser.add_option("-t", "--template-path", dest="templates",
+        default='./templates', metavar="PATH",
+        help='Uses template in that PATH instead of the default one'
+    )
 
     (cfg, arguments) = parser.parse_args()
 

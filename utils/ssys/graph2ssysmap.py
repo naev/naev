@@ -49,9 +49,9 @@ def new_ssys( name, basenam, ssys_pos, jmp ):
    }
    if 'stellarwind' in ssys_others(ssys_pos, basenam):
       xml['ssys']['general'] |= {
-        'background': 'stellarwind',
-        'map_shader': 'stellarwind_map.frag',
-        'features': '#bStellar Wind (1 fuel regen)#0'
+         'background': 'stellarwind',
+         'map_shader': 'stellarwind_map.frag',
+         'features': '#bStellar Wind (1 fuel regen)#0'
       }
    return xml
 

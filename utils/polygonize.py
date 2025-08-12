@@ -88,17 +88,17 @@ Rem 2 : The value of alpha_threshold of 50 is totally arbitrary
 2 ) The set of points is transformed into a polygon in polygonFromImg.
 The algo picks up one of the rightmost points. This point is the starting
 point. We define as well the starting direction as nearly vertical
-  Then the following recurcive algo runs :
-  a/ From the current point, find the next point that is at a distance
-     between minlen and maxlen and that makes the minimal angle with the
-     previous direction.
-  b/ Compute the next direction in order to prevent going backwards.
-     This direction makes the maximal angle with the direction going from
-     current point to previous point, and is chosen among the points that
-     are at a distance < maxlen from the previous point.
-     This step is necessary in the concave parts of ships.
-  After that, a few checks are performed. If the generated polygon fails,
-  a new finer polygon is generated.
+    Then the following recurcive algo runs :
+        a/ From the current point, find the next point that is at a distance
+            between minlen and maxlen and that makes the minimal angle with the
+            previous direction.
+        b/ Compute the next direction in order to prevent going backwards.
+            This direction makes the maximal angle with the direction going from
+            current point to previous point, and is chosen among the points that
+            are at a distance < maxlen from the previous point.
+            This step is necessary in the concave parts of ships.
+    After that, a few checks are performed. If the generated polygon fails,
+    a new finer polygon is generated.
 
 3 ) The polygon is simplified in simplifyPolygon.
 A loop is run among the points of the polygon. Any point which angle is too
@@ -142,8 +142,8 @@ def arrFromImg( address, sx, sy ):
     siy = picture.shape[1]/sy
 
     if (int(six) != six) or (int(siy) != siy) :
-        print(('Warning: sx = ' + str(sx) + ' or sy = ' + str(sy) + \
-               ' is wrong. The shape may be up to 1 pixel wrong.'))
+        print(('Warning: sx = ' + str(sx) + ' or sy = ' + str(sy)
+            + ' is wrong. The shape may be up to 1 pixel wrong.'))
 
     six = int(six)
     siy = int(siy)
@@ -274,8 +274,10 @@ def simplifyPolygon( indices, x, y, tol ):
         th2 = math.atan2( y2-ym, x2-xm )
 
         # The point (xm,ym) does not make a big change in direction : kill it
-        if abs(th1-th2) < tol or abs(th1-th2-2*math.pi) < tol or\
-          abs(th1-th2+2*math.pi) < tol : # this handles the case th1~pi and th2~-pi
+        if (
+                abs(th1-th2) < tol or abs(th1-th2-2*math.pi) < tol or
+                abs(th1-th2+2*math.pi) < tol  # this handles the case th1~pi and th2~-pi
+        ):
             del(indices[j+1])
             del(x[j+1])
             del(y[j+1])
@@ -367,17 +369,19 @@ def pointsFrom3D( address, slices, size, center, alpha ):
     for it in tqdm(range(slices), desc="Transforming model", ascii=True):
         # Rotate the points
         theta = it*dtheta + math.pi/2
-        rot = np.matrix([[math.cos(theta), -math.sin(theta), 0],\
-                         [math.sin(theta), math.cos(theta), 0],\
-                         [0, 0, 1]])
+        rot = np.matrix([
+            [math.cos(theta), -math.sin(theta), 0],
+            [math.sin(theta), math.cos(theta), 0],
+            [0, 0, 1]])
         vt0 = rot * v0
         vt1 = rot * v1
         vt2 = rot * v2
 
         # Projection for the view
-        proj = np.matrix([[1, 0, 0],\
-                          [0, math.sin(alpha), math.cos(alpha)],\
-                          [0, 0, 0]])
+        proj = np.matrix([
+            [1, 0, 0],
+            [0, math.sin(alpha), math.cos(alpha)],
+            [0, 0, 0]])
         vt0 = proj * vt0
         vt1 = proj * vt1
         vt2 = proj * vt2
@@ -427,14 +431,14 @@ def pointsFrom3D( address, slices, size, center, alpha ):
             for aj, j in enumerate( range(int(ymin),int(ymax)+1) ):
                 if fullDots[ai,aj] == 1:
                     if (i == int(xmin) or i == int(xmax) or \
-                       j == int(ymin) or j == int(ymax)):
-                           # We're on the boundary : activate the point
-                           xgrid.append(i)
-                           ygrid.append(j)
+                        j == int(ymin) or j == int(ymax)):
+                            # We're on the boundary : activate the point
+                            xgrid.append(i)
+                            ygrid.append(j)
                     elif (fullDots[ai-1,aj] == 1 and fullDots[ai,aj-1] == 1\
-                       and fullDots[ai+1,aj] == 1 and fullDots[ai,aj+1] == 1) :
-                           # This point is inside the shape. Don't activate it
-                           pass
+                        and fullDots[ai+1,aj] == 1 and fullDots[ai,aj+1] == 1) :
+                            # This point is inside the shape. Don't activate it
+                            pass
                     else:
                         xgrid.append(i)
                         ygrid.append(j)
@@ -603,8 +607,10 @@ def polygonFromPoints( points, minlen, maxlen ):
                 print('refining sprite '+str(ppi))
                 stop = 0
 
-            elif abs(max(ppx)-max(px)) > minlen or abs(min(ppx)-min(px)) > minlen \
-              or abs(max(ppy)-max(py)) > minlen or abs(min(ppy)-min(py)) > minlen:
+            elif (  abs(max(ppx)-max(px)) > minlen or
+                    abs(min(ppx)-min(px)) > minlen or
+                    abs(max(ppy)-max(py)) > minlen or
+                    abs(min(ppy)-min(py)) > minlen):
                 print('Polygon is not precise enough. Refining sprite '+str(ppi))
                 stop = 0
 
@@ -684,12 +690,13 @@ def polygonify_all_outfits(gfxPath, polyPath, overwrite):
 
     # First define the parameters for special files
     maxNmin = {
-               "ripperM" : (3,6)
-              }
+        "ripperM" : (3,6)
+    }
 
     for fileName in os.listdir(gfxPath):
-        if (fileName.endswith((".png", ".webp")) and not fileName.endswith(("-end.png", "-end.webp"))) \
-           and not fileName.startswith("beam_"):
+        if ((fileName.endswith((".png", ".webp")) and
+                not fileName.endswith(("-end.png", "-end.webp"))) and
+                not fileName.startswith("beam_")):
 
             polyAddress = (polyPath+fileName+".xml")
 

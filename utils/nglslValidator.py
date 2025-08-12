@@ -93,15 +93,15 @@ in vec2 VaryingPosition;
 out vec4 colour_out;
 
 vec2 love_getPixelCoord() {
-   vec2 uv = love_ScreenSize.xy * (0.5*VaryingPosition+0.5);
-   uv.y = uv.y * love_ScreenSize.z + love_ScreenSize.w;
-   return uv;
+    vec2 uv = love_ScreenSize.xy * (0.5*VaryingPosition+0.5);
+    uv.y = uv.y * love_ScreenSize.z + love_ScreenSize.w;
+    return uv;
 }
 
 vec4 effect( vec4 vcolour, Image tex, vec2 texcoord, vec2 pixcoord );
 
 void main(void) {
-   love_PixelColour = effect( VaryingColour, MainTex, VaryingTexCoord.st, love_PixelCoord );
+    love_PixelColour = effect( VaryingColour, MainTex, VaryingTexCoord.st, love_PixelCoord );
 }
 """
         else:

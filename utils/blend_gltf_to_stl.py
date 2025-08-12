@@ -29,7 +29,7 @@ selected = False
 scene = bpy.data.scenes[0]
 for s in bpy.data.scenes:
    if s.name=="base":
-       scene = s
+      scene = s
 for i in scene.objects:
    i.select_set(True)
    selected = True

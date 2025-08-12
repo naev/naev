@@ -52,17 +52,17 @@ for k,v in imgdict.items():
 with open( "outfit_gfx.html", "w" ) as out:
     out.write( """
 <html>
-<head>
- <title>Naev Outfit Graphic Used Status</title>
-</head>
-<body>
+ <head>
+  <title>Naev Outfit Graphic Used Status</title>
+ </head>
+ <body>
     """ )
     for k in sorted( imgdict, key=lambda x: imgdict[x], reverse=True ):
         path = prefix+"/dat/gfx/outfit/store/"+k
         if not os.path.isfile( path ):
-           path = prefix+"/artwork/gfx/outfit/store/"+k
+            path = prefix+"/artwork/gfx/outfit/store/"+k
         if not os.path.isfile( path ):
-           path = prefix+"/artwork/"+k
+            path = prefix+"/artwork/"+k
         v = imgdict[k]
         if v[0] != 1: # for simplicity hide stuff that appears once
             out.write(f"""
@@ -73,7 +73,7 @@ with open( "outfit_gfx.html", "w" ) as out:
   </div>
 """)
     out.write( """
-</body>
+ </body>
 </html>
     """ )
 
