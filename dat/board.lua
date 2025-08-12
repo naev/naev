@@ -232,7 +232,7 @@ local function compute_lootables ( plt )
             -- TODO better criteria
             local id = rnd.rnd(1,#ocand)
             local o = ocand[id]
-            local price = o:price() * (10+ps.crew) / (10+pps.crew) / loot_mod
+            local price = o:price() * (10+ps.crew) / (10+pps.crew) / loot_mod * 0.85
             local lo = outfit_loot( o, price )
             table.insert( lootables, lo )
             table.remove( ocand, id ) -- Remove from candidates
@@ -444,7 +444,7 @@ local function board_capture ()
    local pps = pp:stats()
    -- TODO should this be affected by loot_mod and how?
    --local loot_mod = pp:shipstat("loot_mod", true)
-   local bonus = (10+ps.crew) / (10+pps.crew) / loot_mod
+   local bonus = (10+ps.crew) / (10+pps.crew) / loot_mod * 0.85
    local cost = board_plt:worth()
    local costnaked = cost
    local outfitsnaked = board_plt:outfits(nil,true) -- Get non-locked
