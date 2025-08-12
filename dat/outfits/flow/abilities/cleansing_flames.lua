@@ -39,7 +39,7 @@ function descextra( p, _o )
       if i==size then
          pfx = "#b"..pfx.."#n"
       end
-      s = s.."\n"..fmt.f(_("#n{prefix}:#0 {cost} flow, {cooldown} s cooldown, {range} range, {damage} MW damage per second"),
+      s = s.."\n"..fmt.f(_("#n{prefix}:#0 {cost} flow, {cooldown} s cooldown, {range} range, {damage} GW damage per second"),
          {prefix=pfx, cost=cost, range=range, cooldown=cooldown, damage=damage}).."#0"
    end
    return s
