@@ -268,10 +268,9 @@ impl ShadowShader {
     pub fn new(ctx: &ContextWrapper) -> Result<Self> {
         let lctx = ctx.lock();
         let gl = &lctx.gl;
-        let shader = ShaderBuilder::new(Some("PBR Shader"))
+        let shader = ShaderBuilder::new(Some("Shadow Shader"))
             .uniform_buffer("Shadow", Self::U_SHADOW)
-            .vert_file("shadow_rust.vert")
-            .frag_file("shadow.frag")
+            .vert_frag_file("rust_shadow.glsl")
             .build(gl)?;
 
         let buffer = BufferBuilder::new(Some("Shadow Buffer"))

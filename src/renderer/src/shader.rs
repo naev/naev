@@ -247,8 +247,8 @@ impl ShaderBuilder {
             vertdata.insert_str(0, &self.prepend);
             fragdata.insert_str(0, &self.prepend);
         }
-        vertdata.insert_str(0, "#define __VERT__ 1\n");
-        fragdata.insert_str(0, "#define __FRAG__ 1\n");
+        vertdata.insert_str(0, "#define VERT 1\n");
+        fragdata.insert_str(0, "#define FRAG 1\n");
         vertdata.insert_str(0, &prepend);
         fragdata.insert_str(0, &prepend);
 

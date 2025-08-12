@@ -1,3 +1,4 @@
+#if defined(VERT)
 #if GLSL_VERSION >= 420
 layout(std140, binding=0) uniform Shadow {
 #else
@@ -12,3 +13,9 @@ void main (void)
 {
    gl_Position = shadow.view * vec4( vertex, 1.0 );
 }
+#elif defined(FRAG)
+void main (void)
+{
+   // Does nothing but will write to depth buffer
+}
+#endif
