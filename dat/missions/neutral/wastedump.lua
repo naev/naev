@@ -85,9 +85,13 @@ function create ()
 end
 
 function accept ()
+   local q = player.fleetCargoMissionFree()
+   if q <= 0 then
+      vntk.msg(_("Not Enough Cargo Space"), _([[You need to actually have cargo space available to be able to accept waste containers.]]))
+   end
+
    misn.accept()
 
-   local q = player.fleetCargoMissionFree()
    mem.credits = mem.credits_factor * q + mem.credits_mod
 
    lmisn.sfxMoney()
