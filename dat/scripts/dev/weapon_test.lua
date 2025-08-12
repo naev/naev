@@ -1,7 +1,8 @@
 --[[
    Simply spawns some targets and messes up with the camera to test weapons.
 --]]
-return function ()
+return function ( ship )
+   if ship == nil then ship = "Mule" end
    player.teleport("Delta Pavonis")
    player.pilot():setPos( vec2.new( 0, 8000 ) )
    pilot.clear()
@@ -23,7 +24,7 @@ return function ()
    }
    local plts = {}
    for k,p in ipairs(pos) do
-      local plt = pilot.add( "Mule", "Pirate", player.pos()+start+p )
+      local plt = pilot.add( ship, "Pirate", player.pos()+start+p )
       plt:control()
       plt:setNoDeath(true)
       plt:setHostile(true)
