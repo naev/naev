@@ -88,15 +88,29 @@ class _xml_list( list ):
 
    __iadd__ = extend
 
-   """
-   Unmanaged methods that should call self._change() afterwards:
-      clear
-      pop
-      remove
-      reverse
-      sort
-      __delitem__
-   """
+   def clear( self ):
+      self._change()
+      list.clear(self)
+
+   def pop( self, index= -1 ):
+      self._change()
+      return list.pop(self, index)
+
+   def remove( self, val ):
+      self._change()
+      list.remove(self, val)
+
+   def reverse( self ):
+      self._change()
+      list.reverse(self)
+
+   def sort( self, **args ):
+      self._change()
+      list.sort(self, **args)
+
+   def __delitem__( self, item ):
+      self._change()
+      list.__delitem__(self, item)
 
 class xml_node( dict ):
    def __init__ ( self, mapping, parent= None, key= None ):
@@ -168,17 +182,32 @@ class xml_node( dict ):
       self._change()
 
    # Do these make any sense in this context ?
-   pop = None
    popitem = None
+   pop = None
 
-   """
-   Unmanaged methods that should call self._change() afterwards:
-      __reversed__
-      setdefault
-   Unmanaged methods that maybe should do more than that:
-      update
-      __ior__
-   """
+   # update does not rely on setitem, contrary to the doc
+   # This is the implementation corresponding to the doc.
+   def update( self, *E, **F ):
+      if E:
+         E,*_ = E
+         if hasattr(E, 'keys'):
+            for k in E.keys():
+               self[k] = E[k]
+         else:
+            for k, v in E:
+               self[k] = v
+      for k in F:
+         self[k] = F[k]
+
+   __ior__ = update
+
+   def keys():
+      return self.attr.keys() + list.keys(self)
+
+   def setdefault( self, key, default= None ):
+      self._change()
+      return dict.setdefault(self, key, default)
+
 
 def _xml_ify( elt, par, k ):
    return xml_node(elt, par, k) if isinstance(elt, dict) else elt
