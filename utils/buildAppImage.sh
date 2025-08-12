@@ -162,7 +162,7 @@ build_appimage() {
     UPDATE_INFORMATION="gh-releases-zsync|naev|naev|$TAG|naev-*.AppImage.zsync"
 
     pushd "$WORKPATH/dist"
-    "$appimagetool" --comp zstd -v -u "$UPDATE_INFORMATION" "$APPDIRPATH" "$OUTPUT"
+    "$appimagetool" --comp zstd --mksquashfs-opt -Xcompression-level --mksquashfs-opt 20 -v -u "$UPDATE_INFORMATION" "$APPDIRPATH" "$OUTPUT"
     popd
     echo "Completed."
 }
