@@ -29,57 +29,57 @@ msgstr ""
 """
 
 def needs_translation( line ):
-    if not line:
-        return False
-    ls = line.strip()
-    if ls[:2]=="<%" and ls[-2:]=="%>":
-        return False
-    return True
+   if not line:
+       return False
+   ls = line.strip()
+   if ls[:2]=="<%" and ls[-2:]=="%>":
+       return False
+   return True
 
 from tempfile import NamedTemporaryFile
 with open(sys.argv[1],"w") as fout:
-    def print_line( fn, i, line ):
-        quoted_escaped_line = json.dumps(line, ensure_ascii=False)
-        fout.write('#: {}:{}\nmsgid {}\nmsgstr ""\n\n'.format(fn, i+1, quoted_escaped_line))
+   def print_line( fn, i, line ):
+       quoted_escaped_line = json.dumps(line, ensure_ascii=False)
+       fout.write('#: {}:{}\nmsgid {}\nmsgstr ""\n\n'.format(fn, i+1, quoted_escaped_line))
 
-    # Want reproducible stuff
-    filenames = sys.argv[2:].copy()
-    filenames.sort()
+   # Want reproducible stuff
+   filenames = sys.argv[2:].copy()
+   filenames.sort()
 
-    fout.write( HEADER )
-    for fn in filenames:
-        with open( fn, 'r' ) as f:
-            fn = re.sub('.*/dat', 'dat', fn)
-            d = f.read()
-            # Remove meta-data header, TODO parse
-            m = d.split('---\n')
-            n = 0
-            if len(m) > 2:
-                y = yaml.safe_load( m[1] )
-                n = 2 + len(m[1].splitlines())
-                if 'title' in y:
-                    print_line( fn, 1, y['title'] )
-                d = ''.join(m[2:])
-            # Preprocess to get rid of Lua blocks
-            luas = re.findall( "<%[^=].*?%>", d, flags=re.S )
-            tmp = NamedTemporaryFile(mode='wt', delete=False)
-            tmpnam = tmp.name
-            for l in luas:
-               tmp.write(l[2:-2]+"\n")
-            tmp.close()
+   fout.write( HEADER )
+   for fn in filenames:
+      with open( fn, 'r' ) as f:
+         fn = re.sub('.*/dat', 'dat', fn)
+         d = f.read()
+         # Remove meta-data header, TODO parse
+         m = d.split('---\n')
+         n = 0
+         if len(m) > 2:
+            y = yaml.safe_load( m[1] )
+            n = 2 + len(m[1].splitlines())
+            if 'title' in y:
+               print_line( fn, 1, y['title'] )
+            d = ''.join(m[2:])
+         # Preprocess to get rid of Lua blocks
+         luas = re.findall( "<%[^=].*?%>", d, flags=re.S )
+         tmp = NamedTemporaryFile(mode='wt', delete=False)
+         tmpnam = tmp.name
+         for l in luas:
+            tmp.write(l[2:-2]+"\n")
+         tmp.close()
 
-            args = [ "xgettext", tmpnam, "-o", "-", "-L", "Lua", "--omit-header" ]
-            ret = subprocess.run( args, capture_output=True, text=True )
-            os.remove(tmpnam)
-            res = [
-               lin.replace(tmp.name+':', 'stdin:') if lin[:2] =='#:' else lin
-               for lin in ret.stdout.split('\n')
-            ]
-            fout.write( '\n'.join(res) + "\n" )
-            # Replace Lua blocks with <%lua%>
-            d = re.sub( "<%[^=].*?%>", "<%lua%>", d, flags=re.S )
-            # Go over lines
-            l = d.splitlines()
-            for i, line in enumerate(l):
-                if needs_translation( line ):
-                    print_line( fn, n+i, line )
+         args = [ "xgettext", tmpnam, "-o", "-", "-L", "Lua", "--omit-header" ]
+         ret = subprocess.run( args, capture_output=True, text=True )
+         os.remove(tmpnam)
+         res = [
+            lin.replace(tmp.name+':', 'stdin:') if lin[:2] =='#:' else lin
+            for lin in ret.stdout.split('\n')
+         ]
+         fout.write( '\n'.join(res) + "\n" )
+         # Replace Lua blocks with <%lua%>
+         d = re.sub( "<%[^=].*?%>", "<%lua%>", d, flags=re.S )
+         # Go over lines
+         l = d.splitlines()
+         for i, line in enumerate(l):
+            if needs_translation( line ):
+                print_line( fn, n+i, line )

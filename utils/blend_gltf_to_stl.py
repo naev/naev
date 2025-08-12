@@ -15,27 +15,27 @@ filename = os.path.basename( bpy.data.filepath )
 
 # Delete all
 for obj in bpy.data.objects:
-    obj.select_set(True)
+   obj.select_set(True)
 bpy.ops.object.delete()
 
 # Import GLTF
 bpy.ops.import_scene.gltf( 'EXEC_DEFAULT', filepath=gltfpath )
 # New model starts selected, so have to deselect
 for obj in bpy.data.objects:
-    obj.select_set(False)
+   obj.select_set(False)
 # Select only body, ignore engines and other things
 # TODO support for collision shapes
 selected = False
 scene = bpy.data.scenes[0]
 for s in bpy.data.scenes:
-    if s.name=="base":
-        scene = s
+   if s.name=="base":
+       scene = s
 for i in scene.objects:
-    i.select_set(True)
-    selected = True
+   i.select_set(True)
+   selected = True
 if not selected:
-    print(f"{gltfpath}: Failed to find any objects to select!")
-    sys.exit(-1)
+   print(f"{gltfpath}: Failed to find any objects to select!")
+   sys.exit(-1)
 
 # Export to STL
 # blender 4.0 or earlier

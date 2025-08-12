@@ -28,17 +28,17 @@ program = ObjProgram()
 program.use()
 
 for path in glob.glob(f'{ROOT}/*/*/*.obj'):
-    glClearColor(0., 0., 0., 0.)
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+   glClearColor(0., 0., 0., 0.)
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
-    try:
-        print(f"Rendering '{path}'...")
-        ship = parse_obj(path)
-    except Exception as e:
-        print(f"Error parsing '{path}': {e!r}")
-        continue
+   try:
+      print(f"Rendering '{path}'...")
+      ship = parse_obj(path)
+   except Exception as e:
+      print(f"Error parsing '{path}': {e!r}")
+      continue
 
-    for obj in ship.values():
-        obj = RenderObject(program, obj)
-        program.draw(obj, RES, RES, rot=0.)
-    fb.save(OUT / (os.path.basename(path)+'.png'))
+   for obj in ship.values():
+      obj = RenderObject(program, obj)
+      program.draw(obj, RES, RES, rot=0.)
+   fb.save(OUT / (os.path.basename(path)+'.png'))
