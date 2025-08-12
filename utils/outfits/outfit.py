@@ -1,14 +1,17 @@
-# python
+#!/usr/bin/env python3
 
-import xml.etree.ElementTree as ET
+
 import sys
+#from sys import stderr
 from os import path
 script_dir = path.join(path.dirname(__file__), '..')
 sys.path.append(path.realpath(script_dir))
 from xml_name import xml_name as nam2fil
-
+from naev_xml import naev_xml
+import re
 
 MOBILITY_PARAMS = {'speed', 'turn', 'accel', 'thrust'}
+KEEP_IN_XML = {'priority', 'rarity', 'price'}
 LOWER_BETTER = {'mass', 'price', 'delay', 'ew_range', 'falloff', 'trackmin', 'trackmax', 'dispersion', 'speed_dispersion', 'energy_regen_malus', 'ew_stealth', 'ew_stealth_timer', 'ew_signature', 'launch_lockon', 'launch_calibration', 'fwd_energy', 'tur_energy', 'ew_track', 'cooldown_time', 'cargo_inertia', 'land_delay', 'jump_delay', 'delay', 'reload_time', 'iflockon', 'jump_warmup', 'rumble', 'ammo_mass', 'time_mod', 'ew_hide', 'launch_reload'}
 
 def shorten( s ):
@@ -25,119 +28,106 @@ def shorten( s ):
    else:
       return L[0]
 
-def text2val( s ):
-   try:
-      inp = s.split('/', 1)
-      inp = [float(x) for x in inp]
-      return (inp[0], inp[-1])
-   except:
-      return None
-
-def roundit( f ):
-   f = round(f*2.0) / 2.0
-   return int(f) if f == round(f) else f
-
-def fmtval( v ):
-   return str(roundit(v))
-
-def andamp( s ):
-   return '' if s is None else s.replace('&', '&amp;')
-
-def fmt_kv( kv ):
-   (key, value) = kv
-   return key + '="' + str(andamp(value)) + '"'
-
 def prisec( tag, r1, r2, eml1, eml2 ):
-   a = 0 if r1 is None else r1[0]
-
-   if r2 is not None:
-      if tag in MOBILITY_PARAMS:
-         a = (a*eml1+r2[1]*eml2)/(eml1+eml2)
-      else:
-         a += r2[1]
-
-   return roundit(a)
-
-def stackvals( tag, text1, text2, eml1, eml2 ):
-   return str(roundit(prisec(tag, text2val(text1), text2val(text2), eml1, eml2)))
-
-def r_prisec( tag, v1, v2, eml1, eml2 ):
    if tag in MOBILITY_PARAMS:
-      return v1, round((v2*(eml1+eml2) - eml1*v1)/float(eml2))
+      return round(2.0 * float(r1*eml1 + r2*eml2) / float(eml1 + eml2)) / 2
    else:
-      return v1, v2-v1
+      return r1 + r2
 
-def unstackvals( tag, text1, text2, eml1, eml2 ):
-   o1, o2 = r_prisec(tag, float(text1), 0 if text2 == '' else float(text2), eml1, eml2)
-   if o2 == o1:
-      return fmtval(o1)
-   else:
-      return fmtval(o1) + '/' + fmtval(o2)
+def parse_lua_multicore( si ):
+   name = ' ("|\')([^"\']*)\\1'
+   sep = ' ,'
+   num = ' -? [0-9]+(\\.[0-9]+)?'
 
-def readval( what ):
-   if what is None:
-      what = ''
-   if len(prisec := what.split('/')) <= 2:
-      try:
-         what = tuple(map(float, prisec))
-         if len(what) == 1:
-            what = what[0]
-      except:
-            pass
-   return what
+   expr = ' require \\(? ("|\')outfits.lib.multicore(\\1) \\)? \\. init \\( \\{ '
+   block = ' \\{ ((' + name + sep + num + ' (' + sep + num + ')?) (' + sep + ')?'+ ' ) \\}'
+   expr = expr + ' ((' + block + ' ) ( ,' + block + ' )* ,? ) \\} '
+   expr = expr.replace(' ', '\\s*')
 
-class _outfit():
-   def __init__( self, fil, content = False ):
-      self.pri = None
+   block = ' \\{ ("|\')(?P<name>[^"\']*)\\1'+sep+' (?P<pri>'+num+') ('+sep+' (?P<sec>'+num+'))? (' + sep + ' )? \\}'
+   block = block.replace(' ', '\\s*')
 
-      if content:
-         self.r = ET.fromstring(fil)
-      elif type(fil) == type(''):
-         with sys.stdin if fil == '-' else open(fil, 'rt') as fp:
-            self.r = ET.parse(fp).getroot()
+   s = re.sub('\n', ' ', si)
+   match = re.search(expr, s)
+   if match is None:
+      return [], si
+
+   L = [t.groupdict() for t in re.finditer(block, match.group(3))]
+   for d in L:
+      if d['sec'] is None:
+         d['sec'] = d['pri']
+   L = [(d['name'], d['pri'], d['sec']) for d in L]
+   return L, si[:match.span()[0]], si[match.span()[1]:]
+
+def un_multicore( o ):
+   try:
+      e = o.find('lua_inline', ref = True)
+      L, bef, aft = parse_lua_multicore( e['lua_inline'] )
+   except:
+      return False
+
+   paren, args, crt = 1, [], ''
+   for i, c in enumerate(aft):
+      if c == ',' and paren == 1:
+         args.append(crt.strip())
+         crt = ''
       else:
-         self.r = ET.parse(fil).getroot()
-      self.short = False
-      self.fil = fil
+         if c == '(':
+            paren += 1
+         elif c == ')':
+            paren -= 1
+            if paren == 0:
+               break
+         crt += c
+   else:
+      return False
 
-   def name( self ):
-      return self.r.attrib['name']
+   if crt:
+      args.append(crt.strip())
+   aft = aft[i+1:].strip()
+   bef = bef.strip()
 
-   def set_name( self, name ):
-      self.r.attrib['name'] = name
+   e['lua_inline'] = bef
+   if args:
+      e['multicore_args'] = args
+   if aft:
+      e['lua_inline_post'] = aft
 
-   def find( self, tag, el = False ):
-      for i in (e if el else e.text for e in self if e.tag == tag):
-         return i
+   if not (dst := o.find('specific')):
+      dst = o['specific'] = {}
+   for (k, v1, v2) in L:
+      if v1 == v2:
+         dst[k] = v1
+      else:
+         dst[k] = {'pri': v1, 'sec': v2}
+   return True
 
-   def shortname( self ):
-      if not self.short:
-         if (res := self.find('shortname')) is None:
-            res = self.name()
-         if res.split(' ')[-1] == 'Engine':
-            res = ' '.join(res.split(' ')[:-1])
-         self.short = res
-      return self.short
-
-   def size( self, doubled = False ):
-      res = self.find('size')
-      for i, k in enumerate(['small', 'medium', 'large']):
-         if res == k:
-            return 2*i + (2 if doubled else 1)
+class outfit(naev_xml):
+   # None means auto
+   def __init__( self, filename, is_multi = None, read_only = False ):
+      self.pri = None
+      naev_xml.__init__(self, filename, read_only = read_only)
+      if 'outfit' not in self:
+         raise Exception('Invalid outfit filename "' + repr(filename) + '"')
+      self.short = None
+      self.is_multi = False
+      if is_multi or is_multi is None:
+         if un_multicore(self):
+            self.is_multi = True
+            self._uptodate = True
+         elif is_multi:
+            raise ValueError('"' + filename +'" is not a valid multicore.')
 
    def can_pri_sec( self ):
       if self.pri is None:
-         k = self.find('slot', True).attrib
-         self.pri = 'prop' in k and k['prop'].find('secondary') == -1
-         self.sec = 'prop_extra' in k and k['prop_extra'].find('secondary') != -1
-         self.sec = self.sec or 'prop' in k and k['prop'].find('secondary') != -1
+         k = self.find('slot')
+         self.pri = '@prop' in k and k['@prop'].find('secondary') == -1
+         self.sec = '@prop_extra' in k and k['@prop_extra'].find('secondary') != -1
+         self.sec |= '@prop' in k and k['@prop'].find('secondary') != -1
       return self.pri, self.sec
 
    can_pri = lambda self: self.can_pri_sec()[0]
    can_sec = lambda self: self.can_pri_sec()[1]
-
-   def eml( self ):
-      return readval(self.find('engine_limit'))
 
    def can_alone( self ):
       return self.name().find('Twin') == -1
@@ -148,126 +138,123 @@ class _outfit():
          (self.name().split(' ')[0] != 'Krain' and other.name().split(' ')[0] != 'Krain')
       )
 
+   def size_name( self, doubled = False ):
+      return self.find('size')
+
+   def size( self, doubled = False ):
+      res = self.find('size')
+      for i, k in enumerate(['small', 'medium', 'large']):
+         if res == k:
+            return 2*i + (2 if doubled else 1)
+
    def stack( self, other = None ):
+      utd = self._uptodate
       if other is None:
          self.short = self.shortname() + ' x1'
       elif self.shortname() == other.shortname():
          self.short = self.shortname() + ' x2'
       else:
-         self.short = shorten(self.shortname())+' + '+shorten(other.shortname())
-      res = self.eml()
-      if type(res) == type(()):
-         (eml1, _) = res
-      else:
-         eml1 = res
+         self.short = shorten(self.shortname()) + ' + ' + shorten(other.shortname())
 
-      if other is None:
-         eml2 = 0
+      if other:
+         sec = {k: v for d, k, v in other.equipped(sec = True)}
+         el2 = '$engine_limit' in sec and sec['$engine_limit'] or 0
+      else:
          sec = {}
-      else:
-         eml2 = other.eml()
-         if type(eml2) == type(()):
-            (_, eml2) = eml2
-         sec = other.to_dict()
+         el2 = 0
 
-      d = self.to_dict()
-      e = self.find('specific', True)
-      if e is not None:
-         for missing in sec:
-            if missing not in d:
-               el = ET.Element(missing)
-               el.text = ''
-               e.append(el)
+      el1 = None
+      for d, k, v in self.equipped(sec = False):
+         if k == '$engine_limit':
+            el1 = v
+            break
 
-      for e in self:
-         res = text2val(e.text)
-         try:
-            res2 = sec[e.tag]
-            if type(res2) == type(''):
-               res2 = None
-            else:
-               if type(res2) == type([]):
-                  res2 = res2[0]
-               if type(res2) != type(()):
-                  res2 = (res2, res2)
-         except:
-            res2 = None
+      done = set()
+      for d, k, v in self.equipped(sec = False):
+         e = sec[k] if k in sec else 0
+         d[k] = prisec(k.lstrip('$'), v, e, el1, el2)
+         done.add(k)
 
-         if res is not None or res2 is not None:
-            e.text = str(prisec(e.tag, res, res2, eml1, eml2))
+      e = self.find('specific')
+      for d, k, v in other.equipped(sec = True) if other else []:
+         if k not in done:
+            e[k] = prisec(k.lstrip('$'), 0, v, el1, el2)
+      self._uptodate = utd
       return self
 
-   def autostack( self, doubled = False ):
-      self.stack(self if doubled else None)
-
-   def __iter__( self ):
-      def _subs( r ):
-         for e in r:
-            yield e
-            for s in _subs(e):
-               yield s
-
-      return iter(_subs(self.r))
-
-   def write( self, dst = sys.stdout ):
-      def output_r( e, fp, ind = 0 ):
-         li = [e.tag] + [fmt_kv(x) for x in e.attrib.items()]
-
-         try:
-            iter(e).next()
-            flag = True
-         except:
-            flag = False
-
-         if e.text is None and not flag:
-            fp.write(' '*ind+'<'+' '.join(li)+' />\n')
-         else:
-            fp.write(' '*ind+'<'+' '.join(li)+'>'+andamp(e.text).rstrip())
-            fst = True
-            for s in e:
-               if fst:
-                  fp.write('\n')
-                  fst = False
-               output_r(s, fp, ind+1)
-            if not fst:
-               fp.write(' '*ind)
-            fp.write('</'+e.tag+'>\n')
-
-      closeit = False
-      if dst == '-':
-         dest = sys.stdout
-      elif type(dst) == type(''):
-         dest = open(dst, 'w')
-         closeit = True
-      else:
-         dest = dst
-
-      output_r(self.r, dest)
-      if closeit:
-         dest.close()
+   def equipped( self, sec = False):
+      pri_sec = ('sec', 'pri') if sec else ('pri', 'sec')
+      for d, k in self.nodes():
+         D, K = d.parent(), d.tag()
+         if k[-3:] == pri_sec[1]:
+            if pri_sec[0] not in d:
+               yield D, '$' + K, 0
+         elif k[-3:] == pri_sec[0]:
+            yield D, '$' + K, d[k]
+         elif k[:1]=='$' and k[1:2]!='@':
+            yield d, k, d[k]
 
    def to_dict( self ):
-      d = dict()
-      for k in self:
-         if not k.tag in d:
-            d[k.tag] = []
-         what = readval(k.text)
-         d[k.tag].append(what)
-      for k in d:
-         if len(d[k]) == 1:
-            d[k] = d[k][0]
-      return d
+      pri = ((k[1:], v) for (_d, k, v) in self.equipped(sec = False))
+      sec = ((k[1:], v) for (_d, k, v) in self.equipped(sec = True))
+      return {k: ((v1, v2) if v1!=v2 else v1) for ((k, v1), (_, v2)) in zip(pri, sec)}
 
-def outfit( fil, content = False ):
-   if fil is None:
-      return None
+   def name( self ):
+      return self['outfit']['@name']
 
-   if content or type(fil) != type('') or fil.endswith('.xml') or fil.endswith('.mvx') or fil == '-':
-      o = _outfit(fil, content)
-      if o.r.tag == 'outfit':
-         return o
+   def set_name( self, name ):
+      self['outfit']['@name'] = name
 
-   if content:
-      raise Exception('Invalid outfit <user-data content>')
-   else:
-      raise Exception('Invalid outfit "' + str(fil) + '"')
+   def shortname( self ):
+      if not self.short:
+         if (res := self.find('shortname')) is None:
+            res = self.name()
+         if res.split(' ')[-1] == 'Engine':
+            res = ' '.join(res.split(' ')[:-1])
+         self.short = res
+      return self.short
+
+   def prisec_only(self, sec = False):
+      for d, k, v in list(self.equipped(sec)):
+         d[k] = v
+
+   def save( self ):
+      if self.is_multi:
+         # make a deep copy
+         out = naev_xml()
+         out.save_as(self._filename)
+         oout = out['outfit'] = self['outfit']
+
+         ind = 3*' '
+         lua_inline_mcarg = '{\n'
+         for k, v in self.to_dict().items():
+            if k in KEEP_IN_XML:
+               continue
+            if not isinstance(v, tuple):
+               v = (v,)
+            lua_inline_mcarg += ind + '{' + ', '.join(["'"+k+"'"] + [str(u) for u in v]) + '},\n'
+            del oout['specific'][k]
+         lua_inline_mcarg += '}'
+         lua_inline_mcargs = [lua_inline_mcarg]
+         if 'multicore_args' in oout['specific']:
+            L = oout['specific']['multicore_args']
+            del oout['specific']['multicore_args']
+            lua_inline_mcargs += L if isinstance(L, list) else [L]
+         lua_inline = "\nrequire('outfits.lib.multicore').init(" + ', '.join(lua_inline_mcargs)
+         lua_inline += ')'
+         oout['specific']['lua_inline'] = '\n' + (oout['specific']['lua_inline'] + '\n' + lua_inline).strip()
+         if 'lua_inline_post' in oout['specific']:
+            oout['specific']['lua_inline'] += '\n' + oout['specific']['lua_inline_post'].strip()
+            del oout['specific']['lua_inline_post']
+         oout['specific']['lua_inline'] = oout['specific']['lua_inline'].replace('\n','\n'+3*' ') + '\n  '
+      else:
+         out = self
+      naev_xml.save(out)
+      self._uptodate = True
+
+if __name__ == '__main__':
+   import sys
+   for i in sys.argv[1:]:
+      o = outfit(i)
+      o.touch()
+      o.save()

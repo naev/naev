@@ -26,6 +26,7 @@ local function setup_pilot( p )
    plt:rename( mem.name )
    plt:setNoClear()
    plt:setFriendly(true)
+   plt:setInvincPlayer(true)
    plt:setFaction( faction.player() )
    plt:outfitRm("all")
    plt:outfitRm("intrinsic")
@@ -50,7 +51,13 @@ function create ()
 
    -- Free the followers!
    for k,f in ipairs(plt:followers()) do
-      f:setLeader()
+      if f:flags("carried") then
+         -- Just disable and make them fade out. Not sure if anything else can be done here.
+         f:setDisable(true)
+         f:effectAdd("Fade-Out")
+      else
+         f:setLeader()
+      end
    end
 
    -- Original data
@@ -144,6 +151,7 @@ function plt_hail ()
       plt:setFaction( mem.o.faction )
       plt:rename( mem.o.name )
       plt:setFriendly(false)
+      plt:setInvincPlayer(false)
       evt.finish(false)
    end
 end

@@ -77,9 +77,9 @@ On paper, it looked good.
 
 Over the course of many years, many new planets were settled, converted or exploited.
 Interstellar trade became immensely lucrative, new fortunes were made.
-But humanity, even in times of prosperity, tends to strife and conflict.
+But humanity, even in times of prosperity, tends to find strife and conflict.
 Not only did piracy manifest itself in the vast stretches of space, there appeared a growing discontent between the various colonies.
-The Federation proved increasingly less capable of dealing with the security concerns and the discontent between the various worlds.
+The Federation proved increasingly less capable of dealing with the security concerns and the grievances between worlds.
 Gradually, the colonies began to lose faith in Federal leadership, and began to band together in local alliances that guarded their own interests.
 These interests began to conflict with each other.
 Tensions grew higher and higher, until eventually the situation degenerated into armed conflict.
@@ -99,7 +99,7 @@ These factions were similar in strength, and for a time there was a balance of p
 Many believed that eventually hostilities would cease, and new political and trade relations would establish themselves.
 But this didn't happen.
 
-A general serving in the Earth Federation called Duram Daedris devised a cunning strategy.
+An officer serving in the Earth Federation called Duram Daedris devised a cunning strategy.
 Through deceit and trickery he managed to entice both the Free Colonies and the Rimward Block to launch an all-out offensive on the same system, at the same time.
 The two fleets clashed, as was Daedris' plan, decimating each other.
 This gave the Earth Federation the opening it needed to take the initiative and gain the upper hand.
@@ -139,4 +139,4 @@ With Earth lost, along with most of the Imperial bureaucracy, the Imperial leade
 Such a show of weakness caused whatever loyalty the Empire had left from the Great Houses to evaporate, to the point that it's now a public secret that the Empire no longer holds any sway over anybody else.
 
 This was several cycles ago.
-The galaxy is now an unstable place, full of danger and opportunity. Nobody knows what the future holds, but perhaps one person can make all the difference.
+The galaxy is now an unstable place, full of danger and opportunity. Nobody knows what the future holds, but perhaps, like Daedris, one person can make all the difference.

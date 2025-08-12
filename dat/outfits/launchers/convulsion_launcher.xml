@@ -31,11 +31,12 @@
   <accel>700</accel>
   <turn>35</turn>
   <speed_max>850</speed_max>
-  <resist>50</resist>
+  <resist>45</resist>
   <damage>
    <type>ion</type>
-   <penetrate>12</penetrate>
-   <physical>150</physical>
+   <penetrate>21</penetrate>
+   <physical>125</physical>
+   <disable>12</disable>
   </damage>
   <ai>smart</ai>
  </specific>

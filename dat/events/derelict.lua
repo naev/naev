@@ -110,20 +110,25 @@ function create ()
       dship = dospecial.ship
    end
    if not dship then
-      local r = rnd.rnd()
-      if r < 0.2 then
-         dship = "Llama"
-      elseif r < 0.3 then
-         dship = "Hyena"
-      elseif r < 0.5 then
-         dship = "Koala"
-      elseif r < 0.7 then
-         dship = "Quicksilver"
-      elseif r < 0.9 then
-         dship = "Mule"
-      else
-         dship = "Gawain"
+      local ships = {
+         'Hyena', 'Shark', 'Gawain', 'Llama',
+         'Koala', 'Quicksilver',
+         'Mule', 'Rhino',
+      }
+      local prs = system.cur():presences()
+      if prs["Frontier"] or prs["FLF"] then
+         ships = tmerge( ships, { 'Tristan', 'Bedivere' })
       end
+      if prs["Sirius"] then
+         table.insert( ships, "Schroedinger" )
+      end
+      if prs["Dvaered"] or prs["Goddard"] then
+         table.insert( ships, 'Ancestor' )
+      end
+      if prs["Dvaered"] then
+         table.insert( ships, 'Vendetta' )
+      end
+      dship = ships[ rnd.rnd( 1, #ships ) ]
    end
 
    -- Create the derelict.
@@ -134,6 +139,7 @@ function create ()
    derelict:setHealth( 10+40*rnd.rnd(), 0 )
    derelict:setDisable()
    derelict:intrinsicSet( "ew_hide", 300 ) -- Much more visible
+   derelict:intrinsicSet( "ew_signature", 300 ) -- Derelicts are obvious on the map either way, and we want to board on double click
    hook.pilot(derelict, "board", "board")
    hook.pilot(derelict, "death", "destroyevent")
    hook.jumpout("destroyevent")
@@ -164,7 +170,7 @@ function board()
 
    -- Roll for events
    local neuprob, goodprob
-   if lmisn.islucky() then
+   if lmisn.is_lucky() then
       goodprob = 0.75
       neuprob = 0.95
    else
@@ -278,8 +284,11 @@ function goodevent()
 
    local goodevent_list = {
       function ()
-         derelict_msg( gtitle, _([[The derelict appears deserted, its passengers long gone. However, they seem to have left behind a small amount of credit chips in their hurry to leave! You decide to help yourself to them and leave the derelict.]]), fmt.f(_([[You found a derelict in {sys}, it was empty but for some scattered credit chips. Lucky you!]]), {sys=system.cur()}) )
-         player.pay( rnd.rnd(5e3,30e3) )
+         local reward = rnd.rnd(5e3,55e3)
+         derelict_msg( gtitle, fmt.f(_([[The derelict appears deserted, its passengers long gone. However, they seem to have left behind a small amount of credit chips in their hurry to leave! You decide to help yourself to the #g{reward}#0 and leave the derelict.]]), {reward=fmt.credits(reward)}),
+         fmt.f(_([[You found a derelict in {sys}, it was empty but for some scattered credit chips. Lucky you!]]), {sys=system.cur()}) )
+         player.pay( reward )
+         vn.na( fmt.reward( reward ) )
       end,
    }
 

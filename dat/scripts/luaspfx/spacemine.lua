@@ -9,10 +9,23 @@ local spacemine_shader, highlight_shader, spacemine_sfx
 
 local CHECK_INTERVAL = 0.1 -- How often to check activations in seconds
 local ACTIVATE_DELAY = 1.5 -- Time to blow up once activated in seconds
+local RANGE          = 300 -- Range of detection
+local RANGE_MIN      = 100 -- Minimum range of detection
+local RANGE_EXP      = 500 -- Range of the explosion
+local DAMAGE         = 1000 -- Default damage
+local PENETRATION    = 50 -- Default penetration
+local TRACKMIN       = 0 -- Default minimum tracking
+local TRACKMAX       = 5e3 -- Default maximum tracking
+local PRIME          = 5 -- Default time to prime
 
 local function trigger( s, d )
    d.triggered = d.timer + ACTIVATE_DELAY
    luasfx( s:pos(), s:vel(), spacemine_sfx )
+end
+
+local function get_range( ew, d )
+   local mod = (ew - d.trackmin) / (d.trackmax - d.trackmin)
+   return math.max( d.rangemin, d.range*mod )
 end
 
 local function update( s, dt )
@@ -34,7 +47,7 @@ local function update( s, dt )
    if d.triggered then
       -- Time to go boom
       if d.timer > d.triggered then
-         explosion( s:pos(), s:vel(), d.explosion, d.damage, {
+         explosion( sp, s:vel(), d.explosion, d.damage, {
             parent = d.pilot,
             penetration = d.penetration,
             dmgtype = "kinetic",
@@ -43,7 +56,7 @@ local function update( s, dt )
 
          -- Notify pilots in rangea
          -- TODO make detection affect this
-         pilot.msg( nil, pilot.getInrange(10e3), "explosion" )
+         pilot.msg( nil, pilot.getInrange( sp, 10e3 ), "explosion" )
       end
       return
    end
@@ -76,10 +89,9 @@ local function update( s, dt )
          trigger( s, d )
          return
       end
-      mod = (ew - d.trackmin) / (d.trackmax - d.trackmin)
       -- Have to see if it triggers now
-      local dst = p:pos():dist( sp )
-      if d.range < dst * mod then
+      local dst = p:pos():dist2( sp )
+      if dst < get_range(ew,d)^2 then
          trigger( s, d )
          return
       end
@@ -99,10 +111,10 @@ local function render( sp, x, y, z )
 
    -- Render for player
    local pp = player.pilot()
-   local ew = pp:signature()
-   if d.hostile or not d.fct or d.fct:areEnemies(pp:faction()) then
+   if pp:exists() and (d.hostile or not d.fct or d.fct:areEnemies(pp:faction())) then
+      local ew = pp:signature()
       if ew > d.trackmin then
-         local r = math.min( (ew - d.trackmin) / (d.trackmax - d.trackmin), 1 ) * d.range * z
+         local r = get_range( ew, d ) * z
          lg.setShader( highlight_shader )
          lg.setColour( {1, 0, 0, 0.1} )
          love_shaders.img:draw( x-r, y-r, 0, 2*r )
@@ -137,23 +149,23 @@ local function spacemine( pos, vel, fct, params )
 
    -- Other params
    local duration = params.duration or 90
-   local range = 300
 
    -- Sound is handled separately in outfit
-   local s  = spfx.new( duration, update, render, nil, nil, pos, vel, nil, range )
+   local s  = spfx.new( duration, update, render, nil, nil, pos, vel, nil, RANGE )
    local d  = s:data()
-   d.timer  = 0
-   d.check  = rnd.rnd() * CHECK_INTERVAL
-   d.range  = range
-   d.explosion = 500
-   d.fct    = fct
-   d.damage = params.damage or 1000
-   d.penetration = params.penetration or 50
-   d.trackmax  = params.trackmax or 10e3
-   d.trackmin = params.trackmin or 3e3
-   d.pilot  = params.pilot
-   d.primed = params.primed or 5
-   d.hostile = params.hostile
+   d.timer     = 0
+   d.check     = rnd.rnd() * CHECK_INTERVAL
+   d.range     = RANGE
+   d.rangemin  = RANGE_MIN
+   d.explosion = RANGE_EXP
+   d.fct       = fct
+   d.damage    = params.damage or DAMAGE
+   d.penetration = params.penetration or PENETRATION
+   d.trackmax  = params.trackmax or TRACKMAX
+   d.trackmin  = params.trackmin or TRACKMIN
+   d.pilot     = params.pilot
+   d.primed    = params.primed or PRIME
+   d.hostile   = params.hostile
    return s
 end
 

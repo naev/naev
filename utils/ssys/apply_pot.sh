@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 OPS=("-g" "-E1" "-E2" "-w" "-C")
 

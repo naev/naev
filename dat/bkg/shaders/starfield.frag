@@ -45,12 +45,12 @@ const mat3 Rz = mat3(
 );
 const mat3 ROT = A * Rx * Ry * Rz;
 const int ITERATIONS = 17;
-const int VOLSTEPS   = 13;
-const float SPARSITY = 0.698; /* 0.4 to 0.5 (sparse) */
-const float STEPSIZE = 0.19;
-const float FREQVAR  = 1.76; /* 0.5 to 2.0 */
+const int VOLSTEPS   = 7;
+const float SPARSITY = 0.698;
+const float STEPSIZE = 0.211;
+const float FREQVAR  = 1.772;
 const float BRIGHTNESS= 0.0011;
-const float DISTFADING= 0.6377;
+const float DISTFADING= 0.6257;
 
 vec4 effect( vec4 colour_in, Image tex, vec2 texture_coords, vec2 screen_coords )
 {

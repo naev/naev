@@ -49,16 +49,16 @@ local pay_text = {
 }
 
 local pay_s_lux_text = {
-   _("The passengers appreciate that you took them an a Luxury Yacht class ship after all. You are paid the original fare rather than the reduced fare."),
-   _("Your passengers were thrilled that they were able to ride in a Luxury Yacht after all. They insist on paying the originally offered fare as a show of appreciation."),
-   _("As your passengers disembark, one wealthy passenger personally thanks you for taking them on a Luxury Yacht after all and gives you a tip amounting to the difference between the original fare and what your passengers paid."),
-   _("When it comes time to collect your fare, the passengers collectively announce that they will be paying the original fare offered, since you took them on a Luxury Yacht after all."),
+   _("The passengers appreciate that you took them in a luxury vessel after all. You are paid the original fare rather than the reduced fare."),
+   _("Your passengers were thrilled that they were able to ride in a luxury vessel after all. They insist on paying the originally offered fare as a show of appreciation."),
+   _("As your passengers disembark, one wealthy passenger personally thanks you for taking them on a luxury vessel after all and gives you a tip amounting to the difference between the original fare and what your passengers paid."),
+   _("When it comes time to collect your fare, the passengers collectively announce that they will be paying the original fare offered, since you took them on a luxury vessel after all."),
 }
 
 local pay_s_nolux_text = {
-   _("Several passengers are furious that you did not take them on your Luxury Yacht class ship after all. They refuse to pay, leaving you with much less overall payment."),
-   _("While your passengers enjoyed the trip, they are not happy that you didn't take them on your Luxury Yacht class ship the entire way. They refuse to pay the full fare."),
-   _("Most of the passengers enjoyed your tour, but one particularly loud passenger complains that you tricked them into paying full price even though you did not take them on a Luxury Yacht. To calm this passenger down, you offer to reduce everyone's fare. Some passengers refuse the offer, but you still end up being paid much less than you otherwise would have been."),
+   _("Several passengers are furious that you did not take them on your luxury vessel class ship after all. They refuse to pay, leaving you with much less overall payment."),
+   _("While your passengers enjoyed the trip, they are not happy that you didn't take them on your luxury vessel class ship the entire way. They refuse to pay the full fare."),
+   _("Most of the passengers enjoyed your tour, but one particularly loud passenger complains that you tricked them into paying full price even though you did not take them on a luxury vessel. To calm this passenger down, you offer to reduce everyone's fare. Some passengers refuse the offer, but you still end up being paid much less than you otherwise would have been."),
 }
 
 --Sightseeing Messages
@@ -133,7 +133,7 @@ function create ()
    misn.setDesc( fmt.f(_([[Several passengers wish to go off-world and go on a sightseeing tour. Navigate to specified {amount} different attractions in the {sys} system. Once done with the visit, return the passengers to {retspob} ({retsys} system). Payment will be reduced if not in a preferred ship.
 
 #nAttractions:#0 {amount}
-#nPreferred Ship:#0 Luxury Yacht-class]]),
+#nPreferred Ship:#0 luxury vessel]]),
       {sys=mem.missys, amount=mem.attractions, retspob=mem.startingplanet, retsys=mem.startingsystem} ) )
    misn.setReward( mem.credits )
    mem.marker = misn.markerAdd( mem.missys, "computer" )
@@ -141,8 +141,8 @@ end
 
 
 function accept ()
-   if not player.pilot():ship():tags().luxury then
-      if vntk.yesno( _("Not Very Luxurious"), fmt.f( _("Since your ship is not a Luxury Yacht-class ship, you will only be paid {credits}. Accept the mission anyway?"), {credits=fmt.credits(mem.credits_nolux)} ) ) then
+   if not lmisn.is_luxury(player.pilot()) then
+      if vntk.yesno( _("Not Very Luxurious"), fmt.f( _("Since your ship is not a luxury vessel, you will only be paid {credits}. Accept the mission anyway?"), {credits=fmt.credits(mem.credits_nolux)} ) ) then
          mem.nolux_known = true
          misn.setReward( mem.credits_nolux )
       else
@@ -169,9 +169,7 @@ end
 
 function enter ()
    if system.cur() == mem.missys and not mem.job_done then
-      if not player.pilot():ship():tags().luxury then
-         mem.nolux = true
-      end
+      mem.nolux = not lmisn.is_luxury()
       set_marks()
       timer()
    end

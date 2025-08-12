@@ -1,0 +1,19 @@
+<outfit name="Targeting Conduit">
+ <general>
+  <typename>Conduit</typename>
+  <limit>conduit</limit>
+  <slot>utility</slot>
+  <size>small</size>
+  <mass>2</mass>
+  <price>430000</price>
+  <gfx_store>placeholder.webp</gfx_store>
+  <description>The targeting conduit redirects surplus shield energy into the targeting and tracking systems of a ship, allowing for considerably more precise weapon tracking and faster lock-ons while the shields are undamaged, though at the cost of a slight reduction in peak damage output as a result of overloading those systems.</description>
+ </general>
+ <specific type="modification">
+  <ew_detect>22</ew_detect>
+  <ew_track>22</ew_track>
+  <launch_lockon>-50</launch_lockon>
+  <weapon_firerate>-5</weapon_firerate>
+  <lua>outfits/utility/conduit/conduit.lua</lua>
+ </specific>
+</outfit>

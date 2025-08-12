@@ -10,7 +10,7 @@ use crate::array;
 use crate::array::ArrayCString;
 use crate::nlua::LuaEnv;
 use crate::nlua::{NLua, NLUA};
-use crate::{formatx, warn};
+use crate::{formatx, warn, warnx};
 use gettext::gettext;
 use log::warn_err;
 use naev_core::utils::{binary_search_by_key_ref, sort_by_key_ref};
@@ -712,7 +712,7 @@ impl FactionLoad {
         match binary_search_by_key_ref(factions, name, |fctload: &FactionLoad| &fctload.data.name) {
             Ok(id) => Some(id),
             Err(err) => {
-                warn!("Faction '{}' not found during loading!", name);
+                warn!("Faction '{name}' not found during loading!");
                 None
             }
         }
@@ -724,24 +724,21 @@ pub static FACTIONDATA: OnceLock<Vec<FactionData>> = OnceLock::new();
 
 pub fn load() -> Result<()> {
     let ctx = Context::get().as_safe_wrap();
-    let files = ndata::read_dir("factions/")?;
+    let files = ndata::read_dir_filter("factions/", |filename| filename.ends_with(".xml"))?;
 
     // First pass: set up factions
     let mut factionload: Vec<FactionLoad> = files
         //.par_iter()
         .iter()
-        .filter_map(|filename| {
-            if !filename.ends_with(".xml") {
-                return None;
-            }
-            match FactionLoad::new(&ctx, &NLUA, filename.as_str()) {
+        .filter_map(
+            |filename| match FactionLoad::new(&ctx, &NLUA, filename.as_str()) {
                 Ok(sp) => Some(sp),
                 Err(e) => {
-                    warn!("Unable to load Faction '{}': {}", filename, e);
+                    warn!("Unable to load Faction '{filename}': {e}");
                     None
                 }
-            }
-        })
+            },
+        )
         .collect();
     // Add Player before sorting
     factionload.push(FactionLoad {
@@ -785,11 +782,11 @@ pub fn load() -> Result<()> {
 
     // Save the data
     FACTIONDATA.set(factions).unwrap_or_else(|err| {
-        warn_err!(err);
+        warn!("unable to set factions");
     });
     match FactionID::new(PLAYER_FACTION_NAME) {
-        Some(id) => PLAYER.set(id).unwrap_or_else(|err| {
-            warn_err!(err);
+        Some(id) => PLAYER.set(id).unwrap_or_else(|_| {
+            warn!("unable to set player faction ID");
         }),
         None => unreachable!(),
     };
@@ -860,7 +857,7 @@ pub extern "C" fn _faction_get(name: *const c_char) -> c_int {
             return id as c_int;
         }
     }
-    warn!(gettext("Faction '{}' not found in stack."), name);
+    warnx!(gettext("Faction '{}' not found in stack."), name);
     0
 }
 

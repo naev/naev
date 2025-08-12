@@ -362,11 +362,19 @@ static void think_seeker( Weapon *w, double dt )
       return;
    }
 
+   /* If the player stealths, treat the weapon as jammed when out of range.. */
+   WeaponStatus status = w->status;
+   if ( pilot_isFlag( p, PILOT_STEALTH ) && status == WEAPON_STATUS_OK ) {
+      double d = vec2_dist2( &p->solid.pos, &w->solid.pos );
+      if ( d > pow2( p->ew_stealth ) )
+         status = WEAPON_STATUS_JAMMED;
+   }
+
    // ewtrack = pilot_ewWeaponTrack( pilot_get(w->parent), p,
    // w->outfit->u.lau.resist );
 
    /* Handle by status. */
-   switch ( w->status ) {
+   switch ( status ) {
    case WEAPON_STATUS_LOCKING: /* Check to see if we can get a lock on. */
       w->timer2 -= dt;
       if ( w->timer2 >= 0. )
@@ -380,8 +388,8 @@ static void think_seeker( Weapon *w, double dt )
       jc = p->stats.jam_chance - outfit_launcherResist( w->outfit );
       if ( jc > 0. ) {
          /* Roll based on distance. */
-         double d = vec2_dist( &p->solid.pos, &w->solid.pos );
-         if ( d < w->r * p->ew_signature ) {
+         double d = vec2_dist2( &p->solid.pos, &w->solid.pos );
+         if ( d < pow2( w->r * p->ew_signature ) ) {
             if ( RNGF() < jc ) {
                double r = RNGF();
                if ( r < 0.3 ) {
@@ -543,10 +551,9 @@ static void think_beam( Weapon *w, double dt )
          tpos = &wtarget->solid.pos;
    } break;
    default:
-      turn_off = 1;
       break;
    }
-   if ( tpos == NULL )
+   if ( slot->inrange && tpos == NULL )
       turn_off = 1;
 
    /* Check the beam is still in range. */
@@ -2184,11 +2191,20 @@ static double weapon_aimTurretAngle( const Outfit *outfit, const Pilot *parent,
       double trackmin = outfit_trackmin( outfit );
       double trackmax = outfit_trackmax( outfit );
       lead = pilot_ewWeaponTrack( parent, pilot_target, trackmin, trackmax );
-      x    = lead * x + ( 1. - lead ) * rx;
-      y    = lead * y + ( 1. - lead ) * ry;
-   } else
+      // Player interpolates from forward instead of static position, making it
+      // easier to aim with fixed forward weapons
+      if ( pilot_isPlayer( parent ) && outfit_isForward( outfit ) ) {
+         rdir = dir + angle_diff( dir, ANGLE( x, y ) ) * lead;
+      } else {
+         // For Turrets and NPCs we lead
+         x    = lead * x + ( 1. - lead ) * rx;
+         y    = lead * y + ( 1. - lead ) * ry;
+         rdir = ANGLE( x, y );
+      }
+   } else {
       lead = 1.;
-   rdir = ANGLE( x, y );
+      rdir = ANGLE( x, y );
+   }
 
    /* For unguided rockets: use a FD quasi-Newton algorithm to aim better. */
    if ( outfit_isLauncher( outfit ) && outfit_launcherAccel( outfit ) > 0. ) {
@@ -2391,16 +2407,19 @@ static void weapon_createBolt( Weapon *w, const Outfit *outfit, double dir,
       rdir += RNG_1SIGMA() * dispersion;
 
    /* Stat modifiers. */
+   double speed_mod = parent->stats.weapon_speed;
    if ( outfit_type( outfit ) == OUTFIT_TYPE_TURRET_BOLT ) {
       w->dam_mod *= parent->stats.tur_damage * parent->stats.weapon_damage;
       /* dam_as_dis is computed as multiplier, must be corrected. */
       w->dam_as_dis_mod = parent->stats.tur_dam_as_dis - 1.;
       w->range_mod      = parent->stats.tur_range * parent->stats.weapon_range;
+      speed_mod *= parent->stats.tur_speed;
    } else {
       w->dam_mod *= parent->stats.fwd_damage * parent->stats.weapon_damage;
       /* dam_as_dis is computed as multiplier, must be corrected. */
       w->dam_as_dis_mod = parent->stats.fwd_dam_as_dis - 1.;
       w->range_mod      = parent->stats.fwd_range * parent->stats.weapon_range;
+      speed_mod *= parent->stats.fwd_speed;
    }
    /* Clamping, but might not actually be necessary if weird things want to be
     * done. */
@@ -2411,14 +2430,15 @@ static void weapon_createBolt( Weapon *w, const Outfit *outfit, double dir,
 
    mass = 1.; /* Lasers are presumed to have unitary mass, just like the real
                  world. */
+   double speed            = outfit_speed( outfit ) * speed_mod;
    v                       = *vel;
-   m                       = outfit_speed( outfit );
+   m                       = speed;
    double speed_dispersion = outfit_speed_dispersion( outfit );
    if ( speed_dispersion > 0. )
       m += RNG_1SIGMA() * speed_dispersion;
    vec2_cadd( &v, m * cos( rdir ), m * sin( rdir ) );
-   w->timer   = outfit_range( outfit ) / outfit_speed( outfit ) * w->range_mod;
-   w->falloff = w->timer - outfit_falloff( outfit ) / outfit_speed( outfit );
+   w->timer   = outfit_range( outfit ) / speed * w->range_mod;
+   w->falloff = w->timer - outfit_falloff( outfit ) / speed;
    solid_init( &w->solid, mass, rdir, pos, &v, SOLID_UPDATE_EULER );
    w->voice = sound_playPos( outfit_sound( w->outfit ), w->solid.pos.x,
                              w->solid.pos.y, w->solid.vel.x, w->solid.vel.y );
@@ -2485,7 +2505,8 @@ static void weapon_createAmmo( Weapon *w, const Outfit *outfit, double dir,
    /* Set up ammo details. */
    mass     = outfit_massAmmo( w->outfit );
    w->timer = outfit_launcherDuration( w->outfit ) *
-              parent->stats.launch_range * parent->stats.weapon_range;
+              parent->stats.launch_range * parent->stats.weapon_range /
+              w->speed_mod;
    solid_init( &w->solid, mass, rdir, pos, &v, SOLID_UPDATE_EULER );
    w->solid.aerodynamics = w->speed_mod;
 

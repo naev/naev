@@ -3,7 +3,8 @@
 <mission name="The Gauntlet">
  <unique />
  <priority>3</priority>
- <cond>spob.cur():reputation("Nasin") &gt;= 0</cond>
+ <cond>false</cond>
+ <!--<cond>spob.cur():reputation("Nasin") &gt;= 0</cond>-->
  <chance>0</chance>
  <location>Bar</location>
  <faction>Sirius</faction>
@@ -21,8 +22,9 @@
 local fmt = require "format"
 local srs = require "common.sirius"
 
-
 function create()
+   misn.finish(false) -- Disabled
+
    --this mission makes no mission claims
    --set the variables
    mem.reward = 200e3 --mem.reward algorithm after this mission = 100e3 + (rnd.rnd(5,8)*2e3 * (nasin_rep^1.51). flat rate for first mission.

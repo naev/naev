@@ -5,7 +5,7 @@
   <frag>chakra_exp.frag</frag>
   <size>60</size>
   <uniforms>
-   <u_speed x="0.8" />
+   <u_speed x="0.8"/>
   </uniforms>
  </shader>
 </spfx>

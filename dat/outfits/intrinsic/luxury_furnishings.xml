@@ -1,0 +1,18 @@
+<outfit name="Luxury Furnishings">
+ <general>
+  <slot>intrinsic</slot>
+  <mass>0</mass>
+  <price>0</price>
+  <description>Most ships are designed to withstand the harshness of space, with the comfort of the pilot and crew as a nearly forgotten secondary concern. Realizing that not every captain wants to command a sealed coffin, and inspired by the success of the Gawain, Nexus Shipyards now provides a full luxurious overhaul of a ship. Velvet curtains, cushioned panel coating, fully automatic bidets, and a Captain's Chair with 27 degrees of freedom and a 500-page manual are just some of the perks that are included in this ship make-over.</description>O
+  <gfx_store>placeholder.webp</gfx_store>
+  <rarity>1</rarity>
+  <limit>luxury_furnishings</limit>
+ </general>
+ <specific type="modification">
+  <loot_mod>5</loot_mod>
+  <lua>outfits/intrinsic/luxury_furnishings.lua</lua>
+ </specific>
+ <tags>
+  <tag>luxury</tag>
+ </tags>
+</outfit>

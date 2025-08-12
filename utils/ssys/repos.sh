@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 #FLAGS=("-pg" "-O1")
 FLAGS=("-Ofast")

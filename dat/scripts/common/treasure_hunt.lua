@@ -181,6 +181,12 @@ function lib.good_spob( p )
    if p:faction() then
       return false
    end
+   if not p:canLand() then
+      return false
+   end
+   if p:tags().restricted then
+      return false
+   end
    local services = p:services()
    return (not services["inhabited"]) and services["land"]
 end

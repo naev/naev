@@ -1183,16 +1183,16 @@ static int playerL_land( lua_State *L )
    /* End autonav. */
    player_autonavEnd();
 
-   /* Stop afterburning. */
-   pilot_afterburnOver( player.p );
+   /* Stop all on outfits. */
+   // if ( pilot_outfitOffAll( player.p ) > 0 )
+   pilot_outfitOffAll( player.p );
+   pilot_calcStats( player.p ); /* Always update stats for now as something is
+                                   funky with afterburners. */
+
    /* Stop accelerating. */
    player_accelOver();
    /* Stop stealth. */
    pilot_destealth( player.p );
-
-   /* Stop all on outfits. */
-   if ( pilot_outfitOffAll( player.p ) > 0 )
-      pilot_calcStats( player.p );
 
    /* Do whatever the spob wants to do. */
    if ( spob->lua_land != LUA_NOREF ) {
@@ -1856,7 +1856,8 @@ static int playerL_shipSwap( lua_State *L )
  *
  *    @luatreturn table Table containing the metadat of active missions as
  * tables. Fields include "name", "desc", "reward", "loc", "chance", "spob",
- * "system", "chapter", "cond", "done", "priority", "unique", and "tags".
+ * "system", "chapter", "cond", "done", "priority", "unique", "memory", and
+ * "tags".
  * @luafunc missions
  */
 static int playerL_missions( lua_State *L )
@@ -1915,6 +1916,8 @@ static int playerL_missions( lua_State *L )
          lua_pushboolean( L, 1 );
          lua_setfield( L, -2, "unique" );
       }
+      nlua_getenv( L, pm->env, "mem" );
+      lua_setfield( L, -2, "memory" );
       /* Tags. */
       lua_newtable( L );
       for ( int k = 0; k < array_size( md->tags ); k++ ) {

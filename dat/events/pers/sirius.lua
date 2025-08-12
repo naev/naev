@@ -18,6 +18,7 @@ return function ()
                p:outfitAddIntrinsic("Escape Pod")
                equipopt.sirius( p, { flow_ability=outfit.get("Avatar of the Sirichana") } )
                local m = p:memory()
+               m.capturable = true
                m.comm_greet = _([["The Serra Echelon is the pride of House Sirius. As a Scion, I bear the weight of responsibility truthfully."]])
                m.taunt = _("You dare test my faith?! The Serra Scion shall not waiver!")
                m.bribe_no = _([["You think you can buy my faith with mere credits?"]])
@@ -29,6 +30,7 @@ return function ()
                p:outfitAddIntrinsic("Escape Pod")
                equipopt.sirius( p, { flow_ability=outfit.get("Avatar of the Sirichana") } )
                local m = p:memory()
+               m.capturable = true
                m.ad = {
                   _("Stay vigilant, for we are always tested against wickedness."),
                   _("We must be beacons of faith in the eternal darkness."),

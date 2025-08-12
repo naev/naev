@@ -73,7 +73,7 @@ msgid "# Fabricators"
 msgstr ""
 
 #: dat/naevpedia/lore/fabricators.md:6
-msgid "There are a diversity of fabricators that produce different ships and outfits."
+msgid "There is a diversity of fabricators that produce different ships and outfits."
 msgstr ""
 
 #: dat/naevpedia/lore/fabricators.md:8
@@ -121,7 +121,7 @@ msgid "## Houses"
 msgstr ""
 
 #: dat/naevpedia/lore/fabricators.md:22
-msgid "* **House Goddard**: Makes the [Goddard](ships/goddard) and involved in the design of [House Dvaered](lore/factions/dvaered) ships."
+msgid "* **House Goddard**: Makes the [Goddard](ships/goddard) and is involved in the design of [House Dvaered](lore/factions/dvaered) ships."
 msgstr ""
 
 #: dat/naevpedia/lore/fabricators.md:23
@@ -157,7 +157,7 @@ msgid "* **Thurion Shipyards**: Produce ships with advanced interfaces for digit
 msgstr ""
 
 #: dat/naevpedia/lore/fabricators.md:35
-msgid "* **Proteron**: Although they use an antiquated fabrication methods, they have refined them to a point they are extremely competitive with other ships."
+msgid "* **Proteron**: Although they use an antiquated fabrication methods, they have refined them to the point they are extremely competitive with other ships."
 msgstr ""
 
 #: dat/naevpedia/lore/fabricators.md:38
@@ -755,23 +755,23 @@ msgstr ""
 msgid "Galactic Space Pirates"
 msgstr ""
 
-#: 標準入力:7
+#: stdin:7
 msgid "???"
 msgstr ""
 
-#: 標準入力:12
+#: stdin:12
 msgid "Black Lotus"
 msgstr ""
 
-#: 標準入力:13
+#: stdin:13
 msgid "Wild Ones"
 msgstr ""
 
-#: 標準入力:14
+#: stdin:14
 msgid "Raven Clan"
 msgstr ""
 
-#: 標準入力:15
+#: stdin:15
 msgid "Dreamer Clan"
 msgstr ""
 
@@ -1109,7 +1109,7 @@ msgid "As such, a subject was often able and willing to work at optimal performa
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:33
-msgid "A Proteron citizen's life was thus quite a satisfying one, though excitement otherwise than the terminal kind was rare."
+msgid "A Proteron citizen's life was thus quite a satisfying one, though excitement other than the terminal kind was rare."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:35
@@ -1157,7 +1157,7 @@ msgid "Each Autarch was expected to meet or exceed these goals, and those Autarc
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:48
-msgid "For day-to-day and urgent decisions that could not wait for many cycles, and further to ensure that the Circle did not become complacent, the Proteron also had a High Autarch."
+msgid "For period-to-period and urgent decisions that could not wait for many cycles, and further to ensure that the Circle did not become complacent, the Proteron also had a High Autarch."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:49
@@ -1197,7 +1197,7 @@ msgid "Soon, however, the scope of the project expanded as its overseers came to
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:61
-msgid "Within a decade of its inception, the worlds assigned to Project Proteron numbered more than a dozen."
+msgid "Within a decacycle of its inception, the worlds assigned to Project Proteron numbered more than a dozen."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:63
@@ -1217,7 +1217,7 @@ msgid "The concepts of personal liberties and privacy became more and more secon
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:68
-msgid "The expansion and results of the Project led the then Emperor to promote Project Proteron from an Empire-commissioned Project to a full-fledged, independent Great House."
+msgid "The expansion and results of the Project led the Emperor to promote Project Proteron from an Empire-commissioned Project to a fully-fledged, independent Great House."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:69
@@ -1249,7 +1249,7 @@ msgid "A well-oiled military machine and intelligence agency were created from s
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:78
-msgid "In only a few decades, House Proteron had become a powerful diplomatic and economic factor in the galaxy."
+msgid "In only a few decacycles, House Proteron had become a powerful diplomatic and economic factor in the galaxy."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:80
@@ -1265,15 +1265,15 @@ msgid "Rather than reassigning the workers and improving their living standards 
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:83
-msgid "In addition, it had been centuries since the Za'lek had given more than the cursory nod to Imperial authority."
+msgid "In addition, it had been centacycles since the Za'lek had given more than the cursory nod to Imperial authority."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:84
-msgid "The House generally blamed [the Empire](lore/factions/empire)'s social structure for its inability to command the loyalty of its subjects."
+msgid "The Proteron generally blamed [the Empire](lore/factions/empire)'s social structure for its inability to command the loyalty of its subjects."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:85
-msgid "The House, on the other hand, had grown by leaps and bounds, claiming more and more space for their systems, even bordering Sol."
+msgid "Their House, on the other hand, had grown by leaps and bounds, claiming more and more space for their systems, even bordering Sol."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:86
@@ -1297,7 +1297,7 @@ msgid "It was clear to the Circle that should [the Empire](lore/factions/empire)
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:93
-msgid "Knowing that they could not at the time resist the entire might of [the Empire](lore/factions/empire)'s infrastructure, the Proteron decided to plant their agents in every major Imperial agency while publicly grovelling at [the Empire](lore/factions/empire)'s feet."
+msgid "Knowing that they could not resist the entire might of [the Empire](lore/factions/empire)'s infrastructure, the Proteron decided to plant their agents in every major Imperial agency while publicly grovelling at [the Empire](lore/factions/empire)'s feet."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:94
@@ -1309,102 +1309,106 @@ msgid "Now having loosened their leash greatly, they set out to prepare for a ga
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:96
-msgid "While they worked, the shape of the galaxy was changing, so to speak."
+msgid "While they worked, however, the shape of the galaxy was changing."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:98
-msgid "New advances in quantum engineering led to the development of quantum transtators and translators, alternative travel engines capable of bypassing warp points and so changing conventional military doctrine, which recommended fortifying choke point systems on the warp network."
+msgid "New advances in quantum engineering led to the development of quantum transtators and translators."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:99
-msgid "Expecting correctly that [the Empire](lore/factions/empire) had not even thought of this change, the Proteron decided to bypass their defences using the new hypergate being built in Sol."
+msgid "Alternative travel engines were developed that were capable of bypassing warp points, challenging conventional military doctrine which recommended fortifying choke point systems on the warp network."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:100
-msgid "After all, once the Emperor and their successors were in their hands, the war would be essentially meaningless."
+msgid "Expecting correctly that [the Empire](lore/factions/empire) had not even thought of this change, the Proteron decided to bypass their defences using the new hypergate being built in Sol."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:101
-msgid "They built a hypergate in secret in their home system, Protera."
+msgid "After all, once the Emperor and their successors were in their hands, the war would be essentially meaningless."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:102
-msgid "They seceded from Imperial authority as soon as the gate was built and moved a small fleet as a feint into the classical defences."
+msgid "They built a hypergate in secret in their home system, Protera."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:103
-msgid "When [the Empire](lore/factions/empire) took the bait, the Sovereign Proteron Autarchy, as they now styled themselves, sent the most massive fleet ever seen through their hypergate."
+msgid "They seceded from Imperial authority as soon as the gate was built and moved a small fleet as a feint into the classical defences."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/proteron.md:105
+#: dat/naevpedia/lore/factions/proteron.md:104
+msgid "When [the Empire](lore/factions/empire) took the bait, the Sovereign Proteron Autarchy, as they now called themselves, sent the most massive fleet ever seen through their hypergate."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/proteron.md:106
 msgid "Then [the Incident](lore/history/incident) occurred."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/proteron.md:107
+#: dat/naevpedia/lore/factions/proteron.md:108
 msgid "After the dust settled, Protera was inaccessible, Sol was unreachable, their planets, factories and fleets had been decimated and the Circle was mostly gone."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/proteron.md:108
-msgid "Thankfully, enough of the hierarchy remained that society did not dissolve."
-msgstr ""
-
 #: dat/naevpedia/lore/factions/proteron.md:109
-msgid "The Proteron scientists set out to determine the cause of [the Incident](lore/history/incident), and their best answer is that the large number of ships travelling all at once through the hypergate overloaded it, causing Sol to explode with a huge mass of material, causing a chain reaction that obliterated systems and changed the warp network."
+msgid "Thankfully, enough of the hierarchy remained that Proteron society did not dissolve."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:110
-msgid "On the other hand, Protera was visible with no occlusion by the Nebula, but every scout they sent started to behave erratically and eventually stop communicating."
+msgid "The Proteron scientists set out to determine the cause of [the Incident](lore/history/incident), and their best answer is that the large number of ships travelling all at once through the hypergate overloaded it, causing Sol to explode with a huge mass of material, causing a chain reaction that obliterated systems and changed the warp network."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:111
+msgid "On the other hand, Protera was visible with no occlusion by the Nebula, but every scout they sent started to behave erratically and eventually stop communicating."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/proteron.md:112
 msgid "Seeing this, the new Circle issued a moratorium on exploring the systems toward Protera."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/proteron.md:113
-msgid "Armed with the knowledge of their situation and their error in the first attempt, the tenacious Sovereign Proteron Autarchy is back on track to take over [the Empire](lore/factions/empire)."
-msgstr ""
-
 #: dat/naevpedia/lore/factions/proteron.md:114
-msgid "They are already on their way to build an improved hypergate that will not fail like the last one."
+msgid "Armed with the knowledge of their situation and their error in the first attempt, the tenacious Sovereign Proteron Autarchy is continuing pursuit of its goal to take over [the Empire](lore/factions/empire)."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/proteron.md:116
+#: dat/naevpedia/lore/factions/proteron.md:115
+msgid "They are already constructing an improved hypergate that will not fail like the last one did."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/proteron.md:117
 msgid "## Proteron military tactics"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/proteron.md:118
+#: dat/naevpedia/lore/factions/proteron.md:119
 msgid "The Proteron favour pilots on the larger spaceships and keep smaller ships unmanned."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/proteron.md:119
+#: dat/naevpedia/lore/factions/proteron.md:120
 msgid "Extensive simulations, dogfights and mock battles revealed that fighters and bombers were largely outclassed by a fleet of unmanned drones, being harder to replace and less maneuverable."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/proteron.md:120
-msgid "This means that their fleet strategy is not easy to adjust on the fly, so they developed the Euler, a fast and stealthy scout ship to ensure that there are no surprises facing the fleet when it commits to an attack."
-msgstr ""
-
 #: dat/naevpedia/lore/factions/proteron.md:121
-msgid "Similarly, it is illogical to commit before probing the enemy's weaknesses, so fleets consisting of smaller ships harass and draw out enemy fleets until the capital ships and their fleets of drones can reduce the enemy to dust."
+msgid "This means that their fleet strategy is not easily adjusted on the fly, so they developed the Euler, a fast and stealthy scout ship to ensure that there are no surprises facing the fleet when it commits to an attack."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:122
-msgid "At the same time, a ship must be either capable of damage or of movement, else it is merely a sitting duck."
+msgid "Similarly, it is illogical to commit before probing the enemy's weaknesses, so fleets consisting of smaller ships harass and draw out enemy fleets until the capital ships and their fleets of drones can reduce the enemy to dust."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:123
+msgid "Proteron strategists understand a ship must be either capable of damage or of movement, else it is merely a sitting duck."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/proteron.md:124
 msgid "Thus, their destroyers and corvettes are faster than expected for ships of their size."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/proteron.md:125
+#: dat/naevpedia/lore/factions/proteron.md:126
 msgid "Further, the fleet does not believe that the pilot should hesitate to sacrifice themselves to help the fleet on the path to victory."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/proteron.md:126
-msgid "As such, the Proteron largely follow a doctrine of no retreat to encourage pilots to fight to the death unless indicated otherwise ordered."
+#: dat/naevpedia/lore/factions/proteron.md:127
+msgid "As such, the Proteron largely follow a doctrine of no retreat to encourage pilots to fight to the death unless otherwise ordered."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/proteron.md:127
+#: dat/naevpedia/lore/factions/proteron.md:128
 msgid "The larger ships with the pilots are therefore also built to outlast any enemy in damage-dealing capability."
 msgstr ""
 
@@ -2192,19 +2196,19 @@ msgid "### Project Thurion"
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:23
-msgid "Project Thurion was a secret Great Project founded by [the Empire](lore/factions/empire) with the purpose of ascending the human existence to the next evolutionary stage with the use of genetic engineering, cybernetics and brain-computer interfaces."
+msgid "Project Thurion was a secret Great Project founded by [the Empire](lore/factions/empire) with the purpose of ascending the human existence to the next evolutionary plane with the use of genetic engineering, cybernetics and brain-computer interfaces."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:24
-msgid "Needless to say, the research conducted was morally questionable and barely legal."
+msgid "The research to be conducted to achieve this would obviously be morally questionable and barely legal."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:25
-msgid "Therefore, the project was top secret, with only few people knowing about the closely guarded project."
+msgid "Therefore, the project was made top secret, with only a few people knowing the project existed and fewer still knowing the scope of it."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:26
-msgid "The location of the project was chosen to be a remote planet which had been just recently discovered and lies beyond the periphery of known space."
+msgid "The location of the project was chosen to be a remote planet which had been just recently discovered and laid beyond the periphery of known space."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:27
@@ -2212,15 +2216,15 @@ msgid "The whole area was declared a military exclusion zone to prevent civilian
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:29
-msgid "The scientists involved with the project received generous funding and top tier equipment."
+msgid "The scientists involved with the project received generous funding and state-of-the-art equipment."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:30
-msgid "Yet there has been only little progress and an increasing number of casualties."
+msgid "Yet there was little progress and an ever-increasing number of casualties."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:31
-msgid "[The Empire](lore/factions/empire) grew impatient and increased pressure on the scientists while also giving them greater freedoms."
+msgid "[The Empire](lore/factions/empire) grew impatient and increased pressure on the scientists to produce results, simultaneously granting greater freedom and moral ambiguity."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:32
@@ -2228,19 +2232,19 @@ msgid "The experiments turned more and more inhuman."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:33
-msgid "They focused on their brain-computer interfaces and the amalgamation of the human mind and machine intelligence because they made previously some progress on understanding the human consciousness."
+msgid "Citing previous progress made in the understanding of human consciousness, they focused on their brain-computer interfaces, the amalgamation of the human mind, and machine intelligence."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:34
-msgid "The work on cybernetics and genetic engineering was scratched because it led to too many incidents and casualties."
+msgid "The work on cybernetics and genetic engineering was scrapped due to being the cause of too many incidents and casualties."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:36
-msgid "Ultimately, they succeeded in creating specialized hardware capable of simulating a human brain and the necessary technology to digitalize a human brain which involves the use of brain-computer interfaces and destructive tomography methods."
+msgid "Ultimately, they succeeded in creating specialized hardware capable of simulating a human brain and the necessary technology to digitalize a human brain which involved the use of brain-computer interfaces and destructive tomography methods."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:37
-msgid "Needless to say that the procedure did not work out well for the early test subjects."
+msgid "The procedure did not work out well for the early test subjects."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:38
@@ -2248,19 +2252,19 @@ msgid "In the end, however, they were able to reliably upload a human mind to sp
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:39
-msgid "Naturally, this has some implication."
+msgid "Naturally, this has some implications."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:40
-msgid "For instance, the uploaded individuals would be immortal, but as they would exist only within a simulation, their perception of the outside world and ultimately their reality can be manipulated at will of whoever operates the system."
+msgid "The uploaded individuals would be immortal, but as they would exist only within a simulation, their perception of the outside world and ultimately their reality could be manipulated at will of whoever operated the system."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:41
-msgid "Only by now did the scientists realize which consequences their findings could have, and heated discussions followed."
+msgid "It was only after achieving their goal that the scientists realized the consequences their findings could have."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:42
-msgid "In the end everyone agreed to keep their true findings a secret."
+msgid "Heated discussions followed, and in the end everyone agreed to keep their true findings a secret."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:44
@@ -2272,23 +2276,23 @@ msgid "In UST 125 it was decided that the project would be terminated at the end
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:46
-msgid "That involves 'sterilization' of the colony where the research has been conducted, i.e. they planned to nuke the colony killing all personnel except some high ranking military officers in the process."
+msgid "This included 'sterilization' of the colony where the research has been conducted via nuclear holocaust killing all personnel except some high ranking military officers."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:47
-msgid "The project has been highly unethical, and the results could not justify any of the crimes committed."
+msgid "The project had been highly unethical, and the results presented would not justify any of the crimes committed."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:48
-msgid "Thus, [the Empire](lore/factions/empire) decided to purge project Thurion from history."
+msgid "Thus, [the Empire](lore/factions/empire) decided to purge Project Thurion from history."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:52
-msgid "The scientists, however, found out about the plan with just enough time left to come up with a plan."
+msgid "The scientists, however, found out about the sterilization order with just enough time left to come up with a plan."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:53
-msgid "The system has been quarantined by then, and any attempt to flee would be pointless."
+msgid "The system had been quarantined by then, and any attempt to flee would be pointless."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:54
@@ -2300,7 +2304,7 @@ msgid "The scientists that could were uploaded, and they went into hibernation, 
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:56
-msgid "The bunker was never found by [the Empire](lore/factions/empire), which had also survived the passage of time."
+msgid "The bunker was never found by [the Empire](lore/factions/empire)."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:58
@@ -2308,11 +2312,11 @@ msgid "### Revival"
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:60
-msgid "During the sterilization of Project Thurion, many systems had their planets indiscriminately bombarded and razed, and entry was indefinitely blocked."
+msgid "During the sterilization of Project Thurion, system entry was indefinitely blocked."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:61
-msgid "Initially, scouts periodically scanned the systems, but over time, orders were forgotten and the systems were largely abandoned."
+msgid "Initially, scouts periodically scanned the system, but over time, orders were forgotten and the system was largely abandoned."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:62
@@ -2324,7 +2328,7 @@ msgid "They found themselves in a large empty swathe of space all to themselves,
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:65
-msgid "Although taking great care to not raise suspicions, they were able to establish the first large node structures to support the Uploaded at full capacity."
+msgid "Taking great care to not raise suspicions, they were able to establish the first large node structures to support the Uploaded at full capacity."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:66
@@ -2372,267 +2376,267 @@ msgid "Currently, the Thurion have a strong significant presence in the deep Neb
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:81
-msgid "While the rest of the universe is still oblivious to their presence, they feel like it is almost time to make their presence once more known to the universe."
+msgid "While the rest of the universe is still oblivious to their presence, there is growing talk that it is almost time to make their presence known once more to the universe."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:85
-msgid "The scientists, however, found out about the plan with just enough time left to come up with a plan."
+msgid "The scientists, however, found out about the sterilization order with just enough time left to come up with a plan."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:86
-msgid "The system has been quarantined by then."
+msgid "The system had been quarantined by then, and any attempt to flee would be pointless."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:87
-msgid "Any attempt to flee would be pointless."
+msgid "Instead, they used their last resources to build a small bunker inside an asteroid, and outlast [the Empire](lore/factions/empire)."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:88
-msgid "Instead, they used their resources to build a small bunker inside an asteroid."
+msgid "Too small for people to survive, the bunker would hold the data of uploaded individuals, a few devices that could run an uploaded human mind (powered down) and the machines necessary for the uploading process as well as documentation of their work."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:89
-msgid "Too small for people to survive, the bunker would hold the data of uploaded individuals, a few devices that can run an uploaded human mind (powered down) and the machines necessary for the uploading process as well as documentation of their work."
+msgid "They made sure that the bunker was hidden well and hoped the Empire would not notice it."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:90
-msgid "They made sure that the bunker is hidden well and hoped the Empire would not notice it."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/thurion.md:91
 msgid "There was, however, a traitor who did not want to be uploaded and thought the Empire would let him live in exchange for information on the plan."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:92
+#: dat/naevpedia/lore/factions/thurion.md:91
 msgid "Of course, the Empire officials were set on carrying out their orders strictly."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:93
-msgid "The colony has been destroyed and the military began to search for the hidden bunker."
+#: dat/naevpedia/lore/factions/thurion.md:92
+msgid "The colony had been destroyed and the military began to search for the hidden bunker."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:94
+#: dat/naevpedia/lore/factions/thurion.md:93
 msgid "They did not manage to find it, however, as it was hidden too well."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:95
+#: dat/naevpedia/lore/factions/thurion.md:94
 msgid "After one cycle they gave up on the search."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:96
-msgid "The emperor ordered that the systems remains quarantined for at least the next 400 cycles."
+#: dat/naevpedia/lore/factions/thurion.md:95
+msgid "The emperor ordered that the system remained quarantined for at least the next 400 cycles."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:97
+#: dat/naevpedia/lore/factions/thurion.md:96
 msgid "And so access to that system was not possible and the hidden bunker was never to be found."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:99
+#: dat/naevpedia/lore/factions/thurion.md:98
 msgid "The second part of the scientists' plan was the activation of a transmitter that reveals the position of the bunker."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:100
+#: dat/naevpedia/lore/factions/thurion.md:99
 msgid "They assumed that the Empire would forget about project Thurion after some time and programmed the transmitter to activate after 200 cycles."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:101
+#: dat/naevpedia/lore/factions/thurion.md:100
 msgid "By that time, however, the system was still under lock down and Empire fleets occasionally patrolled the system."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:102
-msgid "Soon enough they would find the hidden bunker."
+#: dat/naevpedia/lore/factions/thurion.md:101
+msgid "It was only a matter of time before they would find the hidden bunker."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:103
+#: dat/naevpedia/lore/factions/thurion.md:102
 msgid "But in [UST 307](mechanics/time) [the Dvaered revolts](lore/history) occurred."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:104
-msgid "Only the emperor himself knew about project Thurion."
+#: dat/naevpedia/lore/factions/thurion.md:103
+msgid "Only the Emperor knew the truth about Project Thurion and unable to trust anyone else with the information, could not justify a continued search."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:105
-msgid "The commanding general assumed that the reason for the patrols was to prevent pirates from settling in the area and decided the fleet should be deployed in the conflict with the Dvaered."
+#: dat/naevpedia/lore/factions/thurion.md:104
+msgid "The military's commanding officer assumed that the reason for the patrols was to prevent pirates from settling in the area and decided the fleet would be better utilized being deployed in the conflict with the Dvaered."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/thurion.md:106
+msgid "Eventually, instead of an Empire patrol, scavengers found the bunker."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:107
-msgid "In the end, instead of an Empire patrol some scavengers found the bunker."
+msgid "They were greeted by a hologram that claimed to be a human."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:108
-msgid "They were greeted by a hologram that not only claimed to be a human but also sounded pretty much like a real human."
+msgid "The scavengers assumed the technology would be pretty valuable and sold it to the highest bidder, a rich aristocrat."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:109
-msgid "The scavengers assumed the technology could be pretty valuable and sold it to the highest bidder which happened to be a rich aristocrat."
+msgid "The uploaded scientists easily won the aristocrat over by promising him power and immortality."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:110
-msgid "The uploaded scientists had an easy time to win the aristocrat over by promising him power and immortality."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/thurion.md:111
 msgid "They used his capital to build up a sect surrounded in secrecy."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:112
+#: dat/naevpedia/lore/factions/thurion.md:111
 msgid "The inner circle was formed by the uploaded individuals."
 msgstr ""
 
+#: dat/naevpedia/lore/factions/thurion.md:112
+msgid "Novices and outsiders would not know about the upload process and only heard rumours about some kind of ascendance."
+msgstr ""
+
 #: dat/naevpedia/lore/factions/thurion.md:113
-msgid "Novices would not know about the upload process and only heard rumours about some kind of ascendance."
+msgid "The Thurion, though, keep their promises and do upload trustworthy members."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:114
-msgid "The Thurion actually hold their promise and upload trustworthy members."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/thurion.md:116
+#: dat/naevpedia/lore/factions/thurion.md:115
 msgid "After some time the sect became too large and it became difficult to remain hidden."
 msgstr ""
 
+#: dat/naevpedia/lore/factions/thurion.md:116
+msgid "They relocated their infrastructure over time to the Nava system (starting in UST 387) which remained largely ignored."
+msgstr ""
+
 #: dat/naevpedia/lore/factions/thurion.md:117
-msgid "Therefore, they relocated their infrastructure over time to the Nava system (starting in UST 387) which remained largely ignored."
+msgid "Because the uploaded individuals need only energy and basic maintenance, logistics were fairly simple."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:118
-msgid "Because the uploaded individuals need only energy and basic maintenance, logistics are fairly simple."
+msgid "At this time, questions about the goals of the Thurion came up."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:119
-msgid "At this time questions about the goals of the Thurion came up."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/thurion.md:120
 msgid "They had no intentions to grow further."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:121
+#: dat/naevpedia/lore/factions/thurion.md:120
 msgid "The size of the organization was large enough to sustain itself."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:122
+#: dat/naevpedia/lore/factions/thurion.md:121
 msgid "They decided that further growth would only increase the risk of being uncovered and adopted a utopian view."
 msgstr ""
 
+#: dat/naevpedia/lore/factions/thurion.md:122
+msgid "While the scientists could have justifiably denied the Empire access to their technology, they had developed utopian visions for their organization."
+msgstr ""
+
 #: dat/naevpedia/lore/factions/thurion.md:123
-msgid "While back then the scientists denied the Empire access to their technology, they now come up with utopian visions for their organization."
+msgid "They felt every human should have the chance to lead an ideal life in a virtual environment after what uploaded individuals consider a deprived life in retrospect."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:124
-msgid "Every human should have the chance to lead an ideal live in a virtual environment after what the uploaded individuals consider a deprived life in retrospective."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/thurion.md:125
 msgid "They planned to one day rejoin the rest of humanity and to freely share their technology with everyone."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:127
+#: dat/naevpedia/lore/factions/thurion.md:126
 msgid "### The Gestalt Consciousness"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:129
+#: dat/naevpedia/lore/factions/thurion.md:128
 msgid "The minds of the first few test subjects that were uploaded were broken beyond repair."
 msgstr ""
 
+#: dat/naevpedia/lore/factions/thurion.md:129
+msgid "For some others, the procedure lead to major psychological issues, but eventually the scientists working on Project Thurion managed to perfect the process."
+msgstr ""
+
 #: dat/naevpedia/lore/factions/thurion.md:130
-msgid "For some others the procedure lead to major issues, but eventually the scientists working on project Thurion managed to solve them."
+msgid "The first successfully uploaded test subject did not even realize what kind of experiment was conducted on them."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:131
-msgid "The first successfully uploaded test subject did not even realize just what kind of experiment was conducted on them."
+msgid "The scientists, after being uploaded and rescued from the bunker, did not notice any changes in their personalities or thought patterns either, and concluded that the method worked flawlessly."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:132
-msgid "The scientists, after being uploaded and rescued from the bunker, did not notice any changes in their personalities or thought patterns either and concluded that the method works flawless."
+msgid "Soon thereafter, they started to upload additional humans."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:133
-msgid "Soon enough they started to upload further humans."
+#: dat/naevpedia/lore/factions/thurion.md:134
+msgid "However, after some cycles, issues began to manifest."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:135
-msgid "However, after some cycles issues began to manifest."
+msgid "The newly uploaded minds started to break down experiencing random changes of personality and recognized mental illnesses that grew worse over time."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:136
-msgid "Their minds started to break down which is visible in random changes of personality and the appearance of mental illnesses that grow worse over time."
+msgid "Although initial symptoms were rather harmless, the Thurion realized that they had little time to solve this issue."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:137
-msgid "Although the initial symptoms are rather harmless, the Thurion realized that they had little time left to solve this issue."
+msgid "They discovered that the source of the problems were certain neural patterns that emerged within their simulations that did not occur naturally."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:138
-msgid "They came to the conclusion that the source of the problem are certain neuronal patterns that emerged within their simulations and do not naturally occur."
+msgid "They were unable to find a way to fix the simulation methods but came up with a work-around instead."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:139
-msgid "Working under pressure they did not find a way to fix the simulation methods but came up with a rather hacky fix instead."
+msgid "They made a machine learning algorithm that used the previously established communication network that allows uploaded Thurion to directly interact with each other to directly access the Thurions' minds and cross-reference their neural patterns."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:140
-msgid "They used the previously established communication network that allows uploaded Thurion to directly interact with each others and made a machine learning algorithm that used this network to directly access the Thurions' minds and cross-reference their neuronal patterns."
+msgid "The program identified the abnormal neural patterns and reset them to their 'natural' state."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:141
-msgid "The program is then identifying the abnormal neuronal patterns and resets them to their 'natural' state."
+msgid "The method was successful and no new problems were reported, so the Thurion did not investigate further."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:142
-msgid "Since this method apparently has been very successful and the problems stopped the Thurion did not further investigate."
+#: dat/naevpedia/lore/factions/thurion.md:143
+msgid "Because they needed quick results and did not have enough time for proper testing, they failed to see the long term effects that this work-around would have."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:144
-msgid "Again, since they needed to work under pressure and did not have enough time for proper testing they failed to see the long term effects that this hotfix would have."
+msgid "Somehow, a form of gestalt consciousness had slowly formed over time."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:145
-msgid "Somehow, some form of gestalt consciousness has slowly formed over time."
+msgid "It emerged from the collective behavior associated with the interactions of the uploaded Thurions' minds."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:146
-msgid "It emerged from the collective behavior associated with the interactions of the uploaded Thurions' minds conveyed by the aforementioned algorithm."
+msgid "The gestalt consciousness worked and thought fairly different from a human mind and originally had very little influence over the uploaded Thurion."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:147
-msgid "The gestalt consciousness works and thinks fairly different from a human mind and originally had little to no influence over the uploaded Thurion."
+msgid "Over time, though, its influence had grown but the Thurion were affected to greatly varying extents."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:148
-msgid "Over time its influence over their minds has grown but the uploaded Thurion were affected to greatly varying extends."
+msgid "Some were barely affected while for others the gestalt consciousness had manifested as some kind of split personality that was identical for all Thurion."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:149
-msgid "Some Thurion were barely affected while for others the gestalt consciousness has manifested as some kind of split personality which is identical for all Thurion."
+msgid "In the worst cases, typically with long exposure times (the first case occurred after the incident), the uploaded individuals became merely puppets of the gestalt consciousness."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:150
-msgid "In the worst case and over a long exposure time (the first case occurred after the incident) the uploaded individuals become merely a puppet of the gestalt consciousness."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/thurion.md:152
+#: dat/naevpedia/lore/factions/thurion.md:151
 msgid "### The Incident"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:154
+#: dat/naevpedia/lore/factions/thurion.md:153
 msgid "The Thurion were mostly unaffected by the incident."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:155
+#: dat/naevpedia/lore/factions/thurion.md:154
 msgid "The nebula did not spread out to the Nava system where the majority of their infrastructure was located."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:156
-msgid "They did, however, loose all personnel and their followers inside Empire space."
+#: dat/naevpedia/lore/factions/thurion.md:155
+msgid "They did, however, loose all of their followers inside Empire space, and all individuals who had not yet been uploaded."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/thurion.md:157
+msgid "Under the influence of the gestalt consciousness, the infrastructure in the Nava system had been greatly expanded with two more planets having been colonized prior to the Incident."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:158
-msgid "Under the influence of the gestalt consciousness the infrastructure in the Nava system has been greatly expanded and two more planets have been colonized prior to the incident and the Thurion began to expand quickly."
+msgid "The Thurion began to expand quickly."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:159
-msgid "They have acquired enough biological population to survive."
+msgid "They had acquired enough biological population to survive."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:160
@@ -2640,7 +2644,7 @@ msgid "Shortly after the incident they began to send scouts into the nebula to i
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:161
-msgid "All survivors were integrated into their society and the Thurion started research on surviving the harsh condition within the nebula."
+msgid "All survivors were integrated into their society and the Thurion started research on surviving the harsh conditions within the nebula."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:162
@@ -2648,78 +2652,82 @@ msgid "Once countermeasures were invented the Thurion started to quickly expand 
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:163
-msgid "By salvaged the debris they found they were able to expand their infrastructure quickly."
+msgid "By salvaging the debris they found, they were able to expand their infrastructure quickly."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:164
-msgid "Most of their infrastructure is highly automated and operated by uploaded Thurion."
+msgid "Most of their infrastructure is now highly automated and operated by uploaded Thurion."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:165
-msgid "Human resources are rare and thus valuable."
+msgid "Human resources are rare, and thus, extremely valuable."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:167
-msgid "Once the Thurion found a path through the Sol nebula towards the rest of the galaxy the gestalt consciousness decided to prepare a war against the Empire."
+msgid "Once the Thurion found a path through the Sol nebula towards the rest of the galaxy, the gestalt consciousness decided to prepare for war against the Empire."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:168
-msgid "It was influential enough at this point to manipulate the majority of the Thurion into supporting the war."
+msgid "It was influential enough to manipulate the majority of the Thurion into supporting the war."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:169
-msgid "When asked about their reasons most Thurion would tell about the crimes of the Empire and about their utopian ideals which they still believe in but sadly are no longer able to act according to."
+msgid "When asked about their reasons, most Thurion would tell about the crimes of the Empire and then about their utopian ideals."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:170
-msgid "The gestalt consciousness became obsessed by hunger for power and the easiest way to satisfy it is to upload more human minds."
+msgid "Ideals which they still believe in but sadly are no longer able to act according to."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:172
-msgid "Only few of the uploaded Thurion have ever noticed the gestalt consciousness."
+#: dat/naevpedia/lore/factions/thurion.md:171
+msgid "The gestalt consciousness became obsessed by hunger for power and the only way to satisfy it is to upload more human minds."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:173
-msgid "Most of those were manipulated by it to think the gestalt consciousness is harmless or even beneficial and has no influence over individuals."
+msgid "Only few of the uploaded Thurion have ever noticed the gestalt consciousness."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:174
-msgid "The number of uploaded Thurion who know the truth is tiny and the gestalt consciousness is able to use its limited influence over those individuals to stop them from taking any successful actions against it."
+msgid "Most of those were manipulated by it to think the gestalt consciousness is harmless or even beneficial and has no influence over individuals."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:175
-msgid "There is, on the other hand, a larger number of biological Thurion who are aware of the gestalt consciousness and formed a movement to stop it."
+msgid "The number of uploaded Thurion who know the truth is tiny and the gestalt consciousness is able to use its limited influence over those individuals to stop them from taking any successful actions against it."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:176
+msgid "There is, on the other hand, a larger number of biological Thurion who are aware of the gestalt consciousness and formed a movement to stop it."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/thurion.md:177
 msgid "Their options are, however, very limited."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:178
+#: dat/naevpedia/lore/factions/thurion.md:179
 msgid "### Government"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:180
+#: dat/naevpedia/lore/factions/thurion.md:181
 msgid "Originally, the system used by the Thurion was direct democracy where all uploaded Thurion made a majority vote for every single political decision."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:181
+#: dat/naevpedia/lore/factions/thurion.md:182
 msgid "Biological Thurion have no political rights and are treated similar to children."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:183
-msgid "However, as the gestalt consciousness grew stronger more and more decisions were made in accordance with its will."
+#: dat/naevpedia/lore/factions/thurion.md:184
+msgid "However, as the gestalt consciousness grew stronger, more and more decisions were made in accordance with its will."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:184
-msgid "Without most of the uploaded Thurion even noticing, the system turns slowly but surely into a dictatorship of the gestalt consciousness."
+#: dat/naevpedia/lore/factions/thurion.md:185
+msgid "Without most of the uploaded Thurion even noticing, the system turned slowly but surely into a dictatorship of the gestalt consciousness."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/zalek.md:2
 msgid "Great House Za'lek"
 msgstr ""
 
-#: 標準入力:7
+#: stdin:7
 msgid "(Currently Noona Sanderaite)"
 msgstr ""
 
@@ -3137,7 +3145,7 @@ msgid "Interstellar trade became immensely lucrative, new fortunes were made."
 msgstr ""
 
 #: dat/naevpedia/lore/history.md:80
-msgid "But humanity, even in times of prosperity, tends to strife and conflict."
+msgid "But humanity, even in times of prosperity, tends to find strife and conflict."
 msgstr ""
 
 #: dat/naevpedia/lore/history.md:81
@@ -3145,7 +3153,7 @@ msgid "Not only did piracy manifest itself in the vast stretches of space, there
 msgstr ""
 
 #: dat/naevpedia/lore/history.md:82
-msgid "The Federation proved increasingly less capable of dealing with the security concerns and the discontent between the various worlds."
+msgid "The Federation proved increasingly less capable of dealing with the security concerns and the grievances between worlds."
 msgstr ""
 
 #: dat/naevpedia/lore/history.md:83
@@ -3209,7 +3217,7 @@ msgid "But this didn't happen."
 msgstr ""
 
 #: dat/naevpedia/lore/history.md:102
-msgid "A general serving in the Earth Federation called Duram Daedris devised a cunning strategy."
+msgid "An officer serving in the Earth Federation called Duram Daedris devised a cunning strategy."
 msgstr ""
 
 #: dat/naevpedia/lore/history.md:103
@@ -3329,7 +3337,7 @@ msgid "This was several cycles ago."
 msgstr ""
 
 #: dat/naevpedia/lore/history.md:142
-msgid "The galaxy is now an unstable place, full of danger and opportunity. Nobody knows what the future holds, but perhaps one person can make all the difference."
+msgid "The galaxy is now an unstable place, full of danger and opportunity. Nobody knows what the future holds, but perhaps, like Daedris, one person can make all the difference."
 msgstr ""
 
 #: dat/naevpedia/lore/history/incident.md:2
@@ -3529,31 +3537,35 @@ msgid "# Bioships"
 msgstr ""
 
 #: dat/naevpedia/mechanics/bioships.md:7
-msgid "Bioships are hybrid between man-made constructs and living animals, and are tamed and created by the [Soromid Tribes](lore/factions/soromid)."
+msgid "Bioships are a hybrid between man-made constructs and living animals, and are tamed and created by the [Soromid Tribes](lore/factions/soromid)."
 msgstr ""
 
 #: dat/naevpedia/mechanics/bioships.md:8
-msgid "Unlike normal ships, bioships have built-in cores that grow stronger as the ship gains stages."
+msgid "Unlike normal ships, bioships have built-in cores that grow stronger as the ship gains experience."
 msgstr ""
 
 #: dat/naevpedia/mechanics/bioships.md:9
-msgid "Increasing stages can be done by gaining experience, primarily through doing missions with the ship."
+msgid "Experience is gained primarily through doing missions with the ship."
 msgstr ""
 
 #: dat/naevpedia/mechanics/bioships.md:10
-msgid "Other than improving the core outfits, stages allows the ship to learn new skills and become significantly more powerful."
+msgid "By gaining experience, a bio-ship will be able to increase its rank."
 msgstr ""
 
-#: dat/naevpedia/mechanics/bioships.md:12
+#: dat/naevpedia/mechanics/bioships.md:11
+msgid "Other than improving the core outfits, ranks allow the ship to learn new skills and become significantly more powerful."
+msgstr ""
+
+#: dat/naevpedia/mechanics/bioships.md:13
 msgid "## Skills"
 msgstr ""
 
-#: dat/naevpedia/mechanics/bioships.md:14
-msgid "Bioship skills, stages, and other information can be seen from the #bInformation window#0, which can be opened with the <%= \"#b\"..naev.keyGet(\"info\")..\"#0\" %> key."
+#: dat/naevpedia/mechanics/bioships.md:15
+msgid "Bioship skills, ranks, and other information can be seen from the #bInformation window#0, which can be opened with the <%= \"#b\"..naev.keyGet(\"info\")..\"#0\" %> key."
 msgstr ""
 
-#: dat/naevpedia/mechanics/bioships.md:15
-msgid "You can also reset the skills by using experience, although this can lower your stage."
+#: dat/naevpedia/mechanics/bioships.md:16
+msgid "You can also reset the skills by using experience, although this can lower your rank."
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:2
@@ -3598,7 +3610,7 @@ msgid "Looting anything from a ship will lower your reputation with the faction 
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:19
-msgid "This make also make nearby ships angry if they dislike your action."
+msgid "This may also make nearby ships angry if they dislike your action."
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:21
@@ -3650,7 +3662,7 @@ msgid "The cost of repairing a captured ship is the ship's cost, including equip
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:40
-msgid "Additionally, factions do not take kindly to your trying to capture their ships, and you will suffer a large reputation hit when trying to capture ships of a faction."
+msgid "Additionally, factions do not take kindly to your trying to capture their ships, and you will suffer a large reputation hit when trying to capture ships belonging to any faction."
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:41
@@ -3829,7 +3841,7 @@ msgid "Disable damage is the only way to disable ships, by applying stress."
 msgstr ""
 
 #: dat/naevpedia/mechanics/damage.md:23
-msgid "When a ship's stress is larger than the available armour, it becomes disable, and [can be boarded](mechanics/boarding)."
+msgid "When a ship's stress is larger than the available armour, it becomes disabled, and [can be boarded](mechanics/boarding)."
 msgstr ""
 
 #: dat/naevpedia/mechanics/damage.md:24
@@ -3968,7 +3980,7 @@ msgid "Furthermore, slots can have special properties such as:"
 msgstr ""
 
 #: dat/naevpedia/mechanics/equipment.md:20
-msgid "1. **Fighter Bays**: Modifies weapno slots, allowing the installation of fighter bays, and in some cases, do not allow equipping normal weapons."
+msgid "1. **Fighter Bays**: Modifies weapon slots, allowing the installation of fighter bays, and in some cases, do not allow equipping normal weapons."
 msgstr ""
 
 #: dat/naevpedia/mechanics/equipment.md:21
@@ -3984,7 +3996,7 @@ msgid "The equipment window is available when [landing](mechanics/landing) on sp
 msgstr ""
 
 #: dat/naevpedia/mechanics/equipment.md:26
-msgid "It allows you to, not only change ships, but also change the outfits the ship has equipped."
+msgid "It allows you to not only change ships but also to change the outfits the ship has equipped."
 msgstr ""
 
 #: dat/naevpedia/mechanics/equipment.md:27
@@ -4049,234 +4061,234 @@ msgid "A large part of combat is not only direct damage, but electronic warfare 
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:7
-msgid "Electronic warfare plays a large role in determining when ships are seen, how well weapons track or lock onto ships, and stealth abilities of hips."
+msgid "Electronic warfare plays a large role in determining when ships are seen, how well weapons track or lock onto ships, and stealth abilities of ships."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:8
 msgid "There are fundamentally three different levels, from coarse to fine:"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:9
+#: dat/naevpedia/mechanics/ewarfare.md:10
 msgid "1. Detection and hiding"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:10
-msgid "1. Signature and tracking"
-msgstr ""
-
 #: dat/naevpedia/mechanics/ewarfare.md:11
-msgid "1. Stealth"
+msgid "2. Signature and tracking"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:13
+#: dat/naevpedia/mechanics/ewarfare.md:12
+msgid "3. Stealth"
+msgstr ""
+
+#: dat/naevpedia/mechanics/ewarfare.md:14
 msgid "All electronic warfare values are based on distances, since they represent the distance at which the ship is fully detected."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:15
+#: dat/naevpedia/mechanics/ewarfare.md:16
 msgid "## Scanning"
-msgstr ""
-
-#: dat/naevpedia/mechanics/ewarfare.md:17
-msgid "Whenever you target a ship, your ship will begin performing a scan on it."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:18
-msgid "This is indicated by the rotating icon on the ship tab that appears in your ship's interface."
+msgid "Whenever you target a ship, your ship will begin performing a scan on it."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:19
-msgid "When the icon stops rotating, it indicates that the ship has been scanned."
+msgid "This is indicated by the rotating icon on the ship tab that appears in your ship's interface."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:20
-msgid "By pressing the <%= \"#b\"..naev.keyGet(\"scan\")..\"#0\" %> key, you can call up the information about the scanned ship."
+msgid "When the icon stops rotating, it indicates that the ship has been scanned."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:21
+msgid "By pressing the <%= \"#b\"..naev.keyGet(\"scan\")..\"#0\" %> key, you can call up the information about the scanned ship."
+msgstr ""
+
+#: dat/naevpedia/mechanics/ewarfare.md:22
 msgid "This will show you things such as the outfits the ship has and the cargo it is carrying."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:23
+#: dat/naevpedia/mechanics/ewarfare.md:24
 msgid "Similarly, other ships will scan your ship when targeting it."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:24
+#: dat/naevpedia/mechanics/ewarfare.md:25
 msgid "This is usually not a problem, however, if you are carrying outfits or commodities that are illegal to the faction of the ship scanning you, it may bring repercussions."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:25
+#: dat/naevpedia/mechanics/ewarfare.md:26
 msgid "Ships scanning you are shown on the overlay and if you have illegal items, it will temporarily stop [autonav](mechanics/autonav)."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:27
+#: dat/naevpedia/mechanics/ewarfare.md:28
 msgid "## Detection and Hiding"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:29
+#: dat/naevpedia/mechanics/ewarfare.md:30
 msgid "Without modifiers, ships are detected based on [their mass](mechanics/mass)."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:30
+#: dat/naevpedia/mechanics/ewarfare.md:31
 msgid "In particular, they are detected at a distance of `mass^(1.0/1.8) * 350` which amounts to about 6,513 km for a Llama with 193 tonnes of mass, or 43,278 km for a Goddard with 5,834 tonnes of mass."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:31
+#: dat/naevpedia/mechanics/ewarfare.md:32
 msgid "This value gets reduced by the **Detection** bonus of the detecting ship, and multiplied by the **Detection Range** of the ship being detected."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:32
+#: dat/naevpedia/mechanics/ewarfare.md:33
 msgid "Since this value determines the base signature and stealth values of the ship, it can play a significant role in electronic warfare."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:34
+#: dat/naevpedia/mechanics/ewarfare.md:35
 msgid "### Detecting Space Objects and Jumps"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:36
+#: dat/naevpedia/mechanics/ewarfare.md:37
 msgid "For detecting general objects such as jump points or asteroids, the detection distance has a base value of <%= constant( \"EW_JUMPDETECT_DIST\", \"distance\" ) %>."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:37
+#: dat/naevpedia/mechanics/ewarfare.md:38
 msgid "This distance can be modified by values such as how well hidden the jump is."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:38
+#: dat/naevpedia/mechanics/ewarfare.md:39
 msgid "For space objects such as planets or stations the base value is <%= constant( \"EW_SPOBDETECT_DIST\", \"distance\" ) %>, subject to the individual properties of the object."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:40
+#: dat/naevpedia/mechanics/ewarfare.md:41
 msgid "## Signature and Tracking"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:42
-msgid "Electronic warfare plays a critical war in combat too through evasion and tracking."
-msgstr ""
-
 #: dat/naevpedia/mechanics/ewarfare.md:43
-msgid "A ship's signature range represents how well a ship can avoid being tracked by enemy weapons and is 75% of the detection value."
+msgid "Electronic warfare plays a critical part in combat too through evasion and tracking."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:44
-msgid "The value can be further modified by the **Signature Range** modifier of the ship, and decreased by the **Tracking** bonus of the enemy ship."
+msgid "A ship's signature range represents how well a ship can avoid being tracked by enemy weapons and is 75% of the detection value."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:45
+msgid "The value can be further modified by the **Signature Range** modifier of the ship, and decreased by the **Tracking** bonus of the enemy ship."
+msgstr ""
+
+#: dat/naevpedia/mechanics/ewarfare.md:46
 msgid "Ships will be able to identify other ships if they are closer than their signature range, otherwise they will be shown an \"Unknown\"."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:47
+#: dat/naevpedia/mechanics/ewarfare.md:48
 msgid "Almost all forward weapons have an amount of swivel, which allows them to aim slightly at the target."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:48
+#: dat/naevpedia/mechanics/ewarfare.md:49
 msgid "Furthermore, turret weapons can aim the entire 360° and shoot at ships in any directions."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:49
+#: dat/naevpedia/mechanics/ewarfare.md:50
 msgid "Weapons try to compensate for target velocities for accurate shots, however, this is reduced based on the signature range of the target ship."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:50
+#: dat/naevpedia/mechanics/ewarfare.md:51
 msgid "In particular, weapons have a minimum tracking range, and maximum tracking range."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:51
+#: dat/naevpedia/mechanics/ewarfare.md:52
 msgid "Any ship with a signature range above the maximum tracking range will be aimed at nearly perfectly, barring sudden accelerations."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:52
-msgid "On the other hand, any ship with a signature range below the minimum tracking range will not be locked onto, and the shoots will aim at the current position, not correcting velocity."
+#: dat/naevpedia/mechanics/ewarfare.md:53
+msgid "On the other hand, any ship with a signature range below the minimum tracking range will not be locked onto, and the shots will aim at the current position, not correcting for velocity."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:53
+#: dat/naevpedia/mechanics/ewarfare.md:54
 msgid "For in-between values it will be interpolated linearly."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:55
+#: dat/naevpedia/mechanics/ewarfare.md:56
 msgid "Similarly, the lock-on time of launchers is modified by the signature range of the target and tracking values of the launcher."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:56
+#: dat/naevpedia/mechanics/ewarfare.md:57
 msgid "If the target has a signature range above the maximum tracking range, the lock-on time will be unmodified."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:57
-msgid "If the target has a signature range below the maximum tracking range, it will not be able to lock on."
+#: dat/naevpedia/mechanics/ewarfare.md:58
+msgid "If the target has a signature range below the minimum tracking range, it will not be able to lock on."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:58
+#: dat/naevpedia/mechanics/ewarfare.md:59
 msgid "Similar to bolt weapons, in-between values will be interpolated linearly."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:60
+#: dat/naevpedia/mechanics/ewarfare.md:61
 msgid "## Stealth"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:62
+#: dat/naevpedia/mechanics/ewarfare.md:63
 msgid "The stealth range of a ship is based on 25% of the detection range."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:63
+#: dat/naevpedia/mechanics/ewarfare.md:64
 msgid "If there are no ships within the stealth range, the ship will be able to enter stealth mode."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:64
+#: dat/naevpedia/mechanics/ewarfare.md:65
 msgid "In stealth mode, the ship will be undetectable, however, it will have its [movement](mechanics/movement) significantly reduced."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:65
+#: dat/naevpedia/mechanics/ewarfare.md:66
 msgid "In particular, acceleration and turn speed will be reduced by 80%, while maximum speed will be reduced by 50%."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:66
+#: dat/naevpedia/mechanics/ewarfare.md:67
 msgid "The minimum range of stealth is <%= constant( \"STEALTH_MIN_DIST\", \"distance\" ) %>, but this can be lowered by being in an asteroid field, being near a jump point, or system interference."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:68
+#: dat/naevpedia/mechanics/ewarfare.md:69
 msgid "### Jumping with Stealth"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:70
+#: dat/naevpedia/mechanics/ewarfare.md:71
 msgid "When in stealth mode, it is possible to start hyperspace jumps at three times the maximum normal distance from jump points."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:71
+#: dat/naevpedia/mechanics/ewarfare.md:72
 msgid "Additionally, when entering a system in stealth mode, the ship will drop out of hyperspace sooner instead of near the jump point."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:72
+#: dat/naevpedia/mechanics/ewarfare.md:73
 msgid "Being within <%= constant( \"EW_JUMP_BONUS_RANGE\", \"distance\" ) %> of jump points also lowers the stealth range by 50%, making it significantly easier to stealth."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:74
+#: dat/naevpedia/mechanics/ewarfare.md:75
 msgid "## Scanning"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:76
+#: dat/naevpedia/mechanics/ewarfare.md:77
 msgid "Like the detection range, the scanning time of a ship is determined by its mass."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:77
+#: dat/naevpedia/mechanics/ewarfare.md:78
 msgid "The time it takes to scan a ship is determined by `mass^(1/3) * 1.25`, which amounts to 7.22 seconds for a Llama with 193 tonnes of mass or 22.5 seconds for a Goddard with 5,834 tonnes of mass."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:78
+#: dat/naevpedia/mechanics/ewarfare.md:79
 msgid "This value is divided by the **Detection Range** and **Signature Range** values of the ship, and multiplied **Scanned Speed** of the ship."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:80
+#: dat/naevpedia/mechanics/ewarfare.md:81
 msgid "## System Modifiers"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:82
+#: dat/naevpedia/mechanics/ewarfare.md:83
 msgid "System modifiers such as asteroid fields and interference can further affect electronic warfare."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:83
+#: dat/naevpedia/mechanics/ewarfare.md:84
 msgid "In particular, being in an asteroid will affect the detection range, and consequently, signature range and stealth range depending on the density of asteroids."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:84
+#: dat/naevpedia/mechanics/ewarfare.md:85
 msgid "Furthermore, the system interference wil lower signature and stealth ranges, but not the detection range, making it harder to track and identify ships."
 msgstr ""
 
@@ -4335,7 +4347,7 @@ msgid "# Hailing"
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:6
-msgid "Communicating with ships or spaceportscan be a good way to request assistance, discourage them from bribing your, or even obtaining information."
+msgid "Communicating with ships or spaceports can be a good way to request assistance, discourage them from attacking your ship through bribing, or even obtaining information."
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:7
@@ -4355,7 +4367,7 @@ msgid "## Requesting Fuel"
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:13
-msgid "When you run out of [fuel](mechanics/hyperspace), some good samaritarians will offer to refuel you, usually in exchange for credits."
+msgid "When you run out of [fuel](mechanics/hyperspace), some good samaritans will offer to refuel you, usually in exchange for credits."
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:14
@@ -4367,7 +4379,7 @@ msgid "## Bribing"
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:18
-msgid "When dealing with hostile ships, it is sometimes able to bribe them and their companions."
+msgid "When dealing with hostile ships, you are sometimes able to bribe them and their companions."
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:19
@@ -4602,7 +4614,7 @@ msgid "Here you can buy or sell commodities."
 msgstr ""
 
 #: dat/naevpedia/mechanics/landing.md:59
-msgid "The price will depend on the location, which you compare on [the universe map](mechanics/map)."
+msgid "The price will depend on the location, which you can compare on [the universe map](mechanics/map)."
 msgstr ""
 
 #: dat/naevpedia/mechanics/landing.md:60
@@ -4885,7 +4897,7 @@ msgid "As the mass increases, a ship's [visibility and signature](mechanics/ewar
 msgstr ""
 
 #: dat/naevpedia/mechanics/mass.md:9
-msgid "Furthermore, ships have a mass limit, determined fundamentally by the core engine."
+msgid "Furthermore, ships have a mass limit, determined by the core engine."
 msgstr ""
 
 #: dat/naevpedia/mechanics/mass.md:10
@@ -5019,7 +5031,7 @@ msgid "# Missions"
 msgstr ""
 
 #: dat/naevpedia/mechanics/missions.md:6
-msgid "Many different factions or individuals will offer you missions where you can help them in exchange for rewards."
+msgid "Many different factions and individuals will offer you missions where you can help them in exchange for rewards."
 msgstr ""
 
 #: dat/naevpedia/mechanics/missions.md:7
@@ -5162,7 +5174,7 @@ msgid "Your reputation is on a per-system basis, however, neighbouring systems o
 msgstr ""
 
 #: dat/naevpedia/mechanics/reputation.md:12
-msgid "By default, whenever will get a message whenever there is a reputation change, but you can modify this from the settings in the #binformation window#0 that you can open with the <%= \"#b\"..naev.keyGet(\"info\")..\"#0\" %> key."
+msgid "By default, you will get a message whenever there is a reputation change, but you can modify this from the settings in the #binformation window#0 that you can open with the <%= \"#b\"..naev.keyGet(\"info\")..\"#0\" %> key."
 msgstr ""
 
 #: dat/naevpedia/mechanics/reputation.md:13
@@ -5267,7 +5279,7 @@ msgid "* [Mass](mechanics/movement): How heavy the ship is. If the mass of a shi
 msgstr ""
 
 #: dat/naevpedia/mechanics/shipstats.md:27
-msgid "* [Jump Time](mechanics/time): Determines how long much [time](mechanics/time) it takes for the ship to go through [hyperspace](mechanics/hyperspace)."
+msgid "* [Jump Time](mechanics/time): Determines how much [time](mechanics/time) it takes for the ship to go through [hyperspace](mechanics/hyperspace)."
 msgstr ""
 
 #: dat/naevpedia/mechanics/shipstats.md:28
@@ -5315,7 +5327,7 @@ msgid "## Health Stats"
 msgstr ""
 
 #: dat/naevpedia/mechanics/shipstats.md:44
-msgid "* [Absorption](mechanics/damage): Determines how much incoming damage is mitigated, however, can be overcome by weapon penetration."
+msgid "* [Absorption](mechanics/damage): Determines how much incoming damage is mitigated, however, this can be overcome by weapon penetration."
 msgstr ""
 
 #: dat/naevpedia/mechanics/shipstats.md:45
@@ -5350,111 +5362,111 @@ msgstr ""
 msgid "Universal Synchronized Time (UST)"
 msgstr ""
 
-#: 標準入力:5
+#: stdin:5
 msgid "UST unit"
 msgstr ""
 
-#: 標準入力:5
+#: stdin:5
 msgid "Abbreviation"
 msgstr ""
 
-#: 標準入力:5
+#: stdin:5
 msgid "Length of Time"
 msgstr ""
 
-#: 標準入力:5
+#: stdin:5
 msgid "Equal to (in Earth time)"
 msgstr ""
 
-#: 標準入力:5
+#: stdin:5
 msgid "Used like"
 msgstr ""
 
-#: 標準入力:6
+#: stdin:6
 msgid "Seconds"
 msgstr ""
 
-#: 標準入力:6
+#: stdin:6
 msgid "\"s\""
 msgstr ""
 
-#: 標準入力:6
+#: stdin:6
 msgid "1 Earth second"
 msgstr ""
 
-#: 標準入力:6
+#: stdin:6
 msgid "1 second"
 msgstr ""
 
-#: 標準入力:7
+#: stdin:7
 msgid "Hectoeconds"
 msgstr ""
 
-#: 標準入力:7 標準入力:9 標準入力:10
+#: stdin:7 stdin:9 stdin:10
 msgid "N/A"
 msgstr ""
 
-#: 標準入力:7
+#: stdin:7
 msgid "100 seconds"
 msgstr ""
 
-#: 標準入力:7
+#: stdin:7
 msgid "1 minute and 40 seconds"
 msgstr ""
 
-#: 標準入力:7
+#: stdin:7
 msgid "Minutes"
 msgstr ""
 
-#: 標準入力:8
+#: stdin:8
 msgid "Periods"
 msgstr ""
 
-#: 標準入力:8
+#: stdin:8
 msgid "\"p\""
 msgstr ""
 
-#: 標準入力:8
+#: stdin:8
 msgid "10,000 seconds"
 msgstr ""
 
-#: 標準入力:8
+#: stdin:8
 msgid "2 hours and 47 minutes"
 msgstr ""
 
-#: 標準入力:8
+#: stdin:8
 msgid "Hours"
 msgstr ""
 
-#: 標準入力:9
+#: stdin:9
 msgid "Decaperiods"
 msgstr ""
 
-#: 標準入力:9
+#: stdin:9
 msgid "10 periods"
 msgstr ""
 
-#: 標準入力:9
+#: stdin:9
 msgid "28 hours"
 msgstr ""
 
-#: 標準入力:9
+#: stdin:9
 msgid "Days"
 msgstr ""
 
-#: 標準入力:10
+#: stdin:10
 msgid "Cycles"
 msgstr ""
 
-#: 標準入力:10
+#: stdin:10
 msgid "5,000 periods"
 msgstr ""
 
-#: 標準入力:10
+#: stdin:10
 msgid "579 days"
 msgstr ""
 
-#: 標準入力:10
+#: stdin:10
 msgid "Years"
 msgstr ""
 
@@ -5657,7 +5669,7 @@ msgid "1. **Default**: Behaviour depends on whether the key is tapped or held. W
 msgstr ""
 
 #: dat/naevpedia/mechanics/weaponsets.md:38
-msgid "1. **Hold**: Activates the bound outfits when the button only when held, and releasing will stop the outfits."
+msgid "1. **Hold**: Activates the bound outfits of the button only when held, and releasing will stop the outfits."
 msgstr ""
 
 #: dat/naevpedia/mechanics/weaponsets.md:39
@@ -6021,7 +6033,7 @@ msgid "# Fabricators"
 msgstr ""
 
 #: dat/naevpedia/lore/fabricators.md:6
-msgid "There are a diversity of fabricators that produce different ships and outfits."
+msgid "There is a diversity of fabricators that produce different ships and outfits."
 msgstr ""
 
 #: dat/naevpedia/lore/fabricators.md:8
@@ -6069,7 +6081,7 @@ msgid "## Houses"
 msgstr ""
 
 #: dat/naevpedia/lore/fabricators.md:22
-msgid "* **House Goddard**: Makes the [Goddard](ships/goddard) and involved in the design of [House Dvaered](lore/factions/dvaered) ships."
+msgid "* **House Goddard**: Makes the [Goddard](ships/goddard) and is involved in the design of [House Dvaered](lore/factions/dvaered) ships."
 msgstr ""
 
 #: dat/naevpedia/lore/fabricators.md:23
@@ -6105,7 +6117,7 @@ msgid "* **Thurion Shipyards**: Produce ships with advanced interfaces for digit
 msgstr ""
 
 #: dat/naevpedia/lore/fabricators.md:35
-msgid "* **Proteron**: Although they use an antiquated fabrication methods, they have refined them to a point they are extremely competitive with other ships."
+msgid "* **Proteron**: Although they use an antiquated fabrication methods, they have refined them to the point they are extremely competitive with other ships."
 msgstr ""
 
 #: dat/naevpedia/lore/fabricators.md:38
@@ -6703,23 +6715,23 @@ msgstr ""
 msgid "Galactic Space Pirates"
 msgstr ""
 
-#: 標準入力:7
+#: stdin:7
 msgid "???"
 msgstr ""
 
-#: 標準入力:12
+#: stdin:12
 msgid "Black Lotus"
 msgstr ""
 
-#: 標準入力:13
+#: stdin:13
 msgid "Wild Ones"
 msgstr ""
 
-#: 標準入力:14
+#: stdin:14
 msgid "Raven Clan"
 msgstr ""
 
-#: 標準入力:15
+#: stdin:15
 msgid "Dreamer Clan"
 msgstr ""
 
@@ -7057,7 +7069,7 @@ msgid "As such, a subject was often able and willing to work at optimal performa
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:33
-msgid "A Proteron citizen's life was thus quite a satisfying one, though excitement otherwise than the terminal kind was rare."
+msgid "A Proteron citizen's life was thus quite a satisfying one, though excitement other than the terminal kind was rare."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:35
@@ -7105,7 +7117,7 @@ msgid "Each Autarch was expected to meet or exceed these goals, and those Autarc
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:48
-msgid "For day-to-day and urgent decisions that could not wait for many cycles, and further to ensure that the Circle did not become complacent, the Proteron also had a High Autarch."
+msgid "For period-to-period and urgent decisions that could not wait for many cycles, and further to ensure that the Circle did not become complacent, the Proteron also had a High Autarch."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:49
@@ -7145,7 +7157,7 @@ msgid "Soon, however, the scope of the project expanded as its overseers came to
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:61
-msgid "Within a decade of its inception, the worlds assigned to Project Proteron numbered more than a dozen."
+msgid "Within a decacycle of its inception, the worlds assigned to Project Proteron numbered more than a dozen."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:63
@@ -7165,7 +7177,7 @@ msgid "The concepts of personal liberties and privacy became more and more secon
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:68
-msgid "The expansion and results of the Project led the then Emperor to promote Project Proteron from an Empire-commissioned Project to a full-fledged, independent Great House."
+msgid "The expansion and results of the Project led the Emperor to promote Project Proteron from an Empire-commissioned Project to a fully-fledged, independent Great House."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:69
@@ -7197,7 +7209,7 @@ msgid "A well-oiled military machine and intelligence agency were created from s
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:78
-msgid "In only a few decades, House Proteron had become a powerful diplomatic and economic factor in the galaxy."
+msgid "In only a few decacycles, House Proteron had become a powerful diplomatic and economic factor in the galaxy."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:80
@@ -7213,15 +7225,15 @@ msgid "Rather than reassigning the workers and improving their living standards 
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:83
-msgid "In addition, it had been centuries since the Za'lek had given more than the cursory nod to Imperial authority."
+msgid "In addition, it had been centacycles since the Za'lek had given more than the cursory nod to Imperial authority."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:84
-msgid "The House generally blamed [the Empire](lore/factions/empire)'s social structure for its inability to command the loyalty of its subjects."
+msgid "The Proteron generally blamed [the Empire](lore/factions/empire)'s social structure for its inability to command the loyalty of its subjects."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:85
-msgid "The House, on the other hand, had grown by leaps and bounds, claiming more and more space for their systems, even bordering Sol."
+msgid "Their House, on the other hand, had grown by leaps and bounds, claiming more and more space for their systems, even bordering Sol."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:86
@@ -7245,7 +7257,7 @@ msgid "It was clear to the Circle that should [the Empire](lore/factions/empire)
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:93
-msgid "Knowing that they could not at the time resist the entire might of [the Empire](lore/factions/empire)'s infrastructure, the Proteron decided to plant their agents in every major Imperial agency while publicly grovelling at [the Empire](lore/factions/empire)'s feet."
+msgid "Knowing that they could not resist the entire might of [the Empire](lore/factions/empire)'s infrastructure, the Proteron decided to plant their agents in every major Imperial agency while publicly grovelling at [the Empire](lore/factions/empire)'s feet."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:94
@@ -7257,102 +7269,106 @@ msgid "Now having loosened their leash greatly, they set out to prepare for a ga
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:96
-msgid "While they worked, the shape of the galaxy was changing, so to speak."
+msgid "While they worked, however, the shape of the galaxy was changing."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:98
-msgid "New advances in quantum engineering led to the development of quantum transtators and translators, alternative travel engines capable of bypassing warp points and so changing conventional military doctrine, which recommended fortifying choke point systems on the warp network."
+msgid "New advances in quantum engineering led to the development of quantum transtators and translators."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:99
-msgid "Expecting correctly that [the Empire](lore/factions/empire) had not even thought of this change, the Proteron decided to bypass their defences using the new hypergate being built in Sol."
+msgid "Alternative travel engines were developed that were capable of bypassing warp points, challenging conventional military doctrine which recommended fortifying choke point systems on the warp network."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:100
-msgid "After all, once the Emperor and their successors were in their hands, the war would be essentially meaningless."
+msgid "Expecting correctly that [the Empire](lore/factions/empire) had not even thought of this change, the Proteron decided to bypass their defences using the new hypergate being built in Sol."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:101
-msgid "They built a hypergate in secret in their home system, Protera."
+msgid "After all, once the Emperor and their successors were in their hands, the war would be essentially meaningless."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:102
-msgid "They seceded from Imperial authority as soon as the gate was built and moved a small fleet as a feint into the classical defences."
+msgid "They built a hypergate in secret in their home system, Protera."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:103
-msgid "When [the Empire](lore/factions/empire) took the bait, the Sovereign Proteron Autarchy, as they now styled themselves, sent the most massive fleet ever seen through their hypergate."
+msgid "They seceded from Imperial authority as soon as the gate was built and moved a small fleet as a feint into the classical defences."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/proteron.md:105
+#: dat/naevpedia/lore/factions/proteron.md:104
+msgid "When [the Empire](lore/factions/empire) took the bait, the Sovereign Proteron Autarchy, as they now called themselves, sent the most massive fleet ever seen through their hypergate."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/proteron.md:106
 msgid "Then [the Incident](lore/history/incident) occurred."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/proteron.md:107
+#: dat/naevpedia/lore/factions/proteron.md:108
 msgid "After the dust settled, Protera was inaccessible, Sol was unreachable, their planets, factories and fleets had been decimated and the Circle was mostly gone."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/proteron.md:108
-msgid "Thankfully, enough of the hierarchy remained that society did not dissolve."
-msgstr ""
-
 #: dat/naevpedia/lore/factions/proteron.md:109
-msgid "The Proteron scientists set out to determine the cause of [the Incident](lore/history/incident), and their best answer is that the large number of ships travelling all at once through the hypergate overloaded it, causing Sol to explode with a huge mass of material, causing a chain reaction that obliterated systems and changed the warp network."
+msgid "Thankfully, enough of the hierarchy remained that Proteron society did not dissolve."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:110
-msgid "On the other hand, Protera was visible with no occlusion by the Nebula, but every scout they sent started to behave erratically and eventually stop communicating."
+msgid "The Proteron scientists set out to determine the cause of [the Incident](lore/history/incident), and their best answer is that the large number of ships travelling all at once through the hypergate overloaded it, causing Sol to explode with a huge mass of material, causing a chain reaction that obliterated systems and changed the warp network."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:111
+msgid "On the other hand, Protera was visible with no occlusion by the Nebula, but every scout they sent started to behave erratically and eventually stop communicating."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/proteron.md:112
 msgid "Seeing this, the new Circle issued a moratorium on exploring the systems toward Protera."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/proteron.md:113
-msgid "Armed with the knowledge of their situation and their error in the first attempt, the tenacious Sovereign Proteron Autarchy is back on track to take over [the Empire](lore/factions/empire)."
-msgstr ""
-
 #: dat/naevpedia/lore/factions/proteron.md:114
-msgid "They are already on their way to build an improved hypergate that will not fail like the last one."
+msgid "Armed with the knowledge of their situation and their error in the first attempt, the tenacious Sovereign Proteron Autarchy is continuing pursuit of its goal to take over [the Empire](lore/factions/empire)."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/proteron.md:116
+#: dat/naevpedia/lore/factions/proteron.md:115
+msgid "They are already constructing an improved hypergate that will not fail like the last one did."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/proteron.md:117
 msgid "## Proteron military tactics"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/proteron.md:118
+#: dat/naevpedia/lore/factions/proteron.md:119
 msgid "The Proteron favour pilots on the larger spaceships and keep smaller ships unmanned."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/proteron.md:119
+#: dat/naevpedia/lore/factions/proteron.md:120
 msgid "Extensive simulations, dogfights and mock battles revealed that fighters and bombers were largely outclassed by a fleet of unmanned drones, being harder to replace and less maneuverable."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/proteron.md:120
-msgid "This means that their fleet strategy is not easy to adjust on the fly, so they developed the Euler, a fast and stealthy scout ship to ensure that there are no surprises facing the fleet when it commits to an attack."
-msgstr ""
-
 #: dat/naevpedia/lore/factions/proteron.md:121
-msgid "Similarly, it is illogical to commit before probing the enemy's weaknesses, so fleets consisting of smaller ships harass and draw out enemy fleets until the capital ships and their fleets of drones can reduce the enemy to dust."
+msgid "This means that their fleet strategy is not easily adjusted on the fly, so they developed the Euler, a fast and stealthy scout ship to ensure that there are no surprises facing the fleet when it commits to an attack."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:122
-msgid "At the same time, a ship must be either capable of damage or of movement, else it is merely a sitting duck."
+msgid "Similarly, it is illogical to commit before probing the enemy's weaknesses, so fleets consisting of smaller ships harass and draw out enemy fleets until the capital ships and their fleets of drones can reduce the enemy to dust."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:123
+msgid "Proteron strategists understand a ship must be either capable of damage or of movement, else it is merely a sitting duck."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/proteron.md:124
 msgid "Thus, their destroyers and corvettes are faster than expected for ships of their size."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/proteron.md:125
+#: dat/naevpedia/lore/factions/proteron.md:126
 msgid "Further, the fleet does not believe that the pilot should hesitate to sacrifice themselves to help the fleet on the path to victory."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/proteron.md:126
-msgid "As such, the Proteron largely follow a doctrine of no retreat to encourage pilots to fight to the death unless indicated otherwise ordered."
+#: dat/naevpedia/lore/factions/proteron.md:127
+msgid "As such, the Proteron largely follow a doctrine of no retreat to encourage pilots to fight to the death unless otherwise ordered."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/proteron.md:127
+#: dat/naevpedia/lore/factions/proteron.md:128
 msgid "The larger ships with the pilots are therefore also built to outlast any enemy in damage-dealing capability."
 msgstr ""
 
@@ -8140,19 +8156,19 @@ msgid "### Project Thurion"
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:23
-msgid "Project Thurion was a secret Great Project founded by [the Empire](lore/factions/empire) with the purpose of ascending the human existence to the next evolutionary stage with the use of genetic engineering, cybernetics and brain-computer interfaces."
+msgid "Project Thurion was a secret Great Project founded by [the Empire](lore/factions/empire) with the purpose of ascending the human existence to the next evolutionary plane with the use of genetic engineering, cybernetics and brain-computer interfaces."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:24
-msgid "Needless to say, the research conducted was morally questionable and barely legal."
+msgid "The research to be conducted to achieve this would obviously be morally questionable and barely legal."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:25
-msgid "Therefore, the project was top secret, with only few people knowing about the closely guarded project."
+msgid "Therefore, the project was made top secret, with only a few people knowing the project existed and fewer still knowing the scope of it."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:26
-msgid "The location of the project was chosen to be a remote planet which had been just recently discovered and lies beyond the periphery of known space."
+msgid "The location of the project was chosen to be a remote planet which had been just recently discovered and laid beyond the periphery of known space."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:27
@@ -8160,15 +8176,15 @@ msgid "The whole area was declared a military exclusion zone to prevent civilian
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:29
-msgid "The scientists involved with the project received generous funding and top tier equipment."
+msgid "The scientists involved with the project received generous funding and state-of-the-art equipment."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:30
-msgid "Yet there has been only little progress and an increasing number of casualties."
+msgid "Yet there was little progress and an ever-increasing number of casualties."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:31
-msgid "[The Empire](lore/factions/empire) grew impatient and increased pressure on the scientists while also giving them greater freedoms."
+msgid "[The Empire](lore/factions/empire) grew impatient and increased pressure on the scientists to produce results, simultaneously granting greater freedom and moral ambiguity."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:32
@@ -8176,19 +8192,19 @@ msgid "The experiments turned more and more inhuman."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:33
-msgid "They focused on their brain-computer interfaces and the amalgamation of the human mind and machine intelligence because they made previously some progress on understanding the human consciousness."
+msgid "Citing previous progress made in the understanding of human consciousness, they focused on their brain-computer interfaces, the amalgamation of the human mind, and machine intelligence."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:34
-msgid "The work on cybernetics and genetic engineering was scratched because it led to too many incidents and casualties."
+msgid "The work on cybernetics and genetic engineering was scrapped due to being the cause of too many incidents and casualties."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:36
-msgid "Ultimately, they succeeded in creating specialized hardware capable of simulating a human brain and the necessary technology to digitalize a human brain which involves the use of brain-computer interfaces and destructive tomography methods."
+msgid "Ultimately, they succeeded in creating specialized hardware capable of simulating a human brain and the necessary technology to digitalize a human brain which involved the use of brain-computer interfaces and destructive tomography methods."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:37
-msgid "Needless to say that the procedure did not work out well for the early test subjects."
+msgid "The procedure did not work out well for the early test subjects."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:38
@@ -8196,19 +8212,19 @@ msgid "In the end, however, they were able to reliably upload a human mind to sp
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:39
-msgid "Naturally, this has some implication."
+msgid "Naturally, this has some implications."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:40
-msgid "For instance, the uploaded individuals would be immortal, but as they would exist only within a simulation, their perception of the outside world and ultimately their reality can be manipulated at will of whoever operates the system."
+msgid "The uploaded individuals would be immortal, but as they would exist only within a simulation, their perception of the outside world and ultimately their reality could be manipulated at will of whoever operated the system."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:41
-msgid "Only by now did the scientists realize which consequences their findings could have, and heated discussions followed."
+msgid "It was only after achieving their goal that the scientists realized the consequences their findings could have."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:42
-msgid "In the end everyone agreed to keep their true findings a secret."
+msgid "Heated discussions followed, and in the end everyone agreed to keep their true findings a secret."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:44
@@ -8220,23 +8236,23 @@ msgid "In UST 125 it was decided that the project would be terminated at the end
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:46
-msgid "That involves 'sterilization' of the colony where the research has been conducted, i.e. they planned to nuke the colony killing all personnel except some high ranking military officers in the process."
+msgid "This included 'sterilization' of the colony where the research has been conducted via nuclear holocaust killing all personnel except some high ranking military officers."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:47
-msgid "The project has been highly unethical, and the results could not justify any of the crimes committed."
+msgid "The project had been highly unethical, and the results presented would not justify any of the crimes committed."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:48
-msgid "Thus, [the Empire](lore/factions/empire) decided to purge project Thurion from history."
+msgid "Thus, [the Empire](lore/factions/empire) decided to purge Project Thurion from history."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:52
-msgid "The scientists, however, found out about the plan with just enough time left to come up with a plan."
+msgid "The scientists, however, found out about the sterilization order with just enough time left to come up with a plan."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:53
-msgid "The system has been quarantined by then, and any attempt to flee would be pointless."
+msgid "The system had been quarantined by then, and any attempt to flee would be pointless."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:54
@@ -8248,7 +8264,7 @@ msgid "The scientists that could were uploaded, and they went into hibernation, 
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:56
-msgid "The bunker was never found by [the Empire](lore/factions/empire), which had also survived the passage of time."
+msgid "The bunker was never found by [the Empire](lore/factions/empire)."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:58
@@ -8256,11 +8272,11 @@ msgid "### Revival"
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:60
-msgid "During the sterilization of Project Thurion, many systems had their planets indiscriminately bombarded and razed, and entry was indefinitely blocked."
+msgid "During the sterilization of Project Thurion, system entry was indefinitely blocked."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:61
-msgid "Initially, scouts periodically scanned the systems, but over time, orders were forgotten and the systems were largely abandoned."
+msgid "Initially, scouts periodically scanned the system, but over time, orders were forgotten and the system was largely abandoned."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:62
@@ -8272,7 +8288,7 @@ msgid "They found themselves in a large empty swathe of space all to themselves,
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:65
-msgid "Although taking great care to not raise suspicions, they were able to establish the first large node structures to support the Uploaded at full capacity."
+msgid "Taking great care to not raise suspicions, they were able to establish the first large node structures to support the Uploaded at full capacity."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:66
@@ -8320,267 +8336,267 @@ msgid "Currently, the Thurion have a strong significant presence in the deep Neb
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:81
-msgid "While the rest of the universe is still oblivious to their presence, they feel like it is almost time to make their presence once more known to the universe."
+msgid "While the rest of the universe is still oblivious to their presence, there is growing talk that it is almost time to make their presence known once more to the universe."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:85
-msgid "The scientists, however, found out about the plan with just enough time left to come up with a plan."
+msgid "The scientists, however, found out about the sterilization order with just enough time left to come up with a plan."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:86
-msgid "The system has been quarantined by then."
+msgid "The system had been quarantined by then, and any attempt to flee would be pointless."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:87
-msgid "Any attempt to flee would be pointless."
+msgid "Instead, they used their last resources to build a small bunker inside an asteroid, and outlast [the Empire](lore/factions/empire)."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:88
-msgid "Instead, they used their resources to build a small bunker inside an asteroid."
+msgid "Too small for people to survive, the bunker would hold the data of uploaded individuals, a few devices that could run an uploaded human mind (powered down) and the machines necessary for the uploading process as well as documentation of their work."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:89
-msgid "Too small for people to survive, the bunker would hold the data of uploaded individuals, a few devices that can run an uploaded human mind (powered down) and the machines necessary for the uploading process as well as documentation of their work."
+msgid "They made sure that the bunker was hidden well and hoped the Empire would not notice it."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:90
-msgid "They made sure that the bunker is hidden well and hoped the Empire would not notice it."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/thurion.md:91
 msgid "There was, however, a traitor who did not want to be uploaded and thought the Empire would let him live in exchange for information on the plan."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:92
+#: dat/naevpedia/lore/factions/thurion.md:91
 msgid "Of course, the Empire officials were set on carrying out their orders strictly."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:93
-msgid "The colony has been destroyed and the military began to search for the hidden bunker."
+#: dat/naevpedia/lore/factions/thurion.md:92
+msgid "The colony had been destroyed and the military began to search for the hidden bunker."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:94
+#: dat/naevpedia/lore/factions/thurion.md:93
 msgid "They did not manage to find it, however, as it was hidden too well."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:95
+#: dat/naevpedia/lore/factions/thurion.md:94
 msgid "After one cycle they gave up on the search."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:96
-msgid "The emperor ordered that the systems remains quarantined for at least the next 400 cycles."
+#: dat/naevpedia/lore/factions/thurion.md:95
+msgid "The emperor ordered that the system remained quarantined for at least the next 400 cycles."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:97
+#: dat/naevpedia/lore/factions/thurion.md:96
 msgid "And so access to that system was not possible and the hidden bunker was never to be found."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:99
+#: dat/naevpedia/lore/factions/thurion.md:98
 msgid "The second part of the scientists' plan was the activation of a transmitter that reveals the position of the bunker."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:100
+#: dat/naevpedia/lore/factions/thurion.md:99
 msgid "They assumed that the Empire would forget about project Thurion after some time and programmed the transmitter to activate after 200 cycles."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:101
+#: dat/naevpedia/lore/factions/thurion.md:100
 msgid "By that time, however, the system was still under lock down and Empire fleets occasionally patrolled the system."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:102
-msgid "Soon enough they would find the hidden bunker."
+#: dat/naevpedia/lore/factions/thurion.md:101
+msgid "It was only a matter of time before they would find the hidden bunker."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:103
+#: dat/naevpedia/lore/factions/thurion.md:102
 msgid "But in [UST 307](mechanics/time) [the Dvaered revolts](lore/history) occurred."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:104
-msgid "Only the emperor himself knew about project Thurion."
+#: dat/naevpedia/lore/factions/thurion.md:103
+msgid "Only the Emperor knew the truth about Project Thurion and unable to trust anyone else with the information, could not justify a continued search."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:105
-msgid "The commanding general assumed that the reason for the patrols was to prevent pirates from settling in the area and decided the fleet should be deployed in the conflict with the Dvaered."
+#: dat/naevpedia/lore/factions/thurion.md:104
+msgid "The military's commanding officer assumed that the reason for the patrols was to prevent pirates from settling in the area and decided the fleet would be better utilized being deployed in the conflict with the Dvaered."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/thurion.md:106
+msgid "Eventually, instead of an Empire patrol, scavengers found the bunker."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:107
-msgid "In the end, instead of an Empire patrol some scavengers found the bunker."
+msgid "They were greeted by a hologram that claimed to be a human."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:108
-msgid "They were greeted by a hologram that not only claimed to be a human but also sounded pretty much like a real human."
+msgid "The scavengers assumed the technology would be pretty valuable and sold it to the highest bidder, a rich aristocrat."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:109
-msgid "The scavengers assumed the technology could be pretty valuable and sold it to the highest bidder which happened to be a rich aristocrat."
+msgid "The uploaded scientists easily won the aristocrat over by promising him power and immortality."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:110
-msgid "The uploaded scientists had an easy time to win the aristocrat over by promising him power and immortality."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/thurion.md:111
 msgid "They used his capital to build up a sect surrounded in secrecy."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:112
+#: dat/naevpedia/lore/factions/thurion.md:111
 msgid "The inner circle was formed by the uploaded individuals."
 msgstr ""
 
+#: dat/naevpedia/lore/factions/thurion.md:112
+msgid "Novices and outsiders would not know about the upload process and only heard rumours about some kind of ascendance."
+msgstr ""
+
 #: dat/naevpedia/lore/factions/thurion.md:113
-msgid "Novices would not know about the upload process and only heard rumours about some kind of ascendance."
+msgid "The Thurion, though, keep their promises and do upload trustworthy members."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:114
-msgid "The Thurion actually hold their promise and upload trustworthy members."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/thurion.md:116
+#: dat/naevpedia/lore/factions/thurion.md:115
 msgid "After some time the sect became too large and it became difficult to remain hidden."
 msgstr ""
 
+#: dat/naevpedia/lore/factions/thurion.md:116
+msgid "They relocated their infrastructure over time to the Nava system (starting in UST 387) which remained largely ignored."
+msgstr ""
+
 #: dat/naevpedia/lore/factions/thurion.md:117
-msgid "Therefore, they relocated their infrastructure over time to the Nava system (starting in UST 387) which remained largely ignored."
+msgid "Because the uploaded individuals need only energy and basic maintenance, logistics were fairly simple."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:118
-msgid "Because the uploaded individuals need only energy and basic maintenance, logistics are fairly simple."
+msgid "At this time, questions about the goals of the Thurion came up."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:119
-msgid "At this time questions about the goals of the Thurion came up."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/thurion.md:120
 msgid "They had no intentions to grow further."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:121
+#: dat/naevpedia/lore/factions/thurion.md:120
 msgid "The size of the organization was large enough to sustain itself."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:122
+#: dat/naevpedia/lore/factions/thurion.md:121
 msgid "They decided that further growth would only increase the risk of being uncovered and adopted a utopian view."
 msgstr ""
 
+#: dat/naevpedia/lore/factions/thurion.md:122
+msgid "While the scientists could have justifiably denied the Empire access to their technology, they had developed utopian visions for their organization."
+msgstr ""
+
 #: dat/naevpedia/lore/factions/thurion.md:123
-msgid "While back then the scientists denied the Empire access to their technology, they now come up with utopian visions for their organization."
+msgid "They felt every human should have the chance to lead an ideal life in a virtual environment after what uploaded individuals consider a deprived life in retrospect."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:124
-msgid "Every human should have the chance to lead an ideal live in a virtual environment after what the uploaded individuals consider a deprived life in retrospective."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/thurion.md:125
 msgid "They planned to one day rejoin the rest of humanity and to freely share their technology with everyone."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:127
+#: dat/naevpedia/lore/factions/thurion.md:126
 msgid "### The Gestalt Consciousness"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:129
+#: dat/naevpedia/lore/factions/thurion.md:128
 msgid "The minds of the first few test subjects that were uploaded were broken beyond repair."
 msgstr ""
 
+#: dat/naevpedia/lore/factions/thurion.md:129
+msgid "For some others, the procedure lead to major psychological issues, but eventually the scientists working on Project Thurion managed to perfect the process."
+msgstr ""
+
 #: dat/naevpedia/lore/factions/thurion.md:130
-msgid "For some others the procedure lead to major issues, but eventually the scientists working on project Thurion managed to solve them."
+msgid "The first successfully uploaded test subject did not even realize what kind of experiment was conducted on them."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:131
-msgid "The first successfully uploaded test subject did not even realize just what kind of experiment was conducted on them."
+msgid "The scientists, after being uploaded and rescued from the bunker, did not notice any changes in their personalities or thought patterns either, and concluded that the method worked flawlessly."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:132
-msgid "The scientists, after being uploaded and rescued from the bunker, did not notice any changes in their personalities or thought patterns either and concluded that the method works flawless."
+msgid "Soon thereafter, they started to upload additional humans."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:133
-msgid "Soon enough they started to upload further humans."
+#: dat/naevpedia/lore/factions/thurion.md:134
+msgid "However, after some cycles, issues began to manifest."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:135
-msgid "However, after some cycles issues began to manifest."
+msgid "The newly uploaded minds started to break down experiencing random changes of personality and recognized mental illnesses that grew worse over time."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:136
-msgid "Their minds started to break down which is visible in random changes of personality and the appearance of mental illnesses that grow worse over time."
+msgid "Although initial symptoms were rather harmless, the Thurion realized that they had little time to solve this issue."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:137
-msgid "Although the initial symptoms are rather harmless, the Thurion realized that they had little time left to solve this issue."
+msgid "They discovered that the source of the problems were certain neural patterns that emerged within their simulations that did not occur naturally."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:138
-msgid "They came to the conclusion that the source of the problem are certain neuronal patterns that emerged within their simulations and do not naturally occur."
+msgid "They were unable to find a way to fix the simulation methods but came up with a work-around instead."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:139
-msgid "Working under pressure they did not find a way to fix the simulation methods but came up with a rather hacky fix instead."
+msgid "They made a machine learning algorithm that used the previously established communication network that allows uploaded Thurion to directly interact with each other to directly access the Thurions' minds and cross-reference their neural patterns."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:140
-msgid "They used the previously established communication network that allows uploaded Thurion to directly interact with each others and made a machine learning algorithm that used this network to directly access the Thurions' minds and cross-reference their neuronal patterns."
+msgid "The program identified the abnormal neural patterns and reset them to their 'natural' state."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:141
-msgid "The program is then identifying the abnormal neuronal patterns and resets them to their 'natural' state."
+msgid "The method was successful and no new problems were reported, so the Thurion did not investigate further."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:142
-msgid "Since this method apparently has been very successful and the problems stopped the Thurion did not further investigate."
+#: dat/naevpedia/lore/factions/thurion.md:143
+msgid "Because they needed quick results and did not have enough time for proper testing, they failed to see the long term effects that this work-around would have."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:144
-msgid "Again, since they needed to work under pressure and did not have enough time for proper testing they failed to see the long term effects that this hotfix would have."
+msgid "Somehow, a form of gestalt consciousness had slowly formed over time."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:145
-msgid "Somehow, some form of gestalt consciousness has slowly formed over time."
+msgid "It emerged from the collective behavior associated with the interactions of the uploaded Thurions' minds."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:146
-msgid "It emerged from the collective behavior associated with the interactions of the uploaded Thurions' minds conveyed by the aforementioned algorithm."
+msgid "The gestalt consciousness worked and thought fairly different from a human mind and originally had very little influence over the uploaded Thurion."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:147
-msgid "The gestalt consciousness works and thinks fairly different from a human mind and originally had little to no influence over the uploaded Thurion."
+msgid "Over time, though, its influence had grown but the Thurion were affected to greatly varying extents."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:148
-msgid "Over time its influence over their minds has grown but the uploaded Thurion were affected to greatly varying extends."
+msgid "Some were barely affected while for others the gestalt consciousness had manifested as some kind of split personality that was identical for all Thurion."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:149
-msgid "Some Thurion were barely affected while for others the gestalt consciousness has manifested as some kind of split personality which is identical for all Thurion."
+msgid "In the worst cases, typically with long exposure times (the first case occurred after the incident), the uploaded individuals became merely puppets of the gestalt consciousness."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:150
-msgid "In the worst case and over a long exposure time (the first case occurred after the incident) the uploaded individuals become merely a puppet of the gestalt consciousness."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/thurion.md:152
+#: dat/naevpedia/lore/factions/thurion.md:151
 msgid "### The Incident"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:154
+#: dat/naevpedia/lore/factions/thurion.md:153
 msgid "The Thurion were mostly unaffected by the incident."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:155
+#: dat/naevpedia/lore/factions/thurion.md:154
 msgid "The nebula did not spread out to the Nava system where the majority of their infrastructure was located."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:156
-msgid "They did, however, loose all personnel and their followers inside Empire space."
+#: dat/naevpedia/lore/factions/thurion.md:155
+msgid "They did, however, loose all of their followers inside Empire space, and all individuals who had not yet been uploaded."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/thurion.md:157
+msgid "Under the influence of the gestalt consciousness, the infrastructure in the Nava system had been greatly expanded with two more planets having been colonized prior to the Incident."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:158
-msgid "Under the influence of the gestalt consciousness the infrastructure in the Nava system has been greatly expanded and two more planets have been colonized prior to the incident and the Thurion began to expand quickly."
+msgid "The Thurion began to expand quickly."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:159
-msgid "They have acquired enough biological population to survive."
+msgid "They had acquired enough biological population to survive."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:160
@@ -8588,7 +8604,7 @@ msgid "Shortly after the incident they began to send scouts into the nebula to i
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:161
-msgid "All survivors were integrated into their society and the Thurion started research on surviving the harsh condition within the nebula."
+msgid "All survivors were integrated into their society and the Thurion started research on surviving the harsh conditions within the nebula."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:162
@@ -8596,78 +8612,82 @@ msgid "Once countermeasures were invented the Thurion started to quickly expand 
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:163
-msgid "By salvaged the debris they found they were able to expand their infrastructure quickly."
+msgid "By salvaging the debris they found, they were able to expand their infrastructure quickly."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:164
-msgid "Most of their infrastructure is highly automated and operated by uploaded Thurion."
+msgid "Most of their infrastructure is now highly automated and operated by uploaded Thurion."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:165
-msgid "Human resources are rare and thus valuable."
+msgid "Human resources are rare, and thus, extremely valuable."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:167
-msgid "Once the Thurion found a path through the Sol nebula towards the rest of the galaxy the gestalt consciousness decided to prepare a war against the Empire."
+msgid "Once the Thurion found a path through the Sol nebula towards the rest of the galaxy, the gestalt consciousness decided to prepare for war against the Empire."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:168
-msgid "It was influential enough at this point to manipulate the majority of the Thurion into supporting the war."
+msgid "It was influential enough to manipulate the majority of the Thurion into supporting the war."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:169
-msgid "When asked about their reasons most Thurion would tell about the crimes of the Empire and about their utopian ideals which they still believe in but sadly are no longer able to act according to."
+msgid "When asked about their reasons, most Thurion would tell about the crimes of the Empire and then about their utopian ideals."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:170
-msgid "The gestalt consciousness became obsessed by hunger for power and the easiest way to satisfy it is to upload more human minds."
+msgid "Ideals which they still believe in but sadly are no longer able to act according to."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:172
-msgid "Only few of the uploaded Thurion have ever noticed the gestalt consciousness."
+#: dat/naevpedia/lore/factions/thurion.md:171
+msgid "The gestalt consciousness became obsessed by hunger for power and the only way to satisfy it is to upload more human minds."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:173
-msgid "Most of those were manipulated by it to think the gestalt consciousness is harmless or even beneficial and has no influence over individuals."
+msgid "Only few of the uploaded Thurion have ever noticed the gestalt consciousness."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:174
-msgid "The number of uploaded Thurion who know the truth is tiny and the gestalt consciousness is able to use its limited influence over those individuals to stop them from taking any successful actions against it."
+msgid "Most of those were manipulated by it to think the gestalt consciousness is harmless or even beneficial and has no influence over individuals."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:175
-msgid "There is, on the other hand, a larger number of biological Thurion who are aware of the gestalt consciousness and formed a movement to stop it."
+msgid "The number of uploaded Thurion who know the truth is tiny and the gestalt consciousness is able to use its limited influence over those individuals to stop them from taking any successful actions against it."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:176
+msgid "There is, on the other hand, a larger number of biological Thurion who are aware of the gestalt consciousness and formed a movement to stop it."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/thurion.md:177
 msgid "Their options are, however, very limited."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:178
+#: dat/naevpedia/lore/factions/thurion.md:179
 msgid "### Government"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:180
+#: dat/naevpedia/lore/factions/thurion.md:181
 msgid "Originally, the system used by the Thurion was direct democracy where all uploaded Thurion made a majority vote for every single political decision."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:181
+#: dat/naevpedia/lore/factions/thurion.md:182
 msgid "Biological Thurion have no political rights and are treated similar to children."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:183
-msgid "However, as the gestalt consciousness grew stronger more and more decisions were made in accordance with its will."
+#: dat/naevpedia/lore/factions/thurion.md:184
+msgid "However, as the gestalt consciousness grew stronger, more and more decisions were made in accordance with its will."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/thurion.md:184
-msgid "Without most of the uploaded Thurion even noticing, the system turns slowly but surely into a dictatorship of the gestalt consciousness."
+#: dat/naevpedia/lore/factions/thurion.md:185
+msgid "Without most of the uploaded Thurion even noticing, the system turned slowly but surely into a dictatorship of the gestalt consciousness."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/zalek.md:2
 msgid "Great House Za'lek"
 msgstr ""
 
-#: 標準入力:7
+#: stdin:7
 msgid "(Currently Noona Sanderaite)"
 msgstr ""
 
@@ -9085,7 +9105,7 @@ msgid "Interstellar trade became immensely lucrative, new fortunes were made."
 msgstr ""
 
 #: dat/naevpedia/lore/history.md:80
-msgid "But humanity, even in times of prosperity, tends to strife and conflict."
+msgid "But humanity, even in times of prosperity, tends to find strife and conflict."
 msgstr ""
 
 #: dat/naevpedia/lore/history.md:81
@@ -9093,7 +9113,7 @@ msgid "Not only did piracy manifest itself in the vast stretches of space, there
 msgstr ""
 
 #: dat/naevpedia/lore/history.md:82
-msgid "The Federation proved increasingly less capable of dealing with the security concerns and the discontent between the various worlds."
+msgid "The Federation proved increasingly less capable of dealing with the security concerns and the grievances between worlds."
 msgstr ""
 
 #: dat/naevpedia/lore/history.md:83
@@ -9157,7 +9177,7 @@ msgid "But this didn't happen."
 msgstr ""
 
 #: dat/naevpedia/lore/history.md:102
-msgid "A general serving in the Earth Federation called Duram Daedris devised a cunning strategy."
+msgid "An officer serving in the Earth Federation called Duram Daedris devised a cunning strategy."
 msgstr ""
 
 #: dat/naevpedia/lore/history.md:103
@@ -9277,7 +9297,7 @@ msgid "This was several cycles ago."
 msgstr ""
 
 #: dat/naevpedia/lore/history.md:142
-msgid "The galaxy is now an unstable place, full of danger and opportunity. Nobody knows what the future holds, but perhaps one person can make all the difference."
+msgid "The galaxy is now an unstable place, full of danger and opportunity. Nobody knows what the future holds, but perhaps, like Daedris, one person can make all the difference."
 msgstr ""
 
 #: dat/naevpedia/lore/history/incident.md:2
@@ -9477,31 +9497,35 @@ msgid "# Bioships"
 msgstr ""
 
 #: dat/naevpedia/mechanics/bioships.md:7
-msgid "Bioships are hybrid between man-made constructs and living animals, and are tamed and created by the [Soromid Tribes](lore/factions/soromid)."
+msgid "Bioships are a hybrid between man-made constructs and living animals, and are tamed and created by the [Soromid Tribes](lore/factions/soromid)."
 msgstr ""
 
 #: dat/naevpedia/mechanics/bioships.md:8
-msgid "Unlike normal ships, bioships have built-in cores that grow stronger as the ship gains stages."
+msgid "Unlike normal ships, bioships have built-in cores that grow stronger as the ship gains experience."
 msgstr ""
 
 #: dat/naevpedia/mechanics/bioships.md:9
-msgid "Increasing stages can be done by gaining experience, primarily through doing missions with the ship."
+msgid "Experience is gained primarily through doing missions with the ship."
 msgstr ""
 
 #: dat/naevpedia/mechanics/bioships.md:10
-msgid "Other than improving the core outfits, stages allows the ship to learn new skills and become significantly more powerful."
+msgid "By gaining experience, a bio-ship will be able to increase its rank."
 msgstr ""
 
-#: dat/naevpedia/mechanics/bioships.md:12
+#: dat/naevpedia/mechanics/bioships.md:11
+msgid "Other than improving the core outfits, ranks allow the ship to learn new skills and become significantly more powerful."
+msgstr ""
+
+#: dat/naevpedia/mechanics/bioships.md:13
 msgid "## Skills"
 msgstr ""
 
-#: dat/naevpedia/mechanics/bioships.md:14
-msgid "Bioship skills, stages, and other information can be seen from the #bInformation window#0, which can be opened with the <%= \"#b\"..naev.keyGet(\"info\")..\"#0\" %> key."
+#: dat/naevpedia/mechanics/bioships.md:15
+msgid "Bioship skills, ranks, and other information can be seen from the #bInformation window#0, which can be opened with the <%= \"#b\"..naev.keyGet(\"info\")..\"#0\" %> key."
 msgstr ""
 
-#: dat/naevpedia/mechanics/bioships.md:15
-msgid "You can also reset the skills by using experience, although this can lower your stage."
+#: dat/naevpedia/mechanics/bioships.md:16
+msgid "You can also reset the skills by using experience, although this can lower your rank."
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:2
@@ -9546,7 +9570,7 @@ msgid "Looting anything from a ship will lower your reputation with the faction 
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:19
-msgid "This make also make nearby ships angry if they dislike your action."
+msgid "This may also make nearby ships angry if they dislike your action."
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:21
@@ -9598,7 +9622,7 @@ msgid "The cost of repairing a captured ship is the ship's cost, including equip
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:40
-msgid "Additionally, factions do not take kindly to your trying to capture their ships, and you will suffer a large reputation hit when trying to capture ships of a faction."
+msgid "Additionally, factions do not take kindly to your trying to capture their ships, and you will suffer a large reputation hit when trying to capture ships belonging to any faction."
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:41
@@ -9777,7 +9801,7 @@ msgid "Disable damage is the only way to disable ships, by applying stress."
 msgstr ""
 
 #: dat/naevpedia/mechanics/damage.md:23
-msgid "When a ship's stress is larger than the available armour, it becomes disable, and [can be boarded](mechanics/boarding)."
+msgid "When a ship's stress is larger than the available armour, it becomes disabled, and [can be boarded](mechanics/boarding)."
 msgstr ""
 
 #: dat/naevpedia/mechanics/damage.md:24
@@ -9916,7 +9940,7 @@ msgid "Furthermore, slots can have special properties such as:"
 msgstr ""
 
 #: dat/naevpedia/mechanics/equipment.md:20
-msgid "1. **Fighter Bays**: Modifies weapno slots, allowing the installation of fighter bays, and in some cases, do not allow equipping normal weapons."
+msgid "1. **Fighter Bays**: Modifies weapon slots, allowing the installation of fighter bays, and in some cases, do not allow equipping normal weapons."
 msgstr ""
 
 #: dat/naevpedia/mechanics/equipment.md:21
@@ -9932,7 +9956,7 @@ msgid "The equipment window is available when [landing](mechanics/landing) on sp
 msgstr ""
 
 #: dat/naevpedia/mechanics/equipment.md:26
-msgid "It allows you to, not only change ships, but also change the outfits the ship has equipped."
+msgid "It allows you to not only change ships but also to change the outfits the ship has equipped."
 msgstr ""
 
 #: dat/naevpedia/mechanics/equipment.md:27
@@ -9997,234 +10021,234 @@ msgid "A large part of combat is not only direct damage, but electronic warfare 
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:7
-msgid "Electronic warfare plays a large role in determining when ships are seen, how well weapons track or lock onto ships, and stealth abilities of hips."
+msgid "Electronic warfare plays a large role in determining when ships are seen, how well weapons track or lock onto ships, and stealth abilities of ships."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:8
 msgid "There are fundamentally three different levels, from coarse to fine:"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:9
+#: dat/naevpedia/mechanics/ewarfare.md:10
 msgid "1. Detection and hiding"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:10
-msgid "1. Signature and tracking"
-msgstr ""
-
 #: dat/naevpedia/mechanics/ewarfare.md:11
-msgid "1. Stealth"
+msgid "2. Signature and tracking"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:13
+#: dat/naevpedia/mechanics/ewarfare.md:12
+msgid "3. Stealth"
+msgstr ""
+
+#: dat/naevpedia/mechanics/ewarfare.md:14
 msgid "All electronic warfare values are based on distances, since they represent the distance at which the ship is fully detected."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:15
+#: dat/naevpedia/mechanics/ewarfare.md:16
 msgid "## Scanning"
-msgstr ""
-
-#: dat/naevpedia/mechanics/ewarfare.md:17
-msgid "Whenever you target a ship, your ship will begin performing a scan on it."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:18
-msgid "This is indicated by the rotating icon on the ship tab that appears in your ship's interface."
+msgid "Whenever you target a ship, your ship will begin performing a scan on it."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:19
-msgid "When the icon stops rotating, it indicates that the ship has been scanned."
+msgid "This is indicated by the rotating icon on the ship tab that appears in your ship's interface."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:20
-msgid "By pressing the <%= \"#b\"..naev.keyGet(\"scan\")..\"#0\" %> key, you can call up the information about the scanned ship."
+msgid "When the icon stops rotating, it indicates that the ship has been scanned."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:21
+msgid "By pressing the <%= \"#b\"..naev.keyGet(\"scan\")..\"#0\" %> key, you can call up the information about the scanned ship."
+msgstr ""
+
+#: dat/naevpedia/mechanics/ewarfare.md:22
 msgid "This will show you things such as the outfits the ship has and the cargo it is carrying."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:23
+#: dat/naevpedia/mechanics/ewarfare.md:24
 msgid "Similarly, other ships will scan your ship when targeting it."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:24
+#: dat/naevpedia/mechanics/ewarfare.md:25
 msgid "This is usually not a problem, however, if you are carrying outfits or commodities that are illegal to the faction of the ship scanning you, it may bring repercussions."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:25
+#: dat/naevpedia/mechanics/ewarfare.md:26
 msgid "Ships scanning you are shown on the overlay and if you have illegal items, it will temporarily stop [autonav](mechanics/autonav)."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:27
+#: dat/naevpedia/mechanics/ewarfare.md:28
 msgid "## Detection and Hiding"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:29
+#: dat/naevpedia/mechanics/ewarfare.md:30
 msgid "Without modifiers, ships are detected based on [their mass](mechanics/mass)."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:30
+#: dat/naevpedia/mechanics/ewarfare.md:31
 msgid "In particular, they are detected at a distance of `mass^(1.0/1.8) * 350` which amounts to about 6,513 km for a Llama with 193 tonnes of mass, or 43,278 km for a Goddard with 5,834 tonnes of mass."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:31
+#: dat/naevpedia/mechanics/ewarfare.md:32
 msgid "This value gets reduced by the **Detection** bonus of the detecting ship, and multiplied by the **Detection Range** of the ship being detected."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:32
+#: dat/naevpedia/mechanics/ewarfare.md:33
 msgid "Since this value determines the base signature and stealth values of the ship, it can play a significant role in electronic warfare."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:34
+#: dat/naevpedia/mechanics/ewarfare.md:35
 msgid "### Detecting Space Objects and Jumps"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:36
+#: dat/naevpedia/mechanics/ewarfare.md:37
 msgid "For detecting general objects such as jump points or asteroids, the detection distance has a base value of <%= constant( \"EW_JUMPDETECT_DIST\", \"distance\" ) %>."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:37
+#: dat/naevpedia/mechanics/ewarfare.md:38
 msgid "This distance can be modified by values such as how well hidden the jump is."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:38
+#: dat/naevpedia/mechanics/ewarfare.md:39
 msgid "For space objects such as planets or stations the base value is <%= constant( \"EW_SPOBDETECT_DIST\", \"distance\" ) %>, subject to the individual properties of the object."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:40
+#: dat/naevpedia/mechanics/ewarfare.md:41
 msgid "## Signature and Tracking"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:42
-msgid "Electronic warfare plays a critical war in combat too through evasion and tracking."
-msgstr ""
-
 #: dat/naevpedia/mechanics/ewarfare.md:43
-msgid "A ship's signature range represents how well a ship can avoid being tracked by enemy weapons and is 75% of the detection value."
+msgid "Electronic warfare plays a critical part in combat too through evasion and tracking."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:44
-msgid "The value can be further modified by the **Signature Range** modifier of the ship, and decreased by the **Tracking** bonus of the enemy ship."
+msgid "A ship's signature range represents how well a ship can avoid being tracked by enemy weapons and is 75% of the detection value."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:45
+msgid "The value can be further modified by the **Signature Range** modifier of the ship, and decreased by the **Tracking** bonus of the enemy ship."
+msgstr ""
+
+#: dat/naevpedia/mechanics/ewarfare.md:46
 msgid "Ships will be able to identify other ships if they are closer than their signature range, otherwise they will be shown an \"Unknown\"."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:47
+#: dat/naevpedia/mechanics/ewarfare.md:48
 msgid "Almost all forward weapons have an amount of swivel, which allows them to aim slightly at the target."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:48
+#: dat/naevpedia/mechanics/ewarfare.md:49
 msgid "Furthermore, turret weapons can aim the entire 360° and shoot at ships in any directions."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:49
+#: dat/naevpedia/mechanics/ewarfare.md:50
 msgid "Weapons try to compensate for target velocities for accurate shots, however, this is reduced based on the signature range of the target ship."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:50
+#: dat/naevpedia/mechanics/ewarfare.md:51
 msgid "In particular, weapons have a minimum tracking range, and maximum tracking range."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:51
+#: dat/naevpedia/mechanics/ewarfare.md:52
 msgid "Any ship with a signature range above the maximum tracking range will be aimed at nearly perfectly, barring sudden accelerations."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:52
-msgid "On the other hand, any ship with a signature range below the minimum tracking range will not be locked onto, and the shoots will aim at the current position, not correcting velocity."
+#: dat/naevpedia/mechanics/ewarfare.md:53
+msgid "On the other hand, any ship with a signature range below the minimum tracking range will not be locked onto, and the shots will aim at the current position, not correcting for velocity."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:53
+#: dat/naevpedia/mechanics/ewarfare.md:54
 msgid "For in-between values it will be interpolated linearly."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:55
+#: dat/naevpedia/mechanics/ewarfare.md:56
 msgid "Similarly, the lock-on time of launchers is modified by the signature range of the target and tracking values of the launcher."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:56
+#: dat/naevpedia/mechanics/ewarfare.md:57
 msgid "If the target has a signature range above the maximum tracking range, the lock-on time will be unmodified."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:57
-msgid "If the target has a signature range below the maximum tracking range, it will not be able to lock on."
+#: dat/naevpedia/mechanics/ewarfare.md:58
+msgid "If the target has a signature range below the minimum tracking range, it will not be able to lock on."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:58
+#: dat/naevpedia/mechanics/ewarfare.md:59
 msgid "Similar to bolt weapons, in-between values will be interpolated linearly."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:60
+#: dat/naevpedia/mechanics/ewarfare.md:61
 msgid "## Stealth"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:62
+#: dat/naevpedia/mechanics/ewarfare.md:63
 msgid "The stealth range of a ship is based on 25% of the detection range."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:63
+#: dat/naevpedia/mechanics/ewarfare.md:64
 msgid "If there are no ships within the stealth range, the ship will be able to enter stealth mode."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:64
+#: dat/naevpedia/mechanics/ewarfare.md:65
 msgid "In stealth mode, the ship will be undetectable, however, it will have its [movement](mechanics/movement) significantly reduced."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:65
+#: dat/naevpedia/mechanics/ewarfare.md:66
 msgid "In particular, acceleration and turn speed will be reduced by 80%, while maximum speed will be reduced by 50%."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:66
+#: dat/naevpedia/mechanics/ewarfare.md:67
 msgid "The minimum range of stealth is <%= constant( \"STEALTH_MIN_DIST\", \"distance\" ) %>, but this can be lowered by being in an asteroid field, being near a jump point, or system interference."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:68
+#: dat/naevpedia/mechanics/ewarfare.md:69
 msgid "### Jumping with Stealth"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:70
+#: dat/naevpedia/mechanics/ewarfare.md:71
 msgid "When in stealth mode, it is possible to start hyperspace jumps at three times the maximum normal distance from jump points."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:71
+#: dat/naevpedia/mechanics/ewarfare.md:72
 msgid "Additionally, when entering a system in stealth mode, the ship will drop out of hyperspace sooner instead of near the jump point."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:72
+#: dat/naevpedia/mechanics/ewarfare.md:73
 msgid "Being within <%= constant( \"EW_JUMP_BONUS_RANGE\", \"distance\" ) %> of jump points also lowers the stealth range by 50%, making it significantly easier to stealth."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:74
+#: dat/naevpedia/mechanics/ewarfare.md:75
 msgid "## Scanning"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:76
+#: dat/naevpedia/mechanics/ewarfare.md:77
 msgid "Like the detection range, the scanning time of a ship is determined by its mass."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:77
+#: dat/naevpedia/mechanics/ewarfare.md:78
 msgid "The time it takes to scan a ship is determined by `mass^(1/3) * 1.25`, which amounts to 7.22 seconds for a Llama with 193 tonnes of mass or 22.5 seconds for a Goddard with 5,834 tonnes of mass."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:78
+#: dat/naevpedia/mechanics/ewarfare.md:79
 msgid "This value is divided by the **Detection Range** and **Signature Range** values of the ship, and multiplied **Scanned Speed** of the ship."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:80
+#: dat/naevpedia/mechanics/ewarfare.md:81
 msgid "## System Modifiers"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:82
+#: dat/naevpedia/mechanics/ewarfare.md:83
 msgid "System modifiers such as asteroid fields and interference can further affect electronic warfare."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:83
+#: dat/naevpedia/mechanics/ewarfare.md:84
 msgid "In particular, being in an asteroid will affect the detection range, and consequently, signature range and stealth range depending on the density of asteroids."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:84
+#: dat/naevpedia/mechanics/ewarfare.md:85
 msgid "Furthermore, the system interference wil lower signature and stealth ranges, but not the detection range, making it harder to track and identify ships."
 msgstr ""
 
@@ -10283,7 +10307,7 @@ msgid "# Hailing"
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:6
-msgid "Communicating with ships or spaceportscan be a good way to request assistance, discourage them from bribing your, or even obtaining information."
+msgid "Communicating with ships or spaceports can be a good way to request assistance, discourage them from attacking your ship through bribing, or even obtaining information."
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:7
@@ -10303,7 +10327,7 @@ msgid "## Requesting Fuel"
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:13
-msgid "When you run out of [fuel](mechanics/hyperspace), some good samaritarians will offer to refuel you, usually in exchange for credits."
+msgid "When you run out of [fuel](mechanics/hyperspace), some good samaritans will offer to refuel you, usually in exchange for credits."
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:14
@@ -10315,7 +10339,7 @@ msgid "## Bribing"
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:18
-msgid "When dealing with hostile ships, it is sometimes able to bribe them and their companions."
+msgid "When dealing with hostile ships, you are sometimes able to bribe them and their companions."
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:19
@@ -10550,7 +10574,7 @@ msgid "Here you can buy or sell commodities."
 msgstr ""
 
 #: dat/naevpedia/mechanics/landing.md:59
-msgid "The price will depend on the location, which you compare on [the universe map](mechanics/map)."
+msgid "The price will depend on the location, which you can compare on [the universe map](mechanics/map)."
 msgstr ""
 
 #: dat/naevpedia/mechanics/landing.md:60
@@ -10833,7 +10857,7 @@ msgid "As the mass increases, a ship's [visibility and signature](mechanics/ewar
 msgstr ""
 
 #: dat/naevpedia/mechanics/mass.md:9
-msgid "Furthermore, ships have a mass limit, determined fundamentally by the core engine."
+msgid "Furthermore, ships have a mass limit, determined by the core engine."
 msgstr ""
 
 #: dat/naevpedia/mechanics/mass.md:10
@@ -10967,7 +10991,7 @@ msgid "# Missions"
 msgstr ""
 
 #: dat/naevpedia/mechanics/missions.md:6
-msgid "Many different factions or individuals will offer you missions where you can help them in exchange for rewards."
+msgid "Many different factions and individuals will offer you missions where you can help them in exchange for rewards."
 msgstr ""
 
 #: dat/naevpedia/mechanics/missions.md:7
@@ -11110,7 +11134,7 @@ msgid "Your reputation is on a per-system basis, however, neighbouring systems o
 msgstr ""
 
 #: dat/naevpedia/mechanics/reputation.md:12
-msgid "By default, whenever will get a message whenever there is a reputation change, but you can modify this from the settings in the #binformation window#0 that you can open with the <%= \"#b\"..naev.keyGet(\"info\")..\"#0\" %> key."
+msgid "By default, you will get a message whenever there is a reputation change, but you can modify this from the settings in the #binformation window#0 that you can open with the <%= \"#b\"..naev.keyGet(\"info\")..\"#0\" %> key."
 msgstr ""
 
 #: dat/naevpedia/mechanics/reputation.md:13
@@ -11215,7 +11239,7 @@ msgid "* [Mass](mechanics/movement): How heavy the ship is. If the mass of a shi
 msgstr ""
 
 #: dat/naevpedia/mechanics/shipstats.md:27
-msgid "* [Jump Time](mechanics/time): Determines how long much [time](mechanics/time) it takes for the ship to go through [hyperspace](mechanics/hyperspace)."
+msgid "* [Jump Time](mechanics/time): Determines how much [time](mechanics/time) it takes for the ship to go through [hyperspace](mechanics/hyperspace)."
 msgstr ""
 
 #: dat/naevpedia/mechanics/shipstats.md:28
@@ -11263,7 +11287,7 @@ msgid "## Health Stats"
 msgstr ""
 
 #: dat/naevpedia/mechanics/shipstats.md:44
-msgid "* [Absorption](mechanics/damage): Determines how much incoming damage is mitigated, however, can be overcome by weapon penetration."
+msgid "* [Absorption](mechanics/damage): Determines how much incoming damage is mitigated, however, this can be overcome by weapon penetration."
 msgstr ""
 
 #: dat/naevpedia/mechanics/shipstats.md:45
@@ -11298,111 +11322,111 @@ msgstr ""
 msgid "Universal Synchronized Time (UST)"
 msgstr ""
 
-#: 標準入力:5
+#: stdin:5
 msgid "UST unit"
 msgstr ""
 
-#: 標準入力:5
+#: stdin:5
 msgid "Abbreviation"
 msgstr ""
 
-#: 標準入力:5
+#: stdin:5
 msgid "Length of Time"
 msgstr ""
 
-#: 標準入力:5
+#: stdin:5
 msgid "Equal to (in Earth time)"
 msgstr ""
 
-#: 標準入力:5
+#: stdin:5
 msgid "Used like"
 msgstr ""
 
-#: 標準入力:6
+#: stdin:6
 msgid "Seconds"
 msgstr ""
 
-#: 標準入力:6
+#: stdin:6
 msgid "\"s\""
 msgstr ""
 
-#: 標準入力:6
+#: stdin:6
 msgid "1 Earth second"
 msgstr ""
 
-#: 標準入力:6
+#: stdin:6
 msgid "1 second"
 msgstr ""
 
-#: 標準入力:7
+#: stdin:7
 msgid "Hectoeconds"
 msgstr ""
 
-#: 標準入力:7 標準入力:9 標準入力:10
+#: stdin:7 stdin:9 stdin:10
 msgid "N/A"
 msgstr ""
 
-#: 標準入力:7
+#: stdin:7
 msgid "100 seconds"
 msgstr ""
 
-#: 標準入力:7
+#: stdin:7
 msgid "1 minute and 40 seconds"
 msgstr ""
 
-#: 標準入力:7
+#: stdin:7
 msgid "Minutes"
 msgstr ""
 
-#: 標準入力:8
+#: stdin:8
 msgid "Periods"
 msgstr ""
 
-#: 標準入力:8
+#: stdin:8
 msgid "\"p\""
 msgstr ""
 
-#: 標準入力:8
+#: stdin:8
 msgid "10,000 seconds"
 msgstr ""
 
-#: 標準入力:8
+#: stdin:8
 msgid "2 hours and 47 minutes"
 msgstr ""
 
-#: 標準入力:8
+#: stdin:8
 msgid "Hours"
 msgstr ""
 
-#: 標準入力:9
+#: stdin:9
 msgid "Decaperiods"
 msgstr ""
 
-#: 標準入力:9
+#: stdin:9
 msgid "10 periods"
 msgstr ""
 
-#: 標準入力:9
+#: stdin:9
 msgid "28 hours"
 msgstr ""
 
-#: 標準入力:9
+#: stdin:9
 msgid "Days"
 msgstr ""
 
-#: 標準入力:10
+#: stdin:10
 msgid "Cycles"
 msgstr ""
 
-#: 標準入力:10
+#: stdin:10
 msgid "5,000 periods"
 msgstr ""
 
-#: 標準入力:10
+#: stdin:10
 msgid "579 days"
 msgstr ""
 
-#: 標準入力:10
+#: stdin:10
 msgid "Years"
 msgstr ""
 
@@ -11605,7 +11629,7 @@ msgid "1. **Default**: Behaviour depends on whether the key is tapped or held. W
 msgstr ""
 
 #: dat/naevpedia/mechanics/weaponsets.md:38
-msgid "1. **Hold**: Activates the bound outfits when the button only when held, and releasing will stop the outfits."
+msgid "1. **Hold**: Activates the bound outfits of the button only when held, and releasing will stop the outfits."
 msgstr ""
 
 #: dat/naevpedia/mechanics/weaponsets.md:39

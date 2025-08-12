@@ -22,7 +22,7 @@
    <penetrate>27</penetrate>
    <physical>185</physical>
   </damage>
-  <pointdefense />
+  <pointdefense/>
   <spfx_shield>Shi-S</spfx_shield>
   <spfx_armour>Exp-S</spfx_armour>
   <sound>beam_fuzzy</sound>

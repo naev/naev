@@ -483,7 +483,7 @@ PlayerShip_t *player_newShip( const Ship *ship, const char *def_name, int trade,
    PlayerShip_t *ps;
 
    /* temporary values while player doesn't exist */
-   player_creds = ( player.p != NULL ) ? player.p->credits : 0;
+   player_creds = ( player.p != NULL ) ? player.p->credits : start_credits();
    player_ship  = ship;
    if ( !noname )
       ship_name = dialogue_input( _( "Ship Name" ), 1, 60,
@@ -584,7 +584,7 @@ static PlayerShip_t *player_newShipMake( const char *name )
 
    /* money. */
    player.p->credits = player_creds;
-   player_creds      = 0;
+   player_creds      = start_credits();
    player_payback    = 0;
 
    return ps;
@@ -886,7 +886,7 @@ void player_cleanup( void )
    /* nothing left */
 
    /* Reset some player stuff. */
-   player_creds   = 0;
+   player_creds   = start_credits();
    player_payback = 0;
    free( player.gui );
    player.gui = NULL;
@@ -1732,16 +1732,16 @@ int player_land( int loud )
    /* End autonav. */
    player_autonavEnd();
 
-   /* Stop afterburning. */
-   pilot_afterburnOver( player.p );
+   /* Stop all on outfits. */
+   // if ( pilot_outfitOffAll( player.p ) > 0 )
+   pilot_outfitOffAll( player.p );
+   pilot_calcStats( player.p ); /* Always update stats for now as something is
+                                   funky with afterburners. */
+
    /* Stop accelerating. */
    player_accelOver();
    /* Stop stealth. */
    pilot_destealth( player.p );
-
-   /* Stop all on outfits. */
-   if ( pilot_outfitOffAll( player.p ) > 0 )
-      pilot_calcStats( player.p );
 
    /* Do whatever the spob wants to do. */
    if ( spob->lua_land != LUA_NOREF ) {
@@ -2633,7 +2633,6 @@ void player_cooldownBrake( void )
    if ( pilot_isFlag( player.p, PILOT_HYPERSPACE ) )
       return;
 
-   pilot_afterburnOver( player.p );
    stopped = pilot_isStopped( player.p );
    if ( stopped && !pilot_isFlag( player.p, PILOT_COOLDOWN ) )
       pilot_cooldown( player.p, 1 );
@@ -3954,22 +3953,23 @@ static void player_tryAddLicense( const char *name )
  */
 static Spob *player_parse( xmlNodePtr parent )
 {
-   const char *spob = NULL;
-   Spob       *pnt  = NULL;
-   xmlNodePtr  node, cur;
+   const char *spob                = NULL;
+   Spob       *pnt                 = NULL;
    int         map_overlay_enabled = 0;
    StarSystem *sys;
    double      a, r;
    int         time_set = 0;
+   credits_t   creds    = start_credits();
 
    xmlr_attr_strd( parent, "name", player.name );
    assert( player.p == NULL );
    player_ran_updater = 0;
+   player_payback     = 0;
 
    player.radar_res = RADAR_RES_DEFAULT;
 
    /* Must get spob first. */
-   node = parent->xmlChildrenNode;
+   xmlNodePtr node = parent->xmlChildrenNode;
    do {
       xmlr_str( node, "location", spob );
    } while ( xml_nextNode( node ) );
@@ -3978,7 +3978,7 @@ static Spob *player_parse( xmlNodePtr parent )
    node = parent->xmlChildrenNode;
    do {
       /* global stuff */
-      xmlr_ulong( node, "credits", player_creds );
+      xmlr_ulong( node, "credits", creds );
       xmlr_strd( node, "gui", player.gui );
       xmlr_strd( node, "chapter", player.chapter );
       xmlr_int( node, "mapOverlay", map_overlay_enabled );
@@ -3989,9 +3989,9 @@ static Spob *player_parse( xmlNodePtr parent )
 
       /* Time. */
       if ( xml_isNode( node, "time" ) ) {
-         double rem    = -1.;
-         int    cycles = -1, periods = -1, seconds = -1;
-         cur = node->xmlChildrenNode;
+         double     rem    = -1.;
+         int        cycles = -1, periods = -1, seconds = -1;
+         xmlNodePtr cur = node->xmlChildrenNode;
          do {
             xmlr_int( cur, "SCU", cycles );
             xmlr_int( cur, "STP", periods );
@@ -4011,7 +4011,7 @@ static Spob *player_parse( xmlNodePtr parent )
 
       /* Parse ships. */
       else if ( xml_isNode( node, "ships" ) ) {
-         cur = node->xmlChildrenNode;
+         xmlNodePtr cur = node->xmlChildrenNode;
          do {
             if ( xml_isNode( cur, "ship" ) )
                player_parseShip( cur, 0 );
@@ -4020,7 +4020,7 @@ static Spob *player_parse( xmlNodePtr parent )
 
       /* Parse GUIs. */
       else if ( xml_isNode( node, "guis" ) ) {
-         cur = node->xmlChildrenNode;
+         xmlNodePtr cur = node->xmlChildrenNode;
          do {
             if ( xml_isNode( cur, "gui" ) )
                player_guiAdd( xml_get( cur ) );
@@ -4029,12 +4029,11 @@ static Spob *player_parse( xmlNodePtr parent )
 
       /* Parse outfits. */
       else if ( xml_isNode( node, "outfits" ) ) {
-         cur = node->xmlChildrenNode;
+         xmlNodePtr cur = node->xmlChildrenNode;
          do {
             if ( xml_isNode( cur, "outfit" ) ) {
-               int           q;
-               const Outfit *o;
-               const char   *oname = xml_get( cur );
+               int         q;
+               const char *oname = xml_get( cur );
                xmlr_attr_float( cur, "quantity", q );
                if ( q == 0 ) {
                   WARN( _( "Outfit '%s' was saved without quantity!" ),
@@ -4042,7 +4041,7 @@ static Spob *player_parse( xmlNodePtr parent )
                   continue;
                }
 
-               o = player_tryGetOutfit( oname, q );
+               const Outfit *o = player_tryGetOutfit( oname, q );
                if ( o == NULL )
                   continue;
 
@@ -4077,7 +4076,7 @@ static Spob *player_parse( xmlNodePtr parent )
       const char *err =
          _( "Something went horribly wrong, player does not exist after "
             "load..." );
-      WARN( err );
+      WARN( "%s", err );
       dialogue_alertRaw( err );
       return NULL;
    }
@@ -4098,7 +4097,7 @@ static Spob *player_parse( xmlNodePtr parent )
    player.speed = conf.game_speed;
 
    /* set global thingies */
-   player.p->credits = player_creds + player_payback;
+   player.p->credits = creds + player_payback;
    if ( !time_set ) {
       WARN(
          _( "Save has no time information, setting to start information." ) );
@@ -4173,6 +4172,7 @@ static Spob *player_parse( xmlNodePtr parent )
    /* Initialize outfits. */
    pilot_shipLInit( player.p );
    pilot_outfitLInitAll( player.p );
+   pilot_outfitLUpdate( player.p, 0. );
 
    /* initialize the system */
    space_init( sys->name, 0 );
@@ -4321,11 +4321,20 @@ static int player_parseEscorts( xmlNodePtr parent )
       if ( name == NULL ) /* Workaround for < 0.10.0 old saves, TODO remove
                              around 0.12.0 or 0.13.0. */
          name = xml_getStrd( node );
-      if ( strcmp( buf, "bay" ) == 0 )
-         escort_addList( player.p, ship_get( name ), ESCORT_TYPE_BAY, 0, 1 );
 
-      else if ( strcmp( buf, "fleet" ) == 0 ) {
+      if ( strcmp( buf, "bay" ) == 0 ) {
+         const Ship *s = player_tryGetShip( name );
+         if ( s == NULL ) {
+            DEBUG( "Escort ship does not exist, skipping!" );
+            continue;
+         }
+         escort_addList( player.p, s, ESCORT_TYPE_BAY, 0, 1 );
+      } else if ( strcmp( buf, "fleet" ) == 0 ) {
          PlayerShip_t *ps = player_getPlayerShip( name );
+         if ( ps == NULL ) {
+            WARN( "Escort ship not found, skipping!" );
+            continue;
+         }
 
          /* Only deploy escorts that are deployed. */
          if ( !ps->deployed )

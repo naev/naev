@@ -1,3 +1,5 @@
+// Build script for Rust
+// Mainly here to figure out how to statically link to our local C library
 fn main() {
     println!("cargo:rustc-link-search=native=@BUILD@");
     println!("cargo:rustc-link-lib=static=naev");

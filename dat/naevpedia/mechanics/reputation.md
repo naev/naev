@@ -9,7 +9,7 @@ With sufficient reputation, a faction will see you as friendly, changing how the
 On the other hand, lowering your reputation can lead to a faction seeing you as an enemy, barring you from their spaceports and attacking you on sight.
 
 Your reputation is on a per-system basis, however, neighbouring systems of the same faction will have a tendency to be similar.
-By default, whenever will get a message whenever there is a reputation change, but you can modify this from the settings in the #binformation window#0 that you can open with the <%= "#b"..naev.keyGet("info").."#0" %> key.
+By default, you will get a message whenever there is a reputation change, but you can modify this from the settings in the #binformation window#0 that you can open with the <%= "#b"..naev.keyGet("info").."#0" %> key.
 Your current global reputation standings and other details of the different factions can also be seen from the #bInformation window#0.
 
 ## Changing Reputation

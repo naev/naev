@@ -38,6 +38,7 @@
 #include "ndata.h"
 #include "news.h"
 #include "nlua.h"
+#include "nlua_spfx.h"
 #include "nlua_tk.h"
 #include "npc.h"
 #include "nstring.h"
@@ -1444,6 +1445,12 @@ void land( Spob *p, int load )
    player_addEscorts(); /* TODO only regenerate fleet if planet has a shipyard
                          */
 
+   /* So the issue is that spfxL use the parents environment, which can be from
+    * a mission or event. They usually get cleared when landing, which can
+    * cause the spfx to be stale and floating until the player takes off.
+    * TODO fix this shit with Rust. */
+   spfxL_clear();
+
    /* Stop player sounds. */
    player_soundStop();
 
@@ -1941,7 +1948,8 @@ static void land_stranded( void )
    /* Run Lua. */
    nlua_getenv( naevL, rescue_env, "rescue" );
    if ( nlua_pcall( rescue_env, 0, 0 ) ) { /* error has occurred */
-      WARN( _( "Rescue: 'Ys' : '%s'" ), "rescue", lua_tostring( naevL, -1 ) );
+      WARN( _( "Rescue: '%s' : '%s'" ), "rescue",
+            luaL_tolstring( naevL, -1, NULL ) );
       lua_pop( naevL, 1 );
    }
 }

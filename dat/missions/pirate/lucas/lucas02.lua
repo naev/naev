@@ -307,8 +307,9 @@ function hail_pirate( p )
    if m._lucas02_comm then
       return -- Already set up
    end
+   local mmem = mem -- create a local upvalue so it doesn't reference the global which will be out of scope
    comm.customComm( p, function ()
-      if mem.stage>=2 then
+      if mmem.stage>=2 then
          return nil -- Done already
       end
       return fmt.f(_("Ask about {spob}"),{spob=last_spob})

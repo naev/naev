@@ -206,6 +206,7 @@ function enter ()
       local d = pilot.add( ship, collective_fct, pos, name )
       d:setNoDeath(true)
       d:setFriendly(true)
+      d:setNoBoard(true)
       pilotai.guard( d, pos )
       local m = d:memory()
       m.guarddodist = 2000
@@ -654,7 +655,7 @@ Erk…"]]))
    sai(_([["It's alive!"]]))
    d(_([["Where… where am I?"]]))
    vn.menu{
-      {fmt.f(_([["This is {sys}.]]),{sys=endsys}), "cont01"},
+      {fmt.f(_([["This is {sys}."]]),{sys=endsys}), "cont01"},
       {_([["You're alive!"]]), "cont01"},
       {_([["What happened?"]]), "cont01"},
       {_([[…]]), "cont01"},

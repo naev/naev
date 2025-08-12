@@ -16,7 +16,7 @@ This launcher is mounted on a turret and has more ammo capacity than the standar
  <specific type="turret launcher" secondary="1">
   <delay>3.5</delay>
   <reload_time>160</reload_time>
-  <amount>20</amount>
+  <amount>16</amount>
   <lockon>1.5</lockon>
   <iflockon>1.3</iflockon>
   <trackmin>0</trackmin>
@@ -32,11 +32,12 @@ This launcher is mounted on a turret and has more ammo capacity than the standar
   <accel>700</accel>
   <turn>35</turn>
   <speed_max>850</speed_max>
-  <resist>50</resist>
+  <resist>45</resist>
   <damage>
    <type>ion</type>
-   <penetrate>12</penetrate>
-   <physical>150</physical>
+   <penetrate>21</penetrate>
+   <physical>125</physical>
+   <disable>12</disable>
   </damage>
   <armour>10</armour>
   <absorb>0</absorb>

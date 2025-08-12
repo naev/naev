@@ -9,14 +9,14 @@
   <condstr>You need at least 30% reputation with House Dvaered.</condstr>
   <mass>70</mass>
   <price>110000</price>
-  <description>Mostly referred by its initials SFC, the Super-Fast Collider is basically a giant Mace rocket used by Dvaered Capships in order to strike distant enemies.</description>
+  <description>Mostly referred by its initials SFC, the Super-Fast Collider is basically a giant Mace rocket used by Dvaered capships to strike distant enemies.</description>
   <gfx_store>sfc.png</gfx_store>
   <cpu>-30</cpu>
  </general>
  <specific type="launcher">
-  <delay>10</delay>
-  <reload_time>100</reload_time>
-  <amount>4</amount>
+  <delay>2</delay>
+  <reload_time>70</reload_time>
+  <amount>7</amount>
   <swivel>22</swivel>
   <trackmin>5000</trackmin>
   <trackmax>25000</trackmax>
@@ -33,9 +33,9 @@
   <damage>
    <type>plasma</type>
    <penetrate>100</penetrate>
-   <physical>500</physical>
+   <physical>330</physical>
   </damage>
-  <radius friendlyfire="1">15</radius>
+  <radius friendlyfire="1">30</radius>
   <ai>unguided</ai>
   <armour>50</armour>
   <absorb>30</absorb>

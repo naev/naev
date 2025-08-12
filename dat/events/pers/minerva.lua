@@ -13,6 +13,7 @@ return function ()
             local p = require("common.minerva").pink_demon( nil, {ai="pers_pirate"} )
             p:outfitAddIntrinsic("Escape Pod")
             local m = p:memory()
+            m.capturable = true
             m.taunt = _("Ho ho ho and a bottle of rum!")
             m.comm_greet = _([["What are you doing here?"]])
             return p
@@ -32,6 +33,7 @@ return function ()
                }
             } )
             local m = p:memory()
+            m.capturable = true
             m.ad = {
                _("Back in my day we walked uphill, both ways, in the snow to fight for honour!"),
                _("Kids don't know how good they have it these days!"),
@@ -43,6 +45,7 @@ return function ()
             local vel = p:vel()
             for i=1,4 do
                local e = pilot.add("Dvaered Vendetta", "Dvaered", pos )
+               e.capturable = true
                e:setVel( vel )
                e:setLeader( p )
             end
@@ -59,6 +62,7 @@ return function ()
             equipopt.zalek( p, {fighterbay=20} )
             p:intrinsicSet( "fbay_reload", 100 ) -- More drones!
             local m = p:memory()
+            m.capturable = true
             m.taunt = _("Why are you doing this to me!?")
             m.comm_greet = _([["Shrimp are so fascinating. I can never get enough of them!"]])
          end,

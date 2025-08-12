@@ -47,8 +47,8 @@
 /* Trail stuff. */
 #define TRAIL_UPDATE_DT                                                        \
    0.05 /**< Rate (in seconds) at which trail is updated. */
-static TrailSpec   *trail_spec_stack; /**< Trail specifications. */
-static Trail_spfx **trail_spfx_stack; /**< Active trail effects. */
+static TrailSpec   *trail_spec_stack = NULL; /**< Trail specifications. */
+static Trail_spfx **trail_spfx_stack = NULL; /**< Active trail effects. */
 
 /*
  * Special hard-coded special effects
@@ -469,8 +469,14 @@ void spfx_free( void )
    noise_delete( shake_noise );
 
    /* Free the trails. */
-   for ( int i = 0; i < array_size( trail_spfx_stack ); i++ )
-      spfx_trail_free( trail_spfx_stack[i] );
+   for ( int i = 0; i < array_size( trail_spfx_stack ); i++ ) {
+      /* Not sure what is going on here, but it seems like the refcount getting
+       * wrong and it is failing the assert on some systems. */
+      // spfx_trail_free( trail_spfx_stack[i] );
+      Trail_spfx *trail = trail_spfx_stack[i];
+      free( trail->point_ringbuf );
+      free( trail );
+   }
    array_free( trail_spfx_stack );
    trail_spfx_stack = NULL;
 

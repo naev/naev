@@ -24,16 +24,17 @@
   <spob_remove>S58309</spob_remove>
   <spob_remove>S91456</spob_remove>
  </system>
- <tech name="Heavy Weapons 1">
+ <tech name="Empire Elite Outfits">
   <item_add>__Collective Outfits</item_add>
  </tech>
- <tech name="Heavy Weapons 2">
-  <item_add>__Collective Outfits</item_add>
+ <tech name="Empire Ships Large">
+  <item_add>Drone Carrier</item_add>
  </tech>
- <tech name="Heavy Civilian Combat Ships">
-  <item_add>__Collective Ships</item_add>
+ <tech name="Empire Ships Small">
+  <item_add>Drone</item_add>
+  <item_add>Heavy Drone</item_add>
  </tech>
  <faction name="Collective">
-  <invisible />
+  <invisible/>
  </faction>
 </unidiff>

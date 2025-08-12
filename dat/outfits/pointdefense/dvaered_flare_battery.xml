@@ -33,8 +33,8 @@
   </damage>
   <radius>35</radius>
   <ai>unguided</ai>
-  <pointdefense />
-  <miss_explode />
+  <pointdefense/>
+  <miss_explode/>
   <dispersion>12</dispersion>
   <speed_dispersion>200</speed_dispersion>
  </specific>

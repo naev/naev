@@ -11,4 +11,7 @@
  <specific type="modification">
   <cpu_max>0</cpu_max>
  </specific>
+ <tags>
+  <tag>core</tag>
+ </tags>
 </outfit>

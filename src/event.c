@@ -11,7 +11,6 @@
  *  to and open an entire set of events.
  */
 /** @cond */
-#include "nstring.h"
 #include <stdlib.h>
 
 #include <SDL3/SDL_timer.h>
@@ -112,6 +111,19 @@ Event_t *event_get( unsigned int eventid )
    }
 
    return NULL;
+}
+
+int event_exists( unsigned int eventid )
+{
+   return event_get( eventid ) != NULL;
+}
+
+nlua_env *event_getEnv( unsigned int eventid )
+{
+   Event_t *ev = event_get( eventid );
+   if ( ev == NULL )
+      return NULL;
+   return ev->env;
 }
 
 /**

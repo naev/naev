@@ -1,9 +1,9 @@
 <faction name="Trader">
  <mapname>Independent</mapname>
  <ai>trader</ai>
- <static />
- <invisible />
- <known />
+ <static/>
+ <invisible/>
+ <known/>
  <player>0</player>
  <spawn>trader</spawn>
  <standing>static</standing>

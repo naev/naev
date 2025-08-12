@@ -16,10 +16,9 @@
  <trail_generator x="-18" y="0" h="-4" always_under="1">pirate_bio</trail_generator>
  <fabricator>Skull and Bones</fabricator>
  <faction>Wild Ones</faction>
- <description>As Skull and Bones does not have the technology to grow new bioships from scratch they salvage stolen Soromid ships. While the adaptation process can be seen as cruel from an anthropomorphic point of view, leading to some conflicts with anti-animal cruelty pirate organizations, advocates argue that the process does not cause pain nor significant stress to the ships. The modifications do not target internal organs, and focus on redoing the externals, and there are many stories of pirates that have developed strong bonds with their bioships.
+ <description>As Skull and Bones does not have the technology to grow new bioships from scratch they salvage stolen Soromid ships. While the adaptation process can be seen as cruel from an anthropomorphic point of view, leading to some conflicts with anti-animal cruelty pirate organizations, advocates argue that the process does not cause pain nor significant stress to the ships. The modifications do not target internal organs, and focus on redoing the externals, allowing the ship to equip any hull and stronger non-bio weapons. Many pirates who obtain a Revenant become very fond of them and there are many stories of pirates that have developed strong bonds with their bioships.
 
-The total experience the Revenant can get is only half of what its Soromid counterpart can, but it also gains twice less experience.
-An additional medium weapon slot and the possibility to use any armour makes it significantly more flexible.
+The Revenant can only obtain half the maximum experience of an equivalent Soromid bioship, and also gains half as much experience.
  </description>
  <health>
   <armour>170</armour>
@@ -33,22 +32,22 @@ An additional medium weapon slot and the possibility to use any armour makes it 
  <slots>
   <weapon size="medium" prop="bio_weapon" name="weap1" x="-6" y="18" h="0">Talon Organ I</weapon>
   <weapon size="medium" prop="bio_weapon" name="weap2" x="-6" y="-18" h="0">Talon Organ I</weapon>
-  <weapon size="medium" x="0" y="-8" h="1" />
-  <weapon size="small" x="-8" y="16" h="1" />
-  <weapon size="small" x="-8" y="-16" h="1" />
+  <weapon size="medium" x="0" y="-8" h="1"/>
+  <weapon size="small" x="-8" y="16" h="1"/>
+  <weapon size="small" x="-8" y="-16" h="1"/>
   <utility size="medium" prop="bio_systems" name="brain">Mediocre Cerebrum I</utility>
-  <utility size="medium" prop="bio_organ" name="adrenal_gland" />
-  <utility size="medium" prop="bio_organ" name="feral_rage" />
-  <utility size="medium" prop="bio_organ" name="the_bite" />
-  <utility size="medium" prop="accessory" />
-  <utility size="medium" />
-  <utility size="medium" />
-  <utility size="small" />
+  <utility size="medium" prop="bio_organ" name="adrenal_gland"/>
+  <utility size="medium" prop="bio_organ" name="feral_rage"/>
+  <utility size="medium" prop="bio_organ" name="the_bite"/>
+  <utility size="medium" prop="accessory" name="accessory"/>
+  <utility size="medium"/>
+  <utility size="medium"/>
+  <utility size="small"/>
   <structure size="medium" prop="bio_engines" name="genedrive">Mediocris Gene Drive I</structure>
   <structure size="medium" prop="hull" name="hull">Patchwork Medium Plating</structure>
-  <structure size="medium" />
-  <structure size="medium" />
-  <structure size="medium" />
+  <structure size="medium"/>
+  <structure size="medium"/>
+  <structure size="medium"/>
  </slots>
  <stats>
   <speed_mod>10</speed_mod>

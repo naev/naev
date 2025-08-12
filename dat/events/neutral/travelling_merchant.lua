@@ -102,6 +102,8 @@ function create ()
 
    -- Create pilot
    p = pilot.add( "Mule", fctmisi, spawn_pos, trader_name )
+   p:outfitAdd( "Fuzzy Dice" )
+   p:outfitAddIntrinsic( "Machiavellian Fortune" )
    p:setFriendly()
    p:setInvincible()
    p:setVisplayer()
@@ -150,11 +152,18 @@ function gen_outfits ()
       'Air Freshener',
       'Valkyrie Beam',
       'Hades Torch',
+      "Apollo's Gaze",
+      "Kratos' Glove",
    }
 
    -- Wild space
    if faction.get("Lost"):known() then
       table.insert( outfits, "Berserk Chip" )
+   end
+
+   -- To make the proteron coating easier to obtain for now:
+   if faction.get("Proteron"):known() then
+      table.insert( outfits, "Reconstructive Nanobot Coating" )
    end
 
    -- Treasure hunt

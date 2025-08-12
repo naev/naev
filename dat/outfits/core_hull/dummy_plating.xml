@@ -13,4 +13,7 @@
   <absorb>0</absorb>
   <armour>0</armour>
  </specific>
+ <tags>
+  <tag>core</tag>
+ </tags>
 </outfit>

@@ -450,8 +450,7 @@ static void npc_free( NPC_t *npc )
       return;
    free( npc->name );
    gl_freeTexture( npc->portrait );
-   if ( npc->background != NULL )
-      gl_freeTexture( npc->background );
+   gl_freeTexture( npc->background );
    free( npc->desc );
 
    /* Type-specific free stuff. */

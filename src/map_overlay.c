@@ -938,9 +938,7 @@ void ovr_render( double dt )
          double r;
          if ( pilot_isDisabled( pstk[i] ) )
             continue;
-         if ( areAlliesSystem( player.p->faction, pstk[i]->faction,
-                               cur_system ) ||
-              pilot_isFriendly( pstk[i] ) )
+         if ( pilot_isFriendly( pstk[i] ) )
             continue;
          /* Only show pilots the player can see. */
          if ( !pilot_validTarget( player.p, pstk[i] ) )

@@ -216,7 +216,7 @@ err_ret:
    err =
       _( "Failed to write saved game!  You'll most likely have to restore it "
          "by copying your backup saved game over your current saved game." );
-   WARN( err );
+   WARN( "%s", err );
    dialogue_alert( "%s", err );
    return -1;
 }

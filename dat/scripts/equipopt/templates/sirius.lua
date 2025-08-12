@@ -3,6 +3,8 @@ local ecores = require 'equipopt.cores'
 local eoutfits = require 'equipopt.outfits'
 local eparams = require 'equipopt.params'
 
+local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
+
 local sirius_outfits = eoutfits.merge{{
    -- Heavy Weapons
    "Sirius Fidelity Bay", "Sirius Shaman Bay",
@@ -72,7 +74,7 @@ local sirius_params = {
 --local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 local sirius_cores = {
    ["Sirius Fidelity"] = function () return {
-         systems = "Milspec Orion 2301 Core System",
+         systems = choose_one{ "Milspec Aegis 2201 Core System", "Milspec Prometheus 2203 Core System" },
          engines = "Nexus Dart 160 Engine", -- maybe even melendez ox.
          hull = "S&K Skirmish Plating",
       } end,

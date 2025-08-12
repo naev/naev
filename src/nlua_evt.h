@@ -11,7 +11,7 @@
 
 /* Run Lua for an event. */
 Event_t *event_getFromLua( lua_State *L );
-void     event_runStart( unsigned int eventid, const char *func );
+int      event_runStart( unsigned int eventid, const char *func );
 int      event_runFunc( unsigned int eventid, const char *func, int nargs );
 int      event_run( unsigned int eventid, const char *func );
 

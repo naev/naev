@@ -1,0 +1,19 @@
+<outfit name="Charge Conduit">
+ <general>
+  <typename>Conduit</typename>
+  <limit>conduit</limit>
+  <slot>utility</slot>
+  <size>small</size>
+  <mass>3</mass>
+  <price>480000</price>
+  <gfx_store>placeholder.webp</gfx_store>
+  <description>The charge conduit uses surplus shield energy to enhance a multitude of a ship's systems, allowing the rest of the ship to return to pristine condition rapidly once the shield capacitors are fully charged. It results in some overall stability issues, but not enough to offset its contributions in most cases.</description>
+ </general>
+ <specific type="modification">
+  <armour_regen_mod>80</armour_regen_mod>
+  <energy_regen_mod>35</energy_regen_mod>
+  <cooldown_mod>-35</cooldown_mod>
+  <time_speedup>-3</time_speedup>
+  <lua>outfits/utility/conduit/conduit.lua</lua>
+ </specific>
+</outfit>

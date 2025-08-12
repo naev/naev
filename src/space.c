@@ -1497,7 +1497,7 @@ void space_update( double dt, double real_dt )
       Damage        dmg;
       dmg.type        = dtype_get( "nebula" );
       dmg.damage      = cur_system->nebu_volatility * dt;
-      dmg.penetration = 1.; /* Full penetration. */
+      dmg.penetration = FULL_PENETRATION; /* Full penetration. */
       dmg.disable     = 0.;
 
       /* Damage pilots in volatile systems. */
@@ -1628,11 +1628,12 @@ void space_init( const char *sysname, int do_simulate )
 #endif /* TRACY */
 
    /* Clean up some stuff and reset some global states. */
-   player_clear();          /* Clears targets the player has selected. */
-   ovr_mrkClear();          /* Clear markers when jumping. */
-   pilots_clean( 1 );       /* Destroy non-persistent pilots */
-   weapon_clear();          /* get rid of all the weapons */
-   spfx_clear();            /* get rid of the explosions */
+   player_clear();    /* Clears targets the player has selected. */
+   ovr_mrkClear();    /* Clear markers when jumping. */
+   pilots_clean( 1 ); /* Destroy non-persistent pilots */
+   weapon_clear();    /* get rid of all the weapons */
+   spfx_clear(); /* get rid of the explosions, must be run after weapon+pilrots
+                    clear */
    gatherable_free();       /* get rid of gatherable stuff. */
    background_clear();      /* Get rid of the background. */
    factions_clearDynamic(); /* get rid of dynamic factions. */

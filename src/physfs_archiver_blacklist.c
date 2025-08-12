@@ -17,6 +17,7 @@
 
 #include "array.h"
 #include "log.h"
+#include "nstring.h"
 
 /**
  * @brief Represents a file in a directory. Used to enumerate files.

@@ -1,8 +1,8 @@
 <ssys name="Alpha Centauri">
  <general>
-  <radius>15000.000000</radius>
+  <radius>16200.000000</radius>
   <spacedust>400</spacedust>
-  <interference>144.400000</interference>
+  <interference>94.400000</interference>
   <nebula volatility="3.900000" hue="320.000000">600.000000</nebula>
   <nolanes/>
  </general>
@@ -12,16 +12,16 @@
  </spobs>
  <jumps>
   <jump target="Baitas">
-   <pos x="-12804.710552" y="-7398.200960"/>
+   <pos x="-13737.544729" y="-5932.630800"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Padonia">
-   <pos x="14198.920186" y="420.050032"/>
-   <hide>1.000000</hide>
+   <pos x="14898.364220" y="5149.552437"/>
+   <hide>1.200000</hide>
   </jump>
   <jump target="Veses">
-   <pos x="2130.713495" y="14747.322004"/>
-   <hide>1.000000</hide>
+   <pos x="-315.964321" y="1459.305504"/>
+   <hide>0.730000</hide>
   </jump>
  </jumps>
  <tags>

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # This script will download and wrap meson if the current installed version
-# is not at least version 1.4.0 (which meson.build currently requires)
+# is not at least version VERSION (which meson.build currently requires)
 # if you have a newer version of meson in PATH, this wrapper isn't needed,
 # but it will pass commands through all the same.
 #

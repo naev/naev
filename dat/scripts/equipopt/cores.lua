@@ -169,38 +169,38 @@ esys["Scout"] = function ()
    return "Milspec Orion 2301 Core System"
 end
 esys["Interceptor"] = function ()
-   return choose_one{ "Milspec Orion 2301 Core System", "Milspec Thalos 2202 Core System" }
+   return choose_one{ "Milspec Orion 2301 Core System", "Milspec Aegis 2201 Core System", "Milspec Thalos 2202 Core System", "Milspec Prometheus 2203 Core System" }
 end
 esys["Fighter"] = function ()
-   return choose_one{ "Milspec Orion 2301 Core System", "Milspec Thalos 2202 Core System" }
+   return choose_one{ "Milspec Orion 2301 Core System", "Milspec Aegis 2201 Core System", "Milspec Thalos 2202 Core System", "Milspec Prometheus 2203 Core System" }
 end
 esys["Bomber"] = function ()
-   return "Milspec Orion 2301 Core System"
+   return choose_one{ "Milspec Orion 2301 Core System", "Milspec Aegis 2201 Core System" }
 end
 esys["Corvette"] = function ()
-   return choose_one{ "Milspec Orion 4801 Core System", "Milspec Thalos 4702 Core System" }
+   return choose_one{ "Milspec Orion 4801 Core System", "Milspec Aegis 4701 Core System", "Milspec Thalos 4702 Core System", "Milspec Prometheus 4703 Core System" }
 end
 esys["Destroyer"] = function ()
-   return choose_one{ "Milspec Orion 4801 Core System", "Milspec Thalos 4702 Core System" }
+   return choose_one{ "Milspec Orion 4801 Core System", "Milspec Aegis 4701 Core System", "Milspec Thalos 4702 Core System", "Milspec Prometheus 4703 Core System" }
 end
 esys["Cruiser"] = function ()
-   return choose_one{ "Milspec Orion 8601 Core System", "Milspec Thalos 8502 Core System" }
+   return choose_one{ "Milspec Orion 8601 Core System", "Milspec Aegis 8501 Core System", "Milspec Thalos 8502 Core System", "Milspec Prometheus 8503 Core System" }
 end
 esys["Battleship"] = function ()
-   return choose_one{ "Milspec Orion 8601 Core System", "Milspec Thalos 8502 Core System" }
+   return choose_one{ "Milspec Orion 8601 Core System", "Milspec Aegis 8501 Core System", "Milspec Thalos 8502 Core System", "Milspec Prometheus 8503 Core System" }
 end
 esys["Carrier"] = function ()
-   return choose_one{ "Milspec Orion 8601 Core System", "Milspec Thalos 8502 Core System" }
+   return choose_one{ "Milspec Orion 8601 Core System", "Milspec Aegis 8501 Core System", "Milspec Thalos 8502 Core System", "Milspec Prometheus 8503 Core System" }
 end
 -- Civilian
 esys["Yacht"] = ssys["Yacht"]
 esys["Courier"] = ssys["Courier"]
 esys["Freighter"] = ssys["Freighter"]
 esys["Armoured Transport"] = function ()
-   return "Milspec Orion 4801 Core System"
+   return choose_one{ "Milspec Orion 4801 Core System", "Milspec Aegis 4701 Core System", "Milspec Prometheus 4703 Core System" }
 end
 esys["Bulk Freighter"] = function ()
-   return "Milspec Orion 8601 Core System"
+   return choose_one{ "Milspec Orion 8601 Core System", "Milspec Aegis 8501 Core System", "Milspec Prometheus 8503 Core System" }
 end
 
 -- ELITE HULLS

@@ -8,6 +8,7 @@
  */
 /** @cond */
 #include <lauxlib.h>
+#include <stdlib.h>
 /** @endcond */
 
 #include "nlua_data.h"

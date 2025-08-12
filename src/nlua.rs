@@ -7,7 +7,7 @@ use std::sync::LazyLock;
 use crate::lua::ryaml;
 use crate::vec2;
 use gettext::{gettext, ngettext, pgettext};
-use log::{warn, warn_err};
+use log::{warn, warn_err, warnx};
 
 const NLUA_LOAD_TABLE: &str = "_LOADED"; // Table to use to store the status of required libraries.
 const LUA_INCLUDE_PATH: &str = "scripts/"; // Path for Lua includes.
@@ -36,21 +36,21 @@ impl Drop for LuaEnv {
             Ok(mlua::Value::Function(func)) => match self.call(lua, &func, ()) {
                 Ok(()) => (),
                 Err(e) => {
-                    warn!("Error calling Lua enviroment __gc function: {}", e);
+                    warn!("Error calling Lua enviroment __gc function: {e}");
                 }
             },
             Err(e) => {
-                warn!("Error getting Lua environment __gc function: {}", e);
+                warn!("Error getting Lua environment __gc function: {e}");
             }
             _ => {
                 let name = match self.get::<String>("__name") {
                     Ok(s) => s,
                     Err(e) => {
-                        warn!("environment __name not set: {}", e);
+                        warn!("environment __name not set: {e}");
                         String::from("unknown")
                     }
                 };
-                warn!("__gc is not a function or nil for environment '{}'", name);
+                warn!("__gc is not a function or nil for environment '{name}'");
             }
         }
 
@@ -152,7 +152,9 @@ impl NLua {
         };
 
         // Load base libraries NOT SUFFICIENT
-        lua.load_std_libs(mlua::StdLib::ALL_SAFE).unwrap();
+        lua.load_std_libs(mlua::StdLib::ALL_SAFE)?;
+        #[cfg(debug_assertions)]
+        lua.load_std_libs(mlua::StdLib::DEBUG)?;
 
         // Set up gettext stuff
         open_gettext(lua)?;
@@ -411,7 +413,7 @@ impl NLua {
                 }
                 _ => {
                     let name = value.get::<String>("__name")?;
-                    warn!(
+                    warnx!(
                         gettext("__resize is not a function or nil for environment '{}'"),
                         name
                     );
@@ -524,7 +526,7 @@ pub extern "C" fn nlua_newEnv(name: *const c_char) -> *mut LuaEnv {
     match lua.environment_new(name) {
         Ok(env) => Box::into_raw(Box::new(env)),
         Err(e) => {
-            warn!("unable to create Lua environment: {}", e);
+            warn!("unable to create Lua environment: {e}");
             std::ptr::null_mut()
         }
     }

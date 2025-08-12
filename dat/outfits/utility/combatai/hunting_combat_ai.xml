@@ -7,7 +7,7 @@
   <license>Heavy Weapon</license>
   <mass>0</mass>
   <price>850000</price>
-  <description>Similar to a hunter's ambush, the Hunting Combat AI is able to focus on exploiting the element of surprise and the weaknesses of enemy ship hulls, resulting in a significant increase in damage for turret weapons, albeit with a reduced fire rate.</description>
+  <description>Like a hunter's ambush, the Hunting Combat AI is able to exploit the element of surprise and the weaknesses of enemy ship hulls, resulting in a significant increase in damage for turret weapons, albeit with a reduced fire rate.</description>
   <gfx_store>hunting_combat_ai.webp</gfx_store>
   <limit>combatai</limit>
  </general>

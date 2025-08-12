@@ -17,183 +17,23 @@
 
 #include "physfs.h"
 #include <SDL3/SDL_stdinc.h>
-
-#include "naev.h"
 /** @endcond */
 
 #include "ndata.h"
 
 #include "array.h"
-#include "conf.h"
-#include "env.h"
-#include "opengl.h"
 #if SDL_PLATFORM_MACOS
 #include "glue_macos.h"
 #endif /* SDL_PLATFORM_MACOS */
 #include "log.h"
-#include "nfile.h"
 #include "nstring.h"
 #include "physfs_archiver_blacklist.c"
-#include "plugin.h"
 
 /*
  * Prototypes.
  */
-static void ndata_testVersion( void );
-static int  ndata_found( void );
-static int  ndata_enumerateCallback( void *data, const char *origdir,
-                                     const char *fname );
-
-/**
- * @brief Gets the primary path for where the data is.
- */
-const char *ndata_primaryPath( void )
-{
-   static char *primarypath = NULL;
-   if ( primarypath == NULL ) {
-      char **search_path = PHYSFS_getSearchPath();
-      int    n           = 0;
-      for ( char **p = search_path; *p != NULL; p++ )
-         n++;
-      for ( int i = n - 1; i >= 0; i-- ) {
-         if ( nfile_dirExists( search_path[i] ) ) {
-            primarypath = strdup( search_path[i] );
-            break;
-         }
-      }
-      PHYSFS_freeList( search_path );
-   }
-   return primarypath;
-}
-
-/**
- * @brief Checks to see if the physfs search path is enough to find game data.
- */
-static int ndata_found( void )
-{
-   /* Verify that we can find VERSION and start.xml.
-    * This is arbitrary, but these are among the hard dependencies to
-    * self-identify and start.
-    */
-   return PHYSFS_exists( "VERSION" ) && PHYSFS_exists( START_DATA_PATH );
-}
-
-/**
- * @brief Test version to see if it matches.
- */
-static void ndata_testVersion( void )
-{
-   size_t size;
-   char  *buf, cbuf[PATH_MAX];
-   int    diff;
-
-   if ( !ndata_found() ) {
-      char err[STRMAX];
-      snprintf( err, sizeof( err ),
-                _( "Unable to find game data. You may need to install, specify "
-                   "a datapath, or run using %s (if developing)." ),
-                "naev.py" );
-      SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR,
-                                _( "Naev Critical Error" ), err,
-                                gl_screen.window );
-      ERR( "%s", err );
-   }
-
-   /* Parse version. */
-   buf = ndata_read( "VERSION", &size );
-   for ( size_t i = 0; i < MIN( size, PATH_MAX - 1 ); i++ )
-      cbuf[i] = buf[i];
-   cbuf[MIN( size, PATH_MAX - 1 )] = '\0';
-   diff                            = naev_versionCompare( cbuf );
-   if ( diff != 0 ) {
-      WARN( _( "ndata version inconsistency with this version of Naev!" ) );
-      WARN( _( "Expected ndata version %s got %s." ), naev_version( 0 ), cbuf );
-      if ( ABS( diff ) > 2 ) {
-         char err[STRMAX];
-         snprintf( err, sizeof( err ),
-                   _( "Please get a compatible ndata version!" ) );
-         SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR,
-                                   _( "Naev Critical Error" ), err,
-                                   gl_screen.window );
-         ERR( "%s", err );
-      }
-      if ( ABS( diff ) > 1 )
-         WARN( _( "Naev will probably crash now as the versions are probably "
-                  "not compatible." ) );
-   }
-   free( buf );
-}
-
-/**
- * @brief Gets Naev's data path (for user data such as saves and screenshots)
- */
-void ndata_setupWriteDir( void )
-{
-   /* Global override is set. */
-   if ( conf.datapath ) {
-      PHYSFS_setWriteDir( conf.datapath );
-      return;
-   }
-#if SDL_PLATFORM_MACOS
-   /* For historical reasons predating physfs adoption, this case is different.
-    */
-   PHYSFS_setWriteDir( PHYSFS_getPrefDir( ".", "org.naev.Naev" ) );
-#else
-   PHYSFS_setWriteDir( PHYSFS_getPrefDir( ".", "naev" ) );
-#endif /* SDL_PLATFORM_MACOS */
-   if ( PHYSFS_getWriteDir() == NULL ) {
-      WARN( _( "Cannot determine data path, using current directory." ) );
-      PHYSFS_setWriteDir( "./naev/" );
-   }
-}
-
-/**
- * @brief Sets up the PhysicsFS search path.
- */
-void ndata_setupReadDirs( void )
-{
-   char buf[PATH_MAX];
-
-   if ( conf.ndata != NULL && PHYSFS_mount( conf.ndata, NULL, 1 ) )
-      LOG( _( "Added datapath from conf.lua file: %s" ), conf.ndata );
-
-#if SDL_PLATFORM_MACOS
-   if ( !ndata_found() && macos_isBundle() &&
-        macos_resourcesPath( buf, PATH_MAX - 4 ) >= 0 &&
-        strncat( buf, "/dat", 4 ) ) {
-      LOG( _( "Trying default datapath: %s" ), buf );
-      PHYSFS_mount( buf, NULL, 1 );
-   }
-#endif /* SDL_PLATFORM_MACOS */
-
-#if SDL_PLATFORM_LINUX
-   if ( !ndata_found() && env.isAppImage &&
-        nfile_concatPaths( buf, PATH_MAX, env.appdir, PKGDATADIR, "dat" ) >=
-           0 ) {
-      LOG( _( "Trying default datapath: %s" ), buf );
-      PHYSFS_mount( buf, NULL, 1 );
-   }
-#endif /*SDL_PLATFORM_LINUX */
-
-   if ( !ndata_found() &&
-        nfile_concatPaths( buf, PATH_MAX, PHYSFS_getBaseDir(), "dat" ) >= 0 ) {
-      LOG( _( "Trying default datapath: %s" ), buf );
-      PHYSFS_mount( buf, NULL, 1 );
-   }
-
-   if ( !ndata_found() &&
-        nfile_concatPaths( buf, PATH_MAX, PKGDATADIR, "dat" ) >= 0 ) {
-      LOG( _( "Trying default datapath: %s" ), buf );
-      PHYSFS_mount( buf, NULL, 1 );
-   }
-
-   PHYSFS_mount( PHYSFS_getWriteDir(), NULL, 0 );
-
-   /* Load plugins I guess. */
-   plugin_init();
-
-   ndata_testVersion();
-}
+static int ndata_enumerateCallback( void *data, const char *origdir,
+                                    const char *fname );
 
 /**
  * @brief Reads a file from the ndata (will be NUL terminated).

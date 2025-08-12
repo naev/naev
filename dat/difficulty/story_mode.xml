@@ -1,5 +1,6 @@
 <difficulty name="Story Mode">
  <description>Significantly reduces the difficulty of the game, allowing to concentrate on the story.</description>
+ <level>0.5</level>
  <armour_mod>200</armour_mod>
  <shield_mod>200</shield_mod>
  <energy_mod>200</energy_mod>

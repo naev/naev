@@ -4,9 +4,10 @@ local disable, penetration, isturret, duration, energy
 duration = 3
 function onload( o )
    local s     = o:specificstats()
-   --damage      = s.damage
+   -- The effect applies a fixed ratio of energy vs disable and is normalized
+   -- around disable.
    disable     = s.disable*0.5
-   energy      = s.damage*2.5
+   energy      = s.disable*1.5
    penetration = s.penetration
    isturret    = s.isturret
 end
@@ -28,7 +29,7 @@ function onimpact( p, target )
       else
          mod = p:shipstat("fwd_damage",true)
       end
-      dmg = dmg * mod
+      dmg = dmg * mod * p:shipstat("weapon_damage",true)
    end
 
    target:effectAdd( "Ionization", duration, dmg, p )

@@ -16,11 +16,11 @@ desc_list["generic"] = {
 }
 
 local msg_lore = {
-   _([["I can't stand Dvaereds. I just want to wipe them all off the map. Don't you?"]]),
+   _([["I can't stand the Dvaered. I just want to wipe them all off the map. Don't you?"]]),
    _([["One of these days, we will completely rid the Frontier of Dvaered oppressors. Mark my words!"]]),
-   _([["Have you ever wondered about our chances of actually winning over the Dvaereds? Sometimes I worry a little."]]),
+   _([["Have you ever wondered about our chances of actually winning over the Dvaered? Sometimes I worry a little."]]),
    _([["I was in charge of a bombing run recently. The mission was a success, but I lost a lot of comrades. Oh well… this is the sacrifice we must make to resist the oppressors."]]),
-   _([["What after we beat the Dvaereds, you say? Well, our work is never truly done until the Frontier is completely safe from oppression. Even if the Dvaered threat is ended, we'll still have those Sirius freaks to worry about. I don't think our job will ever end in our lifetimes."]]),
+   _([["What after we beat the Dvaered, you say? Well, our work is never truly done until the Frontier is completely safe from oppression. Even if the Dvaered threat is ended, we'll still have those Sirius freaks to worry about. I don't think our job will ever end in our lifetimes."]]),
    _([["Yeah, it's true, lots of Frontier officials fund our operations. If they didn't, we'd have a really hard time landing on Frontier planets, what with the kinds of operations we perform against the Dvaereds."]]),
    _([["Yeah, some civilians die because of our efforts, but that's just a sacrifice we have to make. It's for the greater good."]]),
    _([["No, we're not terrorists. We're soldiers. True terrorists kill and destroy without purpose. Our operations do have a purpose: to drive out the Dvaered oppressors from the Frontier."]]),

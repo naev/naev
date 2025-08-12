@@ -90,7 +90,7 @@ local goodness_override = {
    ["Hidden Jump Scanner"] = 0,
    ["Asteroid Scanner"] = 1,
    ["Blink Drive"] = 3,
-   ["Hyperbolic Blink Engine"] = 3,
+   ["Hyperbolic Blink Engine"] = 2,
    ["S&K Heavy Plasma Drill"] = 1,
    ["S&K Plasma Drill"] = 1,
 }
@@ -99,26 +99,39 @@ local goodness_override = {
 local goodness_special = {
    ["Black Cat Doll"] = 0.25, -- Only active when stealthing
    ["TeraCom Mace Launcher"] = 0.5,
-   ["Enygma Systems Huntsman Launcher"] = 0.5,
-   ["Enygma Systems Spearhead Launcher"] = 0.4, -- high damage but shield only
-   ["TeraCom Medusa Launcher"] = 0.5,           -- really high disable
-   ["Droid Repair Crew"] = 0.4, -- Only work until 50%
+   ["Unicorp Caesar IV Launcher"] = 0.6, -- high damage but slow with bad tracking
+   ["Enygma Systems Huntsman Launcher"] = 0.6,
+   ["Enygma Systems Spearhead Launcher"] = 0.6, -- high damage but shield only
+   ["TeraCom Vengeance Launcher"] = 0.6,
+   ["TeraCom Medusa Launcher"] = 0.6,           -- really high disable
+   ["Droid Repair Crew"] = 0.35, -- Only work until 50%
    ["Electron Burst Cannon"] = 0.7, -- Shieldbreaker damage
+   ["Particle Beam"] = 0.8,
+   ["EMP Grenade Launcher"] = 0.36,
+
+   -- Point defense works against missiles so it's extra useful
+   ["Ratchet Point Defense"] = 1.52,
+   ["Dvaered Flare Battery"] = 1.46,
+   ["Guardian Interception System"] = 1.21,
+   ["Guardian Overseer System"] = 1.15,
+   ["ZIBS-16"] = 2.77,
+   ["ZIBS-32"] = 2.71,
+   ["Spittle Tubuloid Cluster"] = 1.9,
    -- Plasma do a lot of damage over time
-   ["Plasma Blaster MK1"] = 1 / 0.75,
-   ["Plasma Blaster MK2"] = 1 / 0.75,
-   ["Plasma Cannon"] = 1 / 0.75,
-   ["Plasma Cluster Cannon"] = 1 / 0.75,
-   ["Plasma Turret MK1"] = 1 / 0.75,
-   ["Plasma Turret MK2"] = 1 / 0.75,
+   ["Plasma Blaster MK1"] = 1 / 0.63,
+   ["Plasma Blaster MK2"] = 1 / 0.63,
+   ["Plasma Cannon"] = 1 / 0.63,
+   ["Plasma Cluster Cannon"] = 1 / 0.63,
+   ["Plasma Turret MK1"] = 1 / 0.70,
+   ["Plasma Turret MK2"] = 1 / 0.70,
    -- Razor/Disruptors do disable over time (and energy drain!)
-   ["Razor Artillery S1"] = 1 / 0.75,
-   ["Razor Artillery S2"] = 1 / 0.75,
-   ["Razor Artillery S3"] = 1 / 0.75,
-   ["Razor Battery S3"] = 1 / 0.75,
-   ["Disruptor Artillery S1"] = 1 / 0.75,
-   ["Disruptor Artillery S2"] = 1 / 0.75,
-   ["Disruptor Battery S3"] = 1 / 0.75,
+   ["Razor Artillery S1"] = 1 / 0.80,
+   ["Razor Artillery S2"] = 1 / 0.80,
+   ["Razor Artillery S3"] = 1 / 0.80,
+   ["Razor Battery S3"] = 1 / 0.80,
+   ["Disruptor Artillery S1"] = 1 / 0.80,
+   ["Disruptor Artillery S2"] = 1 / 0.80,
+   ["Disruptor Battery S3"] = 1 / 0.80,
 }
 
 
@@ -199,6 +212,9 @@ function optimize.goodness_default( o, p )
       if o.seeker then
          weap = weap * p.seeker
       end
+      if o.ispd then
+         weap = weap * p.pointdefense
+      end
       if o.typebroad == "Bolt Weapon" then
          weap = weap * p.bolt
       elseif o.typebroad == "Beam Weapon" then
@@ -258,6 +274,90 @@ local function print_debug( lp, p, st, ss, outfit_list, params, constraints, ene
       lp:write_problem( outfile )
       print(fmt.f(_("Wrote optimization problem to '{path}'!"),{path=outfile}))
    end
+end
+
+local function compute_goodness( outfit_list, p, st, ss, params, limits )
+   local outfit_cache = {}
+   for k,out in ipairs(outfit_list) do
+      -- Core stats
+      --local oo    = out:shipstat(nil,true)
+      local oo    = {}
+      oo.name     = out:nameRaw()
+      oo.outfit   = out
+      oo.slot, oo.size = out:slot()
+      oo.is_weap = (oo.slot=="Weapon")
+      oo.is_util = (oo.slot=="Utility")
+      oo.is_stru = (oo.slot=="Structure")
+      local os = outfit_stats[oo.name]
+      oo.stats    = os
+      oo.dps, oo.disable, oo.eps, oo.range, oo.trackmin, oo.trackmax, oo.lockon, oo.iflockon, oo.seeker = out:weapstats( p )
+      oo.trackmin = oo.trackmin or 0
+      oo.trackmax = oo.trackmax or 0
+      oo.lockon   = (oo.lockon or 0) + (oo.iflockon or 0)
+      oo.cpu      = os.cpu - st.cpu_max * os.cpu_mod + st.cpu_max - os.cpu_max
+      oo.mass     = os.mass * ss.mass_mod
+      oo.price    = os.price
+      oo.limit    = os.limit
+      if oo.limit then
+         for i,l in ipairs(limits) do
+            if l == oo.limit then
+               oo.limitpos = i
+               break
+            end
+         end
+      end
+      oo.type     = os.type
+      oo.typebroad = os.typebroad
+      oo.spec     = os.spec
+      oo.isturret = oo.spec.isturret
+      oo.penetration = oo.spec.penetration
+      oo.ispd     = out:pointdefense()
+
+      -- We correct ship stats here and convert them to "relative improvements"
+      -- Movement
+      oo.accel  = os.accel_mod * (os.accel + st.accel) - st.accel
+      oo.speed  = os.speed_mod * (os.speed + st.speed) - st.speed
+      oo.turn   = os.turn_mod  * (os.turn  + st.turn)  - st.turn
+      -- Health
+      oo.armour = os.armour_mod * (os.armour + st.armour) - st.armour
+      oo.shield = os.shield_mod * (os.shield + st.shield) - st.shield
+      oo.energy = os.energy_mod * (os.energy + st.energy) - st.energy
+      oo.armour_regen = os.armour_regen_mod * (ss.armour_regen_mod * os.armour_regen + st.armour_regen) - os.armour_regen_malus - st.armour_regen
+      oo.shield_regen = os.shield_regen_mod * (ss.shield_regen_mod * os.shield_regen + st.shield_regen) - os.shield_regen_malus - st.shield_regen
+      oo.energy_regen = os.energy_regen_mod * (ss.energy_regen_mod * os.energy_regen + st.energy_regen) - os.energy_regen_malus - st.energy_regen
+      oo.nebu_absorb = os.nebu_absorb
+      -- Misc
+      oo.cargo = os.cargo_mod * (os.cargo + ss.cargo) - ss.cargo
+
+      -- Specific corrections
+      if oo.type == "Fighter Bay" then
+         -- Fighter bays don't have dps or anything, so we have to fake it
+         oo.dps      = fbay_dps[oo.name]
+         if not oo.dps then
+            warn(string.format(_("Fighter bay '%s' does not have computed DPS!"), oo.name))
+         end
+         oo.disable  = 0
+         oo.eps      = 0
+         oo.range    = 10e3
+         oo.penetration = 0.5
+      elseif oo.type == "Afterburner" then
+         -- We add it as movement, but weaken the effect a bit
+         oo.accel    = oo.accel + 1.5*math.sqrt(oo.spec.accel * st.accel)
+         oo.speed    = oo.speed + 1.5*math.sqrt(oo.spec.speed * st.speed)
+      end
+
+      -- Compute goodness
+      oo.goodness = goodness_override[oo.name]
+      if oo.goodness then
+         oo.goodness = (params.prefer[oo.name] or 1) * (params.constant +  oo.goodness)
+      else
+         oo.goodness = params.goodness( oo, params )
+      end
+
+      -- Cache it all so we don't have to recompute
+      outfit_cache[out] = oo
+   end
+   return outfit_cache
 end
 
 --[[--
@@ -424,85 +524,7 @@ function optimize.optimize( p, cores, outfit_list, params )
 
    -- Create outfit cache, it contains all sort of nice information like DPS and
    -- other stuff that can be used for our goodness function
-   local outfit_cache = {}
-   for k,out in ipairs(outfit_list) do
-      -- Core stats
-      --local oo    = out:shipstat(nil,true)
-      local oo    = {}
-      oo.name     = out:nameRaw()
-      oo.outfit   = out
-      oo.slot, oo.size = out:slot()
-      oo.is_weap = (oo.slot=="Weapon")
-      oo.is_util = (oo.slot=="Utility")
-      oo.is_stru = (oo.slot=="Structure")
-      local os = outfit_stats[oo.name]
-      oo.stats    = os
-      oo.dps, oo.disable, oo.eps, oo.range, oo.trackmin, oo.trackmax, oo.lockon, oo.iflockon, oo.seeker = out:weapstats( p )
-      oo.trackmin = oo.trackmin or 0
-      oo.trackmax = oo.trackmax or 0
-      oo.lockon   = (oo.lockon or 0) + (oo.iflockon or 0)
-      oo.cpu      = os.cpu - st.cpu_max * os.cpu_mod + st.cpu_max - os.cpu_max
-      oo.mass     = os.mass * ss.mass_mod
-      oo.price    = os.price
-      oo.limit    = os.limit
-      if oo.limit then
-         for i,l in ipairs(limits) do
-            if l == oo.limit then
-               oo.limitpos = i
-               break
-            end
-         end
-      end
-      oo.type     = os.type
-      oo.typebroad = os.typebroad
-      oo.spec     = os.spec
-      oo.isturret = oo.spec.isturret
-      oo.penetration = oo.spec.penetration
-
-      -- We correct ship stats here and convert them to "relative improvements"
-      -- Movement
-      oo.accel  = os.accel_mod * (os.accel + st.accel) - st.accel
-      oo.speed  = os.speed_mod * (os.speed + st.speed) - st.speed
-      oo.turn   = os.turn_mod  * (os.turn  + st.turn)  - st.turn
-      -- Health
-      oo.armour = os.armour_mod * (os.armour + st.armour) - st.armour
-      oo.shield = os.shield_mod * (os.shield + st.shield) - st.shield
-      oo.energy = os.energy_mod * (os.energy + st.energy) - st.energy
-      oo.armour_regen = os.armour_regen_mod * (ss.armour_regen_mod * os.armour_regen + st.armour_regen) - os.armour_regen_malus - st.armour_regen
-      oo.shield_regen = os.shield_regen_mod * (ss.shield_regen_mod * os.shield_regen + st.shield_regen) - os.shield_regen_malus - st.shield_regen
-      oo.energy_regen = os.energy_regen_mod * (ss.energy_regen_mod * os.energy_regen + st.energy_regen) - os.energy_regen_malus - st.energy_regen
-      oo.nebu_absorb = os.nebu_absorb
-      -- Misc
-      oo.cargo = os.cargo_mod * (os.cargo + ss.cargo) - ss.cargo
-
-      -- Specific corrections
-      if oo.type == "Fighter Bay" then
-         -- Fighter bays don't have dps or anything, so we have to fake it
-         oo.dps      = fbay_dps[oo.name]
-         if not oo.dps then
-            warn(string.format(_("Fighter bay '%s' does not have computed DPS!"), oo.name))
-         end
-         oo.disable  = 0
-         oo.eps      = 0
-         oo.range    = 10e3
-         oo.penetration = 0.5
-      elseif oo.type == "Afterburner" then
-         -- We add it as movement, but weaken the effect a bit
-         oo.accel    = oo.accel + 1.5*math.sqrt(oo.spec.accel * st.accel)
-         oo.speed    = oo.speed + 1.5*math.sqrt(oo.spec.speed * st.speed)
-      end
-
-      -- Compute goodness
-      oo.goodness = goodness_override[oo.name]
-      if oo.goodness then
-         oo.goodness = (params.prefer[oo.name] or 1) * (params.constant +  oo.goodness)
-      else
-         oo.goodness = params.goodness( oo, params )
-      end
-
-      -- Cache it all so we don't have to recompute
-      outfit_cache[out] = oo
-   end
+   local outfit_cache = compute_goodness( outfit_list, p, st, ss, params, limits )
 
    -- Figure out slots
    local slots = {}
@@ -846,6 +868,31 @@ function optimize.optimize( p, cores, outfit_list, params )
       end
    end
    return true
+end
+
+function optimize.debug_goodness( p, params, outfits )
+   params = params or eparams.default()
+   outfits = outfits or outfit.getAll()
+   params.goodness = params.goodness or optimize.goodness_default
+
+   p = p or player.pilot()
+   local st = p:stats()
+   local ss = p:shipstat( nil, true ) -- Should include cores!!
+
+   local ocache = compute_goodness( outfits, p, st, ss, params, {} )
+   local oo = {}
+   for k,v in pairs(ocache) do
+      -- Skip core outfits
+      if not v.outfit:tags().core then
+         table.insert( oo, v )
+      end
+   end
+   table.sort( oo, function ( a, b )
+      return a.goodness > b.goodness
+   end )
+   for k,v in ipairs(oo) do
+      print( v.outfit, v.goodness )
+   end
 end
 
 return optimize

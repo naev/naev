@@ -113,9 +113,9 @@ function land()
    vn.scene()
    vn.transition()
 
-   vn.na(fmt.f(_([[You deliver the parcels to the Empire Shipping station at the {pnt} spaceport. Afterwards, they make you do some paperwork to formalise your participation with the Empire. They tell you to keep an eye out for missions labeled {label}, in the mission computer.
+   vn.na(fmt.f(_([[You deliver the parcels to the Empire Shipping station at the {pnt} spaceport. Afterwards, they make you do some paperwork to formalize your participation with the Empire. They tell you to keep an eye out for missions labelled {label}, in the mission computer.
 You aren't too sure of what to make of your encounter with the Empire. Only time will tell…]]),
-      {pnt=mem.dest, label=emp.prefix} ))
+      {pnt=mem.dest, label=emp.prefix_raw} ))
    vn.func( function ()
       var.push("es_cargo", true)
       faction.hit( "Empire", 3 )
@@ -127,6 +127,7 @@ You aren't too sure of what to make of your encounter with the Empire. Only time
 
    vn.run()
 
-   emp.addShippingLog( _([[You were recruited into the Empire's shipping division and can now do missions labeled ES, which stands for Empire Shipping. You aren't too sure of what to make of your encounter with the Empire. Only time will tell…]]) )
+   emp.addShippingLog( fmt.f(_([[You were recruited into the Empire's shipping division and can now do missions labelled {label}, which stands for Empire Shipping. You aren't too sure of what to make of your encounter with the Empire. Only time will tell…]]),
+      {label=emp.prefix_raw}))
    misn.finish(true)
 end

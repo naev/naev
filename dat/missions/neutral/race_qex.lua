@@ -74,7 +74,7 @@ function create ()
       end
 
       track.length = length
-      track.goaltime = length / 600 -- TODO something better
+      track.goaltime = length / 694 -- TODO something better
       track.reward = track.reward or DEFAULT_REWARD
       track.besttime = var.peek( track_besttime(track) ) or math.huge
    end

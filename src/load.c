@@ -571,10 +571,10 @@ static int load_sortCompare( const void *p1, const void *p2 )
    ns2 = (const nsave_t *)p2;
 
    /* Sort by compatibility first. */
-   if ( !ns1->compatible && ns2->compatible )
-      return -1;
-   else if ( ns1->compatible && !ns2->compatible )
+   if ( ns1->compatible && !ns2->compatible )
       return +1;
+   else if ( !ns1->compatible && ns2->compatible )
+      return -1;
 
    /* Make sure back ups are last. */
    const char *BACKUPNAME = "backup";
@@ -584,11 +584,13 @@ static int load_sortCompare( const void *p1, const void *p2 )
       return +1;
    else if ( !b1 && b2 )
       return -1;
+   else if ( b1 && b2 ) /* Both backups, so sort by name. */
+      return strcmp( ns1->save_name, ns2->save_name );
 
-   /* Sort by file modification date with a resolution of 65.536 seconds or 18.2
-    * hours. */
-   PHYSFS_sint64 t1 = ns1->modtime >> 16;
-   PHYSFS_sint64 t2 = ns2->modtime >> 16;
+   /* Sort by file modification date with a resolution of 256 seconds or 4ish
+    * minutes. */
+   PHYSFS_sint64 t1 = ns1->modtime >> 8;
+   PHYSFS_sint64 t2 = ns2->modtime >> 8;
    if ( t1 > t2 )
       return -1;
    else if ( t1 < t2 )
@@ -596,11 +598,16 @@ static int load_sortCompare( const void *p1, const void *p2 )
 
    /* Sort by in-game date. */
    if ( ns1->date > ns2->date )
-      return -1;
-   else if ( ns1->date > ns2->date )
       return +1;
+   else if ( ns1->date > ns2->date )
+      return -1;
 
-   /* Finally sort by name. */
+   /* Sort by player name. */
+   int ret = strcmp( ns1->player_name, ns2->player_name );
+   if ( ret != 0 )
+      return ret;
+
+   /* Finally sort by file name. */
    return strcmp( ns1->save_name, ns2->save_name );
 }
 

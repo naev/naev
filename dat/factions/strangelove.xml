@@ -2,9 +2,9 @@
  <!-- Can't be made dynamic because has an asset.-->
  <ai>zalek</ai>
  <display>Independent</display>
- <static />
- <invisible />
- <known />
+ <static/>
+ <invisible/>
+ <known/>
  <player>0</player>
  <standing>static</standing>
  <equip>pirate</equip>

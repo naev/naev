@@ -42,16 +42,13 @@ deterministic_sort() { LC_ALL=C sort; }
 # The text strings must come first, or else gettext "remembers" its most recent
 # language detection and gives them unwanted "c-format" or "lua-format" tags.
 
-# shellcheck disable=SC2046
-po/credits_pot.py po/credits.pot \
-   dat/intro \
-   dat/AUTHORS \
-   $(cd artwork; find_files gfx/loading txt | sed 's|^|artwork/|')
+IFS=$'\n'
+readarray -t ART <<< "$(cd artwork; find_files gfx/loading txt | sed 's|^|artwork/|')"
+po/credits_pot.py po/credits.pot dat/intro dat/AUTHORS "${ART[@]}"
 
-# shellcheck disable=SC2046
-po/naevpedia_pot.py po/naevpedia.pot \
-   $(cd dat; find_files naevpedia md | sed 's|^|dat/|') \
-   $(find "${BUILDDIR}/dat/naevpedia" -name "*.md") \
+readarray -t MD1 <<< "$(cd dat; find_files naevpedia md | sed 's|^|dat/|')"
+readarray -t MD2 <<< "$(find "${BUILDDIR}/dat/naevpedia" -name "*.md")"
+po/naevpedia_pot.py po/naevpedia.pot "${MD1[@]}" "${MD2[@]}"
 
 (
    echo po/naevpedia.pot

@@ -166,7 +166,7 @@ int gl_init( void )
       SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR,
                                 _( "Naev Critical Error" ), buf,
                                 gl_screen.window );
-      ERR( "%s", buf );
+      return -1;
    }
 
    /* We are interested in 3.3 because it drops all the deprecated stuff and

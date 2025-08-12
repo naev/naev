@@ -6,9 +6,7 @@
   <license>Medium Weapon</license>
   <mass>23</mass>
   <price>85000</price>
-  <description>The Headhunter class interceptor missile is a medium calibre missile that can deal devastating damage to small and medium sized targets, while remaining reasonably fast and agile. Most effective when launched at distant enemies.
-
-This is TeraCom's model Headhunter launcher. Though somewhat pricey and demanding on the ship's resources, the patented tracking and missile arming technology allows pilots to fire their missiles before the competition does.</description>
+  <description>This is TeraCom's model Headhunter launcher. Though somewhat pricey and demanding on the ship's resources, the patented tracking and missile arming technology allows pilots to fire their missiles before the competition does. The Headhunter missiles can deal devastating damage to small and medium-sized distant enemies, while remaining reasonably fast and agile.</description>
   <gfx_store>headhunterlauncher.webp</gfx_store>
   <cpu>-7</cpu>
  </general>

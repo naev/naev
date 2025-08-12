@@ -114,21 +114,18 @@ pub fn get(name: &str) -> Result<&'static SlotProperty> {
 
 pub fn load() -> Result<Vec<SlotProperty>> {
     let ctx = Context::get().as_safe_wrap();
-    let files = ndata::read_dir("slots/")?;
+    let files = ndata::read_dir_filter("slots/", |filename| filename.ends_with(".xml"))?;
     let mut sp_data: Vec<SlotProperty> = files
         .par_iter()
-        .filter_map(|filename| {
-            if !filename.ends_with(".xml") {
-                return None;
-            }
-            match SlotProperty::load(&ctx, filename.as_str()) {
+        .filter_map(
+            |filename| match SlotProperty::load(&ctx, filename.as_str()) {
                 Ok(sp) => Some(sp),
                 Err(err) => {
                     warn_err(err.context(format!("unable to load Slot Property '{filename}'!")));
                     None
                 }
-            }
-        })
+            },
+        )
         .collect();
     sort_by_key_ref(&mut sp_data, |sp: &SlotProperty| &sp.name);
     Ok(sp_data)
@@ -142,7 +139,7 @@ pub extern "C" fn sp_get(name: *const c_char) -> c_int {
         match binary_search_by_key_ref(&SLOT_PROPERTIES, name, |sp: &SlotProperty| &sp.name) {
             Ok(i) => (i + 1) as c_int,
             Err(_) => {
-                warn!("slot property '{}' not found", name);
+                warn!("slot property '{name}' not found");
                 0
             }
         }

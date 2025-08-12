@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 from sys import stderr, stdin
-from core_outfit import some_outfit
 from outfit import LOWER_BETTER
 from combine_multi import mk_combine
 
@@ -39,10 +38,10 @@ def main( args, gith = False, color = False, term = False, noext = False,
    for o in mk_combine(args, combine, autostack, good):
       d = o.to_dict()
       for k, v in d.items():
-         if type(v) == type((1.0,)):
+         if type(v) == type(()):
             (val, _) = v
             s = nfmt(v[0]) + '/' + nfmt(v[1])
-         elif type(v) == type(1.0):
+         elif type(v) in {type(1), type(1.0)}:
             val = v
             s = nfmt(v)
          else:

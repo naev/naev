@@ -16,12 +16,12 @@ from sys import path, stderr, argv
 path.insert(0, util_dir)
 
 from getconst import PHYSICS_SPEED_DAMP
-from core_outfit import core_outfit
+from outfit import outfit
 
 
 def iter_line( line ):
    for d in ['small', 'medium', 'large']:
-      for i in glob(os.path.join( engine_dir, d, line+'*.xml')):
+      for i in glob(os.path.join( engine_dir, d, line + '*.xml')):
          yield i
 
 def max_sp( sp, ac ):
@@ -33,8 +33,8 @@ def mkline( line ):
    acc = []
    for f in iter_line(line):
       for fl in [False, True]:
-         o = core_outfit(f)
-         o.autostack(fl)
+         o = outfit(f, is_multi = True)
+         o.stack(o if fl else None)
          d = o.to_dict()
          acc.append((max_sp(d['speed'], d['accel']), d['speed']))
 

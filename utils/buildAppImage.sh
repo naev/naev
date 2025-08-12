@@ -12,7 +12,7 @@ set -o pipefail
 
 # Defaults
 SOURCEPATH="$(pwd)"
-BUILDTYPE="release"
+BUILDTYPE="debug"
 MAKEAPPIMAGE="false"
 PACKAGE="false"
 NIGHTLY="false"
@@ -75,7 +75,8 @@ echo "BUILDTYPE:           $BUILDTYPE"
 mkdir -p "$WORKPATH"/{dist,utils}
 
 # Get arch for use with linuxdeploy and to help make the linuxdeploy URL more architecture agnostic.
-ARCH=$(arch)
+#ARCH=$(arch)
+ARCH=$(uname -m)
 export ARCH
 
 get_tools() {
@@ -161,7 +162,7 @@ build_appimage() {
     UPDATE_INFORMATION="gh-releases-zsync|naev|naev|$TAG|naev-*.AppImage.zsync"
 
     pushd "$WORKPATH/dist"
-    "$appimagetool" --comp zstd -v -u "$UPDATE_INFORMATION" "$APPDIRPATH" "$OUTPUT"
+    "$appimagetool" --comp zstd --mksquashfs-opt -Xcompression-level --mksquashfs-opt 20 -v -u "$UPDATE_INFORMATION" "$APPDIRPATH" "$OUTPUT"
     popd
     echo "Completed."
 }

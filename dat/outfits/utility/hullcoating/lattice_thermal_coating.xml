@@ -5,7 +5,7 @@
   <size>small</size>
   <mass>0</mass>
   <price>280000</price>
-  <description>By modifying the micro-facets of the hull surface using a triply periodic minimal surface structure, the Lattice Thermal Coating is able to more quickly regulate ship internals without disrupting fundamental functionality. This allows for outfits to generally be used in more quick successions reliably and without long-lasting damage.</description>
+  <description>By modifying the micro-facets of the hull's surface using a triply periodic minimal surface structure, the Lattice Thermal Coating is able to aid in the regulation of ship internals without disrupting core functionality. This allows for outfits to be used in quicker successions reliably and without long-lasting damage.</description>
   <gfx_store>lattice_thermal_coating.webp</gfx_store>
   <limit>hullcoat</limit>
  </general>

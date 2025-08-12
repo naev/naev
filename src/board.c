@@ -129,7 +129,7 @@ int player_canBoard( int noisy )
          player_message( "#r%s",
                          _( "You cannot board a ship that isn't disabled!" ) );
       return PLAYER_BOARD_IMPOSSIBLE;
-   } else if ( pilot_isFlag( p, PILOT_BOARDED ) ) {
+   } else if ( pilot_isFlag( p, PILOT_BOARDED_PLAYER ) ) {
       if ( noisy )
          player_message( "#r%s", _( "Your target cannot be boarded again." ) );
       return PLAYER_BOARD_IMPOSSIBLE;
@@ -193,7 +193,7 @@ int player_tryBoard( int noisy )
 
    /* Mark pilot as boarded only if it isn't being active boarded. */
    if ( !pilot_isFlag( p, PILOT_BOARDABLE ) )
-      pilot_setFlag( p, PILOT_BOARDED );
+      pilot_setFlag( p, PILOT_BOARDED_PLAYER );
    player_message( _( "#oBoarding ship #%c%s#0." ), c, p->name );
 
    /* Don't unboard. */
@@ -238,14 +238,14 @@ int pilot_board( Pilot *p )
    else if ( vec2_dist2( &p->solid.vel, &target->solid.vel ) >
              pow2( MAX_HYPERSPACE_VEL ) )
       return 0;
-   else if ( pilot_isFlag( target, PILOT_BOARDED ) )
+   else if ( pilot_isFlag( target, PILOT_BOARDED_PILOT ) )
       return 0;
 
    /* Set speed to target's speed. */
    vec2_cset( &p->solid.vel, VX( target->solid.vel ), VY( target->solid.vel ) );
 
    /* Set the boarding flag. */
-   pilot_setFlag( target, PILOT_BOARDED );
+   pilot_setFlag( target, PILOT_BOARDED_PILOT );
    pilot_setFlag( p, PILOT_BOARDING );
 
    /* Set time it takes to board. */
@@ -289,7 +289,7 @@ void pilot_boardComplete( Pilot *p )
    } else {
       /* Steal stuff, we only do credits for now. */
       p->credits += target->credits * p->stats.loot_mod;
-      target->credits = 0.;
+      target->credits = 0;
    }
 
    /* Finish the boarding. */

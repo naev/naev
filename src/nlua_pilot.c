@@ -3456,7 +3456,23 @@ static int pilotL_setHilight( lua_State *L )
  */
 static int pilotL_setBribed( lua_State *L )
 {
-   return pilotL_setFlagWrapper( L, PILOT_BRIBED );
+   int    state;
+   Pilot *p = luaL_validpilot( L, 1 );
+
+   /* Get state. */
+   if ( lua_isnone( L, 2 ) )
+      state = 1;
+   else
+      state = lua_toboolean( L, 2 );
+
+   /* Set or remove the flag. */
+   if ( state ) {
+      pilot_rmFlag( p, PILOT_HOSTILE );
+      pilot_setFlag( p, PILOT_BRIBED );
+   } else
+      pilot_rmFlag( p, PILOT_BRIBED );
+
+   return 0;
 }
 
 /**

@@ -29,19 +29,19 @@
   <weapon size="medium" prop="bio_weapon" name="weap1" x="-15" y="-10" h="-10">Talon Organ I</weapon>
   <weapon size="medium" prop="bio_weapon" name="weap2" x="-15" y="10" h="-10">Talon Organ I</weapon>
   <weapon size="medium" prop="bio_weapon" name="weap3" x="20" y="0" h="-10">Talon Organ I</weapon>
-  <weapon size="medium" x="4" y="-5" h="-10" />
-  <weapon size="medium" x="4" y="5" h="-10" />
+  <weapon size="medium" x="4" y="-5" h="-10"/>
+  <weapon size="medium" x="4" y="5" h="-10"/>
   <utility size="medium" prop="bio_systems" name="brain">Largum Cerebrum I</utility>
-  <utility size="medium" prop="bio_organ" name="feral_rage" />
-  <utility size="medium" prop="bio_organ" name="the_bite" />
-  <utility size="medium" prop="accessory" />
-  <utility size="large" />
-  <utility size="medium" />
+  <utility size="medium" prop="bio_organ" name="feral_rage"/>
+  <utility size="medium" prop="bio_organ" name="the_bite"/>
+  <utility size="medium" prop="accessory" name="accessory"/>
+  <utility size="large"/>
+  <utility size="medium"/>
   <structure size="medium" prop="bio_engines" name="genedrive">Largus Gene Drive I</structure>
   <structure size="medium" prop="bio_hull" name="shell">Largus Cortex I</structure>
-  <structure size="large" />
-  <structure size="medium" />
-  <structure size="medium" />
+  <structure size="large"/>
+  <structure size="medium"/>
+  <structure size="medium"/>
  </slots>
  <stats>
   <armour_mod>-10</armour_mod>

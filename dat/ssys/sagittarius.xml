@@ -2,7 +2,7 @@
  <general>
   <radius>15000.000000</radius>
   <spacedust>400</spacedust>
-  <interference>151.200000</interference>
+  <interference>130.200000</interference>
   <nebula volatility="3.700000" hue="320.000000">600.000000</nebula>
   <nolanes/>
  </general>
@@ -12,15 +12,15 @@
  </spobs>
  <jumps>
   <jump target="Hopa">
-   <pos x="6538.367228" y="-12192.742473"/>
+   <pos x="381.121724" y="-11535.784608"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Nirtos">
-   <autopos/>
+   <pos x="1270.586482" y="13660.020555"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Urillian">
-   <pos x="13649.735477" y="1458.072698"/>
+   <pos x="12411.602572" y="5968.952800"/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

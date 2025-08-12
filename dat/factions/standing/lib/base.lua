@@ -277,6 +277,10 @@ Highly simplified version that doesn't take into account maximum standings and t
 function hit_test( _sys, mod, source )
    local  _max
    _max, mod = hit_mod( mod, source, 0 )
+   -- Case nothing changes, or too small to matter
+   if math.abs(mod) < 1e-1 then
+      return 0
+   end
    return mod
 end
 

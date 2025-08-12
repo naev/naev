@@ -1,5 +1,5 @@
 project('naev', ['c', 'rust'],
-   version : '0.13.0-alpha.8',
+   version : '0.13.0-alpha.9',
    default_options : [
       'optimization=g',
       'c_std=c11',
@@ -12,6 +12,7 @@ project('naev', ['c', 'rust'],
 # Dependency requirements
 rustc_needed_version = '>=1.85.0'
 bindgen_needed_version = '>=0.72.0'
+cargo_needed_version = '>=1.77.2'
 
 copyright_year = 2025
 forced_fallbacks = get_option('force_fallback_for')
@@ -59,7 +60,6 @@ fs = import('fs')
 python_module = import('python')
 python = python_module.find_installation('python3', required: true)
 pyyaml = python_module.find_installation('python3', modules: ['yaml'], required: true)
-xmltodict = python_module.find_installation('python3', modules: ['xmltodict'], required: true)
 mutagen = python_module.find_installation('python3', modules: ['mutagen'], required: false)
 
 subdir('utils')
@@ -80,6 +80,7 @@ summary('NData Path', ndata_path, section: 'Features')
 # Subdirs
 subdir('src')
 subdir('dat/outfits') # Has to be before naevpedia
+subdir('dat/tech')
 subdir('dat/naevpedia')
 subdir('dat/scripts')
 subdir('docs')
@@ -421,7 +422,6 @@ naevcrs = rust.bindgen(
       install: false)
 
    # Next handle setting up and passing stuff to Cargo
-   msrv = '1.77.2'
    # Since Rust debug is significantly slower than release, we try to use our
    # custom release-with-debug profile that runs quite fast while still having
    # pretty good debugging properties. Use 'debug_rust' option to explicitly
@@ -433,7 +433,7 @@ naevcrs = rust.bindgen(
    else
       rust_target = 'release'
    endif
-   cargo = find_program('cargo', version:'>= @0@'.format(msrv))
+   cargo = find_program('cargo', version: cargo_needed_version)
    cargo_data = configuration_data()
    cargo_data.set_quoted('NAME', meson.project_name())
    cargo_data.set_quoted('VERSION', meson.project_version())
@@ -590,7 +590,7 @@ naevcrs = rust.bindgen(
       'dat',
       install_dir: ndata_path,
       # Parts of dat/ are used as inputs to custom build targets, which generate the final installed versions.
-      exclude_files: ['AUTHORS', 'outfits/meson.build', 'outfits/bioship/generate.py', 'outfits/bioship/meson.build', 'scripts/meson.build' ],
+      exclude_files: ['AUTHORS', 'outfits/meson.build', 'outfits/bioship/generate.py', 'outfits/bioship/meson.build', 'scripts/meson.build', 'outfits/tech/meson.build' ],
       exclude_directories: ['outfits/py', 'outfits/bioship/templates'],
    )
 

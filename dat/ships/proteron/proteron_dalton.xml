@@ -28,19 +28,19 @@
   <cargo>5</cargo>
  </characteristics>
  <slots>
-  <weapon size="small" x="9" y="6" h="0" />
-  <weapon size="small" x="9" y="-6" h="0" />
-  <weapon size="small" x="9" y="-12" h="0" />
+  <weapon size="small" x="9" y="6" h="0"/>
+  <weapon size="small" x="9" y="-6" h="0"/>
+  <weapon size="small" x="9" y="-12" h="0"/>
   <utility size="small" prop="systems" name="systems">Unicorp PT-16 Core System</utility>
-  <utility size="small" prop="accessory" />
-  <utility size="small" />
-  <utility size="small" />
-  <utility size="small" />
+  <utility size="small" prop="accessory" name="accessory"/>
+  <utility size="small"/>
+  <utility size="small"/>
+  <utility size="small"/>
   <structure size="small" prop="engines" name="engines">Unicorp Hawk 160 Engine</structure>
   <structure size="small" prop="hull" name="hull">Unicorp D-2 Light Plating</structure>
-  <structure size="small" />
-  <structure size="small" />
-  <structure size="small" />
+  <structure size="small"/>
+  <structure size="small"/>
+  <structure size="small"/>
  </slots>
  <stats>
   <armour_mod>5</armour_mod>

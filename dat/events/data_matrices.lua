@@ -50,7 +50,7 @@ function delay ()
    vn.na(fmt.f(_([[You ship AI {ainame} appears before you.]]),
       {ainame=tut.ainame()}))
    sai(_([["I have noticed you have acquired a Data Matrix. It has some sort of archaic lock I am unable to decrypt. For some reason, my memory banks them being useful, however, it seems that my files on them have been somewhat damaged… This is fairly odd."]]))
-   sai(_([["Keeping on to them seems like a reasonable course of action. You may possibly find what my memory banks have forgotten, that is, some use for them."]]))
+   sai(_([["Keeping on to them seems like a reasonable course of action. You may find what my memory banks have forgotten, that is, some use for them."]]))
    vn.done( tut.shipai.transition )
 
    vn.run()

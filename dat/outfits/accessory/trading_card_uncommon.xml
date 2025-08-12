@@ -1,6 +1,6 @@
 <outfit name="Trading Card (Uncommon)">
  <general>
-  <unique />
+  <unique/>
   <typename>Accessory</typename>
   <slot prop="accessory">utility</slot>
   <size>small</size>
@@ -12,6 +12,7 @@
   <rarity>6</rarity>
  </general>
  <specific type="modification">
-  <fwd_firerate>10</fwd_firerate>
+  <fwd_firerate>8</fwd_firerate>
+  <stress_dissipation>6</stress_dissipation>
  </specific>
 </outfit>

@@ -3,16 +3,22 @@
   <slot>intrinsic</slot>
   <mass>0</mass>
   <price>0</price>
-  <description>Although many ships go through a tuning process during their mass production, it is far from perfect with imperfections leading to suboptimal performance. Port and polish consists of a complete in-depth tuning of the ship to bring out its best. Since it requires taking apart, fine-tuning, and putting back together large parts of a ship, the cost increases significantly with the size of the ship.
-#oThis outfit can not be removed once equipped.#0</description>
+  <description>Although many ships go through a tuning process during their mass production, it is far from perfect with imperfections leading to suboptimal performance. Port and polish consists of a complete in-depth tuning of the ship to bring out its best. Since it requires taking apart, fine-tuning, and putting back together large parts of a ship, the cost increases significantly with the size of the ship.</description>
   <gfx_store>placeholder.webp</gfx_store>
   <rarity>2</rarity>
   <limit>port_and_polish</limit>
  </general>
  <specific type="modification">
-  <lua>outfits/intrinsic/port_and_polish.lua</lua>
-  <speed_mod>5</speed_mod>
-  <turn_mod>5</turn_mod>
-  <accel_mod>5</accel_mod>
+  <lua_inline>
+require("outfits.lib.custom_price").setup( function ()
+   local pp = player.pilot()
+   local size = pp:ship():size()
+   return 25e3 * math.pow(2+size, 2)
+end )
+  </lua_inline>
+  <speed_mod>4</speed_mod>
+  <turn_mod>4</turn_mod>
+  <accel_mod>4</accel_mod>
+  <engine_limit_rel>2</engine_limit_rel>
  </specific>
 </outfit>

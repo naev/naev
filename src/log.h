@@ -3,26 +3,40 @@
  */
 #pragma once
 
-/** @cond */
-#include <signal.h>
-#include <stdio.h>
+#define LOGMAX 1024
 
 #include "gettext.h" // IWYU pragma: keep
-/** @endcond */
+#include <stdio.h>   // IWYU pragma: keep
+#include <string.h>  // IWYU pragma: keep
 
-#include "nstring.h"
-
-#define LOG( str, ... ) logprintf( stdout, 1, str, ##__VA_ARGS__ )
-#define LOGERR( str, ... ) logprintf( stderr, 1, str, ##__VA_ARGS__ )
+#define LOG( str, ... )                                                        \
+   do {                                                                        \
+      char _LOGBUF[LOGMAX];                                                    \
+      snprintf( _LOGBUF, sizeof( _LOGBUF ), str, ##__VA_ARGS__ );              \
+      info_rust( _LOGBUF );                                                    \
+   } while ( 0 )
+#define LOGERR LOG
 #define WARN( str, ... )                                                       \
-   log_warn( __FILE__, __LINE__, __func__, str, ##__VA_ARGS__ )
+   do {                                                                        \
+      char _LOGBUF[LOGMAX];                                                    \
+      snprintf( _LOGBUF, sizeof( _LOGBUF ), str, ##__VA_ARGS__ );              \
+      warn_rust( _LOGBUF );                                                    \
+   } while ( 0 )
 #define ERR( str, ... )                                                        \
-   ( logprintf( stderr, 0, _( "ERROR %s:%d [%s]: " ), __FILE__, __LINE__,      \
-                __func__ ),                                                    \
-     logprintf( stderr, 1, str, ##__VA_ARGS__ ), abort() )
+   do {                                                                        \
+      char _LOGBUF[LOGMAX];                                                    \
+      snprintf( _LOGBUF, sizeof( _LOGBUF ), str, ##__VA_ARGS__ );              \
+      warn_rust( _LOGBUF );                                                    \
+      abort();                                                                 \
+   } while ( 0 )
 #ifdef DEBUG
 #undef DEBUG
-#define DEBUG( str, ... ) LOG( str, ##__VA_ARGS__ )
+#define DEBUG( str, ... )                                                      \
+   do {                                                                        \
+      char _LOGBUF[LOGMAX];                                                    \
+      snprintf( _LOGBUF, sizeof( _LOGBUF ), str, ##__VA_ARGS__ );              \
+      debug_rust( _LOGBUF );                                                   \
+   } while ( 0 )
 #ifndef DEBUGGING
 #define DEBUGGING 1
 #endif /* DEBUGGING */
@@ -33,10 +47,7 @@
 #endif /* DEBUG */
 #define DEBUG_BLANK() DEBUG( "%s", "" )
 
-PRINTF_FORMAT( 3, 4 )
-NONNULL( 3 ) int logprintf( FILE *stream, int newline, const char *fmt, ... );
-void log_init( void );
-void log_redirect( void );
-void log_clean( void );
-int  log_warn( const char *file, size_t line, const char *func, const char *fmt,
-               ... );
+// From Rust
+void debug_rust( const char *msg );
+void info_rust( const char *msg );
+void warn_rust( const char *msg );

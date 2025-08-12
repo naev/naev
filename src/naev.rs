@@ -2,7 +2,8 @@
 pub use anyhow;
 use anyhow::{Error, Result};
 use formatx::formatx;
-use log::{debug, info, warn};
+use log::{debug, debugx, info, infox, warn, warn_err, warnx};
+use ndata::env;
 use sdl3 as sdl;
 use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_int, c_uint, c_void}; // Re-export for outter rust shenanigans
@@ -16,7 +17,6 @@ unsafe extern "C" {
 mod array;
 mod camera;
 mod damagetype;
-mod env;
 mod faction;
 mod linebreak;
 mod model;
@@ -28,7 +28,6 @@ mod rng;
 mod ship;
 mod slots;
 mod vec2;
-mod version;
 mod lua {
     pub mod ryaml;
 }
@@ -73,7 +72,9 @@ fn naevmain() -> Result<()> {
     argv.shrink_to_fit();
 
     /* Begin logging infrastructure. */
-    log::init();
+    log::init().unwrap_or_else(|e| {
+        warn_err!(e);
+    });
 
     // Workarounds
     if cfg!(target_os = "linux") {
@@ -100,7 +101,7 @@ fn naevmain() -> Result<()> {
     gettext::init();
 
     /* Print the version */
-    log::info(&version::VERSION_HUMAN);
+    info!("{}", &*log::version::VERSION_HUMAN);
     if cfg!(target_os = "linux") {
         match env::ENV.is_appimage {
             true => {
@@ -146,16 +147,15 @@ fn naevmain() -> Result<()> {
     let cpath = unsafe { naevc::nfile_configPath() };
     unsafe {
         if naevc::nfile_dirMakeExist(cpath) != 0 {
-            warn!(gettext("Unable to create config directory '{}'"), "foo");
+            warnx!(gettext("Unable to create config directory '{}'"), "foo");
         }
     }
 
     /* Set up the configuration. */
     let conf_file_path = unsafe {
         let rpath = cptr_to_cstr(cpath);
-        let conf_file = CStr::from_ptr(naevc::CONF_FILE.as_ptr() as *const c_char)
-            .to_str()
-            .unwrap();
+        let conf_file =
+            CStr::from_ptr(naevc::CONF_FILE.as_ptr() as *const c_char).to_string_lossy();
         format!("{rpath}{conf_file}")
     };
 
@@ -163,39 +163,37 @@ fn naevmain() -> Result<()> {
         let cconf_file_path = CString::new(conf_file_path.clone()).unwrap();
         naevc::conf_loadConfig(cconf_file_path.as_ptr()); /* Lua to parse the configuration file */
         naevc::conf_parseCLI(argv.len() as c_int, argv.as_mut_ptr()); /* parse CLI arguments */
+    }
 
+    // Will propagate error out if necessary
+    ndata::setup()?;
+
+    unsafe {
         /* Set up I/O. */
-        naevc::ndata_setupWriteDir();
-        naevc::log_redirect();
-        naevc::ndata_setupReadDirs();
         naevc::gettext_setLanguage(naevc::conf.language); /* now that we can find translations */
-        info!(gettext("Loaded configuration: {}"), conf_file_path);
+        infox!(gettext("Loaded configuration: {}"), conf_file_path);
         let search_path = naevc::PHYSFS_getSearchPath();
-        info!(gettext("Read locations, searched in order:"));
-        for p in {
-            let mut out: Vec<&str> = Vec::new();
+        let mut buf = String::from(gettext("Read locations, searched in order:"));
+        {
             let mut i = 0;
             loop {
                 let sp = *search_path.offset(i);
                 if sp.is_null() {
                     break;
                 }
-                let s = CStr::from_ptr(sp).to_str().unwrap();
-                out.push(s);
+                buf.push_str(&format!("\n    {}", cptr_to_cstr(sp)));
                 i += 1;
             }
-            out
-        } {
-            info!("    {}", p);
         }
+        info!("{buf}");
         naevc::PHYSFS_freeList(search_path as *mut c_void);
 
         /* Logging the cache path is noisy, noisy is good at the DEBUG level. */
-        debug!(
+        debugx!(
             gettext("Cache location: {}"),
             cptr_to_cstr(naevc::nfile_cachePath())
         );
-        info!(
+        infox!(
             gettext("Write location: {}\n"),
             cptr_to_cstr(naevc::PHYSFS_getWriteDir())
         );
@@ -212,12 +210,11 @@ fn naevmain() -> Result<()> {
 
         info!(
             " {}\n",
-            CStr::from_ptr(naevc::start_name()).to_str().unwrap()
+            CStr::from_ptr(naevc::start_name()).to_string_lossy()
         );
 
         /* Display the SDL version. */
         naevc::print_SDLversion();
-        info!("");
     }
 
     /* Set up OpenGL. */
@@ -226,7 +223,7 @@ fn naevmain() -> Result<()> {
     unsafe {
         if naevc::gl_init() != 0 {
             let err = gettext("Initializing video output failed, exiting…");
-            warn!(err);
+            warn!("{err}");
             anyhow::bail!(err);
         }
 
@@ -276,12 +273,12 @@ fn naevmain() -> Result<()> {
     // OpenAL
     unsafe {
         if naevc::conf.nosound != 0 {
-            info!(gettext("Sound is disabled!"));
+            info!("{}", gettext("Sound is disabled!"));
             naevc::sound_disabled = 1;
             naevc::music_disabled = 1;
         }
         if naevc::sound_init() != 0 {
-            warn!(gettext("Problem setting up sound!"));
+            warn!("{}", gettext("Problem setting up sound!"));
         }
         let m = CString::new("load")?;
         naevc::music_choose(m.as_ptr());
@@ -316,21 +313,23 @@ fn naevmain() -> Result<()> {
         // Joystick
         if naevc::conf.joystick_ind >= 0 || !naevc::conf.joystick_nam.is_null() {
             if naevc::joystick_init() != 0 {
-                warn!(gettext("Error initializing joystick input"));
+                warn!("{}", gettext("Error initializing joystick input"));
             }
             if !naevc::conf.joystick_nam.is_null() {
                 if naevc::joystick_use(naevc::joystick_get(naevc::conf.joystick_nam)) != 0 {
-                    warn!(gettext(
-                        "Failure to open any joystick, falling back to default keybinds"
-                    ));
+                    warn!(
+                        "{}",
+                        gettext("Failure to open any joystick, falling back to default keybinds")
+                    );
                     naevc::input_setDefault(1);
                 }
             } else if naevc::conf.joystick_ind >= 0
                 && naevc::joystick_use(naevc::conf.joystick_ind) != 0
             {
-                warn!(gettext(
-                    "Failure to open any joystick, falling back to default keybinds"
-                ));
+                warn!(
+                    "{}",
+                    gettext("Failure to open any joystick, falling back to default keybinds")
+                );
                 naevc::input_setDefault(1);
             }
         }
@@ -339,12 +338,12 @@ fn naevmain() -> Result<()> {
         naevc::menu_main();
 
         if naevc::conf.devmode != 0 {
-            info!(
+            infox!(
                 gettext("Reached main menu in {:.3f} s"),
                 (sdl::timer::ticks() - starttime) as f32 / 1000.
             );
         } else {
-            info!(gettext("Reached main menu"));
+            info!("{}", gettext("Reached main menu"));
         }
         //NTracingMessageL( _( "Reached main menu" ) );
 
@@ -378,6 +377,8 @@ fn naevmain() -> Result<()> {
     unsafe {
         naevc::naev_main_cleanup();
     }
+
+    log::close_file();
 
     Ok(())
 }

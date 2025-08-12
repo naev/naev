@@ -30,9 +30,6 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
- <tags>
-  <tag>corridor</tag>
- </tags>
  <asteroids>
   <asteroid>
    <group>typeA-standard</group>
@@ -45,4 +42,7 @@
    <pos x="239.076744" y="125.059144"/>
   </exclusion>
  </asteroids>
+ <tags>
+  <tag>corridor</tag>
+ </tags>
 </ssys>

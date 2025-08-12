@@ -26,23 +26,23 @@
   <cargo>20</cargo>
  </characteristics>
  <slots>
-  <weapon size="medium" x="-9" y="-10" h="2" />
-  <weapon size="medium" x="-9" y="10" h="2" />
-  <weapon size="medium" x="-9" y="-3" h="2" />
-  <weapon size="medium" x="-9" y="3" h="2" />
-  <weapon size="small" x="15" y="0" h="2" />
+  <weapon size="medium" x="-9" y="-10" h="2"/>
+  <weapon size="medium" x="-9" y="10" h="2"/>
+  <weapon size="medium" x="-9" y="-3" h="2"/>
+  <weapon size="medium" x="-9" y="3" h="2"/>
+  <weapon size="small" x="15" y="0" h="2"/>
   <utility size="medium" prop="systems" name="systems">Unicorp PT-200 Core System</utility>
-  <utility size="medium" prop="accessory" />
-  <utility size="medium" />
-  <utility size="medium" />
-  <utility size="small" />
-  <utility size="small" />
+  <utility size="medium" prop="accessory" name="accessory"/>
+  <utility size="medium"/>
+  <utility size="medium"/>
+  <utility size="small"/>
+  <utility size="small"/>
   <structure size="medium" prop="engines" name="engines">Unicorp Falcon 700 Engine</structure>
   <structure size="medium" prop="hull" name="hull">Unicorp D-23 Medium Plating</structure>
-  <structure size="medium" />
-  <structure size="medium" />
-  <structure size="medium" />
-  <structure size="medium" />
+  <structure size="medium"/>
+  <structure size="medium"/>
+  <structure size="medium"/>
+  <structure size="medium"/>
  </slots>
  <intrinsics>
   <intrinsic>Internal Flow Amplifier</intrinsic>

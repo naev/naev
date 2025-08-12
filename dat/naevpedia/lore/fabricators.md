@@ -3,7 +3,7 @@ title: "Fabricators"
 ---
 # Fabricators
 
-There are a diversity of fabricators that produce different ships and outfits.
+There is a diversity of fabricators that produce different ships and outfits.
 
 ## Independent
 
@@ -19,7 +19,7 @@ There are a diversity of fabricators that produce different ships and outfits.
 
 ## Houses
 
-* **House Goddard**: Makes the [Goddard](ships/goddard) and involved in the design of [House Dvaered](lore/factions/dvaered) ships.
+* **House Goddard**: Makes the [Goddard](ships/goddard) and is involved in the design of [House Dvaered](lore/factions/dvaered) ships.
 * **House Dvaered**: Works in tandem with House Goddard to develop the ships used by [House Dvaered](lore/factions/dvaered).
 * **Sirius Systems**: Besides developing the ships for [House Sirius](lore/factions/sirius), also develops the [Schroedinger](ships/schroedinger) scout ship.
 * **Za'lek Fabricators**: Focuses on developing and making the ships flown by [House Za'lek](lore/factions/zalek).
@@ -32,7 +32,7 @@ There are a diversity of fabricators that produce different ships and outfits.
 * **Thurion Shipyards**: Produce ships with advanced interfaces for digital humans with minimal life support.
 <% end %>
 <% if faction.get("Proteron"):known() then %>
-* **Proteron**: Although they use an antiquated fabrication methods, they have refined them to a point they are extremely competitive with other ships.
+* **Proteron**: Although they use an antiquated fabrication methods, they have refined them to the point they are extremely competitive with other ships.
 <% end %>
 <% if player.misnDone("Operation Cold Metal") then %>
 * **Robosys**: Provides support and modifications for the Collective ships.

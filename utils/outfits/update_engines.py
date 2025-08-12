@@ -2,8 +2,7 @@
 
 import math
 from sys import stderr, stdout, stdin
-from outfit import nam2fil, fmtval, unstackvals
-from core_outfit import core_outfit, core_write
+from outfit import nam2fil, outfit, MOBILITY_PARAMS
 from getconst import PHYSICS_SPEED_DAMP
 
 
@@ -20,12 +19,13 @@ line_stats = {
         'ratio' : 1.4,
     },
     'Krain' : {
-        'speed_rank_offset' : -0.35,    # Between this size and size-1
+        'speed_rank_offset' : -0.35,   # Between this size and size-1
         'ratio' : 1.1,
         'turn' : 1.05
     },
     'Nexus' : {
-        'speed_rank_offset' : +0.15,   # Pretty good but slightly slower top speed than Melendez and Tricon
+        'speed_rank_offset' : +0.15,   # Pretty good but slightly slower top speed
+                                       # than Melendez and Tricon
         'ratio' : 1.0,
     },
     'Melendez' : {
@@ -36,7 +36,7 @@ line_stats = {
         'speed_rank_offset' : +0.45,
         'ratio' : 1.0,
     },
-    "Za'lek" : { # TODO make these change over time the profile via Lua
+    "Za'lek" : {                       # TODO make these change over time the profile via Lua
         'speed_rank_offset' : +0.5,
         'ratio' : 1.1,
     },
@@ -48,21 +48,35 @@ line_stats = {
 
 ALPHA, BETA = 1.14, 0.048
 
+
+def r_prisec( tag, v1, v2, eml1, eml2 ):
+   if tag in MOBILITY_PARAMS:
+      return v1, round((v2*(eml1+eml2) - eml1*v1)/float(eml2))
+   else:
+      return v1, v2-v1
+
+def fmt( t, half = False ):
+   return str(int(round(t)))
+
+def unstackvals( tag, text1, text2, eml1, eml2 ):
+   o1, o2 = r_prisec(tag, float(text1), 0 if text2 == '' else float(text2), eml1, eml2)
+   o1, o2 = fmt(o1), fmt(o2)
+   if o2 == o1:
+      return o1
+   else:
+      return {'pri': o1, 'sec': o2}
+
 def dec_i( n ):
    if n <= 1:
       return 400.0
    else:
       return dec_i(n-1)/(ALPHA+BETA*(n-1))
 
-def fmt( t, half = False ):
-   red = 2 if half and t<45 else 1
-   return fmtval(round(red*t)/float(red))
-
 def dec( f ):
    n = math.floor(f)
    q = 1.0*f - n
    n = int(n)
-   return pow(dec_i(n), 1.0-q)*pow(dec_i(n+1), q)
+   return pow(dec_i(n), 1.0-q) * pow(dec_i(n+1), q)
 
 def ls2vals( line, size ):
    stats = line_stats[line]
@@ -71,7 +85,7 @@ def ls2vals( line, size ):
    fullspeed = dec( size + stats['speed_rank_offset'])
 
    # r ranges from 15% / 2 (size 6) to 15% * 2 (size 1)
-   r = STD_R * pow(2,-R_MAG*((size-1)-2.5)/5)
+   r = STD_R * pow(2, -R_MAG * ((size-1)-2.5) / 5)
 
    # Modulate ratio based on outfit
    r *= line_stats[line]['ratio']
@@ -84,9 +98,9 @@ def ls2vals( line, size ):
       turn *= stats['turn']
 
    return {
-      'speed' : fmt(speed),
-      'accel' : fmt(accel),
-      'turn' :  fmt(turn, True)
+      'speed' : speed,
+      'accel' : accel,
+      'turn' :  turn
    }
 
 def get_line( name ):
@@ -95,7 +109,7 @@ def get_line( name ):
       return res
 
 out = lambda x: stdout.write(x+'\n')
-err = lambda x, nnl = False: stderr.write(x+('\n' if not nnl else ''))
+err = lambda x, nnl = False: stderr.write(x+('' if nnl else '\n'))
 
 def apply_ls( sub, o, additional = dict() ):
    if sub is not None:
@@ -103,17 +117,18 @@ def apply_ls( sub, o, additional = dict() ):
          if k not in sub:
             sub[k] = v
       acc = []
-      for i in o:
-         if i.tag in sub and i.text != sub[i.tag]:
-            acc.append((i.tag, i.text, sub[i.tag]))
-            i.text = sub[i.tag]
+      for d, k in o.nodes():
+         k = k.lstrip('$')
+         if k in sub and str(d[k]) != str(sub[k]):
+            acc.append((k, d[k], sub[k]))
+            d[k] = sub[k]
       return acc
 
 def mk_subs( a, name = None ):
    sub = []
    for doubled in [False, True]:
       try:
-         o = core_outfit(a)
+         o = outfit(a)
       except:
          o = None
 
@@ -128,7 +143,7 @@ def mk_subs( a, name = None ):
       if line is None:
          break
 
-      o.autostack(doubled)
+      o.stack(o if doubled else None)
       sub.append(ls2vals(line, o.size(doubled)))
 
    if not sub:
@@ -136,6 +151,8 @@ def mk_subs( a, name = None ):
 
    return {k:(v1, sub[-1][k]) for k, v1 in sub[0].items()}
 
+def psstr( t ):
+   return str(t['pri']) + '/' + str(t['sec']) if isinstance(t, dict) else str(t)
 
 def main( args ):
    outfits = []
@@ -144,29 +161,29 @@ def main( args ):
       if sub is None:
          continue
 
-      o = core_outfit(a)
-      t = o.to_dict()['engine_limit']
-      if type(t) == type(()):
-         (eml1, eml2) = t
+      o = outfit(a)
+      t = o.find('engine_limit')
+      if isinstance(t, dict):
+         eml1, eml2 = t['pri'], t['sec']
       else:
          eml1 = eml2 = t
 
       eml1, eml2 = float(eml1), float(eml2)
 
       if o.name() in ['Krain Remige Engine', "Za'lek Test Engine"]:
-         sub = {k:v[0] for k, v in sub.items()}
+         sub = {k:fmt(v[0]) for k, v in sub.items()}
       elif o.name() == 'Krain Patagium Twin Engine':
-         sub = {k:v[1] for k, v in sub.items()}
+         sub = {k:fmt(v[1]) for k, v in sub.items()}
       else:
          sub = {k:unstackvals(k, v[0], v[1], eml1, eml2) for k, v in sub.items()}
 
       if sub is not None:
          acc = apply_ls(sub, o)
          if acc is not None:
-            err(o.fil.split('/')[-1]+': ', nnl = True)
+            err(o._filename.split('/')[-1]+': ', nnl = True)
             if acc:
-               err(', '.join([i+':'+j+'->'+k for i, j, k in acc]))
-               core_write(o, o.fil)
+               err(', '.join([i+':'+psstr(j)+'->'+psstr(k) for i, j, k in acc]))
+               o.save()
             else:
                err('_')
    return 0
@@ -184,14 +201,13 @@ def gen_line( params ):
       return 1
 
    if lin not in line_stats:
-      line_stats[lin] = {'speed_rank_offset' : 0, 'ratio' : 1}
+      line_stats[lin] = {'speed_rank_offset': 0, 'ratio': 1}
 
    line_stats[lin].update(zip(['speed_rank_offset', 'ratio', 'turn'], params))
-   print(line_stats[lin])
 
    for i, s in enumerate(['Small', 'Medium', 'Large']):
       engine = engine_dir.replace('small', s.lower())
-      o = core_outfit(engine)
+      o = outfit(engine, is_multi = True)
 
       if o is None:
          err('Beat up small engine, used as dummy, was not found!')
@@ -199,7 +215,7 @@ def gen_line( params ):
 
       nam = lin + ' ' + s + ' Engine'
       o.set_name(nam)
-      fil = nam2fil(nam+'.xml')
+      fil = nam2fil(nam + '.xml')
 
       sized_params = lambda n: {
          'mass':str(10*n),
@@ -214,8 +230,8 @@ def gen_line( params ):
 
       subs = {k:unstackvals(k, v[0], v[1], 1.0, 1.0) for k, v in mk_subs(engine, nam).items()}
       acc = apply_ls(subs, o, additional)
-      core_write( o, fil)
-      err('<'+fil+'>')
+      o.save()
+      err('<' + fil + '>')
    return 0
 
 if __name__ == '__main__':
@@ -237,9 +253,9 @@ if __name__ == '__main__':
   Generate a brand new line called Zednelem with with speed_rank_offset = 0.5 and 1.2 ratio:
    > ./utils/outfits/update_engines.py -g Zednelem 0.5 1.2
 """)
-   parser.add_argument('-f', '--files', action = 'store_true', help = 'read file list on stdin. Applies when no args.\nDoes not apply in generate mode.')
-   parser.add_argument('-g', '--generate', action = 'store_true', help = 'line_name ex: "Melendez" or "Zednelem".')
-   parser.add_argument('args', nargs = '*', help = 'An outfit with ".xml" extension, else will be silently ignored.\nIf not valid, will not even be printed out.')
+   parser.add_argument('-f', '--files', action= 'store_true', help= 'read file list on stdin. Applies when no args.\nDoes not apply in generate mode.')
+   parser.add_argument('-g', '--generate', action= 'store_true', help= 'line_name ex: "Melendez" or "Zednelem".')
+   parser.add_argument('args', nargs= '*', help= 'An outfit with ".xml" extension, else will be silently ignored.\nIf not valid, will not even be printed out.')
    args = parser.parse_args()
 
    if args.generate:
@@ -250,5 +266,4 @@ if __name__ == '__main__':
    else:
       if args.files or not args.args:
          args.args += [l.strip() for l in stdin.readlines()]
-      args.args = [a for a in args.args if a.endswith('.xml')]
-      exit(main(args.args))
+      exit(main([a for a in args.args if a.endswith('.xml')]))

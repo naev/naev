@@ -3,7 +3,7 @@ title: "Missions"
 ---
 # Missions
 
-Many different factions or individuals will offer you missions where you can help them in exchange for rewards.
+Many different factions and individuals will offer you missions where you can help them in exchange for rewards.
 Although missions can be offered in many forms, such as by [hailing ships](mechanics/hailing), or [boarding](mechanics/boarding) derelicts, most missions you will come across will be offered either from the Mission Bulletin Board System or the Spaceport Bar.
 
 ## Mission Bulletin Board System

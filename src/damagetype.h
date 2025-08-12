@@ -5,6 +5,8 @@
 
 #include "outfit.h"
 
+#define FULL_PENETRATION 1000. /* Not sure if INFINITY would give issues. */
+
 /*
  * stack manipulation
  */

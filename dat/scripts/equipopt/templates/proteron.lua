@@ -20,9 +20,8 @@ local proteron_outfits = eoutfits.merge{{
    -- Utility
    "Droid Repair Crew", "Milspec Scrambler",
    "Hunting Combat AI", "Agility Combat AI",
-   "Milspec Impacto-Plastic Coating", "Targeting Array",
-   "Milspec Jammer", "Emergency Shield Booster",
-   "Sensor Array",
+   "Targeting Array", "Reconstructive Nanobot Coating",
+   "Milspec Jammer", "Emergency Shield Booster", "Sensor Array",
    -- Heavy Structural
    "Battery III", "Shield Capacitor III", "Battery IV", "Nanobond Plating",
    "Reactor Class III", "Large Shield Booster", "Auxiliary Processing Unit III",
@@ -70,6 +69,10 @@ local proteron_params = {
 --local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
 local proteron_params_overwrite = {
+   -- Prefer to use the Proteron utilities
+   prefer = {
+      ["Reconstructive Nanobot Coating"] = 100,
+   },
    turret = 1.1,
    launcher = 0.9,
    max_same_stru = 3,

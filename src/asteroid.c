@@ -669,7 +669,7 @@ static int asttype_parse( AsteroidType *at, const char *file )
    at->polygon     = array_create( CollPoly );
    at->material    = array_create( AsteroidReward );
    at->damage      = 100;
-   at->penetration = 100.;
+   at->penetration = FULL_PENETRATION;
    at->exp_radius  = 50.;
    at->alert_range = 7000.;
 

@@ -2,7 +2,7 @@
  <mapname>Pirate</mapname>
  <longname>Pirate Marauders</longname>
  <ai>marauder</ai>
- <known />
+ <known/>
  <logo>marauder.webp</logo>
  <player>-50</player>
  <colour>red</colour>

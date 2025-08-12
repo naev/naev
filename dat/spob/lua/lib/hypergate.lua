@@ -189,7 +189,7 @@ function hypergate.window ()
    local destnames = {}
    for i,d in ipairs(destinations) do
       local ppf = player.pilot():faction()
-      if d:known() then
+      if d:known() and d:system():known() then
          local s = d:system()
          local f = s:faction()
          local str = fmt.f(_("{sysname} ({factname})"), {sysname=s,factname=f})
@@ -244,8 +244,9 @@ function hypergate.window ()
       end,
    } )
    local function map_center( _sys, idx, hardset )
-      local s = destinations[ idx ]:system()
-      targetknown = s:known()
+      local d = destinations[ idx ]
+      local s = d:system()
+      targetknown = d:known() and s:known()
       if targetknown then
          local p = (cpos + s:pos())*0.5
          jumpx, jumpy = (p*inv):get()
@@ -268,7 +269,7 @@ function hypergate.window ()
       totalmass = totalmass + v:mass()
    end
    local cost_mod = mem._cost_mod
-   local totalcost = (mem.cost_flat + mem.cost_mass * totalmass) * cost_mod
+   local totalcost = math.floor(mem.cost_flat * cost_mod + 0.5) + totalmass * math.floor( mem.cost_mass * cost_mod + 0.5 )
    local hgsys = mem.spob:system()
    local hgfact = mem.spob:faction()
    local standing_value = mem.spob:reputation()
@@ -301,8 +302,8 @@ function hypergate.window ()
       costmod = cost_mod_str,
       totalmass = fmt.tonnes(totalmass),
       totalcost = fmt.credits(totalcost),
-      flatcost = fmt.credits(mem.cost_flat),
-      masscost = fmt.credits(mem.cost_mass),
+      flatcost = fmt.credits(math.floor(mem.cost_flat * cost_mod + 0.5)),
+      masscost = fmt.credits(math.floor(mem.cost_mass * cost_mod + 0.5)),
    }) )
    local txth = txt:height()
    local lst = luatk.newList( wdw, w-260-20, 40+txth+10, 260, h-40-20-40-20-txth-10, destnames, map_center )
@@ -313,15 +314,15 @@ function hypergate.window ()
       local d = destinations[ idx ]
       local s = d:system()
       local extramsg = ""
-      if d:known() and s:faction():areEnemies(ppf) then
-         extramsg = "#r"..fmt.f(_("\nYou are enemies with the {fctname}!"),{fctname=s:faction()}).."#0"
-      end
-      if not d:known() then
+      local known = d:known() and s:known()
+      if not known then
          extramsg = "#r".._("\nThe destination is unknown!").."#0"
+      elseif s:faction():areEnemies(ppf) then
+         extramsg = "#r"..fmt.f(_("\nYou are enemies with the {fctname}!"),{fctname=s:faction()}).."#0"
       end
 
       local sysname
-      if s:known() then
+      if known then
          sysname = s:name()
       else
          sysname = _("Unknown")

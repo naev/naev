@@ -1,6 +1,6 @@
 <outfit name="Pentagram of Valor">
  <general>
-  <unique />
+  <unique/>
   <typename>Accessory</typename>
   <slot prop="accessory">utility</slot>
   <size>small</size>
@@ -9,7 +9,8 @@
   <price>1000000</price>
   <description>A token of commitment to the FLF cause. It smells oddly of fish.</description>
   <gfx_store>pentagram_of_valor.webp</gfx_store>
- <rarity>6</rarity></general>
+  <rarity>6</rarity>
+ </general>
  <specific type="modification">
   <armour_mod>10</armour_mod>
   <fwd_firerate>5</fwd_firerate>

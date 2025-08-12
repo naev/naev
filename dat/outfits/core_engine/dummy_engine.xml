@@ -11,4 +11,7 @@
  <specific type="modification">
   <engine_limit>100</engine_limit>
  </specific>
+ <tags>
+  <tag>core</tag>
+ </tags>
 </outfit>

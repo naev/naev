@@ -65,7 +65,7 @@ function create ()
          {
             type = "credits",
             value = (100e3 + 100e3*rnd.rnd()) * (mem.rewardrisk*0.5+1),
-            weight = (lmisn.islucky() and 0.05) or 0.5, -- less likely
+            weight = (lmisn.is_lucky() and 0.05) or 0.5, -- less likely
          },
       }
       if poi.data_get_gained() > 0 then

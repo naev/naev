@@ -1,18 +1,19 @@
 <outfit name="Daphne's Leap">
  <general>
+  <typename>System Improvement</typename>
   <rarity>6</rarity>
-  <unique />
+  <unique/>
   <slot>utility</slot>
   <size>small</size>
   <mass>0</mass>
   <price>1000000</price>
-  <description>This is a module that interfaces with the navigation system of a ship, modifying the core behaviour. By pushing to the limit the jump point detection and calibration system, it is able to significantly reduce the amount of time needed to jump, however, this comes at the cost of increasing the overall time needed to jump due to necessary in-flight calibration.</description>
+  <description>This is a module that interfaces with the navigation system of a ship, modifying the core behaviour. By pushing to the limit the jump point detection and calibration system, it is able to execute the required preparations well in advance to jump at a moment's notice, however, this comes at the cost of increasing the overall time needed to jump due to necessary in-flight calibration.</description>
   <gfx_store>thruster.webp</gfx_store>
   <cpu>0</cpu>
  </general>
  <specific type="modification">
   <lua>outfits/unique/poi_data.lua</lua>
   <jump_delay>20</jump_delay>
-  <jump_warmup>-80</jump_warmup>
+  <misc_instant_jump>1</misc_instant_jump>
  </specific>
 </outfit>

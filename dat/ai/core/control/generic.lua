@@ -277,7 +277,7 @@ local message_handler_funcs = {
    end,
    -- Follower is being attacked
    f_attacked = function( p, si, dopush, sender, data )
-      if sender==nil or not sender:exists() or sender:leader()~=p then return false end
+      if mem.ignoreorders or sender==nil or not sender:exists() or sender:leader()~=p then return false end
       if data and data:exists() then
          ai.hostile( data ) -- Set hostile
          -- Also signal to other followers
@@ -303,7 +303,7 @@ local message_handler_funcs = {
    end,
    -- Leader is being attacked
    l_attacked = function( p, si, dopush, sender, data )
-      if not dopush or sender==nil or not sender:exists() or sender~=p:leader() then return false end
+      if mem.ignoreorders or not dopush or sender==nil or not sender:exists() or sender~=p:leader() then return false end
       if data and data:exists() then
          ai.hostile( data ) -- Set hostile
          if not si.fighting and should_attack( data, si, true ) then
@@ -314,7 +314,7 @@ local message_handler_funcs = {
       return false
    end,
    l_investigate = function( p, si, dopush, sender, data )
-      if not dopush or sender==nil or not sender:exists() or sender~=p:leader() then return false end
+      if mem.ignoreorders or not dopush or sender==nil or not sender:exists() or sender~=p:leader() then return false end
       if not si.fighting then -- inspect_attacker is fighting, so it shouldn't duplicate
          ai.pushtask("inspect_attacker", data)
          return true
@@ -334,8 +334,8 @@ local message_handler_funcs = {
       local l = p:leader()
       if mem.ignoreorders or not dopush or sender==nil or not sender:exists() or sender~=l or data==nil or not data:exists() or data:leader() == l then return false end
       p:taskClear()
-      --if (si.attack and si.forced and ai.taskdata()==data) or data:flags("disabled") then
-      if data:flags("disabled") then
+      --if (si.attack and si.forced and ai.taskdata()==data) or data:disabled() then
+      if data:disabled() then
          ai.pushtask("attack_forced_kill", data)
       else
          ai.pushtask("attack_forced", data)
@@ -670,6 +670,7 @@ function control_funcs.attack_forced ()
 end
 function control_funcs.flyback () return true end
 function control_funcs.hold () return true end
+control_funcs.scan = scans.control_funcs
 function attacked_manual( attacker )
    local p = ai.pilot()
    -- Ignore hits from dead or stealthed pilots.
@@ -1037,7 +1038,7 @@ function create_pre ()
          p:setFuel( true ) -- Full fuel
       else
          local f = (rnd.twosigma()/4 + 0.5)*(ps.fuel_max-ps.fuel_consumption)
-         f = f + ps.fuel_consumption
+         f = math.max( f, 0 ) + ps.fuel_consumption
          p:setFuel( f )
       end
    end

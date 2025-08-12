@@ -51,7 +51,7 @@ Converts a number of credits to a string.
       @return A string taking the form of "X ¤".
 --]]
 function format.credits( credits )
-   return n_("%s ¤", "%s ¤", credits):format(format.number(credits))
+   return n_("%s ¤", "%s ¤", math.abs(credits)):format(format.number(credits))
 end
 
 
@@ -94,7 +94,7 @@ Converts a number of tonnes to a string, using ngettext.
    @return A string taking the form of "X tonne" or "X tonnes".
 --]]
 function format.tonnes( tonnes )
-   return n_("%s tonne", "%s tonnes", tonnes):format(format.number(tonnes))
+   return n_("%s tonne", "%s tonnes", math.abs(tonnes)):format(format.number(tonnes))
 end
 
 
@@ -106,7 +106,7 @@ Like fmt.tonnes, but for abbreviations.
 --]]
 function format.tonnes_short( tonnes )
    -- Translator note: this form represents an abbreviation of "_ tonnes".
-   return n_( "%s t", "%s t", tonnes ):format(format.number(tonnes))
+   return n_( "%s t", "%s t", math.abs(tonnes)):format(format.number(tonnes))
 end
 
 
@@ -124,7 +124,7 @@ Converts a number of jumps to a string, utilizing ngettext.
       @return A string taking the form of "X jump" or "X jumps".
 --]]
 function format.jumps( jumps )
-   return n_("%s jump", "%s jumps", jumps):format(format.number(jumps))
+   return n_("%s jump", "%s jumps", math.abs(jumps)):format(format.number(jumps))
 end
 
 

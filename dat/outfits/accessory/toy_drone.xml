@@ -1,6 +1,6 @@
 <outfit name="Toy Drone">
  <general>
-  <unique />
+  <unique/>
   <typename>Accessory</typename>
   <slot prop="accessory">utility</slot>
   <size>small</size>
@@ -9,7 +9,8 @@
   <price>1000000</price>
   <description>A small toy drone that can fly around the ship. The AI doesn't seem to work too well and it has a habit of bumping into the walls and beeping all the time, but it is rather cute.</description>
   <gfx_store>zalek_reaper.webp</gfx_store>
- <rarity>6</rarity></general>
+  <rarity>6</rarity>
+ </general>
  <specific type="modification">
   <shield_regen_mod>5</shield_regen_mod>
   <speed_mod>5</speed_mod>

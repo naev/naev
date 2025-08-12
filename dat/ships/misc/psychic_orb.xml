@@ -9,7 +9,7 @@
  <time_mod>1</time_mod>
  <fabricator>N/A</fabricator>
  <description>Not meant for the player.</description>
- <mission />
+ <mission/>
  <movement>
   <accel>0.001</accel>
   <turn>0.001</turn>
@@ -32,7 +32,7 @@
   <fuel_consumption>100</fuel_consumption>
   <cargo>0</cargo>
  </characteristics>
- <slots />
+ <slots/>
  <stats>
   <engine_limit>9999999</engine_limit>
  </stats>

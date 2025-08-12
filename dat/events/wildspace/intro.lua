@@ -12,6 +12,7 @@ local vni = require "vnimage"
 local der = require "common.derelict"
 local ws = require "common.wildspace"
 local fmt = require "format"
+local fcts = require "factions"
 
 local mainspb, mainsys = spob.getS("Hypergate Protera")
 
@@ -134,7 +135,7 @@ To the tune of coughing the speaker goes silent.]]))
 "Here, take the coordinates. Be careful."]]))
    vn.run()
 
-   faction.get("Lost"):setKnown(true)
+   fcts.setKnown( faction.get("Lost"), true )
 
    ws.log(fmt.f(_([[You found a survivor in the {sys} system that led you to a ruined hypergate. You exchanged information with them, and they told you about the Lost that inhabit Wild Space. They seem to have something they want you to do.]]),
       {sys=mainsys}))

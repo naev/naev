@@ -3,10 +3,11 @@
  */
 #pragma once
 
+#include <stdlib.h>
+
 #if HAVE_TRACY
 #include "attributes.h"
 #include "tracy/TracyC.h"
-#include <stdlib.h>
 #define _uninitialized_var( x )                                                \
    x = *( &( x ) ) // Works with Clang but not GCC...
 #define NTracingFrameMark TracyCFrameMark
@@ -30,14 +31,14 @@ ALWAYS_INLINE static inline void *nmalloc( size_t size )
 {
    void *ptr = malloc( size );
    /* Sigh... */
-#if __GNUC__
+#if defined( __GNUC__ ) && !defined( __llvm__ )
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
-#endif /* __GNUC__ */
+#endif /* defined(__GNUC__) && !defined(__llvm__) */
    NTracingAlloc( ptr, size );
-#if __GNUC__
+#if defined( __GNUC__ ) && !defined( __llvm__ )
 #pragma GCC diagnostic pop
-#endif /* __GNUC__ */
+#endif /* defined(__GNUC__) && !defined(__llvm__) */
    return ptr;
 }
 ALWAYS_INLINE static inline void nfree( void *ptr )

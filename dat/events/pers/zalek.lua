@@ -20,6 +20,7 @@ return function ()
                   outfits_add={"Emergency Shield Booster"},
                   prefer={["Emergency Shield Booster"] = 100}} )
                local m = p:memory()
+               m.capturable = true
                m.comm_greet = _([["Nothing in life is to be feared; it is only to be understood."]])
                m.taunt = _("Your death shall be swift and easy!")
                m.bribe_no = _([["You must be eliminated. For science!"]])
@@ -34,6 +35,7 @@ return function ()
                   outfits_add={"Neural Accelerator Interface"},
                   prefer={["Neural Accelerator Interface"] = 100}} )
                local m = p:memory()
+               m.capturable = true
                m.comm_greet = _([["What do you want? Can't you see I'm busy writing a grant?"]])
                m.taunt = _("Do not get in the way of science!")
                m.bribe_prompt = _([["I could use {credits} more in funding."]])
@@ -51,8 +53,9 @@ return function ()
             spawn = function ()
                -- ZHD stands for Za'lek Heavy Drone
                local p = pilot.add("Za'lek Heavy Drone", "Za'lek", nil, _("ZHD-08-5820"), {naked=true, ai="pers_patrol"})
-               p:outfitAddIntrinsic("Escape Pod")
                p:intrinsicSet( "shield_mod", 100 )
+               p:outfitAddIntrinsic("Escape Pod") -- Are they man? Are they machine? Are they cool? (yes)
+               p:setNoDisable(true)
                equipopt.zalek( p )
                local m = p:memory()
                m.ad = _("Damn it's a good day today. Erm, I mean. *BEEP* *BEEP* SCANNING SYSTEM. *BEEP*")
@@ -77,6 +80,7 @@ return function ()
                   outfits_add={"Combat Hologram Projector"},
                   prefer={["Combat Hologram Projector"] = 100}} )
                local m = p:memory()
+               m.capturable = true
                m.ad = { _("Oh shit, did I miss another deadline?"),
                         _("I'll never get into tenure track with my current Z-index…"),
                         _("Seventh time in a row my papers was rejected…"), }

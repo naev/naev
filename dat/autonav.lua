@@ -1,5 +1,6 @@
 local fmt = require "format"
 local lanes = require "ai.core.misc.lanes"
+local escort = require "escort"
 
 local autonav, target_pos, target_spb, target_plt, target_name, instant_jump
 local autonav_jump_delay, autonav_jump_approach, autonav_jump_brake
@@ -11,6 +12,8 @@ local last_shield, last_armour, map_npath, reset_shield, reset_dist, reset_locko
 local path, uselanes_jump, uselanes_spob, uselanes_thr, match_fleet, follow_land_jump, brake_pos, include_escorts
 local follow_pilot_fleet
 local already_aboff
+local escorting
+local wait_msg, last_try
 
 -- We'll need the physics constants
 local PHYSICS_SPEED_DAMP = require("constants").PHYSICS_SPEED_DAMP
@@ -47,6 +50,7 @@ local function autonav_setup ()
    tc_down     = 0
    path        = nil
    already_aboff= false
+   wait_msg    = false
    follow_pilot_fleet = {}
    local stealth = pp:flags("stealth")
    uselanes_jump = var.peek("autonav_uselanes_jump") and not stealth
@@ -60,6 +64,14 @@ local function autonav_setup ()
    reset_lockon = var.peek("autonav_reset_lockon")
    include_escorts = var.peek("autonav_include_escorts")
    player.autonavSetPos()
+
+   -- See if escorting
+   local escorts = escort.all_mission_pilots()
+   if match_fleet and (#escorts > 0) then
+      escorting = escorts
+   else
+      escorting = nil
+   end
 
    -- Set time compression maximum
    tc_max = var.peek("autonav_compr_speed") / pp:speedMax()
@@ -225,10 +237,20 @@ Autonav to a system, destination is in the player's nav
 local function _autonav_system (do_uselanes)
    local dest
    dest, map_npath = player.autonavDest()
-   player.msg("#o"..fmt.f(_("Autonav: travelling to {sys}."),{sys=get_sys_name(dest)}).."#0")
-
    local pp = player.pilot()
    local jmp = pp:navJump()
+
+   local etarget = escort.all_mission_target()
+   local nextsys = jmp:dest()
+   if last_try~=nextsys and etarget and etarget~=nextsys then
+      last_try = nextsys
+      return autonav_abort(fmt.f(_("jumping to {sys} will fail your escort mission"),
+         {sys=get_sys_name(nextsys)}))
+   end
+
+   player.msg("#o"..fmt.f(_("Autonav: travelling to {sys}."),
+      {sys=get_sys_name(dest)}).."#0")
+
    local pos = jmp:pos()
    local d = jmp:jumpDist( pp )
    target_pos = pos + (pp:pos()-pos):normalize( math.max(0.75*d, d-50) )
@@ -256,6 +278,13 @@ end
 Autonav to a spob, potentially trying to land
 --]]
 local function _autonav_spob(spb, tryland, do_uselanes)
+   local etarget = escort.all_mission_target()
+   if last_try~=spb and etarget and etarget~=spb then
+      last_try = spb
+      return autonav_abort(fmt.f(_("landing on {spb} will fail your escort mission"),
+         {spb=spb}))
+   end
+
    target_spb = spb
    local pp = player.pilot()
    local pos = spb:pos()
@@ -318,6 +347,7 @@ end
 Autonav to follow a target pilot
 --]]
 function autonav_pilot( plt )
+   last_try = nil
    autonav_setup()
    target_plt = plt
    local pltstr
@@ -341,6 +371,7 @@ end
 Autonav to board a pilot
 --]]
 function autonav_board( plt )
+   last_try = nil
    autonav_setup()
    target_plt = plt
    local pltstr
@@ -360,6 +391,7 @@ end
 Autonav to a position specified by the player
 --]]
 function autonav_pos( pos )
+   last_try = nil
    autonav_setup()
    player.msg("#o".._("Autonav: heading to target position.").."#0")
    autonav_set( autonav_pos_approach )
@@ -600,17 +632,35 @@ local function autonav_instant_jump_final_approach ()
    return false
 end
 
+local function escorts_left_jump ()
+   if not escorting then return false end
+   for k,p in ipairs(escorting) do
+      if p:exists() and not p:flags("jumpingout") then
+         return true
+      end
+   end
+   return false
+end
+
 -- Breaking at a jump point, target position is stored in target_pos
 function autonav_jump_brake ()
    local ret
    -- With instant jumping we can just focus on getting in range
-   if instant_jump then
+   if instant_jump and not escorts_left_jump() then
       ret = autonav_instant_jump_final_approach()
    else
       ret = ai.brake()
    end
 
    if ai.canHyperspace() then
+      if escorts_left_jump() then
+         if not wait_msg then
+            player.msg("#o".._("Autonav: waiting for escorts to jump first.").."#0")
+            wait_msg = true
+         end
+         return -- wait
+      end
+
       ai.hyperspace()
       local pp = player.pilot()
       pp:msg( pp:followers(), "hyperspace", pp:navJump() )
@@ -730,13 +780,34 @@ function autonav_spob_land_approach ()
    end
 end
 
+local function escorts_left_land ()
+   if not escorting then return false end
+   for k,p in ipairs(escorting) do
+      if p:exists() and not p:flags("landing") then
+         return true
+      end
+   end
+   return false
+end
+
 -- Going for the landing approach
 function autonav_spob_land_brake ()
    local ret = ai.brake()
 
+   -- See if we have to wait for escorts
+   if escorts_left_land() then
+      if not wait_msg then
+         player.msg("#o".._("Autonav: waiting for escorts to land first.").."#0")
+         wait_msg = true
+      end
+      return
+   end
+
    if player.tryLand(false)=="impossible" then
       return _autonav_abort(_("cannot land"))
-   elseif ret then
+   end
+
+   if ret then
       -- Reset to good position
       local pp = player.pilot()
       local pos = target_spb:pos()
@@ -848,7 +919,7 @@ function autonav_plt_follow ()
       target_name = "#"..plt:colourChar()..plt:name().."#o"
    end
 
-   local canboard = plt:flags("disabled") or plt:flags("boardable")
+   local canboard = plt:disabled() or plt:flags("boardable")
    local radius
    if canboard then
       radius = 0
@@ -939,6 +1010,7 @@ end
 
 function autonav_enter ()
    local dest
+   wait_msg = false
    dest, map_npath = player.autonavDest()
    if autonav==autonav_jump_approach or autonav==autonav_jump_brake then
       if not dest then

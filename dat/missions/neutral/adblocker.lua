@@ -28,6 +28,7 @@ local fmt = require "format"
 local neu = require 'common.neutral'
 local vn = require "vn"
 local vnimage  = require "vnimage"
+local ads = require "scripts.common.ads"
 
 local mission = {
    name = _("Adblocker"),
@@ -108,28 +109,20 @@ function enter()
    end
 end
 
--- TODO probably not hardcode the advertisements here, but share with dat/ai/advertiser.lua
-local ads_generic = {
-   _("Fly safe, fly Milspec."),
-   _("Reynir's Hot Dogs: enjoy the authentic taste of tradition."),
-   _("Everyone is faster than light, but only Tricon engines are faster than thought!"),
-   _("Dare excellence! Dare Teracom rockets!"),
-   _("Most people are ordinary. For the others, Nexus designed the Shark fighter."),
-   _("Never take off without your courage. Never take off without your Vendetta."),
-   _("Unicorp: low price and high quality!"),
-   _("Life is short, spend it at Minerva Station in the Limbo System!"),
-   _("Insuperable Sleekness. Introducing the Krain Industries Starbridge."),
-   _("Take care of the ones you do love. Let your Enygma System Turreted Launchers deal with the ones you don't!"),
-}
-
+local adlist
 function timer_advert_spam()
    if not spammer:exists() then return end
 
+   -- Generate ads if not available
+   if not adlist then
+      adlist = rnd.permutation( ads.system_ads(true) )
+   end
+
    -- Only spam if not disabled
-   if not spammer:flags("disabled") then
+   if not spammer:disabled() then
       mem.spammer = mem.spammer or 0
-      mem.spammer = math.fmod(mem.spammer, #ads_generic) + 1
-      spammer:broadcast(ads_generic[mem.spammer], true)
+      mem.spammer = math.fmod(mem.spammer, #adlist) + 1
+      spammer:broadcast(adlist[mem.spammer], true)
    end
 
    mem.hk_advert_spam = hook.timer(1, "timer_advert_spam")

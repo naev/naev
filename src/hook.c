@@ -343,7 +343,8 @@ static int hook_runMisn( Hook *hook, const HookParam *param, int claims )
       hook_rmRaw( hook );
 
    /* Set up hook parameters. */
-   misn_runStart( misn, hook->u.misn.func );
+   if ( misn_runStart( misn, hook->u.misn.func ) )
+      return 0;
    n = hook_parseParam( param );
 
    /* Add hook parameters. */
@@ -389,7 +390,7 @@ static int hook_runEvent( Hook *hook, const HookParam *param, int claims )
       hook_rmRaw( hook );
 
    /* Set up hook parameters. */
-   if ( event_get( hook->u.event.parent ) == NULL ) {
+   if ( !event_exists( hook->u.event.parent ) ) {
       WARN( _( "Hook [%s] '%d' -> '%s' failed, event does not exist. Deleting "
                "hook." ),
             hook->stack, id, hook->u.event.func );
@@ -397,7 +398,9 @@ static int hook_runEvent( Hook *hook, const HookParam *param, int claims )
       return -1;
    }
 
-   event_runStart( hook->u.event.parent, hook->u.event.func );
+   /* Make sure event is working. */
+   if ( event_runStart( hook->u.event.parent, hook->u.event.func ) )
+      return 0;
    n = hook_parseParam( param );
 
    /* Add hook parameters. */
@@ -1069,7 +1072,6 @@ static Hook *hook_get( unsigned int id )
 nlua_env *hook_env( unsigned int hook )
 {
    Mission *misn;
-   Event_t *evt;
 
    Hook *h = hook_get( hook );
    if ( h == NULL )
@@ -1082,10 +1084,7 @@ nlua_env *hook_env( unsigned int hook )
          return misn->env;
       break;
    case HOOK_TYPE_EVENT:
-      evt = event_get( h->u.event.parent );
-      if ( evt != NULL )
-         return evt->env;
-      break;
+      return event_getEnv( h->u.event.parent );
    default:
       break;
    }

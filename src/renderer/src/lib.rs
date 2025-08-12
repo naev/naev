@@ -59,13 +59,11 @@ fn debug_callback(source: u32, msg_type: u32, id: u32, severity: u32, msg: &str)
 
     if severity == glow::DEBUG_SEVERITY_LOW {
         debug!(
-            "OpenGL debug( source={}, type={}, id={}, severity={} ): {}",
-            s_source, s_type, s_id, s_severity, msg
+            "OpenGL debug( source={s_source}, type={s_type}, id={s_id}, severity={s_severity} ): {msg}"
         );
     } else {
         warn!(
-            "OpenGL debug( source={}, type={}, id={}, severity={} ): {}",
-            s_source, s_type, s_id, s_severity, msg
+            "OpenGL debug( source={s_source}, type={s_type}, id={s_id}, severity={s_severity} ): {msg}"
         );
     }
 }
@@ -436,15 +434,15 @@ impl Context {
         CONTEXT.get().expect("No context!")
     }
 
-    pub fn as_safe_wrap(&self) -> ContextWrapper {
+    pub fn as_safe_wrap(&self) -> ContextWrapper<'_> {
         self.as_safe().into_wrap()
     }
 
-    pub fn as_safe(&self) -> SafeContext {
+    pub fn as_safe(&self) -> SafeContext<'_> {
         SafeContext::new(self)
     }
 
-    pub fn as_wrap(&self) -> ContextWrapper {
+    pub fn as_wrap(&self) -> ContextWrapper<'_> {
         ContextWrapper::Context(self)
     }
 
@@ -523,7 +521,7 @@ impl Context {
             Ok(())
         }
         if let Err(e) = set_icon(&mut window) {
-            warn!("Unable to set window icon: {}", e);
+            warn!("Unable to set window icon: {e}");
         }
 
         Ok((window, gl_context))
@@ -624,7 +622,7 @@ impl Context {
                         false,
                     );
                 },
-                false => log::warn("unable to set OpenGL debug mode!"),
+                false => warn!("unable to set OpenGL debug mode!"),
             };
         }
 
@@ -669,8 +667,7 @@ impl Context {
         // The texture shader
         let program_texture = ShaderBuilder::new(Some("Texture Shader"))
             .uniform_buffer("TextureData", 0)
-            .vert_file("rust_texture.vert")
-            .frag_file("rust_texture.frag")
+            .vert_frag_file("rust_texture.glsl")
             .sampler("sampler", 0)
             .build(&gl)?;
         let buffer_texture = BufferBuilder::new(Some("Texture Buffer"))
@@ -682,8 +679,7 @@ impl Context {
         let program_texture_sdf = ShaderBuilder::new(Some("SDF Texture Shader"))
             .uniform_buffer("TextureData", 0)
             .uniform_buffer("SDFData", 1)
-            .vert_file("rust_texture_sdf.vert")
-            .frag_file("rust_texture_sdf.frag")
+            .vert_frag_file("rust_texture_sdf.glsl")
             .sampler("sampler", 0)
             .build(&gl)?;
         let buffer_texture_sdf = BufferBuilder::new(Some("SDF Texture Buffer"))
@@ -694,8 +690,7 @@ impl Context {
         // Downscaling texture shader
         let program_texture_scale = ShaderBuilder::new(Some("Scaling Texture Shader"))
             .uniform_buffer("TextureData", 0)
-            .vert_file("rust_magic.vert")
-            .frag_file("rust_magic.frag")
+            .vert_frag_file("rust_magic.glsl")
             .sampler("sampler", 0)
             .build(&gl)?;
         let buffer_texture_scale = BufferBuilder::new(Some("Scaling Texture Buffer"))
@@ -706,8 +701,7 @@ impl Context {
         // The solid shader
         let program_solid = ShaderBuilder::new(Some("Solid Shader"))
             .uniform_buffer("SolidData", 0)
-            .vert_file("rust_solid.vert")
-            .frag_file("rust_solid.frag")
+            .vert_frag_file("rust_solid.glsl")
             .build(&gl)?;
         let buffer_solid = BufferBuilder::new(Some("Solid Buffer"))
             .target(BufferTarget::Uniform)
@@ -946,7 +940,7 @@ pub extern "C" fn gl_screenshot(cpath: *mut c_char) {
     match ctx.screenshot(path.to_str().unwrap()) {
         Ok(_) => (),
         Err(e) => {
-            warn!("Failed to take a screenshot: {}", e);
+            warn!("Failed to take a screenshot: {e}");
         }
     }
 }

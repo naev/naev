@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 LST=$(mktemp)
 res=0

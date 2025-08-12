@@ -1,7 +1,7 @@
 <outfit name="Fake Transponder">
  <general>
   <rarity>6</rarity>
-  <unique />
+  <unique/>
   <typename>Fake Transponder</typename>
   <slot>utility</slot>
   <size>small</size>

@@ -8,7 +8,7 @@
  <time_mod>1</time_mod>
  <fabricator>N/A</fabricator>
  <description>This is a base. It's for AI use only. Don't buy it. Seriously.</description>
- <mission />
+ <mission/>
  <movement>
   <accel>0.001</accel>
   <turn>0.001</turn>
@@ -31,12 +31,13 @@
   <fuel_consumption>100</fuel_consumption>
   <cargo>0</cargo>
  </characteristics>
- <slots />
+ <slots/>
  <stats>
   <engine_limit>9999999</engine_limit>
  </stats>
  <tags>
   <tag>noplayer</tag>
   <tag>nonaevpedia</tag>
+  <tag>station</tag>
  </tags>
 </ship>

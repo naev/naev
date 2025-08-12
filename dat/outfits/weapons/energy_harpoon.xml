@@ -8,7 +8,8 @@
   <desc_extra>#oOn hit pulls target.#0</desc_extra>
   <gfx_store>tesla.webp</gfx_store>
   <cpu>-40</cpu>
- <rarity>4</rarity></general>
+  <rarity>4</rarity>
+ </general>
  <specific type="bolt">
   <gfx type="shader" size="16" col_size="6">particles/energy_harpoon.frag</gfx>
   <lua>outfits/weapons/energy_harpoon.lua</lua>

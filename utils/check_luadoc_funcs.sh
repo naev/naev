@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 TMP=$(mktemp -u)
 mkfifo "$TMP"

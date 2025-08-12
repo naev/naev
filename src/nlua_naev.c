@@ -75,6 +75,7 @@ static int naevL_shipstats( lua_State *L );
 static int naevL_unit( lua_State *L );
 static int naevL_quadtreeParams( lua_State *L );
 static int naevL_difficulty( lua_State *L );
+static int naevL_difficultyLevel( lua_State *L );
 #if DEBUGGING
 static int naevL_debugTrails( lua_State *L );
 static int naevL_debugCollisions( lua_State *L );
@@ -119,6 +120,7 @@ static const luaL_Reg naev_methods[] = {
    { "unit", naevL_unit },
    { "quadtreeParams", naevL_quadtreeParams },
    { "difficulty", naevL_difficulty },
+   { "difficultyLevel", naevL_difficultyLevel },
 #if DEBUGGING
    { "debugTrails", naevL_debugTrails },
    { "debugCollisions", naevL_debugCollisions },
@@ -170,19 +172,18 @@ static int naevL_version( lua_State *L )
 }
 
 /**
- * @brief Tests two semver version strings.
+ * @brief Test a version string.
  *
- *    @luatparam string v1 Version 1 to test.
- *    @luatparam string v2 Version 2 to test.
- *    @luatreturn number Positive if v1 is newer or negative if v2 is newer.
+ *    @luatparam string ver Version to test.
+ *    @luatparam string req Requirement condition.
+ *    @luatreturn boolean Whether or not the version meets the requirements.
  * @luafunc versionTest
  */
 static int naevL_versionTest( lua_State *L )
 {
-   const char *s1, *s2;
-   s1 = luaL_checkstring( L, 1 );
-   s2 = luaL_checkstring( L, 2 );
-   lua_pushinteger( L, naev_versionCompareTarget( s1, s2 ) );
+   const char *s1 = luaL_checkstring( L, 1 );
+   const char *s2 = luaL_checkstring( L, 2 );
+   lua_pushboolean( L, naev_versionMatchReq( s1, s2 ) );
    return 1;
 }
 
@@ -1028,6 +1029,19 @@ static int naevL_difficulty( lua_State *L )
    lua_pushstring( L, dif->name );
    ss_statsGetLuaTableList( L, dif->stats, lua_toboolean( L, 1 ) );
    return 2;
+}
+
+/**
+ * @brief Gets the difficulty level settings.
+ *
+ *    @luatreturn number Difficulty level settings.
+ * @luafunc difficultyLevel
+ */
+static int naevL_difficultyLevel( lua_State *L )
+{
+   const Difficulty *dif = difficulty_cur();
+   lua_pushnumber( L, dif->level );
+   return 1;
 }
 
 #if DEBUGGING

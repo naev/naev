@@ -107,7 +107,7 @@ end
 function _attack_zigzag( target )
    target = atk.com_think( target )
    if target == nil then return end
-   if target:flags("disabled") then
+   if target:disabled() then
       ai.popsubtask()
       return
    end

@@ -1,11 +1,12 @@
 <outfit name="Nexus Concealment Coating">
  <general>
+  <shortname>N. Concealment Coating</shortname>
   <typename>Hull Coating</typename>
   <slot>utility</slot>
   <size>small</size>
   <mass>0</mass>
   <price>570000</price>
-  <description>Modern ship sensors are based on detecting gravitational anormalities to spot ships and are very robust in most situations. Nexus Shipyards have developed a breakthrough hull coating that uses quantum entangled self-projections that can confuse gravitational readings.</description>
+  <description>Modern ship sensors rely on detecting gravitational anormalities to spot ships, a very robust approach in most situations. Nexus Shipyards have developed a breakthrough hull coating that uses quantum entangled self-projections to confuse gravitational readings and obscure the ship's position.</description>
   <gfx_store>nexus_stealth_coating.webp</gfx_store>
   <limit>hullcoat</limit>
  </general>

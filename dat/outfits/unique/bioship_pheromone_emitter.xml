@@ -1,7 +1,7 @@
 <outfit name="Bioship Pheromone Emitter">
  <general>
   <rarity>6</rarity>
-  <unique />
+  <unique/>
   <typename>Pheromone Emitter</typename>
   <slot>utility</slot>
   <size>small</size>

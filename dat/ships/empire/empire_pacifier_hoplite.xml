@@ -1,4 +1,4 @@
-<ship inherits="Empire Pacifier" name="Empire Pacifier Hoplite">
+<ship name="Empire Pacifier Hoplite" inherits="Empire Pacifier">
  <lua>empire_pacifier_hoplite.lua</lua>
  <rarity>3</rarity>
  <price>3300000</price>

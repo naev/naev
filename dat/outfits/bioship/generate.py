@@ -9,21 +9,15 @@ N_ = lambda text: text
 
 script_dir = path.join(path.dirname(__file__), '..', '..', '..', 'utils', 'outfits')
 sys.path.append(path.realpath(script_dir))
-from core_outfit import core_outfit
 from outfit import outfit
-
 
 def get_outfit_dict( nam, core = False, doubled = False ):
    nam = path.realpath(path.join(path.dirname( __file__ ), '..', nam))
-   try:
-      if core:
-         o = core_outfit(nam, try_again = True, quiet = True)
-      else:
-         o = outfit(nam)
-   except:
-      raise Exception('Could not read "' + path.basename(nam) + '"')
-   o.autostack(doubled)
-   return o.to_dict()
+   o = outfit(nam, is_multi = core, read_only=True)
+   o.stack(o if doubled else None)
+   out = o.to_dict()
+   out['size'] = o.size_name()
+   return out
 
 # Based on some XML templates and the specs below, we're going to generate families of outfit XML files.
 # First things first: what are we supposed to be doing?
@@ -60,13 +54,14 @@ class MesonBuild(Build):
 
 build = MesonBuild(*sys.argv[1:]) if sys.argv[2:3] == ['-o'] else Build()
 
+intify = lambda x: int(x) if round(x) == x else x
 # Hopefully we can refactor this once the behavior is finalized and we're unafraid of merge conflicts. Anyway, back to the show.
 
 def lerpt( t ):
     return lambda x: t[int(math.floor(x*(len(t)*0.99999)))]
 
 def lerp( a, b, ta = 0.0, tb = 1.0 ):
-    return lambda x: a + (x-ta) * (b-a) / (tb-ta)
+    return lambda x: intify(a + (x-ta) * (b-a) / (tb-ta))
 
 def lerpr( a, b, ta = 0.0, tb = 1.0 ):
     def f( x ):
@@ -78,7 +73,7 @@ from math import log, exp
 
 # Does geometric interpolation instead of arithmetic interpolation.
 def eerp( a, b, ta = 0.0, tb = 1.0 ):
-    return lambda x: round(exp(lerp(log(a), log(b), ta, tb)(x)), 2)
+    return lambda x: intify(round(exp(lerp(log(a), log(b), ta, tb)(x)), 2))
 
 def eerpr( a, b, ta = 0.0, tb = 1.0 ):
     return lambda x: int(round(eerp(a, b, ta, tb)(x)))
@@ -213,7 +208,7 @@ for pref, nam1, nam2, dbl, gfx, output_pref, outputs in [
       'gfx_store':    'organic_hull_' + gfx + '.webp',
       'cargo':        lerpr( ref2['cargo'],    round((ref1['cargo']+ref2['cargo'])/2.0) ),
       'absorb':       lerpr( ref1['absorb']-3, ref2['absorb']-3 ),
-      'armour':       lerpr(  ref1['armour'],   ref2['armour'] )
+      'armour':       lerpr( ref1['armour'],   ref2['armour'] )
    } ).run( [ N_(output_pref + " Cortex " + s) for s in outputs ] )
 
 

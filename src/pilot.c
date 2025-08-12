@@ -700,7 +700,7 @@ void pilot_setTurn( Pilot *p, double turn )
  */
 int pilot_isHostile( const Pilot *p )
 {
-   if ( !pilot_isFriendly( p ) && !pilot_isFlag( p, PILOT_BRIBED ) &&
+   if ( !pilot_isFlag( p, PILOT_BRIBED ) &&
         ( pilot_isFlag( p, PILOT_HOSTILE ) ||
           areEnemiesSystem( FACTION_PLAYER, p->faction, cur_system ) ) )
       return 1;
@@ -729,9 +729,9 @@ int pilot_isNeutral( const Pilot *p )
  */
 int pilot_isFriendly( const Pilot *p )
 {
-   if ( pilot_isFlag( p, PILOT_FRIENDLY ) ||
-        ( areAlliesSystem( FACTION_PLAYER, p->faction, cur_system ) &&
-          !pilot_isFlag( p, PILOT_HOSTILE ) ) )
+   if ( !pilot_isFlag( p, PILOT_HOSTILE ) &&
+        ( pilot_isFlag( p, PILOT_FRIENDLY ) ||
+          areAlliesSystem( FACTION_PLAYER, p->faction, cur_system ) ) )
       return 1;
 
    return 0;
@@ -1257,8 +1257,7 @@ void pilot_rmHostile( Pilot *p )
    if ( !pilot_isHostile( p ) )
       return;
 
-   if ( pilot_isFlag( p, PILOT_HOSTILE ) )
-      pilot_rmFlag( p, PILOT_HOSTILE );
+   pilot_rmFlag( p, PILOT_HOSTILE );
 
    /* Set "bribed" flag if faction has poor reputation */
    if ( areEnemies( FACTION_PLAYER, p->faction ) )
@@ -2549,7 +2548,7 @@ void pilot_update( Pilot *pilot, double dt )
       Damage dmg;
       dmg.type        = dtype_get( "raw" );
       dmg.damage      = pilot->stats.damage * dt;
-      dmg.penetration = 1.; /* Full penetration. */
+      dmg.penetration = FULL_PENETRATION; /* Full penetration. */
       dmg.disable     = pilot->stats.disable * dt;
       pilot_hit( pilot, NULL, applicator, &dmg, NULL, LUA_NOREF, 0 );
    }
@@ -2604,7 +2603,7 @@ void pilot_update( Pilot *pilot, double dt )
             dmg.type = dtype_get( "explosion_splash" );
             dmg.damage =
                MAX( 0., 2. * ( a * ( 1. + sqrt( pilot->fuel + 1. ) / 28. ) ) );
-            dmg.penetration = 1.; /* Full penetration. */
+            dmg.penetration = FULL_PENETRATION; /* Full penetration. */
             dmg.disable     = 0.;
             expl_explode( pilot->solid.pos.x, pilot->solid.pos.y,
                           pilot->solid.vel.x, pilot->solid.vel.y,
@@ -4445,7 +4444,7 @@ void pilot_dpseps( const Pilot *p, double *pdps, double *peps )
    double dps = 0., eps = 0.;
    for ( int i = 0; i < array_size( p->outfits ); i++ ) {
       const Damage *dmg;
-      double        mod_energy, mod_damage, mod_rate;
+      double        mod_energy, mod_damage, mod_rate, mod_erate;
       const Outfit *o = p->outfits[i]->outfit;
       if ( o == NULL )
          continue;
@@ -4453,21 +4452,21 @@ void pilot_dpseps( const Pilot *p, double *pdps, double *peps )
       case OUTFIT_TYPE_BOLT:
          mod_energy = p->stats.fwd_energy;
          mod_damage = p->stats.fwd_damage;
-         mod_rate   = p->stats.fwd_firerate * (double)outfit_shots( o ) /
-                    outfit_delay( o );
+         mod_erate  = p->stats.fwd_firerate / outfit_delay( o );
+         mod_rate   = mod_erate * (double)outfit_shots( o );
          break;
       case OUTFIT_TYPE_TURRET_BOLT:
          mod_energy = p->stats.tur_energy;
          mod_damage = p->stats.tur_damage;
-         mod_rate   = p->stats.tur_firerate * (double)outfit_shots( o ) /
-                    outfit_delay( o );
+         mod_erate  = p->stats.tur_firerate / outfit_delay( o );
+         mod_rate   = mod_erate * (double)outfit_shots( o );
          break;
       case OUTFIT_TYPE_LAUNCHER:
       case OUTFIT_TYPE_TURRET_LAUNCHER:
          mod_energy = 1.;
          mod_damage = p->stats.launch_damage;
-         mod_rate   = p->stats.launch_rate * (double)outfit_shots( o ) /
-                    outfit_delay( o );
+         mod_erate  = p->stats.launch_rate / outfit_delay( o );
+         mod_rate   = mod_erate * (double)outfit_shots( o );
          break;
       case OUTFIT_TYPE_BEAM:
       case OUTFIT_TYPE_TURRET_BEAM:
@@ -4476,6 +4475,7 @@ void pilot_dpseps( const Pilot *p, double *pdps, double *peps )
             mod_energy = p->stats.fwd_energy;
             mod_damage = p->stats.fwd_damage;
             mod_rate   = p->stats.fwd_firerate;
+            mod_erate  = mod_rate;
          } else {
             mod_energy = p->stats.tur_energy;
             mod_damage = p->stats.tur_damage;
@@ -4484,6 +4484,7 @@ void pilot_dpseps( const Pilot *p, double *pdps, double *peps )
          {
             double duration = outfit_duration( o );
             mod_rate *= duration / ( outfit_delay( o ) + duration );
+            mod_erate = mod_rate;
          }
          break;
       default:
@@ -4492,7 +4493,7 @@ void pilot_dpseps( const Pilot *p, double *pdps, double *peps )
 
       dmg = outfit_damage( o );
       dps += mod_rate * mod_damage * dmg->damage;
-      eps += mod_rate * mod_energy * MAX( outfit_energy( o ), 0. );
+      eps += mod_erate * mod_energy * MAX( outfit_energy( o ), 0. );
    }
    if ( pdps != NULL )
       *pdps = dps;

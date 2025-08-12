@@ -150,6 +150,7 @@ def generate_c_file(f):
 #include <strings.h>
 #endif
 
+#include <stdlib.h>
 #include "colour.h"
 #include "log.h"
 

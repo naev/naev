@@ -15,6 +15,7 @@ local fmt = require 'format'
 local luatk = require "luatk"
 local gauntlet = require 'common.gauntlet'
 local poi = require "common.poi"
+local fcts = require "factions"
 
 -- Applies a function to all ships
 local function apply_all_ships( func )
@@ -48,6 +49,11 @@ local function updater0130( _did0120, _did0110, _did0100, _did090 )
    -- Newly added diff
    if player.outfitNum( outfit.get("Racing Trophy") ) > 0 then
       diff.apply( "melendez_dome_xy37" )
+   end
+
+   -- Lost was set as static before 0.13.0-alpha.9
+   if player.evtDone("Welcome to Wild Space") then
+      fcts.setKnown( faction.get("Lost"), true )
    end
 
    -- Mark data matrices known if the player has any
@@ -368,17 +374,18 @@ local function updater090 ()
    -- Some previously known factions become unknown
    --faction.get("Traders Guild"):setKnown(false) -- Gone in 0.11.0, replaced with Traders Society
    if not var.peek("disc_collective") then
-      faction.get("Collective"):setKnown(false)
+      fcts.setKnown( faction.get("Collective"), false )
    end
    if not var.peek("disc_proteron") then
       local pro = faction.get("Proteron")
-      pro:setKnown(false)
+      fcts.setKnown( pro, false )
       pro:setReputationGlobal( pro:reputationDefault() ) -- Hostile by default
    end
    local fflf = faction.get("FLF")
-   fflf:setKnown(false)
    if var.peek("disc_frontier") or player.misnDone("Deal with the FLF agent") or player.misnDone("Take the Dvaered crew home")  then
-      fflf:setKnown(true)
+      fcts.setKnown( fflf, true )
+   else
+      fcts.setKnown( fflf, false )
    end
 end
 
@@ -388,31 +395,31 @@ function create ()
 
    local did090, did0100, did0110, did0120
    -- Run on saves older than 0.9.0
-   if not save_version or naev.versionTest( save_version, "0.9.0-0" ) < 0 then
+   if not save_version or naev.versionTest( save_version, "<0.9.0" ) then
       updater090()
       didupdate = true
       did090 = true
    end
    -- Run on saves older than 0.10.0
-   if not save_version or naev.versionTest( save_version, "0.10.0-0" ) < 0 then
+   if not save_version or naev.versionTest( save_version, "<0.10.0" ) then
       updater0100( did090 )
       didupdate = true
       did0100 = true
    end
    -- Run on saves older than 0.11.0
-   if not save_version or naev.versionTest( save_version, "0.11.0-0") < 0 then
+   if not save_version or naev.versionTest( save_version, "<0.11.0") then
       updater0110( did0100, did090 )
       didupdate = true
       did0110 = true
    end
    -- Run on saves older than 0.12.0
-   if not save_version or (naev.versionTest( save_version, "0.12.0-0") < 0) then
+   if not save_version or naev.versionTest( save_version, "<0.12.0") then
       updater0120( did0110, did0100, did090 )
       didupdate = true
       did0120 = true
    end
    -- Run on saves older than 0.13.0
-   if not save_version or (naev.versionTest( save_version, "0.13.0-alpha.7") < 0) then
+   if not save_version or naev.versionTest( save_version, "<0.13.0-alpha.9") then
       updater0130( did0120, did0110, did0100, did090 )
       --didupdate = true
    end
