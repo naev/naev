@@ -32,7 +32,7 @@ The following is a chart of all time units used in Naev along with the correspon
             { _("Hectoeconds"), _([[N/A]]),        _("100 seconds"),    _("1 minute and 40 seconds"),  _("Minutes") },
             { _("Periods"),     _([["p"]]),        _("10,000 seconds"), _("2 hours and 47 minutes"),   _("Hours") },
             { _("Decaperiods"), _([[N/A]]),        _("10 periods"),     _("28 hours"),                 _("Days") },
-            { _("Cycles"), _     ([[N/A]]),        _("5,000 periods"),  _("579 days"),                 _("Years") },
+            { _("Cycles"),      _([[N/A]]),        _("5,000 periods"),  _("579 days"),                 _("Years") },
         }
         return luatk.newTable( nil, 10, 0, tw-20, nil, data )
     end

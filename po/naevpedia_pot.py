@@ -36,6 +36,7 @@ def needs_translation( line ):
         return False
     return True
 
+from tempfile import NamedTemporaryFile
 with open(sys.argv[1],"w") as fout:
     def print_line( fn, i, line ):
         quoted_escaped_line = json.dumps(line, ensure_ascii=False)
@@ -61,12 +62,20 @@ with open(sys.argv[1],"w") as fout:
                 d = ''.join(m[2:])
             # Preprocess to get rid of Lua blocks
             luas = re.findall( "<%[^=].*?%>", d, flags=re.S )
-            luascript = ""
+            tmp = NamedTemporaryFile(mode='wt', delete=False)
+            tmpnam = tmp.name
             for l in luas:
-                luascript += l[2:-2]+"\n"
-            args = [ "xgettext", "-", "-o", "-", "-L", "Lua", "--omit-header" ]
-            ret = subprocess.run( args, input=luascript, capture_output=True, text=True )
-            fout.write( ret.stdout + "\n" )
+               tmp.write(l[2:-2]+"\n")
+            tmp.close()
+
+            args = [ "xgettext", tmpnam, "-o", "-", "-L", "Lua", "--omit-header" ]
+            ret = subprocess.run( args, capture_output=True, text=True )
+            os.remove(tmpnam)
+            res = [
+               lin.replace(tmp.name+':', 'stdin:') if lin[:2] =='#:' else lin
+               for lin in ret.stdout.split('\n')
+            ]
+            fout.write( '\n'.join(res) + "\n" )
             # Replace Lua blocks with <%lua%>
             d = re.sub( "<%[^=].*?%>", "<%lua%>", d, flags=re.S )
             # Go over lines
