@@ -38,9 +38,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ -z "$*" ]; then
 fi
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-NAEV_DIR="$(realpath "${SCRIPT_DIR}/../")"
 
-res=0
 ARGS=("$@")
 IFS=$'\n'
 readarray -t NON_COMMENTED <<< "$(grep -L "<!--" "${ARGS[@]}")"
@@ -107,7 +105,7 @@ readarray -t NON_SSYS <<< "$(grep -v '\<ssys/' <<< "${NON_OUTFITS[*]}")"
    if [ ! "$res1" = 0 ] || [ ! "$res2" = 0 ] || [ ! "$res3" = 0 ] ; then
       exit 1
    fi
-   res=0
+   conflicts=0
    for i in "${COMMENTED[@]}" ; do
       P="$(realpath --relative-to="$PWD" "$i")"
       UNCO="$UNCOM_DIR/""$P"
@@ -118,13 +116,12 @@ readarray -t NON_SSYS <<< "$(grep -v '\<ssys/' <<< "${NON_OUTFITS[*]}")"
       else
          mv "$RES" "$i.diff"
          echo -e "\n$i: \e[31mmerge conflict\e[0m, see $i.diff" >&2
-         res=$((res + 1))
+         conflicts=$((conflicts + 1))
       fi
    done
-   if [ ! "$res" = 0 ] ; then
-      echo -e "\n[\e[31m$res conflict(s)]\e[0m "
+   if [ ! "$conflicts" = 0 ] ; then
+      echo -e "\n[\e[31m$conflicts conflict(s)]\e[0m "
    fi
 )
 wait
 echo >&2
-exit "$res"
