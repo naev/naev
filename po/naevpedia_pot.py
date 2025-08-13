@@ -30,17 +30,17 @@ msgstr ""
 
 def needs_translation( line ):
    if not line:
-       return False
+      return False
    ls = line.strip()
    if ls[:2]=="<%" and ls[-2:]=="%>":
-       return False
+      return False
    return True
 
 from tempfile import NamedTemporaryFile
 with open(sys.argv[1],"w") as fout:
    def print_line( fn, i, line ):
-       quoted_escaped_line = json.dumps(line, ensure_ascii=False)
-       fout.write('#: {}:{}\nmsgid {}\nmsgstr ""\n\n'.format(fn, i+1, quoted_escaped_line))
+      quoted_escaped_line = json.dumps(line, ensure_ascii=False)
+      fout.write('#: {}:{}\nmsgid {}\nmsgstr ""\n\n'.format(fn, i+1, quoted_escaped_line))
 
    # Want reproducible stuff
    filenames = sys.argv[2:].copy()

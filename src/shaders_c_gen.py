@@ -3,58 +3,58 @@
 num_shaders = 0
 
 class Shader:
-    def __init__(self, name, vs_path, fs_path, attributes, uniforms, subroutines={}):
-        global num_shaders
-        num_shaders += 1
-        self.name       = name
-        self.vs_path    = vs_path
-        self.fs_path    = fs_path
-        self.attributes = attributes
-        self.uniforms   = uniforms
-        self.subroutines= subroutines
+   def __init__(self, name, vs_path, fs_path, attributes, uniforms, subroutines={}):
+      global num_shaders
+      num_shaders += 1
+      self.name       = name
+      self.vs_path    = vs_path
+      self.fs_path    = fs_path
+      self.attributes = attributes
+      self.uniforms   = uniforms
+      self.subroutines= subroutines
 
-    def header_chunks(self):
-        yield "   struct {\n"
-        yield "      GLuint program;\n"
-        for attribute in self.attributes:
-            yield f"      GLuint {attribute};\n"
-        for uniform in self.uniforms:
-            yield f"      GLuint {uniform};\n"
-        for subroutine, routines in self.subroutines.items():
-            yield "      struct {\n"
-            yield "         GLuint uniform;\n"
+   def header_chunks(self):
+      yield "   struct {\n"
+      yield "      GLuint program;\n"
+      for attribute in self.attributes:
+         yield f"      GLuint {attribute};\n"
+      for uniform in self.uniforms:
+         yield f"      GLuint {uniform};\n"
+      for subroutine, routines in self.subroutines.items():
+         yield "      struct {\n"
+         yield "         GLuint uniform;\n"
+         for r in routines:
+            yield f"         GLuint {r};\n"
+         yield f"      }} {subroutine};\n"
+      yield f"   }} {self.name};\n"
+
+   def source_chunks(self):
+      yield f"   shaders.{self.name}.program = gl_program_vert_frag(\"{self.vs_path}\", \"{self.fs_path}\");\n"
+      for attribute in self.attributes:
+         yield f"   shaders.{self.name}.{attribute} = glGetAttribLocation(shaders.{self.name}.program, \"{attribute}\");\n"
+      for uniform in self.uniforms:
+         yield f"   shaders.{self.name}.{uniform} = glGetUniformLocation(shaders.{self.name}.program, \"{uniform}\");\n"
+      if len(self.subroutines) > 0:
+         yield "   if (gl_has( OPENGL_SUBROUTINES )) {\n"
+         for subroutine, routines in self.subroutines.items():
+            yield f"      shaders.{self.name}.{subroutine}.uniform = glGetSubroutineUniformLocation( shaders.{self.name}.program, GL_FRAGMENT_SHADER, \"{subroutine}\" );\n"
             for r in routines:
-                yield f"         GLuint {r};\n"
-            yield f"      }} {subroutine};\n"
-        yield f"   }} {self.name};\n"
+               yield f"      shaders.{self.name}.{subroutine}.{r} = glGetSubroutineIndex( shaders.{self.name}.program, GL_FRAGMENT_SHADER, \"{r}\" );\n"
+         yield "   }\n"
 
-    def source_chunks(self):
-        yield f"   shaders.{self.name}.program = gl_program_vert_frag(\"{self.vs_path}\", \"{self.fs_path}\");\n"
-        for attribute in self.attributes:
-            yield f"   shaders.{self.name}.{attribute} = glGetAttribLocation(shaders.{self.name}.program, \"{attribute}\");\n"
-        for uniform in self.uniforms:
-            yield f"   shaders.{self.name}.{uniform} = glGetUniformLocation(shaders.{self.name}.program, \"{uniform}\");\n"
-        if len(self.subroutines) > 0:
-            yield "   if (gl_has( OPENGL_SUBROUTINES )) {\n"
-            for subroutine, routines in self.subroutines.items():
-                yield f"      shaders.{self.name}.{subroutine}.uniform = glGetSubroutineUniformLocation( shaders.{self.name}.program, GL_FRAGMENT_SHADER, \"{subroutine}\" );\n"
-                for r in routines:
-                    yield f"      shaders.{self.name}.{subroutine}.{r} = glGetSubroutineIndex( shaders.{self.name}.program, GL_FRAGMENT_SHADER, \"{r}\" );\n"
-            yield "   }\n"
-
-    def __lt__( self, other ):
-        return self.name < other.name
+   def __lt__( self, other ):
+      return self.name < other.name
 
 num_simpleshaders = 0
 class SimpleShader(Shader):
-    def __init__(self, name, fs_path):
-        super().__init__( name=name, vs_path="project_pos.vert", fs_path=fs_path, attributes=["vertex"], uniforms=["projection","colour","dimensions","dt","paramf","parami","paramv"], subroutines={} )
-        global num_simpleshaders
-        num_simpleshaders += 1
-    def header_chunks(self):
-        yield f"   SimpleShader {self.name};\n"
-    def source_chunks(self):
-        yield f"   shaders_loadSimple( \"{self.name}\", &shaders.{self.name}, \"{self.fs_path}\" );"
+   def __init__(self, name, fs_path):
+      super().__init__( name=name, vs_path="project_pos.vert", fs_path=fs_path, attributes=["vertex"], uniforms=["projection","colour","dimensions","dt","paramf","parami","paramv"], subroutines={} )
+      global num_simpleshaders
+      num_simpleshaders += 1
+   def header_chunks(self):
+      yield f"   SimpleShader {self.name};\n"
+   def source_chunks(self):
+      yield f"   shaders_loadSimple( \"{self.name}\", &shaders.{self.name}, \"{self.fs_path}\" );"
 
 SHADERS = [
    Shader(
@@ -72,11 +72,11 @@ SHADERS = [
       uniforms = ["projection", "colour", "border"],
    ),
    Shader(
-       name = "resize",
-       vs_path = "texture.vert",
-       fs_path = "magic.frag",
-       attributes = ["vertex"],
-       uniforms = ["tex_mat", "projection", "tex", "u_scale", "u_radius"],
+      name = "resize",
+      vs_path = "texture.vert",
+      fs_path = "magic.frag",
+      attributes = ["vertex"],
+      uniforms = ["tex_mat", "projection", "tex", "u_scale", "u_radius"],
    ),
    Shader(
       name = "texture",
@@ -197,7 +197,7 @@ SHADERS = [
       attributes = ["vertex"],
       uniforms = ["projection", "colour", "dt", "r", "dimensions" ],
       subroutines = {
-        "beam_func" : [
+         "beam_func" : [
             "beam_default",
             "beam_wave",
             "beam_arc",
@@ -205,7 +205,7 @@ SHADERS = [
             "beam_organic",
             "beam_unstable",
             "beam_fuzzy",
-        ]
+         ]
       }
    ),
    Shader(
@@ -215,13 +215,13 @@ SHADERS = [
       attributes = ["vertex"],
       uniforms = ["projection", "progress", "direction", "dimensions", "brightness"],
       subroutines = {
-        "jump_func" : [
+         "jump_func" : [
             "jump_default",
             "jump_nebula",
             "jump_organic",
             "jump_circular",
             "jump_wind",
-        ]
+         ]
       }
    ),
    Shader(
@@ -411,12 +411,12 @@ SHADERS = [
 SHADERS.sort()
 
 def header_chunks():
-    yield f"/* FILE GENERATED BY {__file__} */"
+   yield f"/* FILE GENERATED BY {__file__} */"
 
 def generate_h_file():
-    yield from header_chunks()
+   yield from header_chunks()
 
-    yield f"""
+   yield f"""
 #pragma once
 
 #include <SDL3/SDL_timer.h>
@@ -446,10 +446,10 @@ typedef struct SimpleShader_ {{
 typedef struct Shaders_ {{
 """
 
-    for shader in SHADERS:
-        yield from shader.header_chunks()
+   for shader in SHADERS:
+      yield from shader.header_chunks()
 
-    yield f"""   SimpleShader *simple_shaders[ NUM_SIMPLE_SHADERS ];
+   yield f"""   SimpleShader *simple_shaders[ NUM_SIMPLE_SHADERS ];
 }} Shaders;
 
 extern Shaders shaders;
@@ -460,9 +460,9 @@ const SimpleShader *shaders_getSimple( const char *name );
 """
 
 def generate_c_file():
-    yield from header_chunks()
+   yield from header_chunks()
 
-    yield """
+   yield """
 #include <string.h>
 #include "shaders.gen.h"
 #include "opengl_shader.h"
@@ -511,11 +511,11 @@ void shaders_load (void) {
    Uint64 time = SDL_GetTicks();
 """
 
-    for i, shader in enumerate(SHADERS):
-        yield from shader.source_chunks()
-        if i != len(SHADERS) - 1:
-            yield "\n"
-    yield """
+   for i, shader in enumerate(SHADERS):
+      yield from shader.source_chunks()
+      if i != len(SHADERS) - 1:
+         yield "\n"
+   yield """
    if (conf.devmode) {
       time = SDL_GetTicks() - time;
       DEBUG( n_("Loaded %d Shader in %.3f s", "Loaded %d Shaders in %.3f s", NUM_SHADERS ), NUM_SHADERS, time/1000. );
@@ -526,15 +526,14 @@ void shaders_load (void) {
 
 void shaders_unload (void) {
 """
-    for shader in SHADERS:
-        yield f"   glDeleteProgram(shaders.{shader.name}.program);\n"
-
-    yield """   memset(&shaders, 0, sizeof(shaders));
+   for shader in SHADERS:
+      yield f"   glDeleteProgram(shaders.{shader.name}.program);\n"
+   yield """   memset(&shaders, 0, sizeof(shaders));
    nsimpleshaders = 0;
 }"""
 
 with open("shaders.gen.h", "w") as shaders_gen_h:
-    shaders_gen_h.writelines(generate_h_file())
+   shaders_gen_h.writelines(generate_h_file())
 
 with open("shaders.gen.c", "w") as shaders_gen_c:
-    shaders_gen_c.writelines(generate_c_file())
+   shaders_gen_c.writelines(generate_c_file())

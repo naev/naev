@@ -23,11 +23,11 @@ def capship( x ):
 def simulate( x ):
     wsum = patrol(x) + loner_weak(x) + loner_strong(x) + squad(x) + capship(x)
     print( f"""{x} presence
-   patrol: {patrol(x) / wsum * 100:.1f}%
-   loner_weak: {loner_weak(x) / wsum * 100:.1f}%
-   loner_strong: {loner_strong(x) / wsum * 100:.1f}%
-   squad: {squad(x) / wsum * 100:.1f}%
-   capship: {capship(x) / wsum * 100:.1f}%
+    patrol: {patrol(x) / wsum * 100:.1f}%
+    loner_weak: {loner_weak(x) / wsum * 100:.1f}%
+    loner_strong: {loner_strong(x) / wsum * 100:.1f}%
+    squad: {squad(x) / wsum * 100:.1f}%
+    capship: {capship(x) / wsum * 100:.1f}%
 """)
 
 

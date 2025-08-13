@@ -176,21 +176,21 @@ const ColourSort_t col_list[NUM_COLOURS] = {
     f.write("""
 static int colour_cmp( const void *p1, const void *p2 )
 {
-   const ColourSort_t *c1, *c2;
-   c1 = (const ColourSort_t*) p1;
-   c2 = (const ColourSort_t*) p2;
-   return strcasecmp( c1->name, c2->name );
+    const ColourSort_t *c1, *c2;
+    c1 = (const ColourSort_t*) p1;
+    c2 = (const ColourSort_t*) p2;
+    return strcasecmp( c1->name, c2->name );
 }
 
 const glColour* col_fromName( const char* name )
 {
-   const ColourSort_t k = { .name = name };
-   const ColourSort_t *q = bsearch( &k, col_list, NUM_COLOURS, sizeof(ColourSort_t), colour_cmp );
-   if (q==NULL) {
-      WARN(_("Unknown colour '%s'!"),name);
-      return NULL;
-   }
-   return q->c;
+    const ColourSort_t k = { .name = name };
+    const ColourSort_t *q = bsearch( &k, col_list, NUM_COLOURS, sizeof(ColourSort_t), colour_cmp );
+    if (q==NULL) {
+        WARN(_("Unknown colour '%s'!"),name);
+        return NULL;
+    }
+    return q->c;
 }""")
 
 with open("colours.gen.h", "w") as colours_ggen_h:
