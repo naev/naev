@@ -92,11 +92,12 @@ local function __zigzag_run_decide( self, target )
    if mem.atk_skill <= 0.45+0.55*mem.rand then return false end
    -- Try to figure it out
    local relspe = self:speedMax() / target:speedMax()
-   return ( self:mass() <= 400
-            and relspe <= 1.01
-            and ai.hasprojectile()
-            and (not ai.hasafterburner() or self:energy() < 10)
-          )
+   return (
+      self:mass() <= 400
+      and relspe <= 1.01
+      and ai.hasprojectile()
+      and (not ai.hasafterburner() or self:energy() < 10)
+   )
 end
 
 

@@ -296,10 +296,10 @@ end
 
 -- Helper function
 local function setFLF( j )
-  hook.pilot(j, "death", "deathFLF")
-  j:setNoDisable(true)
-  j:setHostile()
-  j:setVisible(true)
+   hook.pilot(j, "death", "deathFLF")
+   j:setNoDisable(true)
+   j:setHostile()
+   j:setVisible(true)
 end
 
 
@@ -444,7 +444,7 @@ end
 
 function destroyBase()
    if base:exists() then
-     base:setHealth( -1, 0 )
+      base:setHealth( -1, 0 )
    end
 end
 

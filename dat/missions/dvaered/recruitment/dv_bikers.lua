@@ -55,13 +55,15 @@ local npc2img, npc2por = vni.generic()
 local npc3img, npc3por = vni.generic()
 local npc4img, npc4por = vni.generic()
 
-local gangs = { _("Big Bang Band"), -- gang of Blue Belly Billy
-                _("Cringe Crew"),
-                _("Dilettante Daemons"),
-                _("The Fuel Drinkers"),
-                _("Flamethrower Gang"),
-                _("The Stabbers"),
-                _("The Warriors") }
+local gangs = {
+   _("Big Bang Band"), -- gang of Blue Belly Billy
+   _("Cringe Crew"),
+   _("Dilettante Daemons"),
+   _("The Fuel Drinkers"),
+   _("Flamethrower Gang"),
+   _("The Stabbers"),
+   _("The Warriors")
+}
 
 -- Forward declarations of functions
 local spawnGang, land_state1, land_state3

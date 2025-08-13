@@ -123,7 +123,7 @@ function land()
 "That took long enough! Being stuck in a place like this… It's always us students who have to do all the hard work!]]))
       student(_([["Anyway, I'm done here with my measurements. Since the shielding prototype requires fine tuning of some parameters these measurements are essential. I just need a few minutes to configure the device. We can start anytime soon."]]))
       if not hasShieldingPrototypeEquipped() then
-        student(_([["You did remember to install the shielding prototype, right?"]]))
+         student(_([["You did remember to install the shielding prototype, right?"]]))
       end
       vn.done()
       vn.run()
@@ -142,9 +142,9 @@ function land()
       mensing(_([["In that case the principles that our design is based on may be flawed. I'm sorry, it's all my fault. I should have been more careful when checking Robert's calculations."]]))
       student(_([["What, now it's my fault?! After you tried to steal all my ideas?"]]))
       vn.menu( {
-        { _("Clear your throat."), "continue" },
-        { _("Sigh."), "continue" },
-        { _("Ask about the payment."), "continue" },
+         { _("Clear your throat."), "continue" },
+         { _("Sigh."), "continue" },
+         { _("Ask about the payment."), "continue" },
       } )
       vn.label("continue")
       mensing(fmt.f(_([["Ah right, let's postpone the scientific issues for a moment. You have earned a reward for all the trouble."
@@ -205,7 +205,7 @@ function hasShieldingPrototypeEquipped()
    local o = player.pilot():outfitsList("structure")
    for i=1,#o do
       if o[i]:nameRaw()=="Nebular Shielding Prototype" then
-        return true
+         return true
       end
    end
    return false

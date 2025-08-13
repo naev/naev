@@ -10,11 +10,14 @@ local COST = 3
 function price( _q )
    local playerhas = poi.data_get()
    local canbuy = (COST <= playerhas)
-   return fmt.f(n_("{num} Encrypted Data Matrix",
-                   "{num} Encrypted Data Matrices", COST),{num=COST}),
-            canbuy, false,
-            fmt.f(n_("{num} Encrypted Data Matrix",
-                   "{num} Encrypted Data Matrices", playerhas),{num=playerhas})
+   return fmt.f(n_(
+      "{num} Encrypted Data Matrix",
+      "{num} Encrypted Data Matrices", COST),{num=COST}),
+      canbuy, false,
+      fmt.f(n_(
+         "{num} Encrypted Data Matrix",
+         "{num} Encrypted Data Matrices", playerhas
+      ),{num=playerhas})
 end
 
 function buy( _q )

@@ -20,8 +20,8 @@
 
    Mission: Escort a Dvaered colonel
    Description: Small mission where you escort a Dvaered Ancestor.
-                This is a one-off that's not part of any major
-                storyline; the in-game purpose will remain a mystery.
+   This is a one-off that's not part of any major
+   storyline; the in-game purpose will remain a mystery.
 
 --]]
 
@@ -83,7 +83,7 @@ function accept()
 
    vn.label("mission description")
    m(fmt.f(_([["Well, to the point. I need somebody who's not crazy to escort me and my Ancestor to {pnt} in the {sys} system. Would you do that? I can't tell you why, that would be classified information leaked to an outsider. Very dangerous, especially when we can't trust you.]]),
-     {pnt=mem.destspb, sys=mem.dest_sys}))
+      {pnt=mem.destspb, sys=mem.dest_sys}))
    m(_([["One more thing: another warlord would be only too happy to blow any of the colonel rank such as myself up, so you may need to expect attacks. The ship will probably be called 'Asheron Anomaly', but it may be something else."]]))
    vn.menu{
       {_([["I'd be happy to do that!"]]), "sure"},

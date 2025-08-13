@@ -9,8 +9,8 @@ local INCBONUS = 3   -- Increment per OVERFLOW
 local BONUS    = INCBONUS / OVERFLOW
 
 function descextra( _p, _s )
- return "#y"..fmt.f(_("For each {over} flow over {min} flow, increases action speed by {bonus}% up to a maximum of {max}%."),
-   {over=OVERFLOW, min=MINFLOW, bonus=INCBONUS, max=MAXBONUS}).."#0"
+   return "#y"..fmt.f(_("For each {over} flow over {min} flow, increases action speed by {bonus}% up to a maximum of {max}%."),
+      {over=OVERFLOW, min=MINFLOW, bonus=INCBONUS, max=MAXBONUS}).."#0"
 end
 
 function update( p, _dt )

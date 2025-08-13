@@ -139,9 +139,9 @@ function reaction()
 end
 
 function finish()
-    hook.rm(yohail)
-    evt.finish(false)
+   hook.rm(yohail)
+   evt.finish(false)
 end
 function leave()
-    evt.finish(false)
+   evt.finish(false)
 end

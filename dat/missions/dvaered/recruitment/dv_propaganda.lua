@@ -158,11 +158,13 @@ function spawnHostiles()
       pilot.add( "Dvaered Vendetta", mem.dynFact, mem.pnt )
    end
    local a = pilot.add( "Dvaered Vendetta", mem.dynFact, mem.pnt )
-   local msg = { _("That is an insult to our Lord's honour!"),
-                 _("Hey! Smart ass! Did you think about the environmental consequences of what you just did?"),
-                 _("Everyone! Get that ship!"),
-                 _("Come back! I have got candies for you... and MACE ROCKETS!"),
-                 _("You spread posters on my planet. My turn to spread rockets on your face!") }
+   local msg = {
+      _("That is an insult to our Lord's honour!"),
+      _("Hey! Smart ass! Did you think about the environmental consequences of what you just did?"),
+      _("Everyone! Get that ship!"),
+      _("Come back! I have got candies for you... and MACE ROCKETS!"),
+      _("You spread posters on my planet. My turn to spread rockets on your face!")
+   }
    a:comm( player.pilot(), msg[rnd.rnd(1,#msg)] )
 end
 

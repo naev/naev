@@ -145,7 +145,8 @@ function atk.decide_zz( target, dist )
    local d = d1-d2
 
    return ( (dist > range) and (ai.hasprojectile())
-           and (dir < math.rad(10)) and (dir > -math.rad(10)) and (d < math.rad(10)) and (d > -math.rad(10)) )
+      and (dir < math.rad(10)) and (dir > -math.rad(10))
+      and (d < math.rad(10)) and (d > -math.rad(10)) )
 end
 
 --[[

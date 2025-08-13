@@ -39,7 +39,7 @@ end
 --]]
 function __atk_drone_ranged( target, dist )
    --local dir = ai.face(target) -- Normal face the target
-  local dir = ai.aim(target) -- Aim for the target
+   local dir = ai.aim(target) -- Aim for the target
    -- TODO: should modify this line
 
    -- Check if in range

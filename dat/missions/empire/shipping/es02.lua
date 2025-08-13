@@ -28,8 +28,7 @@
       minor edits by Infiltrator
       - Mission fixed to suit big systems (Anatolis, 11/02/2011)
 
-   Rescue a VIP stranded on a disabled ship in a system while FLF and Dvaered
-    are fighting.
+   Rescue a VIP stranded on a disabled ship in a system while FLF and Dvaered are fighting.
 
    Stages:
 

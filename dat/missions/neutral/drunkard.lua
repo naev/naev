@@ -19,10 +19,10 @@
 --]]
 --[[
 
-  Drunkard
-  Author: geekt
+   Drunkard
+   Author: geekt
 
-  A drunkard at the bar has gambled his ship into hock, and needs you to do a mission for him.
+   A drunkard at the bar has gambled his ship into hock, and needs you to do a mission for him.
 
 ]]--
 local fmt = require "format"

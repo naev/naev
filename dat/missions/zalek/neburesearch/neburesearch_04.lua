@@ -15,11 +15,11 @@
 --]]
 --[[
 
-   Mission: Shielding Prototype Funding
+    Mission: Shielding Prototype Funding
 
-   Description: The player has to help acquiring funds for the shielding prototype. This is going to be hilariously complicated.
+    Description: The player has to help acquiring funds for the shielding prototype. This is going to be hilariously complicated.
 
-   Difficulty: Easy to Medium
+    Difficulty: Easy to Medium
 
 --]]
 local fmt = require "format"
@@ -97,10 +97,10 @@ function accept()
 end
 
 local function dest_updated()
-   misn.markerMove(mem.misn_marker, mem.dest_planet)
-   misn.osdCreate(_("Shielding Prototype Funding"), {
-      fmt.f(_("Land on {pnt} in the {sys} system"), {pnt=mem.dest_planet, sys=mem.dest_sys}),
-      fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=homeworld, sys=homeworld_sys}),
+    misn.markerMove(mem.misn_marker, mem.dest_planet)
+    misn.osdCreate(_("Shielding Prototype Funding"), {
+        fmt.f(_("Land on {pnt} in the {sys} system"), {pnt=mem.dest_planet, sys=mem.dest_sys}),
+        fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=homeworld, sys=homeworld_sys}),
     })
 end
 
@@ -167,57 +167,57 @@ function land()
 end
 
 function jumpin()
-   if mem.stage == 1 and system.cur() == mem.dest_sys then
-      local scom = {}
-      mem.stage = 2
-      scom[1] = pilot.add("Za'lek Light Drone", "Mercenary", mem.dest_planet, nil, {ai="baddiepos"})
-      scom[2] = pilot.add("Za'lek Light Drone", "Mercenary", mem.dest_planet, nil, {ai="baddiepos"})
-      scom[3] = pilot.add("Za'lek Heavy Drone", "Mercenary", mem.dest_planet, nil, {ai="baddiepos"})
-      for k,p in ipairs(scom) do
-         p:setHostile(true)
-         p:memory().guardpos = player.pos() -- Just go towards the player position and attack if they are around
-      end
-      hook.timer(10.0, "warningMessage")
-   elseif mem.stage == 3 and system.cur() == mem.dest_sys then
-      hook.timer(60.0, "cannotLand")
-   end
+    if mem.stage == 1 and system.cur() == mem.dest_sys then
+        local scom = {}
+        mem.stage = 2
+        scom[1] = pilot.add("Za'lek Light Drone", "Mercenary", mem.dest_planet, nil, {ai="baddiepos"})
+        scom[2] = pilot.add("Za'lek Light Drone", "Mercenary", mem.dest_planet, nil, {ai="baddiepos"})
+        scom[3] = pilot.add("Za'lek Heavy Drone", "Mercenary", mem.dest_planet, nil, {ai="baddiepos"})
+        for k,p in ipairs(scom) do
+            p:setHostile(true)
+            p:memory().guardpos = player.pos() -- Just go towards the player position and attack if they are around
+        end
+        hook.timer(10.0, "warningMessage")
+    elseif mem.stage == 3 and system.cur() == mem.dest_sys then
+        hook.timer(60.0, "cannotLand")
+    end
 end
 
 function takeoff()
-   if mem.stage == 5 then
-      mem.stage = 6
-      hook.timer(2, "startAmbush")
-      hook.timer(12, "secondWarningMessage")
-      player.landAllow(false)
-   end
+    if mem.stage == 5 then
+        mem.stage = 6
+        hook.timer(2, "startAmbush")
+        hook.timer(12, "secondWarningMessage")
+        player.landAllow(false)
+    end
 end
 
 function warningMessage()
     vntk.msg(_("Caution!"), fmt.f(_([[You receive a system-wide broadcast. It appears to be a warning. "Caution! A drone squadron in the {sys} system went haywire! Proceed with care."
     Why is this happening so frequently in Za'lek space? A second glance at your radar shows that a drone squadron is flying right towards your ship.]]),
-      {sys=system.cur()}))
+        {sys=system.cur()}))
 end
 
 function secondWarningMessage()
     vntk.msg(_("Caution!"), fmt.f(_([[The now familiar warning appears once again on your ship's screen. "Caution! A drone squadron in the {sys} system went haywire! Proceed with care."
     Just how often is this going to happen?]]),
-      {sys=system.cur()}))
+        {sys=system.cur()}))
 end
 
 function startAmbush()
-   local scom = {}
-   local origins = {}
-   for k,j in ipairs(system.cur():jumps()) do
-      table.insert( origins, j:dest() )
-   end
-   for i=1,#origins do
-      scom[2*i-1] = pilot.add("Za'lek Light Drone", "Mercenary", origins[i], nil, {ai="baddiepos"})
-      scom[2*i] = pilot.add("Za'lek Heavy Drone", "Mercenary", origins[i], nil, {ai="baddiepos"})
-   end
-   for i=1,#scom do
-      scom[i]:setHostile(false)
-      scom[i]:memory().guardpos = player.pos() -- Just go towards the player position and attack if they are around
-   end
+    local scom = {}
+    local origins = {}
+    for k,j in ipairs(system.cur():jumps()) do
+        table.insert( origins, j:dest() )
+    end
+    for i=1,#origins do
+        scom[2*i-1] = pilot.add("Za'lek Light Drone", "Mercenary", origins[i], nil, {ai="baddiepos"})
+        scom[2*i] = pilot.add("Za'lek Heavy Drone", "Mercenary", origins[i], nil, {ai="baddiepos"})
+    end
+    for i=1,#scom do
+        scom[i]:setHostile(false)
+        scom[i]:memory().guardpos = player.pos() -- Just go towards the player position and attack if they are around
+    end
 end
 
 function cannotLand()

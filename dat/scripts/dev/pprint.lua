@@ -435,10 +435,10 @@ function pprint.pformat(obj, option, printer)
 
         local limit = tonumber(option.depth_limit)
         if limit and depth > limit then
-           if print_header_ix then
-              return string.format('[[%s %d]]...', ttype, print_header_ix)
-           end
-           return string_formatter(tostring(t), true)
+            if print_header_ix then
+                return string.format('[[%s %d]]...', ttype, print_header_ix)
+            end
+            return string_formatter(tostring(t), true)
         end
 
         local tlen = #t
@@ -452,7 +452,7 @@ function pprint.pformat(obj, option, printer)
         for ix = 1,tlen do
             local v = t[ix]
             if formatter[type(v)] == nop_formatter or
-               (option.filter_function and option.filter_function(v, ix, t)) then
+                    (option.filter_function and option.filter_function(v, ix, t)) then
                -- pass
             else
                 if option.wrap_array then
@@ -479,8 +479,8 @@ function pprint.pformat(obj, option, printer)
         local function print_kv(k, v, t)
             -- can't use option.show_x as obj may contain custom type
             if formatter[type(v)] == nop_formatter or
-               formatter[type(k)] == nop_formatter or
-               (option.filter_function and option.filter_function(v, k, t)) then
+                    formatter[type(k)] == nop_formatter or
+                    (option.filter_function and option.filter_function(v, k, t)) then
                 return
             end
             wrapped = _n()

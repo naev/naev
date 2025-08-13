@@ -304,20 +304,20 @@ function create()
    bar_offsets = {
       normal = {
          30, -- Bar X, relative to frame
-          7, -- Icon X
+         7,  -- Icon X
          15, -- Sheen Y
-          6, -- Text Y
+         6,  -- Text Y
       },
       small = { 22, 5, 9, 3 }, -- See above.
       ammo = {
-          2, -- Bar
+         2,  -- Bar
          20, -- Refire indicator Y
-          3, -- Sheen
+         3,  -- Sheen
          13, -- Sheen Y
          22, -- Refire sheen Y
-          6, -- Text Y
-          5, -- Tracking icon X
-          6, -- Tracking icon Y
+         6,  -- Text Y
+         5,  -- Tracking icon X
+         6,  -- Tracking icon Y
       }
    }
 
@@ -877,7 +877,7 @@ function render( dt, dt_mod )
       local width, height = bgs.bar_weapon:dim()
 
       if buttons["formation"] == nil then
-          buttons["formation"] = {}
+         buttons["formation"] = {}
       end
 
       local button = buttons["formation"]
@@ -889,7 +889,7 @@ function render( dt, dt_mod )
 
       col = colour.new( .10, .10, .10 )
       if button.state == "mouseover" then
-          col = colour.new( .25, .25, .25 )
+         col = colour.new( .25, .25, .25 )
       end
 
       gfx.renderRect( x, y, width, height, col)

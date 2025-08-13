@@ -253,10 +253,10 @@ function create()
    ta_flt_pane_w_b, ta_flt_pane_h_b = fleet_pane_b:dim()
    ta_flt_pane_x = ta_pnt_pane_x - ta_flt_pane_w - 16
    if ta_flt_pane_x < tbar_center_x + tbar_center_w / 2 - 10 then
-       ta_flt_pane_x = nil
-       ta_flt_pane_y = nil
+      ta_flt_pane_x = nil
+      ta_flt_pane_y = nil
    else
-       ta_flt_pane_y = tbar_y + tbar_h - 32 - ta_flt_pane_h
+      ta_flt_pane_y = tbar_y + tbar_h - 32 - ta_flt_pane_h
    end
 
    -- Planet faction icon center
@@ -1024,7 +1024,7 @@ function render( _dt )
 
          local col = col_text
          if button.state == "mouseover" then
-             col = col_lgray
+            col = col_lgray
          end
 
          if base_x ~= nil then

@@ -43,10 +43,10 @@ local npc2_image = portrait.getFullPath( npc2_portrait )
 local cargoname = N_("Cynthia")
 local cargodesc = N_("A young teenager.")
 local targetworlds = {
-  spob.get("Niflheim Enclave"),
-  spob.get("Nova Shakar"),
-  spob.get("Selphod"),
-  spob.get("Emperor's Fist")
+   spob.get("Niflheim Enclave"),
+   spob.get("Nova Shakar"),
+   spob.get("Selphod"),
+   spob.get("Emperor's Fist")
 }
 local catchworld = spob.get("Torloth")
 local homeworld, homesys = spob.getS("Zhiru")

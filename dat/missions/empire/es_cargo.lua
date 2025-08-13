@@ -69,7 +69,7 @@ function create()
 
    --Determine risk of piracy
    local riskreward
-    if mem.avgrisk == 0 then
+   if mem.avgrisk == 0 then
       piracyrisk = piracyrisk[1]
       riskreward = 0
    elseif mem.avgrisk <= 200 then

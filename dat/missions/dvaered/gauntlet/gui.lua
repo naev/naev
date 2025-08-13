@@ -9,18 +9,22 @@ local gauntlet_option, gauntlet_start, gauntlet_type, gauntlet_subtype
 local btn_enter, btn_modifiers, btn_options, btn_subtypes, btn_types, headerh, modifiers_divider, options_divider, subtypes_divider
 
 local gauntlet_modifiers = {
-   { id = "doubledmgtaken",
-    str = fmt.f(_("Double Damage Enemies ({bonus})"), {bonus="#g+50%#0"}),
-    var = "gauntlet_unlock_doubledmgtaken",
-    enabled = false },
-   { id = "nohealing",
-    str = fmt.f(_("No Healing Between Waves ({bonus})"),{bonus="#g+25%#0"}),
-    var = "gauntlet_unlock_nohealing",
-    enabled = false },
-   { id = "doubleenemy",
-    str = _("Double Enemies"),
-    var = nil,
-    enabled = false },
+   {
+      id = "doubledmgtaken",
+      str = fmt.f(_("Double Damage Enemies ({bonus})"), {bonus="#g+50%#0"}),
+      var = "gauntlet_unlock_doubledmgtaken",
+      enabled = false
+   }, {
+      id = "nohealing",
+      str = fmt.f(_("No Healing Between Waves ({bonus})"),{bonus="#g+25%#0"}),
+      var = "gauntlet_unlock_nohealing",
+      enabled = false
+   }, {
+      id = "doubleenemy",
+      str = _("Double Enemies"),
+      var = nil,
+      enabled = false
+   },
 }
 
 local function button_list( wdw, captions, bx, by, bw, bh, w, _h, handler )

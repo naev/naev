@@ -177,7 +177,7 @@ function takeoff()
 end
 
 function jumpin()
-    if system.cur() ~= mem.nextsys then
+   if system.cur() ~= mem.nextsys then
       lmisn.fail(_("You jumped into the wrong system. You failed science miserably!"))
    else
       mem.nextsys = lmisn.getNextSystem(system.cur(), mem.destsys)
@@ -290,7 +290,7 @@ function transporterAttacked(p, attacker)
 end
 
 function transporterShutup()
-    mem.shuttingup = false
+   mem.shuttingup = false
 end
 
 function timer_transporterSafe()

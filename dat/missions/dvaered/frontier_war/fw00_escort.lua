@@ -49,7 +49,7 @@ local meet_text1 = _([[After Tam boards the Goddard, you wait for about half a p
 function create()
    -- The mission should not appear just after the FLF destruction
    if not (var.peek("invasion_time") == nil or
-           time.get() >= time.fromnumber(var.peek("invasion_time")) + time.new(0, 20, 0)) then
+         time.get() >= time.fromnumber(var.peek("invasion_time")) + time.new(0, 20, 0)) then
       misn.finish(false)
    end
 
@@ -148,12 +148,12 @@ function enter()
 end
 
 function testPlayerSpeed()
-  local stats = player.pilot():stats()
-  local playershipspeed = stats.speed_max
-  if playershipspeed < 300 then
+   local stats = player.pilot():stats()
+   local playershipspeed = stats.speed_max
+   if playershipspeed < 300 then
       tk.msg(_("Your ship is too slow"), _("Did you really expect to keep up with Major Tam with your current ship?"))
       misn.finish(false)
-  end
+   end
 end
 
 function explain_battle()

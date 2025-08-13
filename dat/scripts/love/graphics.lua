@@ -616,11 +616,11 @@ out InterfBLock {
 vec4 position( mat4 clipSpaceFromLocal, vec4 localPosition );
 
 void main(void) {
-    OUT.VaryingTexCoord = VertexTexCoord;
-    OUT.VaryingTexCoord = ViewSpaceFromLocal * VertexTexCoord;
-    OUT.VaryingColour   = ConstantColour;
-    love_Position       = position( ClipSpaceFromLocal, VertexPosition );
-    OUT.VaryingPosition = love_Position.xy;
+   OUT.VaryingTexCoord = VertexTexCoord;
+   OUT.VaryingTexCoord = ViewSpaceFromLocal * VertexTexCoord;
+   OUT.VaryingColour   = ConstantColour;
+   love_Position       = position( ClipSpaceFromLocal, VertexPosition );
+   OUT.VaryingPosition = love_Position.xy;
 }
 ]]
    local s = graphics.Shader.new()

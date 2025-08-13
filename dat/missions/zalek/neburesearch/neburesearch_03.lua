@@ -14,11 +14,11 @@
 --]]
 --[[
 
-   Mission: The Substitute Speaker
+    Mission: The Substitute Speaker
 
-   Description: The player has to impersonate a scientist and give a scientific talk.
+    Description: The player has to impersonate a scientist and give a scientific talk.
 
-   Difficulty: Easy
+    Difficulty: Easy
 
 --]]
 
@@ -307,14 +307,14 @@ end
 
 -- Date hook
 function tick()
-   local osd_msg = {}
-   if mem.timelimit <= time.get() then
-      -- Case missed second deadline
-      player.msg(_("You were too late. You're never going to be a great scientist!"))
-      misn.finish(false)
-   else
-      osd_msg[1] = fmt.f(_("Fly to {pnt} in the {sys} system before {time_limit}\n({time} remaining)"),
-      { pnt=dest_planet, sys=dest_sys, time_limit=mem.timelimit, time=(mem.timelimit - time.get())})
-      misn.osdCreate(_("The Substitute Speaker"), osd_msg)
-   end
+    local osd_msg = {}
+    if mem.timelimit <= time.get() then
+        -- Case missed second deadline
+        player.msg(_("You were too late. You're never going to be a great scientist!"))
+        misn.finish(false)
+    else
+        osd_msg[1] = fmt.f(_("Fly to {pnt} in the {sys} system before {time_limit}\n({time} remaining)"),
+        { pnt=dest_planet, sys=dest_sys, time_limit=mem.timelimit, time=(mem.timelimit - time.get())})
+        misn.osdCreate(_("The Substitute Speaker"), osd_msg)
+    end
 end

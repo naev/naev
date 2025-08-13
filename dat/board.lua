@@ -98,16 +98,17 @@ local function outfit_loot( o, price )
       else
          sbonus = string.format("#g%+d", bonus*100 - 100)
       end
-      sprice = fmt.f(_("\n#rCosts {credits} ({sbonus}%#r from crew strength) to extract!#0"), {credits=fmt.credits(price), sbonus=sbonus})
+      sprice = fmt.f(_("\n#rCosts {credits} ({sbonus}%#r from crew strength) to extract!#0"), {
+         credits=fmt.credits(price), sbonus=sbonus})
    end
-   local desc = fmt.f(_("{name}{sprice}\n{slotsize} {slottype}#0 slot{sprop}\n{stype}\n{desc}"),
-         { name=o:name(),
-           sprice=sprice,
-           desc=o:description(),
-           slottype=slotTypeColour(name),
-           slotsize=slotSizeColour(size),
-           sprop=sprop,
-           stype=stype})
+   local desc = fmt.f(_("{name}{sprice}\n{slotsize} {slottype}#0 slot{sprop}\n{stype}\n{desc}"),{
+      name=o:name(),
+      sprice=sprice,
+      desc=o:description(),
+      slottype=slotTypeColour(name),
+      slotsize=slotSizeColour(size),
+      sprop=sprop,
+      stype=stype})
    local col = nil
    if o:unique() then
       col = special_col
@@ -487,13 +488,14 @@ local function board_capture ()
 
    local capturemsg = fmt.f(_([[Do you wish to capture the {shpname}? You estimate it will cost #o{credits}#0 ({sbonus}%#0 from crew strength) in repairs to successfully restore the ship with outfits, and #o{creditsnaked}#0 without outfits. You have {playercreds}.{fctmsg}
 
-You will still have to escort the ship and land with it to perform the repairs and complete the capture. The ship will not assist you in combat and will be lost if destroyed.]]),
-      {shpname=board_plt:name(),
-       credits=fmt.credits(cost),
-       creditsnaked=fmt.credits(costnaked),
-       playercreds=fmt.credits(player.credits()),
-       fctmsg=factionmsg,
-       sbonus=sbonus})
+You will still have to escort the ship and land with it to perform the repairs and complete the capture. The ship will not assist you in combat and will be lost if destroyed.]]), {
+         shpname=board_plt:name(),
+         credits=fmt.credits(cost),
+         creditsnaked=fmt.credits(costnaked),
+         playercreds=fmt.credits(player.credits()),
+         fctmsg=factionmsg,
+         sbonus=sbonus
+   })
 
    luatk.yesno( _("Capture Ship?"), capturemsg,
       function ()

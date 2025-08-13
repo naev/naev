@@ -77,7 +77,7 @@ end
 
 --event ends on player leaving the system or landing
 function leave ()
-    evt.finish()
+   evt.finish()
 end
 
 local function whalesound( pos )

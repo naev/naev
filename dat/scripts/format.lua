@@ -61,7 +61,7 @@ Converts an item object or number of credits to reward string ("You have receive
    @usage vn.na(fmt.reward(money_reward))
 
       @param reward_list Thing or number of credits the player is receiving.
-                    Avoid passing strings (English or translated) for clarity's sake. Can be a table containing multiple instances.
+         Avoid passing strings (English or translated) for clarity's sake. Can be a table containing multiple instances.
       @return A string taking the form of "You have received X." -- translated and colourized.
 --]]
 function format.reward( reward_list )
@@ -236,7 +236,7 @@ String interpolation, inspired by <a href="https://github.com/hishamhm/f-strings
    @usage fmt.f(_("A few digits of pi: {1:.2f}"), {math.pi})
 
    @tparam string str Format string which may include placeholders of the form "{var}" "{var:6.3f}"
-                      (where the expression after the colon is any directive string.format understands).
+      (where the expression after the colon is any directive string.format understands).
    @tparam table tab Argument table.
 --]]
 function format.f( str, tab )

@@ -1145,7 +1145,7 @@ function distress_handler( pilot, attacker )
    --[[
    Who is the badguy table. Columns refer to attacker, rows to pilot being attacked.
 
-                    attacker
+                  attacker
    pilot     ally    neutral      enemy           player
             ------------------------------------------
    ally      nil     attacker     attacker        attacker

@@ -23,7 +23,7 @@
    Fifth mission in the collective mini campaign.
 
    You must go rescue a team of commandos after being attacked by collective
-    forces on a surveillance mission.
+   forces on a surveillance mission.
 
 ]]--
 local fleet = require "fleet"
@@ -48,7 +48,7 @@ function create ()
 
    -- Intro text
    if tk.yesno( _("Collective Extraction"), _([[As soon as you exit the landing pad, you see Lt. Commander Dimitri waiting for you. He seems a bit more nervous then usual.
-    "The commando team has sent us an SOS. They were discovered by the Collective, and now they're under heavy fire. We need you to go and get them out of there. Would you be willing to embark on another dangerous mission?"]]) ) then
+   "The commando team has sent us an SOS. They were discovered by the Collective, and now they're under heavy fire. We need you to go and get them out of there. Would you be willing to embark on another dangerous mission?"]]) ) then
       misn.accept()
 
       mem.misn_stage = 0
@@ -241,7 +241,7 @@ function land ()
    elseif mem.misn_stage == 3 and spob.cur() == misn_base then
 
       tk.msg( _("Mission Accomplished"), _([[Lt. Commander Dimitri's face cannot hide his sadness as he sees you approach with no commando members.
-    "No survivors, eh? I had that gut feeling. At least you were able to salvage something? Good, at least it'll mean they didn't die in vain. Meet me in the bar in a while. We're going to try to process this datapad. It'll hopefully have the final results."]]) )
+   "No survivors, eh? I had that gut feeling. At least you were able to salvage something? Good, at least it'll mean they didn't die in vain. Meet me in the bar in a while. We're going to try to process this datapad. It'll hopefully have the final results."]]) )
       misn.cargoRm( mem.misn_cargo )
       var.pop("emp_commando")
 

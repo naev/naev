@@ -5,7 +5,7 @@
  <chance>960</chance>
  <location>Computer</location>
  <cond>
-  require("misn_test").cargo()
+   require("misn_test").cargo()
  </cond>
  <notes>
   <tier>1</tier>

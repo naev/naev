@@ -46,8 +46,8 @@ end
 
 function accept()
    if tk.yesno(_("The Assault"), fmt.f(_([[Draga is sitting at a table with a couple other people who appear to be official military types. They look at you as you approach. Draga stands and greets you. "Hello, {player}," he says. "We have a situation, and we need your help.
-    "The Sirii are starting to take us seriously as a threat. This isn't what we hoped for; we hoped we could go a little longer underground, but it seems we're being forced into battle. As such, we need you to help us defend our system. Our goal here isn't to completely wipe out the Sirius threat, but rather just to drive them off and show them that we mean business. We want them to feel it.
-    "You will be outnumbered, outgunned, and officially declared an enemy of the state. Will you help us?"]]), {player=player.name()})) then
+   "The Sirii are starting to take us seriously as a threat. This isn't what we hoped for; we hoped we could go a little longer underground, but it seems we're being forced into battle. As such, we need you to help us defend our system. Our goal here isn't to completely wipe out the Sirius threat, but rather just to drive them off and show them that we mean business. We want them to feel it.
+   "You will be outnumbered, outgunned, and officially declared an enemy of the state. Will you help us?"]]), {player=player.name()})) then
       tk.msg( _("The Assault"), _([["Excellent! See, folks? I told you this one was a keeper! Our forces will meet you out there. Ah, and while I'm sure you would never do this, as before, desertion will not be tolerated. Do not land or leave the system until your mission is completed."]]) )
 
       misn.accept()

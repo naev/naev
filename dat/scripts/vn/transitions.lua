@@ -295,9 +295,8 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords ) {
 
 transitions._t.crosshatch = [[
 /* Loosely based on https://gl-transitions.com/editor/crosshatch
- * Author: pthrasher
- * License: MIT
- */
+   Author: pthrasher
+   License: MIT */
 #include "lib/math.glsl"
 
 const float THRESHOLD   = 3.0;

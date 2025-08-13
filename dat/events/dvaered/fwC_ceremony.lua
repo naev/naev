@@ -4,11 +4,11 @@
  <location>enter</location>
  <chance>50</chance>
  <cond>
-  system.cur():faction() == faction.get("Dvaered") and
-  player.misnDone("Dvaered Meeting") and
-  var.peek("invasion_time") and
-  not (player.misnDone("Dvaered Ballet") or player.misnActive("Dvaered Ballet")) and
-  not (system.cur() == system.get("Dvaer"))
+   system.cur():faction() == faction.get("Dvaered") and
+   player.misnDone("Dvaered Meeting") and
+   var.peek("invasion_time") and
+   not (player.misnDone("Dvaered Ballet") or player.misnActive("Dvaered Ballet")) and
+   not (system.cur() == system.get("Dvaer"))
  </cond>
  <notes>
   <done_misn name="Dvaered Meeting"/>

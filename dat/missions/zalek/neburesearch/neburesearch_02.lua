@@ -8,14 +8,14 @@
  <location>Bar</location>
  <faction>Empire</faction>
  <cond>
-   if system.get("Gamma Polaris"):jumpDist() &gt; 3 then
-      return false
-   end
-   local t = spob.cur():tags()
-   if t.station then
-      return false
-   end
-   return true
+    if system.get("Gamma Polaris"):jumpDist() &gt; 3 then
+        return false
+    end
+    local t = spob.cur():tags()
+    if t.station then
+        return false
+    end
+    return true
  </cond>
  <notes>
   <campaign>Nebula Research</campaign>
@@ -24,11 +24,11 @@
 --]]
 --[[
 
-   Mission: Emergency of Immediate Inspiration
+    Mission: Emergency of Immediate Inspiration
 
-   Description: Take Dr. Mensing to Jorla as fast as possible!
+    Description: Take Dr. Mensing to Jorla as fast as possible!
 
-   Difficulty: Easy
+    Difficulty: Easy
 
 --]]
 
@@ -106,7 +106,7 @@ But before I forget, there's some issue..."]]))
 
     misn.accept()
     misn.osdCreate(_("Emergency of Immediate Inspiration"), {
-       fmt.f(_("Fly to {pnt} in the {sys} system"), {pnt=homeworld, sys=homeworld_sys}),
+        fmt.f(_("Fly to {pnt} in the {sys} system"), {pnt=homeworld, sys=homeworld_sys}),
     })
 
     hook.land("land")

@@ -128,7 +128,7 @@ local function spawn_baddies(sp)
 --   scom[6] = pilot.add("Za'lek Light Drone", fct, sp )
 --   scom[7] = pilot.add("Za'lek Light Drone", fct, sp )
    for i=1,#scom do
-     scom[i]:setHostile(false)
+      scom[i]:setHostile(false)
    end
 
    return scom
@@ -208,7 +208,7 @@ function sp_baddies()
    badguys = {}
    badguys = spawn_baddies(mem.t_pla[1])
    for i=1,#badguys do
-     badguys[i]:setHostile(true)
+      badguys[i]:setHostile(true)
    end
    bghook = {}
    for i=1,#badguys do

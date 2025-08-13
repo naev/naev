@@ -8,5 +8,5 @@ function onstealth( _p, po, stealthed )
 end
 
 function init( _p, po )
-    po:set( "ew_hide", -15 )
+   po:set( "ew_hide", -15 )
 end

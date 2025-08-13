@@ -8,9 +8,9 @@ local cooldown = 20 -- cooldown time in seconds
 local sfx = audio.newSource( 'snd/sounds/activate4.ogg' )
 
 function descextra( _p, _o )
-  return fmt.f(_("{duration} second duration with {cooldown} second cooldown. Will not activate if the ship is unable to stealth with the bonus."), {
-     duration=active, cooldown=cooldown
-  })
+   return fmt.f(_("{duration} second duration with {cooldown} second cooldown. Will not activate if the ship is unable to stealth with the bonus."), {
+      duration=active, cooldown=cooldown
+   })
 end
 
 local function turnon( p, po )

@@ -13,8 +13,8 @@
 --]]
 --[[
 
-    This is the first of many planned eye candy cinematics.
-    In this one, there will be a battle between the Dvaered and the FLF in the Tuoladis system.
+   This is the first of many planned eye candy cinematics.
+   In this one, there will be a battle between the Dvaered and the FLF in the Tuoladis system.
 
 ]]--
 local fleet = require "fleet"
@@ -79,8 +79,9 @@ end
 
 function DvaeredSpawn ()
    local source_system = system.get("Ogat")
-   local ships = { "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor",
-                   "Dvaered Vigilance", "Dvaered Vigilance", "Dvaered Goddard" }
+   local ships = {
+      "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor",
+      "Dvaered Ancestor", "Dvaered Vigilance", "Dvaered Vigilance", "Dvaered Goddard" }
 
    fleet.add( 1, ships, "Dvaered", source_system )
 

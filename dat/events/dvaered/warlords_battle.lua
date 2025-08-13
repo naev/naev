@@ -404,5 +404,5 @@ function defenderDeath(victim, arg)
 end
 
 function leave ()
-    evt.finish()
+   evt.finish()
 end

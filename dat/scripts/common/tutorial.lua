@@ -50,7 +50,7 @@ end
 
 -- Capsule function for naev.keyGet() that adds a colour code to the return string.
 function tut.getKey( command )
-    return "#b" .. naev.keyGet(command) .. "#0"
+   return "#b" .. naev.keyGet(command) .. "#0"
 end
 
 -- Disables tutorial
