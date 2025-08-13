@@ -60,7 +60,7 @@ local function render( sp, x, y, z, dt )
             v = vec2.newP( -1, r ),
             s = rz,
             a = 0,
-				c = col,
+            c = col,
          } )
       else
          table.insert( d.r, {
@@ -68,7 +68,7 @@ local function render( sp, x, y, z, dt )
             v = vec2.new( -1, 0 ),
             s = rz,
             a = 0,
-				c = col,
+            c = col,
          } )
       end
 
@@ -105,7 +105,7 @@ local function trail( pos, point, params )
    d.timer  = 0
    d.size   = size
    d.col    = params.col or {0, 1.0, 0.7, 0.5} -- in HSV
-	d.colspread = params.colspread or 50
+   d.colspread = params.colspread or 50
    if point then
       local _m, dir = ((point-pos) * vec2.new(-1, 1)):polar()
       d.rot = dir
