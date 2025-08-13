@@ -3,7 +3,7 @@
 set -e
 
 usage() {
-    cat <<EOF
+   cat <<EOF
 ITCHIO DEPLOYMENT SCRIPT FOR NAEV
 
 This script should be run after downloading all build artefacts
@@ -12,7 +12,7 @@ and uploaded to Itch.io
 
 Pass in [-d] [-n] (set this for nightly builds) [-p] (set this for pre-release builds.) [-c] (set this for CI testing) -t <TEMPPATH> (itch.io build artefact location) -o <OUTDIR> (itch.io dist output directory)
 EOF
-    exit 1
+   exit 1
 }
 
 # Defaults
@@ -23,81 +23,81 @@ OUTDIR="$(pwd)/dist"
 DRYRUN="false"
 
 while getopts dnpct:o: OPTION "$@"; do
-    case $OPTION in
-    d)
-        set -x
-        ;;
-    n)
-        NIGHTLY="true"
-        ;;
-    p)
-        PRERELEASE="true"
-        ;;
-    c)
-        DRYRUN="true"
-        ;;
-    t)
-        TEMPPATH="${OPTARG}"
-        ;;
-    o)
-        OUTDIR="${OPTARG}"
-        ;;
-    *)
-        usage
-        ;;
-    esac
+   case $OPTION in
+   d)
+      set -x
+      ;;
+   n)
+      NIGHTLY="true"
+      ;;
+   p)
+      PRERELEASE="true"
+      ;;
+   c)
+      DRYRUN="true"
+      ;;
+   t)
+      TEMPPATH="${OPTARG}"
+      ;;
+   o)
+      OUTDIR="${OPTARG}"
+      ;;
+   *)
+      usage
+      ;;
+   esac
 done
 
 retry() {
-    local -r -i max_attempts="$1"; shift
-    local -i attempt_num=1
-    until "$@"
-    do
-        if ((attempt_num==max_attempts))
-        then
-            echo "Attempt $attempt_num failed and there are no more attempts left!"
-            return 1
-        else
-            echo "Attempt $attempt_num failed! Trying again in $attempt_num seconds..."
-            sleep $((attempt_num++))
-        fi
-    done
+   local -r -i max_attempts="$1"; shift
+   local -i attempt_num=1
+   until "$@"
+   do
+      if ((attempt_num==max_attempts))
+      then
+         echo "Attempt $attempt_num failed and there are no more attempts left!"
+         return 1
+      else
+         echo "Attempt $attempt_num failed! Trying again in $attempt_num seconds..."
+         sleep $((attempt_num++))
+      fi
+   done
 }
 
 BUTLERDIR="butler-bin"
 
 grab_butler () {
-    local VERSION="LATEST"
-    local PACKAGE="butler-linux-amd64.zip"
+   local VERSION="LATEST"
+   local PACKAGE="butler-linux-amd64.zip"
 
-    if [ ! -d "$BUTLERDIR" ]; then
-        mkdir "$BUTLERDIR"
-    fi
+   if [ ! -d "$BUTLERDIR" ]; then
+      mkdir "$BUTLERDIR"
+   fi
 
-    if [ ! -f "$BUTLER" ]; then
-        echo "grabbing from online"
-        curl -L "https://broth.itch.ovh/butler/linux-amd64/$VERSION/archive/default" -o $PACKAGE
-        unzip $PACKAGE -d "$BUTLERDIR"
-        rm $PACKAGE
-    else
-        echo "using cached version $VERSION"
-    fi
+   if [ ! -f "$BUTLER" ]; then
+      echo "grabbing from online"
+      curl -L "https://broth.itch.ovh/butler/linux-amd64/$VERSION/archive/default" -o $PACKAGE
+      unzip $PACKAGE -d "$BUTLERDIR"
+      rm $PACKAGE
+   else
+      echo "using cached version $VERSION"
+   fi
 }
 
 if ! [ -x "$(command -v butler)" ]; then
-    echo "You don't have butler in PATH"
-    BUTLER="$BUTLERDIR/butler"
-    grab_butler
+   echo "You don't have butler in PATH"
+   BUTLER="$BUTLERDIR/butler"
+   grab_butler
 else
-    BUTLER="butler"
+   BUTLER="butler"
 fi
 
 run_butler () {
-    if [[ "$BUTLER" = *"$BUTLERDIR"* ]]; then
-        retry 5 "./$BUTLER" "$@"
-    else
-        retry 5 "$BUTLER" "$@"
-    fi
+   if [[ "$BUTLER" = *"$BUTLERDIR"* ]]; then
+      retry 5 "./$BUTLER" "$@"
+   else
+      retry 5 "$BUTLER" "$@"
+   fi
 }
 
 # Collect the VERSION
@@ -146,58 +146,58 @@ sed -i 's/%PLATFORM%/windows/' "$OUTDIR"/win64/.itch.toml
 
 # Prepare soundtrack
 if [ "$NIGHTLY" == "false" ] && [ "$PRERELEASE" == "false" ]; then
-    mkdir -p "$OUTDIR"/soundtrack
-    unzip "$TEMPPATH"/naev-soundtrack/*.zip -d "$OUTDIR"/soundtrack
+   mkdir -p "$OUTDIR"/soundtrack
+   unzip "$TEMPPATH"/naev-soundtrack/*.zip -d "$OUTDIR"/soundtrack
 fi
 
 # Push builds to itch.io via butler
 
 if [ "$DRYRUN" == "false" ]; then
-    run_butler -V
-    if [ "$NIGHTLY" == "true" ]; then
-        run_butler push --userversion="$VERSION" "$OUTDIR"/lin64 naev/naev:linux-x86-64-nightly
-        run_butler push --userversion="$VERSION" "$OUTDIR"/macos naev/naev:macos-universal-nightly
-        run_butler push --userversion="$VERSION" "$OUTDIR"/win64 naev/naev:windows-x86-64-nightly
+   run_butler -V
+   if [ "$NIGHTLY" == "true" ]; then
+      run_butler push --userversion="$VERSION" "$OUTDIR"/lin64 naev/naev:linux-x86-64-nightly
+      run_butler push --userversion="$VERSION" "$OUTDIR"/macos naev/naev:macos-universal-nightly
+      run_butler push --userversion="$VERSION" "$OUTDIR"/win64 naev/naev:windows-x86-64-nightly
 
-    else
-        if [ "$PRERELEASE" == "true" ]; then
-            run_butler push --userversion="$VERSION" "$OUTDIR"/lin64 naev/naev:linux-x86-64-beta
-            run_butler push --userversion="$VERSION" "$OUTDIR"/macos naev/naev:macos-universal-beta
-            run_butler push --userversion="$VERSION" "$OUTDIR"/win64 naev/naev:windows-x86-64-beta
+   else
+      if [ "$PRERELEASE" == "true" ]; then
+         run_butler push --userversion="$VERSION" "$OUTDIR"/lin64 naev/naev:linux-x86-64-beta
+         run_butler push --userversion="$VERSION" "$OUTDIR"/macos naev/naev:macos-universal-beta
+         run_butler push --userversion="$VERSION" "$OUTDIR"/win64 naev/naev:windows-x86-64-beta
 
-        elif [ "$PRERELEASE" == "false" ]; then
-            run_butler push --userversion="$VERSION" "$OUTDIR"/lin64 naev/naev:linux-x86-64
-            run_butler push --userversion="$VERSION" "$OUTDIR"/macos naev/naev:macos-universal
-            run_butler push --userversion="$VERSION" "$OUTDIR"/win64 naev/naev:windows-x86-64
-            run_butler push --userversion="$VERSION" "$OUTDIR"/soundtrack naev/naev:soundtrack
+      elif [ "$PRERELEASE" == "false" ]; then
+         run_butler push --userversion="$VERSION" "$OUTDIR"/lin64 naev/naev:linux-x86-64
+         run_butler push --userversion="$VERSION" "$OUTDIR"/macos naev/naev:macos-universal
+         run_butler push --userversion="$VERSION" "$OUTDIR"/win64 naev/naev:windows-x86-64
+         run_butler push --userversion="$VERSION" "$OUTDIR"/soundtrack naev/naev:soundtrack
 
-        else
-            echo "Something went wrong determining if this is a PRERELEASE or not."
-        fi
-    fi
+      else
+         echo "Something went wrong determining if this is a PRERELEASE or not."
+      fi
+   fi
 elif [ "$DRYRUN" == "true" ]; then
-    run_butler -V
-    if [ "$NIGHTLY" == "true" ]; then
-        # Run butler nightly upload
-        echo "butler nightly upload"
-        ls -l -R "$OUTDIR"
-    else
-        if [ "$PRERELEASE" == "true" ]; then
-            # Run butler beta upload
-            echo "butler beta upload"
-            ls -l -R "$OUTDIR"
-        elif [ "$PRERELEASE" == "false" ]; then
-            # Run butler release upload
-            echo "butler release upload"
-            echo "butler soundtrack upload"
-            ls -l -R "$OUTDIR"
+   run_butler -V
+   if [ "$NIGHTLY" == "true" ]; then
+      # Run butler nightly upload
+      echo "butler nightly upload"
+      ls -l -R "$OUTDIR"
+   else
+      if [ "$PRERELEASE" == "true" ]; then
+         # Run butler beta upload
+         echo "butler beta upload"
+         ls -l -R "$OUTDIR"
+      elif [ "$PRERELEASE" == "false" ]; then
+         # Run butler release upload
+         echo "butler release upload"
+         echo "butler soundtrack upload"
+         ls -l -R "$OUTDIR"
 
-        else
-            echo "Something went wrong determining if this is a PRERELEASE or not."
-        fi
-    fi
+      else
+         echo "Something went wrong determining if this is a PRERELEASE or not."
+      fi
+   fi
 
 else
-    echo "Something went wrong determining which mode to run this script in."
-    exit 1
+   echo "Something went wrong determining which mode to run this script in."
+   exit 1
 fi

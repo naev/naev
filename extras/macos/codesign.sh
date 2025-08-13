@@ -7,8 +7,7 @@
 # Official Naev builds are currently not yet signed, so this script is right
 # now just an example.
 
-exec rcodesign sign -v -e extras/macos/entitlements.plist "$1" \
-  Naev.app
+exec rcodesign sign -v -e extras/macos/entitlements.plist "$1" Naev.app
 
 # Old invokation that works with native Apple signing tool
 

@@ -3,7 +3,7 @@
 set -e
 
 usage() {
-    cat <<EOF
+   cat <<EOF
 STEAM DEPLOYMENT SCRIPT FOR NAEV
 Requires SteamCMD to be installed within a Github Actions ubuntu-latest runner.
 
@@ -13,7 +13,7 @@ and uploaded to Steam
 
 Pass in [-d] [-n] (set this for nightly builds) [-p] (set this for pre-release builds.) [-c] (set this for CI testing) -s <SCRIPTROOT> (Sets path to look for additional steam scripts.) -t <TEMPPATH> (Steam build artefact location) -o <STEAMPATH> (Steam dist output directory)
 EOF
-    exit 1
+   exit 1
 }
 
 # Defaults
@@ -23,48 +23,48 @@ SCRIPTROOT="$(pwd)"
 DRYRUN="false"
 
 while getopts dnpc:s:t:o: OPTION "$@"; do
-    case $OPTION in
-    d)
-        set -x
-        ;;
-    n)
-        NIGHTLY="true"
-        ;;
-    p)
-        PRERELEASE="true"
-        ;;
-    c)
-        DRYRUN="true"
-        ;;
-    s)
-        SCRIPTROOT="${OPTARG}"
-        ;;
-    t)
-        TEMPPATH="${OPTARG}"
-        ;;
-    o)
-        STEAMPATH="${OPTARG}"
-        ;;
-    *)
-        usage
-        ;;
-    esac
+   case $OPTION in
+   d)
+      set -x
+      ;;
+   n)
+      NIGHTLY="true"
+      ;;
+   p)
+      PRERELEASE="true"
+      ;;
+   c)
+      DRYRUN="true"
+      ;;
+   s)
+      SCRIPTROOT="${OPTARG}"
+      ;;
+   t)
+      TEMPPATH="${OPTARG}"
+      ;;
+   o)
+      STEAMPATH="${OPTARG}"
+      ;;
+   *)
+      usage
+      ;;
+   esac
 done
 
 retry() {
-    local -r -i max_attempts="$1"; shift
-    local -i attempt_num=1
-    until "$@"
-    do
-        if ((attempt_num==max_attempts))
-        then
-            echo "Attempt $attempt_num failed and there are no more attempts left!"
-            return 1
-        else
-            echo "Attempt $attempt_num failed! Trying again in $attempt_num seconds..."
-            sleep $((attempt_num++))
-        fi
-    done
+   local -r -i max_attempts="$1"; shift
+   local -i attempt_num=1
+   until "$@"
+   do
+      if ((attempt_num==max_attempts))
+      then
+         echo "Attempt $attempt_num failed and there are no more attempts left!"
+         return 1
+      else
+         echo "Attempt $attempt_num failed! Trying again in $attempt_num seconds..."
+         sleep $((attempt_num++))
+      fi
+   done
 }
 
 # Make Steam dist path if it does not exist
@@ -108,63 +108,63 @@ tar -Jxf "$TEMPPATH/naev-ndata/naev-ndata.tar.xz" -C "$STEAMPATH/content/ndata"
 
 if [ "$DRYRUN" == "false" ]; then
 
-    # Trigger 2FA request and get 2FA code
-    steamcmd +login "$STEAMCMD_USER" "$STEAMCMD_PASS" +quit || true
-    python3 "$SCRIPTROOT/2fa/get_2fa.py"
-    STEAMCMD_TFA="$(<"$SCRIPTROOT/2fa/2fa.txt")"
+   # Trigger 2FA request and get 2FA code
+   steamcmd +login "$STEAMCMD_USER" "$STEAMCMD_PASS" +quit || true
+   python3 "$SCRIPTROOT/2fa/get_2fa.py"
+   STEAMCMD_TFA="$(<"$SCRIPTROOT/2fa/2fa.txt")"
 
-    if [ "$NIGHTLY" == "true" ]; then
-        # Run steam upload with 2fa key
-        retry 5 steamcmd +login "$STEAMCMD_USER" "$STEAMCMD_PASS" "$STEAMCMD_TFA" +run_app_build_http "$STEAMPATH/scripts/app_build_598530_nightly.vdf" +quit
-    else
-        if [ "$PRERELEASE" == "true" ]; then
-            # Run steam upload with 2fa key
-            retry 5 steamcmd +login "$STEAMCMD_USER" "$STEAMCMD_PASS" "$STEAMCMD_TFA" +run_app_build_http "$STEAMPATH/scripts/app_build_598530_prerelease.vdf" +quit
+   if [ "$NIGHTLY" == "true" ]; then
+      # Run steam upload with 2fa key
+      retry 5 steamcmd +login "$STEAMCMD_USER" "$STEAMCMD_PASS" "$STEAMCMD_TFA" +run_app_build_http "$STEAMPATH/scripts/app_build_598530_nightly.vdf" +quit
+   else
+      if [ "$PRERELEASE" == "true" ]; then
+         # Run steam upload with 2fa key
+         retry 5 steamcmd +login "$STEAMCMD_USER" "$STEAMCMD_PASS" "$STEAMCMD_TFA" +run_app_build_http "$STEAMPATH/scripts/app_build_598530_prerelease.vdf" +quit
 
-        elif [ "$PRERELEASE" == "false" ]; then
-            mkdir -p "$STEAMPATH"/content/soundtrack
-            # Move soundtrack stuff to deployment area
-            cp "$TEMPPATH"/naev-steam-soundtrack/*.* "$STEAMPATH/content/soundtrack"
+      elif [ "$PRERELEASE" == "false" ]; then
+         mkdir -p "$STEAMPATH"/content/soundtrack
+         # Move soundtrack stuff to deployment area
+         cp "$TEMPPATH"/naev-steam-soundtrack/*.* "$STEAMPATH/content/soundtrack"
 
-            # Run steam upload with 2fa key
-            retry 5 steamcmd +login "$STEAMCMD_USER" "$STEAMCMD_PASS" "$STEAMCMD_TFA" +run_app_build_http "$STEAMPATH/scripts/app_build_598530_release.vdf" +quit
-            retry 5 steamcmd +login "$STEAMCMD_USER" "$STEAMCMD_PASS" +run_app_build_http "$STEAMPATH/scripts/app_build_1411430_soundtrack.vdf" +quit
+         # Run steam upload with 2fa key
+         retry 5 steamcmd +login "$STEAMCMD_USER" "$STEAMCMD_PASS" "$STEAMCMD_TFA" +run_app_build_http "$STEAMPATH/scripts/app_build_598530_release.vdf" +quit
+         retry 5 steamcmd +login "$STEAMCMD_USER" "$STEAMCMD_PASS" +run_app_build_http "$STEAMPATH/scripts/app_build_1411430_soundtrack.vdf" +quit
 
-        else
-            echo "Something went wrong determining if this is a PRERELEASE or not."
-        fi
-    fi
+      else
+         echo "Something went wrong determining if this is a PRERELEASE or not."
+      fi
+   fi
 elif [ "$DRYRUN" == "true" ]; then
-    # Trigger 2FA request and get 2FA code
-    echo "steamcmd login"
+   # Trigger 2FA request and get 2FA code
+   echo "steamcmd login"
 
-    #Wait a bit for the email to arrive
-    echo "2fa script"
+   #Wait a bit for the email to arrive
+   echo "2fa script"
 
-    if [ "$NIGHTLY" == "true" ]; then
-        # Run steam upload with 2fa key
-        echo "steamcmd nightly build"
-        ls -l -R "$STEAMPATH"
-    else
-        if [ "$PRERELEASE" == "true" ]; then
-            # Run steam upload with 2fa key
-            echo "steamcmd PRERELEASE build"
-            ls -l -R "$STEAMPATH"
-        elif [ "$PRERELEASE" == "false" ]; then
-            # Move soundtrack stuff to deployment area
-            echo "copy soundtrack files"
+   if [ "$NIGHTLY" == "true" ]; then
+      # Run steam upload with 2fa key
+      echo "steamcmd nightly build"
+      ls -l -R "$STEAMPATH"
+   else
+      if [ "$PRERELEASE" == "true" ]; then
+         # Run steam upload with 2fa key
+         echo "steamcmd PRERELEASE build"
+         ls -l -R "$STEAMPATH"
+      elif [ "$PRERELEASE" == "false" ]; then
+         # Move soundtrack stuff to deployment area
+         echo "copy soundtrack files"
 
-            # Run steam upload with 2fa key
-            echo "steamcmd release build"
-            echo "steamcmd soundtrack build"
-            ls -l -R "$STEAMPATH"
+         # Run steam upload with 2fa key
+         echo "steamcmd release build"
+         echo "steamcmd soundtrack build"
+         ls -l -R "$STEAMPATH"
 
-        else
-            echo "Something went wrong determining if this is a PRERELEASE or not."
-        fi
-    fi
+      else
+         echo "Something went wrong determining if this is a PRERELEASE or not."
+      fi
+   fi
 
 else
-    echo "Something went wrong determining which mode to run this script in."
-    exit 1
+   echo "Something went wrong determining which mode to run this script in."
+   exit 1
 fi
