@@ -36,8 +36,13 @@ function intro.load()
    -- Load and prepare data
    for k,v in ipairs(data) do
       if v.type == "text" then
-         local _maxw, wrap = font:getWrap( v.data, text_width )
-         v.h = font_height * #wrap
+         if v.data then
+            local _maxw, wrap = font:getWrap( v.data, text_width )
+            v.h = font_height * math.max( 1, #wrap )
+         else
+            v.h = font_height
+         end
+         v.adv = v.h
       elseif v.type == "image" then
          if v.data then
             v.w, v.h = v.data:getDimensions()
@@ -64,17 +69,29 @@ end
 
 local img_prev, img_cur
 function intro.draw()
+   -- Draw images first
+   if img_prev and img_prev.data then
+      lg.setColour( 1, 1, 1, alpha*img_prev.alpha )
+      img_prev.data:draw( img_prev.x, img_prev.y )
+   end
+   if img_cur and img_cur.data then
+      lg.setColour( 1, 1, 1, alpha*img_cur.alpha )
+      img_cur.data:draw( img_cur.x, img_cur.y )
+   end
+
+   -- Draw text
    local cg = fc.FontGreen
    lg.setColour( cg[1], cg[2], cg[3], alpha )
    local y = pos
    for k,v in ipairs(data) do
-      if y > 0 then
+      if y > -v.h then
          if y >= nh then
             break
          end
          if v.type=="text" then
-            lg.printf( v.data, font, text_off, y, text_width )
-            y = y + (v.h or 0)
+            if v.data then
+               lg.printf( v.data, font, text_off, y, text_width )
+            end
          elseif v.type=="image" then
             if not v.active then
                img_prev = img_cur
@@ -84,15 +101,10 @@ function intro.draw()
             end
          end
       end
+      y = y + (v.adv or 0)
    end
-   if img_prev and img_prev.data then
-      lg.setColour( 1, 1, 1, alpha*img_prev.alpha )
-      img_prev:draw( img_prev.x, img_prev.y )
-   end
-   if img_cur and img_cur.data then
-      lg.setColour( 1, 1, 1, alpha*img_cur.alpha )
-      img_cur:draw( img_cur.x, img_cur.y )
-   end
+
+   -- Fully advanced so done
    if y < 0 then
       done = true
    end
