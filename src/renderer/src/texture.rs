@@ -227,7 +227,6 @@ impl TextureData {
         srgb: bool,
     ) -> Result<Self> {
         let gl = &ctx.gl;
-        let texture = unsafe { gl.create_texture().map_err(|e| anyhow::anyhow!(e)) }?;
 
         let has_alpha = img.color().has_alpha();
         let img = match flipv {
@@ -241,7 +240,8 @@ impl TextureData {
         };
 
         let internalformat = TextureFormat::auto(has_alpha, srgb);
-        unsafe {
+        let texture = unsafe {
+            let texture = gl.create_texture().map_err(|e| anyhow::anyhow!(e))?;
             gl.bind_texture(glow::TEXTURE_2D, Some(texture));
             let gldata = glow::PixelUnpackData::Slice(Some(imgdata.as_slice()));
             gl.tex_image_2d(
@@ -259,7 +259,8 @@ impl TextureData {
                 gl.object_label(glow::TEXTURE, texture.0.into(), name);
             }
             gl.bind_texture(glow::TEXTURE_2D, None);
-        }
+            texture
+        };
 
         Ok(TextureData {
             name: name.map(String::from),
@@ -686,9 +687,12 @@ impl TextureSource {
                 TextureSource::Path(path) => {
                     let cpath = ndata::simplify_path(path)?;
                     let rw = ndata::iostream(&cpath)?;
-                    let img = image::ImageReader::new(std::io::BufReader::new(rw))
-                        .with_guessed_format()?
-                        .decode()?;
+                    let img = image::ImageReader::with_format(
+                        std::io::BufReader::new(rw),
+                        image::ImageFormat::from_path(path)?,
+                    )
+                    //.with_guessed_format()?
+                    .decode()?;
                     let ctx = &sctx.lock();
                     match sdf {
                         true => TextureData::from_image_sdf(ctx, name, &img, flipv)?,
