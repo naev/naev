@@ -99,7 +99,7 @@ function accept ()
    end )
    lucas(_([["My name is Lucas, I was a Nebula refugee. When I was very young, my family and I escaped the Incident, but I don't know what happened and I got separated."]]))
    lucas(_([["I guess I never really thought about it too much, just did what I was told and went with the flow, but then one day I couldn't. You understand?"]]))
-   lucas(_([[The pause and tighten their fists.
+   lucas(_([[They pause and tighten their fists.
 "I guess there was always something missing in me, like something fundamental was taken away by the Incident. However, I just didn't realize it, didn't understand."]]))
    lucas(_([["One day it snapped, and I had a dream remembering stuff I had forgotten about: my family. I guess I had repressed it for so long. Survival instincts maybe?"]]))
    lucas(_([["Since then I've been trying to find my family with the credits I was able to scrounge up working. I don't think they had as much luck as I had, they are probably stuck on some refugee world. The governments don't care for us at all. They just toss refugees into barely habitable planets and turn their eyes away. We are humans too!"]]))
