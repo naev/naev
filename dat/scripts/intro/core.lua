@@ -47,8 +47,6 @@ function intro.load()
       elseif v.type == "image" then
          if v.data then
             v.w, v.h = v.data:getDimensions()
-            v.x = (IMAGE_WIDTH + SIDE_MARGIN - v.w)*0.5
-            v.y = (nh - v.h)*0.5
          end
       end
    end
@@ -68,17 +66,29 @@ function intro.keypressed( key )
    end
 end
 
+local function draw_image( img )
+   if not img or not img.data then return end
+
+   local s = 1
+   --if img.h > nh then
+   --   s = nh / img.h
+   if img.w > IMAGE_WIDTH then
+      s = IMAGE_WIDTH / img.h
+   end
+
+   --local x = 0
+   local x = (IMAGE_WIDTH + SIDE_MARGIN - s*img.w)*0.5
+   local y = (nh - s*img.h)*0.5
+
+   lg.setColour( 1, 1, 1, alpha*img.alpha )
+   img.data:draw( x, y, 0, s, s )
+end
+
 local img_prev, img_cur
 function intro.draw()
    -- Draw images first
-   if img_prev and img_prev.data then
-      lg.setColour( 1, 1, 1, alpha*img_prev.alpha )
-      img_prev.data:draw( img_prev.x, img_prev.y )
-   end
-   if img_cur and img_cur.data then
-      lg.setColour( 1, 1, 1, alpha*img_cur.alpha )
-      img_cur.data:draw( img_cur.x, img_cur.y )
-   end
+   draw_image( img_prev )
+   draw_image( img_cur )
 
    -- Draw text
    local cg = fc.FontGreen
