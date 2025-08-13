@@ -315,10 +315,10 @@ static GLuint gl_loadSurface( SDL_Surface *surface, unsigned int flags,
       glTexParameterfv( GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, border );
       glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER );
       glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER );
-      glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
+      //glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
       glTexImage2D( GL_TEXTURE_2D, 0, GL_RED, rgba->w, rgba->h, 0, GL_RED,
                     GL_FLOAT, dataf );
-      glPixelStorei( GL_UNPACK_ALIGNMENT, 4 );
+      //glPixelStorei( GL_UNPACK_ALIGNMENT, 4 );
       free( dataf );
    } else {
       GLint internalformat;
@@ -328,11 +328,11 @@ static GLuint gl_loadSurface( SDL_Surface *surface, unsigned int flags,
          internalformat = has_alpha ? GL_SRGB_ALPHA : GL_SRGB;
 
       *vmax = 1.;
-      glPixelStorei( GL_UNPACK_ALIGNMENT,
-                     MIN( rgba->pitch & -rgba->pitch, 8 ) );
+      //glPixelStorei( GL_UNPACK_ALIGNMENT,
+      //               MIN( rgba->pitch & -rgba->pitch, 8 ) );
       glTexImage2D( GL_TEXTURE_2D, 0, internalformat, rgba->w, rgba->h, 0,
                     GL_RGBA, GL_UNSIGNED_BYTE, rgba->pixels );
-      glPixelStorei( GL_UNPACK_ALIGNMENT, 4 );
+      //glPixelStorei( GL_UNPACK_ALIGNMENT, 4 );
    }
    SDL_UnlockSurface( rgba );
    if ( rgba != surface )

@@ -294,14 +294,12 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch,
 
    /* Upload data. */
    glBindTexture( GL_TEXTURE_2D, tex->id );
-   glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
    if ( ch->dataf != NULL )
       glTexSubImage2D( GL_TEXTURE_2D, 0, gr->x, gr->y, ch->w, ch->h, GL_RED,
                        GL_FLOAT, ch->dataf );
    else
       glTexSubImage2D( GL_TEXTURE_2D, 0, gr->x, gr->y, ch->w, ch->h, GL_RED,
                        GL_UNSIGNED_BYTE, ch->data );
-   glPixelStorei( GL_UNPACK_ALIGNMENT, 4 );
 
    /* Check for error. */
    gl_checkErr();

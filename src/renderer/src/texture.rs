@@ -55,6 +55,17 @@ impl TextureFormat {
         }
     }
 
+    pub fn from_gl(val: u32) -> Self {
+        match val {
+            glow::RGB => Self::RGB,
+            glow::RGBA => Self::RGBA,
+            glow::SRGB => Self::SRGB,
+            glow::SRGB_ALPHA => Self::SRGBA,
+            glow::DEPTH_COMPONENT => Self::Depth,
+            _ => Self::RGB,
+        }
+    }
+
     pub fn to_sized_gl(self) -> i32 {
         (match self {
             Self::RGB => glow::RGB,
@@ -219,31 +230,26 @@ impl TextureData {
         let texture = unsafe { gl.create_texture().map_err(|e| anyhow::anyhow!(e)) }?;
 
         let has_alpha = img.color().has_alpha();
-        let (w, h) = (img.width(), img.height());
         let img = match flipv {
             true => &img.flipv(),
             false => img,
         };
 
-        let imgdata = match has_alpha {
-            true => img.to_rgba8().into_raw(),
-            false => img.to_rgb8().into_raw(),
+        let (imgdata, fmt) = match has_alpha {
+            true => (img.to_rgba8().into_flat_samples(), glow::RGBA),
+            false => (img.to_rgb8().into_flat_samples(), glow::RGB),
         };
 
         let internalformat = TextureFormat::auto(has_alpha, srgb);
         unsafe {
             gl.bind_texture(glow::TEXTURE_2D, Some(texture));
             let gldata = glow::PixelUnpackData::Slice(Some(imgdata.as_slice()));
-            let fmt = match has_alpha {
-                true => glow::RGBA,
-                false => glow::RGB,
-            };
             gl.tex_image_2d(
                 glow::TEXTURE_2D,
                 0,
                 internalformat,
-                w as i32,
-                h as i32,
+                imgdata.layout.width as i32,
+                imgdata.layout.height as i32,
                 0,
                 fmt,
                 glow::UNSIGNED_BYTE,
@@ -257,8 +263,8 @@ impl TextureData {
 
         Ok(TextureData {
             name: name.map(String::from),
-            w: w as usize,
-            h: h as usize,
+            w: imgdata.layout.width as usize,
+            h: imgdata.layout.height as usize,
             texture,
             srgb,
             sdf: false,
@@ -282,11 +288,11 @@ impl TextureData {
         if !has_alpha {
             anyhow::bail!("Trying to create SDF from image without alpha!");
         }
-        let (w, h) = (img.width(), img.height());
         let img = match flipv {
             true => &img.flipv(),
             false => img,
         };
+        let (w, h) = (img.width(), img.height());
         let (imgdata, vmax) = {
             // Get only the alpha channel
             let mut rawdata: Vec<_> = img.to_luma_alpha8().pixels().map(|p| p.0[1]).collect();

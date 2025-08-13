@@ -867,7 +867,7 @@ impl Context {
         let mut data: Vec<u8> = vec![0; (w * h * 3) as usize];
         let gl = &self.gl;
         unsafe {
-            gl.pixel_store_i32(glow::PACK_ALIGNMENT, 1);
+            //gl.pixel_store_i32(glow::PACK_ALIGNMENT, 1);
             gl.read_pixels(
                 0,
                 0,
