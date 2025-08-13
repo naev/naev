@@ -23,14 +23,14 @@ float fbm( vec4 color, vec2 screen_coords )
       float scale = pow(SCALAR, i);
       f += cnoise( uv * scale ) / scale;
    }
-	return 0.1 + f;
+   return 0.1 + f;
 }
 
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
    vec2 uv = (texture_coords*2.0-1.0);
    float d = length(uv);
-	float n = fbm( color, (uv + 0.3 * u_time * u_vel) * u_size * 0.5 );
+   float n = fbm( color, (uv + 0.3 * u_time * u_vel) * u_size * 0.5 );
    color.a *= n * smoothstep( -1.0, 0.0, -d ) * min( 1.0, u_time );
    return color;
 }

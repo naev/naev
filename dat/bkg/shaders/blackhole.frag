@@ -27,7 +27,7 @@ const mat3 Ry = mat3(
 const mat3 Rinvy = mat3(
    cy,  0.0, -sy,
    0.0, 1.0, 0.0,
-    sy, 0.0, cy );
+   sy, 0.0, cy );
 const float cz = cos(rotang.z);
 const float sz = sin(rotang.z);
 const mat3 Rz = mat3(
@@ -35,7 +35,7 @@ const mat3 Rz = mat3(
    sz,  cz,  0.0,
    0.0, 0.0, 1.0 );
 const mat3 Rinvz = mat3(
-    cz, sz,  0.0,
+   cz, sz,  0.0,
    -sz, cz,  0.0,
    0.0, 0.0, 1.0 );
 const mat3 R = Rx * Ry * Rz; /**< Final camera rotation matrix. */

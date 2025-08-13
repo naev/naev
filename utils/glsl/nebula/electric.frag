@@ -44,50 +44,50 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 
 
 vec3 hash3_3(vec3 p3) {
-    p3 = fract(p3 * mod3_);
-    p3 += dot(p3, p3.yxz + 19.19);
-    return -1. + 2. * fract(vec3((p3.x + p3.y) * p3.z, (p3.x+p3.z) * p3.y, (p3.y+p3.z) * p3.x));
+   p3 = fract(p3 * mod3_);
+   p3 += dot(p3, p3.yxz + 19.19);
+   return -1. + 2. * fract(vec3((p3.x + p3.y) * p3.z, (p3.x+p3.z) * p3.y, (p3.y+p3.z) * p3.x));
 }
 
 float perlin_noise3(vec3 p) {
-    vec3 pi = floor(p);
-    vec3 pf = p - pi;
+   vec3 pi = floor(p);
+   vec3 pf = p - pi;
 
-    vec3 w = pf * pf * (3. - 2. * pf);
+   vec3 w = pf * pf * (3. - 2. * pf);
 
-    return mix(
-        mix(
-            mix(
-                dot(pf - vec3(0, 0, 0), hash3_3(pi + vec3(0, 0, 0))),
-                dot(pf - vec3(1, 0, 0), hash3_3(pi + vec3(1, 0, 0))),
-                w.x),
-            mix(
-                dot(pf - vec3(0, 0, 1), hash3_3(pi + vec3(0, 0, 1))),
-                dot(pf - vec3(1, 0, 1), hash3_3(pi + vec3(1, 0, 1))),
-                w.x),
-        w.z),
-        mix(
-            mix(
-                dot(pf - vec3(0, 1, 0), hash3_3(pi + vec3(0, 1, 0))),
-                dot(pf - vec3(1, 1, 0), hash3_3(pi + vec3(1, 1, 0))),
-                w.x),
-            mix(
-                dot(pf - vec3(0, 1, 1), hash3_3(pi + vec3(0, 1, 1))),
-                dot(pf - vec3(1, 1, 1), hash3_3(pi + vec3(1, 1, 1))),
-                w.x),
-        w.z),
-    w.y);
+   return mix(
+      mix(
+         mix(
+            dot(pf - vec3(0, 0, 0), hash3_3(pi + vec3(0, 0, 0))),
+            dot(pf - vec3(1, 0, 0), hash3_3(pi + vec3(1, 0, 0))),
+            w.x),
+         mix(
+            dot(pf - vec3(0, 0, 1), hash3_3(pi + vec3(0, 0, 1))),
+            dot(pf - vec3(1, 0, 1), hash3_3(pi + vec3(1, 0, 1))),
+            w.x),
+      w.z),
+      mix(
+         mix(
+            dot(pf - vec3(0, 1, 0), hash3_3(pi + vec3(0, 1, 0))),
+            dot(pf - vec3(1, 1, 0), hash3_3(pi + vec3(1, 1, 0))),
+            w.x),
+         mix(
+            dot(pf - vec3(0, 1, 1), hash3_3(pi + vec3(0, 1, 1))),
+            dot(pf - vec3(1, 1, 1), hash3_3(pi + vec3(1, 1, 1))),
+            w.x),
+      w.z),
+   w.y);
 }
 
 
 float noise_sum_abs3(vec3 p) {
-    float f = 0.;
-    p = p * 3.;
-    f += 1.0000 * abs(perlin_noise3(p)); p = 2. * p;
-    f += 0.5000 * abs(perlin_noise3(p)); p = 3. * p;
-    f += 0.2500 * abs(perlin_noise3(p)); p = 4. * p;
-    f += 0.1250 * abs(perlin_noise3(p)); p = 5. * p;
-    f += 0.0625 * abs(perlin_noise3(p)); p = 6. * p;
+   float f = 0.;
+   p = p * 3.;
+   f += 1.0000 * abs(perlin_noise3(p)); p = 2. * p;
+   f += 0.5000 * abs(perlin_noise3(p)); p = 3. * p;
+   f += 0.2500 * abs(perlin_noise3(p)); p = 4. * p;
+   f += 0.1250 * abs(perlin_noise3(p)); p = 5. * p;
+   f += 0.0625 * abs(perlin_noise3(p)); p = 6. * p;
 
-    return f;
+   return f;
 }

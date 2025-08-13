@@ -249,7 +249,7 @@ vec4 beam_organic( vec4 colour, vec2 pos_tex, vec2 pos_px )
    v = max( 0.0, v-(1.0-range) ) * (2.0/range) - 0.1;
    colour.a += v * (1.0 - smoothstep( 0.0, 0.05, pos_tex.x-0.95 ) );
 
-  return colour;
+   return colour;
 }
 
 BEAM_FUNC_PROTOTYPE

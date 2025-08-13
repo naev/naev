@@ -35,9 +35,9 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    vec2 centered = texture_coords*2.0-1.0;
 
    // Random small rotation
-	float r = 0.0025*u_time + 0.5;
-	float c = cos(r);
-	float s = sin(r);
+   float r = 0.0025*u_time + 0.5;
+   float c = cos(r);
+   float s = sin(r);
    mat2 R = mat2( c, s, -1.3*s, 1.3*c ); // Do some cheap perspective correction
    centered = R * centered;
 
@@ -53,9 +53,9 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    /* Some simple noise. */
    vec2 noisexy = vec2( fbm3( centered ), fbm3( polar ) );
    float noise = fbm3( noisexy );
-   col.rgb += 0.2 * vec3( snoise( noisexy + vec2(100.0) ),
-                          snoise( noisexy - vec2(100.0) ),
-                          snoise( noisexy + vec2(100.0,-100.0) ) );
+   col.rgb += 0.2 * vec3(  snoise( noisexy + vec2(100.0) ),
+                           snoise( noisexy - vec2(100.0) ),
+                           snoise( noisexy + vec2(100.0,-100.0) ) );
 
    /* Putting it together. */
    col.a = (0.7 + 0.3 * noise);

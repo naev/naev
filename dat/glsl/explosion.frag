@@ -62,10 +62,10 @@ vec4 compute_colour( float density, float radius, float brightness )
 }
 
 /* Compute the density at a 3D position for a single sphere.
- The idea here is to compute two growing spheres. The first grows fast at the
- beginning and is solid, while the second one hollows out the first one and
- grows slow at first, but faster at the end.
- Noise is adding in the form of a rotating FBM in inverted space.
+   The idea here is to compute two growing spheres. The first grows fast at the
+   beginning and is solid, while the second one hollows out the first one and
+   grows slow at first, but faster at the end.
+   Noise is adding in the form of a rotating FBM in inverted space.
  */
 float compute_density( vec3 p, float r, float t, vec3 dir )
 {
