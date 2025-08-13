@@ -12,6 +12,7 @@
 #include <SDL3/SDL.h>
 
 #include "naev.h"
+#include <stdlib.h>
 /** @endcond */
 
 #include "intro.h"
@@ -23,7 +24,6 @@
 #include "menu.h"
 #include "music.h"
 #include "ndata.h"
-#include "nstring.h"
 #include "toolkit.h"
 
 #define INTRO_SPEED 30.  /**< Speed of text in characters / second. */
