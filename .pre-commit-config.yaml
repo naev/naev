@@ -40,15 +40,24 @@ repos:
     - id: rem_xml_head
       name: remove unnecessary XML 1.0 headers
       entry: utils/rem_xml_head.sh
-      files: dat/.*\.xml$
       types: [xml]
       language: script
     - id: xml_format
       name: format xml
       entry: utils/xml_format.sh
+      types: [xml]
       args: ["-st"]
       files: dat/.*\.xml$
-      types: [xml]
+      language: script
+    - id: no_tabs
+      name: no_tabs  [build dot frag glsl gltf js lua nsi py rb scm sh tex vdf vert]
+      entry: utils/no_tabs.sh
+      files: .*\.build$|.*\.dot$|.*\.frag$|.*\.glsl$|.*\.gltf|.*\.js$|.*\.lua$|.*\.nsi$|.*\.py$|.*\.scm$|.*\.rb$|.*\.sh$|.*\.tex$|.*\.vdf$|.*\.vert$
+      language: script
+    - id: reindent
+      name: reindent [build dot frag glsl gltf js lua nsi py rb scm sh tex vdf vert]
+      entry: utils/reindent.sh
+      files: .*\.build$|.*\.dot$|.*\.frag$|.*\.glsl$|.*\.gltf|.*\.js$|.*\.lua$|.*\.nsi$|.*\.py$|.*\.scm$|.*\.rb$|.*\.sh$|.*\.tex$|.*\.vdf$|.*\.vert$
       language: script
     - id: check_fmt_f_usage
       name: lua f-string validation
@@ -78,6 +87,7 @@ repos:
   rev: v0.10.0.1
   hooks:
     - id: shellcheck
+      types: [shell]
 - repo: https://github.com/codespell-project/codespell
   rev: v2.4.1
   hooks:
