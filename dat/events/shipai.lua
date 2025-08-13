@@ -108,7 +108,7 @@ local function clicked ()
          {_("Electronic Warfare"), "tut_ewarfare"},
          {_("Stealth"), "tut_stealth"},
          {_("Asteroids and Mining"), "tut_mining"},
-         {_("Nevermind"), "mainmenu"},
+         {_("Never mind"), "mainmenu"},
       }
       if var.peek( "tut_illegal" ) then
          table.insert( opts, #opts, {_("Illegality and Smuggling"), "tut_illegal"} )
@@ -144,7 +144,7 @@ local function clicked ()
    vn.jump("tutorials")
 
    vn.label("tut_stealth")
-   sai(fmt.f(_([["You can activate stealth mode with {stealthkey} when far enough away from other ships, and only when you have no missiles locked on to you. When stealthed, your ship will be completely invisible to all ships. However, if a ship gets within the #ostealth#0 distance of your ship, it will slowly uncover you."]]),{stealthkey=tut.getKey("stealth")}))
+   sai(fmt.f(_([["You can activate stealth mode with {stealthkey} when far enough away from other ships. When stealthed, your ship will be completely invisible to all ships, and even missiles will stop tracking. However, if a ship gets within the #ostealth#0 distance of your ship, it will slowly uncover you."]]),{stealthkey=tut.getKey("stealth")}))
    sai(_([["Besides making your ship invisible to other ships, #ostealth#0 slows down your ship by 50% to mask your gravitational presence. This also has the effect of letting you jump out from jumpoints further away. There are many outfits that can change and modify this behaviour to get more out of stealth."]]))
    sai(_([["When not in stealth, ships can target your ship to perform a scan. This can uncover unwanted information, such as illegal cargo or outfits. The time to scan depends on the mass of the ship. If you don't want to be scanned, you should use stealth as much as possible. Enemy ships may also use stealth. Similarly to how you get uncovered when ships enter your #ostealth#0 range, you can uncover neutral or hostile ships by entering their #ostealth#0 range, however, you will not be able to know where they are until you are on top of them."]]))
    sai(_([["Finally, escorts and fighters will automatically stealth when their leader goes into stealth, so you don't have to worry giving stealth orders to ships you may be commanding. Friendly ships will also not uncover your stealth, so it is good to make as many friends as possible."]]))
