@@ -82,4 +82,4 @@ with open(sys.argv[1],"w") as fout:
          l = d.splitlines()
          for i, line in enumerate(l):
             if needs_translation( line ):
-                print_line( fn, n+i, line )
+               print_line( fn, n+i, line )
