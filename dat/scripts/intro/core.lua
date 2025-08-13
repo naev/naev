@@ -27,6 +27,7 @@ function intro.load()
    local c = naev.cache()
    data = c._intro
    font = lg.newFont( FONT_SIZE )
+   font:setOutline(1)
    nw, nh = lg.getDimensions()
    text_width = nw - 2*SIDE_MARGIN - IMAGE_WIDTH
    text_off = SIDE_MARGIN + IMAGE_WIDTH
