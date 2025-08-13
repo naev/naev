@@ -71,3 +71,19 @@ jobs:
     uses: "naev/naev/.github/workflows/compile_naev.yml@main"
     with:
       platform: "docs"
+
+  "Update_API_Docs":
+    needs: "Documentation"
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger API Documentation Update
+        if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' && github.ref == 'refs/heads/main' }}
+        uses: convictional/trigger-workflow-and-wait@v1.6.5
+        with:
+          owner: naev
+          repo: naev.github.io
+          github_token: ${{ secrets.WEBSITE_ACCESS_TOKEN }}
+          workflow_file_name: website_publish.yml
+          client_payload: '{ "publish_type": "docs" }'

@@ -231,16 +231,6 @@ jobs:
           name: ${{ github.sha }}-ldoc-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
-      - name: Trigger API Documentation Update
-        if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' && github.ref == 'refs/heads/main' }}
-        uses: convictional/trigger-workflow-and-wait@v1.6.5
-        with:
-          owner: naev
-          repo: naev.github.io
-          github_token: ${{ secrets.WEBSITE_ACCESS_TOKEN }}
-          workflow_file_name: website_publish.yml
-          client_payload: '{ "publish_type": "docs" }'
-
   windows_build:
     permissions:
       contents: write
