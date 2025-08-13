@@ -64,8 +64,8 @@
  - Reworked the visuals for some weapons using shaders
 
 #### Engine
- - Begin porting to rust
- - Using SDL3
+ - Began porting to Rust
+ - Engine now uses SDL3
  - Engine supports modifying some important constants such as those related to the physics model for use in plugins
  - Use instancing instead of geometry shaders for space dust
  - Ship Lua scripting supports "onshootany" now
@@ -83,13 +83,13 @@
  - Can override long class names of spobs
  - Changed how ship statistics are computed: those from same source will be additive, while different sources will be multiplicative
  - New ship stats and changes
+    - Weapon speed with variants for cannons and turrets
     - Minimum Stealth Range
     - Absolute Mass
     - Absolute CPU
     - Temporary Invincibility
     - Detection Range only affects 'Detected at:' range
     - Ship Visibility that affects detection, signature, and stealth ranges
- - Engine exposes some constants that can be modified by plugins
 
 #### Fixes
  - The Bite turns off afterburners
@@ -118,6 +118,10 @@
  - Improved AI braking skills
  - Game will not save in certain cases like loading the game and immediately being forced to take off by a load hook
  - Improved handling of fullscreen toggling and resolution changes
+ - Faction ships no longer show up as Unknown when you first discover a faction
+ - Space mines in restricted systems have infinite duration
+ - Lots of spelling and grammars fixes
+ - Translation updates
 
 
 ## 0.12.6

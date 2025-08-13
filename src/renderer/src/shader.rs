@@ -114,6 +114,7 @@ impl Shader {
     }
 }
 
+#[derive(PartialEq)]
 enum ShaderSource {
     Path(String),
     Data(String),
@@ -201,6 +202,10 @@ impl ShaderBuilder {
         self
     }
 
+    pub fn vert_frag_file(self, path: &str) -> Self {
+        self.vert_file(path).frag_file(path)
+    }
+
     pub fn vert_data(mut self, data: &str) -> Self {
         self.vert = ShaderSource::Data(String::from(data));
         self
@@ -228,7 +233,11 @@ impl ShaderBuilder {
 
     pub fn build(self, gl: &glow::Context) -> Result<Shader> {
         let mut vertdata = ShaderSource::to_string(&self.vert)?;
-        let mut fragdata = ShaderSource::to_string(&self.frag)?;
+        let mut fragdata = if self.vert == self.frag {
+            vertdata.clone()
+        } else {
+            ShaderSource::to_string(&self.frag)?
+        };
 
         let glsl = unsafe { naevc::gl_screen.glsl };
         let mut prepend = format!("#version {glsl}\n\n#define GLSL_VERSION {glsl}\n");
@@ -238,6 +247,8 @@ impl ShaderBuilder {
             vertdata.insert_str(0, &self.prepend);
             fragdata.insert_str(0, &self.prepend);
         }
+        vertdata.insert_str(0, "#define VERT 1\n");
+        fragdata.insert_str(0, "#define FRAG 1\n");
         vertdata.insert_str(0, &prepend);
         fragdata.insert_str(0, &prepend);
 

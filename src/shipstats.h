@@ -62,11 +62,12 @@ typedef enum ShipStatsType {
    SS_TYPE_D_EW_SCANNED_TIME,  /**< Electronic warfare time it takes to get
                                   scanned. */
 
-   /* Weapons. */
+   /* Weapons. These affect Forward, Turret, and Launchers. */
    SS_TYPE_D_WEAPON_RANGE,    /**< Weapon range. */
    SS_TYPE_D_WEAPON_DAMAGE,   /**< Weapon damage. */
    SS_TYPE_D_WEAPON_FIRERATE, /**< Weapon fire rate. */
    SS_TYPE_D_WEAPON_ENERGY,   /**< Weapon energy usage. */
+   SS_TYPE_D_WEAPON_SPEED,    /**< Weapon speed. */
 
    /* Launchers. */
    SS_TYPE_D_LAUNCH_RATE,        /**< Launch rate for missiles. */
@@ -98,6 +99,7 @@ typedef enum ShipStatsType {
    SS_TYPE_D_FORWARD_ENERGY,            /**< Energy usage of cannons. */
    SS_TYPE_D_FORWARD_DAMAGE_AS_DISABLE, /**< Damage converted to disable. */
    SS_TYPE_D_FORWARD_RANGE,             /**< Weapon range. */
+   SS_TYPE_D_FORWARD_SPEED,             /**< Weapon speed. */
 
    /* Turrets. */
    SS_TYPE_D_TURRET_DAMAGE,            /**< Damage done by turrets. */
@@ -106,6 +108,7 @@ typedef enum ShipStatsType {
    SS_TYPE_D_TURRET_ENERGY,            /**< Energy usage of turrets. */
    SS_TYPE_D_TURRET_DAMAGE_AS_DISABLE, /**< Damage converted to disable. */
    SS_TYPE_D_TURRET_RANGE,             /**< Weapon range. */
+   SS_TYPE_D_TURRET_SPEED,             /**< Weapon speed. */
 
    /* Misc. */
    SS_TYPE_D_STRESS_DISSIPATION, /**< Ship stress dissipation. */
@@ -275,6 +278,7 @@ typedef struct ShipStats {
    double weapon_damage;   /**< Weapon damage. */
    double weapon_firerate; /**< Weapon firerate. */
    double weapon_energy;   /**< Weapon energy usage. */
+   double weapon_speed;    /**< Weapon speed. */
 
    /* Launchers. */
    double launch_rate;        /**< Fire rate of launchers. */
@@ -304,6 +308,7 @@ typedef struct ShipStats {
    double fwd_energy;     /**< Consumption rate of forward mounts. */
    double fwd_dam_as_dis; /**< Damage as disable for forward mounts. */
    double fwd_range;      /**< Range of forward mounts. */
+   double fwd_speed;      /**< Forward weapon speed. */
 
    /* Destroyer/Cruiser type. */
    double tur_damage;     /**< Damage of turrets. */
@@ -312,6 +317,7 @@ typedef struct ShipStats {
    double tur_energy;     /**< Consumption rate of turrets. */
    double tur_dam_as_dis; /**< Damage as disable for turrets. */
    double tur_range;      /**< Range of forward mounts. */
+   double tur_speed;      /**< Turret weapon speed. */
 
    /* Jamming. */
    double jam_chance; /**< Jamming chance. */

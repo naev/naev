@@ -502,15 +502,15 @@ static int gltf_loadTexture( const GltfObject *obj, Texture *otex,
       }
 
       SDL_LockSurface( surface );
-      glPixelStorei( GL_UNPACK_ALIGNMENT,
-                     MIN( surface->pitch & -surface->pitch, 8 ) );
+      //glPixelStorei( GL_UNPACK_ALIGNMENT,
+      //               MIN( surface->pitch & -surface->pitch, 8 ) );
       if ( notsrgb )
          glTexImage2D( GL_TEXTURE_2D, 0, internalformat, surface->w, surface->h,
                        0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels );
       else
          glTexImage2D( GL_TEXTURE_2D, 0, internalformat, surface->w, surface->h,
                        0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels );
-      glPixelStorei( GL_UNPACK_ALIGNMENT, 4 );
+      //glPixelStorei( GL_UNPACK_ALIGNMENT, 4 );
       SDL_UnlockSurface( surface );
    } else {
       /*

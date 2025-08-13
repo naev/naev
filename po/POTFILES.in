@@ -3597,6 +3597,7 @@ dat/scripts/equipopt/templates/thurion.lua
 dat/scripts/equipopt/templates/zalek.lua
 dat/scripts/equipopt/wrapper.lua
 dat/scripts/escort.lua
+dat/scripts/factions.lua
 dat/scripts/factions/dvaered.lua
 dat/scripts/factions/empire.lua
 dat/scripts/factions/frontier.lua
@@ -3612,6 +3613,10 @@ dat/scripts/factions/zalek.lua
 dat/scripts/fleet.lua
 dat/scripts/format.lua
 dat/scripts/formation.lua
+dat/scripts/intro.lua
+dat/scripts/intro/conf.lua
+dat/scripts/intro/core.lua
+dat/scripts/intro/main.lua
 dat/scripts/lazyload.lua
 dat/scripts/linenoise.lua
 dat/scripts/lmisn.lua

@@ -11,7 +11,7 @@
 </event>
 --]]
 --[[
-   Some kids sneak onto your ship if you land on Majesteka II.
+   Small event to give more fleet capacity after a minigame.
 --]]
 local neu = require "common.neutral"
 local vn = require "vn"

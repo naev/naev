@@ -137,7 +137,7 @@ function land()
    var.push("es_misn", n+1)
 
    -- increase faction
-   local reputation = rnd.rnd(4, 6)
+   local reputation = rnd.rnd(3, 4)
    faction.hit("Empire", reputation)
    pir.reputationNormalMission(reputation)
    misn.finish(true)

@@ -15,6 +15,7 @@ local fmt = require 'format'
 local luatk = require "luatk"
 local gauntlet = require 'common.gauntlet'
 local poi = require "common.poi"
+local fcts = require "factions"
 
 -- Applies a function to all ships
 local function apply_all_ships( func )
@@ -52,7 +53,7 @@ local function updater0130( _did0120, _did0110, _did0100, _did090 )
 
    -- Lost was set as static before 0.13.0-alpha.9
    if player.evtDone("Welcome to Wild Space") then
-      faction.get("Lost"):setKnown(true)
+      fcts.setKnown( faction.get("Lost"), true )
    end
 
    -- Mark data matrices known if the player has any
@@ -373,17 +374,18 @@ local function updater090 ()
    -- Some previously known factions become unknown
    --faction.get("Traders Guild"):setKnown(false) -- Gone in 0.11.0, replaced with Traders Society
    if not var.peek("disc_collective") then
-      faction.get("Collective"):setKnown(false)
+      fcts.setKnown( faction.get("Collective"), false )
    end
    if not var.peek("disc_proteron") then
       local pro = faction.get("Proteron")
-      pro:setKnown(false)
+      fcts.setKnown( pro, false )
       pro:setReputationGlobal( pro:reputationDefault() ) -- Hostile by default
    end
    local fflf = faction.get("FLF")
-   fflf:setKnown(false)
    if var.peek("disc_frontier") or player.misnDone("Deal with the FLF agent") or player.misnDone("Take the Dvaered crew home")  then
-      fflf:setKnown(true)
+      fcts.setKnown( fflf, true )
+   else
+      fcts.setKnown( fflf, false )
    end
 end
 

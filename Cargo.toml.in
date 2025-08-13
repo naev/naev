@@ -43,7 +43,7 @@ not_unsafe_ptr_arg_deref = "allow"
 
 [workspace.dependencies]
 naevc = { path=@NAEVC@ }
-sdl3 = "0"
+sdl3 = "0.14"
 anyhow = "1"
 naev_core = { path="@BUILD@/src/core" }
 gettext = { path="@BUILD@/src/gettext" }
@@ -52,13 +52,13 @@ mutex = { path="@BUILD@/src/mutex" }
 ndata = { path="@BUILD@/src/ndata" }
 renderer = { path="@BUILD@/src/renderer" }
 toolkit = { path="@BUILD@/src/toolkit" }
-formatx = "0"
-glow = "0"
+formatx = "0.2"
+glow = "0.16"
 nalgebra = { version = "0", features = ["bytemuck"]  }
 bytemuck = { version = "1", features = ["derive"] } # Needed for shader voodoo
 encase = { version = "0", features = ["nalgebra"] } # Needed for shader voodoo
-image = "0"
-roxmltree = "0"
+image = "0.25"
+roxmltree = "0.20"
 
 [dependencies]
 naevc = { workspace = true }
@@ -77,10 +77,10 @@ bytemuck = { workspace = true }
 encase = { workspace = true }
 roxmltree = { workspace = true }
 image = { workspace = true }
-constcat = "0"
+constcat = "0.6"
 derive_more = { version = "2", features = ["from", "into"] }
-rand = "0"
-rayon = "1" # parallel computation
+rand = "0.9"
+rayon = "1.10" # parallel computation
 static_assertions = "1"
 palette = "0" # Colour conversion
 mlua = { version = "0.11", features = ["luajit", "anyhow", "send", "serialize"] }

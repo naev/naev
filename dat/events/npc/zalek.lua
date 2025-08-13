@@ -48,7 +48,7 @@ desc_list["government"] = {
 }
 
 local msg_lore = {
-   _([["The Soromids? Hah! We Za'lek are the only true scientists in this galaxy."]]),
+   _([["The Soromid? Hah! We Za'lek are the only true scientists in this galaxy."]]),
    _([["I don't understand why we bother sending our research results to the Empire. These asshats can't understand the simplest formulas!"]]),
    _([["Do you know why many optimization algorithms require your objective function to be convex? It's not only because of the question of local minima, but also because if your function is locally concave around the current iterate, the next one will lead to a greater value of your objective function. There are still too many people who don't know this!"]]),
    _([["There are so many algorithms for solving the non-linear eigenvalues problem, I never know which one to choose. Which one do you prefer?"]]),

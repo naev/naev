@@ -64,7 +64,7 @@ local msg_lore = {
 }
 
 local msg_tip = {
-   _([["Kinetic weapons cause impact damage which is more effective against armour than shields. It also has incredible knocking back power!"]]),
+   _([["Kinetic weapons cause impact damage which is more effective against armour than shields. It also has incredible knocking-back power!"]]),
    _([["House Dvaered is the only Great House that doesn't use fighter bays. It's much more honourable to do the job yourself!"]]),
    _([["Mace rockets are a must-have for fighter pilots. They can spectacularly boost your damage output. But you must also have cannons because mace launchers are extremely slow to reload once empty."]]),
 }

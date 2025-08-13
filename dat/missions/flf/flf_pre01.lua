@@ -23,6 +23,7 @@ local fleet = require "fleet"
 local flf = require "common.flf"
 local fmt = require "format"
 local dv = require "common.dvaered"
+local fcts = require "factions"
 
 local fleetFLF -- Non-persistent state
 
@@ -31,7 +32,7 @@ function create()
    if not misn.claim(missys) then
       abort() -- TODO: This claim should be in the event that starts this mission!
    end
-   faction.get("FLF"):setKnown(true)
+   fcts.setKnown( faction.get("FLF") )
 
    misn.accept() -- The player chose to accept this mission by boarding the FLF ship
 

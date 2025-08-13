@@ -12,6 +12,6 @@
  <specific type="modification">
   <weapon_damage>-10</weapon_damage>
   <weapon_range>15</weapon_range>
-  <launch_speed>15</launch_speed>
+  <weapon_speed>15</weapon_speed>
  </specific>
 </outfit>

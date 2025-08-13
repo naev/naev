@@ -263,6 +263,7 @@ function scom.spawn( pilots )
          mem.doscans = true
       end
       if not pfact:known() then
+         mem.__name = p:name()
          p:rename(_("Unknown"))
       end
       if scom._params.postprocess then

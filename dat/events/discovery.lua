@@ -8,11 +8,10 @@
 --[[
 -- Shows the player fancy messages as they discover things. Meant to be flavourful.
 --]]
-
 local fmt = require 'format'
 local audio = require 'love.audio'
 local textoverlay = require "textoverlay"
-
+local fcts = require "factions"
 
 -- These trigger at specific places
 local system_events = {
@@ -126,8 +125,8 @@ local yetmer_orez = {
       title = _("House Yetmer-O'rez"),
       subtitle = _("Turmoils of Galactic Succession"),
       func = function()
-         faction.get("Yetmer"):setKnown( true )
-         faction.get("O'rez"):setKnown( true )
+         fcts.setKnown( faction.get("Yetmer"), true )
+         fcts.setKnown( faction.get("O'rez"), true )
       end
    }
 -- These trigger for specific factions controlled systems
@@ -161,7 +160,9 @@ local faction_events = {
       name = "disc_proteron",
       title = _("The Proteron Territories"),
       subtitle = _("United through Sacrifice"),
-      func = function() faction.get("Proteron"):setKnown( true ) end
+      func = function()
+         fcts.setKnown( faction.get("Proteron"), true )
+      end
    },
    Thurion = {
       type = "enter",
@@ -174,14 +175,18 @@ local faction_events = {
       name = "disc_frontier",
       title = _("The Frontier"),
       subtitle = _("Leading to a New Future"),
-      func = function() faction.get("FLF"):setKnown( true ) end
+      func = function()
+         fcts.setKnown( faction.get("FLF"), true )
+      end
    },
    Collective = {
       type = "enter",
       name = "disc_collective",
       title = _("The Collective"),
       subtitle = _("Do Robots Dream of Electric Sheep?"),
-      func = function() faction.get("Collective"):setKnown( true ) end
+      func = function()
+         fcts.setKnown( faction.get("Collective"), true )
+      end
    },
    Yetmer = yetmer_orez,
    ["O'rez"] = yetmer_orez,
@@ -210,7 +215,7 @@ local function pir_discovery( fname, disc, subtitle )
       subtitle = "#H"..subtitle.."#0",
       func = function()
          local fpir = faction.get(fname)
-         fpir:setKnown( true )
+         fcts.setKnown( fpir, true )
          for k,p in ipairs( pilot.get( {fpir}, true ) ) do
             if p:name() == _("Unknown") then
                p:rename( p:ship():name() )

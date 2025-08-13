@@ -457,15 +457,13 @@ pub unsafe extern "C" fn nlua_loadVector(env: *mut LuaEnv) -> c_int {
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn luaL_checkvector(L: *mut mlua::lua_State, ind: c_int) -> *mut Vec2 {
+pub unsafe extern "C" fn luaL_checkvector(L: *mut mlua::lua_State, idx: c_int) -> *mut Vec2 {
     unsafe {
-        match lua_isvector(L, ind) {
-            0 => {
-                ffi::luaL_typerror(L, ind, c"vec2".as_ptr() as *const c_char);
-                std::ptr::null_mut()
-            }
-            _ => lua_tovector(L, ind),
+        let vec = lua_tovector(L, idx);
+        if vec.is_null() {
+            ffi::luaL_typerror(L, idx, c"vec2".as_ptr() as *const c_char);
         }
+        vec
     }
 }
 

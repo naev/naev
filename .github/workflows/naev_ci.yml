@@ -2,507 +2,82 @@ on: [push, pull_request]
 
 name: CI
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
-  cancel-in-progress: true
-
 permissions: {}
 jobs:
   "Package_Source":
     permissions:
-      contents: read  #  to fetch code (actions/checkout)
-
-    runs-on: ubuntu-latest
-    container:
-      image: "ghcr.io/naev/naev-release:latest"
-
-    steps:
-      - name: Checkout Naev Repository
-        uses: actions/checkout@v4
-        with:
-          path: source
-          fetch-depth: 0
-          submodules: true
-
-      - name: Configure Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          target: "x86_64-unknown-linux-gnu"
-          override: true
-          rustflags: ""
-
-      - name: Install bindgen-cli
-        uses: baptiste0928/cargo-install@v3
-        with:
-          crate: bindgen-cli
-
-      - name: Package Dist
-        run: |
-          meson setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
-          meson dist -C build --no-tests --include-subprojects
-
-      - name: Upload Dist Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: naev-dist-${{ github.sha }}
-          path: ${{ github.workspace }}/build/meson-dist/*
+      contents: write
+    uses: "naev/naev/.github/workflows/compile_naev.yml@main"
+    with:
+      platform: "source"
 
   "Linux_Compile_Naev":
     needs: "Package_Source"
-    defaults:
-      run:
-        shell: bash
+    permissions:
+      contents: write
     strategy:
       fail-fast: false
       matrix:
         include:
-          - image: naev-steamruntime
-            config: linux_steamruntime.ini
-            wrap_mode: default
-            target: x86_64-unknown-linux-gnu
-
-    runs-on: ubuntu-latest
-    container:
-      image: "ghcr.io/naev/${{ matrix.image }}:latest"
-      volumes:
-        - ${{ github.workspace }}:${{ github.workspace }}
-
-    steps:
-      - name: Get Source
-        uses: actions/download-artifact@v4
-        with:
-          name: naev-dist-${{ github.sha }}
-
-      - name: Extract Source
-        run: |
-          mkdir source
-          tar -xf naev-*.tar.xz -C source --strip 1
-
-      - name: Configure Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          target: "${{ matrix.target }}"
-          override: true
-          rustflags: ""
-
-      - name: Install bindgen-cli
-        uses: baptiste0928/cargo-install@v3
-        with:
-          crate: bindgen-cli
-
-      - name: Meson Setup
-        id: setup
-        run: |
-          meson setup build source \
-              --native-file='source/utils/build/${{ matrix.config }}' \
-              --buildtype=debug \
-              --wrap-mode=${{ matrix.wrap_mode }} \
-              --force-fallback-for=sdl2_image,glpk,SuiteSparse \
-              -Dsteamruntime=false \
-              -Dprefix="/usr" \
-              -Db_lto=true \
-              -Dinstaller=false \
-              -Db_lto=true \
-              -Dauto_features=enabled \
-              -Ddocs_c=disabled \
-              -Ddocs_lua=disabled
-
-      - name: Upload Setup Log
-        uses: actions/upload-artifact@v4
-        if: ${{ success() || steps.setup.outcome == 'failure' }}
-        with:
-          name: ${{ matrix.image }}-${{ github.sha }}-setup-log
-          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
-
-      - name: Meson Compile
-        id: compile
-        run: |
-          meson compile -C build
-
-      - name: Upload Compile Log
-        uses: actions/upload-artifact@v4
-        if: ${{ success() || steps.compile.outcome == 'failure' }}
-        with:
-          name: ${{ matrix.image }}-${{ github.sha }}-compile-log
-          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
-
-      - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.image }}-${{ github.sha }}-buildArtifacts
-          path: ${{ github.workspace }}/build
-
-      - name: Test Install
-        id: install
-        run: |
-          meson install -C build
-        env:
-          DESTDIR: "${{ github.workspace }}/staging"
-
-      - name: Upload Install Log
-        uses: actions/upload-artifact@v4
-        if: ${{ success() || steps.install.outcome == 'failure' }}
-        with:
-          name: ${{ matrix.image }}-${{ github.sha }}-install-log
-          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
-
-      - name: Compile AppImage
-        id: appimageCompile
-        run: |
-          if [[ "$IMAGE_NAME" =~ "naev-steamfrankenruntime" ]]; then
-              ./source/utils/buildAppImage.sh -d -s source -b appImageBuild | tee appImageBuildLog.txt
-              ls ${{ github.workspace }}/appImageBuild/dist/AppDir >/dev/null || exit
-          else
-            ./source/utils/buildAppImage.sh -d -i -s source -b appImageBuild | tee appImageBuildLog.txt
-            ls ${{ github.workspace }}/appImageBuild/dist/*.AppImage >/dev/null || exit
-          fi
-
-      - name: Upload AppImage Compile Log
-        uses: actions/upload-artifact@v4
-        if: ${{ (success() || steps.appimageCompile.outcome == 'failure') }}
-        with:
-          name: ${{ matrix.image }}-${{ github.sha }}-AppImageBuild-log
-          path: ${{ github.workspace }}/appImageBuildLog.txt
-
-      - name: Upload Test AppImage
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.image }}-${{ github.sha }}-AppImageBuild-appimage
-          path: ${{ github.workspace }}/appImageBuild/dist/*.AppImage
+          - build_type: debug
+          - build_type: release
+    uses: "naev/naev/.github/workflows/compile_naev.yml@main"
+    with:
+      platform: "linux"
+      build_type: "${{ matrix.build_type }}"
+      release: false
 
   "Windows_Compile_Naev":
     needs: "Package_Source"
-
+    permissions:
+      contents: write
     strategy:
       fail-fast: false
       matrix:
         include:
-          - image: naev-windows
-            config: windows_cross_mingw.ini
-            target: x86_64-pc-windows-gnu
-
-    runs-on: ubuntu-latest
-    container:
-      image: "ghcr.io/naev/${{ matrix.image }}:latest"
-      env:
-        PKG_CONFIG: "x86_64-w64-mingw32-pkg-config"
-        PKG_CONFIG_PATH: "/usr/x86_64-w64-mingw32/sys-root/mingw/lib/pkgconfig:/__w/naev/naev/source/subprojects/LuaJIT-04dca7911ea255f37be799c18d74c305b921c1a6/etc"
-        BINDGEN_EXTRA_CLANG_ARGS: "--sysroot=/usr/x86_64-w64-mingw32/sys-root/mingw --target=x86_64-w64-mingw32"
-    steps:
-      - name: Get Source
-        uses: actions/download-artifact@v4
-        with:
-          name: naev-dist-${{ github.sha }}
-
-      - name: Extract Source
-        run: |
-          mkdir source
-          tar -xf naev-*.tar.xz -C source --strip 1
-
-      - name: Configure Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          target: "${{ matrix.target }}"
-          override: true
-          rustflags: ""
-
-      - name: Install bindgen-cli
-        uses: baptiste0928/cargo-install@v3
-        with:
-          crate: bindgen-cli
-
-      - name: Meson Setup
-        id: setup
-        run: |
-          meson setup build source \
-              --prefix="$(pwd)"/source/extras/windows/installer \
-              --bindir=bin \
-              -Dndata_path=bin \
-              --cross-file='source/utils/build/${{ matrix.config }}' \
-              --native-file='source/utils/build/linux.ini' \
-              --buildtype=debug \
-              --wrap-mode=nopromote \
-              -Dinstaller=false \
-              -Drelease=false \
-              -Db_lto=false \
-              -Dauto_features=enabled \
-              -Ddocs_c=disabled \
-              -Ddocs_lua=disabled
-
-      - name: Upload Setup Log
-        uses: actions/upload-artifact@v4
-        if: ${{ success() || steps.setup.outcome == 'failure' }}
-        with:
-          name: ${{ matrix.image }}-${{ github.sha }}-setup-log
-          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
-
-      - name: Meson Compile
-        id: compile
-        run: |
-          meson compile -C build
-
-      - name: Upload Compile Log
-        uses: actions/upload-artifact@v4
-        if: ${{ success() || steps.compile.outcome == 'failure' }}
-        with:
-          name: ${{ matrix.image }}-${{ github.sha }}-compile-log
-          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
-
-      - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.image }}-${{ github.sha }}-buildArtifacts
-          path: |
-            ${{ github.workspace }}/build
-          if-no-files-found: error
-
-      - name: Test Install
-        id: install
-        run: |
-          meson install -C build
-
-      - name: Upload Install Log
-        uses: actions/upload-artifact@v4
-        if: ${{ success() || steps.install.outcome == 'failure' }}
-        with:
-          name: ${{ matrix.image }}-${{ github.sha }}-install-log
-          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
+          - build_type: debug
+          - build_type: release
+    uses: "naev/naev/.github/workflows/compile_naev.yml@main"
+    with:
+      platform: "windows"
+      build_type: "${{ matrix.build_type }}"
+      release: false
 
   "Darwin_Compile_Naev":
     needs: "Package_Source"
-
+    permissions:
+      contents: write
     strategy:
       fail-fast: false
       matrix:
         include:
-          - image: naev-macos
-            arch: x86_64
-            deploymenttarget: "11.0"
-            config: macos_cross_osxcross.ini
-          - image: naev-macos
-            arch: aarch64
-            deploymenttarget: "13.0"
-            config: macos_aarch64_cross_osxcross.ini
+          - build_type: debug
+          - build_type: release
+    uses: "naev/naev/.github/workflows/compile_naev.yml@main"
+    with:
+      platform: "macos"
+      build_type: "${{ matrix.build_type }}"
+      release: false
 
-    runs-on: ubuntu-latest
-    container:
-      image: "ghcr.io/naev/${{ matrix.image }}:latest"
-      env:
-        BUILDARCH: "${{ matrix.arch }}"
-        HOST: "${{ matrix.arch }}-apple-darwin23"
-        MACOSX_DEPLOYMENT_TARGET: "${{ matrix.deploymenttarget }}"
-        PKG_CONFIG: "${{ matrix.arch }}-apple-darwin23-pkg-config"
-        PKG_CONFIG_PATH: "/usr/lib/osxcross/macports/pkgs/opt/local/lib/pkgconfig"
-        BINDGEN_EXTRA_CLANG_ARGS: "--sysroot=/usr/lib/osxcross/SDK/MacOSX14.sdk --target=${{ matrix.arch }}-apple-darwin"
-
-    steps:
-      - name: Configure Build Environment
-        run: |
-          echo "Configuring MacPorts packages and build env variables for $BUILDARCH."
-          if [[ "$BUILDARCH" == "aarch64" ]] then
-            rm -f /usr/lib/osxcross/macports
-            ln -s /usr/lib/osxcross/macports.aarch64 /usr/lib/osxcross/macports
-          elif [[ "$BUILDARCH" == "x86_64" ]] then
-            rm -f /usr/lib/osxcross/macports
-            ln -s /usr/lib/osxcross/macports.x86_64 /usr/lib/osxcross/macports
-          # Fallback
-          else
-            rm -f /usr/lib/osxcross/macports
-            ln -s /usr/lib/osxcross/macports.x86_64 /usr/lib/osxcross/macports
-          fi
-
-      - name: Configure Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          target: "${{ matrix.arch }}-apple-darwin"
-          override: true
-          rustflags: ""
-
-      - name: Install bindgen-cli
-        uses: baptiste0928/cargo-install@v3
-        with:
-          crate: bindgen-cli
-          git: https://github.com/rust-lang/rust-bindgen.git
-          commit: bd011d43e2d18078606350eb8c33048bf8a59bac
-
-      - name: Get Source
-        uses: actions/download-artifact@v4
-        with:
-          name: naev-dist-${{ github.sha }}
-
-      - name: Extract Source
-        run: |
-          mkdir source
-          tar -xf naev-*.tar.xz -C source --strip 1
-
-      - name: Meson Setup
-        id: setup
-        run: |
-          meson setup build source \
-              --prefix="$(pwd)"/build/dist/Naev.app \
-              --bindir=Contents/MacOS \
-              --libdir=Contents/Frameworks \
-              -Dndata_path=Contents/Resources \
-              --cross-file='source/utils/build/${{ matrix.config }}' \
-              --native-file='source/utils/build/linux.ini' \
-              --buildtype=debug \
-              -Dinstaller=false \
-              -Drelease=false \
-              -Db_lto=true \
-              -Dauto_features=enabled \
-              -Ddocs_c=disabled \
-              -Ddocs_lua=disabled
-
-
-      - name: Upload Setup Log
-        uses: actions/upload-artifact@v4
-        if: ${{ success() || steps.setup.outcome == 'failure' }}
-        with:
-          name: ${{ matrix.image }}.${{ matrix.arch }}-${{ github.sha }}-setup-log
-          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
-
-      - name: Meson Compile
-        id: compile
-        run: |
-          meson compile -C build
-
-      - name: Upload Compile Log
-        uses: actions/upload-artifact@v4
-        if: ${{ success() || steps.compile.outcome == 'failure' }}
-        with:
-          name: ${{ matrix.image }}.${{ matrix.arch }}-${{ github.sha }}-compile-log
-          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
-
-      - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.image }}.${{ matrix.arch }}-${{ github.sha }}-buildArtifacts
-          path: |
-            ${{ github.workspace }}/build
-          if-no-files-found: error
-
-      - name: Test Install
-        id: install
-        run: |
-          meson install -C build
-
-      - name: Upload Install Log
-        uses: actions/upload-artifact@v4
-        if: ${{ success() || steps.install.outcome == 'failure' }}
-        with:
-          name: ${{ matrix.image }}.${{ matrix.arch }}-${{ github.sha }}-install-log
-          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
-
-  "Luacheck":
-    runs-on: ubuntu-latest
-    container:
-      image: "ghcr.io/naev/naev-steamruntime:latest"
+  "Documentation":
     needs:
       [
-        Package_Source,
         Linux_Compile_Naev,
         Windows_Compile_Naev,
         Darwin_Compile_Naev,
       ]
+    permissions:
+      contents: write
+    uses: "naev/naev/.github/workflows/compile_naev.yml@main"
+    with:
+      platform: "docs"
 
-    steps:
-      - name: Get Source
-        uses: actions/download-artifact@v4
-        with:
-          name: naev-dist-${{ github.sha }}
-
-      - name: Extract Source
-        run: |
-          mkdir source
-          tar -xf naev-*.tar.xz -C source --strip 1
-
-      - name: Configure Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          target: "x86_64-unknown-linux-gnu"
-          override: true
-          rustflags: ""
-
-      - name: Install bindgen-cli
-        uses: baptiste0928/cargo-install@v3
-        with:
-          crate: bindgen-cli
-
-      - name: Meson Setup
-        id: setup
-        run: |
-          meson setup build source \
-              --native-file='source/utils/build/linux.ini' \
-              --buildtype=debug \
-              -Dinstaller=false \
-              -Db_lto=true \
-              -Dauto_features=enabled \
-              -Ddocs_c=disabled \
-              -Ddocs_lua=disabled
-
-      - name: Meson Compile
-        id: compile
-        run: |
-          meson compile -C build
-
-      - name: Meson Test
-        id: test
-        run: |
-          meson test luacheck -C build
-
-      - name: Upload Test Log
-        uses: actions/upload-artifact@v4
-        if: ${{ success() || steps.test.outcome == 'failure' }}
-        with:
-          name: ${{ github.sha }}-lualint-testlog
-          path: ${{ github.workspace }}/build/meson-logs/testlog.txt
-
-  "Documentation":
+  "Update_API_Docs":
+    needs: "Documentation"
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
-    container:
-      image: "ghcr.io/naev/naev-docs:latest"
-    needs: Luacheck
-
     steps:
-      - name: Get Source
-        uses: actions/download-artifact@v4
-        with:
-          name: naev-dist-${{ github.sha }}
-
-      - name: Extract Source
-        run: |
-          mkdir source
-          tar -xf naev-*.tar.xz -C source --strip 1
-
-      - name: Configure Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          target: "x86_64-unknown-linux-gnu"
-          override: true
-          rustflags: ""
-
-      - name: Install bindgen-cli
-        uses: baptiste0928/cargo-install@v3
-        with:
-          crate: bindgen-cli
-
-      - name: Meson Setup
-        run: |
-          meson setup build source \
-              -Dexecutable=disabled
-
-      - name: Meson Compile
-        id: compile
-        run: |
-          meson compile -C build
-
-      - name: Upload Compile Log
-        uses: actions/upload-artifact@v4
-        if: ${{ steps.compile.outcome == 'failure' }}
-        with:
-          name: ${{ github.sha }}-ldoc-log
-          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
-
       - name: Trigger API Documentation Update
         if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' && github.ref == 'refs/heads/main' }}
         uses: convictional/trigger-workflow-and-wait@v1.6.5
