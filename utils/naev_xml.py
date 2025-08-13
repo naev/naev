@@ -199,7 +199,9 @@ class xml_node( dict ):
       for k in F:
          self[k] = F[k]
 
-   __ior__ = update
+   def __ior__( self, other ):
+      self.update(other)
+      return self
 
    def keys():
       return self.attr.keys() + list.keys(self)
