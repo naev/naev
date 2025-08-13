@@ -91,11 +91,12 @@ They beam a smile at you.]]), {sys=runawaysys}))
    minerva.log.pirate(_("You accepted a job from a sketchy individual to harass Dvaered thugs in the Limbo system and make it seem like the Za'lek were involved.") )
 
    misn.accept()
-   misn.osdCreate( _("Thug Decoy"),
-         {_("Get the drone to follow you"),
-          _("Harass the thugs"),
-          fmt.f(_("Jump to {sys}"), {sys=runawaysys}),
-          _("Go back to Minerva Station") } )
+   misn.osdCreate( _("Thug Decoy"), {
+      _("Get the drone to follow you"),
+      _("Harass the thugs"),
+      fmt.f(_("Jump to {sys}"), {sys=runawaysys}),
+      _("Go back to Minerva Station") }
+   )
    misn.osdActive(1)
 
    mem.misnmarker = misn.markerAdd( system.cur() )

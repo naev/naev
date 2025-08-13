@@ -16,10 +16,11 @@
 --[[
 
    MISSION: Defend the System 3
-   DESCRIPTION: A mission to defend the system against swarm of pirate ships.
-            This will be the third in a series of random encounters.
-            After the mission, perhaps there'll be a regular diet of similar missions
-            Perhaps the random missions will eventually lead on to a plot line relating to the pirates.
+   DESCRIPTION:
+      A mission to defend the system against swarm of pirate ships.
+      This will be the third in a series of random encounters.
+      After the mission, perhaps there'll be a regular diet of similar missions
+      Perhaps the random missions will eventually lead on to a plot line relating to the pirates.
 
       Notable events:
        - Stage one: From the bar, the player learns of a pirate fleet attacking the system and joins a defence force.

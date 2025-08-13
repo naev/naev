@@ -235,7 +235,7 @@ function enter()
    local stats = joanneship:stats()
    local joanneshipspeed = stats.speed_max
    if mem.playershipspeed < joanneshipspeed then
-     joanneship:setSpeedLimit(mem.playershipspeed)
+      joanneship:setSpeedLimit(mem.playershipspeed)
    end
 
    -- Clear the natural pirate pilots to make it a "safe" trip

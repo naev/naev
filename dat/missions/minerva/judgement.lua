@@ -148,7 +148,7 @@ function trial_start ()
    vn.label("01_start")
    vn.func( function () didtrial = true end )
    vn.na(_([[The station seems to be crowded with the many simultaneous trials and ongoings. Watching people bustling around with unpredictable patterns is surprisingly entertaining, however, you remember your purpose and follow Zuri to the assigned courtroom.]]))
-    vn.music( 'snd/music/empire1.ogg' ) -- TODO trial music
+   vn.music( 'snd/music/empire1.ogg' ) -- TODO trial music
    -- TODO background?
    vn.na(_([[After getting lost in the corridors overflowing with people several times, you make it to the courtroom. It seems to be quite packed and the ambience electric, with uncertainty about how the upcoming legal drama would unfold.]]))
    zuri(_([[Zuri turns to you.

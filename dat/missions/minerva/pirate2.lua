@@ -89,9 +89,10 @@ She smiles at you.]]))
    end
 
    misn.accept()
-   misn.osdCreate( p_("OSD Title", "Za'lek Scout Drone"),
-         {_("Destroy the scout drone with Dvaered weapons"),
-          _("Go back to Minerva Station") } )
+   misn.osdCreate( p_("OSD Title", "Za'lek Scout Drone"), {
+      _("Destroy the scout drone with Dvaered weapons"),
+      _("Go back to Minerva Station")
+   } )
    misn.osdActive(1)
 
    mem.misnmarker = misn.markerAdd( system.cur() )

@@ -156,7 +156,7 @@ function nerds_land1()
       -- in time, right planet
          vntk.msg(_("Happy nerds"), fmt.f(_([["Good job, {player}," Mia compliments you upon arrival. "We'll now go win the competition and celebrate a bit. You better stay in the system. We will hail you in about 4 or 5 periods, so you can pick us up an' bring us back to {pnt}."
 That said, the nerds shoulder the box and rush towards a banner which reads "Admissions".]]), {player=player.name(), pnt=mem.srcPlanet} ))
-           misn.osdCreate( _("DIY Nerds"), {_("Wait several periods in this system until hailed by the nerds for their return trip")} )
+         misn.osdCreate( _("DIY Nerds"), {_("Wait several periods in this system until hailed by the nerds for their return trip")} )
          mem.expiryDate = time.get() + time.new(0, 0, 36000+rnd.rnd(-7500,7500), 0)
          mem.hailed = false
          mem.impatient = false
@@ -262,11 +262,11 @@ function nerds_fly2()
 
    -- no pickup since hail+2STP+1STP: mission failed (however, you must still land somewhere)
    if not mem.intime then
-        misn.osdCreate( _("DIY Nerds"), {
-           fmt.f(_("Pick up the nerds on {pickup_pnt} for their return trip to {dropoff_pnt}"), {pickup_pnt=mem.destPlanet, dropoff_pnt=mem.srcPlanet}),
-           _("You didn't pick up the nerds in time"),
-        })
-        misn.osdActive(2)
+      misn.osdCreate( _("DIY Nerds"), {
+         fmt.f(_("Pick up the nerds on {pickup_pnt} for their return trip to {dropoff_pnt}"), {pickup_pnt=mem.destPlanet, dropoff_pnt=mem.srcPlanet}),
+            _("You didn't pick up the nerds in time"),
+      })
+      misn.osdActive(2)
    end
 
    -- no pickup since hail+2STP
@@ -275,12 +275,12 @@ function nerds_fly2()
          vntk.msg(_("In-system communication"), _([[Your comm link comes up again. It is the nerds, whom you'd almost forgotten. You hear Mia's voice: "Hey, what are you waiting for? You'd better be here within one period, or we'll get another pilot and pay them, not you!"]]) )
          mem.impatient = true
       end
-        misn.osdCreate( _("DIY Nerds"), {
-           fmt.f(_("Pick up the nerds on {pickup_pnt} for their return trip to {dropoff_pnt}"), {pickup_pnt=mem.destPlanet, dropoff_pnt=mem.srcPlanet}),
-           _("The nerds are getting impatient"),
-           fmt.f(_("You have {time} remaining"), {time=time.str(mem.expiryDate + time.new(0,3,0) - time.get(), 2)}),
-        })
-        misn.osdActive(2)
+         misn.osdCreate( _("DIY Nerds"), {
+            fmt.f(_("Pick up the nerds on {pickup_pnt} for their return trip to {dropoff_pnt}"), {pickup_pnt=mem.destPlanet, dropoff_pnt=mem.srcPlanet}),
+               _("The nerds are getting impatient"),
+               fmt.f(_("You have {time} remaining"), {time=time.str(mem.expiryDate + time.new(0,3,0) - time.get(), 2)}),
+         })
+         misn.osdActive(2)
    end
 end
 

@@ -47,7 +47,7 @@ end
 
 function accept ()
    if tk.yesno( _("Taking One for the Team"), fmt.f(_([[Benito smiles as you approach her. "Hello again, {player}!" she says. "I have another mission for you, should you choose to accept it. See, we have... an important covert operation we need to launch in Raelid. I won't bore you with the details of that operation, but I need someone to distract the Dvaered forces while we do this. You'll basically need to travel to the {sys} system and wreak havoc there so that the Dvaered go after you and not the soldiers conducting the operation.
-    "Of course, this will be a highly dangerous mission, and I can't guarantee any backup for you. You will be paid substantially, however, and this will surely earn you more respect among our ranks. Would you be interested?"]]), {player=player.name(), sys=mem.missys} ) ) then
+   "Of course, this will be a highly dangerous mission, and I can't guarantee any backup for you. You will be paid substantially, however, and this will surely earn you more respect among our ranks. Would you be interested?"]]), {player=player.name(), sys=mem.missys} ) ) then
       tk.msg( _("Taking One for the Team"), _([["Great! The team in charge of the operation will be hiding out around Raelid until they get an opening from your efforts. I will message you when they succeed. Good luck, and try not to get yourself killed!" She grins, and you grin back. Now to cause some mayhem...]]) )
 
       misn.accept()

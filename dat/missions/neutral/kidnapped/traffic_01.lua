@@ -249,10 +249,10 @@ You find an arrangement of credit chips she left in your ship along with a note:
 end
 -- idle
 function idle(shipp,pplanet)
-    shipp:moveto(pplanet:pos() + vec2.new( 400,  400), false)
-    shipp:moveto(pplanet:pos() + vec2.new(-400,  400), false)
-    shipp:moveto(pplanet:pos() + vec2.new(-400, -400), false)
-    shipp:moveto(pplanet:pos() + vec2.new( 400, -400), false)
+   shipp:moveto(pplanet:pos() + vec2.new( 400,  400), false)
+   shipp:moveto(pplanet:pos() + vec2.new(-400,  400), false)
+   shipp:moveto(pplanet:pos() + vec2.new(-400, -400), false)
+   shipp:moveto(pplanet:pos() + vec2.new( 400, -400), false)
 end
 --delay for msgs because if no delay they will pop in mid transit from system to system. A wait function would be awesome...
 function do_msg ()

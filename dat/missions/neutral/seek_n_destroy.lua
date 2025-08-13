@@ -361,8 +361,8 @@ function spawn_advisor ()
 end
 
 function hailme()
-    advisor:hailPlayer()
-    mem.hailie2 = hook.pilot(advisor, "hail", "hail_ad")
+   advisor:hailPlayer()
+   mem.hailie2 = hook.pilot(advisor, "hail", "hail_ad")
 end
 
 function hail_ad()
