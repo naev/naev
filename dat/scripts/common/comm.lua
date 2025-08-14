@@ -25,7 +25,9 @@ local function nameboxUpdateInternal( obj, params )
    if params.faction_str then
       faction_str = params.faction_str
    else
-      if params.bribed then
+      if params.escort then
+         faction_str = "#g".._("Escort").."#0"
+      elseif params.bribed then
          faction_str = "#g".._("Bribed").."#0"
       else
          if params.hostile then
@@ -82,6 +84,7 @@ end
 
 function comm.nameboxUpdate( plt )
    return nameboxUpdateInternal( plt, {
+      escort = plt:leader()==player.pilot(),
       bribed = plt:flags("bribed"),
       hostile = plt:hostile(),
    } )
