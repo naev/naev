@@ -774,6 +774,9 @@ impl Context {
             );
             gl.clear_color(0.0, 0.0, 0.0, 0.0);
             gl.clear(glow::COLOR_BUFFER_BIT | glow::DEPTH_BUFFER_BIT);
+            // image-rs uses tight packing
+            gl.pixel_store_i32(glow::UNPACK_ALIGNMENT, 1);
+            gl.pixel_store_i32(glow::PACK_ALIGNMENT, 1);
         }
         let ctx = Context {
             sdlvid,
@@ -867,7 +870,6 @@ impl Context {
         let mut data: Vec<u8> = vec![0; (w * h * 3) as usize];
         let gl = &self.gl;
         unsafe {
-            //gl.pixel_store_i32(glow::PACK_ALIGNMENT, 1);
             gl.read_pixels(
                 0,
                 0,
