@@ -20,7 +20,8 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
       "  If -S is set, no spoilers on pictures."
       "  If -E is set, early game map."
       "  If --clean-ssys is set, cleans up data/ dir before starting."
-      "    THIS WILL REMOVE ANYTHING GIT DOES NOT KNOW"
+      "    This will REMOVE anything git does not know in SSYS"
+      "    and will RESET everything in SSYS, SPOBS, and MAP_DECORATOR"
       "  If --just-clean-ssys is set, applies the previous one and stops."
    )
    ( IFS=$'\n'; echo "${DOC[*]}" ) >&2
@@ -36,8 +37,8 @@ for i in "$@" ; do
    if [ "$i" = "-f" ] ; then
       FORCE=1
    elif [ "$i" = "--clean-ssys" ] || [ "$i" == "--just-clean-ssys" ] ; then
-      git clean -fd "$DAT"
-      git checkout "$DAT"
+      git clean -fd "$DAT/ssys"
+      git checkout "$DAT/ssys" "$DAT/map_decorator" "$DAT/spobs"
       if [ "$i" == "--just-clean-ssys" ] ; then
          exit 0
       fi
