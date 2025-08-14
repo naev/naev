@@ -2929,6 +2929,7 @@ dat/board.lua
 dat/comm.lua
 dat/common.lua
 dat/constants.lua
+dat/credits.lua
 dat/effects/lua/fadeout.lua
 dat/effects/lua/fadeout_norender.lua
 dat/effects/lua/hypergate_enter.lua
