@@ -61,7 +61,7 @@ float random(float n)
 }
 
 /* Returns a value in the [0,1] range.
- http://byteblacksmith.com/improvements-to-the-canonical-one-liner-glsl-rand-for-opengl-es-2-0/
+ * http://byteblacksmith.com/improvements-to-the-canonical-one-liner-glsl-rand-for-opengl-es-2-0/
  */
 float random(vec2 co)
 {

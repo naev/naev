@@ -48,25 +48,25 @@ float sdSegment( in vec2 p, in vec2 a, in vec2 b )
 /* Equilateral triangle centered at p facing "up" */
 float sdTriangleEquilateral( vec2 p )
 {
-	const float k = sqrt(3.0);
-	p.x = abs(p.x) - 1.0;
-	p.y = p.y + 1.0/k;
-	if( p.x+k*p.y>0.0 ) p = vec2(p.x-k*p.y,-k*p.x-p.y)/2.0;
-	p.x -= clamp( p.x, -2.0, 0.0 );
-	return -length(p)*sign(p.y);
+   const float k = sqrt(3.0);
+   p.x = abs(p.x) - 1.0;
+   p.y = p.y + 1.0/k;
+   if( p.x+k*p.y>0.0 ) p = vec2(p.x-k*p.y,-k*p.x-p.y)/2.0;
+   p.x -= clamp( p.x, -2.0, 0.0 );
+   return -length(p)*sign(p.y);
 }
 
 /* Isosceles triangle centered at p facing "up".
  * q indicates (width, height) */
 float sdTriangleIsosceles( vec2 p, vec2 q )
 {
-	p.x = abs(p.x);
-	vec2 a = p - q*clamp( dot(p,q)/dot(q,q), 0.0, 1.0 );
-	vec2 b = p - q*vec2( clamp( p.x/q.x, 0.0, 1.0 ), 1.0 );
-	float s = -sign( q.y );
-	vec2 d = min( vec2( dot(a,a), s*(p.x*q.y-p.y*q.x) ),
-			vec2( dot(b,b), s*(p.y-q.y)  ));
-	return -sqrt(d.x)*sign(d.y);
+   p.x = abs(p.x);
+   vec2 a = p - q*clamp( dot(p,q)/dot(q,q), 0.0, 1.0 );
+   vec2 b = p - q*vec2( clamp( p.x/q.x, 0.0, 1.0 ), 1.0 );
+   float s = -sign( q.y );
+   vec2 d = min( vec2( dot(a,a), s*(p.x*q.y-p.y*q.x) ),
+         vec2( dot(b,b), s*(p.y-q.y)  ));
+   return -sqrt(d.x)*sign(d.y);
 }
 
 /* Pentagon centered at p with radius r. */
@@ -122,10 +122,10 @@ float sdArc( vec2 p, vec2 sca, vec2 scb, float ra, float rb )
  * r is the radius */
 float sdPie( vec2 p, vec2 c, float r )
 {
-    p.x = abs(p.x);
-    float l = length(p) - r;
-    float m = length(p-c*clamp(dot(p,c),0.0,r));
-    return max(l,m*sign(c.y*p.x-c.x*p.y));
+   p.x = abs(p.x);
+   float l = length(p) - r;
+   float m = length(p-c*clamp(dot(p,c),0.0,r));
+   return max(l,m*sign(c.y*p.x-c.x*p.y));
 }
 
 /* Rhombus at position p with size b. */
@@ -140,14 +140,14 @@ float sdRhombus( vec2 p, vec2 b )
 /* Egg shape (semicircle glued half a vesica) at position p with size b. The cusp is at vec2(-b.x, 0). */
 float sdEgg( vec2 p, vec2 b )
 {
-    /* Transform to Inigo's code */
-    const float k           = 1.73205080756887729353;  /* sqrt(3) */
-    float ra = b.y;
-    float rb = ra + 2.0*b.x - 2.0*b.x*b.x/ra;
-    p = vec2(abs(p.y), b.x - ra - p.x);
-    /* The rest of the calculation matches the web page cited above. */
-    float r = ra - rb;
-    return ((p.y<0.0)       ? length(vec2(p.x,  p.y    )) - r :
+   /* Transform to Inigo's code */
+   const float k           = 1.73205080756887729353;  /* sqrt(3) */
+   float ra = b.y;
+   float rb = ra + 2.0*b.x - 2.0*b.x*b.x/ra;
+   p = vec2(abs(p.y), b.x - ra - p.x);
+   /* The rest of the calculation matches the web page cited above. */
+   float r = ra - rb;
+   return   ((p.y<0.0)      ? length(vec2(p.x,  p.y    )) - r :
             (k*(p.x+r)<p.y) ? length(vec2(p.x,  p.y-k*r)) :
                               length(vec2(p.x+r,p.y    )) - 2.0*r) - rb;
 }
@@ -174,32 +174,35 @@ float sdUnevenCapsuleY( vec2 p, float ra, float rb, float h )
    float m = dot(c,p);
    float n = dot(p,p);
 
-        if( k < 0.0   ) return sqrt(n)               - ra;
-   else if( k > c.x*h ) return sqrt(n+h*h-2.0*h*p.y) - rb;
-                        return m                     - ra;
+   if( k < 0.0 )
+      return sqrt(n)               - ra;
+   else if( k > c.x*h )
+      return sqrt(n+h*h-2.0*h*p.y) - rb;
+   else
+      return m                     - ra;
 }
 
 /* Uneven capsule between points pa and pb with radius ra at point pa and rb at
  * point pb. */
 float sdUnevenCapsule( vec2 p, vec2 pa, vec2 pb, float ra, float rb )
 {
-    p  -= pa;
-    pb -= pa;
-    float h = dot(pb,pb);
-    vec2  q = vec2( dot(p,vec2(pb.y,-pb.x)), dot(p,pb) )/h;
+   p  -= pa;
+   pb -= pa;
+   float h = dot(pb,pb);
+   vec2  q = vec2( dot(p,vec2(pb.y,-pb.x)), dot(p,pb) )/h;
 
-    q.x = abs(q.x);
+   q.x = abs(q.x);
 
-    float b = ra-rb;
-    vec2  c = vec2(sqrt(h-b*b),b);
+   float b = ra-rb;
+   vec2  c = vec2(sqrt(h-b*b),b);
 
-    float k = cro(c,q);
-    float m = dot(c,q);
-    float n = dot(q,q);
+   float k = cro(c,q);
+   float m = dot(c,q);
+   float n = dot(q,q);
 
-         if( k < 0.0 ) return sqrt(h*(n            )) - ra;
-    else if( k > c.x ) return sqrt(h*(n+1.0-2.0*q.y)) - rb;
-                       return m                       - ra;
+         if( k < 0.0 )  return sqrt(h*(n            )) - ra;
+   else  if( k > c.x )  return sqrt(h*(n+1.0-2.0*q.y)) - rb;
+                        return m                       - ra;
 }
 
 /*  p is center
@@ -219,13 +222,13 @@ float sdVesica( vec2 p, float r, float d )
  */
 float sdTrapezoid( vec2 p, float r1, float r2, float he )
 {
-    vec2 k1 = vec2(r2,he);
-    vec2 k2 = vec2(r2-r1,2.0*he);
-    p.x = abs(p.x);
-    vec2 ca = vec2(p.x-min(p.x,(p.y<0.0)?r1:r2), abs(p.y)-he);
-    vec2 cb = p - k1 + k2*clamp( dot(k1-p,k2)/dot2(k2), 0.0, 1.0 );
-    float s = (cb.x<0.0 && ca.y<0.0) ? -1.0 : 1.0;
-    return s*sqrt( min(dot2(ca),dot2(cb)) );
+   vec2 k1 = vec2(r2,he);
+   vec2 k2 = vec2(r2-r1,2.0*he);
+   p.x = abs(p.x);
+   vec2 ca = vec2(p.x-min(p.x,(p.y<0.0)?r1:r2), abs(p.y)-he);
+   vec2 cb = p - k1 + k2*clamp( dot(k1-p,k2)/dot2(k2), 0.0, 1.0 );
+   float s = (cb.x<0.0 && ca.y<0.0) ? -1.0 : 1.0;
+   return s*sqrt( min(dot2(ca),dot2(cb)) );
 }
 
 float sdSmoothUnion( float a, float b, float k )
