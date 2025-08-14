@@ -628,9 +628,9 @@ local function _board_cannibalize(spare)
    local left=armour-dmg
 
    if left<=0 then
-      local fact=board_plt:faction()
+      local fct=board_plt:faction()
       player.msg(fmt.f(_("{plt} was destroyed."),{plt=board_plt}))
-      fact:hit( -board_plt:points(), system.cur(), "destroy")
+      fct:hit( -board_plt:points(), system.cur(), "destroy")
       board_close()
    else
       player.msg(fmt.f(_("{plt} was left with {lft} armour. Next time it won't survive!"),{lft=fmt.number(left), plt=board_plt}))
@@ -755,8 +755,7 @@ function board_close ()
    der.sfx.unboard:play()
 end
 
-_board = function ( plt )
-   board_plt = plt
+function _board( plt )
    loot_mod = player.pilot():shipstat("loot_mod", true)
    local lootables = compute_lootables( plt )
 
@@ -888,10 +887,19 @@ function board( plt )
       return
    end
 
-   der.sfx.board:play()
-   _board( plt )
+   board_wdw = nil
+   board_wgt = nil
+   board_plt = nil
+   board_fcthit = nil
+   board_freespace = nil
+   board_fcthit_txt_msg = nil
+   cargo_image_generic = nil
 
+   der.sfx.board:play()
+   board_plt = plt
+   _board( plt )
    luatk.run()
+   board_plt = nil
 end
 
 function board_fcthit_check( func )
