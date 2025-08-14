@@ -16,6 +16,7 @@ return function ()
 
    return {
       mission = "Point of Interest",
+      chance = 0.5,
       func = function ()
          local poiintro = "Point of Interest - Intro"
 

@@ -80,12 +80,14 @@ function create ()
       local weights = 0
       for _k,sp in ipairs(special_list) do
          weights = weights + sp.weight
-         sp.chance = weights
+         sp._weighted = weights
       end
       local r = rnd.rnd()
       for _k,sp in ipairs(special_list) do
-         if r < sp.chance / weights then
-            dospecial = sp
+         if r < sp._weighted / weights then
+            if rnd.rnd() < (sp.chance or 1) then
+               dospecial = sp
+            end
             break
          end
       end
