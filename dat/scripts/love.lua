@@ -123,7 +123,11 @@ local function _draw( x, y, w, h )
    love.draw()
 end
 local function _update( dt )
-   love._firsttick = true
+   if not love._firsttick then
+      love._firsttick = true
+      love.update(0)
+      return
+   end
    if love.keyboard and love.keyboard._repeat then
       for k,v in pairs(love.keyboard._keystate) do
          if v then
