@@ -54,7 +54,7 @@ physfs_sources += [
 libphysfs = static_library('physfs', physfs_sources, dependencies: physfs_deps)
 
 physfs_dep = declare_dependency(
-    link_with: libphysfs,
-    include_directories: 'src',
-    dependencies: physfs_deps,
-    version: meson.project_version())
+   link_with: libphysfs,
+   include_directories: 'src',
+   dependencies: physfs_deps,
+   version: meson.project_version())

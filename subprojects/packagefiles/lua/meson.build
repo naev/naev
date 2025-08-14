@@ -5,25 +5,25 @@ c_args = cc.get_supported_arguments(['-Wno-address', '-Wno-cast-function-type', 
 add_project_arguments(c_args, language: 'c')
 
 system_deps = [cc.find_library('dl', required : false),
-  cc.find_library('m', required : false)
+   cc.find_library('m', required : false)
 ]
 
 if host_machine.system() == 'linux'
-  add_project_arguments('-DLUA_USE_LINUX', language : 'c')
-  readline_dep = cc.find_library('readline')
+   add_project_arguments('-DLUA_USE_LINUX', language : 'c')
+   readline_dep = cc.find_library('readline')
 elif host_machine.system() == 'darwin'
-  add_project_arguments('-DLUA_USE_MACOSX', language : 'c')
-  readline_dep = cc.find_library('readline')
+   add_project_arguments('-DLUA_USE_MACOSX', language : 'c')
+   readline_dep = cc.find_library('readline')
 elif host_machine.system() == 'windows'
-  add_project_arguments('-DLUA_USE_WINDOWS', language : 'c')
-  readline_dep = []
+   add_project_arguments('-DLUA_USE_WINDOWS', language : 'c')
+   readline_dep = []
 else
-  readline_dep = []
-  error('Unsupported platform')
+   readline_dep = []
+   error('Unsupported platform')
 endif
 
 incdir = include_directories('src')
 subdir('src')
 
 lua_dep = declare_dependency(link_with : lualib,
-  include_directories : incdir)
+   include_directories : incdir)

@@ -18,5 +18,5 @@ foreach ns: files(naevpedia_ships_sources)
       output: '@BASENAME@.md',
       install: true,
       install_dir: ndata_path / 'dat/naevpedia/ships',
-    )
+   )
 endforeach

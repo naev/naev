@@ -185,7 +185,7 @@ if buildExec.disabled() == false
 
    if use_system_suitesparse
       message('Note: Naev needs the following SuiteSparse libraries: amd, colamd, cholmod, and either csparse or cxsparse. ' +
-              'It can use its own copies if you run "meson configure --force-fallback-for=SuiteSparse".')
+         'It can use its own copies if you run "meson configure --force-fallback-for=SuiteSparse".')
       foreach csparse_name : ['cxsparse', 'csparse']
          system_csparse = cc.find_library(csparse_name, required: false)
          if system_csparse.found()
@@ -391,13 +391,13 @@ target_triplet = get_option('target_triplet')
 
 # Invoke bindgen to generate Rust bindings
 naevcrs = rust.bindgen(
-  input: naevch,
-  output: 'naevc.rs',
-  include_directories: [include_dirs, '.'],
-  dependencies: naev_deps,
-  language: 'c',
-  args: bindgen_args,
-  #c_args: bindgen_cargs,
+   input: naevch,
+   output: 'naevc.rs',
+   include_directories: [include_dirs, '.'],
+   dependencies: naev_deps,
+   language: 'c',
+   args: bindgen_args,
+   #c_args: bindgen_cargs,
 )
 
    copydir = find_program('utils/build/copydir.py')
@@ -620,8 +620,8 @@ naevcrs = rust.bindgen(
       install_data(metainfo_file, install_dir: get_option('datadir') / 'metainfo')
 
       install_data(['extras/logos/logo16.png', 'extras/logos/logo32.png', 'extras/logos/logo64.png', 'extras/logos/logo128.png', 'extras/logos/naev.png'],
-             rename : ['16x16/apps/org.naev.Naev.png', '32x32/apps/org.naev.Naev.png', '64x64/apps/org.naev.Naev.png', '128x128/apps/org.naev.Naev.png', '256x256/apps/org.naev.Naev.png'],
-             install_dir: get_option('datadir') / 'icons/hicolor')
+         rename : ['16x16/apps/org.naev.Naev.png', '32x32/apps/org.naev.Naev.png', '64x64/apps/org.naev.Naev.png', '128x128/apps/org.naev.Naev.png', '256x256/apps/org.naev.Naev.png'],
+         install_dir: get_option('datadir') / 'icons/hicolor')
       install_man('naev.6')
    endif
 
@@ -657,15 +657,15 @@ endif
 ####
 luacheckrc_extractor = find_program(join_paths('utils','luacheckrc_extractor.py'))
 custom_target(
-  'luacheckrc_gen',
-  build_by_default: true,
-  command: [
-    luacheckrc_extractor,
-    nlua_source + files('src/nlua_vec2.c'),
-    '--output',
-    join_paths(meson.current_source_dir(),'utils','@OUTPUT@'),
-  ],
-  output: [
-    'luacheckrc_gen.lua',
-  ]
+   'luacheckrc_gen',
+   build_by_default: true,
+   command: [
+      luacheckrc_extractor,
+      nlua_source + files('src/nlua_vec2.c'),
+      '--output',
+      join_paths(meson.current_source_dir(),'utils','@OUTPUT@'),
+   ],
+   output: [
+      'luacheckrc_gen.lua',
+   ]
 )
