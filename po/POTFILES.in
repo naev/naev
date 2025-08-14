@@ -3914,8 +3914,6 @@ src/input.c
 src/input.h
 src/intlist.c
 src/intlist.h
-src/intro.c
-src/intro.h
 src/joystick.c
 src/joystick.h
 src/khrplatform.h

@@ -44,7 +44,7 @@ deterministic_sort() { LC_ALL=C sort; }
 
 IFS=$'\n'
 readarray -t ART <<< "$(cd artwork; find_files gfx/loading txt | sed 's|^|artwork/|')"
-po/credits_pot.py po/credits.pot dat/intro dat/AUTHORS "${ART[@]}"
+po/credits_pot.py po/credits.pot dat/AUTHORS "${ART[@]}"
 
 readarray -t MD1 <<< "$(cd dat; find_files naevpedia md | sed 's|^|dat/|')"
 readarray -t MD2 <<< "$(find "${BUILDDIR}/dat/naevpedia" -name "*.md")"

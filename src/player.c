@@ -34,7 +34,6 @@
 #include "hook.h"
 #include "info.h"
 #include "input.h"
-#include "intro.h"
 #include "land.h"
 #include "land_outfits.h"
 #include "load.h"
@@ -357,12 +356,6 @@ void player_new( void )
 
    if ( player_newMake() )
       return;
-
-   /* Display the intro. */
-   intro_display( INTRO_PATH, "intro" );
-
-   /* Play music. */
-   music_choose( "ambient" );
 
    /* Set loaded version. */
    player.loaded_version = strdup( naev_version( 0 ) );
