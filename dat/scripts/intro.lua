@@ -1,4 +1,5 @@
 local love = require "love"
+local lf = require "love.filesystem"
 local intro = {}
 
 function intro.init( _params )
@@ -25,7 +26,26 @@ function intro.fadeout()
    } )
 end
 
-function intro.run()
+local function lineiter( s )
+   if s:sub(-1)~="\n" then s=s.."\n" end
+   return s:gmatch("(.-)\n")
+end
+
+function intro.run( filename )
+   -- Load file name if specified
+   if filename then
+      local data = lf.read( "AUTHORS" )
+      if data==nil then
+         return error(string.format("intro: unable to read '%s'", "AUTHORS"))
+      end
+      intro.init()
+      for l in lineiter(data) do
+         intro.text(_(l))
+      end
+      intro.run()
+   end
+
+   -- Set up and run Love
    local c = naev.cache()
    c._intro = intro.data
    love.exec( "scripts/intro" )
