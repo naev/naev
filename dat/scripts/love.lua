@@ -201,7 +201,7 @@ end
 --[[
 -- Initialize
 --]]
-function love.exec( path )
+function love.exec( path, data )
    if love._started then
       error(_("can only run one Love2D instance at a time!"))
    end
@@ -281,7 +281,7 @@ function love.exec( path )
 
    -- Run set up function defined in Love2d spec
    dolua( mainpath )
-   love.load()
+   love.load( data )
 
    -- Actually run in Naev
    if love.fullscreen then
@@ -299,7 +299,7 @@ function love.exec( path )
    -- Restore the package.path
    package.path = love._path
 end
-function love.run()
+function love.run( data )
    if love._started then
       error(_("can only run one Love2D instance at a time!"))
    end
@@ -330,7 +330,7 @@ function love.run()
    end
 
    -- Run set up function defined in Love2d spec
-   love.load()
+   love.load( data )
 
    -- Actually run in Naev
    if love.fullscreen then
