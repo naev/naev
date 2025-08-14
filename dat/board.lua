@@ -662,7 +662,7 @@ local function cargo_list ()
    return clist, cnames
 end
 
-local cargo_btn, cargo_wdw, cargo_lst, cargo_jet -- forward declaration
+local cargo_btn, cargo_wdw, cargo_lst, cargo_jet, manage_cargo -- forward declaration
 local function cargo_jettison( cargo, max )
    luatk.msgFader( fmt.f(_("Jettison {cargo}"),{cargo=cargo}),
       fmt.f(_("How many tonnes of {cargo} do you wish to jettison?"),{cargo=cargo}), 1, max, 10, function( val )
@@ -674,21 +674,17 @@ local function cargo_jettison( cargo, max )
          fmt.f(_("Are you sure you want to get rid of {tonnes} of {cargo}?"),
             {tonnes=fmt.tonnes(val), cargo=cargo} ),
          function ()
+            -- Get rid of cargo
             local q = player.fleetCargoJet( cargo, val )
+
+            -- Recreate window
+            manage_cargo()
+
+            -- Display message on top
             luatk.msg( fmt.f(_("Bye Bye {cargo}"),{cargo=cargo} ),
                fmt.f(_("You dump {tonnes} of {cargo} out the airlock of your ship."),
                   {tonnes=fmt.tonnes(q), cargo=cargo}) )
                board_updateFreespace()
-
-               cargo_lst:destroy()
-               local clist, cnames = cargo_list ()
-               if #clist <= 0 then
-                  cnames = { _("None") }
-                  cargo_btn:disable()
-                  cargo_jet:disable()
-               end
-               local w, h = cargo_wdw:getDimensions()
-               cargo_lst = luatk.newList( cargo_wdw, 20, 65, w-40, h-130, cnames )
          end )
    end )
 end
@@ -703,9 +699,18 @@ function cargo_resetButton()
    end
 end
 
-local function manage_cargo ()
+function manage_cargo ()
    local clist, cnames = cargo_list ()
-   if #cnames <= 0 then return end
+   local nocargo = false
+   if #clist <= 0 then
+      cnames = { _("None") }
+      nocargo = true
+   end
+
+   --- Destroy if exists
+   if cargo_wdw then
+      cargo_wdw:destroy()
+   end
 
    local w, h = 400, 400
    local wdw = luatk.newWindow( nil, nil, w, h )
@@ -726,6 +731,11 @@ local function manage_cargo ()
       cargo_jettison( c.c, c.q )
       return true
    end )
+
+   if nocargo then
+      cargo_btn:disable()
+      cargo_jet:disable()
+   end
 end
 
 _board_close = function ( )
