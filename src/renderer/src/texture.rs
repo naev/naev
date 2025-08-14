@@ -234,22 +234,26 @@ impl TextureData {
             false => img,
         };
 
-        let (imgdata, fmt) = match has_alpha {
-            true => (img.to_rgba8().into_flat_samples(), glow::RGBA),
-            false => (img.to_rgb8().into_flat_samples(), glow::RGB),
+        let (imgdata, fmt): (image::DynamicImage, u32) = match has_alpha {
+            //true => (img.to_rgba8().into_flat_samples(), glow::RGBA),
+            //false => (img.to_rgb8().into_flat_samples(), glow::RGB),
+            true => (img.to_rgba8().into(), glow::RGBA),
+            false => (img.to_rgb8().into(), glow::RGB),
         };
+        let (w, h) = (imgdata.width(), imgdata.height());
 
         let internalformat = TextureFormat::auto(has_alpha, srgb);
+        let gldata = glow::PixelUnpackData::Slice(Some(&imgdata.as_bytes()));
+
         let texture = unsafe {
             let texture = gl.create_texture().map_err(|e| anyhow::anyhow!(e))?;
             gl.bind_texture(glow::TEXTURE_2D, Some(texture));
-            let gldata = glow::PixelUnpackData::Slice(Some(imgdata.as_slice()));
             gl.tex_image_2d(
                 glow::TEXTURE_2D,
                 0,
                 internalformat,
-                imgdata.layout.width as i32,
-                imgdata.layout.height as i32,
+                w as i32,
+                h as i32,
                 0,
                 fmt,
                 glow::UNSIGNED_BYTE,
@@ -264,8 +268,8 @@ impl TextureData {
 
         Ok(TextureData {
             name: name.map(String::from),
-            w: imgdata.layout.width as usize,
-            h: imgdata.layout.height as usize,
+            w: w as usize,
+            h: h as usize,
             texture,
             srgb,
             sdf: false,
@@ -691,7 +695,7 @@ impl TextureSource {
                         std::io::BufReader::new(rw),
                         image::ImageFormat::from_path(path)?,
                     )
-                    //.with_guessed_format()?
+                    //let img = image::ImageReader::new(std::io::BufReader::new(rw)).with_guessed_format()?
                     .decode()?;
                     let ctx = &sctx.lock();
                     match sdf {
