@@ -37,28 +37,28 @@
          \markdownRendererInputVerbatim{#1}%
       },
       table = {%
-    \markdownLaTeXTable={}%
-    \markdownLaTeXTableAlignment={}%
-    \markdownLaTeXTableEnd={%
-      \markdownLaTeXBottomRule
-      \end{tabular}%
-      \vspace{3mm}}%
-    \ifx\empty#1\empty\else
-      \addto@hook\markdownLaTeXTable{%
-        \begin{table}[htbp]
-        \centering}%
-      \addto@hook\markdownLaTeXTableEnd{%
-        \caption{#1}
-        \end{table}}%
-    \fi
-    \addto@hook\markdownLaTeXTable{%
-      \vspace{3mm}%
-      \begin{tabular}}%
-    \markdownLaTeXRowCounter=0%
-    \markdownLaTeXRowTotal=#2%
-    \markdownLaTeXColumnTotal=#3%
-    \markdownLaTeXRenderTableRow
-  }
+         \markdownLaTeXTable={}%
+         \markdownLaTeXTableAlignment={}%
+         \markdownLaTeXTableEnd={%
+            \markdownLaTeXBottomRule
+            \end{tabular}%
+            \vspace{3mm}}%
+         \ifx\empty#1\empty\else
+            \addto@hook\markdownLaTeXTable{%
+               \begin{table}[htbp]
+               \centering}%
+            \addto@hook\markdownLaTeXTableEnd{%
+               \caption{#1}
+               \end{table}}%
+         \fi
+         \addto@hook\markdownLaTeXTable{%
+            \vspace{3mm}%
+            \begin{tabular}}%
+         \markdownLaTeXRowCounter=0%
+         \markdownLaTeXRowTotal=#2%
+         \markdownLaTeXColumnTotal=#3%
+         \markdownLaTeXRenderTableRow
+      }
    },
 }
 \makeatother
@@ -71,17 +71,17 @@
 }
 
 \lstdefinelanguage{XML}{
-  basicstyle=\ttfamily\footnotesize,
-  morestring=[b]",
-  moredelim=[s][\bfseries\color{Maroon}]{<}{\ },
-  moredelim=[s][\bfseries\color{Maroon}]{</}{>},
-  moredelim=[l][\bfseries\color{Maroon}]{/>},
-  moredelim=[l][\bfseries\color{Maroon}]{>},
-  morecomment=[s]{<?}{?>},
-  morecomment=[s]{<!--}{-->},
-  commentstyle=\color{DarkOliveGreen},
-  stringstyle=\color{blue},
-  identifierstyle=\color{red}
+   basicstyle=\ttfamily\footnotesize,
+   morestring=[b]",
+   moredelim=[s][\bfseries\color{Maroon}]{<}{\ },
+   moredelim=[s][\bfseries\color{Maroon}]{</}{>},
+   moredelim=[l][\bfseries\color{Maroon}]{/>},
+   moredelim=[l][\bfseries\color{Maroon}]{>},
+   morecomment=[s]{<?}{?>},
+   morecomment=[s]{<!--}{-->},
+   commentstyle=\color{DarkOliveGreen},
+   stringstyle=\color{blue},
+   identifierstyle=\color{red}
 }
 
 \newunicodechar{✔}{{\checkmark}}
@@ -97,7 +97,7 @@
 \definecolor{graynumbers}{rgb}{0.5, 0.5, 0.5}
 
 \lstset{
-	defaultdialect=[5.1]Lua
+   defaultdialect=[5.1]Lua
    autogobble,
    columns=fullflexible,
    showspaces=false,
