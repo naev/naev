@@ -34,9 +34,9 @@ end
 function intro.run( filename )
    -- Load file name if specified
    if filename then
-      local data = lf.read( "AUTHORS" )
+      local data = lf.read( filename )
       if data==nil then
-         return error(string.format("intro: unable to read '%s'", "AUTHORS"))
+         return error(string.format("intro: unable to read '%s'", filename))
       end
       intro.init()
       for l in lineiter(data) do
