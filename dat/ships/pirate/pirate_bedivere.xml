@@ -10,7 +10,7 @@
  <time_mod>1.25</time_mod>
  <fabricator>Skull and Bones</fabricator>
  <faction>Dreamer Clan</faction>
- <description>Realizing the Bedivere's potential as a scavenger vessel, the Skull and Bones version of the ship is refitted for efficent and bountiful looting. In addition to the mundane improvements to stealth ability, the weapon mounts have been shrunk to make room for more crew and boarding androids. Thus the Pirate Bedivere best used in a fleet with more combat-capable ships.</description>
+ <description>Realizing the Bedivere's potential as a versatile scavenger vessel, the Skull and Bones refitted the model for more efficent and plundering. In addition to a rehaul of the electronic warfare systems, the weapon mounts have been shrunk to make room for more crew and boarding androids. Thus, the Pirate Bedivere best used in a fleet with more combat-capable ships.</description>
  <health>
   <armour>340</armour>
   <armour_regen>0</armour_regen>
@@ -45,7 +45,8 @@
  <stats>
   <ew_hide>-10</ew_hide>
   <ew_stealth_timer>-25</ew_stealth_timer>
-  <loot_mod>35</loot_mod>
+  <ew_detect>15</ew_detect>
+  <loot_mod>50</loot_mod>
  </stats>
  <tags>
   <tag>pirate</tag>
