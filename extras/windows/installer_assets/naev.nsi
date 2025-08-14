@@ -114,61 +114,61 @@ LicenseLangString naev-license ${LANG_ENGLISH} "legal\naev-license.txt"
 
 ; Main Naev installation (always installed)
 Section "Naev Engine and Data" SecMain
-  SectionIn RO
-  SetOutPath $INSTDIR
-  File /r bin\*
-  File logo.ico
+   SectionIn RO
+   SetOutPath $INSTDIR
+   File /r bin\*
+   File logo.ico
 SectionEnd
 
 ; Portable section (optional)
 ; Not selected by default; installs datapath.lua and skips registry/shortcuts.
 Section "Portable Install" SecPortable
-  SetOutPath $INSTDIR
-  File datapath.lua
+   SetOutPath $INSTDIR
+   File datapath.lua
 SectionEnd
 
 ; Post-install section
 Section "-PostInstall"
-  ${If} ${SectionIsSelected} ${SecPortable}
-    ; Portable mode selected: Do NOT create registry keys or shortcuts
-  ${Else}
-    ; Normal Install: Create registry keys, shortcuts, and uninstall entries
-    SetShellVarContext all
+   ${If} ${SectionIsSelected} ${SecPortable}
+      ; Portable mode selected: Do NOT create registry keys or shortcuts
+   ${Else}
+      ; Normal Install: Create registry keys, shortcuts, and uninstall entries
+      SetShellVarContext all
 
-    !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
+      !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
 
       CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
       CreateShortCut "$SMPROGRAMS\$StartMenuFolder\${NAME}.lnk" "$INSTDIR\naev.exe"
       CreateShortCut "$DESKTOP\${NAME}.lnk" "$INSTDIR\naev.exe"
 
-    !insertmacro MUI_STARTMENU_WRITE_END
+      !insertmacro MUI_STARTMENU_WRITE_END
 
-    ;Create Registry Keys
-    WriteRegStr HKLM "SOFTWARE\${NAME}" "" "$INSTDIR"
-    WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "DisplayName" "${PACKAGE} (remove only)"
-    WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "UninstallString" '"$INSTDIR\uninstall.exe"'
-    WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "QuietUninstallString" "$\"$INSTDIR\Uninstall.exe$\" /S"
-    WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "Publisher" "${NAEV_DEV}"
-    WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "DisplayVersion" "${VERSION}"
-    WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "HelpLink" "${NAEV_URL}"
-    WriteRegDWORD HKLM "${UNINSTALL_KEY}\${NAME}" "NoModify" 1
-    WriteRegDWORD HKLM "${UNINSTALL_KEY}\${NAME}" "NoRepair" 1
-    ;Create Uninstaller
-    WriteUninstaller "uninstall.exe"
-  ${EndIf}
+      ;Create Registry Keys
+      WriteRegStr HKLM "SOFTWARE\${NAME}" "" "$INSTDIR"
+      WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "DisplayName" "${PACKAGE} (remove only)"
+      WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "UninstallString" '"$INSTDIR\uninstall.exe"'
+      WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "QuietUninstallString" "$\"$INSTDIR\Uninstall.exe$\" /S"
+      WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "Publisher" "${NAEV_DEV}"
+      WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "DisplayVersion" "${VERSION}"
+      WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "HelpLink" "${NAEV_URL}"
+      WriteRegDWORD HKLM "${UNINSTALL_KEY}\${NAME}" "NoModify" 1
+      WriteRegDWORD HKLM "${UNINSTALL_KEY}\${NAME}" "NoRepair" 1
+      ;Create Uninstaller
+      WriteUninstaller "uninstall.exe"
+   ${EndIf}
 SectionEnd
 
 ;--------------------------------
 ;Uninstaller Section
 Section Uninstall
-  !insertmacro MUI_STARTMENU_GETFOLDER Application $StartMenuFolder
-  DeleteRegKey HKLM "${UNINSTALL_KEY}\${NAME}"
-  DeleteRegKey HKLM "SOFTWARE\${NAME}"
-  Delete "$DESKTOP\${NAME}.lnk"
-  RMDir /r "$INSTDIR"
+   !insertmacro MUI_STARTMENU_GETFOLDER Application $StartMenuFolder
+   DeleteRegKey HKLM "${UNINSTALL_KEY}\${NAME}"
+   DeleteRegKey HKLM "SOFTWARE\${NAME}"
+   Delete "$DESKTOP\${NAME}.lnk"
+   RMDir /r "$INSTDIR"
 
-  SetShellVarContext all
-  RMDir /r "$SMPROGRAMS\${PACKAGE}"
+   SetShellVarContext all
+   RMDir /r "$SMPROGRAMS\${PACKAGE}"
 SectionEnd
 
 ;--------------------------------
