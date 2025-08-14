@@ -42,7 +42,6 @@
 #include "map_overlay.h"
 #include "menu.h"
 #include "mission.h"
-#include "music.h"
 #include "ndata.h"
 #include "news.h"
 #include "nlua_outfit.h"

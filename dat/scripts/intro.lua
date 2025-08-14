@@ -42,14 +42,11 @@ function intro.run( filename )
       for l in lineiter(data) do
          intro.text(_(l))
       end
-      intro.run()
    end
 
    -- Set up and run Love
-   local c = naev.cache()
-   c._intro = intro.data
-   love.exec( "scripts/intro" )
-   c._intro = nil
+   love.exec( "scripts/intro", intro.data )
+   intro.data = nil -- Consume the data
 end
 
 return intro

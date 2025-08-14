@@ -3,6 +3,7 @@ local love = require "love"
 local fc = require "colour"
 local intro = {}
 
+-- Constants
 local INTRO_SPEED = 30
 local SIDE_MARGIN = 100
 local IMAGE_WIDTH = 300
@@ -11,28 +12,27 @@ local FADEIN      = 1
 local FADEOUT     = 1
 local FONT_SIZE   = 16
 
-local data
-local done = false
-local pos = 0
-local vel = INTRO_SPEED
-local alpha = 0
-local text_width
-local text_off
-local font
-local nw, nh
+-- Local variables
+local data, done, pos, vel, alpha, text_width, text_off, font, nw, nh, firsttick
 
-function intro.load()
+function intro.load( origdata )
+   -- Defaults
+   firsttick = false
+   done  = false
+   pos   = 0
+   vel   = INTRO_SPEED
+   alpha = 0
+
    love.graphics.setBackgroundColour( 0, 0, 0, 0 )
 
-   local c = naev.cache()
-   data = c._intro
-   font = lg.newFont( FONT_SIZE )
+   data  = origdata
+   font  = lg.newFont( FONT_SIZE )
    font:setOutline(1)
    nw, nh = lg.getDimensions()
    text_width = nw - 2*SIDE_MARGIN - IMAGE_WIDTH
    text_off = SIDE_MARGIN + IMAGE_WIDTH
    local font_height = font:getLineHeight()
-   pos = nh
+   pos   = nh
 
    -- Load and prepare data
    for k,v in ipairs(data) do
@@ -122,6 +122,12 @@ function intro.draw()
 end
 
 function intro.update( dt )
+   -- due to how the stuff is embedded, the first frame can be delayed and mess things up
+   if not firsttick then
+      firsttick = true
+      return
+   end
+
    -- Global fade in/out
    if not done then
       alpha = math.min( 1, alpha + FADEIN*dt )
