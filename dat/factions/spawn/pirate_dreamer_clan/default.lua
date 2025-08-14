@@ -9,7 +9,7 @@ local sadmonisher = ship.get("Pirate Admonisher")
 local srhino      = ship.get("Pirate Rhino")
 local sbedivere   = ship.get("Pirate Bedivere")
 local sstarbridge = ship.get("Pirate Starbridge")
-local skestrel    = ship.get("Pirate Kestrel")
+--local skestrel    = ship.get("Pirate Kestrel")
 
 local prefer_fleets, hostile_system
 
@@ -46,7 +46,7 @@ end
 return function( t, _max, params )
    prefer_fleets = params.prefer_fleets
    hostile_system = params.hostile_system
-   
+
    -- Overwrite stuff
    t.loner_strong.f = spawn_loner_strong
    t.squad.f = spawn_squad

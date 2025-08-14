@@ -610,6 +610,7 @@ dat/ships/neutral/zebra.xml
 dat/ships/pirate/dealbreaker.xml
 dat/ships/pirate/pirate_admonisher.xml
 dat/ships/pirate/pirate_ancestor.xml
+dat/ships/pirate/pirate_bedivere.xml
 dat/ships/pirate/pirate_blue_shark.xml
 dat/ships/pirate/pirate_hyena.xml
 dat/ships/pirate/pirate_kestrel.xml
@@ -3130,6 +3131,7 @@ dat/factions/spawn/pirate/default.lua
 dat/factions/spawn/pirate_black_lotus.lua
 dat/factions/spawn/pirate_black_lotus/default.lua
 dat/factions/spawn/pirate_dreamer_clan.lua
+dat/factions/spawn/pirate_dreamer_clan/default.lua
 dat/factions/spawn/pirate_raven_clan.lua
 dat/factions/spawn/pirate_raven_clan/default.lua
 dat/factions/spawn/pirate_wild_ones.lua
