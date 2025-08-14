@@ -8,7 +8,7 @@ DAT=$(realpath --relative-to="$PWD" "${DIR}/../../dat")
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
    DOC=(
-      "usage:  $(basename "$0") [OPIONS] [-c] [-n] [-f]"
+      "usage:  $(basename "$0") [OPTIONS] [-c] [-n] [-f]"
       "  Applies the whole remap process. See the script content."
       "  If -c is set, cleans up data/ dir before starting."
       "  Unless -f is set, does not save anything."
