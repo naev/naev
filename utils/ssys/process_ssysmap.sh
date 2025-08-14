@@ -8,19 +8,20 @@ DAT=$(realpath --relative-to="$PWD" "${DIR}/../../dat")
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
    DOC=(
-      "usage:  $(basename "$0") [OPTIONS] [-c] [-n] [-f]"
+      "usage:  $(basename "$0") [OPTIONS] [-n] [-f]"
       "  Applies the whole remap process. See the script content."
-      "  If -c is set, cleans up data/ dir before starting."
       "  Unless -f is set, does not save anything."
       "  If -n is set, no povray preview."
       "options:"
-      "  If -C is set, applies -c and quits."
       "  If -N is set, no picture generated."
       "  If -F is set, only final pov is generated; other povs are disabled."
       "  If -H is set, pov outputs are 1080p."
       "  If -v is set, povray output is printed."
       "  If -S is set, no spoilers on pictures."
       "  If -E is set, early game map."
+      "  If --clean-ssys is set, cleans up data/ dir before starting."
+      "    THIS WILL REMOVE ANYTHING GIT DOES NOT KNOW"
+      "  If --just-clean-ssys is set, applies the previous one and stops."
    )
    ( IFS=$'\n'; echo "${DOC[*]}" ) >&2
    exit 0
@@ -34,10 +35,10 @@ S_FILTER="$DIR"/graph_unspoil.sh
 for i in "$@" ; do
    if [ "$i" = "-f" ] ; then
       FORCE=1
-   elif [ "$i" = "-c" ] || [ "$i" == "-C" ] ; then
+   elif [ "$i" = "--clean-ssys" ] || [ "$i" == "--just-clean-ssys" ] ; then
       git clean -fd "$DAT"
       git checkout "$DAT"
-      if [ "$i" == "-C" ] ; then
+      if [ "$i" == "--just-clean-ssys" ] ; then
          exit 0
       fi
    elif [ "$i" = "-F" ] ; then
