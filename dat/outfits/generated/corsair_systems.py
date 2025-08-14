@@ -21,6 +21,7 @@ del general['slot']['@prop_extra']
 specific = o['specific']
 del specific['cooldown_time']
 specific['ew_detect']['$pri'] += 5
+specific['ew_hide'] = -15
 specific['lua_inline_post'] = "require('outfits.core_sets.corsair_systems').init()"
 
 data.prisec_only(sec= False)
