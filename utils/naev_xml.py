@@ -278,7 +278,7 @@ class naev_xml( xml_node ):
          fnam = devnull
       self._uptodate = r
       self.w, self.r = w, r
-      if type(fnam) != type('') or (not fnam.endswith('.xml') and fnam != devnull):
+      if type(fnam) != type('') or ('xml' not in fnam.split('.') and fnam != devnull):
          raise Exception('Invalid xml filename ' + repr(fnam))
       self._filename = fnam
 
