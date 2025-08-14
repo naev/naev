@@ -90,6 +90,7 @@
     - Temporary Invincibility
     - Detection Range only affects 'Detected at:' range
     - Ship Visibility that affects detection, signature, and stealth ranges
+ - Intro text is no longer hardcoded and is handled via Lua
 
 #### Fixes
  - The Bite turns off afterburners
@@ -122,6 +123,7 @@
  - Space mines in restricted systems have infinite duration
  - Lots of spelling and grammars fixes
  - Translation updates
+ - Made Love framework ignore events that were queued before opening
 
 
 ## 0.12.6
