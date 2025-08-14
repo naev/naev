@@ -222,7 +222,7 @@ impl TextureData {
     fn from_image(
         ctx: &Context,
         name: Option<&str>,
-        img: &image::DynamicImage,
+        img: image::DynamicImage,
         flipv: bool,
         srgb: bool,
     ) -> Result<Self> {
@@ -230,15 +230,15 @@ impl TextureData {
 
         let has_alpha = img.color().has_alpha();
         let img = match flipv {
-            true => &img.flipv(),
+            true => img.flipv(),
             false => img,
         };
 
         let (imgdata, fmt): (image::DynamicImage, u32) = match has_alpha {
             //true => (img.to_rgba8().into_flat_samples(), glow::RGBA),
             //false => (img.to_rgb8().into_flat_samples(), glow::RGB),
-            true => (img.to_rgba8().into(), glow::RGBA),
-            false => (img.to_rgb8().into(), glow::RGB),
+            true => (img.into_rgba8().into(), glow::RGBA),
+            false => (img.into_rgb8().into(), glow::RGB),
         };
         let (w, h) = (imgdata.width(), imgdata.height());
 
@@ -283,7 +283,7 @@ impl TextureData {
     fn from_image_sdf(
         ctx: &Context,
         name: Option<&str>,
-        img: &image::DynamicImage,
+        img: image::DynamicImage,
         flipv: bool,
     ) -> Result<Self> {
         let gl = &ctx.gl;
@@ -294,13 +294,13 @@ impl TextureData {
             anyhow::bail!("Trying to create SDF from image without alpha!");
         }
         let img = match flipv {
-            true => &img.flipv(),
+            true => img.flipv(),
             false => img,
         };
         let (w, h) = (img.width(), img.height());
         let (imgdata, vmax) = {
             // Get only the alpha channel
-            let mut rawdata: Vec<_> = img.to_luma_alpha8().pixels().map(|p| p.0[1]).collect();
+            let mut rawdata: Vec<_> = img.into_luma_alpha8().pixels().map(|p| p.0[1]).collect();
             let mut vmax: f64 = 0.0;
             // Compute the distance transform
             let sdfdata = unsafe {
@@ -654,7 +654,7 @@ pub enum TextureSource {
 impl TextureSource {
     #[allow(clippy::too_many_arguments)]
     fn to_texture_data(
-        &self,
+        self,
         sctx: &ContextWrapper,
         w: usize,
         h: usize,
@@ -689,7 +689,7 @@ impl TextureSource {
         let tex = Arc::new({
             let mut inner = match self {
                 TextureSource::Path(path) => {
-                    let cpath = ndata::simplify_path(path)?;
+                    let cpath = ndata::simplify_path(&path)?;
                     let rw = ndata::iostream(&cpath)?;
                     let img = image::ImageReader::with_format(
                         std::io::BufReader::new(rw),
@@ -699,8 +699,8 @@ impl TextureSource {
                     .decode()?;
                     let ctx = &sctx.lock();
                     match sdf {
-                        true => TextureData::from_image_sdf(ctx, name, &img, flipv)?,
-                        false => TextureData::from_image(ctx, name, &img, flipv, srgb)?,
+                        true => TextureData::from_image_sdf(ctx, name, img, flipv)?,
+                        false => TextureData::from_image(ctx, name, img, flipv, srgb)?,
                     }
                 }
                 TextureSource::Image(img) => {
@@ -710,10 +710,10 @@ impl TextureSource {
                         false => TextureData::from_image(ctx, name, img, flipv, srgb)?,
                     }
                 }
-                TextureSource::Raw(tex) => TextureData::from_raw(*tex, w, h)?,
+                TextureSource::Raw(tex) => TextureData::from_raw(tex, w, h)?,
                 TextureSource::Empty(fmt) => {
                     let ctx = &sctx.lock();
-                    TextureData::new(ctx, *fmt, w, h)?
+                    TextureData::new(ctx, fmt, w, h)?
                 }
                 TextureSource::TextureData(_) => unreachable!(),
             };
@@ -735,7 +735,7 @@ impl TextureSource {
 
 pub struct TextureBuilder {
     name: Option<String>,
-    source: TextureSource,
+    source: Option<TextureSource>,
     w: usize,
     h: usize,
     sx: usize,
@@ -761,7 +761,7 @@ impl TextureBuilder {
     pub fn new() -> Self {
         TextureBuilder {
             name: None,
-            source: TextureSource::Empty(TextureFormat::SRGBA),
+            source: Some(TextureSource::Empty(TextureFormat::SRGBA)),
             w: 0,
             h: 0,
             sx: 1,
@@ -784,28 +784,28 @@ impl TextureBuilder {
     }
 
     pub fn path(mut self, path: &str) -> Self {
-        self.source = TextureSource::Path(String::from(path));
+        self.source = Some(TextureSource::Path(String::from(path)));
         self.name = Some(String::from(path));
         self
     }
 
     pub fn empty(mut self, fmt: TextureFormat) -> Self {
-        self.source = TextureSource::Empty(fmt);
+        self.source = Some(TextureSource::Empty(fmt));
         self
     }
 
     pub fn image(mut self, img: &image::DynamicImage) -> Self {
-        self.source = TextureSource::Image(img.clone());
+        self.source = Some(TextureSource::Image(img.clone()));
         self
     }
 
     pub fn texture_data(mut self, data: &Arc<TextureData>) -> Self {
-        self.source = TextureSource::TextureData(data.clone());
+        self.source = Some(TextureSource::TextureData(data.clone()));
         self
     }
 
     pub fn native_texture(mut self, tex: glow::NativeTexture) -> Self {
-        self.source = TextureSource::Raw(tex);
+        self.source = Some(TextureSource::Raw(tex));
         self
     }
 
@@ -890,10 +890,15 @@ impl TextureBuilder {
         self.build_wrap(&wctx)
     }
 
-    pub fn build_wrap(self, sctx: &ContextWrapper) -> Result<Texture> {
+    pub fn build_wrap(mut self, sctx: &ContextWrapper) -> Result<Texture> {
+        let source = self
+            .source
+            .take()
+            .ok_or(anyhow::anyhow!("texture source not specified"))?;
+
         // Some checks
         if self.is_sdf {
-            match self.source {
+            match source {
                 TextureSource::TextureData(_) | TextureSource::Raw(_) | TextureSource::Empty(_) => {
                     anyhow::bail!("SDF must use Path of Image as source!")
                 }
@@ -901,7 +906,7 @@ impl TextureBuilder {
             }
         }
 
-        let texture = self.source.to_texture_data(
+        let texture = source.to_texture_data(
             sctx,
             self.w,
             self.h,
