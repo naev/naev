@@ -123,6 +123,7 @@ local function _draw( x, y, w, h )
    love.draw()
 end
 local function _update( dt )
+   love._firsttick = true
    if love.keyboard and love.keyboard._repeat then
       for k,v in pairs(love.keyboard._keystate) do
          if v then
@@ -141,6 +142,7 @@ local function _update( dt )
    love.update(dt)
 end
 local function _mouse( x, y, mtype, button )
+   if not love._firsttick then return false end
    if not love.mouse then return false end
    if mtype ~= 4 then -- if not a mouse-wheel event
       y = love.h-y-1
@@ -174,6 +176,7 @@ local key_translation = {
    ["right gui"] = "rgui",
 }
 local function _keyboard( pressed, key, _mod, isrepeat )
+   if not love._firsttick then return false end
    if not love.keyboard then return false end
    local k = string.lower( key )
    local t = key_translation[k]
@@ -339,6 +342,7 @@ function love.run( data )
    end
    love._focus = true
    love._started = true
+   love._firsttick = false
    naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse, _resize, _textinput )
    -- Doesn't actually get here until the dialogue is closed
    love._started = false
