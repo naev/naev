@@ -244,7 +244,7 @@ impl TextureData {
         let (w, h) = (imgdata.width(), imgdata.height());
 
         let internalformat = TextureFormat::auto(has_alpha, srgb);
-        let gldata = glow::PixelUnpackData::Slice(Some(&imgdata.as_bytes()));
+        let gldata = glow::PixelUnpackData::Slice(Some(imgdata.as_bytes()));
 
         let texture = unsafe {
             let texture = gl.create_texture().map_err(|e| anyhow::anyhow!(e))?;
@@ -689,7 +689,7 @@ pub enum TextureSource {
 }
 impl TextureSource {
     #[allow(clippy::too_many_arguments)]
-    fn to_texture_data(
+    fn into_texture_data(
         self,
         sctx: &ContextWrapper,
         w: usize,
@@ -729,8 +729,7 @@ impl TextureSource {
                         let cpath = ndata::simplify_path(&path)?;
                         if std::path::Path::new(&cpath)
                             .extension()
-                            .map(|s| s.to_str())
-                            .flatten()
+                            .and_then(|s| s.to_str())
                             == Some("svg")
                         {
                             svg_to_img(&cpath, Some(w), Some(h))?
@@ -953,7 +952,7 @@ impl TextureBuilder {
             }
         }
 
-        let texture = source.to_texture_data(
+        let texture = source.into_texture_data(
             sctx,
             self.w,
             self.h,
