@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+# TODO: make it in bash, would be much faster and just as clear.
 import os
 import re
 import sys

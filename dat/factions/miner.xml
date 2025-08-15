@@ -9,8 +9,7 @@
  <spawn>miner</spawn>
  <standing>static</standing>
  <equip>miner</equip>
- <allies>
- </allies>
+ <allies/>
  <enemies>
   <enemy>Pirate</enemy>
   <enemy>Marauder</enemy>

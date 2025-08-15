@@ -10,8 +10,7 @@
  <equip>trader</equip>
  <local_th>30</local_th>
  <description>The Space Traders Society is an organization that spans over all the different guilds, and serves to protect their interests against the Empire, Great Houses, and Soromid. Some of the prominent members include Astra Vigilis, Mining Vrata, and the Imperial Red Star.</description>
- <allies>
- </allies>
+ <allies/>
  <enemies>
   <enemy>Pirate</enemy>
   <enemy>Marauder</enemy>

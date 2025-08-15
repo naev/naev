@@ -10,11 +10,11 @@
  </general>
  <specific type="modification">
   <lua_inline>
-require("outfits.lib.custom_price").setup( function ()
-   local pp = player.pilot()
-   local size = pp:ship():size()
-   return 25e3 * math.pow(2+size, 2)
-end )
+   require("outfits.lib.custom_price").setup( function ()
+      local pp = player.pilot()
+      local size = pp:ship():size()
+      return 25e3 * math.pow(2+size, 2)
+   end )
   </lua_inline>
   <speed_mod>4</speed_mod>
   <turn_mod>4</turn_mod>

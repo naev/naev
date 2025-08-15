@@ -28,7 +28,7 @@ set -e
 
 usage() {
     echo "Usage: $(basename "$0") -s <SOURCEROOT> -b <BUILDROOT> -t <TARGETS> [-d]"
-    echo ""
+    echo
     echo "Parameters:"
     echo "  -s   Path to the source directory containing the code."
     echo "  -b   Path to the build directory where artifacts and outputs will be stored."
@@ -39,7 +39,7 @@ usage() {
     echo "         macos    : Build the macOS universal DMG (requires additional fixes)."
     echo "         all      : Build all available targets."
     echo "  -d   Enable debug mode (bash -x) for detailed command output."
-    echo ""
+    echo
     echo "Example:"
     echo "  $(basename "$0") -s /path/to/source -b /path/to/build -t linux,windows -d"
     exit 1

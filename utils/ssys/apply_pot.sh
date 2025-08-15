@@ -35,7 +35,7 @@ fi
 if [ "$OP" = "-g" ] || [ "$OP" = "ERR" ] ; then
    N=20
    RESCALE=1.8
-   POST_RESCALE=1.1
+   POST_RESCALE=1.0
 elif [ "$OP" = "-E2" ] ; then
    N=20
    RESCALE=1.5
@@ -80,5 +80,5 @@ for j in "$@"; do
 done
 
 "$SCRIPT_DIR"/graph_scale.py "$RESCALE" |
-"$SCRIPT_DIR"/repeat.sh "$N" "$SCRIPT_DIR"/potential -a "$OP" |
+"$SCRIPT_DIR"/repeat.sh "$N" "$SCRIPT_DIR"/det_potential.sh -a "$OP" |
 "$SCRIPT_DIR"/graph_scale.py "$POST_RESCALE"

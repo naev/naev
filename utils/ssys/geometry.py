@@ -423,7 +423,7 @@ class bb:
       return str(round(self.mini())) + ':' + str(round(self.maxi()))
 
 def symmetry( fst, snd = None ):
-   if isinstance(fst, _vec) and isinstance(fst, _vec):
+   if isinstance(fst, _vec) and isinstance(snd, _vec):
       fst = segment(fst, snd)
    if isinstance(fst, segment):
       fst = fst.line()

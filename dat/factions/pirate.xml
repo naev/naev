@@ -12,8 +12,7 @@
  <useshiddenjumps/>
  <description>The Galactic Space Pirates consists of independent pirate vessels not affiliated with any particular clan. Due to their disorganized nature, they tend to respect the clans they operate near.</description>
  <generator weight="0.5">Marauder</generator>
- <allies>
- </allies>
+ <allies/>
  <enemies>
   <enemy>Collective</enemy>
   <enemy>Dvaered</enemy>

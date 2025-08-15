@@ -195,6 +195,8 @@ for i, p in V.items():
       for t in tagcol:
          if t in tags:
             edge_col = tagcol[t]
+      if {'hidden', 'new'} <= set(tags):
+         edge_col = '0,0.25,0'
       write_pov([ 'cylinder{', [
          '<' + str(p[0]) + ', ' + str(p[1]) + ', 0>,',
          '<' + str(other[0]) + ', ' + str(other[1]) + ', 0>,',

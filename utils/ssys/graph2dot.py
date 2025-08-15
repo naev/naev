@@ -19,9 +19,12 @@ def main( color = False, fixed_pos = False ):
       V = {k:' '.join(l[1:]) for k, l in pos.aux.items()}
    else:
       V = {k:' '.join(l) for k, l in pos.aux.items()}
-   print('graph g{')
-   print('\tepsilon=0.000001')
-   print('\tmaxiter=2000')
+
+   print(
+      'graph g{\n'
+      '\tepsilon=0.000001\n'
+      '\tmaxiter=2000\n'
+   )
 
    # 1inch=72pt
    if fixed_pos:
@@ -31,13 +34,14 @@ def main( color = False, fixed_pos = False ):
       print('\tgraph [overlap=false]')  #'\toverlap=voronoi'
       factor = 0.7
 
-   print('\tinputscale=72')
-   print('\tnotranslate=true') # don't make upper left at 0,0
-   print('\tnode[fixedsize=true,shape=circle,penwidth=0,color=white,fillcolor=grey,style="filled"]')
    reflen = 0.5
-   print('\tnode[width=0.5]')
-   print('\tedge[len=' + str(reflen) + ']')
-
+   print(
+      '\tinputscale=72\n'
+      '\tnotranslate=true\n' # don't make upper left at 0,0
+      '\tnode[fixedsize=true,shape=circle,penwidth=0,color=white,fillcolor=grey,style="filled"]\n'
+      '\tnode[width=0.5]\n'
+      '\tedge[len=' + str(reflen) + ']'
+   )
    if fixed_pos:
       print('\tnode[pin=true]')
 
@@ -89,6 +93,14 @@ def main( color = False, fixed_pos = False ):
    # all others are virtual
    print('\tnode [label="",style=invis]')
 
+   def jump_c_f(aux):
+      jmp_c = {'hidden': 'purple', 'new': 'green', 'fake': 'red'}
+      srcc = [jmp_c[a] for a in aux if a in jmp_c]
+      if {'purple', 'green'} <= set(srcc):
+         return 'gold'
+      else:
+         return (srcc + ['black']) [0]
+
    for i in V:
       for dst, aux in E[i].items():
          suff = []
@@ -99,14 +111,9 @@ def main( color = False, fixed_pos = False ):
          elif 'fake' in aux:
             suff += ['weight=0']
 
-         jmp_c = {'hidden': 'purple', 'new': 'green', 'fake': 'red'}
-         srcc = ([jmp_c[a] for a in aux if a in jmp_c] + ['black'])[0]
-
-         if (oneway := i not in E[dst]) or i<dst:
-            if oneway:
-               dstc = 'white'
-            else:
-               dstc = ([jmp_c[a] for a in E[dst][i] if a in jmp_c] + ['black'])[0]
+         srcc = jump_c_f(aux)
+         if (oneway := i not in E[dst]) or i < dst:
+            dstc = 'grey' if oneway else jump_c_f(E[dst][i])
 
             if srcc != dstc:
                suff += ['color="' + srcc + ';0.5:' + dstc + '"']
@@ -115,8 +122,10 @@ def main( color = False, fixed_pos = False ):
             suff = '[' + ';'.join(suff) + ']' if suff else ''
             print('"'.join(['\t', i, '--', dst, suff]))
 
-   print('\tedge[len=' + str(reflen) + ']')
-   print('\tedge[style="dashed";color="grey";penwidth=1.5]')
+   print(
+      '\tedge[len=' + str(reflen) + ']\n'
+      '\tedge[style="dashed";color="grey";penwidth=1.5]'
+   )
    for f, k in E.items():
       for t, aux in k.items():
          if fixed_pos or 'virtual' not in aux:

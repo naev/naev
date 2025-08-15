@@ -4,32 +4,37 @@
 from geometry import vec
 
 def smoothen( pos, neigh, hard = False ):
+   original_w = 0.0 if hard else 1.0
+   d_w = 1.0 / 3.0
    newp = dict()
    for i in pos:
       for j in neigh[i]:
-         if i not in neigh[j]:
-            neigh[i].add(j)
+         neigh[j] |= {i}
    for k in pos:
       if (n := len(neigh[k])) > 1:
-         acc, count = (vec(), count) if hard else (pos[k], 1)
+         acc, count = pos[k] * original_w, original_w
          for s in neigh[k]:
             if N := [pos[i] for i in neigh[s] if i != k]:
-               acc += 1.5*pos[s] - 0.5*sum(N, vec())/len(N)
+               acc += (1.0 + d_w) * pos[s] - d_w * sum(N, vec())/len(N)
             else:
                acc += pos[s]
             count += 1
          newp[k] = acc / count
    return newp
 
+def smoothen_induced( pos, jmp, S, hard = False ):
+   neigh = {k: {s for (s, _) in jmp[k].items() if {k, s} < S} for k in pos}
+   return smoothen(pos, neigh, hard = hard)
+
 from math import sqrt
-def circleify( pos, L, center ):
+def circleify( pos, L, center, hard = False ):
    newp = dict()
-   # global approach -> more brutal
+   # global approach -> much more brutal.
    V = [(pos[i] - pos[center]).size() for i in L]
    avg = sum(V) / len(V)
    for i in L:
       p = pos[center] + (pos[i]-pos[center]).normalize(avg)
-      pos[i] = (pos[i] + 2.0*p) / 3.0
+      pos[i] = p if hard else (pos[i] + 2.0*p) / 3.0
    """
    # local approach
    for i, j, k in zip(L[:-2],L[1:-1],L[2:]):

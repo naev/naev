@@ -33,7 +33,7 @@ def mkline( line ):
    acc = []
    for f in iter_line(line):
       for fl in [False, True]:
-         o = outfit(f, is_multi = True)
+         o = outfit(f, w= False)
          o.stack(o if fl else None)
          d = o.to_dict()
          acc.append((max_sp(d['speed'], d['accel']), d['speed']))

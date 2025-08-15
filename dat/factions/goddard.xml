@@ -11,8 +11,7 @@
  <description>House Goddard is a minor house wedged between the Empire and Dvaered. They are one of the main fabricators of ships for the Dvaered.</description>
  <generator weight="0.5">Independent</generator>
  <generator weight="0.5">Trader</generator>
- <allies>
- </allies>
+ <allies/>
  <enemies>
   <enemy>Pirate</enemy>
   <enemy>Marauder</enemy>

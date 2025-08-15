@@ -8,8 +8,7 @@
  <standing>static</standing>
  <equip>lost</equip>
  <description>It is not clear what happened, but the Lost were once normal people, however, excessive exposure to the volatile Nebula has affected them in disturbing ways.</description>
- <allies>
- </allies>
+ <allies/>
  <enemies>
   <enemy>Dvaered</enemy>
   <enemy>Empire</enemy>
@@ -24,8 +23,8 @@
   <enemy>Traders Society</enemy>
   <enemy>Thurion</enemy>
   <enemy>Za'lek</enemy>
-  <enemy>Derelict</enemy><!-- So they don't land on the Proteron Hypergate -->
+  <!-- So they don't land on the Proteron Hypergate -->
+  <enemy>Derelict</enemy>
  </enemies>
- <tags>
- </tags>
+ <tags/>
 </faction>

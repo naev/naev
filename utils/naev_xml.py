@@ -1,4 +1,4 @@
-# python3
+#!/usr/bin/env python3
 
 """
 An elementTree-based implementation of xmltodict. 10% slower than pure elementTree,
@@ -31,9 +31,13 @@ Used as follows:
   # o['$speed'] *= 1.2
   # o['$thing'] = 2.0 * 0.5 # will save 1 instead of 1.0
 
-  #  3. You get warnings in the following cases:
-  #    - the dict gets garbage collected while with unsaved changes.
-  #    - the dict gets saved while its destination is already up-to-date.
+  #  3. At init, you can specify the r and w flags (both True by default).
+  #     You get errors in the following cases:
+  #      - r is True and the input file can't be openened
+  #      - w is False and you attempt to save
+  #     You get warnings in the following cases:
+  #      - w is true the dict gets garbage collected while with unsaved changes.
+  #      - the dict gets saved while its destination is already up-to-date.
 
   # This optional call allows to change the destination.
   # If not called, save destination is the same as input.
@@ -44,7 +48,7 @@ Used as follows:
 """
 
 import xml.etree.ElementTree as ET
-from sys import stderr
+from sys import stderr, stdout
 from os import devnull
 
 def _numify( s ):
@@ -54,13 +58,70 @@ def _numify( s ):
    except:
       pass
 
-class xml_node( dict ):
-   def __init__ ( self, mapping, parent= None, key= None ):
-      mknode = lambda v: xml_node(v) if isinstance(v, dict) else v
-      self.attr = {k: v for k, v in mapping.items() if k[:1]=='@'}
-      dict.__init__(self, {k: v for k, v in mapping.items() if k[:1]!='@'})
+class _xml_list( list ):
+   def __init__( self, parent, key, L=[] ):
       self._parent = parent
       self._key = key
+      list.__init__(self, [_xml_ify(i, parent, key) for i in L])
+
+   def _change( self ):
+      self._parent._change()
+
+   def __setitem__( self, key, value ):
+      if isinstance(key, slice):
+         list.__setitem__(self, key, _xml_list(self._parent, self._key, value))
+      else:
+         list.__setitem__(self, key, _xml_ify(value, self._parent, self._key))
+      self._change()
+
+   def insert( self, index, elt ):
+      list.insert(self, index, _xml_ify(elt, self._parent, self._key))
+      self._change()
+
+   def append( self, elt ):
+      list.append(self, _xml_ify(elt, self._parent, self._key))
+      self._change()
+
+   def extend( self, other ):
+      list.extend(self, _xml_list(self._parent, self._key, other))
+      self._change()
+
+   __iadd__ = extend
+
+   def clear( self ):
+      self._change()
+      list.clear(self)
+
+   def pop( self, index= -1 ):
+      self._change()
+      return list.pop(self, index)
+
+   def remove( self, val ):
+      self._change()
+      list.remove(self, val)
+
+   def reverse( self ):
+      self._change()
+      list.reverse(self)
+
+   def sort( self, **args ):
+      self._change()
+      list.sort(self, **args)
+
+   def __delitem__( self, item ):
+      self._change()
+      list.__delitem__(self, item)
+
+class xml_node( dict ):
+   def __init__ ( self, mapping, parent= None, key= None ):
+      self._parent = parent
+      self._key = key
+      if isinstance(mapping, xml_node):
+         self.attr = mapping.attr.copy()
+      else:
+         self.attr = {}
+      for k, v in mapping.items():
+         self[k] = v
 
    def _change( self ):
       if self._parent is None:
@@ -93,7 +154,9 @@ class xml_node( dict ):
          if val is None:
             raise ValueError(str(val) + ' is not a number.')
          key = key[1:]
-      elif isinstance(val, dict) and not isinstance(val, xml_node):
+      elif isinstance(val, list):
+         val = _xml_list(self, key, val)
+      elif isinstance(val, dict):
          val = xml_node(val, self, key)
       if key[:1] == '@':
          self.attr[key] = val
@@ -106,11 +169,50 @@ class xml_node( dict ):
          del self.attr[key]
       else:
          dict.__delitem__(self, key)
+      self._change()
 
    def __repr__( self ):
       return dict.__repr__(self.attr | self)
 
    __str__ = __repr__
+
+   def clear(self):
+      dict.clear(self)
+      self.attr.clear()
+      self._change()
+
+   # Do these make any sense in this context ?
+   popitem = None
+   pop = None
+
+   # update does not rely on setitem, contrary to the doc
+   # This is the implementation corresponding to the doc.
+   def update( self, *E, **F ):
+      if E:
+         E,*_ = E
+         if hasattr(E, 'keys'):
+            for k in E.keys():
+               self[k] = E[k]
+         else:
+            for k, v in E:
+               self[k] = v
+      for k in F:
+         self[k] = F[k]
+
+   def __ior__( self, other ):
+      self.update(other)
+      return self
+
+   def keys():
+      return self.attr.keys() + list.keys(self)
+
+   def setdefault( self, key, default= None ):
+      self._change()
+      return dict.setdefault(self, key, default)
+
+
+def _xml_ify( elt, par, k ):
+   return xml_node(elt, par, k) if isinstance(elt, dict) else elt
 
 class _trusted_node( xml_node ):
    def __init__ ( self, attr, parent= None, key= None ):
@@ -124,9 +226,12 @@ def _parse( node, par, key ):
 
    for e in node:
       if dict.__contains__(d, e.tag):
-         if not isinstance(d[e.tag], list):
-            dict.__setitem__(d, e.tag, [dict.__getitem__(d, e.tag)])
-         dict.__setitem__(d, e.tag, dict.__getitem__(d, e.tag) + [_parse(e, d, e.tag)])
+         crt = dict.__getitem__(d, e.tag)
+         if not isinstance(crt, list):
+            l = _xml_list(d, e.tag)
+            list.append(l, crt)
+            dict.__setitem__(d, e.tag, l)
+         list.append(dict.__getitem__(d, e.tag), _parse(e, d, e.tag))
       else:
          dict.__setitem__(d, e.tag, _parse(e, d, e.tag))
 
@@ -140,24 +245,20 @@ def _parse( node, par, key ):
 
 def _unparse_elt( v, k, indent):
    out = indent*' ' + '<' + k
-   if isinstance(v, dict):
+   content = ''
+
+   if isinstance(v, xml_node):
       for ka, va in v.attr.items():
-         out += ' ' + ka[1:] + '="' + va.replace('&', '&amp;') + '"'
-      if v == {}:
-         out += '/>\n'
-      else:
-         out += '>'
-         if not dict.__contains__(v, '#text'):
-            out += '\n'
-            out += unparse(v, indent+1)
-            out += indent*' '
-         else:
-            out += v['#text']
-         out += '</' + k + '>\n'
-   elif v:
-      out += '>'
-      out += str(v).replace('&', '&amp;')
-      out += '</' + k + '>\n'
+         out += ' ' + ka[1:] + '="' + str(va).replace('&', '&amp;') + '"'
+      if dict.__contains__(v, '#text'):
+         content = v['#text']
+      elif sub := unparse(v, indent+1):
+         content = '\n' + sub + indent*' '
+   elif v or v == 0:
+      content = str(v).replace('&', '&amp;')
+
+   if content:
+      out += '>' + content + '</' + k + '>\n'
    else:
       out += '/>\n'
    return out
@@ -165,39 +266,67 @@ def _unparse_elt( v, k, indent):
 def unparse( d , indent= 0 ):
    out = ''
    for k, v in d.items():
-      if isinstance(v, list):
-         for ve in v:
-            out += _unparse_elt(ve, k, indent)
-      else:
-         out += _unparse_elt(v, k, indent)
-
+      if not isinstance(v, list):
+         v = [v]
+      out += ''.join((_unparse_elt(ve, k, indent) for ve in v))
    return out
 
 class naev_xml( xml_node ):
-   def __init__( self, fnam= devnull, read_only= False ):
-      self._uptodate = True
+   def __init__( self, fnam= None, r= True, w= True):
+      if fnam is None:
+         r = False
+         fnam = devnull
+      self._uptodate = r
+      self.w, self.r = w, r
       if type(fnam) != type('') or (not fnam.endswith('.xml') and fnam != devnull):
          raise Exception('Invalid xml filename ' + repr(fnam))
+      self._filename = fnam
+
       self.short = False
       _trusted_node.__init__(self, {}, None, None)
-      if fnam != devnull:
-         T = ET.parse(fnam).getroot()
-         dict.__setitem__(self, T.tag, _parse(T, self, T.tag))
+      if r and self._filename != devnull:
+         try:
+            P = ET.parse(self._filename)
+         except FileNotFoundError as e:
+            raise e
+         # Can also raise:
+         #  - xml.etree.ElementTree.ParseError: ...
+         except Exception as e:
+            raise Exception('Invalid xml file ' + repr(self._filename)) from e
 
-      self._filename = devnull if read_only else fnam
+         T = P.getroot()
+         try:
+            dict.__setitem__(self, T.tag, _parse(T, self, T.tag))
+         except:
+            raise Exception('Invalid xml file ' + repr(self._filename))
 
-   def save( self ):
+   def save( self, if_needed= False ):
+      if not self.w:
+         raise Exception('Attempt to save read-only ' + repr(self._filenam))
       if self._uptodate:
-         stderr.write('Warning: saving unchanged file "' + self._filename + '".\n')
+         if if_needed:
+            return False
+         else:
+            stderr.write('Warning: saving unchanged file ' + repr(self._filename) + '.\n')
 
-      with open(self._filename, 'w') as fp:
-         fp.write(unparse(self))
+      if self._filename == '-':
+         stdout.write(unparse(self))
+      else:
+         with open(self._filename, 'w') as fp:
+            fp.write(unparse(self))
 
       self._uptodate = True
+      return True
 
-   def save_as( self, filename ):
-      self._uptodate = (self._uptodate and filename == self._filename) or filename == devnull
-      self._filename = filename
+   def save_as( self, filename= None ):
+      filename = filename or devnull
+      if not self.w:
+         raise Exception('Attempt to save read-only ' + repr(self._filenam))
+      if filename == self._filename:
+         stderr.write('Warning: save destination was already ' + repr(self._filename) + '.\n')
+      else:
+         self._uptodate = filename == devnull
+         self._filename = filename
 
    def find( self, key, ref = False):
       for d, k in self.nodes(lookfor = { key }):
@@ -225,5 +354,48 @@ class naev_xml( xml_node ):
       return not self._uptodate
 
    def __del__( self ):
-      if not self._uptodate and self._filename != devnull:
-         stderr.write('Warning: unsaved file "' + self._filename + '" at exit.\n')
+      if self.w and not self._uptodate and self._filename != devnull:
+         stderr.write('Warning: unsaved file ' + repr(self._filename) + ' at exit.\n')
+
+def xml_parser( constr, qualifier= '' ):
+   from pathlib import Path
+   from sys import argv
+   from os import path
+   from pathlib import Path
+
+   args = argv[1:]
+   if inplace := '-i' in args:
+      args.remove('-i')
+
+   if clone := '-c' in args:
+      args.remove('-c')
+      src, dst = (args + [None, None])[:2]
+      args = args[2:]
+
+   if args == [] or '-h' in args or (clone and inplace):
+      stderr.write(
+         'usage: ' + argv[0].split('/')[-1] + ' [ -i | (-c <src_path> <dst_path>)] [ file.xml.. ]\n'
+         '  Reads a ' + qualifier + 'xml file, formats it and outputs the result.\n'
+         '  If -i (in-place) is set, does it in place.\n'
+         '  If -c (clone) is set, for each <file.xml>, produces an uncommented version\n'
+         '  that is written to a file that has the same position in <dst_path> that\n'
+         '  <file.xml> has in <src_path>.\n'
+      )
+      exit(0)
+   for arg in args:
+      x = constr(arg)
+      if inplace:
+         x.touch()
+      elif clone:
+         if (rel := path.relpath(path.realpath(arg), src))[:2] == '..':
+            stderr.write('\033[31merror:\033[0m file ' + repr(arg) + ' not in ' + repr(src) +'\n')
+            exit(1)
+         oarg = path.join(dst, rel)
+         Path(path.split(oarg)[0]).mkdir(parents= True, exist_ok= True)
+         x.save_as(oarg)
+      else:
+         x.save_as('-')
+      x.save()
+
+if __name__ == '__main__':
+   xml_parser(naev_xml)

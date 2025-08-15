@@ -11,9 +11,9 @@ script_dir = path.join(path.dirname(__file__), '..', '..', '..', 'utils', 'outfi
 sys.path.append(path.realpath(script_dir))
 from outfit import outfit
 
-def get_outfit_dict( nam, core = False, doubled = False ):
+def get_outfit_dict( nam, core= False, doubled= False ):
    nam = path.realpath(path.join(path.dirname( __file__ ), '..', nam))
-   o = outfit(nam, is_multi = core, read_only=True)
+   o = outfit(nam, is_multi= core, w= False)
    o.stack(o if doubled else None)
    out = o.to_dict()
    out['size'] = o.size_name()

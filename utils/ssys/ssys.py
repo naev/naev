@@ -1,17 +1,17 @@
-# python3
+#!/usr/bin/env python3
 
 
 import os
-import sys
 import xml.etree.ElementTree as ET
-from sys import argv, stderr
+from sys import argv, stderr, path
 
 getpath = lambda *x: os.path.realpath(os.path.join(*x))
 
 script_dir = os.path.dirname(__file__)
-sys.path.append(getpath(script_dir, '..'))
+path.append(getpath(script_dir, '..'))
 
 from xml_name import xml_name as nam2base
+from naev_xml import naev_xml
 
 PATH = getpath(script_dir, '..', '..', 'dat')
 
@@ -22,28 +22,41 @@ _fil =lambda folder: lambda nam : getpath(PATH, folder, nam + '.xml')
 spob_fil = _fil('spob')
 ssys_fil = _fil('ssys')
 
+AVAILABLE_FIELDS = ['jump', 'spob', 'asteroid', 'waypoint']
+MANDATORY_FIELDS = ['jump', 'spob']
+OTHER_FIELDS = set(AVAILABLE_FIELDS) - set(MANDATORY_FIELDS)
+class ssys_xml(naev_xml):
+   def __init__(self, fnam= None, r= True, w= True):
+      naev_xml.__init__(self, fnam= fnam, r= r, w= w)
+      if fnam is None or not r:
+         self['ssys'] = {}
+      elif 'ssys' not in self:
+         raise Exception('No ssys found in ' + repr(fnam))
+      s = self['ssys']
+      for f in AVAILABLE_FIELDS:
+         fs = f + 's'
+         if not s.get(fs):
+            s[fs] = {f: []}
+         elif f not in s[fs]:
+            s[fs][f] = []
+         elif not isinstance(s[fs][f], list):
+            # don't deepcopy
+            dict.__setitem__(s[fs], f, [s[fs][f]])
+      self._uptodate = True
 
-import subprocess
-cmd = getpath(script_dir, '..', 'repair_xml.sh')
-need_repair = []
-from atexit import register
-
-def fil_ET( name ):
-   T = ET.parse(name)
-   oldw = T.write
-   def write( nam ):
-      global need_repair
-      oldw(nam)
-      if need_repair == []:
-         def _repair_ET():
-            global need_repair
-            if need_repair:
-               subprocess.run([cmd] + need_repair)
-            need_repair = []
-         register(_repair_ET)
-      need_repair.append(nam)
-   T.write = write
-   return T
+   def save(self, *args, **kwargs):
+      ssys = self['ssys']
+      utd = self._uptodate
+      for s in OTHER_FIELDS:
+         if ssys[s + 's'] == {s: []}:
+            del ssys[s + 's']
+      self._uptodate = utd
+      res = naev_xml.save(self, *args, **kwargs)
+      for s in OTHER_FIELDS:
+         if s + 's' not in ssys:
+            ssys[s + 's'] = {s: []}
+      self._uptodate = True
+      return res
 
 class starmap(dict):
    def __missing__( self, key ):
@@ -57,21 +70,12 @@ class starmap(dict):
             self[key] = None
       return self[key]
 
-def ssysneigh( sys ):
-   T = ET.parse(ssys_fil(sys)).getroot()
-   acc = []
-   count = 1
-   for e in T.findall('./jumps/jump'):
-      try:
-         acc.append((nam2base(e.attrib['target']), e.find('hidden') is not None))
-      except:
-         stderr.write('no target defined in "'+sys+'" jump '+str(count)+'\n')
-      count += 1
-   return acc
+def pos_to_vec( e ):
+   return vec(e['$@x'], e['$@y'])
 
-def vec_from_element( e ):
-   return vec(float(e.attrib['x']), float(e.attrib['y']))
+def vec_to_pos( v ):
+   return {'$@x': v[0], '$@y': v[1] }
 
-def vec_to_element( e, v ):
-   e.set('x', str(v[0]))
-   e.set('y', str(v[1]))
+if __name__ == '__main__':
+   from naev_xml import xml_parser
+   xml_parser(ssys_xml, 'ssys ')

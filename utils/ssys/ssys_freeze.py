@@ -2,28 +2,23 @@
 
 
 
-from ssys import nam2base, starmap, fil_ET, vec_to_element
+from ssys import nam2base, starmap, ssys_xml, vec_to_pos
 sm = starmap()
 
 
 def ssys_freeze( sys ):
-   changed = False
-   p = fil_ET(sys)
-   T = p.getroot()
-   myname = nam2base(T.attrib['name'])
-   radius = float(T.find('general/radius').text)
+   f = ssys_xml(sys)
+   p = f['ssys']
+   myname = nam2base(p['@name'])
+   radius = p['general']['$radius']
 
-   for e in T.findall('jumps/jump'):
-      dst = nam2base(e.attrib['target'])
-      for f in e.findall('autopos'):
-         changed = True
-         f.tag = 'pos'
+   for e in p['jumps']['jump']:
+      if 'autopos' in e:
+         del e['autopos']
+         dst = nam2base(e['@target'])
          v = (sm[dst] - sm[myname]).normalize()*radius
-         vec_to_element(f, v)
-         f.set('was_auto','true')
-   if changed:
-      p.write(sys)
-   return changed
+         e['pos'] = vec_to_pos(v) | {'@was_auto': 'true'}
+   return f.save(if_needed= True)
 
 
 if __name__ == '__main__':

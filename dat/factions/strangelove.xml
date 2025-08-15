@@ -8,7 +8,8 @@
  <player>0</player>
  <standing>static</standing>
  <equip>pirate</equip>
- <enemies><!-- They are enemies just so they don't land on the planet.-->
+ <!-- They are enemies just so they don't land on the planet.-->
+ <enemies>
   <enemy>Za'lek</enemy>
   <enemy>Pirate</enemy>
   <enemy>Marauder</enemy>
