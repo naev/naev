@@ -72,6 +72,11 @@ function intro.keypressed( key )
    end
 end
 
+local function smoothstep( edge0, edge1,x )
+   local t = math.min( math.max( (x - edge0) / (edge1 - edge0), 0.0), 1.0)
+   return t * t * (3.0 - 2.0 * t)
+end
+
 local function draw_image( img )
    if not img or not img.data then return end
 
@@ -86,13 +91,8 @@ local function draw_image( img )
    local x = (IMAGE_WIDTH + SIDE_MARGIN - s*img.w)*0.5
    local y = (nh - s*img.h)*0.5
 
-   lg.setColour( 1, 1, 1, alpha*img.alpha )
+   lg.setColour( 1, 1, 1, smoothstep( 0, 1, alpha*img.alpha ) )
    img.data:draw( x, y, 0, s, s )
-end
-
-local function smoothstep( edge0, edge1,x )
-   local t = math.min( math.max( (x - edge0) / (edge1 - edge0), 0.0), 1.0)
-   return t * t * (3.0 - 2.0 * t)
 end
 
 local img_prev, img_cur
@@ -163,7 +163,7 @@ function intro.update( dt )
          return love.event.quit()
       end
    end
-   lg.setBackgroundColour( 0, 0, 0, alpha )
+   lg.setBackgroundColour( 0, 0, 0, smoothstep( 0, 1, alpha ) )
 
    -- Update position
    pos = pos - vel*dt
