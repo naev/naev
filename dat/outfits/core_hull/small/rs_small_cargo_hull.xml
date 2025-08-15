@@ -21,7 +21,7 @@
       {'cargo_mod', 10, 4},
       {'ew_detected', 25, 5},
       {'ew_signature', -10, -6},
-      {'jam_chance', 42, 0},
+      {'jam_chance', 38, 10},
    })
   </lua_inline>
  </specific>
