@@ -25,3 +25,4 @@ image = { workspace = true }
 gettext = { workspace = true }
 formatx = { workspace = true }
 naev_core = { workspace = true }
+resvg = "0.45"

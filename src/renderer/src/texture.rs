@@ -1,3 +1,4 @@
+use anyhow::Context as AnyhowContext;
 use anyhow::Result;
 use glow::*;
 use log::{warn, warn_err};
@@ -644,6 +645,41 @@ impl FilterMode {
     }
 }
 
+/// Loads an SVG file into a DynamicImage
+fn svg_to_img(path: &str, w: Option<usize>, h: Option<usize>) -> Result<image::DynamicImage> {
+    use resvg::{tiny_skia, usvg};
+
+    // Load the SVG
+    // TODO add ndata-based href resolves and such
+    let svg_data = ndata::read(path)?;
+    let opt = usvg::Options {
+        resources_dir: None, // TODO add and such
+        ..Default::default()
+    };
+    let tree = usvg::Tree::from_data(&svg_data, &opt)?;
+
+    // Render the SVG
+    let (iw, ih) = tree.size().to_int_size().dimensions();
+    let transform = {
+        let sx = match w {
+            Some(w) => w as f32 / iw as f32,
+            None => 1.0,
+        };
+        let sy = match h {
+            Some(h) => h as f32 / ih as f32,
+            None => sx,
+        };
+        tiny_skia::Transform::from_scale(sx, sy)
+    };
+    let mut pixmap = tiny_skia::Pixmap::new(iw, ih).context("unable to create pixbuf")?;
+    resvg::render(&tree, transform, &mut pixmap.as_mut());
+
+    // Convert to image and return
+    Ok(image::RgbaImage::from_vec(iw, ih, pixmap.take())
+        .context("unable to create RgbaImage from Pixmap")?
+        .into())
+}
+
 pub enum TextureSource {
     Path(String),
     Image(image::DynamicImage),
@@ -689,14 +725,25 @@ impl TextureSource {
         let tex = Arc::new({
             let mut inner = match self {
                 TextureSource::Path(path) => {
-                    let cpath = ndata::simplify_path(&path)?;
-                    let rw = ndata::iostream(&cpath)?;
-                    let img = image::ImageReader::with_format(
-                        std::io::BufReader::new(rw),
-                        image::ImageFormat::from_path(path)?,
-                    )
-                    //let img = image::ImageReader::new(std::io::BufReader::new(rw)).with_guessed_format()?
-                    .decode()?;
+                    let img = {
+                        let cpath = ndata::simplify_path(&path)?;
+                        if std::path::Path::new(&cpath)
+                            .extension()
+                            .map(|s| s.to_str())
+                            .flatten()
+                            == Some("svg")
+                        {
+                            svg_to_img(&cpath, Some(w), Some(h))?
+                        } else {
+                            let rw = ndata::iostream(&cpath)?;
+                            image::ImageReader::with_format(
+                                std::io::BufReader::new(rw),
+                                image::ImageFormat::from_path(path)?,
+                            )
+                            //let img = image::ImageReader::new(std::io::BufReader::new(rw)).with_guessed_format()?
+                            .decode()?
+                        }
+                    };
                     let ctx = &sctx.lock();
                     match sdf {
                         true => TextureData::from_image_sdf(ctx, name, img, flipv)?,
