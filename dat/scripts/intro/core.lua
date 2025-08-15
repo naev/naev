@@ -11,9 +11,10 @@ local IMAGE_FADE  = 0.2
 local FADEIN      = 1
 local FADEOUT     = 1
 local FONT_SIZE   = 16
+local TEXT_FADEPX = FONT_SIZE*2
 
 -- Local variables
-local data, done, pos, vel, alpha, text_width, text_off, font, nw, nh, firsttick
+local data, done, pos, vel, alpha, text_width, text_off, font, nw, nh, firsttick, advance
 
 function intro.load( origdata )
    -- Defaults
@@ -25,28 +26,33 @@ function intro.load( origdata )
 
    love.graphics.setBackgroundColour( 0, 0, 0, 0 )
 
-   data  = origdata
    font  = lg.newFont( FONT_SIZE )
    font:setOutline(1)
    nw, nh = lg.getDimensions()
    text_width = nw - 2*SIDE_MARGIN - IMAGE_WIDTH
    text_off = SIDE_MARGIN + IMAGE_WIDTH
-   local font_height = font:getLineHeight()
+   advance = font:getLineHeight()
    pos   = nh
 
    -- Load and prepare data
-   for k,v in ipairs(data) do
+   data = {}
+   for k,v in ipairs(origdata) do
       if v.type == "text" then
          if v.data then
             local _maxw, wrap = font:getWrap( v.data, text_width )
-            v.h = font_height * math.max( 1, #wrap )
+            for i,w in ipairs(wrap) do
+               table.insert( data, {
+                  type = "text",
+                  data = w,
+               } )
+            end
          else
-            v.h = font_height
+            table.insert( data, v )
          end
-         v.adv = v.h
       elseif v.type == "image" then
          if v.data then
             v.w, v.h = v.data:getDimensions()
+            table.insert( data, v )
          end
       end
    end
@@ -84,6 +90,11 @@ local function draw_image( img )
    img.data:draw( x, y, 0, s, s )
 end
 
+local function smoothstep( edge0, edge1,x )
+   local t = math.min( math.max( (x - edge0) / (edge1 - edge0), 0.0), 1.0)
+   return t * t * (3.0 - 2.0 * t)
+end
+
 local img_prev, img_cur
 function intro.draw()
    -- Draw images first
@@ -92,15 +103,19 @@ function intro.draw()
 
    -- Draw text
    local cg = fc.FontGreen
-   lg.setColour( cg[1], cg[2], cg[3], alpha )
    local y = pos
    for k,v in ipairs(data) do
-      if y > -v.h then
+      if y > -advance then
          if y >= nh then
             break
          end
          if v.type=="text" then
             if v.data then
+               local a = smoothstep( 0, 1, math.min(
+                  (nh-y-FONT_SIZE*1.0) / TEXT_FADEPX, -- Bottom
+                  (y+FONT_SIZE*0.0) / TEXT_FADEPX -- Top
+               ))
+               lg.setColour( cg[1], cg[2], cg[3], alpha*a )
                lg.printf( v.data, font, text_off, y, text_width )
             end
          elseif v.type=="image" then
@@ -112,7 +127,9 @@ function intro.draw()
             end
          end
       end
-      y = y + (v.adv or 0)
+      if v.type=="text" then
+         y = y + advance
+      end
    end
 
    -- Fully advanced so done
