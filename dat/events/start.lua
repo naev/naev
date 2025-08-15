@@ -9,6 +9,7 @@
 --]]
 local intro = require "intro"
 local lg = require "love.graphics"
+local cinema = require "cinema"
 
 local names = {
    _("Aluminum Mallard"), -- Because we might as well allude to an existing parody. Proper spelling would be "Aluminium", by the way.
@@ -74,6 +75,7 @@ function create()
    diff.apply( "Chapter 0" )
 
    -- Intro animation
+   cinema.on()
    music.choose("intro")
    local imgpath = "gfx/intro/"
    intro.init()
@@ -115,6 +117,7 @@ function create()
    intro.text()
    intro.run()
    music.choose("ambient")
+   cinema.off()
 
    hook.timer(3, "timer_tutorial")
 end
