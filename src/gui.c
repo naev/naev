@@ -596,7 +596,7 @@ void gui_render( double dt )
           ( ( player.p != NULL ) && pilot_isFlag( player.p, PILOT_DEAD ) ) ) ) {
       NTracingZone( _ctx, 1 );
 
-      spfx_cinematic();
+      // spfx_cinematic();
       gl_defViewport();
 
       NTracingZoneEnd( _ctx );
