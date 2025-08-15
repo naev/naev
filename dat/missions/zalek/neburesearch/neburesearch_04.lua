@@ -4,7 +4,7 @@
  <unique />
  <priority>4</priority>
  <done>The Substitute Speaker</done>
- <chance>10</chance>
+ <chance>20</chance>
  <location>Bar</location>
  <faction>Za'lek</faction>
  <cond>system.get("Hideyoshi's Star"):jumpDist() &gt; 2</cond>
