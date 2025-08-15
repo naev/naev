@@ -23,7 +23,7 @@ Each system is represented by a standalone .XML file within the `/ssys/` directo
     * `<nebula>`: Reduces visibility when within the system. A value greater than 0 will cause ships, spobs and asteroids to not appear until the player gets close. The rough visibility range is computed from the formula $(1200-\text{nebula}) \cdot \text{ewdetect} + \text{nebuvisibility}$, where ewdetect and nebuvisibility are each ships detection and nebula visibility statistics.
       * `<volatility>`: Damage over time inflicted upon ships travelling in this system. Value is expressed in MJ per second, applied to shields first and armor after.
     * `<features>`: A string value defining unique characteristics of the system, such as whether it has a factional homeworld or some other anomality. This is shown in the in-game map.
-	* `<pos>`: Position of the system on the universe map, expressed as `x` and `y` coordinates relative to the universe map's origin point.
+   * `<pos>`: Position of the system on the universe map, expressed as `x` and `y` coordinates relative to the universe map's origin point.
   * `<spobs>`: Category which includes all spobs, including virtual spobs, which are present in this system.
     * `<spob>`: Adds the spob of that name to the system. The coordinate position of the spob is defined within that spob's .XML file.
     * `<spob_virtual>`: Adds the virtual spob of that name to the system. Virtual spobs are used primarily for faction presences within the system.
@@ -66,8 +66,8 @@ Asteroid data files are found in `/asteroids/types/`. These files are in .XML fo
 * `<armor_min>` and `<armor_max>`: Defines a range of armor values for asteroids to spawn with. Higher values mean more damage must be dealt to destroy an asteroid.
 * `<absorb>`: Defines the asteroid's damage reduction before applying weapons' armor penetration stats.
 * `<commodity>`: Lists which commodity pickups and quantities thereof can spawn upon destruction of the asteroid.
-	* `<name>`: Name of commodity.
-	* `<quantity>`: Maximum quantity of commodity pickups
+   * `<name>`: Name of commodity.
+   * `<quantity>`: Maximum quantity of commodity pickups
 
 This process will let you create an asteroid field in your `<ssys>` .XML file:
 1) Place graphics for your asteroids, in .WEBP format, to `/gfx/spob/space/asteroid/`;
