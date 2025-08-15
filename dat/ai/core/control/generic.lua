@@ -1101,13 +1101,13 @@ end
 mem._taunted = {}
 function consider_taunt( target, offensive )
    if mem.carried then return end -- Fighters don't taunt
-   local id = target:id()
+   local rtarget = target:leader() or target -- Always consider leader
+   local id = rtarget:id()
    local last_taunted = mem._taunted[id] or -100
    if mem.elapsed - last_taunted > 15 then
-      local msg = taunt( target, offensive )
+      local msg = taunt( rtarget, offensive )
       if msg then
-         local tgt = target:leader() or target
-         ai.pilot():comm( tgt, msg )
+         ai.pilot():comm( rtarget, msg )
       end
       mem._taunted[id] = mem.elapsed
    end
