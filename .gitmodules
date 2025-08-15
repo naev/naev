@@ -1,11 +1,11 @@
 [submodule "extras/windows/mingw-bundledlls"]
-	path = extras/windows/mingw-bundledlls
-	url = https://github.com/ProjectSynchro/mingw-bundledlls.git
-	branch = ucrt_blacklist
+path = extras/windows/mingw-bundledlls
+url = https://github.com/ProjectSynchro/mingw-bundledlls.git
+branch = ucrt_blacklist
 [submodule "artwork"]
-	path = artwork
-	url = https://github.com/naev/naev-artwork-production.git
-	branch = main
+path = artwork
+url = https://github.com/naev/naev-artwork-production.git
+branch = main
 [submodule "dat/lua-repl"]
-	path = dat/lua-repl
-	url = https://github.com/hoelzro/lua-repl.git
+path = dat/lua-repl
+url = https://github.com/hoelzro/lua-repl.git
