@@ -5,7 +5,7 @@
   <slot prop_extra="engines_secondary" prop="engines">structure</slot>
   <size>medium</size>
   <price>112500</price>
-  <description>The Arrow 700 is a respectable Corvette engine for a respectable price, giving captains decent manouverability without leeching too much off of the ship's reactors.</description>
+  <description>The Arrow 700 is a respectable engine for a respectable price, giving captains good manoeuverability without leeching too much off of the ship's reactors.</description>
   <gfx_store>nexus_engine_m.webp</gfx_store>
   <priority>3</priority>
  </general>
