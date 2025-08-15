@@ -32,7 +32,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ -z "$*" ]; then
       "usage  $(basename "$0") [ -l | -b | -a ] <file>.."
       '  Checks its arguments are 3-space-indented.'
       '   - If not, checks is they are k-space indented with k>3.'
-      '     k is the smallest indent found in the file.'
+      '     k is guessed based on the number of occurences of small indents found in the file.'
       '      - If so, replaces blocks of k spaces with blocks of 3 spaces.'
       '      - If not, complains angrily (in red) and returns nonzero.'
       '  In the whole process:'
