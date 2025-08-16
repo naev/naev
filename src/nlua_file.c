@@ -249,6 +249,8 @@ static int fileL_close( lua_State *L )
  * @brief Creatse a file from a string buffer.
  *
  *    @luatparam String str String to use as the memory data.
+ *    @luatparam[opt="memory buffer"] String name Optional name to give the
+ * buffer.
  *    @luatreturn File The new file wrappnig the string.
  * @luafunc close
  */
@@ -256,8 +258,8 @@ static int fileL_from_string( lua_State *L )
 {
    LuaFile_t   lf;
    size_t      len;
-   const char *name = "memory buffer";
    const char *str  = luaL_tolstring( L, 1, &len );
+   const char *name = luaL_optstring( L, 2, "memory buffer" );
    memset( &lf, 0, sizeof( lf ) );
    // Sadly have to duplicate the buffer because otherwise Lua has ownership and
    // we have no guarantee it's valid
