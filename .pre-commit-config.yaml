@@ -42,22 +42,18 @@ repos:
       entry: utils/rem_xml_head.sh
       types: [xml]
       language: script
-    - id: xml_format
-      name: format xml
-      entry: utils/xml_format.sh
-      types: [xml]
-      args: ["-st"]
-      files: dat/.*\.xml$
-      language: script
     - id: no_tabs
-      name: no_tabs  [build dot frag glsl gltf js lua nsi py rb scm sh tex vdf vert]
+      name: no_tabs
       entry: utils/no_tabs.sh
-      files: .*\.build$|.*\.dot$|.*\.frag$|.*\.glsl$|.*\.gltf|.*\.js$|.*\.lua$|.*\.nsi$|.*\.py$|.*\.scm$|.*\.rb$|.*\.sh$|.*\.tex$|.*\.vdf$|.*\.vert$
       language: script
+      exclude: (^|/)Makefile
+      types: [text]
     - id: reindent
-      name: reindent [build dot frag glsl gltf js lua nsi py rb scm sh tex vdf vert]
+      name: reindent
       entry: utils/reindent.sh
-      files: .*\.build$|.*\.dot$|.*\.frag$|.*\.glsl$|.*\.gltf|.*\.js$|.*\.lua$|.*\.nsi$|.*\.py$|.*\.scm$|.*\.rb$|.*\.sh$|.*\.tex$|.*\.vdf$|.*\.vert$
+      #[build clang-format dot frag glsl gltf js lua luacheckrc markdown md nsi py pov rb scm sh tex vdf vert]
+      # Unmanaged: [markdown md yaml yml .clangformat]
+      files: .*\.build$|.*\.dot$|.*\.frag$|.*\.glsl$|.*\.gltf|.*\.js$|.*\.lua$|.*\.luacheckrc$|.*\.nsi$|.*\.py$|.*\.pov$|.*\.rb$|.*\.scm$|.*\.sh$|.*\.tex$|.*\.vdf$|.*\.vert$
       language: script
     - id: check_fmt_f_usage
       name: lua f-string validation
@@ -71,6 +67,13 @@ repos:
       language: script
       always_run: true
       pass_filenames: false
+    - id: xml_format
+      name: format xml
+      entry: utils/xml_format.sh
+      types: [xml]
+      files: .*\.(xml|loc|plist)$
+      args: ["-st"]
+      language: script
     - id: glsl_validator
       name: glsl validator
       entry: utils/nglslValidator.py

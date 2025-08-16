@@ -4,33 +4,39 @@
 # warns that the doc examples won't expand in single quotes...
 
 # Note. In Naev:
-#  - sed/ini/toml/6/wrap/po/pot/cls/codespellignore/desktopeditorconfig/spec files do not require indentation
-#  - rs files are managed by rustfmt.
-#  - xml/template files are 1-space-indented (xml checked by naev_xml.py)
-#  - c/h files are checked by clang-format.
-#  - src/glue_macos.m is O-c, can be clang-format'ed if we pretend it is c.
-#  - maybe clang-format understands frag/vert/glsl ?
-#  - md/markdown/yaml/yml/.clang_format are a bit weird, but basically 3-s indented,
-#    if we consider the space before an item part of it.
-#    However, that would require a specific processing.
-#  - .luacheckrc is regular lua
+#  - not requiring indentation: sed/ini/toml/6/wrap/po/pot/cls/codespellignore/desktopeditorconfig/spec/.gitmodules/config.ld
+#  - requiring 1-space indentation: xml/template
+#     - xml checked by naev_xml.py
+#     - translation.loc and entitlements.plist are xml -> naev_xml.py again
+#  - requiring 3-spaces indentation but managed by specific programs:
+#     - rs files are managed by rustfmt.
+#     - c/h files are checked by clang-format.
+#     - src/glue_macos.m is O-c, can be clang-format'ed if we pretend it is c.
+#     - maybe clang-format understands frag/vert/glsl ?
 #  - everything else is 3 space-indented (checked by this script)
-#     -> pre-commit calls us with: build, dot, frag, glsl, gltf, js, lua, nsi, py, rb, scm, sh, tex, vert
+#     -> pre-commit calls us with:
+#           build clang-format dot frag glsl gltf js lua luacheckrc
+#           markdown md nsi py pov rb scm sh tex vdf vert yaml yml
+#     -> pre-commit does not call (but could)
+#        css scss
 # Ignored:
 #  - .in files do not refer to a specific type
 #  - .txt are of misc origin
-#  - translation.loc and entitlements.plist are xml
-#  - .its and ldoc.ltp are html
+#  - .html/.its/ldoc.ltp are indented in various ways. xml_format can't format them.
+#
 # Unmanaged so far:
-#  - .gitmodules/config.ld is indented, shouldn't be
-#  - scss look ok (but big, so let's do that later)
-#  - css look ok but have diff indent len or use tabs.
-#  - .html are indented in various ways. xml_format can't format them.
+#  - md/markdown/yaml/yml are a bit weird, but basically 3-s indented,
+#    if we consider the space before an item part of it.
+#    However, that would require a specific processing.
+
+#TODO: manage "*.md" "*.markdown" "*.yaml" "*.yml" "*.clang-format"
+
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ -z "$*" ]; then
    DOC=(
       "usage  $(basename "$0") [ -l | -b | -a ] <file>.."
       '  Checks its arguments are 3-space-indented.'
+      '  Binary files are silently ignored.'
       '   - If not, checks is they are k-space indented with k>3.'
       '     k is guessed based on the number of occurences of small indents found in the file.'
       '      - If so, replaces blocks of k spaces with blocks of 3 spaces.'
@@ -70,12 +76,12 @@ while true ; do
    shift
 done
 
-OGREP_COLORS=$GREP_COLORS
-TMP=$(mktemp)
-trap 'rm "$TMP"' EXIT
-readarray -t FILES <<< "$( grep -vl -e '^$' -e '^ *\(<\|-\|\*\|#\)' -e '^\(   \)*[^ ]' "$@" )"
+readarray -t FILES <<< "$( grep -I -vl -e '^$' -e '^ *\(<\|-\|\*\|#\)' -e '^\(   \)*[^ ]' "$@" )"
 
 if [ -z "${FILES[*]}" ] ; then exit 0 ; fi
+
+TMP=$(mktemp)
+trap 'rm "$TMP"' EXIT
 ret=0
 for f in "${FILES[@]}" ; do
    IFS=$'\t'
@@ -96,19 +102,20 @@ for f in "${FILES[@]}" ; do
       done | tail -n1
    )"
    N=${#PAT}
-   if [ "$N" -le 2 ] ; then
+
+   if [ "$N" -le 2 ] && grep -q -e $'\t' -e "[^ ]$PAT" "$f" ; then
       if [ -n "${PAT}" ] ; then
          if [ -z "$LIST_ONLY" ] ; then
             ret=1
             echo -e '\e[31m"'"$f"'":\e[0m minimal indent too small ('"\e[36m$N\e[0m"')' >&2
 
-            export GREP_COLORS=$OGREP_COLORS":ms=41"
+            export GREP_COLORS="ms=41"
             "${GREPL[@]}" -n --color=always -e '^'"$PAT"'[^ <*#-]' "$f" >&2
          else
             LIST+=("$f")
          fi
       fi
-   elif grep -q -v '^\(?:'"$PAT"'\)*$' "$TMP" ; then
+   elif grep -q -v '^\('"$PAT"'\)*$' "$TMP" ; then
       if [ -z "$LIST_ONLY" ] ; then
          ret=1
          echo -e '\e[31m"'"$f"'":\e[0m not properly indented (be consistent) (size '"\e[36m$N\e[0m"')' >&2
@@ -116,7 +123,7 @@ for f in "${FILES[@]}" ; do
          for (( i=1; i<N ; i++ )); do
             DOTS="$DOTS"'.\?'
          done
-         export GREP_COLORS=$OGREP_COLORS":ms=31"
+         export GREP_COLORS="ms=31"
          "${GREPL[@]}" --color=always -n -v -e '^$' -e '^ *\(<\|-\|\*\)' -e '^\('"$PAT"'\)*[^ ]' "$f" |
          sed 's/^\([^ ]*\('"$PAT"'\)*\)\('"$DOTS"'\)\(.*\)$/\1'$'\e''\[44m\3'$'\e''\[0m\4/' >&2
       else
