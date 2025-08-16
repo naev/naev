@@ -39,5 +39,3 @@ stderr.write(s + '  window ' + disp(rel_pos(UL)) + '--' + disp(rel_pos(DR)) + '\
 stderr.write(s + '  center of mass' + disp(rel_pos(g)) + '\n')
 for i in ['sol', 'gamma_polaris', 'feye', 'dvaer', 'zalek', 'aesir']:
    stderr.write(s + '  ' + i + ': ' + disp(rel_pos(ssys_pos[i])) + '\n')
-
-

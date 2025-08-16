@@ -50,6 +50,8 @@ def toward( src, dst, q ):
 
 toward('syndania', 'jommel', 1.0/4.0)
 
+pos['baitas'], pos['padonia'] = pos['padonia'], pos['baitas']
+
 
 # Proteron space (shape it)
 
