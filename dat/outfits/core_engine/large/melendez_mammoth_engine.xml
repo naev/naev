@@ -5,7 +5,7 @@
   <slot prop_extra="engines_secondary" prop="engines">structure</slot>
   <size>large</size>
   <price>750000</price>
-  <description>Melendez's Mammoth can pull incredible amounts of mass. Requiring specialized grav tethers to keep it attached to the ship's hull, it significantly impacts manoeuvrability, though a reasonable top speed can still be maintained. Many bulk freight corporations only turn a profit thanks to the Mammoth line of engines.</description>
+  <description>Melendez's Mammoth can pull incredible amounts of mass. Requiring specialized grav tethers to keep it attached to the ship's hull, it significantly impacts manoeuvrability, though a good top speed can still be maintained. Many bulk freight corporations only turn a profit thanks to the Mammoth line of engines.</description>
   <gfx_store>engine12.webp</gfx_store>
   <priority>3</priority>
  </general>
