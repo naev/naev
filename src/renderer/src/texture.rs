@@ -661,13 +661,23 @@ fn svg_to_img(path: &str, w: Option<usize>, h: Option<usize>) -> Result<image::D
     // Render the SVG
     let (iw, ih) = tree.size().to_int_size().dimensions();
     let transform = {
-        let sx = match w {
-            Some(w) => w as f32 / iw as f32,
-            None => 1.0,
-        };
-        let sy = match h {
-            Some(h) => h as f32 / ih as f32,
-            None => sx,
+        let (sx, sy) = {
+            match w {
+                Some(w) => {
+                    let sx = w as f32 / iw as f32;
+                    match h {
+                        Some(h) => (sx, h as f32 / ih as f32),
+                        None => (sx, sx),
+                    }
+                }
+                None => match h {
+                    Some(h) => {
+                        let sy = h as f32 / ih as f32;
+                        (sy, sy)
+                    }
+                    None => (1.0, 1.0),
+                },
+            }
         };
         tiny_skia::Transform::from_scale(sx, sy)
     };
