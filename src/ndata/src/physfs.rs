@@ -94,15 +94,15 @@ pub enum Mode {
 }
 
 /// A file handle.
-pub struct File<'f> {
+pub struct File {
     raw: AtomicPtr<naevc::PHYSFS_File>,
     //mode: Mode,
-    _marker: std::marker::PhantomData<&'f isize>,
+    _marker: std::marker::PhantomData<*mut ()>,
 }
 
-impl File<'_> {
+impl File {
     /// Opens a file with a specific mode.
-    pub fn open<'g>(filename: &str, mode: Mode) -> Result<File<'g>> {
+    pub fn open(filename: &str, mode: Mode) -> Result<File> {
         let c_filename = CString::new(filename)?;
         let raw = unsafe {
             match mode {
@@ -166,7 +166,7 @@ impl File<'_> {
     }
 }
 
-impl Read for File<'_> {
+impl Read for File {
     /// Reads from a file
     fn read(&mut self, buf: &mut [u8]) -> Result<usize> {
         let ret = unsafe {
@@ -183,7 +183,7 @@ impl Read for File<'_> {
     }
 }
 
-impl Write for File<'_> {
+impl Write for File {
     /// Writes to a file.
     /// This code performs no safety checks to ensure
     /// that the buffer is the correct length.
@@ -212,7 +212,7 @@ impl Write for File<'_> {
     }
 }
 
-impl Seek for File<'_> {
+impl Seek for File {
     /// Seek to a new position within a file
     fn seek(&mut self, pos: SeekFrom) -> Result<u64> {
         let seek_pos = match pos {
@@ -239,7 +239,7 @@ impl Seek for File<'_> {
     }
 }
 
-impl Drop for File<'_> {
+impl Drop for File {
     fn drop(&mut self) {
         let _ = self.close();
     }

@@ -257,7 +257,7 @@ pub fn iostream(path: &str) -> Result<sdl::iostream::IOStream<'_>> {
 }
 
 /// Opens a file for reading
-pub fn open(path: &str) -> Result<physfs::File<'_>> {
+pub fn open(path: &str) -> Result<physfs::File> {
     physfs::File::open(path, physfs::Mode::Read)
 }
 
