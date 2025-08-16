@@ -1368,8 +1368,8 @@ pub extern "C" fn gl_texExistsOrCreate(
         builder = builder.border(Some(Vector4::<f32>::new(0., 0., 0., 0.)));
     }
 
-    let pathname = path.to_str().unwrap();
-    builder = match TextureData::exists(pathname) {
+    let pathname = path.to_string_lossy();
+    builder = match TextureData::exists(&pathname) {
         Some(tex) => {
             unsafe {
                 *created = 0;
@@ -1380,7 +1380,7 @@ pub extern "C" fn gl_texExistsOrCreate(
             unsafe {
                 *created = 1;
             }
-            builder.path(pathname)
+            builder.path(&pathname)
         }
     };
 
@@ -1413,7 +1413,7 @@ pub extern "C" fn gl_loadImageData(
     }
 
     let mut builder = TextureBuilder::new()
-        .name(Some(name.to_str().unwrap()))
+        .name(Some(&name.to_string_lossy()))
         .sx(sx as usize)
         .sy(sy as usize)
         .width(Some(w as usize))
@@ -1473,7 +1473,7 @@ pub extern "C" fn gl_newSprite(
     }
 
     let mut builder = TextureBuilder::new()
-        .path(path.to_str().unwrap())
+        .path(&path.to_string_lossy())
         .sx(sx as usize)
         .sy(sy as usize)
         .srgb(!flags.notsrgb)
@@ -1524,8 +1524,8 @@ pub extern "C" fn gl_newSpriteRWops(
         builder = builder.border(Some(Vector4::<f32>::new(0., 0., 0., 0.)));
     }
 
-    let pathname = path.to_str().unwrap();
-    builder = match TextureData::exists(pathname) {
+    let pathname = path.to_string_lossy();
+    builder = match TextureData::exists(&pathname) {
         Some(tex) => builder.texture_data(&tex),
         None => {
             let rw = unsafe {
@@ -1581,20 +1581,20 @@ pub extern "C" fn gl_rawTexture(
     unsafe {
         naevc::gl_contextSet();
     }
-    let pathname: Option<&str> = {
+    let pathname = {
         if cpath.is_null() {
             None
         } else {
             let path = unsafe { CStr::from_ptr(cpath) };
-            Some(path.to_str().unwrap())
+            Some(path.to_string_lossy())
         }
     };
     let mut builder = TextureBuilder::new()
         .width(Some(w as usize))
         .height(Some(h as usize))
-        .name(pathname);
+        .name(pathname.as_deref());
 
-    builder = match pathname {
+    builder = match &pathname {
         Some(pathname) => match TextureData::exists(pathname) {
             Some(tex) => builder.texture_data(&tex),
             None => {
