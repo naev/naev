@@ -19,6 +19,7 @@
 typedef struct LuaFile_s {
    char          path[PATH_MAX]; /**< Filename or path. */
    char          mode;
+   void         *data;
    size_t        size;
    SDL_IOStream *rw; /**< RWops. */
 } LuaFile_t;

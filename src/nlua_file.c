@@ -24,6 +24,7 @@ static int fileL_gc( lua_State *L );
 static int fileL_eq( lua_State *L );
 static int fileL_new( lua_State *L );
 static int fileL_open( lua_State *L );
+static int fileL_from_string( lua_State *L );
 static int fileL_close( lua_State *L );
 static int fileL_read( lua_State *L );
 static int fileL_write( lua_State *L );
@@ -38,23 +39,15 @@ static int fileL_enumerate( lua_State *L );
 static int fileL_remove( lua_State *L );
 
 static const luaL_Reg fileL_methods[] = {
-   { "__gc", fileL_gc },
-   { "__eq", fileL_eq },
-   { "new", fileL_new },
-   { "open", fileL_open },
-   { "close", fileL_close },
-   { "read", fileL_read },
-   { "write", fileL_write },
-   { "seek", fileL_seek },
-   { "getFilename", fileL_name },
-   { "getMode", fileL_mode },
-   { "getSize", fileL_size },
-   { "isOpen", fileL_isopen },
-   { "filetype", fileL_filetype },
-   { "mkdir", fileL_mkdir },
-   { "enumerate", fileL_enumerate },
-   { "remove", fileL_remove },
-   { 0, 0 } }; /**< File metatable methods. */
+   { "__gc", fileL_gc },       { "__eq", fileL_eq },
+   { "new", fileL_new },       { "open", fileL_open },
+   { "close", fileL_close },   { "from_string", fileL_from_string },
+   { "read", fileL_read },     { "write", fileL_write },
+   { "seek", fileL_seek },     { "getFilename", fileL_name },
+   { "getMode", fileL_mode },  { "getSize", fileL_size },
+   { "isOpen", fileL_isopen }, { "filetype", fileL_filetype },
+   { "mkdir", fileL_mkdir },   { "enumerate", fileL_enumerate },
+   { "remove", fileL_remove }, { 0, 0 } }; /**< File metatable methods. */
 
 /**
  * @brief Loads the file library.
@@ -157,6 +150,8 @@ static int fileL_gc( lua_State *L )
       SDL_CloseIO( lf->rw );
       lf->rw = NULL;
    }
+   free( lf->data );
+   lf->data = NULL;
    return 0;
 }
 
@@ -235,7 +230,7 @@ static int fileL_open( lua_State *L )
  * @brief Closes a file.
  *
  *    @luatparam File file File to close.
- *    @luatreturn true on success.
+ *    @luatreturn boolean true on success.
  * @luafunc close
  */
 static int fileL_close( lua_State *L )
@@ -247,6 +242,35 @@ static int fileL_close( lua_State *L )
    }
    lf->mode = 'c';
    lua_pushboolean( L, 1 );
+   return 1;
+}
+
+/**
+ * @brief Creatse a file from a string buffer.
+ *
+ *    @luatparam String str String to use as the memory data.
+ *    @luatreturn File The new file wrappnig the string.
+ * @luafunc close
+ */
+static int fileL_from_string( lua_State *L )
+{
+   LuaFile_t   lf;
+   size_t      len;
+   const char *name = "memory buffer";
+   const char *str  = luaL_tolstring( L, 1, &len );
+   memset( &lf, 0, sizeof( lf ) );
+   // Sadly have to duplicate the buffer because otherwise Lua has ownership and
+   // we have no guarantee it's valid
+   // TODO figure out if we can consume it instead
+   lf.data = malloc( len );
+   memcpy( lf.data, str, len );
+   lf.rw = SDL_IOFromMem( (void *)str, len );
+   if ( lf.rw == NULL )
+      return NLUA_ERROR( L, "failed to open memory buffer" );
+   strncpy( lf.path, name, sizeof( lf.path ) - 1 );
+   lf.mode = 'r';
+   lf.size = len;
+   lua_pushfile( L, lf );
    return 1;
 }
 
