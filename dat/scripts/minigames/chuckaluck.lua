@@ -80,21 +80,38 @@ local function _chatter( chat_type )
       if love_math.random() < 0.5 then
          text = nil
       else
-         local textlist = {
-            _("The dealer hums to himself."),
-            _("The dealer smiles."),
-            _("The dealer chuckles."),
-         }
+         local textlist
+         if var.peek("minerva_chuckaluck_change") then -- Gender neutral
+            textlist = {
+               _("The dealer hums to themselves."),
+               _("The dealer smiles."),
+               _("The dealer chuckles."),
+            }
+         else
+            textlist = {
+               _("The dealer hums to himself."),
+               _("The dealer smiles."),
+               _("The dealer chuckles."),
+            }
+         end
          text = textlist[love_math.random(1,#textlist)]
       end
    elseif chat_type==1 then
       if love_math.random() < 0.5 then
          text = nil
       else
-         local textlist = {
-            _("The dealer frowns slightly."),
-            _("The dealer wrinkles their eyebrows."),
-         }
+         local textlist
+         if var.peek("minerva_chuckaluck_change") then -- Gender neutral
+            textlist = {
+               _("The dealer frowns slightly."),
+               _("The dealer wrinkles their eyebrows."),
+            }
+         else
+            textlist = {
+               _("The dealer frowns slightly."),
+               _("The dealer wrinkles his eyebrows."),
+            }
+         end
          text = textlist[love_math.random(1,#textlist)]
       end
    elseif chat_type==2 then
