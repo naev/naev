@@ -5,7 +5,7 @@
   <slot prop_extra="engines_secondary" prop="engines">structure</slot>
   <size>medium</size>
   <price>337500</price>
-  <description>Tricon's Cyclone engine upholds the corporation's reputation for premium engines with superb performance. Many large navies and wealthier mercenaries employ the Cyclone in their corvettes and Destroyers.</description>
+  <description>Tricon's Cyclone engine upholds the corporation's reputation for premium engines with superb performance. Many large navies and wealthier mercenaries employ the Cyclone in their corvettes and destroyers.</description>
   <gfx_store>engine13.webp</gfx_store>
   <priority>3</priority>
  </general>
