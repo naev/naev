@@ -266,7 +266,7 @@ static int fileL_from_string( lua_State *L )
    // TODO figure out if we can consume it instead
    lf.data = malloc( len );
    memcpy( lf.data, str, len );
-   lf.rw = SDL_IOFromMem( (void *)str, len );
+   lf.rw = SDL_IOFromConstMem( (void *)str, len );
    if ( lf.rw == NULL )
       return NLUA_ERROR( L, "failed to open memory buffer" );
    strncpy( lf.path, name, sizeof( lf.path ) - 1 );
@@ -350,15 +350,13 @@ static int fileL_seek( lua_State *L )
 {
    LuaFile_t *lf  = luaL_checkfile( L, 1 );
    size_t     pos = luaL_checkinteger( L, 2 );
-   Sint64     ret;
 
    if ( lf->rw == NULL ) {
       lua_pushboolean( L, 1 );
       return 1;
    }
 
-   ret = SDL_SeekIO( lf->rw, pos, SDL_IO_SEEK_SET );
-
+   Sint64 ret = SDL_SeekIO( lf->rw, pos, SDL_IO_SEEK_SET );
    lua_pushboolean( L, ret >= 0 );
    return 1;
 }
@@ -372,7 +370,7 @@ static int fileL_seek( lua_State *L )
  */
 static int fileL_name( lua_State *L )
 {
-   LuaFile_t *lf = luaL_checkfile( L, 1 );
+   const LuaFile_t *lf = luaL_checkfile( L, 1 );
    lua_pushstring( L, lf->path );
    return 1;
 }
@@ -386,7 +384,7 @@ static int fileL_name( lua_State *L )
  */
 static int fileL_mode( lua_State *L )
 {
-   LuaFile_t *lf = luaL_checkfile( L, 1 );
+   const LuaFile_t *lf = luaL_checkfile( L, 1 );
    lua_pushlstring( L, &lf->mode, 1 );
    return 1;
 }
@@ -400,7 +398,7 @@ static int fileL_mode( lua_State *L )
  */
 static int fileL_size( lua_State *L )
 {
-   LuaFile_t *lf = luaL_checkfile( L, 1 );
+   const LuaFile_t *lf = luaL_checkfile( L, 1 );
    lua_pushinteger( L, lf->size );
    return 1;
 }
