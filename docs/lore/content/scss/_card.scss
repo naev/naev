@@ -52,7 +52,7 @@
       @include border-top-radius(var(--#{$prefix}card-inner-border-radius));
     }
 
-    &:last-child  {
+    &:last-child {
       border-bottom-width: 0;
       @include border-bottom-radius(var(--#{$prefix}card-inner-border-radius));
     }

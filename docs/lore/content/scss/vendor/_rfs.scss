@@ -31,7 +31,7 @@ $rfs-two-dimensional: false !default;
 $rfs-factor: 10 !default;
 
 @if type-of($rfs-factor) != number or $rfs-factor <= 1 {
-  @error "`#{$rfs-factor}` is not a valid  $rfs-factor, it must be greater than 1.";
+  @error "`#{$rfs-factor}` is not a valid $rfs-factor, it must be greater than 1.";
 }
 
 // Mode. Possibilities: "min-media-query", "max-media-query"
