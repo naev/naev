@@ -1504,6 +1504,10 @@ pub extern "C" fn gl_newSpriteRWops(
     sy: c_int,
     cflags: c_uint,
 ) -> *mut Texture {
+    if rw.is_null() {
+        warn!("gl_newSpriteRWops received rw==NULL");
+        return std::ptr::null_mut();
+    }
     let ctx = Context::get(); /* Lock early. */
     let path = unsafe { CStr::from_ptr(cpath) };
     let flags = Flags::from(cflags);
