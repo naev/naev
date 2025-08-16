@@ -30,8 +30,8 @@ fn tex_value(ctx: &ContextWrapper, name: Option<&str>, value: [u8; 3]) -> Result
     Ok(Rc::new(
         TextureBuilder::new()
             .name(name)
-            .width(1)
-            .height(1)
+            .width(Some(1))
+            .height(Some(1))
             .srgb(false)
             .flipv(false)
             .image(&img.into())

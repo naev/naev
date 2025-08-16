@@ -692,8 +692,8 @@ impl TextureSource {
     fn into_texture_data(
         self,
         sctx: &ContextWrapper,
-        w: usize,
-        h: usize,
+        w: Option<usize>,
+        h: Option<usize>,
         srgb: bool,
         flipv: bool,
         mipmaps: bool,
@@ -732,7 +732,7 @@ impl TextureSource {
                             .and_then(|s| s.to_str())
                             == Some("svg")
                         {
-                            svg_to_img(&cpath, Some(w), Some(h))?
+                            svg_to_img(&cpath, w, h)?
                         } else {
                             let rw = ndata::iostream(&cpath)?;
                             image::ImageReader::with_format(
@@ -756,10 +756,18 @@ impl TextureSource {
                         false => TextureData::from_image(ctx, name, img, flipv, srgb)?,
                     }
                 }
-                TextureSource::Raw(tex) => TextureData::from_raw(tex, w, h)?,
+                TextureSource::Raw(tex) => {
+                    if w.is_none() || h.is_none() {
+                        anyhow::bail!("empty images need specific dimensions");
+                    }
+                    TextureData::from_raw(tex, w.unwrap(), h.unwrap())?
+                }
                 TextureSource::Empty(fmt) => {
+                    if w.is_none() || h.is_none() {
+                        anyhow::bail!("empty images need specific dimensions");
+                    }
                     let ctx = &sctx.lock();
-                    TextureData::new(ctx, fmt, w, h)?
+                    TextureData::new(ctx, fmt, w.unwrap(), h.unwrap())?
                 }
                 TextureSource::TextureData(_) => unreachable!(),
             };
@@ -782,8 +790,8 @@ impl TextureSource {
 pub struct TextureBuilder {
     name: Option<String>,
     source: Option<TextureSource>,
-    w: usize,
-    h: usize,
+    w: Option<usize>,
+    h: Option<usize>,
     sx: usize,
     sy: usize,
     is_srgb: bool,
@@ -808,8 +816,8 @@ impl TextureBuilder {
         TextureBuilder {
             name: None,
             source: Some(TextureSource::Empty(TextureFormat::SRGBA)),
-            w: 0,
-            h: 0,
+            w: None,
+            h: None,
             sx: 1,
             sy: 1,
             is_srgb: true,
@@ -870,12 +878,12 @@ impl TextureBuilder {
         self
     }
 
-    pub fn width(mut self, w: usize) -> Self {
+    pub fn width(mut self, w: Option<usize>) -> Self {
         self.w = w;
         self
     }
 
-    pub fn height(mut self, h: usize) -> Self {
+    pub fn height(mut self, h: Option<usize>) -> Self {
         self.h = h;
         self
     }
@@ -1178,8 +1186,8 @@ impl FramebufferBuilder {
             let name = self.name.as_ref().map(|name| format!("{name}-Texture"));
             let texture = TextureBuilder::new()
                 .name(name.as_deref())
-                .width(self.w)
-                .height(self.h)
+                .width(Some(self.w))
+                .height(Some(self.h))
                 .filter(self.filter)
                 .address_mode(self.address_mode)
                 .build_wrap(ctx)?;
@@ -1193,8 +1201,8 @@ impl FramebufferBuilder {
             let depth = TextureBuilder::new()
                 .name(name.as_deref())
                 .empty(TextureFormat::Depth)
-                .width(self.w)
-                .height(self.h)
+                .width(Some(self.w))
+                .height(Some(self.h))
                 .filter(self.filter)
                 .address_mode(self.address_mode)
                 .build_wrap(ctx)?;
@@ -1398,8 +1406,8 @@ pub extern "C" fn gl_loadImageData(
         .name(Some(name.to_str().unwrap()))
         .sx(sx as usize)
         .sy(sy as usize)
-        .width(w as usize)
-        .height(h as usize);
+        .width(Some(w as usize))
+        .height(Some(h as usize));
 
     if !data.is_null() {
         let rawdata = unsafe { std::slice::from_raw_parts(data, (w * h * 4) as usize) };
@@ -1572,8 +1580,8 @@ pub extern "C" fn gl_rawTexture(
         }
     };
     let mut builder = TextureBuilder::new()
-        .width(w as usize)
-        .height(h as usize)
+        .width(Some(w as usize))
+        .height(Some(h as usize))
         .name(pathname);
 
     builder = match pathname {
