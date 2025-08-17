@@ -49,7 +49,9 @@ end
 
 local function turnon( p, po )
    if p:mass() > mem.mass_limit then
-      helper.msgnospam("#r".._("Your ship is above the mass limit to use Avatar of the Sirichana.").."#0")
+      if mem.isp then
+         helper.msgnospam("#r".._("Your ship is above the mass limit to use Avatar of the Sirichana.").."#0")
+      end
       return false
    end
 

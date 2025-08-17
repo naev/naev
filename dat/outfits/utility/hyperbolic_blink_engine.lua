@@ -92,8 +92,10 @@ local function doblink( p, po )
    if mem.timer > 0 then return false end
 
    -- Test energy
-   if p==player.pilot() and p:energy(true) < energy then
-      helper.msgnospam("#r"..fmt.f(_("Not enough energy to use {outfit}!"),{outfit=po:outfit()}).."#0")
+   if p:energy(true) < energy then
+      if mem.isp then
+         helper.msgnospam("#r"..fmt.f(_("Not enough energy to use {outfit}!"),{outfit=po:outfit()}).."#0")
+      end
       return false
    end
 
