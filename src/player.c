@@ -1791,7 +1791,7 @@ void player_checkLandAck( void )
 /**
  * @brief Sets the no land message.
  *
- *    @brief str Message to set when the player is not allowed to land
+ *    @brief "str" Message to set when the player is not allowed to land
  * temporarily.
  */
 void player_nolandMsg( const char *str )
@@ -1981,7 +1981,7 @@ double player_dt_default( void )
 }
 
 /**
- * @brief Starts the hail sounds and aborts autoNav
+ * @brief Starts the hail sounds and aborts autonav
  */
 void player_hailStart( void )
 {
@@ -4178,7 +4178,7 @@ static Spob *player_parse( xmlNodePtr parent )
 }
 
 /**
- * @brief Filter function for space_getRndSpob
+ * @brief Filter function for "space_getRndSpob"
  *
  *    @param p Spob.
  *    @return Whether the spob is suitable for teleporting to.

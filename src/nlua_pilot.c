@@ -1686,11 +1686,11 @@ static int pilotL_withPlayer( lua_State *L )
 }
 
 /**
- * @brief Gets the nav target of the pilot.
+ * @brief Gets the navigation target of the pilot.
  *
  * @usage spob, hyperspace = p:nav()
  *
- *    @luatparam Pilot p Pilot to get nav info of.
+ *    @luatparam Pilot p Pilot to get navigation info of.
  *    @luatreturn Spob|nil The pilot's spob target.
  *    @luatreturn System|nil The pilot's hyperspace target.
  * @luafunc nav
@@ -1719,9 +1719,9 @@ static int pilotL_nav( lua_State *L )
 }
 
 /**
- * @brief Gets the nav spob target of the pilot.
+ * @brief Gets the navigation spob target of the pilot.
  *
- *    @luatparam Pilot p Pilot to get nav info of.
+ *    @luatparam Pilot p Pilot to get navigation info of.
  *    @luatreturn Spob|nil The pilot's spob target.
  * @luafunc navSpob
  */
@@ -1773,9 +1773,9 @@ static int pilotL_navSpobSet( lua_State *L )
 }
 
 /**
- * @brief Gets the nav jump target of the pilot.
+ * @brief Gets the navigation jump target of the pilot.
  *
- *    @luatparam Pilot p Pilot to get nav info of.
+ *    @luatparam Pilot p Pilot to get navigation info of.
  *    @luatreturn Jump|nil The pilot's hyperspace target.
  * @luafunc navJump
  */
@@ -4531,7 +4531,7 @@ static int pilotL_ai( lua_State *L )
  * @usage p:changeAI( "empire" ) -- set the pilot to use the Empire AI
  *
  *    @luatparam Pilot p Pilot to change AI of.
- *    @luatparam string newai Name of Ai to use.
+ *    @luatparam string newai Name of AI to use.
  * @luafunc changeAI
  */
 static int pilotL_changeAI( lua_State *L )
@@ -4811,7 +4811,7 @@ static int pilotL_setNoDisable( lua_State *L )
  * @note Can increase the pilot's speed limit over what would be physically
  * possible.
  *
- * @usage p:setSpeedLimit( 100 ) -- Sets maximumspeed to 100px/s.
+ * @usage p:setSpeedLimit( 100 ) -- Sets maximumspeed to 100 pixels/s.
  * @usage p:setSpeedLimit( 0 ) removes speed limit.
  *    @luatparam pilot p Pilot to set speed of.
  *    @luatparam number speed Value to set speed to.
@@ -5721,7 +5721,7 @@ static int pilotL_task( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to get task name of.
  *    @luatreturn string Name of the task.
- *    @luatreturn string|nil Name of the subtask if applicable, or nil
+ *    @luatreturn string|nil Name of the sub-task if applicable, or nil
  * otherwise.
  * @luafunc taskname
  */
@@ -5741,7 +5741,7 @@ static int pilotL_taskname( lua_State *L )
 }
 
 /**
- * @brief Gets the name of all the pilot's current tasks (not subtasks).
+ * @brief Gets the name of all the pilot's current tasks (not sub-tasks).
  *
  *    @luatparam Pilot p Pilot to get task stack of.
  * @luafunc taskstack
@@ -6672,7 +6672,7 @@ static const CollPolyView *getCollPoly( const Pilot *p )
  *
  *    @luatparam Pilot p First pilot to check.
  *    @luatparam Pilot|Asteroid t Second object to check.
- *    @luatreturn Vec2|nil nil if no collision, or Vec2 with collision point if
+ *    @luatreturn Vec2|nil "nil" if no collision, or "Vec2" with collision point if
  * collided.
  * @luafunc collisionTest
  */

@@ -439,7 +439,7 @@ static int audioL_eq( lua_State *L )
 }
 
 /**
- * @brief Tries to generate a single openal source, running Lua garbage collector if necessary.
+ * @brief Tries to generate a single openAL source, running Lua garbage collector if necessary.
  */
 static int audio_genSource( ALuint *source )
 {
@@ -1285,9 +1285,9 @@ static int audioL_getPitch( lua_State *L )
  * by default, the sound is played at player's current position
  *
  * @usage audio.soundPlay( "hail" ) -- Plays the hail sound
- * @usage audio.soundPlay( "hail", pos ) -- Plays the hail sound at position pos
+ * @usage audio.soundPlay( "hail", pos ) -- Plays the hail sound at position "pos"
  * @usage audio.soundPlay( "hail", pos, vel ) -- Plays the hail sound at
- * position pos with velocity vel
+ * position "pos" with velocity "vel"
  *
  *    @luatparam string s Name of the sound to play
  *    @luatparam[opt] Vec2 pos Position of the source

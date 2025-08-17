@@ -194,7 +194,7 @@ static void tq_enqueue( ThreadQueue *q, void *data )
 /**
  * @brief Dequeue from the ThreadQueue q.
  *
- * @attention The callee should ALWAYS have called SDL_WaitSemaphore() on the
+ * @attention The callee should ALWAYS have called "SDL_WaitSemaphore()" on the
  * semaphore.
  *
  *    @param q The queue to dequeue from.

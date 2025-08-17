@@ -491,7 +491,7 @@ static void think_seeker( Weapon *w, double dt )
 }
 
 /**
- * @brief The pseudo-ai of the beam weapons.
+ * @brief The pseudo-AI of the beam weapons.
  *
  *    @param w Weapon to do the thinking.
  *    @param dt Current delta tick.

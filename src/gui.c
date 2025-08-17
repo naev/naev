@@ -1700,7 +1700,7 @@ void gui_setCargo( void )
 }
 
 /**
- * @brief Player just changed their nav computer target.
+ * @brief Player just changed their navigation computer target.
  */
 void gui_setNav( void )
 {

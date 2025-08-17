@@ -166,8 +166,8 @@ static void      spob_lua_free( spob_lua_file *lf );
  * @brief Gets the (English) name for a service code.
  *
  * @param service One of the \p SPOB_SERVICE_* enum values.
- * @return English name, reversible via \p spob_getService()
- * and presentable via \p _().
+ * @return English name, reversible via \p "spob_getService()"
+ * and presentable via \p "_()".
  */
 const char *spob_getServiceName( int service )
 {
@@ -538,7 +538,7 @@ int space_hyperspace( Pilot *p )
 }
 
 /**
- * @brief Calculates the jump in pos for a pilot.
+ * @brief Calculates the jump-in position for a pilot.
  *
  *    @param in Star system entering.
  *    @param out Star system exiting.
@@ -982,7 +982,7 @@ char **system_searchFuzzyCase( const char *sysname, int *n )
 }
 
 /**
- * @brief Comparison function for qsort'ing StarSystem by name.
+ * @brief Comparison function for "qsort'ing" StarSystem by name.
  */
 static int system_cmp( const void *p1, const void *p2 )
 {
@@ -1083,7 +1083,7 @@ const char *spob_getSystemName( const char *spobname )
 }
 
 /**
- * @brief Comparison function for qsort'ing Spob by name.
+ * @brief Comparison function for "qsort'ing" Spob by name.
  */
 static int spob_cmp( const void *p1, const void *p2 )
 {
@@ -1240,7 +1240,7 @@ VirtualSpob *virtualspob_getAll( void )
 }
 
 /**
- * @brief Comparison function for qsort'ing VirtuaSpob by name.
+ * @brief Comparison function for "qsort'ing" VirtuaSpob by name.
  */
 static int virtualspob_cmp( const void *p1, const void *p2 )
 {
@@ -4631,7 +4631,7 @@ double system_getPresenceFull( const StarSystem *sys, int faction, double *base,
 }
 
 /**
- * @brief Go through all the spobs and call system_addPresence().
+ * @brief Go through all the spobs and call "system_addPresence()".
  *
  *    @param sys Pointer to the system to process.
  */

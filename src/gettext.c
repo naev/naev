@@ -285,7 +285,7 @@ static void gettext_readStats( void )
 
 /**
  * @brief List the available languages, with completeness statistics.
- * @return Array (array.h) of LanguageOptions.
+ * @return Array (array.h) of "LanguageOptions".
  */
 LanguageOption *gettext_languageOptions( void )
 {

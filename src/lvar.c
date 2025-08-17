@@ -83,7 +83,7 @@ int lvar_push( lua_State *L, const lvar *v )
  *    @param L Lua state to get var from.
  *    @param name Name of the variable.
  *    @param idx Index to get value from.
- *    @return New lua variable that should be freed with lvar_free().
+ *    @return New lua variable that should be freed with "lvar_free()".
  */
 lvar lvar_tovar( lua_State *L, const char *name, int idx )
 {

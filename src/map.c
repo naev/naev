@@ -2716,7 +2716,7 @@ void map_select( const StarSystem *sys, char shifted )
 /**
  * @brief Cycle and autonav the mission systems in the map.
  *
- *    @param dir -1 for prev, 1 for next.
+ *    @param dir -1 for previous, 1 for next.
  */
 void map_cycleMissions( int dir )
 {

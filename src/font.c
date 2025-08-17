@@ -518,7 +518,7 @@ static size_t font_limitSize( glFontStash *stsh, int *width, const char *text,
 /**
  * @brief Initialize an iterator object for breaking text into lines.
  *
- *    @param iter New glPrintLineIterator.
+ *    @param iter New "glPrintLineIterator".
  *    @param text Text to split.
  *    @param ft_font Font to use.
  *    @param width Maximum width of a line.
@@ -632,13 +632,13 @@ static uint32_t font_nextChar( const char *s, size_t *i )
 /**
  * @brief Prints text on screen.
  *
- * Defaults ft_font to gl_defFont if NULL.
+ * Defaults "ft_font" to "gl_defFont" if NULL.
  *
  *    @param ft_font Font to use
  *    @param x X position to put text at.
  *    @param y Y position to put text at.
  *    @param c Colour to use (uses white if NULL)
- *    @param outlineR Radius in px of outline (-1 for default, 0 for none)
+ *    @param outlineR Radius in pixels of outline (-1 for default, 0 for none)
  *    @param text String to display.
  */
 void gl_printRaw( const glFont *ft_font, double x, double y, const glColour *c,
@@ -672,7 +672,7 @@ void gl_printRaw( const glFont *ft_font, double x, double y, const glColour *c,
  *    @param ft_font Font to use
  *    @param H Transformation matrix to use.
  *    @param c Colour to use (uses white if NULL)
- *    @param outlineR Radius in px of outline (-1 for default, 0 for none)
+ *    @param outlineR Radius in pixels of outline (-1 for default, 0 for none)
  *    @param text String to display.
  */
 void gl_printRawH( const glFont *ft_font, const mat4 *H, const glColour *c,
@@ -699,7 +699,7 @@ void gl_printRawH( const glFont *ft_font, const mat4 *H, const glColour *c,
 }
 
 /**
- * @brief Wrapper for gl_printRaw for map overlay markers
+ * @brief Wrapper for "gl_printRaw" for map overlay markers
  *
  * See gl_printRaw params (minus outlineR)
  */
@@ -714,7 +714,7 @@ void gl_printMarkerRaw( const glFont *ft_font, double x, double y,
  *
  * Defaults ft_font to gl_defFont if NULL.
  *
- *    @param ft_font Font to use (NULL means gl_defFont)
+ *    @param ft_font Font to use (NULL means "gl_defFont")
  *    @param x X position to put text at.
  *    @param y Y position to put text at.
  *    @param c Colour to use (uses white if NULL)
@@ -736,7 +736,7 @@ void gl_print( const glFont *ft_font, const double x, const double y,
 }
 
 /**
- * @brief Behaves like gl_printRaw but stops displaying text after a certain
+ * @brief Behaves like "gl_printRaw" but stops displaying text after a certain
  * distance.
  *
  *    @param ft_font Font to use.
@@ -744,7 +744,7 @@ void gl_print( const glFont *ft_font, const double x, const double y,
  *    @param x X position to display text at.
  *    @param y Y position to display text at.
  *    @param c Colour to use (NULL defaults to white).
- *    @param outlineR Radius in px of outline (-1 for default, 0 for none)
+ *    @param outlineR Radius in pixels of outline (-1 for default, 0 for none)
  *    @param text String to display.
  *    @return The number of characters it had to suppress.
  */
@@ -779,7 +779,7 @@ int gl_printMaxRaw( const glFont *ft_font, const int max, double x, double y,
  * @brief Behaves like gl_print but stops displaying text after reaching a
  * certain length.
  *
- *    @param ft_font Font to use (NULL means use gl_defFont).
+ *    @param ft_font Font to use (NULL means use "gl_defFont").
  *    @param max Maximum length to reach.
  *    @param x X position to display text at.
  *    @param y Y position to display text at.
@@ -812,7 +812,7 @@ int gl_printMax( const glFont *ft_font, const int max, double x, double y,
  *    @param x X position to display text at.
  *    @param y Y position to display text at.
  *    @param c Colour to use for text (NULL defaults to white).
- *    @param outlineR Radius in px of outline (-1 for default, 0 for none)
+ *    @param outlineR Radius in pixels of outline (-1 for default, 0 for none)
  *    @param text String to display.
  *    @return The number of characters it had to truncate.
  */
@@ -850,7 +850,7 @@ int gl_printMidRaw( const glFont *ft_font, int width, double x, double y,
  *
  * Will truncate if text is too long.
  *
- *    @param ft_font Font to use (NULL defaults to gl_defFont)
+ *    @param ft_font Font to use (NULL defaults to "gl_defFont")
  *    @param width Width of area to center in.
  *    @param x X position to display text at.
  *    @param y Y position to display text at.
@@ -885,7 +885,7 @@ int gl_printMid( const glFont *ft_font, const int width, double x, double y,
  *    @param by Y position to display text at.
  *    @param line_height Height of each line to print.
  *    @param c Colour to use (NULL defaults to white).
- *    @param outlineR Radius in px of outline (-1 for default, 0 for none)
+ *    @param outlineR Radius in pixels of outline (-1 for default, 0 for none)
  *    @param text String to display.
  *    @return 0 on success.
  * prints text with line breaks included to a maximum width and height preset
@@ -940,7 +940,7 @@ int gl_printTextRaw( const glFont *ft_font, const int width, const int height,
  *
  * Positions are based on origin being top-left.
  *
- *    @param ft_font Font to use (NULL defaults to gl_defFont).
+ *    @param ft_font Font to use (NULL defaults to "gl_defFont").
  *    @param width Maximum width to print to.
  *    @param height Maximum height to print to.
  *    @param bx X position to display text at.
@@ -975,7 +975,7 @@ int gl_printText( const glFont *ft_font, const int width, const int height,
  *
  * Does not display text on screen.
  *
- *    @param ft_font Font to use (NULL defaults to gl_defFont).
+ *    @param ft_font Font to use (NULL defaults to "gl_defFont").
  *    @param text Text to calculate the length of.
  *    @return The length of the text in pixels.
  */
@@ -1017,7 +1017,7 @@ int gl_printWidthRaw( const glFont *ft_font, const char *text )
  *
  * Does not display text on screen.
  *
- *    @param ft_font Font to use (NULL defaults to gl_defFont).
+ *    @param ft_font Font to use (NULL defaults to "gl_defFont").
  *    @param fmt Text to calculate the length of.
  *    @return The length of the text in pixels.
  */
@@ -1040,7 +1040,7 @@ int gl_printWidth( const glFont *ft_font, const char *fmt, ... )
  *
  * Does not display the text on screen.
  *
- *    @param ft_font Font to use (NULL defaults to gl_defFont).
+ *    @param ft_font Font to use (NULL defaults to "gl_defFont").
  *    @param width Width to jump to next line once reached.
  *    @param text Text to get the height of.
  *    @return The height of the text.
@@ -1072,7 +1072,7 @@ int gl_printHeightRaw( const glFont *ft_font, const int width,
  *
  * Does not display the text on screen.
  *
- *    @param ft_font Font to use (NULL defaults to gl_defFont).
+ *    @param ft_font Font to use (NULL defaults to "gl_defFont").
  *    @param width Width to jump to next line once reached.
  *    @param fmt Text to get the height of in printf format.
  *    @return The height of the text.
@@ -1193,7 +1193,7 @@ int gl_printEnd( int *x, int *y, const glFont *ft_font, int width,
  *
  * Does not display the text on screen.
  *
- *    @param ft_font Font to use (NULL defaults to gl_defFont).
+ *    @param ft_font Font to use (NULL defaults to "gl_defFont").
  *    @param width Width to jump to next line once reached.
  *    @param text Text to get the height of.
  *    @return The number of lines of the text.
@@ -1222,7 +1222,7 @@ int gl_printLinesRaw( const glFont *ft_font, const int width, const char *text )
  *
  * Does not display the text on screen.
  *
- *    @param ft_font Font to use (NULL defaults to gl_defFont).
+ *    @param ft_font Font to use (NULL defaults to "gl_defFont").
  *    @param width Width to jump to next line once reached.
  *    @param fmt Text to get the height of in printf format.
  *    @return The number of lines of he text.
@@ -1661,7 +1661,7 @@ void gl_fontSetFilter( const glFont *ft_font, GLint min, GLint mag )
 /**
  * @brief Initializes a font.
  *
- *    @param font Font to load (NULL defaults to gl_defFont).
+ *    @param font Font to load (NULL defaults to "gl_defFont").
  *    @param fname Name of the font (from inside packfile).
  *    @param h Height of the font to generate.
  *    @param prefix Prefix to look for the font.

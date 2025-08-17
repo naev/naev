@@ -296,7 +296,7 @@ int pilot_addOutfitRaw( Pilot *pilot, const Outfit *outfit, PilotOutfitSlot *s )
 }
 
 /**
- * @brief Same as pilot_addOutfitRaw, but without running Lua.
+ * @brief Same as "pilot_addOutfitRaw", but without running Lua.
  */
 int pilot_addOutfitRawNoLua( Pilot *pilot, const Outfit *outfit,
                              PilotOutfitSlot *s )

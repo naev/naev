@@ -199,10 +199,10 @@ static int mission_init( Mission *mission, const MissionData *misn, int genid,
 }
 
 /**
- * @brief Small wrapper for misn_run.
+ * @brief Small wrapper for "misn_run".
  *
  *    @param mission Mission to accept.
- *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted,
+ *    @return -1 on error, 1 on "misn.finish()" call, 2 if mission got deleted,
  *          3 if the mission got accepted, and 0 normally.
  *
  * @sa misn_run
@@ -360,7 +360,7 @@ void missions_run( MissionAvailability loc, int faction, const Spob *pnt,
  *
  *    @param name Name of the mission to start.
  *    @param[out] id ID of the newly created mission.
- *    @return 0 on success, >0 on forced exit (misn.finish), <0 on error.
+ *    @return 0 on success, >0 on forced exit ("misn.finish"), <0 on error.
  */
 int mission_start( const char *name, unsigned int *id )
 {
@@ -1441,7 +1441,7 @@ int missions_saveActive( xmlTextWriterPtr writer )
 }
 
 /**
- * @brief Saves a temporary commodity's defintion into the current node.
+ * @brief Saves a temporary commodity's definition into the current node.
  *
  *    @param writer XML Write to use to save missions.
  *    @param c Commodity to save.

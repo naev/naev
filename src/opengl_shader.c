@@ -173,7 +173,7 @@ GLuint gl_program_vert_frag( const char *vert, const char *frag )
 
 #if 0
 /**
- * @brief Open and compile GLSL shader from ndata.
+ * @brief Open and compile GLSL shader from the Naev data folder.
  */
 static GLuint gl_shader_compile( GLuint type, const char *buf, GLint length,
                                  const char *filename )

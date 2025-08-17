@@ -605,7 +605,7 @@ static void iar_scroll( Widget *iar, int direction )
 }
 
 /**
- * @brief Return the widget's maximum y position (.pos); this is 0 if all
+ * @brief Return the widget's maximum y position (".pos" (???)); this is 0 if all
  * content fits.
  */
 static double iar_maxPos( Widget *iar )

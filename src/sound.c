@@ -1824,7 +1824,7 @@ int source_new( const char *filename, unsigned int flags )
 }
 
 /**
- * @brief Acts like alSourcePausev but with proper checks.
+ * @brief Acts like "alSourcePause" but with proper checks.
  */
 static void al_pausev( ALint n, ALuint *s )
 {
@@ -1837,7 +1837,7 @@ static void al_pausev( ALint n, ALuint *s )
 }
 
 /**
- * @brief Acts like alSourcePlayv but with proper checks to just resume.
+ * @brief Acts like "alSourcePlay" but with proper checks to just resume.
  */
 static void al_resumev( ALint n, ALuint *s )
 {
@@ -1916,7 +1916,7 @@ static int al_loadWav( ALuint *buf, SDL_IOStream *rw )
 }
 
 /**
- * @brief Gets the vorbisfile error in human readable form..
+ * @brief Gets the "VorbisFile" error in human readable form..
  */
 static const char *vorbis_getErr( int err )
 {
@@ -1992,7 +1992,7 @@ void rg_filter( float **pcm, long channels, long samples, void *filter_param )
  * @brief Loads an ogg file from a tested format if possible.
  *
  *    @param buf Buffer to load ogg into.
- *    @param vf Vorbisfile containing the song.
+ *    @param vf "Vorbisfile" containing the song.
  */
 static int al_loadOgg( ALuint *buf, OggVorbis_File *vf )
 {

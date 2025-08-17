@@ -150,7 +150,7 @@ int nlua_loadMisn( nlua_env *env )
  *
  *    @param misn Mission that owns the function.
  *    @param func Name of the function to call.
- *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted,
+ *    @return -1 on error, 1 on "misn.finish()" call, 2 if mission got deleted,
  *          3 if the mission got accepted, and 0 normally.
  */
 int misn_tryRun( Mission *misn, const char *func )
@@ -172,7 +172,7 @@ int misn_tryRun( Mission *misn, const char *func )
  *
  *    @param misn Mission that owns the function.
  *    @param func Name of the function to call.
- *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted,
+ *    @return -1 on error, 1 on "misn.finish()" call, 2 if mission got deleted,
  *          3 if the mission got accepted, and 0 normally.
  */
 int misn_run( Mission *misn, const char *func )
@@ -200,7 +200,7 @@ Mission *misn_getFromLua( lua_State *L )
 }
 
 /**
- * @brief Sets up the mission to run misn_runFunc.
+ * @brief Sets up the mission to run "misn_runFunc".
  */
 int misn_runStart( Mission *misn, const char *func )
 {
@@ -217,12 +217,12 @@ int misn_runStart( Mission *misn, const char *func )
 }
 
 /**
- * @brief Runs a mission set up with misn_runStart.
+ * @brief Runs a mission set up with "misn_runStart".
  *
  *    @param misn Mission that owns the function.
  *    @param func Name of the function to call.
  *    @param nargs Number of arguments to pass.
- *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted,
+ *    @return -1 on error, 1 on "misn.finish()" call, 2 if mission got deleted,
  *          3 if the mission got accepted, and 0 normally.
  */
 int misn_runFunc( const Mission *misn, const char *func, int nargs )
@@ -708,7 +708,7 @@ static int misn_finish( lua_State *L )
  *       a Commodity object or as the raw (untranslated) name of a
  *       commodity.
  *    @luatparam number quantity Quantity of cargo to add.
- *    @luatreturn number The id of the cargo which can be used in cargoRm.
+ *    @luatreturn number The id of the cargo which can be used in "cargoRm".
  * @luafunc cargoAdd
  */
 static int misn_cargoAdd( lua_State *L )
@@ -1000,7 +1000,7 @@ static int misn_osdGet( lua_State *L )
  * argument (highest is 0, lowest is 10). Missions default to 5 priority.
  *    @luatparam[opt=nil] string background Background file name to use (from
  * GFX_PATH/portraits/).
- *    @luatreturn number The ID of the NPC to pass to npcRm.
+ *    @luatreturn number The ID of the NPC to pass to "npcRm".
  * @luafunc npcAdd
  */
 static int misn_npcAdd( lua_State *L )

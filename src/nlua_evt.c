@@ -113,7 +113,7 @@ Event_t *event_getFromLua( lua_State *L )
 /**
  * @brief Runs a function previously set up with event_runStart.
  *
- *    @return -1 on error, 1 on misn.finish() call, 2 if event got deleted
+ *    @return -1 on error, 1 on "misn.finish()" call, 2 if event got deleted
  *            and 0 normally.
  */
 int event_runFunc( unsigned int eventid, const char *func, int nargs )
@@ -173,7 +173,7 @@ int event_runFunc( unsigned int eventid, const char *func, int nargs )
  * (highest is 0, lowest is 10). Events default to 5 priority.
  *    @luatparam[opt=nil] string background Background file name to use (from
  * GFX_PATH/portraits/).
- *    @luatreturn number The ID of the NPC to pass to npcRm.
+ *    @luatreturn number The ID of the NPC to pass to "npcRm".
  * @luafunc npcAdd
  */
 static int evtL_npcAdd( lua_State *L )

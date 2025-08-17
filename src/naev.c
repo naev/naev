@@ -121,7 +121,7 @@ static void update_all( int dohooks );
 void loadscreen_update( double done, const char *msg );
 
 /**
- * @brief Flags naev to quit.
+ * @brief Flags Naev to quit.
  */
 void naev_quit( void )
 {

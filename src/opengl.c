@@ -4,7 +4,7 @@
 /**
  * @file opengl.c
  *
- * @brief This file handles most of the more generic opengl functions.
+ * @brief This file handles most of the more generic openGL functions.
  *
  * The main way to work with opengl in naev is to create glTextures and then
  *  use the blit functions to draw them on the screen.  This system will

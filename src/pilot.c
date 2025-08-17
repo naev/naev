@@ -738,7 +738,7 @@ int pilot_isFriendly( const Pilot *p )
 }
 
 /**
- * @brief Like areAllies but for pilots.
+ * @brief Like "areAllies" but for pilots.
  */
 int pilot_areAllies( const Pilot *p, const Pilot *target )
 {
@@ -760,7 +760,7 @@ int pilot_areAllies( const Pilot *p, const Pilot *target )
 }
 
 /**
- * @brief Like areEnemies but for pilots.
+ * @brief Like "areEnemies" but for pilots.
  */
 int pilot_areEnemies( const Pilot *p, const Pilot *target )
 {
@@ -816,15 +816,15 @@ void pilot_collideQueryIL( IntList *il, int x1, int y1, int x2, int y2 )
 }
 
 /**
- * @brief Tries to turn the pilot to face dir.
+ * @brief Tries to turn the pilot to face direction.
  *
  * Sets the direction velocity property of the pilot's solid, does not
  *  directly manipulate the direction.
  *
  *    @param p Pilot to turn.
  *    @param dir Direction to attempt to face.
- *    @param dt Current deltatick.
- *    @return The distance left to turn to match dir.
+ *    @param dt Current delta time.
+ *    @return The distance left to turn to match "dir".
  */
 double pilot_face( Pilot *p, double dir, double dt )
 {
@@ -997,7 +997,7 @@ void pilot_cooldownEnd( Pilot *p, const char *reason )
  * @brief Returns the angle for a pilot to aim at another pilot
  *
  *    @param p Pilot that aims.
- *    @param pos Posiion of the target being aimed at.
+ *    @param pos Position of the target being aimed at.
  *    @param vel Velocity of the target being aimed at.
  */
 double pilot_aimAngle( Pilot *p, const vec2 *pos, const vec2 *vel )
@@ -4433,7 +4433,7 @@ double pilot_relsize( const Pilot *cur_pilot, const Pilot *p )
 }
 
 /**
- * @brief Calculates the dps and eps of a pilot.
+ * @brief Calculates the damage per second and energy per second of a pilot.
  *
  *    @param p Pilot to compute stats of.
  *    @param[out] pdps DPS of pilot.

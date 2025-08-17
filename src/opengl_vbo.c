@@ -61,7 +61,7 @@ void gl_exitVBO( void )
  *    @param size Size of the buffer (in bytes).
  *    @param data The actual data to use.
  *    @param usage Usage to use.
- *    @return ID of the vbo.
+ *    @return ID of the VBO.
  */
 static gl_vbo *gl_vboCreate( GLenum target, GLsizei size, const void *data,
                              GLenum usage )
@@ -97,7 +97,7 @@ void gl_vboLabel( gl_vbo *vbo, const char *name )
 }
 
 /**
- * @brief Reloads new data or grows the size of the vbo.
+ * @brief Reloads new data or grows the size of the VBO.
  *
  *    @param vbo VBO to set new data of.
  *    @param size Size of new data.
@@ -145,9 +145,9 @@ void gl_vboSubData( gl_vbo *vbo, GLint offset, GLsizei size, const void *data )
 }
 
 /**
- * @brief Creates a stream vbo.
+ * @brief Creates a stream VBO.
  *
- *    @param size Size of the stream vbo (multiply by sizeof(type)).
+ *    @param size Size of the stream VBO (multiply by "sizeof(type)").
  *    @param data Data for the VBO.
  */
 gl_vbo *gl_vboCreateStream( GLsizei size, const void *data )
@@ -162,9 +162,9 @@ gl_vbo *gl_vboCreateStream( GLsizei size, const void *data )
 }
 
 /**
- * @brief Creates a dynamic vbo.
+ * @brief Creates a dynamic VBO.
  *
- *    @param size Size of the dynamic vbo (multiply by sizeof(type)).
+ *    @param size Size of the dynamic VBO (multiply by "sizeof(type)").
  *    @param data Data for the VBO.
  */
 gl_vbo *gl_vboCreateDynamic( GLsizei size, const void *data )
@@ -179,9 +179,9 @@ gl_vbo *gl_vboCreateDynamic( GLsizei size, const void *data )
 }
 
 /**
- * @brief Creates a stream vbo.
+ * @brief Creates a stream VBO.
  *
- *    @param size Size of the stream vbo (multiply by sizeof(type)).
+ *    @param size Size of the stream VBO (multiply by "sizeof(type)").
  *    @param data Data for the VBO.
  */
 gl_vbo *gl_vboCreateStatic( GLsizei size, const void *data )
@@ -199,7 +199,7 @@ gl_vbo *gl_vboCreateStatic( GLsizei size, const void *data )
  * @brief Maps a buffer.
  *
  *    @param vbo VBO to map.
- *    @return The data contained in the vbo.
+ *    @return The data contained in the VBO.
  */
 void *gl_vboMap( gl_vbo *vbo )
 {

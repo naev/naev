@@ -847,7 +847,7 @@ static void weapons_clearAll( unsigned int wid, const char *str )
 }
 
 /**
- * @brief Toggles autoweap for the ship.
+ * @brief Toggles automatic weapon groups for the ship.
  */
 static void weapons_autoweap( unsigned int wid, const char *str )
 {
@@ -943,7 +943,7 @@ static void weapons_renderLegend( double bx, double by, double bw, double bh,
 }
 
 /**
- * @brief Opens the naevpedia for weapon sets.
+ * @brief Opens Naevpedia for weapon sets.
  */
 static void weapons_help( unsigned int wid, const char *str )
 {

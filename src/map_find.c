@@ -612,7 +612,7 @@ static void map_addOutfitDetailFields( unsigned int wid_results, int x, int y,
 }
 
 /**
- * @brief Update the listPanel outfit details to the outfit selected.
+ * @brief Update the "listPanel" outfit details to the outfit selected.
  *
  *    @param wid The windowid of the window we're updating.
  *    @param wgtname The name of the list that was selected.

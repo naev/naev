@@ -22,7 +22,7 @@
 static nlua_env *naevpedia_env = NULL; /**< Naevpedia environment. */
 
 /**
- * @brief Try to open naevpedia path.
+ * @brief Try to open Naevpedia path.
  */
 int naevpedia_open( const char *path )
 {

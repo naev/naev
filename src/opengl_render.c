@@ -4,7 +4,7 @@
 /**
  * @file opengl_render.c
  *
- * @brief This file handles the opengl rendering routines.
+ * @brief This file handles the openGL rendering routines.
  *
  * There are two coordinate systems: relative and absolute.
  *
@@ -639,10 +639,10 @@ void gl_renderTextureInterpolate( const glTexture *ta, const glTexture *tb,
 /**
  * @brief Converts in-game coordinates to screen coordinates.
  *
- *    @param[out] nx New screen X coord.
- *    @param[out] ny New screen Y coord.
- *    @param bx Game X coord to translate.
- *    @param by Game Y coord to translate.
+ *    @param[out] nx New screen X coordinate.
+ *    @param[out] ny New screen Y coordinate.
+ *    @param bx Game X coordinate to translate.
+ *    @param by Game Y coordinate to translate.
  */
 void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by )
 {
@@ -660,10 +660,10 @@ void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by )
 /**
  * @brief Converts screen coordinates to in-game coordinates.
  *
- *    @param[out] nx New in-game X coord.
- *    @param[out] ny New in-game Y coord.
- *    @param bx Screen X coord to translate.
- *    @param by Screen Y coord to translate.
+ *    @param[out] nx New in-game X coordinate.
+ *    @param[out] ny New in-game Y coordinate.
+ *    @param bx Screen X coordinate to translate.
+ *    @param by Screen Y coordinate to translate.
  */
 void gl_screenToGameCoords( double *nx, double *ny, int bx, int by )
 {

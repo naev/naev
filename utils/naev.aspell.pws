@@ -37,7 +37,6 @@ APIs
 armour
 autoequip
 automagically
-Automagically
 autoface
 autosave
 backend
@@ -96,7 +95,6 @@ waypoints
 VBO
 VBO's
 unpauses
-Unpauses
 unmap
 Unmaps
 Unmarks
@@ -104,7 +102,7 @@ toggleable
 TODO
 TK
 teleporting
-Teleports
+teleports
 guerilla
 healths
 hittable
@@ -125,7 +123,6 @@ qsorting
 quadtree
 quadtrees
 quaternion
-Quaternion
 reentrant
 RGB
 RGBA
@@ -141,7 +138,18 @@ strdup
 subdirectories
 subdirectory
 NPC
+NPCs
 Runge
 Kutta
 dt
 nxml
+accessor
+openGL
+openAL
+cargos
+Eneguoz
+Naevpedia
+fullscreen
+gameplay
+viewport
+Vorbis

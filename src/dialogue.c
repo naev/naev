@@ -400,7 +400,7 @@ int dialogue_YesNoRaw( const char *caption, const char *msg )
    return done[1];
 }
 /**
- * @brief Closes a yesno dialogue.
+ * @brief Closes a yes/no dialogue.
  *    @param wid Window being closed.
  *    @param str Unused.
  */

@@ -883,7 +883,7 @@ static void economy_calcUpdatedCommodityPrice( StarSystem *sys )
 }
 
 /**
- * @brief Initialises commodity prices for the sinusoidal economy model.
+ * @brief Initializes commodity prices for the sinusoidal economy model.
  *
  */
 void economy_initialiseCommodityPrices( void )

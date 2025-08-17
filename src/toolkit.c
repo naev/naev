@@ -1642,10 +1642,10 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
 /**
  * @brief Translates the mouse coordinates.
  *
- *    @param w Window to translate coords for.
- *    @param event Event to translate coords.
- *    @param[out] x Resulting X coord in window space.
- *    @param[out] y Resulting Y coord in window space.
+ *    @param w Window to translate coordinates for.
+ *    @param event Event whose coordinates to translate.
+ *    @param[out] x Resulting X coordinate in window space.
+ *    @param[out] y Resulting Y coordinate in window space.
  *    @param[out] rx Relative X movement (only valid for motion).
  *    @param[out] ry Relative Y movement (only valid for motion).
  *    @return The type of the event.
@@ -2288,8 +2288,8 @@ void toolkit_focusWidget( Window *wdw, Widget *wgt )
 }
 
 /**
- * @brief Defocuses the focused widget in a window. No-op if it's not
- * (de)focusable or already defocused, else voids the window's focus.
+ * @brief Remove focus from the focused widget in a window. No-op if it's not
+ * (de)focusable or has already lost defocus, else voids the window's focus.
  */
 void toolkit_defocusWidget( Window *wdw, Widget *wgt )
 {
