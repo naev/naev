@@ -686,7 +686,7 @@ static int hookL_outfitsell( lua_State *L )
 }
 
 /**
- * @brief Hooks the function to the player equipping or deequipping any outfit.
+ * @brief Hooks the function to the player equipping or unequipping any outfit.
  *
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.

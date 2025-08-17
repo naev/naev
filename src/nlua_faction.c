@@ -877,7 +877,7 @@ static int factionL_isStatic( lua_State *L )
 }
 
 /**
- * @brief Gets the overriden reputation value of a faction.
+ * @brief Gets the overridden reputation value of a faction.
  *
  *    @luatparam Faction f Faction to get whether or not the reputation is
  * overriden and the value.
@@ -897,7 +897,7 @@ static int factionL_reputationOverride( lua_State *L )
 }
 
 /**
- * @brief Gets the overriden reputation value of a faction.
+ * @brief Gets the overridden reputation value of a faction.
  *
  *    @luatparam Faction f Faction to enable/disable reputation override of.
  *    @luatparam number|nil Sets the faction reputation override to the value if

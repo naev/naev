@@ -1433,13 +1433,13 @@ static int pilotL_eq( lua_State *L )
 }
 
 /**
- * @brief Gets the pilot's current (translated) name or notes it is inexistent.
+ * @brief Gets the pilot's current (translated) name or notes it is non-existent.
  *
  * @usage tostring(p)
  *
  *    @luatparam Pilot p Pilot to convert to string.
- *    @luatreturn string The current name of the pilot or "(inexistent pilot)"
- * if not existent.
+ *    @luatreturn string The current name of the pilot
+ * or "(inexistent pilot)" (sic) if not existent.
  * @luafunc __tostring
  */
 static int pilotL_tostring( lua_State *L )

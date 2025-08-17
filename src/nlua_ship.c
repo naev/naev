@@ -340,7 +340,7 @@ static int shipL_baseType( lua_State *L )
  * @brief Gets the ship it inherits stats from if applicable.
  *
  *    @luatparam Ship s Ship to get the ship it is inheriting from.
- *    @luatreturn Ship|nil The ship it is inheritng from or nil if not
+ *    @luatreturn Ship|nil The ship it is inheriting from or nil if not
  * applicable.
  * @luafunc inherits
  */

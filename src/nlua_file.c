@@ -280,7 +280,7 @@ static int fileL_from_string( lua_State *L )
  * @brief Reads from an open file.
  *
  *    @luatparam File file File to read from.
- *    @luatparam[opt] number bytes Number of bytes to read or all if ommitted.
+ *    @luatparam[opt] number bytes Number of bytes to read or all if omitted.
  *    @luatreturn string Read data.
  *    @luatreturn number Number of bytes actually read.
  * @luafunc read

@@ -2376,7 +2376,7 @@ static GltfObject *cache_get( const char *filename, int *new )
 }
 
 /**
- * @brief Decerments the refcount for a cached object and sees if it should be
+ * @brief Decrements the reference count for a cached object and sees if it should be
  * freed.
  *
  *    @param obj Object to check to see if it should be freed.

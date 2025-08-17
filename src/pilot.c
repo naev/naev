@@ -4632,7 +4632,7 @@ void pilot_msg( const Pilot *p, const Pilot *receiver, const char *type,
 }
 
 /**
- * @brief Checks to see if the pilot has illegal stuf to a faction.
+ * @brief Checks to see if the pilot has illegal stuff to a faction.
  *
  *    @param p Pilot to check.
  *    @param faction Faction to check.

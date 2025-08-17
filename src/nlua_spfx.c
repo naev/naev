@@ -249,11 +249,11 @@ static int spfxL_gc( lua_State *L )
 }
 
 /**
- * @brief Compares two spfxs to see if they are the same.
+ * @brief Compares two "spfxs" to see if they are the same.
  *
- *    @luatparam Spfx s1 Spfx 1 to compare.
- *    @luatparam Spfx s2 Spfx 2 to compare.
- *    @luatreturn boolean true if both spfxs are the same.
+ *    @luatparam Spfx s1 "Spfx" 1 to compare.
+ *    @luatparam Spfx s2 "Spfx" 2 to compare.
+ *    @luatreturn boolean true if both "spfxs" are the same.
  * @luafunc __eq
  */
 static int spfxL_eq( lua_State *L )

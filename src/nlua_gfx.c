@@ -869,7 +869,7 @@ static int gfxL_printf( lua_State *L )
 }
 
 /**
- * @brief Prints text on the screen using a font with a transformation matirx.
+ * @brief Prints text on the screen using a font with a transformation matrix.
  *
  *    @luatparam Transform H transformation matrix to use.
  *    @luatparam font font Font to use.

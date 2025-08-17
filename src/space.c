@@ -1268,7 +1268,7 @@ VirtualSpob *virtualspob_get( const char *name )
  *
  *    @param jumpname Name to match.
  *    @param sys System jump is in.
- *    @return Jump point matich jumpname in sys or NULL if not found.
+ *    @return Jump point matching "jumpname" in sys or NULL if not found.
  */
 JumpPoint *jump_get( const char *jumpname, const StarSystem *sys )
 {

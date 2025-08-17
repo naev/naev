@@ -22,7 +22,7 @@ readarray -t WORDS <<< "$(
    grep -h '^ *\* *@' "$@"                                           |
    filter                                                            |
    aspell list -l en_US --personal "$PERS" --extra-dicts "$PERS_U"   |
-    sort -u
+   sort -u
    #sed 's/\([a-z]\)\([A-Z]\)/\1 \2/g'
 )"
 

@@ -231,7 +231,7 @@ void *window_custGetData( unsigned int wid, const char *name )
 }
 
 /**
- * @brief Marks the widget's data as owned, so that it will be freed upon
+ * @brief Marks the widget data as owned, so that it will be freed upon
  * cleanup.
  *
  *    @param wid Window to which widget belongs.

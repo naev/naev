@@ -579,7 +579,7 @@ static void select_call_wrapper( unsigned int wid, const char *wgtname )
  * message.
  *
  *    @param title Title of the dialogue.
- *    @param items Items in the list (should be all malloced, automatically
+ *    @param items Items in the list (should be all allocated, automatically
  * freed).
  *    @param nitems Number of items.
  *    @param fmt printf formatted string with text to display.
@@ -605,7 +605,7 @@ int dialogue_list( const char *title, char **items, int nitems, const char *fmt,
  * @brief Creates a list dialogue with OK and Cancel button.
  *
  *    @param title Title of the dialogue.
- *    @param items Items in the list (should be all malloced, automatically
+ *    @param items Items in the list (should be all allocated, automatically
  * freed).
  *    @param nitems Number of items.
  *    @param msg string with text to display.
@@ -623,7 +623,7 @@ int dialogue_listRaw( const char *title, char **items, int nitems,
  * events.
  *
  *    @param title Title of the dialogue.
- *    @param items Items in the list (should be all malloced, automatically
+ *    @param items Items in the list (should be all allocated, automatically
  * freed).
  *    @param nitems Number of items.
  *    @param extrawidth Width of area to add for select_call callback.
@@ -665,7 +665,7 @@ int dialogue_listPanel(
  * events.
  *
  *    @param title Title of the dialogue.
- *    @param items Items in the list (should be all malloced, automatically
+ *    @param items Items in the list (should be all allocated, automatically
  * freed).
  *    @param nitems Number of items.
  *    @param extrawidth Width of area to add for select_call callback.

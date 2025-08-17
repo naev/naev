@@ -1787,11 +1787,11 @@ static int audioL_setGlobalAirAbsorption( lua_State *L )
 }
 
 /**
- * @brief Sets the doppler effect factor.
+ * @brief Sets the Doppler effect factor.
  *
  * Defaults to 0.3 outside of the nebula and 1.0 in the nebula.
  *
- *    @luatparam number factor Factor to set doppler effect to. Must be
+ *    @luatparam number factor Factor to set Doppler effect to. Must be
  * positive.
  * @luafunc setGlobalDopplerFactor
  */
