@@ -30,11 +30,14 @@ UL = vec(minx, miny)
 DR = vec(maxx, maxy)
 middle = 0.5 * (UL + DR)
 rel_pos = lambda v: f*(v-middle)
+def disp( v ):
+   x,y=v
+   return str((round(100*x), round(100*y)))
 
 s= ' '.join(argv[1:])
-stderr.write(s + '  window ' + str(rel_pos(UL)) + '--' + str(rel_pos(DR)) + '\n\n')
-stderr.write(s + '  center of mass' + str(rel_pos(g)) + '\n')
+stderr.write(s + '  window ' + disp(rel_pos(UL)) + '--' + disp(rel_pos(DR)) + '\n\n')
+stderr.write(s + '  center of mass' + disp(rel_pos(g)) + '\n')
 for i in ['sol', 'gamma_polaris', 'feye', 'dvaer', 'zalek', 'aesir']:
-   stderr.write(s + '  ' + i + ': ' + str(rel_pos(ssys_pos[i])) + '\n')
+   stderr.write(s + '  ' + i + ': ' + disp(rel_pos(ssys_pos[i])) + '\n')
 
 
