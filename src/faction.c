@@ -1785,7 +1785,7 @@ static int faction_parse( Faction *temp, const char *file )
  * @brief Sets up a standing script for a faction.
  *
  *    @param temp Faction to associate the script to.
- *    @param scriptname Name of the lua script to use (e.g., "static").
+ *    @param scriptname Name of the Lua script to use (e.g., "static").
  */
 static void faction_addStandingScript( Faction *temp, const char *scriptname )
 {

@@ -722,7 +722,7 @@ static int event_parseFile( const char *file, EventData *temp )
 }
 
 /**
- * @brief Frees an EventData structure.
+ * @brief Frees an "EventData" structure.
  *
  *    @param event Event Data to free.
  */

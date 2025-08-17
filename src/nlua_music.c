@@ -44,7 +44,7 @@ static const luaL_Reg music_methods[] = {
  * @luamod music
  */
 /**
- * @brief Loads the music functions into a lua_State.
+ * @brief Loads the music functions into a "lua_State".
  *
  *    @param env Lua environment to load the music functions into.
  *    @return 0 on success.

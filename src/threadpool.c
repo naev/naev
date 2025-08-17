@@ -59,7 +59,7 @@ typedef struct Node_ {
 struct vpoolThreadData_;
 
 /**
- * @brief Threadqueue itself.
+ * @brief The "Threadqueue" structure itself.
  */
 struct ThreadQueue_ {
    Node *first;   /**< The first node */
@@ -78,7 +78,7 @@ struct ThreadQueue_ {
 };
 
 /**
- * @brief Data for the threadqueue.
+ * @brief Data for the "Threadqueue".
  */
 typedef struct ThreadQueueData_ {
    int ( *function )( void * ); /* The function to be called */
@@ -132,7 +132,7 @@ static int          vpool_worker( void *data );
  *  we can operate separately on either head or tail. This lets us enqueue at
  *  tail and dequeue at the head in true FIFO fashion.
  *
- *    @return The ThreadQueue.
+ *    @return The "ThreadQueue".
  */
 static ThreadQueue *tq_create( void )
 {
@@ -158,7 +158,7 @@ static ThreadQueue *tq_create( void )
 }
 
 /**
- * @brief Enqueue data to the ThreadQueue q.
+ * @brief Enqueue data to the "ThreadQueue" q.
  *
  *    @param q The queue to be inserted into.
  *    @param data The element to be stored in the queue.
@@ -192,7 +192,7 @@ static void tq_enqueue( ThreadQueue *q, void *data )
 }
 
 /**
- * @brief Dequeue from the ThreadQueue q.
+ * @brief Dequeue from the "ThreadQueue" q.
  *
  * @attention The callee should ALWAYS have called "SDL_WaitSemaphore()" on the
  * semaphore.
@@ -244,11 +244,11 @@ static void *tq_dequeue( ThreadQueue *q )
 }
 
 /**
- * @brief Destroys and frees a ThreadQueue.
+ * @brief Destroys and frees a "ThreadQueue".
  *
  * Frees all elements too.
  *
- *    @param q The ThreadQueue to free.
+ *    @param q The "ThreadQueue" to free.
  */
 static void tq_destroy( ThreadQueue *q )
 {
@@ -290,7 +290,7 @@ static void tq_destroy( ThreadQueue *q )
  *  means the worker thread should stop. Else it dequeues a job from the
  *  global_queue and executes it.
  *
- *    @param data A pointer to the ThreadData struct used for a lot of stuff.
+ *    @param data A pointer to the "ThreadData" struct used for a lot of stuff.
  */
 static int threadpool_worker( void *data )
 {
@@ -501,7 +501,7 @@ int threadpool_init( void )
  *  instead of using the threadpool. I might add a vpool_waitInANewThread
  *  function some day.
  *
- *    @return Returns a ThreadQueue to be used.
+ *    @return Returns a "ThreadQueue" to be used.
  */
 ThreadQueue *vpool_create( void )
 {

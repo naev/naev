@@ -535,7 +535,7 @@ static void opt_gameplayUpdate( unsigned int wid, const char *str )
 }
 
 /**
- * @brief Gets the keybind menu dimensions.
+ * @brief Gets the key binding menu dimensions.
  */
 static void menuKeybinds_getDim( unsigned int wid, int *w, int *h, int *lw,
                                  int *lh, int *bw, int *bh )

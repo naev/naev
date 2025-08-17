@@ -512,7 +512,7 @@ int economy_refresh( void )
 /**
  * @brief Updates the economy.
  *
- *    @param dt Deltatick in NTIME.
+ *    @param dt Delta time in NTIME.
  */
 int economy_update( unsigned int dt )
 {

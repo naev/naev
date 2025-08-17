@@ -2866,7 +2866,7 @@ PlayerShip_t *player_getPlayerShip( const char *shipname )
  * @brief Gets how many of the outfit the player owns.
  *
  *    @param o Outfit to check how many the player owns.
- *    @return The number of outfits matching outfitname owned.
+ *    @return The number of own outfits matching "o".
  */
 int player_outfitOwned( const Outfit *o )
 {
@@ -3386,7 +3386,7 @@ static int player_saveEscorts( xmlTextWriterPtr writer )
 }
 
 /**
- * @brief Save the freaking player in a freaking xmlfile.
+ * @brief Save the freaking player in a freaking xml file.
  *
  *    @param writer xml Writer to use.
  *    @return 0 on success.

@@ -107,7 +107,7 @@ int mission_getID( const char *name )
 }
 
 /**
- * @brief Gets a MissionData based on ID.
+ * @brief Gets a "MissionData" based on ID.
  *
  *    @param id ID to match.
  *    @return MissonData matching ID.
@@ -856,9 +856,9 @@ void mission_shift( int pos )
 }
 
 /**
- * @brief Frees MissionData.
+ * @brief Frees the "MissionData".
  *
- *    @param mission MissionData to free.
+ *    @param mission The "MissionData" to free.
  */
 static void mission_freeData( MissionData *mission )
 {

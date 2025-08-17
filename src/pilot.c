@@ -246,7 +246,7 @@ int pilot_validTarget( const Pilot *p, const Pilot *target )
  *
  *    @param p Reference pilot.
  *    @param target Pilot to see if is a valid target of the reference.
- *    @param[out] inrange Stores the value of pilot_inRangePilot.
+ *    @param[out] inrange Stores the value of "pilot_inRangePilot".
  *    @return 1 if it is valid, 0 otherwise.
  */
 int pilot_validTargetRange( const Pilot *p, const Pilot *target, int *inrange )
@@ -267,7 +267,7 @@ int pilot_validTargetRange( const Pilot *p, const Pilot *target, int *inrange )
 }
 
 /**
- * @brief Same as pilot_validTarget but without the range check.
+ * @brief Same as "pilot_validTarget" but without the range check.
  */
 int pilot_canTarget( const Pilot *p )
 {
@@ -1091,7 +1091,7 @@ void pilot_setHostile( Pilot *p )
 }
 
 /**
- * @brief Gets the faction colour char, works like faction_reputationColourChar
+ * @brief Gets the faction colour char, works like "faction_reputationColourChar"
  * but for a pilot.
  *
  * @sa faction_reputationColourChar
@@ -3044,7 +3044,7 @@ void pilot_delete( Pilot *p )
  * @brief Handles pilot's hyperspace states.
  *
  *    @param p Pilot to handle hyperspace navigation.
- *    @param dt Current deltatick.
+ *    @param dt Current delta time.
  */
 static void pilot_hyperspace( Pilot *p, double dt )
 {
@@ -4600,7 +4600,7 @@ mat4 pilot_local_transform( const Pilot *p )
  *    @param p Pilot to send message
  *    @param receiver Pilot to receive it
  *    @param type Type of message.
- *    @param idx Index of data on lua stack or LUA_NOREF
+ *    @param idx Index of data on Lua stack or "LUA_NOREF"
  */
 void pilot_msg( const Pilot *p, const Pilot *receiver, const char *type,
                 int idx )

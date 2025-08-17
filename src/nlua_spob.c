@@ -1046,7 +1046,7 @@ static int spobL_isKnown( lua_State *L )
 }
 
 /**
- * @brief Sets a spobs's known state.
+ * @brief Sets the known state of a spob.
  *
  * @usage p:setKnown( false ) -- Makes spob unknown.
  *    @luatparam Spob p Spob to set known.

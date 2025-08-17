@@ -340,7 +340,7 @@ static GLuint gl_program_make( GLuint vertex_shader, GLuint fragment_shader )
 }
 
 /**
- * @brief Return true iff the input string has content besides whitespace and
+ * @brief Return whether the input string has content besides whitespace and
  * non-diagnostic messages we'e seen drivers emit. We log warnings in great
  * detail, so filtering false positives is critical.
  */

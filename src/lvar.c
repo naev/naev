@@ -23,7 +23,7 @@ static int  lvar_cmp( const void *p1, const void *p2 );
 static void lvar_free( lvar *var );
 
 /**
- * @brief Compares two lua variable names. For use with qsort/bsearch.
+ * @brief Compares two Lua variable names. For use with qsort/bsearch.
  */
 static int lvar_cmp( const void *p1, const void *p2 )
 {
@@ -34,7 +34,7 @@ static int lvar_cmp( const void *p1, const void *p2 )
 }
 
 /**
- * @brief Gets a lua var by name.
+ * @brief Gets a Lua variable by name.
  *
  *    @param arr Array to search in.
  *    @param str Name to use as a key.
@@ -49,7 +49,7 @@ lvar *lvar_get( const lvar *arr, const char *str )
 }
 
 /**
- * @brief Pushes a lua var to a lua state.
+ * @brief Pushes a Lua variable to a Lua state.
  *
  *    @param L Lua state to push to.
  *    @param v Lua variable to push.
@@ -78,12 +78,12 @@ int lvar_push( lua_State *L, const lvar *v )
 }
 
 /**
- * @brief Gets a lua variable from an index from a lua state.
+ * @brief Gets a Lua variable from an index from a Lua state.
  *
  *    @param L Lua state to get var from.
  *    @param name Name of the variable.
  *    @param idx Index to get value from.
- *    @return New lua variable that should be freed with "lvar_free()".
+ *    @return New Lua variable that should be freed with "lvar_free()".
  */
 lvar lvar_tovar( lua_State *L, const char *name, int idx )
 {
@@ -118,7 +118,7 @@ lvar lvar_tovar( lua_State *L, const char *name, int idx )
 }
 
 /**
- * @brief Frees a lua variable.
+ * @brief Frees a Lua variable.
  *
  *    @param var Lua variable to free.
  */
@@ -238,7 +238,7 @@ int lvar_save( const lvar *arr, xmlTextWriterPtr writer )
  * @brief Loads the vars from XML file.
  *
  *    @param parent Parent node containing the variables.
- *    @return Newly allocated lua variable array or NULL on error.
+ *    @return Newly allocated Lua variable array or NULL on error.
  */
 lvar *lvar_load( xmlNodePtr parent )
 {

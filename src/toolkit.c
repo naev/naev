@@ -358,7 +358,7 @@ Window *window_wgetNameW( const char *name )
 }
 
 /**
- * @brief Gets a widget from window id and widgetname.
+ * @brief Gets a widget from window id and widget name.
  *
  *    @param wid ID of the window to get widget from.
  *    @param name Name of the widget to get.

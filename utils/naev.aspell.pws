@@ -1,5 +1,7 @@
 personal_ws-1.1 en 100
+logfile
 olde
+hilight
 Naev
 gatherable
 WASD
@@ -153,3 +155,14 @@ fullscreen
 gameplay
 viewport
 Vorbis
+webp
+whitespace
+focusable
+gettext
+targetting
+pathfinding
+tex
+wav
+PBR
+SDF
+PPl

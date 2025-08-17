@@ -928,7 +928,7 @@ static int hookL_renderbg( lua_State *L )
 }
 
 /**
- * @brief Hook that runs during rendering the foreground (just below the gui
+ * @brief Hook that runs during rendering the foreground (just below the GUI
  * stuff). Meant to be only for rendering things.
  *
  *    @luatparam string funcname Name of function to run when hook is triggered.

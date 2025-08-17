@@ -2109,7 +2109,7 @@ void spob_luaInitMem( const Spob *spob )
 }
 
 /**
- * @brief Updatse the spob's internal Lua stuff.
+ * @brief Update the spob's internal Lua stuff.
  *
  *    @param spob Spob to update.
  */

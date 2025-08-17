@@ -1789,7 +1789,7 @@ alVoice *voice_get( int id )
 }
 
 /**
- * @brief Loads a new sound source from a RWops.
+ * @brief Loads a new sound source from a "RWops".
  */
 int source_newRW( SDL_IOStream *rw, const char *name, unsigned int flags )
 {

@@ -4811,7 +4811,7 @@ static int pilotL_setNoDisable( lua_State *L )
  * @note Can increase the pilot's speed limit over what would be physically
  * possible.
  *
- * @usage p:setSpeedLimit( 100 ) -- Sets maximumspeed to 100 pixels/s.
+ * @usage p:setSpeedLimit( 100 ) -- Sets maximum speed to 100 pixels/s.
  * @usage p:setSpeedLimit( 0 ) removes speed limit.
  *    @luatparam pilot p Pilot to set speed of.
  *    @luatparam number speed Value to set speed to.
@@ -6787,10 +6787,10 @@ static int pilotL_kill( lua_State *L )
  * @brief Knocks back a pilot. It can either accept two pilots, or a pilot and
  * an element represented by mass, velocity, and position.
  *
- * @usage pilota:knockback( pilotb, 0. ) -- Inelastic collision between pilota
- * and pilotb
+ * @usage pilota:knockback( pilotb, 0. ) -- Inelastic collision between "pilota"
+ * and "pilotb"
  * @usage pilota:knockback( 100, vec2.new(0,0) ) -- Elastic collision between a
- * 100 mass object with no velocity and pilota
+ * 100 mass object with no velocity and "pilota"
  *
  *    @luatparam Pilot p Pilot being knocked back.
  *    @luatparam number m Mass of object knocking back pilot.

@@ -448,7 +448,7 @@ ShipStatList *ss_listFromXML( xmlNodePtr node )
  * @brief Create a shipstat list element from an xml node.
  *
  *    @param writer Writer to use to write the XML data.
- *    @param ll ShipStats to save.
+ *    @param ll The "ShipStats" to save.
  *    @return 0 on success.
  */
 int ss_listToXML( xmlTextWriterPtr writer, const ShipStatList *ll )
@@ -1286,7 +1286,7 @@ int ss_statsGetLuaTableList( lua_State *L, const ShipStatList *list,
 }
 
 /**
- * @brief Exports the sihp stats to Lua.
+ * @brief Exports the ship stats to Lua.
  */
 void ss_exportLua( lua_State *L )
 {

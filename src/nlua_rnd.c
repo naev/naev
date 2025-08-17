@@ -216,8 +216,8 @@ static int rndL_angle( lua_State *L )
  * @usage t = rnd.permutation( 5 )
  * @usage t = rnd.permutation( {"cat", "dog", "cheese"} )
  *
- *    @luatparam number|table input Maximum value to permutate to.
- *    @luatreturn table A randomly permutated table.
+ *    @luatparam number|table input Maximum value to permute to.
+ *    @luatreturn table A randomly permuted table.
  * @luafunc permutation
  */
 static int rndL_permutation( lua_State *L )

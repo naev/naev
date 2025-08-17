@@ -558,9 +558,9 @@ int gui_onScreenSpob( double *rx, double *ry, const JumpPoint *jp,
 }
 
 /**
- * @brief Renders the gui targeting reticles.
+ * @brief Renders the GUI targeting reticles.
  *
- * @param dt Current deltatick.
+ * @param dt Current delta time.
  */
 void gui_renderReticles( double dt )
 {
@@ -1004,7 +1004,7 @@ static const glColour *gui_getPilotColour( const Pilot *p )
  * @brief Renders a pilot in the GUI radar.
  *
  *    @param p Pilot to render.
- *    @param shape Shape of the radar (RADAR_RECT or RADAR_CIRCLE).
+ *    @param shape Shape of the radar ("RADAR_RECT" or "RADAR_CIRCLE").
  *    @param w Width.
  *    @param h Height.
  *    @param res Radar resolution.
@@ -1452,7 +1452,7 @@ void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res,
  * @brief Renders a jump point on the minimap.
  *
  *    @param ind Jump point to render.
- *    @param shape Shape of the radar (RADAR_RECT or RADAR_CIRCLE).
+ *    @param shape Shape of the radar ("RADAR_RECT" or "RADAR_CIRCLE").
  *    @param w Width.
  *    @param h Height.
  *    @param res Radar resolution.
@@ -1936,7 +1936,7 @@ void gui_cleanup( void )
 }
 
 /**
- * @brief Frees the gui stuff.
+ * @brief Frees the GUI stuff.
  */
 void gui_free( void )
 {

@@ -1374,7 +1374,7 @@ static int audioL_getAttenuationDistances( lua_State *L )
 }
 
 /**
- * @brief Sets the rollof factor.
+ * @brief Sets the rolloff factor.
  *
  *    @luatparam number rolloff New rolloff factor.
  * @luafunc setRolloff

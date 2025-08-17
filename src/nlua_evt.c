@@ -111,7 +111,7 @@ Event_t *event_getFromLua( lua_State *L )
 }
 
 /**
- * @brief Runs a function previously set up with event_runStart.
+ * @brief Runs a function previously set up with "event_runStart".
  *
  *    @return -1 on error, 1 on "misn.finish()" call, 2 if event got deleted
  *            and 0 normally.

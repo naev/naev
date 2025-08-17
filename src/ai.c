@@ -470,7 +470,7 @@ void ai_thinkApply( Pilot *p )
 /**
  * @brief Attempts to run a function.
  *
- *    @param[in] env Lua env to run function in.
+ *    @param[in] env Lua "env" to run function in.
  *    @param[in] nargs Number of arguments to run.
  */
 static void ai_run( nlua_env *env, int nargs )
@@ -1308,7 +1308,7 @@ static int ai_tasktarget( lua_State *L, const Task *t )
 /**
  * @brief Pushes a task onto the pilot's task list.
  *    @luatparam string func Name of function to call for task.
- *    @luaparam[opt] data Data to pass to the function.  Supports any lua type.
+ *    @luaparam[opt] data Data to pass to the function.  Supports any Lua type.
  * @luafunc pushtask
  *    @return Number of Lua parameters.
  */
@@ -1376,7 +1376,7 @@ static int aiL_taskdata( lua_State *L )
 /**
  * @brief Pushes a sub-task onto the pilot's sub-task list.
  *    @luatparam string func Name of function to call for task.
- *    @luaparam[opt] data Data to pass to the function. Supports any lua type.
+ *    @luaparam[opt] data Data to pass to the function. Supports any Lua type.
  * @luafunc pushsubtask
  *    @return Number of Lua parameters.
  */

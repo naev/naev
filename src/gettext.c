@@ -254,7 +254,7 @@ const char *gettext_ngettext( const char *msgid, const char *msgid_plural,
 }
 
 /**
- * @brief Helper function for p_(): Return _(lookup) with a fallback of msgid
+ * @brief Helper function for "p_(): Return _(lookup)" with a fallback of "msgid"
  * rather than lookup.
  */
 const char *gettext_pgettext_impl( const char *lookup, const char *msgid )
