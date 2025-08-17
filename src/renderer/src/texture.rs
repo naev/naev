@@ -1542,7 +1542,6 @@ pub extern "C" fn gl_newSpriteRWops(
         return std::ptr::null_mut();
     }
     let ctx = Context::get(); /* Lock early. */
-    let path = unsafe { CStr::from_ptr(cpath) };
     let flags = Flags::from(cflags);
     unsafe {
         naevc::gl_contextSet();
@@ -1561,14 +1560,23 @@ pub extern "C" fn gl_newSpriteRWops(
         builder = builder.border(Some(Vector4::<f32>::new(0., 0., 0., 0.)));
     }
 
-    let pathname = path.to_string_lossy();
-    builder = match TextureData::exists(&pathname) {
-        Some(tex) => builder.texture_data(&tex),
-        None => {
-            let rw = unsafe {
-                sdl::iostream::IOStream::from_ll(rw as *mut sdl::sys::iostream::SDL_IOStream)
-            };
-            builder.iostream(rw).name(Some(&pathname))
+    // See how to load the file
+    builder = if cpath.is_null() {
+        let rw = unsafe {
+            sdl::iostream::IOStream::from_ll(rw as *mut sdl::sys::iostream::SDL_IOStream)
+        };
+        builder.iostream(rw)
+    } else {
+        let path = unsafe { CStr::from_ptr(cpath) };
+        let pathname = path.to_string_lossy();
+        match TextureData::exists(&pathname) {
+            Some(tex) => builder.texture_data(&tex),
+            None => {
+                let rw = unsafe {
+                    sdl::iostream::IOStream::from_ll(rw as *mut sdl::sys::iostream::SDL_IOStream)
+                };
+                builder.iostream(rw).name(Some(&pathname))
+            }
         }
     };
 
