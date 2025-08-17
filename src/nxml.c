@@ -15,7 +15,7 @@
 #include "ndata.h"
 
 /**
- * @brief Parses a texture handling the sx and sy elements.
+ * @brief Parses a texture handling the "sx" and "sy" elements.
  *
  *    @param node Node to parse.
  *    @param path Path to get file from, should be in the format of

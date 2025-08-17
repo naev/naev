@@ -4203,7 +4203,7 @@ static int pilotL_intrinsicReset( lua_State *L )
 /**
  * @brief Allows setting intrinsic stats of a pilot.
  *
- * @usage p:intrinsicSet( "turn", -50 ) -- Lowers p's turn by 50%
+ * @usage p:intrinsicSet( "turn", -50 ) -- Lowers the turn rate of pilot p by 50%
  *
  *    @luatparam Pilot p Pilot to set stat of.
  *    @luatparam string name Name of the stat to set. It is the same as in the
@@ -4287,7 +4287,7 @@ static int pilotL_shippropReset( lua_State *L )
 /**
  * @brief Allows setting ship property stats of a pilot.
  *
- * @usage p:shippropSet( "turn", -50 ) -- Lowers p's turn by 50%
+ * @usage p:shippropSet( "turn", -50 ) -- Lowers the turn rate of pilot p by 50%
  *
  *    @luatparam Pilot p Pilot to set stat of.
  *    @luatparam string name Name of the stat to set. It is the same as in the

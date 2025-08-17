@@ -1008,7 +1008,7 @@ Mission *missions_genList( int faction, const Spob *pnt, const StarSystem *sys,
  * @brief Gets location based on a human readable string.
  *
  *    @param loc String to get the location of.
- *    @return Location matching loc.
+ *    @return Location matching "loc".
  */
 static int mission_location( const char *loc )
 {
