@@ -6,6 +6,7 @@ use nalgebra::{Matrix3, Vector4};
 use sdl3 as sdl;
 use std::boxed::Box;
 use std::ffi::{CStr, CString};
+use std::io::{Read, Seek};
 use std::num::NonZero;
 use std::os::raw::{c_char, c_double, c_float, c_int, c_uint};
 use std::sync::{atomic::AtomicU32, Arc, LazyLock, Mutex, MutexGuard, Weak};
@@ -236,8 +237,6 @@ impl TextureData {
         };
 
         let (imgdata, fmt): (image::DynamicImage, u32) = match has_alpha {
-            //true => (img.to_rgba8().into_flat_samples(), glow::RGBA),
-            //false => (img.to_rgb8().into_flat_samples(), glow::RGB),
             true => (img.into_rgba8().into(), glow::RGBA),
             false => (img.into_rgb8().into(), glow::RGB),
         };
@@ -646,12 +645,20 @@ impl FilterMode {
 }
 
 /// Loads an SVG file into a DynamicImage
-fn svg_to_img(path: &str, w: Option<usize>, h: Option<usize>) -> Result<image::DynamicImage> {
+//fn svg_to_img(path: &str, w: Option<usize>, h: Option<usize>) -> Result<image::DynamicImage> {
+fn svg_to_img(
+    rw: &mut sdl::iostream::IOStream,
+    w: Option<usize>,
+    h: Option<usize>,
+) -> Result<image::DynamicImage> {
     use resvg::{tiny_skia, usvg};
 
     // Load the SVG
     // TODO add ndata-based href resolves and such
-    let svg_data = ndata::read(path)?;
+    //let svg_data = ndata::read(path)?;
+    let mut svg_data = Vec::new();
+    rw.read_to_end(&mut svg_data)?;
+
     let opt = usvg::Options {
         resources_dir: None, // TODO add and such
         ..Default::default()
@@ -692,6 +699,7 @@ fn svg_to_img(path: &str, w: Option<usize>, h: Option<usize>) -> Result<image::D
 
 pub enum TextureSource {
     Path(String),
+    IOStream(sdl::iostream::IOStream<'static>),
     Image(image::DynamicImage),
     TextureData(Arc<TextureData>),
     Raw(glow::NativeTexture),
@@ -737,20 +745,40 @@ impl TextureSource {
                 TextureSource::Path(path) => {
                     let img = {
                         let cpath = ndata::simplify_path(&path)?;
+                        let mut rw = ndata::iostream(&cpath)?;
                         if std::path::Path::new(&cpath)
                             .extension()
                             .and_then(|s| s.to_str())
                             == Some("svg")
                         {
-                            svg_to_img(&cpath, w, h)?
+                            svg_to_img(&mut rw, w, h)?
                         } else {
-                            let rw = ndata::iostream(&cpath)?;
                             image::ImageReader::with_format(
                                 std::io::BufReader::new(rw),
                                 image::ImageFormat::from_path(path)?,
                             )
                             //let img = image::ImageReader::new(std::io::BufReader::new(rw)).with_guessed_format()?
                             .decode()?
+                        }
+                    };
+                    let ctx = &sctx.lock();
+                    match sdf {
+                        true => TextureData::from_image_sdf(ctx, name, img, flipv)?,
+                        false => TextureData::from_image(ctx, name, img, flipv, srgb)?,
+                    }
+                }
+                TextureSource::IOStream(mut rw) => {
+                    let img = {
+                        // We don't know if it's an SVG, so the only choice is to try to open it
+                        // and fallback to image if it fails.
+                        match svg_to_img(&mut rw, w, h) {
+                            Ok(img) => img,
+                            Err(_) => {
+                                rw.seek(std::io::SeekFrom::Start(0))?;
+                                image::ImageReader::new(std::io::BufReader::new(rw))
+                                    .with_guessed_format()?
+                                    .decode()?
+                            }
                         }
                     };
                     let ctx = &sctx.lock();
@@ -850,6 +878,11 @@ impl TextureBuilder {
     pub fn path(mut self, path: &str) -> Self {
         self.source = Some(TextureSource::Path(String::from(path)));
         self.name = Some(String::from(path));
+        self
+    }
+
+    pub fn iostream(mut self, stream: sdl::iostream::IOStream<'static>) -> Self {
+        self.source = Some(TextureSource::IOStream(stream));
         self
     }
 
