@@ -240,14 +240,10 @@ static int texL_new( lua_State *L )
    if ( path != NULL )
       tex = gl_newSprite( path, sx, sy, 0 );
    else {
-      SDL_IOStream *rw = NULL;
-      if ( lf->data != NULL ) {
-         rw = SDL_IOFromConstMem( lf->data, lf->size );
-      } else {
-         rw = SDL_PhysFS_IOFromFile( lf->path );
-         if ( rw == NULL )
-            return NLUA_ERROR( L, "Unable to open '%s'", lf->path );
-      }
+      SDL_IOStream *rw = lua_fileIOStream( lf );
+      if ( rw == NULL )
+         return NLUA_ERROR( L, "Unable to open IOStream from LuaFile '%s'",
+                            lf->path );
       tex = gl_newSpriteRWops( lf->path, rw, sx, sy, 0 );
       // SDL_CloseIO( rw ); /* cleaned up rust-side now. */
    }

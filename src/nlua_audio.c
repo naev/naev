@@ -484,20 +484,23 @@ static int audio_genSource( ALuint *source )
 static int audioL_new( lua_State *L )
 {
    LuaAudio_t    la;
-   LuaFile_t    *lf;
    double        master;
    int           stream;
    const char   *name;
-   SDL_IOStream *rw;
+   SDL_IOStream *rw = NULL;
 
    /* First parameter. */
-   if ( lua_isstring( L, 1 ) )
+   if ( lua_isstring( L, 1 ) ) {
       name = lua_tostring( L, 1 );
-   else if ( lua_isfile( L, 1 ) ) {
-      lf   = lua_tofile( L, 1 );
-      name = lf->path;
+      rw   = SDL_PhysFS_IOFromFile( name );
+   } else if ( lua_isfile( L, 1 ) ) {
+      LuaFile_t *lf = lua_tofile( L, 1 );
+      rw            = lua_fileIOStream( lf );
+      name          = lf->path;
    } else
       NLUA_INVALID_PARAMETER( L, 1 );
+   if ( rw == NULL )
+      return NLUA_ERROR( L, "Unable to open IOStream from '%s'", name );
 
    /* Second parameter. */
    if ( lua_isnoneornil( L, 2 ) ) {
@@ -518,9 +521,6 @@ static int audioL_new( lua_State *L )
       lua_pushaudio( L, la );
       return 1;
    }
-   rw = SDL_PhysFS_IOFromFile( name );
-   if ( rw == NULL )
-      return NLUA_ERROR( L, "Unable to open '%s'", name );
    la.name = strdup( name );
 
    soundLock();

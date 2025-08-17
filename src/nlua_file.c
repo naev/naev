@@ -507,3 +507,15 @@ static int fileL_remove( lua_State *L )
    }
    return 1;
 }
+
+/**
+ * @brief Creates a new iostream.
+ */
+SDL_IOStream *lua_fileIOStream( const LuaFile_t *lf )
+{
+   if ( lf->data != NULL ) {
+      return SDL_IOFromConstMem( lf->data, lf->size );
+   } else {
+      return SDL_PhysFS_IOFromFile( lf->path );
+   }
+}
