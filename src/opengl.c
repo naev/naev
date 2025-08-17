@@ -250,7 +250,7 @@ void gl_windowToScreenPos( float *sx, float *sy, float wx, float wy )
 }
 
 /**
- * @brief Translates the screen position to windos position.
+ * @brief Translates the screen position to window position.
  */
 void gl_screenToWindowPos( float *wx, float *wy, float sx, float sy )
 {

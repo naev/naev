@@ -612,7 +612,7 @@ int gl_printLineIteratorNext( glPrintLineIterator *iter )
 
 /** @brief Reads the next utf-8 sequence out of a string, updating an index.
  * Skips font markup directives.
- * @TODO For now, this enforces font.c's inability to handle tabs.
+ * @TODO For now, this makes up for the inability of font.c to handle tabs.
  */
 static uint32_t font_nextChar( const char *s, size_t *i )
 {

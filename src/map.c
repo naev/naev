@@ -2085,7 +2085,7 @@ void map_updateFactionPresence( const unsigned int wid, const char *name,
 }
 
 /**
- * @brief Called when it's de-focused.
+ * @brief Called when it loses focus.
  */
 static void map_focusLose( unsigned int wid, const char *wgtname )
 {

@@ -740,7 +740,7 @@ static int shipL_getSize( lua_State *L )
  * @brief Gets the path where the ship's graphics are located. Useful for seeing
  * if two ships share the same graphics.
  *
- *    @luatparam Ship s Ship to get the path of the graphis of.
+ *    @luatparam Ship s Ship to get the path of the graphics of.
  *    @luatreturn string The path to the ship graphics.
  * @luafunc gfxPath
  */

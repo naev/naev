@@ -318,7 +318,7 @@ void clear_newslines( void )
 }
 
 /**
- * @brief Called when it's de-focused.
+ * @brief Called when it loses focus.
  */
 static void news_focusLose( unsigned int wid, const char *wgtname )
 {
@@ -479,7 +479,7 @@ int news_saveArticles( xmlTextWriterPtr writer )
 }
 
 /**
- * @brief Loads the player's active articles from a save, initilizes news
+ * @brief Loads the player's active articles from a save, initializes news
  *
  *    @param parent Node containing the player's active events.
  *    @return 0 on success.

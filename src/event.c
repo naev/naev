@@ -153,7 +153,7 @@ int event_start( const char *name, unsigned int *id )
  * @brief Gets the name of the event data.
  *
  *    @param eventid Event to get name of data from.
- *    @return Name of data ev has.
+ *    @return Name of data.
  */
 const char *event_getData( unsigned int eventid )
 {

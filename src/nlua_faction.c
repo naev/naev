@@ -375,7 +375,7 @@ static int factionL_longname( lua_State *L )
  *
  *    @luatparam Faction f Faction to check against.
  *    @luatparam Faction n Faction to check if is true neutral.
- *    @luatreturn boolean true if they are truely neutral, false if they aren't.
+ *    @luatreturn boolean true if they are truly neutral, false if they aren't.
  * @luafunc areNeutral
  */
 static int factionL_areneutral( lua_State *L )
@@ -511,7 +511,7 @@ static int factionL_reputationGlobal( lua_State *L )
 }
 
 /**
- * @brief Gets the human readable standing text correpsonding (translated).
+ * @brief Gets the human readable standing text corresponding (translated).
  *
  *    @luatparam faction f Faction to get standing text from.
  *    @luatparam[opt=f:reputationGlobal()] number|nil val Value to get the

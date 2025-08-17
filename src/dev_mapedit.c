@@ -436,7 +436,7 @@ static void mapedit_render( double bx, double by, double w, double h,
 }
 
 /**
- * @brief Called when it's de-focused.
+ * @brief Called when it loses focus.
  */
 static void mapedit_focusLose( unsigned int wid, const char *wgtname )
 {

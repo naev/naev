@@ -434,7 +434,7 @@ const char *faction_default_ai( int f )
  * @brief Gets the tags the faction has.
  *
  *    @param f Faction ID.
- *    @return The tagss the faction has (array.h).
+ *    @return The tags the faction has (array.h).
  */
 const char *const *faction_tags( int f )
 {

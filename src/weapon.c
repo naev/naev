@@ -40,7 +40,7 @@
 #include "spfx.h"
 
 /**
- * @brief Struct useful for generalization of weapno collisions.
+ * @brief Useful structure for generalization of weapon collisions.
  */
 typedef struct WeaponCollision_ {
    const Weapon    *w;    /**< Weapon doing the colliding. */

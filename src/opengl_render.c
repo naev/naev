@@ -337,7 +337,7 @@ void gl_renderTextureDepthRaw( GLuint texture, GLuint depth, uint8_t flags,
  *
  *    @param texture Texture to blit.
  *    @param sampler Sampler to use.
- *    @param projection Projection matrix tu use.
+ *    @param projection Projection matrix to use.
  *    @param tex_mat Texture matrix to use.
  *    @param c Colour to use (modifies texture colour).
  */
@@ -533,7 +533,7 @@ void gl_renderSDF( const glTexture *texture, double x, double y, double w,
  *    @param sa Sampler for A.
  *    @param sb Sampler for B.
  *    @param inter Amount of interpolation to do.
- *    @param projection Projection matrix tu use.
+ *    @param projection Projection matrix to use.
  *    @param tex_mat Texture matrix to use.
  *    @param c Colour to use (modifies texture colour).
  */

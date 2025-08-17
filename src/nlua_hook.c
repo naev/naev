@@ -634,7 +634,7 @@ static int hookL_commjettison( lua_State *L )
 }
 
 /**
- * @brief Hooks the function to the player gatehring any sort of commodity in
+ * @brief Hooks the function to the player gathering any sort of commodity in
  * space.
  *
  * The hook receives the commodity and the quantity being gathered.
@@ -944,7 +944,7 @@ static int hookL_renderfg( lua_State *L )
 }
 
 /**
- * @brief Hook that runs during rendering aove everything. Meant to be as an
+ * @brief Hook that runs during rendering above everything. Meant to be as an
  * alternative to doing post-processing shader effects.
  *
  *    @luatparam string funcname Name of function to run when hook is triggered.

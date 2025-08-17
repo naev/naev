@@ -5527,7 +5527,7 @@ static int pilotL_ship( lua_State *L )
  * @brief Gets the rough radius of the ship, useful for collision stuff.
  *
  *    @luatparam Pilot p Pilot to get radius of.
- *    @luatreturn number THe radius of the pilot.
+ *    @luatreturn number The radius of the pilot.
  * @luafunc radius
  */
 static int pilotL_radius( lua_State *L )

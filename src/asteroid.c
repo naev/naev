@@ -503,7 +503,7 @@ static void debris_init( Debris *deb )
 }
 
 /**
- * @brief Updates internal alues of an asteroid field.
+ * @brief Updates internal values of an asteroid field.
  */
 void asteroids_computeInternals( AsteroidAnchor *a )
 {

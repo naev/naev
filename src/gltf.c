@@ -316,7 +316,7 @@ static mat4    light_mat_alt[MAX_LIGHTS];
 static mat4   *light_mat = light_mat_def;
 
 /**
- * @brief Shader to use witha material.
+ * @brief Shader to use with a material.
  */
 typedef struct Shader_ {
    GLuint program;
@@ -2300,7 +2300,7 @@ double gltf_lightIntensityGet( void )
 }
 
 /**
- * @brief Transforms the lighting positions based on a trasnform matrix.
+ * @brief Transforms the lighting positions based on a transform matrix.
  */
 void gltf_lightTransform( Lighting *L, const mat4 *H )
 {

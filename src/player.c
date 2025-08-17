@@ -1563,7 +1563,7 @@ void player_targetSpobSet( int id )
 /**
  * @brief Sets the player's target asteroid.
  *
- *    @param field Index of the parent field of the asteoid.
+ *    @param field Index of the parent field of the asteroid.
  *    @param id Target spob or -1 if none should be selected.
  */
 void player_targetAsteroidSet( int field, int id )

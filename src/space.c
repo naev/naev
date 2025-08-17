@@ -797,8 +797,7 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast,
  *    @param x X position to get closest from.
  *    @param y Y position to get closest from.
  *    @param ang Reference angle.
- *    @return The nearest angle to \p ang which is the direction from (\p x, \p
- * y) to a feature.
+ *    @return The angle to the the feature most ahead.
  */
 double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast,
                              int *fie, double x, double y, double ang )
@@ -1474,7 +1473,7 @@ void space_checkLand( void )
  * @brief Controls fleet spawning.
  *
  *    @param dt Current delta tick.
- *    @param real_dt Real time incrcement (in real world seconds).
+ *    @param real_dt Real time increment (in real world seconds).
  */
 void space_update( double dt, double real_dt )
 {
@@ -2101,7 +2100,7 @@ void spob_distress( Spob *spb, const Pilot *p, const Pilot *attacker )
 }
 
 /**
- * @brief Initializes the memory fo a spob.
+ * @brief Initializes the memory for a spob.
  */
 void spob_luaInitMem( const Spob *spob )
 {
@@ -4872,7 +4871,7 @@ const char *space_populationStr( const Spob *spb )
 /**
  * @brief Gets the map shader by name.
  *
- *    @param name NAme of the map shader.
+ *    @param name Name of the map shader.
  *    @return The map shader.
  */
 static const MapShader *mapshader_get( const char *name )

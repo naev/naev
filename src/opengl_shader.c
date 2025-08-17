@@ -314,7 +314,7 @@ GLuint gl_program_vert_frag_string( const char *vert, size_t vert_size,
  *
  *    @param vertex_shader Vertex shader to make program from.
  *    @param fragment_shader Fragment shader to make program from.
- *    @param[opt] geometry_shader Optional geometry shader to amke program from.
+ *    @param[opt] geometry_shader Optional geometry shader to make program from.
  *    @return New shader program or 0 on failure.
  */
 static GLuint gl_program_make( GLuint vertex_shader, GLuint fragment_shader )

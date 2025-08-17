@@ -40,7 +40,7 @@ void mat4_print( const mat4 *m )
  * Note that out should not be neither m1 nor m2.
  *
  *    @param[out] out Output matrix.
- *    @param m1 First matrix to mulitply.
+ *    @param m1 First matrix to multiply.
  *    @param m2 Second matrix to multiply.
  */
 void mat4_mul( mat4 *out, const mat4 *m1, const mat4 *m2 )
@@ -61,7 +61,7 @@ void mat4_mul( mat4 *out, const mat4 *m1, const mat4 *m2 )
  * Note that out should not be v.
  *
  *    @param[out] out Output vector.
- *    @param m Matrix to mulitply.
+ *    @param m Matrix to multiply.
  *    @param v Vector to multiply.
  */
 void mat4_mul_vec( vec3 *out, const mat4 *m, const vec3 *v )

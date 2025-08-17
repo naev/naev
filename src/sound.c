@@ -664,7 +664,7 @@ int sound_init( void )
 }
 
 /**
- * @brief Cleans up after the sound subsytem.
+ * @brief Cleans up after the sound subsystem.
  */
 void sound_exit( void )
 {
@@ -1864,9 +1864,9 @@ static alGroup_t *al_getGroup( int group )
 }
 
 /**
- * @brief Loads a wav file from the rw if possible.
+ * @brief Loads a wav file from the stream if possible.
  *
- * @note Closes the rw.
+ * @note Closes the stream.
  *
  *    @param buf Buffer to load wav into.
  *    @param rw Data for the wave.

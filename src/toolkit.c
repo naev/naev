@@ -561,7 +561,7 @@ void window_canFocusWidget( unsigned int wid, const char *name, int canfocus )
 /**
  * @brief Checks to see if a window is at the top.
  *
- *    @param wid indow ID to see if is top.
+ *    @param wid Window ID to see if is top.
  */
 int window_isTop( unsigned int wid )
 {

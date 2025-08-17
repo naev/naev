@@ -2975,8 +2975,8 @@ static int aiL_settarget( lua_State *L )
 /**
  * @brief Sets the pilot's asteroid target.
  *
- *    @luaparam int field Id of the field to target.
- *    @luaparam int ast Id of the asteroid to target.
+ *    @luatparam int field Id of the field to target.
+ *    @luatparam int ast Id of the asteroid to target.
  *    @luafunc setasterotarget
  */
 static int aiL_setasterotarget( lua_State *L )

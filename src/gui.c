@@ -1116,7 +1116,7 @@ void gui_renderPilot( const Pilot *p, RadarShape shape, double w, double h,
  *    @param w Width.
  *    @param h Height.
  *    @param res Radar resolution.
- *    @param render_radius Radar raduis. INFINITY if it's not a circle shape
+ *    @param render_radius Radar radius. INFINITY if it's not a circle shape
  * radar.
  *    @param overlay Whether to render onto the overlay.
  */
@@ -1194,7 +1194,7 @@ void gui_renderAsteroid( const Asteroid *a, double w, double h, double res,
  * @brief Renders the viewport frame in the GUI radar.
  *
  *    @param res Radar resolution.
- *    @param render_radius Radar raduis. INFINITY if it's not a circle shape
+ *    @param render_radius Radar radius. INFINITY if it's not a circle shape
  * radar.
  *    @param overlay Whether to render onto the overlay.
  */
@@ -1605,7 +1605,7 @@ int gui_init( void )
 /**
  * @brief Runs a GUI Lua function.
  *
- *    @param func_ref Reference of the functionn to run.
+ *    @param func_ref Reference of the function to run.
  *    @param func_name Name of the function to run.
  *    @return 0 on success.
  */
@@ -1624,7 +1624,7 @@ static int gui_doFunc( int func_ref, const char *func_name )
 /**
  * @brief Prepares to run a function.
  *
- *    @param func_ref Reference of the functionn to prepare.
+ *    @param func_ref Reference of the function to prepare.
  *    @param func_name Name of the function to prepare.
  *    @return 0 on success.
  */

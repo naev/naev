@@ -439,7 +439,7 @@ static int audioL_eq( lua_State *L )
 }
 
 /**
- * @brief Tries to generate a single openal source, running GC if necessary.
+ * @brief Tries to generate a single openal source, running Lua garbage collector if necessary.
  */
 static int audio_genSource( ALuint *source )
 {
@@ -1765,7 +1765,7 @@ static int audioL_setGlobalEffect( lua_State *L )
  * @brief Allows setting the speed of sound and air absorption.
  *
  *    @luatparam[opt=3443] number speed Air speed.
- *    @luatparam[opt=-1] number absorption Air absorptuion for all sources. Has
+ *    @luatparam[opt=-1] number absorption Air absorption for all sources. Has
  * to be a value between 0 and 10. If negative, value is ignored.
  * @luafunc setGlobalAirAbsorption
  */

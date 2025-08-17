@@ -167,7 +167,7 @@ static int gfxL_dim( lua_State *L )
 /**
  * @brief Gets the screen coordinates from game coordinates.
  *
- *    @luatparam Vec2 Vector of coordinates to transnform.
+ *    @luatparam Vec2 Vector of coordinates to transform.
  *    @luatparam[opt=false] boolean Whether or not to invert y axis.
  *    @luatreturn Vec2 Transformed vector.
  * @luafunc screencoords

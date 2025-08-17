@@ -445,7 +445,7 @@ ShipStatList *ss_listFromXML( xmlNodePtr node )
 }
 
 /**
- * @brief Creatse a shipstat list element from an xml node.
+ * @brief Create a shipstat list element from an xml node.
  *
  *    @param writer Writer to use to write the XML data.
  *    @param ll ShipStats to save.

@@ -675,15 +675,15 @@ static void safelanes_initStiff( void )
 }
 
 /**
- * @brief Returns the initial conductivity value (1/length) for edge ei.
+ * @brief Returns the initial conductivity value (1/length) for edge e.
  * The live value is stored in the stiffness matrix; \see safelanes_initStiff
  * above. When a lane is activated, its conductivity is updated to
  * (1+ALPHA)/length.
  */
-static double safelanes_initialConductivity( int ei )
+static double safelanes_initialConductivity( int e )
 {
    double *sv = stiff->x;
-   return lane_faction[ei] ? sv[3 * ei] / ( 1 + ALPHA ) : sv[3 * ei];
+   return lane_faction[e] ? sv[3 * e] / ( 1 + ALPHA ) : sv[3 * e];
 }
 
 /**

@@ -679,7 +679,7 @@ KeySemanticType input_keyAlreadyBound( KeybindType type, SDL_Keycode key,
 }
 
 /**
- * @brief Gets the brief descirption of the keybinding.
+ * @brief Gets the brief description of the keybinding.
  */
 const char *input_getKeybindBrief( KeySemanticType keybind )
 {
@@ -1718,8 +1718,8 @@ int input_clickedSpob( int spob, int autonav, int priority )
 /**
  * @brief Performs an appropriate action when an asteroid is clicked.
  *
- *    @param field Index of the parent field of the asteoid.
- *    @param asteroid Index of the oasteoid in the field.
+ *    @param field Index of the parent field of the asteroid.
+ *    @param asteroid Index of the asteroid in the field.
  *    @return Whether the click was used.
  */
 int input_clickedAsteroid( int field, int asteroid )
