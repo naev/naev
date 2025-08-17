@@ -1568,12 +1568,7 @@ pub extern "C" fn gl_newSpriteRWops(
             let rw = unsafe {
                 sdl::iostream::IOStream::from_ll(rw as *mut sdl::sys::iostream::SDL_IOStream)
             };
-            let img = image::ImageReader::new(std::io::BufReader::new(rw))
-                .with_guessed_format()
-                .unwrap()
-                .decode()
-                .unwrap();
-            builder.image(&img)
+            builder.iostream(rw).name(Some(&pathname))
         }
     };
 
