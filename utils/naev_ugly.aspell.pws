@@ -1,4 +1,4 @@
-personal_ws-1.1 en 100
+personal_ws-1.1 en 150
 colour
 behaviour
 ccw
@@ -28,7 +28,6 @@ GltfObject
 HPs
 inrange
 iter
-jammer
 jumpin
 jumpname
 Keymod
