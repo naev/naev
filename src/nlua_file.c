@@ -19,6 +19,8 @@
 #include "nluadef.h"
 #include "physfs.h"
 
+static int nlua_buffer_counter = 0;
+
 /* File metatable methods. */
 static int fileL_gc( lua_State *L );
 static int fileL_eq( lua_State *L );
@@ -257,9 +259,11 @@ static int fileL_close( lua_State *L )
 static int fileL_from_string( lua_State *L )
 {
    LuaFile_t   lf;
-   size_t      len;
-   const char *str  = luaL_tolstring( L, 1, &len );
-   const char *name = luaL_optstring( L, 2, "memory buffer" );
+   const char *str  = luaL_checkstring( L, 1 );
+   size_t      len  = strlen( str );
+   const char *name = NULL;
+   if ( !lua_isnoneornil( L, 2 ) )
+      name = luaL_checkstring( L, 2 );
    memset( &lf, 0, sizeof( lf ) );
    // Sadly have to duplicate the buffer because otherwise Lua has ownership and
    // we have no guarantee it's valid
@@ -269,7 +273,11 @@ static int fileL_from_string( lua_State *L )
    lf.rw = SDL_IOFromConstMem( (void *)str, len );
    if ( lf.rw == NULL )
       return NLUA_ERROR( L, "failed to open memory buffer" );
-   strncpy( lf.path, name, sizeof( lf.path ) - 1 );
+   if ( name != NULL )
+      strncpy( lf.path, name, sizeof( lf.path ) - 1 );
+   else
+      snprintf( lf.path, sizeof( lf.path ) - 1, "memory buffer %d",
+                ++nlua_buffer_counter );
    lf.mode = 'r';
    lf.size = len;
    lua_pushfile( L, lf );
