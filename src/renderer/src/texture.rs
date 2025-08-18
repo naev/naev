@@ -237,7 +237,18 @@ impl TextureData {
         };
 
         let (imgdata, fmt): (image::DynamicImage, u32) = match has_alpha {
-            true => (img.into_rgba8().into(), glow::RGBA),
+            true => {
+                let mut img = img.into_rgba8();
+                // Since we aren't premultiplying in our pipeline, garbage RGB values for alpha==0
+                // can leak into the final render. We forcibly set RGB to 0 if alpha is 0.
+                // TODO maybe use premultiply instead? It should be better overall.
+                for p in img.pixels_mut() {
+                    if p.0[3] == 0 {
+                        p.0 = [0u8; 4];
+                    }
+                }
+                (img.into(), glow::RGBA)
+            }
             false => (img.into_rgb8().into(), glow::RGB),
         };
         let (w, h) = (imgdata.width(), imgdata.height());

@@ -442,7 +442,7 @@ void gl_renderTextureRaw( GLuint texture, GLuint sampler, uint8_t flags,
  *    @param c Colour to use (modifies texture colour).
  *    @param angle Rotation to apply (radians ccw around the center).
  */
-void gl_/enderTexture( const glTexture *texture, double x, double y, double w,
+void gl_renderTexture( const glTexture *texture, double x, double y, double w,
                        double h, double tx, double ty, double tw, double th,
                        const glColour *c, double angle )
 {
