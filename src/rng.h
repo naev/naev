@@ -4,7 +4,7 @@
 #pragma once
 
 /**
- * @brief Gets a random number between L and H (L <= RNG <= H).
+ * @brief Gets a random number between L and H (L <= "RNG" <= H).
  *
  * If L is bigger then H it inverts the roles.
  */
@@ -12,14 +12,14 @@
    ( ( ( L ) > ( H ) ) ? RNG_BASE( ( H ), ( L ) )                              \
                        : RNG_BASE( ( L ), ( H ) ) ) /* L <= RNG <= H */
 /**
- * @brief Gets a number between L and H (L <= RNG <= H).
+ * @brief Gets a number between L and H (L <= "RNG" <= H).
  *
  * Result unspecified in L is bigger then H.
  */
 #define RNG_BASE( L, H )                                                       \
    ( (int)L + (int)( (double)( H - L + 1 ) * randfp() ) ) /* L <= RNG <= H */
 /**
- * @brief Gets a random float between 0 and 1 (0. <= RNGF <= 1.).
+ * @brief Gets a random float between 0 and 1 (0. <= "RNGF" <= 1.).
  */
 #define RNGF() ( randfp() ) /* 0. <= RNGF <= 1. */
 /**

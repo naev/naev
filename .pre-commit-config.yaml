@@ -42,6 +42,11 @@ repos:
       entry: utils/rem_xml_head.sh
       types: [xml]
       language: script
+    - id: doxspell
+      name: doxspell
+      entry: utils/doxspell.sh
+      language: script
+      types: [c]
     - id: no_tabs
       name: no_tabs
       entry: utils/no_tabs.sh

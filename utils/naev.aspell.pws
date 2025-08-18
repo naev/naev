@@ -1,5 +1,7 @@
-personal_ws-1.1 en 100
+personal_ws-1.1 en 200
 logfile
+vsnprintf
+zlib
 olde
 hilight
 Naev
@@ -11,6 +13,7 @@ unboarding
 SDL
 xml
 Lua
+jammer
 spob
 spobs
 shader

@@ -12,7 +12,7 @@ typedef enum LuaDataType_e {
 } LuaDataType_t;
 
 /**
- * @brief Wrapper to datas.
+ * @brief Wrapper to data.
  */
 typedef struct LuaData_s {
    size_t        size; /**< Size of buffer (already multiplied by elem). */
