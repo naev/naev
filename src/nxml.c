@@ -68,7 +68,8 @@ void xmlw_setParams( xmlTextWriterPtr writer )
 /**
  * @brief Analogous to "xmlParseMemory"/"xmlParseFile".
  * @param filename PhysFS file name.
- * @return xml document (must "xmlFreeDoc") on success, NULL on failure (will warn user).
+ * @return xml document (must "xmlFreeDoc") on success, NULL on failure (will
+ * warn user).
  */
 xmlDocPtr xml_parsePhysFS( const char *filename )
 {

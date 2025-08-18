@@ -1433,7 +1433,8 @@ static int pilotL_eq( lua_State *L )
 }
 
 /**
- * @brief Gets the pilot's current (translated) name or notes it is non-existent.
+ * @brief Gets the pilot's current (translated) name or notes it is
+ * non-existent.
  *
  * @usage tostring(p)
  *
@@ -4203,7 +4204,8 @@ static int pilotL_intrinsicReset( lua_State *L )
 /**
  * @brief Allows setting intrinsic stats of a pilot.
  *
- * @usage p:intrinsicSet( "turn", -50 ) -- Lowers the turn rate of pilot p by 50%
+ * @usage p:intrinsicSet( "turn", -50 ) -- Lowers the turn rate of pilot p by
+ * 50%
  *
  *    @luatparam Pilot p Pilot to set stat of.
  *    @luatparam string name Name of the stat to set. It is the same as in the
@@ -6672,8 +6674,8 @@ static const CollPolyView *getCollPoly( const Pilot *p )
  *
  *    @luatparam Pilot p First pilot to check.
  *    @luatparam Pilot|Asteroid t Second object to check.
- *    @luatreturn Vec2|nil "nil" if no collision, or "Vec2" with collision point if
- * collided.
+ *    @luatreturn Vec2|nil "nil" if no collision, or "Vec2" with collision point
+ * if collided.
  * @luafunc collisionTest
  */
 static int pilotL_collisionTest( lua_State *L )

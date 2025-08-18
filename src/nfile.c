@@ -106,7 +106,8 @@ static char *xdgGetRelativeHome( const char *envname,
 
 static char naev_configPath[PATH_MAX] = "\0"; /**< Store Naev's config path. */
 /**
- * @brief Gets Naev's configuration path (for user preferences such as "conf.lua")
+ * @brief Gets Naev's configuration path (for user preferences such as
+ * "conf.lua")
  *
  *    @return The xdg configuration path.
  */

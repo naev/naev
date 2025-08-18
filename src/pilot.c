@@ -1091,8 +1091,8 @@ void pilot_setHostile( Pilot *p )
 }
 
 /**
- * @brief Gets the faction colour char, works like "faction_reputationColourChar"
- * but for a pilot.
+ * @brief Gets the faction colour char, works like
+ * "faction_reputationColourChar" but for a pilot.
  *
  * @sa faction_reputationColourChar
  */

@@ -654,7 +654,8 @@ static const ShipOutfitSlot *ship_outfitSlotFromID( const Ship *s, int id )
  * @brief Checks to see if an outfit fits a ship slot.
  *
  *    @luatparam Ship s Ship to check.
- *    @luatparam number id ID of the slot to check (index in "getSlots()" table).
+ *    @luatparam number id ID of the slot to check (index in "getSlots()"
+ * table).
  *    @luatparam Outfit o Outfit to check to see if it fits in the slot.
  *    @luatreturn boolean Whether or not the outfit fits the slot.
  * @luafunc fitsSlot

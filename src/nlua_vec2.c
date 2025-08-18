@@ -646,8 +646,8 @@ static int vectorL_setP( lua_State *L )
  * @brief Gets the distance from the "Vec2".
  *
  * @usage my_vec:dist() -- Gets length of the vector (distance from origin).
- * @usage my_vec:dist( your_vec ) -- Gets distance from both vectors "your_vec" -
- * "my_vec").
+ * @usage my_vec:dist( your_vec ) -- Gets distance from both vectors "your_vec"
+ * - "my_vec").
  *
  *    @luatparam Vec2 v Vector to act as origin.
  *    @luatparam[opt=vec2.new()] Vec2 v2 Vector to get distance from, uses

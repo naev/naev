@@ -304,8 +304,8 @@ static int spfxL_getAll( lua_State *L )
  * if applicable (behind ships).
  *    @luatparam[opt] Function|nil render_mg Middle render function to use if
  * applicable (infront of NPC ships, behind player).
- *    @luatparam[opt] Function|nil render_fg "Foregroundrender" function to use if
- * applicable (infront of player).
+ *    @luatparam[opt] Function|nil render_fg "Foregroundrender" function to use
+ * if applicable (infront of player).
  *    @luatparam[opt] vec2|boolean pos Position of the effect, or a boolean to
  * indicate whether or not the effect is local.
  *    @luatparam[opt] vec2 vel Velocity of the effect.

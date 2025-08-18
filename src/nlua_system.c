@@ -962,8 +962,8 @@ static int systemL_markerClear( lua_State *L )
 /**
  * @brief Adds a system marker.
  *
- * @usage marker_id = system.markerAdd( vec2.new( 50, 30 ), "Hello" ) -- Creates a
- * marker at (50,30)
+ * @usage marker_id = system.markerAdd( vec2.new( 50, 30 ), "Hello" ) -- Creates
+ * a marker at (50,30)
  *
  *    @luatparam Vec2 v Position to display marker at.
  *    @luatparam[opt] string str String to display next to marker.

@@ -840,8 +840,8 @@ static int playerL_autonavReset( lua_State *L )
 }
 
 /**
- * @brief Ends the autonav system. You probably want to use "player.autonavAbort"
- * instead of this.
+ * @brief Ends the autonav system. You probably want to use
+ * "player.autonavAbort" instead of this.
  *
  * @luafunc autonavEnd
  * @see autonavAbort
