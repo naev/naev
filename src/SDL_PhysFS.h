@@ -69,9 +69,9 @@ SDL_IOStream *SDL_PhysFS_OpenIO(PHYSFS_File *handle);
 /**
  * Load an image through PhysFS with SDL_image.
  *
- * @param filename A const char* representing the file to load from PhysFS.
+ * @param filename A "const char*" representing the file to load from "PhysFS".
  *
- * @return The SDL_Surface*, or NULL on failure. Use SDL_GetError() to get more information.
+ * @return SDL_Surface*, or NULL on failure. Use "SDL_GetError()" to get more information.
  */
 #define SDL_PhysFS_IMG_Load(filename) (IMG_Load_RW(SDL_PhysFS_IOFromFile(filename), true))
 #endif  // SDL_PhysFS_IMG_Load
@@ -82,9 +82,9 @@ SDL_IOStream *SDL_PhysFS_OpenIO(PHYSFS_File *handle);
  *
  * Be sure to include both SDL_PhysFS.h and SDL_stbimage.h for this to function properly.
  *
- * @param filename A const char* representing the file to load from PhysFS.
+ * @param filename A "const char*" representing the file to load from "PhysFS".
  *
- * @return The SDL_Surface*, or NULL on failure. Use SDL_GetError() to get more information.
+ * @return SDL_Surface*, or NULL on failure. Use "SDL_GetError()" to get more information.
  *
  * @see https://github.com/DanielGibson/Snippets/blob/master/SDL_stbimage.h
  */
@@ -95,9 +95,9 @@ SDL_IOStream *SDL_PhysFS_OpenIO(PHYSFS_File *handle);
 /**
  * Load a supported audio format with SDL_mixer into a music object through PhysFS.
  *
- * @param filename A const char* representing the file to load from PhysFS.
+ * @param filename A "const char*" representing the file to load from "PhysFS".
  *
- * @return The Mix_Music*, or NULL on failure. Use SDL_GetError() to get more information.
+ * @return Mix_Music*, or NULL on failure. Use "SDL_GetError()" to get more information.
  *
  * @see https://github.com/libsdl-org/SDL_mixer
  */
@@ -111,7 +111,7 @@ SDL_IOStream *SDL_PhysFS_OpenIO(PHYSFS_File *handle);
  * @param filename A const char* representing the file to load from PhysFS.
  * @param ptsize Integer point size to use for the newly-opened font
  *
- * @return The TTF_Font*, or NULL on failure.
+ * @return TTF_Font*, or NULL on failure.
  *
  * @see https://wiki.libsdl.org/SDL2_ttf/TTF_OpenFontRW
  */
@@ -321,7 +321,7 @@ bool SDL_PhysFS_MountFromMemory(const unsigned char *fileData, int dataSize, con
 /**
  * Unmounts the given directory or archive.
  *
- * @param oldDir The directory that was supplied to MountPhysFS's newDir.
+ * @param oldDir The directory that was supplied to "MountPhysFS's" "newDir".
  *
  * @return true on success, false otherwise.
  *
@@ -513,7 +513,7 @@ SDL_IOStream *SDL_PhysFS_OpenIO(PHYSFS_File *handle) {
  *
  * @param filename The filename to load from PhysFS.
  *
- * @return The resulting SDL_IOStream*, which must be freed with SDL_CloseIO() afterwards. NULL on failure, use SDL_GetError() to see details.
+ * @return The resulting "SDL_IOStream*", which must be freed with "SDL_CloseIO()" afterwards. NULL on failure, use "SDL_GetError()" to see details.
  */
 SDL_IOStream* SDL_PhysFS_IOFromFile(const char* filename) {
     PHYSFS_File* handle = PHYSFS_openRead(filename);
@@ -526,11 +526,11 @@ SDL_IOStream* SDL_PhysFS_IOFromFile(const char* filename) {
 }
 
 /**
- * Loads a bitmap file from PhysFS into an SDL_Surface.
+ * Loads a bitmap file from "PhysFS" into a "SDL_Surface".
  *
  * @param filename The filename to load.
  *
- * @return The SDL_Surface, or NULL on failure, use SDL_GetError() for details.
+ * @return The SDL_Surface, or NULL on failure, use "SDL_GetError()" for details.
  */
 SDL_Surface* SDL_PhysFS_LoadBMP(const char* filename) {
     SDL_IOStream* io = SDL_PhysFS_IOFromFile(filename);
@@ -546,7 +546,7 @@ SDL_Surface* SDL_PhysFS_LoadBMP(const char* filename) {
  *
  * @param filename The filename of the wav file to load.
  *
- * @return True or false depending on if loading was successful. Use SDL_GetError() for details of the failure.
+ * @return True or false depending on if loading was successful. Use "SDL_GetError()" for details of the failure.
  */
 bool SDL_PhysFS_LoadWAV(const char* filename, SDL_AudioSpec * spec, Uint8 ** audio_buf, Uint32 * audio_len) {
     SDL_IOStream* io = SDL_PhysFS_IOFromFile(filename);
@@ -563,7 +563,7 @@ bool SDL_PhysFS_LoadWAV(const char* filename, SDL_AudioSpec * spec, Uint8 ** aud
  * @param filename The name of the file to load.
  * @param datasize Where to put the resulting size of the file.
  *
- * @return A new memory buffer containing all the data from the file. NULL on failure, use SDL_GetError() for details.
+ * @return A new memory buffer containing all the data from the file. NULL on failure, use "SDL_GetError()" for details.
  */
 void* SDL_PhysFS_LoadFile(const char* filename, size_t *datasize) {
     void* handle = PHYSFS_openRead(filename);

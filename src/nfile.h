@@ -22,7 +22,7 @@ int _nfile_concatPaths( char buf[static 1], int maxLength,
  *    @param maxLength Length of the allocated buffer. No more than this many
  * characters will be copied.
  *    @param path First component of the path.
- *    @param ... Rest of the path components to be contacenated.
+ *    @param ... Rest of the path components to be concatenated.
  *    @return The length of the concatenated path on success. -1 on error.
  */
 #define nfile_concatPaths( buf, maxLength, path, ... )                         \

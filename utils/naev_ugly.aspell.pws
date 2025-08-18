@@ -1,4 +1,9 @@
 personal_ws-1.1 en 150
+const
+UniHunkTargetType
+UniHunkType
+filepath
+weaponLayer
 colour
 behaviour
 ccw

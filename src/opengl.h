@@ -9,7 +9,7 @@
 #include <SDL3/SDL_video.h>
 /** @endcond */
 
-/* We put all the other opengl stuff here to only have to include one header. */
+/* We put all the other openGL stuff here to only have to include one header. */
 #include "mat4.h"
 #include "opengl_render.h" // IWYU pragma: export
 #include "opengl_shader.h" // IWYU pragma: export
@@ -23,7 +23,7 @@
  * 3: Used by toolkit */
 
 /*
- * Contains info about the opengl screen
+ * Contains info about the openGL screen
  */
 #define OPENGL_DOUBLEBUF ( 1 << 1 ) /**< Doublebuffer. */
 #define OPENGL_VSYNC ( 1 << 2 ) /**< Sync to monitor vertical refresh rate. */
@@ -32,7 +32,7 @@
                */
 #define gl_has( f ) ( gl_screen.flags & ( f ) ) /**< Check for the flag */
 /**
- * @brief Stores data about the current opengl environment.
+ * @brief Stores data about the current openGL environment.
  */
 typedef struct glInfo {
    unsigned char major; /**< OpenGL major version. */

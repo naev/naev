@@ -103,7 +103,7 @@ static inline _private_container *_array_private_container( void *a )
    ( (basic_type *)( _array_create_helper( sizeof( basic_type ), capacity ) ) )
 // NOLINTBEGIN(bugprone-sizeof-expression)
 /**
- * @brief Resizes the array to accomodate new_size elements.
+ * @brief Resizes the array to accommodate new_size elements.
  *
  * @note Invalidates all iterators.
  *

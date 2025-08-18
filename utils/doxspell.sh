@@ -30,6 +30,7 @@ filter() {
    sed 's/@luaparam\(\[[^]]*\]\)\? [^ ]* *//' |
    sed 's/@luatparam\(\[[^]]*\]\)\? [^ ]* \(\w\||\)* *//' |
    sed 's/\\\(see\|ref\|p\) [^ ]*//' |
+   sed 's/@typedef [^ ]*//' |
    sed 's/@luatreturn\(\[[^]]*\]\)\?\( [^ ]*\)\? *//' |
    sed 's/@return\(\[[^]]*\]\)\? \(\w\||\)* *//' |
    sed 's/@luareturn\(\[[^]]*\]\)\? *//'
