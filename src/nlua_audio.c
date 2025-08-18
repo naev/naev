@@ -439,7 +439,7 @@ static int audioL_eq( lua_State *L )
 }
 
 /**
- * @brief Tries to generate a single openal source, running GC if necessary.
+ * @brief Tries to generate a single openAL source, running Lua garbage collector if necessary.
  */
 static int audio_genSource( ALuint *source )
 {
@@ -1285,9 +1285,9 @@ static int audioL_getPitch( lua_State *L )
  * by default, the sound is played at player's current position
  *
  * @usage audio.soundPlay( "hail" ) -- Plays the hail sound
- * @usage audio.soundPlay( "hail", pos ) -- Plays the hail sound at position pos
+ * @usage audio.soundPlay( "hail", pos ) -- Plays the hail sound at position "pos"
  * @usage audio.soundPlay( "hail", pos, vel ) -- Plays the hail sound at
- * position pos with velocity vel
+ * position "pos" with velocity "vel"
  *
  *    @luatparam string s Name of the sound to play
  *    @luatparam[opt] Vec2 pos Position of the source
@@ -1374,7 +1374,7 @@ static int audioL_getAttenuationDistances( lua_State *L )
 }
 
 /**
- * @brief Sets the rollof factor.
+ * @brief Sets the rolloff factor.
  *
  *    @luatparam number rolloff New rolloff factor.
  * @luafunc setRolloff
@@ -1765,7 +1765,7 @@ static int audioL_setGlobalEffect( lua_State *L )
  * @brief Allows setting the speed of sound and air absorption.
  *
  *    @luatparam[opt=3443] number speed Air speed.
- *    @luatparam[opt=-1] number absorption Air absorptuion for all sources. Has
+ *    @luatparam[opt=-1] number absorption Air absorption for all sources. Has
  * to be a value between 0 and 10. If negative, value is ignored.
  * @luafunc setGlobalAirAbsorption
  */
@@ -1787,11 +1787,11 @@ static int audioL_setGlobalAirAbsorption( lua_State *L )
 }
 
 /**
- * @brief Sets the doppler effect factor.
+ * @brief Sets the Doppler effect factor.
  *
  * Defaults to 0.3 outside of the nebula and 1.0 in the nebula.
  *
- *    @luatparam number factor Factor to set doppler effect to. Must be
+ *    @luatparam number factor Factor to set Doppler effect to. Must be
  * positive.
  * @luafunc setGlobalDopplerFactor
  */

@@ -28,7 +28,7 @@ static const luaL_Reg diffL_methods[] = {
 
 /**
  * @brief Loads the diff Lua library.
- *    @param env Lua enviornment.
+ *    @param env Lua environment.
  *    @return 0 on success.
  */
 int nlua_loadDiff( nlua_env *env )

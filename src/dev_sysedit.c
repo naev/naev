@@ -1169,7 +1169,7 @@ static void sysedit_renderSprite( const glTexture *gfx, double bx, double by,
 }
 
 /**
- * @brief Called when it's de-focused.
+ * @brief Called when it loses focus.
  */
 static void sysedit_focusLose( unsigned int wid, const char *wgtname )
 {

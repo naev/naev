@@ -166,8 +166,8 @@ static void      spob_lua_free( spob_lua_file *lf );
  * @brief Gets the (English) name for a service code.
  *
  * @param service One of the \p SPOB_SERVICE_* enum values.
- * @return English name, reversible via \p spob_getService()
- * and presentable via \p _().
+ * @return English name, reversible via \p "spob_getService()"
+ * and presentable via \p "_()".
  */
 const char *spob_getServiceName( int service )
 {
@@ -538,7 +538,7 @@ int space_hyperspace( Pilot *p )
 }
 
 /**
- * @brief Calculates the jump in pos for a pilot.
+ * @brief Calculates the jump-in position for a pilot.
  *
  *    @param in Star system entering.
  *    @param out Star system exiting.
@@ -797,8 +797,7 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast,
  *    @param x X position to get closest from.
  *    @param y Y position to get closest from.
  *    @param ang Reference angle.
- *    @return The nearest angle to \p ang which is the direction from (\p x, \p
- * y) to a feature.
+ *    @return The angle to the the feature most ahead.
  */
 double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast,
                              int *fie, double x, double y, double ang )
@@ -983,7 +982,7 @@ char **system_searchFuzzyCase( const char *sysname, int *n )
 }
 
 /**
- * @brief Comparison function for qsort'ing StarSystem by name.
+ * @brief Comparison function for "qsort'ing" StarSystem by name.
  */
 static int system_cmp( const void *p1, const void *p2 )
 {
@@ -1084,7 +1083,7 @@ const char *spob_getSystemName( const char *spobname )
 }
 
 /**
- * @brief Comparison function for qsort'ing Spob by name.
+ * @brief Comparison function for "qsort'ing" Spob by name.
  */
 static int spob_cmp( const void *p1, const void *p2 )
 {
@@ -1241,7 +1240,7 @@ VirtualSpob *virtualspob_getAll( void )
 }
 
 /**
- * @brief Comparison function for qsort'ing VirtuaSpob by name.
+ * @brief Comparison function for "qsort'ing" VirtuaSpob by name.
  */
 static int virtualspob_cmp( const void *p1, const void *p2 )
 {
@@ -1269,7 +1268,7 @@ VirtualSpob *virtualspob_get( const char *name )
  *
  *    @param jumpname Name to match.
  *    @param sys System jump is in.
- *    @return Jump point matich jumpname in sys or NULL if not found.
+ *    @return Jump point matching "jumpname" in sys or NULL if not found.
  */
 JumpPoint *jump_get( const char *jumpname, const StarSystem *sys )
 {
@@ -1474,7 +1473,7 @@ void space_checkLand( void )
  * @brief Controls fleet spawning.
  *
  *    @param dt Current delta tick.
- *    @param real_dt Real time incrcement (in real world seconds).
+ *    @param real_dt Real time increment (in real world seconds).
  */
 void space_update( double dt, double real_dt )
 {
@@ -2101,7 +2100,7 @@ void spob_distress( Spob *spb, const Pilot *p, const Pilot *attacker )
 }
 
 /**
- * @brief Initializes the memory fo a spob.
+ * @brief Initializes the memory for a spob.
  */
 void spob_luaInitMem( const Spob *spob )
 {
@@ -2110,7 +2109,7 @@ void spob_luaInitMem( const Spob *spob )
 }
 
 /**
- * @brief Updatse the spob's internal Lua stuff.
+ * @brief Update the spob's internal Lua stuff.
  *
  *    @param spob Spob to update.
  */
@@ -4632,7 +4631,7 @@ double system_getPresenceFull( const StarSystem *sys, int faction, double *base,
 }
 
 /**
- * @brief Go through all the spobs and call system_addPresence().
+ * @brief Go through all the spobs and call "system_addPresence()".
  *
  *    @param sys Pointer to the system to process.
  */
@@ -4872,7 +4871,7 @@ const char *space_populationStr( const Spob *spb )
 /**
  * @brief Gets the map shader by name.
  *
- *    @param name NAme of the map shader.
+ *    @param name Name of the map shader.
  *    @return The map shader.
  */
 static const MapShader *mapshader_get( const char *name )

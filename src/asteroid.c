@@ -503,7 +503,7 @@ static void debris_init( Debris *deb )
 }
 
 /**
- * @brief Updates internal alues of an asteroid field.
+ * @brief Updates internal values of an asteroid field.
  */
 void asteroids_computeInternals( AsteroidAnchor *a )
 {
@@ -767,7 +767,7 @@ static int asttype_parse( AsteroidType *at, const char *file )
 /**
  * @brief Loads the collision polygon for an asteroid type.
  *
- *    @param temp AsteroidType to load into.
+ *    @param temp "AsteroidType" to load into.
  *    @param buf Name of the file.
  */
 static int asteroid_loadPLG( AsteroidType *temp, const char *buf )

@@ -59,7 +59,7 @@ static int dsys_compVirtualSpob( const void *spob1, const void *spob2 )
 }
 
 /**
- * @brief Function for qsorting jumppoints.
+ * @brief Function for "qsort'ing" jump points.
  *
  *    @param jmp1 Jump Point 1 to sort.
  *    @param jmp2 Jump Point 2 to sort.

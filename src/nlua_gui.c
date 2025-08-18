@@ -77,7 +77,7 @@ int nlua_loadGUI( nlua_env *env )
  */
 
 /**
- * @brief Sets the gui viewport.
+ * @brief Sets the GUI viewport.
  *
  * Basically this limits what the rest of the game considers as the screen.
  *  Careful when using this or you can make the game look ugly and unplayable.

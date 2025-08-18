@@ -260,7 +260,7 @@ static void fad_setValue( Widget *fad, double value )
 }
 
 /**
- * @brief Sets a fader widget's value.
+ * @brief Sets a fader widget value.
  *
  *    @param wid ID of the window to get widget from.
  *    @param name Name of the widget.
@@ -325,7 +325,7 @@ void window_faderSetBoundedValue( unsigned int wid, const char *name,
 }
 
 /**
- * @brief Sets a fader widget's boundaries.
+ * @brief Sets the boundaries of a fader widget.
  *
  *    @param wid ID of the window to get widget from.
  *    @param name Name of the widget.

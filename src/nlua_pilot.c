@@ -1433,13 +1433,13 @@ static int pilotL_eq( lua_State *L )
 }
 
 /**
- * @brief Gets the pilot's current (translated) name or notes it is inexistent.
+ * @brief Gets the pilot's current (translated) name or notes it is non-existent.
  *
  * @usage tostring(p)
  *
  *    @luatparam Pilot p Pilot to convert to string.
- *    @luatreturn string The current name of the pilot or "(inexistent pilot)"
- * if not existent.
+ *    @luatreturn string The current name of the pilot
+ * or "(inexistent pilot)" (sic) if not existent.
  * @luafunc __tostring
  */
 static int pilotL_tostring( lua_State *L )
@@ -1686,11 +1686,11 @@ static int pilotL_withPlayer( lua_State *L )
 }
 
 /**
- * @brief Gets the nav target of the pilot.
+ * @brief Gets the navigation target of the pilot.
  *
  * @usage spob, hyperspace = p:nav()
  *
- *    @luatparam Pilot p Pilot to get nav info of.
+ *    @luatparam Pilot p Pilot to get navigation info of.
  *    @luatreturn Spob|nil The pilot's spob target.
  *    @luatreturn System|nil The pilot's hyperspace target.
  * @luafunc nav
@@ -1719,9 +1719,9 @@ static int pilotL_nav( lua_State *L )
 }
 
 /**
- * @brief Gets the nav spob target of the pilot.
+ * @brief Gets the navigation spob target of the pilot.
  *
- *    @luatparam Pilot p Pilot to get nav info of.
+ *    @luatparam Pilot p Pilot to get navigation info of.
  *    @luatreturn Spob|nil The pilot's spob target.
  * @luafunc navSpob
  */
@@ -1773,9 +1773,9 @@ static int pilotL_navSpobSet( lua_State *L )
 }
 
 /**
- * @brief Gets the nav jump target of the pilot.
+ * @brief Gets the navigation jump target of the pilot.
  *
- *    @luatparam Pilot p Pilot to get nav info of.
+ *    @luatparam Pilot p Pilot to get navigation info of.
  *    @luatreturn Jump|nil The pilot's hyperspace target.
  * @luafunc navJump
  */
@@ -4203,7 +4203,7 @@ static int pilotL_intrinsicReset( lua_State *L )
 /**
  * @brief Allows setting intrinsic stats of a pilot.
  *
- * @usage p:intrinsicSet( "turn", -50 ) -- Lowers p's turn by 50%
+ * @usage p:intrinsicSet( "turn", -50 ) -- Lowers the turn rate of pilot p by 50%
  *
  *    @luatparam Pilot p Pilot to set stat of.
  *    @luatparam string name Name of the stat to set. It is the same as in the
@@ -4287,7 +4287,7 @@ static int pilotL_shippropReset( lua_State *L )
 /**
  * @brief Allows setting ship property stats of a pilot.
  *
- * @usage p:shippropSet( "turn", -50 ) -- Lowers p's turn by 50%
+ * @usage p:shippropSet( "turn", -50 ) -- Lowers the turn rate of pilot p by 50%
  *
  *    @luatparam Pilot p Pilot to set stat of.
  *    @luatparam string name Name of the stat to set. It is the same as in the
@@ -4531,7 +4531,7 @@ static int pilotL_ai( lua_State *L )
  * @usage p:changeAI( "empire" ) -- set the pilot to use the Empire AI
  *
  *    @luatparam Pilot p Pilot to change AI of.
- *    @luatparam string newai Name of Ai to use.
+ *    @luatparam string newai Name of AI to use.
  * @luafunc changeAI
  */
 static int pilotL_changeAI( lua_State *L )
@@ -4811,7 +4811,7 @@ static int pilotL_setNoDisable( lua_State *L )
  * @note Can increase the pilot's speed limit over what would be physically
  * possible.
  *
- * @usage p:setSpeedLimit( 100 ) -- Sets maximumspeed to 100px/s.
+ * @usage p:setSpeedLimit( 100 ) -- Sets maximum speed to 100 pixels/s.
  * @usage p:setSpeedLimit( 0 ) removes speed limit.
  *    @luatparam pilot p Pilot to set speed of.
  *    @luatparam number speed Value to set speed to.
@@ -5527,7 +5527,7 @@ static int pilotL_ship( lua_State *L )
  * @brief Gets the rough radius of the ship, useful for collision stuff.
  *
  *    @luatparam Pilot p Pilot to get radius of.
- *    @luatreturn number THe radius of the pilot.
+ *    @luatreturn number The radius of the pilot.
  * @luafunc radius
  */
 static int pilotL_radius( lua_State *L )
@@ -5721,7 +5721,7 @@ static int pilotL_task( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to get task name of.
  *    @luatreturn string Name of the task.
- *    @luatreturn string|nil Name of the subtask if applicable, or nil
+ *    @luatreturn string|nil Name of the sub-task if applicable, or nil
  * otherwise.
  * @luafunc taskname
  */
@@ -5741,7 +5741,7 @@ static int pilotL_taskname( lua_State *L )
 }
 
 /**
- * @brief Gets the name of all the pilot's current tasks (not subtasks).
+ * @brief Gets the name of all the pilot's current tasks (not sub-tasks).
  *
  *    @luatparam Pilot p Pilot to get task stack of.
  * @luafunc taskstack
@@ -6672,7 +6672,7 @@ static const CollPolyView *getCollPoly( const Pilot *p )
  *
  *    @luatparam Pilot p First pilot to check.
  *    @luatparam Pilot|Asteroid t Second object to check.
- *    @luatreturn Vec2|nil nil if no collision, or Vec2 with collision point if
+ *    @luatreturn Vec2|nil "nil" if no collision, or "Vec2" with collision point if
  * collided.
  * @luafunc collisionTest
  */
@@ -6787,10 +6787,10 @@ static int pilotL_kill( lua_State *L )
  * @brief Knocks back a pilot. It can either accept two pilots, or a pilot and
  * an element represented by mass, velocity, and position.
  *
- * @usage pilota:knockback( pilotb, 0. ) -- Inelastic collision between pilota
- * and pilotb
+ * @usage pilota:knockback( pilotb, 0. ) -- Inelastic collision between "pilota"
+ * and "pilotb"
  * @usage pilota:knockback( 100, vec2.new(0,0) ) -- Elastic collision between a
- * 100 mass object with no velocity and pilota
+ * 100 mass object with no velocity and "pilota"
  *
  *    @luatparam Pilot p Pilot being knocked back.
  *    @luatparam number m Mass of object knocking back pilot.

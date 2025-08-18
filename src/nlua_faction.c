@@ -288,7 +288,7 @@ int lua_isfaction( lua_State *L, int ind )
 }
 
 /**
- * @brief __eq (equality) metamethod for factions.
+ * @brief equality ("__eq()") metamethod for factions.
  *
  * You can use the '==' operator within Lua to compare factions with this.
  *
@@ -375,7 +375,7 @@ static int factionL_longname( lua_State *L )
  *
  *    @luatparam Faction f Faction to check against.
  *    @luatparam Faction n Faction to check if is true neutral.
- *    @luatreturn boolean true if they are truely neutral, false if they aren't.
+ *    @luatreturn boolean true if they are truly neutral, false if they aren't.
  * @luafunc areNeutral
  */
 static int factionL_areneutral( lua_State *L )
@@ -511,7 +511,7 @@ static int factionL_reputationGlobal( lua_State *L )
 }
 
 /**
- * @brief Gets the human readable standing text correpsonding (translated).
+ * @brief Gets the human readable standing text corresponding (translated).
  *
  *    @luatparam faction f Faction to get standing text from.
  *    @luatparam[opt=f:reputationGlobal()] number|nil val Value to get the
@@ -877,7 +877,7 @@ static int factionL_isStatic( lua_State *L )
 }
 
 /**
- * @brief Gets the overriden reputation value of a faction.
+ * @brief Gets the overridden reputation value of a faction.
  *
  *    @luatparam Faction f Faction to get whether or not the reputation is
  * overriden and the value.
@@ -897,7 +897,7 @@ static int factionL_reputationOverride( lua_State *L )
 }
 
 /**
- * @brief Gets the overriden reputation value of a faction.
+ * @brief Gets the overridden reputation value of a faction.
  *
  *    @luatparam Faction f Faction to enable/disable reputation override of.
  *    @luatparam number|nil Sets the faction reputation override to the value if

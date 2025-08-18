@@ -4,7 +4,7 @@
 /**
  * @file nmath.c
  *
- * @brief Some math routines for naev.
+ * @brief Some math routines for Naev.
  */
 /** @cond */
 #include <math.h>

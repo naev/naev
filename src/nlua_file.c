@@ -246,12 +246,12 @@ static int fileL_close( lua_State *L )
 }
 
 /**
- * @brief Creatse a file from a string buffer.
+ * @brief Create a file from a string buffer.
  *
  *    @luatparam String str String to use as the memory data.
  *    @luatparam[opt="memory buffer"] String name Optional name to give the
  * buffer.
- *    @luatreturn File The new file wrappnig the string.
+ *    @luatreturn File The new file wrapping the string.
  * @luafunc close
  */
 static int fileL_from_string( lua_State *L )
@@ -280,7 +280,7 @@ static int fileL_from_string( lua_State *L )
  * @brief Reads from an open file.
  *
  *    @luatparam File file File to read from.
- *    @luatparam[opt] number bytes Number of bytes to read or all if ommitted.
+ *    @luatparam[opt] number bytes Number of bytes to read or all if omitted.
  *    @luatreturn string Read data.
  *    @luatreturn number Number of bytes actually read.
  * @luafunc read

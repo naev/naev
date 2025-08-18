@@ -50,7 +50,7 @@ void vec3_sub( vec3 *out, const vec3 *a, const vec3 *b )
 }
 
 /**
- * @brief Weighted addition of two vectors (out = wa*a + wb*b).
+ * @brief Weighted addition of two vectors.
  *
  *    @param[out] out Output vector.
  *    @param[in] a First vector to add.

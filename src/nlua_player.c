@@ -469,7 +469,7 @@ static int playerL_msgClear( lua_State *L )
 /**
  * @brief Clears the player's message buffer.
  *
- *    @luatparam( boolean enable Whether or not to enable the player receiving
+ *    @luatparam boolean enable Whether or not to enable the player receiving
  * messages.
  * @luafunc msgToggle
  */
@@ -840,7 +840,7 @@ static int playerL_autonavReset( lua_State *L )
 }
 
 /**
- * @brief Ends the autonav system. You probably want to use player.autonavAbort
+ * @brief Ends the autonav system. You probably want to use "player.autonavAbort"
  * instead of this.
  *
  * @luafunc autonavEnd

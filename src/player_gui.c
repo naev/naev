@@ -36,7 +36,7 @@ void player_guiCleanup( void )
 }
 
 /**
- * @brief Adds a gui to the player.
+ * @brief Adds a GUI to the player.
  */
 int player_guiAdd( const char *name )
 {

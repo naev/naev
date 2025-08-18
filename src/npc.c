@@ -207,7 +207,7 @@ unsigned int npc_add_event( unsigned int evt, const char *func,
 }
 
 /**
- * @brief Removes an npc from the spaceport bar.
+ * @brief Removes a NPC from the spaceport bar.
  */
 static int npc_rm( NPC_t *npc )
 {
@@ -274,7 +274,7 @@ int npc_rm_mission( unsigned int id, unsigned int mid )
 }
 
 /**
- * @brief Removes all the npc belonging to an event.
+ * @brief Removes all the NPC belonging to an event.
  */
 int npc_rm_parentEvent( unsigned int id )
 {
@@ -298,7 +298,7 @@ int npc_rm_parentEvent( unsigned int id )
 }
 
 /**
- * @brief Removes all the npc belonging to a mission.
+ * @brief Removes all the NPC belonging to a mission.
  */
 int npc_rm_parentMission( unsigned int mid )
 {
@@ -418,7 +418,7 @@ void npc_generateMissions( void )
 }
 
 /**
- * @brief Patches a new mission bar npc into the bar system.
+ * @brief Patches a new mission bar NPC into the bar system.
  *
  * @note Do not reuse the pointer once it's fed.
  *
@@ -441,7 +441,7 @@ void npc_patchMission( Mission *misn )
 }
 
 /**
- * @brief Frees a single npc.
+ * @brief Frees a single NPC.
  */
 static void npc_free( NPC_t *npc )
 {
@@ -498,7 +498,7 @@ void npc_clear( void )
 }
 
 /**
- * @brief Get the size of the npc array.
+ * @brief Get the size of the NPC array.
  */
 int npc_getArraySize( void )
 {

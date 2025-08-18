@@ -4,7 +4,7 @@
 /**
  * @file opengl_tex.c
  *
- * @brief This file handles the opengl texture wrapper routines.
+ * @brief This file handles the openGL texture wrapper routines.
  */
 /** @cond */
 #include <stdio.h>
@@ -41,7 +41,7 @@ typedef struct glTexture {
    double srh; /**< Sprite render height - equivalent to sh/h. */
 
    /* data */
-   GLuint   texture; /**< the opengl texture itself */
+   GLuint   texture; /**< the openGL texture itself */
    uint8_t *trans;   /**< maps the transparency */
    double   vmax;    /**< Maximum value for SDF textures. */
 
@@ -80,7 +80,7 @@ int gl_initTextures( void )
 }
 
 /**
- * @brief Cleans up the opengl texture subsystem.
+ * @brief Cleans up the openGL texture subsystem.
  */
 void gl_exitTextures( void )
 {
@@ -206,7 +206,7 @@ int gl_fboAddDepth( GLuint fbo, GLuint *tex, GLsizei width, GLsizei height )
 }
 
 /**
- * @brief Sets x and y to be the appropriate sprite for glTexture using dir.
+ * @brief Sets x and y to be the appropriate sprite for "glTexture" using "dir".
  *
  * Very slow, try to cache if possible like the pilots do instead of using
  *  in O(n^2) or worse functions.
@@ -278,13 +278,13 @@ glTexture **gl_addTexArray( glTexture **tex, glTexture *t )
 // TODO have to port the distance field stuff to rust
 #if 0
 /**
- * @brief Loads a surface into an opengl texture.
+ * @brief Loads a surface into an openGL texture.
  *
  *    @param surface Surface to load into a texture.
  *    @param flags Flags to use.
  *    @param freesur Whether or not to free the surface.
  *    @param[out] vmax The maximum value in the case of an SDF texture.
- *    @return The opengl texture id.
+ *    @return The openGL texture id.
  */
 static GLuint gl_loadSurface( SDL_Surface *surface, unsigned int flags,
                               int freesur, double *vmax )

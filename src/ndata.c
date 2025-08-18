@@ -36,7 +36,7 @@ static int ndata_enumerateCallback( void *data, const char *origdir,
                                     const char *fname );
 
 /**
- * @brief Reads a file from the ndata (will be NUL terminated).
+ * @brief Reads a file from the Naev data folder (will be NUL terminated).
  *
  *    @param path Path of the file to read.
  *    @param[out] filesize Stores the size of the file.
@@ -119,7 +119,7 @@ void *ndata_read( const char *path, size_t *filesize )
  * Will sort by path, and (unlike underlying PhysicsFS) make sure to list each
  * file path only once.
  *
- *    @return Array of (allocated) file paths relative to base_dir.
+ *    @return Array of (allocated) file paths relative to "base_dir".
  */
 char **ndata_listRecursive( const char *path )
 {
@@ -145,7 +145,7 @@ char **ndata_listRecursive( const char *path )
 }
 
 /**
- * @brief The PHYSFS_EnumerateCallback for ndata_listRecursive
+ * @brief The "PHYSFS_EnumerateCallback" for "ndata_listRecursive"
  */
 static int ndata_enumerateCallback( void *data, const char *origdir,
                                     const char *fname )

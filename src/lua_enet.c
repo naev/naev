@@ -2,8 +2,8 @@
 /**
  * @file lua_enet.c
  *
- * @brief Lightly modified version of https://github.com/leafo/lua-enet/blob/master/enet.c
- * (rev 97d91e8c4337555425fa751f02f552bbb553f17b, upstream copyright below).
+ * @brief Lightly modified version of "https://github.com/leafo/lua-enet/blob/master/enet.c"
+ * ("rev 97d91e8c4337555425fa751f02f552bbb553f17b", upstream copyright below).
  */
 /**
  *

@@ -386,7 +386,7 @@ void shiplog_new( void )
 }
 
 /*
- * @brief Saves the logfiile
+ * @brief Saves the logfile
  */
 int shiplog_save( xmlTextWriterPtr writer )
 {
@@ -428,7 +428,7 @@ int shiplog_save( xmlTextWriterPtr writer )
 }
 
 /**
- * @brief Loads the logfiile
+ * @brief Loads the logfile
  * @param parent Parent node for economy.
  * @return 0 on success.
  */

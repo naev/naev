@@ -296,7 +296,7 @@ int pilot_addOutfitRaw( Pilot *pilot, const Outfit *outfit, PilotOutfitSlot *s )
 }
 
 /**
- * @brief Same as pilot_addOutfitRaw, but without running Lua.
+ * @brief Same as "pilot_addOutfitRaw", but without running Lua.
  */
 int pilot_addOutfitRawNoLua( Pilot *pilot, const Outfit *outfit,
                              PilotOutfitSlot *s )
@@ -1725,7 +1725,7 @@ int pilot_outfitLAdd( Pilot *pilot, PilotOutfitSlot *po )
 }
 
 /**
- * @brief Outfit is removed froma ship.
+ * @brief Outfit is removed from a ship.
  */
 int pilot_outfitLRemove( Pilot *pilot, PilotOutfitSlot *po )
 {
@@ -1944,8 +1944,8 @@ static void outfitLOnhit( const Pilot *pilot, PilotOutfitSlot *po,
  * @brief Runs the pilot's Lua outfits onhit script.
  *
  *    @param pilot Pilot to run Lua outfits for.
- *    @param armour Armour amage taken by pilot.
- *    @param shield Shield amage taken by pilot.
+ *    @param armour Armour damage taken by pilot.
+ *    @param shield Shield damage taken by pilot.
  *    @param attacker The attacker that hit the pilot.
  */
 void pilot_outfitLOnhit( Pilot *pilot, double armour, double shield,

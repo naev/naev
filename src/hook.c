@@ -1067,7 +1067,7 @@ static Hook *hook_get( unsigned int id )
 }
 
 /**
- * @brief Gets the lua env for a hook.
+ * @brief Gets the Lua environment for a hook.
  */
 nlua_env *hook_env( unsigned int hook )
 {

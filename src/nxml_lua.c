@@ -83,7 +83,7 @@ static int nxml_saveData( xmlTextWriterPtr writer, const char *type,
 }
 
 /**
- * @brief Commodity-specific nxml_saveData derivative.
+ * @brief Commodity-specific "nxml_saveData" derivative.
  *
  *    @param writer XML Writer to use to persist stuff.
  *    @param name Name of the data to save.
@@ -116,7 +116,7 @@ static int nxml_saveCommodity( xmlTextWriterPtr writer, const char *name,
 }
 
 /**
- * @brief Reverse of nxml_saveCommodity.
+ * @brief Reverse of "nxml_saveCommodity".
  */
 static Commodity *nxml_loadCommodity( xmlNodePtr node )
 {
@@ -139,7 +139,7 @@ static Commodity *nxml_loadCommodity( xmlNodePtr node )
 }
 
 /**
- * @brief Jump-specific nxml_saveData derivative.
+ * @brief Jump-specific "nxml_saveData" derivative.
  *
  *    @param writer XML Writer to use to persist stuff.
  *    @param name Name of the data to save.
@@ -535,7 +535,7 @@ int nxml_unpersistLua( nlua_env *env, xmlNodePtr parent )
 }
 
 /**
- * @brief Checks whether saving the given string (from lua_tolstring)
+ * @brief Checks whether saving the given string (from "lua_tolstring")
  *        can be saved into an XML document without blowing up.
  *
  *    @param buf Contents of a valid Lua string.

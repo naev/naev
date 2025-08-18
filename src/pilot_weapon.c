@@ -714,7 +714,7 @@ void pilot_weapSetUpdateStats( Pilot *p )
 /**
  * @brief Updates the weapon range for a pilot weapon set.
  *
- *    @param p Pilot whos weapon set is being updated.
+ *    @param p Pilot whose weapon set is being updated.
  *    @param ws Weapon Set to update range for.
  */
 static void pilot_weapSetUpdateRange( const Pilot *p, PilotWeaponSet *ws )
@@ -778,7 +778,7 @@ static void pilot_weapSetUpdateRange( const Pilot *p, PilotWeaponSet *ws )
  * @brief Gets the minimum range of the current pilot weapon set.
  *
  *    @param p Pilot to get the minimum range of.
- *    @param id ID of weapon set to get the minimun range of.
+ *    @param id ID of weapon set to get the minimum range of.
  */
 double pilot_weapSetRangeMin( Pilot *p, int id )
 {
@@ -997,7 +997,7 @@ double pilot_weapFlyTime( const Outfit *o, const Pilot *parent, const vec2 *pos,
 /**
  * @brief Gets the weapon target of a pilot.
  *
- *    @param p Pilot to get weapon targot of.
+ *    @param p Pilot to get weapon target of.
  *    @param[out] wt Weapon target structure set up.
  *    @return The pilot pointer if applicable.
  */
