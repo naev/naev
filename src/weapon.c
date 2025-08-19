@@ -2912,7 +2912,7 @@ void weapon_clearPilot( const Pilot *p )
    for ( int i = 0; i < array_size( weapon_stack ); i++ ) {
       Weapon *w = &weapon_stack[i];
       if ( w->parent == p->id ) {
-         w->timer  = -1.;
+         // w->timer  = -1.;
          w->parent = 0;
       }
    }
