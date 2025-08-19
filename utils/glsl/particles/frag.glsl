@@ -201,6 +201,7 @@ float snoise(vec3 v)
 // but it has at least half decent performance on a
 // modern GPU. In any case, it beats any software
 // implementation of Worley noise hands down.
+#define CELLULAR_NOISE_ACCURATE
 vec2 cellular(vec3 P) {
 #define K 0.142857142857 // 1/7
 #define Ko 0.428571428571 // 1/2-K/2
@@ -922,6 +923,31 @@ vec4 eruptor( vec2 uv )
    return colour;
 }
 
+#define GAMMA_TO_LINEAR_F32(v)   ((v)<=0.04045) ? ((v) / 12.92) : pow(((v)+0.055)/1.055, 2.4)
+#define GAMMA_TO_LINEAR_VEC3(r,g,b)  vec3(GAMMA_TO_LINEAR_F32(r), GAMMA_TO_LINEAR_F32(g), GAMMA_TO_LINEAR_F32(b))
+#define GAMMA_TO_LINEAR_VEC4(r,g,b,a)  vec4( vec3(GAMMA_TO_LINEAR_F32(r), GAMMA_TO_LINEAR_F32(g), GAMMA_TO_LINEAR_F32(b)), a )
+
+vec4 thorn( vec2 uv )
+{
+   const vec3 COLOUR = GAMMA_TO_LINEAR_VEC3(0.45, 0.15, 0.15);
+   const vec3 COLOUR_FADE = GAMMA_TO_LINEAR_VEC3(0.9, 0.5, 0.05 );
+
+   float fade = min(u_time*6.0,u_fade);
+   vec2 c = cellular( vec3( 4.0*uv, 100.*u_r) );
+   float n = (c.y-c.x);
+
+   uv.y = -uv.y + 0.8;
+   float d = sdUnevenCapsuleY( uv*0.8, 0.1, 0.4, 1.0 ) + n*0.2;
+   d *= 3.0 * pow( smoothstep( 0.0, 0.3, -d ), 2.0 );
+
+   vec4 colour;
+   colour.rgb = mix( COLOUR_FADE,
+         COLOUR - d * (COLOUR_FADE-COLOUR),
+         u_fade );
+   colour.a = smoothstep( 0.0, 0.01, -d );
+   return colour;
+}
+
 vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
 {
    vec4 col_out;
@@ -940,10 +966,11 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    //col_out = laser_square( uv_rel );
    //col_out = laser( uv_rel );
    //col_out = ripper_square( uv_rel );
-   col_out = ripper( uv_rel );
+   //col_out = ripper( uv_rel );
    //col_out = reaver_square( uv_rel );
    //col_out = reaver( uv_rel );
    //col_out = eruptor( uv_rel );
+   col_out = thorn( uv_rel );
 
    return mix( bg(uv), col_out, clamp(col_out.a, 0.0, 1.0) );
 }
