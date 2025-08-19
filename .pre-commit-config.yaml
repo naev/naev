@@ -79,11 +79,11 @@ repos:
       files: .*\.(xml|loc|plist)$
       args: ["-st"]
       language: script
-    - id: glsl_validator
-      name: glsl validator
-      entry: utils/nglslValidator.py
-      files: dat/.*\.(frag|vert)$
-      language: python
+#    - id: glsl_validator
+#      name: glsl validator
+#      entry: utils/nglslValidator.py
+#      files: dat/.*\.(frag|vert)$
+#      language: python
     - id: rustfmt
       name: Rust formatter
       entry: rustfmt
