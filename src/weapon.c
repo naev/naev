@@ -2904,6 +2904,21 @@ void weapon_clear( void )
 }
 
 /**
+ * @brief Clears the weapons for a pilot.
+ */
+void weapon_clearPilot( const Pilot *p )
+{
+   /* Don't forget to stop the sounds. */
+   for ( int i = 0; i < array_size( weapon_stack ); i++ ) {
+      Weapon *w = &weapon_stack[i];
+      if ( w->parent == p->id ) {
+         w->timer  = -1.;
+         w->parent = 0;
+      }
+   }
+}
+
+/**
  * @brief Jams all weapons tracking the target pilot.
  */
 void weapon_jamPilot( const Pilot *p )
@@ -2913,7 +2928,7 @@ void weapon_jamPilot( const Pilot *p )
       Weapon *w = &weapon_stack[i];
       if ( !outfit_isLauncher( w->outfit ) )
          continue;
-      Target *t = &w->target;
+      const Target *t = &w->target;
       if ( ( t->type == TARGET_PILOT ) && ( t->u.id == p->id ) ) {
          double r = RNGF();
          if ( r < 0.4 ) {
