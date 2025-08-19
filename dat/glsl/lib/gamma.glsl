@@ -56,4 +56,9 @@ vec4 linearToGammaPrecise( vec4 c ) {
 #define gammaCorrectColorFast       gammaToLinearFast
 #define unGammaCorrectColorFast     linearToGammaFast
 
+// Macros for constant expressions
+#define GAMMA_TO_LINEAR_F32(v)   ((v)<=0.04045) ? ((v) / 12.92) : pow(((v)+0.055)/1.055, 2.4)
+#define GAMMA_TO_LINEAR_VEC3(r,g,b)  vec3(GAMMA_TO_LINEAR_F32(r), GAMMA_TO_LINEAR_F32(g), GAMMA_TO_LINEAR_F32(b))
+#define GAMMA_TO_LINEAR_VEC4(r,g,b,a)  vec4( vec3(GAMMA_TO_LINEAR_F32(r), GAMMA_TO_LINEAR_F32(g), GAMMA_TO_LINEAR_F32(b)), a )
+
 #endif /* _GAMMA_GLSL */
