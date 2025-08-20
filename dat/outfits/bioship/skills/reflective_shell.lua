@@ -4,17 +4,15 @@ notactive = true
 
 local REFLECT = 0.1 -- amount to reflect
 local THORN = outfit.get("Bioship Thorn")
-local TRIGGER = 25
+local TRIGGER = 50
 
 function descextra()
    local s = THORN:specificstats()
-   return fmt.f(_([[Reduces damage taken by {reflect}%. Every {trigger} damage taken, a seeking thorn is launched at the attacker dealing {damage} damage with {penetration}% penetration, and applying plasma burn for an extra {dot:.1f} damage over {duration} seconds.]]), {
+   return fmt.f(_([[Reduces damage taken by {reflect}%. Every {trigger} damage taken, a seeking thorn is launched at the attacker dealing {damage} damage with {penetration}% penetration.]]), {
       reflect  = REFLECT*100,
       damage   = s.damage,
       penetration = s.penetration*100,
       trigger  = TRIGGER,
-      dot      = s.damage,
-      duration = 5,
    })
 end
 

@@ -9,7 +9,6 @@
   <cpu>0</cpu>
  </general>
  <specific type="turret launcher" secondary="1">
-  <lua>outfits/bioship/skills/bioplasma.lua</lua>
   <delay>3</delay>
   <reload_time>1</reload_time>
   <amount>1</amount>
@@ -18,8 +17,8 @@
   <ammo_mass>0.4</ammo_mass>
   <gfx type="shader" size="13" col_size="10">particles/thorn.frag</gfx>
   <sound>plasma</sound>
-  <spfx_shield>Pla-S</spfx_shield>
-  <spfx_armour>Pla-S</spfx_armour>
+  <spfx_shield>Exp-S</spfx_shield>
+  <spfx_armour>Exp-S</spfx_armour>
   <!--<trail_generator x="-5">soromidS</trail_generator>-->
   <duration blowup="armour">4</duration>
   <accel>500</accel>
@@ -29,7 +28,7 @@
   <damage>
    <type>kinetic</type>
    <penetrate>25</penetrate>
-   <physical>50</physical>
+   <physical>25</physical>
    <disable>0</disable>
   </damage>
   <ai>seek</ai>

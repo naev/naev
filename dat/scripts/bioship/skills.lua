@@ -210,13 +210,11 @@ skills.set.health = {
       desc = function ()
          local THORN = outfit.get("Bioship Thorn")
          local s = THORN:specificstats()
-         return fmt.f(_([[Reduces damage taken by {reflect}%. Every {trigger} damage taken, a seeking thorn is launched at the attacker dealing {damage} damage with {penetration}% penetration, and applying plasma burn for an extra {dot:.1f} damage over {duration} seconds.]]), {
+         return fmt.f(_([[Reduces damage taken by {reflect}%. Every {trigger} damage taken, a seeking thorn is launched at the attacker dealing {damage} damage with {penetration}% penetration.]]), {
             reflect  = 10,
             damage   = s.damage,
             penetration = s.penetration*100,
-            trigger  = 25,
-            dot      = s.damage,
-            duration = 5,
+            trigger  = 50,
          })
       end,
       outfit = "Reflective Shell",
