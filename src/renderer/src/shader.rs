@@ -4,7 +4,7 @@ use std::ffi::CStr;
 use std::os::raw::c_char;
 
 use crate::Context;
-use log::warn;
+use log::{warn, warn_err};
 
 pub enum ShaderType {
     Fragment,
@@ -312,15 +312,21 @@ pub extern "C" fn gl_program_backend(
     let vert = unsafe { CStr::from_ptr(cvert) };
     let frag = unsafe { CStr::from_ptr(cfrag) };
     let mut sb = ShaderBuilder::new(None)
-        .vert_file(vert.to_str().unwrap())
-        .frag_file(frag.to_str().unwrap());
+        .vert_file(&vert.to_string_lossy())
+        .frag_file(&frag.to_string_lossy());
 
     if !cprepend.is_null() {
         let prepend = unsafe { CStr::from_ptr(cprepend) };
-        sb = sb.prepend(prepend.to_str().unwrap());
+        sb = sb.prepend(&prepend.to_string_lossy());
     }
 
-    let shader = ManuallyDrop::new(sb.build(&ctx.gl).unwrap());
+    let shader = ManuallyDrop::new(match sb.build(&ctx.gl) {
+        Ok(s) => s,
+        Err(e) => {
+            warn_err!(e);
+            return 0;
+        }
+    });
 
     shader.program.0.into()
 }
@@ -340,11 +346,17 @@ pub extern "C" fn gl_program_vert_frag_string(
         std::str::from_utf8(unsafe { std::slice::from_raw_parts(cfrag as *const u8, frag_size) })
             .unwrap();
     let shader = ManuallyDrop::new(
-        ShaderBuilder::new(None)
+        match ShaderBuilder::new(None)
             .vert_data(vertdata)
             .frag_data(fragdata)
             .build(&ctx.gl)
-            .unwrap(),
+        {
+            Ok(s) => s,
+            Err(e) => {
+                warn_err!(e);
+                return 0;
+            }
+        },
     );
 
     shader.program.0.into()
