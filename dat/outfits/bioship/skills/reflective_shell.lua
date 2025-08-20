@@ -31,10 +31,14 @@ function onhit( p, po, armour, _shield, attacker, pos )
 
    -- Accumulate damage and break off
    mem.dmg = mem.dmg+dmg
-   if mem.dmg>TRIGGER and attacker and attacker:exists() then
-      --attacker:damage( dmg, nil, 100, nil, p )
+   local n = math.floor(mem.dmg / TRIGGER)
+   if n>0 and attacker and attacker:exists() then
       local dir = (attacker:pos()-p:pos()):angle()
-      po:munition( p, THORN, attacker, dir, pos )
-      mem.dmg = mem.dmg-TRIGGER
+      local fan = math.min( 60, n*15 )
+      for i=1,n do
+         local idir = dir  + ((i-1)/n - 0.5)*fan
+         po:munition( p, THORN, attacker, idir, pos )
+      end
+      mem.dmg = mem.dmg - TRIGGER*n
    end
 end
