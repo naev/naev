@@ -1,6 +1,7 @@
 #include "lib/sdf.glsl"
 #define CELLULAR_NOISE_ACCURATE
 #include "lib/cellular.glsl"
+#include "lib/gamma.glsl"
 
 //uniform vec3 dimensions;
 
@@ -16,6 +17,7 @@ const vec3 COLOUR_FADE = GAMMA_TO_LINEAR_VEC3(0.9, 0.5, 0.05 );
 
 void main (void)
 {
+   vec2 uv = pos;
    float fade = min(u_time*6.0,u_fade);
    vec2 c = cellular( vec3( 4.0*uv, 100.*u_r) );
    float n = (c.y-c.x);
