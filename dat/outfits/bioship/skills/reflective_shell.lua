@@ -7,8 +7,14 @@ local THORN = outfit.get("Bioship Thorn")
 local TRIGGER = 25
 
 function descextra()
-   return fmt.f(_([[Reflect {reflect}% of damage back to attackers. Reflected damage is affected by launcher damage bonus.]]), {
-      reflect = REFLECT*100,
+   local s = THORN:specificstats()
+   return fmt.f(_([[Reduces damage taken by {reflect}%. Every {trigger} damage taken, a seeking thorn is launched at the attacker dealing {damage} damage with {penetration}% penetration, and applying plasma burn for an extra {dot:.1f} damage over {duration} seconds.]]), {
+      reflect  = REFLECT*100,
+      damage   = s.damage,
+      penetration = s.penetration*100,
+      trigger  = TRIGGER,
+      dot      = s.damage,
+      duration = 5,
    })
 end
 
@@ -27,7 +33,6 @@ function onhit( p, po, armour, _shield, attacker, pos )
 
    -- Accumulate damage and break off
    mem.dmg = mem.dmg+dmg
-   print( mem.dmg, p:shipstat("absorb") )
    if mem.dmg>TRIGGER and attacker and attacker:exists() then
       --attacker:damage( dmg, nil, 100, nil, p )
       local dir = (attacker:pos()-p:pos()):angle()
