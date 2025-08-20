@@ -1903,12 +1903,11 @@ struct OnhitData {
    double       armour;
    double       shield;
    unsigned int attacker;
+   const vec2  *pos;
 };
 static void outfitLOnhit( const Pilot *pilot, PilotOutfitSlot *po,
                           const void *data )
 {
-   double                  armour, shield;
-   unsigned int            attacker;
    const struct OnhitData *odat;
    int                     oldmem;
    const Outfit           *o = po->outfit;
@@ -1919,10 +1918,7 @@ static void outfitLOnhit( const Pilot *pilot, PilotOutfitSlot *po,
    nlua_env *env = outfit_luaEnv( o );
 
    /* Data. */
-   odat     = (const struct OnhitData *)data;
-   armour   = odat->armour;
-   shield   = odat->shield;
-   attacker = odat->attacker;
+   odat = (const struct OnhitData *)data;
 
    /* Set the memory. */
    oldmem = pilot_outfitLmem( po, env );
@@ -1931,10 +1927,11 @@ static void outfitLOnhit( const Pilot *pilot, PilotOutfitSlot *po,
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, outfit_luaOnhit( o ) ); /* f */
    lua_pushpilot( naevL, pilot->id );                             /* f, p */
    lua_pushpilotoutfit( naevL, po );                              /* f, p, po */
-   lua_pushnumber( naevL, armour );  /* f, p, po, a */
-   lua_pushnumber( naevL, shield );  /* f, p, po, a, s */
-   lua_pushpilot( naevL, attacker ); /* f, p, po, a, s, attacker */
-   if ( nlua_pcall( env, 5, 0 ) ) {  /* */
+   lua_pushnumber( naevL, odat->armour );  /* f, p, po, a */
+   lua_pushnumber( naevL, odat->shield );  /* f, p, po, a, s */
+   lua_pushpilot( naevL, odat->attacker ); /* f, p, po, a, s, attacker */
+   lua_pushvector( naevL, *odat->pos );
+   if ( nlua_pcall( env, 6, 0 ) ) { /* */
       outfitLRunWarning( pilot, o, "onhit", lua_tostring( naevL, -1 ) );
       lua_pop( naevL, 1 );
    }
@@ -1947,12 +1944,13 @@ static void outfitLOnhit( const Pilot *pilot, PilotOutfitSlot *po,
  *    @param armour Armour damage taken by pilot.
  *    @param shield Shield damage taken by pilot.
  *    @param attacker The attacker that hit the pilot.
+ *    @param pos Position of the hit.
  */
 void pilot_outfitLOnhit( Pilot *pilot, double armour, double shield,
-                         unsigned int attacker )
+                         unsigned int attacker, const vec2 *pos )
 {
    const struct OnhitData data = {
-      .armour = armour, .shield = shield, .attacker = attacker };
+      .armour = armour, .shield = shield, .attacker = attacker, .pos = pos };
    pilot_outfitLRun( pilot, outfitLOnhit, &data );
 }
 
