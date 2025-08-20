@@ -25,9 +25,13 @@ skills.set.bite = {
       desc = function( p )
          local dmg = 10*math.sqrt(p:mass())
          return fmt.f(_("The ship will lunge at the target enemy and take a huge bite out of it. +{accel_mod}% accel, +{speed_mod}% speed and +{absorb}% absorb for {duration} seconds or until target ship is bitten. This ship will do {dmg} damage with its current mass ({mass}). Has a {cooldown} second cooldown period."),{
-            dmg=fmt.number(dmg), accel_mod=constants.BITE_ACCEL_MOD,
+            dmg = fmt.number(dmg),
+            accel_mod=constants.BITE_ACCEL_MOD,
             speed_mod=constants.BITE_SPEED_MOD,
-            absorb=30, duration=3, mass=fmt.tonnes_short(p:mass()), cooldown=15,
+            absorb=30,
+            duration=3,
+            mass=fmt.tonnes_short(p:mass()),
+            cooldown=15,
          })
       end,
       icon = "fangs.webp",
@@ -203,7 +207,18 @@ skills.set.health = {
       name = _("Reflective Shell"),
       tier = 5,
       requires = { "health4" },
-      desc = _("Reflects 5% of damage back to attackers. Reflected damage is affected by turret damage bonus."),
+      desc = function ()
+         local THORN = outfit.get("Bioship Thorn")
+         local s = THORN:specificstats()
+         return fmt.f(_([[Reduces damage taken by {reflect}%. Every {trigger} damage taken, a seeking thorn is launched at the attacker dealing {damage} damage with {penetration}% penetration, and applying plasma burn for an extra {dot:.1f} damage over {duration} seconds.]]), {
+            reflect  = 10,
+            damage   = s.damage,
+            penetration = s.penetration*100,
+            trigger  = 25,
+            dot      = s.damage,
+            duration = 5,
+         })
+      end,
       outfit = "Reflective Shell",
       icon = "spiked-shell.webp",
    },
