@@ -20,9 +20,7 @@ impl ShaderType {
 }
 
 pub struct Shader {
-    pub name: String,
-    pub vertname: String,
-    pub fragname: String,
+    pub name: Option<String>,
     pub program: glow::Program,
 }
 impl Drop for Shader {
@@ -31,60 +29,6 @@ impl Drop for Shader {
     }
 }
 impl Shader {
-    fn compile(
-        gl: &glow::Context,
-        shadertype: ShaderType,
-        name: &str,
-        source: &str,
-    ) -> Result<glow::Shader> {
-        let shader = unsafe {
-            gl.create_shader(shadertype.to_gl())
-                .map_err(|e| anyhow::anyhow!(e))?
-        };
-        unsafe {
-            gl.shader_source(shader, source);
-            gl.compile_shader(shader);
-            if gl.supports_debug() {
-                gl.object_label(glow::SHADER, shader.0.into(), Some(name));
-            }
-        }
-        if unsafe { !gl.get_shader_compile_status(shader) } {
-            let mut buf = String::new();
-            for (i, line) in source.lines().enumerate() {
-                buf.push_str(&format!("{i:04}: {line}"));
-            }
-            let slog = unsafe { gl.get_shader_info_log(shader) };
-            warn!("{buf}\nFailed to compile shader '{name}': [[\n{slog}\n]]");
-            return Err(anyhow::anyhow!("failed to compile shader program"));
-        }
-        Ok(shader)
-    }
-
-    fn link(
-        gl: &glow::Context,
-        name: &str,
-        vertshader: glow::Shader,
-        fragshader: glow::Shader,
-    ) -> Result<glow::Program> {
-        let program = unsafe { gl.create_program().map_err(|e| anyhow::anyhow!(e))? };
-        unsafe {
-            gl.attach_shader(program, vertshader);
-            gl.attach_shader(program, fragshader);
-            gl.link_program(program);
-            gl.delete_shader(vertshader);
-            gl.delete_shader(fragshader);
-            if gl.supports_debug() {
-                gl.object_label(glow::PROGRAM, program.0.into(), Some(name));
-            }
-        }
-        if unsafe { !gl.get_program_link_status(program) } {
-            let slog = unsafe { gl.get_program_info_log(program) };
-            warn!("Failed to link shader: [[\n{slog}\n]]");
-            return Err(anyhow::anyhow!("failed to link shader program"));
-        }
-        Ok(program)
-    }
-
     pub fn use_program(&self, gl: &glow::Context) {
         unsafe {
             gl.use_program(Some(self.program));
@@ -95,7 +39,11 @@ impl Shader {
         match unsafe { gl.get_attrib_location(self.program, name) } {
             Some(idx) => Ok(idx),
             None => {
-                anyhow::bail!("Shader '{}' does not have '{}' attrib!", self.name, name);
+                anyhow::bail!(
+                    "Shader '{}' does not have '{}' attrib!",
+                    self.name.as_deref().unwrap_or("UNKNOWN"),
+                    name
+                );
             }
         }
     }
@@ -106,7 +54,7 @@ impl Shader {
             None => {
                 anyhow::bail!(
                     "Shader '{}' does not have '{}' uniform block!",
-                    self.name,
+                    self.name.as_deref().unwrap_or("UNKOWN"),
                     name
                 );
             }
@@ -169,11 +117,121 @@ impl ShaderSource {
     }
 }
 
+enum ProgramSource {
+    Glsl(ShaderSource, ShaderSource),
+    GlslSingle(ShaderSource),
+    //Wgsl( ShaderSource ),
+}
+impl ProgramSource {
+    fn compile(
+        gl: &glow::Context,
+        shadertype: ShaderType,
+        name: &str,
+        source: &str,
+    ) -> Result<glow::Shader> {
+        let shader = unsafe {
+            gl.create_shader(shadertype.to_gl())
+                .map_err(|e| anyhow::anyhow!(e))?
+        };
+        unsafe {
+            gl.shader_source(shader, source);
+            gl.compile_shader(shader);
+            if gl.supports_debug() {
+                gl.object_label(glow::SHADER, shader.0.into(), Some(name));
+            }
+        }
+        if unsafe { !gl.get_shader_compile_status(shader) } {
+            let mut buf = String::new();
+            for (i, line) in source.lines().enumerate() {
+                buf.push_str(&format!("{i:04}: {line}"));
+            }
+            let slog = unsafe { gl.get_shader_info_log(shader) };
+            warn!("{buf}\nFailed to compile shader '{name}': [[\n{slog}\n]]");
+            return Err(anyhow::anyhow!("failed to compile shader program"));
+        }
+        Ok(shader)
+    }
+
+    fn link(
+        gl: &glow::Context,
+        name: &str,
+        vertshader: glow::Shader,
+        fragshader: glow::Shader,
+    ) -> Result<glow::Program> {
+        let program = unsafe { gl.create_program().map_err(|e| anyhow::anyhow!(e))? };
+        unsafe {
+            gl.attach_shader(program, vertshader);
+            gl.attach_shader(program, fragshader);
+            gl.link_program(program);
+            gl.delete_shader(vertshader);
+            gl.delete_shader(fragshader);
+            if gl.supports_debug() {
+                gl.object_label(glow::PROGRAM, program.0.into(), Some(name));
+            }
+        }
+        if unsafe { !gl.get_program_link_status(program) } {
+            let slog = unsafe { gl.get_program_info_log(program) };
+            warn!("Failed to link shader: [[\n{slog}\n]]");
+            return Err(anyhow::anyhow!("failed to link shader program"));
+        }
+        Ok(program)
+    }
+
+    pub fn build_glsl(
+        gl: &glow::Context,
+        name: Option<&str>,
+        prepend: Option<&str>,
+        vert: &ShaderSource,
+        frag: &ShaderSource,
+    ) -> Result<glow::Program> {
+        let mut vertdata = ShaderSource::to_string(&vert)?;
+        let mut fragdata = if vert == frag {
+            vertdata.clone()
+        } else {
+            ShaderSource::to_string(&frag)?
+        };
+
+        let glsl = unsafe { naevc::gl_screen.glsl };
+
+        if let Some(prepend) = prepend {
+            vertdata.insert_str(0, &prepend);
+            fragdata.insert_str(0, &prepend);
+        }
+        vertdata.insert_str(0, "#define VERT 1\n");
+        fragdata.insert_str(0, "#define FRAG 1\n");
+        let version= format!("#version {glsl}\n\n#define GLSL_VERSION {glsl}\n#define HAS_GL_ARB_shader_subroutine 1\n");
+        vertdata.insert_str(0, &version);
+        fragdata.insert_str(0, &version);
+
+        let vertname = vert.name();
+        let fragname = frag.name();
+
+        let vertshader = Self::compile(gl, ShaderType::Vertex, &vertname, &vertdata)?;
+        let fragshader = Self::compile(gl, ShaderType::Fragment, &fragname, &fragdata)?;
+        let name = match name {
+            Some(name) => name,
+            None => &format!("{}-{}", &vertname, &fragname),
+        };
+        Self::link(gl, &name, vertshader, fragshader)
+    }
+
+    pub fn build_gl(
+        self,
+        gl: &glow::Context,
+        name: Option<&str>,
+        prepend: Option<&str>,
+    ) -> Result<glow::Program> {
+        match self {
+            Self::Glsl(vert, frag) => ProgramSource::build_glsl(gl, name, prepend, &vert, &frag),
+            Self::GlslSingle(src) => ProgramSource::build_glsl(gl, name, prepend, &src, &src),
+        }
+    }
+}
+
 pub struct ProgramBuilder {
     name: Option<String>,
-    vert: Option<ShaderSource>,
-    frag: Option<ShaderSource>,
-    prepend: String,
+    source: Option<ProgramSource>,
+    prepend: Option<String>,
     samplers: Vec<(String, i32)>,
     uniform_buffers: Vec<(String, u32)>,
 }
@@ -181,34 +239,38 @@ impl ProgramBuilder {
     pub fn new(name: Option<&str>) -> Self {
         ProgramBuilder {
             name: name.map(String::from),
-            vert: None,
-            frag: None,
-            prepend: Default::default(),
+            source: None,
+            prepend: None,
             samplers: Vec::new(),
             uniform_buffers: Vec::new(),
         }
     }
 
     pub fn vert_frag_file(mut self, vertpath: &str, fragpath: &str) -> Self {
-        self.vert = Some(ShaderSource::Path(String::from(vertpath)));
-        self.frag = Some(ShaderSource::Path(String::from(fragpath)));
+        self.source = Some(ProgramSource::Glsl(
+            ShaderSource::Path(String::from(vertpath)),
+            ShaderSource::Path(String::from(fragpath)),
+        ));
         self
     }
 
     pub fn vert_frag_file_single(mut self, path: &str) -> Self {
-        self.vert = Some(ShaderSource::Path(String::from(path)));
-        self.frag = Some(ShaderSource::Path(String::from(path)));
+        self.source = Some(ProgramSource::GlslSingle(ShaderSource::Path(String::from(
+            path,
+        ))));
         self
     }
 
     pub fn vert_frag_data(mut self, vertdata: &str, fragdata: &str) -> Self {
-        self.vert = Some(ShaderSource::Data(String::from(vertdata)));
-        self.frag = Some(ShaderSource::Data(String::from(fragdata)));
+        self.source = Some(ProgramSource::Glsl(
+            ShaderSource::Data(String::from(vertdata)),
+            ShaderSource::Data(String::from(fragdata)),
+        ));
         self
     }
 
     pub fn prepend(mut self, data: &str) -> Self {
-        self.prepend = String::from(data);
+        self.prepend = Some(String::from(data));
         self
     }
 
@@ -223,40 +285,10 @@ impl ProgramBuilder {
     }
 
     pub fn build(self, gl: &glow::Context) -> Result<Shader> {
-        let vert = self.vert.ok_or(anyhow::anyhow!("invalid vertex shader"))?;
-        let frag = self
-            .frag
-            .ok_or(anyhow::anyhow!("invalid fragment shader"))?;
-        let mut vertdata = ShaderSource::to_string(&vert)?;
-        let mut fragdata = if vert == frag {
-            vertdata.clone()
-        } else {
-            ShaderSource::to_string(&frag)?
-        };
-
-        let glsl = unsafe { naevc::gl_screen.glsl };
-        let mut prepend = format!("#version {glsl}\n\n#define GLSL_VERSION {glsl}\n");
-        prepend.push_str("#define HAS_GL_ARB_shader_subroutine 1\n");
-
-        if !self.prepend.is_empty() {
-            vertdata.insert_str(0, &self.prepend);
-            fragdata.insert_str(0, &self.prepend);
-        }
-        vertdata.insert_str(0, "#define VERT 1\n");
-        fragdata.insert_str(0, "#define FRAG 1\n");
-        vertdata.insert_str(0, &prepend);
-        fragdata.insert_str(0, &prepend);
-
-        let vertname = vert.name();
-        let fragname = frag.name();
-
-        let vertshader = Shader::compile(gl, ShaderType::Vertex, &vertname, &vertdata)?;
-        let fragshader = Shader::compile(gl, ShaderType::Fragment, &fragname, &fragdata)?;
-        let name = match self.name {
-            Some(name) => name,
-            None => format!("{}-{}", &vertname, &fragname),
-        };
-        let program = Shader::link(gl, &name, vertshader, fragshader)?;
+        let program = match self.source {
+            Some(src) => src.build_gl(gl, self.name.as_deref(), self.prepend.as_deref()),
+            None => anyhow::bail!("source not specified for shader!"),
+        }?;
 
         unsafe {
             gl.use_program(Some(program));
@@ -266,7 +298,11 @@ impl ProgramBuilder {
                         gl.uniform_1_i32(Some(&uniformid), idx);
                     }
                     None => {
-                        warn!("shader '{}' does not have sampler '{}'", &name, samplername);
+                        warn!(
+                            "shader '{}' does not have sampler '{}'",
+                            self.name.as_deref().unwrap_or("UNKNOWN"),
+                            samplername
+                        );
                     }
                 }
             }
@@ -278,7 +314,8 @@ impl ProgramBuilder {
                     None => {
                         warn!(
                             "shader '{}' does not have uniform block '{}'",
-                            &name, uniformname
+                            self.name.as_deref().unwrap_or("UNKNOWN"),
+                            uniformname
                         );
                     }
                 }
@@ -287,9 +324,7 @@ impl ProgramBuilder {
         }
 
         Ok(Shader {
-            name,
-            vertname,
-            fragname,
+            name: self.name,
             program,
         })
     }
