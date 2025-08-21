@@ -233,6 +233,7 @@ impl ProgramSource {
         use naga::back::glsl;
         let options = glsl::Options {
             version: naga::back::glsl::Version::Desktop(330),
+            writer_flags: glsl::WriterFlags::empty(),
             ..Default::default()
         };
 
