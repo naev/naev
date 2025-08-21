@@ -62,6 +62,7 @@ impl Shader {
     }
 }
 
+#[derive(Debug)]
 enum Binding {
     Sampler(String, i32),
     //Uniform( String, i32 ),
@@ -271,7 +272,8 @@ impl ProgramSource {
     fn bind_wgsl(
         gl: &glow::Context,
         module: &naga::ir::Module,
-        refl: &naga::back::glsl::ReflectionInfo,
+        vertrefl: &naga::back::glsl::ReflectionInfo,
+        fragrefl: &naga::back::glsl::ReflectionInfo,
         program: glow::Program,
         name: &str,
         bindings: &[Binding],
@@ -280,22 +282,37 @@ impl ProgramSource {
             gl.use_program(Some(program));
         }
         for b in bindings {
+            let mut matched = false;
             match b {
                 Binding::UniformBlock(bname, bidx) => {
-                    for v in refl.uniforms.iter() {
+                    for v in vertrefl.uniforms.iter().chain(fragrefl.uniforms.iter()) {
                         let gv = &module.global_variables[*v.0];
                         if let Some(varname) = &gv.name {
                             if bname == varname {
-                                dbg!(&v.1);
                                 Binding::UniformBlock(v.1.clone(), *bidx).apply(gl, program, name);
-                                continue;
+                                matched = true;
                             }
                         }
                     }
                 }
-                _ => todo!(),
+                Binding::Sampler(bname, bidx) => {
+                    // Assume vertex shader doesn't do texture mapping
+                    for v in fragrefl.texture_mapping.iter() {
+                        if let Some(sampler) = v.1.sampler {
+                            let gv = &module.global_variables[sampler];
+                            if let Some(varname) = &gv.name {
+                                if bname == varname {
+                                    Binding::Sampler(v.0.clone(), *bidx).apply(gl, program, name);
+                                    matched = true;
+                                }
+                            }
+                        }
+                    }
+                }
             }
-            //b.apply( gl, program, name );
+            if !matched {
+                warn!("unmatched binding '{}'", b.name());
+            }
         }
         unsafe {
             gl.use_program(None);
@@ -379,8 +396,7 @@ impl ProgramSource {
         )?;
         let program = Self::link(gl, &name, vertshader, fragshader)?;
 
-        Self::bind_wgsl(gl, &module, &vertrefl, program, name, bindings)?;
-        Self::bind_wgsl(gl, &module, &fragrefl, program, name, bindings)?;
+        Self::bind_wgsl(gl, &module, &vertrefl, &fragrefl, program, name, bindings)?;
 
         Ok(program)
     }
