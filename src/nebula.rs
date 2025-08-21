@@ -12,7 +12,7 @@ use renderer::buffer::{
     Buffer, BufferBuilder, BufferTarget, BufferUsage, VertexArray, VertexArrayBuffer,
     VertexArrayBuilder,
 };
-use renderer::shader::{Shader, ShaderBuilder};
+use renderer::shader::{ProgramBuilder, Shader};
 use renderer::texture::{Framebuffer, FramebufferBuilder};
 use renderer::Uniform;
 
@@ -198,17 +198,17 @@ impl NebulaData {
             .data(&uniform.buffer()?)
             .build(gl)?;
 
-        let shader_bg = ShaderBuilder::new(Some("Nebula Background Shader"))
+        let shader_bg = ProgramBuilder::new(Some("Nebula Background Shader"))
             .uniform_buffer("NebulaData", 0)
             .vert_file("nebula.vert")
             .frag_file("nebula_background.frag")
             .build(gl)?;
-        let shader_overlay = ShaderBuilder::new(Some("Nebula Overlay Shader"))
+        let shader_overlay = ProgramBuilder::new(Some("Nebula Overlay Shader"))
             .uniform_buffer("NebulaData", 0)
             .vert_file("nebula.vert")
             .frag_file("nebula_overlay.frag")
             .build(gl)?;
-        let shader_puff = ShaderBuilder::new(Some("Nebula Puff Shader"))
+        let shader_puff = ProgramBuilder::new(Some("Nebula Puff Shader"))
             .uniform_buffer("PuffData", 0)
             .prepend(&format!("const float PUFF_BUFFER = {PUFF_BUFFER:.1};\n"))
             .vert_file("nebula_puff.vert")

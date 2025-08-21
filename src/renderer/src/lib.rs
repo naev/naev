@@ -18,7 +18,7 @@ use crate::buffer::{
     Buffer, BufferBuilder, BufferTarget, BufferUsage, VertexArray, VertexArrayBuffer,
     VertexArrayBuilder,
 };
-use crate::shader::{Shader, ShaderBuilder};
+use crate::shader::{ProgramBuilder, Shader};
 use log::{debug, info, warn, warn_err};
 
 const MIN_WIDTH: u32 = 1280;
@@ -669,7 +669,7 @@ impl Context {
 
         // Initialize some useful globals
         // The texture shader
-        let program_texture = ShaderBuilder::new(Some("Texture Shader"))
+        let program_texture = ProgramBuilder::new(Some("Texture Shader"))
             .uniform_buffer("TextureData", 0)
             .vert_frag_file("rust_texture.glsl")
             .sampler("sampler", 0)
@@ -680,7 +680,7 @@ impl Context {
             .data(&TextureUniform::default().buffer()?)
             .build(&gl)?;
         // SDF texture shader
-        let program_texture_sdf = ShaderBuilder::new(Some("SDF Texture Shader"))
+        let program_texture_sdf = ProgramBuilder::new(Some("SDF Texture Shader"))
             .uniform_buffer("TextureData", 0)
             .uniform_buffer("SDFData", 1)
             .vert_frag_file("rust_texture_sdf.glsl")
@@ -692,7 +692,7 @@ impl Context {
             .data(&TextureSDFUniform::default().buffer()?)
             .build(&gl)?;
         // Downscaling texture shader
-        let program_texture_scale = ShaderBuilder::new(Some("Scaling Texture Shader"))
+        let program_texture_scale = ProgramBuilder::new(Some("Scaling Texture Shader"))
             .uniform_buffer("TextureData", 0)
             .vert_frag_file("rust_magic.glsl")
             .sampler("sampler", 0)
@@ -703,7 +703,7 @@ impl Context {
             .data(&TextureScaleUniform::default().buffer()?)
             .build(&gl)?;
         // The solid shader
-        let program_solid = ShaderBuilder::new(Some("Solid Shader"))
+        let program_solid = ProgramBuilder::new(Some("Solid Shader"))
             .uniform_buffer("SolidData", 0)
             .vert_frag_file("rust_solid.glsl")
             .build(&gl)?;

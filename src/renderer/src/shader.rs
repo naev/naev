@@ -172,7 +172,7 @@ impl ShaderSource {
     }
 }
 
-pub struct ShaderBuilder {
+pub struct ProgramBuilder {
     name: Option<String>,
     vert: ShaderSource,
     frag: ShaderSource,
@@ -180,9 +180,9 @@ pub struct ShaderBuilder {
     samplers: Vec<(String, i32)>,
     uniform_buffers: Vec<(String, u32)>,
 }
-impl ShaderBuilder {
+impl ProgramBuilder {
     pub fn new(name: Option<&str>) -> Self {
-        ShaderBuilder {
+        ProgramBuilder {
             name: name.map(String::from),
             vert: ShaderSource::None,
             frag: ShaderSource::None,
@@ -311,7 +311,7 @@ pub extern "C" fn gl_program_backend(
     let ctx = Context::get(); /* Lock early. */
     let vert = unsafe { CStr::from_ptr(cvert) };
     let frag = unsafe { CStr::from_ptr(cfrag) };
-    let mut sb = ShaderBuilder::new(None)
+    let mut sb = ProgramBuilder::new(None)
         .vert_file(&vert.to_string_lossy())
         .frag_file(&frag.to_string_lossy());
 
@@ -346,7 +346,7 @@ pub extern "C" fn gl_program_vert_frag_string(
         std::str::from_utf8(unsafe { std::slice::from_raw_parts(cfrag as *const u8, frag_size) })
             .unwrap();
     let shader = ManuallyDrop::new(
-        match ShaderBuilder::new(None)
+        match ProgramBuilder::new(None)
             .vert_data(vertdata)
             .frag_data(fragdata)
             .build(&ctx.gl)

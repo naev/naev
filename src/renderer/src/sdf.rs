@@ -1,5 +1,5 @@
 use crate::{
-    Buffer, BufferBuilder, BufferTarget, BufferUsage, Context, Shader, ShaderBuilder,
+    Buffer, BufferBuilder, BufferTarget, BufferUsage, Context, ProgramBuilder, Shader,
     TextureUniform, Uniform, VertexArray,
 };
 use anyhow::Result;
@@ -38,7 +38,7 @@ pub struct SdfRenderer {
 }
 impl SdfRenderer {
     pub fn new(gl: &glow::Context) -> Result<Self> {
-        let program_cross = ShaderBuilder::new(Some("Cross Shader"))
+        let program_cross = ProgramBuilder::new(Some("Cross Shader"))
             .uniform_buffer("CrossData", 0)
             .vert_frag_file("rust_cross.glsl")
             .build(gl)?;

@@ -13,7 +13,7 @@ use renderer::buffer::{
     Buffer, BufferBuilder, BufferTarget, BufferUsage, VertexArray, VertexArrayBuffer,
     VertexArrayBuilder,
 };
-use renderer::shader::{Shader, ShaderBuilder};
+use renderer::shader::{ProgramBuilder, Shader};
 use renderer::texture;
 use renderer::texture::{
     Framebuffer, FramebufferBuilder, FramebufferTarget, Texture, TextureBuilder,
@@ -215,7 +215,7 @@ impl ModelShader {
     pub fn new(ctx: &ContextWrapper) -> Result<Self> {
         let lctx = ctx.lock();
         let gl = &lctx.gl;
-        let mut shaderbuilder = ShaderBuilder::new(Some("PBR Shader"))
+        let mut shaderbuilder = ProgramBuilder::new(Some("PBR Shader"))
             .vert_file("material_pbr.vert")
             .frag_file("material_pbr.frag")
             .sampler("baseColour_tex", 0)
@@ -268,7 +268,7 @@ impl ShadowShader {
     pub fn new(ctx: &ContextWrapper) -> Result<Self> {
         let lctx = ctx.lock();
         let gl = &lctx.gl;
-        let shader = ShaderBuilder::new(Some("Shadow Shader"))
+        let shader = ProgramBuilder::new(Some("Shadow Shader"))
             .uniform_buffer("Shadow", Self::U_SHADOW)
             .vert_frag_file("rust_shadow.glsl")
             .build(gl)?;
@@ -1158,12 +1158,12 @@ impl Common {
         // Blur Shaders
         let lctx = ctx.lock();
         let gl = &lctx.gl;
-        let shader_blur_x = ShaderBuilder::new(Some("Blur X Shader"))
+        let shader_blur_x = ProgramBuilder::new(Some("Blur X Shader"))
             .sampler("sampler", 0)
             .vert_file("blur.vert")
             .frag_file("blurX.frag")
             .build(gl)?;
-        let shader_blur_y = ShaderBuilder::new(Some("Blur Y Shader"))
+        let shader_blur_y = ProgramBuilder::new(Some("Blur Y Shader"))
             .sampler("sampler", 0)
             .vert_file("blur.vert")
             .frag_file("blurY.frag")
