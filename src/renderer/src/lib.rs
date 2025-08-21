@@ -670,9 +670,9 @@ impl Context {
         // Initialize some useful globals
         // The texture shader
         let program_texture = ProgramBuilder::new(Some("Texture Shader"))
-            .uniform_buffer("TextureData", 0)
-            .vert_frag_file_single("rust_texture.glsl")
-            .sampler("sampler", 0)
+            .uniform_buffer("texturedata", 0)
+            .wgsl_file("texture.wgsl")
+            .sampler("texsampler", 0)
             .build(&gl)?;
         let buffer_texture = BufferBuilder::new(Some("Texture Buffer"))
             .target(BufferTarget::Uniform)
