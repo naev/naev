@@ -120,7 +120,7 @@ impl ShaderSource {
 enum ProgramSource {
     Glsl(ShaderSource, ShaderSource),
     GlslSingle(ShaderSource),
-    //Wgsl( ShaderSource ),
+    Wgsl(ShaderSource),
 }
 impl ProgramSource {
     fn compile(
@@ -177,7 +177,7 @@ impl ProgramSource {
         Ok(program)
     }
 
-    pub fn build_glsl(
+    fn build_glsl(
         gl: &glow::Context,
         name: Option<&str>,
         prepend: Option<&str>,
@@ -215,6 +215,80 @@ impl ProgramSource {
         Self::link(gl, &name, vertshader, fragshader)
     }
 
+    fn build_wgsl(
+        gl: &glow::Context,
+        name: Option<&str>,
+        prepend: Option<&str>,
+        source: &ShaderSource,
+    ) -> Result<glow::Program> {
+        let mut data = ShaderSource::to_string(&source)?;
+        if let Some(prepend) = prepend {
+            data.insert_str(0, &prepend);
+        };
+        let name = match name {
+            Some(n) => n,
+            None => "UNKNOWN",
+        };
+
+        use naga::back::glsl;
+        let options = glsl::Options {
+            version: naga::back::glsl::Version::Desktop(330),
+            ..Default::default()
+        };
+
+        let module: naga::Module = naga::front::wgsl::parse_str(&data)?;
+        let module_info: naga::valid::ModuleInfo = naga::valid::Validator::new(
+            naga::valid::ValidationFlags::all(),
+            naga::valid::Capabilities::all(),
+        )
+        .subgroup_stages(naga::valid::ShaderStages::all())
+        .subgroup_operations(naga::valid::SubgroupOperationSet::all())
+        .validate(&module)?;
+
+        let mut vertdata = String::new();
+        glsl::Writer::new(
+            &mut vertdata,
+            &module,
+            &module_info,
+            &options,
+            &glsl::PipelineOptions {
+                entry_point: "main_vs".into(),
+                shader_stage: naga::ShaderStage::Vertex,
+                multiview: None,
+            },
+            naga::proc::BoundsCheckPolicies::default(),
+        )?
+        .write()?;
+        let vertshader = Self::compile(
+            gl,
+            ShaderType::Vertex,
+            &format!("{} - Vertex", name),
+            &vertdata,
+        )?;
+
+        let mut fragdata = String::new();
+        glsl::Writer::new(
+            &mut fragdata,
+            &module,
+            &module_info,
+            &options,
+            &glsl::PipelineOptions {
+                entry_point: "main_fs".into(),
+                shader_stage: naga::ShaderStage::Fragment,
+                multiview: None,
+            },
+            naga::proc::BoundsCheckPolicies::default(),
+        )?
+        .write()?;
+        let fragshader = Self::compile(
+            gl,
+            ShaderType::Fragment,
+            &format!("{} - Fragment", name),
+            &fragdata,
+        )?;
+        Self::link(gl, &name, vertshader, fragshader)
+    }
+
     pub fn build_gl(
         self,
         gl: &glow::Context,
@@ -222,8 +296,9 @@ impl ProgramSource {
         prepend: Option<&str>,
     ) -> Result<glow::Program> {
         match self {
-            Self::Glsl(vert, frag) => ProgramSource::build_glsl(gl, name, prepend, &vert, &frag),
-            Self::GlslSingle(src) => ProgramSource::build_glsl(gl, name, prepend, &src, &src),
+            Self::Glsl(vert, frag) => Self::build_glsl(gl, name, prepend, &vert, &frag),
+            Self::GlslSingle(src) => Self::build_glsl(gl, name, prepend, &src, &src),
+            Self::Wgsl(src) => Self::build_wgsl(gl, name, prepend, &src),
         }
     }
 }
@@ -266,6 +341,11 @@ impl ProgramBuilder {
             ShaderSource::Data(String::from(vertdata)),
             ShaderSource::Data(String::from(fragdata)),
         ));
+        self
+    }
+
+    pub fn wgsl_file(mut self, path: &str) -> Self {
+        self.source = Some(ProgramSource::Wgsl(ShaderSource::Path(String::from(path))));
         self
     }
 
