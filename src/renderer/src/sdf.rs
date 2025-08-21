@@ -39,7 +39,7 @@ pub struct SdfRenderer {
 impl SdfRenderer {
     pub fn new(gl: &glow::Context) -> Result<Self> {
         let program_cross = ProgramBuilder::new(Some("Cross Shader"))
-            //.uniform_buffer("CrossData", 0)
+            .uniform_buffer("crossdata", 0)
             .wgsl_file("cross.wgsl")
             .build(gl)?;
         let buffer_cross = BufferBuilder::new(Some("Cross Buffer"))

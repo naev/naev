@@ -62,6 +62,48 @@ impl Shader {
     }
 }
 
+enum Binding {
+    Sampler(String, i32),
+    //Uniform( String, i32 ),
+    UniformBlock(String, u32),
+}
+impl Binding {
+    fn apply(&self, gl: &glow::Context, program: glow::Program, name: &str) {
+        match self {
+            Self::Sampler(samplername, idx) => unsafe {
+                match gl.get_uniform_location(program, &samplername) {
+                    Some(uniformid) => {
+                        gl.uniform_1_i32(Some(&uniformid), *idx);
+                    }
+                    None => {
+                        warn!("shader '{}' does not have sampler '{}'", name, samplername);
+                    }
+                }
+            },
+            Self::UniformBlock(uniformname, idx) => unsafe {
+                match gl.get_uniform_block_index(program, &uniformname) {
+                    Some(uniformid) => {
+                        gl.uniform_block_binding(program, uniformid, *idx);
+                    }
+                    None => {
+                        warn!(
+                            "shader '{}' does not have uniform block '{}'",
+                            name, uniformname
+                        );
+                    }
+                }
+            },
+        }
+    }
+
+    fn name(&self) -> &str {
+        match self {
+            Self::Sampler(s, _) => &s,
+            Self::UniformBlock(s, _) => &s,
+        }
+    }
+}
+
 #[derive(PartialEq)]
 enum ShaderSource {
     Path(String),
@@ -183,6 +225,7 @@ impl ProgramSource {
         prepend: Option<&str>,
         vert: &ShaderSource,
         frag: &ShaderSource,
+        bindings: &[Binding],
     ) -> Result<glow::Program> {
         let mut vertdata = ShaderSource::to_string(&vert)?;
         let mut fragdata = if vert == frag {
@@ -212,7 +255,53 @@ impl ProgramSource {
             Some(name) => name,
             None => &format!("{}-{}", &vertname, &fragname),
         };
-        Self::link(gl, &name, vertshader, fragshader)
+        let program = Self::link(gl, &name, vertshader, fragshader)?;
+
+        unsafe {
+            gl.use_program(Some(program));
+            for b in bindings {
+                b.apply(gl, program, name);
+            }
+            gl.use_program(None);
+        }
+
+        Ok(program)
+    }
+
+    fn bind_wgsl(
+        gl: &glow::Context,
+        module: &naga::ir::Module,
+        refl: &naga::back::glsl::ReflectionInfo,
+        program: glow::Program,
+        name: &str,
+        bindings: &[Binding],
+    ) -> Result<()> {
+        unsafe {
+            gl.use_program(Some(program));
+        }
+        for b in bindings {
+            match b {
+                Binding::UniformBlock(bname, bidx) => {
+                    for v in refl.uniforms.iter() {
+                        let gv = &module.global_variables[*v.0];
+                        if let Some(varname) = &gv.name {
+                            if bname == varname {
+                                dbg!(&v.1);
+                                Binding::UniformBlock(v.1.clone(), *bidx).apply(gl, program, name);
+                                continue;
+                            }
+                        }
+                    }
+                }
+                _ => todo!(),
+            }
+            //b.apply( gl, program, name );
+        }
+        unsafe {
+            gl.use_program(None);
+        }
+
+        Ok(())
     }
 
     fn build_wgsl(
@@ -220,6 +309,7 @@ impl ProgramSource {
         name: Option<&str>,
         prepend: Option<&str>,
         source: &ShaderSource,
+        bindings: &[Binding],
     ) -> Result<glow::Program> {
         let mut data = ShaderSource::to_string(&source)?;
         if let Some(prepend) = prepend {
@@ -247,7 +337,7 @@ impl ProgramSource {
         .validate(&module)?;
 
         let mut vertdata = String::new();
-        glsl::Writer::new(
+        let vertrefl = glsl::Writer::new(
             &mut vertdata,
             &module,
             &module_info,
@@ -268,7 +358,7 @@ impl ProgramSource {
         )?;
 
         let mut fragdata = String::new();
-        glsl::Writer::new(
+        let fragrefl = &glsl::Writer::new(
             &mut fragdata,
             &module,
             &module_info,
@@ -287,7 +377,12 @@ impl ProgramSource {
             &format!("{} - Fragment", name),
             &fragdata,
         )?;
-        Self::link(gl, &name, vertshader, fragshader)
+        let program = Self::link(gl, &name, vertshader, fragshader)?;
+
+        Self::bind_wgsl(gl, &module, &vertrefl, program, name, bindings)?;
+        Self::bind_wgsl(gl, &module, &fragrefl, program, name, bindings)?;
+
+        Ok(program)
     }
 
     pub fn build_gl(
@@ -295,11 +390,12 @@ impl ProgramSource {
         gl: &glow::Context,
         name: Option<&str>,
         prepend: Option<&str>,
+        bindings: &[Binding],
     ) -> Result<glow::Program> {
         match self {
-            Self::Glsl(vert, frag) => Self::build_glsl(gl, name, prepend, &vert, &frag),
-            Self::GlslSingle(src) => Self::build_glsl(gl, name, prepend, &src, &src),
-            Self::Wgsl(src) => Self::build_wgsl(gl, name, prepend, &src),
+            Self::Glsl(vert, frag) => Self::build_glsl(gl, name, prepend, &vert, &frag, bindings),
+            Self::GlslSingle(src) => Self::build_glsl(gl, name, prepend, &src, &src, bindings),
+            Self::Wgsl(src) => Self::build_wgsl(gl, name, prepend, &src, bindings),
         }
     }
 }
@@ -308,8 +404,7 @@ pub struct ProgramBuilder {
     name: Option<String>,
     source: Option<ProgramSource>,
     prepend: Option<String>,
-    samplers: Vec<(String, i32)>,
-    uniform_buffers: Vec<(String, u32)>,
+    bindings: Vec<Binding>,
 }
 impl ProgramBuilder {
     pub fn new(name: Option<&str>) -> Self {
@@ -317,8 +412,7 @@ impl ProgramBuilder {
             name: name.map(String::from),
             source: None,
             prepend: None,
-            samplers: Vec::new(),
-            uniform_buffers: Vec::new(),
+            bindings: Vec::new(),
         }
     }
 
@@ -356,53 +450,26 @@ impl ProgramBuilder {
     }
 
     pub fn sampler(mut self, name: &str, idx: i32) -> Self {
-        self.samplers.push((name.to_string(), idx));
+        self.bindings.push(Binding::Sampler(name.to_string(), idx));
         self
     }
 
     pub fn uniform_buffer(mut self, name: &str, idx: u32) -> Self {
-        self.uniform_buffers.push((name.to_string(), idx));
+        self.bindings
+            .push(Binding::UniformBlock(name.to_string(), idx));
         self
     }
 
     pub fn build(self, gl: &glow::Context) -> Result<Shader> {
         let program = match self.source {
-            Some(src) => src.build_gl(gl, self.name.as_deref(), self.prepend.as_deref()),
+            Some(src) => src.build_gl(
+                gl,
+                self.name.as_deref(),
+                self.prepend.as_deref(),
+                &self.bindings,
+            ),
             None => anyhow::bail!("source not specified for shader!"),
         }?;
-
-        unsafe {
-            gl.use_program(Some(program));
-            for (samplername, idx) in self.samplers {
-                match gl.get_uniform_location(program, &samplername) {
-                    Some(uniformid) => {
-                        gl.uniform_1_i32(Some(&uniformid), idx);
-                    }
-                    None => {
-                        warn!(
-                            "shader '{}' does not have sampler '{}'",
-                            self.name.as_deref().unwrap_or("UNKNOWN"),
-                            samplername
-                        );
-                    }
-                }
-            }
-            for (uniformname, idx) in self.uniform_buffers {
-                match gl.get_uniform_block_index(program, &uniformname) {
-                    Some(uniformid) => {
-                        gl.uniform_block_binding(program, uniformid, idx);
-                    }
-                    None => {
-                        warn!(
-                            "shader '{}' does not have uniform block '{}'",
-                            self.name.as_deref().unwrap_or("UNKNOWN"),
-                            uniformname
-                        );
-                    }
-                }
-            }
-            gl.use_program(None);
-        }
 
         Ok(Shader {
             name: self.name,
