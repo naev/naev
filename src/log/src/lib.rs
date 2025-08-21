@@ -59,6 +59,9 @@ struct Logger {
 }
 impl log::Log for Logger {
     fn enabled(&self, metadata: &log::Metadata) -> bool {
+        if metadata.target().starts_with("naga::") {
+            return false;
+        }
         if cfg!(debug_assertions) {
             metadata.level() <= log::Level::Debug
         } else {
