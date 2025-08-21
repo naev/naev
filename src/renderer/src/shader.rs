@@ -118,7 +118,6 @@ impl Shader {
 enum ShaderSource {
     Path(String),
     Data(String),
-    None,
 }
 impl ShaderSource {
     const INCLUDE_INSTRUCTION: &str = "#include";
@@ -159,7 +158,6 @@ impl ShaderSource {
         match self {
             Self::Path(path) => Self::load_file(path),
             Self::Data(data) => Self::preprocess(data),
-            Self::None => Err(anyhow::anyhow!("no shader source defined!")),
         }
     }
 
@@ -167,15 +165,14 @@ impl ShaderSource {
         match self {
             Self::Path(path) => path.clone(),
             Self::Data(_) => String::from("DATA"),
-            Self::None => String::from("NONE"),
         }
     }
 }
 
 pub struct ProgramBuilder {
     name: Option<String>,
-    vert: ShaderSource,
-    frag: ShaderSource,
+    vert: Option<ShaderSource>,
+    frag: Option<ShaderSource>,
     prepend: String,
     samplers: Vec<(String, i32)>,
     uniform_buffers: Vec<(String, u32)>,
@@ -184,8 +181,8 @@ impl ProgramBuilder {
     pub fn new(name: Option<&str>) -> Self {
         ProgramBuilder {
             name: name.map(String::from),
-            vert: ShaderSource::None,
-            frag: ShaderSource::None,
+            vert: None,
+            frag: None,
             prepend: Default::default(),
             samplers: Vec::new(),
             uniform_buffers: Vec::new(),
@@ -193,12 +190,12 @@ impl ProgramBuilder {
     }
 
     pub fn vert_file(mut self, path: &str) -> Self {
-        self.vert = ShaderSource::Path(String::from(path));
+        self.vert = Some(ShaderSource::Path(String::from(path)));
         self
     }
 
     pub fn frag_file(mut self, path: &str) -> Self {
-        self.frag = ShaderSource::Path(String::from(path));
+        self.frag = Some(ShaderSource::Path(String::from(path)));
         self
     }
 
@@ -207,12 +204,12 @@ impl ProgramBuilder {
     }
 
     pub fn vert_data(mut self, data: &str) -> Self {
-        self.vert = ShaderSource::Data(String::from(data));
+        self.vert = Some(ShaderSource::Data(String::from(data)));
         self
     }
 
     pub fn frag_data(mut self, data: &str) -> Self {
-        self.frag = ShaderSource::Data(String::from(data));
+        self.frag = Some(ShaderSource::Data(String::from(data)));
         self
     }
 
@@ -232,11 +229,15 @@ impl ProgramBuilder {
     }
 
     pub fn build(self, gl: &glow::Context) -> Result<Shader> {
-        let mut vertdata = ShaderSource::to_string(&self.vert)?;
-        let mut fragdata = if self.vert == self.frag {
+        let vert = self.vert.ok_or(anyhow::anyhow!("invalid vertex shader"))?;
+        let frag = self
+            .frag
+            .ok_or(anyhow::anyhow!("invalid fragment shader"))?;
+        let mut vertdata = ShaderSource::to_string(&vert)?;
+        let mut fragdata = if vert == frag {
             vertdata.clone()
         } else {
-            ShaderSource::to_string(&self.frag)?
+            ShaderSource::to_string(&frag)?
         };
 
         let glsl = unsafe { naevc::gl_screen.glsl };
@@ -252,8 +253,8 @@ impl ProgramBuilder {
         vertdata.insert_str(0, &prepend);
         fragdata.insert_str(0, &prepend);
 
-        let vertname = self.vert.name();
-        let fragname = self.frag.name();
+        let vertname = vert.name();
+        let fragname = frag.name();
 
         let vertshader = Shader::compile(gl, ShaderType::Vertex, &vertname, &vertdata)?;
         let fragshader = Shader::compile(gl, ShaderType::Fragment, &fragname, &fragdata)?;
