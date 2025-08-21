@@ -40,7 +40,7 @@ impl SdfRenderer {
     pub fn new(gl: &glow::Context) -> Result<Self> {
         let program_cross = ProgramBuilder::new(Some("Cross Shader"))
             .uniform_buffer("CrossData", 0)
-            .vert_frag_file("rust_cross.glsl")
+            .vert_frag_file_single("rust_cross.glsl")
             .build(gl)?;
         let buffer_cross = BufferBuilder::new(Some("Cross Buffer"))
             .target(BufferTarget::Uniform)

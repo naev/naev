@@ -671,7 +671,7 @@ impl Context {
         // The texture shader
         let program_texture = ProgramBuilder::new(Some("Texture Shader"))
             .uniform_buffer("TextureData", 0)
-            .vert_frag_file("rust_texture.glsl")
+            .vert_frag_file_single("rust_texture.glsl")
             .sampler("sampler", 0)
             .build(&gl)?;
         let buffer_texture = BufferBuilder::new(Some("Texture Buffer"))
@@ -683,7 +683,7 @@ impl Context {
         let program_texture_sdf = ProgramBuilder::new(Some("SDF Texture Shader"))
             .uniform_buffer("TextureData", 0)
             .uniform_buffer("SDFData", 1)
-            .vert_frag_file("rust_texture_sdf.glsl")
+            .vert_frag_file_single("rust_texture_sdf.glsl")
             .sampler("sampler", 0)
             .build(&gl)?;
         let buffer_texture_sdf = BufferBuilder::new(Some("SDF Texture Buffer"))
@@ -694,7 +694,7 @@ impl Context {
         // Downscaling texture shader
         let program_texture_scale = ProgramBuilder::new(Some("Scaling Texture Shader"))
             .uniform_buffer("TextureData", 0)
-            .vert_frag_file("rust_magic.glsl")
+            .vert_frag_file_single("rust_magic.glsl")
             .sampler("sampler", 0)
             .build(&gl)?;
         let buffer_texture_scale = BufferBuilder::new(Some("Scaling Texture Buffer"))
@@ -705,7 +705,7 @@ impl Context {
         // The solid shader
         let program_solid = ProgramBuilder::new(Some("Solid Shader"))
             .uniform_buffer("SolidData", 0)
-            .vert_frag_file("rust_solid.glsl")
+            .vert_frag_file_single("rust_solid.glsl")
             .build(&gl)?;
         let buffer_solid = BufferBuilder::new(Some("Solid Buffer"))
             .target(BufferTarget::Uniform)

@@ -216,8 +216,7 @@ impl ModelShader {
         let lctx = ctx.lock();
         let gl = &lctx.gl;
         let mut shaderbuilder = ProgramBuilder::new(Some("PBR Shader"))
-            .vert_file("material_pbr.vert")
-            .frag_file("material_pbr.frag")
+            .vert_frag_file("material_pbr.vert", "material_pbr.frag")
             .sampler("baseColour_tex", 0)
             .sampler("metallic_tex", 1)
             .sampler("emissive_tex", 2)
@@ -270,7 +269,7 @@ impl ShadowShader {
         let gl = &lctx.gl;
         let shader = ProgramBuilder::new(Some("Shadow Shader"))
             .uniform_buffer("Shadow", Self::U_SHADOW)
-            .vert_frag_file("rust_shadow.glsl")
+            .vert_frag_file_single("rust_shadow.glsl")
             .build(gl)?;
 
         let buffer = BufferBuilder::new(Some("Shadow Buffer"))
@@ -1160,13 +1159,11 @@ impl Common {
         let gl = &lctx.gl;
         let shader_blur_x = ProgramBuilder::new(Some("Blur X Shader"))
             .sampler("sampler", 0)
-            .vert_file("blur.vert")
-            .frag_file("blurX.frag")
+            .vert_frag_file("blur.vert", "blurX.frag")
             .build(gl)?;
         let shader_blur_y = ProgramBuilder::new(Some("Blur Y Shader"))
             .sampler("sampler", 0)
-            .vert_file("blur.vert")
-            .frag_file("blurY.frag")
+            .vert_frag_file("blur.vert", "blurY.frag")
             .build(gl)?;
 
         Ok(Common {

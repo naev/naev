@@ -189,27 +189,21 @@ impl ProgramBuilder {
         }
     }
 
-    pub fn vert_file(mut self, path: &str) -> Self {
-        self.vert = Some(ShaderSource::Path(String::from(path)));
+    pub fn vert_frag_file(mut self, vertpath: &str, fragpath: &str) -> Self {
+        self.vert = Some(ShaderSource::Path(String::from(vertpath)));
+        self.frag = Some(ShaderSource::Path(String::from(fragpath)));
         self
     }
 
-    pub fn frag_file(mut self, path: &str) -> Self {
+    pub fn vert_frag_file_single(mut self, path: &str) -> Self {
+        self.vert = Some(ShaderSource::Path(String::from(path)));
         self.frag = Some(ShaderSource::Path(String::from(path)));
         self
     }
 
-    pub fn vert_frag_file(self, path: &str) -> Self {
-        self.vert_file(path).frag_file(path)
-    }
-
-    pub fn vert_data(mut self, data: &str) -> Self {
-        self.vert = Some(ShaderSource::Data(String::from(data)));
-        self
-    }
-
-    pub fn frag_data(mut self, data: &str) -> Self {
-        self.frag = Some(ShaderSource::Data(String::from(data)));
+    pub fn vert_frag_data(mut self, vertdata: &str, fragdata: &str) -> Self {
+        self.vert = Some(ShaderSource::Data(String::from(vertdata)));
+        self.frag = Some(ShaderSource::Data(String::from(fragdata)));
         self
     }
 
@@ -312,9 +306,8 @@ pub extern "C" fn gl_program_backend(
     let ctx = Context::get(); /* Lock early. */
     let vert = unsafe { CStr::from_ptr(cvert) };
     let frag = unsafe { CStr::from_ptr(cfrag) };
-    let mut sb = ProgramBuilder::new(None)
-        .vert_file(&vert.to_string_lossy())
-        .frag_file(&frag.to_string_lossy());
+    let mut sb =
+        ProgramBuilder::new(None).vert_frag_file(&vert.to_string_lossy(), &frag.to_string_lossy());
 
     if !cprepend.is_null() {
         let prepend = unsafe { CStr::from_ptr(cprepend) };
@@ -348,8 +341,7 @@ pub extern "C" fn gl_program_vert_frag_string(
             .unwrap();
     let shader = ManuallyDrop::new(
         match ProgramBuilder::new(None)
-            .vert_data(vertdata)
-            .frag_data(fragdata)
+            .vert_frag_data(vertdata, fragdata)
             .build(&ctx.gl)
         {
             Ok(s) => s,
