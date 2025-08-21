@@ -3,6 +3,7 @@
 
    Common stuff that can likely be shared across pirate AIs.
 --]]
+local lmisn = require "lmisn"
 local pirate = {}
 
 local fmt = require "format"
@@ -159,8 +160,18 @@ function pirate.hailSetup ()
          local worth = pirate.playerWorth()
          mem.bribe_base = (150 * rnd.rnd() + 425) * p:ship():points() * math.max( 0.5, worth / 700e3 )
       end
+      mem.bribe_prompt_prefix = ""
+      if lmisn.is_luxury() then
+         mem.bribe_base = mem.bribe_base*1.5
+         mem.bribe_prompt_prefix = mem.bribe_prompt_prefix.."#o".._("You notice they are eyeing your luxurious ship.").."#0\n"
+      end
       mem.bribe_rng = rnd.rnd()
       mem.bribe_chance = 0.95
+      if lmisn.is_lucky() then
+         mem.bribe_base = mem.bribe_base*0.8
+         mem.bribe_chance = 0.98
+         mem.bribe_prompt_prefix = mem.bribe_prompt_prefix.."#g".._("You are feeling lucky.").."#0\n"
+      end
       mem.refuel_standing = 60
       mem.hailsetup = true
    end
@@ -175,6 +186,7 @@ function pirate.hail ()
    mem.refuel        = 0
    mem.refuel_msg    = nil
    mem.bribe         = 0
+   mem.bribe_prompt_prefix = mem.bribe_prompt_prefix or ""
    mem.bribe_prompt  = nil
    mem.bribe_prompt_nearby = nil
    mem.bribe_paid    = nil
@@ -191,8 +203,8 @@ function pirate.hail ()
    -- Deal with bribeability
    mem.bribe = mem.bribe_base
    if mem.allowbribe or (mem.natural and (mem.bribe_rng <= mem.bribe_chance or mem.bribe_base < 50e3)) then
-      mem.bribe_prompt = fmt.f(pirate.bribe_prompt_list[ rnd.rnd(1,#pirate.bribe_prompt_list) ], {credits=fmt.credits(mem.bribe)})
-      mem.bribe_prompt_nearby = pirate.bribe_prompt_nearby_list[ rnd.rnd(1,#pirate.bribe_prompt_nearby_list) ]
+      mem.bribe_prompt = mem.bribe_prompt_prefix..fmt.f(pirate.bribe_prompt_list[ rnd.rnd(1,#pirate.bribe_prompt_list) ], {credits=fmt.credits(mem.bribe)})
+      mem.bribe_prompt_nearby = mem.bribe_prompt_prefix..pirate.bribe_prompt_nearby_list[ rnd.rnd(1,#pirate.bribe_prompt_nearby_list) ]
       mem.bribe_paid = pirate.bribe_paid_list[ rnd.rnd(1,#pirate.bribe_paid_list) ]
    else
       mem.bribe_no = _([["You won't be able to slide out of this one!"]])
