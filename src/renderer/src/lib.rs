@@ -10,6 +10,7 @@ use std::os::raw::{c_char, c_double};
 use std::sync::{atomic::AtomicBool, atomic::Ordering, Arc, Mutex, MutexGuard, OnceLock, RwLock};
 
 pub mod buffer;
+pub mod sdf;
 pub mod shader;
 pub mod texture;
 
@@ -308,6 +309,9 @@ pub struct Context {
     pub vao_center: VertexArray,
     pub vbo_triangle: Buffer,
     pub vao_triangle: VertexArray,
+
+    // Some subsystems
+    pub sdf: sdf::SdfRenderer,
 
     // To be phased out when moved to rust
     pub vao_core: glow::VertexArray,
@@ -778,6 +782,7 @@ impl Context {
             gl.pixel_store_i32(glow::UNPACK_ALIGNMENT, 1);
             gl.pixel_store_i32(glow::PACK_ALIGNMENT, 1);
         }
+        let sdf = sdf::SdfRenderer::new(&gl)?;
         let ctx = Context {
             sdlvid,
             window,
@@ -798,6 +803,7 @@ impl Context {
             vao_center,
             vbo_triangle,
             vao_triangle,
+            sdf,
             vao_core,
         };
         let _ = CONTEXT.set(ctx);

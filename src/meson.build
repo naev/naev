@@ -23,6 +23,7 @@ source_rust = files(
    'log/src/version.rs',
    'renderer/src/lib.rs',
    'renderer/src/buffer.rs',
+   'renderer/src/sdf.rs',
    'renderer/src/shader.rs',
    'renderer/src/texture.rs',
    'toolkit/src/lib.rs',

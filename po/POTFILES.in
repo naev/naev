@@ -4146,6 +4146,7 @@ src/render.c
 src/render.h
 src/renderer/src/buffer.rs
 src/renderer/src/lib.rs
+src/renderer/src/sdf.rs
 src/renderer/src/shader.rs
 src/renderer/src/texture.rs
 src/rng.h
