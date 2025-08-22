@@ -936,6 +936,7 @@ vec4 thorn( vec2 uv )
    vec2 c = cellular( vec3( 4.0*uv, 100.*u_r) );
    float n = (c.y-c.x);
 
+   uv = uv.yx;
    uv.y = -uv.y + 0.8;
    float d = sdUnevenCapsuleY( uv*0.8, 0.1, 0.4, 1.0 ) + n*0.2;
    d *= 3.0 * pow( smoothstep( 0.0, 0.3, -d ), 2.0 );
