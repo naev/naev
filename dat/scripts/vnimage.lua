@@ -75,15 +75,17 @@ function vni.generator( path )
 
    -- The portraits are a bit trickier as they are cropped from the original
    -- TODO allow defining the crops in metadata.lua
-   -- TODO scaling
+   local _w, _h, scale = gfx.dim()
    local PORTRAIT = {
+      -- Viewport is reference to the image coordinates
       viewxs = 100,
       viewys = 0,
-      width = 800,
-      height = 600,
+      viewxe = 100+800,
+      viewye = 0+600,
+      -- Width and height are final render
+      width  = 400 / scale,
+      height = 300 / scale,
    }
-   PORTRAIT.viewxe = PORTRAIT.viewxs + PORTRAIT.width
-   PORTRAIT.viewye = PORTRAIT.viewys + PORTRAIT.height
    npc.replace = tmergei( npc.replace, {
       { [[width="1000"]], fmt.f([[width="{width}"]], PORTRAIT) },
       { [[height="1415"]], fmt.f([[height="{height}"]], PORTRAIT) },
