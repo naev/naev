@@ -112,7 +112,7 @@ enum ShaderSource {
 }
 impl ShaderSource {
     const INCLUDE_INSTRUCTION: &str = "#include";
-    const GLSL_PATH: &str = "glsl/";
+    const GLSL_PATH: &str = "shaders/";
 
     /// Really simple preprocessor
     fn preprocess(data: &str) -> Result<String> {

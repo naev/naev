@@ -82,7 +82,7 @@ local function explosion( pos, vel, radius, damage, params )
 
    -- Lazy loading shader / sound
    if not explosion_shader then
-      local explosion_shader_frag = lf.read( "glsl/explosion.frag" )
+      local explosion_shader_frag = lf.read( "shaders/explosion.frag" )
       explosion_shader = lg.newShader( explosion_shader_frag )
       explosion_sfx = {
          audio.new( "snd/sounds/explosion0.wav" ),

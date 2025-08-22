@@ -49,7 +49,7 @@ local function emp_blast( pos, vel, radius, _disable, params )
 
    -- Lazy loading shader / sound
    if not emp_shader then
-      local emp_shader_frag = lf.read( "glsl/emp_blast.frag" )
+      local emp_shader_frag = lf.read( "shaders/emp_blast.frag" )
       emp_shader = lg.newShader( emp_shader_frag )
       emp_sfx = {
          audio.new( "snd/sounds/empexplode.ogg" ),

@@ -145,7 +145,7 @@ function luatk_map.newMap( parent, x, y, w, h, options )
    wgt.custrender = options.render
 
    -- Load shaders
-   local path = "scripts/luatk/glsl/"
+   local path = "scripts/luatk/shaders/"
    local function load_shader( filename )
       local src = lf.read( path..filename )
       local shd = lg.newShader( src )

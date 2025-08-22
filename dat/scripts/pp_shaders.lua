@@ -8,7 +8,7 @@
 local pp_shaders = {}
 
 -- We load the C-side shader for the vertex shader
-local f = file.new( 'glsl/postprocess.vert' )
+local f = file.new( 'shaders/postprocess.vert' )
 f:open('r')
 pp_shaders.vertexcode = f:read()
 

@@ -29,7 +29,7 @@ local function flames( pos, vel, radius, params )
 
    -- Lazy loading shader / sound
    if not flames_shader then
-      local flames_shader_frag = lf.read( "glsl/cleansing_flames.frag" )
+      local flames_shader_frag = lf.read( "shaders/cleansing_flames.frag" )
       flames_shader = lg.newShader( flames_shader_frag )
       flames_sfx = {
          audio.new( "snd/sounds/cleansing_flames.ogg" ),

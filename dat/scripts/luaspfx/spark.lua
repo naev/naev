@@ -50,7 +50,7 @@ local function spark( pos, vel, radius, _disable, params )
 
    -- Lazy loading shader / sound
    if not spark_shader then
-      local spark_shader_frag = lf.read( "glsl/spark.frag" )
+      local spark_shader_frag = lf.read( "shaders/spark.frag" )
       spark_shader = lg.newShader( spark_shader_frag )
       --[[
       spark_sfx = {

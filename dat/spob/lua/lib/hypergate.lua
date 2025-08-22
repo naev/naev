@@ -11,7 +11,7 @@ local luatk_map = require "luatk.map"
 local prng = require "prng"
 local luaspfx = require "luaspfx"
 
-local pixelcode = lf.read( "spob/lua/glsl/hypergate.frag" )
+local pixelcode = lf.read( "spob/lua/shaders/hypergate.frag" )
 local jumpsfx = audio.newSource( 'snd/sounds/hypergate.ogg' )
 
 local hypergate = {}
@@ -169,7 +169,7 @@ function hypergate.window ()
    luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Hypergate ({sysname})"), {sysname=mem.spob:system()}), nil, "center", lg.newFont(14) )
 
    -- Load shaders
-   local path = "scripts/luatk/glsl/"
+   local path = "scripts/luatk/shaders/"
    local function load_shader( filename )
       local src = lf.read( path..filename )
       return lg.newShader( src )

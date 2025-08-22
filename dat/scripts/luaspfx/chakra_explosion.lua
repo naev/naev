@@ -50,7 +50,7 @@ local function exp( pos, vel, radius, params )
 
    -- Lazy loading shader / sound
    if not exp_shader then
-      local exp_shader_frag = lf.read( "glsl/chakra_exp.frag" )
+      local exp_shader_frag = lf.read( "shaders/chakra_exp.frag" )
       exp_shader = lg.newShader( exp_shader_frag )
       exp_sfx = {
          audio.new( "snd/sounds/chakra_explosion.ogg" ),
