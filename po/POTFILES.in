@@ -77,6 +77,7 @@ dat/effects/chakra_burn.xml
 dat/effects/chakra_corruption.xml
 dat/effects/corsair.xml
 dat/effects/crippling_plasma.xml
+dat/effects/cyberspace.xml
 dat/effects/ethereal.xml
 dat/effects/fadein.xml
 dat/effects/fadein_black.xml
@@ -3653,6 +3654,7 @@ dat/scripts/luaspfx/blink.lua
 dat/scripts/luaspfx/chakra_explosion.lua
 dat/scripts/luaspfx/cleansing_flames.lua
 dat/scripts/luaspfx/corsair.lua
+dat/scripts/luaspfx/cyberspace.lua
 dat/scripts/luaspfx/emp.lua
 dat/scripts/luaspfx/emp_blast.lua
 dat/scripts/luaspfx/explosion.lua
