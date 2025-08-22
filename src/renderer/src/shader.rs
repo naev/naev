@@ -235,7 +235,10 @@ impl ProgramSource {
             ShaderSource::to_string(&frag)?
         };
 
-        let glsl = unsafe { naevc::gl_screen.glsl };
+        let version = {
+            let v = gl.version();
+            v.major * 100 + v.minor * 10
+        };
 
         if let Some(prepend) = prepend {
             vertdata.insert_str(0, &prepend);
@@ -243,7 +246,7 @@ impl ProgramSource {
         }
         vertdata.insert_str(0, "#define VERT 1\n");
         fragdata.insert_str(0, "#define FRAG 1\n");
-        let version= format!("#version {glsl}\n\n#define GLSL_VERSION {glsl}\n#define HAS_GL_ARB_shader_subroutine 1\n");
+        let version= format!("#version {version}\n\n#define GLSL_VERSION {version}\n#define HAS_GL_ARB_shader_subroutine 1\n");
         vertdata.insert_str(0, &version);
         fragdata.insert_str(0, &version);
 
