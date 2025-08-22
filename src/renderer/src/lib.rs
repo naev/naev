@@ -681,10 +681,10 @@ impl Context {
             .build(&gl)?;
         // SDF texture shader
         let program_texture_sdf = ProgramBuilder::new(Some("SDF Texture Shader"))
-            .uniform_buffer("TextureData", 0)
-            .uniform_buffer("SDFData", 1)
-            .vert_frag_file_single("rust_texture_sdf.glsl")
-            .sampler("sampler", 0)
+            .uniform_buffer("texturedata", 0)
+            .uniform_buffer("sdfdata", 1)
+            .wgsl_file("texture_sdf.wgsl")
+            .sampler("texsampler", 0)
             .build(&gl)?;
         let buffer_texture_sdf = BufferBuilder::new(Some("SDF Texture Buffer"))
             .target(BufferTarget::Uniform)
@@ -704,8 +704,8 @@ impl Context {
             .build(&gl)?;
         // The solid shader
         let program_solid = ProgramBuilder::new(Some("Solid Shader"))
-            .uniform_buffer("SolidData", 0)
-            .vert_frag_file_single("rust_solid.glsl")
+            .uniform_buffer("soliddata", 0)
+            .wgsl_file("solid.wgsl")
             .build(&gl)?;
         let buffer_solid = BufferBuilder::new(Some("Solid Buffer"))
             .target(BufferTarget::Uniform)
