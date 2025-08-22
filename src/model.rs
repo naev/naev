@@ -268,8 +268,8 @@ impl ShadowShader {
         let lctx = ctx.lock();
         let gl = &lctx.gl;
         let shader = ProgramBuilder::new(Some("Shadow Shader"))
-            .uniform_buffer("Shadow", Self::U_SHADOW)
-            .vert_frag_file_single("rust_shadow.glsl")
+            .uniform_buffer("shadow", Self::U_SHADOW)
+            .wgsl_file("shadow.wgsl")
             .build(gl)?;
 
         let buffer = BufferBuilder::new(Some("Shadow Buffer"))
