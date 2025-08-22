@@ -166,6 +166,14 @@ enum ProgramSource {
     Wgsl(ShaderSource),
 }
 impl ProgramSource {
+    fn shader_source_lines(source: &str) -> String {
+        let mut buf = String::new();
+        for (i, line) in source.lines().enumerate() {
+            buf.push_str(&format!("{i:04}: {line}\n"));
+        }
+        buf
+    }
+
     fn compile(
         gl: &glow::Context,
         shadertype: ShaderType,
@@ -184,12 +192,9 @@ impl ProgramSource {
             }
         }
         if unsafe { !gl.get_shader_compile_status(shader) } {
-            let mut buf = String::new();
-            for (i, line) in source.lines().enumerate() {
-                buf.push_str(&format!("{i:04}: {line}"));
-            }
+            let buf = Self::shader_source_lines(&source);
             let slog = unsafe { gl.get_shader_info_log(shader) };
-            warn!("{buf}\nFailed to compile shader '{name}': [[\n{slog}\n]]");
+            warn!("{name}:\n{buf}\nFailed to compile shader '{name}': [[\n{slog}\n]]");
             return Err(anyhow::anyhow!("failed to compile shader program"));
         }
         Ok(shader)
@@ -347,14 +352,29 @@ impl ProgramSource {
             ..Default::default()
         };
 
-        let module: naga::Module = naga::front::wgsl::parse_str(&data)?;
-        let module_info: naga::valid::ModuleInfo = naga::valid::Validator::new(
+        let module: naga::Module = match naga::front::wgsl::parse_str(&data) {
+            Ok(m) => m,
+            Err(e) => {
+                let buf = Self::shader_source_lines(&data);
+                warn!("{name}:\n{buf}\nFailed to parse WGSL shader '{name}': [[\n{e}\n]]");
+                return Err(e.into());
+            }
+        };
+        let module_info: naga::valid::ModuleInfo = match naga::valid::Validator::new(
             naga::valid::ValidationFlags::all(),
             naga::valid::Capabilities::all(),
         )
         .subgroup_stages(naga::valid::ShaderStages::all())
         .subgroup_operations(naga::valid::SubgroupOperationSet::all())
-        .validate(&module)?;
+        .validate(&module)
+        {
+            Ok(m) => m,
+            Err(e) => {
+                let buf = Self::shader_source_lines(&data);
+                warn!("{name}:\n{buf}\nFailed to validate WGSL shader '{name}': [[\n{e}\n]]");
+                return Err(e.into());
+            }
+        };
 
         let mut vertdata = String::new();
         let vertrefl = glsl::Writer::new(
