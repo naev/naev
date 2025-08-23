@@ -157,8 +157,15 @@ function enter ( from_sys )
          trinity:setHilight(true)
          trinity:setFaction("Empire") -- Starts out non-hostile
          trinity:setNoDisable(true)
+         trinity:intrinsicSet( "fbay_rate", 100 )
+         trinity:intrinsicSet( "armour_mod", 50 )
+         trinity:intrinsicSet( "absorb", 10 )
          hook.pilot( trinity, "death", "trinity_kill" )
          hook.pilot( trinity, "jump", "trinity_jump" )
+         for i = 1,4 do
+            local e = pilot.add( "Empire Lancelot", "Empire", trinity_pos, _("Trinity Escort"), {ai="baddie"} )
+            e:setLeader( trinity )
+         end
 
          mem.final_fight = 0
          hook.timer(rnd.uniform(6.0, 8.0) , "final_talk") -- Escorts should be in system by now
@@ -168,7 +175,7 @@ function enter ( from_sys )
    elseif mem.misn_stage == 1 then
 
       mem.misn_stage = 3
-      player.msg( _("Mission Failure: Return to base.") )
+      player.msg( "#r".._("Mission Failure: Return to base.").."#0" )
       misn.setDesc( fmt.f(_("Return to base at {pnt} in {sys}"),
             {pnt=misn_base, sys=misn_base_sys} ))
       misn.markerMove( mem.misn_marker, misn_base )
@@ -198,8 +205,12 @@ function final_talk ()
       talker:broadcast( _("Very well then. All units engage ESS Trinity.") )
 
       -- ESS Trinity becomes collective now.
-      trinity:setFaction("Collective")
-      trinity:setHostile()
+      local fct = faction.get("Collective")
+      trinity:setFaction(fct)
+      trinity:setHostile(true)
+      for k,p in trinity:followers() do
+         p:setFaction( p, fct )
+      end
 
       mem.final_fight = 3
       hook.timer(rnd.uniform( 4.0, 5.0 ), "final_talk")
@@ -288,19 +299,20 @@ function add_escorts( landed )
       param = mem.last_sys
    end
 
-   paci = pilot.add( "Empire Pacifier", "Empire", param, nil, {ai="escort_player"} )
+   paci = pilot.add( "Empire Admonisher", "Empire", param, nil, {ai="escort_player"} )
    escorts[#escorts + 1] = paci
    paci:setFriendly()
    if trinity ~= nil then
-      paci:control()
+      paci:control(true)
       paci:moveto( trinity:pos() )
    end
-   for i=1, 6 do
+   for i=1, 2 do
       local lance = pilot.add( "Empire Lancelot", "Empire", param, nil, {ai="escort_player"} )
       escorts[#escorts + 1] = lance
+      lance:setLeader( paci )
       lance:setFriendly()
       if trinity ~= nil then
-         lance:control()
+         lance:control(true)
          lance:moveto( trinity:pos() )
       end
    end
