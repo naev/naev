@@ -175,7 +175,7 @@ function enter ( from_sys )
    elseif mem.misn_stage == 1 then
 
       mem.misn_stage = 3
-      player.msg( "#r".._("Mission Failure: Return to base.").."#0" )
+      player.msg( "#o".._("Mission Failure: Return to base.").."#0" )
       misn.setDesc( fmt.f(_("Return to base at {pnt} in {sys}"),
             {pnt=misn_base, sys=misn_base_sys} ))
       misn.markerMove( mem.misn_marker, misn_base )
@@ -233,17 +233,17 @@ function trinity_check ()
    end
    mem.tri_checked = mem.tri_checked + 1
 
-   if mem.tri_checked == 3 then
+   if mem.tri_checked == 6 then
       trinity:broadcast( _("It is too late! The plan is being put into motion!") )
-   elseif mem.tri_checked == 6 then
+   elseif mem.tri_checked == 12 then
       trinity:broadcast( _("You have no idea who you're messing with!") )
    end
 
    local a = trinity:health()
-   if a < 100 or mem.tri_checked > 100 then
+   if a < 100 or mem.tri_checked > 60 then
       trinity_flee()
    else
-      hook.timer( 3.0, "trinity_check" )
+      hook.timer( 1, "trinity_check" )
    end
 end
 
@@ -255,7 +255,7 @@ function trinity_flee ()
    trinity:hyperspace( misn_flee_sys )
    trinity:broadcast( _("My drones will make mincemeat of you!") )
    player.msg( _("Incoming drones from hyperspace detected!") )
-   hook.timer( rnd.uniform( 3.0, 5.0 ), "call_drones_jump" )
+   hook.timer( 3*rnd.rnd(), "call_drones_jump" )
 end
 
 
@@ -267,9 +267,9 @@ function call_drones_jump ()
    mem.drone_controlled = true
    local tp = trinity:pos()
    for k,v in ipairs(drone_reinforcements) do
-      v:setHostile()
+      v:setHostile(true)
       v:setNoDisable(true)
-      v:control()
+      v:control(true)
       v:moveto( tp )
       hook.pilot( v, "attacked", "drone_attacked" )
       hook.pilot( v, "idle",     "drone_attacked" )
@@ -306,7 +306,7 @@ function add_escorts( landed )
       paci:control(true)
       paci:moveto( trinity:pos() )
    end
-   for i=1, 2 do
+   for i=1, 3 do
       local lance = pilot.add( "Empire Lancelot", "Empire", param, nil, {ai="escort_player"} )
       escorts[#escorts + 1] = lance
       lance:setLeader( paci )
@@ -353,7 +353,7 @@ end
 
 -- Trinity hooks
 function trinity_kill () -- Got killed
-   player.msg( _("Mission Success: Return to base.") )
+   player.msg( "#g".._("Mission Success: Return to base.").."#0" )
    mem.misn_stage = 2
    misn.osdActive(3)
    mem.trinity_alive = false
@@ -363,7 +363,7 @@ end
 
 
 function trinity_jump () -- Got away
-   player.msg( _("Mission Failure: Return to base.") )
+   player.msg( "#o".._("Mission Failure: Return to base.").."#0" )
    mem.misn_stage = 2
    misn.osdActive(3)
    mem.trinity_alive = true
