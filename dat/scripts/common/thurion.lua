@@ -28,4 +28,10 @@ function thurion.vn_liao( params )
    }, params) )
 end
 
+-- Function for adding log entries for miscellaneous one-off missions.
+function thurion.addDataLog( text )
+   shiplog.create( "thr_data", _("Data Extraction"), _("Thurion") )
+   shiplog.append( "thr_data", text )
+end
+
 return thurion

@@ -150,6 +150,10 @@ function land ()
 
       player.pay( mem.reward )
       faction.get("Thurion"):hit( mem.reputation )
+
+      thurion.addDataLog(fmt.f(_([[You extracted confidential documents from {targetspb} and delivered them to the Thurion at {returnspb}.]]),
+         {targetspb=mem.targetspb, returnspb=mem.returnspb}))
+
       misn.finish(true)
    end
 end
