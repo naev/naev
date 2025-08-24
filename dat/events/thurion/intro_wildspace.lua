@@ -18,7 +18,7 @@ local vni = require "vnimage"
 local fmt = require "format"
 local tut = require "common.tutorial"
 local strmess = require "strmess"
-local thn = require "common.thurion" -- codespell:ignore thn
+local thurion = require "common.thurion"
 
 local landspb, landsys = spob.getS("FD-24")
 local fthurion = faction.get("Thurion")
@@ -115,7 +115,7 @@ function land ()
       vn.na(_([[Eventually your ship reaches the far side of the station, and you are told to wait as preparations are undertaken. You idle by the airlock unsure of what is going to happen.]]))
 
       -- TODO image
-      local alice = thn.vn_drone(_("Alice")) -- codespell:ignore thn
+      local alice = thurion.vn_drone(_("Alice"))
       vn.appear{ alice }
       vn.na(_([[After a short while, you hear the other side of the airlock pressurize, and the door opens. To your surprise, you see a drone flanked by two security robots. Fully automated station?]]))
       alice(fmt.f(_([[The drone in the centre's speaker begins to emit sound, in standard tongue.
@@ -208,6 +208,8 @@ function land ()
       vn.run()
 
       fthurion:setKnown(true)
+      thurion.addMiscLog(fmt.f_(_([[You were cordially invited by an uploaded Thurion named Alice to {spb}, where you were thoroughly questioned. The Thurion deemed you not a threat and gave you permission to fly around their space.]]),
+         {spb=landspb}))
       evt.finish(true)
    end
 end
