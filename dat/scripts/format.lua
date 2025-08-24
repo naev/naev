@@ -146,19 +146,19 @@ function format.list( words )
    local length = #words
    if length == 1 then return tostring(words[1]) end
    if length == 2 then
-      return _replace(_replace( _("{0} and {1}"), '{0}', words[1]),
-         '{1}', words[2])
+      return _replace(_replace( _("{0} and {1}"), '{0}', tostring(words[1])),
+         '{1}', tostring(words[2]))
    end
 
-   local result = _replace( _("{0}, and {1}"), '{1}', words[length])
+   local result = _replace( _("{0}, and {1}"), '{1}', tostring(words[length]))
    while length > 3 do
       length = length - 1
-      local mid = _replace( _("{0}, {1}"), '{1}', words[length])
+      local mid = _replace( _("{0}, {1}"), '{1}', tostring(words[length]))
       result = _replace(result, '{0}', mid)
    end
-   result = _replace(result, '{0}', words[2])
+   result = _replace(result, '{0}', tostring(words[2]))
    result = _replace( _("{0}, {1}"), '{1}', result)
-   result = _replace(result, '{0}', words[1])
+   result = _replace(result, '{0}', tostring(words[1]))
    return result
 end
 
