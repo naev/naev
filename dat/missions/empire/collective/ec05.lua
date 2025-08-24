@@ -155,11 +155,9 @@ function enter ( from_sys )
          trinity = pilot.add( "Empire Hawking", "Empire", trinity_pos, _("ESS Trinity"), {ai="baddie"} )
          trinity:setVisplayer()
          trinity:setHilight(true)
-         trinity:setFaction("Empire") -- Starts out non-hostile
          trinity:setNoDisable(true)
          trinity:intrinsicSet( "fbay_rate", 100 )
          trinity:intrinsicSet( "armour_mod", 50 )
-         trinity:intrinsicSet( "absorb", 10 )
          hook.pilot( trinity, "death", "trinity_kill" )
          hook.pilot( trinity, "jump", "trinity_jump" )
          for i = 1,4 do
@@ -208,8 +206,8 @@ function final_talk ()
       local fct = faction.get("Collective")
       trinity:setFaction(fct)
       trinity:setHostile(true)
-      for k,p in trinity:followers() do
-         p:setFaction( p, fct )
+      for k,p in ipairs(trinity:followers()) do
+         p:setFaction(fct)
       end
 
       mem.final_fight = 3
@@ -265,27 +263,10 @@ function call_drones_jump ()
    drone_reinforcements = fleet.add( 1, sml_swarm, "Collective", misn_flee_sys, _("Collective Drone") )
    drone_reinforcements[4]:rename(_("Collective Heavy Drone"))
    mem.drone_controlled = true
-   local tp = trinity:pos()
    for k,v in ipairs(drone_reinforcements) do
       v:setHostile(true)
       v:setNoDisable(true)
-      v:control(true)
-      v:moveto( tp )
-      hook.pilot( v, "attacked", "drone_attacked" )
-      hook.pilot( v, "idle",     "drone_attacked" )
-   end
-end
-
-
--- Support drones attacked
-function drone_attacked ()
-   if mem.drone_controlled then
-      mem.drone_controlled = false
-      for k,v in ipairs(drone_reinforcements) do
-         if v:exists() then
-            v:control(false)
-         end
-      end
+      v:setLeader(trinity)
    end
 end
 
@@ -299,7 +280,7 @@ function add_escorts( landed )
       param = mem.last_sys
    end
 
-   paci = pilot.add( "Empire Admonisher", "Empire", param, nil, {ai="escort_player"} )
+   paci = pilot.add( "Empire Pacifier", "Empire", param )
    escorts[#escorts + 1] = paci
    paci:setFriendly()
    if trinity ~= nil then
@@ -307,14 +288,10 @@ function add_escorts( landed )
       paci:moveto( trinity:pos() )
    end
    for i=1, 3 do
-      local lance = pilot.add( "Empire Lancelot", "Empire", param, nil, {ai="escort_player"} )
+      local lance = pilot.add( "Empire Lancelot", "Empire", param )
       escorts[#escorts + 1] = lance
       lance:setLeader( paci )
-      lance:setFriendly()
-      if trinity ~= nil then
-         lance:control(true)
-         lance:moveto( trinity:pos() )
-      end
+      lance:setFriendly(true)
    end
 end
 
