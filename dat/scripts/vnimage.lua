@@ -44,6 +44,7 @@ end
 
 -- Renders a clump of SVGs into a single canvas
 local function render_svgs( c, path, npc )
+   lg.setColour( 1, 1, 1, 1 )
    lg.setCanvas( c )
    lg.clear( 0, 0, 0, 0 )
    for k,v in ipairs(npc) do
@@ -64,8 +65,7 @@ end
 -- The metadata.lua file should return a function that returns a table with:
 --  1. A replace field that specifies how to do SVG file substitutions
 --  2. An ordered list of file names (relative to the directory) of files to render.
-function vni.generator( path )
-   local meta = require(path:gsub("/",".")..".metadata")
+function vni.generator( meta, path )
    local npc = meta()
 
    -- The base image is easy, they are all 1000 by 1415 graphics
@@ -76,7 +76,7 @@ function vni.generator( path )
    -- The portraits are a bit trickier as they are cropped from the original
    -- TODO allow defining the crops in metadata.lua
    local _w, _h, scale = gfx.dim()
-   local PORTRAIT = {
+   local PORTRAIT = npc.portraitview or {
       -- Viewport is reference to the image coordinates
       viewxs = 100,
       viewys = 0,
@@ -101,7 +101,9 @@ end
 
 local function gen( path )
    return function ()
-      return vni.generator( "gfx/vn/characters/"..path )
+      local lpath = "gfx/vn/characters/"..path
+      local meta = require(lpath:gsub("/",".")..".metadata")
+      return vni.generator( meta, lpath )
    end
 end
 
@@ -174,6 +176,7 @@ local neutral_new = {
    {"neutral/male2n.webp"},
    {"neutral/male3n.webp"},
    {"neutral/male3n_v2.webp"},
+   gen( "neutral/male01" ),
    {"neutral/female1n.webp"},
    {"neutral/female1n_v2.webp"},
    {"neutral/female1n_v3.webp"},
