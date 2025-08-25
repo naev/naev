@@ -3303,21 +3303,6 @@ void pilot_untargetAsteroid( int anchor, int asteroid )
 }
 
 /**
- * @brief Clears a pilot from being a target.
- */
-void pilot_untargetPilot( const Pilot *plt )
-{
-   for ( int i = 0; i < array_size( pilot_stack ); i++ ) {
-      Pilot *p = pilot_stack[i];
-      if ( p->target == plt->id ) {
-         p->target  = p->id;
-         p->ptarget = NULL;
-         ai_cleartasks( p );
-      }
-   }
-}
-
-/**
  * @brief Checks to see how many of an outfit a pilot has.
  */
 int pilot_numOutfit( const Pilot *p, const Outfit *o )

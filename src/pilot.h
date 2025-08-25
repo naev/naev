@@ -575,7 +575,6 @@ int     pilot_hasDeployed( const Pilot *p );
 int     pilot_dock( Pilot *p, Pilot *target );
 ntime_t pilot_hyperspaceDelay( const Pilot *p );
 void    pilot_untargetAsteroid( int anchor, int asteroid );
-void    pilot_untargetPilot( const Pilot *p );
 PilotOutfitSlot *pilot_getDockSlot( Pilot *p );
 const IntList   *pilot_collideQuery( int x1, int y1, int x2, int y2 );
 void pilot_collideQueryIL( IntList *il, int x1, int y1, int x2, int y2 );
