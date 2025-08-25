@@ -3294,10 +3294,25 @@ ntime_t pilot_hyperspaceDelay( const Pilot *p )
 void pilot_untargetAsteroid( int anchor, int asteroid )
 {
    for ( int i = 0; i < array_size( pilot_stack ); i++ ) {
-      if ( ( pilot_stack[i]->nav_asteroid == asteroid ) &&
-           ( pilot_stack[i]->nav_anchor == anchor ) ) {
-         pilot_stack[i]->nav_asteroid = -1;
-         pilot_stack[i]->nav_anchor   = -1;
+      Pilot *p = pilot_stack[i];
+      if ( ( p->nav_asteroid == asteroid ) && ( p->nav_anchor == anchor ) ) {
+         p->nav_asteroid = -1;
+         p->nav_anchor   = -1;
+      }
+   }
+}
+
+/**
+ * @brief Clears a pilot from being a target.
+ */
+void pilot_untargetPilot( const Pilot *plt )
+{
+   for ( int i = 0; i < array_size( pilot_stack ); i++ ) {
+      Pilot *p = pilot_stack[i];
+      if ( p->target == plt->id ) {
+         p->target  = p->id;
+         p->ptarget = NULL;
+         ai_cleartasks( p );
       }
    }
 }

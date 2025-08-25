@@ -3247,8 +3247,9 @@ static int pilotL_setFaction( lua_State *L )
    Pilot *p   = luaL_validpilot( L, 1 );
    int    fid = luaL_validfaction( L, 2 );
    /* Clear munitions or can cause standing escalade. */
-   if ( p->faction != fid )
+   if ( p->faction != fid ) {
       weapon_clearPilot( p );
+   }
    /* Set the new faction. */
    p->faction = fid;
    return 0;

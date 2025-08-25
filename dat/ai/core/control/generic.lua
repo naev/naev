@@ -1127,7 +1127,7 @@ function distress_handler( pilot, attacker )
    -- Player's faction ignores distress calls
    if pilot:withPlayer() then return end
 
-   -- Ignore please of help when bribed by the attacker
+   -- Ignore pleads of help when bribed by the attacker
    if ai.isbribed(attacker) then return end
 
    local p       = ai.pilot()
