@@ -3255,8 +3255,7 @@ static int pilotL_setFaction( lua_State *L )
       for ( int i = 0; i < array_size( pilot_stack ); i++ ) {
          Pilot *pi = pilot_stack[i];
          if ( pi->target == p->id ) {
-            pi->target  = p->id;
-            pi->ptarget = NULL;
+            pilot_setTarget( pi, pi->id );
             ai_cleartasks( pi );
          } else {
             for ( Task *t = p->task; t != NULL; t = t->next ) {
@@ -3270,8 +3269,7 @@ static int pilotL_setFaction( lua_State *L )
                if ( lua_ispilot( naevL, -1 ) ) {
                   const Pilot *pt = luaL_validpilot( naevL, -1 );
                   if ( pt->id == p->id ) {
-                     pi->target  = p->id;
-                     pi->ptarget = NULL;
+                     pilot_setTarget( pi, pi->id );
                      ai_cleartasks( pi );
                      break;
                   }
