@@ -41,16 +41,19 @@ local function setup_pilot( p )
    hook.pilot( plt, "hail", "plt_hail" )
 end
 
+local oplt
 function create ()
    local nc = naev.cache()
-   plt = nc.capture_pilot.pilot
+   oplt = nc.capture_pilot.pilot
+   -- We clone the pilot to get a new ID and invalidate all references to the old one
+   plt = oplt:clone()
    mem.cost = nc.capture_pilot.cost
    mem.costnaked = nc.capture_pilot.costnaked
    mem.outfitsnaked = nc.capture_pilot.outfitsnaked
    nc.capture_pilot = nil
 
    -- Free the followers!
-   for k,f in ipairs(plt:followers()) do
+   for k,f in ipairs(oplt:followers()) do
       if f:flags("carried") then
          -- Just disable and make them fade out. Not sure if anything else can be done here.
          f:setDisable(true)
@@ -62,22 +65,22 @@ function create ()
 
    -- Original data
    mem.o = {
-      faction = plt:faction(),
-      name = plt:name(),
+      faction = oplt:faction(),
+      name = oplt:name(),
    }
 
    -- Handle case of escape pod (launch and remove)
    local ep = outfit.get("Escape Pod")
-   for k,o in ipairs(plt:outfitsList("intrinsic")) do
+   for k,o in ipairs(oplt:outfitsList("intrinsic")) do
       if o==ep then
-         escapepod.launch(plt)
-         plt:outfitRmIntrinsic(o)
+         escapepod.launch(oplt)
+         oplt:outfitRmIntrinsic(o)
       end
    end
 
-   mem.name = fmt.f(_("Captured {shp}"), {shp=plt:ship():name()} )
-   mem.ship = plt:ship()
-   mem.outfits = plt:outfits()
+   mem.name = fmt.f(_("Captured {shp}"), {shp=oplt:ship():name()} )
+   mem.ship = oplt:ship()
+   mem.outfits = oplt:outfits()
    for k,v in pairs(mem.outfits) do
       -- Ignore outfits that can't be stolen
       if v and v:tags().nosteal then
@@ -85,15 +88,20 @@ function create ()
       end
    end
    mem.system = system.cur()
-   mem.intrinsics = plt:outfitsList("intrinsic")
+   mem.intrinsics = oplt:outfitsList("intrinsic")
    for k,v in pairs(mem.intrinsics) do
       if v:tags().nosteal then
          mem.intrinsics[k] = nil
       end
    end
    setup_pilot( plt )
-   local a,s = plt:health()
+   local a,s = oplt:health()
    plt:setHealth( a, s ) -- Clears disabled state
+   local pp = player.pilot()
+   if pp:target()==oplt then
+      -- Move the target over for the player only
+      pp:setTarget(plt)
+   end
 
    hook.land( "land" )
    hook.jumpout( "jumpout" )
@@ -103,6 +111,15 @@ function create ()
 
    -- Trigger capture hook
    naev.trigger( "capture", plt )
+   hook.safe( "plt_remove" )
+end
+
+function plt_remove ()
+   -- We drop the old pilot, thus invalidating references
+   if oplt then
+      oplt:rm()
+      oplt = nil
+   end
 end
 
 function plt_death ()
