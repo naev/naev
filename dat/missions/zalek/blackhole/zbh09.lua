@@ -332,7 +332,6 @@ function heartbeat_ferals ()
 
    elseif fstate == 2 then
       cinema.off()
-      camera.set()
       nexttime = 3
       fstate = 3
 
@@ -389,8 +388,6 @@ function heartbeat_ferals ()
       misn.osdCreate( title, { _("Survive!") } )
 
       cinema.off()
-      camera.set()
-      camera.setZoom()
 
       zach_say( p_("Zach", "Watch out!") )
       l:control(false)
