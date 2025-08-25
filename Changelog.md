@@ -47,7 +47,6 @@
     - Autonav will warn the player if jumping or landing will fail the mission
     - Autonav will wait for escorts when landing or taking off
 
-
 #### Content
  - 13 new missions and events
     - Go treasure hunting
@@ -91,6 +90,8 @@
     - Detection Range only affects 'Detected at:' range
     - Ship Visibility that affects detection, signature, and stealth ranges
  - Intro text is no longer hardcoded and is handled via Lua
+ - SVG image support
+ - WGSL shader support
 
 #### Fixes
  - The Bite turns off afterburners
