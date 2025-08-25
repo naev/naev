@@ -228,9 +228,9 @@ function enter ()
       -- nohinohi, taitamariki, kauweke,
       local ships
       if pp:ship():size() >= 5 then
-         ships = { "Kauweke", "Kauweke", "Taitamariki", "Taitamariki", "Taitamariki", "Taitamariki" }
+         ships = { "Kauweke", "Kauweke", "Taitamariki", "Taitamariki", "Taitamariki" }
       else
-         ships = { "Kauweke", "Taitamariki", "Taitamariki", "Taitamariki" }
+         ships = { "Kauweke", "Taitamariki", "Taitamariki" }
       end
       local pos = outsys:waypoints("zbh09_feral") -- Halfway towards NGC-4771
       pack = fleet.add( 1, ships, zbh.feralbioship(), pos )
