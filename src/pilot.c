@@ -3733,6 +3733,9 @@ unsigned int pilot_clone( const Pilot *ref )
    /* Reset the pilot. */
    pilot_reset( dyn );
 
+   /* Animated trail. */
+   pilot_init_trails( dyn );
+
    /* Add to quadtree. */
    pilot_addQuadtree( dyn, array_size( pilot_stack ) - 1 );
 
