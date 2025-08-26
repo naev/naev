@@ -24,6 +24,7 @@ local love_shaders = require "love_shaders"
 local vntk = require "vntk"
 local vni = require "vnimage"
 local portrait = require "portrait"
+local equipopt = require "equipopt"
 require "proximity"
 
 local genbu, joe, leader, leaderdest, leaderstart, seiryuu, squads -- Non-persistent state
@@ -379,16 +380,28 @@ end
 
 -- Spawns the Genbu
 function spawnGenbu(sys)
-   genbu = pilot.add( "Pirate Kestrel", shadow.fct_fourwinds(), sys, _("Genbu") )
-   genbu:outfitRm("all")
-   genbu:outfitAdd("Heavy Laser Turret", 3)
-   genbu:outfitAdd("Four Winds Ragnarok Beam", 3) -- You can't win. Seriously.
-   ai_setup.setup(genbu)
-   genbu:control()
-   genbu:setHilight()
-   genbu:setVisplayer()
-   genbu:setNoDeath()
-   genbu:setNoDisable()
+   genbu = pilot.add( "Pirate Kestrel", shadow.fct_fourwinds(), sys, _("Genbu"), {naked=true} )
+   equipopt.pirate( genbu, {
+      outfits_add = {
+         "Four Winds Ragnarok Beam",
+         "ZIBS-32",
+      },
+      prefer = {
+         ["Four Winds Ragnarok Beam"] = 100,
+      },
+      max_same_weap = 4,
+      pointdefense = 10,
+   })
+   genbu:intrinsicSet( "shield_mod", 100 )
+   genbu:intrinsicSet( "absorb", 15 )
+   genbu:intrinsicSet( "shield_regen_mod", 50 )
+   genbu:intrinsicSet( "armour_mod", 50 )
+   genbu:intrinsicSet( "energy_regen_mod", 100 )
+   genbu:control(true)
+   genbu:setHilight(true)
+   genbu:setVisplayer(true)
+   genbu:setNoDeath(true)
+   genbu:setNoDisable(true)
    mem.genbuspawned = true
 end
 
