@@ -1476,7 +1476,12 @@ static void mission_menu_update( unsigned int wid, const char *str )
    const StarSystem *sys;
    int               pos = toolkit_getListPos( wid, "lstMission" );
 
-   if ( pos < 0 || pos == selectedMission )
+   // Already selected
+   if ( pos == selectedMission )
+      return;
+
+   // Out of bounds.
+   if ( ( pos < 0 ) || ( pos > array_size( player_missions ) ) )
       return;
 
    /* Modify the text. */
