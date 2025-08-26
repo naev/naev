@@ -1481,7 +1481,7 @@ static void mission_menu_update( unsigned int wid, const char *str )
       return;
 
    // Out of bounds.
-   if ( ( pos < 0 ) || ( pos > array_size( player_missions ) ) )
+   if ( ( pos < 0 ) || ( pos >= array_size( player_missions ) ) )
       return;
 
    /* Modify the text. */
@@ -1510,7 +1510,7 @@ static void mission_menu_chk_hide( unsigned int wid, const char *str )
 {
    Mission *misn;
    int      pos = toolkit_getListPos( wid, "lstMission" );
-   if ( ( pos < 0 ) || ( pos > array_size( player_missions ) ) )
+   if ( ( pos < 0 ) || ( pos >= array_size( player_missions ) ) )
       return;
    misn = player_missions[pos];
 
@@ -1525,7 +1525,7 @@ static void mission_menu_chk_priority( unsigned int wid, const char *str )
 {
    Mission *misn;
    int      pos = toolkit_getListPos( wid, "lstMission" );
-   if ( ( pos < 0 ) || ( pos > array_size( player_missions ) ) )
+   if ( ( pos < 0 ) || ( pos >= array_size( player_missions ) ) )
       return;
    misn = player_missions[pos];
 
