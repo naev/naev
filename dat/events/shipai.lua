@@ -233,7 +233,7 @@ function advice ()
       local msg_bioship = _([["Bioships gain experience over time, allowing them to advance to new stages and learn new abilities. Bioships must land to advance to new stages, and only while landed will they will be able to learn new skills. You can set the skills from the bioship interface which is accessible from the #bInfo window#0 which you can open with #b{infokey}#0."]],
          {infokey=tut.getKey("info")})
       table.insert( adv_rnd, msg_bioship )
-      if bioship.skillpointsfree() > 0 then
+      if bioship.skillpointsfree(player.pilot()) > 0 then
          table.insert( adv, msg_bioship )
       end
    end
