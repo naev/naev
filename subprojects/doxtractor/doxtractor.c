@@ -31,21 +31,33 @@ static int do_it(FILE *const fp, const char *nam)
    size_t   line_siz   = 0;
    int      in_comment = 0;
    unsigned lineno     = 0;
+   int      warn_left  = 5;
 
    while (getline(&line, &line_siz, fp) != -1) {
       lineno++;
       if (in_comment) {
          char *where;
          if ((where = strstr(line, "*/"))) {
-            while (where > line && where[-1] == ' ')
-               where--;
             strcpy(where, "\n");
             in_comment = 0;
          }
-         if (!strncmp(line, " * ", 3) && line[3] != '\0') {
-            const int n = sprintf(buff, "%s %u: ", nam, lineno);
+         if (!strncmp(line, " *", 2)) {
+            int n = sprintf(buff, "%s %u: ", nam, lineno);
+
+            char *const str = line + 2 + (line[2] == ' ' ? 1 : 0);
+            char *const end = strchrnul(str, '\n');
+            for (where = end; where[-1] == ' '; where--)
+               ;
+            if (where == str)
+               n--;
             fwrite(buff, sizeof(char), n, stdout);
-            fwrite(line + 3, sizeof(char), strlen(line + 3), stdout);
+            strcpy(where, end);
+            fwrite(str, sizeof(char), strlen(str), stdout);
+         } else if (in_comment && warn_left) {
+            *strchrnul(line, '\n') = '\0';
+            fprintf(stderr, "%s %u: ", nam, lineno);
+            fprintf(stderr, "Invalid comment line \"%s\"\n", line);
+            warn_left--;
          }
       } else if (!strcmp(line, "/**\n")) {
          in_comment = 1;
