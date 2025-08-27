@@ -20,6 +20,9 @@ forced_fallbacks = get_option('force_fallback_for')
 issue_address = 'https://github.com/naev/naev/issues'
 copyright_holder = 'Naev Dev Team'
 
+doxtractor_sub = subproject('doxtractor')
+doxtractor = doxtractor_sub.get_variable('doxtractor').full_path()
+
 # Tools
 cc = meson.get_compiler('c')
 c_args = cc.get_supported_arguments([
