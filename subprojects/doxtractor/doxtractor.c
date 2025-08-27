@@ -12,9 +12,9 @@
 
 /* This is *not* another one.*/
 
-/** Nor this.*/
+/** Neither does this.*/
 
-// Neither does this
+// Nor this.
 
 #define _GNU_SOURCE
 #include <libgen.h>

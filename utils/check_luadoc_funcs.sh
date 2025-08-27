@@ -2,7 +2,6 @@
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-
 TMP=$(mktemp -u)
 mkfifo "$TMP"
 TMP2=$(mktemp)
