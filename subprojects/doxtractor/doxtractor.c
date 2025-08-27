@@ -1,5 +1,5 @@
 
-// gcc -O1 comments.c -Wall -Wextra -lc
+// gcc -O1 doxtractor.c -Wall -Wextra -lc
 
 /**
  * An example:
@@ -22,9 +22,9 @@
 #include <stdio.h>
 #include <string.h>
 
-static int do_it(FILE *const fp, const char *nam)
+static int do_it(FILE *const fp, const char *pref)
 {
-   char *buff = calloc(snprintf(NULL, 0, "%s %u: ", nam, (unsigned) (-1)) + 1,
+   char *buff = calloc(snprintf(NULL, 0, "%s%u: ", pref, (unsigned) (-1)) + 1,
                        sizeof(char));
 
    char    *line       = NULL;
@@ -42,7 +42,7 @@ static int do_it(FILE *const fp, const char *nam)
             in_comment = 0;
          }
          if (!strncmp(line, " *", 2)) {
-            int n = sprintf(buff, "%s %u: ", nam, lineno);
+            int n = sprintf(buff, "%s%u: ", pref, lineno);
 
             char *const str = line + 2 + (line[2] == ' ' ? 1 : 0);
             char *const end = strchrnul(str, '\n');
@@ -55,7 +55,7 @@ static int do_it(FILE *const fp, const char *nam)
             fwrite(str, sizeof(char), strlen(str), stdout);
          } else if (in_comment && warn_left) {
             *strchrnul(line, '\n') = '\0';
-            fprintf(stderr, "%s %u: ", nam, lineno);
+            fprintf(stderr, "%s%u: ", pref, lineno);
             fprintf(stderr, "Invalid comment line \"%s\"\n", line);
             warn_left--;
          }
@@ -86,16 +86,20 @@ int main(int argc, char *const *argv)
    FILE *fp;
    int   res = 0;
 
-   if (argc > 1 && argv[1][0] == '-' && argv[1][1] == 'h' && argv[1][2] == '\0')
+   if (argc > 1 && (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help")))
       return usage(argv[0]);
 
    if (argc == 1)
-      res = do_it(stdin, "<stdin>");
+      res = do_it(stdin, "");
    else
       for (int i = 1; i < argc && !res; i++)
          if ((fp = fopen(argv[i], "rt"))) {
-            res = do_it(fp, basename(argv[i])) || res;
+            const char *bn = basename(argv[i]);
+            char *pref     = calloc(snprintf(NULL, 0, "%s ", bn), sizeof(char));
+            sprintf(pref, "%s ", bn);
+            res = do_it(fp, pref) || res;
             fclose(fp);
+            free(pref);
          } else
             res = 1;
    return res;
