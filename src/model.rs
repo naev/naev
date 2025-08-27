@@ -18,7 +18,7 @@ use renderer::texture;
 use renderer::texture::{
     Framebuffer, FramebufferBuilder, FramebufferTarget, Texture, TextureBuilder,
 };
-use renderer::{look_at4, ortho4, Context, ContextWrapper, Uniform};
+use renderer::{Context, ContextWrapper, Uniform, look_at4, ortho4};
 
 const MAX_LIGHTS: usize = 7;
 const SHADOWMAP_SIZE_LOW: usize = 128;

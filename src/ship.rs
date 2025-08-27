@@ -3,7 +3,7 @@ use anyhow::Result;
 use log::warn;
 use rayon::prelude::*;
 use renderer::{Context, ContextWrapper};
-use std::ffi::{c_void, CStr, CString};
+use std::ffi::{CStr, CString, c_void};
 use std::sync::Mutex;
 
 struct ShipWrapper(naevc::Ship);

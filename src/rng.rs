@@ -134,11 +134,7 @@ pub fn normal_inverse(p: f64) -> f64 {
         x = poly(&E, x) / poly(&F, x);
     }
 
-    if q < 0.0 {
-        -x
-    } else {
-        x
-    }
+    if q < 0.0 { -x } else { x }
 }
 
 fn normal(x: f64) -> f64 {
@@ -152,9 +148,5 @@ fn normal(x: f64) -> f64 {
     let t = 1.0f64 / (1.0f64 + p * (if x < 0.0f64 { -x } else { x }));
     let series =
         1.0f64 - c_0 * (-x * x / 2.0f64).exp() * t * (t * (t * (t * (t * b5 + b4) + b3) + b2) + b1);
-    if x > 0.0f64 {
-        1.0f64 - series
-    } else {
-        series
-    }
+    if x > 0.0f64 { 1.0f64 - series } else { series }
 }

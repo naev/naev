@@ -1,6 +1,6 @@
 use log::{info, warn, warn_err};
 use sdl3 as sdl;
-use std::ffi::{c_char, CStr, CString};
+use std::ffi::{CStr, CString, c_char};
 use std::io::{Read, Result};
 use std::path::Path;
 
@@ -154,7 +154,12 @@ pub fn setup() -> anyhow::Result<()> {
 
     // If data is not found, we error.
     if !found() {
-        anyhow::bail!(formatx!(gettext("Unable to find game data. You may need to install, specify a datapath, or run using {} (if developing)."), "naev.py" )?);
+        anyhow::bail!(formatx!(
+            gettext(
+                "Unable to find game data. You may need to install, specify a datapath, or run using {} (if developing)."
+            ),
+            "naev.py"
+        )?);
     }
 
     // Verify the version
@@ -163,7 +168,13 @@ pub fn setup() -> anyhow::Result<()> {
     let version = semver::Version::parse(&version_str)?;
     let diff = version::compare_versions(&version::VERSION, &version);
     if diff != 0 {
-        let err_str = formatx!(gettext("ndata_version inconsistency with this version of Naev!\nExpected ndata version {} got {}."), &*version::VERSION_HUMAN, &version_str)?;
+        let err_str = formatx!(
+            gettext(
+                "ndata_version inconsistency with this version of Naev!\nExpected ndata version {} got {}."
+            ),
+            &*version::VERSION_HUMAN,
+            &version_str
+        )?;
         warn!("{}", &err_str);
         if diff.abs() > 2 {
             anyhow::bail!(err_str);

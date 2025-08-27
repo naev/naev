@@ -2,7 +2,7 @@ use sdl3 as sdl;
 use std::cell::UnsafeCell;
 use std::ffi::CStr;
 use std::sync::{
-    atomic::AtomicBool, atomic::Ordering, LockResult, PoisonError, TryLockError, TryLockResult,
+    LockResult, PoisonError, TryLockError, TryLockResult, atomic::AtomicBool, atomic::Ordering,
 };
 
 struct Lock(*mut sdl::sys::mutex::SDL_Mutex);

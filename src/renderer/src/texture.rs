@@ -9,7 +9,7 @@ use std::ffi::{CStr, CString};
 use std::io::{Read, Seek};
 use std::num::NonZero;
 use std::os::raw::{c_char, c_double, c_float, c_int, c_uint};
-use std::sync::{atomic::AtomicU32, Arc, LazyLock, Mutex, MutexGuard, Weak};
+use std::sync::{Arc, LazyLock, Mutex, MutexGuard, Weak, atomic::AtomicU32};
 
 use crate::buffer;
 use crate::{

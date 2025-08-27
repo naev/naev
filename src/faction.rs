@@ -9,13 +9,13 @@ use std::sync::{Mutex, OnceLock, RwLock};
 use crate::array;
 use crate::array::ArrayCString;
 use crate::nlua::LuaEnv;
-use crate::nlua::{NLua, NLUA};
+use crate::nlua::{NLUA, NLua};
 use crate::{formatx, warn, warnx};
 use gettext::gettext;
 use log::warn_err;
 use naev_core::utils::{binary_search_by_key_ref, sort_by_key_ref};
 use naev_core::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
-use renderer::{texture, Context, ContextWrapper};
+use renderer::{Context, ContextWrapper, texture};
 
 #[derive(Copy, Clone, Debug, PartialEq)]
 enum GridEntry {
@@ -71,7 +71,10 @@ impl Grid {
                 {
                     let ent = self[(dat.id, *a)];
                     if ent != GridEntry::Allies && ent != GridEntry::None {
-                        warn!("Incoherent faction grid! '{}' and '{}' already have contradictory relationships!", &dat.name, &factions[*a].data.name);
+                        warn!(
+                            "Incoherent faction grid! '{}' and '{}' already have contradictory relationships!",
+                            &dat.name, &factions[*a].data.name
+                        );
                     }
                 }
                 self[(dat.id, *a)] = GridEntry::Allies;
@@ -82,7 +85,10 @@ impl Grid {
                 {
                     let ent = self[(dat.id, *e)];
                     if ent != GridEntry::Enemies && ent != GridEntry::None {
-                        warn!("Incoherent faction grid! '{}' and '{}' already have contradictory relationships!", &dat.name, &factions[*e].data.name);
+                        warn!(
+                            "Incoherent faction grid! '{}' and '{}' already have contradictory relationships!",
+                            &dat.name, &factions[*e].data.name
+                        );
                     }
                 }
             }
@@ -92,7 +98,10 @@ impl Grid {
                 {
                     let ent = self[(dat.id, *n)];
                     if ent != GridEntry::Neutrals && ent != GridEntry::None {
-                        warn!("Incoherent faction grid! '{}' and '{}' already have contradictory relationships!", &dat.name, &factions[*n].data.name);
+                        warn!(
+                            "Incoherent faction grid! '{}' and '{}' already have contradictory relationships!",
+                            &dat.name, &factions[*n].data.name
+                        );
                     }
                 }
             }

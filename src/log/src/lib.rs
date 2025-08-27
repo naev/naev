@@ -226,7 +226,7 @@ macro_rules! warn_err {
 }
 
 // Some simple C API
-use std::ffi::{c_char, CStr};
+use std::ffi::{CStr, c_char};
 macro_rules! log_c {
     ($funcname: ident, $macro: ident) => {
         #[unsafe(no_mangle)]

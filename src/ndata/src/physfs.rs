@@ -1,7 +1,7 @@
 /* Documentation mentions global lock in settings. Should be thread-safe _except_ for opening the
  * same file and writing + reading/writing with multiple threads. */
 use sdl3 as sdl;
-use std::ffi::{c_int, CStr, CString};
+use std::ffi::{CStr, CString, c_int};
 use std::io::{Error, Read, Result, Seek, SeekFrom, Write};
 use std::os::raw::c_void;
 use std::sync::atomic::{AtomicPtr, Ordering};

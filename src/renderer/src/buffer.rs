@@ -1,8 +1,8 @@
 use anyhow::Result;
 use glow::*;
 
-use crate::warn;
 use crate::Context;
+use crate::warn;
 
 pub struct Buffer {
     pub buffer: glow::Buffer,

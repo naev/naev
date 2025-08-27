@@ -2,19 +2,19 @@ use anyhow::Result;
 use encase::ShaderType;
 use glow::*;
 use nalgebra::{Vector2, Vector3};
-use palette::rgb::Srgb;
 use palette::FromColor;
 use palette::Hsv;
+use palette::rgb::Srgb;
 use std::os::raw::c_double;
 
 use crate::rng;
+use renderer::Uniform;
 use renderer::buffer::{
     Buffer, BufferBuilder, BufferTarget, BufferUsage, VertexArray, VertexArrayBuffer,
     VertexArrayBuilder,
 };
 use renderer::shader::{ProgramBuilder, Shader};
 use renderer::texture::{Framebuffer, FramebufferBuilder};
-use renderer::Uniform;
 
 #[allow(dead_code)]
 pub const DEFAULT_HUE: f64 = 260.0;

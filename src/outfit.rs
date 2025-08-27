@@ -1,7 +1,7 @@
 use rayon::prelude::*;
-use renderer::texture::TextureBuilder;
 use renderer::Context;
-use std::ffi::{c_void, CStr};
+use renderer::texture::TextureBuilder;
+use std::ffi::{CStr, c_void};
 
 struct OutfitWrapper(naevc::Outfit);
 //unsafe impl Sync for OutfitWrapper {}

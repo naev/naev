@@ -6,11 +6,7 @@ pub fn angle_clean(a: f64) -> f64 {
     if a.abs() > 2. * PI {
         a %= 2. * PI;
     }
-    if a < 0. {
-        a + 2. * PI
-    } else {
-        a
-    }
+    if a < 0. { a + 2. * PI } else { a }
 }
 
 /// Gets the difference between two angles.

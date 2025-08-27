@@ -7,7 +7,7 @@ use sdl3 as sdl;
 use std::ffi::CStr;
 use std::ops::Deref;
 use std::os::raw::{c_char, c_double};
-use std::sync::{atomic::AtomicBool, atomic::Ordering, Arc, Mutex, MutexGuard, OnceLock, RwLock};
+use std::sync::{Arc, Mutex, MutexGuard, OnceLock, RwLock, atomic::AtomicBool, atomic::Ordering};
 
 pub mod buffer;
 pub mod sdf;
