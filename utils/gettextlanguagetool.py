@@ -16,7 +16,7 @@ Below is a chunk from an example vimrc of getting this to work with vim
 ```
 " Set up ALE plugin used plugged
 call plug#begin('~/.vim/plugged')
- Plug 'dense-analysis/ale'
+   Plug 'dense-analysis/ale'
 call plug#end()
 
 " Create the Lua linter
@@ -38,10 +38,10 @@ os.environ["LC_ALL"] = "C"
 # TODO better handling parameters and ideally passing them on to xgettext
 filename = sys.argv[1]
 if filename=='--autoDetect':
-    filename = sys.argv[2]
+   filename = sys.argv[2]
 
 with open( filename, 'r' ) as f:
-    lines = f.read().splitlines()
+   lines = f.read().splitlines()
 
 tf = tempfile.NamedTemporaryFile( suffix='.po' )
 args = [ "xgettext", filename, '--from-code=utf-8', '-d' , tf.name[:-3] ] # xgettext adds .po again
@@ -52,16 +52,16 @@ tool = language_tool_python.LanguageTool('en-GB')
 po = polib.pofile( tf.name )
 n = 1
 for entry in po:
-    for ti,txt in enumerate(entry.msgid.splitlines()):
-        line = int(entry.occurrences[0][1])+ti
-        f = lines[line-1].find(txt)
-        assert( f>= 0)
-        clist = tool.check(txt)
-        for c in clist:
-            col = 1+f+c.offset
-            print(f"{n}.) Line {line}, column {col}, Rule ID: {c.ruleId}")
-            print(f"Message: {c.message}")
-            print(f"{c.context}")
-            print(f"{' '*c.offsetInContext}{'^'*c.errorLength}")
-            print()
-            n = n+1
+   for ti,txt in enumerate(entry.msgid.splitlines()):
+      line = int(entry.occurrences[0][1])+ti
+      f = lines[line-1].find(txt)
+      assert( f>= 0)
+      clist = tool.check(txt)
+      for c in clist:
+         col = 1+f+c.offset
+         print(f"{n}.) Line {line}, column {col}, Rule ID: {c.ruleId}")
+         print(f"Message: {c.message}")
+         print(f"{c.context}")
+         print(f"{' '*c.offsetInContext}{'^'*c.errorLength}")
+         print()
+         n = n+1

@@ -18,20 +18,20 @@ foreach ns: files(naevpedia_outfits_sources)
       output: '@BASENAME@.md',
       install: true,
       install_dir: ndata_path / 'dat/naevpedia/outfits',
-    )
+   )
 endforeach
 
 genlist = []
 foreach gen: gen_outfits
-  genlist += gen.to_list()
+   genlist += gen.to_list()
 endforeach
 foreach ns: genlist
-  naevpedia_outfits += custom_target( ns.full_path().replace('/','_'),
+   naevpedia_outfits += custom_target( ns.full_path().replace('/','_'),
       command: outfits_gen,
       depends: [gen_outfits, gen_bio_outfits], # a bit brute force to depend on gen_outfit stage, but works
       input: ns,
       output: '@BASENAME@.md',
       install: true,
       install_dir: ndata_path / 'dat/naevpedia/outfits',
-    )
+   )
 endforeach

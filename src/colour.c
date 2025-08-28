@@ -53,7 +53,7 @@ void col_gammaToLinear( glColour *c )
  *
  * All values go from 0 to 1, except H which is 0-360.
  *
- *    @param[out] c Colour to be converted to from hsv.
+ *    @param[out] c Colour to be converted to from HSV.
  *    @param h Hue to convert.
  *    @param s Saturation to convert.
  *    @param v Value to convert.

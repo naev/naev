@@ -4,7 +4,7 @@
 /**
  * @file opengl.c
  *
- * @brief This file handles most of the more generic opengl functions.
+ * @brief This file handles most of the more generic openGL functions.
  *
  * The main way to work with opengl in naev is to create glTextures and then
  *  use the blit functions to draw them on the screen.  This system will
@@ -250,7 +250,7 @@ void gl_windowToScreenPos( float *sx, float *sy, float wx, float wy )
 }
 
 /**
- * @brief Translates the screen position to windos position.
+ * @brief Translates the screen position to window position.
  */
 void gl_screenToWindowPos( float *wx, float *wy, float sx, float sy )
 {

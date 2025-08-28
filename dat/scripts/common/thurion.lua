@@ -28,4 +28,16 @@ function thurion.vn_liao( params )
    }, params) )
 end
 
+-- Logging the data extraction missions
+function thurion.addDataLog( text )
+   shiplog.create( "thr_data", _("Data Extraction"), _("Thurion") )
+   shiplog.append( "thr_data", text )
+end
+
+-- General logging
+function thurion.addMiscLog( text )
+   shiplog.create( "thr_misc", _("Miscellaneous"), _("Thurion") )
+   shiplog.append( "thr_misc", text )
+end
+
 return thurion

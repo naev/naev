@@ -2,11 +2,10 @@ require 'ai.core.core'
 require 'ai.core.idle.trader'
 
 --[[
- ===FLEE AI===
+===FLEE AI===
 Mission specific AI to make pilots leave the system immediately.
-
-  Settings
 --]]
+
 -- Required control rate
 control_rate   = 2
 

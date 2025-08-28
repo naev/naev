@@ -94,7 +94,7 @@ static int               blk_flush( struct PHYSFS_Io *io );
 static void              blk_destroy( struct PHYSFS_Io *io );
 
 /**
- * @brief Mimicks an empty file.
+ * @brief Mimics an empty file.
  */
 static const PHYSFS_Io blk_emptyio = {
    .version   = 0,

@@ -17,7 +17,7 @@
 /**
  * @file naev.h
  *
- * @brief Header file with generic functions and naev-specifics.
+ * @brief Header file with generic functions and Naev-specifics.
  */
 #pragma once
 

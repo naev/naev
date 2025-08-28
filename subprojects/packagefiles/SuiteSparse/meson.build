@@ -1,8 +1,8 @@
 project(
-    'SuiteSparse',
-    'c',
-    default_options : ['c_std=c11'],
-    version: '7.3.1.beta1',
+   'SuiteSparse',
+   'c',
+   default_options : ['c_std=c11'],
+   version: '7.3.1.beta1',
 )
 
 cc = meson.get_compiler('c')

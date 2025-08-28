@@ -3,18 +3,18 @@
 %Clic sur bouton "PDFLATEX" pour compiler ce document ;
 % clic sur bouton "VOIR PDF", pour le visualiser.
 
-\documentclass[11pt,a4paper]{article}		% Format de page pour "article"
-\pagestyle{plain}		% pas pied page donc pas numero page
-\usepackage[utf8]{inputenc}			% Pour les caract�res accentu�s
-\usepackage[T1]{fontenc}				% Encodage de caract�res
-\usepackage{lmodern}					% Police vectorielle Latin Modern
-\usepackage[frenchb]{babel}				% R�gles typographiques fran�aises
-\usepackage{amsmath,amsfonts,amssymb,mathrsfs}			% Symboles math�matiques
-\usepackage{graphicx}					% Ins�rer des images
-\usepackage[left=2cm, right=2cm, top=2cm, bottom=2cm]{geometry}	%  marges
-\usepackage{array}                % tableaux
-\usepackage{multirow}                % tableaux de plusieurs colonnes
-\usepackage{multicol}                % plusieurs colonnes dans texte
+\documentclass[11pt,a4paper]{article}  % Format de page pour "article"
+\pagestyle{plain}                      % pas pied page donc pas numero page
+\usepackage[utf8]{inputenc}            % Pour les caract�res accentu�s
+\usepackage[T1]{fontenc}               % Encodage de caract�res
+\usepackage{lmodern}                   % Police vectorielle Latin Modern
+\usepackage[frenchb]{babel}            % R�gles typographiques fran�aises
+\usepackage{amsmath,amsfonts,amssymb,mathrsfs}         % Symboles math�matiques
+\usepackage{graphicx}                  % Ins�rer des images
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=2cm]{geometry}   %  marges
+\usepackage{array}                     % tableaux
+\usepackage{multirow}                  % tableaux de plusieurs colonnes
+\usepackage{multicol}                  % plusieurs colonnes dans texte
 \usepackage{wrapfig}
 \usepackage{booktabs}
 \def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
@@ -24,14 +24,14 @@
 \usepackage[ruled]{algorithm2e}
 
 % TRAIT entre COLONNES de textes :
-%\setlength{\columnseprule}{1pt}		% trait entre colonnes
-\setlength{\columnsep}{20pt}		% largeur de separ entre colnnes
+%\setlength{\columnseprule}{1pt}       % trait entre colonnes
+\setlength{\columnsep}{20pt}           % largeur de separ entre colnnes
 \usepackage{epstopdf}
 \setlength{\parskip}{8pt plus2pt minus1pt}   %  saut entre paragraphes
 \renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii}.}    % listes numerotees imbriquees ex :  2.1.1.4
 \renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}}
 \renewcommand{\labelenumiv}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.\arabic{enumiv}}
-\usepackage{xspace}  % espaces sp�ciaux
+\usepackage{xspace}                    % espaces sp�ciaux
 \usepackage{graphicx,xcolor}
 % commande \EUROS
 \newcommand{\euros}{\ensuremath{~\epsilon\xspace}}
@@ -74,54 +74,54 @@ This report is divided as follows: the direct impedance problem and its resoluti
 The discrete impedance problem arises naturally in physics from elliptic PDEs that model electricity, diffusive phenomena and mechanics. It is also used in economics to model the traffic of goods.
 
 \begin{figure}[ht]\centering
-	\includegraphics[scale=.5]{mesh.png}
-	\caption{A mesh}
-	\label{fig:mesh}
+   \includegraphics[scale=.5]{mesh.png}
+   \caption{A mesh}
+   \label{fig:mesh}
 \end{figure}
 
 Let us suppose one wants to solve such a problem on the mesh presented in figure \ref{fig:mesh}. Each node (blue) has un unknown potential $u$, and on each edge (red) there is an unknown oriented flux $f$. For each edge, there is also a given impedance $k$. On table \ref{tab:potNflux}, the physical quantities represented by $u$, $f$ and $k$ are listed.
 
 \begin{table}[ht]
-	\centering
-	\begin{tabular}{ccccc}
+   \centering
+   \begin{tabular}{ccccc}
       \toprule
-		Domain & $u$ & $f$ & k & Remark \\
+      Domain & $u$ & $f$ & k & Remark \\
       \midrule
-		Economy & Quantity of goods & Flux of goods & ? & \\
-		Traffic modelling & Population & Traffic & ? & It's our case \\
-		Thermic & Temperature & Heat flux & Thermal conductivity & \\
-		Diffusion & Quantity of particles & Flux of particles & Conductivity & \\
-		Electricity & Electric potential & Intensity & Inverse of resistance & \\
-		Mechanics & Displacement & Stress & Stiffness & $u$ is a vector \\
+      Economy & Quantity of goods & Flux of goods & ? & \\
+      Traffic modelling & Population & Traffic & ? & It's our case \\
+      Thermic & Temperature & Heat flux & Thermal conductivity & \\
+      Diffusion & Quantity of particles & Flux of particles & Conductivity & \\
+      Electricity & Electric potential & Intensity & Inverse of resistance & \\
+      Mechanics & Displacement & Stress & Stiffness & $u$ is a vector \\
       \bottomrule
-	\end{tabular}
-	\caption{Potential and Flux in different domains}
-	\label{tab:potNflux}
+   \end{tabular}
+   \caption{Potential and Flux in different domains}
+   \label{tab:potNflux}
 \end{table}
 
 One can impose three types of boundary conditions:
 
 \begin{itemize}
-	\item Dirichlet BC consist at imposing some values of $u$ at some nodes.
-	\item Neumann BC consist at imposing an input flux $b$ at some nodes. This leads to $\sum_j f_j = b$ for all edges that start from the given node.
-	\item Robin BC consist at imposing a linear relation between $u$ and $b$ at some node. This leads to $\sum_j f_j = \mu u$.
+   \item Dirichlet BC consist at imposing some values of $u$ at some nodes.
+   \item Neumann BC consist at imposing an input flux $b$ at some nodes. This leads to $\sum_j f_j = b$ for all edges that start from the given node.
+   \item Robin BC consist at imposing a linear relation between $u$ and $b$ at some node. This leads to $\sum_j f_j = \mu u$.
 \end{itemize}
 
 %\begin{table}[ht]
-%	\centering
-%	\begin{tabular}{|c|c|c|c|} \hline
-%		Domain & Dirichlet & Neumann & Robin \\ \hline
-%		Economy & ? & Someone produces a given quantity  & Someone adapts the production to demand \\
-%		& & of goods per day & $\mu$ is linked to the price the factory wants to sell its goods \\ \hline
-%		Traffic modelling & The nb of people in a room is given & ? & People want to leave (or go to) a place\\
-%		& & & $\mu$ is linked to the space in the place \\ \hline
-%		Thermic & Temperature is imposed & A heat flux is imposed & Thermal conductivity \\ \hline
-%		Diffusion & Quantity of particles & Flux of particles & Conductivity \\ \hline
-%		Electricity & Electric potential & Intensity & Inverse of resistance \\ \hline
-%		Mechanics & Displacement & Stress & Stiffness \\ \hline
-%	\end{tabular}
-%	\caption{Physical meaning of different boundary conditions in different domains}
-%	\label{tab:BC}
+%   \centering
+%   \begin{tabular}{|c|c|c|c|} \hline
+%      Domain & Dirichlet & Neumann & Robin \\ \hline
+%      Economy & ? & Someone produces a given quantity  & Someone adapts the production to demand \\
+%      & & of goods per day & $\mu$ is linked to the price the factory wants to sell its goods \\ \hline
+%      Traffic modelling & The nb of people in a room is given & ? & People want to leave (or go to) a place\\
+%      & & & $\mu$ is linked to the space in the place \\ \hline
+%      Thermic & Temperature is imposed & A heat flux is imposed & Thermal conductivity \\ \hline
+%      Diffusion & Quantity of particles & Flux of particles & Conductivity \\ \hline
+%      Electricity & Electric potential & Intensity & Inverse of resistance \\ \hline
+%      Mechanics & Displacement & Stress & Stiffness \\ \hline
+%   \end{tabular}
+%   \caption{Physical meaning of different boundary conditions in different domains}
+%   \label{tab:BC}
 %\end{table}
 
 Solving the impedance problem consists in determining the potential at each node and the flux at each edge of the graph from the given boundary conditions.
@@ -181,9 +181,9 @@ Once one Robin BC has been added on each connected part of the graph, the system
 There are a few interesting properties that will be useful to determine automatically during computation if two nodes are connected by the graph:
 
 \begin{itemize}
-	\item If the right hand side is non-zero only in one connected sub-graph, the solution of the system vanishes in all the other sub-graphs.
-	\item If the right hand side is orthogonal to the kernel of the matrix $K$ (ie. with zero mean), the solution at a node with Robin BCs is zero.
-	\item If the right hand side is non-zero only in one connected sub-graph, and each of its terms is greater or equal to zero, the solution of the system vanishes only in the other sub-graphs, and is strictly greater than zero in the sub-graph.
+   \item If the right hand side is non-zero only in one connected sub-graph, the solution of the system vanishes in all the other sub-graphs.
+   \item If the right hand side is orthogonal to the kernel of the matrix $K$ (ie. with zero mean), the solution at a node with Robin BCs is zero.
+   \item If the right hand side is non-zero only in one connected sub-graph, and each of its terms is greater or equal to zero, the solution of the system vanishes only in the other sub-graphs, and is strictly greater than zero in the sub-graph.
 \end{itemize}
 
 By virtue of the last property, if the right hand side is $b_i = \delta_{ij}$ ($\delta$ being the Kronecker symbol, which means $0$ everywhere and $1$ on node $j$), the only nodes connected to $j$ are such that the corresponding component of $K^{-1}F$ is nonzero.
@@ -255,9 +255,9 @@ The principle of a topological optimization procedure is to build a cost-functio
 The sketch of the optimization process is as follows :
 
 \begin{itemize}
-	\item Initialization: $\theta_0$ is zero except for the lanes that are imposed as active
-	\item At each iteration, compute $U$ by solving the multiple right hand side linear system $K(\theta_i)U=F$
-	\item Find the next iterate $\theta_{i+1}$
+   \item Initialization: $\theta_0$ is zero except for the lanes that are imposed as active
+   \item At each iteration, compute $U$ by solving the multiple right hand side linear system $K(\theta_i)U=F$
+   \item Find the next iterate $\theta_{i+1}$
 \end{itemize}
 
 
@@ -336,10 +336,10 @@ For $\tilde{U}$ and $\lambda$ such that $\nabla_u \psi = 0$ and $\nabla_\lambda 
 As a conclusion, in order to compute $\nabla\phi$, which is an essential point in the algorithm, one has to do the following computations :
 
 \begin{itemize}
-	\item Solve MRHS problem $K(\theta)\tilde{U} = \tilde{F}$ to obtain $\tilde{U}$
-	\item Solve MRHS problem $K(\theta) \tilde{\Lambda} = - Q^TQ\tilde{U}$ to obtain $\tilde{\Lambda}$
-	\item Compute $\Lambda = \tilde{\Lambda}P_p^TP_p$
-	\item Evaluate $\nabla\phi = \Lambda^T \cdot \nabla K(\theta) \tilde{U}$, as detailed in annex C.
+   \item Solve MRHS problem $K(\theta)\tilde{U} = \tilde{F}$ to obtain $\tilde{U}$
+   \item Solve MRHS problem $K(\theta) \tilde{\Lambda} = - Q^TQ\tilde{U}$ to obtain $\tilde{\Lambda}$
+   \item Compute $\Lambda = \tilde{\Lambda}P_p^TP_p$
+   \item Evaluate $\nabla\phi = \Lambda^T \cdot \nabla K(\theta) \tilde{U}$, as detailed in annex C.
 \end{itemize}
 
 \section{The algorithm (boolean case)}
@@ -347,26 +347,26 @@ As a conclusion, in order to compute $\nabla\phi$, which is an essential point i
 We propose first an algorithm that works with boolean unknowns $\theta$. It consists in activating at each iteration one lane per system and per faction. This lane is the one with the strongest gradient (in absolute value). It is presented at algorithm \ref{alg:lanes}.
 
 \begin{algorithm}[ht]
-	\caption{Lanes building algorithm}
-	\label{alg:lanes}
-	\begin{algorithmic}
-		\STATE Compute $Q$ and $Q^TQ$
-		\STATE For each faction, compute $P_p$ and $P_p^TP_p$
-		\STATE Assemble the MRHS $\tilde{F}$
-		\STATE Initialize the vector $\theta_1$
-		\FOR{$i = 1,\,2,\, \dots,n$}
-			\STATE Compute $K(\theta_i)$
-			\STATE Solve $K(\theta_i)\tilde{U} = \tilde{F}$
-			\STATE Solve $K(\theta_i)\tilde{\Lambda} = - Q^TQ\tilde{U}$
-			\STATE For each faction, compute $\Lambda_p = \tilde{\Lambda}P_p^TP_p$
-			\STATE Compute for each faction $\nabla\phi = \Lambda_p^T \cdot \nabla K(\theta) \tilde{U} = \left( ( \Lambda_p\tilde{U}^T )_{ii} + ( \Lambda_p\tilde{U}^T )_{jj} - ( \Lambda_p\tilde{U}^T )_{ij} - ( \Lambda_p\tilde{U}^T )_{ji} \right) k_{ij}$
-			\FOR{Each system $s$}
-				\FOR{Each faction $p$}
-					\STATE Activate the affordable lane for which the ratio $\nabla\phi_\eta / L_\eta$ is the greatest.
-				\ENDFOR
-			\ENDFOR
-		\ENDFOR
-	\end{algorithmic}
+   \caption{Lanes building algorithm}
+   \label{alg:lanes}
+   \begin{algorithmic}
+      \STATE Compute $Q$ and $Q^TQ$
+      \STATE For each faction, compute $P_p$ and $P_p^TP_p$
+      \STATE Assemble the MRHS $\tilde{F}$
+      \STATE Initialize the vector $\theta_1$
+      \FOR{$i = 1,\,2,\, \dots,n$}
+         \STATE Compute $K(\theta_i)$
+         \STATE Solve $K(\theta_i)\tilde{U} = \tilde{F}$
+         \STATE Solve $K(\theta_i)\tilde{\Lambda} = - Q^TQ\tilde{U}$
+         \STATE For each faction, compute $\Lambda_p = \tilde{\Lambda}P_p^TP_p$
+         \STATE Compute for each faction $\nabla\phi = \Lambda_p^T \cdot \nabla K(\theta) \tilde{U} = \left( ( \Lambda_p\tilde{U}^T )_{ii} + ( \Lambda_p\tilde{U}^T )_{jj} - ( \Lambda_p\tilde{U}^T )_{ij} - ( \Lambda_p\tilde{U}^T )_{ji} \right) k_{ij}$
+         \FOR{Each system $s$}
+            \FOR{Each faction $p$}
+               \STATE Activate the affordable lane for which the ratio $\nabla\phi_\eta / L_\eta$ is the greatest.
+            \ENDFOR
+         \ENDFOR
+      \ENDFOR
+   \end{algorithmic}
 \end{algorithm}
 
 \section{Continuous case}
@@ -433,8 +433,8 @@ The second constraint is the positivity of the lane density. This reads $\theta\
 
 \begin{equation}
 \begin{cases}
-	\theta_0 \geqslant 0\\
-	c^T\theta_0 \geqslant \Xi
+   \theta_0 \geqslant 0\\
+   c^T\theta_0 \geqslant \Xi
 \end{cases}
 \end{equation}
 
@@ -457,28 +457,28 @@ The gradient gives the direction to follow for minimizing $\theta$. Once this di
 The operation of projection presented in Section~\ref{sect:pos}, will be denoted by $P(\bullet)$
 
 \begin{algorithm}[ht]
-	\caption{Linesearch}
-	\label{alg:linesearch}
-	\begin{algorithmic}
-		\STATE Initialize $\alpha = \theta_n$, the previous iterate.
-		\STATE Initialize $\beta = \alpha + p\delta$
-		\IF{$\phi(P(\alpha))>\phi(P(\beta))$}
-		\STATE $\gamma\leftarrow \dfrac{-\alpha+2\beta}{2}$
-		\WHILE{$\phi(P(\beta))>\phi(P(\gamma))$}
-		\STATE $\beta\leftarrow\gamma$
-		\STATE $\gamma\leftarrow \dfrac{-\alpha+2\beta}{2}$
-		\ENDWHILE
-		\ENDIF
-		\STATE \COMMENT{Now, we know there is a minimum between $\alpha$ and $\beta$}
-		\FOR{Each $i=1..n$}
-		\IF{$\phi(P(\alpha))>\phi(P(\beta))$}
-		\STATE $\alpha\leftarrow \dfrac{\alpha+\beta}{2}$
-		\ELSE
-		\STATE $\beta\leftarrow \dfrac{\alpha+\beta}{2}$
-		\ENDIF
-		\ENDFOR
-		\STATE $\theta_{n+1} = P(\alpha)$
-	\end{algorithmic}
+   \caption{Linesearch}
+   \label{alg:linesearch}
+   \begin{algorithmic}
+      \STATE Initialize $\alpha = \theta_n$, the previous iterate.
+      \STATE Initialize $\beta = \alpha + p\delta$
+      \IF{$\phi(P(\alpha))>\phi(P(\beta))$}
+      \STATE $\gamma\leftarrow \dfrac{-\alpha+2\beta}{2}$
+      \WHILE{$\phi(P(\beta))>\phi(P(\gamma))$}
+      \STATE $\beta\leftarrow\gamma$
+      \STATE $\gamma\leftarrow \dfrac{-\alpha+2\beta}{2}$
+      \ENDWHILE
+      \ENDIF
+      \STATE \COMMENT{Now, we know there is a minimum between $\alpha$ and $\beta$}
+      \FOR{Each $i=1..n$}
+      \IF{$\phi(P(\alpha))>\phi(P(\beta))$}
+      \STATE $\alpha\leftarrow \dfrac{\alpha+\beta}{2}$
+      \ELSE
+      \STATE $\beta\leftarrow \dfrac{\alpha+\beta}{2}$
+      \ENDIF
+      \ENDFOR
+      \STATE $\theta_{n+1} = P(\alpha)$
+   \end{algorithmic}
 \end{algorithm}
 
 \textcolor{red}{Check the algo}

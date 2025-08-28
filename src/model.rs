@@ -13,12 +13,12 @@ use renderer::buffer::{
     Buffer, BufferBuilder, BufferTarget, BufferUsage, VertexArray, VertexArrayBuffer,
     VertexArrayBuilder,
 };
-use renderer::shader::{Shader, ShaderBuilder};
+use renderer::shader::{ProgramBuilder, Shader};
 use renderer::texture;
 use renderer::texture::{
     Framebuffer, FramebufferBuilder, FramebufferTarget, Texture, TextureBuilder,
 };
-use renderer::{look_at4, ortho4, Context, ContextWrapper, Uniform};
+use renderer::{Context, ContextWrapper, Uniform, look_at4, ortho4};
 
 const MAX_LIGHTS: usize = 7;
 const SHADOWMAP_SIZE_LOW: usize = 128;
@@ -30,8 +30,8 @@ fn tex_value(ctx: &ContextWrapper, name: Option<&str>, value: [u8; 3]) -> Result
     Ok(Rc::new(
         TextureBuilder::new()
             .name(name)
-            .width(1)
-            .height(1)
+            .width(Some(1))
+            .height(Some(1))
             .srgb(false)
             .flipv(false)
             .image(&img.into())
@@ -215,9 +215,8 @@ impl ModelShader {
     pub fn new(ctx: &ContextWrapper) -> Result<Self> {
         let lctx = ctx.lock();
         let gl = &lctx.gl;
-        let mut shaderbuilder = ShaderBuilder::new(Some("PBR Shader"))
-            .vert_file("material_pbr.vert")
-            .frag_file("material_pbr.frag")
+        let mut shaderbuilder = ProgramBuilder::new(Some("PBR Shader"))
+            .vert_frag_file("material_pbr.vert", "material_pbr.frag")
             .sampler("baseColour_tex", 0)
             .sampler("metallic_tex", 1)
             .sampler("emissive_tex", 2)
@@ -268,9 +267,9 @@ impl ShadowShader {
     pub fn new(ctx: &ContextWrapper) -> Result<Self> {
         let lctx = ctx.lock();
         let gl = &lctx.gl;
-        let shader = ShaderBuilder::new(Some("Shadow Shader"))
-            .uniform_buffer("Shadow", Self::U_SHADOW)
-            .vert_frag_file("rust_shadow.glsl")
+        let shader = ProgramBuilder::new(Some("Shadow Shader"))
+            .uniform_buffer("shadow", Self::U_SHADOW)
+            .wgsl_file("shadow.wgsl")
             .build(gl)?;
 
         let buffer = BufferBuilder::new(Some("Shadow Buffer"))
@@ -1158,15 +1157,13 @@ impl Common {
         // Blur Shaders
         let lctx = ctx.lock();
         let gl = &lctx.gl;
-        let shader_blur_x = ShaderBuilder::new(Some("Blur X Shader"))
+        let shader_blur_x = ProgramBuilder::new(Some("Blur X Shader"))
             .sampler("sampler", 0)
-            .vert_file("blur.vert")
-            .frag_file("blurX.frag")
+            .vert_frag_file("blur.vert", "blurX.frag")
             .build(gl)?;
-        let shader_blur_y = ShaderBuilder::new(Some("Blur Y Shader"))
+        let shader_blur_y = ProgramBuilder::new(Some("Blur Y Shader"))
             .sampler("sampler", 0)
-            .vert_file("blur.vert")
-            .frag_file("blurY.frag")
+            .vert_frag_file("blur.vert", "blurY.frag")
             .build(gl)?;
 
         Ok(Common {

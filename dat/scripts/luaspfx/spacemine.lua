@@ -24,7 +24,7 @@ local function trigger( s, d )
 end
 
 local function get_range( ew, d )
-   local mod = (ew - d.trackmin) / (d.trackmax - d.trackmin)
+   local mod = math.min( 1, (ew - d.trackmin) / (d.trackmax - d.trackmin) )
    return math.max( d.rangemin, d.range*mod )
 end
 

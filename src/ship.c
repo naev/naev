@@ -428,6 +428,10 @@ glTexture *ship_gfxComm( const Ship *s, int size, double tilt, double dir,
    char       buf[STRMAX_SHORT];
    glTexture *gltex;
 
+   // UNUSED
+   (void)tilt;
+   (void)dir;
+
    fbosize = ceil( size / gl_screen.scale );
 
    /* Load graphic if applicable. */

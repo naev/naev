@@ -19,11 +19,11 @@
 --]]
 --[[
 
-  Drinking Aristocrat
-  Author: geekt
-  Idea from todo list.
+   Drinking Aristocrat
+   Author: geekt
+   Idea from todo list.
 
-  An aristocrat wants a specific drink which he recalls from a certain planet and will pay handsomely if you bring it. When you get to said planet it turns out the drink isn't served there but the bartender gives you a hint. You are then hinted until you end up getting the drink and bringing it back.
+   An aristocrat wants a specific drink which he recalls from a certain planet and will pay handsomely if you bring it. When you get to said planet it turns out the drink isn't served there but the bartender gives you a hint. You are then hinted until you end up getting the drink and bringing it back.
 
 Thank you to Bobbens, Deiz, BTAxis, and others that have helped me with learning to use Lua and debugging my scripts in the IRC channel. Thanks as well to all those that have contributed to Naev and made it as great as it is today, and continue to make it better every day.
 
@@ -53,11 +53,11 @@ moreinfotxt[3] = _([[You walk in and see someone behind the bar. When you approa
 
 local worktxt = {}
 worktxt[1] = _([[You walk into the bar and know instantly that you are finally here! This is the place! You walk up to the bartender, who smiles. This has to be them. You start to describe the drink to them and they interrupt. "A Swamp Bombing. Of course, that's my speciality." You ask if they can make it to go, prompting a bit of a chuckle. "Sure, why not?"
-    Just as they're about to start making it, though, you stop them and say you'll have one here after all. As long as you've come all this way, you might as well try it. You're amazed at how quickly and gracefully their trained hands move, flipping bottles and shaking various containers. Before you know it, they've set a drink before you and closed another container to take with you. You taste it expecting something incredible. It's alright, but you doubt it was worth all this trouble.]])
+   Just as they're about to start making it, though, you stop them and say you'll have one here after all. As long as you've come all this way, you might as well try it. You're amazed at how quickly and gracefully their trained hands move, flipping bottles and shaking various containers. Before you know it, they've set a drink before you and closed another container to take with you. You taste it expecting something incredible. It's alright, but you doubt it was worth all this trouble.]])
 worktxt[2] = _([[You walk into the bar and know instantly that you are finally here! This is the place! You walk up to the bartender, who smiles. This has to be him. You start to describe the drink to him and he interrupts. "A Swamp Bombing. Of course, that's my speciality." You ask if he can make it to go, prompting a bit of a chuckle. "Sure, why not?"
-    Just as he's about to start making it, though, you stop him and say you'll have one here after all. As long as you've come all this way, you might as well try it. You're amazed at how quickly and gracefully his trained hands move, flipping bottles and shaking various containers. Before you know it, he's set a drink before you and closed another container to take with you. You taste it expecting something incredible. It's alright, but you doubt it was worth all this trouble.]])
+   Just as he's about to start making it, though, you stop him and say you'll have one here after all. As long as you've come all this way, you might as well try it. You're amazed at how quickly and gracefully his trained hands move, flipping bottles and shaking various containers. Before you know it, he's set a drink before you and closed another container to take with you. You taste it expecting something incredible. It's alright, but you doubt it was worth all this trouble.]])
 worktxt[3] = _([[You walk into the bar and know instantly that you are finally here! This is the place! You walk up to the bartender, who smiles. This has to be her. You start to describe the drink to her and she interrupts. "A Swamp Bombing. Of course, that's my speciality." You ask if she can make it to go, prompting a bit of a chuckle. "Sure, why not?"
-    Just as she's about to start making it, though, you stop her and say you'll have one here after all. As long as you've come all this way, you might as well try it. You're amazed at how quickly and gracefully her trained hands move, flipping bottles and shaking various containers. Before you know it, she's set a drink before you and closed another container to take with you. You taste it expecting something incredible. It's alright, but you doubt it was worth all this trouble.]])
+   Just as she's about to start making it, though, you stop her and say you'll have one here after all. As long as you've come all this way, you might as well try it. You're amazed at how quickly and gracefully her trained hands move, flipping bottles and shaking various containers. Before you know it, she's set a drink before you and closed another container to take with you. You taste it expecting something incredible. It's alright, but you doubt it was worth all this trouble.]])
 
 function create ()
    -- Note: this mission does not make any system claims.
@@ -83,7 +83,7 @@ function accept ()
    vn.transition()
 
    ari(fmt.f( _([[You begin to approach the aristocrat. Next to him stands a well dressed and muscular man, perhaps his assistant, or maybe his bodyguard, you're not sure. When you get close to his table, he begins talking to you as if you work for him. "This simply will not do. When I ordered this 'drink', if you can call it that, it seemed interesting. It certainly doesn't taste interesting. It's just bland. The only parts of it that are in any way interesting are not at all pleasing. It just tastes so… common.
-    You know what I would really like? There was this drink at a bar on, what planet was that? Damien, do you remember? The green drink with the red fruit shavings." Damien looks down at him and seems to think for a second before shaking his head. "I believe it might have been {pnt} in the {sys} system. The drink was something like an Atmospheric Re-Entry or Gaian Bombing or something. It's the bar's speciality. They'll know what you're talking about. You should go get me one. Can you leave right away?"]]),
+   You know what I would really like? There was this drink at a bar on, what planet was that? Damien, do you remember? The green drink with the red fruit shavings." Damien looks down at him and seems to think for a second before shaking his head. "I believe it might have been {pnt} in the {sys} system. The drink was something like an Atmospheric Re-Entry or Gaian Bombing or something. It's the bar's speciality. They'll know what you're talking about. You should go get me one. Can you leave right away?"]]),
       {pnt=mem.clueplanet, sys=mem.cluesys}))
    vn.menu{
       {_([[Accept]]), "accept"},
@@ -187,7 +187,7 @@ function land ()
       ari(fmt.f(_([["Ahh! I was just thinking how much I wanted one of those drinks! I'm so glad that you managed to find it. You sure seemed to take your time though." You give him his drink and tell him that it wasn't easy, and how many systems you had to go through. "Hmm. That is quite a few systems. No reason for you to be this late though." He takes a sip from his drink. "Ahh! That is good though. I suppose you'll be wanting to get paid for your efforts. You did go through a lot of trouble. Then again, you did take quite a long time. I suppose {credits} should be appropriate."]]),
          {credits=fmt.credits(payment)}))
       vn.na(_([[Considering the amount of effort that you went through, you feel almost cheated. You don't feel like arguing with the snobby aristocrat though, so you just leave him to his drink without another word. It's probably the most that anyone's ever paid for a drink like that anyway.
-    When you get back to your ship you realize you have a drink left over. It might look good like an ornament?]]))
+   When you get back to your ship you realize you have a drink left over. It might look good like an ornament?]]))
       vn.sfxVictory()
       vn.func( function ()
          player.outfitAdd(reward)

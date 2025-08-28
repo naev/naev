@@ -102,7 +102,8 @@ end
 -- armour is the amount of armour damage taken (in GJ)
 -- shield is the amount of shield damage taken (in GJ)
 -- attacker is the pilot that attacked
-function onhit( _p, _po, _armour, _shield, _attacker )
+-- pos is the position of the hit
+function onhit( _p, _po, _armour, _shield, _attacker, _pos )
 end
 
 -- The onshoot function is run when the pilot 'p' shoots ANY weapon. This includes primary / secondary / instant weapon sets

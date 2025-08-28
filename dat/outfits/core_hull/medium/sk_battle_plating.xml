@@ -4,7 +4,7 @@
   <slot prop_extra="hull_secondary" prop="hull">structure</slot>
   <size>medium</size>
   <price>320000</price>
-  <description>Designed for corvettes and similarly-sized vessels, Schafer &amp; Kane's medium combat plating provides ample protection utilizing the latest in defensive materials.</description>
+  <description>Designed for medium-sized vessels, Schafer &amp; Kane's medium combat plating provides ample protection utilizing the latest in defensive materials.</description>
   <gfx_store>combat_hull_m.webp</gfx_store>
   <priority>3</priority>
  </general>

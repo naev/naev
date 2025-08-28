@@ -49,16 +49,18 @@ local radius = 4000
 local mace_fail = _("Your only weapons should be Mace rockets: land and speak again with Major Tam.")
 
 -- Joy cries (for the Mace throw)
-local joy = { _("Wohoo!"),
-        _("One less!"),
-        _("Baoum!"),
-        _("I'm in such good shape!"),
-        _("Top score, here I come!"),
-        _("Eat that, you Llama freak!"),
-        _("I am so a-Mace-ing!"), -- Yep, I remember the puns I read on discord
-        _("Dodge that!"),
-        _("I got one right in the a... Hem. The engine..."),
-        _("Got you!"),}
+local joy = {
+   _("Wohoo!"),
+   _("One less!"),
+   _("Baoum!"),
+   _("I'm in such good shape!"),
+   _("Top score, here I come!"),
+   _("Eat that, you Llama freak!"),
+   _("I am so a-Mace-ing!"), -- Yep, I remember the puns I read on discord
+   _("Dodge that!"),
+   _("I got one right in the a... Hem. The engine..."),
+   _("Got you!"),
+}
 
 function create()
    if not misn.claim(destsys) then
@@ -94,16 +96,18 @@ function create()
 
    -- Prepare storing of total scores of competitors
    mem.score_total = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
-   mem.competitors_names = { _("Major Tam"),
-                         _("Captain Leblanc"),
-                         _("General Klank"),
-                         _("Sergeant Strafer"),
-                         _("Private Micoult"),
-                         _("Sergeant Garcia"),
-                         _("Corporal Johnson"),
-                         _("Private Ernst"),
-                         _("Lieutenant Guo"),
-                         player.name(), }
+   mem.competitors_names = {
+      _("Major Tam"),
+      _("Captain Leblanc"),
+      _("General Klank"),
+      _("Sergeant Strafer"),
+      _("Private Micoult"),
+      _("Sergeant Garcia"),
+      _("Corporal Johnson"),
+      _("Private Ernst"),
+      _("Lieutenant Guo"),
+      player.name(),
+   }
 end
 
 local cargo_flowers

@@ -167,7 +167,7 @@ static int gfxL_dim( lua_State *L )
 /**
  * @brief Gets the screen coordinates from game coordinates.
  *
- *    @luatparam Vec2 Vector of coordinates to transnform.
+ *    @luatparam Vec2 Vector of coordinates to transform.
  *    @luatparam[opt=false] boolean Whether or not to invert y axis.
  *    @luatreturn Vec2 Transformed vector.
  * @luafunc screencoords
@@ -869,7 +869,7 @@ static int gfxL_printf( lua_State *L )
 }
 
 /**
- * @brief Prints text on the screen using a font with a transformation matirx.
+ * @brief Prints text on the screen using a font with a transformation matrix.
  *
  *    @luatparam Transform H transformation matrix to use.
  *    @luatparam font font Font to use.

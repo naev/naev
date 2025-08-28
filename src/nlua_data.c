@@ -4,7 +4,7 @@
 /**
  * @file nlua_data.c
  *
- * @brief Handles datas.
+ * @brief Handles data.
  */
 /** @cond */
 #include <lauxlib.h>
@@ -56,7 +56,7 @@ int nlua_loadData( nlua_env *env )
 }
 
 /**
- * @brief Lua bindings to interact with datas.
+ * @brief Lua bindings to interact with data.
  *
  * @luamod data
  */
@@ -138,11 +138,11 @@ static int dataL_gc( lua_State *L )
 }
 
 /**
- * @brief Compares two datas to see if they are the same.
+ * @brief Compares two data to see if they are the same.
  *
  *    @luatparam Data d1 Data 1 to compare.
  *    @luatparam Data d2 Data 2 to compare.
- *    @luatreturn boolean true if both datas are the same.
+ *    @luatreturn boolean true if both data are the same.
  * @luafunc __eq
  */
 static int dataL_eq( lua_State *L )

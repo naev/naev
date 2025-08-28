@@ -316,7 +316,7 @@ static mat4    light_mat_alt[MAX_LIGHTS];
 static mat4   *light_mat = light_mat_def;
 
 /**
- * @brief Shader to use witha material.
+ * @brief Shader to use with a material.
  */
 typedef struct Shader_ {
    GLuint program;
@@ -502,15 +502,15 @@ static int gltf_loadTexture( const GltfObject *obj, Texture *otex,
       }
 
       SDL_LockSurface( surface );
-      glPixelStorei( GL_UNPACK_ALIGNMENT,
-                     MIN( surface->pitch & -surface->pitch, 8 ) );
+      //glPixelStorei( GL_UNPACK_ALIGNMENT,
+      //               MIN( surface->pitch & -surface->pitch, 8 ) );
       if ( notsrgb )
          glTexImage2D( GL_TEXTURE_2D, 0, internalformat, surface->w, surface->h,
                        0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels );
       else
          glTexImage2D( GL_TEXTURE_2D, 0, internalformat, surface->w, surface->h,
                        0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels );
-      glPixelStorei( GL_UNPACK_ALIGNMENT, 4 );
+      //glPixelStorei( GL_UNPACK_ALIGNMENT, 4 );
       SDL_UnlockSurface( surface );
    } else {
       /*
@@ -2300,7 +2300,7 @@ double gltf_lightIntensityGet( void )
 }
 
 /**
- * @brief Transforms the lighting positions based on a trasnform matrix.
+ * @brief Transforms the lighting positions based on a transform matrix.
  */
 void gltf_lightTransform( Lighting *L, const mat4 *H )
 {
@@ -2376,7 +2376,7 @@ static GltfObject *cache_get( const char *filename, int *new )
 }
 
 /**
- * @brief Decerments the refcount for a cached object and sees if it should be
+ * @brief Decrements the reference count for a cached object and sees if it should be
  * freed.
  *
  *    @param obj Object to check to see if it should be freed.

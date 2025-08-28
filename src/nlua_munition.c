@@ -205,13 +205,13 @@ static Weapon *munition_get( LuaMunition *lm )
 
 /**
  * @brief Gets the munition's current (translated) name or notes it is
- * inexistent.
+ * non-existent.
  *
  * @usage tostring(p)
  *
  *    @luatparam Munition p Munition to convert to string.
- *    @luatreturn string The current name of the munition or "(inexistent
- * munition)" if not existent.
+ *    @luatreturn string The current name of the munition or '("inexistent"
+ * munition)' if non-existent.
  * @luafunc __tostring
  */
 static int munitionL_tostring( lua_State *L )

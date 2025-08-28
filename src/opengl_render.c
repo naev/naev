@@ -4,7 +4,7 @@
 /**
  * @file opengl_render.c
  *
- * @brief This file handles the opengl rendering routines.
+ * @brief This file handles the openGL rendering routines.
  *
  * There are two coordinate systems: relative and absolute.
  *
@@ -337,7 +337,7 @@ void gl_renderTextureDepthRaw( GLuint texture, GLuint depth, uint8_t flags,
  *
  *    @param texture Texture to blit.
  *    @param sampler Sampler to use.
- *    @param projection Projection matrix tu use.
+ *    @param projection Projection matrix to use.
  *    @param tex_mat Texture matrix to use.
  *    @param c Colour to use (modifies texture colour).
  */
@@ -442,7 +442,7 @@ void gl_renderTextureRaw( GLuint texture, GLuint sampler, uint8_t flags,
  *    @param c Colour to use (modifies texture colour).
  *    @param angle Rotation to apply (radians ccw around the center).
  */
-void gl_/enderTexture( const glTexture *texture, double x, double y, double w,
+void gl_renderTexture( const glTexture *texture, double x, double y, double w,
                        double h, double tx, double ty, double tw, double th,
                        const glColour *c, double angle )
 {
@@ -533,7 +533,7 @@ void gl_renderSDF( const glTexture *texture, double x, double y, double w,
  *    @param sa Sampler for A.
  *    @param sb Sampler for B.
  *    @param inter Amount of interpolation to do.
- *    @param projection Projection matrix tu use.
+ *    @param projection Projection matrix to use.
  *    @param tex_mat Texture matrix to use.
  *    @param c Colour to use (modifies texture colour).
  */
@@ -639,10 +639,10 @@ void gl_renderTextureInterpolate( const glTexture *ta, const glTexture *tb,
 /**
  * @brief Converts in-game coordinates to screen coordinates.
  *
- *    @param[out] nx New screen X coord.
- *    @param[out] ny New screen Y coord.
- *    @param bx Game X coord to translate.
- *    @param by Game Y coord to translate.
+ *    @param[out] nx New screen X coordinate.
+ *    @param[out] ny New screen Y coordinate.
+ *    @param bx Game X coordinate to translate.
+ *    @param by Game Y coordinate to translate.
  */
 void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by )
 {
@@ -660,10 +660,10 @@ void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by )
 /**
  * @brief Converts screen coordinates to in-game coordinates.
  *
- *    @param[out] nx New in-game X coord.
- *    @param[out] ny New in-game Y coord.
- *    @param bx Screen X coord to translate.
- *    @param by Screen Y coord to translate.
+ *    @param[out] nx New in-game X coordinate.
+ *    @param[out] ny New in-game Y coordinate.
+ *    @param bx Screen X coordinate to translate.
+ *    @param by Screen Y coordinate to translate.
  */
 void gl_screenToGameCoords( double *nx, double *ny, int bx, int by )
 {

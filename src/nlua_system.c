@@ -125,7 +125,7 @@ int nlua_loadSystem( nlua_env *env )
  *
  *    @param L Lua state to get system from.
  *    @param ind Index position of system.
- *    @return The LuaSystem at ind.
+ *    @return LuaSystem found at ind.
  */
 LuaSystem lua_tosystem( lua_State *L, int ind )
 {
@@ -136,7 +136,7 @@ LuaSystem lua_tosystem( lua_State *L, int ind )
  *
  *    @param L Lua state to get system from.
  *    @param ind Index position of system.
- *    @return The LuaSystem at ind.
+ *    @return LuaSystem found at ind.
  */
 LuaSystem luaL_checksystem( lua_State *L, int ind )
 {
@@ -238,7 +238,7 @@ static int systemL_cur( lua_State *L )
  * @usage sys = system.get( "Gamma Polaris" ) -- Gets the system by name.
  *
  *    @luatparam string|Spob param Read description for details.
- *    @luatreturn System System matching param.
+ *    @luatreturn System System matching parameter.
  * @luafunc get
  */
 static int systemL_get( lua_State *L )
@@ -441,7 +441,7 @@ static int systemL_interference( lua_State *L )
  * @usage d = sys:jumpDist( another_sys ) -- Distance from sys to another_sys.
  *
  *    @luatparam System s Starting system.
- *    @luatparam nil|string|Goal system param See description.
+ *    @luatparam nil|string|system goal Goal system parameter, see description.
  *    @luatparam[opt=false] boolean hidden Whether or not to consider hidden
  * jumps.
  *    @luatparam[opt=false] boolean known Whether or not to consider only jumps
@@ -503,7 +503,7 @@ static int systemL_jumpdistance( lua_State *L )
  * to another_sys.
  *
  *    @luatparam System s Starting system.
- *    @luatparam System goal Goal system param See description.
+ *    @luatparam nil|string|system goal Goal system parameter, see description.
  *    @luatparam[opt=false] boolean hidden Whether or not to consider hidden
  * jumps.
  *    @luatreturn {Jump,...} Table of jumps.
@@ -962,8 +962,8 @@ static int systemL_markerClear( lua_State *L )
 /**
  * @brief Adds a system marker.
  *
- * @usage mrk_id = system.markerAdd( vec2.new( 50, 30 ), "Hello" ) -- Creates a
- * marker at (50,30)
+ * @usage marker_id = system.markerAdd( vec2.new( 50, 30 ), "Hello" ) -- Creates
+ * a marker at (50,30)
  *
  *    @luatparam Vec2 v Position to display marker at.
  *    @luatparam[opt] string str String to display next to marker.
@@ -996,7 +996,7 @@ static int systemL_markerAdd( lua_State *L )
 /**
  * @brief Removes a system marker.
  *
- * @usage system.markerRm( mrk_id ) -- Removes a marker by mrk_id
+ * @usage system.markerRm( marker_id ) -- Removes a marker by marker_id
  *
  *    @luatparam number id ID of the marker to remove.
  * @luafunc markerRm

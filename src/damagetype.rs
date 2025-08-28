@@ -158,11 +158,11 @@ impl DamageType {
             }
             match node.tag_name().name().to_lowercase().as_str() {
                 "shield" => {
-                    dt.shield_stat = node.attribute("stat").map(|s| stat_offset(s)).flatten();
+                    dt.shield_stat = node.attribute("stat").and_then(stat_offset);
                     dt.shield_mod = nxml::node_f64(node)?
                 }
                 "armour" => {
-                    dt.armour_stat = node.attribute("stat").map(|s| stat_offset(s)).flatten();
+                    dt.armour_stat = node.attribute("stat").and_then(stat_offset);
                     dt.armour_mod = nxml::node_f64(node)?
                 }
                 "knockback" => dt.knockback = nxml::node_f64(node)?,

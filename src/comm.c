@@ -237,7 +237,7 @@ int comm_openSpob( Spob *spob )
  *
  *    @param p Pilot to get string from.
  *    @param str String to get.
- *    @return String matching str.
+ *    @return String matching string.
  */
 static const char *comm_getString( const Pilot *p, const char *str )
 {

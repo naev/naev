@@ -15,7 +15,7 @@
 #include "ndata.h"
 
 /**
- * @brief Parses a texture handling the sx and sy elements.
+ * @brief Parses a texture handling the "sx" and "sy" elements.
  *
  *    @param node Node to parse.
  *    @param path Path to get file from, should be in the format of
@@ -66,9 +66,10 @@ void xmlw_setParams( xmlTextWriterPtr writer )
 }
 
 /**
- * @brief Analogous to xmlParseMemory/xmlParseFile.
+ * @brief Analogous to "xmlParseMemory"/"xmlParseFile".
  * @param filename PhysFS file name.
- * @return doc (must xmlFreeDoc) on success, NULL on failure (will warn user).
+ * @return xml document (must "xmlFreeDoc") on success, NULL on failure (will
+ * warn user).
  */
 xmlDocPtr xml_parsePhysFS( const char *filename )
 {

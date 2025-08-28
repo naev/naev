@@ -131,9 +131,10 @@ function land ()
    liao(_([["Do not worry about me, I have arrangements and don't expect any difficulties here. However, there is a lot of work left to do."]]))
    vn.jump("01_cont")
 
+   local spb = spob.get("Cerberus Outpost")
    vn.label("01_cont")
    liao(fmt.f(_([["Before I send you off your way, let me hook you up with a special code for the Mission Bulletin Board System, you'll be able to find small tasks for us. However, they won't be as easy as this one. For now, we only operate through around here, and {spb}. However, we hope that will change in the future."]]),
-      {spb=spob.get("Cerberus Outpost")}))
+      {spb=spb}))
    liao(_([[They sort of blank out for a second, before suddenly coming back.
 "Sorry, I haven't been this disconnected in a while. Even though I trained for it, it will take some getting used to. Here, take a credit stick and let us meet again, somewhere, someday."]]))
    vn.na(_([[They flash a smile and head off towards the interior of the station full of confidence.]]))
@@ -147,6 +148,9 @@ function land ()
 
    vn.done( thurion.liao.transition )
    vn.run()
+
+   thurion.addDataLog(fmt.f(_([[You helped a Thurion android named Liaou reach {spb} to begin data extraction operations. They mentioned that you may find missions to further help the Thurion cause on the Mission Bullet Board Systems at {spobs}.]]),
+      {spobs=fmt.list{destspb, spb}, spb=destspb}))
 
    misn.finish(true)
 end

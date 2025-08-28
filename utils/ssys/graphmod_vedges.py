@@ -24,6 +24,7 @@ virtual_edges = [
    ('pellmell', 'fulcrum'),
    ('nasona', 'oriantis'),
    ('tau_ceti', 'arcanis'),
+   ('ngc8338', 'unicorn'),
    #('carrza', 'tepvin'),
    #('tepvin', 'hakoi'),
 ]

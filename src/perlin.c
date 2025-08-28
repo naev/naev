@@ -28,7 +28,7 @@
 /**
  * @file perlin.c
  *
- * @brief Handles creating noise based on perlin noise.
+ * @brief Handles creating noise based on Perlin noise.
  *
  * Code tries to handle basically 2d/3d cases, without much genericness
  *  because it needs to be pretty fast.  Originally sped up the code from
@@ -66,7 +66,7 @@ struct perlin_data_s {
    ( (int)( a ) - ( ( a ) < 0 && ( a ) != (int)( a ) ) ) /**< Limits to 0. */
 
 /**
- * @brief Creates a new perlin noise generator.
+ * @brief Creates a new Perlin noise generator.
  */
 perlin_data_t *noise_new( void )
 {

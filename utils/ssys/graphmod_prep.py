@@ -20,14 +20,15 @@ anbh = [ 'ngc11935', 'ngc5483', 'ngc7078', 'ngc7533', 'octavian',
    'copernicus', 'ngc13674', 'ngc1562', 'ngc2601', ]
 
 del_edges = [
-#   ('titus', 'vedalus'),
-#   ('kelvos', 'mason'),
-#   ('khaas', 'diadem'),
+#   {'titus', 'vedalus'},
+   {'kelvos', 'mason'},
+#   {'khaas', 'diadem'},
 ]
 
 new_edges = [
 #  ('khaas', 'vedalus'),
-#  ('andres', 'mason'),
+   ('andres', 'mason'), ('mason', 'andres'),
+   ('sunir', 'suna'), ('sunir', 'vanir'), ('sunir', 'monogram'),
 ]
 
 # In the form: (from, to [, length])
@@ -44,13 +45,13 @@ virtual_edges = [
    ('baitas', 'tasopa'), ('percival', 'jommel'),
    ('flow', 'katami'), ('nava', 'flow'),
    ('katami', 'eisenhorn'), ('vean', 'basel'),
-   ('alpha_centauri', 'tasopa'),('syndania', 'padonia'),
+   ('alpha_centauri', 'tasopa'),
    ('veses', 'protera'), ('syndania', 'stint'),
    ('sagittarius', 'alpha_centauri'), ('protera', 'scholzs_star'),
    ('ngc18451', 'felzen'), ('ngc6057', 'xeric'), ('ngc1098', 'westhaven'),
    ('ngc7061', 'kansas'), ('niger', 'kyo'),
    ('willow', 'palovi'), ('margarita', 'narousse'),
-   ('porro', 'modus_manis'), ('suna', 'vanir'),
+   ('porro', 'modus_manis'),
    ('tobanna', 'brumeria'),('rotide', 'tide'),
    ('padonia', 'basel'), ('ogat', 'wochii'),
    ('griffin', 'pastor'), ('ngc2948', 'ngc9017'),
@@ -64,7 +65,7 @@ virtual_edges = [
    ('ngc14479', 'zintar'), ('pudas', 'fried'),
    ('blunderbuss', 'darkstone'), ('ekkodu', 'tarsus'),
    ('ivella', 'jommel'), ('starlight_end', 'possum'),
-   ('ngc8338', 'unicorn'), ('ngc22375', 'undergate'),
+   ('ngc22375', 'undergate'), ('daled', 'andres'),
 ]
 
 prv, prvj  = None, None
@@ -85,17 +86,33 @@ if prv is not None:
    virtual_edges.append(('_'+str(prvj+2),             prv))
    virtual_edges.append(('_'+str(prvj+2),      '_'+str(1)))
 
+
+virtual_edges.extend([
+   ('sunir', 'botarn'), ('sunir', 'anrique'),
+   ('kraft', 'kiwi')])
+
+
 from graphmod import ssys_pos, ssys_jmp
 from virtual_edges import add_virtual_edges
-add_virtual_edges(ssys_jmp, virtual_edges)
 
+ssys_pos['sunir'] = (ssys_pos['suna'] + ssys_pos['vanir'] + ssys_pos['botarn']) / 3.0
+ssys_pos.aux['sunir'] = ["default::spoiler:unused", "Su'nir"]
+
+for sys, side in {'mason': 'north', 'c59': 'north', 'sollav': 'south'}.items():
+   if ':' not in ssys_pos.aux[sys][0]:
+      ssys_pos.aux[sys][0] += ':'
+   for pref in ['', side]:
+      if ssys_pos.aux[sys][0].find(':' + pref + 'stellarwind') == -1:
+         ssys_pos.aux[sys][0] += ':' + pref + 'stellarwind'
+
+add_virtual_edges(ssys_jmp, virtual_edges)
 
 for v in ssys_pos:
    for e, t in ssys_jmp[v].items():
-      if (v, e) in del_edges:
+      if {v, e} in del_edges:
          t.append('fake')
       if (v, e) in new_edges:
          new_edges.remove((v, e))
 
 for (i, j) in new_edges:
-   ssys_pos[i].append((j, ['new']))
+   ssys_jmp[i][j] = ['new']

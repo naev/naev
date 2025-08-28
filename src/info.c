@@ -847,7 +847,7 @@ static void weapons_clearAll( unsigned int wid, const char *str )
 }
 
 /**
- * @brief Toggles autoweap for the ship.
+ * @brief Toggles automatic weapon groups for the ship.
  */
 static void weapons_autoweap( unsigned int wid, const char *str )
 {
@@ -943,7 +943,7 @@ static void weapons_renderLegend( double bx, double by, double bw, double bh,
 }
 
 /**
- * @brief Opens the naevpedia for weapon sets.
+ * @brief Opens Naevpedia for weapon sets.
  */
 static void weapons_help( unsigned int wid, const char *str )
 {
@@ -1476,7 +1476,12 @@ static void mission_menu_update( unsigned int wid, const char *str )
    const StarSystem *sys;
    int               pos = toolkit_getListPos( wid, "lstMission" );
 
-   if ( pos < 0 || pos == selectedMission )
+   // Already selected
+   if ( pos == selectedMission )
+      return;
+
+   // Out of bounds.
+   if ( ( pos < 0 ) || ( pos >= array_size( player_missions ) ) )
       return;
 
    /* Modify the text. */
@@ -1505,7 +1510,7 @@ static void mission_menu_chk_hide( unsigned int wid, const char *str )
 {
    Mission *misn;
    int      pos = toolkit_getListPos( wid, "lstMission" );
-   if ( ( pos < 0 ) || ( pos > array_size( player_missions ) ) )
+   if ( ( pos < 0 ) || ( pos >= array_size( player_missions ) ) )
       return;
    misn = player_missions[pos];
 
@@ -1520,7 +1525,7 @@ static void mission_menu_chk_priority( unsigned int wid, const char *str )
 {
    Mission *misn;
    int      pos = toolkit_getListPos( wid, "lstMission" );
-   if ( ( pos < 0 ) || ( pos > array_size( player_missions ) ) )
+   if ( ( pos < 0 ) || ( pos >= array_size( player_missions ) ) )
       return;
    misn = player_missions[pos];
 

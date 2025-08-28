@@ -18,7 +18,7 @@
  <trail_generator y="-27" h="-4" always_under="1" x="16">nebula</trail_generator>
  <fabricator>Skull and Bones</fabricator>
  <faction>Raven Clan</faction>
- <description>The Zebra, one of the largest freighters available for independent civilian traders, was refitted by Skull and Bones to serve as carrier. Large portions of the cargo bays were repurposed as hangars, thus the cargo capacity is significantly lower. The pirate version of the Zebra is nevertheless used as freighter occasionally.</description>
+ <description>The Zebra, one of the largest freighters available for independent civilian traders, was refitted by Skull and Bones to serve as carrier. Large portions of the cargo bays were left out to harden the hull or repurposed as hangars; those hangars have to operate in a scarily makeshift manner, slowing fighter maintienance substantially, but on the flipside, releasing the fighters is hardly more involved than jettisoning unwanted cargo, making it quick to respond to sudden threats. Although its capacity for cargo ends up suboptimal, the pirate version of the Zebra is used as a freighter occasionally.</description>
  <health>
   <armour>1400</armour>
   <armour_regen>0</armour_regen>
@@ -62,6 +62,8 @@
   <cargo_inertia>-10</cargo_inertia>
   <armour_mod>-10</armour_mod>
   <ew_hide>-10</ew_hide>
+  <fbay_rate>160</fbay_rate>
+  <fbay_reload>-20</fbay_reload>
   <fuel>400</fuel>
  </stats>
  <tags>

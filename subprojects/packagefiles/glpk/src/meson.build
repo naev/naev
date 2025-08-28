@@ -197,4 +197,4 @@ libglpk = static_library(
    c_args: glpk_args,
    dependencies: glpk_dependencies,
    include_directories: glpk_includes,
- )
+)

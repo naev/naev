@@ -3,11 +3,11 @@ directory = pcre2-10.45
 source_url = https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.45/pcre2-10.45.tar.bz2
 source_filename = pcre2-10.45.tar.bz2
 source_hash = 21547f3516120c75597e5b30a992e27a592a31950b5140e7b8bfde3f192033c4
-patch_filename = pcre2_10.45-1_patch.zip
-patch_url = https://wrapdb.mesonbuild.com/v2/pcre2_10.45-1/get_patch
-patch_hash = 0be2b28c3604513da4a0e072b3e136199144f2fb5a5c7b6b7981e12a60488083
-source_fallback_url = https://github.com/mesonbuild/wrapdb/releases/download/pcre2_10.45-1/pcre2-10.45.tar.bz2
-wrapdb_version = 10.45-1
+patch_filename = pcre2_10.45-4_patch.zip
+patch_url = https://wrapdb.mesonbuild.com/v2/pcre2_10.45-4/get_patch
+patch_hash = 52d950275cd19b7143004d83461cb72589caed2b9ac593f84913f0f48e782fa0
+source_fallback_url = https://github.com/mesonbuild/wrapdb/releases/download/pcre2_10.45-4/pcre2-10.45.tar.bz2
+wrapdb_version = 10.45-4
 
 [provide]
 libpcre2-8 = libpcre2_8

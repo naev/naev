@@ -19,9 +19,9 @@
       {'armour', 170, 190},
       {'cargo_inertia', -10, -4},
       {'cargo_mod', 10, 4},
-      {'ew_detected', 25, 0},
-      {'ew_signature', -10, 0},
-      {'jam_chance', 42, 0},
+      {'ew_detected', 25, 5},
+      {'ew_signature', -15, -9},
+      {'jam_chance', 38, 10},
    })
   </lua_inline>
  </specific>

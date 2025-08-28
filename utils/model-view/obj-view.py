@@ -40,22 +40,22 @@ window = Window(rot)
 ship = parse_obj(args.obj)
 
 if args.save is not None:
-    fb = Framebuffer(args.res, args.res)
+   fb = Framebuffer(args.res, args.res)
 
-    glEnable( GL_FRAMEBUFFER_SRGB )
+   glEnable( GL_FRAMEBUFFER_SRGB )
 
-    glViewport(0, 0, args.res, args.res)
+   glViewport(0, 0, args.res, args.res)
 
-    program = ObjProgram()
-    program.use()
+   program = ObjProgram()
+   program.use()
 
-    glClearColor(0., 0., 0., 0.)
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+   glClearColor(0., 0., 0., 0.)
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
-    for obj in ship.values():
-        obj = RenderObject(program, obj)
-        program.draw(obj, args.res, args.res, rot)
+   for obj in ship.values():
+      obj = RenderObject(program, obj)
+      program.draw(obj, args.res, args.res, rot)
 
-    fb.save(args.save)
+   fb.save(args.save)
 elif not args.exit:
-    window.main_loop(ship)
+   window.main_loop(ship)

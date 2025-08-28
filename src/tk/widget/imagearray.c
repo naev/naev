@@ -458,7 +458,7 @@ static int iar_mclick( Widget *iar, int button, int x, int y )
  *
  *    @param iar Widget receiving the event.
  *    @return 1 if event is used.
- *    @TODO It would be more precise to record the iar_focus result for
+ *    @TODO It would be more precise to record the "iar_focus" result for
  *          every click, so rapidly clicking an icon, out of bounds, and
  *          the same icon wouldn't register as a double-click.
  */
@@ -605,7 +605,7 @@ static void iar_scroll( Widget *iar, int direction )
 }
 
 /**
- * @brief Return the widget's maximum y position (.pos); this is 0 if all
+ * @brief Return the widget maximum y position (".pos" (???)); this is 0 if all
  * content fits.
  */
 static double iar_maxPos( Widget *iar )
@@ -922,7 +922,7 @@ int toolkit_setImageArrayPos( unsigned int wid, const char *name, int pos )
  *
  *    @param wid Window containing the image array.
  *    @param name Name of the image array widget.
- *    @param iar_data Pointer to an iar_data_t struct to save to.
+ *    @param iar_data Pointer to an "iar_data_t" struct to save to.
  *    @return 0 on success.
  */
 int toolkit_saveImageArrayData( unsigned int wid, const char *name,
@@ -944,7 +944,7 @@ int toolkit_saveImageArrayData( unsigned int wid, const char *name,
  *
  *    @param wid Window containing the image array.
  *    @param name Name of the image array widget.
- *    @param iar_data Pointer to an iar_data_t struct to load.
+ *    @param iar_data Pointer to an "iar_data_t" struct to load.
  *    @return 0 on success.
  */
 int toolkit_loadImageArrayData( unsigned int wid, const char *name,

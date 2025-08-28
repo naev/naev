@@ -76,8 +76,8 @@ function lib.render( systems, jumps, w, h, target, names, rng )
    local scale = 2/math.max( (xmax-xmin), (ymax-ymin) )
 
    local function pos( x, y )
-      return w*(0.5+0.5*(x-cx)*scale),
-             h-h*(0.5+0.5*(y-cy)*scale)
+      return w*(0.5 + 0.5*(x-cx)*scale),
+         h - h*(0.5 + 0.5*(y-cy)*scale)
    end
 
    -- Flip Y

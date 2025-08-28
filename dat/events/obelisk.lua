@@ -9,8 +9,8 @@ local audio = require 'love.audio'
 local lf = require "love.filesystem"
 local pp_shaders = require "pp_shaders"
 
-local pixelcode_enter = lf.read( "glsl/love/obelisk_enter.frag" )
-local pixelcode_exit = lf.read( "glsl/love/obelisk_exit.frag" )
+local pixelcode_enter = lf.read( "shaders/love/obelisk_enter.frag" )
+local pixelcode_exit = lf.read( "shaders/love/obelisk_exit.frag" )
 
 local target, shader
 local sfx = audio.newSource( 'snd/sounds/gamelan_gong.ogg' )

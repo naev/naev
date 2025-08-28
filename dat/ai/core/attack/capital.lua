@@ -31,7 +31,7 @@ function atk_capital.atk( target, dokill )
       atk.ranged( target, dist )
    -- Close enough to melee
    else
-     __atk_g_capital(target, dist)
+      __atk_g_capital(target, dist)
    end
 end
 

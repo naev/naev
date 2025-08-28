@@ -94,7 +94,7 @@ function destroyevent( _p, killer )
       evt.finish(true)
    end
    evt.finish()
- end
+end
 
 function endevent ()
    evt.finish()

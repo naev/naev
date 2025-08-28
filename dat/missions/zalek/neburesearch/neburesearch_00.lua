@@ -169,6 +169,8 @@ function jumpin()
    elseif mem.misn_stage == 1 and mem.sys == t_sys[2] then
       mem.misn_stage = 2
       hook.timer(5.0, "beginSecondScan")
+   else
+      hook.timerClear()
    end
 end
 

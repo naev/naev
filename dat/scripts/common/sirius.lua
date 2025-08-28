@@ -101,8 +101,8 @@ function srs.obeliskExit ()
    end
 end
 
-local pixelcode_enter = lf.read( "glsl/love/obelisk_enter.frag" )
-local pixelcode_exit = lf.read( "glsl/love/obelisk_exit.frag" )
+local pixelcode_enter = lf.read( "shaders/love/obelisk_enter.frag" )
+local pixelcode_exit = lf.read( "shaders/love/obelisk_exit.frag" )
 local shader, endfunc, finalfunc
 function srs.obeliskCleanup( func, cleanup )
    endfunc = func

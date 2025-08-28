@@ -212,7 +212,7 @@ int gatherable_getClosest( const vec2 *pos, double rad )
  *    @param pos pointer to the position.
  *    @param vel pointer to the velocity.
  *    @param id Id of the gatherable in the stack.
- *    @return flag 1->there exists a gatherable 0->elsewere.
+ *    @return flag 1->there exists a gatherable 0->elsewhere.
  */
 int gatherable_getPos( vec2 *pos, vec2 *vel, int id )
 {

@@ -697,7 +697,7 @@ static int outfitL_getShipStat( lua_State *L )
  *
  *    @luatparam Outfit o Outfit to compute for.
  *    @luatparam[opt=nil] Pilot p Pilot to use ship stats when computing.
- *    @luatreturn number Damage per secondof the outfit.
+ *    @luatreturn number Damage per second of the outfit.
  *    @luatreturn number Disable per second of the outfit.
  *    @luatreturn number Energy per second of the outfit.
  *    @luatreturn number Range of the outfit.

@@ -148,9 +148,11 @@ end
 function timer_spawn_dv ()
    mem.dv_coming = false
    if not mem.job_done then
-      local fleets = { {"Dvaered Vendetta"}, {"Dvaered Ancestor"}, {"Dvaered Phalanx"}, {"Dvaered Vigilance"}, {"Dvaered Goddard"},
-                       {"Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor"},
-                       {"Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance"} }
+      local fleets = {
+         {"Dvaered Vendetta"}, {"Dvaered Ancestor"}, {"Dvaered Phalanx"}, {"Dvaered Vigilance"}, {"Dvaered Goddard"},
+         {"Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor"},
+         {"Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance"}
+      }
       local ships = fleets[ rnd.rnd( 1, #fleets ) ]
       local fleetname
 

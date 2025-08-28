@@ -340,7 +340,7 @@ static int shipL_baseType( lua_State *L )
  * @brief Gets the ship it inherits stats from if applicable.
  *
  *    @luatparam Ship s Ship to get the ship it is inheriting from.
- *    @luatreturn Ship|nil The ship it is inheritng from or nil if not
+ *    @luatreturn Ship|nil The ship it is inheriting from or nil if not
  * applicable.
  * @luafunc inherits
  */
@@ -654,9 +654,10 @@ static const ShipOutfitSlot *ship_outfitSlotFromID( const Ship *s, int id )
  * @brief Checks to see if an outfit fits a ship slot.
  *
  *    @luatparam Ship s Ship to check.
- *    @luatparam number id ID of the slot to check (index in getSlots table).
+ *    @luatparam number id ID of the slot to check (index in "getSlots()"
+ * table).
  *    @luatparam Outfit o Outfit to check to see if it fits in the slot.
- *    @luatreturn boolean WHether or not the outfit fits the slot.
+ *    @luatreturn boolean Whether or not the outfit fits the slot.
  * @luafunc fitsSlot
  */
 static int shipL_fitsSlot( lua_State *L )
@@ -740,7 +741,7 @@ static int shipL_getSize( lua_State *L )
  * @brief Gets the path where the ship's graphics are located. Useful for seeing
  * if two ships share the same graphics.
  *
- *    @luatparam Ship s Ship to get the path of the graphis of.
+ *    @luatparam Ship s Ship to get the path of the graphics of.
  *    @luatreturn string The path to the ship graphics.
  * @luafunc gfxPath
  */

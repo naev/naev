@@ -6,7 +6,7 @@ local starfield = require "bkg.lib.starfield"
 local luaspfx = require "luaspfx"
 local fmt = require "format"
 
-local pixelcode = lf.read( "spob/lua/glsl/wormhole.frag" )
+local pixelcode = lf.read( "spob/lua/shaders/wormhole.frag" )
 local jumpsfx = audio.newSource( 'snd/sounds/wormhole.ogg' )
 
 -- Default parameters that can be overwritten

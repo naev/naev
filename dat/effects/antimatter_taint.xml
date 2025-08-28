@@ -1,6 +1,7 @@
 <effect name="Antimatter Taint">
  <description>Antimatter is tainting your ship!</description>
- <duration>7</duration><!-- actually increased due to taint -->
+ <!-- actually increased due to taint -->
+ <duration>7</duration>
  <overwrite>antimatter_taint</overwrite>
  <icon>/gfx/misc/icons/star-cycle.webp</icon>
  <shader>effects/antimatter_taint.frag</shader>

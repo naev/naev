@@ -1828,7 +1828,7 @@ void outfit_freeSlot( OutfitSlot *s )
  * @brief Gets the outfit type from a human readable string.
  *
  *    @param buf String to extract outfit type from.
- *    @return Outfit type stored in buf.
+ *    @return Outfit type stored in "buf".
  */
 static OutfitType outfit_strToOutfitType( char *buf )
 {

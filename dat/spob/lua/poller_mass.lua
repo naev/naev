@@ -4,7 +4,7 @@ local lf = require "love.filesystem"
 local li = require "love.image"
 local love_shaders = require "love_shaders"
 
-local pixelcode = lf.read( "spob/lua/glsl/goo.frag" )
+local pixelcode = lf.read( "spob/lua/shaders/goo.frag" )
 
 local function update_canvas ()
    local oldcanvas = lg.getCanvas()

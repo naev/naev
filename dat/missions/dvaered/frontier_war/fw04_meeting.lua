@@ -62,29 +62,33 @@ lore_text[3] = _([[You ask Strafer why Major Tam requested you for the mission. 
 lore_text[4] = _([["You wish to become one of them?" Before you have a chance to deny, he continues: "Anybody can become a warlord. One just has to have achieved the '9th grade commendation', and to conquer a planet (or a station). In the army, every rank gives you a commendation grade, for example, I have the 3rd grade. Civilians also obtain commendation for their high deeds; you obtained the 1st grade commendation for your involvement in the FLF destruction, if I am right. The 9th grade commendation, that is associated to the rank of first-class General in the army, gives the right to own a military base, and by extension, to be granted regal power over a region.
    "In the Dvaered army, everybody starts as a raw soldier, no matter if you're an infantryman, a pilot, a medic, or even a General's child. And only Valor decides how quick you rise in the hierarchy. Warlord is the ultimate rank for the military and for private combat pilots, like yourself)"]])
 
-local lords_chatter = { _("Ahoy, suckers! Here comes the master!"),
-                  _("Look down, you weaklings."),
-                  _("Only submission will save you from my anger!"),
-                  _("Kneel, for I am destined to rule you all!"),
-                  _("Worship my strength, or burn by my railguns."),
-                  _("Here comes Daddy!"),
-                  _("I am an artist of Pain and Destruction. Who wants to be part of my next masterpiece?"),
-                  _("Make way for the supplier of Hell!"),
-                  _("Death is everyone's ultimate destination. Pissing me off means taking a shortcut."), }
+local lords_chatter = {
+   _("Ahoy, suckers! Here comes the master!"),
+   _("Look down, you weaklings."),
+   _("Only submission will save you from my anger!"),
+   _("Kneel, for I am destined to rule you all!"),
+   _("Worship my strength, or burn by my railguns."),
+   _("Here comes Daddy!"),
+   _("I am an artist of Pain and Destruction. Who wants to be part of my next masterpiece?"),
+   _("Make way for the supplier of Hell!"),
+   _("Death is everyone's ultimate destination. Pissing me off means taking a shortcut."),
+}
 
 -- This might be hard to translate, but that is not a problem IMHO as it is actually supposed to be an automatically generated message.
 
-local occupations = { _("caterer"),
-                _("butcher"),
-                _("brewer"),
-                _("waiter"),
-                _("vigil"),
-                _("gladiator"),
-                _("rat exterminator"),
-                _("emergency doctor"),
-                _("weapons dealer"),
-                _("drug dealer"),
-                _("torturer"), }
+local occupations = {
+   _("caterer"),
+   _("butcher"),
+   _("brewer"),
+   _("waiter"),
+   _("vigil"),
+   _("gladiator"),
+   _("rat exterminator"),
+   _("emergency doctor"),
+   _("weapons dealer"),
+   _("drug dealer"),
+   _("torturer"),
+}
 
 function create()
    if spob.cur() == destpla then

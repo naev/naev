@@ -12,38 +12,38 @@ STD_R   = 0.12
 R_MAG   = 1.5
 
 line_stats = {
-    'Tricon' : {
-        'speed_rank_offset' : 0.0,     # 0.0 indicates current speed rank
+   'Tricon' : {
+      'speed_rank_offset' : 0.0,       # 0.0 indicates current speed rank
                                        # 1.0 means next speed rank (size+1);
                                        # !!! higher means slower
-        'ratio' : 1.4,
-    },
-    'Krain' : {
-        'speed_rank_offset' : -0.35,   # Between this size and size-1
-        'ratio' : 1.1,
-        'turn' : 1.05
-    },
-    'Nexus' : {
-        'speed_rank_offset' : +0.15,   # Pretty good but slightly slower top speed
+      'ratio' : 1.4,
+   },
+   'Krain' : {
+      'speed_rank_offset' : -0.35,     # Between this size and size-1
+      'ratio' : 1.1,
+      'turn' : 1.05
+   },
+   'Nexus' : {
+      'speed_rank_offset' : +0.15,     # Pretty good but slightly slower top speed
                                        # than Melendez and Tricon
-        'ratio' : 1.0,
-    },
-    'Melendez' : {
-        'speed_rank_offset' : +0.15,
-        'ratio' : 0.5,
-    },
-    'Unicorp' : {
-        'speed_rank_offset' : +0.45,
-        'ratio' : 1.0,
-    },
-    "Za'lek" : {                       # TODO make these change over time the profile via Lua
-        'speed_rank_offset' : +0.5,
-        'ratio' : 1.1,
-    },
-    'Beat' : {
-        'speed_rank_offset' : +0.7,
-        'ratio' : 0.7,
-    },
+      'ratio' : 1.0,
+   },
+   'Melendez' : {
+      'speed_rank_offset' : +0.15,
+      'ratio' : 0.5,
+   },
+   'Unicorp' : {
+      'speed_rank_offset' : +0.45,
+      'ratio' : 1.0,
+   },
+   "Za'lek" : {                         # TODO make these change over time the profile via Lua
+      'speed_rank_offset' : +0.5,
+      'ratio' : 1.1,
+   },
+   'Beat' : {
+      'speed_rank_offset' : +0.7,
+      'ratio' : 0.7,
+   },
 }
 
 ALPHA, BETA = 1.14, 0.048
@@ -207,7 +207,7 @@ def gen_line( params ):
 
    for i, s in enumerate(['Small', 'Medium', 'Large']):
       engine = engine_dir.replace('small', s.lower())
-      o = outfit(engine, is_multi = True)
+      o = outfit(engine, w= False)
 
       if o is None:
          err('Beat up small engine, used as dummy, was not found!')
@@ -241,18 +241,23 @@ if __name__ == '__main__':
       usage = " %(prog)s (-g line_name [speed_rank [ratio [turn]]]) | (filename ...) | -h",
       formatter_class = argparse.RawTextHelpFormatter,
       description = 'The changes made will be listed onto <stderr>: \"_\" means \"nothing\".',
-      epilog = """Examples:
-  Standard usage:
-   > find dat/outfits/core_engine/ -name "*.xml" | ./utils/outfits/update_engines.py -f
-  Generate a line called Krain with same params as Krain:
-   > ./utils/outfits/update_engines.py -g Krain
-  Generate a line called Melendez with same params as Melendez *but with speed_rank_offset = 0.5*:
-   > ./utils/outfits/update_engines.py -g Melendez 0.5
-  Generate a brand new line called Zednelem with with speed_rank_offset = 0.5 and default 1.0 ratio:
-   > ./utils/outfits/update_engines.py -g Zednelem 0.5
-  Generate a brand new line called Zednelem with with speed_rank_offset = 0.5 and 1.2 ratio:
-   > ./utils/outfits/update_engines.py -g Zednelem 0.5 1.2
-""")
+      epilog = '\n'.join([
+         'Examples:',
+         '  Standard usage:',
+         '   > find dat/outfits/core_engine/ -name "*.xml" | ./utils/outfits/update_engines.py -f',
+         '  Generate a line called Krain with same params as Krain:',
+         '   > ./utils/outfits/update_engines.py -g Krain',
+         '  Generate a line called Melendez with same params as Melendez '
+            '*but with speed_rank_offset = 0.5*:',
+         '   > ./utils/outfits/update_engines.py -g Melendez 0.5',
+         '  Generate a brand new line called Zednelem with with '
+            'speed_rank_offset = 0.5 and default 1.0 ratio:',
+         '   > ./utils/outfits/update_engines.py -g Zednelem 0.5',
+         '  Generate a brand new line called Zednelem with with speed_rank_offset = 0.5 '
+            'and 1.2 ratio:',
+         '   > ./utils/outfits/update_engines.py -g Zednelem 0.5 1.2'
+      ])
+   )
    parser.add_argument('-f', '--files', action= 'store_true', help= 'read file list on stdin. Applies when no args.\nDoes not apply in generate mode.')
    parser.add_argument('-g', '--generate', action= 'store_true', help= 'line_name ex: "Melendez" or "Zednelem".')
    parser.add_argument('args', nargs= '*', help= 'An outfit with ".xml" extension, else will be silently ignored.\nIf not valid, will not even be printed out.')

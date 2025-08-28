@@ -63,7 +63,7 @@ static omsg_t *omsg_get( unsigned int id )
 }
 
 /**
- * @brief Frees all internal stuff of a msg.
+ * @brief Frees all internal stuff of a "msg".
  */
 static void omsg_free( omsg_t *omsg )
 {

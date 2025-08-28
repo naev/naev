@@ -156,8 +156,8 @@ biooutfits = {
       'template': 'cerebrum',
       'depend_files' : [ 'core_system/small/milspec_orion_2301_core_system.xml' ],
       'output' : [
-        'perleve_cerebrum_i.xml',
-        'perleve_cerebrum_ii.xml',
+         'perleve_cerebrum_i.xml',
+         'perleve_cerebrum_ii.xml',
       ],
    },
    'laevum_cerebrum' : {
@@ -205,27 +205,27 @@ biooutfits = {
    'stinger_organ' : {
       'template': 'weapon',
       'output' : [
-        'stinger_organ_i.xml',
-        'stinger_organ_ii.xml',
-        'stinger_organ_iii.xml',
+         'stinger_organ_i.xml',
+         'stinger_organ_ii.xml',
+         'stinger_organ_iii.xml',
       ],
    },
    'talon_organ' : {
       'template': 'weapon',
       'output' : [
-        'talon_organ_i.xml',
-        'talon_organ_ii.xml',
-        'talon_organ_iii.xml',
-        'talon_organ_iv.xml',
+         'talon_organ_i.xml',
+         'talon_organ_ii.xml',
+         'talon_organ_iii.xml',
+         'talon_organ_iv.xml',
       ],
    },
    'tentacle_organ' : {
       'template': 'weapon',
       'output' : [
-        'tentacle_organ_i.xml',
-        'tentacle_organ_ii.xml',
-        'tentacle_organ_iii.xml',
-        'tentacle_organ_iv.xml'
+         'tentacle_organ_i.xml',
+         'tentacle_organ_ii.xml',
+         'tentacle_organ_iii.xml',
+         'tentacle_organ_iv.xml'
       ],
    },
 }

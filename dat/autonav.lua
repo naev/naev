@@ -403,15 +403,15 @@ end
 --[[
 tint is the integral of the time in per time units.
 
- tc_mod
-    ^
-    |
-    |\
-    | \
-    |  \___
-    |
-    +------> time
-    0   3
+   tc_mod
+   ^
+   |
+   |\
+   | \
+   |  \___
+   |
+   +------> time
+   0   3
 
 We decompose integral in a rectangle (3*1) and a triangle (3*(tc_mod-1.))/2.
 This is the "elapsed time" when linearly decreasing the tc_mod. Which we can

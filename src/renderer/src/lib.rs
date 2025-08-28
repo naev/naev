@@ -7,9 +7,10 @@ use sdl3 as sdl;
 use std::ffi::CStr;
 use std::ops::Deref;
 use std::os::raw::{c_char, c_double};
-use std::sync::{atomic::AtomicBool, atomic::Ordering, Arc, Mutex, MutexGuard, OnceLock, RwLock};
+use std::sync::{Arc, Mutex, MutexGuard, OnceLock, RwLock, atomic::AtomicBool, atomic::Ordering};
 
 pub mod buffer;
+pub mod sdf;
 pub mod shader;
 pub mod texture;
 
@@ -17,7 +18,7 @@ use crate::buffer::{
     Buffer, BufferBuilder, BufferTarget, BufferUsage, VertexArray, VertexArrayBuffer,
     VertexArrayBuilder,
 };
-use crate::shader::{Shader, ShaderBuilder};
+use crate::shader::{ProgramBuilder, Shader};
 use log::{debug, info, warn, warn_err};
 
 const MIN_WIDTH: u32 = 1280;
@@ -308,6 +309,9 @@ pub struct Context {
     pub vao_center: VertexArray,
     pub vbo_triangle: Buffer,
     pub vao_triangle: VertexArray,
+
+    // Some subsystems
+    pub sdf: sdf::SdfRenderer,
 
     // To be phased out when moved to rust
     pub vao_core: glow::VertexArray,
@@ -665,10 +669,10 @@ impl Context {
 
         // Initialize some useful globals
         // The texture shader
-        let program_texture = ShaderBuilder::new(Some("Texture Shader"))
-            .uniform_buffer("TextureData", 0)
-            .vert_frag_file("rust_texture.glsl")
-            .sampler("sampler", 0)
+        let program_texture = ProgramBuilder::new(Some("Texture Shader"))
+            .uniform_buffer("texturedata", 0)
+            .wgsl_file("texture.wgsl")
+            .sampler("texsampler", 0)
             .build(&gl)?;
         let buffer_texture = BufferBuilder::new(Some("Texture Buffer"))
             .target(BufferTarget::Uniform)
@@ -676,11 +680,11 @@ impl Context {
             .data(&TextureUniform::default().buffer()?)
             .build(&gl)?;
         // SDF texture shader
-        let program_texture_sdf = ShaderBuilder::new(Some("SDF Texture Shader"))
-            .uniform_buffer("TextureData", 0)
-            .uniform_buffer("SDFData", 1)
-            .vert_frag_file("rust_texture_sdf.glsl")
-            .sampler("sampler", 0)
+        let program_texture_sdf = ProgramBuilder::new(Some("SDF Texture Shader"))
+            .uniform_buffer("texturedata", 0)
+            .uniform_buffer("sdfdata", 1)
+            .wgsl_file("texture_sdf.wgsl")
+            .sampler("texsampler", 0)
             .build(&gl)?;
         let buffer_texture_sdf = BufferBuilder::new(Some("SDF Texture Buffer"))
             .target(BufferTarget::Uniform)
@@ -688,9 +692,9 @@ impl Context {
             .data(&TextureSDFUniform::default().buffer()?)
             .build(&gl)?;
         // Downscaling texture shader
-        let program_texture_scale = ShaderBuilder::new(Some("Scaling Texture Shader"))
+        let program_texture_scale = ProgramBuilder::new(Some("Scaling Texture Shader"))
             .uniform_buffer("TextureData", 0)
-            .vert_frag_file("rust_magic.glsl")
+            .vert_frag_file_single("rust_magic.glsl")
             .sampler("sampler", 0)
             .build(&gl)?;
         let buffer_texture_scale = BufferBuilder::new(Some("Scaling Texture Buffer"))
@@ -699,9 +703,9 @@ impl Context {
             .data(&TextureScaleUniform::default().buffer()?)
             .build(&gl)?;
         // The solid shader
-        let program_solid = ShaderBuilder::new(Some("Solid Shader"))
-            .uniform_buffer("SolidData", 0)
-            .vert_frag_file("rust_solid.glsl")
+        let program_solid = ProgramBuilder::new(Some("Solid Shader"))
+            .uniform_buffer("soliddata", 0)
+            .wgsl_file("solid.wgsl")
             .build(&gl)?;
         let buffer_solid = BufferBuilder::new(Some("Solid Buffer"))
             .target(BufferTarget::Uniform)
@@ -774,7 +778,11 @@ impl Context {
             );
             gl.clear_color(0.0, 0.0, 0.0, 0.0);
             gl.clear(glow::COLOR_BUFFER_BIT | glow::DEPTH_BUFFER_BIT);
+            // image-rs uses tight packing
+            gl.pixel_store_i32(glow::UNPACK_ALIGNMENT, 1);
+            gl.pixel_store_i32(glow::PACK_ALIGNMENT, 1);
         }
+        let sdf = sdf::SdfRenderer::new(&gl)?;
         let ctx = Context {
             sdlvid,
             window,
@@ -795,6 +803,7 @@ impl Context {
             vao_center,
             vbo_triangle,
             vao_triangle,
+            sdf,
             vao_core,
         };
         let _ = CONTEXT.set(ctx);
@@ -867,7 +876,6 @@ impl Context {
         let mut data: Vec<u8> = vec![0; (w * h * 3) as usize];
         let gl = &self.gl;
         unsafe {
-            gl.pixel_store_i32(glow::PACK_ALIGNMENT, 1);
             gl.read_pixels(
                 0,
                 0,

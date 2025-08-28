@@ -19,11 +19,14 @@
 #include "nluadef.h"
 #include "physfs.h"
 
+static int nlua_buffer_counter = 0;
+
 /* File metatable methods. */
 static int fileL_gc( lua_State *L );
 static int fileL_eq( lua_State *L );
 static int fileL_new( lua_State *L );
 static int fileL_open( lua_State *L );
+static int fileL_from_string( lua_State *L );
 static int fileL_close( lua_State *L );
 static int fileL_read( lua_State *L );
 static int fileL_write( lua_State *L );
@@ -38,23 +41,15 @@ static int fileL_enumerate( lua_State *L );
 static int fileL_remove( lua_State *L );
 
 static const luaL_Reg fileL_methods[] = {
-   { "__gc", fileL_gc },
-   { "__eq", fileL_eq },
-   { "new", fileL_new },
-   { "open", fileL_open },
-   { "close", fileL_close },
-   { "read", fileL_read },
-   { "write", fileL_write },
-   { "seek", fileL_seek },
-   { "getFilename", fileL_name },
-   { "getMode", fileL_mode },
-   { "getSize", fileL_size },
-   { "isOpen", fileL_isopen },
-   { "filetype", fileL_filetype },
-   { "mkdir", fileL_mkdir },
-   { "enumerate", fileL_enumerate },
-   { "remove", fileL_remove },
-   { 0, 0 } }; /**< File metatable methods. */
+   { "__gc", fileL_gc },       { "__eq", fileL_eq },
+   { "new", fileL_new },       { "open", fileL_open },
+   { "close", fileL_close },   { "from_string", fileL_from_string },
+   { "read", fileL_read },     { "write", fileL_write },
+   { "seek", fileL_seek },     { "getFilename", fileL_name },
+   { "getMode", fileL_mode },  { "getSize", fileL_size },
+   { "isOpen", fileL_isopen }, { "filetype", fileL_filetype },
+   { "mkdir", fileL_mkdir },   { "enumerate", fileL_enumerate },
+   { "remove", fileL_remove }, { 0, 0 } }; /**< File metatable methods. */
 
 /**
  * @brief Loads the file library.
@@ -157,6 +152,8 @@ static int fileL_gc( lua_State *L )
       SDL_CloseIO( lf->rw );
       lf->rw = NULL;
    }
+   free( lf->data );
+   lf->data = NULL;
    return 0;
 }
 
@@ -235,7 +232,7 @@ static int fileL_open( lua_State *L )
  * @brief Closes a file.
  *
  *    @luatparam File file File to close.
- *    @luatreturn true on success.
+ *    @luatreturn boolean true on success.
  * @luafunc close
  */
 static int fileL_close( lua_State *L )
@@ -251,10 +248,47 @@ static int fileL_close( lua_State *L )
 }
 
 /**
+ * @brief Create a file from a string buffer.
+ *
+ *    @luatparam String str String to use as the memory data.
+ *    @luatparam[opt="memory buffer"] String name Optional name to give the
+ * buffer.
+ *    @luatreturn File The new file wrapping the string.
+ * @luafunc close
+ */
+static int fileL_from_string( lua_State *L )
+{
+   LuaFile_t   lf;
+   const char *str  = luaL_checkstring( L, 1 );
+   size_t      len  = strlen( str );
+   const char *name = NULL;
+   if ( !lua_isnoneornil( L, 2 ) )
+      name = luaL_checkstring( L, 2 );
+   memset( &lf, 0, sizeof( lf ) );
+   // Sadly have to duplicate the buffer because otherwise Lua has ownership and
+   // we have no guarantee it's valid
+   // TODO figure out if we can consume it instead
+   lf.data = malloc( len );
+   memcpy( lf.data, str, len );
+   lf.rw = SDL_IOFromConstMem( (void *)str, len );
+   if ( lf.rw == NULL )
+      return NLUA_ERROR( L, "failed to open memory buffer" );
+   if ( name != NULL )
+      strncpy( lf.path, name, sizeof( lf.path ) - 1 );
+   else
+      snprintf( lf.path, sizeof( lf.path ) - 1, "memory buffer %d",
+                ++nlua_buffer_counter );
+   lf.mode = 'r';
+   lf.size = len;
+   lua_pushfile( L, lf );
+   return 1;
+}
+
+/**
  * @brief Reads from an open file.
  *
  *    @luatparam File file File to read from.
- *    @luatparam[opt] number bytes Number of bytes to read or all if ommitted.
+ *    @luatparam[opt] number bytes Number of bytes to read or all if omitted.
  *    @luatreturn string Read data.
  *    @luatreturn number Number of bytes actually read.
  * @luafunc read
@@ -324,15 +358,13 @@ static int fileL_seek( lua_State *L )
 {
    LuaFile_t *lf  = luaL_checkfile( L, 1 );
    size_t     pos = luaL_checkinteger( L, 2 );
-   Sint64     ret;
 
    if ( lf->rw == NULL ) {
       lua_pushboolean( L, 1 );
       return 1;
    }
 
-   ret = SDL_SeekIO( lf->rw, pos, SDL_IO_SEEK_SET );
-
+   Sint64 ret = SDL_SeekIO( lf->rw, pos, SDL_IO_SEEK_SET );
    lua_pushboolean( L, ret >= 0 );
    return 1;
 }
@@ -346,7 +378,7 @@ static int fileL_seek( lua_State *L )
  */
 static int fileL_name( lua_State *L )
 {
-   LuaFile_t *lf = luaL_checkfile( L, 1 );
+   const LuaFile_t *lf = luaL_checkfile( L, 1 );
    lua_pushstring( L, lf->path );
    return 1;
 }
@@ -360,7 +392,7 @@ static int fileL_name( lua_State *L )
  */
 static int fileL_mode( lua_State *L )
 {
-   LuaFile_t *lf = luaL_checkfile( L, 1 );
+   const LuaFile_t *lf = luaL_checkfile( L, 1 );
    lua_pushlstring( L, &lf->mode, 1 );
    return 1;
 }
@@ -374,7 +406,7 @@ static int fileL_mode( lua_State *L )
  */
 static int fileL_size( lua_State *L )
 {
-   LuaFile_t *lf = luaL_checkfile( L, 1 );
+   const LuaFile_t *lf = luaL_checkfile( L, 1 );
    lua_pushinteger( L, lf->size );
    return 1;
 }
@@ -482,4 +514,16 @@ static int fileL_remove( lua_State *L )
       return 2;
    }
    return 1;
+}
+
+/**
+ * @brief Creates a new iostream.
+ */
+SDL_IOStream *lua_fileIOStream( const LuaFile_t *lf )
+{
+   if ( lf->data != NULL ) {
+      return SDL_IOFromConstMem( lf->data, lf->size );
+   } else {
+      return SDL_PhysFS_IOFromFile( lf->path );
+   }
 }

@@ -276,6 +276,7 @@ files["dat/ships/**/*.lua"].std = STANDARD .. GFX .. "+API_pilotship+camera" -- 
 files["dat/rescue.lua"].std = STANDARD .. TK .. "+API_rescue"
 files["dat/scan.lua"].std = STANDARD .. TK .. "+API_scan"
 files["dat/rep.lua"].std = STANDARD .. TK .. "+tex+colour+bkg+cli+camera+music+linopt"
+files["dat/credits.lua"].std = STANDARD .. TK .. "+music"
 files["dat/save_updater.lua"].std = STANDARD .. "+API_save_updater" -- Probably should be limited...
 files["dat/shipai.lua"].std = STANDARD .. TK .. "+API_shipai"
 files["dat/snd/**/*.lua"].std = STANDARD .. TK .. "+API_music+music"

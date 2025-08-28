@@ -258,7 +258,7 @@
       // success code
       if (SWIG_IsNewObj(res) {
         ...
-	delete *ptr;
+   delete *ptr;
       } else {
         ...
       }
@@ -365,32 +365,32 @@ typedef struct swig_type_info *(*swig_dycast_func)(void **);
 
 /* Structure to store information on one type */
 typedef struct swig_type_info {
-  const char             *name;			/* mangled name of this type */
-  const char             *str;			/* human readable name of this type */
-  swig_dycast_func        dcast;		/* dynamic cast function down a hierarchy */
-  struct swig_cast_info  *cast;			/* linked list of types that can cast into this type */
-  void                   *clientdata;		/* language specific type data */
-  int                    owndata;		/* flag if the structure owns the clientdata */
+  const char             *name;        /* mangled name of this type */
+  const char             *str;         /* human readable name of this type */
+  swig_dycast_func        dcast;       /* dynamic cast function down a hierarchy */
+  struct swig_cast_info  *cast;        /* linked list of types that can cast into this type */
+  void                   *clientdata;  /* language specific type data */
+  int                    owndata;      /* flag if the structure owns the clientdata */
 } swig_type_info;
 
 /* Structure to store a type and conversion function used for casting */
 typedef struct swig_cast_info {
-  swig_type_info         *type;			/* pointer to type that is equivalent to this type */
-  swig_converter_func     converter;		/* function to cast the void pointers */
-  struct swig_cast_info  *next;			/* pointer to next cast in linked list */
-  struct swig_cast_info  *prev;			/* pointer to the previous cast */
+  swig_type_info         *type;        /* pointer to type that is equivalent to this type */
+  swig_converter_func     converter;   /* function to cast the void pointers */
+  struct swig_cast_info  *next;        /* pointer to next cast in linked list */
+  struct swig_cast_info  *prev;        /* pointer to the previous cast */
 } swig_cast_info;
 
 /* Structure used to store module information
  * Each module generates one structure like this, and the runtime collects
  * all of these structures and stores them in a circularly linked list.*/
 typedef struct swig_module_info {
-  swig_type_info         **types;		/* Array of pointers to swig_type_info structures that are in this module */
-  size_t                 size;		        /* Number of types in this module */
-  struct swig_module_info *next;		/* Pointer to next element in circularly linked list */
-  swig_type_info         **type_initial;	/* Array of initially generated type structures */
-  swig_cast_info         **cast_initial;	/* Array of initially generated casting structures */
-  void                    *clientdata;		/* Language specific module data */
+  swig_type_info         **types;         /* Array of pointers to swig_type_info structures that are in this module */
+  size_t                 size;            /* Number of types in this module */
+  struct swig_module_info *next;          /* Pointer to next element in circularly linked list */
+  swig_type_info         **type_initial;  /* Array of initially generated type structures */
+  swig_cast_info         **cast_initial;  /* Array of initially generated casting structures */
+  void                    *clientdata;    /* Language specific module data */
 } swig_module_info;
 
 /*
@@ -402,7 +402,7 @@ typedef struct swig_module_info {
 */
 SWIGRUNTIME int
 SWIG_TypeNameComp(const char *f1, const char *l1,
-		  const char *f2, const char *l2) {
+        const char *f2, const char *l2) {
   for (;(f1 != l1) && (f2 != l2); ++f1, ++f2) {
     while ((*f1 == ' ') && (f1 != l1)) ++f1;
     while ((*f2 == ' ') && (f2 != l2)) ++f2;
@@ -558,7 +558,7 @@ SWIG_TypeClientData(swig_type_info *ti, void *clientdata) {
     if (!cast->converter) {
       swig_type_info *tc = cast->type;
       if (!tc->clientdata) {
-	SWIG_TypeClientData(tc, clientdata);
+   SWIG_TypeClientData(tc, clientdata);
       }
     }
     cast = cast->next;
@@ -581,32 +581,32 @@ SWIG_TypeNewClientData(swig_type_info *ti, void *clientdata) {
 SWIGRUNTIME swig_type_info *
 SWIG_MangledTypeQueryModule(swig_module_info *start,
                             swig_module_info *end,
-		            const char *name) {
+                  const char *name) {
   swig_module_info *iter = start;
   do {
     if (iter->size) {
       size_t l = 0;
       size_t r = iter->size - 1;
       do {
-	/* since l+r >= 0, we can (>> 1) instead (/ 2) */
-	size_t i = (l + r) >> 1;
-	const char *iname = iter->types[i]->name;
-	if (iname) {
-	  int compare = strcmp(name, iname);
-	  if (compare == 0) {
-	    return iter->types[i];
-	  } else if (compare < 0) {
-	    if (i) {
-	      r = i - 1;
-	    } else {
-	      break;
-	    }
-	  } else if (compare > 0) {
-	    l = i + 1;
-	  }
-	} else {
-	  break; /* should never happen */
-	}
+   /* since l+r >= 0, we can (>> 1) instead (/ 2) */
+   size_t i = (l + r) >> 1;
+   const char *iname = iter->types[i]->name;
+   if (iname) {
+     int compare = strcmp(name, iname);
+     if (compare == 0) {
+       return iter->types[i];
+     } else if (compare < 0) {
+       if (i) {
+         r = i - 1;
+       } else {
+         break;
+       }
+     } else if (compare > 0) {
+       l = i + 1;
+     }
+   } else {
+     break; /* should never happen */
+   }
       } while (l <= r);
     }
     iter = iter->next;
@@ -626,7 +626,7 @@ SWIG_MangledTypeQueryModule(swig_module_info *start,
 SWIGRUNTIME swig_type_info *
 SWIG_TypeQueryModule(swig_module_info *start,
                      swig_module_info *end,
-		     const char *name) {
+           const char *name) {
   /* STEP 1: Search the name field using binary search */
   swig_type_info *ret = SWIG_MangledTypeQueryModule(start, end, name);
   if (ret) {
@@ -638,8 +638,8 @@ SWIG_TypeQueryModule(swig_module_info *start,
     do {
       size_t i = 0;
       for (; i < iter->size; ++i) {
-	if (iter->types[i]->str && (SWIG_TypeEquiv(iter->types[i]->str, name)))
-	  return iter->types[i];
+   if (iter->types[i]->str && (SWIG_TypeEquiv(iter->types[i]->str, name)))
+     return iter->types[i];
       }
       iter = iter->next;
     } while (iter != end);
@@ -753,18 +753,18 @@ SWIG_UnpackDataName(const char *c, void *ptr, size_t sz, const char *name) {
 #endif
 
 /* SWIG Errors applicable to all language modules, values are reserved from -1 to -99 */
-#define  SWIG_UnknownError    	   -1
-#define  SWIG_IOError        	   -2
-#define  SWIG_RuntimeError   	   -3
-#define  SWIG_IndexError     	   -4
-#define  SWIG_TypeError      	   -5
-#define  SWIG_DivisionByZero 	   -6
-#define  SWIG_OverflowError  	   -7
-#define  SWIG_SyntaxError    	   -8
-#define  SWIG_ValueError     	   -9
-#define  SWIG_SystemError    	   -10
-#define  SWIG_AttributeError 	   -11
-#define  SWIG_MemoryError    	   -12
+#define  SWIG_UnknownError         -1
+#define  SWIG_IOError              -2
+#define  SWIG_RuntimeError         -3
+#define  SWIG_IndexError           -4
+#define  SWIG_TypeError            -5
+#define  SWIG_DivisionByZero       -6
+#define  SWIG_OverflowError        -7
+#define  SWIG_SyntaxError          -8
+#define  SWIG_ValueError           -9
+#define  SWIG_SystemError          -10
+#define  SWIG_AttributeError       -11
+#define  SWIG_MemoryError          -12
 #define  SWIG_NullReferenceError   -13
 
 
@@ -2597,7 +2597,7 @@ SWIGRUNTIME void* SWIG_Lua_MustGetPtr(lua_State *L,int index,swig_type_info *typ
   void *result = 0;
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,index,&result,type,flags))){
     luaL_error (L,"Error in %s, expected a %s at argument number %d\n",
-		func_name,(type && type->str)?type->str:"void*",argnum);
+      func_name,(type && type->str)?type->str:"void*",argnum);
   }
   return result;
 }
@@ -2718,9 +2718,9 @@ SWIG_Lua_dostring(lua_State *L, const char *str) {
   if (str==0 || str[0]==0) return 0; /* nothing to do */
   top=lua_gettop(L); /* save stack */
 #if (defined(LUA_VERSION_NUM) && (LUA_VERSION_NUM>=501))
-  ok=luaL_dostring(L,str);	/* looks like this is lua 5.1.X or later, good */
+  ok=luaL_dostring(L,str);    /* looks like this is lua 5.1.X or later, good */
 #else
-  ok=lua_dostring(L,str);	/* might be lua 5.0.x, using lua_dostring */
+  ok=lua_dostring(L,str);     /* might be lua 5.0.x, using lua_dostring */
 #endif
   if (ok!=0) {
     SWIG_DOSTRING_FAIL(lua_tostring(L,-1));
@@ -4948,7 +4948,7 @@ SWIG_InitializeModule(SWIG_INIT_CLIENT_DATA_TYPE clientdata) {
       printf("SWIG_InitializeModule: found type %s\n", type->name);
 #endif
       if (swig_module.type_initial[i]->clientdata) {
-	type->clientdata = swig_module.type_initial[i]->clientdata;
+   type->clientdata = swig_module.type_initial[i]->clientdata;
 #ifdef SWIGRUNTIME_DEBUG
       printf("SWIG_InitializeModule: found and overwrite type %s \n", type->name);
 #endif
@@ -4969,29 +4969,29 @@ SWIG_InitializeModule(SWIG_INIT_CLIENT_DATA_TYPE clientdata) {
       if (swig_module.next != &swig_module) {
         ret = SWIG_MangledTypeQueryModule(swig_module.next, &swig_module, cast->type->name);
 #ifdef SWIGRUNTIME_DEBUG
-	if (ret) printf("SWIG_InitializeModule: found cast %s\n", ret->name);
+   if (ret) printf("SWIG_InitializeModule: found cast %s\n", ret->name);
 #endif
       }
       if (ret) {
-	if (type == swig_module.type_initial[i]) {
+   if (type == swig_module.type_initial[i]) {
 #ifdef SWIGRUNTIME_DEBUG
-	  printf("SWIG_InitializeModule: skip old type %s\n", ret->name);
+     printf("SWIG_InitializeModule: skip old type %s\n", ret->name);
 #endif
-	  cast->type = ret;
-	  ret = 0;
-	} else {
-	  /* Check for casting already in the list */
-	  swig_cast_info *ocast = SWIG_TypeCheck(ret->name, type);
+     cast->type = ret;
+     ret = 0;
+   } else {
+     /* Check for casting already in the list */
+     swig_cast_info *ocast = SWIG_TypeCheck(ret->name, type);
 #ifdef SWIGRUNTIME_DEBUG
-	  if (ocast) printf("SWIG_InitializeModule: skip old cast %s\n", ret->name);
+     if (ocast) printf("SWIG_InitializeModule: skip old cast %s\n", ret->name);
 #endif
-	  if (!ocast) ret = 0;
-	}
+     if (!ocast) ret = 0;
+   }
       }
 
       if (!ret) {
 #ifdef SWIGRUNTIME_DEBUG
-	printf("SWIG_InitializeModule: adding cast %s\n", cast->type->name);
+   printf("SWIG_InitializeModule: adding cast %s\n", cast->type->name);
 #endif
         if (type->cast) {
           type->cast->prev = cast;

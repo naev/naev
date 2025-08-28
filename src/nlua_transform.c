@@ -197,7 +197,7 @@ static int transformL_mul( lua_State *L )
  *
  * Note, this returns in column-major.
  *
- *    @luatparam Transform T Transform te get parameters of.
+ *    @luatparam Transform T Transform to get parameters of.
  *    @luatreturn table 2D table containing all the values of the transform.
  * @luafunc get
  */

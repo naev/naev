@@ -356,7 +356,7 @@ static int asteroidL_get( lua_State *L )
  * @brief Checks to see if an asteroid exists.
  *
  *    @luatparam Asteroid a Asteroid to check to see if exists.
- *    @luatreturn boolean true if te asteroid exists, false otherwise.
+ *    @luatreturn boolean true if the asteroid exists, false otherwise.
  * @luafunc exists
  */
 static int asteroidL_exists( lua_State *L )

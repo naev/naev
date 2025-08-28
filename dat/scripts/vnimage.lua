@@ -7,6 +7,7 @@ local portrait = require "portrait"
 
 local vn = require "vn"
 local lg = require "love.graphics"
+local lf = require "love.filesystem"
 local fmt = require "format"
 local pir = require "common.pirate"
 
@@ -14,8 +15,11 @@ local vni = {}
 
 local function _get_list( lst )
    local p = lst[ rnd.rnd(1,#lst) ]
-   if type(p)=="table" then
+   local t = type(p)
+   if t=="table" then
       return p[1], p[1]
+   elseif t=="function" then
+      return p()
    end
    return portrait.getFullPath(p), p
 end
@@ -35,6 +39,71 @@ local function get_list( ... )
             return _get_list( v )
          end
       end
+   end
+end
+
+-- Renders a clump of SVGs into a single canvas
+local function render_svgs( c, path, npc )
+   lg.setColour( 1, 1, 1, 1 )
+   lg.setCanvas( c )
+   lg.clear( 0, 0, 0, 0 )
+   for k,v in ipairs(npc) do
+      if v then
+         local filename = path.."/"..v
+         local svg = lf.read( filename )
+         for i,r in ipairs(npc.replace) do
+            svg = string.gsub( svg, r[1], r[2] )
+         end
+         local img = lg.newImage( tex.new(file.from_string(svg)) )
+         img:draw( 0, 0 )
+      end
+   end
+end
+
+-- Generates an NPC from a generating folder.
+-- In particular, it looks up metadata.lua in the folder, and uses that to dynamically generate NPCs.
+-- The metadata.lua file should return a function that returns a table with:
+--  1. A replace field that specifies how to do SVG file substitutions
+--  2. An ordered list of file names (relative to the directory) of files to render.
+function vni.generator( meta, path )
+   local npc = meta()
+
+   -- The base image is easy, they are all 1000 by 1415 graphics
+   -- TODO scale if necessary
+   local img = lg.newCanvas( 1000, 1415 )
+   render_svgs( img, path, npc )
+
+   -- The portraits are a bit trickier as they are cropped from the original
+   -- TODO allow defining the crops in metadata.lua
+   local _w, _h, scale = gfx.dim()
+   local PORTRAIT = npc.portraitview or {
+      -- Viewport is reference to the image coordinates
+      viewxs = 100,
+      viewys = 0,
+      viewxe = 100+800,
+      viewye = 0+600,
+      -- Width and height are final render
+      width  = 400 / scale,
+      height = 300 / scale,
+   }
+   npc.replace = tmergei( npc.replace, {
+      { [[width="1000"]], fmt.f([[width="{width}"]], PORTRAIT) },
+      { [[height="1415"]], fmt.f([[height="{height}"]], PORTRAIT) },
+      { [[viewBox="0 0 1000 1415"]], fmt.f([[viewBox="{viewxs} {viewys} {viewxe} {viewye}" preserveAspectRatio="xMidYMin slice" style="aspect-ratio:{width}/{height};max-height:{height}px;"]], PORTRAIT) },
+   } )
+   local prt = lg.newCanvas( PORTRAIT.width, PORTRAIT.height )
+   render_svgs( prt, path, npc )
+   lg.setCanvas()
+
+   -- Due to limitations of the C-side API, we have to pass the texture as a portrait, while the VN supports canvases
+   return img, prt.t.tex
+end
+
+local function gen( path )
+   return function ()
+      local lpath = "gfx/vn/characters/"..path
+      local meta = require(lpath:gsub("/",".")..".metadata")
+      return vni.generator( meta, lpath )
    end
 end
 
@@ -63,6 +132,8 @@ local neutral_m = {
    {"neutral/male2n.webp"},
    {"neutral/male3n.webp"},
    {"neutral/male3n_v2.webp"},
+   -- Image generators
+   gen( "neutral/male01" ),
 }
 local neutral_f = {
    "neutral/female1.webp",
@@ -105,6 +176,7 @@ local neutral_new = {
    {"neutral/male2n.webp"},
    {"neutral/male3n.webp"},
    {"neutral/male3n_v2.webp"},
+   gen( "neutral/male01" ),
    {"neutral/female1n.webp"},
    {"neutral/female1n_v2.webp"},
    {"neutral/female1n_v3.webp"},

@@ -88,17 +88,17 @@ Rem 2 : The value of alpha_threshold of 50 is totally arbitrary
 2 ) The set of points is transformed into a polygon in polygonFromImg.
 The algo picks up one of the rightmost points. This point is the starting
 point. We define as well the starting direction as nearly vertical
-  Then the following recurcive algo runs :
-  a/ From the current point, find the next point that is at a distance
-     between minlen and maxlen and that makes the minimal angle with the
-     previous direction.
-  b/ Compute the next direction in order to prevent going backwards.
-     This direction makes the maximal angle with the direction going from
-     current point to previous point, and is chosen among the points that
-     are at a distance < maxlen from the previous point.
-     This step is necessary in the concave parts of ships.
-  After that, a few checks are performed. If the generated polygon fails,
-  a new finer polygon is generated.
+   Then the following recurcive algo runs :
+      a/ From the current point, find the next point that is at a distance
+         between minlen and maxlen and that makes the minimal angle with the
+         previous direction.
+      b/ Compute the next direction in order to prevent going backwards.
+         This direction makes the maximal angle with the direction going from
+         current point to previous point, and is chosen among the points that
+         are at a distance < maxlen from the previous point.
+         This step is necessary in the concave parts of ships.
+   After that, a few checks are performed. If the generated polygon fails,
+   a new finer polygon is generated.
 
 3 ) The polygon is simplified in simplifyPolygon.
 A loop is run among the points of the polygon. Any point which angle is too
@@ -123,742 +123,749 @@ from tqdm import tqdm
 
 # Create an array from an image
 def arrFromImg( address, sx, sy ):
-    buffer = plt.imread( address )
+   buffer = plt.imread( address )
 
-    if np.shape(buffer)[2] == 4:
-        picture = buffer[:,:,3]
-    elif np.shape(buffer)[2] == 2: # Black and white
-        picture = buffer[:,:,1]
-    else:
-        print('Warning: unable to read png file')
-        picture = buffer[:,:,3] # Try this, maybe it will work
+   if np.shape(buffer)[2] == 4:
+      picture = buffer[:,:,3]
+   elif np.shape(buffer)[2] == 2: # Black and white
+      picture = buffer[:,:,1]
+   else:
+      print('Warning: unable to read png file')
+      picture = buffer[:,:,3] # Try this, maybe it will work
 
-    # Now see if values are in [0,1] or [0,255]
-    if np.max(picture) <= 1:
-        picture = 255*picture
+   # Now see if values are in [0,1] or [0,255]
+   if np.max(picture) <= 1:
+      picture = 255*picture
 
-    # Store all the different pictures in a list of matrices
-    six = picture.shape[0]/sx
-    siy = picture.shape[1]/sy
+   # Store all the different pictures in a list of matrices
+   six = picture.shape[0]/sx
+   siy = picture.shape[1]/sy
 
-    if (int(six) != six) or (int(siy) != siy) :
-        print(('Warning: sx = ' + str(sx) + ' or sy = ' + str(sy) + \
-               ' is wrong. The shape may be up to 1 pixel wrong.'))
+   if (int(six) != six) or (int(siy) != siy) :
+      print(('Warning: sx = ' + str(sx) + ' or sy = ' + str(sy)
+         + ' is wrong. The shape may be up to 1 pixel wrong.'))
 
-    six = int(six)
-    siy = int(siy)
+   six = int(six)
+   siy = int(siy)
 
-    # For the case when sx or sy is wrong, all the pictures have not the
-    # same size
-    stax = list(range(sx))
-    endx = list(range(sx))
-    for i in range(sx):
-        stax[i] = int( i * picture.shape[0]/sx )
-        endx[i] = int( (i+1) * picture.shape[0]/sx )
+   # For the case when sx or sy is wrong, all the pictures have not the
+   # same size
+   stax = list(range(sx))
+   endx = list(range(sx))
+   for i in range(sx):
+      stax[i] = int( i * picture.shape[0]/sx )
+      endx[i] = int( (i+1) * picture.shape[0]/sx )
 
-    stay = list(range(sy))
-    endy = list(range(sy))
-    for i in range(sy):
-        stay[i] = int( i * picture.shape[1]/sy )
-        endy[i] = int( (i+1) * picture.shape[1]/sy )
+   stay = list(range(sy))
+   endy = list(range(sy))
+   for i in range(sy):
+      stay[i] = int( i * picture.shape[1]/sy )
+      endy[i] = int( (i+1) * picture.shape[1]/sy )
 
-    # Create and populate the list of matrices
-    pictensor = list(range(sx*sy))
-    for i in range(sx):
-        for j in range(sy):
-            sxy = sy*i + j
-            pictensor[sxy] = picture[ stax[i]:endx[i], stay[j]:endy[j] ]
+   # Create and populate the list of matrices
+   pictensor = list(range(sx*sy))
+   for i in range(sx):
+      for j in range(sy):
+         sxy = sy*i + j
+         pictensor[sxy] = picture[ stax[i]:endx[i], stay[j]:endy[j] ]
 
-    return pictensor
+   return pictensor
 
 
 # Defines points from png
 def pointsFromImg( address, sx, sy, alpha_threshold ):
-    if type(address)==str:
-        picture = arrFromImg( address, sx, sy )
-    else:
-        picture = address
-    npict = len(picture)
+   if type(address)==str:
+      picture = arrFromImg( address, sx, sy )
+   else:
+      picture = address
+   npict = len(picture)
 
-    pointsx = [] # This list of list will contain the abscissae of the points
-    pointsy = []
+   pointsx = [] # This list of list will contain the abscissae of the points
+   pointsy = []
 
-    for p in range(npict):
-        pictcur = picture[p]
+   for p in range(npict):
+      pictcur = picture[p]
 
-        ssx = pictcur.shape[0]
-        ssy = pictcur.shape[1]
-        sx2 = ssx/2 # Offset value
-        sy2 = ssy/2
+      ssx = pictcur.shape[0]
+      ssy = pictcur.shape[1]
+      sx2 = ssx/2 # Offset value
+      sy2 = ssy/2
 
-        bufferx = [] # TODO : something to pre-allocate memory
-        buffery = []
+      bufferx = [] # TODO : something to pre-allocate memory
+      buffery = []
 
-        # loop over the corners (between pixels) if at least one pixel adjacent
-        # to corner is > alpha_threshold, put a point at this corner
-        # + + + + + + + +
-        #  0 1 1 1 0 0 0
-        # + + + + + + + +
-        #  0 0 1 1 1 0 0
-        # + + + + + + + +
+      # loop over the corners (between pixels) if at least one pixel adjacent
+      # to corner is > alpha_threshold, put a point at this corner
+      # + + + + + + + +
+      #  0 1 1 1 0 0 0
+      # + + + + + + + +
+      #  0 0 1 1 1 0 0
+      # + + + + + + + +
 
-        for i in range(ssx+1): # There is 1 corner more than pixels
-            for j in range(ssy+1):
-                if i==0:
-                    if j==0:
-                        if pictcur[0,0] >= alpha_threshold:
-                            bufferx.append(-i+sx2) # -i because image vs coordinates
-                            buffery.append(j-sy2)
-                    elif j==ssy:
-                        if pictcur[0,ssy-1] >= alpha_threshold:
-                            bufferx.append(-i+sx2)
-                            buffery.append(j-sy2)
-                    else:
-                        if pictcur[0,j-1] >= alpha_threshold or pictcur[0,j] >= alpha_threshold:
-                            bufferx.append(-i+sx2)
-                            buffery.append(j-sy2)
+      for i in range(ssx+1): # There is 1 corner more than pixels
+         for j in range(ssy+1):
+            if i==0:
+               if j==0:
+                  if pictcur[0,0] >= alpha_threshold:
+                     bufferx.append(-i+sx2) # -i because image vs coordinates
+                     buffery.append(j-sy2)
+               elif j==ssy:
+                  if pictcur[0,ssy-1] >= alpha_threshold:
+                     bufferx.append(-i+sx2)
+                     buffery.append(j-sy2)
+               else:
+                  if pictcur[0,j-1] >= alpha_threshold or pictcur[0,j] >= alpha_threshold:
+                     bufferx.append(-i+sx2)
+                     buffery.append(j-sy2)
 
-                elif i==ssx:
-                    if j==0:
-                        if pictcur[ssx-1,0] >= alpha_threshold:
-                            bufferx.append(-i+sx2)
-                            buffery.append(j-sy2)
-                    elif j==ssy:
-                        if pictcur[ssx-1,ssy-1] >= alpha_threshold:
-                            bufferx.append(-i+sx2)
-                            buffery.append(j-sy2)
-                    else:
-                        if pictcur[ssx-1,j-1] >= alpha_threshold or pictcur[ssx-1,j] >= alpha_threshold:
-                            bufferx.append(-i+sx2)
-                            buffery.append(j-sy2)
+            elif i==ssx:
+               if j==0:
+                  if pictcur[ssx-1,0] >= alpha_threshold:
+                     bufferx.append(-i+sx2)
+                     buffery.append(j-sy2)
+               elif j==ssy:
+                  if pictcur[ssx-1,ssy-1] >= alpha_threshold:
+                     bufferx.append(-i+sx2)
+                     buffery.append(j-sy2)
+               else:
+                  if pictcur[ssx-1,j-1] >= alpha_threshold or pictcur[ssx-1,j] >= alpha_threshold:
+                     bufferx.append(-i+sx2)
+                     buffery.append(j-sy2)
 
-                else:
-                    if j==0:
-                        if pictcur[i-1,0] >= alpha_threshold or pictcur[i,0] >= alpha_threshold:
-                            bufferx.append(-i+sx2)
-                            buffery.append(j-sy2)
-                    elif j==ssy:
-                        if pictcur[i-1,ssy-1] >= alpha_threshold or pictcur[i,ssy-1] >= alpha_threshold:
-                            bufferx.append(-i+sx2)
-                            buffery.append(j-sy2)
-                    else:
-                        # This is the most general case. Remove points inside the domain
-                        if (pictcur[i-1,j-1] >= alpha_threshold or pictcur[i-1,j] >= alpha_threshold \
-                            or pictcur[i,j-1] >= alpha_threshold or pictcur[i,j] >= alpha_threshold) \
-                            and not (pictcur[i-1,j-1] >= alpha_threshold and pictcur[i-1,j] >= alpha_threshold \
-                            and pictcur[i,j-1] >= alpha_threshold and pictcur[i,j] >= alpha_threshold):
-                            bufferx.append(-i+sx2)
-                            buffery.append(j-sy2)
+            else:
+               if j==0:
+                  if pictcur[i-1,0] >= alpha_threshold or pictcur[i,0] >= alpha_threshold:
+                     bufferx.append(-i+sx2)
+                     buffery.append(j-sy2)
+               elif j==ssy:
+                  if pictcur[i-1,ssy-1] >= alpha_threshold or pictcur[i,ssy-1] >= alpha_threshold:
+                     bufferx.append(-i+sx2)
+                     buffery.append(j-sy2)
+               else:
+                  # This is the most general case. Remove points inside the domain
+                  if (pictcur[i-1,j-1] >= alpha_threshold or pictcur[i-1,j] >= alpha_threshold \
+                     or pictcur[i,j-1] >= alpha_threshold or pictcur[i,j] >= alpha_threshold) \
+                     and not (pictcur[i-1,j-1] >= alpha_threshold and pictcur[i-1,j] >= alpha_threshold \
+                     and pictcur[i,j-1] >= alpha_threshold and pictcur[i,j] >= alpha_threshold):
+                     bufferx.append(-i+sx2)
+                     buffery.append(j-sy2)
 
-        pointsx.append(buffery)
-        pointsy.append(bufferx) # We invert because pictures and matrix dont use the same coordinate system
+      pointsx.append(buffery)
+      pointsy.append(bufferx) # We invert because pictures and matrix dont use the same coordinate system
 
-    return (pointsx,pointsy)
+   return (pointsx,pointsy)
 
 # Simplify a polygon by removing points that are aligned with other points
 def simplifyPolygon( indices, x, y, tol ):
-    lim = len(indices)
-    if lim < 3:
-        return (indices, x, y)
+   lim = len(indices)
+   if lim < 3:
+      return (indices, x, y)
 
-    j = 0
-    for i in range(lim-1): # Actually, it works as a while, with a safety bound
-        xj = x[j]
-        yj = y[j]
-        xm = x[j+1]
-        ym = y[j+1]
-        x2 = x[j+2]
-        y2 = y[j+2]
+   j = 0
+   for i in range(lim-1): # Actually, it works as a while, with a safety bound
+      xj = x[j]
+      yj = y[j]
+      xm = x[j+1]
+      ym = y[j+1]
+      x2 = x[j+2]
+      y2 = y[j+2]
 
-        th1 = math.atan2( ym-yj, xm-xj )
-        th2 = math.atan2( y2-ym, x2-xm )
+      th1 = math.atan2( ym-yj, xm-xj )
+      th2 = math.atan2( y2-ym, x2-xm )
 
-        # The point (xm,ym) does not make a big change in direction : kill it
-        if abs(th1-th2) < tol or abs(th1-th2-2*math.pi) < tol or\
-          abs(th1-th2+2*math.pi) < tol : # this handles the case th1~pi and th2~-pi
-            del(indices[j+1])
-            del(x[j+1])
-            del(y[j+1])
-            j -= 1
+      # The point (xm,ym) does not make a big change in direction : kill it
+      if (
+            abs(th1-th2) < tol or abs(th1-th2-2*math.pi) < tol or
+            abs(th1-th2+2*math.pi) < tol  # this handles the case th1~pi and th2~-pi
+      ):
+         del(indices[j+1])
+         del(x[j+1])
+         del(y[j+1])
+         j -= 1
 
-        j += 1
-        if j >= len(indices)-2:
-            break
+      j += 1
+      if j >= len(indices)-2:
+         break
 
-    return (indices, x, y)
+   return (indices, x, y)
 
 # Create the projections of the ship from the 3D data
 def pointsFrom3D( address, slices, size, center, alpha ):
-    """
-    from gltflib import GLTF
-    # Note doing it directly from GLTF is not working, so we use blender to drop to STL
-    # Extract the mesh and the points
-    gltf = GLTF().load( address )
-    for s in gltf.scenes:
-        if s.name=="body":
-            scene = s
-            break
-    vertices = []
-    triangles = []
-    for meshid in scene.nodes:
-        mesh = gltf.meshes[ meshid ]
-        for primitive in mesh.primitives:
-            # get the binary data for this mesh primitive from the buffer
-            accessor = gltf.accessors[ primitive.attributes.POSITION ]
-            bufferView = gltf.bufferViews[ accessor.bufferView ]
-            buffer = gltf.buffers[ bufferView.buffer ]
-            data = gltf.get_data_from_buffer_uri( buffer.uri )
+   """
+   from gltflib import GLTF
+   # Note doing it directly from GLTF is not working, so we use blender to drop to STL
+   # Extract the mesh and the points
+   gltf = GLTF().load( address )
+   for s in gltf.scenes:
+      if s.name=="body":
+         scene = s
+         break
+   vertices = []
+   triangles = []
+   for meshid in scene.nodes:
+      mesh = gltf.meshes[ meshid ]
+      for primitive in mesh.primitives:
+         # get the binary data for this mesh primitive from the buffer
+         accessor = gltf.accessors[ primitive.attributes.POSITION ]
+         bufferView = gltf.bufferViews[ accessor.bufferView ]
+         buffer = gltf.buffers[ bufferView.buffer ]
+         data = gltf.get_data_from_buffer_uri( buffer.uri )
 
-            # pull each vertex from the binary buffer and convert it into a tuple of python floats
-            for i in range(accessor.count):
-                index = bufferView.byteOffset + accessor.byteOffset + i*12  # the location in the buffer of this vertex
-                d = data[index:index+12]  # the vertex data
-                v = struct.unpack("<fff", d)   # convert from base64 to three floats
-                vertices.append(v)
+         # pull each vertex from the binary buffer and convert it into a tuple of python floats
+         for i in range(accessor.count):
+            index = bufferView.byteOffset + accessor.byteOffset + i*12  # the location in the buffer of this vertex
+            d = data[index:index+12]  # the vertex data
+            v = struct.unpack("<fff", d)   # convert from base64 to three floats
+            vertices.append(v)
 
-            # unpack floats
-            vertices2 = []
-            for a,b,c in vertices:
-                vertices2 += [a,b,c]
+         # unpack floats
+         vertices2 = []
+         for a,b,c in vertices:
+            vertices2 += [a,b,c]
 
-            # create triangles
-            vertices = vertices2
-            # TODO not sure why there's not a good amount of triangles...
-            for i in range(0,math.floor(len(vertices)/9)*9,9):
-                triangles.append(vertices[i:i+9])
+         # create triangles
+         vertices = vertices2
+         # TODO not sure why there's not a good amount of triangles...
+         for i in range(0,math.floor(len(vertices)/9)*9,9):
+            triangles.append(vertices[i:i+9])
 
-    triangles = np.array(triangles).transpose()
-    v0 = np.array(triangles[:][0:3])
-    v1 = np.array(triangles[:][3:6])
-    v2 = np.array(triangles[:][6:9])
-    """
+   triangles = np.array(triangles).transpose()
+   v0 = np.array(triangles[:][0:3])
+   v1 = np.array(triangles[:][3:6])
+   v2 = np.array(triangles[:][6:9])
+   """
 
-    stlfile = tempfile.NamedTemporaryFile( suffix=".stl" )
-    gltftostlpy = os.path.dirname(sys.argv[0])+"/blend_gltf_to_stl.py"
-    ret = subprocess.run(['blender', '--background', '--python', gltftostlpy, '--', address, stlfile.name ])
-    if ret.returncode != 0:
-        print("Warning: GLTF to STL export failed.")
-        return None
+   stlfile = tempfile.NamedTemporaryFile( suffix=".stl" )
+   gltftostlpy = os.path.dirname(sys.argv[0])+"/blend_gltf_to_stl.py"
+   ret = subprocess.run(['blender', '--background', '--python', gltftostlpy, '--', address, stlfile.name ])
+   if ret.returncode != 0:
+      print("Warning: GLTF to STL export failed.")
+      return None
 
-    shipMesh = mesh.Mesh.from_file( stlfile.name )
-    v0 = np.transpose(shipMesh.v0) # TODO : take the center into account
-    v1 = np.transpose(shipMesh.v1)
-    v2 = np.transpose(shipMesh.v2)
+   shipMesh = mesh.Mesh.from_file( stlfile.name )
+   v0 = np.transpose(shipMesh.v0) # TODO : take the center into account
+   v1 = np.transpose(shipMesh.v1)
+   v2 = np.transpose(shipMesh.v2)
 
-    # Compute x and y max and min
-    xM = max( [np.amax(v0[0,:]), np.amax(v1[0,:]), np.amax(v2[0,:])] )
-    xm = min( [np.amin(v0[0,:]), np.amin(v1[0,:]), np.amin(v2[0,:])] )
-    yM = max( [np.amax(v0[1,:]), np.amax(v1[1,:]), np.amax(v2[1,:])] )
-    ym = min( [np.amin(v0[1,:]), np.amin(v1[1,:]), np.amin(v2[1,:])] )
+   # Compute x and y max and min
+   xM = max( [np.amax(v0[0,:]), np.amax(v1[0,:]), np.amax(v2[0,:])] )
+   xm = min( [np.amin(v0[0,:]), np.amin(v1[0,:]), np.amin(v2[0,:])] )
+   yM = max( [np.amax(v0[1,:]), np.amax(v1[1,:]), np.amax(v2[1,:])] )
+   ym = min( [np.amin(v0[1,:]), np.amin(v1[1,:]), np.amin(v2[1,:])] )
 
-    # Rescale the data
-    radius = max( np.max(np.linalg.norm(v0,axis=0)), np.max(np.linalg.norm(v1,axis=0)), np.max(np.linalg.norm(v2,axis=0)) )
-    factor = size/radius * 0.5
+   # Rescale the data
+   radius = max( np.max(np.linalg.norm(v0,axis=0)), np.max(np.linalg.norm(v1,axis=0)), np.max(np.linalg.norm(v2,axis=0)) )
+   factor = size/radius * 0.5
 
-    v0 = factor*v0
-    v1 = factor*v1
-    v2 = factor*v2
+   v0 = factor*v0
+   v1 = factor*v1
+   v2 = factor*v2
 
-    # Rotate the stuff for any angle
-    dtheta = 2*math.pi/slices
+   # Rotate the stuff for any angle
+   dtheta = 2*math.pi/slices
 
-    xlist = []
-    ylist = []
-    for it in tqdm(range(slices), desc="Transforming model", ascii=True):
-        # Rotate the points
-        theta = it*dtheta + math.pi/2
-        rot = np.matrix([[math.cos(theta), -math.sin(theta), 0],\
-                         [math.sin(theta), math.cos(theta), 0],\
-                         [0, 0, 1]])
-        vt0 = rot * v0
-        vt1 = rot * v1
-        vt2 = rot * v2
+   xlist = []
+   ylist = []
+   for it in tqdm(range(slices), desc="Transforming model", ascii=True):
+      # Rotate the points
+      theta = it*dtheta + math.pi/2
+      rot = np.matrix([
+         [math.cos(theta), -math.sin(theta), 0],
+         [math.sin(theta), math.cos(theta), 0],
+         [0, 0, 1]])
+      vt0 = rot * v0
+      vt1 = rot * v1
+      vt2 = rot * v2
 
-        # Projection for the view
-        proj = np.matrix([[1, 0, 0],\
-                          [0, math.sin(alpha), math.cos(alpha)],\
-                          [0, 0, 0]])
-        vt0 = proj * vt0
-        vt1 = proj * vt1
-        vt2 = proj * vt2
+      # Projection for the view
+      proj = np.matrix([
+         [1, 0, 0],
+         [0, math.sin(alpha), math.cos(alpha)],
+         [0, 0, 0]])
+      vt0 = proj * vt0
+      vt1 = proj * vt1
+      vt2 = proj * vt2
 
-        # Extract x and y coordinates
-        x0 = vt0[0,:]
-        x1 = vt1[0,:]
-        x2 = vt2[0,:]
-        y0 = vt0[1,:]
-        y1 = vt1[1,:]
-        y2 = vt2[1,:]
+      # Extract x and y coordinates
+      x0 = vt0[0,:]
+      x1 = vt1[0,:]
+      x2 = vt2[0,:]
+      y0 = vt0[1,:]
+      y1 = vt1[1,:]
+      y2 = vt2[1,:]
 
-        xmax = max( [np.amax(x0), np.amax(x1), np.amax(x2)] )
-        xmin = min( [np.amin(x0), np.amin(x1), np.amin(x2)] )
-        ymax = max( [np.amax(y0), np.amax(y1), np.amax(y2)] )
-        ymin = min( [np.amin(y0), np.amin(y1), np.amin(y2)] )
+      xmax = max( [np.amax(x0), np.amax(x1), np.amax(x2)] )
+      xmin = min( [np.amin(x0), np.amin(x1), np.amin(x2)] )
+      ymax = max( [np.amax(y0), np.amax(y1), np.amax(y2)] )
+      ymin = min( [np.amin(y0), np.amin(y1), np.amin(y2)] )
 
-        # Now we create a grid of points that are inside the ship.
-        # We need this regular grid because its the only way to have a
-        # non-convex polygon generation algo that is guaranteed to work.
-        xgrid = []
-        ygrid = []
-        fullDots = np.zeros( ( int(xmax)-int(xmin)+1 , int(ymax)-int(ymin)+1 ) )
+      # Now we create a grid of points that are inside the ship.
+      # We need this regular grid because its the only way to have a
+      # non-convex polygon generation algo that is guaranteed to work.
+      xgrid = []
+      ygrid = []
+      fullDots = np.zeros( ( int(xmax)-int(xmin)+1 , int(ymax)-int(ymin)+1 ) )
 
-        for ai, i in enumerate( range(int(xmin),int(xmax)+1) ):
-            for aj, j in enumerate( range(int(ymin),int(ymax)+1) ):
-                # Test if there is a triangle for which the point (i,j) is inside
-                # Here, we do vector operations to speed up computations
-                D1 = np.multiply(x1-i,y2-j) - np.multiply(x2-i,y1-j);
-                D2 = np.multiply(x2-i,y0-j) - np.multiply(x0-i,y2-j);
-                D3 = np.multiply(x0-i,y1-j) - np.multiply(x1-i,y0-j);
-                D0 = D1+D2+D3;
+      for ai, i in enumerate( range(int(xmin),int(xmax)+1) ):
+         for aj, j in enumerate( range(int(ymin),int(ymax)+1) ):
+            # Test if there is a triangle for which the point (i,j) is inside
+            # Here, we do vector operations to speed up computations
+            D1 = np.multiply(x1-i,y2-j) - np.multiply(x2-i,y1-j);
+            D2 = np.multiply(x2-i,y0-j) - np.multiply(x0-i,y2-j);
+            D3 = np.multiply(x0-i,y1-j) - np.multiply(x1-i,y0-j);
+            D0 = D1+D2+D3;
 
-                j1 = np.where(np.multiply(D0,D1) > 0)[1];
-                j2 = np.where(np.multiply(D0,D2) > 0)[1];
-                j3 = np.where(np.multiply(D0,D3) > 0)[1];
-                j4 = np.intersect1d( np.intersect1d(j1,j2), j3);
+            j1 = np.where(np.multiply(D0,D1) > 0)[1];
+            j2 = np.where(np.multiply(D0,D2) > 0)[1];
+            j3 = np.where(np.multiply(D0,D3) > 0)[1];
+            j4 = np.intersect1d( np.intersect1d(j1,j2), j3);
 
-                # Hell, there are flat triangles. As a consequence, > cannot
-                # be replaced by >= in np.where
-                if len(j4) >= 1: # point is in a triangle
-                    fullDots[ai,aj] = 1
+            # Hell, there are flat triangles. As a consequence, > cannot
+            # be replaced by >= in np.where
+            if len(j4) >= 1: # point is in a triangle
+               fullDots[ai,aj] = 1
 
-        # Second loop to remove points that are inside the domain
-        # (to speedup polygon generation)
-        for ai, i in enumerate( range(int(xmin),int(xmax)+1) ):
-            for aj, j in enumerate( range(int(ymin),int(ymax)+1) ):
-                if fullDots[ai,aj] == 1:
-                    if (i == int(xmin) or i == int(xmax) or \
-                       j == int(ymin) or j == int(ymax)):
-                           # We're on the boundary : activate the point
-                           xgrid.append(i)
-                           ygrid.append(j)
-                    elif (fullDots[ai-1,aj] == 1 and fullDots[ai,aj-1] == 1\
-                       and fullDots[ai+1,aj] == 1 and fullDots[ai,aj+1] == 1) :
-                           # This point is inside the shape. Don't activate it
-                           pass
-                    else:
-                        xgrid.append(i)
-                        ygrid.append(j)
+      # Second loop to remove points that are inside the domain
+      # (to speedup polygon generation)
+      for ai, i in enumerate( range(int(xmin),int(xmax)+1) ):
+         for aj, j in enumerate( range(int(ymin),int(ymax)+1) ):
+            if fullDots[ai,aj] == 1:
+               if (i == int(xmin) or i == int(xmax) or \
+                  j == int(ymin) or j == int(ymax)):
+                     # We're on the boundary : activate the point
+                     xgrid.append(i)
+                     ygrid.append(j)
+               elif (fullDots[ai-1,aj] == 1 and fullDots[ai,aj-1] == 1\
+                  and fullDots[ai+1,aj] == 1 and fullDots[ai,aj+1] == 1) :
+                     # This point is inside the shape. Don't activate it
+                     pass
+               else:
+                  xgrid.append(i)
+                  ygrid.append(j)
 
-        xlist.append(xgrid)
-        ylist.append(ygrid)
+      xlist.append(xgrid)
+      ylist.append(ygrid)
 
-        #plt.scatter(xgrid,ygrid)
-        #plt.scatter(x0.tolist()[0],y0.tolist()[0])
-        #break
+      #plt.scatter(xgrid,ygrid)
+      #plt.scatter(x0.tolist()[0],y0.tolist()[0])
+      #break
 
-    return (xlist, ylist, factor)
+   return (xlist, ylist, factor)
 
 # Computes a single polygon from an image
 def singlePolygonFromImg( px, py, minlen, maxlen, ppi, theta=0. ):
-    npt = len(px)
-    minlen2 = minlen**2
-    maxlen2 = maxlen**2
+   npt = len(px)
+   minlen2 = minlen**2
+   maxlen2 = maxlen**2
 
-    dvec = np.zeros( npt )
-    dpos = np.array([math.cos(theta),math.sin(theta)])
-    for i in range(npt):
-        dvec[i] = np.dot( dpos, (px[i], py[i] ) )
+   dvec = np.zeros( npt )
+   dpos = np.array([math.cos(theta),math.sin(theta)])
+   for i in range(npt):
+      dvec[i] = np.dot( dpos, (px[i], py[i] ) )
 
-    star    = np.argmax(dvec) # Choose the starting point
-    polygon = [star] # Initialize the polygon
+   star   = np.argmax(dvec) # Choose the starting point
+   polygon = [star] # Initialize the polygon
 
-    # Now we do a loop
-    pcur     = star
-    pdir     = [math.cos(theta-1e-8),math.sin(theta-1e-8)] # Previous direction
-    d02      = 0             # This value will store the distance between first and second one
+   # Now we do a loop
+   pcur    = star
+   pdir    = [math.cos(theta-1e-8),math.sin(theta-1e-8)] # Previous direction
+   d02     = 0          # This value will store the distance between first and second one
 
-    for i in range(1000): # Limit number of iterations
-        xc = px[pcur]
-        yc = py[pcur]
+   for i in range(1000): # Limit number of iterations
+      xc = px[pcur]
+      yc = py[pcur]
 
-        mine = npt # Initialize the current minimal angle value
-        amin = 3*math.pi
+      mine = npt # Initialize the current minimal angle value
+      amin = 3*math.pi
 
-        pool = [] # Contains all the points that will be removed for next step
+      pool = [] # Contains all the points that will be removed for next step
 
-        for j in range(npt): # looking for current one
-            if j==pcur:
-                continue # Next one cannot be current one
+      for j in range(npt): # looking for current one
+         if j==pcur:
+            continue # Next one cannot be current one
 
-            x  = px[j]
-            y  = py[j]
-            d2 = (x-xc)**2 + (y-yc)**2
+         x  = px[j]
+         y  = py[j]
+         d2 = (x-xc)**2 + (y-yc)**2
+
+         if d2 > maxlen2:
+            continue # Too far away
+
+         pool.append(j)
+
+         if j==star and d2 < d02 and len(polygon)>7: # We made a loop
+            mine = star
+            break
+
+         if d2 < minlen2 and not (j==star):
+            continue # Too close
+
+         cdir = [x-xc,y-yc]
+         vprod = pdir[0]*cdir[1] - pdir[1]*cdir[0] # Vectorial product
+         sprod = pdir[0]*cdir[0] + pdir[1]*cdir[1] # Scalar product
+         alpha = math.atan2( vprod, sprod )      # Angle
+
+         if alpha < 0: # We need alpha to be positive
+            alpha = 2*math.pi + alpha
+
+         if alpha < amin:
+            amin = alpha
+            mine = j
+
+      if mine == star: # Loop finished
+         # TODO : find a way to be sure that the last point is not after the start point
+         break
+
+      if mine < npt: # Move forward
+         x = px[mine]
+         y = py[mine]
+         if pcur == star: # Store the distance between first and second one (to avoid getting back)
+            d02 = (yc-y)**2 + (xc-x)**2
+         pcur = mine
+         angl = math.atan2( yc-y, xc-x  )
+         adir = [ xc-x, yc-y ]
+
+         # Seek for the angle from witch we will start for next search
+         # This angle should be such that previous iterates are not reachable
+         anglj = 0
+         for j in pool: #polygon
+
+            xj = px[j]
+            yj = py[j]
+            d2 = (x-xj)**2 + (y-yj)**2
 
             if d2 > maxlen2:
-                continue # Too far away
+               continue # Not reachable anyway
 
-            pool.append(j)
+            jdir = [ xj-x, yj-y ]
 
-            if j==star and d2 < d02 and len(polygon)>7: # We made a loop
-                mine = star
-                break
+            vprod = adir[0]*jdir[1] - adir[1]*jdir[0] # Vectorial product
+            sprod = adir[0]*jdir[0] + adir[1]*jdir[1] # Scalar product
+            angla = math.atan2( vprod, sprod )      # Angle from adir to jdir
+            if angla > math.pi/2: # Limit this angle
+               angla = 0
+            anglj = max(anglj, angla)
 
-            if d2 < minlen2 and not (j==star):
-                continue # Too close
+         angl = angl + anglj + math.pi/1e4 # Slightly increment the angle
+         #print(angl)
 
-            cdir = [x-xc,y-yc]
-            vprod = pdir[0]*cdir[1] - pdir[1]*cdir[0] # Vectorial product
-            sprod = pdir[0]*cdir[0] + pdir[1]*cdir[1] # Scalar product
-            alpha = math.atan2( vprod, sprod )        # Angle
+         pdir = [ math.cos(angl), math.sin(angl) ]
+         polygon.append(mine)
 
-            if alpha < 0: # We need alpha to be positive
-                alpha = 2*math.pi + alpha
+      else: # Did not find any value
+         print('No more eligible point for polygon at sprite '+str(ppi))
+         break
 
-            if alpha < amin:
-                amin = alpha
-                mine = j
+   ppx = [ px[i] for i in polygon ]
+   ppy = [ py[i] for i in polygon ]
 
-        if mine == star: # Loop finished
-            # TODO : find a way to be sure that the last point is not after the start point
-            break
-
-        if mine < npt: # Move forward
-            x = px[mine]
-            y = py[mine]
-            if pcur == star: # Store the distance between first and second one (to avoid getting back)
-                d02 = (yc-y)**2 + (xc-x)**2
-            pcur = mine
-            angl = math.atan2( yc-y, xc-x  )
-            adir = [ xc-x, yc-y ]
-
-            # Seek for the angle from witch we will start for next search
-            # This angle should be such that previous iterates are not reachable
-            anglj = 0
-            for j in pool: #polygon
-
-                xj = px[j]
-                yj = py[j]
-                d2 = (x-xj)**2 + (y-yj)**2
-
-                if d2 > maxlen2:
-                    continue # Not reachable anyway
-
-                jdir = [ xj-x, yj-y ]
-
-                vprod = adir[0]*jdir[1] - adir[1]*jdir[0] # Vectorial product
-                sprod = adir[0]*jdir[0] + adir[1]*jdir[1] # Scalar product
-                angla = math.atan2( vprod, sprod )        # Angle from adir to jdir
-                if angla > math.pi/2: # Limit this angle
-                    angla = 0
-                anglj = max(anglj, angla)
-
-            angl = angl + anglj + math.pi/1e4 # Slightly increment the angle
-            #print(angl)
-
-            pdir = [ math.cos(angl), math.sin(angl) ]
-            polygon.append(mine)
-
-        else: # Did not find any value
-            print('No more eligible point for polygon at sprite '+str(ppi))
-            break
-
-    ppx = [ px[i] for i in polygon ]
-    ppy = [ py[i] for i in polygon ]
-
-    return(polygon, ppx, ppy)
+   return(polygon, ppx, ppy)
 
 
 # Computes polygons from points
 def polygonFromPoints( points, minlen, maxlen ):
-    pxa = points[0]
-    pya = points[1]
+   pxa = points[0]
+   pya = points[1]
 
-    npict = len(pxa)
+   npict = len(pxa)
 
-    ppxs    = []
-    ppys    = []
-    polyall = []
+   ppxs   = []
+   ppys   = []
+   polyall = []
 
-    # List of values for minlen and maxlen. Both list should have same length
-    minlist = [ 6, 5,  4, 3, 2, 1 ]
-    maxlist = [ 12, 10, 8, 6, 4, 1.5 ]
-    assert( len(minlist)==len(maxlist) )
+   # List of values for minlen and maxlen. Both list should have same length
+   minlist = [ 6, 5,  4, 3, 2, 1 ]
+   maxlist = [ 12, 10, 8, 6, 4, 1.5 ]
+   assert( len(minlist)==len(maxlist) )
 
-    # Adapt minlist and maxlist in order to match presripted values
-    minlist = list(filter(lambda x: x <= minlen, minlist))
-    maxlist = list(filter(lambda x: x <= maxlen, maxlist))
+   # Adapt minlist and maxlist in order to match presripted values
+   minlist = list(filter(lambda x: x <= minlen, minlist))
+   maxlist = list(filter(lambda x: x <= maxlen, maxlist))
 
-    for ppi in range(npict):
-        px = pxa[ppi]
-        py = pya[ppi]
+   for ppi in range(npict):
+      px = pxa[ppi]
+      py = pya[ppi]
 
-        theta = ppi/npict * 2*math.pi + math.pi/2
+      theta = ppi/npict * 2*math.pi + math.pi/2
 
-        for j in range(len(minlist)):
-            stop = 1
+      for j in range(len(minlist)):
+         stop = 1
 
-            pplg    = singlePolygonFromImg( px, py, minlist[j], maxlist[j], ppi, theta )
-            if len(pplg[1]) <= 3:
-                stop = 0
-                print( f"Too few points for view (only {len(ppx)}, trying again ", file=sys.stderr)
-                pplg    = singlePolygonFromImg( px, py, minlist[j], maxlist[j], ppi, theta+math.pi/2 )
+         pplg   = singlePolygonFromImg( px, py, minlist[j], maxlist[j], ppi, theta )
+         if len(pplg[1]) <= 3:
+            stop = 0
+            print( f"Too few points for view (only {len(ppx)}, trying again ", file=sys.stderr)
+            pplg   = singlePolygonFromImg( px, py, minlist[j], maxlist[j], ppi, theta+math.pi/2 )
 
-            polygon = pplg[0]
-            ppx     = pplg[1]
-            ppy     = pplg[2]
-            #print( polygon, ppx, ppy )
+         polygon = pplg[0]
+         ppx    = pplg[1]
+         ppy    = pplg[2]
+         #print( polygon, ppx, ppy )
 
-            # Some checks
-            if len(polygon)==1001:
-                print('refining sprite '+str(ppi))
-                stop = 0
+         # Some checks
+         if len(polygon)==1001:
+            print('refining sprite '+str(ppi))
+            stop = 0
 
-            elif abs(max(ppx)-max(px)) > minlen or abs(min(ppx)-min(px)) > minlen \
-              or abs(max(ppy)-max(py)) > minlen or abs(min(ppy)-min(py)) > minlen:
-                print('Polygon is not precise enough. Refining sprite '+str(ppi))
-                stop = 0
+         elif (  abs(max(ppx)-max(px)) > minlen or
+               abs(min(ppx)-min(px)) > minlen or
+               abs(max(ppy)-max(py)) > minlen or
+               abs(min(ppy)-min(py)) > minlen):
+            print('Polygon is not precise enough. Refining sprite '+str(ppi))
+            stop = 0
 
-            if stop:
-                break
+         if stop:
+            break
 
-        polysim = simplifyPolygon( polygon, ppx, ppy, math.pi/16 ) # Simplify the polygon
+      polysim = simplifyPolygon( polygon, ppx, ppy, math.pi/16 ) # Simplify the polygon
 
-        ppxs.append( polysim[1] )
-        ppys.append( polysim[2] )
-        polyall.append( polysim[0] )
+      ppxs.append( polysim[1] )
+      ppys.append( polysim[2] )
+      polyall.append( polysim[0] )
 
-    return (polyall, ppxs, ppys)
+   return (polyall, ppxs, ppys)
 
 # Computes a polygon from an image
 def polygonFromImg( address, sx, sy, alpha_threshold, minlen, maxlen ):
-    points  = pointsFromImg( address, sx, sy, alpha_threshold )
-    polygon = polygonFromPoints( points, minlen, maxlen )
-    return (points, polygon)
+   points  = pointsFromImg( address, sx, sy, alpha_threshold )
+   polygon = polygonFromPoints( points, minlen, maxlen )
+   return (points, polygon)
 
 # Computes a polygon from an STL
 def polygonFrom3D( address, slices=120, scale=30, center=[0,0,0], alpha=math.pi/4, minlen=3, maxlen=6 ):
-    points  = pointsFrom3D( address, slices, scale, center, alpha )
-    xlist   = points[0]
-    ylist   = points[1]
-    factor  = points[2]
-    polygon = polygonFromPoints( (xlist, ylist), minlen, maxlen )
+   points  = pointsFrom3D( address, slices, scale, center, alpha )
+   xlist   = points[0]
+   ylist   = points[1]
+   factor  = points[2]
+   polygon = polygonFromPoints( (xlist, ylist), minlen, maxlen )
 
-    # Rescale by dividing by factor
-    xlist = polygon[1]
-    ylist = polygon[2]
-    #xlist = [np.array(i)/factor for i in xlist]
-    #ylist = [np.array(i)/factor for i in ylist]
+   # Rescale by dividing by factor
+   xlist = polygon[1]
+   ylist = polygon[2]
+   #xlist = [np.array(i)/factor for i in xlist]
+   #ylist = [np.array(i)/factor for i in ylist]
 
-    xpoint = points[0]
-    ypoint = points[1]
-    #xpoint = [np.array(i)/factor for i in xpoint]
-    #ypoint = [np.array(i)/factor for i in ypoint]
+   xpoint = points[0]
+   ypoint = points[1]
+   #xpoint = [np.array(i)/factor for i in xpoint]
+   #ypoint = [np.array(i)/factor for i in ypoint]
 
-    return ( (xpoint,ypoint), (polygon[0],xlist,ylist) )
+   return ( (xpoint,ypoint), (polygon[0],xlist,ylist) )
 
 # Generates a XML file that contains the polygon
 def generateXML( polygon, address ):
 
-    os.makedirs( os.path.dirname(address), exist_ok=True )
+   os.makedirs( os.path.dirname(address), exist_ok=True )
 
-    poly = polygon[0]
-    px   = polygon[1]
-    py   = polygon[2]
+   poly = polygon[0]
+   px   = polygon[1]
+   py   = polygon[2]
 
-    nb   = len(poly)
+   nb   = len(poly)
 
-    polygons = ET.Element('polygons')
-    polygons.set("num", f"{nb}")
-    for i in range(nb):
-        polyg = ET.SubElement(polygons,'polygon')
-        polyg.set("num", f"{len(px[i])}" )
-        x = ET.SubElement(polyg,'x')
-        y = ET.SubElement(polyg,'y')
-        x.text = ",".join(map(lambda x: str(x), px[i]))
-        y.text = ",".join(map(lambda x: str(x), py[i]))
+   polygons = ET.Element('polygons')
+   polygons.set("num", f"{nb}")
+   for i in range(nb):
+      polyg = ET.SubElement(polygons,'polygon')
+      polyg.set("num", f"{len(px[i])}" )
+      x = ET.SubElement(polyg,'x')
+      y = ET.SubElement(polyg,'y')
+      x.text = ",".join(map(lambda x: str(x), px[i]))
+      y.text = ",".join(map(lambda x: str(x), py[i]))
 
-    mydata = ET.tostring(polygons, encoding="UTF-8", method="xml")
-    mydata = pretty.parseString(mydata)
-    mydata = mydata.toprettyxml(indent="\t",encoding="UTF-8")
+   mydata = ET.tostring(polygons, encoding="UTF-8", method="xml")
+   mydata = pretty.parseString(mydata)
+   mydata = mydata.toprettyxml(indent="\t",encoding="UTF-8")
 
-    myfile = open(address, "w")
-    myfile.write(mydata.decode("utf-8") )
-    myfile.close()
-    print(f"   Saved to {address}!")
+   myfile = open(address, "w")
+   myfile.write(mydata.decode("utf-8") )
+   myfile.close()
+   print(f"   Saved to {address}!")
 
 # Generates polygon for all outfits
 def polygonify_all_outfits(gfxPath, polyPath, overwrite):
 
-    # Default parameters
-    default_maxNmin = (2,4)
+   # Default parameters
+   default_maxNmin = (2,4)
 
-    # First define the parameters for special files
-    maxNmin = {
-               "ripperM" : (3,6)
-              }
+   # First define the parameters for special files
+   maxNmin = {
+      "ripperM" : (3,6)
+   }
 
-    for fileName in os.listdir(gfxPath):
-        if (fileName.endswith((".png", ".webp")) and not fileName.endswith(("-end.png", "-end.webp"))) \
-           and not fileName.startswith("beam_"):
+   for fileName in os.listdir(gfxPath):
+      if ((fileName.endswith((".png", ".webp")) and
+            not fileName.endswith(("-end.png", "-end.webp"))) and
+            not fileName.startswith("beam_")):
 
-            polyAddress = (polyPath+fileName+".xml")
+         polyAddress = (polyPath+fileName+".xml")
 
-            # Test if the file already exists
-            if ( not overwrite and os.path.exists(polyAddress) ) :
-                continue
+         # Test if the file already exists
+         if ( not overwrite and os.path.exists(polyAddress) ) :
+            continue
 
-            # Special case because of strange non-connex pixels
-            if fileName == 'autocannon.png':
-                print('Warning : autocannon.png was not generated')
-                continue
+         # Special case because of strange non-connex pixels
+         if fileName == 'autocannon.png':
+            print('Warning : autocannon.png was not generated')
+            continue
 
-            # Manage parameters
-            lmin = default_maxNmin[0]
-            lmax = default_maxNmin[1]
-            if fileName in maxNmin:
-                mNm = maxNmin[fileName]
-                lmin = mNm[0]
-                lmax = mNm[1]
+         # Manage parameters
+         lmin = default_maxNmin[0]
+         lmax = default_maxNmin[1]
+         if fileName in maxNmin:
+            mNm = maxNmin[fileName]
+            lmin = mNm[0]
+            lmax = mNm[1]
 
-            pngAddress  = (gfxPath+fileName)
+         pngAddress  = (gfxPath+fileName)
 
-            print("Generation of " + polyAddress)
+         print("Generation of " + polyAddress)
 
-            pntNplg = polygonFromImg( pngAddress, 6, 6, 50, lmin, lmax )
+         pntNplg = polygonFromImg( pngAddress, 6, 6, 50, lmin, lmax )
 
-            polygon = pntNplg[1]
-            generateXML( polygon, polyAddress )
+         polygon = pntNplg[1]
+         generateXML( polygon, polyAddress )
 
 # Generates polygon for all asteroids
 def polygonify_all_asteroids( gfxPath, polyPath, overwrite ):
 
-    # Default parameters
-    default_maxNmin = (3,6,50)
+   # Default parameters
+   default_maxNmin = (3,6,50)
 
-    # First define the parameters for special files
-    maxNmin = { "flower01" : (5,10,50) } # Actually, the algorithm automatically refines this one, so it could be skipped
+   # First define the parameters for special files
+   maxNmin = { "flower01" : (5,10,50) } # Actually, the algorithm automatically refines this one, so it could be skipped
 
-    for fileName in os.listdir(gfxPath):
+   for fileName in os.listdir(gfxPath):
 
-        polyAddress = (polyPath+fileName+".xml")
+      polyAddress = (polyPath+fileName+".xml")
 
-        # Test if the file already exists
-        if ( not overwrite and os.path.exists(polyAddress) ) :
-            continue
+      # Test if the file already exists
+      if ( not overwrite and os.path.exists(polyAddress) ) :
+         continue
 
-        # Manage parameters
-        lmin = default_maxNmin[0]
-        lmax = default_maxNmin[1]
-        alpha_threshold = default_maxNmin[2]
-        if fileName in maxNmin:
-            mNm = maxNmin[fileName]
-            lmin = mNm[0]
-            lmax = mNm[1]
-            alpha_threshold = mNm[2]
+      # Manage parameters
+      lmin = default_maxNmin[0]
+      lmax = default_maxNmin[1]
+      alpha_threshold = default_maxNmin[2]
+      if fileName in maxNmin:
+         mNm = maxNmin[fileName]
+         lmin = mNm[0]
+         lmax = mNm[1]
+         alpha_threshold = mNm[2]
 
-        pngAddress  = (gfxPath+fileName)
+      pngAddress  = (gfxPath+fileName)
 
-        print("Generation of " + polyAddress)
+      print("Generation of " + polyAddress)
 
-        pntNplg = polygonFromImg( pngAddress, 1, 1, alpha_threshold, lmin, lmax )
-        polygon = pntNplg[1]
+      pntNplg = polygonFromImg( pngAddress, 1, 1, alpha_threshold, lmin, lmax )
+      polygon = pntNplg[1]
 
-        """
-        points  = pntNplg[0]
-        plt.figure()
-        plt.title(polyAddress)
-        plt.scatter(points[0][0],points[1][0])
-        plt.scatter(polygon[1][0],polygon[2][0])
-        """
+      """
+      points  = pntNplg[0]
+      plt.figure()
+      plt.title(polyAddress)
+      plt.scatter(points[0][0],points[1][0])
+      plt.scatter(polygon[1][0],polygon[2][0])
+      """
 
-        generateXML(polygon,polyAddress)
+      generateXML(polygon,polyAddress)
 
 
 ships = {}
 def parse_ships():
-    searchpath = os.path.dirname(sys.argv[0])+"/../dat/ships/**/*.xml"
-    for f in glob.glob( searchpath, recursive=True ):
-        root = ET.parse( f ).getroot()
-        name = root.get('name')
-        inherits = root.get('inherits')
-        gfx = root.find( "gfx" )
-        base_type = root.find( "base_type" )
-        if base_type != None:
-            typepath = base_type.get("path")
-            if typepath == None:
-                typepath = base_type.text
-        if inherits == None:
-            ships[ name ] = { "name": name, "gfx": gfx, "base_type": base_type, "typepath": typepath }
+   searchpath = os.path.dirname(sys.argv[0])+"/../dat/ships/**/*.xml"
+   for f in glob.glob( searchpath, recursive=True ):
+      root = ET.parse( f ).getroot()
+      name = root.get('name')
+      inherits = root.get('inherits')
+      gfx = root.find( "gfx" )
+      base_type = root.find( "base_type" )
+      if base_type != None:
+         typepath = base_type.get("path")
+         if typepath == None:
+            typepath = base_type.text
+      if inherits == None:
+         ships[ name ] = { "name": name, "gfx": gfx, "base_type": base_type, "typepath": typepath }
 
 def polygonify_ship( filename, outpath, gfxpath, use2d=True, use3d=True ):
-    root = ET.parse( filename ).getroot()
-    name = root.get('name')
-    inherits = root.get('inherits')
-    tag, basetag, typepath = None, None, None
-    if inherits != None:
-        s = ships[ inherits ]
-        tag = s["gfx"]
-        basetag = s["base_type"]
-        typepath = s["typepath"]
-    def replace_none( key, val ):
-        return val if val != None else key
-    tag = replace_none( tag, root.find( "gfx" ) )
-    basetag = replace_none( tag, root.find( "base_type" ) )
-    typepath = replace_none( typepath, basetag.get("path") )
-    if typepath == None:
-        typepath = basetag.text
-    if tag != None:
-        if outpath != None:
-            outname = f"{outpath}/ship/{tag.text}.xml"
+   root = ET.parse( filename ).getroot()
+   name = root.get('name')
+   inherits = root.get('inherits')
+   tag, basetag, typepath = None, None, None
+   if inherits != None:
+      s = ships[ inherits ]
+      tag = s["gfx"]
+      basetag = s["base_type"]
+      typepath = s["typepath"]
+   def replace_none( key, val ):
+      return val if val != None else key
+   tag = replace_none( tag, root.find( "gfx" ) )
+   basetag = replace_none( tag, root.find( "base_type" ) )
+   typepath = replace_none( typepath, basetag.get("path") )
+   if typepath == None:
+      typepath = basetag.text
+   if tag != None:
+      if outpath != None:
+         outname = f"{outpath}/ship/{tag.text}.xml"
 
-        pntNplg = None
-        if use3d:
-            # Try 3D first
-            gltfpath = f"{gfxpath}/ship3d/{typepath}/{tag.text}.gltf"
-            if os.path.isfile(gltfpath):
-                pntNplg = polygonFrom3D( gltfpath, scale=int(tag.get("size")) )
-            else:
-                print(f"{gltfpath} is not a 3D model!")
-        # Fall back to image
-        if use2d and pntNplg==None:
-            print("Failed to find 3D model, falling back to 2D")
-            imgpath = f"{gfxpath}/ship/{tag.text.split('_')[0]}/{tag.text}.webp"
-            if not os.path.isfile(imgpath):
-                imgpath = f"{gfxpath}/ship/{tag.text.split('_')[0]}/{tag.text}.png"
-            sx = int(tag.get("sx")) if tag.get("sx")!=None else 8
-            sy = int(tag.get("sy")) if tag.get("sy")!=None else 8
-            sx, sy = sy, sx # Seems like it's flipped :/
-            alpha_threshold = 50
-            minlen  = 3
-            maxlen  = 6
-            img     = arrFromImg( imgpath, sx, sy )
-            if img[0].shape[0] > 50:
-                minlen = 4
-                maxlen = 8
-            pntNplg = polygonFromImg( img, sx, sy, alpha_threshold, minlen, maxlen )
+      pntNplg = None
+      if use3d:
+         # Try 3D first
+         gltfpath = f"{gfxpath}/ship3d/{typepath}/{tag.text}.gltf"
+         if os.path.isfile(gltfpath):
+            pntNplg = polygonFrom3D( gltfpath, scale=int(tag.get("size")) )
+         else:
+            print(f"{gltfpath} is not a 3D model!")
+      # Fall back to image
+      if use2d and pntNplg==None:
+         print("Failed to find 3D model, falling back to 2D")
+         imgpath = f"{gfxpath}/ship/{tag.text.split('_')[0]}/{tag.text}.webp"
+         if not os.path.isfile(imgpath):
+            imgpath = f"{gfxpath}/ship/{tag.text.split('_')[0]}/{tag.text}.png"
+         sx = int(tag.get("sx")) if tag.get("sx")!=None else 8
+         sy = int(tag.get("sy")) if tag.get("sy")!=None else 8
+         sx, sy = sy, sx # Seems like it's flipped :/
+         alpha_threshold = 50
+         minlen  = 3
+         maxlen  = 6
+         img    = arrFromImg( imgpath, sx, sy )
+         if img[0].shape[0] > 50:
+            minlen = 4
+            maxlen = 8
+         pntNplg = polygonFromImg( img, sx, sy, alpha_threshold, minlen, maxlen )
 
-            if outpath != None:
-                outname = f"{outpath}/ship2d/{tag.text}.xml"
+         if outpath != None:
+            outname = f"{outpath}/ship2d/{tag.text}.xml"
 
-        # Not generated
-        if pntNplg==None:
-            print(f"Skipping '{filename}'...")
-            return None
+      # Not generated
+      if pntNplg==None:
+         print(f"Skipping '{filename}'...")
+         return None
 
-        # Now Generate the
-        polygon = pntNplg[1]
-        if outpath != None:
-            generateXML( polygon, outname )
-        return pntNplg
+      # Now Generate the
+      polygon = pntNplg[1]
+      if outpath != None:
+         generateXML( polygon, outname )
+      return pntNplg
 
-        """
-        points = pntNplg[0]
-        plt.figure()
-        plt.title( outname )
-        plt.scatter(points[0][0],points[1][0])
-        plt.scatter(polygon[1][0],polygon[2][0])
-        plt.show()
-        """
+      """
+      points = pntNplg[0]
+      plt.figure()
+      plt.title( outname )
+      plt.scatter(points[0][0],points[1][0])
+      plt.scatter(polygon[1][0],polygon[2][0])
+      plt.show()
+      """
 
 class CustomFormatter(argparse.ArgumentDefaultsHelpFormatter, argparse.RawDescriptionHelpFormatter):
-    pass
+   pass
 
 # Run stuff
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-            description = 'Wrapper for luacheck that "understands" Naev hooks.',
-            formatter_class = CustomFormatter,
-            epilog = f"""
+   parser = argparse.ArgumentParser(
+         description = 'Wrapper for luacheck that "understands" Naev hooks.',
+         formatter_class = CustomFormatter,
+         epilog = f"""
 Examples:
 
 # Generate the collision polygons for the Admonisher from the Naev github repo
@@ -867,72 +874,72 @@ Examples:
 # Generate  the collision polygons for a ship that is fully contained in a plugin at /path/to/plugin
 {sys.argv[0]} --gfxpath /path/to/plugin/gfx/ --outpath /path/to/plugin/collision/ /path/to/plugin/ships/MyShip.xml
 """)
-    parser.add_argument('path', metavar='PATH', nargs='+', type=str, help='Name of the ship XML file(s) to parse. Data is extracted from the ship definition about the sprites and/or 3D models.')
-    parser.add_argument('--outpath', help="Path to output the polygons to.", type=str, default="artwork/collision/" )
-    parser.add_argument("--use2d", help="Allows the script to use 2D data (if found). Only used if 3D data is disable or not found.", default=True, action=argparse.BooleanOptionalAction )
-    parser.add_argument("--use3d", help="Allows the script to use 3D data (if found).", default=True, action=argparse.BooleanOptionalAction )
-    parser.add_argument("--compare", help="Computes both 2D and 3D collision polygons and compares the results visually with a plot. Only will process the first ship XML file path.", default=False, action=argparse.BooleanOptionalAction )
-    parser.add_argument("--gfxpath", help="Root path which the artwork graphics are located.", type=str, default="artwork/gfx/" )
-    parser.add_argument("--visualize", help="Whether or not the results should be visualized as a matplotlib animation. Only will process the first ship XML file path", type=bool, default=False, action=argparse.BooleanOptionalAction )
-    args, unknown = parser.parse_known_args()
+   parser.add_argument('path', metavar='PATH', nargs='+', type=str, help='Name of the ship XML file(s) to parse. Data is extracted from the ship definition about the sprites and/or 3D models.')
+   parser.add_argument('--outpath', help="Path to output the polygons to.", type=str, default="artwork/collision/" )
+   parser.add_argument("--use2d", help="Allows the script to use 2D data (if found). Only used if 3D data is disable or not found.", default=True, action=argparse.BooleanOptionalAction )
+   parser.add_argument("--use3d", help="Allows the script to use 3D data (if found).", default=True, action=argparse.BooleanOptionalAction )
+   parser.add_argument("--compare", help="Computes both 2D and 3D collision polygons and compares the results visually with a plot. Only will process the first ship XML file path.", default=False, action=argparse.BooleanOptionalAction )
+   parser.add_argument("--gfxpath", help="Root path which the artwork graphics are located.", type=str, default="artwork/gfx/" )
+   parser.add_argument("--visualize", help="Whether or not the results should be visualized as a matplotlib animation. Only will process the first ship XML file path", type=bool, default=False, action=argparse.BooleanOptionalAction )
+   args, unknown = parser.parse_known_args()
 
-    # Comparison mode shows difference between 3D and 2D
-    if args.compare:
-        import matplotlib.animation as animation
-        polya = polygonify_ship( args.path[0], None, False )
-        polyb = polygonify_ship( args.path[0], None, True )
-        def display( poly, name, idx, frame=0 ):
-            frame = frame % len(poly[0][0])
-            points = poly[0]
-            polygon = poly[1]
-            plt.subplot(1, 2, idx)
-            ax = plt.gca()
-            ax.set_aspect('equal', 'box')
-            plt.title( name + f" ({len(polygon[0][0])} points)" )
-            plt.scatter(points[0][frame],points[1][frame])
-            plt.scatter(polygon[1][frame],polygon[2][frame])
+   # Comparison mode shows difference between 3D and 2D
+   if args.compare:
+      import matplotlib.animation as animation
+      polya = polygonify_ship( args.path[0], None, False )
+      polyb = polygonify_ship( args.path[0], None, True )
+      def display( poly, name, idx, frame=0 ):
+         frame = frame % len(poly[0][0])
+         points = poly[0]
+         polygon = poly[1]
+         plt.subplot(1, 2, idx)
+         ax = plt.gca()
+         ax.set_aspect('equal', 'box')
+         plt.title( name + f" ({len(polygon[0][0])} points)" )
+         plt.scatter(points[0][frame],points[1][frame])
+         plt.scatter(polygon[1][frame],polygon[2][frame])
 
-        fig = plt.figure()
-        display( polya, "From Image", 1 )
-        display( polyb, "From GLTF", 2 )
-        def animate( i ):
-            plt.clf()
-            display( polya, "From Image", 1, i )
-            display( polyb, "From GLTF", 2, i )
+      fig = plt.figure()
+      display( polya, "From Image", 1 )
+      display( polyb, "From GLTF", 2 )
+      def animate( i ):
+         plt.clf()
+         display( polya, "From Image", 1, i )
+         display( polyb, "From GLTF", 2, i )
 
-        ani = animation.FuncAnimation( fig, animate, repeat=True, interval=500, cache_frame_data=False )
-        plt.show()
-        sys.exit(0)
+      ani = animation.FuncAnimation( fig, animate, repeat=True, interval=500, cache_frame_data=False )
+      plt.show()
+      sys.exit(0)
 
-    # Load up the ships
-    parse_ships()
+   # Load up the ships
+   parse_ships()
 
-    # Normal mode we just try to process the files
-    for a in args.path:
-        print(f"Processing {a}...")
-        try:
-            poly = polygonify_ship( a, outpath=args.outpath, use2d=args.use2d, use3d=args.use3d, gfxpath=args.gfxpath )
-            if args.visualize:
-                import matplotlib.animation as animation
-                def display( poly, name, idx, frame=0 ):
-                    frame = frame % len(poly[0][0])
-                    points = poly[0]
-                    polygon = poly[1]
-                    plt.subplot(1, 2, idx)
-                    ax = plt.gca()
-                    ax.set_aspect('equal', 'box')
-                    plt.title( name + f" ({len(polygon[0][0])} points)" )
-                    plt.scatter(points[0][frame],points[1][frame])
-                    plt.scatter(polygon[1][frame],polygon[2][frame])
+   # Normal mode we just try to process the files
+   for a in args.path:
+      print(f"Processing {a}...")
+      try:
+         poly = polygonify_ship( a, outpath=args.outpath, use2d=args.use2d, use3d=args.use3d, gfxpath=args.gfxpath )
+         if args.visualize:
+            import matplotlib.animation as animation
+            def display( poly, name, idx, frame=0 ):
+               frame = frame % len(poly[0][0])
+               points = poly[0]
+               polygon = poly[1]
+               plt.subplot(1, 2, idx)
+               ax = plt.gca()
+               ax.set_aspect('equal', 'box')
+               plt.title( name + f" ({len(polygon[0][0])} points)" )
+               plt.scatter(points[0][frame],points[1][frame])
+               plt.scatter(polygon[1][frame],polygon[2][frame])
 
-                fig = plt.figure()
-                display( poly, "Model", 1 )
-                def animate( i ):
-                    plt.clf()
-                    display( poly, "Model", 1, i )
+            fig = plt.figure()
+            display( poly, "Model", 1 )
+            def animate( i ):
+               plt.clf()
+               display( poly, "Model", 1, i )
 
-                ani = animation.FuncAnimation( fig, animate, repeat=True, interval=500, cache_frame_data=False )
-                plt.show()
-                sys.exit(0)
-        except Exception as e:
-            print( f"Failed to process '{a}': {e}", file=sys.stderr)
+            ani = animation.FuncAnimation( fig, animate, repeat=True, interval=500, cache_frame_data=False )
+            plt.show()
+            sys.exit(0)
+      except Exception as e:
+         print( f"Failed to process '{a}': {e}", file=sys.stderr)

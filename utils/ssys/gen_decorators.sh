@@ -5,7 +5,7 @@ PIC="$(realpath --relative-to="$PWD" "${SCRIPT_DIR}/../../artwork/gfx/map")"
 MAP="$(realpath --relative-to="$PWD" "${SCRIPT_DIR}/../../dat/map_decorator")"
 
 if [ -f "decorators.inc" ] ; then
-   echo '"decorators.inc" already exists!'
+   echo '"decorators.inc" already exists!' 1>&2
    exit 0
 fi
 
@@ -26,9 +26,9 @@ while read -r picnam ; do
       if [ ! -f "$OUT" ] || [ "$pic" -nt "$OUT" ] ; then
          convert "$pic" "$OUT"
       else
-         echo -n " [already here]" >&2
+         echo -n " [was already here]" >&2
       fi
-      echo "" >&2
+      echo >&2
       echo -e "#declare $bas = box{\n\t<0,0,0>\n\t<1,1,-1>"
       echo -e "\tpigment{image_map{\"$OUT\"}}"
       echo -e "\ttranslate <-0.5,-0.5,0>\n\tscale <-$W,-$H,1>\n}"

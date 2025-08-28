@@ -350,7 +350,7 @@ function board()
    seiryuu:control(false)
 
    if var.peek("shadowrun") then
-     var.pop("shadowrun") -- in case it was used
+      var.pop("shadowrun") -- in case it was used
    end
    shadow.addLog( _([[You participated in an operation for Captain Rebina. You thought you were rescuing a man named Jorek, but it turns out that you were actually helping smuggle something onto Captain Rebina's ship, the Seiryuu. You know next to nothing about Captain Rebina or who she works for.]]) )
    misn.finish(true)

@@ -108,7 +108,7 @@ local function clicked ()
          {_("Electronic Warfare"), "tut_ewarfare"},
          {_("Stealth"), "tut_stealth"},
          {_("Asteroids and Mining"), "tut_mining"},
-         {_("Nevermind"), "mainmenu"},
+         {_("Never mind"), "mainmenu"},
       }
       if var.peek( "tut_illegal" ) then
          table.insert( opts, #opts, {_("Illegality and Smuggling"), "tut_illegal"} )
@@ -123,12 +123,13 @@ local function clicked ()
    end )
 
    vn.label("tut_weaponsets")
-   sai(_([["A large part of combat is decided ahead of time by the ship classes and their load out. However, good piloting can turn the tables easily. It is important to assign weapon sets to be easy to use. You can set weapon sets from the '#oWeapons#0' tab of the information window. You have 10 different weapon sets that can be configured separately for each ship."]]))
-   sai(_([["There are three different types of weapon sets:
-- #oSwitch#0: activating the hotkey will set your primary and secondary weapons
+   sai(_([["A large part of combat is decided ahead of time by the ship classes and their load out. However, good piloting can turn the tables easily. It is important to assign weapon sets to be easy to use. You can set weapon sets from the '#oWeapons#0' tab of the information window. You have 10 different customizable weapon sets that can be configured separately for each ship, in addition to primary and secondary weapon sets.."]]))
+   sai(_([["There are three different types of weapon sets you can activate in advanced mode:
+- #oDefault#0: behaviour depends on whether the key is tapped or held. If tapped it toggles the weapon set on or off, while if held, it will activate it while held.
+- #oHold#0: holding the hotkey will turn the outfits on
 - #oToggle#0: activating the hotkey will toggle the outfits between on/off states
-- #oHold#0: holding the hotkey will turn the outfits on"]]))
-   sai(_([["By default, the weapon sets will be automatically managed by me, with forward bolts in set 1 (switch), turret weapons in set 2 (switch), and both turret and forward weapons in set 3 (switch). Seeker weapons are in set 4 (hold), and fighter bays in set 5 (hold). However, you can override this and set them however you prefer. Just remember to update them whenever you change your outfits."]]))
+"]]))
+   sai(_([["By default, the weapon sets will be automatically managed by me, with primary and secondary weapon sets will be set accordingly to appropriate weapons, and other outfits added to the remaining weapon sets. They will all be in default mode. Feel free to customize the settings, and more information is available in the holo-archives on the topic. Just remember to update your weapon sets whenever you change your outfits."]]))
    vn.jump("tutorials")
 
    vn.label("tut_ewarfare")
@@ -144,7 +145,7 @@ local function clicked ()
    vn.jump("tutorials")
 
    vn.label("tut_stealth")
-   sai(fmt.f(_([["You can activate stealth mode with {stealthkey} when far enough away from other ships, and only when you have no missiles locked on to you. When stealthed, your ship will be completely invisible to all ships. However, if a ship gets within the #ostealth#0 distance of your ship, it will slowly uncover you."]]),{stealthkey=tut.getKey("stealth")}))
+   sai(fmt.f(_([["You can activate stealth mode with {stealthkey} when far enough away from other ships. When stealthed, your ship will be completely invisible to all ships, and even missiles will stop tracking. However, if a ship gets within the #ostealth#0 distance of your ship, it will slowly uncover you."]]),{stealthkey=tut.getKey("stealth")}))
    sai(_([["Besides making your ship invisible to other ships, #ostealth#0 slows down your ship by 50% to mask your gravitational presence. This also has the effect of letting you jump out from jumpoints further away. There are many outfits that can change and modify this behaviour to get more out of stealth."]]))
    sai(_([["When not in stealth, ships can target your ship to perform a scan. This can uncover unwanted information, such as illegal cargo or outfits. The time to scan depends on the mass of the ship. If you don't want to be scanned, you should use stealth as much as possible. Enemy ships may also use stealth. Similarly to how you get uncovered when ships enter your #ostealth#0 range, you can uncover neutral or hostile ships by entering their #ostealth#0 range, however, you will not be able to know where they are until you are on top of them."]]))
    sai(_([["Finally, escorts and fighters will automatically stealth when their leader goes into stealth, so you don't have to worry giving stealth orders to ships you may be commanding. Friendly ships will also not uncover your stealth, so it is good to make as many friends as possible."]]))
@@ -232,7 +233,7 @@ function advice ()
       local msg_bioship = _([["Bioships gain experience over time, allowing them to advance to new stages and learn new abilities. Bioships must land to advance to new stages, and only while landed will they will be able to learn new skills. You can set the skills from the bioship interface which is accessible from the #bInfo window#0 which you can open with #b{infokey}#0."]],
          {infokey=tut.getKey("info")})
       table.insert( adv_rnd, msg_bioship )
-      if bioship.skillpointsfree() > 0 then
+      if bioship.skillpointsfree(player.pilot()) > 0 then
          table.insert( adv, msg_bioship )
       end
    end

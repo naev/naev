@@ -19,55 +19,55 @@ DRYRUN="false"
 REPONAME="naev/naev"
 
 while getopts dnpct:o:r:g: OPTION "$@"; do
-    case $OPTION in
-    d)
-        set -x
-        ;;
-    n)
-        NIGHTLY="true"
-        ;;
-    p)
-        PRERELEASE="true"
-        ;;
-    c)
-        DRYRUN="true"
-        ;;
-    t)
-        TEMPPATH="${OPTARG}"
-        ;;
-    o)
-        OUTDIR="${OPTARG}"
-        ;;
-    r)
-        TAGNAME="${OPTARG}"
-        ;;
-    g)
-        REPONAME="${OPTARG}"
-        ;;
-    *)
-        ;;
-    esac
+   case $OPTION in
+   d)
+      set -x
+      ;;
+   n)
+      NIGHTLY="true"
+      ;;
+   p)
+      PRERELEASE="true"
+      ;;
+   c)
+      DRYRUN="true"
+      ;;
+   t)
+      TEMPPATH="${OPTARG}"
+      ;;
+   o)
+      OUTDIR="${OPTARG}"
+      ;;
+   r)
+      TAGNAME="${OPTARG}"
+      ;;
+   g)
+      REPONAME="${OPTARG}"
+      ;;
+   *)
+      ;;
+   esac
 done
 
 if [[ -z "$TAGNAME" ]]; then
-    echo "usage: $(basename "$0") [-d] [-n] (set this for nightly builds) [-p] (set this for pre-release builds.) [-c] (set this for CI testing) -t <TEMPPATH> (build artefact location) -o <OUTDIR> (dist output directory) -r <TAGNAME> (tag of release *required*) -g <REPONAME> (defaults to naev/naev)"
-    exit 1
+   echo "usage: $(basename "$0") [-d] [-n] (set this for nightly builds) [-p] (set this for pre-release builds.) [-c] (set this for CI testing) -t <TEMPPATH> (build artefact location) -o <OUTDIR> (dist output directory) -r <TAGNAME> (tag of release *required*) -g <REPONAME> (defaults to naev/naev)"
+   exit 1
 fi
 
 # Check dependencies
 if ! [ -x "$(command -v gh)" ]; then
-    echo "You don't have gh (GitHub CLI) in PATH"
-    exit 1
+   echo "You don't have gh (GitHub CLI) in PATH"
+   exit 1
 fi
 if ! [ -x "$(command -v git)" ]; then
-    echo "You don't have git in PATH"
-    exit 1
+   echo "You don't have git in PATH"
+   exit 1
 fi
 
 # Set git configuration from environment variables if provided
 if [ -n "$GIT_USERNAME" ] && [ -n "$GIT_EMAIL" ]; then
-    git -C build/staging/repo config user.name "$GIT_USERNAME"
-    git -C build/staging/repo config user.email "$GIT_EMAIL"
+   git -C build/staging/repo config user.name "$GIT_USERNAME"
+   git -C build/staging/repo config user.email "$GIT_EMAIL"
 fi
 
 VERSION="$(<"$TEMPPATH/naev-version/VERSION")"
@@ -97,73 +97,73 @@ cp "$TEMPPATH"/naev-dist/source.tar.xz "$OUTDIR"/dist/naev-"$VERSION"-source.tar
 
 # Move Soundtrack to deployment location if this is a release.
 if [ "$NIGHTLY" == "true" ] || [ "$PRERELEASE" == "true" ]; then
-    echo "not preparing soundtrack"
+   echo "not preparing soundtrack"
 else
-    cp "$TEMPPATH"/naev-soundtrack/naev-*-soundtrack.zip "$OUTDIR"/dist/naev-"$VERSION"-soundtrack.zip
+   cp "$TEMPPATH"/naev-soundtrack/naev-*-soundtrack.zip "$OUTDIR"/dist/naev-"$VERSION"-soundtrack.zip
 fi
 
 # Create Release and push builds to github via gh
 # If DRYRUN is set to true, simulate the release creation and upload
 
 if [ "$DRYRUN" == "false" ]; then
-    # Delete existing release for the current tag if it exists
-    if gh release view "$TAGNAME" --repo "$REPONAME" >/dev/null 2>&1; then
-        gh release delete "$TAGNAME" --repo "$REPONAME" --yes
-    fi
+   # Delete existing release for the current tag if it exists
+   if gh release view "$TAGNAME" --repo "$REPONAME" >/dev/null 2>&1; then
+      gh release delete "$TAGNAME" --repo "$REPONAME" --yes
+   fi
 
-    # For nightly releases, force push the "nightly" tag to HEAD
-    if [ "$NIGHTLY" == "true" ]; then
-        pushd build/staging/repo > /dev/null
-        git tag -f nightly HEAD
-        git push -f origin nightly
-        popd > /dev/null
-    fi
+   # For nightly releases, force push the "nightly" tag to HEAD
+   if [ "$NIGHTLY" == "true" ]; then
+      pushd build/staging/repo > /dev/null
+      git tag -f nightly HEAD
+      git push -f origin nightly
+      popd > /dev/null
+   fi
 
-    # Create release for $TAGNAME
-    if [ "$NIGHTLY" == "true" ]; then
-        gh release create "$TAGNAME" --title "Nightly Build" --prerelease --generate-notes --verify-tag --repo "$REPONAME"
-    else
-        if [ "$PRERELEASE" == "true" ]; then
-            gh release create "$TAGNAME" --title "$TAGNAME" --notes-file "build/staging/naev-changelog/Changelog.md" --prerelease --verify-tag --repo "$REPONAME"
-        else
-            gh release create "$TAGNAME" --title "$TAGNAME" --notes-file "build/staging/naev-changelog/Changelog.md" --verify-tag --repo "$REPONAME"
-        fi
-    fi
+   # Create release for $TAGNAME
+   if [ "$NIGHTLY" == "true" ]; then
+      gh release create "$TAGNAME" --title "Nightly Build" --prerelease --generate-notes --verify-tag --repo "$REPONAME"
+   else
+      if [ "$PRERELEASE" == "true" ]; then
+         gh release create "$TAGNAME" --title "$TAGNAME" --notes-file "build/staging/naev-changelog/Changelog.md" --prerelease --verify-tag --repo "$REPONAME"
+      else
+         gh release create "$TAGNAME" --title "$TAGNAME" --notes-file "build/staging/naev-changelog/Changelog.md" --verify-tag --repo "$REPONAME"
+      fi
+   fi
 
-    gh --version
-    gh release upload "$TAGNAME" "$OUTDIR/lin64/naev-${VERSION}-linux-x86-64.AppImage" --repo "$REPONAME" --clobber
-    gh release upload "$TAGNAME" "$OUTDIR/lin64/naev-${VERSION}-linux-x86-64.AppImage.zsync" --repo "$REPONAME" --clobber
-    gh release upload "$TAGNAME" "$OUTDIR/macos/naev-${VERSION}-macos-universal.dmg" --repo "$REPONAME" --clobber
-    gh release upload "$TAGNAME" "$OUTDIR/win64/naev-${VERSION}-win64.exe" --repo "$REPONAME" --clobber
-    if [ "$NIGHTLY" == "false" ] && [ "$PRERELEASE" == "false" ]; then
-        gh release upload "$TAGNAME" "$OUTDIR/dist/naev-${VERSION}-soundtrack.zip" --repo "$REPONAME" --clobber
-    fi
-    gh release upload "$TAGNAME" "$OUTDIR/dist/naev-${VERSION}-source.tar.xz" --repo "$REPONAME" --clobber
+   gh --version
+   gh release upload "$TAGNAME" "$OUTDIR/lin64/naev-${VERSION}-linux-x86-64.AppImage" --repo "$REPONAME" --clobber
+   gh release upload "$TAGNAME" "$OUTDIR/lin64/naev-${VERSION}-linux-x86-64.AppImage.zsync" --repo "$REPONAME" --clobber
+   gh release upload "$TAGNAME" "$OUTDIR/macos/naev-${VERSION}-macos-universal.dmg" --repo "$REPONAME" --clobber
+   gh release upload "$TAGNAME" "$OUTDIR/win64/naev-${VERSION}-win64.exe" --repo "$REPONAME" --clobber
+   if [ "$NIGHTLY" == "false" ] && [ "$PRERELEASE" == "false" ]; then
+      gh release upload "$TAGNAME" "$OUTDIR/dist/naev-${VERSION}-soundtrack.zip" --repo "$REPONAME" --clobber
+   fi
+   gh release upload "$TAGNAME" "$OUTDIR/dist/naev-${VERSION}-source.tar.xz" --repo "$REPONAME" --clobber
 elif [ "$DRYRUN" == "true" ]; then
-    gh --version
-    # Simulate deletion of an existing release for the current tag
-    echo "Would check for and delete existing release for tag: $TAGNAME"
-    if [ "$NIGHTLY" == "true" ]; then
-        echo "Would force push 'nightly' tag to HEAD: git tag -f nightly HEAD && git push -f origin nightly"
-        echo "Would create release: gh release create $TAGNAME --title 'Nightly Build' --prerelease --generate-notes --verify-tag --repo $REPONAME"
-    else
-        if [ "$PRERELEASE" == "true" ]; then
-            echo "Would create release: gh release create $TAGNAME --title $TAGNAME --notes-file build/staging/naev-changelog/Changelog.md --prerelease --verify-tag --repo $REPONAME"
-        else
-            echo "Would create release: gh release create $TAGNAME --title $TAGNAME --notes-file build/staging/naev-changelog/Changelog.md --verify-tag --repo $REPONAME"
-        fi
-    fi
-    # Simulate asset uploads
-    echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/lin64/naev-${VERSION}-linux-x86-64.AppImage --repo $REPONAME --clobber"
-    echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/lin64/naev-${VERSION}-linux-x86-64.AppImage.zsync --repo $REPONAME --clobber"
-    echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/macos/naev-${VERSION}-macos-universal.dmg --repo $REPONAME --clobber"
-    echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/win64/naev-${VERSION}-win64.exe --repo $REPONAME --clobber"
-    if [ "$NIGHTLY" == "false" ] && [ "$PRERELEASE" == "false" ]; then
-        echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/dist/naev-${VERSION}-soundtrack.zip --repo $REPONAME --clobber"
-    fi
-    echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/dist/naev-${VERSION}-source.tar.xz --repo $REPONAME --clobber"
-    ls -l -R "$OUTDIR"
+   gh --version
+   # Simulate deletion of an existing release for the current tag
+   echo "Would check for and delete existing release for tag: $TAGNAME"
+   if [ "$NIGHTLY" == "true" ]; then
+      echo "Would force push 'nightly' tag to HEAD: git tag -f nightly HEAD && git push -f origin nightly"
+      echo "Would create release: gh release create $TAGNAME --title 'Nightly Build' --prerelease --generate-notes --verify-tag --repo $REPONAME"
+   else
+      if [ "$PRERELEASE" == "true" ]; then
+         echo "Would create release: gh release create $TAGNAME --title $TAGNAME --notes-file build/staging/naev-changelog/Changelog.md --prerelease --verify-tag --repo $REPONAME"
+      else
+         echo "Would create release: gh release create $TAGNAME --title $TAGNAME --notes-file build/staging/naev-changelog/Changelog.md --verify-tag --repo $REPONAME"
+      fi
+   fi
+   # Simulate asset uploads
+   echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/lin64/naev-${VERSION}-linux-x86-64.AppImage --repo $REPONAME --clobber"
+   echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/lin64/naev-${VERSION}-linux-x86-64.AppImage.zsync --repo $REPONAME --clobber"
+   echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/macos/naev-${VERSION}-macos-universal.dmg --repo $REPONAME --clobber"
+   echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/win64/naev-${VERSION}-win64.exe --repo $REPONAME --clobber"
+   if [ "$NIGHTLY" == "false" ] && [ "$PRERELEASE" == "false" ]; then
+      echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/dist/naev-${VERSION}-soundtrack.zip --repo $REPONAME --clobber"
+   fi
+   echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/dist/naev-${VERSION}-source.tar.xz --repo $REPONAME --clobber"
+   ls -l -R "$OUTDIR"
 else
-    echo "Something went wrong determining which mode to run this script in."
-    exit 1
+   echo "Something went wrong determining which mode to run this script in."
+   exit 1
 fi

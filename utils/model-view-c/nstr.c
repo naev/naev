@@ -4,7 +4,7 @@
 /**
  * @file nstring.c
  *
- * @brief Some string routines for naev.
+ * @brief Some string routines for Naev.
  */
 #include "common.h"
 

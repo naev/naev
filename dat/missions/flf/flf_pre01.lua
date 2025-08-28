@@ -14,9 +14,9 @@
 --[[
    This is the first "prelude" mission leading to the FLF campaign. The player takes a FLF agent onboard, then either turns him in to the Dvaered or delivers him to a hidden FLF base.
    stack variable flfbase_intro:
-       1 - The player has turned in the FLF agent or rescued the Dvaered crew. Conditional for dv_antiflf02
-       2 - The player has rescued the FLF agent. Conditional for flf_pre02
-       3 - The player has found the FLF base for the Dvaered, or has betrayed the FLF after rescuing the agent. Conditional for dv_antiflf03
+      1 - The player has turned in the FLF agent or rescued the Dvaered crew. Conditional for dv_antiflf02
+      2 - The player has rescued the FLF agent. Conditional for flf_pre02
+      3 - The player has found the FLF base for the Dvaered, or has betrayed the FLF after rescuing the agent. Conditional for dv_antiflf03
 --]]
 
 local fleet = require "fleet"

@@ -61,7 +61,7 @@ Converts an item object or number of credits to reward string ("You have receive
    @usage vn.na(fmt.reward(money_reward))
 
       @param reward_list Thing or number of credits the player is receiving.
-                    Avoid passing strings (English or translated) for clarity's sake. Can be a table containing multiple instances.
+         Avoid passing strings (English or translated) for clarity's sake. Can be a table containing multiple instances.
       @return A string taking the form of "You have received X." -- translated and colourized.
 --]]
 function format.reward( reward_list )
@@ -146,19 +146,19 @@ function format.list( words )
    local length = #words
    if length == 1 then return tostring(words[1]) end
    if length == 2 then
-      return _replace(_replace( _("{0} and {1}"), '{0}', words[1]),
-         '{1}', words[2])
+      return _replace(_replace( _("{0} and {1}"), '{0}', tostring(words[1])),
+         '{1}', tostring(words[2]))
    end
 
-   local result = _replace( _("{0}, and {1}"), '{1}', words[length])
+   local result = _replace( _("{0}, and {1}"), '{1}', tostring(words[length]))
    while length > 3 do
       length = length - 1
-      local mid = _replace( _("{0}, {1}"), '{1}', words[length])
+      local mid = _replace( _("{0}, {1}"), '{1}', tostring(words[length]))
       result = _replace(result, '{0}', mid)
    end
-   result = _replace(result, '{0}', words[2])
+   result = _replace(result, '{0}', tostring(words[2]))
    result = _replace( _("{0}, {1}"), '{1}', result)
-   result = _replace(result, '{0}', words[1])
+   result = _replace(result, '{0}', tostring(words[1]))
    return result
 end
 
@@ -236,7 +236,7 @@ String interpolation, inspired by <a href="https://github.com/hishamhm/f-strings
    @usage fmt.f(_("A few digits of pi: {1:.2f}"), {math.pi})
 
    @tparam string str Format string which may include placeholders of the form "{var}" "{var:6.3f}"
-                      (where the expression after the colon is any directive string.format understands).
+      (where the expression after the colon is any directive string.format understands).
    @tparam table tab Argument table.
 --]]
 function format.f( str, tab )

@@ -232,7 +232,7 @@ void nlua_setenv( lua_State *L, nlua_env *env, const char *name )
 }
 
 /*
- * @brief Registers C functions as lua library in environment
+ * @brief Registers C functions as Lua library in environment
  *
  * This is meant to replace luaL_register()
  *
@@ -261,7 +261,7 @@ void nlua_register( nlua_env *env, const char *libname, const luaL_Reg *l,
 /**
  * @brief Wrapper around luaL_newstate.
  *
- *    @return A newly created lua_State.
+ *    @return A newly created "lua_State".
  */
 static lua_State *nlua_newState( void )
 {
@@ -415,7 +415,7 @@ static int nlua_errTraceInternal( lua_State *L, int idx )
 }
 
 /*
- * @brief Wrapper around lua_pcall() that handles errors and environments
+ * @brief Wrapper around "lua_pcall()" that handles errors and environments
  *
  *    @param env Environment.
  *    @param nargs Number of arguments to pass.
@@ -468,7 +468,7 @@ int nlua_pcall( nlua_env *env, int nargs, int nresults )
 }
 
 /**
- * @brief Gets the reference of a global in a lua environment.
+ * @brief Gets the reference of a global in a Lua environment.
  *
  *    @param env Environment.
  *    @param name Name of the global to get.
@@ -484,12 +484,12 @@ int nlua_refenv( nlua_env *env, const char *name )
 }
 
 /**
- * @brief Gets the reference of a global in a lua environment if it matches a
+ * @brief Gets the reference of a global in a Lua environment if it matches a
  * type.
  *
  *    @param env Environment.
  *    @param name Name of the global to get.
- *    @param type Type to match, e.g., LUA_TFUNCTION.
+ *    @param type Type to match, e.g., "LUA_TFUNCTION".
  *    @return LUA_NOREF if no global found, reference otherwise.
  */
 int nlua_refenvtype( nlua_env *env, const char *name, int type )

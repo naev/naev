@@ -98,16 +98,17 @@ local function outfit_loot( o, price )
       else
          sbonus = string.format("#g%+d", bonus*100 - 100)
       end
-      sprice = fmt.f(_("\n#rCosts {credits} ({sbonus}%#r from crew strength) to extract!#0"), {credits=fmt.credits(price), sbonus=sbonus})
+      sprice = fmt.f(_("\n#rCosts {credits} ({sbonus}%#r from crew strength) to extract!#0"), {
+         credits=fmt.credits(price), sbonus=sbonus})
    end
-   local desc = fmt.f(_("{name}{sprice}\n{slotsize} {slottype}#0 slot{sprop}\n{stype}\n{desc}"),
-         { name=o:name(),
-           sprice=sprice,
-           desc=o:description(),
-           slottype=slotTypeColour(name),
-           slotsize=slotSizeColour(size),
-           sprop=sprop,
-           stype=stype})
+   local desc = fmt.f(_("{name}{sprice}\n{slotsize} {slottype}#0 slot{sprop}\n{stype}\n{desc}"),{
+      name=o:name(),
+      sprice=sprice,
+      desc=o:description(),
+      slottype=slotTypeColour(name),
+      slotsize=slotSizeColour(size),
+      sprop=sprop,
+      stype=stype})
    local col = nil
    if o:unique() then
       col = special_col
@@ -487,13 +488,14 @@ local function board_capture ()
 
    local capturemsg = fmt.f(_([[Do you wish to capture the {shpname}? You estimate it will cost #o{credits}#0 ({sbonus}%#0 from crew strength) in repairs to successfully restore the ship with outfits, and #o{creditsnaked}#0 without outfits. You have {playercreds}.{fctmsg}
 
-You will still have to escort the ship and land with it to perform the repairs and complete the capture. The ship will not assist you in combat and will be lost if destroyed.]]),
-      {shpname=board_plt:name(),
-       credits=fmt.credits(cost),
-       creditsnaked=fmt.credits(costnaked),
-       playercreds=fmt.credits(player.credits()),
-       fctmsg=factionmsg,
-       sbonus=sbonus})
+You will still have to escort the ship and land with it to perform the repairs and complete the capture. The ship will not assist you in combat and will be lost if destroyed.]]), {
+         shpname=board_plt:name(),
+         credits=fmt.credits(cost),
+         creditsnaked=fmt.credits(costnaked),
+         playercreds=fmt.credits(player.credits()),
+         fctmsg=factionmsg,
+         sbonus=sbonus
+   })
 
    luatk.yesno( _("Capture Ship?"), capturemsg,
       function ()
@@ -628,9 +630,9 @@ local function _board_cannibalize(spare)
    local left=armour-dmg
 
    if left<=0 then
-      local fact=board_plt:faction()
+      local fct=board_plt:faction()
       player.msg(fmt.f(_("{plt} was destroyed."),{plt=board_plt}))
-      fact:hit( -board_plt:points(), system.cur(), "destroy")
+      fct:hit( -board_plt:points(), system.cur(), "destroy")
       board_close()
    else
       player.msg(fmt.f(_("{plt} was left with {lft} armour. Next time it won't survive!"),{lft=fmt.number(left), plt=board_plt}))
@@ -662,7 +664,7 @@ local function cargo_list ()
    return clist, cnames
 end
 
-local cargo_btn, cargo_wdw, cargo_lst, cargo_jet -- forward declaration
+local cargo_btn, cargo_wdw, cargo_lst, cargo_jet, manage_cargo -- forward declaration
 local function cargo_jettison( cargo, max )
    luatk.msgFader( fmt.f(_("Jettison {cargo}"),{cargo=cargo}),
       fmt.f(_("How many tonnes of {cargo} do you wish to jettison?"),{cargo=cargo}), 1, max, 10, function( val )
@@ -674,21 +676,17 @@ local function cargo_jettison( cargo, max )
          fmt.f(_("Are you sure you want to get rid of {tonnes} of {cargo}?"),
             {tonnes=fmt.tonnes(val), cargo=cargo} ),
          function ()
+            -- Get rid of cargo
             local q = player.fleetCargoJet( cargo, val )
+
+            -- Recreate window
+            manage_cargo()
+
+            -- Display message on top
             luatk.msg( fmt.f(_("Bye Bye {cargo}"),{cargo=cargo} ),
                fmt.f(_("You dump {tonnes} of {cargo} out the airlock of your ship."),
                   {tonnes=fmt.tonnes(q), cargo=cargo}) )
                board_updateFreespace()
-
-               cargo_lst:destroy()
-               local clist, cnames = cargo_list ()
-               if #clist <= 0 then
-                  cnames = { _("None") }
-                  cargo_btn:disable()
-                  cargo_jet:disable()
-               end
-               local w, h = cargo_wdw:getDimensions()
-               cargo_lst = luatk.newList( cargo_wdw, 20, 65, w-40, h-130, cnames )
          end )
    end )
 end
@@ -703,9 +701,18 @@ function cargo_resetButton()
    end
 end
 
-local function manage_cargo ()
+function manage_cargo ()
    local clist, cnames = cargo_list ()
-   if #cnames <= 0 then return end
+   local nocargo = false
+   if #clist <= 0 then
+      cnames = { _("None") }
+      nocargo = true
+   end
+
+   --- Destroy if exists
+   if cargo_wdw then
+      cargo_wdw:destroy()
+   end
 
    local w, h = 400, 400
    local wdw = luatk.newWindow( nil, nil, w, h )
@@ -726,6 +733,11 @@ local function manage_cargo ()
       cargo_jettison( c.c, c.q )
       return true
    end )
+
+   if nocargo then
+      cargo_btn:disable()
+      cargo_jet:disable()
+   end
 end
 
 _board_close = function ( )
@@ -745,8 +757,7 @@ function board_close ()
    der.sfx.unboard:play()
 end
 
-_board = function ( plt )
-   board_plt = plt
+function _board( plt )
    loot_mod = player.pilot():shipstat("loot_mod", true)
    local lootables = compute_lootables( plt )
 
@@ -878,10 +889,19 @@ function board( plt )
       return
    end
 
-   der.sfx.board:play()
-   _board( plt )
+   board_wdw = nil
+   board_wgt = nil
+   board_plt = nil
+   board_fcthit = nil
+   board_freespace = nil
+   board_fcthit_txt_msg = nil
+   cargo_image_generic = nil
 
+   der.sfx.board:play()
+   board_plt = plt
+   _board( plt )
    luatk.run()
+   board_plt = nil
 end
 
 function board_fcthit_check( func )

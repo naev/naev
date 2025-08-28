@@ -120,7 +120,7 @@ function landed()
       mem.reward = player.pilot():cargoFree()
       if mem.misn_bleeding then
          reward_text = _([[Reynir doesn't look happy when you meet him outside the ship.
-    "I lost my hearing out there! Damn you!! I made a promise, though, so I'd better keep it. Here's your reward, {tonnes} of hot dogs…"]])
+   "I lost my hearing out there! Damn you!! I made a promise, though, so I'd better keep it. Here's your reward, {tonnes} of hot dogs…"]])
          log_text = _([[You took an old man named Reynir on a ride in outer space, but he was made very angry because the distance you traveled led to him getting injured and losing his hearing. Still, he begrudgingly paid you in the form of {tonnes} of hot dogs.]])
       else
          reward_text = _([["Thank you so much! Here's {tonnes} of hot dogs. They're worth more than their weight in gold, aren't they?"]])

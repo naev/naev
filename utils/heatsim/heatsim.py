@@ -16,11 +16,11 @@ def clamp( a, b, x ):
    return min( b, max( a, x ) )
 
 def frange(start, end=None, inc=None):
-    if end is None:
-        start, end = 0., start + 0.
-    if inc is None:
-        inc = 1.
-    return [i*inc+start for i in range(1+int((end-start)//inc))]
+   if end is None:
+      start, end = 0., start + 0.
+   if inc is None:
+      inc = 1.
+   return [i*inc+start for i in range(1+int((end-start)//inc))]
 
 
 class heatsim:

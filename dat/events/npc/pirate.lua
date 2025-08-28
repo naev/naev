@@ -84,29 +84,32 @@ But sure you won’t see home
 --]]
    _([["I love the space pirate shanty, but every time I learn the lyrics I end up getting piss drunk and forget them the next morning…"]]),
    -- First part of the space pirate shanty
-   {_([[They are singing the first part of the Space Pirate Shanty.]]),
-    _([[♬"I lost my friend and fam’ly to a pirate raid
+   {
+      _([[They are singing the first part of the Space Pirate Shanty.]]),
+      _([[♬"I lost my friend and fam’ly to a pirate raid
 The captain stood before me, I thought meself for dead
 Instead he told me rise up, come to the endless sea
 Into the black I followed, a pirate’s life for me."♬]]),
-   _([[♬"Yo ho yo ho a pirate life for me
+      _([[♬"Yo ho yo ho a pirate life for me
 In endless black we gonna attack
 A pirate’s life for me"♬]]),
-   _([[♬"Yo ho yo ho, up in the endless sea
+      _([[♬"Yo ho yo ho, up in the endless sea
 I may be hanged, don’t give a damn
-A pirate’s life for me"♬]])},
+A pirate’s life for me"♬]])
+   }, {
    -- Second part of the space pirate shanty
-   {_([[They are singing the second part of the Space Pirate Shanty.]]),
-   _([[♬"The empire sent their warships, to capture our fair crew
+      _([[They are singing the second part of the Space Pirate Shanty.]]),
+      _([[♬"The empire sent their warships, to capture our fair crew
 A thousand ships before us, and surely we were screwed
 The captain said 'Me hearties! At last we sail to hell!'
 My life was maybe short, but I’m sure I’ve spent it well"♬]]),
-   _([[♬"Yo ho yo ho go down on your knee
+      _([[♬"Yo ho yo ho go down on your knee
 Man the guns and hit them hard
 A pirate’s death for me"♬]]),
-   _([[♬"Yo ho yo ho life with sword and gun
+      _([[♬"Yo ho yo ho life with sword and gun
 May get you wealth, just fly in stealth
-But sure you won’t see home"♬]])},
+But sure you won’t see home"♬]])
+   },
 }
 
 local msg_tip = {

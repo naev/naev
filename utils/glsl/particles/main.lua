@@ -47,7 +47,9 @@ function love.draw ()
    local parami = 0
    local function draw_shader( w )
       local h = w--/3
-      shader:send("u_size",w/2)
+      if shader:hasUniform("u_size") then
+         shader:send("u_size",w/2)
+      end
       if shader:hasUniform("parami") then
          shader:send("parami", parami )
       end

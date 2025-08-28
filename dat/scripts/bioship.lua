@@ -188,12 +188,12 @@ end
 bioship.skill_enable = skill_enable
 
 local _maxstageSize = {
-   5, -- interceptor
-   6, -- fighter / bomber
-   7, -- corvette
-   8, -- destroyer
-   9, -- cruiser
-  10, -- carrier / battleship
+   5,  -- interceptor
+   6,  -- fighter / bomber
+   7,  -- corvette
+   8,  -- destroyer
+   9,  -- cruiser
+   10, -- carrier / battleship
 }
 function bioship.maxstage( p )
    local ps = p:ship()

@@ -189,11 +189,10 @@ static int texL_close( lua_State *L )
  */
 static int texL_new( lua_State *L )
 {
-   const char   *path;
-   glTexture    *tex;
-   LuaFile_t    *lf;
-   int           sx, sy;
-   SDL_IOStream *rw;
+   const char *path;
+   glTexture  *tex;
+   LuaFile_t  *lf;
+   int         sx, sy;
 
    /* Defaults. */
    lf   = NULL;
@@ -241,9 +240,10 @@ static int texL_new( lua_State *L )
    if ( path != NULL )
       tex = gl_newSprite( path, sx, sy, 0 );
    else {
-      rw = SDL_PhysFS_IOFromFile( lf->path );
+      SDL_IOStream *rw = lua_fileIOStream( lf );
       if ( rw == NULL )
-         return NLUA_ERROR( L, "Unable to open '%s'", lf->path );
+         return NLUA_ERROR( L, "Unable to open IOStream from LuaFile '%s'",
+                            lf->path );
       tex = gl_newSpriteRWops( lf->path, rw, sx, sy, 0 );
       // SDL_CloseIO( rw ); /* cleaned up rust-side now. */
    }

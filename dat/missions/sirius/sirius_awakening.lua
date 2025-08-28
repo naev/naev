@@ -38,7 +38,7 @@ local function update_osd ()
       fmt.f(_("Activate (hail with {key}) the {obelisk} ({sys} system)"),
          { obelisk=obelisk, sys=obelisksys, key=tut.getKey("hail") })
    }
-   if flow.has( player.pilot() ) then
+   if not flow.has( player.pilot() ) then
       table.insert( osd, 1, _("Equip a Flow amplifier or Sirius ship") )
    end
    misn.osdCreate( title, osd )

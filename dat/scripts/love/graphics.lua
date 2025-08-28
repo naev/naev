@@ -4,7 +4,7 @@
 local class = require 'class'
 local love = require 'love'
 local object = require 'love.object'
-local filesystem = require 'love.filesystem'
+--local filesystem = require 'love.filesystem'
 local love_math = require 'love.math'
 
 local graphics = {
@@ -86,7 +86,7 @@ graphics.Image._type = "Image"
 function graphics.newImage( filename )
    local ttex
    if type(filename)=='string' then
-      ttex = naev.tex.open( filesystem.newFile( filename ) )
+      ttex = naev.tex.open( filename )
    elseif type(filename)=='table' and filename.type then
       local ot = filename:type() -- codespell:ignore ot
       if ot=='ImageData' then -- codespell:ignore ot
@@ -616,11 +616,11 @@ out InterfBLock {
 vec4 position( mat4 clipSpaceFromLocal, vec4 localPosition );
 
 void main(void) {
-    OUT.VaryingTexCoord = VertexTexCoord;
-    OUT.VaryingTexCoord = ViewSpaceFromLocal * VertexTexCoord;
-    OUT.VaryingColour   = ConstantColour;
-    love_Position       = position( ClipSpaceFromLocal, VertexPosition );
-    OUT.VaryingPosition = love_Position.xy;
+   OUT.VaryingTexCoord = VertexTexCoord;
+   OUT.VaryingTexCoord = ViewSpaceFromLocal * VertexTexCoord;
+   OUT.VaryingColour   = ConstantColour;
+   love_Position       = position( ClipSpaceFromLocal, VertexPosition );
+   OUT.VaryingPosition = love_Position.xy;
 }
 ]]
    local s = graphics.Shader.new()

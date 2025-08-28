@@ -17,7 +17,7 @@ stdout = sys.stdout
 sys.stdout = open(os.devnull, 'w')
 
 for path in glob.glob(f'{ROOT}/*/*/*.obj'):
-    try:
-        ship = parse_obj(path)
-    except Exception as e:
-        stdout.write(f"Error loading '{path}': {e!r}\n")
+   try:
+      ship = parse_obj(path)
+   except Exception as e:
+      stdout.write(f"Error loading '{path}': {e!r}\n")

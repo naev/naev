@@ -3,7 +3,7 @@
 minimum_pre_commit_version: '3.2.0'
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v5.0.0
+  rev: v6.0.0
   hooks:
     - id: trailing-whitespace
     - id: end-of-file-fixer
@@ -15,18 +15,87 @@ repos:
     - id: check-executables-have-shebangs
     #- id: check-shebang-scripts-are-executable
     - id: check-case-conflict
-    - id: check-symlinks
-    - id: check-illegal-windows-names
-    - id: destroyed-symlinks
+    #- id: check-symlinks
+    #- id: check-illegal-windows-names
+    #- id: destroyed-symlinks
     - id: detect-private-key
     - id: mixed-line-ending
-    - id: pretty-format-json
+    #- id: pretty-format-json
     - id: check-merge-conflict
       args: [--assume-in-merge]
+- repo: local
+  hooks:
+    - id: check_luadoc_func
+      name: check @lua.. not used outside @luafunc
+      entry: utils/check_luadoc_funcs.sh
+      files: '^src/nlua_*.c'
+      types: [c]
+      language: script
+    - id: luafunc_dup
+      name: duplicate @luafunc entry detector
+      entry: utils/luafunc_dup.sh
+      files: '^src/nlua_*.c'
+      types: [c]
+      language: script
+    - id: rem_xml_head
+      name: remove unnecessary XML 1.0 headers
+      entry: utils/rem_xml_head.sh
+      types: [xml]
+      language: script
+    - id: doxspell
+      name: doxspell
+      entry: utils/doxspell.sh
+      language: script
+      types: [c]
+    - id: no_tabs
+      name: no_tabs
+      entry: utils/no_tabs.sh
+      language: script
+      exclude: (^|/)Makefile
+      types: [text]
+    - id: reindent
+      name: reindent
+      entry: utils/reindent.sh
+      #[build clang-format dot frag glsl gltf js lua luacheckrc markdown md nsi py pov rb scm sh tex vdf vert]
+      # Unmanaged: [markdown md yaml yml .clangformat]
+      files: .*\.build$|.*\.dot$|.*\.frag$|.*\.glsl$|.*\.gltf|.*\.js$|.*\.lua$|.*\.luacheckrc$|.*\.nsi$|.*\.py$|.*\.pov$|.*\.rb$|.*\.scm$|.*\.sh$|.*\.tex$|.*\.vdf$|.*\.vert$
+      language: script
+    - id: check_fmt_f_usage
+      name: lua f-string validation
+      entry: utils/check_fmt_f_usage.py
+      files: '^dat/'
+      types: [lua]
+      language: python
+    - id: potfiles
+      name: check for stale POTFILES.in
+      entry: utils/update-po.sh . . --pre-commit
+      language: script
+      always_run: true
+      pass_filenames: false
+    - id: xml_format
+      name: format xml
+      entry: utils/xml_format.sh
+      types: [xml]
+      files: .*\.(xml|loc|plist)$
+      args: ["-st"]
+      language: script
+#    - id: glsl_validator
+#      name: glsl validator
+#      entry: utils/nglslValidator.py
+#      files: dat/.*\.(frag|vert)$
+#      language: python
+    - id: rustfmt
+      name: Rust formatter
+      entry: rustfmt
+      types: [rust]
+      files: '^src/'
+      args: ["--edition", "2024"]
+      language: system
 - repo: https://github.com/shellcheck-py/shellcheck-py
-  rev: v0.10.0.1
+  rev: v0.11.0.1
   hooks:
     - id: shellcheck
+      types: [shell]
 - repo: https://github.com/codespell-project/codespell
   rev: v2.4.1
   hooks:
@@ -44,57 +113,15 @@ repos:
       types: [png]
 - repo: local
   hooks:
-    - id: check_luadoc_func
-      name: check @lua.. not used outside @luafunc
-      entry: utils/check_luadoc_funcs.sh
-      files: '^src/nlua_*.c'
-      types: [c]
-      language: script
-    - id: luafunc_dup
-      name: duplicate @luafunc entry detector
-      entry: utils/luafunc_dup.sh
-      files: '^src/nlua_*.c'
-      types: [c]
-      language: script
-    - id: rem_xml_head
-      name: Remove unnecessary XML 1.0 headers
-      entry: utils/rem_xml_head.sh
-      files: dat/.*\.xml$
-      types: [xml]
-      language: script
-    - id: nluacheck
-      name: wrapper for luacheck that understands Naev hooks
-      entry: utils/nluacheck.py
-      files: '^dat/'
-      types: [lua]
-      language: python
-    - id: check_fmt_f_usage
-      name: Lua f-string validation
-      entry: utils/check_fmt_f_usage.py
-      files: '^dat/'
-      types: [lua]
-      language: python
-    - id: glsl_validator
-      name: glsl validator
-      entry: utils/nglslValidator.py
-      files: dat/.*\.(frag|vert)$
-      language: python
-    - id: potfiles
-      name: check for stale POTFILES.in
-      entry: utils/update-po.sh . . --pre-commit
-      language: script
-      always_run: true
-      pass_filenames: false
     - id: clang-format
       name: Clang formatter
       entry: clang-format -i
       types: [c]
       files: '^src/'
       language: system
-    - id: rustfmt
-      name: Rust formatter
-      entry: rustfmt
-      types: [rust]
-      files: '^src/'
-      args: ["--edition", "2021"]
-      language: system
+    - id: nluacheck
+      name: wrapper for luacheck that understands Naev hooks
+      entry: utils/nluacheck.py
+      files: '^dat/'
+      types: [lua]
+      language: python

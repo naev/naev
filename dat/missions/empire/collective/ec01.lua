@@ -43,7 +43,7 @@ end
 function accept ()
    -- Intro text
    if not tk.yesno( _("Lt. Commander Dimitri"), _([[You meet up with Lt. Commander Dimitri.
-    "We managed to capture the drone after you located it. It didn't seem to be in good health. Our scientists are studying it as we speak, but we've found something strange in it. Some sort of weird wireless module. We'd like you to do a deep scan of the nearby Collective systems to see if you can pick up any strange wireless communications. This will be a dangerous mission, because you'll need to stay in the system long enough for the scan to complete. I recommend a fast ship to outrun the drones. Are you interested in doing this now?"]]) ) then
+   "We managed to capture the drone after you located it. It didn't seem to be in good health. Our scientists are studying it as we speak, but we've found something strange in it. Some sort of weird wireless module. We'd like you to do a deep scan of the nearby Collective systems to see if you can pick up any strange wireless communications. This will be a dangerous mission, because you'll need to stay in the system long enough for the scan to complete. I recommend a fast ship to outrun the drones. Are you interested in doing this now?"]]) ) then
       misn.finish()
    end
 
@@ -78,48 +78,48 @@ end
 
 function enter()
     -- End any ongoing scans.
-    if mem.scanning then
-        hook.rm(mem.timerhook)
-        player.omsgRm(mem.omsg)
-        mem.scanning = false
-    end
+   if mem.scanning then
+      hook.rm(mem.timerhook)
+      player.omsgRm(mem.omsg)
+      mem.scanning = false
+   end
 
-    if (system.cur() == targsys1 and not mem.sysdone1) or (system.cur() == targsys2 and not mem.sysdone2) then
-        mem.scantime = 90 -- seconds
-        mem.omsg = player.omsgAdd(fmt.f(_("Scanning... {seconds}s remaining."), {seconds=mem.scantime}), 0)
-        mem.timerhook = hook.timer(1.0, "scantimer")
-        mem.scanning = true
-    end
+   if (system.cur() == targsys1 and not mem.sysdone1) or (system.cur() == targsys2 and not mem.sysdone2) then
+      mem.scantime = 90 -- seconds
+      mem.omsg = player.omsgAdd(fmt.f(_("Scanning... {seconds}s remaining."), {seconds=mem.scantime}), 0)
+      mem.timerhook = hook.timer(1.0, "scantimer")
+      mem.scanning = true
+   end
 end
 
 function scantimer()
-    mem.scantime = mem.scantime - 1
-    if mem.scantime == 0 then
-        player.omsgRm(mem.omsg)
-        if system.cur() == targsys1 then
-            misn.markerRm(mem.misn_marker1)
-            mem.sysdone1 = true
-        elseif system.cur() == targsys2 then
-            misn.markerRm(mem.misn_marker2)
-            mem.sysdone2 = true
-        end
-        mem.scanning = false
+   mem.scantime = mem.scantime - 1
+   if mem.scantime == 0 then
+      player.omsgRm(mem.omsg)
+      if system.cur() == targsys1 then
+         misn.markerRm(mem.misn_marker1)
+         mem.sysdone1 = true
+      elseif system.cur() == targsys2 then
+         misn.markerRm(mem.misn_marker2)
+         mem.sysdone2 = true
+      end
+      mem.scanning = false
 
-        if mem.sysdone1 and mem.sysdone2 then
-            misn.osdActive(2)
-            misn.markerAdd(misn_base, "low")
-        end
+      if mem.sysdone1 and mem.sysdone2 then
+         misn.osdActive(2)
+         misn.markerAdd(misn_base, "low")
+      end
 
-        return
-    end
-    player.omsgChange(mem.omsg, fmt.f(_("Scanning... {seconds}s remaining."), {seconds=mem.scantime}), 0)
-    mem.timerhook = hook.timer(1.0, "scantimer")
+      return
+   end
+   player.omsgChange(mem.omsg, fmt.f(_("Scanning... {seconds}s remaining."), {seconds=mem.scantime}), 0)
+   mem.timerhook = hook.timer(1.0, "scantimer")
 end
 
 function land()
    if spob.cur() == misn_base and mem.sysdone1 and mem.sysdone2 then
       tk.msg( _("Mission Accomplished"), _([[After landing, Lt. Commander Dimitri greets you on the land pad.
-    "I suppose all went well? Those drones can really give a beating. We'll have the researchers start looking at your logs right away. Meet me in the bar again in a while."]]) )
+   "I suppose all went well? Those drones can really give a beating. We'll have the researchers start looking at your logs right away. Meet me in the bar again in a while."]]) )
       player.pay(mem.credits)
       faction.hit("Empire",5)
       emp.addCollectiveLog( _([[You helped gather intel on the Collective by scanning Collective systems. Lt. Commander Dimitri told you to meet him in the bar again on Omega Enclave.]]) )

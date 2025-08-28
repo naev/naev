@@ -9,7 +9,7 @@ local audio = require 'love.audio'
 local lf = require "love.filesystem"
 local pp_shaders = require "pp_shaders"
 
-local pixelcode = lf.read( "glsl/love/wormhole_travel.frag" )
+local pixelcode = lf.read( "shaders/love/wormhole_travel.frag" )
 
 local target, colour, shader, r
 local sfx = audio.newSource( 'snd/sounds/wormhole.ogg' )

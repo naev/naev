@@ -20,7 +20,7 @@ typedef enum SaveCompatibility_ {
 } SaveCompatibility;
 
 /**
- * @brief A naev save.
+ * @brief A Naev save.
  */
 typedef struct nsave_s {
    char         *save_name;   /** Snapshot name. */

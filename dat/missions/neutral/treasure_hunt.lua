@@ -45,6 +45,15 @@ function load ()
    naev.cache().treasure_maps = #mem.maps
 end
 
+local function cleanup ()
+   for k,v in ipairs(mem.maps) do
+      if v.trigger then
+         return naev.trigger( v.trigger, true )
+      end
+   end
+   player.infoButtonUnregister( btn )
+end
+
 local function gen_map( data )
    return th.create_map( data, MAP_WIDTH, MAP_HEIGHT )
 end
@@ -108,7 +117,7 @@ function view_maps ()
    luatk.run()
 
    if #mem.maps <= 0 then
-      hook.safe("cleanup")
+      hook.safe("abort")
    end
 end
 
@@ -180,18 +189,13 @@ function land ()
       table.remove( mem.maps, torm[i] )
    end
    naev.cache().treasure_maps = #mem.maps
+
+   if #mem.maps <= 0 then
+      abort()
+   end
 end
 
 function abort ()
-   for k,v in ipairs(mem.maps) do
-      if v.trigger then
-         return naev.trigger( v.trigger, true )
-      end
-   end
-   player.infoButtonUnregister( btn )
-end
-
-function cleanup ()
-   abort()
+   cleanup()
    misn.finish(false)
 end

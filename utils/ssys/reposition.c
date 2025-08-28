@@ -811,7 +811,7 @@ int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
       map.nosys = map.nsys;
 
    qsort(map.jumps, map.njumps, sizeof(struct s_edge), edge_cmp);
-   int w = 1;
+   int w = map.njumps && 1;
    for (int i = 1; i < map.njumps; i++)
       if (edge_cmp((const void *) (map.jumps + i),
                    (const void *) (map.jumps + w - 1)))
@@ -890,6 +890,7 @@ int main(int argc, char **argv)
       }
 
    qsort(argv + fst_opt, fst_non_opt - fst_opt, sizeof(char *), cmpstringp);
+   qsort(argv + fst_non_opt, argc - fst_non_opt, sizeof(char *), cmpstringp);
    fst_opt = fst_non_opt;
    for (int i = fst_non_opt - 1; i > 0; i--)
       if (strcmp(argv[i], argv[i - 1]))

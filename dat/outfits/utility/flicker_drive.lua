@@ -60,7 +60,9 @@ local function doblink( p, po, blinkdir )
 
    -- Test energy
    if p:energy(true) < energy then
-      helper.msgnospam("#r"..fmt.f(_("Not enough energy to use {outfit}!"),{outfit=po:outfit()}).."#0")
+      if mem.isp then
+         helper.msgnospam("#r"..fmt.f(_("Not enough energy to use {outfit}!"),{outfit=po:outfit()}).."#0")
+      end
       return false
    end
 

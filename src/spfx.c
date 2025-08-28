@@ -733,7 +733,7 @@ static void spfx_updateDamage( double dt )
 }
 
 /**
- * @brief Initalizes a trail.
+ * @brief Initializes a trail.
  *
  *    @return Pointer to initialized trail. When done (due e.g. to pilot death),
  * call spfx_trail_remove.

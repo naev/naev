@@ -100,7 +100,7 @@ end
 --]]
 function lmisn.getNextSystem( nowsys, finalsys, hidden )
    if nowsys == finalsys or finalsys == nil then
-       return nowsys
+      return nowsys
    end
 
    local path = nowsys:jumpPath( finalsys, hidden )
@@ -194,14 +194,14 @@ end
    @usage
    local spobs = {}
    lmisn.getSysAtDistance( system.cur(), 1, 6,
-       function(s)
-           for i, v in ipairs(s:spobs()) do
-               if v:faction() == faction.get("Sirius") and v:class() == "M" then
-                   return true
-               end
-           end
-           return false
-       end )
+      function(s)
+         for i, v in ipairs(s:spobs()) do
+            if v:faction() == faction.get("Sirius") and v:class() == "M" then
+               return true
+            end
+         end
+         return false
+      end )
 
    if #spobs == 0 then misn.finish(false) end -- In case no suitable spobs are in range.
 

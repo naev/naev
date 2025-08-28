@@ -26,9 +26,9 @@ uniform int u_seed = 0;
 
 vec3 hash( vec3 x )
 {
-   x = vec3( dot(x,vec3(127.1,311.7, 74.7)),
-             dot(x,vec3(269.5,183.3,246.1)),
-             dot(x,vec3(113.5,271.9,124.6)));
+   x = vec3(   dot(x,vec3(127.1,311.7, 74.7)),
+               dot(x,vec3(269.5,183.3,246.1)),
+               dot(x,vec3(113.5,271.9,124.6)));
    return fract(sin(x)*43758.5453123);
 }
 
@@ -92,7 +92,7 @@ vec3 sphere_coords( vec2 uv, float phase )
 
 float get_depth( vec2 uv )
 {
-    return texture( height, uv ).g;
+   return texture( height, uv ).g;
 }
 
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )

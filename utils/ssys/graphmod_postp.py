@@ -125,12 +125,13 @@ pos['reptile'] += (pos['newmarch']-pos['armorhead']) / 6.0
 
 # Sirius
 
-v = (pos['aesir']-pos['vanir']) / 2.0
-pos['aesir'] += v
-pos['vanir'] += v
 pos['porro'] = (pos['tarmak'] + pos['churchill']) / 2.0
 pos['ngc20489'] = (pos['ngc9607'] + pos['ngc15670'] + pos['ngc14676'] + pos['ngc7319']) / 4.0
 pos['voproid'] = symmetry(pos['botarn'], pos['ngc7319'])(pos['voproid'])
+
+v = pos['narousse']
+pos['narousse'] = symmetry((pos['toxin'] + pos['korma'])/2.0)(pos['narousse'])
+pos['euler'] += pos['narousse'] - v
 
 for sys in ['ngc127', 'ngc344', 'ngc4363']:
    n = next(iter(E[sys].keys()))
@@ -140,6 +141,20 @@ for sys in ['ngc127', 'ngc344', 'ngc4363']:
          acc += (pos[n] - pos[e]).normalize()
    v = pos[sys] - pos[n]
    pos[sys] = pos[n] + acc.normalize(v.size())
+
+plasma = {'ngc10081', 'ngc10653', 'ngc11050', 'ngc12261', 'ngc14337', 'ngc14430', 'ngc14676',
+   'ngc18269', 'ngc20489', 'ngc22375', 'ngc6901', 'ngc7319', 'ngc9607',}
+off = {}
+for i in plasma - {'ngc20489'}:
+   if len(E[i]) <= 2:
+      off[i] = pos[i] - sum((pos[k] for k in E[i]),vec()) / len(E[i])
+
+for i, o in off.items():
+   pos[i] += o
+
+P1 = 1.5 * pos['euler'] - 0.5 * pos['narousse']
+P2 = 1.5 * pos['ngc11050'] - 0.5 * pos['ngc10081']
+pos['ngc14337'] = (P1 + P2) / 2.0
 
 
 # Anubis BH
@@ -182,6 +197,7 @@ for i in ['tempus', 'aesria', 'flow', 'vean', 'nava']:
 
 
 # Increase terminal ngc dist to neighbour to at least average edge length * F.
+
 F = 1.0
 total = 0.0
 count = 0

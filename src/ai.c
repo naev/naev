@@ -392,7 +392,7 @@ Task *ai_curTask( Pilot *pilot )
 }
 
 /**
- * @brief Sets the cur_pilot's ai.
+ * @brief Sets the cur_pilot's AI.
  */
 static int ai_setMemory( void )
 {
@@ -470,7 +470,7 @@ void ai_thinkApply( Pilot *p )
 /**
  * @brief Attempts to run a function.
  *
- *    @param[in] env Lua env to run function in.
+ *    @param[in] env Lua "env" to run function in.
  *    @param[in] nargs Number of arguments to run.
  */
 static void ai_run( nlua_env *env, int nargs )
@@ -483,7 +483,7 @@ static void ai_run( nlua_env *env, int nargs )
 }
 
 /**
- * @brief Initializes the pilot in the ai.
+ * @brief Initializes the pilot in the AI.
  *
  * Mainly used to create the pilot's memory table.
  *
@@ -554,7 +554,7 @@ void ai_cleartasks( Pilot *p )
 }
 
 /**
- * @brief Destroys the ai part of the pilot
+ * @brief Destroys the AI part of the pilot
  *
  *    @param[in] p Pilot to destroy its AI part.
  */
@@ -1308,7 +1308,7 @@ static int ai_tasktarget( lua_State *L, const Task *t )
 /**
  * @brief Pushes a task onto the pilot's task list.
  *    @luatparam string func Name of function to call for task.
- *    @luaparam[opt] data Data to pass to the function.  Supports any lua type.
+ *    @luaparam[opt] data Data to pass to the function.  Supports any Lua type.
  * @luafunc pushtask
  *    @return Number of Lua parameters.
  */
@@ -1374,9 +1374,9 @@ static int aiL_taskdata( lua_State *L )
 }
 
 /**
- * @brief Pushes a subtask onto the pilot's task's subtask list.
+ * @brief Pushes a sub-task onto the pilot's sub-task list.
  *    @luatparam string func Name of function to call for task.
- *    @luaparam[opt] data Data to pass to the function.  Supports any lua type.
+ *    @luaparam[opt] data Data to pass to the function. Supports any Lua type.
  * @luafunc pushsubtask
  *    @return Number of Lua parameters.
  */
@@ -1415,8 +1415,8 @@ static int aiL_popsubtask( lua_State *L )
 }
 
 /**
- * @brief Gets the current subtask's name.
- *    @luatreturn string The current subtask name or nil if there are no
+ * @brief Gets the name of current sub-task.
+ *    @luatreturn string The current sub-task name or nil if there are no
  * subtasks.
  * @luafunc subtaskname
  *    @return Number of Lua parameters.
@@ -1432,7 +1432,7 @@ static int aiL_subtaskname( lua_State *L )
 }
 
 /**
- * @brief Gets the pilot's subtask target.
+ * @brief Gets the pilot's sub-task target.
  *    @luareturn The pilot's target ship identifier or nil if no target.
  *    @luasee pushsubtask
  * @luafunc subtaskdata
@@ -2593,7 +2593,7 @@ static int aiL_hyperspace( lua_State *L )
  * @brief Sets hyperspace target.
  *
  *    @luatparam Jump target Hyperspace target
- *    @luareturn Vec2 Where to go to jump
+ *    @luatreturn Vec2 Where to go to jump
  *    @luafunc sethyptarget
  */
 static int aiL_sethyptarget( lua_State *L )
@@ -2910,7 +2910,7 @@ static int aiL_face_accurate( lua_State *L )
 }
 
 /**
- * @brief Completely stops the pilot if it is below minimum vel error (no
+ * @brief Completely stops the pilot if it is below minimum velocity error (no
  * insta-stops).
  *
  *    @luafunc stop
@@ -2975,8 +2975,8 @@ static int aiL_settarget( lua_State *L )
 /**
  * @brief Sets the pilot's asteroid target.
  *
- *    @luaparam int field Id of the field to target.
- *    @luaparam int ast Id of the asteroid to target.
+ *    @luatparam int field Id of the field to target.
+ *    @luatparam int ast Id of the asteroid to target.
  *    @luafunc setasterotarget
  */
 static int aiL_setasterotarget( lua_State *L )
@@ -3022,11 +3022,11 @@ static int aiL_getGatherable( lua_State *L )
 }
 
 /**
- * @brief Gets the pos and vel of a given gatherable.
+ * @brief Gets the position and velocity of a given gatherable.
  *
  *    @luaparam int id Id of the gatherable.
- *    @luareturn vec2 pos position of the gatherable.
- *    @luareturn vec2 vel velocity of the gatherable.
+ *    @luatreturn vec2 Position of the gatherable.
+ *    @luatreturn vec2 Velocity of the gatherable.
  *    @luafunc gatherablepos
  */
 static int aiL_gatherablePos( lua_State *L )

@@ -34,7 +34,6 @@
 #include "hook.h"
 #include "info.h"
 #include "input.h"
-#include "intro.h"
 #include "land.h"
 #include "land_outfits.h"
 #include "load.h"
@@ -43,7 +42,6 @@
 #include "map_overlay.h"
 #include "menu.h"
 #include "mission.h"
-#include "music.h"
 #include "ndata.h"
 #include "news.h"
 #include "nlua_outfit.h"
@@ -357,12 +355,6 @@ void player_new( void )
 
    if ( player_newMake() )
       return;
-
-   /* Display the intro. */
-   intro_display( INTRO_PATH, "intro" );
-
-   /* Play music. */
-   music_choose( "ambient" );
 
    /* Set loaded version. */
    player.loaded_version = strdup( naev_version( 0 ) );
@@ -1571,7 +1563,7 @@ void player_targetSpobSet( int id )
 /**
  * @brief Sets the player's target asteroid.
  *
- *    @param field Index of the parent field of the asteoid.
+ *    @param field Index of the parent field of the asteroid.
  *    @param id Target spob or -1 if none should be selected.
  */
 void player_targetAsteroidSet( int field, int id )
@@ -1799,7 +1791,7 @@ void player_checkLandAck( void )
 /**
  * @brief Sets the no land message.
  *
- *    @brief str Message to set when the player is not allowed to land
+ *    @brief "str" Message to set when the player is not allowed to land
  * temporarily.
  */
 void player_nolandMsg( const char *str )
@@ -1989,7 +1981,7 @@ double player_dt_default( void )
 }
 
 /**
- * @brief Starts the hail sounds and aborts autoNav
+ * @brief Starts the hail sounds and aborts autonav
  */
 void player_hailStart( void )
 {
@@ -2874,7 +2866,7 @@ PlayerShip_t *player_getPlayerShip( const char *shipname )
  * @brief Gets how many of the outfit the player owns.
  *
  *    @param o Outfit to check how many the player owns.
- *    @return The number of outfits matching outfitname owned.
+ *    @return The number of own outfits matching "o".
  */
 int player_outfitOwned( const Outfit *o )
 {
@@ -3394,7 +3386,7 @@ static int player_saveEscorts( xmlTextWriterPtr writer )
 }
 
 /**
- * @brief Save the freaking player in a freaking xmlfile.
+ * @brief Save the freaking player in a freaking xml file.
  *
  *    @param writer xml Writer to use.
  *    @return 0 on success.
@@ -4186,7 +4178,7 @@ static Spob *player_parse( xmlNodePtr parent )
 }
 
 /**
- * @brief Filter function for space_getRndSpob
+ * @brief Filter function for "space_getRndSpob"
  *
  *    @param p Spob.
  *    @return Whether the spob is suitable for teleporting to.

@@ -123,6 +123,11 @@ local function _draw( x, y, w, h )
    love.draw()
 end
 local function _update( dt )
+   if not love._firsttick then
+      love._firsttick = true
+      love.update(0)
+      return
+   end
    if love.keyboard and love.keyboard._repeat then
       for k,v in pairs(love.keyboard._keystate) do
          if v then
@@ -141,6 +146,7 @@ local function _update( dt )
    love.update(dt)
 end
 local function _mouse( x, y, mtype, button )
+   if not love._firsttick then return false end
    if not love.mouse then return false end
    if mtype ~= 4 then -- if not a mouse-wheel event
       y = love.h-y-1
@@ -174,6 +180,7 @@ local key_translation = {
    ["right gui"] = "rgui",
 }
 local function _keyboard( pressed, key, _mod, isrepeat )
+   if not love._firsttick then return false end
    if not love.keyboard then return false end
    local k = string.lower( key )
    local t = key_translation[k]
@@ -201,7 +208,7 @@ end
 --[[
 -- Initialize
 --]]
-function love.exec( path )
+function love.exec( path, data )
    if love._started then
       error(_("can only run one Love2D instance at a time!"))
    end
@@ -281,7 +288,7 @@ function love.exec( path )
 
    -- Run set up function defined in Love2d spec
    dolua( mainpath )
-   love.load()
+   love.load( data )
 
    -- Actually run in Naev
    if love.fullscreen then
@@ -299,7 +306,7 @@ function love.exec( path )
    -- Restore the package.path
    package.path = love._path
 end
-function love.run()
+function love.run( data )
    if love._started then
       error(_("can only run one Love2D instance at a time!"))
    end
@@ -330,7 +337,7 @@ function love.run()
    end
 
    -- Run set up function defined in Love2d spec
-   love.load()
+   love.load( data )
 
    -- Actually run in Naev
    if love.fullscreen then
@@ -339,6 +346,7 @@ function love.run()
    end
    love._focus = true
    love._started = true
+   love._firsttick = false
    naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse, _resize, _textinput )
    -- Doesn't actually get here until the dialogue is closed
    love._started = false

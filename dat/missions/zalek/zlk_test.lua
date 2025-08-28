@@ -24,8 +24,8 @@
    (Based on the Empire Shipping lua code)
 
    stages :
-             0 : everything normal
-             1 : the player has forgotten the engine
+      0 : everything normal
+      1 : the player has forgotten the engine
 ]]
 local car = require "common.cargo"
 local fmt = require "format"
@@ -93,8 +93,8 @@ end
 
 function accept()
    if player.misnActive("Za'lek Test") then
-       vntk.msg(_("You cannot accept this mission"), _("You are already testing another engine."))
-       return
+      vntk.msg(_("You cannot accept this mission"), _("You are already testing another engine."))
+      return
    end
 
    misn.accept()

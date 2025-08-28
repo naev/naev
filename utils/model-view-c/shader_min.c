@@ -233,7 +233,7 @@ static void print_with_line_numbers( const char *str )
 }
 
 /**
- * @brief Open and compile GLSL shader from ndata.
+ * @brief Open and compile GLSL shader from the Naev data folder.
  */
 static GLuint gl_shader_compile( GLuint type, const char *buf,
       GLint length, const char *filename)

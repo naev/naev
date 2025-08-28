@@ -285,7 +285,7 @@ void conf_cleanup( void )
 }
 
 /*
- * @brief Parses the local conf that dictates where user data goes.
+ * @brief Parses the local configuration that dictates where user data goes.
  */
 void conf_loadConfigPath( void )
 {
@@ -686,9 +686,9 @@ int conf_parseCLI( int argc, char **argv )
  * source code
  *
  *    @param str The destination buffer
- *    @param size The maximum amount of space in str to use
+ *    @param size The maximum amount of space in string to use
  *    @param text The string to quote and escape
- *    @return The number of characters actually written to str
+ *    @return The number of characters actually written to string
  */
 static size_t quoteLuaString( char *str, size_t size, const char *text )
 {

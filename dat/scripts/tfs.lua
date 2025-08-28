@@ -1,56 +1,56 @@
 
 --[[
-# tfs Console Interface ( Example usage )
-
-> fs = require 'tfs'
- mounted table:_0x4194ca30 at /shipmem
- mounted table:_0x417ccda0 at /mengine
- /pilot_My_Dogma/
-
-> fs.ls()
-  [0] ../
-  [1] shipmem/
-  [2] mengine/
-
-> fs.cd(2)
- /pilot_My_Dogma/mengine/
-
-> fs.ls()
-  [0] ../
-      needs_refresh : false
-  [1] engines/
-  [2] total/
-      _dev_ : table:_0x417ccda0
-
-> fs.cd('engines')
- /pilot_My_Dogma/mengine/engines/
-
-> fs.fd()
-  1/engine_limit : 2700
-  ...
-  2/speed : 73
-
-> fs.cd(player.pilot():shipMemory())
- /pilot_My_Dogma/shipmem/
-
-> fs.cd('/')
- /
-
-> fs.cd(player.pilot():outfits())
- Not a valid dir.
-
-> fs.mnt(player.pilot():outfits(), "outfits")
- mounted table:_0x40abbb00 at /outfits
-
-> fs.cd('outfits')
- /outfits/
-
-> fs.ls()
-  [0] ../
-      1 : Tricon Typhoon Engine
-      2 : Tricon Typhoon Engine
-      3 : S&K War Plating
-  ...
+| # tfs Console Interface ( Example usage )
+|
+| > fs = require 'tfs'
+|  mounted table:_0x4194ca30 at /shipmem
+|  mounted table:_0x417ccda0 at /mengine
+|  /pilot_My_Dogma/
+|
+| > fs.ls()
+|   [0] ../
+|   [1] shipmem/
+|   [2] mengine/
+|
+| > fs.cd(2)
+|  /pilot_My_Dogma/mengine/
+|
+| > fs.ls()
+|   [0] ../
+|       needs_refresh : false
+|   [1] engines/
+|   [2] total/
+|       _dev_ : table:_0x417ccda0
+|
+| > fs.cd('engines')
+|  /pilot_My_Dogma/mengine/engines/
+|
+| > fs.fd()
+|   1/engine_limit : 2700
+|   ...
+|   2/speed : 73
+|
+| > fs.cd(player.pilot():shipMemory())
+|  /pilot_My_Dogma/shipmem/
+|
+| > fs.cd('/')
+|  /
+|
+| > fs.cd(player.pilot():outfits())
+|  Not a valid dir.
+|
+| > fs.mnt(player.pilot():outfits(), "outfits")
+|  mounted table:_0x40abbb00 at /outfits
+|
+| > fs.cd('outfits')
+|  /outfits/
+|
+| > fs.ls()
+|   [0] ../
+|       1 : Tricon Typhoon Engine
+|       2 : Tricon Typhoon Engine
+|       3 : S&K War Plating
+|   ...
 --]]
 
 local tfs = {}

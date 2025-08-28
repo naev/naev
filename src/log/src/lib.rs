@@ -45,8 +45,8 @@ impl Output {
                 b.push_str(msg);
             }
             Self::File(lf) => {
-                lf.file.write(b"\n")?;
-                lf.file.write(msg.as_bytes())?;
+                lf.file.write_all(b"\n")?;
+                lf.file.write_all(msg.as_bytes())?;
             }
         }
         Ok(())
@@ -59,6 +59,9 @@ struct Logger {
 }
 impl log::Log for Logger {
     fn enabled(&self, metadata: &log::Metadata) -> bool {
+        if metadata.target().starts_with("naga::") {
+            return false;
+        }
         if cfg!(debug_assertions) {
             metadata.level() <= log::Level::Debug
         } else {
@@ -110,11 +113,8 @@ impl log::Log for Logger {
 
     fn flush(&self) {
         let mut o = self.output.lock().unwrap();
-        match &mut *o {
-            Output::File(lf) => {
-                let _ = lf.file.flush();
-            }
-            _ => (),
+        if let Output::File(lf) = &mut *o {
+            let _ = lf.file.flush();
         }
     }
 }
@@ -131,7 +131,7 @@ impl Logger {
         let mut o = self.output.lock().unwrap();
         match &*o {
             Output::Buffer(b) => {
-                f.write(&b.as_bytes())?;
+                f.write_all(b.as_bytes())?;
             }
             Output::File(_) => {
                 anyhow::bail!("already logging to file");
@@ -145,7 +145,7 @@ impl Logger {
     }
 }
 
-static LOGGER: LazyLock<Logger> = LazyLock::new(|| Logger::new());
+static LOGGER: LazyLock<Logger> = LazyLock::new(Logger::new);
 
 pub fn init() -> Result<()> {
     match log::set_logger(&*LOGGER) {
@@ -226,7 +226,7 @@ macro_rules! warn_err {
 }
 
 // Some simple C API
-use std::ffi::{c_char, CStr};
+use std::ffi::{CStr, c_char};
 macro_rules! log_c {
     ($funcname: ident, $macro: ident) => {
         #[unsafe(no_mangle)]

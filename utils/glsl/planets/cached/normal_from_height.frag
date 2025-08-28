@@ -22,7 +22,7 @@ vec2 normal( vec2 uv )
 
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
-    // UV coordinates.
+   // UV coordinates.
    vec2 uv = screen_coords / dimensions;
    vec4 color_out = vec4( normal( uv*vec2(0.5,1.0) ), 1.0, 1.0 );
    return color_out;

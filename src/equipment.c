@@ -1611,7 +1611,8 @@ void equipment_addAmmo( void )
  *    @param buf Buffer to write to.
  *    @param max_len Maximum length of the string to allocate.
  *    @param s Pilot to get stats of.
- *    @param dpseps Whether or not to display dps and eps.
+ *    @param dpseps Whether or not to display damage per second and energy per
+ * second.
  *    @param name Whether or not to display the pilot name.
  */
 int equipment_shipStats( char *buf, int max_len, const Pilot *s, int dpseps,

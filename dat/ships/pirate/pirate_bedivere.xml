@@ -1,0 +1,54 @@
+<ship name="Pirate Bedivere">
+ <lua>pirate.lua</lua>
+ <points>75</points>
+ <base_type>Bedivere</base_type>
+ <gfx size="83">bedivere.gltf</gfx>
+ <rarity>1</rarity>
+ <sound>engine</sound>
+ <class>Destroyer</class>
+ <price>1310000</price>
+ <time_mod>1.25</time_mod>
+ <fabricator>Skull and Bones</fabricator>
+ <faction>Dreamer Clan</faction>
+ <description>Realizing the Bedivere's potential as a versatile scavenger vessel, the Skull and Bones refitted the model for more efficent plundering. In addition to a rehaul of the electronic warfare systems, the weapon mounts have been shrunk to make room for more crew and boarding androids. Thus, the Pirate Bedivere best used in a fleet with more combat-capable ships.</description>
+ <health>
+  <armour>340</armour>
+  <armour_regen>0</armour_regen>
+ </health>
+ <characteristics>
+  <crew>24</crew>
+  <mass>400</mass>
+  <fuel_consumption>200</fuel_consumption>
+  <cargo>150</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="medium"/>
+  <weapon size="medium"/>
+  <weapon size="medium"/>
+  <weapon size="medium"/>
+  <utility prop="systems" name="systems" size="medium">Previous Generation Medium Systems</utility>
+  <utility prop="systems_secondary" name="systems_secondary" size="medium"/>
+  <utility prop="accessory" name="accessory" size="medium"/>
+  <utility size="large"/>
+  <utility size="medium"/>
+  <utility size="medium"/>
+  <utility size="medium"/>
+  <structure prop="engines" name="engines" size="medium">Beat Up Medium Engine</structure>
+  <structure prop="engines_secondary" name="engines_secondary" size="medium"/>
+  <structure prop="hull" name="hull" size="medium">Patchwork Medium Plating</structure>
+  <structure prop="hull_secondary" name="hull_secondary" size="medium"/>
+  <structure size="medium"/>
+  <structure size="medium"/>
+  <structure size="medium"/>
+  <structure size="medium"/>
+ </slots>
+ <stats>
+  <ew_hide>-10</ew_hide>
+  <ew_stealth_timer>-25</ew_stealth_timer>
+  <ew_detect>15</ew_detect>
+  <loot_mod>50</loot_mod>
+ </stats>
+ <tags>
+  <tag>pirate</tag>
+ </tags>
+</ship>

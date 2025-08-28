@@ -40,7 +40,7 @@
 #include "spfx.h"
 
 /**
- * @brief Struct useful for generalization of weapno collisions.
+ * @brief Useful structure for generalization of weapon collisions.
  */
 typedef struct WeaponCollision_ {
    const Weapon    *w;    /**< Weapon doing the colliding. */
@@ -491,7 +491,7 @@ static void think_seeker( Weapon *w, double dt )
 }
 
 /**
- * @brief The pseudo-ai of the beam weapons.
+ * @brief The pseudo-AI of the beam weapons.
  *
  *    @param w Weapon to do the thinking.
  *    @param dt Current delta tick.
@@ -2904,6 +2904,21 @@ void weapon_clear( void )
 }
 
 /**
+ * @brief Clears the weapons for a pilot.
+ */
+void weapon_clearPilot( const Pilot *p )
+{
+   /* Don't forget to stop the sounds. */
+   for ( int i = 0; i < array_size( weapon_stack ); i++ ) {
+      Weapon *w = &weapon_stack[i];
+      if ( w->parent == p->id ) {
+         // w->timer  = -1.;
+         w->parent = 0;
+      }
+   }
+}
+
+/**
  * @brief Jams all weapons tracking the target pilot.
  */
 void weapon_jamPilot( const Pilot *p )
@@ -2913,7 +2928,7 @@ void weapon_jamPilot( const Pilot *p )
       Weapon *w = &weapon_stack[i];
       if ( !outfit_isLauncher( w->outfit ) )
          continue;
-      Target *t = &w->target;
+      const Target *t = &w->target;
       if ( ( t->type == TARGET_PILOT ) && ( t->u.id == p->id ) ) {
          double r = RNGF();
          if ( r < 0.4 ) {

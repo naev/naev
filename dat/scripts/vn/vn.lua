@@ -1763,7 +1763,7 @@ end
 Plays an eerie sound.
 --]]
 function vn.sfxEerie( params )
-    return vn.sfx( vn._sfx.eerie, params )
+   return vn.sfx( vn._sfx.eerie, params )
 end
 
 --[[--

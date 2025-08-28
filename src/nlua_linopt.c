@@ -634,7 +634,7 @@ static int opt_onoff( const char *str, int def )
  * @brief Solves the linear optimization problem.
  *
  *    @luatparam LinOpt lp Linear program to modify.
- *    @luatreturn number The value of the primal funcation.
+ *    @luatreturn number The value of the primal function.
  *    @luatreturn table Table of column values.
  * @luafunc solve
  */

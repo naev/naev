@@ -155,10 +155,10 @@
 <h2><a href="#$(no_spaces(kind))">$(kind)</a></h2>
 <table class="function_list">
 #  for item in items() do
-	<tr>
-	<td class="name" $(nowrap)><a href="#$(item.name)">$(display_name(item))</a></td>
-	<td class="summary">$(M(item.summary,item))</td>
-	</tr>
+   <tr>
+   <td class="name" $(nowrap)><a href="#$(item.name)">$(display_name(item))</a></td>
+   <td class="summary">$(M(item.summary,item))</td>
+   </tr>
 #  end -- for items
 </table>
 #end -- for kinds
@@ -321,10 +321,10 @@
 # kind = kind:lower()
 <table class="module_list">
 # for m in mods() do
-	<tr>
-		<td class="name"  $(nowrap)><a href="$(no_spaces(kind))/$(m.name).html">$(m.name)</a></td>
-		<td class="summary">$(M(ldoc.strip_header(m.summary),m))</td>
-	</tr>
+   <tr>
+      <td class="name"  $(nowrap)><a href="$(no_spaces(kind))/$(m.name).html">$(m.name)</a></td>
+      <td class="summary">$(M(ldoc.strip_header(m.summary),m))</td>
+   </tr>
 #  end -- for modules
 </table>
 # end -- for kinds

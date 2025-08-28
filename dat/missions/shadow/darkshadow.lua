@@ -24,6 +24,7 @@ local love_shaders = require "love_shaders"
 local vntk = require "vntk"
 local vni = require "vnimage"
 local portrait = require "portrait"
+local equipopt = require "equipopt"
 require "proximity"
 
 local genbu, joe, leader, leaderdest, leaderstart, seiryuu, squads -- Non-persistent state
@@ -113,8 +114,8 @@ function seiryuuBoard()
       -- TODO change this ridiculously large log block
       shadow.addLog( fmt.f(_([[Captain Rebina has further explained the organization she works for.
    "As I've said before, we are the Four Winds. Our organization is a very secretive one, as you've experienced firsthand. Very few outside our ranks know of our existence, and now you're one of those few.
-    "The Four Winds are old, {player}. Very old indeed. The movement dates back to old Earth, before the Space Age, even. We have been with human civilization throughout the ages, at first only in the Eastern nations, later establishing a foothold worldwide. Our purpose was to guide humanity and prevent it from making mistakes it could not afford to make. We never came out in the open, we always worked behind the scenes, from the shadows. We were diplomats, scientists, journalists, politicians' spouses, sometimes even assassins. We used any means necessary to gather information and avert disaster, when we could.
-    "Of course, we didn't always succeed. We couldn't prevent the nuclear strikes on Japan, though we managed to prevent several others. We foiled the sabotage attempts on several of the colony ships launched during the First Growth, but sadly failed to do so in Maelstrom's case. We failed to stop the Faction Wars, though we managed to help the Empire gain the upper hand. Our most recent failure is the Incident - we should have seen it coming, but we were completely taken by surprise."]]), {player=player.name()} ) )
+   "The Four Winds are old, {player}. Very old indeed. The movement dates back to old Earth, before the Space Age, even. We have been with human civilization throughout the ages, at first only in the Eastern nations, later establishing a foothold worldwide. Our purpose was to guide humanity and prevent it from making mistakes it could not afford to make. We never came out in the open, we always worked behind the scenes, from the shadows. We were diplomats, scientists, journalists, politicians' spouses, sometimes even assassins. We used any means necessary to gather information and avert disaster, when we could.
+   "Of course, we didn't always succeed. We couldn't prevent the nuclear strikes on Japan, though we managed to prevent several others. We foiled the sabotage attempts on several of the colony ships launched during the First Growth, but sadly failed to do so in Maelstrom's case. We failed to stop the Faction Wars, though we managed to help the Empire gain the upper hand. Our most recent failure is the Incident - we should have seen it coming, but we were completely taken by surprise."]]), {player=player.name()} ) )
 
       rebina(_([[Captain Rebina sits back in her chair and heaves a sigh. "I think that may have been when things started to change. We used to be committed to our purpose, but apparently things are different now. No doubt you remember what happened to the diplomatic exchange between the Empire and the Dvaered some time ago. Well, suffice to say that increasing the tension between the two is definitely not part of our mandate. In fact, it's completely at odds with what we stand for. And that was not just an isolated incident either. Things have been happening that suggest Four Winds involvement, things that bode ill."]]))
       rebina(_([[She activates the holotable, and it displays four cruisers, all seemingly identical to the Seiryuu, though you notice subtle differences in the hull designs.]]))
@@ -153,8 +154,8 @@ function seiryuuBoard()
       seiryuu:hyperspace()
       var.pop("darkshadow_active")
       shadow.addLog( _([[You found Jorek and successfully retrieved his informant on behalf of Captain Rebina. The Genbu ambushed you, but you managed to get away and dock the Seiryuu. Captain Rebina remarked on the situation.
-    "It would seem that Giornio and his comrades have a vested interest in keeping me away from the truth. It's a good thing you managed to get out of that ambush and bring me that informant. I do hope he'll be able to shed more light on the situation. I've got a bad premonition, a hunch that we're going to have to act soon if we're going to avert disaster, whatever that may be."
-    She said she may need your services again in the future.]]) )
+   "It would seem that Giornio and his comrades have a vested interest in keeping me away from the truth. It's a good thing you managed to get out of that ambush and bring me that informant. I do hope he'll be able to shed more light on the situation. I've got a bad premonition, a hunch that we're going to have to act soon if we're going to avert disaster, whatever that may be."
+   She said she may need your services again in the future.]]) )
       misn.finish(true)
    end
 end
@@ -379,16 +380,28 @@ end
 
 -- Spawns the Genbu
 function spawnGenbu(sys)
-   genbu = pilot.add( "Pirate Kestrel", shadow.fct_fourwinds(), sys, _("Genbu") )
-   genbu:outfitRm("all")
-   genbu:outfitAdd("Heavy Laser Turret", 3)
-   genbu:outfitAdd("Four Winds Ragnarok Beam", 3) -- You can't win. Seriously.
-   ai_setup.setup(genbu)
-   genbu:control()
-   genbu:setHilight()
-   genbu:setVisplayer()
-   genbu:setNoDeath()
-   genbu:setNoDisable()
+   genbu = pilot.add( "Pirate Kestrel", shadow.fct_fourwinds(), sys, _("Genbu"), {naked=true} )
+   equipopt.pirate( genbu, {
+      outfits_add = {
+         "Four Winds Ragnarok Beam",
+         "ZIBS-32",
+      },
+      prefer = {
+         ["Four Winds Ragnarok Beam"] = 100,
+      },
+      max_same_weap = 4,
+      pointdefense = 10,
+   })
+   genbu:intrinsicSet( "shield_mod", 100 )
+   genbu:intrinsicSet( "absorb", 15 )
+   genbu:intrinsicSet( "shield_regen_mod", 50 )
+   genbu:intrinsicSet( "armour_mod", 50 )
+   genbu:intrinsicSet( "energy_regen_mod", 100 )
+   genbu:control(true)
+   genbu:setHilight(true)
+   genbu:setVisplayer(true)
+   genbu:setNoDeath(true)
+   genbu:setNoDisable(true)
    mem.genbuspawned = true
 end
 

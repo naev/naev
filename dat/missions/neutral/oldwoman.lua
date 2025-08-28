@@ -51,11 +51,11 @@ function create ()
    lmisn.getSysAtDistance( mem.cursys, 1, 6,
       function(s)
          for i, v in ipairs(s:spobs()) do
-             if v:faction() == faction.get("Sirius") and v:class() == "M" and v:canLand() then
-                 planets[#planets + 1] = {v, s}
-             end
-          end
-          return false
+            if v:faction() == faction.get("Sirius") and v:class() == "M" and v:canLand() then
+               planets[#planets + 1] = {v, s}
+            end
+         end
+         return false
       end )
 
    if #planets == 0 then misn.finish(false) end -- In case no suitable planets are in range.

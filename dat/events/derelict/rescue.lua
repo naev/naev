@@ -8,5 +8,6 @@ return function ()
 
    return {
       mission = misnname,
+      chance = 0.5,
    }
 end

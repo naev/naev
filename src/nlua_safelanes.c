@@ -24,7 +24,7 @@ static const luaL_Reg safelanesL_methods[] = {
 
 /**
  * @brief Loads the safelanes Lua library.
- *    @param env Lua enviornment.
+ *    @param env Lua environment.
  *    @return 0 on success.
  */
 int nlua_loadSafelanes( nlua_env *env )

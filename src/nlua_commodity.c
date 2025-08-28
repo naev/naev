@@ -495,7 +495,7 @@ static int commodityL_icon( lua_State *L )
 /**
  * @brief Gets the description of a commodity if it exists.
  *
- *    @luatparam Commodity c Commodity to get decription of
+ *    @luatparam Commodity c Commodity to get description of
  *    @luatreturn string|nil Description of the commodity if exists, otherwise
  * nil.
  * @luafunc description

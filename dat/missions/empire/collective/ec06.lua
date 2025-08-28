@@ -57,7 +57,7 @@ function accept ()
 
    -- Intro text
    if not tk.yesno( _("Bar"), _([[You join Commodore Keer at her table.
-    She begins, "We're going to finally attack the Collective. We've gotten the Emperor himself to bless the mission and send some of his better pilots. Would you be interested in aiding in the destruction of the Collective?"]]) ) then
+   She begins, "We're going to finally attack the Collective. We've gotten the Emperor himself to bless the mission and send some of his better pilots. Would you be interested in aiding in the destruction of the Collective?"]]) ) then
       misn.finish()
    end
 
@@ -278,7 +278,7 @@ function land ()
    if mem.misn_stage == 4 and spob.cur() == misn_base then
 
       tk.msg( _("Mission Success"), fmt.f(_([[As you approach to land on {pnt} you notice big banners placed on the exterior of the station. They seem to be in celebration of the final defeat of the Collective. Upon landing, you are saluted by the welcoming committee in charge of honouring all the returning pilots.
-    You notice Commodore Keer. Upon greeting her, she says, "You did a good job out there. No need to worry about the Collective anymore. Without Welsh, the Collective won't stand a chance, since they aren't truly autonomous. Right now we have some ships cleaning up the last of the Collective; shouldn't take too long to be back to normal."]]), {pnt=misn_base}) )
+   You notice Commodore Keer. Upon greeting her, she says, "You did a good job out there. No need to worry about the Collective anymore. Without Welsh, the Collective won't stand a chance, since they aren't truly autonomous. Right now we have some ships cleaning up the last of the Collective; shouldn't take too long to be back to normal."]]), {pnt=misn_base}) )
 
       diff.apply("collective_dead")
 
@@ -288,8 +288,8 @@ function land ()
       player.pay( emp.rewards.ec06 )
 
       tk.msg( _("Mission Success"), _([[She continues. "As a symbol of appreciation, you should find a deposit of 5,000,000 credits in your account. There will be a celebration later today in the officer's room if you want to join in."
-    And so ends the Collective threat...
-    You don't remember much of the after party, but you wake up groggily in your ship clutching an Empire officer's boot.]]) )
+   And so ends the Collective threat...
+   You don't remember much of the after party, but you wake up groggily in your ship clutching an Empire officer's boot.]]) )
       player.outfitAdd("Left Boot")
 
       emp.addCollectiveLog( _([[You helped the Empire to finally destroy the Collective once and for all. The Collective is now no more.]]) )

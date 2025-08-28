@@ -9,7 +9,7 @@ local audio = require 'love.audio'
 local lf = require "love.filesystem"
 local pp_shaders = require "pp_shaders"
 
-local pixelcode = lf.read( "glsl/love/hypergate_travel.frag" )
+local pixelcode = lf.read( "shaders/love/hypergate_travel.frag" )
 
 
 local target, shader, prevtex

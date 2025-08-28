@@ -78,10 +78,10 @@ end
 function competitor1()
    if player.misnDone("Destroy the FLF base!") == true then
       tk.msg(_("I am here to win the championship"), _([["I am here to claim my place as this cycle's champion! I've prepared myself since the first day I piloted a ship. Trust me, I'm nearly invincible and my Vendetta is indestructible.
-    "Do you know who I am? I am the famous independent pilot who helped Dvaered High Command destroy the FLF base in the nebula! I managed to defeat lots of FLF fighters with my ship! I will tell you my adventures some other time, but for now, I need to concentrate."]]))
+   "Do you know who I am? I am the famous independent pilot who helped Dvaered High Command destroy the FLF base in the nebula! I managed to defeat lots of FLF fighters with my ship! I will tell you my adventures some other time, but for now, I need to concentrate."]]))
    else
       tk.msg(_("I am here to win the championship"), _([["Hello! I am here to claim my place as this cycle's champion! I've prepared myself since the first day I piloted a ship. Trust me, I'm nearly invincible and my Vendetta is indestructible.
-    "Did you know that the Vendetta is the best fighter in this part of the galaxy? It's the reason why every pilot who's won this championship had one."]]))
+   "Did you know that the Vendetta is the best fighter in this part of the galaxy? It's the reason why every pilot who's won this championship had one."]]))
    end
 end
 function competitor2()
@@ -102,7 +102,7 @@ function accept()
    mem.reward = 50e3
 
    if tk.yesno(_("Do you want to take part to a challenge?"), _([["Hello, I'm a member of the staff of the Dvaered dogfight challenge. Here are the rules: you need to take off with a fighter-class ship and to join your starting mark. After that, you will try to disable your opponent. Don't kill them; the security staff won't forgive that. It is forbidden to use missiles, so you won't be allowed to have those equipped while taking off. It's also forbidden to board the opponent's ship and to attack him before the signal is given. You are not allowed to land on any planet or jump away during the championship.
-    We are looking for pilots. Are you in?"]])) then
+   We are looking for pilots. Are you in?"]])) then
 
       misn.accept()
 

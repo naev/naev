@@ -424,7 +424,7 @@ void input_exit( void )
 }
 
 /**
- * @brief Enables all the keybinds.
+ * @brief Enables all the key bindings.
  */
 void input_enableAll( void )
 {
@@ -433,7 +433,7 @@ void input_enableAll( void )
 }
 
 /**
- * @brief Disables all the keybinds.
+ * @brief Disables all the key bindings.
  */
 void input_disableAll( void )
 {
@@ -442,7 +442,7 @@ void input_disableAll( void )
 }
 
 /**
- * @brief Enables or disables a keybind.
+ * @brief Enables or disables a key binding.
  */
 void input_toggleEnable( KeySemanticType key, int enable )
 {
@@ -494,10 +494,11 @@ SDL_Keycode input_keyConv( const char *name )
 }
 
 /**
- * @brief Binds key of type type to action keybind.
+ * @brief Binds key of type type to action key binding.
  *
- *    @param keybind The KeySemanticType of the keybind (as defined above).
- *    @param type The type of the keybind.
+ *    @param keybind The "KeySemanticType" of the key binding (as defined
+ * above).
+ *    @param type The type of the key binding.
  *    @param key The key to bind to.
  *    @param mod Modifiers to check for.
  */
@@ -517,9 +518,9 @@ void input_setKeybind( KeySemanticType keybind, KeybindType type,
 }
 
 /**
- * @brief Gets the value of a keybind.
+ * @brief Gets the value of a key binding.
  *
- *    @param[in] keybind KeySemanticType of the keybinding to get.
+ *    @param[in] keybind "KeySemanticType" of the keybinding to get.
  *    @param[out] type Stores the type of the keybinding.
  *    @param[out] mod Stores the modifiers used with the keybinding.
  *    @return The key associated with the keybinding.
@@ -540,7 +541,7 @@ SDL_Keycode input_getKeybind( KeySemanticType keybind, KeybindType *type,
 }
 
 /**
- * @brief Gets the display name (translated and human-readable) of a keybind
+ * @brief Gets the display name (translated and human-readable) of a key binding
  *
  *    @param[in] keybind Name of the keybinding to get display name of.
  *    @param[out] buf Buffer to write the display name to.
@@ -679,7 +680,7 @@ KeySemanticType input_keyAlreadyBound( KeybindType type, SDL_Keycode key,
 }
 
 /**
- * @brief Gets the brief descirption of the keybinding.
+ * @brief Gets the brief description of the keybinding.
  */
 const char *input_getKeybindBrief( KeySemanticType keybind )
 {
@@ -809,7 +810,7 @@ void input_update( double dt )
 /**
  * @brief Runs the input command.
  *
- *    @param keynum The index of the keybind.
+ *    @param keynum The index of the key binding.
  *    @param value The value of the keypress (defined above).
  *    @param kabs The absolute value.
  *    @param repeat Whether the key is still held down, rather than newly
@@ -1718,8 +1719,8 @@ int input_clickedSpob( int spob, int autonav, int priority )
 /**
  * @brief Performs an appropriate action when an asteroid is clicked.
  *
- *    @param field Index of the parent field of the asteoid.
- *    @param asteroid Index of the oasteoid in the field.
+ *    @param field Index of the parent field of the asteroid.
+ *    @param asteroid Index of the asteroid in the field.
  *    @return Whether the click was used.
  */
 int input_clickedAsteroid( int field, int asteroid )

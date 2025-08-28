@@ -63,10 +63,10 @@ pirate_base.cores = {
          }
       end,
    ["Pirate Kestrel"] = function ()
-          return {
-             engines = "Krain Remige Engine",
-             systems = "Unicorp PT-440 Core System",
-             hull = "Unicorp D-58 Heavy Plating" }
+         return {
+            engines = "Krain Remige Engine",
+            systems = "Unicorp PT-440 Core System",
+            hull = "Unicorp D-58 Heavy Plating" }
       end,
    ["Pirate Starbridge"] = function (p)
          local c = ecores.get( p, { systems=pirate_base.class, hulls=pirate_base.class } )

@@ -1,3 +1,4 @@
+use anyhow::Context as AnyhowContext;
 use anyhow::Result;
 use glow::*;
 use log::{warn, warn_err};
@@ -5,9 +6,10 @@ use nalgebra::{Matrix3, Vector4};
 use sdl3 as sdl;
 use std::boxed::Box;
 use std::ffi::{CStr, CString};
+use std::io::{Read, Seek};
 use std::num::NonZero;
 use std::os::raw::{c_char, c_double, c_float, c_int, c_uint};
-use std::sync::{atomic::AtomicU32, Arc, LazyLock, Mutex, MutexGuard, Weak};
+use std::sync::{Arc, LazyLock, Mutex, MutexGuard, Weak, atomic::AtomicU32};
 
 use crate::buffer;
 use crate::{
@@ -52,6 +54,17 @@ impl TextureFormat {
             Self::SRGB => glow::RGB,
             Self::SRGBA => glow::RGBA,
             Self::Depth => glow::DEPTH_COMPONENT,
+        }
+    }
+
+    pub fn from_gl(val: u32) -> Self {
+        match val {
+            glow::RGB => Self::RGB,
+            glow::RGBA => Self::RGBA,
+            glow::SRGB => Self::SRGB,
+            glow::SRGB_ALPHA => Self::SRGBA,
+            glow::DEPTH_COMPONENT => Self::Depth,
+            _ => Self::RGB,
         }
     }
 
@@ -211,33 +224,41 @@ impl TextureData {
     fn from_image(
         ctx: &Context,
         name: Option<&str>,
-        img: &image::DynamicImage,
+        img: image::DynamicImage,
         flipv: bool,
         srgb: bool,
     ) -> Result<Self> {
         let gl = &ctx.gl;
-        let texture = unsafe { gl.create_texture().map_err(|e| anyhow::anyhow!(e)) }?;
 
         let has_alpha = img.color().has_alpha();
-        let (w, h) = (img.width(), img.height());
         let img = match flipv {
-            true => &img.flipv(),
+            true => img.flipv(),
             false => img,
         };
 
-        let imgdata = match has_alpha {
-            true => img.to_rgba8().into_raw(),
-            false => img.to_rgb8().into_raw(),
+        let (imgdata, fmt): (image::DynamicImage, u32) = match has_alpha {
+            true => {
+                let mut img = img.into_rgba8();
+                // Since we aren't premultiplying in our pipeline, garbage RGB values for alpha==0
+                // can leak into the final render. We forcibly set RGB to 0 if alpha is 0.
+                // TODO maybe use premultiply instead? It should be better overall.
+                for p in img.pixels_mut() {
+                    if p.0[3] == 0 {
+                        p.0 = [0u8; 4];
+                    }
+                }
+                (img.into(), glow::RGBA)
+            }
+            false => (img.into_rgb8().into(), glow::RGB),
         };
+        let (w, h) = (imgdata.width(), imgdata.height());
 
         let internalformat = TextureFormat::auto(has_alpha, srgb);
-        unsafe {
+        let gldata = glow::PixelUnpackData::Slice(Some(imgdata.as_bytes()));
+
+        let texture = unsafe {
+            let texture = gl.create_texture().map_err(|e| anyhow::anyhow!(e))?;
             gl.bind_texture(glow::TEXTURE_2D, Some(texture));
-            let gldata = glow::PixelUnpackData::Slice(Some(imgdata.as_slice()));
-            let fmt = match has_alpha {
-                true => glow::RGBA,
-                false => glow::RGB,
-            };
             gl.tex_image_2d(
                 glow::TEXTURE_2D,
                 0,
@@ -253,7 +274,8 @@ impl TextureData {
                 gl.object_label(glow::TEXTURE, texture.0.into(), name);
             }
             gl.bind_texture(glow::TEXTURE_2D, None);
-        }
+            texture
+        };
 
         Ok(TextureData {
             name: name.map(String::from),
@@ -272,7 +294,7 @@ impl TextureData {
     fn from_image_sdf(
         ctx: &Context,
         name: Option<&str>,
-        img: &image::DynamicImage,
+        img: image::DynamicImage,
         flipv: bool,
     ) -> Result<Self> {
         let gl = &ctx.gl;
@@ -282,14 +304,14 @@ impl TextureData {
         if !has_alpha {
             anyhow::bail!("Trying to create SDF from image without alpha!");
         }
-        let (w, h) = (img.width(), img.height());
         let img = match flipv {
-            true => &img.flipv(),
+            true => img.flipv(),
             false => img,
         };
+        let (w, h) = (img.width(), img.height());
         let (imgdata, vmax) = {
             // Get only the alpha channel
-            let mut rawdata: Vec<_> = img.to_luma_alpha8().pixels().map(|p| p.0[1]).collect();
+            let mut rawdata: Vec<_> = img.into_luma_alpha8().pixels().map(|p| p.0[1]).collect();
             let mut vmax: f64 = 0.0;
             // Compute the distance transform
             let sdfdata = unsafe {
@@ -633,8 +655,62 @@ impl FilterMode {
     }
 }
 
+/// Loads an SVG file into a DynamicImage
+//fn svg_to_img(path: &str, w: Option<usize>, h: Option<usize>) -> Result<image::DynamicImage> {
+fn svg_to_img(
+    rw: &mut sdl::iostream::IOStream,
+    w: Option<usize>,
+    h: Option<usize>,
+) -> Result<image::DynamicImage> {
+    use resvg::{tiny_skia, usvg};
+
+    // Load the SVG
+    // TODO add ndata-based href resolves and such
+    //let svg_data = ndata::read(path)?;
+    let mut svg_data = Vec::new();
+    rw.read_to_end(&mut svg_data)?;
+
+    let opt = usvg::Options {
+        resources_dir: None, // TODO add and such
+        ..Default::default()
+    };
+    let tree = usvg::Tree::from_data(&svg_data, &opt)?;
+
+    // Render the SVG
+    let (iw, ih) = tree.size().to_int_size().dimensions();
+    let transform = {
+        let (sx, sy) = {
+            match w {
+                Some(w) => {
+                    let sx = w as f32 / iw as f32;
+                    match h {
+                        Some(h) => (sx, h as f32 / ih as f32),
+                        None => (sx, sx),
+                    }
+                }
+                None => match h {
+                    Some(h) => {
+                        let sy = h as f32 / ih as f32;
+                        (sy, sy)
+                    }
+                    None => (1.0, 1.0),
+                },
+            }
+        };
+        tiny_skia::Transform::from_scale(sx, sy)
+    };
+    let mut pixmap = tiny_skia::Pixmap::new(iw, ih).context("unable to create pixbuf")?;
+    resvg::render(&tree, transform, &mut pixmap.as_mut());
+
+    // Convert to image and return
+    Ok(image::RgbaImage::from_vec(iw, ih, pixmap.take())
+        .context("unable to create RgbaImage from Pixmap")?
+        .into())
+}
+
 pub enum TextureSource {
     Path(String),
+    IOStream(sdl::iostream::IOStream<'static>),
     Image(image::DynamicImage),
     TextureData(Arc<TextureData>),
     Raw(glow::NativeTexture),
@@ -642,11 +718,11 @@ pub enum TextureSource {
 }
 impl TextureSource {
     #[allow(clippy::too_many_arguments)]
-    fn to_texture_data(
-        &self,
+    fn into_texture_data(
+        self,
         sctx: &ContextWrapper,
-        w: usize,
-        h: usize,
+        w: Option<usize>,
+        h: Option<usize>,
         srgb: bool,
         flipv: bool,
         mipmaps: bool,
@@ -678,15 +754,48 @@ impl TextureSource {
         let tex = Arc::new({
             let mut inner = match self {
                 TextureSource::Path(path) => {
-                    let cpath = ndata::simplify_path(path)?;
-                    let rw = ndata::iostream(&cpath)?;
-                    let img = image::ImageReader::new(std::io::BufReader::new(rw))
-                        .with_guessed_format()?
-                        .decode()?;
+                    let img = {
+                        let cpath = ndata::simplify_path(&path)?;
+                        let mut rw = ndata::iostream(&cpath)?;
+                        if std::path::Path::new(&cpath)
+                            .extension()
+                            .and_then(|s| s.to_str())
+                            == Some("svg")
+                        {
+                            svg_to_img(&mut rw, w, h)?
+                        } else {
+                            image::ImageReader::with_format(
+                                std::io::BufReader::new(rw),
+                                image::ImageFormat::from_path(path)?,
+                            )
+                            //let img = image::ImageReader::new(std::io::BufReader::new(rw)).with_guessed_format()?
+                            .decode()?
+                        }
+                    };
                     let ctx = &sctx.lock();
                     match sdf {
-                        true => TextureData::from_image_sdf(ctx, name, &img, flipv)?,
-                        false => TextureData::from_image(ctx, name, &img, flipv, srgb)?,
+                        true => TextureData::from_image_sdf(ctx, name, img, flipv)?,
+                        false => TextureData::from_image(ctx, name, img, flipv, srgb)?,
+                    }
+                }
+                TextureSource::IOStream(mut rw) => {
+                    let img = {
+                        // We don't know if it's an SVG, so the only choice is to try to open it
+                        // and fallback to image if it fails.
+                        match svg_to_img(&mut rw, w, h) {
+                            Ok(img) => img,
+                            Err(_) => {
+                                rw.seek(std::io::SeekFrom::Start(0))?;
+                                image::ImageReader::new(std::io::BufReader::new(rw))
+                                    .with_guessed_format()?
+                                    .decode()?
+                            }
+                        }
+                    };
+                    let ctx = &sctx.lock();
+                    match sdf {
+                        true => TextureData::from_image_sdf(ctx, name, img, flipv)?,
+                        false => TextureData::from_image(ctx, name, img, flipv, srgb)?,
                     }
                 }
                 TextureSource::Image(img) => {
@@ -696,10 +805,18 @@ impl TextureSource {
                         false => TextureData::from_image(ctx, name, img, flipv, srgb)?,
                     }
                 }
-                TextureSource::Raw(tex) => TextureData::from_raw(*tex, w, h)?,
+                TextureSource::Raw(tex) => {
+                    if w.is_none() || h.is_none() {
+                        anyhow::bail!("empty images need specific dimensions");
+                    }
+                    TextureData::from_raw(tex, w.unwrap(), h.unwrap())?
+                }
                 TextureSource::Empty(fmt) => {
+                    if w.is_none() || h.is_none() {
+                        anyhow::bail!("empty images need specific dimensions");
+                    }
                     let ctx = &sctx.lock();
-                    TextureData::new(ctx, *fmt, w, h)?
+                    TextureData::new(ctx, fmt, w.unwrap(), h.unwrap())?
                 }
                 TextureSource::TextureData(_) => unreachable!(),
             };
@@ -721,9 +838,9 @@ impl TextureSource {
 
 pub struct TextureBuilder {
     name: Option<String>,
-    source: TextureSource,
-    w: usize,
-    h: usize,
+    source: Option<TextureSource>,
+    w: Option<usize>,
+    h: Option<usize>,
     sx: usize,
     sy: usize,
     is_srgb: bool,
@@ -747,9 +864,9 @@ impl TextureBuilder {
     pub fn new() -> Self {
         TextureBuilder {
             name: None,
-            source: TextureSource::Empty(TextureFormat::SRGBA),
-            w: 0,
-            h: 0,
+            source: Some(TextureSource::Empty(TextureFormat::SRGBA)),
+            w: None,
+            h: None,
             sx: 1,
             sy: 1,
             is_srgb: true,
@@ -770,28 +887,33 @@ impl TextureBuilder {
     }
 
     pub fn path(mut self, path: &str) -> Self {
-        self.source = TextureSource::Path(String::from(path));
+        self.source = Some(TextureSource::Path(String::from(path)));
         self.name = Some(String::from(path));
         self
     }
 
+    pub fn iostream(mut self, stream: sdl::iostream::IOStream<'static>) -> Self {
+        self.source = Some(TextureSource::IOStream(stream));
+        self
+    }
+
     pub fn empty(mut self, fmt: TextureFormat) -> Self {
-        self.source = TextureSource::Empty(fmt);
+        self.source = Some(TextureSource::Empty(fmt));
         self
     }
 
     pub fn image(mut self, img: &image::DynamicImage) -> Self {
-        self.source = TextureSource::Image(img.clone());
+        self.source = Some(TextureSource::Image(img.clone()));
         self
     }
 
     pub fn texture_data(mut self, data: &Arc<TextureData>) -> Self {
-        self.source = TextureSource::TextureData(data.clone());
+        self.source = Some(TextureSource::TextureData(data.clone()));
         self
     }
 
     pub fn native_texture(mut self, tex: glow::NativeTexture) -> Self {
-        self.source = TextureSource::Raw(tex);
+        self.source = Some(TextureSource::Raw(tex));
         self
     }
 
@@ -810,12 +932,12 @@ impl TextureBuilder {
         self
     }
 
-    pub fn width(mut self, w: usize) -> Self {
+    pub fn width(mut self, w: Option<usize>) -> Self {
         self.w = w;
         self
     }
 
-    pub fn height(mut self, h: usize) -> Self {
+    pub fn height(mut self, h: Option<usize>) -> Self {
         self.h = h;
         self
     }
@@ -876,10 +998,15 @@ impl TextureBuilder {
         self.build_wrap(&wctx)
     }
 
-    pub fn build_wrap(self, sctx: &ContextWrapper) -> Result<Texture> {
+    pub fn build_wrap(mut self, sctx: &ContextWrapper) -> Result<Texture> {
+        let source = self
+            .source
+            .take()
+            .ok_or(anyhow::anyhow!("texture source not specified"))?;
+
         // Some checks
         if self.is_sdf {
-            match self.source {
+            match source {
                 TextureSource::TextureData(_) | TextureSource::Raw(_) | TextureSource::Empty(_) => {
                     anyhow::bail!("SDF must use Path of Image as source!")
                 }
@@ -887,7 +1014,7 @@ impl TextureBuilder {
             }
         }
 
-        let texture = self.source.to_texture_data(
+        let texture = source.into_texture_data(
             sctx,
             self.w,
             self.h,
@@ -1113,8 +1240,8 @@ impl FramebufferBuilder {
             let name = self.name.as_ref().map(|name| format!("{name}-Texture"));
             let texture = TextureBuilder::new()
                 .name(name.as_deref())
-                .width(self.w)
-                .height(self.h)
+                .width(Some(self.w))
+                .height(Some(self.h))
                 .filter(self.filter)
                 .address_mode(self.address_mode)
                 .build_wrap(ctx)?;
@@ -1128,8 +1255,8 @@ impl FramebufferBuilder {
             let depth = TextureBuilder::new()
                 .name(name.as_deref())
                 .empty(TextureFormat::Depth)
-                .width(self.w)
-                .height(self.h)
+                .width(Some(self.w))
+                .height(Some(self.h))
                 .filter(self.filter)
                 .address_mode(self.address_mode)
                 .build_wrap(ctx)?;
@@ -1285,8 +1412,8 @@ pub extern "C" fn gl_texExistsOrCreate(
         builder = builder.border(Some(Vector4::<f32>::new(0., 0., 0., 0.)));
     }
 
-    let pathname = path.to_str().unwrap();
-    builder = match TextureData::exists(pathname) {
+    let pathname = path.to_string_lossy();
+    builder = match TextureData::exists(&pathname) {
         Some(tex) => {
             unsafe {
                 *created = 0;
@@ -1297,7 +1424,7 @@ pub extern "C" fn gl_texExistsOrCreate(
             unsafe {
                 *created = 1;
             }
-            builder.path(pathname)
+            builder.path(&pathname)
         }
     };
 
@@ -1330,11 +1457,11 @@ pub extern "C" fn gl_loadImageData(
     }
 
     let mut builder = TextureBuilder::new()
-        .name(Some(name.to_str().unwrap()))
+        .name(Some(&name.to_string_lossy()))
         .sx(sx as usize)
         .sy(sy as usize)
-        .width(w as usize)
-        .height(h as usize);
+        .width(Some(w as usize))
+        .height(Some(h as usize));
 
     if !data.is_null() {
         let rawdata = unsafe { std::slice::from_raw_parts(data, (w * h * 4) as usize) };
@@ -1390,7 +1517,7 @@ pub extern "C" fn gl_newSprite(
     }
 
     let mut builder = TextureBuilder::new()
-        .path(path.to_str().unwrap())
+        .path(&path.to_string_lossy())
         .sx(sx as usize)
         .sy(sy as usize)
         .srgb(!flags.notsrgb)
@@ -1421,8 +1548,11 @@ pub extern "C" fn gl_newSpriteRWops(
     sy: c_int,
     cflags: c_uint,
 ) -> *mut Texture {
+    if rw.is_null() {
+        warn!("gl_newSpriteRWops received rw==NULL");
+        return std::ptr::null_mut();
+    }
     let ctx = Context::get(); /* Lock early. */
-    let path = unsafe { CStr::from_ptr(cpath) };
     let flags = Flags::from(cflags);
     unsafe {
         naevc::gl_contextSet();
@@ -1441,19 +1571,23 @@ pub extern "C" fn gl_newSpriteRWops(
         builder = builder.border(Some(Vector4::<f32>::new(0., 0., 0., 0.)));
     }
 
-    let pathname = path.to_str().unwrap();
-    builder = match TextureData::exists(pathname) {
-        Some(tex) => builder.texture_data(&tex),
-        None => {
-            let rw = unsafe {
-                sdl::iostream::IOStream::from_ll(rw as *mut sdl::sys::iostream::SDL_IOStream)
-            };
-            let img = image::ImageReader::new(std::io::BufReader::new(rw))
-                .with_guessed_format()
-                .unwrap()
-                .decode()
-                .unwrap();
-            builder.image(&img)
+    // See how to load the file
+    builder = if cpath.is_null() {
+        let rw = unsafe {
+            sdl::iostream::IOStream::from_ll(rw as *mut sdl::sys::iostream::SDL_IOStream)
+        };
+        builder.iostream(rw)
+    } else {
+        let path = unsafe { CStr::from_ptr(cpath) };
+        let pathname = path.to_string_lossy();
+        match TextureData::exists(&pathname) {
+            Some(tex) => builder.texture_data(&tex),
+            None => {
+                let rw = unsafe {
+                    sdl::iostream::IOStream::from_ll(rw as *mut sdl::sys::iostream::SDL_IOStream)
+                };
+                builder.iostream(rw).name(Some(&pathname))
+            }
         }
     };
 
@@ -1498,20 +1632,20 @@ pub extern "C" fn gl_rawTexture(
     unsafe {
         naevc::gl_contextSet();
     }
-    let pathname: Option<&str> = {
+    let pathname = {
         if cpath.is_null() {
             None
         } else {
             let path = unsafe { CStr::from_ptr(cpath) };
-            Some(path.to_str().unwrap())
+            Some(path.to_string_lossy())
         }
     };
     let mut builder = TextureBuilder::new()
-        .width(w as usize)
-        .height(h as usize)
-        .name(pathname);
+        .width(Some(w as usize))
+        .height(Some(h as usize))
+        .name(pathname.as_deref());
 
-    builder = match pathname {
+    builder = match &pathname {
         Some(pathname) => match TextureData::exists(pathname) {
             Some(tex) => builder.texture_data(&tex),
             None => {

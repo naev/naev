@@ -8,7 +8,7 @@
 </mission>
 --]]
 --[[
-  Rehabilitation Mission
+   Rehabilitation Mission
 --]]
 require("common.rehab").init( faction.get("Dvaered"), {
    desc = _([[Although you have become an enemy of House Dvaered through your despicable actions, Dvaered High Command is willing to give you a second opportunity to atone for your actions. Through a one-time payment, the warlords are willing to overlook your past offenses and give you a chance to recover their trust. However, please note that ANY hostilities against House Dvaered or aiding enemies of House Dvaered will render this agreement void.]]),

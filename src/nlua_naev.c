@@ -218,7 +218,7 @@ static int naevL_lastplayed( lua_State *L )
 }
 
 /**
- * @brief Equivalent to os.date from standard Lua.
+ * @brief Equivalent to "os.date" from standard Lua.
  *
  * @luafunc date
  */
@@ -968,7 +968,7 @@ static const char *unittbl[] = {
 };
 /**
  * @brief Gets the translated string corresponding to an in-game unit.
- *    @luaparam[opt=nil] string str Name of the unit to get or nil to get a
+ *    @luatparam[opt=nil] string str Name of the unit to get or nil to get a
  * table with all of them.
  *    @luareturn Translated string corresponding to the unit or table of all
  * strings if no parameter is passed.

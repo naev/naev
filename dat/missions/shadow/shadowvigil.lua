@@ -160,11 +160,11 @@ function accept_m()
    mem.marker = misn.markerAdd(misssys[1], "low")
 
    misn.osdCreate(_("Shadow Vigil"), {
-     fmt.f(_("Fly to the {sys} system and join the other escorts"), {sys=misssys[1]}),
-     fmt.f(_("Follow the group to {spb} and land"),{spb=refuelsys}),
-     _("Follow the flight leader to the rendezvous location"),
-     _("Escort the Imperial diplomat"),
-     fmt.f(_("Report back to Rebina ({sys} system)"),{sys=rebinasys}),
+      fmt.f(_("Fly to the {sys} system and join the other escorts"), {sys=misssys[1]}),
+      fmt.f(_("Follow the group to {spb} and land"),{spb=refuelsys}),
+      _("Follow the flight leader to the rendezvous location"),
+      _("Escort the Imperial diplomat"),
+      fmt.f(_("Report back to Rebina ({sys} system)"),{sys=rebinasys}),
    })
 
    hook.land("land")
@@ -325,7 +325,7 @@ function jumpin()
          hook.timer(5.0, "chatter", {pilot = escorts[1], text = _("Alright folks, there he is. You know your orders. Stick to him. Don't let anyone touch him on the way to the rendezvous.")})
          hook.timer(12.0, "chatter", {pilot = escorts[2], text = _("Two, copy.")})
          hook.timer(14.0, "chatter", {pilot = escorts[3], text = _("Three, copy.")})
-     elseif system.cur() == misssys[4] then -- case rendezvous with Dvaered diplomat
+      elseif system.cur() == misssys[4] then -- case rendezvous with Dvaered diplomat
          for i, j in ipairs(escorts) do
             if j:exists() then
                j:follow(diplomat,true) -- Follow the diplomat.

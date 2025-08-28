@@ -32,10 +32,10 @@ function atk_corvette.atk( target, dokill )
    -- TODO: Corvette-specific attack functions.
    else
       if target:mass() < 500 then
-        atk.space_sup( target, dist )
+         atk.space_sup( target, dist )
       else
-        mem.aggressive = true
-        atk.flyby( target, dist )
+         mem.aggressive = true
+         atk.flyby( target, dist )
       end
    end
 end

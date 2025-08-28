@@ -40,6 +40,6 @@ libenet = static_library(
    ['callbacks.c', 'compress.c', 'host.c', 'list.c', 'packet.c', 'peer.c', 'protocol.c', 'unix.c', 'win32.c'],
    include_directories: 'include',
    dependencies:  host_machine.system() == 'windows' ? [cc.find_library('winmm'), cc.find_library('ws2_32')] : [],
- )
+)
 
 enet_dep = declare_dependency(link_with: libenet, include_directories: 'include', version: meson.project_version())

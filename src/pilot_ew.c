@@ -430,7 +430,7 @@ double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double trackmin,
  * could break stealth.
  *
  *    @param p Pilot to check.
- *    @param mod Distance-dependent trength modifier.
+ *    @param mod Distance-dependent strength modifier.
  *    @param close Number of pilots nearby.
  *    @param isplayer Whether or not the player is the pilot breaking stealth.
  *    @return Number of stealth-breaking pilots nearby.

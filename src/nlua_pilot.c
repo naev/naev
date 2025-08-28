@@ -1433,13 +1433,14 @@ static int pilotL_eq( lua_State *L )
 }
 
 /**
- * @brief Gets the pilot's current (translated) name or notes it is inexistent.
+ * @brief Gets the pilot's current (translated) name or notes it is
+ * non-existent.
  *
  * @usage tostring(p)
  *
  *    @luatparam Pilot p Pilot to convert to string.
- *    @luatreturn string The current name of the pilot or "(inexistent pilot)"
- * if not existent.
+ *    @luatreturn string The current name of the pilot
+ * or "(inexistent pilot)" (sic) if not existent.
  * @luafunc __tostring
  */
 static int pilotL_tostring( lua_State *L )
@@ -1686,11 +1687,11 @@ static int pilotL_withPlayer( lua_State *L )
 }
 
 /**
- * @brief Gets the nav target of the pilot.
+ * @brief Gets the navigation target of the pilot.
  *
  * @usage spob, hyperspace = p:nav()
  *
- *    @luatparam Pilot p Pilot to get nav info of.
+ *    @luatparam Pilot p Pilot to get navigation info of.
  *    @luatreturn Spob|nil The pilot's spob target.
  *    @luatreturn System|nil The pilot's hyperspace target.
  * @luafunc nav
@@ -1719,9 +1720,9 @@ static int pilotL_nav( lua_State *L )
 }
 
 /**
- * @brief Gets the nav spob target of the pilot.
+ * @brief Gets the navigation spob target of the pilot.
  *
- *    @luatparam Pilot p Pilot to get nav info of.
+ *    @luatparam Pilot p Pilot to get navigation info of.
  *    @luatreturn Spob|nil The pilot's spob target.
  * @luafunc navSpob
  */
@@ -1773,9 +1774,9 @@ static int pilotL_navSpobSet( lua_State *L )
 }
 
 /**
- * @brief Gets the nav jump target of the pilot.
+ * @brief Gets the navigation jump target of the pilot.
  *
- *    @luatparam Pilot p Pilot to get nav info of.
+ *    @luatparam Pilot p Pilot to get navigation info of.
  *    @luatreturn Jump|nil The pilot's hyperspace target.
  * @luafunc navJump
  */
@@ -3245,6 +3246,38 @@ static int pilotL_setFaction( lua_State *L )
    /* Parse parameters. */
    Pilot *p   = luaL_validpilot( L, 1 );
    int    fid = luaL_validfaction( L, 2 );
+   /* Clear munitions or can cause standing escalade. */
+   if ( p->faction != fid ) {
+      weapon_clearPilot( p );
+
+      /* Have to clear tasks targeting the pilot. */
+      Pilot *const *pilot_stack = pilot_getAll();
+      for ( int i = 0; i < array_size( pilot_stack ); i++ ) {
+         Pilot *pi = pilot_stack[i];
+         if ( pi->target == p->id ) {
+            pilot_setTarget( pi, pi->id );
+            ai_cleartasks( pi );
+         } else {
+            for ( Task *t = p->task; t != NULL; t = t->next ) {
+               if ( t->done )
+                  continue;
+               if ( t->dat == LUA_NOREF )
+                  continue;
+
+               // TODO this should probably be done sending a message Lua-side
+               lua_rawgeti( naevL, LUA_REGISTRYINDEX, t->dat );
+               if ( lua_ispilot( naevL, -1 ) ) {
+                  const Pilot *pt = luaL_validpilot( naevL, -1 );
+                  if ( pt->id == p->id ) {
+                     pilot_setTarget( pi, pi->id );
+                     ai_cleartasks( pi );
+                     break;
+                  }
+               }
+            }
+         }
+      }
+   }
    /* Set the new faction. */
    p->faction = fid;
    return 0;
@@ -3398,8 +3431,8 @@ static int pilotL_setNoRender( lua_State *L )
 /**
  * @brief Marks the pilot as always visible for the player.
  *
- * This cancels out ewarfare visibility ranges and only affects the visibility
- * of the player.
+ * This cancels out ewarfare visibility ranges and only affects the
+ * visibility of the player.
  *
  * @usage p:setVisplayer( true )
  *
@@ -3509,7 +3542,8 @@ static int pilotL_disabled( lua_State *L )
  * @usage p:setNoDeath( true ) -- Pilot will never die
  *
  *    @luatparam Pilot p Pilot to set never die state of.
- *    @luatparam[opt=true] boolean state Whether or not to set never die state.
+ *    @luatparam[opt=true] boolean state Whether or not to set never die
+ * state.
  * @luafunc setNoDeath
  */
 static int pilotL_setNoDeath( lua_State *L )
@@ -3577,7 +3611,8 @@ static int pilotL_cooldown( lua_State *L )
  * @usage p:setCooldown( true )
  *
  *    @luatparam Pilot p Pilot to modify the cooldown status of.
- *    @luatparam[opt=true] boolean state Whether to enable or disable cooldown.
+ *    @luatparam[opt=true] boolean state Whether to enable or disable
+ * cooldown.
  * @luafunc setCooldown
  */
 static int pilotL_setCooldown( lua_State *L )
@@ -3731,19 +3766,20 @@ static int pilotL_outfitHasSlot( lua_State *L )
  * This by default tries to add them to the first empty or defaultly equipped
  * slot. Will not overwrite existing non-default outfits.
  *
- * This will also not add outfits to locked slots. Please use outfitAddSlot for
- * that.
+ * This will also not add outfits to locked slots. Please use outfitAddSlot
+ * for that.
  *
- * @usage added = p:outfitAdd( "Laser Cannon", 5 ) -- Adds 5 laser cannons to p
+ * @usage added = p:outfitAdd( "Laser Cannon", 5 ) -- Adds 5 laser cannons to
+ * p
  *
  *    @luatparam Pilot p Pilot to add outfit to.
  *    @luatparam string|outfit outfit Outfit or name of the outfit to add.
  *    @luatparam[opt=1] number q Quantity of the outfit to add.
- *    @luatparam[opt=false] boolean bypass_cpu Whether to skip CPU checks when
- * adding an outfit.
- *    @luatparam[opt=false] boolean bypass_slot Whether or not to skip slot size
- * checks before adding an outfit. Not that this implies skipping the CPU
- * checks.
+ *    @luatparam[opt=false] boolean bypass_cpu Whether to skip CPU checks
+ * when adding an outfit.
+ *    @luatparam[opt=false] boolean bypass_slot Whether or not to skip slot
+ * size checks before adding an outfit. Not that this implies skipping the
+ * CPU checks.
  *    @luatreturn number The number of outfits added.
  *    @luatreturn number The id of the slot of the first outfit added if
  * applicable.
@@ -3819,8 +3855,8 @@ static int pilotL_outfitAdd( lua_State *L )
  * @brief Checks to see outfit a pilot has in a slot.
  *
  *    @luatparam Pilot p Pilot to check outfit slot of.
- *    @luatparam string|integer slot Slot to check. Can be passed as a slot name
- * (string) or slot id (integer).
+ *    @luatparam string|integer slot Slot to check. Can be passed as a slot
+ * name (string) or slot id (integer).
  *    @luatreturn Outfit|nil Outfit if applicable or nil otherwise.
  * @luafunc outfitSlot
  */
@@ -3844,12 +3880,12 @@ static int pilotL_outfitSlot( lua_State *L )
  *    @luatparam string|outfit outfit Outfit or name of the outfit to add.
  *    @luatparam string|integer slot Slot to add to. Can be passed as a slot
  * name (string) or slot id (integer).
- *    @luatparam[opt=false] boolean bypass_cpu Whether to skip CPU checks when
- * adding an outfit.
+ *    @luatparam[opt=false] boolean bypass_cpu Whether to skip CPU checks
+ * when adding an outfit.
  *    @luatparam[opt=false] boolean|string bypass_slot Whether or not to skip
- * slot size checks before adding an outfit. Not that this implies skipping the
- * CPU checks. In the case bypass_slot is a string, the outfit gets added to the
- * named slot if possible (no slot check).
+ * slot size checks before adding an outfit. Not that this implies skipping
+ * the CPU checks. In the case bypass_slot is a string, the outfit gets added
+ * to the named slot if possible (no slot check).
  *    @luatreturn boolean Whether or not the outfit was added.
  * @luafunc outfitAddSlot
  */
@@ -3905,10 +3941,11 @@ static int pilotL_outfitAddSlot( lua_State *L )
  * locked outfits).
  * @usage p:outfitRm( "cores" ) -- Strips the pilot of its cores, leaving it
  * dead in space.
- * @usage p:outfitRm( "intrinsic" ) -- Removes all the intrinsic outfits of the
- * ship.
+ * @usage p:outfitRm( "intrinsic" ) -- Removes all the intrinsic outfits of
+ * the ship.
  * @usage p:outfitRm( "Neutron Disruptor" ) -- Removes a neutron disruptor.
- * @usage p:outfitRm( "Neutron Disruptor", 2 ) -- Removes two neutron disruptor.
+ * @usage p:outfitRm( "Neutron Disruptor", 2 ) -- Removes two neutron
+ * disruptor.
  *
  *    @luatparam Pilot p Pilot to remove outfit from.
  *    @luatparam string|outfit outfit Outfit or name of the outfit to remove.
@@ -3999,9 +4036,9 @@ static int pilotL_outfitRm( lua_State *L )
 /**
  * @brief Removes an outfit from a pilot's named slot.
  *
- * Note that this only works with the `name="foo"` property of slots. It is not
- * meant to be used with unnamed slots. By default all slots are unnamed unless
- * specified.
+ * Note that this only works with the `name="foo"` property of slots. It is
+ * not meant to be used with unnamed slots. By default all slots are unnamed
+ * unless specified.
  *
  *    @luatparam Pilot p Pilot to remove outfit from.
  *    @luatparam string|integer slot Slot to remove from. Can be passed as a
@@ -4057,12 +4094,12 @@ static int pilotL_outfitInitSlot( lua_State *L )
  * @brief Sends a message to an outfit.
  *
  *    @luatparam Pilot p Pilot containing the outfit to send a message to.
- *    @luatparam string|integer slot Slot to send a message to. Can be passed as
- * a slot name (string) or slot id (integer).
+ *    @luatparam string|integer slot Slot to send a message to. Can be passed
+ * as a slot name (string) or slot id (integer).
  *    @luatparam string type Type of message.
  *    @luaparam[opt] data Data to send with message.
- *    @luareturn The return value of the `message` function run on the outfit or
- * nil if not applicable.
+ *    @luareturn The return value of the `message` function run on the outfit
+ * or nil if not applicable.
  * @luafunc outfitMessageSlot
  */
 static int pilotL_outfitMessageSlot( lua_State *L )
@@ -4083,8 +4120,8 @@ static int pilotL_outfitMessageSlot( lua_State *L )
 /**
  * @brief Adds an intrinsic outfit to the pilot.
  *
- * Intrinsic outfits are outfits that are associated with a ship, but not their
- * slots.
+ * Intrinsic outfits are outfits that are associated with a ship, but not
+ * their slots.
  *
  *    @luatparam Pilot p Pilot to add intrinsic outfit to.
  *    @luatparam Outfit o Outfit to add as intrinsic outfit (must be modifier
@@ -4110,8 +4147,8 @@ static int pilotL_outfitAddIntrinsic( lua_State *L )
 /**
  * @brief Removes an intrinsic outfit from the pilot.
  *
- * Intrinsic outfits are outfits that are associated with a ship, but not their
- * slots.
+ * Intrinsic outfits are outfits that are associated with a ship, but not
+ * their slots.
  *
  *    @luatparam Pilot p Pilot to remove intrinsic outfit from.
  *    @luatparam Outfit o Outfit to remove from intrinsic outfits.
@@ -4161,8 +4198,8 @@ static int pilotL_getFuel( lua_State *L )
  * @usage p:setFuel( true ) -- Sets fuel to max
  *
  *    @luatparam Pilot p Pilot to set fuel of.
- *    @luatparam boolean|number f true sets fuel to max, false sets fuel to 0, a
- * number sets fuel to that amount in units.
+ *    @luatparam boolean|number f true sets fuel to max, false sets fuel to
+ * 0, a number sets fuel to that amount in units.
  *    @luatreturn number The amount of fuel the pilot has.
  * @luafunc setFuel
  */
@@ -4203,11 +4240,12 @@ static int pilotL_intrinsicReset( lua_State *L )
 /**
  * @brief Allows setting intrinsic stats of a pilot.
  *
- * @usage p:intrinsicSet( "turn", -50 ) -- Lowers p's turn by 50%
+ * @usage p:intrinsicSet( "turn", -50 ) -- Lowers the turn rate of pilot p by
+ * 50%
  *
  *    @luatparam Pilot p Pilot to set stat of.
- *    @luatparam string name Name of the stat to set. It is the same as in the
- * xml.
+ *    @luatparam string name Name of the stat to set. It is the same as in
+ * the xml.
  *    @luatparam number value Value to set the stat to.
  *    @luatparam boolean replace Whether or not to add to the stat or replace
  * it.
@@ -4245,16 +4283,16 @@ static int pilotL_intrinsicSet( lua_State *L )
 }
 
 /**
- * @brief Allows getting an intrinsic stats of a pilot, or gets all of them if
- * name is not specified.
+ * @brief Allows getting an intrinsic stats of a pilot, or gets all of them
+ * if name is not specified.
  *
  *    @luatparam Pilot p Pilot to get stat of.
- *    @luatparam[opt=nil] string name Name of the stat to get. It is the same as
- * in the xml. If nil, returns a table containing all the shipstats.
- *    @luatparam[opt=false] boolean internal Whether or not to use the internal
- * representation.
- *    @luaparam Value of the stat or a table containing all the stats if name is
- * not specified.
+ *    @luatparam[opt=nil] string name Name of the stat to get. It is the same
+ * as in the xml. If nil, returns a table containing all the shipstats.
+ *    @luatparam[opt=false] boolean internal Whether or not to use the
+ * internal representation.
+ *    @luaparam Value of the stat or a table containing all the stats if name
+ * is not specified.
  * @luafunc intrinsicGet
  */
 static int pilotL_intrinsicGet( lua_State *L )
@@ -4287,11 +4325,12 @@ static int pilotL_shippropReset( lua_State *L )
 /**
  * @brief Allows setting ship property stats of a pilot.
  *
- * @usage p:shippropSet( "turn", -50 ) -- Lowers p's turn by 50%
+ * @usage p:shippropSet( "turn", -50 ) -- Lowers the turn rate of pilot p by
+ * 50%
  *
  *    @luatparam Pilot p Pilot to set stat of.
- *    @luatparam string name Name of the stat to set. It is the same as in the
- * xml.
+ *    @luatparam string name Name of the stat to set. It is the same as in
+ * the xml.
  *    @luatparam number value Value to set the stat to.
  * @luafunc shippropSet
  */
@@ -4332,16 +4371,16 @@ static int pilotL_shippropSet( lua_State *L )
 }
 
 /**
- * @brief Allows getting an ship property stats of a pilot, or gets all of them
- * if name is not specified.
+ * @brief Allows getting an ship property stats of a pilot, or gets all of
+ * them if name is not specified.
  *
  *    @luatparam Pilot p Pilot to get stat of.
- *    @luatparam[opt=nil] string name Name of the stat to get. It is the same as
- * in the xml.
- *    @luatparam[opt=false] boolean internal Whether or not to use the internal
- * representation.
- *    @luaparam Value of the stat or a table containing all the stats if name is
- * not specified.
+ *    @luatparam[opt=nil] string name Name of the stat to get. It is the same
+ * as in the xml.
+ *    @luatparam[opt=false] boolean internal Whether or not to use the
+ * internal representation.
+ *    @luaparam Value of the stat or a table containing all the stats if name
+ * is not specified.
  * @luafunc shippropGet
  */
 static int pilotL_shippropGet( lua_State *L )
@@ -4386,8 +4425,8 @@ static int pilotL_effectClear( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to add effect to.
  *    @luatparam string name Name of the effect to add.
- *    @luatparam[opt=-1] duration Duration of the effect or set to negative to
- * be default.
+ *    @luatparam[opt=-1] duration Duration of the effect or set to negative
+ * to be default.
  *    @luatparam[opt=1] scale Scaling factor.
  *    @luatparam[opt] Pilot Pilot applying the effect.
  *    @luatreturn boolean Whether or not the effect was successfully added.
@@ -4416,10 +4455,11 @@ static int pilotL_effectAdd( lua_State *L )
  * @brief Removes an effect from the pilot.
  *
  *    @luatparam Pilot p Pilot to remove effect from.
- *    @luatparam string|integer name Name of the effect to add or index in the
- * case of being a number.
- *    @luatparam boolean all Remove all instances of the effect or only the most
- * first instance. Only valid in the case the name is specified as a string.
+ *    @luatparam string|integer name Name of the effect to add or index in
+ * the case of being a number.
+ *    @luatparam boolean all Remove all instances of the effect or only the
+ * most first instance. Only valid in the case the name is specified as a
+ * string.
  * @luafunc effectRm
  */
 static int pilotL_effectRm( lua_State *L )
@@ -4467,8 +4507,8 @@ static int pilotL_effectHas( lua_State *L )
  * @brief Gets the effects on a pilot.
  *
  *    @luatparam Pilot p Pilot to get effects of.
- *    @luatreturn table Table of effects which are treated as tables with "name"
- * and "timer" elements.
+ *    @luatreturn table Table of effects which are treated as tables with
+ * "name" and "timer" elements.
  * @luafunc effects
  */
 static int pilotL_effectGet( lua_State *L )
@@ -4531,7 +4571,7 @@ static int pilotL_ai( lua_State *L )
  * @usage p:changeAI( "empire" ) -- set the pilot to use the Empire AI
  *
  *    @luatparam Pilot p Pilot to change AI of.
- *    @luatparam string newai Name of Ai to use.
+ *    @luatparam string newai Name of AI to use.
  * @luafunc changeAI
  */
 static int pilotL_changeAI( lua_State *L )
@@ -4585,20 +4625,21 @@ static void setHealth( Pilot *p, double a, double s, double st )
 /**
  * @brief Sets the health of a pilot.
  *
- * This recovers the pilot's disabled state, although they may become disabled
- * afterwards.
+ * This recovers the pilot's disabled state, although they may become
+ * disabled afterwards.
  *
  * @usage p:setHealth( 100, 100 ) -- Sets pilot to full health
  * @usage p:setHealth(  70,   0 ) -- Sets pilot to 70% armour
- * @usage p:setHealth( 100, 100, 0 ) -- Sets pilot to full health and no stress
+ * @usage p:setHealth( 100, 100, 0 ) -- Sets pilot to full health and no
+ * stress
  *
  *    @luatparam Pilot p Pilot to set health of.
  *    @luatparam[opt=current armour] number armour Value to set armour to,
  * should be double from 0-100 (in percent).
  *    @luatparam[opt=current shield] number shield Value to set shield to,
  * should be double from 0-100 (in percent).
- *    @luatparam[opt=0] number stress Value to set stress (disable damage) to,
- * should be double from 0-100 (in percent of current armour).
+ *    @luatparam[opt=0] number stress Value to set stress (disable damage)
+ * to, should be double from 0-100 (in percent of current armour).
  * @luafunc setHealth
  */
 static int pilotL_setHealth( lua_State *L )
@@ -4629,16 +4670,16 @@ static int pilotL_setHealth( lua_State *L )
 /**
  * @brief Sets the health of a pilot in absolute value.
  *
- * This recovers the pilot's disabled state, although they may become disabled
- * afterwards.
+ * This recovers the pilot's disabled state, although they may become
+ * disabled afterwards.
  *
  *    @luatparam Pilot p Pilot to set health of.
  *    @luatparam[opt=current armour] number armour Value to set armour to, in
  * absolute value.
  *    @luatparam[opt=current shield] number shield Value to set shield to, in
  * absolute value
- *    @luatparam[opt=current stress] number stress Value to set stress (disable
- * damage) to, in absolute value.
+ *    @luatparam[opt=current stress] number stress Value to set stress
+ * (disable damage) to, in absolute value.
  * @luafunc setHealthAbs
  */
 static int pilotL_setHealthAbs( lua_State *L )
@@ -4696,8 +4737,8 @@ static int pilotL_addHealth( lua_State *L )
  *    @luatparam Pilot p Pilot to set energy of.
  *    @luatparam number energy Value to set energy to, should be double from
  * 0-100 (in percent).
- *    @luatparam[opt=false] boolean absolute Whether or not it is being set in
- * relative value or absolute.
+ *    @luatparam[opt=false] boolean absolute Whether or not it is being set
+ * in relative value or absolute.
  * @luafunc setEnergy
  */
 static int pilotL_setEnergy( lua_State *L )
@@ -4752,8 +4793,8 @@ static int pilotL_fillAmmo( lua_State *L )
  * @usage p:setNoBoard( true ) -- Pilot can not be boarded by anyone
  *
  *    @luatparam Pilot p Pilot to set disable boarding.
- *    @luatparam[opt=true] number noboard If true it disallows boarding of the
- * pilot, otherwise it allows boarding which is the default.
+ *    @luatparam[opt=true] number noboard If true it disallows boarding of
+ * the pilot, otherwise it allows boarding which is the default.
  * @luafunc setNoBoard
  */
 static int pilotL_setNoBoard( lua_State *L )
@@ -4783,8 +4824,8 @@ static int pilotL_setNoBoard( lua_State *L )
  * @usage p:setNoDisable( true ) -- Pilot can not be disabled anymore.
  *
  *    @luatparam Pilot p Pilot to set disable disabling.
- *    @luatparam[opt=true] boolean disable If true it disallows disabled of the
- * pilot, otherwise it allows disabling which is the default.
+ *    @luatparam[opt=true] boolean disable If true it disallows disabled of
+ * the pilot, otherwise it allows disabling which is the default.
  * @luafunc setNoDisable
  */
 static int pilotL_setNoDisable( lua_State *L )
@@ -4811,7 +4852,7 @@ static int pilotL_setNoDisable( lua_State *L )
  * @note Can increase the pilot's speed limit over what would be physically
  * possible.
  *
- * @usage p:setSpeedLimit( 100 ) -- Sets maximumspeed to 100px/s.
+ * @usage p:setSpeedLimit( 100 ) -- Sets maximum speed to 100 pixels/s.
  * @usage p:setSpeedLimit( 0 ) removes speed limit.
  *    @luatparam pilot p Pilot to set speed of.
  *    @luatparam number speed Value to set speed to.
@@ -4843,12 +4884,12 @@ static int pilotL_setSpeedLimit( lua_State *L )
  *    @luatparam Pilot p Pilot to get health of.
  *    @luatparam[opt=false] boolean absolute Whether or not it shouldn't be
  * relative and be absolute instead.
- *    @luatreturn number The armour in % [0:100] if relative or absolute value
- * otherwise.
- *    @luatreturn number The shield in % [0:100] if relative or absolute value
- * otherwise.
- *    @luatreturn number The stress in % [0:100] if relative or absolute value
- * otherwise.
+ *    @luatreturn number The armour in % [0:100] if relative or absolute
+ * value otherwise.
+ *    @luatreturn number The shield in % [0:100] if relative or absolute
+ * value otherwise.
+ *    @luatreturn number The stress in % [0:100] if relative or absolute
+ * value otherwise.
  *    @luatreturn boolean Indicates if pilot is disabled.
  * @luafunc health
  */
@@ -4880,8 +4921,8 @@ static int pilotL_getHealth( lua_State *L )
  *    @luatparam Pilot p Pilot to get armour of.
  *    @luatparam[opt=false] boolean absolute Whether or not it shouldn't be
  * relative and be absolute instead.
- *    @luatreturn number The armour in % [0:100] if relative or absolute value
- * otherwise.
+ *    @luatreturn number The armour in % [0:100] if relative or absolute
+ * value otherwise.
  * @luafunc armour
  */
 static int pilotL_getArmour( lua_State *L )
@@ -4905,8 +4946,8 @@ static int pilotL_getArmour( lua_State *L )
  *    @luatparam Pilot p Pilot to get shield of.
  *    @luatparam[opt=false] boolean absolute Whether or not it shouldn't be
  * relative and be absolute instead.
- *    @luatreturn number The shield in % [0:100] if relative or absolute value
- * otherwise.
+ *    @luatreturn number The shield in % [0:100] if relative or absolute
+ * value otherwise.
  * @luafunc shield
  */
 static int pilotL_getShield( lua_State *L )
@@ -4929,8 +4970,8 @@ static int pilotL_getShield( lua_State *L )
  *    @luatparam Pilot p Pilot to get stress of.
  *    @luatparam[opt=false] boolean absolute Whether or not it shouldn't be
  * relative and be absolute instead.
- *    @luatreturn number The shield in % [0:100] if relative or absolute value
- * otherwise.
+ *    @luatreturn number The shield in % [0:100] if relative or absolute
+ * value otherwise.
  * @luafunc stress
  */
 static int pilotL_getStress( lua_State *L )
@@ -5082,15 +5123,15 @@ static int pilotL_getStats( lua_State *L )
  * @brief Gets a shipstat from a Pilot by name, or a table containing all the
  * ship stats if not specified.
  *
- * @usage local mod = p:shipstat("tur_damage",true) -- Gets turret damage bonus
- * with internal representation
+ * @usage local mod = p:shipstat("tur_damage",true) -- Gets turret damage
+ * bonus with internal representation
  *
  *    @luatparam Pilot p Pilot to get ship stat of.
  *    @luatparam[opt=nil] string name Name of the ship stat to get.
- *    @luatparam[opt=false] boolean internal Whether or not to use the internal
- * representation.
- *    @luareturn Value of the ship stat or a table containing all the ship stats
- * if name is not specified.
+ *    @luatparam[opt=false] boolean internal Whether or not to use the
+ * internal representation.
+ *    @luareturn Value of the ship stat or a table containing all the ship
+ * stats if name is not specified.
  * @luafunc shipstat
  */
 static int pilotL_getShipStat( lua_State *L )
@@ -5224,8 +5265,8 @@ static int pilotL_cargoRmHelper( lua_State *L, int jet )
  * @brief Tries to remove cargo from the pilot's ship.
  *
  * @usage n = pilot.cargoRm(player.pilot(), "Food", 20)
- * @usage n = pilot.cargoRm(player.pilot(), "all") -- Removes all cargo from the
- * player
+ * @usage n = pilot.cargoRm(player.pilot(), "all") -- Removes all cargo from
+ * the player
  *
  *    @luatparam Pilot p The pilot to remove cargo from.
  *    @luatparam Commodity|string cargo Type of cargo to remove, either
@@ -5264,9 +5305,9 @@ static int pilotL_cargoJet( lua_State *L )
  * The list has the following members:<br />
  * <ul>
  * <li><b>name:</b> raw (untranslated) name of the cargo (equivalent to the
- * output of commodity.nameRaw()).</li> <li><b>c:</b> the cargo commodity.</li>
- * <li><b>q:</b> quantity of the cargo.</li>
- * <li><b>m:</b> true if cargo is for a mission.</li>
+ * output of commodity.nameRaw()).</li> <li><b>c:</b> the cargo
+ * commodity.</li> <li><b>q:</b> quantity of the cargo.</li> <li><b>m:</b>
+ * true if cargo is for a mission.</li>
  * </ul>
  *
  * @usage for i, v in ipairs(pilot.cargoList(player.pilot())) do print(
@@ -5328,8 +5369,8 @@ static int pilotL_credits( lua_State *L )
  * @brief Gets the worth of a pilot (total value of ship and outfits).
  *
  *    @luatparam Pilot p Pilot to get worth of.
- *    @luatparam[opt=false] boolean count_unique Whether or not to count unique
- * outfits too.
+ *    @luatparam[opt=false] boolean count_unique Whether or not to count
+ * unique outfits too.
  *    @luatreturn number The credit worth of the pilot.
  * @luafunc worth
  */
@@ -5359,12 +5400,13 @@ static int pilotL_getColour( lua_State *L )
 }
 
 /**
- * @brief Gets the pilot's colour character based on hostility or friendliness
- * to the player. For use with functions that print to the screen.
+ * @brief Gets the pilot's colour character based on hostility or
+ * friendliness to the player. For use with functions that print to the
+ * screen.
  *
  *    @luatparam Pilot p Pilot to get the colour of.
- *    @luatreturn string Character representing the pilot's colour for use with
- * specila printing characters.
+ *    @luatreturn string Character representing the pilot's colour for use
+ * with specila printing characters.
  * @luafunc colourChar
  */
 static int pilotL_colourChar( lua_State *L )
@@ -5461,7 +5503,8 @@ static const struct pL_flag pL_flags[] = {
  *  <li> carried: pilot came from a fighter bay.</li>
  * </ul>
  *    @luatparam Pilot p Pilot to get flags of.
- *    @luatparam[opt] string name If provided, return only the individual flag.
+ *    @luatparam[opt] string name If provided, return only the individual
+ * flag.
  *    @luatreturn table Table with flag names an index, boolean as value.
  * @luafunc flags
  */
@@ -5527,7 +5570,7 @@ static int pilotL_ship( lua_State *L )
  * @brief Gets the rough radius of the ship, useful for collision stuff.
  *
  *    @luatparam Pilot p Pilot to get radius of.
- *    @luatreturn number THe radius of the pilot.
+ *    @luatreturn number The radius of the pilot.
  * @luafunc radius
  */
 static int pilotL_radius( lua_State *L )
@@ -5572,11 +5615,11 @@ static int pilotL_idle( lua_State *L )
 /**
  * @brief Sets manual control of the pilot.
  *
- * Note that this will reset the pilot's current task when the state changes. In
- * the case of the player, it will also clear autonav.
+ * Note that this will reset the pilot's current task when the state changes.
+ * In the case of the player, it will also clear autonav.
  *
- * @usage p:control() -- Same as p:control(true), enables manual control of the
- * pilot
+ * @usage p:control() -- Same as p:control(true), enables manual control of
+ * the pilot
  * @usage p:control(false) -- Restarts AI control of the pilot
  * @usage p:control( true, true ) -- Enables manual control of the pilot and
  * resets tasks.
@@ -5584,9 +5627,9 @@ static int pilotL_idle( lua_State *L )
  *    @luatparam Pilot p Pilot to change manual control settings.
  *    @luatparam[opt=true] boolean enable If true or nil enables pilot manual
  * control, otherwise enables automatic AI.
- *    @luatparam[opt=true if changing modes] boolean Whether or not to clear the
- * tasks for the pilot. Defaults to true when changing from manual to normal
- * mode or viceversa.
+ *    @luatparam[opt=true if changing modes] boolean Whether or not to clear
+ * the tasks for the pilot. Defaults to true when changing from manual to
+ * normal mode or viceversa.
  * @luasee moveto
  * @luasee brake
  * @luasee follow
@@ -5623,10 +5666,11 @@ static int pilotL_control( lua_State *L )
       pilot_rmFlag( p, PILOT_MANUAL_CONTROL );
       if ( pilot_isPlayer( p ) )
          ai_destroy( p );
-      /* Note, we do not set p->ai to NULL, we just clear the tasks and memory.
-       * This is because the player always has an ai named "player", which is
-       * used for manual control among other things. Basically a pilot always
-       * has to have an AI even if it's the player for things to work. */
+      /* Note, we do not set p->ai to NULL, we just clear the tasks and
+       * memory. This is because the player always has an ai named "player",
+       * which is used for manual control among other things. Basically a
+       * pilot always has to have an AI even if it's the player for things to
+       * work. */
    }
 
    /* Clear task if changing state. */
@@ -5721,7 +5765,7 @@ static int pilotL_task( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to get task name of.
  *    @luatreturn string Name of the task.
- *    @luatreturn string|nil Name of the subtask if applicable, or nil
+ *    @luatreturn string|nil Name of the sub-task if applicable, or nil
  * otherwise.
  * @luafunc taskname
  */
@@ -5741,7 +5785,7 @@ static int pilotL_taskname( lua_State *L )
 }
 
 /**
- * @brief Gets the name of all the pilot's current tasks (not subtasks).
+ * @brief Gets the name of all the pilot's current tasks (not sub-tasks).
  *
  *    @luatparam Pilot p Pilot to get task stack of.
  * @luafunc taskstack
@@ -5897,8 +5941,8 @@ static Task *pilotL_newtask( lua_State *L, Pilot *p, const char *task )
  * @usage p:moveto( v, true, true ) -- Same as p:moveto( v )
  * @usage p:moveto( v, false ) -- Goes to v without braking compensating
  * velocity
- * @usage p:moveto( v, false, false ) -- Really rough approximation of going to
- * v without braking
+ * @usage p:moveto( v, false, false ) -- Really rough approximation of going
+ * to v without braking
  *
  *    @luatparam Pilot p Pilot to tell to go to a position.
  *    @luatparam Vec2 v Vector target for the pilot.
@@ -5955,8 +5999,8 @@ static int pilotL_moveto( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to add task to.
  *    @luatparam Vec2|Pilot target Target to face.
- *    @luatparam[opt=false] boolean towards Makes the task end when the target
- * is faced (otherwise it's an enduring state).
+ *    @luatparam[opt=false] boolean towards Makes the task end when the
+ * target is faced (otherwise it's an enduring state).
  * @luafunc face
  */
 static int pilotL_face( lua_State *L )
@@ -6014,8 +6058,8 @@ static int pilotL_brake( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to tell to follow another pilot.
  *    @luatparam Pilot pt Target pilot to follow.
- *    @luatparam[opt=false] boolean accurate If true, use a PD controller which
- *              parameters can be defined using the pilot's memory.
+ *    @luatparam[opt=false] boolean accurate If true, use a PD controller
+ * which parameters can be defined using the pilot's memory.
  * @luasee control
  * @luasee memory
  * @luafunc follow
@@ -6052,8 +6096,8 @@ static int pilotL_follow( lua_State *L )
  * @usage p:attack() -- Attack nearest pilot.
  *
  *    @luatparam Pilot p Pilot to tell to attack another pilot.
- *    @luatparam[opt] Pilot pt Target pilot to attack (or nil to attack nearest
- * enemy).
+ *    @luatparam[opt] Pilot pt Target pilot to attack (or nil to attack
+ * nearest enemy).
  * @luasee control
  * @luafunc attack
  */
@@ -6115,10 +6159,10 @@ static int pilotL_board( lua_State *L )
  * @brief Makes the pilot runaway from another pilot.
  *
  * By default the pilot tries to jump when running away.
- * Third argument is destination: if false or nil, destination is automatically
- * chosen. If true, the pilot does not jump nor land and stays in system. If
- * Jump is given, the pilot tries to use this jump to go hyperspace. If Spob is
- * given, the pilot tries to land on it.
+ * Third argument is destination: if false or nil, destination is
+ * automatically chosen. If true, the pilot does not jump nor land and stays
+ * in system. If Jump is given, the pilot tries to use this jump to go
+ * hyperspace. If Spob is given, the pilot tries to land on it.
  *
  * @usage p:runaway( p_enemy ) -- Run away from p_enemy
  * @usage p:runaway( p_enemy, true ) -- Run away from p_enemy but do not jump
@@ -6187,8 +6231,8 @@ static int pilotL_gather( lua_State *L )
 }
 
 /**
- * @brief Checks to see if the pilot can currently hyperspace (as in has target
- * jump and is in range).
+ * @brief Checks to see if the pilot can currently hyperspace (as in has
+ * target jump and is in range).
  *
  *    @luatparam Pilot p Pilot to check if they can hyperspace.
  *    @luatreturn boolean Whether or not the pilot can hyperspace.
@@ -6207,8 +6251,8 @@ static int pilotL_canHyperspace( lua_State *L )
  * Pilot must be under manual control for this to work.
  *
  *    @luatparam Pilot p Pilot to tell to hyperspace.
- *    @luatparam[opt] System|Jump sys Optional System to jump to, uses random if
- * nil.
+ *    @luatparam[opt] System|Jump sys Optional System to jump to, uses random
+ * if nil.
  *    @luatparam[opt=false] boolean noshoot Forbids to shoot at targets with
  * turrets while running away.
  * @luasee control
@@ -6371,8 +6415,8 @@ static int pilotL_land( lua_State *L )
  *
  * Automatically deactivated when pilot is hailed.
  *
- * @usage p:hailPlayer() -- Player will be informed he's being hailed and pilot
- * will have an icon
+ * @usage p:hailPlayer() -- Player will be informed he's being hailed and
+ * pilot will have an icon
  *    @luatparam Pilot p Pilot to hail the player.
  *    @luatparam[opt=true] boolean enable If true hails the pilot, if false
  * disables the hailing.
@@ -6445,8 +6489,8 @@ static int pilotL_msg( lua_State *L )
 }
 
 /**
- * @brief Gets a pilots mothership (only exists for deployed pilots). Guaranteed
- * to exist or will be nil.
+ * @brief Gets a pilots mothership (only exists for deployed pilots).
+ * Guaranteed to exist or will be nil.
  *
  *    @luatparam Pilot p Pilot to get the mothership of.
  *    @luatreturn Pilot|nil The mothership or nil.
@@ -6471,11 +6515,12 @@ static int pilotL_mothership( lua_State *L )
  *
  * @usage local creation_outfit = p:mothership():outfits()[ p:dockslot() ] --
  * Gets the outfit that created the pilot (will error if the pilot is not
- * created from a fighter bay outfit and/or the mothership is not a valid pilot)
+ * created from a fighter bay outfit and/or the mothership is not a valid
+ * pilot)
  *
  *    @luatparam Pilot p Pilot to get the dockslot of.
- *    @luatreturn Integer|nil The dockslot or nil. It can be used with outfits
- * to get the outfit that created the pilot.
+ *    @luatreturn Integer|nil The dockslot or nil. It can be used with
+ * outfits to get the outfit that created the pilot.
  * @luafunc dockslot
  * @see outfits
  */
@@ -6595,7 +6640,8 @@ static int pilotL_setLeader( lua_State *L )
             continue;
          }
 
-         /* Setting an escort as leader, so we clear the leader of the escort.
+         /* Setting an escort as leader, so we clear the leader of the
+          * escort.
           */
          if ( pe->id == p->parent ) {
             escort_rmListIndex( p, i );
@@ -6672,8 +6718,8 @@ static const CollPolyView *getCollPoly( const Pilot *p )
  *
  *    @luatparam Pilot p First pilot to check.
  *    @luatparam Pilot|Asteroid t Second object to check.
- *    @luatreturn Vec2|nil nil if no collision, or Vec2 with collision point if
- * collided.
+ *    @luatreturn Vec2|nil "nil" if no collision, or "Vec2" with collision
+ * point if collided.
  * @luafunc collisionTest
  */
 static int pilotL_collisionTest( lua_State *L )
@@ -6784,21 +6830,21 @@ static int pilotL_kill( lua_State *L )
 }
 
 /**
- * @brief Knocks back a pilot. It can either accept two pilots, or a pilot and
- * an element represented by mass, velocity, and position.
+ * @brief Knocks back a pilot. It can either accept two pilots, or a pilot
+ * and an element represented by mass, velocity, and position.
  *
- * @usage pilota:knockback( pilotb, 0. ) -- Inelastic collision between pilota
- * and pilotb
- * @usage pilota:knockback( 100, vec2.new(0,0) ) -- Elastic collision between a
- * 100 mass object with no velocity and pilota
+ * @usage pilota:knockback( pilotb, 0. ) -- Inelastic collision between
+ * "pilota" and "pilotb"
+ * @usage pilota:knockback( 100, vec2.new(0,0) ) -- Elastic collision between
+ * a 100 mass object with no velocity and "pilota"
  *
  *    @luatparam Pilot p Pilot being knocked back.
  *    @luatparam number m Mass of object knocking back pilot.
  *    @luatparam Vec2 v Velocity of object knocking back pilot.
  *    @luatparam[opt=p:pos()] Vec2 p Position of the object knocking back the
  * pilot.
- *    @luatparam[opt=1.] number e Coefficient of restitution. Use 1. for elastic
- * collisions, and 0. for inelastic collisions.
+ *    @luatparam[opt=1.] number e Coefficient of restitution. Use 1. for
+ * elastic collisions, and 0. for inelastic collisions.
  * @luafunc knockback
  */
 static int pilotL_knockback( lua_State *L )
@@ -7022,16 +7068,18 @@ static int pilotL_render( lua_State *L )
    double      eg;
    Pilot      *p = luaL_validpilot( L, 1 );
 
-   /* TODO handle when effects make the ship render larger than it really is. */
+   /* TODO handle when effects make the ship render larger than it really is.
+    */
    w = p->ship->size;
    h = p->ship->size;
    if ( canvas_new( &lc, w, h ) )
       return NLUA_ERROR( L, _( "Error setting up framebuffer!" ) );
 
    /* The code path below is really buggy.
-    * 1. engine_glow seems to scale 3D models improperly when interpolating, so
-    * it's disabled.
-    * 2. for some reason, have to pass real dimensions and not fbo dimensions.
+    * 1. engine_glow seems to scale 3D models improperly when interpolating,
+    * so it's disabled.
+    * 2. for some reason, have to pass real dimensions and not fbo
+    * dimensions.
     * TODO fix this shit. */
    eg             = p->engine_glow;
    p->engine_glow = ( eg > 0.5 ) ? 1.0 : 0.0;
@@ -7058,19 +7106,21 @@ static int pilotL_renderTo( lua_State *L )
    int          w, h;
    double       eg;
 
-   /* TODO handle when effects make the ship render larger than it really is. */
+   /* TODO handle when effects make the ship render larger than it really is.
+    */
    w = p->ship->size;
    h = p->ship->size;
    if ( ( tex_w( lc->tex ) < w ) || ( tex_h( lc->tex ) < h ) )
-      NLUA_WARN(
-         L,
-         _( "Canvas is too small to fully render '%s': %.0f x %.0f < %d x %d" ),
-         p->name, tex_w( lc->tex ), tex_h( lc->tex ), w, h );
+      NLUA_WARN( L,
+                 _( "Canvas is too small to fully render '%s': %.0f x %.0f "
+                    "< %d x %d" ),
+                 p->name, tex_w( lc->tex ), tex_h( lc->tex ), w, h );
 
    /* The code path below is really buggy.
-    * 1. engine_glow seems to scale 3D models improperly when interpolating, so
-    * it's disabled.
-    * 2. for some reason, have to pass real dimensions and not fbo dimensions.
+    * 1. engine_glow seems to scale 3D models improperly when interpolating,
+    * so it's disabled.
+    * 2. for some reason, have to pass real dimensions and not fbo
+    * dimensions.
     * TODO fix this shit. */
    eg             = p->engine_glow;
    p->engine_glow = ( eg > 0.5 ) ? 1.0 : 0.0;

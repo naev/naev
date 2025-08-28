@@ -87,7 +87,7 @@ void pilot_outfitLInit( Pilot *pilot, PilotOutfitSlot *po );
 void pilot_outfitLUpdate( Pilot *pilot, double dt );
 void pilot_outfitLOutfofenergy( Pilot *pilot );
 void pilot_outfitLOnhit( Pilot *pilot, double armour, double shield,
-                         unsigned int attacker );
+                         unsigned int attacker, const vec2 *pos );
 int  pilot_outfitLOntoggle( const Pilot *pilot, PilotOutfitSlot *po, int on,
                             int natural );
 int  pilot_outfitLOnshoot( const Pilot *pilot, PilotOutfitSlot *po );

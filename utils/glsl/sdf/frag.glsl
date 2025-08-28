@@ -56,7 +56,7 @@ float random(float n)
 }
 
 /* Returns a value in the [0,1] range.
- http://byteblacksmith.com/improvements-to-the-canonical-one-liner-glsl-rand-for-opengl-es-2-0/
+ * http://byteblacksmith.com/improvements-to-the-canonical-one-liner-glsl-rand-for-opengl-es-2-0/
  */
 float random(vec2 co)
 {
@@ -195,86 +195,86 @@ float snoise(vec3 v)
 
 float psrdnoise(vec2 x, vec2 period, float alpha, out vec2 gradient) {
 
-	// Transform to simplex space (axis-aligned hexagonal grid)
-	vec2 uv = vec2(x.x + x.y*0.5, x.y);
+   // Transform to simplex space (axis-aligned hexagonal grid)
+   vec2 uv = vec2(x.x + x.y*0.5, x.y);
 
-	// Determine which simplex we're in, with i0 being the "base"
-	vec2 i0 = floor(uv);
-	vec2 f0 = fract(uv);
-	// o1 is the offset in simplex space to the second corner
-	float cmp = step(f0.y, f0.x);
-	vec2 o1 = vec2(cmp, 1.0-cmp);
+   // Determine which simplex we're in, with i0 being the "base"
+   vec2 i0 = floor(uv);
+   vec2 f0 = fract(uv);
+   // o1 is the offset in simplex space to the second corner
+   float cmp = step(f0.y, f0.x);
+   vec2 o1 = vec2(cmp, 1.0-cmp);
 
-	// Enumerate the remaining simplex corners
-	vec2 i1 = i0 + o1;
-	vec2 i2 = i0 + vec2(1.0, 1.0);
+   // Enumerate the remaining simplex corners
+   vec2 i1 = i0 + o1;
+   vec2 i2 = i0 + vec2(1.0, 1.0);
 
-	// Transform corners back to texture space
-	vec2 v0 = vec2(i0.x - i0.y * 0.5, i0.y);
-	vec2 v1 = vec2(v0.x + o1.x - o1.y * 0.5, v0.y + o1.y);
-	vec2 v2 = vec2(v0.x + 0.5, v0.y + 1.0);
+   // Transform corners back to texture space
+   vec2 v0 = vec2(i0.x - i0.y * 0.5, i0.y);
+   vec2 v1 = vec2(v0.x + o1.x - o1.y * 0.5, v0.y + o1.y);
+   vec2 v2 = vec2(v0.x + 0.5, v0.y + 1.0);
 
-	// Compute vectors from v to each of the simplex corners
-	vec2 x0 = x - v0;
-	vec2 x1 = x - v1;
-	vec2 x2 = x - v2;
+   // Compute vectors from v to each of the simplex corners
+   vec2 x0 = x - v0;
+   vec2 x1 = x - v1;
+   vec2 x2 = x - v2;
 
-	vec3 iu, iv;
-	vec3 xw, yw;
+   vec3 iu, iv;
+   vec3 xw, yw;
 
-	// Wrap to periods, if desired
-	if(any(greaterThan(period, vec2(0.0)))) {
-		xw = vec3(v0.x, v1.x, v2.x);
-		yw = vec3(v0.y, v1.y, v2.y);
-		if(period.x > 0.0)
-			xw = mod(vec3(v0.x, v1.x, v2.x), period.x);
-		if(period.y > 0.0)
-			yw = mod(vec3(v0.y, v1.y, v2.y), period.y);
-		// Transform back to simplex space and fix rounding errors
-		iu = floor(xw + 0.5*yw + 0.5);
-		iv = floor(yw + 0.5);
-	} else { // Shortcut if neither x nor y periods are specified
-		iu = vec3(i0.x, i1.x, i2.x);
-		iv = vec3(i0.y, i1.y, i2.y);
-	}
+   // Wrap to periods, if desired
+   if(any(greaterThan(period, vec2(0.0)))) {
+      xw = vec3(v0.x, v1.x, v2.x);
+      yw = vec3(v0.y, v1.y, v2.y);
+      if(period.x > 0.0)
+         xw = mod(vec3(v0.x, v1.x, v2.x), period.x);
+      if(period.y > 0.0)
+         yw = mod(vec3(v0.y, v1.y, v2.y), period.y);
+      // Transform back to simplex space and fix rounding errors
+      iu = floor(xw + 0.5*yw + 0.5);
+      iv = floor(yw + 0.5);
+   } else { // Shortcut if neither x nor y periods are specified
+      iu = vec3(i0.x, i1.x, i2.x);
+      iv = vec3(i0.y, i1.y, i2.y);
+   }
 
-	// Compute one pseudo-random hash value for each corner
-	vec3 hash = mod(iu, 289.0);
-	hash = mod((hash*51.0 + 2.0)*hash + iv, 289.0);
-	hash = mod((hash*34.0 + 10.0)*hash, 289.0);
+   // Compute one pseudo-random hash value for each corner
+   vec3 hash = mod(iu, 289.0);
+   hash = mod((hash*51.0 + 2.0)*hash + iv, 289.0);
+   hash = mod((hash*34.0 + 10.0)*hash, 289.0);
 
-	// Pick a pseudo-random angle and add the desired rotation
-	vec3 psi = hash * 0.07482 + alpha;
-	vec3 gx = cos(psi);
-	vec3 gy = sin(psi);
+   // Pick a pseudo-random angle and add the desired rotation
+   vec3 psi = hash * 0.07482 + alpha;
+   vec3 gx = cos(psi);
+   vec3 gy = sin(psi);
 
-	// Reorganize for dot products below
-	vec2 g0 = vec2(gx.x,gy.x);
-	vec2 g1 = vec2(gx.y,gy.y);
-	vec2 g2 = vec2(gx.z,gy.z);
+   // Reorganize for dot products below
+   vec2 g0 = vec2(gx.x,gy.x);
+   vec2 g1 = vec2(gx.y,gy.y);
+   vec2 g2 = vec2(gx.z,gy.z);
 
-	// Radial decay with distance from each simplex corner
-	vec3 w = 0.8 - vec3(dot(x0, x0), dot(x1, x1), dot(x2, x2));
-	w = max(w, 0.0);
-	vec3 w2 = w * w;
-	vec3 w4 = w2 * w2;
+   // Radial decay with distance from each simplex corner
+   vec3 w = 0.8 - vec3(dot(x0, x0), dot(x1, x1), dot(x2, x2));
+   w = max(w, 0.0);
+   vec3 w2 = w * w;
+   vec3 w4 = w2 * w2;
 
-	// The value of the linear ramp from each of the corners
-	vec3 gdotx = vec3(dot(g0, x0), dot(g1, x1), dot(g2, x2));
+   // The value of the linear ramp from each of the corners
+   vec3 gdotx = vec3(dot(g0, x0), dot(g1, x1), dot(g2, x2));
 
-	// Multiply by the radial decay and sum up the noise value
-	float n = dot(w4, gdotx);
+   // Multiply by the radial decay and sum up the noise value
+   float n = dot(w4, gdotx);
 
-	// Compute the first order partial derivatives
-	vec3 w3 = w2 * w;
-	vec3 dw = -8.0 * w3 * gdotx;
-	vec2 dn0 = w4.x * g0 + dw.x * x0;
-	vec2 dn1 = w4.y * g1 + dw.y * x1;
-	vec2 dn2 = w4.z * g2 + dw.z * x2;
-	gradient = 10.9 * (dn0 + dn1 + dn2);
+   // Compute the first order partial derivatives
+   vec3 w3 = w2 * w;
+   vec3 dw = -8.0 * w3 * gdotx;
+   vec2 dn0 = w4.x * g0 + dw.x * x0;
+   vec2 dn1 = w4.y * g1 + dw.y * x1;
+   vec2 dn2 = w4.z * g2 + dw.z * x2;
+   gradient = 10.9 * (dn0 + dn1 + dn2);
 
-	// Scale the return value to fit nicely into the range [-1,1]
-	return 10.9 * n;
+   // Scale the return value to fit nicely into the range [-1,1]
+   return 10.9 * n;
 }
 
 float smin( float a, float b, float k )
@@ -290,25 +290,25 @@ float sdSmoothUnion( float d1, float d2, float k )
 /* Equilateral triangle centered at p facing "up" */
 float sdTriangleEquilateral( vec2 p )
 {
-	const float k = sqrt(3.0);
-	p.x = abs(p.x) - 1.0;
-	p.y = p.y + 1.0/k;
-	if( p.x+k*p.y>0.0 ) p = vec2(p.x-k*p.y,-k*p.x-p.y)/2.0;
-	p.x -= clamp( p.x, -2.0, 0.0 );
-	return -length(p)*sign(p.y);
+   const float k = sqrt(3.0);
+   p.x = abs(p.x) - 1.0;
+   p.y = p.y + 1.0/k;
+   if( p.x+k*p.y>0.0 ) p = vec2(p.x-k*p.y,-k*p.x-p.y)/2.0;
+   p.x -= clamp( p.x, -2.0, 0.0 );
+   return -length(p)*sign(p.y);
 }
 
 /* Isosceles triangle centered at p facing "up".
  * q indicates (width, height) */
 float sdTriangleIsosceles( vec2 p, vec2 q )
 {
-	p.x = abs(p.x);
-	vec2 a = p - q*clamp( dot(p,q)/dot(q,q), 0.0, 1.0 );
-	vec2 b = p - q*vec2( clamp( p.x/q.x, 0.0, 1.0 ), 1.0 );
-	float s = -sign( q.y );
-	vec2 d = min( vec2( dot(a,a), s*(p.x*q.y-p.y*q.x) ),
-			vec2( dot(b,b), s*(p.y-q.y)  ));
-	return -sqrt(d.x)*sign(d.y);
+   p.x = abs(p.x);
+   vec2 a = p - q*clamp( dot(p,q)/dot(q,q), 0.0, 1.0 );
+   vec2 b = p - q*vec2( clamp( p.x/q.x, 0.0, 1.0 ), 1.0 );
+   float s = -sign( q.y );
+   vec2 d = min( vec2( dot(a,a), s*(p.x*q.y-p.y*q.x) ),
+         vec2( dot(b,b), s*(p.y-q.y)  ));
+   return -sqrt(d.x)*sign(d.y);
 }
 
 float sdBox( vec2 p, vec2 b )
@@ -328,16 +328,16 @@ float sdRhombus( vec2 p, vec2 b )
 /* Egg shape (semicircle glued half a vesica) at position p with size b. The cusp is at vec2(-b.x, 0). */
 float sdEgg( vec2 p, vec2 b )
 {
-    /* Transform to Inigo's code */
-    const float k           = 1.73205080756887729353;  /* sqrt(3) */
-    float ra = b.y;
-    float rb = ra + 2.0*b.x - 2.0*b.x*b.x/ra;
-    p = vec2(abs(p.y), b.x - ra - p.x);
-    /* The rest of the calculation matches the web page cited above. */
-    float r = ra - rb;
-    return ((p.y<0.0)       ? length(vec2(p.x,  p.y    )) - r :
-            (k*(p.x+r)<p.y) ? length(vec2(p.x,  p.y-k*r)) :
-                              length(vec2(p.x+r,p.y    )) - 2.0*r) - rb;
+   /* Transform to Inigo's code */
+   const float k           = 1.73205080756887729353;  /* sqrt(3) */
+   float ra = b.y;
+   float rb = ra + 2.0*b.x - 2.0*b.x*b.x/ra;
+   p = vec2(abs(p.y), b.x - ra - p.x);
+   /* The rest of the calculation matches the web page cited above. */
+   float r = ra - rb;
+   return   ((p.y<0.0)      ? length(vec2(p.x,   p.y    )) - r :
+            (k*(p.x+r)<p.y) ? length(vec2(p.x,   p.y-k*r)) :
+                              length(vec2(p.x+r, p.y    )) - 2.0*r) - rb;
 }
 
 float sdSegment( in vec2 p, in vec2 a, in vec2 b )
@@ -366,9 +366,9 @@ float sdUnevenCapsuleY( in vec2 p, in float ra, in float rb, in float h )
    float m = dot(c,p);
    float n = dot(p,p);
 
-        if( k < 0.0   ) return sqrt(n)               - ra;
-   else if( k > c.x*h ) return sqrt(n+h*h-2.0*h*p.y) - rb;
-                        return m                     - ra;
+         if( k < 0.0   )   return sqrt(n)               - ra;
+   else  if( k > c.x*h )   return sqrt(n+h*h-2.0*h*p.y) - rb;
+                           return m                     - ra;
 }
 
 float sdUnevenCapsule( in vec2 p, in vec2 pa, in vec2 pb, in float ra, in float rb )
@@ -407,10 +407,11 @@ float sdArc( in vec2 p, in vec2 sca, in vec2 scb, in float ra, in float rb )
 
 float sdArc2( in vec2 p, in vec2 sc, in float ra, float rb )
 {
-    // sc is the sin/cos of the arc's aperture
-    p.x = abs(p.x);
-    return ((sc.y*p.x>sc.x*p.y) ? length(p-sc*ra) :
-                                  abs(length(p)-ra)) - rb;
+   // sc is the sin/cos of the arc's aperture
+   p.x = abs(p.x);
+   return ((sc.y*p.x>sc.x*p.y) ?
+      length(p-sc*ra) :
+      abs(length(p)-ra)) - rb;
 }
 
 float sdCircle( in vec2 p, in float r )

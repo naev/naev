@@ -104,8 +104,9 @@ function careful.checkVulnerable( p, plt, threshold )
       -- Check to see vulnerability
       if mem.careful then
          -- Pilot actually cares about their fighting chances
-         local t = __join_tables( p:getAllies( mem.vulnrange, pos, true ),
-                                  p:getAllies( mem.vulnrange, nil, true ) )
+         local t = __join_tables(
+            p:getAllies( mem.vulnrange, pos, true ),
+            p:getAllies( mem.vulnrange, nil, true ) )
          t[ p:id() ]  = p -- add self
          F = 1+__estimate_strength( t )
          H = 1+__estimate_strength( p:getEnemies( mem.vulnrange, pos ) )

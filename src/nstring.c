@@ -4,7 +4,7 @@
 /**
  * @file nstring.c
  *
- * @brief Some string routines for naev.
+ * @brief Some string routines for Naev.
  */
 /** @cond */
 #include "naev.h"
@@ -90,7 +90,7 @@ int num2str( char dest[NUM2STRLEN], double n, int decimals )
 }
 
 /**
- * @brief Unsafe version of num2str that uses an internal buffer. Every call
+ * @brief Unsafe version of "num2str" that uses an internal buffer. Every call
  * overwrites the return value.
  *
  *    @param n Number to write.

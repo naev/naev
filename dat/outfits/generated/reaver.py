@@ -21,10 +21,10 @@ specific['$swivel'] *= 1.5
 specific['$trackmax'] = round(specific['$trackmax'] * 0.8333333333)
 specific['lua'] = 'outfits/lib/matrix_sell.lua'
 specific['gfx'] = {
-    '@type' : 'shader',
-    '@size' : '10',
-    '@col_size' : '8',
-    '#text' : 'particles/reaver.frag',
+   '@type' : 'shader',
+   '@size' : '10',
+   '@col_size' : '8',
+   '#text' : 'particles/reaver.frag',
 }
 
 damage = specific['damage']

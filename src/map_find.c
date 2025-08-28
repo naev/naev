@@ -612,9 +612,9 @@ static void map_addOutfitDetailFields( unsigned int wid_results, int x, int y,
 }
 
 /**
- * @brief Update the listPanel outfit details to the outfit selected.
+ * @brief Update the "listPanel" outfit details to the outfit selected.
  *
- *    @param wid The windowid of the window we're updating.
+ *    @param wid The window id of the window we are updating.
  *    @param wgtname The name of the list that was selected.
  *    @param x The x offset where we can start drawing
  *    @param y the y offset where we can start drawing
@@ -680,7 +680,7 @@ static void map_showOutfitDetail( unsigned int wid, const char *wgtname, int x,
 /**
  * @brief Adjust "Show all"/"Find" button label.
  *
- *    @param wid_map_find The windowid of the find window.
+ *    @param wid_map_find The window id of the find window.
  *    @param name         The widget name of the input widget.
  */
 static void map_adjustButtonLabel( unsigned int wid_map_find, const char *name )

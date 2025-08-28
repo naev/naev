@@ -360,7 +360,7 @@ static int load_enumerateCallbackPlayer( void *data, const char *origdir,
 }
 
 /**
- * @brief The PHYSFS_EnumerateCallback for load_refresh
+ * @brief The "PHYSFS_EnumerateCallback" for "load_refresh"
  */
 static int load_enumerateCallback( void *data, const char *origdir,
                                    const char *fname )
@@ -1497,8 +1497,8 @@ err:
 }
 
 /**
- * @brief Temporary (hopefully) wrapper around xml_parsePhysFS in support of
- * gzipped XML (like .ns files).
+ * @brief Temporary (hopefully) wrapper around "xml_parsePhysFS" in support of
+ * gzipped XML (like ".ns" files).
  */
 static xmlDocPtr load_xml_parsePhysFS( const char *filename )
 {

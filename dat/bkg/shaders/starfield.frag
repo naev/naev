@@ -31,15 +31,15 @@ const float phi = %f;
 const float cy = cos(phi);
 const float sy = sin(phi);
 const mat3 Ry = mat3(
-    cy, 0.0, -sy,
+   cy,  0.0, -sy,
    0.0, 1.0, 0.0,
-    sy, 0.0,  cy
+   sy,  0.0,  cy
 );
 const float psi = %f;
 const float cz = cos(psi);
 const float sz = sin(psi);
 const mat3 Rz = mat3(
-    cz,  sz, 0.0,
+   cz,   sz, 0.0,
    -sz,  cz, 0.0,
    0.0, 0.0, 1.0
 );

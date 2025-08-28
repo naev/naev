@@ -4,7 +4,7 @@
 /**
  * @file cond.c
  *
- * @brief Handles lua conditionals.
+ * @brief Handles Lua conditionals.
  */
 /** @cond */
 #include "naev.h"

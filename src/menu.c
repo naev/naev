@@ -22,12 +22,13 @@
 #include "dialogue.h"
 #include "hook.h"
 #include "info.h"
-#include "intro.h"
 #include "land.h"
 #include "load.h"
 #include "log.h"
 #include "music.h"
 #include "ndata.h"
+#include "nlua_music.h"
+#include "nlua_tk.h"
 #include "ntracing.h"
 #include "options.h"
 #include "pause.h"
@@ -376,13 +377,46 @@ static void menu_main_new( unsigned int wid, const char *str )
  */
 static void menu_main_credits( unsigned int wid, const char *str )
 {
+   (void)wid;
    (void)str;
-   window_destroy( wid );
-   menu_Close( MENU_MAIN );
-   intro_display( "AUTHORS", "credits" );
-   bg_needs_reset = 0;
-   menu_main();
-   bg_needs_reset = 1;
+
+   const char      *filename = "credits.lua";
+   static nlua_env *env      = NULL;
+   static int       chunk    = LUA_NOREF;
+
+   if ( env == NULL ) {
+      env = nlua_newEnv( "credits" );
+      nlua_loadStandard( env );
+      nlua_loadMusic( env );
+      nlua_loadTk( env );
+
+      size_t sz;
+      char  *dat = ndata_read( filename, &sz );
+      if ( dat == NULL ) {
+         WARN( "Failed to read '%s'.", filename );
+         return;
+      }
+
+      if ( nlua_loadbuffer( naevL, dat, sz, filename ) ) {
+         WARN( _( "Failed to run '%s':\n%s" ), filename,
+               lua_tostring( naevL, -1 ) );
+         lua_pop( naevL, 1 );
+         nlua_freeEnv( env );
+         env = NULL;
+         free( dat );
+         return;
+      }
+      free( dat );
+      chunk = nlua_ref( naevL, -1 );
+   }
+
+   if ( nlua_dochunkenv( env, chunk, filename ) ) {
+      WARN( _( "Failed to run '%s':\n%s" ), filename,
+            lua_tostring( naevL, -1 ) );
+      lua_pop( naevL, 1 );
+      return;
+   }
+
    /* We'll need to start music again. */
    music_choose( "load" );
 }

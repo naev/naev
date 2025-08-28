@@ -40,7 +40,7 @@ local function update_wset()
          break
       end
       active_icons[k] = v.outfit:icon()
-    end
+   end
 end
 
 

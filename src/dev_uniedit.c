@@ -1358,7 +1358,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh,
 }
 
 /**
- * @brief Called when it's de-focused.
+ * @brief Called when it loses focus.
  */
 static void uniedit_focusLose( unsigned int wid, const char *wgtname )
 {

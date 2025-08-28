@@ -47,6 +47,7 @@ function cinema.off ()
    end
 
    camera.set()
+   camera.setZoom()
    player.cinematics( false )
 
    old = {}

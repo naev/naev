@@ -44,7 +44,7 @@ end
 function accept ()
    if tk.yesno( _("Here we go again"), fmt.f( _([["{player}, we were just saying you should join in on this one! It's another great assault against the Dvaered oppressors, and we'd like you to lead the way to victory once again! Are you in?"]]), {player=player.name()} ) ) then
       tk.msg( _("Another Decisive Strike"), _([["Excellent!" You take a seat. "So once again, our mission today is the destruction of a loathed Dvaered base: Fort Raglan! The plan is pretty much the same as before: we have tasked a group of pirates with creating a disturbance nearby, and we have planted a bomb within the outpost to aid in its destruction. You just need to decide when to strike and let your teammates know.
-    The one thing that will be different, though, is that you're likely to find more Dvaered ships guarding Fort Raglan compared to Fort Raelid, and it might be a little harder to destroy. So be extra careful!" Time to get your ship ready for battle, then.]]) )
+   The one thing that will be different, though, is that you're likely to find more Dvaered ships guarding Fort Raglan compared to Fort Raelid, and it might be a little harder to destroy. So be extra careful!" Time to get your ship ready for battle, then.]]) )
 
       misn.accept()
 
@@ -294,7 +294,7 @@ end
 function land ()
    if spob.cur():faction() == faction.get("FLF") then
       tk.msg( _("Another Day, Another Victory"), fmt.f( _([[If your comrades were happy about your success at Raelid, they are ecstatic about your victory at Haleb. As you enter the station, you are met with cheers from what seems to be everyone. As a result, it takes you longer than usual to make it to Benito. "Congratulations," she says. "That was an astounding victory, sure to set back the Dvaered oppressors substantially! This is the first time we've pushed them out of Frontier space, and for that, we all thank you. If you haven't noticed, you've made yourself into a bit of a hero!
-    "Here is your pay, {player}. May we have another daring operation later on! Down with the oppressors!" You exchange some more words with Benito, party with the others for a period or two, and then make your way back to your ship for some much-needed rest.]]), {player=player.name()} ) )
+   "Here is your pay, {player}. May we have another daring operation later on! Down with the oppressors!" You exchange some more words with Benito, party with the others for a period or two, and then make your way back to your ship for some much-needed rest.]]), {player=player.name()} ) )
       finish()
    end
 end

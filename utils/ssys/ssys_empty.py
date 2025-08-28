@@ -1,32 +1,20 @@
 #!/usr/bin/env python3
 
-
-import xml.etree.ElementTree as ET
+from ssys import ssys_xml
 
 
 def ssys_empty( sys ):
-   T = ET.parse(sys).getroot()
+   T = ssys_xml(sys, w= False)['ssys']
 
-   if T.find('./general/nolanes') is None:
+   if not('general' in T and 'nolanes' in T['general']):
       return False
 
-   for i in [
-      './asteroids/asteroid/pos',
-      './spobs/spob',
-      './waypoints/waypoint'
-   ]:
-      if T.find(i) is not None:
-         # has an object
+   for i in ['asteroid', 'spob', 'waypoint']:
+      if len(T[i + 's'][i]):
          return False
 
-   for e in T.findall('./jumps/jump/pos'):
-      if 'was_auto' not in e.attrib:
-         # has a fixed jump point
-         return False
-
-   # just in case ( should not happen )
-   for e in T.findall('./tags/tag'):
-      if e.text == 'tradelane':
+   for e in T['jumps']['jump']:
+      if 'pos' in e and '@was_auto' not in e:
          return False
 
    return True

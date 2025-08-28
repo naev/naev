@@ -115,7 +115,7 @@ def main( args, gith = False, color = False, term = False, autostack = False,
    if color:
       C = [ 'eml   \n(t)   ', 'drift \nspeed ', 'max   \nspeed ', 'accel \n      ',
             'fullsp\n(s)   ', 'fullsp\n(km)  ', 'turn  \n(°/s) ', 'turn  \nradius',
-             '\xbdturn \n(s)   ']
+            '\xbdturn \n(s)   ']
       if term:
          C = [len(s.split('\n')[0])*'-' + '\n' + s for s in C]
    elif gith:
@@ -123,7 +123,7 @@ def main( args, gith = False, color = False, term = False, autostack = False,
          'fullsp (km)', 'turn (°/s)', 'turn radius', '1/2 turn (s)']
    else:
       C = [' eml  ', 'dr.sp.', 'max sp', 'accel ', 'fsp(s)',
-          'fsp.km', ' turn ', 'radius', '1/2turn(s)']
+         'fsp.km', ' turn ', 'radius', '1/2turn(s)']
 
    N = max([3] + [len(n) for (_, n) in L])
    C = [s.split('\n') for s in C]

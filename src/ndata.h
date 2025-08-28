@@ -99,7 +99,7 @@
 #define LUA_INCLUDE_PATH "scripts/" /**< Path for Lua includes. */
 #define AI_PATH "ai/"               /**< Location of the AI files. */
 
-#define GLSL_PATH "glsl/"
+#define GLSL_PATH "shaders/"
 
 #define AI_EQUIP_PATH "factions/equip/generic.lua"
 #define GUI_PATH "gui/"

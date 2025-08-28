@@ -13,5 +13,6 @@ return function ()
 
    return {
       mission = misnname,
+      weight = 2,
    }
 end

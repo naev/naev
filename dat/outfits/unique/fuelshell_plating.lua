@@ -1,7 +1,7 @@
 notactive = true
 
 function descextra( _p, _o )
-  return "#r".._("Drains fuel on armor damage.").."#0"
+   return "#r".._("Drains fuel on armor damage.").."#0"
 end
 
 function onhit(p,_po,armour,_shield,_attacker)
