@@ -250,14 +250,6 @@ unsafe extern "C" {
     pub fn alGetProcAddress(fname: *const ALchar) -> *mut ALvoid;
 }
 
-// === efx.h ===
-
-pub const ALC_EXT_EFX_NAME: &CStr = c"ALC_EXT_EFX";
-
-pub const ALC_EFX_MAJOR_VERSION: ALCenum = 0x20001;
-pub const ALC_EFX_MINOR_VERSION: ALCenum = 0x20002;
-pub const ALC_MAX_AUXILIARY_SENDS: ALCenum = 0x20003;
-
 // === Misc Extensions ===
 
 pub const ALC_OUTPUT_LIMITER_SOFT_NAME: &CStr = c"ALC_SOFT_output_limiter";

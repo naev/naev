@@ -383,8 +383,13 @@ impl AudioSystem {
             v.parameter_f32(AL_MAX_DISTANCE, MAX_DISTANCE);
             v.parameter_f32(AL_ROLLOFF_FACTOR, 1.);
 
-            if efx.is_some() {
-                //device.parameter_3_i32( AL_AUXILIARY_SEND_FILTER, direct, 0, AL_FILTER_NULL );
+            if let Some(efx) = &efx {
+                v.parameter_3_i32(
+                    AL_AUXILIARY_SEND_FILTER,
+                    efx.direct_slot.0.clone().get() as i32,
+                    0,
+                    AL_FILTER_NULL,
+                );
             }
         }
 
