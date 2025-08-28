@@ -175,7 +175,7 @@ static void commodity_exchange_genList( unsigned int wid )
       array_free( commodity_list );
    commodity_list = array_create( CommodityItem );
 
-   /* First add special sellable. */
+   /* First add special salable. */
    PilotCommodity *pclist = pfleet_cargoList();
    for ( int i = 0; i < array_size( pclist ); i++ ) {
       PilotCommodity *pc = &pclist[i];

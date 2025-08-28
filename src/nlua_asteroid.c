@@ -207,7 +207,7 @@ static int asteroidL_eq( lua_State *L )
 
 /**
  * @brief Gets the asteroid's current (translated) name or notes it is
- * inexistent.
+ * non-existent.
  *
  * @usage tostring(a)
  *

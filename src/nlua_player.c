@@ -912,12 +912,12 @@ static int playerL_setSpeed( lua_State *L )
  * <ul>
  *  <li>abort : (string) autonav abort message</li>
  *  <li>no2x : (boolean) whether to prevent the player from increasing the
- * speed, default false</li> <li>gui : (boolean) enables the player's gui,
+ * speed, default false</li> <li>gui : (boolean) enables the player's GUI,
  * default disabled</li>
  * </ul>
  *
  * @usage player.cinematics( true, { gui = true } ) -- Enables cinematics
- * without hiding gui.
+ * without hiding GUI.
  *
  *    @luatparam boolean enable If true sets cinematics mode, if false disables.
  * Defaults to disable.

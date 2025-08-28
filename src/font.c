@@ -701,7 +701,7 @@ void gl_printRawH( const glFont *ft_font, const mat4 *H, const glColour *c,
 /**
  * @brief Wrapper for "gl_printRaw" for map overlay markers
  *
- * See gl_printRaw params (minus outlineR)
+ * See `gl_printRaw` parameters (minus `outlineR`)
  */
 void gl_printMarkerRaw( const glFont *ft_font, double x, double y,
                         const glColour *c, const char *text )
@@ -1875,7 +1875,7 @@ static int gl_fontstashAddFallback( glFontStash *stsh, const char *fname,
 
 /**
  * @brief Frees a loaded font.
- *        Caution: its glFontStash still has a slot in avail_fonts.
+ *        Caution: its `glFontStash` still has a slot in `avail_fonts`.
  *        At the time of writing, it's enough to zero it so it cannot
  *        match a future font request.
  *

@@ -172,7 +172,7 @@ static void push_event(lua_State *l, ENetEvent *event) {
 
 /**
  * Read a packet off the stack as a string
- * idx is position of string
+ * `idx` is position of string
  */
 static ENetPacket *read_packet(lua_State *l, int idx, enet_uint8 *channel_id) {
    size_t size;
@@ -210,7 +210,7 @@ static ENetPacket *read_packet(lua_State *l, int idx, enet_uint8 *channel_id) {
 
 /**
  * Create a new host
- * Args:
+ * Arguments:
  *   address (nil for client)
  *   [peer_count = 64]
  *   [channel_count = 1]
@@ -272,8 +272,8 @@ static int linked_version(lua_State *l) {
 }
 
 /**
- * Serice a host
- * Args:
+ * Service a host
+ * Arguments:
  *   timeout
  *
  * Return
@@ -338,7 +338,7 @@ static int host_compress_with_range_coder(lua_State *l) {
 
 /**
  * Connect a host to an address
- * Args:
+ * Arguments:
  *   the address
  *   [channel_count = 1]
  *   [data = 0]
@@ -713,8 +713,8 @@ static int peer_receive(lua_State *l) {
 
 
 /**
- * Send a lua string to a peer
- * Args:
+ * Send a Lua string to a peer
+ * Arguments:
  *   packet data, string
  *   channel id
  *   flags ["reliable", nil]

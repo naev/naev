@@ -6,8 +6,8 @@
  *
  * @brief Handles pausing and resuming the game.
  *
- * Main trick to pausing/unpausing is to allow things based on time to
- *  behavie properly when the toolkit opens a window.
+ * Main trick to pausing/resuming is to allow things based on time to
+ * behave properly when the toolkit opens a window.
  */
 #include "pause.h"
 

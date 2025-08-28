@@ -1,5 +1,5 @@
 /**
- * See Licensing and Copyright notice in naev.h
+ * See Licensing and Copyright notice in "naev.h"
  */
 /**
  * @file nxml.c

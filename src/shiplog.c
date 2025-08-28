@@ -49,7 +49,7 @@ static ShipLogEntry *shiplog_removeEntry( ShipLogEntry *e );
  *    @param logname Name of the log (title)
  *    @param type Type of the log, e.g. travel, shipping, etc
  *    @param overwrite Whether to overwrite an existing log of this type and
- * logname (if 1), or all logs of this type (if 2).
+ * `logname` (if 1), or all logs of this type (if 2).
  *    @param maxLen Maximum number of entries for this log (longer ones will be
  * purged).
  *    @return log ID.
@@ -542,7 +542,7 @@ void shiplog_listTypes( int *ntypes, char ***logTypes, int includeAll )
  *    @param[out] logsOut Matching log-names. Will be reallocated as needed.
  * Emitted strings must be freed.
  *    @param[out] logIDs Matching log ID lists. Will be reallocated as needed.
- * Emitted lists are owned by the shipLog.
+ * Emitted lists are owned by the `shipLog`.
  *    @param includeAll Whether to include the special "All" log.
  */
 void shiplog_listLogsOfType( const char *type, int *nlogs, char ***logsOut,

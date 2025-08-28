@@ -218,7 +218,7 @@ int lua_isjump( lua_State *L, int ind )
 /**
  * @brief Gets a jump.
  *
- * Possible values of params: <br/>
+ * Possible values of parameters: <br/>
  *    - string : Gets the jump by system name. <br/>
  *    - system : Gets the jump by system. <br/>
  *

@@ -230,7 +230,7 @@ static int systemL_cur( lua_State *L )
 /**
  * @brief Gets a system.
  *
- * Behaves differently depending on what you pass as param: <br/>
+ * Behaves differently depending on what you pass as parameter: <br/>
  *    - string : Gets the system by raw (untranslated) name. <br/>
  *    - spob : Gets the system by spob. <br/>
  *

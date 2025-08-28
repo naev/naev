@@ -3816,7 +3816,7 @@ static int player_runUpdaterStart( void )
 
 /**
  * @brief Runs the save updater script, leaving any result on the stack of
- * naevL.
+ * `naevL`.
  *
  *    @param type Type of item to translate. Currently "outfit" and "license"
  * are supported.

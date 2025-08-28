@@ -228,7 +228,7 @@ static int commodityL_get( lua_State *L )
  * @brief Gets the list of standard commodities.
  *
  *    @luatreturn table A table containing commodity objects, namely those which
- * are standard (buyable/sellable anywhere).
+ * are standard (buyable/salable anywhere).
  * @luafunc getStandard
  */
 static int commodityL_getStandard( lua_State *L )
@@ -329,7 +329,7 @@ static int commodityL_price( lua_State *L )
  * @brief Gets the base price of an commodity on a certain spob.
  *
  * @usage if c:priceAt( spob.get("Polaris Prime") ) > 100 then -- Checks price
- * of a commodity at polaris prime
+ * of a commodity at Polaris Prime
  *
  *    @luatparam Commodity c Commodity to get information of.
  *    @luatparam Spob p Spob to get price at.
@@ -362,7 +362,7 @@ static int commodityL_priceAt( lua_State *L )
  * @brief Gets the price of an commodity on a certain spob at a certain time.
  *
  * @usage if c:priceAtTime( spob.get("Polaris Prime"), time ) > 100 then --
- * Checks price of a commodity at polaris prime
+ * Checks price of a commodity at Polaris Prime
  *
  *    @luatparam Commodity c Commodity to get information of.
  *    @luatparam Spob p Spob to get price at.

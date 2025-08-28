@@ -384,8 +384,8 @@ static int spobL_exists( lua_State *L )
 /**
  * @brief Gets a spob.
  *
- * Possible values of param: <br/>
- *    - bool : Gets a random spob. <br/>
+ * Possible values of parameter: <br/>
+ *    - boolean : Gets a random spob. <br/>
  *    - faction : Gets random spob belonging to faction matching the number.
  * <br/>
  *    - string : Gets the spob by raw (untranslated) name. <br/>
@@ -409,8 +409,8 @@ static int spobL_get( lua_State *L )
 /**
  * @brief Gets a spob and its corresponding system.
  *
- * Possible values of param: <br/>
- *    - bool : Gets a random spob. <br/>
+ * Possible values of parameter: <br/>
+ *    - boolean : Gets a random spob. <br/>
  *    - faction : Gets random spob belonging to faction matching the number.
  * <br/>
  *    - string : Gets the spob by raw (untranslated) name. <br/>

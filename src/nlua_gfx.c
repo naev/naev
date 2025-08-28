@@ -311,7 +311,7 @@ static int gfxL_renderTexScale( lua_State *L )
 /**
  * @brief Renders a texture using the core render function.
  *
- * This function is far more complex than renderTex, however it allows much
+ * This function is far more complex than `renderTex`, however it allows much
  *  more fine grained control over the entire render process and puts you
  *  closer to the actual OpenGL calls.
  *
@@ -1091,7 +1091,7 @@ static int gfxL_setBlendState( lua_State *L )
 /**
  * @brief Sets the scissor clipping, with (0,0) at top-left.
  *
- * Calling setScissor with no parameters disables the clipping.
+ * Calling `setScissor` with no parameters disables the clipping.
  *
  *    @luatparam number x X position of the clipping rectangle.
  *    @luatparam number y Y position of the clipping rectangle.

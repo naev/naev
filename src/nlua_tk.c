@@ -447,7 +447,7 @@ static void cust_cleanup( void *data )
  *    @luatparam Function textinput Function to call when textinput events are
  * received.
  *    @luatparam boolean nodynamic Whether or not the dialogue should be not
- * dynamic, or use tk.refresh to force rerenders.
+ * dynamic, or use `tk.refresh` to force re-rendering.
  * @luafunc custom
  */
 static int tkL_custom( lua_State *L )

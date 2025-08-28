@@ -52,7 +52,7 @@ int nlua_loadCanvas( nlua_env *env )
 /**
  * @brief Lua bindings to interact with canvass.
  *
- * @note The API here is designed to be compatible with that of LÖVE.
+ * @note The API here is designed to be compatible with that of "LÖVE".
  *
  * @luamod canvas
  */

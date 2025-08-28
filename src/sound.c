@@ -10,11 +10,11 @@
  *
  * Naming:
  *    buffer - sound sample
- *    source - openal object that plays sound
+ *    source - openAL object that plays sound
  *    voice - virtual object that wants to play sound
  *
  * 1) First we allocate all the buffers based on what we find inside the
- * datafile.
+ * "datafile".
  * 2) Then we allocate all the possible sources (giving the music system
  * what it needs).
  * 3) Now we allow the user to dynamically create voices, these voices will
@@ -1952,9 +1952,9 @@ static const char *vorbis_getErr( int err )
  * @brief This is the filter function for the decoded Ogg Vorbis stream.
  *
  * base on:
- * vgfilter.c (c) 2007,2008 William Poetra Yoga Hadisoeseno
+ * `vgfilter.c` (c) 2007,2008 William Poetra Yoga Hadisoeseno
  * based on:
- * vgplay.c 1.0 (c) 2003 John Morton
+ * `vgplay.c` 1.0 (c) 2003 John Morton
  */
 void rg_filter( float **pcm, long channels, long samples, void *filter_param )
 {

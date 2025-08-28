@@ -106,7 +106,7 @@ int nlua_loadVector( nlua_env *env )
  *
  * To call members of the metatable always use:
  * @code
- * vector:function( param )
+ * vector:function( parameter )
  * @endcode
  *
  * @luamod vec2

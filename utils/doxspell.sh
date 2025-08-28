@@ -81,7 +81,7 @@ readarray -t FILES <<< "$(grep -l '^ *\* *.*'"$EXPR"'' "$@")"
 if [ -z "${FILES[*]}" ] ; then
    exit 0
 fi
-echo "$# -> ${#FILES[@]}" >&2
+#echo "$# -> ${#FILES[@]}" >&2
 
 TMP=$(mktemp -u)
 mkfifo "$TMP"

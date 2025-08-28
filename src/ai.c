@@ -1300,7 +1300,7 @@ static int ai_tasktarget( lua_State *L, const Task *t )
  *
  * Usage is:
  * @code
- * ai.function( params )
+ * ai.function( parameters )
  * @endcode
  *
  * @{
@@ -1612,9 +1612,9 @@ static int aiL_getflybydistance( lua_State *L )
 /**
  * @brief Gets the minimum braking distance.
  *
- * braking vel ==> 0 = v - a*dt
+ * braking velocity ==> 0 = v - a*dt
  * add turn around time (to initial vel) ==> 180.*360./cur_pilot->turn
- * add it to general euler equation  x = v * t + 0.5 * a * t^2
+ * add it to general Euler equation  x = v * t + 0.5 * a * t^2
  * and voila!
  *
  * I hate this function and it'll probably need to get changed in the future
@@ -1913,7 +1913,7 @@ static int aiL_face( lua_State *L )
 
 /**
  * @brief Gives the direction to follow in order to reach the target while
- *  minimizating risk.
+ *  minimizing risk.
  *
  * This method is based on a simplified version of trajectory generation in
  * mobile robotics using the potential method.

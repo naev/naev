@@ -668,7 +668,7 @@ static int pilotL_choosePoint( lua_State *L )
  * @usage p = pilot.add( "Goddard", "Goddard", spob.get("Zhiru") , _("Goddard
  * Goddard") ) -- Have the pilot take off from a spob.
  *
- * How param works (by type of value passed): <br/>
+ * How parameter works (by type of value passed): <br/>
  *  - nil: spawns pilot randomly entering from jump points with presence of
  * their faction or taking off from non-hostile spobs <br/>
  *  - spob: pilot takes off from the spob <br/>
@@ -1020,7 +1020,7 @@ static void toggleSpawn( int f, int b )
  * @usage pilot.toggleSpawn( "Pirate", true ) -- Turns on pirate spawning
  *
  *    @luatparam[opt] Faction|table fac Faction or table of factions to enable
- * or disable spawning off. If ommited it works on global spawning.
+ * or disable spawning off. If omitted it works on global spawning.
  *    @luatparam[opt=false] boolean enable true enables spawn, false disables
  * it.
  *    @luatreturn boolean The current spawn state.
@@ -1318,8 +1318,8 @@ static int pilotL_getEnemies( lua_State *L )
 /**
  * @brief Gets visible pilots to a pilot.
  *
- * @note This function can not use quadtrees and is much slower than getEnemies,
- * getAllies, or getInrange.
+ * @note This function can not use quadtrees and is much slower than `getEnemies`,
+ * `getAllies`, or `getInrange`.
  *
  *    @luatparam Pilot pilot Pilot to get visible pilots of.
  *    @luatparam[opt=false] boolean disabled Whether or not to count disabled
@@ -2001,8 +2001,8 @@ static int pilotL_autoweap( lua_State *L )
  * </li> <li> in_arc: Whether or not the target is in targeting arc or nil if
  * not applicable. </li>
  * <li> active: Whether or not the weapon is currently active.
- * </li></li> <li> type: Type of the weapon. </li> <li> dtype: Damage
- * type of the weapon. </li> <li> track: Tracking level of the weapon. </li>
+ * </li></li> <li> `type`: Type of the weapon. </li> <li> `dtype`: Damage
+ * type of the weapon. </li> <li> `track`: Tracking level of the weapon. </li>
  * </ul>
  *
  * An example would be:
@@ -2107,7 +2107,7 @@ static PilotOutfitSlot *luaL_checkslot( lua_State *L, Pilot *p, int idx )
  *    @luatparam Pilot p Pilot to set weapon set outfit list of.
  *    @luatparam integer id ID of the weapon set as shown in game (from 0 to 9).
  *    @luatreturn table Table containing the slot ids of all outfits in the
- * weapon set for use with functions such as pilot.outfitGet.
+ * weapon set for use with functions such as `pilot.outfitGet`.
  * @luafunc weapsetList
  */
 static int pilotL_weapsetList( lua_State *L )
@@ -3401,7 +3401,7 @@ static int pilotL_setHide( lua_State *L )
 /**
  * @brief Sets the pilot's invisibility status.
  *
- * An invisible pilot is not shown on the radar nor targettable, however, it
+ * An invisible pilot is not shown on the radar nor targetable, however, it
  * renders and updates just like normal.
  *
  *    @luatparam Pilot p Pilot to set invisibility status of.
@@ -3431,7 +3431,7 @@ static int pilotL_setNoRender( lua_State *L )
 /**
  * @brief Marks the pilot as always visible for the player.
  *
- * This cancels out ewarfare visibility ranges and only affects the
+ * This cancels out electronic warfare visibility ranges and only affects the
  * visibility of the player.
  *
  * @usage p:setVisplayer( true )
@@ -3448,7 +3448,7 @@ static int pilotL_setVisplayer( lua_State *L )
 /**
  * @brief Marks the pilot as always visible for other pilots.
  *
- * This cancels out ewarfare visibility ranges and affects every pilot.
+ * This cancels out electronic warfare visibility ranges and affects every pilot.
  *
  * @usage p:setVisible( true )
  *
@@ -3465,7 +3465,7 @@ static int pilotL_setVisible( lua_State *L )
  * @brief Makes pilot stand out on radar and the likes.
  *
  * This makes the pilot stand out in the map overlay and radar to increase
- * noticability.
+ * noticeability.
  *
  * @usage p:setHilight( true )
  *
@@ -3763,10 +3763,10 @@ static int pilotL_outfitHasSlot( lua_State *L )
 /**
  * @brief Adds an outfit to a pilot.
  *
- * This by default tries to add them to the first empty or defaultly equipped
+ * This by default tries to add them to the first empty or "defaultly" equipped
  * slot. Will not overwrite existing non-default outfits.
  *
- * This will also not add outfits to locked slots. Please use outfitAddSlot
+ * This will also not add outfits to locked slots. Please use `outfitAddSlot`
  * for that.
  *
  * @usage added = p:outfitAdd( "Laser Cannon", 5 ) -- Adds 5 laser cannons to
@@ -4701,7 +4701,7 @@ static int pilotL_setHealthAbs( lua_State *L )
 /**
  * @brief Adds health to a pilot.
  *
- * Does not revive dead pilots, use setHealth for that.
+ * Does not revive dead pilots, use `setHealth` for that.
  *
  *    @luatparam Pilot p Pilot to add health to.
  *    @luatparam[opt=0.] number armour Armour to add.
@@ -5406,7 +5406,7 @@ static int pilotL_getColour( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to get the colour of.
  *    @luatreturn string Character representing the pilot's colour for use
- * with specila printing characters.
+ * with special printing characters.
  * @luafunc colourChar
  */
 static int pilotL_colourChar( lua_State *L )
@@ -5478,29 +5478,29 @@ static const struct pL_flag pL_flags[] = {
  *
  * Valid flags are:<br/>
  * <ul>
- *  <li> hailing: pilot is hailing the player.</li>
- *  <li> boardable: pilot is boardable while active.</li>
- *  <li> nojump: pilot cannot jump.</li>
- *  <li> noland: pilot cannot land.</li>
- *  <li> nodeath: pilot cannot die.</li>
- *  <li> nodisable: pilot cannot be disabled.</li>
- *  <li> escort: pilot is an escort.</li>
- *  <li> visible: pilot is always visible.</li>
- *  <li> visplayer: pilot is always visible to the player.</li>
- *  <li> hilight: pilot is hilighted on the map.</li>
- *  <li> stealth: pilot is in stealth mode.</li>
- *  <li> invisible: pilot is not displayed.</li>
- *  <li> invincible: pilot cannot be hit.</li>
- *  <li> invinc_player: pilot cannot be hit by the player.</li>
- *  <li> friendly: pilot is friendly toward the player.</li>
- *  <li> hostile: pilot is hostile toward the player.</li>
- *  <li> refueling: pilot is refueling another pilot.</li>
- *  <li> disabled: pilot is disabled.</li>
- *  <li> landing: pilot is currently landing.</li>
- *  <li> takingoff: pilot is currently taking off.</li>
- *  <li> manualcontrol: pilot is under manual control.</li>
- *  <li> combat: pilot is engaged in combat.</li>
- *  <li> carried: pilot came from a fighter bay.</li>
+ *  <li> `hailing`: pilot is hailing the player.</li>
+ *  <li> `boardable`: pilot is boardable while active.</li>
+ *  <li> `nojump`: pilot cannot jump.</li>
+ *  <li> `noland`: pilot cannot land.</li>
+ *  <li> `nodeath`: pilot cannot die.</li>
+ *  <li> `nodisable`: pilot cannot be disabled.</li>
+ *  <li> `escort`: pilot is an escort.</li>
+ *  <li> `visible`: pilot is always visible.</li>
+ *  <li> `visplayer`: pilot is always visible to the player.</li>
+ *  <li> `hilight`: pilot is highlighted on the map.</li>
+ *  <li> `stealth`: pilot is in stealth mode.</li>
+ *  <li> `invisible`: pilot is not displayed.</li>
+ *  <li> `invincible`: pilot cannot be hit.</li>
+ *  <li> `invinc_player`: pilot cannot be hit by the player.</li>
+ *  <li> `friendly`: pilot is friendly toward the player.</li>
+ *  <li> `hostile`: pilot is hostile toward the player.</li>
+ *  <li> `refueling`: pilot is refueling another pilot.</li>
+ *  <li> `disabled`: pilot is disabled.</li>
+ *  <li> `landing`: pilot is currently landing.</li>
+ *  <li> `takingoff`: pilot is currently taking off.</li>
+ *  <li> `manualcontrol`: pilot is under manual control.</li>
+ *  <li> `combat`: pilot is engaged in combat.</li>
+ *  <li> `carried`: pilot came from a fighter bay.</li>
  * </ul>
  *    @luatparam Pilot p Pilot to get flags of.
  *    @luatparam[opt] string name If provided, return only the individual
@@ -5629,7 +5629,7 @@ static int pilotL_idle( lua_State *L )
  * control, otherwise enables automatic AI.
  *    @luatparam[opt=true if changing modes] boolean Whether or not to clear
  * the tasks for the pilot. Defaults to true when changing from manual to
- * normal mode or viceversa.
+ * normal mode or vice-versa.
  * @luasee moveto
  * @luasee brake
  * @luasee follow

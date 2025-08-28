@@ -153,16 +153,16 @@ static void render_fbo_list( double dt, PPShader *list, int *current, int done )
  * @brief Renders the game itself (player flying around and friends).
  *
  * Blitting order (layers):
- *   - BG
+ *   - `BG`
  *     - stars and spobs
  *     - background player stuff (spob targeting)
  *     - background particles
  *     - back layer weapons
- *   - N
+ *   - `N`
  *     - NPC ships
  *     - front layer weapons
  *     - normal layer particles (above ships)
- *   - FG
+ *   - `FG`
  *     - player
  *     - foreground particles
  *     - text and GUI

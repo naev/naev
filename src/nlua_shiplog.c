@@ -50,16 +50,16 @@ int nlua_loadShiplog( nlua_env *env )
  * @usage shiplog.create("MyLog", "My mission title", "Mission type") -- Creates
  * log "MyLog" without erasing anything
  * @usage shiplog.create("MyOtherLog", "Any title","Anything can be a type",
- * true, 10) -- Erases any existing MyOtherLog entries and sets a limit of 10
+ * true, 10) -- Erases any existing `MyOtherLog` entries and sets a limit of 10
  * entries
  *
  *    @luatparam string idstr ID string to identify this log, or empty string
- * for unnamed logsets.
+ * for an unnamed `shiplog`.
  *    @luatparam string logname Name for this log.
  *    @luatparam string logtype Type of log (e.g travel, trade, etc, can be
  * anything).
  *    @luatparam[opt=false] boolean overwrite Whether to remove previous entries
- * of this logname and type.
+ * of this `logname` and `logtype`.
  *    @luatparam[opt=0] number maxLen Maximum length of the log (zero for
  * infinite) - if greater than this length, new entries appended will result in
  * old entries being removed.

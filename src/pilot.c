@@ -352,8 +352,8 @@ unsigned int pilot_getNearestEnemy( const Pilot *p )
 }
 
 /**
- * @brief Gets the nearest enemy to the pilot closest to the pilot whose mass is
- * between LB and UB.
+ * @brief Gets the nearest enemy to the pilot whose mass is
+ * between `target_mass_LB` and `target_mass_UB`.
  *
  *    @param p Pilot to get the nearest enemy of.
  *    @param target_mass_LB the lower bound for target mass
@@ -388,8 +388,7 @@ unsigned int pilot_getNearestEnemy_size( const Pilot *p, double target_mass_LB,
 }
 
 /**
- * @brief Gets the nearest enemy to the pilot closest to the pilot whose mass is
- * between LB and UB.
+ * @brief Gets the nearest enemy to the pilot which matches certain conditions.
  *
  *    @param p Pilot to get the nearest enemy of.
  *    @param mass_factor parameter for target mass (0-1, 0.5 = current mass)
@@ -634,7 +633,7 @@ double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang,
  *
  * It's a binary search ( O(logn) ) therefore it's pretty fast and can be
  *  abused all the time. Maximum iterations is 32 on a platform with 32 bit
- *  unsigned ints.
+ *  integers.
  *
  *    @param id ID of the pilot to get.
  *    @return The actual pilot who has matching ID or NULL if not found.

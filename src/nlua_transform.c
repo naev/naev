@@ -364,7 +364,7 @@ static int transformL_applyPoint( lua_State *L )
 /**
  * @brief Applies a transformation to a dimension.
  *
- * @note This is similar to Transform.applyPoint, except the translation is not
+ * @note This is similar to `Transform.applyPoint`, except the translation is not
  * applied.
  *
  *    @luatparam Transform T Transform to apply.

@@ -549,11 +549,11 @@ static int misn_markerRm( lua_State *L )
  * @brief Sets the current mission NPC.
  *
  * This is used in bar missions where you talk to a person. The portraits are
- *  the ones found in GFX_PATH/portraits. (For GFX_PATH/portraits/none.webp
- *  you would use "none.webp".)
+ * the ones found in GFX_PATH/portraits. (For GFX_PATH/portraits/none.webp
+ * you would use "none.webp".)
  *
- * Note that this NPC will disappear when either misn.accept() or misn.finish()
- *  is called.
+ * Note that this NPC will disappear when either `misn.accept()` or `misn.finish()`
+ * is called.
  *
  * @usage misn.setNPC( "Invisible Man", "none.webp", _("You see a levitating mug
  * drain itself.") )
@@ -834,7 +834,7 @@ static int misnL_osdSetHide( lua_State *L )
  * @brief Creates a mission OSD.
  *
  * @note You can index elements by using '\\t' as first character of an element.
- * @note Destroys an osd if it already exists.
+ * @note Destroys an OSD if it already exists.
  *
  * @usage misn.osdCreate( "My OSD", {"Element 1", "Element 2"})
  *

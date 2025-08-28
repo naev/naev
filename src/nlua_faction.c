@@ -547,7 +547,7 @@ static int factionL_reputationDefault( lua_State *L )
 
 /**
  * @brief Overrides the player's faction global standing with a faction. Use
- * sparingly as it overrites local standings at all systems.
+ * sparingly as it overwrites local standings at all systems.
  *
  *    @luatparam Faction f Faction to set the player's global reputation with.
  *    @luatparam number The value of the reputation to set to.
@@ -880,9 +880,9 @@ static int factionL_isStatic( lua_State *L )
  * @brief Gets the overridden reputation value of a faction.
  *
  *    @luatparam Faction f Faction to get whether or not the reputation is
- * overriden and the value.
+ * overridden and the value.
  *    @luatreturn number|nil The override reputation value or nil if not
- * overriden.
+ * overridden.
  * @luafunc reputationOverride
  */
 static int factionL_reputationOverride( lua_State *L )

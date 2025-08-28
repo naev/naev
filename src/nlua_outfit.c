@@ -338,7 +338,7 @@ static int outfitL_nameRaw( lua_State *L )
  * @brief Gets the translated short name of the outfit.
  *
  * This translated name should be used when you have abbreviate the outfit
- * greatly, e.g., the GUI. In the case the outfit has no special shortname,
+ * greatly, e.g., the GUI. In the case the outfit has no specific `shortname`,
  * it's equivalent to outfit.name().
  *
  *    @luatparam Outfit s Outfit to get the translated short name of.
