@@ -57,6 +57,40 @@ pub const AL_FILTER_LOWPASS: ALenum = 0x0001;
 pub const AL_FILTER_HIGHPASS: ALenum = 0x0002;
 pub const AL_FILTER_BANDPASS: ALenum = 0x0003;
 
+pub type ALGENAUXILIARYEFFECTSLOTS =
+    unsafe extern "C" fn(n: ALsizei, auxiliaryeffectslots: *const ALuint) -> *mut ALvoid;
+pub type ALDELETEAUXILIARYEFFECTSLOTS =
+    unsafe extern "C" fn(n: ALsizei, auxiliaryeffectslots: *const ALuint);
+pub type ALISAUXILIARYEFFECTSLOT = unsafe extern "C" fn(auxiliaryeffectslot: ALuint);
+pub type ALAUXILIARYEFFECTSLOTI =
+    unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: ALint);
+pub type ALAUXILIARYEFFECTSLOTIV =
+    unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: *const ALint);
+pub type ALAUXILIARYEFFECTSLOTF =
+    unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: ALfloat);
+pub type ALAUXILIARYEFFECTSLOTFV =
+    unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: *const ALfloat);
+pub type ALGETAUXILIARYEFFECTSLOTI =
+    unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: *const ALint);
+pub type ALGETAUXILIARYEFFECTSLOTIV =
+    unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: *const ALint);
+pub type ALGETAUXILIARYEFFECTSLOTF =
+    unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: *const ALfloat);
+pub type ALGETAUXILIARYEFFECTSLOTFV =
+    unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: *const ALfloat);
+pub type ALGENFILTERS = unsafe extern "C" fn(n: ALsizei, filters: *const ALuint);
+pub type ALDELETEFILTERS = unsafe extern "C" fn(n: ALsizei, filters: *const ALuint);
+pub type ALFILTERI = unsafe extern "C" fn(filter: ALuint, param: ALenum, value: ALint);
+pub type ALFILTERIV = unsafe extern "C" fn(filter: ALuint, param: ALenum, value: *const ALint);
+pub type ALFILTERF = unsafe extern "C" fn(filter: ALuint, param: ALenum, value: ALfloat);
+pub type ALFILTERFV = unsafe extern "C" fn(filter: ALuint, param: ALenum, value: *const ALfloat);
+pub type ALGENEFFECTS = unsafe extern "C" fn(n: ALsizei, effects: *const ALuint);
+pub type ALDELETEEFFECTS = unsafe extern "C" fn(n: ALsizei, effects: *const ALuint);
+pub type ALEFFECTI = unsafe extern "C" fn(filter: ALuint, param: ALenum, value: ALint);
+pub type ALEFFECTIV = unsafe extern "C" fn(filter: ALuint, param: ALenum, value: *const ALint);
+pub type ALEFFECTF = unsafe extern "C" fn(filter: ALuint, param: ALenum, value: ALfloat);
+pub type ALEFFECTFV = unsafe extern "C" fn(filter: ALuint, param: ALenum, value: *const ALfloat);
+
 #[allow(non_snake_case)]
 pub struct Efx {
     pub version: (i32, i32),
@@ -65,39 +99,29 @@ pub struct Efx {
     pub echo: Effect,
 
     // Efx C API
-    pub alGenAuxiliaryEffectSlots:
-        unsafe extern "C" fn(n: ALsizei, auxiliaryeffectslots: *const ALuint) -> *mut ALvoid,
-    pub alDeleteAuxiliaryEffectSlots:
-        unsafe extern "C" fn(n: ALsizei, auxiliaryeffectslots: *const ALuint),
-    pub alIsAuxiliaryEffectSlot: unsafe extern "C" fn(auxiliaryeffectslot: ALuint),
-    pub alAuxiliaryEffectSloti:
-        unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: ALint),
-    pub alAuxiliaryEffectSlotiv:
-        unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: *const ALint),
-    pub alAuxiliaryEffectSlotf:
-        unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: ALfloat),
-    pub alAuxiliaryEffectSlotfv:
-        unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: *const ALfloat),
-    pub alGetAuxiliaryEffectSloti:
-        unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: *const ALint),
-    pub alGetAuxiliaryEffectSlotiv:
-        unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: *const ALint),
-    pub alGetAuxiliaryEffectSlotf:
-        unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: *const ALfloat),
-    pub alGetAuxiliaryEffectSlotfv:
-        unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: *const ALfloat),
-    pub alGenFilters: unsafe extern "C" fn(n: ALsizei, filters: *const ALuint),
-    pub alDeleteFilters: unsafe extern "C" fn(n: ALsizei, filters: *const ALuint),
-    pub alFilteri: unsafe extern "C" fn(filter: ALuint, param: ALenum, value: ALint),
-    pub alFilteriv: unsafe extern "C" fn(filter: ALuint, param: ALenum, value: *const ALint),
-    pub alFilterf: unsafe extern "C" fn(filter: ALuint, param: ALenum, value: ALfloat),
-    pub alFilterfv: unsafe extern "C" fn(filter: ALuint, param: ALenum, value: *const ALfloat),
-    pub alGenEffects: unsafe extern "C" fn(n: ALsizei, effects: *const ALuint),
-    pub alDeleteEffects: unsafe extern "C" fn(n: ALsizei, effects: *const ALuint),
-    pub alEffecti: unsafe extern "C" fn(filter: ALuint, param: ALenum, value: ALint),
-    pub alEffectiv: unsafe extern "C" fn(filter: ALuint, param: ALenum, value: *const ALint),
-    pub alEffectf: unsafe extern "C" fn(filter: ALuint, param: ALenum, value: ALfloat),
-    pub alEffectfv: unsafe extern "C" fn(filter: ALuint, param: ALenum, value: *const ALfloat),
+    pub alGenAuxiliaryEffectSlots: ALGENAUXILIARYEFFECTSLOTS,
+    pub alDeleteAuxiliaryEffectSlots: ALDELETEAUXILIARYEFFECTSLOTS,
+    pub alIsAuxiliaryEffectSlot: ALISAUXILIARYEFFECTSLOT,
+    pub alAuxiliaryEffectSloti: ALAUXILIARYEFFECTSLOTI,
+    pub alAuxiliaryEffectSlotiv: ALAUXILIARYEFFECTSLOTIV,
+    pub alAuxiliaryEffectSlotf: ALAUXILIARYEFFECTSLOTF,
+    pub alAuxiliaryEffectSlotfv: ALAUXILIARYEFFECTSLOTFV,
+    pub alGetAuxiliaryEffectSloti: ALGETAUXILIARYEFFECTSLOTI,
+    pub alGetAuxiliaryEffectSlotiv: ALGETAUXILIARYEFFECTSLOTIV,
+    pub alGetAuxiliaryEffectSlotf: ALGETAUXILIARYEFFECTSLOTF,
+    pub alGetAuxiliaryEffectSlotfv: ALGETAUXILIARYEFFECTSLOTFV,
+    pub alGenFilters: ALGENFILTERS,
+    pub alDeleteFilters: ALDELETEFILTERS,
+    pub alFilteri: ALFILTERI,
+    pub alFilteriv: ALFILTERIV,
+    pub alFilterf: ALFILTERF,
+    pub alFilterfv: ALFILTERFV,
+    pub alGenEffects: ALGENEFFECTS,
+    pub alDeleteEffects: ALDELETEEFFECTS,
+    pub alEffecti: ALEFFECTI,
+    pub alEffectiv: ALEFFECTIV,
+    pub alEffectf: ALEFFECTF,
+    pub alEffectfv: ALEFFECTFV,
 }
 impl Efx {
     #[allow(non_snake_case)]
@@ -108,7 +132,7 @@ impl Efx {
         );
 
         macro_rules! proc_address {
-            ($func: literal) => {{
+            ($func: literal, $type: ident) => {{
                 let val = unsafe { alGetProcAddress($func.as_ptr()) };
                 if val.is_null() {
                     warn!(
@@ -116,43 +140,49 @@ impl Efx {
                         $func.to_string_lossy()
                     );
                 }
-                unsafe { std::mem::transmute(val) }
+                unsafe { std::mem::transmute::<*mut ALvoid, $type>(val) }
             }};
         }
 
-        let alGenAuxiliaryEffectSlots = proc_address!(c"alGenAuxiliaryEffectSlots");
-        let alDeleteAuxiliaryEffectSlots = proc_address!(c"alDeleteAuxiliaryEffectSlots");
-        let alIsAuxiliaryEffectSlot = proc_address!(c"alIsAuxiliaryEffectSlot");
-        let alAuxiliaryEffectSloti = proc_address!(c"alAuxiliaryEffectSloti");
-        let alAuxiliaryEffectSlotiv = proc_address!(c"alAuxiliaryEffectSlotiv");
-        let alAuxiliaryEffectSlotf = proc_address!(c"alAuxiliaryEffectSlotf");
-        let alAuxiliaryEffectSlotfv = proc_address!(c"alAuxiliaryEffectSlotfv");
-        let alGetAuxiliaryEffectSloti = proc_address!(c"alGetAuxiliaryEffectSloti");
-        let alGetAuxiliaryEffectSlotiv = proc_address!(c"alGetAuxiliaryEffectSlotiv");
-        let alGetAuxiliaryEffectSlotf = proc_address!(c"alGetAuxiliaryEffectSlotf");
-        let alGetAuxiliaryEffectSlotfv = proc_address!(c"alGetAuxiliaryEffectSlotfv");
-        let alGenFilters = proc_address!(c"alGenFilters");
-        let alDeleteFilters = proc_address!(c"alDeleteFilters");
-        let alFilteri = proc_address!(c"alFilteri");
-        let alFilteriv = proc_address!(c"alFilteriv");
-        let alFilterf = proc_address!(c"alFilterf");
-        let alFilterfv = proc_address!(c"alFilterfv");
-        let alGenEffects = proc_address!(c"alGenEffects");
-        let alDeleteEffects = proc_address!(c"alDeleteEffects");
-        //let alEffecti:  = proc_address!( c"alEffecti" );
-        let alEffecti: unsafe extern "C" fn(filter: ALuint, param: ALenum, value: ALint) =
-            proc_address!(c"alEffecti");
-        let alEffectiv = proc_address!(c"alEffectiv");
-        //let alEffectf = proc_address!( c"alEffectf" );
-        let alEffectf: unsafe extern "C" fn(filter: ALuint, param: ALenum, value: ALfloat) =
-            proc_address!(c"alEffectf");
-        let alEffectfv = proc_address!(c"alEffectfv");
+        let alGenAuxiliaryEffectSlots =
+            proc_address!(c"alGenAuxiliaryEffectSlots", ALGENAUXILIARYEFFECTSLOTS);
+        let alDeleteAuxiliaryEffectSlots = proc_address!(
+            c"alDeleteAuxiliaryEffectSlots",
+            ALDELETEAUXILIARYEFFECTSLOTS
+        );
+        let alIsAuxiliaryEffectSlot =
+            proc_address!(c"alIsAuxiliaryEffectSlot", ALISAUXILIARYEFFECTSLOT);
+        let alAuxiliaryEffectSloti =
+            proc_address!(c"alAuxiliaryEffectSloti", ALAUXILIARYEFFECTSLOTI);
+        let alAuxiliaryEffectSlotiv =
+            proc_address!(c"alAuxiliaryEffectSlotiv", ALAUXILIARYEFFECTSLOTIV);
+        let alAuxiliaryEffectSlotf =
+            proc_address!(c"alAuxiliaryEffectSlotf", ALAUXILIARYEFFECTSLOTF);
+        let alAuxiliaryEffectSlotfv =
+            proc_address!(c"alAuxiliaryEffectSlotfv", ALAUXILIARYEFFECTSLOTFV);
+        let alGetAuxiliaryEffectSloti =
+            proc_address!(c"alGetAuxiliaryEffectSloti", ALGETAUXILIARYEFFECTSLOTI);
+        let alGetAuxiliaryEffectSlotiv =
+            proc_address!(c"alGetAuxiliaryEffectSlotiv", ALGETAUXILIARYEFFECTSLOTIV);
+        let alGetAuxiliaryEffectSlotf =
+            proc_address!(c"alGetAuxiliaryEffectSlotf", ALGETAUXILIARYEFFECTSLOTF);
+        let alGetAuxiliaryEffectSlotfv =
+            proc_address!(c"alGetAuxiliaryEffectSlotfv", ALGETAUXILIARYEFFECTSLOTFV);
+        let alGenFilters = proc_address!(c"alGenFilters", ALGENFILTERS);
+        let alDeleteFilters = proc_address!(c"alDeleteFilters", ALDELETEFILTERS);
+        let alFilteri = proc_address!(c"alFilteri", ALFILTERI);
+        let alFilteriv = proc_address!(c"alFilteriv", ALFILTERIV);
+        let alFilterf = proc_address!(c"alFilterf", ALFILTERF);
+        let alFilterfv = proc_address!(c"alFilterfv", ALFILTERFV);
+        let alGenEffects = proc_address!(c"alGenEffects", ALGENEFFECTS);
+        let alDeleteEffects = proc_address!(c"alDeleteEffects", ALDELETEEFFECTS);
+        let alEffecti = proc_address!(c"alEffecti", ALEFFECTI);
+        let alEffectiv = proc_address!(c"alEffectiv", ALEFFECTIV);
+        let alEffectf = proc_address!(c"alEffectf", ALEFFECTF);
+        let alEffectfv = proc_address!(c"alEffectfv", ALEFFECTFV);
 
         fn new_auxiliary_effect_slot(
-            alGenAuxiliaryEffectSlots: unsafe extern "C" fn(
-                n: ALsizei,
-                auxiliaryeffectslots: *const ALuint,
-            ) -> *mut ALvoid,
+            alGenAuxiliaryEffectSlots: ALGENAUXILIARYEFFECTSLOTS,
         ) -> Result<AuxiliaryEffectSlot> {
             let id: ALuint = 0;
             unsafe { alGenAuxiliaryEffectSlots(1, &id) };
@@ -164,9 +194,7 @@ impl Efx {
         }
         let direct_slot = new_auxiliary_effect_slot(alGenAuxiliaryEffectSlots)?;
 
-        fn new_effect(
-            alGenEffects: unsafe extern "C" fn(n: ALsizei, effects: *const ALuint),
-        ) -> Result<Effect> {
+        fn new_effect(alGenEffects: ALGENEFFECTS) -> Result<Effect> {
             let id: ALuint = 0;
             unsafe { alGenEffects(1, &id) };
             let id = match std::num::NonZero::new(id) {
