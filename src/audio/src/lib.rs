@@ -12,13 +12,42 @@ use gettext::gettext;
 use log::{debug, debugx, warn, warn_err};
 use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
 use std::ffi::{CStr, CString};
-use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, AtomicPtr, Ordering};
+use std::sync::{Arc, Mutex};
 
 const NUM_VOICES: usize = 64;
 const REFERENCE_DISTANCE: f32 = 500.;
 const MAX_DISTANCE: f32 = 25_000.;
 static AUDIO_ENABLED: AtomicBool = AtomicBool::new(false);
+
+#[derive(Clone)]
+pub enum Message {
+    DeleteAuxiliaryEffectSlot(std::num::NonZero<ALuint>),
+    DeleteFilter(std::num::NonZero<ALuint>),
+    DeleteEffect(std::num::NonZero<ALuint>),
+}
+impl Message {
+    fn execute(self, sys: &AudioSystem) {
+        match self {
+            Self::DeleteAuxiliaryEffectSlot(id) => unsafe {
+                (sys.efx.as_ref().unwrap().alDeleteAuxiliaryEffectSlots)(
+                    1,
+                    &id.get() as *const ALuint,
+                );
+            },
+            Self::DeleteFilter(id) => unsafe {
+                (sys.efx.as_ref().unwrap().alDeleteFilters)(1, &id.get() as *const ALuint);
+            },
+            Self::DeleteEffect(id) => unsafe {
+                (sys.efx.as_ref().unwrap().alDeleteEffects)(1, &id.get() as *const ALuint);
+            },
+        }
+    }
+}
+static MESSAGE_QUEUE: Mutex<Vec<Message>> = Mutex::new(vec![]);
+pub(crate) fn message_push(msg: Message) {
+    MESSAGE_QUEUE.lock().unwrap().push(msg);
+}
 
 #[inline]
 pub(crate) fn check_error() {

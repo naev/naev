@@ -59,39 +59,39 @@ pub struct Efx {
     pub echo: Effect,
 
     // Efx C API
-    alGenAuxiliaryEffectSlots:
+    pub alGenAuxiliaryEffectSlots:
         unsafe extern "C" fn(n: ALsizei, auxiliaryeffectslots: *const ALuint) -> *mut ALvoid,
-    alDeleteAuxiliaryEffectSlots:
+    pub alDeleteAuxiliaryEffectSlots:
         unsafe extern "C" fn(n: ALsizei, auxiliaryeffectslots: *const ALuint),
-    alIsAuxiliaryEffectSlot: unsafe extern "C" fn(auxiliaryeffectslot: ALuint),
-    alAuxiliaryEffectSloti:
+    pub alIsAuxiliaryEffectSlot: unsafe extern "C" fn(auxiliaryeffectslot: ALuint),
+    pub alAuxiliaryEffectSloti:
         unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: ALint),
-    alAuxiliaryEffectSlotiv:
+    pub alAuxiliaryEffectSlotiv:
         unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: *const ALint),
-    alAuxiliaryEffectSlotf:
+    pub alAuxiliaryEffectSlotf:
         unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: ALfloat),
-    alAuxiliaryEffectSlotfv:
+    pub alAuxiliaryEffectSlotfv:
         unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: *const ALfloat),
-    alGetAuxiliaryEffectSloti:
+    pub alGetAuxiliaryEffectSloti:
         unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: *const ALint),
-    alGetAuxiliaryEffectSlotiv:
+    pub alGetAuxiliaryEffectSlotiv:
         unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: *const ALint),
-    alGetAuxiliaryEffectSlotf:
+    pub alGetAuxiliaryEffectSlotf:
         unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: *const ALfloat),
-    alGetAuxiliaryEffectSlotfv:
+    pub alGetAuxiliaryEffectSlotfv:
         unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: *const ALfloat),
-    alGenFilters: unsafe extern "C" fn(n: ALsizei, filters: *const ALuint),
-    alDeleteFilters: unsafe extern "C" fn(n: ALsizei, filters: *const ALuint),
-    alFilteri: unsafe extern "C" fn(filter: ALuint, param: ALenum, value: ALint),
-    alFilteriv: unsafe extern "C" fn(filter: ALuint, param: ALenum, value: *const ALint),
-    alFilterf: unsafe extern "C" fn(filter: ALuint, param: ALenum, value: ALfloat),
-    alFilterfv: unsafe extern "C" fn(filter: ALuint, param: ALenum, value: *const ALfloat),
-    alGenEffects: unsafe extern "C" fn(n: ALsizei, effects: *const ALuint),
-    alDeleteEffects: unsafe extern "C" fn(n: ALsizei, effects: *const ALuint),
-    alEffecti: unsafe extern "C" fn(filter: ALuint, param: ALenum, value: ALint),
-    alEffectiv: unsafe extern "C" fn(filter: ALuint, param: ALenum, value: *const ALint),
-    alEffectf: unsafe extern "C" fn(filter: ALuint, param: ALenum, value: ALfloat),
-    alEffectfv: unsafe extern "C" fn(filter: ALuint, param: ALenum, value: *const ALfloat),
+    pub alGenFilters: unsafe extern "C" fn(n: ALsizei, filters: *const ALuint),
+    pub alDeleteFilters: unsafe extern "C" fn(n: ALsizei, filters: *const ALuint),
+    pub alFilteri: unsafe extern "C" fn(filter: ALuint, param: ALenum, value: ALint),
+    pub alFilteriv: unsafe extern "C" fn(filter: ALuint, param: ALenum, value: *const ALint),
+    pub alFilterf: unsafe extern "C" fn(filter: ALuint, param: ALenum, value: ALfloat),
+    pub alFilterfv: unsafe extern "C" fn(filter: ALuint, param: ALenum, value: *const ALfloat),
+    pub alGenEffects: unsafe extern "C" fn(n: ALsizei, effects: *const ALuint),
+    pub alDeleteEffects: unsafe extern "C" fn(n: ALsizei, effects: *const ALuint),
+    pub alEffecti: unsafe extern "C" fn(filter: ALuint, param: ALenum, value: ALint),
+    pub alEffectiv: unsafe extern "C" fn(filter: ALuint, param: ALenum, value: *const ALint),
+    pub alEffectf: unsafe extern "C" fn(filter: ALuint, param: ALenum, value: ALfloat),
+    pub alEffectfv: unsafe extern "C" fn(filter: ALuint, param: ALenum, value: *const ALfloat),
 }
 impl Efx {
     #[allow(non_snake_case)]
@@ -154,7 +154,7 @@ impl Efx {
                 Some(v) => v,
                 None => anyhow::bail!("failed to create Efx auxiliary effect slot"),
             };
-            Ok(AuxiliaryEffectSlot(id, None))
+            Ok(AuxiliaryEffectSlot(id))
         }
         let direct_slot = new_auxiliary_effect_slot(alGenAuxiliaryEffectSlots)?;
 
@@ -167,7 +167,7 @@ impl Efx {
                 Some(v) => v,
                 None => anyhow::bail!("failed to create Efx effect"),
             };
-            Ok(Effect(id, None))
+            Ok(Effect(id))
         }
         let reverb = new_effect(alGenEffects)?;
         let echo = new_effect(alGenEffects)?;
@@ -219,39 +219,27 @@ impl Efx {
             Some(v) => v,
             None => anyhow::bail!("failed to create Efx effect"),
         };
-        Ok(Effect(id, Some(&self)))
+        Ok(Effect(id))
     }
 }
 
-pub struct AuxiliaryEffectSlot(pub std::num::NonZero<ALuint>, Option<&'static Efx>);
+pub struct AuxiliaryEffectSlot(pub std::num::NonZero<ALuint>);
 impl Drop for AuxiliaryEffectSlot {
     fn drop(&mut self) {
-        if let Some(efx) = self.1 {
-            unsafe {
-                (efx.alDeleteAuxiliaryEffectSlots)(1, &self.0.clone().get() as *const ALuint);
-            }
-        }
+        crate::message_push(crate::Message::DeleteAuxiliaryEffectSlot(self.0.clone()));
     }
 }
 
-pub struct Filter(pub std::num::NonZero<ALuint>, Option<&'static Efx>);
+pub struct Filter(pub std::num::NonZero<ALuint>);
 impl Drop for Filter {
     fn drop(&mut self) {
-        if let Some(efx) = self.1 {
-            unsafe {
-                (efx.alDeleteFilters)(1, &self.0.clone().get() as *const ALuint);
-            }
-        }
+        crate::message_push(crate::Message::DeleteFilter(self.0.clone()));
     }
 }
 
-pub struct Effect(pub std::num::NonZero<ALuint>, Option<&'static Efx>);
+pub struct Effect(pub std::num::NonZero<ALuint>);
 impl Drop for Effect {
     fn drop(&mut self) {
-        if let Some(efx) = self.1 {
-            unsafe {
-                (efx.alDeleteEffects)(1, &self.0.clone().get() as *const ALuint);
-            }
-        }
+        crate::message_push(crate::Message::DeleteEffect(self.0.clone()));
     }
 }
