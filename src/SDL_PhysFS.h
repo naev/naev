@@ -24,7 +24,7 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
  *
- * Modified for naev by:
+ * Modified for Naev by:
  * 1. Exposing SDL_PhysFS_OpenIO as part of the API.
  */
 #ifndef SDL_PHYSFS_H__
@@ -187,7 +187,7 @@ bool SDL_PhysFS_Init(const char* argv) {
 }
 
 /**
- * Initializes the PhysFS virtual file system with access to SDL's preferences directory as /app.
+ * Initializes the PhysFS virtual file system with access to the preferences directory of SDL as /app.
  *
  * Mounts the writable preferences directory as "/app".
  *
@@ -652,12 +652,12 @@ bool SDL_PhysFS_SetWriteDir(const char* path) {
  * Make sure to unload the list by using SDL_PhysFS_FreeDirectoryFiles().
  *
  * @code
- * char** directoryFiles = SDL_PhysFS_LoadDirectoryFiles("res");
+ * char** dir_files = SDL_PhysFS_LoadDirectoryFiles("res");
  * int count = 0;
- * for (char** file = directoryFiles; *file != NULL; file++) {
+ * for (char** file = dir_files; *file != NULL; file++) {
  *     count++;
  * }
- * SDL_PhysFS_FreeDirectoryFiles(directoryFiles);
+ * SDL_PhysFS_FreeDirectoryFiles(dir_files);
  * @endcode
  *
  * @return A list of files that were found in the given search path. NULL otherwise.

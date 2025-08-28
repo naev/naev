@@ -8,9 +8,9 @@
 /**
  * @file utf8.h
  * Utilities from cutef8: https://github.com/JeffBezanson/cutef8
- * @note Its current README says, "I now use and recommend utf8proc instead of
+ * @note Its current "README" says, "I now use and recommend utf8proc instead of
  * this library."
- * @note Some unused functions (and supporting polyfills, macro tweaks) have
+ * @note Some unused functions (and supporting "polyfills", macro tweaks) have
  * been removed. In the unlikely event more cutef8 features are required, check
  * earlier revisions in git. */
 

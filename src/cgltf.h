@@ -80,7 +80,7 @@
  * false if the passed-in element_size is too small, or if the accessor is sparse.
  *
  * `cgltf_accessor_read_uint` is similar to its floating-point counterpart, but limited to reading
- * vector types and does not support matrix types. The passed-in element size is the number of uints
+ * vector types and does not support matrix types. The passed-in element size is the number of unsigned integers
  * in the output buffer, which should be in the range [1, 4]. Returns false if the passed-in
  * element_size is too small, or if the accessor is sparse.
  *

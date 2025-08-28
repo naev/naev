@@ -283,7 +283,7 @@ int nlua_loadPlayer( nlua_env *env )
  * These bindings let you modify stuff about the player and find out special
  *  information. General usage would be calls like:
  * @code
- * pname = player.name()
+ * p_name = player.name()
  * shipname = player.ship()
  * @endcode
  * @luamod player

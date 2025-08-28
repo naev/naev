@@ -2008,7 +2008,7 @@ static int pilotL_autoweap( lua_State *L )
  * An example would be:
  * @code
  * ws_name, ws = p:weapset( true )
- * print( "Weapnset Name: " .. ws_name )
+ * print( "Weaponset Name: " .. ws_name )
  * for i, w in ipairs(ws) do
  *    print( "Name: " .. w.name )
  *    print( "Cooldown: " .. tostring(w.cooldown) )

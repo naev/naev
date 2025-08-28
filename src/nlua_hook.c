@@ -139,11 +139,11 @@ int nlua_loadHook( nlua_env *env )
  *
  * Example usage would be:
  * @code
- * function penter( arg )
+ * function penter( argument )
  *    -- Function to run when player enters a system
  * end
  *
- * hookid = hook.enter( "penter", 5 )
+ * hook_id = hook.enter( "penter", 5 )
  * @endcode
  *
  * @luamod hook
