@@ -95,7 +95,7 @@ int main(int argc, char *const *argv)
       for (int i = 1; i < argc && !res; i++)
          if ((fp = fopen(argv[i], "rt"))) {
             const char *bn = basename(argv[i]);
-            char *pref     = calloc(snprintf(NULL, 0, "%s ", bn), sizeof(char));
+            char *pref     = calloc(snprintf(NULL, 0, "%s ", bn) + 1, sizeof(char));
             sprintf(pref, "%s ", bn);
             res = do_it(fp, pref) || res;
             fclose(fp);
