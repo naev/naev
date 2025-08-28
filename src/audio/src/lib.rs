@@ -13,11 +13,12 @@ use log::{debug, debugx, warn, warn_err};
 use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
 use std::ffi::{CStr, CString};
 use std::sync::Arc;
-use std::sync::atomic::{AtomicPtr, Ordering};
+use std::sync::atomic::{AtomicBool, AtomicPtr, Ordering};
 
 const NUM_VOICES: usize = 64;
 const REFERENCE_DISTANCE: f32 = 500.;
 const MAX_DISTANCE: f32 = 25_000.;
+static AUDIO_ENABLED: AtomicBool = AtomicBool::new(false);
 
 #[inline]
 pub(crate) fn check_error() {

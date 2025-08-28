@@ -54,11 +54,13 @@ const AL_ECHO_SPREAD: ALenum = 0x0005;
 #[allow(non_snake_case)]
 pub struct Efx {
     pub version: (i32, i32),
+    pub direct_slot: AuxiliaryEffectSlot,
     pub reverb: Effect,
     pub echo: Effect,
 
     // Efx C API
-    alGenAuxiliaryEffectSlots: unsafe extern "C" fn(fname: *const ALchar) -> *mut ALvoid,
+    alGenAuxiliaryEffectSlots:
+        unsafe extern "C" fn(n: ALsizei, auxiliaryeffectslots: *const ALuint) -> *mut ALvoid,
     alDeleteAuxiliaryEffectSlots:
         unsafe extern "C" fn(n: ALsizei, auxiliaryeffectslots: *const ALuint),
     alIsAuxiliaryEffectSlot: unsafe extern "C" fn(auxiliaryeffectslot: ALuint),
@@ -140,6 +142,22 @@ impl Efx {
             proc_address!(c"alEffectf");
         let alEffectfv = proc_address!(c"alEffectfv");
 
+        fn new_auxiliary_effect_slot(
+            alGenAuxiliaryEffectSlots: unsafe extern "C" fn(
+                n: ALsizei,
+                auxiliaryeffectslots: *const ALuint,
+            ) -> *mut ALvoid,
+        ) -> Result<AuxiliaryEffectSlot> {
+            let id: ALuint = 0;
+            unsafe { alGenAuxiliaryEffectSlots(1, &id) };
+            let id = match std::num::NonZero::new(id) {
+                Some(v) => v,
+                None => anyhow::bail!("failed to create Efx auxiliary effect slot"),
+            };
+            Ok(AuxiliaryEffectSlot(id, None))
+        }
+        let direct_slot = new_auxiliary_effect_slot(alGenAuxiliaryEffectSlots)?;
+
         fn new_effect(
             alGenEffects: unsafe extern "C" fn(n: ALsizei, effects: *const ALuint),
         ) -> Result<Effect> {
@@ -163,6 +181,7 @@ impl Efx {
 
         Ok(Efx {
             version,
+            direct_slot,
             reverb,
             echo,
 
@@ -204,6 +223,17 @@ impl Efx {
     }
 }
 
+pub struct AuxiliaryEffectSlot(pub std::num::NonZero<ALuint>, Option<&'static Efx>);
+impl Drop for AuxiliaryEffectSlot {
+    fn drop(&mut self) {
+        if let Some(efx) = self.1 {
+            unsafe {
+                (efx.alDeleteAuxiliaryEffectSlots)(1, &self.0.clone().get() as *const ALuint);
+            }
+        }
+    }
+}
+
 pub struct Filter(pub std::num::NonZero<ALuint>, Option<&'static Efx>);
 impl Drop for Filter {
     fn drop(&mut self) {
@@ -214,6 +244,7 @@ impl Drop for Filter {
         }
     }
 }
+
 pub struct Effect(pub std::num::NonZero<ALuint>, Option<&'static Efx>);
 impl Drop for Effect {
     fn drop(&mut self) {
