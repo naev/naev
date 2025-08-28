@@ -144,7 +144,7 @@ impl Default for SolidUniform {
 
 #[allow(clippy::enum_variant_names)] // Remove when we add other messages
 #[derive(Clone)]
-pub enum Message {
+pub(crate) enum Message {
     DeleteBuffer(glow::NativeBuffer),
     DeleteVertexArray(glow::NativeVertexArray),
     DeleteProgram(glow::NativeProgram),
@@ -202,7 +202,7 @@ pub struct Dimensions {
 }
 
 #[rustfmt::skip]
-pub const fn ortho3( left: f32, right: f32, bottom: f32, top: f32 ) -> Matrix3<f32> {
+pub const fn ortho3(left: f32, right: f32, bottom: f32, top: f32) -> Matrix3<f32> {
     Matrix3::new(
         2.0/(right-left), 0.0,              -(right+left)/(right-left),
         0.0,              2.0/(top-bottom), -(top+bottom)/(top-bottom),
@@ -211,7 +211,7 @@ pub const fn ortho3( left: f32, right: f32, bottom: f32, top: f32 ) -> Matrix3<f
 }
 
 #[rustfmt::skip]
-pub const fn ortho4( left: f32, right: f32, bottom: f32, top: f32, near: f32, far: f32 ) -> Matrix4<f32> {
+pub const fn ortho4(left: f32, right: f32, bottom: f32, top: f32, near: f32, far: f32) -> Matrix4<f32> {
     Matrix4::new(
         2.0/(right-left),   0.0,  0.0, -(right+left)/(right-left),
         0.0,    2.0/(top-bottom), 0.0, -(top+bottom)/(top-bottom),

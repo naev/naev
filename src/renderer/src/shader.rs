@@ -72,7 +72,7 @@ impl Binding {
     fn apply(&self, gl: &glow::Context, program: glow::Program, name: &str) {
         match self {
             Self::Sampler(samplername, idx) => unsafe {
-                match gl.get_uniform_location(program, &samplername) {
+                match gl.get_uniform_location(program, samplername) {
                     Some(uniformid) => {
                         gl.uniform_1_i32(Some(&uniformid), *idx);
                     }
@@ -82,7 +82,7 @@ impl Binding {
                 }
             },
             Self::UniformBlock(uniformname, idx) => unsafe {
-                match gl.get_uniform_block_index(program, &uniformname) {
+                match gl.get_uniform_block_index(program, uniformname) {
                     Some(uniformid) => {
                         gl.uniform_block_binding(program, uniformid, *idx);
                     }
@@ -99,8 +99,8 @@ impl Binding {
 
     fn name(&self) -> &str {
         match self {
-            Self::Sampler(s, _) => &s,
-            Self::UniformBlock(s, _) => &s,
+            Self::Sampler(s, _) => s,
+            Self::UniformBlock(s, _) => s,
         }
     }
 }
@@ -192,7 +192,7 @@ impl ProgramSource {
             }
         }
         if unsafe { !gl.get_shader_compile_status(shader) } {
-            let buf = Self::shader_source_lines(&source);
+            let buf = Self::shader_source_lines(source);
             let slog = unsafe { gl.get_shader_info_log(shader) };
             warn!("{name}:\n{buf}\nFailed to compile shader '{name}': [[\n{slog}\n]]");
             return Err(anyhow::anyhow!("failed to compile shader program"));
@@ -233,11 +233,11 @@ impl ProgramSource {
         frag: &ShaderSource,
         bindings: &[Binding],
     ) -> Result<glow::Program> {
-        let mut vertdata = ShaderSource::to_string(&vert)?;
+        let mut vertdata = ShaderSource::to_string(vert)?;
         let mut fragdata = if vert == frag {
             vertdata.clone()
         } else {
-            ShaderSource::to_string(&frag)?
+            ShaderSource::to_string(frag)?
         };
 
         let version = {
@@ -246,8 +246,8 @@ impl ProgramSource {
         };
 
         if let Some(prepend) = prepend {
-            vertdata.insert_str(0, &prepend);
-            fragdata.insert_str(0, &prepend);
+            vertdata.insert_str(0, prepend);
+            fragdata.insert_str(0, prepend);
         }
         vertdata.insert_str(0, "#define VERT 1\n");
         fragdata.insert_str(0, "#define FRAG 1\n");
@@ -266,7 +266,7 @@ impl ProgramSource {
             Some(name) => name,
             None => &format!("{}-{}", &vertname, &fragname),
         };
-        let program = Self::link(gl, &name, vertshader, fragshader)?;
+        let program = Self::link(gl, name, vertshader, fragshader)?;
 
         unsafe {
             gl.use_program(Some(program));
@@ -338,14 +338,11 @@ impl ProgramSource {
         source: &ShaderSource,
         bindings: &[Binding],
     ) -> Result<glow::Program> {
-        let mut data = ShaderSource::to_string(&source)?;
+        let mut data = ShaderSource::to_string(source)?;
         if let Some(prepend) = prepend {
-            data.insert_str(0, &prepend);
+            data.insert_str(0, prepend);
         };
-        let name = match name {
-            Some(n) => n,
-            None => "UNKNOWN",
-        };
+        let name = name.unwrap_or("UNKNOWN");
 
         use naga::back::glsl;
         let options = glsl::Options {
@@ -419,9 +416,9 @@ impl ProgramSource {
             &format!("{} - Fragment", name),
             &fragdata,
         )?;
-        let program = Self::link(gl, &name, vertshader, fragshader)?;
+        let program = Self::link(gl, name, vertshader, fragshader)?;
 
-        Self::bind_wgsl(gl, &module, &vertrefl, &fragrefl, program, name, bindings)?;
+        Self::bind_wgsl(gl, &module, &vertrefl, fragrefl, program, name, bindings)?;
 
         Ok(program)
     }
