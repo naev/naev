@@ -3078,7 +3078,7 @@ static int cmp_int( const void *p1, const void *p2 )
 
 /**
  * @brief Marks a mission as completed.
-
+ *
  *    @param id ID of the mission to mark as completed.
  */
 void player_missionFinished( int id )

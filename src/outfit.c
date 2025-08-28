@@ -3171,7 +3171,7 @@ static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent )
 
 /**
  * @brief Parses and returns Outfit from parent node.
-
+ *
  *    @param temp Outfit to load into.
  *    @param file Path to the XML file (relative to base directory).
  *    @return 0 on success.
