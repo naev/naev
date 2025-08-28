@@ -247,7 +247,17 @@ impl Efx {
         })
     }
 
-    pub fn new_effect(&'static self) -> Result<Effect> {
+    pub fn new_auxiliary_effect_slot(&self) -> Result<AuxiliaryEffectSlot> {
+        let id: ALuint = 0;
+        unsafe { (self.alGenAuxiliaryEffectSlots)(1, &id) };
+        let id = match std::num::NonZero::new(id) {
+            Some(v) => v,
+            None => anyhow::bail!("failed to create Efx auxliary effect slot"),
+        };
+        Ok(AuxiliaryEffectSlot(id))
+    }
+
+    pub fn new_effect(&self) -> Result<Effect> {
         let id: ALuint = 0;
         unsafe { (self.alGenEffects)(1, &id) };
         let id = match std::num::NonZero::new(id) {
@@ -255,6 +265,16 @@ impl Efx {
             None => anyhow::bail!("failed to create Efx effect"),
         };
         Ok(Effect(id))
+    }
+
+    pub fn new_filter(&self) -> Result<Filter> {
+        let id: ALuint = 0;
+        unsafe { (self.alGenFilters)(1, &id) };
+        let id = match std::num::NonZero::new(id) {
+            Some(v) => v,
+            None => anyhow::bail!("failed to create Efx filter"),
+        };
+        Ok(Filter(id))
     }
 }
 
