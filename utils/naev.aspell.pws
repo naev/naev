@@ -20,6 +20,7 @@ shader
 GLSL
 Preprocesses
 preprocessing
+preprocessed
 preprocess
 bsearch
 prepended
@@ -49,6 +50,7 @@ Barebones
 blit
 Blits
 blitting
+blitted
 boardability
 booleans
 callee
@@ -186,6 +188,7 @@ selectable
 scrollbar
 rolloff
 fader
+faders
 globals
 sqrt
 unboards
@@ -196,3 +199,21 @@ reticle
 reticles
 recomputation
 macOS
+Juergen
+Quade
+libc
+POSIX
+glibc
+mutex
+whitepaper
+Apez
+MPS
+UI
+Dvaered
+cutscene
+Keer
+Doxygen
+modelled
+radiosity
+gzipped
+merchantability
