@@ -178,8 +178,8 @@ impl Efx {
         let reverb = new_effect(alGenEffects)?;
         let echo = new_effect(alGenEffects)?;
         unsafe {
-            alEffecti(reverb.0.clone().get(), AL_EFFECT_TYPE, AL_EFFECT_REVERB);
-            let e = echo.0.clone().get();
+            alEffecti(reverb.0.get(), AL_EFFECT_TYPE, AL_EFFECT_REVERB);
+            let e = echo.0.get();
             alEffecti(e, AL_EFFECT_TYPE, AL_EFFECT_ECHO);
             alEffectf(e, AL_ECHO_DELAY, 0.207);
             alListenerf(AL_METERS_PER_UNIT, 5.);
@@ -232,20 +232,20 @@ impl Efx {
 pub struct AuxiliaryEffectSlot(pub std::num::NonZero<ALuint>);
 impl Drop for AuxiliaryEffectSlot {
     fn drop(&mut self) {
-        crate::message_push(crate::Message::DeleteAuxiliaryEffectSlot(self.0.clone()));
+        crate::message_push(crate::Message::DeleteAuxiliaryEffectSlot(self.0));
     }
 }
 
 pub struct Filter(pub std::num::NonZero<ALuint>);
 impl Drop for Filter {
     fn drop(&mut self) {
-        crate::message_push(crate::Message::DeleteFilter(self.0.clone()));
+        crate::message_push(crate::Message::DeleteFilter(self.0));
     }
 }
 
 pub struct Effect(pub std::num::NonZero<ALuint>);
 impl Drop for Effect {
     fn drop(&mut self) {
-        crate::message_push(crate::Message::DeleteEffect(self.0.clone()));
+        crate::message_push(crate::Message::DeleteEffect(self.0));
     }
 }

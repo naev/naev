@@ -304,10 +304,10 @@ impl Device {
     }
 
     pub fn is_extension_present(&self, extname: &CStr) -> bool {
-        match unsafe { alcIsExtensionPresent(self.raw(), extname.as_ptr()) } {
-            ALC_TRUE => true,
-            _ => false,
-        }
+        matches!(
+            unsafe { alcIsExtensionPresent(self.raw(), extname.as_ptr()) },
+            ALC_TRUE
+        )
     }
 
     pub fn get_parameter_str(&self, parameter: ALCenum) -> &'static str {

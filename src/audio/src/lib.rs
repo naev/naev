@@ -51,11 +51,8 @@ pub(crate) fn message_push(msg: Message) {
 
 #[inline]
 pub(crate) fn check_error() {
-    match al::is_error() {
-        Some(e) => {
-            warn_err!(e);
-        }
-        None => (),
+    if let Some(e) = al::is_error() {
+        warn_err!(e);
     }
 }
 
@@ -93,8 +90,7 @@ impl AudioBuffer {
         let mut hint = Hint::new();
         if let Some(ext) = std::path::Path::new(path)
             .extension()
-            .map(|s| s.to_str())
-            .flatten()
+            .and_then(|s| s.to_str())
         {
             hint.with_extension(ext);
         }
@@ -200,10 +196,10 @@ impl AudioBuffer {
                     }
                 }
             }
-            let left = buffers.iter().map(|b| b.chan(0).to_vec()).flatten();
+            let left = buffers.iter().flat_map(|b| b.chan(0).to_vec());
             let data: Vec<_> = match stereo {
                 true => {
-                    let right = buffers.iter().map(|b| b.chan(1).to_vec()).flatten();
+                    let right = buffers.iter().flat_map(|b| b.chan(1).to_vec());
                     left.chain(right).collect()
                 }
                 false => left.collect(),
@@ -373,10 +369,10 @@ impl AudioSystem {
             None
         };
 
-        let voices: Vec<_> = [0..NUM_VOICES]
+        let voices: Vec<_> = (0..NUM_VOICES)
+            .collect::<std::vec::Vec<usize>>()
             .iter()
-            .map(|_| al::Source::new())
-            .flatten()
+            .flat_map(|_| al::Source::new())
             .collect();
         for v in &voices {
             v.parameter_f32(AL_REFERENCE_DISTANCE, REFERENCE_DISTANCE);
@@ -386,7 +382,7 @@ impl AudioSystem {
             if let Some(efx) = &efx {
                 v.parameter_3_i32(
                     AL_AUXILIARY_SEND_FILTER,
-                    efx.direct_slot.0.clone().get() as i32,
+                    efx.direct_slot.0.get() as i32,
                     0,
                     AL_FILTER_NULL,
                 );
