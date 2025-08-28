@@ -1,5 +1,7 @@
 #![allow(dead_code, unused_imports, unused_variables)]
+mod efx;
 mod openal;
+use crate::efx::*;
 use crate::openal as al;
 use crate::openal::al_types::*;
 use crate::openal::alc_types::*;
@@ -10,8 +12,8 @@ use gettext::gettext;
 use log::{debug, debugx, warn, warn_err};
 use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
 use std::ffi::{CStr, CString};
-use std::sync::atomic::{AtomicPtr, Ordering};
 use std::sync::Arc;
+use std::sync::atomic::{AtomicPtr, Ordering};
 
 const NUM_VOICES: usize = 64;
 const REFERENCE_DISTANCE: f32 = 500.;
@@ -47,7 +49,7 @@ struct AudioBuffer {
 impl AudioBuffer {
     fn from_path(path: &str) -> Result<Self> {
         use symphonia::core::audio::{AudioBuffer, Channels, SampleBuffer, Signal};
-        use symphonia::core::codecs::{CodecParameters, Decoder, DecoderOptions, CODEC_TYPE_NULL};
+        use symphonia::core::codecs::{CODEC_TYPE_NULL, CodecParameters, Decoder, DecoderOptions};
         use symphonia::core::errors::Error;
         use symphonia::core::formats::{FormatOptions, FormatReader, Track};
         use symphonia::core::io::MediaSourceStream;
@@ -297,9 +299,7 @@ pub struct AudioSystem {
 
     freq: i32,
     output_limiter: bool,
-    efx: Option<(i32, i32)>,
-    efx_reverb: bool,
-    efx_echo: bool,
+    efx: Option<Efx>,
 
     voices: Vec<al::Source>,
 }
@@ -308,7 +308,7 @@ impl AudioSystem {
         let device = al::Device::new(None)?;
 
         let mut attribs: Vec<ALint> = vec![ALC_MONO_SOURCES, 512, ALC_STEREO_SOURCES, 32];
-        let efx = match unsafe { naevc::conf.al_efx } {
+        let has_efx = match unsafe { naevc::conf.al_efx } {
             0 => false,
             _ => match device.is_extension_present(ALC_EXT_EFX_NAME) {
                 true => {
@@ -336,13 +336,9 @@ impl AudioSystem {
         let nmono = device.get_parameter_i32(ALC_MONO_SOURCES);
         let nstereo = device.get_parameter_i32(ALC_STEREO_SOURCES);
 
-        let mut efx_reverb = false;
-        let mut efx_echo = false;
-        let efx_version = if efx {
-            Some((
-                device.get_parameter_i32(ALC_EFX_MAJOR_VERSION),
-                device.get_parameter_i32(ALC_EFX_MINOR_VERSION),
-            ))
+        #[allow(non_snake_case)]
+        let efx = if has_efx {
+            Some(Efx::new(&device)?)
         } else {
             None
         };
@@ -357,7 +353,9 @@ impl AudioSystem {
             v.parameter_f32(AL_MAX_DISTANCE, MAX_DISTANCE);
             v.parameter_f32(AL_ROLLOFF_FACTOR, 1.);
 
-            if efx {}
+            if efx.is_some() {
+                //device.parameter_3_i32( AL_AUXILIARY_SEND_FILTER, direct, 0, AL_FILTER_NULL );
+            }
         }
 
         unsafe {
@@ -366,12 +364,12 @@ impl AudioSystem {
 
         debugx!(gettext("OpenAL started: {} Hz"), freq);
         debugx!(gettext("Renderer: %s"), al::get_parameter_str(AL_RENDERER));
-        if let Some((major, minor)) = efx_version {
+        if let Some(efx) = &efx {
             debugx!(
                 gettext("Version: {} with EFX {}.{}"),
                 al::get_parameter_str(AL_VERSION),
-                major,
-                minor
+                efx.version.0,
+                efx.version.1
             );
         } else {
             debugx!(
@@ -391,9 +389,7 @@ impl AudioSystem {
 
             freq,
             output_limiter,
-            efx: efx_version,
-            efx_reverb,
-            efx_echo,
+            efx,
 
             voices,
         })

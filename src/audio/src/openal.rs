@@ -246,6 +246,8 @@ unsafe extern "C" {
     pub fn alDopplerFactor(dopplerFactor: ALfloat);
     pub fn alDopplerVelocity(dopplerVelocity: ALfloat);
     pub fn alSpeedOfSound(speed: ALfloat);
+
+    pub fn alGetProcAddress(fname: *const ALchar) -> *mut ALvoid;
 }
 
 // === efx.h ===

@@ -3815,6 +3815,7 @@ src/array.rs
 src/asteroid.c
 src/asteroid.h
 src/attributes.h
+src/audio/src/efx.rs
 src/audio/src/lib.rs
 src/audio/src/openal.rs
 src/background.c

@@ -12,6 +12,7 @@ subdir('toolkit')
 source_rust = files(
    'audio/src/lib.rs',
    'audio/src/openal.rs',
+   'audio/src/efx.rs',
    'core/src/lib.rs',
    'core/src/ntime.rs',
    'core/src/nxml.rs',
