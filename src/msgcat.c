@@ -3,7 +3,7 @@
  * @file msgcat.c
  *
  * @brief Message catalog lookup and plural-form evaluation subroutines.
- *        This implementation comes from musl. See below for details and copyright info.
+ *        This implementation comes from "musl". See below for details and copyright info.
  */
 
 

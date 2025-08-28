@@ -2313,7 +2313,7 @@ static int playerL_fleetCargoList( lua_State *L )
  * Note that this does not get licenses.
  *
  *    @luatreturn table A table containing inventory items in the form of
- * subtables with a "name" and "quantity" field.
+ * sub-tables with a "name" and "quantity" field.
  * @luafunc inventory
  */
 static int playerL_inventory( lua_State *L )
@@ -2658,7 +2658,7 @@ static int playerL_chapterSet( lua_State *L )
  *    @luatparam[opt] string key Hotkey for using the button without it being
  * focused.
  *    @luatreturn number ID of the info window button for use with
- * player.infoButtonUnregister.
+ * `player.infoButtonUnregister`.
  * @luafunc infoButtonRegister
  */
 static int playerL_infoButtonRegister( lua_State *L )
@@ -2776,7 +2776,7 @@ static int playerL_gameover( lua_State *L )
  *    @luatreturn Returns a table containing the different start information as
  * keys and the corresponding information as values. Fields include things such
  * as "name" for the campaign name, "ship" for the starting ship, "shipname" for
- * the starting shp name, etc. Please refer to `dat/start.xml` for more details
+ * the starting ship name, etc. Please refer to "dat/start.xml" for more details
  * of available fields.
  * @luafunc start
  */

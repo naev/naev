@@ -1318,8 +1318,8 @@ static int pilotL_getEnemies( lua_State *L )
 /**
  * @brief Gets visible pilots to a pilot.
  *
- * @note This function can not use quadtrees and is much slower than `getEnemies`,
- * `getAllies`, or `getInrange`.
+ * @note This function can not use quadtrees and is much slower than
+ * `getEnemies`, `getAllies`, or `getInrange`.
  *
  *    @luatparam Pilot pilot Pilot to get visible pilots of.
  *    @luatparam[opt=false] boolean disabled Whether or not to count disabled
@@ -3448,7 +3448,8 @@ static int pilotL_setVisplayer( lua_State *L )
 /**
  * @brief Marks the pilot as always visible for other pilots.
  *
- * This cancels out electronic warfare visibility ranges and affects every pilot.
+ * This cancels out electronic warfare visibility ranges and affects every
+ * pilot.
  *
  * @usage p:setVisible( true )
  *

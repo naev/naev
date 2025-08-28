@@ -355,8 +355,8 @@ void missions_run( MissionAvailability loc, int faction, const Spob *pnt,
 /**
  * @brief Starts a mission.
  *
- *  Mission must still call misn.accept() to actually get added to the player's
- * active missions.
+ *  Mission must still call `misn.accept()` to actually get added to the
+ * player's active missions.
  *
  *    @param name Name of the mission to start.
  *    @param[out] id ID of the newly created mission.

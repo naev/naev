@@ -758,7 +758,7 @@ static int hookL_shipswap( lua_State *L )
  *
  * It returns the name of the key being pressed like "accel" and whether or not
  * it's a press.<br/> <br/> Functions should be in format:<br/> function f(
- * inputname, inputpress, args )
+ * `inputname`, `inputpress`, `args` )
  *
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
@@ -796,7 +796,8 @@ static int hookL_mouse( lua_State *L )
  *
  * The parameters passed to the function are faction whose standing is being
  * changed and the amount changed:<br/>
- * function f( faction, change, system, secondary, primary_fct, args )
+ * function f( `faction`, `change`, `system`, `secondary`, `primary_fct`, `args`
+ * )
  *
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
@@ -855,7 +856,8 @@ static int hookL_asteroidScan( lua_State *L )
  * player.pay() (the Lua function only).
  *
  * The amount paid (or taken from the player) and reason (which is nil by
- * default) is passed as a parameter:<br/> function f( amount, reason, args )
+ * default) is passed as a parameter:<br/> function f( `amount`, `reason`,
+ * `args` )
  *
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
@@ -896,7 +898,8 @@ static int hookL_safe( lua_State *L )
  * it continues forever.
  *
  * The current delta-tick (time passed in game) and real delta-tick (independent
- * of game status) are passed as parameters:<br/> function f( dt, real_dt, args
+ * of game status) are passed as parameters:<br/> function f( `dt`, `real_dt`,
+ * `args`
  * )
  *
  *    @luatparam string funcname Name of function to run when hook is triggered.
@@ -1043,13 +1046,16 @@ static int hookL_custom( lua_State *L )
  * all pilots.<br /> <br /> DO NOT DO UNSAFE THINGS IN PILOT HOOKS. THIS MEANS
  * STUFF LIKE player.teleport(). IF YOU HAVE DOUBTS USE A "safe" HOOK.<br /> <br
  * /> These hooks all pass the pilot triggering the hook as a parameter, so they
- * should have the structure of: <p> function my_hook( pilot, arg )<br /> end
+ * should have the structure of:
+ * <p>
+ *    function my_hook( pilot, argument )<br />
+ *    end
  * </p>
  * The combat hooks also pass the pilot acting on it, so for example the pilot
  *  that disabled, attacked or killed the selected pilot. They have the
  *  following format:
  * <p>
- *    function combat_hook( pilot, attacker, arg )<br />
+ *    function combat_hook( pilot, attacker, argument )<br />
  *    end
  * </p>
  * Please note that in the case of disable or death hook the attacker may be nil
@@ -1059,20 +1065,20 @@ static int hookL_custom( lua_State *L )
  * The land and jump hooks also pass the spob or jump point the pilot is
  * landing at or jumped from, respectively:
  * <p>
- *    function land_hook( pilot, spob, arg )<br />
+ *    function land_hook( pilot, spob, argument )<br />
  *    end
  * </p>
  * <p style="margin-bottom: 0">
- *    function jump_hook( pilot, jump_point, arg )<br />
+ *    function jump_hook( pilot, jump_point, argument )<br />
  *    end
  * </p>
  * The stealth hook passes whether or not the ship is stealthing or destealthing
- * as a boolean: <p> function stealth_hook( pilot, status, arg )<br /> end
+ * as a boolean: <p> function stealth_hook( pilot, status, argument )<br /> end
  * </p>
  *    @luatparam Pilot|nil pilot Pilot identifier to hook (or nil for all).
  *    @luatparam string type One of the supported hook types.
  *    @luatparam string funcname Name of function to run when hook is triggered.
- *    @luaparam arg Argument to pass to hook.
+ *    @luaparam argument Argument to pass to hook.
  *    @luatreturn number Hook identifier.
  * @luafunc pilot
  */

@@ -493,9 +493,9 @@ int threadpool_init( void )
  * @brief Creates a new vpool queue.
  *
  * This is just an interface to make running a number of jobs and then wait for
- *  them to finish more pleasant. You should not nest `vpools` as of now as there
- *  are only a limit number of worker threads and we can't have them wait for a
- *  thread to finish that doesn't exist.
+ *  them to finish more pleasant. You should not nest `vpools` as of now as
+ * there are only a limit number of worker threads and we can't have them wait
+ * for a thread to finish that doesn't exist.
  *
  * If you really want to sort of nest `vpools`, you should start a new thread
  *  instead of using the threadpool. I might add a vpool_waitInANewThread

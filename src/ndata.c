@@ -4,10 +4,10 @@
 /**
  * @file ndata.c
  *
- * @brief Wrappers to set up and access game assets (mounted via PhysicsFS).
- *        We choose our underlying directories in ndata_setupWriteDir() and
- * ndata_setupReadDirs(). However, conf.c code may have seeded the search path
- * based on command-line arguments.
+ * @brief Wrappers to set up and access game assets (mounted via "PhysicsFS").
+ *        We choose our underlying directories in `ndata_setupWriteDir()` and
+ * `ndata_setupReadDirs()`. However, "conf.c" code may have seeded the search
+ * path based on command-line arguments.
  */
 /** @cond */
 #include <stdlib.h>

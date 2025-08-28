@@ -2951,16 +2951,16 @@ void map_setZoom( unsigned int wid, double zoom )
  * @brief Gets the jump path between two systems.
  *
  *    @param sysstart Name of the system to start from.
- *    @param posstart Position to start from. (Ignored it if old_data != NULL or
- * posstart == NULL.
+ *    @param posstart Position to start from. (Ignored it if `old_data != NULL`
+ * or `posstart == NULL`.
  *    @param sysend Name of the system to end at.
  *    @param ignore_known Whether or not to ignore if systems and jump points
  * are known.
  *    @param show_hidden Whether or not to use hidden jumps points.
  *    @param old_data the old path (if we're merely extending)
  *    @param o_distance output the sum of the distances to go across the systems
- * if it's not NULL.
- *    @return Array (array.h): the systems in the path. NULL on failure.
+ * if it's not `NULL`.
+ *    @return Array ("array.h"): the systems in the path. `NULL` on failure.
  */
 StarSystem **map_getJumpPath( StarSystem *sysstart, const vec2 *posstart,
                               StarSystem *sysend, int ignore_known,

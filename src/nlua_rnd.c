@@ -123,9 +123,10 @@ static int rndL_sigma( lua_State *L )
 /**
  * @brief Creates a number in the two-sigma range [-2:2].
  *
- * This function behaves much like the rnd.sigma function but uses the two-sigma
- * range, meaning that numbers are in the 95% quadrant and thus are much more
- * random.  They are biased towards 0 and approximately 63% will be within
+ * This function behaves much like the `rnd.sigma` function but uses the
+ * two-sigma range, meaning that numbers are in the 95% quadrant and thus are
+ * much more random.  They are biased towards 0 and approximately 63% will be
+ * within
  * [-1:1].  The rest will be in either the [-2:-1] range or the [1:2] range.
  *
  * @usage n = 5.5 + rnd.twosigma()/4. -- Creates a number from 5 to 6 heavily
@@ -142,8 +143,8 @@ static int rndL_twosigma( lua_State *L )
 /**
  * @brief Creates a number in the three-sigma range [-3:3].
  *
- * This function behaves much like its brothers rnd.sigma and rnd.twosigma.  The
- * main difference is that it uses the three-sigma range which is the 99%
+ * This function behaves much like its sisters `rnd.sigma` and `rnd.twosigma`.
+ * The main difference is that it uses the three-sigma range which is the 99%
  * quadrant.  It will rarely generate numbers outside the [-2:2] range (about 5%
  * of the time) and create numbers outside of the [-1:1] range about 37% of the
  * time.  This can be used when you want extremes to appear rarely.
@@ -209,7 +210,7 @@ static int rndL_angle( lua_State *L )
 /**
  * @brief Creates a random permutation
  *
- * This creates a list from 1 to input and then randomly permutates it,
+ * This creates a list from 1 to input and then randomly permutes it,
  * however, if an ordered table is passed as a parameter, that is randomly
  * permuted instead.
  *

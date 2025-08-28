@@ -572,7 +572,7 @@ static char **map_outfitsMatch( const char *name )
 }
 /**
  * @brief Add widgets to the extended area on the outfit search
- *    listpanel.
+ *    list panel.
  *
  *    @param wid_results The ID of the Search Results window we're populating
  *    @param x The x offset where we can start drawing

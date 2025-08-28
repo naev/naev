@@ -552,8 +552,8 @@ static int misn_markerRm( lua_State *L )
  * the ones found in GFX_PATH/portraits. (For GFX_PATH/portraits/none.webp
  * you would use "none.webp".)
  *
- * Note that this NPC will disappear when either `misn.accept()` or `misn.finish()`
- * is called.
+ * Note that this NPC will disappear when either `misn.accept()` or
+ * `misn.finish()` is called.
  *
  * @usage misn.setNPC( "Invisible Man", "none.webp", _("You see a levitating mug
  * drain itself.") )

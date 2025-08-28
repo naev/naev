@@ -340,7 +340,7 @@ static int naevL_fps( lua_State *L )
  * @usage bindname = naev.keyGet( "accel" )
  *
  *    @luatparam string keyname Name of the keybinding to get value of. Valid
- * values are listed in src/input.c: keybind_info.
+ * values are listed in "src/input.c": `keybind_info`.
  * @luafunc keyGet
  */
 static int naevL_keyGet( lua_State *L )
@@ -442,7 +442,7 @@ static int naevL_missionList( lua_State *L )
  * @usage naev.missionStart( "Some Mission" )
  *    @luatparam string misnname Name of the mission to start.
  *    @luatreturn boolean true if mission was either accepted, or started
- * without misn.finish() getting called in create.
+ * without `misn.finish()` getting called in create.
  *    @luatreturn boolean true whether or not the mission was accepted.
  * @luafunc missionStart
  */
@@ -466,7 +466,7 @@ static int naevL_missionStart( lua_State *L )
  * player.
  *
  * Note that this tests the Lua conditionals, not the create function, so it may
- * be possible that even though naev.missionTest returns true, the player can
+ * be possible that even though `naev.missionTest` returns true, the player can
  * still not start the mission.
  *
  * @usage naev.missionTest( "Some Mission" )
