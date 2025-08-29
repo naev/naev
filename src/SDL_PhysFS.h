@@ -67,9 +67,9 @@ SDL_IOStream *SDL_PhysFS_OpenIO(PHYSFS_File *handle);
 
 #ifndef SDL_PhysFS_IMG_Load
 /**
- * Load an image through PhysFS with SDL_image.
+ * Load an image through PhysFS with `SDL_image`.
  *
- * @param filename A `const char*` representing the file to load from `PhysFS`.
+ * @param filename A `const char*` representing the file to load from PhysFS.
  *
  * @return SDL_Surface*, or NULL on failure. Use `SDL_GetError()` to get more information.
  */
@@ -93,7 +93,7 @@ SDL_IOStream *SDL_PhysFS_OpenIO(PHYSFS_File *handle);
 
 #ifndef SDL_PhysFS_Mix_LoadMUS
 /**
- * Load a supported audio format with SDL_mixer into a music object through PhysFS.
+ * Load a supported audio format with `SDL_mixer` into a music object through PhysFS.
  *
  * @param filename A `const char*` representing the file to load from "PhysFS".
  *
@@ -106,9 +106,9 @@ SDL_IOStream *SDL_PhysFS_OpenIO(PHYSFS_File *handle);
 
 #ifndef SDL_PhysFS_TTF_OpenFont
 /**
- * Load a font with SDL_ttf from PhysFS, at the given size.
+ * Load a font with `SDL_ttf` from PhysFS, at the given size.
  *
- * @param filename A const char* representing the file to load from PhysFS.
+ * @param filename A `const char*` representing the file to load from `PhysFS`.
  * @param ptsize Integer point size to use for the newly-opened font
  *
  * @return TTF_Font*, or NULL on failure.
@@ -509,7 +509,7 @@ SDL_IOStream *SDL_PhysFS_OpenIO(PHYSFS_File *handle) {
 }
 
 /**
- * Loads a SDL_IOStream from the given filename in PhysFS.
+ * Loads a `SDL_IOStream` from the given filename in PhysFS.
  *
  * @param filename The filename to load from PhysFS.
  *

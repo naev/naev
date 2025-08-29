@@ -151,6 +151,7 @@ overridden
 pathfinding
 PBR
 Perlin
+PhysFS
 png
 Poetra
 POSIX
@@ -160,9 +161,7 @@ preprocess
 preprocessed
 Preprocesses
 preprocessing
-printf
 qsort
-qsorting
 Quade
 quadtree
 quadtrees
@@ -215,6 +214,7 @@ teleporting
 teleports
 tex
 thrusters
+titlescreen
 TK
 TODO
 toggleable
@@ -240,8 +240,6 @@ VBO
 VBO's
 viewport
 Vorbis
-vsnprintf
-vsprintf
 WASD
 wav
 waypoint

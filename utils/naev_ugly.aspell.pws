@@ -8,7 +8,6 @@ Colouring
 colourized
 colours
 colourspace
-const
 dataname
 desc
 displayname
@@ -76,8 +75,6 @@ Optim
 packfile
 pathname
 pcall
-physfs
-PhysFS
 PhysicsFS
 pilotoutfit
 PilotOutfit
@@ -114,7 +111,6 @@ textinput
 tget
 threadpool
 thresholding
-titlescreen
 tk
 tolstring
 trackmax

@@ -438,7 +438,8 @@ static int systemL_interference( lua_State *L )
  *
  * @usage d = sys:jumpDist() -- Distance the current system to `sys`.
  * @usage d = sys:jumpDist( "Draygar" ) -- Distance from `sys` to `"Draygar"`.
- * @usage d = sys:jumpDist( another_sys ) -- Distance from `sys` to `another_sys`.
+ * @usage d = sys:jumpDist( another_sys ) -- Distance from `sys` to
+ * `another_sys`.
  *
  *    @luatparam System s Starting system.
  *    @luatparam nil|string|system goal Goal system parameter, see description.

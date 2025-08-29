@@ -218,8 +218,8 @@ static int fontL_width( lua_State *L )
  *
  *    @luatparam Font font Font to set filter.
  *    @luatparam string min Minification filter (`"nearest"` or `"linear"`)
- *    @luatparam[opt] string mag Magnification filter (`"nearest"` or `"linear"`).
- * Defaults to min.
+ *    @luatparam[opt] string mag Magnification filter (`"nearest"` or
+ * `"linear"`). Defaults to min.
  * @luafunc setFilter
  */
 static int fontL_setFilter( lua_State *L )

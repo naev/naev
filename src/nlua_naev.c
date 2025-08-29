@@ -190,8 +190,8 @@ static int naevL_versionTest( lua_State *L )
 /**
  * @brief Gets the current language locale.
  *
- *    @luatreturn string Current language locale (such as `"en"` for English, `"de"`
- * for German, or `"ja"` for Japanese).
+ *    @luatreturn string Current language locale (such as `"en"` for English,
+ * `"de"` for German, or `"ja"` for Japanese).
  * @luafunc language
  */
 static int naevL_language( lua_State *L )

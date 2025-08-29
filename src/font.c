@@ -638,7 +638,8 @@ static uint32_t font_nextChar( const char *s, size_t *i )
  *    @param x X position to put text at.
  *    @param y Y position to put text at.
  *    @param c Colour to use (uses white if `NULL`)
- *    @param outlineR Radius in pixels of outline (`-1` for default, `0` for none)
+ *    @param outlineR Radius in pixels of outline (`-1` for default, `0` for
+ * none)
  *    @param text String to display.
  */
 void gl_printRaw( const glFont *ft_font, double x, double y, const glColour *c,
@@ -710,7 +711,7 @@ void gl_printMarkerRaw( const glFont *ft_font, double x, double y,
 }
 
 /**
- * @brief Prints text on screen like printf.
+ * @brief Prints text on screen like `printf`.
  *
  * Defaults `ft_font` to `gl_defFont` if `NULL`.
  *
@@ -718,7 +719,7 @@ void gl_printMarkerRaw( const glFont *ft_font, double x, double y,
  *    @param x X position to put text at.
  *    @param y Y position to put text at.
  *    @param c Colour to use (uses white if NULL)
- *    @param fmt String formatted like printf to print.
+ *    @param fmt String formatted like `printf` to print.
  */
 void gl_print( const glFont *ft_font, const double x, const double y,
                const glColour *c, const char *fmt, ... )
@@ -855,7 +856,7 @@ int gl_printMidRaw( const glFont *ft_font, int width, double x, double y,
  *    @param x X position to display text at.
  *    @param y Y position to display text at.
  *    @param c Colour to use for text (NULL defaults to white).
- *    @param fmt Text to display formatted like printf.
+ *    @param fmt Text to display formatted like `printf`.
  *    @return The number of characters it had to truncate.
  */
 int gl_printMid( const glFont *ft_font, const int width, double x, double y,
@@ -947,7 +948,7 @@ int gl_printTextRaw( const glFont *ft_font, const int width, const int height,
  *    @param by Y position to display text at.
  *    @param line_height Height of each line to print.
  *    @param c Colour to use (NULL defaults to white).
- *    @param fmt Text to display formatted like printf.
+ *    @param fmt Text to display formatted like `printf`.
  *    @return 0 on success.
  * prints text with line breaks included to a maximum width and height preset
  */
@@ -1074,7 +1075,7 @@ int gl_printHeightRaw( const glFont *ft_font, const int width,
  *
  *    @param ft_font Font to use (`NULL` defaults to `gl_defFont`).
  *    @param width Width to jump to next line once reached.
- *    @param fmt Text to get the height of in printf format.
+ *    @param fmt Text to get the height of in `printf` format.
  *    @return The height of the text.
  */
 int gl_printHeight( const glFont *ft_font, const int width, const char *fmt,
@@ -1224,7 +1225,7 @@ int gl_printLinesRaw( const glFont *ft_font, const int width, const char *text )
  *
  *    @param ft_font Font to use (`NULL` defaults to `gl_defFont`).
  *    @param width Width to jump to next line once reached.
- *    @param fmt Text to get the height of in printf format.
+ *    @param fmt Text to get the height of in `printf` format.
  *    @return The number of lines of he text.
  */
 int gl_printLines( const glFont *ft_font, const int width, const char *fmt,

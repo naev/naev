@@ -65,7 +65,6 @@ readarray -t WORDS <<< "$(
    #sed 's/\([a-z]\)\([A-Z]\)/\1 \2/g'
 )"
 
-echo "${WORDS[@]}" >&2
 MARK="33;44;1"
 E=$'\e'
 
@@ -75,6 +74,8 @@ EXPR="${WS// /\\)\\|\\(}"
 if [ -z "${EXPR[*]}" ] ; then
    exit 0
 fi
+
+echo "${WORDS[@]}" >&2
 
 SEPE="[$SEP]"
 EXPR='\(\(^\|'"$SEPE"'\)\(\('"$EXPR"'\)\)\($\|'"$SEPE"'\)\)'
@@ -95,6 +96,7 @@ grep -v -e '^$' -e '^[^:]*:$'                      |
 tee >(cut '-d:' -f1 > "$TMP")                      |
 cut '-d:' -f2-                                     |
 filter                                             |
+#TODO: substitute ' ' by '_' in `...` expr
 sed 's/'"$EXPR"'/'"$E"'['"$MARK"'m\1'"$E"'[0m/g'   |
 paste '-d:' "$TMP" -                               |
 grep "$E"                                          |

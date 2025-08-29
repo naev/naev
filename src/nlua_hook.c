@@ -756,9 +756,9 @@ static int hookL_shipswap( lua_State *L )
 /**
  * @brief Hooks the function to the player pressing any input.
  *
- * It returns the name of the key being pressed like `"accel"` and whether or not
- * it's a press.<br/> <br/> Functions should be in format:
- * <br/> `function f(inputname, inputpress, args)`
+ * It returns the name of the key being pressed like `"accel"` and whether or
+ * not it's a press. <br/> <br/> Functions should be in format: <br/>
+ * `function f(inputname, inputpress, args)`
  *
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.

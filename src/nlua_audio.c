@@ -477,8 +477,8 @@ static int audio_genSource( ALuint *source )
  * @brief Creates a new audio source.
  *
  *    @luatparam string|File data Data to load the audio from.
- *    @luatparam[opt="static"] string  Either `"static"` to load the entire source
- * at the start, or `"stream"` to load it in real time.
+ *    @luatparam[opt="static"] string  Either `"static"` to load the entire
+ * source at the start, or `"stream"` to load it in real time.
  *    @luatreturn Audio New audio corresponding to the data.
  * @luafunc new
  */

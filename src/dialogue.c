@@ -124,7 +124,7 @@ static void dialogue_cancel( unsigned int wid, const char *str )
 /**
  * @brief Displays an alert popup with only an ok button and a message.
  *
- *    @param fmt Printf style message to display.
+ *    @param fmt `printf`-style message to display.
  */
 void dialogue_alert( const char *fmt, ... )
 {
@@ -221,7 +221,7 @@ static glFont *dialogue_getSize( const char *title, const char *msg, int *width,
  * @brief Opens a dialogue window with an ok button and a message.
  *
  *    @param caption Window title.
- *    @param fmt Printf style message to display.
+ *    @param fmt `printf`-style message to display.
  */
 void dialogue_msg( const char *caption, const char *fmt, ... )
 {
@@ -242,7 +242,7 @@ void dialogue_msg( const char *caption, const char *fmt, ... )
  *
  *    @param caption Window title.
  *    @param img Path of the image file to display.
- *    @param fmt Printf style message to display.
+ *    @param fmt `printf`-style message to display.
  */
 void dialogue_msgImg( const char *caption, const char *img, const char *fmt,
                       ... )
@@ -345,7 +345,7 @@ void dialogue_msgImgRaw( const char *caption, const char *msg, const char *img,
  * @brief Runs a dialogue with both yes and no options.
  *
  *    @param caption Caption to use for the dialogue.
- *    @param fmt Printf style message.
+ *    @param fmt `printf`-style message.
  *    @return 1 if yes is clicked or 0 if no is clicked.
  */
 int dialogue_YesNo( const char *caption, const char *fmt, ... )
@@ -434,7 +434,7 @@ static InputDialogue
  *    @param title Title of the dialogue window.
  *    @param min Minimum length of the message (must be non-zero).
  *    @param max Maximum length of the message (must be non-zero).
- *    @param fmt Printf style message to display on the dialogue.
+ *    @param fmt `printf`-style message to display on the dialogue.
  *    @return The message the player typed or NULL if it was cancelled.
  */
 char *dialogue_input( const char *title, int min, int max, const char *fmt,
@@ -582,7 +582,7 @@ static void select_call_wrapper( unsigned int wid, const char *wgtname )
  *    @param items Items in the list (should be all allocated, automatically
  * freed).
  *    @param nitems Number of items.
- *    @param fmt printf formatted string with text to display.
+ *    @param fmt `printf`-formatted string with text to display.
  */
 int dialogue_list( const char *title, char **items, int nitems, const char *fmt,
                    ... )
@@ -633,7 +633,7 @@ int dialogue_listRaw( const char *title, char **items, int nitems,
  *    @param select_call This function is called when a new item in the list is
  *          selected, receiving the window's id and the selected widgets name
  *          as arguments.
- *    @param fmt printf formatted string with text to display.
+ *    @param fmt `printf`-formatted string with text to display.
  */
 int dialogue_listPanel(
    const char *title, char **items, int nitems, int extrawidth, int minheight,

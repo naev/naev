@@ -327,7 +327,7 @@ void player_messageRaw( const char *str )
 /**
  * @brief Adds a mesg to the queue to be displayed on screen.
  *
- *    @param fmt String with formatting like printf.
+ *    @param fmt String with formatting like `printf`.
  */
 void player_message( const char *fmt, ... )
 {

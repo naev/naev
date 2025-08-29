@@ -2297,10 +2297,11 @@ static int pilotL_weapsetAuto( lua_State *L )
  *  <li> active: Whether or not the outfit is active at the current time.</li>
  *  <li> weapset: The first weapon
  * set that the outfit appears in, if any. </li> <li> state: State of the
- * outfit, which can be one of `{ "off", "warmup", "on", "cooldown" }`. </li> <li>
- * duration: Set only if state is `"on"`. Indicates duration value (0 = just
- * finished, 1 = just on). </li> <li> cooldown: Set only if state is `"cooldown"`.
- * Indicates cooldown value (0 = just ending, 1 = just started cooling down).
+ * outfit, which can be one of `{ "off", "warmup", "on", "cooldown" }`. </li>
+ * <li> duration: Set only if state is `"on"`. Indicates duration value (0 =
+ * just finished, 1 = just on). </li> <li> cooldown: Set only if state is
+ * `"cooldown"`. Indicates cooldown value (0 = just ending, 1 = just started
+ * cooling down).
  * </li>
  * </ul>
  *
@@ -2482,8 +2483,8 @@ static int outfit_compareActive( const void *slot1, const void *slot2 )
  *
  *    @luatparam Pilot p Pilot to get outfits of.
  *    @luatparam[opt=nil] string What slot type to get outfits of. Can be either
- * nil, `"weapon"`, `"utility"`, `"structure"`, `"intrinsic"`, or `"all"`. nil implies
- * returning all non-intrinsic outfits.
+ * nil, `"weapon"`, `"utility"`, `"structure"`, `"intrinsic"`, or `"all"`. nil
+ * implies returning all non-intrinsic outfits.
  *    @luatparam[opt=false] boolean skip_locked Whether or not locked outfits
  * should be ignored.
  *    @luatreturn table The outfits of the pilot in an ordered list.

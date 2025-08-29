@@ -274,7 +274,7 @@ int nfile_fileExists( const char *path )
 /**
  * @brief Backup a file, if it exists.
  *
- *    @param path printf formatted string pointing to the file to backup.
+ *    @param path `printf`-formatted string pointing to the file to backup.
  *    @return 0 on success, or if file does not exist, -1 on error.
  */
 int nfile_backupIfExists( const char *path )

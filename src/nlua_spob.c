@@ -420,8 +420,8 @@ static int spobL_get( lua_State *L )
  * @usage p,s = spob.get( "Anecu" ) -- Gets spob by name
  * @usage p,s = spob.get( faction.get( "Empire" ) ) -- Gets random Empire spob
  * @usage p,s = spob.get(true) -- Gets completely random spob
- s* @usage p,s = spob.get( { faction.get("Empire"), faction.get("Dvaered") } ) --
- * Random spob belonging to Empire or Dvaered
+ * @usage p,s = spob.get( { faction.get("Empire"), faction.get("Dvaered") } )
+ * -- Random spob belonging to Empire or Dvaered
  *    @luatparam boolean|Faction|string|table param See description.
  *    @luatreturn Spob The matching spob.
  *    @luatreturn System The system it is in.
