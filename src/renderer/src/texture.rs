@@ -1137,8 +1137,7 @@ pub struct Framebuffer {
 }
 impl Drop for Framebuffer {
     fn drop(&mut self) {
-        let ctx = Context::get();
-        unsafe { ctx.gl.delete_framebuffer(self.framebuffer) };
+        crate::message_push(crate::Message::DeleteFramebuffer(self.framebuffer));
     }
 }
 impl Framebuffer {
