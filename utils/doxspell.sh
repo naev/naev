@@ -55,10 +55,10 @@ DOXTRACT="$("$SCRIPT_DIR"/get_doxtractor.sh)"
 readarray -t WORDS <<< "$(
    "$DOXTRACT" "$@" | cut '-d ' -f 3-                                |
    filter                                                            |
-   sed                  \
-    -e 's/"[^ ]*"//g'   \
-    -e "s/\`[^ ]*\`//g" \
-    -e 's/@[^ ]*//g'    \
+   sed                     \
+    -e "s/\"[^\"]*\"//g"   \
+    -e "s/\`[^\`]*\`//g"   \
+    -e 's/@[^ ]*//g'       \
     -e 's/\w*\('"$NSEPNW"'\)\w*/\1/g'                                |
    aspell list -l en_US --personal "$PERS" --extra-dicts "$PERS_U"   |
    sort -u
