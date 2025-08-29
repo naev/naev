@@ -380,6 +380,14 @@ impl Source {
         }
         out
     }
+
+    pub fn get_parameter_f32(&self, param: ALenum) -> f32 {
+        let mut out: f32 = 0.0;
+        unsafe {
+            alGetSourcef(self.raw(), param, &mut out);
+        }
+        out
+    }
 }
 impl Drop for Source {
     fn drop(&mut self) {

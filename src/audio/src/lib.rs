@@ -283,6 +283,11 @@ impl AudioBuffer {
     }
 }
 
+pub enum AudioSeek {
+    Seconds,
+    Samples,
+}
+
 pub struct Audio {
     name: String,
     ok: bool,
@@ -344,6 +349,26 @@ impl Audio {
 
     pub fn is_stopped(&self) -> bool {
         self.is_state(AL_STOPPED)
+    }
+
+    pub fn rewind(&self) {
+        unsafe {
+            alSourceRewind(self.source.raw());
+        }
+    }
+
+    pub fn seek(&self, offset: f32, unit: AudioSeek) {
+        match unit {
+            AudioSeek::Seconds => self.source.parameter_f32(AL_SEC_OFFSET, offset),
+            AudioSeek::Samples => self.source.parameter_f32(AL_SAMPLE_OFFSET, offset),
+        }
+    }
+
+    pub fn tell(&self, unit: AudioSeek) -> f32 {
+        match unit {
+            AudioSeek::Seconds => self.source.get_parameter_f32(AL_SEC_OFFSET),
+            AudioSeek::Samples => self.source.get_parameter_f32(AL_SAMPLE_OFFSET),
+        }
     }
 }
 
@@ -473,15 +498,35 @@ impl FromLua for Audio {
 }
 */
 
-#[allow(unused_doc_comments)]
+/*
+ * @brief Lua bindings to interact with audio.
+ *
+ * @luamod audio
+ */
 impl UserData for Audio {
     fn add_fields<F: mlua::UserDataFields<Self>>(fields: &mut F) {
         fields.add_field_method_get("name", |_, this| Ok(this.name.clone()));
     }
     fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
-        //methods.add_meta_function(MetaMethod::ToString, |_, audio: &Self| {
-        //    Ok(format!("audio( {} )", &audio.name ))
-        //});
+        /*
+         * @brief Gets a string representation of an audio file.
+         *
+         *    @luatparam Audio audio Audio to get string representation of.
+         *    @luatreturn string String representation of the audio.
+         * @luafunc __tostring
+         */
+        methods.add_meta_method(MetaMethod::ToString, |_, audio: &Self, ()| {
+            Ok(format!("audio( {} )", &audio.name))
+        });
+        /*
+         * @brief Creates a new audio source.
+         *
+         *    @luatparam string|File data Data to load the audio from.
+         *    @luatparam[opt="static"] string  Either "static" to load the entire source
+         * at the start, or "stream" to load it in real time.
+         *    @luatreturn Audio New audio corresponding to the data.
+         * @luafunc new
+         */
         methods.add_function(
             "new",
             |_, (val, _streaming): (String, bool)| -> mlua::Result<Self> {
@@ -489,27 +534,119 @@ impl UserData for Audio {
                 Ok(Self::new(&val)?)
             },
         );
-        // "clone"
-        methods.add_method("play", |_, audio: &Self, ()| -> mlua::Result<()> {
-            audio.play();
-            Ok(())
+        /*
+         * @brief Clones an existing audio source.
+         *
+         *    @luatparam Audio source Audio source to clone.
+         *    @luatreturn Audio New audio corresponding to the data.
+         * @luafunc clone
+         */
+        methods.add_method("clone", |_, audio: &Self, ()| -> mlua::Result<()> {
+            todo!()
         });
+        /*
+         * @brief Plays a source.
+         *
+         *    @luatparam Audio source Source to play.
+         * @luafunc play
+         */
+        methods.add_method("play", |_, audio: &Self, ()| -> mlua::Result<()> {
+            Ok(audio.play())
+        });
+        /*
+         * @brief Checks to see if a source is playing.
+         *
+         *    @luatparam Audio source Source to check to see if is playing.
+         *    @luatreturn boolean Whether or not the source is playing.
+         * @luafunc isPlaying
+         */
         methods.add_method("isPlaying", |_, audio: &Self, ()| -> mlua::Result<bool> {
             Ok(audio.is_playing())
         });
+        /*
+         * @brief Pauses a source.
+         *
+         *    @luatparam Audio source Source to pause.
+         * @luafunc pause
+         */
         methods.add_method("pause", |_, audio: &Self, ()| -> mlua::Result<()> {
-            audio.pause();
-            Ok(())
+            Ok(audio.pause())
         });
+        /*
+         * @brief Checks to see if a source is paused.
+         *
+         *    @luatparam Audio source Source to check to see if is paused.
+         *    @luatreturn boolean Whether or not the source is paused.
+         * @luafunc isPaused
+         */
         methods.add_method("isPaused", |_, audio: &Self, ()| -> mlua::Result<bool> {
             Ok(audio.is_paused())
         });
+        /*
+         * @brief Stops a source.
+         *
+         *    @luatparam Audio source Source to stop.
+         * @luafunc stop
+         */
         methods.add_method("stop", |_, audio: &Self, ()| -> mlua::Result<()> {
-            audio.stop();
-            Ok(())
+            Ok(audio.stop())
         });
+        /*
+         * @brief Checks to see if a source is stopped.
+         *
+         *    @luatparam Audio source Source to check to see if is stopped.
+         *    @luatreturn boolean Whether or not the source is stopped.
+         * @luafunc isStopped
+         */
         methods.add_method("isStopped", |_, audio: &Self, ()| -> mlua::Result<bool> {
             Ok(audio.is_stopped())
         });
+        /*
+         * @brief Rewinds a source.
+         *
+         *    @luatparam Audio source Source to rewind.
+         * @luafunc rewind
+         */
+        methods.add_method("rewind", |_, audio: &Self, ()| -> mlua::Result<()> {
+            Ok(audio.rewind())
+        });
+        /*
+         * @brief Seeks a source.
+         *
+         *    @luatparam Audio source Source to seek.
+         *    @luatparam number offset Offset to seek to.
+         *    @luatparam boolean samples Whether or not to use samples as a seek unit instead of seconds.
+         * @luafunc seek
+         */
+        methods.add_method(
+            "seek",
+            |_, audio: &Self, (offset, samples): (f32, bool)| -> mlua::Result<()> {
+                Ok(audio.seek(
+                    offset,
+                    match samples {
+                        true => AudioSeek::Samples,
+                        false => AudioSeek::Seconds,
+                    },
+                ))
+            },
+        );
+        /*
+         * @brief Gets the position of a source.
+         *
+         *    @luatparam Audio source Source to get position of.
+         *    @luatparam[opt="seconds"] string unit Either "seconds" or "samples"
+         * indicating the type to report.
+         *    @luatreturn number Offset of the source or -1 on error.
+         * @luafunc tell
+         */
+        methods.add_method(
+            "tell",
+            |_, audio: &Self, samples: bool| -> mlua::Result<f32> {
+                Ok(audio.tell(match samples {
+                    true => AudioSeek::Samples,
+                    false => AudioSeek::Seconds,
+                }))
+            },
+        );
     }
 }
