@@ -91,12 +91,15 @@ TMP=$(mktemp -u)
 mkfifo "$TMP"
 trap 'rm "$TMP"' EXIT
 
+#shellcheck disable=SC2016
 "$DOXTRACT" "${FILES[@]}"                          |
 grep -v -e '^$' -e '^[^:]*:$'                      |
 tee >(cut '-d:' -f1 > "$TMP")                      |
 cut '-d:' -f2-                                     |
 filter                                             |
-#TODO: substitute ' ' by '_' in `...` expr
+#substitute ' ' with '_' inside a `...` / "..." expr
+sed ':loop; s/\([^`]*\)\(`[^ `]*\) \([^`]*`\)/\1\2_\3/; t loop' |
+sed ':loop; s/\([^"]*\)\("[^ "]*\) \([^"]*"\)/\1\2_\3/; t loop' |
 sed 's/'"$EXPR"'/'"$E"'['"$MARK"'m\1'"$E"'[0m/g'   |
 paste '-d:' "$TMP" -                               |
 grep "$E"                                          |
