@@ -17,7 +17,7 @@ cargo_needed_version = '>=1.77.2'
 copyright_year = 2025
 forced_fallbacks = get_option('force_fallback_for')
 
-issue_address = 'https://github.com/naev/naev/issues'
+issue_address = 'https://codeberg.org/naev/naev/issues'
 copyright_holder = 'Naev Dev Team'
 
 # Tools

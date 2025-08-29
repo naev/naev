@@ -48,8 +48,8 @@ Tensions can occur between community members even when they are trying their bes
 
 When an incident does occur, it is important to report it promptly. To report a possible violation, please get in touch with:
 
-* [bobbens](https://github.com/bobbens) (project head): via e-mail at <bobbens@gmail.com>, matrix at `@bobbens:matrix.org`, or via Discord at `@bobbens`
-* [synchro](https://github.com/ProjectSynchro) (developer): via e-mail <jack@emoss.org>, or via Discord `@.synchro`
+* [bobbens](https://codeberg.org/bobbens) (project head): via e-mail at <bobbens@gmail.com>, matrix at `@bobbens:matrix.org`, or via Discord at `@bobbens`
+* [synchro](https://codeberg.org/Synchro) (developer): via e-mail <jack@emoss.org>, or via Discord `@.synchro`
 
 Community Moderators take reports of violations seriously and will make every effort to respond in a timely manner. They will investigate all reports of code of conduct violations, reviewing messages, logs, and recordings, or interviewing witnesses and other participants. Community Moderators will keep investigation and enforcement actions as transparent as possible while prioritizing safety and confidentiality. In order to honor these values, enforcement actions are carried out in private with the involved parties, but communicating to the whole community may be part of a mutually agreed upon resolution.
 
