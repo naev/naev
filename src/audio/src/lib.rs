@@ -287,7 +287,6 @@ pub struct Audio {
     name: String,
     ok: bool,
     atype: AudioType,
-    nocleanup: bool,
     source: al::Source,
     slot: ALuint,
     volume: f64,
@@ -306,12 +305,45 @@ impl Audio {
             name,
             ok: true,
             atype,
-            nocleanup: false,
             source,
             slot: 0,
             volume: 1.0,
             buffer,
         })
+    }
+
+    fn is_state(&self, state: ALenum) -> bool {
+        self.source.get_parameter_i32(AL_SOURCE_STATE) == state
+    }
+
+    pub fn play(&self) {
+        unsafe {
+            alSourcePlay(self.source.raw());
+        }
+    }
+
+    pub fn is_playing(&self) -> bool {
+        self.is_state(AL_PLAYING)
+    }
+
+    pub fn pause(&self) {
+        unsafe {
+            alSourcePause(self.source.raw());
+        }
+    }
+
+    pub fn is_paused(&self) -> bool {
+        self.is_state(AL_PAUSED)
+    }
+
+    pub fn stop(&self) {
+        unsafe {
+            alSourceStop(self.source.raw());
+        }
+    }
+
+    pub fn is_stopped(&self) -> bool {
+        self.is_state(AL_STOPPED)
     }
 }
 
@@ -427,13 +459,57 @@ impl AudioSystem {
     }
 }
 
+/*
+impl FromLua for Audio {
+    fn from_lua(value: Value, _: &Lua) -> mlua::Result<Self> {
+        match value {
+            Value::UserData(ud) => Ok(*ud.borrow::<Self>()?),
+            val => Err(mlua::Error::RuntimeError(format!(
+                "unable to convert {} to Audio",
+                val.type_name()
+            ))),
+        }
+    }
+}
+*/
+
 #[allow(unused_doc_comments)]
 impl UserData for Audio {
     fn add_fields<F: mlua::UserDataFields<Self>>(fields: &mut F) {
         fields.add_field_method_get("name", |_, this| Ok(this.name.clone()));
     }
     fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
-        //methods.add_method("foo", |_, ()| -> mlua::Result<Self> {
-        //}
+        //methods.add_meta_function(MetaMethod::ToString, |_, audio: &Self| {
+        //    Ok(format!("audio( {} )", &audio.name ))
+        //});
+        methods.add_function(
+            "new",
+            |_, (val, _streaming): (String, bool)| -> mlua::Result<Self> {
+                // TODO add streaming
+                Ok(Self::new(&val)?)
+            },
+        );
+        // "clone"
+        methods.add_method("play", |_, audio: &Self, ()| -> mlua::Result<()> {
+            audio.play();
+            Ok(())
+        });
+        methods.add_method("isPlaying", |_, audio: &Self, ()| -> mlua::Result<bool> {
+            Ok(audio.is_playing())
+        });
+        methods.add_method("pause", |_, audio: &Self, ()| -> mlua::Result<()> {
+            audio.pause();
+            Ok(())
+        });
+        methods.add_method("isPaused", |_, audio: &Self, ()| -> mlua::Result<bool> {
+            Ok(audio.is_paused())
+        });
+        methods.add_method("stop", |_, audio: &Self, ()| -> mlua::Result<()> {
+            audio.stop();
+            Ok(())
+        });
+        methods.add_method("isStopped", |_, audio: &Self, ()| -> mlua::Result<bool> {
+            Ok(audio.is_stopped())
+        });
     }
 }

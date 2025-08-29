@@ -372,6 +372,14 @@ impl Source {
             alSource3i(self.raw(), param, v1, v2, v3);
         }
     }
+
+    pub fn get_parameter_i32(&self, param: ALenum) -> i32 {
+        let mut out: i32 = 0;
+        unsafe {
+            alGetSourcei(self.raw(), param, &mut out);
+        }
+        out
+    }
 }
 impl Drop for Source {
     fn drop(&mut self) {
