@@ -92,17 +92,25 @@ mkfifo "$TMP"
 trap 'rm "$TMP"' EXIT
 
 #shellcheck disable=SC2016
-"$DOXTRACT" "${FILES[@]}"                          |
-grep -v -e '^$' -e '^[^:]*:$'                      |
-tee >(cut '-d:' -f1 > "$TMP")                      |
-cut '-d:' -f2-                                     |
-filter                                             |
+"$DOXTRACT" "${FILES[@]}"                                         |
+grep -v -e '^$' -e '^[^:]*:$'                                     |
+tee >(cut '-d:' -f1 > "$TMP")                                     |
+cut '-d:' -f2-                                                    |
+filter                                                            |
 #substitute ' ' with '_' inside a `...` / "..." expr
-sed ':loop; s/\([^`]*\)\(`[^ `]*\) \([^`]*`\)/\1\2_\3/; t loop' |
-sed ':loop; s/\([^"]*\)\("[^ "]*\) \([^"]*"\)/\1\2_\3/; t loop' |
-sed 's/'"$EXPR"'/'"$E"'['"$MARK"'m\1'"$E"'[0m/g'   |
-paste '-d:' "$TMP" -                               |
-grep "$E"                                          |
-# Mimic grep's colors
-sed 's/^\([^ ]*\) \([^:]*\):/'"$E"'[35m\1 '"$E"'[32m\2'"$E"'[36m:'"$E"'[m/' >&2
+sed ':loop; s/\([^`]*\)\(`[^ `]*\) \([^`]*`\)/\1\2_\3/; t loop'   |
+sed ':loop; s/\([^"]*\)\("[^ "]*\) \([^"]*"\)/\1\2_\3/; t loop'   |
+sed 's/'"$EXPR"'/'"$E"'['"$MARK"'m\1'"$E"'[m/g'                   |
+paste '-d:' "$TMP" -                                              |
+grep "$E"                                                         |
+sed                                                \
+   `# Reduce the error box when possible`          \
+   -e "s/\($SEPE\)\($E\[m\)/\2\1/g"                \
+   -e "s/\($E\[${MARK}m\)\($SEPE\)/\2\1/g"         \
+   `# Add previously overlapping error boxes`      \
+   -e 's/'"$EXPR"'/'"$E"'['"$MARK"'m\1'"$E"'[m/g'  \
+   -e "s/\($SEPE\)\($E\[m\)/\2\1/g"                \
+   -e "s/\($E\[${MARK}m\)\($SEPE\)/\2\1/g"         \
+   `# Mimic grep's colors`                         \
+   -e 's/^\([^ ]*\) \([^:]*\):/'"$E"'[35m\1 '"$E"'[32m\2'"$E"'[36m:'"$E"'[m/' >&2
 exit 1
