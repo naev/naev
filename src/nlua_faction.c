@@ -129,7 +129,7 @@ int nlua_loadFaction( nlua_env *env )
  * @code
  * f = faction.get( "Empire" )
  * if f:playerStanding() < 0 then
- *    -- player is hostile to "Empire"
+ *    -- player is hostile to Empire
  * end
  * @endcode
  *
@@ -288,9 +288,9 @@ int lua_isfaction( lua_State *L, int ind )
 }
 
 /**
- * @brief equality ("__eq()") metamethod for factions.
+ * @brief equality (`__eq()`) metamethod for factions.
  *
- * You can use the '==' operator within Lua to compare factions with this.
+ * You can use the `==` operator within Lua to compare factions with this.
  *
  * @usage if f == faction.get( "Dvaered" ) then
  *
@@ -447,8 +447,8 @@ static int factionL_areallies( lua_State *L )
  *    @luatparam System|nil Whether to make the faction hit local at a system,
  * or global affecting all systems of the faction.
  *    @luatparam[opt="script"] string reason Reason behind it. This is passed as
- * a string to the faction "hit" function. The engine can generate "destroy" and
- * "distress" sources. For missions the default is "script".
+ * a string to the faction `hit` function. The engine can generate `destroy` and
+ * `distress` sources. For missions the default is `script`.
  *    @luatparam[opt=false] boolean single Whether or not the hit should affect
  * allies/enemies of the faction getting a hit.
  *    @luatreturn How much the reputation was actually changed after Lua script
@@ -476,8 +476,8 @@ static int factionL_hit( lua_State *L )
  *    @luatparam System|nil Whether to make the faction hit local at a system,
  * or global.
  *    @luatparam[opt="script"] string reason Reason behind it. This is passed as
- * a string to the faction "hit" function. The engine can generate "destroy" and
- * "distress" sources. For missions the default is "script".
+ * a string to the faction `hit` function. The engine can generate `destroy` and
+ * `distress` sources. For missions the default is `script`.
  *    @luatreturn How much the reputation was actually changed after Lua script
  * was run.
  * @luafunc hitTest
@@ -590,8 +590,8 @@ static int factionL_applyLocalThreshold( lua_State *L )
  *    @luatparam Faction f Faction to modify player's standing with.
  *    @luatparam number mod The modifier to modify faction by.
  *    @luatparam[opt="script"] string reason Reason behind it. This is passed as
- * a string to the faction "hit" function. The engine can generate "destroy" and
- * "distress" sources. For missions the default is "script".
+ * a string to the faction `hit` function. The engine can generate `destroy` and
+ * `distress` sources. For missions the default is `script`.
  * @luafunc modPlayer
  */
 static int factionL_modplayer( lua_State *L )
@@ -614,8 +614,8 @@ static int factionL_modplayer( lua_State *L )
  *    @luatparam Faction f Faction to modify player's standing with.
  *    @luatparam number mod The modifier to modify faction by.
  *    @luatparam[opt="script"] string reason Reason behind it. This is passed as
- * a string to the faction "hit" function. The engine can generate "destroy" and
- * "distress" sources. For missions the default is "script".
+ * a string to the faction `hit` function. The engine can generate `destroy` and
+ * `distress` sources. For missions the default is `script`.
  * @luafunc modPlayerSingle
  */
 static int factionL_modplayersingle( lua_State *L )
@@ -941,10 +941,10 @@ static int factionL_tags( lua_State *L )
  * faction.
  *    @luatparam string name Name to give the faction.
  *    @luatparam[opt] string display Display name to give the faction.
- *    @luatparam[opt] table params Table of parameters. Options include "ai"
- * (string) to set the AI to use, "clear_allies" (boolean) to clear all allies,
- * "clear_enemies" (boolean) to clear all enemies, "player" (number) to set the
- * default player standing, "colour" (string|colour) which represents the
+ *    @luatparam[opt] table params Table of parameters. Options include `ai`
+ * (string) to set the AI to use, `clear_allies` (boolean) to clear all allies,
+ * `clear_enemies` (boolean) to clear all enemies, `player` (number) to set the
+ * default player standing, `colour` (string|colour) which represents the
  * factional colours.
  * @luafunc dynAdd
  */

@@ -496,7 +496,7 @@ SDL_Keycode input_keyConv( const char *name )
 /**
  * @brief Binds key of type type to action key binding.
  *
- *    @param keybind The "KeySemanticType" of the key binding (as defined
+ *    @param keybind The `KeySemanticType` of the key binding (as defined
  * above).
  *    @param type The type of the key binding.
  *    @param key The key to bind to.
@@ -520,7 +520,7 @@ void input_setKeybind( KeySemanticType keybind, KeybindType type,
 /**
  * @brief Gets the value of a key binding.
  *
- *    @param[in] keybind "KeySemanticType" of the keybinding to get.
+ *    @param[in] keybind `KeySemanticType` of the keybinding to get.
  *    @param[out] type Stores the type of the keybinding.
  *    @param[out] mod Stores the modifiers used with the keybinding.
  *    @return The key associated with the keybinding.

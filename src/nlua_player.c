@@ -841,7 +841,7 @@ static int playerL_autonavReset( lua_State *L )
 
 /**
  * @brief Ends the autonav system. You probably want to use
- * "player.autonavAbort" instead of this.
+ * `player.autonavAbort` instead of this.
  *
  * @luafunc autonavEnd
  * @see autonavAbort
@@ -1037,8 +1037,8 @@ static int playerL_screenshot( lua_State *L )
  * @brief Tries to make the player board their target.
  *
  *    @luatparam boolean noisy Whether or not to do player messages.
- *    @luatreturn string Status of the boarding attempt. Can be "impossible",
- * "retry", "ok", or "error".
+ *    @luatreturn string Status of the boarding attempt. Can be `"impossible"`,
+ * `"retry"`, `"ok"`, or `"error"`.
  * @luafunc tryBoard
  */
 static int playerL_tryBoard( lua_State *L )
@@ -1116,8 +1116,8 @@ static int playerL_takeoff( lua_State *L )
  * @brief Tries to make the player land.
  *
  *    @luatparam boolean noisy Whether or not to do player messages.
- *    @luatreturn string Status of the boarding attempt. Can be "impossible",
- * "retry", "ok", or "error".
+ *    @luatreturn string Status of the boarding attempt. Can be `"impossible"`,
+ * `"retry"`, `"ok"`, or `"error"`.
  * @luafunc tryLand
  */
 static int playerL_tryLand( lua_State *L )
@@ -1374,7 +1374,7 @@ static PlayerShip_t *playerL_shipvarShip( lua_State *L, int idx )
  * @brief Peeks at a ship variable.
  *
  * @usage local exp = player.shipvarPeek( "exp" ) -- Checks the value of the
- * "exp" ship var on the player's current ship
+ * `exp` ship var on the player's current ship.
  *
  *    @luatparam string varname Name of the variable to check value of.
  *    @luatparam[opt] string shipname Name of the ship to check variable of.
@@ -1672,8 +1672,8 @@ static int playerL_outfits( lua_State *L )
  * @brief Gets the number of outfits the player owns in their list (excludes
  * equipped on ships).
  *
- * @usage q = player.outfitNum( "Laser Cannon MK0", true ) -- Number of 'Laser
- * Cannon MK0' the player owns (unequipped)
+ * @usage q = player.outfitNum( "Laser Cannon MK0", true ) -- Number of
+ * "Laser Cannon MK0" the player owns (unequipped)
  *
  *    @luatparam string name Name of the outfit to remove.
  *    @luatparam[opt=false] bool unequipped_only Whether or not to check only
@@ -1734,7 +1734,7 @@ static int playerL_outfitAdd( lua_State *L )
 /**
  * @brief Removes an outfit from the player's outfit list.
  *
- * "all" will remove all outfits.
+ * `"all"` will remove all outfits.
  *
  * @usage player.outfitRm( "Plasma Blaster", 2 ) -- Removes two plasma blasters
  * from the player
@@ -1855,9 +1855,9 @@ static int playerL_shipSwap( lua_State *L )
  * @usage n = \#player.missions() -- number of active missions
  *
  *    @luatreturn table Table containing the metadat of active missions as
- * tables. Fields include "name", "desc", "reward", "loc", "chance", "spob",
- * "system", "chapter", "cond", "done", "priority", "unique", "memory", and
- * "tags".
+ * tables. Fields include `name`, `desc`, `reward`, `loc`, `chance`, `spob`,
+ * `system`, `chapter`, `cond`, `done`, `priority`, `unique`, `memory`, and
+ * `tags`.
  * @luafunc missions
  */
 static int playerL_missions( lua_State *L )
@@ -2313,7 +2313,7 @@ static int playerL_fleetCargoList( lua_State *L )
  * Note that this does not get licenses.
  *
  *    @luatreturn table A table containing inventory items in the form of
- * sub-tables with a "name" and "quantity" field.
+ * sub-tables with a `name` and `quantity` field.
  * @luafunc inventory
  */
 static int playerL_inventory( lua_State *L )
@@ -2775,7 +2775,7 @@ static int playerL_gameover( lua_State *L )
  *
  *    @luatreturn Returns a table containing the different start information as
  * keys and the corresponding information as values. Fields include things such
- * as "name" for the campaign name, "ship" for the starting ship, "shipname" for
+ * as `name` for the campaign name, `ship` for the starting ship, `shipname` for
  * the starting ship name, etc. Please refer to "dat/start.xml" for more details
  * of available fields.
  * @luafunc start

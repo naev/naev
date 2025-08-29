@@ -1639,7 +1639,7 @@ static void shiplog_menu_update( unsigned int wid, const char *str )
 }
 
 /**
- * @brief Translates a position in "lstLogType" to a shiplog "type" filter.
+ * @brief Translates a position in `lstLogType` to a shiplog `type` filter.
  */
 static const char *info_getLogTypeFilter( int lstPos )
 {

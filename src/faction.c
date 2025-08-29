@@ -1036,9 +1036,9 @@ double faction_hitTest( int f, const StarSystem *sys, double mod,
  *    @param source Source of the faction modifier.
  *
  *   Possible sources:
- *    - "destroy" : Pilot death.
- *    - "distress" : Pilot distress signal.
- *    - "script" : Either a mission or an event.
+ *    - `destroy` : Pilot death.
+ *    - `distress` : Pilot distress signal.
+ *    - `script` : Either a mission or an event.
  */
 void faction_modPlayer( int f, double mod, const char *source )
 {
@@ -1074,9 +1074,9 @@ void faction_modPlayer( int f, double mod, const char *source )
  *    @param source Source of the faction modifier.
  *
  *   Possible sources:
- *    - "destroy" : Pilot death.
- *    - "distress" : Pilot distress signal.
- *    - "script" : Either a mission or an event.
+ *    - `destroy` : Pilot death.
+ *    - `distress` : Pilot distress signal.
+ *    - `script` : Either a mission or an event.
  *
  * @sa faction_modPlayer
  */
@@ -1297,7 +1297,7 @@ const glColour *faction_reputationColourSystem( int f, const StarSystem *sys )
 /**
  * @brief Gets the faction character associated to its standing with the player.
  *
- * Use this to do something like "#%c", faction_reputationColourChar(
+ * Use this to do something like `#%c`, faction_reputationColourChar(
  * some_faction ) in the font print routines.
  *
  *    @param f Faction to get the colour of based on player's standing.
@@ -1785,7 +1785,7 @@ static int faction_parse( Faction *temp, const char *file )
  * @brief Sets up a standing script for a faction.
  *
  *    @param temp Faction to associate the script to.
- *    @param scriptname Name of the Lua script to use (e.g., "static").
+ *    @param scriptname Name of the Lua script to use (e.g., `static`).
  */
 static void faction_addStandingScript( Faction *temp, const char *scriptname )
 {

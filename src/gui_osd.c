@@ -153,7 +153,7 @@ unsigned int osd_create( const char *title, int nitems, const char **items,
 }
 
 /**
- * @brief Calculates the word-wrapped "osd->items" from "osd->msg".
+ * @brief Calculates the word-wrapped `osd->items` from `osd->msg`.
  */
 static void osd_wordwrap( OSD_t *osd )
 {

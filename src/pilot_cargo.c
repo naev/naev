@@ -103,7 +103,7 @@ int pilot_cargoMove( Pilot *dest, Pilot *src )
 }
 
 /**
- * @brief Adds cargo to the pilot's "commodities" array only.
+ * @brief Adds cargo to the pilot's `commodities` array only.
  *
  *    @param pilot Pilot to add cargo to.
  *    @param cargo Cargo to add.

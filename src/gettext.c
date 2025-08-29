@@ -116,7 +116,7 @@ const char *gettext_getSystemLanguage( void )
 /**
  * @brief Gets the active (primary) translation language. Even in case of a
  * complex locale, this will be the name of the first message catalog to be
- * checked (or the "en" language code for untranslated English). The purpose is
+ * checked (or the `en` language code for untranslated English). The purpose is
  * to provide a simple answer to things like libunibreak which ask which
  * language we're using.
  */
@@ -255,7 +255,7 @@ const char *gettext_ngettext( const char *msgid, const char *msgid_plural,
 
 /**
  * @brief Helper function for "p_(): Return _(lookup)" with a fallback of
- * "msgid" rather than lookup.
+ * `msgid` rather than lookup.
  */
 const char *gettext_pgettext_impl( const char *lookup, const char *msgid )
 {
@@ -285,7 +285,7 @@ static void gettext_readStats( void )
 
 /**
  * @brief List the available languages, with completeness statistics.
- * @return Array (array.h) of "LanguageOptions".
+ * @return Array (array.h) of `LanguageOptions`.
  */
 LanguageOption *gettext_languageOptions( void )
 {

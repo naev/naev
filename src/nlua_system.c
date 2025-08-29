@@ -436,9 +436,9 @@ static int systemL_interference( lua_State *L )
  *    - string : Gets distance to system matching name.
  *    - system : Gets distance to system
  *
- * @usage d = sys:jumpDist() -- Distance the current system to sys.
- * @usage d = sys:jumpDist( "Draygar" ) -- Distance from sys to system Draygar.
- * @usage d = sys:jumpDist( another_sys ) -- Distance from sys to another_sys.
+ * @usage d = sys:jumpDist() -- Distance the current system to `sys`.
+ * @usage d = sys:jumpDist( "Draygar" ) -- Distance from `sys` to `"Draygar"`.
+ * @usage d = sys:jumpDist( another_sys ) -- Distance from `sys` to `another_sys`.
  *
  *    @luatparam System s Starting system.
  *    @luatparam nil|string|system goal Goal system parameter, see description.
@@ -496,11 +496,11 @@ static int systemL_jumpdistance( lua_State *L )
  * name.</li> <li>system : Gets path to system</li>
  * </ul>
  *
- * @usage jumps = sys:jumpPath( system.cur() ) -- Path from sys to current
+ * @usage jumps = sys:jumpPath( system.cur() ) -- Path from `sys` to current
  * system.
- * @usage jumps = sys:jumpPath( "Draygar" ) -- Path from sys to Draygar.
- * @usage jumps = system.jumpPath( "Draygar", another_sys ) -- Path from Draygar
- * to another_sys.
+ * @usage jumps = sys:jumpPath( "Draygar" ) -- Path from `sys` to `"Draygar"`.
+ * @usage jumps = system.jumpPath( "Draygar", another_sys ) -- Path from
+ * `"Draygar"` to `another_sys`.
  *
  *    @luatparam System s Starting system.
  *    @luatparam nil|string|system goal Goal system parameter, see description.

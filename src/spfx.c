@@ -1229,7 +1229,7 @@ void spfx_render( int layer, double dt )
 }
 
 /**
- * @brief Parses raw values out of a "trail" element.
+ * @brief Parses raw values out of a `trail` element.
  * \warning This means values like idle->thick aren't ready to use.
  */
 static int trailSpec_parse( TrailSpec *tc, const char *file, int firstpass )

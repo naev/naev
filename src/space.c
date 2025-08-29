@@ -166,7 +166,7 @@ static void      spob_lua_free( spob_lua_file *lf );
  * @brief Gets the (English) name for a service code.
  *
  * @param service One of the \p SPOB_SERVICE_* enum values.
- * @return English name, reversible via \p "spob_getService()"
+ * @return English name, reversible via \p `spob_getService()`
  * and presentable via \p "_()".
  */
 const char *spob_getServiceName( int service )
@@ -1268,7 +1268,7 @@ VirtualSpob *virtualspob_get( const char *name )
  *
  *    @param jumpname Name to match.
  *    @param sys System jump is in.
- *    @return Jump point matching "jumpname" in sys or NULL if not found.
+ *    @return Jump point matching `jumpname` in sys or `NULL` if not found.
  */
 JumpPoint *jump_get( const char *jumpname, const StarSystem *sys )
 {
@@ -4631,7 +4631,7 @@ double system_getPresenceFull( const StarSystem *sys, int faction, double *base,
 }
 
 /**
- * @brief Go through all the spobs and call "system_addPresence()".
+ * @brief Go through all the spobs and call `system_addPresence()`.
  *
  *    @param sys Pointer to the system to process.
  */

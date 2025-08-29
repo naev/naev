@@ -51,8 +51,8 @@ int nlua_loadSafelanes( nlua_env *env )
  * Empire's lanes through Gamma Polaris.
  *    @luatparam[opt] Faction f If present, only return this faction's lanes.
  *    @luatparam[opt] string standing What type of lanes to get. Either nil for
- * specific faction only, "friendly", "neutral", "hostile", "non-friendly", or
- * "non-hostile".
+ * specific faction only, `"friendly"`, `"neutral"`, `"hostile"`, `"non-friendly"`, or
+ * `"non-hostile"`.
  *    @luatparam[opt=system.cur()] System s The system whose lanes we want.
  *    @luatparam[opt=false] boolean onlyknown Whether or not to limit the lanes
  * to those known to the player.

@@ -632,13 +632,13 @@ static uint32_t font_nextChar( const char *s, size_t *i )
 /**
  * @brief Prints text on screen.
  *
- * Defaults "ft_font" to "gl_defFont" if NULL.
+ * Defaults `ft_font` to `gl_defFont` if `NULL`.
  *
  *    @param ft_font Font to use
  *    @param x X position to put text at.
  *    @param y Y position to put text at.
- *    @param c Colour to use (uses white if NULL)
- *    @param outlineR Radius in pixels of outline (-1 for default, 0 for none)
+ *    @param c Colour to use (uses white if `NULL`)
+ *    @param outlineR Radius in pixels of outline (`-1` for default, `0` for none)
  *    @param text String to display.
  */
 void gl_printRaw( const glFont *ft_font, double x, double y, const glColour *c,

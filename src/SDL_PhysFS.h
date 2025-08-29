@@ -526,7 +526,7 @@ SDL_IOStream* SDL_PhysFS_IOFromFile(const char* filename) {
 }
 
 /**
- * Loads a bitmap file from "PhysFS" into a "SDL_Surface".
+ * Loads a bitmap file from "PhysFS" into a `SDL_Surface`.
  *
  * @param filename The filename to load.
  *

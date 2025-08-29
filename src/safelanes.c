@@ -230,7 +230,7 @@ void safelanes_destroy( void )
  * signifying "all of them".
  *    @param standing Bit-mask indicating what standing to get.
  *    @param system Star system whose lanes we want.
- *    @return Array (array.h) of matching "SafeLane" structures. Caller frees.
+ *    @return Array (array.h) of matching `SafeLane` structures. Caller frees.
  */
 SafeLane *safelanes_get( int faction, int standing, const StarSystem *system )
 {
