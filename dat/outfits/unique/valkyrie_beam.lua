@@ -8,10 +8,15 @@ function update( p, _po )
    end
 end
 
-function onshoot( p, _po, on )
-   if on then
-      p:effectAdd( "Ride of the Valkyries" )
-   end
-   mem.state = on
+function onshoot( p, _po )
+   p:effectAdd( "Ride of the Valkyries" )
+   mem.state = true
    return true -- Doesn't limit anything
+end
+
+function ontoggle( _p, _po, on )
+   if not on then
+      mem.state = false
+   end
+   return true
 end
