@@ -39,8 +39,9 @@ if genLDoc.disabled() == false
    if ldoc.found()
       c2luadoc = generator(
          find_program('lua/c2luadoc.sh', required: true),
-         arguments: [doxtractor, '@INPUT@', '@OUTPUT@'],
-         output   : '@BASENAME@.luadoc'
+         arguments: [doxtractor.full_path(), '@INPUT@', '@OUTPUT@'],
+         output   : '@BASENAME@.luadoc',
+         depends: [doxtractor],
       )
 
       # WARNING: half-assed way to ensure the same directory contains the Lua sources we want to document.

@@ -21,7 +21,7 @@ issue_address = 'https://codeberg.org/naev/naev/issues'
 copyright_holder = 'Naev Dev Team'
 
 doxtractor_sub = subproject('doxtractor')
-doxtractor = doxtractor_sub.get_variable('doxtractor').full_path()
+doxtractor = doxtractor_sub.get_variable('doxtractor')
 
 # Tools
 cc = meson.get_compiler('c')
