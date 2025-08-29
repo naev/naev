@@ -131,6 +131,11 @@ pub const AL_FORMAT_STEREO16: ALenum = 0x1103;
 pub const AL_FORMAT_MONO_FLOAT32: ALenum = 0x10010;
 pub const AL_FORMAT_STEREO_FLOAT32: ALenum = 0x10011;
 
+pub const AL_FREQUENCY: ALenum = 0x2001;
+pub const AL_BITS: ALenum = 0x2002;
+pub const AL_CHANNELS: ALenum = 0x2003;
+pub const AL_SIZE: ALenum = 0x2004;
+
 pub const AL_DOPPLER_FACTOR: ALenum = 0xC000;
 pub const AL_DOPPLER_VELOCITY: ALenum = 0xC001;
 pub const AL_SPEED_OF_SOUND: ALenum = 0xC003;
@@ -414,6 +419,14 @@ impl Buffer {
     #[inline]
     pub fn raw(&self) -> ALuint {
         self.0
+    }
+
+    pub fn get_parameter_i32(&self, param: ALenum) -> i32 {
+        let mut out: i32 = 0;
+        unsafe {
+            alGetBufferi(self.raw(), param, &mut out);
+        }
+        out
     }
 }
 impl Drop for Buffer {

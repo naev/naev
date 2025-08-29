@@ -281,6 +281,20 @@ impl AudioBuffer {
             track_peak,
         })
     }
+
+    pub fn duration(&self, unit: AudioSeek) -> f32 {
+        let bytes = self.buffer.get_parameter_i32(AL_SIZE);
+        let channels = self.buffer.get_parameter_i32(AL_CHANNELS);
+        let bits = self.buffer.get_parameter_i32(AL_CHANNELS);
+        let samples = (bytes * 8 / (channels * bits)) as f32;
+        match unit {
+            AudioSeek::Seconds => {
+                let freq = self.buffer.get_parameter_i32(AL_FREQUENCY);
+                samples / freq as f32
+            }
+            AudioSeek::Samples => samples,
+        }
+    }
 }
 
 pub enum AudioSeek {
@@ -643,6 +657,24 @@ impl UserData for Audio {
             "tell",
             |_, audio: &Self, samples: bool| -> mlua::Result<f32> {
                 Ok(audio.tell(match samples {
+                    true => AudioSeek::Samples,
+                    false => AudioSeek::Seconds,
+                }))
+            },
+        );
+        /*
+         * @brief Gets the length of a source.
+         *
+         *    @luatparam Audio source Source to get duration of.
+         *    @luatparam[opt="seconds"] string unit Either "seconds" or "samples"
+         * indicating the type to report.
+         *    @luatreturn number Duration of the source or -1 on error.
+         * @luafunc getDuration
+         */
+        methods.add_method(
+            "getDuration",
+            |_, audio: &Self, samples: bool| -> mlua::Result<f32> {
+                Ok(audio.buffer.duration(match samples {
                     true => AudioSeek::Samples,
                     false => AudioSeek::Seconds,
                 }))
