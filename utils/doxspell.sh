@@ -49,6 +49,8 @@ filter() {
    -e 's/@return'"$SUB"' '"$TYP"' *//'
 }
 
+SEP=" ?,;.:/!:"
+NSEPNW="[^a-zA-Z$SEP]"
 DOXTRACT="$("$SCRIPT_DIR"/get_doxtractor.sh)"
 readarray -t WORDS <<< "$(
    "$DOXTRACT" "$@" | cut '-d ' -f 3-                                |
@@ -56,13 +58,14 @@ readarray -t WORDS <<< "$(
    sed                  \
     -e 's/"[^ ]*"//g'   \
     -e "s/\`[^ ]*\`//g" \
-    -e 's/@[^ ]*//g'                                                 |
+    -e 's/@[^ ]*//g'    \
+    -e 's/\w*\('"$NSEPNW"'\)\w*/\1/g'                                |
    aspell list -l en_US --personal "$PERS" --extra-dicts "$PERS_U"   |
    sort -u
    #sed 's/\([a-z]\)\([A-Z]\)/\1 \2/g'
 )"
 
-#echo "${WORDS[@]}" >&2
+echo "${WORDS[@]}" >&2
 MARK="33;44;1"
 E=$'\e'
 
@@ -73,15 +76,15 @@ if [ -z "${EXPR[*]}" ] ; then
    exit 0
 fi
 
-SEP="[ ?,;.:/!:]"
-EXPR='\(\(^\|'"$SEP"'\)\(\('"$EXPR"'\)\)\($\|'"$SEP"'\)\)'
+SEPE="[$SEP]"
+EXPR='\(\(^\|'"$SEPE"'\)\(\('"$EXPR"'\)\)\($\|'"$SEPE"'\)\)'
 
 readarray -t FILES <<< "$(grep -l '^ *\* *.*'"$EXPR"'' "$@")"
 
 if [ -z "${FILES[*]}" ] ; then
    exit 0
 fi
-#echo "$# -> ${#FILES[@]}" >&2
+echo "$# -> ${#FILES[@]}" >&2
 
 TMP=$(mktemp -u)
 mkfifo "$TMP"

@@ -56,9 +56,9 @@ int nlua_loadMusic( nlua_env *env )
 }
 
 /**
- * @brief Delays a rechoose.
+ * @brief Delays a re-choose.
  *
- * @usage music.choose( "ambient" ) -- Rechooses ambient in 5 seconds
+ * @usage music.choose( "ambient" ) -- Re-chooses ambient in 5 seconds
  *
  *    @luatparam string situation Situation to choose.
  * @luafunc choose

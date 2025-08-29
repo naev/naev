@@ -435,7 +435,7 @@ int music_choose( const char *situation )
 }
 
 /**
- * @brief Attempts to rechoose the music.
+ * @brief Attempts to re-choose the music.
  */
 void music_rechoose( void )
 {

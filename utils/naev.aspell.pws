@@ -170,6 +170,7 @@ quaternion
 radiosity
 recomputation
 reentrant
+repositions
 respawn
 reticle
 reticles
@@ -213,6 +214,7 @@ targetting
 teleporting
 teleports
 tex
+thrusters
 TK
 TODO
 toggleable
@@ -220,6 +222,7 @@ UI
 unboarding
 unboards
 unequip
+unequips
 unequipped
 unequipping
 unidiff

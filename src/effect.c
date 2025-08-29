@@ -50,7 +50,7 @@ static int effect_cmpTimer( const void *p1, const void *p2 )
 }
 
 /**
- * @brief Parsess an effect.
+ * @brief Parses an effect.
  */
 static int effect_parse( EffectData *efx, const char *file )
 {

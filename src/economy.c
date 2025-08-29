@@ -90,7 +90,7 @@ credits_t economy_getPrice( const Commodity *com, const StarSystem *sys,
  *    @param com Commodity to get price of.
  *    @param sys System to get price of commodity.
  *    @param p Spob to get price of commodity.
- *    @param tme Time to get price at, eg as retunred by ntime_get()
+ *    @param tme Time to get price at, e.g. as returned by `ntime_get()`
  *    @return The price of the commodity.
  */
 credits_t economy_getPriceAtTime( const Commodity *com, const StarSystem *sys,

@@ -2307,7 +2307,7 @@ void space_gfxUnload( StarSystem *sys )
 }
 
 /**
- * @brief Parsess an spob presence from xml.
+ * @brief Parses a spob presence from xml.
  *
  *    @param node Node to process.
  *    @param[out] ap Spob presence to save to.
