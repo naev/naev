@@ -15,10 +15,9 @@
  * function definitions.
  *
  * Reference:
- * `cgltf_result cgltf_parse(const cgltf_options*, const void*,
- * cgltf_size, cgltf_data**)` parses both glTF and GLB data. If
- * this function returns `cgltf_result_success`, you have to call
- * `cgltf_free()` on the created `cgltf_data*` variable.
+ * `cgltf_result cgltf_parse(const cgltf_options*, const void*, * cgltf_size, cgltf_data**)`
+ * parses both glTF and GLB data. If this function returns `cgltf_result_success`,
+ * you have to call `cgltf_free()` on the created `cgltf_data*` variable.
  * Note that contents of external files for buffers and images are not
  * automatically loaded. You'll need to read these files yourself using
  * URIs in the `cgltf_data` structure.

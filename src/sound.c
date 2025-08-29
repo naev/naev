@@ -1951,10 +1951,11 @@ static const char *vorbis_getErr( int err )
 /**
  * @brief This is the filter function for the decoded Ogg Vorbis stream.
  *
- * base on:
- * `vgfilter.c` (c) 2007,2008 William Poetra Yoga Hadisoeseno
  * based on:
- * `vgplay.c` 1.0 (c) 2003 John Morton
+ * "vgfilter.c" (c) 2007,2008 William Poetra Yoga Hadisoeseno
+ *
+ * based on:
+ * "vgplay.c" 1.0 (c) 2003 John Morton
  */
 void rg_filter( float **pcm, long channels, long samples, void *filter_param )
 {

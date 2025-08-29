@@ -1,13 +1,14 @@
 /*
- * See Licensing and Copyright notice in naev.h
+ * See Licensing and Copyright notice in "naev.h"
  */
 
 /**
  * @file debug_fpu.c
  *
- * @brief Implements the "debug_enableFPUExcept" function where supported (GNU
- * systems). This is separated into its own file because defining _GNU_SOURCE --
- * the only way to get access to "feenableexcept()" -- does frightening things.
+ * @brief Implements the `debug_enableFPUExcept` function where supported (GNU
+ * systems). This is separated into its own file because defining `_GNU_SOURCE`
+ * --- the only way to get access to `feenableexcept()` --- does frightening
+ * things.
  */
 
 /** @cond */

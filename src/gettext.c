@@ -197,7 +197,7 @@ void gettext_setLanguage( const char *lang )
 }
 
 /**
- * @brief Pick the best match from "available" (a physfs listing) for the
+ * @brief Pick the best match from `available` (a `physFS` listing) for the
  * string-slice with address `lang` of length `lang_len`.
  *
  * @return The best match, if any, else `NULL`.

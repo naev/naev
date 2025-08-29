@@ -485,7 +485,8 @@ static inline void grow_vector_if_needed (uint32_t **vector, uint32_t *onstack, 
 {
   size_t current_size = *size;
   if (needed >= current_size) {
-    size_t new_size = current_size * 2; /* `needed` is never bigger than `current_size * 2` */
+    /* `needed` is never bigger than `current_size * 2` */
+    size_t new_size = current_size * 2;
     uint32_t *new_vector = malloc(new_size * sizeof(uint32_t));
     memcpy(new_vector, *vector, current_size * sizeof(uint32_t));
     *size = new_size;

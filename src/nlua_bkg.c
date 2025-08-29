@@ -42,7 +42,7 @@ int nlua_loadBackground( nlua_env *env )
  * An example would be:
  * @code
  * @endcode
- *`
+ *
  * @luamod bkg
  */
 /**

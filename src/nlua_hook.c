@@ -757,8 +757,8 @@ static int hookL_shipswap( lua_State *L )
  * @brief Hooks the function to the player pressing any input.
  *
  * It returns the name of the key being pressed like "accel" and whether or not
- * it's a press.<br/> <br/> Functions should be in format:<br/> function f(
- * `inputname`, `inputpress`, `args` )
+ * it's a press.<br/> <br/> Functions should be in format:
+ * <br/> `function f(inputname, inputpress, args)`
  *
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
@@ -796,8 +796,7 @@ static int hookL_mouse( lua_State *L )
  *
  * The parameters passed to the function are faction whose standing is being
  * changed and the amount changed:<br/>
- * function f( `faction`, `change`, `system`, `secondary`, `primary_fct`, `args`
- * )
+ * function `f( faction, change, system, secondary, primary_fct, args)`
  *
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
@@ -856,8 +855,8 @@ static int hookL_asteroidScan( lua_State *L )
  * player.pay() (the Lua function only).
  *
  * The amount paid (or taken from the player) and reason (which is nil by
- * default) is passed as a parameter:<br/> function f( `amount`, `reason`,
- * `args` )
+ * default) is passed as a parameter:
+ * <br/> `function f( amount, reason, args )`
  *
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
@@ -898,9 +897,8 @@ static int hookL_safe( lua_State *L )
  * it continues forever.
  *
  * The current delta-tick (time passed in game) and real delta-tick (independent
- * of game status) are passed as parameters:<br/> function f( `dt`, `real_dt`,
- * `args`
- * )
+ * of game status) are passed as parameters:
+ * <br/> `function f( dt, real_dt, args )`
  *
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.

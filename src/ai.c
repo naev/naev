@@ -470,7 +470,7 @@ void ai_thinkApply( Pilot *p )
 /**
  * @brief Attempts to run a function.
  *
- *    @param[in] env Lua "env" to run function in.
+ *    @param[in] env Lua environment to run function in.
  *    @param[in] nargs Number of arguments to run.
  */
 static void ai_run( nlua_env *env, int nargs )

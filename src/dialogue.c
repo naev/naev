@@ -1005,7 +1005,7 @@ int dialogue_customResize( unsigned int wid, int width, int height )
  * @brief Creates a secondary loop until loop_done is set to 1 or the toolkit
  * closes.
  *
- * Almost identical to the main loop in `naev.c`.
+ * Almost identical to the main loop in "naev.c".
  *
  * @TODO Fix this, we need proper threading as the music Lua and dialogue
  * running Lua may be run in parallel and this will make everyone cry. So

@@ -5,7 +5,7 @@
  * @file safelanes.c
  *
  * @brief Handles factions' safe lanes through systems.
- * This implements the algorithm described in `utils/lanes-generator`
+ * This implements the algorithm described in "utils/lanes-generator"
  * (whitepaper and much clearer Python version).
  */
 /** @cond */

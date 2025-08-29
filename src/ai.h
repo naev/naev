@@ -51,8 +51,8 @@ typedef struct AI_Profile_ {
 /**
  * @struct AIMemory
  *
- * @brief Represents a temporary pilot memory. For use with "ai_setPilot" and
- * "ai_unsetPilot"
+ * @brief Represents a temporary pilot memory. For use with `ai_setPilot` and
+ * `ai_unsetPilot`
  * @see ai_setPilot
  * @see ai_unsetPilot
  */

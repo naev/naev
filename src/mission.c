@@ -360,7 +360,7 @@ void missions_run( MissionAvailability loc, int faction, const Spob *pnt,
  *
  *    @param name Name of the mission to start.
  *    @param[out] id ID of the newly created mission.
- *    @return 0 on success, >0 on forced exit ("misn.finish"), <0 on error.
+ *    @return 0 on success, >0 on forced exit (`misn.finish`), <0 on error.
  */
 int mission_start( const char *name, unsigned int *id )
 {

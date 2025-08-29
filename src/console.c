@@ -240,7 +240,7 @@ int cli_printRaw( lua_State *L )
 }
 
 /**
- * @brief Would be like "dofile" from the base Lua lib.
+ * @brief Would be like `dofile` from the base Lua lib.
  */
 static int cli_script( lua_State *L )
 {
