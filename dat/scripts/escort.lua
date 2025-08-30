@@ -165,8 +165,8 @@ end
 
 local exited
 local function run_success ()
-   clear_hooks()
    _G[mem._escort.func_success]()
+   clear_hooks()
 end
 
 function escort.reset_ai ()
@@ -419,13 +419,19 @@ function escort.spawn( pos )
    end
 
    if mem._escort.destsys then
+      local scur = system.cur()
+      -- Reached destination system, we are done here
+      if not mem._escort.destspob and mem._escort.destsys==scur then
+         run_success()
+         return mem._escort.convoy
+      end
+
       -- Have the leader move as slow as the slowest ship
       l:setHilight(true)
       -- Moving to system
       escort.reset_ai()
 
       -- Mark destination
-      local scur = system.cur()
       if mem._escort.nextsys then
          system.markerAdd( jump.get( scur, mem._escort.nextsys ):pos() )
       else
