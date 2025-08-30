@@ -267,7 +267,8 @@ function cutscene00()
       v:brake()
    end
    mem.survived = #ep
-   hook.timer( 6, "cutscene01" )
+   hook.timer( 3, "cutscene01" )
+   player.autonavReset( 5 )
 end
 
 function cutscene01()
@@ -293,6 +294,7 @@ function cutscene01()
       fmt.f(_("Return to {spob} ({sys})"),{spob=base, sys=basesys}),
    } )
    misn.markerMove( mem.marker, base )
+   escort.exit() -- Ignore escort stuff now
 end
 
 function enter ()
