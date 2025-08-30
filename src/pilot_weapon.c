@@ -1475,6 +1475,10 @@ void pilot_weaponAuto( Pilot *p )
       pilot_weapSetUpdateRange( p, &p->weapon_sets[i] );
    }
 
+   /* Set fighter bays to volley mode. */
+   if ( hasfb )
+      pilot_weapSetVolley( p, hasfb, 1 );
+
    /* Update all outfits. */
    pilot_weaponSafe( p );
 }
