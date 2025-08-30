@@ -477,8 +477,8 @@ static int audio_genSource( ALuint *source )
  * @brief Creates a new audio source.
  *
  *    @luatparam string|File data Data to load the audio from.
- *    @luatparam[opt="static"] string  Either "static" to load the entire source
- * at the start, or "stream" to load it in real time.
+ *    @luatparam[opt="static"] string  Either `"static"` to load the entire
+ * source at the start, or `"stream"` to load it in real time.
  *    @luatreturn Audio New audio corresponding to the data.
  * @luafunc new
  */
@@ -843,7 +843,7 @@ static int audioL_rewind( lua_State *L )
  *
  *    @luatparam Audio source Source to seek.
  *    @luatparam number offset Offset to seek to.
- *    @luatparam[opt="seconds"] string unit Either "seconds" or "samples"
+ *    @luatparam[opt="seconds"] string unit Either `"seconds"` or `"samples"`
  * indicating the type to seek to.
  * @luafunc seek
  */
@@ -896,7 +896,7 @@ static int audioL_seek( lua_State *L )
  * @brief Gets the position of a source.
  *
  *    @luatparam Audio source Source to get position of.
- *    @luatparam[opt="seconds"] string unit Either "seconds" or "samples"
+ *    @luatparam[opt="seconds"] string unit Either `"seconds"` or `"samples"`
  * indicating the type to report.
  *    @luatreturn number Offset of the source or -1 on error.
  * @luafunc tell
@@ -955,7 +955,7 @@ static int audioL_tell( lua_State *L )
  * @brief Gets the length of a source.
  *
  *    @luatparam Audio source Source to get duration of.
- *    @luatparam[opt="seconds"] string unit Either "seconds" or "samples"
+ *    @luatparam[opt="seconds"] string unit Either `"seconds"` or `"samples"`
  * indicating the type to report.
  *    @luatreturn number Duration of the source or -1 on error.
  * @luafunc getDuration
@@ -1289,7 +1289,7 @@ static int audioL_getPitch( lua_State *L )
  * @usage audio.soundPlay( "hail", pos ) -- Plays the hail sound at position
  * "pos"
  * @usage audio.soundPlay( "hail", pos, vel ) -- Plays the hail sound at
- * position "pos" with velocity "vel"
+ * position `pos` with velocity `vel`
  *
  *    @luatparam string s Name of the sound to play
  *    @luatparam[opt] Vec2 pos Position of the source

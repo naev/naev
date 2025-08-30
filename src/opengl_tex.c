@@ -206,7 +206,7 @@ int gl_fboAddDepth( GLuint fbo, GLuint *tex, GLsizei width, GLsizei height )
 }
 
 /**
- * @brief Sets x and y to be the appropriate sprite for "glTexture" using "dir".
+ * @brief Sets x and y to be the appropriate sprite for `glTexture` using `dir`.
  *
  * Very slow, try to cache if possible like the pilots do instead of using
  *  in O(n^2) or worse functions.

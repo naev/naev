@@ -232,16 +232,16 @@ static int poL_outfit( lua_State *L )
 /**
  * @brief Sets the state of the PilotOutfit.
  *
- * Note on setting state("on"): this will bypass and ignore the weapon sets so
+ * Note on setting `state("on")`: this will bypass and ignore the weapon sets so
  * you can set an outfit on in the update(...) function and it will be set as
  * on until it is toggled off or the state is changed. A single exception is
- * when it is set as "on" during an ontoggle(...) function call that returns
+ * when it is set as `"on"` during an `ontoggle(...)` function call that returns
  * true. In that case, it will behave like non-Lua outfits and be turned off
  * whenever it is toggled off again.
  *
  *    @luatparam PilotOutfit po Pilot outfit to set the state of.
  *    @luatparam string state State to set the pilot outfit to. Can be either
- * "off", "warmup", "on", or "cooldown".
+ * `"off"`, `"warmup"`, `"on"`, or `"cooldown"`.
  * @luafunc state
  */
 static int poL_state( lua_State *L )

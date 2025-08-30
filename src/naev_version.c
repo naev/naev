@@ -4,8 +4,8 @@
 /**
  * @file naev_version.c
  *
- * @brief Implements "naev_version()" in a separate compilation unit, so that a
- * "git pull" only forces a recompile of this tiny piece plus a re-link.
+ * @brief Implements `naev_version()` in a separate compilation unit, so that a
+ * `git pull` only forces a recompile of this tiny piece plus a re-link.
  */
 /** @cond */
 #include "naev.h"

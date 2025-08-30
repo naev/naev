@@ -261,7 +261,7 @@ void nlua_register( nlua_env *env, const char *libname, const luaL_Reg *l,
 /**
  * @brief Wrapper around luaL_newstate.
  *
- *    @return A newly created "lua_State".
+ *    @return A newly created `lua_State`.
  */
 static lua_State *nlua_newState( void )
 {
@@ -415,7 +415,7 @@ static int nlua_errTraceInternal( lua_State *L, int idx )
 }
 
 /*
- * @brief Wrapper around "lua_pcall()" that handles errors and environments
+ * @brief Wrapper around `lua_pcall()` that handles errors and environments
  *
  *    @param env Environment.
  *    @param nargs Number of arguments to pass.
@@ -489,7 +489,7 @@ int nlua_refenv( nlua_env *env, const char *name )
  *
  *    @param env Environment.
  *    @param name Name of the global to get.
- *    @param type Type to match, e.g., "LUA_TFUNCTION".
+ *    @param type Type to match, e.g., `LUA_TFUNCTION`.
  *    @return LUA_NOREF if no global found, reference otherwise.
  */
 int nlua_refenvtype( nlua_env *env, const char *name, int type )

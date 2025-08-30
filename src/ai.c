@@ -29,19 +29,19 @@
  * Specification
  *
  *   -  AI will follow basic tasks defined from Lua AI script.
- *     - if Task is NULL, AI will run "control" task
+ *     - if Task is NULL, AI will run `control` task
  *     - Task is continued every frame
  *     - Tasks can have subtasks which will be closed when parent task is dead.
- *     -  "control" task is a special task that MUST exist in any given  Pilot
- * AI (missiles and such will use "seek")
- *     - "control" task is not permanent, but transitory
- *     - "control" task sets another task
- *   - "control" task is also run at a set rate (depending on Lua global
- * "control_rate") to choose optimal behaviour (task)
+ *     -  `control` task is a special task that MUST exist in any given  Pilot
+ * AI (missiles and such will use `seek`)
+ *     - `control` task is not permanent, but transitory
+ *     - `control` task sets another task
+ *   - `control` task is also run at a set rate (depending on Lua global
+ * `control_rate`) to choose optimal behaviour (task)
  *
  * Memory
  *
- *  The AI currently has per-pilot memory which is accessible as "mem".  This
+ *  The AI currently has per-pilot memory which is accessible as `mem`.  This
  * memory is actually stored in the table pilotmem[cur_pilot->id].  This allows
  * the pilot to keep some memory always accessible between runs without having
  * to rely on the storage space a task has.
@@ -470,7 +470,7 @@ void ai_thinkApply( Pilot *p )
 /**
  * @brief Attempts to run a function.
  *
- *    @param[in] env Lua "env" to run function in.
+ *    @param[in] env Lua environment to run function in.
  *    @param[in] nargs Number of arguments to run.
  */
 static void ai_run( nlua_env *env, int nargs )
@@ -1115,7 +1115,7 @@ void ai_getDistress( const Pilot *p, const Pilot *distressed,
  *
  * Should create all the gear and such the pilot has.
  *
- *    @param pilot Pilot to "create".
+ *    @param pilot Pilot to `create`.
  */
 static void ai_create( Pilot *pilot )
 {

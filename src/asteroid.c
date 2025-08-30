@@ -767,7 +767,7 @@ static int asttype_parse( AsteroidType *at, const char *file )
 /**
  * @brief Loads the collision polygon for an asteroid type.
  *
- *    @param temp "AsteroidType" to load into.
+ *    @param temp `AsteroidType` to load into.
  *    @param buf Name of the file.
  */
 static int asteroid_loadPLG( AsteroidType *temp, const char *buf )

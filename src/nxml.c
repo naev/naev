@@ -15,15 +15,15 @@
 #include "ndata.h"
 
 /**
- * @brief Parses a texture handling the "sx" and "sy" elements.
+ * @brief Parses a texture handling the `sx` and `sy` elements.
  *
  *    @param node Node to parse.
  *    @param path Path to get file from, should be in the format of
- *           "PREFIX%sSUFFIX".
+ *           `"PREFIX%sSUFFIX"`.
  *    @param defsx Default X sprites.
  *    @param defsy Default Y sprites.
  *    @param flags Image parameter control flags.
- *    @return The texture from the node or NULL if an error occurred.
+ *    @return The texture from the node or `NULL` if an error occurred.
  */
 glTexture *xml_parseTexture( xmlNodePtr node, const char *path, int defsx,
                              int defsy, const unsigned int flags )
@@ -66,9 +66,9 @@ void xmlw_setParams( xmlTextWriterPtr writer )
 }
 
 /**
- * @brief Analogous to "xmlParseMemory"/"xmlParseFile".
- * @param filename PhysFS file name.
- * @return xml document (must "xmlFreeDoc") on success, NULL on failure (will
+ * @brief Analogous to `xmlParseMemory` / `xmlParseFile`.
+ * @param filename `PhysFS` file name.
+ * @return xml document (must `xmlFreeDoc`) on success, `NULL` on failure (will
  * warn user).
  */
 xmlDocPtr xml_parsePhysFS( const char *filename )

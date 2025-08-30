@@ -534,7 +534,7 @@ void shiplog_listTypes( int *ntypes, char ***logTypes, int includeAll )
 }
 
 /**
- * @brief Lists matching logs (which haven't expired via "removeAfter") into the
+ * @brief Lists matching logs (which haven't expired via `removeAfter`) into the
  * provided arrays.
  *
  *    @param type The log-type to match (or NULL to match any type).
@@ -543,7 +543,7 @@ void shiplog_listTypes( int *ntypes, char ***logTypes, int includeAll )
  * Emitted strings must be freed.
  *    @param[out] logIDs Matching log ID lists. Will be reallocated as needed.
  * Emitted lists are owned by the `shipLog`.
- *    @param includeAll Whether to include the special "All" log.
+ *    @param includeAll Whether to include the special `"All"` log.
  */
 void shiplog_listLogsOfType( const char *type, int *nlogs, char ***logsOut,
                              int **logIDs, int includeAll )

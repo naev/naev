@@ -522,7 +522,7 @@ static int commodityL_description( lua_State *L )
  * cargo name defined in commodity.xml.
  *    @luatparam string decription Description of the cargo to add.
  *    @luatparam[opt=nil] table params Table of named parameters. Currently
- * supported is "gfx_space".
+ * supported is `"gfx_space"`.
  *    @luatreturn Commodity The newly created commodity or an existing temporary
  * commodity with the same name.
  * @luafunc new

@@ -150,7 +150,7 @@ static news_t *luaL_validnews( lua_State *L, int ind )
  * @usage s = news.add( { { faction = "Empire", title = "Hello World!", body =
  * "The Empire wishes to say hello!" } } ) -- Can also be passed as tables
  *
- *    @luatparam Faction|string faction of the article, "Generic" for
+ *    @luatparam Faction|string faction of the article, `"Generic"` for
  * non-factional
  *    @luatparam string title Title of the article
  *    @luatparam string body What's in the article
@@ -327,7 +327,7 @@ int newsL_rm( lua_State *L )
  * <ul>
  *    <li>Title of the news articles</li>
  *    <li>Body (text) of the articles</li>
- *    <li>Faction name of the articles ("Generic" for generic)</li>
+ *    <li>Faction name of the articles (`"Generic"` for generic)</li>
  *    <li>Tag of the articles (applied with news.bind())</li>
  *    <li>Date of the articles in number form</li>
  * </ul>

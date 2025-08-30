@@ -312,13 +312,13 @@ static unsigned int hookL_generic( lua_State *L, const char *stack, double sec,
  *
  * Can also be used to hook the various subparts of the landing menu. Possible
  * targets for where are:<br />
- *   - "land" - when landed (default with no parameter )<br />
- *   - "outfits" - when visited outfitter<br />
- *   - "shipyard" - when visited shipyard<br />
- *   - "bar" - when visited bar<br />
- *   - "mission" - when visited mission computer<br />
- *   - "commodity" - when visited commodity exchange<br />
- *   - "equipment" - when visiting equipment place<br />
+ *   - `"land"` - when landed (default with no parameter )<br />
+ *   - `"outfits"` - when visited outfitter<br />
+ *   - `"shipyard"` - when visited shipyard<br />
+ *   - `"bar"` - when visited bar<br />
+ *   - `"mission"` - when visited mission computer<br />
+ *   - `"commodity"` - when visited commodity exchange<br />
+ *   - `"equipment"` - when visiting equipment place<br />
  *
  * @usage hook.land( "my_function" ) -- Land calls my_function
  * @usage hook.land( "my_function", "equipment" ) -- Calls my_function at
@@ -350,13 +350,13 @@ static int hookL_land( lua_State *L )
  *
  * Can also be used to hook the various subparts of the info menu. Possible
  * targets for where are:<br />
- *   - "main"<br />
- *   - "ship"<br />
- *   - "weapons"<br />
- *   - "cargo"<br />
- *   - "mission"<br />
- *   - "standing"<br />
- *   - "shiplog"<br />
+ *   - `"main"`<br />
+ *   - `"ship"`<br />
+ *   - `"weapons"`<br />
+ *   - `"cargo"`<br />
+ *   - `"mission"`<br />
+ *   - `"standing"`<br />
+ *   - `"shiplog"`<br />
  *
  * @usage hook.info( "my_function" ) -- Info calls my_function
  * @usage hook.info( "my_function", "equipment" ) -- Calls my_function at
@@ -756,9 +756,9 @@ static int hookL_shipswap( lua_State *L )
 /**
  * @brief Hooks the function to the player pressing any input.
  *
- * It returns the name of the key being pressed like "accel" and whether or not
- * it's a press.<br/> <br/> Functions should be in format:<br/> function f(
- * `inputname`, `inputpress`, `args` )
+ * It returns the name of the key being pressed like `"accel"` and whether or
+ * not it's a press. <br/> <br/> Functions should be in format: <br/>
+ * `function f(inputname, inputpress, args)`
  *
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
@@ -796,8 +796,7 @@ static int hookL_mouse( lua_State *L )
  *
  * The parameters passed to the function are faction whose standing is being
  * changed and the amount changed:<br/>
- * function f( `faction`, `change`, `system`, `secondary`, `primary_fct`, `args`
- * )
+ * function `f( faction, change, system, secondary, primary_fct, args)`
  *
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
@@ -816,8 +815,8 @@ static int hookL_standing( lua_State *L )
  * the likes.
  *
  * The parameters passed to the function are the type which can be one of:<br/>
- * - "spob" <br/>
- * - "jump" <br/>
+ * - `"spob"` <br/>
+ * - `"jump"` <br/>
  * and the actual spob or jump point discovered with the following format: <br/>
  * function f( type, discovery )
  *
@@ -856,8 +855,8 @@ static int hookL_asteroidScan( lua_State *L )
  * player.pay() (the Lua function only).
  *
  * The amount paid (or taken from the player) and reason (which is nil by
- * default) is passed as a parameter:<br/> function f( `amount`, `reason`,
- * `args` )
+ * default) is passed as a parameter:
+ * <br/> `function f( amount, reason, args )`
  *
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
@@ -898,9 +897,8 @@ static int hookL_safe( lua_State *L )
  * it continues forever.
  *
  * The current delta-tick (time passed in game) and real delta-tick (independent
- * of game status) are passed as parameters:<br/> function f( `dt`, `real_dt`,
- * `args`
- * )
+ * of game status) are passed as parameters:
+ * <br/> `function f( dt, real_dt, args )`
  *
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.

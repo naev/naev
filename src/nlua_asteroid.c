@@ -388,8 +388,8 @@ static int asteroidL_exists( lua_State *L )
  * @brief Gets the state of an asteroid.
  *
  *    @luatparam Asteroid a Asteroid to check state of.
- *    @luatreturn string State of the asteroid. Can be one of "FG", "XB", "BX",
- * "XX_TO_BG", "FG_TO_BG", "BG_TO_FG", "BG_TO_XX", or "XX".
+ *    @luatreturn string State of the asteroid. Can be one of `FG`, `XB`, `BX`,
+ * `XX_TO_BG`, `FG_TO_BG`, `BG_TO_FG`, `BG_TO_XX`, or `XX`.
  * @luafunc state
  */
 static int asteroidL_state( lua_State *L )
@@ -430,8 +430,8 @@ static int asteroidL_state( lua_State *L )
  * @brief Sets the state of an asteroid.
  *
  *    @luatparam Asteroid a Asteroid to set state of.
- *    @luatparam string s State to set. Has to be one of "FG", "XB", "BX",
- * "XX_TO_BG", "FG_TO_BG", "BG_TO_FG", "BG_TO_XX", or "XX".
+ *    @luatparam string s State to set. Has to be one of `FG`, `XB`, `BX`,
+ * `XX_TO_BG`, `FG_TO_BG`, `BG_TO_FG`, `BG_TO_XX`, or `XX`.
  * @luafunc setState
  */
 static int asteroidL_setState( lua_State *L )

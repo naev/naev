@@ -15,10 +15,9 @@
  * function definitions.
  *
  * Reference:
- * `cgltf_result cgltf_parse(const cgltf_options*, const void*,
- * cgltf_size, cgltf_data**)` parses both glTF and GLB data. If
- * this function returns `cgltf_result_success`, you have to call
- * `cgltf_free()` on the created `cgltf_data*` variable.
+ * `cgltf_result cgltf_parse(const cgltf_options*, const void*, cgltf_size, cgltf_data**)`
+ * parses both glTF and GLB data. If this function returns `cgltf_result_success`,
+ * you have to call `cgltf_free()` on the created `cgltf_data*` variable.
  * Note that contents of external files for buffers and images are not
  * automatically loaded. You'll need to read these files yourself using
  * URIs in the `cgltf_data` structure.
@@ -35,20 +34,19 @@
  * `void cgltf_free(cgltf_data*)` frees the allocated `cgltf_data`
  * variable.
  *
- * `cgltf_result cgltf_load_buffers(const cgltf_options*, cgltf_data*,
- * const char* gltf_path)` can be optionally called to open and read buffer
+ * `cgltf_result cgltf_load_buffers(const cgltf_options*, cgltf_data*, const char* gltf_path)`
+ * can be optionally called to open and read buffer
  * files using the `FILE*` APIs. The `gltf_path` argument is the path to
  * the original glTF file, which allows the parser to resolve the path to
  * buffer files.
  *
- * `cgltf_result cgltf_load_buffer_base64(const cgltf_options* options,
- * cgltf_size size, const char* base64, void** out_data)` decodes
+ * `cgltf_result cgltf_load_buffer_base64(const cgltf_options* options, cgltf_size size, const char* base64, void** out_data)` decodes
  * base64-encoded data content. Used internally by `cgltf_load_buffers()`.
  * This is useful when decoding data URIs in images.
  *
- * `cgltf_result cgltf_parse_file(const cgltf_options* options, const
- * char* path, cgltf_data** out_data)` can be used to open the given
- * file using `FILE*` APIs and parse the data using `cgltf_parse()`.
+ * `cgltf_result cgltf_parse_file(const cgltf_options* options, const char* path, cgltf_data** out_data)`
+ * can be used to open the given file using `FILE*` APIs and parse the data
+ * using `cgltf_parse()`.
  *
  * `cgltf_result cgltf_validate(cgltf_data*)` can be used to do additional
  * checks to make sure the parsed glTF data is valid.
@@ -87,7 +85,7 @@
  * `cgltf_accessor_read_index` is similar to its floating-point counterpart, but it returns size_t
  * and only works with single-component data types.
  *
- * `cgltf_copy_extras_json` allows users to retrieve the "extras" data that can be attached to many
+ * `cgltf_copy_extras_json` allows users to retrieve the `extras` data that can be attached to many
  * glTF objects (which can be arbitrary JSON data). This is a legacy function, consider using
  * cgltf_extras::data directly instead. You can parse this data using your own JSON parser
  * or, if you've included the cgltf implementation using the integrated JSMN JSON parser.

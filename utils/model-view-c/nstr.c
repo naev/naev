@@ -114,8 +114,8 @@ int strsort( const void *p1, const void *p2 )
  *
  * @param[out] strp Used to return the allocated char* in case of success. Caller must free.
  *                  In case of failure, *strp is set to NULL, but don't rely on this because the GNU version doesn't guarantee it.
- * @param fmt Same as vsprintf().
- * @param ap Same as vsprintf().
+ * @param fmt Same as `vsprintf()`.
+ * @param ap Same as `vsprintf()`.
  * @return -1 if it failed, otherwise the number of bytes "printed".
  */
 #if !HAVE_VASPRINTF
@@ -144,7 +144,7 @@ int vasprintf( char** strp, const char* fmt, va_list ap )
  *
  * @param[out] strp Used to return the allocated char* in case of success. Caller must free.
  *                  In case of failure, *strp is set to NULL, but don't rely on this because the GNU version doesn't guarantee it.
- * @param fmt Same as sprintf().
+ * @param fmt Same as `sprintf()`.
  * @return -1 if it failed, otherwise the number of bytes "printed".
  */
 #if !HAVE_ASPRINTF
@@ -161,7 +161,7 @@ int asprintf( char** strp, const char* fmt, ... )
 #endif /* !HAVE_ASPRINTF */
 
 /**
- * @brief Like snprintf(), but returns the number of characters \em ACTUALLY "printed" into the buffer.
+ * @brief Like `snprintf()`, but returns the number of characters \em ACTUALLY "printed" into the buffer.
  *        This makes it possible to chain these calls to concatenate into a buffer without introducing a potential bug every time.
  *        This call was first added to the Linux kernel by Juergen Quade.
  */

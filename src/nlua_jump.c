@@ -112,7 +112,7 @@ LuaJump *luaL_checkjump( lua_State *L, int ind )
 }
 
 /**
- * @brief Back-end for "luaL_validjump".
+ * @brief Back-end for `luaL_validjump`.
  *
  *    @param L Lua state to get jump from.
  *    @param ind Index to check.

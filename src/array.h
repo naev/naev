@@ -86,7 +86,7 @@ static inline _private_container *_array_private_container( void *a )
 }
 
 /**
- * @brief Creates a new dynamic array of `basic_type'
+ * @brief Creates a new dynamic array of type `basic_type`
  *
  *    @param basic_type Type of the array to create.
  */
@@ -94,7 +94,8 @@ static inline _private_container *_array_private_container( void *a )
    ( (basic_type *)( _array_create_helper( sizeof( basic_type ), 1 ) ) )
 
 /**
- * @brief Creates a new dynamic array of `basic_type' with an initial capacity
+ * @brief Creates a new dynamic array of type `basic_type' with an initial
+ * capacity
  *
  *    @param basic_type Type of the array to create.
  *    @param capacity Initial size.
@@ -151,7 +152,7 @@ static inline _private_container *_array_private_container( void *a )
                           (void *)( last ) ) )
 // NOLINTEND(bugprone-sizeof-expression)
 /**
- * @brief Shrinks memory to fit only `size' elements.
+ * @brief Shrinks memory to fit only `size` elements.
  *
  * @note Invalidates all iterators.
  *

@@ -684,9 +684,9 @@ static int pilotL_choosePoint( lua_State *L )
  *    @luatparam[opt] string pilotname Name to give the pilot. Defaults to
  * shipname.
  *    @luatparam[opt] table parameters Table of extra keyword arguments.
- * Supported arguments: "ai" (string): AI to give the pilot. Defaults to the
- * faction's AI. "naked" (boolean): Whether or not to have the pilot spawn
- * without outfits. Defaults to false. "stealth" (boolean): Whether or not to
+ * Supported arguments: `ai` (string): AI to give the pilot. Defaults to the
+ * faction's AI. `naked` (boolean): Whether or not to have the pilot spawn
+ * without outfits. Defaults to false. `stealth` (boolean): Whether or not to
  * have the pilot spawn in stealth mode. Defaults to false.
  *    @luatreturn Pilot The created pilot.
  * @luafunc add
@@ -1440,7 +1440,7 @@ static int pilotL_eq( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to convert to string.
  *    @luatreturn string The current name of the pilot
- * or "(inexistent pilot)" (sic) if not existent.
+ * or `"(inexistent pilot)"` (sic) if non-existent.
  * @luafunc __tostring
  */
 static int pilotL_tostring( lua_State *L )
@@ -2130,7 +2130,7 @@ static int pilotL_weapsetList( lua_State *L )
  *    @luatparam Pilot p Pilot to set weapon set type of.
  *    @luatparam integer id ID of the weapon set as shown in game (from 0 to 9).
  *    @luatparam string type Type of the weapon set. Can be either
- * "toggle", or "hold".
+ * `"toggle"`, or `"hold"`.
  * @luafunc weapsetType
  */
 static int pilotL_weapsetType( lua_State *L )
@@ -2297,17 +2297,18 @@ static int pilotL_weapsetAuto( lua_State *L )
  *  <li> active: Whether or not the outfit is active at the current time.</li>
  *  <li> weapset: The first weapon
  * set that the outfit appears in, if any. </li> <li> state: State of the
- * outfit, which can be one of { "off", "warmup", "on", "cooldown" }. </li> <li>
- * duration: Set only if state is "on". Indicates duration value (0 = just
- * finished, 1 = just on). </li> <li> cooldown: Set only if state is "cooldown".
- * Indicates cooldown value (0 = just ending, 1 = just started cooling down).
+ * outfit, which can be one of `{ "off", "warmup", "on", "cooldown" }`. </li>
+ * <li> duration: Set only if state is `"on"`. Indicates duration value (0 =
+ * just finished, 1 = just on). </li> <li> cooldown: Set only if state is
+ * `"cooldown"`. Indicates cooldown value (0 = just ending, 1 = just started
+ * cooling down).
  * </li>
  * </ul>
  *
  * An example would be:
  * @code
  * act_outfits = p:actives()
- * print( "Weapnset Name: " .. ws_name )
+ * print( "Weaponset Name: " .. ws_name )
  * for i, o in ipairs(act_outfits) do
  *    print( "Name: " .. o.name )
  *    print( "State: " .. o.state )
@@ -2482,8 +2483,8 @@ static int outfit_compareActive( const void *slot1, const void *slot2 )
  *
  *    @luatparam Pilot p Pilot to get outfits of.
  *    @luatparam[opt=nil] string What slot type to get outfits of. Can be either
- * nil, "weapon", "utility", "structure", "intrinsic", or "all". nil implies
- * returning all non-intrinsic outfits.
+ * nil, `"weapon"`, `"utility"`, `"structure"`, `"intrinsic"`, or `"all"`. nil
+ * implies returning all non-intrinsic outfits.
  *    @luatparam[opt=false] boolean skip_locked Whether or not locked outfits
  * should be ignored.
  *    @luatreturn table The outfits of the pilot in an ordered list.
@@ -3153,7 +3154,7 @@ static int pilotL_broadcast( lua_State *L )
  * ignore interference in the case a pilot is being used, otherwise it is a
  * colour string such as 'N' that can be used to colour the text..
  *    @luatparam[opt=false] boolean raw Whether or not to just display the raw
- * text without quotation marks instead of a "message".
+ * text without quotation marks instead of a `message`.
  * @luafunc comm
  */
 static int pilotL_comm( lua_State *L )
@@ -3934,8 +3935,8 @@ static int pilotL_outfitAddSlot( lua_State *L )
 /**
  * @brief Removes an outfit from a pilot.
  *
- * "all" will remove all outfits except cores, locked outfits, and intrinsic
- * outfits. "cores" will remove all cores, but nothing else. "intrinsic" will
+ * `"all"` will remove all outfits except cores, locked outfits, and intrinsic
+ * outfits. "cores" will remove all cores, but nothing else. `"intrinsic"` will
  * remove all intrinsic outfits.
  *
  * @usage p:outfitRm( "all" ) -- Leaves the pilot naked (except for cores and
@@ -4509,7 +4510,7 @@ static int pilotL_effectHas( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to get effects of.
  *    @luatreturn table Table of effects which are treated as tables with
- * "name" and "timer" elements.
+ * `"name"` and `"timer"` elements.
  * @luafunc effects
  */
 static int pilotL_effectGet( lua_State *L )
@@ -5272,7 +5273,7 @@ static int pilotL_cargoRmHelper( lua_State *L, int jet )
  *    @luatparam Pilot p The pilot to remove cargo from.
  *    @luatparam Commodity|string cargo Type of cargo to remove, either
  *       as a Commodity object or as the raw (untranslated) name of a
- *       commodity. You can also pass the special value "all" to
+ *       commodity. You can also pass the special value `"all"` to
  *       remove all cargo from the pilot, except for mission cargo.
  *    @luatparam number quantity Quantity of the cargo to remove.
  *    @luatreturn number The number of cargo removed.
@@ -5289,7 +5290,7 @@ static int pilotL_cargoRm( lua_State *L )
  *    @luatparam Pilot p The pilot to remove cargo from.
  *    @luatparam Commodity|string cargo Type of cargo to remove, either
  *       as a Commodity object or as the raw (untranslated) name of a
- *       commodity. You can also pass the special value "all" to
+ *       commodity. You can also pass the special value `"all"` to
  *       remove all cargo from the pilot, except for mission cargo.
  *    @luatparam number quantity Quantity of the cargo to remove.
  *    @luatreturn number The number of cargo removed.
@@ -6719,7 +6720,7 @@ static const CollPolyView *getCollPoly( const Pilot *p )
  *
  *    @luatparam Pilot p First pilot to check.
  *    @luatparam Pilot|Asteroid t Second object to check.
- *    @luatreturn Vec2|nil "nil" if no collision, or "Vec2" with collision
+ *    @luatreturn Vec2|nil `nil` if no collision, or `Vec2` with collision
  * point if collided.
  * @luafunc collisionTest
  */
@@ -6835,9 +6836,9 @@ static int pilotL_kill( lua_State *L )
  * and an element represented by mass, velocity, and position.
  *
  * @usage pilota:knockback( pilotb, 0. ) -- Inelastic collision between
- * "pilota" and "pilotb"
+ * `pilota` and `pilotb`
  * @usage pilota:knockback( 100, vec2.new(0,0) ) -- Elastic collision between
- * a 100 mass object with no velocity and "pilota"
+ * a 100 mass object with no velocity and `pilota`
  *
  *    @luatparam Pilot p Pilot being knocked back.
  *    @luatparam number m Mass of object knocking back pilot.
@@ -6983,7 +6984,7 @@ static int pilotL_calcStats( lua_State *L )
 /**
  * @brief Peeks at a ship variable.
  *
- * @usage local exp = p:shipvarPeek( "exp" ) -- Checks the value of the "exp"
+ * @usage local exp = p:shipvarPeek( "exp" ) -- Checks the value of the `"exp"`
  * ship var on the player's current ship
  *
  *    @luatparam Pilot p Pilot whose ship variable is being manipulated.

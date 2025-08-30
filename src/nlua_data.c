@@ -162,7 +162,7 @@ static int dataL_eq( lua_State *L )
  * @brief Opens a new data.
  *
  *    @luatparam number size Size to allocate for data.
- *    @luatparam string type Type of the data to create ("number")
+ *    @luatparam string type Type of the data to create (`"number"`)
  *    @luatreturn Data New data object.
  * @luafunc new
  */
@@ -270,7 +270,7 @@ static int dataL_getString( lua_State *L )
 }
 
 /**
- * @brief Writes the contents of "source" into "dest".
+ * @brief Writes the contents of `source` into `dest`.
  *
  *    @luatparam Data dest Destination.
  *    @luatparam Data source Source.

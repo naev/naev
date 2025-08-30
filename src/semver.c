@@ -347,7 +347,7 @@ int semver_compare( semver_t x, semver_t y )
 }
 
 /**
- * Performs a `greater than` comparison
+ * Performs a "greater than" comparison
  */
 
 int semver_gt( semver_t x, semver_t y )
@@ -356,7 +356,7 @@ int semver_gt( semver_t x, semver_t y )
 }
 
 /**
- * Performs a `lower than` comparison
+ * Performs a "lower than" comparison
  */
 
 int semver_lt( semver_t x, semver_t y )
@@ -365,7 +365,7 @@ int semver_lt( semver_t x, semver_t y )
 }
 
 /**
- * Performs a `equality` comparison
+ * Performs an "equality" comparison
  */
 
 int semver_eq( semver_t x, semver_t y )
@@ -374,7 +374,7 @@ int semver_eq( semver_t x, semver_t y )
 }
 
 /**
- * Performs a `non equal to` comparison
+ * Performs a "non equal to" comparison
  */
 
 int semver_neq( semver_t x, semver_t y )
@@ -383,7 +383,7 @@ int semver_neq( semver_t x, semver_t y )
 }
 
 /**
- * Performs a `greater than or equal` comparison
+ * Performs a "greater than or equal" comparison
  */
 
 int semver_gte( semver_t x, semver_t y )
@@ -392,7 +392,7 @@ int semver_gte( semver_t x, semver_t y )
 }
 
 /**
- * Performs a `lower than or equal` comparison
+ * Performs a "lower than or equal" comparison
  */
 
 int semver_lte( semver_t x, semver_t y )

@@ -36,8 +36,8 @@ static int nxml_canWriteString( const char *buf, size_t len );
  *    @param writer XML Writer to use to persist stuff.
  *    @param name Name of the data to save.
  *    @param name_len Data size of name (which is an arbitrary Lua string).
- *    @param keynum Whether the "name" is a numeric key, to be marked with
- * keynum="1" in the XML.
+ *    @param keynum Whether `name` is a numeric key, to be marked with
+ * `keynum="1"` in the XML.
  *    @return 0 on success.
  */
 static int nxml_saveNameAttribute( xmlTextWriterPtr writer, const char *name,
@@ -83,14 +83,14 @@ static int nxml_saveData( xmlTextWriterPtr writer, const char *type,
 }
 
 /**
- * @brief Commodity-specific "nxml_saveData" derivative.
+ * @brief Commodity-specific `nxml_saveData` derivative.
  *
  *    @param writer XML Writer to use to persist stuff.
  *    @param name Name of the data to save.
  *    @param name_len Data size of name (which is an arbitrary Lua string).
  *    @param c Commodity to save.
- *    @param keynum Whether the "name" is a numeric key, to be marked with
- * keynum="1" in the XML.
+ *    @param keynum Whether `name` is a numeric key, to be marked with
+ * `keynum="1"` in the XML.
  *    @return 0 on success.
  */
 static int nxml_saveCommodity( xmlTextWriterPtr writer, const char *name,
@@ -116,7 +116,7 @@ static int nxml_saveCommodity( xmlTextWriterPtr writer, const char *name,
 }
 
 /**
- * @brief Reverse of "nxml_saveCommodity".
+ * @brief Reverse of `nxml_saveCommodity`.
  */
 static Commodity *nxml_loadCommodity( xmlNodePtr node )
 {
@@ -139,15 +139,15 @@ static Commodity *nxml_loadCommodity( xmlNodePtr node )
 }
 
 /**
- * @brief Jump-specific "nxml_saveData" derivative.
+ * @brief Jump-specific `nxml_saveData` derivative.
  *
  *    @param writer XML Writer to use to persist stuff.
  *    @param name Name of the data to save.
  *    @param name_len Data size of name (which is an arbitrary Lua string).
  *    @param start System in which the jump is.
  *    @param dest Jump's destination system.
- *    @param keynum Whether the "name" is a numeric key, to be marked with
- * keynum="1" in the XML.
+ *    @param keynum Whether `name` is a numeric key, to be marked with
+ * `keynum="1"` in the XML.
  *    @return 0 on success.
  */
 static int nxml_saveJump( xmlTextWriterPtr writer, const char *name,
@@ -362,7 +362,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer )
 /**
  * @brief Persists all the nxml Lua data.
  *
- * All supported contents of the table named "mem" are saved. Functions aren't
+ * All supported contents of the table `mem` are saved. Functions aren't
  * supported.
  *
  *    @param env Lua environment to save.
@@ -517,7 +517,7 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
 }
 
 /**
- * @brief Unpersists Lua data into a table named "mem".
+ * @brief Unpersists Lua data into a table `mem`.
  *
  *    @param env Environment to unpersist data into.
  *    @param parent Node containing all the Lua persisted data.
@@ -535,7 +535,7 @@ int nxml_unpersistLua( nlua_env *env, xmlNodePtr parent )
 }
 
 /**
- * @brief Checks whether saving the given string (from "lua_tolstring")
+ * @brief Checks whether saving the given string (from `lua_tolstring`)
  *        can be saved into an XML document without blowing up.
  *
  *    @param buf Contents of a valid Lua string.

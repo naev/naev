@@ -517,12 +517,12 @@ static int texL_setFilter( lua_State *L )
  * @brief Sets the texture wrapping.
  *
  *    @luatparam Tex tex Texture to set filter.
- *    @luatparam string horiz Horizontal wrapping ("clamp", "repeat", or
- * "mirroredrepeat" )
- *    @luatparam[opt] string vert Vertical wrapping ("clamp", "repeat", or
- * "mirroredrepeat" )
- *    @luatparam[opt] string depth Depth wrapping ("clamp", "repeat", or
- * "mirroredrepeat" )
+ *    @luatparam string horiz Horizontal wrapping (`"clamp"`, `"repeat"`, or
+ * `"mirroredrepeat"` )
+ *    @luatparam[opt] string vert Vertical wrapping (`"clamp"`, `"repeat"`, or
+ * `"mirroredrepeat"` )
+ *    @luatparam[opt] string depth Depth wrapping (`"clamp"`, `"repeat"`, or
+ * `"mirroredrepeat"` )
  * @luafunc setWrap
  */
 static int texL_setWrap( lua_State *L )

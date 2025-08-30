@@ -48,7 +48,7 @@ int nlua_loadShiplog( nlua_env *env )
  * @brief Creates a shiplog for this mission.
  *
  * @usage shiplog.create("MyLog", "My mission title", "Mission type") -- Creates
- * log "MyLog" without erasing anything
+ * log `MyLog` without erasing anything
  * @usage shiplog.create("MyOtherLog", "Any title","Anything can be a type",
  * true, 10) -- Erases any existing `MyOtherLog` entries and sets a limit of 10
  * entries
