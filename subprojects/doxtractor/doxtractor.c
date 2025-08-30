@@ -17,22 +17,48 @@
 // Nor this.
 
 #include <libgen.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
-typedef struct{
-   FILE*fp;
-   char*buf;
+typedef struct {
+   FILE  *fp;
+   char  *buf;
    size_t siz;
    size_t num;
 } MYFILE;
 
-static int my_getline(char**line, size_t*line_siz, MYFILE fp){
-   return getline(line, line_siz, fp.fp);
+static ssize_t my_getline(char **line, size_t *line_siz, MYFILE *fp)
+{
+   char *where = memchr(fp->buf, '\n', fp->num);
+   while (!where && !feof(fp->fp)) {
+      if (fp->num == fp->siz) {
+         fp->siz = (fp->siz * 2) | 3;
+         fp->buf = realloc(fp->buf, fp->siz);
+      }
+      const size_t added =
+         fread(fp->buf + fp->num, sizeof(char), fp->siz - fp->num, fp->fp);
+      where = memchr(fp->buf + fp->num, '\n', added);
+      fp->num += added;
+   }
+   if (!where)
+      where = fp->buf + fp->num - 1;
+
+   const size_t n = where + 1 - fp->buf;
+
+   if (n + 1 > *line_siz)
+      *line = realloc(*line, (*line_siz = n + 1));
+
+   memcpy(*line, fp->buf, n);
+   (*line)[n] = '\0';
+
+   fp->num -= n;
+   memmove(fp->buf, fp->buf + n, fp->num);
+
+   return (ssize_t) n - 1;
 }
 
-static int do_it(MYFILE fp, const char *pref)
+static int do_it(MYFILE *fp, const char *pref)
 {
    char *buff = calloc(snprintf(NULL, 0, "%s%u: ", pref, (unsigned) (-1)) + 1,
                        sizeof(char));
@@ -99,18 +125,18 @@ int main(int argc, char *const *argv)
    if (argc > 1 && (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help")))
       return usage(argv[0]);
 
-   if (argc == 1){
-      MYFILE mfp = {.fp= stdin};
-      res = do_it(mfp, "");
+   if (argc == 1) {
+      MYFILE mfp = {.fp = stdin};
+      res        = do_it(&mfp, "");
       free(mfp.buf);
-   }else
+   } else
       for (int i = 1; i < argc && !res; i++)
          if ((fp = fopen(argv[i], "rt"))) {
-            MYFILE mfp = {.fp= fp};
-            const char *bn = basename(argv[i]);
-            char *pref     = calloc(snprintf(NULL, 0, "%s ", bn) + 1, sizeof(char));
+            MYFILE      mfp = {.fp = fp};
+            const char *bn  = basename(argv[i]);
+            char *pref = calloc(snprintf(NULL, 0, "%s ", bn) + 1, sizeof(char));
             sprintf(pref, "%s ", bn);
-            res = do_it(mfp, pref) || res;
+            res = do_it(&mfp, pref) || res;
             fclose(mfp.fp);
             free(mfp.buf);
             free(pref);
