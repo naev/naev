@@ -9,9 +9,14 @@ if [ ! -f builddir/doxtractor ] ; then
 fi
 if [ ! -f builddir/doxtractor ] ; then
    (
-      meson setup builddir .
+      meson setup builddir . >/dev/null
       cd builddir || exit
-      meson compile
+      meson compile >/dev/null
    )
 fi
-echo "$(pwd)/builddir/doxtractor"
+if [ ! -f builddir/doxtractor ] ; then
+   echo ":"
+   exit 1
+else
+   echo "$(pwd)/builddir/doxtractor"
+fi

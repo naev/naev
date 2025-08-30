@@ -16,13 +16,23 @@
 
 // Nor this.
 
-#define _GNU_SOURCE
 #include <libgen.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
-static int do_it(FILE *const fp, const char *pref)
+typedef struct{
+   FILE*fp;
+   char*buf;
+   size_t siz;
+   size_t num;
+} MYFILE;
+
+static int my_getline(char**line, size_t*line_siz, MYFILE fp){
+   return getline(line, line_siz, fp.fp);
+}
+
+static int do_it(MYFILE fp, const char *pref)
 {
    char *buff = calloc(snprintf(NULL, 0, "%s%u: ", pref, (unsigned) (-1)) + 1,
                        sizeof(char));
@@ -33,7 +43,7 @@ static int do_it(FILE *const fp, const char *pref)
    unsigned lineno     = 0;
    int      warn_left  = 5;
 
-   while (getline(&line, &line_siz, fp) != -1) {
+   while (my_getline(&line, &line_siz, fp) != -1) {
       lineno++;
       if (in_comment) {
          char *where;
@@ -89,16 +99,20 @@ int main(int argc, char *const *argv)
    if (argc > 1 && (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help")))
       return usage(argv[0]);
 
-   if (argc == 1)
-      res = do_it(stdin, "");
-   else
+   if (argc == 1){
+      MYFILE mfp = {.fp= stdin};
+      res = do_it(mfp, "");
+      free(mfp.buf);
+   }else
       for (int i = 1; i < argc && !res; i++)
          if ((fp = fopen(argv[i], "rt"))) {
+            MYFILE mfp = {.fp= fp};
             const char *bn = basename(argv[i]);
             char *pref     = calloc(snprintf(NULL, 0, "%s ", bn) + 1, sizeof(char));
             sprintf(pref, "%s ", bn);
-            res = do_it(fp, pref) || res;
-            fclose(fp);
+            res = do_it(mfp, pref) || res;
+            fclose(mfp.fp);
+            free(mfp.buf);
             free(pref);
          } else
             res = 1;
