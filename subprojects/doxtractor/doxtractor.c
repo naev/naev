@@ -1,5 +1,9 @@
 
-// gcc -O1 doxtractor.c -Wall -Wextra -lc
+/*
+ * TODO:
+ *  - Apply the portability fix to utils/ssys/{potential,reposition}.c
+ *  - re-implement it in rust.
+ */
 
 /**
  * An example:
