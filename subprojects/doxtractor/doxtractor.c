@@ -23,7 +23,8 @@
 
 static char *my_strchrnul(char *s, int c)
 {
-   return strchr(s, c) ?: (s + strlen(s));
+   char *out = strchr(s, c);
+   return out ? out : (s + strlen(s));
 }
 
 typedef struct {
