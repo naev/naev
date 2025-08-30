@@ -12,6 +12,8 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+#include "getline.c"
+
 #define THREADS 4
 #define GRAV_FACT 0.1f
 
@@ -312,6 +314,7 @@ void apply_potential(const float *lst, size_t nb, enum e_pot t,
 int do_it(const enum e_pot type, const float scale, const bool apply,
           const int alt)
 {
+   MYFILE mfp = {.fp = stdin};
    float *lst = NULL;
    char **nam = NULL;
    size_t nb  = 0;
@@ -319,7 +322,7 @@ int do_it(const enum e_pot type, const float scale, const bool apply,
    char  *line = NULL;
    size_t _n   = 0;
    int    len1, len2, n;
-   while ((n = getline(&line, &_n, stdin)) != -1) {
+   while ((n = my_getline(&line, &_n, &mfp)) != -1) {
       if (line[n - 1] == '\n')
          line[n - 1] = '\0';
       if ((nb & (nb + 1)) == 0) {
