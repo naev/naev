@@ -349,6 +349,7 @@ function _escort_e_jump( p, j )
    end
 end
 
+local heartbeat
 --[[--
 Spawns the escorts at location. This can be useful at the beginning if you want them to jump in or take of while in space. It is handled automatically when the player takes off or jumps into a system.
 
@@ -435,8 +436,10 @@ function escort.spawn( pos )
 
       -- Have to run logic
       if not mem._escort.nofollowplayer then
-         hook.timerClear()
-         hook.timer( HEARTBEAT_TIMER, "_escort_heartbeat" )
+         if heartbeat then
+            hook.rm( heartbeat )
+         end
+         heartbeat = hook.timer( HEARTBEAT_TIMER, "_escort_heartbeat" )
       end
    end
 
@@ -478,7 +481,7 @@ function _escort_heartbeat ()
          end
       end
    end
-   hook.timer( HEARTBEAT_TIMER, "_escort_heartbeat" )
+   heartbeat = hook.timer( HEARTBEAT_TIMER, "_escort_heartbeat" )
 end
 
 function _escort_spawn ()
