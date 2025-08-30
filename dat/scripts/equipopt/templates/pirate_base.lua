@@ -87,6 +87,8 @@ pirate_base.params_overwrite = {
    max_same_util = 1,
 }
 
+pirate_base.type = "pirate"
+
 function pirate_base.make_equip( pbase )
    --[[
    -- @brief Does Pirate pilot equipping
@@ -140,7 +142,7 @@ function pirate_base.make_equip( pbase )
       end
 
       local mem = p:memory()
-      mem.equip = { type="pirate", level="standard" }
+      mem.equip = { type=pirate_base.type, level="standard" }
 
       -- Try to equip
       return optimize.optimize( p, cores, outfits, params )
