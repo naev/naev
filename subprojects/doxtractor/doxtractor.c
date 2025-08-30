@@ -18,7 +18,7 @@
 
 #define _GNU_SOURCE
 #include <libgen.h>
-#include <malloc.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
