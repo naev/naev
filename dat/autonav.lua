@@ -234,7 +234,7 @@ end
 --[[
 Autonav to a system, destination is in the player's nav
 --]]
-local function _autonav_system (do_uselanes)
+local function _autonav_system( do_uselanes, domsg )
    local dest
    dest, map_npath = player.autonavDest()
    local pp = player.pilot()
@@ -248,8 +248,10 @@ local function _autonav_system (do_uselanes)
          {sys=get_sys_name(nextsys)}))
    end
 
-   player.msg("#o"..fmt.f(_("Autonav: travelling to {sys}."),
-      {sys=get_sys_name(dest)}).."#0")
+   if domsg then
+      player.msg("#o"..fmt.f(_("Autonav: travelling to {sys}."),
+         {sys=get_sys_name(dest)}).."#0")
+   end
 
    local pos = jmp:pos()
    local d = jmp:jumpDist( pp )
@@ -271,7 +273,7 @@ end
 
 function autonav_system ()
    autonav_setup()
-   _autonav_system (uselanes_jump)
+   _autonav_system( uselanes_jump, true )
 end
 
 --[[
@@ -549,13 +551,19 @@ function autonav_jump_delay ()
       return
    end
 
-   -- Determine how to do lanes
-   if uselanes_jump then
-      path = lanes.getRouteP( pp, target_pos, nil, uselanes_thr )
-   else
-      path = {target_pos}
+   -- Restart autonav system
+   autonav_setup()
+   _autonav_system( uselanes_jump, false )
+
+   -- Display message only if not aborted
+   if player.autonav() then
+      local dest = player.autonavDest()
+      local sysstr = get_sys_name( dest )
+      player.msg("#o"..fmt.f(n_(
+         "Autonav continuing until {sys} ({n} jump left).",
+         "Autonav continuing until {sys} ({n} jumps left).",
+         map_npath),{sys=sysstr,n=map_npath}).."#0")
    end
-   autonav_set( autonav_jump_approach )
 end
 
 local function recompute_jump_pos ()
@@ -847,7 +855,7 @@ function autonav_plt_follow ()
 
                -- Try to follow through jump
                pp:navJumpSet( jmp )
-               _autonav_system(false)
+               _autonav_system(false, true)
                autonav_reset(0)
             else
                local why=nil
@@ -1033,18 +1041,14 @@ function autonav_enter ()
          return false
       end
 
-      -- Keep on going
-      player.msg("#o"..fmt.f(n_(
-         "Autonav continuing until {sys} ({n} jump left).",
-         "Autonav continuing until {sys} ({n} jumps left).",
-         map_npath),{sys=sysstr,n=map_npath}).."#0")
-
       local pos = jmp:pos()
       local d = jmp:jumpDist( pp )
       target_pos = pos + (pp:pos()-pos):normalize( math.max(0.8*d, d-30) )
       if uselanes_jump then
          lanes.clearCache( pp )
       end
+
+      -- Keep on going
       autonav_set( autonav_jump_delay )
    end
 end
