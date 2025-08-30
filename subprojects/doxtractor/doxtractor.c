@@ -21,6 +21,11 @@
 #include <stdlib.h>
 #include <string.h>
 
+static char *my_strchrnul(char *s, int c)
+{
+   return strchr(s, c) ?: (s + strlen(s));
+}
+
 typedef struct {
    FILE  *fp;
    char  *buf;
@@ -28,7 +33,7 @@ typedef struct {
    size_t num;
 } MYFILE;
 
-static ssize_t my_getline(char **line, size_t *line_siz, MYFILE *fp)
+static int my_getline(char **line, size_t *line_siz, MYFILE *fp)
 {
    char *where = memchr(fp->buf, '\n', fp->num);
    while (!where && !feof(fp->fp)) {
@@ -55,7 +60,7 @@ static ssize_t my_getline(char **line, size_t *line_siz, MYFILE *fp)
    fp->num -= n;
    memmove(fp->buf, fp->buf + n, fp->num);
 
-   return (ssize_t) n - 1;
+   return (int) n - 1;
 }
 
 static int do_it(MYFILE *fp, const char *pref)
@@ -81,7 +86,7 @@ static int do_it(MYFILE *fp, const char *pref)
             int n = sprintf(buff, "%s%u: ", pref, lineno);
 
             char *const str = line + 2 + (line[2] == ' ' ? 1 : 0);
-            char *const end = strchrnul(str, '\n');
+            char *const end = my_strchrnul(str, '\n');
             for (where = end; where[-1] == ' '; where--)
                ;
             if (where == str)
@@ -90,7 +95,7 @@ static int do_it(MYFILE *fp, const char *pref)
             strcpy(where, end);
             fwrite(str, sizeof(char), strlen(str), stdout);
          } else if (in_comment && warn_left) {
-            *strchrnul(line, '\n') = '\0';
+            *my_strchrnul(line, '\n') = '\0';
             fprintf(stderr, "%s%u: ", pref, lineno);
             fprintf(stderr, "Invalid comment line \"%s\"\n", line);
             warn_left--;
