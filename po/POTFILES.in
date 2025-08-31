@@ -155,7 +155,9 @@ dat/outfits/accessory/left_boot.xml
 dat/outfits/accessory/love_letter.xml
 dat/outfits/accessory/pentagram_of_valor.xml
 dat/outfits/accessory/pilot_doll.xml
-dat/outfits/accessory/racing_trophy.xml
+dat/outfits/accessory/racing_trophy_bronze.xml
+dat/outfits/accessory/racing_trophy_gold.xml
+dat/outfits/accessory/racing_trophy_silver.xml
 dat/outfits/accessory/rackhams_razor.xml
 dat/outfits/accessory/sandwich_holder.xml
 dat/outfits/accessory/satellite_mockup.xml

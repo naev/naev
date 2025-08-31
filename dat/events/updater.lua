@@ -47,7 +47,7 @@ local function updater0130( _did0120, _did0110, _did0100, _did090 )
    -- 4. Detection changes?
 
    -- Newly added diff
-   if player.outfitNum( outfit.get("Racing Trophy") ) > 0 then
+   if player.outfitNum( outfit.get("Racing Trophy (Silver)") ) > 0 then
       diff.apply( "melendez_dome_xy37" )
    end
 

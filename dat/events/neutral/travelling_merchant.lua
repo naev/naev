@@ -187,7 +187,7 @@ function gen_outfits ()
       { "Nebula Satellite",         "Satellite Mock-up" },
       { "The one with the Runaway", "Toy Drone" },
       { "Deliver Love",             "Love Letter" },
-      --{ "Racing Skills 2",          "Racing Trophy" }, -- This is redoable so no need to give it again
+      --{ "Racing Skills 2",          "Racing Trophy (Silver)" }, -- This is redoable so no need to give it again
       { "Operation Cold Metal",     "Left Boot" },
       { "Black Cat",                "Black Cat Doll" },
       { "Terraforming Antlejos 10", "Commemorative Stein" },

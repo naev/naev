@@ -1,4 +1,4 @@
-<outfit name="Racing Trophy">
+<outfit name="Racing Trophy (Silver)">
  <general>
   <unique/>
   <typename>Accessory</typename>
@@ -7,8 +7,8 @@
   <priority>3</priority>
   <mass>0</mass>
   <price>1000000</price>
-  <description>Racing trophy you won with your excellent piloting skills. Looks great on the wall!</description>
-  <gfx_store>racing_trophy_gold.svg</gfx_store>
+  <description>The racing trophy you won with your excellent piloting skills. Looks great on the wall!</description>
+  <gfx_store>racing_trophy_silver.svg</gfx_store>
   <rarity>6</rarity>
  </general>
  <specific type="modification">

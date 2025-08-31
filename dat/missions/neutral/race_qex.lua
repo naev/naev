@@ -315,7 +315,7 @@ function race_landed ()
       best_improved = true
    end
    local reward = mem.track.reward
-   local reward_outfit = outfit.get("Racing Trophy")
+   local reward_outfit = outfit.get("Racing Trophy (Silver)")
 
    vn.clear()
    vn.scene()
