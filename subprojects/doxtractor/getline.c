@@ -41,5 +41,5 @@ static int my_getline(char **line, size_t *line_siz, MYFILE *fp)
    fp->off += n;
    if (!n)
       fp->buf = realloc(fp->buf, (fp->siz = 0));
-   return (int) n - 1;
+   return n ? (int) n : -1;
 }
