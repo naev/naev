@@ -6,16 +6,16 @@
  *
  * @brief This file handles most of the more generic openGL functions.
  *
- * The main way to work with opengl in naev is to create glTextures and then
- *  use the blit functions to draw them on the screen.  This system will
- *  handle relative and absolute positions.
+ * The main way to work with openGL in Naev is to create `glTextures` and then
+ * use the blit functions to draw them on the screen.  This system will
+ * handle relative and absolute positions.
  *
  * There are two coordinate systems: relative and absolute.
  *
  * Relative:
  *  * Everything is drawn relative to the player, if it doesn't fit on screen
  *    it is clipped.
- *  * Origin (0., 0.) would be ontop of the player.
+ *  * Origin (0., 0.) would be on top of the player.
  *
  * Absolute:
  *  * Everything is drawn in "screen coordinates".

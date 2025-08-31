@@ -59,7 +59,7 @@ typedef struct Node_ {
 struct vpoolThreadData_;
 
 /**
- * @brief The "Threadqueue" structure itself.
+ * @brief The `Threadqueue` structure itself.
  */
 struct ThreadQueue_ {
    Node *first;   /**< The first node */
@@ -78,7 +78,7 @@ struct ThreadQueue_ {
 };
 
 /**
- * @brief Data for the "Threadqueue".
+ * @brief Data for the `Threadqueue`.
  */
 typedef struct ThreadQueueData_ {
    int ( *function )( void * ); /* The function to be called */
@@ -132,7 +132,7 @@ static int          vpool_worker( void *data );
  *  we can operate separately on either head or tail. This lets us enqueue at
  *  tail and dequeue at the head in true FIFO fashion.
  *
- *    @return The "ThreadQueue".
+ *    @return The `ThreadQueue`.
  */
 static ThreadQueue *tq_create( void )
 {
@@ -158,7 +158,7 @@ static ThreadQueue *tq_create( void )
 }
 
 /**
- * @brief Enqueue data to the "ThreadQueue" q.
+ * @brief Enqueue data to the `ThreadQueue` `q`.
  *
  *    @param q The queue to be inserted into.
  *    @param data The element to be stored in the queue.
@@ -192,9 +192,9 @@ static void tq_enqueue( ThreadQueue *q, void *data )
 }
 
 /**
- * @brief Dequeue from the "ThreadQueue" q.
+ * @brief Dequeue from the `ThreadQueue` `q`.
  *
- * @attention The callee should ALWAYS have called "SDL_WaitSemaphore()" on the
+ * @attention The callee should ALWAYS have called `SDL_WaitSemaphore()` on the
  * semaphore.
  *
  *    @param q The queue to dequeue from.
@@ -244,11 +244,11 @@ static void *tq_dequeue( ThreadQueue *q )
 }
 
 /**
- * @brief Destroys and frees a "ThreadQueue".
+ * @brief Destroys and frees a `ThreadQueue`.
  *
  * Frees all elements too.
  *
- *    @param q The "ThreadQueue" to free.
+ *    @param q The `ThreadQueue` to free.
  */
 static void tq_destroy( ThreadQueue *q )
 {
@@ -290,7 +290,7 @@ static void tq_destroy( ThreadQueue *q )
  *  means the worker thread should stop. Else it dequeues a job from the
  *  global_queue and executes it.
  *
- *    @param data A pointer to the "ThreadData" struct used for a lot of stuff.
+ *    @param data A pointer to the `ThreadData` struct used for a lot of stuff.
  */
 static int threadpool_worker( void *data )
 {
@@ -493,15 +493,15 @@ int threadpool_init( void )
  * @brief Creates a new vpool queue.
  *
  * This is just an interface to make running a number of jobs and then wait for
- *  them to finish more pleasant. You should not nest vpools as of now as there
- *  are only a limit number of worker threads and we can't have them wait for a
- *  thread to finish that doesn't exist.
+ *  them to finish more pleasant. You should not nest `vpools` as of now as
+ * there are only a limit number of worker threads and we can't have them wait
+ * for a thread to finish that doesn't exist.
  *
- * If you really want to sort of nest vpools, you should start a new thread
+ * If you really want to sort of nest `vpools`, you should start a new thread
  *  instead of using the threadpool. I might add a vpool_waitInANewThread
  *  function some day.
  *
- *    @return Returns a "ThreadQueue" to be used.
+ *    @return Returns a `ThreadQueue` to be used.
  */
 ThreadQueue *vpool_create( void )
 {

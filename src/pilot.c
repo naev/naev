@@ -246,7 +246,7 @@ int pilot_validTarget( const Pilot *p, const Pilot *target )
  *
  *    @param p Reference pilot.
  *    @param target Pilot to see if is a valid target of the reference.
- *    @param[out] inrange Stores the value of "pilot_inRangePilot".
+ *    @param[out] inrange Stores the value of `pilot_inRangePilot`.
  *    @return 1 if it is valid, 0 otherwise.
  */
 int pilot_validTargetRange( const Pilot *p, const Pilot *target, int *inrange )
@@ -267,7 +267,7 @@ int pilot_validTargetRange( const Pilot *p, const Pilot *target, int *inrange )
 }
 
 /**
- * @brief Same as "pilot_validTarget" but without the range check.
+ * @brief Same as `pilot_validTarget` but without the range check.
  */
 int pilot_canTarget( const Pilot *p )
 {
@@ -352,8 +352,8 @@ unsigned int pilot_getNearestEnemy( const Pilot *p )
 }
 
 /**
- * @brief Gets the nearest enemy to the pilot closest to the pilot whose mass is
- * between LB and UB.
+ * @brief Gets the nearest enemy to the pilot whose mass is
+ * between `target_mass_LB` and `target_mass_UB`.
  *
  *    @param p Pilot to get the nearest enemy of.
  *    @param target_mass_LB the lower bound for target mass
@@ -388,8 +388,7 @@ unsigned int pilot_getNearestEnemy_size( const Pilot *p, double target_mass_LB,
 }
 
 /**
- * @brief Gets the nearest enemy to the pilot closest to the pilot whose mass is
- * between LB and UB.
+ * @brief Gets the nearest enemy to the pilot which matches certain conditions.
  *
  *    @param p Pilot to get the nearest enemy of.
  *    @param mass_factor parameter for target mass (0-1, 0.5 = current mass)
@@ -634,7 +633,7 @@ double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang,
  *
  * It's a binary search ( O(logn) ) therefore it's pretty fast and can be
  *  abused all the time. Maximum iterations is 32 on a platform with 32 bit
- *  unsigned ints.
+ *  integers.
  *
  *    @param id ID of the pilot to get.
  *    @return The actual pilot who has matching ID or NULL if not found.
@@ -738,7 +737,7 @@ int pilot_isFriendly( const Pilot *p )
 }
 
 /**
- * @brief Like "areAllies" but for pilots.
+ * @brief Like `areAllies` but for pilots.
  */
 int pilot_areAllies( const Pilot *p, const Pilot *target )
 {
@@ -760,7 +759,7 @@ int pilot_areAllies( const Pilot *p, const Pilot *target )
 }
 
 /**
- * @brief Like "areEnemies" but for pilots.
+ * @brief Like `areEnemies` but for pilots.
  */
 int pilot_areEnemies( const Pilot *p, const Pilot *target )
 {
@@ -824,7 +823,7 @@ void pilot_collideQueryIL( IntList *il, int x1, int y1, int x2, int y2 )
  *    @param p Pilot to turn.
  *    @param dir Direction to attempt to face.
  *    @param dt Current delta time.
- *    @return The distance left to turn to match "dir".
+ *    @return The distance left to turn to match `dir`.
  */
 double pilot_face( Pilot *p, double dir, double dt )
 {
@@ -1092,7 +1091,7 @@ void pilot_setHostile( Pilot *p )
 
 /**
  * @brief Gets the faction colour char, works like
- * "faction_reputationColourChar" but for a pilot.
+ * `faction_reputationColourChar` but for a pilot.
  *
  * @sa faction_reputationColourChar
  */
@@ -4604,7 +4603,7 @@ mat4 pilot_local_transform( const Pilot *p )
  *    @param p Pilot to send message
  *    @param receiver Pilot to receive it
  *    @param type Type of message.
- *    @param idx Index of data on Lua stack or "LUA_NOREF"
+ *    @param idx Index of data on Lua stack or `LUA_NOREF`
  */
 void pilot_msg( const Pilot *p, const Pilot *receiver, const char *type,
                 int idx )

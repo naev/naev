@@ -3,7 +3,7 @@
  * @file msgcat.c
  *
  * @brief Message catalog lookup and plural-form evaluation subroutines.
- *        This implementation comes from musl. See below for details and copyright info.
+ *        This implementation comes from "musl". See below for details and copyright info.
  */
 
 
@@ -52,7 +52,7 @@ static const char* msgcat_mo_lookup( const void *p, size_t size, const char *s )
 /* (The code in this section is heavily modified for Naev's use, but that's its origin.) */
 
 /**
- * @brief Initialize a "msgcat_t", given the contents and content-length of a ".mo" file.
+ * @brief Initialize a `msgcat_t`, given the contents and content-length of a ".mo" file.
  */
 void msgcat_init( msgcat_t* p, const void* map, size_t map_size )
 {

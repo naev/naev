@@ -106,7 +106,7 @@ int nlua_loadVector( nlua_env *env )
  *
  * To call members of the metatable always use:
  * @code
- * vector:function( param )
+ * vector:function( parameter )
  * @endcode
  *
  * @luamod vec2
@@ -116,7 +116,7 @@ int nlua_loadVector( nlua_env *env )
  *
  *    @param L Lua state to get vector from.
  *    @param ind Index position of vector.
- *    @return The "vec2" at index "ind".
+ *    @return The `vec2` at index `ind`.
  */
 vec2 *lua_tovector( lua_State *L, int ind )
 {
@@ -127,7 +127,7 @@ vec2 *lua_tovector( lua_State *L, int ind )
  *
  *    @param L Lua state to get vector from.
  *    @param ind Index position of vector.
- *    @return The "vec2" at index "ind".
+ *    @return The `vec2` at index `ind`.
  */
 vec2 *luaL_checkvector( lua_State *L, int ind )
 {
@@ -597,7 +597,7 @@ static int vectorL_polar( lua_State *L )
 /**
  * @brief Sets the vector by cartesian coordinates.
  *
- * @usage my_vec:set(5, 3) -- "my_vec" is now (5,3)
+ * @usage my_vec:set(5, 3) -- `my_vec` is now (5,3)
  *
  *    @luatparam Vec2 v Vector to set coordinates of.
  *    @luatparam number x X coordinate to set.
@@ -621,7 +621,7 @@ static int vectorL_set( lua_State *L )
 /**
  * @brief Sets the vector by polar coordinates.
  *
- * @usage my_vec:setP( 1, 90 ) -- "my_vec" is now (0,1)
+ * @usage my_vec:setP( 1, 90 ) -- `my_vec` is now (0,1)
  *
  *    @luatparam Vec2 v Vector to set coordinates of.
  *    @luatparam number m Modulus to set.
@@ -643,11 +643,11 @@ static int vectorL_setP( lua_State *L )
 }
 
 /**
- * @brief Gets the distance from the "Vec2".
+ * @brief Gets the distance from the `Vec2`.
  *
  * @usage my_vec:dist() -- Gets length of the vector (distance from origin).
- * @usage my_vec:dist( your_vec ) -- Gets distance from both vectors "your_vec"
- * - "my_vec").
+ * @usage my_vec:dist( your_vec ) -- Gets distance from both vectors `your_vec`
+ * - `my_vec`).
  *
  *    @luatparam Vec2 v Vector to act as origin.
  *    @luatparam[opt=vec2.new()] Vec2 v2 Vector to get distance from, uses
@@ -673,7 +673,7 @@ static int vectorL_distance( lua_State *L )
 }
 
 /**
- * @brief Gets the squared distance from the "Vec2" (saves a "sqrt()")
+ * @brief Gets the squared distance from the `Vec2` (saves a `sqrt()`)
  *
  * @usage my_vec:dist2() -- Gets squared length of the vector (distance squared
  * from origin).

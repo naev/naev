@@ -126,7 +126,7 @@ static void outfit_modifiers( unsigned int wid )
 }
 
 /**
- * Used to force rerenders.
+ * Used to force re-rendering.
  */
 static int outfit_events( unsigned int wid, SDL_Event *evt )
 {

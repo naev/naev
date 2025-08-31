@@ -17,7 +17,6 @@ pub use semver;
 pub use nix;
 
 // TODO
-// * Remove log if empty (no warnings) on drop
 // * Maybe add colour for warning / whatever in console
 // * Maybe keep a copy of the last warning before moving over
 
@@ -32,6 +31,10 @@ enum Output {
 }
 impl Output {
     fn write(&mut self, msg: &str, level: log::Level) -> Result<()> {
+        if msg.len() == 0 {
+            return Ok(());
+        }
+
         // Write to buffer
         if level <= log::Level::Warn {
             eprintln!("{msg}");

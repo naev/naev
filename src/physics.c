@@ -139,8 +139,8 @@ static void solid_update_euler( Solid *obj, double dt )
  *
  *
  * Main advantage comes thanks to the fact that Naev is on a 2d plane.
- *  Therefore RK chops it up in chunks and actually creates a tiny curve
- *  instead of approximating the curve for a tiny straight line.
+ * Therefore Runge-Kutta chops it up in chunks and actually creates a tiny curve
+ * instead of approximating the curve for a tiny straight line.
  */
 #define RK4_MIN_H 0.01 /**< Minimal pass we want. */
 static void solid_update_rk4( Solid *obj, double dt )

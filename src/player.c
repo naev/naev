@@ -1791,7 +1791,7 @@ void player_checkLandAck( void )
 /**
  * @brief Sets the no land message.
  *
- *    @brief "str" Message to set when the player is not allowed to land
+ *    @brief `str` Message to set when the player is not allowed to land
  * temporarily.
  */
 void player_nolandMsg( const char *str )
@@ -2866,7 +2866,7 @@ PlayerShip_t *player_getPlayerShip( const char *shipname )
  * @brief Gets how many of the outfit the player owns.
  *
  *    @param o Outfit to check how many the player owns.
- *    @return The number of own outfits matching "o".
+ *    @return The number of own outfits matching `o`.
  */
 int player_outfitOwned( const Outfit *o )
 {
@@ -3078,7 +3078,7 @@ static int cmp_int( const void *p1, const void *p2 )
 
 /**
  * @brief Marks a mission as completed.
-
+ *
  *    @param id ID of the mission to mark as completed.
  */
 void player_missionFinished( int id )
@@ -3816,9 +3816,9 @@ static int player_runUpdaterStart( void )
 
 /**
  * @brief Runs the save updater script, leaving any result on the stack of
- * naevL.
+ * `naevL`.
  *
- *    @param type Type of item to translate. Currently "outfit" and "license"
+ *    @param type Type of item to translate. Currently `outfit` and `license`
  * are supported.
  *    @param name Name of the inventory item.
  *    @param q Quantity in possession.
@@ -4178,7 +4178,7 @@ static Spob *player_parse( xmlNodePtr parent )
 }
 
 /**
- * @brief Filter function for "space_getRndSpob"
+ * @brief Filter function for `space_getRndSpob`
  *
  *    @param p Spob.
  *    @return Whether the spob is suitable for teleporting to.
@@ -4295,7 +4295,7 @@ static int player_parseInventory( xmlNodePtr parent )
 /**
  * @brief Parses the escorts from the escort node.
  *
- *    @param parent "escorts" node to parse.
+ *    @param parent `escorts` node to parse.
  *    @return 0 on success.
  */
 static int player_parseEscorts( xmlNodePtr parent )
@@ -4354,7 +4354,7 @@ static int player_parseEscorts( xmlNodePtr parent )
 /**
  * @brief Parses the player metadata.
  *
- *    @param parent "metadata" node to parse.
+ *    @param parent `metadata` node to parse.
  *    @return 0 on success.
  */
 static int player_parseMetadata( xmlNodePtr parent )

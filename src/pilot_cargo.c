@@ -58,8 +58,8 @@ int pilot_cargoFree( const Pilot *p )
 /**
  * @brief Moves cargo from one pilot to another without any checks.
  *
- * At the end has dest have exactly the same cargo as src and leaves src with
- * none.
+ * At the end has `dest` have exactly the same cargo as `src` and leaves `src`
+ * with none.
  *
  *    @param dest Destination pilot.
  *    @param src Source pilot.
@@ -82,8 +82,8 @@ int pilot_cargoMoveRaw( Pilot *dest, Pilot *src )
 /**
  * @brief Moves cargo from one pilot to another.
  *
- * At the end has dest have exactly the same cargo as src and leaves src with
- * none.
+ * At the end has `dest` have exactly the same cargo as `src` and leaves `src`
+ * with none.
  *
  *    @param dest Destination pilot.
  *    @param src Source pilot.
@@ -103,7 +103,7 @@ int pilot_cargoMove( Pilot *dest, Pilot *src )
 }
 
 /**
- * @brief Adds cargo to the pilot's "commodities" array only.
+ * @brief Adds cargo to the pilot's `commodities` array only.
  *
  *    @param pilot Pilot to add cargo to.
  *    @param cargo Cargo to add.

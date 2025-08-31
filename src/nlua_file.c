@@ -72,7 +72,7 @@ int nlua_loadFileNoEnv( lua_State *L )
 /**
  * @brief Lua bindings to interact with files.
  *
- * @note The API here is designed to be compatible with that of LÖVE.
+ * @note The API here is designed to be compatible with that of "LÖVE".
  *
  * @luamod file
  */

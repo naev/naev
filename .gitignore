@@ -46,6 +46,7 @@ utils/starmap/*.log
 builddir/
 meson-bin/
 /subprojects/*
+!/subprojects/doxtractor/
 !/subprojects/packagefiles
 !/subprojects/*.wrap
 

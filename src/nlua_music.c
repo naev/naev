@@ -44,7 +44,7 @@ static const luaL_Reg music_methods[] = {
  * @luamod music
  */
 /**
- * @brief Loads the music functions into a "lua_State".
+ * @brief Loads the music functions into a `lua_State`.
  *
  *    @param env Lua environment to load the music functions into.
  *    @return 0 on success.
@@ -56,9 +56,9 @@ int nlua_loadMusic( nlua_env *env )
 }
 
 /**
- * @brief Delays a rechoose.
+ * @brief Delays a re-choose.
  *
- * @usage music.choose( "ambient" ) -- Rechooses ambient in 5 seconds
+ * @usage music.choose( "ambient" ) -- Re-chooses ambient in 5 seconds
  *
  *    @luatparam string situation Situation to choose.
  * @luafunc choose
@@ -107,7 +107,7 @@ static int musicL_pause( lua_State *L )
  *
  *    @luatparam boolean disable Whether or not to disable music changes until
  * music.play() is called. This disables all in-game music changes such as
- * taking off. Disables by false, set to true to stop music until "music.play()"
+ * taking off. Disables by false, set to true to stop music until `music.play()`
  * is run.
  * @luafunc stop
  */
@@ -143,7 +143,7 @@ static int musicL_isPlaying( lua_State *L )
  *
  * @usage songname, songplayed = music.current()
  *
- *    @luatreturn string The name of the current playing song or "none" if no
+ *    @luatreturn string The name of the current playing song or `"none"` if no
  * song is playing.
  *    @luatreturn number The current offset inside the song (-1. if music is
  * none).

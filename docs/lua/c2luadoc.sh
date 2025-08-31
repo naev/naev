@@ -1,13 +1,13 @@
-#!/bin/sh
+#!/bin/bash
 
 # Convert Doxygen comments to Luadoc comments
 # CAUTION: We need to support BSD/macOS sed in addition to GNU sed.
 #          If you aren't suffering, you've probably introduced a bug. :P
-sed -n                                                                        \
+"$1" "$2" | sed -e 's/^[^:]*:/ */' | sed -n                                   \
  -e '1i\
 -- This file was generated automatically from C sources to feed LDoc.'        \
 `# Convert Doxygen /** to Luadoc ---`                                         \
- -e 's|^ */\*\* *$|---|p'                                                     \
+ -e 's|^$|\n---|p'                                                            \
 `# Convert special tags to Lua expressions.`                                  \
 `# Lines after @luafunc & @luamod will be ignored by Luadoc`                  \
 `# Doxygen comments that do not contain any of these tags have no impact on`  \
@@ -44,21 +44,11 @@ sed -n                                                                        \
  -e 's|^ *\* *@code|-- <pre>|p'                                               \
  -e 's|^ *\* *@endcode|-- </pre>|p'                                           \
 `# Remove other tags:`                                                        \
- -e '\|^ *\* *@.*|d'                                                          \
-`# Insert newline between comments, replace */ with \n:`                      \
- -e '\|^ *\*/|c\
-'                                                                             \
+ -e '\|^ *\* *@|d'                                                            \
 `# Keep other comments, replace * with --`                                    \
  -e 's|^ *\*|--|p'                                                            \
 `# Keep blank lines`                                                          \
  -e 's|^\s*$||p'                                                              \
 `# Delete everything else, just in case:`                                     \
- -e 'd'                                                                       \
-   "$1" | awk '
-# Skips all comment blocks without an @ tag
-   BEGIN {
-      RS="\n\n"
-   }
-   /@/ {
-      print $0, "\n"
-   }' > "$2"
+ -e 'd' |
+sed -z -e 's/\n/\t/g' -e 's/\t\t/\n\t/g' | grep '@' | tr $'\t' $'\n'   > "$3"

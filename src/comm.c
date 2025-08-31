@@ -230,10 +230,10 @@ int comm_openSpob( Spob *spob )
  * @brief Gets a string from the pilot's memory.
  *
  * Valid targets are:
- *    - comm_no: message of communication failure.
- *    - bribe_no: unbribe message
- *    - bribe_prompt: bribe prompt
- *    - bribe_paid: paid message
+ *    - `comm_no`: message of communication failure.
+ *    - `bribe_no`: can't bribe message
+ *    - `bribe_prompt`: bribe prompt
+ *    - `bribe_paid`: paid message
  *
  *    @param p Pilot to get string from.
  *    @param str String to get.

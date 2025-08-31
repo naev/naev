@@ -132,6 +132,7 @@ fi
 msg "gen before graph"
 # shellcheck disable=SC2002
 cat "$TMP"                                                                    |
+"$DIR"/graphmod_stats.py 'init'                                               |
 if [ -z "$NOPIC" ] ;                                                      then
    pmsg "" |
    tee >(
@@ -168,6 +169,7 @@ pmsg ""                                                                        |
 if [ -z "$NOPIC" ] ;                                                      then
    tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_repos')
 else cat ;                                                                  fi |
+"$DIR"/graphmod_stats.py 'repos'                                               |
 pmsg "apply gravity"                                                           |
 "$DIR"/apply_pot.sh -g                                                         |
 "$DIR"/graphmod_stretch_north.py                                               |
@@ -176,6 +178,7 @@ if [ -z "$NOPIC" ] ;                                                      then
    pmsg "" |
    tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_grav')
 else pmsg "" ;                                                              fi |
+"$DIR"/graphmod_stats.py 'grav '                                               |
 pmsg "post-process "                                                           |
 "$DIR"/repeat.sh 3 "$DIR"/graphmod_repos.sh "$DIR" "${ALMOST_ALMOST_ALL[@]}"   |
 if [ -z "$NOPIC" ] ;                                                      then

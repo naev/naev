@@ -1828,7 +1828,7 @@ void outfit_freeSlot( OutfitSlot *s )
  * @brief Gets the outfit type from a human readable string.
  *
  *    @param buf String to extract outfit type from.
- *    @return Outfit type stored in "buf".
+ *    @return Outfit type stored in `buf`.
  */
 static OutfitType outfit_strToOutfitType( char *buf )
 {
@@ -3171,7 +3171,7 @@ static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent )
 
 /**
  * @brief Parses and returns Outfit from parent node.
-
+ *
  *    @param temp Outfit to load into.
  *    @param file Path to the XML file (relative to base directory).
  *    @return 0 on success.

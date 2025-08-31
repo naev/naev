@@ -520,7 +520,7 @@ void main_loop( int nested )
 }
 
 /**
- * @brief Wrapper for gl_resize that handles non-GL reinitialization.
+ * @brief Wrapper for gl_resize that handles non-GL re-initialization.
  */
 void naev_resize( void )
 {

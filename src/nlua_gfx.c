@@ -42,7 +42,8 @@ static int gfxL_renderCircleH( lua_State *L );
 static int gfxL_renderLinesH( lua_State *L );
 static int gfxL_clearDepth( lua_State *L );
 static int gfxL_fontSize( lua_State *L );
-/* TODO get rid of printDim and print in favour of printfDim and printf */
+/* TODO get rid of `printDim` and `print` in favor of `printfDim` and `printf`
+ */
 static int gfxL_printfDim( lua_State *L );
 static int gfxL_printfEnd( lua_State *L );
 static int gfxL_printfWrap( lua_State *L );
@@ -311,7 +312,7 @@ static int gfxL_renderTexScale( lua_State *L )
 /**
  * @brief Renders a texture using the core render function.
  *
- * This function is far more complex than renderTex, however it allows much
+ * This function is far more complex than `renderTex`, however it allows much
  *  more fine grained control over the entire render process and puts you
  *  closer to the actual OpenGL calls.
  *
@@ -990,10 +991,11 @@ static int gfxL_printText( lua_State *L )
  *
  * @usage gfx.setBlendMode( "alpha", "premultiplied" )
  *
- *    @luatparam string mode One of: "alpha", "replace", "screen", "add",
- * "subtract", "multiply", "lighten", or "darken".
+ *    @luatparam string mode One of: `"alpha"`, `"replace"`, `"screen"`,
+ * `"add"`,
+ * `"subtract"`, `"multiply"`, `"lighten"`, or `"darken"`.
  *    @luatparam[opt="alphamultiply"] string alphamode Override to
- * "premultiplied" when drawing canvases; see
+ * `premultiplied` when drawing canvases; see
  * https://love2d.org/wiki/BlendAlphaMode.
  * @luafunc setBlendMode
  */
@@ -1091,7 +1093,7 @@ static int gfxL_setBlendState( lua_State *L )
 /**
  * @brief Sets the scissor clipping, with (0,0) at top-left.
  *
- * Calling setScissor with no parameters disables the clipping.
+ * Calling `setScissor` with no parameters disables the clipping.
  *
  *    @luatparam number x X position of the clipping rectangle.
  *    @luatparam number y Y position of the clipping rectangle.

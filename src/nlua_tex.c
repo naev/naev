@@ -64,8 +64,8 @@ int nlua_loadTex( nlua_env *env )
  * An example would be:
  * @code
  * t  = tex.open( "foo/bar.png" ) -- Loads the texture
- * w,h, sw,sh = t:dim()
- * sprites, sx,sy = t:sprites()
+ * w, h, sw, sh = t:dim()
+ * sprites, x, y = t:sprites()
  * @endcode
  *
  * @luamod tex
@@ -517,12 +517,12 @@ static int texL_setFilter( lua_State *L )
  * @brief Sets the texture wrapping.
  *
  *    @luatparam Tex tex Texture to set filter.
- *    @luatparam string horiz Horizontal wrapping ("clamp", "repeat", or
- * "mirroredrepeat" )
- *    @luatparam[opt] string vert Vertical wrapping ("clamp", "repeat", or
- * "mirroredrepeat" )
- *    @luatparam[opt] string depth Depth wrapping ("clamp", "repeat", or
- * "mirroredrepeat" )
+ *    @luatparam string horiz Horizontal wrapping (`"clamp"`, `"repeat"`, or
+ * `"mirroredrepeat"` )
+ *    @luatparam[opt] string vert Vertical wrapping (`"clamp"`, `"repeat"`, or
+ * `"mirroredrepeat"` )
+ *    @luatparam[opt] string depth Depth wrapping (`"clamp"`, `"repeat"`, or
+ * `"mirroredrepeat"` )
  * @luafunc setWrap
  */
 static int texL_setWrap( lua_State *L )

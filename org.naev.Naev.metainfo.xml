@@ -11,7 +11,11 @@
   </developer>
   <icon type="stock">org.naev.Naev</icon>
   <url type="homepage">https://naev.org</url>
-  <url type="bugtracker">https://github.com/naev/naev/issues</url>
+  <url type="bugtracker">https://codeberg.org/naev/naev/issues</url>
+  <url type="contribute">https://codeberg.org/naev/naev</url>
+  <url type="contact">https://naev.org/contact/</url>
+  <url type="translate">https://hosted.weblate.org/projects/naev/</url>
+  <url type="vcs-browser">https://codeberg.org/naev/naev</url>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
   <update_contact>bobbens_AT_gmail.com</update_contact>
@@ -21,6 +25,11 @@
     <control>keyboard</control>
     <!--<control>gamepad</control>-->
   </recommends>
+
+  <branding>
+    <color type="primary" scheme_preference="light">#62a0ea</color>
+    <color type="primary" scheme_preference="dark">#1c71d8</color>
+  </branding>
 
   <description>
     <p>
@@ -46,113 +55,115 @@
   <categories>
     <category>Game</category>
     <category>AdventureGame</category>
+    <category>ActionGame</category>
+    <category>RolePlaying</category>
   </categories>
 
   <releases>
     <release version="0.12.6" type="stable" date="2025-07-09">
-      <url>https://naev.org/blarg/2025-07-09_0.12.6/</url>
+      <url type="details">https://naev.org/blarg/2025-07-09_0.12.6/</url>
     </release>
     <release version="0.12.5" type="stable" date="2025-05-23">
-      <url>https://naev.org/blarg/2025-05-23_0.12.5/</url>
+      <url type="details">https://naev.org/blarg/2025-05-23_0.12.5/</url>
     </release>
     <release version="0.12.4" type="stable" date="2025-04-06">
-      <url>https://naev.org/blarg/2025-04-06_0.12.4/</url>
+      <url type="details">https://naev.org/blarg/2025-04-06_0.12.4/</url>
     </release>
     <release version="0.12.3" type="stable" date="2025-02-01">
-      <url>https://naev.org/blarg/2025-02-01_0.12.3/</url>
+      <url type="details">https://naev.org/blarg/2025-02-01_0.12.3/</url>
     </release>
     <release version="0.12.2" type="stable" date="2025-01-09">
-      <url>https://naev.org/blarg/2025-01-09_0.12.2/</url>
+      <url type="details">https://naev.org/blarg/2025-01-09_0.12.2/</url>
     </release>
     <release version="0.12.1" type="stable" date="2024-12-27">
-      <url>https://naev.org/blarg/2024-12-27_0.12.1/</url>
+      <url type="details">https://naev.org/blarg/2024-12-27_0.12.1/</url>
     </release>
     <release version="0.12.0" type="stable" date="2024-12-23">
-      <url>https://naev.org/blarg/2024-12-23_0.12.0/</url>
+      <url type="details">https://naev.org/blarg/2024-12-23_0.12.0/</url>
     </release>
     <release version="0.11.5" type="stable" date="2024-06-13">
-      <url>https://naev.org/blarg/2024-06-13_0.11.5/</url>
+      <url type="details">https://naev.org/blarg/2024-06-13_0.11.5/</url>
     </release>
     <release version="0.11.4" type="stable" date="2024-03-09">
-      <url>https://naev.org/blarg/2024-03-09_0.11.4/</url>
+      <url type="details">https://naev.org/blarg/2024-03-09_0.11.4/</url>
     </release>
     <release version="0.11.3" type="stable" date="2024-01-25">
-      <url>https://naev.org/blarg/2024-01-25_0.11.3/</url>
+      <url type="details">https://naev.org/blarg/2024-01-25_0.11.3/</url>
     </release>
     <release version="0.11.2" type="stable" date="2024-01-15">
-      <url>https://naev.org/blarg/2024-01-15_0.11.2/</url>
+      <url type="details">https://naev.org/blarg/2024-01-15_0.11.2/</url>
     </release>
     <release version="0.11.1" type="stable" date="2024-01-14">
-      <url>https://naev.org/blarg/2024-01-14_0.11.1/</url>
+      <url type="details">https://naev.org/blarg/2024-01-14_0.11.1/</url>
     </release>
     <release version="0.11.0" type="stable" date="2023-12-23">
-      <url>https://naev.org/blarg/2023-12-23_0.11.0/</url>
+      <url type="details">https://naev.org/blarg/2023-12-23_0.11.0/</url>
     </release>
     <release version="0.10.6" type="stable" date="2023-07-07">
-      <url>https://naev.org/blarg/2023-07-07_0.10.6/</url>
+      <url type="details">https://naev.org/blarg/2023-07-07_0.10.6/</url>
     </release>
     <release version="0.10.5" type="stable" date="2023-04-23">
-      <url>https://naev.org/blarg/2023-04-23_0.10.5/</url>
+      <url type="details">https://naev.org/blarg/2023-04-23_0.10.5/</url>
     </release>
     <release version="0.10.4" type="stable" date="2023-02-04">
-      <url>https://naev.org/blarg/2023-02-04_0.10.4/</url>
+      <url type="details">https://naev.org/blarg/2023-02-04_0.10.4/</url>
     </release>
     <release version="0.10.3" type="stable" date="2023-01-17">
-      <url>https://naev.org/blarg/2023-01-17_0.10.3/</url>
+      <url type="details">https://naev.org/blarg/2023-01-17_0.10.3/</url>
     </release>
     <release version="0.10.2" type="stable" date="2023-01-12">
-      <url>https://naev.org/blarg/2023-01-12_0.10.2/</url>
+      <url type="details">https://naev.org/blarg/2023-01-12_0.10.2/</url>
     </release>
     <release version="0.10.1" type="stable" date="2022-12-29">
-      <url>https://naev.org/blarg/2022-12-29_0.10.1/</url>
+      <url type="details">https://naev.org/blarg/2022-12-29_0.10.1/</url>
     </release>
     <release version="0.10.0" type="stable" date="2022-12-23">
-      <url>https://naev.org/blarg/2022-12-23_0.10.0/</url>
+      <url type="details">https://naev.org/blarg/2022-12-23_0.10.0/</url>
     </release>
     <release version="0.9.4" type="stable" date="2022-07-20">
-      <url>https://naev.org/blarg/2022-07-20_0.9.4/</url>
+      <url type="details">https://naev.org/blarg/2022-07-20_0.9.4/</url>
     </release>
     <release version="0.9.3" type="stable" date="2022-04-02">
-      <url>https://naev.org/blarg/2022-04-03_0.9.3/</url>
+      <url type="details">https://naev.org/blarg/2022-04-03_0.9.3/</url>
     </release>
     <release version="0.9.2" type="stable" date="2022-01-20">
-      <url>https://naev.org/blarg/2022-01-20_0.9.2</url>
+      <url type="details">https://naev.org/blarg/2022-01-20_0.9.2</url>
     </release>
     <release version="0.9.1" type="stable" date="2022-01-02">
-      <url>https://naev.org/blarg/2022-01-02_0.9.1</url>
+      <url type="details">https://naev.org/blarg/2022-01-02_0.9.1</url>
     </release>
     <release version="0.9.0" type="stable" date="2021-12-23">
-      <url>https://naev.org/blarg/2021-12-23_0.9.0</url>
+      <url type="details">https://naev.org/blarg/2021-12-23_0.9.0</url>
     </release>
     <release version="0.8.2" type="stable" date="2021-02-12">
-      <url>https://naev.org/blarg/2021-02-12_0.8.2</url>
+      <url type="details">https://naev.org/blarg/2021-02-12_0.8.2</url>
     </release>
     <release version="0.8.1" type="stable" date="2021-01-09">
-      <url>https://naev.org/blarg/2021-01-09_0.8.1</url>
+      <url type="details">https://naev.org/blarg/2021-01-09_0.8.1</url>
     </release>
     <release version="0.8.0" type="stable" date="2020-12-17">
-      <url>https://naev.org/blarg/2020-12-17_0.8.0</url>
+      <url type="details">https://naev.org/blarg/2020-12-17_0.8.0</url>
     </release>
     <release version="0.7.0" type="stable" date="2017-07-08">
-      <url>https://naev.org/blarg/2017-07-08_0.7.0</url>
+      <url type="details">https://naev.org/blarg/2017-07-08_0.7.0</url>
     </release>
     <release version="0.6.1" type="stable" date="2015-11-15">
-      <url>https://naev.org/blarg/2015-11-15_0.6.1</url>
+      <url type="details">https://naev.org/blarg/2015-11-15_0.6.1</url>
     </release>
     <release version="0.6.0" type="stable" date="2015-03-17">
-      <url>https://naev.org/blarg/2015-03-17_0.6.0</url>
+      <url type="details">https://naev.org/blarg/2015-03-17_0.6.0</url>
     </release>
     <release version="0.5.3" type="stable" date="2012-04-15">
-      <url>https://naev.org/blarg/2012-04-15_0.5.3</url>
+      <url type="details">https://naev.org/blarg/2012-04-15_0.5.3</url>
     </release>
     <release version="0.5.2" type="stable" date="2012-03-25">
-      <url>https://naev.org/blarg/2012-03-25_0.5.2</url>
+      <url type="details">https://naev.org/blarg/2012-03-25_0.5.2</url>
     </release>
     <release version="0.5.1" type="stable" date="2012-03-01">
-      <url>https://naev.org/blarg/2012-03-01_0.5.1</url>
+      <url type="details">https://naev.org/blarg/2012-03-01_0.5.1</url>
     </release>
     <release version="0.5.0" type="stable" date="2011-06-03">
-      <url>https://naev.org/blarg/2011-06-03_0.5.0</url>
+      <url type="details">https://naev.org/blarg/2011-06-03_0.5.0</url>
     </release>
   </releases>
 

@@ -384,8 +384,8 @@ static int spobL_exists( lua_State *L )
 /**
  * @brief Gets a spob.
  *
- * Possible values of param: <br/>
- *    - bool : Gets a random spob. <br/>
+ * Possible values of parameter: <br/>
+ *    - boolean : Gets a random spob. <br/>
  *    - faction : Gets random spob belonging to faction matching the number.
  * <br/>
  *    - string : Gets the spob by raw (untranslated) name. <br/>
@@ -409,8 +409,8 @@ static int spobL_get( lua_State *L )
 /**
  * @brief Gets a spob and its corresponding system.
  *
- * Possible values of param: <br/>
- *    - bool : Gets a random spob. <br/>
+ * Possible values of parameter: <br/>
+ *    - boolean : Gets a random spob. <br/>
  *    - faction : Gets random spob belonging to faction matching the number.
  * <br/>
  *    - string : Gets the spob by raw (untranslated) name. <br/>
@@ -420,8 +420,8 @@ static int spobL_get( lua_State *L )
  * @usage p,s = spob.get( "Anecu" ) -- Gets spob by name
  * @usage p,s = spob.get( faction.get( "Empire" ) ) -- Gets random Empire spob
  * @usage p,s = spob.get(true) -- Gets completely random spob
- * @usage p,s = spob.get( { faction.get("Empire"), faction.get("Dvaered") } ) --
- * Random spob belonging to Empire or Dvaered
+ * @usage p,s = spob.get( { faction.get("Empire"), faction.get("Dvaered") } )
+ * -- Random spob belonging to Empire or Dvaered
  *    @luatparam boolean|Faction|string|table param See description.
  *    @luatreturn Spob The matching spob.
  *    @luatreturn System The system it is in.
@@ -693,15 +693,15 @@ static int spobL_classLong( lua_State *L )
  * @brief Checks for spob services.
  *
  * Possible services are:<br />
- *  - "land"<br />
- *  - "inhabited"<br />
- *  - "refuel"<br />
- *  - "bar"<br />
- *  - "missions"<br />
- *  - "commodity"<br />
- *  - "outfits"<br />
- *  - "shipyard"<br />
- *  - "blackmarket"<br />
+ *  - `land`<br />
+ *  - `inhabited`<br />
+ *  - `refuel`<br />
+ *  - `bar`<br />
+ *  - `missions`<br />
+ *  - `commodity`<br />
+ *  - `outfits`<br />
+ *  - `shipyard`<br />
+ *  - `blackmarket`<br />
  *
  * @usage if p:services()["refuel"] then -- Spob has refuel service.
  * @usage if p:services()["shipyard"] then -- Spob has shipyard service.
@@ -735,7 +735,7 @@ static int spobL_services( lua_State *L )
  * @brief Checks for spob flags.
  *
  * Possible services are:<br />
- *  - "nomissionspawn"<br />
+ *  - `nomissionspawn`<br />
  *
  * @usage if p:flags()["nomissionspawn"] then -- Spob doesn't spawn missions
  *    @luatparam Spob p Spob to get the services of.

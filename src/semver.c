@@ -140,7 +140,7 @@ static char *parse_slice( char *buf, char sep )
 }
 
 /**
- * Parses a string as semver expression.
+ * Parses a string as `semver` expression.
  *
  * Returns:
  *
@@ -184,7 +184,7 @@ int semver_parse( const char *str, semver_t *ver )
 }
 
 /**
- * Parses a given string as semver expression.
+ * Parses a given string as `semver` expression.
  *
  * Returns:
  *
@@ -308,7 +308,7 @@ int semver_compare_prerelease( semver_t x, semver_t y )
  *
  * Returns:
  *
- * `0` - If versiona are equal
+ * `0` - If versions are equal
  * `1` - If x is higher than y
  * `-1` - If x is lower than y
  */
@@ -347,7 +347,7 @@ int semver_compare( semver_t x, semver_t y )
 }
 
 /**
- * Performs a `greater than` comparison
+ * Performs a "greater than" comparison
  */
 
 int semver_gt( semver_t x, semver_t y )
@@ -356,7 +356,7 @@ int semver_gt( semver_t x, semver_t y )
 }
 
 /**
- * Performs a `lower than` comparison
+ * Performs a "lower than" comparison
  */
 
 int semver_lt( semver_t x, semver_t y )
@@ -365,7 +365,7 @@ int semver_lt( semver_t x, semver_t y )
 }
 
 /**
- * Performs a `equality` comparison
+ * Performs an "equality" comparison
  */
 
 int semver_eq( semver_t x, semver_t y )
@@ -374,7 +374,7 @@ int semver_eq( semver_t x, semver_t y )
 }
 
 /**
- * Performs a `non equal to` comparison
+ * Performs a "non equal to" comparison
  */
 
 int semver_neq( semver_t x, semver_t y )
@@ -383,7 +383,7 @@ int semver_neq( semver_t x, semver_t y )
 }
 
 /**
- * Performs a `greater than or equal` comparison
+ * Performs a "greater than or equal" comparison
  */
 
 int semver_gte( semver_t x, semver_t y )
@@ -392,7 +392,7 @@ int semver_gte( semver_t x, semver_t y )
 }
 
 /**
- * Performs a `lower than or equal` comparison
+ * Performs a "lower than or equal" comparison
  */
 
 int semver_lte( semver_t x, semver_t y )
@@ -517,7 +517,7 @@ int semver_satisfies( semver_t x, semver_t y, const char *op )
 }
 
 /**
- * Free heep allocated memory of a given semver.
+ * Free heap-allocated memory of a given `semver`.
  * This is just a convenient function that you
  * should call when you're done.
  */
@@ -552,7 +552,7 @@ static void concat_char( char *str, char *x, char *sep )
 }
 
 /**
- * Render a given semver as string
+ * Render a given `semver` as string
  */
 
 void semver_render( semver_t *x, char *dest )
@@ -595,7 +595,7 @@ static int has_valid_length( const char *s )
 }
 
 /**
- * Checks if a given semver string is valid
+ * Checks if a given `semver` string is valid
  *
  * Returns:
  *
@@ -656,7 +656,7 @@ static int char_to_int( const char *str )
 }
 
 /**
- * Render a given semver as numeric value.
+ * Render a given `semver` as numeric value.
  * Useful for ordering and filtering.
  */
 

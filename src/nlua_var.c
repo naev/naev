@@ -177,7 +177,7 @@ static int varL_pop( lua_State *L )
  *
  *    @luatparam string name Name to use for the new mission variable.
  *    @luaparam value Value of the new mission variable.  Accepted types are:
- *                  nil, bool, string or number.
+ *                  nil, boolean, string or number.
  * @luafunc push
  */
 static int varL_push( lua_State *L )

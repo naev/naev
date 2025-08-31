@@ -22,29 +22,49 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ -z "$*" ]; then
    exit 0
 fi
 
-filter() {
-   grep -v -e '@file\>' -e '@luamod\>' -e '@luafunc\>' -e '@\(lua\)\?note\>' -e '@\(lua\)\?see\>' -e '@struct\>' -e '@sa\>' -e '@endcode\>' |
-   sed 's/"[^ ]*"//g' |
-   sed 's/\(@usage\)\(\([^-]\)\|\(-[^-]\)\)*\(--.*\)\?/\5/' |
-   sed 's/@param\(\[[^]]*\]\)\? *[^ ]* *//' |
-   sed 's/@luaparam\(\[[^]]*\]\)\? [^ ]* *//' |
-   sed 's/@luatparam\(\[[^]]*\]\)\? [^ ]* \(\w\||\)* *//' |
-   sed 's/\\\(see\|ref\|p\) [^ ]*//' |
-   sed 's/@typedef [^ ]*//' |
-   sed 's/@luatreturn\(\[[^]]*\]\)\?\( [^ ]*\)\? *//' |
-   sed 's/@return\(\[[^]]*\]\)\? \(\w\||\)* *//' |
-   sed 's/@luareturn\(\[[^]]*\]\)\? *//'
+# !!! don't give it more than 9 args.
+# (because sed groups go from \1 to \9)
+mk_expr() {
+   SUFF=$1
+   OFF=$2
+   shift 2
+   ARGS="$*"
+   ARG_EXPR='s/\(\('"${ARGS// /\\)\\|\\(}"'\)\)'
+   #shellcheck disable=SC2028
+   echo "$ARG_EXPR""$SUFF"' \([^ ]*\)/\1 `'"\\$(($# + 2 + OFF))"'`/g'
 }
 
+PROTECT_ARG_1="$(mk_expr '' 0 '@luafunc' '@file' '@struct' '@sa' '@luamod' '@typedef' '@luasee' )"
+PROTECT_ARG_2="$(mk_expr '' 0 '\\see' '\\ref' '\\p' '@c' '@see' )"
+SUB='\(\[[^]]*\]\)\?'
+PARAM_ARG="$(mk_expr "$SUB" 1 '@param' '@luaparam' '@luatreturn')"
+TYP='\(\w\||\)*'
+filter() {
+   sed                                                      \
+   -e "$PROTECT_ARG_1" -e "$PROTECT_ARG_2"                  \
+   -e "$PARAM_ARG"                                          \
+   `#TODO: protect the args instead of killing everything.` \
+   -e 's/\(@usage\)\(\([^-]\)\|\(-[^-]\)\)*\(--.*\)\?/\5/'  \
+   -e 's/@luatparam'"$SUB"' [^ ]* '"$TYP"' *//'             \
+   -e 's/@return'"$SUB"' '"$TYP"' *//'
+}
+
+SEP=" ?,;.:/!:"
+NSEPNW="[^a-zA-Z$SEP]"
+DOXTRACT="$("$SCRIPT_DIR"/get_doxtractor.sh)"
 readarray -t WORDS <<< "$(
-   grep -h '^ *\* *@' "$@"                                           |
+   "$DOXTRACT" "$@" | cut '-d ' -f 3-                                |
    filter                                                            |
+   sed                     \
+    -e "s/\"[^\"]*\"//g"   \
+    -e "s/\`[^\`]*\`//g"   \
+    -e 's/@[^ ]*//g'       \
+    -e 's/\w*\('"$NSEPNW"'\)\w*/\1/g'                                |
    aspell list -l en_US --personal "$PERS" --extra-dicts "$PERS_U"   |
    sort -u
    #sed 's/\([a-z]\)\([A-Z]\)/\1 \2/g'
 )"
 
-echo "${WORDS[@]}" >&2
 MARK="33;44;1"
 E=$'\e'
 
@@ -54,29 +74,43 @@ EXPR="${WS// /\\)\\|\\(}"
 if [ -z "${EXPR[*]}" ] ; then
    exit 0
 fi
-EXPR='\(\(\<\|[^a-zA-Z]\)\(\('"$EXPR"'\)\)\(\>\|[^a-zA-Z]\)\)'
 
-readarray -t FILES <<< "$(grep -l '^ *\* *@.*'"$EXPR"'' "$@")"
+echo "${WORDS[@]}" >&2
+
+SEPE="[$SEP]"
+EXPR='\(\(^\|'"$SEPE"'\)\(\('"$EXPR"'\)\)\($\|'"$SEPE"'\)\)'
+
+readarray -t FILES <<< "$(grep -l '^ *\* *.*'"$EXPR"'' "$@")"
 
 if [ -z "${FILES[*]}" ] ; then
    exit 0
 fi
 echo "$# -> ${#FILES[@]}" >&2
 
-(
-   # shellcheck disable=SC2030
-   export GREP_COLORS="ms="
-   grep --color=always -H -n '^ *\* *@' "${FILES[@]}"
-) |
-sed 's/^\([^ ]*\) *\* *\(.*\)$/\1 \2/'       |
-filter                                       |
-sed 's/\([^ ]*\) *@\w* /\1 /'                |
-(
-   # shellcheck disable=SC2031
-   export GREP_COLORS="ms=$MARK"
-   grep --color=always "$EXPR" |
-   sed 's/^\([^:]*\)'"$E"'\['"$MARK"'m'"$E"'\[K\([^'"$E"']*\)'"$E"'\[m/\1\2/' |
-   if grep "$E\[$MARK"'m' ; then
-      exit 1
-   fi
-)
+TMP=$(mktemp -u)
+mkfifo "$TMP"
+trap 'rm "$TMP"' EXIT
+
+#shellcheck disable=SC2016
+"$DOXTRACT" "${FILES[@]}"                                         |
+grep -v -e '^$' -e '^[^:]*:$'                                     |
+tee >(cut '-d:' -f1 > "$TMP")                                     |
+cut '-d:' -f2-                                                    |
+filter                                                            |
+#substitute ' ' with '_' inside a `...` / "..." expr
+sed ':loop; s/\([^`]*\)\(`[^ `]*\) \([^`]*`\)/\1\2_\3/; t loop'   |
+sed ':loop; s/\([^"]*\)\("[^ "]*\) \([^"]*"\)/\1\2_\3/; t loop'   |
+sed 's/'"$EXPR"'/'"$E"'['"$MARK"'m\1'"$E"'[m/g'                   |
+paste '-d:' "$TMP" -                                              |
+grep "$E"                                                         |
+sed                                                \
+   `# Reduce the error box when possible`          \
+   -e "s/\($SEPE\)\($E\[m\)/\2\1/g"                \
+   -e "s/\($E\[${MARK}m\)\($SEPE\)/\2\1/g"         \
+   `# Add previously overlapping error boxes`      \
+   -e 's/'"$EXPR"'/'"$E"'['"$MARK"'m\1'"$E"'[m/g'  \
+   -e "s/\($SEPE\)\($E\[m\)/\2\1/g"                \
+   -e "s/\($E\[${MARK}m\)\($SEPE\)/\2\1/g"         \
+   `# Mimic grep's colors`                         \
+   -e 's/^\([^ ]*\) \([^:]*\):/'"$E"'[35m\1 '"$E"'[32m\2'"$E"'[36m:'"$E"'[m/' >&2
+exit 1

@@ -85,28 +85,28 @@ nlua_env *hook_env( unsigned int hook );
  *
  * Currently used:
  *  - General
- *    - "safe" - Runs once each frame at a same time (last in the frame), good
+ *    - `safe` - Runs once each frame at a same time (last in the frame), good
  * place to do breaking stuff.
- *    - "takeoff" - When taking off
- *    - "jumpin" - When player jumps (after changing system)
- *    - "jumpout" - When player jumps (before changing system)
- *    - "time" - When time is increment drastically (hyperspace and taking off)
- *    - "hail" - When any pilot is hailed
- *    - "hail_spob" - When any spob is hailed
- *    - "board" - When any pilot is boarded
- *    - "input" - When an input command is pressed
- *    - "standing" - Whenever faction changes.
- *    - "load" - Run on load.
- *    - "discover" - When something is discovered.
- *    - "pay" - When player receives or loses money.
+ *    - `takeoff` - When taking off
+ *    - `jumpin` - When player jumps (after changing system)
+ *    - `jumpout` - When player jumps (before changing system)
+ *    - `time` - When time is increment drastically (hyperspace and taking off)
+ *    - `hail` - When any pilot is hailed
+ *    - `hail_spob` - When any spob is hailed
+ *    - `board` - When any pilot is boarded
+ *    - `input` - When an input command is pressed
+ *    - `standing` - Whenever faction changes.
+ *    - `load` - Run on load.
+ *    - `discover` - When something is discovered.
+ *    - `pay` - When player receives or loses money.
  *  - Landing
- *    - "land" - When landed
- *    - "outfits" - When visited outfitter
- *    - "shipyard" - When visited shipyard
- *    - "bar" - When visited bar
- *    - "mission" - When visited mission computer
- *    - "commodity" - When visited commodity exchange
- *    - "equipment" - When visiting equipment place < br/>
+ *    - `land` - When landed
+ *    - `outfits` - When visited outfitter
+ *    - `shipyard` - When visited shipyard
+ *    - `bar` - When visited bar
+ *    - `mission` - When visited mission computer
+ *    - `commodity` - When visited commodity exchange
+ *    - `equipment` - When visiting equipment place < br/>
  */
 int hooks_runParamDeferred( const char *stack, const HookParam *param );
 int hooks_runParam( const char *stack, const HookParam *param );

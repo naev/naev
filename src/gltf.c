@@ -157,7 +157,7 @@ typedef struct Material {
 } Material;
 
 /**
- * @brief Represents the underlyig 3D data and associated material.
+ * @brief Represents the underlying 3D data and associated material.
  */
 typedef struct MeshPrimitive {
    size_t nidx;     /**< Number of indices. */

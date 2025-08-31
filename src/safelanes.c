@@ -5,8 +5,8 @@
  * @file safelanes.c
  *
  * @brief Handles factions' safe lanes through systems.
- * This implements the algorithm described in utils/lanes-generator (whitepaper
- * and much clearer Python version).
+ * This implements the algorithm described in "utils/lanes-generator"
+ * (whitepaper and much clearer Python version).
  */
 /** @cond */
 #include <math.h>
@@ -230,7 +230,7 @@ void safelanes_destroy( void )
  * signifying "all of them".
  *    @param standing Bit-mask indicating what standing to get.
  *    @param system Star system whose lanes we want.
- *    @return Array (array.h) of matching "SafeLane" structures. Caller frees.
+ *    @return Array (array.h) of matching `SafeLane` structures. Caller frees.
  */
 SafeLane *safelanes_get( int faction, int standing, const StarSystem *system )
 {

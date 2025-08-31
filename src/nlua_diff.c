@@ -41,7 +41,7 @@ int nlua_loadDiff( nlua_env *env )
  * @brief Lua bindings to apply/remove Universe Diffs.
  *
  * Universe Diffs are patches you can apply to the universe to make permanent
- *  changes. They are defined in dat/unidiff.xml.
+ *  changes. They are defined in "dat/unidiff.xml".
  *
  * Typical usage would be:
  * @code

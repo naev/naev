@@ -190,8 +190,8 @@ static int naevL_versionTest( lua_State *L )
 /**
  * @brief Gets the current language locale.
  *
- *    @luatreturn string Current language locale (such as "en" for English, "de"
- * for German, or "ja" for Japanese).
+ *    @luatreturn string Current language locale (such as `"en"` for English,
+ * `"de"` for German, or `"ja"` for Japanese).
  * @luafunc language
  */
 static int naevL_language( lua_State *L )
@@ -218,7 +218,7 @@ static int naevL_lastplayed( lua_State *L )
 }
 
 /**
- * @brief Equivalent to "os.date" from standard Lua.
+ * @brief Equivalent to `os.date` from standard Lua.
  *
  * @luafunc date
  */
@@ -340,7 +340,7 @@ static int naevL_fps( lua_State *L )
  * @usage bindname = naev.keyGet( "accel" )
  *
  *    @luatparam string keyname Name of the keybinding to get value of. Valid
- * values are listed in src/input.c: keybind_info.
+ * values are listed in "src/input.c": `keybind_info`.
  * @luafunc keyGet
  */
 static int naevL_keyGet( lua_State *L )
@@ -359,7 +359,7 @@ static int naevL_keyGet( lua_State *L )
  *
  * @usage naev.keyEnable( "accel", false ) -- Disables the acceleration key
  *    @luatparam string keyname Name of the key to disable (for example
- * "accel").
+ * `"accel"`).
  *    @luatparam[opt=false] boolean enable Whether to enable or disable.
  * @luafunc keyEnable
  */
@@ -442,7 +442,7 @@ static int naevL_missionList( lua_State *L )
  * @usage naev.missionStart( "Some Mission" )
  *    @luatparam string misnname Name of the mission to start.
  *    @luatreturn boolean true if mission was either accepted, or started
- * without misn.finish() getting called in create.
+ * without `misn.finish()` getting called in create.
  *    @luatreturn boolean true whether or not the mission was accepted.
  * @luafunc missionStart
  */
@@ -466,7 +466,7 @@ static int naevL_missionStart( lua_State *L )
  * player.
  *
  * Note that this tests the Lua conditionals, not the create function, so it may
- * be possible that even though naev.missionTest returns true, the player can
+ * be possible that even though `naev.missionTest` returns true, the player can
  * still not start the mission.
  *
  * @usage naev.missionTest( "Some Mission" )
@@ -792,12 +792,12 @@ static int naevL_plugins( lua_State *L )
  * @brief Opens the info menu window.
  *
  * Possible window targets are: <br />
- *  - "main" : Main window.<br />
- *  - "ship" : Ship info window.<br />
- *  - "weapons" : Weapon configuration window.<br />
- *  - "cargo" : Cargo view window.<br />
- *  - "missions" : Mission view window.<br />
- *  - "standings" : Standings view window.<br />
+ *  - `"main"` : Main window.<br />
+ *  - `"ship"` : Ship info window.<br />
+ *  - `"weapons"` : Weapon configuration window.<br />
+ *  - `"cargo"` : Cargo view window.<br />
+ *  - `"missions"` : Mission view window.<br />
+ *  - `"standings"` : Standings view window.<br />
  *
  * @usage naev.menuInfo( "ship" ) -- Opens ship tab
  *

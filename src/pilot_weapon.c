@@ -39,7 +39,7 @@ static void pilot_weapSetUpdateRange( const Pilot *p, PilotWeaponSet *ws );
 
 /**
  * @brief Gets a weapon set from id.
-
+ *
  *    @param p Pilot to get weapon set from.
  *    @param id ID of the weapon set.
  *    @return The weapon set matching id.
@@ -1474,6 +1474,10 @@ void pilot_weaponAuto( Pilot *p )
       /* Update range and speed (at 0)*/
       pilot_weapSetUpdateRange( p, &p->weapon_sets[i] );
    }
+
+   /* Set fighter bays to volley mode. */
+   if ( hasfb )
+      pilot_weapSetVolley( p, hasfb, 1 );
 
    /* Update all outfits. */
    pilot_weaponSafe( p );

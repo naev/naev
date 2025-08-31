@@ -276,7 +276,7 @@ static int linoptL_addrows( lua_State *L )
  *    @luatparam number coefficient Coefficient of the objective function being
  * added.
  *    @luatparam[opt="real"] string kind Kind of the column being added. Can be
- * either "real", "integer", or "binary".
+ * either `"real"`, `"integer"`, or `"binary"`.
  *    @luatparam[opt=nil] number lb Lower bound of the column.
  *    @luatparam[opt=nil] number ub Upper bound of the column.
  * @luafunc set_col

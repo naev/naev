@@ -64,7 +64,6 @@ void escort_freeList( Pilot *p )
  *
  *    @param p Pilot to remove escort from.
  *    @param i index of the pilot representing the escort.
-
  */
 void escort_rmListIndex( Pilot *p, int i )
 {
@@ -76,7 +75,6 @@ void escort_rmListIndex( Pilot *p, int i )
  *
  *    @param p Pilot to remove escort from.
  *    @param id ID of the pilot representing the escort.
-
  */
 void escort_rmList( Pilot *p, unsigned int id )
 {

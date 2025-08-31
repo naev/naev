@@ -1,4 +1,4 @@
-[![Nightly Release Status](https://github.com/naev/naev/actions/workflows/naev_nightly.yml/badge.svg)](https://github.com/naev/naev/actions/workflows/naev_nightly.yml) [![CI Status](https://github.com/naev/naev/actions/workflows/naev_ci.yml/badge.svg?branch=main)](https://github.com/naev/naev/actions/workflows/naev_ci.yml) [![Packaging status](https://repology.org/badge/tiny-repos/naev.svg)](https://repology.org/project/naev/versions) [![Translation Status](https://hosted.weblate.org/widgets/naev/-/naev/svg-badge.svg)](https://hosted.weblate.org/projects/naev/)
+[![Nightly Release Status](https://codeberg.org/naev/naev/badges/workflows/naev_nightly.yml/badge.svg)](https://codeberg.org/naev/naev/actions/?workflow=naev_nightly.yml) [![CI Status](https://codeberg.org/naev/naev/badges/workflows/naev_ci.yml/badge.svg)](https://codeberg.org/naev/naev/actions/?workflow=naev_ci.yml) [![Packaging status](https://repology.org/badge/tiny-repos/naev.svg)](https://repology.org/project/naev/versions) [![Translation Status](https://hosted.weblate.org/widgets/naev/-/naev/svg-badge.svg)](https://hosted.weblate.org/projects/naev/)
 # NAEV README
 
 ![Naev Logo](https://naev.org/imgs/naev.png)
@@ -29,9 +29,9 @@ Naev!
 ## PLUGINS
 
 Plugins are supported since version 0.10.0. Although we do not have a plugin
-manager yet ([help wanted!](https://github.com/naev/naev/issues/2180)), you can
+manager yet ([help wanted!](https://codeberg.org/naev/naev/issues/2180)), you can
 look at existing plugins registered on the [naev plugins
-repository](https://github.com/naev/naev-plugins) and install them manually. If
+repository](https://codeberg.org/naev/naev-plugins) and install them manually. If
 you want to get started making your own, please take a look at the [Naev
 Development Manual](https://naev.org/devmanual/) (WIP).
 
@@ -63,9 +63,9 @@ Dependencies marked with `*` will use subprojects if not found in the host syste
 ### DETAILS FOR YOUR OS
 
 The Naev wiki has more detailed compilation steps, and lists of packages to install, for several operating systems and Linux distros:
-* [Linux/\*nix](https://github.com/naev/naev/wiki/Compiling-on-*nix)
-* [Windows](https://github.com/naev/naev/wiki/Compiling-on-Windows)
-* [macOS](https://github.com/naev/naev/wiki/Compiling-on-macOS)
+* [Linux/\*nix](https://codeberg.org/naev/naev/wiki/Compiling-on-*nix)
+* [Windows](https://codeberg.org/naev/naev/wiki/Compiling-on-Windows)
+* [macOS](https://codeberg.org/naev/naev/wiki/Compiling-on-macOS)
 
 ## COMPILING NAEV
 
@@ -112,7 +112,7 @@ directory to see a list of all available options.
 
 **For faster debug builds** (but harder to trace with gdb/lldb), try `--buildtype=debugoptimized -Db_lto=true -Db_lto_mode=thin` in place of the corresponding values above.
 
-#### For up to date build instructions, check out the compilation page in our [Wiki](https://github.com/naev/naev/wiki/Compiling)
+#### For up to date build instructions, check out the compilation page in our [Wiki](https://codeberg.org/naev/naev/wiki/Compiling)
 
 ### RUNNING NAEV
 
@@ -133,7 +133,7 @@ from 16x16 to 256x256 can be found in `extras/logos/`.
 ## UPDATING ART ASSETS
 
 Art assets are partially stored in the
-[naev-artwork-production](https://github.com/naev/naev-artwork-production)
+[naev-artwork](https://codeberg.org/naev/naev-artwork)
 repository and sometimes are updated. For that reason, it is recommended to
 periodically update the submodules with the following command.
 
@@ -191,12 +191,12 @@ Individual translations can be updated via `meson compile naev-update-po`, but _
 
 ## CRASHES AND PROBLEMS
 
-Please take a look at the [FAQ](https://github.com/naev/naev/wiki/FAQ) before submitting a new
+Please take a look at the [FAQ](https://codeberg.org/naev/naev/wiki/FAQ) before submitting a new
 bug report, as it covers a number of common gameplay questions and
 common issues.
 
 If Naev is crashing during gameplay, please file a bug report after
-reading https://github.com/naev/naev/wiki/Bugs
+reading https://codeberg.org/naev/naev/wiki/Bugs
 
 ## LICENSE
 

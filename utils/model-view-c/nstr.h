@@ -16,7 +16,7 @@
 #endif
 
 /**
- * @brief A function which passes on a format string to vsnprintf or the like should have PRINTF_FORMAT( i, j )
+ * @brief A function which passes on a format string to `vsnprintf` or the like should have PRINTF_FORMAT( i, j )
  *        in front of its prototype, where i is the 1-based index of the format-string argument and j is the
  *        1-based index where the formatted items (if any) start. */
 #define PRINTF_FORMAT( i, j ) FORMAT( BUILTIN_PRINTF_FORMAT, i, j)

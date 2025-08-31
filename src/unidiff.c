@@ -799,7 +799,7 @@ void diff_end( void )
 }
 
 /**
- * @brief Parsess the attributes.
+ * @brief Parses the attributes.
  */
 static void diff_parseAttr( UniHunk_t *hunk, xmlNodePtr node )
 {

@@ -207,7 +207,7 @@ typedef struct ShipStatList ShipStatList;
  *  Absolute percentage values (get added together).
  *
  * Booleans:
- *  1 or 0 values wher 1 indicates property is set.
+ *  1 or 0 values where 1 indicates property is set.
  */
 typedef struct ShipStats {
    /* Movement. */

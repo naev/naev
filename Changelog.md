@@ -1370,7 +1370,7 @@
  - Tweaked Za'lek ships' stats and outfit slot behavior to match expectations
 
 #### Engine
- - Restored macOS support. (Catalina users will have to bypass Gatekeeper: See https://github.com/naev/naev/wiki/FAQ for details.)
+ - Restored macOS support. (Catalina users will have to bypass Gatekeeper: See https://codeberg.org/naev/naev/wiki/FAQ for details.)
  - Fixed a crash-loop when the "saves" folder gets populated by Steam data (or other files) and no Naev save files
  - Fixed intermittent error messages about the "Lua Spawn script for faction 'Trader'"
  - Fixed rare/potential bugs in font and save-file code

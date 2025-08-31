@@ -555,9 +555,9 @@ static int shipL_slots( lua_State *L )
  *    @luatparam Ship s Ship to get slots of
  *    @luatparam[opt=false] boolean ignore_locked Whether or not to ignore
  * locked slots.
- *    @luareturn A table of tables with slot properties string "size", string
- * "type", string "property", boolean "required", boolean "exclusive", boolean
- * "locked", and (if applicable) outfit "outfit" (Strings are English.)
+ *    @luareturn A table of tables with slot properties string `size`, string
+ * `type`, string `property`, boolean `required`, boolean `exclusive`, boolean
+ * `locked`, and (if applicable) outfit `outfit` (Strings are English.)
  * @luafunc getSlots
  */
 static int shipL_getSlots( lua_State *L )
@@ -654,7 +654,7 @@ static const ShipOutfitSlot *ship_outfitSlotFromID( const Ship *s, int id )
  * @brief Checks to see if an outfit fits a ship slot.
  *
  *    @luatparam Ship s Ship to check.
- *    @luatparam number id ID of the slot to check (index in "getSlots()"
+ *    @luatparam number id ID of the slot to check (index in `getSlots()`
  * table).
  *    @luatparam Outfit o Outfit to check to see if it fits in the slot.
  *    @luatreturn boolean Whether or not the outfit fits the slot.

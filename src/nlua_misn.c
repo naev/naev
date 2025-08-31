@@ -150,7 +150,7 @@ int nlua_loadMisn( nlua_env *env )
  *
  *    @param misn Mission that owns the function.
  *    @param func Name of the function to call.
- *    @return -1 on error, 1 on "misn.finish()" call, 2 if mission got deleted,
+ *    @return -1 on error, 1 on `misn.finish()` call, 2 if mission got deleted,
  *          3 if the mission got accepted, and 0 normally.
  */
 int misn_tryRun( Mission *misn, const char *func )
@@ -172,7 +172,7 @@ int misn_tryRun( Mission *misn, const char *func )
  *
  *    @param misn Mission that owns the function.
  *    @param func Name of the function to call.
- *    @return -1 on error, 1 on "misn.finish()" call, 2 if mission got deleted,
+ *    @return -1 on error, 1 on `misn.finish()` call, 2 if mission got deleted,
  *          3 if the mission got accepted, and 0 normally.
  */
 int misn_run( Mission *misn, const char *func )
@@ -200,7 +200,7 @@ Mission *misn_getFromLua( lua_State *L )
 }
 
 /**
- * @brief Sets up the mission to run "misn_runFunc".
+ * @brief Sets up the mission to run `misn_runFunc`.
  */
 int misn_runStart( Mission *misn, const char *func )
 {
@@ -217,12 +217,12 @@ int misn_runStart( Mission *misn, const char *func )
 }
 
 /**
- * @brief Runs a mission set up with "misn_runStart".
+ * @brief Runs a mission set up with `misn_runStart`.
  *
  *    @param misn Mission that owns the function.
  *    @param func Name of the function to call.
  *    @param nargs Number of arguments to pass.
- *    @return -1 on error, 1 on "misn.finish()" call, 2 if mission got deleted,
+ *    @return -1 on error, 1 on `misn.finish()` call, 2 if mission got deleted,
  *          3 if the mission got accepted, and 0 normally.
  */
 int misn_runFunc( const Mission *misn, const char *func, int nargs )
@@ -391,10 +391,10 @@ static int misn_setFaction( lua_State *L )
  * @usage my_marker = misn.markerAdd( system.get("Gamma Polaris"), "low" )
  *
  * Valid marker types are:<br/>
- *  - "plot": Important plot marker.<br/>
- *  - "high": High importance mission marker (lower than plot).<br/>
- *  - "low": Low importance mission marker (lower than high).<br/>
- *  - "computer": Mission computer marker.<br/>
+ *  - `"plot"`: Important plot marker.<br/>
+ *  - `"high"`: High importance mission marker (lower than plot).<br/>
+ *  - `"low"`: Low importance mission marker (lower than high).<br/>
+ *  - `"computer"`: Mission computer marker.<br/>
  *
  *    @luatparam System|Spob target System or spob to mark.
  *    @luatparam[opt="high"] string type Colouring scheme to use.
@@ -549,11 +549,11 @@ static int misn_markerRm( lua_State *L )
  * @brief Sets the current mission NPC.
  *
  * This is used in bar missions where you talk to a person. The portraits are
- *  the ones found in GFX_PATH/portraits. (For GFX_PATH/portraits/none.webp
- *  you would use "none.webp".)
+ * the ones found in GFX_PATH/portraits. (For "GFX_PATH/portraits/none.webp"
+ * you would use `"none.webp"`.)
  *
- * Note that this NPC will disappear when either misn.accept() or misn.finish()
- *  is called.
+ * Note that this NPC will disappear when either `misn.accept()` or
+ * `misn.finish()` is called.
  *
  * @usage misn.setNPC( "Invisible Man", "none.webp", _("You see a levitating mug
  * drain itself.") )
@@ -708,7 +708,7 @@ static int misn_finish( lua_State *L )
  *       a Commodity object or as the raw (untranslated) name of a
  *       commodity.
  *    @luatparam number quantity Quantity of cargo to add.
- *    @luatreturn number The id of the cargo which can be used in "cargoRm".
+ *    @luatreturn number The id of the cargo which can be used in `cargoRm`.
  * @luafunc cargoAdd
  */
 static int misn_cargoAdd( lua_State *L )
@@ -834,7 +834,7 @@ static int misnL_osdSetHide( lua_State *L )
  * @brief Creates a mission OSD.
  *
  * @note You can index elements by using '\\t' as first character of an element.
- * @note Destroys an osd if it already exists.
+ * @note Destroys an OSD if it already exists.
  *
  * @usage misn.osdCreate( "My OSD", {"Element 1", "Element 2"})
  *
@@ -1000,7 +1000,7 @@ static int misn_osdGet( lua_State *L )
  * argument (highest is 0, lowest is 10). Missions default to 5 priority.
  *    @luatparam[opt=nil] string background Background file name to use (from
  * GFX_PATH/portraits/).
- *    @luatreturn number The ID of the NPC to pass to "npcRm".
+ *    @luatreturn number The ID of the NPC to pass to `npcRm`.
  * @luafunc npcAdd
  */
 static int misn_npcAdd( lua_State *L )

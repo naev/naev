@@ -10,11 +10,11 @@
  *
  * Naming:
  *    buffer - sound sample
- *    source - openal object that plays sound
+ *    source - openAL object that plays sound
  *    voice - virtual object that wants to play sound
  *
  * 1) First we allocate all the buffers based on what we find inside the
- * datafile.
+ * `datafile`.
  * 2) Then we allocate all the possible sources (giving the music system
  * what it needs).
  * 3) Now we allow the user to dynamically create voices, these voices will
@@ -1789,7 +1789,7 @@ alVoice *voice_get( int id )
 }
 
 /**
- * @brief Loads a new sound source from a "RWops".
+ * @brief Loads a new sound source from a `RWops`.
  */
 int source_newRW( SDL_IOStream *rw, const char *name, unsigned int flags )
 {
@@ -1824,7 +1824,7 @@ int source_new( const char *filename, unsigned int flags )
 }
 
 /**
- * @brief Acts like "alSourcePause" but with proper checks.
+ * @brief Acts like `alSourcePause` but with proper checks.
  */
 static void al_pausev( ALint n, ALuint *s )
 {
@@ -1837,7 +1837,7 @@ static void al_pausev( ALint n, ALuint *s )
 }
 
 /**
- * @brief Acts like "alSourcePlay" but with proper checks to just resume.
+ * @brief Acts like `alSourcePlay` but with proper checks to just resume.
  */
 static void al_resumev( ALint n, ALuint *s )
 {
@@ -1916,7 +1916,7 @@ static int al_loadWav( ALuint *buf, SDL_IOStream *rw )
 }
 
 /**
- * @brief Gets the "VorbisFile" error in human readable form..
+ * @brief Gets the `VorbisFile` error in human readable form..
  */
 static const char *vorbis_getErr( int err )
 {
@@ -1951,10 +1951,11 @@ static const char *vorbis_getErr( int err )
 /**
  * @brief This is the filter function for the decoded Ogg Vorbis stream.
  *
- * base on:
- * vgfilter.c (c) 2007,2008 William Poetra Yoga Hadisoeseno
  * based on:
- * vgplay.c 1.0 (c) 2003 John Morton
+ * "vgfilter.c" (c) 2007,2008 William Poetra Yoga Hadisoeseno
+ *
+ * based on:
+ * "vgplay.c" 1.0 (c) 2003 John Morton
  */
 void rg_filter( float **pcm, long channels, long samples, void *filter_param )
 {
@@ -1992,7 +1993,7 @@ void rg_filter( float **pcm, long channels, long samples, void *filter_param )
  * @brief Loads an ogg file from a tested format if possible.
  *
  *    @param buf Buffer to load ogg into.
- *    @param vf "Vorbisfile" containing the song.
+ *    @param vf `Vorbisfile` containing the song.
  */
 static int al_loadOgg( ALuint *buf, OggVorbis_File *vf )
 {

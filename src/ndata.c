@@ -4,10 +4,10 @@
 /**
  * @file ndata.c
  *
- * @brief Wrappers to set up and access game assets (mounted via PhysicsFS).
- *        We choose our underlying directories in ndata_setupWriteDir() and
- * ndata_setupReadDirs(). However, conf.c code may have seeded the search path
- * based on command-line arguments.
+ * @brief Wrappers to set up and access game assets (mounted via "PhysicsFS").
+ *        We choose our underlying directories in `ndata_setupWriteDir()` and
+ * `ndata_setupReadDirs()`. However, "conf.c" code may have seeded the search
+ * path based on command-line arguments.
  */
 /** @cond */
 #include <stdlib.h>
@@ -119,7 +119,7 @@ void *ndata_read( const char *path, size_t *filesize )
  * Will sort by path, and (unlike underlying PhysicsFS) make sure to list each
  * file path only once.
  *
- *    @return Array of (allocated) file paths relative to "base_dir".
+ *    @return Array of (allocated) file paths relative to `base_dir`.
  */
 char **ndata_listRecursive( const char *path )
 {
@@ -145,7 +145,7 @@ char **ndata_listRecursive( const char *path )
 }
 
 /**
- * @brief The "PHYSFS_EnumerateCallback" for "ndata_listRecursive"
+ * @brief The `PHYSFS_EnumerateCallback` for `ndata_listRecursive`
  */
 static int ndata_enumerateCallback( void *data, const char *origdir,
                                     const char *fname )

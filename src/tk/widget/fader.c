@@ -291,7 +291,7 @@ void window_faderValue( unsigned int wid, const char *name, double value )
  * to be within a bounded range, such as 10 through 100. By default
  * faders seem to use 0 through 1 as their valid range.
  *
- * There was a specific difficulty where Scalefactor was to default to
+ * There was a specific difficulty where `Scalefactor` was to default to
  * value of 1, while in the 0..1 range; it would always be set to Max.
  *
  *    @param wid ID of the window to get widget from.

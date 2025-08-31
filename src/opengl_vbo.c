@@ -147,7 +147,7 @@ void gl_vboSubData( gl_vbo *vbo, GLint offset, GLsizei size, const void *data )
 /**
  * @brief Creates a stream VBO.
  *
- *    @param size Size of the stream VBO (multiply by "sizeof(type)").
+ *    @param size Size of the stream VBO (multiply by `sizeof(type)`).
  *    @param data Data for the VBO.
  */
 gl_vbo *gl_vboCreateStream( GLsizei size, const void *data )
@@ -164,7 +164,7 @@ gl_vbo *gl_vboCreateStream( GLsizei size, const void *data )
 /**
  * @brief Creates a dynamic VBO.
  *
- *    @param size Size of the dynamic VBO (multiply by "sizeof(type)").
+ *    @param size Size of the dynamic VBO (multiply by `sizeof(type)`).
  *    @param data Data for the VBO.
  */
 gl_vbo *gl_vboCreateDynamic( GLsizei size, const void *data )
@@ -181,7 +181,7 @@ gl_vbo *gl_vboCreateDynamic( GLsizei size, const void *data )
 /**
  * @brief Creates a stream VBO.
  *
- *    @param size Size of the stream VBO (multiply by "sizeof(type)").
+ *    @param size Size of the stream VBO (multiply by `sizeof(type)`).
  *    @param data Data for the VBO.
  */
 gl_vbo *gl_vboCreateStatic( GLsizei size, const void *data )

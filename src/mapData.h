@@ -7,7 +7,7 @@
 
 /**
  * @brief Represents a map, is not actually stored on a ship but put into the
- * nav system.
+ * navigation system.
  *
  * Basically just marks an amount of systems when the player buys it as known.
  */

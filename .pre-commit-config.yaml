@@ -115,10 +115,10 @@ repos:
   hooks:
     - id: clang-format
       name: Clang formatter
-      entry: clang-format -i
+      entry: utils/clf.sh
       types: [c]
       files: '^src/'
-      language: system
+      language: script
     - id: nluacheck
       name: wrapper for luacheck that understands Naev hooks
       entry: utils/nluacheck.py

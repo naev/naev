@@ -220,18 +220,29 @@ function escort_spawn( p )
    m.vulnerability = 100 -- less preferred as targets compared to player
 end
 
+local escort_plts
 -- luacheck: globals escort_success
 function escort_success ()
-   -- Not actually done yet
-   for k,e in ipairs(escort.pilots()) do
-      e:control(true)
-      local pos = handoffpos + vec2.newP( 200*rnd.rnd(), rnd.angle() )
-      e:moveto( pos )
-   end
+   escort_plts = escort.pilots()
    escort_inpos()
 end
 
+local sysmrk
 function escort_inpos ()
+   -- Give order to go to the position when nearby
+   local left = {}
+   for k,p in ipairs(escort_plts) do
+      if p:pos():dist2( handoffpos ) < 1000^2 then
+         p:control(true)
+         local pos = handoffpos + vec2.newP( 200*rnd.rnd(), rnd.angle() )
+         p:moveto( pos )
+      else
+         table.insert( left, p )
+      end
+   end
+   escort_plts = left
+
+   -- Check if all stopped
    local notstopped = false
    for k,p in ipairs(escort.pilots()) do
       if not p:isStopped() then
@@ -239,9 +250,11 @@ function escort_inpos ()
          break
       end
    end
+
    if notstopped then
       hook.timer( 1, "escort_inpos" )
    else
+      system.markerRm( sysmrk )
       hook.timer( 3, "cutscene00" )
    end
 end
@@ -254,7 +267,8 @@ function cutscene00()
       v:brake()
    end
    mem.survived = #ep
-   hook.timer( 6, "cutscene01" )
+   hook.timer( 3, "cutscene01" )
+   player.autonavReset( 5 )
 end
 
 function cutscene01()
@@ -280,6 +294,7 @@ function cutscene01()
       fmt.f(_("Return to {spob} ({sys})"),{spob=base, sys=basesys}),
    } )
    misn.markerMove( mem.marker, base )
+   escort.exit() -- Ignore escort stuff now
 end
 
 function enter ()
@@ -364,11 +379,14 @@ end
 function incoming_bogies ()
    local pe = escort.pilots()
    pe[1]:broadcast(_("Incoming bogies!"))
+   player.autonavReset(3)
 end
 
 function almost_there ()
    local pe = escort.pilots()
    pe[1]:broadcast(_("Almost there! Head to the rendezvous point!"))
+   sysmrk = system.markerAdd( handoffpos,  _("Rendezvous Point"))
+   player.autonavReset(3)
 end
 
 -- luacheck: globals escort_failure

@@ -2289,7 +2289,7 @@ void toolkit_focusWidget( Window *wdw, Widget *wgt )
 
 /**
  * @brief Remove focus from the focused widget in a window. No-op if it's not
- * (de)focusable or has already lost defocus, else voids the window's focus.
+ * (de)focusable or has already lost focus, else voids the window's focus.
  */
 void toolkit_defocusWidget( Window *wdw, Widget *wgt )
 {

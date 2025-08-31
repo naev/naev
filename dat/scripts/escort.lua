@@ -84,6 +84,7 @@ function escort.init( ships, params )
    end
 end
 
+local heartbeat
 local function clear_hooks ()
    if mem._escort.hooks.jumpin then
       hook.rm( mem._escort.hooks.jumpin )
@@ -100,6 +101,10 @@ local function clear_hooks ()
    if mem._escort.hooks.takeoff then
       hook.rm( mem._escort.hooks.takeoff )
       mem._escort.hooks.takeoff = nil
+   end
+   if heartbeat then
+      hook.rm( heartbeat )
+      heartbeat = nil
    end
 end
 
@@ -165,8 +170,8 @@ end
 
 local exited
 local function run_success ()
-   clear_hooks()
    _G[mem._escort.func_success]()
+   clear_hooks()
 end
 
 function escort.reset_ai ()
@@ -359,6 +364,10 @@ function escort.spawn( pos )
    local have_outfits = (escort_outfits ~= nil)
    local pp = player.pilot()
    pos = pos or mem._escort.origin
+   if heartbeat then
+      hook.rm( heartbeat )
+      heartbeat = nil
+   end
 
    -- Set up the new convoy for the new system
    exited = {}
@@ -418,13 +427,19 @@ function escort.spawn( pos )
    end
 
    if mem._escort.destsys then
+      local scur = system.cur()
+      -- Reached destination system, we are done here
+      if not mem._escort.destspob and mem._escort.destsys==scur then
+         run_success()
+         return mem._escort.convoy
+      end
+
       -- Have the leader move as slow as the slowest ship
       l:setHilight(true)
       -- Moving to system
       escort.reset_ai()
 
       -- Mark destination
-      local scur = system.cur()
       if mem._escort.nextsys then
          system.markerAdd( jump.get( scur, mem._escort.nextsys ):pos() )
       else
@@ -435,8 +450,7 @@ function escort.spawn( pos )
 
       -- Have to run logic
       if not mem._escort.nofollowplayer then
-         hook.timerClear()
-         hook.timer( HEARTBEAT_TIMER, "_escort_heartbeat" )
+         heartbeat = hook.timer( HEARTBEAT_TIMER, "_escort_heartbeat" )
       end
    end
 
@@ -445,6 +459,7 @@ end
 
 -- Logic to make the pilots automatically jump or land when near the target
 function _escort_heartbeat ()
+   if not mem._escort then return end
    local destspob = mem._escort.destspob
    local nextsys = mem._escort.nextsys
    local doland = (system.cur() == mem._escort.destsys) and (destspob ~= nil)
@@ -478,7 +493,7 @@ function _escort_heartbeat ()
          end
       end
    end
-   hook.timer( HEARTBEAT_TIMER, "_escort_heartbeat" )
+   heartbeat = hook.timer( HEARTBEAT_TIMER, "_escort_heartbeat" )
 end
 
 function _escort_spawn ()
