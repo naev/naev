@@ -21,7 +21,6 @@ local vn = require "vn"
 local vntk = require "vntk"
 
 local reward = 500e3
-local getlandable, getlandablesystems -- Forward-declared functions
 
 local directions = {}
 directions[1] = _([["I know just the place," Harrus tells you. "Take us to planet {pnt} in the {sys} system. I'm sure a man of my calibre can find everything he needs there. Captain, please notify me when we arrive." With that, Harrus turns and rejoins his family. The kids seem in the process of redecorating (if not wrecking) your quarters, and despite the apologetic glance the woman gives you you can't help but wonder if you did the right thing responding to that SOS.]])
@@ -32,6 +31,17 @@ directions[3] = _([["The sky! Have you LOOKED at it?"
    Harrus rounds on you with a furious expression. Your keen understanding of human body language tells you he isn't happy. You thought he might be satisfied with the state of the spacedock, since it's kept in prime condition, and indeed he was. That changed as soon as he looked up.
    "It's com-plete-ly the wrong colour!" Harrus fumes. "It's a mockery of our standards of living, and it's right there overhead! Do you want my children to grow up believing the sky is supposed to look like, like... like THAT?" Harrus again looks up at the heavens that offend him so. "No, Captain, my patience is at an end. I expect you to take me and my family to {pnt} in the {sys} system. We've got relatives there who will take us in. I will waste my time with this pointless endeavour no longer!"
    Before you get a chance at making a snappy retort, Harrus storms back to his (your) quarters, leaving you to either vent your anger on his wife, who is hovering nearby, or keep it to yourself. Since the poor woman has done nothing wrong, you grimly return to the bridge.]])
+
+local function choose_stop ()
+   local fct = faction.get("Independent")
+   mem.destplanet, mem.destsys = lmisn.getRandomSpobAtDistance( nil, 1, 3, fct )
+   if not mem.destplanet then
+      -- In case no systems were found.
+      mem.destsys = system.get("Apez")
+      mem.destplanet = lmisn.getLandableSpobs( mem.destsys, fct )
+      mem.destplanet = mem.destplanet[ rnd.rnd(1,#mem.destplanet) ]
+   end
+end
 
 function create ()
    -- Note: this mission does not make any system claims.
@@ -44,11 +54,7 @@ function create ()
 
    -- First stop; subsequent stops will be handled in the land function
    mem.nextstop = 1
-   mem.targsys = lmisn.getSysAtDistance(nil, 3) -- Populate the array
-   mem.targsys = getlandablesystems( mem.targsys )
-   if #mem.targsys == 0 then mem.targsys = {system.get("Apez")} end -- In case no systems were found.
-   mem.destsys = mem.targsys[rnd.rnd(1, #mem.targsys)]
-   mem.destplanet = getlandable(mem.destsys) -- pick a landable planet in the destination system
+   choose_stop()
 
    -- Intro text, player meets family
    vn.clear()
@@ -81,24 +87,14 @@ Without further ado, and without so much as formally asking for the favour, Harr
    hook.enter("enter")
 end
 
--- Given a system, return the first landable planet found, or nil if none are landable (shouldn't happen in this script)
-function getlandable(sys)
-   for a, b in pairs(sys:spobs()) do
-      if b:services()["inhabited"] and b:canLand() then
-         return b
-      end
-   end
-   return nil
-end
-
 function land()
    if spob.cur() == mem.destplanet then -- We've arrived!
       if mem.nextstop >= 3 then -- This is the last stop
          vn.clear()
          vn.scene()
          vn.transition()
-         vn.na(_([[You land at your final stop in your quest to take the space family home, and not a moment too soon, for both you and Harrus. Harrus stomps off your ship without so much as a farewell, his wife and children in tow, and you are just as happy to see them gone.
-   Surveying your now deserted quarters, you are appalled at how much damage the temporary inhabitants have managed to do along the way. You console yourself with the thought that at least you'll have something to do during the dull periods in hyperspace and turn to tend to your ships needs, when your eye falls on a small box that you don't remember seeing here before.]]))
+         vn.na(_([[You land at your final stop in your quest to take the space family home, and not a moment too soon, for both you and Harrus. Harrus stomps off your ship without so much as a farewell, his wife and children in tow, and you are just as happy to see them gone.]]))
+         vn.na(_([[Surveying your now deserted quarters, you are appalled at how much damage the temporary inhabitants have managed to do along the way. You console yourself with the thought that at least you'll have something to do during the dull periods in hyperspace and turn to tend to your ships needs, when your eye falls on a small box that you don't remember seeing here before.]]))
          vn.sfxVictory()
          vn.func( function ()
             player.pay( reward )
@@ -112,31 +108,14 @@ function land()
          misn.finish(true)
       else
          mem.nextstop = mem.nextstop + 1
-         mem.targsys = lmisn.getSysAtDistance(nil, mem.nextstop+1) -- Populate the array
-         mem.targsys = getlandablesystems( mem.targsys )
-         if #mem.targsys == 0 then mem.targsys = {system.get("Apez")} end -- In case no systems were found.
-         mem.destsys = mem.targsys[rnd.rnd(1, #mem.targsys)]
-         mem.destplanet = getlandable(mem.destsys) -- pick a landable planet in the destination system
+         choose_stop()
+
          vntk.msg(_("Next stop"), fmt.f(directions[mem.nextstop], {pnt=mem.destplanet, sys=mem.destsys})) -- NPC telling you where to go
          misn.osdCreate(_("The Space Family"), {
             fmt.f(_("Take the space family to {pnt} in the {sys} system"), {pnt=mem.destplanet, sys=mem.destsys})})
          misn.markerMove( mem.misn_marker, mem.destplanet )
       end
    end
-end
-
--- Only gets landable systems
-function getlandablesystems( systems )
-   local t = {}
-   for _k1,v in ipairs(systems) do
-      for _k2,p in ipairs(v:spobs()) do
-         if p:services()["inhabited"] and p:canLand() then
-            t[#t+1] = v
-            break
-         end
-      end
-   end
-   return t
 end
 
 function enter()
