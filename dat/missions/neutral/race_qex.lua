@@ -63,10 +63,10 @@ function create ()
    for k,track in ipairs(track_list) do
       -- Length of the track
       local length = 0
-      local lp = track.track[1][1]
       local scale = track.scale or 1
+      local lp = track.track[1][1]*scale
       for i,trk in ipairs(track.track) do
-         for t = 0,1,0.01 do -- only 100 samples
+         for t = 0,1,0.05 do
             local p = cubicBezier( t, trk[1], trk[1]+trk[2], trk[4]+trk[3], trk[4] ) * scale
             length = length + p:dist(lp)
             lp = p
