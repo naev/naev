@@ -98,7 +98,19 @@ pub const AL_VERSION: ALenum = 0xb002;
 pub const AL_RENDERER: ALenum = 0xb003;
 pub const AL_EXTENSIONS: ALenum = 0xb004;
 
+pub const AL_SOURCE_RELATIVE: ALenum = 0x202;
+pub const AL_CONE_INNER_ANGLE: ALenum = 0x1001;
+pub const AL_CONE_OUTER_ANGLE: ALenum = 0x1002;
+pub const AL_PITCH: ALenum = 0x1003;
+pub const AL_POSITION: ALenum = 0x1004;
+pub const AL_DIRECTION: ALenum = 0x1005;
+pub const AL_VELOCITY: ALenum = 0x1006;
+pub const AL_LOOPING: ALenum = 0x1007;
+pub const AL_BUFFER: ALenum = 0x1009;
+pub const AL_GAIN: ALenum = 0x100A;
+pub const AL_MIN_GAIN: ALenum = 0x100D;
 pub const AL_MAX_GAIN: ALenum = 0x100E;
+pub const AL_ORIENTATION: ALenum = 0x100F;
 
 pub const AL_SOURCE_STATE: ALenum = 0x1010;
 
@@ -372,9 +384,37 @@ impl Source {
         }
     }
 
+    pub fn get_parameter_f32(&self, param: ALenum) -> f32 {
+        let mut out: f32 = 0.0;
+        unsafe {
+            alGetSourcef(self.raw(), param, &mut out);
+        }
+        out
+    }
+
+    pub fn parameter_3_f32(&self, param: ALenum, v1: ALfloat, v2: ALfloat, v3: ALfloat) {
+        unsafe {
+            alSource3f(self.raw(), param, v1, v2, v3);
+        }
+    }
+
+    pub fn get_parameter_3_f32(&self, param: ALenum) -> [f32; 3] {
+        let mut out: [f32; 3] = [0.0; 3];
+        unsafe {
+            alGetSourcefv(self.raw(), param, out.as_mut_ptr());
+        }
+        out
+    }
+
     pub fn parameter_3_i32(&self, param: ALenum, v1: ALint, v2: ALint, v3: ALint) {
         unsafe {
             alSource3i(self.raw(), param, v1, v2, v3);
+        }
+    }
+
+    pub fn parameter_i32(&self, param: ALenum, val: ALint) {
+        unsafe {
+            alSourcei(self.raw(), param, val);
         }
     }
 
@@ -382,14 +422,6 @@ impl Source {
         let mut out: i32 = 0;
         unsafe {
             alGetSourcei(self.raw(), param, &mut out);
-        }
-        out
-    }
-
-    pub fn get_parameter_f32(&self, param: ALenum) -> f32 {
-        let mut out: f32 = 0.0;
-        unsafe {
-            alGetSourcef(self.raw(), param, &mut out);
         }
         out
     }

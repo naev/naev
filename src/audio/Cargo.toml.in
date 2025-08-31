@@ -19,3 +19,5 @@ anyhow = { workspace = true }
 symphonia = { workspace = true }
 log = { workspace = true }
 gettext = { workspace = true }
+naev_core = { workspace = true }
+nalgebra = { workspace = true }

@@ -6,11 +6,13 @@ use crate::openal as al;
 use crate::openal::al_types::*;
 use crate::openal::alc_types::*;
 use crate::openal::*;
+use naev_core::utils::AtomicF32;
 
 use anyhow::Result;
 use gettext::gettext;
 use log::{debug, debugx, warn, warn_err};
 use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
+use nalgebra::Vector3;
 use std::ffi::{CStr, CString};
 use std::sync::atomic::{AtomicBool, AtomicPtr, Ordering};
 use std::sync::{Arc, Mutex};
@@ -19,6 +21,8 @@ const NUM_VOICES: usize = 64;
 const REFERENCE_DISTANCE: f32 = 500.;
 const MAX_DISTANCE: f32 = 25_000.;
 static AUDIO_ENABLED: AtomicBool = AtomicBool::new(false);
+/// Master volume in log
+static VOLUME_MASTER: AtomicF32 = AtomicF32::new(1.0);
 
 #[derive(Clone)]
 pub enum Message {
@@ -308,7 +312,7 @@ pub struct Audio {
     atype: AudioType,
     source: al::Source,
     slot: ALuint,
-    volume: f64,
+    volume: f32,
     buffer: Arc<AudioBuffer>,
 }
 impl Audio {
@@ -383,6 +387,60 @@ impl Audio {
             AudioSeek::Seconds => self.source.get_parameter_f32(AL_SEC_OFFSET),
             AudioSeek::Samples => self.source.get_parameter_f32(AL_SAMPLE_OFFSET),
         }
+    }
+
+    pub fn set_volume(&mut self, vol: f32) {
+        let master = VOLUME_MASTER.load(Ordering::Relaxed);
+        self.source.parameter_f32(AL_GAIN, master * vol);
+        self.volume = vol;
+    }
+
+    pub fn set_volume_raw(&mut self, vol: f32) {
+        self.source.parameter_f32(AL_GAIN, vol);
+        self.volume = vol;
+    }
+
+    pub fn volume(&self) -> f32 {
+        self.volume
+    }
+
+    pub fn set_relative(&self, relative: bool) {
+        self.source
+            .parameter_i32(AL_SOURCE_RELATIVE, relative as i32);
+    }
+
+    pub fn set_position(&self, pos: Vector3<f32>) {
+        self.source
+            .parameter_3_f32(AL_POSITION, pos.x, pos.y, pos.z);
+    }
+
+    pub fn position(&self) -> Vector3<f32> {
+        Vector3::from(self.source.get_parameter_3_f32(AL_POSITION))
+    }
+
+    pub fn set_velocity(&self, pos: Vector3<f32>) {
+        self.source
+            .parameter_3_f32(AL_VELOCITY, pos.x, pos.y, pos.z);
+    }
+
+    pub fn velocity(&self) -> Vector3<f32> {
+        Vector3::from(self.source.get_parameter_3_f32(AL_VELOCITY))
+    }
+
+    pub fn set_looping(&self, looping: bool) {
+        self.source.parameter_i32(AL_LOOPING, looping as i32);
+    }
+
+    pub fn looping(&self) -> bool {
+        self.source.get_parameter_i32(AL_LOOPING) != 0
+    }
+
+    pub fn set_pitch(&self, pitch: f32) {
+        self.source.parameter_f32(AL_PITCH, pitch);
+    }
+
+    pub fn pitch(&self) -> f32 {
+        self.source.get_parameter_f32(AL_PITCH)
     }
 }
 
@@ -680,5 +738,168 @@ impl UserData for Audio {
                 }))
             },
         );
+        /*
+         * @brief Sets the volume of a source.
+         *
+         *    @luatparam Audio source Source to set volume of.
+         *    @luatparam number vol Volume to set the source to with 0.0 being silent
+         * and 1.0 being full volume.
+         *    @luatparam[opt=false] boolean ignorevol Don't modify volume based on
+         * master.
+         * @luafunc setVolume
+         */
+        methods.add_method_mut(
+            "setVolume",
+            |_, audio: &mut Self, (volume, ignoremaster): (f32, bool)| -> mlua::Result<()> {
+                if ignoremaster {
+                    audio.set_volume_raw(volume)
+                } else {
+                    audio.set_volume(volume)
+                }
+                Ok(())
+            },
+        );
+        /*
+         * @brief Gets the volume of a source.
+         *
+         *    @luatparam[opt] Audio source Source to get volume of.
+         *    @luatreturn number Volume the source is set to.
+         * @luafunc getVolume
+         */
+        methods.add_method("getVolume", |_, audio: &Self, ()| -> mlua::Result<f32> {
+            Ok(audio.volume())
+        });
+        /*
+         * @brief Sets whether a source is relative or not.
+         *
+         *    @luatparam boolean relative Whether or not to make the source relative or
+         * not.
+         * @luafunc setRelative
+         */
+        methods.add_method(
+            "setRelative",
+            |_, audio: &Self, relative: bool| -> mlua::Result<()> {
+                Ok(audio.set_relative(relative))
+            },
+        );
+        /*
+         * @brief Sets the position of a source.
+         *
+         *    @luatparam Audio source Source to set position of.
+         *    @luatparam number x X position.
+         *    @luatparam number y Y position.
+         *    @luatparam number z Z position.
+         * @luafunc setPosition
+         */
+        methods.add_method(
+            "setPosition",
+            |_, audio: &Self, (x, y, z): (f32, f32, f32)| -> mlua::Result<()> {
+                let vec: Vector3<f32> = Vector3::new(x, y, z);
+                Ok(audio.set_position(vec))
+            },
+        );
+        /*
+         * @brief Gets the position of a source.
+         *
+         *    @luatparam Audio source Source to get position of.
+         *    @luatreturn number X position.
+         *    @luatreturn number Y position.
+         *    @luatreturn number Z position.
+         * @luafunc getPosition
+         */
+        methods.add_method(
+            "getPosition",
+            |_, audio: &Self, ()| -> mlua::Result<(f32, f32, f32)> {
+                let pos = audio.position();
+                Ok((pos.x, pos.y, pos.z))
+            },
+        );
+        /*
+         * @brief Sets the velocity of a source.
+         *
+         *    @luatparam Audio source Source to set velocity of.
+         *    @luatparam number x X velocity.
+         *    @luatparam number y Y velocity.
+         *    @luatparam number z Z velocity.
+         * @luafunc setVelocity
+         */
+        methods.add_method(
+            "setVelocity",
+            |_, audio: &Self, (x, y, z): (f32, f32, f32)| -> mlua::Result<()> {
+                let vec: Vector3<f32> = Vector3::new(x, y, z);
+                Ok(audio.set_velocity(vec))
+            },
+        );
+        /*
+         * @brief Gets the velocity of a source.
+         *
+         *    @luatparam Audio source Source to get velocity of.
+         *    @luatreturn number X velocity.
+         *    @luatreturn number Y velocity.
+         *    @luatreturn number Z velocity.
+         * @luafunc getVelocity
+         */
+        methods.add_method(
+            "getVelocity",
+            |_, audio: &Self, ()| -> mlua::Result<(f32, f32, f32)> {
+                let vel = audio.velocity();
+                Ok((vel.x, vel.y, vel.z))
+            },
+        );
+        /*
+         * @brief Sets a source to be looping or not.
+         *
+         *    @luatparam Audio source Source to set looping state of.
+         *    @luatparam boolean enable Whether or not the source should be set to
+         * looping.
+         * @luafunc setLooping
+         */
+        methods.add_method(
+            "setLooping",
+            |_, audio: &Self, looping: bool| -> mlua::Result<()> { Ok(audio.set_looping(looping)) },
+        );
+        /*
+         * @brief Gets the looping state of a source.
+         *
+         *    @luatparam Audio source Source to get looping state of.
+         *    @luatreturn boolean Whether or not the source is looping.
+         * @luafunc isLooping
+         */
+        methods.add_method("isLooping", |_, audio: &Self, ()| -> mlua::Result<bool> {
+            Ok(audio.looping())
+        });
+        /*
+         * @brief Sets the pitch of a source.
+         *
+         *    @luatparam Audio source Source to set pitch of.
+         *    @luatparam number pitch Pitch to set the source to.
+         * @luafunc setPitch
+         */
+        methods.add_method(
+            "setPitch",
+            |_, audio: &Self, pitch: f32| -> mlua::Result<()> { Ok(audio.set_pitch(pitch)) },
+        );
+        /*
+         * @brief Gets the pitch of a source.
+         *
+         *    @luatparam Audio source Source to get pitch of.
+         *    @luatreturn number Pitch of the source.
+         * @luafunc getPitch
+         */
+        methods.add_method("getPitch", |_, audio: &Self, ()| -> mlua::Result<f32> {
+            Ok(audio.pitch())
+        });
+        /*
+        { "setPitch", audioL_setPitch },
+        { "getPitch", audioL_getPitch },
+        { "setAttenuationDistances", audioL_setAttenuationDistances },
+        { "getAttenuationDistances", audioL_getAttenuationDistances },
+        { "setRolloff", audioL_setRolloff },
+        { "getRolloff", audioL_getRolloff },
+        { "setEffect", audioL_setEffect },
+        { "setGlobalEffect", audioL_setGlobalEffect },
+        { "setGlobalAirAbsorption", audioL_setGlobalAirAbsorption },
+        { "setGlobalDopplerFactor", audioL_setGlobaDopplerFactor },
+             */
     }
 }
