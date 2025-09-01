@@ -111,7 +111,6 @@ class outfit(naev_xml):
          self['outfit'] = {}
       elif 'outfit' not in self:
          raise Exception('No outfit found in ' + repr(fnam))
-      self.short = None
       self.is_multi = False
       if is_multi or is_multi is None:
          if un_multicore(self):
@@ -201,20 +200,8 @@ class outfit(naev_xml):
       sec = ((k[1:], v) for (_d, k, v) in self.equipped(sec = True))
       return {k: ((v1, v2) if v1!=v2 else v1) for ((k, v1), (_, v2)) in zip(pri, sec)}
 
-   def name( self ):
-      return self['outfit']['@name']
-
    def set_name( self, name ):
       self['outfit']['@name'] = name
-
-   def shortname( self ):
-      if not self.short:
-         if (res := self.find('shortname')) is None:
-            res = self.name()
-         if res.split(' ')[-1] == 'Engine':
-            res = ' '.join(res.split(' ')[:-1])
-         self.short = res
-      return self.short
 
    def prisec_only(self, sec = False):
       for d, k, v in list(self.equipped(sec)):

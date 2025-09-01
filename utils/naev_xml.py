@@ -273,6 +273,7 @@ def unparse( d , indent= 0 ):
 
 class naev_xml( xml_node ):
    def __init__( self, fnam= None, r= True, w= True):
+      self.short = None
       if fnam is None:
          r = False
          fnam = devnull
@@ -341,11 +342,33 @@ class naev_xml( xml_node ):
             else:
                yield node, '$' + k
          if isinstance(v, dict):
-            for t in naev_xml._nodes(v, lookfor):
-               yield t
+            yield from naev_xml._nodes(v, lookfor)
 
    def nodes( self, lookfor= None ):
       return self._nodes(self, lookfor)
+
+   @staticmethod
+   def _to_dict( node ):
+      for k, v in node.items():
+         if isinstance(v, dict):
+            yield from naev_xml._to_dict(v)
+         elif (vv := _numify(v)) is not None:
+            yield k, vv
+
+   def to_dict( self ):
+      return dict(self._to_dict(self))
+
+   def name( self ):
+      return next(iter(self.values()))['@name']
+
+   def shortname( self ):
+      if not self.short:
+         if (res := self.find('shortname')) is None:
+            res = self.name()
+         if res.split(' ')[-1] == 'Engine':
+            res = ' '.join(res.split(' ')[:-1])
+         self.short = res
+      return self.short
 
    def touch( self ):
       self._uptodate = False
