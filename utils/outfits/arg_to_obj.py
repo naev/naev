@@ -12,7 +12,7 @@ def preprocess_ship(o):
       if not isinstance(v, list):
          v = [v]
       for s in v:
-         what = f + '_' + s['@size'][0]
+         what = f + '_' + s['@size'][0].upper()
          if '@prop' in s:
             if s['@prop'] == 'accessory':
                continue
