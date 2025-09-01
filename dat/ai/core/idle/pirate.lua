@@ -220,7 +220,7 @@ function backoff( target )
    end
 
    -- Shoot turret if applicable
-   shoot_turret()
+   shoot_turret( target )
 end
 
 control_funcs.ambush_moveto = function ()
