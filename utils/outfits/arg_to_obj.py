@@ -5,7 +5,7 @@ from copy import deepcopy
 from sys import stderr
 
 
-def mk_combine(args, combine, autostack, good):
+def arg_to_naev_obj(args, combine, autostack, good):
    if combine or autostack:
       acc = []
       for i in args:

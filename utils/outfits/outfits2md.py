@@ -2,7 +2,7 @@
 
 from sys import stderr, stdin
 from outfit import LOWER_BETTER
-from combine_multi import mk_combine
+from arg_to_obj import arg_to_naev_obj
 
 def transpose( M ):
    N = max(map(len, M))
@@ -35,7 +35,7 @@ def main( args, gith = False, color = False, term = False, noext = False,
    names = []
    acc = []
 
-   for o in mk_combine(args, combine, autostack, good):
+   for o in arg_to_naev_obj(args, combine, autostack, good):
       d = o.to_dict()
       for k, v in d.items():
          if type(v) == type(()):
