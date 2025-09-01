@@ -57,7 +57,7 @@ glow = "0.16"
 nalgebra = { version = "0", features = ["bytemuck"]  }
 bytemuck = { version = "1", features = ["derive"] } # Needed for shader voodoo
 encase = { version = "0", features = ["nalgebra"] } # Needed for shader voodoo
-image = "0.25"
+image = { version = "=0.25.6", features = ["rayon"] }
 roxmltree = "0.20"
 
 [dependencies]
