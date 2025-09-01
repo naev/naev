@@ -1,6 +1,6 @@
 # python3
 
-from outfit import outfit
+from outfit import outfit, naev_xml
 from copy import deepcopy
 from sys import stderr
 
@@ -45,14 +45,20 @@ def mk_combine(args, combine, autostack, good):
             s = s[2:] if s[:2] == '2x' else s[:-2]
             s = s + '+' + s
          s = s.split('+')
-         if o := outfit(s[0], w= False):
-            if len(s) == 2 :
-               if s[1].strip() == '':
-                  if o.can_alone():
-                     yield o.stack()
-               elif o.can_pri():
-                  o2 = outfit(s[1], w= False)
-                  if o2 and o2.can_sec() and o.can_stack(o2):
-                     yield o.stack(o2)
-            elif len(s) == 1 and o.can_alone():
-               yield o
+         try:
+            if o := outfit(s[0], w= False):
+               if len(s) == 2 :
+                  if s[1].strip() == '':
+                     if o.can_alone():
+                        yield o.stack()
+                  elif o.can_pri():
+                     o2 = outfit(s[1], w= False)
+                     if o2 and o2.can_sec() and o.can_stack(o2):
+                        yield o.stack(o2)
+               elif len(s) == 1 and o.can_alone():
+                  yield o
+         except Exception as e:
+            if len(s) == 1:
+               yield naev_xml(s[0])
+            else:
+               raise e
