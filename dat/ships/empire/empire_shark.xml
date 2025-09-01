@@ -20,7 +20,6 @@
  <description>The Empire military grade version of the Shark is mostly identical in function to a standard Shark, but with slightly better armour, and shields. The military-grade materials used also result in the ship being slightly lighter than its generic counterpart.</description>
  <health>
   <armour>40</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>2</crew>

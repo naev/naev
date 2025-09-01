@@ -19,7 +19,6 @@
  <description>This military grade version of the Lancelot is mostly identical in function to a standard Lancelot, but with slightly better armour, and shields.</description>
  <health>
   <armour>70</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>4</crew>

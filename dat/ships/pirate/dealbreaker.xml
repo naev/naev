@@ -13,7 +13,6 @@
  <description>Few people meet a Dealbreaker and survive to tell the tale. Designed through a mix of reverse engineering other fabricators and reusing existing components, the Skull and Bones engineers designed a monstrous battleship used by the upper bosses of the Black Lotus Pirate Clan. Although pirate shipbuilders lack the formal training of traditional fabricators, they make up for it in cunning and experience, and the Dealbreaker is much more capable than you would expect from a hodgepodge of pirates. Given how few are made, not only is it an icon that strikes fear in those who know the Black Lotus, but it is a status symbol that even pirates from other clans have come to know and respect.</description>
  <health>
   <armour>1600</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>61</crew>

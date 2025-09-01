@@ -15,7 +15,6 @@
  <description>A heavy freighter specialized in transporting cargo throughout the galaxy. Also has sufficient accommodation for passengers, depending on the model, allowing for enjoyable cruises. The Mule is a favourite target of pirates, so avoiding dangerous systems is strongly advised.</description>
  <health>
   <armour>350</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>13</crew>

@@ -15,7 +15,6 @@
  <description>The star product of Aerosys, the Hyena quickly has also become a favourite of guerrilla and paramilitary groups far and wide. Their top-notch acceleration combined with fast reaction time allow them to exhaust enemy energy supplies while wearing them down. While Aerosys claim that their ships are only sold to reputable pilots, it's suspected that they sell to anyone willing to pay, as it seems there are countless Hyenas among the ranks of the more notorious and unruly pilots.</description>
  <health>
   <armour>25</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>2</crew>

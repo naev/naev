@@ -12,7 +12,6 @@
  <description>One of the most long-lived designs in spacefaring, the Bedivere was designed to be able to fulfill a diversity of different roles. Although technically considered a combat vessel, it has significant cargo holds and can also serve as a cargo ship. While still a flexible ship, even with retrofitting, the ancient system layout and lack of specialization led to the Bedivere being discontinued in favour of more modern ships. Although it is not possible to obtain new Bediveres, given their ease to repair, it seems like it will take a long time for them to completely disappear.</description>
  <health>
   <armour>390</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>22</crew>

@@ -21,7 +21,6 @@
  <description>The heart of the Proteron battle fleet is formed by the Watson. Acting as a mobile launch base as well as a command and control unit, this vessel co-ordinates the rest of the fleet in the fight for dominance over the galaxy.</description>
  <health>
   <armour>1800</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>65</crew>

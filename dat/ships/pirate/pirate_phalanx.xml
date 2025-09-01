@@ -17,7 +17,6 @@
  <description>Building upon the already-capable Phalanx chassis, the Skull and Bones engineers have substantially improved the ship's performance, while only minorly sacrificing protection.</description>
  <health>
   <armour>190</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>15</crew>

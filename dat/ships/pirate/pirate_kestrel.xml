@@ -16,7 +16,6 @@
  <description>The Kestrel is one of the best ships offered by Skull and Bones. It is extremely agile for a cruiser yet doesn't lack the firepower necessary to question the authority of the Empire. A very strong ship for those pirate captains who can afford it and want to make a lasting impression.</description>
  <health>
   <armour>950</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>28</crew>

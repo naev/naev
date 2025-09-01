@@ -21,7 +21,6 @@
  <description>The Zebra, one of the largest freighters available for independent civilian traders, was refitted by Skull and Bones to serve as carrier. Large portions of the cargo bays were left out to harden the hull or repurposed as hangars; those hangars have to operate in a scarily makeshift manner, slowing fighter maintienance substantially, but on the flipside, releasing the fighters is hardly more involved than jettisoning unwanted cargo, making it quick to respond to sudden threats. Although its capacity for cargo ends up suboptimal, the pirate version of the Zebra is used as a freighter occasionally.</description>
  <health>
   <armour>1400</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>40</crew>

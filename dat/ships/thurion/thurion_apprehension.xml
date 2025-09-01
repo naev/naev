@@ -20,7 +20,6 @@
  <description>The Thurion Apprehension is a defense-focused light destroyer. High mobility paired with advanced electronic defenses make it difficult for enemies to detect the ship, let alone attempt to lock onto it.</description>
  <health>
   <armour>550</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>12</crew>

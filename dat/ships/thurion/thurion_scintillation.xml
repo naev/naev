@@ -20,7 +20,6 @@
  <description>The Thurion Scintillation is a bomber designed to attack from a large distance. It is better armed than any other Thurion ship of comparable size, but still not as well as bombers from other makers.</description>
  <health>
   <armour>60</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>4</crew>

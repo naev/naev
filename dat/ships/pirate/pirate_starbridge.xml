@@ -17,7 +17,6 @@
  <description>Even though the Starbridge is already a light and fast destroyer, Skull and Bones engineers managed to further improve its speed. Due to its large firepower and relatively high speed, for its ship class, the Starbridge is truly a fearsome sight.</description>
  <health>
   <armour>300</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>14</crew>

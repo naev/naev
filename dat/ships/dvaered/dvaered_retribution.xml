@@ -20,7 +20,6 @@
  <description>When the Empire replaced their ageing cruisers with the new Hawking class House Dvaered seized the opportunity to acquire the license for the cruiser and most of the remaining ships. Dvaered engineers reinforced the armor and redesigned the ship's structure while also attaching additional weapon hard points. Afterwards, the ship was renamed to Retribution. However, the electronics remained outdated.</description>
  <health>
   <armour>1800</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>39</crew>

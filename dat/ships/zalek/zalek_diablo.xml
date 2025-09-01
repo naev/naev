@@ -20,7 +20,6 @@
  <description>This carrier is the archetypical Za'lek warship. Virtually unarmoured and equipped with heavy shields, they are, however, meant to serve as a platform for devastating drone swarms, not frontline combat.</description>
  <health>
   <armour>1000</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>28</crew>

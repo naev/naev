@@ -22,7 +22,6 @@
  <description>This military grade version of the Hawking is mostly identical in function to a standard Hawking, but with slightly better armour, and shields.</description>
  <health>
   <armour>1600</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>35</crew>

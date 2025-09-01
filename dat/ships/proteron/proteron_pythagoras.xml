@@ -20,7 +20,6 @@
  <description>While the Proteron mostly rely on heavy and powerful capital ships the Pythagoras is an exception. It is a light and fast cruiser often deployed in small skirmishes against medium sized ships. It can usually be found testing the defence of the enemy trying to find a weak spot for the heavy Proteron fleets to break through.</description>
  <health>
   <armour>1400</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>33</crew>

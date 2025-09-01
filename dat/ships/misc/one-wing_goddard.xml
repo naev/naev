@@ -20,7 +20,6 @@
   <armour>15000</armour>
   <energy>0</energy>
   <shield_regen>0</shield_regen>
-  <armour_regen>0</armour_regen>
   <energy_regen>0</energy_regen>
  </health>
  <characteristics>
