@@ -14,7 +14,6 @@
  <description>The Koala is your standard cargo vessel. It's a small ship with little weapon space but a decent amount of cargo space. Good for the entrepreneur working looking to turn a profit while making their way across the stars.</description>
  <health>
   <armour>110</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>3</crew>

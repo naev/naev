@@ -6,7 +6,6 @@
  <description>The Za'lek Demon Type IV is a departure from the standard autonomous drone-focused combat philosophy, redesigned to make heavy use of long range weapons such as Za'lek Reaper suicide drones. To achieve this goal, this Demon sports a completely reworked electronics system, with top-notch specially tailoured lock-on algorithms. However, as per the no free lunch theorem, this comes at a cost of a much weaker drone command and control system, and the extra weapon slot and missile system storage required removing more of the ship's shield emitters and already thin armour.</description>
  <health>
   <armour>300</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <slots>
   <weapon y="0" h="5" size="large" x="28"/>

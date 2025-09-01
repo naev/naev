@@ -24,7 +24,6 @@
  <description>The Copia bio-freighter is the backbone of Soromid convoys and is frequently used to supply Soromid fleets or military installations with critical supplies. Unlike most cargo ships, the Copia is designed to not shy away from combat, and can be a very deadly ship in the right hands.</description>
  <health>
   <armour>900</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>25</crew>

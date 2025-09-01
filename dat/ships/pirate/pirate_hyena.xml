@@ -17,7 +17,6 @@
  <description>The Pirate Hyena has quickly become a favourite of pirates far and wide. Not much of a fighter, nor does it pack too much of a punch, but in groups they can overcome nearly any vessel and it's so simple to pilot that reaction times are vastly improved. Skull and Bones has added modifications to make them even more efficient as scavengers and harder to hit than their Aerosys counterparts.</description>
  <health>
   <armour>25</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>2</crew>

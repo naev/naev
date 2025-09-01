@@ -16,7 +16,6 @@
  <description>The Proteron chose their battles carefully as their slow capital ships cannot retreat from a battle easily. Thus, they have rather large fleet of reconnaissance vessels with the Euler being the primarily used reconnaissance vessel. Not geared for combat, this ship relies on stealth and speed to avoid hostiles.</description>
  <health>
   <armour>30</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>2</crew>

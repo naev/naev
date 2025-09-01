@@ -19,7 +19,6 @@
  <description>While smaller and less intimidating than its bigger siblings in the Proteron arsenal, a pack of Daltons is still a foe to be reckoned with. It's the latest in a long line of largely carrier-based interceptors. The Dalton's armor shell can be retracted and functions as cargo box for more convenient handling and storage. Packing relatively little firepower, they're ill-suited to duelling, but a carrier group unleashing several squadrons has been known to turn the tide of battle on many occasions.</description>
  <health>
   <armour>35</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>2</crew>

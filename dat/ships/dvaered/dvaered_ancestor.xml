@@ -19,7 +19,6 @@
  <description>On this military grade version of the Ancestor, the distribution of the weight on the structure has been optimized in order to allow embarking more payload.</description>
  <health>
   <armour>60</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>6</crew>

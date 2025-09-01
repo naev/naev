@@ -1,11 +1,28 @@
 # python3
 
-from outfit import outfit
+from outfit import outfit, naev_xml
 from copy import deepcopy
 from sys import stderr
 
 
-def mk_combine(args, combine, autostack, good):
+def preprocess_ship(o):
+   d = {}
+   for n, f in o.nodes({'weapon', 'utility', 'structure'}):
+      v = n[f]
+      if not isinstance(v, list):
+         v = [v]
+      for s in v:
+         what = f + '_' + s['@size'][0].upper()
+         if '@prop' in s:
+            if s['@prop'] == 'accessory':
+               continue
+            if s['@prop'][:4] == 'bio_' and s['@prop'] != 'bio_weapon':
+               continue
+            what += '_' + s['@prop'].split('_secondary')[0]
+         d[what] = d.get(what, 0) + 1
+   o.update(d)
+
+def arg_to_naev_obj(args, combine, autostack, good):
    if combine or autostack:
       acc = []
       for i in args:
@@ -45,14 +62,23 @@ def mk_combine(args, combine, autostack, good):
             s = s[2:] if s[:2] == '2x' else s[:-2]
             s = s + '+' + s
          s = s.split('+')
-         if o := outfit(s[0], w= False):
-            if len(s) == 2 :
-               if s[1].strip() == '':
-                  if o.can_alone():
-                     yield o.stack()
-               elif o.can_pri():
-                  o2 = outfit(s[1], w= False)
-                  if o2 and o2.can_sec() and o.can_stack(o2):
-                     yield o.stack(o2)
-            elif len(s) == 1 and o.can_alone():
+         try:
+            if o := outfit(s[0], w= False):
+               if len(s) == 2 :
+                  if s[1].strip() == '':
+                     if o.can_alone():
+                        yield o.stack()
+                  elif o.can_pri():
+                     o2 = outfit(s[1], w= False)
+                     if o2 and o2.can_sec() and o.can_stack(o2):
+                        yield o.stack(o2)
+               elif len(s) == 1 and o.can_alone():
+                  yield o
+         except Exception as e:
+            if len(s) == 1:
+               o = naev_xml(s[0], w= False)
+               if 'ship' in o:
+                  preprocess_ship(o)
                yield o
+            else:
+               raise e

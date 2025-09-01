@@ -16,7 +16,6 @@
  <description>Ancestors were one of the first ships to be fancied by pirates. The big intimidating wings and good top speeds would usually get ships to surrender without firing a shot. As better ships came out in the market, their use has fallen due to their archaic electronics and targeting systems.</description>
  <health>
   <armour>45</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>6</crew>

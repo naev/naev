@@ -18,7 +18,6 @@
  <description>A very versatile combat ship. Nexus defines the Admonisher as a compromise between the ruggedness of the Pacifier and the agility of the Lancelot. Overall a very solid combat ship.</description>
  <health>
   <armour>220</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>13</crew>

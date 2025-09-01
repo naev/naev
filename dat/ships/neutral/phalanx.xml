@@ -16,7 +16,6 @@
  <description>The Phalanx is, by Dvaered standards, a fast corvette that can be used as a missile platform, that it also maneuvers poorly is standard Dvaered construction. Its high armor makes it a capable corvette provided one equips it with turrets.</description>
  <health>
   <armour>250</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>15</crew>

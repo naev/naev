@@ -20,7 +20,6 @@
  <description>On this military grade version of the Vendetta, the distribution of the weight on the structure has been optimized in order to allow embarking more payload.</description>
  <health>
   <armour>100</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>4</crew>

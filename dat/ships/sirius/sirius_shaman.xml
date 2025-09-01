@@ -17,7 +17,6 @@
  <description>Though its relatively sleek form may cause it to be mistaken for a light fighter from a distance, the Shaman is anything but. A purpose-built light missile platform, few enemies escape the reach of the Shaman.</description>
  <health>
   <armour>50</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>4</crew>
