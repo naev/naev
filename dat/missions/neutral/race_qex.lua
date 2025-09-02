@@ -23,6 +23,12 @@ local lmisn = require "lmisn"
 
 local DEFAULT_REWARD = 100e3
 
+goal_times = {
+   ['Peninsula']= { Bronze= 47.7, Silver= 25.8, Gold= 20 },
+   ['Smiling Man']= { Bronze= 69, Silver= 44.1, Gold= 34.1 },
+   ['Qex Tour']= { Bronze= 47.7, Silver= 38.5, Gold= 31 }
+}
+
 local elapsed_time, race_done
 
 local col_next = {0, 1, 1, 0.3}
@@ -74,7 +80,7 @@ function create ()
       end
 
       track.length = length
-      track.goaltime = length / 694 -- TODO something better
+      track.goaltime = goal_times[track.name]
       track.reward = track.reward or DEFAULT_REWARD
       track.besttime = var.peek( track_besttime(track) ) or math.huge
    end
@@ -151,13 +157,17 @@ function approach_terminal ()
 
       --txt = txt.."#n".._("Name: ").."#0"     ..track.name.."\n"
       txt = txt.."#n".._("Length: ").."#0"   ..fmt.number(track.length).."\n"
-      txt = txt.."#n".._("Goal Time: ").."#0"..display_time(track.goaltime).."\n"
-      txt = txt.."#n".._("Reward: ").."#0"   ..fmt.credits(track.reward).."\n"
+      for n, i in ipairs({'Bronze', 'Silver', 'Gold'}) do
+         txt = txt .. '#n' .._('Goal Time:')
+         txt = txt .. '#0 ' .. display_time(track.goaltime[i])
+         txt = txt .. ' #n(' .. _(i) .. ')\n'
+      end
+      txt = txt.."#n".._("Reward: ").."#0"..fmt.credits(track.reward)..' #n0.5/1/2#0\n'
       if track.besttime == math.huge then
          txt = txt.."#n".._("Best Time: ").."#0".._("N/A")
       else
          local col = ""
-         if track.besttime <= track.goaltime then
+         if track.besttime <= track.goaltime.Bronze then
             col = "#g"
          end
          txt = txt.."#n".._("Best Time: ").."#0"..col..display_time(track.besttime)
@@ -305,8 +315,16 @@ function race_complete ()
    player.land( mem.race_spob )
 end
 
+function get_goal_result(time, goal)
+   for i_, g in ipairs({'Gold', 'Silver', 'Bronze'}) do
+      if time <= goal[g] then
+         return g
+      end
+   end
+end
+
 function race_landed ()
-   local beat_time = (elapsed_time <= mem.track.goaltime)
+   local beat_time = get_goal_result(elapsed_time, mem.track.goaltime)
    local best_improved = false
    -- Update best time if applicable
    if elapsed_time < mem.track.besttime or mem.track.besttime <= 0 then
@@ -315,55 +333,79 @@ function race_landed ()
       best_improved = true
    end
    local reward = mem.track.reward
-   local reward_outfit = outfit.get("Racing Trophy (Silver)")
 
    vn.clear()
    vn.scene()
    vn.transition()
    if beat_time then
       if best_improved then
-         vn.na(fmt.f(_("You finished the race in {elapsed} and beat the goal time of {goal}! This is your new best time! Congratulations!"), {
-            elapsed="#g"..display_time( elapsed_time ).."#0",
-            goal=display_time( mem.track.goaltime ),
+         vn.na(fmt.f(_("You finished the race in {elapsed} and beat the goal time of {goal} ({metal})! This is your new best time! Congratulations!"), {
+            elapsed= "#g"..display_time( elapsed_time ).."#0",
+            goal= display_time( mem.track.goaltime[beat_time] ),
+            metal= beat_time
          }))
       else
-         vn.na(fmt.f(_("You finished the race in {elapsed} and beat the goal time of {goal}! Congratulations!"), {
-            elapsed="#g"..display_time( elapsed_time ).."#0",
-            goal=display_time( mem.track.goaltime ),
+         vn.na(fmt.f(_("You finished the race in {elapsed} and beat the goal time of {goal} ({metal})! Congratulations!"), {
+            elapsed= "#g"..display_time( elapsed_time ).."#0",
+            goal= display_time( mem.track.goaltime[beat_time] ),
+            metal= beat_time,
          }))
       end
-      local did_all = true
-      for k,v in ipairs(track_list) do
-         if v.besttime > v.goaltime then
-            did_all = false
+      local beat_n
+      for _n, g in ipairs({'Gold', 'Silver', 'Bronze'}) do
+         local did_all = true
+         for k,v in ipairs(track_list) do
+            if v.besttime > v.goaltime[g] then
+               did_all = false
+               break
+            end
+         end
+         if did_all then
+            did_all = g
             break
          end
       end
-      if player.outfitNum( reward_outfit ) <= 0 and did_all then
-         vn.na(fmt.f(_([[An individual in a suit and tie suddenly takes you up onto a stage. A large name tag on their jacket says 'Melendez Corporation'. "Congratulations on your win," they say, shaking your hand, "That was a great race! On behalf of Melendez Corporation, and for beating the goal times of all the courses here at {spobname}, I would like to present to you your trophy!".
+      if did_all then
+         local already_have={}
+         for _n, g in ipairs({'Gold', 'Silver', 'Bronze'}) do
+            if player.outfitNum(outfit.get('Racing Trophy (' .. did_all .. ')')) == 1 then
+               already_have[g] = true
+            end
+         end
+      end 
+      if did_all and not already_have[did_all] then
+         vn.na(fmt.f(_([[An individual in a suit and tie suddenly takes you up onto a stage. A large name tag on their jacket says 'Melendez Corporation'. "Congratulations on your win," they say, shaking your hand, "That was a great race! On behalf of Melendez Corporation, and for beating the goal times of all the courses here at {spobname}, I would like to present to you your {metal} trophy!".
 They hand you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it. At least the trophy looks cool.]]),
-            {spobname=spob.cur()}))
+            {spobname= spob.cur(), metal= did_all}))
+         local reward_outfit = outfit.get('Racing Trophy (' .. did_all .. ')')
          vn.na(fmt.reward(reward_outfit).."\n"..fmt.reward(reward))
-         vn.func( function ()
-            player.outfitAdd( reward_outfit )
-            diff.apply("melendez_dome_xy37")
-         end )
-         vn.na(_([[After the formalities finish, a Nexus Engineer comes up to you, nervous and stuttering, "I-I-i love the way you fly! Me and some o-other engineers were thinking you mi-might want to try our prototype. I've g-given you access at the shipyard to check it out.". They quickly scuttle away before you can ask anything else. You wonder what the prototype is.]]))
+         if did_all == 'Silver' or (not already_have['Silver'] and did_all == 'Gold') then
+            vn.func( function ()
+               player.outfitAdd( reward_outfit )
+               diff.apply("melendez_dome_xy37")
+            end )
+            vn.na(_([[After the formalities finish, a Nexus Engineer comes up to you, nervous and stuttering, "I-I-i love the way you fly! Me and some o-other engineers were thinking you mi-might want to try our prototype. I've g-given you access at the shipyard to check it out.". They quickly scuttle away before you can ask anything else. You wonder what the prototype is.]]))
+         end
       else
-         vn.na(fmt.reward(reward))
+         for i, n in ipairs({'Bronze', 'Silver', 'Gold'}) do
+            if n == beat_time then
+               local rew = reward * 2^(i-2)
+               vn.na(fmt.reward(rew))
+               vn.func( function ()
+                  player.pay(rew)
+               end)
+            end
+         end
       end
-      vn.func( function ()
-         player.pay(reward)
-      end )
    elseif best_improved then
       vn.na(fmt.f(_("You finished the race in {elapsed}, but were {short} over the goal time. This is your new best time! Keep trying!"), {
          elapsed="#g"..display_time( elapsed_time ).."#0",
-         short="#r"..display_time( elapsed_time - mem.track.goaltime ).."#0",
+         short="#r"..display_time( elapsed_time - mem.track.goaltime['Bronze'] ).."#0",
       }))
    else
       vn.na(fmt.f(_("You finished the race in {elapsed}, but were {short} over the goal time. Keep trying!"), {
          elapsed="#g"..display_time( elapsed_time ).."#0",
-         short="#r"..display_time( elapsed_time - mem.track.goaltime ).."#0",
+         short="#r"..display_time( elapsed_time - mem.track.goaltime['Bronze'] ).."#0",
       }))
    end
 
