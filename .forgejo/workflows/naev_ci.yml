@@ -23,6 +23,7 @@ jobs:
       - name: Configure Rust
         run: |
           /usr/bin/setup-devenv.sh
+          . "$HOME/.cargo/env"
 
       - name: Package Dist
         run: |
@@ -73,6 +74,7 @@ jobs:
       - name: Configure Rust
         run: |
           /usr/bin/setup-devenv.sh
+          . "$HOME/.cargo/env"
 
       - name: Meson Setup
         id: setup
@@ -190,6 +192,7 @@ jobs:
       - name: Configure Rust
         run: |
           /usr/bin/setup-devenv.sh
+          . "$HOME/.cargo/env"
 
       - name: Meson Setup
         id: setup
@@ -283,6 +286,7 @@ jobs:
       - name: Configure Rust
         run: |
           /usr/bin/setup-devenv.sh
+          . "$HOME/.cargo/env"
 
       - name: Get Source
         uses: actions/download-artifact@v3
@@ -382,6 +386,7 @@ jobs:
       - name: Configure Rust
         run: |
           /usr/bin/setup-devenv.sh
+          . "$HOME/.cargo/env"
 
       - name: Meson Setup
         id: setup
@@ -436,6 +441,7 @@ jobs:
       - name: Configure Rust
         run: |
           /usr/bin/setup-devenv.sh
+          . "$HOME/.cargo/env"
 
       - name: Meson Setup
         run: |
