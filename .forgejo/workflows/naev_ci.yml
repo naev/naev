@@ -9,6 +9,10 @@ jobs:
       image: "codeberg.org/naev/naev-release:latest"
 
     steps:
+      - name: "BODGE: Symlink node-20 to node"
+        run: |
+          ln -s /usr/bin/node-20 /usr/bin/node
+
       - name: Checkout Naev Repository
         uses: actions/checkout@v4
         with:
@@ -52,6 +56,10 @@ jobs:
         - ${{ github.workspace }}:${{ github.workspace }}
 
     steps:
+      - name: "BODGE: Symlink node-20 to node"
+        run: |
+          ln -s /usr/bin/node-20 /usr/bin/node
+
       - name: Get Source
         uses: actions/download-artifact@v3
         with:
@@ -165,6 +173,10 @@ jobs:
         PKG_CONFIG_PATH: "/usr/x86_64-w64-mingw32/sys-root/mingw/lib/pkgconfig:/__w/naev/naev/source/subprojects/LuaJIT-04dca7911ea255f37be799c18d74c305b921c1a6/etc"
         BINDGEN_EXTRA_CLANG_ARGS: "--sysroot=/usr/x86_64-w64-mingw32/sys-root/mingw --target=x86_64-w64-mingw32"
     steps:
+      - name: "BODGE: Symlink node-20 to node"
+        run: |
+          ln -s /usr/bin/node-20 /usr/bin/node
+
       - name: Get Source
         uses: actions/download-artifact@v3
         with:
@@ -264,20 +276,9 @@ jobs:
         BINDGEN_EXTRA_CLANG_ARGS: "--sysroot=/usr/lib/osxcross/SDK/MacOSX14.sdk --target=${{ matrix.arch }}-apple-darwin"
 
     steps:
-      - name: Configure Build Environment
+      - name: "BODGE: Symlink node-20 to node"
         run: |
-          echo "Configuring MacPorts packages and build env variables for $BUILDARCH."
-          if [[ "$BUILDARCH" == "aarch64" ]] then
-            rm -f /usr/lib/osxcross/macports
-            ln -s /usr/lib/osxcross/macports.aarch64 /usr/lib/osxcross/macports
-          elif [[ "$BUILDARCH" == "x86_64" ]] then
-            rm -f /usr/lib/osxcross/macports
-            ln -s /usr/lib/osxcross/macports.x86_64 /usr/lib/osxcross/macports
-          # Fallback
-          else
-            rm -f /usr/lib/osxcross/macports
-            ln -s /usr/lib/osxcross/macports.x86_64 /usr/lib/osxcross/macports
-          fi
+          ln -s /usr/bin/node-20 /usr/bin/node
 
       - name: Configure Rust
         run: |
@@ -364,6 +365,10 @@ jobs:
       ]
 
     steps:
+      - name: "BODGE: Symlink node-20 to node"
+        run: |
+          ln -s /usr/bin/node-20 /usr/bin/node
+
       - name: Get Source
         uses: actions/download-artifact@v3
         with:
@@ -414,6 +419,10 @@ jobs:
     needs: Luacheck
 
     steps:
+      - name: "BODGE: Symlink node-20 to node"
+        run: |
+          ln -s /usr/bin/node-20 /usr/bin/node
+
       - name: Get Source
         uses: actions/download-artifact@v3
         with:
