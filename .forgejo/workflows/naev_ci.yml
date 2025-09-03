@@ -7,7 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: "codeberg.org/naev/naev-release:latest"
-
+      env:
+        PATH: "$HOME/.cargo/bin:$PATH"
     steps:
       - name: "BODGE: Symlink node-20 to node"
         run: |
@@ -23,7 +24,6 @@ jobs:
       - name: Configure Rust
         run: |
           /usr/bin/setup-devenv.sh
-          . "$HOME/.cargo/env"
 
       - name: Package Dist
         run: |
@@ -53,6 +53,8 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: "codeberg.org/naev/${{ matrix.image }}:latest"
+      env:
+        PATH: "$HOME/.cargo/bin:$PATH"
       volumes:
         - ${{ github.workspace }}:${{ github.workspace }}
 
@@ -74,7 +76,6 @@ jobs:
       - name: Configure Rust
         run: |
           /usr/bin/setup-devenv.sh
-          . "$HOME/.cargo/env"
 
       - name: Meson Setup
         id: setup
@@ -171,6 +172,7 @@ jobs:
     container:
       image: "codeberg.org/naev/${{ matrix.image }}:latest"
       env:
+        PATH: "$HOME/.cargo/bin:$PATH"
         PKG_CONFIG: "x86_64-w64-mingw32-pkg-config"
         PKG_CONFIG_PATH: "/usr/x86_64-w64-mingw32/sys-root/mingw/lib/pkgconfig:/__w/naev/naev/source/subprojects/LuaJIT-04dca7911ea255f37be799c18d74c305b921c1a6/etc"
         BINDGEN_EXTRA_CLANG_ARGS: "--sysroot=/usr/x86_64-w64-mingw32/sys-root/mingw --target=x86_64-w64-mingw32"
@@ -192,7 +194,6 @@ jobs:
       - name: Configure Rust
         run: |
           /usr/bin/setup-devenv.sh
-          . "$HOME/.cargo/env"
 
       - name: Meson Setup
         id: setup
@@ -271,6 +272,7 @@ jobs:
     container:
       image: "codeberg.org/naev/${{ matrix.image }}:latest"
       env:
+        PATH: "$HOME/.cargo/bin:$PATH"
         BUILDARCH: "${{ matrix.arch }}"
         HOST: "${{ matrix.arch }}-apple-darwin23"
         MACOSX_DEPLOYMENT_TARGET: "${{ matrix.deploymenttarget }}"
@@ -286,7 +288,6 @@ jobs:
       - name: Configure Rust
         run: |
           /usr/bin/setup-devenv.sh
-          . "$HOME/.cargo/env"
 
       - name: Get Source
         uses: actions/download-artifact@v3
@@ -360,6 +361,8 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: "codeberg.org/naev/naev-steamruntime:latest"
+      env:
+        PATH: "$HOME/.cargo/bin:$PATH"
     needs:
       [
         Package_Source,
@@ -386,7 +389,6 @@ jobs:
       - name: Configure Rust
         run: |
           /usr/bin/setup-devenv.sh
-          . "$HOME/.cargo/env"
 
       - name: Meson Setup
         id: setup
@@ -421,6 +423,8 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: "codeberg.org/naev/naev-docs:latest"
+      env:
+        PATH: "$HOME/.cargo/bin:$PATH"
     needs: Luacheck
 
     steps:
@@ -441,7 +445,6 @@ jobs:
       - name: Configure Rust
         run: |
           /usr/bin/setup-devenv.sh
-          . "$HOME/.cargo/env"
 
       - name: Meson Setup
         run: |
