@@ -342,9 +342,15 @@ end
 function race_landed ()
    local beat_time
    local reward
+   local bonus
+
+   if elapsed_time <= 0.0 then return end
+
    for i, g in ipairs({'Gold', 'Silver', 'Bronze'}) do
       if elapsed_time <= mem.track.goaltime[g] then
-         reward = mem.track.reward * 2^(2-i)
+         local ratio = mem.track.goaltime[g] / elapsed_time - 1.0
+         reward = mem.track.reward  * 2^(2-i)
+         bonus = math.floor( ratio * reward / 1000) * 1000
          beat_time = g
          break
       end
@@ -397,7 +403,6 @@ function race_landed ()
          end
       end
       local reward_outfit = outfit.get('Racing Trophy (' .. completed .. ')')
-      print(tostring(reward_outfit))
       if completed then
          upgrade_trophies(reward_outfit)
       end
@@ -405,23 +410,23 @@ function race_landed ()
          vn.na(fmt.f(_([[An individual in a suit and tie suddenly takes you up onto a stage. A large name tag on their jacket says 'Melendez Corporation'. "Congratulations on your win," they say, shaking your hand, "That was a great race! On behalf of Melendez Corporation, and for beating the goal times of all the courses here at {spobname}, I would like to present to you your {metal} trophy!".
 They hand you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it. At least the trophy looks cool.]]),
             {spobname= spob.cur(), metal= completed}))
-         vn.na(fmt.reward(reward_outfit).."\n"..fmt.reward(reward))
+         vn.na(fmt.reward(reward_outfit)..'\n'..fmt.reward(reward)..'\n'..fmt.reward(bonus))
          if completed == 'Silver' or (not already_have['Silver'] and completed == 'Gold') then
             vn.func( function ()
-               player.outfitAdd( reward_outfit )
                diff.apply("melendez_dome_xy37")
             end )
             vn.na(_([[After the formalities finish, a Nexus Engineer comes up to you, nervous and stuttering, "I-I-i love the way you fly! Me and some o-other engineers were thinking you mi-might want to try our prototype. I've g-given you access at the shipyard to check it out.". They quickly scuttle away before you can ask anything else. You wonder what the prototype is.]]))
-         else
-            vn.func( function ()
-               player.outfitAdd( reward_outfit )
-            end )
          end
-      else
          vn.func( function ()
-            player.pay(reward)
-         end)
+            player.outfitAdd( reward_outfit )
+         end )
+      else
+         vn.na(fmt.reward(reward)..'\n'..fmt.reward(bonus))
       end
+      vn.func( function ()
+         player.pay(reward)
+         player.pay(bonus)
+      end)
    elseif best_improved then
       vn.na(fmt.f(_("You finished the race in {elapsed}, but were {short} over the goal time. This is your new best time! Keep trying!"), {
          elapsed="#g"..display_time( elapsed_time ).."#0",
@@ -435,7 +440,6 @@ They hand you one of those fake oversized cheques for the audience, and then a c
    end
 
    vn.run()
-
    misn.finish( beat_time )
 end
 
