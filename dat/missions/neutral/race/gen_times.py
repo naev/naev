@@ -33,11 +33,12 @@ length = [n / 1.15 for n in length]
 configs = [
    {
       'ship': 'neutral/hyena', 'engine': 'small/nexus_dart_160_engine',
+      'AB': 'unicorp_light_afterburner',
    },{
       'ship': 'neutral/hyena', 'engine': 'small/nexus_dart_160_engine',
       'AB': 'unicorp_light_afterburner',
    },{
-      'ship': 'neutral/hyena', 'engine': 'small/tricon_zephyr_engine',
+      'ship': 'neutral/hyena', 'engine': 'small/nexus_dart_160_engine',
       'AB': 'unicorp_light_afterburner',
    },{
       'ship': 'soromid/soromid_reaver', 'engines': 'small/tricon_zephyr_engine',
@@ -75,7 +76,7 @@ configs = [
    }
 ]
 
-ab_ratio = [0.0, 0.2, 0.3, 0.65, 0.65, 0.7, 0.9, 0.9, 0.9]
+ab_ratio = [0.05, 0.198, 0.402, 0.595, 0.602, 0.69, 0.885, 0.89, 0.91]
 
 where = {
    'ship': 'ships/',
