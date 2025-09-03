@@ -23,11 +23,7 @@ local lmisn = require "lmisn"
 
 local DEFAULT_REWARD = 100e3
 
-goal_times = {
-   ['Peninsula']= { Bronze= 47.7, Silver= 25.8, Gold= 20 },
-   ['Smiling Man']= { Bronze= 69, Silver= 44.1, Gold= 34.1 },
-   ['Qex Tour']= { Bronze= 47.7, Silver= 38.5, Gold= 31 }
-}
+goal_times = require 'missions.neutral.race.times_qex'
 
 local elapsed_time, race_done
 
@@ -127,12 +123,12 @@ function approach_terminal ()
       var.push("racing_intro", true)
    end
 
-   local w, h = 460, 400
+   local w, h = 460, 420
    local wdw = luatk.newWindow( nil, nil, w, h )
    luatk.newButton( wdw, -20-80-20, -20, 80, 30, _("Race!"), function ()
       local worthy, reason = player.pilot():spaceworthy()
       if not worthy then
-         luatk.msg(_("Not Spaceworthy!"), _("Your ship is not spaceworthy and can not participate in the race right now for the following reasons:\n\n")..reason)
+         luatk.print(_("Not Spaceworthy!"), _("Your ship is not spaceworthy and can not participate in the race right now for the following reasons:\n\n")..reason)
       else
          accept = true
          luatk.close()
@@ -141,9 +137,9 @@ function approach_terminal ()
    luatk.newButton( wdw, -20, -20, 80, 30, _("Close"), luatk.close )
    luatk.newText( wdw, 0, 10, w, 20, _("Choose Race Track"), nil, "center" )
 
-   local txt_race = luatk.newText( wdw, 240, 40, w-260, 200 )
+   local txt_race = luatk.newText( wdw, 240, 40, w-260, 220 )
 
-   local bzr_race = bezier.newBezier( wdw, 20+200+20, 130, 200, 200 )
+   local bzr_race = bezier.newBezier( wdw, 20+200+20, 160, 200, 200 )
 
    local track_names = {}
    for k,v in ipairs(track_list) do
@@ -316,15 +312,19 @@ function race_complete ()
 end
 
 function get_goal_result(time, goal)
-   for i_, g in ipairs({'Gold', 'Silver', 'Bronze'}) do
-      if time <= goal[g] then
-         return g
-      end
-   end
 end
 
 function race_landed ()
-   local beat_time = get_goal_result(elapsed_time, mem.track.goaltime)
+   local beat_time
+   local reward
+   for i, g in ipairs({'Gold', 'Silver', 'Bronze'}) do
+      if elapsed_time <= mem.track.goaltime[g] then
+         reward = mem.track.reward * 2^(2-i)
+         beat_time = g
+         break
+      end
+   end
+
    local best_improved = false
    -- Update best time if applicable
    if elapsed_time < mem.track.besttime or mem.track.besttime <= 0 then
@@ -332,7 +332,6 @@ function race_landed ()
       var.push( track_besttime(mem.track), elapsed_time )
       best_improved = true
    end
-   local reward = mem.track.reward
 
    vn.clear()
    vn.scene()
@@ -352,50 +351,49 @@ function race_landed ()
          }))
       end
       local beat_n
+      local completed
       for _n, g in ipairs({'Gold', 'Silver', 'Bronze'}) do
          local did_all = true
-         for k,v in ipairs(track_list) do
+         for k, v in ipairs(track_list) do
             if v.besttime > v.goaltime[g] then
                did_all = false
                break
             end
          end
          if did_all then
-            did_all = g
+            completed = g
             break
          end
       end
-      if did_all then
-         local already_have={}
-         for _n, g in ipairs({'Gold', 'Silver', 'Bronze'}) do
-            if player.outfitNum(outfit.get('Racing Trophy (' .. did_all .. ')')) == 1 then
-               already_have[g] = true
-            end
+      local already_have = {}
+      for _n, g in ipairs({'Gold', 'Silver', 'Bronze'}) do
+         if player.outfitNum(outfit.get('Racing Trophy (' .. g .. ')')) >= 1 then
+            already_have[g] = true
+            print('already have ' .. g)
          end
-      end 
-      if did_all and not already_have[did_all] then
+      end
+      print('completed' .. tostring(completed))
+      if completed and not already_have[completed] then
          vn.na(fmt.f(_([[An individual in a suit and tie suddenly takes you up onto a stage. A large name tag on their jacket says 'Melendez Corporation'. "Congratulations on your win," they say, shaking your hand, "That was a great race! On behalf of Melendez Corporation, and for beating the goal times of all the courses here at {spobname}, I would like to present to you your {metal} trophy!".
 They hand you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it. At least the trophy looks cool.]]),
-            {spobname= spob.cur(), metal= did_all}))
-         local reward_outfit = outfit.get('Racing Trophy (' .. did_all .. ')')
+            {spobname= spob.cur(), metal= completed}))
+         local reward_outfit = outfit.get('Racing Trophy (' .. completed .. ')')
          vn.na(fmt.reward(reward_outfit).."\n"..fmt.reward(reward))
-         if did_all == 'Silver' or (not already_have['Silver'] and did_all == 'Gold') then
+         if completed == 'Silver' or (not already_have['Silver'] and completed == 'Gold') then
             vn.func( function ()
                player.outfitAdd( reward_outfit )
                diff.apply("melendez_dome_xy37")
             end )
             vn.na(_([[After the formalities finish, a Nexus Engineer comes up to you, nervous and stuttering, "I-I-i love the way you fly! Me and some o-other engineers were thinking you mi-might want to try our prototype. I've g-given you access at the shipyard to check it out.". They quickly scuttle away before you can ask anything else. You wonder what the prototype is.]]))
+         else
+            vn.func( function ()
+               player.outfitAdd( reward_outfit )
+            end )
          end
       else
-         for i, n in ipairs({'Bronze', 'Silver', 'Gold'}) do
-            if n == beat_time then
-               local rew = reward * 2^(i-2)
-               vn.na(fmt.reward(rew))
-               vn.func( function ()
-                  player.pay(rew)
-               end)
-            end
-         end
+         vn.func( function ()
+            player.pay(reward)
+         end)
       end
    elseif best_improved then
       vn.na(fmt.f(_("You finished the race in {elapsed}, but were {short} over the goal time. This is your new best time! Keep trying!"), {

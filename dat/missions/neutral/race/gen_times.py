@@ -29,7 +29,7 @@ else:
 # QT
 
 # These are computed by the game and displayed in the race menu
-names = ["Peninsula", "Smiling Man", "Qex tour"]
+names = ["Peninsula", "Smiling Man", "Qex Tour"]
 length = [23745, 40554, 36886]
 #the lengths are overestimated by approx 15%
 length = [n / 1.15 for n in length]
@@ -112,9 +112,9 @@ def fmt_tim(f):
       return str(round(f, 1))
 
 info = lambda *t: sys.stderr.write(' '.join(t)+'\n')
-race = [names[i] + ' ' + j for j in ['bronze', 'silver', 'gold'] for i in range(3)]
+race = [names[i] + ' ' + j for j in ['Bronze', 'Silver', 'Gold'] for i in range(3)]
 out={}
-for nj, j in enumerate(['bronze', 'silver', 'gold']):
+for nj, j in enumerate(['Bronze', 'Silver', 'Gold']):
    for ni, i in enumerate(names):
       ra = j + ' ' + i
       l = length[ni]
