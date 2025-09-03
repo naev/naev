@@ -24,10 +24,6 @@ if argv[1] == '-q':
 else:
    info = lambda *t: sys.stderr.write(' '.join(t) + '\n')
 
-# Peninsula 40 25 20
-# SM
-# QT
-
 # These are computed by the game and displayed in the race menu
 names = ["Peninsula", "Smiling Man", "Qex Tour"]
 length = [23745, 40554, 36886]

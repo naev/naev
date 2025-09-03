@@ -128,7 +128,7 @@ function approach_terminal ()
    luatk.newButton( wdw, -20-80-20, -20, 80, 30, _("Race!"), function ()
       local worthy, reason = player.pilot():spaceworthy()
       if not worthy then
-         luatk.print(_("Not Spaceworthy!"), _("Your ship is not spaceworthy and can not participate in the race right now for the following reasons:\n\n")..reason)
+         luatk.msg(_("Not Spaceworthy!"), _("Your ship is not spaceworthy and can not participate in the race right now for the following reasons:\n\n")..reason)
       else
          accept = true
          luatk.close()
@@ -311,9 +311,6 @@ function race_complete ()
    player.land( mem.race_spob )
 end
 
-function get_goal_result(time, goal)
-end
-
 function race_landed ()
    local beat_time
    local reward
@@ -369,10 +366,8 @@ function race_landed ()
       for _n, g in ipairs({'Gold', 'Silver', 'Bronze'}) do
          if player.outfitNum(outfit.get('Racing Trophy (' .. g .. ')')) >= 1 then
             already_have[g] = true
-            print('already have ' .. g)
          end
       end
-      print('completed' .. tostring(completed))
       if completed and not already_have[completed] then
          vn.na(fmt.f(_([[An individual in a suit and tie suddenly takes you up onto a stage. A large name tag on their jacket says 'Melendez Corporation'. "Congratulations on your win," they say, shaking your hand, "That was a great race! On behalf of Melendez Corporation, and for beating the goal times of all the courses here at {spobname}, I would like to present to you your {metal} trophy!".
 They hand you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it. At least the trophy looks cool.]]),
