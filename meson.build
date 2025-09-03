@@ -454,12 +454,20 @@ naevcrs = rust.bindgen(
       cargo_options += ['--target', target_triplet]
    endif
 
-   naev_rlib = custom_target( 'cargo-build',
+   # First let's compile Rust with cargo, but we can't control output
+   naev_rlib_compile = custom_target( 'cargo-build',
       depends: [naevcrs, naevc_crate, naev_clib],
       depend_files: source_rust + cargo_toml + buildrs,
-      output: 'libnaev.rlib',
+      output: 'src',
       console: true,
-      command: [ 'env', cargo_env, cargo, 'build', cargo_options, '&&', copydir, meson.project_build_root(), 'src' / target_triplet / rust_target / '@OUTPUT@', ] )
+      command: [ 'env', cargo_env, cargo, 'build', cargo_options, ] )
+   # Now we can copy the compile rlib to a location where meson can understand it
+   naev_rlib = custom_target( 'naev_rlib',
+      depends: [naev_rlib_compile],
+      depend_files: source_rust + cargo_toml + buildrs,
+      output: 'libnaev.rlib',
+      command: [ copydir, meson.project_build_root(), 'src' / target_triplet / rust_target / '@OUTPUT@', ] )
+   # Also declare it as a library so meson can link with it
    naev_rlib_lib = library(
       'naev_rlib',
       naev_rlib,
