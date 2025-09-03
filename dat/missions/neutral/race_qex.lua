@@ -55,6 +55,34 @@ local function track_besttime( track )
    return "race_bt_"..track.name
 end
 
+local map_all_ships = require 'scripts.map_all_ships'
+
+function upgrade_trophies(to)
+   --outfitAddSlot outfitRmSlot
+   map_all_ships(function (pp)
+      if pp:outfitHasSlot('accessory') then
+         for _i, v in ipairs({'Gold', 'Silver', 'Bronze'}) do
+            if pp:outfitSlot('accessory') == outfit.get('Racing Trophy (' .. v .. ')') then
+               pp:outfitRmSlot('accessory')
+               pp:outfitAddSlot(to, 'accessory')
+            end
+         end
+      end
+   end)
+   if to == outfit.get('Racing Trophy (Gold)') then
+      if player.outfitNum(outfit.get('Racing Trophy (Silver)'), true) >= 1 then
+         player.outfitRm('Racing Trophy (Silver)')
+      end
+      if player.outfitNum(outfit.get('Racing Trophy (Bronze)'), true) >= 1 then
+         player.outfitRm('Racing Trophy (Bronze)')
+      end
+   elseif to == outfit.get('Racing Trophy (Silver)') then
+      if player.outfitNum(outfit.get('Racing Trophy (Bronze)'), true) >= 1 then
+         player.outfitRm('Racing Trophy (Bronze)')
+      end
+   end
+end
+
 function create ()
    mem.race_spob = spob.cur()
    if not misn.claim( system.cur() ) then
@@ -368,11 +396,15 @@ function race_landed ()
             already_have[g] = true
          end
       end
+      local reward_outfit = outfit.get('Racing Trophy (' .. completed .. ')')
+      print(tostring(reward_outfit))
+      if completed then
+         upgrade_trophies(reward_outfit)
+      end
       if completed and not already_have[completed] then
          vn.na(fmt.f(_([[An individual in a suit and tie suddenly takes you up onto a stage. A large name tag on their jacket says 'Melendez Corporation'. "Congratulations on your win," they say, shaking your hand, "That was a great race! On behalf of Melendez Corporation, and for beating the goal times of all the courses here at {spobname}, I would like to present to you your {metal} trophy!".
 They hand you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it. At least the trophy looks cool.]]),
             {spobname= spob.cur(), metal= completed}))
-         local reward_outfit = outfit.get('Racing Trophy (' .. completed .. ')')
          vn.na(fmt.reward(reward_outfit).."\n"..fmt.reward(reward))
          if completed == 'Silver' or (not already_have['Silver'] and completed == 'Gold') then
             vn.func( function ()

@@ -17,26 +17,8 @@ local gauntlet = require 'common.gauntlet'
 local poi = require "common.poi"
 local fcts = require "factions"
 
--- Applies a function to all ships
-local function apply_all_ships( func )
-   local curship = player.pilot():name()
-   local ships = player.ships()
-   local deployed = {}
-   for k,s in ipairs( ships ) do
-      if s.deployed then
-         table.insert( deployed, s )
-      end
-   end
-   for k,s in ipairs( ships ) do
-      player.shipSwap( s.name, true )
-      func( player.pilot() )
-   end
-   player.shipSwap( curship, true )
-   func( player.pilot() )
-   for k,s in ipairs( deployed ) do
-      player.shipDeploy( s.name, true )
-   end
-end
+
+local apply_all_ships = require 'scripts.map_all_ships'
 
 -- Runs on saves older than 0.13.0
 local function updater0130( _did0120, _did0110, _did0100, _did090 )
