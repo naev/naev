@@ -20,7 +20,7 @@ jobs:
           submodules: true
 
       - name: Configure Rust
-        uses: https://github.com/actions-rust-lang/setup-rust-toolchain@v4
+        uses: https://github.com/actions-rust-lang/setup-rust-toolchain@v1
         with:
           target: "x86_64-unknown-linux-gnu"
           override: true
@@ -77,7 +77,7 @@ jobs:
           tar -xf naev-*.tar.xz -C source --strip 1
 
       - name: Configure Rust
-        uses: https://github.com/actions-rust-lang/setup-rust-toolchain@v4
+        uses: https://github.com/actions-rust-lang/setup-rust-toolchain@v1
         with:
           target: "${{ matrix.target }}"
           override: true
@@ -201,7 +201,7 @@ jobs:
           tar -xf naev-*.tar.xz -C source --strip 1
 
       - name: Configure Rust
-        uses: https://github.com/actions-rust-lang/setup-rust-toolchain@v4
+        uses: https://github.com/actions-rust-lang/setup-rust-toolchain@v1
         with:
           target: "${{ matrix.target }}"
           override: true
@@ -316,7 +316,7 @@ jobs:
           fi
 
       - name: Configure Rust
-        uses: https://github.com/actions-rust-lang/setup-rust-toolchain@v4
+        uses: https://github.com/actions-rust-lang/setup-rust-toolchain@v1
         with:
           target: "${{ matrix.arch }}-apple-darwin"
           override: true
@@ -422,7 +422,7 @@ jobs:
           tar -xf naev-*.tar.xz -C source --strip 1
 
       - name: Configure Rust
-        uses: https://github.com/actions-rust-lang/setup-rust-toolchain@v4
+        uses: https://github.com/actions-rust-lang/setup-rust-toolchain@v1
         with:
           target: "x86_64-unknown-linux-gnu"
           override: true
@@ -483,7 +483,7 @@ jobs:
           tar -xf naev-*.tar.xz -C source --strip 1
 
       - name: Configure Rust
-        uses: https://github.com/actions-rust-lang/setup-rust-toolchain@v4
+        uses: https://github.com/actions-rust-lang/setup-rust-toolchain@v1
         with:
           target: "x86_64-unknown-linux-gnu"
           override: true
