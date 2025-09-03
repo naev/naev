@@ -442,6 +442,26 @@ impl Audio {
     pub fn pitch(&self) -> f32 {
         self.source.get_parameter_f32(AL_PITCH)
     }
+
+    pub fn set_attenuation_distances(&self, reference: f32, max: f32) {
+        self.source.parameter_f32(AL_REFERENCE_DISTANCE, reference);
+        self.source.parameter_f32(AL_MAX_DISTANCE, max);
+    }
+
+    pub fn attenuation_distances(&self) -> (f32, f32) {
+        (
+            self.source.get_parameter_f32(AL_REFERENCE_DISTANCE),
+            self.source.get_parameter_f32(AL_MAX_DISTANCE),
+        )
+    }
+
+    pub fn set_rolloff(&self, rolloff: f32) {
+        self.source.parameter_f32(AL_ROLLOFF_FACTOR, rolloff);
+    }
+
+    pub fn rolloff(&self) -> f32 {
+        self.source.get_parameter_f32(AL_ROLLOFF_FACTOR)
+    }
 }
 
 pub struct AudioSystem {
@@ -890,12 +910,50 @@ impl UserData for Audio {
             Ok(audio.pitch())
         });
         /*
-        { "setPitch", audioL_setPitch },
-        { "getPitch", audioL_getPitch },
-        { "setAttenuationDistances", audioL_setAttenuationDistances },
-        { "getAttenuationDistances", audioL_getAttenuationDistances },
-        { "setRolloff", audioL_setRolloff },
-        { "getRolloff", audioL_getRolloff },
+         * @brief Sets the attenuation distances for the audio source.
+         *
+         *    @luatparam number ref Reference distance.
+         *    @luatparam number max Maximum distance.
+         * @luafunc setAttenuationDistances
+         */
+        methods.add_method(
+            "setAttenuationDistances",
+            |_, audio: &Self, (reference, max): (f32, f32)| -> mlua::Result<()> {
+                Ok(audio.set_attenuation_distances(reference, max))
+            },
+        );
+        /*
+         * @brief Gets the attenuation distances for the audio source. Set to 0. if
+         * audio is disabled.
+         *
+         *    @luatreturn number Reference distance.
+         *    @luatreturn number Maximum distance.
+         * @luafunc getAttenuationDistances
+         */
+        methods.add_method(
+            "getAttenuationDistances",
+            |_, audio: &Self, ()| -> mlua::Result<(f32, f32)> { Ok(audio.attenuation_distances()) },
+        );
+        /*
+         * @brief Sets the rolloff factor.
+         *
+         *    @luatparam number rolloff New rolloff factor.
+         * @luafunc setRolloff
+         */
+        methods.add_method(
+            "setRolloff",
+            |_, audio: &Self, rolloff: f32| -> mlua::Result<()> { Ok(audio.set_rolloff(rolloff)) },
+        );
+        /*
+         * @brief Gets the rolloff factor.
+         *
+         *    @luatreturn number Rolloff factor or 0. if sound is disabled.
+         * @luafunc getRolloff
+         */
+        methods.add_method("getRolloff", |_, audio: &Self, ()| -> mlua::Result<f32> {
+            Ok(audio.rolloff())
+        });
+        /*
         { "setEffect", audioL_setEffect },
         { "setGlobalEffect", audioL_setGlobalEffect },
         { "setGlobalAirAbsorption", audioL_setGlobalAirAbsorption },
