@@ -25,7 +25,7 @@ else:
    info = lambda *t: sys.stderr.write(' '.join(t) + '\n')
 
 # These are computed by the game and displayed in the race menu
-names = ["Peninsula", "Smiling Man", "Qex Tour"]
+names = ['Peninsula', 'Smiling Man', 'Qex Tour']
 length = [23745, 40554, 36886]
 #the lengths are overestimated by approx 15%
 length = [n / 1.15 for n in length]
@@ -34,11 +34,10 @@ configs = [
    {
       'ship': 'neutral/hyena', 'engine': 'small/nexus_dart_160_engine',
    },{
-      'ship': 'neutral/hyena', 'engine': 'small/tricon_zephyr_engine',
+      'ship': 'neutral/hyena', 'engine': 'small/nexus_dart_160_engine',
       'AB': 'unicorp_light_afterburner',
    },{
       'ship': 'neutral/hyena', 'engine': 'small/tricon_zephyr_engine',
-      'structure': "engine_reroute", # expects a reactor
       'AB': 'unicorp_light_afterburner',
    },{
       'ship': 'soromid/soromid_reaver', 'engines': 'small/tricon_zephyr_engine',
@@ -58,25 +57,25 @@ configs = [
    },{
       'ship': 'pirate/pirate_revenant', 'engine': 'medium/tricon_cyclone_engine',
       'accessory': 'racing_trophy_silver',
-      'structure': ("compact_lightsail", 2),
+      'structure': ('compact_lightsail', 2),
       'AG': 'adrenal_gland_iii',
       'skill': 'wanderer'
    },{
       'ship': 'pirate/pirate_revenant', 'engine': 'medium/tricon_cyclone_engine',
       'accessory': 'racing_trophy_silver',
-      'structure': ("compact_lightsail", 2),
+      'structure': ('compact_lightsail', 2),
       'AG': 'adrenal_gland_iii',
       'skill': 'wanderer'
    },{
       'ship': 'pirate/pirate_revenant', 'engine': 'medium/tricon_cyclone_engine',
       'accessory': 'racing_trophy_silver',
-      'structure': ("compact_lightsail", 2),
+      'structure': ('compact_lightsail', 2),
       'AG': 'adrenal_gland_iii',
       'skill': 'wanderer'
    }
 ]
 
-ab_ratio = [0.0, 0.15, 0.2, 0.65, 0.65, 0.7, 0.9, 0.9, 0.9]
+ab_ratio = [0.0, 0.2, 0.3, 0.65, 0.65, 0.7, 0.9, 0.9, 0.9]
 
 where = {
    'ship': 'ships/',
@@ -107,7 +106,6 @@ def fmt_tim(f):
    else:
       return str(round(f, 1))
 
-info = lambda *t: sys.stderr.write(' '.join(t)+'\n')
 race = [names[i] + ' ' + j for j in ['Bronze', 'Silver', 'Gold'] for i in range(3)]
 out={}
 for nj, j in enumerate(['Bronze', 'Silver', 'Gold']):
@@ -152,9 +150,9 @@ for nj, j in enumerate(['Bronze', 'Silver', 'Gold']):
       final_AB = (in_AB['speed'] + in_AB['accel']/PHYSICS_SPEED_DAMP) * total['time_speedup_AB']
 
       vals = [(a[0].split('/')[-1], a[1]) if isinstance(a, tuple) else a.split('/')[-1] for a in c.values()]
+      info('\n' + config_to_str(c))
       s = 'normal: ' + str(round(final))
       s += '  ' + 'AB (\033[36m' + str(round(100.0*ab)) + '%\033[m' + ' of track) ' + str(round(final_AB))
-      info('\n' + config_to_str(c))
       final = ab*final_AB + (1 - ab)*final
       info(s, '->', '\033[36m' + str(round(final)) + '\033[m')
       info(ra + ':','\033[36;1m' + fmt_tim(l/final) + '\033[m')

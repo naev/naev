@@ -1,0 +1,22 @@
+path = meson.project_source_root()
+gen_qex_times = custom_target( 'qex_times',
+   command: [find_program('gen_times.py'), '-q', '@OUTPUT@'],
+   install: true,
+   install_dir: ndata_path / 'missions/neutral/race/',
+   depend_files: [
+      path / 'dat/ships/neutral/hyena.xml',
+      path / 'dat/ships/soromid/soromid_reaver.xml',
+      path / 'dat/ships/pirate/pirate_revenant.xml',
+      path / 'dat/outfits/accessory/racing_trophy_bronze.xml',
+      path / 'dat/outfits/accessory/racing_trophy_silver.xml',
+      path / 'dat/outfits/core_engine/small/nexus_dart_160_engine.xml',
+      path / 'dat/outfits/core_engine/small/tricon_zephyr_engine.xml',
+      path / 'dat/outfits/core_engine/medium/tricon_cyclone_engine.xml',
+      path / 'dat/outfits/structure/compact_lightsail.xml',
+      path / 'dat/outfits/utility/unicorp_light_afterburner.xml',
+      path / 'dat/outfits/bioship/skills/wanderer.xml',
+      path / 'dat/outfits/bioship/skills/adrenal_gland_ii.xml',
+      path / 'dat/outfits/bioship/skills/adrenal_gland_iii.xml',
+   ],
+   output: 'times_qex.lua',
+) 
