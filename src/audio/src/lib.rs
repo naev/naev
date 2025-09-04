@@ -1,4 +1,5 @@
 #![allow(dead_code, unused_imports, unused_variables)]
+mod debug;
 mod efx;
 mod openal;
 use crate::efx::*;
@@ -51,13 +52,6 @@ impl Message {
 static MESSAGE_QUEUE: Mutex<Vec<Message>> = Mutex::new(vec![]);
 pub(crate) fn message_push(msg: Message) {
     MESSAGE_QUEUE.lock().unwrap().push(msg);
-}
-
-#[inline]
-pub(crate) fn check_error() {
-    if let Some(e) = al::is_error() {
-        warn_err!(e);
-    }
 }
 
 struct LuaAudioEfx {
@@ -273,7 +267,6 @@ impl AudioBuffer {
                         }
                     }
                 }
-                check_error();
                 buffer
             }
             None => anyhow::bail!("no format!"),
@@ -479,6 +472,7 @@ pub struct AudioSystem {
     freq: i32,
     output_limiter: bool,
     efx: Option<Efx>,
+    debug: Option<debug::Debug>,
 
     voices: Vec<al::Source>,
 }
@@ -503,19 +497,39 @@ impl AudioSystem {
             attribs.push(ALC_OUTPUT_LIMITER_SOFT);
             attribs.push(ALC_TRUE as i32);
         }
+
+        let has_debug = if cfg!(debug_assertions) {
+            let debug = device.is_extension_present(debug::ALC_EXT_DEBUG_NAME);
+            if debug {
+                attribs.push(debug::ALC_CONTEXT_FLAGS);
+                attribs.push(debug::ALC_CONTEXT_DEBUG_BIT);
+            }
+            debug
+        } else {
+            false
+        };
         attribs.push(0); // Has to be NULL terminated
 
         let context = al::Context::new(&device, &attribs)?;
+
+        // Check to see if output limiter is working
         if output_limiter && device.get_parameter_i32(ALC_OUTPUT_LIMITER_SOFT) != ALC_TRUE as i32 {
             warn!("failed to set ALC_OUTPUT_LIMITER_SOFT");
         }
+
+        // Check to see if debugging was enabled
+        let debug = if has_debug {
+            Some(debug::Debug::new(&device)?)
+        } else {
+            None
+        };
 
         // Get context information
         let freq = device.get_parameter_i32(ALC_FREQUENCY);
         let nmono = device.get_parameter_i32(ALC_MONO_SOURCES);
         let nstereo = device.get_parameter_i32(ALC_STEREO_SOURCES);
 
-        #[allow(non_snake_case)]
+        // Set up the Efx
         let efx = if has_efx {
             Some(Efx::new(&device)?)
         } else {
@@ -574,6 +588,7 @@ impl AudioSystem {
             freq,
             output_limiter,
             efx,
+            debug,
 
             voices,
         })

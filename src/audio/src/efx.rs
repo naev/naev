@@ -126,7 +126,7 @@ pub struct Efx {
 }
 impl Efx {
     #[allow(non_snake_case)]
-    pub fn new(device: &al::Device) -> Result<Efx> {
+    pub fn new(device: &al::Device) -> Result<Self> {
         let version = (
             device.get_parameter_i32(ALC_EFX_MAJOR_VERSION),
             device.get_parameter_i32(ALC_EFX_MINOR_VERSION),

@@ -177,6 +177,8 @@ unsafe extern "C" {
     pub fn alIsSource(source: ALuint) -> ALboolean;
 
     pub fn alEnable(capability: ALenum);
+    pub fn alDisable(capability: ALenum);
+    pub fn alIsEnabled(capability: ALenum) -> ALboolean;
 
     pub fn alGetString(param: ALCenum) -> *const ALCchar;
 
