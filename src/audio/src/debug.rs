@@ -5,7 +5,8 @@ use crate::openal::alc_types::*;
 use crate::openal::*;
 use anyhow::Result;
 use log::{debug, warn, warn_err};
-use std::ffi::CStr;
+use std::ffi::{CStr, CString};
+use std::sync::OnceLock;
 
 pub const ALC_EXT_DEBUG_NAME: &CStr = c"ALC_EXT_DEBUG";
 
@@ -68,6 +69,9 @@ pub const AL_MAX_LABEL_LENGTH: ALenum = 0x19CC;
 // Returned by alGetError:
 pub const AL_STACK_OVERFLOW: ALenum = 0x19CD;
 pub const AL_STACK_UNDERFLOW: ALenum = 0x19CE;
+
+pub const AL_BUFFER: ALenum = 0x1009;
+pub const AL_SOURCE: ALenum = 0x19D0;
 
 pub type ALDEBUGPROC = unsafe extern "C" fn(
     source: ALenum,
@@ -149,7 +153,7 @@ unsafe extern "C" fn debug_callback(
 
 impl Debug {
     #[allow(non_snake_case)]
-    pub fn new(device: &al::Device) -> Result<Self> {
+    pub fn init(device: &al::Device) -> Result<()> {
         macro_rules! proc_address {
             ($func: literal, $type: ident) => {{
                 let val = unsafe { alGetProcAddress($func.as_ptr()) };
@@ -175,9 +179,32 @@ impl Debug {
         if !ok {
             warn!("failed to set AL_DEBUG_OUTPUT");
         }
-        Ok(Self {
+        let _ = DEBUG.set(Some(Self {
             alDebugMessageCallback,
             alObjectLabel,
-        })
+        }));
+        Ok(())
+    }
+
+    pub fn init_none() {
+        let _ = DEBUG.set(None);
     }
 }
+
+pub fn object_label(identifier: ALenum, name: ALuint, label: &str) {
+    #[cfg(debug_assertions)]
+    if let Some(dbg) = DEBUG.get().unwrap() {
+        let clabel = CString::new(label).unwrap();
+        let bytes = clabel.as_bytes_with_nul();
+        unsafe {
+            (dbg.alObjectLabel)(
+                identifier,
+                name,
+                bytes.len() as ALint,
+                bytes.as_ptr() as *const ALchar,
+            );
+        }
+    }
+}
+
+static DEBUG: OnceLock<Option<Debug>> = OnceLock::new();

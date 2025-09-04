@@ -315,7 +315,9 @@ impl Audio {
         let atype = AudioType::Static;
 
         let source = al::Source::new()?;
+        debug::object_label(debug::AL_SOURCE, source.raw(), path);
         let buffer = Arc::new(AudioBuffer::from_path(path)?);
+        debug::object_label(debug::AL_BUFFER, buffer.buffer.raw(), path);
 
         Ok(Self {
             name,
@@ -472,7 +474,6 @@ pub struct AudioSystem {
     freq: i32,
     output_limiter: bool,
     efx: Option<Efx>,
-    debug: Option<debug::Debug>,
 
     voices: Vec<al::Source>,
 }
@@ -518,11 +519,11 @@ impl AudioSystem {
         }
 
         // Check to see if debugging was enabled
-        let debug = if has_debug {
-            Some(debug::Debug::new(&device)?)
+        if has_debug {
+            debug::Debug::init(&device)?;
         } else {
-            None
-        };
+            debug::Debug::init_none();
+        }
 
         // Get context information
         let freq = device.get_parameter_i32(ALC_FREQUENCY);
@@ -588,7 +589,6 @@ impl AudioSystem {
             freq,
             output_limiter,
             efx,
-            debug,
 
             voices,
         })
