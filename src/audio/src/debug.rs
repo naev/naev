@@ -81,11 +81,14 @@ pub type ALDEBUGPROC = unsafe extern "C" fn(
 
 pub type ALDEBUGMESSAGECALLBACK =
     unsafe extern "C" fn(callback: ALDEBUGPROC, user_param: *const ALvoid);
+pub type ALOBJECTLABEL =
+    unsafe extern "C" fn(identifier: ALenum, name: ALuint, length: ALsizei, label: *const ALchar);
 
 #[allow(non_snake_case)]
 pub struct Debug {
     // Debug C API
     pub alDebugMessageCallback: ALDEBUGMESSAGECALLBACK,
+    pub alObjectLabel: ALOBJECTLABEL,
 }
 
 unsafe extern "C" fn debug_callback(
@@ -162,6 +165,7 @@ impl Debug {
 
         let alDebugMessageCallback =
             proc_address!(c"alDebugMessageCallback", ALDEBUGMESSAGECALLBACK);
+        let alObjectLabel = proc_address!(c"alObjectLabel", ALOBJECTLABEL);
 
         let ok = unsafe {
             alEnable(AL_DEBUG_OUTPUT);
@@ -173,6 +177,7 @@ impl Debug {
         }
         Ok(Self {
             alDebugMessageCallback,
+            alObjectLabel,
         })
     }
 }
