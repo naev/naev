@@ -66,7 +66,7 @@ struct LuaAudioEfx {
     slot: ALuint,
 }
 
-#[derive(Clone, PartialEq)]
+#[derive(Clone, PartialEq, Copy)]
 enum AudioType {
     Static,
     Stream,
@@ -407,6 +407,10 @@ impl Audio {
     pub fn set_relative(&self, relative: bool) {
         self.source
             .parameter_i32(AL_SOURCE_RELATIVE, relative as i32);
+    }
+
+    pub fn relative(&self) -> bool {
+        self.source.get_parameter_i32(AL_SOURCE_RELATIVE) != 0
     }
 
     pub fn set_position(&self, pos: Vector3<f32>) {
@@ -803,6 +807,15 @@ impl UserData for Audio {
             },
         );
         /*
+         * @brief Gets whether a source is relative or not.
+         *
+         *    @luatreturn boolean relative Whether or not to the source is relative.
+         * @luafunc isRelative
+         */
+        methods.add_method("isRelative", |_, audio: &Self, ()| -> mlua::Result<bool> {
+            Ok(audio.relative())
+        });
+        /*
          * @brief Sets the position of a source.
          *
          *    @luatparam Audio source Source to set position of.
@@ -954,8 +967,39 @@ impl UserData for Audio {
             Ok(audio.rolloff())
         });
         /*
-        { "setEffect", audioL_setEffect },
-        { "setGlobalEffect", audioL_setGlobalEffect },
+         * @brief Sets effects on a source.
+         *
+         * @usage source:setEffect( "reverb", true )
+         *
+         *    @luatparam string name Name of the effect.
+         *    @luatparam boolean enable Whether or not to enable it on the source.
+         *    @luatreturn boolean true on success.
+         * @luafunc setEffect
+         */
+        methods.add_method(
+            "setEffect",
+            |_, audio: &Self, (name, enable): (String, bool)| -> mlua::Result<bool> {
+                // TODO
+                Ok(true)
+            },
+        );
+        /*
+         * @brief Sets global effects, or creates it if necessary.
+         *
+         * @usage audio.setEffect( "reverb", { type="reverb" } )
+         * @usage source:setEffect( "reverb" )
+         *
+         *    @luatparam string name Name of the effect.
+         *    @luatparam table|boolean params Parameter table of the effect to create, or whether or not to
+         *    enable it globally, otherwise.
+         *    @luatreturn boolean true on success.
+         * @luafunc setGlobalEffect
+         */
+        methods.add_function(
+            "setGlobalEffect",
+            |_, (name, param): (String, Value)| -> mlua::Result<()> { Ok(()) },
+        );
+        /*
         { "setGlobalAirAbsorption", audioL_setGlobalAirAbsorption },
         { "setGlobalDopplerFactor", audioL_setGlobaDopplerFactor },
              */
