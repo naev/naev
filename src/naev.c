@@ -171,13 +171,12 @@ int         naev_main_setup( void )
    }
 
    /* Incomplete game note (shows every time version number changes). */
+#if 0
    if ( conf.lastversion == NULL ||
         ( ( naev_versionCompare( conf.lastversion ) < 0 ) &&
           // "+" will appear on commits described by git describe, aka
           // development builds
           ( strstr( naev_version( 0 ), "+" ) == NULL ) ) ) {
-      free( conf.lastversion );
-      conf.lastversion = strdup( naev_version( 0 ) );
       dialogue_msg(
          _( "Welcome to Naev" ),
          _( "Welcome to Naev version %s, and thank you for playing! We hope you"
@@ -197,6 +196,9 @@ int         naev_main_setup( void )
             " And again, thank you for playing!" ),
          conf.lastversion );
    }
+#endif
+   free( conf.lastversion );
+   conf.lastversion = strdup( naev_version( 0 ) );
    return 0;
 }
 

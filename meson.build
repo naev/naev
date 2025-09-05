@@ -418,7 +418,7 @@ naevcrs = rust.bindgen(
 
    # First create the static library with C using meson
    naev_clib = static_library(
-      'naev', # Has to be called 'naev' like the executable, or things fail to compile (why?)
+      'naev', # Has to be called 'naev' or it won't link properly with the executable (why?)
       naev_source,
       include_directories: include_dirs,
       dependencies: naev_deps,
@@ -495,7 +495,7 @@ naevcrs = rust.bindgen(
 
    # Finally, build the executable with Rust again, but using meson to link it all together
    naev_bin = executable(
-      'naev',
+      'naev_exe',
       sources: naev_rs,
       # Have to make sure Rust uses the dependencies from Cargo
       rust_args: ['--extern', 'naev=libnaev.rlib', '-L', 'src' / target_triplet / rust_target / 'deps', '-L', 'src' / rust_target / 'deps'],

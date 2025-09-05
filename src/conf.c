@@ -149,13 +149,14 @@ void conf_setDefaults( void )
    conf.font_size_small   = FONT_SIZE_SMALL_DEFAULT;
 
    /* Misc. */
-   conf.redirect_file            = 1;
-   conf.nosave                   = 0;
-   conf.devmode                  = 0;
-   conf.devautosave              = 0;
-   conf.lua_enet                 = 0;
-   conf.lua_repl                 = 0;
-   conf.lastversion              = strdup( "" );
+   conf.redirect_file = 1;
+   conf.nosave        = 0;
+   conf.devmode       = 0;
+   conf.devautosave   = 0;
+   conf.lua_enet      = 0;
+   conf.lua_repl      = 0;
+   free( conf.lastversion );
+   conf.lastversion              = NULL;
    conf.translation_warning_seen = 0;
    memset( &conf.last_played, 0, sizeof( time_t ) );
 
