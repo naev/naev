@@ -37,7 +37,8 @@ edition = "2024"
 # 1.80 LazyLock
 # 1.84 New random syntax
 # 1.85 Rust 2024
-rust-version = "1.85" # Note this has to be set in meson.build too!
+# 1.87 str::from_utf8
+rust-version = "1.87" # Note this has to be set in meson.build too!
 
 [workspace.lints.clippy]
 not_unsafe_ptr_arg_deref = "allow"
