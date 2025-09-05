@@ -109,10 +109,9 @@ typedef struct PlayerConf_s {
    int           vsync; /**< Whether or not to use vsync. */
 
    /* Video options. */
-   unsigned int width;        /**< Width of the window to use. */
-   unsigned int height;       /**< Height of the window to use. */
-   int          explicit_dim; /**< Dimension is explicit. */
-   double       scalefactor;  /**< Amount to reduce resolution by. */
+   unsigned int width;       /**< Width of the window to use. */
+   unsigned int height;      /**< Height of the window to use. */
+   double       scalefactor; /**< Amount to reduce resolution by. */
    double       nebu_scale; /**< Downscaling factor for the expensively rendered
                                nebula. */
    int    fullscreen;       /**< Whether or not game is fullscreen. */

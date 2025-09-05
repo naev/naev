@@ -245,11 +245,9 @@ void conf_setVideoDefaults( void )
    conf.vsync = VSYNC_DEFAULT;
 
    /* Window. */
-   conf.fullscreen = f;
-   conf.width      = w;
-   conf.height     = h;
-   conf.explicit_dim =
-      0; /* No need for a define, this is only for first-run. */
+   conf.fullscreen          = f;
+   conf.width               = w;
+   conf.height              = h;
    conf.scalefactor         = SCALE_FACTOR_DEFAULT;
    conf.nebu_scale          = NEBULA_SCALE_FACTOR_DEFAULT;
    conf.minimize            = MINIMIZE_DEFAULT;
@@ -350,12 +348,10 @@ int conf_loadConfig( const char *file )
    conf_loadInt( L, "width", w );
    conf_loadInt( L, "height", h );
    if ( w != 0 ) {
-      conf.explicit_dim = 1;
-      conf.width        = w;
+      conf.width = w;
    }
    if ( h != 0 ) {
-      conf.explicit_dim = 1;
-      conf.height       = h;
+      conf.height = h;
    }
    conf_loadFloat( L, "scalefactor", conf.scalefactor );
    conf_loadFloat( L, "nebu_scale", conf.nebu_scale );
@@ -639,12 +635,10 @@ int conf_parseCLI( int argc, char **argv )
          conf.joystick_nam = strdup( optarg );
          break;
       case 'W':
-         conf.width        = atoi( optarg );
-         conf.explicit_dim = 1;
+         conf.width = atoi( optarg );
          break;
       case 'H':
-         conf.height       = atoi( optarg );
-         conf.explicit_dim = 1;
+         conf.height = atoi( optarg );
          break;
       case 'M':
          conf.nosound = 1;
@@ -930,13 +924,8 @@ int conf_saveConfig( const char *file )
    conf_saveComment( _( "The window size or screen resolution" ) );
    conf_saveComment(
       _( "Set both of these to 0 to make Naev try the desktop resolution" ) );
-   if ( conf.explicit_dim ) {
-      conf_saveInt( "width", conf.width );
-      conf_saveInt( "height", conf.height );
-   } else {
-      conf_saveInt( "width", 0 );
-      conf_saveInt( "height", 0 );
-   }
+   conf_saveInt( "width", conf.width );
+   conf_saveInt( "height", conf.height );
    conf_saveEmptyLine();
 
    conf_saveComment( _( "Factor used to divide the above resolution with" ) );
