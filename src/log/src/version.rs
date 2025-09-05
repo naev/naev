@@ -40,6 +40,9 @@ pub fn compare_versions(vera: &semver::Version, verb: &semver::Version) -> i32 {
 }
 
 fn parse_cstr(ver: *const c_char) -> Result<semver::Version> {
+    if ver.is_null() {
+        anyhow::bail!("null pointer");
+    }
     let ptr = unsafe { CStr::from_ptr(ver) };
     Ok(semver::Version::parse(&ptr.to_string_lossy())?)
 }
