@@ -225,6 +225,16 @@ local omsg_timer
 function start_race ()
    pilot.clear()
    pilot.toggleSpawn(false)
+   -- Clean up the escorts
+   for k,p in ipairs(player.pilot():followers()) do
+      print(tostring(k)..'|'..tostring(p))
+      if p:flags("carried") then
+         p:rm()
+      else
+         p:setHide( true ) -- Don't remove or it'll mess cargo
+      end
+   end
+
    -- TODO add spectators / cameras?
 
    local scale = mem.track.scale or 1
