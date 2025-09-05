@@ -25,39 +25,21 @@ static AUDIO_ENABLED: AtomicBool = AtomicBool::new(false);
 /// Master volume in log
 static VOLUME_MASTER: AtomicF32 = AtomicF32::new(1.0);
 
-#[derive(Clone)]
-pub enum Message {
-    DeleteAuxiliaryEffectSlot(std::num::NonZero<ALuint>),
-    DeleteFilter(std::num::NonZero<ALuint>),
-    DeleteEffect(std::num::NonZero<ALuint>),
-}
-impl Message {
-    fn execute(self, sys: &AudioSystem) {
-        match self {
-            Self::DeleteAuxiliaryEffectSlot(id) => unsafe {
-                (sys.efx.as_ref().unwrap().alDeleteAuxiliaryEffectSlots)(
-                    1,
-                    &id.get() as *const ALuint,
-                );
-            },
-            Self::DeleteFilter(id) => unsafe {
-                (sys.efx.as_ref().unwrap().alDeleteFilters)(1, &id.get() as *const ALuint);
-            },
-            Self::DeleteEffect(id) => unsafe {
-                (sys.efx.as_ref().unwrap().alDeleteEffects)(1, &id.get() as *const ALuint);
-            },
-        }
-    }
-}
-static MESSAGE_QUEUE: Mutex<Vec<Message>> = Mutex::new(vec![]);
-pub(crate) fn message_push(msg: Message) {
-    MESSAGE_QUEUE.lock().unwrap().push(msg);
-}
-
 struct LuaAudioEfx {
     name: String,
-    effect: ALuint,
-    slot: ALuint,
+    effect: Effect,
+    slot: AuxiliaryEffectSlot,
+}
+impl LuaAudioEfx {
+    pub fn new(name: &str) -> Result<Self> {
+        let effect = Effect::new()?;
+        let slot = AuxiliaryEffectSlot::new()?;
+        Ok(Self {
+            name: String::from(name),
+            effect,
+            slot,
+        })
+    }
 }
 
 #[derive(Clone, PartialEq, Copy)]
@@ -473,7 +455,6 @@ pub struct AudioSystem {
 
     freq: i32,
     output_limiter: bool,
-    efx: Option<Efx>,
 
     voices: Vec<al::Source>,
 }
@@ -531,23 +512,24 @@ impl AudioSystem {
         let nstereo = device.get_parameter_i32(ALC_STEREO_SOURCES);
 
         // Set up the Efx
-        let efx = if has_efx {
-            Some(Efx::new(&device)?)
+        if has_efx {
+            Efx::init(&device)?;
         } else {
-            None
-        };
+            Efx::init_none();
+        }
 
         let voices: Vec<_> = (0..NUM_VOICES)
             .collect::<std::vec::Vec<usize>>()
             .iter()
             .flat_map(|_| al::Source::new())
             .collect();
+        let efx = EFX.get().unwrap();
         for v in &voices {
             v.parameter_f32(AL_REFERENCE_DISTANCE, REFERENCE_DISTANCE);
             v.parameter_f32(AL_MAX_DISTANCE, MAX_DISTANCE);
             v.parameter_f32(AL_ROLLOFF_FACTOR, 1.);
 
-            if let Some(efx) = &efx {
+            if let Some(efx) = efx {
                 v.parameter_3_i32(
                     AL_AUXILIARY_SEND_FILTER,
                     efx.direct_slot.0.get() as i32,
@@ -563,7 +545,7 @@ impl AudioSystem {
 
         debugx!(gettext("OpenAL started: {} Hz"), freq);
         debugx!(gettext("Renderer: %s"), al::get_parameter_str(AL_RENDERER));
-        if let Some(efx) = &efx {
+        if let Some(efx) = efx {
             debugx!(
                 gettext("Version: {} with EFX {}.{}"),
                 al::get_parameter_str(AL_VERSION),
@@ -588,7 +570,6 @@ impl AudioSystem {
 
             freq,
             output_limiter,
-            efx,
 
             voices,
         })
@@ -1010,18 +991,31 @@ impl UserData for Audio {
         /*
          * @brief Sets global effects, or creates it if necessary.
          *
-         * @usage audio.setEffect( "reverb", { type="reverb" } )
-         * @usage source:setEffect( "reverb" )
+         * @usage audio.setEffectData( "reverb", { type="reverb" } )
          *
          *    @luatparam string name Name of the effect.
-         *    @luatparam table|boolean params Parameter table of the effect to create, or whether or not to
-         *    enable it globally, otherwise.
-         *    @luatreturn boolean true on success.
-         * @luafunc setGlobalEffect
+         *    @luatparam table params Parameter table of the effect to create.
+         * @luafunc setEffectData
          */
         methods.add_function(
-            "setGlobalEffect",
+            "setEffectData",
             |_, (name, param): (String, Value)| -> mlua::Result<()> {
+                // TODO
+                Ok(())
+            },
+        );
+        /*
+         * @brief Sets global effects, or creates it if necessary.
+         *
+         * @usage audio.setGlobalEffect( "reverb" )
+         *
+         *    @luatparam string name Name of the effect.
+         *    @luatreturn boolean true on success.
+         * @luafunc setEffectData
+         */
+        methods.add_function(
+            "setEffectData",
+            |_, name: Option<String>| -> mlua::Result<()> {
                 // TODO
                 Ok(())
             },

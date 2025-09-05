@@ -8,6 +8,7 @@ use anyhow::Result;
 use gettext::gettext;
 use log::{debug, debugx, warn, warn_err};
 use std::ffi::CStr;
+use std::sync::OnceLock;
 
 pub const ALC_EXT_EFX_NAME: &CStr = c"ALC_EXT_EFX";
 
@@ -128,7 +129,7 @@ pub struct Efx {
 }
 impl Efx {
     #[allow(non_snake_case)]
-    pub fn new(device: &al::Device) -> Result<Self> {
+    pub fn init(device: &al::Device) -> Result<()> {
         let version = (
             device.get_parameter_i32(ALC_EFX_MAJOR_VERSION),
             device.get_parameter_i32(ALC_EFX_MINOR_VERSION),
@@ -216,7 +217,7 @@ impl Efx {
             alListenerf(AL_METERS_PER_UNIT, 5.);
         }
 
-        Ok(Efx {
+        let _ = EFX.set(Some(Efx {
             version,
             direct_slot,
             reverb,
@@ -246,57 +247,91 @@ impl Efx {
             alEffectiv,
             alEffectf,
             alEffectfv,
-        })
+        }));
+        Ok(())
     }
 
-    pub fn new_auxiliary_effect_slot(&self) -> Result<AuxiliaryEffectSlot> {
-        let id: ALuint = 0;
-        unsafe { (self.alGenAuxiliaryEffectSlots)(1, &id) };
-        let id = match std::num::NonZero::new(id) {
-            Some(v) => v,
-            None => anyhow::bail!("failed to create Efx auxliary effect slot"),
-        };
-        Ok(AuxiliaryEffectSlot(id))
-    }
-
-    pub fn new_effect(&self) -> Result<Effect> {
-        let id: ALuint = 0;
-        unsafe { (self.alGenEffects)(1, &id) };
-        let id = match std::num::NonZero::new(id) {
-            Some(v) => v,
-            None => anyhow::bail!("failed to create Efx effect"),
-        };
-        Ok(Effect(id))
-    }
-
-    pub fn new_filter(&self) -> Result<Filter> {
-        let id: ALuint = 0;
-        unsafe { (self.alGenFilters)(1, &id) };
-        let id = match std::num::NonZero::new(id) {
-            Some(v) => v,
-            None => anyhow::bail!("failed to create Efx filter"),
-        };
-        Ok(Filter(id))
+    pub fn init_none() {
+        let _ = EFX.set(None);
     }
 }
 
 pub struct AuxiliaryEffectSlot(pub std::num::NonZero<ALuint>);
+impl AuxiliaryEffectSlot {
+    pub fn new() -> Result<Self> {
+        if let Some(efx) = EFX.get().unwrap() {
+            let id: ALuint = 0;
+            unsafe { (efx.alGenAuxiliaryEffectSlots)(1, &id) };
+            let id = match std::num::NonZero::new(id) {
+                Some(v) => v,
+                None => anyhow::bail!("failed to create Efx auxliary effect slot"),
+            };
+            Ok(AuxiliaryEffectSlot(id))
+        } else {
+            anyhow::bail!("EFX not available")
+        }
+    }
+}
 impl Drop for AuxiliaryEffectSlot {
     fn drop(&mut self) {
-        crate::message_push(crate::Message::DeleteAuxiliaryEffectSlot(self.0));
+        if let Some(efx) = EFX.get().unwrap() {
+            unsafe {
+                (efx.alDeleteAuxiliaryEffectSlots)(1, &self.0.get());
+            }
+        }
     }
 }
 
 pub struct Filter(pub std::num::NonZero<ALuint>);
+impl Filter {
+    pub fn new() -> Result<Self> {
+        if let Some(efx) = EFX.get().unwrap() {
+            let id: ALuint = 0;
+            unsafe { (efx.alGenFilters)(1, &id) };
+            let id = match std::num::NonZero::new(id) {
+                Some(v) => v,
+                None => anyhow::bail!("failed to create Efx filter"),
+            };
+            Ok(Filter(id))
+        } else {
+            anyhow::bail!("EFX not available")
+        }
+    }
+}
 impl Drop for Filter {
     fn drop(&mut self) {
-        crate::message_push(crate::Message::DeleteFilter(self.0));
+        if let Some(efx) = EFX.get().unwrap() {
+            unsafe {
+                (efx.alDeleteFilters)(1, &self.0.get());
+            }
+        }
     }
 }
 
 pub struct Effect(pub std::num::NonZero<ALuint>);
-impl Drop for Effect {
-    fn drop(&mut self) {
-        crate::message_push(crate::Message::DeleteEffect(self.0));
+impl Effect {
+    pub fn new() -> Result<Self> {
+        if let Some(efx) = EFX.get().unwrap() {
+            let id: ALuint = 0;
+            unsafe { (efx.alGenEffects)(1, &id) };
+            let id = match std::num::NonZero::new(id) {
+                Some(v) => v,
+                None => anyhow::bail!("failed to create Efx effect"),
+            };
+            Ok(Self(id))
+        } else {
+            anyhow::bail!("EFX not available")
+        }
     }
 }
+impl Drop for Effect {
+    fn drop(&mut self) {
+        if let Some(efx) = EFX.get().unwrap() {
+            unsafe {
+                (efx.alDeleteEffects)(1, &self.0.get());
+            }
+        }
+    }
+}
+
+pub static EFX: OnceLock<Option<Efx>> = OnceLock::new();
