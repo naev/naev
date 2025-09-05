@@ -7,7 +7,7 @@ use crate::openal as al;
 use crate::openal::al_types::*;
 use crate::openal::alc_types::*;
 use crate::openal::*;
-use naev_core::utils::AtomicF32;
+use naev_core::utils::{AtomicF32, binary_search_by_key_ref, sort_by_key_ref};
 
 use anyhow::Result;
 use gettext::gettext;
@@ -16,7 +16,7 @@ use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
 use nalgebra::Vector3;
 use std::ffi::{CStr, CString};
 use std::sync::atomic::{AtomicBool, AtomicPtr, Ordering};
-use std::sync::{Arc, Mutex};
+use std::sync::{Arc, Mutex, MutexGuard};
 
 const NUM_VOICES: usize = 64;
 const REFERENCE_DISTANCE: f32 = 500.;
@@ -41,6 +41,7 @@ impl LuaAudioEfx {
         })
     }
 }
+static EFX_LIST: Mutex<Vec<LuaAudioEfx>> = Mutex::new(Vec::new());
 
 #[derive(Clone, PartialEq, Copy)]
 enum AudioType {
@@ -999,8 +1000,129 @@ impl UserData for Audio {
          */
         methods.add_function(
             "setEffectData",
-            |_, (name, param): (String, Value)| -> mlua::Result<()> {
+            |_, (name, param): (String, mlua::Table)| -> mlua::Result<()> {
                 // TODO
+                let mut lock = EFX_LIST.lock().unwrap();
+                let efxid = match binary_search_by_key_ref(&lock, &name, |e: &LuaAudioEfx| &e.name)
+                {
+                    Ok(efx) => efx,
+                    Err(_) => {
+                        let efx = LuaAudioEfx::new(&name)?;
+                        lock.push(efx);
+                        sort_by_key_ref(&mut lock, |e: &LuaAudioEfx| &e.name);
+                        binary_search_by_key_ref(&lock, &name, |e: &LuaAudioEfx| &e.name).unwrap()
+                    }
+                };
+                let efx = &lock[efxid];
+
+                let typename: String = param.get("type")?;
+                let volume: Option<f32> = param.get("volume")?;
+
+                macro_rules! efx_set_f32 {
+                    ($name: literal, $field: ident) => {{
+                        efx.effect.parameter_f32($field, param.get::<f32>($name)?);
+                    }};
+                }
+                macro_rules! efx_set_i32 {
+                    ($name: literal, $field: ident) => {{
+                        efx.effect.parameter_i32($field, param.get::<i32>($name)?);
+                    }};
+                }
+
+                if typename == "reverb" {
+                    efx.effect.parameter_i32(AL_EFFECT_TYPE, AL_EFFECT_REVERB);
+                    efx_set_f32!("density", AL_REVERB_DENSITY);
+                    efx_set_f32!("density", AL_REVERB_DENSITY); // 0.0 to 1.0 (1.0)
+                    efx_set_f32!("diffusion", AL_REVERB_DIFFUSION); // 0.0 to 1.0 (1.0)
+                    efx_set_f32!("gain", AL_REVERB_GAIN); // 0.0 to 1.0 (0.32)
+                    efx_set_f32!("highgain", AL_REVERB_GAINHF); // 0.0 to 1.0 (0.89)
+                    efx_set_f32!("decaytime", AL_REVERB_DECAY_TIME); // 0.1 to 20.0 (1.49)
+                    efx_set_f32!("decayhighratio", AL_REVERB_DECAY_HFRATIO); // 0.1 to 2.0 (0.83)
+                    efx_set_f32!("earlygain", AL_REVERB_REFLECTIONS_GAIN); // 0.0 to 3.16 (0.05)
+                    efx_set_f32!("earlydelay", AL_REVERB_REFLECTIONS_DELAY); // 0.0 to 0.3 (0.007)
+                    efx_set_f32!("lategain", AL_REVERB_LATE_REVERB_GAIN); // 0.0 to 10.0 (1.26)
+                    efx_set_f32!("latedelay", AL_REVERB_LATE_REVERB_DELAY); // 0.0 to 0.1 (0.011)
+                    efx_set_f32!("roomrolloff", AL_REVERB_ROOM_ROLLOFF_FACTOR); // 0.0 to 10.0 (0.0)
+                    efx_set_f32!("airabsorption", AL_REVERB_AIR_ABSORPTION_GAINHF); // 0.892 to 1.0 (0.994)
+                    efx_set_i32!("highlimit", AL_REVERB_DECAY_HFLIMIT); // AL_FALSE or AL_TRUE (AL_TRUE)
+                } else if typename == "distortion" {
+                    efx.effect
+                        .parameter_i32(AL_EFFECT_TYPE, AL_EFFECT_DISTORTION);
+                    efx_set_f32!("gain", AL_DISTORTION_GAIN); // 0.01 to 1.0 (0.2)
+                    efx_set_f32!("edge", AL_DISTORTION_EDGE); // 0.0 to 1.0 (0.05)
+                    efx_set_f32!("lowcut", AL_DISTORTION_LOWPASS_CUTOFF); // 80.0 to 24000.0 (8000.0)
+                    efx_set_f32!("center", AL_DISTORTION_EQCENTER); // 80.0 to 24000.0 (3600.0)
+                    efx_set_f32!("bandwidth", AL_DISTORTION_EQBANDWIDTH); // 80.0 to 24000.0 (3600.0)
+                } else if typename == "chorus" {
+                    efx.effect.parameter_i32(AL_EFFECT_TYPE, AL_EFFECT_CHORUS);
+                    efx_set_i32!("waveform", AL_CHORUS_WAVEFORM); // 0=sin, 1=triangle (1)
+                    efx_set_i32!("phase", AL_CHORUS_PHASE); // -180 to 180 (90)
+                    efx_set_f32!("rate", AL_CHORUS_RATE); // 0.0 to 10.0 (1.1)
+                    efx_set_f32!("depth", AL_CHORUS_DEPTH); // 0.0 to 1.0 (0.1)
+                    efx_set_f32!("feedback", AL_CHORUS_FEEDBACK); // -1.0 to 1.0 (0.25)
+                    efx_set_f32!("delay", AL_CHORUS_DELAY); // 0.0 to 0.016 (0.016)
+                } else if typename == "compressor" {
+                    efx.effect
+                        .parameter_i32(AL_EFFECT_TYPE, AL_EFFECT_COMPRESSOR);
+                    efx_set_i32!("enable", AL_COMPRESSOR_ONOFF); // AL_FALSE or AL_TRUE (AL_TRUE)
+                } else if typename == "echo" {
+                    efx.effect.parameter_i32(AL_EFFECT_TYPE, AL_EFFECT_ECHO);
+                    efx_set_f32!("delay", AL_ECHO_DELAY); // 0.0 to 0.207 (0.1)
+                    efx_set_f32!("tapdelay", AL_ECHO_LRDELAY); // 0.0 to 0.404 (0.1)
+                    efx_set_f32!("damping", AL_ECHO_DAMPING); // 0.0 to 0.99 (0.5)
+                    efx_set_f32!("feedback", AL_ECHO_FEEDBACK); // 0.0 to 1.0 (0.5)
+                    efx_set_f32!("spread", AL_ECHO_SPREAD); // -1.0 to 1.0 (-1.0)
+                } else if typename == "ringmodulator" {
+                    efx.effect
+                        .parameter_i32(AL_EFFECT_TYPE, AL_EFFECT_RING_MODULATOR);
+                    efx_set_f32!("frequency", AL_RING_MODULATOR_FREQUENCY); // 0.0 to 8000.0 (440.0)
+                    efx_set_f32!("highcut", AL_RING_MODULATOR_HIGHPASS_CUTOFF); // 0.0 to 24000.0 (800.0)
+                    efx_set_i32!("waveform", AL_RING_MODULATOR_WAVEFORM); // 0 (sin), 1 (saw), 2 (square), (0 (sin))
+                } else if typename == "equalizer" {
+                    efx.effect
+                        .parameter_i32(AL_EFFECT_TYPE, AL_EFFECT_EQUALIZER);
+                    efx_set_f32!("lowgain", AL_EQUALIZER_LOW_GAIN); // 0.126 to 7.943 (1.0)
+                    efx_set_f32!("lowcut", AL_EQUALIZER_LOW_CUTOFF); // 50.0 to 800.0 (200.0)
+                    efx_set_f32!("lowmidgain", AL_EQUALIZER_MID1_GAIN); // 0.126 to 7.943 (1.0)
+                    efx_set_f32!("lowmidfrequency", AL_EQUALIZER_MID1_CENTER); // 200.0 to 3000.0 (500.0)
+                    efx_set_f32!("lowmidbandwidth", AL_EQUALIZER_MID1_WIDTH); // 0.01 to 1.0 (1.0)
+                    efx_set_f32!("highmidgain", AL_EQUALIZER_MID2_GAIN); // 0.126 to 7.943 (1.0)
+                    efx_set_f32!("highmidfrequency", AL_EQUALIZER_MID2_CENTER); // 1000.0 to 8000.0 (3000.0)
+                    efx_set_f32!("highmidbandwidth", AL_EQUALIZER_MID2_WIDTH); // 0.01 to 1.0 (1.0)
+                    efx_set_f32!("highgain", AL_EQUALIZER_HIGH_GAIN); // 0.126 to 7.943 (1.0)
+                    efx_set_f32!("highcut", AL_EQUALIZER_HIGH_CUTOFF); // 4000.0 to 16000.0 (6000.0)
+                } else if typename == "pitchshifter" {
+                    efx.effect
+                        .parameter_i32(AL_EFFECT_TYPE, AL_EFFECT_PITCH_SHIFTER);
+
+                    efx_set_i32!("tunecoarse", AL_PITCH_SHIFTER_COARSE_TUNE); // -12 to 12 (12)
+                    efx_set_i32!("tunefine'", AL_PITCH_SHIFTER_FINE_TUNE); // -50 to 50  (0)
+                } else if typename == "vocalmorpher" {
+                    efx.effect
+                        .parameter_i32(AL_EFFECT_TYPE, AL_EFFECT_VOCAL_MORPHER);
+                    efx_set_i32!("phonemea", AL_VOCAL_MORPHER_PHONEMEA); // 0 to 29 (0 ("A"))
+                    efx_set_i32!("phonemeb", AL_VOCAL_MORPHER_PHONEMEB); // 0 to 29 (10 ("ER"))
+                    efx_set_i32!("tunecoarsea", AL_VOCAL_MORPHER_PHONEMEA_COARSE_TUNING); // -24 to 24 (0)
+                    efx_set_i32!("tunecoarseb", AL_VOCAL_MORPHER_PHONEMEB_COARSE_TUNING); // -24 to 24 (0)
+                    efx_set_i32!("waveform", AL_VOCAL_MORPHER_WAVEFORM); // 0 (sin), 1 (saw), 2 (square), (0 (sin))
+                    efx_set_f32!("rate", AL_VOCAL_MORPHER_RATE); // 0.0 to 10.0 (1.41)
+                } else if typename == "flanger" {
+                    efx.effect.parameter_i32(AL_EFFECT_TYPE, AL_EFFECT_FLANGER);
+                    efx_set_i32!("waveform", AL_FLANGER_WAVEFORM); //  0 (sin), 1 (triangle)  (1 (triangle))
+                    efx_set_f32!("phase", AL_FLANGER_PHASE); // -180 to 180 (0)
+                    efx_set_f32!("rate", AL_FLANGER_RATE); // 0.0 to 10.0 (0.27)
+                    efx_set_f32!("depth", AL_FLANGER_DEPTH); // 0.0 to 1.0 (1.0)
+                    efx_set_f32!("feedback", AL_FLANGER_FEEDBACK); // -1.0 to 1.0 (-0.5)
+                    efx_set_f32!("delay", AL_FLANGER_DELAY); // 0.0 to 0.004 (0.002)
+                } else if typename == "frequencyshifter" {
+                    efx.effect
+                        .parameter_i32(AL_EFFECT_TYPE, AL_EFFECT_FREQUENCY_SHIFTER);
+                    efx_set_f32!("frequency", AL_FREQUENCY_SHIFTER_FREQUENCY); // 0.0 to 24000.0 (0.0)
+                    efx_set_i32!("leftdirection", AL_FREQUENCY_SHIFTER_LEFT_DIRECTION); // 0 (down), 1 (up), 2 (off) (0 (down))
+                    efx_set_i32!("rightdirection", AL_FREQUENCY_SHIFTER_RIGHT_DIRECTION); // 0 (down), 1 (up), 2 (off) (0 (down))
+                } else {
+                    todo!();
+                }
                 Ok(())
             },
         );
@@ -1014,8 +1136,12 @@ impl UserData for Audio {
          * @luafunc setEffectData
          */
         methods.add_function(
-            "setEffectData",
+            "setGlobalEffect",
             |_, name: Option<String>| -> mlua::Result<()> {
+                let lock = EFX_LIST.lock().unwrap();
+                if let Some(name) = name {
+                    let efx = binary_search_by_key_ref(&lock, &name, |e: &LuaAudioEfx| &e.name);
+                }
                 // TODO
                 Ok(())
             },
