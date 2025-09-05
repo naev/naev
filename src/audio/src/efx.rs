@@ -167,11 +167,11 @@ pub type ALAUXILIARYEFFECTSLOTIV =
 pub type ALAUXILIARYEFFECTSLOTF =
     unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: ALfloat);
 pub type ALAUXILIARYEFFECTSLOTFV =
-    unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: *const ALfloat);
+    unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: *mut ALfloat);
 pub type ALGETAUXILIARYEFFECTSLOTI =
-    unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: *const ALint);
+    unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: *mut ALint);
 pub type ALGETAUXILIARYEFFECTSLOTIV =
-    unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: *const ALint);
+    unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: *mut ALint);
 pub type ALGETAUXILIARYEFFECTSLOTF =
     unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: *const ALfloat);
 pub type ALGETAUXILIARYEFFECTSLOTFV =

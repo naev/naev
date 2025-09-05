@@ -171,7 +171,7 @@ unsafe extern "C" {
 
     pub fn alDistanceModel(value: ALenum);
 
-    pub fn alGetEnumValue(enumName: *const ALchar) -> ALenum;
+    pub fn alGetEnumValue(enumName: *mut ALchar) -> ALenum;
 
     pub fn alIsBuffer(buffer: ALuint) -> ALboolean;
     pub fn alIsSource(source: ALuint) -> ALboolean;
@@ -180,9 +180,9 @@ unsafe extern "C" {
     pub fn alDisable(capability: ALenum);
     pub fn alIsEnabled(capability: ALenum) -> ALboolean;
 
-    pub fn alGetString(param: ALCenum) -> *const ALCchar;
+    pub fn alGetString(param: ALCenum) -> *mut ALCchar;
 
-    pub fn alGetBufferi(buffer: ALuint, param: ALenum, value: *const ALint);
+    pub fn alGetBufferi(buffer: ALuint, param: ALenum, value: *mut ALint);
 
     pub fn alListenerf(param: ALenum, value: ALfloat);
     pub fn alListener3f(param: ALenum, value1: ALfloat, value2: ALfloat, value3: ALfloat);

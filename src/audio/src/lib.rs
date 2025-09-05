@@ -644,7 +644,8 @@ impl UserData for Audio {
          * @luafunc play
          */
         methods.add_method("play", |_, audio: &Self, ()| -> mlua::Result<()> {
-            Ok(audio.play())
+            audio.play();
+            Ok(())
         });
         /*
          * @brief Checks to see if a source is playing.
@@ -663,7 +664,8 @@ impl UserData for Audio {
          * @luafunc pause
          */
         methods.add_method("pause", |_, audio: &Self, ()| -> mlua::Result<()> {
-            Ok(audio.pause())
+            audio.pause();
+            Ok(())
         });
         /*
          * @brief Checks to see if a source is paused.
@@ -682,7 +684,8 @@ impl UserData for Audio {
          * @luafunc stop
          */
         methods.add_method("stop", |_, audio: &Self, ()| -> mlua::Result<()> {
-            Ok(audio.stop())
+            audio.stop();
+            Ok(())
         });
         /*
          * @brief Checks to see if a source is stopped.
@@ -701,7 +704,8 @@ impl UserData for Audio {
          * @luafunc rewind
          */
         methods.add_method("rewind", |_, audio: &Self, ()| -> mlua::Result<()> {
-            Ok(audio.rewind())
+            audio.rewind();
+            Ok(())
         });
         /*
          * @brief Seeks a source.
@@ -714,13 +718,14 @@ impl UserData for Audio {
         methods.add_method(
             "seek",
             |_, audio: &Self, (offset, samples): (f32, bool)| -> mlua::Result<()> {
-                Ok(audio.seek(
+                audio.seek(
                     offset,
                     match samples {
                         true => AudioSeek::Samples,
                         false => AudioSeek::Seconds,
                     },
-                ))
+                );
+                Ok(())
             },
         );
         /*
@@ -800,7 +805,8 @@ impl UserData for Audio {
         methods.add_method(
             "setRelative",
             |_, audio: &Self, relative: bool| -> mlua::Result<()> {
-                Ok(audio.set_relative(relative))
+                audio.set_relative(relative);
+                Ok(())
             },
         );
         /*
@@ -825,7 +831,8 @@ impl UserData for Audio {
             "setPosition",
             |_, audio: &Self, (x, y, z): (f32, f32, f32)| -> mlua::Result<()> {
                 let vec: Vector3<f32> = Vector3::new(x, y, z);
-                Ok(audio.set_position(vec))
+                audio.set_position(vec);
+                Ok(())
             },
         );
         /*
@@ -857,7 +864,8 @@ impl UserData for Audio {
             "setVelocity",
             |_, audio: &Self, (x, y, z): (f32, f32, f32)| -> mlua::Result<()> {
                 let vec: Vector3<f32> = Vector3::new(x, y, z);
-                Ok(audio.set_velocity(vec))
+                audio.set_velocity(vec);
+                Ok(())
             },
         );
         /*
@@ -886,7 +894,10 @@ impl UserData for Audio {
          */
         methods.add_method(
             "setLooping",
-            |_, audio: &Self, looping: bool| -> mlua::Result<()> { Ok(audio.set_looping(looping)) },
+            |_, audio: &Self, looping: bool| -> mlua::Result<()> {
+                audio.set_looping(looping);
+                Ok(())
+            },
         );
         /*
          * @brief Gets the looping state of a source.
@@ -907,7 +918,10 @@ impl UserData for Audio {
          */
         methods.add_method(
             "setPitch",
-            |_, audio: &Self, pitch: f32| -> mlua::Result<()> { Ok(audio.set_pitch(pitch)) },
+            |_, audio: &Self, pitch: f32| -> mlua::Result<()> {
+                audio.set_pitch(pitch);
+                Ok(())
+            },
         );
         /*
          * @brief Gets the pitch of a source.
@@ -929,7 +943,8 @@ impl UserData for Audio {
         methods.add_method(
             "setAttenuationDistances",
             |_, audio: &Self, (reference, max): (f32, f32)| -> mlua::Result<()> {
-                Ok(audio.set_attenuation_distances(reference, max))
+                audio.set_attenuation_distances(reference, max);
+                Ok(())
             },
         );
         /*
@@ -952,7 +967,10 @@ impl UserData for Audio {
          */
         methods.add_method(
             "setRolloff",
-            |_, audio: &Self, rolloff: f32| -> mlua::Result<()> { Ok(audio.set_rolloff(rolloff)) },
+            |_, audio: &Self, rolloff: f32| -> mlua::Result<()> {
+                audio.set_rolloff(rolloff);
+                Ok(())
+            },
         );
         /*
          * @brief Gets the rolloff factor.
@@ -1187,10 +1205,7 @@ impl UserData for Audio {
             "setSpeedOfSound",
             |_, speed: Option<f32>| -> mlua::Result<()> {
                 unsafe {
-                    alSpeedOfSound(match speed {
-                        Some(spd) => spd,
-                        None => 3433.,
-                    });
+                    alSpeedOfSound(speed.unwrap_or(3433.));
                 }
                 Ok(())
             },
