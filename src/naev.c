@@ -171,7 +171,6 @@ int         naev_main_setup( void )
    }
 
    /* Incomplete game note (shows every time version number changes). */
-#if 0
    if ( conf.lastversion == NULL ||
         ( ( naev_versionCompare( conf.lastversion ) < 0 ) &&
           // "+" will appear on commits described by git describe, aka
@@ -196,7 +195,6 @@ int         naev_main_setup( void )
             " And again, thank you for playing!" ),
          conf.lastversion );
    }
-#endif
    free( conf.lastversion );
    conf.lastversion = strdup( naev_version( 0 ) );
    return 0;
