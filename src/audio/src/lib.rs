@@ -994,7 +994,16 @@ impl UserData for Audio {
         methods.add_method(
             "setEffect",
             |_, audio: &Self, (name, enable): (String, bool)| -> mlua::Result<bool> {
-                // TODO
+                let slot = if enable {
+                    // let efx = getEffectByName( name );
+                    // efx.slot
+                    AL_EFFECTSLOT_NULL
+                } else {
+                    AL_EFFECTSLOT_NULL
+                };
+                audio
+                    .source
+                    .parameter_3_i32(AL_AUXILIARY_SEND_FILTER, slot, 0, AL_FILTER_NULL);
                 Ok(true)
             },
         );
@@ -1012,11 +1021,41 @@ impl UserData for Audio {
          */
         methods.add_function(
             "setGlobalEffect",
-            |_, (name, param): (String, Value)| -> mlua::Result<()> { Ok(()) },
+            |_, (name, param): (String, Value)| -> mlua::Result<()> {
+                // TODO
+                Ok(())
+            },
         );
         /*
-        { "setGlobalAirAbsorption", audioL_setGlobalAirAbsorption },
-        { "setGlobalDopplerFactor", audioL_setGlobaDopplerFactor },
-             */
+         * @brief Allows setting the speed of sound.
+         *
+         *    @luatparam[opt=3443] number speed Air speed.
+         * @luafunc setSpeedOfSound
+         */
+        methods.add_function(
+            "setSpeedOfSound",
+            |_, speed: Option<f32>| -> mlua::Result<()> {
+                unsafe {
+                    alSpeedOfSound(match speed {
+                        Some(spd) => spd,
+                        None => 3433.,
+                    });
+                }
+                Ok(())
+            },
+        );
+        /*
+         * @brief Sets the Doppler effect factor.
+         *
+         * Defaults to 0.3 outside of the nebula and 1.0 in the nebula.
+         *
+         *    @luatparam number factor Factor to set Doppler effect to. Must be
+         * positive.
+         * @luafunc setGlobalDopplerFactor
+         */
+        methods.add_function("setDopplerFactor", |_, factor: f32| -> mlua::Result<()> {
+            unsafe { alDopplerFactor(factor) };
+            Ok(())
+        });
     }
 }

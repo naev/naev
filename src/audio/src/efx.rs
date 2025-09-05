@@ -11,6 +11,8 @@ use std::ffi::CStr;
 
 pub const ALC_EXT_EFX_NAME: &CStr = c"ALC_EXT_EFX";
 
+pub const AL_EFFECTSLOT_NULL: ALenum = 0x0000;
+
 pub const ALC_EFX_MAJOR_VERSION: ALenum = 0x20001;
 pub const ALC_EFX_MINOR_VERSION: ALenum = 0x20002;
 pub const ALC_MAX_AUXILIARY_SENDS: ALenum = 0x20003;
