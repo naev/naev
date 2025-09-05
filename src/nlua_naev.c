@@ -547,7 +547,7 @@ static int naevL_isSimulation( lua_State *L )
 
 #define PUSH_STRING( L, name, value )                                          \
    lua_pushstring( L, name );                                                  \
-   lua_pushstring( L, value );                                                 \
+   lua_pushstring( L, ( ( value ) == NULL ) ? "" : ( value ) );                \
    lua_rawset( L, -3 )
 #define PUSH_DOUBLE( L, name, value )                                          \
    lua_pushstring( L, name );                                                  \
