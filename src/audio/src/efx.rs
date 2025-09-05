@@ -365,6 +365,32 @@ impl AuxiliaryEffectSlot {
             anyhow::bail!("EFX not available")
         }
     }
+
+    pub fn raw(&self) -> ALuint {
+        self.0.into()
+    }
+
+    pub fn parameter_i32(&self, param: ALenum, val: ALint) {
+        if let Some(efx) = EFX.get().unwrap() {
+            unsafe { (efx.alAuxiliaryEffectSloti)(self.raw(), param, val) };
+        }
+    }
+
+    pub fn parameter_f32(&self, param: ALenum, val: ALfloat) {
+        if let Some(efx) = EFX.get().unwrap() {
+            unsafe { (efx.alAuxiliaryEffectSlotf)(self.raw(), param, val) };
+        }
+    }
+
+    pub fn set_effect(&self, effect: Option<&Effect>) {
+        self.parameter_i32(
+            AL_EFFECTSLOT_EFFECT,
+            match effect {
+                Some(effect) => effect.raw() as ALint,
+                None => AL_EFFECTSLOT_NULL,
+            },
+        )
+    }
 }
 impl Drop for AuxiliaryEffectSlot {
     fn drop(&mut self) {

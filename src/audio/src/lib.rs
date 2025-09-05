@@ -977,9 +977,18 @@ impl UserData for Audio {
             "setEffect",
             |_, audio: &Self, (name, enable): (String, bool)| -> mlua::Result<bool> {
                 let slot = if enable {
-                    // let efx = getEffectByName( name );
-                    // efx.slot
-                    AL_EFFECTSLOT_NULL
+                    let lock = EFX_LIST.lock().unwrap();
+                    let efxid =
+                        match binary_search_by_key_ref(&lock, &name, |e: &LuaAudioEfx| &e.name) {
+                            Ok(efx) => efx,
+                            Err(_) => {
+                                return Err(mlua::Error::RuntimeError(format!(
+                                    "effect '{name}' not found"
+                                )));
+                            }
+                        };
+                    let efx = &lock[efxid];
+                    efx.slot.raw() as ALint
                 } else {
                     AL_EFFECTSLOT_NULL
                 };
@@ -1001,7 +1010,6 @@ impl UserData for Audio {
         methods.add_function(
             "setEffectData",
             |_, (name, param): (String, mlua::Table)| -> mlua::Result<()> {
-                // TODO
                 let mut lock = EFX_LIST.lock().unwrap();
                 let efxid = match binary_search_by_key_ref(&lock, &name, |e: &LuaAudioEfx| &e.name)
                 {
@@ -1121,8 +1129,16 @@ impl UserData for Audio {
                     efx_set_i32!("leftdirection", AL_FREQUENCY_SHIFTER_LEFT_DIRECTION); // 0 (down), 1 (up), 2 (off) (0 (down))
                     efx_set_i32!("rightdirection", AL_FREQUENCY_SHIFTER_RIGHT_DIRECTION); // 0 (down), 1 (up), 2 (off) (0 (down))
                 } else {
-                    todo!();
+                    return Err(mlua::Error::RuntimeError(format!(
+                        "uknown effect type '{typename}'"
+                    )));
                 }
+
+                if let Some(volume) = volume {
+                    efx.slot.parameter_f32(AL_EFFECTSLOT_GAIN, volume);
+                }
+                efx.slot.set_effect(Some(&efx.effect));
+
                 Ok(())
             },
         );
@@ -1133,16 +1149,31 @@ impl UserData for Audio {
          *
          *    @luatparam string name Name of the effect.
          *    @luatreturn boolean true on success.
-         * @luafunc setEffectData
+         * @luafunc setGlobalEffect
          */
         methods.add_function(
             "setGlobalEffect",
             |_, name: Option<String>| -> mlua::Result<()> {
-                let lock = EFX_LIST.lock().unwrap();
-                if let Some(name) = name {
-                    let efx = binary_search_by_key_ref(&lock, &name, |e: &LuaAudioEfx| &e.name);
+                if let Some(efx) = EFX.get().unwrap() {
+                    let direct_slot = &efx.direct_slot;
+                    if let Some(name) = name {
+                        let lock = EFX_LIST.lock().unwrap();
+                        let efxid =
+                            match binary_search_by_key_ref(&lock, &name, |e: &LuaAudioEfx| &e.name)
+                            {
+                                Ok(efx) => efx,
+                                Err(_) => {
+                                    return Err(mlua::Error::RuntimeError(format!(
+                                        "effect '{name}' not found"
+                                    )));
+                                }
+                            };
+                        let efx = &lock[efxid];
+                        direct_slot.set_effect(Some(&efx.effect));
+                    } else {
+                        direct_slot.set_effect(None);
+                    }
                 }
-                // TODO
                 Ok(())
             },
         );
