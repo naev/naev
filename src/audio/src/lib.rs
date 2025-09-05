@@ -33,7 +33,9 @@ struct LuaAudioEfx {
 impl LuaAudioEfx {
     pub fn new(name: &str) -> Result<Self> {
         let effect = Effect::new()?;
+        debug::object_label(debug::AL_FILTER, effect.raw(), name);
         let slot = AuxiliaryEffectSlot::new()?;
+        debug::object_label(debug::AL_AUXILIARY_EFFECT_SLOT, slot.raw(), name);
         Ok(Self {
             name: String::from(name),
             effect,
@@ -44,7 +46,7 @@ impl LuaAudioEfx {
 static EFX_LIST: Mutex<Vec<LuaAudioEfx>> = Mutex::new(Vec::new());
 
 #[derive(Clone, PartialEq, Copy)]
-enum AudioType {
+pub enum AudioType {
     Static,
     Stream,
 }
@@ -292,10 +294,8 @@ pub struct Audio {
     buffer: Arc<AudioBuffer>,
 }
 impl Audio {
-    pub fn new(path: &str) -> Result<Self> {
+    pub fn new(path: &str, atype: AudioType) -> Result<Self> {
         let name = String::from(path);
-
-        let atype = AudioType::Static;
 
         let source = al::Source::new()?;
         debug::object_label(debug::AL_SOURCE, source.raw(), path);
@@ -525,7 +525,9 @@ impl AudioSystem {
             .flat_map(|_| al::Source::new())
             .collect();
         let efx = EFX.get().unwrap();
-        for v in &voices {
+        for (i, v) in voices.iter().enumerate() {
+            debug::object_label(debug::AL_SOURCE, v.raw(), &format!("voice {i}"));
+
             v.parameter_f32(AL_REFERENCE_DISTANCE, REFERENCE_DISTANCE);
             v.parameter_f32(AL_MAX_DISTANCE, MAX_DISTANCE);
             v.parameter_f32(AL_ROLLOFF_FACTOR, 1.);
@@ -615,16 +617,21 @@ impl UserData for Audio {
          * @brief Creates a new audio source.
          *
          *    @luatparam string|File data Data to load the audio from.
-         *    @luatparam[opt="static"] string  Either "static" to load the entire source
-         * at the start, or "stream" to load it in real time.
+         *    @luatparam boolean streaming True if should be a streaming source instead of loaded
+         *    entirely in memory.
          *    @luatreturn Audio New audio corresponding to the data.
          * @luafunc new
          */
         methods.add_function(
             "new",
-            |_, (val, _streaming): (String, bool)| -> mlua::Result<Self> {
-                // TODO add streaming
-                Ok(Self::new(&val)?)
+            |_, (val, streaming): (String, bool)| -> mlua::Result<Self> {
+                Ok(Self::new(
+                    &val,
+                    match streaming {
+                        true => AudioType::Stream,
+                        false => AudioType::Static,
+                    },
+                )?)
             },
         );
         /*

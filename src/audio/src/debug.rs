@@ -73,6 +73,10 @@ pub const AL_STACK_UNDERFLOW: ALenum = 0x19CE;
 pub const AL_BUFFER: ALenum = 0x1009;
 pub const AL_SOURCE: ALenum = 0x19D0;
 
+pub const AL_FILTER: ALenum = 0x19D1;
+pub const AL_EFFECT: ALenum = 0x19D2;
+pub const AL_AUXILIARY_EFFECT_SLOT: ALenum = 0x19D3;
+
 pub type ALDEBUGPROC = unsafe extern "C" fn(
     source: ALenum,
     etype: ALenum,
