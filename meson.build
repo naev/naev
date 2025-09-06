@@ -507,6 +507,11 @@ naevcrs = rust.bindgen(
       link_args: naev_bin_link_args,
       install: true)
 
+   # Simplifies clippy stuff
+   clippy = run_target( 'clippy',
+      depends: [naev_rlib_compile],
+      command: [ 'env', cargo_env, cargo, 'clippy', cargo_options, ] )
+
    # Naevlua is unused and unsupported with rust for now.
    #naevlua_bin = executable(
    #   'naevlua',
