@@ -496,7 +496,7 @@ naevcrs = rust.bindgen(
 
    # Finally, build the executable with Rust again, but using meson to link it all together
    naev_bin = executable(
-      'naev_exe',
+      'naev', # needed so the binary is named 'naev'
       sources: naev_rs,
       # Have to make sure Rust uses the dependencies from Cargo
       rust_args: ['--extern', 'naev=libnaev.rlib', '-L', 'src' / target_triplet / rust_target / 'deps', '-L', 'src' / rust_target / 'deps'],
