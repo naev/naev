@@ -99,7 +99,6 @@ int  sound_updateListener( double dir, double px, double py, double vx,
 /*
  * Group functions.
  */
-int  sound_reserve( int num );
 int  sound_createGroup( int size );
 int  sound_playGroup( int group, int sound, int once );
 void sound_stopGroup( int group );

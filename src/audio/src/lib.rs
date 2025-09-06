@@ -51,7 +51,8 @@ pub enum AudioType {
     Stream,
 }
 
-struct AudioBuffer {
+pub struct AudioBuffer {
+    name: String,
     track_gain_db: f64,
     track_peak: f64,
     buffer: al::Buffer,
@@ -257,7 +258,11 @@ impl AudioBuffer {
             None => anyhow::bail!("no format!"),
         };
 
+        // Set debug stuff
+        debug::object_label(debug::AL_BUFFER, buffer.raw(), path);
+
         Ok(Self {
+            name: String::from(path),
             buffer,
             track_gain_db,
             track_peak,
@@ -285,8 +290,6 @@ pub enum AudioSeek {
 }
 
 pub struct Audio {
-    name: String,
-    ok: bool,
     atype: AudioType,
     source: al::Source,
     slot: ALuint,
@@ -294,23 +297,41 @@ pub struct Audio {
     buffer: Arc<AudioBuffer>,
 }
 impl Audio {
-    pub fn new(path: &str, atype: AudioType) -> Result<Self> {
-        let name = String::from(path);
-
+    pub fn new(buffer: Arc<AudioBuffer>) -> Result<Self> {
         let source = al::Source::new()?;
-        debug::object_label(debug::AL_SOURCE, source.raw(), path);
-        let buffer = Arc::new(AudioBuffer::from_path(path)?);
-        debug::object_label(debug::AL_BUFFER, buffer.buffer.raw(), path);
-
+        debug::object_label(debug::AL_SOURCE, source.raw(), &buffer.name);
         Ok(Self {
-            name,
-            ok: true,
-            atype,
+            atype: AudioType::Static,
             source,
             slot: 0,
             volume: 1.0,
-            buffer,
+            buffer: buffer.clone(),
         })
+    }
+
+    pub fn from_path(path: &str, atype: AudioType) -> Result<Self> {
+        // TODO streaming
+        let buffer = Arc::new(AudioBuffer::from_path(path)?);
+        Self::new(buffer)
+    }
+
+    /// Sets the sound to be in-game as opposed to a GUI or music track.
+    pub fn ingame(&self) {
+        let v = &self.source;
+
+        v.parameter_f32(AL_REFERENCE_DISTANCE, REFERENCE_DISTANCE);
+        v.parameter_f32(AL_MAX_DISTANCE, MAX_DISTANCE);
+        v.parameter_f32(AL_ROLLOFF_FACTOR, 1.);
+
+        let efx = EFX.get().unwrap();
+        if let Some(efx) = efx {
+            v.parameter_3_i32(
+                AL_AUXILIARY_SEND_FILTER,
+                efx.direct_slot.0.get() as i32,
+                0,
+                AL_FILTER_NULL,
+            );
+        }
     }
 
     fn is_state(&self, state: ALenum) -> bool {
@@ -456,8 +477,6 @@ pub struct AudioSystem {
 
     freq: i32,
     output_limiter: bool,
-
-    voices: Vec<al::Source>,
 }
 impl AudioSystem {
     pub fn new() -> Result<Self> {
@@ -519,35 +538,13 @@ impl AudioSystem {
             Efx::init_none();
         }
 
-        let voices: Vec<_> = (0..NUM_VOICES)
-            .collect::<std::vec::Vec<usize>>()
-            .iter()
-            .flat_map(|_| al::Source::new())
-            .collect();
-        let efx = EFX.get().unwrap();
-        for (i, v) in voices.iter().enumerate() {
-            debug::object_label(debug::AL_SOURCE, v.raw(), &format!("voice {i}"));
-
-            v.parameter_f32(AL_REFERENCE_DISTANCE, REFERENCE_DISTANCE);
-            v.parameter_f32(AL_MAX_DISTANCE, MAX_DISTANCE);
-            v.parameter_f32(AL_ROLLOFF_FACTOR, 1.);
-
-            if let Some(efx) = efx {
-                v.parameter_3_i32(
-                    AL_AUXILIARY_SEND_FILTER,
-                    efx.direct_slot.0.get() as i32,
-                    0,
-                    AL_FILTER_NULL,
-                );
-            }
-        }
-
         unsafe {
             alDistanceModel(AL_INVERSE_DISTANCE_CLAMPED);
         }
 
         debugx!(gettext("OpenAL started: {} Hz"), freq);
         debugx!(gettext("Renderer: %s"), al::get_parameter_str(AL_RENDERER));
+        let efx = EFX.get().unwrap();
         if let Some(efx) = efx {
             debugx!(
                 gettext("Version: {} with EFX {}.{}"),
@@ -573,8 +570,6 @@ impl AudioSystem {
 
             freq,
             output_limiter,
-
-            voices,
         })
     }
 }
@@ -600,7 +595,7 @@ impl FromLua for Audio {
  */
 impl UserData for Audio {
     fn add_fields<F: mlua::UserDataFields<Self>>(fields: &mut F) {
-        fields.add_field_method_get("name", |_, this| Ok(this.name.clone()));
+        fields.add_field_method_get("name", |_, this| Ok(this.buffer.name.clone()));
     }
     fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
         /*
@@ -611,7 +606,7 @@ impl UserData for Audio {
          * @luafunc __tostring
          */
         methods.add_meta_method(MetaMethod::ToString, |_, audio: &Self, ()| {
-            Ok(format!("audio( {} )", &audio.name))
+            Ok(format!("audio( {} )", &audio.buffer.name))
         });
         /*
          * @brief Creates a new audio source.
@@ -625,7 +620,7 @@ impl UserData for Audio {
         methods.add_function(
             "new",
             |_, (val, streaming): (String, bool)| -> mlua::Result<Self> {
-                Ok(Self::new(
+                Ok(Self::from_path(
                     &val,
                     match streaming {
                         true => AudioType::Stream,
