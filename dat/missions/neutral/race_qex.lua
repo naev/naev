@@ -151,7 +151,7 @@ function approach_terminal ()
       var.push("racing_intro", true)
    end
 
-   local w, h = 460, 420
+   local w, h = 480, 420
    local wdw = luatk.newWindow( nil, nil, w, h )
    luatk.newButton( wdw, -20-80-20, -20, 80, 30, _("Race!"), function ()
       local worthy, reason = player.pilot():spaceworthy()
@@ -167,7 +167,7 @@ function approach_terminal ()
 
    local txt_race = luatk.newText( wdw, 240, 40, w-260, 220 )
 
-   local bzr_race = bezier.newBezier( wdw, 20+200+20, 160, 200, 200 )
+   local bzr_race = bezier.newBezier( wdw, 20+200+20, 160, w-260, 190 )
 
    local track_names = {}
    for k,v in ipairs(track_list) do
@@ -179,23 +179,29 @@ function approach_terminal ()
 
       bzr_race:set( track.track )
 
-      --txt = txt.."#n".._("Name: ").."#0"     ..track.name.."\n"
-      txt = txt.."#n".._("Length: ").."#0"   ..fmt.number(track.length).."\n"
+      txt = txt .. '#nLength: ' .. fmt.number(track.length) .. ' km#0\n'
+      local cols = {'#o', '#w', '#y'}
+      local yet
       for n, i in ipairs({'Bronze', 'Silver', 'Gold'}) do
-         txt = txt .. '#n' .._('Goal Time:')
-         txt = txt .. '#0 ' .. display_time(track.goaltime[i])
-         txt = txt .. ' #n(' .. _(i) .. ')\n'
-      end
-      txt = txt.."#n".._("Reward: ").."#0"..fmt.credits(track.reward)..' #n0.5/1/2#0\n'
-      if track.besttime == math.huge then
-         txt = txt.."#n".._("Best Time: ").."#0".._("N/A")
-      else
-         local col = ""
-         if track.besttime <= track.goaltime.Bronze then
-            col = "#g"
+         if not yet and track.besttime >= track.goaltime[i] then
+            yet = true
+            txt = txt .. '#b' .. _('Best Time:') .. ' '
+            if track.besttime == math.huge then
+               txt = txt .. '#n' .. _('N/A') .. '#0\n'
+            else
+               txt = txt .. display_time(track.besttime) .. '#0\n'
+            end
          end
-         txt = txt.."#n".._("Best Time: ").."#0"..col..display_time(track.besttime)
+         txt = txt .. '#n' .. _('Goal Time:') .. cols[n]
+         txt = txt .. ' ' .. display_time(track.goaltime[i])
+         txt = txt .. ' ' .. '#n(' .. _(i) .. ')#0\n'
       end
+      if not yet then
+         txt = txt .. '#b' .. _('Best Time:') .. ' ' .. display_time(track.besttime) .. '#0\n'
+      end
+      txt = txt .. '#n' .. _('Reward:') .. ' '
+      txt = txt .. cols[1] .. '0.5#n/' .. cols[2] .. '1#n/' .. cols[3] .. '2#0'
+      txt = txt .. ' #nx ' .. fmt.credits(track.reward) .. '#0\n'
 
       txt_race:set(txt)
    end )
@@ -412,8 +418,9 @@ function race_landed ()
             already_have[g] = true
          end
       end
-      local reward_outfit = outfit.get('Racing Trophy (' .. completed .. ')')
+      local reward_outfit
       if completed then
+         reward_outfit = outfit.get('Racing Trophy (' .. completed .. ')')
          upgrade_trophies(reward_outfit)
       end
       if completed and not already_have[completed] then
