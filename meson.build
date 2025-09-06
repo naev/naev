@@ -462,6 +462,7 @@ naevcrs = rust.bindgen(
       console: true,
       command: [ 'env', cargo_env, cargo, 'build', cargo_options, ] )
    # Now we can copy the compile rlib to a location where meson can understand it
+   # TODO When the following gets merged we can simplify this https://github.com/rust-lang/cargo/issues/6790
    naev_rlib = custom_target( 'naev_rlib',
       depends: [naev_rlib_compile],
       output: 'libnaev.rlib',
