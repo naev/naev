@@ -13,11 +13,6 @@
    nluaL_optarg( L, ind, def, luaL_checkvector )
 
 /*
- * Vector library.
- */
-int nlua_loadVector( nlua_env *env );
-
-/*
  * Vector operations.
  */
 vec2 *lua_tovector( lua_State *L, int ind );
