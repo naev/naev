@@ -275,6 +275,9 @@ fn naevmain() -> Result<()> {
     };
 
     // OpenAL
+    if audio::init().is_err() {
+        warn!("{}", gettext("Problem setting up sound!"));
+    }
     unsafe {
         if naevc::conf.nosound != 0 {
             info!("{}", gettext("Sound is disabled!"));
@@ -284,8 +287,7 @@ fn naevmain() -> Result<()> {
         if naevc::sound_init() != 0 {
             warn!("{}", gettext("Problem setting up sound!"));
         }
-        let m = CString::new("load")?;
-        naevc::music_choose(m.as_ptr());
+        naevc::music_choose(c"load".as_ptr());
     }
 
     // Misc Init

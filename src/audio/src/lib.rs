@@ -16,14 +16,11 @@ use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
 use nalgebra::Vector3;
 use std::ffi::{CStr, CString};
 use std::sync::atomic::{AtomicBool, AtomicPtr, Ordering};
-use std::sync::{Arc, Mutex, MutexGuard};
+use std::sync::{Arc, LazyLock, Mutex, MutexGuard, RwLock};
 
 const NUM_VOICES: usize = 64;
 const REFERENCE_DISTANCE: f32 = 500.;
 const MAX_DISTANCE: f32 = 25_000.;
-static AUDIO_ENABLED: AtomicBool = AtomicBool::new(false);
-/// Master volume in log
-static VOLUME_MASTER: AtomicF32 = AtomicF32::new(1.0);
 
 struct LuaAudioEfx {
     name: String,
@@ -389,7 +386,7 @@ impl Audio {
     }
 
     pub fn set_volume(&mut self, vol: f32) {
-        let master = VOLUME_MASTER.load(Ordering::Relaxed);
+        let master = AUDIO.volume.read().unwrap().volume;
         self.source.parameter_f32(AL_GAIN, master * vol);
         self.volume = vol;
     }
@@ -467,16 +464,29 @@ impl Audio {
     }
 }
 
+pub struct AudioVolume {
+    volume: f32,
+    volume_lin: f32,
+    volume_speed: f32,
+}
+impl AudioVolume {
+    pub fn new() -> Self {
+        Self {
+            volume: 1.,
+            volume_lin: 1.,
+            volume_speed: 1.,
+        }
+    }
+}
+
 pub struct AudioSystem {
     device: al::Device,
     context: al::Context,
 
-    volume: f32,
-    volume_lin: f32,
-    volume_speed: f32,
-
     freq: i32,
     output_limiter: bool,
+
+    volume: RwLock<AudioVolume>,
 }
 impl AudioSystem {
     pub fn new() -> Result<Self> {
@@ -564,14 +574,18 @@ impl AudioSystem {
             device,
             context,
 
-            volume: 1.,
-            volume_lin: 1.,
-            volume_speed: 1.,
+            volume: RwLock::new(AudioVolume::new()),
 
             freq,
             output_limiter,
         })
     }
+}
+static AUDIO: LazyLock<AudioSystem> = LazyLock::new(|| AudioSystem::new().unwrap());
+
+pub fn init() -> Result<()> {
+    let _ = &*AUDIO;
+    Ok(())
 }
 
 /*
@@ -1227,3 +1241,32 @@ impl UserData for Audio {
         });
     }
 }
+
+/*
+pub fn open_vec2(lua: &mlua::Lua, env: &LuaEnv) -> anyhow::Result<()> {
+    let proxy = lua.create_proxy::<Audio>()?;
+    env.set("audio", &proxy)?;
+    // Add to the Naev stuff
+    let naev: mlua::Table = env.get("naev")?;
+    naev.set("audio", proxy)?;
+
+    // Only add stuff as necessary
+    if let mlua::Value::Nil = lua.named_registry_value("push_vector")? {
+        let push_vector = lua.create_function(|lua, (x, y): (f64, f64)| {
+            let vec = Vec2::new(x, y);
+            lua.create_any_userdata(vec)
+        })?;
+        lua.set_named_registry_value("push_vector", push_vector)?;
+
+        let get_vector = lua.create_function(|_, mut ud: mlua::UserDataRefMut<Vec2>| {
+            let vec: *mut Vec2 = &mut *ud;
+            Ok(Value::LightUserData(mlua::LightUserData(
+                vec as *mut c_void,
+            )))
+        })?;
+        lua.set_named_registry_value("get_vector", get_vector)?;
+    }
+
+    Ok(())
+}
+    */
