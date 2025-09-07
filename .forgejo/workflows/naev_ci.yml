@@ -8,27 +8,12 @@ jobs:
     container:
       image: "codeberg.org/naev/naev-release:latest"
     steps:
-      - name: "BODGE: Symlink node-20 to node"
-        run: |
-          ln -s /usr/bin/node-20 /usr/bin/node
-
       - name: Checkout Naev Repository
         uses: actions/checkout@v4
         with:
           path: source
           fetch-depth: 0
           submodules: true
-
-      - name: Configure Rust
-        uses: https://github.com/actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          target: "x86_64-unknown-linux-gnu"
-          override: true
-          rustflags: ""
-
-      - name: Install bindgen-cli
-        run: |
-          cargo install bindgen-cli
 
       - name: Package Dist
         run: |
@@ -62,10 +47,6 @@ jobs:
         - ${{ github.workspace }}:${{ github.workspace }}
 
     steps:
-      - name: "BODGE: Symlink node-20 to node"
-        run: |
-          ln -s /usr/bin/node-20 /usr/bin/node
-
       - name: Get Source
         uses: actions/download-artifact@v3
         with:
@@ -75,17 +56,6 @@ jobs:
         run: |
           mkdir source
           tar -xf naev-*.tar.xz -C source --strip 1
-
-      - name: Configure Rust
-        uses: https://github.com/actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          target: "${{ matrix.target }}"
-          override: true
-          rustflags: ""
-
-      - name: Install bindgen-cli
-        run: |
-          cargo install bindgen-cli
 
       - name: Meson Setup
         id: setup
@@ -186,10 +156,6 @@ jobs:
         PKG_CONFIG_PATH: "/usr/x86_64-w64-mingw32/sys-root/mingw/lib/pkgconfig:/__w/naev/naev/source/subprojects/LuaJIT-04dca7911ea255f37be799c18d74c305b921c1a6/etc"
         BINDGEN_EXTRA_CLANG_ARGS: "--sysroot=/usr/x86_64-w64-mingw32/sys-root/mingw --target=x86_64-w64-mingw32"
     steps:
-      - name: "BODGE: Symlink node-20 to node"
-        run: |
-          ln -s /usr/bin/node-20 /usr/bin/node
-
       - name: Get Source
         uses: actions/download-artifact@v3
         with:
@@ -199,17 +165,6 @@ jobs:
         run: |
           mkdir source
           tar -xf naev-*.tar.xz -C source --strip 1
-
-      - name: Configure Rust
-        uses: https://github.com/actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          target: "${{ matrix.target }}"
-          override: true
-          rustflags: ""
-
-      - name: Install bindgen-cli
-        run: |
-          cargo install bindgen-cli
 
       - name: Meson Setup
         id: setup
@@ -296,36 +251,6 @@ jobs:
         BINDGEN_EXTRA_CLANG_ARGS: "--sysroot=/usr/lib/osxcross/SDK/MacOSX14.sdk --target=${{ matrix.arch }}-apple-darwin"
 
     steps:
-      - name: "BODGE: Symlink node-20 to node"
-        run: |
-          ln -s /usr/bin/node-20 /usr/bin/node
-
-      - name: Configure Build Environment
-        run: |
-          echo "Configuring MacPorts packages and build env variables for $BUILDARCH."
-          if [[ "$BUILDARCH" == "aarch64" ]] then
-            rm -f /usr/lib/osxcross/macports
-            ln -s /usr/lib/osxcross/macports.aarch64 /usr/lib/osxcross/macports
-          elif [[ "$BUILDARCH" == "x86_64" ]] then
-            rm -f /usr/lib/osxcross/macports
-            ln -s /usr/lib/osxcross/macports.x86_64 /usr/lib/osxcross/macports
-          # Fallback
-          else
-            rm -f /usr/lib/osxcross/macports
-            ln -s /usr/lib/osxcross/macports.x86_64 /usr/lib/osxcross/macports
-          fi
-
-      - name: Configure Rust
-        uses: https://github.com/actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          target: "${{ matrix.arch }}-apple-darwin"
-          override: true
-          rustflags: ""
-
-      - name: Install bindgen-cli
-        run: |
-          cargo install bindgen-cli --git https://github.com/rust-lang/rust-bindgen.git --rev bd011d43e2d18078606350eb8c33048bf8a59bac
-
       - name: Get Source
         uses: actions/download-artifact@v3
         with:
@@ -407,10 +332,6 @@ jobs:
       ]
 
     steps:
-      - name: "BODGE: Symlink node-20 to node"
-        run: |
-          ln -s /usr/bin/node-20 /usr/bin/node
-
       - name: Get Source
         uses: actions/download-artifact@v3
         with:
@@ -420,17 +341,6 @@ jobs:
         run: |
           mkdir source
           tar -xf naev-*.tar.xz -C source --strip 1
-
-      - name: Configure Rust
-        uses: https://github.com/actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          target: "x86_64-unknown-linux-gnu"
-          override: true
-          rustflags: ""
-
-      - name: Install bindgen-cli
-        run: |
-          cargo install bindgen-cli
 
       - name: Meson Setup
         id: setup
@@ -468,10 +378,6 @@ jobs:
     needs: Luacheck
 
     steps:
-      - name: "BODGE: Symlink node-20 to node"
-        run: |
-          ln -s /usr/bin/node-20 /usr/bin/node
-
       - name: Get Source
         uses: actions/download-artifact@v3
         with:
@@ -481,21 +387,6 @@ jobs:
         run: |
           mkdir source
           tar -xf naev-*.tar.xz -C source --strip 1
-
-      - name: Configure Rust
-        uses: https://github.com/actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          target: "x86_64-unknown-linux-gnu"
-          override: true
-          rustflags: ""
-
-      - name: Install bindgen-cli
-        run: |
-          cargo install bindgen-cli
-
-      - name: Install bindgen-cli
-        run: |
-          cargo install bindgen-cli
 
       - name: Meson Setup
         run: |
