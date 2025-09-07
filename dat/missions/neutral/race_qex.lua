@@ -24,6 +24,7 @@ local lmisn = require "lmisn"
 local DEFAULT_REWARD = 100e3
 
 goal_times = require 'missions.neutral.race.times_qex'
+local medal_col = {Bronze= '#o', Silver='#w', Gold= '#y'}
 
 local elapsed_time, race_done
 
@@ -180,9 +181,8 @@ function approach_terminal ()
       bzr_race:set( track.track )
 
       txt = txt .. '#nLength: ' .. fmt.number(track.length) .. ' km#0\n'
-      local cols = {'#o', '#w', '#y'}
       local yet
-      for n, i in ipairs({'Bronze', 'Silver', 'Gold'}) do
+      for _n, i in ipairs({'Bronze', 'Silver', 'Gold'}) do
          if not yet and track.besttime >= track.goaltime[i] then
             yet = true
             txt = txt .. '#b' .. _('Best Time:') .. ' '
@@ -192,7 +192,7 @@ function approach_terminal ()
                txt = txt .. display_time(track.besttime) .. '#0\n'
             end
          end
-         txt = txt .. '#n' .. _('Goal Time:') .. cols[n]
+         txt = txt .. '#n' .. _('Goal Time:') .. medal_col[i]
          txt = txt .. ' ' .. display_time(track.goaltime[i])
          txt = txt .. ' ' .. '#n(' .. _(i) .. ')#0\n'
       end
@@ -200,7 +200,8 @@ function approach_terminal ()
          txt = txt .. '#b' .. _('Best Time:') .. ' ' .. display_time(track.besttime) .. '#0\n'
       end
       txt = txt .. '#n' .. _('Reward:') .. ' '
-      txt = txt .. cols[1] .. '0.5#n/' .. cols[2] .. '1#n/' .. cols[3] .. '2#0'
+      txt = txt .. medal_col['Bronze'] .. '0.5#n/' .. medal_col['Silver'] .. '1#n/'
+      txt = txt .. medal_col['Gold'] .. '2#0'
       txt = txt .. ' #nx ' .. fmt.credits(track.reward) .. '#0\n'
 
       txt_race:set(txt)
@@ -357,6 +358,7 @@ end
 
 function race_landed ()
    local beat_time
+   local nxt
    local reward
    local bonus
 
@@ -370,31 +372,39 @@ function race_landed ()
          beat_time = g
          break
       end
+      nxt = g
    end
 
-   local best_improved = false
+   local imp_str
    -- Update best time if applicable
    if elapsed_time < mem.track.besttime or mem.track.besttime <= 0 then
       mem.track.besttime = elapsed_time
       var.push( track_besttime(mem.track), elapsed_time )
-      best_improved = true
+      imp_str = ' ' .. _('This is your new best time!')
+   else
+      imp_str = ''
    end
 
    vn.clear()
    vn.scene()
    vn.transition()
    if beat_time then
-      if best_improved then
-         vn.na(fmt.f(_("You finished the race in {elapsed} and beat the goal time of {goal} ({metal})! This is your new best time! Congratulations!"), {
-            elapsed= "#g"..display_time( elapsed_time ).."#0",
-            goal= display_time( mem.track.goaltime[beat_time] ),
-            metal= beat_time
+      if nxt then
+         vn.na(fmt.f(_('You finished the race in {elapsed} and beat the goal time of {goal} ({metal}) but were {short} over the goal time of {ngoal} ({nmetal}).{imp_str} Congratulations!'), {
+            elapsed= '#b' .. display_time( elapsed_time ) .. '#0',
+            goal= medal_col[beat_time] .. display_time( mem.track.goaltime[beat_time] ) .. '#0',
+            metal= beat_time,
+            short= '#r' .. display_time( elapsed_time - mem.track.goaltime[nxt] ) .. '#0',
+            ngoal= medal_col[nxt] .. display_time( mem.track.goaltime[nxt] ) .. '#0',
+            nmetal= nxt,
+            imp_str= imp_str,
          }))
       else
-         vn.na(fmt.f(_("You finished the race in {elapsed} and beat the goal time of {goal} ({metal})! Congratulations!"), {
-            elapsed= "#g"..display_time( elapsed_time ).."#0",
-            goal= display_time( mem.track.goaltime[beat_time] ),
+         vn.na(fmt.f(_("You finished the race in {elapsed} and beat the goal time of {goal} ({metal}).{imp_str} Congratulations!"), {
+            elapsed= '#b' .. display_time( elapsed_time ) .. '#0',
+            goal= medal_col[beat_time] .. display_time( mem.track.goaltime[beat_time] ) .. '#0',
             metal= beat_time,
+            imp_str= imp_str,
          }))
       end
       local beat_n
@@ -427,7 +437,7 @@ function race_landed ()
          vn.na(fmt.f(_([[An individual in a suit and tie suddenly takes you up onto a stage. A large name tag on their jacket says 'Melendez Corporation'. "Congratulations on your win," they say, shaking your hand, "That was a great race! On behalf of Melendez Corporation, and for beating the goal times of all the courses here at {spobname}, I would like to present to you your {metal} trophy!".
 They hand you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it. At least the trophy looks cool.]]),
             {spobname= spob.cur(), metal= completed}))
-         vn.na(fmt.reward(reward_outfit)..'\n'..fmt.reward(reward)..'\n'..fmt.reward(bonus))
+         vn.na(fmt.reward(reward_outfit)..'\n'..fmt.reward(reward)..'\n'..fmt.reward(bonus)..' (early finish bonus)')
          if completed == 'Silver' or (not already_have['Silver'] and completed == 'Gold') then
             vn.func( function ()
                diff.apply("melendez_dome_xy37")
@@ -438,21 +448,18 @@ They hand you one of those fake oversized cheques for the audience, and then a c
             player.outfitAdd( reward_outfit )
          end )
       else
-         vn.na(fmt.reward(reward)..'\n'..fmt.reward(bonus))
+         vn.na(fmt.reward(reward)..'\n'..fmt.reward(bonus)..' (early finish bonus)')
       end
       vn.func( function ()
          player.pay(reward)
          player.pay(bonus)
       end)
-   elseif best_improved then
-      vn.na(fmt.f(_("You finished the race in {elapsed}, but were {short} over the goal time. This is your new best time! Keep trying!"), {
-         elapsed="#g"..display_time( elapsed_time ).."#0",
-         short="#r"..display_time( elapsed_time - mem.track.goaltime['Bronze'] ).."#0",
-      }))
    else
-      vn.na(fmt.f(_("You finished the race in {elapsed}, but were {short} over the goal time. Keep trying!"), {
-         elapsed="#g"..display_time( elapsed_time ).."#0",
-         short="#r"..display_time( elapsed_time - mem.track.goaltime['Bronze'] ).."#0",
+      vn.na(fmt.f(_("You finished the race in {elapsed}, but were {short} over the goal time of {goal}.{imp_str} Keep trying!"), {
+         elapsed= '#b' .. display_time( elapsed_time ) .. '#0',
+         short= '#r' .. display_time( elapsed_time - mem.track.goaltime['Bronze'] ) .. '#0',
+         goal= medal_col['Bronze'] .. display_time( mem.track.goaltime['Bronze'] ) .. '#0',
+         imp_str= imp_str,
       }))
    end
 
