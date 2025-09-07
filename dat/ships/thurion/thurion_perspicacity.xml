@@ -21,7 +21,6 @@
  <description>The Thurion Perspicacity is a fast, light fighter typically used for scouting or attacking in swarms. Due to their small size, they use a special nebula-hardened frame, giving them much needed resistance to the nebula volatility.</description>
  <health>
   <armour>50</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>1</crew>

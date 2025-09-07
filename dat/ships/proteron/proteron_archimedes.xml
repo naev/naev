@@ -21,7 +21,6 @@
  <description>The Archimedes is the backbone of the Proteron fleet. Offering heavy firepower and high durability, it can always be found in the heat of battle.</description>
  <health>
   <armour>1900</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>40</crew>

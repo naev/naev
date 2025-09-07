@@ -22,7 +22,6 @@
  </characteristics>
  <health>
   <armour>25</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <slots>
   <weapon size="small" x="7" y="0" h="1"/>

@@ -12,7 +12,6 @@
  <description>The Tristan is the predecessor of Nexus Shipyards' popular Lancelot model. Originally developed for the Empire during the Dvaered Revolts for peacekeeping and suppressing dissent, delays made it so the Tristan was unable prevent the loss of territory and creation of House Dvaered. Due to a powerful atmospheric flight mode, the Tristan quickly became very popular as a flexible fighter. However, production quickly ceased when it was replaced by the Lancelot, with a more compact and flexible form. Although no new Tristan ships are being produced anymore, the abundance of decommissioned vessels and a large refurbishing and repair community make it so they are still surprisingly in use, especially by those who can not afford better.</description>
  <health>
   <armour>80</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>3</crew>

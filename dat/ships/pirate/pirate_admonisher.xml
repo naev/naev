@@ -19,7 +19,6 @@
  <description>The stock Admonisher is a powerful vessel, especially for its size. Through the usual Skull and Bones refit the Pirate Admonisher features improved manoeuvrability, more weapons space and slightly improved defences, at a cost of cargo capacity and shielding power.</description>
  <health>
   <armour>200</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>13</crew>

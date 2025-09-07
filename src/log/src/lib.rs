@@ -31,7 +31,7 @@ enum Output {
 }
 impl Output {
     fn write(&mut self, msg: &str, level: log::Level) -> Result<()> {
-        if msg.len() == 0 {
+        if msg.is_empty() {
             return Ok(());
         }
 

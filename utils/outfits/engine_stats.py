@@ -5,7 +5,7 @@ from sys import stdout, stderr, stdin
 import math
 
 from getconst import PHYSICS_SPEED_DAMP
-from combine_multi import mk_combine
+from arg_to_obj import arg_to_naev_obj
 from slst import Slst
 
 
@@ -105,7 +105,7 @@ def l( s ):
 def main( args, gith = False, color = False, term = False, autostack = False,
       combine = False, nosort = False, good_only = False ):
 
-   L = [ (o.to_dict(), o.shortname()) for o in mk_combine(args, combine, autostack, good_only) ]
+   L = [ (o.to_dict(), o.shortname()) for o in arg_to_naev_obj(args, combine, autostack, good_only) ]
 
    stderr.write('\n')
    if not nosort:

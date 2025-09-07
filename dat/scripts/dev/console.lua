@@ -94,3 +94,10 @@ pprint = require "dev.pprint"
 dev = {}
 dev.weapon_test = require "dev.weapon_test"
 dev.system_tour = function () naev.eventStart("System Tour") end
+
+-- Lazy load equipopt as it requires outfits to be loaded and such
+local equipopt
+dev.debug_goodness = function (...)
+   equipopt = require "equipopt"
+   return equipopt.optimize.debug_goodness(...)
+end

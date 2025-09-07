@@ -21,7 +21,6 @@
  <description>This military grade version of the Admonisher is mostly identical in function to a standard Admonisher, but with slightly better armour, and shields.</description>
  <health>
   <armour>240</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>13</crew>

@@ -48,13 +48,16 @@ outfits.standard.structural = {
    -- Heavy Structural
    "Battery III", "Shield Capacitor III", "Reactor Class III",
    "Large Shield Booster", "Nanobond Plating",
+   "Large Cargo Pod", "Large Fuel Pod",
    -- Medium Structural
    "Battery II", "Shield Capacitor II", "Reactor Class II",
    "Medium Shield Booster", "Microbond Plating",
+   "Medium Cargo Pod", "Medium Fuel Pod",
    -- Small Structural
    --"Improved Stabilizer", "Engine Reroute",
    "Battery I", "Shield Capacitor I", "Reactor Class I",
    "Small Shield Booster", "Plasteel Plating",
+   "Small Cargo Pod", "Small Fuel Pod",
 }
 outfits.standard.set = outfits.merge{
    outfits.standard.weapons,

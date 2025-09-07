@@ -1,9 +1,5 @@
 
-/*
- * TODO:
- *  - Apply the portability fix to utils/ssys/{potential,reposition}.c
- *  - re-implement it in rust.
- */
+/* TODO: re-implement it in rust. */
 
 /**
  * An example:
@@ -25,47 +21,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "getline.c"
+
 static char *my_strchrnul(char *s, int c)
 {
    char *out = strchr(s, c);
    return out ? out : (s + strlen(s));
-}
-
-typedef struct {
-   FILE  *fp;
-   char  *buf;
-   size_t siz;
-   size_t num;
-} MYFILE;
-
-static int my_getline(char **line, size_t *line_siz, MYFILE *fp)
-{
-   char *where = memchr(fp->buf, '\n', fp->num);
-   while (!where && !feof(fp->fp)) {
-      if (fp->num == fp->siz) {
-         fp->siz = (fp->siz * 2) | 3;
-         fp->buf = realloc(fp->buf, fp->siz);
-      }
-      const size_t added =
-         fread(fp->buf + fp->num, sizeof(char), fp->siz - fp->num, fp->fp);
-      where = memchr(fp->buf + fp->num, '\n', added);
-      fp->num += added;
-   }
-   if (!where)
-      where = fp->buf + fp->num - 1;
-
-   const size_t n = where + 1 - fp->buf;
-
-   if (n + 1 > *line_siz)
-      *line = realloc(*line, (*line_siz = n + 1));
-
-   memcpy(*line, fp->buf, n);
-   (*line)[n] = '\0';
-
-   fp->num -= n;
-   memmove(fp->buf, fp->buf + n, fp->num);
-
-   return (int) n - 1;
 }
 
 static int do_it(MYFILE *fp, const char *pref)
@@ -138,7 +99,6 @@ int main(int argc, char *const *argv)
    if (argc == 1) {
       MYFILE mfp = {.fp = stdin};
       res        = do_it(&mfp, "");
-      free(mfp.buf);
    } else
       for (int i = 1; i < argc && !res; i++)
          if ((fp = fopen(argv[i], "rt"))) {
@@ -147,8 +107,7 @@ int main(int argc, char *const *argv)
             char *pref = calloc(snprintf(NULL, 0, "%s ", bn) + 1, sizeof(char));
             sprintf(pref, "%s ", bn);
             res = do_it(&mfp, pref) || res;
-            fclose(mfp.fp);
-            free(mfp.buf);
+            fclose(fp);
             free(pref);
          } else
             res = 1;

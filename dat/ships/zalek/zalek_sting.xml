@@ -20,7 +20,6 @@
  <description>The Sting Corvette is rather large for its class, but its advanced sensor suite, impressive weapons loadout, tough shields, and overall flexibility makes it a core part of the House Za'lek fleets. Its low fuel consumption and high autonomy, due to the embedded carrier functionality, make it also an ideal ship for reconnaissance missions.</description>
  <health>
   <armour>230</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>12</crew>

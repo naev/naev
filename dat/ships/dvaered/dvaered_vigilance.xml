@@ -19,7 +19,6 @@
  <description>This military grade version of the Vigilance has an optimized weight distribution allowing it to carry more payload.</description>
  <health>
   <armour>550</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>15</crew>

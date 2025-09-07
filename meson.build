@@ -418,7 +418,7 @@ naevcrs = rust.bindgen(
 
    # First create the static library with C using meson
    naev_clib = static_library(
-      'naev', # Has to be called 'naev' like the executable, or things fail to compile (why?)
+      'naev', # Has to be called 'naev' or it won't link properly with the executable (why?)
       naev_source,
       include_directories: include_dirs,
       dependencies: naev_deps,
@@ -454,12 +454,20 @@ naevcrs = rust.bindgen(
       cargo_options += ['--target', target_triplet]
    endif
 
-   naev_rlib = custom_target( 'cargo-build',
+   # First let's compile Rust with cargo, but we can't control output
+   naev_rlib_compile = custom_target( 'cargo-build',
       depends: [naevcrs, naevc_crate, naev_clib],
       depend_files: source_rust + cargo_toml + buildrs,
-      output: 'libnaev.rlib',
+      output: 'src',
       console: true,
-      command: [ 'env', cargo_env, cargo, 'build', cargo_options, '&&', copydir, meson.project_build_root(), 'src' / target_triplet / rust_target / '@OUTPUT@', ] )
+      command: [ 'env', cargo_env, cargo, 'build', cargo_options, ] )
+   # Now we can copy the compile rlib to a location where meson can understand it
+   # TODO When the following gets merged we can simplify this https://github.com/rust-lang/cargo/issues/6790
+   naev_rlib = custom_target( 'naev_rlib',
+      depends: [naev_rlib_compile],
+      output: 'libnaev.rlib',
+      command: [ copydir, meson.project_build_root(), 'src' / target_triplet / rust_target / '@OUTPUT@', ] )
+   # Also declare it as a library so meson can link with it
    naev_rlib_lib = library(
       'naev_rlib',
       naev_rlib,
@@ -488,7 +496,7 @@ naevcrs = rust.bindgen(
 
    # Finally, build the executable with Rust again, but using meson to link it all together
    naev_bin = executable(
-      'naev',
+      'naev', # needed so the binary is named 'naev'
       sources: naev_rs,
       # Have to make sure Rust uses the dependencies from Cargo
       rust_args: ['--extern', 'naev=libnaev.rlib', '-L', 'src' / target_triplet / rust_target / 'deps', '-L', 'src' / rust_target / 'deps'],
@@ -498,6 +506,11 @@ naevcrs = rust.bindgen(
       export_dynamic: use_export_dynamic,
       link_args: naev_bin_link_args,
       install: true)
+
+   # Simplifies clippy stuff
+   clippy = run_target( 'clippy',
+      depends: [naev_rlib_compile],
+      command: [ 'env', cargo_env, cargo, 'clippy', cargo_options, ] )
 
    # Naevlua is unused and unsupported with rust for now.
    #naevlua_bin = executable(

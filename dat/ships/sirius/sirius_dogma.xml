@@ -18,7 +18,6 @@
  <description>The backbone of the House Sirius fleet, the Dogma is a sight to behold. Trimmed in gold and silver and fielding a large array of weapons, the Dogma is seldom surpassed in either prestige or military might.</description>
  <health>
   <armour>1800</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>43</crew>

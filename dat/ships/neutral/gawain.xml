@@ -14,7 +14,6 @@
  <description>The Gawain is a very high-end ship, outpacing nearly all other production vessels. It relies heavily on technology first implemented on the Lancelot and is widely used as a sporting vessel as it is extremely manoeuvrable, though they rarely survive combat due to their meagre weapons space and relative fragility.</description>
  <health>
   <armour>40</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>2</crew>

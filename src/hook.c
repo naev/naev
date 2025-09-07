@@ -142,6 +142,12 @@ int hook_load( xmlNodePtr parent );
 /* Misc. */
 static Mission *hook_getMission( Hook *hook );
 
+static int should_run_hook( void )
+{
+   return ( ( player.p != NULL ) && !player_isFlag( PLAYER_DESTROYED ) &&
+            !pilot_isFlag( player.p, PILOT_DEAD ) );
+}
+
 /**
  * Adds a hook to the queue.
  */
@@ -791,7 +797,8 @@ void hooks_update( double dt )
 
    /* Don't update without player. */
    if ( ( player.p == NULL ) || player_isFlag( PLAYER_CREATING ) ||
-        player_isFlag( PLAYER_DESTROYED ) )
+        player_isFlag( PLAYER_DESTROYED ) ||
+        pilot_isFlag( player.p, PILOT_DEAD ) )
       return;
 
    /* Clear creation flags. */
@@ -925,7 +932,7 @@ static int hooks_executeParam( const char *stack, const HookParam *param )
    int run;
 
    /* Don't update if player is dead. */
-   if ( ( player.p == NULL ) || player_isFlag( PLAYER_DESTROYED ) )
+   if ( !should_run_hook() )
       return 0;
 
    /* Reset the current stack's ran and creation flags. */
@@ -1002,7 +1009,7 @@ int hooks_runParamDeferred( const char *stack, const HookParam *param )
    HookQueue_t *hq;
 
    /* Don't update if player is dead. */
-   if ( ( player.p == NULL ) || player_isFlag( PLAYER_DESTROYED ) )
+   if ( !should_run_hook() )
       return 0;
 
    hq        = calloc( 1, sizeof( HookQueue_t ) );
@@ -1032,7 +1039,7 @@ int hooks_runParamDeferred( const char *stack, const HookParam *param )
 int hooks_runParam( const char *stack, const HookParam *param )
 {
    /* Don't update if player is dead. */
-   if ( ( player.p == NULL ) || player_isFlag( PLAYER_DESTROYED ) )
+   if ( !should_run_hook() )
       return 0;
 
    /* Not time to run hooks, so queue them. */
@@ -1104,7 +1111,7 @@ int hook_runIDparam( unsigned int id, const HookParam *param )
    Hook *h;
 
    /* Don't update if player is dead. */
-   if ( ( player.p == NULL ) || player_isFlag( PLAYER_DESTROYED ) )
+   if ( !should_run_hook() )
       return 0;
 
    /* Try to find the hook and run it. */

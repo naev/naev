@@ -13,6 +13,8 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+#include "getline.c"
+
 #define THREADS 4
 #define SAMP 200
 #define EDGE_FACT 1.6
@@ -740,6 +742,7 @@ int edge_cmp(const void *a, const void *b)
 int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
           bool only, bool ign_alone, bool quiet, double weight)
 {
+   MYFILE        mfp     = {.fp = stdin};
    GHashTable   *h       = g_hash_table_new(g_str_hash, g_str_equal);
    struct s_ssys map     = {0};
    const double  nulv[2] = {0.0, 0.0};
@@ -751,7 +754,7 @@ int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
    char  *line = NULL;
    size_t _n   = 0;
    int    n;
-   while ((n = getline(&line, &_n, stdin)) != -1) {
+   while ((n = my_getline(&line, &_n, &mfp)) != -1) {
       int    r1, r2, r3 = 0;
       double tmp[2] = {0.0, 0.0};
       double len    = 1.0;

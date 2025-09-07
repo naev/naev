@@ -18,7 +18,6 @@
  <description>The nimble Nexus Shipyards Shark has proved an excellent canvas for the Skull and Bones technicians. Fitted with an additional weapon mount, its handling suffers minimally while it's able to bring substantially more firepower to bear.</description>
  <health>
   <armour>35</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>2</crew>

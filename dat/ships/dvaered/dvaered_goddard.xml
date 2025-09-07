@@ -22,7 +22,6 @@
  <description>Once upon a time, the Goddard Battlecruiser was commissioned by the Empire for military service. However, during the Dvaered Revolts most Goddard captains sided with the insurgents and, after the establishment of House Dvaered, the Empire ceded the license for the ageing vessel to them. Today, House Dvaered is House Goddard's biggest client and this Dvaered military grade version has been adapted to the needs of the Dvaered Warlords, which means better armour and forwards weapon damage at the cost of increased mass.</description>
  <health>
   <armour>2100</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>52</crew>

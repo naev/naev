@@ -182,7 +182,7 @@ end
 function optimize.goodness_default( o, p )
    local os = o.stats
    -- Base attributes
-   local base = p.cargo*(0.5*math.pow(o.cargo,0.3) + 0.1*(1-os.cargo_inertia)) + p.fuel*0.003*os.fuel
+   local base = p.cargo*(0.5*math.pow(o.cargo,0.3) + 0.1*(1-os.cargo_inertia)) + p.fuel*0.2*o.fuel
    -- Movement attributes
    local move = 0.1*o.accel + 0.1*o.speed + 0.2*o.turn + 50*(os.time_speedup-1)
    -- Health attributes
@@ -328,6 +328,7 @@ local function compute_goodness( outfit_list, p, st, ss, params, limits )
       oo.nebu_absorb = os.nebu_absorb
       -- Misc
       oo.cargo = os.cargo_mod * (os.cargo + ss.cargo) - ss.cargo
+      oo.fuel  = (os.fuel_mod * (os.fuel + ss.fuel) - ss.fuel) / st.fuel_consumption
 
       -- Specific corrections
       if oo.type == "Fighter Bay" then
@@ -883,7 +884,8 @@ function optimize.debug_goodness( p, params, outfits )
    local oo = {}
    for k,v in pairs(ocache) do
       -- Skip core outfits
-      if not v.outfit:tags().core then
+      local t = v.outfit:tags()
+      if not t.core and not t.noplayer then
          table.insert( oo, v )
       end
    end

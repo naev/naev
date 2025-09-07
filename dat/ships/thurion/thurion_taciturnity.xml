@@ -19,7 +19,6 @@
  <description>The Thurion Taciturnity is an armoured and stealthy transport capable both of surviving the harsh nebula and defending itself from attack.</description>
  <health>
   <armour>500</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>6</crew>

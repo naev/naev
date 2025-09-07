@@ -15,7 +15,6 @@
  <description>Commonly referred to as the "Little Goddard", the Ancestor also has its roots in the primitive flying machines used by men many ages ago. Unlike the Goddard though, the electronics are manufactured by House Dvaered, making it considerably inferior in that area.</description>
  <health>
   <armour>60</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>6</crew>

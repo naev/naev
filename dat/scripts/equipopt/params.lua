@@ -37,8 +37,8 @@ function params.default( overwrite )
       weap        = 1,
       ew          = 1,
       -- Not as important
-      cargo       = 1,
-      fuel        = 1,
+      cargo       = 0,
+      fuel        = 0,
 
       -- Weapon stuff
       t_absorb    = 0.2, -- assumed target absorption
@@ -66,6 +66,8 @@ function params.civilian( overwrite )
       t_speed     = 300,
       t_track     = 4e3,
       t_range     = 1e3,
+      cargo       = 1,
+      fuel        = 1,
    }, overwrite )
 end
 
@@ -76,7 +78,8 @@ function params.merchant( overwrite )
       t_speed     = 300,
       t_track     = 4e3,
       t_range     = 1e3,
-      cargo       = 2,
+      cargo       = 1.5,
+      fuel        = 1,
       forward     = 0.5, -- Less forward weapons
       prefer      = {
          ["Point Defense"] = 1.1,
@@ -93,7 +96,8 @@ function params.armoured_transport( overwrite )
       t_speed     = 300,
       t_track     = 4e3,
       t_range     = 1e3,
-      cargo       = 1.5,
+      cargo       = 1,
+      fuel        = 0.5,
       forward     = 0.3, -- Less forward weapons
    }, overwrite )
 end
