@@ -447,7 +447,19 @@ impl LuaEnv {
     }
 
     pub fn load_standard(&mut self, lua: &NLua) -> Result<()> {
-        vec2::open_vec2(&lua.lua, self)?;
+        let naev: mlua::Table = self.get("naev")?;
+
+        let open_lib = |name: &str,
+                        open: fn(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData>|
+         -> Result<()> {
+            let lib = open(&lua.lua)?;
+            self.set(name, &lib)?;
+            naev.set(name, &lib)?;
+            Ok(())
+        };
+
+        open_lib("vec2", vec2::open_vec2)?;
+
         let ret = unsafe {
             let env = self as *mut LuaEnv as *mut naevc::nlua_env;
             let mut r: c_int = 0;

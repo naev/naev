@@ -2,10 +2,6 @@ use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
 use nalgebra::Vector2;
 use std::os::raw::c_void;
 
-use log::warn_err;
-
-use crate::nlua::{LuaEnv, NLUA};
-
 #[derive(Copy, Clone, derive_more::From, derive_more::Into)]
 pub struct Vec2(Vector2<f64>);
 
@@ -456,12 +452,12 @@ impl UserData for Vec2 {
     }
 }
 
-pub fn open_vec2(lua: &mlua::Lua, env: &LuaEnv) -> anyhow::Result<()> {
+pub fn open_vec2(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
     let proxy = lua.create_proxy::<Vec2>()?;
-    env.set("vec2", &proxy)?;
+    //env.set("vec2", &proxy)?;
     // Add to the Naev stuff
-    let naev: mlua::Table = env.get("naev")?;
-    naev.set("vec2", proxy)?;
+    //let naev: mlua::Table = env.get("naev")?;
+    //naev.set("vec2", proxy)?;
 
     // Only add stuff as necessary
     if let mlua::Value::Nil = lua.named_registry_value("push_vector")? {
@@ -480,24 +476,11 @@ pub fn open_vec2(lua: &mlua::Lua, env: &LuaEnv) -> anyhow::Result<()> {
         lua.set_named_registry_value("get_vector", get_vector)?;
     }
 
-    Ok(())
+    Ok(proxy)
 }
 
 use mlua::ffi;
 use std::os::raw::{c_char, c_int};
-
-#[unsafe(no_mangle)]
-pub unsafe extern "C" fn nlua_loadVector(env: *mut LuaEnv) -> c_int {
-    let lua = &NLUA;
-    let env = unsafe { &*env };
-    match open_vec2(&lua.lua, env) {
-        Err(e) => {
-            warn_err!(e);
-            -1
-        }
-        _ => 0,
-    }
-}
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]

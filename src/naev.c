@@ -311,11 +311,6 @@ nlua_env *loadscreen_load( void )
    load_env   = nlua_newEnv( "loadscreen" );
 
    r = nlua_loadStandard( load_env );
-   r |= nlua_loadNaev( load_env );
-   r |= nlua_loadRnd( load_env );
-   r |= nlua_loadVector( load_env );
-   r |= nlua_loadFile( load_env );
-   r |= nlua_loadData( load_env );
    r |= nlua_loadTex( load_env );
    r |= nlua_loadCol( load_env );
    r |= nlua_loadGFX( load_env );
