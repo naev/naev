@@ -305,12 +305,10 @@ int naev_main_cleanup( void )
  */
 nlua_env *loadscreen_load( void )
 {
-   int r;
-
    load_mutex = SDL_CreateMutex();
    load_env   = nlua_newEnv( "loadscreen" );
 
-   r = nlua_loadStandard( load_env );
+   int r = nlua_loadStandard( load_env );
    r |= nlua_loadTex( load_env );
    r |= nlua_loadCol( load_env );
    r |= nlua_loadGFX( load_env );
