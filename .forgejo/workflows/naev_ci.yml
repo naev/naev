@@ -4,9 +4,7 @@ name: CI
 
 jobs:
   "Package_Source":
-    runs-on: ubuntu-latest
-    container:
-      image: "codeberg.org/naev/naev-release:latest"
+    runs-on: naev-release
     steps:
       - name: Checkout Naev Repository
         uses: actions/checkout@v4
@@ -28,9 +26,6 @@ jobs:
 
   "Linux_Compile_Naev":
     needs: "Package_Source"
-    defaults:
-      run:
-        shell: bash
     strategy:
       fail-fast: false
       matrix:
@@ -40,11 +35,7 @@ jobs:
             wrap_mode: default
             target: x86_64-unknown-linux-gnu
 
-    runs-on: ubuntu-latest
-    container:
-      image: "codeberg.org/naev/${{ matrix.image }}:latest"
-      volumes:
-        - ${{ github.workspace }}:${{ github.workspace }}
+    runs-on: ${{ matrix.image }}
 
     steps:
       - name: Get Source
@@ -148,13 +139,11 @@ jobs:
             config: windows_cross_mingw.ini
             target: x86_64-pc-windows-gnu
 
-    runs-on: ubuntu-latest
-    container:
-      image: "codeberg.org/naev/${{ matrix.image }}:latest"
-      env:
-        PKG_CONFIG: "x86_64-w64-mingw32-pkg-config"
-        PKG_CONFIG_PATH: "/usr/x86_64-w64-mingw32/sys-root/mingw/lib/pkgconfig:/__w/naev/naev/source/subprojects/LuaJIT-04dca7911ea255f37be799c18d74c305b921c1a6/etc"
-        BINDGEN_EXTRA_CLANG_ARGS: "--sysroot=/usr/x86_64-w64-mingw32/sys-root/mingw --target=x86_64-w64-mingw32"
+    runs-on: ${{ matrix.image }}
+    env:
+      PKG_CONFIG: "x86_64-w64-mingw32-pkg-config"
+      PKG_CONFIG_PATH: "/usr/x86_64-w64-mingw32/sys-root/mingw/lib/pkgconfig:/__w/naev/naev/source/subprojects/LuaJIT-04dca7911ea255f37be799c18d74c305b921c1a6/etc"
+      BINDGEN_EXTRA_CLANG_ARGS: "--sysroot=/usr/x86_64-w64-mingw32/sys-root/mingw --target=x86_64-w64-mingw32"
     steps:
       - name: Get Source
         uses: actions/download-artifact@v3
@@ -239,16 +228,14 @@ jobs:
             deploymenttarget: "13.0"
             config: macos_aarch64_cross_osxcross.ini
 
-    runs-on: ubuntu-latest
-    container:
-      image: "codeberg.org/naev/${{ matrix.image }}:latest"
-      env:
-        BUILDARCH: "${{ matrix.arch }}"
-        HOST: "${{ matrix.arch }}-apple-darwin23"
-        MACOSX_DEPLOYMENT_TARGET: "${{ matrix.deploymenttarget }}"
-        PKG_CONFIG: "${{ matrix.arch }}-apple-darwin23-pkg-config"
-        PKG_CONFIG_PATH: "/usr/lib/osxcross/macports/pkgs/opt/local/lib/pkgconfig"
-        BINDGEN_EXTRA_CLANG_ARGS: "--sysroot=/usr/lib/osxcross/SDK/MacOSX14.sdk --target=${{ matrix.arch }}-apple-darwin"
+    runs-on: ${{ matrix.image }}
+    env:
+      BUILDARCH: "${{ matrix.arch }}"
+      HOST: "${{ matrix.arch }}-apple-darwin23"
+      MACOSX_DEPLOYMENT_TARGET: "${{ matrix.deploymenttarget }}"
+      PKG_CONFIG: "${{ matrix.arch }}-apple-darwin23-pkg-config"
+      PKG_CONFIG_PATH: "/usr/lib/osxcross/macports/pkgs/opt/local/lib/pkgconfig"
+      BINDGEN_EXTRA_CLANG_ARGS: "--sysroot=/usr/lib/osxcross/SDK/MacOSX14.sdk --target=${{ matrix.arch }}-apple-darwin"
 
     steps:
       - name: Get Source
@@ -320,9 +307,7 @@ jobs:
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
   "Luacheck":
-    runs-on: ubuntu-latest
-    container:
-      image: "codeberg.org/naev/naev-steamruntime:latest"
+    runs-on: naev-steamruntime
     needs:
       [
         Package_Source,
@@ -372,9 +357,7 @@ jobs:
           path: ${{ github.workspace }}/build/meson-logs/testlog.txt
 
   "Documentation":
-    runs-on: ubuntu-latest
-    container:
-      image: "codeberg.org/naev/naev-docs:latest"
+    runs-on: naev-docs
     needs: Luacheck
 
     steps:
