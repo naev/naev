@@ -17,7 +17,7 @@
 #
 # Additional Environment Variable:
 #   USE_LOCAL      : When set to "1", the script uses local Docker images (e.g., 'naev-steamruntime')
-#                instead of pulling from the GitHub Container Registry.
+#                instead of pulling from the Codeberg Container Registry.
 #
 # TODO:
 #   - Integrate a proper entrypoint for advanced environment configuration.
@@ -89,10 +89,10 @@ if [ "$USE_LOCAL" = "1" ]; then
    image_macos="naev-macos"
    echo "Using local docker images"
 else
-   image_source="ghcr.io/naev/naev-release:latest"
-   image_linux="ghcr.io/naev/naev-steamruntime:latest"
-   image_windows="ghcr.io/naev/naev-windows:latest"
-   image_macos="ghcr.io/naev/naev-macos:latest"
+   image_source="codeberg.org/naev/naev-release:latest"
+   image_linux="codeberg.org/naev/naev-steamruntime:latest"
+   image_windows="codeberg.org/naev/naev-windows:latest"
+   image_macos="codeberg.org/naev/naev-macos:latest"
 fi
 
 # Update image pulling block
