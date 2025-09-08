@@ -156,7 +156,7 @@ pub const AL_FILTER_HIGHPASS: ALenum = 0x0002;
 pub const AL_FILTER_BANDPASS: ALenum = 0x0003;
 
 pub type ALGENAUXILIARYEFFECTSLOTS =
-    unsafe extern "C" fn(n: ALsizei, auxiliaryeffectslots: *const ALuint) -> *mut ALvoid;
+    unsafe extern "C" fn(n: ALsizei, auxiliaryeffectslots: *mut ALuint) -> *mut ALvoid;
 pub type ALDELETEAUXILIARYEFFECTSLOTS =
     unsafe extern "C" fn(n: ALsizei, auxiliaryeffectslots: *const ALuint);
 pub type ALISAUXILIARYEFFECTSLOT = unsafe extern "C" fn(auxiliaryeffectslot: ALuint);
@@ -176,13 +176,13 @@ pub type ALGETAUXILIARYEFFECTSLOTF =
     unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: *const ALfloat);
 pub type ALGETAUXILIARYEFFECTSLOTFV =
     unsafe extern "C" fn(auxiliaryeffectslot: ALuint, param: ALenum, value: *const ALfloat);
-pub type ALGENFILTERS = unsafe extern "C" fn(n: ALsizei, filters: *const ALuint);
+pub type ALGENFILTERS = unsafe extern "C" fn(n: ALsizei, filters: *mut ALuint);
 pub type ALDELETEFILTERS = unsafe extern "C" fn(n: ALsizei, filters: *const ALuint);
 pub type ALFILTERI = unsafe extern "C" fn(filter: ALuint, param: ALenum, value: ALint);
 pub type ALFILTERIV = unsafe extern "C" fn(filter: ALuint, param: ALenum, value: *const ALint);
 pub type ALFILTERF = unsafe extern "C" fn(filter: ALuint, param: ALenum, value: ALfloat);
 pub type ALFILTERFV = unsafe extern "C" fn(filter: ALuint, param: ALenum, value: *const ALfloat);
-pub type ALGENEFFECTS = unsafe extern "C" fn(n: ALsizei, effects: *const ALuint);
+pub type ALGENEFFECTS = unsafe extern "C" fn(n: ALsizei, effects: *mut ALuint);
 pub type ALDELETEEFFECTS = unsafe extern "C" fn(n: ALsizei, effects: *const ALuint);
 pub type ALEFFECTI = unsafe extern "C" fn(filter: ALuint, param: ALenum, value: ALint);
 pub type ALEFFECTIV = unsafe extern "C" fn(filter: ALuint, param: ALenum, value: *const ALint);
@@ -282,8 +282,9 @@ impl Efx {
         fn new_auxiliary_effect_slot(
             alGenAuxiliaryEffectSlots: ALGENAUXILIARYEFFECTSLOTS,
         ) -> Result<AuxiliaryEffectSlot> {
-            let id: ALuint = 0;
-            unsafe { alGenAuxiliaryEffectSlots(1, &id) };
+            let mut id: ALuint = 0;
+            unsafe { alGenAuxiliaryEffectSlots(1, &mut id) };
+            dbg!(id, alGenAuxiliaryEffectSlots);
             let id = match std::num::NonZero::new(id) {
                 Some(v) => v,
                 None => anyhow::bail!("failed to create Efx auxiliary effect slot"),
@@ -293,8 +294,8 @@ impl Efx {
         let direct_slot = new_auxiliary_effect_slot(alGenAuxiliaryEffectSlots)?;
 
         fn new_effect(alGenEffects: ALGENEFFECTS) -> Result<Effect> {
-            let id: ALuint = 0;
-            unsafe { alGenEffects(1, &id) };
+            let mut id: ALuint = 0;
+            unsafe { alGenEffects(1, &mut id) };
             let id = match std::num::NonZero::new(id) {
                 Some(v) => v,
                 None => anyhow::bail!("failed to create Efx effect"),
@@ -354,8 +355,8 @@ pub struct AuxiliaryEffectSlot(pub std::num::NonZero<ALuint>);
 impl AuxiliaryEffectSlot {
     pub fn new() -> Result<Self> {
         if let Some(efx) = EFX.get().unwrap() {
-            let id: ALuint = 0;
-            unsafe { (efx.alGenAuxiliaryEffectSlots)(1, &id) };
+            let mut id: ALuint = 0;
+            unsafe { (efx.alGenAuxiliaryEffectSlots)(1, &mut id) };
             let id = match std::num::NonZero::new(id) {
                 Some(v) => v,
                 None => anyhow::bail!("failed to create Efx auxliary effect slot"),
@@ -406,8 +407,8 @@ pub struct Filter(pub std::num::NonZero<ALuint>);
 impl Filter {
     pub fn new() -> Result<Self> {
         if let Some(efx) = EFX.get().unwrap() {
-            let id: ALuint = 0;
-            unsafe { (efx.alGenFilters)(1, &id) };
+            let mut id: ALuint = 0;
+            unsafe { (efx.alGenFilters)(1, &mut id) };
             let id = match std::num::NonZero::new(id) {
                 Some(v) => v,
                 None => anyhow::bail!("failed to create Efx filter"),
@@ -432,8 +433,8 @@ pub struct Effect(pub std::num::NonZero<ALuint>);
 impl Effect {
     pub fn new() -> Result<Self> {
         if let Some(efx) = EFX.get().unwrap() {
-            let id: ALuint = 0;
-            unsafe { (efx.alGenEffects)(1, &id) };
+            let mut id: ALuint = 0;
+            unsafe { (efx.alGenEffects)(1, &mut id) };
             let id = match std::num::NonZero::new(id) {
                 Some(v) => v,
                 None => anyhow::bail!("failed to create Efx effect"),
