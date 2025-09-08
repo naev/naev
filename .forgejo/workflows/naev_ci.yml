@@ -16,7 +16,7 @@ jobs:
       - name: Package Dist
         run: |
           meson setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
-          meson dist -C build --no-tests --include-subprojects
+          meson dist -C build --no-tests --include-subprojects --wrap-mode=forcefallback
 
       - name: Upload Dist Artifact
         uses: actions/upload-artifact@v3
