@@ -361,6 +361,7 @@ impl Context {
     }
 }
 
+#[derive(PartialEq, Debug)]
 pub struct Source(ALuint);
 impl Source {
     pub fn new() -> Result<Self> {
@@ -436,6 +437,7 @@ impl Drop for Source {
     }
 }
 
+#[derive(PartialEq, Debug)]
 pub struct Buffer(ALuint);
 impl Buffer {
     pub fn new() -> Result<Self> {

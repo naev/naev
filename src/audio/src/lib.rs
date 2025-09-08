@@ -42,16 +42,17 @@ impl LuaAudioEfx {
 }
 static EFX_LIST: Mutex<Vec<LuaAudioEfx>> = Mutex::new(Vec::new());
 
-#[derive(Clone, PartialEq, Copy)]
+#[derive(Clone, PartialEq, Copy, Eq, Debug)]
 pub enum AudioType {
     Static,
     Stream,
 }
 
+#[derive(PartialEq, Debug)]
 pub struct AudioBuffer {
     name: String,
-    track_gain_db: f64,
-    track_peak: f64,
+    track_gain_db: f32,
+    track_peak: f32,
     buffer: al::Buffer,
 }
 impl AudioBuffer {
@@ -89,15 +90,15 @@ impl AudioBuffer {
             let mut track_peak = 1.;
             if let Some(md) = format.metadata().current() {
                 for t in md.tags() {
-                    fn tag_to_f64(t: &Tag) -> Result<f64> {
+                    fn tag_to_f32(t: &Tag) -> Result<f32> {
                         match t.value {
-                            Value::Float(val) => Ok(val),
+                            Value::Float(val) => Ok(val as f32),
                             _ => anyhow::bail!("tag is not a float"),
                         }
                     }
                     if let Some(key) = t.std_key {
                         match key {
-                            StandardTagKey::ReplayGainTrackGain => match tag_to_f64(t) {
+                            StandardTagKey::ReplayGainTrackGain => match tag_to_f32(t) {
                                 Ok(f) => {
                                     track_gain_db = f;
                                 }
@@ -105,7 +106,7 @@ impl AudioBuffer {
                                     warn_err!(e);
                                 }
                             },
-                            StandardTagKey::ReplayGainTrackPeak => match tag_to_f64(t) {
+                            StandardTagKey::ReplayGainTrackPeak => match tag_to_f32(t) {
                                 Ok(f) => {
                                     track_peak = f;
                                 }
@@ -118,7 +119,7 @@ impl AudioBuffer {
                     }
                 }
             }
-            (10.0_f64.powf(track_gain_db / 20.0), 1.0 / track_peak)
+            (10.0_f32.powf(track_gain_db / 20.0), 1.0 / track_peak)
         };
 
         // Find the first audio track with a known (decodeable) codec.
@@ -281,11 +282,13 @@ impl AudioBuffer {
     }
 }
 
+#[derive(Clone, PartialEq, Copy, Eq, Debug)]
 pub enum AudioSeek {
     Seconds,
     Samples,
 }
 
+#[derive(PartialEq, Debug)]
 pub struct Audio {
     atype: AudioType,
     source: al::Source,
@@ -464,6 +467,7 @@ impl Audio {
     }
 }
 
+#[derive(Clone, PartialEq, Copy, Debug)]
 pub struct AudioVolume {
     volume: f32,
     volume_lin: f32,
@@ -1242,31 +1246,6 @@ impl UserData for Audio {
     }
 }
 
-/*
-pub fn open_vec2(lua: &mlua::Lua, env: &LuaEnv) -> anyhow::Result<()> {
-    let proxy = lua.create_proxy::<Audio>()?;
-    env.set("audio", &proxy)?;
-    // Add to the Naev stuff
-    let naev: mlua::Table = env.get("naev")?;
-    naev.set("audio", proxy)?;
-
-    // Only add stuff as necessary
-    if let mlua::Value::Nil = lua.named_registry_value("push_vector")? {
-        let push_vector = lua.create_function(|lua, (x, y): (f64, f64)| {
-            let vec = Vec2::new(x, y);
-            lua.create_any_userdata(vec)
-        })?;
-        lua.set_named_registry_value("push_vector", push_vector)?;
-
-        let get_vector = lua.create_function(|_, mut ud: mlua::UserDataRefMut<Vec2>| {
-            let vec: *mut Vec2 = &mut *ud;
-            Ok(Value::LightUserData(mlua::LightUserData(
-                vec as *mut c_void,
-            )))
-        })?;
-        lua.set_named_registry_value("get_vector", get_vector)?;
-    }
-
-    Ok(())
+pub fn open_audio(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
+    Ok(lua.create_proxy::<Audio>()?)
 }
-    */
