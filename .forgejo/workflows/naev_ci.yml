@@ -88,12 +88,6 @@ jobs:
           name: ${{ matrix.image }}-${{ github.sha }}-compile-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
-      - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ matrix.image }}-${{ github.sha }}-buildArtifacts
-          path: ${{ github.workspace }}/build
-
       - name: Test Install
         id: install
         run: |
@@ -125,12 +119,6 @@ jobs:
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-AppImageBuild-log
           path: ${{ github.workspace }}/appImageBuildLog.txt
-
-      - name: Upload Test AppImage
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ matrix.image }}-${{ github.sha }}-AppImageBuild-appimage
-          path: ${{ github.workspace }}/appImageBuild/dist/*.AppImage
 
   "Windows_Compile_Naev":
     needs: "Package_Source"
@@ -196,14 +184,6 @@ jobs:
           name: ${{ matrix.image }}-${{ github.sha }}-compile-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
-      - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ matrix.image }}-${{ github.sha }}-buildArtifacts
-          path: |
-            ${{ github.workspace }}/build
-          if-no-files-found: error
-
       - name: Test Install
         id: install
         run: |
@@ -242,6 +222,10 @@ jobs:
       BINDGEN_EXTRA_CLANG_ARGS: "--sysroot=/usr/lib/osxcross/SDK/MacOSX14.sdk --target=${{ matrix.arch }}-apple-darwin"
 
     steps:
+      - name: Configure environment
+        run: |
+          /usr/bin/setup-devenv.sh
+
       - name: Get Source
         uses: actions/download-artifact@v3
         with:
@@ -289,14 +273,6 @@ jobs:
         with:
           name: ${{ matrix.image }}.${{ matrix.arch }}-${{ github.sha }}-compile-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
-
-      - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ matrix.image }}.${{ matrix.arch }}-${{ github.sha }}-buildArtifacts
-          path: |
-            ${{ github.workspace }}/build
-          if-no-files-found: error
 
       - name: Test Install
         id: install
