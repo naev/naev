@@ -535,7 +535,13 @@ impl AudioSystem {
 
         // Check to see if debugging was enabled
         if has_debug {
-            debug::Debug::init(&device)?;
+            match debug::Debug::init(&device) {
+                Ok(()) => (),
+                Err(e) => {
+                    warn_err!(e);
+                    debug::Debug::init_none();
+                }
+            }
         } else {
             debug::Debug::init_none();
         }
@@ -547,7 +553,13 @@ impl AudioSystem {
 
         // Set up the Efx
         if has_efx {
-            Efx::init(&device)?;
+            match Efx::init(&device) {
+                Ok(()) => (),
+                Err(e) => {
+                    warn_err!(e);
+                    Efx::init_none();
+                }
+            }
         } else {
             Efx::init_none();
         }
