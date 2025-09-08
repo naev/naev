@@ -25,7 +25,7 @@ jobs:
       - name: Collect Artifacts
         run: |
           mkdir -p build/dist
-          cp -r source/utils/ci/itch source/utils/ci/steam source/utils/ci/gh build/dist/
+          cp -r source/utils/ci/itch source/utils/ci/steam source/utils/ci/berg build/dist/
           cp source/utils/buildAppImage.sh build/dist
           cp source/utils/buildUniversalBundle.sh build/dist
           cp -r source/extras/macos/dmg_assets build/dist
@@ -76,11 +76,11 @@ jobs:
           path: ${{ github.workspace }}/build/dist/entitlements.plist
           if-no-files-found: error
 
-      - name: Upload GitHub Deployment Artifact
+      - name: Upload Codeberg Deployment Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: naev-github-deployment
-          path: ${{ github.workspace }}/build/dist/gh/*
+          name: naev-codeberg-deployment
+          path: ${{ github.workspace }}/build/dist/berg/*
           if-no-files-found: error
 
       - name: Upload Steam Deployment Script Artifact
