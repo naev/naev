@@ -3,6 +3,8 @@
 use std::ffi::{CStr, CString};
 use std::sync::atomic::{AtomicPtr, Ordering};
 
+use log::warn;
+
 // === alc.h ===
 
 #[allow(dead_code)]
@@ -297,9 +299,13 @@ pub(crate) fn is_error() -> Option<ALenum> {
     }
 }
 
-pub fn get_parameter_str(parameter: ALenum) -> &'static str {
-    let val = unsafe { CStr::from_ptr(alGetString(parameter)) };
-    val.to_str().unwrap()
+pub fn get_parameter_str(parameter: ALenum) -> Result<String> {
+    let alstr = unsafe { alGetString(parameter) };
+    if alstr.is_null() {
+        anyhow::bail!("received NULL pointer");
+    }
+    let val = unsafe { CStr::from_ptr(alstr) };
+    Ok(val.to_str().unwrap().to_owned())
 }
 
 pub struct Device(AtomicPtr<ALCdevice>);
@@ -329,9 +335,13 @@ impl Device {
         )
     }
 
-    pub fn get_parameter_str(&self, parameter: ALCenum) -> &'static str {
-        let val = unsafe { CStr::from_ptr(alcGetString(self.raw(), parameter)) };
-        val.to_str().unwrap()
+    pub fn get_parameter_str(&self, parameter: ALCenum) -> Result<String> {
+        let alstr = unsafe { alcGetString(self.raw(), parameter) };
+        if alstr.is_null() {
+            anyhow::bail!("received NULL pointer");
+        }
+        let val = unsafe { CStr::from_ptr(alstr) };
+        Ok(val.to_str().unwrap().to_owned())
     }
 
     pub fn get_parameter_i32(&self, parameter: ALCenum) -> ALCint {
@@ -345,6 +355,7 @@ impl Device {
 impl Drop for Device {
     fn drop(&mut self) {
         unsafe {
+            warn!("DROPPING DEVICE");
             alcCloseDevice(self.raw());
         }
     }

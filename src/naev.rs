@@ -279,6 +279,7 @@ fn naevmain() -> Result<()> {
         warn!("{}", gettext("Problem setting up sound!"));
     }
     unsafe {
+        /*
         if naevc::conf.nosound != 0 {
             info!("{}", gettext("Sound is disabled!"));
             naevc::sound_disabled = 1;
@@ -287,6 +288,7 @@ fn naevmain() -> Result<()> {
         if naevc::sound_init() != 0 {
             warn!("{}", gettext("Problem setting up sound!"));
         }
+        */
         naevc::music_choose(c"load".as_ptr());
     }
 

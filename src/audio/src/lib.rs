@@ -327,7 +327,7 @@ impl Audio {
         if let Some(efx) = efx {
             v.parameter_3_i32(
                 AL_AUXILIARY_SEND_FILTER,
-                efx.direct_slot.0.get() as i32,
+                efx.direct_slot.raw() as i32,
                 0,
                 AL_FILTER_NULL,
             );
@@ -473,6 +473,12 @@ pub struct AudioVolume {
     volume_lin: f32,
     volume_speed: f32,
 }
+impl Default for AudioVolume {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl AudioVolume {
     pub fn new() -> Self {
         Self {
@@ -557,11 +563,11 @@ impl AudioSystem {
                 Ok(()) => (),
                 Err(e) => {
                     warn_err!(e);
-                    Efx::init_none();
+                    let _ = Efx::init_none();
                 }
             }
         } else {
-            Efx::init_none();
+            let _ = Efx::init_none();
         }
 
         unsafe {
@@ -569,24 +575,23 @@ impl AudioSystem {
         }
 
         debugx!(gettext("OpenAL started: {} Hz"), freq);
-        debugx!(gettext("Renderer: %s"), al::get_parameter_str(AL_RENDERER));
+        let al_renderer = al::get_parameter_str(AL_RENDERER)?;
+        debugx!(gettext("Renderer: {}"), &al_renderer);
+        let al_version = al::get_parameter_str(AL_VERSION)?;
         let efx = EFX.get().unwrap();
         if let Some(efx) = efx {
             debugx!(
                 gettext("Version: {} with EFX {}.{}"),
-                al::get_parameter_str(AL_VERSION),
+                &al_version,
                 efx.version.0,
                 efx.version.1
             );
         } else {
-            debugx!(
-                gettext("Version: {} without EFX"),
-                al::get_parameter_str(AL_VERSION)
-            );
+            debugx!(gettext("Version: {} without EFX"), &al_version);
         }
         debug!("");
 
-        Ok(Self {
+        Ok(AudioSystem {
             device,
             context,
 
@@ -597,10 +602,11 @@ impl AudioSystem {
         })
     }
 }
-static AUDIO: LazyLock<AudioSystem> = LazyLock::new(|| AudioSystem::new().unwrap());
+pub static AUDIO: LazyLock<AudioSystem> = LazyLock::new(|| AudioSystem::new().unwrap());
 
 pub fn init() -> Result<()> {
-    let _ = &*AUDIO;
+    //let _ = &*AUDIO;
+    LazyLock::force(&AUDIO);
     Ok(())
 }
 

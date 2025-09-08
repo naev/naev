@@ -284,11 +284,6 @@ impl Efx {
         ) -> Result<AuxiliaryEffectSlot> {
             let mut id: ALuint = 0;
             unsafe { alGenAuxiliaryEffectSlots(1, &mut id) };
-            dbg!(id, alGenAuxiliaryEffectSlots);
-            let id = match std::num::NonZero::new(id) {
-                Some(v) => v,
-                None => anyhow::bail!("failed to create Efx auxiliary effect slot"),
-            };
             Ok(AuxiliaryEffectSlot(id))
         }
         let direct_slot = new_auxiliary_effect_slot(alGenAuxiliaryEffectSlots)?;
@@ -312,7 +307,7 @@ impl Efx {
             alListenerf(AL_METERS_PER_UNIT, 5.);
         }
 
-        let _ = EFX.set(Some(Efx {
+        match EFX.set(Some(Efx {
             version,
             direct_slot,
             reverb,
@@ -342,25 +337,30 @@ impl Efx {
             alEffectiv,
             alEffectf,
             alEffectfv,
-        }));
-        Ok(())
+        })) {
+            Ok(()) => Ok(()),
+            Err(_) => {
+                anyhow::bail!("unable to set EFX");
+            }
+        }
     }
 
-    pub fn init_none() {
-        let _ = EFX.set(None);
+    pub fn init_none() -> Result<()> {
+        match EFX.set(None) {
+            Ok(()) => Ok(()),
+            Err(_) => {
+                anyhow::bail!("unable to set EFX");
+            }
+        }
     }
 }
 
-pub struct AuxiliaryEffectSlot(pub std::num::NonZero<ALuint>);
+pub struct AuxiliaryEffectSlot(pub ALuint);
 impl AuxiliaryEffectSlot {
     pub fn new() -> Result<Self> {
         if let Some(efx) = EFX.get().unwrap() {
             let mut id: ALuint = 0;
             unsafe { (efx.alGenAuxiliaryEffectSlots)(1, &mut id) };
-            let id = match std::num::NonZero::new(id) {
-                Some(v) => v,
-                None => anyhow::bail!("failed to create Efx auxliary effect slot"),
-            };
             Ok(AuxiliaryEffectSlot(id))
         } else {
             anyhow::bail!("EFX not available")
@@ -368,7 +368,7 @@ impl AuxiliaryEffectSlot {
     }
 
     pub fn raw(&self) -> ALuint {
-        self.0.into()
+        self.0
     }
 
     pub fn parameter_i32(&self, param: ALenum, val: ALint) {
@@ -397,7 +397,7 @@ impl Drop for AuxiliaryEffectSlot {
     fn drop(&mut self) {
         if let Some(efx) = EFX.get().unwrap() {
             unsafe {
-                (efx.alDeleteAuxiliaryEffectSlots)(1, &self.0.get());
+                (efx.alDeleteAuxiliaryEffectSlots)(1, &self.raw());
             }
         }
     }
