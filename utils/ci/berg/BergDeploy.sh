@@ -49,23 +49,19 @@ VERSION="$(<"$TEMPPATH/naev-version/VERSION")"
 
 # Make dist path if it does not exist
 mkdir -p "$OUTDIR"/dist
-mkdir -p "$OUTDIR"/lin64
-mkdir -p "$OUTDIR"/macos
-mkdir -p "$OUTDIR"/win64
-mkdir -p "$OUTDIR"/soundtrack
 
 # Move all build artefacts to deployment locations
 # Move Linux AppImage, zsync files and set AppImage as executable
-cp "$TEMPPATH"/naev-linux-x86-64/*.AppImage "$OUTDIR"/lin64/naev-"$VERSION"-linux-x86-64.AppImage
-cp "$TEMPPATH"/naev-linux-x86-64/*.zsync "$OUTDIR"/lin64/naev-"$VERSION"-linux-x86-64.AppImage.zsync
+cp "$TEMPPATH"/naev-linux-x86-64/*.AppImage "$OUTDIR"/dist/naev-"$VERSION"-linux-x86-64.AppImage
+cp "$TEMPPATH"/naev-linux-x86-64/*.zsync "$OUTDIR"/dist/naev-"$VERSION"-linux-x86-64.AppImage.zsync
 
-chmod +x "$OUTDIR"/lin64/naev-"$VERSION"-linux-x86-64.AppImage
+chmod +x "$OUTDIR"/dist/naev-"$VERSION"-linux-x86-64.AppImage
 
 # Move macOS dmg image to deployment location
-cp "$TEMPPATH"/naev-macos/*.dmg "$OUTDIR"/macos/naev-"$VERSION"-macos-universal.dmg
+cp "$TEMPPATH"/naev-macos/*.dmg "$OUTDIR"/dist/naev-"$VERSION"-macos-universal.dmg
 
 # Move Windows installer to deployment location
-cp "$TEMPPATH"/naev-win64/naev*.exe "$OUTDIR"/win64/naev-"$VERSION"-win64.exe
+cp "$TEMPPATH"/naev-win64/naev*.exe "$OUTDIR"/dist/naev-"$VERSION"-win64.exe
 
 # Move Dist to deployment location
 cp "$TEMPPATH"/naev-dist/source.tar.xz "$OUTDIR"/dist/naev-"$VERSION"-source.tar.xz
