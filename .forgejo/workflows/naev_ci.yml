@@ -6,10 +6,6 @@ jobs:
   "Package_Source":
     runs-on: naev-release
     steps:
-      - name: Test node
-        run: |
-          command -v node
-
       - name: Checkout Naev Repository
         uses: actions/checkout@v4
         with:
