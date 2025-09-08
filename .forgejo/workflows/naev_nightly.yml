@@ -437,7 +437,6 @@ jobs:
         run: |
           git config --local user.email "naevBuilder@emoss.ca"
           git config --local user.name "Naev Runner [bot]"
-          git commit -am "Nightly Release $(date -u +"%Y-%m-%d %H:%M UTC")"
           git tag -f nightly
           git push --force origin nightly
 
