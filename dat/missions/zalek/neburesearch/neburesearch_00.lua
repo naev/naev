@@ -39,9 +39,15 @@ local amount = 5
 -- Mission states:
 --  nil: mission not accepted yet
 --   0: go to doeston
---   1: go to iris
---   2: scan the iris system
---   3: return to jorla
+--   1: doeston scan done
+--   2: go to iris
+--   3: scan the iris system
+--   4: return to jorla
+local STAGE_GOTO_DOESTON = 0
+local STAGE_DOESTON_SCAN = 1
+local STAGE_GOTO_IRIS = 2
+local STAGE_IRIS_SCAN =3
+local STAGE_RETURN_JORLA = 4
 mem.misn_stage = nil
 
 function create()
@@ -111,7 +117,7 @@ With that said he hurries and leaves the bar.]]))
    mem.misn_marker = misn.markerAdd( t_sys[1], "low" )
 
    -- Add mission
-   mem.misn_stage = 0
+   mem.misn_stage = STAGE_GOTO_DOESTON
    misn.accept()
    local osd_title = _("Novice Nebula Research")
    local osd_msg = {}
@@ -126,8 +132,7 @@ With that said he hurries and leaves the bar.]]))
 end
 
 function land()
-   mem.landed = spob.cur()
-   if mem.misn_stage == 3 and mem.landed == homeworld then
+   if mem.misn_stage == STAGE_RETURN_JORLA and spob.cur() == homeworld then
       vn.clear()
       vn.scene()
       local student = vn.newCharacter( nebu_research.vn_student() )
@@ -164,13 +169,22 @@ end
 
 function enter()
    mem.sys = system.cur()
-   if mem.misn_stage == 0 and mem.sys == t_sys[1] then
+   if mem.misn_stage==STAGE_GOTO_DOESTON and mem.sys == t_sys[1] then
       hook.timer(5.0, "beginFirstScan")
-   elseif mem.misn_stage == 1 and mem.sys == t_sys[2] then
-      mem.misn_stage = 2
+      mem.misn_stage = STAGE_DOESTON_SCAN
+
+   elseif mem.misn_stage==STAGE_GOTO_IRIS and mem.sys == t_sys[2] then
       hook.timer(5.0, "beginSecondScan")
-   else
+      mem.misn_stage = STAGE_IRIS_SCAN
+
+   elseif mem.misn_stage==STAGE_DOESTON_SCAN then
+      mem.misn_stage = STAGE_GOTO_DOESTON
       hook.timerClear()
+
+   elseif mem.misn_stage==STAGE_IRIS_SCAN then
+      mem.misn_stage = STAGE_GOTO_IRIS
+      hook.timerClear()
+
    end
 end
 
@@ -234,13 +248,10 @@ function stopProblems()
    student(fmt.f(_([["I should investigate the damage it caused to the armour once we land. But first we must go to the {sys} system. Don't worry, the blackout will not occur again!"]]), {sys=t_sys[2]}))
    vn.done()
    vn.run()
-   mem.misn_stage = 1
    misn.markerMove(mem.misn_marker, t_sys[2])
    misn.osdActive(2)
    hook.rm(mem.phook)
-   if not mem.ehook then
-      mem.ehook = hook.enter("enter")
-   end
+   mem.misn_stage = STAGE_GOTO_IRIS
 end
 
 function beginSecondScan()
@@ -263,7 +274,7 @@ function endSecondScan()
    student(fmt.f(_([["OK, my measurements are complete! Let's go back to {pnt}."]]), {pnt=homeworld}))
    vn.done()
    vn.run()
-   mem.misn_stage = 3
+   mem.misn_stage = STAGE_RETURN_JORLA
    misn.markerMove(mem.misn_marker, homeworld)
    misn.osdActive(3)
 end
