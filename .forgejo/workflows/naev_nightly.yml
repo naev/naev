@@ -447,7 +447,7 @@ jobs:
         run: |
           chmod -R +x build/staging/naev-codeberg-deployment
           cp -r build/staging/naev-codeberg-deployment/* "$(pwd)"
-          ./utils/ci/berg/BergDeploy.sh -n -t "$(pwd)/build/staging" -o "$(pwd)/build/dist" -r "nightly"
+          ./BergDeploy.sh -n -t "$(pwd)/build/staging" -o "$(pwd)/build/dist" -r "nightly"
 
       - name: Upload Codeberg Release
         if: ${{ matrix.releasetype == 'codeberg' }}
