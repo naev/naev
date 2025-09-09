@@ -434,6 +434,7 @@ jobs:
 
       - name: Push 'nightly' tag
         if: ${{ matrix.releasetype == 'codeberg' }}
+        working-directory: build/staging/repo
         run: |
           git config --local user.email "naevBuilder@emoss.ca"
           git config --local user.name "Naev Runner [bot]"
