@@ -122,7 +122,7 @@ With that said he hurries and leaves the bar.]]))
 
    mem.thook = hook.takeoff("takeoff")
    hook.land("land")
-   hook.enter("jumpin")
+   hook.enter("enter")
 end
 
 function land()
@@ -162,7 +162,7 @@ His last words are supposed to be reassuring, but instead you start to think tha
    hook.rm(mem.thook)
 end
 
-function jumpin()
+function enter()
    mem.sys = system.cur()
    if mem.misn_stage == 0 and mem.sys == t_sys[1] then
       hook.timer(5.0, "beginFirstScan")
@@ -238,7 +238,9 @@ function stopProblems()
    misn.markerMove(mem.misn_marker, t_sys[2])
    misn.osdActive(2)
    hook.rm(mem.phook)
-   hook.enter("jumpin")
+   if not mem.ehook then
+      mem.ehook = hook.enter("enter")
+   end
 end
 
 function beginSecondScan()
