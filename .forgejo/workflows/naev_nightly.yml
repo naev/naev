@@ -443,6 +443,7 @@ jobs:
 
       - name: Stage Codeberg Release
         if: ${{ matrix.releasetype == 'codeberg' }}
+        working-directory: ${{ github.workspace }}
         run: |
           chmod -R +x build/staging/naev-codeberg-deployment
           cp -r build/staging/naev-codeberg-deployment/* "$(pwd)"
