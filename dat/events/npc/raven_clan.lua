@@ -33,7 +33,7 @@ local msg_tip = {
 }
 
 local msg_cond = {
-   { function () return (player.chapter()=="0") end, _([["The Black Lotus have been requesting lots of high tech contraband lately. I think they must be building something fancy."]]) },
+   { npc.test_chapter0(), _([["The Black Lotus have been requesting lots of high tech contraband lately. I think they must be building something fancy."]]) },
 }
 
 -- Returns a lore message for the given faction.
