@@ -336,7 +336,7 @@ impl Efx {
         }) {
             Ok(()) => Ok(()),
             Err(_) => {
-                anyhow::bail!("unable to set EFX");
+                anyhow::bail!("failed to set EFX");
             }
         }
     }

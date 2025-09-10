@@ -183,11 +183,13 @@ impl Debug {
         if !ok {
             warn!("failed to set AL_DEBUG_OUTPUT");
         }
-        let _ = DEBUG.set(Self {
+        match DEBUG.set(Self {
             alDebugMessageCallback,
             alObjectLabel,
-        });
-        Ok(())
+        }) {
+            Ok(()) => Ok(()),
+            Err(_) => anyhow::bail!("failed to set DEBUG"),
+        }
     }
 }
 
