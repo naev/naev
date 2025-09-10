@@ -427,6 +427,23 @@ jobs:
         with:
           path: build/staging/repo
 
+      - name: Generate Nightly Changelog
+        if: ${{ matrix.releasetype == 'codeberg' }}
+        run: |
+          pushd build/staging/repo
+          # Get last nightly tag commit (if exists)
+          if git rev-parse nightly >/dev/null 2>&1; then
+            last_tag="nightly"
+          else
+            last_tag="$(git rev-list --max-parents=0 HEAD)" # fallback: first commit
+          fi
+
+          # Generate changelog
+          echo "# Nightly Changelog" > ${{ github.workspace }}/build/staging/CHANGELOG.md
+          echo "" >> ${{ github.workspace }}/build/staging/CHANGELOG.md
+          git log --pretty=format:'- %s (%h)' ${last_tag}..HEAD >> ${{ github.workspace }}/build/staging/CHANGELOG.md
+          popd
+
       - name: Push 'nightly' tag
         if: ${{ matrix.releasetype == 'codeberg' }}
         run: |
@@ -450,7 +467,7 @@ jobs:
         with:
           direction: upload
           release-dir: "$(pwd)/build/dist"
-          release-notes-assistant: true
+          release-notes: "$(pwd)/build/staging/CHANGELOG.md"
           override: true
           prerelease: true
           hide-archive-link: true
