@@ -323,8 +323,7 @@ impl Audio {
         v.parameter_f32(AL_MAX_DISTANCE, MAX_DISTANCE);
         v.parameter_f32(AL_ROLLOFF_FACTOR, 1.);
 
-        let efx = EFX.get().unwrap();
-        if let Some(efx) = efx {
+        if let Some(efx) = EFX.get() {
             v.parameter_3_i32(
                 AL_AUXILIARY_SEND_FILTER,
                 efx.direct_slot.raw() as i32,
@@ -563,11 +562,8 @@ impl AudioSystem {
                 Ok(()) => (),
                 Err(e) => {
                     warn_err!(e);
-                    let _ = Efx::init_none();
                 }
             }
-        } else {
-            let _ = Efx::init_none();
         }
 
         unsafe {
@@ -578,8 +574,7 @@ impl AudioSystem {
         let al_renderer = al::get_parameter_str(AL_RENDERER)?;
         debugx!(gettext("Renderer: {}"), &al_renderer);
         let al_version = al::get_parameter_str(AL_VERSION)?;
-        let efx = EFX.get().unwrap();
-        if let Some(efx) = efx {
+        if let Some(efx) = EFX.get() {
             debugx!(
                 gettext("Version: {} with EFX {}.{}"),
                 &al_version,
@@ -602,11 +597,10 @@ impl AudioSystem {
         })
     }
 }
-pub static AUDIO: LazyLock<AudioSystem> = LazyLock::new(|| AudioSystem::new().unwrap());
+static AUDIO: LazyLock<AudioSystem> = LazyLock::new(|| AudioSystem::new().unwrap());
 
 pub fn init() -> Result<()> {
-    //let _ = &*AUDIO;
-    LazyLock::force(&AUDIO);
+    let _ = &*AUDIO;
     Ok(())
 }
 
@@ -1210,7 +1204,7 @@ impl UserData for Audio {
         methods.add_function(
             "setGlobalEffect",
             |_, name: Option<String>| -> mlua::Result<()> {
-                if let Some(efx) = EFX.get().unwrap() {
+                if let Some(efx) = EFX.get() {
                     let direct_slot = &efx.direct_slot;
                     if let Some(name) = name {
                         let lock = EFX_LIST.lock().unwrap();

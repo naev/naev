@@ -321,6 +321,7 @@ impl Device {
         if device.is_null() {
             anyhow::bail!("unable to open default sound device");
         }
+        dbg!("created", device);
         Ok(Self(AtomicPtr::new(device)))
     }
 
@@ -355,7 +356,7 @@ impl Device {
 impl Drop for Device {
     fn drop(&mut self) {
         unsafe {
-            warn!("DROPPING DEVICE");
+            dbg!("dropped", self.raw());
             alcCloseDevice(self.raw());
         }
     }

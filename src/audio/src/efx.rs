@@ -291,23 +291,19 @@ impl Efx {
         fn new_effect(alGenEffects: ALGENEFFECTS) -> Result<Effect> {
             let mut id: ALuint = 0;
             unsafe { alGenEffects(1, &mut id) };
-            let id = match std::num::NonZero::new(id) {
-                Some(v) => v,
-                None => anyhow::bail!("failed to create Efx effect"),
-            };
             Ok(Effect(id))
         }
         let reverb = new_effect(alGenEffects)?;
         let echo = new_effect(alGenEffects)?;
         unsafe {
-            alEffecti(reverb.0.get(), AL_EFFECT_TYPE, AL_EFFECT_REVERB);
-            let e = echo.0.get();
+            alEffecti(reverb.0, AL_EFFECT_TYPE, AL_EFFECT_REVERB);
+            let e = echo.0;
             alEffecti(e, AL_EFFECT_TYPE, AL_EFFECT_ECHO);
             alEffectf(e, AL_ECHO_DELAY, 0.207);
             alListenerf(AL_METERS_PER_UNIT, 5.);
         }
 
-        match EFX.set(Some(Efx {
+        match EFX.set(Efx {
             version,
             direct_slot,
             reverb,
@@ -337,16 +333,7 @@ impl Efx {
             alEffectiv,
             alEffectf,
             alEffectfv,
-        })) {
-            Ok(()) => Ok(()),
-            Err(_) => {
-                anyhow::bail!("unable to set EFX");
-            }
-        }
-    }
-
-    pub fn init_none() -> Result<()> {
-        match EFX.set(None) {
+        }) {
             Ok(()) => Ok(()),
             Err(_) => {
                 anyhow::bail!("unable to set EFX");
@@ -358,7 +345,7 @@ impl Efx {
 pub struct AuxiliaryEffectSlot(pub ALuint);
 impl AuxiliaryEffectSlot {
     pub fn new() -> Result<Self> {
-        if let Some(efx) = EFX.get().unwrap() {
+        if let Some(efx) = EFX.get() {
             let mut id: ALuint = 0;
             unsafe { (efx.alGenAuxiliaryEffectSlots)(1, &mut id) };
             Ok(AuxiliaryEffectSlot(id))
@@ -372,13 +359,13 @@ impl AuxiliaryEffectSlot {
     }
 
     pub fn parameter_i32(&self, param: ALenum, val: ALint) {
-        if let Some(efx) = EFX.get().unwrap() {
+        if let Some(efx) = EFX.get() {
             unsafe { (efx.alAuxiliaryEffectSloti)(self.raw(), param, val) };
         }
     }
 
     pub fn parameter_f32(&self, param: ALenum, val: ALfloat) {
-        if let Some(efx) = EFX.get().unwrap() {
+        if let Some(efx) = EFX.get() {
             unsafe { (efx.alAuxiliaryEffectSlotf)(self.raw(), param, val) };
         }
     }
@@ -395,7 +382,7 @@ impl AuxiliaryEffectSlot {
 }
 impl Drop for AuxiliaryEffectSlot {
     fn drop(&mut self) {
-        if let Some(efx) = EFX.get().unwrap() {
+        if let Some(efx) = EFX.get() {
             unsafe {
                 (efx.alDeleteAuxiliaryEffectSlots)(1, &self.raw());
             }
@@ -406,7 +393,7 @@ impl Drop for AuxiliaryEffectSlot {
 pub struct Filter(pub std::num::NonZero<ALuint>);
 impl Filter {
     pub fn new() -> Result<Self> {
-        if let Some(efx) = EFX.get().unwrap() {
+        if let Some(efx) = EFX.get() {
             let mut id: ALuint = 0;
             unsafe { (efx.alGenFilters)(1, &mut id) };
             let id = match std::num::NonZero::new(id) {
@@ -421,7 +408,7 @@ impl Filter {
 }
 impl Drop for Filter {
     fn drop(&mut self) {
-        if let Some(efx) = EFX.get().unwrap() {
+        if let Some(efx) = EFX.get() {
             unsafe {
                 (efx.alDeleteFilters)(1, &self.0.get());
             }
@@ -429,16 +416,12 @@ impl Drop for Filter {
     }
 }
 
-pub struct Effect(pub std::num::NonZero<ALuint>);
+pub struct Effect(pub ALuint);
 impl Effect {
     pub fn new() -> Result<Self> {
-        if let Some(efx) = EFX.get().unwrap() {
+        if let Some(efx) = EFX.get() {
             let mut id: ALuint = 0;
             unsafe { (efx.alGenEffects)(1, &mut id) };
-            let id = match std::num::NonZero::new(id) {
-                Some(v) => v,
-                None => anyhow::bail!("failed to create Efx effect"),
-            };
             Ok(Self(id))
         } else {
             anyhow::bail!("EFX not available")
@@ -446,29 +429,29 @@ impl Effect {
     }
 
     pub fn raw(&self) -> ALuint {
-        self.0.into()
+        self.0
     }
 
     pub fn parameter_i32(&self, param: ALenum, val: ALint) {
-        if let Some(efx) = EFX.get().unwrap() {
+        if let Some(efx) = EFX.get() {
             unsafe { (efx.alEffecti)(self.raw(), param, val) };
         }
     }
 
     pub fn parameter_f32(&self, param: ALenum, val: ALfloat) {
-        if let Some(efx) = EFX.get().unwrap() {
+        if let Some(efx) = EFX.get() {
             unsafe { (efx.alEffectf)(self.raw(), param, val) };
         }
     }
 }
 impl Drop for Effect {
     fn drop(&mut self) {
-        if let Some(efx) = EFX.get().unwrap() {
+        if let Some(efx) = EFX.get() {
             unsafe {
-                (efx.alDeleteEffects)(1, &self.0.get());
+                (efx.alDeleteEffects)(1, &self.0);
             }
         }
     }
 }
 
-pub static EFX: OnceLock<Option<Efx>> = OnceLock::new();
+pub static EFX: OnceLock<Efx> = OnceLock::new();
