@@ -48,29 +48,29 @@ fi
 VERSION="$(<"$TEMPPATH/naev-version/VERSION")"
 
 # Make dist path if it does not exist
-mkdir -p "$OUTDIR"/dist
+mkdir -p "$OUTDIR"
 
 # Move all build artefacts to deployment locations
 # Move Linux AppImage, zsync files and set AppImage as executable
-cp "$TEMPPATH"/naev-linux-x86-64/*.AppImage "$OUTDIR"/dist/naev-"$VERSION"-linux-x86-64.AppImage
-cp "$TEMPPATH"/naev-linux-x86-64/*.zsync "$OUTDIR"/dist/naev-"$VERSION"-linux-x86-64.AppImage.zsync
+cp "$TEMPPATH"/naev-linux-x86-64/*.AppImage "$OUTDIR"/naev-"$VERSION"-linux-x86-64.AppImage
+cp "$TEMPPATH"/naev-linux-x86-64/*.zsync "$OUTDIR"/naev-"$VERSION"-linux-x86-64.AppImage.zsync
 
-chmod +x "$OUTDIR"/dist/naev-"$VERSION"-linux-x86-64.AppImage
+chmod +x "$OUTDIR"/naev-"$VERSION"-linux-x86-64.AppImage
 
 # Move macOS dmg image to deployment location
-cp "$TEMPPATH"/naev-macos/*.dmg "$OUTDIR"/dist/naev-"$VERSION"-macos-universal.dmg
+cp "$TEMPPATH"/naev-macos/*.dmg "$OUTDIR"/naev-"$VERSION"-macos-universal.dmg
 
 # Move Windows installer to deployment location
-cp "$TEMPPATH"/naev-win64/naev*.exe "$OUTDIR"/dist/naev-"$VERSION"-win64.exe
+cp "$TEMPPATH"/naev-win64/naev*.exe "$OUTDIR"/naev-"$VERSION"-win64.exe
 
 # Move Dist to deployment location
-cp "$TEMPPATH"/naev-dist/source.tar.xz "$OUTDIR"/dist/naev-"$VERSION"-source.tar.xz
+cp "$TEMPPATH"/naev-dist/source.tar.xz "$OUTDIR"/naev-"$VERSION"-source.tar.xz
 
 # Move Soundtrack to deployment location if this is a release.
 if [ "$NIGHTLY" == "true" ] || [ "$PRERELEASE" == "true" ]; then
    echo "not preparing soundtrack"
 else
-   cp "$TEMPPATH"/naev-soundtrack/naev-*-soundtrack.zip "$OUTDIR"/dist/naev-"$VERSION"-soundtrack.zip
+   cp "$TEMPPATH"/naev-soundtrack/naev-*-soundtrack.zip "$OUTDIR"/naev-"$VERSION"-soundtrack.zip
 fi
 
 # Print staged files for verification
