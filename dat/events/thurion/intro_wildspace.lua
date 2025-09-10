@@ -208,7 +208,7 @@ function land ()
       vn.run()
 
       fthurion:setKnown(true)
-      thurion.addMiscLog(fmt.f_(_([[You were cordially invited by an uploaded Thurion named Alice to {spb}, where you were thoroughly questioned. The Thurion deemed you not a threat and gave you permission to fly around their space.]]),
+      thurion.addMiscLog(fmt.f(_([[You were cordially invited by an uploaded Thurion named Alice to {spb}, where you were thoroughly questioned. The Thurion deemed you not a threat and gave you permission to fly around their space.]]),
          {spb=landspb}))
       evt.finish(true)
    end
