@@ -88,7 +88,7 @@ impl log::Log for Logger {
             }
             log::Level::Warn => {
                 let nw = self.warn_num.fetch_add(1, Ordering::SeqCst);
-                let msg = if nw <= WARN_MAX {
+                let msg = if nw < WARN_MAX {
                     let bt = std::backtrace::Backtrace::force_capture();
                     format!("{}[W] {}", bt, record.args())
                 } else if nw == WARN_MAX {
