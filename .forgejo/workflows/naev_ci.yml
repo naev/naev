@@ -363,3 +363,13 @@ jobs:
         with:
           name: ${{ github.sha }}-ldoc-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
+
+      - name: Trigger Website Build
+        if: ${{ steps.compile.outcome == 'success' }}
+        run: |
+          curl -X POST \
+            -H "Authorization: token ${{ secrets.WEBSITE_TOKEN }}" \
+            -H "Accept: application/json" \
+            -H "Content-Type: application/json" \
+            "https://codeberg.org/api/v1/repos/naev/naev-website/actions/workflows/api_build.yml/dispatches" \
+            -d '{"ref": "main"}'
