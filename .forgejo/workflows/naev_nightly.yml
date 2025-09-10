@@ -448,13 +448,12 @@ jobs:
 
       - name: Push 'nightly' tag
         if: ${{ matrix.releasetype == 'codeberg' }}
+        working-directory: ${{ github.workspace }}/build/staging/repo
         run: |
-          pushd build/staging/repo
           git config --local user.email "naevBuilder@emoss.ca"
           git config --local user.name "Naev Runner [bot]"
           git tag -f nightly
           git push --force origin nightly
-          popd
 
       - name: Stage Codeberg Release
         if: ${{ matrix.releasetype == 'codeberg' }}
