@@ -544,11 +544,8 @@ impl AudioSystem {
                 Ok(()) => (),
                 Err(e) => {
                     warn_err!(e);
-                    debug::Debug::init_none();
                 }
             }
-        } else {
-            debug::Debug::init_none();
         }
 
         // Get context information

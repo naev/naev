@@ -183,21 +183,17 @@ impl Debug {
         if !ok {
             warn!("failed to set AL_DEBUG_OUTPUT");
         }
-        let _ = DEBUG.set(Some(Self {
+        let _ = DEBUG.set(Self {
             alDebugMessageCallback,
             alObjectLabel,
-        }));
+        });
         Ok(())
-    }
-
-    pub fn init_none() {
-        let _ = DEBUG.set(None);
     }
 }
 
 pub fn object_label(identifier: ALenum, name: ALuint, label: &str) {
     #[cfg(debug_assertions)]
-    if let Some(dbg) = DEBUG.get().unwrap() {
+    if let Some(dbg) = DEBUG.get() {
         let clabel = CString::new(label).unwrap();
         let bytes = clabel.as_bytes_with_nul();
         unsafe {
@@ -211,4 +207,4 @@ pub fn object_label(identifier: ALenum, name: ALuint, label: &str) {
     }
 }
 
-static DEBUG: OnceLock<Option<Debug>> = OnceLock::new();
+static DEBUG: OnceLock<Debug> = OnceLock::new();
