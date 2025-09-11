@@ -575,9 +575,12 @@ impl AudioSystem {
         }
 
         debugx!(gettext("OpenAL started: {} Hz"), freq);
-        let al_vendor = al::get_parameter_str(AL_VENDOR)?;
-        debugx!(gettext("Vendor: {}"), &al_vendor);
+        //let al_vendor = al::get_parameter_str(AL_VENDOR)?;
+        //debugx!(gettext("Vendor: {}"), &al_vendor);
         let al_renderer = al::get_parameter_str(AL_RENDERER)?;
+        if al_renderer != "OpenAL Soft" {
+            warn!("Not using OpenAL Soft renderer! Things may catch on fire.");
+        }
         debugx!(gettext("Renderer: {}"), &al_renderer);
         let al_version = al::get_parameter_str(AL_VERSION)?;
         debugx!(gettext("Version: {}"), &al_version);
