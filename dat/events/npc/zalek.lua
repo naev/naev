@@ -86,9 +86,9 @@ local msg_cond = {
    { npc.test_misnHint("Za'lek Black Hole 1"), _([["Did you know there's a ton of tiny Za'lek research outposts throughout the galaxy? Since they have few or no staff, it is common for them to run into trouble."]]) },
    { npc.test_misnHint("Za'lek Black Hole 1"), _([["I heard that there have been some weird electromagnetic emissions recorded near the Anubis black hole. It is probably just poorly calibrated instruments."]]) },
    { npc.test_misnHint("Za'lek Particle Physics 1"), _([["It seems like Chairwoman Noona has run away to do science again. Nobody takes the Chairwoman job seriously anymore."]]) },
-   { function () return (player.chapter()=="0") end, _([["It seems like they are looking for rare minerals in Ruadan. It is hard to get drones to mine things without blowing everything up."]]) },
-   { function () return (player.chapter()=="0") end, _([["The Za'lek Council is spending too much resources on the gigantic hyper-whatchamacallit in Ruadan. They should invest more in basic research like Hyperbolian Lie algebras!"]]) },
-   { function () return (player.chapter()~="0") end, _([["Have you seen the hypergate at Ruadan? It is truly fascinating. Theoretically, it does not seem like it should work, but it does!"]]) },
+   { npc.test_chapter0(), _([["It seems like they are looking for rare minerals in Ruadan. It is hard to get drones to mine things without blowing everything up."]]) },
+   { npc.test_chapter0(), _([["The Za'lek Council is spending too much resources on the gigantic hyper-whatchamacallit in Ruadan. They should invest more in basic research like Hyperbolian Lie algebras!"]]) },
+   { npc.test_neg( npc.test_chapter0() ), _([["Have you seen the hypergate at Ruadan? It is truly fascinating. Theoretically, it does not seem like it should work, but it does!"]]) },
 }
 
 -- Returns a lore message for the given faction.

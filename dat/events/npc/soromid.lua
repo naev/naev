@@ -57,8 +57,8 @@ local msg_tip = {
 }
 
 local msg_cond = {
-   { function () return (player.chapter()=="0") end, _([["They are building something big in Feye and apparently need all the rare minerals they can get. If you're a good miner, this may be a good way to make some quick credits."]]) },
-   { function () return (player.chapter()~="0") end, _([["I hadn't been to Feye in a while and had my mind blown when I saw the new hypergate they built. Apparently it lets you go to far away systems in a single jump."]]) }
+   { npc.test_chapter0(), _([["They are building something big in Feye and apparently need all the rare minerals they can get. If you're a good miner, this may be a good way to make some quick credits."]]) },
+   { npc.test_neg( npc.test_chapter0() ), _([["I hadn't been to Feye in a while and had my mind blown when I saw the new hypergate they built. Apparently it lets you go to far away systems in a single jump."]]) }
 }
 
 -- Returns a lore message for the given faction.

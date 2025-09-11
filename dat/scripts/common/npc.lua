@@ -53,6 +53,18 @@ function npc.test_evtDone( evtname )
    end
 end
 
+function npc.test_chapter0 ()
+   return function ()
+      return (player.chapter()=="0")
+   end
+end
+
+function npc.test_neg( f )
+   return function ()
+      return not f ()
+   end
+end
+
 --[[
 Gameplay tip messages.
 ALL NPCs have a chance to say one of these lines instead of a lore message.

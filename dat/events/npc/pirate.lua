@@ -128,23 +128,24 @@ local fct_wildones = faction.get("Wild Ones")
 local fct_ravenclan = faction.get("Raven Clan")
 local fct_dreamerclan = faction.get("Dreamer Clan")
 local fct_blacklotus = faction.get("Black Lotus")
-local function test_wildones () return spob.cur():faction()==fct_wildones end
-local function test_ravenclan () return spob.cur():faction()==fct_ravenclan end
-local function test_dreamerclan () return spob.cur():faction()==fct_dreamerclan end
-local function test_blacklotus () return spob.cur():faction()==fct_blacklotus end
-local function test_chapter0 () return (player.chapter()=="0") end
-local function test_event( e ) return not player.evtDone(e) end
-local function tneg( f ) return function () return not f() end end
+local function test_faction( fct ) return function ()
+      return spob.cur():faction()==fct
+   end
+end
+local function test_wildones () return test_faction(fct_wildones) end
+local function test_ravenclan () return test_faction(fct_ravenclan) end
+local function test_dreamerclan () return test_faction(fct_dreamerclan) end
+local function test_blacklotus () return test_faction(fct_blacklotus) end
 
 local msg_cond = {
-   { tneg(test_wildones), _([["The Wild Ones clan is too out of control for me. It seems like all they want to do is pillage and destroy!"]]) },
-   { tneg(test_blacklotus), _([["The Black Lotus pirates are so boring. All they do is paperwork and extortion. Can you call yourself a pirate if you don't pillage?"]]) },
-   { tneg(test_dreamerclan),_([["Dreamer Clan pirates never show up to the pirate assemblies. Probably doing too many illegal substances…"]]) },
-   { test_ravenclan,_([["If it weren't for the Raven Clan pirates, piracy would have gone extinct ages ago! Our supplies and organization are second to none!"]]) },
-   { test_dreamerclan,_([["I ate a weird mushroom yesterday, and I haven't stopped tripping. Are you real?"]]) },
-   { test_chapter0,_([["Ya noticed all the large constructions being built recently in space? They need a lot of rare resources which the resource ships great targets for plundering! Arr!"]]) },
-   { tneg(test_chapter0), _([["There been news of all these hypergates going online throughout the Empire. Rumour's that the Black Lotus have one too!"]]) },
-   { test_event("Haven's Curse"), _([["There's been rumours about strange things happening around Old Man Jack in the Haven system. Got to be them ghosts. If you fly around in a circle three times counterclockwise, it takes its real form. Not gonna try that. Nuthin' ever good comes out of system-wide atrocities."]]) },
+   { npc.test_neg( test_wildones() ), _([["The Wild Ones clan is too out of control for me. It seems like all they want to do is pillage and destroy!"]]) },
+   { npc.test_neg( test_blacklotus() ), _([["The Black Lotus pirates are so boring. All they do is paperwork and extortion. Can you call yourself a pirate if you don't pillage?"]]) },
+   { npc.test_neg( test_dreamerclan() ),_([["Dreamer Clan pirates never show up to the pirate assemblies. Probably doing too many illegal substances…"]]) },
+   { test_ravenclan(),_([["If it weren't for the Raven Clan pirates, piracy would have gone extinct ages ago! Our supplies and organization are second to none!"]]) },
+   { test_dreamerclan(),_([["I ate a weird mushroom yesterday, and I haven't stopped tripping. Are you real?"]]) },
+   { npc.test_chapter0(),_([["Ya noticed all the large constructions being built recently in space? They need a lot of rare resources which the resource ships great targets for plundering! Arr!"]]) },
+   { npc.test_neg( npc.test_chapter0() ), _([["There been news of all these hypergates going online throughout the Empire. Rumour's that the Black Lotus have one too!"]]) },
+   { npc.test_evtHint("Haven's Curse"), _([["There's been rumours about strange things happening around Old Man Jack in the Haven system. Got to be them ghosts. If you fly around in a circle three times counterclockwise, it takes its real form. Not gonna try that. Nuthin' ever good comes out of system-wide atrocities."]]) },
 }
 
 -- Returns a lore message for the given faction.

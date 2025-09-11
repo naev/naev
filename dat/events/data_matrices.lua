@@ -45,7 +45,7 @@ function delay ()
    vn.reset()
    vn.scene()
 
-   local sai = tut.vn_shipai()
+   local sai = vn.newCharacter( tut.vn_shipai() )
    vn.transition( tut.shipai.transition )
    vn.na(fmt.f(_([[You ship AI {ainame} appears before you.]]),
       {ainame=tut.ainame()}))

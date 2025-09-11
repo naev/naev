@@ -39,9 +39,15 @@ local amount = 5
 -- Mission states:
 --  nil: mission not accepted yet
 --   0: go to doeston
---   1: go to iris
---   2: scan the iris system
---   3: return to jorla
+--   1: doeston scan done
+--   2: go to iris
+--   3: scan the iris system
+--   4: return to jorla
+local STAGE_GOTO_DOESTON = 0
+local STAGE_DOESTON_SCAN = 1
+local STAGE_GOTO_IRIS = 2
+local STAGE_IRIS_SCAN =3
+local STAGE_RETURN_JORLA = 4
 mem.misn_stage = nil
 
 function create()
@@ -111,7 +117,7 @@ With that said he hurries and leaves the bar.]]))
    mem.misn_marker = misn.markerAdd( t_sys[1], "low" )
 
    -- Add mission
-   mem.misn_stage = 0
+   mem.misn_stage = STAGE_GOTO_DOESTON
    misn.accept()
    local osd_title = _("Novice Nebula Research")
    local osd_msg = {}
@@ -122,19 +128,18 @@ With that said he hurries and leaves the bar.]]))
 
    mem.thook = hook.takeoff("takeoff")
    hook.land("land")
-   hook.enter("jumpin")
+   hook.enter("enter")
 end
 
 function land()
-   mem.landed = spob.cur()
-   if mem.misn_stage == 3 and mem.landed == homeworld then
+   if mem.misn_stage == STAGE_RETURN_JORLA and spob.cur() == homeworld then
       vn.clear()
       vn.scene()
       local student = vn.newCharacter( nebu_research.vn_student() )
       student:rename(_("Student"))
       vn.transition("fade")
       vn.na(fmt.f(_("The student has already removed all the cables and sensors inside your ship during the flight back to {pnt}. Everything is packed into a couple of crates by the time you land."),{pnt=homeworld}))
-      student(_([["Once again, thank you for your help. I still have to analyze the data, but it looks promising so far. With these results no one is going to question my theories anymore! Also, I decided to increase your reward to compensate for the trouble I caused."]]))
+      student(_([["Once again, thank you for your help. I still have to analyze the data, but it looks promising so far. With these results no one is going to question my theories any more! Also, I decided to increase your reward to compensate for the trouble I caused."]]))
       vn.na(fmt.f(_("He gives you a credit chip worth {credits} and heads off. The money is nice, but not worth as much as the insight that working for the Za'lek will be dangerous and tiresome."),{credits=fmt.credits(credits)}))
       vn.done()
       vn.run()
@@ -162,15 +167,24 @@ His last words are supposed to be reassuring, but instead you start to think tha
    hook.rm(mem.thook)
 end
 
-function jumpin()
+function enter()
    mem.sys = system.cur()
-   if mem.misn_stage == 0 and mem.sys == t_sys[1] then
+   if mem.misn_stage==STAGE_GOTO_DOESTON and mem.sys == t_sys[1] then
       hook.timer(5.0, "beginFirstScan")
-   elseif mem.misn_stage == 1 and mem.sys == t_sys[2] then
-      mem.misn_stage = 2
+      mem.misn_stage = STAGE_DOESTON_SCAN
+
+   elseif mem.misn_stage==STAGE_GOTO_IRIS and mem.sys == t_sys[2] then
       hook.timer(5.0, "beginSecondScan")
-   else
+      mem.misn_stage = STAGE_IRIS_SCAN
+
+   elseif mem.misn_stage==STAGE_DOESTON_SCAN then
+      mem.misn_stage = STAGE_GOTO_DOESTON
       hook.timerClear()
+
+   elseif mem.misn_stage==STAGE_IRIS_SCAN then
+      mem.misn_stage = STAGE_GOTO_IRIS
+      hook.timerClear()
+
    end
 end
 
@@ -210,7 +224,7 @@ function noticeProblems()
    vn.clear()
    vn.scene()
    vn.transition("fade")
-   vn.na(_("Suddenly you lose control of your ship. Apparently most core systems were shut down. Something drains your ship's energy and there are black outs in several parts of your ship."))
+   vn.na(_("Suddenly you lose control of your ship. Apparently most core systems were shut down. Something drains your ship's energy and there are black-outs in several parts of your ship."))
    vn.na(_("You realize that your shields are down as well. In an environment like this... That's it, you're going to die here! You knew accepting this mission was a mistake from the very first moment."))
    vn.done()
    vn.run()
@@ -231,14 +245,13 @@ function stopProblems()
    else
       student(_([["Sorry for causing trouble. I'm not quite familiar with the electronics of this ship type. You really should fly a Za'lek ship instead. Those are so much better!"]]))
    end
-   student(fmt.f(_([["I should investigate the damage it caused to the armor once we land. But first we must go to the {sys} system. Don't worry, the blackout will not occur again!"]]), {sys=t_sys[2]}))
+   student(fmt.f(_([["I should investigate the damage it caused to the armour once we land. But first we must go to the {sys} system. Don't worry, the blackout will not occur again!"]]), {sys=t_sys[2]}))
    vn.done()
    vn.run()
-   mem.misn_stage = 1
    misn.markerMove(mem.misn_marker, t_sys[2])
    misn.osdActive(2)
    hook.rm(mem.phook)
-   hook.enter("jumpin")
+   mem.misn_stage = STAGE_GOTO_IRIS
 end
 
 function beginSecondScan()
@@ -261,7 +274,7 @@ function endSecondScan()
    student(fmt.f(_([["OK, my measurements are complete! Let's go back to {pnt}."]]), {pnt=homeworld}))
    vn.done()
    vn.run()
-   mem.misn_stage = 3
+   mem.misn_stage = STAGE_RETURN_JORLA
    misn.markerMove(mem.misn_marker, homeworld)
    misn.osdActive(3)
 end

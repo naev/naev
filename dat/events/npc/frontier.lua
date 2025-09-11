@@ -47,8 +47,8 @@ local msg_lore = {
 
 local msg_cond = {
    { npc.test_misnDone("Destroy the FLF base!"), _([["I heard that the Dvaered blew up a major Frontier Liberation Front base. This makes me uncertain of the future of the Frontier."]]) },
-   { function () return (player.chapter()=="0") end, _([["I've heard the Great Houses are building megastructures in space. We don't have anything like that in the Frontier."]])},
-   { function () return (player.chapter()~="0") end, _([["They say that a great Hypergate network has gone online. You can travel across the galaxy nearly instantly. We don't have anything like that here in the Frontier…"]])},
+   { npc.test_chapter0(), _([["I've heard the Great Houses are building megastructures in space. We don't have anything like that in the Frontier."]])},
+   { npc.test_neg( npc.test_chapter0() ), _([["They say that a great Hypergate network has gone online. You can travel across the galaxy nearly instantly. We don't have anything like that here in the Frontier…"]])},
 }
 
 -- Returns a lore message for the given faction.

@@ -4,14 +4,8 @@ name: CI
 
 jobs:
   "Package_Source":
-    runs-on: ubuntu-latest
-    container:
-      image: "codeberg.org/naev/naev-release:latest"
+    runs-on: naev-release
     steps:
-      - name: "BODGE: Symlink node-20 to node"
-        run: |
-          ln -s /usr/bin/node-20 /usr/bin/node
-
       - name: Checkout Naev Repository
         uses: actions/checkout@v4
         with:
@@ -19,20 +13,9 @@ jobs:
           fetch-depth: 0
           submodules: true
 
-      - name: Configure Rust
-        uses: https://github.com/actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          target: "x86_64-unknown-linux-gnu"
-          override: true
-          rustflags: ""
-
-      - name: Install bindgen-cli
-        run: |
-          cargo install bindgen-cli
-
       - name: Package Dist
         run: |
-          meson setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
+          meson setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled --wrap-mode=forcefallback
           meson dist -C build --no-tests --include-subprojects
 
       - name: Upload Dist Artifact
@@ -43,9 +26,6 @@ jobs:
 
   "Linux_Compile_Naev":
     needs: "Package_Source"
-    defaults:
-      run:
-        shell: bash
     strategy:
       fail-fast: false
       matrix:
@@ -55,17 +35,9 @@ jobs:
             wrap_mode: default
             target: x86_64-unknown-linux-gnu
 
-    runs-on: ubuntu-latest
-    container:
-      image: "codeberg.org/naev/${{ matrix.image }}:latest"
-      volumes:
-        - ${{ github.workspace }}:${{ github.workspace }}
+    runs-on: ${{ matrix.image }}
 
     steps:
-      - name: "BODGE: Symlink node-20 to node"
-        run: |
-          ln -s /usr/bin/node-20 /usr/bin/node
-
       - name: Get Source
         uses: actions/download-artifact@v3
         with:
@@ -75,17 +47,6 @@ jobs:
         run: |
           mkdir source
           tar -xf naev-*.tar.xz -C source --strip 1
-
-      - name: Configure Rust
-        uses: https://github.com/actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          target: "${{ matrix.target }}"
-          override: true
-          rustflags: ""
-
-      - name: Install bindgen-cli
-        run: |
-          cargo install bindgen-cli
 
       - name: Meson Setup
         id: setup
@@ -123,12 +84,6 @@ jobs:
           name: ${{ matrix.image }}-${{ github.sha }}-compile-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
-      - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ matrix.image }}-${{ github.sha }}-buildArtifacts
-          path: ${{ github.workspace }}/build
-
       - name: Test Install
         id: install
         run: |
@@ -161,12 +116,6 @@ jobs:
           name: ${{ matrix.image }}-${{ github.sha }}-AppImageBuild-log
           path: ${{ github.workspace }}/appImageBuildLog.txt
 
-      - name: Upload Test AppImage
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ matrix.image }}-${{ github.sha }}-AppImageBuild-appimage
-          path: ${{ github.workspace }}/appImageBuild/dist/*.AppImage
-
   "Windows_Compile_Naev":
     needs: "Package_Source"
 
@@ -178,18 +127,12 @@ jobs:
             config: windows_cross_mingw.ini
             target: x86_64-pc-windows-gnu
 
-    runs-on: ubuntu-latest
-    container:
-      image: "codeberg.org/naev/${{ matrix.image }}:latest"
-      env:
-        PKG_CONFIG: "x86_64-w64-mingw32-pkg-config"
-        PKG_CONFIG_PATH: "/usr/x86_64-w64-mingw32/sys-root/mingw/lib/pkgconfig:/__w/naev/naev/source/subprojects/LuaJIT-04dca7911ea255f37be799c18d74c305b921c1a6/etc"
-        BINDGEN_EXTRA_CLANG_ARGS: "--sysroot=/usr/x86_64-w64-mingw32/sys-root/mingw --target=x86_64-w64-mingw32"
+    runs-on: ${{ matrix.image }}
+    env:
+      PKG_CONFIG: "x86_64-w64-mingw32-pkg-config"
+      PKG_CONFIG_PATH: "/usr/x86_64-w64-mingw32/sys-root/mingw/lib/pkgconfig:/__w/naev/naev/source/subprojects/LuaJIT-04dca7911ea255f37be799c18d74c305b921c1a6/etc"
+      BINDGEN_EXTRA_CLANG_ARGS: "--sysroot=/usr/x86_64-w64-mingw32/sys-root/mingw --target=x86_64-w64-mingw32"
     steps:
-      - name: "BODGE: Symlink node-20 to node"
-        run: |
-          ln -s /usr/bin/node-20 /usr/bin/node
-
       - name: Get Source
         uses: actions/download-artifact@v3
         with:
@@ -199,17 +142,6 @@ jobs:
         run: |
           mkdir source
           tar -xf naev-*.tar.xz -C source --strip 1
-
-      - name: Configure Rust
-        uses: https://github.com/actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          target: "${{ matrix.target }}"
-          override: true
-          rustflags: ""
-
-      - name: Install bindgen-cli
-        run: |
-          cargo install bindgen-cli
 
       - name: Meson Setup
         id: setup
@@ -248,14 +180,6 @@ jobs:
           name: ${{ matrix.image }}-${{ github.sha }}-compile-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
-      - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ matrix.image }}-${{ github.sha }}-buildArtifacts
-          path: |
-            ${{ github.workspace }}/build
-          if-no-files-found: error
-
       - name: Test Install
         id: install
         run: |
@@ -284,47 +208,19 @@ jobs:
             deploymenttarget: "13.0"
             config: macos_aarch64_cross_osxcross.ini
 
-    runs-on: ubuntu-latest
-    container:
-      image: "codeberg.org/naev/${{ matrix.image }}:latest"
-      env:
-        BUILDARCH: "${{ matrix.arch }}"
-        HOST: "${{ matrix.arch }}-apple-darwin23"
-        MACOSX_DEPLOYMENT_TARGET: "${{ matrix.deploymenttarget }}"
-        PKG_CONFIG: "${{ matrix.arch }}-apple-darwin23-pkg-config"
-        PKG_CONFIG_PATH: "/usr/lib/osxcross/macports/pkgs/opt/local/lib/pkgconfig"
-        BINDGEN_EXTRA_CLANG_ARGS: "--sysroot=/usr/lib/osxcross/SDK/MacOSX14.sdk --target=${{ matrix.arch }}-apple-darwin"
+    runs-on: ${{ matrix.image }}
+    env:
+      BUILDARCH: "${{ matrix.arch }}"
+      HOST: "${{ matrix.arch }}-apple-darwin23"
+      MACOSX_DEPLOYMENT_TARGET: "${{ matrix.deploymenttarget }}"
+      PKG_CONFIG: "${{ matrix.arch }}-apple-darwin23-pkg-config"
+      PKG_CONFIG_PATH: "/usr/lib/osxcross/macports/pkgs/opt/local/lib/pkgconfig"
+      BINDGEN_EXTRA_CLANG_ARGS: "--sysroot=/usr/lib/osxcross/SDK/MacOSX14.sdk --target=${{ matrix.arch }}-apple-darwin"
 
     steps:
-      - name: "BODGE: Symlink node-20 to node"
+      - name: Configure environment
         run: |
-          ln -s /usr/bin/node-20 /usr/bin/node
-
-      - name: Configure Build Environment
-        run: |
-          echo "Configuring MacPorts packages and build env variables for $BUILDARCH."
-          if [[ "$BUILDARCH" == "aarch64" ]] then
-            rm -f /usr/lib/osxcross/macports
-            ln -s /usr/lib/osxcross/macports.aarch64 /usr/lib/osxcross/macports
-          elif [[ "$BUILDARCH" == "x86_64" ]] then
-            rm -f /usr/lib/osxcross/macports
-            ln -s /usr/lib/osxcross/macports.x86_64 /usr/lib/osxcross/macports
-          # Fallback
-          else
-            rm -f /usr/lib/osxcross/macports
-            ln -s /usr/lib/osxcross/macports.x86_64 /usr/lib/osxcross/macports
-          fi
-
-      - name: Configure Rust
-        uses: https://github.com/actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          target: "${{ matrix.arch }}-apple-darwin"
-          override: true
-          rustflags: ""
-
-      - name: Install bindgen-cli
-        run: |
-          cargo install bindgen-cli --git https://github.com/rust-lang/rust-bindgen.git --rev bd011d43e2d18078606350eb8c33048bf8a59bac
+          /usr/bin/setup-devenv.sh
 
       - name: Get Source
         uses: actions/download-artifact@v3
@@ -374,14 +270,6 @@ jobs:
           name: ${{ matrix.image }}.${{ matrix.arch }}-${{ github.sha }}-compile-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
-      - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ matrix.image }}.${{ matrix.arch }}-${{ github.sha }}-buildArtifacts
-          path: |
-            ${{ github.workspace }}/build
-          if-no-files-found: error
-
       - name: Test Install
         id: install
         run: |
@@ -395,9 +283,7 @@ jobs:
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
   "Luacheck":
-    runs-on: ubuntu-latest
-    container:
-      image: "codeberg.org/naev/naev-steamruntime:latest"
+    runs-on: naev-steamruntime
     needs:
       [
         Package_Source,
@@ -407,10 +293,6 @@ jobs:
       ]
 
     steps:
-      - name: "BODGE: Symlink node-20 to node"
-        run: |
-          ln -s /usr/bin/node-20 /usr/bin/node
-
       - name: Get Source
         uses: actions/download-artifact@v3
         with:
@@ -420,17 +302,6 @@ jobs:
         run: |
           mkdir source
           tar -xf naev-*.tar.xz -C source --strip 1
-
-      - name: Configure Rust
-        uses: https://github.com/actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          target: "x86_64-unknown-linux-gnu"
-          override: true
-          rustflags: ""
-
-      - name: Install bindgen-cli
-        run: |
-          cargo install bindgen-cli
 
       - name: Meson Setup
         id: setup
@@ -462,16 +333,10 @@ jobs:
           path: ${{ github.workspace }}/build/meson-logs/testlog.txt
 
   "Documentation":
-    runs-on: ubuntu-latest
-    container:
-      image: "codeberg.org/naev/naev-docs:latest"
+    runs-on: naev-docs
     needs: Luacheck
 
     steps:
-      - name: "BODGE: Symlink node-20 to node"
-        run: |
-          ln -s /usr/bin/node-20 /usr/bin/node
-
       - name: Get Source
         uses: actions/download-artifact@v3
         with:
@@ -481,21 +346,6 @@ jobs:
         run: |
           mkdir source
           tar -xf naev-*.tar.xz -C source --strip 1
-
-      - name: Configure Rust
-        uses: https://github.com/actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          target: "x86_64-unknown-linux-gnu"
-          override: true
-          rustflags: ""
-
-      - name: Install bindgen-cli
-        run: |
-          cargo install bindgen-cli
-
-      - name: Install bindgen-cli
-        run: |
-          cargo install bindgen-cli
 
       - name: Meson Setup
         run: |
@@ -513,3 +363,13 @@ jobs:
         with:
           name: ${{ github.sha }}-ldoc-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
+
+      - name: Trigger Website Build
+        if: ${{ steps.compile.outcome == 'success' }}
+        run: |
+          curl -X POST \
+            -H "Authorization: token ${{ secrets.WEBSITE_TOKEN }}" \
+            -H "Accept: application/json" \
+            -H "Content-Type: application/json" \
+            "https://codeberg.org/api/v1/repos/naev/naev-website/actions/workflows/api_build.yml/dispatches" \
+            -d '{"ref": "main"}'
