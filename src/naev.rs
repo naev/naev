@@ -289,7 +289,7 @@ fn naevmain() -> Result<()> {
             warn!("{}", gettext("Problem setting up sound!"));
         }
         */
-        //naevc::music_init();
+        naevc::music_init();
         naevc::music_choose(c"load".as_ptr());
     }
 
