@@ -448,7 +448,7 @@ jobs:
           # Generate and changelog into RELEASE_NOTES env var
           {
             echo "RELEASE_NOTES<<EOF"
-            echo "## Built on ${build_date} Git SHA: [${build_sha}](${repo_url}/${build_sha})"
+            echo "## Built on ${build_date} Git SHA: [${build_sha:0:7}](${repo_url}/${build_sha})"
             echo ""
             echo "This is an automated development snapshot build. Debugging is enabled."
             echo ""
