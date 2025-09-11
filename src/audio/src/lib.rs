@@ -285,16 +285,37 @@ pub enum AudioSeek {
     Samples,
 }
 
+#[derive(Debug, PartialEq, Clone)]
+pub enum AudioSource {
+    Buffer(Arc<AudioBuffer>),
+}
+
 #[derive(PartialEq, Debug)]
 pub struct Audio {
     atype: AudioType,
     source: al::Source,
     slot: ALuint,
     volume: f32,
-    buffer: Arc<AudioBuffer>,
+    data: Option<AudioSource>,
 }
 impl Audio {
-    pub fn new(buffer: &Arc<AudioBuffer>) -> Result<Self> {
+    pub fn new(data: &Option<AudioSource>) -> Result<Self> {
+        match data {
+            Some(AudioSource::Buffer(buffer)) => Self::new_buffer(buffer),
+            None => {
+                let source = al::Source::new()?;
+                Ok(Self {
+                    atype: AudioType::Static,
+                    source,
+                    slot: 0,
+                    volume: 1.0,
+                    data: None,
+                })
+            }
+        }
+    }
+
+    pub fn new_buffer(buffer: &Arc<AudioBuffer>) -> Result<Self> {
         let source = al::Source::new()?;
         debug::object_label(debug::AL_SOURCE, source.raw(), &buffer.name);
         Ok(Self {
@@ -302,18 +323,18 @@ impl Audio {
             source,
             slot: 0,
             volume: 1.0,
-            buffer: buffer.clone(),
+            data: Some(AudioSource::Buffer(buffer.clone())),
         })
     }
 
     pub fn from_path(path: &str, _atype: AudioType) -> Result<Self> {
         // TODO streaming
         let buffer = Arc::new(AudioBuffer::from_path(path)?);
-        Self::new(&buffer)
+        Self::new_buffer(&buffer)
     }
 
     fn try_clone(&self) -> Result<Self> {
-        let mut audio = Audio::new(&self.buffer)?;
+        let mut audio = Audio::new(&self.data)?;
         audio.atype = self.atype;
         audio.slot = self.slot;
         audio.volume = self.volume;
@@ -472,6 +493,10 @@ impl Audio {
     }
 }
 
+pub struct AudioGroup {
+    voices: Vec<Audio>,
+}
+
 #[derive(Clone, PartialEq, Copy, Debug)]
 pub struct AudioVolume {
     volume: f32,
@@ -483,7 +508,6 @@ impl Default for AudioVolume {
         Self::new()
     }
 }
-
 impl AudioVolume {
     pub fn new() -> Self {
         Self {
@@ -497,10 +521,8 @@ impl AudioVolume {
 pub struct AudioSystem {
     device: al::Device,
     context: al::Context,
-
     freq: i32,
     output_limiter: bool,
-
     volume: RwLock<AudioVolume>,
 }
 impl AudioSystem {
@@ -575,8 +597,6 @@ impl AudioSystem {
         }
 
         debugx!(gettext("OpenAL started: {} Hz"), freq);
-        //let al_vendor = al::get_parameter_str(AL_VENDOR)?;
-        //debugx!(gettext("Vendor: {}"), &al_vendor);
         let al_renderer = al::get_parameter_str(AL_RENDERER)?;
         if al_renderer != "OpenAL Soft" {
             warn!("Not using OpenAL Soft renderer! Things may catch on fire.");
@@ -631,7 +651,12 @@ impl FromLua for Audio {
  */
 impl UserData for Audio {
     fn add_fields<F: mlua::UserDataFields<Self>>(fields: &mut F) {
-        fields.add_field_method_get("name", |_, this| Ok(this.buffer.name.clone()));
+        fields.add_field_method_get("name", |_, this| {
+            Ok(match &this.data {
+                Some(AudioSource::Buffer(buffer)) => String::from(&buffer.name),
+                None => String::from("NONE"),
+            })
+        });
     }
     fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
         /*
@@ -642,7 +667,13 @@ impl UserData for Audio {
          * @luafunc __tostring
          */
         methods.add_meta_method(MetaMethod::ToString, |_, audio: &Self, ()| {
-            Ok(format!("audio( {} )", &audio.buffer.name))
+            Ok(format!(
+                "audio( {} )",
+                match &audio.data {
+                    Some(AudioSource::Buffer(buffer)) => &buffer.name,
+                    None => "NONE",
+                }
+            ))
         });
         /*
          * @brief Creates a new audio source.
@@ -796,10 +827,13 @@ impl UserData for Audio {
         methods.add_method(
             "getDuration",
             |_, audio: &Self, samples: bool| -> mlua::Result<f32> {
-                Ok(audio.buffer.duration(match samples {
-                    true => AudioSeek::Samples,
-                    false => AudioSeek::Seconds,
-                }))
+                Ok(match &audio.data {
+                    Some(AudioSource::Buffer(buffer)) => buffer.duration(match samples {
+                        true => AudioSeek::Samples,
+                        false => AudioSeek::Seconds,
+                    }),
+                    None => 0.0,
+                })
             },
         );
         /*
