@@ -286,7 +286,7 @@ pub enum AudioSeek {
 }
 
 #[derive(Debug, PartialEq, Clone)]
-pub enum AudioSource {
+pub enum AudioData {
     Buffer(Arc<AudioBuffer>),
 }
 
@@ -296,12 +296,12 @@ pub struct Audio {
     source: al::Source,
     slot: ALuint,
     volume: f32,
-    data: Option<AudioSource>,
+    data: Option<AudioData>,
 }
 impl Audio {
-    pub fn new(data: &Option<AudioSource>) -> Result<Self> {
+    pub fn new(data: &Option<AudioData>) -> Result<Self> {
         match data {
-            Some(AudioSource::Buffer(buffer)) => Self::new_buffer(buffer),
+            Some(AudioData::Buffer(buffer)) => Self::new_buffer(buffer),
             None => {
                 let source = al::Source::new()?;
                 Ok(Self {
@@ -323,7 +323,7 @@ impl Audio {
             source,
             slot: 0,
             volume: 1.0,
-            data: Some(AudioSource::Buffer(buffer.clone())),
+            data: Some(AudioData::Buffer(buffer.clone())),
         })
     }
 
@@ -653,7 +653,7 @@ impl UserData for Audio {
     fn add_fields<F: mlua::UserDataFields<Self>>(fields: &mut F) {
         fields.add_field_method_get("name", |_, this| {
             Ok(match &this.data {
-                Some(AudioSource::Buffer(buffer)) => String::from(&buffer.name),
+                Some(AudioData::Buffer(buffer)) => String::from(&buffer.name),
                 None => String::from("NONE"),
             })
         });
@@ -670,7 +670,7 @@ impl UserData for Audio {
             Ok(format!(
                 "audio( {} )",
                 match &audio.data {
-                    Some(AudioSource::Buffer(buffer)) => &buffer.name,
+                    Some(AudioData::Buffer(buffer)) => &buffer.name,
                     None => "NONE",
                 }
             ))
@@ -828,7 +828,7 @@ impl UserData for Audio {
             "getDuration",
             |_, audio: &Self, samples: bool| -> mlua::Result<f32> {
                 Ok(match &audio.data {
-                    Some(AudioSource::Buffer(buffer)) => buffer.duration(match samples {
+                    Some(AudioData::Buffer(buffer)) => buffer.duration(match samples {
                         true => AudioSeek::Samples,
                         false => AudioSeek::Seconds,
                     }),
