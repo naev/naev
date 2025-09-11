@@ -15,7 +15,6 @@ use log::{debug, debugx, warn, warn_err};
 use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
 use nalgebra::Vector3;
 use std::ffi::{CStr, CString};
-use std::sync::atomic::{AtomicBool, AtomicPtr, Ordering};
 use std::sync::{Arc, LazyLock, Mutex, MutexGuard, RwLock};
 
 const NUM_VOICES: usize = 64;
@@ -497,6 +496,8 @@ pub struct AudioSystem {
 
     volume: RwLock<AudioVolume>,
 }
+unsafe impl Send for AudioSystem {}
+unsafe impl Sync for AudioSystem {}
 impl AudioSystem {
     pub fn new() -> Result<Self> {
         let device = al::Device::new(None)?;
@@ -537,7 +538,6 @@ impl AudioSystem {
         if output_limiter && device.get_parameter_i32(ALC_OUTPUT_LIMITER_SOFT) != ALC_TRUE as i32 {
             warn!("failed to set ALC_OUTPUT_LIMITER_SOFT");
         }
-
         // Check to see if debugging was enabled
         if has_debug {
             match debug::Debug::init(&device) {
@@ -550,8 +550,6 @@ impl AudioSystem {
 
         // Get context information
         let freq = device.get_parameter_i32(ALC_FREQUENCY);
-        let nmono = device.get_parameter_i32(ALC_MONO_SOURCES);
-        let nstereo = device.get_parameter_i32(ALC_STEREO_SOURCES);
 
         // Set up the Efx
         if has_efx {
@@ -569,20 +567,23 @@ impl AudioSystem {
 
         debugx!(gettext("OpenAL started: {} Hz"), freq);
         let al_renderer = al::get_parameter_str(AL_RENDERER)?;
-        debugx!(gettext("Renderer: {}"), &al_renderer);
-        let al_version = al::get_parameter_str(AL_VERSION)?;
-        if let Some(efx) = EFX.get() {
-            debugx!(
-                gettext("Version: {} with EFX {}.{}"),
-                &al_version,
-                efx.version.0,
-                efx.version.1
-            );
-        } else {
-            debugx!(gettext("Version: {} without EFX"), &al_version);
-        }
+        /*
+                debugx!(gettext("Renderer: {}"), &al_renderer);
+                let al_version = al::get_parameter_str(AL_VERSION)?;
+                if let Some(efx) = EFX.get() {
+                    debugx!(
+                        gettext("Version: {} with EFX {}.{}"),
+                        &al_version,
+                        efx.version.0,
+                        efx.version.1
+                    );
+                } else {
+                    debugx!(gettext("Version: {} without EFX"), &al_version);
+                }
+        */
         debug!("");
 
+        dbg!("ready", device.raw());
         Ok(AudioSystem {
             device,
             context,

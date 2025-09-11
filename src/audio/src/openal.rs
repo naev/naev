@@ -182,7 +182,7 @@ unsafe extern "C" {
     pub fn alDisable(capability: ALenum);
     pub fn alIsEnabled(capability: ALenum) -> ALboolean;
 
-    pub fn alGetString(param: ALCenum) -> *mut ALCchar;
+    pub fn alGetString(param: ALCenum) -> *const ALCchar;
 
     pub fn alGetBufferi(buffer: ALuint, param: ALenum, value: *mut ALint);
 
@@ -301,6 +301,7 @@ pub(crate) fn is_error() -> Option<ALenum> {
 
 pub fn get_parameter_str(parameter: ALenum) -> Result<String> {
     let alstr = unsafe { alGetString(parameter) };
+    dbg!(alstr);
     if alstr.is_null() {
         anyhow::bail!("received NULL pointer");
     }
@@ -308,7 +309,7 @@ pub fn get_parameter_str(parameter: ALenum) -> Result<String> {
     Ok(val.to_str().unwrap().to_owned())
 }
 
-pub struct Device(AtomicPtr<ALCdevice>);
+pub struct Device(*mut ALCdevice);
 impl Device {
     pub fn new(devicename: Option<&str>) -> Result<Self> {
         let devicename = devicename.map(|s| CString::new(s).unwrap());
@@ -318,15 +319,15 @@ impl Device {
                 Some(n) => n.as_ptr(),
             })
         };
+        dbg!("create", device);
         if device.is_null() {
             anyhow::bail!("unable to open default sound device");
         }
-        dbg!("created", device);
-        Ok(Self(AtomicPtr::new(device)))
+        Ok(Self(device))
     }
 
     pub fn raw(&self) -> *mut ALCdevice {
-        self.0.load(Ordering::Relaxed)
+        self.0
     }
 
     pub fn is_extension_present(&self, extname: &CStr) -> bool {

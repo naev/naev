@@ -8,8 +8,8 @@ use log::{debug, warn, warn_err};
 use std::ffi::{CStr, CString};
 use std::sync::OnceLock;
 
-pub const ALC_EXT_DEBUG_NAME: &CStr = c"ALC_EXT_DEBUG";
-
+pub const ALC_EXT_DEBUG_NAME: &CStr = c"ALC_EXT_debug";
+pub const AL_EXT_DEBUG_NAME: &CStr = c"AL_EXT_debug";
 // Accepted as an attribute to alcCreateContext:
 pub const ALC_CONTEXT_FLAGS: ALenum = 0x19CF;
 
@@ -158,6 +158,8 @@ unsafe extern "C" fn debug_callback(
 impl Debug {
     #[allow(non_snake_case)]
     pub fn init(device: &al::Device) -> Result<()> {
+        dbg!(device.get_parameter_i32(AL_CONTEXT_FLAGS));
+
         macro_rules! proc_address {
             ($func: literal, $type: ident) => {{
                 let val = unsafe { alGetProcAddress($func.as_ptr()) };
@@ -172,10 +174,11 @@ impl Debug {
         }
 
         let alDebugMessageCallback =
-            proc_address!(c"alDebugMessageCallback", ALDEBUGMESSAGECALLBACK);
-        let alObjectLabel = proc_address!(c"alObjectLabel", ALOBJECTLABEL);
+            proc_address!(c"alDebugMessageCallbackEXT", ALDEBUGMESSAGECALLBACK);
+        let alObjectLabel = proc_address!(c"alObjectLabelEXT", ALOBJECTLABEL);
 
         let ok = unsafe {
+            dbg!(alIsEnabled(AL_DEBUG_OUTPUT));
             alEnable(AL_DEBUG_OUTPUT);
             alDebugMessageCallback(debug_callback, std::ptr::null());
             alIsEnabled(AL_DEBUG_OUTPUT) != 0
