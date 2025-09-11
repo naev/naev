@@ -426,6 +426,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           path: build/staging/repo
+          fetch-depth: 0
 
       - name: Generate Nightly Changelog
         if: ${{ matrix.releasetype == 'codeberg' }}
