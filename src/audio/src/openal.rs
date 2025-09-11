@@ -93,6 +93,9 @@ pub mod al_types {
 }
 use al_types::*;
 
+pub const AL_FALSE: ALboolean = 0;
+pub const AL_TRUE: ALboolean = 1;
+
 pub const AL_NO_ERROR: ALenum = 0;
 
 pub const AL_VENDOR: ALenum = 0xb001;
@@ -269,6 +272,8 @@ unsafe extern "C" {
     pub fn alSpeedOfSound(speed: ALfloat);
 
     pub fn alGetProcAddress(fname: *const ALchar) -> *mut ALvoid;
+
+    pub fn alGetIntegerv(param: ALCenum, data: *mut ALCint);
 }
 
 // === Misc Extensions ===
@@ -301,12 +306,19 @@ pub(crate) fn is_error() -> Option<ALenum> {
 
 pub fn get_parameter_str(parameter: ALenum) -> Result<String> {
     let alstr = unsafe { alGetString(parameter) };
-    dbg!(alstr);
     if alstr.is_null() {
         anyhow::bail!("received NULL pointer");
     }
     let val = unsafe { CStr::from_ptr(alstr) };
     Ok(val.to_str().unwrap().to_owned())
+}
+
+pub fn get_parameter_i32(parameter: ALenum) -> ALint {
+    let mut val: ALCint = 0;
+    unsafe {
+        alGetIntegerv(parameter, &mut val);
+    }
+    val
 }
 
 pub struct Device(*mut ALCdevice);
@@ -319,7 +331,6 @@ impl Device {
                 Some(n) => n.as_ptr(),
             })
         };
-        dbg!("create", device);
         if device.is_null() {
             anyhow::bail!("unable to open default sound device");
         }
@@ -357,20 +368,30 @@ impl Device {
 impl Drop for Device {
     fn drop(&mut self) {
         unsafe {
-            dbg!("dropped", self.raw());
             alcCloseDevice(self.raw());
         }
     }
 }
 
-pub struct Context(AtomicPtr<ALCcontext>);
+pub struct Context(*mut ALCcontext);
 impl Context {
     pub fn new(device: &Device, attribs: &[ALCenum]) -> Result<Self> {
         let context = unsafe { alcCreateContext(device.raw(), attribs.as_ptr()) };
         if context.is_null() {
             anyhow::bail!("unable to create context");
         }
-        Ok(Self(AtomicPtr::new(context)))
+        Ok(Self(context))
+    }
+
+    pub fn raw(&self) -> *mut ALCcontext {
+        self.0
+    }
+
+    pub fn set_current(&self) -> Result<()> {
+        match unsafe { alcMakeContextCurrent(self.raw()) } {
+            ALC_FALSE => anyhow::bail!("unable to set context as current"),
+            _ => Ok(()),
+        }
     }
 }
 

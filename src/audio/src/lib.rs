@@ -503,6 +503,19 @@ impl AudioSystem {
         let device = al::Device::new(None)?;
 
         let mut attribs: Vec<ALint> = vec![ALC_MONO_SOURCES, 512, ALC_STEREO_SOURCES, 32];
+        let mut has_debug = if cfg!(debug_assertions) {
+            let debug = device.is_extension_present(debug::ALC_EXT_DEBUG_NAME);
+            if debug {
+                attribs.push(debug::ALC_CONTEXT_FLAGS);
+                attribs.push(debug::ALC_CONTEXT_DEBUG_BIT);
+            } else {
+                warn("ALC_EXT_debug not supported on device");
+            }
+            debug
+        } else {
+            false
+        };
+
         let has_efx = match unsafe { naevc::conf.al_efx } {
             0 => false,
             _ => match device.is_extension_present(ALC_EXT_EFX_NAME) {
@@ -519,20 +532,10 @@ impl AudioSystem {
             attribs.push(ALC_OUTPUT_LIMITER_SOFT);
             attribs.push(ALC_TRUE as i32);
         }
-
-        let has_debug = if cfg!(debug_assertions) {
-            let debug = device.is_extension_present(debug::ALC_EXT_DEBUG_NAME);
-            if debug {
-                attribs.push(debug::ALC_CONTEXT_FLAGS);
-                attribs.push(debug::ALC_CONTEXT_DEBUG_BIT);
-            }
-            debug
-        } else {
-            false
-        };
         attribs.push(0); // Has to be NULL terminated
 
         let context = al::Context::new(&device, &attribs)?;
+        context.set_current()?;
 
         // Check to see if output limiter is working
         if output_limiter && device.get_parameter_i32(ALC_OUTPUT_LIMITER_SOFT) != ALC_TRUE as i32 {
@@ -543,6 +546,7 @@ impl AudioSystem {
             match debug::Debug::init(&device) {
                 Ok(()) => (),
                 Err(e) => {
+                    has_debug = false;
                     warn_err!(e);
                 }
             }
@@ -567,23 +571,18 @@ impl AudioSystem {
 
         debugx!(gettext("OpenAL started: {} Hz"), freq);
         let al_renderer = al::get_parameter_str(AL_RENDERER)?;
-        /*
-                debugx!(gettext("Renderer: {}"), &al_renderer);
-                let al_version = al::get_parameter_str(AL_VERSION)?;
-                if let Some(efx) = EFX.get() {
-                    debugx!(
-                        gettext("Version: {} with EFX {}.{}"),
-                        &al_version,
-                        efx.version.0,
-                        efx.version.1
-                    );
-                } else {
-                    debugx!(gettext("Version: {} without EFX"), &al_version);
-                }
-        */
+        debugx!(gettext("Renderer: {}"), &al_renderer);
+        let al_vendor = al::get_parameter_str(AL_VENDOR)?;
+        let al_version = al::get_parameter_str(AL_VERSION)?;
+        debugx!(gettext("Version: {}"), &al_version);
+        if has_debug {
+            debugx!(gettext("   with DEBUG"));
+        }
+        if let Some(efx) = EFX.get() {
+            debugx!(gettext("   with EFX {}.{}"), efx.version.0, efx.version.1);
+        }
         debug!("");
 
-        dbg!("ready", device.raw());
         Ok(AudioSystem {
             device,
             context,

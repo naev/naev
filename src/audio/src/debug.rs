@@ -91,12 +91,21 @@ pub type ALDEBUGMESSAGECALLBACK =
     unsafe extern "C" fn(callback: ALDEBUGPROC, user_param: *const ALvoid);
 pub type ALOBJECTLABEL =
     unsafe extern "C" fn(identifier: ALenum, name: ALuint, length: ALsizei, label: *const ALchar);
+pub type ALDEBUGMESSAGECONTROL = unsafe extern "C" fn(
+    source: ALenum,
+    atype: ALenum,
+    severity: ALenum,
+    count: ALsizei,
+    ids: *const ALuint,
+    enable: ALboolean,
+);
 
 #[allow(non_snake_case)]
 pub struct Debug {
     // Debug C API
     pub alDebugMessageCallback: ALDEBUGMESSAGECALLBACK,
     pub alObjectLabel: ALOBJECTLABEL,
+    pub alDebugMessageControl: ALDEBUGMESSAGECONTROL,
 }
 
 unsafe extern "C" fn debug_callback(
@@ -158,7 +167,9 @@ unsafe extern "C" fn debug_callback(
 impl Debug {
     #[allow(non_snake_case)]
     pub fn init(device: &al::Device) -> Result<()> {
-        dbg!(device.get_parameter_i32(AL_CONTEXT_FLAGS));
+        if (get_parameter_i32(AL_CONTEXT_FLAGS) & AL_CONTEXT_DEBUG_BIT) == 0 {
+            anyhow::bail!("AL_CONTEXT_DEBUG_BIT not set");
+        }
 
         macro_rules! proc_address {
             ($func: literal, $type: ident) => {{
@@ -176,10 +187,19 @@ impl Debug {
         let alDebugMessageCallback =
             proc_address!(c"alDebugMessageCallbackEXT", ALDEBUGMESSAGECALLBACK);
         let alObjectLabel = proc_address!(c"alObjectLabelEXT", ALOBJECTLABEL);
+        let alDebugMessageControl =
+            proc_address!(c"alDebugMessageControlEXT", ALDEBUGMESSAGECONTROL);
 
         let ok = unsafe {
-            dbg!(alIsEnabled(AL_DEBUG_OUTPUT));
             alEnable(AL_DEBUG_OUTPUT);
+            alDebugMessageControl(
+                AL_DONT_CARE,
+                AL_DONT_CARE,
+                AL_DEBUG_SEVERITY_LOW,
+                0,
+                std::ptr::null(),
+                AL_TRUE,
+            );
             alDebugMessageCallback(debug_callback, std::ptr::null());
             alIsEnabled(AL_DEBUG_OUTPUT) != 0
         };
@@ -189,6 +209,7 @@ impl Debug {
         match DEBUG.set(Self {
             alDebugMessageCallback,
             alObjectLabel,
+            alDebugMessageControl,
         }) {
             Ok(()) => Ok(()),
             Err(_) => anyhow::bail!("failed to set DEBUG"),
