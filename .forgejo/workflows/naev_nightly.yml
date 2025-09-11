@@ -441,10 +441,27 @@ jobs:
           # Repo URL base for commit links
           repo_url="https://codeberg.org/naev/naev/commit"
 
-          # Generate changelog
-          echo "# Nightly Changelog" > ${{ github.workspace }}/build/staging/CHANGELOG.md
-          echo "" >> ${{ github.workspace }}/build/staging/CHANGELOG.md
-          git log --pretty=format:"- %s ([%h](${repo_url}/%H))" ${last_tag}..HEAD >> ${{ github.workspace }}/build/staging/CHANGELOG.md
+          # Build date and sha
+          build_date="$(date +%Y-%m-%d)"
+          build_sha="$(git rev-parse HEAD)"
+
+          # Generate and changelog into RELEASE_NOTES env var
+          {
+            echo "RELEASE_NOTES<<EOF"
+            echo "## Built on ${build_date} Git SHA: [${build_sha}](${repo_url}/${build_sha})"
+            echo ""
+            echo "This is an automated development snapshot build. Debugging is enabled."
+            echo ""
+            echo "Please report any issues you run into on the [issue tracker](https://codeberg.org/naev/naev/issues)!"
+            echo ""
+            echo "### Changes since last build"
+            echo ""
+            git log --pretty=format:"- %s ([%h](${repo_url}/%H))" ${last_tag}..HEAD
+            echo "EOF"
+          } >> $GITHUB_ENV
+
+          # Generate release title into RELEASE_TITLE env var
+          echo "RELEASE_TITLE=Nightly Release (${build_date}, ${build_sha:0:7})" >> $GITHUB_ENV
 
       - name: Push 'nightly' tag
         if: ${{ matrix.releasetype == 'codeberg' }}
@@ -468,12 +485,12 @@ jobs:
         with:
           direction: upload
           release-dir: "$(pwd)/build/dist"
-          release-notes: "$(pwd)/build/staging/CHANGELOG.md"
+          release-notes: "${{ env.RELEASE_NOTES }}"
           override: true
           prerelease: true
           hide-archive-link: true
           tag: nightly
-          title: Nightly Release
+          title: ${{ env.RELEASE_TITLE }}
 
       - name: Build and Upload itch.io Release
         if: ${{ matrix.releasetype == 'itch' }}
