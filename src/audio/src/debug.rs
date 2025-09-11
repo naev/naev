@@ -1,7 +1,6 @@
 #![allow(clippy::upper_case_acronyms)]
 use crate::openal as al;
 use crate::openal::al_types::*;
-use crate::openal::alc_types::*;
 use crate::openal::*;
 use anyhow::Result;
 use log::{debug, warn, warn_err};

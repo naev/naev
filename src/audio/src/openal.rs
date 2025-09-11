@@ -3,8 +3,6 @@
 use std::ffi::{CStr, CString};
 use std::sync::atomic::{AtomicPtr, Ordering};
 
-use log::warn;
-
 // === alc.h ===
 
 #[allow(dead_code)]
@@ -321,7 +319,7 @@ pub fn get_parameter_i32(parameter: ALenum) -> ALint {
     val
 }
 
-pub struct Device(*mut ALCdevice);
+pub struct Device(AtomicPtr<ALCdevice>);
 impl Device {
     pub fn new(devicename: Option<&str>) -> Result<Self> {
         let devicename = devicename.map(|s| CString::new(s).unwrap());
@@ -334,11 +332,11 @@ impl Device {
         if device.is_null() {
             anyhow::bail!("unable to open default sound device");
         }
-        Ok(Self(device))
+        Ok(Self(AtomicPtr::new(device)))
     }
 
     pub fn raw(&self) -> *mut ALCdevice {
-        self.0
+        self.0.load(Ordering::Relaxed)
     }
 
     pub fn is_extension_present(&self, extname: &CStr) -> bool {
@@ -373,18 +371,18 @@ impl Drop for Device {
     }
 }
 
-pub struct Context(*mut ALCcontext);
+pub struct Context(AtomicPtr<ALCcontext>);
 impl Context {
     pub fn new(device: &Device, attribs: &[ALCenum]) -> Result<Self> {
         let context = unsafe { alcCreateContext(device.raw(), attribs.as_ptr()) };
         if context.is_null() {
             anyhow::bail!("unable to create context");
         }
-        Ok(Self(context))
+        Ok(Self(AtomicPtr::new(context)))
     }
 
     pub fn raw(&self) -> *mut ALCcontext {
-        self.0
+        self.0.load(Ordering::Relaxed)
     }
 
     pub fn set_current(&self) -> Result<()> {

@@ -1,21 +1,19 @@
-#![allow(dead_code, unused_imports, unused_variables)]
+#![allow(dead_code, unused_variables)]
 mod debug;
 mod efx;
 mod openal;
 use crate::efx::*;
 use crate::openal as al;
 use crate::openal::al_types::*;
-use crate::openal::alc_types::*;
 use crate::openal::*;
-use naev_core::utils::{AtomicF32, binary_search_by_key_ref, sort_by_key_ref};
+use naev_core::utils::{binary_search_by_key_ref, sort_by_key_ref};
 
 use anyhow::Result;
 use gettext::gettext;
 use log::{debug, debugx, warn, warn_err};
-use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
+use mlua::{MetaMethod, UserData, UserDataMethods};
 use nalgebra::Vector3;
-use std::ffi::{CStr, CString};
-use std::sync::{Arc, LazyLock, Mutex, MutexGuard, RwLock};
+use std::sync::{Arc, LazyLock, Mutex, RwLock};
 
 const NUM_VOICES: usize = 64;
 const REFERENCE_DISTANCE: f32 = 500.;
@@ -56,13 +54,13 @@ pub struct AudioBuffer {
 }
 impl AudioBuffer {
     fn from_path(path: &str) -> Result<Self> {
-        use symphonia::core::audio::{AudioBuffer, Channels, SampleBuffer, Signal};
-        use symphonia::core::codecs::{CODEC_TYPE_NULL, CodecParameters, Decoder, DecoderOptions};
+        use symphonia::core::audio::{AudioBuffer, Channels, Signal};
+        use symphonia::core::codecs::{CODEC_TYPE_NULL, CodecParameters, DecoderOptions};
         use symphonia::core::errors::Error;
-        use symphonia::core::formats::{FormatOptions, FormatReader, Track};
+        use symphonia::core::formats::{FormatOptions, FormatReader};
         use symphonia::core::io::MediaSourceStream;
         use symphonia::core::meta::{MetadataOptions, StandardTagKey, Tag, Value};
-        use symphonia::core::probe::{Hint, ProbeResult};
+        use symphonia::core::probe::Hint;
         use symphonia::core::sample::{Sample, SampleFormat};
 
         let src = ndata::open(path)?;
@@ -496,8 +494,6 @@ pub struct AudioSystem {
 
     volume: RwLock<AudioVolume>,
 }
-unsafe impl Send for AudioSystem {}
-unsafe impl Sync for AudioSystem {}
 impl AudioSystem {
     pub fn new() -> Result<Self> {
         let device = al::Device::new(None)?;
