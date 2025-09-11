@@ -1,5 +1,4 @@
 #![allow(clippy::upper_case_acronyms)]
-use crate::openal as al;
 use crate::openal::al_types::*;
 use crate::openal::*;
 use anyhow::Result;
@@ -114,7 +113,7 @@ unsafe extern "C" fn debug_callback(
     severity: ALenum,
     length: ALsizei,
     message: *const ALchar,
-    user_param: *const ALvoid,
+    _user_param: *const ALvoid,
 ) {
     let s_source = match source {
         AL_DEBUG_SOURCE_API => "api",
@@ -165,7 +164,7 @@ unsafe extern "C" fn debug_callback(
 
 impl Debug {
     #[allow(non_snake_case)]
-    pub fn init(device: &al::Device) -> Result<()> {
+    pub fn init() -> Result<()> {
         if (get_parameter_i32(AL_CONTEXT_FLAGS) & AL_CONTEXT_DEBUG_BIT) == 0 {
             anyhow::bail!("AL_CONTEXT_DEBUG_BIT not set");
         }

@@ -1,4 +1,4 @@
-#![allow(dead_code, unused_variables)]
+#![allow(dead_code)]
 mod debug;
 mod efx;
 mod openal;
@@ -157,7 +157,7 @@ impl AudioBuffer {
                 // Decode the packet into audio samples.
                 match decoder.decode(&packet) {
                     Ok(decoded) => {
-                        let spec = decoded.spec();
+                        //let spec = decoded.spec();
                         buffers.push(decoded.make_equivalent());
                     }
                     Err(Error::IoError(e)) => {
@@ -294,7 +294,7 @@ pub struct Audio {
     buffer: Arc<AudioBuffer>,
 }
 impl Audio {
-    pub fn new(buffer: Arc<AudioBuffer>) -> Result<Self> {
+    pub fn new(buffer: &Arc<AudioBuffer>) -> Result<Self> {
         let source = al::Source::new()?;
         debug::object_label(debug::AL_SOURCE, source.raw(), &buffer.name);
         Ok(Self {
@@ -306,10 +306,19 @@ impl Audio {
         })
     }
 
-    pub fn from_path(path: &str, atype: AudioType) -> Result<Self> {
+    pub fn from_path(path: &str, _atype: AudioType) -> Result<Self> {
         // TODO streaming
         let buffer = Arc::new(AudioBuffer::from_path(path)?);
-        Self::new(buffer)
+        Self::new(&buffer)
+    }
+
+    fn try_clone(&self) -> Result<Self> {
+        let mut audio = Audio::new(&self.buffer)?;
+        audio.atype = self.atype;
+        audio.slot = self.slot;
+        audio.volume = self.volume;
+        // TODO copy some other properties over and set volume
+        Ok(audio)
     }
 
     /// Sets the sound to be in-game as opposed to a GUI or music track.
@@ -539,7 +548,7 @@ impl AudioSystem {
         }
         // Check to see if debugging was enabled
         if has_debug {
-            match debug::Debug::init(&device) {
+            match debug::Debug::init() {
                 Ok(()) => (),
                 Err(e) => {
                     has_debug = false;
@@ -566,9 +575,10 @@ impl AudioSystem {
         }
 
         debugx!(gettext("OpenAL started: {} Hz"), freq);
+        let al_vendor = al::get_parameter_str(AL_VENDOR)?;
+        debugx!(gettext("Vendor: {}"), &al_vendor);
         let al_renderer = al::get_parameter_str(AL_RENDERER)?;
         debugx!(gettext("Renderer: {}"), &al_renderer);
-        let al_vendor = al::get_parameter_str(AL_VENDOR)?;
         let al_version = al::get_parameter_str(AL_VERSION)?;
         debugx!(gettext("Version: {}"), &al_version);
         if has_debug {
@@ -659,8 +669,8 @@ impl UserData for Audio {
          *    @luatreturn Audio New audio corresponding to the data.
          * @luafunc clone
          */
-        methods.add_method("clone", |_, audio: &Self, ()| -> mlua::Result<()> {
-            todo!()
+        methods.add_method("clone", |_, audio: &Self, ()| -> mlua::Result<Audio> {
+            Ok(audio.try_clone()?)
         });
         /*
          * @brief Plays a source.
