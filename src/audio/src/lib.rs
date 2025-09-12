@@ -292,7 +292,6 @@ pub enum AudioData {
 
 #[derive(PartialEq, Debug)]
 pub struct Audio {
-    atype: AudioType,
     source: al::Source,
     slot: ALuint,
     volume: f32,
@@ -305,7 +304,6 @@ impl Audio {
             None => {
                 let source = al::Source::new()?;
                 Ok(Self {
-                    atype: AudioType::Static,
                     source,
                     slot: 0,
                     volume: 1.0,
@@ -319,7 +317,6 @@ impl Audio {
         let source = al::Source::new()?;
         debug::object_label(debug::AL_SOURCE, source.raw(), &buffer.name);
         Ok(Self {
-            atype: AudioType::Static,
             source,
             slot: 0,
             volume: 1.0,
@@ -335,7 +332,6 @@ impl Audio {
 
     fn try_clone(&self) -> Result<Self> {
         let mut audio = Audio::new(&self.data)?;
-        audio.atype = self.atype;
         audio.slot = self.slot;
         audio.volume = self.volume;
         // TODO copy some other properties over and set volume
