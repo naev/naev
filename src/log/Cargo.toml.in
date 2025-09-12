@@ -16,8 +16,8 @@ gettext = { workspace = true }
 naevc = { workspace = true }
 anyhow = { workspace = true }
 formatx = { workspace = true }
-semver = "1"
-log = "0"
+semver = "1.0"
+log = "0.4"
 
 [target.'cfg(unix)'.dependencies]
-nix = { version="0", features=["signal"] }
+nix = { version="0.30", features=["signal"] }

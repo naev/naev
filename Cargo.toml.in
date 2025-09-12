@@ -81,8 +81,8 @@ constcat = "0.6"
 derive_more = { version = "2", features = ["from", "into"] }
 rand = "0.9"
 rayon = "1.10" # parallel computation
-static_assertions = "1"
-palette = "0" # Colour conversion
+static_assertions = "1.1"
+palette = "0.7" # Colour conversion
 mlua = { version = "0.11", features = ["luajit", "anyhow", "send", "serialize"] }
 serde_yaml2 = "0.1"
 # gltf-rs crate doesn't support WEBP in any release atm...
