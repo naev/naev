@@ -7,8 +7,9 @@ use crate::efx::*;
 use crate::openal as al;
 use crate::openal::al_types::*;
 use crate::openal::*;
+use crate::source_spatialize::*;
 use naev_core::utils::{binary_search_by_key_ref, sort_by_key_ref};
-use source_spatialize::*;
+use std::sync::atomic::Ordering;
 
 use anyhow::Result;
 use gettext::gettext;
@@ -352,6 +353,9 @@ impl Audio {
         check_audio!(self);
         let v = &self.source;
 
+        if HAS_AL_SOFT_SOURCE_SPATIALIZE.load(Ordering::Relaxed) {
+            v.parameter_i32(AL_SOURCE_SPATIALIZE_SOFT, AL_AUTO_SOFT);
+        }
         v.parameter_f32(AL_REFERENCE_DISTANCE, REFERENCE_DISTANCE);
         v.parameter_f32(AL_MAX_DISTANCE, MAX_DISTANCE);
         v.parameter_f32(AL_ROLLOFF_FACTOR, 1.);
@@ -558,7 +562,6 @@ pub struct AudioSystem {
     volume: RwLock<AudioVolume>,
     // Some extension information
     output_limiter: bool,
-    source_spatialize: bool,
 }
 impl AudioSystem {
     pub fn new() -> Result<Self> {
@@ -632,8 +635,8 @@ impl AudioSystem {
             alDistanceModel(AL_INVERSE_DISTANCE_CLAMPED);
         }
 
-        let source_spatialize = device.is_extension_present(AL_SOFT_SOURCE_SPATIALIZE);
-        dbg!(source_spatialize);
+        let source_spatialize = al::is_extension_present(AL_SOFT_SOURCE_SPATIALIZE);
+        HAS_AL_SOFT_SOURCE_SPATIALIZE.store(source_spatialize, Ordering::Relaxed);
 
         debugx!(gettext("OpenAL started: {} Hz"), freq);
         let al_renderer = al::get_parameter_str(AL_RENDERER)?;
@@ -662,7 +665,6 @@ impl AudioSystem {
             volume: RwLock::new(AudioVolume::new()),
             freq,
             output_limiter,
-            source_spatialize,
         })
     }
 }

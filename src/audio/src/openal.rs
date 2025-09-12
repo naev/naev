@@ -272,6 +272,8 @@ unsafe extern "C" {
     pub fn alGetProcAddress(fname: *const ALchar) -> *mut ALvoid;
 
     pub fn alGetIntegerv(param: ALCenum, data: *mut ALCint);
+
+    pub fn alIsExtensionPresent(extname: *const ALchar) -> ALCboolean;
 }
 
 // === Misc Extensions ===
@@ -300,6 +302,10 @@ pub(crate) fn is_error() -> Option<ALenum> {
         AL_NO_ERROR => None,
         err => Some(err),
     }
+}
+
+pub fn is_extension_present(extname: &CStr) -> bool {
+    matches!(unsafe { alIsExtensionPresent(extname.as_ptr()) }, ALC_TRUE)
 }
 
 pub fn get_parameter_str(parameter: ALenum) -> Result<String> {
