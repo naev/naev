@@ -6,6 +6,7 @@ mod openal;
 mod events;
 mod source_spatialize;
 use crate::efx::*;
+use crate::events::*;
 use crate::openal as al;
 use crate::openal::al_types::*;
 use crate::openal::*;
@@ -604,6 +605,12 @@ impl AudioSystem {
         let context = al::Context::new(&device, &attribs)?;
         context.set_current()?;
 
+        // Has to test after context creation
+        let has_events = is_extension_present(AL_SOFT_EVENTS_NAME);
+        if has_events {
+            Events::init()?;
+        }
+
         // Check to see if output limiter is working
         if output_limiter && device.get_parameter_i32(ALC_OUTPUT_LIMITER_SOFT) != ALC_TRUE as i32 {
             warn!("failed to set ALC_OUTPUT_LIMITER_SOFT");
@@ -637,8 +644,8 @@ impl AudioSystem {
             alDistanceModel(AL_INVERSE_DISTANCE_CLAMPED);
         }
 
-        let source_spatialize = al::is_extension_present(AL_SOFT_SOURCE_SPATIALIZE);
-        HAS_AL_SOFT_SOURCE_SPATIALIZE.store(source_spatialize, Ordering::Relaxed);
+        let has_source_spatialize = al::is_extension_present(AL_SOFT_SOURCE_SPATIALIZE);
+        HAS_AL_SOFT_SOURCE_SPATIALIZE.store(has_source_spatialize, Ordering::Relaxed);
 
         debugx!(gettext("OpenAL started: {} Hz"), freq);
         let al_renderer = al::get_parameter_str(AL_RENDERER)?;
@@ -652,11 +659,14 @@ impl AudioSystem {
         if has_debug {
             extensions.push("debug".to_string());
         }
-        if source_spatialize {
-            extensions.push("source_spatialize".to_string());
-        }
         if let Some(efx) = EFX.get() {
             extensions.push(format!("EFX {}.{}", efx.version.0, efx.version.1));
+        }
+        if has_source_spatialize {
+            extensions.push("source_spatialize".to_string());
+        }
+        if has_events {
+            extensions.push("events".to_string());
         }
         debugx!("   with {}", extensions.join(", "));
         debug!("");
