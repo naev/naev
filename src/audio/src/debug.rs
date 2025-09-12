@@ -1,3 +1,4 @@
+//! AL_EXT_debug extension
 #![allow(clippy::upper_case_acronyms)]
 use crate::openal::al_types::*;
 use crate::openal::*;

@@ -2,11 +2,13 @@
 mod debug;
 mod efx;
 mod openal;
+mod source_spatialize;
 use crate::efx::*;
 use crate::openal as al;
 use crate::openal::al_types::*;
 use crate::openal::*;
 use naev_core::utils::{binary_search_by_key_ref, sort_by_key_ref};
+use source_spatialize::*;
 
 use anyhow::Result;
 use gettext::gettext;
@@ -297,6 +299,13 @@ pub struct Audio {
     volume: f32,
     data: Option<AudioData>,
 }
+macro_rules! check_audio {
+    ($self: ident) => {{
+        if $self.data == None {
+            return Default::default();
+        }
+    }};
+}
 impl Audio {
     pub fn new(data: &Option<AudioData>) -> Result<Self> {
         match data {
@@ -340,6 +349,7 @@ impl Audio {
 
     /// Sets the sound to be in-game as opposed to a GUI or music track.
     pub fn ingame(&self) {
+        check_audio!(self);
         let v = &self.source;
 
         v.parameter_f32(AL_REFERENCE_DISTANCE, REFERENCE_DISTANCE);
@@ -357,46 +367,55 @@ impl Audio {
     }
 
     fn is_state(&self, state: ALenum) -> bool {
+        check_audio!(self);
         self.source.get_parameter_i32(AL_SOURCE_STATE) == state
     }
 
     pub fn play(&self) {
+        check_audio!(self);
         unsafe {
             alSourcePlay(self.source.raw());
         }
     }
 
     pub fn is_playing(&self) -> bool {
+        check_audio!(self);
         self.is_state(AL_PLAYING)
     }
 
     pub fn pause(&self) {
+        check_audio!(self);
         unsafe {
             alSourcePause(self.source.raw());
         }
     }
 
     pub fn is_paused(&self) -> bool {
+        check_audio!(self);
         self.is_state(AL_PAUSED)
     }
 
     pub fn stop(&self) {
+        check_audio!(self);
         unsafe {
             alSourceStop(self.source.raw());
         }
     }
 
     pub fn is_stopped(&self) -> bool {
+        check_audio!(self);
         self.is_state(AL_STOPPED)
     }
 
     pub fn rewind(&self) {
+        check_audio!(self);
         unsafe {
             alSourceRewind(self.source.raw());
         }
     }
 
     pub fn seek(&self, offset: f32, unit: AudioSeek) {
+        check_audio!(self);
         match unit {
             AudioSeek::Seconds => self.source.parameter_f32(AL_SEC_OFFSET, offset),
             AudioSeek::Samples => self.source.parameter_f32(AL_SAMPLE_OFFSET, offset),
@@ -404,6 +423,7 @@ impl Audio {
     }
 
     pub fn tell(&self, unit: AudioSeek) -> f32 {
+        check_audio!(self);
         match unit {
             AudioSeek::Seconds => self.source.get_parameter_f32(AL_SEC_OFFSET),
             AudioSeek::Samples => self.source.get_parameter_f32(AL_SAMPLE_OFFSET),
@@ -411,69 +431,84 @@ impl Audio {
     }
 
     pub fn set_volume(&mut self, vol: f32) {
+        check_audio!(self);
         let master = AUDIO.volume.read().unwrap().volume;
         self.source.parameter_f32(AL_GAIN, master * vol);
         self.volume = vol;
     }
 
     pub fn set_volume_raw(&mut self, vol: f32) {
+        check_audio!(self);
         self.source.parameter_f32(AL_GAIN, vol);
         self.volume = vol;
     }
 
     pub fn volume(&self) -> f32 {
+        check_audio!(self);
         self.volume
     }
 
     pub fn set_relative(&self, relative: bool) {
+        check_audio!(self);
         self.source
             .parameter_i32(AL_SOURCE_RELATIVE, relative as i32);
     }
 
     pub fn relative(&self) -> bool {
+        check_audio!(self);
         self.source.get_parameter_i32(AL_SOURCE_RELATIVE) != 0
     }
 
     pub fn set_position(&self, pos: Vector3<f32>) {
+        check_audio!(self);
         self.source
             .parameter_3_f32(AL_POSITION, pos.x, pos.y, pos.z);
     }
 
     pub fn position(&self) -> Vector3<f32> {
+        check_audio!(self);
         Vector3::from(self.source.get_parameter_3_f32(AL_POSITION))
     }
 
     pub fn set_velocity(&self, pos: Vector3<f32>) {
+        check_audio!(self);
         self.source
             .parameter_3_f32(AL_VELOCITY, pos.x, pos.y, pos.z);
     }
 
     pub fn velocity(&self) -> Vector3<f32> {
+        check_audio!(self);
         Vector3::from(self.source.get_parameter_3_f32(AL_VELOCITY))
     }
 
     pub fn set_looping(&self, looping: bool) {
+        check_audio!(self);
         self.source.parameter_i32(AL_LOOPING, looping as i32);
     }
 
     pub fn looping(&self) -> bool {
+        check_audio!(self);
         self.source.get_parameter_i32(AL_LOOPING) != 0
     }
 
     pub fn set_pitch(&self, pitch: f32) {
+        check_audio!(self);
         self.source.parameter_f32(AL_PITCH, pitch);
     }
 
     pub fn pitch(&self) -> f32 {
+        check_audio!(self);
         self.source.get_parameter_f32(AL_PITCH)
     }
 
     pub fn set_attenuation_distances(&self, reference: f32, max: f32) {
+        check_audio!(self);
         self.source.parameter_f32(AL_REFERENCE_DISTANCE, reference);
         self.source.parameter_f32(AL_MAX_DISTANCE, max);
     }
 
     pub fn attenuation_distances(&self) -> (f32, f32) {
+        check_audio!(self);
         (
             self.source.get_parameter_f32(AL_REFERENCE_DISTANCE),
             self.source.get_parameter_f32(AL_MAX_DISTANCE),
@@ -481,10 +516,12 @@ impl Audio {
     }
 
     pub fn set_rolloff(&self, rolloff: f32) {
+        check_audio!(self);
         self.source.parameter_f32(AL_ROLLOFF_FACTOR, rolloff);
     }
 
     pub fn rolloff(&self) -> f32 {
+        check_audio!(self);
         self.source.get_parameter_f32(AL_ROLLOFF_FACTOR)
     }
 }
@@ -518,8 +555,10 @@ pub struct AudioSystem {
     device: al::Device,
     context: al::Context,
     freq: i32,
-    output_limiter: bool,
     volume: RwLock<AudioVolume>,
+    // Some extension information
+    output_limiter: bool,
+    source_spatialize: bool,
 }
 impl AudioSystem {
     pub fn new() -> Result<Self> {
@@ -588,9 +627,13 @@ impl AudioSystem {
             }
         }
 
+        // Default global settings
         unsafe {
             alDistanceModel(AL_INVERSE_DISTANCE_CLAMPED);
         }
+
+        let source_spatialize = device.is_extension_present(AL_SOFT_SOURCE_SPATIALIZE);
+        dbg!(source_spatialize);
 
         debugx!(gettext("OpenAL started: {} Hz"), freq);
         let al_renderer = al::get_parameter_str(AL_RENDERER)?;
@@ -600,22 +643,26 @@ impl AudioSystem {
         debugx!(gettext("Renderer: {}"), &al_renderer);
         let al_version = al::get_parameter_str(AL_VERSION)?;
         debugx!(gettext("Version: {}"), &al_version);
+        let mut extensions: Vec<String> = Vec::new();
         if has_debug {
-            debugx!(gettext("   with DEBUG"));
+            extensions.push("debug".to_string());
+        }
+        if source_spatialize {
+            extensions.push("source_spatialize".to_string());
         }
         if let Some(efx) = EFX.get() {
-            debugx!(gettext("   with EFX {}.{}"), efx.version.0, efx.version.1);
+            extensions.push(format!("EFX {}.{}", efx.version.0, efx.version.1));
         }
+        debugx!("   with {}", extensions.join(", "));
         debug!("");
 
         Ok(AudioSystem {
             device,
             context,
-
             volume: RwLock::new(AudioVolume::new()),
-
             freq,
             output_limiter,
+            source_spatialize,
         })
     }
 }
