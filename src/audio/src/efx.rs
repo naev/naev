@@ -228,19 +228,7 @@ impl Efx {
             device.get_parameter_i32(ALC_EFX_MINOR_VERSION),
         );
 
-        macro_rules! proc_address {
-            ($func: literal, $type: ident) => {{
-                let val = unsafe { alGetProcAddress($func.as_ptr()) };
-                if val.is_null() {
-                    warn!(
-                        "unable to load proc address for '{}'",
-                        $func.to_string_lossy()
-                    );
-                }
-                unsafe { std::mem::transmute::<*mut ALvoid, $type>(val) }
-            }};
-        }
-
+        use crate::proc_address;
         let alGenAuxiliaryEffectSlots =
             proc_address!(c"alGenAuxiliaryEffectSlots", ALGENAUXILIARYEFFECTSLOTS);
         let alDeleteAuxiliaryEffectSlots = proc_address!(

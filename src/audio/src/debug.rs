@@ -170,19 +170,7 @@ impl Debug {
             anyhow::bail!("AL_CONTEXT_DEBUG_BIT not set");
         }
 
-        macro_rules! proc_address {
-            ($func: literal, $type: ident) => {{
-                let val = unsafe { alGetProcAddress($func.as_ptr()) };
-                if val.is_null() {
-                    warn!(
-                        "unable to load proc address for '{}'",
-                        $func.to_string_lossy()
-                    );
-                }
-                unsafe { std::mem::transmute::<*mut ALvoid, $type>(val) }
-            }};
-        }
-
+        use crate::proc_address;
         let alDebugMessageCallback =
             proc_address!(c"alDebugMessageCallbackEXT", ALDEBUGMESSAGECALLBACK);
         let alObjectLabel = proc_address!(c"alObjectLabelEXT", ALOBJECTLABEL);
