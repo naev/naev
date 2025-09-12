@@ -510,3 +510,17 @@ impl Drop for Buffer {
         }
     }
 }
+
+#[macro_export]
+macro_rules! proc_address {
+    ($func: literal, $type: ident) => {{
+        let val = unsafe { alGetProcAddress($func.as_ptr()) };
+        if val.is_null() {
+            warn!(
+                "unable to load proc address for '{}'",
+                $func.to_string_lossy()
+            );
+        }
+        unsafe { std::mem::transmute::<*mut ALvoid, $type>(val) }
+    }};
+}

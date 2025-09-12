@@ -1,7 +1,9 @@
 #![allow(dead_code)]
 mod debug;
 mod efx;
+#[macro_use]
 mod openal;
+mod events;
 mod source_spatialize;
 use crate::efx::*;
 use crate::openal as al;

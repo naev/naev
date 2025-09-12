@@ -15,6 +15,7 @@ source_rust = files(
    'audio/src/efx.rs',
    'audio/src/openal.rs',
    'audio/src/source_spatialize.rs',
+   'audio/src/events.rs',
    'core/src/lib.rs',
    'core/src/ntime.rs',
    'core/src/nxml.rs',
