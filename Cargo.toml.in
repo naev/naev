@@ -54,7 +54,7 @@ renderer = { path="@BUILD@/src/renderer" }
 toolkit = { path="@BUILD@/src/toolkit" }
 formatx = "0.2"
 glow = "0.16"
-nalgebra = { version = "0", features = ["bytemuck"]  }
+nalgebra = { version = "0.33", features = ["bytemuck"]  }
 bytemuck = { version = "1", features = ["derive"] } # Needed for shader voodoo
 encase = { version = "0", features = ["nalgebra"] } # Needed for shader voodoo
 image = { version = "=0.25", features = ["rayon"] }
