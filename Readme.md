@@ -1,4 +1,4 @@
-[![Nightly Release Status](https://codeberg.org/naev/naev/badges/workflows/naev_nightly.yml/badge.svg)](https://codeberg.org/naev/naev/actions/?workflow=naev_nightly.yml) [![CI Status](https://codeberg.org/naev/naev/badges/workflows/naev_ci.yml/badge.svg)](https://codeberg.org/naev/naev/actions/?workflow=naev_ci.yml) [![Packaging status](https://repology.org/badge/tiny-repos/naev.svg)](https://repology.org/project/naev/versions) [![Translation Status](https://hosted.weblate.org/widgets/naev/-/naev/svg-badge.svg)](https://hosted.weblate.org/projects/naev/)
+[![Nightly Release Status](https://codeberg.org/naev/naev/badges/workflows/naev_nightly.yml/badge.svg)](https://codeberg.org/naev/naev/actions/?workflow=naev_nightly.yml) [![CI Status](https://codeberg.org/naev/naev/badges/workflows/naev_ci.yml/badge.svg)](https://codeberg.org/naev/naev/actions/?workflow=naev_ci.yml) [![Packaging status](https://repology.org/badge/tiny-repos/naev.svg)](https://repology.org/project/naev/versions) [![Translation Status](https://translate.codeberg.org/widget/naev/naev/svg-badge.svg)](https://translate.codeberg.org/projects/naev/)
 # NAEV README
 
 ![Naev Logo](https://naev.org/imgs/naev.png)
@@ -164,9 +164,9 @@ Naev uses [Oxford Spelling](https://en.wikipedia.org/wiki/Oxford_spelling) for a
 
 ### ONLINE TRANSLATION
 
-Naev is incorporated into [Weblate](https://weblate.org/). You can easily
+Naev is incorporated into Weblate on Codeberg. You can easily
 translate directly with a web interface to your chosen language from Naev's
-[project page](https://hosted.weblate.org/projects/naev/naev/). New languages have to be added
+[project page](https://translate.codeberg.org/projects/naev/). New languages have to be added
 manually, please open an issue if you want to translate Naev to a new language.
 
 Some translation notes:
@@ -177,7 +177,7 @@ Some translation notes:
 ### TRANSLATION FOR DEVELOPERS
 
 Naev's translation is handled with gettext. (It's custom, but C and Lua code can use the conventional `_()` for gettext and
-`N_()` for gettext-noop, as well as `n_()` for ngettext.)
+`N_()` for gettext-noop, as well as `n_()` for ngettext. Rust uses `gettext()`, `ngettext()`, and the likes instead.)
 
 When content like missions is updated, new translatable text must be made available to Weblate.
 The key manual step is to regenerate the `po/naev.pot` file (`meson compile naev-pot` in the build dir) and commit it.
