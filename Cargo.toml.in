@@ -46,7 +46,7 @@ not_unsafe_ptr_arg_deref = "allow"
 [workspace.dependencies]
 naevc = { path=@NAEVC@ }
 sdl3 = "0.14"
-anyhow = "1"
+anyhow = "1.0"
 audio = { path="@BUILD@/src/audio" }
 naev_core = { path="@BUILD@/src/core" }
 gettext = { path="@BUILD@/src/gettext" }
@@ -57,10 +57,10 @@ renderer = { path="@BUILD@/src/renderer" }
 toolkit = { path="@BUILD@/src/toolkit" }
 formatx = "0.2"
 glow = "0.16"
-nalgebra = { version = "0.33", features = ["bytemuck"]  }
-bytemuck = { version = "1", features = ["derive"] } # Needed for shader voodoo
-encase = { version = "0", features = ["nalgebra"] } # Needed for shader voodoo
-image = { version = "=0.25", features = ["rayon"] }
+nalgebra = { version = "=0.33", features = ["bytemuck"]  }
+bytemuck = { version = "1.23", features = ["derive"] } # Needed for shader voodoo
+encase = { version = "0.11", features = ["nalgebra"] } # Needed for shader voodoo
+image = { version = "0.25", features = ["rayon"] }
 roxmltree = "0.20"
 mlua = { version = "0.11", features = ["luajit", "anyhow", "send", "serialize"] }
 symphonia = "0.5"
@@ -88,8 +88,8 @@ constcat = "0.6"
 derive_more = { version = "2", features = ["from", "into"] }
 rand = "0.9"
 rayon = "1.10" # parallel computation
-static_assertions = "1"
-palette = "0" # Colour conversion
+static_assertions = "1.1"
+palette = "0.7" # Colour conversion
 serde_yaml2 = "0.1"
 # gltf-rs crate doesn't support WEBP in any release atm...
 gltf = { git = "https://github.com/gltf-rs/gltf.git", rev = "12fc1b7ce28c7b4c6d1b881a30df24060dccfbda", features = ["extras", "names", "utils", "EXT_texture_webp", "KHR_materials_emissive_strength"] }

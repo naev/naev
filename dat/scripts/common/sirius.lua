@@ -61,6 +61,7 @@ function srs.obeliskEnter( oblk )
    local pp = player.pilot()
    spos = pp:pos()
    sdir = pp:dir()
+   pp:setVel( vec2.new() )
 
    -- Have to claim the system or other missions/events can affect it
    if naev.evt then

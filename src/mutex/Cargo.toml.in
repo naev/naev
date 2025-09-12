@@ -13,4 +13,3 @@ path = "@SOURCE@/src/mutex/src/lib.rs"
 
 [dependencies]
 sdl3 = { workspace = true }
-not-send = "1"

@@ -234,6 +234,8 @@ function drone_board ()
       misn.cargoAdd(c, 0)
       misn.osdActive(2)
       mem.state = 2
+      pdis:setHilight(false)
+      misn.markerAdd(mainpnt)
    end
 
    player.unboard()

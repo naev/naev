@@ -33,7 +33,7 @@ impl Drop for Lock {
 
 pub struct MutexGuard<'a, T: ?Sized + 'a> {
     lock: &'a Mutex<T>,
-    _phantom: not_send::PhantomNotSend,
+    _marker: std::marker::PhantomData<*mut ()>,
 }
 //impl<T: ?Sized> !Send for MutexGuard<'_, T> {}
 unsafe impl<T: ?Sized + Sync> Sync for MutexGuard<'_, T> {}
@@ -45,11 +45,11 @@ impl<'mutex, T: ?Sized> MutexGuard<'mutex, T> {
         {
             Ok(_) => Ok(MutexGuard {
                 lock,
-                _phantom: not_send::PhantomNotSend::default(),
+                _marker: std::marker::PhantomData::default(),
             }),
             Err(_) => Err(PoisonError::new(MutexGuard {
                 lock,
-                _phantom: not_send::PhantomNotSend::default(),
+                _marker: std::marker::PhantomData::default(),
             })),
         }
     }
