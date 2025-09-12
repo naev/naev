@@ -44,7 +44,7 @@ not_unsafe_ptr_arg_deref = "allow"
 [workspace.dependencies]
 naevc = { path=@NAEVC@ }
 sdl3 = "0.14"
-anyhow = "1"
+anyhow = "1.0"
 naev_core = { path="@BUILD@/src/core" }
 gettext = { path="@BUILD@/src/gettext" }
 log = { path="@BUILD@/src/log" }
@@ -55,9 +55,9 @@ toolkit = { path="@BUILD@/src/toolkit" }
 formatx = "0.2"
 glow = "0.16"
 nalgebra = { version = "0.33", features = ["bytemuck"]  }
-bytemuck = { version = "1", features = ["derive"] } # Needed for shader voodoo
-encase = { version = "0", features = ["nalgebra"] } # Needed for shader voodoo
-image = { version = "=0.25", features = ["rayon"] }
+bytemuck = { version = "1.23", features = ["derive"] } # Needed for shader voodoo
+encase = { version = "0.11", features = ["nalgebra"] } # Needed for shader voodoo
+image = { version = "0.25", features = ["rayon"] }
 roxmltree = "0.20"
 
 [dependencies]
