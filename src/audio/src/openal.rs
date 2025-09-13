@@ -1,5 +1,6 @@
 //! OpenAL (Soft) bindings
 #![allow(non_snake_case, dead_code)]
+use nalgebra::Vector3;
 use std::ffi::{CStr, CString};
 use std::sync::atomic::{AtomicPtr, Ordering};
 
@@ -319,6 +320,18 @@ pub fn get_parameter_i32(parameter: ALenum) -> ALint {
         alGetIntegerv(parameter, &mut val);
     }
     val
+}
+
+pub fn set_listener_position(position: Vector3<f32>) {
+    unsafe {
+        alListenerfv(AL_POSITION, position.as_ptr());
+    }
+}
+
+pub fn set_listener_velocity(velocity: Vector3<f32>) {
+    unsafe {
+        alListenerfv(AL_VELOCITY, velocity.as_ptr());
+    }
 }
 
 pub struct Device(AtomicPtr<ALCdevice>);

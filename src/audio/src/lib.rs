@@ -567,6 +567,10 @@ impl Audio {
         check_audio!(self);
         self.source.get_parameter_f32(AL_ROLLOFF_FACTOR)
     }
+
+    pub fn into_ptr(self) -> *mut Self {
+        Box::into_raw(Box::new(self))
+    }
 }
 
 pub struct AudioGroup {
@@ -1415,4 +1419,74 @@ impl UserData for Audio {
 
 pub fn open_audio(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
     Ok(lua.create_proxy::<Audio>()?)
+}
+
+// Here be C API
+use std::ffi::c_char;
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sound_get(name: *const c_char) -> *const AudioBuffer {
+    std::ptr::null()
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sound_getLength(sound: *const AudioBuffer) -> f64 {
+    if sound.is_null() {
+        warn!("recieved NULL");
+        return 0.0;
+    }
+    let sound = unsafe { &*sound };
+    sound.duration(AudioSeek::Seconds) as f64
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sound_play(sound: *const Arc<AudioBuffer>) -> *const Audio {
+    if sound.is_null() {
+        warn!("recieved NULL");
+        return std::ptr::null();
+    }
+    let sound = unsafe { &*sound };
+    let voice = Audio::new(&Some(AudioData::Buffer(sound.clone()))).unwrap();
+    voice.into_ptr()
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sound_playPos(
+    sound: *const naevc::Sound,
+    px: f64,
+    py: f64,
+    vx: f64,
+    vy: f64,
+) -> *const Audio {
+    let voice = Audio::new(&None).unwrap();
+    voice.set_position(Vector3::from([px as f32, py as f32, 0.0]));
+    voice.set_velocity(Vector3::from([vx as f32, vy as f32, 0.0]));
+    voice.into_ptr()
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sound_stop(voice: *mut Audio) {
+    if voice.is_null() {
+        warn!("recieved NULL");
+        return;
+    }
+    let voice = unsafe { &*voice };
+    voice.stop();
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sound_updatePos(voice: *mut Audio, px: f64, py: f64, vx: f64, vy: f64) {
+    if voice.is_null() {
+        warn!("recieved NULL");
+        return;
+    }
+    let voice = unsafe { &*voice };
+    voice.set_position(Vector3::from([px as f32, py as f32, 0.0]));
+    voice.set_velocity(Vector3::from([vx as f32, vy as f32, 0.0]));
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sound_updateListener(px: f64, py: f64, vx: f64, vy: f64) {
+    set_listener_position(Vector3::from([px as f32, py as f32, 0.0]));
+    set_listener_velocity(Vector3::from([vx as f32, vy as f32, 0.0]));
 }

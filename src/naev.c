@@ -274,8 +274,8 @@ int naev_main_cleanup( void )
    difficulty_free(); /* Clean up difficulties. */
    music_exit();      /* Kills Lua state. */
    lua_exit();        /* Closes Lua state, and invalidates all Lua. */
-   sound_exit();      /* Kills the sound */
-   gl_exit();         /* Kills video output */
+   // sound_exit();      /* Kills the sound */
+   gl_exit(); /* Kills video output */
 
    /* Has to be run last or it will mess up sound settings. */
    conf_cleanup(); /* Free some memory the configuration allocated. */

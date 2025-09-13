@@ -63,8 +63,6 @@ extern ov_callbacks sound_al_ovcall_noclose;
 /*
  * sound subsystem
  */
-int    sound_init( void );
-void   sound_exit( void );
 int    sound_update( double dt );
 void   sound_pause( void );
 void   sound_resume( void );
