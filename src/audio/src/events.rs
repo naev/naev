@@ -8,13 +8,15 @@ use std::ffi::CStr;
 use std::sync::OnceLock;
 
 pub const AL_SOFT_EVENTS_NAME: &CStr = c"AL_SOFT_events";
+pub mod consts {
+    use crate::openal::al_types::*;
+    pub const AL_EVENT_CALLBACK_FUNCTION_SOFT: ALenum = 0x19A2;
+    pub const AL_EVENT_CALLBACK_USER_PARAM_SOFT: ALenum = 0x19A3;
 
-pub const AL_EVENT_CALLBACK_FUNCTION_SOFT: ALenum = 0x19A2;
-pub const AL_EVENT_CALLBACK_USER_PARAM_SOFT: ALenum = 0x19A3;
-
-pub const AL_EVENT_TYPE_BUFFER_COMPLETED_SOFT: ALenum = 0x19A4;
-pub const AL_EVENT_TYPE_SOURCE_STATE_CHANGED_SOFT: ALenum = 0x19A5;
-pub const AL_EVENT_TYPE_DISCONNECTED_SOFT: ALenum = 0x19A6;
+    pub const AL_EVENT_TYPE_BUFFER_COMPLETED_SOFT: ALenum = 0x19A4;
+    pub const AL_EVENT_TYPE_SOURCE_STATE_CHANGED_SOFT: ALenum = 0x19A5;
+    pub const AL_EVENT_TYPE_DISCONNECTED_SOFT: ALenum = 0x19A6;
+}
 
 pub type Callback = fn(event_type: ALenum, object: ALuint, param: ALuint, message: &str);
 
