@@ -329,6 +329,7 @@ impl Efx {
     }
 }
 
+#[derive(PartialEq, Debug)]
 pub struct AuxiliaryEffectSlot(pub ALuint);
 impl AuxiliaryEffectSlot {
     pub fn new() -> Result<Self> {
@@ -377,6 +378,7 @@ impl Drop for AuxiliaryEffectSlot {
     }
 }
 
+#[derive(PartialEq, Debug)]
 pub struct Filter(pub std::num::NonZero<ALuint>);
 impl Filter {
     pub fn new() -> Result<Self> {
@@ -403,6 +405,7 @@ impl Drop for Filter {
     }
 }
 
+#[derive(PartialEq, Debug)]
 pub struct Effect(pub ALuint);
 impl Effect {
     pub fn new() -> Result<Self> {

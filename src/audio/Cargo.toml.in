@@ -21,3 +21,5 @@ log = { workspace = true }
 gettext = { workspace = true }
 naev_core = { workspace = true }
 nalgebra = { workspace = true }
+thunderdome = { workspace = true }
+static_assertions = { workspace = true }

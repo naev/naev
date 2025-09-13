@@ -20,6 +20,7 @@ use crate::source_spatialize::consts::*;
 use crate::source_spatialize::*;
 use naev_core::utils::{binary_search_by_key_ref, sort_by_key_ref};
 use std::sync::atomic::{AtomicU32, Ordering};
+use thunderdome::Arena;
 
 use anyhow::Result;
 use gettext::gettext;
@@ -301,7 +302,7 @@ impl AudioBuffer {
         */
     }
 
-    fn exists(name: &str) -> Option<Arc<Self>> {
+    fn get(name: &str) -> Option<Arc<Self>> {
         let buffers = AUDIO_BUFFER.lock().unwrap();
         for buf in buffers.iter() {
             if let Some(b) = buf.upgrade() {
@@ -311,6 +312,20 @@ impl AudioBuffer {
             }
         }
         None
+    }
+
+    fn get_or_try_load(name: &str) -> Result<Arc<Self>> {
+        let mut buffers = AUDIO_BUFFER.lock().unwrap();
+        for buf in buffers.iter() {
+            if let Some(b) = buf.upgrade() {
+                if b.name == name {
+                    return Ok(b);
+                }
+            }
+        }
+        let data = Arc::new(Self::from_path(name)?);
+        buffers.push(Arc::downgrade(&data));
+        Ok(data)
     }
 }
 /// All the shared Static audio data (streaming is separate)
@@ -335,9 +350,9 @@ pub enum AudioData {
 #[derive(PartialEq, Debug)]
 pub struct Audio {
     source: al::Source,
-    slot: ALuint,
-    volume: f32,
+    slot: Option<AuxiliaryEffectSlot>,
     data: Option<AudioData>,
+    volume: f32,
 }
 macro_rules! check_audio {
     ($self: ident) => {{
@@ -354,7 +369,7 @@ impl Audio {
                 let source = al::Source::new()?;
                 Ok(Self {
                     source,
-                    slot: 0,
+                    slot: None,
                     volume: 1.0,
                     data: None,
                 })
@@ -367,7 +382,7 @@ impl Audio {
         debug::object_label(debug::consts::AL_SOURCE_EXT, source.raw(), &buffer.name);
         Ok(Self {
             source,
-            slot: 0,
+            slot: None,
             volume: 1.0,
             data: Some(AudioData::Buffer(buffer.clone())),
         })
@@ -381,7 +396,7 @@ impl Audio {
 
     fn try_clone(&self) -> Result<Self> {
         let mut audio = Audio::new(&self.data)?;
-        audio.slot = self.slot;
+        audio.slot = None;
         audio.volume = self.volume;
         // TODO copy some other properties over and set volume
         Ok(audio)
@@ -579,8 +594,11 @@ pub struct AudioGroup {
 
 #[derive(Clone, PartialEq, Copy, Debug)]
 pub struct AudioVolume {
+    /// Logarithmic volume
     volume: f32,
+    /// Linear volume
     volume_lin: f32,
+    /// Volume speed multiplier
     volume_speed: f32,
 }
 impl Default for AudioVolume {
@@ -618,6 +636,7 @@ pub struct AudioSystem {
     context: al::Context,
     freq: i32,
     volume: RwLock<AudioVolume>,
+    voices: Mutex<Arena<Audio>>,
 }
 impl AudioSystem {
     pub fn new() -> Result<Self> {
@@ -739,7 +758,24 @@ impl AudioSystem {
             context,
             volume: RwLock::new(AudioVolume::new()),
             freq,
+            voices: Mutex::new(Arena::new()),
         })
+    }
+
+    pub fn set_volume(&self, volume: f32) {
+        let mut vol = self.volume.write().unwrap();
+        vol.volume_lin = volume;
+        if vol.volume_lin > 0.0 {
+            vol.volume = 1.0 / 2.0_f32.powf((1.0 - volume) * 8.0);
+        } else {
+            vol.volume = 0.0;
+        }
+    }
+
+    pub fn set_volume_speed(&self, speed: f32) {
+        let mut vol = self.volume.write().unwrap();
+        vol.volume_speed = speed;
+        drop(vol);
     }
 }
 static AUDIO: LazyLock<AudioSystem> = LazyLock::new(|| AudioSystem::new().unwrap());
@@ -1422,15 +1458,33 @@ pub fn open_audio(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
 }
 
 // Here be C API
-use std::ffi::c_char;
+use std::ffi::{CStr, c_char, c_void};
+
+// We assume that the index can be cast to a pointer for C to not complain
+// This should hold on 64 bit platforms
+static_assertions::assert_eq_size!(thunderdome::Index, *const c_void);
 
 #[unsafe(no_mangle)]
-pub extern "C" fn sound_get(name: *const c_char) -> *const AudioBuffer {
+pub extern "C" fn sound_get(name: *const c_char) -> *const Arc<AudioBuffer> {
+    if name.is_null() {
+        warn!("recieved NULL");
+        return std::ptr::null();
+    }
+    let name = unsafe { CStr::from_ptr(name).to_string_lossy() };
+    for ext in ["wav", "ogg"] {
+        let path = format!("snd/sounds/{name}.{ext}");
+        match AudioBuffer::get_or_try_load(&path) {
+            Ok(buffer) => {
+                return Box::into_raw(Box::new(buffer));
+            }
+            Err(_) => (),
+        };
+    }
     std::ptr::null()
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn sound_getLength(sound: *const AudioBuffer) -> f64 {
+pub extern "C" fn sound_getLength(sound: *const Arc<AudioBuffer>) -> f64 {
     if sound.is_null() {
         warn!("recieved NULL");
         return 0.0;
@@ -1440,47 +1494,64 @@ pub extern "C" fn sound_getLength(sound: *const AudioBuffer) -> f64 {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn sound_play(sound: *const Arc<AudioBuffer>) -> *const Audio {
+pub extern "C" fn sound_play(sound: *const Arc<AudioBuffer>) -> *const c_void {
     if sound.is_null() {
         warn!("recieved NULL");
         return std::ptr::null();
     }
     let sound = unsafe { &*sound };
-    let voice = Audio::new(&Some(AudioData::Buffer(sound.clone()))).unwrap();
-    voice.into_ptr()
+
+    let mut voices = AUDIO.voices.lock().unwrap();
+    let audio = Audio::new(&Some(AudioData::Buffer(sound.clone()))).unwrap();
+    let voice = voices.insert(audio);
+    unsafe { std::mem::transmute::<thunderdome::Index, *const c_void>(voice) }
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_playPos(
-    sound: *const naevc::Sound,
+    sound: *const Arc<AudioBuffer>,
     px: f64,
     py: f64,
     vx: f64,
     vy: f64,
-) -> *const Audio {
-    let voice = Audio::new(&None).unwrap();
-    voice.set_position(Vector3::from([px as f32, py as f32, 0.0]));
-    voice.set_velocity(Vector3::from([vx as f32, vy as f32, 0.0]));
-    voice.into_ptr()
+) -> *const c_void {
+    if sound.is_null() {
+        warn!("recieved NULL");
+        return std::ptr::null();
+    }
+    let sound = unsafe { &*sound };
+
+    let mut voices = AUDIO.voices.lock().unwrap();
+    let audio = Audio::new(&Some(AudioData::Buffer(sound.clone()))).unwrap();
+    audio.set_position(Vector3::from([px as f32, py as f32, 0.0]));
+    audio.set_velocity(Vector3::from([vx as f32, vy as f32, 0.0]));
+    let voice = voices.insert(audio);
+    unsafe { std::mem::transmute::<thunderdome::Index, *const c_void>(voice) }
+}
+
+macro_rules! get_voice {
+    ($voice: ident) => {{
+        if $voice.is_null() {
+            warn!("recieved NULL");
+            return Default::default();
+        }
+        unsafe { std::mem::transmute::<*const c_void, thunderdome::Index>($voice) }
+    }};
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn sound_stop(voice: *mut Audio) {
-    if voice.is_null() {
-        warn!("recieved NULL");
-        return;
-    }
-    let voice = unsafe { &*voice };
+pub extern "C" fn sound_stop(voice: *const c_void) {
+    let index = get_voice!(voice);
+    let voices = AUDIO.voices.lock().unwrap();
+    let voice = &voices[index];
     voice.stop();
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn sound_updatePos(voice: *mut Audio, px: f64, py: f64, vx: f64, vy: f64) {
-    if voice.is_null() {
-        warn!("recieved NULL");
-        return;
-    }
-    let voice = unsafe { &*voice };
+pub extern "C" fn sound_updatePos(voice: *const c_void, px: f64, py: f64, vx: f64, vy: f64) {
+    let index = get_voice!(voice);
+    let voices = AUDIO.voices.lock().unwrap();
+    let voice = &voices[index];
     voice.set_position(Vector3::from([px as f32, py as f32, 0.0]));
     voice.set_velocity(Vector3::from([vx as f32, vy as f32, 0.0]));
 }
@@ -1489,4 +1560,61 @@ pub extern "C" fn sound_updatePos(voice: *mut Audio, px: f64, py: f64, vx: f64, 
 pub extern "C" fn sound_updateListener(px: f64, py: f64, vx: f64, vy: f64) {
     set_listener_position(Vector3::from([px as f32, py as f32, 0.0]));
     set_listener_velocity(Vector3::from([vx as f32, vy as f32, 0.0]));
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sound_update(dt: f64) -> i32 {
+    0
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sound_pause() {
+    let voices = AUDIO.voices.lock().unwrap();
+    for (_, v) in voices.iter() {
+        v.pause();
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sound_resume() {
+    let voices = AUDIO.voices.lock().unwrap();
+    for (_, v) in voices.iter() {
+        v.play();
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sound_volume(volume: f64) {
+    AUDIO.set_volume(volume as f32);
+    let master = {
+        let vol = AUDIO.volume.read().unwrap();
+        vol.volume * vol.volume_speed
+    };
+    let voices = AUDIO.voices.lock().unwrap();
+    for (_, v) in voices.iter() {
+        v.source.parameter_f32(AL_GAIN, master * v.volume);
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sound_getVolume() -> f64 {
+    AUDIO.volume.read().unwrap().volume_lin as f64
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sound_getVolumeLog() -> f64 {
+    AUDIO.volume.read().unwrap().volume as f64
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sound_stopAll() {
+    let mut voices = AUDIO.voices.lock().unwrap();
+    for (_, v) in voices.drain() {
+        v.stop();
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sound_setSpeed(speed: f64) {
+    AUDIO.set_volume_speed(speed as f32);
 }
