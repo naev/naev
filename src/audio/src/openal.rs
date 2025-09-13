@@ -511,12 +511,13 @@ impl Drop for Buffer {
     }
 }
 
+/// Wrapper for alGetProcAddress with some checks.
 #[macro_export]
 macro_rules! proc_address {
     ($func: literal, $type: ident) => {{
         let val = unsafe { alGetProcAddress($func.as_ptr()) };
         if val.is_null() {
-            warn!(
+            anyhow::bail!(
                 "unable to load proc address for '{}'",
                 $func.to_string_lossy()
             );
