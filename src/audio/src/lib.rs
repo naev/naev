@@ -636,7 +636,7 @@ impl AudioSystem {
         context.set_current()?;
 
         // Has to test after context creation
-        let has_events = is_extension_present(AL_SOFT_EVENTS_NAME);
+        let has_events = events::supported();
         if has_events {
             Events::init(event_callback)?;
             event_control(&[AL_EVENT_TYPE_SOURCE_STATE_CHANGED_SOFT], true);

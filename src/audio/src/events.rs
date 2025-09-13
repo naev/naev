@@ -4,10 +4,8 @@ use crate::openal::al_types::*;
 use crate::openal::*;
 use anyhow::Result;
 use log::warn;
-use std::ffi::CStr;
 use std::sync::OnceLock;
 
-pub const AL_SOFT_EVENTS_NAME: &CStr = c"AL_SOFT_events";
 pub mod consts {
     use crate::openal::al_types::*;
     pub const AL_EVENT_CALLBACK_FUNCTION_SOFT: ALenum = 0x19A2;
@@ -101,4 +99,8 @@ pub fn event_control(events_data: &[ALenum], enable: bool) {
         },
         None => warn!("Events not enabled"),
     }
+}
+
+pub fn supported() -> bool {
+    is_extension_present(c"AL_SOFT_events")
 }
