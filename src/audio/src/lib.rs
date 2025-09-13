@@ -7,12 +7,14 @@ mod buffer_length_query;
 mod events;
 mod source_spatialize;
 use crate::buffer_length_query::consts::*;
+use crate::efx::consts::*;
 use crate::efx::*;
 use crate::events::consts::*;
 use crate::events::*;
 use crate::openal as al;
 use crate::openal::al_types::*;
 use crate::openal::*;
+use crate::source_spatialize::consts::*;
 use crate::source_spatialize::*;
 use naev_core::utils::{binary_search_by_key_ref, sort_by_key_ref};
 use std::sync::atomic::Ordering;
@@ -614,7 +616,7 @@ impl AudioSystem {
 
         let has_efx = match unsafe { naevc::conf.al_efx } {
             0 => false,
-            _ => match device.is_extension_present(ALC_EXT_EFX_NAME) {
+            _ => match efx::supported(&device) {
                 true => {
                     attribs.push(ALC_MAX_AUXILIARY_SENDS);
                     attribs.push(4);
@@ -675,8 +677,7 @@ impl AudioSystem {
             alDistanceModel(AL_INVERSE_DISTANCE_CLAMPED);
         }
 
-        let has_source_spatialize = al::is_extension_present(AL_SOFT_SOURCE_SPATIALIZE);
-        HAS_AL_SOFT_SOURCE_SPATIALIZE.store(has_source_spatialize, Ordering::Relaxed);
+        let has_source_spatialize = source_spatialize::supported();
 
         debugx!(gettext("OpenAL started: {} Hz"), freq);
         let al_renderer = al::get_parameter_str(AL_RENDERER)?;

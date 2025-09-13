@@ -5,153 +5,154 @@ use crate::openal::al_types::*;
 use crate::openal::*;
 
 use anyhow::Result;
-use std::ffi::CStr;
 use std::sync::OnceLock;
 
-pub const ALC_EXT_EFX_NAME: &CStr = c"ALC_EXT_EFX";
+pub mod consts {
+    use crate::openal::al_types::*;
+    pub const AL_EFFECTSLOT_NULL: ALenum = 0x0000;
 
-pub const AL_EFFECTSLOT_NULL: ALenum = 0x0000;
+    pub const ALC_EFX_MAJOR_VERSION: ALenum = 0x20001;
+    pub const ALC_EFX_MINOR_VERSION: ALenum = 0x20002;
+    pub const ALC_MAX_AUXILIARY_SENDS: ALenum = 0x20003;
+    // Listener Properties
+    pub const AL_METERS_PER_UNIT: ALenum = 0x20004;
+    // Source Properties
+    pub const AL_DIRECT_FILTER: ALenum = 0x20005;
+    pub const AL_AUXILIARY_SEND_FILTER: ALenum = 0x20006;
+    pub const AL_AIR_ABSORPTION_FACTOR: ALenum = 0x20007;
+    pub const AL_ROOM_ROLLOFF_FACTOR: ALenum = 0x20008;
+    pub const AL_CONE_OUTER_GAINHF: ALenum = 0x20009;
+    pub const AL_DIRECT_FILTER_GAINHF_AUTO: ALenum = 0x2000A;
+    pub const AL_AUXILIARY_SEND_FILTER_GAIN_AUTO: ALenum = 0x2000B;
+    pub const AL_AUXILIARY_SEND_FILTER_GAINHF_AUTO: ALenum = 0x2000C;
 
-pub const ALC_EFX_MAJOR_VERSION: ALenum = 0x20001;
-pub const ALC_EFX_MINOR_VERSION: ALenum = 0x20002;
-pub const ALC_MAX_AUXILIARY_SENDS: ALenum = 0x20003;
-// Listener Properties
-pub const AL_METERS_PER_UNIT: ALenum = 0x20004;
-// Source Properties
-pub const AL_DIRECT_FILTER: ALenum = 0x20005;
-pub const AL_AUXILIARY_SEND_FILTER: ALenum = 0x20006;
-pub const AL_AIR_ABSORPTION_FACTOR: ALenum = 0x20007;
-pub const AL_ROOM_ROLLOFF_FACTOR: ALenum = 0x20008;
-pub const AL_CONE_OUTER_GAINHF: ALenum = 0x20009;
-pub const AL_DIRECT_FILTER_GAINHF_AUTO: ALenum = 0x2000A;
-pub const AL_AUXILIARY_SEND_FILTER_GAIN_AUTO: ALenum = 0x2000B;
-pub const AL_AUXILIARY_SEND_FILTER_GAINHF_AUTO: ALenum = 0x2000C;
-
-pub const AL_EFFECT_TYPE: ALenum = 0x8001;
-// Effect Types
-pub const AL_EFFECT_NULL: ALenum = 0x0000;
-pub const AL_EFFECT_REVERB: ALenum = 0x0001;
-pub const AL_EFFECT_CHORUS: ALenum = 0x0002;
-pub const AL_EFFECT_DISTORTION: ALenum = 0x0003;
-pub const AL_EFFECT_ECHO: ALenum = 0x0004;
-pub const AL_EFFECT_FLANGER: ALenum = 0x0005;
-pub const AL_EFFECT_FREQUENCY_SHIFTER: ALenum = 0x0006;
-pub const AL_EFFECT_VOCAL_MORPHER: ALenum = 0x0007;
-pub const AL_EFFECT_PITCH_SHIFTER: ALenum = 0x0008;
-pub const AL_EFFECT_RING_MODULATOR: ALenum = 0x0009;
-pub const AL_EFFECT_AUTOWAH: ALenum = 0x000A;
-pub const AL_EFFECT_COMPRESSOR: ALenum = 0x000B;
-pub const AL_EFFECT_EQUALIZER: ALenum = 0x000C;
-pub const AL_EFFECT_EAXREVERB: ALenum = 0x8000;
-// Effect Slot Properties
-pub const AL_EFFECTSLOT_EFFECT: ALenum = 0x0001;
-pub const AL_EFFECTSLOT_GAIN: ALenum = 0x0002;
-pub const AL_EFFECTSLOT_AUXILIARY_SEND_AUTO: ALenum = 0x0003;
-// Reverb effect parameters
-pub const AL_REVERB_DENSITY: ALenum = 0x0001;
-pub const AL_REVERB_DIFFUSION: ALenum = 0x0002;
-pub const AL_REVERB_GAIN: ALenum = 0x0003;
-pub const AL_REVERB_GAINHF: ALenum = 0x0004;
-pub const AL_REVERB_DECAY_TIME: ALenum = 0x0005;
-pub const AL_REVERB_DECAY_HFRATIO: ALenum = 0x0006;
-pub const AL_REVERB_REFLECTIONS_GAIN: ALenum = 0x0007;
-pub const AL_REVERB_REFLECTIONS_DELAY: ALenum = 0x0008;
-pub const AL_REVERB_LATE_REVERB_GAIN: ALenum = 0x0009;
-pub const AL_REVERB_LATE_REVERB_DELAY: ALenum = 0x000A;
-pub const AL_REVERB_AIR_ABSORPTION_GAINHF: ALenum = 0x000B;
-pub const AL_REVERB_ROOM_ROLLOFF_FACTOR: ALenum = 0x000C;
-pub const AL_REVERB_DECAY_HFLIMIT: ALenum = 0x000D;
-// EAX Reverb effect parameters
-pub const AL_EAXREVERB_DENSITY: ALenum = 0x0001;
-pub const AL_EAXREVERB_DIFFUSION: ALenum = 0x0002;
-pub const AL_EAXREVERB_GAIN: ALenum = 0x0003;
-pub const AL_EAXREVERB_GAINHF: ALenum = 0x0004;
-pub const AL_EAXREVERB_GAINLF: ALenum = 0x0005;
-pub const AL_EAXREVERB_DECAY_TIME: ALenum = 0x0006;
-pub const AL_EAXREVERB_DECAY_HFRATIO: ALenum = 0x0007;
-pub const AL_EAXREVERB_DECAY_LFRATIO: ALenum = 0x0008;
-pub const AL_EAXREVERB_REFLECTIONS_GAIN: ALenum = 0x0009;
-pub const AL_EAXREVERB_REFLECTIONS_DELAY: ALenum = 0x000A;
-pub const AL_EAXREVERB_REFLECTIONS_PAN: ALenum = 0x000B;
-pub const AL_EAXREVERB_LATE_REVERB_GAIN: ALenum = 0x000C;
-pub const AL_EAXREVERB_LATE_REVERB_DELAY: ALenum = 0x000D;
-pub const AL_EAXREVERB_LATE_REVERB_PAN: ALenum = 0x000E;
-pub const AL_EAXREVERB_ECHO_TIME: ALenum = 0x000F;
-pub const AL_EAXREVERB_ECHO_DEPTH: ALenum = 0x0010;
-pub const AL_EAXREVERB_MODULATION_TIME: ALenum = 0x0011;
-pub const AL_EAXREVERB_MODULATION_DEPTH: ALenum = 0x0012;
-pub const AL_EAXREVERB_AIR_ABSORPTION_GAINHF: ALenum = 0x0013;
-pub const AL_EAXREVERB_HFREFERENCE: ALenum = 0x0014;
-pub const AL_EAXREVERB_LFREFERENCE: ALenum = 0x0015;
-pub const AL_EAXREVERB_ROOM_ROLLOFF_FACTOR: ALenum = 0x0016;
-pub const AL_EAXREVERB_DECAY_HFLIMIT: ALenum = 0x0017;
-// Chorus effect parameters
-pub const AL_CHORUS_WAVEFORM: ALenum = 0x0001;
-pub const AL_CHORUS_PHASE: ALenum = 0x0002;
-pub const AL_CHORUS_RATE: ALenum = 0x0003;
-pub const AL_CHORUS_DEPTH: ALenum = 0x0004;
-pub const AL_CHORUS_FEEDBACK: ALenum = 0x0005;
-pub const AL_CHORUS_DELAY: ALenum = 0x0006;
-// Distortion effect parameters
-pub const AL_DISTORTION_EDGE: ALenum = 0x0001;
-pub const AL_DISTORTION_GAIN: ALenum = 0x0002;
-pub const AL_DISTORTION_LOWPASS_CUTOFF: ALenum = 0x0003;
-pub const AL_DISTORTION_EQCENTER: ALenum = 0x0004;
-pub const AL_DISTORTION_EQBANDWIDTH: ALenum = 0x0005;
-// Echo effect parameters
-pub const AL_ECHO_DELAY: ALenum = 0x0001;
-pub const AL_ECHO_LRDELAY: ALenum = 0x0002;
-pub const AL_ECHO_DAMPING: ALenum = 0x0003;
-pub const AL_ECHO_FEEDBACK: ALenum = 0x0004;
-pub const AL_ECHO_SPREAD: ALenum = 0x0005;
-// Flanger effect parameters
-pub const AL_FLANGER_WAVEFORM: ALenum = 0x0001;
-pub const AL_FLANGER_PHASE: ALenum = 0x0002;
-pub const AL_FLANGER_RATE: ALenum = 0x0003;
-pub const AL_FLANGER_DEPTH: ALenum = 0x0004;
-pub const AL_FLANGER_FEEDBACK: ALenum = 0x0005;
-pub const AL_FLANGER_DELAY: ALenum = 0x0006;
-// Frequency shifter effect parameters
-pub const AL_FREQUENCY_SHIFTER_FREQUENCY: ALenum = 0x0001;
-pub const AL_FREQUENCY_SHIFTER_LEFT_DIRECTION: ALenum = 0x0002;
-pub const AL_FREQUENCY_SHIFTER_RIGHT_DIRECTION: ALenum = 0x0003;
-// Vocal morpher effect parameters
-pub const AL_VOCAL_MORPHER_PHONEMEA: ALenum = 0x0001;
-pub const AL_VOCAL_MORPHER_PHONEMEA_COARSE_TUNING: ALenum = 0x0002;
-pub const AL_VOCAL_MORPHER_PHONEMEB: ALenum = 0x0003;
-pub const AL_VOCAL_MORPHER_PHONEMEB_COARSE_TUNING: ALenum = 0x0004;
-pub const AL_VOCAL_MORPHER_WAVEFORM: ALenum = 0x0005;
-pub const AL_VOCAL_MORPHER_RATE: ALenum = 0x0006;
-// Pitchshifter effect parameters
-pub const AL_PITCH_SHIFTER_COARSE_TUNE: ALenum = 0x0001;
-pub const AL_PITCH_SHIFTER_FINE_TUNE: ALenum = 0x0002;
-// Ringmodulator effect parameters
-pub const AL_RING_MODULATOR_FREQUENCY: ALenum = 0x0001;
-pub const AL_RING_MODULATOR_HIGHPASS_CUTOFF: ALenum = 0x0002;
-pub const AL_RING_MODULATOR_WAVEFORM: ALenum = 0x0003;
-// Autowah effect parameters
-pub const AL_AUTOWAH_ATTACK_TIME: ALenum = 0x0001;
-pub const AL_AUTOWAH_RELEASE_TIME: ALenum = 0x0002;
-pub const AL_AUTOWAH_RESONANCE: ALenum = 0x0003;
-pub const AL_AUTOWAH_PEAK_GAIN: ALenum = 0x0004;
-// Compressor effect parameters
-pub const AL_COMPRESSOR_ONOFF: ALenum = 0x0001;
-// Equalizer effect parameters
-pub const AL_EQUALIZER_LOW_GAIN: ALenum = 0x0001;
-pub const AL_EQUALIZER_LOW_CUTOFF: ALenum = 0x0002;
-pub const AL_EQUALIZER_MID1_GAIN: ALenum = 0x0003;
-pub const AL_EQUALIZER_MID1_CENTER: ALenum = 0x0004;
-pub const AL_EQUALIZER_MID1_WIDTH: ALenum = 0x0005;
-pub const AL_EQUALIZER_MID2_GAIN: ALenum = 0x0006;
-pub const AL_EQUALIZER_MID2_CENTER: ALenum = 0x0007;
-pub const AL_EQUALIZER_MID2_WIDTH: ALenum = 0x0008;
-pub const AL_EQUALIZER_HIGH_GAIN: ALenum = 0x0009;
-pub const AL_EQUALIZER_HIGH_CUTOFF: ALenum = 0x000A;
-// Filter Types, used with the AL_FILTER_TYPE
-pub const AL_FILTER_NULL: ALenum = 0x0000;
-pub const AL_FILTER_LOWPASS: ALenum = 0x0001;
-pub const AL_FILTER_HIGHPASS: ALenum = 0x0002;
-pub const AL_FILTER_BANDPASS: ALenum = 0x0003;
+    pub const AL_EFFECT_TYPE: ALenum = 0x8001;
+    // Effect Types
+    pub const AL_EFFECT_NULL: ALenum = 0x0000;
+    pub const AL_EFFECT_REVERB: ALenum = 0x0001;
+    pub const AL_EFFECT_CHORUS: ALenum = 0x0002;
+    pub const AL_EFFECT_DISTORTION: ALenum = 0x0003;
+    pub const AL_EFFECT_ECHO: ALenum = 0x0004;
+    pub const AL_EFFECT_FLANGER: ALenum = 0x0005;
+    pub const AL_EFFECT_FREQUENCY_SHIFTER: ALenum = 0x0006;
+    pub const AL_EFFECT_VOCAL_MORPHER: ALenum = 0x0007;
+    pub const AL_EFFECT_PITCH_SHIFTER: ALenum = 0x0008;
+    pub const AL_EFFECT_RING_MODULATOR: ALenum = 0x0009;
+    pub const AL_EFFECT_AUTOWAH: ALenum = 0x000A;
+    pub const AL_EFFECT_COMPRESSOR: ALenum = 0x000B;
+    pub const AL_EFFECT_EQUALIZER: ALenum = 0x000C;
+    pub const AL_EFFECT_EAXREVERB: ALenum = 0x8000;
+    // Effect Slot Properties
+    pub const AL_EFFECTSLOT_EFFECT: ALenum = 0x0001;
+    pub const AL_EFFECTSLOT_GAIN: ALenum = 0x0002;
+    pub const AL_EFFECTSLOT_AUXILIARY_SEND_AUTO: ALenum = 0x0003;
+    // Reverb effect parameters
+    pub const AL_REVERB_DENSITY: ALenum = 0x0001;
+    pub const AL_REVERB_DIFFUSION: ALenum = 0x0002;
+    pub const AL_REVERB_GAIN: ALenum = 0x0003;
+    pub const AL_REVERB_GAINHF: ALenum = 0x0004;
+    pub const AL_REVERB_DECAY_TIME: ALenum = 0x0005;
+    pub const AL_REVERB_DECAY_HFRATIO: ALenum = 0x0006;
+    pub const AL_REVERB_REFLECTIONS_GAIN: ALenum = 0x0007;
+    pub const AL_REVERB_REFLECTIONS_DELAY: ALenum = 0x0008;
+    pub const AL_REVERB_LATE_REVERB_GAIN: ALenum = 0x0009;
+    pub const AL_REVERB_LATE_REVERB_DELAY: ALenum = 0x000A;
+    pub const AL_REVERB_AIR_ABSORPTION_GAINHF: ALenum = 0x000B;
+    pub const AL_REVERB_ROOM_ROLLOFF_FACTOR: ALenum = 0x000C;
+    pub const AL_REVERB_DECAY_HFLIMIT: ALenum = 0x000D;
+    // EAX Reverb effect parameters
+    pub const AL_EAXREVERB_DENSITY: ALenum = 0x0001;
+    pub const AL_EAXREVERB_DIFFUSION: ALenum = 0x0002;
+    pub const AL_EAXREVERB_GAIN: ALenum = 0x0003;
+    pub const AL_EAXREVERB_GAINHF: ALenum = 0x0004;
+    pub const AL_EAXREVERB_GAINLF: ALenum = 0x0005;
+    pub const AL_EAXREVERB_DECAY_TIME: ALenum = 0x0006;
+    pub const AL_EAXREVERB_DECAY_HFRATIO: ALenum = 0x0007;
+    pub const AL_EAXREVERB_DECAY_LFRATIO: ALenum = 0x0008;
+    pub const AL_EAXREVERB_REFLECTIONS_GAIN: ALenum = 0x0009;
+    pub const AL_EAXREVERB_REFLECTIONS_DELAY: ALenum = 0x000A;
+    pub const AL_EAXREVERB_REFLECTIONS_PAN: ALenum = 0x000B;
+    pub const AL_EAXREVERB_LATE_REVERB_GAIN: ALenum = 0x000C;
+    pub const AL_EAXREVERB_LATE_REVERB_DELAY: ALenum = 0x000D;
+    pub const AL_EAXREVERB_LATE_REVERB_PAN: ALenum = 0x000E;
+    pub const AL_EAXREVERB_ECHO_TIME: ALenum = 0x000F;
+    pub const AL_EAXREVERB_ECHO_DEPTH: ALenum = 0x0010;
+    pub const AL_EAXREVERB_MODULATION_TIME: ALenum = 0x0011;
+    pub const AL_EAXREVERB_MODULATION_DEPTH: ALenum = 0x0012;
+    pub const AL_EAXREVERB_AIR_ABSORPTION_GAINHF: ALenum = 0x0013;
+    pub const AL_EAXREVERB_HFREFERENCE: ALenum = 0x0014;
+    pub const AL_EAXREVERB_LFREFERENCE: ALenum = 0x0015;
+    pub const AL_EAXREVERB_ROOM_ROLLOFF_FACTOR: ALenum = 0x0016;
+    pub const AL_EAXREVERB_DECAY_HFLIMIT: ALenum = 0x0017;
+    // Chorus effect parameters
+    pub const AL_CHORUS_WAVEFORM: ALenum = 0x0001;
+    pub const AL_CHORUS_PHASE: ALenum = 0x0002;
+    pub const AL_CHORUS_RATE: ALenum = 0x0003;
+    pub const AL_CHORUS_DEPTH: ALenum = 0x0004;
+    pub const AL_CHORUS_FEEDBACK: ALenum = 0x0005;
+    pub const AL_CHORUS_DELAY: ALenum = 0x0006;
+    // Distortion effect parameters
+    pub const AL_DISTORTION_EDGE: ALenum = 0x0001;
+    pub const AL_DISTORTION_GAIN: ALenum = 0x0002;
+    pub const AL_DISTORTION_LOWPASS_CUTOFF: ALenum = 0x0003;
+    pub const AL_DISTORTION_EQCENTER: ALenum = 0x0004;
+    pub const AL_DISTORTION_EQBANDWIDTH: ALenum = 0x0005;
+    // Echo effect parameters
+    pub const AL_ECHO_DELAY: ALenum = 0x0001;
+    pub const AL_ECHO_LRDELAY: ALenum = 0x0002;
+    pub const AL_ECHO_DAMPING: ALenum = 0x0003;
+    pub const AL_ECHO_FEEDBACK: ALenum = 0x0004;
+    pub const AL_ECHO_SPREAD: ALenum = 0x0005;
+    // Flanger effect parameters
+    pub const AL_FLANGER_WAVEFORM: ALenum = 0x0001;
+    pub const AL_FLANGER_PHASE: ALenum = 0x0002;
+    pub const AL_FLANGER_RATE: ALenum = 0x0003;
+    pub const AL_FLANGER_DEPTH: ALenum = 0x0004;
+    pub const AL_FLANGER_FEEDBACK: ALenum = 0x0005;
+    pub const AL_FLANGER_DELAY: ALenum = 0x0006;
+    // Frequency shifter effect parameters
+    pub const AL_FREQUENCY_SHIFTER_FREQUENCY: ALenum = 0x0001;
+    pub const AL_FREQUENCY_SHIFTER_LEFT_DIRECTION: ALenum = 0x0002;
+    pub const AL_FREQUENCY_SHIFTER_RIGHT_DIRECTION: ALenum = 0x0003;
+    // Vocal morpher effect parameters
+    pub const AL_VOCAL_MORPHER_PHONEMEA: ALenum = 0x0001;
+    pub const AL_VOCAL_MORPHER_PHONEMEA_COARSE_TUNING: ALenum = 0x0002;
+    pub const AL_VOCAL_MORPHER_PHONEMEB: ALenum = 0x0003;
+    pub const AL_VOCAL_MORPHER_PHONEMEB_COARSE_TUNING: ALenum = 0x0004;
+    pub const AL_VOCAL_MORPHER_WAVEFORM: ALenum = 0x0005;
+    pub const AL_VOCAL_MORPHER_RATE: ALenum = 0x0006;
+    // Pitchshifter effect parameters
+    pub const AL_PITCH_SHIFTER_COARSE_TUNE: ALenum = 0x0001;
+    pub const AL_PITCH_SHIFTER_FINE_TUNE: ALenum = 0x0002;
+    // Ringmodulator effect parameters
+    pub const AL_RING_MODULATOR_FREQUENCY: ALenum = 0x0001;
+    pub const AL_RING_MODULATOR_HIGHPASS_CUTOFF: ALenum = 0x0002;
+    pub const AL_RING_MODULATOR_WAVEFORM: ALenum = 0x0003;
+    // Autowah effect parameters
+    pub const AL_AUTOWAH_ATTACK_TIME: ALenum = 0x0001;
+    pub const AL_AUTOWAH_RELEASE_TIME: ALenum = 0x0002;
+    pub const AL_AUTOWAH_RESONANCE: ALenum = 0x0003;
+    pub const AL_AUTOWAH_PEAK_GAIN: ALenum = 0x0004;
+    // Compressor effect parameters
+    pub const AL_COMPRESSOR_ONOFF: ALenum = 0x0001;
+    // Equalizer effect parameters
+    pub const AL_EQUALIZER_LOW_GAIN: ALenum = 0x0001;
+    pub const AL_EQUALIZER_LOW_CUTOFF: ALenum = 0x0002;
+    pub const AL_EQUALIZER_MID1_GAIN: ALenum = 0x0003;
+    pub const AL_EQUALIZER_MID1_CENTER: ALenum = 0x0004;
+    pub const AL_EQUALIZER_MID1_WIDTH: ALenum = 0x0005;
+    pub const AL_EQUALIZER_MID2_GAIN: ALenum = 0x0006;
+    pub const AL_EQUALIZER_MID2_CENTER: ALenum = 0x0007;
+    pub const AL_EQUALIZER_MID2_WIDTH: ALenum = 0x0008;
+    pub const AL_EQUALIZER_HIGH_GAIN: ALenum = 0x0009;
+    pub const AL_EQUALIZER_HIGH_CUTOFF: ALenum = 0x000A;
+    // Filter Types, used with the AL_FILTER_TYPE
+    pub const AL_FILTER_NULL: ALenum = 0x0000;
+    pub const AL_FILTER_LOWPASS: ALenum = 0x0001;
+    pub const AL_FILTER_HIGHPASS: ALenum = 0x0002;
+    pub const AL_FILTER_BANDPASS: ALenum = 0x0003;
+}
+use consts::*;
 
 pub type ALGENAUXILIARYEFFECTSLOTS =
     unsafe extern "C" fn(n: ALsizei, auxiliaryeffectslots: *mut ALuint) -> *mut ALvoid;
@@ -441,3 +442,7 @@ impl Drop for Effect {
 }
 
 pub static EFX: OnceLock<Efx> = OnceLock::new();
+
+pub fn supported(device: &Device) -> bool {
+    device.is_extension_present(c"ALC_EXT_EFX")
+}

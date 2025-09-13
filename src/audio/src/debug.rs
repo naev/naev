@@ -4,11 +4,8 @@ use crate::openal::al_types::*;
 use crate::openal::*;
 use anyhow::Result;
 use log::{debug, warn, warn_err};
-use std::ffi::{CStr, CString};
+use std::ffi::CString;
 use std::sync::OnceLock;
-
-const ALC_EXT_DEBUG_NAME: &CStr = c"ALC_EXT_debug";
-const AL_EXT_DEBUG_NAME: &CStr = c"AL_EXT_debug";
 
 pub mod consts {
     use crate::openal::al_types::*;
@@ -228,5 +225,5 @@ pub fn object_label(identifier: ALenum, name: ALuint, label: &str) {
 static DEBUG: OnceLock<Debug> = OnceLock::new();
 
 pub fn supported(device: &Device) -> bool {
-    device.is_extension_present(ALC_EXT_DEBUG_NAME)
+    device.is_extension_present(c"ALC_EXT_debug")
 }

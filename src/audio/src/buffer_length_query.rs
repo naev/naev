@@ -1,7 +1,4 @@
 //! AL_SOFT_buffer_length_query
-use std::ffi::CStr;
-
-const AL_SOFT_BUFFER_LENGTH_QUERY_NAME: &CStr = c"AL_SOFT_buffer_length_query";
 
 pub mod consts {
     use crate::openal::al_types::*;
@@ -11,5 +8,5 @@ pub mod consts {
 }
 
 pub fn supported() -> bool {
-    crate::openal::is_extension_present(AL_SOFT_BUFFER_LENGTH_QUERY_NAME)
+    crate::openal::is_extension_present(c"AL_SOFT_buffer_length_query")
 }
