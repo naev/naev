@@ -5,6 +5,7 @@ mod efx;
 mod openal;
 mod buffer_length_query;
 mod events;
+mod output_limiter;
 mod source_spatialize;
 use crate::buffer_length_query::consts::*;
 use crate::efx::consts::*;
@@ -14,6 +15,7 @@ use crate::events::*;
 use crate::openal as al;
 use crate::openal::al_types::*;
 use crate::openal::*;
+use crate::output_limiter::consts::*;
 use crate::source_spatialize::consts::*;
 use crate::source_spatialize::*;
 use naev_core::utils::{binary_search_by_key_ref, sort_by_key_ref};
@@ -593,8 +595,6 @@ pub struct AudioSystem {
     context: al::Context,
     freq: i32,
     volume: RwLock<AudioVolume>,
-    // Some extension information
-    output_limiter: bool,
 }
 impl AudioSystem {
     pub fn new() -> Result<Self> {
@@ -625,8 +625,8 @@ impl AudioSystem {
                 false => false,
             },
         };
-        let output_limiter = device.is_extension_present(ALC_OUTPUT_LIMITER_SOFT_NAME);
-        if output_limiter {
+        let has_output_limiter = output_limiter::supported(&device);
+        if has_output_limiter {
             attribs.push(ALC_OUTPUT_LIMITER_SOFT);
             attribs.push(ALC_TRUE as i32);
         }
@@ -645,7 +645,9 @@ impl AudioSystem {
         let has_buffer_length_query = buffer_length_query::supported();
 
         // Check to see if output limiter is working
-        if output_limiter && device.get_parameter_i32(ALC_OUTPUT_LIMITER_SOFT) != ALC_TRUE as i32 {
+        if has_output_limiter
+            && device.get_parameter_i32(ALC_OUTPUT_LIMITER_SOFT) != ALC_TRUE as i32
+        {
             warn!("failed to set ALC_OUTPUT_LIMITER_SOFT");
         }
         // Check to see if debugging was enabled
@@ -703,6 +705,9 @@ impl AudioSystem {
         if has_buffer_length_query {
             extensions.push("buffer_length_query".to_string());
         }
+        if has_output_limiter {
+            extensions.push("output_limiter".to_string());
+        }
         debugx!(gettext("   with {}"), extensions.join(", "));
         debug!("");
 
@@ -711,7 +716,6 @@ impl AudioSystem {
             context,
             volume: RwLock::new(AudioVolume::new()),
             freq,
-            output_limiter,
         })
     }
 }

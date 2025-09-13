@@ -3822,6 +3822,7 @@ src/audio/src/efx.rs
 src/audio/src/events.rs
 src/audio/src/lib.rs
 src/audio/src/openal.rs
+src/audio/src/output_limiter.rs
 src/audio/src/source_spatialize.rs
 src/background.c
 src/background.h

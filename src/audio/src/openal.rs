@@ -277,11 +277,6 @@ unsafe extern "C" {
     pub fn alIsExtensionPresent(extname: *const ALchar) -> ALCboolean;
 }
 
-// === Misc Extensions ===
-
-pub const ALC_OUTPUT_LIMITER_SOFT_NAME: &CStr = c"ALC_SOFT_output_limiter";
-pub const ALC_OUTPUT_LIMITER_SOFT: ALCenum = 0x199A;
-
 // === Rust ===
 
 use anyhow::Result;
