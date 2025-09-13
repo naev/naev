@@ -558,6 +558,21 @@ impl AudioVolume {
     }
 }
 
+fn event_callback(event_type: ALenum, _object: ALuint, param: ALuint, _message: &str) {
+    // Can't call OpenAL stuff here
+    match event_type {
+        AL_EVENT_TYPE_SOURCE_STATE_CHANGED_SOFT => {
+            let param = param as i32;
+            // object is the source ID
+            // param is the source's new state
+            if param == AL_STOPPED {
+                // TODO send message or something
+            }
+        }
+        _ => (),
+    }
+}
+
 pub struct AudioSystem {
     device: al::Device,
     context: al::Context,
@@ -608,7 +623,8 @@ impl AudioSystem {
         // Has to test after context creation
         let has_events = is_extension_present(AL_SOFT_EVENTS_NAME);
         if has_events {
-            Events::init()?;
+            Events::init(event_callback)?;
+            event_control(&[AL_EVENT_TYPE_SOURCE_STATE_CHANGED_SOFT], true);
         }
 
         // Check to see if output limiter is working
