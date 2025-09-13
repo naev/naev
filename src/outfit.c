@@ -2275,7 +2275,7 @@ static void outfit_parseSBolt( Outfit *temp, const xmlNodePtr parent )
    MELEMENT( temp->u.blt.gfx.size < 0., "gfx" );
    MELEMENT( temp->u.blt.spfx_shield == -1, "spfx_shield" );
    MELEMENT( temp->u.blt.spfx_armour == -1, "spfx_armour" );
-   MELEMENT( ( sound_disabled != 0 ) && ( temp->u.blt.sound < 0 ), "sound" );
+   MELEMENT( temp->u.blt.sound == NULL, "sound" );
    MELEMENT( temp->mass == 0., "mass" );
    MELEMENT( temp->u.blt.delay == 0, "delay" );
    MELEMENT( temp->u.blt.speed == 0, "speed" );
@@ -2436,12 +2436,11 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
    MELEMENT( temp->u.bem.width == 0., "shader width" );
    MELEMENT( temp->u.bem.spfx_shield == -1, "spfx_shield" );
    MELEMENT( temp->u.bem.spfx_armour == -1, "spfx_armour" );
-   MELEMENT( ( sound_disabled != 0 ) && ( temp->u.bem.warmup > 0. ) &&
-                ( temp->u.bem.sound < 0 ),
+   MELEMENT( ( temp->u.bem.warmup >= 0. ) &&
+                ( temp->u.bem.sound_warmup == NULL ),
              "sound_warmup" );
-   MELEMENT( ( sound_disabled != 0 ) && ( temp->u.bem.sound < 0 ), "sound" );
-   MELEMENT( ( sound_disabled != 0 ) && ( temp->u.bem.sound_off < 0 ),
-             "sound_off" );
+   MELEMENT( temp->u.bem.sound == NULL, "sound" );
+   MELEMENT( temp->u.bem.sound_off == NULL, "sound_off" );
    MELEMENT( temp->u.bem.delay == 0, "delay" );
    MELEMENT( temp->u.bem.duration == 0, "duration" );
    MELEMENT( temp->u.bem.min_delay < 0, "delay" );
@@ -2739,7 +2738,7 @@ static void outfit_parseSLauncher( Outfit *temp, const xmlNodePtr parent )
    MELEMENT( !outfit_isProp( temp, OUTFIT_PROP_SHOOT_DRY ) &&
                 temp->u.lau.spfx_armour == -1,
              "spfx_armour" );
-   MELEMENT( ( sound_disabled != 0 ) && ( temp->u.lau.sound < 0 ), "sound" );
+   MELEMENT( temp->u.lau.sound == NULL, "sound" );
    /* MELEMENT(temp->u.lau.accel==0,"accel"); */
    /* Unguided missiles don't need everything */
    if ( outfit_isSeeker( temp ) ) {

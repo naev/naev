@@ -969,11 +969,11 @@ void player_soundPlay( const Sound *sound, int once )
  */
 void player_soundStop( void )
 {
-   if ( player_gui_group >= 0 )
+   if ( player_gui_group != NULL )
       sound_stopGroup( player_gui_group );
-   if ( player_engine_group >= 0 )
+   if ( player_engine_group != NULL )
       sound_stopGroup( player_engine_group );
-   if ( player_hyper_group >= 0 )
+   if ( player_hyper_group != NULL )
       sound_stopGroup( player_hyper_group );
 
    /* No last engine sound. */
@@ -985,9 +985,9 @@ void player_soundStop( void )
  */
 void player_soundPause( void )
 {
-   if ( player_engine_group >= 0 )
+   if ( player_engine_group != NULL )
       sound_pauseGroup( player_engine_group );
-   if ( player_hyper_group >= 0 )
+   if ( player_hyper_group != NULL )
       sound_pauseGroup( player_hyper_group );
 }
 
@@ -996,9 +996,9 @@ void player_soundPause( void )
  */
 void player_soundResume( void )
 {
-   if ( player_engine_group >= 0 )
+   if ( player_engine_group != NULL )
       sound_resumeGroup( player_engine_group );
-   if ( player_hyper_group >= 0 )
+   if ( player_hyper_group != NULL )
       sound_resumeGroup( player_hyper_group );
 }
 
