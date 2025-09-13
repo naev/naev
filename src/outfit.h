@@ -8,6 +8,7 @@
 #include "nlua.h"
 #include "opengl_tex.h"
 #include "shipstats.h"
+#include "sound.h"
 #include "spfx.h"
 
 /*
@@ -189,11 +190,11 @@ typedef struct OutfitBoltData_ {
    int    mining_rarity;    /**< Maximum mining rarity the weapon can mine. */
 
    /* Sound and graphics. */
-   OutfitGFX gfx;         /**< Rendering information. */
-   int       sound;       /**< Sound to play on shoot.*/
-   int       sound_hit;   /**< Sound to play on hit. */
-   int       spfx_armour; /**< special effect on hit. */
-   int       spfx_shield; /**< special effect on hit. */
+   OutfitGFX    gfx;         /**< Rendering information. */
+   const Sound *sound;       /**< Sound to play on shoot.*/
+   const Sound *sound_hit;   /**< Sound to play on hit. */
+   int          spfx_armour; /**< special effect on hit. */
+   int          spfx_shield; /**< special effect on hit. */
 } OutfitBoltData;
 
 /**
@@ -216,14 +217,14 @@ typedef struct OutfitBeamData_ {
    int mining_rarity; /**< Maximum mining rarity the weapon can mine. */
 
    /* Graphics and sound. */
-   glColour colour;       /**< Colour to use for the shader. */
-   GLfloat  width;        /**< Width of the beam. */
-   GLuint   shader;       /**< Shader subroutine to use. */
-   int      spfx_armour;  /**< special effect on hit */
-   int      spfx_shield;  /**< special effect on hit */
-   int      sound_warmup; /**< Sound to play when warming up. @todo use. */
-   int      sound;        /**< Sound to play. */
-   int      sound_off;    /**< Sound to play when turning off. */
+   glColour     colour;       /**< Colour to use for the shader. */
+   GLfloat      width;        /**< Width of the beam. */
+   GLuint       shader;       /**< Shader subroutine to use. */
+   int          spfx_armour;  /**< special effect on hit */
+   int          spfx_shield;  /**< special effect on hit */
+   const Sound *sound_warmup; /**< Sound to play when warming up. @todo use. */
+   const Sound *sound;        /**< Sound to play. */
+   const Sound *sound_off;    /**< Sound to play when turning off. */
 } OutfitBeamData;
 
 /**
@@ -267,8 +268,8 @@ typedef struct OutfitLauncherData_ {
    double dmg_absorb; /**< Damage absorption. */
 
    OutfitGFX        gfx;         /**< Rendering information. */
-   int              sound;       /**< sound to play */
-   int              sound_hit;   /**< Sound to play on hit. */
+   const Sound     *sound;       /**< sound to play */
+   const Sound     *sound_hit;   /**< Sound to play on hit. */
    int              spfx_armour; /**< special effect on hit */
    int              spfx_shield; /**< special effect on hit */
    const TrailSpec *trail_spec;  /**< Trail style if applicable, else NULL. */
@@ -296,14 +297,14 @@ typedef struct OutfitModificationData_ {
  */
 typedef struct OutfitAfterburnerData_ {
    /* Internal properties. */
-   double rumble;     /**< Percent of rumble */
-   int    sound_on;   /**< Sound of the afterburner turning on */
-   int    sound;      /**< Sound of the afterburner being on */
-   int    sound_off;  /**< Sound of the afterburner turning off */
-   double accel;      /**< Percent of accel increase based on ship base. */
-   double speed;      /**< Percent of speed to increase based on ship base. */
-   double energy;     /**< Energy usage while active */
-   double mass_limit; /**< Limit at which effectiveness starts to drop. */
+   double       rumble;    /**< Percent of rumble */
+   const Sound *sound_on;  /**< Sound of the afterburner turning on */
+   const Sound *sound;     /**< Sound of the afterburner being on */
+   const Sound *sound_off; /**< Sound of the afterburner turning off */
+   double       accel;     /**< Percent of accel increase based on ship base. */
+   double       speed;  /**< Percent of speed to increase based on ship base. */
+   double       energy; /**< Energy usage while active */
+   double       mass_limit; /**< Limit at which effectiveness starts to drop. */
 } OutfitAfterburnerData;
 
 struct Ship; /* Bit of a horrible hack to allow us to avoid circular
@@ -318,7 +319,7 @@ typedef struct OutfitFighterBayData_ {
    double             delay;       /**< Delay between launches. */
    int                amount;      /**< Amount of ammo it can store. */
    double             reload_time; /**< Time it takes to reload 1 ammo. */
-   int                sound;       /**< Sound to use when launching. */
+   const Sound       *sound;       /**< Sound to use when launching. */
 } OutfitFighterBayData;
 
 /* Forward declaration */
@@ -595,9 +596,9 @@ double              outfit_spin( const Outfit *o );
 double              outfit_trackmin( const Outfit *o );
 double              outfit_trackmax( const Outfit *o );
 int                 outfit_miningRarity( const Outfit *o );
-int                 outfit_sound( const Outfit *o );
-int                 outfit_soundHit( const Outfit *o );
-int                 outfit_soundOff( const Outfit *o );
+const Sound        *outfit_sound( const Outfit *o );
+const Sound        *outfit_soundHit( const Outfit *o );
+const Sound        *outfit_soundOff( const Outfit *o );
 double              outfit_ammoMass( const Outfit *o );
 int                 outfit_shots( const Outfit *o );
 double              outfit_dispersion( const Outfit *o );
@@ -610,9 +611,9 @@ int                 outfit_lmapRange( const Outfit *o );
 double              outfit_afterburnerMassLimit( const Outfit *o );
 double              outfit_afterburnerSpeed( const Outfit *o );
 double              outfit_afterburnerAccel( const Outfit *o );
-int                 outfit_afterburnerSound( const Outfit *o );
-int                 outfit_afterburnerSoundOn( const Outfit *o );
-int                 outfit_afterburnerSoundOff( const Outfit *o );
+const Sound        *outfit_afterburnerSound( const Outfit *o );
+const Sound        *outfit_afterburnerSoundOn( const Outfit *o );
+const Sound        *outfit_afterburnerSoundOff( const Outfit *o );
 double              outfit_afterburnerRumble( const Outfit *o );
 double              outfit_launcherSpeed( const Outfit *o );
 double              outfit_launcherSpeedMax( const Outfit *o );

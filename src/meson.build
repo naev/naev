@@ -168,7 +168,6 @@ source = files(
    'ship.c',
    'shiplog.c',
    'shipstats.c',
-   'sound.c',
    'space.c',
    'spfx.c',
    'tech.c',

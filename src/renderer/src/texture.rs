@@ -17,12 +17,12 @@ use crate::{
 };
 
 /// All the shared texture data to look up
-pub static TEXTURE_DATA: LazyLock<Mutex<Vec<Weak<TextureData>>>> =
+pub(crate) static TEXTURE_DATA: LazyLock<Mutex<Vec<Weak<TextureData>>>> =
     LazyLock::new(|| Mutex::new(Default::default()));
 /// Counter for how many textures were destroyed
-pub static GC_COUNTER: AtomicU32 = AtomicU32::new(0);
+pub(crate) static GC_COUNTER: AtomicU32 = AtomicU32::new(0);
 /// Number of destroyed textures to start garbage collecting the cache
-pub const GC_THRESHOLD: u32 = 128;
+pub(crate) const GC_THRESHOLD: u32 = 128;
 
 #[allow(clippy::upper_case_acronyms)]
 #[derive(Clone, Copy, Debug)]

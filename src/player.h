@@ -7,6 +7,7 @@
 
 #include "nstring.h"
 #include "pilot.h"
+#include "sound.h"
 
 /** Player flag enum. */
 enum {
@@ -155,15 +156,15 @@ extern Player_t player; /**< Local player. */
 /*
  * Common player sounds.
  */
-extern int snd_target;       /**< Sound when targeting. */
-extern int snd_jump;         /**< Sound when can jump. */
-extern int snd_nav;          /**< Sound when changing nav computer. */
-extern int snd_hail;         /**< Hail sound. */
-extern int snd_hypPowUp;     /**< Hyperspace power up sound. */
-extern int snd_hypEng;       /**< Hyperspace engine sound. */
-extern int snd_hypPowDown;   /**< Hyperspace power down sound. */
-extern int snd_hypPowUpJump; /**< Hyperspace Power up to jump sound. */
-extern int snd_hypJump;      /**< Hyperspace jump sound. */
+extern const Sound *snd_target;       /**< Sound when targeting. */
+extern const Sound *snd_jump;         /**< Sound when can jump. */
+extern const Sound *snd_nav;          /**< Sound when changing nav computer. */
+extern const Sound *snd_hail;         /**< Hail sound. */
+extern const Sound *snd_hypPowUp;     /**< Hyperspace power up sound. */
+extern const Sound *snd_hypEng;       /**< Hyperspace engine sound. */
+extern const Sound *snd_hypPowDown;   /**< Hyperspace power down sound. */
+extern const Sound *snd_hypPowUpJump; /**< Hyperspace Power up to jump sound. */
+extern const Sound *snd_hypJump;      /**< Hyperspace jump sound. */
 
 /*
  * creation/cleanup
@@ -205,8 +206,8 @@ int       player_hasCredits( credits_t amount );
 credits_t player_modCredits( credits_t amount );
 void      player_hailStart( void );
 /* Sounds. */
-void player_soundPlay( int sound, int once );
-void player_soundPlayGUI( int sound, int once );
+void player_soundPlay( const Sound *sound, int once );
+void player_soundPlayGUI( const Sound *sound, int once );
 void player_soundStop( void );
 void player_soundPause( void );
 void player_soundResume( void );

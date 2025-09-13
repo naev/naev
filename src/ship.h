@@ -8,6 +8,7 @@
 #include "gltf.h"
 #include "opengl.h"
 #include "outfit.h"
+#include "sound.h"
 #include "spfx.h"
 #include "vec3.h"
 
@@ -165,8 +166,8 @@ typedef struct Ship {
    CollPoly polygon; /**< Array (array.h): Collision polygons. */
 
    /* Sound */
-   int    sound;        /**< Sound engine uses. */
-   double engine_pitch; /**< Sets the base pitch of the engine. */
+   const Sound *sound;        /**< Sound engine uses. */
+   double       engine_pitch; /**< Sets the base pitch of the engine. */
 
    /* Outfits */
    ShipOutfitSlot

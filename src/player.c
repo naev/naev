@@ -98,20 +98,20 @@ static char **player_licenses = NULL; /**< Licenses player has. */
 /*
  * player sounds.
  */
-static int player_engine_group = -1; /**< Player engine sound group. */
-static int player_hyper_group  = -1; /**< Player hyperspace sound group. */
-static int player_gui_group    = -1; /**< Player GUI sound group. */
-int        snd_target          = -1; /**< Sound when targeting. */
-int        snd_jump            = -1; /**< Sound when can jump. */
-int        snd_nav             = -1; /**< Sound when changing nav computer. */
-int        snd_hail            = -1; /**< Sound when being hailed. */
+static Group *player_engine_group = NULL; /**< Player engine sound group. */
+static Group *player_hyper_group  = NULL; /**< Player hyperspace sound group. */
+static Group *player_gui_group    = NULL; /**< Player GUI sound group. */
+const Sound  *snd_target          = NULL; /**< Sound when targeting. */
+const Sound  *snd_jump            = NULL; /**< Sound when can jump. */
+const Sound  *snd_nav  = NULL; /**< Sound when changing nav computer. */
+const Sound  *snd_hail = NULL; /**< Sound when being hailed. */
 /* Hyperspace sounds. */
-int           snd_hypPowUp     = -1; /**< Hyperspace power up sound. */
-int           snd_hypEng       = -1; /**< Hyperspace engine sound. */
-int           snd_hypPowDown   = -1; /**< Hyperspace power down sound. */
-int           snd_hypPowUpJump = -1; /**< Hyperspace Power up to jump sound. */
-int           snd_hypJump      = -1; /**< Hyperspace jump sound. */
-static int    player_lastEngineSound = -1; /**< Last engine sound. */
+const Sound *snd_hypPowUp     = NULL; /**< Hyperspace power up sound. */
+const Sound *snd_hypEng       = NULL; /**< Hyperspace engine sound. */
+const Sound *snd_hypPowDown   = NULL; /**< Hyperspace power down sound. */
+const Sound *snd_hypPowUpJump = NULL; /**< Hyperspace Power up to jump sound. */
+const Sound *snd_hypJump      = NULL; /**< Hyperspace jump sound. */
+static const Sound *player_lastEngineSound = NULL; /**< Last engine sound. */
 static int    player_hailCounter = 0;  /**< Number of times to play the hail. */
 static double player_hailTimer   = 0.; /**< Timer for hailing. */
 
@@ -948,7 +948,7 @@ static void player_initSound( void )
  *    @param sound ID of the sound to play.
  *    @param once Play only once?
  */
-void player_soundPlayGUI( int sound, int once )
+void player_soundPlayGUI( const Sound *sound, int once )
 {
    sound_playGroup( player_gui_group, sound, once );
 }
@@ -959,7 +959,7 @@ void player_soundPlayGUI( int sound, int once )
  *    @param sound ID of the sound to play.
  *    @param once Play only once?
  */
-void player_soundPlay( int sound, int once )
+void player_soundPlay( const Sound *sound, int once )
 {
    sound_playGroup( player_hyper_group, sound, once );
 }
@@ -977,7 +977,7 @@ void player_soundStop( void )
       sound_stopGroup( player_hyper_group );
 
    /* No last engine sound. */
-   player_lastEngineSound = -1;
+   player_lastEngineSound = NULL;
 }
 
 /**
@@ -1367,9 +1367,9 @@ void player_update( Pilot *pplayer, const double dt )
  */
 void player_updateSpecific( Pilot *pplayer, const double dt )
 {
-   int    engsound;
-   double pitch = 1.;
-   Pilot *t     = pilot_getTarget( pplayer );
+   const Sound *engsound;
+   double       pitch = 1.;
+   Pilot       *t     = pilot_getTarget( pplayer );
 
    /* Set special flag if scanned by player. */
    if ( ( t != NULL ) && !pilot_isFlag( t, PILOT_PLAYER_SCANNED ) &&
@@ -1386,14 +1386,15 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
       engsound = pplayer->ship->sound;
       pitch    = pplayer->ship->engine_pitch;
    } else
-      engsound = -1;
-   if ( engsound >= 0 )
+      engsound = NULL;
+
+   if ( engsound != NULL )
       sound_volumeGroup( player_engine_group,
                          conf.engine_vol * pplayer->engine_glow );
    /* See if sound must change. */
    if ( player_lastEngineSound != engsound ) {
       sound_stopGroup( player_engine_group );
-      if ( engsound >= 0 ) {
+      if ( engsound != NULL ) {
          sound_pitchGroup( player_engine_group, pitch );
          sound_playGroup( player_engine_group, engsound, 0 );
       }

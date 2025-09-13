@@ -19,14 +19,14 @@ use crate::output_limiter::consts::*;
 use crate::source_spatialize::consts::*;
 use crate::source_spatialize::*;
 use naev_core::utils::{binary_search_by_key_ref, sort_by_key_ref};
-use std::sync::atomic::Ordering;
+use std::sync::atomic::{AtomicU32, Ordering};
 
 use anyhow::Result;
 use gettext::gettext;
 use log::{debug, debugx, warn, warn_err};
 use mlua::{MetaMethod, UserData, UserDataMethods};
 use nalgebra::Vector3;
-use std::sync::{Arc, LazyLock, Mutex, RwLock};
+use std::sync::{Arc, LazyLock, Mutex, RwLock, Weak};
 
 const NUM_VOICES: usize = 64;
 const REFERENCE_DISTANCE: f32 = 500.;
@@ -300,7 +300,26 @@ impl AudioBuffer {
         }
         */
     }
+
+    fn exists(name: &str) -> Option<Arc<Self>> {
+        let buffers = AUDIO_BUFFER.lock().unwrap();
+        for buf in buffers.iter() {
+            if let Some(b) = buf.upgrade() {
+                if b.name == name {
+                    return Some(b);
+                }
+            }
+        }
+        None
+    }
 }
+/// All the shared Static audio data (streaming is separate)
+pub(crate) static AUDIO_BUFFER: LazyLock<Mutex<Vec<Weak<AudioBuffer>>>> =
+    LazyLock::new(|| Mutex::new(Default::default()));
+/// Counter for how many buffers were destroyed
+pub(crate) static GC_COUNTER: AtomicU32 = AtomicU32::new(0);
+/// Number of destroyed buffers to start garbage collecting the cache
+pub(crate) const GC_THRESHOLD: u32 = 128;
 
 #[derive(Clone, PartialEq, Copy, Eq, Debug)]
 pub enum AudioSeek {

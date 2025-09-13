@@ -83,30 +83,34 @@ int source_new( const char *filename, unsigned int flags );
 /*
  * sound sample management
  */
-int    sound_get( const char *name );
-double sound_getLength( int sound );
+typedef struct Sound Sound;
+const Sound         *sound_get( const char *name );
+double               sound_getLength( const Sound *sound );
 
 /*
  * voice management
  */
-int  sound_play( int sound );
-int  sound_playPos( int sound, double px, double py, double vx, double vy );
-void sound_stop( int voice );
-int  sound_updatePos( int voice, double px, double py, double vx, double vy );
-int  sound_updateListener( double dir, double px, double py, double vx,
-                           double vy );
+typedef struct Voice Voice;
+Voice               *sound_play( const Sound *sound );
+Voice *sound_playPos( const Sound *sound, double px, double py, double vx,
+                      double vy );
+void   sound_stop( Voice *voice );
+int sound_updatePos( Voice *voice, double px, double py, double vx, double vy );
+int sound_updateListener( double dir, double px, double py, double vx,
+                          double vy );
 
 /*
  * Group functions.
  */
-int  sound_createGroup( int size );
-int  sound_playGroup( int group, int sound, int once );
-void sound_stopGroup( int group );
-void sound_pauseGroup( int group );
-void sound_resumeGroup( int group );
-void sound_speedGroup( int group, int enable );
-void sound_volumeGroup( int group, double volume );
-void sound_pitchGroup( int group, double pitch );
+typedef struct Group Group;
+Group               *sound_createGroup( int size );
+int  sound_playGroup( Group *group, const Sound *sound, int once );
+void sound_stopGroup( Group *group );
+void sound_pauseGroup( Group *group );
+void sound_resumeGroup( Group *group );
+void sound_speedGroup( Group *group, int enable );
+void sound_volumeGroup( Group *group, double volume );
+void sound_pitchGroup( Group *group, double pitch );
 
 /*
  * Environmental functions.

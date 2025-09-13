@@ -1131,7 +1131,7 @@ int outfit_miningRarity( const Outfit *o )
  *    @param o Outfit to get sound from.
  *    @return Outfit's sound.
  */
-int outfit_sound( const Outfit *o )
+const Sound *outfit_sound( const Outfit *o )
 {
    if ( outfit_isBolt( o ) )
       return o->u.blt.sound;
@@ -1139,26 +1139,26 @@ int outfit_sound( const Outfit *o )
       return o->u.bem.sound;
    else if ( outfit_isLauncher( o ) )
       return o->u.lau.sound;
-   return -1.;
+   return NULL;
 }
 /**
  * @brief Gets the outfit's hit sound.
  *    @param o Outfit to get hit sound from.
  *    @return Outfit's hit sound.
  */
-int outfit_soundHit( const Outfit *o )
+const Sound *outfit_soundHit( const Outfit *o )
 {
    if ( outfit_isBolt( o ) )
       return o->u.blt.sound_hit;
    else if ( outfit_isLauncher( o ) )
       return o->u.lau.sound_hit;
-   return -1.;
+   return NULL;
 }
-int outfit_soundOff( const Outfit *o )
+const Sound *outfit_soundOff( const Outfit *o )
 {
    if ( outfit_isBeam( o ) )
       return o->u.bem.sound_off;
-   return -1.;
+   return NULL;
 }
 /**
  * @brief Gets the outfit's ammunition mass.
@@ -1263,23 +1263,23 @@ double outfit_afterburnerAccel( const Outfit *o )
       return o->u.afb.accel;
    return 0.;
 }
-int outfit_afterburnerSound( const Outfit *o )
+const Sound *outfit_afterburnerSound( const Outfit *o )
 {
    if ( outfit_isAfterburner( o ) )
       return o->u.afb.sound;
-   return -1;
+   return NULL;
 }
-int outfit_afterburnerSoundOn( const Outfit *o )
+const Sound *outfit_afterburnerSoundOn( const Outfit *o )
 {
    if ( outfit_isAfterburner( o ) )
       return o->u.afb.sound_on;
-   return -1;
+   return NULL;
 }
-int outfit_afterburnerSoundOff( const Outfit *o )
+const Sound *outfit_afterburnerSoundOff( const Outfit *o )
 {
    if ( outfit_isAfterburner( o ) )
       return o->u.afb.sound_off;
-   return -1;
+   return NULL;
 }
 double outfit_afterburnerRumble( const Outfit *o )
 {
@@ -2082,8 +2082,6 @@ static void outfit_parseSBolt( Outfit *temp, const xmlNodePtr parent )
    temp->u.blt.gfx.size    = -1.;
    temp->u.blt.spfx_armour = -1;
    temp->u.blt.spfx_shield = -1;
-   temp->u.blt.sound       = -1;
-   temp->u.blt.sound_hit   = -1;
    temp->u.blt.falloff     = -1.;
    temp->u.blt.trackmin    = -1.;
    temp->u.blt.trackmax    = -1.;
@@ -2309,11 +2307,8 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
    char      *shader;
 
    /* Defaults. */
-   temp->u.bem.spfx_armour  = -1;
-   temp->u.bem.spfx_shield  = -1;
-   temp->u.bem.sound_warmup = -1;
-   temp->u.bem.sound        = -1;
-   temp->u.bem.sound_off    = -1;
+   temp->u.bem.spfx_armour = -1;
+   temp->u.bem.spfx_shield = -1;
 
    node = parent->xmlChildrenNode;
    do { /* load all the data */
@@ -2476,8 +2471,6 @@ static void outfit_parseSLauncher( Outfit *temp, const xmlNodePtr parent )
    temp->u.lau.trackmax    = -1.;
    temp->u.lau.spfx_armour = -1;
    temp->u.lau.spfx_shield = -1;
-   temp->u.lau.sound       = -1;
-   temp->u.lau.sound_hit   = -1;
    temp->u.lau.trail_spec  = NULL;
    temp->u.lau.ai          = -1;
    temp->u.lau.speed_max   = -1.;
@@ -2827,11 +2820,6 @@ static void outfit_parseSAfterburner( Outfit *temp, const xmlNodePtr parent )
 {
    size_t     l;
    xmlNodePtr node = parent->children;
-
-   /* Defaults. */
-   temp->u.afb.sound     = -1;
-   temp->u.afb.sound_on  = -1;
-   temp->u.afb.sound_off = -1;
 
    /* must be >= 1. */
    temp->u.afb.accel = 1.;

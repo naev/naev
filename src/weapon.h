@@ -6,6 +6,7 @@
 #include "outfit.h"
 #include "physics.h"
 #include "pilot.h"
+#include "sound.h"
 #include "target.h"
 
 /**
@@ -65,7 +66,7 @@ typedef struct Weapon_ {
    double turn_mod;       /**< Turn modifier. */
 
    double  real_vel; /**< Keeps track of the real velocity. */
-   int     voice;    /**< Weapon's voice. */
+   Voice  *voice;    /**< Weapon's voice. */
    double  timer2;   /**< Explosion timer for beams, and lockon for ammo. */
    double  paramf;   /**< Arbitrary parameter for outfits. */
    double  life;     /**< Total life. */

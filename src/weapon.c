@@ -1767,7 +1767,6 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius,
  */
 static void weapon_hit( Weapon *w, const WeaponHit *hit )
 {
-   int           s;
    double        damage, radius;
    Damage        dmg;
    const Damage *odmg;
@@ -1783,8 +1782,8 @@ static void weapon_hit( Weapon *w, const WeaponHit *hit )
                                  damage * w->dam_as_dis_mod );
 
    /* Play sound if they have it. */
-   s = outfit_soundHit( w->outfit );
-   if ( s != -1 )
+   const Sound *s = outfit_soundHit( w->outfit );
+   if ( s != NULL )
       w->voice = sound_playPos( s, w->solid.pos.x, w->solid.pos.y,
                                 w->solid.vel.x, w->solid.vel.y );
 
@@ -1857,14 +1856,13 @@ static void weapon_miss( Weapon *w )
 
    /* Add death sprite if needed. */
    if ( spfx != -1 ) {
-      int s;
       spfx_add( spfx, w->solid.pos.x, w->solid.pos.y, w->solid.vel.x,
                 w->solid.vel.y,
                 ( w->layer == WEAPON_LAYER_FG ) ? SPFX_LAYER_FRONT
                                                 : SPFX_LAYER_MIDDLE );
       /* Add sound if explodes and has it. */
-      s = outfit_soundHit( w->outfit );
-      if ( s != -1 )
+      const Sound *s = outfit_soundHit( w->outfit );
+      if ( s != NULL )
          w->voice = sound_playPos( s, w->solid.pos.x, w->solid.pos.y,
                                    w->solid.vel.x, w->solid.vel.y );
    }
@@ -1945,14 +1943,13 @@ static void weapon_damage( Weapon *w, const Damage *dmg )
    else if ( outfit_isProp( w->outfit, OUTFIT_PROP_WEAP_BLOWUP_SHIELD ) )
       spfx = outfit_spfxShield( w->outfit );
    if ( spfx != -1 ) {
-      int s;
       spfx_add( spfx, w->solid.pos.x, w->solid.pos.y, w->solid.vel.x,
                 w->solid.vel.y,
                 ( w->layer == WEAPON_LAYER_FG ) ? SPFX_LAYER_FRONT
                                                 : SPFX_LAYER_MIDDLE );
       /* Add sound if explodes and has it. */
-      s = outfit_soundHit( w->outfit );
-      if ( s != -1 )
+      const Sound *s = outfit_soundHit( w->outfit );
+      if ( s != NULL )
          w->voice = sound_playPos( s, w->solid.pos.x, w->solid.pos.y,
                                    w->solid.vel.x, w->solid.vel.y );
    }
