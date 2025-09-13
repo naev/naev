@@ -1,4 +1,5 @@
 
+// Would be much simpler with fgets.
 
 typedef struct {
    FILE  *fp;

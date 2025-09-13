@@ -1,3 +1,6 @@
+
+--TODO: do it with messages instead of onoutfitchange
+
 --[[
 
    Library for outfit sets
