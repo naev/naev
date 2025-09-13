@@ -618,16 +618,13 @@ impl AudioVolume {
 
 fn event_callback(event_type: ALenum, _object: ALuint, param: ALuint, _message: &str) {
     // Can't call OpenAL stuff here
-    match event_type {
-        AL_EVENT_TYPE_SOURCE_STATE_CHANGED_SOFT => {
-            let param = param as i32;
-            // object is the source ID
-            // param is the source's new state
-            if param == AL_STOPPED {
-                // TODO send message or something
-            }
+    if event_type == AL_EVENT_TYPE_SOURCE_STATE_CHANGED_SOFT {
+        let param = param as i32;
+        // object is the source ID
+        // param is the source's new state
+        if param == AL_STOPPED {
+            // TODO send message or something
         }
-        _ => (),
     }
 }
 
@@ -1473,11 +1470,8 @@ pub extern "C" fn sound_get(name: *const c_char) -> *const Arc<AudioBuffer> {
     let name = unsafe { CStr::from_ptr(name).to_string_lossy() };
     for ext in ["wav", "ogg"] {
         let path = format!("snd/sounds/{name}.{ext}");
-        match AudioBuffer::get_or_try_load(&path) {
-            Ok(buffer) => {
-                return Box::into_raw(Box::new(buffer));
-            }
-            Err(_) => (),
+        if let Ok(buffer) = AudioBuffer::get_or_try_load(&path) {
+            return Box::into_raw(Box::new(buffer));
         };
     }
     std::ptr::null()
