@@ -365,7 +365,7 @@ jobs:
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
       - name: Trigger Website Build
-        if: ${{ steps.compile.outcome == 'success' }}
+        if: ${{ steps.compile.outcome == 'success' && github.ref == 'refs/heads/main' }}
         run: |
           curl -X POST \
             -H "Authorization: token ${{ secrets.WEBSITE_TOKEN }}" \
