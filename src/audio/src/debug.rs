@@ -7,74 +7,79 @@ use log::{debug, warn, warn_err};
 use std::ffi::{CStr, CString};
 use std::sync::OnceLock;
 
-pub const ALC_EXT_DEBUG_NAME: &CStr = c"ALC_EXT_debug";
-pub const AL_EXT_DEBUG_NAME: &CStr = c"AL_EXT_debug";
-// Accepted as an attribute to alcCreateContext:
-pub const ALC_CONTEXT_FLAGS: ALenum = 0x19CF;
+const ALC_EXT_DEBUG_NAME: &CStr = c"ALC_EXT_debug";
+const AL_EXT_DEBUG_NAME: &CStr = c"AL_EXT_debug";
 
-// Accepted as a bitwise-or'd value for the ALC_CONTEXT_FLAGS context creation attribute value:
-pub const ALC_CONTEXT_DEBUG_BIT: ALenum = 0x0001;
+pub mod consts {
+    use crate::openal::al_types::*;
+    // Accepted as an attribute to alcCreateContext:
+    pub const ALC_CONTEXT_FLAGS: ALenum = 0x19CF;
 
-// Accepted as the <pname> parameter of alGetInteger[v]:
-pub const AL_CONTEXT_FLAGS: ALenum = 0x19CF;
+    // Accepted as a bitwise-or'd value for the ALC_CONTEXT_FLAGS context creation attribute value:
+    pub const ALC_CONTEXT_DEBUG_BIT: ALenum = 0x0001;
 
-//Returned by alGetInteger[v] when <pname> is AL_CONTEXT_FLAGS:
-pub const AL_CONTEXT_DEBUG_BIT: ALenum = 0x0001;
+    // Accepted as the <pname> parameter of alGetInteger[v]:
+    pub const AL_CONTEXT_FLAGS: ALenum = 0x19CF;
 
-// Accepted as the <target> parameter of alEnable, alDisable, and alIsEnabled:
-pub const AL_DEBUG_OUTPUT: ALenum = 0x19B2;
+    //Returned by alGetInteger[v] when <pname> is AL_CONTEXT_FLAGS:
+    pub const AL_CONTEXT_DEBUG_BIT: ALenum = 0x0001;
 
-// Accepted as the <pname> parameter of alGetPointerEXT and alGetPointervEXT:
-pub const AL_DEBUG_CALLBACK_FUNCTION: ALenum = 0x19B3;
-pub const AL_DEBUG_CALLBACK_USER_PARAM: ALenum = 0x19B4;
+    // Accepted as the <target> parameter of alEnable, alDisable, and alIsEnabled:
+    pub const AL_DEBUG_OUTPUT: ALenum = 0x19B2;
 
-// Accepted or provided by the <source> parameter of alDebugMessageControlEXT, alDebugMessageInsertEXT, and ALDEBUGPROCEXT, and returned by the <sources> parameter of alGetDebugMessageLogEXT:
-pub const AL_DEBUG_SOURCE_API: ALenum = 0x19B5;
-pub const AL_DEBUG_SOURCE_AUDIO_SYSTEM: ALenum = 0x19B6;
-pub const AL_DEBUG_SOURCE_THIRD_PARTY: ALenum = 0x19B7;
-pub const AL_DEBUG_SOURCE_APPLICATION: ALenum = 0x19B8;
-pub const AL_DEBUG_SOURCE_OTHER: ALenum = 0x19B9;
+    // Accepted as the <pname> parameter of alGetPointerEXT and alGetPointervEXT:
+    pub const AL_DEBUG_CALLBACK_FUNCTION: ALenum = 0x19B3;
+    pub const AL_DEBUG_CALLBACK_USER_PARAM: ALenum = 0x19B4;
 
-// Accepted or provided by the <type> parameter of alDebugMessageControlEXT, alDebugMessageInsertEXT, and ALDEBUGPROCEXT, and returned by the <types> parameter of alGetDebugMessageLogEXT:
-pub const AL_DEBUG_TYPE_ERROR: ALenum = 0x19BA;
-pub const AL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: ALenum = 0x19BB;
-pub const AL_DEBUG_TYPE_UNDEFINED_BEHAVIOR: ALenum = 0x19BC;
-pub const AL_DEBUG_TYPE_PORTABILITY: ALenum = 0x19BD;
-pub const AL_DEBUG_TYPE_PERFORMANCE: ALenum = 0x19BE;
-pub const AL_DEBUG_TYPE_MARKER: ALenum = 0x19BF;
-pub const AL_DEBUG_TYPE_OTHER: ALenum = 0x19C2;
+    // Accepted or provided by the <source> parameter of alDebugMessageControlEXT, alDebugMessageInsertEXT, and ALDEBUGPROCEXT, and returned by the <sources> parameter of alGetDebugMessageLogEXT:
+    pub const AL_DEBUG_SOURCE_API: ALenum = 0x19B5;
+    pub const AL_DEBUG_SOURCE_AUDIO_SYSTEM: ALenum = 0x19B6;
+    pub const AL_DEBUG_SOURCE_THIRD_PARTY: ALenum = 0x19B7;
+    pub const AL_DEBUG_SOURCE_APPLICATION: ALenum = 0x19B8;
+    pub const AL_DEBUG_SOURCE_OTHER: ALenum = 0x19B9;
 
-// Accepted or provided by the <type> parameter of alDebugMessageControlEXT and ALDEBUGPROCEXT, and returned by the <types> parameter of alGetDebugMessageLogEXT:
-pub const AL_DEBUG_TYPE_PUSH_GROUP: ALenum = 0x19C0;
-pub const AL_DEBUG_TYPE_POP_GROUP: ALenum = 0x19C1;
+    // Accepted or provided by the <type> parameter of alDebugMessageControlEXT, alDebugMessageInsertEXT, and ALDEBUGPROCEXT, and returned by the <types> parameter of alGetDebugMessageLogEXT:
+    pub const AL_DEBUG_TYPE_ERROR: ALenum = 0x19BA;
+    pub const AL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: ALenum = 0x19BB;
+    pub const AL_DEBUG_TYPE_UNDEFINED_BEHAVIOR: ALenum = 0x19BC;
+    pub const AL_DEBUG_TYPE_PORTABILITY: ALenum = 0x19BD;
+    pub const AL_DEBUG_TYPE_PERFORMANCE: ALenum = 0x19BE;
+    pub const AL_DEBUG_TYPE_MARKER: ALenum = 0x19BF;
+    pub const AL_DEBUG_TYPE_OTHER: ALenum = 0x19C2;
 
-// Accepted or provided by the <severity> parameter of alDebugMessageControlEXT, alDebugMessageInsertEXT, and ALDEBUGPROCEXT, and returned by the <severities> parameter of alGetDebugMessageLogEXT:
-pub const AL_DEBUG_SEVERITY_HIGH: ALenum = 0x19C3;
-pub const AL_DEBUG_SEVERITY_MEDIUM: ALenum = 0x19C4;
-pub const AL_DEBUG_SEVERITY_LOW: ALenum = 0x19C5;
-pub const AL_DEBUG_SEVERITY_NOTIFICATION: ALenum = 0x19C6;
+    // Accepted or provided by the <type> parameter of alDebugMessageControlEXT and ALDEBUGPROCEXT, and returned by the <types> parameter of alGetDebugMessageLogEXT:
+    pub const AL_DEBUG_TYPE_PUSH_GROUP: ALenum = 0x19C0;
+    pub const AL_DEBUG_TYPE_POP_GROUP: ALenum = 0x19C1;
 
-// Accepted as the <source>, <type>, and <severity> parameters of alDebugMessageControlEXT:
-pub const AL_DONT_CARE: ALenum = 0x0002;
+    // Accepted or provided by the <severity> parameter of alDebugMessageControlEXT, alDebugMessageInsertEXT, and ALDEBUGPROCEXT, and returned by the <severities> parameter of alGetDebugMessageLogEXT:
+    pub const AL_DEBUG_SEVERITY_HIGH: ALenum = 0x19C3;
+    pub const AL_DEBUG_SEVERITY_MEDIUM: ALenum = 0x19C4;
+    pub const AL_DEBUG_SEVERITY_LOW: ALenum = 0x19C5;
+    pub const AL_DEBUG_SEVERITY_NOTIFICATION: ALenum = 0x19C6;
 
-// Accepted as the <pname> parameter of alGetBoolean[v], alGetInteger[v], alGetFloat[v], and alGetDouble[v]:
-pub const AL_DEBUG_LOGGED_MESSAGES: ALenum = 0x19C7;
-pub const AL_DEBUG_NEXT_LOGGED_MESSAGE_LENGTH: ALenum = 0x19C8;
-pub const AL_MAX_DEBUG_MESSAGE_LENGTH: ALenum = 0x19C9;
-pub const AL_MAX_DEBUG_LOGGED_MESSAGES: ALenum = 0x19CA;
-pub const AL_MAX_DEBUG_GROUP_STACK_DEPTH: ALenum = 0x19CB;
-pub const AL_MAX_LABEL_LENGTH: ALenum = 0x19CC;
+    // Accepted as the <source>, <type>, and <severity> parameters of alDebugMessageControlEXT:
+    pub const AL_DONT_CARE: ALenum = 0x0002;
 
-// Returned by alGetError:
-pub const AL_STACK_OVERFLOW: ALenum = 0x19CD;
-pub const AL_STACK_UNDERFLOW: ALenum = 0x19CE;
+    // Accepted as the <pname> parameter of alGetBoolean[v], alGetInteger[v], alGetFloat[v], and alGetDouble[v]:
+    pub const AL_DEBUG_LOGGED_MESSAGES: ALenum = 0x19C7;
+    pub const AL_DEBUG_NEXT_LOGGED_MESSAGE_LENGTH: ALenum = 0x19C8;
+    pub const AL_MAX_DEBUG_MESSAGE_LENGTH: ALenum = 0x19C9;
+    pub const AL_MAX_DEBUG_LOGGED_MESSAGES: ALenum = 0x19CA;
+    pub const AL_MAX_DEBUG_GROUP_STACK_DEPTH: ALenum = 0x19CB;
+    pub const AL_MAX_LABEL_LENGTH: ALenum = 0x19CC;
 
-pub const AL_BUFFER: ALenum = 0x1009;
-pub const AL_SOURCE: ALenum = 0x19D0;
+    // Returned by alGetError:
+    pub const AL_STACK_OVERFLOW: ALenum = 0x19CD;
+    pub const AL_STACK_UNDERFLOW: ALenum = 0x19CE;
 
-pub const AL_FILTER: ALenum = 0x19D1;
-pub const AL_EFFECT: ALenum = 0x19D2;
-pub const AL_AUXILIARY_EFFECT_SLOT: ALenum = 0x19D3;
+    pub const AL_BUFFER: ALenum = 0x1009;
+    pub const AL_SOURCE: ALenum = 0x19D0;
+
+    pub const AL_FILTER: ALenum = 0x19D1;
+    pub const AL_EFFECT: ALenum = 0x19D2;
+    pub const AL_AUXILIARY_EFFECT_SLOT: ALenum = 0x19D3;
+}
+use consts::*;
 
 pub type ALDEBUGPROC = unsafe extern "C" fn(
     source: ALenum,
@@ -221,3 +226,7 @@ pub fn object_label(identifier: ALenum, name: ALuint, label: &str) {
 }
 
 static DEBUG: OnceLock<Debug> = OnceLock::new();
+
+pub fn supported(device: &Device) -> bool {
+    device.is_extension_present(ALC_EXT_DEBUG_NAME)
+}

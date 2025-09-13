@@ -6,7 +6,7 @@ mod openal;
 mod buffer_length_query;
 mod events;
 mod source_spatialize;
-use crate::buffer_length_query::*;
+use crate::buffer_length_query::consts::*;
 use crate::efx::*;
 use crate::events::*;
 use crate::openal as al;
@@ -35,9 +35,9 @@ struct LuaAudioEfx {
 impl LuaAudioEfx {
     pub fn new(name: &str) -> Result<Self> {
         let effect = Effect::new()?;
-        debug::object_label(debug::AL_FILTER, effect.raw(), name);
+        debug::object_label(debug::consts::AL_FILTER, effect.raw(), name);
         let slot = AuxiliaryEffectSlot::new()?;
-        debug::object_label(debug::AL_AUXILIARY_EFFECT_SLOT, slot.raw(), name);
+        debug::object_label(debug::consts::AL_AUXILIARY_EFFECT_SLOT, slot.raw(), name);
         Ok(Self {
             name: String::from(name),
             effect,
@@ -262,7 +262,7 @@ impl AudioBuffer {
         };
 
         // Set debug stuff
-        debug::object_label(debug::AL_BUFFER, buffer.raw(), path);
+        debug::object_label(debug::consts::AL_BUFFER, buffer.raw(), path);
 
         Ok(Self {
             name: String::from(path),
@@ -336,7 +336,7 @@ impl Audio {
 
     pub fn new_buffer(buffer: &Arc<AudioBuffer>) -> Result<Self> {
         let source = al::Source::new()?;
-        debug::object_label(debug::AL_SOURCE, source.raw(), &buffer.name);
+        debug::object_label(debug::consts::AL_SOURCE, source.raw(), &buffer.name);
         Ok(Self {
             source,
             slot: 0,
@@ -595,10 +595,10 @@ impl AudioSystem {
 
         let mut attribs: Vec<ALint> = vec![ALC_MONO_SOURCES, 512, ALC_STEREO_SOURCES, 32];
         let mut has_debug = if cfg!(debug_assertions) {
-            let debug = device.is_extension_present(debug::ALC_EXT_DEBUG_NAME);
+            let debug = debug::supported(&device);
             if debug {
-                attribs.push(debug::ALC_CONTEXT_FLAGS);
-                attribs.push(debug::ALC_CONTEXT_DEBUG_BIT);
+                attribs.push(debug::consts::ALC_CONTEXT_FLAGS);
+                attribs.push(debug::consts::ALC_CONTEXT_DEBUG_BIT);
             } else {
                 warn("ALC_EXT_debug not supported on device");
             }
@@ -635,7 +635,7 @@ impl AudioSystem {
             event_control(&[AL_EVENT_TYPE_SOURCE_STATE_CHANGED_SOFT], true);
         }
 
-        let has_buffer_length_query = is_extension_present(AL_SOFT_BUFFER_LENGTH_QUERY_NAME);
+        let has_buffer_length_query = buffer_length_query::supported();
 
         // Check to see if output limiter is working
         if output_limiter && device.get_parameter_i32(ALC_OUTPUT_LIMITER_SOFT) != ALC_TRUE as i32 {
