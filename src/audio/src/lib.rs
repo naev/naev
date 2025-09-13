@@ -3,8 +3,10 @@ mod debug;
 mod efx;
 #[macro_use]
 mod openal;
+mod buffer_length_query;
 mod events;
 mod source_spatialize;
+use crate::buffer_length_query::*;
 use crate::efx::*;
 use crate::events::*;
 use crate::openal as al;
@@ -271,6 +273,11 @@ impl AudioBuffer {
     }
 
     pub fn duration(&self, unit: AudioSeek) -> f32 {
+        match unit {
+            AudioSeek::Seconds => self.buffer.get_parameter_f32(AL_SEC_LENGTH_SOFT),
+            AudioSeek::Samples => self.buffer.get_parameter_i32(AL_SAMPLE_LENGTH_SOFT) as f32,
+        }
+        /*
         let bytes = self.buffer.get_parameter_i32(AL_SIZE);
         let channels = self.buffer.get_parameter_i32(AL_CHANNELS);
         let bits = self.buffer.get_parameter_i32(AL_CHANNELS);
@@ -282,6 +289,7 @@ impl AudioBuffer {
             }
             AudioSeek::Samples => samples,
         }
+        */
     }
 }
 
@@ -627,6 +635,8 @@ impl AudioSystem {
             event_control(&[AL_EVENT_TYPE_SOURCE_STATE_CHANGED_SOFT], true);
         }
 
+        let has_buffer_length_query = is_extension_present(AL_SOFT_BUFFER_LENGTH_QUERY_NAME);
+
         // Check to see if output limiter is working
         if output_limiter && device.get_parameter_i32(ALC_OUTPUT_LIMITER_SOFT) != ALC_TRUE as i32 {
             warn!("failed to set ALC_OUTPUT_LIMITER_SOFT");
@@ -684,7 +694,10 @@ impl AudioSystem {
         if has_events {
             extensions.push("events".to_string());
         }
-        debugx!("   with {}", extensions.join(", "));
+        if has_buffer_length_query {
+            extensions.push("buffer_length_query".to_string());
+        }
+        debugx!(gettext("   with {}"), extensions.join(", "));
         debug!("");
 
         Ok(AudioSystem {

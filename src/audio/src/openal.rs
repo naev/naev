@@ -186,6 +186,7 @@ unsafe extern "C" {
     pub fn alGetString(param: ALCenum) -> *const ALCchar;
 
     pub fn alGetBufferi(buffer: ALuint, param: ALenum, value: *mut ALint);
+    pub fn alGetBufferf(buffer: ALuint, param: ALenum, value: *mut ALfloat);
 
     pub fn alListenerf(param: ALenum, value: ALfloat);
     pub fn alListener3f(param: ALenum, value1: ALfloat, value2: ALfloat, value3: ALfloat);
@@ -499,6 +500,14 @@ impl Buffer {
         let mut out: i32 = 0;
         unsafe {
             alGetBufferi(self.raw(), param, &mut out);
+        }
+        out
+    }
+
+    pub fn get_parameter_f32(&self, param: ALenum) -> f32 {
+        let mut out: f32 = 0.0;
+        unsafe {
+            alGetBufferf(self.raw(), param, &mut out);
         }
         out
     }
