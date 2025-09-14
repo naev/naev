@@ -126,35 +126,35 @@ function qex_race_advice()
    vn.scene()
    local lbp = vn.newCharacter(_("Laid Back Person"), {image=laid_back_portrait})
    vn.transition()
+
    lbp(_([["Hiya there! How is the racing going ?"]]))
+
    vn.label("start")
-   lbp(_([["Do you need help?]]))
+   lbp(_([["Do you need help?"]]))
    vn.menu{
-      {_([[difficulty levels]]), "cont_difficulty"},
-      {_([[general strategy]]), "cont_strategy"},
-      {_([[the bronze series]]), "cont_bronze"},
-      {_([[the silver series]]), "cont_silver"},
-      {_([[the gold series]]), "cont_gold"},
-      {_([[quit]]), "cont_quit"},
+      {_([[Difficulty Levels]]), "cont_difficulty"},
+      {_([[Useful Tips]]), "cont_strategy"},
+      {_([[The Bronze, Silver, and Gold Series]]), "cont_series"},
+      {_([[Leave]]), "cont_quit"},
    }
+
    vn.label("cont_difficulty")
-   lbp(_([["The tracks are increasingly difficult. Peninsula is the easiest, while Qex Tour is the hardest. That also means that you get more rewards for harder races."]]))
-   lbp(_([["The three levels of difficulty Bronze, Silver and Gold change drastically how hard it is to beat a race, so, Peninsula - Silver is harder than Qex Tour - Bronze and Peninsula - Gold is harder than Qex Tour - Silver"]]))
-   lbp(_([["Therefore, it is advised to beat all Bronze times before attempting to beat Silver times. Furthermore, the Bronze price will make it easier to beat the Silver times, and similarly for the Gold times."]]))
+   lbp(_([["The tracks are in order of increasing difficult, with the Peninsula being the easiest track, while the Qex Tour is considered the hardest. Increased difficulty also means increased payouts, so it's worth tackling the harder races."]]))
+   lbp(_([["Furthermore, each track has three goal times: Bronze, Silver and Gold. The payout is also increased based on what goal time you manage to beat, and you can always try to beat your best time. However, note that the goal times get much harder on the harder tracks, so Silver on Peninsula is harder that Bronze on the Qex Tour and the likes."]]))
+   lbp(_([["I would recommend you to try to beat the Bronze goal times on all the tracks before moving on to Silver, and finally Gold. It's also a great way to get some more practice racing."]]))
    vn.jump("start")
+
    vn.label("cont_strategy")
-   lbp(_([["Qex Races allow you -- and expects you -- to use afterburners.
-The two crucial aspects of your ships are therefore how long it can maintain afterburner and how fast does it go while in afterburner."]]))
+   lbp(_([["The first step of racing is to choose a ship that can be designed for max speed. Interceptors and other smaller ships tend to be easier to modify, so I would recommend to start there. Make sure to grab the fastest engines you can get your hand on and stack as many speed modifications as possible."]]))
+   lbp(_([["However, racing isn't all about passive bonuses! You are not only allowed, but expected to use afterburners while racing. It's important not only to try to get as fast of a ship as possible, but also one that can sustain the afterburner the longest during the race. So make sure to have enough energy regeneration!"]]))
    vn.jump("start")
-   vn.label("cont_bronze")
-   lbp(_([["The Bronze series is the easy one. It is doable with limited resources and outfits and ships available here."]]))
+
+   vn.label("cont_series")
+   lbp(_([["Beating the Bronze goal times in the Bronze series is the easiest and a good way to get practice racing. With any decent ship build for speed it should be possible to clear them."]]))
+   lbp(_([["The Silver series is more challenging. It will require something better than the basic Unicorp afterburner, and finding the right ship and outfit to do this is a challenge in itself. It is only accessible for seasoned captains who can afford it."]]))
+   lbp(_([["Finally, the Gold series is the hardest challenge with very tight goal times. Only very few pilots manage to complete it and get the prestigious Gold Trophy. At this point, this is all about prestige, as the Gold Trophy in itself is not worth the effort, if you ask me."]]))
    vn.jump("start")
-   vn.label("cont_silver")
-   lbp(_([["The Silver series is more challenging. It will require better than the basic Unicorp afterburner, and finding the right ship and outfit to do this is a challenge in itself. It is a challenge for seasoned captains who can afford it."]]))
-   vn.jump("start")
-   vn.label("cont_gold")
-   lbp(_([["The Gold series is even harder than the Silver series. Only very few manage to do it and get the prestigious Gold Trophy. This is all about prestige, as the Gold Trophy in itself is not worth the effort, if you ask me."]]))
-   vn.jump("start")
+
    vn.label("cont_quit")
    vn.run()
 end
