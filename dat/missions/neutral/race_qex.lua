@@ -188,15 +188,12 @@ function approach_terminal ()
 
       vn.label("cont01_yes")
       lbp(_([["Racing is quite simple, you have to go through all the gates in order until you reach the final goal. There are no limitations on what ship and outfits you can use, but you're best sticking to light or medium-light ships and using an afterburner if you want to make good times."]]))
-      lbp(_([["Each track has three goal times to beat: Bronze, Silver and Gold corresponding to three levels of difficulty.
-If you beat one of the times, you will get a nice credit reward depending on the track and on the difficulty level of the beaten time. In addition, you will get an early finish bonus depending on the improvement over the reference time.
-If you beat all the tracks here for a given difficulty level, a Melendez Corporation representative will give you a nice trophy to commemorate!"]]))
-      lbp(_([["You can try as many times as you want with no penalty. Your best time will also be saved so you can try to beat it again."]]))
-      lbp(_([["It's really fun, just be careful not to get addicted. He he."]]))
+      lbp(_([["Each track has three goal times to beat: Bronze, Silver and Gold corresponding to three increasing levels of difficulty. The reward you get on each track will depend on which goal time you beat and also on the difficulty of the track itself. In addition, you will get an early finish bonus depending on the improvement over the reference time."]]))
+      lbp(_([["If you beat all the tracks here for a given difficulty level, a Melendez Corporation representative will give you a nice trophy to commemorate!"]]))
+      lbp(_([["You can try as many times as you want with no penalty. Your best time will also be saved so you can try to beat it again. It's really fun, just be careful not to get addicted. He he."]]))
 
       vn.label("cont01_no")
-      lbp(_([["OK, look forward to seeing your racing skills!
-I will be around if you have any questions."]]))
+      lbp(_([["OK, look forward to seeing your racing skills! I will be around if you have any questions."]]))
       vn.run()
       var.push("racing_intro", true)
       add_advice_npc()
@@ -487,7 +484,7 @@ function race_landed ()
 They hand you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it. At least the trophy looks cool.]]),
             {spobname= spob.cur(), metal= completed}))
          vn.na(fmt.reward(reward_outfit)..'\n'..fmt.reward(reward)..'\n'..fmt.reward(bonus)..' (early finish bonus)')
-         if completed == 'Silver' or (not already_have['Silver'] and completed == 'Gold') then
+         if completed == 'Silver' or (not already_have['Silver'] and completed == 'Gold') and not diff.isApplied("melendez_dome_xy37") then
             vn.func( function ()
                diff.apply("melendez_dome_xy37")
             end )
