@@ -6,7 +6,7 @@ local wp=system.get("Qex"):waypoints()
 return {
    {
       name = _("Peninsula"),
-      reward = 100000,
+      reward = 100e3,
       scale = 15,
       center = true,
       track = {
@@ -49,7 +49,7 @@ return {
       },
    }, {
       name = _("Smiling Man"),
-      reward = 150000,
+      reward = 150e3,
       scale = 15,
       center = true,
       track = {
@@ -112,7 +112,7 @@ return {
       },
    }, {
       name = _("Qex Tour"),
-      reward = 180000,
+      reward = 180e3,
       track = {
          {
             wp["track_tour_1"], -- start near Qex IV

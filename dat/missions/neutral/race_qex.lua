@@ -240,16 +240,16 @@ function approach_terminal ()
             end
          end
          txt = txt .. '#n' .. _('Goal Time:') .. medal_col[i]
-         txt = txt .. ' ' .. display_time(track.goaltime[i])
-         txt = txt .. ' ' .. '#n(' .. _(i) .. ')#0\n'
+            .. ' ' .. display_time(track.goaltime[i])
+            .. ' ' .. '#n(' .. _(i) .. ')#0\n'
       end
       if not yet then
          txt = txt .. '#b' .. _('Best Time:') .. ' ' .. display_time(track.besttime) .. '#0\n'
       end
       txt = txt .. '#n' .. _('Reward:') .. ' '
-      txt = txt .. medal_col['Bronze'] .. '0.5#n/' .. medal_col['Silver'] .. '1#n/'
-      txt = txt .. medal_col['Gold'] .. '2#0'
-      txt = txt .. ' #nx ' .. fmt.credits(track.reward) .. '#0\n'
+         .. medal_col['Bronze'] .. '0.5#n/' .. medal_col['Silver'] .. '1#n/'
+         .. medal_col['Gold'] .. '2#0'
+         .. ' #nx ' .. fmt.credits(track.reward) .. '#0\n'
 
       txt_race:set(txt)
    end )
