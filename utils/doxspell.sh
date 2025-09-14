@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#TODO: remove US english from the dicts and add british english instead. Reverse the br->us conversions done so far.
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 PERS="$SCRIPT_DIR/naev.aspell.pws"

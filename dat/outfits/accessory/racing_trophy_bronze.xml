@@ -1,0 +1,19 @@
+<outfit name="Racing Trophy (Bronze)">
+ <general>
+  <unique/>
+  <typename>Accessory</typename>
+  <slot prop="accessory">utility</slot>
+  <size>small</size>
+  <priority>3</priority>
+  <mass>0</mass>
+  <price>1000000</price>
+  <description>The racing trophy you won with your piloting skills.</description>
+  <gfx_store>racing_trophy_bronze.svg</gfx_store>
+  <rarity>6</rarity>
+ </general>
+ <specific type="modification">
+  <turn_mod>3</turn_mod>
+  <speed_mod>3</speed_mod>
+  <accel_mod>3</accel_mod>
+ </specific>
+</outfit>
