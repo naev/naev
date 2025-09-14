@@ -3679,6 +3679,7 @@ dat/scripts/luatk/luatk.lua
 dat/scripts/luatk/main.lua
 dat/scripts/luatk/map.lua
 dat/scripts/luatk/markdown.lua
+dat/scripts/map_all_ships.lua
 dat/scripts/minigames/blackjack.lua
 dat/scripts/minigames/chuckaluck.lua
 dat/scripts/minigames/flip.lua

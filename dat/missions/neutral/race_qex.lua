@@ -23,7 +23,7 @@ local lmisn = require "lmisn"
 
 local DEFAULT_REWARD = 100e3
 
-goal_times = require 'missions.neutral.race.times_qex'
+local goal_times = require 'missions.neutral.race.times_qex'
 local medal_col = {Bronze= '#o', Silver= '#w', Gold= '#y'}
 
 local elapsed_time, race_done
@@ -58,7 +58,7 @@ end
 
 local map_all_ships = require 'scripts.map_all_ships'
 
-function upgrade_trophies(to)
+local function upgrade_trophies(to)
    --outfitAddSlot outfitRmSlot
    map_all_ships(function (pp)
       if pp:outfitHasSlot('accessory') then
@@ -138,16 +138,16 @@ function qex_race_advice()
       {_([[quit]]), "cont_quit"},
    }
    vn.label("cont_difficulty")
-   lbp(_([["The tracks are increasingly difficult. Peninsula is the easiest, while Qex Tour is the hardest. That also means that you get more rewards for harder races.
-  The three levels of difficulty Bronze, Silver and Gold change drastically how hard it is to beat a race, so, Peninsula - Silver is harder than Qex Tour - Bronze and Peninsula - Gold is harder than Qex Tour - Silver"]]))
+   lbp(_([["The tracks are increasingly difficult. Peninsula is the easiest, while Qex Tour is the hardest. That also means that you get more rewards for harder races."]]))
+   lbp(_([["The three levels of difficulty Bronze, Silver and Gold change drastically how hard it is to beat a race, so, Peninsula - Silver is harder than Qex Tour - Bronze and Peninsula - Gold is harder than Qex Tour - Silver"]]))
    lbp(_([["Therefore, it is advised to beat all Bronze times before attempting to beat Silver times. Furthermore, the Bronze price will make it easier to beat the Silver times, and similarly for the Gold times."]]))
    vn.jump("start")
    vn.label("cont_strategy")
    lbp(_([["Qex Races allow you -- and expects you -- to use afterburners.
-  The two crucial aspects of your ships are therefore how long it can maintain afterburner and how fast does it go while in afterburner."]]))
+The two crucial aspects of your ships are therefore how long it can maintain afterburner and how fast does it go while in afterburner."]]))
    vn.jump("start")
    vn.label("cont_bronze")
-   lbp(_([["The Bronze series is the easy one. It is doable with limited ressources and outfits and ships available here."]]))
+   lbp(_([["The Bronze series is the easy one. It is doable with limited resources and outfits and ships available here."]]))
    vn.jump("start")
    vn.label("cont_silver")
    lbp(_([["The Silver series is more challenging. It will require better than the basic Unicorp afterburner, and finding the right ship and outfit to do this is a challenge in itself. It is a challenge for seasoned captains who can afford it."]]))
@@ -189,14 +189,14 @@ function approach_terminal ()
       vn.label("cont01_yes")
       lbp(_([["Racing is quite simple, you have to go through all the gates in order until you reach the final goal. There are no limitations on what ship and outfits you can use, but you're best sticking to light or medium-light ships and using an afterburner if you want to make good times."]]))
       lbp(_([["Each track has three goal times to beat: Bronze, Silver and Gold corresponding to three levels of difficulty.
-  If you beat one of the times, you will get a nice credit reward depending on the track and on the difficulty level of the beaten time. In addition of that, you will get an early finish bonus dependepending on the improvement over the reference time.
-  If you beat all the tracks here for a given difficulty level, a Melendez Corporation representative will give you a nice trophy to commemorate!"]]))
+If you beat one of the times, you will get a nice credit reward depending on the track and on the difficulty level of the beaten time. In addition, you will get an early finish bonus depending on the improvement over the reference time.
+If you beat all the tracks here for a given difficulty level, a Melendez Corporation representative will give you a nice trophy to commemorate!"]]))
       lbp(_([["You can try as many times as you want with no penalty. Your best time will also be saved so you can try to beat it again."]]))
       lbp(_([["It's really fun, just be careful not to get addicted. He he."]]))
 
       vn.label("cont01_no")
       lbp(_([["OK, look forward to seeing your racing skills!
-  I will be around if you have any questions."]]))
+I will be around if you have any questions."]]))
       vn.run()
       var.push("racing_intro", true)
       add_advice_npc()
@@ -457,7 +457,6 @@ function race_landed ()
             imp_str= imp_str,
          }))
       end
-      local beat_n
       local completed
       for _n, g in ipairs({'Gold', 'Silver', 'Bronze'}) do
          local did_all = true

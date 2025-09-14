@@ -19,4 +19,4 @@ gen_qex_times = custom_target( 'qex_times',
       path / 'dat/outfits/bioship/skills/adrenal_gland_iii.xml',
    ],
    output: 'times_qex.lua',
-) 
+)
