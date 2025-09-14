@@ -3,7 +3,7 @@ from os import path
 script_dir = path.join(path.dirname(__file__), '..', '..', '..', 'utils')
 sys.path.append(path.realpath(script_dir))
 sys.path.append(path.realpath(path.join(script_dir, 'outfits')))
-from outfit import outfit, KEEP_IN_XML
+from outfit import outfit
 
 INPUT = sys.argv[1]
 OUTPUT = sys.argv[2]

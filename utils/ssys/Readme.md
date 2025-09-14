@@ -97,6 +97,8 @@ These are designed to manage the **internal geometry of systems**, that might ge
  - `ssysmap_{push, pop, dequeue}.sh` apply the corresponding operations to ssys map position history.
 
 # TODO
+ - also manage exit_only jumps when creating new jumps.
+ - find a last sol-centering improvement before the big jump.
  - `reposition.c`:
     - penalty map +
     - fixed point algorithm

@@ -9,19 +9,19 @@ Usage: $(basename "$0") [options]
 Manually sends a workflow dispatch to Forgejo.
 
 Required:
-  -r <release_type>   Release type: nightly | prerelease | release
-  -t <token>          Forgejo application token (requires repo read+write scope).
-                      Can also be set via environment variable FJ_TOKEN.
+  -r <release_type>  Release type: nightly | prerelease | release
+  -t <token>         Forgejo application token (requires repo read+write scope).
+                     Can also be set via environment variable FJ_TOKEN.
 
 Optional:
-  -g <repo>           Repository name (default: naev/naev)
-  -b <ref>            Branch or ref name (default: main)
-  -s <server_url>     Forgejo instance URL (default: https://codeberg.org or \$SERVER_URL)
-  -d                  Enable debug mode (set -x)
+  -g <repo>          Repository name (default: naev/naev)
+  -b <ref>           Branch or ref name (default: main)
+  -s <server_url>    Forgejo instance URL (default: https://codeberg.org or \$SERVER_URL)
+  -d                 Enable debug mode (set -x)
 
 Examples:
-  $(basename "$0") -t <token> -r nightly
-  FJ_TOKEN=<token> $(basename "$0") -r release -s https://git.myforgejo.org
+   $(basename "$0") -t <token> -r nightly
+   FJ_TOKEN=<token> $(basename "$0") -r release -s https://git.myforgejo.org
 
 EOF
    exit 1

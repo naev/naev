@@ -51,6 +51,9 @@ local function render_svgs( c, path, npc )
       if v then
          local filename = path.."/"..v
          local svg = lf.read( filename )
+         if not svg then
+            error(fmt.f("svg '{filename}' not found", {filename=filename}))
+         end
          for i,r in ipairs(npc.replace) do
             svg = string.gsub( svg, r[1], r[2] )
          end
@@ -65,7 +68,8 @@ end
 -- The metadata.lua file should return a function that returns a table with:
 --  1. A replace field that specifies how to do SVG file substitutions
 --  2. An ordered list of file names (relative to the directory) of files to render.
-function vni.generator( meta, path )
+function vni.generator( path )
+   local meta = require(path:gsub("/",".")..".metadata")
    local npc = meta()
 
    -- The base image is easy, they are all 1000 by 1415 graphics
@@ -102,8 +106,7 @@ end
 local function gen( path )
    return function ()
       local lpath = "gfx/vn/characters/"..path
-      local meta = require(lpath:gsub("/",".")..".metadata")
-      return vni.generator( meta, lpath )
+      return vni.generator( lpath )
    end
 end
 
@@ -167,6 +170,8 @@ local neutral_f = {
    {"neutral/female7n.webp"},
    {"neutral/female7n_v2.webp"},
    {"neutral/female7n_v3.webp"},
+   -- Image generators
+   gen( "neutral/female07" ),
 }
 vni.genericMale = get_list( neutral_m )
 vni.genericFemale = get_list( neutral_f )
@@ -191,6 +196,7 @@ local neutral_new = {
    {"neutral/female7n.webp"},
    {"neutral/female7n_v2.webp"},
    {"neutral/female7n_v3.webp"},
+   gen( "neutral/female07" ),
 }
 -- Temporary function until we only have new images
 vni.genericNew = get_list( neutral_new )

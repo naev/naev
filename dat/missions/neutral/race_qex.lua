@@ -23,6 +23,9 @@ local lmisn = require "lmisn"
 
 local DEFAULT_REWARD = 100e3
 
+local goal_times = require 'missions.neutral.race.times_qex'
+local medal_col = {Bronze= '#o', Silver= '#w', Gold= '#y'}
+
 local elapsed_time, race_done
 
 local col_next = {0, 1, 1, 0.3}
@@ -53,6 +56,39 @@ local function track_besttime( track )
    return "race_bt_"..track.name
 end
 
+local map_all_ships = require 'scripts.map_all_ships'
+
+local function upgrade_trophies(to)
+   --outfitAddSlot outfitRmSlot
+   map_all_ships(function (pp)
+      if pp:outfitHasSlot('accessory') then
+         for _i, v in ipairs({'Gold', 'Silver', 'Bronze'}) do
+            if pp:outfitSlot('accessory') == outfit.get('Racing Trophy (' .. v .. ')') then
+               pp:outfitRmSlot('accessory')
+               pp:outfitAddSlot(to, 'accessory')
+            end
+         end
+      end
+   end)
+   if to == outfit.get('Racing Trophy (Gold)') then
+      if player.outfitNum(outfit.get('Racing Trophy (Silver)'), true) >= 1 then
+         player.outfitRm('Racing Trophy (Silver)')
+      end
+      if player.outfitNum(outfit.get('Racing Trophy (Bronze)'), true) >= 1 then
+         player.outfitRm('Racing Trophy (Bronze)')
+      end
+   elseif to == outfit.get('Racing Trophy (Silver)') then
+      if player.outfitNum(outfit.get('Racing Trophy (Bronze)'), true) >= 1 then
+         player.outfitRm('Racing Trophy (Bronze)')
+      end
+   end
+end
+
+local function add_advice_npc()
+   misn.npcAdd( "qex_race_advice", _("Laid Back Person"), laid_back_portrait,
+      _("This person will be happy to answer any questions about racing."), 6)
+end
+
 function create ()
    mem.race_spob = spob.cur()
    if not misn.claim( system.cur() ) then
@@ -63,10 +99,10 @@ function create ()
    for k,track in ipairs(track_list) do
       -- Length of the track
       local length = 0
-      local lp = track.track[1][1]
       local scale = track.scale or 1
+      local lp = track.track[1][1]*scale
       for i,trk in ipairs(track.track) do
-         for t = 0,1,0.01 do -- only 100 samples
+         for t = 0,1,0.05 do
             local p = cubicBezier( t, trk[1], trk[1]+trk[2], trk[4]+trk[3], trk[4] ) * scale
             length = length + p:dist(lp)
             lp = p
@@ -74,12 +110,53 @@ function create ()
       end
 
       track.length = length
-      track.goaltime = length / 694 -- TODO something better
+      track.goaltime = goal_times[track.name]
       track.reward = track.reward or DEFAULT_REWARD
       track.besttime = var.peek( track_besttime(track) ) or math.huge
    end
 
    misn.npcAdd( "approach_terminal", _("Racing Terminal"), npc_portrait, npc_description )
+   if var.peek( "racing_intro" ) then
+      add_advice_npc()
+   end
+end
+
+function qex_race_advice()
+   vn.clear()
+   vn.scene()
+   local lbp = vn.newCharacter(_("Laid Back Person"), {image=laid_back_portrait})
+   vn.transition()
+
+   lbp(_([["Hiya there! How is the racing going ?"]]))
+
+   vn.label("start")
+   lbp(_([["Do you need help?"]]))
+   vn.menu{
+      {_([[Difficulty Levels]]), "cont_difficulty"},
+      {_([[Useful Tips]]), "cont_strategy"},
+      {_([[The Bronze, Silver, and Gold Series]]), "cont_series"},
+      {_([[Leave]]), "cont_quit"},
+   }
+
+   vn.label("cont_difficulty")
+   lbp(_([["The tracks are in order of increasing difficult, with the Peninsula being the easiest track, while the Qex Tour is considered the hardest. Increased difficulty also means increased payouts, so it's worth tackling the harder races."]]))
+   lbp(_([["Furthermore, each track has three goal times: Bronze, Silver and Gold. The payout is also increased based on what goal time you manage to beat, and you can always try to beat your best time. However, note that the goal times get much harder on the harder tracks, so Silver on Peninsula is harder that Bronze on the Qex Tour and the likes."]]))
+   lbp(_([["I would recommend you to try to beat the Bronze goal times on all the tracks before moving on to Silver, and finally Gold. It's also a great way to get some more practice racing."]]))
+   vn.jump("start")
+
+   vn.label("cont_strategy")
+   lbp(_([["The first step of racing is to choose a ship that can be designed for max speed. Interceptors and other smaller ships tend to be easier to modify, so I would recommend to start there. Make sure to grab the fastest engines you can get your hand on and stack as many speed modifications as possible."]]))
+   lbp(_([["However, racing isn't all about passive bonuses! You are not only allowed, but expected to use afterburners while racing. It's important not only to try to get as fast of a ship as possible, but also one that can sustain the afterburner the longest during the race. So make sure to have enough energy regeneration!"]]))
+   vn.jump("start")
+
+   vn.label("cont_series")
+   lbp(_([["Beating the Bronze goal times in the Bronze series is the easiest and a good way to get practice racing. With any decent ship build for speed it should be possible to clear them."]]))
+   lbp(_([["The Silver series is more challenging. It will require something better than the basic Unicorp afterburner, and finding the right ship and outfit to do this is a challenge in itself. It is only accessible for seasoned captains who can afford it."]]))
+   lbp(_([["Finally, the Gold series is the hardest challenge with very tight goal times. Only very few pilots manage to complete it and get the prestigious Gold Trophy. At this point, this is all about prestige, as the Gold Trophy in itself is not worth the effort, if you ask me."]]))
+   vn.jump("start")
+
+   vn.label("cont_quit")
+   vn.run()
 end
 
 local function display_time( time )
@@ -110,18 +187,19 @@ function approach_terminal ()
       }
 
       vn.label("cont01_yes")
-      lbp(_([["Racing is quite simple, you have to go through all the gates in order until you reach the final goal. There are no limitations on what ship and outfits you can use, but you're best sticking to Yacht or Interceptor-class ships if you want to make good times."]]))
-      lbp(_([["Each track has a goal time to beat. If you beat the time, you will get a nice credit reward. Furthermore, if you beat all the tracks here, a Melendez Corporation representative will give you a nice trophy to commemorate!"]]))
-      lbp(_([["You can try as many times as you want with no penalty. Your best time will also be saved so you can try to beat it again."]]))
-      lbp(_([["It's really fun, just be careful not to get addicted. He he."]]))
+      lbp(_([["Racing is quite simple, you have to go through all the gates in order until you reach the final goal. There are no limitations on what ship and outfits you can use, but you're best sticking to light or medium-light ships and using an afterburner if you want to make good times."]]))
+      lbp(_([["Each track has three goal times to beat: Bronze, Silver and Gold corresponding to three increasing levels of difficulty. The reward you get on each track will depend on which goal time you beat and also on the difficulty of the track itself. In addition, you will get an early finish bonus depending on the improvement over the reference time."]]))
+      lbp(_([["If you beat all the tracks here for a given difficulty level, a Melendez Corporation representative will give you a nice trophy to commemorate!"]]))
+      lbp(_([["You can try as many times as you want with no penalty. Your best time will also be saved so you can try to beat it again. It's really fun, just be careful not to get addicted. He he."]]))
 
       vn.label("cont01_no")
-      lbp(_([["OK, look forward to seeing your racing skills!"]]))
+      lbp(_([["OK, look forward to seeing your racing skills! I will be around if you have any questions."]]))
       vn.run()
       var.push("racing_intro", true)
+      add_advice_npc()
    end
 
-   local w, h = 460, 400
+   local w, h = 480, 420
    local wdw = luatk.newWindow( nil, nil, w, h )
    luatk.newButton( wdw, -20-80-20, -20, 80, 30, _("Race!"), function ()
       local worthy, reason = player.pilot():spaceworthy()
@@ -135,9 +213,9 @@ function approach_terminal ()
    luatk.newButton( wdw, -20, -20, 80, 30, _("Close"), luatk.close )
    luatk.newText( wdw, 0, 10, w, 20, _("Choose Race Track"), nil, "center" )
 
-   local txt_race = luatk.newText( wdw, 240, 40, w-260, 200 )
+   local txt_race = luatk.newText( wdw, 240, 40, w-260, 220 )
 
-   local bzr_race = bezier.newBezier( wdw, 20+200+20, 130, 200, 200 )
+   local bzr_race = bezier.newBezier( wdw, 20+200+20, 160, w-260, 190 )
 
    local track_names = {}
    for k,v in ipairs(track_list) do
@@ -149,19 +227,29 @@ function approach_terminal ()
 
       bzr_race:set( track.track )
 
-      --txt = txt.."#n".._("Name: ").."#0"     ..track.name.."\n"
-      txt = txt.."#n".._("Length: ").."#0"   ..fmt.number(track.length).."\n"
-      txt = txt.."#n".._("Goal Time: ").."#0"..display_time(track.goaltime).."\n"
-      txt = txt.."#n".._("Reward: ").."#0"   ..fmt.credits(track.reward).."\n"
-      if track.besttime == math.huge then
-         txt = txt.."#n".._("Best Time: ").."#0".._("N/A")
-      else
-         local col = ""
-         if track.besttime <= track.goaltime then
-            col = "#g"
+      txt = txt .. '#nLength: ' .. fmt.number(track.length) .. ' km#0\n'
+      local yet
+      for _n, i in ipairs({'Bronze', 'Silver', 'Gold'}) do
+         if not yet and track.besttime >= track.goaltime[i] then
+            yet = true
+            txt = txt .. '#b' .. _('Best Time:') .. ' '
+            if track.besttime == math.huge then
+               txt = txt .. '#n' .. _('N/A') .. '#0\n'
+            else
+               txt = txt .. display_time(track.besttime) .. '#0\n'
+            end
          end
-         txt = txt.."#n".._("Best Time: ").."#0"..col..display_time(track.besttime)
+         txt = txt .. '#n' .. _('Goal Time:') .. medal_col[i]
+            .. ' ' .. display_time(track.goaltime[i])
+            .. ' ' .. '#n(' .. _(i) .. ')#0\n'
       end
+      if not yet then
+         txt = txt .. '#b' .. _('Best Time:') .. ' ' .. display_time(track.besttime) .. '#0\n'
+      end
+      txt = txt .. '#n' .. _('Reward:') .. ' '
+         .. medal_col['Bronze'] .. '0.5#n/' .. medal_col['Silver'] .. '1#n/'
+         .. medal_col['Gold'] .. '2#0'
+         .. ' #nx ' .. fmt.credits(track.reward) .. '#0\n'
 
       txt_race:set(txt)
    end )
@@ -191,6 +279,16 @@ local omsg_timer
 function start_race ()
    pilot.clear()
    pilot.toggleSpawn(false)
+   -- Clean up the escorts
+   for k,p in ipairs(player.pilot():followers()) do
+      print(tostring(k)..'|'..tostring(p))
+      if p:flags("carried") then
+         p:rm()
+      else
+         p:setHide( true ) -- Don't remove or it'll mess cargo
+      end
+   end
+
    -- TODO add spectators / cameras?
 
    local scale = mem.track.scale or 1
@@ -306,69 +404,112 @@ function race_complete ()
 end
 
 function race_landed ()
-   local beat_time = (elapsed_time <= mem.track.goaltime)
-   local best_improved = false
+   local beat_time
+   local nxt
+   local reward
+   local bonus
+
+   if elapsed_time <= 0.0 then return end
+
+   for i, g in ipairs({'Gold', 'Silver', 'Bronze'}) do
+      if elapsed_time <= mem.track.goaltime[g] then
+         local ratio = mem.track.goaltime[g] / elapsed_time - 1.0
+         reward = mem.track.reward  * 2^(2-i)
+         bonus = math.floor( ratio * reward / 1000) * 1000
+         beat_time = g
+         break
+      end
+      nxt = g
+   end
+
+   local imp_str
    -- Update best time if applicable
    if elapsed_time < mem.track.besttime or mem.track.besttime <= 0 then
       mem.track.besttime = elapsed_time
       var.push( track_besttime(mem.track), elapsed_time )
-      best_improved = true
+      imp_str = ' ' .. _('This is your new best time!')
+   else
+      imp_str = ''
    end
-   local reward = mem.track.reward
-   local reward_outfit = outfit.get("Racing Trophy")
 
    vn.clear()
    vn.scene()
    vn.transition()
    if beat_time then
-      if best_improved then
-         vn.na(fmt.f(_("You finished the race in {elapsed} and beat the goal time of {goal}! This is your new best time! Congratulations!"), {
-            elapsed="#g"..display_time( elapsed_time ).."#0",
-            goal=display_time( mem.track.goaltime ),
+      if nxt then
+         vn.na(fmt.f(_('You finished the race in {elapsed} and beat the goal time of {goal} ({metal}) but were {short} over the goal time of {ngoal} ({nmetal}).{imp_str} Congratulations!'), {
+            elapsed= '#b' .. display_time( elapsed_time ) .. '#0',
+            goal= medal_col[beat_time] .. display_time( mem.track.goaltime[beat_time] ) .. '#0',
+            metal= beat_time,
+            short= '#r' .. display_time( elapsed_time - mem.track.goaltime[nxt] ) .. '#0',
+            ngoal= medal_col[nxt] .. display_time( mem.track.goaltime[nxt] ) .. '#0',
+            nmetal= nxt,
+            imp_str= imp_str,
          }))
       else
-         vn.na(fmt.f(_("You finished the race in {elapsed} and beat the goal time of {goal}! Congratulations!"), {
-            elapsed="#g"..display_time( elapsed_time ).."#0",
-            goal=display_time( mem.track.goaltime ),
+         vn.na(fmt.f(_("You finished the race in {elapsed} and beat the goal time of {goal} ({metal}).{imp_str} Congratulations!"), {
+            elapsed= '#b' .. display_time( elapsed_time ) .. '#0',
+            goal= medal_col[beat_time] .. display_time( mem.track.goaltime[beat_time] ) .. '#0',
+            metal= beat_time,
+            imp_str= imp_str,
          }))
       end
-      local did_all = true
-      for k,v in ipairs(track_list) do
-         if v.besttime > v.goaltime then
-            did_all = false
+      local completed
+      for _n, g in ipairs({'Gold', 'Silver', 'Bronze'}) do
+         local did_all = true
+         for k, v in ipairs(track_list) do
+            if v.besttime > v.goaltime[g] then
+               did_all = false
+               break
+            end
+         end
+         if did_all then
+            completed = g
             break
          end
       end
-      if player.outfitNum( reward_outfit ) <= 0 and did_all then
-         vn.na(fmt.f(_([[An individual in a suit and tie suddenly takes you up onto a stage. A large name tag on their jacket says 'Melendez Corporation'. "Congratulations on your win," they say, shaking your hand, "That was a great race! On behalf of Melendez Corporation, and for beating the goal times of all the courses here at {spobname}, I would like to present to you your trophy!".
+      local already_have = {}
+      for _n, g in ipairs({'Gold', 'Silver', 'Bronze'}) do
+         if player.outfitNum(outfit.get('Racing Trophy (' .. g .. ')')) >= 1 then
+            already_have[g] = true
+         end
+      end
+      local reward_outfit
+      if completed then
+         reward_outfit = outfit.get('Racing Trophy (' .. completed .. ')')
+         upgrade_trophies(reward_outfit)
+      end
+      if completed and not already_have[completed] then
+         vn.na(fmt.f(_([[An individual in a suit and tie suddenly takes you up onto a stage. A large name tag on their jacket says 'Melendez Corporation'. "Congratulations on your win," they say, shaking your hand, "That was a great race! On behalf of Melendez Corporation, and for beating the goal times of all the courses here at {spobname}, I would like to present to you your {metal} trophy!".
 They hand you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it. At least the trophy looks cool.]]),
-            {spobname=spob.cur()}))
-         vn.na(fmt.reward(reward_outfit).."\n"..fmt.reward(reward))
+            {spobname= spob.cur(), metal= completed}))
+         vn.na(fmt.reward(reward_outfit)..'\n'..fmt.reward(reward)..'\n'..fmt.reward(bonus)..' (early finish bonus)')
+         if completed == 'Silver' or (not already_have['Silver'] and completed == 'Gold') and not diff.isApplied("melendez_dome_xy37") then
+            vn.func( function ()
+               diff.apply("melendez_dome_xy37")
+            end )
+            vn.na(_([[After the formalities finish, a Nexus Engineer comes up to you, nervous and stuttering, "I-I-i love the way you fly! Me and some o-other engineers were thinking you mi-might want to try our prototype. I've g-given you access at the shipyard to check it out.". They quickly scuttle away before you can ask anything else. You wonder what the prototype is.]]))
+         end
          vn.func( function ()
             player.outfitAdd( reward_outfit )
-            diff.apply("melendez_dome_xy37")
          end )
-         vn.na(_([[After the formalities finish, a Nexus Engineer comes up to you, nervous and stuttering, "I-I-i love the way you fly! Me and some o-other engineers were thinking you mi-might want to try our prototype. I've g-given you access at the shipyard to check it out.". They quickly scuttle away before you can ask anything else. You wonder what the prototype is.]]))
       else
-         vn.na(fmt.reward(reward))
+         vn.na(fmt.reward(reward)..'\n'..fmt.reward(bonus)..' (early finish bonus)')
       end
       vn.func( function ()
          player.pay(reward)
-      end )
-   elseif best_improved then
-      vn.na(fmt.f(_("You finished the race in {elapsed}, but were {short} over the goal time. This is your new best time! Keep trying!"), {
-         elapsed="#g"..display_time( elapsed_time ).."#0",
-         short="#r"..display_time( elapsed_time - mem.track.goaltime ).."#0",
-      }))
+         player.pay(bonus)
+      end)
    else
-      vn.na(fmt.f(_("You finished the race in {elapsed}, but were {short} over the goal time. Keep trying!"), {
-         elapsed="#g"..display_time( elapsed_time ).."#0",
-         short="#r"..display_time( elapsed_time - mem.track.goaltime ).."#0",
+      vn.na(fmt.f(_("You finished the race in {elapsed}, but were {short} over the goal time of {goal}.{imp_str} Keep trying!"), {
+         elapsed= '#b' .. display_time( elapsed_time ) .. '#0',
+         short= '#r' .. display_time( elapsed_time - mem.track.goaltime['Bronze'] ) .. '#0',
+         goal= medal_col['Bronze'] .. display_time( mem.track.goaltime['Bronze'] ) .. '#0',
+         imp_str= imp_str,
       }))
    end
 
    vn.run()
-
    misn.finish( beat_time )
 end
 
