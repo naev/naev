@@ -89,11 +89,12 @@ double               sound_getLength( const Sound *sound );
  * voice management
  */
 typedef struct Voice Voice;
-Voice               *sound_play( const Sound *sound );
-Voice *sound_playPos( const Sound *sound, double px, double py, double vx,
-                      double vy );
-void   sound_stop( Voice *voice );
-int sound_updatePos( Voice *voice, double px, double py, double vx, double vy );
+const Voice         *sound_play( const Sound *sound );
+const Voice *sound_playPos( const Sound *sound, double px, double py, double vx,
+                            double vy );
+void         sound_stop( const Voice *voice );
+int sound_updatePos( const Voice *voice, double px, double py, double vx,
+                     double vy );
 int sound_updateListener( double dir, double px, double py, double vx,
                           double vy );
 
@@ -101,14 +102,15 @@ int sound_updateListener( double dir, double px, double py, double vx,
  * Group functions.
  */
 typedef struct Group Group;
-Group               *sound_createGroup( int size );
-int  sound_playGroup( Group *group, const Sound *sound, int once );
-void sound_stopGroup( Group *group );
-void sound_pauseGroup( Group *group );
-void sound_resumeGroup( Group *group );
-void sound_speedGroup( Group *group, int enable );
-void sound_volumeGroup( Group *group, double volume );
-void sound_pitchGroup( Group *group, double pitch );
+const Group         *sound_createGroup( int size );
+const Voice         *sound_playGroup( const Group *group, const Sound *sound,
+                                      int once );
+void                 sound_stopGroup( const Group *group );
+void                 sound_pauseGroup( const Group *group );
+void                 sound_resumeGroup( const Group *group );
+void                 sound_speedGroup( const Group *group, int enable );
+void                 sound_volumeGroup( const Group *group, double volume );
+void                 sound_pitchGroup( const Group *group, double pitch );
 
 /*
  * Environmental functions.

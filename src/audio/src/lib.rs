@@ -353,6 +353,7 @@ pub struct Audio {
     slot: Option<AuxiliaryEffectSlot>,
     data: Option<AudioData>,
     volume: f32,
+    groupid: Option<thunderdome::Index>,
 }
 macro_rules! check_audio {
     ($self: ident) => {{
@@ -372,6 +373,7 @@ impl Audio {
                     slot: None,
                     volume: 1.0,
                     data: None,
+                    groupid: None,
                 })
             }
         }
@@ -385,6 +387,7 @@ impl Audio {
             slot: None,
             volume: 1.0,
             data: Some(AudioData::Buffer(buffer.clone())),
+            groupid: None,
         })
     }
 
@@ -588,8 +591,11 @@ impl Audio {
     }
 }
 
+#[derive(Debug, Default)]
 pub struct AudioGroup {
-    voices: Vec<Audio>,
+    max: usize,
+    volume: f32,
+    voices: Vec<thunderdome::Index>,
 }
 
 #[derive(Clone, PartialEq, Copy, Debug)]
@@ -634,6 +640,7 @@ pub struct AudioSystem {
     freq: i32,
     volume: RwLock<AudioVolume>,
     voices: Mutex<Arena<Audio>>,
+    groups: Mutex<Arena<AudioGroup>>,
 }
 impl AudioSystem {
     pub fn new() -> Result<Self> {
@@ -755,7 +762,8 @@ impl AudioSystem {
             context,
             volume: RwLock::new(AudioVolume::new()),
             freq,
-            voices: Mutex::new(Arena::new()),
+            voices: Mutex::new(Default::default()),
+            groups: Mutex::new(Default::default()),
         })
     }
 
@@ -1455,7 +1463,7 @@ pub fn open_audio(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
 }
 
 // Here be C API
-use std::ffi::{CStr, c_char, c_void};
+use std::ffi::{CStr, c_char, c_double, c_int, c_void};
 
 // We assume that the index can be cast to a pointer for C to not complain
 // This should hold on 64 bit platforms
@@ -1478,13 +1486,13 @@ pub extern "C" fn sound_get(name: *const c_char) -> *const Arc<AudioBuffer> {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn sound_getLength(sound: *const Arc<AudioBuffer>) -> f64 {
+pub extern "C" fn sound_getLength(sound: *const Arc<AudioBuffer>) -> c_double {
     if sound.is_null() {
         warn!("recieved NULL");
         return 0.0;
     }
     let sound = unsafe { &*sound };
-    sound.duration(AudioSeek::Seconds) as f64
+    sound.duration(AudioSeek::Seconds) as c_double
 }
 
 #[unsafe(no_mangle)]
@@ -1495,8 +1503,8 @@ pub extern "C" fn sound_play(sound: *const Arc<AudioBuffer>) -> *const c_void {
     }
     let sound = unsafe { &*sound };
 
-    let mut voices = AUDIO.voices.lock().unwrap();
     let audio = Audio::new(&Some(AudioData::Buffer(sound.clone()))).unwrap();
+    let mut voices = AUDIO.voices.lock().unwrap();
     let voice = voices.insert(audio);
     unsafe { std::mem::transmute::<thunderdome::Index, *const c_void>(voice) }
 }
@@ -1504,10 +1512,10 @@ pub extern "C" fn sound_play(sound: *const Arc<AudioBuffer>) -> *const c_void {
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_playPos(
     sound: *const Arc<AudioBuffer>,
-    px: f64,
-    py: f64,
-    vx: f64,
-    vy: f64,
+    px: c_double,
+    py: c_double,
+    vx: c_double,
+    vy: c_double,
 ) -> *const c_void {
     if sound.is_null() {
         warn!("recieved NULL");
@@ -1542,7 +1550,13 @@ pub extern "C" fn sound_stop(voice: *const c_void) {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn sound_updatePos(voice: *const c_void, px: f64, py: f64, vx: f64, vy: f64) {
+pub extern "C" fn sound_updatePos(
+    voice: *const c_void,
+    px: c_double,
+    py: c_double,
+    vx: c_double,
+    vy: c_double,
+) {
     let index = get_voice!(voice);
     let voices = AUDIO.voices.lock().unwrap();
     let voice = &voices[index];
@@ -1551,13 +1565,13 @@ pub extern "C" fn sound_updatePos(voice: *const c_void, px: f64, py: f64, vx: f6
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn sound_updateListener(px: f64, py: f64, vx: f64, vy: f64) {
+pub extern "C" fn sound_updateListener(px: c_double, py: c_double, vx: c_double, vy: c_double) {
     set_listener_position(Vector3::from([px as f32, py as f32, 0.0]));
     set_listener_velocity(Vector3::from([vx as f32, vy as f32, 0.0]));
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn sound_update(dt: f64) -> i32 {
+pub extern "C" fn sound_update(dt: c_double) -> i32 {
     0
 }
 
@@ -1578,7 +1592,7 @@ pub extern "C" fn sound_resume() {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn sound_volume(volume: f64) {
+pub extern "C" fn sound_volume(volume: c_double) {
     AUDIO.set_volume(volume as f32);
     let master = {
         let vol = AUDIO.volume.read().unwrap();
@@ -1591,13 +1605,13 @@ pub extern "C" fn sound_volume(volume: f64) {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn sound_getVolume() -> f64 {
-    AUDIO.volume.read().unwrap().volume_lin as f64
+pub extern "C" fn sound_getVolume() -> c_double {
+    AUDIO.volume.read().unwrap().volume_lin as c_double
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn sound_getVolumeLog() -> f64 {
-    AUDIO.volume.read().unwrap().volume as f64
+pub extern "C" fn sound_getVolumeLog() -> c_double {
+    AUDIO.volume.read().unwrap().volume as c_double
 }
 
 #[unsafe(no_mangle)]
@@ -1609,6 +1623,103 @@ pub extern "C" fn sound_stopAll() {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn sound_setSpeed(speed: f64) {
+pub extern "C" fn sound_setSpeed(speed: c_double) {
     AUDIO.set_volume_speed(speed as f32);
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sound_createGroup(size: c_int) -> *const c_void {
+    let mut groups = AUDIO.groups.lock().unwrap();
+    let group = AudioGroup {
+        max: size as usize,
+        ..Default::default()
+    };
+    let groupid = groups.insert(group);
+    unsafe { std::mem::transmute::<thunderdome::Index, *const c_void>(groupid) }
+}
+
+macro_rules! get_group {
+    ($group: ident) => {{
+        if $group.is_null() {
+            warn!("recieved NULL");
+            return Default::default();
+        }
+        unsafe { std::mem::transmute::<*const c_void, thunderdome::Index>($group) }
+    }};
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sound_playGroup(
+    group: *const c_void,
+    sound: *const Arc<AudioBuffer>,
+    once: c_int,
+) -> *const c_void {
+    if sound.is_null() {
+        warn!("recieved NULL");
+        return std::ptr::null();
+    }
+    let sound = unsafe { &*sound };
+
+    let groupid = get_group!(group);
+    let mut groups = AUDIO.groups.lock().unwrap();
+    let group = &mut groups[groupid];
+    if group.voices.len() >= group.max {
+        return std::ptr::null();
+    }
+
+    let mut audio = Audio::new(&Some(AudioData::Buffer(sound.clone()))).unwrap();
+    audio.groupid = Some(groupid);
+    let mut voices = AUDIO.voices.lock().unwrap();
+    let voice = voices.insert(audio);
+    group.voices.push(voice);
+
+    unsafe { std::mem::transmute::<thunderdome::Index, *const c_void>(voice) }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sound_stopGroup(group: *const c_void) {
+    let groupid = get_group!(group);
+    let mut groups = AUDIO.groups.lock().unwrap();
+    let group = &mut groups[groupid];
+    let voices = AUDIO.voices.lock().unwrap();
+    for v in group.voices.drain(..) {
+        voices[v].stop();
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sound_pauseGroup(group: *const c_void) {
+    let groupid = get_group!(group);
+    let groups = AUDIO.groups.lock().unwrap();
+    let group = &groups[groupid];
+    let voices = AUDIO.voices.lock().unwrap();
+    for v in group.voices.iter() {
+        voices[*v].pause();
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sound_resumeGroup(group: *const c_void) {
+    let groupid = get_group!(group);
+    let groups = AUDIO.groups.lock().unwrap();
+    let group = &groups[groupid];
+    let voices = AUDIO.voices.lock().unwrap();
+    for v in group.voices.iter() {
+        voices[*v].play();
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sound_speedGroup(group: *const c_void, enable: c_int) {
+    let _groupid = get_group!(group);
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sound_volumeGroup(group: *const c_void, volume: c_double) {
+    let _groupid = get_group!(group);
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sound_pitchGroup(group: *const c_void, pitch: c_double) {
+    let _groupid = get_group!(group);
 }
