@@ -171,7 +171,7 @@ local neutral_f = {
    {"neutral/female7n_v2.webp"},
    {"neutral/female7n_v3.webp"},
    -- Image generators
-   --gen( "neutral/female07" ),
+   gen( "neutral/female07" ),
 }
 vni.genericMale = get_list( neutral_m )
 vni.genericFemale = get_list( neutral_f )
@@ -196,7 +196,7 @@ local neutral_new = {
    {"neutral/female7n.webp"},
    {"neutral/female7n_v2.webp"},
    {"neutral/female7n_v3.webp"},
-   --gen( "neutral/female07" ),
+   gen( "neutral/female07" ),
 }
 -- Temporary function until we only have new images
 vni.genericNew = get_list( neutral_new )
