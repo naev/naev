@@ -1615,7 +1615,19 @@ pub extern "C" fn sound_updatePos(
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn sound_updateListener(px: c_double, py: c_double, vx: c_double, vy: c_double) {
+pub extern "C" fn sound_updateListener(
+    dir: c_double,
+    px: c_double,
+    py: c_double,
+    vx: c_double,
+    vy: c_double,
+) {
+    let dir = dir as f32;
+    let (c, s) = (dir.cos(), dir.sin());
+    let ori = [c, s, 0.0, 0.0, 0.0, 1.0];
+    unsafe {
+        alListenerfv(AL_ORIENTATION, ori.as_ptr());
+    }
     set_listener_position(Vector3::from([px as f32, py as f32, 0.0]));
     set_listener_velocity(Vector3::from([vx as f32, vy as f32, 0.0]));
 }
