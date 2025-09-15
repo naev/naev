@@ -68,6 +68,7 @@ mlua = { version = "0.11", features = ["luajit", "anyhow", "send", "serialize"] 
 symphonia = "0.5"
 thunderdome = "0.6"
 static_assertions = "1.1"
+tracing-mutex = "0.3"
 
 [dependencies]
 audio = { workspace = true }

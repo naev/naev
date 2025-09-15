@@ -27,7 +27,11 @@ use gettext::gettext;
 use log::{debug, debugx, warn, warn_err};
 use mlua::{MetaMethod, UserData, UserDataMethods};
 use nalgebra::Vector3;
-use std::sync::{Arc, LazyLock, Mutex, RwLock, Weak};
+use std::sync::{Arc, LazyLock, Weak};
+#[cfg(not(debug_assertions))]
+use std::sync::{Mutex, RwLock};
+#[cfg(debug_assertions)]
+use tracing_mutex::stdsync::{Mutex, RwLock};
 
 const NUM_VOICES: usize = 64;
 const REFERENCE_DISTANCE: f32 = 500.;
@@ -797,11 +801,12 @@ impl AudioSystem {
         for m in MESSAGES.lock().unwrap().drain(..) {
             match m {
                 Message::SourceStopped(id) => {
+                    // We always lock groups first
+                    let mut groups = AUDIO.groups.lock().unwrap();
                     let mut voices = AUDIO.voices.lock().unwrap();
                     if let Some((vid, v)) = voices.iter().find(|(_, x)| x.source.raw() == id) {
                         // Remove from group too if it has one
                         if let Some(gid) = v.groupid {
-                            let mut groups = AUDIO.groups.lock().unwrap();
                             let group = &mut groups[gid];
                             if let Some(gvid) = group.voices.iter().position(|x| *x == vid) {
                                 group.voices.remove(gvid);
