@@ -333,7 +333,7 @@ function land ()
       vn.transition()
       vn.na(_([[You land and head back to the Data Broker's headquarters. You still feel watched on the way there, but it is different than last time.]]))
       vn.na(_([[When you get to the location, the door discretely opens and you once again find yourself in the room with the chair.]]))
-      broker(fmt.f(_([["Welcome back, {player}.]]),
+      broker(fmt.f(_([["Welcome back, {player}."]]),
          {player=player.name()}))
       vn.menu( function ()
          local opts = {
@@ -544,6 +544,7 @@ The wailing continues.]]))
    -- TODO some sad + dramatic music
    vn.menu{
       {_([["Whaaaat!?"]]), "02_cont"},
+      {_([[...]]), "02_cont"},
    }
 
    vn.label("02_cont")
@@ -609,7 +610,7 @@ There is a constant sound of loud and furious typing.]]))
    vn.disappear( msg )
    vn.move( l337, "center" )
 
-   l337(_([["..."]]))
+   l337(_([[...]]))
    vn.music( onion.loops.hacker )
    l337(_([["Damnit Trixie, I looked up to you!"
 They take another deep breath.
