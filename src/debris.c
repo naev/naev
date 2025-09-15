@@ -72,10 +72,10 @@ static int debris_load( void )
  *
  *    @param mass Mass of the debris cloud.
  *    @param r Radius of the cloud.
- *    @param px X position to center cloud.
- *    @param py Y position to center cloud.
- *    @param vx X velocity of the cloud center.
- *    @param vy Y velocity of the cloud center.
+ *    @param px X position to centre cloud.
+ *    @param py Y position to centre cloud.
+ *    @param vx X velocity of the cloud centre.
+ *    @param vy Y velocity of the cloud centre.
  */
 void debris_add( double mass, double r, double px, double py, double vx,
                  double vy )

@@ -1240,7 +1240,7 @@ VirtualSpob *virtualspob_getAll( void )
 }
 
 /**
- * @brief Comparison function for "qsort'ing" VirtuaSpob by name.
+ * @brief Comparison function for "qsort'ing" VirtualSpob by name.
  */
 static int virtualspob_cmp( const void *p1, const void *p2 )
 {

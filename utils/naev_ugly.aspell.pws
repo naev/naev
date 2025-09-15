@@ -2,12 +2,6 @@ personal_ws-1.1 en 150
 ai
 behaviour
 ccw
-colour
-colourblind
-Colouring
-colourized
-colours
-colourspace
 dataname
 desc
 displayname
@@ -126,7 +120,7 @@ unregister
 unregisters
 unsets
 vbos
-VirtuaSpob
+VirtualSpob
 vpool
 weaponLayer
 weaponset
