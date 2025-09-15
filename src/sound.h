@@ -116,7 +116,7 @@ void                 sound_pitchGroup( const Group *group, double pitch );
  * Environmental functions.
  */
 void sound_setAbsorption( double value );
-int  sound_env( SoundEnv_t env, double param );
+void sound_env( SoundEnv_t env, double param );
 
 /*
  * Vorbis filtering.

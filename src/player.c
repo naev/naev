@@ -98,13 +98,15 @@ static char **player_licenses = NULL; /**< Licenses player has. */
 /*
  * player sounds.
  */
-static Group *player_engine_group = NULL; /**< Player engine sound group. */
-static Group *player_hyper_group  = NULL; /**< Player hyperspace sound group. */
-static Group *player_gui_group    = NULL; /**< Player GUI sound group. */
-const Sound  *snd_target          = NULL; /**< Sound when targeting. */
-const Sound  *snd_jump            = NULL; /**< Sound when can jump. */
-const Sound  *snd_nav  = NULL; /**< Sound when changing nav computer. */
-const Sound  *snd_hail = NULL; /**< Sound when being hailed. */
+static const Group *player_engine_group =
+   NULL; /**< Player engine sound group. */
+static const Group *player_hyper_group =
+   NULL; /**< Player hyperspace sound group. */
+static const Group *player_gui_group = NULL; /**< Player GUI sound group. */
+const Sound        *snd_target       = NULL; /**< Sound when targeting. */
+const Sound        *snd_jump         = NULL; /**< Sound when can jump. */
+const Sound        *snd_nav  = NULL; /**< Sound when changing nav computer. */
+const Sound        *snd_hail = NULL; /**< Sound when being hailed. */
 /* Hyperspace sounds. */
 const Sound *snd_hypPowUp     = NULL; /**< Hyperspace power up sound. */
 const Sound *snd_hypEng       = NULL; /**< Hyperspace engine sound. */

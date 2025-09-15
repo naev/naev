@@ -590,6 +590,11 @@ impl Audio {
         self.source.get_parameter_f32(AL_ROLLOFF_FACTOR)
     }
 
+    pub fn set_air_absorption_factor(&self, value: f32) {
+        check_audio!(self);
+        self.source.parameter_f32(AL_AIR_ABSORPTION_FACTOR, value);
+    }
+
     pub fn into_ptr(self) -> *mut Self {
         Box::into_raw(Box::new(self))
     }
@@ -795,6 +800,13 @@ impl AudioSystem {
         let mut vol = self.volume.write().unwrap();
         vol.volume_speed = speed;
         drop(vol);
+    }
+
+    pub fn set_air_absorption_factor(&self, factor: f32) {
+        let voices = self.voices.lock().unwrap();
+        for (_, v) in voices.iter() {
+            v.set_air_absorption_factor(factor);
+        }
     }
 
     pub fn execute_messages(&self) {
@@ -1778,4 +1790,41 @@ pub extern "C" fn sound_pitchGroup(group: *const c_void, pitch: c_double) {
     let group = &mut groups[groupid];
     group.pitch = pitch as f32;
     //group.update();
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sound_setAbsorption(value: c_double) {
+    AUDIO.set_air_absorption_factor(value as f32);
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sound_env(env: naevc::SoundEnv_t, param: f64) {
+    match env {
+        naevc::SoundEnv_e_SOUND_ENV_NORMAL => {
+            unsafe {
+                alSpeedOfSound(3433.0);
+                alDopplerFactor(0.3);
+            }
+            AUDIO.set_air_absorption_factor(0.0);
+
+            if let Some(efx) = EFX.get() {
+                efx.direct_slot.set_effect(None);
+            }
+        }
+        naevc::SoundEnv_e_SOUND_ENV_NEBULA => {
+            let f = param as f32 / 1000.0;
+            unsafe {
+                alSpeedOfSound(3433.0 / (1.0 + f * 2.0));
+                alDopplerFactor(1.0);
+            }
+            AUDIO.set_air_absorption_factor(3.0 * f);
+
+            if let Some(efx) = EFX.get() {
+                efx.reverb.parameter_f32(AL_REVERB_DECAY_TIME, 10.0);
+                efx.reverb.parameter_f32(AL_REVERB_DECAY_HFRATIO, 0.5);
+                efx.direct_slot.set_effect(Some(&efx.reverb));
+            }
+        }
+        _ => (),
+    }
 }
