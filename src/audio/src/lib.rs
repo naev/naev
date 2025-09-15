@@ -595,6 +595,8 @@ impl Audio {
 pub struct AudioGroup {
     max: usize,
     volume: f32,
+    pitch: f32,
+    speed_affects: bool,
     voices: Vec<thunderdome::Index>,
 }
 
@@ -622,14 +624,22 @@ impl AudioVolume {
     }
 }
 
-fn event_callback(event_type: ALenum, _object: ALuint, param: ALuint, _message: &str) {
+pub enum Message {
+    SourceStopped(ALuint),
+}
+static MESSAGES: Mutex<Vec<Message>> = Mutex::new(Vec::new());
+
+fn event_callback(event_type: ALenum, object: ALuint, param: ALuint, _message: &str) {
     // Can't call OpenAL stuff here
     if event_type == AL_EVENT_TYPE_SOURCE_STATE_CHANGED_SOFT {
         let param = param as i32;
         // object is the source ID
         // param is the source's new state
         if param == AL_STOPPED {
-            // TODO send message or something
+            MESSAGES
+                .lock()
+                .unwrap()
+                .push(Message::SourceStopped(object));
         }
     }
 }
@@ -781,6 +791,28 @@ impl AudioSystem {
         let mut vol = self.volume.write().unwrap();
         vol.volume_speed = speed;
         drop(vol);
+    }
+
+    pub fn execute_messages(&self) {
+        for m in MESSAGES.lock().unwrap().drain(..) {
+            match m {
+                Message::SourceStopped(id) => {
+                    let mut voices = AUDIO.voices.lock().unwrap();
+                    if let Some((vid, v)) = voices.iter().find(|(_, x)| x.source.raw() == id) {
+                        // Remove from group too if it has one
+                        if let Some(gid) = v.groupid {
+                            let mut groups = AUDIO.groups.lock().unwrap();
+                            let group = &mut groups[gid];
+                            if let Some(gvid) = group.voices.iter().position(|x| *x == vid) {
+                                group.voices.remove(gvid);
+                            }
+                        }
+                        // Finally remove the voice
+                        voices.remove(vid);
+                    }
+                }
+            }
+        }
     }
 }
 static AUDIO: LazyLock<AudioSystem> = LazyLock::new(|| AudioSystem::new().unwrap());
@@ -1571,7 +1603,8 @@ pub extern "C" fn sound_updateListener(px: c_double, py: c_double, vx: c_double,
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn sound_update(dt: c_double) -> i32 {
+pub extern "C" fn sound_update(_dt: c_double) -> i32 {
+    AUDIO.execute_messages();
     0
 }
 
@@ -1632,7 +1665,10 @@ pub extern "C" fn sound_createGroup(size: c_int) -> *const c_void {
     let mut groups = AUDIO.groups.lock().unwrap();
     let group = AudioGroup {
         max: size as usize,
-        ..Default::default()
+        volume: 1.0,
+        pitch: 1.0,
+        speed_affects: true,
+        voices: Vec::new(),
     };
     let groupid = groups.insert(group);
     unsafe { std::mem::transmute::<thunderdome::Index, *const c_void>(groupid) }
@@ -1668,6 +1704,9 @@ pub extern "C" fn sound_playGroup(
     }
 
     let mut audio = Audio::new(&Some(AudioData::Buffer(sound.clone()))).unwrap();
+    if once != 0 {
+        audio.set_looping(true);
+    }
     audio.groupid = Some(groupid);
     let mut voices = AUDIO.voices.lock().unwrap();
     let voice = voices.insert(audio);
@@ -1711,15 +1750,27 @@ pub extern "C" fn sound_resumeGroup(group: *const c_void) {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_speedGroup(group: *const c_void, enable: c_int) {
-    let _groupid = get_group!(group);
+    let groupid = get_group!(group);
+    let mut groups = AUDIO.groups.lock().unwrap();
+    let group = &mut groups[groupid];
+    group.speed_affects = enable != 0;
+    //group.update();
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_volumeGroup(group: *const c_void, volume: c_double) {
-    let _groupid = get_group!(group);
+    let groupid = get_group!(group);
+    let mut groups = AUDIO.groups.lock().unwrap();
+    let group = &mut groups[groupid];
+    group.volume = volume as f32;
+    //group.update();
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_pitchGroup(group: *const c_void, pitch: c_double) {
-    let _groupid = get_group!(group);
+    let groupid = get_group!(group);
+    let mut groups = AUDIO.groups.lock().unwrap();
+    let group = &mut groups[groupid];
+    group.pitch = pitch as f32;
+    //group.update();
 }
