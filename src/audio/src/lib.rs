@@ -1574,6 +1574,7 @@ pub extern "C" fn sound_playPos(
 
     let mut voices = AUDIO.voices.lock().unwrap();
     let audio = Audio::new(&Some(AudioData::Buffer(sound.clone()))).unwrap();
+    audio.ingame();
     audio.set_position(Vector3::from([px as f32, py as f32, 0.0]));
     audio.set_velocity(Vector3::from([vx as f32, vy as f32, 0.0]));
     let voice = voices.insert(audio);
