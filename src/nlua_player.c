@@ -284,7 +284,7 @@ int nlua_loadPlayer( nlua_env *env )
  *  information. General usage would be calls like:
  * @code
  * p_name = player.name()
- * shipname = player.ship()
+ * ship_name = player.ship()
  * @endcode
  * @luamod player
  */
@@ -1794,7 +1794,7 @@ static int playerL_outfitRm( lua_State *L )
  *
  *    @luatparam string ship Name of the ship to add.
  *    @luatparam[opt=ship.get(ship):name()] string name Name to give the ship if
- * player refuses to name it (defaults to shipname if omitted).
+ * player refuses to name it (defaults to ship name if omitted).
  *    @luatparam[opt] string acquired A description of how the ship was
  * acquired.
  *    @luatparam[opt=false] boolean noname If true does not let the player name

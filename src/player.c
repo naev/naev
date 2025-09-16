@@ -583,7 +583,7 @@ static PlayerShip_t *player_newShipMake( const char *name )
 }
 
 /**
- * @brief Swaps player's current ship with their ship named shipname.
+ * @brief Swaps player's current ship with their ship named `shipname`.
  *
  *    @param shipname Ship to change to.
  *    @param move_cargo Whether or not to move the cargo over or ignore it.

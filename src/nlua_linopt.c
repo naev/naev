@@ -113,7 +113,7 @@ LuaLinOpt_t *luaL_checklinopt( lua_State *L, int ind )
  * @brief Pushes a linopt on the stack.
  *
  *    @param L Lua state to push linopt into.
- *    @param linopt Optim to push.
+ *    @param linopt `Optim` to push.
  *    @return Newly pushed linopt.
  */
 LuaLinOpt_t *lua_pushlinopt( lua_State *L, LuaLinOpt_t linopt )
@@ -151,7 +151,7 @@ int lua_islinopt( lua_State *L, int ind )
 /**
  * @brief Frees a linopt.
  *
- *    @luatparam Optim linopt Optim to free.
+ *    @luatparam Optim linopt `Optim` to free.
  * @luafunc __gc
  */
 static int linoptL_gc( lua_State *L )
@@ -164,8 +164,8 @@ static int linoptL_gc( lua_State *L )
 /**
  * @brief Compares two linopts to see if they are the same.
  *
- *    @luatparam Optim d1 Optim 1 to compare.
- *    @luatparam Optim d2 Optim 2 to compare.
+ *    @luatparam Optim d1 Comparison argument 1.
+ *    @luatparam Optim d2 Comparison argument 2.
  *    @luatreturn boolean true if both linopts are the same.
  * @luafunc __eq
  */
