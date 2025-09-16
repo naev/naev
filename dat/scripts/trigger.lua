@@ -1,5 +1,4 @@
 --[[
-
    Library that supersedes "proximity" trying to rely less on globals and keep
    a more simple and less flexible API.
 
@@ -19,6 +18,10 @@ end
 
 --[[--
 Runs a function 'fn' when the player is within a distance of a target position.
+
+   @tparam vec2 target Target position.
+   @tparam number distance Distance from the target position to trigger.
+   @tparam function fn Function to run when within the distance.
 --]]
 function lib.distance_player( target, distance, fn )
    _heartbeat_distance_params = {
