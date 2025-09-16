@@ -53,7 +53,6 @@ from pathlib import Path
 with (Path(__file__).parent / "languagetool_dict.txt").open() as f:
    lt_dict = f.read().splitlines()
 lt_dict = list( filter( lambda x: x[0]!='#', lt_dict ) )
-print( lt_dict )
 
 # Run languagetool with custom dictionary and Oxford british on the generated po text
 tool = language_tool_python.LanguageTool( language='en-GB', newSpellings=lt_dict)
