@@ -82,11 +82,7 @@ summary('NData Path', ndata_path, section: 'Features')
 
 # Subdirs
 subdir('src')
-subdir('dat/outfits') # Has to be before naevpedia
-subdir('dat/tech')
-subdir('dat/naevpedia')
-subdir('dat/scripts')
-subdir('dat/missions/neutral/race')
+subdir('dat')
 subdir('docs')
 
 ####
