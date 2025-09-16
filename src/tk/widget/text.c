@@ -27,7 +27,7 @@ static void txt_cleanup( Widget *txt );
  *    @param y Y position within the window to use.
  *    @param w Maximum width of the text.
  *    @param h Maximum height of the text.
- *    @param centered Whether text should be centered.
+ *    @param centred Whether text should be centred.
  *    @param name Name of the widget to use internally.
  *    @param font Font to use (NULL is default).
  *    @param colour Colour to use (NULL is default).

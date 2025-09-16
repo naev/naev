@@ -157,8 +157,8 @@ void gl_renderRectH( const mat4 *H, const glColour *c, int filled )
 /**
  * @brief Renders a cross at a given position.
  *
- *    @param x X position to center at.
- *    @param y Y position to center at.
+ *    @param x X position to centre at.
+ *    @param y Y position to centre at.
  *    @param r Radius of cross.
  *    @param c Colour to use.
  */
@@ -172,8 +172,8 @@ void gl_renderCross( double x, double y, double r, const glColour *c )
 /**
  * @brief Renders a triangle at a given position.
  *
- *    @param x X position to center at.
- *    @param y Y position to center at.
+ *    @param x X position to centre at.
+ *    @param y Y position to centre at.
  *    @param a Angle the triangle should "face" (right is 0.)
  *    @param s Scaling of the triangle.
  *    @param length Length deforming factor. Setting it to a value of other
@@ -396,7 +396,7 @@ void gl_renderTextureRawH( GLuint texture, GLuint sampler,
  *    @param tw Texture width. [0:1]
  *    @param th Texture height. [0:1]
  *    @param c Colour to use (modifies texture colour).
- *    @param angle Rotation to apply (radians ccw around the center).
+ *    @param angle Rotation to apply (radians ccw around the centre).
  */
 void gl_renderTextureRaw( GLuint texture, GLuint sampler, uint8_t flags,
                           double x, double y, double w, double h, double tx,
@@ -440,7 +440,7 @@ void gl_renderTextureRaw( GLuint texture, GLuint sampler, uint8_t flags,
  *    @param tw Texture width. [0:1]
  *    @param th Texture height. [0:1]
  *    @param c Colour to use (modifies texture colour).
- *    @param angle Rotation to apply (radians ccw around the center).
+ *    @param angle Rotation to apply (radians ccw around the centre).
  */
 void gl_renderTexture( const glTexture *texture, double x, double y, double w,
                        double h, double tx, double ty, double tw, double th,
@@ -459,7 +459,7 @@ void gl_renderTexture( const glTexture *texture, double x, double y, double w,
  *    @param w Width on the screen. (units pixels)
  *    @param h Height on the screen. (units pixels)
  *    @param c Colour to use (modifies texture colour).
- *    @param angle Rotation to apply (radians ccw around the center).
+ *    @param angle Rotation to apply (radians ccw around the centre).
  *    @param outline Thickness of the outline.
  */
 void gl_renderSDF( const glTexture *texture, double x, double y, double w,
@@ -1200,7 +1200,7 @@ void gl_renderStatic( const glTexture *texture, double bx, double by,
  *    @param r Rotation or 0. to disable.
  *    @param shd Shader to render.
  *    @param c Colour to use or NULL if not necessary.
- *    @param center Whether or not to center the shader on the position and use
+ *    @param centre Whether or not to centre the shader on the position and use
  * [-1,1] coordinates or set bottom-left and use [0,1] coordinates.
  */
 void gl_renderShader( double x, double y, double w, double h, double r,
@@ -1221,7 +1221,7 @@ void gl_renderShader( double x, double y, double w, double h, double r,
  *    @param shd Shader to render.
  *    @param H Transformation matrix.
  *    @param c Colour to use or NULL if not necessary.
- *    @param center Whether or not to center the shader on the position and use
+ *    @param centre Whether or not to centre the shader on the position and use
  * [-1,1] coordinates or set bottom-left and use [0,1] coordinates.
  */
 void gl_renderShaderH( const SimpleShader *shd, const mat4 *H,
@@ -1246,8 +1246,8 @@ void gl_renderShaderH( const SimpleShader *shd, const mat4 *H,
 /**
  * @brief Draws a circle.
  *
- *    @param cx X position of the center in screen coordinates.
- *    @param cy Y position of the center in screen coordinates.
+ *    @param cx X position of the centre in screen coordinates.
+ *    @param cy Y position of the centre in screen coordinates.
  *    @param r Radius of the circle.
  *    @param c Colour to use.
  *    @param filled Whether or not it should be filled.

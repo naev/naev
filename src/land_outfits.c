@@ -151,7 +151,7 @@ static void outfits_onClose( unsigned int wid, const char *str )
 }
 
 /**
- * @brief Opens the outfit exchange center window.
+ * @brief Opens the outfit exchange centre window.
  *
  *    @param wid Window ID to open at.
  *    @param outfits Array (array.h): Outfits to sell. Will be freed.

@@ -839,7 +839,7 @@ static int gfxL_printRestoreLast( lua_State *L )
  *    @luatparam number y Y position to print at.
  *    @luatparam Colour col Colour to print text.
  *    @luatparam[opt] int max Maximum width to render up to.
- *    @luatparam[opt] boolean center Whether or not to center it.
+ *    @luatparam[opt] boolean centre Whether or not to centre it.
  * @luafunc printf
  */
 static int gfxL_printf( lua_State *L )
@@ -906,7 +906,7 @@ static int gfxL_printH( lua_State *L )
  * Displays text in red at 50,50.
  * @usage gfx.print( true, _("Hello World!"), 50, 50, col, 100 ) -- Displays
  * text to a maximum of 100 pixels wide.
- * @usage gfx.print( true, str, 50, 50, col, 100, true ) -- Displays centered
+ * @usage gfx.print( true, str, 50, 50, col, 100, true ) -- Displays centred
  * text to a maximum of 100 pixels.
  *
  *    @luatparam boolean small Whether or not to use a small font.
@@ -915,7 +915,7 @@ static int gfxL_printH( lua_State *L )
  *    @luatparam number y Y position to print at.
  *    @luatparam Colour col Colour to print text.
  *    @luatparam[opt] int max Maximum width to render up to.
- *    @luatparam[opt] boolean center Whether or not to center it.
+ *    @luatparam[opt] boolean centre Whether or not to centre it.
  * @luafunc print
  */
 static int gfxL_print( lua_State *L )

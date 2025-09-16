@@ -74,7 +74,7 @@ static int bkgL_clear( lua_State *L )
  *    @luatparam number x X position.
  *    @luatparam number y Y position.
  *    @luatparam[opt=0] number move Fraction of a pixel to move when the player
- * moves one pixel. A value of 0 indicates static and centered.
+ * moves one pixel. A value of 0 indicates static and centred.
  *    @luatparam[opt=1] number scale How much to scale the image.
  *    @luatparam[opt=0] Rotation angle, in radians.
  *    @luatparam[opt=nil] Colour col Colour to tint image.

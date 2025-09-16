@@ -2197,7 +2197,7 @@ static void uniedit_findSysClose( unsigned int wid, const char *name )
 }
 
 /**
- * @brief Centers the selected system.
+ * @brief Centres the selected system.
  */
 static void uniedit_centerSystem( unsigned int wid, const char *unused )
 {

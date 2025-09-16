@@ -804,12 +804,12 @@ int gl_printMax( const glFont *ft_font, const int max, double x, double y,
 }
 
 /**
- * @brief Displays text centered in position and width.
+ * @brief Displays text centred in position and width.
  *
  * Will truncate if text is too long.
  *
  *    @param ft_font Font to use.
- *    @param width Width of area to center in.
+ *    @param width Width of area to centre in.
  *    @param x X position to display text at.
  *    @param y Y position to display text at.
  *    @param c Colour to use for text (NULL defaults to white).
@@ -847,12 +847,12 @@ int gl_printMidRaw( const glFont *ft_font, int width, double x, double y,
 }
 
 /**
- * @brief Displays text centered in position and width.
+ * @brief Displays text centred in position and width.
  *
  * Will truncate if text is too long.
  *
  *    @param ft_font Font to use (`NULL` defaults to `gl_defFont`)
- *    @param width Width of area to center in.
+ *    @param width Width of area to centre in.
  *    @param x X position to display text at.
  *    @param y Y position to display text at.
  *    @param c Colour to use for text (NULL defaults to white).
@@ -1304,7 +1304,7 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
          vmax = 1.0; /* arbitrary */
       } else {
          GLubyte *buffer;
-         /* Create a larger image using an extra border and center glyph. */
+         /* Create a larger image using an extra border and centre glyph. */
          b = 1 + ( ( MAX_EFFECT_RADIUS + 1 ) * FONT_DISTANCE_FIELD_SIZE - 1 ) /
                     stsh->h;
          rw     = w + b * 2;
@@ -1337,7 +1337,7 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
 static void gl_fontRenderStart( const glFontStash *stsh, double x, double y,
                                 const glColour *c, double outlineR )
 {
-   /* OpenGL has pixel centers at 0.5 offset. */
+   /* OpenGL has pixel centres at 0.5 offset. */
    mat4 H = gl_view_matrix;
    mat4_translate_xy( &H, x + 0.5 * gl_screen.wscale,
                       y + 0.5 * gl_screen.hscale );

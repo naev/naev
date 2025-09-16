@@ -129,8 +129,8 @@ static glFont *omsg_getFont( int font )
 /**
  * @brief Positions the overlay messages.
  *
- *    @param center_x X center.
- *    @param center_y Y center.
+ *    @param centre_x X centre.
+ *    @param centre_y Y centre.
  *    @param width Width to target.
  */
 void omsg_position( double center_x, double center_y, double width )

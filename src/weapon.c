@@ -1587,7 +1587,7 @@ void weapon_hitAI( Pilot *p, const Pilot *shooter, double dmg )
  *    @param w Weapon exploding.
  *    @param dmg Damage it does.
  *    @param radius Radius of the explosion.
- *    @param center Center of the explosion caused by the weapon (likely from
+ *    @param centre Centre of the explosion caused by the weapon (likely from
  * collisions).
  */
 static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius,
