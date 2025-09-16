@@ -622,7 +622,9 @@ impl Context {
                         glow::DEBUG_SOURCE_API,
                         glow::DEBUG_TYPE_PERFORMANCE,
                         glow::DONT_CARE,
-                        &[131218],
+                        // 131218 -> recompiling shaders
+                        // 131186 -> Buffer performance warning: ... being copied/moved from VIDEO memory to HOST memory.
+                        &[131218, 131186],
                         false,
                     );
                 },
