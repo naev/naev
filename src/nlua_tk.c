@@ -175,7 +175,7 @@ static int tkL_query( lua_State *L )
 }
 
 /**
- * @brief Creates a window with an ok button, and optionally an image.
+ * @brief Creates a window with an OK button, and optionally an image.
  *
  * @usage tk.msg( "Title", "This is a message." )
  * @usage tk.msg( "Title", "This is a message.", "character.png" )

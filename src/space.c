@@ -4765,7 +4765,7 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
 
 /**
  * @brief Cues a spob to be landed on. This is not done immediately, but when
- * the engine thinks it is ok to do.
+ * the engine thinks it is OK to do.
  *
  *    @param pnt Spob to land on.
  */
