@@ -45,11 +45,11 @@ impl<'mutex, T: ?Sized> MutexGuard<'mutex, T> {
         {
             Ok(_) => Ok(MutexGuard {
                 lock,
-                _marker: std::marker::PhantomData::default(),
+                _marker: std::marker::PhantomData,
             }),
             Err(_) => Err(PoisonError::new(MutexGuard {
                 lock,
-                _marker: std::marker::PhantomData::default(),
+                _marker: std::marker::PhantomData,
             })),
         }
     }
