@@ -1,6 +1,8 @@
 #!/bin/bash
 
-#TODO: remove US english from the dicts and add british english instead. Reverse the br->us conversions done so far.
+#TODO: separate dicts by usage (in-game, code, etc.) Don't forget .codespellignore.
+#TODO: port to hunspell using:
+#  https://github.com/kaubu/oxford-english-spelling/blob/main/en_GB_oxendict.dic
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 PERS="$SCRIPT_DIR/naev.aspell.pws"
