@@ -145,7 +145,7 @@ function qex_race_advice()
    vn.jump("start")
 
    vn.label("cont_strategy")
-   lbp(_([["The first step of racing is to choose a ship that can be designed for max speed. Interceptors and other smaller ships tend to be easier to modify, so I would recommend to start there. Make sure to grab the fastest engines you can get your hand on and stack as many speed modifications as possible."]]))
+   lbp(_([["The first step of racing is to choose a ship that can be designed for max speed. Interceptors and other smaller ships tend to be easier to modify, so I would recommend to start there. Make sure to grab the best engines you can get your hand on and stack as many speed modifications as possible."]]))
    lbp(_([["However, racing isn't all about passive bonuses! You are not only allowed, but expected to use afterburners while racing. It's important not only to try to get as fast of a ship as possible, but also one that can sustain the afterburner the longest during the race. So make sure to have enough energy regeneration!"]]))
    vn.jump("start")
 

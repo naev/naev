@@ -43,12 +43,20 @@ if filename=='--autoDetect':
 with open( filename, 'r' ) as f:
    lines = f.read().splitlines()
 
+# There is no option but to output to a temporary file which we can then pass to languagetool
 tf = tempfile.NamedTemporaryFile( suffix='.po' )
 args = [ "xgettext", filename, '--from-code=utf-8', '-d' , tf.name[:-3] ] # xgettext adds .po again
 ret = subprocess.run( args )
 
-# TODO implement a custom dictionary or something to lower false positives
-tool = language_tool_python.LanguageTool('en-GB')
+# Load the dictionary
+from pathlib import Path
+with (Path(__file__).parent / "languagetool_dict.txt").open() as f:
+   lt_dict = f.read().splitlines()
+lt_dict = list( filter( lambda x: x[0]!='#', lt_dict ) )
+
+# Run languagetool with custom dictionary and Oxford british on the generated po text
+tool = language_tool_python.LanguageTool( language='en-GB', newSpellings=lt_dict)
+tool.enabled_categories = ['BRE_STYLE_OXFORD_SPELLING']
 po = polib.pofile( tf.name )
 n = 1
 for entry in po:

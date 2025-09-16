@@ -24,7 +24,6 @@
 --]]
 
 local fmt = require "format"
-require "proximity"
 local sciwrong = require "common.sciencegonewrong"
 local equipopt = require "equipopt"
 local vn = require 'vn'

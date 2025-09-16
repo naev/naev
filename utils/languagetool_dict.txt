@@ -1,0 +1,8 @@
+# Dictionary for languagetool
+# Lines starting with # are ignored
+# The rest are treated as new words
+Dvaered
+Empire
+Sirius
+Soromid
+Za'lek

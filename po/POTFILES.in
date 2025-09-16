@@ -3724,6 +3724,7 @@ dat/scripts/term.lua
 dat/scripts/textoverlay.lua
 dat/scripts/tfs.lua
 dat/scripts/tfs_api.lua
+dat/scripts/trigger.lua
 dat/scripts/vn.lua
 dat/scripts/vn/conf.lua
 dat/scripts/vn/log.lua
