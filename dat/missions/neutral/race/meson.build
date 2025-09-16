@@ -2,7 +2,7 @@ path = meson.project_source_root()
 gen_qex_times = custom_target( 'qex_times',
    command: [find_program('gen_times.py'), '-q', '@OUTPUT@'],
    install: true,
-   install_dir: ndata_path / 'missions/neutral/race/',
+   install_dir: ndata_path / 'dat/missions/neutral/race/',
    depend_files: [
       path / 'dat/ships/neutral/hyena.xml',
       path / 'dat/ships/soromid/soromid_reaver.xml',
