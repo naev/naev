@@ -3071,7 +3071,7 @@ static int pilotL_setVelocity( lua_State *L )
 /**
  * @brief Sets the pilot's direction.
  *
- * @note Right is 0, top is math.pi/2, left is math.pi, bottom is 3*math.pi/2.
+ * @note Right is 0, top is `math.pi/2`, left is `math.pi`, bottom is `3*math.pi/2`.
  *
  * @usage p:setDir( math.pi/2 )
  *
@@ -5496,7 +5496,7 @@ static const struct pL_flag pL_flags[] = {
  *  <li> `invinc_player`: pilot cannot be hit by the player.</li>
  *  <li> `friendly`: pilot is friendly toward the player.</li>
  *  <li> `hostile`: pilot is hostile toward the player.</li>
- *  <li> `refueling`: pilot is refueling another pilot.</li>
+ *  <li> `refueling`: pilot is refuelling another pilot.</li>
  *  <li> `disabled`: pilot is disabled.</li>
  *  <li> `landing`: pilot is currently landing.</li>
  *  <li> `takingoff`: pilot is currently taking off.</li>
@@ -5891,7 +5891,7 @@ static int pilotL_poptask( lua_State *L )
 /**
  * @brief Tries to refuel a pilot.
  *
- *    @luatparam Pilot p Pilot to do the refueling.
+ *    @luatparam Pilot p Pilot to do the refuelling.
  *    @luatparam Pilot target Target pilot to give fuel to.
  *    @luatparam[opt=100] number amount Amount to refuel.
  * @luafunc refuel

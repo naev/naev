@@ -2777,7 +2777,7 @@ void pilot_update( Pilot *pilot, double dt )
    else
       pilot->player_damage = 0.;
 
-   /* Pilot is board/refueling.  Hack to match speeds. */
+   /* Pilot is board/refuelling.  Hack to match speeds. */
    if ( pilot_isFlag( pilot, PILOT_REFUELBOARDING ) )
       pilot_refuel( pilot, dt );
 
@@ -3201,9 +3201,9 @@ void pilot_hyperspaceAbort( Pilot *p )
 }
 
 /**
- * @brief Attempts to start refueling the pilot's target.
+ * @brief Attempts to start refuelling the pilot's target.
  *
- *    @param p Pilot to try to start refueling.
+ *    @param p Pilot to try to start refuelling.
  */
 int pilot_refuelStart( Pilot *p )
 {
@@ -3224,7 +3224,7 @@ int pilot_refuelStart( Pilot *p )
 
    /* Now start the boarding to refuel. */
    pilot_setFlag( p, PILOT_REFUELBOARDING );
-   p->ptimer = PILOT_REFUEL_TIME; /* Use timer to handle refueling. */
+   p->ptimer = PILOT_REFUEL_TIME; /* Use timer to handle refuelling. */
    return 1;
 }
 
@@ -3242,7 +3242,7 @@ static void pilot_updateSolid( Pilot *p, double dt )
 /**
  * @brief Has the pilot refuel its target.
  *
- *    @param p Pilot that is actively refueling.
+ *    @param p Pilot that is actively refuelling.
  *    @param dt Current delta tick.
  */
 static void pilot_refuel( Pilot *p, double dt )

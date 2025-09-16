@@ -1645,7 +1645,7 @@ int equipment_shipStats( char *buf, int max_len, const Pilot *s, int dpseps,
 }
 
 /**
- * @brief Handles toggling of the favorite checkbox.
+ * @brief Handles toggling of the favourite checkbox.
  */
 static void equipment_toggleFav( unsigned int wid, const char *wgt )
 {

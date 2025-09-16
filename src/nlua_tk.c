@@ -239,8 +239,8 @@ static int tkL_yesno( lua_State *L )
  * 0).
  *    @luatparam number max Maximum characters to accept.
  *    @luatparam string str Text to display in the window.
- *    @luatreturn string|nil nil if input was canceled or a string with the text
- * written.
+ *    @luatreturn string|nil nil if input was cancelled or a string with the
+ * text written.
  * @luafunc input
  */
 static int tkL_input( lua_State *L )

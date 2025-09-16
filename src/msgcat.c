@@ -2,7 +2,7 @@
 /**
  * @file msgcat.c
  *
- * @brief Message catalog lookup and plural-form evaluation subroutines.
+ * @brief Message catalogue lookup and plural-form evaluation subroutines.
  *        This implementation comes from "musl". See below for details and copyright info.
  */
 
@@ -87,13 +87,13 @@ void msgcat_init( msgcat_t* p, const void* map, size_t map_size )
 }
 
 /**
- * @brief Return a translation, if present, from the given message catalog.
+ * @brief Return a translation, if present, from the given message catalogue.
  *
- * @param p The message catalog.
+ * @param p The message catalogue.
  * @param msgid1 The English singular form.
  * @param msgid2 The English plural form. (Pass NULL if simply translating \p msgid1.)
  * @param n The number determining the plural form to use. (Pass 1 if simply translating \p msgid1.)
- * @return The translation in the message catalog, if it exists, else NULL.
+ * @return The translation in the message catalogue, if it exists, else NULL.
  *         (\p msgid1 is \em not passed through; the higher-level gettext.c functions handle fallbacks.)
  */
 const char* msgcat_ngettext( const msgcat_t* p, const char* msgid1, const char* msgid2, uint64_t n )
@@ -163,7 +163,7 @@ const char *msgcat_mo_lookup(const void *p, size_t size, const char *s)
 
 
 /**
- * @brief Return the number of strings in a message catalog, given its first 12 bytes.
+ * @brief Return the number of strings in a message catalogue, given its first 12 bytes.
  */
 uint32_t msgcat_nstringsFromHeader( const char buf[12] )
 {

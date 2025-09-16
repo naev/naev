@@ -447,7 +447,7 @@ static int systemL_interference( lua_State *L )
  * jumps.
  *    @luatparam[opt=false] boolean known Whether or not to consider only jumps
  * known by the player.
- *    @luatreturn number Number of jumps to system or math.huge if no path
+ *    @luatreturn number Number of jumps to system or `math.huge` if no path
  * found.
  * @luafunc jumpDist
  */
