@@ -4,7 +4,7 @@
 /**
  * @file land_trade.c
  *
- * @brief Handles the Trading Center at land.
+ * @brief Handles the Trading Centre at land.
  */
 /** @cond */
 #include <stdio.h>

@@ -193,7 +193,7 @@ typedef struct ShipStatList ShipStatList;
  * @brief Represents ship statistics, properties ship can use.
  *
  * Doubles:
- *  These are normalized and centered around 1 so they are in the [0:2]
+ *  These are normalized and centred around 1 so they are in the [0:2]
  *  range, with 1. being default. This value then modulates the stat's base
  *  value.
  *  Example:

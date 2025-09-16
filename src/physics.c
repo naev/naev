@@ -78,8 +78,8 @@ double angle_diff( double ref, double a )
  *   d x(t) / d t = a*t + v, v = constant (initial velocity)
  *   x(t) = a/2*t + v*t + p, p = constant (initial position)
  *
- *   since dt isn't actually differential this gives us ERROR!
- *   so watch out with big values for dt
+ *   since `dt` isn't actually differential this gives us ERROR!
+ *   so watch out with big values for `dt`
  */
 static void solid_update_euler( Solid *obj, double dt )
 {

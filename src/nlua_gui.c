@@ -173,11 +173,11 @@ static int guiL_mesgInit( lua_State *L )
 }
 
 /**
- * @brief Sets the center of the omsg messages and width.
+ * @brief Sets the centre of the omsg messages and width.
  *
  *    @luatparam number width Width of the omsg messages.
- *    @luatparam number x X center of the omsg messages.
- *    @luatparam number y Y center of the omsg messages.
+ *    @luatparam number x X centre of the omsg messages.
+ *    @luatparam number y Y centre of the omsg messages.
  * @luafunc omsgInit
  */
 static int guiL_omsgInit( lua_State *L )

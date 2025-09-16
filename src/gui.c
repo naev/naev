@@ -1347,7 +1347,7 @@ static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx,
 /**
  * @brief Draws the spobs in the minimap.
  *
- * Matrix mode is already displaced to center of the minimap.
+ * Matrix mode is already displaced to centre of the minimap.
  */
 void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res,
                      double alpha, int overlay )

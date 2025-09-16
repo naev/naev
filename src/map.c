@@ -3122,7 +3122,7 @@ StarSystem **map_getJumpPath( StarSystem *sysstart, const vec2 *posstart,
 /**
  * @brief Marks maps around a radius of currently system as known.
  *
- *    @param targ_sys System at center of the "known" circle.
+ *    @param targ_sys System at centre of the "known" circle.
  *    @param r Radius (in jumps) to mark as known.
  *    @return 0 on success.
  */
@@ -3291,8 +3291,8 @@ int localmap_isUseless( const Outfit *lmap )
  *    @param w Width of map to open.
  *    @param h Height of map to open.
  *    @param zoom Default zoom to use.
- *    @param xoff X offset when centering.
- *    @param yoff Y offset when centering.
+ *    @param xoff X offset when centring.
+ *    @param yoff Y offset when centring.
  */
 void map_show( int wid, int x, int y, int w, int h, double zoom, double xoff,
                double yoff )
@@ -3323,11 +3323,11 @@ void map_show( int wid, int x, int y, int w, int h, double zoom, double xoff,
 }
 
 /**
- * @brief Centers the map on a spob.
+ * @brief Centres the map on a spob.
  *
  *    @param wid ID of the window with the map widget, or 0 for "the" map
  * window.
- *    @param sys System to center the map on (internal name).
+ *    @param sys System to centre the map on (internal name).
  *    @return 0 on success.
  */
 int map_center( int wid, const char *sys )

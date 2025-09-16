@@ -1827,7 +1827,7 @@ static void faction_addStandingScript( Faction *temp, const char *scriptname )
 }
 
 /**
- * @brief Parses the social tidbits of a faction: allies and enemies.
+ * @brief Parses the social titbits of a faction: allies and enemies.
  *
  *    @param file File to parse.
  *    @return 0 on success.

@@ -368,12 +368,12 @@ mat4 mat4_ortho( double left, double right, double bottom, double top,
 }
 
 /**
- * @brief Creates a matrix with a transformation to look at a center point from
+ * @brief Creates a matrix with a transformation to look at a centre point from
  * an eye with an up vector.
  *
  *    @param[in] eye Vector representing the eye position that is looking at
  * something.
- *    @param[in] center Vector representing the position that is being looked
+ *    @param[in] centre Vector representing the position that is being looked
  * at.
  *    @param[in] up Vector representing the "upward" direction. Has to be a
  * unitary vector.
@@ -385,7 +385,7 @@ mat4 mat4_lookat( const vec3 *eye, const vec3 *center, const vec3 *up )
    mat4 H;
 
    vec3_sub( &forward, center, eye );
-   vec3_normalize( &forward ); /* Points towards the center from the eye. */
+   vec3_normalize( &forward ); /* Points towards the centre from the eye. */
 
    /* side = forward x up */
    vec3_cross( &side, &forward, up );

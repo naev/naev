@@ -30,10 +30,10 @@ static int exp_600 = -1; /**< 600 radius explosion spfx. */
 /**
  * @brief Does explosion in a radius (damage and graphics).
  *
- *    @param x X position of explosion center.
- *    @param y Y position of explosion center.
- *    @param vx X velocity of explosion center.
- *    @param vy Y velocity of explosion center.
+ *    @param x X position of explosion centre.
+ *    @param y Y position of explosion centre.
+ *    @param vx X velocity of explosion centre.
+ *    @param vy Y velocity of explosion centre.
  *    @param radius Radius of the explosion.
  *    @param dmg Damage characteristics.
  *    @param parent Parent of the explosion, NULL is none.
@@ -89,8 +89,8 @@ void expl_explode( double x, double y, double vx, double vy, double radius,
 /**
  * @brief Does explosion damage in a radius.
  *
- *    @param x X position of explosion center.
- *    @param y Y position of explosion center.
+ *    @param x X position of explosion centre.
+ *    @param y Y position of explosion centre.
  *    @param radius Radius of the explosion.
  *    @param dmg Damage characteristics.
  *    @param parent Parent of the explosion, 0 is none.

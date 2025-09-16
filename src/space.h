@@ -66,7 +66,7 @@
 /**
  * @struct MapOverlayPos
  *
- * @brief Saves the layout decisions from positioning labeled objects on the
+ * @brief Saves the layout decisions from positioning labelled objects on the
  * overlay.
  */
 typedef struct MapOverlayPos_ {

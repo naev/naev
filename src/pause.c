@@ -56,7 +56,7 @@ void unpause_game( void )
 }
 
 /**
- * @brief Adjusts the game's dt modifier.
+ * @brief Adjusts the game's `dt` modifier.
  */
 void pause_setSpeed( double mod )
 {

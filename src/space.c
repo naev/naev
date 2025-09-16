@@ -1240,7 +1240,7 @@ VirtualSpob *virtualspob_getAll( void )
 }
 
 /**
- * @brief Comparison function for "qsort'ing" VirtuaSpob by name.
+ * @brief Comparison function for "qsort'ing" VirtualSpob by name.
  */
 static int virtualspob_cmp( const void *p1, const void *p2 )
 {
@@ -4765,7 +4765,7 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
 
 /**
  * @brief Cues a spob to be landed on. This is not done immediately, but when
- * the engine thinks it is ok to do.
+ * the engine thinks it is OK to do.
  *
  *    @param pnt Spob to land on.
  */

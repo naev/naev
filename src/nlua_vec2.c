@@ -775,7 +775,7 @@ static int vectorL_collideLineLine( lua_State *L )
 /**
  * @brief Computes the intersection of a line segment and a circle.
  *
- *    @luatparam Vector center Center of the circle.
+ *    @luatparam Vector centre Centre of the circle.
  *    @luatparam number radius Radius of the circle.
  *    @luatparam Vector p1 First point of the line segment.
  *    @luatparam Vector p2 Second point of the line segment.

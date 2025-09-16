@@ -2775,7 +2775,7 @@ static void outfit_parseSLauncher( Outfit *temp, const xmlNodePtr parent )
 }
 
 /**
- * @brief Parses the modification tidbits of the outfit.
+ * @brief Parses the modification titbits of the outfit.
  *
  *    @param temp Outfit to finish loading.
  *    @param parent Outfit's parent node.
@@ -2818,7 +2818,7 @@ static void outfit_parseSMod( Outfit *temp, const xmlNodePtr parent )
 }
 
 /**
- * @brief Parses the afterburner tidbits of the outfit.
+ * @brief Parses the afterburner titbits of the outfit.
  *
  *    @param temp Outfit to finish loading.
  *    @param parent Outfit's parent node.
@@ -2900,7 +2900,7 @@ static void outfit_parseSAfterburner( Outfit *temp, const xmlNodePtr parent )
 }
 
 /**
- * @brief Parses the fighter bay tidbits of the outfit.
+ * @brief Parses the fighter bay titbits of the outfit.
  *
  *    @param temp Outfit to finish loading.
  *    @param parent Outfit's parent node.
@@ -2961,7 +2961,7 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
 }
 
 /**
- * @brief Parses the map tidbits of the outfit.
+ * @brief Parses the map titbits of the outfit.
  *
  *    @param temp Outfit to finish loading.
  *    @param parent Outfit's parent node.
@@ -3064,7 +3064,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
 }
 
 /**
- * @brief Parses the map tidbits of the outfit.
+ * @brief Parses the map titbits of the outfit.
  *
  *    @param temp Outfit to finish loading.
  *    @param parent Outfit's parent node.
@@ -3100,7 +3100,7 @@ static void outfit_parseSLocalMap( Outfit *temp, const xmlNodePtr parent )
 }
 
 /**
- * @brief Parses the GUI tidbits of the outfit.
+ * @brief Parses the GUI titbits of the outfit.
  *
  *    @param temp Outfit to finish loading.
  *    @param parent Outfit's parent node.
@@ -3134,7 +3134,7 @@ static void outfit_parseSGUI( Outfit *temp, const xmlNodePtr parent )
 }
 
 /**
- * @brief Parses the license tidbits of the outfit.
+ * @brief Parses the license titbits of the outfit.
  *
  *    @param temp Outfit to finish loading.
  *    @param parent Outfit's parent node.

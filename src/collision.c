@@ -1032,7 +1032,7 @@ static int linePointOnSegment( double d1, double x1, double y1, double x2,
  *
  *    @param[in] p1 Point 1 of the line segment.
  *    @param[in] p2 Point 2 of the line segment.
- *    @param[in] cc Center of the circle.
+ *    @param[in] cc Centre of the circle.
  *    @param[in] cr Radius of the circle.
  *    @param[out] crash Position of the collision.
  *    @return 1 on collision, 0 else.

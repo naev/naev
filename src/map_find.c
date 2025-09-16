@@ -361,7 +361,7 @@ static void map_findAccumulateResult( map_find_t *found, int n, StarSystem *sys,
 }
 
 /**
- * @brief Centers the search result in the map, opening if necessary.
+ * @brief Centres the search result in the map, opening if necessary.
  */
 static void map_findSelect( const StarSystem *sys )
 {

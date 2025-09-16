@@ -122,7 +122,7 @@ static void dialogue_cancel( unsigned int wid, const char *str )
 }
 
 /**
- * @brief Displays an alert popup with only an ok button and a message.
+ * @brief Displays an alert popup with only an OK button and a message.
  *
  *    @param fmt `printf`-style message to display.
  */
@@ -141,7 +141,7 @@ void dialogue_alert( const char *fmt, ... )
 }
 
 /**
- * @brief Displays an alert popup with only an ok button and a message.
+ * @brief Displays an alert popup with only an OK button and a message.
  *
  *    @param msg String to display.
  */
@@ -218,7 +218,7 @@ static glFont *dialogue_getSize( const char *title, const char *msg, int *width,
 }
 
 /**
- * @brief Opens a dialogue window with an ok button and a message.
+ * @brief Opens a dialogue window with an OK button and a message.
  *
  *    @param caption Window title.
  *    @param fmt `printf`-style message to display.
@@ -238,7 +238,7 @@ void dialogue_msg( const char *caption, const char *fmt, ... )
 }
 
 /**
- * @brief Opens a dialogue window with an ok button, a message and an image.
+ * @brief Opens a dialogue window with an OK button, a message and an image.
  *
  *    @param caption Window title.
  *    @param img Path of the image file to display.
@@ -260,7 +260,7 @@ void dialogue_msgImg( const char *caption, const char *img, const char *fmt,
 }
 
 /**
- * @brief Opens a dialogue window with an ok button and a fixed message.
+ * @brief Opens a dialogue window with an OK button and a fixed message.
  *
  *    @param caption Window title.
  *    @param msg Message to display.
@@ -283,7 +283,7 @@ void dialogue_msgRaw( const char *caption, const char *msg )
 }
 
 /**
- * @brief Opens a dialogue window with an ok button, a fixed message and an
+ * @brief Opens a dialogue window with an OK button, a fixed message and an
  * image.
  *
  *    @param caption Window title.
