@@ -379,12 +379,12 @@ mat4 mat4_ortho( double left, double right, double bottom, double top,
  * unitary vector.
  *    @return The newly created matrix.
  */
-mat4 mat4_lookat( const vec3 *eye, const vec3 *center, const vec3 *up )
+mat4 mat4_lookat( const vec3 *eye, const vec3 *centre, const vec3 *up )
 {
    vec3 forward, side, upc;
    mat4 H;
 
-   vec3_sub( &forward, center, eye );
+   vec3_sub( &forward, centre, eye );
    vec3_normalize( &forward ); /* Points towards the centre from the eye. */
 
    /* side = forward x up */

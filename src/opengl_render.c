@@ -1204,7 +1204,7 @@ void gl_renderStatic( const glTexture *texture, double bx, double by,
  * [-1,1] coordinates or set bottom-left and use [0,1] coordinates.
  */
 void gl_renderShader( double x, double y, double w, double h, double r,
-                      const SimpleShader *shd, const glColour *c, int center )
+                      const SimpleShader *shd, const glColour *c, int centre )
 {
    mat4 projection = gl_view_matrix;
    mat4_translate_xy( &projection, x, y );
@@ -1212,7 +1212,7 @@ void gl_renderShader( double x, double y, double w, double h, double r,
       mat4_rotate2d( &projection, r );
    mat4_scale_xy( &projection, w, h );
    glUniform2f( shd->dimensions, w, h );
-   gl_renderShaderH( shd, &projection, c, center );
+   gl_renderShaderH( shd, &projection, c, centre );
 }
 
 /**
@@ -1225,10 +1225,10 @@ void gl_renderShader( double x, double y, double w, double h, double r,
  * [-1,1] coordinates or set bottom-left and use [0,1] coordinates.
  */
 void gl_renderShaderH( const SimpleShader *shd, const mat4 *H,
-                       const glColour *c, int center )
+                       const glColour *c, int centre )
 {
    glEnableVertexAttribArray( shd->vertex );
-   gl_vboActivateAttribOffset( center ? gl_circleVBO : gl_squareVBO,
+   gl_vboActivateAttribOffset( centre ? gl_circleVBO : gl_squareVBO,
                                shd->vertex, 0, 2, GL_FLOAT, 0 );
 
    if ( c != NULL )
