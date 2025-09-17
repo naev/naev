@@ -35,7 +35,7 @@ end
 
 function _hook_pilot_defeated( plt, _killer, params )
    -- Make disable permanent if necessary
-   if params.permdisable then
+   if params.permdisable and plt:disabled() then
       plt:setDisable()
    end
 
@@ -58,6 +58,8 @@ end
 Runs a function `fn` when all the pilots are defeated (either disabled or destroyed).
 
 Disabled pilots will become permanently disabled so they can't "recover" and cause issues.
+
+Use pilot:setNoDeath() or pilot:setNoDisable() if you want the pilots to either not be destroyed or disabled respectively.
 
    @tparam {Pilot} pilots Pilots to check when they are all defeated, which is disabled or destroyed.
    @tparam function fn Function to call when all the pilots are defeated.
