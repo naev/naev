@@ -8,13 +8,13 @@
   <meta name="fediverse:creator" content="@naev@mastodon.gamedev.place">
   <link rel="me" href="https://mastodon.gamedev.place/@naev"><!-- Mobile -->
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Favourite icon -->
-  <link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
-  <link rel="icon" type="image/png" sizes="196x196" href="favicon-196.png">
-  <link rel="icon" type="image/png" sizes="128x128" href="favicon-128.png">
-  <link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
-  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"><!-- CSS -->
+  <link rel="apple-touch-icon" sizes="180x180" href="https://naev.org/favicon-180.png">
+  <link rel="icon" type="image/png" sizes="196x196" href="https://naev.org/favicon-196.png">
+  <link rel="icon" type="image/png" sizes="128x128" href="https://naev.org/favicon-128.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="https://naev.org/favicon-64.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://naev.org/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://naev.org/favicon-16.png">
+  <link rel="shortcut icon" type="image/x-icon" href="https://naev.org/favicon.ico"><!-- CSS -->
   <link rel="stylesheet" href="https://naev.org/style.css"><!-- Website information -->
   <title>Naev - An open source 2d action/rpg space game that combines elements from the action, rpg
   and simulation genres.</title><!-- RSS -->
