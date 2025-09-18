@@ -13,7 +13,7 @@ function _hook_player_distance( params )
    if player.pos():dist2( params.target ) <= params.dist2 then
       params.fn()
    else
-      hook.timer( 1, "_hook_player_distance" )
+      hook.timer( 1, "_hook_player_distance", params )
    end
 end
 
