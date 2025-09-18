@@ -39,7 +39,8 @@ local STATE_FINISH_SCANS = 2
 local STATE_BEAT_MERCENARIES = 3
 mem.state = nil
 
-local TARGETSYS_CANDIDATES = { -- TODO decide
+-- Candidates are somewhat uninhabited spobs along the main trade lanes
+local TARGETSYS_CANDIDATES = {
    system.get("Gremlin"),
    system.get("Overture"),
    system.get("Daan"),
@@ -60,7 +61,8 @@ function create()
    if #targets <= 0 then return misn.finish(false) end
    mem.targetsys = targets[ rnd.rnd(1, #targets) ]
 
-   if not misn.claim( mem.targetsys ) then misn.finish(false) end
+   -- Need to soft claim
+   if not misn.claim( mem.targetsys, false ) then misn.finish(false) end
 
    local prt = love_shaders.shaderimage2canvas( love_shaders.hologram(), onion.img_l337b01() )
    misn.setNPC( _("l337_b01"), prt.t.tex, _([[Try to get in touch with l337_b01.]]) )
