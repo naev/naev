@@ -1591,7 +1591,7 @@ void weapon_hitAI( Pilot *p, const Pilot *shooter, double dmg )
  * collisions).
  */
 static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius,
-                               const vec2 *center )
+                               const vec2 *centre )
 {
    int             x, y, r, x1, y1, x2, y2;
    double          vx, vy, nvel;
@@ -1611,8 +1611,8 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius,
    vx = vy = nvel = 0.;
 
    /* Set up coordinates. */
-   x  = round( center->x );
-   y  = round( center->y );
+   x  = round( centre->x );
+   y  = round( centre->y );
    r  = ceil( radius );
    x1 = x - r;
    y1 = y - r;
