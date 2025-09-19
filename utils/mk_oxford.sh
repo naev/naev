@@ -66,8 +66,8 @@ DD="$E\\\[m"
 
 if [ -n "$FORCE" ] ; then
    sed -f <(
-      echo "s/\($EXPR\)/$D\1$D/g;"
-      echo "s/$D\(.\?[^a-zA-Z]\)\?\([a-zA-Z]*\)\([^a-zA-Z]*\)$D/\1$D\2$D\3/g"
+      echo -e "s/\($EXPR\)/$D\1$D/g;"
+      echo -e "s/$D\(.\?[^a-zA-Z]\)\?\([a-zA-Z]*\)\([^a-zA-Z]*\)$D/\1$D\2$D\3/g"
       sed "s/^\(.*\)->\(.*\)/s\/$DD\1$DD\/\2\/g;/" <<< "$SUBDIC"
    ) -i "${FILES[@]}"
 else
