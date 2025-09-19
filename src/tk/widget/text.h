@@ -9,10 +9,10 @@
  * @brief The text widget data.
  */
 typedef struct WidgetTextData_ {
-   char *
-      text; /**< Text to display, using printMid if centred, else printText. */
-   glFont  *font;     /**< Text font. */
-   glColour colour;   /**< Text colour. */
+   char
+      *text; /**< Text to display, using printMid if centred, else printText. */
+   glFont  *font;    /**< Text font. */
+   glColour colour;  /**< Text colour. */
    int      centred; /**< 1 if text is centred, 0 if it isn't. */
 } WidgetTextData;
 
