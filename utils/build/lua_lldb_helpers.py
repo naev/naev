@@ -2,7 +2,7 @@
 
 # Lua LLDB Helpers
 # LLDB port based on the original GDB version by Michal Kottman
-# License: MIT
+# Licence: MIT
 
 import lldb
 

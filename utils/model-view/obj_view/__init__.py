@@ -1,1 +1,1 @@
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-Licence-Identifier: GPL-3.0-or-later

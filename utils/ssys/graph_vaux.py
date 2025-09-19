@@ -99,9 +99,9 @@ else:
          'usage:  ' + os.path.basename(argv[0]) + ' [ -c ] [ -n ] [-e]',
          '  Replaces faction name by faction group name in vertices aux field,',
          '  and adds tags amongst ' + ', '.join(Rtags) + '.',
-         '  If -c is set, replaces it with color instead.',
+         '  If -c is set, replaces it with colour instead.',
          '  If -n is set, adds ssys full name.',
-         '  If -e is set, extends faction/color tags to influence zone.',
+         '  If -e is set, extends faction/colour tags to influence zone.',
       ]:
          msg(l)
       exit(0 if help_f else 1)

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-Licence-Identifier: GPL-3.0-or-later
 
 import glob
 import os

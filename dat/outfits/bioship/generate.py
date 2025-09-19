@@ -55,7 +55,7 @@ class MesonBuild(Build):
 build = MesonBuild(*sys.argv[1:]) if sys.argv[2:3] == ['-o'] else Build()
 
 intify = lambda x: int(x) if round(x) == x else x
-# Hopefully we can refactor this once the behavior is finalized and we're unafraid of merge conflicts. Anyway, back to the show.
+# Hopefully we can refactor this once the behaviour is finalized and we're unafraid of merge conflicts. Anyway, back to the show.
 
 def lerpt( t ):
    return lambda x: t[int(math.floor(x*(len(t)*0.99999)))]

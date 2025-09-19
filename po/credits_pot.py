@@ -6,7 +6,7 @@ import sys
 
 HEADER = r"""# Naev Credits
 # Copyright (C) YEAR Naev Dev Team
-# This file is distributed under the same license as the naev package.
+# This file is distributed under the same licence as the naev package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy

@@ -48,7 +48,7 @@ if (h := ('-h' in argv[1:] or '--help' in argv[1:])) or argv[1:]:
    print (
       'usage ', basename(argv[0]), '[-d]', '[-H]', '[ (-p | -q)<file.png> ]\n'
       '  Writes "out.pov". Outputs povray commandline to stdout.\n'
-      '  If color tags are present in inputs, they will be used.\n'
+      '  If colour tags are present in inputs, they will be used.\n'
       '  If -d is set, uses decorators.\n'
       '  If -H is set, output is 1080p instead of 720p.\n'
       '  If -n is set, no preview is dispalyed.\n'
@@ -79,7 +79,7 @@ def write_pov( s, indent = -1 ):
 
 from graphmod import ssys_pos as V, ssys_jmp as E, no_graph_out
 no_graph_out()
-colors = { k: color_values[ssys_color(V, k)] for k in V }
+colours = { k: color_values[ssys_color(V, k)] for k in V }
 nebula = { k: ssys_nebula(V, k) for k in V if ssys_nebula(V, k) is not None}
 others = { k: ssys_others(V, k) for k in V }
 is_def = { k: is_default((v+['default'])[0]) for k, v in V.aux.items() }
@@ -128,7 +128,7 @@ for i, p in V.items():
          nam,
          'translate <' + x + ', ' + y + ', ' + str(depth) + '>',
       ], '}', ])
-   col = (0.5, 0.5, 0.5) if i not in colors else colors[i]
+   col = (0.5, 0.5, 0.5) if i not in colours else colours[i]
    if not (i == 'sol'):
       write_pov([ 'sphere{', [
          '<' + str(p[0]) + ', ' + str(p[1]) + ', 0>,',
