@@ -1,5 +1,5 @@
 --[[
--- Math
+-- Maths
 --]]
 local class = require 'class'
 local prng = require 'prng'

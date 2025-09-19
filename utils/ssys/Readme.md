@@ -18,12 +18,12 @@ Scripts:
  - `graph2ssysmap.py`: Reads a graph in input, updates current system map accordingly. This is the only way to actually modify it.
 
  - `dot2graph.py`: As the name suggests, turns a graph in dot format into a graph in our basic format.
- - `graph2pov.py`: Reads graph input, and generates a `png` using `povray`. Will have colors if input vertices have color tags (i.e. input is obtained from `ssys2graph | graph_vaux -c`.
+ - `graph2pov.py`: Reads graph input, and generates a `png` using `povray`. Will have colours if input vertices have colour tags (i.e. input is obtained from `ssys2graph | graph_vaux -c`.
  - `graph2dot.py`: As the name suggests, reads current system map and outputs a graph in dot format.
 
 ## graphmod
 `graphmod.py` provides all that is necessary to build a graph modifier such as the programs described in the section graphmods below. As a simple example of use, see `graphmod_repos_virt.py` source. By convention, we call `graph_xxx.py` the generic utilities and `graphmod_xxx.py` the ad hoc modifiers.
- - `graph_vaux.py`: Reads a graph in input, adds faction tag to vertex aux field, and outputs the result. With, `-c`, adds the color instead of the faction. Also provides color values when imported.
+ - `graph_vaux.py`: Reads a graph in input, adds faction tag to vertex aux field, and outputs the result. With, `-c`, adds the colour instead of the faction. Also provides colour values when imported.
  - `graph_scale.py`: Reads a graph in input, scales it, and outputs the resulting graph.
 
 
@@ -72,7 +72,7 @@ Performed by `process_ssys.sh`. Several steps:
  - generate `map_swr.png`
  - generate `map_fin.png` with decorators
 
-The labeled maps `before.png` and `after.png` are generated, corresponding to `map_ini.png` and `map_fin.png`.
+The labelled maps `before.png` and `after.png` are generated, corresponding to `map_ini.png` and `map_fin.png`.
 
 # Others
 

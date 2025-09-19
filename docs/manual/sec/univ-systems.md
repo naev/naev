@@ -21,7 +21,7 @@ Each system is represented by a standalone .XML file within the `/ssys/` directo
     * `<spacedust>`: Defines the density of space dust displayed in the system.
     * `<interference>`: Influences the sensors of ships in the system. A value greater than 0 will reduce the ranges at which you can detect, identify or destealth other ships. Reduction of detection, evasion, and stealth ranges is computed by the formula $\frac{1}{1+\frac{\text{interference}}{100}}$.
     * `<nebula>`: Reduces visibility when within the system. A value greater than 0 will cause ships, spobs and asteroids to not appear until the player gets close. The rough visibility range is computed from the formula $(1200-\text{nebula}) \cdot \text{ewdetect} + \text{nebuvisibility}$, where ewdetect and nebuvisibility are each ships detection and nebula visibility statistics.
-      * `<volatility>`: Damage over time inflicted upon ships travelling in this system. Value is expressed in MJ per second, applied to shields first and armor after.
+      * `<volatility>`: Damage over time inflicted upon ships travelling in this system. Value is expressed in MJ per second, applied to shields first and armour after.
     * `<features>`: A string value defining unique characteristics of the system, such as whether it has a factional homeworld or some other anomality. This is shown in the in-game map.
    * `<pos>`: Position of the system on the universe map, expressed as `x` and `y` coordinates relative to the universe map's origin point.
   * `<spobs>`: Category which includes all spobs, including virtual spobs, which are present in this system.
@@ -31,15 +31,15 @@ Each system is represented by a standalone .XML file within the `/ssys/` directo
     * `<jump>`: Defines a jump point.
       * `<target>`: Name of the jump point's destination system. The direction of travel when entering this jump point corresponds to that of the jump line shown on the universe map.
       * `<pos>`: Position of the jump point within the system, expressed as `x` and `y` coordinates relative to the system's `x="0" y="0"` origin point.
-      * `<autopos/>`: Alternative to `<pos>` which prompts the game to generate a position for the jump point. The point will always be placed at the system boundary (the circle defined by <radius>) on a line between the current system center and the destination system.
+      * `<autopos/>`: Alternative to `<pos>` which prompts the game to generate a position for the jump point. The point will always be placed at the system boundary (the circle defined by <radius>) on a line between the current system centre and the destination system.
         * `<exitonly/>: Prevents the player from detecting this jump point or entering it from the current system. These points are used exclusively as the destinations to jumps coming in from other systems.
       * `<hide>`: Modifies the range at which your sensors can discover previously unknown jump points. A value of `1` is the default and indicates no change. Values greater than `1` increase the jump point's detection distance. Values less than `1` but greater than `0` reduce the jump point's detection distance. A value of `0` is a specific exception which labels the jump as part of a Trade Route - the jump point will automatically be discovered when the player enters the system, regardless of distance, and also have some small beacons next to it.
       * `<hidden/>`: Designates the jump as a hidden point which cannot be discovered with standard sensors. In the base Naev scenario, hidden jump points are revealed to the player mainly via mission rewards, by completing certain missions or by equipping and activating a Hidden Jump Scanner outfit.
   * `<asteroids>`: Category which includes coordinates and contents of asteroid fields.
     * `<asteroid>`: Defines an asteroid field.
       * `<group>`: Names an .XML list from `/asteroids/groups` that defines what asteroids spawn in this field.
-      * `<pos>`: Center position of the asteroid field within the system, expressed as `x` and `y` coordinates relative to the system's center point.
-      * `<radius>`: Size of the circular asteroid field, expressed in distance units from the field's center point as defined in the `<pos>` field.
+      * `<pos>`: Centre position of the asteroid field within the system, expressed as `x` and `y` coordinates relative to the system's centre point.
+      * `<radius>`: Size of the circular asteroid field, expressed in distance units from the field's centre point as defined in the `<pos>` field.
       * `<density>`: Affects how many asteroids are present within the asteroid field's area.
     * `<exclusion>`: Defines an asteroid exclusion zone, creating a "negative" asteroid field. This can be used to create asteroid fields of unique shapes such as rings or crescents.
       * `<radius>` and <pos> fields function identically to those under <asteroid>.
@@ -63,8 +63,8 @@ Asteroid fields are zones of floating objects within systems. They differ from s
 Asteroid data files are found in `/asteroids/types/`. These files are in .XML format and contain the following fields:
 * `<scanned>`: Text string shown to the player upon entering range of their asteroid scanner outfit.
 * `<gfx>`: Possible graphics for this asteroid. Multiple graphics can be referenced, one per `<gfx>` tag, to increase the variety of visuals.
-* `<armor_min>` and `<armor_max>`: Defines a range of armor values for asteroids to spawn with. Higher values mean more damage must be dealt to destroy an asteroid.
-* `<absorb>`: Defines the asteroid's damage reduction before applying weapons' armor penetration stats.
+* `<armor_min>` and `<armor_max>`: Defines a range of armour values for asteroids to spawn with. Higher values mean more damage must be dealt to destroy an asteroid.
+* `<absorb>`: Defines the asteroid's damage reduction before applying weapons' armour penetration stats.
 * `<commodity>`: Lists which commodity pickups and quantities thereof can spawn upon destruction of the asteroid.
    * `<name>`: Name of commodity.
    * `<quantity>`: Maximum quantity of commodity pickups

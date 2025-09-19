@@ -37,7 +37,7 @@ Meddle with the Onion Society, an eclectic group of the Nexus denizens and hacke
 9. **onion09:** another tense emergency conclave in the Nexus, l337_b01 gets peeled and have to go save them
 9. **onion10:** Recover the package at Gordon's Exchange
 10. **onion11:** Plant trap signal generator and defend it while l337_b01 captures the signal
-11. **onion12:** final showdown at underworlder's center of operations station. Eventually DOG comes and helps out
+11. **onion12:** final showdown at underworlder's centre of operations station. Eventually DOG comes and helps out
 12. **onion13:** epilogue where the player gets control of the station and can do a single jump to a location while DOG disappears into the Nebula
 
 

@@ -43,7 +43,7 @@ Many believe this Emperor's reign will not last much longer.
 
 ## Territory
 
-The Empire still has the largest territorial claim in the galaxy, holding a major part of the inhabited Galaxy centered around Polaris Prime in the Gamma Polaris system, the official seat of the Emperor.
+The Empire still has the largest territorial claim in the galaxy, holding a major part of the inhabited Galaxy centred around Polaris Prime in the Gamma Polaris system, the official seat of the Emperor.
 It is there that all important decisions of the Empire are made.
 However, the Empire holds outposts deep in hostile space, like Cerberus Outpost in the Doeston system or Zabween Outpost in Draconis.
 The core systems, those in the vicinity of Gamma Polaris, are heavily patrolled and kept safe by the Empire military.
@@ -77,7 +77,7 @@ To be a councilor is a highly sought-after position, as upon the Emperor's death
 The Council does not oversee the laws being carried out, that task falls to the Imperial Bureaucracy.
 It is the largest part of Empire administration besides the military.
 Enforcing the large number of laws passed by generations of Councils word for word is impossible.
-Therefore, most members of the Bureaucracy follow what they, in their best judgment, believe to be the intention behind the laws.
+Therefore, most members of the Bureaucracy follow what they, in their best judgement, believe to be the intention behind the laws.
 But even that task is becoming ever more difficult and social progress has been observed to become slower in recent years.
 The Bureaucracy is also the only organ of the state the people interact with directly.
 Requests for audiences with the Council may be directed to the Bureaucracy, though they are seldom granted and some have been known to simply disappear within the immense, monolithic complexity of the Bureaucracy.

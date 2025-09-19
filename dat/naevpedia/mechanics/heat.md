@@ -10,7 +10,7 @@ Weapons become more inaccurate at over 500 K and have lower fire rate at over 1,
 
 ## Active Cooldown
 
-Although ships cool down naturally through radiation of excess heat, they can perform an active cooldown maneuver to dump all excess heat in a short amount of time.
+Although ships cool down naturally through radiation of excess heat, they can perform an active cooldown manoeuvre to dump all excess heat in a short amount of time.
 Not only does it get rid of all excess heat, but it will also reload all weapons on the ship.
 The downside is the ship will be immovable and unable to defend itself during this time.
 An active cooldown can be performed by either double tapping the <%= "#b"..naev.keyGet("reverse").."#0" %> key or by pressing the <%= "#b"..naev.keyGet("cooldown").."#0" %> key.

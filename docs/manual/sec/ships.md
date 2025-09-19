@@ -54,12 +54,12 @@ Each ship is represented with a stand-alone file that has to be located in `ship
 * `trail_generator`: Creates a particle trail during flight.
   * `x`, `y` (*attributes*): Trail origin coordinates, relative to the ship sprite in a "90 degree" heading.
   * `h` (*attributes*): Trail coordinate y-offset, used to modify the origin point on a "perspective" camera.
-* `fabricator`: Flavor text stating the ship's manufacturer.
+* `fabricator`: Flavour text stating the ship's manufacturer.
 * `faction` (*optional*): Defines the faction which produces the ship. Currently only used for the fancy gradient backgrounds.
-* `license` (*optional*): License-type outfit which must be owned to purchase the ship.
+* `licence` (*optional*): Licence-type outfit which must be owned to purchase the ship.
 * `cond` (*optional*): Lua conditional expression to evaluate to see if the player can buy the ship.
 * `condstr` (*optional*): human-readable interpretation of the Lua conditional expression `cond`.
-* `description`: Flavor text describing the ship and its capabilities.
+* `description`: Flavour text describing the ship and its capabilities.
 * `characteristics`: Core ship characteristics that are defined as integers.
   * `crew`: Number of crewmen operating the ship. Used in boarding actions.
   * `mass`: Tonnage of the ship hull without any cargo or outfits.
@@ -74,7 +74,7 @@ Each ship is represented with a stand-alone file that has to be located in `ship
         * Inserting an outfit's `name` will add it to that outfit slot in the ship's "stock" configuration. This is useful for selling a ship with prefilled core outfits to ensure its spaceworthiness immediately upon purchase.
 * `stats` (*optional*): Defines modifiers applied to all characteristics and outfits on the ship.
   * Fields here correspond to those in the `characteristics` category and the `general` and `specifics` categories on equipped outfits.
-* `tags` (*optional*): Referenced by scripts. Can be used to effect availability of missions, NPC behavior and other elements.
+* `tags` (*optional*): Referenced by scripts. Can be used to effect availability of missions, NPC behaviour and other elements.
   * `tag`: Each `tag` node represents a binary flag which are accessible as a table with `ship.tags()`
 * `health`: Supercategory which defines the ship's intrinsic durability before modifiers from `stats` and equipped outfits. **Note that this node and subnodes are deprecated and will likely be removed in future versions. Use ship stats instead!**
   * `armour`: Armour value.

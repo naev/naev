@@ -183,7 +183,7 @@ When content like missions is updated, new translatable text must be made availa
 The key manual step is to regenerate the `po/naev.pot` file (`meson compile naev-pot` in the build dir) and commit it.
 To avoid merge conflicts, it is recommended to not include updated `po/naev.pot` in a pull request that isn't exclusively about translation.
 
-Under the hood: `po/POTFILES.in` is a catalog of files that may have translatable text.
+Under the hood: `po/POTFILES.in` is a catalogue of files that may have translatable text.
 We keep it synced using pre-commit hooks (or manually: `meson compile potfiles`).
 The `naev-pot` Meson target is built using standard `xgettext`, plus additional rules.
 (Rules for `AUTHORS` and `intro` are in `po/update-po.sh`. Rules for XML data files are in `po/its/translation.its`.)
@@ -202,7 +202,7 @@ reading https://codeberg.org/naev/naev/wiki/Bugs
 
 Naev is open source software compatible with the [Debian Free Software
 Guidelines](https://www.debian.org/social_contract#guidelines) licensed under
-the [GNU General Public License version 3 or
+the [GNU General Public Licence version 3 or
 later](https://www.gnu.org/licenses/gpl-3.0.en.html), with some exceptions.
 Please refer to the [LICENSE](LICENSE) file for more in-depth licensing
 details.

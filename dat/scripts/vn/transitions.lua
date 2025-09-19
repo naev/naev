@@ -221,7 +221,7 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords ) {
 transitions._t.hexagon = [[
 // Author: Fernando Kuteken
 // Licence: MIT
-// Hexagonal math from: http://www.redblobgames.com/grids/hexagons/
+// Hexagonal maths from: http://www.redblobgames.com/grids/hexagons/
 
 const int steps = 50;
 uniform float horizontalHexagons = 20.0;

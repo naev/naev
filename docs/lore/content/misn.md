@@ -64,7 +64,7 @@ This page contains **HEAVY SPOILERS**! Read at your own risk. You can hide this 
  </div>
 
  <div class="modal fade cmpn" id="modal-cmpn-#{c[:id]}" tabindex="-1" aria-labelledby="modal-cmpn-label-#{c[:id]}" data-cmpn-modal="#{c[:name]}" aria-hidden="true">
-  <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+  <div class="modal-dialogue modal-xl modal-dialogue-centered modal-dialogue-scrollable">
    <div class="modal-content">
     <div class="modal-header">
      <h1 class="modal-title fs-5" id="modal-cmpn-label-#{c[:id]}">#{c[:name]}</h1>

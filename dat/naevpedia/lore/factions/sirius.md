@@ -82,11 +82,11 @@ After all, it is difficult to believe in a man who resides on a planet far from 
 It begins anywhere in Sirius space, on any world, in any echelon.
 There are some who feel the call, the irresistible urge to come forth.
 Those individuals leave their homes, sell their possessions and embark on a pilgrimage to Mutris.
-Those who can't afford the fare right away will raise the money through intensive labor until they can, or die trying.
+Those who can't afford the fare right away will raise the money through intensive labour until they can, or die trying.
 Once on Mutris, the pilgrims will flock to Crater City, the holy city of the Sirii and the seat of Sirichana himself.
 
 Crater City is indeed built in a massive crater, a legacy left by the forces that once rendered Mutris sterile during the Faction Wars.
-Streets and houses now cover its slopes, and in its center stands a tall, tall spire, the Tower of Sirichana.
+Streets and houses now cover its slopes, and in its centre stands a tall, tall spire, the Tower of Sirichana.
 There is not a major road, not a square in Crater City that does not have a direct view on the Tower.
 To this place the pilgrims come, and here they will reside, moving in to a suitable empty home and taking up whatever tasks need doing.
 They live in Crater City with their fellow pilgrims, sometimes for cycles on end.

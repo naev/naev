@@ -26,7 +26,7 @@ These tensions escalated into all-out war, with devastating consequences for bot
 
 House Proteron worlds were governed by a totalitarian regime that required its citizens to follow their dictated daily routines, severely punishing transgressions under a zero-tolerance policy.
 A Proteron citizen was never their own person.
-They were an asset of the government, their life's labor neatly represented in a bookkeeping column somewhere.
+They were an asset of the government, their life's labour neatly represented in a bookkeeping column somewhere.
 Even the details of their private life were managed and tallied by the authorities.
 Despite the lack of freedom and privacy, Proteron citizens were not slaves.
 The government kept them in top shape, providing an adequate supply of health care, relaxation, and entertainment, making sure all predispositions and tastes were catered for.
@@ -63,7 +63,7 @@ Soon, however, the scope of the project expanded as its overseers came to the co
 Within a decacycle of its inception, the worlds assigned to Project Proteron numbered more than a dozen.
 
 [The Empire](lore/factions/empire), eager to see results, continued to push the experiment to work faster and more efficiently.
-As a direct result of this, the more liberal, decentralised processes were eliminated from the test roster, and more emphasis was put on controlled, high-yield social structures.
+As a direct result of this, the more liberal, decentralized processes were eliminated from the test roster, and more emphasis was put on controlled, high-yield social structures.
 More and more planets were added to the project, its populations relocated, re-educated and re-assigned for a better turnout.
 The concepts of personal liberties and privacy became more and more secondary to the collective performance, and eventually were abandoned altogether by those who led the Project.
 
@@ -89,7 +89,7 @@ The final straw was the Quarantine of Sorom, where [the Empire](lore/factions/em
 
 Some debate followed, but the consensus was that House Proteron had achieved its original goal, and now it was time for the weak Empire to make way for the new generation of galactic dominance.
 But when the Proteron High Autarch delivered this message to the Emperor, he was furious at the perceived insult and ordered all Autarchs executed.
-Appalled at this reaction, the Circle concluded in an emergency meeting that [the Empire](lore/factions/empire) had no intention of honoring the original agreement, thereby forfeiting its claim to the loyalty of House Proteron.
+Appalled at this reaction, the Circle concluded in an emergency meeting that [the Empire](lore/factions/empire) had no intention of honouring the original agreement, thereby forfeiting its claim to the loyalty of House Proteron.
 It was clear to the Circle that should [the Empire](lore/factions/empire) insist on trying to turn the Proteron into another Dvaered incident or, worse still, turning them into Empire systems, there could be no peace with them.
 
 Knowing that they could not resist the entire might of [the Empire](lore/factions/empire)'s infrastructure, the Proteron decided to plant their agents in every major Imperial agency while publicly grovelling at [the Empire](lore/factions/empire)'s feet.
