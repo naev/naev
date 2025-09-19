@@ -25,7 +25,7 @@ wgtfct = require("naevpedia.lore.faction").init( "Pirate" )
 # Galactic Space Pirates
 
 The Galactic Space Pirates are split into two main groups, the clans and independent pirates.
-Amoung the independent pirates are marauders who are extremely aggressive and not very well-equipped.
+Among the independent pirates are marauders who are extremely aggressive and not very well-equipped.
 Other pirates tend to be better equipped and usually strive to join one of the major pirate clans.
 
 The four main clans are the <%= strblacklotus %>, <%= strwildones %>, <%= strravenclan %>, and <%= strdreamerclan %>.

@@ -1,5 +1,5 @@
 <effect name="Hypergate Exit">
- <description>Exitting a hypergate!</description>
+ <description>Exiting a hypergate!</description>
  <duration>3</duration>
  <overwrite>wormhole_enter</overwrite>
  <icon>/gfx/misc/icons/galaxy.webp</icon>

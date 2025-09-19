@@ -11,7 +11,7 @@ Like other outfits they can be equipped using [weapon sets](mechanics/weaponsets
 
 Launchers are roughly divided into three categories:
 1. **Torpedoes** are slow and devastating and are able to significantly damage even the largest of ships, however, they do not pose a threat to ships with mobility.
-2. **Missiles** are fast and agile, meant for targetting smaller ships.
+2. **Missiles** are fast and agile, meant for targeting smaller ships.
 3. **Dumbfires** have no tracking ability, however, they usually pack a higher payload than other weapons of the same size.
 
 ## Ammunition

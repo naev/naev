@@ -6,7 +6,7 @@
   <mass>0</mass>
   <price>470000</price>
   <gfx_store>flicker_drive.webp</gfx_store>
-  <description>The Flicker Drive is a compacted version of the Blink Drive, lowering the power usage, blinking range, and amount of mass that can be blinked, however, this comes at the advantaged of much higher mobility due to a lower cooldown. The brief spacial folds it creates have a secondary effect of obscuring the ship's gravitational footprint. Although most ships commonly make use of afterburners to increase mobility, the Flicker Drive has a strong following who claim it is superior to any alternatives.</description>
+  <description>The Flicker Drive is a compacted version of the Blink Drive, lowering the power usage, blinking range, and amount of mass that can be blinked, however, this comes at the advantaged of much higher mobility due to a lower cooldown. The brief spatial folds it creates have a secondary effect of obscuring the ship's gravitational footprint. Although most ships commonly make use of afterburners to increase mobility, the Flicker Drive has a strong following who claim it is superior to any alternatives.</description>
   <limit>blinkdrive</limit>
  </general>
  <specific type="modification">

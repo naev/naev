@@ -788,7 +788,7 @@ msgid "The Galactic Space Pirates are split into two main groups, the clans and 
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:11
-msgid "Amoung the independent pirates are marauders who are extremely aggressive and not very well-equipped."
+msgid "Among the independent pirates are marauders who are extremely aggressive and not very well-equipped."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:12
@@ -4659,7 +4659,7 @@ msgid "1. **Torpedoes** are slow and devastating and are able to significantly d
 msgstr ""
 
 #: dat/naevpedia/mechanics/launchers.md:14
-msgid "2. **Missiles** are fast and agile, meant for targetting smaller ships."
+msgid "2. **Missiles** are fast and agile, meant for targeting smaller ships."
 msgstr ""
 
 #: dat/naevpedia/mechanics/launchers.md:15
@@ -6748,7 +6748,7 @@ msgid "The Galactic Space Pirates are split into two main groups, the clans and 
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:11
-msgid "Amoung the independent pirates are marauders who are extremely aggressive and not very well-equipped."
+msgid "Among the independent pirates are marauders who are extremely aggressive and not very well-equipped."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:12
@@ -10619,7 +10619,7 @@ msgid "1. **Torpedoes** are slow and devastating and are able to significantly d
 msgstr ""
 
 #: dat/naevpedia/mechanics/launchers.md:14
-msgid "2. **Missiles** are fast and agile, meant for targetting smaller ships."
+msgid "2. **Missiles** are fast and agile, meant for targeting smaller ships."
 msgstr ""
 
 #: dat/naevpedia/mechanics/launchers.md:15

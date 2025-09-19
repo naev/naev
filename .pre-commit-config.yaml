@@ -101,7 +101,7 @@ repos:
   hooks:
     - id: codespell
       files: '^dat/'
-      types: [lua]
+      types_or: [xml, lua]
       args: ["--ignore-words", ".codespellignore" ]
       additional_dependencies:
         - tomli
