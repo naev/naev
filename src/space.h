@@ -26,7 +26,7 @@
  * Spob services.
  */
 #define SPOB_SERVICE_LAND ( 1 << 0 )      /**< Can land. */
-#define SPOB_SERVICE_REFUEL ( 1 << 1 )    /**< Has refueling. */
+#define SPOB_SERVICE_REFUEL ( 1 << 1 )    /**< Has refuelling. */
 #define SPOB_SERVICE_BAR ( 1 << 2 )       /**< Has bar and thus news. */
 #define SPOB_SERVICE_MISSIONS ( 1 << 3 )  /**< Has mission computer. */
 #define SPOB_SERVICE_OUTFITS ( 1 << 4 )   /**< Can trade outfits. */
@@ -34,7 +34,7 @@
 #define SPOB_SERVICE_COMMODITY ( 1 << 6 ) /**< Can trade commodities. */
 #define SPOB_SERVICE_INHABITED ( 1 << 7 ) /**< Spob is inhabited. */
 #define SPOB_SERVICE_BLACKMARKET                                               \
-   ( 1 << 8 ) /**< Disables license restrictions on goods. */
+   ( 1 << 8 ) /**< Disables licence restrictions on goods. */
 #define SPOB_SERVICES_MAX ( SPOB_SERVICE_BLACKMARKET << 1 )
 #define spob_hasService( p, s )                                                \
    ( ( p )->services & s ) /**< Checks if spob has a service. */

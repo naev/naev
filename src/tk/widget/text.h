@@ -10,17 +10,17 @@
  */
 typedef struct WidgetTextData_ {
    char *
-      text; /**< Text to display, using printMid if centered, else printText. */
+      text; /**< Text to display, using printMid if centred, else printText. */
    glFont  *font;     /**< Text font. */
    glColour colour;   /**< Text colour. */
-   int      centered; /**< 1 if text is centered, 0 if it isn't. */
+   int      centred; /**< 1 if text is centred, 0 if it isn't. */
 } WidgetTextData;
 
 /* Required functions. */
 void window_addText( unsigned int wid, const int x, const int y, /* position */
                      const int w, const int h,                   /* size */
-                     const int   centered,
-                     const char *name, /* text is centered? label name */
+                     const int   centred,
+                     const char *name, /* text is centred? label name */
                      glFont *font, const glColour *colour,
                      const char *string ); /* font, colour and actual text */
 

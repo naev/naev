@@ -4,7 +4,7 @@
  *
  * https://github.com/RobLoach/SDL_PhysFS
  *
- * @license zlib
+ * @licence zlib
  *
  * Copyright (c) 2024 Rob Loach <https://robloach.net>
  *
@@ -189,7 +189,7 @@ bool SDL_PhysFS_Init(const char* argv) {
 /**
  * Initializes the PhysFS virtual file system with access to the preferences directory of SDL as /app.
  *
- * Mounts the writable preferences directory as "/app".
+ * Mounts the writeable preferences directory as "/app".
  *
  * @param org The name of your organization.
  * @param app The name of your application.

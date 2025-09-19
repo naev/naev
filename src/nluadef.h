@@ -18,7 +18,7 @@
 static_assert( 1, "" );
 /*
  * A number of Lua error functions don't return, but aren't marked
- * as such. These redeclarations ensure that the compiler and analyzer are
+ * as such. These redeclarations ensure that the compiler and analyser are
  * aware that no return will take place when compiling our code.
  */
 #pragma GCC diagnostic push

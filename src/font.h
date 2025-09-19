@@ -97,7 +97,7 @@ void gl_print( const glFont *ft_font, double x, double y, const glColour *c,
 PRINTF_FORMAT( 6, 7 )
 int gl_printMax( const glFont *ft_font, const int max, double x, double y,
                  const glColour *c, const char *fmt, ... );
-/* prints text centered in width at x */
+/* prints text centred in width at x */
 PRINTF_FORMAT( 6, 7 )
 int gl_printMid( const glFont *ft_font, const int width, double x, double y,
                  const glColour *c, const char *fmt, ... );

@@ -2,9 +2,9 @@
 /* -*- c -*-
    ----------------------------------------------------------------
 
-   Notice that the following BSD-style license applies to this one
+   Notice that the following BSD-style licence applies to this one
    file (valgrind.h) only.  The rest of Valgrind is licensed under the
-   terms of the GNU General Public License, version 2, unless
+   terms of the GNU General Public Licence, version 2, unless
    otherwise indicated.  See the COPYING file in the source
    distribution for details.
 
@@ -24,7 +24,7 @@
 
    2. The origin of this software must not be misrepresented; you must
       not claim that you wrote the original software.  If you use this
-      software in a product, an acknowledgment in the product
+      software in a product, an acknowledgement in the product
       documentation would be appreciated but is not required.
 
    3. Altered source versions must be plainly marked as such, and must
@@ -48,9 +48,9 @@
 
    ----------------------------------------------------------------
 
-   Notice that the above BSD-style license applies to this one file
+   Notice that the above BSD-style licence applies to this one file
    (valgrind.h) only.  The entire rest of Valgrind is licensed under
-   the terms of the GNU General Public License, version 2.  See the
+   the terms of the GNU General Public Licence, version 2.  See the
    COPYING file in the source distribution for details.
 
    ----------------------------------------------------------------
@@ -1238,7 +1238,7 @@ typedef
 
 /* Macros to save and align the stack before making a function
    call and restore it afterwards as gcc may not keep the stack
-   pointer aligned if it doesn't realise calls are being made
+   pointer aligned if it doesn't realize calls are being made
    to other functions. */
 
 #define VALGRIND_ALIGN_STACK               \
@@ -1743,7 +1743,7 @@ typedef
 
 /* Macros to save and align the stack before making a function
    call and restore it afterwards as gcc may not keep the stack
-   pointer aligned if it doesn't realise calls are being made
+   pointer aligned if it doesn't realize calls are being made
    to other functions. */
 
 #define VALGRIND_ALIGN_STACK               \
@@ -2249,7 +2249,7 @@ typedef
 
 /* Macros to save and align the stack before making a function
    call and restore it afterwards as gcc may not keep the stack
-   pointer aligned if it doesn't realise calls are being made
+   pointer aligned if it doesn't realize calls are being made
    to other functions. */
 
 #define VALGRIND_ALIGN_STACK               \
@@ -2728,7 +2728,7 @@ typedef
 
 /* Macros to save and align the stack before making a function
    call and restore it afterwards as gcc may not keep the stack
-   pointer aligned if it doesn't realise calls are being made
+   pointer aligned if it doesn't realize calls are being made
    to other functions. */
 
 #define VALGRIND_ALIGN_STACK               \
@@ -3284,7 +3284,7 @@ typedef
 
 /* Macros to save and align the stack before making a function
    call and restore it afterwards as gcc may not keep the stack
-   pointer aligned if it doesn't realise calls are being made
+   pointer aligned if it doesn't realize calls are being made
    to other functions. */
 
 #define VALGRIND_ALIGN_STACK               \
@@ -3835,7 +3835,7 @@ typedef
 
 /* Macros to save and align the stack before making a function
    call and restore it afterwards as gcc may not keep the stack
-   pointer aligned if it doesn't realise calls are being made
+   pointer aligned if it doesn't realize calls are being made
    to other functions. */
 
 /* This is a bit tricky.  We store the original stack pointer in r10
@@ -6707,7 +6707,7 @@ typedef
 
           /* Some requests used for Valgrind internal, such as
              self-test or self-hosting. */
-          /* Initialise IR injection */
+          /* Initialize IR injection */
           VG_USERREQ__VEX_INIT_FOR_IRI = 0x1901,
           /* Used by Inner Valgrind to inform Outer Valgrind where to
              find the list of inner guest threads */
@@ -7135,7 +7135,7 @@ VALGRIND_PRINTF_BACKTRACE(const char *format, ...)
    If a connection is opened with GDB, the output will be sent
    according to the output mode set for vgdb.
    If no connection is opened, output will go to the log output.
-   Returns 1 if command not recognised, 0 otherwise. */
+   Returns 1 if command not recognized, 0 otherwise. */
 #define VALGRIND_MONITOR_COMMAND(command)                               \
    VALGRIND_DO_CLIENT_REQUEST_EXPR(0, VG_USERREQ__GDB_MONITOR_COMMAND, \
                                    command, 0, 0, 0, 0)
