@@ -909,7 +909,7 @@ function render( _dt )
    renderField( credits_h, tbar_center_x + tbar_center_w/2 + 4, fields_y, fields_w, col_text, icon_money )
    renderField( fmt.tonnes_short(cargo), tbar_center_x + tbar_center_w/2 + fields_w + 12, fields_y, fields_w, col_text, icon_cargo )
 
-   --Center
+   --Centre
    gfx.renderTex( top_bar_center, tbar_center_x - tbar_center_w/2, tbar_y + tbar_h - tbar_center_h )
 
    --Time
