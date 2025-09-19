@@ -69,6 +69,7 @@ characterise->characterize
 characterised->characterized
 characterises->characterizes
 characterising->characterizing
+civilisation->civilization
 cognizant->cognisant
 color->colour
 coloration->colouration
@@ -193,6 +194,9 @@ finalises->finalizes
 finalising->finalizing
 flavor->flavour
 flavors->flavours
+focuses->focusses
+focusing->focussing
+focussed->focused
 formalisation->formalization
 formalise->formalize
 formalised->formalized
@@ -261,9 +265,6 @@ legalises->legalizes
 legalising->legalizing
 leukemia->leukaemia
 license->licence
-licensed->licenced
-licenses->licences
-licensing->licencing
 liter->litre
 liters->litres
 localisation->localization
@@ -440,6 +441,7 @@ reparameterised->reparameterized
 reparameterises->reparameterizes
 reparameterising->reparameterizing
 rigor->rigour
+routing->routeing
 salable->saleable
 sanitisation->sanitization
 sanitise->sanitize
