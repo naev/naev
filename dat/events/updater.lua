@@ -401,7 +401,7 @@ function create ()
       did0120 = true
    end
    -- Run on saves older than 0.13.0
-   if not save_version or naev.versionTest( save_version, "<0.13.0-alpha.9") then
+   if not save_version or naev.versionTest( save_version, "<0.13.0-alpha.10") then
       updater0130( did0120, did0110, did0100, did090 )
       --didupdate = true
    end
