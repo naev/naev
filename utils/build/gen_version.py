@@ -8,98 +8,89 @@ import logging
 # Configure logging to output to stderr
 logging.basicConfig(level=logging.INFO, stream=sys.stderr)
 
-def parse_version(version_str):
-   """
-   Parses a git describe version string into a standardized version format.
-   Handles tags with additional commit/dirtiness info.
-   """
-   try:
-      version_parts = version_str.split('-')
-      if len(version_parts) >= 2:
-         version = version_parts[0] + '-' + version_parts[1].replace('.', '.') + '+' + '.'.join(version_parts[2:]).replace('-', '+')
-      else:
-         version = version_str
-      return version
-   except Exception as e:
-      logging.error(f"Error parsing version string: {e}")
-      return ''
 
-def get_matching_tag(source_root, version_prefix):
-   """
-   Returns the latest tag that matches the given version prefix (e.g., 'v0.13').
-   Looks for tags in the git repository that start with the specified prefix.
-   """
+def get_commit_sha(source_root: str) -> str | None:
+   """Return the short git commit SHA, or None if unavailable."""
    try:
-      tags_proc = subprocess.run(
-         ['git', '-C', source_root, 'tag', '--list', f'v{version_prefix}*', '--sort=-v:refname'],
-         capture_output=True, text=True, check=True
+      proc = subprocess.run(
+         ["git", "-C", source_root, "rev-parse", "--short", "HEAD"],
+         capture_output=True,
+         text=True,
+         check=True,
       )
-      tags = tags_proc.stdout.strip().splitlines()
-      if tags:
-         return tags[0]
-   except Exception as e:
-      logging.warning(f"Could not find matching tag for version {version_prefix}: {e}")
-   return None
+      return proc.stdout.strip()
+   except Exception:
+      return None
 
-def get_version(source_root):
-   """
-   Determines the project version using git tags or a VERSION file.
-   Prefers a git tag matching the provided version argument, if available.
-   Falls back to the VERSION file or a default dev version if necessary.
-   """
-   version_file = os.path.join(source_root, 'dat', 'VERSION')
-   version = ""
 
-   if os.path.isdir(os.path.join(source_root, '.git')):
-      # In the git repo. Build the tag from git info
+def is_dirty(source_root: str) -> bool:
+   """Return True if the git repo has uncommitted changes."""
+   try:
+      proc = subprocess.run(
+         ["git", "-C", source_root, "status", "--porcelain"],
+         capture_output=True,
+         text=True,
+         check=True,
+      )
+      return bool(proc.stdout.strip())
+   except Exception:
+      return False
+
+
+def get_version(source_root: str) -> str:
+   """
+   Determine the project version:
+      1. Use MESON_PROJECT_VERSION + git SHA [+dirty] if .git exists.
+      2. Otherwise, read existing dat/VERSION if present.
+      3. Otherwise, just MESON_PROJECT_VERSION.
+      Always write the result back to dat/VERSION.
+      """
+      version_file = os.path.join(source_root, "dat", "VERSION")
+
+   base_version = os.getenv("MESON_PROJECT_VERSION")
+   if not base_version:
+      logging.error("MESON_PROJECT_VERSION not set — must be run by Meson.")
+      sys.exit(1)
+
+   version = None
+
+   git_dir = os.path.join(source_root, ".git")
+   if os.path.isdir(git_dir):
+      version = base_version
+      sha = get_commit_sha(source_root)
+      if sha:
+         version += f"+g{sha}"
+         if is_dirty(source_root):
+            version += "+dirty"
+   elif os.path.isfile(version_file):
+      # No git, but VERSION file exists (tarball or source package)
       try:
-         version_arg = sys.argv[1] if len(sys.argv) > 1 else None
-         tag_to_match = None
-         if version_arg:
-            tag_to_match = get_matching_tag(source_root, version_arg)
-         if tag_to_match:
-            git_describe = subprocess.run(
-               ['git', '-C', source_root, 'describe', '--tags', '--match', tag_to_match, '--dirty'],
-               capture_output=True, text=True, check=True
-            )
-            git_output = git_describe.stdout.strip()
-            version = parse_version(git_output[1:])
-         else:
-            git_describe = subprocess.run(
-               ['git', '-C', source_root, 'describe', '--tags', '--match', 'v*', '--dirty'],
-               capture_output=True, text=True, check=True
-            )
-            git_output = git_describe.stdout.strip()
-            version = parse_version(git_output[1:])
-         if version:
-            with open(version_file, 'w') as f:
-               f.write(version)
-      except subprocess.CalledProcessError:
-         pass
-
-   if not version and os.path.isfile(version_file):
-      # In a source package. Version file should exist.
-      with open(version_file, 'r') as f:
-         version = f.read().strip()
+         with open(version_file, "r") as f:
+            version = f.read().strip()
+      except Exception as e:
+         logging.warning(f"Could not read existing VERSION file: {e}")
 
    if not version:
-      # Couldn't find git repo or a packaged VERSION file
-      # Did you clone the repo with --depth=1?
-      # Did you download the zip'd repo instead of a release?
-      if len(sys.argv) > 1:
-         version = f"{sys.argv[1]}+dev"
-      else:
-         version = "0.0.0+dev"
-      with open(version_file, 'w') as f:
+      # Fallback: just use the base project version
+      version = base_version
+
+   # Write the version to VERSION file
+   try:
+      os.makedirs(os.path.dirname(version_file), exist_ok=True)
+      with open(version_file, "w") as f:
          f.write(version)
+   except Exception as e:
+      logging.warning(f"Could not write VERSION file: {e}")
 
    return version
 
+
 if __name__ == "__main__":
-   source_root = os.getenv('MESON_SOURCE_ROOT')
-   if source_root:
-      version = get_version(source_root)
-      logging.info(f"Version retrieved: {version}")
-      print(version)
-   else:
-      logging.error("Error: MESON_SOURCE_ROOT environment variable not set.")
+   source_root = os.getenv("MESON_SOURCE_ROOT")
+   if not source_root:
+      logging.error("This script is intended to be run by Meson.")
+      sys.exit(1)
+
+   version = get_version(source_root)
+   logging.info(f"Version retrieved: {version}")
+   print(version)
