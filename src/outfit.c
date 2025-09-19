@@ -2115,7 +2115,8 @@ static void outfit_parseSBolt( Outfit *temp, const xmlNodePtr parent )
          }
          continue;
       }
-      if ( xml_isNode( node, "pointdefense" ) ) {
+      if ( xml_isNode( node, "pointdefense" ) ||
+           xml_isNode( node, "pointdefence" ) ) {
          outfit_setProp( temp, OUTFIT_PROP_WEAP_POINTDEFENSE );
          continue;
       }
@@ -2328,7 +2329,8 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
       xmlr_int( node, "mining_rarity", temp->u.bem.mining_rarity );
       xmlr_strd( node, "lua", temp->lua_file );
       xmlr_strd( node, "lua_inline", temp->lua_inline );
-      if ( xml_isNode( node, "pointdefense" ) ) {
+      if ( xml_isNode( node, "pointdefense" ) ||
+           xml_isNode( node, "pointdefence" ) ) {
          outfit_setProp( temp, OUTFIT_PROP_WEAP_POINTDEFENSE );
          continue;
       }
@@ -2513,7 +2515,8 @@ static void outfit_parseSLauncher( Outfit *temp, const xmlNodePtr parent )
          }
          continue;
       }
-      if ( xml_isNode( node, "pointdefense" ) ) {
+      if ( xml_isNode( node, "pointdefense" ) ||
+           xml_isNode( node, "pointdefence" ) ) {
          outfit_setProp( temp, OUTFIT_PROP_WEAP_POINTDEFENSE );
          continue;
       }
