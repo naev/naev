@@ -351,7 +351,7 @@ function enter()
    -- When entering Empire Space, contact with Captain HewHew
    elseif mem.stage == 4 and system.cur():presences()["Empire"] and (not system.cur():presences()["Za'lek"]) then
       hook.timer(2.0, "spawnHewHew", mem.lastSys)
-      hook.timer(10.0, "backDialog")  -- And some dialog with the VIP
+      hook.timer(10.0, "backDialog")  -- And some dialogue with the VIP
    end
 
    -- Spawn Strafer

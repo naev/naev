@@ -1,4 +1,4 @@
--- Partial reimplementation of https://github.com/hoelzro/lua-term (license: MIT) using Naev markup.
+-- Partial reimplementation of https://github.com/hoelzro/lua-term (licence: MIT) using Naev markup.
 
 local term = { colors = {} }
 

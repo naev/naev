@@ -257,7 +257,7 @@ function call_the_police ()
    vn.scene()
    local p = ccomm.newCharacter( vn, adm1 )
    vn.transition()
-   p(_([["We have reason to believe you are carrying controlled substances without a proper license. Please stop your ship and prepare to be boarded."]]))
+   p(_([["We have reason to believe you are carrying controlled substances without a proper licence. Please stop your ship and prepare to be boarded."]]))
    p(_([["Stand down for inspection."]]))
    vn.run()
 

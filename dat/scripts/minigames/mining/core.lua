@@ -109,7 +109,7 @@ function mining.load()
       }
    end
 
-   -- Center on player
+   -- Centre on player
    cx, cy = naev.gfx.screencoords( naev.camera.pos(), true ):get()
 
    -- Generate targets
@@ -293,18 +293,18 @@ function mining.draw()
       local ta = alpha * ease( math.min(tcompleted/0.1,1.0) )
       local text = _("MINING COMPLETED")
       lg.setColour( 1, 1, 1, ta )
-      lg.printf( text, mfont, cx-radius, y, 2*radius, "center" )
+      lg.printf( text, mfont, cx-radius, y, 2*radius, "centre" )
 
       if reward then
          y = y+10+fh
-         lg.printf( _("ACQUIRED:"), mfont, cx-radius, y, 2*radius, "center" )
+         lg.printf( _("ACQUIRED:"), mfont, cx-radius, y, 2*radius, "centre" )
          y = y+64
          lg.setColour( 0, 0, 0, 0.8*ta )
          lg.rectangle( "fill", cx-36, y-36, 72, 72 )
          lg.setColour( 1, 1, 1, ta )
          lg.draw( reward.icon, cx-32, y-32, 0, 64/reward.sw, 64/reward.sh )
          y = y+2*fh+10
-         lg.printf( reward.text, mfont, cx-radius, y, 2*radius, "center" )
+         lg.printf( reward.text, mfont, cx-radius, y, 2*radius, "centre" )
       end
 
    elseif not moving or tsincestart < 0.1 then
@@ -313,7 +313,7 @@ function mining.draw()
       lg.setColour( 1, 1, 1, ta )
       local _width, wrappedtext = mfont:getWrap( text, radius )
       local th = mfont:getHeight() * #wrappedtext
-      lg.printf( text, mfont, cx-radius/2, cy-th/2, radius, "center" )
+      lg.printf( text, mfont, cx-radius/2, cy-th/2, radius, "centre" )
    end
 end
 

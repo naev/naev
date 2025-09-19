@@ -57,7 +57,7 @@ end
 
 local function renderColumn( x, y, w, olist, title )
    lg.setColour( luatk.colour.text )
-   lg.printf( title, x, y, w, "center" )
+   lg.printf( title, x, y, w, "centre" )
    x = x + (w-BOX)*0.5
    y = y + HEADER
    for k,o in ipairs(olist) do

@@ -60,7 +60,7 @@ function accept()
    The image on the wall updates again, this time showing several House Dvaered crests near your ship.
    "Some time after you enter the system, several of our military assets will jump in and open fire. To the FLF, it will look like one of their own has come under attack! Since their base is nearby, they will undoubtedly send reinforcements to help their 'comrade' out of a tight situation."]]), {sys=mem.destsys}))
       tk.msg(_("A clever ruse"), _([["As soon as the FLF ships join the battle, you and the Dvaered ships will disengage and target the FLF instead. Your mission is to render at least one of their ships incapable of fighting, and board it. You can then access the ship's computer and download the flight log, which should contain the location of the FLF base. Take this information to a Dvaered base, and your mission will be complete."
-   The image on the wall updates one last time, simulating the battle as described by Colonel Urnus. Several FLF logos appear, which are promptly surrounded by the Dvaered ones. Then the logos turn gray, indicating that they've been disabled.
+   The image on the wall updates one last time, simulating the battle as described by Colonel Urnus. Several FLF logos appear, which are promptly surrounded by the Dvaered ones. Then the logos turn grey, indicating that they've been disabled.
    "Let me make one thing clear, citizen. You are allowed, even expected, to fire on the Dvaered ships that are firing on you. However, you must make it look you're on the losing side, or the FLF will not come to your aid! So, do NOT disable or destroy any Dvaered ships, and make sure your own armour takes a bit of a beating. This is vital to the success of the mission. Do not fail."
    Colonel Urnus seems to have concluded his explanation, so you, having spotted the obvious flaw in the Dvaereds' plan, pop the question of what happens if the FLF never show up.
    "Well," the Colonel muses, "That will mean our intel was probably wrong. But don't worry, citizen, we'll get those terrorists eventually! Now, time is of the essence, so get to your ship and follow your orders. Dismissed!"]]))
@@ -151,17 +151,17 @@ function spawnDV()
    hook.timer(0.5, "pollHealth")
 end
 
--- Polls the player's health and the Dvaereds' shields, and spawns the FLF fleet if shields and armor are below a certain value.
+-- Polls the player's health and the Dvaereds' shields, and spawns the FLF fleet if shields and armour are below a certain value.
 function pollHealth()
    mem.shieldDV = 0
-   mem.parmor, mem.pshield = player.pilot():health()
+   mem.parmour, mem.pshield = player.pilot():health()
    local maxshieldDV = 0
    for i, j in ipairs(fleetDV) do
       maxshieldDV = maxshieldDV + j:stats()["shield"]
-      mem.armor, mem.shield = j:health()
+      mem.armour, mem.shield = j:health()
       mem.shieldDV = mem.shieldDV + mem.shield
    end
-   if mem.parmor <= 60 and mem.pshield <= 10 and mem.shieldDV <= (maxshieldDV - 50) then
+   if mem.parmour <= 60 and mem.pshield <= 10 and mem.shieldDV <= (maxshieldDV - 50) then
       spawnFLF()
    else
       hook.timer(0.5, "pollHealth")
@@ -199,7 +199,7 @@ end
 
 function disableDV()
    if mem.DVdisablefail then -- Only true as long as the FLF aren't there yet
-      tk.msg(_("You fought too hard!"), _("You have disabled a Dvaered ship, thereby violating your orders. The operation is canceled thanks to you. The Dvaered are less than pleased."))
+      tk.msg(_("You fought too hard!"), _("You have disabled a Dvaered ship, thereby violating your orders. The operation is cancelled thanks to you. The Dvaered are less than pleased."))
       faction.get("Dvaered"):hit(-10)
       abort()
    end

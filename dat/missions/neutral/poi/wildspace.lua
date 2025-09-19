@@ -40,7 +40,7 @@ return function ( mem )
 
          local sai = tut.vn_shipai()
          vn.appear( sai, tut.shipai.transition )
-         sai(_([["There seem to be a total of 8 bodies on the ship. The purple eyes are likely some sort of effect from the radiation they have received. Analyzing the radiation profile of the ship, it seems to be statistically correlated with the Nebula volatility. I am trying to perform an analysis of the systems, however, the firmware they seem to use is very outdated. It will take a while to interface."]]))
+         sai(_([["There seem to be a total of 8 bodies on the ship. The purple eyes are likely some sort of effect from the radiation they have received. Analysing the radiation profile of the ship, it seems to be statistically correlated with the Nebula volatility. I am trying to perform an analysis of the systems, however, the firmware they seem to use is very outdated. It will take a while to interface."]]))
          vn.na(fmt.f(_([[You check the rest of the bodies while {shipai} performs their analysis. Yup, they all have purple eyes.}]]),
             {shipai=tut.ainame()}))
          local reward = poi.data_str(1)
@@ -50,7 +50,7 @@ return function ( mem )
          vn.na(fmt.reward(reward))
          vn.disappear( sai, tut.shipai.transition )
 
-         vn.na(_([[It may be worth seeing the hidden to see what caused the fate of the ship. You may want to double check how hardened your ship is to radiation first though.]]))
+         vn.na(_([[It may be worth seeing the hidden to see what caused the fate of the ship. You may want to double-check how hardened your ship is to radiation first though.]]))
 
          vn.func( function ()
             jmp:setKnown()

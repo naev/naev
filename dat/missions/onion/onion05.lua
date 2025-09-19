@@ -608,7 +608,7 @@ There is a constant sound of loud and furious typing.]]))
 "l337_b01, everything is in your hands now. Like old times... I'll be waiting with v3c70r and DEADBEEF..."]]))
    msg(_([["CONNECTION TERMINATED"]]))
    vn.disappear( msg )
-   vn.move( l337, "center" )
+   vn.move( l337, "centre" )
 
    l337(_([[...]]))
    vn.music( onion.loops.hacker )
