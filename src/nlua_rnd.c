@@ -107,12 +107,12 @@ static int rndL_int( lua_State *L )
  *
  * A one sigma range means that it creates a number following the normal
  * distribution but limited to the 63% quadrant.  This means that the number is
- * biased towards 0, but can become either 1 or -1.  It's a fancier way of
+ * biassed towards 0, but can become either 1 or -1.  It's a fancier way of
  * generating random numbers.
  *
  * @usage n = 5.5 + rnd.sigma()/2. -- Creates a number from 5 to 6 slightly
- * biased to 5.5.
- *    @luatreturn number A number from [-1:1] biased slightly towards 0.
+ * biassed to 5.5.
+ *    @luatreturn number A number from [-1:1] biassed slightly towards 0.
  * @luafunc sigma
  */
 static int rndL_sigma( lua_State *L )
@@ -125,14 +125,14 @@ static int rndL_sigma( lua_State *L )
  *
  * This function behaves much like the `rnd.sigma` function but uses the
  * two-sigma range, meaning that numbers are in the 95% quadrant and thus are
- * much more random.  They are biased towards 0 and approximately 63% will be
+ * much more random.  They are biassed towards 0 and approximately 63% will be
  * within
  * [-1:1].  The rest will be in either the [-2:-1] range or the [1:2] range.
  *
  * @usage n = 5.5 + rnd.twosigma()/4. -- Creates a number from 5 to 6 heavily
- * biased to 5.5.
+ * biassed to 5.5.
  *
- *    @luatreturn number A number from [-2:2] biased heavily towards 0.
+ *    @luatreturn number A number from [-2:2] biassed heavily towards 0.
  * @luafunc twosigma
  */
 static int rndL_twosigma( lua_State *L )
@@ -150,9 +150,9 @@ static int rndL_twosigma( lua_State *L )
  * time.  This can be used when you want extremes to appear rarely.
  *
  * @usage n = 5.5 + rnd.threesigma()/6. -- Creates a number from 5 to 6 totally
- * biased to 5.5.
+ * biassed to 5.5.
  *
- *    @luatreturn number A number from [-3:3] biased totally towards 0.
+ *    @luatreturn number A number from [-3:3] biassed totally towards 0.
  * @luafunc threesigma
  */
 static int rndL_threesigma( lua_State *L )

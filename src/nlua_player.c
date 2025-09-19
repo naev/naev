@@ -2398,7 +2398,7 @@ static int playerL_inventoryOwned( lua_State *L )
 /**
  * @brief Checks to see if a player has a license.
  *
- *    @luatparam string name The name of the license to check.
+ *    @luatparam string name The name of the licence to check.
  *    @luatreturn boolean Whether or not the player has the license.
  * @luafunc hasLicense
  */

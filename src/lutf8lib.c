@@ -6,7 +6,7 @@
 /*
  * From: https://github.com/starwing/luautf8/releases/tag/0.1.6
 
-MIT License
+MIT Licence
 
 Copyright (c) 2018 Xavier Wang
 

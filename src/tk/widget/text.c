@@ -34,7 +34,7 @@ static void txt_cleanup( Widget *txt );
  *    @param string Text to display.
  */
 void window_addText( const unsigned int wid, const int x, const int y,
-                     const int w, const int h, const int centered,
+                     const int w, const int h, const int centred,
                      const char *name, glFont *font, const glColour *colour,
                      const char *string )
 {
@@ -51,7 +51,7 @@ void window_addText( const unsigned int wid, const int x, const int y,
    wgt->cleanup          = txt_cleanup;
    wgt->dat.txt.font     = ( font == NULL ) ? &gl_defFont : font;
    wgt->dat.txt.colour   = ( colour == NULL ) ? cFontWhite : *colour;
-   wgt->dat.txt.centered = centered;
+   wgt->dat.txt.centered = centred;
    wgt->dat.txt.text     = ( string == NULL ) ? NULL : strdup( string );
 
    /* position/size */

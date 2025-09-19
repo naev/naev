@@ -38,8 +38,8 @@ typedef struct omsg_s {
 static omsg_t      *omsg_array = NULL; /**< Array of messages. */
 static unsigned int omsg_idgen = 0;    /**< Unique ID generator. */
 
-static double omsg_center_x = 0.;   /**< X center of the overlay messages. */
-static double omsg_center_y = 0.;   /**< Y center of the overlay messages. */
+static double omsg_center_x = 0.;   /**< X centre of the overlay messages. */
+static double omsg_center_y = 0.;   /**< Y centre of the overlay messages. */
 static double omsg_center_w = 100.; /**< Width of the overlay messages. */
 
 /*
@@ -169,7 +169,7 @@ void omsg_render( double dt )
    if ( omsg_array == NULL )
       return;
 
-   /* Center. */
+   /* Centre. */
    x = omsg_center_x - omsg_center_w / 2.;
    y = omsg_center_y;
 

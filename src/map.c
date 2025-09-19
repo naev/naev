@@ -71,8 +71,8 @@ typedef struct CstMapWidget_ {
    double  xoff;             /**< X offset for centering. */
    double  yoff;             /**< Y offset for centering. */
    double  zoom;             /**< Level of zoom. */
-   double  xpos;             /**< Centered x position. */
-   double  ypos;             /**< Centered y position. */
+   double  xpos;             /**< Centred x position. */
+   double  ypos;             /**< Centred y position. */
    double  xtarget;          /**< Target X position. */
    double  ytarget;          /**< Target Y position. */
    int     drag;             /**< Is the user dragging the map? */
@@ -2775,7 +2775,7 @@ void map_cycleMissions( int dir )
    else
       return;
 
-   /* Select and center system. */
+   /* Select and centre system. */
    map_select( target, 0 );
    map_center( window_get( MAP_WDWNAME ), target->name );
 
@@ -3340,7 +3340,7 @@ int map_center( int wid, const char *sys )
    if ( ssys == NULL )
       return -1;
 
-   /* Center on the system. */
+   /* Centre on the system. */
    cst->xtarget = ssys->pos.x * cst->zoom + cst->xoff;
    cst->ytarget = ssys->pos.y * cst->zoom + cst->yoff;
 

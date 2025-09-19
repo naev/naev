@@ -25,7 +25,7 @@
  *
  * Updated in 2011 to avoid a corner case infinite loop.
  *
- * Updated 2012 to change license from LGPL to MIT.
+ * Updated 2012 to change licence from LGPL to MIT.
  *
  * Updated 2014 to fix a bug with the 'gy' gradient computation.
  *
@@ -33,7 +33,7 @@
 
 /*
  Copyright (C) 2009-2012 Stefan Gustavson (stefan.gustavson@gmail.com)
- The code in this file is distributed under the MIT license:
+ The code in this file is distributed under the MIT licence:
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -146,14 +146,14 @@ double distaa3( double *img, double *gximg, double *gyimg, int w, int c, int xc,
    int    closest;
 
    closest = c - xc - yc * w; // Index to the edge pixel pointed to from c
-   a       = img[closest];    // Grayscale value at the edge pixel
+   a       = img[closest];    // Greyscale value at the edge pixel
    gx      = gximg[closest];  // X gradient component at the edge pixel
    gy      = gyimg[closest];  // Y gradient component at the edge pixel
 
    if ( a > 1.0 )
       a = 1.0;
    if ( a < 0.0 )
-      a = 0.0; // Clip grayscale values outside the range [0,1]
+      a = 0.0; // Clip greyscale values outside the range [0,1]
    if ( a == 0.0 )
       return 1000000.0; // Not an object pixel, return "very far" ("don't know
                         // yet")
@@ -223,7 +223,7 @@ void edtaa3( double *img, double *gx, double *gy, int w, int h, short *distx,
 
          /* scan right, propagate distances from above & left */
 
-         /* Leftmost pixel is special, has no left neighbors */
+         /* Leftmost pixel is special, has no left neighbours */
          olddist = dist[i];
          if ( olddist > 0 ) // If non-zero distance or not set yet
          {
@@ -256,7 +256,7 @@ void edtaa3( double *img, double *gx, double *gy, int w, int h, short *distx,
          }
          i++;
 
-         /* Middle pixels have all neighbors */
+         /* Middle pixels have all neighbours */
          for ( x = 1; x < w - 1; x++, i++ ) {
             olddist = dist[i];
             if ( olddist <= 0 )
@@ -318,7 +318,7 @@ void edtaa3( double *img, double *gx, double *gy, int w, int h, short *distx,
             }
          }
 
-         /* Rightmost pixel of row is special, has no right neighbors */
+         /* Rightmost pixel of row is special, has no right neighbours */
          olddist = dist[i];
          if ( olddist > 0 ) // If not already zero distance
          {
@@ -365,7 +365,7 @@ void edtaa3( double *img, double *gx, double *gy, int w, int h, short *distx,
          }
 
          /* Move index to second rightmost pixel of current row. */
-         /* Rightmost pixel is skipped, it has no right neighbor. */
+         /* Rightmost pixel is skipped, it has no right neighbour. */
          i = y * w + w - 2;
 
          /* scan left, propagate distance from right */
@@ -396,7 +396,7 @@ void edtaa3( double *img, double *gx, double *gy, int w, int h, short *distx,
 
          /* Scan left, propagate distances from below & right */
 
-         /* Rightmost pixel is special, has no right neighbors */
+         /* Rightmost pixel is special, has no right neighbours */
          olddist = dist[i];
          if ( olddist > 0 ) // If not already zero distance
          {
@@ -429,7 +429,7 @@ void edtaa3( double *img, double *gx, double *gy, int w, int h, short *distx,
          }
          i--;
 
-         /* Middle pixels have all neighbors */
+         /* Middle pixels have all neighbours */
          for ( x = w - 2; x > 0; x--, i-- ) {
             olddist = dist[i];
             if ( olddist <= 0 )
@@ -490,7 +490,7 @@ void edtaa3( double *img, double *gx, double *gy, int w, int h, short *distx,
                changed  = 1;
             }
          }
-         /* Leftmost pixel is special, has no left neighbors */
+         /* Leftmost pixel is special, has no left neighbours */
          olddist = dist[i];
          if ( olddist > 0 ) // If not already zero distance
          {
@@ -537,7 +537,7 @@ void edtaa3( double *img, double *gx, double *gy, int w, int h, short *distx,
          }
 
          /* Move index to second leftmost pixel of current row. */
-         /* Leftmost pixel is skipped, it has no left neighbor. */
+         /* Leftmost pixel is skipped, it has no left neighbour. */
          i = y * w + 1;
          for ( x = 1; x < w; x++, i++ ) {
             /* scan right, propagate distance from left */

@@ -49,7 +49,7 @@ typedef struct ovr_marker_s {
    char             *text;     /**< Marker display text. */
    ovr_marker_type_t type;     /**< Marker type. */
    int               refcount; /**< Refcount. */
-   vec2              pos;      /**< Center of the marker. */
+   vec2              pos;      /**< Centre of the marker. */
    MapOverlayPos     mo;       /**< Map overlay display position. */
    union {
       struct {

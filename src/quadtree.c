@@ -3,7 +3,7 @@
  * posted under following page:
  * https://stackoverflow.com/questions/41946007/efficient-and-well-explained-implementation-of-a-quadtree-for-2d-collision-det
  *
- * As for the license, the author has kindly noted:
+ * As for the licence, the author has kindly noted:
  *
  * "Oh and feel free to use this code I post however you want, even for
  * commercial projects. I would really love it if people let me know if they
@@ -60,7 +60,7 @@ enum {
    // ----------------------------------------------------------------------------------------
    nd_num = 6,
 
-   // Stores the extents of the node using a centered rectangle and half-size.
+   // Stores the extents of the node using a centred rectangle and half-size.
    nd_idx_mx = 0,
    nd_idx_my = 1,
    nd_idx_sx = 2,
@@ -243,7 +243,7 @@ void qt_create( Quadtree *qt, int x1, int y1, int x2, int y2, int max_elements,
    qt->root_sx     = half_width;
    qt->root_sy     = half_height;
 
-   // Center
+   // Centre
    qt->root_mx = x1 + half_width;
    qt->root_my = y1 + half_height;
 }

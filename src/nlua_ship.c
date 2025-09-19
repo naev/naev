@@ -490,13 +490,13 @@ static int shipL_fuelConsumption( lua_State *L )
 }
 
 /**
- * @brief Gets license required for the ship.
+ * @brief Gets licence required for the ship.
  *
- * @usage license = s:license()
+ * @usage licence = s:licence()
  *
- *    @luatparam Ship s Ship to get license of.
- *    @luatreturn string Required license or nil if not necessary.
- * @luafunc license
+ *    @luatparam Ship s Ship to get licence of.
+ *    @luatreturn string Required licence or nil if not necessary.
+ * @luafunc licence
  */
 static int shipL_license( lua_State *L )
 {

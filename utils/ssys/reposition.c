@@ -560,22 +560,22 @@ int reposition_sys(double dst[2], const struct s_ssys *map, int ssys,
    for (int i = 0; i < ssys_p.n_neigh; i++)
       ssys_p.neigh[OFF_N * i + 2] = id_neigh[i].len;
 
-   double center[2];
+   double centre[2];
    // include self in the list -> "+ 1"
    // Allow angles down to 60° -> 3.0 *
    double sqrad =
-      3.0 * bounding_circle(center, ssys_p.neigh, ssys_p.n_neigh + 1, OFF_N);
+      3.0 * bounding_circle(centre, ssys_p.neigh, ssys_p.n_neigh + 1, OFF_N);
    double rad = sqrt(sqrad);
 
-   double UL[2] = {center[0] - rad, center[1] - rad};
-   double LR[2] = {center[0] + rad, center[1] + rad};
+   double UL[2] = {centre[0] - rad, centre[1] - rad};
+   double LR[2] = {centre[0] + rad, centre[1] + rad};
 
    id_around     = calloc(map->nsys, sizeof(int));
    double max_sq = rad + ssys_p.falloff;
    max_sq *= max_sq;
 
    for (int i = 0; i < map->nsys; i++)
-      if (i != ssys && dist_sq(center, map->sys[i].v) < max_sq &&
+      if (i != ssys && dist_sq(centre, map->sys[i].v) < max_sq &&
           map->sys[i].w != 0.0)
          id_around[n_around++] = i;
 
@@ -598,7 +598,7 @@ int reposition_sys(double dst[2], const struct s_ssys *map, int ssys,
       double *B    = map->sys[map->jumps[i].jmp[1]].v;
       double  u[2] = INIT_VDIF(B, A);
       norm_v(u);
-      if (seg_dist_sq(A, B, u, center) < max_sq) {
+      if (seg_dist_sq(A, B, u, centre) < max_sq) {
          vcpy(ssys_p.edges + ssys_p.n_edges * 8, A);
          vcpy(ssys_p.edges + ssys_p.n_edges * 8 + 2, B);
          vcpy(ssys_p.edges + ssys_p.n_edges * 8 + 4, u);
@@ -610,7 +610,7 @@ int reposition_sys(double dst[2], const struct s_ssys *map, int ssys,
       realloc((void *) ssys_p.edges, ssys_p.n_edges * 8 * sizeof(double));
 
    if (g_opt || ppm) {
-      double best[2]    = {center[0], center[1]};
+      double best[2]    = {centre[0], centre[1]};
       double best_score = DBL_MAX;
       int    best_id    = 0;
 
@@ -621,7 +621,7 @@ int reposition_sys(double dst[2], const struct s_ssys *map, int ssys,
          for (int j = 0; j < SAMP; j++) {
             v[0] = (1.0 * j / (SAMP - 1)) * (LR[0] - UL[0]) + UL[0];
             v[1] = (1.0 * i / (SAMP - 1)) * (LR[1] - UL[1]) + UL[1];
-            if (dist_sq(center, v) <= sqrad) {
+            if (dist_sq(centre, v) <= sqrad) {
                const double score =
                   sys_total_score(samples + 3 * (i * SAMP + j), &ssys_p, v);
                if (score < best_score) {
@@ -675,7 +675,7 @@ void gen_map_reposition(struct s_ssys *map, bool g_opt, bool quiet,
       double v[2] = {map->sys[i].v[0], map->sys[i].v[1]};
 
       if (reposition_sys(v, map, i, g_opt, quiet, gen_map) && (!quiet))
-         fprintf(stderr, "\"%s\" has no neighbor !\n", map->sys_nam[i]);
+         fprintf(stderr, "\"%s\" has no neighbour !\n", map->sys_nam[i]);
 
       const size_t n = snprintf(
          buff, 511, "%s %lf %lf%s\n", map->sys_nam[i],
@@ -857,7 +857,7 @@ static int usage(char *nam, int ret, double w)
            "  If <weight> is set (positive), outputs values in the form:\n"
            "    (<weight>*old_pos + new_pos) / (<weight> + 1.0)\n"
            "   - If not specified, <weight> defaults to %.1f.\n"
-           "   - If you repos systems that are neighbors, its is strongly "
+           "   - If you repos systems that are neighbours, its is strongly "
            "advised\n"
            "       to choose <weight> at the very least greater than 1.0.\n"
            "   - If you repos independent systems, you can (and should) use "

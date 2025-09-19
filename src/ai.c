@@ -2110,7 +2110,7 @@ static int aiL_iface( lua_State *L )
       /* 1 - 1/(|x|+1) does a pretty nice job of mapping the reals to the
        * interval (0...1). That forms the core of this angle calculation */
       /* There is nothing special about the scaling parameter of 200; it can be
-         tuned to get any behavior desired. A lower number will give a more
+         tuned to get any behaviour desired. A lower number will give a more
          dramatic 'lead' */
       double speedmap =
          -copysign( 1. - 1. / ( FABS( drift_azimuthal / 200. ) + 1. ),
@@ -2226,7 +2226,7 @@ static int aiL_idir( lua_State *L )
       /* 1 - 1/(|x|+1) does a pretty nice job of mapping the reals to the
        * interval (0...1). That forms the core of this angle calculation */
       /* There is nothing special about the scaling parameter of 200; it can be
-         tuned to get any behavior desired. A lower number will give a more
+         tuned to get any behaviour desired. A lower number will give a more
          dramatic 'lead' */
       double speedmap =
          -copysign( 1. - 1. / ( FABS( drift_azimuthal / 200. ) + 1. ),

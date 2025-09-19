@@ -88,7 +88,7 @@ static int asteroid_updateSingle( Asteroid *a )
    int                   forced;
    int                   setvel = 0;
 
-   /* Push back towards center. */
+   /* Push back towards centre. */
    offx = ast->pos.x - a->sol.pos.x;
    offy = ast->pos.y - a->sol.pos.y;
    d    = pow2( offx ) + pow2( offy );

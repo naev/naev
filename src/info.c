@@ -1802,7 +1802,7 @@ static void info_shiplogAdd( unsigned int wid, const char *str )
 static void info_openShipLog( unsigned int wid )
 {
    int w, h, texth;
-   /* re-initialise the statics */
+   /* re-initialize the statics */
    selectedLog     = 0;
    selectedLogType = 0;
 

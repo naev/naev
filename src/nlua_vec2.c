@@ -786,16 +786,16 @@ static int vectorL_collideLineLine( lua_State *L )
  */
 static int vectorL_collideCircleLine( lua_State *L )
 {
-   const vec2 *center, *p1, *p2;
+   const vec2 *centre, *p1, *p2;
    vec2        crash[2];
    double      radius;
 
-   center = luaL_checkvector( L, 1 );
+   centre = luaL_checkvector( L, 1 );
    radius = luaL_checknumber( L, 2 );
    p1     = luaL_checkvector( L, 3 );
    p2     = luaL_checkvector( L, 4 );
 
-   int cnt = CollideLineCircle( p1, p2, center, radius, crash );
+   int cnt = CollideLineCircle( p1, p2, centre, radius, crash );
    if ( cnt > 0 )
       lua_pushvector( L, crash[0] );
    if ( cnt > 1 )

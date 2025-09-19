@@ -763,7 +763,7 @@ static unsigned int choice_wid = 0; /**< Stores the choice window id. */
 static char        *choice_result;  /**< Pointer to the choice result. */
 static int          choice_nopts;   /**< Counter variable. */
 /**
- * @brief Create the choice dialog. Need to add choices with below method.
+ * @brief Create the choice dialogue. Need to add choices with below method.
  *
  *    @param caption Caption to use for the dialogue.
  *    @param msg Message to display.
@@ -807,7 +807,7 @@ void dialogue_addChoice( const char *caption, const char *msg, const char *opt )
    choice_nopts--;
 }
 /**
- * @brief Run the dialog and return the clicked string.
+ * @brief Run the dialogue and return the clicked string.
  *
  * @note You must free the return value.
  *

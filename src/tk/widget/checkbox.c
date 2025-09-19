@@ -34,7 +34,7 @@ static void    chk_toggleState( Widget *chk );
  *    @param w Width of the widget.
  *    @param h Height of the widget.
  *    @param name Name of the widget to use internally.
- *    @param display Text displayed on the button (centered).
+ *    @param display Text displayed on the button (centred).
  *    @param call Function to call when checkbox is toggled Parameter passed
  *                is the name of the checkbox.
  */

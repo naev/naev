@@ -495,7 +495,7 @@ static void safelanes_initStacks_edge( void )
                   break;
                }
             if ( has_approx_midpoint )
-               continue; /* The edge from i to j is disallowed in favor of a
+               continue; /* The edge from i to j is disallowed in favour of a
                             path through k. */
             array_push_back_edge( &edge_stack, j, i );
             array_push_back(

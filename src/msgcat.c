@@ -7,7 +7,7 @@
  */
 
 
-/* musl as a whole is licensed under the following standard MIT license:
+/* musl as a whole is licensed under the following standard MIT licence:
  *
  * ----------------------------------------------------------------------
  * Copyright © 2005-2020 Rich Felker, et al.
