@@ -87,7 +87,7 @@ function land()
    -- Return bit
    elseif mem.misn_stage == 1 and spob.cur() == misn_base then
       tk.msg( _("Mission Accomplished"), _([[As your ship touches ground, you see Lt. Commander Dimitri come out to greet you.
-   "How was the weather?" he asks jokingly. "Glad to see you're still in one piece. We'll get right on analyzing the data acquired. Those robots have to be up to something. Meet me in the bar later. Meanwhile, give yourself a treat; you've earned it. We've made a 700K credit deposit into your bank account. Enjoy it."]]) )
+   "How was the weather?" he asks jokingly. "Glad to see you're still in one piece. We'll get right on analysing the data acquired. Those robots have to be up to something. Meet me in the bar later. Meanwhile, give yourself a treat; you've earned it. We've made a 700K credit deposit into your bank account. Enjoy it."]]) )
 
       -- Rewards
       faction.hit("Empire",5)

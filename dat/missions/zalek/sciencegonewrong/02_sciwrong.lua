@@ -41,7 +41,7 @@ mem.t_pla[1] = mem.t_sys[1]:spobs()[1]
 --mem.t_pla[2], mem.t_sys[2] = spob.getS("Gastan")
 
 function create ()
-   -- Have to be at center of operations.
+   -- Have to be at centre of operations.
    mem.t_pla[2], mem.t_sys[2] = sciwrong.getCenterOperations()
    if spob.cur() ~= mem.t_pla[2] then
       misn.finish(false)

@@ -8,7 +8,7 @@ return {
       name = _("Peninsula"),
       reward = 100e3,
       scale = 15,
-      center = true,
+      centre = true,
       track = {
          {
             vec2.new( 939, 394 ),
@@ -51,7 +51,7 @@ return {
       name = _("Smiling Man"),
       reward = 150e3,
       scale = 15,
-      center = true,
+      centre = true,
       track = {
          {
             vec2.new( 942, -381 ),

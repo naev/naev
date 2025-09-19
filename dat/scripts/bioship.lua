@@ -549,7 +549,7 @@ function bioship.window ()
       if s.gfx and not (lk.isDown("left ctrl") or lk.isDown("right ctrl")) then
          s.gfx:draw( x+10, y+10, 0, 70/256, 70/256 )
       else
-         lg.printf( self.skill.displayname, sfont, x+10, y+10+(70-self.txth)/2, 70, "center" )
+         lg.printf( self.skill.displayname, sfont, x+10, y+10+(70-self.txth)/2, 70, "centre" )
       end
    end
    function SkillIcon:drawover( bx, by )
@@ -588,7 +588,7 @@ function bioship.window ()
       return true
    end
    wdw:setCancel( wdw_done )
-   luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Stage {stage} {name}"),{stage=stage,name=ps}), nil, "center" )
+   luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Stage {stage} {name}"),{stage=stage,name=ps}), nil, "centre" )
    local stagetxt
    local maxstage = bioship.maxstage(pp)
    if stage==maxstage then
@@ -604,7 +604,7 @@ function bioship.window ()
          stagetxt = fmt.f(_("Current Experience: {exp} points (next stage at {nextexp} points)"),{exp=fmt.number(exp),nextexp=fmt.number(nextexp)})
       end
    end
-   luatk.newText( wdw, 30, 40, w-60, 20, stagetxt, nil, 'center' )
+   luatk.newText( wdw, 30, 40, w-60, 20, stagetxt, nil, 'centre' )
    local btn_reset = luatk.newButton( wdw, w-120-100-20, h-40-20, 100, 40, _("Reset"), function ()
       -- Player pays EXP cost when resetting ship. Can lower their ship's stage.
       local curexp = pp:shipvarPeek("bioshipexp") or 0
@@ -632,13 +632,13 @@ function bioship.window ()
 
    -- Background
    luatk.newRect( wdw, bx, by+sh-30, sw*skillx+sw, sh*skilly+30, {0,0,0,0.8} )
-   skilltxt = luatk.newText( wdw, bx+sw, by+70, sw*skillx, 30, "", {1,1,1,1}, "center", font )
+   skilltxt = luatk.newText( wdw, bx+sw, by+70, sw*skillx, 30, "", {1,1,1,1}, "centre", font )
    skill_text()
 
    -- Tier stuff
    for i=1,maxtier do
       local col = { 0.95, 0.95, 0.95 }
-      luatk.newText( wdw, bx, by+sh*i+(sh-12)/2, sw/2, sh, utility.roman_encode(i), col, "center", font )
+      luatk.newText( wdw, bx, by+sh*i+(sh-12)/2, sw/2, sh, utility.roman_encode(i), col, "centre", font )
    end
    bx = bx + sw/2-10
 
@@ -662,7 +662,7 @@ function bioship.window ()
    -- Intrinsics
    bx = bx+sw*skillx+70
    luatk.newRect( wdw, bx, by+sh-30, sw*intx, sh*inty+30, {0,0,0,0.8} )
-   luatk.newText( wdw, bx, by+70, sw*intx, 30, _("Stage Traits"), {1,1,1,1}, "center", font )
+   luatk.newText( wdw, bx, by+70, sw*intx, 30, _("Stage Traits"), {1,1,1,1}, "centre", font )
    for k,s in ipairs(intrinsics) do
       local x = bx + ((k-1)%3)*sw
       local y = by + math.floor((k-1)/3)*sh + sh
