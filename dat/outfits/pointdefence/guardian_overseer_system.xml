@@ -4,7 +4,7 @@
   <slot>weapon</slot>
   <size>large</size>
   <licence>Heavy Weapon</licence>
-  <typename>Point Defense</typename>
+  <typename>Point Defence</typename>
   <mass>60</mass>
   <price>850000</price>
   <description>The Guardian Overseer System is a complete rework of the original Guardian Interception System. Instead of basing itself on weaker laser turrets, the system makes use of specially modified Ripper cannons that allow it to neutralize most ordnance. Although designed for intercepting torpedoes, the targeting system is also efficient at tracking small enemy craft.</description>
@@ -12,7 +12,7 @@
   <cpu>-100</cpu>
  </general>
  <specific type="turret bolt">
-  <lua>outfits/pointdefense/pointdefense.lua</lua>
+  <lua>outfits/pointdefence/pointdefence.lua</lua>
   <gfx type="shader" size="10" col_size="8">particles/ripper_blue.frag</gfx>
   <sound>ripper</sound>
   <spfx_shield>Shi-S</spfx_shield>
@@ -29,7 +29,7 @@
    <penetrate>34</penetrate>
    <physical>75</physical>
   </damage>
-  <pointdefense/>
+  <pointdefence/>
  </specific>
  <tags>
   <tag>empire</tag>

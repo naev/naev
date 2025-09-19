@@ -124,6 +124,7 @@ end
 --]]
 local outfit_list = {
    -- Below is a list of changes from 0.12.0 to 0.13.0
+   ["Ratchet Point Defense"]              = "Ratchet Point Defence",
    ["Racing Trophy"]                      = "Racing Trophy (Silver)", -- getting the gold is now much harder
    ["Avatar of Sirichana"]                = "Avatar of the Sirichana",
    ["Auxiliary Proccessing Unit I"]       = "Auxiliary Processing Unit I", -- codespell:ignore proccessing

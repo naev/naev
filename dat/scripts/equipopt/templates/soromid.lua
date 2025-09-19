@@ -22,7 +22,7 @@ local soromid_outfits = eoutfits.merge{{
    "Plasma Cannon", "Plasma Turret MK1",
    "Plasma Blaster MK1", "Plasma Blaster MK2",
    "TeraCom Banshee Launcher", "TeraCom Mace Launcher",
-   -- Point Defense
+   -- Point Defence
    "Spittle Tubuloid Cluster",
    -- Utility
    "Droid Repair Crew", "Milspec Scrambler", "Unicorp Scrambler",

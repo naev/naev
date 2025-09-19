@@ -390,7 +390,7 @@ function spawnGenbu(sys)
          ["Four Winds Ragnarok Beam"] = 100,
       },
       max_same_weap = 4,
-      pointdefense = 10,
+      pointdefence = 10,
    })
    genbu:intrinsicSet( "shield_mod", 100 )
    genbu:intrinsicSet( "absorb", 15 )

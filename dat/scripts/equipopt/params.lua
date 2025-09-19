@@ -21,7 +21,7 @@ function params.default( overwrite )
       -- optimization problem not having a solution with high minimums
       type_range  = {
          ["Launcher"] = { max=2 }, -- typebroad
-         ["Point Defense"] = { max=2 }, -- typename
+         ["Point Defence"] = { max=2 }, -- typename
          ["Manoeuvrability Modifier"] = { max=1 }, -- can cause ships to poorly estimate their energy regen
       },
       -- Outfit names that the pilot should prefer (multiplies weights)
@@ -55,7 +55,7 @@ function params.default( overwrite )
       bolt        = 1,
       fighterbay  = 1,
       seeker      = 1,
-      pointdefense= 1,
+      pointdefence= 1,
    }, overwrite )
 end
 
@@ -82,7 +82,7 @@ function params.merchant( overwrite )
       fuel        = 1,
       forward     = 0.5, -- Less forward weapons
       prefer      = {
-         ["Point Defense"] = 1.1,
+         ["Point Defence"] = 1.1,
          ["Fighter Bay"] = 1.1,
          ["Bolt Cannon"] = 0.9,
          ["Beam Cannon"] = 0.9,

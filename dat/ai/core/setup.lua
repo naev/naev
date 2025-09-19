@@ -53,7 +53,7 @@ function setup.setup( p )
    -- Set up some defaults
    -- 1 is primary
    -- 2 is secondary
-   -- 3 has point defense
+   -- 3 has point defence
    -- 4 has fighter bays
    -- 5 is turret weapons
 

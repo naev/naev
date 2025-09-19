@@ -41,14 +41,14 @@ end
 function atk.secondary()
    ai.weapset( 2, true ) -- Usually seekers / ammo outfits are here
 end
-function atk.pointdefense()
+function atk.pointdefence()
    ai.weapset( 3, true ) -- Probably want to keep on most of the time
 end
 function atk.fighterbays()
    ai.weapset( 4, true ) -- Toggle to launch
 end
 function atk.fb_and_pd()
-   atk.pointdefense()
+   atk.pointdefence()
    atk.fighterbays()
 end
 function atk.turrets()
@@ -90,20 +90,20 @@ end
 
 --[[
 --Attempts to maintain a constant distance from nearby things
---This modulates the distance between the current pilot and its nearest neighbor
+--This modulates the distance between the current pilot and its nearest neighbour
 --]]
 function atk.keep_distance()
-   --anticipate this will be added to eliminate potentially silly behavior if it becomes a problem
+   --anticipate this will be added to eliminate potentially silly behaviour if it becomes a problem
    --local flight_offset = ai.drift_facing()
 
    --find nearest thing
-   local neighbor = ai.nearestpilot()
-   if not neighbor or not neighbor:exists() then
+   local neighbour = ai.nearestpilot()
+   if not neighbour or not neighbour:exists() then
       return
    end
 
    --find the distance based on the direction I'm travelling
-   local perp_distance = ai.flyby_dist(neighbor)
+   local perp_distance = ai.flyby_dist(neighbour)
    -- adjust my direction of flight to account for this
    -- if pilot is too close, turn away
    if perp_distance < 0 and perp_distance > -50 then
@@ -131,7 +131,7 @@ end
 -- Decides if zigzag is a good option
 --]]
 function atk.decide_zz( target, dist )
-   -- Some AI will not do fancy maneuvers
+   -- Some AI will not do fancy manoeuvres
    if mem.atk_skill <= 0.45+0.55*mem.rand then return false end
    if target:disabled() then return false end -- Don't be fance with disabled ships
    -- The situation is the following: we're out of range, facing the target,
@@ -284,7 +284,7 @@ function atk.flyby( target, dist )
 end
 
 --[[
--- Attack Profile for a maneuverable ship engaging a maneuverable target
+-- Attack Profile for a manoeuvrable ship engaging a manoeuvrable target
 --
 --This is designed for fighters engaging other fighters
 --]]
