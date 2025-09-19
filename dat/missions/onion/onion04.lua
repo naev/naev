@@ -441,7 +441,7 @@ You hear a beep.
       else
          l337(_([["What were you able to get?"]]))
          trixie(_([["I didn't have much time to choose, so I just randomly downloaded as much as bandwidth allowed, still going through it. From the little I've seen, there's some interesting account credentials, and some encrypted stuff that we have to unlock. All in all, a pretty good haul."]]))
-         l337(_([["Cool. Def share the tidbits. I've got some spare computational power to crack codes."]]))
+         l337(_([["Cool. Def share the titbits. I've got some spare computational power to crack codes."]]))
       end
       l337(_([["What are our next steps?"]]))
       trixie(_([["I've been thinking about what we talked about almost a cycle ago. We might be able to pull off something big, like really big."]]))

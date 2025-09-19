@@ -59,11 +59,11 @@ function hail ()
    mem.bribe_paid    = nil
    mem.bribe_no      = nil
 
-   -- Deal with refueling
+   -- Deal with refuelling
    local standing = p:reputation()
    mem.refuel = mem.refuel_base
    if standing > 60 then mem.refuel = mem.refuel * 0.7 end
-   mem.refuel_msg = _([["I could do you the favour of refueling for the price of {credits}."]])
+   mem.refuel_msg = _([["I could do you the favour of refuelling for the price of {credits}."]])
 
    -- Bribing
    mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]

@@ -9,7 +9,7 @@ function atk_capital.init ()
 end
 
 --[[
--- Main control function for capital ship behavior.
+-- Main control function for capital ship behaviour.
 --]]
 function atk_capital.atk( target, dokill )
    target = atk.com_think( target, dokill )

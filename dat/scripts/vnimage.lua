@@ -463,8 +463,8 @@ function vni.soundonly( id, params )
    lg.setCanvas( c )
    lg.clear{ 0, 0, 0, 0.8 }
    lg.setColour( col )
-   lg.printf( id, fl, 0, 200, 1000, "center" )
-   lg.printf( p_("vn_extras", "SOUND ONLY"), fs, 0, 550, 1000, "center" )
+   lg.printf( id, fl, 0, 200, 1000, "centre" )
+   lg.printf( p_("vn_extras", "SOUND ONLY"), fs, 0, 550, 1000, "centre" )
    lg.setCanvas( oc )
 
    return vn.Character.new(
@@ -488,8 +488,8 @@ function vni.textonly( id, params )
    lg.setCanvas( c )
    lg.clear{ 0, 0, 0, 0.8 }
    lg.setColour( col )
-   lg.printf( id, fl, 0, 200, 1000, "center" )
-   lg.printf( p_("vn_extras", "TEXT ONLY"), fs, 0, 550, 1000, "center" )
+   lg.printf( id, fl, 0, 200, 1000, "centre" )
+   lg.printf( p_("vn_extras", "TEXT ONLY"), fs, 0, 550, 1000, "centre" )
    lg.setCanvas( oc )
 
    return vn.Character.new(
