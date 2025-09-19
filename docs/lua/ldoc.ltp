@@ -342,7 +342,7 @@
 <div id="naev-footer" class="container-fluid nebula-bg mt-5">
   <canvas id="nebula-canvas-1"></canvas>
   <div class="container" style="position: relative; z-index: 1;">
-    <footer class="row text-muted">
+    <footer class="row text-light">
       <p class="col-xs-12 col-sm-6 text-left">© $(ldoc.updatetime:sub(1,4)) Naev Development Blarg</p>
       <p class="col-xs-12 col-sm-6 text-right">Original content licensed under <a href=
       "https://creativecommons.org/licenses/by-sa/4.0/">CC-by-sa 4.0</a></p>
