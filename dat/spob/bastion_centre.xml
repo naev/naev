@@ -1,4 +1,4 @@
-<spob name="Bastion Center">
+<spob name="Bastion Centre">
  <pos x="-596.226354" y="-3709.852869"/>
  <GFX>
   <space>zalek_station1.webp</space>
@@ -22,8 +22,8 @@
    <outfits/>
    <shipyard/>
   </services>
-  <description>Bastion Center is one of the two primary defence, border guard, and patrol base stations leading into Za'lek space. As such, it is one of the few military expenditures that goes (largely) unchallenged even by the notorious Za'lek political scene. The House Za'lek Defence Force conducts most of their foreign contact here, where they can keep an eye on affairs.</description>
-  <bar>The Bastion Center sports a large spaceport bar. Although most is private and used for diplomatic meetings, the common area is still large by space station standards and has a wide selection of beverages from around the galaxy, even making the "Za'lek Life" magazine hottest tourism spot right after a full life-size replication of the Great Library of Alexandria.</bar>
+  <description>Bastion Centre is one of the two primary defence, border guard, and patrol base stations leading into Za'lek space. As such, it is one of the few military expenditures that goes (largely) unchallenged even by the notorious Za'lek political scene. The House Za'lek Defence Force conducts most of their foreign contact here, where they can keep an eye on affairs.</description>
+  <bar>The Bastion Centre sports a large spaceport bar. Although most is private and used for diplomatic meetings, the common area is still large by space station standards and has a wide selection of beverages from around the galaxy, even making the "Za'lek Life" magazine hottest tourism spot right after a full life-size replication of the Great Library of Alexandria.</bar>
  </general>
  <tech>
   <item>Laser 1</item>

@@ -1,4 +1,4 @@
-<spob name="Vigilance Center">
+<spob name="Vigilance Centre">
  <lua>zalek_mil_restricted.lua</lua>
  <pos x="2944.327674" y="3312.368633"/>
  <GFX>
@@ -22,7 +22,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <description>Vigilance Center is the defence centre for Procyon. Unusually for a Za'lek military asset, it is well-supplied and cared for, with the staff being ready at a moment's notice to come to Procyon's aid.</description>
+  <description>Vigilance Centre is the defence centre for Procyon. Unusually for a Za'lek military asset, it is well-supplied and cared for, with the staff being ready at a moment's notice to come to Procyon's aid.</description>
   <bar>This bar is simple and clean. Every inch a military establishment.</bar>
  </general>
  <tech>
