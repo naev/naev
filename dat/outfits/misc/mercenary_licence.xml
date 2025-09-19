@@ -2,7 +2,7 @@
  <general>
   <mass>0</mass>
   <price>250000</price>
-  <gfx_store>license.webp</gfx_store>
+  <gfx_store>licence.webp</gfx_store>
   <description>This licence will authorize you to do mercenary missions and, more importantly, collect bounties.</description>
  </general>
  <specific type="licence">
