@@ -858,7 +858,7 @@ void player_cleanup( void )
    array_free( events_done );
    events_done = NULL;
 
-   /* Clean up licenses. */
+   /* Clean up licences. */
    for ( int i = 0; i < array_size( player_licenses ); i++ )
       free( player_licenses[i] );
    array_free( player_licenses );
@@ -2875,7 +2875,7 @@ int player_outfitOwned( const Outfit *o )
         ( outfit_isLocalMap( o ) && localmap_isUseless( o ) ) )
       return 1;
 
-   /* Special case license. */
+   /* Special case licence. */
    if ( outfit_isLicense( o ) &&
         player_hasLicense( outfit_licenseProvides( o ) ) )
       return 1;
@@ -3001,7 +3001,7 @@ int player_addOutfit( const Outfit *o, int quantity )
       player_guiAdd( outfit_gui( o ) );
       return 1; /* Success. */
    }
-   /* special case if it's a license. */
+   /* special case if it's a licence. */
    else if ( outfit_isLicense( o ) ) {
       player_addLicense( outfit_licenseProvides( o ) );
       return 1; /* Success. */
@@ -3189,43 +3189,43 @@ int *player_eventsDoneList( void )
 }
 
 /**
- * @brief Checks to see if player has license.
+ * @brief Checks to see if player has licence.
  *
- *    @param license License to check to see if the player has.
- *    @return 1 if has license (or none needed), 0 if doesn't.
+ *    @param licence Licence to check to see if the player has.
+ *    @return 1 if has licence (or none needed), 0 if doesn't.
  */
-int player_hasLicense( const char *license )
+int player_hasLicense( const char *licence )
 {
-   if ( license == NULL )
+   if ( licence == NULL )
       return 1;
    if ( player_licenses == NULL )
       return 0;
 
    const char *s =
-      bsearch( &license, player_licenses, array_size( player_licenses ),
+      bsearch( &licence, player_licenses, array_size( player_licenses ),
                sizeof( char * ), strsort );
    return s != NULL;
 }
 
 /**
- * @brief Gives the player a license.
+ * @brief Gives the player a licence.
  *
- *    @brief license License to give the player.
+ *    @brief licence Licence to give the player.
  */
-void player_addLicense( const char *license )
+void player_addLicense( const char *licence )
 {
-   if ( player_hasLicense( license ) )
+   if ( player_hasLicense( licence ) )
       return;
    if ( player_licenses == NULL )
       player_licenses = array_create( char * );
-   array_push_back( &player_licenses, strdup( license ) );
+   array_push_back( &player_licenses, strdup( licence ) );
 
    qsort( player_licenses, array_size( player_licenses ), sizeof( char * ),
           strsort );
 }
 
 /**
- * @brief Gets the array (array.h) of license names in the player's inventory.
+ * @brief Gets the array (array.h) of licence names in the player's inventory.
  */
 const char **player_getLicenses()
 {
@@ -3454,7 +3454,7 @@ int player_save( xmlTextWriterPtr writer )
    /* Licenses. */
    xmlw_startElem( writer, "licenses" );
    for ( int i = 0; i < array_size( player_licenses ); i++ )
-      xmlw_elem( writer, "license", "%s", player_licenses[i] );
+      xmlw_elem( writer, "licence", "%s", player_licenses[i] );
    xmlw_endElem( writer ); /* "licenses" */
 
    /* Inventory. */
@@ -4248,9 +4248,9 @@ static int player_parseDoneEvents( xmlNodePtr parent )
 }
 
 /**
- * @brief Parses player's licenses.
+ * @brief Parses player's licences.
  *
- *    @param parent Node of the licenses.
+ *    @param parent Node of the licences.
  *    @return 0 on success.
  */
 static int player_parseLicenses( xmlNodePtr parent )
