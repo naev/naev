@@ -40,7 +40,7 @@ function opt.open( vn )
    local wdw = luatk.newWindow( nil, nil, w, h )
 
    -- Translator note VN stands for Visual Novel
-   luatk.newText( wdw, 0, 10, w, h, _("VN Options"), luatk.colour.text, "center" )
+   luatk.newText( wdw, 0, 10, w, h, _("VN Options"), luatk.colour.text, "centre" )
 
    local y = 40
    local autoscrollval = (var.peek("vn_autoscroll")==true)

@@ -396,7 +396,7 @@ function graphics.printf( text, ... )
    local atype
    if align=="left" then
       atype = 1
-   elseif align=="center" then
+   elseif align=="center" or align=="centre" then -- codespell:ignore center
       atype = 2
    elseif align=="right" then
       atype = 3

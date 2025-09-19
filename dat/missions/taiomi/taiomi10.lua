@@ -644,7 +644,7 @@ function cutscene_board ()
    vn.appear( sai, tut.shipai.transition )
    vn.na(_([[You approach the wreck resembling Scavenger. They do not seem to be in a good shape and are irresponsive.]]))
    sai(_([["This does not look good. We may need to jump start them. Try to get closer and get ready for a space walk."]]))
-   vn.na(fmt.f(_([[You carefully maneuver your ship adjacent to Scavenger. Donning your space suit you eject and manually approach Scavenger, who once again looks imposing up close. Following {shipai}'s guidance you attach your ship's electrical system to Scavenger.]]),
+   vn.na(fmt.f(_([[You carefully manoeuvre your ship adjacent to Scavenger. Donning your space suit you eject and manually approach Scavenger, who once again looks imposing up close. Following {shipai}'s guidance you attach your ship's electrical system to Scavenger.]]),
       {shipai=tut.ainame()}))
    sai(_([["Let there be power!"]]))
    vn.sfx( ELECTRIC_SFX )
@@ -675,7 +675,7 @@ Erk…"]]))
    }
 
    vn.label("cont02_here")
-   d(_([["We seem to have gotten stuck in a side-effect of the activation. It could have been worse, we could have been warped to a sun or black hole."]]))
+   d(_([["We seem to have gotten stuck in a side effect of the activation. It could have been worse, we could have been warped to a sun or black hole."]]))
    vn.jump("cont02")
 
    vn.label("cont02_alright")
