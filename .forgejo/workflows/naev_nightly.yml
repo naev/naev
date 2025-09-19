@@ -14,7 +14,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           path: source
-          fetch-depth: 0
+          fetch-depth: 250
+          fetch-tags: true
           submodules: true
 
       - name: Package Dist
