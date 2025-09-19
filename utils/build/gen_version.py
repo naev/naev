@@ -37,20 +37,15 @@ def is_dirty(source_root: str) -> bool:
       return False
 
 
-def get_version(source_root: str) -> str:
+def get_version(source_root: str, base_version: str) -> str:
    """
    Determine the project version:
-      1. Use MESON_PROJECT_VERSION + git SHA [+dirty] if .git exists.
+      1. Use base_version + git SHA [+dirty] if .git exists.
       2. Otherwise, read existing dat/VERSION if present.
-      3. Otherwise, just MESON_PROJECT_VERSION.
+      3. Otherwise, just base_version.
       Always write the result back to dat/VERSION.
-      """
-      version_file = os.path.join(source_root, "dat", "VERSION")
-
-   base_version = os.getenv("MESON_PROJECT_VERSION")
-   if not base_version:
-      logging.error("MESON_PROJECT_VERSION not set — must be run by Meson.")
-      sys.exit(1)
+   """
+   version_file = os.path.join(source_root, "dat", "VERSION")
 
    version = None
 
@@ -61,7 +56,7 @@ def get_version(source_root: str) -> str:
       if sha:
          version += f"+g{sha}"
          if is_dirty(source_root):
-            version += "+dirty"
+            version += ".dirty"
    elif os.path.isfile(version_file):
       # No git, but VERSION file exists (tarball or source package)
       try:
@@ -72,7 +67,7 @@ def get_version(source_root: str) -> str:
 
    if not version:
       # Fallback: just use the base project version
-      version = base_version
+      version = f"{base_version}+dev"
 
    # Write the version to VERSION file
    try:
@@ -84,13 +79,16 @@ def get_version(source_root: str) -> str:
 
    return version
 
-
 if __name__ == "__main__":
    source_root = os.getenv("MESON_SOURCE_ROOT")
    if not source_root:
       logging.error("This script is intended to be run by Meson.")
       sys.exit(1)
+   if len(sys.argv) < 2:
+      logging.error("Usage: gen_version.py <project_version>")
+      sys.exit(1)
 
-   version = get_version(source_root)
+   base_version = sys.argv[1]
+   version = get_version(source_root, base_version)
    logging.info(f"Version retrieved: {version}")
    print(version)
