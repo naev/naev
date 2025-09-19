@@ -124,7 +124,7 @@ function enter ()
    end
 
    -- Spawn the drones
-   -- TODO better location once testing center object is created
+   -- TODO better location once testing centre object is created
    local pkatar = spob.get("Katar"):pos()
    local pkatari = mainpnt:pos()
    local pos = (pkatar - pkatari) + pkatar
