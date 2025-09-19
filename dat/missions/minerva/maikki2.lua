@@ -508,7 +508,7 @@ He taps the tank of the floating shrimp next to him.]]))
    drshrimp(_([["And what's best, look how cute they are!"
 He enthusiastically points towards Calliope.
 "Isn't she the cutest?"]]))
-   drshrimp(_([["After focusing on shrimp for a few cycles, people started calling me Dr. Shrimp and the name stuck. Honestly, it's the best nickname they could give me. Makes me feel like getting my PhD was finally worth it!"]]))
+   drshrimp(_([["After focussing on shrimp for a few cycles, people started calling me Dr. Shrimp and the name stuck. Honestly, it's the best nickname they could give me. Makes me feel like getting my PhD was finally worth it!"]]))
    vn.func( function () mem.asked_drshrimp = true end )
    vn.jump("menu_msg")
 
