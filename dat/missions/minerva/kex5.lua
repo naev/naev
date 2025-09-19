@@ -69,7 +69,7 @@ function accept ()
    vn.transition( "hexagon" )
 
    vn.na(_("You approach Kex, who is sort of slumping at his usual spot. He doesn't seem to be in very good condition."))
-   kex(_([[It takes a bit before Kex notices your presence. His feathers are rather disheveled.
+   kex(_([[It takes a bit before Kex notices your presence. His feathers are rather dishevelled.
 "Oh, hey kid."]]))
    kex(_([[It takes a while before he continues.
 "Compared to the vastness of all the universe, we are completely insignificant. Our sorrows and glories go unheard and seemingly devoid of all meaning."]]))
@@ -138,7 +138,7 @@ function approach_kex ()
    vn.transition( "hexagon" )
    vn.na(_("You approach Kex who is sort of slumping at his usual spot. He doesn't seem much better than last time you met him."))
    kex(_([["Hey kid."
-He seems a bit nervious and speaks softer than usual.
+He seems a bit nervous and speaks softer than usual.
 "Did you do what I asked?"]]))
 
    if strangelove_death=="comforted" then
@@ -300,7 +300,7 @@ function enter ()
    elseif mem.misn_state~=1 and rnd.rnd() < mem.thug_chance then
       -- Make sure system isn't claimed, but we don't claim it (inclusive test)
       if naev.claimTest( system.cur(), true ) then
-         -- Spawn near the center, they home in on player
+         -- Spawn near the centre, they home in on player
          spawn_thugs( vec2.newP(0.7*system.cur():radius()*rnd.rnd(), rnd.angle()), false )
          -- Timer
          hook.timer( 5, "thug_heartbeat" )
@@ -424,8 +424,8 @@ function landed_lab ()
    vn.jump("menu")
 
    vn.label("recreation")
-   vn.na(_("You head towards, and eventually reach, the recreation room, which has been completely trashed. Even pieces of the wall have been ripped out, revealing shoddy cable connections and lots of weird mold."))
-   vn.na(_("Looking around, you find that the hologram projector you used last time is, unsurprisingly, completely wrecked. It doesn't seem like you'll be able to use it to get in touch with Dr. Strangelove anymore."))
+   vn.na(_("You head towards, and eventually reach, the recreation room, which has been completely trashed. Even pieces of the wall have been ripped out, revealing shoddy cable connections and lots of weird mould."))
+   vn.na(_("Looking around, you find that the hologram projector you used last time is, unsurprisingly, completely wrecked. It doesn't seem like you'll be able to use it to get in touch with Dr. Strangelove any more."))
    vn.na(_("Try as you might, you are unable to find anything of interest."))
    vn.func( function () check_rr = true end )
    vn.jump("menu")
@@ -493,7 +493,7 @@ function strangelove_board ()
    love_audio.setEffect( "reverb_psychotic", reverb_preset.psychotic() )
    vn.music( minerva.loops.strangelove, {effect="reverb_psychotic"} )
    vn.appear(dr)
-   vn.na(_("You enter the room and meet Dr. Strangelove face-to-face for the first time. Dr. Strangelove is laid out in a medical bed connected to a lot of weird machines, with a medical droid attending him. If it weren't for the fact that everything is fairly rundown and dirty, you would think you were in a planetary hospital instead of a space ship at the edge of the universe."))
+   vn.na(_("You enter the room and meet Dr. Strangelove face-to-face for the first time. Dr. Strangelove is laid out in a medical bed connected to a lot of weird machines, with a medical droid attending him. If it weren't for the fact that everything is fairly rundown and dirty, you would think you were in a planetary hospital instead of a spaceship at the edge of the universe."))
    dr(_("You take a close look at Dr. Strangelove, and he seems like a husk of what might have once been a man. His cheekbones protrude from his pale face and his laboratory coat seems to be a few sizes too large on his frail body. His vitals monitor also confirms your suspicion that he is more dead than alive."))
    dr(_([["I see you were able to make it."
 He coughs violently.
@@ -616,7 +616,7 @@ His talking is slowing down and starting to get muddled. You have trouble making
    vn.label("4cont")
    vn.na(_([[His lips begin moving and you can hear some sort of rasping sound coming out, however, you can no longer make out what he is saying. You glance at the monitors and you see his vitals are tanking. It looks like he has run out of time.]]))
    vn.label("nonviolent_death")
-   vn.na(_([[He slowly lifts up an arm as if trying to reach out and grasp something. It it extremely thin and pale, almost transparent. His lips move as if trying to say something, but you can't make out a single sound. You see the strength slowly ebb out of him as he collapses one last time and his pulse flatlines.]]))
+   vn.na(_([[He slowly lifts up an arm as if trying to reach out and grasp something. It is extremely thin and pale, almost transparent. His lips move as if trying to say something, but you can't make out a single sound. You see the strength slowly ebb out of him as he collapses one last time and his pulse flat lines.]]))
    vn.disappear( dr, "slideup", nil, "ease-out" ) -- played backwards so should be down
    vn.label("dr_death")
    vn.musicStop() -- Stop music

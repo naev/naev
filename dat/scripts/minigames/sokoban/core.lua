@@ -376,14 +376,14 @@ function sokoban.draw()
    end
 
    setcol{ 1, 1, 1 }
-   lg.printf( headertext, headerfont, 0, y, nw, "center" )
+   lg.printf( headertext, headerfont, 0, y, nw, "centre" )
    local subheader
    if completed then
       subheader = _("Completed!")
    else
       subheader = fmt.f(_("Layer {cur} / {total}"), {cur=levelIndex, total=#levels} )
    end
-   lg.printf( subheader, 0, y+40, nw, "center" )
+   lg.printf( subheader, 0, y+40, nw, "centre" )
    y = y + headersize
 
    drawLevel( lx, ly+headersize, level, transition )
@@ -398,7 +398,7 @@ function sokoban.draw()
    setcol{ 0, 0, 0 }
    lg.rectangle( 'fill', (nw-cw)/2, cy, cw, 20 )
    setcol{ 1, 1, 1 }
-   lg.printf( controls, 0, cy, nw, "center" )
+   lg.printf( controls, 0, cy, nw, "centre" )
 
    if canskip then
       btnskip:draw( 0, 0 )

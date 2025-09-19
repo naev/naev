@@ -61,7 +61,7 @@ local articles = {
    },
    {
       head = N_([[Calmest Limerick Competition in Cycles]]),
-      body = _([[Onlookers left disappointed as the Galactic Pirate Limerick Competition ended without a massive brawl for first time in history. "Does nobody respect tradition any more?" said one angry spectator. Organizers blame Pirate Lord Pizarros birthday party a few periods before for drying out all the reservoirs of Rum and giving most participants a deca-period long hangover.]]),
+      body = _([[Onlookers left disappointed as the Galactic Pirate Limerick Competition ended without a massive brawl for first time in history. "Does nobody respect tradition any more?" said one angry spectator. Organisers blame Pirate Lord Pizarros birthday party a few periods before for drying out all the reservoirs of Rum and giving most participants a deca-period long hangover.]]),
    },
    {
       head = N_([[Ghost in the Shell?]]),

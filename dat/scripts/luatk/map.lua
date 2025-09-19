@@ -333,7 +333,7 @@ function Map:rerender()
    self._dirty = true
    luatk.rerender()
 end
-function Map:center( pos, hardset )
+function Map:centre( pos, hardset )
    self.target = pos or vec2.new()
    self.target = self.target * inv
    if hardset then
@@ -343,6 +343,7 @@ function Map:center( pos, hardset )
    end
    self:rerender()
 end
+Map.center = Map.centre -- codespell:ignore center
 function Map:update( dt )
    if (self.pos - self.target):dist2() > 1e-3 then
       self:rerender() -- Fully animated, so draw every frame

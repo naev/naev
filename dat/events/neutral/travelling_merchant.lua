@@ -311,7 +311,7 @@ function hail ()
       local mm = vn.newCharacter( trader_name,
          { image=trader_image, colour=trader_colour, shader=love_shaders.hologram() } )
       vn.transition("electric")
-      mm:say(_([["Howdy Human! I have new propitiuous and meretricious wares available. Come see the wares on my ship!"]]))
+      mm:say(_([["Howdy Human! I have new propitious and meretricious wares available. Come see the wares on my ship!"]]))
       vn.done("electric")
       vn.run()
 
@@ -331,16 +331,16 @@ function board ()
    local mm = vn.newCharacter( trader_name, { image=trader_image, colour=trader_colour } )
    vn.transition()
    if not var.peek('travelling_trader_boarded') then
-      vn.na(_([[You open the airlock and are immediately greeted by an intense humidity and heat, almost like a jungle. As you advance through the dimly lit ship you can see all types of mold and plants crowing in crevices in the wall. Wait, was that a small animal scurrying around? Eventually you reach the cargo hold that has been re-adapted as a sort of bazaar. As you look around the mess of different wares, most seemingly to be garbage, you suddenly notice a mysterious figure standing in front of you. You're surprised at how you didn't notice them getting so close to you, almost like a ghost.]]))
+      vn.na(_([[You open the airlock and are immediately greeted by an intense humidity and heat, almost like a jungle. As you advance through the dimly lit ship you can see all types of mould and plants crowing in crevices in the wall. Wait, was that a small animal scurrying around? Eventually you reach the cargo hold that has been re-adapted as a sort of bazaar. As you look around the mess of different wares, most seemingly to be garbage, you suddenly notice a mysterious figure standing in front of you. You're surprised at how you didn't notice them getting so close to you, almost like a ghost.]]))
       mm(_([[You stare dumbfounded at the figure who seems to be capturing your entire essence with a piercing gaze, when suddenly you can barely make out what seems to be a large grin.
 "You look a bit funky for a human, but all are welcome at Misi's Fabulous Bazaar!"
-They throw their hands up in the air, tossing what seems to be some sort of confetti. Wait, is that ship mold?]]))
-      mm(_([["In my travels, I've collected quite a fair amount of rare and expensive jun… I mean trinkets from all over the galaxy. Not many appreciate my fine wares, so I peddle them as I travel around. If you see anything you fancy, I'll let it go for a fair price. You won't find such a good bargain anywhere else!"]]))
+They throw their hands up in the air, tossing what seems to be some sort of confetti. Wait, is that ship mould?]]))
+      mm(_([["During my travels, I've collected quite a fair amount of rare and expensive jun… I mean trinkets from all over the galaxy. Not many appreciate my fine wares, so I peddle them as I travel around. If you see anything you fancy, I'll let it go for a fair price. You won't find such a good bargain anywhere else!"]]))
       var.push( "travelling_trader_boarded", true )
    else
-      vn.na(_([[You open the airlock and are immediately greeted by an intense humidity and heat, almost like a jungle. As you advance through the dimly lit ship you can see all types of mold and plants crowing in crevices in the wall. Wait, was that a small animal scurrying around? Eventually you reach the cargo hold bazaar where Misi is waiting for you.]]))
+      vn.na(_([[You open the airlock and are immediately greeted by an intense humidity and heat, almost like a jungle. As you advance through the dimly lit ship you can see all types of mould and plants crowing in crevices in the wall. Wait, was that a small animal scurrying around? Eventually you reach the cargo hold bazaar where Misi is waiting for you.]]))
       if poi.data_get_gained() > 0 and not var.peek("travelling_trader_data") then
-         mm(_([[Suddenly they starts sniffing the air.
+         mm(_([[Suddenly they start sniffing the air.
 "Wait is that…?"
 They get uncomfortably close
 "Say, you smell like… something odd…]]))
@@ -367,7 +367,7 @@ They get uncomfortably close
 
          vn.label("matrices_cont01")
          mm(_([[They sniff the air as to confirm their findings.
-"You haven't been able to decrypt them have you? Old technology is a bugger, and most of the cipher codes have been lost, not making it an easy task. I don't think the Encrypted Data Matrices will be of any use to you. However, if you're willing to trade, I have some better offerings that may pique your interest."]]))
+"You haven't been able to decrypt them, have you? Old technology is a bugger, and most of the cipher codes have been lost, not making it an easy task. I don't think the Encrypted Data Matrices will be of any use to you. However, if you're willing to trade, I have some better offerings that may pique your interest."]]))
          mm(_([["If you aren't interested in material goods, I also have some special services up my sleeves that should suit any of your ships. Just ask me about them."]]))
          vn.func( function ()
             var.push("travelling_trader_data",true)
@@ -430,7 +430,7 @@ They get uncomfortably close
    }
    vn.label("special")
    mm( function ()
-      return fmt.f(_([["So you're interested in my special services. Quite a bargain might I say. Each services costs only {cost}."
+      return fmt.f(_([["So you're interested in my special services. Quite a bargain might I say. Each service costs only {cost}."
 
 You currently have {amount}.]]),
          {cost=poi.data_str(upgrade_cost), amount=poi.data_str(poi.data_get())})
@@ -512,7 +512,7 @@ You have {amount}. Pay {cost} for replacing {replacement} with {upgrade}?]]),
       mm(_([["This will take a second."
 They grab a toolbox and rush over to your boarded ship. You decide not to follow as some things are best left not known. At least they know what they are doing right?]]))
       mm(_([[Eventually, they come back covered in what seems to be fish parts and slime.
-"That was fun! However, when I put it back together, I found some extra screws. Oh well, it does seem to hold together fairly well. Hope you enjoy the upgrades! The fish smell will go away in a few periods hopefully."]]))
+"That was fun! However, when I put it back together, I found some extra screws. Oh well, it does seem to hold together fairly well. Hope you enjoy the upgrades! The fish smell will go away in a few periods, hopefully."]]))
       vn.func( function ()
          local pp = player.pilot()
          -- Remove old and add new
@@ -535,7 +535,7 @@ They grab a toolbox and rush over to your boarded ship. You decide not to follow
 
    vn.label("special_info")
    mm(_([["Throughout my travels, I've been in many a tight spot. I remember getting stuck with a broken engine capacitor in a lost asteroid field, no food, no equipment, and a hull leaking solar radiation. It was either adapt or perish, and me being here is a testament to my ship modification skills acquired under pressure."]]))
-   mm(fmt.f(_([["Or it could be the Toni's Discount Ship Repair Certification Course I did for {cost} in a back-alley on Darkshed. Still never really understood why we need to slap fish skin on the radiators. Bug juice would work much better, but anyway, I got my license and I get spruce up your ship for all your space needs!"]]),
+   mm(fmt.f(_([["Or it could be the Toni's Discount Ship Repair Certification Course I did for {cost} in a back-alley on Darkshed. Still never really understood why we need to slap fish skin on the radiators. Bug juice would work much better, but anyway, I got my licence and I get spruce up your ship for all your space needs!"]]),
       {cost=fmt.credits(99)}))
    mm(_([["I can offer you three different services, however, you can only have one active at a time on your ship. It is possible to change them if you wish though. In particular, I offer three services: Machiavellian Necessity, Machiavellian Fortune, and Machiavellian Virtue."]]))
    mm(_([["Machiavellian Necessity focuses on tweaking your weapon systems to be able to take decisive action when necessary."

@@ -7,7 +7,7 @@
    if system.cur():reputation("Empire") &lt; 0 or faction.reputationGlobal("Empire") &lt; 0 or faction.reputationGlobal("Dvaered") &lt; 0 or faction.reputationGlobal("FLF") &gt;= 10 then
       return false
    end
-   --return require("misn_test").reweight_active() -- Don't reweight as licenses are important!
+   --return require("misn_test").reweight_active() -- Don't reweight as licences are important!
    return true
  </cond>
  <chance>35</chance>

@@ -459,7 +459,7 @@ function board_boss ()
       end
       mainspb:landAllow(false) -- Clear landing status
    end )
-   vn.na(fmt.f(_([[Right before boarding, you power on your shields and slam on your ship thrusters. Catching the {plt} completely off guard with your maneuver, your ship smashes into their hull causing massive damage. Time to power on your weapons.]]),
+   vn.na(fmt.f(_([[Right before boarding, you power on your shields and slam on your ship thrusters. Catching the {plt} completely off guard with your manoeuvre, your ship smashes into their hull causing massive damage. Time to power on your weapons.]]),
       {plt=boss}))
    vn.done()
    vn.label("ram_bad")
@@ -473,7 +473,7 @@ function board_boss ()
       end
       mainspb:landAllow(false) -- Clear landing status
    end )
-   vn.na(fmt.f(_([[Right before boarding, you power on your shields and slam on your ship thrusters. Catching the {plt} completely off guard with your maneuver, your ship smashes into their hull causing significant damage. Time to power on your weapons.]]),
+   vn.na(fmt.f(_([[Right before boarding, you power on your shields and slam on your ship thrusters. Catching the {plt} completely off guard with your manoeuvre, your ship smashes into their hull causing significant damage. Time to power on your weapons.]]),
       {plt=boss}))
    vn.done()
 
@@ -511,7 +511,7 @@ function land ()
       vn.na(fmt.f(_([[She explains to you the situation of Zuri and Kex, while Kex hasn't changed at all, Zuri hasn't improved significantly and is under a deep coma. While the installations at {spb} are not bad, they are far from being the forefront in medical technology.]]),
          {spb=returnspb}))
       vn.na(_([[Eventually an engineer comes back to report on the situation. It seems like some schematics of Kex's design were recovered, along with some other blueprints that could prove to be useful, or at least in the worst case, worth a pretty penny on the black market. Maikki looks ecstatic at the possibility, albeit remote, of being able to repair her father.]]))
-      maikki(fmt.f(_([["Great job! I knew we could pull this off. If we have the blueprints or schematics or whatever they are, they should be able to repair my father! {spb} may have shitty medical installations, but the engineers here should be top notch!"]]),
+      maikki(fmt.f(_([["Great job! I knew we could pull this off. If we have the blueprints or schematics or whatever they are, they should be able to repair my father! {spb} may have shitty medical installations, but the engineers here should be top-notch!"]]),
          {spb=returnspb}))
       vn.na(_([[The engineers get the OK from Maikki to proceed, and begin working on whatever they have to do on Kex. Given the importance of the operation, you and Maikki leave it to the specialists while you fret together in the nearby waiting room until the procedure is finished.]]))
       maikki(_([["This is nerve-wracking. I'm a pirate for hell's sake, not supposed to be worrying about lives, just booty!"]]))
@@ -683,7 +683,7 @@ She breaks free from the engineers and jumps at Kex. Fearing the worst, you try 
       maikkip(_([["Thanks! I owe it to you to finally be able to be able to talk to my father. We have a ton of catching up to do still!"]]))
       kexp(_([["I feel the same. Thank you for helping me out, despite my current appearance. Maybe this time I will be able to amend my past and break the loop."]]))
       maikkip(_([["Amend the past? That's impossible. You were a complete asshole."]]))
-      kexp(_([[He looks bit dejected and sad.]]))
+      kexp(_([[He looks a bit dejected and sad.]]))
       maikkip(_([["Don't be sad. You have to learn to live with your past, and learn from it to have a good future! What's done is done, but you can still decide what's yet to come."]]))
       kexp(_([["It's still hard. Although I've had a lot of time to think since I lost my body. This time I have no excuses."]]))
       maikkip(fmt.f(_([[She beams a smile at Kex.
@@ -735,14 +735,14 @@ function approach_pir ()
    pir(_([[They take a good look at you first before deciding you must be the person they are waiting for.
 "Maikki sent you right? I've been expecting you."]]))
    pir(_([["We don't have too much time, the place is starting to get full of bureaucrats and it's only a question of time before they start locking things down and asking questions."]]))
-   pir(_([["You're up to date with everything right? We're pretty sure that the weapon laboratory is in penthouse number 5. It just doesn't match the station blueprints and there seems to be excess power routed there."]]))
+   pir(_([["You're up-to-date with everything right? We're pretty sure that the weapon laboratory is in penthouse number 5. It just doesn't match the station blueprints and there seems to be excess power routed there."]]))
    pir(_([["I've got us some disguises prepared that should let us get close enough to break it."]]))
    vn.na(_([[You head to the lavatory and get changed into the outfit. It seems to be some sort of mix between a jumpsuit and a labcoat, and the size is quite off, making you look a bit funny. After getting changed you meet up with the pirate who is also now in a similar attire.]]))
    pir(_([["Not the best fit, but we have no choice to try. Let's get headed."]]))
    vn.na(_([[You follow them through the winding corridors of the station. Except for passing a couple distracted bureaucrats, it is quite uneventful. Eventually you find yourself near a door that seems to have a guard posted.]]))
    pir(_([["Act natural."]]))
    vn.na(_([[They go to the door and give a nod to the guard before entering the room. You follow their step and imitate their actions.]]))
-   vn.na(_([[You find yourself with the pirate inside what seems to be a laboratory packed with racks full of boxes and weird gadgets. Other than you and the pirate, there's some bureaucrats that seem to be performing inventory while a pair of guards watches. It's going to be tricky to do anything with so many people in the room.]]))
+   vn.na(_([[You find yourself with the pirate inside what seems to be a laboratory packed with racks full of boxes and weird gadgets. Other than you and the pirate, there are some bureaucrats that seem to be performing inventory while a pair of guards watches. It's going to be tricky to do anything with so many people in the room.]]))
    vn.na(_([[You and the pirate split up, acting as if you belong there while you inspect the rest of the room. Past the racks there seems to be a small clearing with what looks like some laser weapon prototype. You are looking around when you notice the pirate is talking to a bureaucrat.]]))
 
    vn.label("01_menu")
@@ -790,7 +790,7 @@ function approach_pir ()
    local emp1 = vn.Character.new( _("Guard A"), {image=vni.empireMilitary(),pos="right"} )
    local emp2 = vn.Character.new( _("Guard B"), {image=vni.empireMilitary(),pos="farright"} )
    vn.appear( {emp1,emp2} )
-   vn.na(_([[The room breaks into chaos with the pirate sucker punches the bureaucrat he was talking to, and you trying to recover your breath. The two guards quickly draw their weapons and you and the pirate find yourselves looking at the end of a rifle. Things aren't looking too hot.]]))
+   vn.na(_([[The room breaks into chaos when the pirate sucker punches the bureaucrat he was talking to, and you try to recover your breath. The two guards quickly draw their weapons and you and the pirate find yourselves looking at the end of a rifle. Things aren't looking too hot.]]))
    pir(_([["Shit."]]))
    emp1(_([["Put your hands where I can see them!"]]))
    vn.na(_([[You and the pirate exchange looks, but have no choice but to raise your hands as the guards slowly approach with their weapons raised and ready.]]))
@@ -964,12 +964,12 @@ function shader_update( dt )
          underwear_brand = s
       end )
       sai( function ()
-         return fmt.f(_([["Your {brand} underwear has builtin reporting functionality. It's useful to tell if you are alive and healthy, or if you soiled yourself."]]),
+         return fmt.f(_([["Your {brand} underwear has built-in reporting functionality. It's useful to tell if you are alive and healthy, or if you soiled yourself."]]),
             {brand=_(underwear_brand)}) end )
       vn.jump("02_cont")
 
       vn.label("02_fingers")
-      sai(_([["Oh, I forgot. I do not have fingers anymore."]]))
+      sai(_([["Oh, I forgot. I do not have fingers any more."]]))
       vn.jump("02_cont")
 
       vn.label("02_cont")

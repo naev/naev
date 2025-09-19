@@ -19,7 +19,7 @@ local function wgt ()
 
    local wgtlist = {}
    table.insert( wgtlist, luatk.newImage( nil, 0, 0, 192, 192, lg.newImage(fct:logo()) ) )
-   table.insert( wgtlist, luatk.newText( nil, 0, 0, nil, nil, txt, nil, "center" ) )
+   table.insert( wgtlist, luatk.newText( nil, 0, 0, nil, nil, txt, nil, "centre" ) )
 
    local function filter_known( lst )
       local newlst = {}
@@ -56,7 +56,7 @@ local function wgt ()
       table.insert( wgtlist, luatk.newText( nil, 0, 0, nil, nil, t ) )
    end
    return luatk.newContainer( nil, -10, 0, nil, nil, wgtlist, {
-      center = true
+      centre = true
    } )
 end
 
