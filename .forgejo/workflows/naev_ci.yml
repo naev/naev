@@ -10,8 +10,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           path: source
-          fetch-tags: true
           submodules: true
+
+      - name: Fetch tags
+        working-directory: source
+        run: git fetch --tags
 
       - name: Package Dist
         run: |
