@@ -30,8 +30,11 @@ let g:ale_linters = {
 \\}
 ```
 """
+from pathlib import Path
 
 assert(len(sys.argv)>1)
+
+basepath = Path(__file__).parent
 
 os.environ["LC_ALL"] = "C"
 
@@ -44,13 +47,16 @@ with open( filename, 'r' ) as f:
    lines = f.read().splitlines()
 
 # There is no option but to output to a temporary file which we can then pass to languagetool
+basename, ext = os.path.splitext(filename)
 tf = tempfile.NamedTemporaryFile( suffix='.po' )
-args = [ "xgettext", filename, '--from-code=utf-8', '-d' , tf.name[:-3] ] # xgettext adds .po again
+if ext==".xml":
+   args = [ 'itstool', '--its', basepath / '../po/its/translation.its', '-o', tf.name, filename ] # itstool does not add .po
+else:
+   args = [ "xgettext", filename, '--from-code=utf-8', '-d', tf.name[:-3] ] # xgettext adds .po again
 ret = subprocess.run( args )
 
 # Load the dictionary
-from pathlib import Path
-with (Path(__file__).parent / "languagetool_dict.txt").open() as f:
+with (basepath / "languagetool_dict.txt").open() as f:
    lt_dict = f.read().splitlines()
 lt_dict = list( filter( lambda x: x[0]!='#', lt_dict ) )
 
