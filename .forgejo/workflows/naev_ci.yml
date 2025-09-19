@@ -12,10 +12,6 @@ jobs:
           path: source
           submodules: true
 
-      - name: Fetch tags
-        working-directory: source
-        run: git fetch --tags
-
       - name: Package Dist
         run: |
           meson setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled --wrap-mode=forcefallback
