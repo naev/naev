@@ -43,7 +43,7 @@ All the ships you know and their availability can be accessed [here](ships).
 
 ### Equipment
 
-Any spaceport with refueling capabilities will allow you to access the [equipment tab](mechanics/equipment).
+Any spaceport with refuelling capabilities will allow you to access the [equipment tab](mechanics/equipment).
 Here you can change the outfits on your ships, or change your current ship.
 <% if player.fleetCapacity() > 0 then %>
 By right-clicking on ships, or toggling the #bdeployed#0 checkbox, you can set a ship as part of [your player fleet](mechanics/playerfleet).

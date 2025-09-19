@@ -192,7 +192,7 @@ function pirate.hail ()
    mem.bribe_paid    = nil
    mem.bribe_no      = nil
 
-   -- Deal with refueling
+   -- Deal with refuelling
    local standing = p:reputation()
    mem.refuel = mem.refuel_base
    if standing >= mem.refuel_standing then

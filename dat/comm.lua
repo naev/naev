@@ -415,7 +415,7 @@ function comm( plt )
    vn.jump("menu")
 
    --
-   -- REFUELING
+   -- REFUELLING
    --
    vn.label("refuel_no")
    p( function () return mem.refuel_no end )
@@ -433,7 +433,7 @@ function comm( plt )
    p(mem.refuel_busy or _([["Sorry, I'm busy now."]]))
    vn.jump("menu")
 
-   vn.label("refueling_already")
+   vn.label("refuelling_already")
    p(mem.refuel_already or _([["What part of 'on my way' don't you understand?"]]))
    vn.jump("menu")
 
@@ -460,8 +460,8 @@ function comm( plt )
       if val==nil or plt:flags("manualcontrol") then
          vn.jump("refuel_busy")
       end
-      if plt:flags("refueling") then
-         vn.jump("refueling_already")
+      if plt:flags("refuelling") then
+         vn.jump("refuelling_already")
       end
    end )
    p( function ()
@@ -477,7 +477,7 @@ function comm( plt )
          -- It's free so give as much as the player wants
          vn.jump("refuel_trypay_max")
       end
-      return fmt.f(_("{msg}\n\nYou have {credits}. Pay for refueling??"), {msg=str, credits=chave} )
+      return fmt.f(_("{msg}\n\nYou have {credits}. Pay for refuelling??"), {msg=str, credits=chave} )
    end )
    vn.menu( function ()
       local pps = player.pilot():stats()
@@ -507,7 +507,7 @@ function comm( plt )
    vn.na( function ()
       local cstr = fmt.credits( player.credits() )
       local cdif = fmt.credits( mem.refuel - player.credits() )
-      return fmt.f(_("You only have {credits} credits. You need #r{cdif}#0 more to be able to afford the refueling!"), {credits=cstr, cdif=cdif} )
+      return fmt.f(_("You only have {credits} credits. You need #r{cdif}#0 more to be able to afford the refuelling!"), {credits=cstr, cdif=cdif} )
    end )
    vn.jump("menu")
 

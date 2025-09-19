@@ -22,7 +22,7 @@ Furthermore, slots can have special properties such as:
 
 ## Equipment Window
 
-The equipment window is available when [landing](mechanics/landing) on spaceports with refueling capabilities.
+The equipment window is available when [landing](mechanics/landing) on spaceports with refuelling capabilities.
 It allows you to not only change ships but also to change the outfits the ship has equipped.
 You can also see updated statistics and properties of the ships you own.
 <% if player.fleetCapacity() > 0 then %>
@@ -41,4 +41,4 @@ This can be used to get a ship ready to fly quickly.
 Intrinisc outfits are modifications to the ship itself that do not take an outfit slot.
 They are usually much more difficult to obtain, as they require extensive modifications to the ship itself.
 Once installed, in general, they can not be removed nor moved to another ship.
-You can view the intrinsic outfits a ship has from the equipment window when [landed](mechanics/landing) at a spaceport with refueling capabilities.
+You can view the intrinsic outfits a ship has from the equipment window when [landed](mechanics/landing) at a spaceport with refuelling capabilities.

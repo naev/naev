@@ -3650,7 +3650,7 @@ msgid "1. Board and Capture the ship."
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:36
-msgid "1. Escort the ship to a spaceport with refueling capabilities."
+msgid "1. Escort the ship to a spaceport with refuelling capabilities."
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:37
@@ -3992,7 +3992,7 @@ msgid "## Equipment Window"
 msgstr ""
 
 #: dat/naevpedia/mechanics/equipment.md:25
-msgid "The equipment window is available when [landing](mechanics/landing) on spaceports with refueling capabilities."
+msgid "The equipment window is available when [landing](mechanics/landing) on spaceports with refuelling capabilities."
 msgstr ""
 
 #: dat/naevpedia/mechanics/equipment.md:26
@@ -4044,7 +4044,7 @@ msgid "Once installed, in general, they can not be removed nor moved to another 
 msgstr ""
 
 #: dat/naevpedia/mechanics/equipment.md:44
-msgid "You can view the intrinsic outfits a ship has from the equipment window when [landed](mechanics/landing) at a spaceport with refueling capabilities."
+msgid "You can view the intrinsic outfits a ship has from the equipment window when [landed](mechanics/landing) at a spaceport with refuelling capabilities."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:2
@@ -4582,7 +4582,7 @@ msgid "### Equipment"
 msgstr ""
 
 #: dat/naevpedia/mechanics/landing.md:46
-msgid "Any spaceport with refueling capabilities will allow you to access the [equipment tab](mechanics/equipment)."
+msgid "Any spaceport with refuelling capabilities will allow you to access the [equipment tab](mechanics/equipment)."
 msgstr ""
 
 #: dat/naevpedia/mechanics/landing.md:47
@@ -9610,7 +9610,7 @@ msgid "1. Board and Capture the ship."
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:36
-msgid "1. Escort the ship to a spaceport with refueling capabilities."
+msgid "1. Escort the ship to a spaceport with refuelling capabilities."
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:37
@@ -9952,7 +9952,7 @@ msgid "## Equipment Window"
 msgstr ""
 
 #: dat/naevpedia/mechanics/equipment.md:25
-msgid "The equipment window is available when [landing](mechanics/landing) on spaceports with refueling capabilities."
+msgid "The equipment window is available when [landing](mechanics/landing) on spaceports with refuelling capabilities."
 msgstr ""
 
 #: dat/naevpedia/mechanics/equipment.md:26
@@ -10004,7 +10004,7 @@ msgid "Once installed, in general, they can not be removed nor moved to another 
 msgstr ""
 
 #: dat/naevpedia/mechanics/equipment.md:44
-msgid "You can view the intrinsic outfits a ship has from the equipment window when [landed](mechanics/landing) at a spaceport with refueling capabilities."
+msgid "You can view the intrinsic outfits a ship has from the equipment window when [landed](mechanics/landing) at a spaceport with refuelling capabilities."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:2
@@ -10542,7 +10542,7 @@ msgid "### Equipment"
 msgstr ""
 
 #: dat/naevpedia/mechanics/landing.md:46
-msgid "Any spaceport with refueling capabilities will allow you to access the [equipment tab](mechanics/equipment)."
+msgid "Any spaceport with refuelling capabilities will allow you to access the [equipment tab](mechanics/equipment)."
 msgstr ""
 
 #: dat/naevpedia/mechanics/landing.md:47

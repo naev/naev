@@ -120,9 +120,6 @@ decentralise->decentralize
 decentralised->decentralized
 decentralises->decentralizes
 decentralising->decentralizing
-defence->defense
-defenceless->defenseless
-defences->defenses
 demonise->demonize
 demonised->demonized
 demonises->demonizes
