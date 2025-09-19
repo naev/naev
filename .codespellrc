@@ -1,0 +1,5 @@
+[codespell]
+ignore-words = .codespellignore
+builtin = clear,rare
+# Add en_to_en-OX when supported and specify version in pre-commit
+#builtin = clear,rare,en_to_en-OX
