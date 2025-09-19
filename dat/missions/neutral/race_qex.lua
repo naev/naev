@@ -227,9 +227,9 @@ function approach_terminal ()
 
       bzr_race:set( track.track )
 
-      txt = txt .. '#nLength: ' .. fmt.number(track.length) .. ' km#0\n'
+      txt = txt .. '#n' .. fmt.f('Length: {length} km', {length=fmt.number(track.length)})..'#0\n'
       local yet
-      for _n, i in ipairs({'Bronze', 'Silver', 'Gold'}) do
+      for _n, i in ipairs({N_('Bronze'), N_('Silver'), N_('Gold')}) do
          if not yet and track.besttime >= track.goaltime[i] then
             yet = true
             txt = txt .. '#b' .. _('Best Time:') .. ' '
@@ -411,7 +411,7 @@ function race_landed ()
 
    if elapsed_time <= 0.0 then return end
 
-   for i, g in ipairs({'Gold', 'Silver', 'Bronze'}) do
+   for i, g in ipairs({N_('Gold'), N_('Silver'), N_('Bronze')}) do
       if elapsed_time <= mem.track.goaltime[g] then
          local ratio = mem.track.goaltime[g] / elapsed_time - 1.0
          reward = mem.track.reward  * 2^(2-i)
@@ -440,7 +440,7 @@ function race_landed ()
          vn.na(fmt.f(_('You finished the race in {elapsed} and beat the goal time of {goal} ({metal}) but were {short} over the goal time of {ngoal} ({nmetal}).{imp_str} Congratulations!'), {
             elapsed= '#b' .. display_time( elapsed_time ) .. '#0',
             goal= medal_col[beat_time] .. display_time( mem.track.goaltime[beat_time] ) .. '#0',
-            metal= beat_time,
+            metal= _(beat_time),
             short= '#r' .. display_time( elapsed_time - mem.track.goaltime[nxt] ) .. '#0',
             ngoal= medal_col[nxt] .. display_time( mem.track.goaltime[nxt] ) .. '#0',
             nmetal= nxt,
@@ -494,7 +494,7 @@ They hand you one of those fake oversized cheques for the audience, and then a c
             player.outfitAdd( reward_outfit )
          end )
       else
-         vn.na(fmt.reward(reward)..'\n'..fmt.reward(bonus)..' (early finish bonus)')
+         vn.na(fmt.reward(reward)..'\n'..fmt.reward(bonus).._(' (early finish bonus)'))
       end
       vn.func( function ()
          player.pay(reward)
