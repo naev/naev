@@ -194,8 +194,8 @@ finalises->finalizes
 finalising->finalizing
 flavor->flavour
 flavors->flavours
-focuses->focusses
-focusing->focussing
+focusses->focuses
+focussing->focusing
 focussed->focused
 formalisation->formalization
 formalise->formalize

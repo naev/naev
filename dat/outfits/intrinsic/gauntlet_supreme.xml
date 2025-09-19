@@ -3,7 +3,7 @@
   <slot>intrinsic</slot>
   <mass>0</mass>
   <price>1000000</price>
-  <description>This service focusses on refining and polishing the launcher systems to maximize the missile fire power of the ship. It is a comprehensive and in-depth optimization that has to be done on a per-ship basis, with specialized technicians tuning everything for maximum efficiency. Due to the nature of the service, only one can be applied to each ship.</description>
+  <description>This service focuses on refining and polishing the launcher systems to maximize the missile fire power of the ship. It is a comprehensive and in-depth optimization that has to be done on a per-ship basis, with specialized technicians tuning everything for maximum efficiency. Due to the nature of the service, only one can be applied to each ship.</description>
   <gfx_store>/gfx/misc/crimson_gauntlet.webp</gfx_store>
   <rarity>6</rarity>
  </general>

@@ -538,7 +538,7 @@ They grab a toolbox and rush over to your boarded ship. You decide not to follow
    mm(fmt.f(_([["Or it could be the Toni's Discount Ship Repair Certification Course I did for {cost} in a back-alley on Darkshed. Still never really understood why we need to slap fish skin on the radiators. Bug juice would work much better, but anyway, I got my licence and I get spruce up your ship for all your space needs!"]]),
       {cost=fmt.credits(99)}))
    mm(_([["I can offer you three different services, however, you can only have one active at a time on your ship. It is possible to change them if you wish though. In particular, I offer three services: Machiavellian Necessity, Machiavellian Fortune, and Machiavellian Virtue."]]))
-   mm(_([["Machiavellian Necessity focusses on tweaking your weapon systems to be able to take decisive action when necessary."
+   mm(_([["Machiavellian Necessity focuses on tweaking your weapon systems to be able to take decisive action when necessary."
 "Machiavellian Fortune will help you minimize the risks of fickleness of fortune."
 "Finally, Machiavellian Virtue will make you a bulwark against unforeseen mishaps."]]))
    for k,v in pairs(upgrade_list) do

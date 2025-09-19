@@ -498,7 +498,7 @@ function strangelove_board ()
    dr(_([["I see you were able to make it."
 He coughs violently.
 "Sorry, I haven't been feeling too well lately."
-He doesn't seem to be focussing much on you and is just talking in your general direction.]]))
+He doesn't seem to be focusing much on you and is just talking in your general direction.]]))
    dr(_([["It is all going well. I think we are close to a breakthrough, the next time I should be able to succeed. After all this time, finally I'll be able to see the truth!"
 His vital monitor's warning light flashes on.]]))
    dr(_([["You were right. It was and is all connected. I should have listened to you sooner, but I was foolish and naïve."
