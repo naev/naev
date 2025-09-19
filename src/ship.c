@@ -1341,7 +1341,7 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
    temp->dmg_absorb /= 100.;
    temp->turn *= M_PI / 180.; /* Convert to rad. */
 
-   /* Check license. */
+   /* Check licence. */
    if ( temp->license && !outfit_licenseExists( temp->license ) )
       WARN( _( "Ship '%s' has inexistent licence requirement '%s'!" ),
             temp->name, temp->license );
