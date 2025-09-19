@@ -39,7 +39,7 @@ local pir = require "common.pirate"
 
 mem.reward = 300e3
 
-local defense_fleet, fraider, raider_fleet, raiders_left -- Non-persistent state
+local defence_fleet, fraider, raider_fleet, raiders_left -- Non-persistent state
 local defend_system -- Forward-declared functions
 
 -- Create the mission on the current planet, and present the first Bar text.
@@ -56,7 +56,7 @@ function create()
       misn.finish(false)
    end
 
-   if tk.yesno( _("In the bar"), _([[The barman has just asked you for your order when the portmaster bursts though the door, out of breath. "Pirates, all over the system!  The navy's on maneuvers. Quickly, we need to organize a defence."
+   if tk.yesno( _("In the bar"), _([[The barman has just asked you for your order when the portmaster bursts though the door, out of breath. "Pirates, all over the system!  The navy's on manoeuvres. Quickly, we need to organize a defence."
    All the pilots in the room scramble to their feet. "How many are there?" someone asks. "How long have they been in system?" another calls out.
    Into the confusion steps a steely-haired, upright, uniformed figure. Her stripes mark her as a navy Commodore.
    "I'm with the navy and I will organize the defence," her voice cuts through the commotion. "Who here is a pilot?  We must strike back quickly. I will arrange a reward for everyone who volunteers. We'll need as many pilots as possible. Follow me."]]) ) then
@@ -115,14 +115,14 @@ function defend_system()
    pilot.toggleSpawn( false )
 
    -- Set up distances
-   local angle, defense_position, raider_position
+   local angle, defence_position, raider_position
    angle = rnd.angle()
    if mem.defender == true then
       raider_position  = vec2.newP( 400, angle )
-      defense_position = vec2.new( 0, 0 )
+      defence_position = vec2.new( 0, 0 )
    else
       raider_position  = vec2.newP( 800, angle )
-      defense_position = vec2.newP( 400, angle )
+      defence_position = vec2.newP( 400, angle )
    end
 
    -- Create a fleet of raiding pirates
@@ -133,8 +133,8 @@ function defend_system()
 
    -- And a fleet of defending independents
    local dfleet = { "Mule", "Lancelot", "Ancestor", "Gawain" }
-   defense_fleet = fleet.add( 2, dfleet, "Trader", defense_position, _("Defender"), {ai="def"} )
-   for k,v in ipairs( defense_fleet) do
+   defence_fleet = fleet.add( 2, dfleet, "Trader", defence_position, _("Defender"), {ai="def"} )
+   for k,v in ipairs( defence_fleet) do
       v:setFriendly()
    end
 
@@ -203,7 +203,7 @@ end
 
 function congratulations()
    tk.msg( _("Good job!"), fmt.f( _([[The debris from the battle disappears behind you in a blur of light. A moment after you emerge from hyperspace, a Imperial ship jumps in behind you and hails you.
-   "Please hold course and confirm your identity, {ship}."  You send your license code and wait for a moment. "OK, that's fine. We're just making sure no pirates escaped. You were part of the battle, weren't you?  Surprised you didn't return for the bounty, pilot. Listen, I appreciate what you did back there. I have family on {pnt}. When I'm not flying overhead, it's good to know there are good Samaritans like you who will step up. Thanks."
+   "Please hold course and confirm your identity, {ship}."  You send your licence code and wait for a moment. "OK, that's fine. We're just making sure no pirates escaped. You were part of the battle, weren't you?  Surprised you didn't return for the bounty, pilot. Listen, I appreciate what you did back there. I have family on {pnt}. When I'm not flying overhead, it's good to know there are good Samaritans like you who will step up. Thanks."
 ]]), {ship=player.ship(), pnt=mem.this_planet}))
    misn.finish( true)
 end

@@ -81,6 +81,7 @@ static const luaL_Reg outfitL_methods[] = {
    { "summary", outfitL_summary },
    { "unique", outfitL_unique },
    { "friendlyfire", outfitL_friendlyfire },
+   { "pointdefence", outfitL_pointdefense },
    { "pointdefense", outfitL_pointdefense },
    { "missShips", outfitL_miss_ships },
    { "missAsteroids", outfitL_miss_asteroids },

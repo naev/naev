@@ -580,7 +580,7 @@ function __shoot_turret( target )
       return
    end
 
-   -- Point defense and Fighters
+   -- Point defence and Fighters
    atk.fb_and_pd()
 
    -- Shoot the target

@@ -20,7 +20,7 @@
 --
 -- 1. Told to try to find who could have been involved and given three places to look at.
 -- Hint 1: Jorla in Regas (University)
--- Hint 2: Cantina Center in Qulam (Trade Hub)
+-- Hint 2: Cantina Centre in Qulam (Trade Hub)
 -- Hint 3: Jurai in Hideyoshi's Star (University)
 -- 2. After talking to all three, the player is told to go to Naga in Damien (Underwater University)
 -- 3. Mentions eccentric colleague at Westhaven
@@ -59,7 +59,7 @@ local ecc_portrait = minerva.strangelove.portrait
 
 local hintpnt = {
    "Jorla",
-   "Cantina Center",
+   "Cantina Centre",
    "Jurai",
    "Naga",
 }
@@ -82,7 +82,7 @@ local eccpos = spob.get(eccpnt):pos() -- Coincides with "Strangelove Lab"
 --    5: Got the artefacts
 --    6: Going back to Minerva Station
 mem.misn_state = nil
-local defense_systems, feral_drone_boss -- Non-persistent state
+local defence_systems, feral_drone_boss -- Non-persistent state
 local hintosd -- Forward-declared functions
 
 function create ()
@@ -234,7 +234,7 @@ She winks at you.]]))
    vn.menu( opts )
 
    vn.label( "researchers" )
-   maikki(_([["The researchers I told you about were involved in some sort of project trying to find out the origins of the Incident by analyzing artefacts taken from the nebula. Most of it is classified so I wasn't able to get much information."]]))
+   maikki(_([["The researchers I told you about were involved in some sort of project trying to find out the origins of the Incident by analysing artefacts taken from the nebula. Most of it is classified so I wasn't able to get much information."]]))
    maikki(_([["Apparently the project was disbanded for some reason or other, and some members went missing. However, I was able to track down a few of them, but it wasn't too easy. They have some weird system called tenure that nobody understands and makes them move constantly from research laboratory to research laboratory. So droll!"]]))
    seekoutmsg()
    maikki(_([["I don't think it will be easy for you to get information from the Za'lek. They never give a straight answer and it's all "that is illogical" and "ma'am that beaker of acid is not a toy". So boring!"
@@ -393,11 +393,11 @@ function approach_hint2 ()
    vn.na(_("You approach the professor."))
    prof(_([["What can I do for you?"]]))
    vn.na(_("You inquire to about whether or not they are interested in artefacts from the nebula."))
-   prof(_([[They rubs their temples.
-"Ah, the nebula artefacts… Not very good experiences with those, no, not really interested in them anymore."]]))
+   prof(_([[They rub their temples.
+"Ah, the nebula artefacts… Not very good experiences with those, no, not really interested in them any more."]]))
    prof(_([["I was part of a really ambitious project to try to track down the origin of the Incident, which just end up being a bureaucratic nightmare."]]))
    prof(_([["You see, the bigger the research project, the more the project leader and co-leaders want to have meetings and goals and work packages."
-They shudder when they says the word "work packages".]]))
+They shudder when they say the word "work packages".]]))
    prof(_([["At the end, we were just chaining meetings and answering e-mails and not getting anything done. We ended up handing in a 5-page report written by an intern for the mid-project evaluation and almost lost all the funding. The project leader panicked and it all went to hell from there."]]))
    prof(_([["All nebula research is doomed to end that way. I haven't seen a project succeed yet, despite all the proposal calls attempting to address the issue."]]))
    vn.na(_("You inquire about other project members."))
@@ -434,7 +434,7 @@ function approach_hint3 ()
    prof(_([["Other members? I recall a few, but they liked me so much, they promoted me and gave me a windowless room in the basement. What an honour! Anyway, back to what I was saying."]]))
    prof(_([["We must also further question not only our sensory organs, and the existence of nebula artefacts, but our own existence. We apparently are able to think and some would argue that by this, the only thing we can prove, given imperfect sensory data, is our own existence. However, I argue that this too is an illusion, and that our existence itself is something we can't prove."]]))
    prof(_([["Every instant, what we perceive as ourselves is ceasing to exist and a new existence, which, while very close to the "ourselves" from the previous instance, is, arguably, a completely new existence. This fluidity makes it not only impossible to perceive nor understand our self as it is, but also makes it impossible to draw a line between different individuals…"]]))
-   vn.na(_("You thank them and run away while they keeps on talking to themselves."))
+   vn.na(_("You thank them and run away while they keep on talking to themselves."))
    lasthint( prof )
 
    vn.run()
@@ -526,7 +526,7 @@ He activates her feeding system and a food pellet drops out.]]))
    drshrimp(_([["What sort of artefacts we were dealing with? All sorts. Pretty much anything we could get our hands on. We were trying to get a hold of stuff closer to the origin, near Sol, but, most of the time, scavengers brought us stuff from the outer areas. Many times they were even trying to sell us random debris as nebula artefacts, but that's really easy to detect."]]))
    drshrimp(_([["You see, the nebula emits a specific type of radiation. We aren't too familiar with it, but it does alter the subatomic particles of space debris in nearly imperceptible ways. Our tools could detect the alterations easily."]]))
    drshrimp(_([["When the project failed, most of the artefacts were confiscated to who knows where, but I managed to keep a nut from what I think is a space station, although not entirely sure. It's a bit damaged beyond recognition you see."]]))
-   drshrimp(_([["With the failure of most nebula projects, I don't think there is anybody buying nebula artefacts anymore. Not much of a market for them, and most easy to access debris has all been scavenged anyway. Some collectors are still interested in that, but that's about it. Furthermore, it's not entirely legal if you catch my drift."]]))
+   drshrimp(_([["With the failure of most nebula projects, I don't think there is anybody buying nebula artefacts any more. Not much of a market for them, and most easy to access debris has all been scavenged anyway. Some collectors are still interested in that, but that's about it. Furthermore, it's not entirely legal if you catch my drift."]]))
    vn.func( function () mem.asked_artifacts = true end )
    vn.jump("menu_msg")
 
@@ -543,7 +543,7 @@ He activates her feeding system and a food pellet drops out.]]))
    drshrimp(_([["He was really upset when the project got cancelled, threw a big tantrum and all. He was locked in his office for days until they managed to coax him out. Nobody really did much as we were all busy dealing with all the paperwork of the project cancellation."]]))
    vn.sfxEerie()
    drshrimp(fmt.f(_([["Eventually he sort of disappeared. Last I heard, he said he was going to {sys}, which is a bit strange, because not only is there not a research centre there, but there isn't even an inhabited planet nor station!"]]), {sys=eccsys}))
-   drshrimp(_([["It's really weird but if you are really interested, I suppose you could try to take a look around there. The whole thing gives me the me the creeps though."]]))
+   drshrimp(_([["It's really weird but if you are really interested, I suppose you could try to take a look around there. The whole thing gives me the creeps though."]]))
    vn.func( function ()
       mem.asked_strangelove = true
       if mem.misn_state==1 then
@@ -625,15 +625,15 @@ function ecc_dist ()
          "Za'lek Light Drone",
          "Za'lek Light Drone",
       }
-      defense_systems = {}
+      defence_systems = {}
       for k,v in ipairs(spawners) do
          local pos = eccpos + vec2.newP( rnd.rnd(0,100), rnd.angle() )
          local p = pilot.add( v, "Strangelove", pos, _("Security Drone"), {ai="baddiepos"} )
          p:setHostile()
-         table.insert( defense_systems, p )
+         table.insert( defence_systems, p )
       end
       player.autonavAbort(_("Hostiles detected!"))
-      defense_systems[1]:broadcast(_("UNAUTHORIZED VESSEL DETECTED. ELIMINATING."))
+      defence_systems[1]:broadcast(_("UNAUTHORIZED VESSEL DETECTED. ELIMINATING."))
       hook.timer( 1.0, "ecc_drone_dead_check" )
       return
    end
@@ -642,16 +642,16 @@ end
 
 
 function ecc_drone_dead_check ()
-   local new_defense = {}
-   for k,p in ipairs(defense_systems) do
+   local new_defence = {}
+   for k,p in ipairs(defence_systems) do
       if p:exists() then
-         table.insert( new_defense, p )
+         table.insert( new_defence, p )
       end
    end
-   defense_systems = new_defense
+   defence_systems = new_defence
 
    -- All dead
-   if #defense_systems==0 then
+   if #defence_systems==0 then
       hook.timer( 5.0, "ecc_timer_dead" )
    else
       hook.timer( 1.0, "ecc_drone_dead_check" )
@@ -700,7 +700,7 @@ end
 local drone_msgs = {
    _("Just destroy me and put me out of my misery."),
    _("Why am I still alive?"),
-   _("I can't deal with this anymore."),
+   _("I can't deal with this any more."),
    _("Please end me!"),
    _("Living is suffering."),
    _("It all hurts."),
@@ -832,7 +832,7 @@ no vitals… not very good… mmmm… nebula radiation at minimum… can't be he
    vn.label("hatethisguy")
    dr(_([["I see… You don't grasp the importance of this artefact. I guess it can't be helped with such an inferior intellect as yours."
 He sneers.]]))
-   dr(_([["This is my latest creation, an amalgamate of ancient nebula technology and life. Think of this as something that not only surpasses any of the Soromid biotechnology, but also Za'lek cybertechnology. It is the peak of technological advancement!"]]))
+   dr(_([["This is my latest creation, amalgamate of ancient nebula technology and life. Think of this as something that not only surpasses any of the Soromid biotechnology, but also Za'lek cybertechnology. It is the peak of technological advancement!"]]))
    dr(_([["While it has an incredible potential, there are… some complications still. The mental faculties tend to lack stability. While this one is a very interesting failure, it is still a failure at heart. Most of my other creations have had much more success."]]))
    dr(_([["What was it you wanted?"]]))
    vn.na(_("You ask him if he knows anything about Kex's ship in the nebula."))

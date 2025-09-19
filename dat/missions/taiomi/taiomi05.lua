@@ -59,9 +59,9 @@ local SPAWNLIST_FIGHT = {
    0: mission started
    1: landed on one-winged goddard
    2: first broadcast
-   3: finish defense
+   3: finish defence
    4: second broadcast
-   5: finish second defense
+   5: finish second defence
    6: return time
 --]]
 mem.state = 0

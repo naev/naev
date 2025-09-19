@@ -79,8 +79,8 @@ function outfit_buy( o )
       vn.run()
       var.push( "tut_turret", true )
 
-   -- pointdefense
-   elseif tspecific=="Point Defense" and not var.peek( "tut_pd" ) then
+   -- pointdefence
+   elseif tspecific=="Point Defence" and not var.peek( "tut_pd" ) then
       vn.clear()
       vn.scene()
       local sai = vn.newCharacter( tut.vn_shipai() )

@@ -681,10 +681,10 @@ function vn.StateCharacter.new( character, remove )
    return s
 end
 local function _getpos( pos )
-   pos = pos or "center"
+   pos = pos or "centre"
    if type(pos)=="number" then
       return pos
-   elseif pos == "center" then
+   elseif pos == "center" or pos == "centre" then -- codespell:ignore center
       return 0.5
    elseif pos == "left" then
       return 0.25
@@ -1475,7 +1475,7 @@ Moves a character to another position.
 
    @see vn.animation
    @tparam Character c Character to move.
-   @tparam[opt="center"] string|number pos Position to move to. Can be either a [0,1] value, "center", "left", "right", "farleft", or "farright".
+   @tparam[opt="centre"] string|number pos Position to move to. Can be either a [0,1] value, "centre", "left", "right", "farleft", or "farright".
 --]]
 function vn.move( c, pos )
    local function runinit ()

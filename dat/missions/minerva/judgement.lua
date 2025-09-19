@@ -188,12 +188,12 @@ function trial_start ()
    vn.scene()
    vn.newCharacter( judge )
    vn.transition()
-   judge(_([[A judge floats up to the center of the room.
+   judge(_([[A judge floats up to the centre of the room.
 "Order! Order!"
 She hits her gavel.]]))
    vn.na(_([[Except for the odd cough, silence envelops the room.]]))
    judge(_([["We are gathered here to day to deliberate over the future of Minerva Station, which has been accused of falling into debauchery and lawlessness. These are very serious accusation that question the sovereignty of Minerva Station, which currently enjoys the privilege of independent rule."]]))
-   judge(_([[According to Principle of System Sovereignty, the parties who have claims on the system have the right for equal, fair, and honest deliberations of the partake in the distribution of powers.]]))
+   judge(_([[According to Principle of System Sovereignty, the parties who have claims on the system have the right for equal, fair, and honest deliberations that partake in the distribution of powers.]]))
 
    vn.func( function ()
       zlk.pos = "farleft"
@@ -236,9 +236,9 @@ Maikki gives an impeccable formal bow.]]))
 
    -- Reset positions
    vn.func( function ()
-      zlk.pos = "center"
-      dvd.pos = "center"
-      maikki.pos = "center"
+      zlk.pos = "centre"
+      dvd.pos = "centre"
+      maikki.pos = "centre"
    end )
    vn.scene()
    vn.newCharacter( zlk )
@@ -247,7 +247,7 @@ Maikki gives an impeccable formal bow.]]))
 "Ladies and gentlemen, it is long known that Minerva Station is a stain on the galactic map. Despite all the excellent potential, it has been squandered away during cycles neither benefiting the Empire nor the Great Houses."]]))
    zlk(_([["Today, I stand before you as the representative of House Za'lek, armed not only with legal expertise, but intellect that has guided our House to prosperity throughout the Empire. I shall present a compelling case as to why Minerva Station rightfully belongs to House Za'lek."]]))
    local log = vne.flashbackTextStart(_("Narrator"))
-   log(_([[The Za'lek Lawyer gives a meticulously prepared and organized speech regarding the plans and benefits that House Za'lek can bring to Minerva Station with a focus on the track record of House Za'lek and the potential for refocusing the station as a cultural enlightenment center to improve collaboration amongst the great houses.]]))
+   log(_([[The Za'lek Lawyer gives a meticulously prepared and organized speech regarding the plans and benefits that House Za'lek can bring to Minerva Station with a focus on the track record of House Za'lek and the potential for refocussing the station as a cultural enlightenment centre to improve collaboration amongst the great houses.]]))
    vne.flashbackTextEnd()
    zlk(_([["...In conclusion, I am confident that your wisdom and discernment will lead you to make the just and informed decision, aligning the fate of this space station with the unmatched expertise and vision of House Za'lek."]]))
 
@@ -289,7 +289,7 @@ Maikki gives an impeccable formal bow.]]))
    judge(_([["Let us proceed with the presentation of evidence."]]))
    log = vne.flashbackTextStart(_("Narrator"))
    log(_([[First House Za'lek begins to present evidence, presenting results of economical and social growth in systems that were handed-over to the House in the original days. They also call in an expert who presents testimony and highlights the differences with House Dvaered. The Dvaered Representative raises objections, but they are overruled. Overall it is quite a scientific and dry exposition, albeit sound and well established on facts. ]]))
-   log(_([[Next comes House Dvaered that presents a more emotional defense of Dvaered prosperity, instead of relying on economic indicators, they use social analysis and questionnaire results to show increased levels of relative happiness compared to Za'lek territory, where objections by the Za'lek Lawyer are overruled. Finally, they bring a Dvaered expert to testify on how House Dvaered has a curtailing effect on piracy and unwanted behaviours. All in all, as expected from House Dvaered.]]))
+   log(_([[Next comes House Dvaered that presents a more emotional defence of Dvaered prosperity, instead of relying on economic indicators, they use social analysis and questionnaire results to show increased levels of relative happiness compared to Za'lek territory, where objections by the Za'lek Lawyer are overruled. Finally, they bring a Dvaered expert to testify on how House Dvaered has a curtailing effect on piracy and unwanted behaviours. All in all, as expected from House Dvaered.]]))
    log(_([[Next is Maikki's turn...]]))
    vne.flashbackTextEnd{ characters={maikki} }
 
@@ -365,8 +365,8 @@ Maikki gives an impeccable formal bow.]]))
 Having finished her interrogation, Maikki sits down.]]))
 
    vn.func( function ()
-      zlk.pos = "center"
-      dvd.pos = "center"
+      zlk.pos = "centre"
+      dvd.pos = "centre"
    end )
    vn.scene()
    vn.newCharacter( dvd )
@@ -458,10 +458,10 @@ Having finished her interrogation, Maikki sits down.]]))
    vn.transition()
    zlk(_([[Finally, it is House Za'lek's interrogation.]]))
    if helped=="dvaered" then
-      zlk(fmt.f(_([["{playername}, although you seem to have a preference for joining House Dvaered in brutish ways against House Za'lek. Let us put that aside to analyze your personality and lack of trustworthiness."]]),
+      zlk(fmt.f(_([["{playername}, although you seem to have a preference for joining House Dvaered in brutish ways against House Za'lek. Let us put that aside to analyse your personality and lack of trustworthiness."]]),
          {playername=player.name()}))
    else
-      zlk(fmt.f(_([["{playername}, let us analyze your personality and lack of trustworthiness."]]),
+      zlk(fmt.f(_([["{playername}, let us analyse your personality and lack of trustworthiness."]]),
          {playername=player.name()}))
    end
 

@@ -75,7 +75,7 @@ function begin ()
 
    hook.timer(3.0, "merchant")
    hook.timer(7.0, "attack")
-   hook.timer(12.0, "defense")
+   hook.timer(12.0, "defence")
    battleEnded = false
 
    hook.rm(jumphook)
@@ -254,7 +254,7 @@ function attack ()
    goda:land(source_planet)
 end
 
-function defense ()
+function defence ()
    defAttHook = {}
    local n = rnd.rnd(3,6)
    local name = _("Local Warlord's Force")

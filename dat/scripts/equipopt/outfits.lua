@@ -36,7 +36,7 @@ outfits.standard.weapons = {
    "Laser Turret MK2", "Laser Turret MK1", "Turreted Gauss Gun", "Plasma Turret MK1",
    "Laser Cannon MK1", "Gauss Gun", "Plasma Blaster MK1", "Razor Artillery S1",
    "Ion Cannon", "Razor Artillery S2", "Razor Artillery S3", "Ripper Cannon", "Particle Beam",
-   -- Point Defense
+   -- Point Defence
    "Guardian Overseer System",
    "Guardian Interception System",
 }
