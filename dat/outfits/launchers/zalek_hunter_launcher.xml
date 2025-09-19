@@ -3,7 +3,7 @@
   <shortname>Z. Hunter L.</shortname>
   <slot>weapon</slot>
   <size>medium</size>
-  <license>Heavy Weapon</license>
+  <licence>Heavy Weapon</licence>
   <cond>require("buyrep")("Za'lek", 30)</cond>
   <condstr>You need at least 30% reputation with House Za'lek.</condstr>
   <rarity>1</rarity>

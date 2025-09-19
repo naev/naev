@@ -2018,7 +2018,17 @@ int diff_load( xmlNodePtr parent )
                            "unidiff. Was empty." ) );
                   continue;
                }
-               diff_applyInternal( diffName, 0 );
+               if ( diff_applyInternal( diffName, 0 ) ) {
+                  if ( player_runUpdaterScript( "unidiff", diffName, 0 ) !=
+                       0 ) {
+                     if ( lua_type( naevL, -1 ) == LUA_TSTRING )
+                        diff_applyInternal( lua_tostring( naevL, -1 ), 0 );
+                     else
+                        WARN( "Invalid value returned from 'unidiff' in "
+                              "'save_updater.lua'" );
+                     lua_pop( naevL, 1 );
+                  }
+               }
                continue;
             }
          } while ( xml_nextNode( cur ) );

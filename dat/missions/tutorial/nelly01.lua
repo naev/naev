@@ -324,7 +324,7 @@ function enter ()
    elseif mem.misn_state==2 and system.cur() == mem.retsys then
       hook.timer( 5, "talk_derelict" )
 
-      local pos = player.pos() * 0.6 -- Should be to the center of the system
+      local pos = player.pos() * 0.6 -- Should be to the centre of the system
       derelict = pilot.add( "Koala", "Derelict", pos, p_("ship", "Derelict") )
       derelict:setDisable()
       derelict:intrinsicSet( "ew_hide", 300 ) -- Much more visible
@@ -390,7 +390,7 @@ function info ()
       mem.hk_info = nil
    end
 
-   info_msg( _([["Ah, the info menu in all its glory. In the main window, you can see overall statistics of your gameplay and license information. Try to navigate to the #oMissions#0 tab. Feel free to click the other tabs for more information."]]) )
+   info_msg( _([["Ah, the info menu in all its glory. In the main window, you can see overall statistics of your gameplay and licence information. Try to navigate to the #oMissions#0 tab. Feel free to click the other tabs for more information."]]) )
 
    mem.hk_info_ship      = hook.info( "info_ship",     "ship" )
    mem.hk_info_weapons   = hook.info( "info_weapons",  "weapons" )
@@ -486,7 +486,7 @@ end
 
 function outfit_buy( o, _q )
    local t = o:type()
-   if t=="Map" or t=="Local Map" or t=="License" or t=="GUI" or t=="Unknown" then
+   if t=="Map" or t=="Local Map" or t=="Licence" or t=="GUI" or t=="Unknown" then
       return
    end
    if o ~= outfit_tobuy then

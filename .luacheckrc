@@ -124,9 +124,10 @@ stds.API_scan = {globals={"scan"}}      -- C function: player_scan
 stds.API_save_updater = {globals={
    "start",                             -- C function: player_runUpdaterStart
    "finish",                            -- C function: player_runUpdaterFinish
-   "license",                           -- C function: player_tryAddLicense
+   "licence",                           -- C function: player_tryAddLicense
    "outfit",                            -- C function: player_tryGetOutfit
    "ship",                              -- C function: player_tryGetShip
+   "unidiff",                           -- C function: diff_load
 }}
 stds.API_shipai = {globals={"create"}}  -- C function: info_shipAI
 stds.API_spawn = {globals={

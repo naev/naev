@@ -6,7 +6,7 @@
   <cond>require("buyrep")("Empire", 30)</cond>
   <condstr>You need at least 30% reputation with the Empire.</condstr>
   <size>small</size>
-  <license>Medium Weapon</license>
+  <licence>Medium Weapon</licence>
   <mass>22</mass>
   <price>90000</price>
   <description>Storm missiles and launchers were designed by Unicorp to be the guided equivalent to a Mace rocket. However, despite the undeniable ability of Unicorp to design functional and cheap outfits, the result ended up way too costly to mass-equip the Navy with. For that reason, only the Imperial elite squadrons use this very deadly weapon.</description>

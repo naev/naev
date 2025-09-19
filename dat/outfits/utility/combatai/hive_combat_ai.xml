@@ -4,7 +4,7 @@
   <slot>utility</slot>
   <size>medium</size>
   <rarity>1</rarity>
-  <license>Heavy Weapon</license>
+  <licence>Heavy Weapon</licence>
   <cond>require("buyrep")("Za'lek", 10)</cond>
   <condstr>You need at least 10% reputation with House Za'lek.</condstr>
   <mass>0</mass>

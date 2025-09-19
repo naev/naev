@@ -4,7 +4,7 @@
   <slot>utility</slot>
   <size>medium</size>
   <rarity>1</rarity>
-  <license>Medium Weapon</license>
+  <licence>Medium Weapon</licence>
   <mass>3</mass>
   <price>650000</price>
   <gfx_store>combat_hologram_projector.webp</gfx_store>

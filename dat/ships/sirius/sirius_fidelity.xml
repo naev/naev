@@ -9,7 +9,7 @@
  <price>320000</price>
  <time_mod>0.9</time_mod>
  <trail_generator x="-13" y="0" h="0">sirius</trail_generator>
- <license>Light Combat Vessel</license>
+ <licence>Light Combat Vessel</licence>
  <fabricator>Sirius Systems</fabricator>
  <faction>Sirius</faction>
  <cond>require("buyrep")("Sirius", 20)</cond>

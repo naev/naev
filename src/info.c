@@ -468,7 +468,7 @@ static void info_openMain( unsigned int wid )
       int ninv  = array_size( inv );
       inventory = malloc( sizeof( char * ) * n );
       for ( int i = 0; i < nlic; i++ )
-         SDL_asprintf( &inventory[i], "#n%s#0%s", _( "License: " ),
+         SDL_asprintf( &inventory[i], "#n%s#0%s", _( "Licence: " ),
                        _( lic[i] ) );
       qsort( inventory, nlic, sizeof( char * ), strsort );
       for ( int i = 0; i < ninv; i++ ) {

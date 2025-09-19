@@ -4,7 +4,7 @@
   <slot>utility</slot>
   <size>small</size>
   <rarity>1</rarity>
-  <license>Medium Weapon</license>
+  <licence>Medium Weapon</licence>
   <mass>1</mass>
   <price>375000</price>
   <description>The flow of time is generally not perceived as a constant value, rather it fluctuates greatly depending on the circumstances. Using the latest in neuro-interface technology, the Neural Accelerator Interface is able to exploit large amounts of ship energy to skew the flow of time to benefit the piloted ship.</description>

@@ -11,7 +11,7 @@
  <trail_generator y="0" h="0" x="-10">fire</trail_generator>
  <fabricator>House Dvaered</fabricator>
  <faction>Independent</faction>
- <license>Light Combat Vessel</license>
+ <licence>Light Combat Vessel</licence>
  <description>Commonly referred to as the "Little Goddard", the Ancestor also has its roots in the primitive flying machines used by men many ages ago. Unlike the Goddard though, the electronics are manufactured by House Dvaered, making it considerably inferior in that area.</description>
  <health>
   <armour>60</armour>

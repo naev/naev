@@ -1,8 +1,8 @@
-<unidiff name="heavy_combat_vessel_license">
+<unidiff name="heavy_combat_vessel_licence">
  <tech name="Basic Outfits 1">
-  <item_add>__Heavy Combat Vessel License</item_add>
+  <item_add>__Heavy Combat Vessel Licence</item_add>
  </tech>
  <tech name="Basic Outfits 2">
-  <item_add>__Heavy Combat Vessel License</item_add>
+  <item_add>__Heavy Combat Vessel Licence</item_add>
  </tech>
 </unidiff>

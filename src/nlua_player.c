@@ -252,6 +252,7 @@ static const luaL_Reg playerL_methods[] = {
    { "inventoryRm", playerL_inventoryRm },
    { "inventoryOwned", playerL_inventoryOwned },
    { "hasLicense", playerL_hasLicense },
+   { "hasLicence", playerL_hasLicense },
    { "teleport", playerL_teleport },
    { "dt_mod", playerL_dt_mod },
    { "fleetCapacity", playerL_fleetCapacity },

@@ -3,7 +3,7 @@
   <slot>weapon</slot>
   <unique/>
   <size>large</size>
-  <license>Heavy Weapon</license>
+  <licence>Heavy Weapon</licence>
   <mass>55</mass>
   <price>750000</price>
   <description>The Valkyrie Beam is a heavily modified version of the Ragnarok Beam, where the shields of the ship are significantly rerouted into the beam weapon to increase the output damage. The result is an incredibly potent beam that has a tendency to leave the ship as a sitting duck if it is unable to destroy the target in a single shot.</description>

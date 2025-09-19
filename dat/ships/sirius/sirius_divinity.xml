@@ -12,7 +12,7 @@
  <trail_generator y="-5" h="0" x="-52">sirius</trail_generator>
  <fabricator>Sirius Systems</fabricator>
  <faction>Sirius</faction>
- <license>Heavy Combat Vessel</license>
+ <licence>Heavy Combat Vessel</licence>
  <cond>require("buyrep")("Sirius", 70)</cond>
  <condstr>You need at least 70% reputation with House Sirius.</condstr>
  <description>Whilst the Dogma is said to form the core of any Sirian fleet, few combat pilots would dismiss the significance of the Divinity. Though not exceptionally formidable in direct combat, the Divinity's ability to field a multitude of fighters gives it unparalleled flexibility in combat, serving as a key logistical vessel in any sizable fleet.</description>

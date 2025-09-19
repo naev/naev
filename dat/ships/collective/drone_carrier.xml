@@ -14,8 +14,8 @@
  <trail_generator y="-10" h="0" x="-36"/>
  <fabricator>Robosys</fabricator>
  <faction>Collective</faction>
- <license>Heavy Combat Vessel</license>
- <description>This carrier is highly automated and is designed to command fleets of Collective Drones. It can be operated by a skeleton crew although most sections of the ship are not pressurized. Maintenance can be carried out by remotely controlled droids. Due to the lack of unnecessary crew facilities and heavy armor the Drone Carrier is an unusual lightweight and fast carrier.</description>
+ <licence>Heavy Combat Vessel</licence>
+ <description>This carrier is highly automated and is designed to command fleets of Collective Drones. It can be operated by a skeleton crew although most sections of the ship are not pressurized. Maintenance can be carried out by remotely controlled droids. Due to the lack of unnecessary crew facilities and heavy armour the Drone Carrier is an unusual lightweight and fast carrier.</description>
  <health>
   <armour>1200</armour>
   <armour_regen>25</armour_regen>

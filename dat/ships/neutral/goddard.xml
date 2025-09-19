@@ -15,7 +15,7 @@
  <trail_generator y="60" h="0" x="-14">nebula</trail_generator>
  <fabricator>House Goddard</fabricator>
  <faction>Goddard</faction>
- <license>Heavy Combat Vessel</license>
+ <licence>Heavy Combat Vessel</licence>
  <description>Designed by eccentric genius Eduard Manuel Goddard, the Goddard Battleship is what skyrocketed House Goddard to fame and fortune. Production is entirely done on Zhiru in the Goddard system by House Goddard. Over time, specialization and improvements on the original design have kept it very competitive in the market. It's a classic of space.</description>
  <health>
   <armour>1900</armour>

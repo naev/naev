@@ -13,7 +13,7 @@
  <trail_generator y="-8" h="0" x="-25"/>
  <fabricator>Nexus Shipyards</fabricator>
  <faction>Empire</faction>
- <license>Medium Combat Vessel</license>
+ <licence>Medium Combat Vessel</licence>
  <cond>require("buyrep")("Empire", 50)</cond>
  <condstr>You need at least 50% reputation with the Empire.</condstr>
  <description>This military grade version of the Pacifier is mostly identical in function to a standard Pacifier, but with slightly better armour, and shields.</description>

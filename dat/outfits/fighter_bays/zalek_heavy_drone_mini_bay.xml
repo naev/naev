@@ -3,7 +3,7 @@
   <shortname>Z. H. Drone mB.</shortname>
   <slot prop="fighter_bay">weapon</slot>
   <size>medium</size>
-  <license>Light Combat Vessel</license>
+  <licence>Light Combat Vessel</licence>
   <cond>require("buyrep")("Za'lek", 40)</cond>
   <condstr>You need at least 40% reputation with House Za'lek.</condstr>
   <rarity>1</rarity>

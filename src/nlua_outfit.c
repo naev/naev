@@ -75,6 +75,7 @@ static const luaL_Reg outfitL_methods[] = {
    { "limit", outfitL_limit },
    { "icon", outfitL_icon },
    { "license", outfitL_license },
+   { "licence", outfitL_license },
    { "price", outfitL_price },
    { "description", outfitL_description },
    { "summary", outfitL_summary },

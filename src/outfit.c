@@ -1460,7 +1460,7 @@ const char *outfit_getType( const Outfit *o )
       N_( "Star Map" ),
       N_( "Local Map" ),
       N_( "GUI" ),
-      N_( "License" ),
+      N_( "Licence" ),
    };
 
    /* Name override. */

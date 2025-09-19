@@ -13,7 +13,7 @@
  <trail_generator y="-15" h="-3" x="-30">nebula</trail_generator>
  <fabricator>House Dvaered</fabricator>
  <faction>Dvaered</faction>
- <license>Medium Combat Vessel</license>
+ <licence>Medium Combat Vessel</licence>
  <cond>require("buyrep")("Dvaered", 50)</cond>
  <condstr>You need at least 50% reputation with House Dvaered.</condstr>
  <description>This military grade version of the Vigilance has an optimized weight distribution allowing it to carry more payload.</description>

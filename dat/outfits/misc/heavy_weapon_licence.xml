@@ -1,0 +1,13 @@
+<outfit name="Heavy Weapon Licence">
+ <general>
+  <rarity>1</rarity>
+  <licence>Medium Weapon</licence>
+  <mass>0</mass>
+  <price>125000</price>
+  <gfx_store>licence.webp</gfx_store>
+  <description>This licence will authorize you to buy and use heavy weapons like the heavy ion turret.</description>
+ </general>
+ <specific type="licence">
+  <provides>Heavy Weapon</provides>
+ </specific>
+</outfit>

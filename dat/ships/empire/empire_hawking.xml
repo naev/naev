@@ -16,7 +16,7 @@
  <trail_generator x="-21" y="-10" h="-10" always_under="1">nebula</trail_generator>
  <fabricator>Nexus Shipyards</fabricator>
  <faction>Empire</faction>
- <license>Heavy Combat Vessel</license>
+ <licence>Heavy Combat Vessel</licence>
  <cond>require("buyrep")("Empire", 60)</cond>
  <condstr>You need at least 60% reputation with the Empire.</condstr>
  <description>This military grade version of the Hawking is mostly identical in function to a standard Hawking, but with slightly better armour, and shields.</description>

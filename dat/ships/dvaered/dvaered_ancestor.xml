@@ -13,7 +13,7 @@
  <trail_generator y="0" h="0" x="-10">fire</trail_generator>
  <fabricator>House Dvaered</fabricator>
  <faction>Dvaered</faction>
- <license>Light Combat Vessel</license>
+ <licence>Light Combat Vessel</licence>
  <cond>require("buyrep")("Dvaered", 30)</cond>
  <condstr>You need at least 30% reputation with House Dvaered.</condstr>
  <description>On this military grade version of the Ancestor, the distribution of the weight on the structure has been optimized in order to allow embarking more payload.</description>

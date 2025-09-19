@@ -3,7 +3,7 @@
   <slot>weapon</slot>
   <size>large</size>
   <mass>85</mass>
-  <license>Heavy Weapon</license>
+  <licence>Heavy Weapon</licence>
   <rarity>1</rarity>
   <price>720000</price>
   <description>While one railgun is a formidable weapon, the ultimate in brute-force capital ship weaponry is the railgun turret. Mounting two railguns in a specialized turret housing, it manages to mitigate the recoil normally associated with railguns at a slight velocity cost. Very few capital ships can survive being pounded by these weapons for long.</description>
