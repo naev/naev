@@ -9,11 +9,11 @@ local desc_list = {}
 desc_list["generic"] = {
    _("You see a person casually solving some partial differential equations on a napkin."),
    _("An individual who seems to be studying an ancient dialect."),
-   _("This person is using a portable spectrometer to analyze their fizzy drink."),
+   _("This person is using a portable spectrometer to analyse their fizzy drink."),
    _("This individual is staring blankly at the ceiling, while absentmindedly stirring their drink."),
    _("A person with three drinks in front of them who seems to be taking notes of the experience."),
-   _("An individual reading a 500 page proof while drinking hard liquor."),
-   _("A slightly tipsy individual who seems to be trying to do peer review."),
+   _("An individual reading a 500-page proof while drinking hard liquor."),
+   _("A slightly tipsy individual who seems to be trying to do peer-review."),
    _("A person idly writing a proof using non-Euclidean algebras."),
    _("This individual seems to be reading the latest issue of Nanoconductors Monthly."),
 }
@@ -22,7 +22,7 @@ desc_list["agriculture"] = {
    _("An individual that smells oddly of seaweed."),
 }
 desc_list["industrial"] = {
-   _("The individual is analyzing some industrial schematics."),
+   _("The individual is analysing some industrial schematics."),
 }
 desc_list["mining"] = {
    _("The person seems to have a set of rock samples in front of them. Some seem to have been licked."),
@@ -87,7 +87,7 @@ local msg_cond = {
    { npc.test_misnHint("Za'lek Black Hole 1"), _([["I heard that there have been some weird electromagnetic emissions recorded near the Anubis black hole. It is probably just poorly calibrated instruments."]]) },
    { npc.test_misnHint("Za'lek Particle Physics 1"), _([["It seems like Chairwoman Noona has run away to do science again. Nobody takes the Chairwoman job seriously anymore."]]) },
    { npc.test_chapter0(), _([["It seems like they are looking for rare minerals in Ruadan. It is hard to get drones to mine things without blowing everything up."]]) },
-   { npc.test_chapter0(), _([["The Za'lek Council is spending too much resources on the gigantic hyper-whatchamacallit in Ruadan. They should invest more in basic research like Hyperbolian Lie algebras!"]]) },
+   { npc.test_chapter0(), _([["The Za'lek Council is spending too many resources on the gigantic hyper-whatchamacallit in Ruadan. They should invest more in basic research like Hyperbolian Lie algebras!"]]) },
    { npc.test_neg( npc.test_chapter0() ), _([["Have you seen the hypergate at Ruadan? It is truly fascinating. Theoretically, it does not seem like it should work, but it does!"]]) },
 }
 

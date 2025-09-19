@@ -121,7 +121,7 @@ function enter ()
       local function add_blockade( jp )
          local pos = jp:pos()
          local m, a = pos:polar()
-         pos = vec2.newP( m-100, a ) -- Slightly towards the system center
+         pos = vec2.newP( m-100, a ) -- Slightly towards the system centre
 
          local l = pilot.add( "Empire Peacemaker", fct, pos, nil, {ai="guard"} )
          l:setHostile(true)

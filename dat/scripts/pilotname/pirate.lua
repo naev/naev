@@ -198,7 +198,7 @@ local colours = {
    _("Gelb"),
    _("Gin'iro No"),
    _("Golden"),
-   _("Gray"),
+   _("Grey"),
    _("Green"),
    _("Grün"),
    _("Haiiro No"),

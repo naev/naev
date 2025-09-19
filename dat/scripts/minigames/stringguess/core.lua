@@ -307,7 +307,7 @@ local function drawglyph( g, f, x, y, w, h, col )
    lg.rectangle( "fill", x, y, w, h )
    setcol( colours.text )
    local fh = f:getHeight()
-   lg.printf( g, f, x, y+(h-fh)*0.5, w, "center" )
+   lg.printf( g, f, x, y+(h-fh)*0.5, w, "centre" )
 end
 
 local function drawbox( x, y, w, h )
@@ -342,7 +342,7 @@ function mg.draw ()
 
    if headertext then
       setcol{ 1, 1, 1 }
-      lg.printf( headertext, headerfont, 0, by, nw, "center" )
+      lg.printf( headertext, headerfont, 0, by, nw, "centre" )
       y = y + 60
    end
 
@@ -350,7 +350,7 @@ function mg.draw ()
    s = 40
    b = 10
    setcol( colours.text )
-   lg.printf( p_("stringguess", "Codes"), font, bx+x, by+y, s+40+b, "center" )
+   lg.printf( p_("stringguess", "Codes"), font, bx+x, by+y, s+40+b, "centre" )
    y = y+25
    x = x+20
    drawbox( bx+x, by+y, s+b, s*#keyset+b )
@@ -418,7 +418,7 @@ Guess the sequence of codes
    b = 10
    boxw = s*#sol+b+40
    setcol( colours.text )
-   lg.printf( p_("stringguess", "Attempts"), font, bx+x, by+y, boxw, "center" )
+   lg.printf( p_("stringguess", "Attempts"), font, bx+x, by+y, boxw, "centre" )
    y = y+25
    x = x
    drawbox( bx+x, by+y, boxw, s*(max_tries-1)+b )

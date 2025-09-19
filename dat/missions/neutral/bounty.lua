@@ -194,7 +194,7 @@ local reason_list = {
       _([[ for impersonating a member of the theocratic government]]),
       _([[ for disrupting the harmony of Crater City]]),
       _([[ for attempting to steal a relic from the Tower of the Sirichana]]),
-      _([[ for practicing dark magic in a meditation chamber]]),
+      _([[ for practising dark magic in a meditation chamber]]),
       _([[ for conspiring against an Arch-Canter]]),
       _([[ for vandalizing a sacred text]]),
       _([[ for attempting to flee the echelon system]]),

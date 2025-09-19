@@ -210,7 +210,7 @@ local function land_lab ()
 
    vn.label("02_wait")
    vn.func( function () wait = wait + 1 end )
-   vn.na(_([[You help yourself to some free coffee and snacks and sit down to wait the other researchers out. The coffee is quite good actually. These researchers have good taste.]]))
+   vn.na(_([[You help yourself to some free coffee and snacks and sit down to wait the other researchers out. The coffee is quite good, actually. These researchers have good taste.]]))
    vn.na(_([[Time goes by and the researchers don't seem to be going anywhere. Don't they have work to do?]]))
    vn.menu{
       {_([[Access the terminal.]]), "02_terminal"},
@@ -308,7 +308,7 @@ local function land_done ()
       vn.na(_([[You explain how easily it was for you to go through the laboratory complex and get the data for a professional saboteur such as yourself.]]))
       s(_([["You are exceeding all expectations!"]]))
    end
-   s(_([["Let me analyze the documents and finish matching the correspondences with all the collected data. I believe this should be sufficient to design something useful."]]))
+   s(_([["Let me analyse the documents and finish matching the correspondences with all the collected data. I believe this should be sufficient to design something useful."]]))
    s(_([["I shall be waiting for you outside."
 Scavenger backs out of the Goddard and returns to space.]]))
    vn.sfxVictory()

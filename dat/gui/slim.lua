@@ -263,14 +263,14 @@ function create()
    --Target image background
    ta_image_x = ta_pane_x + 14
    ta_image_y = ta_pane_y + 106
-   --Target image center
+   --Target image centre
    local ta_image_w, ta_image_h = target_bg:dim()
    ta_center_x = ta_image_x + ta_image_w / 2
    ta_center_y = ta_image_y + ta_image_h / 2
    -- ? image
    ta_question_w, ta_question_h = question:dim()
 
-   --Target Faction icon center
+   --Target Faction icon centre
    ta_fact_x = ta_pane_x + 122
    ta_fact_y = ta_pane_y + 122
 
@@ -335,7 +335,7 @@ function create()
    ta_pnt_image_x = ta_pnt_pane_x + 14
    ta_pnt_image_y = ta_pnt_pane_y
 
-   -- Planet image center
+   -- Planet image centre
    local ta_pnt_image_w, ta_pnt_image_h = planet_bg:dim()
    ta_pnt_center_x = ta_pnt_image_x + ta_pnt_image_w * 0.5
    ta_pnt_center_y = ta_pnt_image_y + ta_pnt_image_h * 0.5

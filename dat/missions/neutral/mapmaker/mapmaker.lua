@@ -34,7 +34,7 @@ local npc_image = "mapmaker.webp"
 
 local targets = {
    {
-      center = system.get("Alteris"),
+      centre = system.get("Alteris"),
       var = "mapmaker_wildones",
       rewards = {
          [0.4] = {
@@ -53,7 +53,7 @@ local targets = {
       },
    },
    {
-      center = system.get("Feye"),
+      centre = system.get("Feye"),
       var = "mapmaker_sirius",
       rewards = {
          [0.4] = {
@@ -70,7 +70,7 @@ local targets = {
       },
    },
    {
-      center = system.get("Dvaer"),
+      centre = system.get("Dvaer"),
       var = "mapmaker_dvaered",
       rewards = {
          [0.4] = {
@@ -88,7 +88,7 @@ local targets = {
       },
    },
    {
-      center = system.get("Eye of Night"),
+      centre = system.get("Eye of Night"),
       var = "mapmaker_sirius",
       rewards = {
          [0.4] = {
@@ -107,11 +107,11 @@ local targets = {
    },
 }
 
-local function explored( center, distance )
+local function explored( centre, distance )
    local sys_todiscover = 0
    local sys_discovered = 0
    local sys_completed = 0
-   local syslist = lmisn.getSysAtDistance( center, 0, distance )
+   local syslist = lmisn.getSysAtDistance( centre, 0, distance )
    for i,sys in ipairs(syslist) do
       local todiscover = 0
       local discovered = 0
@@ -139,18 +139,18 @@ local function explored( center, distance )
 end
 
 local function update_marker_single( t )
-   local todiscover, discovered = explored( t.center, t.distance or 5 )
+   local todiscover, discovered = explored( t.centre, t.distance or 5 )
    local progress = discovered / todiscover
    -- Haven't reached final reward
    if progress < 0.8 then
-      misn.markerAdd( t.center, "low" )
+      misn.markerAdd( t.centre, "low" )
       return true
    end
    -- Not all rewards gotten yet
    for th,rwd in pairs(t.rewards) do
       for i,jmp in ipairs(rwd) do
          if not jmp:known() then
-            misn.markerAdd( t.center, "low" )
+            misn.markerAdd( t.centre, "low" )
             return true
          end
       end
@@ -167,11 +167,11 @@ local function update_markers ()
    local desc = _("Explore the vicinity around the following marked systems:")
    for k,t in ipairs(targets) do
       if update_marker_single( t ) then
-         local todiscover, discovered = explored( t.center, t.distance or 5 )
+         local todiscover, discovered = explored( t.centre, t.distance or 5 )
          local progress = discovered / todiscover
          local sysname
-         if t.center:known() then
-            sysname = t.center:name()
+         if t.centre:known() then
+            sysname = t.centre:name()
          else
             sysname = _("Unknown")
          end
@@ -317,11 +317,11 @@ function land ()
 
    -- See if there is any reward that can be given
    for k,t in ipairs(targets) do
-      local todiscover, discovered = explored( t.center, t.distance or 5 )
+      local todiscover, discovered = explored( t.centre, t.distance or 5 )
       local progress = discovered / todiscover
       local lastprog = 0
       -- Require knowing the focused system
-      if t.center:known() then
+      if t.centre:known() then
          for th,rwd in pairs(t.rewards) do
             -- See if we can give rewards
             if th > lastprog and th < progress then
@@ -344,7 +344,7 @@ function land ()
          end
          -- We'll only do one reward for one area at a time
          if #rewards > 0 then
-            rewardsys = t.center
+            rewardsys = t.centre
             break
          end
       end

@@ -315,7 +315,7 @@ function enter ()
    elseif mem.misn_state~=1 and rnd.rnd() < mem.thug_chance then
       -- Make sure system isn't claimed, but we don't claim it (inclusive test)
       if naev.claimTest( system.cur(), true ) then
-         -- Spawn near the center, they home in on player
+         -- Spawn near the centre, they home in on player
          spawn_thugs( vec2.newP(0.7*system.cur():radius()*rnd.rnd(), rnd.angle()), false )
          -- Timer
          hook.timer( 5, "thug_heartbeat" )

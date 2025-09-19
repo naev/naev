@@ -75,7 +75,7 @@ He leaves the bar. It appears he has given up finding a pilot, at least for now.
    end
    student(fmt.f(_([[He pauses for a moment.
 "As this is the point where any other pilots I asked backed out, I should start by mentioning that due to some unfortunate circumstances the payment for this mission will be only {credits}."]]), {credits=fmt.credits(credits)}))
-   student(_([["But rest assured, you will be mentioned in the acknowledgment section of my next paper!"]]))
+   student(_([["But rest assured, you will be mentioned in the acknowledgement section of my next paper!"]]))
    vn.menu( {
       { _("Accept the job"), "accept" },
       { _("Decline to help"), "decline" },
@@ -139,7 +139,7 @@ function land()
       student:rename(_("Student"))
       vn.transition("fade")
       vn.na(fmt.f(_("The student has already removed all the cables and sensors inside your ship during the flight back to {pnt}. Everything is packed into a couple of crates by the time you land."),{pnt=homeworld}))
-      student(_([["Once again, thank you for your help. I still have to analyze the data, but it looks promising so far. With these results no one is going to question my theories any more! Also, I decided to increase your reward to compensate for the trouble I caused."]]))
+      student(_([["Once again, thank you for your help. I still have to analyse the data, but it looks promising so far. With these results no one is going to question my theories any more! Also, I decided to increase your reward to compensate for the trouble I caused."]]))
       vn.na(fmt.f(_("He gives you a credit chip worth {credits} and heads off. The money is nice, but not worth as much as the insight that working for the Za'lek will be dangerous and tiresome."),{credits=fmt.credits(credits)}))
       vn.done()
       vn.run()

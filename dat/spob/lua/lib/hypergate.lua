@@ -166,7 +166,7 @@ function hypergate.window ()
    local w = 900
    local h = 600
    local wdw = luatk.newWindow( nil, nil, w, h )
-   luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Hypergate ({sysname})"), {sysname=mem.spob:system()}), nil, "center", lg.newFont(14) )
+   luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Hypergate ({sysname})"), {sysname=mem.spob:system()}), nil, "centre", lg.newFont(14) )
 
    -- Load shaders
    local path = "scripts/luatk/shaders/"
@@ -243,7 +243,7 @@ function hypergate.window ()
          end
       end,
    } )
-   local function map_center( _sys, idx, hardset )
+   local function map_centre( _sys, idx, hardset )
       local d = destinations[ idx ]
       local s = d:system()
       targetknown = d:known() and s:known()
@@ -252,15 +252,15 @@ function hypergate.window ()
          jumpx, jumpy = (p*inv):get()
          targetx, targety = (s:pos()*inv):get()
          jumpl, jumpa = ((s:pos()-cpos)*inv):polar()
-         map:center( p, hardset )
+         map:centre( p, hardset )
       else
          jumpx, jumpy = 0, 0
          jumpl, jumpa = 0, 0
-         map:center( cpos, hardset )
+         map:centre( cpos, hardset )
       end
    end
    map:setScale( 1/3 )
-   map_center( nil, 1, true ) -- Center on first item in the list
+   map_centre( nil, 1, true ) -- Centre on first item in the list
 
    local pp = player.pilot()
    local ppf = pp:faction()
@@ -306,7 +306,7 @@ function hypergate.window ()
       masscost = fmt.credits(math.floor(mem.cost_mass * cost_mod + 0.5)),
    }) )
    local txth = txt:height()
-   local lst = luatk.newList( wdw, w-260-20, 40+txth+10, 260, h-40-20-40-20-txth-10, destnames, map_center )
+   local lst = luatk.newList( wdw, w-260-20, 40+txth+10, 260, h-40-20-40-20-txth-10, destnames, map_centre )
 
    local target_gate
    local function btn_jump ()

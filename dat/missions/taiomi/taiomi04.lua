@@ -114,7 +114,7 @@ function enter ()
 
    -- Create small convoy that tries to leave
    local pos
-   for _i,p in ipairs(scur:asteroidFields()) do -- Center of last asteroid field
+   for _i,p in ipairs(scur:asteroidFields()) do -- Centre of last asteroid field
       pos = p.pos
    end
    local fct = faction.dynAdd( nil, "shady_miners", _("Shady Miners"), {ai="independent"} )
