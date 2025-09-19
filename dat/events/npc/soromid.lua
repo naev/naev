@@ -37,7 +37,7 @@ local msg_lore = {
    _([["The Soromid have been shunned and ridiculed by the Great Houses since inception. Over time, they have had no choice but to learn to respect us, however, treatment as equals seems still far away."]]),
    _([["It feels good to be free of Empire interference. If we, the Soromid, were a Great House like the Dvaered or Za'lek, we would have much less freedom than what we enjoy today!"]]),
    _([["I once went to Empire territory and got stared at and ridiculed for my looks. The Empire is such a backwards society. Probably all the paperwork and bureaucracy is rotting their brains."]]),
-   _([["We sometimes get Za'lek researchers trying to find out the science behind our bioships. No matter how much they analyze them, they can never reproduce anything. They can't seem to understand that bioships are more of an art than a science!"]]),
+   _([["We sometimes get Za'lek researchers trying to find out the science behind our bioships. No matter how much they analyse them, they can never reproduce anything. They can't seem to understand that bioships are more of an art than a science!"]]),
    _([["The Empire laughs at our bioships and calls us brutish cattle herders. However, they seem to laugh a lot less when their cruisers get bitten in half by a Soromid capship!"]]),
    _([["I've heard of some bioships going missing during creation. It must be the will of the universe."]]),
    _([["We Soromid are split into tribes, each with their own traditions and customs. Tribes are mainly independent, but the Elders convene with each other periodically to decide what to do with things that affect us all."]]),

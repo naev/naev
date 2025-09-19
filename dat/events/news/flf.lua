@@ -17,7 +17,7 @@ local articles = {
    --]]
    {
       head = N_([[Cookie Cutter]]),
-      body = _([[With the goal of raising funds for the cause, young recruits began selling cookies in the Frontier colonies. Some have even been roughly modeled on Resistance heroes and leaders.]])
+      body = _([[With the goal of raising funds for the cause, young recruits began selling cookies in the Frontier colonies. Some have even been roughly modelled on Resistance heroes and leaders.]])
    },
    --[[
       Politics

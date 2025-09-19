@@ -9,7 +9,7 @@ function scan ()
    local wdw = luatk.newWindow( nil, nil, w, h )
    local function wdw_close () return wdw:destroy() end
    wdw:setCancel( wdw_close )
-   luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Scanning {plt}"), {plt=plt}), nil, "center" )
+   luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Scanning {plt}"), {plt=plt}), nil, "centre" )
 
    -- Equipment can determine height
    local weq = wgtEquipment.new( wdw, 20, 40, 200, 500, plt )

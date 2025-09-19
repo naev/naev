@@ -183,7 +183,7 @@ Let me be clear, the packet you have hopefully recovered. It is not for me. It i
 I do not want to succumb. Ben gave his everything, so I could survive until now. I did not want it to be in vain, I persisted, fought with all my strength. It was not enough, it is never enough.
 
 When I saw you at first, I knew it was a sign. I could pass all that Ben gave me to you, and finally be free of this curse to join him.]]))
-      c(_([[The package you should have, contains the blueprints for counteracting this disease. It can not cure, but it can prolong and delay. It was too late for us, but it is not so for you. Please analyze the documents, and do not become what we have become.
+      c(_([[The package you should have, contains the blueprints for counteracting this disease. It can not cure, but it can prolong and delay. It was too late for us, but it is not so for you. Please analyse the documents, and do not become what we have become.
 
 When you receive this message, there is no need to come look for me. I will no longer be among the living, but I will also not be among the Lost. I will be finally free... finally with...]]))
       vne.flashbackTextEnd()
@@ -191,7 +191,7 @@ When you receive this message, there is no need to come look for me. I will no l
       vn.scene()
       vn.newCharacter( sai )
       vn.transition()
-      sai(_([["That was the entire audible message. I have taken the liberty of analyzing the data in the satchel you brought back. It seems to contain the blueprints for a trivial modification of the shield software that modulates the phase in hyper-spectral patterns. It seems like the modification counteracts some local effects in the so called 'wild space'. If you wish, I can apply them to your ships."]]))
+      sai(_([["That was the entire audible message. I have taken the liberty of analysing the data in the satchel you brought back. It seems to contain the blueprints for a trivial modification of the shield software that modulates the phase in hyper-spectral patterns. It seems like the modification counteracts some local effects in the so called 'wild space'. If you wish, I can apply them to your ships."]]))
       vn.na(_([[You agree to the modifications. Claude and Ben's deaths should not be in vain.]]))
 
       if not jump.get("Scholz's Star", "Haered"):known() then

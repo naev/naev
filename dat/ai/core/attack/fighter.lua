@@ -33,7 +33,7 @@ end
 
 
 --[[
--- Main control function for fighter behavior.
+-- Main control function for fighter behaviour.
 --]]
 function atk_fighter.atk( target, dokill )
    target = atk.com_think( target, dokill )

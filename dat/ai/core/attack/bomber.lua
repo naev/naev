@@ -7,7 +7,7 @@ function atk_bomber.init ()
 end
 
 --[[
--- Main control function for bomber behavior.
+-- Main control function for bomber behaviour.
 -- Bombers are expected to have heavy weapons and target
 --ships bigger than they are
 --]]

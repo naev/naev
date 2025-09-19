@@ -211,7 +211,7 @@ function approach_terminal ()
       end
    end )
    luatk.newButton( wdw, -20, -20, 80, 30, _("Close"), luatk.close )
-   luatk.newText( wdw, 0, 10, w, 20, _("Choose Race Track"), nil, "center" )
+   luatk.newText( wdw, 0, 10, w, 20, _("Choose Race Track"), nil, "centre" )
 
    local txt_race = luatk.newText( wdw, 240, 40, w-260, 220 )
 
@@ -293,7 +293,7 @@ function start_race ()
 
    local scale = mem.track.scale or 1
    local translate = mem.track.translate or vec2.new()
-   if mem.track.center then
+   if mem.track.centre then
       local minx, maxx, miny, maxy = math.huge, -math.huge, math.huge, -math.huge
       for k,trk in ipairs(mem.track.track) do
          for t = 0,1,0.05 do
