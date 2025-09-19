@@ -63,7 +63,7 @@ function view_maps ()
    local BUTTON_W, BUTTON_H = 120, 30
 
    local wdw = luatk.newWindow( nil, nil, w, h )
-   luatk.newText( wdw, 0, 10, w, 20, _("Treasure Maps"), nil, "center" )
+   luatk.newText( wdw, 0, 10, w, 20, _("Treasure Maps"), nil, "centre" )
    local function wdw_close() wdw:destroy() end
    wdw:setCancel( wdw_close )
    luatk.newButton( wdw, w-20-BUTTON_W, h-20-BUTTON_H, BUTTON_W, BUTTON_H, _("Close"), wdw_close )
@@ -75,7 +75,7 @@ function view_maps ()
       if img then img:destroy() end
       if m then
          img = luatk.newImage( wdw, w-20-MAP_WIDTH-20-MAP_WIDTH, 30, MAP_WIDTH, MAP_HEIGHT, gen_map(m) )
-         wmap:center( m.start:pos() )
+         wmap:centre( m.start:pos() )
       else
          img = nil
       end

@@ -431,8 +431,8 @@ local Window_mt = { __index=luatk.Window }
 --[[--
 Creates a new window.
 
-   @tparam number|nil x X position of the window or nil to center.
-   @tparam number|nil y Y position of the window or nil to center.
+   @tparam number|nil x X position of the window or nil to centre.
+   @tparam number|nil y Y position of the window or nil to centre.
    @tparam number w Width to set the window to.
    @tparam number h Height to set the window to.
    @treturn luatk.Window A new luatk window.
@@ -446,8 +446,8 @@ function luatk.newWindow( x, y, w, h )
    setmetatable( wdw, Window_mt )
    table.insert( luatk._windows, wdw )
    wdw.type = "window"
-   wdw.centerx = cx
-   wdw.centery = cy
+   wdw.centrex = cx
+   wdw.centrey = cy
    luatk._dirty = true
    return wdw
 end
@@ -461,10 +461,10 @@ function luatk.Window:resize( w, h )
    local nw, nh = naev.gfx.dim()
    self.w = w
    self.h = h
-   if self.centerx then
+   if self.centrex then
       self.x = (nw-w)/2
    end
-   if self.centery then
+   if self.centrey then
       self.y = (nh-h)/2
    end
 end
@@ -720,7 +720,7 @@ function luatk.Button:draw( bx, by )
    lg.rectangle( "fill", x, y, w, h )
    lg.setColour( fc )
    if self.text then
-      lg.printf( self.text, font, x, y+(h-self.th)/2, w, 'center' )
+      lg.printf( self.text, font, x, y+(h-self.th)/2, w, 'centre' )
    else
       self.render( x, y, w, h )
    end
@@ -1125,14 +1125,14 @@ function luatk.Fader:draw( bx, by )
       local ly = y + h + 5
       lg.setColour( luatk.scrollbar.colour.label )
       if off * w > 40 then
-         lg.printf( num(self.min), self.font, x-30, ly, 60, "center" )
+         lg.printf( num(self.min), self.font, x-30, ly, 60, "centre" )
       end
       if off * w < w-40 then
-         lg.printf( num(self.max), self.font, x+w-30, ly, 60, "center" )
+         lg.printf( num(self.max), self.font, x+w-30, ly, 60, "centre" )
       end
       lg.setColour( luatk.colour.text )
       lg.setColour( luatk.scrollbar.colour.value )
-      lg.printf( num(self.val), self.font, cx-30, ly, 60, "center" )
+      lg.printf( num(self.val), self.font, cx-30, ly, 60, "centre" )
    end
 end
 function luatk.Fader:pressed( mx, _my )
@@ -1503,7 +1503,7 @@ function luatk.newContainer( parent, x, y, w, h, wgts, opts )
    maxw = math.min( maxw, (w or maxw) )
 
    -- See if we do centering
-   if opts.center then
+   if opts.centre then
       for k,v in ipairs(wgts) do
          v.x = (maxw-v.w)*0.5
       end
@@ -1559,7 +1559,7 @@ function luatk.msg( title, msg )
    end
    wdw:setAccept( wdw_done )
    wdw:setCancel( wdw_done )
-   luatk.newText( wdw, 0, 10, w, 20, title, nil, "center" )
+   luatk.newText( wdw, 0, 10, w, 20, title, nil, "centre" )
    luatk.newText( wdw, 20, 40, w-40, h, msg )
    luatk.newButton( wdw, (w-50)/2, h+110-20-30, 50, 30, _("OK"), function( wgt )
       wgt.parent:destroy()
@@ -1569,7 +1569,7 @@ end
 function luatk.yesno( title, msg, funcyes, funcno )
    local w, h = msgbox_size( title, msg )
    local wdw = luatk.newWindow( nil, nil, w, 110 + h )
-   luatk.newText( wdw, 0, 10, w, 20, title, nil, "center" )
+   luatk.newText( wdw, 0, 10, w, 20, title, nil, "centre" )
    luatk.newText( wdw, 20, 40, w-40, h, msg )
    local bw = 120
    luatk.newButton( wdw, (w-bw)/2, h+110-20-30, 50, 30, _("Yes"), function( wgt )
@@ -1590,7 +1590,7 @@ function luatk.msgFader( title, msg, minval, maxval, def, funcdone )
    local w, h = msgbox_size( title, msg )
 
    local wdw = luatk.newWindow( nil, nil, w, 160 + h )
-   luatk.newText( wdw, 0, 10, w, 20, title, nil, "center" )
+   luatk.newText( wdw, 0, 10, w, 20, title, nil, "centre" )
    luatk.newText( wdw, 20, 40, w-40, h, msg )
    local fad = luatk.newFader( wdw, 20, h+105-20-30, w-40, 35, minval, maxval, def, nil, {
       labels = true,
@@ -1630,7 +1630,7 @@ function luatk.msgInput( title, msg, max, funcdone, params )
    local w, h = msgbox_size( title, msg )
 
    local wdw = luatk.newWindow( nil, nil, w, 160 + h )
-   luatk.newText( wdw, 0, 10, w, 20, title, nil, "center" )
+   luatk.newText( wdw, 0, 10, w, 20, title, nil, "centre" )
    luatk.newText( wdw, 20, 40, w-40, h, msg )
    local inp = luatk.newInput( wdw, 20, h+100-20-20, w-40, 35, max, params )
    wdw:setFocus( inp )

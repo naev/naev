@@ -178,7 +178,7 @@ function tick()
       misn.osdCreate(_("Rush cargo mission"), osd_msg)
    elseif mem.timelimit2 <= time.get() then
       -- Case missed second deadline
-      player.msg( fmt.f(_("The delivery to {sys} has been canceled! You were too late."), {sys=mem.destsys}) )
+      player.msg( fmt.f(_("The delivery to {sys} has been cancelled! You were too late."), {sys=mem.destsys}) )
       misn.finish(false)
    elseif mem.intime then
       -- Case missed first deadline

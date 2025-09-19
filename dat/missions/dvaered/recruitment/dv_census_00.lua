@@ -20,7 +20,7 @@
 -- Dvaered Census 0
 -- This is the first mission of the Dvaered Recruitment arc
 -- (facultative missions that make the player close to the Dvaered
--- and end up allowing them to purchase heavy weapons and ships licenses).
+-- and end up allowing them to purchase heavy weapons and ships licences).
 -- The player has to get in range of a given amount of Dvaered Ships in a given system.
 
    Stages :
@@ -193,14 +193,14 @@ A kid shot the ball in the wrong direction, and it crashed into the side of my p
 
    vn.label("blaster")
    nel(_([[Nelly looks at you, surprised.
-"That's exactly what that cyber-grandpa told me. And then, he said the problem was that my ship's absorption was not high enough. He spoke about a coating that is only used by Dvaered pilots, the 'Impacto-Plastic Coating', that can make your ship's armor much more resilient.
+"That's exactly what that cyber-grandpa told me. And then, he said the problem was that my ship's absorption was not high enough. He spoke about a coating that is only used by Dvaered pilots, the 'Impacto-Plastic Coating', that can make your ship's armour much more resilient.
 So, after the reparations were completed, I went to Dvaered space. But I didn't find anybody who could install this coating on my ship yet. And what is more, I suspect this will cost much more that I can afford. So I do missions for the Dvaered in order to make money and explore a bit."]]))
    vn.menu{ warlord, sausage, leave }
 
    vn.label("repair")
    nel(_([["Well. The problem is that my hull's architecture is a bit… uncommon. Front and back are from the original Llama Mk IV-BM version from UST-599, but on the sides, I have adapted parts of the Llama Mk II-O version (from the batch of UST-567, not the more mainstream batch of UST-568). As they cannot be adapted together by default, I got a friend on Em5 to machine a special adaptor.
 "Anyway, so the repairman on Brooks didn't have the needed parts to repair my hull and I had to get someone to transport me to Darkshed. You know, it's the best place to find spare parts for older models of ships as nebula scavengers often sell their findings there. But once there, I met Robin. Do you know Robin?
-She is small, wants to kill me, has curly brunette hair and a smiling round head. You are sure you don't know her? She talked a lot about killing me lately. Anyway, I managed to hide in a trash can, but unfortunately, I got loaded by mistake on a garbage ship heading to that stinky planet in Soromid space, you know? I got lucky I was in a pressurized compartment, and I managed to get out in Father's Pride.
+She is small, wants to kill me, has curly brunette hair and a smiling round head. You are sure you don't know her? She talked a lot about killing me lately. Anyway, I managed to hide in a rubbish bin, but unfortunately, I got loaded by mistake on a garbage ship heading to that stinky planet in Soromid space, you know? I got lucky I was in a pressurized compartment, and I managed to get out in Father's Pride.
 And after that I got an inter-system call from the repairman in Brooks who actually found the needed set of parts (it was in a crate he was using to wedge his desk). So I returned, had a bath and got my repaired ship!"]]))
    vn.menu{ warlord, sausage, leave }
 

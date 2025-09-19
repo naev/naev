@@ -12,7 +12,8 @@ local lg = require "love.graphics"
 local cinema = require "cinema"
 
 local names = {
-   _("Aluminum Mallard"), -- Because we might as well allude to an existing parody. Proper spelling would be "Aluminium", by the way.
+   -- Because we might as well allude to an existing parody. Proper spelling would be "Aluminium", by the way.
+   _("Aluminum Mallard"), -- codespell:ignore
    _("Armchair Traveller"),
    _("Attitude Adjuster"),
    _("Commuter"),

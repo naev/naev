@@ -11,7 +11,7 @@ desc_list["generic"] = {
    _("A Black Lotus clansperson sipping a sophisticated cocktail."),
    _("A Black Lotus pirate with a sharp wit and a charming smile."), -- codespell:ignore wit
    _("A Black Lotus clansperson with a subtle hint of intrigue."),
-   _("A Black Lotus clansperson skillfully manipulating a deck of cards in a mesmerizing display of precision."),
+   _("A Black Lotus clansperson skilfully manipulating a deck of cards in a mesmerizing display of precision."),
    _("A Black Lotus pirate elegantly sipping a glass of vintage wine."),
    _("A burly Black Lotus clansperson scanning the bar for trouble."),
    _("A tall Black Lotus clansperson quietly observing the spaceport's comings and goings with a penetrating gaze."),

@@ -38,7 +38,7 @@ local reward = 1e6
 local shpnm = _("Tokera")
 
 function create ()
-   -- Have to be at center of operations.
+   -- Have to be at centre of operations.
    mem.t_pla[1], mem.t_sys[1] = sciwrong.getCenterOperations()
    if spob.cur() ~= mem.t_pla[1] then
       misn.finish(false)
