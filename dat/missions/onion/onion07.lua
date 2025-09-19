@@ -81,7 +81,6 @@ function accept ()
    vn.music( onion.loops.hacker ) -- TODO different music
    vn.transition("electric")
 
-   vn.na(_([[]]))
    vn.na(fmt.f())
 
    vn.done("electric")
@@ -130,7 +129,6 @@ function enter ()
          vn.music( onion.loops.hacker ) -- TODO different music
          vn.transition("electric")
 
-         vn.na(_([[]]))
          l337()
 
          vn.done("electric")
