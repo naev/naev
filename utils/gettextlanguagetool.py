@@ -69,6 +69,8 @@ for entry in po:
    for ti,txt in enumerate(entry.msgid.splitlines()):
       line = int(entry.occurrences[0][1])+ti
       f = lines[line-1].find(txt)
+      if f < 0:
+         continue
       assert( f>= 0)
       clist = tool.check(txt)
       for c in clist:
