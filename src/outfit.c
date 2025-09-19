@@ -1843,6 +1843,7 @@ static OutfitType outfit_strToOutfitType( char *buf )
    O_CMP( "fighter bay", OUTFIT_TYPE_FIGHTER_BAY );
    O_CMP( "map", OUTFIT_TYPE_MAP );
    O_CMP( "localmap", OUTFIT_TYPE_LOCALMAP );
+   O_CMP( "licence", OUTFIT_TYPE_LICENSE );
    O_CMP( "license", OUTFIT_TYPE_LICENSE );
    O_CMP( "gui", OUTFIT_TYPE_GUI );
 
@@ -3247,6 +3248,7 @@ static int outfit_parse( Outfit *temp, const char *file )
             xmlr_int( cur, "rarity", temp->rarity );
             xmlr_strd( cur, "shortname", temp->shortname );
             xmlr_strd( cur, "license", temp->license );
+            xmlr_strd( cur, "licence", temp->license );
             xmlr_strd( cur, "cond", temp->cond );
             xmlr_strd( cur, "condstr", temp->condstr );
             xmlr_float( cur, "mass", temp->mass );
@@ -3797,7 +3799,7 @@ int outfit_loadPost( void )
 
       /* Make sure licenses are valid. */
       if ( ( o->license != NULL ) && !outfit_licenseExists( o->license ) )
-         WARN( _( "Outfit '%s' has inexistent license requirement '%s'!" ),
+         WARN( _( "Outfit '%s' has inexistent licence requirement '%s'!" ),
                o->name, o->license );
    }
 
