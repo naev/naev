@@ -219,7 +219,7 @@ function approach_terminal ()
 
    local track_names = {}
    for k,v in ipairs(track_list) do
-      table.insert( track_names, v.name )
+      table.insert( track_names, _(v.name) )
    end
    local lst_race = luatk.newList( wdw, 20, 40, 200, h-60, track_names, function ( _name, idx )
       track = track_list[idx]
