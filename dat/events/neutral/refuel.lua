@@ -74,7 +74,7 @@ function board ()
       {reward=fmt.credits(reward), fuel=fmt.number(amount)}))
 
    -- Done, time to go away
-   plt:memory().refueled = true -- Stop refueling again
+   plt:memory().refuelled = true -- Stop refuelling again
    plt:setActiveBoard(false)
    plt:setHilight(false)
    plt:control(false)

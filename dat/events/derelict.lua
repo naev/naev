@@ -391,7 +391,7 @@ function goodevent()
       end )
    end
 
-   -- If the player has little fuel left allow for refueling
+   -- If the player has little fuel left allow for refuelling
    local pp = player.pilot()
    local stats = pp:stats()
    if stats.fuel < 2*stats.fuel_consumption then

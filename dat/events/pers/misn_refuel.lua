@@ -14,7 +14,7 @@ local function spawn_needs_refuel ()
    if vol > 0 then
       return false
    end
-   -- Ignore systems that have refueling services (probably could check more in detail, but meh)
+   -- Ignore systems that have refuelling services (probably could check more in detail, but meh)
    for k,s in ipairs(scur:spobs()) do
       if s:services().refuel then
          return false
@@ -51,7 +51,7 @@ return function ()
 
          local function needs_refuel( p )
             if player.evtActive("Refuel") then return false end
-            if p:memory().refueled then return false end
+            if p:memory().refuelled then return false end
             return (not player.pilot():areEnemies(p) and p:fuel() < amount)
          end
 

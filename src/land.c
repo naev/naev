@@ -1577,10 +1577,10 @@ static void land_createMainTab( unsigned int wid )
    y      = 20 + ( LAND_BUTTON_HEIGHT + 20 ) + 20;
    if ( land_hasLocalMap() )
       y += LAND_BUTTON_HEIGHT + 20;
-   /* Add "no refueling" notice if needed. */
+   /* Add "no refuelling" notice if needed. */
    if ( !spob_hasService( land_spob, SPOB_SERVICE_REFUEL ) )
-      l +=
-         scnprintf( &buf[l], sizeof( buf ) - l, _( "No refueling services." ) );
+      l += scnprintf( &buf[l], sizeof( buf ) - l,
+                      _( "No refuelling services." ) );
    if ( !land_canSave() ) {
       if ( l > 0 )
          l += scnprintf( &buf[l], sizeof( buf ) - l, "\n" );
