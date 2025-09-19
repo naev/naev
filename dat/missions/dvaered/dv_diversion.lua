@@ -20,7 +20,7 @@
 --[[
    This is a one-off mission where you help a new Dvaered Warlord takeover a planet
    To Do: fix fighters being idle after mission ends
-   Other editors, feel free to update dialog to make it more dvaered like.
+   Other editors, feel free to update dialogue to make it more dvaered like.
 --]]
 
 local fleet = require "fleet"

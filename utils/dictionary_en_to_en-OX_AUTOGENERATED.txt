@@ -545,3 +545,4 @@ visualiser->visualizer
 visualises->visualizes
 visualising->visualizing
 writable->writeable
+civilisation->civilization

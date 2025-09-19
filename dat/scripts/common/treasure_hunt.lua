@@ -211,10 +211,10 @@ function lib.good_sys( s )
    return false
 end
 
-function lib.create_treasure_hunt( center, maxdist, length )
+function lib.create_treasure_hunt( centre, maxdist, length )
    length = length or rnd.rnd(4,5)
    maxdist = maxdist or 20
-   local goallst = lmisn.getSysAtDistance( center, 0, maxdist, lib.good_sys )
+   local goallst = lmisn.getSysAtDistance( centre, 0, maxdist, lib.good_sys )
    if #goallst <= 0 then
       -- So, at Qorellia it can't find it across hidden jumps, so we use Goddard as a fallback since it's quite centric
       -- This is a hack until we allow jumps to support tags or something more generic
@@ -252,8 +252,8 @@ function lib.create_treasure_hunt( center, maxdist, length )
 end
 
 local MISSIONNAME = "Treasure Hunt"
-function lib.give_map( center, maxdist )
-   local data = lib.create_treasure_hunt( center, maxdist )
+function lib.give_map( centre, maxdist )
+   local data = lib.create_treasure_hunt( centre, maxdist )
    if not data then
       warn("Failed to give treasure map!")
       return false
