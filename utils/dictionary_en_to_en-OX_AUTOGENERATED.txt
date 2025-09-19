@@ -267,7 +267,7 @@ legalised->legalized
 legalises->legalizes
 legalising->legalizing
 leukemia->leukaemia
-licensing->licencing
+license->licence
 liter->litre
 liters->litres
 localisation->localization
