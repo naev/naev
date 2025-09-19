@@ -3,7 +3,7 @@
   <shortname>Z. Reaper L.</shortname>
   <slot>weapon</slot>
   <size>medium</size>
-  <license>Heavy Weapon</license>
+  <licence>Heavy Weapon</licence>
   <cond>require("buyrep")("Za'lek", 40)</cond>
   <condstr>You need at least 40% reputation with House Za'lek.</condstr>
   <rarity>1</rarity>

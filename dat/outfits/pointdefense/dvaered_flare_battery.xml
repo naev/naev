@@ -3,7 +3,7 @@
   <shortname>D. Flare B.</shortname>
   <slot>weapon</slot>
   <size>large</size>
-  <license>Heavy Weapon</license>
+  <licence>Heavy Weapon</licence>
   <typename>Point Defense</typename>
   <mass>90</mass>
   <price>570000</price>

@@ -1,0 +1,11 @@
+<outfit name="Light Combat Vessel Licence">
+ <general>
+  <mass>0</mass>
+  <price>175000</price>
+  <gfx_store>licence.webp</gfx_store>
+  <description>This licence will authorize you to buy fighter and bomber class ships.</description>
+ </general>
+ <specific type="licence">
+  <provides>Light Combat Vessel</provides>
+ </specific>
+</outfit>

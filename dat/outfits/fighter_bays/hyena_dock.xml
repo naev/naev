@@ -2,7 +2,7 @@
  <general>
   <slot prop="fighter_bay">weapon</slot>
   <size>medium</size>
-  <license>Light Combat Vessel</license>
+  <licence>Light Combat Vessel</licence>
   <mass>74</mass>
   <price>600000</price>
   <gfx_store>hyena_fighter.webp</gfx_store>

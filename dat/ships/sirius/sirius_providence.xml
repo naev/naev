@@ -16,7 +16,7 @@
  <trail_generator y="11" h="0" x="-36">nebula</trail_generator>
  <fabricator>Sirius Systems</fabricator>
  <faction>Sirius</faction>
- <license>Large Civilian Vessel</license>
+ <licence>Large Civilian Vessel</licence>
  <cond>require("buyrep")("Sirius", 60)</cond>
  <condstr>You need at least 60% reputation with House Sirius.</condstr>
  <description>The Providence is the bulk freighter of House Sirius and is mainly used to transport large amounts of supplies. Some of them are also being used to transport pilgrims, even though most Sirii dislike these overcrowded mass transports.</description>

@@ -85,7 +85,7 @@ function land ()
       return
    end
 
-   local getlicense = not diff.isApplied( "heavy_combat_vessel_license" )
+   local getlicence = not diff.isApplied( "heavy_combat_vessel_licence" )
 
    vn.clear()
    vn.scene()
@@ -106,11 +106,11 @@ function land ()
    z2(_([["Oh well, at least we have a hint to where she is now. On to Katar I!"]]))
    vn.disappear( { z1, z2 }, "slideleft" ) -- Played in reverse
    vn.na(_([[The Za'lek officers leave as fast as they got there, barely acknowledging your presence. Pondering how House Za'lek manages to get anything done, you take your leave and open up the envelope that you got handed back. It has a letter from Noona.]]))
-   if getlicense then
+   if getlicence then
       n(_([[You read the letter:
-   Thanks for all your help at Katar I. By now you've probably realized I am not just a researcher, but have been bestowed the curse of being the Za'lek chairwoman. Not often do I get to get away from everything and focus on my research. I have attached a credstick as a reward, and have given you clearance for the Heavy Combat Vessel License. Your help was invaluable and I hope we meet again.]]))
+   Thanks for all your help at Katar I. By now you've probably realized I am not just a researcher, but have been bestowed the curse of being the Za'lek chairwoman. Not often do I get to get away from everything and focus on my research. I have attached a credstick as a reward, and have given you clearance for the Heavy Combat Vessel Licence. Your help was invaluable and I hope we meet again.]]))
       vn.sfxBingo()
-      vn.na(_([[You can now purchase the #bHeavy Combat Vessel License#0.]]))
+      vn.na(_([[You can now purchase the #bHeavy Combat Vessel Licence#0.]]))
    else
       n(_([[You read the letter:
    Thanks for all your help at Katar I. By now you've probably realized am I not just a researcher, but have been bestowed the curse of being the Za'lek chairwoman. Not often do I get to get away from everything and focus on my research. I have attached a credstick as a reward. Your help was invaluable and I hope we meet again.]]))
@@ -121,9 +121,9 @@ function land ()
 
    faction.hit("Za'lek", zpp.fctmod.zpp06)
    player.pay( reward )
-   if getlicense then
-      diff.apply("heavy_combat_vessel_license")
-      zpp.log(fmt.f(_("You delivered Noona's report to {pnt} and found out that she is the Za'lek chairwoman. You also got access to the Heavy Combat Vessel license for your help."),
+   if getlicence then
+      diff.apply("heavy_combat_vessel_licence")
+      zpp.log(fmt.f(_("You delivered Noona's report to {pnt} and found out that she is the Za'lek chairwoman. You also got access to the Heavy Combat Vessel licence for your help."),
          {pnt=destpnt}))
    else
       zpp.log(fmt.f(_("You delivered Noona's report to {pnt} and found out that she is the Za'lek chairwoman."),

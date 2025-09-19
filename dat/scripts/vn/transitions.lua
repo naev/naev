@@ -44,15 +44,15 @@ transitions._t.circleopen = [[
 #include "lib/math.glsl"
 // Adapted from https://gl-transitions.com/editor/circleopen
 // author: gre
-// License: MIT
+// Licence: MIT
 
 const float SMOOTHNESS = 0.3;
-const vec2 CENTER = vec2(0.5, 0.5);
+const vec2 CENTRE = vec2(0.5, 0.5);
 
 vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 {
    float x = progress;
-   float m = smoothstep(-SMOOTHNESS, 0.0, M_SQRT2*distance(CENTER, uv) - x*(1.+SMOOTHNESS));
+   float m = smoothstep(-SMOOTHNESS, 0.0, M_SQRT2*distance(CENTRE, uv) - x*(1.+SMOOTHNESS));
    vec4 c1 = Texel( texprev, uv );
    vec4 c2 = Texel( tex, uv );
    return mix( c1, c2, 1.0-m );
@@ -63,15 +63,15 @@ transitions._t.circleclose = [[
 #include "lib/math.glsl"
 // Adapted from https://gl-transitions.com/editor/circleopen
 // author: gre
-// License: MIT
+// Licence: MIT
 
 const float SMOOTHNESS = 0.3;
-const vec2 CENTER = vec2(0.5, 0.5);
+const vec2 CENTRE = vec2(0.5, 0.5);
 
 vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 {
    float x = 1.0-progress;
-   float m = smoothstep(-SMOOTHNESS, 0.0, M_SQRT2*distance(CENTER, uv) - x*(1.+SMOOTHNESS));
+   float m = smoothstep(-SMOOTHNESS, 0.0, M_SQRT2*distance(CENTRE, uv) - x*(1.+SMOOTHNESS));
    vec4 c1 = Texel( texprev, uv );
    vec4 c2 = Texel( tex, uv );
    return mix( c1, c2, m );
@@ -81,7 +81,7 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 transitions._t.dreamy = [[
 // Adapted from https://gl-transitions.com/editor/Dreamy
 // Author: mikolalysenko
-// License: MIT
+// Licence: MIT
 
 #include "lib/math.glsl"
 
@@ -103,7 +103,7 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 transitions._t.ripple = [[
 // Adapted from https://gl-transitions.com/editor/ripple
 // Author: gre
-// License: MIT
+// Licence: MIT
 
 const float amplitude = 100.0;
 const float speed = 50.0;
@@ -142,7 +142,7 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 transitions._t.wave = [[
 // Adapted from https://gl-transitions._t.com/editor/ButterflyWaveScrawler
 // Author: mandubian
-// License: MIT
+// Licence: MIT
 
 #include "lib/math.glsl"
 
@@ -150,8 +150,8 @@ const float amplitude = 1.0;
 const float waves = 30.0;
 const float colourSeparation = 0.3;
 
-float compute(vec2 p, float progress, vec2 center) {
-   vec2 o = p*sin(progress * amplitude)-center;
+float compute(vec2 p, float progress, vec2 centre) {
+   vec2 o = p*sin(progress * amplitude)-centre;
    // horizontal vector
    vec2 h = vec2(1.0, 0.0);
    // butterfly polar function (don't ask me why this one :))
@@ -198,7 +198,7 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 transitions._t.pixelize = [[
 // Adapted from https://gl-transitions.com/editor/pixelize
 // Author: gre
-// License: MIT
+// Licence: MIT
 // forked from https://gist.github.com/benraziel/c528607361d90a072e98
 
 #include "lib/math.glsl"
@@ -220,7 +220,7 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords ) {
 
 transitions._t.hexagon = [[
 // Author: Fernando Kuteken
-// License: MIT
+// Licence: MIT
 // Hexagonal math from: http://www.redblobgames.com/grids/hexagons/
 
 const int steps = 50;
@@ -296,7 +296,7 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords ) {
 transitions._t.crosshatch = [[
 /* Loosely based on https://gl-transitions.com/editor/crosshatch
    Author: pthrasher
-   License: MIT */
+   Licence: MIT */
 #include "lib/math.glsl"
 
 const float THRESHOLD   = 3.0;

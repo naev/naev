@@ -13,10 +13,10 @@
  <trail_generator x="-6" y="0" h="0" always_under="1">nebula</trail_generator>
  <fabricator>Proteron</fabricator>
  <faction>Proteron</faction>
- <license>Light Combat Vessel</license>
+ <licence>Light Combat Vessel</licence>
  <cond>require("buyrep")("Proteron", 20)</cond>
  <condstr>You need at least 20% reputation with the Proteron.</condstr>
- <description>While smaller and less intimidating than its bigger siblings in the Proteron arsenal, a pack of Daltons is still a foe to be reckoned with. It's the latest in a long line of largely carrier-based interceptors. The Dalton's armor shell can be retracted and functions as cargo box for more convenient handling and storage. Packing relatively little firepower, they're ill-suited to duelling, but a carrier group unleashing several squadrons has been known to turn the tide of battle on many occasions.</description>
+ <description>While smaller and less intimidating than its bigger siblings in the Proteron arsenal, a pack of Daltons is still a foe to be reckoned with. It's the latest in a long line of largely carrier-based interceptors. The Dalton's armour shell can be retracted and functions as cargo box for more convenient handling and storage. Packing relatively little firepower, they're ill-suited to duelling, but a carrier group unleashing several squadrons has been known to turn the tide of battle on many occasions.</description>
  <health>
   <armour>35</armour>
  </health>

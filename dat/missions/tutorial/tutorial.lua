@@ -255,7 +255,7 @@ end
 function land_outfits ()
    hook.rm(mem.outfits_hook)
    mem.outfits_hook = nil
-   msg_info{_([["This is the Outfitter, where you can buy new outfits to make your starship even better! You can fit your ship with new weapons, extra cargo space, more powerful core systems, and more! Regional maps which can help you explore the galaxy more easily can also be purchased here, as well as licenses required for higher-end weaponry and starships. For example, you will require a Large Civilian Vessel License to purchase a Melendez Corporation Mule Bulk Cargo Starship. As my previous owner found out, they don't do too well in combat, though."]]),
+   msg_info{_([["This is the Outfitter, where you can buy new outfits to make your starship even better! You can fit your ship with new weapons, extra cargo space, more powerful core systems, and more! Regional maps which can help you explore the galaxy more easily can also be purchased here, as well as licences required for higher-end weaponry and starships. For example, you will require a Large Civilian Vessel Licence to purchase a Melendez Corporation Mule Bulk Cargo Starship. As my previous owner found out, they don't do too well in combat, though."]]),
    _([["As you can see, a series of tabs at the top of your screen allow you to filter outfits by type. When you see an outfit that interests you, click on it to get more information about it, then either click on the '#bBuy#0' button to buy it or click on the '#bSell#0' button to sell it if you have one in your possession. Different planets have different outfits available; if you don't see a specific outfit you're looking for, you can search for it via the '#bFind Outfits#0' button on the starmap screen. After buying new outfits make sure to equip them in the #oEquipment#0 window."]]),
    }
 end
@@ -264,7 +264,7 @@ function land_shipyard ()
    hook.rm(mem.shipyard_hook)
    mem.shipyard_hook = nil
    msg_info{_([["This is the Shipyard, where you can buy new starships to either replace the one you've got, or to add to your collection! On the left of this screen, you will see ships available on the planet you're on. Click on a ship you're interested in learning more about. You can then either buy the ship with the '#bBuy#0' button, or trade your current ship in for the new ship with the '#bTrade-In#0' button. Different planets have different ships available; if you don't see a specific ship you're looking for, you can search for it via the '#bFind#0' button on the starmap screen."]]),
-   _([["You likely don't have enough credits for a new ship now, but later on, when you've saved up enough, you'll probably want to upgrade your ship to an even better one, depending on what kinds of tasks you will be performing. Different ships have different strengths and weaknesses which interact with the different outfits you can equip them with. Note that some ships also require licenses before you can buy them."]])
+   _([["You likely don't have enough credits for a new ship now, but later on, when you've saved up enough, you'll probably want to upgrade your ship to an even better one, depending on what kinds of tasks you will be performing. Different ships have different strengths and weaknesses which interact with the different outfits you can equip them with. Note that some ships also require licences before you can buy them."]])
    }
 end
 
@@ -273,7 +273,7 @@ function land_equipment ()
    mem.equipment_hook = nil
    -- TODO cut up
    msg_info{_([["This is the Equipment screen. Here, you can equip your ships with any outfits you have bought at the #oOutfitter#0. You can swap which ship you are currently piloting by selecting another ship and clicking the '#bSwap Ship#0' button or #bdouble-clicking#0 on it. You can also sell those other ships, but not your current ship, with the '#bSell Ship#0' button, if you decide that you no longer need them. Selling a ship that still has outfits equipped will also lead to those outfits being sold along with the ship, so do keep that in mind if there's an outfit you need to keep."]]),
-   _([["If you make any changes to your ship now, please ensure that you still have weapons equipped, as you will need those later for practicing combat, and anyway flying around space without any weapons can be very risky."]]),
+   _([["If you make any changes to your ship now, please ensure that you still have weapons equipped, as you will need those later for practising combat, and anyway flying around space without any weapons can be very risky."]]),
    }
 end
 

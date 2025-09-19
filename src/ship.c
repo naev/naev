@@ -1092,7 +1092,7 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
       }
       xmlr_float( node, "time_mod", temp->dt_default );
       xmlr_long( node, "price", temp->price );
-      xmlr_strd_free( node, "license", temp->license );
+      xmlr_strd_free( node, "licence", temp->license );
       xmlr_strd_free( node, "cond", temp->cond );
       xmlr_strd_free( node, "condstr", temp->condstr );
       xmlr_strd_free( node, "fabricator", temp->fabricator );
@@ -1343,7 +1343,7 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
 
    /* Check license. */
    if ( temp->license && !outfit_licenseExists( temp->license ) )
-      WARN( _( "Ship '%s' has inexistent license requirement '%s'!" ),
+      WARN( _( "Ship '%s' has inexistent licence requirement '%s'!" ),
             temp->name, temp->license );
 
    /* Make sure no duplicate slot names. */

@@ -2,7 +2,7 @@
  <general>
   <slot>weapon</slot>
   <size>medium</size>
-  <license>Medium Weapon</license>
+  <licence>Medium Weapon</licence>
   <typename>Point Defense</typename>
   <mass>23</mass>
   <price>150000</price>

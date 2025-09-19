@@ -4,7 +4,7 @@
   <slot>utility</slot>
   <size>medium</size>
   <rarity>1</rarity>
-  <license>Heavy Weapon</license>
+  <licence>Heavy Weapon</licence>
   <mass>0</mass>
   <price>725000</price>
   <description>Developed to solve needle in haystack-type problems, the Pinpoint Combat AI excels at finding and locking onto small objects in the vastness of space. Integrated into a ship's targeting systems, the AI is able to increase both the range and the lock-on speed of all missile launchers on the ship.</description>

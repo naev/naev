@@ -46,7 +46,7 @@ function enter ()
    if done then return end
 
    -- Set up some variables
-   local has_license = diff.isApplied("heavy_combat_vessel_license") or (player.outfitNum("Heavy Combat Vessel License") > 0)
+   local has_licence = diff.isApplied("heavy_combat_vessel_licence") or (player.outfitNum("Heavy Combat Vessel Licence") > 0)
    local traded_total = var.peek("hypconst_traded_total") or 0
 
    local explored = 0
@@ -61,8 +61,8 @@ function enter ()
          + #player.misnDoneList() / 40 -- Needs 40 missions to complete by itself
          + player.wealth() / 50e6 -- Needs 50 million by themselves to trigger event
          + explored / 300 -- Needs 300 known systems
-   -- Finally getting the heavy weapon or vessel license permission gives a large
-   if has_license then
+   -- Finally getting the heavy weapon or vessel licence permission gives a large
+   if has_licence then
       progress = progress + 0.4
    end
 
@@ -169,7 +169,7 @@ function foreground ()
 
       if fg.text then
          lg.setColour( 1, 1, 1, fg.alpha )
-         lg.printf( fg.text, fg.font, fg.x, fg.y, 0.6*nw, "center" )
+         lg.printf( fg.text, fg.font, fg.x, fg.y, 0.6*nw, "centre" )
       end
    end
 end

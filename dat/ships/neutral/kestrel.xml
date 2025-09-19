@@ -11,7 +11,7 @@
  <trail_generator x="-45" y="0" h="17"/>
  <fabricator>Krain Industries</fabricator>
  <faction>Independent</faction>
- <license>Heavy Combat Vessel</license>
+ <licence>Heavy Combat Vessel</licence>
  <description>The ship that single-handedly put Krain Industries on the map, the Kestrel was designed to be a sleek heavy assault cruiser. Generally more fragile than other cruisers, it manages to combine excellent manoeuvrability and firepower with state-of-the-art electronics, making for a truly fearsome ship in the hands of an able captain.</description>
  <health>
   <armour>1100</armour>

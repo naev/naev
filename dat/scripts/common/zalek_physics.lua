@@ -36,10 +36,10 @@ end
 zpp.rewards = {
    zpp01 = 200e3,
    zpp02 = 300e3,
-   zpp03 = 200e3, -- + "Heavy Weapons Combat License" permission
+   zpp03 = 200e3, -- + "Heavy Weapons Combat Licence" permission
    zpp04 = 400e3,
    --zpp05 = 0, -- No payment, really small flashback
-   zpp06 = 500e3, -- + "Heavy Combat Vessel License" permission
+   zpp06 = 500e3, -- + "Heavy Combat Vessel Licence" permission
 }
 
 zpp.fctmod = {

@@ -601,7 +601,7 @@ static void map_addOutfitDetailFields( unsigned int wid_results, int x, int y,
    l += scnprintf( &buf[l], sizeof( buf ) - l, "#n%s#0\n", _( "Mass:" ) );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "#n%s#0\n", _( "Price:" ) );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "#n%s#0\n", _( "Money:" ) );
-   l += scnprintf( &buf[l], sizeof( buf ) - l, "#n%s#0\n", _( "License:" ) );
+   l += scnprintf( &buf[l], sizeof( buf ) - l, "#n%s#0\n", _( "Licence:" ) );
    window_addText( wid_results, iw + 20, -50 - 128 - 10, 90, 160, 0, "txtSDesc",
                    &gl_smallFont, NULL, buf );
    window_addText( wid_results, iw + 20, -50 - 128 - 10,

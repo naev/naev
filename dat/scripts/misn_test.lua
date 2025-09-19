@@ -47,7 +47,7 @@ end
    @brief Test for mercenary missions.
 --]]
 function misn_test.mercenary( notcomputer )
-   if player.outfitNum("Mercenary License") <= 0 then
+   if player.outfitNum("Mercenary Licence") <= 0 then
       return false
    end
    return notcomputer or misn_test.computer()
@@ -57,7 +57,7 @@ end
    @brief Test for mercenary missions.
 --]]
 function misn_test.heavy_weapons( notcomputer )
-   if player.outfitNum("Heavy Weapon License") <= 0 then
+   if player.outfitNum("Heavy Weapon Licence") <= 0 then
       return false
    end
    return notcomputer or misn_test.computer()
@@ -67,7 +67,7 @@ end
    @brief Test for mercenary missions.
 --]]
 function misn_test.heavy_combat_vessel( notcomputer )
-   if player.outfitNum("Heavy Combat Vessel License") <= 0 then
+   if player.outfitNum("Heavy Combat Vessel Licence") <= 0 then
       return false
    end
    return notcomputer or misn_test.computer()

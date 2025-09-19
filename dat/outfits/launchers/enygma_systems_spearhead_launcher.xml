@@ -3,10 +3,10 @@
   <shortname>E. Spearhead L.</shortname>
   <slot>weapon</slot>
   <size>medium</size>
-  <license>Medium Weapon</license>
+  <licence>Medium Weapon</licence>
   <mass>22</mass>
   <price>160000</price>
-  <description>The Spearhead class EMP missile is one of Enygma Systems' more specialised pieces of hardware. Its sole function is to do massive damage to shielding. It uses a special energy discharge warhead that is quite effective at disrupting shields, but has little effect on physical objects. The Spearhead's limited agility make it primarily suited to fighting corvette class ships or heavier.</description>
+  <description>The Spearhead class EMP missile is one of Enygma Systems' more specialized pieces of hardware. Its sole function is to do massive damage to shielding. It uses a special energy discharge warhead that is quite effective at disrupting shields, but has little effect on physical objects. The Spearhead's limited agility make it primarily suited to fighting corvette class ships or heavier.</description>
   <gfx_store>spearhead_launcher.webp</gfx_store>
   <cpu>-7</cpu>
  </general>

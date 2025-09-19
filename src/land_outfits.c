@@ -579,7 +579,7 @@ void outfits_update( unsigned int wid, const char *str )
 
    if ( outfit_license( outfit ) ) {
       int meets_reqs = player_hasLicense( outfit_license( outfit ) );
-      k += scnprintf( &lbl[k], sizeof( lbl ) - k, "\n%s", _( "License:" ) );
+      k += scnprintf( &lbl[k], sizeof( lbl ) - k, "\n%s", _( "Licence:" ) );
       if ( blackmarket )
          l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s#0",
                          _( "Not Necessary (Blackmarket)" ) );
@@ -937,7 +937,7 @@ int outfit_canBuy( const Outfit *outfit, int wid )
    /* Already has license. */
    if ( outfit_isLicense( outfit ) &&
         player_hasLicense( outfit_licenseProvides( outfit ) ) ) {
-      land_errDialogueBuild( _( "You already have this license." ) );
+      land_errDialogueBuild( _( "You already have this licence." ) );
       return 0;
    }
    /* Not enough $$ */
@@ -1105,7 +1105,7 @@ int outfit_canSell( const Outfit *outfit )
    }
    /* License check. */
    if ( outfit_isLicense( outfit ) ) {
-      land_errDialogueBuild( _( "You can't sell a license." ) );
+      land_errDialogueBuild( _( "You can't sell a licence." ) );
       failure = 1;
    }
    /* has no outfits to sell */
