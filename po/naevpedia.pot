@@ -4105,7 +4105,7 @@ msgid "By pressing the <%= \"#b\"..naev.keyGet(\"scan\")..\"#0\" %> key, you can
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:22
-msgid "This will show you things such as the outfits the ship has and the cargo it is carrying."
+msgid "This will show you information such as the outfits the ship has and the cargo it is carrying."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:24
@@ -4289,7 +4289,7 @@ msgid "In particular, being in an asteroid will affect the detection range, and 
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:85
-msgid "Furthermore, the system interference wil lower signature and stealth ranges, but not the detection range, making it harder to track and identify ships."
+msgid "Furthermore, the system interference will lower signature and stealth ranges, but not the detection range, making it harder to track and identify ships."
 msgstr ""
 
 #: dat/naevpedia/mechanics/flow.md:2
@@ -4359,7 +4359,7 @@ msgid "Additionally, some ships will hail your ship."
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:9
-msgid "You can respond to these ships by either targetting them and hailing them, or using the <%= \"#b\"..naev.keyGet(\"autohail\")..\"#0\" %> key to respond directly."
+msgid "You can respond to these ships by either targeting them and hailing them, or using the <%= \"#b\"..naev.keyGet(\"autohail\")..\"#0\" %> key to respond directly."
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:11
@@ -4367,7 +4367,7 @@ msgid "## Requesting Fuel"
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:13
-msgid "When you run out of [fuel](mechanics/hyperspace), some good samaritans will offer to refuel you, usually in exchange for credits."
+msgid "When you run out of [fuel](mechanics/hyperspace), some good Samaritans will offer to refuel you, usually in exchange for credits."
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:14
@@ -10065,7 +10065,7 @@ msgid "By pressing the <%= \"#b\"..naev.keyGet(\"scan\")..\"#0\" %> key, you can
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:22
-msgid "This will show you things such as the outfits the ship has and the cargo it is carrying."
+msgid "This will show you information such as the outfits the ship has and the cargo it is carrying."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:24
@@ -10249,7 +10249,7 @@ msgid "In particular, being in an asteroid will affect the detection range, and 
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:85
-msgid "Furthermore, the system interference wil lower signature and stealth ranges, but not the detection range, making it harder to track and identify ships."
+msgid "Furthermore, the system interference will lower signature and stealth ranges, but not the detection range, making it harder to track and identify ships."
 msgstr ""
 
 #: dat/naevpedia/mechanics/flow.md:2
@@ -10319,7 +10319,7 @@ msgid "Additionally, some ships will hail your ship."
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:9
-msgid "You can respond to these ships by either targetting them and hailing them, or using the <%= \"#b\"..naev.keyGet(\"autohail\")..\"#0\" %> key to respond directly."
+msgid "You can respond to these ships by either targeting them and hailing them, or using the <%= \"#b\"..naev.keyGet(\"autohail\")..\"#0\" %> key to respond directly."
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:11
@@ -10327,7 +10327,7 @@ msgid "## Requesting Fuel"
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:13
-msgid "When you run out of [fuel](mechanics/hyperspace), some good samaritans will offer to refuel you, usually in exchange for credits."
+msgid "When you run out of [fuel](mechanics/hyperspace), some good Samaritans will offer to refuel you, usually in exchange for credits."
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:14

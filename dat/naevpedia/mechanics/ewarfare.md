@@ -19,7 +19,7 @@ Whenever you target a ship, your ship will begin performing a scan on it.
 This is indicated by the rotating icon on the ship tab that appears in your ship's interface.
 When the icon stops rotating, it indicates that the ship has been scanned.
 By pressing the <%= "#b"..naev.keyGet("scan").."#0" %> key, you can call up the information about the scanned ship.
-This will show you things such as the outfits the ship has and the cargo it is carrying.
+This will show you information such as the outfits the ship has and the cargo it is carrying.
 
 Similarly, other ships will scan your ship when targeting it.
 This is usually not a problem, however, if you are carrying outfits or commodities that are illegal to the faction of the ship scanning you, it may bring repercussions.
@@ -82,4 +82,4 @@ This value is divided by the **Detection Range** and **Signature Range** values 
 
 System modifiers such as asteroid fields and interference can further affect electronic warfare.
 In particular, being in an asteroid will affect the detection range, and consequently, signature range and stealth range depending on the density of asteroids.
-Furthermore, the system interference wil lower signature and stealth ranges, but not the detection range, making it harder to track and identify ships.
+Furthermore, the system interference will lower signature and stealth ranges, but not the detection range, making it harder to track and identify ships.
