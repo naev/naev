@@ -4,12 +4,13 @@ import os
 import subprocess
 import sys
 import logging
+from typing import Optional
 
 # Configure logging to output to stderr
 logging.basicConfig(level=logging.INFO, stream=sys.stderr)
 
 
-def get_commit_sha(source_root: str) -> str | None:
+def get_commit_sha(source_root: str) -> Optional[str]:
    """Return the short git commit SHA, or None if unavailable."""
    try:
       proc = subprocess.run(
@@ -37,24 +38,46 @@ def is_dirty(source_root: str) -> bool:
       return False
 
 
+def is_tagged_release(source_root: str) -> bool:
+   """Return True if HEAD is exactly at a tag."""
+   try:
+      subprocess.run(
+         ["git", "-C", source_root, "describe", "--exact-match", "--tags", "HEAD"],
+         capture_output=True,
+         text=True,
+         check=True,
+      )
+      return True
+   except subprocess.CalledProcessError:
+      return False
+   except Exception:
+      return False
+
+
 def get_version(source_root: str, base_version: str) -> str:
    """
    Determine the project version:
-      1. Use base_version + git SHA [+dirty] if .git exists.
-      2. Otherwise, read existing dat/VERSION if present.
-      3. Otherwise, just base_version.
-      Always write the result back to dat/VERSION.
+      1. If HEAD is exactly at a tag and the repo is clean, use base_version.
+         (Assumes base_version has been set to the tag by Meson.)
+      2. Otherwise, build a dev version: base_version + git SHA [+dirty] if .git exists.
+      3. If no .git, but dat/VERSION exists, read and reuse it.
+      4. If nothing else works, fall back to base_version + "+dev".
+      The resolved version is always written to dat/VERSION.
    """
    version_file = os.path.join(source_root, "dat", "VERSION")
 
    version = None
 
-   git_dir = os.path.join(source_root, ".git")
-   if os.path.isdir(git_dir):
-      version = base_version
-      sha = get_commit_sha(source_root)
-      if sha:
-         version += f"+g{sha}"
+   if os.path.isdir(os.path.join(source_root, ".git")):
+      if is_tagged_release(source_root) and not is_dirty(source_root):
+         # Exact tag, clean repo
+         version = base_version
+      else:
+         # Dev build: append sha and maybe dirty
+         version = base_version
+         sha = get_commit_sha(source_root)
+         if sha:
+            version += f"+g{sha}"
          if is_dirty(source_root):
             version += ".dirty"
    elif os.path.isfile(version_file):
@@ -78,6 +101,7 @@ def get_version(source_root: str, base_version: str) -> str:
       logging.warning(f"Could not write VERSION file: {e}")
 
    return version
+
 
 if __name__ == "__main__":
    source_root = os.getenv("MESON_SOURCE_ROOT")
