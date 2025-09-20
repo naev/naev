@@ -1,3 +1,4 @@
+use log::warn_err;
 use rayon::prelude::*;
 use renderer::Context;
 use renderer::texture::TextureBuilder;
@@ -45,7 +46,13 @@ pub extern "C" fn outfit_gfxStoreLoadNeeded() {
             }
         };
 
-        let tex = TextureBuilder::new().path(&path).build_wrap(&ctx).unwrap();
+        let tex = match TextureBuilder::new().path(&path).build_wrap(&ctx) {
+            Ok(tex) => tex,
+            Err(e) => {
+                warn_err!(e);
+                return;
+            }
+        };
         o.gfx_store = tex.into_ptr() as *mut naevc::glTexture;
     });
 }
