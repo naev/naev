@@ -83,15 +83,16 @@ end
 Simplified version of fleet.add where they all share faction, locations, and parameters.
 
    @tparam {Ship} ships Table of ships (or ship names) to spawn.
-   @tparam Faction faction Faction to give the pilots.
+   @tparam Faction fct Faction to give the pilots.
    @tparam Vec2|Jump|System|Spob location Location to spawn the pilot. Pilots will jump in from jumps or systems, while they will take off from spobs.
    @tparam table parameters Additional parameters to pass to `pilot.add`.
    @treturn {Pilot} Table containing the pilots spawned.
 --]]
-function fleet.spawn( ships, faction, location, parameters )
+function fleet.spawn( ships, fct, location, parameters )
+   fct = faction.get(fct)
    local out = {}
    for k,v in ipairs(ships) do
-      local p = pilot.add( ships[k], faction, location, parameters )
+      local p = pilot.add( ships[k], fct, location, parameters )
       table.insert( out, p )
    end
    return postprocess(out)
