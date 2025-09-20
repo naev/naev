@@ -77,6 +77,14 @@ function create()
    misn.setDesc(_([[TODO.]]))
 end
 
+local function reset_osd()
+   misn.osdCreate( title, {
+      fmt.f(_("Go to the location in the {sys} system"),
+         {sys=mem.targetsys}),
+      _("Scan ships in the system"),
+   } )
+end
+
 function accept ()
    local accepted = false
 
@@ -87,7 +95,7 @@ function accept ()
    vn.music( onion.loops.hacker ) -- TODO different music
    vn.transition("electric")
 
-   vn.na(fmt.f())
+   l337()
 
    vn.done("electric")
    vn.run()
@@ -96,11 +104,7 @@ function accept ()
 
    misn.accept()
 
-   misn.osdCreate( title, {
-      fmt.f(_("Go to the location in the {sys} system"),
-         {sys=mem.targetsys}),
-      _("Scan ships in the system"),
-   } )
+   reset_osd()
    hook.enter("enter")
 end
 
@@ -146,6 +150,8 @@ function enter ()
    elseif mem.state~=STATE_BEAT_MERCENARIES then
       -- Reset state
       mem.state = nil
+      hook.timerClear()
+      reset_osd()
    end
 end
 
@@ -173,16 +179,15 @@ local function spawn_baddies()
       hook.land( "land" )
    end  )
 
-   hook.timer( 5, "announce_baddies" )
-end
-
-function announce_baddies ()
-   -- TODO some discussion
-
-   -- Update
-   misn.osdCreate( title, {
-      _("Defeat the mercenaries!"),
-   } )
+   trigger.timer_chain{
+      { 5, _([[l337_b01: What is this? Shit, it seems like someone put a bounty on your ship!]]) },
+      { 5, _([[l337_b01: Wait, we can probably use this. Take the mercenaries out!]]) },
+      { 1, function ()
+         misn.osdCreate( title, {
+            _("Defeat the mercenaries!"),
+         } )
+      end },
+   }
 end
 
 function scan( tgt )
@@ -204,7 +209,17 @@ function scan( tgt )
 end
 
 function land ()
+   vn.clear()
+   vn.scene()
+   local l337 = onion.vn_l337b01{pos="left"}
+   vn.newCharacter( l337 )
+   vn.music( onion.loops.hacker ) -- TODO different music
+   vn.transition("electric")
 
+   vn.na(fmt.f())
+
+   vn.done("electric")
+   vn.run()
 
    onion.log(_([[TODO]]))
 
