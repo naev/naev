@@ -55,11 +55,11 @@ local SHIPS_TO_SCAN = 10 -- Ships it says to scan
 local SHIPS_TO_SCAN_REAL = 3 -- The true amount after which the player is attacked
 
 function create()
-   misn.finish(false) -- Disabled for now
+   --misn.finish(false) -- Disabled for now
 
    -- Try to find a closeby acceptable target
    local targets = {}
-   for t in ipairs(TARGETSYS_CANDIDATES) do
+   for k,t in ipairs(TARGETSYS_CANDIDATES) do
       if naev.claimTest( t ) and t:jumpDist() < 6 then
          table.insert( targets, t )
       end
@@ -78,6 +78,8 @@ function create()
 end
 
 local function reset_osd()
+   misn.markerRm()
+   misn.markerAdd( mem.targetsys )
    misn.osdCreate( title, {
       fmt.f(_("Go to the location in the {sys} system"),
          {sys=mem.targetsys}),
@@ -96,6 +98,8 @@ function accept ()
    vn.transition("electric")
 
    l337()
+
+   vn.func( function() accepted = true end )
 
    vn.done("electric")
    vn.run()
@@ -121,7 +125,7 @@ function enter ()
          return true
       end
       repeat
-         position = vec2.newP( 2/3*scur.radius(), rnd.angle() )
+         position = vec2.newP( 2/3*scur:radius(), rnd.angle() )
          good = good_position(position)
          rep = rep+1
       until good or rep > 100
@@ -129,7 +133,7 @@ function enter ()
       mem.honeypot = position
       mem.sysmarker = system.markerAdd( position, _("Honeypot") )
 
-      trigger.player_distance( position, 2000, function ()
+      trigger.distance_player( position, 2000, function ()
          vn.clear()
          vn.scene()
          local l337 = vn.newCharacter( onion.vn_l337b01() )
@@ -146,6 +150,7 @@ function enter ()
          system.markerRm( mem.sysmarker )
 
          hook.pilot( player.pilot(), "scan", "scan" )
+         scan() -- set up OSD and such
       end )
    elseif mem.state~=STATE_BEAT_MERCENARIES then
       -- Reset state
@@ -198,6 +203,7 @@ function scan( tgt )
    if not inlist( ships_scanned, tgt ) then
       table.insert( ships_scanned, tgt )
    end
+   misn.markerRm()
    misn.osdCreate( title, {
       fmt.f(_("Scan {n} ships in the system ({left} left)"),
          {n=SHIPS_TO_SCAN, left=SHIPS_TO_SCAN-#ships_scanned}),

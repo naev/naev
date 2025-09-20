@@ -9,11 +9,11 @@
 --]]
 local lib = {}
 
-function _hook_player_distance( params )
+function _hook_distance( params )
    if player.pos():dist2( params.target ) <= params.dist2 then
       params.fn()
    else
-      hook.timer( 1, "_hook_player_distance", params )
+      hook.timer( 1, "_hook_distance", params )
    end
 end
 
@@ -30,7 +30,7 @@ function lib.distance_player( target, distance, fn )
       fn       = fn,
       dist2    = distance^2,
    }
-   hook.timer( 1, "_hook_player_distance", params )
+   hook.timer( 1, "_hook_distance", params )
 end
 
 function _hook_pilot_defeated( plt, _killer, params )
@@ -76,7 +76,7 @@ function lib.pilots_defeated( pilots, fn )
    end
 end
 
-function _trigger_timer( params )
+function _hook_trigger_timer( params )
    local c = params._current
    local p = params[c]
 
@@ -90,7 +90,7 @@ function _trigger_timer( params )
    params._current = c+1
    if params._current < #params then
       local t = params[c+1][1]
-      hook.timer( t, "_trigger_timer", params )
+      hook.timer( t, "_hook_trigger_timer", params )
    end
 end
 
@@ -101,7 +101,7 @@ Can be used to set up a chain of timer events, which will be chained automatical
 --]]
 function lib.timer_chain( messages )
    messages._current = 1
-   hook.timer( messages[1][1], "_trigger_timer", messages )
+   hook.timer( messages[1][1], "_hook_trigger_timer", messages )
 end
 
 return lib
