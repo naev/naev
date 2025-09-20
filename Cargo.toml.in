@@ -37,7 +37,7 @@ edition = "2024"
 # 1.84 New random syntax
 # 1.85 Rust 2024
 # 1.87 nalgebra 0.34
-rust-version = "1.85" # Note this has to be set in meson.build too!
+rust-version = "1.87" # Note this has to be set in meson.build too!
 
 [workspace.lints.clippy]
 not_unsafe_ptr_arg_deref = "allow"
@@ -81,7 +81,7 @@ image = { workspace = true }
 constcat = "0.6"
 derive_more = { version = "2", features = ["from", "into"] }
 rand = "0.9"
-rayon = "1.10" # parallel computation
+rayon = "1.11" # parallel computation
 static_assertions = "1.1"
 palette = "0.7" # Colour conversion
 mlua = { version = "0.11", features = ["luajit", "anyhow", "send", "serialize"] }
