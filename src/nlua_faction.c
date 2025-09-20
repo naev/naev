@@ -567,8 +567,8 @@ static int factionL_setReputationGlobal( lua_State *L )
  * system. Meant to be used when computing faction hits from the faction
  * standing Lua scripts. Not meant for use elsewhere.
  *
- *    @luatparam Faction f Faction to apply local thresholding to.
- *    @luatparam System sys System to compute the thresholding from. This will
+ *    @luatparam Faction f Faction to apply local threshold to.
+ *    @luatparam System sys System to compute the threshold from. This will
  * be the reference and will not have its value modified.
  * @luafunc applyLocalThreshold
  */

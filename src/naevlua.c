@@ -245,7 +245,7 @@ int main( int argc, char **argv )
    gui_init();        /* initializes the GUI graphics */
    toolkit_init();    /* initializes the toolkit */
    map_init();        /* initializes the map. */
-   map_system_init(); /* Initialise the solar system map */
+   map_system_init(); /* Initialize the solar system map */
    cond_init();       /* Initialize conditional subsystem. */
    cli_init();        /* Initialize console. */
 

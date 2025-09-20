@@ -1637,8 +1637,8 @@ void sound_setAbsorption( double value )
    for ( int i = 0; i < source_ntotal; i++ ) {
       ALuint s = source_total[i];
       /* Value is from 0. (normal) to 10..
-       * It represents the attenuation per meter. In this case it decreases by
-       * 0.05*AB_FACTOR dB/meter where AB_FACTOR is the air absorption factor.
+       * It represents the attenuation per metre. In this case it decreases by
+       * 0.05*AB_FACTOR dB/metre where AB_FACTOR is the air absorption factor.
        * In our case each pixel represents 5 meters.
        */
       alSourcef( s, AL_AIR_ABSORPTION_FACTOR, value );

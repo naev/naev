@@ -176,10 +176,10 @@ static int   player_parseMetadata( xmlNodePtr parent );
 static int   player_addOutfitToPilot( Pilot *pilot, const Outfit *outfit,
                                       PilotOutfitSlot *s );
 /* Updating. */
-static nlua_env *player_updater_env = NULL;
-static int       player_runUpdaterStart( void );
-static int player_runUpdaterScript( const char *type, const char *name, int q );
-static int player_runUpdaterFinish( void );
+static nlua_env     *player_updater_env = NULL;
+static void          player_runUpdaterLoadIfNecessary( void );
+static int           player_runUpdaterStart( void );
+static int           player_runUpdaterFinish( void );
 static const Outfit *player_tryGetOutfit( const char *name, int q );
 static const Ship   *player_tryGetShip( const char *name );
 static void          player_tryAddLicense( const char *name );
@@ -585,7 +585,7 @@ static PlayerShip_t *player_newShipMake( const char *name )
 }
 
 /**
- * @brief Swaps player's current ship with their ship named shipname.
+ * @brief Swaps player's current ship with their ship named `shipname`.
  *
  *    @param shipname Ship to change to.
  *    @param move_cargo Whether or not to move the cargo over or ignore it.
@@ -860,7 +860,7 @@ void player_cleanup( void )
    array_free( events_done );
    events_done = NULL;
 
-   /* Clean up licenses. */
+   /* Clean up licences. */
    for ( int i = 0; i < array_size( player_licenses ); i++ )
       free( player_licenses[i] );
    array_free( player_licenses );
@@ -2878,7 +2878,7 @@ int player_outfitOwned( const Outfit *o )
         ( outfit_isLocalMap( o ) && localmap_isUseless( o ) ) )
       return 1;
 
-   /* Special case license. */
+   /* Special case licence. */
    if ( outfit_isLicense( o ) &&
         player_hasLicense( outfit_licenseProvides( o ) ) )
       return 1;
@@ -3004,7 +3004,7 @@ int player_addOutfit( const Outfit *o, int quantity )
       player_guiAdd( outfit_gui( o ) );
       return 1; /* Success. */
    }
-   /* special case if it's a license. */
+   /* special case if it's a licence. */
    else if ( outfit_isLicense( o ) ) {
       player_addLicense( outfit_licenseProvides( o ) );
       return 1; /* Success. */
@@ -3192,43 +3192,43 @@ int *player_eventsDoneList( void )
 }
 
 /**
- * @brief Checks to see if player has license.
+ * @brief Checks to see if player has licence.
  *
- *    @param license License to check to see if the player has.
- *    @return 1 if has license (or none needed), 0 if doesn't.
+ *    @param licence Licence to check to see if the player has.
+ *    @return 1 if has licence (or none needed), 0 if doesn't.
  */
-int player_hasLicense( const char *license )
+int player_hasLicense( const char *licence )
 {
-   if ( license == NULL )
+   if ( licence == NULL )
       return 1;
    if ( player_licenses == NULL )
       return 0;
 
    const char *s =
-      bsearch( &license, player_licenses, array_size( player_licenses ),
+      bsearch( &licence, player_licenses, array_size( player_licenses ),
                sizeof( char * ), strsort );
    return s != NULL;
 }
 
 /**
- * @brief Gives the player a license.
+ * @brief Gives the player a licence.
  *
- *    @brief license License to give the player.
+ *    @brief licence Licence to give the player.
  */
-void player_addLicense( const char *license )
+void player_addLicense( const char *licence )
 {
-   if ( player_hasLicense( license ) )
+   if ( player_hasLicense( licence ) )
       return;
    if ( player_licenses == NULL )
       player_licenses = array_create( char * );
-   array_push_back( &player_licenses, strdup( license ) );
+   array_push_back( &player_licenses, strdup( licence ) );
 
    qsort( player_licenses, array_size( player_licenses ), sizeof( char * ),
           strsort );
 }
 
 /**
- * @brief Gets the array (array.h) of license names in the player's inventory.
+ * @brief Gets the array (array.h) of licence names in the player's inventory.
  */
 const char **player_getLicenses()
 {
@@ -3457,7 +3457,7 @@ int player_save( xmlTextWriterPtr writer )
    /* Licenses. */
    xmlw_startElem( writer, "licenses" );
    for ( int i = 0; i < array_size( player_licenses ); i++ )
-      xmlw_elem( writer, "license", "%s", player_licenses[i] );
+      xmlw_elem( writer, "licence", "%s", player_licenses[i] );
    xmlw_endElem( writer ); /* "licenses" */
 
    /* Inventory. */
@@ -3787,7 +3787,7 @@ Spob *player_load( xmlNodePtr parent )
    return pnt;
 }
 
-static int player_runUpdaterStart( void )
+static void player_runUpdaterLoadIfNecessary( void )
 {
    /* Load env if necessary. */
    if ( player_updater_env == NULL ) {
@@ -3802,10 +3802,15 @@ static int player_runUpdaterStart( void )
                   "Most likely Lua file has improper syntax, please check" ),
                SAVE_UPDATER_PATH, lua_tostring( naevL, -1 ) );
          free( buf );
-         return 0;
+         return;
       }
       free( buf );
    }
+}
+
+static int player_runUpdaterStart( void )
+{
+   player_runUpdaterLoadIfNecessary();
 
    /* Run start. */
    nlua_getenv( naevL, player_updater_env, "start" );
@@ -3821,16 +3826,17 @@ static int player_runUpdaterStart( void )
  * @brief Runs the save updater script, leaving any result on the stack of
  * `naevL`.
  *
- *    @param type Type of item to translate. Currently `outfit` and `license`
- * are supported.
+ *    @param type Type of item to translate. Currently `outfit`, `ship`, and
+ * `licence` are supported.
  *    @param name Name of the inventory item.
  *    @param q Quantity in possession.
  *    @return Stack depth: 1 if player got a translated item back, 0 if they got
  * nothing or just money.
  */
-static int player_runUpdaterScript( const char *type, const char *name, int q )
+int player_runUpdaterScript( const char *type, const char *name, int q )
 {
    player_ran_updater = 1;
+   player_runUpdaterLoadIfNecessary();
 
    /* Try to find out equivalent. */
    nlua_getenv( naevL, player_updater_env, type );
@@ -3929,12 +3935,12 @@ static void player_tryAddLicense( const char *name )
    player_ran_updater = 1;
 
    /* Try to find out equivalent. */
-   if ( player_runUpdaterScript( "license", name, 1 ) == 0 )
+   if ( player_runUpdaterScript( "licence", name, 1 ) == 0 )
       return;
    else if ( lua_type( naevL, -1 ) == LUA_TSTRING )
       player_addLicense( lua_tostring( naevL, -1 ) );
    else
-      WARN( _( "Saved license does not exist and could not be found or "
+      WARN( _( "Saved licence does not exist and could not be found or "
                "updated: '%s'!" ),
             name );
    lua_pop( naevL, 1 );
@@ -4046,7 +4052,8 @@ static Spob *player_parse( xmlNodePtr parent )
       }
 
       /* Parse licenses. */
-      else if ( xml_isNode( node, "licenses" ) )
+      else if ( xml_isNode( node, "licenses" ) ||
+                xml_isNode( node, "licences" ) )
          player_parseLicenses( node );
 
       else if ( xml_isNode( node, "inventory" ) )
@@ -4244,9 +4251,9 @@ static int player_parseDoneEvents( xmlNodePtr parent )
 }
 
 /**
- * @brief Parses player's licenses.
+ * @brief Parses player's licences.
  *
- *    @param parent Node of the licenses.
+ *    @param parent Node of the licences.
  *    @return 0 on success.
  */
 static int player_parseLicenses( xmlNodePtr parent )
@@ -4255,12 +4262,12 @@ static int player_parseLicenses( xmlNodePtr parent )
    do {
       xml_onlyNodes( node );
 
-      if ( !xml_isNode( node, "license" ) )
+      if ( !xml_isNode( node, "license" ) && !xml_isNode( node, "licence" ) )
          continue;
 
       const char *name = xml_get( node );
       if ( name == NULL ) {
-         WARN( _( "License node is missing name." ) );
+         WARN( _( "Licence node is missing name." ) );
          continue;
       }
       player_tryAddLicense( name );

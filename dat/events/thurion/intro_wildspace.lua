@@ -52,7 +52,7 @@ function timer ()
    local sai = tut.vn_shipai()
    vn.appear( sai, "electric" )
    sai(fmt.f(_([[Your ship AI {shipai} materializes before you.
-"{player}, it seems like we are currently undergoing a strong electromagnetic attack. I have rerouted power to cybernetic defenses for now. It is puzzling as we should be in uninhabited area."]]),
+"{player}, it seems like we are currently undergoing a strong electromagnetic attack. I have rerouted power to cybernetic defences for now. It is puzzling as we should be in uninhabited area."]]),
       {shipai=tut.ainame(), player=player.name()}))
    vn.menu{
       {_([["Scan for anomalies!"]]), "cont01_scan"},

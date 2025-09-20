@@ -111,7 +111,7 @@ typedef struct Asteroid_ {
 typedef struct AsteroidAnchor_ {
    char               *label;     /**< Label used for unidiffs. */
    int                 id;        /**< ID of the anchor, for targeting. */
-   vec2                pos;       /**< Position in the system (from center). */
+   vec2                pos;       /**< Position in the system (from centre). */
    double              density;   /**< Density of the field. */
    Asteroid           *asteroids; /**< Asteroids belonging to the field. */
    int                 nmax;      /**< Maximum number of asteroids. */
@@ -122,7 +122,7 @@ typedef struct AsteroidAnchor_ {
    double              groupswtotal; /**< Sum of the weights of the groups. */
    double maxspeed; /**< Maxmimum speed the asteroids can have in the field. */
    double maxspin;  /**< Maxmimum spin the asteroids can have in the field. */
-   double accel;    /**< Accel applied when out of radius towards center. */
+   double accel;    /**< Accel applied when out of radius towards centre. */
    double margin; /**< Extra margin to use when doing distance computations. */
    /* Collision stuff. */
    Quadtree qt;      /**< Handles collisions. */
@@ -135,7 +135,7 @@ typedef struct AsteroidAnchor_ {
  */
 typedef struct AsteroidExclusion_ {
    char  *label;   /**< Label used for unidiffs. */
-   vec2   pos;     /**< Position in the system (from center). */
+   vec2   pos;     /**< Position in the system (from centre). */
    double radius;  /**< Radius of the exclusion zone. */
    int    affects; /**< Temporary internal value when rendering. */
 } AsteroidExclusion;

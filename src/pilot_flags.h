@@ -87,9 +87,9 @@ enum {
                      visibility). */
    /* Outfit stuff. */
    PILOT_AFTERBURNER, /**< Pilot has their afterburner activated. */
-   /* Refueling. */
-   PILOT_REFUELING,      /**< Pilot is trying to refueling. */
-   PILOT_REFUELBOARDING, /**< Pilot is actively refueling. */
+   /* Refuelling. */
+   PILOT_REFUELING,      /**< Pilot is trying to refuelling. */
+   PILOT_REFUELBOARDING, /**< Pilot is actively refuelling. */
    /* Cooldown. */
    PILOT_COOLDOWN,       /**< Pilot is in active cooldown mode. */
    PILOT_COOLDOWN_BRAKE, /**< Pilot is braking to enter active cooldown mode. */

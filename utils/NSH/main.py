@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- encoding: utf8 -*-
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=80:
-# License: X/MIT
+# Licence: X/MIT
 # author: Ludovic Bellière AKA. xrogaan
 
 from collections import defaultdict
@@ -21,10 +21,10 @@ class yamlLabelReader:
    def __init__(self, stream):
       self.ydata = yaml.safe_load(stream)
       keys = set(self.ydata['shipstats'])
-      labeled = set(self.ydata['statslabel'])
-      for label in keys - labeled:
+      labelled = set(self.ydata['statslabel'])
+      for label in keys - labelled:
          print("Warning: missing label for shipstats key:", label)
-      for label in labeled - keys:
+      for label in labelled - keys:
          print("Notice: statslabel is orphan", label)
 
    def getShipStatsLabels(self, label):

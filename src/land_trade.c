@@ -4,7 +4,7 @@
 /**
  * @file land_trade.c
  *
- * @brief Handles the Trading Center at land.
+ * @brief Handles the Trading Centre at land.
  */
 /** @cond */
 #include <stdio.h>
@@ -175,7 +175,7 @@ static void commodity_exchange_genList( unsigned int wid )
       array_free( commodity_list );
    commodity_list = array_create( CommodityItem );
 
-   /* First add special salable. */
+   /* First add special saleable. */
    PilotCommodity *pclist = pfleet_cargoList();
    for ( int i = 0; i < array_size( pclist ); i++ ) {
       PilotCommodity *pc = &pclist[i];
@@ -214,7 +214,7 @@ static void commodity_exchange_genList( unsigned int wid )
       array_push_back( &commodity_list, item );
    }
 
-   /* Next add local specialties. */
+   /* Next add local specialities. */
    double     *prices = NULL;
    Commodity **tech   = tech_getCommodity( land_spob->tech, &prices );
    for ( int i = 0; i < array_size( tech ); i++ ) {

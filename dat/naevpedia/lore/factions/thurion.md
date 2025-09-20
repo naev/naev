@@ -144,7 +144,7 @@ The method was successful and no new problems were reported, so the Thurion did 
 
 Because they needed quick results and did not have enough time for proper testing, they failed to see the long term effects that this work-around would have.
 Somehow, a form of gestalt consciousness had slowly formed over time.
-It emerged from the collective behavior associated with the interactions of the uploaded Thurions' minds.
+It emerged from the collective behaviour associated with the interactions of the uploaded Thurions' minds.
 The gestalt consciousness worked and thought fairly different from a human mind and originally had very little influence over the uploaded Thurion.
 Over time, though, its influence had grown but the Thurion were affected to greatly varying extents.
 Some were barely affected while for others the gestalt consciousness had manifested as some kind of split personality that was identical for all Thurion.

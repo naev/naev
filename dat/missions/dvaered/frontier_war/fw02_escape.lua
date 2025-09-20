@@ -61,7 +61,7 @@ local commMass = 4
 local fzlk = faction.get("Za'lek")
 local hampla, hamsys = spob.getS("Vilati Vilata") -- Where the player meets up to start the stuff
 local reppla, repsys = spob.getS("Dvaer Prime") -- Where the player has to run back to after interception
-local pripla, prisys = spob.getS("Bastion Center") -- Military base where the captured person starts
+local pripla, prisys = spob.getS("Bastion Centre") -- Military base where the captured person starts
 local zlkpla, zlksys = spob.getS("House Za'lek Central") -- Target delivery place of the captured person
 local intsys = system.get("Hargen") -- Where the action happens, should be between prisys and zlksys
 local dealsys = system.get("Van Maanen")
@@ -351,7 +351,7 @@ function enter()
    -- When entering Empire Space, contact with Captain HewHew
    elseif mem.stage == 4 and system.cur():presences()["Empire"] and (not system.cur():presences()["Za'lek"]) then
       hook.timer(2.0, "spawnHewHew", mem.lastSys)
-      hook.timer(10.0, "backDialog")  -- And some dialog with the VIP
+      hook.timer(10.0, "backDialog")  -- And some dialogue with the VIP
    end
 
    -- Spawn Strafer

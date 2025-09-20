@@ -25,7 +25,7 @@ def nfmt( n ):
       f = int(f)
    return str(f)
 
-def main( args, gith = False, color = False, term = False, noext = False,
+def main( args, gith = False, colour = False, term = False, noext = False,
       sortit = False, autostack = False, combine = False, good = False ):
    if not args:
       return 0
@@ -78,31 +78,31 @@ def main( args, gith = False, color = False, term = False, noext = False,
    length = [4] * len(names) # :--- at least 3 - required
 
    termit_rule = lambda s: s
-   if color:
+   if colour:
       Sep, SepAlt, Lm, Rm, LM, RM = '\033[30;1m|\033[0m', '\033[34m|\033[0m', '\033[31m', '\033[37m', '\033[32m', '\033[37m'
       mk_pad = lambda i, n: '\033[34m' + n*'-' + '\033[0m'
       leng = lambda x: len(x) - (10 if x != '' and x[0]=='\033' else 0)
       if term:
-         # Could also use it to manage gith and color.
+         # Could also use it to manage gith and colour.
          from slst import Slst
          termit = Slst([('|',"\N{BOX DRAWINGS LIGHT VERTICAL}")])
          (Sep, SepAlt, Lm, Rm, LM, RM) = map(termit, (Sep, SepAlt, Lm, Rm, LM, RM))
          termit_rule = -termit + [
-            ('\033[34m', ), ('\033[0m', ),            # uncolor
+            ('\033[34m', ), ('\033[0m', ),            # uncolour
             ('| -', '|--'), ('- |',  '--|'),
             ('-|-',  "-\N{BOX DRAWINGS LIGHT VERTICAL AND HORIZONTAL}-" ),
             ('|-',   "\N{BOX DRAWINGS LIGHT DOWN AND RIGHT}-"           ),
             ('-|',   "-\N{BOX DRAWINGS LIGHT VERTICAL AND LEFT}"        ),
             ('^|',   "\N{BOX DRAWINGS LIGHT VERTICAL AND RIGHT}"        ),
             ('-',    "\N{BOX DRAWINGS LIGHT HORIZONTAL}"                ),
-            ('', '\033[34m', 1), ('', '\033[0m', -1)  # recolor whole line
+            ('', '\033[34m', 1), ('', '\033[0m', -1)  # recolour whole line
          ]
    else:
       Sep, SepAlt, Lm, Rm, LM, RM = '|', '|', '_', '_', '**', '**'
       mk_pad = lambda i, n: '-'*(n-1)+('-' if i == 0 else ':')
       leng = len
 
-   if color:
+   if colour:
       head = transpose([s.split(' ') for s in names])
    else:
       head = [names]
@@ -138,7 +138,7 @@ def main( args, gith = False, color = False, term = False, noext = False,
 
    for t in head:
       acc = mklin(map(fmt, zip(t, length)))
-      if color:
+      if colour:
          acc = ' '+acc[len(Sep):]
       print(acc)
    print(termit_rule(mklinalt(True)([mk_pad(i, n) for i, n in enumerate(length)])))
@@ -160,8 +160,8 @@ if __name__ == '__main__':
       epilog = '\nTypical usage (from naev root dir) :\n > ./utils/outfits/outfits2md.py dat/outfits/core_system/small/*.xml -C -t | less -RS'
    )
    parser.add_argument('-g', '--github', action = 'store_true', help = 'unaligned (therefore smaller) valid github md, for use in posts.')
-   parser.add_argument('-c', '--color', action = 'store_true', help = 'colored terminal output. You can pipe to "less -RS" if it is too wide.')
-   parser.add_argument('-t', '--term', action = 'store_true', help = 'colored terminal output (TODO: with extended table characters).')
+   parser.add_argument('-c', '--colour', action = 'store_true', help = 'coloured terminal output. You can pipe to "less -RS" if it is too wide.')
+   parser.add_argument('-t', '--term', action = 'store_true', help = 'coloured terminal output (TODO: with extended table characters).')
    parser.add_argument('-n', '--nomax', action = 'store_true', help = 'Do not emphasize min/max values.' )
    parser.add_argument('-s', '--sort', help = 'inputs are sorted by their SORT key.')
    parser.add_argument('-S', '--sortbymass', action = 'store_true', help = 'Like -s mass.' )
@@ -174,13 +174,13 @@ Can also be two outfits separated by \'+\', or an outfit prefixed
 with \'2x\' (or: \'1x\') or suffixed with \'x2\' (or: \'x1\').""")
 
    args = parser.parse_args()
-   if args.term and args.color:
+   if args.term and args.colour:
       print('Warning: -c subsumed by -t', file = stderr, flush = True)
 
-   if args.github and (args.color or args.term):
+   if args.github and (args.colour or args.term):
       print('Warning: Ignored conflicting: -g and -' +
          ('t' if args.term else 'c'), file = stderr, flush = True)
-      args.github = args.color = args.term = False
+      args.github = args.colour = args.term = False
 
    if args.autostack and args.good:
       print('Warning: -A is subsumed by -G', file = stderr, flush = True)
@@ -205,7 +205,7 @@ with \'2x\' (or: \'1x\') or suffixed with \'x2\' (or: \'x1\').""")
       args.filename += [l.strip() for l in stdin.readlines()]
 
    main([f for f in args.filename if f not in ign],
-      args.github, args.color or args.term, args.term, args.nomax, sortby,
+      args.github, args.colour or args.term, args.term, args.nomax, sortby,
       args.autostack, args.combinations or args.good, args.good)
 else:
    raise Exception('This module is only intended to be used as main.')

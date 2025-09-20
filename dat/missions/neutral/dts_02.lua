@@ -39,7 +39,7 @@ local pir = require "common.pirate"
 
 local reward = 400e3
 
-local cadet1, cadet2, defense_fleet, fraider, raider_fleet, raiders_left, second_wave -- Non-persistent state
+local cadet1, cadet2, defence_fleet, fraider, raider_fleet, raiders_left, second_wave -- Non-persistent state
 local defend_system, second_wave_attacks -- Forward-declared functions
 
 -- Create the mission on the current planet, and present the first Bar text.
@@ -121,14 +121,14 @@ function defend_system()
    pilot.toggleSpawn( false )
 
    -- Set up distances
-   local angle, defense_position, raider_position
+   local angle, defence_position, raider_position
    angle = rnd.angle()
    if mem.defender == true then
       raider_position  = vec2.newP( 400, angle )
-      defense_position = vec2.new( 0, 0 )
+      defence_position = vec2.new( 0, 0 )
    else
       raider_position  = vec2.newP( 800, angle )
-      defense_position = vec2.newP( 400, angle )
+      defence_position = vec2.newP( 400, angle )
    end
 
    -- Create a fleet of raiding pirates
@@ -139,18 +139,18 @@ function defend_system()
 
    -- And a fleet of defending independents
    local dfleet = { "Mule", "Lancelot", "Ancestor", "Gawain" }
-   defense_fleet = fleet.add( 2, dfleet, "Trader", defense_position, _("Defender"), {ai="def"} )
-   cadet1 = pilot.add( "Empire Lancelot", "Empire", defense_position, nil, {ai="def"} )
+   defence_fleet = fleet.add( 2, dfleet, "Trader", defence_position, _("Defender"), {ai="def"} )
+   cadet1 = pilot.add( "Empire Lancelot", "Empire", defence_position, nil, {ai="def"} )
    do
       mem.cadet1_alive = true
       hook.pilot( cadet1, "death", "cadet1_dead")
    end
-   cadet2 = pilot.add( "Empire Lancelot", "Empire", defense_position, nil, {ai="def"} )
+   cadet2 = pilot.add( "Empire Lancelot", "Empire", defence_position, nil, {ai="def"} )
    do
       mem.cadet2_alive = true
       hook.pilot( cadet2, "death", "cadet2_dead")
    end
-   for k,v in ipairs( defense_fleet) do
+   for k,v in ipairs( defence_fleet) do
       v:setFriendly()
    end
    cadet1:setFriendly()

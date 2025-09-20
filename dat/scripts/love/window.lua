@@ -73,7 +73,7 @@ function window.fromPixels( value )
    return value * scale
 end
 function window.getMode()
-   return love.w, love.h, { fullscreen=love.fullscreen, vsync=1, resizeable=false, borderless = false, centered=true, display=1, msaa=0 }
+   return love.w, love.h, { fullscreen=love.fullscreen, vsync=1, resizeable=false, borderless = false, centred=true, display=1, msaa=0 }
 end
 function window.setFullscreen( fullscreen )
    -- Skip unnecessary changing

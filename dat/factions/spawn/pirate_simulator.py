@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Trivial script to simulate pirate ditributions.
+Trivial script to simulate pirate distributions.
 """
 
 def patrol( x ):

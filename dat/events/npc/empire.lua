@@ -58,7 +58,7 @@ local msg_lore = {
    _([["Things are getting worse by the cycle. What happened to the Empire? We used to be the lords and masters over the whole galaxy!"]]),
    _([["Did you know that House Za'lek was originally a Great Project initiated by the Empire? Well, now you do! There was also a Project Proteron, but that didn't go so well."]]),
    _([["The Emperor lives on a giant supercruiser in Gamma Polaris. It's said to be the biggest ship in the galaxy! I totally want one."]]),
-   _([["I'm still waiting for my pilot license application to get through. Oh well, it's only been half a cycle, I just have to be patient."]]),
+   _([["I'm still waiting for my pilot licence application to get through. Oh well, it's only been half a cycle, I just have to be patient."]]),
    _([["Between you and me, the laws the Council passes can get really ridiculous! Most planets find creative ways of ignoring them…"]]),
    _([["Don't pay attention to the naysayers. The Empire is still strong. Have you ever seen a Peacemaker up close? I doubt any ship fielded by any other power could stand up to one."]]),
    _([["I've been studying to become an Empire Combat Bureaucrat, but I keep on failing the paperwork exam. It's more fun to blow ships up than fill forms!"]]),
@@ -81,7 +81,7 @@ local msg_tip = {
 
 local msg_cond = {
    { npc.test_misnHint("Empire Recruitment"), _([["Have you thought about doing shipping for the Empire? It's great work! You just need to find a recruiter to teach you the ropes."]])},
-   { npc.test_misnHint("Empire Shipping 2"), _([["I hear you can get a Heavy Weapons License if you help out the Empire doing special shipping missions."]])},
+   { npc.test_misnHint("Empire Shipping 2"), _([["I hear you can get a Heavy Weapons Licence if you help out the Empire doing special shipping missions."]])},
    { npc.test_misnHint("Collective Espionage 1"), _([["I've heard that there seems to be lots of combat near Fortitude. You might even be able to help if you make it to Omega Enclave."]])},
    { npc.test_misnHint("Operation Cold Metal"), _([["I was getting rid of some documents the other day and found some old document about a project to create a fully autonomous self-replicating armada of robot ships. I wonder what happened with that?"]])},
    { npc.test_chapter0(), _([["I hear the Empire is looking for rare minerals in Gamma Polaris. What could they be building?"]])},

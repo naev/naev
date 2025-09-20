@@ -7,7 +7,7 @@ function atk_corvette.init ()
 end
 
 --[[
--- Main control function for corvette behavior.
+-- Main control function for corvette behaviour.
 --]]
 function atk_corvette.atk( target, dokill )
    target = atk.com_think( target, dokill )

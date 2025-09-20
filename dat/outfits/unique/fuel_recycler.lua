@@ -65,7 +65,7 @@ local function recycle_interface ()
    local lstw = 250
    local wdw = luatk.newWindow( nil, nil, w, h )
 
-   luatk.newText( wdw, 0, 10, w, 20, _("Fuel Recycler"), nil, "center" )
+   luatk.newText( wdw, 0, 10, w, 20, _("Fuel Recycler"), nil, "centre" )
 
    local txt = luatk.newText( wdw, lstw+40, 65, w-lstw-40-20, h-65-20, "" )
    local function update_text( idx )

@@ -2,7 +2,7 @@
  <general>
   <slot prop="fighter_bay">weapon</slot>
   <size>large</size>
-  <license>Light Combat Vessel</license>
+  <licence>Light Combat Vessel</licence>
   <rarity>2</rarity>
   <cond>require("buyrep")("Empire", 50)</cond>
   <condstr>You need at least 50% reputation with the Empire.</condstr>

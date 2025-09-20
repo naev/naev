@@ -281,7 +281,7 @@
  - Fixed collisions for some ships at certain angles
  - Changed mouse click selection priority, it prefers spobs/jumps and will ignore clicks reselecting the same object
  - Fixed map decorators not shown in editor
- - Centered buttons at the top of the holo-archives
+ - Centred buttons at the top of the holo-archives
  - Show if a system has a bar in the map
  - Fixed conf.mouse_doubleclick not disabling when set to 0
  - Fixed crashes when a faction is assigned a non-existent colour
@@ -669,7 +669,7 @@
  - Added pilot.weapsetAddType and pilot.weapsetSetActive
  - Gave unicorp storm launchers a rarity of 2 and made it more available
  - Have ships be a little less spammy distressing
- - Centered tracking icon in slim GUI
+ - Centred tracking icon in slim GUI
  - Show tracking icons for non-turret bolt weapons too
  - More short names for weapon outfits
  - Fixed pilot.setSpeedLimit not working
@@ -872,7 +872,7 @@
 ## 0.10.6
 
 #### Fixed potential segfault with invalid semver strings
- - Fixed sign error when buying artifacts in the Baron Prince mission (sorry)
+ - Fixed sign error when buying artefacts in the Baron Prince mission (sorry)
  - Fixed behaviour of naev.trigger with parameters
  - Fixed Lua spfx volume changing with game speed
  - Fixed memory leak in luaspfx trails
@@ -995,7 +995,7 @@
  - Fixed pilot.comm not showing messages
  - Fixed typo/grammar in sightseeing and dvaered census introductory mission
  - Don't display health bars with no player alive
- - Autonav doesn't go only to the center of spobs
+ - Autonav doesn't go only to the centre of spobs
  - Mention escort AI settings when buying a fighter bay tutorial plays
 
 
@@ -1176,7 +1176,7 @@
  - Some more outfit graphics
  - Pilots should be a bit less trigger happy when jumping in
  - Fixed minor visual artefacts with pirate trails
- - Centered the bottom bar (Brushed GUI)
+ - Centred the bottom bar (Brushed GUI)
  - FPS and Time Compression factors are monospaced when displayed
  - Added option for disabling resizing of window
  - Stealthed pilots don't affect autonav
@@ -1203,7 +1203,7 @@
  - Fixed autonav via the map during a landing sequence
  - Fixed autonav giving away autofollowed pilots and unknown destination systems
  - Improved speed and accuracy of autonav stopping
- - Improved mission marker behavior (show planets more, always clean up at end of mission)
+ - Improved mission marker behaviour (show planets more, always clean up at end of mission)
  - Kicked Empire patrols out of the Arandon system
  - Gave pirate ships dodgier outfits
  - Proofread too many parts of the game to mention
@@ -1367,7 +1367,7 @@
 
 #### Gameplay
  - Lowered large ships' time constant (renamed from time dilation) by 50% of the deviation from 100%
- - Tweaked Za'lek ships' stats and outfit slot behavior to match expectations
+ - Tweaked Za'lek ships' stats and outfit slot behaviour to match expectations
 
 #### Engine
  - Restored macOS support. (Catalina users will have to bypass Gatekeeper: See https://codeberg.org/naev/naev/wiki/FAQ for details.)

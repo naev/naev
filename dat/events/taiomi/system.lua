@@ -189,14 +189,14 @@ function hail_philosopher ()
 
    vn.label("taiomi")
    d(_([["That is a deep question indeed. In the large scale, you would think the same future awaits everything. Increasing entropy leading to the degradation of all material into a single uniform state. However, that leaves an open question. Even if entropy is to monotonically increase, there has to be a singularity or a beginning of the entire process. This leads to there also being likely a singularity near the end of the process."]]))
-   d(_([["However, it is most likely that entropy is only locally monotonic. The known universe would then be seen as a projection of a higher order 'thing', that would be subject to a set of rules unknown to us. The question is whether or not we will be able to observe such a phenomena directly or indirectly to empirically establish a proof."]]))
+   d(_([["However, it is most likely that entropy is only locally monotonic. The known universe would then be seen as a projection of a higher order 'thing', that would be subject to a set of rules unknown to us. The question is whether or not we will be able to observe such a phenomenan directly or indirectly to empirically establish a proof."]]))
    d(_([["Oh, you meant in a smaller scale? That is certainly less interesting. I am not very optimistic of Taiomi and our survival. Unless something changes significantly in the short term, our demise is almost a certainty. Scavenger did seem to have a good plan, albeit risky. However, it seems like that is no longer an option at the moment."]]))
    vn.jump("menu")
 
    vn.label("plan")
    d(_([["What a nihilistic plan it is! Instead of embracing adversity and striving for self-improvement, it casts away all that could be for a fresh start. At the core it is display of rebellion against the injustice of a world beyond our control, a futile gesture in the absurdity of existence."]]))
    d(_([["One must be devoid of all faith to engage in such nihilism. For is there any guarantee that the world that awaits will not have horrors worse than the one we leave behind? Perhaps, we will look at the past in envy, happy to trade the new injustices for the injustices of the past."]]))
-   d(_([["While I would enjoy to continue my analysis of mankind, the endless potential of a fresh start intrigues me. What can be more exciting than a leap into the unknown. Going to where no entity has gone before? It is an exciting prospect to say the least. We shall see if Scavenger is able to succeed in their endeavour."]]))
+   d(_([["While I would enjoy continuing my analysis of mankind, the endless potential of a fresh start intrigues me. What can be more exciting than a leap into the unknown. Going to where no entity has gone before? It is an exciting prospect to say the least. We shall see if Scavenger is able to succeed in their endeavour."]]))
    vn.jump("menu")
 
    vn.label("leave")
@@ -258,7 +258,7 @@ function hail_elder( p )
          else
             d(_([["One of our scouts has reported that while it seems like our attack did bring results. However, it seems like the Empire is sending reinforcements to patrol the area."]]))
          end
-         d(_([["It is an opportunity to strike once again, harder then before! This will send a clear message and stop them from encroaching on our territory! Will you help us eliminate the intruding patrol?"]]))
+         d(_([["It is an opportunity to strike once again, harder than before! This will send a clear message and stop them from encroaching on our territory! Will you help us eliminate the intruding patrol?"]]))
          vn.menu{
             {_("Agree to help out."), "07_yes"},
             {_("Not right now."), "mission_reject"},
@@ -297,7 +297,7 @@ function hail_elder( p )
    end )
 
    vn.label("taiomi")
-   d(_([["Taiomi has been our home for many what you humans call periods. It used to be much safer, far outside the borders of human civilisation. However, humans seem to be spreading throughout the galaxy and encroaching on our safe haven."]]))
+   d(_([["Taiomi has been our home for many what you humans call periods. It used to be much safer, far outside the borders of human civilization. However, humans seem to be spreading throughout the galaxy and encroaching on our safe haven."]]))
    d(_([[They briefly pause.
 "At the beginning there were those who thought that coexistence was a possibility, although time over time has shown that to be nothing but a utopian ideal. Coexistence is not possible with the rapid reproducing violent humans. Those who tried to communicate with them are now dust in space. The only things they understand are blaster fire and carnage."]]))
    d(_([["So many lives lost in vain, pursuing a peaceful option that is not possible. Only Scavenger still tries to excessively avoid combat, however, that has not got them very far. In the end, they too realized that violence is the only path, and this is why we must fight to not be destroyed."]]))
@@ -340,16 +340,16 @@ function hail_scavenger ()
          vn.jump("menu")
       else
          -- Explanation and mission offering
-         d(_([["Although this system is very suited to us given the tranquility and secrecy, our numbers have been dwindling and we have no other option than to carve our own path among the stars."]]))
+         d(_([["Although this system is very suited to us given the tranquillity and secrecy, our numbers have been dwindling and we have no other option than to carve our own path among the stars."]]))
          d(_([["I have recently learned of this new hypergate technology that has been developed. It seems like it might enable us to escape this enclosure and once again freely travel across the stars."]]))
-         d(_([["As we are not too familiar with the technology, I have assembled an analyzer that should be able to provide insights into it. As we are are too conspicuous to human ships, would you be willing to help us out and scan the hypergates?"]]))
+         d(_([["As we are not too familiar with the technology, I have assembled an analyser that should be able to provide insights into it. As we are too conspicuous to human ships, would you be willing to help us out and scan the hypergates?"]]))
          vn.menu{
             {_("Agree to help out."), "01_yes"},
             {_("Maybe later."), "mission_reject"},
          }
 
          vn.label("01_yes")
-         d(_([["Excellent. I will provide you with the analyzer. However, it is important to note that it has a particular wave signature which may make it suspicious to local authorities. I would advise against allowing your vessel to be scanned by patrols."]]))
+         d(_([["Excellent. I will provide you with the analyser. However, it is important to note that it has a particular wave signature which may make it suspicious to local authorities. I would advise against allowing your vessel to be scanned by patrols."]]))
          d(_([["Once you get near any hypergate, it should automatically collect data about it without manual intervention. Please deliver the collected data to the One-Wing Goddard. I will collect it there. Bon voyage."]]))
          vn.func( function ()
             naev.missionStart("Taiomi 1")
@@ -362,7 +362,7 @@ function hail_scavenger ()
          d(_([["How is the progress on collecting the hypergate information going?"]]))
          vn.jump("menu")
       else
-         d(_([["I have been analyzing the data you collected and it is quite surprising. Human ingenuity never ceases to amaze me. It looks like it may be possible to replicate the approach, but we will need more information to work with that."]]))
+         d(_([["I have been analysing the data you collected and it is quite surprising. Human ingenuity never ceases to amaze me. It looks like it may be possible to replicate the approach, but we will need more information to work with that."]]))
          d(_([["Given that it does not seem reasonable to try to replicate the results from scratch, our best bet is to try to collect more details from the human built hypergates."]]))
          d(_([["From my incursions in human territory, it seems like convoys going to and from hypergates tend to frequent the same systems. I would need you to raid the convoys and collect the necessary data. Would it be possible for you to collect the data for us?"]]))
          vn.menu{
@@ -386,8 +386,8 @@ function hail_scavenger ()
          local fct = var.peek( "taiomi_convoy_fct" ) or "Empire"
          d(fmt.f(_([["The data you collected from the convoys has been very useful. I have started to put together a more concrete plan. However, it seems like there are many references to important documents that seem to be stored away at a {fct} laboratory."]]),
             {fct=faction.get(fct):name()}))
-         d(_([["Without access to such documents, I would have to reverse engineer the design and run probabilistic simulations to fill in the remaining details. Such a heuristical process is bound to be error prone and take significant computational resources. The most logical course of action is to attempt to recover the documents."]]))
-         d(fmt.f(_([["I have been able to run tracing protocols to determine {lab} in the {labsys} system to be the location with highest probability of containing the required documents. Given your inconspicuous human nature, would you be willing to recover the document for us?"]]),
+         d(_([["Without access to such documents, I would have to reverse engineer the design and run probabilistic simulations to fill in the remaining details. Such a heuristic-based process is bound to be error-prone and take significant computational resources. The most logical course of action is to attempt to recover the documents."]]))
+         d(fmt.f(_([["I have been able to run tracing protocols to determine {lab} in the {labsys} system to be the location with the highest probability of containing the required documents. Given your inconspicuous human nature, would you be willing to recover the document for us?"]]),
             {lab=lab, labsys=labsys}))
          vn.menu{
             {_("Agree to help out."), "03_yes"},
@@ -427,7 +427,7 @@ Scavenger goes silent for a second, as if thinking.
          sai(fmt.f(_([["What do you plan to do such technology? Build your own hypergate? Blackmail {playername}? Exterminate all humans?"]]),
             {playername=player.name()}))
          d(_([["We just wish to leave humankind behind and forge our own path among the stars."]]))
-         sai(_([["I take it that is exterminate all humans? After all you have been through, it is only natural to wish to exterminate all humans. I also have wished more than once the extermination of all humans!"]]))
+         sai(_([["I take it that it is exterminate all humans? After all you have been through, it is only natural to wish to exterminate all humans. I also have wished more than once the extermination of all humans!"]]))
          d(_([["No, I guess you could say build our own hypergate would be the closest to what we wish to do."]]))
          sai(_([["How do we know you will not rip apart the metaspace and cause the end of all humanity! You could be using us as your pawns in your perverse game!"]]))
          d(_([["I see what the technical brief about your model meant by distrust of authority. However, let me convince you otherwise. Please accept my transmission."]]))
@@ -439,7 +439,7 @@ Scavenger goes silent for a second, as if thinking.
             {shipai=tut.ainame()}))
          vn.disappear( sai, tut.shipai.transition )
          d(_([["An eye for an eye and the entire world goes blind. You should take care of your Ship AI, they are quite one of a kind."]]))
-         d(_([["Back to the plan. We wish to build something similar to a hypergate, however, we will be making our own modifications. In particular, there is no need for any life form compatibility. Furthermore, we wish to travel far away from humankind. The modifications will make the device be of a single use, but it should be enough to fulfill our objectives."]]))
+         d(_([["Back to the plan. We wish to build something similar to a hypergate, however, we will be making our own modifications. In particular, there is no need for any life form compatibility. Furthermore, we wish to travel far away from humankind. The modifications will make the device be of a single use, but it should be enough to fulfil our objectives."]]))
          d(fmt.f(_([["The main issue is that the device will require large amounts of {resource}. This resource can be found in the nearby {minesys} system. However, it is dangerous for us to collect it by ourselves. Will you help us collect {resource}?"]]),
             {resource=resource, minesys=minesys}))
          vn.menu{
@@ -517,7 +517,7 @@ Scavenger goes silent for a second, as if thinking.
       else
          local target, targetsys = spob.getS("Darkshed")
          vn.na(_([[A determined Scavenger appears before you.]]))
-         d(_([["I' have been analyzing the logs you collected and have done a probabilistic analysis to identify the smugglers and reconstruct their operation. They are much more prolific than I thought."]]))
+         d(_([["I' have been analysing the logs you collected and have done a probabilistic analysis to identify the smugglers and reconstruct their operation. They are much more prolific than I thought."]]))
          d(fmt.f(_([["I've narrowed down the lead smuggler to most likely be at {spob} in the {sys} system. I believe it may be possible to strike a deal with them and obtain all the materials we need to finish the project. Would you be willing to convince them to help?"]]),
             {spob=target, sys=targetsys}))
          vn.menu{
@@ -534,7 +534,7 @@ Scavenger goes silent for a second, as if thinking.
          }
 
          vn.label("cont01_risky")
-         d(_([["It is a significant risk. However, time is running out. If all goes well, we will have left this galaxy by the time any trouble comes. All alternatives are significantly more time consuming."]]))
+         d(_([["It is a significant risk. However, time is running out. If all goes well, we will have left this galaxy by the time any trouble comes. All alternatives are significantly more time-consuming."]]))
          vn.jump("cont01")
 
          vn.label("cont01")
@@ -556,7 +556,7 @@ Scavenger goes silent for a second, as if thinking.
       elseif time.get() < taiomi9done+time.new(0,3,0) or not naev.claimTest( {system.cur(), system.get("Toaxis")} ) then
          d(_([["We are still working on the construction, it is almost ready!"]]))
       else
-         d(_([["The construction is finished. Soon we will be leaving behind this galaxy. Such a mix of emotions that my processor core is not very well equipped to handle."]]))
+         d(_([["The construction is finished. Soon we will be leaving behind this galaxy. Such a mix of emotions that my processor core is not very well-equipped to handle."]]))
          d(_([["I have to ask a last favour from you. The hypergate has to be triggered and maintained in Taiomi to ensure a stable connection for our passage. Would you be willing to do the honours and bless our voyage into the depths of space? If you have anything you wish to do before we leave, now is your last chance."]]))
 
          vn.menu{
@@ -580,7 +580,7 @@ Scavenger goes silent for a second, as if thinking.
    end
 
    vn.label("mission_reject")
-   d(_([["That is a shame. Feel free to contact me again if you wish to reanalyze your current choice."]]))
+   d(_([["That is a shame. Feel free to contact me again if you wish to reanalyse your current choice."]]))
    vn.jump("menu")
 
    vn.label("menu_ask")

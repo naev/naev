@@ -42,7 +42,7 @@ local pir = require "common.pirate"
 
 local reward = 200e3
 
-local defense_fleet, fraider, raider_fleet, raiders_left -- Non-persistent state
+local defence_fleet, fraider, raider_fleet, raiders_left -- Non-persistent state
 local defend_system -- Forward-declared functions
 
 -- Create the mission on the current planet, and present the first Bar text.
@@ -118,14 +118,14 @@ function defend_system()
    pilot.toggleSpawn( false )
 
    -- Set up distances
-   local angle, defense_position, raider_position
+   local angle, defence_position, raider_position
    angle = rnd.angle()
    if mem.defender == true then
       raider_position  = vec2.newP( 400, angle )
-      defense_position = vec2.new( 0, 0 )
+      defence_position = vec2.new( 0, 0 )
    else
       raider_position  = vec2.newP( 800, angle )
-      defense_position = vec2.newP( 400, angle )
+      defence_position = vec2.newP( 400, angle )
    end
 
    -- Create a fleet of raiding pirates
@@ -136,8 +136,8 @@ function defend_system()
 
    -- And a fleet of defending independents
    local dfleet = { "Mule", "Lancelot", "Ancestor", "Gawain" }
-   defense_fleet = fleet.add( 2, dfleet, "Trader", defense_position, _("Defender"), {ai="def"} )
-   for k,v in ipairs( defense_fleet) do
+   defence_fleet = fleet.add( 2, dfleet, "Trader", defence_position, _("Defender"), {ai="def"} )
+   for k,v in ipairs( defence_fleet) do
       v:setFriendly()
    end
 

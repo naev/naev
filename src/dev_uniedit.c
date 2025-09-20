@@ -109,8 +109,8 @@ static double       uniedit_dragSelX =
 static double uniedit_dragSelY =
    0; /**< Dragging selection initial Y position */
 static double       uniedit_rotate    = 0.; /**< Rotated angle (in radians). */
-static double       uniedit_rotate_cx = 0.; /**< Center position of rotation. */
-static double       uniedit_rotate_cy = 0.; /**< Center position of rotation. */
+static double       uniedit_rotate_cx = 0.; /**< Centre position of rotation. */
+static double       uniedit_rotate_cy = 0.; /**< Centre position of rotation. */
 static StarSystem **uniedit_sys       = NULL; /**< Selected systems. */
 static StarSystem  *uniedit_tsys = NULL; /**< Temporarily clicked system. */
 static int uniedit_tadd = 0; /**< Temporarily clicked system should be added. */
@@ -2197,7 +2197,7 @@ static void uniedit_findSysClose( unsigned int wid, const char *name )
 }
 
 /**
- * @brief Centers the selected system.
+ * @brief Centres the selected system.
  */
 static void uniedit_centerSystem( unsigned int wid, const char *unused )
 {
@@ -2215,7 +2215,7 @@ static void uniedit_centerSystem( unsigned int wid, const char *unused )
    if ( sys == NULL )
       return;
 
-   /* Center. */
+   /* Centre. */
    uniedit_xpos = sys->pos.x * uniedit_zoom;
    uniedit_ypos = sys->pos.y * uniedit_zoom;
 }
@@ -2427,7 +2427,7 @@ static void uniedit_editSysClose( unsigned int wid, const char *name )
    double      fdata;
 
    /* We already know the system exists because we checked when opening the
-    * dialog. */
+    * dialogue. */
    sys = uniedit_sys[0];
 
    /* Changes in radius need to scale the system spob positions. */

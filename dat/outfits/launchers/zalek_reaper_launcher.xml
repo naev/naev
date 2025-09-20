@@ -3,13 +3,13 @@
   <shortname>Z. Reaper L.</shortname>
   <slot>weapon</slot>
   <size>medium</size>
-  <license>Heavy Weapon</license>
+  <licence>Heavy Weapon</licence>
   <cond>require("buyrep")("Za'lek", 40)</cond>
   <condstr>You need at least 40% reputation with House Za'lek.</condstr>
   <rarity>1</rarity>
   <mass>57</mass>
   <price>320000</price>
-  <description>This weapon stretches the term 'miniaturized drone' nearly to its breaking point. It is effectively a standard drone platform slimmed down to accomodate a huge ferromagnetohydraulic bomb. It's the Za'lek's answer to torpedoes from less advanced nations, and an eloquent answer it certainly is.</description>
+  <description>This weapon stretches the term 'miniaturized drone' nearly to its breaking point. It is effectively a standard drone platform slimmed down to accommodate a huge ferromagnetohydraulic bomb. It's the Za'lek's answer to torpedoes from less advanced nations, and an eloquent answer it certainly is.</description>
   <gfx_store>zalek_reaper_launcher.webp</gfx_store>
   <cpu>-34</cpu>
  </general>

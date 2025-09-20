@@ -1,5 +1,5 @@
 local lg = require 'love.graphics'
-local center = vec2.new( 0.5, 0.5 )
+local centre = vec2.new( 0.5, 0.5 )
 
 local function render( sp, x, y, z, dt )
    local d = sp:data()
@@ -10,7 +10,7 @@ local function render( sp, x, y, z, dt )
    if not d.rot then
       for k,v in ipairs(d.r) do
          v.p = v.p + v.v * dt * 0.3
-         local dc = v.p:dist( center )
+         local dc = v.p:dist( centre )
          if dc>1.1 then
             v.cleanup = true
             cleanup = true

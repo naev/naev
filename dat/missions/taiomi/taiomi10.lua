@@ -49,7 +49,7 @@ local DEFENSE_LENGTH = 60*3 -- Length in seconds
    3: cutscene done
 --]]
 mem.state = 0
-local defense_timer, defense_spawn, defense_fct, defense_spawnlist, collective_fct
+local defence_timer, defence_spawn, defence_fct, defence_spawnlist, collective_fct
 
 function create ()
    if not misn.claim{ basesys, endsys } then
@@ -77,7 +77,7 @@ end
 local function osd ()
    misn.osdCreate( title, {
       fmt.f(_("Defend the {base} ({left} s left)"),
-         {base=base, left=DEFENSE_LENGTH-defense_timer})
+         {base=base, left=DEFENSE_LENGTH-defence_timer})
    } )
 end
 
@@ -122,7 +122,7 @@ Scavenger deftly deploys an assortment of manipulator arms and tools. You've nev
    vn.done( taiomi.scavenger.transition )
    vn.run()
 
-   defense_timer = 0
+   defence_timer = 0
    osd()
    misn.markerMove( mem.marker, basesys )
 end
@@ -136,11 +136,11 @@ function enter ()
 
    collective_fct = faction.dynAdd( "Independent", "taiomi_goodies", _("Independent") )
 
-   defense_timer = 0
-   defense_spawn = 0
-   defense_fct = var.peek( "taiomi_convoy_fct" ) or "Empire"
+   defence_timer = 0
+   defence_spawn = 0
+   defence_fct = var.peek( "taiomi_convoy_fct" ) or "Empire"
    local d_interceptor, d_fighter, d_bomber, d_corvette, d_destroyer, d_bulkfreighter, d_cruiser, d_battleship, d_carrier
-   if defense_fct=="Soromid" then
+   if defence_fct=="Soromid" then
       d_interceptor     = "Soromid Brigand"
       d_fighter         = "Soromid Reaver"
       d_bomber          = "Soromid Marauder"
@@ -150,7 +150,7 @@ function enter ()
       d_cruiser         = "Soromid Ira"
       d_battleship      = "Soromid Vox"
       d_carrier         = "Soromid Arx"
-   elseif defense_fct=="Dvaered" then
+   elseif defence_fct=="Dvaered" then
       d_fighter         = "Dvaered Vendetta"
       d_bomber          = "Dvaered Ancestor"
       d_corvette        = "Dvaered Phalanx"
@@ -171,10 +171,10 @@ function enter ()
       d_bomber          = d_fighter
       d_battleship      = d_carrier
    end
-   defense_fct = faction.get( defense_fct )
-   defense_fct = faction.dynAdd( defense_fct, "taiomi_baddies", defense_fct:name() )
-   defense_fct:dynEnemy( collective_fct )
-   defense_spawnlist = {
+   defence_fct = faction.get( defence_fct )
+   defence_fct = faction.dynAdd( defence_fct, "taiomi_baddies", defence_fct:name() )
+   defence_fct:dynEnemy( collective_fct )
+   defence_spawnlist = {
       { t=0,   p={d_destroyer, d_interceptor, d_interceptor} },
       { t=15,  p={d_corvette, d_corvette} },
       { t=20,  p={d_fighter, d_fighter, d_fighter} },
@@ -261,9 +261,9 @@ function drone_disabled( d )
 end
 
 function heartbeat ()
-   defense_timer = defense_timer + 1
+   defence_timer = defence_timer + 1
 
-   if defense_timer >= DEFENSE_LENGTH then
+   if defence_timer >= DEFENSE_LENGTH then
       cinema.on()
 
       hypergate:setNoDeath(true)
@@ -275,13 +275,13 @@ function heartbeat ()
       return
    end
 
-   local spawn = defense_spawnlist[ defense_spawn+1 ]
-   if spawn and spawn.t and defense_timer > spawn.t then
-      for k,p in ipairs( fleet.add( 1, spawn.p, defense_fct ) ) do
+   local spawn = defence_spawnlist[ defence_spawn+1 ]
+   if spawn and spawn.t and defence_timer > spawn.t then
+      for k,p in ipairs( fleet.add( 1, spawn.p, defence_fct ) ) do
          pilotai.guard( p, base:pos() )
          p:setHostile()
       end
-      defense_spawn = defense_spawn+1
+      defence_spawn = defence_spawn+1
    end
 
    osd()
@@ -644,7 +644,7 @@ function cutscene_board ()
    vn.appear( sai, tut.shipai.transition )
    vn.na(_([[You approach the wreck resembling Scavenger. They do not seem to be in a good shape and are irresponsive.]]))
    sai(_([["This does not look good. We may need to jump start them. Try to get closer and get ready for a space walk."]]))
-   vn.na(fmt.f(_([[You carefully maneuver your ship adjacent to Scavenger. Donning your space suit you eject and manually approach Scavenger, who once again looks imposing up close. Following {shipai}'s guidance you attach your ship's electrical system to Scavenger.]]),
+   vn.na(fmt.f(_([[You carefully manoeuvre your ship adjacent to Scavenger. Donning your space suit you eject and manually approach Scavenger, who once again looks imposing up close. Following {shipai}'s guidance you attach your ship's electrical system to Scavenger.]]),
       {shipai=tut.ainame()}))
    sai(_([["Let there be power!"]]))
    vn.sfx( ELECTRIC_SFX )
@@ -675,7 +675,7 @@ Erk…"]]))
    }
 
    vn.label("cont02_here")
-   d(_([["We seem to have gotten stuck in a side-effect of the activation. It could have been worse, we could have been warped to a sun or black hole."]]))
+   d(_([["We seem to have gotten stuck in a side effect of the activation. It could have been worse, we could have been warped to a sun or black hole."]]))
    vn.jump("cont02")
 
    vn.label("cont02_alright")

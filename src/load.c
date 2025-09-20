@@ -1430,7 +1430,7 @@ static int load_gameInternalHook( void *data )
    economy_init();
    economy_sysLoad( node );
 
-   /* Initialise the ship log */
+   /* Initialize the ship log */
    shiplog_new();
    shiplog_load( node );
 

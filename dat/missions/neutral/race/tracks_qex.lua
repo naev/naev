@@ -5,10 +5,10 @@ local wp=system.get("Qex"):waypoints()
 
 return {
    {
-      name = _("Peninsula"),
+      name = N_("Peninsula"),
       reward = 100e3,
       scale = 15,
-      center = true,
+      centre = true,
       track = {
          {
             vec2.new( 939, 394 ),
@@ -48,10 +48,10 @@ return {
          },
       },
    }, {
-      name = _("Smiling Man"),
+      name = N_("Smiling Man"),
       reward = 150e3,
       scale = 15,
-      center = true,
+      centre = true,
       track = {
          {
             vec2.new( 942, -381 ),
@@ -111,7 +111,7 @@ return {
          },
       },
    }, {
-      name = _("Qex Tour"),
+      name = N_("Qex Tour"),
       reward = 180e3,
       track = {
          {

@@ -27,14 +27,14 @@ static void txt_cleanup( Widget *txt );
  *    @param y Y position within the window to use.
  *    @param w Maximum width of the text.
  *    @param h Maximum height of the text.
- *    @param centered Whether text should be centered.
+ *    @param centred Whether text should be centred.
  *    @param name Name of the widget to use internally.
  *    @param font Font to use (NULL is default).
  *    @param colour Colour to use (NULL is default).
  *    @param string Text to display.
  */
 void window_addText( const unsigned int wid, const int x, const int y,
-                     const int w, const int h, const int centered,
+                     const int w, const int h, const int centred,
                      const char *name, glFont *font, const glColour *colour,
                      const char *string )
 {
@@ -47,12 +47,12 @@ void window_addText( const unsigned int wid, const int x, const int y,
    wgt->type = WIDGET_TEXT;
 
    /* specific */
-   wgt->render           = txt_render;
-   wgt->cleanup          = txt_cleanup;
-   wgt->dat.txt.font     = ( font == NULL ) ? &gl_defFont : font;
-   wgt->dat.txt.colour   = ( colour == NULL ) ? cFontWhite : *colour;
-   wgt->dat.txt.centered = centered;
-   wgt->dat.txt.text     = ( string == NULL ) ? NULL : strdup( string );
+   wgt->render          = txt_render;
+   wgt->cleanup         = txt_cleanup;
+   wgt->dat.txt.font    = ( font == NULL ) ? &gl_defFont : font;
+   wgt->dat.txt.colour  = ( colour == NULL ) ? cFontWhite : *colour;
+   wgt->dat.txt.centred = centred;
+   wgt->dat.txt.text    = ( string == NULL ) ? NULL : strdup( string );
 
    /* position/size */
    wgt->w = (double)w;
@@ -73,7 +73,7 @@ static void txt_render( Widget *txt, double bx, double by )
    if ( txt->dat.txt.text == NULL )
       return;
 
-   if ( txt->dat.txt.centered )
+   if ( txt->dat.txt.centred )
       gl_printMidRaw( txt->dat.txt.font, txt->w, bx + txt->x,
                       by + txt->y + ( txt->h - txt->dat.txt.font->h ) / 2.,
                       &txt->dat.txt.colour, -1., txt->dat.txt.text );

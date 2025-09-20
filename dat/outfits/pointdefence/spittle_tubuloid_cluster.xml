@@ -2,16 +2,16 @@
  <general>
   <slot>utility</slot>
   <size>medium</size>
-  <license>Medium Weapon</license>
-  <typename>Point Defense</typename>
+  <licence>Medium Weapon</licence>
+  <typename>Point Defence</typename>
   <mass>23</mass>
   <price>390000</price>
-  <description>Actually consisting of a small colony of space-hardened parasites, known as Spittle Tubuloids, that leech from the ship energy systems to provide defensive cover. They have been genetically engineered to detect the weak radiation and gravitational signals of incoming ordnance to activate their defense mechanism of spitting large bubbles of plasma. Although the bubbles are quite weak compared to engineered weapons, their numbers allow them to efficiently protect the ship they are attached to from non-armoured missiles.</description>
+  <description>Actually consisting of a small colony of space-hardened parasites, known as Spittle Tubuloids, that leech from the ship energy systems to provide defensive cover. They have been genetically engineered to detect the weak radiation and gravitational signals of incoming ordnance to activate their defence mechanism of spitting large bubbles of plasma. Although the bubbles are quite weak compared to engineered weapons, their numbers allow them to efficiently protect the ship they are attached to from non-armoured missiles.</description>
   <gfx_store>placeholder.webp</gfx_store>
   <cpu>-10</cpu>
  </general>
  <specific type="turret bolt">
-  <lua>outfits/pointdefense/pointdefense.lua</lua>
+  <lua>outfits/pointdefence/pointdefence.lua</lua>
   <gfx type="shader" size="10" col_size="10">particles/spittle.frag</gfx>
   <sound>plasma</sound>
   <spfx_shield>Pla-S2</spfx_shield>
@@ -28,7 +28,7 @@
    <penetrate>0</penetrate>
    <physical>10</physical>
   </damage>
-  <pointdefense/>
+  <pointdefence/>
   <miss_ships/>
   <shots>5</shots>
   <dispersion>27</dispersion>

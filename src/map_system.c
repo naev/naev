@@ -847,7 +847,7 @@ static void map_system_array_update( unsigned int wid, const char *str )
       l += scnprintf( &infobuf[l], sizeof( infobuf ) - l, "\n#n%s#0 %s",
                       _( "Price:" ), buf_price );
       l += scnprintf( &infobuf[l], sizeof( infobuf ) - l, "  #n%s#0 %s",
-                      _( "License:" ), buf_license );
+                      _( "Licence:" ), buf_license );
       l += scnprintf( &infobuf[l], sizeof( infobuf ) - l, "\n%s",
                       ship->desc_stats );
    } else if ( ( strcmp( str, MAPSYS_TRADE ) == 0 ) ) {

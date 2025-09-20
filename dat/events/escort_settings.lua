@@ -121,7 +121,7 @@ function escort_gui ()
    local w, h = 600, 420
    local wdw = luatk.newWindow( nil, nil, w, h )
    wdw:setCancel( luatk.close )
-   luatk.newText( wdw, 0, 10, w, 20, _("Escort Manager"), nil, "center" )
+   luatk.newText( wdw, 0, 10, w, 20, _("Escort Manager"), nil, "centre" )
 
    local function update_wgt ()
       lst_profiles:setItem( "Custom", true )

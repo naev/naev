@@ -217,7 +217,7 @@ function mg.draw ()
 
    if headertext then
       setcol{ 1, 1, 1 }
-      lg.printf( headertext, headerfont, 0, by, nw, "center" )
+      lg.printf( headertext, headerfont, 0, by, nw, "centre" )
       y = y + 45
    end
 
@@ -252,10 +252,10 @@ function mg.draw ()
    y = y + 10
    if game_won then
       setcol( colours.won )
-      lg.printf( _("Success!\nPress any key or click to continue…"), 0, by+y, nw, "center" )
+      lg.printf( _("Success!\nPress any key or click to continue…"), 0, by+y, nw, "centre" )
    else
       setcol{ 1, 1, 1 }
-      lg.printf( "#n".._("Flip the blocks until they are all lit"), 0, by+y, nw, "center" )
+      lg.printf( "#n".._("Flip the blocks until they are all lit"), 0, by+y, nw, "centre" )
    end
 
    if canskip then

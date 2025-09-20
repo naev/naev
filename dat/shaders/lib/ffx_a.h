@@ -83,7 +83,7 @@
 // CHANGE LOG
 // ==========
 // 20200914 - Expanded wave ops and prx code.
-// 20200713 - Added [ZOL] section, fixed serious bugs in sRGB and Rec.709 color conversion code, etc.
+// 20200713 - Added [ZOL] section, fixed serious bugs in sRGB and Rec.709 colour conversion code, etc.
 //==============================================================================================================================
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -156,7 +156,7 @@
 // This uses a lower-case prefix for special vector constructs.
 //  - In C restrict pointers are used.
 //  - In the shading language, in/inout/out arguments are used.
-// This depends on the ability to access a vector value in both languages via array syntax (aka color[2]).
+// This depends on the ability to access a vector value in both languages via array syntax (aka colour[2]).
 //==============================================================================================================================
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1540,7 +1540,7 @@
 //  - If sign bit=0, flip all bits     (negatives).
 // Has nice side effects.
 //  - Larger integers are more positive values.
-//  - Float zero is mapped to center of integers (so clear to integer zero is a nice default for atomic max usage).
+//  - Float zero is mapped to centre of integers (so clear to integer zero is a nice default for atomic max usage).
 // Burns 3 ops for conversion {shift,or,xor}.
 //==============================================================================================================================
 /* bobbens: these commented out lines seem to give issues on some platforms when compiling. */
@@ -1705,7 +1705,7 @@
 // ========
 //   0 = unused (can be used to mean something else)
 //   1 = lowest value
-// 128 = exact zero center (zero based encoding
+// 128 = exact zero centre (zero based encoding
 // 255 = highest value
 //------------------------------------------------------------------------------------------------------------------------------
 // Zero-based [Zb] flips the MSB bit of the byte (making 128 "exact zero" actually zero).

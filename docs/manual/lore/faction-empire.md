@@ -14,7 +14,7 @@ The Empire is one of the major factions in the Naev universe. Its governmental s
 
 ## Government
 
-In accordance with the backstory of Naev, the modern Empire is but a shadow of what it formerly was. Its government type can be described as one half despotism, one half republic and one half paralyzing bureaucracy. The Emperor is the head of state as well as the Ruler of all Mankind, and he has absolute power, on paper, at least. In reality, he is an isolated figure, interacting only with his Imperial Council. The Emperor is above the Council and can pass any edict he wishes without being challenged, but in practice a lone figure cannot directly govern a domain spanning many star systems, even in its present, reduced state. As a result, the councilors often pass laws at their own discretion, with little oversight from the Emperor himself. However, they too remain isolated, dealing with the theoretical implications of their work, rarely bothering to verify that their actions have the intended result, and as such their labors typically yield inefficacy.
+In accordance with the backstory of Naev, the modern Empire is but a shadow of what it formerly was. Its government type can be described as one half despotism, one half republic and one half paralyzing bureaucracy. The Emperor is the head of state as well as the Ruler of all Mankind, and he has absolute power, on paper, at least. In reality, he is an isolated figure, interacting only with his Imperial Council. The Emperor is above the Council and can pass any edict he wishes without being challenged, but in practice a lone figure cannot directly govern a domain spanning many star systems, even in its present, reduced state. As a result, the councilors often pass laws at their own discretion, with little oversight from the Emperor himself. However, they too remain isolated, dealing with the theoretical implications of their work, rarely bothering to verify that their actions have the intended result, and as such their labours typically yield inefficacy.
 
 ## Interaction with the Houses
 
@@ -28,7 +28,7 @@ The Bureaucracy also manages the Imperial military, with rather more success tha
 
 ## In-Game Database
 
-The following section is written from an **in-universe** perspective. It may contain biased information or omit facts for dramatic purposes.
+The following section is written from an **in-universe** perspective. It may contain biassed information or omit facts for dramatic purposes.
 
 ### History
 
@@ -44,7 +44,7 @@ The current Emperor is a man called Eilo Cedona. He was elected Emperor by what 
 
 ### Territory
 
-The Empire still has the largest territorial claim of all factions, holding a major part of the inhabited Galaxy centered around Polaris Prime in the Gamma Polaris system, the official seat of The Emperor. It is there that all important decisions of the Empire are made. However, the Empire holds outposts deep in hostile space, like Cerberus Station in the Doeston system or Zabween in Draconis. The core systems, those in the vicinity of Gamma Polaris, are heavily patrolled and kept safe by the Empire military. However, frequent patrols to the outer systems are a logistical impossibility, and the Empire relies on its allies to keep traders safe there. Still, skirmishes between Imperial forces and pirate raiders are not uncommon. It is a major goal of the Empire to restore the security of its territory to levels present prior to the Incident.
+The Empire still has the largest territorial claim of all factions, holding a major part of the inhabited Galaxy centred around Polaris Prime in the Gamma Polaris system, the official seat of The Emperor. It is there that all important decisions of the Empire are made. However, the Empire holds outposts deep in hostile space, like Cerberus Station in the Doeston system or Zabween in Draconis. The core systems, those in the vicinity of Gamma Polaris, are heavily patrolled and kept safe by the Empire military. However, frequent patrols to the outer systems are a logistical impossibility, and the Empire relies on its allies to keep traders safe there. Still, skirmishes between Imperial forces and pirate raiders are not uncommon. It is a major goal of the Empire to restore the security of its territory to levels present prior to the Incident.
 
 ### Economy
 
@@ -60,7 +60,7 @@ The Emperor is ultimately the seat of all power and has the ability to overrule 
 
 #### The Imperial Bureaucracy
 
-The council does not oversee the laws being carried out, that task falls to the Imperial bureaucracy. It is the largest part of the Empire administration besides the military. Enforcing the large number of laws passed by generations of councils word for word is impossible. Therefore, most members of the bureaucracy follow what they in their best judgment believe to be the idea behind the laws. But even that task is becoming ever more difficult and social progress has been observed to become slower in recent years. The bureaucracy is also the only organ of the state the people interact with directly. Requests for audiences with the council or similar may be directed at the bureaucracy, though they are seldom granted and some have been known to simply disappear within the immense, monolithic complexity of the bureaucracy. Finally, it is the bureaucracy's task to manage the Empire military, which it does with some success. The Emperor and the Council place great value on the defense of their borders and the bureaucracy must ensure that those wishes are carried out. The military works quite well on their own and usually requires little oversight. The Generals and Commanders of the army are known to work with great efficiency, thus, the military is often called the most efficient part of the Empire administration.
+The council does not oversee the laws being carried out, that task falls to the Imperial bureaucracy. It is the largest part of the Empire administration besides the military. Enforcing the large number of laws passed by generations of councils word for word is impossible. Therefore, most members of the bureaucracy follow what they in their best judgement believe to be the idea behind the laws. But even that task is becoming ever more difficult and social progress has been observed to become slower in recent years. The bureaucracy is also the only organ of the state the people interact with directly. Requests for audiences with the council or similar may be directed at the bureaucracy, though they are seldom granted and some have been known to simply disappear within the immense, monolithic complexity of the bureaucracy. Finally, it is the bureaucracy's task to manage the Empire military, which it does with some success. The Emperor and the Council place great value on the defense of their borders and the bureaucracy must ensure that those wishes are carried out. The military works quite well on their own and usually requires little oversight. The Generals and Commanders of the army are known to work with great efficiency, thus, the military is often called the most efficient part of the Empire administration.
 
 #### The Great Houses
 

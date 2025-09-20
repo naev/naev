@@ -12,7 +12,7 @@ local lib = {} -- Has to be here so subsequent calls to lazyload work happy
    @usage return require("lazyload")( "mylib", false )
 
       @tparam string libname Name of library to lazy load (gets passed to require)
-      @tparam[opt=false] boolean rw Whether or not the library should be writable.
+      @tparam[opt=false] boolean rw Whether or not the library should be writeable.
       @treturn table A library that can be used in place of the real library with lazy loading.
 --]]
 function lazyload( libname, rw )

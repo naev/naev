@@ -109,8 +109,8 @@ local goodness_special = {
    ["Particle Beam"] = 0.8,
    ["EMP Grenade Launcher"] = 0.36,
 
-   -- Point defense works against missiles so it's extra useful
-   ["Ratchet Point Defense"] = 1.52,
+   -- Point defence works against missiles so it's extra useful
+   ["Ratchet Point Defence"] = 1.52,
    ["Dvaered Flare Battery"] = 1.46,
    ["Guardian Interception System"] = 1.21,
    ["Guardian Overseer System"] = 1.15,
@@ -213,7 +213,7 @@ function optimize.goodness_default( o, p )
          weap = weap * p.seeker
       end
       if o.ispd then
-         weap = weap * p.pointdefense
+         weap = weap * p.pointdefence
       end
       if o.typebroad == "Bolt Weapon" then
          weap = weap * p.bolt
@@ -311,7 +311,7 @@ local function compute_goodness( outfit_list, p, st, ss, params, limits )
       oo.spec     = os.spec
       oo.isturret = oo.spec.isturret
       oo.penetration = oo.spec.penetration
-      oo.ispd     = out:pointdefense()
+      oo.ispd     = out:pointdefence()
 
       -- We correct ship stats here and convert them to "relative improvements"
       -- Movement

@@ -26,7 +26,7 @@ vec4 graineffect( vec4 bgcolour, vec2 uv, vec2 px ) {
    float luminance = rgb2lum( bgcolour.rgb );
    vec3 desaturated = vec3(luminance);
 
-   // now blend the noise over top the backround
+   // now blend the noise over top the background
    // in our case soft-light looks pretty good
    vec4 colour;
    colour = vec4( vec3(1.2,1.0,0.4)*luminance, bgcolour.a );

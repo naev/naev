@@ -76,7 +76,7 @@ function hail ()
       mem.bribe_no = _([["The only way to deal with scum like you is with cannons!"]])
    end
 
-   -- Handle refueling.
+   -- Handle refuelling.
    if standing > 70 or
          (standing > 30 and mem.refuel_rng > 0.8) or
          (standing > 0 and mem.refuel_rng > 0.5) then

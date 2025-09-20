@@ -35,8 +35,8 @@
 typedef struct background_image_s {
    unsigned int id;    /**< Background id. */
    glTexture   *image; /**< Image to display. */
-   double       x;     /**< X center of the image. */
-   double       y;     /**< Y center of the image. */
+   double       x;     /**< X centre of the image. */
+   double       y;     /**< Y centre of the image. */
    double
       move; /**< How many pixels it moves for each pixel the player moves. */
    double   scale;     /**< How the image should be scaled. */

@@ -41,10 +41,10 @@ function create ()
    hook.enter("finish")
 
    ghost_waypoints = {}
-   local center = spb:pos()
+   local centre = spb:pos()
    local N = 30
    for i = 1,N do
-      table.insert( ghost_waypoints, center + vec2.newP( 500, 2*math.pi / N * (i-1) ) )
+      table.insert( ghost_waypoints, centre + vec2.newP( 500, 2*math.pi / N * (i-1) ) )
    end
    ghost = pilot.add("Pirate Hyena", fct, ghost_waypoints[#ghost_waypoints], _("Suspicious Pirate Hyena") )
    ghost:setNoDeath()

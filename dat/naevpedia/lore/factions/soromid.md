@@ -48,7 +48,7 @@ The people of Sorom were left to die.
 The people of Sorom had been abandoned.
 The plague claimed more and more lives every period.
 It would be a matter of cycles, maybe decaperiods before nobody was left alive.
-Faced with no hope of survival, the remaining hospitals and research centers decided to gamble everything on a bold plan.
+Faced with no hope of survival, the remaining hospitals and research centres decided to gamble everything on a bold plan.
 If the human immune system couldn't combat the disease, then it was deficient.
 It was to be replaced by something better, something that could purify the system of the pathogen.
 It was time to redesign the human body.

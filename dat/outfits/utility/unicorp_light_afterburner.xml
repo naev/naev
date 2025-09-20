@@ -5,7 +5,7 @@
   <size>small</size>
   <mass>3</mass>
   <price>40000</price>
-  <description>Afterburners provide your ship with an immediate boost to acceleration and speed when activated. However, while an afterburner is active it will quickly drain the ship's energy. This afterburner model produced by Unicorp is a relatively cheap and efficent option, though only well-suitable for light fighters and interceptors.</description>
+  <description>Afterburners provide your ship with an immediate boost to acceleration and speed when activated. However, while an afterburner is active it will quickly drain the ship's energy. This afterburner model produced by Unicorp is a relatively cheap and efficient option, though only well-suitable for light fighters and interceptors.</description>
   <gfx_store>afterburner.webp</gfx_store>
   <limit>afterburner</limit>
   <cpu>0</cpu>

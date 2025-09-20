@@ -33,7 +33,7 @@ The cost of repairing a stolen outfit is the base cost multiplied by `(10 + thei
 Capturing a ship is a three stage process:
 
 1. Board and Capture the ship.
-1. Escort the ship to a spaceport with refueling capabilities.
+1. Escort the ship to a spaceport with refuelling capabilities.
 1. Pay to repair the ship.
 
 The cost of repairing a captured ship is the ship's cost, including equipped outfits, multiplied by `(10 + their crew) / (10 + your crew) + 0.25`.

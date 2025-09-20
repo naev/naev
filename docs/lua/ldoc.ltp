@@ -4,7 +4,9 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <!--Old html 4.0.1 way <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> -->
   <!--<meta charset="UTF-8">--><!-- New HTML5 way -->
-  <!-- Mobile -->
+  <!-- Mastodon -->
+  <meta name="fediverse:creator" content="@naev@mastodon.gamedev.place">
+  <link rel="me" href="https://mastodon.gamedev.place/@naev"><!-- Mobile -->
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Favourite icon -->
   <link rel="apple-touch-icon" sizes="180x180" href="https://naev.org/favicon-180.png">
   <link rel="icon" type="image/png" sizes="196x196" href="https://naev.org/favicon-196.png">
@@ -12,12 +14,12 @@
   <link rel="icon" type="image/png" sizes="64x64" href="https://naev.org/favicon-64.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://naev.org/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://naev.org/favicon-16.png">
-  <link rel="shortcut icon" type="image/x-icon" href="https://naev.org/favicon.ico">
-  <link rel="stylesheet" href="$(ldoc.css)"><!-- CSS -->
-  <link rel="stylesheet" href=https://naev.org/style.css><!-- CSS -->
-  <!-- EnlighterJS Resources !-->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/enlighterjs@3.4.0/dist/enlighterjs.min.css" />
-  <title>$(ldoc.title)</title><!-- Website information -->
+  <link rel="shortcut icon" type="image/x-icon" href="https://naev.org/favicon.ico"><!-- CSS -->
+  <link rel="stylesheet" href="https://naev.org/style.css"><!-- Website information -->
+  <title>Naev - An open source 2d action/rpg space game that combines elements from the action, rpg
+  and simulation genres.</title><!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="Naev Blarg RSS Feed" href=
+  "https://naev.org/feed/index.xml">
 </head>
 <body class="bg-light">
   <div id="naev-header" class="container-fluid nebula-bg">
@@ -50,10 +52,10 @@
             <a class="nav-link" href="https://naev.org/contact/">Contact</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="https://github.com/naev/naev">Github</a>
+            <a class="nav-link" href="https://codeberg.org/naev/naev">Code</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="https://github.com/naev/naev/wiki">Wiki</a>
+            <a class="nav-link" href="https://codeberg.org/naev/naev/wiki">Wiki</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="https://naev.org/api/">Lua API</a>
@@ -340,7 +342,7 @@
 <div id="naev-footer" class="container-fluid nebula-bg mt-5">
   <canvas id="nebula-canvas-1"></canvas>
   <div class="container" style="position: relative; z-index: 1;">
-    <footer class="row text-muted">
+    <footer class="row text-light">
       <p class="col-xs-12 col-sm-6 text-left">© $(ldoc.updatetime:sub(1,4)) Naev Development Blarg</p>
       <p class="col-xs-12 col-sm-6 text-right">Original content licensed under <a href=
       "https://creativecommons.org/licenses/by-sa/4.0/">CC-by-sa 4.0</a></p>
@@ -349,14 +351,7 @@
 </div>
   <!-- Naev.org Javascript -->
   <script type="text/javascript" src="https://naev.org/site.js"></script>
-
-  <!-- EnlighterJS -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/enlighterjs@3.4.0/dist/enlighterjs.min.js">
-          integrity="sha384-qMvs9nZ6afccojk2J2vg2CwyiHc5m/k1nb9VWa+otyt3VK4agPEc9/pfWC/iOxkG"
-          crossorigin="anonymous">
-  </script>
-
-  <!-- Init Code -->
+  <!-- EnlighterJS Init Code -->
   <script type="text/javascript">
       // - highlight all pre + code tags (CSS3 selectors)
       // - use theme "enlighter"

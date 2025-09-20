@@ -81,9 +81,9 @@
 //------------------------------------------------------------------------------------------------------------------------------
 // Input image requirements:
 //
-// Color needs to be encoded as 3 channel[red, green, blue](e.g.XYZ not supported)
+// Colour needs to be encoded as 3 channel[red, green, blue](e.g.XYZ not supported)
 // Each channel needs to be in the range[0, 1]
-// Any color primaries are supported
+// Any colour primaries are supported
 // Display / tonemapping curve needs to be as if presenting to sRGB display or similar(e.g.Gamma 2.0)
 // There should be no banding in the input
 // There should be no high amplitude noise in the input
@@ -129,7 +129,7 @@
 //  #include "ffx_fsr1.h"
 //
 //  Example of declaring the required input callbacks for GLSL :
-//  The callbacks need to gather4 for each color channel using the specified texture coordinate 'p'.
+//  The callbacks need to gather4 for each colour channel using the specified texture coordinate 'p'.
 //  EASU uses gather4 to reduce position computation logic and for free Arrays of Structures to Structures of Arrays conversion.
 //
 //  AH4 FsrEasuRH(AF2 p){return AH4(textureGather(sampler2D(tex,sam),p,0));}
@@ -176,7 +176,7 @@ AF1 outputSizeInPixelsY){
  // This is used to get upper-left of 'F' tap.
  con1[0]=AU1_AF1(ARcpF1(inputSizeInPixelsX));
  con1[1]=AU1_AF1(ARcpF1(inputSizeInPixelsY));
- // Centers of gather4, first offset from upper-left of 'F'.
+ // Centres of gather4, first offset from upper-left of 'F'.
  //      +---+---+
  //      |   |   |
  //      +--(0)--+
@@ -237,7 +237,7 @@ A_STATIC void FsrEasuConOffset(
 //------------------------------------------------------------------------------------------------------------------------------
  // Filtering for a given tap for the scalar.
  void FsrEasuTapF(
- inout AF3 aC, // Accumulated color, with negative lobe.
+ inout AF3 aC, // Accumulated colour, with negative lobe.
  inout AF1 aW, // Accumulated weight.
  AF2 off, // Pixel offset from resolve position to tap.
  AF2 dir, // Gradient direction.
@@ -606,7 +606,7 @@ A_STATIC void FsrEasuConOffset(
 // RCAS uses a more exact mechanism, solving for the maximum local sharpness possible before clipping.
 // RCAS also has a built in process to limit sharpening of what it detects as possible noise.
 // RCAS sharper does not support scaling, as it should be applied after EASU scaling.
-// Pass EASU output straight into RCAS, no color conversions necessary.
+// Pass EASU output straight into RCAS, no colour conversions necessary.
 //------------------------------------------------------------------------------------------------------------------------------
 // RCAS is based on the following logic.
 // RCAS uses a 5 tap filter in a cross pattern (same as CAS),
@@ -634,7 +634,7 @@ A_STATIC void FsrEasuConOffset(
 //  AH4 FsrRcasLoadH(ASW2 p){return AH4(imageLoad(imgSrc,ASU2(p)));}
 //  void FsrRcasInputH(inout AH1 r,inout AH1 g,inout AH1 b)
 //  {
-//    //do any simple input color conversions here or leave empty if none needed
+//    //do any simple input colour conversions here or leave empty if none needed
 //  }
 //
 //  FsrRcasCon need to be called from the CPU or GPU to set up constants.
@@ -999,15 +999,15 @@ AF1 sharpness){
 // These functions limit grain based on distance to signal limits.
 // This is done so that the grain is temporally energy preserving, and thus won't modify image tonality.
 // Grain application should be done in a linear colorspace.
-// The grain should be temporally changing, but have a temporal sum per pixel that adds to zero (non-biased).
+// The grain should be temporally changing, but have a temporal sum per pixel that adds to zero (non-biassed).
 //------------------------------------------------------------------------------------------------------------------------------
 // Usage,
 //   FsrLfga*(
-//    color, // In/out linear colorspace color {0 to 1} ranged.
-//    grain, // Per pixel grain texture value {-0.5 to 0.5} ranged, input is 3-channel to support colored grain.
+//    colour, // In/out linear colorspace colour {0 to 1} ranged.
+//    grain, // Per pixel grain texture value {-0.5 to 0.5} ranged, input is 3-channel to support coloured grain.
 //    amount); // Amount of grain (0 to 1} ranged.
 //------------------------------------------------------------------------------------------------------------------------------
-// Example if grain texture is monochrome: 'FsrLfgaF(color,AF3_(grain),amount)'
+// Example if grain texture is monochrome: 'FsrLfgaF(colour,AF3_(grain),amount)'
 //==============================================================================================================================
 #if defined(A_GPU)
  // Maximum grain is the minimum distance to the signal limit.
@@ -1032,12 +1032,12 @@ AF1 sharpness){
 //                                          FSR - [SRTM] SIMPLE REVERSIBLE TONE-MAPPER
 //
 //------------------------------------------------------------------------------------------------------------------------------
-// This provides a way to take linear HDR color {0 to FP16_MAX} and convert it into a temporary {0 to 1} ranged post-tonemapped linear.
-// The tonemapper preserves RGB ratio, which helps maintain HDR color bleed during filtering.
+// This provides a way to take linear HDR colour {0 to FP16_MAX} and convert it into a temporary {0 to 1} ranged post-tonemapped linear.
+// The tonemapper preserves RGB ratio, which helps maintain HDR colour bleed during filtering.
 //------------------------------------------------------------------------------------------------------------------------------
 // Reversible tonemapper usage,
-//  FsrSrtm*(color); // {0 to FP16_MAX} converted to {0 to 1}.
-//  FsrSrtmInv*(color); // {0 to 1} converted into {0 to 32768, output peak safe for FP16}.
+//  FsrSrtm*(colour); // {0 to FP16_MAX} converted to {0 to 1}.
+//  FsrSrtmInv*(colour); // {0 to 1} converted into {0 to 32768, output peak safe for FP16}.
 //==============================================================================================================================
 #if defined(A_GPU)
  void FsrSrtmF(inout AF3 c){c*=AF3_(ARcpF1(AMax3F1(c.r,c.g,c.b)+AF1_(1.0)));}
@@ -1067,7 +1067,7 @@ AF1 sharpness){
 // Temporally energy preserving dithered {0 to 1} linear to gamma 2.0 conversion.
 // Gamma 2.0 is used so that the conversion back to linear is just to square the color.
 // The conversion comes in 8-bit and 10-bit modes, designed for output to 8-bit UNORM or 10:10:10:2 respectively.
-// Given good non-biased temporal blue noise as dither input,
+// Given good non-biassed temporal blue noise as dither input,
 // the output dither will temporally conserve energy.
 // This is done by choosing the linear nearest step point instead of perceptual nearest.
 // See code below for details.

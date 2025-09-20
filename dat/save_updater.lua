@@ -124,6 +124,7 @@ end
 --]]
 local outfit_list = {
    -- Below is a list of changes from 0.12.0 to 0.13.0
+   ["Ratchet Point Defense"]              = "Ratchet Point Defence",
    ["Racing Trophy"]                      = "Racing Trophy (Silver)", -- getting the gold is now much harder
    ["Avatar of Sirichana"]                = "Avatar of the Sirichana",
    ["Auxiliary Proccessing Unit I"]       = "Auxiliary Processing Unit I", -- codespell:ignore proccessing
@@ -761,19 +762,28 @@ function outfit( name, q )
    return apply_change( name, outfit_list[name], q )
 end
 
-local license_list = {
+local licence_list = {
    -- Below is a list of changes from 0.9.0-alpha to 0.9.0-beta
-   ["Heavy Combat Vessel License"] = "Heavy Combat Vessel",
-   ["Heavy Weapon License"] = "Heavy Weapon",
-   ["Large Civilian Vessel License"] = "Large Civilian Vessel",
-   ["Light Combat Vessel License"] = "Light Combat Vessel",
-   ["Medium Combat Vessel License"] = "Medium Combat Vessel",
-   ["Medium Weapon License"] = "Medium Weapon",
-   ["Mercenary License"] = "Mercenary",
+   ["Heavy Combat Vessel Licence"] = "Heavy Combat Vessel",
+   ["Heavy Weapon Licence"] = "Heavy Weapon",
+   ["Large Civilian Vessel Licence"] = "Large Civilian Vessel",
+   ["Light Combat Vessel Licence"] = "Light Combat Vessel",
+   ["Medium Combat Vessel Licence"] = "Medium Combat Vessel",
+   ["Medium Weapon Licence"] = "Medium Weapon",
+   ["Mercenary Licence"] = "Mercenary",
 }
 --[[--
-   Takes a license name and should return either a new license name or the amount of credits to give back to the player.
+   Takes a licence name and should return either a new licence name or the amount of credits to give back to the player.
 --]]
-function license( name, q )
-   return apply_change( name, license_list[name], q )
+function licence( name, q )
+   return apply_change( name, licence_list[name], q )
+end
+
+local unidiff_list = {
+   ["heavy_combat_vessel_license"] = "heavy_combat_vessel_licence",
+   ["heavy_weapons_license"] = "heavy_weapons_license",
+}
+function unidiff( name )
+   -- Internals stuff so we don't expose to the player
+   return  unidiff_list[name]
 end

@@ -394,9 +394,9 @@ static int iar_key( Widget *iar, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
 }
 
 /**
- * @brief Centers on the selection if needed.
+ * @brief Centres on the selection if needed.
  *
- *    @param iar Widget to center on selection.
+ *    @param iar Widget to centre on selection.
  */
 static void iar_centerSelected( Widget *iar )
 {
@@ -671,7 +671,7 @@ static void iar_focus( Widget *iar, double bx, double by )
    /* Scrollbar click. */
    else if ( bx > iar->w - 10. ) {
       double scroll_pos, hmax, y;
-      /* Get bar position (center). */
+      /* Get bar position (centre). */
       hmax = iar_maxPos( iar );
       if ( hmax == 0. )
          scroll_pos = 0.;

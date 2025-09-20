@@ -22,7 +22,7 @@ return {
    {
       name = _("ZR-01"),
       scale = 15,
-      center = true,
+      centre = true,
       track = {
          {
             control_1["ZR_01_01"],
@@ -79,7 +79,7 @@ return {
    }, {
       name = _("ZR-02"),
       scale = 15,
-      center = true,
+      centre = true,
       track = {
          {
             control_2["ZR_02_01"],

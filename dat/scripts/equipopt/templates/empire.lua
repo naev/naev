@@ -16,7 +16,7 @@ local empire_outfits = eoutfits.merge{{
    -- Small Weapons
    "TeraCom Banshee Launcher", "Unicorp Storm Launcher", "Ion Cannon",
    "Laser Cannon MK1", "Laser Cannon MK2", "Ripper Cannon",
-   -- Point Defense
+   -- Point Defence
    "Guardian Overseer System",
    "Guardian Interception System",
    -- Utility

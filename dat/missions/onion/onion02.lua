@@ -130,7 +130,7 @@ You hear the sound of mashing keys on a console.
       l337(_([["Graeme Tildor of Haldr, consider yourself peeled!"]]))
       l337(_([["Ah bollocks, they've run out of their room. Not a good idea. notasockpuppet is going to have them for lunch. Oh well. Might as well close their connection."]]))
       vn.disappear( ogre, "electric" )
-      vn.move( l337, "center" )
+      vn.move( l337, "centre" )
       vn.menu{
          {_([["What was that?"]]), "02_cont"},
          {_([["Where's Ogre?"]]), "02_cont"},

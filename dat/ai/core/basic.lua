@@ -88,7 +88,7 @@ local function __zigzag ( dir, angle )
    ai.accel()
 end
 local function __zigzag_run_decide( self, target )
-   -- Some AI will not do fancy maneuvers
+   -- Some AI will not do fancy manoeuvres
    if mem.atk_skill <= 0.45+0.55*mem.rand then return false end
    -- Try to figure it out
    local relspe = self:speedMax() / target:speedMax()
@@ -580,7 +580,7 @@ function __shoot_turret( target )
       return
    end
 
-   -- Point defense and Fighters
+   -- Point defence and Fighters
    atk.fb_and_pd()
 
    -- Shoot the target
@@ -925,8 +925,8 @@ function refuel( target )
       return
    end
 
-   -- See if finished refueling
-   if not ai.pilot():flags("refueling") then
+   -- See if finished refuelling
+   if not ai.pilot():flags("refuelling") then
       ai.poptask()
       return
    end
@@ -959,9 +959,9 @@ function _refuelstop( target )
    -- Set the target
    ai.settarget(target)
 
-   -- See if finished refueling
+   -- See if finished refuelling
    local p = ai.pilot()
-   if not p:flags("refueling") then
+   if not p:flags("refuelling") then
       p:comm(target, _("Finished fuel transfer."))
       ai.poptask()
 

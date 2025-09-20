@@ -356,7 +356,7 @@ end
 -- Take off for the next stage
 function takeoff()
    local pos
-   mem.center = destpla:pos() + vec2.new(0,radius)
+   mem.centre = destpla:pos() + vec2.new(0,radius)
 
    if mem.stage == 2 then -- Mace Throw: spawn Llamas and competitors.
       -- Check the player only has mace rockets
@@ -373,16 +373,16 @@ function takeoff()
          pilot.clear()
          spawnCompetitors()
          player.pilot():control()
-         player.pilot():face(mem.center)
+         player.pilot():face(mem.centre)
 
          local fwarlords = fw.fct_warlords()
          targets = {}
          for i = 1, 30 do
-            pos = mem.center + vec2.newP( rnd.rnd(0,radius), rnd.angle() )
+            pos = mem.centre + vec2.newP( rnd.rnd(0,radius), rnd.angle() )
             targets[i] = pilot.add( "Llama", fwarlords, pos, _("Target "))
             targets[i]:control()
             targets[i]:setHostile() -- Just in case
-            pos = mem.center + vec2.newP( rnd.rnd(0,radius), rnd.angle() )
+            pos = mem.centre + vec2.newP( rnd.rnd(0,radius), rnd.angle() )
             targets[i]:moveto( pos, false, false )
             hook.pilot( targets[i], "idle", "targetIdle" )
             hook.pilot( targets[i], "attacked", "targetHit" )
@@ -422,7 +422,7 @@ function takeoff()
       pilot.clear()
       spawnCompetitors( )
       player.pilot():control()
-      player.pilot():face(mem.center)
+      player.pilot():face(mem.centre)
 
       for i, p in ipairs(competitors) do
          p:setNoDeath() -- Bouuuh! they r cheating!
@@ -432,7 +432,7 @@ function takeoff()
       local fwarlords = fw.fct_warlords()
       annoyers = {}
       for i = 1, 10 do
-         pos = mem.center + vec2.newP( rnd.rnd(0,radius-500), rnd.angle() )
+         pos = mem.centre + vec2.newP( rnd.rnd(0,radius-500), rnd.angle() )
          annoyers[i] = pilot.add( "Dvaered Vendetta", fwarlords, pos, _("Shooter"))
          fw.equipVendettaMace( annoyers[i] )
          annoyers[i]:setSpeedLimit( .0001 )
@@ -441,7 +441,7 @@ function takeoff()
 
       local cflowers = _flowers()
       for i = 1, 60 do
-         pos = mem.center + vec2.newP( rnd.rnd(0,radius), rnd.angle() )
+         pos = mem.centre + vec2.newP( rnd.rnd(0,radius), rnd.angle() )
          system.addGatherable( cflowers, 1, pos, vec2.new(0,0), 3600 )
       end
 
@@ -471,7 +471,7 @@ function takeoff()
          pilot.clear()
          spawnCompetitors( )
          player.pilot():control()
-         player.pilot():face(mem.center)
+         player.pilot():face(mem.centre)
 
          compHitHook = {nil,nil,nil,nil,nil,nil,nil,nil,nil}
          mem.playerHitHook = hook.pilot( player.pilot(), "attacked", "playerHit" )
@@ -617,20 +617,20 @@ function spawnCompetitors( )
    local fdhc = fw.fct_dhc()
    competitors = {} -- tam, leblanc, klank, strafer, caros, micoult, johnson, ernst, guo
    for i = 1, 9 do
-      local pos = mem.center + vec2.newP( radius, i*math.pi/5 - math.pi/2 )
+      local pos = mem.centre + vec2.newP( radius, i*math.pi/5 - math.pi/2 )
       competitors[i] = pilot.add( "Dvaered Vendetta", fdhc, pos, mem.competitors_names[i])
       fw.equipVendettaMace( competitors[i] )
       competitors[i]:memory().Cindex = i -- Store their index
       competitors[i]:setVisible()
       competitors[i]:control()
-      competitors[i]:face(mem.center)
+      competitors[i]:face(mem.centre)
       hook.pilot( competitors[i], "death", "compDie" )
    end
 end
 
 -- One of the targets is idle (Mace Throw)
 function targetIdle( self )
-   local pos = mem.center + vec2.newP( rnd.rnd(0,radius), rnd.angle() )
+   local pos = mem.centre + vec2.newP( rnd.rnd(0,radius), rnd.angle() )
    self:moveto( pos, false, false )
 end
 

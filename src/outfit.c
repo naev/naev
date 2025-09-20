@@ -1460,7 +1460,7 @@ const char *outfit_getType( const Outfit *o )
       N_( "Star Map" ),
       N_( "Local Map" ),
       N_( "GUI" ),
-      N_( "License" ),
+      N_( "Licence" ),
    };
 
    /* Name override. */
@@ -1843,6 +1843,7 @@ static OutfitType outfit_strToOutfitType( char *buf )
    O_CMP( "fighter bay", OUTFIT_TYPE_FIGHTER_BAY );
    O_CMP( "map", OUTFIT_TYPE_MAP );
    O_CMP( "localmap", OUTFIT_TYPE_LOCALMAP );
+   O_CMP( "licence", OUTFIT_TYPE_LICENSE );
    O_CMP( "license", OUTFIT_TYPE_LICENSE );
    O_CMP( "gui", OUTFIT_TYPE_GUI );
 
@@ -2112,7 +2113,8 @@ static void outfit_parseSBolt( Outfit *temp, const xmlNodePtr parent )
          }
          continue;
       }
-      if ( xml_isNode( node, "pointdefense" ) ) {
+      if ( xml_isNode( node, "pointdefense" ) ||
+           xml_isNode( node, "pointdefence" ) ) {
          outfit_setProp( temp, OUTFIT_PROP_WEAP_POINTDEFENSE );
          continue;
       }
@@ -2322,7 +2324,8 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
       xmlr_int( node, "mining_rarity", temp->u.bem.mining_rarity );
       xmlr_strd( node, "lua", temp->lua_file );
       xmlr_strd( node, "lua_inline", temp->lua_inline );
-      if ( xml_isNode( node, "pointdefense" ) ) {
+      if ( xml_isNode( node, "pointdefense" ) ||
+           xml_isNode( node, "pointdefence" ) ) {
          outfit_setProp( temp, OUTFIT_PROP_WEAP_POINTDEFENSE );
          continue;
       }
@@ -2504,7 +2507,8 @@ static void outfit_parseSLauncher( Outfit *temp, const xmlNodePtr parent )
          }
          continue;
       }
-      if ( xml_isNode( node, "pointdefense" ) ) {
+      if ( xml_isNode( node, "pointdefense" ) ||
+           xml_isNode( node, "pointdefence" ) ) {
          outfit_setProp( temp, OUTFIT_PROP_WEAP_POINTDEFENSE );
          continue;
       }
@@ -2767,7 +2771,7 @@ static void outfit_parseSLauncher( Outfit *temp, const xmlNodePtr parent )
 }
 
 /**
- * @brief Parses the modification tidbits of the outfit.
+ * @brief Parses the modification titbits of the outfit.
  *
  *    @param temp Outfit to finish loading.
  *    @param parent Outfit's parent node.
@@ -2810,7 +2814,7 @@ static void outfit_parseSMod( Outfit *temp, const xmlNodePtr parent )
 }
 
 /**
- * @brief Parses the afterburner tidbits of the outfit.
+ * @brief Parses the afterburner titbits of the outfit.
  *
  *    @param temp Outfit to finish loading.
  *    @param parent Outfit's parent node.
@@ -2887,7 +2891,7 @@ static void outfit_parseSAfterburner( Outfit *temp, const xmlNodePtr parent )
 }
 
 /**
- * @brief Parses the fighter bay tidbits of the outfit.
+ * @brief Parses the fighter bay titbits of the outfit.
  *
  *    @param temp Outfit to finish loading.
  *    @param parent Outfit's parent node.
@@ -2948,7 +2952,7 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
 }
 
 /**
- * @brief Parses the map tidbits of the outfit.
+ * @brief Parses the map titbits of the outfit.
  *
  *    @param temp Outfit to finish loading.
  *    @param parent Outfit's parent node.
@@ -3051,7 +3055,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
 }
 
 /**
- * @brief Parses the map tidbits of the outfit.
+ * @brief Parses the map titbits of the outfit.
  *
  *    @param temp Outfit to finish loading.
  *    @param parent Outfit's parent node.
@@ -3087,7 +3091,7 @@ static void outfit_parseSLocalMap( Outfit *temp, const xmlNodePtr parent )
 }
 
 /**
- * @brief Parses the GUI tidbits of the outfit.
+ * @brief Parses the GUI titbits of the outfit.
  *
  *    @param temp Outfit to finish loading.
  *    @param parent Outfit's parent node.
@@ -3121,7 +3125,7 @@ static void outfit_parseSGUI( Outfit *temp, const xmlNodePtr parent )
 }
 
 /**
- * @brief Parses the license tidbits of the outfit.
+ * @brief Parses the license titbits of the outfit.
  *
  *    @param temp Outfit to finish loading.
  *    @param parent Outfit's parent node.
@@ -3234,6 +3238,7 @@ static int outfit_parse( Outfit *temp, const char *file )
             xmlr_int( cur, "rarity", temp->rarity );
             xmlr_strd( cur, "shortname", temp->shortname );
             xmlr_strd( cur, "license", temp->license );
+            xmlr_strd( cur, "licence", temp->license );
             xmlr_strd( cur, "cond", temp->cond );
             xmlr_strd( cur, "condstr", temp->condstr );
             xmlr_float( cur, "mass", temp->mass );
@@ -3784,7 +3789,7 @@ int outfit_loadPost( void )
 
       /* Make sure licenses are valid. */
       if ( ( o->license != NULL ) && !outfit_licenseExists( o->license ) )
-         WARN( _( "Outfit '%s' has inexistent license requirement '%s'!" ),
+         WARN( _( "Outfit '%s' has inexistent licence requirement '%s'!" ),
                o->name, o->license );
    }
 

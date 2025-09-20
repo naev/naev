@@ -168,7 +168,7 @@ void toolkit_setWindowPos( Window *wdw, int x, int y )
    window_rmFlag( wdw, WINDOW_CENTERY );
 
    /* x pos */
-   if ( x == -1 ) { /* Center */
+   if ( x == -1 ) { /* Centre */
       wdw->x    = ( gl_screen.nw - wdw->w ) / 2.;
       wdw->xrel = 0.5;
       window_setFlag( wdw, WINDOW_CENTERX );
@@ -178,7 +178,7 @@ void toolkit_setWindowPos( Window *wdw, int x, int y )
       wdw->x = (double)x;
 
    /* y pos */
-   if ( y == -1 ) { /* Center */
+   if ( y == -1 ) { /* Centre */
       wdw->y    = ( gl_screen.nh - wdw->h ) / 2.;
       wdw->yrel = 0.5;
       window_setFlag( wdw, WINDOW_CENTERY );
@@ -709,8 +709,8 @@ const char *window_getDisplayName( unsigned int wid )
  *
  *    @param name Window name to use internally - should be unique.
  *    @param displayname Title displayed on the window.
- *    @param x X position of the window (-1 centers).
- *    @param y Y position of the window (-1 centers).
+ *    @param x X position of the window (-1 centres).
+ *    @param y Y position of the window (-1 centres).
  *    @param w Width of the window (-1 fullscreen).
  *    @param h Height of the window (-1 fullscreen).
  *    @return Newly created window's ID.
@@ -726,8 +726,8 @@ unsigned int window_create( const char *name, const char *displayname,
  *
  *    @param name Window name to use internally - should be unique.
  *    @param displayname Title displayed on the window.
- *    @param x X position of the window (-1 centers).
- *    @param y Y position of the window (-1 centers).
+ *    @param x X position of the window (-1 centres).
+ *    @param y Y position of the window (-1 centres).
  *    @param w Width of the window (-1 fullscreen).
  *    @param h Height of the window (-1 fullscreen).
  *    @param flags Initial flags to set.

@@ -134,7 +134,7 @@ These tags allow missions to randomly target spobs with specific properties, so 
 * **criminal**: the spob has a large criminal element such as important pirate or mafia presence
 * **ringworld**: Is a ring world.
 * **toxic**: Is a toxic location, dangerous to stay too long.
-* **refuel**: Is mainly used as a refueling location with few or no other services.
+* **refuel**: Is mainly used as a refuelling location with few or no other services.
 
 
 ### Lua Scripting

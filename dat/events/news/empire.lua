@@ -62,7 +62,7 @@ local articles = {
       body = _([[Recent studies show that reports of piracy on Trader vessels have gone down by up to 40% in some sectors. This is a demonstration of the Empire's commitment to eradicating piracy.]])
    },
    {
-      head = N_([[Nexus Contract Finalised]]),
+      head = N_([[Nexus Contract Finalized]]),
       body = _([[The Empire agreed to terms with shipbuilder Nexus for a new generation of military craft. The deal extends the partnership with the government for another 10 cycles.]])
    },
    --[[

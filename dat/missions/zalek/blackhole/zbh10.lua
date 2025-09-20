@@ -197,7 +197,7 @@ end
 
 local drones_deployed = false
 local feralpack
-local defense_drones = {}
+local defence_drones = {}
 function heartbeat ()
    heartbeat_state = heartbeat_state + 1
    if heartbeat_state == 1 then
@@ -252,8 +252,8 @@ function heartbeat ()
                local fgoodguys = zbh.fzach()
                local fbadguys = zbh.evilpi()
                fgoodguys:dynEnemy( fbadguys )
-               defense_drones = fleet.add( 5, {"Za'lek Light Drone"}, fgoodguys, mainpnt, _("Defence Drone"), {ai="guard"} )
-               for k,p in ipairs(defense_drones) do
+               defence_drones = fleet.add( 5, {"Za'lek Light Drone"}, fgoodguys, mainpnt, _("Defence Drone"), {ai="guard"} )
+               for k,p in ipairs(defence_drones) do
                   p:setFriendly(true)
                   p:memory().guardpos = mainpnt:pos() + vec2.newP(200*rnd.rnd(), rnd.angle() )
                end
@@ -308,7 +308,7 @@ function heartbeat ()
             end
          end
 
-         for k,d in ipairs(defense_drones) do
+         for k,d in ipairs(defence_drones) do
             if d:exists() then
                d:control(true)
                d:land( mainpnt )

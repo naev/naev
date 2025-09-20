@@ -92,7 +92,7 @@ local function meeting()
    if first then
       var.push("shadowvigil_first", false)
 
-      vn.na(_([[You dock with the Seiryuu and shut down your engines. At the airlock, you are welcomed by two nondescript crewmen in gray uniforms who tell you to follow them into the ship. They lead you through corridors and passages that seem to lead to the bridge. On the way, you can't help but look around you in wonder. The ship isn't anything you're used to seeing. While some parts can be identified as such common features as doors and viewports, a lot of the equipment in the compartments and niches seems strange, almost alien to you. Clearly the Seiryuu is not just any other Kestrel.]]))
+      vn.na(_([[You dock with the Seiryuu and shut down your engines. At the airlock, you are welcomed by two nondescript crewmen in grey uniforms who tell you to follow them into the ship. They lead you through corridors and passages that seem to lead to the bridge. On the way, you can't help but look around you in wonder. The ship isn't anything you're used to seeing. While some parts can be identified as such common features as doors and viewports, a lot of the equipment in the compartments and niches seems strange, almost alien to you. Clearly the Seiryuu is not just any other Kestrel.]]))
       vn.na(_([[On the bridge, you immediately spot - who else - the Seiryuu's captain, Rebina, seated in the captain's chair. The chair, too, is designed in the strange fashion that you've been seeing all over the ship. It sports several controls that you can't place, despite the fact that you're an experienced pilot yourself. The rest of the bridge is no different. All the regular stations and consoles seem to be there, but there are some others whose purpose you can only guess.]]))
       rebina(fmt.f(_([[Rebina swivels the chair around and smiles when she sees you. "Ah, {player}," she says. "How good of you to come. I was hoping you'd get my invitation, since I was quite pleased with your performance last time. And I'm not the only one. As it turns out Jorek seems to have taken a liking to you as well. He may seem rough, but he's a good man at heart."]]),
          {player=player.name()}))
@@ -539,7 +539,7 @@ function diplomatCutscene()
    camera.set(dvaerplomat, false, 500)
 
    hook.timer(1.0, "chatter", {pilot = diplomat, text = _("This is Empire zero-zero-four. Transmitting clearance code now.")})
-   hook.timer(10.0, "chatter", {pilot = dvaerplomat, text = _("Empire zero-zero-four, your code checks out. Commence boarding maneuvers.")})
+   hook.timer(10.0, "chatter", {pilot = dvaerplomat, text = _("Empire zero-zero-four, your code checks out. Commence boarding manoeuvres.")})
    hook.timer(17.0, "diplomatGo")
    hook.timer(21.0, "chatter", {pilot = escorts[1], text = _("This is your leader, you're all clear. Execute, execute, execute!")})
    hook.timer(21.5, "killDiplomats")

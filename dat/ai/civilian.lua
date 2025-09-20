@@ -27,7 +27,7 @@ function hail ()
    -- No bribe
    mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]
 
-   -- Refueling
+   -- Refuelling
    mem.refuel = rnd.rnd( 1000, 3000 )
    mem.refuel_msg = _([["I'll supply your ship with fuel for {credits}."]])
 

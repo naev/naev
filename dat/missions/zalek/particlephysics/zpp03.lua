@@ -92,21 +92,21 @@ function land ()
    if mem.state==1 or spob.cur() ~= mainpnt then
       return
    end
-   local getlicense = not diff.isApplied( "heavy_weapons_license" )
+   local getlicence = not diff.isApplied( "heavy_weapons_licence" )
 
    vn.clear()
    vn.scene()
    local n = vn.newCharacter( zpp.vn_noona() )
    vn.transition( zpp.noona.transition )
    vn.na(_([[You land and find Noona waiting outside your ship expectantly.]]))
-   n(_([["That was scary! I have no idea what happened with the drone powering up and attacking you. I'm glad I sent you, I would have been fried with my flying skills, even if I still had my flying license. You got the black box in one piece, right? Great! Let me look into it and see what happened."
+   n(_([["That was scary! I have no idea what happened with the drone powering up and attacking you. I'm glad I sent you, I would have been fried with my flying skills, even if I still had my flying licence. You got the black box in one piece, right? Great! Let me look into it and see what happened."
 She tosses you a credstick and runs to her room with the black box.]]))
-   if getlicense then
+   if getlicence then
       n(_([[Just before she disappears around the corner she turns back to you and yells.
-"Oh, and by the way, I was able to pull some strings with my friend and you should be cleared for the Heavy Weapon License now. Seeing the dangers you face, it would be good for you to have bigger guns."
+"Oh, and by the way, I was able to pull some strings with my friend and you should be cleared for the Heavy Weapon Licence now. Seeing the dangers you face, it would be good for you to have bigger guns."
 Without giving you time to process what she yelled, she vanishes.]]))
       vn.sfxBingo()
-      vn.na(_([[You can now purchase the #bHeavy Weapon License#0.]]))
+      vn.na(_([[You can now purchase the #bHeavy Weapon Licence#0.]]))
    end
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )
@@ -115,9 +115,9 @@ Without giving you time to process what she yelled, she vanishes.]]))
 
    faction.hit("Za'lek", zpp.fctmod.zpp03)
    player.pay( reward )
-   if getlicense then
-      diff.apply("heavy_weapons_license")
-      zpp.log(_("You helped Noona retrieve the black box from one of her drones that malfunctioned. You're not exactly sure how, but she also managed to get you cleared for the Heavy Weapon License."))
+   if getlicence then
+      diff.apply("heavy_weapons_licence")
+      zpp.log(_("You helped Noona retrieve the black box from one of her drones that malfunctioned. You're not exactly sure how, but she also managed to get you cleared for the Heavy Weapon Licence."))
    else
       zpp.log(_("You helped Noona retrieve the black box from one of her drones that malfunctioned."))
    end
@@ -136,7 +136,7 @@ function enter ()
    local fdrone = faction.dynAdd( "Za'lek", "haywire_drone", _("Za'lek"), {clear_allies=true, clear_enemies=true} )
 
    -- Spawn the drones
-   -- TODO better location once testing center object is created
+   -- TODO better location once testing centre object is created
    local pkatar = spob.get("Katar"):pos()
    local pkatari = mainpnt:pos()
    local pos = (pkatar - pkatari)*1.5 + pkatar

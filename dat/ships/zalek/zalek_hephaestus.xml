@@ -14,7 +14,7 @@
  <trail_generator y="-30" h="0" x="45">zalek</trail_generator>
  <fabricator>Za'lek Fabricators</fabricator>
  <faction>Za'lek</faction>
- <license>Heavy Combat Vessel</license>
+ <licence>Heavy Combat Vessel</licence>
  <description>The crown of the House Za'lek Defence Fleet, these proud buttresses of the Za'lek's ideals frequently serve as the nerve centre of a Za'lek battle fleet, thanks to their superior sensor suite. The Hephaestus is rarely-seen, but commands respect.</description>
  <health>
   <armour>1200</armour>

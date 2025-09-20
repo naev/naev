@@ -14,13 +14,13 @@ House Dvaered is one of the major factions in the Naev universe. It evolved from
 
 ### History
 
-House Dvaered came forth from a lower caste in the old Empire, a collection of miners, manual laborers, foot soldiers and outcasts. With the gradual decline in authority of the Empire, the working class became increasingly disgruntled with their social position. They banded together into what could be considered the biggest labor union in all of human history, and started demanding better treatment.
+House Dvaered came forth from a lower caste in the old Empire, a collection of miners, manual labourers, foot soldiers and outcasts. With the gradual decline in authority of the Empire, the working class became increasingly disgruntled with their social position. They banded together into what could be considered the biggest labour union in all of human history, and started demanding better treatment.
 
-When the Empire was less than forthcoming, the laborers began to take more drastic measures. The labor union turned into a resistance movement that escalated into open rebellion on several worlds. History names this movement the Dvaered Revolts. The origin of that name is unclear, but it became common among the rebelling workers.
+When the Empire was less than forthcoming, the labourers began to take more drastic measures. The labour union turned into a resistance movement that escalated into open rebellion on several worlds. History names this movement the Dvaered Revolts. The origin of that name is unclear, but it became common among the rebelling workers.
 
 Cycles of civil unrest on the working planets and fruitless attempts on the part of the Empire to quell it eventually led the Emperor of that time to agree to the Dvaereds' demands. Their leaders were granted the right to establish a Great House, and direct control over a sizeable chunk of space, in reparation for the lives lost during the Dvaered Revolts.
 
-Eager to claim their place among the other big players, the then-time Dvaered leadership decided that discipline was the only proper way to shape a society. And so House Dvaered evolved into a military regime, and the values of honor and strength were etched into the Dvaered soul.
+Eager to claim their place among the other big players, the then-time Dvaered leadership decided that discipline was the only proper way to shape a society. And so House Dvaered evolved into a military regime, and the values of honour and strength were etched into the Dvaered soul.
 
 ### Government
 

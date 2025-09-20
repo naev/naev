@@ -20,7 +20,7 @@ local zalek_outfits = eoutfits.merge{{
    "Grave Lance", "Orion Beam",
    -- Small Weapons
    "Particle Beam", "Particle Lance", "Orion Lance", "Electron Burst Cannon",
-   -- Point Defense
+   -- Point Defence
    "ZIBS-16", "ZIBS-32",
    -- Utility
    "Droid Repair Crew", "Milspec Scrambler", "Unicorp Scrambler",

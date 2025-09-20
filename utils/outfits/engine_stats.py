@@ -11,18 +11,18 @@ from slst import Slst
 
 out = lambda x: stdout.write(x + '\n')
 
-def line_drawing(gith = False, color = False, term = False):
+def line_drawing(gith = False, colour = False, term = False):
    head, rule, line, alt_line = Slst(), Slst(), Slst(), Slst()
 
-   if color or term:
+   if colour or term:
       head += [ ('|', ' ', 1) ]
       [a.append(('', ' |', -1)) for a in [rule, line, alt_line]]
-      if color:
-         color, alt_col, defc = '\033[30;1m', '\033[34m', '\033[0m'
-         rule += [ ('', color, 1), ('', defc, -1) ]
-         line += [ ('|', color + '|' + defc) ]
+      if colour:
+         colour, alt_col, defc = '\033[30;1m', '\033[34m', '\033[0m'
+         rule += [ ('', colour, 1), ('', defc, -1) ]
+         line += [ ('|', colour + '|' + defc) ]
          alt_line += [ ('', alt_col, 1), ('', defc, -1) ]
-         #alt_line += [ ('|', (color if term else alt_col) + '|' + defc) ]
+         #alt_line += [ ('|', (colour if term else alt_col) + '|' + defc) ]
       if term:
          rule += [
             ('| -', '|--'), ('- |',  '--|'),
@@ -102,7 +102,7 @@ def l( s ):
    a, b = tuple(s.split('.', 1))
    return ' | ' + (3-len(a))*' ' + a + m + b + (2-len(b))*' '
 
-def main( args, gith = False, color = False, term = False, autostack = False,
+def main( args, gith = False, colour = False, term = False, autostack = False,
       combine = False, nosort = False, good_only = False ):
 
    L = [ (o.to_dict(), o.shortname()) for o in arg_to_naev_obj(args, combine, autostack, good_only) ]
@@ -111,8 +111,8 @@ def main( args, gith = False, color = False, term = False, autostack = False,
    if not nosort:
       L.sort(key = key, reverse = True)
 
-   head, rule, lines = line_drawing(gith, color, term)
-   if color:
+   head, rule, lines = line_drawing(gith, colour, term)
+   if colour:
       C = [ 'eml   \n(t)   ', 'drift \nspeed ', 'max   \nspeed ', 'accel \n      ',
             'fullsp\n(s)   ', 'fullsp\n(km)  ', 'turn  \n(°/s) ', 'turn  \nradius',
             '\xbdturn \n(s)   ']
@@ -150,8 +150,8 @@ if __name__ == '__main__':
       epilog = '\nTypical usage (from naev root dir) :\n > find dat/outfits/core_engine/ -name "*.xml" | ./utils/outfits/engines_stats.py'
    )
    parser.add_argument('-g', '--github', action = 'store_true', help = 'unaligned (therefore smaller) valid github md, for use in posts.')
-   parser.add_argument('-c', '--color', action = 'store_true', help = 'colored terminal output. You can pipe to "less -RS" if the table is too wide.')
-   parser.add_argument('-t', '--term', action = 'store_true', help = 'colored terminal output with extended table characters.')
+   parser.add_argument('-c', '--colour', action = 'store_true', help = 'coloured terminal output. You can pipe to "less -RS" if the table is too wide.')
+   parser.add_argument('-t', '--term', action = 'store_true', help = 'coloured terminal output with extended table characters.')
    parser.add_argument('-A', '--autostack', action = 'store_true', help = 'Outfits are presented both alone and auto-stacked.')
    parser.add_argument('-C', '--combinations', action = 'store_true', help = 'also display all the combinations.' )
    parser.add_argument('-G', '--good', action = 'store_true', help = "Like -C, but good comb. only: don't comb when pri smaller." )
@@ -160,13 +160,13 @@ if __name__ == '__main__':
    parser.add_argument('filename', nargs = '*', help = """An outfit with ".xml" or ".mvx" extension, else will be ignored.
 Can also be two outfits separated by \'+\', or an outfit prefixed with \'2x\' or suffixed with \'x2\'.""")
    args = parser.parse_args()
-   if args.term and args.color:
+   if args.term and args.colour:
       print('Warning: -c subsumed by -t', file = stderr, flush = True)
 
-   if args.github and (args.color or args.term):
+   if args.github and (args.colour or args.term):
       print('Warning: Ignored conflicting: -g and -' +
          ('t' if args.term else 'c'), file = stderr, flush = True)
-      args.github = args.color = args.term = False
+      args.github = args.colour = args.term = False
 
    if args.autostack and args.good:
       print('Warning: -A is subsumed by -G', file = stderr, flush = True)
@@ -181,7 +181,7 @@ Can also be two outfits separated by \'+\', or an outfit prefixed with \'2x\' or
    if args.files or args.filename == []:
       args.filename += [l.strip() for l in stdin.readlines()]
    args.filename = [f for f in args.filename if f[-4:] in {".mvx", ".xml"}]
-   main(args.filename, args.github, args.color or args.term, args.term,
+   main(args.filename, args.github, args.colour or args.term, args.term,
       args.autostack, args.combinations or args.good, args.no_sort, args.good)
 else:
    raise Exception('This module is only intended to be used as main.')

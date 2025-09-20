@@ -34,7 +34,7 @@ static void    btn_updateHotkey( Widget *btn );
  *    @param w Width of the widget.
  *    @param h Height of the widget.
  *    @param name Name of the widget to use internally.
- *    @param display Text displayed on the button (centered).
+ *    @param display Text displayed on the button (centred).
  *    @param call Function to call when button is pressed. Parameter passed
  *                is the name of the button.
  *    @param key Hotkey for using the button without it being focused.
@@ -116,7 +116,7 @@ void window_addButtonKey(
  *    @param w Width of the widget.
  *    @param h Height of the widget.
  *    @param name Name of the widget to use internally.
- *    @param display Text displayed on the button (centered).
+ *    @param display Text displayed on the button (centred).
  *    @param call Function to call when button is pressed. Parameter passed
  *                is the name of the button.
  */

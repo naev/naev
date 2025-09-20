@@ -376,7 +376,7 @@ void shipyard_update( unsigned int wid, const char *str )
    if ( ship->license ) {
       int meets_reqs = player_hasLicense( ship->license );
       ;
-      k += scnprintf( &lbl[k], sizeof( lbl ) - k, "\n%s", _( "License:" ) );
+      k += scnprintf( &lbl[k], sizeof( lbl ) - k, "\n%s", _( "Licence:" ) );
       if ( blackmarket )
          l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s#0",
                          _( "Not Necessary (Blackmarket)" ) );
@@ -534,7 +534,7 @@ static int shipyard_canAcquire( const Ship *ship, const Spob *spob,
 
    /* Must have the necessary license. */
    if ( !blackmarket && !player_hasLicense( ship->license ) ) {
-      land_errDialogueBuild( _( "You need the '%s' license to buy this ship." ),
+      land_errDialogueBuild( _( "You need the '%s' licence to buy this ship." ),
                              _( ship->license ) );
       failure = 1;
    }

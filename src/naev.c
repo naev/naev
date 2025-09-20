@@ -642,7 +642,7 @@ double fps_current( void )
 /**
  * @brief Updates the game itself (player flying around and friends).
  *
- *    @brief Mainly uses game dt.
+ *    @brief Mainly uses game `dt`.
  */
 static void update_all( int dohooks )
 {

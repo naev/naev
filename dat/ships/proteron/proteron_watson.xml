@@ -15,10 +15,10 @@
  <trail_generator y="-22" h="0" always_under="1" x="-5">nebula</trail_generator>
  <fabricator>Proteron</fabricator>
  <faction>Proteron</faction>
- <license>Heavy Combat Vessel</license>
+ <licence>Heavy Combat Vessel</licence>
  <cond>require("buyrep")("Proteron", 70)</cond>
  <condstr>You need at least 70% reputation with the Proteron.</condstr>
- <description>The heart of the Proteron battle fleet is formed by the Watson. Acting as a mobile launch base as well as a command and control unit, this vessel co-ordinates the rest of the fleet in the fight for dominance over the galaxy.</description>
+ <description>The heart of the Proteron battle fleet is formed by the Watson. Acting as a mobile launch base as well as a command and control unit, this vessel coordinates the rest of the fleet in the fight for dominance over the galaxy.</description>
  <health>
   <armour>1800</armour>
  </health>

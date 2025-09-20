@@ -43,7 +43,7 @@
 # endif
 #endif
 
-/* attribute recognised by some compilers to avoid 'unused' warnings */
+/* attribute recognized by some compilers to avoid 'unused' warnings */
 #ifndef SWIGUNUSED
 # if defined(__GNUC__)
 #   if !(defined(__cplusplus)) || (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4))
@@ -131,7 +131,7 @@
 # define __ASSERT_MACROS_DEFINE_VERSIONS_WITHOUT_UNDERSCORES 0
 #endif
 
-/* Intel's compiler complains if a variable which was never initialised is
+/* Intel's compiler complains if a variable which was never initialized is
  * cast to void, which is a common idiom which we use to indicate that we
  * are aware a variable isn't used.  So we just silence that warning.
  * See: https://github.com/swig/swig/issues/192 for more discussion.
@@ -786,7 +786,7 @@ extern "C" {
 #include <assert.h>  /* for a few sanity tests */
 
 /* -----------------------------------------------------------------------------
- * Lua flavors
+ * Lua flavours
  * ----------------------------------------------------------------------------- */
 
 #define SWIG_LUA_FLAVOR_LUA 1
@@ -1507,7 +1507,7 @@ SWIGINTERN int SWIG_Lua_iterate_bases(lua_State *L, swig_type_info * SWIGUNUSED 
     (void)swig_type;
     lua_getmetatable(L,first_arg);
 
-    /* initialise base search */
+    /* initialize base search */
 #if (SWIG_LUA_TARGET == SWIG_LUA_FLAVOR_LUA)
     SWIG_Lua_get_table(L,".bases");
     assert(lua_istable(L,-1));
@@ -5081,7 +5081,7 @@ SWIGEXPORT int SWIG_init(lua_State* L) /* default Lua action */
   int globalRegister = 0;
   /* start with global table */
   lua_pushglobaltable (L);
-  /* SWIG's internal initialisation */
+  /* SWIG's internal initialization */
   SWIG_InitializeModule((void*)L);
   SWIG_PropagateClientData();
 #endif

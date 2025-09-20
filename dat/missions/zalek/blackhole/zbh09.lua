@@ -203,7 +203,7 @@ function enter ()
       hook.pilot( p, "discovered", "scout_discovered" )
 
    elseif mem.state==1 and system.cur() == insys then
-      player.landAllow( false, _("Zach is analyzing the wormhole signal.") )
+      player.landAllow( false, _("Zach is analysing the wormhole signal.") )
 
       if mem.wormholeknown then
          system.markerAdd( inwormhole:pos(), _("Wormhole") )
@@ -275,7 +275,7 @@ local zach_msg_known = {
 }
 local zach_msg_unknown = {
    _("Damn, what the hell is that?" ),
-   _("One second, let me analyze the data." ),
+   _("One second, let me analyse the data." ),
    _("I can't make much sense out of this, but…"),
    _("It seems like some sort of space-time discontinuity…"),
    _("It doesn't seem dangerous, at least the readings seem strangely fine."),

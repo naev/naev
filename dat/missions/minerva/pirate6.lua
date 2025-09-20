@@ -121,7 +121,7 @@ The Empire will not stand for such displays of brazen debauchery, and thus invok
       {sys=trialsys}))
    ecb(_([["The Empire is watching you."]]))
    vn.disappear( ecb, "electric" )
-   vn.move( zuri, "center" )
+   vn.move( zuri, "centre" )
 
    vn.na(_([[Without any fanfare, the Empire Combat Bureaucrat dematerializes and the bar breaks into chaos. Hey, is that the Minerva CEO running around?]]))
    zuri(_([[You turn back to Zuri who is seems to be thinking profously.

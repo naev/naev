@@ -72,7 +72,7 @@ int nlua_loadCol( nlua_env *env )
  * @endcode
  *
  * Colours are assumed to be given as gamma-corrected values and are stored
- * internally in linear colourspace by default. Most functions have a boolean
+ * internally in linear colour space by default. Most functions have a boolean
  * parameter that allows controlling this behaviour.
  *
  * @luamod colour
@@ -175,7 +175,7 @@ static int colL_tostring( lua_State *L )
 }
 
 /**
- * @brief Creates a new colour. Colours are assumed to be in gamma colourspace
+ * @brief Creates a new colour. Colours are assumed to be in gamma colour space
  * by default and are converted to linear unless specified.
  *
  * @usage colour.new( "Red" ) -- Gets colour by name
@@ -190,7 +190,7 @@ static int colL_tostring( lua_State *L )
  *    @luatparam number b Blue value of the colour.
  *    @luatparam[opt=1.] number a Alpha value of the colour.
  *    @luatparam[opt=false] gamma Whether to load the colour in the gamma
- * colourspace.
+ * colour space.
  *    @luatreturn Colour A newly created colour.
  * @luafunc new
  */
@@ -234,7 +234,7 @@ static int colL_new( lua_State *L )
 
 /**
  * @brief Creates a new colour from HSV values. Colours are assumed to be in
- * gamma colourspace by default and are converted to linear unless specified.
+ * gamma colour space by default and are converted to linear unless specified.
  *
  * @usage colour.new( 0., 0.5, 0.5 ) -- Creates a colour with 0 hue, 0.5
  * saturation and 0.5 value.
@@ -244,7 +244,7 @@ static int colL_new( lua_State *L )
  *    @luatparam number v Value of the colour (0-1 value).
  *    @luatparam[opt=1.] number a Alpha value of the colour.
  *    @luatparam[opt=false] gamma Whether to load the colour in the gamma
- * colourspace.
+ * colour space.
  *    @luatreturn Colour A newly created colour.
  * @luafunc newHSV
  */
@@ -387,7 +387,7 @@ static int colL_hsv( lua_State *L )
 }
 
 /**
- * @brief Sets the colours values from the RGB colourspace.
+ * @brief Sets the colours values from the RGB colour space.
  *
  * Values are from 0. to 1.
  *
@@ -409,7 +409,7 @@ static int colL_setrgb( lua_State *L )
 }
 
 /**
- * @brief Sets the colours values from the HSV colourspace.
+ * @brief Sets the colours values from the HSV colour space.
  *
  * Values are from 0. to 1.
  *

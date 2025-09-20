@@ -20,10 +20,10 @@
 
    This mission has two ways of being done:
    1. Using brute force and killing everything.
-   2. Using stealth if the player boards the drone controllers or hacking center, they can disable drones.
+   2. Using stealth if the player boards the drone controllers or hacking centre, they can disable drones.
 
-   There are drones patrolling the hacking center, it requires disabling two drone controllers to get there.
-   There are also drones wandering around that are independent / depend on the hacking center.
+   There are drones patrolling the hacking centre, it requires disabling two drone controllers to get there.
+   There are also drones wandering around that are independent / depend on the hacking centre.
 --]]
 local minerva = require "common.minerva"
 local vn = require 'vn'
@@ -39,9 +39,9 @@ local mainsys = system.get("Gammacron")
 --  nil: mission not accepted yet
 --    1. fly to mainsys
 --    2. mission time!
---    3. hacking center disabled
+--    3. hacking centre disabled
 mem.misn_state = nil
-local all_ships, drone_control1, drone_control2, drone_group1, drone_group2, hacking_center, main_boss -- Non-persistent state
+local all_ships, drone_control1, drone_control2, drone_group1, drone_group2, hacking_centre, main_boss -- Non-persistent state
 
 
 function create ()
@@ -202,7 +202,7 @@ function enter ()
    -- Main positions
    local pos_drone_control1 = wp["pirate5_drone_control1"]
    local pos_drone_control2 = wp["pirate5_drone_control2"]
-   local pos_hacking_center = wp["pirate5_hacking_center"]
+   local pos_hacking_centre = wp["pirate5_hacking_centre"]
 
    -- Define the routes
    local route0 = {
@@ -215,7 +215,7 @@ function enter ()
    }
    local route2 = {
       pos_drone_control1,
-      pos_hacking_center,
+      pos_hacking_centre,
    }
    local route3 = {
       pos_drone_control2,
@@ -223,7 +223,7 @@ function enter ()
    }
    local route4 = {
       pos_drone_control2,
-      pos_hacking_center,
+      pos_hacking_centre,
    }
    local route5 = {
       wp["pirate5_5_1"],
@@ -240,7 +240,7 @@ function enter ()
    local route7 = {
       wp["pirate5_7_1"],
       wp["pirate5_7_2"],
-      pos_hacking_center,
+      pos_hacking_centre,
    }
 
    -- We'll use a dynamic faction for some ships to lower faction standing damage
@@ -290,10 +290,10 @@ function enter ()
    drone_control2 = spawn_drone_controller( pos_drone_control2 )
    hook.pilot( drone_control2, "death", "drone_control2_dead" )
    hook.pilot( drone_control2, "board", "plant_explosives" )
-   hacking_center = spawn_drone_controller( pos_hacking_center )
-   hacking_center:rename(_("Hacking Centre"))
-   hook.pilot( hacking_center, "death", "hacking_center_dead" )
-   hook.pilot( hacking_center, "board", "plant_explosives" )
+   hacking_centre = spawn_drone_controller( pos_hacking_centre )
+   hacking_centre:rename(_("Hacking Centre"))
+   hook.pilot( hacking_centre, "death", "hacking_centre_dead" )
+   hook.pilot( hacking_centre, "board", "plant_explosives" )
 
    local function add_patrol_group( route, ships, group, start )
       start = start or rnd.rnd(1,#route)
@@ -334,7 +334,7 @@ function enter ()
    end
 
    -- Main boss, isn't necessary to kill
-   local bosspos = pos_hacking_center - vec2.new( -67, -109 )
+   local bosspos = pos_hacking_centre - vec2.new( -67, -109 )
    main_boss = pilot.add( "Za'lek Mephisto", "Za'lek", bosspos, nil, {naked=true, ai="guard"} )
    all_ships[1] = main_boss
    -- Be nice and give only close-range weapons
@@ -397,11 +397,11 @@ function enter ()
 end
 
 function message_first ()
-   hacking_center:broadcast( fmt.f(_("Due to military exercises, {sys} is under lockdown. Please evacuate the area immediately."), {sys=mainsys}), true )
+   hacking_centre:broadcast( fmt.f(_("Due to military exercises, {sys} is under lockdown. Please evacuate the area immediately."), {sys=mainsys}), true )
 end
 
 function message_warn ()
-   hacking_center:broadcast( _("Unwelcome ships will be terminated. You have been warned."), true )
+   hacking_centre:broadcast( _("Unwelcome ships will be terminated. You have been warned."), true )
 end
 
 function message_hostile ()
@@ -450,7 +450,7 @@ function drone_control_update ()
       aimem.guardpos = mainsys:waypoints("pirate5_guard")
    end
 end
-function hacking_center_dead ()
+function hacking_centre_dead ()
    misn.markerMove( mem.mrk_mainsys, spob.get("Minerva Station") )
    misn.osdActive(3)
    mem.misn_state = 3

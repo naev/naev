@@ -259,7 +259,7 @@ function create()
       ta_flt_pane_y = tbar_y + tbar_h - 32 - ta_flt_pane_h
    end
 
-   -- Planet faction icon center
+   -- Planet faction icon centre
    ta_pnt_fact_x = ta_pnt_pane_x + 152
    ta_pnt_fact_y = ta_pnt_pane_y + 167
 
@@ -267,7 +267,7 @@ function create()
    ta_pnt_image_x = ta_pnt_pane_x + 14
    ta_pnt_image_y = ta_pnt_pane_y
 
-   -- Planet image center
+   -- Planet image centre
    local ta_pnt_image_w, ta_pnt_image_h = planet_bg:dim()
    ta_pnt_center_x = ta_pnt_image_x + ta_pnt_image_w / 2
    ta_pnt_center_y = ta_pnt_image_y + ta_pnt_image_h / 2
@@ -532,7 +532,7 @@ local function renderBar( name, value, light, locked, prefix, mod_x, mod_y, heat
 end
 
 local function renderWeapBar( weapon, x, y )
-   local offsets = { 2, 2, 4, 54, 13, 23, 47 } --third last is y of icon_weapon1, last two are the centers of the two weapon icons
+   local offsets = { 2, 2, 4, 54, 13, 23, 47 } --third last is y of icon_weapon1, last two are the centres of the two weapon icons
    local outfit_yoffset = 36
    local name_offset = 17
    local bottom_icon, bottom_icon_w, bottom_icon_h, top_icon_w, top_icon_h, icon, weap_heat, width
@@ -909,7 +909,7 @@ function render( _dt )
    renderField( credits_h, tbar_center_x + tbar_center_w/2 + 4, fields_y, fields_w, col_text, icon_money )
    renderField( fmt.tonnes_short(cargo), tbar_center_x + tbar_center_w/2 + fields_w + 12, fields_y, fields_w, col_text, icon_cargo )
 
-   --Center
+   --Centre
    gfx.renderTex( top_bar_center, tbar_center_x - tbar_center_w/2, tbar_y + tbar_h - tbar_center_h )
 
    --Time

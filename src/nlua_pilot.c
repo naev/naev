@@ -660,7 +660,7 @@ static int pilotL_choosePoint( lua_State *L )
  * @usage p = pilot.add( "Pirate Hyena", "Pirate", _("Blackbeard") ) -- Just
  * adds the pilot (will jump in or take off).
  * @usage p = pilot.add( "Llama", "Trader", nil, _("Trader Llama"), {ai="dummy"}
- * ) -- Overrides AI with dummy ai.
+ * ) -- Overrides AI with dummy AI.
  * @usage p = pilot.add( "Gawain", "Civilian", vec2.new( 1000, 200 ) ) -- Pilot
  * won't jump in, will just appear.
  * @usage p = pilot.add( "Empire Pacifier", "Empire", system.get("Goddard") ) --
@@ -682,7 +682,7 @@ static int pilotL_choosePoint( lua_State *L )
  * system it'll try to jump in from that system, if it's a spob it'll try to
  * take off from it.
  *    @luatparam[opt] string pilotname Name to give the pilot. Defaults to
- * shipname.
+ * ship name.
  *    @luatparam[opt] table parameters Table of extra keyword arguments.
  * Supported arguments: `ai` (string): AI to give the pilot. Defaults to the
  * faction's AI. `naked` (boolean): Whether or not to have the pilot spawn
@@ -3071,7 +3071,8 @@ static int pilotL_setVelocity( lua_State *L )
 /**
  * @brief Sets the pilot's direction.
  *
- * @note Right is 0, top is math.pi/2, left is math.pi, bottom is 3*math.pi/2.
+ * @note Right is 0, top is `math.pi/2`, left is `math.pi`, bottom is
+ * `3*math.pi/2`.
  *
  * @usage p:setDir( math.pi/2 )
  *
@@ -5447,6 +5448,7 @@ struct pL_flag {
 static const struct pL_flag pL_flags[] = {
    { .name = "stealth", .id = PILOT_STEALTH },
    { .name = "refueling", .id = PILOT_REFUELING },
+   { .name = "refuelling", .id = PILOT_REFUELING },
    { .name = "invisible", .id = PILOT_INVISIBLE },
    { .name = "disabled", .id = PILOT_DISABLED },
    { .name = "disabled_perm", .id = PILOT_DISABLED_PERM },
@@ -5496,7 +5498,7 @@ static const struct pL_flag pL_flags[] = {
  *  <li> `invinc_player`: pilot cannot be hit by the player.</li>
  *  <li> `friendly`: pilot is friendly toward the player.</li>
  *  <li> `hostile`: pilot is hostile toward the player.</li>
- *  <li> `refueling`: pilot is refueling another pilot.</li>
+ *  <li> `refueling`: pilot is refuelling another pilot.</li>
  *  <li> `disabled`: pilot is disabled.</li>
  *  <li> `landing`: pilot is currently landing.</li>
  *  <li> `takingoff`: pilot is currently taking off.</li>
@@ -5845,7 +5847,7 @@ static int pilotL_taskclear( lua_State *L )
 /**
  * @brief Pushes a new task to the pilot's AI.
  *
- * Equivalent to ai.pushtask()
+ * Equivalent to `ai.pushtask()`
  *
  *    @luatparam Pilot p Pilot to push task to.
  *    @luatparam string func Name of the function to be run.
@@ -5871,7 +5873,7 @@ static int pilotL_pushtask( lua_State *L )
 /**
  * @brief Pops the current task from the pilot's AI.
  *
- * Equivalent to ai.poptask().
+ * Equivalent to `ai.poptask()`.
  *
  *    @luatparam Pilot p Pilot to pop task from.
  * @luafunc poptask
@@ -5891,7 +5893,7 @@ static int pilotL_poptask( lua_State *L )
 /**
  * @brief Tries to refuel a pilot.
  *
- *    @luatparam Pilot p Pilot to do the refueling.
+ *    @luatparam Pilot p Pilot to do the refuelling.
  *    @luatparam Pilot target Target pilot to give fuel to.
  *    @luatparam[opt=100] number amount Amount to refuel.
  * @luafunc refuel

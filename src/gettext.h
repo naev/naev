@@ -39,7 +39,7 @@ const char *gettext_pgettext_impl( const char *lookup, const char *msgid );
 #define gettext_noop( String ) String
 
 /** A gettext() implementation that will return the input's translation,
- * if the message catalogs in ndata provide it. Otherwise, it returns its
+ * if the message catalogues in ndata provide it. Otherwise, it returns its
  * input. The returned string must not be modified or freed.
  */
 FORMAT_ARG( 1 ) static inline const char *_( const char *msgid )

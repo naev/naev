@@ -1,9 +1,12 @@
 #!/bin/bash
 
-#TODO: remove US english from the dicts and add british english instead. Reverse the br->us conversions done so far.
+#TODO: separate dicts by usage (in-game, code, etc.) Don't forget .codespellignore.
+#TODO: port to hunspell using:
+#  https://github.com/kaubu/oxford-english-spelling/blob/main/en_GB_oxendict.dic
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 PERS="$SCRIPT_DIR/naev.aspell.pws"
+PERS_O="$SCRIPT_DIR/oxford.aspell.pws"
 PERS_U="$SCRIPT_DIR/naev_ugly.aspell.pws"
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ -z "$*" ]; then
@@ -54,14 +57,14 @@ SEP=" ?,;.:/!:"
 NSEPNW="[^a-zA-Z$SEP]"
 DOXTRACT="$("$SCRIPT_DIR"/get_doxtractor.sh)"
 readarray -t WORDS <<< "$(
-   "$DOXTRACT" "$@" | cut '-d ' -f 3-                                |
-   filter                                                            |
+   "$DOXTRACT" "$@" | cut '-d ' -f 3- |   filter                |
    sed                     \
     -e "s/\"[^\"]*\"//g"   \
     -e "s/\`[^\`]*\`//g"   \
     -e 's/@[^ ]*//g'       \
-    -e 's/\w*\('"$NSEPNW"'\)\w*/\1/g'                                |
-   aspell list -l en_US --personal "$PERS" --extra-dicts "$PERS_U"   |
+    -e 's/\w*\('"$NSEPNW"'\)\w*/\1/g'                           |
+   aspell list -l en_GB --personal "$PERS" \
+      --add-extra-dicts "$PERS_U" --add-extra-dicts "$PERS_O"   |
    sort -u
    #sed 's/\([a-z]\)\([A-Z]\)/\1 \2/g'
 )"
@@ -76,6 +79,7 @@ if [ -z "${EXPR[*]}" ] ; then
    exit 0
 fi
 
+echo >&2
 echo "${WORDS[@]}" >&2
 
 SEPE="[$SEP]"
@@ -86,7 +90,7 @@ readarray -t FILES <<< "$(grep -l '^ *\* *.*'"$EXPR"'' "$@")"
 if [ -z "${FILES[*]}" ] ; then
    exit 0
 fi
-echo "$# -> ${#FILES[@]}" >&2
+#echo "$# -> ${#FILES[@]}" >&2
 
 TMP=$(mktemp -u)
 mkfifo "$TMP"

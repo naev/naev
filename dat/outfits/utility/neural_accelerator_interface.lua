@@ -13,8 +13,8 @@ vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
 {
    vec4 colour     = texture( tex, texcoord );
    float opacity  = 0.8 * clamp( progress, 0.0, 1.0 );
-   vec3 grayscale = vec3(rgb2lum(colour.rgb));
-   colour.rgb      = mix( colour.rgb, grayscale, opacity );
+   vec3 greyscale = vec3(rgb2lum(colour.rgb));
+   colour.rgb      = mix( colour.rgb, greyscale, opacity );
    return colour;
 }
 ]])

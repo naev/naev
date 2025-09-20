@@ -468,7 +468,7 @@ static void info_openMain( unsigned int wid )
       int ninv  = array_size( inv );
       inventory = malloc( sizeof( char * ) * n );
       for ( int i = 0; i < nlic; i++ )
-         SDL_asprintf( &inventory[i], "#n%s#0%s", _( "License: " ),
+         SDL_asprintf( &inventory[i], "#n%s#0%s", _( "Licence: " ),
                        _( lic[i] ) );
       qsort( inventory, nlic, sizeof( char * ), strsort );
       for ( int i = 0; i < ninv; i++ ) {
@@ -1802,7 +1802,7 @@ static void info_shiplogAdd( unsigned int wid, const char *str )
 static void info_openShipLog( unsigned int wid )
 {
    int w, h, texth;
-   /* re-initialise the statics */
+   /* re-initialize the statics */
    selectedLog     = 0;
    selectedLogType = 0;
 

@@ -196,7 +196,7 @@ typedef struct Node {
    size_t *children;  /**< Children nodes. */
    size_t  nchildren; /**< Number of children mesh. */
 
-   GLfloat radius;   /**< Sphere fit on the model centered at 0,0. */
+   GLfloat radius;   /**< Sphere fit on the model centred at 0,0. */
    vec3    aabb_min; /**< Minimum value of AABB wrapping around it. */
    vec3    aabb_max; /**< Maximum value of AABB wrapping around it. */
 
@@ -265,7 +265,7 @@ typedef struct GltfObject {
    size_t     nmaterials;  /**< Number of materials. */
    Animation *animations;  /**< The animations. */
    size_t     nanimations; /**< Number of animations. */
-   GLfloat    radius;      /**< Sphere fit on the model centered at 0,0. */
+   GLfloat    radius;      /**< Sphere fit on the model centred at 0,0. */
    /* Some useful default scenes. */
    int scene_body;   /**< Body of the object. */
    int scene_engine; /**< Engine of the object (if applicable or -1) */
@@ -1055,18 +1055,18 @@ static int gltf_loadAnimation( GltfObject *obj, const cgltf_data *data,
 static void shadow_matrix( mat4 *m, const Light *light )
 {
    const vec3  up     = { .v = { 0., 1., 0. } };
-   const vec3  center = { .v = { 0., 0., 0. } };
+   const vec3  centre = { .v = { 0., 0., 0. } };
    const float r      = 1.0;
    if ( light->sun ) {
       vec3 light_pos = light->pos;
       vec3_normalize( &light_pos );
-      const mat4 L = mat4_lookat( &light_pos, &center, &up );
+      const mat4 L = mat4_lookat( &light_pos, &centre, &up );
       const mat4 O = mat4_ortho( -r, r, -r, r, 0.0, 2.0 );
       mat4_mul( m, &L, &O );
    } else {
       /* TODO fix this. Point lights should use perspective matrix... */
       const vec3  light_pos = light->pos;
-      const mat4  L         = mat4_lookat( &light_pos, &center, &up );
+      const mat4  L         = mat4_lookat( &light_pos, &centre, &up );
       const float norm      = vec3_length( &light_pos );
       const mat4  O = mat4_ortho( -r, r, -r, r, norm - 1.0, norm + 1.0 );
       mat4_mul( m, &L, &O );

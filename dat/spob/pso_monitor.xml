@@ -18,7 +18,7 @@
    <land/>
    <refuel/>
   </services>
-  <description>PSO Monitor is a small scientific station run by an independent university, monitoring the high-interference nebula PSO. As no government actually funds the station, it only has what it absolutely needs to run. It also has a refueling depot for travelling ships in an effort to raise funding.</description>
+  <description>PSO Monitor is a small scientific station run by an independent university, monitoring the high-interference nebula PSO. As no government actually funds the station, it only has what it absolutely needs to run. It also has a refuelling depot for travelling ships in an effort to raise funding.</description>
  </general>
  <tags>
   <tag>research</tag>

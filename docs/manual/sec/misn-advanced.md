@@ -31,7 +31,7 @@ TODO
 
 Cutscenes are a powerful way of conveying events that the player may or may not interact with. In order to activate cinematic mode, you must use `player.cinematics` function. However, the player will still be controllable and escorts will be doing their thing. If you want to make the player and escorts stop and be invulnerable, you can use the `cinema` library. In particular, the `cinema.on` function enables cinema mode and `cinema.off` disables it.
 
-You can also control where the camera is with `camera.set()`. By default, it will try to center the camera on the player, but if you pass a position or pilot as a parameter, it will move to the position or follow the pilot, respectively.
+You can also control where the camera is with `camera.set()`. By default, it will try to centre the camera on the player, but if you pass a position or pilot as a parameter, it will move to the position or follow the pilot, respectively.
 
 The cornerstone of cutscenes is to use hooks to make things happen and show that to the player. In this case, one of the most useful hooks is the `hook.timer` timer hook. Let us put it all together to do a short example.
 

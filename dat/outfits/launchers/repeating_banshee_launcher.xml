@@ -3,7 +3,7 @@
   <shortname>R. Banshee L.</shortname>
   <slot>weapon</slot>
   <size>medium</size>
-  <license>Heavy Weapon</license>
+  <licence>Heavy Weapon</licence>
   <rarity>1</rarity>
   <cond>require("buyrep")("Dvaered", 15)</cond>
   <condstr>You need at least 15% reputation with House Dvaered.</condstr>

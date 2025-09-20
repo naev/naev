@@ -37,7 +37,7 @@ Meddle with the Onion Society, an eclectic group of the Nexus denizens and hacke
 9. **onion09:** another tense emergency conclave in the Nexus, l337_b01 gets peeled and have to go save them
 9. **onion10:** Recover the package at Gordon's Exchange
 10. **onion11:** Plant trap signal generator and defend it while l337_b01 captures the signal
-11. **onion12:** final showdown at underworlder's center of operations station. Eventually DOG comes and helps out
+11. **onion12:** final showdown at underworlder's centre of operations station. Eventually DOG comes and helps out
 12. **onion13:** epilogue where the player gets control of the station and can do a single jump to a location while DOG disappears into the Nebula
 
 
@@ -57,7 +57,7 @@ Most of the time they are hacking freely and enjoying their arguments with each 
 
 #### Operation Dissonance (Roughly 530 UST)
 
-1. Hackers find some clues of fishy things going on at **Tenebros Station** while tracking som erefugee diversion database changes.
+1. Hackers find some clues of fishy things going on at **Tenebros Station** while tracking some refugee diversion database changes.
 1. Hacking into the systems of the station, it is found that the local governor is experimenting with mind-control drugs on a large scale on the station as part of a secret Imperial project.
 1. l337_b01 and v3c70r go in person, faking being members of the project to get more direct access, while DEADBEEF (not original 7, disciple of l337_b01) and Trixie stay back providing support.
 1. Find out the project is in the last stage and about to trigger the sleeping agent in all inhabitants of the station, much sooner than anticipatedi due to a screw up by DEADBEEF.

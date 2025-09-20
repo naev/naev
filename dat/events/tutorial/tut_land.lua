@@ -79,67 +79,67 @@ function outfit_buy( o )
       vn.run()
       var.push( "tut_turret", true )
 
-   -- pointdefense
-   elseif tspecific=="Point Defense" and not var.peek( "tut_pd" ) then
+   -- pointdefence
+   elseif tspecific=="Point Defence" and not var.peek( "tut_pd" ) then
       vn.clear()
       vn.scene()
       local sai = vn.newCharacter( tut.vn_shipai() )
       vn.transition( tut.shipai.transition )
-      sai(_([["Whoa, is that a #oPoint Defense#0 weapon you just acquired? When activated, #oPoint Defense#0 will target nearby incoming missiles and try to destroy them. Also, if they have tracking, they will also be able to track ships with a signature less than the tracking value. They can be very useful for keeping ships alive when being pummelled with fighters and ordnance."]]))
-      sai(_([["#oPoint Defense#0 will be on by default, however, you can turn it off and on by toggling it. When on, it will automatically shoot anything it can target in range. No need for any micromanagement. Almost like they make me obsolete... wait no! I'm still important! Don't get rid of me!"]]))
+      sai(_([["Whoa, is that a #oPoint Defence#0 weapon you just acquired? When activated, #oPoint Defence#0 will target nearby incoming missiles and try to destroy them. Also, if they have tracking, they will also be able to track ships with a signature less than the tracking value. They can be very useful for keeping ships alive when being pummelled with fighters and ordnance."]]))
+      sai(_([["#oPoint Defence#0 will be on by default, however, you can turn it off and on by toggling it. When on, it will automatically shoot anything it can target in range. No need for any micromanagement. Almost like they make me obsolete... wait no! I'm still important! Don't get rid of me!"]]))
       vn.done( tut.shipai.transition )
       vn.run()
       var.push( "tut_pd", true )
 
-   elseif tbroad == "License" then
+   elseif tbroad == "Licence" then
 
       local text
-      if o == outfit.get("Large Civilian Vessel License") and not var.peek( "tut_lic_largeciv" ) then
+      if o == outfit.get("Large Civilian Vessel Licence") and not var.peek( "tut_lic_largeciv" ) then
          text = {
-            _([["If you want to rake in the credits doing larger missions or commodities trades, the #oLarge Civilian Vessel License#0 is your first step! Plan your routes carefully, though, because these ships' defensive capabilities are very limited."]])
+            _([["If you want to rake in the credits doing larger missions or commodities trades, the #oLarge Civilian Vessel Licence#0 is your first step! Plan your routes carefully, though, because these ships' defensive capabilities are very limited."]])
          }
          var.push("tut_lic_largeciv", true )
 
-      elseif o == outfit.get("Medium Weapon License") and not var.peek( "tut_lic_medweap" )  then
+      elseif o == outfit.get("Medium Weapon Licence") and not var.peek( "tut_lic_medweap" )  then
          text = {
-            _([["Oh, is that a #oMedium Weapon License#0? This will open the possibility of equipping larger weapons like turrets or launchers. Turrets can rotate any direction and take the burden of aiming off your ship. Launchers use ammunition and can lock on to enemy ships to make sure the payload hits the target. By mixing and matching weapons with complementary strengths you can greatly increase your combat ability."]]),
+            _([["Oh, is that a #oMedium Weapon Licence#0? This will open the possibility of equipping larger weapons like turrets or launchers. Turrets can rotate any direction and take the burden of aiming off your ship. Launchers use ammunition and can lock on to enemy ships to make sure the payload hits the target. By mixing and matching weapons with complementary strengths you can greatly increase your combat ability."]]),
             _([["Many of the newer weapons you'll now have access to have higher CPU requirements. To increase your CPU, you have to equip better #oCore Systems#0. How powerful of a core system you can equip is limited by the slot sizes of your ship. Larger slots give you more power, but come at the cost of more mass. If you want to stay nimble and stealthy, you should be careful about increasing your mass."]]),
          }
          var.push( "tut_lic_medweap", true )
 
-      elseif o == outfit.get("Heavy Weapon License") and not var.peek( "tut_lic_hvyweap" ) then
+      elseif o == outfit.get("Heavy Weapon Licence") and not var.peek( "tut_lic_hvyweap" ) then
          text = {
-            _([["Looks like you're finally ready to take on the big guns. #oHeavy Weapons License#0 will allow you to buy the largest and most powerful of weaponry. These weapons are generally similar to their medium counterparts, but are on a different scale. They use much more energy, weigh much more, but also have much longer range and higher firepower."]]),
+            _([["Looks like you're finally ready to take on the big guns. #oHeavy Weapons Licence#0 will allow you to buy the largest and most powerful of weaponry. These weapons are generally similar to their medium counterparts, but are on a different scale. They use much more energy, weigh much more, but also have much longer range and higher firepower."]]),
             _([["One thing you will have to watch out is that heavy weapons tend to have large minimum tracking values and optimal tracking values. Ships with #oSignature#0 lower than your weapons minimum tracking value will be able to easily dodge most of your shots. On the other hand, large ships with signature above your optimal tracking value will be devastated by your shots. If you intend to deal with smaller ships too, make sure to equip fighter bays or lighter weapons!"]]),
          }
          var.push( "tut_lic_hvyweap", true )
 
-      elseif o == outfit.get("Light Combat Vessel License") and not var.peek( "tut_lic_lightcom" ) then
+      elseif o == outfit.get("Light Combat Vessel Licence") and not var.peek( "tut_lic_lightcom" ) then
          text = {
-            _([["It looks like you can finally get your hands on combat vessels with the #oLight Combat Vessel License#0! Combat vessels differ from civilian vessels in that they are intrinsically suited for combat. This, in general, translates to higher mobility and firepower, at the cost of cargo capacity and utility. There are mainly three classes of light combat vessels: #oFighters#0, #oBombers#0, and #oInterceptors#0."]]),
+            _([["It looks like you can finally get your hands on combat vessels with the #oLight Combat Vessel Licence#0! Combat vessels differ from civilian vessels in that they are intrinsically suited for combat. This, in general, translates to higher mobility and firepower, at the cost of cargo capacity and utility. There are mainly three classes of light combat vessels: #oFighters#0, #oBombers#0, and #oInterceptors#0."]]),
             _([["#oInterceptors#0 are the lightest of the three with limited slots, but low mass and high manoeuvrability. #oFighters#0 and #oBombers#0 are heavier but still very agile, with fighters specialized in closer combat with small craft, while bombers are known to carry torpedoes that can ravage even the largest of battleships."]]),
-            _([["To make the most of combat ships, it is recommended you look at their strengths and weaknesses. Equipping only forward weapons on a #oBomber#0-class ship is not going to make for an effective combat vessel. Slots also play an important role, with #oInterceptor#0-class ships being more limited than #oFighter#0-class ships. Be sure to experiment with set ups to see what works well for you."]]),
+            _([["To make the most of combat ships, it is recommended you look at their strengths and weaknesses. Equipping only forward weapons on a #oBomber#0-class ship is not going to make for an effective combat vessel. Slots also play an important role, with #oInterceptor#0-class ships being more limited than #oFighter#0-class ships. Be sure to experiment with set-ups to see what works well for you."]]),
          }
          var.push( "tut_lic_lightcom", true )
 
-      elseif o == outfit.get("Medium Combat Vessel License") and not var.peek( "tut_lic_medcom" ) then
+      elseif o == outfit.get("Medium Combat Vessel Licence") and not var.peek( "tut_lic_medcom" ) then
          text = {
-            _([["Looks like you've outgrown the #oLight Combat Vessel License#0. With the #oMedium Combat Vessel License#0 you'll get access to #oCorvette#0- and #oDestroyer#0-class ships, which can start to pack a real punch. Corvettes are the more agile of the two and can skirmish with smaller craft, while destroyers tend to be slower with much more firepower."]]),
+            _([["Looks like you've outgrown the #oLight Combat Vessel Licence#0. With the #oMedium Combat Vessel Licence#0 you'll get access to #oCorvette#0- and #oDestroyer#0-class ships, which can start to pack a real punch. Corvettes are the more agile of the two and can skirmish with smaller craft, while destroyers tend to be slower with much more firepower."]]),
             _([["Medium combat vessels tend to have a good balance between firepower and utility, being able to both perform stealth operations and frontal assaults. As they also have more slots, they can be configured more extensively to play different roles. You should experiment and see what works well for you."]]),
          }
          var.push( "tut_lic_medcom", true )
 
-      elseif o == outfit.get("Heavy Combat Vessel License") and not var.peek( "tut_lic_hvycom" ) then
+      elseif o == outfit.get("Heavy Combat Vessel Licence") and not var.peek( "tut_lic_hvycom" ) then
          text = {
-            _([["Looks like you finally got your hands on the #oHeavy Combat Vessel License#0! This will allow you to pilot the largest of the combat ships, which includes #oCruiser#0-, #oBattleship#0-, and #oCarrier#0-class ships. These ships sacrifice size and utility for survivability and firepower, being able to lay devastating barrages to lay waste to enemy forces."]]),
+            _([["Looks like you finally got your hands on the #oHeavy Combat Vessel Licence#0! This will allow you to pilot the largest of the combat ships, which includes #oCruiser#0-, #oBattleship#0-, and #oCarrier#0-class ships. These ships sacrifice size and utility for survivability and firepower, being able to lay devastating barrages to lay waste to enemy forces."]]),
             _([["#oCruisers#0 are the smallest of the three categories, but also the lowest mass and highest manoeuvrability. They can be seen more or less as a heavier version of a destroyer. #oBattleships#0 push the firepower to the max and can chew through any ship that is unable to evade their concentrated firepower. #oCarriers#0 use a different strategy of using fighters to do the combat for them while maximizing survivability."]]),
             _([["Flying a heavy combat vessel is very different from other classes of ships. Given their size, usually time seems to pass at a faster rate than smaller ships which can be seen by their '#oTime Constant#0' value. Furthermore, given their size, stealth becomes difficult, and they can be vulnerable to volleys of torpedoes. Escorts and fighter bays can help them deal with enemy bombers."]]),
          }
          var.push( "tut_lic_hvycom", true )
 
-      elseif o == outfit.get("Mercenary License") and not var.peek( "tut_lic_merc" ) then
+      elseif o == outfit.get("Mercenary Licence") and not var.peek( "tut_lic_merc" ) then
          text = {
-            _([["It looks like you got a #oMercenary License#0. This will enable bounty collection missions that should start appearing in your mission computer screens from now on. These missions are usually generally combat-oriented and will require you to have a suitable combat vessel to successfully complete them. They can be fairly challenging at the beginning so make sure your ship is properly equipped for combat."]]),
+            _([["It looks like you got a #oMercenary Licence#0. This will enable bounty collection missions that should start appearing in your mission computer screens from now on. These missions are usually generally combat-oriented and will require you to have a suitable combat vessel to successfully complete them. They can be fairly challenging at the beginning so make sure your ship is properly equipped for combat."]]),
          }
          var.push( "tut_lic_merc", true )
       end
@@ -165,7 +165,7 @@ function ship_buy( s )
       vn.scene()
       local sai = vn.newCharacter( tut.vn_shipai() )
       vn.transition( tut.shipai.transition )
-      sai(fmt.f(_([["Congratulations on buying a brand new {ship}! Unless you trade in your ship, when you buy a new ship it is added to your available ships. Usually, ships come with only core outfits equipped, so you should head over to the #oEquipment#0 window to deck the ship out and swap it with your current one if you want to use it. You can swap ships at any planet or station with refueling capabilities and there is no penalty nor cost associated with swapping. In fact, getting a diversity of ships and switching to the one that best fits your need is a great way to get things done."]]),{ship=s}))
+      sai(fmt.f(_([["Congratulations on buying a brand new {ship}! Unless you trade in your ship, when you buy a new ship it is added to your available ships. Usually, ships come with only core outfits equipped, so you should head over to the #oEquipment#0 window to deck the ship out and swap it with your current one if you want to use it. You can swap ships at any planet or station with refuelling capabilities and there is no penalty nor cost associated with swapping. In fact, getting a diversity of ships and switching to the one that best fits your need is a great way to get things done."]]),{ship=s}))
       sai(_([["You also don't have to worry about your ship AI changing, I am automatically transferred between your ships. You can't get away from me, ha ha."]]))
       vn.done( tut.shipai.transition )
       vn.run()

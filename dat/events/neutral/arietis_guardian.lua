@@ -42,10 +42,10 @@ function enter ()
    local fct = faction.dynAdd( "Thurion", _("Unknown"), _("Unknown") )
 
    local waypoints = {}
-   local center = mainspb:pos()
+   local centre = mainspb:pos()
    local N = 15
    for i = 1,N do
-      table.insert( waypoints, center + vec2.newP( 1800, 2*math.pi / N * (i-1) ) )
+      table.insert( waypoints, centre + vec2.newP( 1800, 2*math.pi / N * (i-1) ) )
    end
 
    -- Spawn the boss

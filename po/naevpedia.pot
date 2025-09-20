@@ -1,6 +1,6 @@
 # Naevpedia
 # Copyright (C) YEAR Naev Dev Team
-# This file is distributed under the same license as the naev package.
+# This file is distributed under the same licence as the naev package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
@@ -335,7 +335,7 @@ msgid "## History"
 msgstr ""
 
 #: dat/naevpedia/lore/factions/dvaered.md:26
-msgid "House Dvaered came forth from a lower caste in the old Empire, a collection of miners, manual laborers, foot soldiers, and outcasts."
+msgid "House Dvaered came forth from a lower caste in the old Empire, a collection of miners, manual labourers, foot soldiers, and outcasts."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/dvaered.md:27
@@ -343,15 +343,15 @@ msgid "With the gradual decline in authority of [the Empire](lore/factions/empir
 msgstr ""
 
 #: dat/naevpedia/lore/factions/dvaered.md:28
-msgid "They banded together into what could be considered the biggest labor union in all of human history, and started demanding better treatment."
+msgid "They banded together into what could be considered the biggest labour union in all of human history, and started demanding better treatment."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/dvaered.md:30
-msgid "When [the Empire](lore/factions/empire) was less than forthcoming, the laborers began to take more drastic measures."
+msgid "When [the Empire](lore/factions/empire) was less than forthcoming, the labourers began to take more drastic measures."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/dvaered.md:31
-msgid "The peaceful labor union demands turned into an armed resistance movement that escalated into open rebellion on several worlds."
+msgid "The peaceful labour union demands turned into an armed resistance movement that escalated into open rebellion on several worlds."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/dvaered.md:32
@@ -580,7 +580,7 @@ msgid "## Territory"
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:44
-msgid "The Empire still has the largest territorial claim in the galaxy, holding a major part of the inhabited Galaxy centered around Polaris Prime in the Gamma Polaris system, the official seat of the Emperor."
+msgid "The Empire still has the largest territorial claim in the galaxy, holding a major part of the inhabited Galaxy centred around Polaris Prime in the Gamma Polaris system, the official seat of the Emperor."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:45
@@ -684,7 +684,7 @@ msgid "Enforcing the large number of laws passed by generations of Councils word
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:78
-msgid "Therefore, most members of the Bureaucracy follow what they, in their best judgment, believe to be the intention behind the laws."
+msgid "Therefore, most members of the Bureaucracy follow what they, in their best judgement, believe to be the intention behind the laws."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:79
@@ -788,7 +788,7 @@ msgid "The Galactic Space Pirates are split into two main groups, the clans and 
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:11
-msgid "Amoung the independent pirates are marauders who are extremely aggressive and not very well-equipped."
+msgid "Among the independent pirates are marauders who are extremely aggressive and not very well-equipped."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:12
@@ -1085,7 +1085,7 @@ msgid "A Proteron citizen was never their own person."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:27
-msgid "They were an asset of the government, their life's labor neatly represented in a bookkeeping column somewhere."
+msgid "They were an asset of the government, their life's labour neatly represented in a bookkeeping column somewhere."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:28
@@ -1205,7 +1205,7 @@ msgid "[The Empire](lore/factions/empire), eager to see results, continued to pu
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:64
-msgid "As a direct result of this, the more liberal, decentralised processes were eliminated from the test roster, and more emphasis was put on controlled, high-yield social structures."
+msgid "As a direct result of this, the more liberal, decentralized processes were eliminated from the test roster, and more emphasis was put on controlled, high-yield social structures."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:65
@@ -1289,7 +1289,7 @@ msgid "But when the Proteron High Autarch delivered this message to the Emperor,
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:90
-msgid "Appalled at this reaction, the Circle concluded in an emergency meeting that [the Empire](lore/factions/empire) had no intention of honoring the original agreement, thereby forfeiting its claim to the loyalty of House Proteron."
+msgid "Appalled at this reaction, the Circle concluded in an emergency meeting that [the Empire](lore/factions/empire) had no intention of honouring the original agreement, thereby forfeiting its claim to the loyalty of House Proteron."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:91
@@ -1662,7 +1662,7 @@ msgid "Those individuals leave their homes, sell their possessions and embark on
 msgstr ""
 
 #: dat/naevpedia/lore/factions/sirius.md:83
-msgid "Those who can't afford the fare right away will raise the money through intensive labor until they can, or die trying."
+msgid "Those who can't afford the fare right away will raise the money through intensive labour until they can, or die trying."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/sirius.md:84
@@ -1674,7 +1674,7 @@ msgid "Crater City is indeed built in a massive crater, a legacy left by the for
 msgstr ""
 
 #: dat/naevpedia/lore/factions/sirius.md:87
-msgid "Streets and houses now cover its slopes, and in its center stands a tall, tall spire, the Tower of Sirichana."
+msgid "Streets and houses now cover its slopes, and in its centre stands a tall, tall spire, the Tower of Sirichana."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/sirius.md:88
@@ -1899,7 +1899,7 @@ msgid "It would be a matter of cycles, maybe decaperiods before nobody was left 
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:49
-msgid "Faced with no hope of survival, the remaining hospitals and research centers decided to gamble everything on a bold plan."
+msgid "Faced with no hope of survival, the remaining hospitals and research centres decided to gamble everything on a bold plan."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:50
@@ -2592,7 +2592,7 @@ msgid "Somehow, a form of gestalt consciousness had slowly formed over time."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:145
-msgid "It emerged from the collective behavior associated with the interactions of the uploaded Thurions' minds."
+msgid "It emerged from the collective behaviour associated with the interactions of the uploaded Thurions' minds."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:146
@@ -3650,7 +3650,7 @@ msgid "1. Board and Capture the ship."
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:36
-msgid "1. Escort the ship to a spaceport with refueling capabilities."
+msgid "1. Escort the ship to a spaceport with refuelling capabilities."
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:37
@@ -3992,7 +3992,7 @@ msgid "## Equipment Window"
 msgstr ""
 
 #: dat/naevpedia/mechanics/equipment.md:25
-msgid "The equipment window is available when [landing](mechanics/landing) on spaceports with refueling capabilities."
+msgid "The equipment window is available when [landing](mechanics/landing) on spaceports with refuelling capabilities."
 msgstr ""
 
 #: dat/naevpedia/mechanics/equipment.md:26
@@ -4044,7 +4044,7 @@ msgid "Once installed, in general, they can not be removed nor moved to another 
 msgstr ""
 
 #: dat/naevpedia/mechanics/equipment.md:44
-msgid "You can view the intrinsic outfits a ship has from the equipment window when [landed](mechanics/landing) at a spaceport with refueling capabilities."
+msgid "You can view the intrinsic outfits a ship has from the equipment window when [landed](mechanics/landing) at a spaceport with refuelling capabilities."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:2
@@ -4105,7 +4105,7 @@ msgid "By pressing the <%= \"#b\"..naev.keyGet(\"scan\")..\"#0\" %> key, you can
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:22
-msgid "This will show you things such as the outfits the ship has and the cargo it is carrying."
+msgid "This will show you information such as the outfits the ship has and the cargo it is carrying."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:24
@@ -4289,7 +4289,7 @@ msgid "In particular, being in an asteroid will affect the detection range, and 
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:85
-msgid "Furthermore, the system interference wil lower signature and stealth ranges, but not the detection range, making it harder to track and identify ships."
+msgid "Furthermore, the system interference will lower signature and stealth ranges, but not the detection range, making it harder to track and identify ships."
 msgstr ""
 
 #: dat/naevpedia/mechanics/flow.md:2
@@ -4359,7 +4359,7 @@ msgid "Additionally, some ships will hail your ship."
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:9
-msgid "You can respond to these ships by either targetting them and hailing them, or using the <%= \"#b\"..naev.keyGet(\"autohail\")..\"#0\" %> key to respond directly."
+msgid "You can respond to these ships by either targeting them and hailing them, or using the <%= \"#b\"..naev.keyGet(\"autohail\")..\"#0\" %> key to respond directly."
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:11
@@ -4367,7 +4367,7 @@ msgid "## Requesting Fuel"
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:13
-msgid "When you run out of [fuel](mechanics/hyperspace), some good samaritans will offer to refuel you, usually in exchange for credits."
+msgid "When you run out of [fuel](mechanics/hyperspace), some good Samaritans will offer to refuel you, usually in exchange for credits."
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:14
@@ -4424,7 +4424,7 @@ msgid "## Active Cooldown"
 msgstr ""
 
 #: dat/naevpedia/mechanics/heat.md:13
-msgid "Although ships cool down naturally through radiation of excess heat, they can perform an active cooldown maneuver to dump all excess heat in a short amount of time."
+msgid "Although ships cool down naturally through radiation of excess heat, they can perform an active cooldown manoeuvre to dump all excess heat in a short amount of time."
 msgstr ""
 
 #: dat/naevpedia/mechanics/heat.md:14
@@ -4582,7 +4582,7 @@ msgid "### Equipment"
 msgstr ""
 
 #: dat/naevpedia/mechanics/landing.md:46
-msgid "Any spaceport with refueling capabilities will allow you to access the [equipment tab](mechanics/equipment)."
+msgid "Any spaceport with refuelling capabilities will allow you to access the [equipment tab](mechanics/equipment)."
 msgstr ""
 
 #: dat/naevpedia/mechanics/landing.md:47
@@ -4659,7 +4659,7 @@ msgid "1. **Torpedoes** are slow and devastating and are able to significantly d
 msgstr ""
 
 #: dat/naevpedia/mechanics/launchers.md:14
-msgid "2. **Missiles** are fast and agile, meant for targetting smaller ships."
+msgid "2. **Missiles** are fast and agile, meant for targeting smaller ships."
 msgstr ""
 
 #: dat/naevpedia/mechanics/launchers.md:15
@@ -6295,7 +6295,7 @@ msgid "## History"
 msgstr ""
 
 #: dat/naevpedia/lore/factions/dvaered.md:26
-msgid "House Dvaered came forth from a lower caste in the old Empire, a collection of miners, manual laborers, foot soldiers, and outcasts."
+msgid "House Dvaered came forth from a lower caste in the old Empire, a collection of miners, manual labourers, foot soldiers, and outcasts."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/dvaered.md:27
@@ -6303,15 +6303,15 @@ msgid "With the gradual decline in authority of [the Empire](lore/factions/empir
 msgstr ""
 
 #: dat/naevpedia/lore/factions/dvaered.md:28
-msgid "They banded together into what could be considered the biggest labor union in all of human history, and started demanding better treatment."
+msgid "They banded together into what could be considered the biggest labour union in all of human history, and started demanding better treatment."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/dvaered.md:30
-msgid "When [the Empire](lore/factions/empire) was less than forthcoming, the laborers began to take more drastic measures."
+msgid "When [the Empire](lore/factions/empire) was less than forthcoming, the labourers began to take more drastic measures."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/dvaered.md:31
-msgid "The peaceful labor union demands turned into an armed resistance movement that escalated into open rebellion on several worlds."
+msgid "The peaceful labour union demands turned into an armed resistance movement that escalated into open rebellion on several worlds."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/dvaered.md:32
@@ -6540,7 +6540,7 @@ msgid "## Territory"
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:44
-msgid "The Empire still has the largest territorial claim in the galaxy, holding a major part of the inhabited Galaxy centered around Polaris Prime in the Gamma Polaris system, the official seat of the Emperor."
+msgid "The Empire still has the largest territorial claim in the galaxy, holding a major part of the inhabited Galaxy centred around Polaris Prime in the Gamma Polaris system, the official seat of the Emperor."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:45
@@ -6644,7 +6644,7 @@ msgid "Enforcing the large number of laws passed by generations of Councils word
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:78
-msgid "Therefore, most members of the Bureaucracy follow what they, in their best judgment, believe to be the intention behind the laws."
+msgid "Therefore, most members of the Bureaucracy follow what they, in their best judgement, believe to be the intention behind the laws."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:79
@@ -6748,7 +6748,7 @@ msgid "The Galactic Space Pirates are split into two main groups, the clans and 
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:11
-msgid "Amoung the independent pirates are marauders who are extremely aggressive and not very well-equipped."
+msgid "Among the independent pirates are marauders who are extremely aggressive and not very well-equipped."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:12
@@ -7045,7 +7045,7 @@ msgid "A Proteron citizen was never their own person."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:27
-msgid "They were an asset of the government, their life's labor neatly represented in a bookkeeping column somewhere."
+msgid "They were an asset of the government, their life's labour neatly represented in a bookkeeping column somewhere."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:28
@@ -7165,7 +7165,7 @@ msgid "[The Empire](lore/factions/empire), eager to see results, continued to pu
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:64
-msgid "As a direct result of this, the more liberal, decentralised processes were eliminated from the test roster, and more emphasis was put on controlled, high-yield social structures."
+msgid "As a direct result of this, the more liberal, decentralized processes were eliminated from the test roster, and more emphasis was put on controlled, high-yield social structures."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:65
@@ -7249,7 +7249,7 @@ msgid "But when the Proteron High Autarch delivered this message to the Emperor,
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:90
-msgid "Appalled at this reaction, the Circle concluded in an emergency meeting that [the Empire](lore/factions/empire) had no intention of honoring the original agreement, thereby forfeiting its claim to the loyalty of House Proteron."
+msgid "Appalled at this reaction, the Circle concluded in an emergency meeting that [the Empire](lore/factions/empire) had no intention of honouring the original agreement, thereby forfeiting its claim to the loyalty of House Proteron."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/proteron.md:91
@@ -7622,7 +7622,7 @@ msgid "Those individuals leave their homes, sell their possessions and embark on
 msgstr ""
 
 #: dat/naevpedia/lore/factions/sirius.md:83
-msgid "Those who can't afford the fare right away will raise the money through intensive labor until they can, or die trying."
+msgid "Those who can't afford the fare right away will raise the money through intensive labour until they can, or die trying."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/sirius.md:84
@@ -7634,7 +7634,7 @@ msgid "Crater City is indeed built in a massive crater, a legacy left by the for
 msgstr ""
 
 #: dat/naevpedia/lore/factions/sirius.md:87
-msgid "Streets and houses now cover its slopes, and in its center stands a tall, tall spire, the Tower of Sirichana."
+msgid "Streets and houses now cover its slopes, and in its centre stands a tall, tall spire, the Tower of Sirichana."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/sirius.md:88
@@ -7859,7 +7859,7 @@ msgid "It would be a matter of cycles, maybe decaperiods before nobody was left 
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:49
-msgid "Faced with no hope of survival, the remaining hospitals and research centers decided to gamble everything on a bold plan."
+msgid "Faced with no hope of survival, the remaining hospitals and research centres decided to gamble everything on a bold plan."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:50
@@ -8552,7 +8552,7 @@ msgid "Somehow, a form of gestalt consciousness had slowly formed over time."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:145
-msgid "It emerged from the collective behavior associated with the interactions of the uploaded Thurions' minds."
+msgid "It emerged from the collective behaviour associated with the interactions of the uploaded Thurions' minds."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/thurion.md:146
@@ -9610,7 +9610,7 @@ msgid "1. Board and Capture the ship."
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:36
-msgid "1. Escort the ship to a spaceport with refueling capabilities."
+msgid "1. Escort the ship to a spaceport with refuelling capabilities."
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:37
@@ -9952,7 +9952,7 @@ msgid "## Equipment Window"
 msgstr ""
 
 #: dat/naevpedia/mechanics/equipment.md:25
-msgid "The equipment window is available when [landing](mechanics/landing) on spaceports with refueling capabilities."
+msgid "The equipment window is available when [landing](mechanics/landing) on spaceports with refuelling capabilities."
 msgstr ""
 
 #: dat/naevpedia/mechanics/equipment.md:26
@@ -10004,7 +10004,7 @@ msgid "Once installed, in general, they can not be removed nor moved to another 
 msgstr ""
 
 #: dat/naevpedia/mechanics/equipment.md:44
-msgid "You can view the intrinsic outfits a ship has from the equipment window when [landed](mechanics/landing) at a spaceport with refueling capabilities."
+msgid "You can view the intrinsic outfits a ship has from the equipment window when [landed](mechanics/landing) at a spaceport with refuelling capabilities."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:2
@@ -10065,7 +10065,7 @@ msgid "By pressing the <%= \"#b\"..naev.keyGet(\"scan\")..\"#0\" %> key, you can
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:22
-msgid "This will show you things such as the outfits the ship has and the cargo it is carrying."
+msgid "This will show you information such as the outfits the ship has and the cargo it is carrying."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:24
@@ -10249,7 +10249,7 @@ msgid "In particular, being in an asteroid will affect the detection range, and 
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:85
-msgid "Furthermore, the system interference wil lower signature and stealth ranges, but not the detection range, making it harder to track and identify ships."
+msgid "Furthermore, the system interference will lower signature and stealth ranges, but not the detection range, making it harder to track and identify ships."
 msgstr ""
 
 #: dat/naevpedia/mechanics/flow.md:2
@@ -10319,7 +10319,7 @@ msgid "Additionally, some ships will hail your ship."
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:9
-msgid "You can respond to these ships by either targetting them and hailing them, or using the <%= \"#b\"..naev.keyGet(\"autohail\")..\"#0\" %> key to respond directly."
+msgid "You can respond to these ships by either targeting them and hailing them, or using the <%= \"#b\"..naev.keyGet(\"autohail\")..\"#0\" %> key to respond directly."
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:11
@@ -10327,7 +10327,7 @@ msgid "## Requesting Fuel"
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:13
-msgid "When you run out of [fuel](mechanics/hyperspace), some good samaritans will offer to refuel you, usually in exchange for credits."
+msgid "When you run out of [fuel](mechanics/hyperspace), some good Samaritans will offer to refuel you, usually in exchange for credits."
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:14
@@ -10384,7 +10384,7 @@ msgid "## Active Cooldown"
 msgstr ""
 
 #: dat/naevpedia/mechanics/heat.md:13
-msgid "Although ships cool down naturally through radiation of excess heat, they can perform an active cooldown maneuver to dump all excess heat in a short amount of time."
+msgid "Although ships cool down naturally through radiation of excess heat, they can perform an active cooldown manoeuvre to dump all excess heat in a short amount of time."
 msgstr ""
 
 #: dat/naevpedia/mechanics/heat.md:14
@@ -10542,7 +10542,7 @@ msgid "### Equipment"
 msgstr ""
 
 #: dat/naevpedia/mechanics/landing.md:46
-msgid "Any spaceport with refueling capabilities will allow you to access the [equipment tab](mechanics/equipment)."
+msgid "Any spaceport with refuelling capabilities will allow you to access the [equipment tab](mechanics/equipment)."
 msgstr ""
 
 #: dat/naevpedia/mechanics/landing.md:47
@@ -10619,7 +10619,7 @@ msgid "1. **Torpedoes** are slow and devastating and are able to significantly d
 msgstr ""
 
 #: dat/naevpedia/mechanics/launchers.md:14
-msgid "2. **Missiles** are fast and agile, meant for targetting smaller ships."
+msgid "2. **Missiles** are fast and agile, meant for targeting smaller ships."
 msgstr ""
 
 #: dat/naevpedia/mechanics/launchers.md:15

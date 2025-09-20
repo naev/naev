@@ -52,7 +52,7 @@ local patron_descriptions = {
    _("A tourist looking a bit bewildered at all the noises and shiny lights all over."),
    _("A patron who seems down on their luck."),
    _("A patron who looks exhilarated as if they won big today."),
-   _("A patron that looks like they have spend a lot of time at the station. There are clear dark circles under their eyes."),
+   _("A patron that looks like they have spent a lot of time at the station. There are clear dark circles under their eyes."),
    _("A patron that looks strangely out of place."),
    _("A patron that fits in perfectly into the gambling station."),
 }
@@ -74,7 +74,7 @@ local patron_messages = {
    end,
    function ()
       if player.misnDone( "Minerva Pirates 6" ) then
-         return _([["I've seen folks come in with nothing and leave with a brand new Kestrel! Minerva station is a crazy place!"]])
+         return _([["I've seen folks come in with nothing and leave with a brand-new Kestrel! Minerva station is a crazy place!"]])
       else
          return _([["This place is great! I still have no idea how to play blackjack, but I just keep on playing again and again against that Cyborg Chicken."]])
       end
@@ -83,19 +83,19 @@ local patron_messages = {
       _([["I came all the way from {pnt} to be here! We don't have anything like this back at home."]]),
       {pnt=spob.get( {faction.get("Dvaered"), faction.get("Za'lek"), faction.get("Empire"), faction.get("Soromid")} )}
    ) end,
-   _([["Critics of Minerva Station say that being able to acquire nice outfits here without needing licenses increases piracy. I think they are all lame!"]]),
+   _([["Critics of Minerva Station say that being able to acquire nice outfits here without needing licences increases piracy. I think they are all lame!"]]),
    _([["I really want to go to the VIP hot springs they have, but I don't have the tokens. How does that even work in a space station?"]]),
    _([["I hear you can do all sorts of crazy stuff here if you have enough tokens. Need… to… get… more…!"]]),
    _([["I have never seen robots talk so roboty like the terminals here. That is so retro!"]]),
    _([["I scrounged up my lifetime savings to get a ticket here, but I forgot to bring extra to gamble…"]]),
    _([["I gambled all my savings away… I'm going to get killed when I get back home…"]]),
-   _([["They say you shouldn't gamble more than you can afford to lose. I wish someone had told me that yesterday. I don't even own a ship anymore!"]]),
-   _([["I like to play blackjack. I'm not addicted to gambling. I'm addicted to sitting in a semi-circle."]]), -- Mitch Hedberg
+   _([["They say you shouldn't gamble more than you can afford to lose. I wish someone had told me that yesterday. I don't even own a ship any more!"]]),
+   _([["I like to play blackjack. I'm not addicted to gambling. I'm addicted to sitting in a semicircle."]]), -- Mitch Hedberg
    _([["Gambling has brought our family together. We had to move to a smaller house."]]), -- Tommy Cooper
    _([["You don’t gamble to win. You gamble so you can gamble the next day."]]), -- Bert Ambrose
    _([["A credit won is twice as sweet as a credit earned!"]]), -- Paul Newman (dollar -> credit)
    _([["There is a very easy way to return from Minerva Station with a small fortune: come here with a large one!"]]), -- Jack Yelton (paraphrased)
-   _([["Luck always seems to be against the ones who depends on it."]]),
+   _([["Luck always seems to be against the ones who depend on it."]]),
 }
 
 function create()
@@ -276,7 +276,7 @@ WHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
    t:say( _([["WHILE GAMBLING IS NOT ALLOWED IN MOST OF THE EMPIRE, MINERVA STATION BOASTS OF AN EXCLUSIVE STATUS THANKS TO THE IMPERIAL DECREE 289.78 ARTICLE 478 SECTION 19 ALLOWING GAMBLING TO BE ENJOYED WITHOUT RESTRICTIONS. IT IS POSSIBLE TO PLAY GAMES USING CREDITS TO OBTAIN MINERVA TOKENS THAT CAN BE TRADED IN FOR GOODS AND SERVICES ANY TERMINAL THROUGHOUT THE STATION."]] ) )
    vn.jump( "more_info" )
    vn.label( "info_trade" )
-   t:say( _([["IT IS POSSIBLE TO TRADE MINERVA TOKENS FOR GOODS AND SERVICES AT TERMINALS THROUGHOUT THE STATION. THANKS TO THE IMPERIAL DECREE 289.78 ARTICLE 478 SECTION 72, ALL TRADE-INS ARE NOT SUBJECT TO STANDARD IMPERIAL LICENSE RESTRICTIONS. FURTHERMORE, THEY ALL HAVE 'I Got This Sucker at Minerva Station' ENGRAVED ON THEM."]]) )
+   t:say( _([["IT IS POSSIBLE TO TRADE MINERVA TOKENS FOR GOODS AND SERVICES AT TERMINALS THROUGHOUT THE STATION. THANKS TO THE IMPERIAL DECREE 289.78 ARTICLE 478 SECTION 72, ALL TRADE-INS ARE NOT SUBJECT TO STANDARD IMPERIAL LICENCE RESTRICTIONS. FURTHERMORE, THEY ALL HAVE 'I Got This Sucker at Minerva Station' ENGRAVED ON THEM."]]) )
    vn.jump( "more_info" )
    vn.label( "info_chicken" )
    t:say( _([["CYBORG CHICKEN IS OUR MOST POPULAR BLACKJACK DEALER. NOWHERE ELSE IN THE UNIVERSE WILL YOU BE ABLE TO PLAY CARD GAMES WITH AN AI-ENHANCED CHICKEN CYBORG. IT IS A ONCE AND A LIFE-TIME CHANCE THAT YOU SHOULD NOT MISS."]]) )

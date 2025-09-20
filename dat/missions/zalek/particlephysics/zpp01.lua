@@ -13,7 +13,7 @@
    if system.cur():reputation("Za'lek") &lt; 0 or faction.reputationGlobal("Za'lek") &lt; 0 then
       return false
    end
-   --return require("misn_test").reweight_active() -- Don't reweight since license are important
+   --return require("misn_test").reweight_active() -- Don't reweight since licence are important
    return true
  </cond>
  <notes>

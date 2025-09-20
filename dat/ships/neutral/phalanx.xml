@@ -12,8 +12,8 @@
  <trail_generator x="-12" y="-40" h="0">nebula</trail_generator>
  <fabricator>House Dvaered</fabricator>
  <faction>Independent</faction>
- <license>Medium Combat Vessel</license>
- <description>The Phalanx is, by Dvaered standards, a fast corvette that can be used as a missile platform, that it also maneuvers poorly is standard Dvaered construction. Its high armor makes it a capable corvette provided one equips it with turrets.</description>
+ <licence>Medium Combat Vessel</licence>
+ <description>The Phalanx is, by Dvaered standards, a fast corvette that can be used as a missile platform, that it also manoeuvres poorly is standard Dvaered construction. Its high armour makes it a capable corvette provided one equips it with turrets.</description>
  <health>
   <armour>250</armour>
  </health>

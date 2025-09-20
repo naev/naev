@@ -147,8 +147,8 @@ class line:
          else:
             return None
       elif isinstance(other, circle):
-         u = self - other.center
-         if (cl := (other.center + u)) not in other:
+         u = self - other.centre
+         if (cl := (other.centre + u)) not in other:
             return []
          else:
             d = sqrt(other.radius*other.radius - u*u)
@@ -210,13 +210,13 @@ class segment:
          return self.B
 
 class circle:
-   def __init__( self, center = vec(), radius = 0.0, strict = False ):
-      self.center = center
+   def __init__( self, centre = vec(), radius = 0.0, strict = False ):
+      self.centre = centre
       self.radius = radius
       self.strict = False
 
    def __repr__( self ):
-      return 'circle' + repr((self.center, self.radius))
+      return 'circle' + repr((self.centre, self.radius))
 
    __str__ = __repr__
 
@@ -228,10 +228,10 @@ class circle:
       if not isinstance(other, circle):
          return False
       d = self.radius - other.radius
-      return self.center == other.center and d*d < EPS*EPS
+      return self.centre == other.centre and d*d < EPS*EPS
 
    def __contains__( self, P ):
-      u = P - self.center
+      u = P - self.centre
       epsilon = -EPS if self.strict else +EPS
       return u * u <= self.radius * self.radius * (1.0 + epsilon)
 
@@ -293,7 +293,7 @@ def interstices( edges, vertices = [], povfp = None ):
       for t in subsets(S, 3):
          lines = tuple(x.line() for x in t)
          if C := inscribed_lines(*lines):
-            c = C.center
+            c = C.centre
             if c in t[0] and c in t[1] and c in t[2]:
                yield C, tuple(l.closest(c) for l in lines), 0
       # line, line, point -> manual solution
@@ -314,7 +314,7 @@ def interstices( edges, vertices = [], povfp = None ):
             P2 = P2[-1] if (P2[0]-I).size()<=(P2[-1]-I).size() else P2[0]
             ratio = ((P-I) * (P-I)) / ((P2-I) * (P-I))
             C = circle(I + (O-I)*ratio, UC.radius * abs(ratio))
-            c = C.center
+            c = C.centre
             if c in t1 and c in t2:
                yield C, (P, l1.closest(c), l2.closest(c)), 1
       # point, point, line -> the point point line problem of Apollonius (PPL)
@@ -351,7 +351,7 @@ def interstices( edges, vertices = [], povfp = None ):
          out.append(c)
          prev = c.strictness(True)
          for t in S:
-            if t.closest(c.center) in c:
+            if t.closest(c.centre) in c:
                if povfp and n!=3:
                   print_circle(povfp, out.pop(), "Magenta")
                else:
@@ -368,7 +368,7 @@ def bounded_circles( L, povfp = None ):
    sides = list(zip(L, L[1:]+L[:1]))
    ext = vec(min([x for (x,_) in L]), min([y for (_,y) in L])) - vec(1, 1)
    for C in interstices(sides , povfp = povfp):
-      l = segment(C.center, ext)
+      l = segment(C.centre, ext)
       if len([1 for s in sides if l & segment(*s)]) % 2 == 1:
          yield C
 
@@ -487,9 +487,9 @@ if __name__ == '__main__':
       [print_point(povfp, P) for P in L]
 
    def print_circle( fp, C, c = 'White', alt_cross = False ):
-      print_cross(fp, C.center, c, alt_cross)
+      print_cross(fp, C.centre, c, alt_cross)
       fp.write('torus{ ' + str(C.radius) + ', 0.002 ')
-      fp.write('rotate 90*x ' + 'translate '+point_it(C.center))
+      fp.write('rotate 90*x ' + 'translate '+point_it(C.centre))
       fp.write('pigment{color ' + c + '}}\n')
 
    ranv = lambda: vec(random()-0.5, random()-0.5)
@@ -517,15 +517,15 @@ if __name__ == '__main__':
          Pol = [P - vec(u, v) for P in Pols[i][j]]
          B = bounding_circle(Pol)
          if B:
-            d = B.center - vec(u, v)
+            d = B.centre - vec(u, v)
             Pol = [P - d for P in Pol]
-            B.center -= d
+            B.centre -= d
             print_circle(povfp, B, 'Blue', alt_cross = True)
          print_poly(povfp, Pol, 'Yellow')
-         color = 'Orange'
+         colour = 'Orange'
          for B in bounded_circles(Pol, None):
-            print_circle(povfp, B, color)
-            color = 'Red'
+            print_circle(povfp, B, colour)
+            colour = 'Red'
 
    povfp.flush()
    run(['povray', '+W1280', '+H720', '+A0.1', '+AM2', '+R3', '+J',

@@ -26,7 +26,7 @@ The Empire was quick to realize the threat Sorom now presented to the galaxy. Wi
 
 ### Gene Treatment
 
-The people of Sorom had been abandoned. The plague claimed more and more lives every day. It would be a matter of years, maybe months before nobody was left alive. Faced with no hope of survival, the remaining hospitals and research centers decided to gamble everything on a bold plan. If the human immune system couldn't combat the disease, then it was deficient. It was to be replaced by something better, something that could purify the system of the pathogen. It was time to redesign the human body.
+The people of Sorom had been abandoned. The plague claimed more and more lives every day. It would be a matter of years, maybe months before nobody was left alive. Faced with no hope of survival, the remaining hospitals and research centres decided to gamble everything on a bold plan. If the human immune system couldn't combat the disease, then it was deficient. It was to be replaced by something better, something that could purify the system of the pathogen. It was time to redesign the human body.
 
 As the researchers had precious little time, they found themselves forced to abandon ethics and cut corners. Many terminally ill patients were experimented upon and died. Even so, nobody objected. After all, if this project bore no fruit, all would perish. And so work desperately continued, claiming life after life until at last a breakthrough was achieved: a new technique for genetic manipulation.
 

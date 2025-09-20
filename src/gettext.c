@@ -24,8 +24,8 @@
 
 typedef struct translation {
    char     *language;   /**< Language code (allocated string). */
-   msgcat_t *chain;      /**< Array of message catalogs to try in order. */
-   char    **chain_lang; /**< Array of those catalogs' names. */
+   msgcat_t *chain;      /**< Array of message catalogues to try in order. */
+   char    **chain_lang; /**< Array of those catalogues' names. */
    struct translation
       *next; /**< Next entry in the list of loaded translations. */
 } translation_t;
@@ -115,7 +115,7 @@ const char *gettext_getSystemLanguage( void )
 
 /**
  * @brief Gets the active (primary) translation language. Even in case of a
- * complex locale, this will be the name of the first message catalog to be
+ * complex locale, this will be the name of the first message catalogue to be
  * checked (or the `en` language code for untranslated English). The purpose is
  * to provide a simple answer to things like libunibreak which ask which
  * language we're using.
@@ -225,16 +225,16 @@ static const char *gettext_matchLanguage( const char *lang, size_t lang_len,
 
 /**
  * @brief Return a translated version of the input, using the current language
- * catalogs.
+ * catalogues.
  *
  * @param msgid The English singular form.
  * @param msgid_plural The English plural form. (Pass NULL if simply translating
  * \p msgid1.)
  * @param n The number determining the plural form to use. (Pass 1 if simply
  * translating \p msgid1.)
- * @return The translation in the message catalog, if it exists, else whichever
- * of msgid1 or msgid2 is appropriate in English. The returned string must not
- * be modified or freed.
+ * @return The translation in the message catalogue, if it exists, else
+ * whichever of msgid1 or msgid2 is appropriate in English. The returned string
+ * must not be modified or freed.
  */
 const char *gettext_ngettext( const char *msgid, const char *msgid_plural,
                               uint64_t n )

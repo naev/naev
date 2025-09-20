@@ -117,7 +117,7 @@ static void inp_render( Widget *inp, double bx, double by )
 
    /* Draw text. */
    if ( inp->dat.inp.oneline ) {
-      /* center vertically, print whatever text fits regardless of word
+      /* centre vertically, print whatever text fits regardless of word
        * boundaries. */
       ty = y + ( inp->h - inp->dat.inp.font->h ) / 2.;
       gl_printMaxRaw( inp->dat.inp.font, inp->w - 10., x + 5., ty, col, -1.,

@@ -49,7 +49,7 @@
   <waypoint x="-500.000000" y="2000.000000">pirate5_drone_control1</waypoint>
   <waypoint x="18500.000000" y="9200.000000">pirate5_drone_control2</waypoint>
   <waypoint x="4000.000000" y="-14000.000000">pirate5_guard</waypoint>
-  <waypoint x="5000.000000" y="-17000.000000">pirate5_hacking_center</waypoint>
+  <waypoint x="5000.000000" y="-17000.000000">pirate5_hacking_centre</waypoint>
   <waypoint x="-1500.000000" y="600.000000">shadowrun_seiryuu</waypoint>
  </waypoints>
 </ssys>

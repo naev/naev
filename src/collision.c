@@ -884,7 +884,7 @@ int CollideCirclePolygon( const vec2 *ap, double ar, const CollPolyView *bt,
         ( ap->y - ar > p1.y ) && ( ap->y + ar < p2.y ) )
       return 0;
 
-   /* See if center is in polygon. */
+   /* See if centre is in polygon. */
    if ( PointInPolygon( bt, bp, ap->x, ap->y ) ) {
       crash[real_hits].x = ap->x;
       crash[real_hits].y = ap->y;
@@ -1032,7 +1032,7 @@ static int linePointOnSegment( double d1, double x1, double y1, double x2,
  *
  *    @param[in] p1 Point 1 of the line segment.
  *    @param[in] p2 Point 2 of the line segment.
- *    @param[in] cc Center of the circle.
+ *    @param[in] cc Centre of the circle.
  *    @param[in] cr Radius of the circle.
  *    @param[out] crash Position of the collision.
  *    @return 1 on collision, 0 else.
@@ -1188,15 +1188,15 @@ double CollideCircleIntersection( const vec2 *p1, double r1, const vec2 *p2,
    /* Distances. */
    double dist   = sqrt( dist2 );
    double distc1 = ( pow2( r1 ) - pow2( r2 ) + dist2 ) /
-                   ( 2. * dist ); /* First center point to middle line. */
-   double distc2 = dist - distc1; /* Second center point to middle line. */
+                   ( 2. * dist ); /* First centre point to middle line. */
+   double distc2 = dist - distc1; /* Second centre point to middle line. */
    double height =
       sqrt( pow2( r1 ) - pow2( distc1 ) ); /* Half of middle line. */
    /* Angles. */
    double ang1 = fmod( atan2( height, distc1 ) * 2. + 2. * M_PI,
-                       2. * M_PI ); /* Center angle for first circle. */
+                       2. * M_PI ); /* Centre angle for first circle. */
    double ang2 = fmod( atan2( height, distc2 ) * 2. + 2. * M_PI,
-                       2. * M_PI ); /*< Center angle for second circle. */
+                       2. * M_PI ); /*< Centre angle for second circle. */
    /* Areas. */
    double A1 = pow2( r1 ) / 2.0 *
                ( ang1 - sin( ang1 ) ); /* Area of first circula segment. */

@@ -369,7 +369,7 @@ They lift up their toy Lancelot. You can barely make out a golden Efreeti etched
       sl(_([["Great! So take a look at this ship and listen carefully."]]) .. "\n\n" .. question_data.question)
       function restore_vn ()
          vn.disappear( shipchar )
-         vn.move( sl, "center" )
+         vn.move( sl, "centre" )
       end
    end
 

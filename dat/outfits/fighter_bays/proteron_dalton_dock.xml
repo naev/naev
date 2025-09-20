@@ -3,7 +3,7 @@
   <shortname>P. Dalton Dock</shortname>
   <slot prop="fighter_bay">weapon</slot>
   <size>medium</size>
-  <license>Light Combat Vessel</license>
+  <licence>Light Combat Vessel</licence>
   <rarity>2</rarity>
   <cond>require("buyrep")("Proteron", 50)</cond>
   <condstr>You need at least 50% reputation with the Sovereign Proteron Autarchy.</condstr>

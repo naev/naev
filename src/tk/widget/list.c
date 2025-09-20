@@ -330,7 +330,7 @@ static int lst_focus( Widget *lst, double bx, double by )
          lst_scroll( lst, 0 ); /* checks boundaries and triggers callback */
       }
    } else {
-      /* Get bar position (center). */
+      /* Get bar position (centre). */
       double scroll_pos = (double)( lst->dat.lst.pos * CELLHEIGHT ) /
                           ( lst->dat.lst.height - lst->h + 2 );
       double y = ( lst->h - 30. ) * ( 1. - scroll_pos ) + 15.;

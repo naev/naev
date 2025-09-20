@@ -6,7 +6,7 @@ call plug#end()
 " Have to specify paths below
 let naev = "/path/to/naev/"
 autocmd BufRead,BufNewFile /path/to/naev/* call NaevOptions()
-autocmd BufRead,BufNewFile /path/to/naev/*.{c,lua} call NaevALEOptions()
+autocmd BufRead,BufNewFile /path/to/naev/*.{c,lua,xml} call NaevALEOptions()
 function NaevOptions()
    " Indentation
    set expandtab     " Make sure that every file uses real tabs, not spaces
@@ -27,6 +27,7 @@ function NaevOptions()
    highlight ColorColumn ctermbg=darkblue
 endfunction
 function NaevALEOptions()
+   call ale#handlers#languagetool#DefineLinter('xml')
    call ale#handlers#languagetool#DefineLinter('lua')
    let g:ale_languagetool_executable = naev.'utils/gettextlanguagetool.py'
    let g:ale_lua_luacheck_executable = naev.'utils/nluacheck.py'
@@ -35,6 +36,7 @@ function NaevALEOptions()
    let g:ale_c_flawfinder_minlevel = 5
    let g:ale_linters = {
    \  'lua':['languagetool', 'cspell', 'lua_language_server', 'luac', 'luacheck', 'selene'],
+   \  'xml':['xmllint', 'languagetool'],
    \}
 
    " Vim defaults to C++ for .h files, so force C

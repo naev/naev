@@ -239,7 +239,7 @@ function hit( sys, mod, source, secondary, primary_fct )
       return changed
    end
 
-   -- Center hit on sys and have to expand out
+   -- Centre hit on sys and have to expand out
    local val = hit_local( sys, mod, min, max )
    local valsys = sys
    if sbase.hit_range > 0 then

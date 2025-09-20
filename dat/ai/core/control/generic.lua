@@ -1216,7 +1216,7 @@ function distress_handler( pilot, attacker )
             return true
          end
       end
-   -- If not fleeing or refueling, begin attacking
+   -- If not fleeing or refuelling, begin attacking
    elseif task ~= "runaway" and task ~= "refuel" then
       if not si.noattack and mem.aggressive then
          -- Ignore if not interested in attacking

@@ -171,7 +171,7 @@ function nooutfit_timer ()
    vn.transition( tut.shipai.transition )
    vn.na(fmt.f(_([[Your ship AI {shipai} materializes before you.]]),
       {shipai=tut.ainame()}))
-   sai(_([["It seems like the ship's sensors are not sufficient to analyze the sensor anomaly. We'll need something better. The probability of off-the-shelf outfits working is low, the most logical course of action might be to #bconsult other pilots at a nearby bar#0."]]))
+   sai(_([["It seems like the ship's sensors are not sufficient to analyse the sensor anomaly. We'll need something better. The probability of off-the-shelf outfits working is low, the most logical course of action might be to #bconsult other pilots at a nearby bar#0."]]))
    vn.done( tut.shipai.transition )
    vn.run()
 end

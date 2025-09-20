@@ -1,13 +1,6 @@
-personal_ws-1.1 en 150
+personal_ws-1.1 en 130
 ai
-behaviour
 ccw
-colour
-colourblind
-Colouring
-colourized
-colours
-colourspace
 dataname
 desc
 displayname
@@ -71,7 +64,6 @@ omsg
 onChange
 onhit
 onshootany
-Optim
 packfile
 pathname
 pcall
@@ -92,8 +84,6 @@ rerender
 rnd
 setNPC
 sfx
-shipmass
-shipname
 shipstat
 shipstats
 spobname
@@ -110,7 +100,6 @@ targetting
 textinput
 tget
 threadpool
-thresholding
 tk
 tolstring
 trackmax
@@ -126,7 +115,7 @@ unregister
 unregisters
 unsets
 vbos
-VirtuaSpob
+VirtualSpob
 vpool
 weaponLayer
 weaponset

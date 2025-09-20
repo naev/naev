@@ -11,7 +11,7 @@
    if system.cur():reputation("Dvaered") &lt; 0 or faction.reputationGlobal("Dvaered") &lt; 0 then
       return false
    end
-   --return require("misn_test").reweight_active() -- don't reweight for licenses
+   --return require("misn_test").reweight_active() -- don't reweight for licences
    return true
  </cond>
  <notes>
@@ -301,15 +301,15 @@ function land()
       vn.transition( )
       vn.na(_([[After landing, you notice Colonel Okran waiting for you on the dock.]]))
       local sol = vn.newCharacter( _("Colonel Okran"), { image=portrait.getFullPath(agentPort) } )
-      if diff.isApplied( "heavy_weapons_license" ) then
+      if diff.isApplied( "heavy_weapons_licence" ) then
          sol(fmt.f(_([["Hello again, citizen {name}. We have been informed by House Goddard of the tragic death of Mrs Grosjean. Lord Fatgun sent flowers to her family, and I believe you may have come to receive your reward. We will re-contact you in case we need your services again in the future."]]),
             {name=player.name()}))
       else
          sol(fmt.f(_([["Hello again, citizen {name}. We have been informed by House Goddard of the tragic death of Mrs Grosjean. Lord Fatgun sent flowers to her family, and I believe you may have come to receive your reward. We will re-contact you in case we need your services again in the future."
-"Oh, and as an additional reward, I made sure you can now purchase the Heavy Weapon License."]]),
+"Oh, and as an additional reward, I made sure you can now purchase the Heavy Weapon Licence."]]),
             {name=player.name()}))
          vn.sfxBingo()
-         vn.na(_([[You can now purchase the #bHeavy Weapon License#0.]]))
+         vn.na(_([[You can now purchase the #bHeavy Weapon Licence#0.]]))
       end
 
       vn.sfxVictory()
@@ -319,11 +319,11 @@ function land()
       vn.run()
 
       faction.get("Dvaered"):hit(5)
-      if diff.isApplied( "heavy_weapons_license" ) then
+      if diff.isApplied( "heavy_weapons_licence" ) then
          dv.addStandardLog( _([[You performed a negotiation mission for Lord Fatgun, who needs to purchase a second Goddard battlecruiser. This mission consisted in killing a shareholder of Goddard who was opposed to this contract.]]) )
-      else -- Player does not have the license
-         dv.addStandardLog( _([[You performed a negotiation mission for Lord Fatgun, who needs to purchase a second Goddard battlecruiser. This mission consisted in killing a shareholder of Goddard who was opposed to this contract. Completing this mission has granted you access to the Heavy Weapon License.]]) )
-         diff.apply("heavy_weapons_license")
+      else -- Player does not have the licence
+         dv.addStandardLog( _([[You performed a negotiation mission for Lord Fatgun, who needs to purchase a second Goddard battlecruiser. This mission consisted in killing a shareholder of Goddard who was opposed to this contract. Completing this mission has granted you access to the Heavy Weapon Licence.]]) )
+         diff.apply("heavy_weapons_licence")
       end
       player.pay(mem.credits)
       misn.finish(true)

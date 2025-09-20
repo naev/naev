@@ -52,7 +52,7 @@ function create ()
       end
    end
 
-   local c = commodity.new( N_("Subspace Analyzer"), N_("An amalgam of parts recovered from derelict ships heavily modified to be able to perform in-depth analysis of subspace spectrum.") )
+   local c = commodity.new( N_("Subspace Analyser"), N_("An amalgam of parts recovered from derelict ships heavily modified to be able to perform in-depth analysis of subspace spectrum.") )
    c:illegalto( {"Empire", "Dvaered", "Soromid", "Sirius", "Za'lek", "Frontier"} )
    mem.cargo = misn.cargoAdd( c, 0 )
 
@@ -92,7 +92,7 @@ function heartbeat ()
    if hypergate:pos():dist( player.pos() ) < 10e3 then
       player.autonavReset( 3 )
       luaspfx.sfx( nil, nil, beep )
-      player.msg( _("The analyzer has collected the hypergate data and become inert."), true )
+      player.msg( _("The analyser has collected the hypergate data and become inert."), true )
       mem.state = 1
       misn.osdActive(2)
       misn.markerRm()

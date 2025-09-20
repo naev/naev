@@ -46,7 +46,7 @@ __attribute__( ( const ) ) mat4 mat4_identity( void );
 __attribute__( ( const ) ) mat4 mat4_ortho( double left, double right,
                                             double bottom, double top,
                                             double nearVal, double farVal );
-mat4 mat4_lookat( const vec3 *eye, const vec3 *center, const vec3 *up );
+mat4 mat4_lookat( const vec3 *eye, const vec3 *centre, const vec3 *up );
 mat4 mat4_perspective( double fov, double aspect, double near, double far );
 
 /* Quaternion stuff. */

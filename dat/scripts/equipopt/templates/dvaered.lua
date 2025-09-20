@@ -17,9 +17,9 @@ local dvaered_outfits = eoutfits.merge{{
    -- Small Weapons
    "Shredder", "Vulcan Gun", "Gauss Gun", "Turreted Gauss Gun",
    "TeraCom Mace Launcher", "TeraCom Banshee Launcher",
-   -- Point Defense
+   -- Point Defence
    "Dvaered Flare Battery",
-   "Ratchet Point Defense",
+   "Ratchet Point Defence",
    -- Utility
    "Cyclic Combat AI", "Milspec Impacto-Plastic Coating",
    "Unicorp Scrambler", "Milspec Scrambler", "Unicorp Light Afterburner",
@@ -44,7 +44,7 @@ local dvaered_params = {
       } end,
    ["Dvaered Phalanx"] = function () return {
          turret = 1.25,
-         pointdefense = 0.8, -- point defenses are turrets so we compensate
+         pointdefence = 0.8, -- point defences are turrets so we compensate
          type_range = {
             ["Launcher"] = { max = rnd.rnd(2,3) },
          }

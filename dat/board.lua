@@ -331,7 +331,7 @@ function wgtBoard:draw( bx, by )
       local font = luatk._deffont
       local _maxw, wrap = font:getWrap( txt, w )
       local th = #wrap * font:getLineHeight()
-      lg.printf( txt, luatk._deffont, x, y+(h-th)/2, w, 'center' )
+      lg.printf( txt, luatk._deffont, x, y+(h-th)/2, w, 'centre' )
    end
    if l.qs then
       lg.setColour( luatk.colour.text )
@@ -499,7 +499,7 @@ You will still have to escort the ship and land with it to perform the repairs a
 
    luatk.yesno( _("Capture Ship?"), capturemsg,
       function ()
-         luatk.msg(_([[Ship Taken Over]]),fmt.f(_([[You have taken over the {shp}. You will still have to escort the ship to an spaceport with refueling capabilities to complete the capture and then pay the reparation fee of {amount}.]]),
+         luatk.msg(_([[Ship Taken Over]]),fmt.f(_([[You have taken over the {shp}. You will still have to escort the ship to an spaceport with refuelling capabilities to complete the capture and then pay the reparation fee of {amount}.]]),
             {shp=board_plt:name(),amount=fmt.credits(cost)}))
 
          -- Faction hit
@@ -540,11 +540,11 @@ local function board_fcthit_apply ( eat )
          {fcthit=fmt.number(loss),fct=fct})
    else
       if loss == 0 then
-         board_fcthit_txt_msg = fmt.f(_("You have cannibalized this ship, gaining {eat} armor. Another cannibalize would destroy it."),
+         board_fcthit_txt_msg = fmt.f(_("You have cannibalized this ship, gaining {eat} armour. Another cannibalize would destroy it."),
             {eat=fmt.number(eat)})
       else
          local loss_d = -fct:hitTest( -board_fcthit, system.cur(), "destroy" )
-         board_fcthit_txt_msg = fmt.f(_("You have cannibalized this ship, gaining {eat} armor and losing {fcthit} reputation with {fct} for it ! Another cannibalize would destroy it, losing an additional {ld} reputation."),
+         board_fcthit_txt_msg = fmt.f(_("You have cannibalized this ship, gaining {eat} armour and losing {fcthit} reputation with {fct} for it ! Another cannibalize would destroy it, losing an additional {ld} reputation."),
             {eat=fmt.number(eat),fcthit=fmt.number(loss),fct=fct,ld=fmt.number(loss_d)})
       end
       board_fcthit = 0
@@ -718,7 +718,7 @@ function manage_cargo ()
    local wdw = luatk.newWindow( nil, nil, w, h )
    cargo_wdw = wdw
 
-   luatk.newText( wdw, 0, 10, w, 20, _("Manage Cargo"), nil, "center" )
+   luatk.newText( wdw, 0, 10, w, 20, _("Manage Cargo"), nil, "centre" )
 
    luatk.newText( wdw, 20, 40, w-40, 20, _("Select cargo to jettison:") )
    cargo_lst = luatk.newList( wdw, 20, 65, w-40, h-130, cnames )
@@ -782,7 +782,7 @@ function _board( plt )
    local yoff=0
 
    board_wdw = wdw
-   luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Boarding {plt}"), {plt=plt}), nil, "center" )
+   luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Boarding {plt}"), {plt=plt}), nil, "centre" )
 
    local x = w-20-80
    luatk.newButton( wdw, x, h-20-30+yoff, 80, 30, _("Close"), board_close )

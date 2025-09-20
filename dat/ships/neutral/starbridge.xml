@@ -12,7 +12,7 @@
  <trail_generator y="-6" h="5" x="-28"/>
  <fabricator>Krain Industries</fabricator>
  <faction>Independent</faction>
- <license>Medium Combat Vessel</license>
+ <licence>Medium Combat Vessel</licence>
  <description>The Starbridge is the latest ship designed by Krain Industries. It is a lightweight destroyer reaching the same manoeuvrability as a corvette and comparable maximum speed. Its low mass comes at the cost of reduced structural space.</description>
  <health>
   <armour>320</armour>

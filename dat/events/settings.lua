@@ -59,7 +59,7 @@ function settings ()
    local w, h = 600, 650
    local wdw = luatk.newWindow( nil, nil, w, h )
    wdw:setCancel( luatk.close )
-   luatk.newText( wdw, 0, 10, w, 20, _("Player Settings"), nil, "center" )
+   luatk.newText( wdw, 0, 10, w, 20, _("Player Settings"), nil, "centre" )
 
    local y = 40
    luatk.newText( wdw, 20, y, w-40, 20, "#n".._("General Settings") )
@@ -235,7 +235,7 @@ end
 function pick_gui ()
    local w, h = 220, 300
    local wdw = luatk.newWindow( nil, nil, w, h )
-   luatk.newText( wdw, 0, 10, w, 20, _("Select GUI"), nil, "center" )
+   luatk.newText( wdw, 0, 10, w, 20, _("Select GUI"), nil, "centre" )
 
    local lst_guis = luatk.newList( wdw, 20, 40, w-40, h-120, player.guiList() )
    lst_guis:setItem( player.gui() )

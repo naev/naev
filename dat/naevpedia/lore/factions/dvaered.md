@@ -25,12 +25,12 @@ The only way of rising up is through military achievement, recognized through me
 
 ## History
 
-House Dvaered came forth from a lower caste in the old Empire, a collection of miners, manual laborers, foot soldiers, and outcasts.
+House Dvaered came forth from a lower caste in the old Empire, a collection of miners, manual labourers, foot soldiers, and outcasts.
 With the gradual decline in authority of [the Empire](lore/factions/empire), the working class became increasingly disgruntled with their social position.
-They banded together into what could be considered the biggest labor union in all of human history, and started demanding better treatment.
+They banded together into what could be considered the biggest labour union in all of human history, and started demanding better treatment.
 
-When [the Empire](lore/factions/empire) was less than forthcoming, the laborers began to take more drastic measures.
-The peaceful labor union demands turned into an armed resistance movement that escalated into open rebellion on several worlds.
+When [the Empire](lore/factions/empire) was less than forthcoming, the labourers began to take more drastic measures.
+The peaceful labour union demands turned into an armed resistance movement that escalated into open rebellion on several worlds.
 History names this movement the Dvaered Revolts.
 While the origin of that name is lost to time, it became a badge of honour among the rebelling workers.
 

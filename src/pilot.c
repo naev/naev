@@ -2777,7 +2777,7 @@ void pilot_update( Pilot *pilot, double dt )
    else
       pilot->player_damage = 0.;
 
-   /* Pilot is board/refueling.  Hack to match speeds. */
+   /* Pilot is board/refuelling.  Hack to match speeds. */
    if ( pilot_isFlag( pilot, PILOT_REFUELBOARDING ) )
       pilot_refuel( pilot, dt );
 
@@ -3201,9 +3201,9 @@ void pilot_hyperspaceAbort( Pilot *p )
 }
 
 /**
- * @brief Attempts to start refueling the pilot's target.
+ * @brief Attempts to start refuelling the pilot's target.
  *
- *    @param p Pilot to try to start refueling.
+ *    @param p Pilot to try to start refuelling.
  */
 int pilot_refuelStart( Pilot *p )
 {
@@ -3224,7 +3224,7 @@ int pilot_refuelStart( Pilot *p )
 
    /* Now start the boarding to refuel. */
    pilot_setFlag( p, PILOT_REFUELBOARDING );
-   p->ptimer = PILOT_REFUEL_TIME; /* Use timer to handle refueling. */
+   p->ptimer = PILOT_REFUEL_TIME; /* Use timer to handle refuelling. */
    return 1;
 }
 
@@ -3242,7 +3242,7 @@ static void pilot_updateSolid( Pilot *p, double dt )
 /**
  * @brief Has the pilot refuel its target.
  *
- *    @param p Pilot that is actively refueling.
+ *    @param p Pilot that is actively refuelling.
  *    @param dt Current delta tick.
  */
 static void pilot_refuel( Pilot *p, double dt )
@@ -3836,10 +3836,10 @@ Pilot *pilot_setPlayer( Pilot *after )
  *    @param[out] jump Jump chosen or NULL if not.
  *    @param lf Faction to choose point for.
  *    @param ignore_rules Whether or not to ignore all rules.
- *    @param guerilla Whether or not to spawn in deep space.
+ *    @param guerrilla Whether or not to spawn in deep space.
  */
 void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf,
-                        int ignore_rules, int guerilla )
+                        int ignore_rules, int guerrilla )
 {
    int        *ind;
    JumpPoint **validJumpPoints;
@@ -3869,7 +3869,7 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf,
       for ( int i = 0; i < array_size( cur_system->jumps ); i++ ) {
          /* The jump into the system must not be exit-only, and unless
           * ignore_rules is set, must also be non-hidden
-          * (excepted if the pilot is guerilla) and have faction
+          * (excepted if the pilot is guerrilla) and have faction
           * presence matching the pilot's on the remote side. */
          const JumpPoint *jmp    = &cur_system->jumps[i];
          JumpPoint       *target = jmp->returnJump;
@@ -3885,8 +3885,8 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf,
             continue;
          }
 
-         /* Only guerrila entrances can use hidden jumps. */
-         if ( jp_isFlag( jmp, JP_HIDDEN ) && !guerilla )
+         /* Only guerrilla entrances can use hidden jumps. */
+         if ( jp_isFlag( jmp, JP_HIDDEN ) && !guerrilla )
             continue;
 
          /* Test presence on the other side, making sure there is presence. */
@@ -3907,7 +3907,7 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf,
    /* Unusual case no landable nor presence, we'll just jump in randomly if
     * possible. */
    if ( array_size( ind ) == 0 && array_size( validJumpPoints ) == 0 ) {
-      if ( guerilla ) /* Guerilla ships are created far away in deep space. */
+      if ( guerrilla ) /* Guerrilla ships are created far away in deep space. */
          vec2_pset( vp, 1.5 * cur_system->radius, RNGF() * 2 * M_PI );
       else if ( array_size( cur_system->jumps ) > 0 ) {
          for ( int i = 0; i < array_size( cur_system->jumps ); i++ ) {
@@ -3919,9 +3919,9 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf,
                continue;
             array_push_back( &validJumpPoints, jp->returnJump );
          }
-         /* Now add hidden jumps as a last resort - only for non guerillas as
+         /* Now add hidden jumps as a last resort - only for non guerrillas as
           * they should be added otherwise. */
-         if ( !guerilla && array_size( validJumpPoints ) <= 0 ) {
+         if ( !guerrilla && array_size( validJumpPoints ) <= 0 ) {
             for ( int i = 0; i < array_size( cur_system->jumps ); i++ ) {
                JumpPoint *jp = &cur_system->jumps[i];
                if ( jp_isFlag( jp->returnJump, JP_EXITONLY ) )

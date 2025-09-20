@@ -18,7 +18,7 @@
    if not misn_test.mercenary(true) then
       return false
    end
-   --return misn_test.reweight_active() -- don't reweight for licenses
+   --return misn_test.reweight_active() -- don't reweight for licences
    return true
  </cond>
  <notes>

@@ -27,21 +27,21 @@ def smoothen_induced( pos, jmp, S, hard = False ):
    return smoothen(pos, neigh, hard = hard)
 
 from math import sqrt
-def circleify( pos, L, center, hard = False ):
+def circleify( pos, L, centre, hard = False ):
    newp = dict()
    # global approach -> much more brutal.
-   V = [(pos[i] - pos[center]).size() for i in L]
+   V = [(pos[i] - pos[centre]).size() for i in L]
    avg = sum(V) / len(V)
    for i in L:
-      p = pos[center] + (pos[i]-pos[center]).normalize(avg)
+      p = pos[centre] + (pos[i]-pos[centre]).normalize(avg)
       pos[i] = p if hard else (pos[i] + 2.0*p) / 3.0
    """
    # local approach
    for i, j, k in zip(L[:-2],L[1:-1],L[2:]):
       c = (pos[i] + pos[k]) / 2.0
-      v1, v2 = pos[i] - pos[center], pos[k] - pos[center]
+      v1, v2 = pos[i] - pos[centre], pos[k] - pos[centre]
       #avg = lambda x, y: (x + y) / 2.0
       avg = lambda x, y: sqrt(x * y)
-      newp[j] = pos[center] + (pos[j] - pos[center]).normalize(avg(v1.size(), v2.size()))
+      newp[j] = pos[centre] + (pos[j] - pos[centre]).normalize(avg(v1.size(), v2.size()))
    """
    return newp

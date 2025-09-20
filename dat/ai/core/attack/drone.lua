@@ -66,7 +66,7 @@ function __atk_drone_ranged( target, dist )
 end
 
 --[[
--- Main control function for drone behavior.
+-- Main control function for drone behaviour.
 --]]
 function atk_drone.atk( target, dokill )
    target = atk.com_think( target, dokill )

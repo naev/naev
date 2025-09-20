@@ -363,7 +363,7 @@ int escorts_clear( const Pilot *parent )
 }
 
 /**
- * @brief Open a dialog for the player to issue a command to an escort.
+ * @brief Open a dialogue for the player to issue a command to an escort.
  *
  *    @param e The pilot for the player to issue an order to.
  *    @return 0 on success, 1 if no orders given.

@@ -8,12 +8,12 @@ from sys import argv, stderr
 from graph_vaux import color_values, ssys_color, ssys_nebula, ssys_others
 
 
-def main( color = False, fixed_pos = False ):
+def main( colour = False, fixed_pos = False ):
    from graphmod import ssys_pos as pos, ssys_jmp as E, no_graph_out
    no_graph_out()
 
-   if color:
-      colors = { k: color_values[ssys_color(pos, k)] for k in pos }
+   if colour:
+      colours = { k: color_values[ssys_color(pos, k)] for k in pos }
       nebula = { k: ssys_nebula(pos, k) for k in pos if ssys_nebula(pos, k) is not None }
       others = { k: ssys_others(pos, k) for k in pos }
       V = {k:' '.join(l[1:]) for k, l in pos.aux.items()}
@@ -60,7 +60,7 @@ def main( color = False, fixed_pos = False ):
             label = label.replace(*t)
          s += 'label="' + label + '"'
 
-         if color:
+         if colour:
             if i in nebula:
                for lev, col in {
                   0:'blue',
@@ -81,7 +81,7 @@ def main( color = False, fixed_pos = False ):
                if o in c:
                   s += 'penwidth=4.0;color=' + c[o]
                   break
-            cols = [int(255.0*(f/3.0+2.0/3.0)) for f in colors[i]]
+            cols = [int(255.0*(f/3.0+2.0/3.0)) for f in colours[i]]
             rgb = ''.join([('0'+(hex(v)[2:]))[-2:] for v in cols])
             s += ';fillcolor="#' + rgb + '"'
 
@@ -148,7 +148,7 @@ def main( color = False, fixed_pos = False ):
          print('\t"' + f + '"--"' + t + '"' + prop)
    print('}')
 
-if color := '-c' in argv:
+if colour := '-c' in argv:
    argv.remove('-c')
 
 if keep := '-k' in argv:
@@ -159,7 +159,7 @@ if '-h' in argv[1:] or '--help' in argv[1:]:
       'usage: ', argv[0], '[-c]', '[-k]', '\n'
       '  Outputs the graph in dot format.\n'
       '  By default, interprets the vertex aux as the name.\n'
-      '  If -c is set, interprets the first aux field as color.\n'
+      '  If -c is set, interprets the first aux field as colour.\n'
       '  If -k is set, the nodes have the keep_position marker.\n'
       'Examples:\n'
       '  > ./utils/ssys/ssys2dot.py -k | neato -Tpng > before.png\n'
@@ -170,4 +170,4 @@ else:
    if argv[1:]:
       stderr.write('Ignored: "' + '", "'.join(argv[1:]) + '"\n')
 
-   main(color, keep)
+   main(colour, keep)

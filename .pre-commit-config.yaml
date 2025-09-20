@@ -101,10 +101,7 @@ repos:
   hooks:
     - id: codespell
       files: '^dat/'
-      types: [lua]
-      args: ["--ignore-words", ".codespellignore" ]
-      additional_dependencies:
-        - tomli
+      types_or: [xml, lua]
 - repo: https://github.com/shssoichiro/oxipng
   rev: v9.1.5
   hooks:

@@ -320,3 +320,4 @@ void player_scan( void );
 void player_toggleMouseFly( void );
 void player_cooldownBrake( void );
 void player_stealth( void );
+int  player_runUpdaterScript( const char *type, const char *name, int q );

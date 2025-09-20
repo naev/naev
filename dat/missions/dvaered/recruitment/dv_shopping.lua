@@ -17,7 +17,7 @@
    if spob.cur():services().shipyard == nil then
       return false
    end
-   --return require("misn_test").reweight_active() -- don't reweight for licenses
+   --return require("misn_test").reweight_active() -- don't reweight for licences
    return true
  </cond>
  <notes>
@@ -235,12 +235,12 @@ The walls are covered with pictures of different versions of the Goddard battlec
 "Congratulations, citizen {player}. Our data suggests you have won your first honourable fight against a gentleman. Please reach the spaceport's military contact office for further information."
 When you arrive at the said office, a soldier greets you.]]), {player=player.name()}))
       local sol = vn.newCharacter( _("Dvaered Soldier"), { image=portrait.getFullPath(solPort) } )
-      if diff.isApplied( "heavy_combat_vessel_license" ) then
+      if diff.isApplied( "heavy_combat_vessel_licence" ) then
          sol(_([["Good day, citizen. We got the information that you destroyed the Colonel Okran in a fair space fight in the framework of a Warlords rivalry. This achievement gives you the respect of the Dvaered High Command. Moreover, our cleaning team did find a fancy keychain among the remains of Okran's ship. As the customs requires it, this item is now yours, for what it's worth."]]))
       else
-         sol(_([["Good day, citizen. We got the information that you destroyed the Colonel Okran in a fair space fight in the framework of a Warlords rivalry. This achievement gives you the respect of the Dvaered High Command. As such, you will be allowed to purchase the Heavy Combat Vessel License. Moreover, our cleaning team did find a fancy keychain among the remains of Okran's ship. As the customs requires it, this item is now yours, for what it's worth."]]))
+         sol(_([["Good day, citizen. We got the information that you destroyed the Colonel Okran in a fair space fight in the framework of a Warlords rivalry. This achievement gives you the respect of the Dvaered High Command. As such, you will be allowed to purchase the Heavy Combat Vessel Licence. Moreover, our cleaning team did find a fancy keychain among the remains of Okran's ship. As the customs requires it, this item is now yours, for what it's worth."]]))
          vn.sfxBingo()
-         vn.na(_([[You can now purchase the #bHeavy Combat Vessel License#0.]]))
+         vn.na(_([[You can now purchase the #bHeavy Combat Vessel Licence#0.]]))
       end
       sol(fmt.f(_([["And finally, two Warlords, namely Lady Proserpina and Lord Richthofen, required us to give you the sum of {credits} and their greetings. I wish you to stay right, loyal and strong, citizen."]]),
             {credits=fmt.credits(amount)}))
@@ -256,11 +256,11 @@ When you arrive at the said office, a soldier greets you.]]), {player=player.nam
       vn.done()
       vn.run()
 
-      if diff.isApplied( "heavy_combat_vessel_license" ) then -- Player already has the license
+      if diff.isApplied( "heavy_combat_vessel_licence" ) then -- Player already has the licence
          dv.addStandardLog( _([[You were supposed to escort the Dvaered Colonel Okran who wanted to purchase a battlecruiser for his Warlord. Instead, the Warlord got assassinated and an imperial pilot convinced the Colonel Okran that you betrayed him. He tried to kill you with the battlecruiser in question. You managed to destroy Colonel Okran.]]) )
       else
-         dv.addStandardLog( _([[You were supposed to escort the Dvaered Colonel Okran who wanted to purchase a battlecruiser for his Warlord. Instead, the Warlord got assassinated and an imperial pilot convinced the Colonel Okran that you betrayed him. He tried to kill you with the battlecruiser in question. You managed to destroy Colonel Okran and was rewarded with the ability to buy the Heavy Combat Vessel License by Okran's enemies among the Dvaered.]]) )
-         diff.apply("heavy_combat_vessel_license")
+         dv.addStandardLog( _([[You were supposed to escort the Dvaered Colonel Okran who wanted to purchase a battlecruiser for his Warlord. Instead, the Warlord got assassinated and an imperial pilot convinced the Colonel Okran that you betrayed him. He tried to kill you with the battlecruiser in question. You managed to destroy Colonel Okran and was rewarded with the ability to buy the Heavy Combat Vessel Licence by Okran's enemies among the Dvaered.]]) )
+         diff.apply("heavy_combat_vessel_licence")
       end
 
       misn.finish(true)
@@ -455,7 +455,7 @@ I'm so annoying! Am I not? Hewhewhew! Yep I totally am!"]]))
    }
 
    vn.label("how")
-   trick(_([["C'mon! You're a adult, no? Ya know how to obliterate a Goddard. Don't you? Oh, I'm dumb. Maybe you don't even have the Heavy Combat Vessel License! Hewhewhew! Did I put you in a shitty situation? Kof kof kof!
+   trick(_([["C'mon! You're a adult, no? Ya know how to obliterate a Goddard. Don't you? Oh, I'm dumb. Maybe you don't even have the Heavy Combat Vessel Licence! Hewhewhew! Did I put you in a shitty situation? Kof kof kof!
 No, of course not! Now that Lord Fatass… Fatgun died, all his soldiers have been put to the Dvaered Military Reserve, and Okran don't command them anymore. Officially, he was also sent to the Reserve, but custom needs him to avenge his lord first, by at least killing one person (you). So he will be flying an unescorted Goddard.
 And as they teach at school, an unescorted capship is a dead capship. I recommend using a corvette with torpedoes. Unless of course you have another capship stronger than a Dvaered Goddard. Of course. Hewhewhew!"]]))
    vn.menu{

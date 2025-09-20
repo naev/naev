@@ -151,7 +151,7 @@ static void outfits_onClose( unsigned int wid, const char *str )
 }
 
 /**
- * @brief Opens the outfit exchange center window.
+ * @brief Opens the outfit exchange centre window.
  *
  *    @param wid Window ID to open at.
  *    @param outfits Array (array.h): Outfits to sell. Will be freed.
@@ -550,7 +550,7 @@ void outfits_update( unsigned int wid, const char *str )
                                 &cansell, &youhave );
    credits2str( buf_credits, player.p->credits, 2 );
 
-   /* gray out sell button */
+   /* grey out sell button */
    if ( ( outfit_canSell( outfit ) > 0 ) && cansell )
       window_enableButton( wid, "btnSellOutfit" );
    else
@@ -579,7 +579,7 @@ void outfits_update( unsigned int wid, const char *str )
 
    if ( outfit_license( outfit ) ) {
       int meets_reqs = player_hasLicense( outfit_license( outfit ) );
-      k += scnprintf( &lbl[k], sizeof( lbl ) - k, "\n%s", _( "License:" ) );
+      k += scnprintf( &lbl[k], sizeof( lbl ) - k, "\n%s", _( "Licence:" ) );
       if ( blackmarket )
          l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s#0",
                          _( "Not Necessary (Blackmarket)" ) );
@@ -934,10 +934,10 @@ int outfit_canBuy( const Outfit *outfit, int wid )
       land_errDialogueBuild( _( "You already own this GUI." ) );
       return 0;
    }
-   /* Already has license. */
+   /* Already has licence. */
    if ( outfit_isLicense( outfit ) &&
         player_hasLicense( outfit_licenseProvides( outfit ) ) ) {
-      land_errDialogueBuild( _( "You already have this license." ) );
+      land_errDialogueBuild( _( "You already have this licence." ) );
       return 0;
    }
    /* Not enough $$ */
@@ -947,11 +947,11 @@ int outfit_canBuy( const Outfit *outfit, int wid )
       land_errDialogueBuild( _( "You need %s more." ), buf );
       failure = 1;
    }
-   /* Needs license. */
+   /* Needs licence. */
    if ( !sold && !blackmarket &&
         !player_hasLicense( outfit_license( outfit ) ) ) {
       land_errDialogueBuild(
-         _( "You need the '%s' license to buy this outfit." ),
+         _( "You need the '%s' licence to buy this outfit." ),
          _( outfit_license( outfit ) ) );
       failure = 1;
    }
@@ -1103,9 +1103,9 @@ int outfit_canSell( const Outfit *outfit )
       land_errDialogueBuild( _( "You can't sell a GUI." ) );
       failure = 1;
    }
-   /* License check. */
+   /* Licence check. */
    if ( outfit_isLicense( outfit ) ) {
-      land_errDialogueBuild( _( "You can't sell a license." ) );
+      land_errDialogueBuild( _( "You can't sell a licence." ) );
       failure = 1;
    }
    /* has no outfits to sell */
