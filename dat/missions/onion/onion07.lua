@@ -173,7 +173,8 @@ local function spawn_baddies()
    for k,p in ipairs(baddies) do
       p:setHostile(true)
    end
-   pilotai.guard( baddies, mem.honeypot )
+   pilotai.patrol( baddies, {player.pos(), mem.honeypot} )
+   pilotai.setTaunt( baddies, _("That's the ship!") )
    baddies[1]:setHilight(true)
    baddies[1]:setVisplayer(true)
    baddies[1]:rename(_("Mercenary Boss"))
