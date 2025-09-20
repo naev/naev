@@ -21,6 +21,19 @@ local function _buildDupeTable( input, count )
    end
 end
 
+local function postprocess( pilots )
+   if #pilots<=0 then
+      return pilots
+   end
+   local leader = pilots[1]
+   for k,p in ipairs(pilots) do
+      if k~=1 then
+         p:setPos( p:pos() + vec2.newP( rnd.rnd()*75 + 75, rnd.angle() ) )
+         p:setLeader( leader )
+      end
+   end
+   return pilots
+end
 
 --[[--
 Wrapper for pilot.add() that can operate on tables of ships.
@@ -63,17 +76,25 @@ function fleet.add( count, ship, faction, location, pilotname, parameters )
          table.insert( out, p )
       end
    end
-   if #out > 1 then
-      local leader = out[1]
-      for k,v in ipairs(out) do
-         if k~=1 then
-            v:setPos( v:pos() + vec2.newP( rnd.rnd()*75 + 75, rnd.angle() ) )
-            v:setLeader( leader )
-         end
-      end
-   end
-   return out
+   return postprocess(out)
 end
 
+--[[--
+Simplified version of fleet.add where they all share faction, locations, and parameters.
+
+   @tparam {Ship} ships Table of ships (or ship names) to spawn.
+   @tparam Faction faction Faction to give the pilots.
+   @tparam Vec2|Jump|System|Spob location Location to spawn the pilot. Pilots will jump in from jumps or systems, while they will take off from spobs.
+   @tparam table parameters Additional parameters to pass to `pilot.add`.
+   @treturn {Pilot} Table containing the pilots spawned.
+--]]
+function fleet.spawn( ships, faction, location, parameters )
+   local out = {}
+   for k,v in ipairs(ships) do
+      local p = pilot.add( ships[k], faction, location, parameters )
+      table.insert( out, p )
+   end
+   return postprocess(out)
+end
 
 return fleet
