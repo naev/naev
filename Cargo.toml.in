@@ -36,6 +36,7 @@ edition = "2024"
 # 1.80 LazyLock
 # 1.84 New random syntax
 # 1.85 Rust 2024
+# 1.87 nalgebra 0.34
 rust-version = "1.85" # Note this has to be set in meson.build too!
 
 [workspace.lints.clippy]
@@ -54,10 +55,8 @@ renderer = { path="@BUILD@/src/renderer" }
 toolkit = { path="@BUILD@/src/toolkit" }
 formatx = "0.2"
 glow = "0.16"
-# Incompatibility between nalgebra and encase versions make us freeze them for now
-# See https://github.com/teoxoy/encase/issues/94 and https://github.com/dimforge/nalgebra/pull/1545
-nalgebra = { version = "=0.33", features = ["bytemuck"]  }
-encase = { version = "=0.11", features = ["nalgebra"] } # Needed for shader voodoo
+nalgebra = { version = "0.34", features = ["bytemuck", "encase"] }
+encase = { version = "0.12" } # Needed for shader voodoo
 bytemuck = { version = "1.23", features = ["derive"] } # Needed for shader voodoo
 image = { version = "0.25", features = ["rayon"] }
 roxmltree = "0.20"
