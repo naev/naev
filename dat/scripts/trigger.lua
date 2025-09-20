@@ -83,12 +83,12 @@ function _hook_trigger_timer( params )
    if type(p[2])=='function' then
       p[2]()
    else
-      player.msg( p[2] )
+      player.msg( p[2], true ) -- Display on top of the player
       player.autonavReset( 3 )
    end
 
    params._current = c+1
-   if params._current < #params then
+   if params._current <= #params then
       local t = params[c+1][1]
       hook.timer( t, "_hook_trigger_timer", params )
    end
