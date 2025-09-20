@@ -76,4 +76,32 @@ function lib.pilots_defeated( pilots, fn )
    end
 end
 
+function _trigger_timer( params )
+   local c = params._current
+   local p = params[c]
+
+   if type(p[2])=='function' then
+      p[2]()
+   else
+      player.msg( p[2] )
+      player.autonavReset( 3 )
+   end
+
+   params._current = c+1
+   if params._current < #params then
+      local t = params[c+1][1]
+      hook.timer( t, "_trigger_timer", params )
+   end
+end
+
+--[[--
+Can be used to set up a chain of timer events, which will be chained automatically without needing to define additional hook functions.
+
+   @tparam table messages Table of pairs of `{delay, func}` where `delay` is how much to delay the call, and `func` is either a function to call or a message to pass to `player.msg()`.
+--]]
+function lib.timer_chain( messages )
+   messages._current = 1
+   hook.timer( messages[1][1], "_trigger_timer", messages )
+end
+
 return lib

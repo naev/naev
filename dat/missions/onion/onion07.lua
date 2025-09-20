@@ -27,6 +27,9 @@ local vn = require "vn"
 local onion = require "common.onion"
 local love_shaders = require "love_shaders"
 local trigger = require "trigger"
+local fleet = require "fleet"
+local lmisn = require "lmisn"
+local pilotai = require "pilotai"
 --local tut = require "common.tutorial"
 --local lg = require "love.graphics"
 
@@ -47,6 +50,9 @@ local TARGETSYS_CANDIDATES = {
    system.get("Santoros"),
    system.get("Fidelis"),
 }
+
+local SHIPS_TO_SCAN = 10 -- Ships it says to scan
+local SHIPS_TO_SCAN_REAL = 3 -- The true amount after which the player is attacked
 
 function create()
    misn.finish(false) -- Disabled for now
@@ -71,6 +77,14 @@ function create()
    misn.setDesc(_([[TODO.]]))
 end
 
+local function reset_osd()
+   misn.osdCreate( title, {
+      fmt.f(_("Go to the location in the {sys} system"),
+         {sys=mem.targetsys}),
+      _("Scan ships in the system"),
+   } )
+end
+
 function accept ()
    local accepted = false
 
@@ -81,7 +95,7 @@ function accept ()
    vn.music( onion.loops.hacker ) -- TODO different music
    vn.transition("electric")
 
-   vn.na(fmt.f())
+   l337()
 
    vn.done("electric")
    vn.run()
@@ -90,19 +104,11 @@ function accept ()
 
    misn.accept()
 
+   reset_osd()
    hook.enter("enter")
 end
 
-local function spawn_baddies()
-   local baddies = {}
-
-   trigger.pilots_defeated( baddies, function ()
-
-      mem.state = STATE_BEAT_MERCENARIES
-      hook.land( "land" )
-   end )
-end
-
+local ships_scanned = {}
 function enter ()
    local scur = system.cur()
    if scur==mem.targetsys and mem.state==nil then
@@ -120,6 +126,7 @@ function enter ()
          rep = rep+1
       until good or rep > 100
 
+      mem.honeypot = position
       mem.sysmarker = system.markerAdd( position, _("Honeypot") )
 
       trigger.player_distance( position, 2000, function ()
@@ -135,27 +142,86 @@ function enter ()
          vn.run()
 
          mem.state = STATE_SET_UP_HONEYPOT
+         ships_scanned = {}
          system.markerRm( mem.sysmarker )
-         hook.timer(1, "scanning")
+
+         hook.pilot( player.pilot(), "scan", "scan" )
       end )
-   else
+   elseif mem.state~=STATE_BEAT_MERCENARIES then
       -- Reset state
       mem.state = nil
+      hook.timerClear()
+      reset_osd()
    end
 end
 
-local condition = false
-function scanning ()
-   if condition then
+local function spawn_baddies()
+   -- Clear pilots
+   pilotai.clear()
 
+   -- Spawn new ones and send them towards the player
+   local baddies = fleet.spawn({
+   }, "Mercenary", lmisn.nearestJump() )
+   for k,p in ipairs(baddies) do
+      p:setHostile(true)
+   end
+   pilotai.guard( baddies, mem.honeypot )
+   baddies[1]:setHilight(true)
+   baddies[1]:setVisplayer(true)
+   baddies[1]:rename(_("Mercenary Boss"))
+
+   -- Finish when beaten
+   trigger.pilots_defeated( baddies, function ()
+      mem.state = STATE_BEAT_MERCENARIES
+      misn.osdCreate( title, {
+         _("Land to speak with l337_b01."),
+      } )
+      hook.land( "land" )
+   end  )
+
+   trigger.timer_chain{
+      { 5, _([[l337_b01: What is this? Shit, it seems like someone put a bounty on your ship!]]) },
+      { 5, _([[l337_b01: Wait, we can probably use this. Take the mercenaries out!]]) },
+      { 1, function ()
+         misn.osdCreate( title, {
+            _("Defeat the mercenaries!"),
+         } )
+      end },
+   }
+end
+
+function scan( tgt )
+   if mem.state~=STATE_SET_UP_HONEYPOT then
+      return
+   end
+
+   if not inlist( ships_scanned, tgt ) then
+      table.insert( ships_scanned, tgt )
+   end
+   misn.osdCreate( title, {
+      fmt.f(_("Scan {n} ships in the system ({left} left)"),
+         {n=SHIPS_TO_SCAN, left=SHIPS_TO_SCAN-#ships_scanned}),
+   } )
+   if #ships_scanned > SHIPS_TO_SCAN_REAL then
       spawn_baddies()
-
       mem.state = STATE_FINISH_SCANS
    end
-   hook.timer(1,"scanning")
 end
 
 function land ()
+   vn.clear()
+   vn.scene()
+   local l337 = onion.vn_l337b01{pos="left"}
+   vn.newCharacter( l337 )
+   vn.music( onion.loops.hacker ) -- TODO different music
+   vn.transition("electric")
+
+   vn.na(fmt.f())
+
+   vn.done("electric")
+   vn.run()
+
+   onion.log(_([[TODO]]))
 
    misn.finish(true)
 end

@@ -368,6 +368,27 @@ function lmisn.calculateDistance( origin_sys, origin_pos, dest_sys, dest_pos, pa
 end
 
 --[[--
+Gets the closest jump to a position.
+
+   @tparam[opt=player.pos()] Vec2 pos Position to get closest jump to.
+   @tparam[opt=system.cur()] System sys System to get closest jump from location.
+--]]
+function lmisn.nearestJump( pos, sys )
+   pos = pos or player.pos()
+   sys = sys or system.cur()
+   local closest_j = nil
+   local closest = math.huge
+   for k,j in ipairs(sys:jumps(true)) do
+      local d = j:pos():dist2(pos)
+      if d < closest then
+         closest_j = j
+         closest = d
+      end
+   end
+   return closest_j
+end
+
+--[[--
    Wrapper for player.misnActive that works on a table of missions.
 
    @usage if anyMissionActive( { "Cargo", "Cargo Rush" } ) then -- at least one Cargo or Cargo Rush is active
