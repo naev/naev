@@ -66,8 +66,8 @@ Use pilot:setNoDeath() or pilot:setNoDisable() if you want the pilots to either 
 --]]
 function lib.pilots_defeated( pilots, fn )
    local params = {
-      pilots   = pilots,
-      fn       = fn,
+      pilots      = pilots,
+      fn          = fn,
       permdisable = true,
    }
    for p in ipairs(pilots) do

@@ -195,7 +195,7 @@ local function spawn_baddies()
    }
 end
 
-function scan( tgt )
+function scan( _pp, tgt )
    if mem.state~=STATE_SET_UP_HONEYPOT then
       return
    end
