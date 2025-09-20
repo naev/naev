@@ -52,7 +52,7 @@ local TARGETSYS_CANDIDATES = {
 }
 
 local SHIPS_TO_SCAN = 10 -- Ships it says to scan
-local SHIPS_TO_SCAN_REAL = 3 -- The true amount after which the player is attacked
+local SHIPS_TO_SCAN_REAL = 1 -- The true amount after which the player is attacked
 
 function create()
    --misn.finish(false) -- Disabled for now
@@ -166,6 +166,9 @@ local function spawn_baddies()
 
    -- Spawn new ones and send them towards the player
    local baddies = fleet.spawn({
+      "Pacifier",
+      "Admonisher",
+      "Admonisher",
    }, "Mercenary", lmisn.nearestJump() )
    for k,p in ipairs(baddies) do
       p:setHostile(true)
@@ -208,7 +211,7 @@ function scan( _pp, tgt )
       fmt.f(_("Scan {n} ships in the system ({left} left)"),
          {n=SHIPS_TO_SCAN, left=SHIPS_TO_SCAN-#ships_scanned}),
    } )
-   if #ships_scanned > SHIPS_TO_SCAN_REAL then
+   if #ships_scanned >= SHIPS_TO_SCAN_REAL then
       spawn_baddies()
       mem.state = STATE_FINISH_SCANS
    end

@@ -70,7 +70,7 @@ function lib.pilots_defeated( pilots, fn )
       fn          = fn,
       permdisable = true,
    }
-   for p in ipairs(pilots) do
+   for k,p in ipairs(pilots) do
       hook.pilot( p, "death", "_hook_pilot_defeated", params )
       hook.pilot( p, "disable", "_hook_pilot_defeated", params )
    end
