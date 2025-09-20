@@ -72,6 +72,7 @@ function lib.pilots_defeated( pilots, fn )
    }
    for k,p in ipairs(pilots) do
       hook.pilot( p, "death", "_hook_pilot_defeated", params )
+      hook.pilot( p, "exploded", "_hook_pilot_defeated", params )
       hook.pilot( p, "disable", "_hook_pilot_defeated", params )
    end
 end
