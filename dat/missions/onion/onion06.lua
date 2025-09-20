@@ -147,5 +147,7 @@ Their voice fades out.]]))
 
    if not accepted then return end
 
+   onion.log(_([[TODO]]))
+
    misn.finish(true)
 end
