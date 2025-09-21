@@ -19,7 +19,7 @@
  - Intrinsics from a certain trader are now stronger
  - Ships now disabled below a certain armour threshold regardless of stress
  - AI is less susceptible to stealth bomber cheese
- - Point defense now shoots at all ships prioritizing smaller ones after missiles
+ - Point defence now shoots at all ships prioritizing smaller ones after missiles
  - Cargo delivery missions have increased cargo amounts
  - Minimum stealth range also affects detection and signature
  - Ships can have a minimum cargo-less mass of 50% of the ship base mass
@@ -28,13 +28,14 @@
  - Gauntlet negative bonuses are now multiplicative
  - Stealthing will temporarily jam locked on munitions
  - Changed forward weapon aiming algorithm for the player so it is easier to shoot small ships with skill
+ - Reflective shell now shoots thorns
 
 #### Quality of Life
  - Autonav improvements
     - Can automatically land when following a ship
     - Improved autonav behaviour when losing a followed ship
     - Disables afterburner when getting ready to land or jump
-    - Shooting *non-point defense* weapons resets autonav speed up
+    - Shooting *non-point defence* weapons resets autonav speed up
  - Combat and ambient music tries to play from where it was last stopped when applicable
  - Gave small untargetable time to player when using hypergates and wormholes
  - Ships that are scanning you use a different colour hilight
@@ -61,6 +62,9 @@
     - More variation in landing and situational music
  - Significant changes in jumps (hidden and otherwise)
  - Reworked the visuals for some weapons using shaders
+ - Start to more strictly enforce Oxford spelling
+ - Racing reward system reworked
+ - Reworked escort missions so that escorts follow the player and improved how it interacts with autonav
 
 #### Engine
  - Began porting to Rust
@@ -92,6 +96,7 @@
  - Intro text is no longer hardcoded and is handled via Lua
  - SVG image support
  - WGSL shader support
+ - trigger library to handle commonly mission code
 
 #### Fixes
  - The Bite turns off afterburners
@@ -131,7 +136,7 @@
 
  - Dvaered Negotiation 1: update the location of the target on the map
  - Dvaered Sabotage: no longer fail the mission if the target jumps out after boarding
- - Fixed point defense turning off all the time
+ - Fixed point defence turning off all the time
  - Minor typo fixes and translation updates
 
 
@@ -163,7 +168,7 @@
  - Sirius preacher gives +4% shield regeneration, not +4 GW shield regeneration
  - Largus Gene Drive (Nyx) has a max speed of 175, not 275
  - Tweaked Melendez Mammoth XL and Eagle 6500 top speeds
- - Fixed not being able to stealth with active point defense
+ - Fixed not being able to stealth with active point defence
  - Fixed being able to complete the test of purification after failing
  - Fixed GUI getting weirdly offset in some cases
  - Cannibalize button doesn't overlap with capture anymore
@@ -184,7 +189,7 @@
  - Fixed stealth circles not appearing on hostile pilots if their faction is friendly
  - Fixed some date-related mission information not being updated
  - Fixed landing music playing with VN music in some situations
- - Significantly buffed point defense damage
+ - Significantly buffed point defence damage
  - Story mode gives an additional -50% fuel usage modifier
  - Minor typo fixes and translation updates
 
@@ -311,7 +316,7 @@
  - neburesearch04: don't let the drones see through stealth and disable the player from relanding to skip stage
  - minerva/judugement: fixed error in VN flow
  - Minor typo fixes and translation updates
- - Increased maxmimum reputation for a certain hidden faction to 70
+ - Increased maximum reputation for a certain hidden faction to 70
  - Restored portable installs with the Windows installer
  - Workaround MESA driver bug that causes dark or invisible ships on AMD hardware
  - Documentation fixes
@@ -350,7 +355,7 @@
  - Fixed beam weapons in "in range" mode not respecting range bonus
  - Fixed hiding mission OSDs and changing priority being reset on take off or jump
  - Fixed asking your ship AI for advice
- - Fixed point defense requiring toggling thrice to turn off in some cases
+ - Fixed point defence requiring toggling thrice to turn off in some cases
  - sensor anomaly: Nelly will no longer appear in too dangerous or risky systems
  - mephisto type v: lowered heat generation
  - seek_n_destroy: fixed hints breaking in certain cases
@@ -386,7 +391,7 @@
  - Can stealth when missiles are locked on
  - Deployed fighters take stress and damage over time when their mother ship is destroyed
  - Electron Burst Cannons and Za'lek Heavy Drones have had their damage per second lowered
- - Improved point defense
+ - Improved point defence
     - Spittle Tubuloid Cluster is now a utility and does more damage
     - Guardian Interception System does double damage
     - Missiles explode when intercepted
@@ -539,7 +544,7 @@
  - Only do updates with positive delta ticks
  - Fixed cargo disappearing when buying a ship when over the cargo limit
  - Don't let the player trade ships when they have mission cargo
- - Fixed not being able to turn off point defense weapons
+ - Fixed not being able to turn off point defence weapons
  - Fixed Za'lek drone bay being cheaper than the mini-bay
  - Flicker drives can not be stacked and are mutually exclusive with other blink drives
  - Decreased Nexus Drill Lance mining malus from -80% to -15%
@@ -563,7 +568,7 @@
  - Fixed race condition in threadpool
  - Fixed asteroids spawning in not proper shapes
  - Fixed autonav wobble and overshooting
- - Point defense won't shoot at disabled pilots anymore
+ - Point defence won't shoot at disabled pilots anymore
  - Fixed battery descriptions
  - Discovering a hidden jump will make both directions known
  - Fixed AI trying to scan hostile targets they lost track of
@@ -609,8 +614,8 @@
  - Fixed beams only showing hit explosions on one target being hit instead of all
  - Consider beam width when computing collisions
  - Made beam effects a bit thinner
- - Point defense weapons should track fighters much better now
- - Fixed point defense weapons not firing properly
+ - Point defence weapons should track fighters much better now
+ - Fixed point defence weapons not firing properly
  - Approach no longer instantly starts autonav unless a space object or derelict is already targeted
  - Tweaked the approach logic to prefer planets over pilots when only planet is selected
  - Approach should no longer play extraneous target sounds
@@ -673,7 +678,7 @@
  - Show tracking icons for non-turret bolt weapons too
  - More short names for weapon outfits
  - Fixed pilot.setSpeedLimit not working
- - Added tutorial message when player acquires first point defense weapon
+ - Added tutorial message when player acquires first point defence weapon
  - `test_of_renewal`: fixed weapon set defaults being incorrect and increased enemy damage
  - `seek_n_destroy`: missions should work properly when boarding the target
  - `flf_diversion`, `flf_rogue`: Missions should no longer be able to have ridiculously low credit rewards
@@ -700,7 +705,7 @@
  - Buffed Hunting Combat AI to 15% bonus
  - Made Weakness Harmonizer AI not appear as an active outfit
  - Outfit Lua function onshoot has been renamed onshootany
- - Can toggle point defense weapons on and off
+ - Can toggle point defence weapons on and off
  - AI will turn off weapons ionizer when going for a kill
  - Player's new ships should start will all the default outfits, which fixes the some Sirius psychic tests
  - pilot.weapsetAdd follows the same logic as the normal equipping functions
@@ -724,7 +729,7 @@
     - Reviewed and corrected many descriptions and placement of spobs and systems
     - More in-depth and fleshed out tag system for locations
  - Ship slots and mass limits reworked such that smaller ships get more utility/structural slots to work with
- - Point defense systems that can shoot down missiles and torpedoes
+ - Point defence systems that can shoot down missiles and torpedoes
  - Space object (planets, stations, etc.) properties affect quantity of missions available
  - Moved many missions and events to the vn system
  - Can sometimes find POI events with a pulse scanner equipped when entering systems
@@ -796,7 +801,7 @@
  - Tons of new outfits
     - Sirius flow outfits
     - Completely reworked Sirius weapons too
-    - Point defense systems
+    - Point defence systems
     - New accessories
     - Intrinsic outfits
     - and more!
@@ -834,7 +839,7 @@
  - Weaker effects shouldn't overwrite stronger ones anymore
  - Spobs can use communication graphics
  - Require OpenGL 3.2 for geometry shaders now
- - Support for advanced collisions such as weapon on weapon, allowing for point defense weapons
+ - Support for advanced collisions such as weapon on weapon, allowing for point defence weapons
  - Renamed thrust to accel for more consistency and simplifications
  - Support for buying intrinsic outfits
  - Ship distress moved to the message framework
@@ -1132,7 +1137,7 @@
  - Fix bug in "Waste Collector" mission
  - Fixed a bug that allowed the player to get infinite escorts
  - Work around bugs in at least one OpenGL driver
- - Fix crash when unidiff changes assets that the player has targetted
+ - Fix crash when unidiff changes assets that the player has targeted
  - Player actually has to pay for stealing outfits
  - Fixed game hanging when entering some volatile nebula systems
 
@@ -1217,7 +1222,7 @@
 
 ## 0.9.0-beta.2
 
- - Prevented Naev from losing the player's (pre-0.9.0-beta) licenses on first load
+ - Prevented Naev from losing the player's (pre-0.9.0-beta) licences on first load
  - Fixed missing credits and translation coverage data
  - Improved phrasing
  - Prevented players from getting stranded without access to fuel
@@ -1229,7 +1234,7 @@
  - Do not render systems with unknown assets as restricted
  - Added gamma correction to Options
  - Fixed reproducible crash when boarded pilots get removed
- - Added counterfeit licenses to pirate worlds
+ - Added counterfeit licences to pirate worlds
  - Remove minor energy malus from sensor array and jump detector
  - Electron burst cannon is no longer widely available
 
@@ -1267,7 +1272,7 @@
  - Added discovery messages as you explore the universe
  - Overhauled NPC AI
  - Overhaul and rebalance of most outfits
- - Wanted ships no longer aggro defense forces (bounties)
+ - Wanted ships no longer aggro defence forces (bounties)
  - Bribed pilots don't become hostile again unless attacked
  - Stress now decreases based on ship mass
  - Merged the Independent and Civilian factions
