@@ -31,7 +31,6 @@ local fleet = require "fleet"
 local lmisn = require "lmisn"
 local pilotai = require "pilotai"
 --local tut = require "common.tutorial"
---local lg = require "love.graphics"
 
 -- Reference to honeypot (trap)
 local title = _("Onion and Honey")
@@ -152,12 +151,36 @@ function enter ()
          hook.pilot( player.pilot(), "scan", "scan" )
          scan() -- set up OSD and such
       end )
-   elseif mem.state~=STATE_BEAT_MERCENARIES then
+   elseif mem.state==STATE_BEAT_MERCENARIES then
+      -- Make random mercenaries attack the player
+      hook.timerClear()
+      hook.timer( 30*rnd.rnd(), "mercenaries_gone_bad" )
+   else
       -- Reset state
       mem.state = nil
       hook.timerClear()
       reset_osd()
    end
+end
+
+-- Make natural spawned mercenaries become hostile to the player if they see them
+function mercenaries_gone_bad()
+   -- Stop if the system gets claimed
+   if not naev.claimTest( system.cur(), true ) then
+      return
+   end
+
+   -- Go over all the mercaneries
+   local pp = player.pilot()
+   for k,p in ipairs(pilot.get( { faction.get("Mercenary") } )) do
+      if p:memory().natural then
+         local ir, fuz = p:inrange(pp)
+         if ir and fuz then
+            p:setHostile(true)
+         end
+      end
+   end
+   hook.timer( 15+30*rnd.rnd(), "mercenaries_gone_bad" )
 end
 
 local function spawn_baddies()
@@ -182,6 +205,7 @@ local function spawn_baddies()
    -- Finish when beaten
    trigger.pilots_defeated( baddies, function ()
       mem.state = STATE_BEAT_MERCENARIES
+      player.msg(_("l337_b01: OK, we have enough data. Land somewhere with a Nexus connection."),true)
       misn.osdCreate( title, {
          _("Land to speak with l337_b01."),
       } )
