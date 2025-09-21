@@ -120,16 +120,16 @@
  - Player can't stealth while disabled
  - Getting disabled turns off stealth
  - Carried fighters don't carry commodities
- - darkshodw: enemies shouldn't see through stealth
+ - darkshadow: enemies shouldn't see through stealth
  - Cryogenic Nanobots no longer restore health to 100% on completing cooldown regardless of damage taken
  - Improved AI braking skills
  - Game will not save in certain cases like loading the game and immediately being forced to take off by a load hook
  - Improved handling of fullscreen toggling and resolution changes
- - Faction ships no longer show up as Unknown when you first discover a faction
+ - Faction ships no longer show up as "Unknown" when you first discover a faction
  - Space mines in restricted systems have infinite duration
- - Lots of spelling and grammars fixes
- - Translation updates
+ - Lots of spelling and grammar fixes
  - Made Love framework ignore events that were queued before opening
+ - Translation updates
 
 
 ## 0.12.6
