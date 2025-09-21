@@ -6,4 +6,7 @@
  <lua>effects/lua/hypergate_enter.lua</lua>
  <shader vertex="effect15x.vert">effects/hypergate_enter.frag</shader>
  <priority>0</priority>
+ <stats>
+  <invincible>1</invincible>
+ </stats>
 </effect>

@@ -36,9 +36,10 @@ local pilotai = require "pilotai"
 local title = _("Onion and Honey")
 
 -- Mission states
-local STATE_SET_UP_HONEYPOT = 1
-local STATE_FINISH_SCANS = 2
-local STATE_BEAT_MERCENARIES = 3
+local STATE_TALKED_TO_DOG = 1
+local STATE_SET_UP_HONEYPOT = 2
+local STATE_FINISH_SCANS = 3
+local STATE_BEAT_MERCENARIES = 4
 mem.state = nil
 
 -- Candidates are somewhat uninhabited spobs along the main trade lanes
@@ -51,11 +52,9 @@ local TARGETSYS_CANDIDATES = {
 }
 
 local SHIPS_TO_SCAN = 10 -- Ships it says to scan
-local SHIPS_TO_SCAN_REAL = 1 -- The true amount after which the player is attacked
+local SHIPS_TO_SCAN_REAL = 3 -- The true amount after which the player is attacked
 
 function create()
-   --misn.finish(false) -- Disabled for now
-
    -- Try to find a closeby acceptable target
    local targets = {}
    for k,t in ipairs(TARGETSYS_CANDIDATES) do
@@ -73,7 +72,8 @@ function create()
    misn.setNPC( _("l337_b01"), prt.t.tex, _([[Try to get in touch with l337_b01.]]) )
    misn.setReward(_("???") )
    misn.setTitle( title )
-   misn.setDesc(_([[TODO.]]))
+   misn.setDesc(fmt.f(_([[Help l337_b01 find out who the instigator is by setting up a honeypot and monitoring communications in the {sys} system.]]),
+      {sys=mem.targetsys}))
 end
 
 local function reset_osd()
@@ -91,11 +91,28 @@ function accept ()
 
    vn.clear()
    vn.scene()
-   local l337 = onion.vn_l337b01{pos="left"}
+   local l337 = onion.vn_l337b01()
+   vn.transition()
+
+   vn.na(_([[You send a connection request to the Nexus address of l337_b01.]]))
+   vn.na(_([[There is no response, but you keep on trying.]]))
+   vn.na(_([[...]]))
+   vn.na(_([[Maybe a bit more?]]))
+   vn.na(_([[...]]))
+   vn.na(_([[You're about to give up for now when the connection gets through.]]))
+
+   vn.scene()
    vn.newCharacter( l337 )
    vn.music( onion.loops.hacker ) -- TODO different music
    vn.transition("electric")
 
+   vn.menu{
+      {_([["Yo."]]), "01_cont"},
+      {_([["Heyo."]]), "01_cont"},
+      {_([["l337_b01, you alright?"]]), "01_cont"},
+   }
+
+   vn.cont("01_cont")
    l337()
 
    vn.func( function() accepted = true end )
@@ -107,6 +124,7 @@ function accept ()
 
    misn.accept()
 
+   mem.state = 0
    reset_osd()
    hook.enter("enter")
 end
@@ -114,7 +132,9 @@ end
 local ships_scanned = {}
 function enter ()
    local scur = system.cur()
-   if scur==mem.targetsys and mem.state==nil then
+   if mem.state<STATE_TALKED_TO_DOG then
+      hook.timer( 8, "dog" )
+   elseif scur==mem.targetsys and mem.state<=STATE_TALKED_TO_DOG then
 
       -- Try to get a good position
       local rep = 0
@@ -161,6 +181,21 @@ function enter ()
       hook.timerClear()
       reset_osd()
    end
+end
+
+-- Small chat with dog
+function dog()
+   vn.clear()
+   vn.scene()
+   local dog = vn.newCharacter( onion.vn_dog() )
+   vn.transition("electric")
+
+   dog()
+
+   vn.done("electric")
+   vn.run()
+
+   mem.state = STATE_TALKED_TO_DOG
 end
 
 -- Make natural spawned mercenaries become hostile to the player if they see them

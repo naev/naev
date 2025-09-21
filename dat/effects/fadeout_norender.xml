@@ -6,4 +6,7 @@
  <lua>effects/lua/fadeout_norender.lua</lua>
  <shader>effects/fadeout.frag</shader>
  <priority>0</priority>
+ <stats>
+  <invincible>1</invincible>
+ </stats>
 </effect>

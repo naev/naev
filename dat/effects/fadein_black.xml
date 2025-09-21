@@ -5,4 +5,7 @@
  <icon>/gfx/misc/icons/galaxy.webp</icon>
  <shader>effects/fadein_black.frag</shader>
  <priority>0</priority>
+ <stats>
+  <invincible>1</invincible>
+ </stats>
 </effect>

@@ -6,4 +6,7 @@
  <lua>effects/lua/wormhole_enter.lua</lua>
  <shader vertex="effect2x.vert">effects/wormhole_enter.frag</shader>
  <priority>0</priority>
+ <stats>
+  <invincible>1</invincible>
+ </stats>
 </effect>
