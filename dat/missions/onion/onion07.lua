@@ -212,7 +212,7 @@ They go silent for a bit.
 
       vn.label("05_ogre")
       vn.func( function() var.push("onion_guess_insider", "ogre") end )
-      l337(_([["You serious? Ogre is long gone. They barely had the skills to tie their own shoelaces let alone do anything serious on the Nexus."]]))
+      l337(_([["You serious? Ogre is long gone. They barely had the skills to power on a terminal, let alone do anything serious on the Nexus."]]))
       vn.jump("05_thoughts")
 
       vn.label("05_trixie")
@@ -225,6 +225,7 @@ They let out a sigh.]]))
 
       vn.label("05_thoughts")
       l337(_([["I was thinking that it is probably lonewolf4, you can see them trying to pin the blame on me. It's almost as like they are trying to escalate the situation to their own game!"]]))
+      vn.jump("05_cont")
 
       vn.label("05_cont")
       l337(_([["I've always got the creeps from them. With their entire weird role-playing and funny talk."]]))
