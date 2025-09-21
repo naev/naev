@@ -44,7 +44,7 @@ not_unsafe_ptr_arg_deref = "allow"
 
 [workspace.dependencies]
 naevc = { path=@NAEVC@ }
-sdl3 = "0.14"
+sdl3 = "0.15"
 anyhow = "1.0"
 naev_core = { path="@BUILD@/src/core" }
 gettext = { path="@BUILD@/src/gettext" }
