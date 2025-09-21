@@ -33,7 +33,7 @@ function lib.distance_player( target, distance, fn )
    hook.timer( 1, "_hook_distance", params )
 end
 
-function _hook_pilot_defeated( plt, _killer, params )
+local function pilot_defeated( plt, params )
    -- Make disable permanent if necessary
    if params.permdisable and plt:disabled() then
       plt:setDisable()
@@ -41,8 +41,8 @@ function _hook_pilot_defeated( plt, _killer, params )
 
    -- Remove pilot from list of pilots
    local newplts = {}
-   for p in ipairs(params.pilots) do
-      if p~=plt then
+   for k,p in ipairs(params.pilots) do
+      if p~=plt and p:exists() then
          table.insert( newplts, p )
       end
    end
@@ -52,6 +52,12 @@ function _hook_pilot_defeated( plt, _killer, params )
    if #params.pilots <= 0 then
       params.fn()
    end
+end
+function _hook_pilot_defeated( plt, _killer, params )
+   pilot_defeated( plt, params )
+end
+function _hook_pilot_exploded( plt, params )
+   pilot_defeated( plt, params )
 end
 
 --[[--
@@ -72,8 +78,8 @@ function lib.pilots_defeated( pilots, fn )
    }
    for k,p in ipairs(pilots) do
       hook.pilot( p, "death", "_hook_pilot_defeated", params )
-      hook.pilot( p, "exploded", "_hook_pilot_defeated", params )
       hook.pilot( p, "disable", "_hook_pilot_defeated", params )
+      hook.pilot( p, "exploded", "_hook_pilot_exploded", params )
    end
 end
 
