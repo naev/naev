@@ -182,7 +182,7 @@ They go quiet for a second.]]))
             {_([[lonewolf4]]), "05_lonewolf4"},
          }
          table.insert( opts, {_([[Ogre]]), "05_ogre"} )
-         table.insert( opts, {_([[Trixi]]), "05_trixie"} )
+         table.insert( opts, {_([[Trixie]]), "05_trixie"} )
          return opts
       end )
 
@@ -212,7 +212,7 @@ They go silent for a bit.
 
       vn.label("05_ogre")
       vn.func( function() var.push("onion_guess_insider", "ogre") end )
-      l337(_([["You serious? Ogre is long gone. They barely had the skills to power on a terminal, let alone do anything serious on the Nexus."]]))
+      l337(_([["You serious? Ogre is long gone. They barely had the skills to tie their own shoelaces let alone do anything serious on the Nexus."]]))
       vn.jump("05_thoughts")
 
       vn.label("05_trixie")
@@ -225,7 +225,6 @@ They let out a sigh.]]))
 
       vn.label("05_thoughts")
       l337(_([["I was thinking that it is probably lonewolf4, you can see them trying to pin the blame on me. It's almost as like they are trying to escalate the situation to their own game!"]]))
-      vn.jump("05_cont")
 
       vn.label("05_cont")
       l337(_([["I've always got the creeps from them. With their entire weird role-playing and funny talk."]]))
@@ -295,16 +294,8 @@ function enter ()
       mem.sysmarker = system.markerAdd( position, _("Honeypot") )
 
       trigger.distance_player( position, 2000, function ()
-         vn.clear()
-         vn.scene()
-         local l337 = vn.newCharacter( onion.vn_l337b01() )
-         vn.music( onion.loops.hacker ) -- TODO different music
-         vn.transition("electric")
 
-         l337()
-
-         vn.done("electric")
-         vn.run()
+         player.msg(_([[l337_b01: I've set up the honeypot. Start scanning ships!]]),true)
 
          mem.state = STATE_SET_UP_HONEYPOT
          ships_scanned = {}
@@ -337,7 +328,12 @@ function dog()
    local dog = vn.newCharacter( onion.vn_dog() )
    vn.transition("electric")
 
-   dog()
+   vn.na(_([[Your systems flicker for a second, before a familiar hologram appears.]]))
+   dog(fmt.f(_([["Pardon the intrusion, {name}. I do not have much time, so I will keep this short."]]),
+      {name=player.name()}))
+   dog(_([["I worry you are getting too deep. l337_b01 is drawn more towards passion than reason, and I worry about their safety."]]))
+   dog(_([["You should not proceed further, as such recklessness may endanger us all."]]))
+   vn.na(_([[The hologram fades as your systems flicker once more and everything returns to normal.]]))
 
    vn.done("electric")
    vn.run()
@@ -429,17 +425,21 @@ end
 function land ()
    vn.clear()
    vn.scene()
-   local l337 = onion.vn_l337b01{pos="left"}
+   local l337 = onion.vn_l337b01()
    vn.newCharacter( l337 )
-   vn.music( onion.loops.hacker ) -- TODO different music
+   vn.music( onion.loops.hacker )
    vn.transition("electric")
 
-   vn.na(fmt.f())
+   vn.na(_([[You land and are promptly greeted by l337_b01's hologram.]]))
+   l337(_([["Putting a fake bounty on your ship was unexpected, but thanks to that, I was able to get more information."]]))
+   l337(_([["I had to clear the fake bounty, so I'm still a bit behind on analysing the collected data, but I should be able to churn through it in a bit."]]))
+   l337(_([["Get in touch with me in a bit, and we'll finally unmask who is behind everything!"]]))
+   vn.na(_([[The connection closes as l337_b01 focuses computational resources on signal processing.]]))
 
    vn.done("electric")
    vn.run()
 
-   onion.log(_([[TODO]]))
+   onion.log(_([[You helped l337_b01 set up a honeypot to intercept communication and try to unmask whoever is behind the recent incidents. A fake bounty was set up on your ship, but you were able to overcome mercenaries set on you.]]))
 
    misn.finish(true)
 end
