@@ -127,8 +127,9 @@
  - Improved handling of fullscreen toggling and resolution changes
  - Faction ships no longer show up as "Unknown" when you first discover a faction
  - Space mines in restricted systems have infinite duration
- - Lots of spelling and grammar fixes
  - Made Love framework ignore events that were queued before opening
+ - Lowered reputation gains from aiding hypergate construction sites
+ - Lots of spelling and grammar fixes
  - Translation updates
 
 
