@@ -34,6 +34,7 @@ local pilotai = require "pilotai"
 
 -- Reference to honeypot (trap)
 local title = _("Onion and Honey")
+local reward = onion.rewards.misn07
 
 -- Mission states
 local STATE_TALKED_TO_DOG = 1
@@ -123,7 +124,7 @@ function accept ()
       l337(_([["Not really, no."]]))
       vn.jump("01_cont")
 
-      vn.cont("01_cont")
+      vn.label("01_cont")
       l337(_([["I guess I made a mess out there."]]))
       vn.menu{
          {_([["It was already a mess."]]), "02_cont"},
@@ -281,8 +282,17 @@ function enter ()
       local rep = 0
       local good
       local position
-      local function good_position( _pos )
-         return true
+      local function good_position( pos )
+         for k,s in ipairs(scur:spobs()) do
+            if s:pos():dist2(pos) < 2500^2 then
+               return false
+            end
+         end
+         local mindist = math.huge
+         for k,j in ipairs(scur:jumps()) do
+            mindist = math.min( j:pos():dist2(pos), mindist )
+         end
+         return mindist > 5000^2
       end
       repeat
          position = vec2.newP( 2/3*scur:radius(), rnd.angle() )
@@ -333,7 +343,7 @@ function dog()
       {name=player.name()}))
    dog(_([["I worry you are getting too deep. l337_b01 is drawn more towards passion than reason, and I worry about their safety."]]))
    dog(_([["You should not proceed further, as such recklessness may endanger us all."]]))
-   vn.na(_([[The hologram fades as your systems flicker once more and everything returns to normal.]]))
+   vn.na(_([[The hologram fades as your systems flicker once more and everything returns to normal. What was that all about?]]))
 
    vn.done("electric")
    vn.run()
@@ -436,7 +446,13 @@ function land ()
    l337(_([["Get in touch with me in a bit, and we'll finally unmask who is behind everything!"]]))
    vn.na(_([[The connection closes as l337_b01 focuses computational resources on signal processing.]]))
 
-   vn.done("electric")
+   vn.scene()
+   vn.transition("electric")
+   vn.na(_([[As you recline in your captain's chair you notice you got an incoming transfer from some anonymous account, but you can guess who sent it to you.]]))
+   vn.sfxVictory()
+   vn.func( function () player.pay( reward ) end )
+   vn.na(fmt.reward(reward))
+
    vn.run()
 
    onion.log(_([[You helped l337_b01 set up a honeypot to intercept communication and try to unmask whoever is behind the recent incidents. A fake bounty was set up on your ship, but you were able to overcome mercenaries set on you.]]))
