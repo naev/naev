@@ -129,6 +129,7 @@
  - Space mines in restricted systems have infinite duration
  - Made Love framework ignore events that were queued before opening
  - Lowered reputation gains from aiding hypergate construction sites
+ - Use higher resolution icon
  - Lots of spelling and grammar fixes
  - Translation updates
 
