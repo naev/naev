@@ -510,10 +510,20 @@ impl Context {
         fn set_icon(window: &mut sdl::video::Window) -> Result<()> {
             let filename = format!("{}{}", ndata::GFX_PATH, "icon.webp");
             let rw = ndata::iostream(&filename)?;
-            let img = image::ImageReader::new(std::io::BufReader::new(rw))
-                .with_guessed_format()?
-                .decode()?;
-            let mut data = img.to_rgba8().into_flat_samples();
+            let img = {
+                let mut img = image::ImageReader::new(std::io::BufReader::new(rw))
+                    .with_guessed_format()?
+                    .decode()?
+                    .into_rgba8();
+                // See crate::texture::TextureData::from_image()
+                for p in img.pixels_mut() {
+                    if p.0[3] == 0 {
+                        p.0 = [0u8; 4];
+                    }
+                }
+                img
+            };
+            let mut data = img.into_flat_samples();
             let sur = sdl::surface::Surface::from_data(
                 &mut data.samples,
                 data.layout.width,
