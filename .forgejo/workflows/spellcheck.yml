@@ -7,10 +7,6 @@ on:
   pull_request:
     types: [opened, synchronize]
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
-  cancel-in-progress: true
-
 jobs:
   spellcheck:
     name: Spelling
@@ -20,7 +16,7 @@ jobs:
       with:
         ref: ${{ github.event.pull_request.head.sha }}
         show-progress: false
-    - uses: codespell-project/actions-codespell@master
+    - uses: https://github.com/codespell-project/actions-codespell@v2
       with:
         path: dat/missions/, dat/events
         ignore_words_file: .codespellignore
