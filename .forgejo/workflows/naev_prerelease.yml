@@ -11,42 +11,25 @@ name: Pre-Release
 permissions: {}
 jobs:
   "Package_Source":
-    permissions:
-      contents: read  #  to fetch code (actions/checkout)
-
-    runs-on: ubuntu-latest
-    container:
-      image: "ghcr.io/naev/naev-release:latest"
-
+    runs-on: naev-release
     steps:
       - name: Checkout Naev Repository
         uses: actions/checkout@v4
         with:
           path: source
-          fetch-depth: 0
+
+          fetch-tags: true
           submodules: true
-
-      - name: Configure Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          target: "x86_64-unknown-linux-gnu"
-          override: true
-          rustflags: ""
-
-      - name: Install bindgen-cli
-        uses: baptiste0928/cargo-install@v3
-        with:
-          crate: bindgen-cli
 
       - name: Package Dist
         run: |
-          meson setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
+          meson setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled --wrap-mode=forcefallback
           meson dist -C build --no-tests --include-subprojects
 
       - name: Collect Artifacts
         run: |
           mkdir -p build/dist
-          cp -r source/utils/ci/itch source/utils/ci/steam source/utils/ci/gh build/dist/
+          cp -r source/utils/ci/itch source/utils/ci/steam source/utils/ci/berg build/dist/
           cp source/utils/buildAppImage.sh build/dist
           cp source/utils/buildUniversalBundle.sh build/dist
           cp -r source/extras/macos/dmg_assets build/dist
@@ -56,7 +39,7 @@ jobs:
           cp source/dat/VERSION build/dist
 
       - name: Upload Source Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: naev-dist
           path: ${{ github.workspace }}/build/dist/source.tar.xz
@@ -68,30 +51,29 @@ jobs:
           name: naev-changelog
           path: ${{ github.workspace }}/build/dist/Changelog.md
           if-no-files-found: error
-
       - name: Upload Version Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: naev-version
           path: ${{ github.workspace }}/build/dist/VERSION
           if-no-files-found: error
 
       - name: Upload AppImage Packaging Script Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: naev-appimage-packaging
           path: ${{ github.workspace }}/build/dist/buildAppImage.sh
           if-no-files-found: error
 
       - name: Upload Universal Bundle Packaging Script Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: naev-macos-packaging
           path: ${{ github.workspace }}/build/dist/buildUniversalBundle.sh
           if-no-files-found: error
 
       - name: Upload DMG Assets Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: naev-macos-dmg
           path: ${{ github.workspace }}/build/dist/dmg_assets
@@ -99,28 +81,28 @@ jobs:
           include-hidden-files: true
 
       - name: Upload Entitlements PLIST Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: naev-macos-entitlements
           path: ${{ github.workspace }}/build/dist/entitlements.plist
           if-no-files-found: error
 
-      - name: Upload GitHub Deployment Artifact
-        uses: actions/upload-artifact@v4
+      - name: Upload Codeberg Deployment Artifact
+        uses: actions/upload-artifact@v3
         with:
-          name: naev-github-deployment
-          path: ${{ github.workspace }}/build/dist/gh/*
+          name: naev-codeberg-deployment
+          path: ${{ github.workspace }}/build/dist/berg/*
           if-no-files-found: error
 
       - name: Upload Steam Deployment Script Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: naev-steam-deployment
           path: ${{ github.workspace }}/build/dist/steam/*
           if-no-files-found: error
 
       - name: Upload Itch Deployment Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: naev-itch-deployment
           path: ${{ github.workspace }}/build/dist/itch/*
@@ -129,18 +111,20 @@ jobs:
 
   "Linux_Naev_Release":
     needs: "Package_Source"
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-    container:
-      image: "ghcr.io/naev/naev-steamruntime:latest"
-      volumes:
-        - ${{ github.workspace }}:${{ github.workspace }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - image: naev-steamruntime
+            config: linux_steamruntime.ini
+            wrap_mode: default
+            target: x86_64-unknown-linux-gnu
+
+    runs-on: ${{ matrix.image }}
 
     steps:
       - name: Get Source
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: naev-dist
 
@@ -149,24 +133,12 @@ jobs:
           mkdir source
           tar -xf source.tar.xz -C source --strip 1
 
-      - name: Configure Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          target: "x86_64-unknown-linux-gnu"
-          override: true
-          rustflags: ""
-
-      - name: Install bindgen-cli
-        uses: baptiste0928/cargo-install@v3
-        with:
-          crate: bindgen-cli
-
       - name: Meson Setup
         run: |
           meson setup build source \
               --native-file='source/utils/build/linux_steamruntime.ini' \
               --buildtype=debug \
-              --wrap-mode=default
+              --wrap-mode=${{ matrix.wrap_mode }} \
               --force-fallback-for=sdl2_image,glpk,SuiteSparse \
               -Dsteamruntime=true \
               -Dprefix="/usr" \
@@ -202,19 +174,19 @@ jobs:
           tar -cJvf build/dist/naev-ndata.tar.xz -C staging/usr/share/naev dat
 
       - name: Upload Naev Binary Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: naev-steamruntime
           path: ${{ github.workspace }}/build/dist/naev.x64
 
       - name: Upload Naev Data Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: naev-ndata
           path: ${{ github.workspace }}/build/dist/naev-ndata.tar.xz
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: naev-linux-appdir-x86-64
           path: "${{ github.workspace }}/build/dist/naev-appdir.tar.xz"
@@ -225,21 +197,15 @@ jobs:
         Package_Source,
         Linux_Naev_Release
       ]
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-    container:
-      image: "ghcr.io/naev/naev-release:latest"
-
+    runs-on: naev-release
     steps:
       - name: Get AppImage Packaging Script
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: naev-appimage-packaging
 
       - name: Get AppDir
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: naev-linux-appdir-x86-64
 
@@ -250,24 +216,31 @@ jobs:
               ./buildAppImage.sh -d -p -a "./AppDir" -b build
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: naev-linux-x86-64
           path: "${{ github.workspace }}/build/dist/*"
 
   "Windows_Naev_Release":
     needs: "Package_Source"
-    runs-on: ubuntu-latest
-    container:
-      image: "ghcr.io/naev/naev-windows:latest"
-      env:
-        PKG_CONFIG: "x86_64-w64-mingw32-pkg-config"
-        PKG_CONFIG_PATH: "/usr/x86_64-w64-mingw32/sys-root/mingw/lib/pkgconfig:/__w/naev/naev/source/subprojects/LuaJIT-04dca7911ea255f37be799c18d74c305b921c1a6/etc"
-        BINDGEN_EXTRA_CLANG_ARGS: "--sysroot=/usr/x86_64-w64-mingw32/sys-root/mingw --target=x86_64-w64-mingw32"
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - image: naev-windows
+            config: windows_cross_mingw.ini
+            target: x86_64-pc-windows-gnu
+
+    runs-on: ${{ matrix.image }}
+    env:
+      PKG_CONFIG: "x86_64-w64-mingw32-pkg-config"
+      PKG_CONFIG_PATH: "/usr/x86_64-w64-mingw32/sys-root/mingw/lib/pkgconfig:/__w/naev/naev/source/subprojects/LuaJIT-04dca7911ea255f37be799c18d74c305b921c1a6/etc"
+      BINDGEN_EXTRA_CLANG_ARGS: "--sysroot=/usr/x86_64-w64-mingw32/sys-root/mingw --target=x86_64-w64-mingw32"
 
     steps:
       - name: Get Source
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: naev-dist
 
@@ -276,18 +249,6 @@ jobs:
           mkdir source
           tar -xf source.tar.xz -C source --strip 1
 
-      - name: Configure Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          target: "x86_64-pc-windows-gnu"
-          override: true
-          rustflags: ""
-
-      - name: Install bindgen-cli
-        uses: baptiste0928/cargo-install@v3
-        with:
-          crate: bindgen-cli
-
       - name: Meson Setup
         # We disable b_lto here because it messes with backtraces on windows
         run: |
@@ -295,7 +256,7 @@ jobs:
               --prefix="$(pwd)"/build/windows \
               --bindir=. \
               -Dndata_path=. \
-              --cross-file='source/utils/build/windows_cross_mingw.ini' \
+              --cross-file='source/utils/build/${{ matrix.config }}' \
               --native-file='source/utils/build/linux.ini' \
               --buildtype=debugoptimized \
               --wrap-mode=nopromote \
@@ -315,7 +276,7 @@ jobs:
           meson install -C build
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: naev-win64
           path: ${{ github.workspace }}/build/dist/*
@@ -337,52 +298,22 @@ jobs:
             deploymenttarget: "13.0"
             config: macos_aarch64_cross_osxcross.ini
 
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-    container:
-      image: "ghcr.io/naev/${{ matrix.image }}:latest"
-      env:
-        BUILDARCH: "${{ matrix.arch }}"
-        HOST: "${{ matrix.arch }}-apple-darwin23"
-        MACOSX_DEPLOYMENT_TARGET: "${{ matrix.deploymenttarget }}"
-        PKG_CONFIG: "${{ matrix.arch }}-apple-darwin23-pkg-config"
-        PKG_CONFIG_PATH: "/usr/lib/osxcross/macports/pkgs/opt/local/lib/pkgconfig"
-        BINDGEN_EXTRA_CLANG_ARGS: "--sysroot=/usr/lib/osxcross/SDK/MacOSX14.sdk --target=${{ matrix.arch }}-apple-darwin"
+    runs-on: ${{ matrix.image }}
+    env:
+      BUILDARCH: "${{ matrix.arch }}"
+      HOST: "${{ matrix.arch }}-apple-darwin23"
+      MACOSX_DEPLOYMENT_TARGET: "${{ matrix.deploymenttarget }}"
+      PKG_CONFIG: "${{ matrix.arch }}-apple-darwin23-pkg-config"
+      PKG_CONFIG_PATH: "/usr/lib/osxcross/macports/pkgs/opt/local/lib/pkgconfig"
+      BINDGEN_EXTRA_CLANG_ARGS: "--sysroot=/usr/lib/osxcross/SDK/MacOSX14.sdk --target=${{ matrix.arch }}-apple-darwin"
 
     steps:
       - name: Configure Build Environment
         run: |
-          echo "Configuring MacPorts packages and build env variables for $BUILDARCH."
-          if [[ "$BUILDARCH" == "aarch64" ]] then
-            rm -f /usr/lib/osxcross/macports
-            ln -s /usr/lib/osxcross/macports.aarch64 /usr/lib/osxcross/macports
-          elif [[ "$BUILDARCH" == "x86_64" ]] then
-            rm -f /usr/lib/osxcross/macports
-            ln -s /usr/lib/osxcross/macports.x86_64 /usr/lib/osxcross/macports
-          # Fallback
-          else
-            rm -f /usr/lib/osxcross/macports
-            ln -s /usr/lib/osxcross/macports.x86_64 /usr/lib/osxcross/macports
-          fi
-
-      - name: Configure Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          target: "${{ matrix.arch }}-apple-darwin"
-          override: true
-          rustflags: ""
-
-      - name: Install bindgen-cli
-        uses: baptiste0928/cargo-install@v3
-        with:
-          crate: bindgen-cli
-          git: https://github.com/rust-lang/rust-bindgen.git
-          commit: bd011d43e2d18078606350eb8c33048bf8a59bac
+          /usr/bin/setup-devenv.sh
 
       - name: Get Source
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: naev-dist
 
@@ -421,7 +352,7 @@ jobs:
           mv build/dist/naev-macos.zip build/dist/naev-macos-${{ matrix.arch }}.zip
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: naev-macos-${{ matrix.arch }}
           path: ${{ github.workspace }}/build/dist/naev-macos-${{ matrix.arch }}.zip
@@ -433,37 +364,32 @@ jobs:
         Package_Source,
         Darwin_Compile_Naev
       ]
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-    container:
-      image: "ghcr.io/naev/naev-macos:latest"
+    runs-on: naev-macos
 
     steps:
       - name: Get Universal Bundle Packaging Script
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: naev-macos-packaging
 
       - name: Get DMG Assets
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: naev-macos-dmg
           path: dmg_assets
 
       - name: Get Entitlements PLIST
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: naev-macos-entitlements
 
       - name: Get x86_64 macOS Bundle
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: naev-macos-x86_64
 
       - name: Get ARM64 macOS Bundle
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: naev-macos-aarch64
 
@@ -476,28 +402,21 @@ jobs:
               ./buildUniversalBundle.sh -d -i ./dmg_assets -e ./entitlements.plist -a ./arm64 -x ./x86_64 -b ./build
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: naev-macos
           path: "${{ github.workspace }}/build/dist/*"
 
   "Upload_Naev_Release":
-    permissions:
-      contents: write  #  to create a release (ncipollo/release-action)
-
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         include:
-          - releasetype: github
+          - releasetype: codeberg
           - releasetype: steam
           - releasetype: itch
 
-    runs-on: ubuntu-latest
-
-    container:
-      image: "ghcr.io/naev/naev-release:latest"
-
+    runs-on: naev-release
     needs:
       [
         Package_Source,
@@ -508,32 +427,43 @@ jobs:
     if: ${{ github.repository == 'naev/naev' }}
 
     steps:
-      - name: Create Release Staging and Output Areas
-        run: |
-          mkdir -p temp build/{staging,dist/{lin64,macos,win64}}
-        working-directory: ${{ github.workspace }}
-
       - name: Download Artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           path: ${{ github.workspace }}/build/staging
 
       - name: Checkout Naev Repository
+        if: ${{ matrix.releasetype == 'codeberg' }}
         uses: actions/checkout@v4
         with:
           path: build/staging/repo
-        if: ${{ matrix.releasetype == 'github' }}
+          fetch-depth: 0
 
-      - name: Build and Upload Github Release
-        if: ${{ matrix.releasetype == 'github' }}
+      - name: Generate Nightly Changelog
+        if: ${{ matrix.releasetype == 'codeberg' }}
+        working-directory: ${{ github.workspace }}/build/staging/repo
         run: |
-          chmod -R +x build/staging/naev-github-deployment
-          cp -r build/staging/naev-github-deployment/* "$(pwd)"
-          ./GHDeploy.sh -p -t "$(pwd)/build/staging" -o "$(pwd)/build/dist" -r "${{github.ref_name}}"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GIT_USERNAME: "github-actions[bot]"
-          GIT_EMAIL: "41898282+github-actions[bot]@users.noreply.github.com"
+          # Populate RELEASE_NOTES env var
+          echo "RELEASE_NOTES=$(cat /build/staging/naev-changelog/Changelog.md)" >> $GITHUB_ENV
+
+      - name: Stage Codeberg Release
+        if: ${{ matrix.releasetype == 'codeberg' }}
+        run: |
+          chmod -R +x build/staging/naev-codeberg-deployment
+          cp -r build/staging/naev-codeberg-deployment/* "$(pwd)"
+          ./BergDeploy.sh -n -t "$(pwd)/build/staging" -o "$(pwd)/build/dist" -r "${{ github.ref_name }}"
+
+      - name: Upload Codeberg Release
+        if: ${{ matrix.releasetype == 'codeberg' }}
+        uses: actions/forgejo-release@v2.7.2
+        with:
+          direction: upload
+          release-dir: "$(pwd)/build/dist"
+          release-notes: "${{ env.RELEASE_NOTES }}"
+          override: true
+          prerelease: true
+          hide-archive-link: true
+          tag: ${{ github.ref_name }}
 
       - name: Build and Upload itch.io Release
         if: ${{ matrix.releasetype == 'itch' }}
