@@ -91,11 +91,12 @@ repos:
       files: '^src/'
       args: ["--edition", "2024"]
       language: system
-- repo: https://github.com/shellcheck-py/shellcheck-py
-  rev: v0.11.0.1
+- repo: https://github.com/koalaman/shellcheck-precommit
+  rev: v0.11.0
   hooks:
     - id: shellcheck
       types: [shell]
+      require_serial: False
 - repo: https://github.com/codespell-project/codespell
   rev: v2.4.1
   hooks:
