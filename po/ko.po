@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-09-25 06:03-0400\n"
+"POT-Creation-Date: 2025-09-25 06:06-0400\n"
 "PO-Revision-Date: 2024-06-23 14:45+0000\n"
 "Last-Translator: Han Ga Eun <gdd72582@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/naev/naev/ko/>\n"
@@ -17,1841 +17,6 @@ msgstr ""
 "X-Crowdin-Language: ko\n"
 "X-Crowdin-File: naev.pot\n"
 "X-Crowdin-File-ID: 2\n"
-
-msgid "Active Plating"
-msgstr ""
-
-msgid "<widget mainimg />"
-msgstr ""
-
-msgid "# <%= o:name() %>"
-msgstr ""
-
-msgid "<widget wgtdescription />"
-msgstr ""
-
-msgid "## Properties"
-msgstr ""
-
-msgid "<widget wgtsummary />"
-msgstr ""
-
-msgid "## Availability"
-msgstr ""
-
-msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
-msgstr ""
-
-msgid "<widget map />"
-msgstr ""
-
-msgid ""
-"You are not aware of anywhere where <%= o:name() %> are available for "
-"purchase."
-msgstr ""
-
-msgid "Adaptive Camouflage Plating"
-msgstr ""
-
-msgid "Adaptive Jump"
-msgstr ""
-
-#. Movement skill tree
-#. Only for up to destroyers
-#. Needs adrenal gland slot
-msgid "Adrenal Gland I"
-msgstr ""
-
-msgid "Adrenal Gland II"
-msgstr ""
-
-msgid "Adrenal Gland III"
-msgstr ""
-
-msgid "Adrenaline Hormones"
-msgstr ""
-
-msgid "Agility Combat AI"
-msgstr ""
-
-msgid "Air Freshener"
-msgstr ""
-
-#, fuzzy
-msgid "Ambush Hunter I"
-msgstr "옹호자"
-
-#, fuzzy
-msgid "Ambush Hunter II"
-msgstr "옹호자"
-
-#, fuzzy
-msgid "Antimatter Lance"
-msgstr "프론티어 순찰대"
-
-msgid "Apollo's Gaze"
-msgstr ""
-
-msgid "Arc Blade"
-msgstr ""
-
-msgid "Arc Machete"
-msgstr ""
-
-msgid "Asteroid Scanner"
-msgstr "소행성 스캐너"
-
-#, fuzzy
-msgid "Astral Cannon"
-msgstr "리퍼 캐논"
-
-msgid "Astral Flow Amplifier"
-msgstr ""
-
-#. Set outfit state
-#. Astral projection
-msgid "Astral Projection"
-msgstr ""
-
-msgid "Auxiliary Processing Unit I"
-msgstr ""
-
-msgid "Auxiliary Processing Unit II"
-msgstr ""
-
-msgid "Auxiliary Processing Unit III"
-msgstr ""
-
-msgid "Auxiliary Processing Unit IV"
-msgstr ""
-
-#, fuzzy
-msgid "Avatar of the Sirichana"
-msgstr "투리온의 불꽃"
-
-msgid "Bad Shape"
-msgstr ""
-
-msgid "Base Ripper MK2"
-msgstr ""
-
-msgid "Battery I"
-msgstr ""
-
-msgid "Battery II"
-msgstr ""
-
-msgid "Battery III"
-msgstr ""
-
-msgid "Battery IV"
-msgstr ""
-
-msgid "Beat Up Large Engine"
-msgstr ""
-
-msgid "Beat Up Medium Engine"
-msgstr ""
-
-msgid "Beat Up Small Engine"
-msgstr ""
-
-msgid "Berserk Chip"
-msgstr ""
-
-#, fuzzy
-msgid "Bikers Fury Launcher"
-msgstr "터레 티드 가우스 건"
-
-msgid "Bio-Neural Combat AI"
-msgstr ""
-
-msgid "Biometal Armour"
-msgstr ""
-
-#, fuzzy
-msgid "Bioship Pheromone Emitter"
-msgstr "바이오십 뇌"
-
-msgid "Black Agate Finishing"
-msgstr ""
-
-msgid "Black Cat Doll"
-msgstr ""
-
-msgid "Blink Drive"
-msgstr ""
-
-msgid "Boarding Androids MK1"
-msgstr ""
-
-msgid "Boarding Androids MK2"
-msgstr ""
-
-msgid "Broken Nebular Shielding Prototype"
-msgstr ""
-
-#. Health tree
-#. For everyone!
-#. Uses intrinsics only
-msgid "Bulky Abdomen"
-msgstr ""
-
-msgid "Cargo Damper"
-msgstr ""
-
-#. Misc tree
-#. For everyone!
-#. All intrinsics
-msgid "Cargo Sacs"
-msgstr ""
-
-msgid "Catalytic Energy Drill"
-msgstr ""
-
-msgid "Charge Conduit"
-msgstr ""
-
-msgid "Cleansing Flames"
-msgstr ""
-
-msgid "Cloaking Device"
-msgstr ""
-
-msgid "Combat Hologram Projector"
-msgstr ""
-
-msgid "Commemorative Stein"
-msgstr ""
-
-msgid "Compact Lightsail"
-msgstr ""
-
-#. Stealth skill tree
-#. For up to cruiser
-#. Uses intrinsics only
-msgid "Compound Eyes"
-msgstr ""
-
-#, fuzzy
-msgid "Convulsion Launcher"
-msgstr "오리온 랜스"
-
-#. Plasma tree
-#. For everyone!
-#. Requires plasma slot for tier 5
-msgid "Corrosion I"
-msgstr ""
-
-msgid "Corrosion II"
-msgstr ""
-
-#, fuzzy
-msgid "Corsair Engine"
-msgstr "핵심 시스템"
-
-#, fuzzy
-msgid "Corsair Hull Plating"
-msgstr "선체 수정"
-
-#, fuzzy
-msgid "Corsair Systems"
-msgstr "핵심 시스템"
-
-msgid "Crippling Plasma"
-msgstr ""
-
-msgid "Cryogenic Repair Nanobots"
-msgstr ""
-
-msgid "Cyborg Feather"
-msgstr ""
-
-msgid "Cyclic Combat AI"
-msgstr ""
-
-msgid "Daphne's Leap"
-msgstr ""
-
-msgid "Defective"
-msgstr ""
-
-msgid "Disruptor Artillery S1"
-msgstr ""
-
-msgid "Disruptor Artillery S2"
-msgstr ""
-
-msgid "Disruptor Battery S2"
-msgstr ""
-
-msgid "Droid Repair Crew"
-msgstr ""
-
-#, fuzzy
-msgid "Drone Bay"
-msgstr "프론티어 시스템"
-
-#, fuzzy
-msgid "Dummy Engine"
-msgstr "엔지"
-
-msgid "Dummy Plating"
-msgstr ""
-
-#, fuzzy
-msgid "Dummy Systems"
-msgstr "시리우스 시스템"
-
-#, fuzzy
-msgid "Dvaered Flare Battery"
-msgstr "드바에레드 순찰대"
-
-msgid "Efficiency Combat AI"
-msgstr ""
-
-msgid "Electron Burst Cannon"
-msgstr ""
-
-msgid "Emergency Shield Booster"
-msgstr ""
-
-msgid "Emergency Stasis Inducer"
-msgstr ""
-
-#, fuzzy
-msgid "EMP Grenade Launcher"
-msgstr "터레 티드 가우스 건"
-
-#, fuzzy
-msgid "Empire Lancelot Bay"
-msgstr "랜슬롯"
-
-msgid "Energy Harpoon"
-msgstr ""
-
-msgid "Engine Reroute"
-msgstr ""
-
-msgid "Enhanced Smell"
-msgstr ""
-
-msgid "Enygma Systems Huntsman Launcher"
-msgstr ""
-
-msgid "Enygma Systems Spearhead Launcher"
-msgstr ""
-
-msgid "Enygma Systems Turreted Fury Launcher"
-msgstr ""
-
-msgid "Enygma Systems Turreted Headhunter Launcher"
-msgstr ""
-
-#, fuzzy
-msgid "Escape Pod"
-msgstr "드 베어드 경계"
-
-msgid "Executor Shield Aura"
-msgstr ""
-
-msgid "Fake Transponder"
-msgstr ""
-
-msgid "Fancy Key Chain"
-msgstr ""
-
-msgid "Faraday Tempest Coating"
-msgstr ""
-
-msgid "Feather Drive"
-msgstr ""
-
-#. Attack tree
-#. For everyone!
-#. Uses feral rage slot (only for ships that get tier 5)
-msgid "Feral Rage I"
-msgstr ""
-
-msgid "Feral Rage II"
-msgstr ""
-
-msgid "Feral Rage III"
-msgstr ""
-
-#, fuzzy
-msgid "Flak Gun"
-msgstr "벌컨 건"
-
-msgid "Flicker Drive"
-msgstr ""
-
-#, fuzzy
-msgid "Four Winds Laser Cannon"
-msgstr "오리온 랜스"
-
-#, fuzzy
-msgid "Four Winds Ragnarok Beam"
-msgstr "라그나로크 빔"
-
-msgid "Fuel Bladder"
-msgstr ""
-
-msgid "Fuel Recycler"
-msgstr ""
-
-#, fuzzy
-msgid "Fuelshell Plating"
-msgstr "선체 수정"
-
-msgid "Fuzzy Dice"
-msgstr ""
-
-msgid "Gauntlet Deluxe"
-msgstr ""
-
-msgid "Gauntlet Supreme"
-msgstr ""
-
-msgid "Gauss Gun"
-msgstr ""
-
-#, fuzzy
-msgid "Goatee Marker"
-msgstr "해적 조상"
-
-#, fuzzy
-msgid "Grave Beam"
-msgstr "입자 빔"
-
-#, fuzzy
-msgid "Grave Lance"
-msgstr "입자 랜스"
-
-#, fuzzy
-msgid "Greater Astral Cannon"
-msgstr "리퍼 캐논"
-
-msgid "Guardian Interception System"
-msgstr ""
-
-#, fuzzy
-msgid "Guardian Overseer System"
-msgstr "시리안 국경 시스템"
-
-msgid "GUI - Brushed"
-msgstr ""
-
-msgid "GUI - Legacy"
-msgstr ""
-
-msgid "GUI - Slim"
-msgstr ""
-
-msgid "GUI - Slimv2"
-msgstr ""
-
-msgid "Hades Torch"
-msgstr ""
-
-msgid "Handbook for Dvaered Good Manners"
-msgstr ""
-
-msgid "Hard Shell"
-msgstr ""
-
-#, fuzzy
-msgid "Heavy Ion Cannon"
-msgstr "리퍼 캐논"
-
-#, fuzzy
-msgid "Heavy Ion Turret"
-msgstr "플라즈마 터렛 MK1"
-
-#, fuzzy
-msgid "Heavy Laser Turret"
-msgstr "면도기 터렛 MK1"
-
-msgid "Heavy Neutron Disruptor"
-msgstr ""
-
-#, fuzzy
-msgid "Heavy Ripper Cannon"
-msgstr "리퍼 캐논"
-
-#, fuzzy
-msgid "Heavy Ripper Turret"
-msgstr "플라즈마 터렛 MK1"
-
-msgid "Hellburner"
-msgstr ""
-
-msgid "Hidden Jump Scanner"
-msgstr ""
-
-msgid "Hive Combat AI"
-msgstr ""
-
-msgid "Homebrew Processing Unit"
-msgstr ""
-
-msgid "House of Mirrors"
-msgstr ""
-
-msgid "Hunter's Instinct"
-msgstr ""
-
-msgid "Hunting Combat AI"
-msgstr ""
-
-#, fuzzy
-msgid "Hyena Bay"
-msgstr "하이에나"
-
-#, fuzzy
-msgid "Hyena Dock"
-msgstr "하이에나"
-
-msgid "Hyperbolic Blink Engine"
-msgstr ""
-
-msgid "Hyperdrive Retool"
-msgstr ""
-
-msgid "Improved Stabilizer"
-msgstr ""
-
-msgid "Internal Flow Amplifier"
-msgstr ""
-
-#, fuzzy
-msgid "Ion Cannon"
-msgstr "리퍼 캐논"
-
-msgid "Jack's Eyepatch"
-msgstr ""
-
-msgid "Jump Scanner"
-msgstr ""
-
-msgid "Krain Nanotubes Foam Padding"
-msgstr ""
-
-#, fuzzy
-msgid "Krain Patagium Twin Engine"
-msgstr "엔지"
-
-msgid "Krain Remige Engine"
-msgstr ""
-
-msgid "Kratos' Glove"
-msgstr ""
-
-#, fuzzy
-msgid "Lancelot Bay"
-msgstr "랜슬롯"
-
-msgid "Large Cargo Pod"
-msgstr ""
-
-msgid "Large Flow Amplifier"
-msgstr ""
-
-msgid "Large Flow Resonator"
-msgstr ""
-
-msgid "Large Fuel Pod"
-msgstr ""
-
-msgid "Large Meditation Chamber"
-msgstr ""
-
-msgid "Large Shield Booster"
-msgstr ""
-
-#, fuzzy
-msgid "Laser Cannon MK1"
-msgstr "플라즈마 클러스터 캐논 MK1"
-
-#, fuzzy
-msgid "Laser Cannon MK2"
-msgstr "플라즈마 클러스터 캐논 MK2"
-
-#, fuzzy
-msgid "Laser Turret MK1"
-msgstr "면도기 터렛 MK1"
-
-#, fuzzy
-msgid "Laser Turret MK2"
-msgstr "면도기 터렛 MK2"
-
-msgid "Lattice Thermal Coating"
-msgstr ""
-
-msgid "Left Boot"
-msgstr ""
-
-#, fuzzy
-msgid "Lesser Astral Cannon"
-msgstr "리퍼 캐논"
-
-#, fuzzy
-msgid "Local System Map"
-msgstr "시스템"
-
-msgid "Love Letter"
-msgstr ""
-
-msgid "Low Radiation Sensor Modulator"
-msgstr ""
-
-msgid "Luxury Furnishings"
-msgstr ""
-
-msgid "Machiavellian Fortune"
-msgstr ""
-
-msgid "Machiavellian Necessity"
-msgstr ""
-
-msgid "Machiavellian Virtue"
-msgstr ""
-
-msgid "Map: Collective Space"
-msgstr ""
-
-#, fuzzy
-msgid "Map: Dvaered Core"
-msgstr "드 베어드 고다드"
-
-#, fuzzy
-msgid "Map: Empire-Soromid Trade Route"
-msgstr "드바에레드-소로미드 무역로"
-
-msgid "Map: Empire Core"
-msgstr ""
-
-msgid "Map: FLF-Pirate Route"
-msgstr ""
-
-msgid "Map: FLF Hidden Jumps"
-msgstr ""
-
-msgid "Map: Inner Nebula Secret Jump"
-msgstr ""
-
-msgid "Map: Kretogg's Hypergate"
-msgstr ""
-
-msgid "Map: Kretogg's Secrets"
-msgstr ""
-
-#, fuzzy
-msgid "Map: Nebula Edge"
-msgstr "솔 성운 모서리"
-
-msgid "Map: New Haven's Secrets"
-msgstr ""
-
-msgid "Map: Pirate Strongholds"
-msgstr ""
-
-msgid "Map: Qorel Tunnel"
-msgstr ""
-
-#, fuzzy
-msgid "Map: Sirian Border Systems"
-msgstr "시리안 국경 시스템"
-
-msgid "Map: Sirius Core"
-msgstr ""
-
-msgid "Map: Sol"
-msgstr ""
-
-msgid "Map: The Frontier"
-msgstr "지도: 개척지 변경"
-
-#, fuzzy
-msgid "Map: Thurion Core"
-msgstr "투리온의 확신"
-
-msgid "Map: Za'lek Core"
-msgstr ""
-
-msgid "Mass Driver"
-msgstr ""
-
-msgid "Medium Cargo Pod"
-msgstr ""
-
-msgid "Medium Flow Amplifier"
-msgstr ""
-
-msgid "Medium Flow Resonator"
-msgstr ""
-
-msgid "Medium Fuel Pod"
-msgstr ""
-
-msgid "Medium Meditation Chamber"
-msgstr ""
-
-msgid "Medium Shield Booster"
-msgstr ""
-
-#, fuzzy
-msgid "Melendez Buffalo Engine"
-msgstr "메렌데즈 회사."
-
-#, fuzzy
-msgid "Melendez Mammoth Engine"
-msgstr "메렌데즈 회사."
-
-#, fuzzy
-msgid "Melendez Ox Engine"
-msgstr "멜렌데즈 전략 CEO"
-
-msgid "Microbond Plating"
-msgstr ""
-
-msgid "Milspec Aegis 2201 Core System"
-msgstr ""
-
-msgid "Milspec Aegis 4701 Core System"
-msgstr ""
-
-msgid "Milspec Aegis 8501 Core System"
-msgstr ""
-
-msgid "Milspec Impacto-Plastic Coating"
-msgstr ""
-
-msgid "Milspec Jammer"
-msgstr ""
-
-msgid "Milspec Orion 2301 Core System"
-msgstr ""
-
-msgid "Milspec Orion 4801 Core System"
-msgstr ""
-
-msgid "Milspec Orion 8601 Core System"
-msgstr ""
-
-msgid "Milspec Prometheus 2203 Core System"
-msgstr ""
-
-msgid "Milspec Prometheus 4703 Core System"
-msgstr ""
-
-msgid "Milspec Prometheus 8503 Core System"
-msgstr ""
-
-msgid "Milspec Scrambler"
-msgstr ""
-
-msgid "Milspec Thalos 2202 Core System"
-msgstr ""
-
-msgid "Milspec Thalos 4702 Core System"
-msgstr ""
-
-msgid "Milspec Thalos 8502 Core System"
-msgstr ""
-
-msgid "Mining Lance MK1"
-msgstr ""
-
-msgid "Mining Lance MK2"
-msgstr ""
-
-#, fuzzy
-msgid "Mystery Outfit"
-msgstr "맵 의상"
-
-msgid "Nanobond Plating"
-msgstr ""
-
-msgid "Nanofiber Structural Enhancement"
-msgstr ""
-
-msgid "Natural Healing I"
-msgstr ""
-
-msgid "Natural Healing II"
-msgstr ""
-
-msgid "Nebula Resistant Coating"
-msgstr ""
-
-msgid "Nebular Shielding Prototype"
-msgstr ""
-
-msgid "Neural Accelerator Interface"
-msgstr ""
-
-msgid "Neutralizer"
-msgstr ""
-
-msgid "Neutron Disruptor"
-msgstr ""
-
-msgid "Nexus Arrow 700 Engine"
-msgstr ""
-
-msgid "Nexus Bolt 3000 Engine"
-msgstr ""
-
-msgid "Nexus Concealment Coating"
-msgstr ""
-
-msgid "Nexus Dart 160 Engine"
-msgstr ""
-
-msgid "Nexus Drill Lance"
-msgstr ""
-
-msgid "Nexus Ghost Weave"
-msgstr ""
-
-msgid "Nexus Phantasm Weave"
-msgstr ""
-
-#, fuzzy
-msgid "Nexus Shadow Weave"
-msgstr "시리우스 주술사"
-
-msgid "Orion Beam"
-msgstr "오리온 빔"
-
-msgid "Orion Lance"
-msgstr "오리온 랜스"
-
-msgid "Paralyzing Plasma"
-msgstr ""
-
-msgid "Particle Beam"
-msgstr "입자 빔"
-
-msgid "Particle Lance"
-msgstr "입자 랜스"
-
-msgid "Patchwork Heavy Plating"
-msgstr ""
-
-msgid "Patchwork Light Plating"
-msgstr ""
-
-msgid "Patchwork Medium Plating"
-msgstr ""
-
-msgid "Pentagram of Valor"
-msgstr ""
-
-msgid "Photo-Voltaic Nanobot Coating"
-msgstr ""
-
-msgid "Pilot Doll"
-msgstr ""
-
-msgid "Pincushion Battery"
-msgstr ""
-
-msgid "Pinpoint Combat AI"
-msgstr ""
-
-msgid "Pipeline Conduit"
-msgstr ""
-
-#, fuzzy
-msgid "Pirate Hyena Bay"
-msgstr "해적 벤데타"
-
-#, fuzzy
-msgid "Pirate Hyena Dock"
-msgstr "해적 벤데타"
-
-msgid "Plasma Blaster MK1"
-msgstr "플라즈마 블래스터 MK1"
-
-msgid "Plasma Blaster MK2"
-msgstr "플라즈마 블래스터 MK2"
-
-#, fuzzy
-msgid "Plasma Burst"
-msgstr "플라즈마 터렛 MK2"
-
-#, fuzzy
-msgid "Plasma Cannon"
-msgstr "리퍼 캐논"
-
-#, fuzzy
-msgid "Plasma Cluster Cannon"
-msgstr "플라즈마 클러스터 캐논 MK1"
-
-#, fuzzy
-msgid "Plasma Eruptor"
-msgstr "리퍼 캐논"
-
-#, fuzzy
-msgid "Plasma Turret MK1"
-msgstr "플라즈마 터렛 MK2"
-
-msgid "Plasma Turret MK2"
-msgstr "플라즈마 터렛 MK2"
-
-msgid "Plasteel Plating"
-msgstr ""
-
-msgid "Port & Polish"
-msgstr ""
-
-msgid "Previous Generation Large Systems"
-msgstr ""
-
-msgid "Previous Generation Medium Systems"
-msgstr ""
-
-msgid "Previous Generation Small Systems"
-msgstr ""
-
-#, fuzzy
-msgid "Proteron Dalton Bay"
-msgstr "프로 테론 왓슨"
-
-#, fuzzy
-msgid "Proteron Dalton Dock"
-msgstr "프로 테론 왓슨"
-
-msgid "Prototype Systems T-IVa 'Quickshell'"
-msgstr ""
-
-#, fuzzy
-msgid "Pulse Scanner"
-msgstr "소행성 스캐너"
-
-msgid "Racing Trophy (Bronze)"
-msgstr ""
-
-msgid "Racing Trophy (Gold)"
-msgstr ""
-
-msgid "Racing Trophy (Silver)"
-msgstr ""
-
-msgid "Rackham's Razor"
-msgstr ""
-
-msgid "Ragnarok Beam"
-msgstr "라그나로크 빔"
-
-msgid "Railgun"
-msgstr "레일건"
-
-#, fuzzy
-msgid "Railgun Turret"
-msgstr "레일건"
-
-msgid "Razor Artillery S1"
-msgstr ""
-
-msgid "Razor Artillery S2"
-msgstr ""
-
-msgid "Razor Artillery S3"
-msgstr ""
-
-msgid "Razor Battery S2"
-msgstr ""
-
-msgid "Reactor Class I"
-msgstr ""
-
-msgid "Reactor Class II"
-msgstr ""
-
-msgid "Reactor Class III"
-msgstr ""
-
-msgid "Reality Rip"
-msgstr ""
-
-#, fuzzy
-msgid "Reaver Cannon"
-msgstr "리퍼 캐논"
-
-msgid "Reconstructive Nanobot Coating"
-msgstr ""
-
-msgid "Reflective Shell"
-msgstr ""
-
-#, fuzzy
-msgid "Repeating Banshee Launcher"
-msgstr "터레 티드 가우스 건"
-
-msgid "Repeating Railgun"
-msgstr "반복 레일 건"
-
-#, fuzzy
-msgid "Ripper Cannon"
-msgstr "리퍼 캐논"
-
-msgid "Red Star Large Cargo Hull"
-msgstr ""
-
-msgid "Red Star Medium Cargo Hull"
-msgstr ""
-
-#, fuzzy
-msgid "Red Star Small Cargo Hull"
-msgstr "저지름: %s"
-
-msgid "Sandwich Holder"
-msgstr ""
-
-msgid "Satellite Mock-up"
-msgstr ""
-
-msgid "Scanning Combat AI"
-msgstr ""
-
-msgid "Seeking Chakra"
-msgstr ""
-
-msgid "Seeking Chakra Large"
-msgstr ""
-
-msgid "Seeking Chakra Medium"
-msgstr ""
-
-msgid "Seeking Chakra Small"
-msgstr ""
-
-msgid "Sensor Array"
-msgstr ""
-
-#, fuzzy
-msgid "Shatterer Launcher"
-msgstr "입자 랜스"
-
-msgid "Shield Capacitor I"
-msgstr ""
-
-msgid "Shield Capacitor II"
-msgstr ""
-
-msgid "Shield Capacitor III"
-msgstr ""
-
-msgid "Shield Capacitor IV"
-msgstr ""
-
-msgid "Shredder"
-msgstr "슈레더"
-
-msgid "Silence"
-msgstr ""
-
-#, fuzzy
-msgid "Sirius Fidelity Bay"
-msgstr "시리우스 피델리티"
-
-#, fuzzy
-msgid "Sirius Shaman Bay"
-msgstr "시리우스 주술사"
-
-msgid "S&K Battle Plating"
-msgstr ""
-
-msgid "S&K Heavy Plasma Drill"
-msgstr ""
-
-msgid "S&K Large Cargo Hull"
-msgstr ""
-
-msgid "S&K Medium Cargo Hull"
-msgstr ""
-
-msgid "S&K Plasma Drill"
-msgstr ""
-
-msgid "S&K Skirmish Plating"
-msgstr ""
-
-msgid "S&K Small Cargo Hull"
-msgstr ""
-
-msgid "S&K War Plating"
-msgstr ""
-
-#, fuzzy
-msgid "Small Cargo Pod"
-msgstr "저지름: %s"
-
-msgid "Small Flow Amplifier"
-msgstr ""
-
-msgid "Small Flow Resonator"
-msgstr ""
-
-msgid "Small Fuel Pod"
-msgstr ""
-
-msgid "Small Meditation Chamber"
-msgstr ""
-
-msgid "Small Shield Booster"
-msgstr ""
-
-#, fuzzy
-msgid "Soromid Brigand Bay"
-msgstr "소로 미드 브 리간드"
-
-msgid "Space Mine Layer"
-msgstr ""
-
-msgid "Spittle Tubuloid Cluster"
-msgstr ""
-
-msgid "Squadron Synchronizer Module"
-msgstr ""
-
-msgid "Star of Valor"
-msgstr ""
-
-#, fuzzy
-msgid "Stealth Burster"
-msgstr "투리온의 불꽃"
-
-#, fuzzy
-msgid "Super-Fast Collider Launcher"
-msgstr "터레 티드 가우스 건"
-
-#. get the drink
-msgid "Swamp Bombing"
-msgstr ""
-
-msgid "Targeting Array"
-msgstr ""
-
-msgid "Targeting Conduit"
-msgstr ""
-
-#, fuzzy
-msgid "TeraCom Banshee Launcher"
-msgstr "터레 티드 가우스 건"
-
-#, fuzzy
-msgid "TeraCom Fury Launcher"
-msgstr "터레 티드 가우스 건"
-
-#, fuzzy
-msgid "TeraCom Headhunter Launcher"
-msgstr "터레 티드 가우스 건"
-
-#, fuzzy
-msgid "TeraCom Imperator Launcher"
-msgstr "터레 티드 가우스 건"
-
-#, fuzzy
-msgid "TeraCom Mace Launcher"
-msgstr "터레 티드 가우스 건"
-
-#, fuzzy
-msgid "TeraCom Medusa Launcher"
-msgstr "터레 티드 가우스 건"
-
-msgid "TeraCom Vengeance Launcher"
-msgstr ""
-
-msgid "The Bite - Blood Lust"
-msgstr ""
-
-msgid "The Bite - Cannibal"
-msgstr ""
-
-msgid "The Bite - Improved"
-msgstr ""
-
-#, fuzzy
-msgid "The Bite"
-msgstr "슈뢰딩거"
-
-#, fuzzy
-msgid "Bioship Thorn"
-msgstr "바이오십 뇌"
-
-#, fuzzy
-msgid "Thurion Perspicacity Bay"
-msgstr "투리온의 통찰력"
-
-#, fuzzy
-msgid "Thurion Perspicacity Dock"
-msgstr "투리온의 통찰력"
-
-#, fuzzy
-msgid "Thurion Scintillation Bay"
-msgstr "투리온의 불꽃"
-
-msgid "Toy Drone"
-msgstr ""
-
-#, fuzzy
-msgid "Tracking Antennae"
-msgstr "호킹"
-
-msgid "Trading Card (Common)"
-msgstr ""
-
-msgid "Trading Card (Rare)"
-msgstr ""
-
-msgid "Trading Card (Uncommon)"
-msgstr ""
-
-#. Create the lootable entry
-msgid "Treasure Map"
-msgstr ""
-
-msgid "Tricon Cyclone Engine"
-msgstr ""
-
-msgid "Tricon Typhoon Engine"
-msgstr ""
-
-msgid "Tricon Zephyr Engine"
-msgstr ""
-
-msgid "Tunnelling Organ"
-msgstr ""
-
-msgid "Turbolaser"
-msgstr "터보 레이저"
-
-#, fuzzy
-msgid "Turreted Convulsion Launcher"
-msgstr "터레 티드 가우스 건"
-
-#, fuzzy
-msgid "Turreted Gauss Gun"
-msgstr "터레 티드 벌컨 건"
-
-msgid "Turreted Vulcan Gun"
-msgstr "터레 티드 벌컨 건"
-
-msgid "Ugly Statue"
-msgstr ""
-
-msgid "Ultra Map"
-msgstr ""
-
-msgid "Unicorp Caesar IV Launcher"
-msgstr ""
-
-#, fuzzy
-msgid "Unicorp D-23 Medium Plating"
-msgstr "터레 티드 가우스 건"
-
-msgid "Unicorp D-2 Light Plating"
-msgstr ""
-
-msgid "Unicorp D-58 Heavy Plating"
-msgstr ""
-
-msgid "Unicorp Eagle 3000 Engine"
-msgstr ""
-
-msgid "Unicorp Falcon 700 Engine"
-msgstr ""
-
-msgid "Unicorp Hawk 160 Engine"
-msgstr ""
-
-msgid "Unicorp Jammer"
-msgstr ""
-
-msgid "Unicorp Light Afterburner"
-msgstr ""
-
-#, fuzzy
-msgid "Unicorp Medium Afterburner"
-msgstr "터레 티드 가우스 건"
-
-msgid "Unicorp PT-16 Core System"
-msgstr ""
-
-msgid "Unicorp PT-200 Core System"
-msgstr ""
-
-msgid "Unicorp PT-440 Core System"
-msgstr ""
-
-msgid "Unicorp Scrambler"
-msgstr ""
-
-#, fuzzy
-msgid "Unicorp Storm Launcher"
-msgstr "터레 티드 가우스 건"
-
-msgid "Vacuum Cleaner?"
-msgstr ""
-
-#, fuzzy
-msgid "Valkyrie Beam"
-msgstr "입자 빔"
-
-msgid "Veil of Penelope"
-msgstr ""
-
-msgid "Vulcan Gun"
-msgstr "벌컨 건"
-
-#, fuzzy
-msgid "Wanderer"
-msgstr "렌더링: %s"
-
-msgid "Weakness Harmonizer AI"
-msgstr ""
-
-msgid "Weapons Ionizer"
-msgstr ""
-
-msgid "Wild Space Taint"
-msgstr ""
-
-msgid "Worn Down"
-msgstr ""
-
-#, fuzzy
-msgid "Za'lek Bomber Drone Bay"
-msgstr "잘렉의 폭격 드로"
-
-#, fuzzy
-msgid "Za'lek Bomber Drone Mini Bay"
-msgstr "잘렉의 폭격 드로"
-
-#, fuzzy
-msgid "Za'lek Heavy Drone Bay"
-msgstr "잘렉 헤비 드론"
-
-#, fuzzy
-msgid "Za'lek Heavy Drone Mini Bay"
-msgstr "잘렉 헤비 드론"
-
-#, fuzzy
-msgid "Za'lek Hunter Launcher"
-msgstr "잘렉 헤비 드론"
-
-#, fuzzy
-msgid "Za'lek Light Drone Bay"
-msgstr "잘렉의 경량 드로"
-
-#, fuzzy
-msgid "Za'lek Light Drone Mini Bay"
-msgstr "잘렉의 경량 드로"
-
-#, fuzzy
-msgid "Za'lek Reaper Launcher"
-msgstr "자레크의 연구티"
-
-#, fuzzy
-msgid "Za'lek Test Engine"
-msgstr "자레크의 찌르기"
-
-msgid "ZD-5 Guardian Unit"
-msgstr ""
-
-msgid "ZIBS-16"
-msgstr ""
-
-msgid "ZIBS-32"
-msgstr ""
-
-msgid "Admonisher"
-msgstr "옹호자"
-
-msgid "<widget rightstats />"
-msgstr ""
-
-msgid "# <%= s:name() %>"
-msgstr ""
-
-msgid "* **[Class](ships/classes)**:   <%= _(s:classDisplay()) %>"
-msgstr ""
-
-msgid "* **Fabricator**:   <%= _(s:fabricator()) %>"
-msgstr ""
-
-msgid "* **[Crew](mechanics/boarding)**:   <%= fmt.number(s:crew()) %>"
-msgstr ""
-
-msgid ""
-"* **[Fleet Capacity](mechanics/playerfleet)**:   <%= fmt.number(s:points()) "
-"%>"
-msgstr ""
-
-msgid ""
-"* **[Mass](mechanics/movement)**:   <%= fmt.f(_(\"{mass} {unit}\"), "
-"{mass=fmt.number(s:mass()),unit=naev.unit('mass')}) %>"
-msgstr ""
-
-msgid ""
-"* **[Base Armour](mechanics/damage)**:   <%= fmt.f(_(\"{armour} {unit}\"), "
-"{armour=fmt.number(s:armour()), unit=naev.unit('energy')}) %>"
-msgstr ""
-
-msgid ""
-"* **[Cargo Space](mechanics/cargo)**:   <%= fmt.f(_(\"{cargo} {unit}\"), "
-"{cargo=fmt.number(s:cargo()), unit=naev.unit('mass')})%>"
-msgstr ""
-
-msgid ""
-"* **[Fuel Consumption](mechanics/hyperspace)**:   <%= fmt.f(_(\"{fuel} {unit}"
-"\"), {fuel=fmt.number(s:fuelConsumption()), unit=naev.unit('unit')})%>"
-msgstr ""
-
-msgid "* **[Price](mechanics/credits)**:   <%= fmt.credits(s:price()) %>"
-msgstr ""
-
-msgid "* **License**:   <%= _(s:license()) %>"
-msgstr ""
-
-msgid "Places where the <%= s:name() %> is sold are shown in #ggreen#0."
-msgstr ""
-
-msgid ""
-"You are not aware of anywhere where the <%= s:name() %> is available for "
-"purchase."
-msgstr ""
-
-#, fuzzy
-msgid "Admonisher ΩIIa"
-msgstr "옹호자"
-
-msgid "Ancestor"
-msgstr "조상"
-
-msgid "Ancestor HG Eagle-Eye"
-msgstr ""
-
-msgid "Astral Projection Greater"
-msgstr ""
-
-msgid "Astral Projection Lesser"
-msgstr ""
-
-msgid "Astral Projection Normal"
-msgstr ""
-
-msgid "Bedivere"
-msgstr ""
-
-#, fuzzy
-msgid "Dealbreaker"
-msgstr "렌더링: %s"
-
-msgid "Drone"
-msgstr ""
-
-#, fuzzy
-msgid "Drone Carrier"
-msgstr "프론티어 시스템"
-
-#, fuzzy
-msgid "Drone (Hyena)"
-msgstr "프론티어 시스템"
-
-msgid "Dvaered Ancestor"
-msgstr "드 베어드 조상"
-
-#, fuzzy
-msgid "Dvaered Arsenal"
-msgstr "드 베어드 경계"
-
-msgid "Dvaered Goddard"
-msgstr "드 베어드 고다드"
-
-msgid "Dvaered Phalanx"
-msgstr "드 베어드 팔랑스"
-
-#, fuzzy
-msgid "Dvaered Retribution"
-msgstr "드 베어드 경계"
-
-msgid "Dvaered Vendetta"
-msgstr "드 베어드 벤데타"
-
-msgid "Dvaered Vigilance"
-msgstr "드 베어드 경계"
-
-#, fuzzy
-msgid "Empire Admonisher"
-msgstr "옹호자"
-
-#, fuzzy
-msgid "Empire Admonisher Longbow"
-msgstr "옹호자"
-
-#, fuzzy
-msgid "Empire Hawking"
-msgstr "제국 상어"
-
-#, fuzzy
-msgid "Empire Lancelot"
-msgstr "랜슬롯"
-
-#, fuzzy
-msgid "Empire Lancelot Golden Efreeti"
-msgstr "엠파이어 피스 메이커"
-
-#, fuzzy
-msgid "Empire Pacifier"
-msgstr "엠파이어 피스 메이커"
-
-#, fuzzy
-msgid "Empire Pacifier Hoplite"
-msgstr "엠파이어 피스 메이커"
-
-msgid "Empire Peacemaker"
-msgstr "엠파이어 피스 메이커"
-
-#, fuzzy
-msgid "Empire Rainmaker"
-msgstr "엠파이어 피스 메이커"
-
-msgid "Empire Shark"
-msgstr "제국 상어"
-
-#, fuzzy
-msgid "Fort Raelid"
-msgstr "투리온의 확신"
-
-msgid "Fort Raglan"
-msgstr ""
-
-msgid "Gawain"
-msgstr "가와 인"
-
-#, fuzzy
-msgid "Gawain XY-37"
-msgstr "가와 인"
-
-#, fuzzy
-msgid "Goddard"
-msgstr "드 베어드 고다드"
-
-#, fuzzy
-msgid "Goddard Merchantman"
-msgstr "랜슬롯"
-
-msgid "Hawking"
-msgstr "호킹"
-
-msgid "Heavy Drone"
-msgstr ""
-
-msgid "Hyena"
-msgstr "하이에나"
-
-msgid "Kauweke"
-msgstr ""
-
-msgid "Kestrel"
-msgstr "황조롱이"
-
-#, fuzzy
-msgid "Kestrel Sigma"
-msgstr "황조롱이"
-
-msgid "Koala"
-msgstr "코알라"
-
-msgid "Koala Armoured"
-msgstr ""
-
-msgid "Lancelot"
-msgstr "랜슬롯"
-
-msgid "Llama"
-msgstr "야마"
-
-msgid "Llama Voyager"
-msgstr ""
-
-msgid "Mule"
-msgstr "노새"
-
-msgid "Mule Hardhat"
-msgstr ""
-
-#, fuzzy
-msgid "Nohinohi"
-msgstr "코뿔소"
-
-#, fuzzy
-msgid "One-Wing Goddard"
-msgstr "드 베어드 고다드"
-
-msgid "Pacifier"
-msgstr "고무 젖꼭지"
-
-msgid "Phalanx"
-msgstr "지골"
-
-#, fuzzy
-msgid "Pirate Admonisher"
-msgstr "해적 옹호자"
-
-msgid "Pirate Ancestor"
-msgstr "해적 조상"
-
-#, fuzzy
-msgid "Pirate Bedivere"
-msgstr "해적 벤데타"
-
-#, fuzzy
-msgid "Pirate Blue Shark"
-msgstr "해적 상어"
-
-#, fuzzy
-msgid "Pirate Hyena"
-msgstr "해적 벤데타"
-
-#, fuzzy
-msgid "Pirate Kestrel"
-msgstr "해적 황조롱이"
-
-#, fuzzy
-msgid "Pirate Kestrel Yuri's Kiss"
-msgstr "해적 황조롱이"
-
-msgid "Pirate Phalanx"
-msgstr "해적 지골"
-
-#, fuzzy
-msgid "Pirate Revenant"
-msgstr "해적 벤데타"
-
-msgid "Pirate Rhino"
-msgstr "해적 코뿔소"
-
-msgid "Pirate Shark"
-msgstr "해적 상어"
-
-#, fuzzy
-msgid "Pirate Starbridge"
-msgstr "투리온의 불꽃"
-
-msgid "Pirate Vendetta"
-msgstr "해적 벤데타"
-
-#, fuzzy
-msgid "Pirate Zebra"
-msgstr "해적 벤데타"
-
-msgid "Plowshare"
-msgstr ""
-
-msgid "Proteron Archimedes"
-msgstr "프로 테론 아르키메데스"
-
-#, fuzzy
-msgid "Proteron Dalton"
-msgstr "프로 테론 왓슨"
-
-#, fuzzy
-msgid "Proteron Euler"
-msgstr "프로 테론 카한"
-
-#, fuzzy
-msgid "Proteron Gauss"
-msgstr "프로 테론 왓슨"
-
-#, fuzzy
-msgid "Proteron Hippocrates"
-msgstr "프로 테론 왓슨"
-
-#, fuzzy
-msgid "Proteron Pythagoras"
-msgstr "프로 테론 카한"
-
-msgid "Proteron Watson"
-msgstr "프로 테론 왓슨"
-
-msgid "Psychic Orb"
-msgstr ""
-
-msgid "Quicksilver"
-msgstr "수은"
-
-#, fuzzy
-msgid "Quicksilver Mercury"
-msgstr "수은"
-
-msgid "Rhino"
-msgstr "코뿔소"
-
-msgid "Schroedinger"
-msgstr "슈뢰딩거"
-
-msgid "Shark"
-msgstr "상어"
-
-#, fuzzy
-msgid "Shark ΨIIIa"
-msgstr "상어"
-
-msgid "Sindbad"
-msgstr ""
-
-msgid "Sirius Divinity"
-msgstr "시리우스 신성"
-
-msgid "Sirius Dogma"
-msgstr "시리우스 도그마"
-
-msgid "Sirius Fidelity"
-msgstr "시리우스 피델리티"
-
-msgid "Sirius Preacher"
-msgstr "시리우스 설교자"
-
-#, fuzzy
-msgid "Sirius Providence"
-msgstr "시리우스 설교자"
-
-msgid "Sirius Shaman"
-msgstr "시리우스 주술사"
-
-msgid "Soromid Arx"
-msgstr "소로미드 알스"
-
-msgid "Soromid Brigand"
-msgstr "소로 미드 브 리간드"
-
-#, fuzzy
-msgid "Soromid Copia"
-msgstr "소로미드 이라"
-
-msgid "Soromid Ira"
-msgstr "소로미드 이라"
-
-msgid "Soromid Marauder"
-msgstr "소로미드 약탈자"
-
-msgid "Soromid Nyx"
-msgstr "소로미드 닉스"
-
-msgid "Soromid Odium"
-msgstr "소로미드 오듐"
-
-msgid "Soromid Reaver"
-msgstr "소로미드 강"
-
-msgid "Soromid Vox"
-msgstr "소로미드 복스"
-
-msgid "Starbridge"
-msgstr ""
-
-#, fuzzy
-msgid "Starbridge Sigma"
-msgstr "투리온의 불꽃"
-
-msgid "Taitamariki"
-msgstr ""
-
-msgid "Thurion Apprehension"
-msgstr "투리온 체포"
-
-msgid "Thurion Certitude"
-msgstr "투리온의 확신"
-
-msgid "Thurion Ingenuity"
-msgstr "투리온의 독창성"
-
-msgid "Thurion Perspicacity"
-msgstr "투리온의 통찰력"
-
-#, fuzzy
-msgid "Thurion Perspicacity Beta"
-msgstr "투리온의 통찰력"
-
-msgid "Thurion Scintillation"
-msgstr "투리온의 불꽃"
-
-#, fuzzy
-msgid "Thurion Taciturnity"
-msgstr "투리온 미술 애호가"
-
-msgid "Thurion Virtuosity"
-msgstr "투리온 미술 애호가"
-
-#, fuzzy
-msgid "Tristan"
-msgstr "%s (%d 점프, %.0fk 거리)"
-
-msgid "Vendetta"
-msgstr "상호 복수"
-
-#, fuzzy
-msgid "Vendetta Whiplash"
-msgstr "상호 복수"
-
-msgid "Vigilance"
-msgstr "각서"
-
-msgid "Za'lek Bomber Drone"
-msgstr "잘렉의 폭격 드로"
-
-msgid "Za'lek Demon"
-msgstr "잘렉 악마"
-
-#, fuzzy
-msgid "Za'lek Demon Type IV"
-msgstr "자레크의 찌르기"
-
-msgid "Za'lek Diablo"
-msgstr "잘렉의 디아블ㄹ"
-
-msgid "Za'lek Heavy Drone"
-msgstr "잘렉 헤비 드론"
-
-msgid "Za'lek Hephaestus"
-msgstr "잘렉 헤파이스토스"
-
-msgid "Za'lek Light Drone"
-msgstr "잘렉의 경량 드로"
-
-#, fuzzy
-msgid "Za'lek Mammon"
-msgstr "잘렉 악마"
-
-msgid "Za'lek Mephisto"
-msgstr "자레크의 메피스토"
-
-#, fuzzy
-msgid "Za'lek Mephisto Type V"
-msgstr "자레크의 메피스토"
-
-msgid "Za'lek Scout Drone"
-msgstr "Za'lek 정찰 드로"
-
-msgid "Za'lek Sting"
-msgstr "자레크의 찌르기"
-
-#, fuzzy
-msgid "Za'lek Sting Type II"
-msgstr "자레크의 찌르기"
-
-#, fuzzy
-msgid "Za'lek Sting Type IV"
-msgstr "자레크의 찌르기"
-
-msgid "Zebra"
-msgstr ""
 
 msgid "Main"
 msgstr "기본"
@@ -9352,8 +7517,16 @@ msgid ""
 "the story."
 msgstr ""
 
+#, fuzzy
+msgid "Ambush Hunter I"
+msgstr "옹호자"
+
 msgid "The ship has caught other ships by surprise!"
 msgstr ""
+
+#, fuzzy
+msgid "Ambush Hunter II"
+msgstr "옹호자"
 
 msgid "Antimatter Taint"
 msgstr ""
@@ -9361,9 +7534,18 @@ msgstr ""
 msgid "Antimatter is tainting your ship!"
 msgstr ""
 
+#. Set outfit state
+#. Astral projection
+msgid "Astral Projection"
+msgstr ""
+
 #, fuzzy
 msgid "Ship is being projected."
 msgstr "총에 맞은 것 같군."
+
+#, fuzzy
+msgid "Avatar of the Sirichana"
+msgstr "투리온의 불꽃"
 
 #, fuzzy
 msgid "You are an avatar of the Sirichana!"
@@ -9415,6 +7597,9 @@ msgstr ""
 msgid "Corsair set bonus."
 msgstr ""
 
+msgid "Crippling Plasma"
+msgstr ""
+
 msgid "Plasma is interfering with the weapon systems!"
 msgstr ""
 
@@ -9459,9 +7644,18 @@ msgstr "해적 코뿔소"
 msgid "Fade-Out Norender"
 msgstr "해적 코뿔소"
 
+msgid "Feather Drive"
+msgstr ""
+
 #, fuzzy
 msgid "Your ship just used Feather Drive!"
 msgstr "너의 우주선은 내 것이다!"
+
+#. Attack tree
+#. For everyone!
+#. Uses feral rage slot (only for ships that get tier 5)
+msgid "Feral Rage I"
+msgstr ""
 
 msgid "Fractured Reality"
 msgstr ""
@@ -9494,6 +7688,9 @@ msgid "Onionized"
 msgstr ""
 
 msgid "Hacked!"
+msgstr ""
+
+msgid "Paralyzing Plasma"
 msgstr ""
 
 msgid "Plasma is slowing the ship down!"
@@ -9655,6 +7852,10 @@ msgid ""
 "The Frontier Alliance is formed by the survivors of the initial attempts of "
 "Human expansion into space."
 msgstr ""
+
+#, fuzzy
+msgid "Goddard"
+msgstr "드 베어드 고다드"
 
 #, fuzzy
 msgid "House Goddard"
@@ -9973,6 +8174,9 @@ msgid ""
 "a secretive Great House, but they have recently become much more open."
 msgstr ""
 
+msgid "Air Freshener"
+msgstr ""
+
 msgid "Accessory"
 msgstr "엑세서리"
 
@@ -9983,6 +8187,9 @@ msgid ""
 "cosmetic."
 msgstr ""
 
+msgid "Black Cat Doll"
+msgstr ""
+
 msgid ""
 "A crude doll of a black cat made from authentic \"Felis catus\" fur you made "
 "that was all over your ship. It's quite cute."
@@ -9991,11 +8198,17 @@ msgstr ""
 msgid "#pOnly active when in stealth.#0"
 msgstr ""
 
+msgid "Broken Nebular Shielding Prototype"
+msgstr ""
+
 msgid ""
 "A broken prototype for a novel shielding device that is supposed to enable "
 "travel into the Sol Nebula. However, due to its malfunction you almost died. "
 "On the other hand it does seem to absorb harmful energy and emit heat "
 "radiation into space."
+msgstr ""
+
+msgid "Commemorative Stein"
 msgstr ""
 
 msgid ""
@@ -10008,13 +8221,22 @@ msgid ""
 "Antlejos!\" with an illegible signature."
 msgstr ""
 
+msgid "Cyborg Feather"
+msgstr ""
+
 msgid ""
 "A feather from a cyborg duck. Although the quill is made of some lightweight "
 "metal alloy, the rest looks surprisingly close to a normal feather."
 msgstr ""
 
+msgid "Fancy Key Chain"
+msgstr ""
+
 msgid ""
 "A small statue of a crossed-eyed gorilla lifting a Goddard Battlecruiser."
+msgstr ""
+
+msgid "Fuzzy Dice"
 msgstr ""
 
 msgid ""
@@ -10027,10 +8249,17 @@ msgstr ""
 msgid "#pImproves luck!#0"
 msgstr ""
 
+#, fuzzy
+msgid "Goatee Marker"
+msgstr "해적 조상"
+
 msgid ""
 "A rare limited edition Goatee Marker, meant exclusive for drawing not only "
 "facial hair, but Goatees in particular. It seems to have been partially used "
 "and has the marauder logo on the bottom."
+msgstr ""
+
+msgid "Handbook for Dvaered Good Manners"
 msgstr ""
 
 msgid ""
@@ -10044,12 +8273,18 @@ msgid ""
 "Command"
 msgstr ""
 
+msgid "Jack's Eyepatch"
+msgstr ""
+
 msgid ""
 "A ragged eyepatch that seems to have seen its share of adventures among the "
 "stars."
 msgstr ""
 
 msgid "#pDoubles the range of blink drives.#0"
+msgstr ""
+
+msgid "Left Boot"
 msgstr ""
 
 msgid ""
@@ -10059,6 +8294,9 @@ msgid ""
 msgstr ""
 
 msgid "#pSmells funky.#0"
+msgstr ""
+
+msgid "Love Letter"
 msgstr ""
 
 msgid ""
@@ -10071,7 +8309,13 @@ msgstr ""
 msgid "#rLove is in the air.#0"
 msgstr ""
 
+msgid "Pentagram of Valor"
+msgstr ""
+
 msgid "A token of commitment to the FLF cause. It smells oddly of fish."
+msgstr ""
+
+msgid "Pilot Doll"
 msgstr ""
 
 msgid ""
@@ -10080,7 +8324,13 @@ msgid ""
 "here is the intention and not the result."
 msgstr ""
 
+msgid "Racing Trophy (Bronze)"
+msgstr ""
+
 msgid "The racing trophy you won with your piloting skills."
+msgstr ""
+
+msgid "Racing Trophy (Gold)"
 msgstr ""
 
 msgid ""
@@ -10088,9 +8338,15 @@ msgid ""
 "skills. Looks great on the wall!"
 msgstr ""
 
+msgid "Racing Trophy (Silver)"
+msgstr ""
+
 msgid ""
 "The racing trophy you won with your excellent piloting skills. Looks great "
 "on the wall!"
+msgstr ""
+
+msgid "Rackham's Razor"
 msgstr ""
 
 msgid ""
@@ -10103,10 +8359,16 @@ msgstr ""
 msgid "#gDouble effect when flying a pirate ship.#0"
 msgstr ""
 
+msgid "Sandwich Holder"
+msgstr ""
+
 msgid ""
 "It appears to be a limited edition Nexus Shipyards sandwich holder. Very "
 "useful for hands-free eating of sandwiches in zero gravity. Apparently the "
 "CEO really loves his sandwiches."
+msgstr ""
+
+msgid "Satellite Mock-up"
 msgstr ""
 
 msgid ""
@@ -10114,9 +8376,16 @@ msgid ""
 "blinking lights!"
 msgstr ""
 
+msgid "Star of Valor"
+msgstr ""
+
 msgid ""
 "A shiny medal for your contribution to the Dvaered cause. On the back it "
 "says \"not for rectal use\". Wait, what?"
+msgstr ""
+
+#. get the drink
+msgid "Swamp Bombing"
 msgstr ""
 
 msgid ""
@@ -10124,10 +8393,16 @@ msgid ""
 "good as an accessory."
 msgstr ""
 
+msgid "Toy Drone"
+msgstr ""
+
 msgid ""
 "A small toy drone that can fly around the ship. The AI doesn't seem to work "
 "too well and it has a habit of bumping into the walls and beeping all the "
 "time, but it is rather cute."
+msgstr ""
+
+msgid "Trading Card (Common)"
 msgstr ""
 
 msgid ""
@@ -10137,10 +8412,16 @@ msgid ""
 "high acceleration?"
 msgstr ""
 
+msgid "Trading Card (Rare)"
+msgstr ""
+
 msgid ""
 "A #oGolden Llama#0 trading card game card of #prare#0 rarity. Instead of "
 "going into the important details of the ship, it just shows a high "
 "definition holographic rendition of the supposed Golden Llama."
+msgstr ""
+
+msgid "Trading Card (Uncommon)"
 msgstr ""
 
 msgid ""
@@ -10151,12 +8432,18 @@ msgid ""
 "normal ships?"
 msgstr ""
 
+msgid "Ugly Statue"
+msgstr ""
+
 msgid ""
 "A statue given to you by Baron Sauterfeldt for your fine work. You would "
 "feel more grateful if he hadn't mentioned that his lover was making him get "
 "rid of it. The statue seems to depict a shrimp wearing a bow tie playing an "
 "ukulele and its head bobbles around with the ship acceleration. How "
 "tasteful..."
+msgstr ""
+
+msgid "Vacuum Cleaner?"
 msgstr ""
 
 msgid ""
@@ -10166,14 +8453,62 @@ msgid ""
 "outfit's real name."
 msgstr ""
 
+msgid "Adaptive Jump"
+msgstr ""
+
 #, fuzzy
 msgid "Bioship Organ"
 msgstr "바이오십 뇌"
+
+#. Movement skill tree
+#. Only for up to destroyers
+#. Needs adrenal gland slot
+msgid "Adrenal Gland I"
+msgstr ""
 
 msgid ""
 "The bioship adrenal gland organ is able to generate immense amounts of "
 "adrenaline from raw energy, allowing the ship to temporarily have augmented "
 "movement."
+msgstr ""
+
+msgid "Adrenal Gland II"
+msgstr ""
+
+msgid "Adrenal Gland III"
+msgstr ""
+
+msgid "Adrenaline Hormones"
+msgstr ""
+
+#. Health tree
+#. For everyone!
+#. Uses intrinsics only
+msgid "Bulky Abdomen"
+msgstr ""
+
+#. Misc tree
+#. For everyone!
+#. All intrinsics
+msgid "Cargo Sacs"
+msgstr ""
+
+#. Stealth skill tree
+#. For up to cruiser
+#. Uses intrinsics only
+msgid "Compound Eyes"
+msgstr ""
+
+#. Plasma tree
+#. For everyone!
+#. Requires plasma slot for tier 5
+msgid "Corrosion I"
+msgstr ""
+
+msgid "Corrosion II"
+msgstr ""
+
+msgid "Enhanced Smell"
 msgstr ""
 
 msgid ""
@@ -10186,12 +8521,18 @@ msgstr ""
 msgid "Active for 5 seconds since armour was last damaged."
 msgstr ""
 
+msgid "Feral Rage II"
+msgstr ""
+
 msgid ""
 "Through careful manipulation of the brain stem, the bioship can be induced "
 "into a primitive state of feral rage in which forward and turret weapon "
 "output is significantly increased. Armour damage is needed to enter the "
 "trance-like state. Further coupling with the cerebellum allows the trance to "
 "also increase the ship agility temporarily."
+msgstr ""
+
+msgid "Feral Rage III"
 msgstr ""
 
 msgid ""
@@ -10208,8 +8549,50 @@ msgid ""
 "toggled with a 30 second cooldown."
 msgstr ""
 
+msgid "Fuel Bladder"
+msgstr ""
+
+msgid "Hard Shell"
+msgstr ""
+
+msgid "Hunter's Instinct"
+msgstr ""
+
+msgid "Natural Healing I"
+msgstr ""
+
+msgid "Natural Healing II"
+msgstr ""
+
+#, fuzzy
+msgid "Plasma Burst"
+msgstr "플라즈마 터렛 MK2"
+
 msgid "Deals 300 plasma damage to all hostile ships in 200 range."
 msgstr ""
+
+msgid "Reflective Shell"
+msgstr ""
+
+msgid "Silence"
+msgstr ""
+
+msgid "The Bite - Blood Lust"
+msgstr ""
+
+msgid "The Bite - Cannibal"
+msgstr ""
+
+msgid "The Bite - Improved"
+msgstr ""
+
+#, fuzzy
+msgid "The Bite"
+msgstr "슈뢰딩거"
+
+#, fuzzy
+msgid "Bioship Thorn"
+msgstr "바이오십 뇌"
 
 #. Speed Lights
 #. Make sure it's valid.
@@ -10217,6 +8600,21 @@ msgstr ""
 #, c-format
 msgid "None"
 msgstr ""
+
+#, fuzzy
+msgid "Tracking Antennae"
+msgstr "호킹"
+
+msgid "Tunnelling Organ"
+msgstr ""
+
+#, fuzzy
+msgid "Wanderer"
+msgstr "렌더링: %s"
+
+#, fuzzy
+msgid "Dummy Engine"
+msgstr "엔지"
 
 #, fuzzy
 msgid "Core Systems (Engine)"
@@ -10227,9 +8625,15 @@ msgid ""
 "BUY."
 msgstr ""
 
+msgid "Beat Up Large Engine"
+msgstr ""
+
 msgid ""
 "Clogged, corroded and cracked in every way possible while still remaining in "
 "functional condition, this engine really belongs on the scrap heap."
+msgstr ""
+
+msgid "Krain Remige Engine"
 msgstr ""
 
 msgid "K. Remige Engine"
@@ -10245,6 +8649,10 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+msgid "Melendez Mammoth Engine"
+msgstr "메렌데즈 회사."
+
+#, fuzzy
 msgid "M. Mammoth Engine"
 msgstr "자레크의 찌르기"
 
@@ -10256,6 +8664,9 @@ msgid ""
 "Mammoth line of engines."
 msgstr ""
 
+msgid "Nexus Bolt 3000 Engine"
+msgstr ""
+
 msgid "N. Bolt 3000 Engine"
 msgstr ""
 
@@ -10263,6 +8674,9 @@ msgid ""
 "The Bolt 3000 is a somewhat uncommonly used engine designed for cruisers. "
 "Like most Nexus engines, it doesn't excel in speed, but its low power "
 "consumption makes it an attractive option for some pilots."
+msgstr ""
+
+msgid "Tricon Typhoon Engine"
 msgstr ""
 
 msgid "T. Typhoon Engine"
@@ -10275,6 +8689,9 @@ msgid ""
 "powerful reactors."
 msgstr ""
 
+msgid "Unicorp Eagle 3000 Engine"
+msgstr ""
+
 msgid "U. Eagle 3000 Engine"
 msgstr ""
 
@@ -10283,6 +8700,13 @@ msgid ""
 "captains who can afford better. While spaceworthy, the engine's performance "
 "renders it a liability in combat and uneconomical for freight hauling."
 msgstr ""
+
+msgid "Beat Up Medium Engine"
+msgstr ""
+
+#, fuzzy
+msgid "Krain Patagium Twin Engine"
+msgstr "엔지"
 
 #, fuzzy
 msgid "K. Patagium Twin Engine"
@@ -10296,6 +8720,10 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+msgid "Melendez Buffalo Engine"
+msgstr "메렌데즈 회사."
+
+#, fuzzy
 msgid "M. Buffalo Engine"
 msgstr "멜렌데즈 전략 CEO"
 
@@ -10304,6 +8732,9 @@ msgid ""
 "occasionally seen on particularly well-armed corvettes and destroyers. As a "
 "typical freight-oriented engine, the Buffalo possesses good top speed, poor "
 "handling, and excellent fuel capacity."
+msgstr ""
+
+msgid "Nexus Arrow 700 Engine"
 msgstr ""
 
 msgid "N. Arrow 700 Engine"
@@ -10315,6 +8746,9 @@ msgid ""
 "reactors."
 msgstr ""
 
+msgid "Tricon Cyclone Engine"
+msgstr ""
+
 msgid "T. Cyclone Engine"
 msgstr ""
 
@@ -10322,6 +8756,9 @@ msgid ""
 "Tricon's Cyclone engine upholds the corporation's reputation for premium "
 "engines with superb performance. Many large navies and wealthier mercenaries "
 "employ the Cyclone in their corvettes and destroyers."
+msgstr ""
+
+msgid "Unicorp Falcon 700 Engine"
 msgstr ""
 
 msgid "U. Falcon 700 Engine"
@@ -10334,6 +8771,13 @@ msgid ""
 "when engaged in battle."
 msgstr ""
 
+msgid "Beat Up Small Engine"
+msgstr ""
+
+#, fuzzy
+msgid "Melendez Ox Engine"
+msgstr "멜렌데즈 전략 CEO"
+
 #, fuzzy
 msgid "M. Ox Engine"
 msgstr "멜렌데즈 전략 CEO"
@@ -10344,6 +8788,9 @@ msgid ""
 "to larger and more power-hungry models."
 msgstr ""
 
+msgid "Nexus Dart 160 Engine"
+msgstr ""
+
 msgid "N. Dart 160 Engine"
 msgstr ""
 
@@ -10352,6 +8799,9 @@ msgid ""
 "excel in speed, it offers good handling and power efficiency for a "
 "reasonable price. A very popular engine among civilian and military users "
 "alike."
+msgstr ""
+
+msgid "Tricon Zephyr Engine"
 msgstr ""
 
 msgid "T. Zephyr Engine"
@@ -10365,6 +8815,9 @@ msgid ""
 "requisite reactor upgrades."
 msgstr ""
 
+msgid "Unicorp Hawk 160 Engine"
+msgstr ""
+
 #, fuzzy
 msgid "U. Hawk 160 Engine"
 msgstr "멜렌데즈 전략 CEO"
@@ -10374,6 +8827,10 @@ msgid ""
 "their ships. It's not particularly effective, but it's a lightweight engine "
 "with low energy demands, making it a solid choice for small vessels."
 msgstr ""
+
+#, fuzzy
+msgid "Za'lek Test Engine"
+msgstr "자레크의 찌르기"
 
 #, fuzzy
 msgid "Z. Test Engine"
@@ -10386,6 +8843,9 @@ msgid ""
 "are very often modded by students, which makes them unreliable."
 msgstr ""
 
+msgid "Dummy Plating"
+msgstr ""
+
 #, fuzzy
 msgid "Core Systems (Hull)"
 msgstr "핵심 시스템"
@@ -10393,6 +8853,9 @@ msgstr "핵심 시스템"
 msgid ""
 "This is a dummy hull for use in missions only, which does nothing. DO NOT "
 "BUY."
+msgstr ""
+
+msgid "Nexus Phantasm Weave"
 msgstr ""
 
 msgid "N. Phantasm Weave"
@@ -10404,9 +8867,15 @@ msgid ""
 "without sacrificing protection."
 msgstr ""
 
+msgid "Patchwork Heavy Plating"
+msgstr ""
+
 msgid ""
 "On the plus side, it keeps air from venting into space. But that's about it. "
 "This kind of hull maintenance is simply unacceptable."
+msgstr ""
+
+msgid "Red Star Large Cargo Hull"
 msgstr ""
 
 #, fuzzy
@@ -10422,16 +8891,25 @@ msgid ""
 "missiles."
 msgstr ""
 
+msgid "S&K Large Cargo Hull"
+msgstr ""
+
 msgid ""
 "This cargo hull from Schafer & Kane Industries makes use of state-of-the-art "
 "defensive alloys, which allows it to free up even more space for cargo "
 "without sacrificing too much durability."
 msgstr ""
 
+msgid "S&K War Plating"
+msgstr ""
+
 msgid ""
 "This heavy plating developed by Schafer & Kane Industries can endure "
 "prolonged battle. Quite a few captains and their crews owe their lives to "
 "this armour configuration."
+msgstr ""
+
+msgid "Unicorp D-58 Heavy Plating"
 msgstr ""
 
 #, fuzzy
@@ -10442,6 +8920,9 @@ msgid ""
 "Though a respectable design, the D-58 plating is outclassed by modern heavy "
 "weapons, with most seasoned captains opting for a heavier, more advanced "
 "plating."
+msgstr ""
+
+msgid "Krain Nanotubes Foam Padding"
 msgstr ""
 
 msgid "K. Nanofoam Padding"
@@ -10460,6 +8941,9 @@ msgid ""
 "It does come at a hefty price tag, though."
 msgstr ""
 
+msgid "Nexus Ghost Weave"
+msgstr ""
+
 msgid "N. Ghost Weave"
 msgstr ""
 
@@ -10467,6 +8951,12 @@ msgid ""
 "Medium-sized ships are usually not in the business of remaining undetected, "
 "but Nexus Shipyards have nevertheless developed a hull modification that "
 "helps in this area"
+msgstr ""
+
+msgid "Patchwork Medium Plating"
+msgstr ""
+
+msgid "Red Star Medium Cargo Hull"
 msgstr ""
 
 #, fuzzy
@@ -10483,15 +8973,25 @@ msgid ""
 "little bit slower."
 msgstr ""
 
+msgid "S&K Battle Plating"
+msgstr ""
+
 msgid ""
 "Designed for medium-sized vessels, Schafer & Kane's medium combat plating "
 "provides ample protection utilizing the latest in defensive materials."
+msgstr ""
+
+msgid "S&K Medium Cargo Hull"
 msgstr ""
 
 msgid ""
 "Schafer & Kane Industries have developed a hull modification that provides "
 "both ample cargo space and protection."
 msgstr ""
+
+#, fuzzy
+msgid "Unicorp D-23 Medium Plating"
+msgstr "터레 티드 가우스 건"
 
 #, fuzzy
 msgid "U. D-23 Medium Plating"
@@ -10502,6 +9002,10 @@ msgid ""
 "doesn't weigh too much."
 msgstr ""
 
+#, fuzzy
+msgid "Nexus Shadow Weave"
+msgstr "시리우스 주술사"
+
 msgid "N. Shadow Weave"
 msgstr ""
 
@@ -10510,6 +9014,13 @@ msgid ""
 "Plating configuration features the latest in sensor-absorbing materials and "
 "geometry."
 msgstr ""
+
+msgid "Patchwork Light Plating"
+msgstr ""
+
+#, fuzzy
+msgid "Red Star Small Cargo Hull"
+msgstr "저지름: %s"
 
 #, fuzzy
 msgid "RS. Small Cargo Hull"
@@ -10525,16 +9036,25 @@ msgid ""
 "privateers."
 msgstr ""
 
+msgid "S&K Skirmish Plating"
+msgstr ""
+
 msgid ""
 "Schafer & Kane Industries mostly develop for larger ships, but the Skirmish "
 "Plating configuration is a product made for light fighters and in-system "
 "patrol craft, providing optimum protection."
 msgstr ""
 
+msgid "S&K Small Cargo Hull"
+msgstr ""
+
 msgid ""
 "Though a pricey investment for couriers, this hull modification from Schafer "
 "& Kane Industries provides an impressive amount of cargo space without "
 "compromising the hull's integrity."
+msgstr ""
+
+msgid "Unicorp D-2 Light Plating"
 msgstr ""
 
 #, fuzzy
@@ -10547,12 +9067,19 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+msgid "Dummy Systems"
+msgstr "시리우스 시스템"
+
+#, fuzzy
 msgid "Core Systems (System)"
 msgstr "핵심 시스템"
 
 msgid ""
 "This is a dummy core system for use in missions only, which does nothing. DO "
 "NOT BUY."
+msgstr ""
+
+msgid "Milspec Aegis 8501 Core System"
 msgstr ""
 
 #, fuzzy
@@ -10563,6 +9090,9 @@ msgid ""
 "Milspec cares about your personal safety. Your protection is our concern. "
 "The Aegis 8501 grants your ship excellent shield strength while preserving a "
 "high level of subsystem control and energy capacity. Fly safe, fly Milspec."
+msgstr ""
+
+msgid "Milspec Orion 8601 Core System"
 msgstr ""
 
 #, fuzzy
@@ -10577,6 +9107,9 @@ msgid ""
 "Milspec."
 msgstr ""
 
+msgid "Milspec Prometheus 8503 Core System"
+msgstr ""
+
 #, fuzzy
 msgid "M. Prometheus 8503 System"
 msgstr "시리우스 시스템"
@@ -10585,6 +9118,9 @@ msgid ""
 "Milspec offers solutions for pilots who believe the best defence is a good "
 "offense. The 8503 boasts a heavy duty power generator as well as "
 "considerable shielding and subsystem control. Fly safe, fly Milspec."
+msgstr ""
+
+msgid "Milspec Thalos 8502 Core System"
 msgstr ""
 
 msgid "M. Thalos 8502 System"
@@ -10597,12 +9133,18 @@ msgid ""
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
 
+msgid "Previous Generation Large Systems"
+msgstr ""
+
 msgid "Prev. Gen. Large Systems"
 msgstr ""
 
 msgid ""
 "A jury-rigged mess of processors and generators that most captains wouldn't "
 "be seen dead having installed on their ship."
+msgstr ""
+
+msgid "Unicorp PT-440 Core System"
 msgstr ""
 
 msgid "U. PT-440 System"
@@ -10614,6 +9156,9 @@ msgid ""
 "fraction of its competitors' prices."
 msgstr ""
 
+msgid "Milspec Aegis 4701 Core System"
+msgstr ""
+
 #, fuzzy
 msgid "M. Aegis 4701 System"
 msgstr "시리우스 시스템"
@@ -10622,6 +9167,9 @@ msgid ""
 "Milspec cares about your personal safety. Your protection is our concern. "
 "The Aegis 4701 grants your ship excellent shield strength while preserving a "
 "high level of subsystem control and energy capacity. Fly safe, fly Milspec."
+msgstr ""
+
+msgid "Milspec Orion 4801 Core System"
 msgstr ""
 
 #, fuzzy
@@ -10635,6 +9183,9 @@ msgid ""
 "recommended for the discerning captain. Fly safe, fly Milspec."
 msgstr ""
 
+msgid "Milspec Prometheus 4703 Core System"
+msgstr ""
+
 #, fuzzy
 msgid "M. Prometheus 4703 System"
 msgstr "시리우스 시스템"
@@ -10643,6 +9194,9 @@ msgid ""
 "Milspec offers solutions for pilots who believe the best defence is a good "
 "offense. The Prometheus 4703 boasts a heavy duty power generator as well as "
 "considerable shielding and subsystem control. Fly safe, fly Milspec."
+msgstr ""
+
+msgid "Milspec Thalos 4702 Core System"
 msgstr ""
 
 msgid "M. Thalos 4702 System"
@@ -10655,7 +9209,13 @@ msgid ""
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
 
+msgid "Previous Generation Medium Systems"
+msgstr ""
+
 msgid "Prev. Gen. Medium Systems"
+msgstr ""
+
+msgid "Unicorp PT-200 Core System"
 msgstr ""
 
 msgid "U. PT-200 System"
@@ -10666,6 +9226,9 @@ msgid ""
 "the PT-200 gives acceptable performance for an acceptable price."
 msgstr ""
 
+msgid "Milspec Aegis 2201 Core System"
+msgstr ""
+
 #, fuzzy
 msgid "M. Aegis 2201 System"
 msgstr "시리우스 시스템"
@@ -10674,6 +9237,9 @@ msgid ""
 "Milspec cares about your personal safety. Your protection is our concern. "
 "The Aegis 2201 grants your ship excellent shield strength while preserving a "
 "high level of subsystem control and energy capacity. Fly safe, fly Milspec."
+msgstr ""
+
+msgid "Milspec Orion 2301 Core System"
 msgstr ""
 
 #, fuzzy
@@ -10687,6 +9253,9 @@ msgid ""
 "recommended for the beginning captain. Fly safe, fly Milspec."
 msgstr ""
 
+msgid "Milspec Prometheus 2203 Core System"
+msgstr ""
+
 #, fuzzy
 msgid "M. Prometheus 2203 System"
 msgstr "시리우스 시스템"
@@ -10695,6 +9264,9 @@ msgid ""
 "Milspec offers solutions for pilots who believe the best defence is a good "
 "offense. The Prometheus 2203 boasts a heavy duty power generator as well as "
 "considerable shielding and subsystem control."
+msgstr ""
+
+msgid "Milspec Thalos 2202 Core System"
 msgstr ""
 
 msgid "M. Thalos 2202 System"
@@ -10707,7 +9279,13 @@ msgid ""
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
 
+msgid "Previous Generation Small Systems"
+msgstr ""
+
 msgid "Prev. Gen. Small Systems"
+msgstr ""
+
+msgid "Unicorp PT-16 Core System"
 msgstr ""
 
 msgid "U. PT-16 System"
@@ -10717,6 +9295,10 @@ msgid ""
 "The PT-16 is a modest but to-spec core system offering reasonable, all-round "
 "performance for small vessels."
 msgstr ""
+
+#, fuzzy
+msgid "Drone Bay"
+msgstr "프론티어 시스템"
 
 #, fuzzy
 msgid "You need at least 50% reputation with the Empire."
@@ -10731,6 +9313,10 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+msgid "Empire Lancelot Bay"
+msgstr "랜슬롯"
+
+#, fuzzy
 msgid "E. Lancelot Bay"
 msgstr "랜슬롯"
 
@@ -10740,11 +9326,19 @@ msgid ""
 "flight of the fighters."
 msgstr ""
 
+#, fuzzy
+msgid "Hyena Bay"
+msgstr "하이에나"
+
 msgid ""
 "This bay expands on the popular Hyena Dock, doubling the amount of Hyena "
 "interceptors that can be operated. It comes with all the amenities necessary "
 "for the maintenance and operation of the interceptors."
 msgstr ""
+
+#, fuzzy
+msgid "Hyena Dock"
+msgstr "하이에나"
 
 msgid ""
 "This dock allows your ship to carry twin Hyena interceptors. It comes with "
@@ -10752,11 +9346,19 @@ msgid ""
 "interceptors."
 msgstr ""
 
+#, fuzzy
+msgid "Lancelot Bay"
+msgstr "랜슬롯"
+
 msgid ""
 "This fighter bay allows your ship to carry a pair of Lancelot class "
 "fighters. It comes with all the devices required for the maintenance and "
 "flight of the fighters."
 msgstr ""
+
+#, fuzzy
+msgid "Pirate Hyena Bay"
+msgstr "해적 벤데타"
 
 #, fuzzy
 msgid "P. Hyena Bay"
@@ -10770,6 +9372,10 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+msgid "Pirate Hyena Dock"
+msgstr "해적 벤데타"
+
+#, fuzzy
 msgid "P. Hyena Dock"
 msgstr "하이에나"
 
@@ -10779,6 +9385,10 @@ msgid ""
 "the interceptors. The Pirate Hyenas can assist in ship scavenging and "
 "looting."
 msgstr ""
+
+#, fuzzy
+msgid "Proteron Dalton Bay"
+msgstr "프로 테론 왓슨"
 
 #, fuzzy
 msgid "P. Dalton Bay"
@@ -10795,6 +9405,10 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+msgid "Proteron Dalton Dock"
+msgstr "프로 테론 왓슨"
+
+#, fuzzy
 msgid "P. Dalton Dock"
 msgstr "프로 테론 왓슨"
 
@@ -10803,6 +9417,10 @@ msgid ""
 "interceptors. It comes with all the devices required for the maintenance and "
 "flight of the interceptors."
 msgstr ""
+
+#, fuzzy
+msgid "Sirius Fidelity Bay"
+msgstr "시리우스 피델리티"
 
 #, fuzzy
 msgid "S. Fidelity Bay"
@@ -10819,6 +9437,10 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+msgid "Sirius Shaman Bay"
+msgstr "시리우스 주술사"
+
+#, fuzzy
 msgid "S. Shaman Bay"
 msgstr "시리우스 주술사"
 
@@ -10831,6 +9453,10 @@ msgid ""
 "bombers. It comes with all the devices required for the maintenance and "
 "flight of the bombers."
 msgstr ""
+
+#, fuzzy
+msgid "Soromid Brigand Bay"
+msgstr "소로 미드 브 리간드"
 
 #, fuzzy
 msgid "S. Brigand Bay"
@@ -10847,6 +9473,10 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+msgid "Thurion Perspicacity Bay"
+msgstr "투리온의 통찰력"
+
+#, fuzzy
 msgid "T. Perspicacity Bay"
 msgstr "투리온의 통찰력"
 
@@ -10859,6 +9489,10 @@ msgid ""
 "comes with all the devices required for the maintenance and flight of the "
 "fighters."
 msgstr ""
+
+#, fuzzy
+msgid "Thurion Perspicacity Dock"
+msgstr "투리온의 통찰력"
 
 #, fuzzy
 msgid "T. Perspicacity Dock"
@@ -10875,6 +9509,10 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+msgid "Thurion Scintillation Bay"
+msgstr "투리온의 불꽃"
+
+#, fuzzy
 msgid "T. Scintillation Bay"
 msgstr "투리온의 불꽃"
 
@@ -10883,6 +9521,10 @@ msgid ""
 "It comes with all the devices required for the maintenance and flight of the "
 "bombers."
 msgstr ""
+
+#, fuzzy
+msgid "Za'lek Bomber Drone Bay"
+msgstr "잘렉의 폭격 드로"
 
 #, fuzzy
 msgid "Z. B. Drone B."
@@ -10899,6 +9541,10 @@ msgid ""
 "flight of the drones."
 msgstr ""
 
+#, fuzzy
+msgid "Za'lek Bomber Drone Mini Bay"
+msgstr "잘렉의 폭격 드로"
+
 msgid "Z. B. Drone mB."
 msgstr ""
 
@@ -10914,6 +9560,10 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+msgid "Za'lek Heavy Drone Bay"
+msgstr "잘렉 헤비 드론"
+
+#, fuzzy
 msgid "Z. H. Drone B."
 msgstr "잘렉 헤비 드론"
 
@@ -10926,6 +9576,10 @@ msgid ""
 "the biggest ships in packs. It comes with all the devices required for the "
 "maintenance and flight of the drones."
 msgstr ""
+
+#, fuzzy
+msgid "Za'lek Heavy Drone Mini Bay"
+msgstr "잘렉 헤비 드론"
 
 msgid "Z. H. Drone mB."
 msgstr ""
@@ -10941,6 +9595,10 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+msgid "Za'lek Light Drone Bay"
+msgstr "잘렉의 경량 드로"
+
+#, fuzzy
 msgid "Z. L. Drone B."
 msgstr "잘렉의 경량 드로"
 
@@ -10950,6 +9608,10 @@ msgid ""
 "comes with all the devices required for the maintenance and flight of the "
 "drones."
 msgstr ""
+
+#, fuzzy
+msgid "Za'lek Light Drone Mini Bay"
+msgstr "잘렉의 경량 드로"
 
 msgid "Z. L. Drone mB."
 msgstr ""
@@ -10976,6 +9638,9 @@ msgid ""
 "Sirichana significantly increasing all aspects of the ship being flown."
 msgstr ""
 
+msgid "Cleansing Flames"
+msgstr ""
+
 msgid ""
 "Flow can be used to purify the immediate environment of the ship, bathing "
 "allies in soothing psychic emanations, while scorching enemies in damaging "
@@ -10990,6 +9655,9 @@ msgid ""
 "residual psychic shockwaves additionally slow them down."
 msgstr ""
 
+msgid "House of Mirrors"
+msgstr ""
+
 msgid ""
 "It's not clear how this flow ability came to be, but stories tell of a "
 "pirate who took too many flow mushrooms and ended up locked up in the "
@@ -10999,6 +9667,9 @@ msgid ""
 "to be able to project multiple copies of one's ship to amplify the raw "
 "destructive power. It has become a favourite of those who have been able to "
 "master the skill."
+msgstr ""
+
+msgid "Reality Rip"
 msgstr ""
 
 msgid ""
@@ -11011,13 +9682,46 @@ msgid ""
 "outside."
 msgstr ""
 
+msgid "Seeking Chakra"
+msgstr ""
+
 msgid ""
 "One of the first abilities all Sirii Cadets learn. Flow is focused into a "
 "ball which is then hurled at the target. Proficient users are able to create "
 "multiple seeking chakra at once."
 msgstr ""
 
+msgid "Seeking Chakra Large"
+msgstr ""
+
+msgid "Seeking Chakra Medium"
+msgstr ""
+
+msgid "Seeking Chakra Small"
+msgstr ""
+
+msgid "Astral Flow Amplifier"
+msgstr ""
+
 msgid "Flow Amplifier"
+msgstr ""
+
+#, fuzzy
+msgid "Astral Cannon"
+msgstr "리퍼 캐논"
+
+#, fuzzy
+msgid "Greater Astral Cannon"
+msgstr "리퍼 캐논"
+
+#, fuzzy
+msgid "Lesser Astral Cannon"
+msgstr "리퍼 캐논"
+
+msgid "Internal Flow Amplifier"
+msgstr ""
+
+msgid "Large Flow Amplifier"
 msgstr ""
 
 msgid ""
@@ -11026,6 +9730,9 @@ msgid ""
 "capabilities. Flow Amplifiers are specially tuned to the crew and allow "
 "significantly amplifying their psychic abilities to aid the ship with "
 "different abilities."
+msgstr ""
+
+msgid "Large Flow Resonator"
 msgstr ""
 
 #, fuzzy
@@ -11039,13 +9746,40 @@ msgid ""
 "half of the full potential."
 msgstr ""
 
+msgid "Large Meditation Chamber"
+msgstr ""
+
 msgid ""
 "A meditation chamber integrated directly into the ship. This allows the crew "
 "to aid the ship's flow capabilities and acts as an auxiliary flow buffer. A "
 "flow amplifier is required for the meditation chamber to take effect."
 msgstr ""
 
+msgid "Medium Flow Amplifier"
+msgstr ""
+
+msgid "Medium Flow Resonator"
+msgstr ""
+
+msgid "Medium Meditation Chamber"
+msgstr ""
+
+msgid "Small Flow Amplifier"
+msgstr ""
+
+msgid "Small Flow Resonator"
+msgstr ""
+
+msgid "Small Meditation Chamber"
+msgstr ""
+
+msgid "Bad Shape"
+msgstr ""
+
 msgid "This ship is in bad shape and works much less well than usual."
+msgstr ""
+
+msgid "Black Agate Finishing"
 msgstr ""
 
 msgid ""
@@ -11058,12 +9792,22 @@ msgid ""
 "it."
 msgstr ""
 
+msgid "Defective"
+msgstr ""
+
 msgid "The ship has serious design defects that limit its functionality."
 msgstr ""
+
+#, fuzzy
+msgid "Escape Pod"
+msgstr "드 베어드 경계"
 
 msgid ""
 "An escape pod that will automatically eject when the ship has taken fatal "
 "damage."
+msgstr ""
+
+msgid "Gauntlet Deluxe"
 msgstr ""
 
 msgid ""
@@ -11074,12 +9818,18 @@ msgid ""
 "can be applied to each ship."
 msgstr ""
 
+msgid "Gauntlet Supreme"
+msgstr ""
+
 msgid ""
 "This service focuses on refining and polishing the launcher systems to "
 "maximize the missile fire power of the ship. It is a comprehensive and in-"
 "depth optimization that has to be done on a per-ship basis, with specialized "
 "technicians tuning everything for maximum efficiency. Due to the nature of "
 "the service, only one can be applied to each ship."
+msgstr ""
+
+msgid "Hyperdrive Retool"
 msgstr ""
 
 msgid ""
@@ -11089,6 +9839,9 @@ msgid ""
 "few will actually go through the trouble and responsibility to retool ship's "
 "hyperdrive making it a rare modification to find.\n"
 "#oThis outfit can not be removed once equipped.#0"
+msgstr ""
+
+msgid "Luxury Furnishings"
 msgstr ""
 
 msgid ""
@@ -11102,10 +9855,16 @@ msgid ""
 "make-over."
 msgstr ""
 
+msgid "Machiavellian Fortune"
+msgstr ""
+
 msgid ""
 "Fortune is like an onrushing river pushing an impenetrable wall of water "
 "ahead of it. It is possible to build dams and walls to try to contain the "
 "flow, but there is no way to prevent the water from hitting."
+msgstr ""
+
+msgid "Machiavellian Necessity"
 msgstr ""
 
 msgid ""
@@ -11113,9 +9872,15 @@ msgid ""
 "can determine the outcome of an encounter."
 msgstr ""
 
+msgid "Machiavellian Virtue"
+msgstr ""
+
 msgid ""
 "Virtue is the bulwark against the fickle whims of fortune. One can master "
 "their own will by mastering their own character."
+msgstr ""
+
+msgid "Port & Polish"
 msgstr ""
 
 msgid ""
@@ -11127,6 +9892,9 @@ msgid ""
 "significantly with the size of the ship."
 msgstr ""
 
+msgid "Wild Space Taint"
+msgstr ""
+
 msgid ""
 "The ship seems to have been tainted by whatever is subverting people into "
 "the Lost you met in Wild Space. It has spread completely throughout the "
@@ -11136,8 +9904,15 @@ msgid ""
 "nebula radiation."
 msgstr ""
 
+msgid "Worn Down"
+msgstr ""
+
 msgid "This ship is extremely worn down and is barely functional."
 msgstr ""
+
+#, fuzzy
+msgid "Convulsion Launcher"
+msgstr "오리온 랜스"
 
 #, fuzzy
 msgid "Convulsion L."
@@ -11147,6 +9922,9 @@ msgid ""
 "The Thurion interceptor class missile focus on high agility rather than "
 "destructive power. While it does little damage to physical objects it is "
 "quite effective at disrupting shields."
+msgstr ""
+
+msgid "Electron Burst Cannon"
 msgstr ""
 
 msgid "Electron Burst C."
@@ -11165,6 +9943,10 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+msgid "EMP Grenade Launcher"
+msgstr "터레 티드 가우스 건"
+
+#, fuzzy
 msgid "EMP Grenade L."
 msgstr "터레 티드 가우스 건"
 
@@ -11177,6 +9959,9 @@ msgid ""
 "keeping pirates at bay."
 msgstr ""
 
+msgid "Enygma Systems Huntsman Launcher"
+msgstr ""
+
 #, fuzzy
 msgid "E. Huntsman L."
 msgstr "잘렉 헤비 드론"
@@ -11187,6 +9972,9 @@ msgid ""
 "insufficient, they redesigned Unicorp's Caesar IV torpedo as a heavy EMP "
 "weapon, capable of rapidly frying the systems of even the largest capital "
 "ships."
+msgstr ""
+
+msgid "Enygma Systems Spearhead Launcher"
 msgstr ""
 
 #, fuzzy
@@ -11202,6 +9990,9 @@ msgid ""
 "class ships or heavier."
 msgstr ""
 
+msgid "Enygma Systems Turreted Fury Launcher"
+msgstr ""
+
 msgid "E. Fury T. L."
 msgstr ""
 
@@ -11209,6 +10000,9 @@ msgid ""
 "Enygma Systems has developed a turret mounted Fury launcher. It comes at a "
 "steep price, but Fury missiles can be a powerful means of discouraging "
 "pirate fighters and an effective defence against hostile bombers."
+msgstr ""
+
+msgid "Enygma Systems Turreted Headhunter Launcher"
 msgstr ""
 
 #, fuzzy
@@ -11220,6 +10014,9 @@ msgid ""
 "ships aren't manoeuvrable enough to effectively combat enemy fighters and "
 "bombers. The punch of the Headhunter missile combined with Enygma Systems' "
 "swivel mounted launcher can effectively compensate for any blind spots."
+msgstr ""
+
+msgid "Pincushion Battery"
 msgstr ""
 
 #, fuzzy
@@ -11241,6 +10038,10 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+msgid "Repeating Banshee Launcher"
+msgstr "터레 티드 가우스 건"
+
+#, fuzzy
 msgid "R. Banshee L."
 msgstr "터레 티드 가우스 건"
 
@@ -11256,6 +10057,10 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+msgid "Shatterer Launcher"
+msgstr "입자 랜스"
+
+#, fuzzy
 msgid "Shatterer L."
 msgstr "입자 랜스"
 
@@ -11266,6 +10071,9 @@ msgid ""
 "dangerous."
 msgstr ""
 
+msgid "Space Mine Layer"
+msgstr ""
+
 msgid "Space Mine L."
 msgstr ""
 
@@ -11274,6 +10082,10 @@ msgid ""
 "automated or manned patrols in most situations. However, when raw explosive "
 "power is mandated, nothing can surpass the destructive force of space mines."
 msgstr ""
+
+#, fuzzy
+msgid "Super-Fast Collider Launcher"
+msgstr "터레 티드 가우스 건"
 
 msgid "SFC L."
 msgstr ""
@@ -11288,6 +10100,10 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+msgid "TeraCom Banshee Launcher"
+msgstr "터레 티드 가우스 건"
+
+#, fuzzy
 msgid "T. Banshee L."
 msgstr "터레 티드 가우스 건"
 
@@ -11297,6 +10113,10 @@ msgid ""
 "unguided rockets, while slow, can do respectable damage even to fairly large "
 "ships in the hands of a competent pilot."
 msgstr ""
+
+#, fuzzy
+msgid "TeraCom Fury Launcher"
+msgstr "터레 티드 가우스 건"
 
 #, fuzzy
 msgid "T. Fury L."
@@ -11311,6 +10131,10 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+msgid "TeraCom Headhunter Launcher"
+msgstr "터레 티드 가우스 건"
+
+#, fuzzy
 msgid "T. Headhunter L."
 msgstr "터레 티드 가우스 건"
 
@@ -11321,6 +10145,10 @@ msgid ""
 "The Headhunter missiles can deal devastating damage to small and medium-"
 "sized distant enemies, while remaining reasonably fast and agile."
 msgstr ""
+
+#, fuzzy
+msgid "TeraCom Imperator Launcher"
+msgstr "터레 티드 가우스 건"
 
 #, fuzzy
 msgid "T. Imperator L."
@@ -11336,6 +10164,10 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+msgid "TeraCom Mace Launcher"
+msgstr "터레 티드 가우스 건"
+
+#, fuzzy
 msgid "T. Mace L."
 msgstr "터레 티드 가우스 건"
 
@@ -11347,6 +10179,10 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+msgid "TeraCom Medusa Launcher"
+msgstr "터레 티드 가우스 건"
+
+#, fuzzy
 msgid "T. Medusa L."
 msgstr "터레 티드 가우스 건"
 
@@ -11356,6 +10192,9 @@ msgid ""
 "The warhead does little physical damage, so even lightly armoured targets "
 "can be effectively disabled with this weapon. However, the Medusa is not the "
 "most agile missile on the market."
+msgstr ""
+
+msgid "TeraCom Vengeance Launcher"
 msgstr ""
 
 #, fuzzy
@@ -11373,6 +10212,10 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+msgid "Turreted Convulsion Launcher"
+msgstr "터레 티드 가우스 건"
+
+#, fuzzy
 msgid "T. Convulsion L."
 msgstr "오리온 랜스"
 
@@ -11385,6 +10228,9 @@ msgid ""
 "standard launcher."
 msgstr ""
 
+msgid "Unicorp Caesar IV Launcher"
+msgstr ""
+
 #, fuzzy
 msgid "U. Caesar IV L."
 msgstr "터레 티드 가우스 건"
@@ -11394,6 +10240,10 @@ msgid ""
 "available. Though much slower than missiles and useless against mobile "
 "targets, they remain manoeuvrable enough to chase down cruisers."
 msgstr ""
+
+#, fuzzy
+msgid "Unicorp Storm Launcher"
+msgstr "터레 티드 가우스 건"
 
 #, fuzzy
 msgid "U. Storm L."
@@ -11412,6 +10262,10 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+msgid "Za'lek Hunter Launcher"
+msgstr "잘렉 헤비 드론"
+
+#, fuzzy
 msgid "Z. Hunter L."
 msgstr "잘렉 헤비 드론"
 
@@ -11424,6 +10278,10 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+msgid "Za'lek Reaper Launcher"
+msgstr "자레크의 연구티"
+
+#, fuzzy
 msgid "Z. Reaper L."
 msgstr "자레크의 연구티"
 
@@ -11434,7 +10292,14 @@ msgid ""
 "torpedoes from less advanced nations, and an eloquent answer it certainly is."
 msgstr ""
 
+#, fuzzy
+msgid "Local System Map"
+msgstr "시스템"
+
 msgid "This map contains information about the local system."
+msgstr ""
+
+msgid "Map: Collective Space"
 msgstr ""
 
 msgid ""
@@ -11443,14 +10308,25 @@ msgid ""
 "in the area."
 msgstr ""
 
+#, fuzzy
+msgid "Map: Dvaered Core"
+msgstr "드 베어드 고다드"
+
 msgid ""
 "This map lists the locations of all Dvaered worlds and stations close to the "
 "Dvaered capital."
 msgstr ""
 
+#, fuzzy
+msgid "Map: Empire-Soromid Trade Route"
+msgstr "드바에레드-소로미드 무역로"
+
 msgid ""
 "This map contains the main trade route between Empire and Soromid controlled "
 "space."
+msgstr ""
+
+msgid "Map: Empire Core"
 msgstr ""
 
 msgid ""
@@ -11458,9 +10334,15 @@ msgid ""
 "the Imperial capital."
 msgstr ""
 
+msgid "Map: FLF-Pirate Route"
+msgstr ""
+
 msgid ""
 "This map contains the location of the two-way hidden jump point between the "
 "FLF base and the nearest Pirate stronghold."
+msgstr ""
+
+msgid "Map: FLF Hidden Jumps"
 msgstr ""
 
 msgid ""
@@ -11468,9 +10350,15 @@ msgid ""
 "and Frontier space."
 msgstr ""
 
+msgid "Map: Inner Nebula Secret Jump"
+msgstr ""
+
 msgid ""
 "This map contains the location of a hidden jump point leading to the inner "
 "nebula."
+msgstr ""
+
+msgid "Map: Kretogg's Hypergate"
 msgstr ""
 
 msgid ""
@@ -11478,14 +10366,24 @@ msgid ""
 "the Black Lotus Clan-controlled hypergate."
 msgstr ""
 
+msgid "Map: Kretogg's Secrets"
+msgstr ""
+
 msgid ""
 "This map contains the position of hidden jump points leading straight into "
 "Za'lek space."
 msgstr ""
 
+#, fuzzy
+msgid "Map: Nebula Edge"
+msgstr "솔 성운 모서리"
+
 msgid ""
 "This map contains border of the Nebula with Dvaered/Imperial space. It also "
 "lists the deepest Imperial station within the Nebula."
+msgstr ""
+
+msgid "Map: New Haven's Secrets"
 msgstr ""
 
 msgid ""
@@ -11493,9 +10391,15 @@ msgid ""
 "the New Haven system."
 msgstr ""
 
+msgid "Map: Pirate Strongholds"
+msgstr ""
+
 msgid ""
 "This map contains the locations of the pirate clan worlds, and a few "
 "stations that are known to offer opportunities for pirates in the vicinity."
+msgstr ""
+
+msgid "Map: Qorel Tunnel"
 msgstr ""
 
 msgid ""
@@ -11505,12 +10409,22 @@ msgid ""
 "costly to reduce the number of people having access to it."
 msgstr ""
 
+#, fuzzy
+msgid "Map: Sirian Border Systems"
+msgstr "시리안 국경 시스템"
+
 msgid "This map contains the systems that lead to Sirius controlled space."
+msgstr ""
+
+msgid "Map: Sirius Core"
 msgstr ""
 
 msgid ""
 "This map contains the location of Mutris, home of Sirichana and capital to "
 "the Sirians, as well as the surrounding systems."
+msgstr ""
+
+msgid "Map: Sol"
 msgstr ""
 
 msgid ""
@@ -11520,19 +10434,32 @@ msgid ""
 "Sol, if anything, is unknown."
 msgstr ""
 
+msgid "Map: The Frontier"
+msgstr "지도: 개척지 변경"
+
 msgid ""
 "This map contains an east-west route through Frontier space, as well as the "
 "location of the Frontier Council."
 msgstr ""
+
+#, fuzzy
+msgid "Map: Thurion Core"
+msgstr "투리온의 확신"
 
 msgid ""
 "This map provides the hidden route to the Thurion core systems outside of "
 "the Nebula."
 msgstr ""
 
+msgid "Map: Za'lek Core"
+msgstr ""
+
 msgid ""
 "This map contains the heart of Za'lek space, including its capital Ruadan "
 "and central hub, Za'lek."
+msgstr ""
+
+msgid "Ultra Map"
 msgstr ""
 
 msgid "For cheating."
@@ -11570,13 +10497,25 @@ msgstr ""
 msgid "Heavy Weapon"
 msgstr "리퍼 캐논"
 
+msgid "GUI - Brushed"
+msgstr ""
+
 msgid "Outfit corresponding with the \"Brushed\" GUI."
+msgstr ""
+
+msgid "GUI - Legacy"
 msgstr ""
 
 msgid "Outfit corresponding with the \"Legacy\" GUI."
 msgstr ""
 
+msgid "GUI - Slim"
+msgstr ""
+
 msgid "Outfit corresponding with the \"Slim\" GUI."
+msgstr ""
+
+msgid "GUI - Slimv2"
 msgstr ""
 
 msgid "Outfit corresponding with the \"Slimv2\" GUI."
@@ -11650,12 +10589,20 @@ msgid ""
 "importantly, collect bounties."
 msgstr ""
 
+#, fuzzy
+msgid "Mystery Outfit"
+msgstr "맵 의상"
+
 msgid "Gacha"
 msgstr ""
 
 msgid ""
 "A mystery outfit of the finest quality! Guaranteed to be of two star rarity. "
 "You will not know what you get until you buy it."
+msgstr ""
+
+#. Create the lootable entry
+msgid "Treasure Map"
 msgstr ""
 
 msgid "Map"
@@ -11665,6 +10612,10 @@ msgid ""
 "A treasure map leading to something that could turn out to be useful. "
 "However, you won't know what there is until you find it."
 msgstr ""
+
+#, fuzzy
+msgid "Dvaered Flare Battery"
+msgstr "드바에레드 순찰대"
 
 msgid "D. Flare B."
 msgstr ""
@@ -11685,6 +10636,9 @@ msgid ""
 "flares, which has led to more than one major incident in the past."
 msgstr ""
 
+msgid "Guardian Interception System"
+msgstr ""
+
 msgid "Guardian I.S."
 msgstr ""
 
@@ -11695,6 +10649,10 @@ msgid ""
 "torpedoes and other heavy ordnance, it excels at tracking lighter missiles "
 "and can even be used to deter small assault craft."
 msgstr ""
+
+#, fuzzy
+msgid "Guardian Overseer System"
+msgstr "시리안 국경 시스템"
 
 msgid "Guardian O.S."
 msgstr ""
@@ -11724,6 +10682,9 @@ msgid ""
 "tolerances and controls giving it significantly more reliability."
 msgstr ""
 
+msgid "Spittle Tubuloid Cluster"
+msgstr ""
+
 msgid ""
 "Actually consisting of a small colony of space-hardened parasites, known as "
 "Spittle Tubuloids, that leech from the ship energy systems to provide "
@@ -11732,6 +10693,9 @@ msgid ""
 "defence mechanism of spitting large bubbles of plasma. Although the bubbles "
 "are quite weak compared to engineered weapons, their numbers allow them to "
 "efficiently protect the ship they are attached to from non-armoured missiles."
+msgstr ""
+
+msgid "ZIBS-16"
 msgstr ""
 
 msgid ""
@@ -11744,6 +10708,9 @@ msgid ""
 "Field-testing quickly showed that the weapon was of very limited use in non-"
 "point defence roles, which resulted in the creation of the ZIBS-16, and "
 "later ZIBS-32 line of beam-based point defence."
+msgstr ""
+
+msgid "ZIBS-32"
 msgstr ""
 
 msgid ""
@@ -11761,16 +10728,34 @@ msgid ""
 "spaceport bars across the House Za'lek territory."
 msgstr ""
 
+msgid "Base Ripper MK2"
+msgstr ""
+
 msgid "This weapon is a cheat. It is not meant to be used by players."
 msgstr ""
+
+#, fuzzy
+msgid "Bikers Fury Launcher"
+msgstr "터레 티드 가우스 건"
+
+#, fuzzy
+msgid "Four Winds Laser Cannon"
+msgstr "오리온 랜스"
 
 #, fuzzy
 msgid "F.W. Laser Cannon"
 msgstr "오리온 랜스"
 
 #, fuzzy
+msgid "Four Winds Ragnarok Beam"
+msgstr "라그나로크 빔"
+
+#, fuzzy
 msgid "F.W. Ragnarok Beam"
 msgstr "라그나로크 빔"
+
+msgid "Active Plating"
+msgstr ""
 
 msgid "Armour Modifier"
 msgstr ""
@@ -11783,11 +10768,17 @@ msgid ""
 "energy usage."
 msgstr ""
 
+msgid "Adaptive Camouflage Plating"
+msgstr ""
+
 msgid ""
 "This armour plating does not provide any protection, instead it makes the "
 "ship harder to detect. It has integrated sensors that measure the ambient "
 "radiation around the ship and is able to emit space-resolved the right "
 "amount of radiation to appear invisible for passive sensors."
+msgstr ""
+
+msgid "Auxiliary Processing Unit I"
 msgstr ""
 
 msgid "A.P.U. I"
@@ -11802,12 +10793,18 @@ msgid ""
 "system, giving small ships a little more processing power."
 msgstr ""
 
+msgid "Auxiliary Processing Unit II"
+msgstr ""
+
 msgid "A.P.U. II"
 msgstr ""
 
 msgid ""
 "An additional processing unit to supplement the main processor of the core "
 "system, giving medium ships a little more processing power."
+msgstr ""
+
+msgid "Auxiliary Processing Unit III"
 msgstr ""
 
 msgid "A.P.U. III"
@@ -11818,12 +10815,18 @@ msgid ""
 "system, giving large ships a little more processing power."
 msgstr ""
 
+msgid "Auxiliary Processing Unit IV"
+msgstr ""
+
 msgid "A.P.U. IV"
 msgstr ""
 
 msgid ""
 "An additional processing unit to supplement the main processor of the core "
 "system, giving capital ships a little more processing power."
+msgstr ""
+
+msgid "Battery I"
 msgstr ""
 
 msgid "Energy Modifier"
@@ -11834,9 +10837,15 @@ msgid ""
 "mount on many light vessels."
 msgstr ""
 
+msgid "Battery II"
+msgstr ""
+
 msgid ""
 "A large battery unit designed to hold 500 GJ of energy. Ideally mounted on "
 "medium-to-large vessels."
+msgstr ""
+
+msgid "Battery III"
 msgstr ""
 
 msgid ""
@@ -11844,9 +10853,15 @@ msgid ""
 "mounted on very large ships."
 msgstr ""
 
+msgid "Battery IV"
+msgstr ""
+
 msgid ""
 "A massive battery unit designed to hold 1500 GJ of energy. Given the mass of "
 "this battery, it's advisable to only mount it on capital ships."
+msgstr ""
+
+msgid "Biometal Armour"
 msgstr ""
 
 msgid ""
@@ -11854,6 +10869,9 @@ msgid ""
 "bacteria throughout it. Due to the compartmentalization to permit bacterial "
 "life, and the difficulty of cultivating the bacteria, Biometal has greater "
 "mass than alternatives, and is the most expensive hull plating."
+msgstr ""
+
+msgid "Compact Lightsail"
 msgstr ""
 
 msgid "Manoeuvrability Modifier"
@@ -11866,6 +10884,9 @@ msgid ""
 "method of propulsion, it can provide a minor aid in the ship's acceleration."
 msgstr ""
 
+msgid "Engine Reroute"
+msgstr ""
+
 msgid ""
 "This enhancement routes energy from the ship's energy supplies to the "
 "engine, giving the ship an increased acceleration and turning. It does not "
@@ -11874,11 +10895,17 @@ msgid ""
 "braking with a small loss in reverse thrust capability."
 msgstr ""
 
+msgid "Improved Stabilizer"
+msgstr ""
+
 msgid ""
 "By improving your ship's stabilization systems drastically, this "
 "modification will allow you to reach higher speeds while still keeping the "
 "ship stable. As another side effect, the improved stabilizers allowing "
 "reversing the thrusters with a small loss of thrust."
+msgstr ""
+
+msgid "Large Cargo Pod"
 msgstr ""
 
 msgid "Cargo Expansion"
@@ -11890,10 +10917,16 @@ msgid ""
 "slightly increasing the cargo inertia."
 msgstr ""
 
+msgid "Large Fuel Pod"
+msgstr ""
+
 msgid "Fuel Modifier"
 msgstr ""
 
 msgid "The fuel pod allows a ship to store more fuel for hyperspace jumps."
+msgstr ""
+
+msgid "Large Shield Booster"
 msgstr ""
 
 msgid "Shield Booster"
@@ -11905,10 +10938,25 @@ msgid ""
 "boost, at the expense of draining some of the ship's energy."
 msgstr ""
 
+msgid "Medium Cargo Pod"
+msgstr ""
+
+msgid "Medium Fuel Pod"
+msgstr ""
+
+msgid "Medium Shield Booster"
+msgstr ""
+
+msgid "Microbond Plating"
+msgstr ""
+
 msgid ""
 "Further developed from Nanobond plating, Microbond plating is a less dense, "
 "lighter revision that's still stronger than Plasteel, making it a great "
 "choice to strengthen the hull of a medium-sized ship."
+msgstr ""
+
+msgid "Nanobond Plating"
 msgstr ""
 
 msgid ""
@@ -11916,6 +10964,9 @@ msgid ""
 "a greatly refined manufacturing process, providing greater particle density. "
 "The result is a much more robust material, although it is substantially more "
 "expensive."
+msgstr ""
+
+msgid "Nanofiber Structural Enhancement"
 msgstr ""
 
 msgid ""
@@ -11928,6 +10979,9 @@ msgid ""
 "much lighter ones, significantly reducing the mass. It does come with a big "
 "disclaimer saying it is not suited for combat, but that is more like a "
 "suggestion, right?"
+msgstr ""
+
+msgid "Nebular Shielding Prototype"
 msgstr ""
 
 #, fuzzy
@@ -11944,12 +10998,18 @@ msgid ""
 "GW of damage prevented."
 msgstr ""
 
+msgid "Plasteel Plating"
+msgstr ""
+
 msgid ""
 "Plasteel was one of man's greatest improvements on materials. It's a cheap, "
 "strong armour that seems to take the best from both plastic and steel, "
 "bending easily yet keeping its incredible strength. The Second Growth was "
 "only possible with this material. Although it is no longer cutting-edge, its "
 "low price point attracts many buyers."
+msgstr ""
+
+msgid "Reactor Class I"
 msgstr ""
 
 msgid "Power Modifier"
@@ -11961,10 +11021,16 @@ msgid ""
 "alongside it and hooks up directly to the energy flux."
 msgstr ""
 
+msgid "Reactor Class II"
+msgstr ""
+
 msgid ""
 "The class II reactor uses a newer fusion technology than the class I, "
 "permitting it to have greater energy density. The result is a mid-sized "
 "reactor that is best used on ships with moderate energy demands."
+msgstr ""
+
+msgid "Reactor Class III"
 msgstr ""
 
 msgid ""
@@ -11975,9 +11041,15 @@ msgid ""
 "energy output would be excessive for anything less."
 msgstr ""
 
+msgid "Shield Capacitor I"
+msgstr ""
+
 msgid ""
 "An enhancement for the shield power system, giving small ships a better "
 "chance of escaping attackers."
+msgstr ""
+
+msgid "Shield Capacitor II"
 msgstr ""
 
 msgid ""
@@ -11985,14 +11057,34 @@ msgid ""
 "skirmishes."
 msgstr ""
 
+msgid "Shield Capacitor III"
+msgstr ""
+
 msgid ""
 "A heavy duty shield enhancer for ships that face combat on a regular basis."
+msgstr ""
+
+msgid "Shield Capacitor IV"
 msgstr ""
 
 msgid ""
 "The pinnacle in shield boosting technology, reinforcing the defences of "
 "ships fighting on the front lines."
 msgstr ""
+
+#, fuzzy
+msgid "Small Cargo Pod"
+msgstr "저지름: %s"
+
+msgid "Small Fuel Pod"
+msgstr ""
+
+msgid "Small Shield Booster"
+msgstr ""
+
+#, fuzzy
+msgid "Bioship Pheromone Emitter"
+msgstr "바이오십 뇌"
 
 msgid "Pheromone Emitter"
 msgstr ""
@@ -12009,6 +11101,9 @@ msgstr ""
 msgid "Release bioship pheromones when used."
 msgstr ""
 
+msgid "Daphne's Leap"
+msgstr ""
+
 msgid "System Improvement"
 msgstr ""
 
@@ -12019,6 +11114,9 @@ msgid ""
 "preparations well in advance to jump at a moment's notice, however, this "
 "comes at the cost of increasing the overall time needed to jump due to "
 "necessary in-flight calibration."
+msgstr ""
+
+msgid "Executor Shield Aura"
 msgstr ""
 
 msgid "Aura"
@@ -12039,6 +11137,9 @@ msgid ""
 "Range is affected by detection bonus."
 msgstr ""
 
+msgid "Fake Transponder"
+msgstr ""
+
 msgid ""
 "A fake transponder to make ships appear to be a non-descript and harmless "
 "independent ship."
@@ -12047,6 +11148,9 @@ msgstr ""
 msgid ""
 "Makes the ship appear as independent to other ships. Becomes temporarily "
 "void when discovered."
+msgstr ""
+
+msgid "Fuel Recycler"
 msgstr ""
 
 msgid ""
@@ -12063,6 +11167,10 @@ msgstr ""
 msgid "#gAllows converting space resources to fuel.#0"
 msgstr ""
 
+#, fuzzy
+msgid "Fuelshell Plating"
+msgstr "선체 수정"
+
 msgid ""
 "An experimental hull design for scout ships that would allow them to "
 "significantly increase their travel range by using a porous hull material "
@@ -12074,6 +11182,9 @@ msgid ""
 "tinderbox and leaking fuel when sustaining damage, but who knows?"
 msgstr ""
 
+msgid "Hades Torch"
+msgstr ""
+
 msgid ""
 "The Hades Torch would be an exceptional afterburner except for the minor "
 "detail that to obtain maximum performance it has a tendency to burn the hull "
@@ -12083,6 +11194,9 @@ msgstr ""
 msgid "#rHot hot hot!#0"
 msgstr ""
 
+msgid "Homebrew Processing Unit"
+msgstr ""
+
 msgid ""
 "This core system is easily recognizable as the work of some amateurs, with "
 "sloppy wiring and dangerously exposed internals. However, unlike mass "
@@ -12090,6 +11204,9 @@ msgid ""
 "developing the unit. While the shield and computation power are less than "
 "most similar cores, it has significantly better developed functionality in "
 "other areas."
+msgstr ""
+
+msgid "Prototype Systems T-IVa 'Quickshell'"
 msgstr ""
 
 msgid "P.S. T-IVa 'Qickshell'"
@@ -12104,6 +11221,10 @@ msgid ""
 "that is just a matter of time. It is only a matter of time before Project "
 "Thurion becomes the technological backbone of civilization!\""
 msgstr ""
+
+#, fuzzy
+msgid "Pulse Scanner"
+msgstr "소행성 스캐너"
 
 msgid ""
 "The Pulse Scanner takes an alternate approach to regular scanning devices "
@@ -12122,6 +11243,9 @@ msgid ""
 "#pCan be used for tracking anomaly signals.#0"
 msgstr ""
 
+msgid "Squadron Synchronizer Module"
+msgstr ""
+
 msgid ""
 "It's not clear how Misi got the goods to sell and they evade questions on "
 "the topic, however, the Squadron Synchronizer Module can be easily connected "
@@ -12129,6 +11253,10 @@ msgid ""
 "accurately. At its core it seems to change some of the underlying algorithms "
 "to be more efficient to use less bandwidth."
 msgstr ""
+
+#, fuzzy
+msgid "Valkyrie Beam"
+msgstr "입자 빔"
 
 msgid ""
 "The Valkyrie Beam is a heavily modified version of the Ragnarok Beam, where "
@@ -12141,11 +11269,17 @@ msgstr ""
 msgid "#rDrains 80 shield per second when firing and for one second after.#0"
 msgstr ""
 
+msgid "Veil of Penelope"
+msgstr ""
+
 msgid ""
 "This device seems to be almost like a parasite that hooks up to the ship's "
 "systems. It's not exactly clear what it does, but it seems to feed on the "
 "emitted radiation, allowing the ship to remain undetected longer when near "
 "other ships."
+msgstr ""
+
+msgid "ZD-5 Guardian Unit"
 msgstr ""
 
 msgid ""
@@ -12162,11 +11296,17 @@ msgid ""
 "maximum of 200 damage per second."
 msgstr ""
 
+msgid "Apollo's Gaze"
+msgstr ""
+
 msgid ""
 "This device hooks up to the ship's weapon systems and allows launching "
 "projectiles at higher velocities and further than usual. This indeed comes "
 "with a performance penalty, however."
 msgstr ""
+
+msgid "Asteroid Scanner"
+msgstr "소행성 스캐너"
 
 #, fuzzy
 msgid "Mining System"
@@ -12179,6 +11319,9 @@ msgid ""
 "spectroscopy, and, what is more impressive, to infer the internal "
 "composition via inverse electrical impedance. Of course, that comes at a "
 "price that not just any miner can pay."
+msgstr ""
+
+msgid "Berserk Chip"
 msgstr ""
 
 msgid "Speed Modifier"
@@ -12198,11 +11341,17 @@ msgid ""
 "automatically when hull integrity is below 20%."
 msgstr ""
 
+msgid "Blink Drive"
+msgstr ""
+
 msgid ""
 "The blink drive uses hyperdrive technology modified to create a small space-"
 "time fold allowing ships to instantly cross short distances. Pilots who "
 "often use such devices tend to have a higher amount of strong headaches than "
 "usual, but any effects more adverse than that have yet to be discovered."
+msgstr ""
+
+msgid "Boarding Androids MK1"
 msgstr ""
 
 msgid "Boarding Androids"
@@ -12215,10 +11364,16 @@ msgid ""
 "be it tactical or culinary."
 msgstr ""
 
+msgid "Boarding Androids MK2"
+msgstr ""
+
 msgid ""
 "The Boarding Android Mark 2 improves upon the wide variety of implements "
 "sported by its predecessor, additionally including scissor-hands and a "
 "sewing needle."
+msgstr ""
+
+msgid "Cargo Damper"
 msgstr ""
 
 msgid ""
@@ -12227,6 +11382,9 @@ msgid ""
 "within a ship's cargo bays to generate a weak directed gravitational field "
 "to reduce the impact of cargo inertia on the ship's mobility and offset the "
 "requirement for bulkier engines."
+msgstr ""
+
+msgid "Catalytic Energy Drill"
 msgstr ""
 
 msgid ""
@@ -12243,7 +11401,13 @@ msgstr ""
 msgid "#gAllows precise mining of asteroids to extract rare minerals.#0"
 msgstr ""
 
+msgid "Cloaking Device"
+msgstr ""
+
 msgid "Uses 1 MJ of energy per 10 mass and drains shield in 0.5 seconds."
+msgstr ""
+
+msgid "Combat Hologram Projector"
 msgstr ""
 
 msgid "Holograph Projector"
@@ -12261,6 +11425,9 @@ msgid ""
 "Creates a hologram of the current ship to distract the enemy ship target."
 msgstr ""
 
+msgid "Agility Combat AI"
+msgstr ""
+
 msgid "Combat AI"
 msgstr ""
 
@@ -12271,12 +11438,18 @@ msgid ""
 "modifying the hardware nor increasing the energy consumption."
 msgstr ""
 
+msgid "Bio-Neural Combat AI"
+msgstr ""
+
 msgid ""
 "Unlike regular Combat AIs which consist of pure software, this AI relies on "
 "a quasi-organic coprocessor made with both living tissue and inorganic "
 "material. Acting as a small temporal lobe, the coprocessor is able to "
 "analyse all the available sensory data to predict future events, allowing "
 "the ship to seemingly gain an edge over others in reaction times."
+msgstr ""
+
+msgid "Cyclic Combat AI"
 msgstr ""
 
 msgid ""
@@ -12286,11 +11459,17 @@ msgid ""
 "that lead to an overall increase in fire rate."
 msgstr ""
 
+msgid "Efficiency Combat AI"
+msgstr ""
+
 msgid ""
 "This Combat AI utilizes advanced power routeing and process scheduling "
 "controls to better distribute the ship's computing power between tasks, "
 "allowing to get more use out of the hardware at hand without any increase in "
 "energy use."
+msgstr ""
+
+msgid "Hive Combat AI"
 msgstr ""
 
 #, fuzzy
@@ -12305,11 +11484,17 @@ msgid ""
 "lost fighters."
 msgstr ""
 
+msgid "Hunting Combat AI"
+msgstr ""
+
 msgid ""
 "Like a hunter's ambush, the Hunting Combat AI is able to exploit the element "
 "of surprise and the weaknesses of enemy ship hulls, resulting in a "
 "significant increase in damage for turret weapons, albeit with a reduced "
 "fire rate."
+msgstr ""
+
+msgid "Pinpoint Combat AI"
 msgstr ""
 
 msgid ""
@@ -12319,10 +11504,16 @@ msgid ""
 "the range and the lock-on speed of all missile launchers on the ship."
 msgstr ""
 
+msgid "Scanning Combat AI"
+msgstr ""
+
 msgid ""
 "This Combat AI focuses on optimization of the ship's sensor infrastructure. "
 "By making small tweaks to the sensors' tolerances on the fly, it is able to "
 "effectively increase the range at which other ships are detected."
+msgstr ""
+
+msgid "Charge Conduit"
 msgstr ""
 
 msgid "Conduit"
@@ -12336,10 +11527,16 @@ msgid ""
 "in most cases."
 msgstr ""
 
+msgid "Pipeline Conduit"
+msgstr ""
+
 msgid ""
 "The Pipeline Conduit funnels excess shield energy into the ammunition and "
 "fighter reconstruction pipelines, greatly speeding up those processes at the "
 "cost of extra CPU use."
+msgstr ""
+
+msgid "Targeting Conduit"
 msgstr ""
 
 msgid ""
@@ -12348,6 +11545,9 @@ msgid ""
 "tracking and faster lock-ons while the shields are undamaged, though at the "
 "cost of a slight reduction in peak damage output as a result of overloading "
 "those systems."
+msgstr ""
+
+msgid "Cryogenic Repair Nanobots"
 msgstr ""
 
 msgid "Armour Repair"
@@ -12366,6 +11566,9 @@ msgstr ""
 msgid "Restores armour to full when performing an active cooldown."
 msgstr ""
 
+msgid "Droid Repair Crew"
+msgstr ""
+
 msgid ""
 "This low maintenance droid crew will scour your ship to repair any damage "
 "caused by space hazards. They are very small and able to work both on the "
@@ -12376,6 +11579,9 @@ msgid ""
 msgstr ""
 
 msgid "Can only restore armour when below 50%."
+msgstr ""
+
+msgid "Emergency Shield Booster"
 msgstr ""
 
 #, fuzzy
@@ -12396,6 +11602,9 @@ msgid ""
 "of 15 seconds. Uses 3 GJ of energy for each GJ of shield recovered."
 msgstr ""
 
+msgid "Emergency Stasis Inducer"
+msgstr ""
+
 msgid ""
 "Not much unlike the Neural Accelerator Interface, the Emergency Stasis "
 "Inducer creates a strong electromagnetic field around the ship, making time "
@@ -12410,6 +11619,9 @@ msgstr ""
 msgid "Triggered on armour damage. Lasts 3 seconds with 8 seconds cooldown."
 msgstr ""
 
+msgid "Flicker Drive"
+msgstr ""
+
 msgid ""
 "The Flicker Drive is a compacted version of the Blink Drive, lowering the "
 "power usage, blinking range, and amount of mass that can be blinked, "
@@ -12420,6 +11632,9 @@ msgid ""
 "strong following who claim it is superior to any alternatives."
 msgstr ""
 
+msgid "Hellburner"
+msgstr ""
+
 msgid ""
 "The Hellburner is one of the best light afterburners on the market. Through "
 "proprietary pressurization ducts, the Hellburner is able to generate far "
@@ -12428,12 +11643,18 @@ msgid ""
 "more rapidly."
 msgstr ""
 
+msgid "Hidden Jump Scanner"
+msgstr ""
+
 msgid ""
 "A specialized piece of sensor technology that can scan its immediate "
 "surroundings for unusual anomalies in the fabric of space. Although short-"
 "ranged and only capable of scanning for a limited amount of time before "
 "needing to recharge, this scanner is capable of discovering jump points that "
 "regular sensors can't detect."
+msgstr ""
+
+msgid "Faraday Tempest Coating"
 msgstr ""
 
 #, fuzzy
@@ -12448,12 +11669,18 @@ msgid ""
 "recovery from system damage."
 msgstr ""
 
+msgid "Lattice Thermal Coating"
+msgstr ""
+
 msgid ""
 "By modifying the micro-facets of the hull's surface using a triply periodic "
 "minimal surface structure, the Lattice Thermal Coating is able to aid in the "
 "regulation of ship internals without disrupting core functionality. This "
 "allows for outfits to be used in quicker successions reliably and without "
 "long-lasting damage."
+msgstr ""
+
+msgid "Milspec Impacto-Plastic Coating"
 msgstr ""
 
 msgid "M. Impacto-Plastic Coating"
@@ -12465,6 +11692,9 @@ msgid ""
 "its original state."
 msgstr ""
 
+msgid "Nebula Resistant Coating"
+msgstr ""
+
 msgid ""
 "Protecting ships from nebula radiation is not an easy task given the "
 "fluctuations and parameters of the different types of radiation being "
@@ -12472,6 +11702,9 @@ msgid ""
 "fully immune to the Nebula's effects, this hull coating does provide a "
 "significant extra resistance, although prolonged exposure is still not "
 "recommended."
+msgstr ""
+
+msgid "Nexus Concealment Coating"
 msgstr ""
 
 msgid "N. Concealment Coating"
@@ -12485,6 +11718,9 @@ msgid ""
 "position."
 msgstr ""
 
+msgid "Photo-Voltaic Nanobot Coating"
+msgstr ""
+
 msgid ""
 "A coating of photo-voltaic nanobot paint covers the ship's entire hull and "
 "is able to harness solar energy and redirect it to the power system of the "
@@ -12492,11 +11728,17 @@ msgid ""
 "maintenance once a colony has been established."
 msgstr ""
 
+msgid "Reconstructive Nanobot Coating"
+msgstr ""
+
 msgid ""
 "It is possible to establish a colony of repair nanobots directly on the hull "
 "of a ship. Since the design has to account for the potentially harsh "
 "conditions outside the approach has limited effectiveness compared to the "
 "more intrusive solutions, but nevertheless complements them neatly."
+msgstr ""
+
+msgid "Hyperbolic Blink Engine"
 msgstr ""
 
 msgid ""
@@ -12516,6 +11758,9 @@ msgid ""
 "mass."
 msgstr ""
 
+msgid "Jump Scanner"
+msgstr ""
+
 msgid ""
 "This device installs a secondary scanning array on the ship. The array is "
 "programmed with the known characteristics of the spatial anomalies "
@@ -12527,10 +11772,16 @@ msgid ""
 "standard type."
 msgstr ""
 
+msgid "Kratos' Glove"
+msgstr ""
+
 msgid ""
 "A module that lets the ship's generator direct energy to its weapons in "
 "larger, more spaced out bursts. It's not perfectly efficient, but has been "
 "proven useful in some combat encounters."
+msgstr ""
+
+msgid "Low Radiation Sensor Modulator"
 msgstr ""
 
 msgid ""
@@ -12538,6 +11789,9 @@ msgid ""
 "Low Radiation Sensor Modulator is able to increase the detection of nearby "
 "ships while also giving more sensitivity to jump point signatures when "
 "stealthed."
+msgstr ""
+
+msgid "Milspec Jammer"
 msgstr ""
 
 msgid "M. Jammer"
@@ -12555,6 +11809,9 @@ msgid ""
 "escape! Fly safe, fly Milspec."
 msgstr ""
 
+msgid "Milspec Scrambler"
+msgstr ""
+
 msgid "M. Scrambler"
 msgstr ""
 
@@ -12568,6 +11825,9 @@ msgid ""
 "a minimal cost to you or your ship's reactor! Fly safe, fly Milspec."
 msgstr ""
 
+msgid "Neural Accelerator Interface"
+msgstr ""
+
 msgid ""
 "The flow of time is generally not perceived as a constant value, rather it "
 "fluctuates greatly depending on the circumstances. Using the latest in neuro-"
@@ -12579,6 +11839,9 @@ msgstr ""
 msgid "Active for 5 seconds with a cooldown of 20 seconds."
 msgstr ""
 
+msgid "Sensor Array"
+msgstr ""
+
 msgid ""
 "This sensor array uses quadralens-magnified photon modulation to more easily "
 "detect the faint signals emitted by a distant ship, effectively boosting "
@@ -12586,6 +11849,9 @@ msgid ""
 "can be useful to counteract the effect of cloaking instruments and also "
 "increases the accuracy of short-range tracking information used by your "
 "ship's weapons system."
+msgstr ""
+
+msgid "S&K Heavy Plasma Drill"
 msgstr ""
 
 msgid ""
@@ -12597,12 +11863,19 @@ msgid ""
 "vessels."
 msgstr ""
 
+msgid "S&K Plasma Drill"
+msgstr ""
+
 msgid ""
 "The S&K Plasma Drill is an alternate approach to conventional mining lances. "
 "Although it requires getting up close to the asteroid and accurate controls "
 "to be able to extract minerals, it obtains significantly better yields. An "
 "integrated asteroid scanner is just the icing on the cake."
 msgstr ""
+
+#, fuzzy
+msgid "Stealth Burster"
+msgstr "투리온의 불꽃"
 
 msgid ""
 "No one really knows the origin of the stealth burster, however, it seems to "
@@ -12611,6 +11884,9 @@ msgid ""
 "temporarily confuse the sensors of nearby ships and give a significant "
 "increase in stealth ability. However, this is only a short temporary effect, "
 "and the device takes a long time to recalibrate and reload the capacitors."
+msgstr ""
+
+msgid "Targeting Array"
 msgstr ""
 
 #, fuzzy
@@ -12623,6 +11899,9 @@ msgid ""
 "to compute an ideal vector, slightly slowing firing rates."
 msgstr ""
 
+msgid "Unicorp Jammer"
+msgstr ""
+
 msgid "U. Jammer"
 msgstr ""
 
@@ -12633,6 +11912,9 @@ msgid ""
 "modulating the signature of the ship it's installed in. This is much more "
 "effective, but it also uses a lot more power. For this reason, jammer "
 "systems are inactive until needed, and must be activated manually."
+msgstr ""
+
+msgid "Unicorp Light Afterburner"
 msgstr ""
 
 #, fuzzy
@@ -12648,6 +11930,10 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+msgid "Unicorp Medium Afterburner"
+msgstr "터레 티드 가우스 건"
+
+#, fuzzy
 msgid "U. Medium Afterburner"
 msgstr "터레 티드 가우스 건"
 
@@ -12657,6 +11943,9 @@ msgid ""
 "quickly drain the ship's energy. This model is able to provide an emergency "
 "speed boost to heavier ships than Unicorp's light afterburner, but requires "
 "a larger mount and more energy to run."
+msgstr ""
+
+msgid "Unicorp Scrambler"
 msgstr ""
 
 msgid "U. Scrambler"
@@ -12671,12 +11960,18 @@ msgid ""
 "active."
 msgstr ""
 
+msgid "Weakness Harmonizer AI"
+msgstr ""
+
 msgid ""
 "This is an upgrade to the sensor systems that is able to learn from nearby "
 "hostile ships' common weaknesses. The AI is able to extract subtle features "
 "that the human eye misses and extrapolate into great detail to point out "
 "weaknesses in enemy ships. The more ships it is able to analyse and "
 "extrapolate from, the stronger the effect."
+msgstr ""
+
+msgid "Weapons Ionizer"
 msgstr ""
 
 #, fuzzy
@@ -12695,6 +11990,10 @@ msgstr ""
 msgid "Automatically triggers when target armour is below 50%."
 msgstr ""
 
+#, fuzzy
+msgid "Antimatter Lance"
+msgstr "프론티어 순찰대"
+
 msgid ""
 "The antimatter lance directly attacks the integrity of a ship on a molecular "
 "level, rather than trying to brute force its way through the armour of enemy "
@@ -12703,6 +12002,9 @@ msgid ""
 msgstr ""
 
 msgid "Lowers the action speed upon hit by 10% for 7 seconds."
+msgstr ""
+
+msgid "Arc Blade"
 msgstr ""
 
 msgid ""
@@ -12714,6 +12016,9 @@ msgid ""
 "pirate captains who purchase it regret their decision."
 msgstr ""
 
+msgid "Arc Machete"
+msgstr ""
+
 msgid ""
 "This weapon unleashes a focused beam of disabling electromagnetic radiation, "
 "able to both effectively shred through a target's shielding and render its "
@@ -12721,6 +12026,9 @@ msgid ""
 "physical harm. It's favoured by the few well-off pirate captains able to get "
 "their hands on one, as well as law enforcement on the hunt for those "
 "pirates, for similar reasons."
+msgstr ""
+
+msgid "Disruptor Artillery S1"
 msgstr ""
 
 msgid "Disruptor A. S1"
@@ -12735,6 +12043,9 @@ msgid ""
 "systems."
 msgstr ""
 
+msgid "Disruptor Artillery S2"
+msgstr ""
+
 msgid "Disruptor A. S2"
 msgstr ""
 
@@ -12742,6 +12053,9 @@ msgid ""
 "The Disruptor Artillery S2 is an upscaled version of the S1 model. Although "
 "the larger dimensions limit the applicability to destroyer-class ships and "
 "up, this comes with perks of longer range and significant more damage."
+msgstr ""
+
+msgid "Disruptor Battery S2"
 msgstr ""
 
 msgid "Disruptor B. S2"
@@ -12756,6 +12070,9 @@ msgid ""
 "more than makes up for it with overall utility. Given the fact that not many "
 "survive being the brunt of a barrage from Disruptor Battery S2s, it may be "
 "that they have a point."
+msgstr ""
+
+msgid "Energy Harpoon"
 msgstr ""
 
 msgid ""
@@ -12773,12 +12090,19 @@ msgstr ""
 msgid "#oOn hit pulls target.#0"
 msgstr ""
 
+#, fuzzy
+msgid "Flak Gun"
+msgstr "벌컨 건"
+
 msgid ""
 "Fires waste debris in a shotgun-like blast that can be useful in taking down "
 "small craft or hitting large targets. Not widely used due the tendency to "
 "jam and blow up, which has been known to cause hull breaches, fires, and "
 "other major issues on the ship. However, this one looks like it is in quite "
 "good shape."
+msgstr ""
+
+msgid "Gauss Gun"
 msgstr ""
 
 msgid ""
@@ -12789,17 +12113,29 @@ msgid ""
 "use, reliable weapon."
 msgstr ""
 
+#, fuzzy
+msgid "Grave Beam"
+msgstr "입자 빔"
+
 msgid ""
 "The Grave Beam is a lighter, faster version of the Ragnarok Beam. It does "
 "not deal as much damage, but its lighter size and more forgiving CPU "
 "requirements makes it a competitive contender."
 msgstr ""
 
+#, fuzzy
+msgid "Grave Lance"
+msgstr "입자 랜스"
+
 msgid ""
 "The Grave Lance is one of the most powerful Lance weapons around. The "
 "technology behind it is poorly understood by everyone except the Za'lek, who "
 "use it as a standard weapon."
 msgstr ""
+
+#, fuzzy
+msgid "Heavy Ion Cannon"
+msgstr "리퍼 캐논"
 
 msgid ""
 "The Heavy Ion Cannon does a far better job at disabling ships than the "
@@ -12808,11 +12144,19 @@ msgid ""
 "use as well."
 msgstr ""
 
+#, fuzzy
+msgid "Heavy Ion Turret"
+msgstr "플라즈마 터렛 MK1"
+
 msgid ""
 "The Heavy Ion Turret is a Sirius military design, applying brute force to "
 "its target's internal systems. When coupled with Razor weaponry, it is "
 "terribly efficient at reducing enemy warships to tumbling hunks of junk."
 msgstr ""
+
+#, fuzzy
+msgid "Heavy Laser Turret"
+msgstr "면도기 터렛 MK1"
 
 msgid ""
 "The Heavy Laser Turret is more or less an upscaled version of the Laser "
@@ -12822,12 +12166,19 @@ msgid ""
 "purchase."
 msgstr ""
 
+msgid "Heavy Neutron Disruptor"
+msgstr ""
+
 msgid ""
 "The Heavy Neutron Disruptor improves upon the processes behind the smaller "
 "Neutron Disruptor, giving this weapon greater damage and range."
 msgstr ""
 "Heavy Neutron Disruptor는 더 작은 Neutron Disruptor 뒤에있는 프로세스를 개선"
 "하여이 무기에 더 큰 피해와 범위를 제공합니다."
+
+#, fuzzy
+msgid "Heavy Ripper Cannon"
+msgstr "리퍼 캐논"
 
 msgid ""
 "By modulating the frequency of the basic Ripper Cannon, the Empire military "
@@ -12837,11 +12188,19 @@ msgid ""
 "it unsuitable for smaller ships."
 msgstr ""
 
+#, fuzzy
+msgid "Heavy Ripper Turret"
+msgstr "플라즈마 터렛 MK1"
+
 msgid ""
 "Built off the heavy ripper cannon, the ripper turret is the heaviest turret "
 "conventionally available to civilians. Its bulk, high energy requirements, "
 "and high damage make it unsuitable for non-capital ships."
 msgstr ""
+
+#, fuzzy
+msgid "Ion Cannon"
+msgstr "리퍼 캐논"
 
 msgid ""
 "Ion Cannons are primarily nonlethal weapons designed to short out internal "
@@ -12852,6 +12211,10 @@ msgid ""
 "policing and militia when nonlethal force is needed."
 msgstr ""
 
+#, fuzzy
+msgid "Laser Cannon MK1"
+msgstr "플라즈마 클러스터 캐논 MK1"
+
 msgid ""
 "The Laser Cannon MK1 is a standard weapon on many vessels, and the first "
 "defence of merchants everywhere. The cannon fires charged energy that can do "
@@ -12859,12 +12222,20 @@ msgid ""
 "while remaining efficient enough to mount several even on small ships."
 msgstr ""
 
+#, fuzzy
+msgid "Laser Cannon MK2"
+msgstr "플라즈마 클러스터 캐논 MK2"
+
 msgid ""
 "A high-powered version of the Laser Cannon MK1, the MK2 is usually found on "
 "Imperial law enforcement and military ships. Its superior firepower helps "
 "keep order among the civilian populace and pirates at bay. It is even "
 "capable of dealing with larger Corvette vessels with some effort."
 msgstr ""
+
+#, fuzzy
+msgid "Laser Turret MK1"
+msgstr "면도기 터렛 MK1"
 
 msgid ""
 "A pair of modified laser cannon MK1s mounted on a rotating turret, providing "
@@ -12874,10 +12245,17 @@ msgid ""
 "stray pirates and marauders."
 msgstr ""
 
+#, fuzzy
+msgid "Laser Turret MK2"
+msgstr "면도기 터렛 MK2"
+
 msgid ""
 "The Laser Turret MK2 is often found on Imperial fast response fleets, for "
 "use against fleets of small to medium ships. Due to the low cost and high "
 "firepower, this weapon is one of the mainstays in the Imperial space forces."
+msgstr ""
+
+msgid "Mass Driver"
 msgstr ""
 
 msgid ""
@@ -12886,11 +12264,17 @@ msgid ""
 "economical heavy weapons in the galaxy."
 msgstr ""
 
+msgid "Mining Lance MK1"
+msgstr ""
+
 msgid ""
 "Mining lances are optimized for high destructive power at short range, "
 "specialized in mining space asteroids. While they can deal significant "
 "damage to heavy armour, they are impractical against shields, however, there "
 "are stories of miners using them to get away from marauders in a clutch.."
+msgstr ""
+
+msgid "Mining Lance MK2"
 msgstr ""
 
 msgid ""
@@ -12904,11 +12288,17 @@ msgid ""
 "safety analysis reports."
 msgstr ""
 
+msgid "Neutron Disruptor"
+msgstr ""
+
 msgid ""
 "The Neutron Disruptor uses high-energy pulses that alter the base "
 "composition of molecules, causing heavy damage. This weapon was first "
 "popular with the Collective, whose drones were immune to early versions' "
 "lethal backscatter radiation."
+msgstr ""
+
+msgid "Nexus Drill Lance"
 msgstr ""
 
 msgid ""
@@ -12921,6 +12311,9 @@ msgid ""
 "materials."
 msgstr ""
 
+msgid "Orion Beam"
+msgstr "오리온 빔"
+
 #, fuzzy
 msgid ""
 "The turret-mounted edition of the Orion Lance offers mid-sized ships "
@@ -12929,6 +12322,9 @@ msgid ""
 msgstr ""
 "포탑에 장착 된 Orion 디자인 에디션은 중형 선박에 뛰어난 단시간 화력을 제공하"
 "여 경선에 대한 강력한 억제력을 제공합니다."
+
+msgid "Orion Lance"
+msgstr "오리온 랜스"
 
 #, fuzzy
 msgid ""
@@ -12943,6 +12339,9 @@ msgstr ""
 "정 된 수냉식 레이저를 기반으로 한이 제품은 연속 발사가 가능하여 파괴적인 빔"
 "을 생성 할 수 있습니다."
 
+msgid "Particle Beam"
+msgstr "입자 빔"
+
 #, fuzzy
 msgid ""
 "A turret-mounted particle lance. The smallest possible turreted beam weapon, "
@@ -12953,12 +12352,18 @@ msgstr ""
 "포탑에 장착 된 입자 빔. 가벼운 적에 대한 최후의 무기로 사용되는 가능한 가장 "
 "작은 터렛 빔 무기입니다."
 
+msgid "Particle Lance"
+msgstr "입자 랜스"
+
 msgid ""
 "This is the smallest direct beam weapon built, purpose-built by the Za'lek "
 "for their drones. While the beam can instantaneously hit multiple targets "
 "simultaneously, it comes at a downside of a really short range, requiring "
 "the pilot to get very close to their target risking enemy fire."
 msgstr ""
+
+msgid "Plasma Blaster MK1"
+msgstr "플라즈마 블래스터 MK1"
 
 #, fuzzy
 msgid "Plasma Bl. MK1"
@@ -12973,6 +12378,9 @@ msgid ""
 "tend to make it harder to disable ships."
 msgstr ""
 
+msgid "Plasma Blaster MK2"
+msgstr "플라즈마 블래스터 MK2"
+
 #, fuzzy
 msgid "Plasma Bl. MK2"
 msgstr "플라즈마 블래스터 MK2"
@@ -12986,12 +12394,20 @@ msgid ""
 "unlucky enough to get hit."
 msgstr ""
 
+#, fuzzy
+msgid "Plasma Cannon"
+msgstr "리퍼 캐논"
+
 msgid ""
 "The Plasma Cannon is a scaled-up version of the Plasma Blaster design for "
 "use on Corvettes. It manages to pack a markedly stronger punch, but the "
 "engineering complexities of fitting such a powerful weapon into a small slot "
 "lead to much higher dependence on guidance from the ship's central computer."
 msgstr ""
+
+#, fuzzy
+msgid "Plasma Cluster Cannon"
+msgstr "플라즈마 클러스터 캐논 MK1"
 
 #, fuzzy
 msgid "Plasma C. Cannon"
@@ -13007,6 +12423,10 @@ msgid ""
 "handle its computational load despite being a synthetic construct."
 msgstr ""
 
+#, fuzzy
+msgid "Plasma Eruptor"
+msgstr "리퍼 캐논"
+
 msgid ""
 "Using a genetically engineered modified plasma organ, the Eruptor is able to "
 "spray large areas of space with highly corrosive plasma. Unlike other plasma "
@@ -13015,6 +12435,10 @@ msgid ""
 "accuracy is comprised, however, as it can spray around a large area, it is "
 "almost guaranteed to hit anything within sight."
 msgstr ""
+
+#, fuzzy
+msgid "Plasma Turret MK1"
+msgstr "플라즈마 터렛 MK2"
 
 #, fuzzy
 msgid "Plasma T. MK1"
@@ -13031,6 +12455,9 @@ msgstr ""
 "리가 짧아 방어에 적합하지 않기 때문에 상인과 상인에게 특히 인기가 없지만, 프"
 "로만큼 조준하지 못하는 경험이없는 용병들 사이에서 틈새 시장을 찾았습니다."
 
+msgid "Plasma Turret MK2"
+msgstr "플라즈마 터렛 MK2"
+
 #, fuzzy
 msgid "Plasma T. MK2"
 msgstr "플라즈마 터렛 MK2"
@@ -13044,6 +12471,9 @@ msgstr ""
 "와 피해량에 비해 비정상적으로 가벼운 무게로 인해 코르벳이 선호하는 경우가 있"
 "습니다."
 
+msgid "Ragnarok Beam"
+msgstr "라그나로크 빔"
+
 msgid ""
 "The Ragnarok Beam is one of the most powerful beam class weapons on the "
 "market. It was designed by House Za'lek for capital ship combat, although "
@@ -13053,6 +12483,9 @@ msgid ""
 "fact it can slice through battleship heavy armour like butter makes it a "
 "favourite of pilots who like to get close to their enemies."
 msgstr ""
+
+msgid "Railgun"
+msgstr "레일건"
 
 #, fuzzy
 msgid ""
@@ -13067,6 +12500,10 @@ msgstr ""
 "다."
 
 #, fuzzy
+msgid "Railgun Turret"
+msgstr "레일건"
+
+#, fuzzy
 msgid ""
 "While one railgun is a formidable weapon, the ultimate in brute-force "
 "capital ship weaponry is the railgun turret. Mounting two railguns in a "
@@ -13077,6 +12514,9 @@ msgstr ""
 "하나의 150mm 레일 건은 강력한 무기이지만, 무차별 대도 함선 무기의 궁극은 "
 "150mm 레일 건 포탑입니다. 특수 포탑 하우징에 두 개의 레일 건을 장착하여 약간"
 "의 속도 비용으로 레일 건과 관련된 반동을 완화 할 수 있습니다."
+
+msgid "Razor Artillery S1"
+msgstr ""
 
 #, fuzzy
 msgid "Razor A. S1"
@@ -13091,6 +12531,9 @@ msgid ""
 "drain significant energy reserves during that time. While House Sirius "
 "proclaims their use as non-lethal weapons, if care is not taken, they can "
 "prove to be quite lethal."
+msgstr ""
+
+msgid "Razor Artillery S2"
 msgstr ""
 
 #, fuzzy
@@ -13109,6 +12552,9 @@ msgstr ""
 "Razor MK2는 대상의 방패를 배출하는 데 가장 잘 사용되어 다른 무기가 마무리 타"
 "격을 줄 수있는 길을 닦습니다."
 
+msgid "Razor Artillery S3"
+msgstr ""
+
 #, fuzzy
 msgid "Razor A. S3"
 msgstr "면도기 MK1"
@@ -13125,6 +12571,9 @@ msgstr ""
 "며, 지원 선박의 임무는 무거운 집행자 선박이 이동하기 전에 표적을 약화시키는 "
 "것입니다."
 
+msgid "Razor Battery S2"
+msgstr ""
+
 #, fuzzy
 msgid "Razor B. S2"
 msgstr "면도기 MK2"
@@ -13136,6 +12585,9 @@ msgid ""
 "quickly demoralize pirates and marauders looking to make some quick credits."
 msgstr ""
 
+msgid "Repeating Railgun"
+msgstr "반복 레일 건"
+
 msgid ""
 "While the Railgun was devastating in its effects, it wasn't quite "
 "devastating enough for Dvaered High Command. They had their engineers "
@@ -13145,6 +12597,10 @@ msgstr ""
 "Railgun은 그 효과가 파괴적 이었지만 Dvaered High Command에게는 충분히 파괴적"
 "이지 않았습니다. 그들은 엔지니어에게 무기를 소형 유성우 생성기만큼 총이 아닌 "
 "더 무겁고 빠른 발사 변형으로 향상 시켰습니다."
+
+#, fuzzy
+msgid "Ripper Cannon"
+msgstr "리퍼 캐논"
 
 #, fuzzy
 msgid ""
@@ -13159,6 +12615,9 @@ msgstr ""
 "걸리므로 발사 속도가 떨어집니다. 리퍼 캐논은 더 이상 빠른 발사에 의존 할 필요"
 "가없는 숙련 된 조종사가 주로 사용합니다."
 
+msgid "Shredder"
+msgstr "슈레더"
+
 #, fuzzy
 msgid ""
 "The Shredder quite lives up to the name its Dvaered manufacturers gave it. "
@@ -13168,6 +12627,9 @@ msgstr ""
 "Shredder는 Dvaered 제조업체가 부여한 이름에 걸 맞습니다. 이 무기의 엄청난 데"
 "미지 처리 능력으로 인해 Dvaered 전투기는 실제보다 크지 않은 배와 교전하는 것"
 "이 위험합니다."
+
+msgid "Turbolaser"
+msgstr "터보 레이저"
 
 #, fuzzy
 msgid ""
@@ -13180,6 +12642,10 @@ msgstr ""
 "헤비 레이저의 군사 등급 모델은 은하계에서 가장 무거운 무기 중 하나입니다. 임"
 "페리얼 캐피탈 선박은이를 사용하여 적군함에 대한 파괴적인 포격을가합니다."
 
+#, fuzzy
+msgid "Turreted Gauss Gun"
+msgstr "터레 티드 벌컨 건"
+
 msgid ""
 "One of the more common countermeasures employed by low-budget merchant "
 "ships, the turret version of the Gauss Gun provides basic defence against "
@@ -13189,6 +12655,9 @@ msgstr ""
 "고독한 해적에 대한 기본적인 방어를 제공합니다. 그러나 더 단호한 공격자는 저지"
 "되지 않을 것입니다."
 
+msgid "Turreted Vulcan Gun"
+msgstr "터레 티드 벌컨 건"
+
 msgid ""
 "Turreted Vulcan Guns pack the same calibre ammunition as their fixed mount "
 "brethren. Ships not nimble enough to evade its relentless stream of "
@@ -13197,6 +12666,9 @@ msgstr ""
 "Turreted Vulcan Guns는 고정 마운트 형제와 동일한 구경의 탄약을 포장합니다. 무"
 "자비한 투사 체의 흐름을 피할만큼 민첩하지 않은 선박은 머지 않아 선체 구멍에 "
 "휩싸 일 수 있습니다."
+
+msgid "Vulcan Gun"
+msgstr "벌컨 건"
 
 #, fuzzy
 msgid ""
@@ -13208,6 +12680,9 @@ msgstr ""
 "Vulcan Gun은 더 무거운 구경 탄약을 사용하여 증가 된 범위와 데미지로 Gauss Gun"
 "보다 향상됩니다. 숙련 된 조종사는 배에 설치된 벌칸 건 한 쌍으로 심각한 혼란"
 "을 일으킬 수 있습니다."
+
+msgid "Drone"
+msgstr ""
 
 #, fuzzy
 msgid "Robotic Interceptor"
@@ -13224,6 +12699,10 @@ msgstr ""
 "이것은 인간을위한 생명 유지 시스템을 포함하는 로봇 드론의 수정 된 버전입니다."
 
 #, fuzzy
+msgid "Drone Carrier"
+msgstr "프론티어 시스템"
+
+#, fuzzy
 msgid "Robotic Carrier"
 msgstr "투리온의 불꽃"
 
@@ -13236,7 +12715,14 @@ msgid ""
 "carrier."
 msgstr ""
 
+#, fuzzy
+msgid "Drone (Hyena)"
+msgstr "프론티어 시스템"
+
 msgid "A fully sentient drone disguised as a Hyena."
+msgstr ""
+
+msgid "Heavy Drone"
 msgstr ""
 
 #, fuzzy
@@ -13251,11 +12737,18 @@ msgstr ""
 "이 집단 무거운 드론은 인간 조종사를 지원하기 위해 엔지니어에 의해 수정되었습"
 "니다."
 
+msgid "Dvaered Ancestor"
+msgstr "드 베어드 조상"
+
 msgid ""
 "On this military grade version of the Ancestor, the distribution of the "
 "weight on the structure has been optimized in order to allow embarking more "
 "payload."
 msgstr ""
+
+#, fuzzy
+msgid "Dvaered Arsenal"
+msgstr "드 베어드 경계"
 
 #, fuzzy
 msgid "You need at least 60% reputation with House Dvaered."
@@ -13270,6 +12763,9 @@ msgid ""
 "even basic necessities. Colloquially they have been also been known to be "
 "called \"Dvaered Gunboxes\"."
 msgstr ""
+
+msgid "Dvaered Goddard"
+msgstr "드 베어드 고다드"
 
 #, fuzzy
 msgid "You need at least 70% reputation with House Dvaered."
@@ -13291,6 +12787,9 @@ msgstr ""
 "House Dvaered는 House Goddard의 가장 큰 고객이며,이 군용 등급 버전은 질량과 "
 "에너지 소비를 증가시키면서 더 나은 갑옷과 무기 손상을 특징으로합니다."
 
+msgid "Dvaered Phalanx"
+msgstr "드 베어드 팔랑스"
+
 #, fuzzy
 msgid "You need at least 40% reputation with House Dvaered."
 msgstr "타겟 연습이 잘 될거야!"
@@ -13301,6 +12800,10 @@ msgid ""
 "payload."
 msgstr ""
 
+#, fuzzy
+msgid "Dvaered Retribution"
+msgstr "드 베어드 경계"
+
 msgid ""
 "When the Empire replaced their ageing cruisers with the new Hawking class "
 "House Dvaered seized the opportunity to acquire the licence for the cruiser "
@@ -13310,11 +12813,17 @@ msgid ""
 "electronics remained outdated."
 msgstr ""
 
+msgid "Dvaered Vendetta"
+msgstr "드 베어드 벤데타"
+
 msgid ""
 "On this military grade version of the Vendetta, the distribution of the "
 "weight on the structure has been optimized in order to allow embarking more "
 "payload."
 msgstr ""
+
+msgid "Dvaered Vigilance"
+msgstr "드 베어드 경계"
 
 #, fuzzy
 msgid "You need at least 50% reputation with House Dvaered."
@@ -13324,6 +12833,10 @@ msgid ""
 "This military grade version of the Vigilance has an optimized weight "
 "distribution allowing it to carry more payload."
 msgstr ""
+
+#, fuzzy
+msgid "Empire Admonisher"
+msgstr "옹호자"
 
 msgid "Nexus Shipyards"
 msgstr ""
@@ -13340,6 +12853,10 @@ msgid ""
 msgstr ""
 "이 군사 등급 버전의 Admonisher는 기능면에서 표준 Admonisher와 거의 동일하지"
 "만 갑옷, 방패 및 열 분산이 약간 더 좋습니다."
+
+#, fuzzy
+msgid "Empire Admonisher Longbow"
+msgstr "옹호자"
 
 msgid ""
 "Standard Empire Admonishers are fabricated to be able to fit many needs, in "
@@ -13358,6 +12875,10 @@ msgid "#bGains as much weapon range bonus as the ship detection.#0"
 msgstr ""
 
 #, fuzzy
+msgid "Empire Hawking"
+msgstr "제국 상어"
+
+#, fuzzy
 msgid "You need at least 60% reputation with the Empire."
 msgstr "타겟 연습이 잘 될거야!"
 
@@ -13370,12 +12891,20 @@ msgstr ""
 "은 장갑, 방패 및 열 방출을 제공합니다."
 
 #, fuzzy
+msgid "Empire Lancelot"
+msgstr "랜슬롯"
+
+#, fuzzy
 msgid ""
 "This military grade version of the Lancelot is mostly identical in function "
 "to a standard Lancelot, but with slightly better armour, and shields."
 msgstr ""
 "이 군사 등급 버전의 랜슬롯은 기능면에서 표준 랜슬롯과 거의 동일하지만 약간 "
 "더 나은 갑옷, 방패 및 열 방출을 제공합니다."
+
+#, fuzzy
+msgid "Empire Lancelot Golden Efreeti"
+msgstr "엠파이어 피스 메이커"
 
 msgid ""
 "A high-spec bombing focused Lancelot that is most known by the use with the "
@@ -13387,12 +12916,20 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+msgid "Empire Pacifier"
+msgstr "엠파이어 피스 메이커"
+
+#, fuzzy
 msgid ""
 "This military grade version of the Pacifier is mostly identical in function "
 "to a standard Pacifier, but with slightly better armour, and shields."
 msgstr ""
 "이 군용 Pacifier 버전은 기능면에서 표준 Pacifier와 거의 동일하지만 갑옷, 방"
 "패 및 열 방출이 약간 더 좋습니다."
+
+#, fuzzy
+msgid "Empire Pacifier Hoplite"
+msgstr "엠파이어 피스 메이커"
 
 msgid ""
 "Designed by an Imperial Combat Bureaucrat for personal use, the Pacifier "
@@ -13411,6 +12948,9 @@ msgstr ""
 msgid "Shields start regenerating again upon full cooldown."
 msgstr ""
 
+msgid "Empire Peacemaker"
+msgstr "엠파이어 피스 메이커"
+
 #, fuzzy
 msgid "You need at least 70% reputation with the Empire."
 msgstr "타겟 연습이 잘 될거야!"
@@ -13427,6 +12967,10 @@ msgstr ""
 "국 함대의 기함 역할을하며 전투기와 폭격기 편대에 필요한 재 보급을 제공 할 수 "
 "있습니다. 그러나 대부분의 주력함과 마찬가지로 적 폭격기의 공격에 취약합니다."
 
+#, fuzzy
+msgid "Empire Rainmaker"
+msgstr "엠파이어 피스 메이커"
+
 msgid ""
 "The Rainmaker is the largest freighter used by the Empire. It is capable of "
 "transporting extensive amounts of material through dangerous territory as "
@@ -13437,6 +12981,9 @@ msgid ""
 "supplies. After the events an EE-1891-392 official ship rename form was "
 "approved and Rainmaker became the ship's official name."
 msgstr ""
+
+msgid "Empire Shark"
+msgstr "제국 상어"
 
 #, fuzzy
 msgid "You need at least 20% reputation with the Empire."
@@ -13453,11 +13000,18 @@ msgstr ""
 "및 열 방출이 약간 더 우수합니다. 군용 등급 재료를 사용하여 일반 우주선보다 약"
 "간 더 가볍습니다."
 
+msgid "Kauweke"
+msgstr ""
+
 msgid "Elder Feral Bioship"
 msgstr ""
 
 msgid "Still to do..."
 msgstr ""
+
+#, fuzzy
+msgid "Nohinohi"
+msgstr "코뿔소"
 
 #, fuzzy
 msgid "Bio-Fighter"
@@ -13472,6 +13026,9 @@ msgid ""
 "Bioships\" and not much is known about them."
 msgstr ""
 
+msgid "Taitamariki"
+msgstr ""
+
 msgid "Bio-Corvette"
 msgstr ""
 
@@ -13479,11 +13036,25 @@ msgid "Not meant for the player."
 msgstr ""
 
 #, fuzzy
+msgid "Fort Raelid"
+msgstr "투리온의 확신"
+
+#, fuzzy
 msgid "Station"
 msgstr "투리온의 불꽃"
 
 msgid "This is a base. It's for AI use only. Don't buy it. Seriously."
 msgstr "이것은 기본입니다. AI 전용입니다. 그것을 사지 마십시오. 진지하게."
+
+msgid "Fort Raglan"
+msgstr ""
+
+#, fuzzy
+msgid "One-Wing Goddard"
+msgstr "드 베어드 고다드"
+
+msgid "Psychic Orb"
+msgstr ""
 
 #. We'll need the physics constants
 #. Some defaults
@@ -13623,6 +13194,12 @@ msgstr "이것은 기본입니다. AI 전용입니다. 그것을 사지 마십�
 msgid "Unknown"
 msgstr ""
 
+msgid "Sindbad"
+msgstr ""
+
+msgid "Admonisher"
+msgstr "옹호자"
+
 #, fuzzy
 msgid ""
 "A very versatile combat ship. Nexus defines the Admonisher as a compromise "
@@ -13632,6 +13209,10 @@ msgstr ""
 "매우 다재다능한 전투함. Nexus는 Admonisher를 Pacifier의 견고 함과 Lancelot의 "
 "민첩성 사이의 절충안으로 정의합니다. 전반적으로 매우 견고한 전투기입니다."
 
+#, fuzzy
+msgid "Admonisher ΩIIa"
+msgstr "옹호자"
+
 msgid ""
 "The Admonisher ΩIIa makes the hard choice of sacrificing long-range "
 "engagement capability to be able to excel in dogfighting. The original long-"
@@ -13640,6 +13221,9 @@ msgid ""
 "fighters and bombers with ease. However, the difficulty to equip torpedo "
 "launchers make the ship ill-suited for engagements with larger ships."
 msgstr ""
+
+msgid "Ancestor"
+msgstr "조상"
 
 #, fuzzy
 msgid ""
@@ -13651,6 +13235,9 @@ msgstr ""
 "일반적으로 작은 고다드라고 불리는 조상은 또한 오래 전에 인간이 사용했던 원시 "
 "비행 기계에 뿌리를두고 있습니다. 그러나 Goddard와 달리 전자 제품은 House "
 "Dvaered에서 수행하므로 해당 영역에서 상당히 열등합니다."
+
+msgid "Ancestor HG Eagle-Eye"
+msgstr ""
 
 msgid ""
 "A product of a special collaboration between House Goddard and House "
@@ -13665,6 +13252,9 @@ msgid ""
 "make sure every missile counts."
 msgstr ""
 
+msgid "Bedivere"
+msgstr ""
+
 msgid ""
 "One of the most long-lived designs in spacefaring, the Bedivere was designed "
 "to be able to fulfil a diversity of different roles. Although technically "
@@ -13675,6 +13265,9 @@ msgid ""
 "possible to obtain new Bediveres, given their ease to repair, it seems like "
 "it will take a long time for them to completely disappear."
 msgstr ""
+
+msgid "Gawain"
+msgstr "가와 인"
 
 msgid "Luxury Yacht"
 msgstr ""
@@ -13691,6 +13284,10 @@ msgstr ""
 "Lancelot에서 처음 구현 된 기술에 크게 의존하며 무기 공간이 적고 상대적으로 취"
 "약하기 때문에 전투를 거의 보지 못하지만 매우 기동성이 뛰어나 스포츠 선박으로 "
 "널리 사용됩니다."
+
+#, fuzzy
+msgid "Gawain XY-37"
+msgstr "가와 인"
 
 msgid ""
 "The Gawain XY-37 was meant to rework the engine and start a new era of "
@@ -13717,6 +13314,10 @@ msgstr ""
 "에서 Zhiru에서 전적으로 수행됩니다. 시간이 지남에 따라 원래 디자인에 대한 전"
 "문화와 개선으로 시장에서 매우 경쟁력이 유지되었습니다. 공간의 고전입니다."
 
+#, fuzzy
+msgid "Goddard Merchantman"
+msgstr "랜슬롯"
+
 msgid ""
 "It all began with an insurance dispute at Manuel Station when a sensor "
 "malfunction resulted in a Zebra being damaged beyond repair while delivering "
@@ -13736,6 +13337,9 @@ msgid ""
 "second hand Goddards are reconfigured and re-sold as 'Merchantman' variants."
 msgstr ""
 
+msgid "Hawking"
+msgstr "호킹"
+
 msgid ""
 "The Hawking is the flagship vessel of Nexus Shipyards. A large cruiser "
 "designed for extended engagements, it is widely used by the Empire to exert "
@@ -13747,6 +13351,9 @@ msgstr ""
 "양함으로 제국에서 영토를 장악하기 위해 널리 사용됩니다. 원시 화력 측면에서 "
 "Hawking은 House Goddard의 기함에 이어 두 번째로 좁지 만 프레임이 좁아 적에게 "
 "더 작은 목표를 제시 할 수 있습니다."
+
+msgid "Hyena"
+msgstr "하이에나"
 
 msgid "Aerosys"
 msgstr ""
@@ -13768,6 +13375,9 @@ msgstr ""
 "급 사이에 수많은 하이에나가있는 것처럼 보이기 때문에 기꺼이 지불하려는 사람에"
 "게만 판매하는 것으로 의심됩니다."
 
+msgid "Kestrel"
+msgstr "황조롱이"
+
 msgid "Krain Industries"
 msgstr "Krain 산업"
 
@@ -13783,6 +13393,10 @@ msgstr ""
 "화력을 최첨단 전자 장치와 결합하여 유능한 선장의 손에 진정으로 무시 무시한 함"
 "선을 만듭니다."
 
+#, fuzzy
+msgid "Kestrel Sigma"
+msgstr "황조롱이"
+
 msgid ""
 "The Kestrel Sigma features a high-end reflectokinetic hull padding that not "
 "only increases the durability of the ship, but also can affect weapon locks "
@@ -13793,6 +13407,9 @@ msgid ""
 "difficulty of production leading to high failure rates racks up a premium on "
 "the final ship's cost."
 msgstr ""
+
+msgid "Koala"
+msgstr "코알라"
 
 msgid "Melendez Corp."
 msgstr "메렌데즈 회사."
@@ -13806,6 +13423,9 @@ msgstr ""
 "코알라는 표준 화물선입니다. 무기 공간은 적지 만화물 공간은 적당한 작은 배입니"
 "다. 광대 한 우주 무역 제국으로 일하는 기업가에게 좋습니다."
 
+msgid "Koala Armoured"
+msgstr ""
+
 msgid ""
 "The Koala is one of the sturdier courier ships, with a small size that also "
 "aids it in survival. The armoured variant sacrifices speed for even more "
@@ -13815,6 +13435,9 @@ msgid ""
 "ships efficiently. It is commonly used for the delivery of critical cargo "
 "without raising too much attention."
 msgstr ""
+
+msgid "Lancelot"
+msgstr "랜슬롯"
 
 #, fuzzy
 msgid ""
@@ -13830,6 +13453,9 @@ msgstr ""
 "된 버전이 민간인에게 제공되지만 원래 사양과 완전히 일치하지는 않습니다. 신뢰"
 "성과 가용성을 위해 우주 전역의 보안 기관에서 사용합니다."
 
+msgid "Llama"
+msgstr "야마"
+
 #, fuzzy
 msgid ""
 "One of the most widely used ships in the galaxy. Renowned for its stability "
@@ -13842,6 +13468,9 @@ msgstr ""
 "초의 민간용 우주선 중 하나였으며, 처음에는 귀족들이 사용했고 이제는 더 나은 "
 "것을 감당할 수없는 모든 사람들이 사용합니다."
 
+msgid "Llama Voyager"
+msgstr ""
+
 msgid ""
 "The Llama's popularity is based on the wide availability of the base ship, "
 "and is most pilots introduction to spacefaring. Inspired by the popularity, "
@@ -13851,6 +13480,9 @@ msgid ""
 "ramscoop that is able to capture and filter minuscule space dust to slowly "
 "refill fuel."
 msgstr ""
+
+msgid "Mule"
+msgstr "노새"
 
 #, fuzzy
 msgid ""
@@ -13863,6 +13495,9 @@ msgstr ""
 "객을위한 충분한 숙박 시설이있어 즐거운 크루즈를 즐길 수 있습니다. 노새는 해적"
 "들이 가장 좋아하는 표적이므로 위험한 시스템을 피하는 것이 좋습니다."
 
+msgid "Mule Hardhat"
+msgstr ""
+
 msgid ""
 "Specially ordered by the Mining Vrata, the Mule Hardhat is a modified "
 "version of the Mule with a focus on augmenting the mining capabilities. In "
@@ -13872,6 +13507,9 @@ msgid ""
 "popular among miners. However, such changes come with an increase in the "
 "fabrication cost."
 msgstr ""
+
+msgid "Pacifier"
+msgstr "고무 젖꼭지"
 
 #, fuzzy
 msgid ""
@@ -13885,11 +13523,17 @@ msgstr ""
 "니다. Pacifier는 긴 순찰 경로를 용이하게하기 위해 높은 연료 용량을 특징으로합"
 "니다."
 
+msgid "Phalanx"
+msgstr "지골"
+
 msgid ""
 "The Phalanx is, by Dvaered standards, a fast corvette that can be used as a "
 "missile platform, that it also manoeuvres poorly is standard Dvaered "
 "construction. Its high armour makes it a capable corvette provided one "
 "equips it with turrets."
+msgstr ""
+
+msgid "Plowshare"
 msgstr ""
 
 msgid ""
@@ -13902,6 +13546,9 @@ msgid ""
 "of the cornerstones of modern spacefaring societies."
 msgstr ""
 
+msgid "Quicksilver"
+msgstr "수은"
+
 msgid ""
 "While still a cargo hauler, the Quicksilver is quite different from "
 "Melendez's other offerings. Featuring a streamlined frame and oversized "
@@ -13910,6 +13557,10 @@ msgstr ""
 "여전히화물 운송 업체이지만 Quicksilver는 Melendez의 다른 제품과는 상당히 다릅"
 "니다. 유선형 프레임과 특 대형 엔진이 특징 인이 제품은 편리한 배송을위한 최고"
 "의 선택입니다."
+
+#, fuzzy
+msgid "Quicksilver Mercury"
+msgstr "수은"
 
 msgid "Luxury Courier"
 msgstr ""
@@ -13924,6 +13575,9 @@ msgid ""
 "a heft price tag that many can not afford."
 msgstr ""
 
+msgid "Rhino"
+msgstr "코뿔소"
+
 msgid ""
 "A particularly durable Melendez design, the Rhino is well-suited to "
 "transporting high-value, high-risk freight. While it has much lower cargo "
@@ -13935,6 +13589,9 @@ msgstr ""
 "승무원이 필요하며 독점 연료 탱크를 사용하면 대부분의 선박보다 더 넓은 범위를 "
 "확보 할 수 있습니다. 단점은 장갑이 가볍고 무기 공간이 적기 때문에 공격에 매"
 "우 취약합니다. 또한 한 쌍의 Eraedon 엔진이 장착되어 기동성이 뛰어납니다."
+
+msgid "Schroedinger"
+msgstr "슈뢰딩거"
 
 msgid "Sirius Systems"
 msgstr "시리우스 시스템"
@@ -13953,6 +13610,9 @@ msgstr ""
 "우 취약하다는 것입니다. 또한 한 쌍의 Eraedon 엔진이 장착되어 기동성이 뛰어납"
 "니다."
 
+msgid "Shark"
+msgstr "상어"
+
 #, fuzzy
 msgid ""
 "A newer Nexus Shipyards design, the Shark is an agile, light fighter "
@@ -13963,6 +13623,10 @@ msgstr ""
 "이트 파이터입니다. 더 큰 친척 인 Lancelot만큼 능력은 없지만 여전히 모든 함대"
 "에 효과적인 추가 기능입니다."
 
+#, fuzzy
+msgid "Shark ΨIIIa"
+msgstr "상어"
+
 msgid ""
 "With the Shark ΨIIIa, Nexus Shipyards rethinks the Shark as a Scout-class "
 "vessel. The weapon mounts are significantly reduced in exchange for more "
@@ -13972,12 +13636,19 @@ msgid ""
 "very hard to find."
 msgstr ""
 
+msgid "Starbridge"
+msgstr ""
+
 msgid ""
 "The Starbridge is the latest ship designed by Krain Industries. It is a "
 "lightweight destroyer reaching the same manoeuvrability as a corvette and "
 "comparable maximum speed. Its low mass comes at the cost of reduced "
 "structural space."
 msgstr ""
+
+#, fuzzy
+msgid "Starbridge Sigma"
+msgstr "투리온의 불꽃"
 
 msgid ""
 "Heavily modified, the Starbridge Sigma boasts the capability of housing "
@@ -13987,6 +13658,10 @@ msgid ""
 "ship is a premium variant of the Starbridge capable of holding its own in "
 "deep space."
 msgstr ""
+
+#, fuzzy
+msgid "Tristan"
+msgstr "%s (%d 점프, %.0fk 거리)"
 
 msgid ""
 "The Tristan is the predecessor of Nexus Shipyards' popular Lancelot model. "
@@ -14000,6 +13675,9 @@ msgid ""
 "vessels and a large refurbishing and repair community make it so they are "
 "still surprisingly in use, especially by those who can not afford better."
 msgstr ""
+
+msgid "Vendetta"
+msgstr "상호 복수"
 
 #, fuzzy
 msgid ""
@@ -14017,6 +13695,10 @@ msgstr ""
 "고 있기 때문에 확장 된 전투보다 전투에 더 적합하지만, 정말 무시 무시한 포격"
 "을 일으킬 수 있습니다."
 
+#, fuzzy
+msgid "Vendetta Whiplash"
+msgstr "상호 복수"
+
 msgid ""
 "The Vendetta's great flaw is trying to provide a consistent weapon system, "
 "requiring the ship's system to perform equally at maximum and minimum weapon "
@@ -14027,6 +13709,9 @@ msgid ""
 "to start up, once they are up and running, the firepower is unmatched by any "
 "ship of the same size."
 msgstr ""
+
+msgid "Vigilance"
+msgstr "각서"
 
 #, fuzzy
 msgid ""
@@ -14039,12 +13724,19 @@ msgstr ""
 "하드 포인트를 특징으로하는이 제품은 최대한 세게 타격하도록 설계되었습니다. "
 "Dvaered 기원을 감안할 때 상대 제품에 비해 열등한 기술을 보유하고 있습니다."
 
+msgid "Zebra"
+msgstr ""
+
 msgid ""
 "The Zebra bulk freighter is the largest of all of the freighters produced by "
 "Melendez, and one of the most desired ships by all independent civilian "
 "traders. The Zebra offers an unmatched cargo density with reasonable "
 "protection."
 msgstr ""
+
+#, fuzzy
+msgid "Dealbreaker"
+msgstr "렌더링: %s"
 
 msgid "Skull and Bones"
 msgstr "두개골과 뼈"
@@ -14063,6 +13755,10 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+msgid "Pirate Admonisher"
+msgstr "해적 옹호자"
+
+#, fuzzy
 msgid ""
 "The stock Admonisher is a powerful vessel, especially for its size. Through "
 "the usual Skull and Bones refit the Pirate Admonisher features improved "
@@ -14072,6 +13768,9 @@ msgstr ""
 "스톡 Admonisher는 특히 그 크기에 비해 강력한 선박입니다. 일반적인 Skull and "
 "Bones를 통해 Pirate Admonisher는 향상된 기동성, 더 많은 무기 공간 및 약간 향"
 "상된 방어력을 제공하며화물 용량과 갑옷 재생률을 희생합니다."
+
+msgid "Pirate Ancestor"
+msgstr "해적 조상"
 
 msgid ""
 "Ancestors were one of the first ships to be fancied by pirates. The big "
@@ -14084,6 +13783,10 @@ msgstr ""
 "박이 시장에 나옴에 따라 구식 전자 장치 및 표적 시스템으로 인해 사용이 감소했"
 "습니다."
 
+#, fuzzy
+msgid "Pirate Bedivere"
+msgstr "해적 벤데타"
+
 msgid ""
 "Realizing the Bedivere's potential as a versatile scavenger vessel, the "
 "Skull and Bones refitted the model for more efficient plundering. In "
@@ -14091,6 +13794,10 @@ msgid ""
 "have been shrunk to make room for more crew and boarding androids. Thus, the "
 "Pirate Bedivere best used in a fleet with more combat-capable ships."
 msgstr ""
+
+#, fuzzy
+msgid "Pirate Blue Shark"
+msgstr "해적 상어"
 
 msgid ""
 "As any good pirate would know, you can hardly pillage a ship if you blow it "
@@ -14101,6 +13808,10 @@ msgid ""
 "popularity. \"Everyone knows Red makes ships go fast, Blue makes them go "
 "slower!\" is a common ill-informed complaint."
 msgstr ""
+
+#, fuzzy
+msgid "Pirate Hyena"
+msgstr "해적 벤데타"
 
 #, fuzzy
 msgid ""
@@ -14119,6 +13830,10 @@ msgstr ""
 "게만 판매하는 것으로 의심됩니다."
 
 #, fuzzy
+msgid "Pirate Kestrel"
+msgstr "해적 황조롱이"
+
+#, fuzzy
 msgid ""
 "The Kestrel is one of the best ships offered by Skull and Bones. It is "
 "extremely agile for a cruiser yet doesn't lack the firepower necessary to "
@@ -14128,6 +13843,10 @@ msgstr ""
 "Kestrel은 Skull and Bones가 제공하는 최고의 함선입니다. 순양함에게는 매우 민"
 "첩하지만 제국의 권위에 의문을 제기하는 데 필요한 화력이 부족하지 않습니다. 그"
 "것을 감당할 수있는 해적들에게 매우 강한 배입니다."
+
+#, fuzzy
+msgid "Pirate Kestrel Yuri's Kiss"
+msgstr "해적 황조롱이"
 
 msgid ""
 "One-Eyed Yuri was a famous ship engineer at Skull and Bones, renown for her "
@@ -14148,6 +13867,9 @@ msgid ""
 "targets are able to react."
 msgstr ""
 
+msgid "Pirate Phalanx"
+msgstr "해적 지골"
+
 msgid ""
 "Building upon the already-capable Phalanx chassis, the Skull and Bones "
 "engineers have substantially improved the ship's performance, while only "
@@ -14155,6 +13877,10 @@ msgid ""
 msgstr ""
 "이미 사용 가능한 Phalanx 섀시를 기반으로 Skull and Bones 엔지니어는 함선의 성"
 "능을 크게 향상시키면서 보호 기능을 약간만 희생했습니다."
+
+#, fuzzy
+msgid "Pirate Revenant"
+msgstr "해적 벤데타"
 
 msgid ""
 "As Skull and Bones does not have the technology to grow new bioships from "
@@ -14172,6 +13898,9 @@ msgid ""
 "Soromid bioship, and also gains half as much experience."
 msgstr ""
 
+msgid "Pirate Rhino"
+msgstr "해적 코뿔소"
+
 msgid ""
 "The traditional Skull and Bones refit has left the Rhino substantially more "
 "manoeuvrable, though somewhat less armoured. Exploiting its large cargo bay "
@@ -14180,6 +13909,9 @@ msgstr ""
 "전통적인 Skull and Bones 재 장착으로 인해 Rhino는 훨씬 더 기동성이 있지만 장"
 "갑은 다소 적습니다. 대형 화물칸과 내구성을 활용 한 Rhino는 뛰어난 청소 함이되"
 "었습니다."
+
+msgid "Pirate Shark"
+msgstr "해적 상어"
 
 msgid ""
 "The nimble Nexus Shipyards Shark has proved an excellent canvas for the "
@@ -14191,12 +13923,19 @@ msgstr ""
 "입증했습니다. 추가 무기 마운트가 장착되어있어 핸들링에 최소한의 영향을 주지"
 "만 훨씬 더 많은 화력을 견딜 수 있습니다."
 
+#, fuzzy
+msgid "Pirate Starbridge"
+msgstr "투리온의 불꽃"
+
 msgid ""
 "Even though the Starbridge is already a light and fast destroyer, Skull and "
 "Bones engineers managed to further improve its speed. Due to its large "
 "firepower and relatively high speed, for its ship class, the Starbridge is "
 "truly a fearsome sight."
 msgstr ""
+
+msgid "Pirate Vendetta"
+msgstr "해적 벤데타"
 
 #, fuzzy
 msgid ""
@@ -14214,6 +13953,10 @@ msgstr ""
 "원래보다 훨씬 낫지 만 원자로가 우주선을 파괴하는 경우가 많습니다. 당신은 하나"
 "에 들어가면 당신에게 일어나지 않기를 바랍니다."
 
+#, fuzzy
+msgid "Pirate Zebra"
+msgstr "해적 벤데타"
+
 msgid ""
 "The Zebra, one of the largest freighters available for independent civilian "
 "traders, was refitted by Skull and Bones to serve as carrier. Large portions "
@@ -14226,6 +13969,9 @@ msgid ""
 "occasionally."
 msgstr ""
 
+msgid "Proteron Archimedes"
+msgstr "프로 테론 아르키메데스"
+
 #, fuzzy
 msgid "You need at least 70% reputation with the Proteron."
 msgstr "타겟 연습이 잘 될거야!"
@@ -14236,6 +13982,10 @@ msgid ""
 msgstr ""
 "아르키메데스는 Proteron 함대의 중추입니다. 강력한 화력과 높은 내구성을 제공하"
 "는이 무기는 전투의 열기 속에서 항상 찾을 수 있습니다."
+
+#, fuzzy
+msgid "Proteron Dalton"
+msgstr "프로 테론 왓슨"
 
 #, fuzzy
 msgid "You need at least 20% reputation with the Proteron."
@@ -14257,6 +14007,10 @@ msgstr ""
 "적합하지만, 여러 편대를 발사하는 항공 모함 그룹은 여러 차례 전투의 흐름을 바"
 "꾸는 것으로 알려져 있습니다."
 
+#, fuzzy
+msgid "Proteron Euler"
+msgstr "프로 테론 카한"
+
 msgid ""
 "The Proteron chose their battles carefully as their slow capital ships "
 "cannot retreat from a battle easily. Thus, they have rather large fleet of "
@@ -14264,6 +14018,10 @@ msgid ""
 "reconnaissance vessel. Not geared for combat, this ship relies on stealth "
 "and speed to avoid hostiles."
 msgstr ""
+
+#, fuzzy
+msgid "Proteron Gauss"
+msgstr "프로 테론 왓슨"
 
 #, fuzzy
 msgid "You need at least 50% reputation with the Proteron."
@@ -14280,6 +14038,10 @@ msgstr ""
 "주 전투함이 될 궤도에 올랐습니다. Pacifier보다 무기 마운트가 적지 만 질량과 "
 "구조적 공간이 더 적습니다."
 
+#, fuzzy
+msgid "Proteron Hippocrates"
+msgstr "프로 테론 왓슨"
+
 msgid ""
 "As the Proteron only use carrier-based fighters small fleets lack fighter "
 "support. To make up this issue the Hippocrates was developed, an ultra-light "
@@ -14287,6 +14049,10 @@ msgid ""
 "fleets. The Hippocrates can also be used as missile platform using the "
 "hangar bay to store additional ammo crates."
 msgstr ""
+
+#, fuzzy
+msgid "Proteron Pythagoras"
+msgstr "프로 테론 카한"
 
 #, fuzzy
 msgid "You need at least 60% reputation with the Proteron."
@@ -14300,6 +14066,9 @@ msgid ""
 "fleets to break through."
 msgstr ""
 
+msgid "Proteron Watson"
+msgstr "프로 테론 왓슨"
+
 #, fuzzy
 msgid ""
 "The heart of the Proteron battle fleet is formed by the Watson. Acting as a "
@@ -14310,9 +14079,21 @@ msgstr ""
 "명령 및 제어 장치 역할을하는이 함선은 은하계를 지배하기 위해 다른 함선을 조정"
 "합니다."
 
+msgid "Astral Projection Greater"
+msgstr ""
+
 #, fuzzy
 msgid "Sirius Psychic Powers"
 msgstr "시리우스 설교자"
+
+msgid "Astral Projection Lesser"
+msgstr ""
+
+msgid "Astral Projection Normal"
+msgstr ""
+
+msgid "Sirius Divinity"
+msgstr "시리우스 신성"
 
 #, fuzzy
 msgid "You need at least 70% reputation with House Sirius."
@@ -14330,6 +14111,9 @@ msgstr ""
 "의 전투기를 배치 할 수있는 신성의 능력은 전투에서 비할 데없는 유연성을 제공하"
 "며, 규모가 큰 함대에서 주요 물류 선박 역할을합니다."
 
+msgid "Sirius Dogma"
+msgstr "시리우스 도그마"
+
 msgid ""
 "The backbone of the House Sirius fleet, the Dogma is a sight to behold. "
 "Trimmed in gold and silver and fielding a large array of weapons, the Dogma "
@@ -14338,6 +14122,9 @@ msgstr ""
 "House Sirius 함대의 중추 인 Dogma는 볼만한 광경입니다. 금색과 은색으로 다듬어"
 "지고 다양한 무기를 배치 한 도그마는 명성이나 군사력에서 거의 능가하지 않습니"
 "다."
+
+msgid "Sirius Fidelity"
+msgstr "시리우스 피델리티"
 
 #, fuzzy
 msgid "You need at least 20% reputation with House Sirius."
@@ -14351,6 +14138,9 @@ msgid ""
 msgstr ""
 "Fidelity는 House Sirius의 라이트 파이터입니다. 혼자서 특별히 유능하지는 않지"
 "만, 종종 전방 정찰병으로 사용되어 훨씬 더 치명적인 동맹을 데려옵니다."
+
+msgid "Sirius Preacher"
+msgstr "시리우스 설교자"
 
 #, fuzzy
 msgid "You need at least 40% reputation with House Sirius."
@@ -14366,6 +14156,10 @@ msgstr ""
 "는 데 능숙합니다."
 
 #, fuzzy
+msgid "Sirius Providence"
+msgstr "시리우스 설교자"
+
+#, fuzzy
 msgid "You need at least 60% reputation with House Sirius."
 msgstr "타겟 연습이 잘 될거야!"
 
@@ -14375,6 +14169,9 @@ msgid ""
 "transport pilgrims, even though most Sirii dislike these overcrowded mass "
 "transports."
 msgstr ""
+
+msgid "Sirius Shaman"
+msgstr "시리우스 주술사"
 
 #, fuzzy
 msgid "You need at least 30% reputation with House Sirius."
@@ -14388,6 +14185,9 @@ msgstr ""
 "비교적 날렵한 형태로 인해 먼 거리에서 라이트 파이터로 오인 될 수 있지만, 주술"
 "사는 그 어떤 것도 아닙니다. 특수 제작 된 경량 미사일 플랫폼으로, 주술사의 손"
 "이 닿지 않는 적은 거의 없습니다."
+
+msgid "Soromid Arx"
+msgstr "소로미드 알스"
 
 #, fuzzy
 msgid "Bio-Carrier"
@@ -14404,6 +14204,9 @@ msgid ""
 "Arx tends to be a more lightweight carrier than is typically found in non-"
 "Soromid fleets, without sacrificing carrying capacity."
 msgstr ""
+
+msgid "Soromid Brigand"
+msgstr "소로 미드 브 리간드"
 
 msgid "Bio-Interceptor"
 msgstr ""
@@ -14423,6 +14226,10 @@ msgstr ""
 "대적으로 소모성이 높아이를 보완합니다."
 
 #, fuzzy
+msgid "Soromid Copia"
+msgstr "소로미드 이라"
+
+#, fuzzy
 msgid "Bio-Freighter"
 msgstr "랜슬롯"
 
@@ -14437,6 +14244,9 @@ msgid ""
 "from combat, and can be a very deadly ship in the right hands."
 msgstr ""
 
+msgid "Soromid Ira"
+msgstr "소로미드 이라"
+
 msgid "Bio-Cruiser"
 msgstr ""
 
@@ -14445,6 +14255,9 @@ msgid ""
 "While its armour is somewhat weak, this rarely saves those met with its "
 "devastating barrage."
 msgstr ""
+
+msgid "Soromid Marauder"
+msgstr "소로미드 약탈자"
 
 msgid "Bio-Bomber"
 msgstr ""
@@ -14463,6 +14276,9 @@ msgstr ""
 "Marauder는 내구도와 탄약 실을 증가시키는 폭격기 역할을 수행하기 위해 개발되었"
 "습니다. 이것은 멀리 떨어진 사촌보다 상당히 느리게 만듭니다."
 
+msgid "Soromid Nyx"
+msgstr "소로미드 닉스"
+
 msgid "Bio-Destroyer"
 msgstr ""
 
@@ -14474,6 +14290,9 @@ msgstr ""
 "Nyx는 Soromid의 군사력을 상징합니다. 격렬한 전투에서 강력한 화력을 제공 할 "
 "수 있고 필요할 때 철수 할 수있을만큼 민첩한이 배는 일반적으로 규모가 큰 "
 "Soromid 함대의 중추를 형성합니다."
+
+msgid "Soromid Odium"
+msgstr "소로미드 오듐"
 
 #, fuzzy
 msgid "You need at least 40% reputation with the Soromid."
@@ -14488,6 +14307,9 @@ msgstr ""
 "상적인 양의 시스템 하드 포인트를 제공합니다. 소규모 군사 교전을 지배하는 경우"
 "가 종종 있습니다."
 
+msgid "Soromid Reaver"
+msgstr "소로미드 강"
+
 #, fuzzy
 msgid ""
 "Reavers are often found at the forefront of Soromid military engagements. "
@@ -14497,6 +14319,9 @@ msgstr ""
 "리버는 종종 Soromid 군사 교전의 최전선에서 발견됩니다. 그들의 좋은 속도와 기"
 "동성은 내구성에 의해 더욱 강화되어 Reaver는 은하계에서 가장 효과적인 중전 투"
 "기 중 하나입니다."
+
+msgid "Soromid Vox"
+msgstr "소로미드 복스"
 
 #, fuzzy
 msgid "Bio-Battleship"
@@ -14511,6 +14336,9 @@ msgstr ""
 "Vox는 Soromid 필드가 물려받은 가장 큰 선박입니다. 이 드레드 노트는 주어진 "
 "Soromid 전쟁 함대의 핵심 역할을하며 주목할만한 교전에서만 요청되었습니다."
 
+msgid "Thurion Apprehension"
+msgstr "투리온 체포"
+
 #, fuzzy
 msgid "Thurion Shipyards"
 msgstr "투리온 조선소"
@@ -14520,6 +14348,9 @@ msgid ""
 "paired with advanced electronic defences make it difficult for enemies to "
 "detect the ship, let alone attempt to lock onto it."
 msgstr ""
+
+msgid "Thurion Certitude"
+msgstr "투리온의 확신"
 
 #, fuzzy
 msgid "You need at least 70% reputation with the Thurion."
@@ -14533,6 +14364,9 @@ msgid ""
 "also unrivaled by other Thurion ships, and the towering presence makes it "
 "clear that the ship is not only for support."
 msgstr ""
+
+msgid "Thurion Ingenuity"
+msgstr "투리온의 독창성"
 
 #, fuzzy
 msgid ""
@@ -14549,6 +14383,9 @@ msgstr ""
 "너무 뜨거워지면 재충전과 재생을 위해 빠르게 후퇴 할 수 있습니다. 또한 모든 "
 "Thurian 선박과 마찬가지로 전자 제품은 평균 이상입니다."
 
+msgid "Thurion Perspicacity"
+msgstr "투리온의 통찰력"
+
 #, fuzzy
 msgid "You need at least 20% reputation with the Thurion."
 msgstr "타겟 연습이 잘 될거야!"
@@ -14563,6 +14400,10 @@ msgstr ""
 "Thurion Perspicacity는 일반적으로 떼를 정찰하거나 공격하는 데 사용되는 빠르"
 "고 가벼운 전투기입니다."
 
+#, fuzzy
+msgid "Thurion Perspicacity Beta"
+msgstr "투리온의 통찰력"
+
 msgid ""
 "Originally designed as a fast scout ship, the lack of usability quickly led "
 "to the redesign as a more capable interceptor. The Perspicacity Beta is the "
@@ -14570,6 +14411,9 @@ msgid ""
 "to its small size. However, it can boast an incredible speed boost and "
 "slightly more nebula hardening."
 msgstr ""
+
+msgid "Thurion Scintillation"
+msgstr "투리온의 불꽃"
 
 #, fuzzy
 msgid ""
@@ -14580,12 +14424,19 @@ msgstr ""
 "Thurion Scintillation은 먼 거리에서 공격하도록 설계된 폭격기입니다. 비슷한 크"
 "기의 다른 Thurion 함선보다 무장하지만 다른 폭격기 만큼은 아닙니다."
 
+#, fuzzy
+msgid "Thurion Taciturnity"
+msgstr "투리온 미술 애호가"
+
 msgid ""
 "The Thurion Taciturnity is an armoured and stealthy transport capable both "
 "of surviving the harsh nebula and defending itself from attack."
 msgstr ""
 "Thurion Taciturnity는 거친 성운에서 살아남고 공격으로부터 자신을 방어 할 수있"
 "는 무장하고 은밀한 수송기입니다."
+
+msgid "Thurion Virtuosity"
+msgstr "투리온 미술 애호가"
 
 #, fuzzy
 msgid "You need at least 40% reputation with the Thurion."
@@ -14602,6 +14453,9 @@ msgstr ""
 "무기 공간은 별보다 작지만 우주선의 우수한 전자 장치와 거친 성운에 대한 저항력"
 "은 그것을 보완하는 것보다 더 많습니다."
 
+msgid "Za'lek Bomber Drone"
+msgstr "잘렉의 폭격 드로"
+
 #, fuzzy
 msgid "Robotic Bomber"
 msgstr "투리온의 불꽃"
@@ -14615,6 +14469,9 @@ msgid ""
 msgstr ""
 "이것은 Za'lek Bomber Drone입니다. 무거운 선박을 공격하기 위해 제작되었습니"
 "다. 플레이어가 비행해서는 안됩니다."
+
+msgid "Za'lek Demon"
+msgstr "잘렉 악마"
 
 msgid "Za'lek Fabricators"
 msgstr "잘렉의 제작사"
@@ -14630,6 +14487,10 @@ msgstr ""
 "리 및 크기로 별명을 얻었습니다. 핸들링이 어렵고 모든 Za'lek 선박처럼 장갑이 "
 "좋지 않지만 Za'lek의 적들에게 좋지 않은 위로가됩니다."
 
+#, fuzzy
+msgid "Za'lek Demon Type IV"
+msgstr "자레크의 찌르기"
+
 msgid ""
 "The Za'lek Demon Type IV is a departure from the standard autonomous drone-"
 "focused combat philosophy, redesigned to make heavy use of long range "
@@ -14640,6 +14501,9 @@ msgid ""
 "system, and the extra weapon slot and missile system storage required "
 "removing more of the ship's shield emitters and already thin armour."
 msgstr ""
+
+msgid "Za'lek Diablo"
+msgstr "잘렉의 디아블ㄹ"
 
 #, fuzzy
 msgid "You need at least 70% reputation with House Za'lek."
@@ -14655,12 +14519,18 @@ msgstr ""
 "착 한 이들은 최전선 전투가 아니라 파괴적인 드론 무리를위한 플랫폼 역할을합니"
 "다."
 
+msgid "Za'lek Heavy Drone"
+msgstr "잘렉 헤비 드론"
+
 msgid ""
 "This is the Za'lek Heavy Drone. Fewer and not as crap. Not to be flown by "
 "the player."
 msgstr ""
 "이것은 Za'lek Heavy Drone입니다. 더 적고 쓰레기가 아닙니다. 플레이어가 비행해"
 "서는 안됩니다."
+
+msgid "Za'lek Hephaestus"
+msgstr "잘렉 헤파이스토스"
 
 msgid ""
 "The crown of the House Za'lek Defence Fleet, these proud buttresses of the "
@@ -14671,12 +14541,19 @@ msgstr ""
 "Za'lek Imp는 대부분의 다른 Za'lek 선박에 비해 최첨단 센서 제품군을 포함합니"
 "다. 더 무거운 코르벳의 화력은 부족하지만 함대에주는 정보 이점은 무시합니다."
 
+msgid "Za'lek Light Drone"
+msgstr "잘렉의 경량 드로"
+
 msgid ""
 "This is the Za'lek Light Drone. Very weak, cheap and numerous. Not to be "
 "flown by the player."
 msgstr ""
 "이것은 Za'lek Light Drone입니다. 매우 약하고 저렴하며 수많은. 플레이어가 비행"
 "해서는 안됩니다."
+
+#, fuzzy
+msgid "Za'lek Mammon"
+msgstr "잘렉 악마"
 
 msgid ""
 "While House Za'lek relies on drones for most everything, their limited fuel "
@@ -14689,6 +14566,9 @@ msgid ""
 "making a getaway."
 msgstr ""
 
+msgid "Za'lek Mephisto"
+msgstr "자레크의 메피스토"
+
 msgid ""
 "A mighty ship, the Mephisto has grand energy and shielding management, and "
 "its shields allow it to shrug off a lot of abuse. A core of these ships can "
@@ -14697,6 +14577,10 @@ msgstr ""
 "강력한 함선 인 Mephisto는 웅장한 에너지와 방어막 관리 능력을 갖추고 있으며, "
 "방어막 덕분에 많은 학대를 피할 수 있습니다. 이 배의 핵심은 강력한 함대조차도 "
 "짧은 시간에 슬래그로 줄일 수 있습니다."
+
+#, fuzzy
+msgid "Za'lek Mephisto Type V"
+msgstr "자레크의 메피스토"
 
 #, fuzzy
 msgid "You need at least 80% reputation with House Za'lek."
@@ -14715,6 +14599,9 @@ msgid ""
 "it very hard to get your hands on one."
 msgstr ""
 
+msgid "Za'lek Scout Drone"
+msgstr "Za'lek 정찰 드로"
+
 #, fuzzy
 msgid "Robotic Scout"
 msgstr "투리온의 불꽃"
@@ -14725,6 +14612,9 @@ msgid ""
 msgstr ""
 "이것은 Za'lek Scout Drone입니다. 전투 용이 아닌 정찰 용으로 제작되었습니다. "
 "플레이어가 비행해서는 안됩니다."
+
+msgid "Za'lek Sting"
+msgstr "자레크의 찌르기"
 
 #, fuzzy
 msgid ""
@@ -14737,6 +14627,10 @@ msgstr ""
 "Sting Corvette는 크기에 비해 다소 크지 만 고급 센서 제품군, 인상적인 무기로"
 "드 아웃 및 견고한 실드로 인해 House Za'lek 함대의 좋은 백본이됩니다."
 
+#, fuzzy
+msgid "Za'lek Sting Type II"
+msgstr "자레크의 찌르기"
+
 msgid ""
 "The Sting Type II reworks the shield systems of the original model. By "
 "rerouting the capacitor recharge loop in a positive feedback loop, "
@@ -14745,6 +14639,10 @@ msgid ""
 "ship that is surprisingly robust as long as shields are up, however, the "
 "moment they go down the hull tends to fail shortly after."
 msgstr ""
+
+#, fuzzy
+msgid "Za'lek Sting Type IV"
+msgstr "자레크의 찌르기"
 
 msgid ""
 "A lot of the popularity of the Za'lek Sting comes from the large amount of "
@@ -124118,6 +124016,10 @@ msgstr ""
 msgid "Tentacle Organ IV"
 msgstr ""
 
+#, fuzzy
+msgid "Corsair Engine"
+msgstr "핵심 시스템"
+
 msgid ""
 "there once was a big mighty corsair\n"
 "who was said to be the finest heir\n"
@@ -124125,6 +124027,10 @@ msgid ""
 "almost tied as a spouse\n"
 "before they quickly took to the air"
 msgstr ""
+
+#, fuzzy
+msgid "Corsair Hull Plating"
+msgstr "선체 수정"
 
 msgid ""
 "wish I be like that lovely corsair\n"
@@ -124134,12 +124040,19 @@ msgid ""
 "irresistible buccaneer stare"
 msgstr ""
 
+#, fuzzy
+msgid "Corsair Systems"
+msgstr "핵심 시스템"
+
 msgid ""
 "oh, the ferocious mighty corsair\n"
 "never sitting in their captain's chair\n"
 "least they puke out their grub\n"
 "all over the ship hub\n"
 "in space is it also mal de mer?"
+msgstr ""
+
+msgid "Neutralizer"
 msgstr ""
 
 msgid ""
@@ -124149,6 +124062,10 @@ msgid ""
 "improvements in nearly all facets. Due to the fact that few were made, it is "
 "a fairly rare find, but an import asset in a pilot's arsenal."
 msgstr ""
+
+#, fuzzy
+msgid "Reaver Cannon"
+msgstr "리퍼 캐논"
 
 msgid ""
 "The complex engineering specifications and difficulty of mass production "

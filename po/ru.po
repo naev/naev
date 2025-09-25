@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.12.0-beta.1\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-09-25 06:03-0400\n"
+"POT-Creation-Date: 2025-09-25 06:06-0400\n"
 "PO-Revision-Date: 2025-07-31 17:02+0000\n"
 "Last-Translator: Valeriy Sosnov <sigus@vivaldi.net>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/naev/naev/ru/>\n"
@@ -18,1713 +18,6 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Weblate 5.13-dev\n"
-
-msgid "Active Plating"
-msgstr ""
-
-msgid "<widget mainimg />"
-msgstr ""
-
-msgid "# <%= o:name() %>"
-msgstr ""
-
-msgid "<widget wgtdescription />"
-msgstr ""
-
-msgid "## Properties"
-msgstr ""
-
-msgid "<widget wgtsummary />"
-msgstr ""
-
-msgid "## Availability"
-msgstr ""
-
-msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
-msgstr ""
-
-msgid "<widget map />"
-msgstr ""
-
-msgid ""
-"You are not aware of anywhere where <%= o:name() %> are available for "
-"purchase."
-msgstr ""
-
-msgid "Adaptive Camouflage Plating"
-msgstr ""
-
-msgid "Adaptive Jump"
-msgstr "Адаптивный прыжок"
-
-#. Movement skill tree
-#. Only for up to destroyers
-#. Needs adrenal gland slot
-msgid "Adrenal Gland I"
-msgstr "Надпочечник I"
-
-msgid "Adrenal Gland II"
-msgstr "Надпочечник II"
-
-msgid "Adrenal Gland III"
-msgstr "Надпочечник III"
-
-msgid "Adrenaline Hormones"
-msgstr "Гормоны адреналина"
-
-msgid "Agility Combat AI"
-msgstr ""
-
-msgid "Air Freshener"
-msgstr "Освежитель воздуха"
-
-#, fuzzy
-msgid "Ambush Hunter I"
-msgstr "Охотник из засады"
-
-#, fuzzy
-msgid "Ambush Hunter II"
-msgstr "Охотник из засады"
-
-msgid "Antimatter Lance"
-msgstr ""
-
-msgid "Apollo's Gaze"
-msgstr ""
-
-msgid "Arc Blade"
-msgstr ""
-
-msgid "Arc Machete"
-msgstr ""
-
-msgid "Asteroid Scanner"
-msgstr ""
-
-msgid "Astral Cannon"
-msgstr ""
-
-msgid "Astral Flow Amplifier"
-msgstr ""
-
-#. Set outfit state
-#. Astral projection
-msgid "Astral Projection"
-msgstr "Астральная проекция"
-
-#, fuzzy
-msgid "Auxiliary Processing Unit I"
-msgstr "Вспомогательное процессорное устройство I"
-
-#, fuzzy
-msgid "Auxiliary Processing Unit II"
-msgstr "Вспомогательное процессорное устройство II"
-
-#, fuzzy
-msgid "Auxiliary Processing Unit III"
-msgstr "Вспомогательное процессорное устройство III"
-
-#, fuzzy
-msgid "Auxiliary Processing Unit IV"
-msgstr "Вспомогательное процессорное устройство IV"
-
-#, fuzzy
-msgid "Avatar of the Sirichana"
-msgstr "Аватар Сиричаны"
-
-#, fuzzy
-msgid "Bad Shape"
-msgstr "Твёрдый панцирь"
-
-msgid "Base Ripper MK2"
-msgstr ""
-
-msgid "Battery I"
-msgstr "Батарея I"
-
-msgid "Battery II"
-msgstr "Батарея II"
-
-msgid "Battery III"
-msgstr "Батарея III"
-
-msgid "Battery IV"
-msgstr "Батарея IV"
-
-msgid "Beat Up Large Engine"
-msgstr ""
-
-msgid "Beat Up Medium Engine"
-msgstr ""
-
-msgid "Beat Up Small Engine"
-msgstr ""
-
-msgid "Berserk Chip"
-msgstr ""
-
-msgid "Bikers Fury Launcher"
-msgstr ""
-
-msgid "Bio-Neural Combat AI"
-msgstr ""
-
-msgid "Biometal Armour"
-msgstr "Биометаллическая броня"
-
-msgid "Bioship Pheromone Emitter"
-msgstr ""
-
-msgid "Black Agate Finishing"
-msgstr ""
-
-msgid "Black Cat Doll"
-msgstr "Кукла чёрного кота"
-
-msgid "Blink Drive"
-msgstr ""
-
-msgid "Boarding Androids MK1"
-msgstr "Абордажные андроиды МК1"
-
-msgid "Boarding Androids MK2"
-msgstr "Абордажные андроиды МК2"
-
-msgid "Broken Nebular Shielding Prototype"
-msgstr "Сломанный прототип туманного экранирования"
-
-#. Health tree
-#. For everyone!
-#. Uses intrinsics only
-msgid "Bulky Abdomen"
-msgstr "Объёмный живот"
-
-#, fuzzy
-msgid "Cargo Damper"
-msgstr "Грузовые мешки"
-
-#. Misc tree
-#. For everyone!
-#. All intrinsics
-msgid "Cargo Sacs"
-msgstr "Грузовые мешки"
-
-msgid "Catalytic Energy Drill"
-msgstr ""
-
-msgid "Charge Conduit"
-msgstr ""
-
-msgid "Cleansing Flames"
-msgstr ""
-
-msgid "Cloaking Device"
-msgstr "Маскировочное устройство"
-
-msgid "Combat Hologram Projector"
-msgstr ""
-
-msgid "Commemorative Stein"
-msgstr "Памятная кружка"
-
-msgid "Compact Lightsail"
-msgstr ""
-
-#. Stealth skill tree
-#. For up to cruiser
-#. Uses intrinsics only
-msgid "Compound Eyes"
-msgstr "Составные глаза"
-
-msgid "Convulsion Launcher"
-msgstr ""
-
-#. Plasma tree
-#. For everyone!
-#. Requires plasma slot for tier 5
-msgid "Corrosion I"
-msgstr "Коррозия I"
-
-msgid "Corrosion II"
-msgstr "Коррозия II"
-
-msgid "Corsair Engine"
-msgstr ""
-
-msgid "Corsair Hull Plating"
-msgstr ""
-
-msgid "Corsair Systems"
-msgstr ""
-
-msgid "Crippling Plasma"
-msgstr "Разрушающая плазма"
-
-msgid "Cryogenic Repair Nanobots"
-msgstr ""
-
-msgid "Cyborg Feather"
-msgstr "Кибер-перо"
-
-msgid "Cyclic Combat AI"
-msgstr ""
-
-msgid "Daphne's Leap"
-msgstr ""
-
-#, fuzzy
-msgid "Defective"
-msgstr "Отражающая оболочка"
-
-msgid "Disruptor Artillery S1"
-msgstr ""
-
-msgid "Disruptor Artillery S2"
-msgstr ""
-
-msgid "Disruptor Battery S2"
-msgstr ""
-
-msgid "Droid Repair Crew"
-msgstr ""
-
-msgid "Drone Bay"
-msgstr ""
-
-msgid "Dummy Engine"
-msgstr ""
-
-msgid "Dummy Plating"
-msgstr ""
-
-msgid "Dummy Systems"
-msgstr ""
-
-msgid "Dvaered Flare Battery"
-msgstr ""
-
-msgid "Efficiency Combat AI"
-msgstr ""
-
-msgid "Electron Burst Cannon"
-msgstr ""
-
-msgid "Emergency Shield Booster"
-msgstr "Экстренный усилитель щита"
-
-msgid "Emergency Stasis Inducer"
-msgstr ""
-
-msgid "EMP Grenade Launcher"
-msgstr ""
-
-msgid "Empire Lancelot Bay"
-msgstr ""
-
-msgid "Energy Harpoon"
-msgstr ""
-
-msgid "Engine Reroute"
-msgstr ""
-
-msgid "Enhanced Smell"
-msgstr "Улучшенное обоняние"
-
-msgid "Enygma Systems Huntsman Launcher"
-msgstr ""
-
-msgid "Enygma Systems Spearhead Launcher"
-msgstr ""
-
-msgid "Enygma Systems Turreted Fury Launcher"
-msgstr ""
-
-msgid "Enygma Systems Turreted Headhunter Launcher"
-msgstr ""
-
-msgid "Escape Pod"
-msgstr ""
-
-msgid "Executor Shield Aura"
-msgstr ""
-
-msgid "Fake Transponder"
-msgstr ""
-
-msgid "Fancy Key Chain"
-msgstr "Модная цепочка для ключей"
-
-msgid "Faraday Tempest Coating"
-msgstr ""
-
-msgid "Feather Drive"
-msgstr "Перьевой привод"
-
-#. Attack tree
-#. For everyone!
-#. Uses feral rage slot (only for ships that get tier 5)
-msgid "Feral Rage I"
-msgstr "Дикая ярость"
-
-msgid "Feral Rage II"
-msgstr "Дикая ярость II"
-
-msgid "Feral Rage III"
-msgstr "Дикая ярость III"
-
-msgid "Flak Gun"
-msgstr ""
-
-msgid "Flicker Drive"
-msgstr ""
-
-msgid "Four Winds Laser Cannon"
-msgstr ""
-
-msgid "Four Winds Ragnarok Beam"
-msgstr ""
-
-msgid "Fuel Bladder"
-msgstr "Топливный мочевой пузырь"
-
-msgid "Fuel Recycler"
-msgstr ""
-
-msgid "Fuelshell Plating"
-msgstr ""
-
-msgid "Fuzzy Dice"
-msgstr "Пушистые игральные кубики"
-
-msgid "Gauntlet Deluxe"
-msgstr ""
-
-msgid "Gauntlet Supreme"
-msgstr ""
-
-msgid "Gauss Gun"
-msgstr ""
-
-msgid "Goatee Marker"
-msgstr "Маркер для бородки"
-
-msgid "Grave Beam"
-msgstr ""
-
-msgid "Grave Lance"
-msgstr ""
-
-msgid "Greater Astral Cannon"
-msgstr ""
-
-msgid "Guardian Interception System"
-msgstr ""
-
-msgid "Guardian Overseer System"
-msgstr ""
-
-msgid "GUI - Brushed"
-msgstr ""
-
-msgid "GUI - Legacy"
-msgstr ""
-
-msgid "GUI - Slim"
-msgstr ""
-
-msgid "GUI - Slimv2"
-msgstr ""
-
-msgid "Hades Torch"
-msgstr ""
-
-msgid "Handbook for Dvaered Good Manners"
-msgstr "Пособие по хорошим манерам для Дваред"
-
-msgid "Hard Shell"
-msgstr "Твёрдый панцирь"
-
-msgid "Heavy Ion Cannon"
-msgstr ""
-
-msgid "Heavy Ion Turret"
-msgstr "Тяжёлая ионная турель"
-
-msgid "Heavy Laser Turret"
-msgstr "Тяжёлая лазерная турель"
-
-msgid "Heavy Neutron Disruptor"
-msgstr ""
-
-msgid "Heavy Ripper Cannon"
-msgstr ""
-
-msgid "Heavy Ripper Turret"
-msgstr ""
-
-msgid "Hellburner"
-msgstr ""
-
-msgid "Hidden Jump Scanner"
-msgstr ""
-
-msgid "Hive Combat AI"
-msgstr ""
-
-msgid "Homebrew Processing Unit"
-msgstr ""
-
-msgid "House of Mirrors"
-msgstr ""
-
-msgid "Hunter's Instinct"
-msgstr "Охотничий инстинкт"
-
-msgid "Hunting Combat AI"
-msgstr ""
-
-msgid "Hyena Bay"
-msgstr ""
-
-msgid "Hyena Dock"
-msgstr ""
-
-msgid "Hyperbolic Blink Engine"
-msgstr ""
-
-msgid "Hyperdrive Retool"
-msgstr ""
-
-msgid "Improved Stabilizer"
-msgstr "Улучшенный стабилизатор"
-
-msgid "Internal Flow Amplifier"
-msgstr ""
-
-msgid "Ion Cannon"
-msgstr ""
-
-msgid "Jack's Eyepatch"
-msgstr ""
-
-msgid "Jump Scanner"
-msgstr ""
-
-msgid "Krain Nanotubes Foam Padding"
-msgstr ""
-
-msgid "Krain Patagium Twin Engine"
-msgstr ""
-
-msgid "Krain Remige Engine"
-msgstr ""
-
-msgid "Kratos' Glove"
-msgstr ""
-
-msgid "Lancelot Bay"
-msgstr ""
-
-msgid "Large Cargo Pod"
-msgstr "Большой грузовой контейнер"
-
-msgid "Large Flow Amplifier"
-msgstr "Большой усилитель потока"
-
-msgid "Large Flow Resonator"
-msgstr "Большой резонатор потока"
-
-msgid "Large Fuel Pod"
-msgstr "Большой топливный бак"
-
-msgid "Large Meditation Chamber"
-msgstr "Большой отсек для медитаций"
-
-msgid "Large Shield Booster"
-msgstr "Большой усилитель щита"
-
-msgid "Laser Cannon MK1"
-msgstr "Лазерная пушка МК1"
-
-msgid "Laser Cannon MK2"
-msgstr "Лазерная пушка МК2"
-
-msgid "Laser Turret MK1"
-msgstr "Лазерная турель МК1"
-
-msgid "Laser Turret MK2"
-msgstr "Лазерная турель МК2"
-
-msgid "Lattice Thermal Coating"
-msgstr ""
-
-msgid "Left Boot"
-msgstr "Левый ботинок"
-
-msgid "Lesser Astral Cannon"
-msgstr ""
-
-msgid "Local System Map"
-msgstr "Карта местной системы"
-
-msgid "Love Letter"
-msgstr "Любовное письмо"
-
-msgid "Low Radiation Sensor Modulator"
-msgstr ""
-
-msgid "Luxury Furnishings"
-msgstr ""
-
-msgid "Machiavellian Fortune"
-msgstr ""
-
-msgid "Machiavellian Necessity"
-msgstr ""
-
-msgid "Machiavellian Virtue"
-msgstr ""
-
-msgid "Map: Collective Space"
-msgstr "Карта: Пространство Коллектива"
-
-msgid "Map: Dvaered Core"
-msgstr "Карта: Центральные системы Двареда"
-
-msgid "Map: Empire-Soromid Trade Route"
-msgstr "Карта: Имперско-Соромидский торговый путь"
-
-msgid "Map: Empire Core"
-msgstr "Карта: Центральные системы Империи"
-
-msgid "Map: FLF-Pirate Route"
-msgstr ""
-
-msgid "Map: FLF Hidden Jumps"
-msgstr ""
-
-msgid "Map: Inner Nebula Secret Jump"
-msgstr ""
-
-msgid "Map: Kretogg's Hypergate"
-msgstr ""
-
-msgid "Map: Kretogg's Secrets"
-msgstr ""
-
-msgid "Map: Nebula Edge"
-msgstr "Карта: окраина Туманности"
-
-msgid "Map: New Haven's Secrets"
-msgstr ""
-
-msgid "Map: Pirate Strongholds"
-msgstr ""
-
-msgid "Map: Qorel Tunnel"
-msgstr ""
-
-msgid "Map: Sirian Border Systems"
-msgstr "Карта: Пограничные системы Сириуса"
-
-msgid "Map: Sirius Core"
-msgstr "Карта: Центральные системы Сириуса"
-
-msgid "Map: Sol"
-msgstr "Карта: Сол"
-
-msgid "Map: The Frontier"
-msgstr "Карта: Фронтир"
-
-msgid "Map: Thurion Core"
-msgstr ""
-
-msgid "Map: Za'lek Core"
-msgstr "Карта: Центральные системы За'лек"
-
-msgid "Mass Driver"
-msgstr ""
-
-msgid "Medium Cargo Pod"
-msgstr "Средний грузовой контейнер"
-
-msgid "Medium Flow Amplifier"
-msgstr "Средний усилитель потока"
-
-msgid "Medium Flow Resonator"
-msgstr "Средний резонатор потока"
-
-msgid "Medium Fuel Pod"
-msgstr "Средний топливный бак"
-
-msgid "Medium Meditation Chamber"
-msgstr "Средний отсек для медитаций"
-
-msgid "Medium Shield Booster"
-msgstr "Средний усилитель щита"
-
-msgid "Melendez Buffalo Engine"
-msgstr ""
-
-msgid "Melendez Mammoth Engine"
-msgstr ""
-
-msgid "Melendez Ox Engine"
-msgstr ""
-
-msgid "Microbond Plating"
-msgstr ""
-
-msgid "Milspec Aegis 2201 Core System"
-msgstr ""
-
-msgid "Milspec Aegis 4701 Core System"
-msgstr ""
-
-msgid "Milspec Aegis 8501 Core System"
-msgstr ""
-
-msgid "Milspec Impacto-Plastic Coating"
-msgstr ""
-
-msgid "Milspec Jammer"
-msgstr ""
-
-msgid "Milspec Orion 2301 Core System"
-msgstr ""
-
-msgid "Milspec Orion 4801 Core System"
-msgstr ""
-
-msgid "Milspec Orion 8601 Core System"
-msgstr ""
-
-msgid "Milspec Prometheus 2203 Core System"
-msgstr ""
-
-msgid "Milspec Prometheus 4703 Core System"
-msgstr ""
-
-msgid "Milspec Prometheus 8503 Core System"
-msgstr ""
-
-msgid "Milspec Scrambler"
-msgstr ""
-
-msgid "Milspec Thalos 2202 Core System"
-msgstr ""
-
-msgid "Milspec Thalos 4702 Core System"
-msgstr ""
-
-msgid "Milspec Thalos 8502 Core System"
-msgstr ""
-
-msgid "Mining Lance MK1"
-msgstr ""
-
-msgid "Mining Lance MK2"
-msgstr ""
-
-#, fuzzy
-msgid "Mystery Outfit"
-msgstr "# Оборудование"
-
-msgid "Nanobond Plating"
-msgstr ""
-
-msgid "Nanofiber Structural Enhancement"
-msgstr ""
-
-msgid "Natural Healing I"
-msgstr "Естественное заживление I"
-
-msgid "Natural Healing II"
-msgstr "Естественное заживление II"
-
-msgid "Nebula Resistant Coating"
-msgstr ""
-
-msgid "Nebular Shielding Prototype"
-msgstr ""
-
-msgid "Neural Accelerator Interface"
-msgstr ""
-
-msgid "Neutralizer"
-msgstr ""
-
-msgid "Neutron Disruptor"
-msgstr ""
-
-msgid "Nexus Arrow 700 Engine"
-msgstr ""
-
-msgid "Nexus Bolt 3000 Engine"
-msgstr ""
-
-msgid "Nexus Concealment Coating"
-msgstr ""
-
-msgid "Nexus Dart 160 Engine"
-msgstr ""
-
-msgid "Nexus Drill Lance"
-msgstr ""
-
-msgid "Nexus Ghost Weave"
-msgstr ""
-
-msgid "Nexus Phantasm Weave"
-msgstr ""
-
-#, fuzzy
-msgid "Nexus Shadow Weave"
-msgstr "Верфи Нексус"
-
-msgid "Orion Beam"
-msgstr ""
-
-msgid "Orion Lance"
-msgstr ""
-
-msgid "Paralyzing Plasma"
-msgstr "Парализующая плазма"
-
-msgid "Particle Beam"
-msgstr ""
-
-msgid "Particle Lance"
-msgstr ""
-
-msgid "Patchwork Heavy Plating"
-msgstr ""
-
-msgid "Patchwork Light Plating"
-msgstr ""
-
-msgid "Patchwork Medium Plating"
-msgstr ""
-
-msgid "Pentagram of Valor"
-msgstr "Пентаграмма доблести"
-
-msgid "Photo-Voltaic Nanobot Coating"
-msgstr ""
-
-msgid "Pilot Doll"
-msgstr "Кукла-пилот"
-
-msgid "Pincushion Battery"
-msgstr ""
-
-msgid "Pinpoint Combat AI"
-msgstr ""
-
-msgid "Pipeline Conduit"
-msgstr ""
-
-msgid "Pirate Hyena Bay"
-msgstr ""
-
-msgid "Pirate Hyena Dock"
-msgstr ""
-
-msgid "Plasma Blaster MK1"
-msgstr ""
-
-msgid "Plasma Blaster MK2"
-msgstr ""
-
-msgid "Plasma Burst"
-msgstr "Плазменный взрыв"
-
-msgid "Plasma Cannon"
-msgstr ""
-
-msgid "Plasma Cluster Cannon"
-msgstr ""
-
-#, fuzzy
-msgid "Plasma Eruptor"
-msgstr "Плазменный ожог"
-
-msgid "Plasma Turret MK1"
-msgstr "Плазменная турель МК1"
-
-msgid "Plasma Turret MK2"
-msgstr "Плазменная турель МК2"
-
-msgid "Plasteel Plating"
-msgstr ""
-
-msgid "Port & Polish"
-msgstr ""
-
-msgid "Previous Generation Large Systems"
-msgstr ""
-
-msgid "Previous Generation Medium Systems"
-msgstr ""
-
-msgid "Previous Generation Small Systems"
-msgstr ""
-
-msgid "Proteron Dalton Bay"
-msgstr ""
-
-msgid "Proteron Dalton Dock"
-msgstr ""
-
-msgid "Prototype Systems T-IVa 'Quickshell'"
-msgstr ""
-
-msgid "Pulse Scanner"
-msgstr ""
-
-#, fuzzy
-msgid "Racing Trophy (Bronze)"
-msgstr "Гоночный трофей"
-
-#, fuzzy
-msgid "Racing Trophy (Gold)"
-msgstr "Гоночный трофей"
-
-#, fuzzy
-msgid "Racing Trophy (Silver)"
-msgstr "Гоночный трофей"
-
-msgid "Rackham's Razor"
-msgstr "Бритва Рэкхема"
-
-msgid "Ragnarok Beam"
-msgstr ""
-
-msgid "Railgun"
-msgstr ""
-
-msgid "Railgun Turret"
-msgstr ""
-
-msgid "Razor Artillery S1"
-msgstr ""
-
-msgid "Razor Artillery S2"
-msgstr ""
-
-msgid "Razor Artillery S3"
-msgstr ""
-
-msgid "Razor Battery S2"
-msgstr ""
-
-msgid "Reactor Class I"
-msgstr "Реактор I класса"
-
-msgid "Reactor Class II"
-msgstr "Реактор II класса"
-
-msgid "Reactor Class III"
-msgstr "Реактор III класса"
-
-msgid "Reality Rip"
-msgstr ""
-
-#, fuzzy
-msgid "Reaver Cannon"
-msgstr "Лазерная пушка МК1"
-
-msgid "Reconstructive Nanobot Coating"
-msgstr ""
-
-msgid "Reflective Shell"
-msgstr "Отражающая оболочка"
-
-msgid "Repeating Banshee Launcher"
-msgstr ""
-
-msgid "Repeating Railgun"
-msgstr ""
-
-msgid "Ripper Cannon"
-msgstr ""
-
-msgid "Red Star Large Cargo Hull"
-msgstr ""
-
-msgid "Red Star Medium Cargo Hull"
-msgstr ""
-
-msgid "Red Star Small Cargo Hull"
-msgstr ""
-
-msgid "Sandwich Holder"
-msgstr "Держатель для сэндвичей"
-
-msgid "Satellite Mock-up"
-msgstr "Макет спутника"
-
-msgid "Scanning Combat AI"
-msgstr ""
-
-msgid "Seeking Chakra"
-msgstr ""
-
-msgid "Seeking Chakra Large"
-msgstr ""
-
-msgid "Seeking Chakra Medium"
-msgstr ""
-
-msgid "Seeking Chakra Small"
-msgstr ""
-
-msgid "Sensor Array"
-msgstr ""
-
-msgid "Shatterer Launcher"
-msgstr ""
-
-msgid "Shield Capacitor I"
-msgstr ""
-
-msgid "Shield Capacitor II"
-msgstr ""
-
-msgid "Shield Capacitor III"
-msgstr ""
-
-msgid "Shield Capacitor IV"
-msgstr ""
-
-msgid "Shredder"
-msgstr ""
-
-msgid "Silence"
-msgstr "Тишина"
-
-msgid "Sirius Fidelity Bay"
-msgstr ""
-
-msgid "Sirius Shaman Bay"
-msgstr ""
-
-msgid "S&K Battle Plating"
-msgstr ""
-
-msgid "S&K Heavy Plasma Drill"
-msgstr ""
-
-msgid "S&K Large Cargo Hull"
-msgstr ""
-
-msgid "S&K Medium Cargo Hull"
-msgstr ""
-
-msgid "S&K Plasma Drill"
-msgstr ""
-
-msgid "S&K Skirmish Plating"
-msgstr ""
-
-msgid "S&K Small Cargo Hull"
-msgstr ""
-
-msgid "S&K War Plating"
-msgstr ""
-
-msgid "Small Cargo Pod"
-msgstr "Малый грузовой контейнер"
-
-msgid "Small Flow Amplifier"
-msgstr "Малый усилитель потока"
-
-msgid "Small Flow Resonator"
-msgstr "Малый резонатор потока"
-
-msgid "Small Fuel Pod"
-msgstr "Малый топливный бак"
-
-msgid "Small Meditation Chamber"
-msgstr "Малый отсек для медитаций"
-
-msgid "Small Shield Booster"
-msgstr "Малый усилитель щита"
-
-msgid "Soromid Brigand Bay"
-msgstr ""
-
-msgid "Space Mine Layer"
-msgstr ""
-
-msgid "Spittle Tubuloid Cluster"
-msgstr ""
-
-msgid "Squadron Synchronizer Module"
-msgstr ""
-
-msgid "Star of Valor"
-msgstr "Звезда доблести"
-
-msgid "Stealth Burster"
-msgstr ""
-
-msgid "Super-Fast Collider Launcher"
-msgstr ""
-
-#. get the drink
-msgid "Swamp Bombing"
-msgstr "Бомбардировка болот"
-
-msgid "Targeting Array"
-msgstr ""
-
-msgid "Targeting Conduit"
-msgstr ""
-
-msgid "TeraCom Banshee Launcher"
-msgstr ""
-
-msgid "TeraCom Fury Launcher"
-msgstr ""
-
-msgid "TeraCom Headhunter Launcher"
-msgstr ""
-
-msgid "TeraCom Imperator Launcher"
-msgstr ""
-
-msgid "TeraCom Mace Launcher"
-msgstr ""
-
-msgid "TeraCom Medusa Launcher"
-msgstr ""
-
-msgid "TeraCom Vengeance Launcher"
-msgstr ""
-
-msgid "The Bite - Blood Lust"
-msgstr "Укус - Жажда крови"
-
-#, fuzzy
-msgid "The Bite - Cannibal"
-msgstr "Укус - Жажда крови"
-
-msgid "The Bite - Improved"
-msgstr "Укус - Улучшенный"
-
-msgid "The Bite"
-msgstr "Укус"
-
-#, fuzzy
-msgid "Bioship Thorn"
-msgstr "Орган биокорабля"
-
-msgid "Thurion Perspicacity Bay"
-msgstr ""
-
-msgid "Thurion Perspicacity Dock"
-msgstr ""
-
-#, fuzzy
-msgid "Thurion Scintillation Bay"
-msgstr "Турионское Мерцание"
-
-msgid "Toy Drone"
-msgstr "Игрушечный беспилотник"
-
-msgid "Tracking Antennae"
-msgstr "Следящие антенны"
-
-msgid "Trading Card (Common)"
-msgstr "Коллекционная карточка (обычная)"
-
-msgid "Trading Card (Rare)"
-msgstr "Коллекционная карточка (редкая)"
-
-msgid "Trading Card (Uncommon)"
-msgstr "Коллекционная карточка (необычная)"
-
-#. Create the lootable entry
-#, fuzzy
-msgid "Treasure Map"
-msgstr "Звездная карта"
-
-msgid "Tricon Cyclone Engine"
-msgstr ""
-
-msgid "Tricon Typhoon Engine"
-msgstr ""
-
-msgid "Tricon Zephyr Engine"
-msgstr ""
-
-msgid "Tunnelling Organ"
-msgstr "Туннельный орган"
-
-msgid "Turbolaser"
-msgstr "Турболазер"
-
-msgid "Turreted Convulsion Launcher"
-msgstr ""
-
-msgid "Turreted Gauss Gun"
-msgstr ""
-
-msgid "Turreted Vulcan Gun"
-msgstr ""
-
-msgid "Ugly Statue"
-msgstr "Уродливая статуэтка"
-
-msgid "Ultra Map"
-msgstr "Ультра-карта"
-
-msgid "Unicorp Caesar IV Launcher"
-msgstr ""
-
-msgid "Unicorp D-23 Medium Plating"
-msgstr ""
-
-msgid "Unicorp D-2 Light Plating"
-msgstr ""
-
-msgid "Unicorp D-58 Heavy Plating"
-msgstr ""
-
-msgid "Unicorp Eagle 3000 Engine"
-msgstr ""
-
-msgid "Unicorp Falcon 700 Engine"
-msgstr ""
-
-msgid "Unicorp Hawk 160 Engine"
-msgstr ""
-
-msgid "Unicorp Jammer"
-msgstr ""
-
-msgid "Unicorp Light Afterburner"
-msgstr ""
-
-msgid "Unicorp Medium Afterburner"
-msgstr ""
-
-msgid "Unicorp PT-16 Core System"
-msgstr ""
-
-msgid "Unicorp PT-200 Core System"
-msgstr ""
-
-msgid "Unicorp PT-440 Core System"
-msgstr ""
-
-msgid "Unicorp Scrambler"
-msgstr ""
-
-msgid "Unicorp Storm Launcher"
-msgstr ""
-
-msgid "Vacuum Cleaner?"
-msgstr "Пылесос?"
-
-msgid "Valkyrie Beam"
-msgstr ""
-
-msgid "Veil of Penelope"
-msgstr ""
-
-msgid "Vulcan Gun"
-msgstr ""
-
-msgid "Wanderer"
-msgstr ""
-
-msgid "Weakness Harmonizer AI"
-msgstr ""
-
-msgid "Weapons Ionizer"
-msgstr "Ионизатор оружия"
-
-msgid "Wild Space Taint"
-msgstr ""
-
-msgid "Worn Down"
-msgstr ""
-
-msgid "Za'lek Bomber Drone Bay"
-msgstr ""
-
-msgid "Za'lek Bomber Drone Mini Bay"
-msgstr ""
-
-msgid "Za'lek Heavy Drone Bay"
-msgstr ""
-
-msgid "Za'lek Heavy Drone Mini Bay"
-msgstr ""
-
-msgid "Za'lek Hunter Launcher"
-msgstr ""
-
-msgid "Za'lek Light Drone Bay"
-msgstr ""
-
-msgid "Za'lek Light Drone Mini Bay"
-msgstr ""
-
-msgid "Za'lek Reaper Launcher"
-msgstr ""
-
-msgid "Za'lek Test Engine"
-msgstr "Экспериментальный двигатель За'лек"
-
-msgid "ZD-5 Guardian Unit"
-msgstr "ZD-5 Охранный юнит"
-
-msgid "ZIBS-16"
-msgstr ""
-
-msgid "ZIBS-32"
-msgstr ""
-
-msgid "Admonisher"
-msgstr "Увещеватель"
-
-msgid "<widget rightstats />"
-msgstr ""
-
-msgid "# <%= s:name() %>"
-msgstr ""
-
-msgid "* **[Class](ships/classes)**:   <%= _(s:classDisplay()) %>"
-msgstr ""
-
-msgid "* **Fabricator**:   <%= _(s:fabricator()) %>"
-msgstr ""
-
-msgid "* **[Crew](mechanics/boarding)**:   <%= fmt.number(s:crew()) %>"
-msgstr ""
-
-msgid ""
-"* **[Fleet Capacity](mechanics/playerfleet)**:   <%= fmt.number(s:points()) "
-"%>"
-msgstr ""
-
-msgid ""
-"* **[Mass](mechanics/movement)**:   <%= fmt.f(_(\"{mass} {unit}\"), "
-"{mass=fmt.number(s:mass()),unit=naev.unit('mass')}) %>"
-msgstr ""
-
-msgid ""
-"* **[Base Armour](mechanics/damage)**:   <%= fmt.f(_(\"{armour} {unit}\"), "
-"{armour=fmt.number(s:armour()), unit=naev.unit('energy')}) %>"
-msgstr ""
-
-msgid ""
-"* **[Cargo Space](mechanics/cargo)**:   <%= fmt.f(_(\"{cargo} {unit}\"), "
-"{cargo=fmt.number(s:cargo()), unit=naev.unit('mass')})%>"
-msgstr ""
-
-msgid ""
-"* **[Fuel Consumption](mechanics/hyperspace)**:   <%= fmt.f(_(\"{fuel} {unit}"
-"\"), {fuel=fmt.number(s:fuelConsumption()), unit=naev.unit('unit')})%>"
-msgstr ""
-
-msgid "* **[Price](mechanics/credits)**:   <%= fmt.credits(s:price()) %>"
-msgstr ""
-
-msgid "* **License**:   <%= _(s:license()) %>"
-msgstr ""
-
-msgid "Places where the <%= s:name() %> is sold are shown in #ggreen#0."
-msgstr ""
-
-msgid ""
-"You are not aware of anywhere where the <%= s:name() %> is available for "
-"purchase."
-msgstr ""
-
-msgid "Admonisher ΩIIa"
-msgstr "Увещеватель ΩIIa"
-
-msgid "Ancestor"
-msgstr "Предок"
-
-msgid "Ancestor HG Eagle-Eye"
-msgstr "Предок ДГ Орлиный Глаз"
-
-msgid "Astral Projection Greater"
-msgstr ""
-
-msgid "Astral Projection Lesser"
-msgstr ""
-
-msgid "Astral Projection Normal"
-msgstr ""
-
-msgid "Bedivere"
-msgstr "Бедивер"
-
-msgid "Dealbreaker"
-msgstr "Дилбрейкер"
-
-msgid "Drone"
-msgstr "Дрон"
-
-msgid "Drone Carrier"
-msgstr "Дрон-авианосец"
-
-msgid "Drone (Hyena)"
-msgstr ""
-
-msgid "Dvaered Ancestor"
-msgstr "Дваредский Предок"
-
-msgid "Dvaered Arsenal"
-msgstr "Дваредский Арсенал"
-
-msgid "Dvaered Goddard"
-msgstr "Дваредский Годдард"
-
-msgid "Dvaered Phalanx"
-msgstr "Дваредская Фаланга"
-
-msgid "Dvaered Retribution"
-msgstr "Дваредское Возмездие"
-
-msgid "Dvaered Vendetta"
-msgstr "Дваредская Вендетта"
-
-msgid "Dvaered Vigilance"
-msgstr "Дваредская Бдительность"
-
-msgid "Empire Admonisher"
-msgstr "Имперский Увещеватель"
-
-#, fuzzy
-msgid "Empire Admonisher Longbow"
-msgstr "Имперский Увещеватель"
-
-msgid "Empire Hawking"
-msgstr "Имперский Хокинг"
-
-msgid "Empire Lancelot"
-msgstr "Имперский Ланселот"
-
-msgid "Empire Lancelot Golden Efreeti"
-msgstr "Имперский Ланселот Золотой Ифрит"
-
-msgid "Empire Pacifier"
-msgstr "Имперский Умиротворитель"
-
-#, fuzzy
-msgid "Empire Pacifier Hoplite"
-msgstr "Имперский Умиротворитель"
-
-msgid "Empire Peacemaker"
-msgstr "Имперский Миротворец"
-
-msgid "Empire Rainmaker"
-msgstr "Имперский Рейнмейкер"
-
-msgid "Empire Shark"
-msgstr "Имперская Акула"
-
-msgid "Fort Raelid"
-msgstr ""
-
-msgid "Fort Raglan"
-msgstr ""
-
-msgid "Gawain"
-msgstr "Гавейн"
-
-msgid "Gawain XY-37"
-msgstr "Гавейн XY-37"
-
-msgid "Goddard"
-msgstr "Годдард"
-
-msgid "Goddard Merchantman"
-msgstr "Годдард Торговец"
-
-msgid "Hawking"
-msgstr "Хокинг"
-
-msgid "Heavy Drone"
-msgstr "Тяжёлый дрон"
-
-msgid "Hyena"
-msgstr "Гиена"
-
-msgid "Kauweke"
-msgstr ""
-
-msgid "Kestrel"
-msgstr "Пустельга"
-
-msgid "Kestrel Sigma"
-msgstr "Пустельга Сигма"
-
-msgid "Koala"
-msgstr "Коала"
-
-msgid "Koala Armoured"
-msgstr "Бронированная Коала"
-
-msgid "Lancelot"
-msgstr "Ланселот"
-
-msgid "Llama"
-msgstr "Лама"
-
-msgid "Llama Voyager"
-msgstr "Лама Вояджер"
-
-msgid "Mule"
-msgstr "Мул"
-
-msgid "Mule Hardhat"
-msgstr "Мул Шахтёр"
-
-msgid "Nohinohi"
-msgstr ""
-
-msgid "One-Wing Goddard"
-msgstr ""
-
-msgid "Pacifier"
-msgstr "Умиротворитель"
-
-msgid "Phalanx"
-msgstr "Фаланга"
-
-msgid "Pirate Admonisher"
-msgstr "Пиратский Увещеватель"
-
-msgid "Pirate Ancestor"
-msgstr "Пиратский Предок"
-
-#, fuzzy
-msgid "Pirate Bedivere"
-msgstr "Бедивер"
-
-msgid "Pirate Blue Shark"
-msgstr "Пиратская Голубая Акула"
-
-msgid "Pirate Hyena"
-msgstr "Пиратская Гиена"
-
-msgid "Pirate Kestrel"
-msgstr "Пиратская Пустельга"
-
-msgid "Pirate Kestrel Yuri's Kiss"
-msgstr "Пиратская Пустельга Поцелуй Юри"
-
-msgid "Pirate Phalanx"
-msgstr "Пиратская Фаланга"
-
-msgid "Pirate Revenant"
-msgstr "Пиратский Призрак"
-
-msgid "Pirate Rhino"
-msgstr "Пиратский Носорог"
-
-msgid "Pirate Shark"
-msgstr "Пиратская Акула"
-
-msgid "Pirate Starbridge"
-msgstr "Пиратский Звёздный мост"
-
-msgid "Pirate Vendetta"
-msgstr "Пиратская Вендетта"
-
-msgid "Pirate Zebra"
-msgstr "Пиратская Зебра"
-
-msgid "Plowshare"
-msgstr "Лемех"
-
-msgid "Proteron Archimedes"
-msgstr "Протеронский Архимед"
-
-msgid "Proteron Dalton"
-msgstr "Протеронский Дальтон"
-
-msgid "Proteron Euler"
-msgstr "Протеронский Эйлер"
-
-msgid "Proteron Gauss"
-msgstr "Протеронский Гаусс"
-
-msgid "Proteron Hippocrates"
-msgstr "Протеронский Гиппократ"
-
-msgid "Proteron Pythagoras"
-msgstr "Протеронский Пифагор"
-
-msgid "Proteron Watson"
-msgstr "Протеронский Уотсон"
-
-msgid "Psychic Orb"
-msgstr ""
-
-msgid "Quicksilver"
-msgstr "Ртуть"
-
-msgid "Quicksilver Mercury"
-msgstr "Ртуть Меркьюри"
-
-msgid "Rhino"
-msgstr "Носорог"
-
-msgid "Schroedinger"
-msgstr "Шрёдингер"
-
-msgid "Shark"
-msgstr "Акула"
-
-msgid "Shark ΨIIIa"
-msgstr "Акула ΨIIIa"
-
-msgid "Sindbad"
-msgstr ""
-
-msgid "Sirius Divinity"
-msgstr "Божественность Сириуса"
-
-msgid "Sirius Dogma"
-msgstr "Догма Сириуса"
-
-msgid "Sirius Fidelity"
-msgstr "Верность Сириуса"
-
-msgid "Sirius Preacher"
-msgstr "Проповедник Сириуса"
-
-msgid "Sirius Providence"
-msgstr "Провидение Сириуса"
-
-msgid "Sirius Shaman"
-msgstr "Шаман Сириуса"
-
-msgid "Soromid Arx"
-msgstr "Соромидский Аркс"
-
-msgid "Soromid Brigand"
-msgstr "Соромидский Бриганд"
-
-msgid "Soromid Copia"
-msgstr "Соромидская Копия"
-
-msgid "Soromid Ira"
-msgstr "Соромидский Айра"
-
-msgid "Soromid Marauder"
-msgstr "Соромидский Мародёр"
-
-msgid "Soromid Nyx"
-msgstr "Соромидский Никс"
-
-msgid "Soromid Odium"
-msgstr "Соромидский Одиум"
-
-msgid "Soromid Reaver"
-msgstr "Соромидский Ривер"
-
-msgid "Soromid Vox"
-msgstr "Соромидский Вокс"
-
-msgid "Starbridge"
-msgstr "Звёздный мост"
-
-msgid "Starbridge Sigma"
-msgstr "Звёздный мост Сигма"
-
-msgid "Taitamariki"
-msgstr ""
-
-msgid "Thurion Apprehension"
-msgstr "Турионская Настороженность"
-
-msgid "Thurion Certitude"
-msgstr "УверенностьТуриона"
-
-msgid "Thurion Ingenuity"
-msgstr "Изобретательность Туриона"
-
-msgid "Thurion Perspicacity"
-msgstr "Турионская Проницательность"
-
-msgid "Thurion Perspicacity Beta"
-msgstr "Турионская Проницательность Бета"
-
-msgid "Thurion Scintillation"
-msgstr "Турионское Мерцание"
-
-msgid "Thurion Taciturnity"
-msgstr "Молчаливость Туриона"
-
-msgid "Thurion Virtuosity"
-msgstr "Виртуозность Туриона"
-
-msgid "Tristan"
-msgstr "Тристан"
-
-msgid "Vendetta"
-msgstr "Вендетта"
-
-msgid "Vendetta Whiplash"
-msgstr "Хлыст Вендетты"
-
-msgid "Vigilance"
-msgstr "Бдительность"
-
-msgid "Za'lek Bomber Drone"
-msgstr ""
-
-msgid "Za'lek Demon"
-msgstr "Демон За'лек"
-
-msgid "Za'lek Demon Type IV"
-msgstr "Демон За'лек Тип IV"
-
-msgid "Za'lek Diablo"
-msgstr "Диабло За'лек"
-
-msgid "Za'lek Heavy Drone"
-msgstr ""
-
-msgid "Za'lek Hephaestus"
-msgstr "Гефест За'лек"
-
-msgid "Za'lek Light Drone"
-msgstr ""
-
-msgid "Za'lek Mammon"
-msgstr "Мамона За'лек"
-
-msgid "Za'lek Mephisto"
-msgstr "Мефисто За'лек"
-
-msgid "Za'lek Mephisto Type V"
-msgstr "Мефисто За'лек Тип V"
-
-msgid "Za'lek Scout Drone"
-msgstr ""
-
-msgid "Za'lek Sting"
-msgstr "Жало За'лек"
-
-msgid "Za'lek Sting Type II"
-msgstr "Жало За'лек тип II"
-
-msgid "Za'lek Sting Type IV"
-msgstr "Жало За'лек тип IV"
-
-msgid "Zebra"
-msgstr "Зебра"
 
 msgid "Main"
 msgstr "Главная"
@@ -11447,8 +9740,16 @@ msgid ""
 msgstr ""
 "Значительно снижает сложность игры, позволяя сосредоточиться на сюжете."
 
+#, fuzzy
+msgid "Ambush Hunter I"
+msgstr "Охотник из засады"
+
 msgid "The ship has caught other ships by surprise!"
 msgstr "Этот корабль застаёт другие корабли врасплох!"
+
+#, fuzzy
+msgid "Ambush Hunter II"
+msgstr "Охотник из засады"
 
 msgid "Antimatter Taint"
 msgstr "Антиматериальное заражение"
@@ -11456,8 +9757,17 @@ msgstr "Антиматериальное заражение"
 msgid "Antimatter is tainting your ship!"
 msgstr "Антиматерия портит ваш корабль!"
 
+#. Set outfit state
+#. Astral projection
+msgid "Astral Projection"
+msgstr "Астральная проекция"
+
 msgid "Ship is being projected."
 msgstr "Корабль проектируется."
+
+#, fuzzy
+msgid "Avatar of the Sirichana"
+msgstr "Аватар Сиричаны"
 
 #, fuzzy
 msgid "You are an avatar of the Sirichana!"
@@ -11506,6 +9816,9 @@ msgstr ""
 msgid "Corsair set bonus."
 msgstr ""
 
+msgid "Crippling Plasma"
+msgstr "Разрушающая плазма"
+
 msgid "Plasma is interfering with the weapon systems!"
 msgstr "Плазма мешает системам вооружения!"
 
@@ -11546,8 +9859,17 @@ msgstr "Постепенное исчезновение"
 msgid "Fade-Out Norender"
 msgstr "Постепенное исчезновение"
 
+msgid "Feather Drive"
+msgstr "Перьевой привод"
+
 msgid "Your ship just used Feather Drive!"
 msgstr "Ваш корабль только что использовал Перьевой привод!"
+
+#. Attack tree
+#. For everyone!
+#. Uses feral rage slot (only for ships that get tier 5)
+msgid "Feral Rage I"
+msgstr "Дикая ярость"
 
 msgid "Fractured Reality"
 msgstr "Расколотая реальность"
@@ -11581,6 +9903,9 @@ msgstr ""
 
 msgid "Hacked!"
 msgstr "Взломан!"
+
+msgid "Paralyzing Plasma"
+msgstr "Парализующая плазма"
 
 msgid "Plasma is slowing the ship down!"
 msgstr "Плазма замедляет корабль!"
@@ -11748,6 +10073,9 @@ msgid ""
 msgstr ""
 "Альянс Фронтира образован выжившими после первых попыток экспансии "
 "человечества в космос."
+
+msgid "Goddard"
+msgstr "Годдард"
 
 msgid "House Goddard"
 msgstr "Дом Годдард"
@@ -12097,6 +10425,9 @@ msgstr ""
 "Дом За'лек — научное сердце Империи. До недавнего времени они были скрытным "
 "Великим Домом, но в последнее время стали гораздо более открытыми."
 
+msgid "Air Freshener"
+msgstr "Освежитель воздуха"
+
 msgid "Accessory"
 msgstr "Аксессуар"
 
@@ -12111,6 +10442,9 @@ msgstr ""
 "поскольку они не влияют на мощные системы фильтрации современных судов, в "
 "наши дни они носят исключительно косметический характер."
 
+msgid "Black Cat Doll"
+msgstr "Кукла чёрного кота"
+
 msgid ""
 "A crude doll of a black cat made from authentic \"Felis catus\" fur you made "
 "that was all over your ship. It's quite cute."
@@ -12122,6 +10456,9 @@ msgstr ""
 msgid "#pOnly active when in stealth.#0"
 msgstr "#pАктивируется только в скрытном состоянии.#0"
 
+msgid "Broken Nebular Shielding Prototype"
+msgstr "Сломанный прототип туманного экранирования"
+
 msgid ""
 "A broken prototype for a novel shielding device that is supposed to enable "
 "travel into the Sol Nebula. However, due to its malfunction you almost died. "
@@ -12132,6 +10469,9 @@ msgstr ""
 "позволить путешествовать в туманности Солнечной системы. Однако из-за его "
 "неисправности вы едва не погибли. С другой стороны, оно, похоже, поглощает "
 "вредную энергию и излучает тепловое излучение в космос."
+
+msgid "Commemorative Stein"
+msgstr "Памятная кружка"
 
 msgid ""
 "This is a stein commemorating the terraforming and establishment of a "
@@ -12149,6 +10489,9 @@ msgstr ""
 "происходило на самом деле? Внизу надпись \"К черту ПУААА, да здравствует "
 "герой Антлехоса!\" с неразборчивой подписью."
 
+msgid "Cyborg Feather"
+msgstr "Кибер-перо"
+
 #, fuzzy
 msgid ""
 "A feather from a cyborg duck. Although the quill is made of some lightweight "
@@ -12157,10 +10500,16 @@ msgstr ""
 "Перо утки-киборга. Хотя перо сделано из какого-то лёгкого металлического "
 "сплава, в остальном оно удивительно похоже на обычное перо."
 
+msgid "Fancy Key Chain"
+msgstr "Модная цепочка для ключей"
+
 msgid ""
 "A small statue of a crossed-eyed gorilla lifting a Goddard Battlecruiser."
 msgstr ""
 "Небольшая статуя косоглазой гориллы, поднимающей линейный крейсер Годдард."
+
+msgid "Fuzzy Dice"
+msgstr "Пушистые игральные кубики"
 
 msgid ""
 "A pair of fuzzy dice that can be hung inside your ship. Apparently they are "
@@ -12176,6 +10525,9 @@ msgstr ""
 msgid "#pImproves luck!#0"
 msgstr "#pУлучшает удачу!#0"
 
+msgid "Goatee Marker"
+msgstr "Маркер для бородки"
+
 msgid ""
 "A rare limited edition Goatee Marker, meant exclusive for drawing not only "
 "facial hair, but Goatees in particular. It seems to have been partially used "
@@ -12184,6 +10536,9 @@ msgstr ""
 "Редкий маркер для бородок ограниченной серии, предназначенный исключительно "
 "для рисования волос на лице, в частности бородок. Кажется, он был частично "
 "использован и имеет логотип мародера на дне."
+
+msgid "Handbook for Dvaered Good Manners"
+msgstr "Пособие по хорошим манерам для Дваред"
 
 msgid ""
 "When does a gentleman use the head of another gentleman as a trophy in their "
@@ -12204,6 +10559,9 @@ msgstr ""
 "продвинуться по служебной лестнице\", - полковник Урнус, исполнительный "
 "директор Верховного командования"
 
+msgid "Jack's Eyepatch"
+msgstr ""
+
 msgid ""
 "A ragged eyepatch that seems to have seen its share of adventures among the "
 "stars."
@@ -12211,6 +10569,9 @@ msgstr ""
 
 msgid "#pDoubles the range of blink drives.#0"
 msgstr ""
+
+msgid "Left Boot"
+msgstr "Левый ботинок"
 
 msgid ""
 "The left boot of a high-ranking Empire official. It doesn't seem to fit you "
@@ -12223,6 +10584,9 @@ msgstr ""
 
 msgid "#pSmells funky.#0"
 msgstr "#pПахнет обалденно.#0"
+
+msgid "Love Letter"
+msgstr "Любовное письмо"
 
 msgid ""
 "A misplaced love letter that you were supposed to deliver, reading the first "
@@ -12238,8 +10602,14 @@ msgstr ""
 msgid "#rLove is in the air.#0"
 msgstr "#rЛюбовь витает в воздухе.#0"
 
+msgid "Pentagram of Valor"
+msgstr "Пентаграмма доблести"
+
 msgid "A token of commitment to the FLF cause. It smells oddly of fish."
 msgstr "Знак приверженности делу FLF. Странно пахнет рыбой."
+
+msgid "Pilot Doll"
+msgstr "Кукла-пилот"
 
 msgid ""
 "A doll made by orphans out of their old clothes. You believe it's supposed "
@@ -12250,10 +10620,18 @@ msgstr ""
 "она совсем на вас не похожа. Однако, здесь важно намерение, а не результат."
 
 #, fuzzy
+msgid "Racing Trophy (Bronze)"
+msgstr "Гоночный трофей"
+
+#, fuzzy
 msgid "The racing trophy you won with your piloting skills."
 msgstr ""
 "Гоночный трофей, который вы выиграли благодаря своим превосходным навыкам "
 "пилотирования. Отлично смотрится на стене!"
+
+#, fuzzy
+msgid "Racing Trophy (Gold)"
+msgstr "Гоночный трофей"
 
 #, fuzzy
 msgid ""
@@ -12264,12 +10642,19 @@ msgstr ""
 "пилотирования. Отлично смотрится на стене!"
 
 #, fuzzy
+msgid "Racing Trophy (Silver)"
+msgstr "Гоночный трофей"
+
+#, fuzzy
 msgid ""
 "The racing trophy you won with your excellent piloting skills. Looks great "
 "on the wall!"
 msgstr ""
 "Гоночный трофей, который вы выиграли благодаря своим превосходным навыкам "
 "пилотирования. Отлично смотрится на стене!"
+
+msgid "Rackham's Razor"
+msgstr "Бритва Рэкхема"
 
 msgid ""
 "An ornately engraved sword with a lightly curved, razor-sharp nanosteel "
@@ -12285,6 +10670,9 @@ msgstr ""
 msgid "#gDouble effect when flying a pirate ship.#0"
 msgstr "#gДвойной эффект при управлении пиратским кораблём.#0"
 
+msgid "Sandwich Holder"
+msgstr "Держатель для сэндвичей"
+
 msgid ""
 "It appears to be a limited edition Nexus Shipyards sandwich holder. Very "
 "useful for hands-free eating of sandwiches in zero gravity. Apparently the "
@@ -12295,12 +10683,18 @@ msgstr ""
 "бутербродов без помощи рук в условиях невесомости. Очевидно, генеральный "
 "директор действительно любит свои бутерброды."
 
+msgid "Satellite Mock-up"
+msgstr "Макет спутника"
+
 msgid ""
 "A mock-up of a satellite you helped launch into the Nebula. It even has cute "
 "blinking lights!"
 msgstr ""
 "Макет спутника, который вы помогли запустить в туманность. На нем даже есть "
 "симпатичные мигающие огоньки!"
+
+msgid "Star of Valor"
+msgstr "Звезда доблести"
 
 msgid ""
 "A shiny medal for your contribution to the Dvaered cause. On the back it "
@@ -12309,12 +10703,19 @@ msgstr ""
 "Блестящая медаль за ваш вклад в дело Дваред. На обратной стороне написано "
 "«не для ректального использования». Подождите, что?"
 
+#. get the drink
+msgid "Swamp Bombing"
+msgstr "Бомбардировка болот"
+
 msgid ""
 "A fairly mediocre cocktail that you don't intend to drink. At least it looks "
 "good as an accessory."
 msgstr ""
 "Довольно посредственный коктейль, который вы не собираетесь пить. По крайней "
 "мере, он хорошо смотрится в качестве аксессуара."
+
+msgid "Toy Drone"
+msgstr "Игрушечный беспилотник"
 
 msgid ""
 "A small toy drone that can fly around the ship. The AI doesn't seem to work "
@@ -12325,6 +10726,9 @@ msgstr ""
 "Искусственный интеллект, похоже, работает не слишком хорошо, и у него есть "
 "привычка натыкаться на стены и постоянно издавать звуковые сигналы, но это "
 "довольно мило."
+
+msgid "Trading Card (Common)"
+msgstr "Коллекционная карточка (обычная)"
 
 msgid ""
 "A #oHyena#0 trading card game card of common rarity. It describes in detail "
@@ -12337,6 +10741,9 @@ msgstr ""
 "модели Гиены создавали такую большую нагрузку на пилотов, что могли "
 "раздавить их при большом ускорении?"
 
+msgid "Trading Card (Rare)"
+msgstr "Коллекционная карточка (редкая)"
+
 msgid ""
 "A #oGolden Llama#0 trading card game card of #prare#0 rarity. Instead of "
 "going into the important details of the ship, it just shows a high "
@@ -12345,6 +10752,9 @@ msgstr ""
 "Коллекционная карточная карта #oЗолотая Лама#0, #pредкая#0. Вместо того, "
 "чтобы вдаваться в важные детали корабля, она просто показывает "
 "голографическое изображение предполагаемой Золотой Ламы в высоком разрешении."
+
+msgid "Trading Card (Uncommon)"
+msgstr "Коллекционная карточка (необычная)"
 
 msgid ""
 "A #oDvaered Vigilance#0 trading card game card of #buncommon#0 rarity. It "
@@ -12359,6 +10769,9 @@ msgstr ""
 "позволяющую экипажу преодолевать повреждения, которые обычно выводят из "
 "строя обычные корабли?"
 
+msgid "Ugly Statue"
+msgstr "Уродливая статуэтка"
+
 msgid ""
 "A statue given to you by Baron Sauterfeldt for your fine work. You would "
 "feel more grateful if he hadn't mentioned that his lover was making him get "
@@ -12372,6 +10785,9 @@ msgstr ""
 "галстуке-бабочке, играющую на гавайской гитаре, и её голова покачивается в "
 "такт ускорению корабля. Как со вкусом..."
 
+msgid "Vacuum Cleaner?"
+msgstr "Пылесос?"
+
 msgid ""
 "Found on a Four Winds fighter that was carrying a Ragnarok beam. It seems to "
 "increase the performance of your engine when the ship's mass is high. It is "
@@ -12383,8 +10799,17 @@ msgstr ""
 "безусловно, не настоящий пылесос, но вы не знаете настоящего названия этого "
 "устройства."
 
+msgid "Adaptive Jump"
+msgstr "Адаптивный прыжок"
+
 msgid "Bioship Organ"
 msgstr "Орган биокорабля"
+
+#. Movement skill tree
+#. Only for up to destroyers
+#. Needs adrenal gland slot
+msgid "Adrenal Gland I"
+msgstr "Надпочечник I"
 
 msgid ""
 "The bioship adrenal gland organ is able to generate immense amounts of "
@@ -12394,6 +10819,45 @@ msgstr ""
 "Надпочечниковая железа биокорабля способна вырабатывать огромное количество "
 "адреналина из необработанной энергии, что позволяет кораблю временно "
 "двигаться быстрее."
+
+msgid "Adrenal Gland II"
+msgstr "Надпочечник II"
+
+msgid "Adrenal Gland III"
+msgstr "Надпочечник III"
+
+msgid "Adrenaline Hormones"
+msgstr "Гормоны адреналина"
+
+#. Health tree
+#. For everyone!
+#. Uses intrinsics only
+msgid "Bulky Abdomen"
+msgstr "Объёмный живот"
+
+#. Misc tree
+#. For everyone!
+#. All intrinsics
+msgid "Cargo Sacs"
+msgstr "Грузовые мешки"
+
+#. Stealth skill tree
+#. For up to cruiser
+#. Uses intrinsics only
+msgid "Compound Eyes"
+msgstr "Составные глаза"
+
+#. Plasma tree
+#. For everyone!
+#. Requires plasma slot for tier 5
+msgid "Corrosion I"
+msgstr "Коррозия I"
+
+msgid "Corrosion II"
+msgstr "Коррозия II"
+
+msgid "Enhanced Smell"
+msgstr "Улучшенное обоняние"
 
 msgid ""
 "Through careful manipulation of the brain stem, the bioship can be induced "
@@ -12409,6 +10873,9 @@ msgstr ""
 msgid "Active for 5 seconds since armour was last damaged."
 msgstr "Действует в течение 5 секунд с момента последнего повреждения брони."
 
+msgid "Feral Rage II"
+msgstr "Дикая ярость II"
+
 msgid ""
 "Through careful manipulation of the brain stem, the bioship can be induced "
 "into a primitive state of feral rage in which forward and turret weapon "
@@ -12421,6 +10888,9 @@ msgstr ""
 "переднего и башенного оружия значительно увеличивается. Для вхождения в "
 "состояние транса требуется урон от брони. Дальнейшая связь с мозжечком "
 "позволяет трансу также временно увеличить маневренность корабля."
+
+msgid "Feral Rage III"
+msgstr "Дикая ярость III"
 
 #, fuzzy
 msgid ""
@@ -12445,10 +10915,51 @@ msgstr ""
 "Активна в течение 7 секунд с момента последнего повреждения брони или может "
 "быть вручную отключена с 30-секундным временем восстановления."
 
+msgid "Fuel Bladder"
+msgstr "Топливный мочевой пузырь"
+
+msgid "Hard Shell"
+msgstr "Твёрдый панцирь"
+
+msgid "Hunter's Instinct"
+msgstr "Охотничий инстинкт"
+
+msgid "Natural Healing I"
+msgstr "Естественное заживление I"
+
+msgid "Natural Healing II"
+msgstr "Естественное заживление II"
+
+msgid "Plasma Burst"
+msgstr "Плазменный взрыв"
+
 msgid "Deals 300 plasma damage to all hostile ships in 200 range."
 msgstr ""
 "Наносит 300 единиц плазменного урона всем вражеским кораблям в радиусе 200 "
 "единиц."
+
+msgid "Reflective Shell"
+msgstr "Отражающая оболочка"
+
+msgid "Silence"
+msgstr "Тишина"
+
+msgid "The Bite - Blood Lust"
+msgstr "Укус - Жажда крови"
+
+#, fuzzy
+msgid "The Bite - Cannibal"
+msgstr "Укус - Жажда крови"
+
+msgid "The Bite - Improved"
+msgstr "Укус - Улучшенный"
+
+msgid "The Bite"
+msgstr "Укус"
+
+#, fuzzy
+msgid "Bioship Thorn"
+msgstr "Орган биокорабля"
 
 #. Speed Lights
 #. Make sure it's valid.
@@ -12456,6 +10967,18 @@ msgstr ""
 #, c-format
 msgid "None"
 msgstr "Ничего"
+
+msgid "Tracking Antennae"
+msgstr "Следящие антенны"
+
+msgid "Tunnelling Organ"
+msgstr "Туннельный орган"
+
+msgid "Wanderer"
+msgstr ""
+
+msgid "Dummy Engine"
+msgstr ""
 
 msgid "Core Systems (Engine)"
 msgstr ""
@@ -12465,9 +10988,15 @@ msgid ""
 "BUY."
 msgstr ""
 
+msgid "Beat Up Large Engine"
+msgstr ""
+
 msgid ""
 "Clogged, corroded and cracked in every way possible while still remaining in "
 "functional condition, this engine really belongs on the scrap heap."
+msgstr ""
+
+msgid "Krain Remige Engine"
 msgstr ""
 
 msgid "K. Remige Engine"
@@ -12482,6 +11011,9 @@ msgid ""
 "engines."
 msgstr ""
 
+msgid "Melendez Mammoth Engine"
+msgstr ""
+
 msgid "M. Mammoth Engine"
 msgstr ""
 
@@ -12493,6 +11025,9 @@ msgid ""
 "Mammoth line of engines."
 msgstr ""
 
+msgid "Nexus Bolt 3000 Engine"
+msgstr ""
+
 msgid "N. Bolt 3000 Engine"
 msgstr ""
 
@@ -12500,6 +11035,9 @@ msgid ""
 "The Bolt 3000 is a somewhat uncommonly used engine designed for cruisers. "
 "Like most Nexus engines, it doesn't excel in speed, but its low power "
 "consumption makes it an attractive option for some pilots."
+msgstr ""
+
+msgid "Tricon Typhoon Engine"
 msgstr ""
 
 msgid "T. Typhoon Engine"
@@ -12512,6 +11050,9 @@ msgid ""
 "powerful reactors."
 msgstr ""
 
+msgid "Unicorp Eagle 3000 Engine"
+msgstr ""
+
 msgid "U. Eagle 3000 Engine"
 msgstr ""
 
@@ -12519,6 +11060,12 @@ msgid ""
 "Inexpensive by capital ship standards, the Eagle 3000 is seldom selected by "
 "captains who can afford better. While spaceworthy, the engine's performance "
 "renders it a liability in combat and uneconomical for freight hauling."
+msgstr ""
+
+msgid "Beat Up Medium Engine"
+msgstr ""
+
+msgid "Krain Patagium Twin Engine"
 msgstr ""
 
 msgid "K. Patagium Twin Engine"
@@ -12531,6 +11078,9 @@ msgid ""
 "most other destroyers due to their higher mass."
 msgstr ""
 
+msgid "Melendez Buffalo Engine"
+msgstr ""
+
 msgid "M. Buffalo Engine"
 msgstr ""
 
@@ -12539,6 +11089,9 @@ msgid ""
 "occasionally seen on particularly well-armed corvettes and destroyers. As a "
 "typical freight-oriented engine, the Buffalo possesses good top speed, poor "
 "handling, and excellent fuel capacity."
+msgstr ""
+
+msgid "Nexus Arrow 700 Engine"
 msgstr ""
 
 msgid "N. Arrow 700 Engine"
@@ -12550,6 +11103,9 @@ msgid ""
 "reactors."
 msgstr ""
 
+msgid "Tricon Cyclone Engine"
+msgstr ""
+
 msgid "T. Cyclone Engine"
 msgstr ""
 
@@ -12557,6 +11113,9 @@ msgid ""
 "Tricon's Cyclone engine upholds the corporation's reputation for premium "
 "engines with superb performance. Many large navies and wealthier mercenaries "
 "employ the Cyclone in their corvettes and destroyers."
+msgstr ""
+
+msgid "Unicorp Falcon 700 Engine"
 msgstr ""
 
 msgid "U. Falcon 700 Engine"
@@ -12569,6 +11128,12 @@ msgid ""
 "when engaged in battle."
 msgstr ""
 
+msgid "Beat Up Small Engine"
+msgstr ""
+
+msgid "Melendez Ox Engine"
+msgstr ""
+
 msgid "M. Ox Engine"
 msgstr ""
 
@@ -12576,6 +11141,9 @@ msgid ""
 "A powerful engine for its size, though not a particularly manoeuvrable one. "
 "The Ox enables small vessels to haul more cargo or weapons without resorting "
 "to larger and more power-hungry models."
+msgstr ""
+
+msgid "Nexus Dart 160 Engine"
 msgstr ""
 
 msgid "N. Dart 160 Engine"
@@ -12586,6 +11154,9 @@ msgid ""
 "excel in speed, it offers good handling and power efficiency for a "
 "reasonable price. A very popular engine among civilian and military users "
 "alike."
+msgstr ""
+
+msgid "Tricon Zephyr Engine"
 msgstr ""
 
 msgid "T. Zephyr Engine"
@@ -12599,6 +11170,9 @@ msgid ""
 "requisite reactor upgrades."
 msgstr ""
 
+msgid "Unicorp Hawk 160 Engine"
+msgstr ""
+
 msgid "U. Hawk 160 Engine"
 msgstr ""
 
@@ -12607,6 +11181,9 @@ msgid ""
 "their ships. It's not particularly effective, but it's a lightweight engine "
 "with low energy demands, making it a solid choice for small vessels."
 msgstr ""
+
+msgid "Za'lek Test Engine"
+msgstr "Экспериментальный двигатель За'лек"
 
 msgid "Z. Test Engine"
 msgstr ""
@@ -12618,12 +11195,18 @@ msgid ""
 "are very often modded by students, which makes them unreliable."
 msgstr ""
 
+msgid "Dummy Plating"
+msgstr ""
+
 msgid "Core Systems (Hull)"
 msgstr ""
 
 msgid ""
 "This is a dummy hull for use in missions only, which does nothing. DO NOT "
 "BUY."
+msgstr ""
+
+msgid "Nexus Phantasm Weave"
 msgstr ""
 
 msgid "N. Phantasm Weave"
@@ -12635,9 +11218,15 @@ msgid ""
 "without sacrificing protection."
 msgstr ""
 
+msgid "Patchwork Heavy Plating"
+msgstr ""
+
 msgid ""
 "On the plus side, it keeps air from venting into space. But that's about it. "
 "This kind of hull maintenance is simply unacceptable."
+msgstr ""
+
+msgid "Red Star Large Cargo Hull"
 msgstr ""
 
 msgid "RS. Large Cargo Hull"
@@ -12652,16 +11241,25 @@ msgid ""
 "missiles."
 msgstr ""
 
+msgid "S&K Large Cargo Hull"
+msgstr ""
+
 msgid ""
 "This cargo hull from Schafer & Kane Industries makes use of state-of-the-art "
 "defensive alloys, which allows it to free up even more space for cargo "
 "without sacrificing too much durability."
 msgstr ""
 
+msgid "S&K War Plating"
+msgstr ""
+
 msgid ""
 "This heavy plating developed by Schafer & Kane Industries can endure "
 "prolonged battle. Quite a few captains and their crews owe their lives to "
 "this armour configuration."
+msgstr ""
+
+msgid "Unicorp D-58 Heavy Plating"
 msgstr ""
 
 msgid "U. D-58 Heavy Plating"
@@ -12671,6 +11269,9 @@ msgid ""
 "Though a respectable design, the D-58 plating is outclassed by modern heavy "
 "weapons, with most seasoned captains opting for a heavier, more advanced "
 "plating."
+msgstr ""
+
+msgid "Krain Nanotubes Foam Padding"
 msgstr ""
 
 msgid "K. Nanofoam Padding"
@@ -12689,6 +11290,9 @@ msgid ""
 "It does come at a hefty price tag, though."
 msgstr ""
 
+msgid "Nexus Ghost Weave"
+msgstr ""
+
 msgid "N. Ghost Weave"
 msgstr ""
 
@@ -12696,6 +11300,12 @@ msgid ""
 "Medium-sized ships are usually not in the business of remaining undetected, "
 "but Nexus Shipyards have nevertheless developed a hull modification that "
 "helps in this area"
+msgstr ""
+
+msgid "Patchwork Medium Plating"
+msgstr ""
+
+msgid "Red Star Medium Cargo Hull"
 msgstr ""
 
 msgid "RS. Medium Cargo Hull"
@@ -12711,14 +11321,23 @@ msgid ""
 "little bit slower."
 msgstr ""
 
+msgid "S&K Battle Plating"
+msgstr ""
+
 msgid ""
 "Designed for medium-sized vessels, Schafer & Kane's medium combat plating "
 "provides ample protection utilizing the latest in defensive materials."
 msgstr ""
 
+msgid "S&K Medium Cargo Hull"
+msgstr ""
+
 msgid ""
 "Schafer & Kane Industries have developed a hull modification that provides "
 "both ample cargo space and protection."
+msgstr ""
+
+msgid "Unicorp D-23 Medium Plating"
 msgstr ""
 
 msgid "U. D-23 Medium Plating"
@@ -12729,6 +11348,10 @@ msgid ""
 "doesn't weigh too much."
 msgstr ""
 
+#, fuzzy
+msgid "Nexus Shadow Weave"
+msgstr "Верфи Нексус"
+
 msgid "N. Shadow Weave"
 msgstr ""
 
@@ -12736,6 +11359,12 @@ msgid ""
 "Designed for military scouting and patrol vessels, Nexus' Light Stealth "
 "Plating configuration features the latest in sensor-absorbing materials and "
 "geometry."
+msgstr ""
+
+msgid "Patchwork Light Plating"
+msgstr ""
+
+msgid "Red Star Small Cargo Hull"
 msgstr ""
 
 msgid "RS. Small Cargo Hull"
@@ -12751,16 +11380,25 @@ msgid ""
 "privateers."
 msgstr ""
 
+msgid "S&K Skirmish Plating"
+msgstr ""
+
 msgid ""
 "Schafer & Kane Industries mostly develop for larger ships, but the Skirmish "
 "Plating configuration is a product made for light fighters and in-system "
 "patrol craft, providing optimum protection."
 msgstr ""
 
+msgid "S&K Small Cargo Hull"
+msgstr ""
+
 msgid ""
 "Though a pricey investment for couriers, this hull modification from Schafer "
 "& Kane Industries provides an impressive amount of cargo space without "
 "compromising the hull's integrity."
+msgstr ""
+
+msgid "Unicorp D-2 Light Plating"
 msgstr ""
 
 msgid "U. D-2 Light Plating"
@@ -12771,12 +11409,18 @@ msgid ""
 "manufacturers due to its low cost and adequate, if uninspiring performance."
 msgstr ""
 
+msgid "Dummy Systems"
+msgstr ""
+
 msgid "Core Systems (System)"
 msgstr ""
 
 msgid ""
 "This is a dummy core system for use in missions only, which does nothing. DO "
 "NOT BUY."
+msgstr ""
+
+msgid "Milspec Aegis 8501 Core System"
 msgstr ""
 
 msgid "M. Aegis 8501 System"
@@ -12786,6 +11430,9 @@ msgid ""
 "Milspec cares about your personal safety. Your protection is our concern. "
 "The Aegis 8501 grants your ship excellent shield strength while preserving a "
 "high level of subsystem control and energy capacity. Fly safe, fly Milspec."
+msgstr ""
+
+msgid "Milspec Orion 8601 Core System"
 msgstr ""
 
 msgid "M. Orion 8601 System"
@@ -12805,6 +11452,9 @@ msgstr ""
 "обеспечивающее превосходную производительность в любой сфере. Летайте "
 "безопасно, летайте с Милспек."
 
+msgid "Milspec Prometheus 8503 Core System"
+msgstr ""
+
 msgid "M. Prometheus 8503 System"
 msgstr ""
 
@@ -12812,6 +11462,9 @@ msgid ""
 "Milspec offers solutions for pilots who believe the best defence is a good "
 "offense. The 8503 boasts a heavy duty power generator as well as "
 "considerable shielding and subsystem control. Fly safe, fly Milspec."
+msgstr ""
+
+msgid "Milspec Thalos 8502 Core System"
 msgstr ""
 
 msgid "M. Thalos 8502 System"
@@ -12824,12 +11477,18 @@ msgid ""
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
 
+msgid "Previous Generation Large Systems"
+msgstr ""
+
 msgid "Prev. Gen. Large Systems"
 msgstr ""
 
 msgid ""
 "A jury-rigged mess of processors and generators that most captains wouldn't "
 "be seen dead having installed on their ship."
+msgstr ""
+
+msgid "Unicorp PT-440 Core System"
 msgstr ""
 
 msgid "U. PT-440 System"
@@ -12841,6 +11500,9 @@ msgid ""
 "fraction of its competitors' prices."
 msgstr ""
 
+msgid "Milspec Aegis 4701 Core System"
+msgstr ""
+
 msgid "M. Aegis 4701 System"
 msgstr ""
 
@@ -12848,6 +11510,9 @@ msgid ""
 "Milspec cares about your personal safety. Your protection is our concern. "
 "The Aegis 4701 grants your ship excellent shield strength while preserving a "
 "high level of subsystem control and energy capacity. Fly safe, fly Milspec."
+msgstr ""
+
+msgid "Milspec Orion 4801 Core System"
 msgstr ""
 
 msgid "M. Orion 4801 System"
@@ -12860,6 +11525,9 @@ msgid ""
 "recommended for the discerning captain. Fly safe, fly Milspec."
 msgstr ""
 
+msgid "Milspec Prometheus 4703 Core System"
+msgstr ""
+
 msgid "M. Prometheus 4703 System"
 msgstr ""
 
@@ -12867,6 +11535,9 @@ msgid ""
 "Milspec offers solutions for pilots who believe the best defence is a good "
 "offense. The Prometheus 4703 boasts a heavy duty power generator as well as "
 "considerable shielding and subsystem control. Fly safe, fly Milspec."
+msgstr ""
+
+msgid "Milspec Thalos 4702 Core System"
 msgstr ""
 
 msgid "M. Thalos 4702 System"
@@ -12879,7 +11550,13 @@ msgid ""
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
 
+msgid "Previous Generation Medium Systems"
+msgstr ""
+
 msgid "Prev. Gen. Medium Systems"
+msgstr ""
+
+msgid "Unicorp PT-200 Core System"
 msgstr ""
 
 msgid "U. PT-200 System"
@@ -12890,6 +11567,9 @@ msgid ""
 "the PT-200 gives acceptable performance for an acceptable price."
 msgstr ""
 
+msgid "Milspec Aegis 2201 Core System"
+msgstr ""
+
 msgid "M. Aegis 2201 System"
 msgstr ""
 
@@ -12897,6 +11577,9 @@ msgid ""
 "Milspec cares about your personal safety. Your protection is our concern. "
 "The Aegis 2201 grants your ship excellent shield strength while preserving a "
 "high level of subsystem control and energy capacity. Fly safe, fly Milspec."
+msgstr ""
+
+msgid "Milspec Orion 2301 Core System"
 msgstr ""
 
 msgid "M. Orion 2301 System"
@@ -12909,6 +11592,9 @@ msgid ""
 "recommended for the beginning captain. Fly safe, fly Milspec."
 msgstr ""
 
+msgid "Milspec Prometheus 2203 Core System"
+msgstr ""
+
 msgid "M. Prometheus 2203 System"
 msgstr ""
 
@@ -12916,6 +11602,9 @@ msgid ""
 "Milspec offers solutions for pilots who believe the best defence is a good "
 "offense. The Prometheus 2203 boasts a heavy duty power generator as well as "
 "considerable shielding and subsystem control."
+msgstr ""
+
+msgid "Milspec Thalos 2202 Core System"
 msgstr ""
 
 msgid "M. Thalos 2202 System"
@@ -12928,7 +11617,13 @@ msgid ""
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
 
+msgid "Previous Generation Small Systems"
+msgstr ""
+
 msgid "Prev. Gen. Small Systems"
+msgstr ""
+
+msgid "Unicorp PT-16 Core System"
 msgstr ""
 
 msgid "U. PT-16 System"
@@ -12937,6 +11632,9 @@ msgstr ""
 msgid ""
 "The PT-16 is a modest but to-spec core system offering reasonable, all-round "
 "performance for small vessels."
+msgstr ""
+
+msgid "Drone Bay"
 msgstr ""
 
 msgid "You need at least 50% reputation with the Empire."
@@ -12950,6 +11648,9 @@ msgid ""
 "bay."
 msgstr ""
 
+msgid "Empire Lancelot Bay"
+msgstr ""
+
 msgid "E. Lancelot Bay"
 msgstr ""
 
@@ -12959,10 +11660,16 @@ msgid ""
 "flight of the fighters."
 msgstr ""
 
+msgid "Hyena Bay"
+msgstr ""
+
 msgid ""
 "This bay expands on the popular Hyena Dock, doubling the amount of Hyena "
 "interceptors that can be operated. It comes with all the amenities necessary "
 "for the maintenance and operation of the interceptors."
+msgstr ""
+
+msgid "Hyena Dock"
 msgstr ""
 
 msgid ""
@@ -12971,10 +11678,16 @@ msgid ""
 "interceptors."
 msgstr ""
 
+msgid "Lancelot Bay"
+msgstr ""
+
 msgid ""
 "This fighter bay allows your ship to carry a pair of Lancelot class "
 "fighters. It comes with all the devices required for the maintenance and "
 "flight of the fighters."
+msgstr ""
+
+msgid "Pirate Hyena Bay"
 msgstr ""
 
 msgid "P. Hyena Bay"
@@ -12987,6 +11700,9 @@ msgid ""
 "also assist in ship scavenging and looting."
 msgstr ""
 
+msgid "Pirate Hyena Dock"
+msgstr ""
+
 msgid "P. Hyena Dock"
 msgstr ""
 
@@ -12995,6 +11711,9 @@ msgid ""
 "comes with all the amenities necessary for the maintenance and operation of "
 "the interceptors. The Pirate Hyenas can assist in ship scavenging and "
 "looting."
+msgstr ""
+
+msgid "Proteron Dalton Bay"
 msgstr ""
 
 msgid "P. Dalton Bay"
@@ -13010,6 +11729,9 @@ msgid ""
 "flight of the interceptors."
 msgstr ""
 
+msgid "Proteron Dalton Dock"
+msgstr ""
+
 msgid "P. Dalton Dock"
 msgstr ""
 
@@ -13017,6 +11739,9 @@ msgid ""
 "This fighter bay allows your ship to carry twin Proteron Dalton class "
 "interceptors. It comes with all the devices required for the maintenance and "
 "flight of the interceptors."
+msgstr ""
+
+msgid "Sirius Fidelity Bay"
 msgstr ""
 
 msgid "S. Fidelity Bay"
@@ -13032,6 +11757,9 @@ msgid ""
 "society."
 msgstr ""
 
+msgid "Sirius Shaman Bay"
+msgstr ""
+
 msgid "S. Shaman Bay"
 msgstr ""
 
@@ -13043,6 +11771,9 @@ msgid ""
 "This fighter bay allows your ship to carry a pair of Sirius Shaman class "
 "bombers. It comes with all the devices required for the maintenance and "
 "flight of the bombers."
+msgstr ""
+
+msgid "Soromid Brigand Bay"
 msgstr ""
 
 msgid "S. Brigand Bay"
@@ -13057,6 +11788,9 @@ msgid ""
 "and flight of the fighters."
 msgstr ""
 
+msgid "Thurion Perspicacity Bay"
+msgstr ""
+
 msgid "T. Perspicacity Bay"
 msgstr ""
 
@@ -13067,6 +11801,9 @@ msgid ""
 "This bay allows your ship to carry four Thurion Perspicacity fighters. It "
 "comes with all the devices required for the maintenance and flight of the "
 "fighters."
+msgstr ""
+
+msgid "Thurion Perspicacity Dock"
 msgstr ""
 
 msgid "T. Perspicacity Dock"
@@ -13082,6 +11819,10 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+msgid "Thurion Scintillation Bay"
+msgstr "Турионское Мерцание"
+
+#, fuzzy
 msgid "T. Scintillation Bay"
 msgstr "Турионское Мерцание"
 
@@ -13089,6 +11830,9 @@ msgid ""
 "This bay allows your ship to carry a pair of Thurion Scintillation bombers. "
 "It comes with all the devices required for the maintenance and flight of the "
 "bombers."
+msgstr ""
+
+msgid "Za'lek Bomber Drone Bay"
 msgstr ""
 
 msgid "Z. B. Drone B."
@@ -13102,6 +11846,9 @@ msgid ""
 "capital ships into submission without the mothership ever coming into "
 "danger. It comes with all the devices required for the maintenance and "
 "flight of the drones."
+msgstr ""
+
+msgid "Za'lek Bomber Drone Mini Bay"
 msgstr ""
 
 msgid "Z. B. Drone mB."
@@ -13118,6 +11865,9 @@ msgid ""
 "flight of the drones."
 msgstr ""
 
+msgid "Za'lek Heavy Drone Bay"
+msgstr ""
+
 msgid "Z. H. Drone B."
 msgstr "З. Б. Дрон Б."
 
@@ -13128,6 +11878,9 @@ msgid ""
 "This bay can launch an entire squadron of drones capable of fighting all but "
 "the biggest ships in packs. It comes with all the devices required for the "
 "maintenance and flight of the drones."
+msgstr ""
+
+msgid "Za'lek Heavy Drone Mini Bay"
 msgstr ""
 
 msgid "Z. H. Drone mB."
@@ -13142,6 +11895,9 @@ msgid ""
 "of the drones."
 msgstr ""
 
+msgid "Za'lek Light Drone Bay"
+msgstr ""
+
 msgid "Z. L. Drone B."
 msgstr ""
 
@@ -13150,6 +11906,9 @@ msgid ""
 "expendable, but in numbers they excel at clearing enemy light craft. It "
 "comes with all the devices required for the maintenance and flight of the "
 "drones."
+msgstr ""
+
+msgid "Za'lek Light Drone Mini Bay"
 msgstr ""
 
 msgid "Z. L. Drone mB."
@@ -13177,6 +11936,9 @@ msgid ""
 "Sirichana significantly increasing all aspects of the ship being flown."
 msgstr ""
 
+msgid "Cleansing Flames"
+msgstr ""
+
 msgid ""
 "Flow can be used to purify the immediate environment of the ship, bathing "
 "allies in soothing psychic emanations, while scorching enemies in damaging "
@@ -13191,6 +11953,9 @@ msgid ""
 "residual psychic shockwaves additionally slow them down."
 msgstr ""
 
+msgid "House of Mirrors"
+msgstr ""
+
 msgid ""
 "It's not clear how this flow ability came to be, but stories tell of a "
 "pirate who took too many flow mushrooms and ended up locked up in the "
@@ -13200,6 +11965,9 @@ msgid ""
 "to be able to project multiple copies of one's ship to amplify the raw "
 "destructive power. It has become a favourite of those who have been able to "
 "master the skill."
+msgstr ""
+
+msgid "Reality Rip"
 msgstr ""
 
 msgid ""
@@ -13212,14 +11980,44 @@ msgid ""
 "outside."
 msgstr ""
 
+msgid "Seeking Chakra"
+msgstr ""
+
 msgid ""
 "One of the first abilities all Sirii Cadets learn. Flow is focused into a "
 "ball which is then hurled at the target. Proficient users are able to create "
 "multiple seeking chakra at once."
 msgstr ""
 
+msgid "Seeking Chakra Large"
+msgstr ""
+
+msgid "Seeking Chakra Medium"
+msgstr ""
+
+msgid "Seeking Chakra Small"
+msgstr ""
+
+msgid "Astral Flow Amplifier"
+msgstr ""
+
 msgid "Flow Amplifier"
 msgstr ""
+
+msgid "Astral Cannon"
+msgstr ""
+
+msgid "Greater Astral Cannon"
+msgstr ""
+
+msgid "Lesser Astral Cannon"
+msgstr ""
+
+msgid "Internal Flow Amplifier"
+msgstr ""
+
+msgid "Large Flow Amplifier"
+msgstr "Большой усилитель потока"
 
 msgid ""
 "Although all Sirius ships are equipped with internal flow amplifiers, some "
@@ -13228,6 +12026,9 @@ msgid ""
 "significantly amplifying their psychic abilities to aid the ship with "
 "different abilities."
 msgstr ""
+
+msgid "Large Flow Resonator"
+msgstr "Большой резонатор потока"
 
 msgid "Flow Modifier"
 msgstr ""
@@ -13239,13 +12040,41 @@ msgid ""
 "half of the full potential."
 msgstr ""
 
+msgid "Large Meditation Chamber"
+msgstr "Большой отсек для медитаций"
+
 msgid ""
 "A meditation chamber integrated directly into the ship. This allows the crew "
 "to aid the ship's flow capabilities and acts as an auxiliary flow buffer. A "
 "flow amplifier is required for the meditation chamber to take effect."
 msgstr ""
 
+msgid "Medium Flow Amplifier"
+msgstr "Средний усилитель потока"
+
+msgid "Medium Flow Resonator"
+msgstr "Средний резонатор потока"
+
+msgid "Medium Meditation Chamber"
+msgstr "Средний отсек для медитаций"
+
+msgid "Small Flow Amplifier"
+msgstr "Малый усилитель потока"
+
+msgid "Small Flow Resonator"
+msgstr "Малый резонатор потока"
+
+msgid "Small Meditation Chamber"
+msgstr "Малый отсек для медитаций"
+
+#, fuzzy
+msgid "Bad Shape"
+msgstr "Твёрдый панцирь"
+
 msgid "This ship is in bad shape and works much less well than usual."
+msgstr ""
+
+msgid "Black Agate Finishing"
 msgstr ""
 
 msgid ""
@@ -13258,12 +12087,22 @@ msgid ""
 "it."
 msgstr ""
 
+#, fuzzy
+msgid "Defective"
+msgstr "Отражающая оболочка"
+
 msgid "The ship has serious design defects that limit its functionality."
+msgstr ""
+
+msgid "Escape Pod"
 msgstr ""
 
 msgid ""
 "An escape pod that will automatically eject when the ship has taken fatal "
 "damage."
+msgstr ""
+
+msgid "Gauntlet Deluxe"
 msgstr ""
 
 msgid ""
@@ -13274,12 +12113,18 @@ msgid ""
 "can be applied to each ship."
 msgstr ""
 
+msgid "Gauntlet Supreme"
+msgstr ""
+
 msgid ""
 "This service focuses on refining and polishing the launcher systems to "
 "maximize the missile fire power of the ship. It is a comprehensive and in-"
 "depth optimization that has to be done on a per-ship basis, with specialized "
 "technicians tuning everything for maximum efficiency. Due to the nature of "
 "the service, only one can be applied to each ship."
+msgstr ""
+
+msgid "Hyperdrive Retool"
 msgstr ""
 
 msgid ""
@@ -13289,6 +12134,9 @@ msgid ""
 "few will actually go through the trouble and responsibility to retool ship's "
 "hyperdrive making it a rare modification to find.\n"
 "#oThis outfit can not be removed once equipped.#0"
+msgstr ""
+
+msgid "Luxury Furnishings"
 msgstr ""
 
 msgid ""
@@ -13302,10 +12150,16 @@ msgid ""
 "make-over."
 msgstr ""
 
+msgid "Machiavellian Fortune"
+msgstr ""
+
 msgid ""
 "Fortune is like an onrushing river pushing an impenetrable wall of water "
 "ahead of it. It is possible to build dams and walls to try to contain the "
 "flow, but there is no way to prevent the water from hitting."
+msgstr ""
+
+msgid "Machiavellian Necessity"
 msgstr ""
 
 msgid ""
@@ -13313,9 +12167,15 @@ msgid ""
 "can determine the outcome of an encounter."
 msgstr ""
 
+msgid "Machiavellian Virtue"
+msgstr ""
+
 msgid ""
 "Virtue is the bulwark against the fickle whims of fortune. One can master "
 "their own will by mastering their own character."
+msgstr ""
+
+msgid "Port & Polish"
 msgstr ""
 
 msgid ""
@@ -13327,6 +12187,9 @@ msgid ""
 "significantly with the size of the ship."
 msgstr ""
 
+msgid "Wild Space Taint"
+msgstr ""
+
 msgid ""
 "The ship seems to have been tainted by whatever is subverting people into "
 "the Lost you met in Wild Space. It has spread completely throughout the "
@@ -13336,7 +12199,13 @@ msgid ""
 "nebula radiation."
 msgstr ""
 
+msgid "Worn Down"
+msgstr ""
+
 msgid "This ship is extremely worn down and is barely functional."
+msgstr ""
+
+msgid "Convulsion Launcher"
 msgstr ""
 
 msgid "Convulsion L."
@@ -13346,6 +12215,9 @@ msgid ""
 "The Thurion interceptor class missile focus on high agility rather than "
 "destructive power. While it does little damage to physical objects it is "
 "quite effective at disrupting shields."
+msgstr ""
+
+msgid "Electron Burst Cannon"
 msgstr ""
 
 msgid "Electron Burst C."
@@ -13363,6 +12235,9 @@ msgid ""
 "and high damage of their beams."
 msgstr ""
 
+msgid "EMP Grenade Launcher"
+msgstr ""
+
 msgid "EMP Grenade L."
 msgstr ""
 
@@ -13375,6 +12250,9 @@ msgid ""
 "keeping pirates at bay."
 msgstr ""
 
+msgid "Enygma Systems Huntsman Launcher"
+msgstr ""
+
 msgid "E. Huntsman L."
 msgstr ""
 
@@ -13384,6 +12262,9 @@ msgid ""
 "insufficient, they redesigned Unicorp's Caesar IV torpedo as a heavy EMP "
 "weapon, capable of rapidly frying the systems of even the largest capital "
 "ships."
+msgstr ""
+
+msgid "Enygma Systems Spearhead Launcher"
 msgstr ""
 
 msgid "E. Spearhead L."
@@ -13398,6 +12279,9 @@ msgid ""
 "class ships or heavier."
 msgstr ""
 
+msgid "Enygma Systems Turreted Fury Launcher"
+msgstr ""
+
 msgid "E. Fury T. L."
 msgstr ""
 
@@ -13405,6 +12289,9 @@ msgid ""
 "Enygma Systems has developed a turret mounted Fury launcher. It comes at a "
 "steep price, but Fury missiles can be a powerful means of discouraging "
 "pirate fighters and an effective defence against hostile bombers."
+msgstr ""
+
+msgid "Enygma Systems Turreted Headhunter Launcher"
 msgstr ""
 
 msgid "E. Headhunter T. L."
@@ -13415,6 +12302,9 @@ msgid ""
 "ships aren't manoeuvrable enough to effectively combat enemy fighters and "
 "bombers. The punch of the Headhunter missile combined with Enygma Systems' "
 "swivel mounted launcher can effectively compensate for any blind spots."
+msgstr ""
+
+msgid "Pincushion Battery"
 msgstr ""
 
 msgid "Pincushion B."
@@ -13434,6 +12324,9 @@ msgid ""
 "random nearby enemies. Lowers shield regeneration by -70% on hit."
 msgstr ""
 
+msgid "Repeating Banshee Launcher"
+msgstr ""
+
 msgid "R. Banshee L."
 msgstr ""
 
@@ -13448,6 +12341,9 @@ msgid ""
 "the bomber or its target will have been destroyed before it is empty."
 msgstr ""
 
+msgid "Shatterer Launcher"
+msgstr ""
+
 msgid "Shatterer L."
 msgstr ""
 
@@ -13458,6 +12354,9 @@ msgid ""
 "dangerous."
 msgstr ""
 
+msgid "Space Mine Layer"
+msgstr ""
+
 msgid "Space Mine L."
 msgstr ""
 
@@ -13465,6 +12364,9 @@ msgid ""
 "The vastness of space limits the applicability of space mines in lieu of "
 "automated or manned patrols in most situations. However, when raw explosive "
 "power is mandated, nothing can surpass the destructive force of space mines."
+msgstr ""
+
+msgid "Super-Fast Collider Launcher"
 msgstr ""
 
 msgid "SFC L."
@@ -13478,6 +12380,9 @@ msgid ""
 "giant Mace rocket used by Dvaered capships to strike distant enemies."
 msgstr ""
 
+msgid "TeraCom Banshee Launcher"
+msgstr ""
+
 msgid "T. Banshee L."
 msgstr ""
 
@@ -13486,6 +12391,9 @@ msgid ""
 "tube cooling systems, giving a significant boost to rate of fire. These "
 "unguided rockets, while slow, can do respectable damage even to fairly large "
 "ships in the hands of a competent pilot."
+msgstr ""
+
+msgid "TeraCom Fury Launcher"
 msgstr ""
 
 msgid "T. Fury L."
@@ -13499,6 +12407,9 @@ msgid ""
 "some of the fastest ships in the galaxy."
 msgstr ""
 
+msgid "TeraCom Headhunter Launcher"
+msgstr ""
+
 msgid "T. Headhunter L."
 msgstr ""
 
@@ -13508,6 +12419,9 @@ msgid ""
 "technology allows pilots to fire their missiles before the competition does. "
 "The Headhunter missiles can deal devastating damage to small and medium-"
 "sized distant enemies, while remaining reasonably fast and agile."
+msgstr ""
+
+msgid "TeraCom Imperator Launcher"
 msgstr ""
 
 msgid "T. Imperator L."
@@ -13522,6 +12436,9 @@ msgid ""
 "completely."
 msgstr ""
 
+msgid "TeraCom Mace Launcher"
+msgstr ""
+
 msgid "T. Mace L."
 msgstr ""
 
@@ -13530,6 +12447,9 @@ msgid ""
 "peak firepower in tight situations. It is far better at dealing damage to "
 "light targets than most fighter sized energy cannons, but comes with the "
 "disadvantage of running out of ammunition after only a short time of fire."
+msgstr ""
+
+msgid "TeraCom Medusa Launcher"
 msgstr ""
 
 msgid "T. Medusa L."
@@ -13541,6 +12461,9 @@ msgid ""
 "The warhead does little physical damage, so even lightly armoured targets "
 "can be effectively disabled with this weapon. However, the Medusa is not the "
 "most agile missile on the market."
+msgstr ""
+
+msgid "TeraCom Vengeance Launcher"
 msgstr ""
 
 msgid "T. Vengeance L."
@@ -13565,6 +12488,9 @@ msgstr ""
 "значительно сокращает время, необходимое для блокировки. Иногда эти "
 "несколько секунд могут все изменить."
 
+msgid "Turreted Convulsion Launcher"
+msgstr ""
+
 msgid "T. Convulsion L."
 msgstr ""
 
@@ -13577,6 +12503,9 @@ msgid ""
 "standard launcher."
 msgstr ""
 
+msgid "Unicorp Caesar IV Launcher"
+msgstr ""
+
 msgid "U. Caesar IV L."
 msgstr ""
 
@@ -13584,6 +12513,9 @@ msgid ""
 "Caesar IV class torpedoes are among the most common torpedo weapons "
 "available. Though much slower than missiles and useless against mobile "
 "targets, they remain manoeuvrable enough to chase down cruisers."
+msgstr ""
+
+msgid "Unicorp Storm Launcher"
 msgstr ""
 
 msgid "U. Storm L."
@@ -13600,6 +12532,9 @@ msgid ""
 "squadrons use this very deadly weapon."
 msgstr ""
 
+msgid "Za'lek Hunter Launcher"
+msgstr ""
+
 msgid "Z. Hunter L."
 msgstr ""
 
@@ -13609,6 +12544,9 @@ msgid ""
 "fabricating kamikaze drones to replace them, and the efforts have been "
 "fruitful indeed. The hunter-killer drone accelerates towards its target and "
 "unleashes its ferromagnetohydraulic payload to deadly effect."
+msgstr ""
+
+msgid "Za'lek Reaper Launcher"
 msgstr ""
 
 msgid "Z. Reaper L."
@@ -13621,8 +12559,14 @@ msgid ""
 "torpedoes from less advanced nations, and an eloquent answer it certainly is."
 msgstr ""
 
+msgid "Local System Map"
+msgstr "Карта местной системы"
+
 msgid "This map contains information about the local system."
 msgstr "Эта карта содержит информацию о местной системе."
+
+msgid "Map: Collective Space"
+msgstr "Карта: Пространство Коллектива"
 
 msgid ""
 "This map charts the known jumps that connect the systems occupied by the "
@@ -13630,19 +12574,31 @@ msgid ""
 "in the area."
 msgstr ""
 
+msgid "Map: Dvaered Core"
+msgstr "Карта: Центральные системы Двареда"
+
 msgid ""
 "This map lists the locations of all Dvaered worlds and stations close to the "
 "Dvaered capital."
 msgstr ""
+
+msgid "Map: Empire-Soromid Trade Route"
+msgstr "Карта: Имперско-Соромидский торговый путь"
 
 msgid ""
 "This map contains the main trade route between Empire and Soromid controlled "
 "space."
 msgstr ""
 
+msgid "Map: Empire Core"
+msgstr "Карта: Центральные системы Империи"
+
 msgid ""
 "This map lists the locations of all Imperial worlds and stations close to "
 "the Imperial capital."
+msgstr ""
+
+msgid "Map: FLF-Pirate Route"
 msgstr ""
 
 msgid ""
@@ -13650,9 +12606,15 @@ msgid ""
 "FLF base and the nearest Pirate stronghold."
 msgstr ""
 
+msgid "Map: FLF Hidden Jumps"
+msgstr ""
+
 msgid ""
 "This map contains the location of hidden jump points between the FLF base "
 "and Frontier space."
+msgstr ""
+
+msgid "Map: Inner Nebula Secret Jump"
 msgstr ""
 
 msgid ""
@@ -13660,9 +12622,15 @@ msgid ""
 "nebula."
 msgstr ""
 
+msgid "Map: Kretogg's Hypergate"
+msgstr ""
+
 msgid ""
 "A map revealing a hidden jump point from Kretogg to NGC-14549, leading to "
 "the Black Lotus Clan-controlled hypergate."
+msgstr ""
+
+msgid "Map: Kretogg's Secrets"
 msgstr ""
 
 msgid ""
@@ -13670,9 +12638,15 @@ msgid ""
 "Za'lek space."
 msgstr ""
 
+msgid "Map: Nebula Edge"
+msgstr "Карта: окраина Туманности"
+
 msgid ""
 "This map contains border of the Nebula with Dvaered/Imperial space. It also "
 "lists the deepest Imperial station within the Nebula."
+msgstr ""
+
+msgid "Map: New Haven's Secrets"
 msgstr ""
 
 msgid ""
@@ -13680,9 +12654,15 @@ msgid ""
 "the New Haven system."
 msgstr ""
 
+msgid "Map: Pirate Strongholds"
+msgstr ""
+
 msgid ""
 "This map contains the locations of the pirate clan worlds, and a few "
 "stations that are known to offer opportunities for pirates in the vicinity."
+msgstr ""
+
+msgid "Map: Qorel Tunnel"
 msgstr ""
 
 msgid ""
@@ -13692,13 +12672,22 @@ msgid ""
 "costly to reduce the number of people having access to it."
 msgstr ""
 
+msgid "Map: Sirian Border Systems"
+msgstr "Карта: Пограничные системы Сириуса"
+
 msgid "This map contains the systems that lead to Sirius controlled space."
 msgstr "Карта систем, ведущих в пространство Сириуса."
+
+msgid "Map: Sirius Core"
+msgstr "Карта: Центральные системы Сириуса"
 
 msgid ""
 "This map contains the location of Mutris, home of Sirichana and capital to "
 "the Sirians, as well as the surrounding systems."
 msgstr ""
+
+msgid "Map: Sol"
+msgstr "Карта: Сол"
 
 msgid ""
 "This map contains the location of the Sol system, the origin of mankind. "
@@ -13707,9 +12696,15 @@ msgid ""
 "Sol, if anything, is unknown."
 msgstr ""
 
+msgid "Map: The Frontier"
+msgstr "Карта: Фронтир"
+
 msgid ""
 "This map contains an east-west route through Frontier space, as well as the "
 "location of the Frontier Council."
+msgstr ""
+
+msgid "Map: Thurion Core"
 msgstr ""
 
 msgid ""
@@ -13717,12 +12712,18 @@ msgid ""
 "the Nebula."
 msgstr ""
 
+msgid "Map: Za'lek Core"
+msgstr "Карта: Центральные системы За'лек"
+
 msgid ""
 "This map contains the heart of Za'lek space, including its capital Ruadan "
 "and central hub, Za'lek."
 msgstr ""
 "Эта карта содержит сердце космоса За'лек, включая его столицу Руадан и "
 "центральный хаб, За'лек."
+
+msgid "Ultra Map"
+msgstr "Ультра-карта"
 
 msgid "For cheating."
 msgstr "Для читерства."
@@ -13757,13 +12758,25 @@ msgstr ""
 msgid "Heavy Weapon"
 msgstr ""
 
+msgid "GUI - Brushed"
+msgstr ""
+
 msgid "Outfit corresponding with the \"Brushed\" GUI."
+msgstr ""
+
+msgid "GUI - Legacy"
 msgstr ""
 
 msgid "Outfit corresponding with the \"Legacy\" GUI."
 msgstr ""
 
+msgid "GUI - Slim"
+msgstr ""
+
 msgid "Outfit corresponding with the \"Slim\" GUI."
+msgstr ""
+
+msgid "GUI - Slimv2"
 msgstr ""
 
 msgid "Outfit corresponding with the \"Slimv2\" GUI."
@@ -13850,6 +12863,10 @@ msgstr ""
 "Эта лицензия разрешает выполнять наёмнические миссии и, что более важно, "
 "получать награды назначенные за чьи-то головы."
 
+#, fuzzy
+msgid "Mystery Outfit"
+msgstr "# Оборудование"
+
 msgid "Gacha"
 msgstr ""
 
@@ -13858,12 +12875,20 @@ msgid ""
 "You will not know what you get until you buy it."
 msgstr ""
 
+#. Create the lootable entry
+#, fuzzy
+msgid "Treasure Map"
+msgstr "Звездная карта"
+
 msgid "Map"
 msgstr ""
 
 msgid ""
 "A treasure map leading to something that could turn out to be useful. "
 "However, you won't know what there is until you find it."
+msgstr ""
+
+msgid "Dvaered Flare Battery"
 msgstr ""
 
 msgid "D. Flare B."
@@ -13885,6 +12910,9 @@ msgid ""
 "flares, which has led to more than one major incident in the past."
 msgstr ""
 
+msgid "Guardian Interception System"
+msgstr ""
+
 msgid "Guardian I.S."
 msgstr ""
 
@@ -13894,6 +12922,9 @@ msgid ""
 "alike. Although it lacks the sufficient firepower to efficiently take down "
 "torpedoes and other heavy ordnance, it excels at tracking lighter missiles "
 "and can even be used to deter small assault craft."
+msgstr ""
+
+msgid "Guardian Overseer System"
 msgstr ""
 
 msgid "Guardian O.S."
@@ -13925,6 +12956,9 @@ msgid ""
 "tolerances and controls giving it significantly more reliability."
 msgstr ""
 
+msgid "Spittle Tubuloid Cluster"
+msgstr ""
+
 msgid ""
 "Actually consisting of a small colony of space-hardened parasites, known as "
 "Spittle Tubuloids, that leech from the ship energy systems to provide "
@@ -13933,6 +12967,9 @@ msgid ""
 "defence mechanism of spitting large bubbles of plasma. Although the bubbles "
 "are quite weak compared to engineered weapons, their numbers allow them to "
 "efficiently protect the ship they are attached to from non-armoured missiles."
+msgstr ""
+
+msgid "ZIBS-16"
 msgstr ""
 
 msgid ""
@@ -13945,6 +12982,9 @@ msgid ""
 "Field-testing quickly showed that the weapon was of very limited use in non-"
 "point defence roles, which resulted in the creation of the ZIBS-16, and "
 "later ZIBS-32 line of beam-based point defence."
+msgstr ""
+
+msgid "ZIBS-32"
 msgstr ""
 
 msgid ""
@@ -13962,14 +13002,29 @@ msgid ""
 "spaceport bars across the House Za'lek territory."
 msgstr ""
 
+msgid "Base Ripper MK2"
+msgstr ""
+
 msgid "This weapon is a cheat. It is not meant to be used by players."
+msgstr ""
+
+msgid "Bikers Fury Launcher"
+msgstr ""
+
+msgid "Four Winds Laser Cannon"
 msgstr ""
 
 #, fuzzy
 msgid "F.W. Laser Cannon"
 msgstr "Лазерная пушка МК1"
 
+msgid "Four Winds Ragnarok Beam"
+msgstr ""
+
 msgid "F.W. Ragnarok Beam"
+msgstr ""
+
+msgid "Active Plating"
 msgstr ""
 
 msgid "Armour Modifier"
@@ -13983,12 +13038,19 @@ msgid ""
 "energy usage."
 msgstr ""
 
+msgid "Adaptive Camouflage Plating"
+msgstr ""
+
 msgid ""
 "This armour plating does not provide any protection, instead it makes the "
 "ship harder to detect. It has integrated sensors that measure the ambient "
 "radiation around the ship and is able to emit space-resolved the right "
 "amount of radiation to appear invisible for passive sensors."
 msgstr ""
+
+#, fuzzy
+msgid "Auxiliary Processing Unit I"
+msgstr "Вспомогательное процессорное устройство I"
 
 msgid "A.P.U. I"
 msgstr ""
@@ -14001,6 +13063,10 @@ msgid ""
 "system, giving small ships a little more processing power."
 msgstr ""
 
+#, fuzzy
+msgid "Auxiliary Processing Unit II"
+msgstr "Вспомогательное процессорное устройство II"
+
 msgid "A.P.U. II"
 msgstr ""
 
@@ -14008,6 +13074,10 @@ msgid ""
 "An additional processing unit to supplement the main processor of the core "
 "system, giving medium ships a little more processing power."
 msgstr ""
+
+#, fuzzy
+msgid "Auxiliary Processing Unit III"
+msgstr "Вспомогательное процессорное устройство III"
 
 msgid "A.P.U. III"
 msgstr ""
@@ -14017,6 +13087,10 @@ msgid ""
 "system, giving large ships a little more processing power."
 msgstr ""
 
+#, fuzzy
+msgid "Auxiliary Processing Unit IV"
+msgstr "Вспомогательное процессорное устройство IV"
+
 msgid "A.P.U. IV"
 msgstr ""
 
@@ -14024,6 +13098,9 @@ msgid ""
 "An additional processing unit to supplement the main processor of the core "
 "system, giving capital ships a little more processing power."
 msgstr ""
+
+msgid "Battery I"
+msgstr "Батарея I"
 
 msgid "Energy Modifier"
 msgstr ""
@@ -14033,26 +13110,41 @@ msgid ""
 "mount on many light vessels."
 msgstr ""
 
+msgid "Battery II"
+msgstr "Батарея II"
+
 msgid ""
 "A large battery unit designed to hold 500 GJ of energy. Ideally mounted on "
 "medium-to-large vessels."
 msgstr ""
+
+msgid "Battery III"
+msgstr "Батарея III"
 
 msgid ""
 "A very large battery unit designed to hold 1000 GJ of energy. It can only be "
 "mounted on very large ships."
 msgstr ""
 
+msgid "Battery IV"
+msgstr "Батарея IV"
+
 msgid ""
 "A massive battery unit designed to hold 1500 GJ of energy. Given the mass of "
 "this battery, it's advisable to only mount it on capital ships."
 msgstr ""
+
+msgid "Biometal Armour"
+msgstr "Биометаллическая броня"
 
 msgid ""
 "Biometal is an armour that regenerates itself due to genetically-engineered "
 "bacteria throughout it. Due to the compartmentalization to permit bacterial "
 "life, and the difficulty of cultivating the bacteria, Biometal has greater "
 "mass than alternatives, and is the most expensive hull plating."
+msgstr ""
+
+msgid "Compact Lightsail"
 msgstr ""
 
 msgid "Manoeuvrability Modifier"
@@ -14065,6 +13157,9 @@ msgid ""
 "method of propulsion, it can provide a minor aid in the ship's acceleration."
 msgstr ""
 
+msgid "Engine Reroute"
+msgstr ""
+
 msgid ""
 "This enhancement routes energy from the ship's energy supplies to the "
 "engine, giving the ship an increased acceleration and turning. It does not "
@@ -14073,12 +13168,18 @@ msgid ""
 "braking with a small loss in reverse thrust capability."
 msgstr ""
 
+msgid "Improved Stabilizer"
+msgstr "Улучшенный стабилизатор"
+
 msgid ""
 "By improving your ship's stabilization systems drastically, this "
 "modification will allow you to reach higher speeds while still keeping the "
 "ship stable. As another side effect, the improved stabilizers allowing "
 "reversing the thrusters with a small loss of thrust."
 msgstr ""
+
+msgid "Large Cargo Pod"
+msgstr "Большой грузовой контейнер"
 
 msgid "Cargo Expansion"
 msgstr ""
@@ -14089,11 +13190,17 @@ msgid ""
 "slightly increasing the cargo inertia."
 msgstr ""
 
+msgid "Large Fuel Pod"
+msgstr "Большой топливный бак"
+
 msgid "Fuel Modifier"
 msgstr ""
 
 msgid "The fuel pod allows a ship to store more fuel for hyperspace jumps."
 msgstr ""
+
+msgid "Large Shield Booster"
+msgstr "Большой усилитель щита"
 
 msgid "Shield Booster"
 msgstr ""
@@ -14104,10 +13211,25 @@ msgid ""
 "boost, at the expense of draining some of the ship's energy."
 msgstr ""
 
+msgid "Medium Cargo Pod"
+msgstr "Средний грузовой контейнер"
+
+msgid "Medium Fuel Pod"
+msgstr "Средний топливный бак"
+
+msgid "Medium Shield Booster"
+msgstr "Средний усилитель щита"
+
+msgid "Microbond Plating"
+msgstr ""
+
 msgid ""
 "Further developed from Nanobond plating, Microbond plating is a less dense, "
 "lighter revision that's still stronger than Plasteel, making it a great "
 "choice to strengthen the hull of a medium-sized ship."
+msgstr ""
+
+msgid "Nanobond Plating"
 msgstr ""
 
 msgid ""
@@ -14115,6 +13237,9 @@ msgid ""
 "a greatly refined manufacturing process, providing greater particle density. "
 "The result is a much more robust material, although it is substantially more "
 "expensive."
+msgstr ""
+
+msgid "Nanofiber Structural Enhancement"
 msgstr ""
 
 msgid ""
@@ -14127,6 +13252,9 @@ msgid ""
 "much lighter ones, significantly reducing the mass. It does come with a big "
 "disclaimer saying it is not suited for combat, but that is more like a "
 "suggestion, right?"
+msgstr ""
+
+msgid "Nebular Shielding Prototype"
 msgstr ""
 
 msgid "Shield Modifier"
@@ -14142,6 +13270,9 @@ msgid ""
 "GW of damage prevented."
 msgstr ""
 
+msgid "Plasteel Plating"
+msgstr ""
+
 msgid ""
 "Plasteel was one of man's greatest improvements on materials. It's a cheap, "
 "strong armour that seems to take the best from both plastic and steel, "
@@ -14149,6 +13280,9 @@ msgid ""
 "only possible with this material. Although it is no longer cutting-edge, its "
 "low price point attracts many buyers."
 msgstr ""
+
+msgid "Reactor Class I"
+msgstr "Реактор I класса"
 
 msgid "Power Modifier"
 msgstr ""
@@ -14159,11 +13293,17 @@ msgid ""
 "alongside it and hooks up directly to the energy flux."
 msgstr ""
 
+msgid "Reactor Class II"
+msgstr "Реактор II класса"
+
 msgid ""
 "The class II reactor uses a newer fusion technology than the class I, "
 "permitting it to have greater energy density. The result is a mid-sized "
 "reactor that is best used on ships with moderate energy demands."
 msgstr ""
+
+msgid "Reactor Class III"
+msgstr "Реактор III класса"
 
 msgid ""
 "The immense class III reactor provides enough power for nearly anything. The "
@@ -14173,9 +13313,15 @@ msgid ""
 "energy output would be excessive for anything less."
 msgstr ""
 
+msgid "Shield Capacitor I"
+msgstr ""
+
 msgid ""
 "An enhancement for the shield power system, giving small ships a better "
 "chance of escaping attackers."
+msgstr ""
+
+msgid "Shield Capacitor II"
 msgstr ""
 
 msgid ""
@@ -14183,13 +13329,31 @@ msgid ""
 "skirmishes."
 msgstr ""
 
+msgid "Shield Capacitor III"
+msgstr ""
+
 msgid ""
 "A heavy duty shield enhancer for ships that face combat on a regular basis."
+msgstr ""
+
+msgid "Shield Capacitor IV"
 msgstr ""
 
 msgid ""
 "The pinnacle in shield boosting technology, reinforcing the defences of "
 "ships fighting on the front lines."
+msgstr ""
+
+msgid "Small Cargo Pod"
+msgstr "Малый грузовой контейнер"
+
+msgid "Small Fuel Pod"
+msgstr "Малый топливный бак"
+
+msgid "Small Shield Booster"
+msgstr "Малый усилитель щита"
+
+msgid "Bioship Pheromone Emitter"
 msgstr ""
 
 msgid "Pheromone Emitter"
@@ -14207,6 +13371,9 @@ msgstr ""
 msgid "Release bioship pheromones when used."
 msgstr ""
 
+msgid "Daphne's Leap"
+msgstr ""
+
 msgid "System Improvement"
 msgstr ""
 
@@ -14217,6 +13384,9 @@ msgid ""
 "preparations well in advance to jump at a moment's notice, however, this "
 "comes at the cost of increasing the overall time needed to jump due to "
 "necessary in-flight calibration."
+msgstr ""
+
+msgid "Executor Shield Aura"
 msgstr ""
 
 msgid "Aura"
@@ -14237,6 +13407,9 @@ msgid ""
 "Range is affected by detection bonus."
 msgstr ""
 
+msgid "Fake Transponder"
+msgstr ""
+
 msgid ""
 "A fake transponder to make ships appear to be a non-descript and harmless "
 "independent ship."
@@ -14245,6 +13418,9 @@ msgstr ""
 msgid ""
 "Makes the ship appear as independent to other ships. Becomes temporarily "
 "void when discovered."
+msgstr ""
+
+msgid "Fuel Recycler"
 msgstr ""
 
 msgid ""
@@ -14261,6 +13437,9 @@ msgstr ""
 msgid "#gAllows converting space resources to fuel.#0"
 msgstr ""
 
+msgid "Fuelshell Plating"
+msgstr ""
+
 msgid ""
 "An experimental hull design for scout ships that would allow them to "
 "significantly increase their travel range by using a porous hull material "
@@ -14272,6 +13451,9 @@ msgid ""
 "tinderbox and leaking fuel when sustaining damage, but who knows?"
 msgstr ""
 
+msgid "Hades Torch"
+msgstr ""
+
 msgid ""
 "The Hades Torch would be an exceptional afterburner except for the minor "
 "detail that to obtain maximum performance it has a tendency to burn the hull "
@@ -14281,6 +13463,9 @@ msgstr ""
 msgid "#rHot hot hot!#0"
 msgstr ""
 
+msgid "Homebrew Processing Unit"
+msgstr ""
+
 msgid ""
 "This core system is easily recognizable as the work of some amateurs, with "
 "sloppy wiring and dangerously exposed internals. However, unlike mass "
@@ -14288,6 +13473,9 @@ msgid ""
 "developing the unit. While the shield and computation power are less than "
 "most similar cores, it has significantly better developed functionality in "
 "other areas."
+msgstr ""
+
+msgid "Prototype Systems T-IVa 'Quickshell'"
 msgstr ""
 
 msgid "P.S. T-IVa 'Qickshell'"
@@ -14301,6 +13489,9 @@ msgid ""
 "sentience interface. Although the shield capacity parameters are suboptimal, "
 "that is just a matter of time. It is only a matter of time before Project "
 "Thurion becomes the technological backbone of civilization!\""
+msgstr ""
+
+msgid "Pulse Scanner"
 msgstr ""
 
 msgid ""
@@ -14320,12 +13511,18 @@ msgid ""
 "#pCan be used for tracking anomaly signals.#0"
 msgstr ""
 
+msgid "Squadron Synchronizer Module"
+msgstr ""
+
 msgid ""
 "It's not clear how Misi got the goods to sell and they evade questions on "
 "the topic, however, the Squadron Synchronizer Module can be easily connected "
 "to any ship to increase the amount of ships it can command efficiently and "
 "accurately. At its core it seems to change some of the underlying algorithms "
 "to be more efficient to use less bandwidth."
+msgstr ""
+
+msgid "Valkyrie Beam"
 msgstr ""
 
 msgid ""
@@ -14339,12 +13536,18 @@ msgstr ""
 msgid "#rDrains 80 shield per second when firing and for one second after.#0"
 msgstr ""
 
+msgid "Veil of Penelope"
+msgstr ""
+
 msgid ""
 "This device seems to be almost like a parasite that hooks up to the ship's "
 "systems. It's not exactly clear what it does, but it seems to feed on the "
 "emitted radiation, allowing the ship to remain undetected longer when near "
 "other ships."
 msgstr ""
+
+msgid "ZD-5 Guardian Unit"
+msgstr "ZD-5 Охранный юнит"
 
 msgid ""
 "The ZD-5 Guardian Unit is designed as a last resort defence system. It "
@@ -14360,10 +13563,16 @@ msgid ""
 "maximum of 200 damage per second."
 msgstr ""
 
+msgid "Apollo's Gaze"
+msgstr ""
+
 msgid ""
 "This device hooks up to the ship's weapon systems and allows launching "
 "projectiles at higher velocities and further than usual. This indeed comes "
 "with a performance penalty, however."
+msgstr ""
+
+msgid "Asteroid Scanner"
 msgstr ""
 
 msgid "Mining System"
@@ -14376,6 +13585,9 @@ msgid ""
 "spectroscopy, and, what is more impressive, to infer the internal "
 "composition via inverse electrical impedance. Of course, that comes at a "
 "price that not just any miner can pay."
+msgstr ""
+
+msgid "Berserk Chip"
 msgstr ""
 
 msgid "Speed Modifier"
@@ -14395,12 +13607,18 @@ msgid ""
 "automatically when hull integrity is below 20%."
 msgstr ""
 
+msgid "Blink Drive"
+msgstr ""
+
 msgid ""
 "The blink drive uses hyperdrive technology modified to create a small space-"
 "time fold allowing ships to instantly cross short distances. Pilots who "
 "often use such devices tend to have a higher amount of strong headaches than "
 "usual, but any effects more adverse than that have yet to be discovered."
 msgstr ""
+
+msgid "Boarding Androids MK1"
+msgstr "Абордажные андроиды МК1"
 
 msgid "Boarding Androids"
 msgstr ""
@@ -14412,6 +13630,9 @@ msgid ""
 "be it tactical or culinary."
 msgstr ""
 
+msgid "Boarding Androids MK2"
+msgstr "Абордажные андроиды МК2"
+
 msgid ""
 "The Boarding Android Mark 2 improves upon the wide variety of implements "
 "sported by its predecessor, additionally including scissor-hands and a "
@@ -14420,12 +13641,19 @@ msgstr ""
 "Абордажный андроид Марк 2 улучшает широкий спектр инструментов, которыми мог "
 "похвастаться его предшественник, добавляя к нему руки-ножницы и швейную иглу."
 
+#, fuzzy
+msgid "Cargo Damper"
+msgstr "Грузовые мешки"
+
 msgid ""
 "When hauling large amounts of cargo, general-purpose ship engines may become "
 "overwhelmed and deliver a subpar performance. This device can be installed "
 "within a ship's cargo bays to generate a weak directed gravitational field "
 "to reduce the impact of cargo inertia on the ship's mobility and offset the "
 "requirement for bulkier engines."
+msgstr ""
+
+msgid "Catalytic Energy Drill"
 msgstr ""
 
 msgid ""
@@ -14442,7 +13670,13 @@ msgstr ""
 msgid "#gAllows precise mining of asteroids to extract rare minerals.#0"
 msgstr ""
 
+msgid "Cloaking Device"
+msgstr "Маскировочное устройство"
+
 msgid "Uses 1 MJ of energy per 10 mass and drains shield in 0.5 seconds."
+msgstr ""
+
+msgid "Combat Hologram Projector"
 msgstr ""
 
 msgid "Holograph Projector"
@@ -14460,6 +13694,9 @@ msgid ""
 "Creates a hologram of the current ship to distract the enemy ship target."
 msgstr ""
 
+msgid "Agility Combat AI"
+msgstr ""
+
 msgid "Combat AI"
 msgstr ""
 
@@ -14470,12 +13707,18 @@ msgid ""
 "modifying the hardware nor increasing the energy consumption."
 msgstr ""
 
+msgid "Bio-Neural Combat AI"
+msgstr ""
+
 msgid ""
 "Unlike regular Combat AIs which consist of pure software, this AI relies on "
 "a quasi-organic coprocessor made with both living tissue and inorganic "
 "material. Acting as a small temporal lobe, the coprocessor is able to "
 "analyse all the available sensory data to predict future events, allowing "
 "the ship to seemingly gain an edge over others in reaction times."
+msgstr ""
+
+msgid "Cyclic Combat AI"
 msgstr ""
 
 msgid ""
@@ -14485,11 +13728,17 @@ msgid ""
 "that lead to an overall increase in fire rate."
 msgstr ""
 
+msgid "Efficiency Combat AI"
+msgstr ""
+
 msgid ""
 "This Combat AI utilizes advanced power routeing and process scheduling "
 "controls to better distribute the ship's computing power between tasks, "
 "allowing to get more use out of the hardware at hand without any increase in "
 "energy use."
+msgstr ""
+
+msgid "Hive Combat AI"
 msgstr ""
 
 #, fuzzy
@@ -14504,11 +13753,17 @@ msgid ""
 "lost fighters."
 msgstr ""
 
+msgid "Hunting Combat AI"
+msgstr ""
+
 msgid ""
 "Like a hunter's ambush, the Hunting Combat AI is able to exploit the element "
 "of surprise and the weaknesses of enemy ship hulls, resulting in a "
 "significant increase in damage for turret weapons, albeit with a reduced "
 "fire rate."
+msgstr ""
+
+msgid "Pinpoint Combat AI"
 msgstr ""
 
 msgid ""
@@ -14518,10 +13773,16 @@ msgid ""
 "the range and the lock-on speed of all missile launchers on the ship."
 msgstr ""
 
+msgid "Scanning Combat AI"
+msgstr ""
+
 msgid ""
 "This Combat AI focuses on optimization of the ship's sensor infrastructure. "
 "By making small tweaks to the sensors' tolerances on the fly, it is able to "
 "effectively increase the range at which other ships are detected."
+msgstr ""
+
+msgid "Charge Conduit"
 msgstr ""
 
 msgid "Conduit"
@@ -14535,10 +13796,16 @@ msgid ""
 "in most cases."
 msgstr ""
 
+msgid "Pipeline Conduit"
+msgstr ""
+
 msgid ""
 "The Pipeline Conduit funnels excess shield energy into the ammunition and "
 "fighter reconstruction pipelines, greatly speeding up those processes at the "
 "cost of extra CPU use."
+msgstr ""
+
+msgid "Targeting Conduit"
 msgstr ""
 
 msgid ""
@@ -14547,6 +13814,9 @@ msgid ""
 "tracking and faster lock-ons while the shields are undamaged, though at the "
 "cost of a slight reduction in peak damage output as a result of overloading "
 "those systems."
+msgstr ""
+
+msgid "Cryogenic Repair Nanobots"
 msgstr ""
 
 msgid "Armour Repair"
@@ -14565,6 +13835,9 @@ msgstr ""
 msgid "Restores armour to full when performing an active cooldown."
 msgstr ""
 
+msgid "Droid Repair Crew"
+msgstr ""
+
 msgid ""
 "This low maintenance droid crew will scour your ship to repair any damage "
 "caused by space hazards. They are very small and able to work both on the "
@@ -14576,6 +13849,9 @@ msgstr ""
 
 msgid "Can only restore armour when below 50%."
 msgstr ""
+
+msgid "Emergency Shield Booster"
+msgstr "Экстренный усилитель щита"
 
 msgid "Shield Modification"
 msgstr ""
@@ -14594,6 +13870,9 @@ msgid ""
 "of 15 seconds. Uses 3 GJ of energy for each GJ of shield recovered."
 msgstr ""
 
+msgid "Emergency Stasis Inducer"
+msgstr ""
+
 msgid ""
 "Not much unlike the Neural Accelerator Interface, the Emergency Stasis "
 "Inducer creates a strong electromagnetic field around the ship, making time "
@@ -14608,6 +13887,9 @@ msgstr ""
 msgid "Triggered on armour damage. Lasts 3 seconds with 8 seconds cooldown."
 msgstr ""
 
+msgid "Flicker Drive"
+msgstr ""
+
 msgid ""
 "The Flicker Drive is a compacted version of the Blink Drive, lowering the "
 "power usage, blinking range, and amount of mass that can be blinked, "
@@ -14618,6 +13900,9 @@ msgid ""
 "strong following who claim it is superior to any alternatives."
 msgstr ""
 
+msgid "Hellburner"
+msgstr ""
+
 msgid ""
 "The Hellburner is one of the best light afterburners on the market. Through "
 "proprietary pressurization ducts, the Hellburner is able to generate far "
@@ -14626,12 +13911,18 @@ msgid ""
 "more rapidly."
 msgstr ""
 
+msgid "Hidden Jump Scanner"
+msgstr ""
+
 msgid ""
 "A specialized piece of sensor technology that can scan its immediate "
 "surroundings for unusual anomalies in the fabric of space. Although short-"
 "ranged and only capable of scanning for a limited amount of time before "
 "needing to recharge, this scanner is capable of discovering jump points that "
 "regular sensors can't detect."
+msgstr ""
+
+msgid "Faraday Tempest Coating"
 msgstr ""
 
 msgid "Hull Coating"
@@ -14645,12 +13936,18 @@ msgid ""
 "recovery from system damage."
 msgstr ""
 
+msgid "Lattice Thermal Coating"
+msgstr ""
+
 msgid ""
 "By modifying the micro-facets of the hull's surface using a triply periodic "
 "minimal surface structure, the Lattice Thermal Coating is able to aid in the "
 "regulation of ship internals without disrupting core functionality. This "
 "allows for outfits to be used in quicker successions reliably and without "
 "long-lasting damage."
+msgstr ""
+
+msgid "Milspec Impacto-Plastic Coating"
 msgstr ""
 
 msgid "M. Impacto-Plastic Coating"
@@ -14662,6 +13959,9 @@ msgid ""
 "its original state."
 msgstr ""
 
+msgid "Nebula Resistant Coating"
+msgstr ""
+
 msgid ""
 "Protecting ships from nebula radiation is not an easy task given the "
 "fluctuations and parameters of the different types of radiation being "
@@ -14669,6 +13969,9 @@ msgid ""
 "fully immune to the Nebula's effects, this hull coating does provide a "
 "significant extra resistance, although prolonged exposure is still not "
 "recommended."
+msgstr ""
+
+msgid "Nexus Concealment Coating"
 msgstr ""
 
 msgid "N. Concealment Coating"
@@ -14682,6 +13985,9 @@ msgid ""
 "position."
 msgstr ""
 
+msgid "Photo-Voltaic Nanobot Coating"
+msgstr ""
+
 msgid ""
 "A coating of photo-voltaic nanobot paint covers the ship's entire hull and "
 "is able to harness solar energy and redirect it to the power system of the "
@@ -14689,11 +13995,17 @@ msgid ""
 "maintenance once a colony has been established."
 msgstr ""
 
+msgid "Reconstructive Nanobot Coating"
+msgstr ""
+
 msgid ""
 "It is possible to establish a colony of repair nanobots directly on the hull "
 "of a ship. Since the design has to account for the potentially harsh "
 "conditions outside the approach has limited effectiveness compared to the "
 "more intrusive solutions, but nevertheless complements them neatly."
+msgstr ""
+
+msgid "Hyperbolic Blink Engine"
 msgstr ""
 
 msgid ""
@@ -14713,6 +14025,9 @@ msgid ""
 "mass."
 msgstr ""
 
+msgid "Jump Scanner"
+msgstr ""
+
 msgid ""
 "This device installs a secondary scanning array on the ship. The array is "
 "programmed with the known characteristics of the spatial anomalies "
@@ -14724,10 +14039,16 @@ msgid ""
 "standard type."
 msgstr ""
 
+msgid "Kratos' Glove"
+msgstr ""
+
 msgid ""
 "A module that lets the ship's generator direct energy to its weapons in "
 "larger, more spaced out bursts. It's not perfectly efficient, but has been "
 "proven useful in some combat encounters."
+msgstr ""
+
+msgid "Low Radiation Sensor Modulator"
 msgstr ""
 
 msgid ""
@@ -14735,6 +14056,9 @@ msgid ""
 "Low Radiation Sensor Modulator is able to increase the detection of nearby "
 "ships while also giving more sensitivity to jump point signatures when "
 "stealthed."
+msgstr ""
+
+msgid "Milspec Jammer"
 msgstr ""
 
 msgid "M. Jammer"
@@ -14752,6 +14076,9 @@ msgid ""
 "escape! Fly safe, fly Milspec."
 msgstr ""
 
+msgid "Milspec Scrambler"
+msgstr ""
+
 msgid "M. Scrambler"
 msgstr ""
 
@@ -14765,6 +14092,9 @@ msgid ""
 "a minimal cost to you or your ship's reactor! Fly safe, fly Milspec."
 msgstr ""
 
+msgid "Neural Accelerator Interface"
+msgstr ""
+
 msgid ""
 "The flow of time is generally not perceived as a constant value, rather it "
 "fluctuates greatly depending on the circumstances. Using the latest in neuro-"
@@ -14776,6 +14106,9 @@ msgstr ""
 msgid "Active for 5 seconds with a cooldown of 20 seconds."
 msgstr ""
 
+msgid "Sensor Array"
+msgstr ""
+
 msgid ""
 "This sensor array uses quadralens-magnified photon modulation to more easily "
 "detect the faint signals emitted by a distant ship, effectively boosting "
@@ -14783,6 +14116,9 @@ msgid ""
 "can be useful to counteract the effect of cloaking instruments and also "
 "increases the accuracy of short-range tracking information used by your "
 "ship's weapons system."
+msgstr ""
+
+msgid "S&K Heavy Plasma Drill"
 msgstr ""
 
 msgid ""
@@ -14794,11 +14130,17 @@ msgid ""
 "vessels."
 msgstr ""
 
+msgid "S&K Plasma Drill"
+msgstr ""
+
 msgid ""
 "The S&K Plasma Drill is an alternate approach to conventional mining lances. "
 "Although it requires getting up close to the asteroid and accurate controls "
 "to be able to extract minerals, it obtains significantly better yields. An "
 "integrated asteroid scanner is just the icing on the cake."
+msgstr ""
+
+msgid "Stealth Burster"
 msgstr ""
 
 msgid ""
@@ -14810,6 +14152,9 @@ msgid ""
 "and the device takes a long time to recalibrate and reload the capacitors."
 msgstr ""
 
+msgid "Targeting Array"
+msgstr ""
+
 msgid "Weapon Modifier (Turret)"
 msgstr ""
 
@@ -14817,6 +14162,9 @@ msgid ""
 "An improved targeting array allows your missiles to more quickly acquire "
 "targets, and minimizes accuracy losses at range. It requires a short period "
 "to compute an ideal vector, slightly slowing firing rates."
+msgstr ""
+
+msgid "Unicorp Jammer"
 msgstr ""
 
 msgid "U. Jammer"
@@ -14831,6 +14179,9 @@ msgid ""
 "systems are inactive until needed, and must be activated manually."
 msgstr ""
 
+msgid "Unicorp Light Afterburner"
+msgstr ""
+
 msgid "U. Light Afterburner"
 msgstr ""
 
@@ -14842,6 +14193,9 @@ msgid ""
 "light fighters and interceptors."
 msgstr ""
 
+msgid "Unicorp Medium Afterburner"
+msgstr ""
+
 msgid "U. Medium Afterburner"
 msgstr ""
 
@@ -14851,6 +14205,9 @@ msgid ""
 "quickly drain the ship's energy. This model is able to provide an emergency "
 "speed boost to heavier ships than Unicorp's light afterburner, but requires "
 "a larger mount and more energy to run."
+msgstr ""
+
+msgid "Unicorp Scrambler"
 msgstr ""
 
 msgid "U. Scrambler"
@@ -14865,6 +14222,9 @@ msgid ""
 "active."
 msgstr ""
 
+msgid "Weakness Harmonizer AI"
+msgstr ""
+
 msgid ""
 "This is an upgrade to the sensor systems that is able to learn from nearby "
 "hostile ships' common weaknesses. The AI is able to extract subtle features "
@@ -14872,6 +14232,9 @@ msgid ""
 "weaknesses in enemy ships. The more ships it is able to analyse and "
 "extrapolate from, the stronger the effect."
 msgstr ""
+
+msgid "Weapons Ionizer"
+msgstr "Ионизатор оружия"
 
 msgid "Weapon Modification"
 msgstr ""
@@ -14888,6 +14251,9 @@ msgstr ""
 msgid "Automatically triggers when target armour is below 50%."
 msgstr ""
 
+msgid "Antimatter Lance"
+msgstr ""
+
 msgid ""
 "The antimatter lance directly attacks the integrity of a ship on a molecular "
 "level, rather than trying to brute force its way through the armour of enemy "
@@ -14896,6 +14262,9 @@ msgid ""
 msgstr ""
 
 msgid "Lowers the action speed upon hit by 10% for 7 seconds."
+msgstr ""
+
+msgid "Arc Blade"
 msgstr ""
 
 msgid ""
@@ -14907,6 +14276,9 @@ msgid ""
 "pirate captains who purchase it regret their decision."
 msgstr ""
 
+msgid "Arc Machete"
+msgstr ""
+
 msgid ""
 "This weapon unleashes a focused beam of disabling electromagnetic radiation, "
 "able to both effectively shred through a target's shielding and render its "
@@ -14914,6 +14286,9 @@ msgid ""
 "physical harm. It's favoured by the few well-off pirate captains able to get "
 "their hands on one, as well as law enforcement on the hunt for those "
 "pirates, for similar reasons."
+msgstr ""
+
+msgid "Disruptor Artillery S1"
 msgstr ""
 
 msgid "Disruptor A. S1"
@@ -14928,6 +14303,9 @@ msgid ""
 "systems."
 msgstr ""
 
+msgid "Disruptor Artillery S2"
+msgstr ""
+
 msgid "Disruptor A. S2"
 msgstr ""
 
@@ -14935,6 +14313,9 @@ msgid ""
 "The Disruptor Artillery S2 is an upscaled version of the S1 model. Although "
 "the larger dimensions limit the applicability to destroyer-class ships and "
 "up, this comes with perks of longer range and significant more damage."
+msgstr ""
+
+msgid "Disruptor Battery S2"
 msgstr ""
 
 msgid "Disruptor B. S2"
@@ -14949,6 +14330,9 @@ msgid ""
 "more than makes up for it with overall utility. Given the fact that not many "
 "survive being the brunt of a barrage from Disruptor Battery S2s, it may be "
 "that they have a point."
+msgstr ""
+
+msgid "Energy Harpoon"
 msgstr ""
 
 msgid ""
@@ -14966,12 +14350,18 @@ msgstr ""
 msgid "#oOn hit pulls target.#0"
 msgstr ""
 
+msgid "Flak Gun"
+msgstr ""
+
 msgid ""
 "Fires waste debris in a shotgun-like blast that can be useful in taking down "
 "small craft or hitting large targets. Not widely used due the tendency to "
 "jam and blow up, which has been known to cause hull breaches, fires, and "
 "other major issues on the ship. However, this one looks like it is in quite "
 "good shape."
+msgstr ""
+
+msgid "Gauss Gun"
 msgstr ""
 
 msgid ""
@@ -14982,16 +14372,25 @@ msgid ""
 "use, reliable weapon."
 msgstr ""
 
+msgid "Grave Beam"
+msgstr ""
+
 msgid ""
 "The Grave Beam is a lighter, faster version of the Ragnarok Beam. It does "
 "not deal as much damage, but its lighter size and more forgiving CPU "
 "requirements makes it a competitive contender."
 msgstr ""
 
+msgid "Grave Lance"
+msgstr ""
+
 msgid ""
 "The Grave Lance is one of the most powerful Lance weapons around. The "
 "technology behind it is poorly understood by everyone except the Za'lek, who "
 "use it as a standard weapon."
+msgstr ""
+
+msgid "Heavy Ion Cannon"
 msgstr ""
 
 msgid ""
@@ -15001,11 +14400,17 @@ msgid ""
 "use as well."
 msgstr ""
 
+msgid "Heavy Ion Turret"
+msgstr "Тяжёлая ионная турель"
+
 msgid ""
 "The Heavy Ion Turret is a Sirius military design, applying brute force to "
 "its target's internal systems. When coupled with Razor weaponry, it is "
 "terribly efficient at reducing enemy warships to tumbling hunks of junk."
 msgstr ""
+
+msgid "Heavy Laser Turret"
+msgstr "Тяжёлая лазерная турель"
 
 msgid ""
 "The Heavy Laser Turret is more or less an upscaled version of the Laser "
@@ -15015,9 +14420,15 @@ msgid ""
 "purchase."
 msgstr ""
 
+msgid "Heavy Neutron Disruptor"
+msgstr ""
+
 msgid ""
 "The Heavy Neutron Disruptor improves upon the processes behind the smaller "
 "Neutron Disruptor, giving this weapon greater damage and range."
+msgstr ""
+
+msgid "Heavy Ripper Cannon"
 msgstr ""
 
 msgid ""
@@ -15028,10 +14439,16 @@ msgid ""
 "it unsuitable for smaller ships."
 msgstr ""
 
+msgid "Heavy Ripper Turret"
+msgstr ""
+
 msgid ""
 "Built off the heavy ripper cannon, the ripper turret is the heaviest turret "
 "conventionally available to civilians. Its bulk, high energy requirements, "
 "and high damage make it unsuitable for non-capital ships."
+msgstr ""
+
+msgid "Ion Cannon"
 msgstr ""
 
 msgid ""
@@ -15043,6 +14460,9 @@ msgid ""
 "policing and militia when nonlethal force is needed."
 msgstr ""
 
+msgid "Laser Cannon MK1"
+msgstr "Лазерная пушка МК1"
+
 msgid ""
 "The Laser Cannon MK1 is a standard weapon on many vessels, and the first "
 "defence of merchants everywhere. The cannon fires charged energy that can do "
@@ -15050,12 +14470,18 @@ msgid ""
 "while remaining efficient enough to mount several even on small ships."
 msgstr ""
 
+msgid "Laser Cannon MK2"
+msgstr "Лазерная пушка МК2"
+
 msgid ""
 "A high-powered version of the Laser Cannon MK1, the MK2 is usually found on "
 "Imperial law enforcement and military ships. Its superior firepower helps "
 "keep order among the civilian populace and pirates at bay. It is even "
 "capable of dealing with larger Corvette vessels with some effort."
 msgstr ""
+
+msgid "Laser Turret MK1"
+msgstr "Лазерная турель МК1"
 
 msgid ""
 "A pair of modified laser cannon MK1s mounted on a rotating turret, providing "
@@ -15065,10 +14491,16 @@ msgid ""
 "stray pirates and marauders."
 msgstr ""
 
+msgid "Laser Turret MK2"
+msgstr "Лазерная турель МК2"
+
 msgid ""
 "The Laser Turret MK2 is often found on Imperial fast response fleets, for "
 "use against fleets of small to medium ships. Due to the low cost and high "
 "firepower, this weapon is one of the mainstays in the Imperial space forces."
+msgstr ""
+
+msgid "Mass Driver"
 msgstr ""
 
 msgid ""
@@ -15077,11 +14509,17 @@ msgid ""
 "economical heavy weapons in the galaxy."
 msgstr ""
 
+msgid "Mining Lance MK1"
+msgstr ""
+
 msgid ""
 "Mining lances are optimized for high destructive power at short range, "
 "specialized in mining space asteroids. While they can deal significant "
 "damage to heavy armour, they are impractical against shields, however, there "
 "are stories of miners using them to get away from marauders in a clutch.."
+msgstr ""
+
+msgid "Mining Lance MK2"
 msgstr ""
 
 msgid ""
@@ -15095,11 +14533,17 @@ msgid ""
 "safety analysis reports."
 msgstr ""
 
+msgid "Neutron Disruptor"
+msgstr ""
+
 msgid ""
 "The Neutron Disruptor uses high-energy pulses that alter the base "
 "composition of molecules, causing heavy damage. This weapon was first "
 "popular with the Collective, whose drones were immune to early versions' "
 "lethal backscatter radiation."
+msgstr ""
+
+msgid "Nexus Drill Lance"
 msgstr ""
 
 msgid ""
@@ -15112,10 +14556,16 @@ msgid ""
 "materials."
 msgstr ""
 
+msgid "Orion Beam"
+msgstr ""
+
 msgid ""
 "The turret-mounted edition of the Orion Lance offers mid-sized ships "
 "exceptional short-duration firepower, a potent deterrent against enemy "
 "vessels that dare venture within firing range."
+msgstr ""
+
+msgid "Orion Lance"
 msgstr ""
 
 msgid ""
@@ -15127,6 +14577,9 @@ msgid ""
 "survive the encounter once they are in range."
 msgstr ""
 
+msgid "Particle Beam"
+msgstr ""
+
 msgid ""
 "A turret-mounted particle lance. The smallest possible turreted beam weapon, "
 "used as a last-ditch weapon against light enemies. Like the particle lance, "
@@ -15134,11 +14587,17 @@ msgid ""
 "of a significantly reduced range."
 msgstr ""
 
+msgid "Particle Lance"
+msgstr ""
+
 msgid ""
 "This is the smallest direct beam weapon built, purpose-built by the Za'lek "
 "for their drones. While the beam can instantaneously hit multiple targets "
 "simultaneously, it comes at a downside of a really short range, requiring "
 "the pilot to get very close to their target risking enemy fire."
+msgstr ""
+
+msgid "Plasma Blaster MK1"
 msgstr ""
 
 msgid "Plasma Bl. MK1"
@@ -15153,6 +14612,9 @@ msgid ""
 "tend to make it harder to disable ships."
 msgstr ""
 
+msgid "Plasma Blaster MK2"
+msgstr ""
+
 msgid "Plasma Bl. MK2"
 msgstr ""
 
@@ -15165,11 +14627,17 @@ msgid ""
 "unlucky enough to get hit."
 msgstr ""
 
+msgid "Plasma Cannon"
+msgstr ""
+
 msgid ""
 "The Plasma Cannon is a scaled-up version of the Plasma Blaster design for "
 "use on Corvettes. It manages to pack a markedly stronger punch, but the "
 "engineering complexities of fitting such a powerful weapon into a small slot "
 "lead to much higher dependence on guidance from the ship's central computer."
+msgstr ""
+
+msgid "Plasma Cluster Cannon"
 msgstr ""
 
 msgid "Plasma C. Cannon"
@@ -15185,6 +14653,10 @@ msgid ""
 "handle its computational load despite being a synthetic construct."
 msgstr ""
 
+#, fuzzy
+msgid "Plasma Eruptor"
+msgstr "Плазменный ожог"
+
 msgid ""
 "Using a genetically engineered modified plasma organ, the Eruptor is able to "
 "spray large areas of space with highly corrosive plasma. Unlike other plasma "
@@ -15193,6 +14665,9 @@ msgid ""
 "accuracy is comprised, however, as it can spray around a large area, it is "
 "almost guaranteed to hit anything within sight."
 msgstr ""
+
+msgid "Plasma Turret MK1"
+msgstr "Плазменная турель МК1"
 
 msgid "Plasma T. MK1"
 msgstr ""
@@ -15205,6 +14680,9 @@ msgid ""
 "the pros."
 msgstr ""
 
+msgid "Plasma Turret MK2"
+msgstr "Плазменная турель МК2"
+
 msgid "Plasma T. MK2"
 msgstr ""
 
@@ -15212,6 +14690,9 @@ msgid ""
 "The mark 2 plasma turret isn't especially impressive compared to other "
 "medium-size turrets, but it is sometimes favoured by corvettes for its "
 "unusually low weight compared to its range and damage output."
+msgstr ""
+
+msgid "Ragnarok Beam"
 msgstr ""
 
 msgid ""
@@ -15224,6 +14705,9 @@ msgid ""
 "favourite of pilots who like to get close to their enemies."
 msgstr ""
 
+msgid "Railgun"
+msgstr ""
+
 msgid ""
 "The railgun is a cannon that uses heavy magnetic pulses to accelerate pieces "
 "of debris to extremely high velocities. The impact caused by the pieces of "
@@ -15232,12 +14716,18 @@ msgid ""
 "weapons can cause on their targets."
 msgstr ""
 
+msgid "Railgun Turret"
+msgstr ""
+
 msgid ""
 "While one railgun is a formidable weapon, the ultimate in brute-force "
 "capital ship weaponry is the railgun turret. Mounting two railguns in a "
 "specialized turret housing, it manages to mitigate the recoil normally "
 "associated with railguns at a slight velocity cost. Very few capital ships "
 "can survive being pounded by these weapons for long."
+msgstr ""
+
+msgid "Razor Artillery S1"
 msgstr ""
 
 msgid "Razor A. S1"
@@ -15254,6 +14744,9 @@ msgid ""
 "prove to be quite lethal."
 msgstr ""
 
+msgid "Razor Artillery S2"
+msgstr ""
+
 msgid "Razor A. S2"
 msgstr ""
 
@@ -15262,6 +14755,9 @@ msgid ""
 "compared to the more compact S2 model, and has less difficulty in "
 "overloading corvette and destroyer-grade shielding, and disabling critical "
 "components."
+msgstr ""
+
+msgid "Razor Artillery S3"
 msgstr ""
 
 msgid "Razor A. S3"
@@ -15274,6 +14770,9 @@ msgid ""
 "corvettes."
 msgstr ""
 
+msgid "Razor Battery S2"
+msgstr ""
+
 msgid "Razor B. S2"
 msgstr ""
 
@@ -15284,11 +14783,17 @@ msgid ""
 "quickly demoralize pirates and marauders looking to make some quick credits."
 msgstr ""
 
+msgid "Repeating Railgun"
+msgstr ""
+
 msgid ""
 "While the Railgun was devastating in its effects, it wasn't quite "
 "devastating enough for Dvaered High Command. They had their engineers "
 "enhance the weapon into a heavier, faster firing variant that isn't so much "
 "a gun as it is a miniature meteor shower generator."
+msgstr ""
+
+msgid "Ripper Cannon"
 msgstr ""
 
 msgid ""
@@ -15299,11 +14804,17 @@ msgid ""
 "but need heavy firepower so they can take on heavier ships effectively."
 msgstr ""
 
+msgid "Shredder"
+msgstr ""
+
 msgid ""
 "The Shredder quite lives up to the name its Dvaered manufacturers gave it. "
 "The sheer damage dealing capacity of this weapon makes Dvaered Corvettes "
 "dangerous to engage by ships that aren't substantially larger than they are."
 msgstr ""
+
+msgid "Turbolaser"
+msgstr "Турболазер"
 
 msgid ""
 "This special model of the Heavy Laser Turret is one of the heaviest weapons "
@@ -15313,10 +14824,16 @@ msgid ""
 "to perform evasive manoeuvres."
 msgstr ""
 
+msgid "Turreted Gauss Gun"
+msgstr ""
+
 msgid ""
 "One of the more common countermeasures employed by low-budget merchant "
 "ships, the turret version of the Gauss Gun provides basic defence against "
 "lone pirates. A more determined attacker is unlikely to be deterred, however."
+msgstr ""
+
+msgid "Turreted Vulcan Gun"
 msgstr ""
 
 msgid ""
@@ -15325,12 +14842,18 @@ msgid ""
 "projectiles might find themselves riddled with hull punctures before long."
 msgstr ""
 
+msgid "Vulcan Gun"
+msgstr ""
+
 msgid ""
 "The Vulcan Gun improves over the Gauss Gun with increased range and damage, "
 "achieved by using a heavier calibre ammunition. A skilled pilot can wreak "
 "some serious havoc even to medium-sized vessels with a pair of Vulcan Guns "
 "installed on their ship."
 msgstr ""
+
+msgid "Drone"
+msgstr "Дрон"
 
 msgid "Robotic Interceptor"
 msgstr ""
@@ -15344,6 +14867,9 @@ msgid ""
 msgstr ""
 "Это - модифицированная версия Дрона Коллектива, включающая систему "
 "жизнеобеспечения человека."
+
+msgid "Drone Carrier"
+msgstr "Дрон-авианосец"
 
 msgid "Robotic Carrier"
 msgstr "Роботизированный авианосец"
@@ -15363,8 +14889,14 @@ msgstr ""
 "с помощью удалённо управляемых дроидов. Благодаря отстуствию тяжёлой брони и "
 "ненужных удобств для экипажа, Дрон-авианосец необыкновенно лёгкий и быстрый."
 
+msgid "Drone (Hyena)"
+msgstr ""
+
 msgid "A fully sentient drone disguised as a Hyena."
 msgstr ""
+
+msgid "Heavy Drone"
+msgstr "Тяжёлый дрон"
 
 msgid "Robotic Fighter"
 msgstr ""
@@ -15376,6 +14908,9 @@ msgstr ""
 "Этот Тяжёлый Дрон Коллектива был модифицирован инженерами, чтобы быть "
 "пилотируемым человеком."
 
+msgid "Dvaered Ancestor"
+msgstr "Дваредский Предок"
+
 msgid ""
 "On this military grade version of the Ancestor, the distribution of the "
 "weight on the structure has been optimized in order to allow embarking more "
@@ -15383,6 +14918,9 @@ msgid ""
 msgstr ""
 "В этой военной версии Предка распределение веса по конструкции было "
 "оптимизировано, чтобы позволить нести больше полезной нагрузки."
+
+msgid "Dvaered Arsenal"
+msgstr "Дваредский Арсенал"
 
 msgid "You need at least 60% reputation with House Dvaered."
 msgstr "Вам нужна как минимум 60% репутация у Дома Дваред."
@@ -15403,6 +14941,9 @@ msgstr ""
 "скорее ориентированы на доставку и развёртывание вооружений и войск, чем на "
 "доставку сырья, товаров или даже предметов первой необходимости. "
 "Неофициально они также известны как \"Дваредские оружейные ящики\"."
+
+msgid "Dvaered Goddard"
+msgstr "Дваредский Годдард"
 
 msgid "You need at least 70% reputation with House Dvaered."
 msgstr "Вам нужна как минимум 70% репутация у Дома Дваред."
@@ -15425,6 +14966,9 @@ msgstr ""
 "была адаптирована под нужды Дваредских Военачальников, что означает лучшую "
 "броню и большую фронтальную огневую мощь ценой увеличенной массы."
 
+msgid "Dvaered Phalanx"
+msgstr "Дваредская Фаланга"
+
 msgid "You need at least 40% reputation with House Dvaered."
 msgstr "Вам нужна как минимум 40% репутация у Дома Дваред."
 
@@ -15435,6 +14979,9 @@ msgid ""
 msgstr ""
 "В этой военной версии Фаланги распределение веса по конструкции было "
 "оптимизировано, чтобы позволить нести больше полезной нагрузки."
+
+msgid "Dvaered Retribution"
+msgstr "Дваредское Возмездие"
 
 #, fuzzy
 msgid ""
@@ -15452,6 +14999,9 @@ msgstr ""
 "установки вооружения. После этого корабль был переименован в Возмездие. "
 "Впрочем, электроника осталась устаревшей."
 
+msgid "Dvaered Vendetta"
+msgstr "Дваредская Вендетта"
+
 msgid ""
 "On this military grade version of the Vendetta, the distribution of the "
 "weight on the structure has been optimized in order to allow embarking more "
@@ -15459,6 +15009,9 @@ msgid ""
 msgstr ""
 "В этой военной версии Вендетты распределение веса по конструкции было "
 "оптимизировано, чтобы позволить нести больше полезной нагрузки."
+
+msgid "Dvaered Vigilance"
+msgstr "Дваредская Бдительность"
 
 msgid "You need at least 50% reputation with House Dvaered."
 msgstr "Вам нужна как минимум мере 50% репутация у Дома Дваред."
@@ -15469,6 +15022,9 @@ msgid ""
 msgstr ""
 "В этой военной версии Бдительности распределение веса по конструкции было "
 "оптимизировано, чтобы позволить нести больше полезной нагрузки."
+
+msgid "Empire Admonisher"
+msgstr "Имперский Увещеватель"
 
 msgid "Nexus Shipyards"
 msgstr "Верфи Нексус"
@@ -15483,6 +15039,10 @@ msgid ""
 msgstr ""
 "Эта военная версия Увещевателя почти идентична стандартной, но имеет немного "
 "лучшие броню и щиты."
+
+#, fuzzy
+msgid "Empire Admonisher Longbow"
+msgstr "Имперский Увещеватель"
 
 msgid ""
 "Standard Empire Admonishers are fabricated to be able to fit many needs, in "
@@ -15500,6 +15060,9 @@ msgstr ""
 msgid "#bGains as much weapon range bonus as the ship detection.#0"
 msgstr ""
 
+msgid "Empire Hawking"
+msgstr "Имперский Хокинг"
+
 msgid "You need at least 60% reputation with the Empire."
 msgstr "Вам нужна как минимум 60% репутация у Империи."
 
@@ -15510,12 +15073,18 @@ msgstr ""
 "Эта военная версия Хокинга почти идентична стандартной, но имеет немного "
 "лучшие броню и щиты."
 
+msgid "Empire Lancelot"
+msgstr "Имперский Ланселот"
+
 msgid ""
 "This military grade version of the Lancelot is mostly identical in function "
 "to a standard Lancelot, but with slightly better armour, and shields."
 msgstr ""
 "Эта военная версия Ланселота почти идентична стандартной, но имеет немного "
 "лучшие броню и щиты."
+
+msgid "Empire Lancelot Golden Efreeti"
+msgstr "Имперский Ланселот Золотой Ифрит"
 
 msgid ""
 "A high-spec bombing focused Lancelot that is most known by the use with the "
@@ -15526,12 +15095,19 @@ msgid ""
 "switch between targets while depending on missiles and torpedoes."
 msgstr ""
 
+msgid "Empire Pacifier"
+msgstr "Имперский Умиротворитель"
+
 msgid ""
 "This military grade version of the Pacifier is mostly identical in function "
 "to a standard Pacifier, but with slightly better armour, and shields."
 msgstr ""
 "Эта военная версия Умиротворителя почти идентична стандартной, но имеет "
 "немного лучшие броню и щиты."
+
+#, fuzzy
+msgid "Empire Pacifier Hoplite"
+msgstr "Имперский Умиротворитель"
 
 msgid ""
 "Designed by an Imperial Combat Bureaucrat for personal use, the Pacifier "
@@ -15550,6 +15126,9 @@ msgstr ""
 msgid "Shields start regenerating again upon full cooldown."
 msgstr ""
 
+msgid "Empire Peacemaker"
+msgstr "Имперский Миротворец"
+
 msgid "You need at least 70% reputation with the Empire."
 msgstr "Вам нужна как минимум 70% репутация у Империи."
 
@@ -15566,6 +15145,9 @@ msgstr ""
 "обеспечивать эскадрильи истребителей и бомбардировщиков необходимыми "
 "припасами. Однако, как и большинство крупных кораблей, они уязвимы для "
 "вражеских бомбардировщиков."
+
+msgid "Empire Rainmaker"
+msgstr "Имперский Рейнмейкер"
 
 msgid ""
 "The Rainmaker is the largest freighter used by the Empire. It is capable of "
@@ -15588,6 +15170,9 @@ msgstr ""
 "была одобрена и название \"Рейнмейкер\" стало официальным наименованием "
 "судна."
 
+msgid "Empire Shark"
+msgstr "Имперская Акула"
+
 msgid "You need at least 20% reputation with the Empire."
 msgstr "Вам нужна как минимум 20% репутация у Империи."
 
@@ -15601,10 +15186,16 @@ msgstr ""
 "лучшие броню и щиты. Кроме того, использование материалов военного класса "
 "привело к тому, что этот корабль немного легче, чем стандартная версия."
 
+msgid "Kauweke"
+msgstr ""
+
 msgid "Elder Feral Bioship"
 msgstr ""
 
 msgid "Still to do..."
+msgstr ""
+
+msgid "Nohinohi"
 msgstr ""
 
 msgid "Bio-Fighter"
@@ -15619,16 +15210,31 @@ msgid ""
 "Bioships\" and not much is known about them."
 msgstr ""
 
+msgid "Taitamariki"
+msgstr ""
+
 msgid "Bio-Corvette"
 msgstr "Био-Корвет"
 
 msgid "Not meant for the player."
 msgstr ""
 
+msgid "Fort Raelid"
+msgstr ""
+
 msgid "Station"
 msgstr ""
 
 msgid "This is a base. It's for AI use only. Don't buy it. Seriously."
+msgstr ""
+
+msgid "Fort Raglan"
+msgstr ""
+
+msgid "One-Wing Goddard"
+msgstr ""
+
+msgid "Psychic Orb"
 msgstr ""
 
 #. We'll need the physics constants
@@ -15769,6 +15375,12 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
+msgid "Sindbad"
+msgstr ""
+
+msgid "Admonisher"
+msgstr "Увещеватель"
+
 msgid ""
 "A very versatile combat ship. Nexus defines the Admonisher as a compromise "
 "between the ruggedness of the Pacifier and the agility of the Lancelot. "
@@ -15778,6 +15390,9 @@ msgstr ""
 "между прочностью Умиротворителя и манёвренностью Ланселота. В общем, очень "
 "солидное боевое судно."
 
+msgid "Admonisher ΩIIa"
+msgstr "Увещеватель ΩIIa"
+
 msgid ""
 "The Admonisher ΩIIa makes the hard choice of sacrificing long-range "
 "engagement capability to be able to excel in dogfighting. The original long-"
@@ -15786,6 +15401,9 @@ msgid ""
 "fighters and bombers with ease. However, the difficulty to equip torpedo "
 "launchers make the ship ill-suited for engagements with larger ships."
 msgstr ""
+
+msgid "Ancestor"
+msgstr "Предок"
 
 msgid ""
 "Commonly referred to as the \"Little Goddard\", the Ancestor also has its "
@@ -15797,6 +15415,9 @@ msgstr ""
 "примитивным летающим машинам, использовавшимся людьми много веков назад. "
 "Однако, в отличие от Годдарда, его электроника производится Домом Дваред, из-"
 "за чего он существенно уступает в этой области."
+
+msgid "Ancestor HG Eagle-Eye"
+msgstr "Предок ДГ Орлиный Глаз"
 
 msgid ""
 "A product of a special collaboration between House Goddard and House "
@@ -15810,6 +15431,9 @@ msgid ""
 "hamper the resulting launch speed and ammo reserves, the pilot will have to "
 "make sure every missile counts."
 msgstr ""
+
+msgid "Bedivere"
+msgstr "Бедивер"
 
 #, fuzzy
 msgid ""
@@ -15831,6 +15455,9 @@ msgstr ""
 "полностью они исчезнут ещё очень не скоро, что обусловлено лёгкостью их "
 "ремонта."
 
+msgid "Gawain"
+msgstr "Гавейн"
+
 msgid "Luxury Yacht"
 msgstr ""
 
@@ -15846,6 +15473,9 @@ msgstr ""
 "реализованную в Ланселоте, и широко используется как спортивное судно, так "
 "как является чрезвычайно манёвренным. Впрочем, из-за скудного вооружения и "
 "сравнительной хрупкости, в бою он редко выживает."
+
+msgid "Gawain XY-37"
+msgstr "Гавейн XY-37"
 
 msgid ""
 "The Gawain XY-37 was meant to rework the engine and start a new era of "
@@ -15872,6 +15502,9 @@ msgstr ""
 "Cпециализация и улучшения оригинальной конструкции на протяжении долгого "
 "времени сохраняют корабль очень конкурентоспособным. Это классика космоса."
 
+msgid "Goddard Merchantman"
+msgstr "Годдард Торговец"
+
 msgid ""
 "It all began with an insurance dispute at Manuel Station when a sensor "
 "malfunction resulted in a Zebra being damaged beyond repair while delivering "
@@ -15891,6 +15524,9 @@ msgid ""
 "second hand Goddards are reconfigured and re-sold as 'Merchantman' variants."
 msgstr ""
 
+msgid "Hawking"
+msgstr "Хокинг"
+
 msgid ""
 "The Hawking is the flagship vessel of Nexus Shipyards. A large cruiser "
 "designed for extended engagements, it is widely used by the Empire to exert "
@@ -15898,6 +15534,9 @@ msgid ""
 "second only to the flagship of House Goddard, though its narrower frame "
 "allows it to present a smaller target to the enemy."
 msgstr ""
+
+msgid "Hyena"
+msgstr "Гиена"
 
 msgid "Aerosys"
 msgstr ""
@@ -15919,6 +15558,9 @@ msgstr ""
 "их всем, кто готов платить, поскольку, как кажется, бесcчётные Гиены "
 "используются более отъявленными и неуправляемыми пилотами."
 
+msgid "Kestrel"
+msgstr "Пустельга"
+
 msgid "Krain Industries"
 msgstr "Крейн Индастрис"
 
@@ -15930,6 +15572,9 @@ msgid ""
 "ship in the hands of an able captain."
 msgstr ""
 
+msgid "Kestrel Sigma"
+msgstr "Пустельга Сигма"
+
 msgid ""
 "The Kestrel Sigma features a high-end reflectokinetic hull padding that not "
 "only increases the durability of the ship, but also can affect weapon locks "
@@ -15940,6 +15585,9 @@ msgid ""
 "difficulty of production leading to high failure rates racks up a premium on "
 "the final ship's cost."
 msgstr ""
+
+msgid "Koala"
+msgstr "Коала"
 
 msgid "Melendez Corp."
 msgstr ""
@@ -15953,6 +15601,9 @@ msgstr ""
 "зато приличный грузовой отсек. Хорошо подходит предпринимателям, стремящимся "
 "получить прибыль, прокладывая свой путь среди звёзд."
 
+msgid "Koala Armoured"
+msgstr "Бронированная Коала"
+
 msgid ""
 "The Koala is one of the sturdier courier ships, with a small size that also "
 "aids it in survival. The armoured variant sacrifices speed for even more "
@@ -15962,6 +15613,9 @@ msgid ""
 "ships efficiently. It is commonly used for the delivery of critical cargo "
 "without raising too much attention."
 msgstr ""
+
+msgid "Lancelot"
+msgstr "Ланселот"
 
 msgid ""
 "One of the prized heavy fighters of Nexus Shipyards. The Lancelot was "
@@ -15978,6 +15632,9 @@ msgstr ""
 "соответствует оригинальным спецификациям. Из-за надёжности и доступности "
 "используется службами безопасности по всей галактике."
 
+msgid "Llama"
+msgstr "Лама"
+
 msgid ""
 "One of the most widely used ships in the galaxy. Renowned for its stability "
 "and stubbornness. The design hasn't been modified much since its creation "
@@ -15991,6 +15648,9 @@ msgstr ""
 "аристократией, а сейчас - используемым всеми, кто не может себе позволить "
 "ничего лучше."
 
+msgid "Llama Voyager"
+msgstr "Лама Вояджер"
+
 msgid ""
 "The Llama's popularity is based on the wide availability of the base ship, "
 "and is most pilots introduction to spacefaring. Inspired by the popularity, "
@@ -16000,6 +15660,9 @@ msgid ""
 "ramscoop that is able to capture and filter minuscule space dust to slowly "
 "refill fuel."
 msgstr ""
+
+msgid "Mule"
+msgstr "Мул"
 
 msgid ""
 "A heavy freighter specialized in transporting cargo throughout the galaxy. "
@@ -16013,6 +15676,9 @@ msgstr ""
 "путешествия. Мул - излюбленная цель пиратов, так что настоятельно "
 "рекомендуется избегать опасных систем."
 
+msgid "Mule Hardhat"
+msgstr "Мул Шахтёр"
+
 msgid ""
 "Specially ordered by the Mining Vrata, the Mule Hardhat is a modified "
 "version of the Mule with a focus on augmenting the mining capabilities. In "
@@ -16022,6 +15688,9 @@ msgid ""
 "popular among miners. However, such changes come with an increase in the "
 "fabrication cost."
 msgstr ""
+
+msgid "Pacifier"
+msgstr "Умиротворитель"
 
 msgid ""
 "The Pacifier is one of the older and trustier designs of Nexus Shipyards. It "
@@ -16035,6 +15704,9 @@ msgstr ""
 "налётчиков. Умиротворитель имеет большой запас топлива, обеспечивающий "
 "длинные маршруты патрулирования."
 
+msgid "Phalanx"
+msgstr "Фаланга"
+
 #, fuzzy
 msgid ""
 "The Phalanx is, by Dvaered standards, a fast corvette that can be used as a "
@@ -16046,6 +15718,9 @@ msgstr ""
 "использован как ракетная платформа. У него низкая манёрвенность, что "
 "является обычным для Дваредских конструкций. Тяжёлая броня делает его "
 "дееспособным корветом при условии, что он будет оборудован турелями."
+
+msgid "Plowshare"
+msgstr "Лемех"
 
 #, fuzzy
 msgid ""
@@ -16066,6 +15741,9 @@ msgstr ""
 "вселенной и являются одним из краеугольных камней современных космических "
 "обществ."
 
+msgid "Quicksilver"
+msgstr "Ртуть"
+
 msgid ""
 "While still a cargo hauler, the Quicksilver is quite different from "
 "Melendez's other offerings. Featuring a streamlined frame and oversized "
@@ -16074,6 +15752,9 @@ msgstr ""
 "Оставаясь грузовым судном, Ртуть существенно отличается от других "
 "предложений Мелендез. Обладая оптимизированной формой и увеличенными "
 "двигателями, оно является лучшим выбором для ускоренной доставки."
+
+msgid "Quicksilver Mercury"
+msgstr "Ртуть Меркьюри"
 
 msgid "Luxury Courier"
 msgstr ""
@@ -16088,6 +15769,9 @@ msgid ""
 "a heft price tag that many can not afford."
 msgstr ""
 
+msgid "Rhino"
+msgstr "Носорог"
+
 msgid ""
 "A particularly durable Melendez design, the Rhino is well-suited to "
 "transporting high-value, high-risk freight. While it has much lower cargo "
@@ -16101,6 +15785,9 @@ msgstr ""
 "чрезвычайно эффективно. Модульные отсеки позволяют использовать его для "
 "перевозки личного состава, что не ускользнуло от внимания современных "
 "вооружённых сил."
+
+msgid "Schroedinger"
+msgstr "Шрёдингер"
 
 msgid "Sirius Systems"
 msgstr ""
@@ -16121,6 +15808,9 @@ msgstr ""
 "количеством места для вооружения. Он также оснащён парой двигателей Эраэдон, "
 "делающих его высокоманёвренным."
 
+msgid "Shark"
+msgstr "Акула"
+
 msgid ""
 "A newer Nexus Shipyards design, the Shark is an agile, light fighter "
 "designed for in-system patrolling. While it's not as capable as its larger "
@@ -16131,6 +15821,9 @@ msgstr ""
 "мощной, как её больший родственник, Ланселот, она, тем не менее, является "
 "эффективным дополнением к любому флоту."
 
+msgid "Shark ΨIIIa"
+msgstr "Акула ΨIIIa"
+
 msgid ""
 "With the Shark ΨIIIa, Nexus Shipyards rethinks the Shark as a Scout-class "
 "vessel. The weapon mounts are significantly reduced in exchange for more "
@@ -16139,6 +15832,9 @@ msgid ""
 "unknown, there has been almost no publicity regarding the ΨIIIa and it is "
 "very hard to find."
 msgstr ""
+
+msgid "Starbridge"
+msgstr "Звёздный мост"
 
 msgid ""
 "The Starbridge is the latest ship designed by Krain Industries. It is a "
@@ -16151,6 +15847,9 @@ msgstr ""
 "максимальной скорости. Небольшая масса достигается за счёт уменьшенного "
 "структурного пространства."
 
+msgid "Starbridge Sigma"
+msgstr "Звёздный мост Сигма"
+
 msgid ""
 "Heavily modified, the Starbridge Sigma boasts the capability of housing "
 "fighters in new modified weapon mounts. The increased weapon room is "
@@ -16159,6 +15858,9 @@ msgid ""
 "ship is a premium variant of the Starbridge capable of holding its own in "
 "deep space."
 msgstr ""
+
+msgid "Tristan"
+msgstr "Тристан"
 
 msgid ""
 "The Tristan is the predecessor of Nexus Shipyards' popular Lancelot model. "
@@ -16184,6 +15886,9 @@ msgstr ""
 "тому, что они, как ни странно, всё ещё используются, особенно теми, кто не "
 "может позволить себе что-то получше."
 
+msgid "Vendetta"
+msgstr "Вендетта"
+
 msgid ""
 "The Vendetta displays the House Dvaered philosophy very well. Give a ship "
 "many intimidating guns, layer it with heavy armour and neglect the "
@@ -16201,6 +15906,9 @@ msgstr ""
 "ужасный залп, который она способна произвести, может превратить длительное "
 "сражение в короткую стычку."
 
+msgid "Vendetta Whiplash"
+msgstr "Хлыст Вендетты"
+
 msgid ""
 "The Vendetta's great flaw is trying to provide a consistent weapon system, "
 "requiring the ship's system to perform equally at maximum and minimum weapon "
@@ -16212,12 +15920,18 @@ msgid ""
 "ship of the same size."
 msgstr ""
 
+msgid "Vigilance"
+msgstr "Бдительность"
+
 msgid ""
 "The Vigilance is the embodiment of Dvaered philosophy. Featuring immense "
 "energy reserves and six weapon hardpoints, it's designed to hit as hard as "
 "possible with forward weapons. Given its Dvaered origins, it possesses "
 "inferior technology relative to its counterparts."
 msgstr ""
+
+msgid "Zebra"
+msgstr "Зебра"
 
 msgid ""
 "The Zebra bulk freighter is the largest of all of the freighters produced by "
@@ -16228,6 +15942,9 @@ msgstr ""
 "Зебра - самое большое грузовое судно, производящееся Мелендез, и одно из "
 "наиболее желанных всеми независимыми гражданскими торговцами. Зебра сочетает "
 "непревзойдённую плотность груза с неплохой защитой."
+
+msgid "Dealbreaker"
+msgstr "Дилбрейкер"
 
 msgid "Skull and Bones"
 msgstr ""
@@ -16245,12 +15962,18 @@ msgid ""
 "have come to know and respect."
 msgstr ""
 
+msgid "Pirate Admonisher"
+msgstr "Пиратский Увещеватель"
+
 msgid ""
 "The stock Admonisher is a powerful vessel, especially for its size. Through "
 "the usual Skull and Bones refit the Pirate Admonisher features improved "
 "manoeuvrability, more weapons space and slightly improved defences, at a "
 "cost of cargo capacity and shielding power."
 msgstr ""
+
+msgid "Pirate Ancestor"
+msgstr "Пиратский Предок"
 
 msgid ""
 "Ancestors were one of the first ships to be fancied by pirates. The big "
@@ -16259,6 +15982,10 @@ msgid ""
 "fallen due to their archaic electronics and targeting systems."
 msgstr ""
 
+#, fuzzy
+msgid "Pirate Bedivere"
+msgstr "Бедивер"
+
 msgid ""
 "Realizing the Bedivere's potential as a versatile scavenger vessel, the "
 "Skull and Bones refitted the model for more efficient plundering. In "
@@ -16266,6 +15993,9 @@ msgid ""
 "have been shrunk to make room for more crew and boarding androids. Thus, the "
 "Pirate Bedivere best used in a fleet with more combat-capable ships."
 msgstr ""
+
+msgid "Pirate Blue Shark"
+msgstr "Пиратская Голубая Акула"
 
 msgid ""
 "As any good pirate would know, you can hardly pillage a ship if you blow it "
@@ -16277,6 +16007,9 @@ msgid ""
 "slower!\" is a common ill-informed complaint."
 msgstr ""
 
+msgid "Pirate Hyena"
+msgstr "Пиратская Гиена"
+
 msgid ""
 "The Pirate Hyena has quickly become a favourite of pirates far and wide. Not "
 "much of a fighter, nor does it pack too much of a punch, but in groups they "
@@ -16286,12 +16019,18 @@ msgid ""
 "counterparts."
 msgstr ""
 
+msgid "Pirate Kestrel"
+msgstr "Пиратская Пустельга"
+
 msgid ""
 "The Kestrel is one of the best ships offered by Skull and Bones. It is "
 "extremely agile for a cruiser yet doesn't lack the firepower necessary to "
 "question the authority of the Empire. A very strong ship for those pirate "
 "captains who can afford it and want to make a lasting impression."
 msgstr ""
+
+msgid "Pirate Kestrel Yuri's Kiss"
+msgstr "Пиратская Пустельга Поцелуй Юри"
 
 msgid ""
 "One-Eyed Yuri was a famous ship engineer at Skull and Bones, renown for her "
@@ -16312,11 +16051,17 @@ msgid ""
 "targets are able to react."
 msgstr ""
 
+msgid "Pirate Phalanx"
+msgstr "Пиратская Фаланга"
+
 msgid ""
 "Building upon the already-capable Phalanx chassis, the Skull and Bones "
 "engineers have substantially improved the ship's performance, while only "
 "minorly sacrificing protection."
 msgstr ""
+
+msgid "Pirate Revenant"
+msgstr "Пиратский Призрак"
 
 msgid ""
 "As Skull and Bones does not have the technology to grow new bioships from "
@@ -16334,11 +16079,17 @@ msgid ""
 "Soromid bioship, and also gains half as much experience."
 msgstr ""
 
+msgid "Pirate Rhino"
+msgstr "Пиратский Носорог"
+
 msgid ""
 "The traditional Skull and Bones refit has left the Rhino substantially more "
 "manoeuvrable, though somewhat less armoured. Exploiting its large cargo bay "
 "and durability, the Rhino has become an excellent scavenger ship."
 msgstr ""
+
+msgid "Pirate Shark"
+msgstr "Пиратская Акула"
 
 msgid ""
 "The nimble Nexus Shipyards Shark has proved an excellent canvas for the "
@@ -16347,12 +16098,18 @@ msgid ""
 "firepower to bear."
 msgstr ""
 
+msgid "Pirate Starbridge"
+msgstr "Пиратский Звёздный мост"
+
 msgid ""
 "Even though the Starbridge is already a light and fast destroyer, Skull and "
 "Bones engineers managed to further improve its speed. Due to its large "
 "firepower and relatively high speed, for its ship class, the Starbridge is "
 "truly a fearsome sight."
 msgstr ""
+
+msgid "Pirate Vendetta"
+msgstr "Пиратская Вендетта"
 
 msgid ""
 "The Pirate Vendetta is even more intimidating than its regular counterpart. "
@@ -16363,6 +16120,9 @@ msgid ""
 "reactor goes nova, destroying the ship. You hope it won't happen to you if "
 "you get in one."
 msgstr ""
+
+msgid "Pirate Zebra"
+msgstr "Пиратская Зебра"
 
 msgid ""
 "The Zebra, one of the largest freighters available for independent civilian "
@@ -16376,6 +16136,9 @@ msgid ""
 "occasionally."
 msgstr ""
 
+msgid "Proteron Archimedes"
+msgstr "Протеронский Архимед"
+
 msgid "You need at least 70% reputation with the Proteron."
 msgstr ""
 
@@ -16385,6 +16148,9 @@ msgid ""
 msgstr ""
 "Архимед - основа Протеронского флота. Обладающий тяжёлой огневой мощью и "
 "высокой прочностью, он всегда может быть найден в пылу сражения."
+
+msgid "Proteron Dalton"
+msgstr "Протеронский Дальтон"
 
 msgid "You need at least 20% reputation with the Proteron."
 msgstr ""
@@ -16399,6 +16165,9 @@ msgid ""
 "been known to turn the tide of battle on many occasions."
 msgstr ""
 
+msgid "Proteron Euler"
+msgstr "Протеронский Эйлер"
+
 msgid ""
 "The Proteron chose their battles carefully as their slow capital ships "
 "cannot retreat from a battle easily. Thus, they have rather large fleet of "
@@ -16406,6 +16175,9 @@ msgid ""
 "reconnaissance vessel. Not geared for combat, this ship relies on stealth "
 "and speed to avoid hostiles."
 msgstr ""
+
+msgid "Proteron Gauss"
+msgstr "Протеронский Гаусс"
 
 msgid "You need at least 50% reputation with the Proteron."
 msgstr ""
@@ -16417,6 +16189,9 @@ msgid ""
 "makes up for it with its lower mass and expanded structural space."
 msgstr ""
 
+msgid "Proteron Hippocrates"
+msgstr "Протеронский Гиппократ"
+
 msgid ""
 "As the Proteron only use carrier-based fighters small fleets lack fighter "
 "support. To make up this issue the Hippocrates was developed, an ultra-light "
@@ -16424,6 +16199,9 @@ msgid ""
 "fleets. The Hippocrates can also be used as missile platform using the "
 "hangar bay to store additional ammo crates."
 msgstr ""
+
+msgid "Proteron Pythagoras"
+msgstr "Протеронский Пифагор"
 
 msgid "You need at least 60% reputation with the Proteron."
 msgstr ""
@@ -16436,14 +16214,29 @@ msgid ""
 "fleets to break through."
 msgstr ""
 
+msgid "Proteron Watson"
+msgstr "Протеронский Уотсон"
+
 msgid ""
 "The heart of the Proteron battle fleet is formed by the Watson. Acting as a "
 "mobile launch base as well as a command and control unit, this vessel "
 "coordinates the rest of the fleet in the fight for dominance over the galaxy."
 msgstr ""
 
+msgid "Astral Projection Greater"
+msgstr ""
+
 msgid "Sirius Psychic Powers"
 msgstr ""
+
+msgid "Astral Projection Lesser"
+msgstr ""
+
+msgid "Astral Projection Normal"
+msgstr ""
+
+msgid "Sirius Divinity"
+msgstr "Божественность Сириуса"
 
 msgid "You need at least 70% reputation with House Sirius."
 msgstr "Вам нужна как минимум 70% репутация у Дома Сириус."
@@ -16461,6 +16254,9 @@ msgstr ""
 "выпускать множество истребителей дает ей непревзойденную гибкость в бою, "
 "выступая в качестве ключевого логистического судна в любом крупном флоте."
 
+msgid "Sirius Dogma"
+msgstr "Догма Сириуса"
+
 msgid ""
 "The backbone of the House Sirius fleet, the Dogma is a sight to behold. "
 "Trimmed in gold and silver and fielding a large array of weapons, the Dogma "
@@ -16469,6 +16265,9 @@ msgstr ""
 "Основа флота Дома Сириуса, Догма — это зрелище, которое стоит увидеть. "
 "Отделанная золотом и серебром и оснащенная большим набором оружия, Догма "
 "редко кем может быть превзойдена по престижу или военной мощи."
+
+msgid "Sirius Fidelity"
+msgstr "Верность Сириуса"
 
 msgid "You need at least 20% reputation with House Sirius."
 msgstr "Вам нужна как минимум 20% репутация у Дома Сириус."
@@ -16482,6 +16281,9 @@ msgstr ""
 "его часто используют в качестве передового разведчика, за которым следуют "
 "куда более смертоносные союзники."
 
+msgid "Sirius Preacher"
+msgstr "Проповедник Сириуса"
+
 msgid "You need at least 40% reputation with House Sirius."
 msgstr "Вам нужна как минимум 40% репутация у Дома Сириус."
 
@@ -16494,6 +16296,9 @@ msgstr ""
 "посредством которого Дом Сириуса проецирует свое послание и волю. Имея "
 "большой арсенал оружия, Проповедник искусен в обращении неверующих в свою "
 "веру."
+
+msgid "Sirius Providence"
+msgstr "Провидение Сириуса"
 
 msgid "You need at least 60% reputation with House Sirius."
 msgstr "Вам нужна как минимум 60% репутация у Дома Сириус."
@@ -16509,6 +16314,9 @@ msgstr ""
 "них также используются для перевозки паломников, хотя большинство Сирианцев "
 "не любят эти забитые битком транспорты."
 
+msgid "Sirius Shaman"
+msgstr "Шаман Сириуса"
+
 msgid "You need at least 30% reputation with House Sirius."
 msgstr "Вам нужна как минимум 30% репутация у Дома Сириус."
 
@@ -16521,6 +16329,9 @@ msgstr ""
 "легкий истребитель на расстоянии, Шаман - совсем не таков. Это специально "
 "созданная легкая ракетная платформа, немногие враги могут избежать залпов "
 "Шамана."
+
+msgid "Soromid Arx"
+msgstr "Соромидский Аркс"
 
 msgid "Bio-Carrier"
 msgstr "Био-Авианосец"
@@ -16542,6 +16353,9 @@ msgstr ""
 "легкий носитель, чем те, которые обычно встречаются в не-Соромидских флотах, "
 "без ущерба для грузоподъемности."
 
+msgid "Soromid Brigand"
+msgstr "Соромидский Бриганд"
+
 msgid "Bio-Interceptor"
 msgstr "Био-Перехватчик"
 
@@ -16558,6 +16372,9 @@ msgstr ""
 "патрулирования системы и полицейских задач. Корабль легко бронирован и "
 "довольно хрупкий, но он компенсирует это тем, что быстро растет и, "
 "следовательно, относительно легко расходуется."
+
+msgid "Soromid Copia"
+msgstr "Соромидская Копия"
 
 msgid "Bio-Freighter"
 msgstr "Био-Транспорт"
@@ -16577,6 +16394,9 @@ msgstr ""
 "чтобы не уклоняться от боя, и может быть очень смертоносным судном в умелых "
 "руках."
 
+msgid "Soromid Ira"
+msgstr "Соромидский Айра"
+
 msgid "Bio-Cruiser"
 msgstr "Био-Крейсер"
 
@@ -16588,6 +16408,9 @@ msgstr ""
 "Айра — это специально созданный крейсер, который часто можно встретить в "
 "качестве лидера сил Соромидов. Хотя его броня довольно слаба, это редко "
 "спасает тех, кто сталкивается с его разрушительным огнем."
+
+msgid "Soromid Marauder"
+msgstr "Соромидский Мародёр"
 
 msgid "Bio-Bomber"
 msgstr "Био-Бомбардировщик"
@@ -16606,6 +16429,9 @@ msgstr ""
 "бомбардировщика, что требует повышенной прочности и боезапаса. Это делает "
 "его немного медленнее своего дальнего родственника."
 
+msgid "Soromid Nyx"
+msgstr "Соромидский Никс"
+
 msgid "Bio-Destroyer"
 msgstr "Био-Эсминец"
 
@@ -16619,6 +16445,9 @@ msgstr ""
 "необходимости, этот корабль обычно составляет основу любого значительного "
 "флота Соромидов."
 
+msgid "Soromid Odium"
+msgstr "Соромидский Одиум"
+
 msgid "You need at least 40% reputation with the Soromid."
 msgstr "Вам нужна как минимум 40% репутация у Соромидов."
 
@@ -16631,6 +16460,9 @@ msgstr ""
 "количество системных точек подвески для корабля его размера. Его часто можно "
 "увидеть доминирующим в небольших военных столкновениях."
 
+msgid "Soromid Reaver"
+msgstr "Соромидский Ривер"
+
 msgid ""
 "Reavers are often found at the forefront of Soromid military engagements. "
 "Their good speed and maneuverability are compounded by their durability, "
@@ -16639,6 +16471,9 @@ msgstr ""
 "Корабли класса Грабитель часто встречаются на передовой военных сражений "
 "Соромидов. Их хорошая скорость и маневренность дополняются их прочностью, "
 "что делает Грабитель одним из самых эффективных истребителей в галактике."
+
+msgid "Soromid Vox"
+msgstr "Соромидский Вокс"
 
 msgid "Bio-Battleship"
 msgstr "Био-Линкор"
@@ -16652,6 +16487,9 @@ msgstr ""
 "служит ядром любого военного флота Соромидов и вызывается только для "
 "значимых сражений."
 
+msgid "Thurion Apprehension"
+msgstr "Турионская Настороженность"
+
 msgid "Thurion Shipyards"
 msgstr "Верфи Туриона"
 
@@ -16664,6 +16502,9 @@ msgstr ""
 "Опасение Туриона — легкий эсминец, ориентированный на оборону. Высокая "
 "мобильность в сочетании с передовой электронной защитой затрудняет "
 "обнаружение корабля врагами, не говоря уже о попытках захватить его."
+
+msgid "Thurion Certitude"
+msgstr "УверенностьТуриона"
 
 msgid "You need at least 70% reputation with the Thurion."
 msgstr "Вам необходимо иметь не менее 70% репутации с Турионом."
@@ -16684,6 +16525,9 @@ msgstr ""
 "громадный внешний вид ясно дает понять, что корабль предназначен не только "
 "для поддержки."
 
+msgid "Thurion Ingenuity"
+msgstr "Изобретательность Туриона"
+
 msgid ""
 "The Thurion Ingenuity is a fighter built for survival. Like all Thurian "
 "ships, it puts defensive capabilities first and offensive capabilities "
@@ -16700,6 +16544,9 @@ msgstr ""
 "быстро отступить для перезарядки и регенерации. Кроме того, как и у всех "
 "кораблей Турианцев, его электроника намного выше среднего."
 
+msgid "Thurion Perspicacity"
+msgstr "Турионская Проницательность"
+
 msgid "You need at least 20% reputation with the Thurion."
 msgstr "Вам необходимо иметь не менее 20% репутации с Турионом."
 
@@ -16713,6 +16560,9 @@ msgstr ""
 "для разведки или атаки роями. Благодаря своему небольшому размеру они "
 "используют специальный каркас, усиленный против воздействия туманности, что "
 "дает им столь необходимое сопротивление к неустойчивости туманности."
+
+msgid "Thurion Perspicacity Beta"
+msgstr "Турионская Проницательность Бета"
 
 msgid ""
 "Originally designed as a fast scout ship, the lack of usability quickly led "
@@ -16728,6 +16578,9 @@ msgstr ""
 "своего небольшого размера, однако он может похвастаться невероятным "
 "приростом скорости и немного большей устойчивостью к туманности."
 
+msgid "Thurion Scintillation"
+msgstr "Турионское Мерцание"
+
 msgid ""
 "The Thurion Scintillation is a bomber designed to attack from a large "
 "distance. It is better armed than any other Thurion ship of comparable size, "
@@ -16738,12 +16591,18 @@ msgstr ""
 "сопоставимого размера, но все равно не так хорошо, как бомбардировщики "
 "других производителей."
 
+msgid "Thurion Taciturnity"
+msgstr "Молчаливость Туриона"
+
 msgid ""
 "The Thurion Taciturnity is an armoured and stealthy transport capable both "
 "of surviving the harsh nebula and defending itself from attack."
 msgstr ""
 "Молчаливость Туриона — бронированный и малозаметный транспорт, способный как "
 "выживать в суровых условиях туманности, так и защищаться от атак."
+
+msgid "Thurion Virtuosity"
+msgstr "Виртуозность Туриона"
 
 msgid "You need at least 40% reputation with the Thurion."
 msgstr "Вам необходимо иметь не менее 40% репутации с Турионом."
@@ -16759,6 +16618,9 @@ msgstr ""
 "электроника судна и его устойчивость к суровым условиям туманности более чем "
 "компенсируют это."
 
+msgid "Za'lek Bomber Drone"
+msgstr ""
+
 msgid "Robotic Bomber"
 msgstr ""
 
@@ -16770,6 +16632,9 @@ msgid ""
 "flown by the player."
 msgstr ""
 
+msgid "Za'lek Demon"
+msgstr "Демон За'лек"
+
 msgid "Za'lek Fabricators"
 msgstr "Производители За'лека"
 
@@ -16779,6 +16644,9 @@ msgid ""
 "Its handling suffers and it has poor armour, like all Za'lek ships, but this "
 "comes as little consolation to the Za'lek's enemies."
 msgstr ""
+
+msgid "Za'lek Demon Type IV"
+msgstr "Демон За'лек Тип IV"
 
 msgid ""
 "The Za'lek Demon Type IV is a departure from the standard autonomous drone-"
@@ -16791,6 +16659,9 @@ msgid ""
 "removing more of the ship's shield emitters and already thin armour."
 msgstr ""
 
+msgid "Za'lek Diablo"
+msgstr "Диабло За'лек"
+
 msgid "You need at least 70% reputation with House Za'lek."
 msgstr "Вам нужна как минимум 70% репутация у Дома За'лек."
 
@@ -16800,10 +16671,16 @@ msgid ""
 "for devastating drone swarms, not frontline combat."
 msgstr ""
 
+msgid "Za'lek Heavy Drone"
+msgstr ""
+
 msgid ""
 "This is the Za'lek Heavy Drone. Fewer and not as crap. Not to be flown by "
 "the player."
 msgstr ""
+
+msgid "Za'lek Hephaestus"
+msgstr "Гефест За'лек"
 
 msgid ""
 "The crown of the House Za'lek Defence Fleet, these proud buttresses of the "
@@ -16812,10 +16689,16 @@ msgid ""
 "but commands respect."
 msgstr ""
 
+msgid "Za'lek Light Drone"
+msgstr ""
+
 msgid ""
 "This is the Za'lek Light Drone. Very weak, cheap and numerous. Not to be "
 "flown by the player."
 msgstr ""
+
+msgid "Za'lek Mammon"
+msgstr "Мамона За'лек"
 
 msgid ""
 "While House Za'lek relies on drones for most everything, their limited fuel "
@@ -16828,11 +16711,17 @@ msgid ""
 "making a getaway."
 msgstr ""
 
+msgid "Za'lek Mephisto"
+msgstr "Мефисто За'лек"
+
 msgid ""
 "A mighty ship, the Mephisto has grand energy and shielding management, and "
 "its shields allow it to shrug off a lot of abuse. A core of these ships can "
 "reduce even powerful fleets to slag in short order."
 msgstr ""
+
+msgid "Za'lek Mephisto Type V"
+msgstr "Мефисто За'лек Тип V"
 
 msgid "You need at least 80% reputation with House Za'lek."
 msgstr "Вам нужна как минимум 80% репутация у Дома За'лек."
@@ -16850,6 +16739,9 @@ msgid ""
 "it very hard to get your hands on one."
 msgstr ""
 
+msgid "Za'lek Scout Drone"
+msgstr ""
+
 msgid "Robotic Scout"
 msgstr ""
 
@@ -16857,6 +16749,9 @@ msgid ""
 "This is the Za'lek Scout Drone. Built for scouting, not for battle. Not to "
 "be flown by the player."
 msgstr ""
+
+msgid "Za'lek Sting"
+msgstr "Жало За'лек"
 
 msgid ""
 "The Sting Corvette is rather large for its class, but its advanced sensor "
@@ -16866,6 +16761,9 @@ msgid ""
 "an ideal ship for reconnaissance missions."
 msgstr ""
 
+msgid "Za'lek Sting Type II"
+msgstr "Жало За'лек тип II"
+
 msgid ""
 "The Sting Type II reworks the shield systems of the original model. By "
 "rerouting the capacitor recharge loop in a positive feedback loop, "
@@ -16874,6 +16772,9 @@ msgid ""
 "ship that is surprisingly robust as long as shields are up, however, the "
 "moment they go down the hull tends to fail shortly after."
 msgstr ""
+
+msgid "Za'lek Sting Type IV"
+msgstr "Жало За'лек тип IV"
 
 msgid ""
 "A lot of the popularity of the Za'lek Sting comes from the large amount of "
@@ -124766,12 +124667,18 @@ msgstr ""
 msgid "Tentacle Organ IV"
 msgstr ""
 
+msgid "Corsair Engine"
+msgstr ""
+
 msgid ""
 "there once was a big mighty corsair\n"
 "who was said to be the finest heir\n"
 "of some noble great house\n"
 "almost tied as a spouse\n"
 "before they quickly took to the air"
+msgstr ""
+
+msgid "Corsair Hull Plating"
 msgstr ""
 
 msgid ""
@@ -124782,12 +124689,18 @@ msgid ""
 "irresistible buccaneer stare"
 msgstr ""
 
+msgid "Corsair Systems"
+msgstr ""
+
 msgid ""
 "oh, the ferocious mighty corsair\n"
 "never sitting in their captain's chair\n"
 "least they puke out their grub\n"
 "all over the ship hub\n"
 "in space is it also mal de mer?"
+msgstr ""
+
+msgid "Neutralizer"
 msgstr ""
 
 msgid ""
@@ -124797,6 +124710,10 @@ msgid ""
 "improvements in nearly all facets. Due to the fact that few were made, it is "
 "a fairly rare find, but an import asset in a pilot's arsenal."
 msgstr ""
+
+#, fuzzy
+msgid "Reaver Cannon"
+msgstr "Лазерная пушка МК1"
 
 msgid ""
 "The complex engineering specifications and difficulty of mass production "

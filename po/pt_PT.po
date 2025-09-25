@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-09-25 06:03-0400\n"
+"POT-Creation-Date: 2025-09-25 06:06-0400\n"
 "PO-Revision-Date: 2025-06-28 13:05+0000\n"
 "Last-Translator: Manuela Silva <mmsrs@sky.com>\n"
 "Language-Team: Portuguese (Portugal) <https://hosted.weblate.org/projects/"
@@ -18,1784 +18,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 5.13-dev\n"
-
-msgid "Active Plating"
-msgstr "Revestimento Ativo"
-
-msgid "<widget mainimg />"
-msgstr ""
-
-msgid "# <%= o:name() %>"
-msgstr ""
-
-msgid "<widget wgtdescription />"
-msgstr ""
-
-msgid "## Properties"
-msgstr ""
-
-msgid "<widget wgtsummary />"
-msgstr ""
-
-msgid "## Availability"
-msgstr ""
-
-msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
-msgstr ""
-
-msgid "<widget map />"
-msgstr ""
-
-msgid ""
-"You are not aware of anywhere where <%= o:name() %> are available for "
-"purchase."
-msgstr ""
-
-#, fuzzy
-msgid "Adaptive Camouflage Plating"
-msgstr "Revestimento de Camuflagem Adaptativa"
-
-msgid "Adaptive Jump"
-msgstr "Salto Adaptável"
-
-#. Movement skill tree
-#. Only for up to destroyers
-#. Needs adrenal gland slot
-msgid "Adrenal Gland I"
-msgstr "Glândula Adrenal I"
-
-msgid "Adrenal Gland II"
-msgstr "Glândula Adrenal II"
-
-msgid "Adrenal Gland III"
-msgstr "Glândula Adrenal III"
-
-msgid "Adrenaline Hormones"
-msgstr "Hormonas de Adrenalina"
-
-msgid "Agility Combat AI"
-msgstr "IA de Combate de Agilidade"
-
-msgid "Air Freshener"
-msgstr "Purfificador de Ar"
-
-#, fuzzy
-msgid "Ambush Hunter I"
-msgstr "Caçador de emboscada"
-
-#, fuzzy
-msgid "Ambush Hunter II"
-msgstr "Caçador de emboscada"
-
-msgid "Antimatter Lance"
-msgstr "Lança de Antimatéria"
-
-msgid "Apollo's Gaze"
-msgstr ""
-
-msgid "Arc Blade"
-msgstr ""
-
-msgid "Arc Machete"
-msgstr ""
-
-msgid "Asteroid Scanner"
-msgstr "Sonda de Asteroides"
-
-#, fuzzy
-msgid "Astral Cannon"
-msgstr "Canhão Tesla"
-
-#, fuzzy
-msgid "Astral Flow Amplifier"
-msgstr "Amplificador"
-
-#. Set outfit state
-#. Astral projection
-msgid "Astral Projection"
-msgstr "Projeção astral"
-
-#, fuzzy
-msgid "Auxiliary Processing Unit I"
-msgstr "Unidade de Processamento Auxiliar I"
-
-#, fuzzy
-msgid "Auxiliary Processing Unit II"
-msgstr "Unidade de Processamento Auxiliar II"
-
-#, fuzzy
-msgid "Auxiliary Processing Unit III"
-msgstr "Unidade de Processamento Auxiliar III"
-
-#, fuzzy
-msgid "Auxiliary Processing Unit IV"
-msgstr "Unidade de Processamento Auxiliar IV"
-
-#, fuzzy
-msgid "Avatar of the Sirichana"
-msgstr "Avatar de Sirichana"
-
-#, fuzzy
-msgid "Bad Shape"
-msgstr "Carapaça Rígida"
-
-msgid "Base Ripper MK2"
-msgstr "Estripador de Base MK2"
-
-msgid "Battery I"
-msgstr "Bateria I"
-
-msgid "Battery II"
-msgstr "Bateria II"
-
-msgid "Battery III"
-msgstr "Bateria III"
-
-msgid "Battery IV"
-msgstr "Bateria IV"
-
-msgid "Beat Up Large Engine"
-msgstr "Motor Desgastado Grande"
-
-msgid "Beat Up Medium Engine"
-msgstr "Motor Desgastado Médio"
-
-msgid "Beat Up Small Engine"
-msgstr "Motor Desgastado Pequeno"
-
-msgid "Berserk Chip"
-msgstr "Chip Berserk"
-
-#, fuzzy
-msgid "Bikers Fury Launcher"
-msgstr "Lançador Fury TeraCom"
-
-msgid "Bio-Neural Combat AI"
-msgstr "IA de Combate Bio-Neural"
-
-msgid "Biometal Armour"
-msgstr "Armadura Biometálica"
-
-msgid "Bioship Pheromone Emitter"
-msgstr "Emissor de Feromonas de Bionave"
-
-msgid "Black Agate Finishing"
-msgstr ""
-
-msgid "Black Cat Doll"
-msgstr "Boneco de Gato Preto"
-
-msgid "Blink Drive"
-msgstr "Unidade Piscada"
-
-msgid "Boarding Androids MK1"
-msgstr "Androides de Assalto MK 1"
-
-msgid "Boarding Androids MK2"
-msgstr "Androides de Assalto MK2"
-
-msgid "Broken Nebular Shielding Prototype"
-msgstr "Protótipo de Escudo de Proteção Nebular Danificado"
-
-#. Health tree
-#. For everyone!
-#. Uses intrinsics only
-msgid "Bulky Abdomen"
-msgstr "Abdómen Volumoso"
-
-#, fuzzy
-msgid "Cargo Damper"
-msgstr "Espaço de carga"
-
-#. Misc tree
-#. For everyone!
-#. All intrinsics
-msgid "Cargo Sacs"
-msgstr "Sacos de Carga"
-
-msgid "Catalytic Energy Drill"
-msgstr ""
-
-#, fuzzy
-msgid "Charge Conduit"
-msgstr "Conduta de Mira"
-
-msgid "Cleansing Flames"
-msgstr ""
-
-msgid "Cloaking Device"
-msgstr "Aparelho de Camuflagem"
-
-msgid "Combat Hologram Projector"
-msgstr "Projetor Holográfico de Combate"
-
-msgid "Commemorative Stein"
-msgstr "Caneca Comemorativa"
-
-msgid "Compact Lightsail"
-msgstr ""
-
-#. Stealth skill tree
-#. For up to cruiser
-#. Uses intrinsics only
-msgid "Compound Eyes"
-msgstr "Olhos Compostos"
-
-msgid "Convulsion Launcher"
-msgstr "Lançador Convulsão"
-
-#. Plasma tree
-#. For everyone!
-#. Requires plasma slot for tier 5
-msgid "Corrosion I"
-msgstr "Corrosão I"
-
-msgid "Corrosion II"
-msgstr "Corrosão II"
-
-#, fuzzy
-msgid "Corsair Engine"
-msgstr "Corsário"
-
-#, fuzzy
-msgid "Corsair Hull Plating"
-msgstr "Revestimento de Casco"
-
-#, fuzzy
-msgid "Corsair Systems"
-msgstr "Sistemas Principais"
-
-msgid "Crippling Plasma"
-msgstr "Plasma incapacitante"
-
-msgid "Cryogenic Repair Nanobots"
-msgstr "Nanorobôs de Reparação Criogénica"
-
-msgid "Cyborg Feather"
-msgstr ""
-
-msgid "Cyclic Combat AI"
-msgstr "IA de Combate Cíclica"
-
-msgid "Daphne's Leap"
-msgstr "O Salto de Daphne"
-
-#, fuzzy
-msgid "Defective"
-msgstr "Defensivo"
-
-msgid "Disruptor Artillery S1"
-msgstr ""
-
-msgid "Disruptor Artillery S2"
-msgstr ""
-
-msgid "Disruptor Battery S2"
-msgstr ""
-
-msgid "Droid Repair Crew"
-msgstr "Equipa de Andróides de Reparação"
-
-msgid "Drone Bay"
-msgstr "Baía de Drones"
-
-msgid "Dummy Engine"
-msgstr "Motor Simulado"
-
-msgid "Dummy Plating"
-msgstr "Revestimento Simulado"
-
-msgid "Dummy Systems"
-msgstr "Sistemas Simulados"
-
-#, fuzzy
-msgid "Dvaered Flare Battery"
-msgstr "Sistemas centrais Dvaered"
-
-msgid "Efficiency Combat AI"
-msgstr "IA de Combate de Eficiência"
-
-msgid "Electron Burst Cannon"
-msgstr "Canhão de Explosão de Eletrões"
-
-msgid "Emergency Shield Booster"
-msgstr "Potenciador de Escudo de Emergência"
-
-msgid "Emergency Stasis Inducer"
-msgstr "Indutor de Estase de Emergência"
-
-msgid "EMP Grenade Launcher"
-msgstr "Lançador de Granada PEM"
-
-msgid "Empire Lancelot Bay"
-msgstr "Baía Lancelot Imperial"
-
-#, fuzzy
-msgid "Energy Harpoon"
-msgstr "Capacidade de energia"
-
-msgid "Engine Reroute"
-msgstr "Redirecionamento de Motor"
-
-msgid "Enhanced Smell"
-msgstr "Faro Melhorado"
-
-msgid "Enygma Systems Huntsman Launcher"
-msgstr "Lançador de Torpedos Caçador Sistemas Enygma"
-
-msgid "Enygma Systems Spearhead Launcher"
-msgstr "Lançador de Mísseis Ponta de Lança Sistemas Enygma"
-
-msgid "Enygma Systems Turreted Fury Launcher"
-msgstr "Lançador Torretado de Mísseis Fury da Sistemas Enygma"
-
-msgid "Enygma Systems Turreted Headhunter Launcher"
-msgstr "Lançador Torretado de Mísseis Caçador de Cabeças Sistemas Enygma"
-
-#, fuzzy
-msgid "Escape Pod"
-msgstr "Escapado"
-
-msgid "Executor Shield Aura"
-msgstr "Aura de Escudo Executor"
-
-msgid "Fake Transponder"
-msgstr "Transponder Falso"
-
-msgid "Fancy Key Chain"
-msgstr "Molho de Chaves Extravagante"
-
-msgid "Faraday Tempest Coating"
-msgstr "Revestimento Tempestade de Faraday"
-
-msgid "Feather Drive"
-msgstr "Propulsão de pluma"
-
-#. Attack tree
-#. For everyone!
-#. Uses feral rage slot (only for ships that get tier 5)
-msgid "Feral Rage I"
-msgstr "Fúria selvagem I"
-
-msgid "Feral Rage II"
-msgstr "Fúria Selvagem II"
-
-msgid "Feral Rage III"
-msgstr "Fúria Selvagem III"
-
-#, fuzzy
-msgid "Flak Gun"
-msgstr "Canhão Vulcão"
-
-#, fuzzy
-msgid "Flicker Drive"
-msgstr "Unidade Piscada"
-
-#, fuzzy
-msgid "Four Winds Laser Cannon"
-msgstr "Canhão Laser do Batoteiro"
-
-#, fuzzy
-msgid "Four Winds Ragnarok Beam"
-msgstr "Raio Ragnarok"
-
-msgid "Fuel Bladder"
-msgstr "Bexiga de Combustível"
-
-msgid "Fuel Recycler"
-msgstr "Reciclador de Combustível"
-
-#, fuzzy
-msgid "Fuelshell Plating"
-msgstr "Revestimento de Plasaço"
-
-msgid "Fuzzy Dice"
-msgstr "Dados Felpudos"
-
-msgid "Gauntlet Deluxe"
-msgstr "Manopla de Luxo"
-
-#, fuzzy
-msgid "Gauntlet Supreme"
-msgstr "Manopla de Luxo"
-
-msgid "Gauss Gun"
-msgstr "Arma Gauss"
-
-#, fuzzy
-msgid "Goatee Marker"
-msgstr "Piratas Saqueadores"
-
-msgid "Grave Beam"
-msgstr "Raio Túmulo"
-
-msgid "Grave Lance"
-msgstr "Lança Túmulo"
-
-#, fuzzy
-msgid "Greater Astral Cannon"
-msgstr "Canhão Laser do Batoteiro"
-
-msgid "Guardian Interception System"
-msgstr ""
-
-#, fuzzy
-msgid "Guardian Overseer System"
-msgstr "Mapa: Sistema de Fronteira Sirian"
-
-msgid "GUI - Brushed"
-msgstr "Interface Gráfica - Metal Escovado"
-
-msgid "GUI - Legacy"
-msgstr "Interface Gráfica - Legado"
-
-msgid "GUI - Slim"
-msgstr "Interface Gráfica - Mínimo"
-
-msgid "GUI - Slimv2"
-msgstr "Interface Gráfica - Mínimo V2"
-
-msgid "Hades Torch"
-msgstr "Tocha de Hades"
-
-msgid "Handbook for Dvaered Good Manners"
-msgstr "Manual de Boas Maneiras Dvaered"
-
-msgid "Hard Shell"
-msgstr "Carapaça Rígida"
-
-msgid "Heavy Ion Cannon"
-msgstr "Canhão de Iões Pesado"
-
-msgid "Heavy Ion Turret"
-msgstr "Torreta de Iões Pesada"
-
-msgid "Heavy Laser Turret"
-msgstr "Torreta Laser Pesada"
-
-msgid "Heavy Neutron Disruptor"
-msgstr "Disruptor Neutrónico Pesado"
-
-msgid "Heavy Ripper Cannon"
-msgstr "Canhão Estripador Pesado"
-
-msgid "Heavy Ripper Turret"
-msgstr "Torreta Estripadora Pesada"
-
-msgid "Hellburner"
-msgstr "Pós-Combustor Infernal"
-
-msgid "Hidden Jump Scanner"
-msgstr "Sonda de Salto Oculto"
-
-msgid "Hive Combat AI"
-msgstr "IA de Combate Colmeia"
-
-msgid "Homebrew Processing Unit"
-msgstr "Unidade de Processamento Caseira I"
-
-#, fuzzy
-msgid "House of Mirrors"
-msgstr "Casa Sirius"
-
-msgid "Hunter's Instinct"
-msgstr "Instinto de Caçador"
-
-msgid "Hunting Combat AI"
-msgstr "IA de Combate Caçada"
-
-msgid "Hyena Bay"
-msgstr "Baía Hiena"
-
-msgid "Hyena Dock"
-msgstr "Doca Hiena"
-
-msgid "Hyperbolic Blink Engine"
-msgstr "Motor de Piscada Hiperbólico"
-
-msgid "Hyperdrive Retool"
-msgstr ""
-
-msgid "Improved Stabilizer"
-msgstr "Estabilizador Aperfeiçoado"
-
-msgid "Internal Flow Amplifier"
-msgstr ""
-
-msgid "Ion Cannon"
-msgstr "Canhão de Iões"
-
-msgid "Jack's Eyepatch"
-msgstr ""
-
-msgid "Jump Scanner"
-msgstr "Sonda de Salto"
-
-msgid "Krain Nanotubes Foam Padding"
-msgstr ""
-
-#, fuzzy
-msgid "Krain Patagium Twin Engine"
-msgstr "Motor Krain Patágio"
-
-msgid "Krain Remige Engine"
-msgstr "Motor Krain Remige"
-
-msgid "Kratos' Glove"
-msgstr ""
-
-msgid "Lancelot Bay"
-msgstr "Baía Lancelot"
-
-msgid "Large Cargo Pod"
-msgstr "Compartimento de Carga Grande"
-
-#, fuzzy
-msgid "Large Flow Amplifier"
-msgstr "Amplificador"
-
-msgid "Large Flow Resonator"
-msgstr ""
-
-msgid "Large Fuel Pod"
-msgstr "Compartimento de Combustível Grande"
-
-msgid "Large Meditation Chamber"
-msgstr ""
-
-msgid "Large Shield Booster"
-msgstr "Potenciador de Escudo Grande"
-
-msgid "Laser Cannon MK1"
-msgstr "Canhão Laser MK1"
-
-msgid "Laser Cannon MK2"
-msgstr "Canhão Laser MK2"
-
-msgid "Laser Turret MK1"
-msgstr "Torreta Laser MK1"
-
-msgid "Laser Turret MK2"
-msgstr "Torreta Laser MK2"
-
-msgid "Lattice Thermal Coating"
-msgstr "Malha de Revestimento Térmico"
-
-msgid "Left Boot"
-msgstr "Bota Esquerda"
-
-#, fuzzy
-msgid "Lesser Astral Cannon"
-msgstr "Canhão Tesla"
-
-msgid "Local System Map"
-msgstr "Mapa de sistema local"
-
-msgid "Love Letter"
-msgstr "Carta de Amor"
-
-msgid "Low Radiation Sensor Modulator"
-msgstr "Modulador de Sensor de Baixa Radiação"
-
-#, fuzzy
-msgid "Luxury Furnishings"
-msgstr "Mensageiro"
-
-msgid "Machiavellian Fortune"
-msgstr "Sorte Maquiavélica"
-
-msgid "Machiavellian Necessity"
-msgstr "Necessidade Maquiavélica"
-
-msgid "Machiavellian Virtue"
-msgstr "Virtude Maquiavélica"
-
-msgid "Map: Collective Space"
-msgstr "Mapa: Território da Coletividade"
-
-msgid "Map: Dvaered Core"
-msgstr "Mapa: Território Central Dvaered"
-
-#, fuzzy
-msgid "Map: Empire-Soromid Trade Route"
-msgstr "Mapa: Rota Comercial Dvaered-Soromid"
-
-msgid "Map: Empire Core"
-msgstr "Mapa: Território Central Imperial"
-
-msgid "Map: FLF-Pirate Route"
-msgstr "Mapa: Rota FLF-Pirata"
-
-msgid "Map: FLF Hidden Jumps"
-msgstr "Mapa: Pontos de salto ocultos da FLF"
-
-msgid "Map: Inner Nebula Secret Jump"
-msgstr "Mapa: Ponto de salto secreto para a Nebulosa Interior"
-
-msgid "Map: Kretogg's Hypergate"
-msgstr "Mapa: Hiperportal de Kretogg"
-
-msgid "Map: Kretogg's Secrets"
-msgstr "Mapa: Os Segredos de Kretogg"
-
-msgid "Map: Nebula Edge"
-msgstr "Mapa: O Limite da Nebulosa"
-
-msgid "Map: New Haven's Secrets"
-msgstr "Mapa: Os Segredos de Novo Santuário"
-
-msgid "Map: Pirate Strongholds"
-msgstr "Mapa: Fortalezas Piratas"
-
-#, fuzzy
-msgid "Map: Qorel Tunnel"
-msgstr "Mapa: Extensão Qorel"
-
-msgid "Map: Sirian Border Systems"
-msgstr "Mapa: Sistema de Fronteira Sirian"
-
-msgid "Map: Sirius Core"
-msgstr "Mapa: Território Central Sirius"
-
-msgid "Map: Sol"
-msgstr "Mapa: Sol"
-
-msgid "Map: The Frontier"
-msgstr "Mapa: A Fronteira"
-
-msgid "Map: Thurion Core"
-msgstr "Mapa: Território Central Túrion"
-
-msgid "Map: Za'lek Core"
-msgstr "Mapa: Território Central Za'lek"
-
-msgid "Mass Driver"
-msgstr "Impulsionador de Massa"
-
-msgid "Medium Cargo Pod"
-msgstr "Cápsula de Carga Média"
-
-#, fuzzy
-msgid "Medium Flow Amplifier"
-msgstr "Amplificador"
-
-#, fuzzy
-msgid "Medium Flow Resonator"
-msgstr "Compartimento de Combustível Médio"
-
-msgid "Medium Fuel Pod"
-msgstr "Compartimento de Combustível Médio"
-
-msgid "Medium Meditation Chamber"
-msgstr ""
-
-msgid "Medium Shield Booster"
-msgstr "Potenciador de Escudo Médio"
-
-#, fuzzy
-msgid "Melendez Buffalo Engine"
-msgstr "Motor Melendez Búfalo XL"
-
-#, fuzzy
-msgid "Melendez Mammoth Engine"
-msgstr "Motor Melendez Mamute XL"
-
-#, fuzzy
-msgid "Melendez Ox Engine"
-msgstr "Motor Melendez Boi XL"
-
-msgid "Microbond Plating"
-msgstr "Revestimento de Microligação"
-
-#, fuzzy
-msgid "Milspec Aegis 2201 Core System"
-msgstr "Sistema Principal Milspec Oríon 2301"
-
-#, fuzzy
-msgid "Milspec Aegis 4701 Core System"
-msgstr "Sistema Principal Milspec Oríon 3701"
-
-#, fuzzy
-msgid "Milspec Aegis 8501 Core System"
-msgstr "Sistema Principal Milspec Oríon 5501"
-
-msgid "Milspec Impacto-Plastic Coating"
-msgstr "Revestimento Impacto-Plástico Milspec"
-
-msgid "Milspec Jammer"
-msgstr "Inibidor Milspec"
-
-msgid "Milspec Orion 2301 Core System"
-msgstr "Sistema Principal Milspec Oríon 2301"
-
-msgid "Milspec Orion 4801 Core System"
-msgstr "Sistema Principal Milspec Oríon 4801"
-
-msgid "Milspec Orion 8601 Core System"
-msgstr "Sistema Principal Milspec Oríon 8601"
-
-#, fuzzy
-msgid "Milspec Prometheus 2203 Core System"
-msgstr "Sistema Principal Milspec Thalos 2202"
-
-#, fuzzy
-msgid "Milspec Prometheus 4703 Core System"
-msgstr "Sistema Principal Milspec Thalos 4702"
-
-#, fuzzy
-msgid "Milspec Prometheus 8503 Core System"
-msgstr "Sistema Principal Milspec Thalos 8502"
-
-msgid "Milspec Scrambler"
-msgstr "Distorçor Milspec"
-
-msgid "Milspec Thalos 2202 Core System"
-msgstr "Sistema Principal Milspec Thalos 2202"
-
-msgid "Milspec Thalos 4702 Core System"
-msgstr "Sistema Principal Milspec Thalos 4702"
-
-msgid "Milspec Thalos 8502 Core System"
-msgstr "Sistema Principal Milspec Thalos 8502"
-
-msgid "Mining Lance MK1"
-msgstr "Lança de Mineração MK1"
-
-msgid "Mining Lance MK2"
-msgstr "Lança de Mineração MK2"
-
-#, fuzzy
-msgid "Mystery Outfit"
-msgstr "Posto avançado Hystera"
-
-msgid "Nanobond Plating"
-msgstr "Revestimento de Nanoligação"
-
-msgid "Nanofiber Structural Enhancement"
-msgstr ""
-
-msgid "Natural Healing I"
-msgstr "Cura Natural I"
-
-msgid "Natural Healing II"
-msgstr "Cura Natural II"
-
-msgid "Nebula Resistant Coating"
-msgstr "Revestimento Resistente à Nebulosa"
-
-msgid "Nebular Shielding Prototype"
-msgstr "Protótipo de Escudo Nebular"
-
-msgid "Neural Accelerator Interface"
-msgstr "Interface Aceleradora Neural"
-
-#, fuzzy
-msgid "Neutralizer"
-msgstr "Neutro"
-
-msgid "Neutron Disruptor"
-msgstr "Disruptor Neutrónico"
-
-msgid "Nexus Arrow 700 Engine"
-msgstr "Motor Nexo Flecha 700"
-
-msgid "Nexus Bolt 3000 Engine"
-msgstr "Motor Nexus Raio 3000"
-
-#, fuzzy
-msgid "Nexus Concealment Coating"
-msgstr "Revestimento de Camuflagem Nexo"
-
-msgid "Nexus Dart 160 Engine"
-msgstr "Motor Nexo Dardo 160"
-
-msgid "Nexus Drill Lance"
-msgstr "Lança Perfuradora Nexo"
-
-msgid "Nexus Ghost Weave"
-msgstr ""
-
-msgid "Nexus Phantasm Weave"
-msgstr ""
-
-#, fuzzy
-msgid "Nexus Shadow Weave"
-msgstr "Estaleiros Nexo"
-
-msgid "Orion Beam"
-msgstr "Raio Oríon"
-
-msgid "Orion Lance"
-msgstr "Lança Oríon"
-
-msgid "Paralyzing Plasma"
-msgstr "Plasma paralisante"
-
-msgid "Particle Beam"
-msgstr "Feixe de Partículas"
-
-msgid "Particle Lance"
-msgstr "Lança de Partículas"
-
-msgid "Patchwork Heavy Plating"
-msgstr "Blindagem Pesada de Retalhos"
-
-msgid "Patchwork Light Plating"
-msgstr "Revestimento de Retalhos Leve"
-
-msgid "Patchwork Medium Plating"
-msgstr "Revestimento de Retalhos Médio"
-
-msgid "Pentagram of Valor"
-msgstr "Pentagrama da Coragem"
-
-msgid "Photo-Voltaic Nanobot Coating"
-msgstr "Revestimento Fotovoltaico Nanorobótico"
-
-msgid "Pilot Doll"
-msgstr "Boneco piloto"
-
-msgid "Pincushion Battery"
-msgstr ""
-
-msgid "Pinpoint Combat AI"
-msgstr "IA de Combate Focado"
-
-#, fuzzy
-msgid "Pipeline Conduit"
-msgstr "Conduta de Mira"
-
-msgid "Pirate Hyena Bay"
-msgstr "Baía Hiena Pirata"
-
-msgid "Pirate Hyena Dock"
-msgstr "Doca Hiena Pirata"
-
-msgid "Plasma Blaster MK1"
-msgstr "Detonador de Plasma MK1"
-
-msgid "Plasma Blaster MK2"
-msgstr "Detonador de Plasma MK2"
-
-msgid "Plasma Burst"
-msgstr "Salva de Plasma"
-
-msgid "Plasma Cannon"
-msgstr "Canhão de Plasma"
-
-msgid "Plasma Cluster Cannon"
-msgstr "Canhão de Plasma Aninhado"
-
-#, fuzzy
-msgid "Plasma Eruptor"
-msgstr "Queimadura de plasma"
-
-msgid "Plasma Turret MK1"
-msgstr "Torreta de Plasma MK1"
-
-msgid "Plasma Turret MK2"
-msgstr "Torreta de Plasma MK2"
-
-msgid "Plasteel Plating"
-msgstr "Revestimento de Plasaço"
-
-msgid "Port & Polish"
-msgstr "Aportar e Polir"
-
-msgid "Previous Generation Large Systems"
-msgstr "Sistemas Grandes de Geração Anterior"
-
-msgid "Previous Generation Medium Systems"
-msgstr "Sistemas Médios de Geração Anterior"
-
-msgid "Previous Generation Small Systems"
-msgstr "Sistemas Pequenos de Geração Anterior"
-
-msgid "Proteron Dalton Bay"
-msgstr "Baía Proteron Dalton"
-
-msgid "Proteron Dalton Dock"
-msgstr "Doca Proteron Watson"
-
-msgid "Prototype Systems T-IVa 'Quickshell'"
-msgstr ""
-
-msgid "Pulse Scanner"
-msgstr "Sonda de Pulso"
-
-#, fuzzy
-msgid "Racing Trophy (Bronze)"
-msgstr "Troféu de Corrida"
-
-#, fuzzy
-msgid "Racing Trophy (Gold)"
-msgstr "Troféu de Corrida"
-
-#, fuzzy
-msgid "Racing Trophy (Silver)"
-msgstr "Troféu de Corrida"
-
-msgid "Rackham's Razor"
-msgstr ""
-
-msgid "Ragnarok Beam"
-msgstr "Raio Ragnarok"
-
-msgid "Railgun"
-msgstr "Canhão Elétrico"
-
-msgid "Railgun Turret"
-msgstr "Torreta de Canhão Elétrico"
-
-msgid "Razor Artillery S1"
-msgstr ""
-
-msgid "Razor Artillery S2"
-msgstr ""
-
-msgid "Razor Artillery S3"
-msgstr ""
-
-#, fuzzy
-msgid "Razor Battery S2"
-msgstr "Bateria I"
-
-msgid "Reactor Class I"
-msgstr "Reator Classe I"
-
-msgid "Reactor Class II"
-msgstr "Reator Classe II"
-
-msgid "Reactor Class III"
-msgstr "Reator Classe III"
-
-msgid "Reality Rip"
-msgstr ""
-
-#, fuzzy
-msgid "Reaver Cannon"
-msgstr "Canhão Estripador"
-
-#, fuzzy
-msgid "Reconstructive Nanobot Coating"
-msgstr "Revestimento Fotovoltaico Nanorobótico"
-
-msgid "Reflective Shell"
-msgstr "Concha Refletora"
-
-msgid "Repeating Banshee Launcher"
-msgstr "Lançador de Repetição Banshee"
-
-msgid "Repeating Railgun"
-msgstr "Canhão Elétrico de Repetição"
-
-msgid "Ripper Cannon"
-msgstr "Canhão Estripador"
-
-msgid "Red Star Large Cargo Hull"
-msgstr "Casco de Carga Grande Estrela Vermelha"
-
-msgid "Red Star Medium Cargo Hull"
-msgstr "Casco de Carga Médio Estrela Vermelha"
-
-msgid "Red Star Small Cargo Hull"
-msgstr "Casco de Carga Pequeno Estrela Vermelha"
-
-msgid "Sandwich Holder"
-msgstr "Porta-Sanduíches"
-
-msgid "Satellite Mock-up"
-msgstr "Maquete de Satélite"
-
-msgid "Scanning Combat AI"
-msgstr "IA de Combate de Sondagem"
-
-msgid "Seeking Chakra"
-msgstr ""
-
-msgid "Seeking Chakra Large"
-msgstr "Chakra de busca grande"
-
-msgid "Seeking Chakra Medium"
-msgstr "Chakra de busca médio"
-
-msgid "Seeking Chakra Small"
-msgstr "Chakra de busca pequeno"
-
-msgid "Sensor Array"
-msgstr "Conjunto de Sensores"
-
-msgid "Shatterer Launcher"
-msgstr "Lançador Estilhaçador"
-
-msgid "Shield Capacitor I"
-msgstr "Condensador de Escudo I"
-
-msgid "Shield Capacitor II"
-msgstr "Condensador de Escudo I"
-
-msgid "Shield Capacitor III"
-msgstr "Condensador de Escudo III"
-
-msgid "Shield Capacitor IV"
-msgstr "Condensador de Escudo IV"
-
-msgid "Shredder"
-msgstr "Triturador"
-
-msgid "Silence"
-msgstr "Silêncio"
-
-msgid "Sirius Fidelity Bay"
-msgstr "Baía Fidelidade Sirius"
-
-msgid "Sirius Shaman Bay"
-msgstr "Baía Xamã Sirius"
-
-#, fuzzy
-msgid "S&K Battle Plating"
-msgstr "Revestimento de Combate Pesado S&K"
-
-msgid "S&K Heavy Plasma Drill"
-msgstr "Broca de Plasma Pesada S&K"
-
-msgid "S&K Large Cargo Hull"
-msgstr "Casco de Carga Grande S&K"
-
-msgid "S&K Medium Cargo Hull"
-msgstr "Casco de Carga Médio S&K"
-
-msgid "S&K Plasma Drill"
-msgstr "Broca de Plasma S&K"
-
-#, fuzzy
-msgid "S&K Skirmish Plating"
-msgstr "Revestimento de Combate Leve S&K"
-
-msgid "S&K Small Cargo Hull"
-msgstr "Casco de Carga Pequeno S&K"
-
-#, fuzzy
-msgid "S&K War Plating"
-msgstr "Revestimento de Combate Pesado S&K"
-
-msgid "Small Cargo Pod"
-msgstr "Compartimento de Carga Pequeno"
-
-#, fuzzy
-msgid "Small Flow Amplifier"
-msgstr "Amplificador"
-
-msgid "Small Flow Resonator"
-msgstr ""
-
-msgid "Small Fuel Pod"
-msgstr "Compartimento de Combustível Pequeno"
-
-msgid "Small Meditation Chamber"
-msgstr ""
-
-msgid "Small Shield Booster"
-msgstr "Potenciador de Escudo Pequeno"
-
-msgid "Soromid Brigand Bay"
-msgstr "Baía Salteador Soromid"
-
-msgid "Space Mine Layer"
-msgstr "Camada de Mina Espacial"
-
-msgid "Spittle Tubuloid Cluster"
-msgstr ""
-
-msgid "Squadron Synchronizer Module"
-msgstr ""
-
-msgid "Star of Valor"
-msgstr "Estrela da Coragem"
-
-#, fuzzy
-msgid "Stealth Burster"
-msgstr "Camuflagem a:"
-
-msgid "Super-Fast Collider Launcher"
-msgstr "Lançador Colisor Super Rápido"
-
-#. get the drink
-msgid "Swamp Bombing"
-msgstr "Bomba de Pântano"
-
-msgid "Targeting Array"
-msgstr "Conjunto de Mira"
-
-msgid "Targeting Conduit"
-msgstr "Conduta de Mira"
-
-msgid "TeraCom Banshee Launcher"
-msgstr "Lançador Banshee TeraCom"
-
-msgid "TeraCom Fury Launcher"
-msgstr "Lançador Fury TeraCom"
-
-msgid "TeraCom Headhunter Launcher"
-msgstr "Lançador de Mísseis Caçador de Cabeças TeraCom"
-
-msgid "TeraCom Imperator Launcher"
-msgstr "Lançador de Torpedos Imperador TeraCom"
-
-msgid "TeraCom Mace Launcher"
-msgstr "Lançador de Foguetes Bastão TeraCom"
-
-msgid "TeraCom Medusa Launcher"
-msgstr "Lançador de Mísseis Medusa TeraCom"
-
-msgid "TeraCom Vengeance Launcher"
-msgstr "Lançador de Mísseis Vingança TeraCom"
-
-msgid "The Bite - Blood Lust"
-msgstr "A Mordida - Sede por Sangue"
-
-#, fuzzy
-msgid "The Bite - Cannibal"
-msgstr "A Mordida - Sede por Sangue"
-
-msgid "The Bite - Improved"
-msgstr "A Mordida - Melhorada"
-
-msgid "The Bite"
-msgstr "A Mordida"
-
-#, fuzzy
-msgid "Bioship Thorn"
-msgstr "Orgão de Bionave"
-
-msgid "Thurion Perspicacity Bay"
-msgstr "Baía Perspicácia Túrion"
-
-msgid "Thurion Perspicacity Dock"
-msgstr "Doca Perspicácia Túrion"
-
-#, fuzzy
-msgid "Thurion Scintillation Bay"
-msgstr "Cintilação Túrion"
-
-msgid "Toy Drone"
-msgstr "Drone de Brinquedo"
-
-msgid "Tracking Antennae"
-msgstr "Antenas Rastreadoras"
-
-msgid "Trading Card (Common)"
-msgstr "Carta Colecionável (Comum)"
-
-msgid "Trading Card (Rare)"
-msgstr "Carta Colecionável (Rara)"
-
-msgid "Trading Card (Uncommon)"
-msgstr "Carta Colecionável (Incomum)"
-
-#. Create the lootable entry
-#, fuzzy
-msgid "Treasure Map"
-msgstr "Caçador de Tesouros"
-
-msgid "Tricon Cyclone Engine"
-msgstr "Motor Tricon Ciclone"
-
-msgid "Tricon Typhoon Engine"
-msgstr "Motor Tricon Tufão"
-
-msgid "Tricon Zephyr Engine"
-msgstr "Motor Tricon Zéfiro"
-
-msgid "Tunnelling Organ"
-msgstr "Órgão de Tunelamento"
-
-msgid "Turbolaser"
-msgstr "Laser Turbo"
-
-msgid "Turreted Convulsion Launcher"
-msgstr "Lançador de Mísseis Turretado Convulsão"
-
-msgid "Turreted Gauss Gun"
-msgstr "Arma Gauss Turretada"
-
-msgid "Turreted Vulcan Gun"
-msgstr "Arma Vulcão Turretada"
-
-msgid "Ugly Statue"
-msgstr "Estátua Feia"
-
-msgid "Ultra Map"
-msgstr "Ultra Mapa"
-
-msgid "Unicorp Caesar IV Launcher"
-msgstr "Lançador de Torpedos César IV Unicorp"
-
-msgid "Unicorp D-23 Medium Plating"
-msgstr "Revestimento Médio Unicorp D-23"
-
-msgid "Unicorp D-2 Light Plating"
-msgstr "Revestimento Leve Unicorp D-2"
-
-msgid "Unicorp D-58 Heavy Plating"
-msgstr "Revestimento Pesado Unicorp D-58"
-
-#, fuzzy
-msgid "Unicorp Eagle 3000 Engine"
-msgstr "Motor Unicorp Águia 6500"
-
-#, fuzzy
-msgid "Unicorp Falcon 700 Engine"
-msgstr "Motor Unicorp Falcão 1400"
-
-#, fuzzy
-msgid "Unicorp Hawk 160 Engine"
-msgstr "Motor Unicorp Gavião 360"
-
-msgid "Unicorp Jammer"
-msgstr "Inibidor Unicorp"
-
-msgid "Unicorp Light Afterburner"
-msgstr "Pós-Combustor Leve Unicorp"
-
-msgid "Unicorp Medium Afterburner"
-msgstr "Pós-Combustor Médio Unicorp"
-
-msgid "Unicorp PT-16 Core System"
-msgstr "Sistema Principal Unicorp PT-16"
-
-msgid "Unicorp PT-200 Core System"
-msgstr "Sistema Principal Unicorp PT-200"
-
-msgid "Unicorp PT-440 Core System"
-msgstr "Sistema Principal Unicorp PT-440"
-
-msgid "Unicorp Scrambler"
-msgstr "Distorçor Unicorp"
-
-msgid "Unicorp Storm Launcher"
-msgstr "Lançador de Mísseis Tempestade Unicorp"
-
-msgid "Vacuum Cleaner?"
-msgstr "Aspirador de Pó?"
-
-msgid "Valkyrie Beam"
-msgstr "Raio Valquíria"
-
-msgid "Veil of Penelope"
-msgstr "Véu de Penélope"
-
-msgid "Vulcan Gun"
-msgstr "Canhão Vulcão"
-
-msgid "Wanderer"
-msgstr "Andarilho"
-
-msgid "Weakness Harmonizer AI"
-msgstr "IA de Harmonização de Fraqueza"
-
-msgid "Weapons Ionizer"
-msgstr "Ionizador de Armas"
-
-msgid "Wild Space Taint"
-msgstr ""
-
-#, fuzzy
-msgid "Worn Down"
-msgstr "A arrefecer"
-
-msgid "Za'lek Bomber Drone Bay"
-msgstr "Baía de Drones Bombardeiros Za'lek"
-
-msgid "Za'lek Bomber Drone Mini Bay"
-msgstr "Mini Baía de Drones Bombardeiros Za'lek"
-
-msgid "Za'lek Heavy Drone Bay"
-msgstr "Baía de Drones Pesados Za'lek"
-
-msgid "Za'lek Heavy Drone Mini Bay"
-msgstr "Mini Baía de Drones Pesados Za'lek"
-
-msgid "Za'lek Hunter Launcher"
-msgstr "Lançador de Drones Caçador Za'lek"
-
-msgid "Za'lek Light Drone Bay"
-msgstr "Baía de Drones Leves Za'lek"
-
-msgid "Za'lek Light Drone Mini Bay"
-msgstr "Mini Baía de Drones Leves Za'lek"
-
-msgid "Za'lek Reaper Launcher"
-msgstr "Lançador de Drones Ceifador Za'lek"
-
-msgid "Za'lek Test Engine"
-msgstr "Motor de Teste Za'lek"
-
-msgid "ZD-5 Guardian Unit"
-msgstr "Unidade Guardiã ZD-5"
-
-msgid "ZIBS-16"
-msgstr ""
-
-msgid "ZIBS-32"
-msgstr ""
-
-msgid "Admonisher"
-msgstr "Admoestador"
-
-msgid "<widget rightstats />"
-msgstr ""
-
-msgid "# <%= s:name() %>"
-msgstr ""
-
-msgid "* **[Class](ships/classes)**:   <%= _(s:classDisplay()) %>"
-msgstr ""
-
-msgid "* **Fabricator**:   <%= _(s:fabricator()) %>"
-msgstr ""
-
-msgid "* **[Crew](mechanics/boarding)**:   <%= fmt.number(s:crew()) %>"
-msgstr ""
-
-msgid ""
-"* **[Fleet Capacity](mechanics/playerfleet)**:   <%= fmt.number(s:points()) "
-"%>"
-msgstr ""
-
-msgid ""
-"* **[Mass](mechanics/movement)**:   <%= fmt.f(_(\"{mass} {unit}\"), "
-"{mass=fmt.number(s:mass()),unit=naev.unit('mass')}) %>"
-msgstr ""
-
-msgid ""
-"* **[Base Armour](mechanics/damage)**:   <%= fmt.f(_(\"{armour} {unit}\"), "
-"{armour=fmt.number(s:armour()), unit=naev.unit('energy')}) %>"
-msgstr ""
-
-msgid ""
-"* **[Cargo Space](mechanics/cargo)**:   <%= fmt.f(_(\"{cargo} {unit}\"), "
-"{cargo=fmt.number(s:cargo()), unit=naev.unit('mass')})%>"
-msgstr ""
-
-msgid ""
-"* **[Fuel Consumption](mechanics/hyperspace)**:   <%= fmt.f(_(\"{fuel} {unit}"
-"\"), {fuel=fmt.number(s:fuelConsumption()), unit=naev.unit('unit')})%>"
-msgstr ""
-
-msgid "* **[Price](mechanics/credits)**:   <%= fmt.credits(s:price()) %>"
-msgstr ""
-
-msgid "* **License**:   <%= _(s:license()) %>"
-msgstr ""
-
-msgid "Places where the <%= s:name() %> is sold are shown in #ggreen#0."
-msgstr ""
-
-msgid ""
-"You are not aware of anywhere where the <%= s:name() %> is available for "
-"purchase."
-msgstr ""
-
-#, fuzzy
-msgid "Admonisher ΩIIa"
-msgstr "Admoestador"
-
-msgid "Ancestor"
-msgstr "Ancestral"
-
-msgid "Ancestor HG Eagle-Eye"
-msgstr ""
-
-msgid "Astral Projection Greater"
-msgstr ""
-
-msgid "Astral Projection Lesser"
-msgstr ""
-
-msgid "Astral Projection Normal"
-msgstr ""
-
-#, fuzzy
-msgid "Bedivere"
-msgstr "Rio"
-
-#, fuzzy
-msgid "Dealbreaker"
-msgstr "destrói escudos"
-
-msgid "Drone"
-msgstr "Drone"
-
-msgid "Drone Carrier"
-msgstr "Porta-Drones"
-
-msgid "Drone (Hyena)"
-msgstr "Drone (Hiena)"
-
-msgid "Dvaered Ancestor"
-msgstr "Ancestral Dvaered"
-
-msgid "Dvaered Arsenal"
-msgstr "Arsenal Dvaered"
-
-msgid "Dvaered Goddard"
-msgstr "Goddard Dvaered"
-
-msgid "Dvaered Phalanx"
-msgstr "Falange Dvaered"
-
-msgid "Dvaered Retribution"
-msgstr "Retribuição Dvaered"
-
-msgid "Dvaered Vendetta"
-msgstr "Vendetta Dvaered"
-
-msgid "Dvaered Vigilance"
-msgstr "Vigilance Dvaered"
-
-msgid "Empire Admonisher"
-msgstr "Admoestador Imperial"
-
-#, fuzzy
-msgid "Empire Admonisher Longbow"
-msgstr "Admoestador Imperial"
-
-msgid "Empire Hawking"
-msgstr "Hawking Imperial"
-
-msgid "Empire Lancelot"
-msgstr "Lancelot Imperial"
-
-#, fuzzy
-msgid "Empire Lancelot Golden Efreeti"
-msgstr "Lancelot Imperial"
-
-msgid "Empire Pacifier"
-msgstr "Pacificador Imperial"
-
-#, fuzzy
-msgid "Empire Pacifier Hoplite"
-msgstr "Pacificador Imperial"
-
-msgid "Empire Peacemaker"
-msgstr "Mediador Imperial"
-
-msgid "Empire Rainmaker"
-msgstr "Criador de Chuva Imperial"
-
-msgid "Empire Shark"
-msgstr "Tubarão Imperial"
-
-msgid "Fort Raelid"
-msgstr "Forte Raelid"
-
-msgid "Fort Raglan"
-msgstr "Forte Raglan"
-
-msgid "Gawain"
-msgstr "Gawain"
-
-#, fuzzy
-msgid "Gawain XY-37"
-msgstr "Gawain"
-
-msgid "Goddard"
-msgstr "Goddard"
-
-msgid "Goddard Merchantman"
-msgstr ""
-
-msgid "Hawking"
-msgstr "Hawking"
-
-msgid "Heavy Drone"
-msgstr "Drone Pesado"
-
-msgid "Hyena"
-msgstr "Hiena"
-
-msgid "Kauweke"
-msgstr "Kauweke"
-
-msgid "Kestrel"
-msgstr "Francelho"
-
-#, fuzzy
-msgid "Kestrel Sigma"
-msgstr "Francelho"
-
-msgid "Koala"
-msgstr "Koala"
-
-#, fuzzy
-msgid "Koala Armoured"
-msgstr "Armadura Biometálica"
-
-msgid "Lancelot"
-msgstr "Lancelot"
-
-msgid "Llama"
-msgstr "Llama"
-
-msgid "Llama Voyager"
-msgstr ""
-
-msgid "Mule"
-msgstr "Mula"
-
-msgid "Mule Hardhat"
-msgstr ""
-
-msgid "Nohinohi"
-msgstr "Nohinohi"
-
-msgid "One-Wing Goddard"
-msgstr "Goddard de Uma-Asa"
-
-msgid "Pacifier"
-msgstr "Pacificador"
-
-msgid "Phalanx"
-msgstr "Falange"
-
-msgid "Pirate Admonisher"
-msgstr "Admoestador Pirata"
-
-msgid "Pirate Ancestor"
-msgstr "Ancestral Pirata"
-
-#, fuzzy
-msgid "Pirate Bedivere"
-msgstr "Rio"
-
-#, fuzzy
-msgid "Pirate Blue Shark"
-msgstr "Tubarão Pirata"
-
-msgid "Pirate Hyena"
-msgstr "Hiena Pirata"
-
-msgid "Pirate Kestrel"
-msgstr "Francelho Pirata"
-
-#, fuzzy
-msgid "Pirate Kestrel Yuri's Kiss"
-msgstr "Francelho Pirata"
-
-msgid "Pirate Phalanx"
-msgstr "Falange Pirata"
-
-msgid "Pirate Revenant"
-msgstr "Pirata Renascido"
-
-msgid "Pirate Rhino"
-msgstr "Rinoceronte Pirata"
-
-msgid "Pirate Shark"
-msgstr "Tubarão Pirata"
-
-msgid "Pirate Starbridge"
-msgstr "Ponte Estelar Pirata"
-
-msgid "Pirate Vendetta"
-msgstr "Vendetta Pirata"
-
-msgid "Pirate Zebra"
-msgstr "Zebra Pirata"
-
-msgid "Plowshare"
-msgstr ""
-
-msgid "Proteron Archimedes"
-msgstr "Arquimedes Proteron"
-
-msgid "Proteron Dalton"
-msgstr "Proteron Dalton"
-
-msgid "Proteron Euler"
-msgstr "Proteron Euler"
-
-msgid "Proteron Gauss"
-msgstr "Proteron Gauss"
-
-msgid "Proteron Hippocrates"
-msgstr "Hipócrates Proteron"
-
-msgid "Proteron Pythagoras"
-msgstr "Pitágoras Proteron"
-
-msgid "Proteron Watson"
-msgstr "Watson Proteron"
-
-msgid "Psychic Orb"
-msgstr "Orbe Psíquica"
-
-msgid "Quicksilver"
-msgstr "Mercúrio"
-
-#, fuzzy
-msgid "Quicksilver Mercury"
-msgstr "Mercúrio"
-
-msgid "Rhino"
-msgstr "Rinoceronte"
-
-msgid "Schroedinger"
-msgstr "Schroedinger"
-
-msgid "Shark"
-msgstr "Tubarão"
-
-#, fuzzy
-msgid "Shark ΨIIIa"
-msgstr "Dvaer IIIa"
-
-msgid "Sindbad"
-msgstr "Sindbad"
-
-msgid "Sirius Divinity"
-msgstr "Divindade Sirius"
-
-msgid "Sirius Dogma"
-msgstr "Dogma Sirius"
-
-msgid "Sirius Fidelity"
-msgstr "Fidelidade Sirius"
-
-msgid "Sirius Preacher"
-msgstr "Pregador Sirius"
-
-msgid "Sirius Providence"
-msgstr "Providência Sirius"
-
-msgid "Sirius Shaman"
-msgstr "Xamã Sirius"
-
-msgid "Soromid Arx"
-msgstr "Arx Soromid"
-
-msgid "Soromid Brigand"
-msgstr "Bandido Soromid"
-
-msgid "Soromid Copia"
-msgstr "Copia Soromid"
-
-msgid "Soromid Ira"
-msgstr "Ira Soromid"
-
-msgid "Soromid Marauder"
-msgstr "Saqueador Soromid"
-
-msgid "Soromid Nyx"
-msgstr "Nyx Soromid"
-
-msgid "Soromid Odium"
-msgstr "Ódio Soromid"
-
-msgid "Soromid Reaver"
-msgstr "Saqueador Soromid"
-
-msgid "Soromid Vox"
-msgstr "Voz Soromid"
-
-msgid "Starbridge"
-msgstr "Ponte Estelar"
-
-#, fuzzy
-msgid "Starbridge Sigma"
-msgstr "Ponte Estelar"
-
-msgid "Taitamariki"
-msgstr "Taitamariki"
-
-msgid "Thurion Apprehension"
-msgstr "Apreensão Túrion"
-
-msgid "Thurion Certitude"
-msgstr "Certeza Túrion"
-
-msgid "Thurion Ingenuity"
-msgstr "Engenhosidade Túrion"
-
-msgid "Thurion Perspicacity"
-msgstr "Perspicácia Túrion"
-
-#, fuzzy
-msgid "Thurion Perspicacity Beta"
-msgstr "Baía Perspicácia Túrion"
-
-msgid "Thurion Scintillation"
-msgstr "Cintilação Túrion"
-
-msgid "Thurion Taciturnity"
-msgstr "Taciturnidade Túrion"
-
-msgid "Thurion Virtuosity"
-msgstr "Virtuosidade Túrion"
-
-#, fuzzy
-msgid "Tristan"
-msgstr "Cristen"
-
-msgid "Vendetta"
-msgstr "Vendetta"
-
-#, fuzzy
-msgid "Vendetta Whiplash"
-msgstr "Vendetta"
-
-msgid "Vigilance"
-msgstr "Vigilance"
-
-msgid "Za'lek Bomber Drone"
-msgstr "Bombardeiro Drone Za'lek"
-
-msgid "Za'lek Demon"
-msgstr "Demônio Za'lek"
-
-#, fuzzy
-msgid "Za'lek Demon Type IV"
-msgstr "Ferrão Za'lek"
-
-msgid "Za'lek Diablo"
-msgstr "Diabo Za'lek"
-
-msgid "Za'lek Heavy Drone"
-msgstr "Drone Pesado Za'lek"
-
-msgid "Za'lek Hephaestus"
-msgstr "Hefesto Za'lek"
-
-msgid "Za'lek Light Drone"
-msgstr "Drone Leve Za'lek"
-
-msgid "Za'lek Mammon"
-msgstr "Mammon Za'lek"
-
-msgid "Za'lek Mephisto"
-msgstr "Mefisto Za'lek"
-
-#, fuzzy
-msgid "Za'lek Mephisto Type V"
-msgstr "Mefisto Za'lek"
-
-msgid "Za'lek Scout Drone"
-msgstr "Drone Batedor Za'lek"
-
-msgid "Za'lek Sting"
-msgstr "Ferrão Za'lek"
-
-#, fuzzy
-msgid "Za'lek Sting Type II"
-msgstr "Ferrão Za'lek"
-
-#, fuzzy
-msgid "Za'lek Sting Type IV"
-msgstr "Ferrão Za'lek"
-
-msgid "Zebra"
-msgstr "Zebra"
 
 msgid "Main"
 msgstr "Principal"
@@ -9485,8 +7707,16 @@ msgstr ""
 "Reduz significativamente a dificuldade do jogo, permitindo concentrares-te "
 "na história."
 
+#, fuzzy
+msgid "Ambush Hunter I"
+msgstr "Caçador de emboscada"
+
 msgid "The ship has caught other ships by surprise!"
 msgstr "A nave apanhou outras naves de surpresa!"
+
+#, fuzzy
+msgid "Ambush Hunter II"
+msgstr "Caçador de emboscada"
 
 msgid "Antimatter Taint"
 msgstr "Contaminação por antimatéria"
@@ -9494,8 +7724,17 @@ msgstr "Contaminação por antimatéria"
 msgid "Antimatter is tainting your ship!"
 msgstr "A antimatéria está a contaminar a tua nave!"
 
+#. Set outfit state
+#. Astral projection
+msgid "Astral Projection"
+msgstr "Projeção astral"
+
 msgid "Ship is being projected."
 msgstr "A nave está a ser projetada."
+
+#, fuzzy
+msgid "Avatar of the Sirichana"
+msgstr "Avatar de Sirichana"
 
 #, fuzzy
 msgid "You are an avatar of the Sirichana!"
@@ -9544,6 +7783,9 @@ msgstr "Corsário"
 msgid "Corsair set bonus."
 msgstr ""
 
+msgid "Crippling Plasma"
+msgstr "Plasma incapacitante"
+
 msgid "Plasma is interfering with the weapon systems!"
 msgstr "O plasma está a interferir com os sistemas de armas!"
 
@@ -9585,8 +7827,17 @@ msgstr "Desabarecer"
 msgid "Fade-Out Norender"
 msgstr "Desabarecer"
 
+msgid "Feather Drive"
+msgstr "Propulsão de pluma"
+
 msgid "Your ship just used Feather Drive!"
 msgstr "A tua nave acabou de usar a propulsão de pluma!"
+
+#. Attack tree
+#. For everyone!
+#. Uses feral rage slot (only for ships that get tier 5)
+msgid "Feral Rage I"
+msgstr "Fúria selvagem I"
 
 msgid "Fractured Reality"
 msgstr "Realidade fraturada"
@@ -9622,6 +7873,9 @@ msgstr "Cebolas"
 #, fuzzy
 msgid "Hacked!"
 msgstr "Bloqueado"
+
+msgid "Paralyzing Plasma"
+msgstr "Plasma paralisante"
 
 msgid "Plasma is slowing the ship down!"
 msgstr "O plasma está a desacelerar a nave!"
@@ -9790,6 +8044,9 @@ msgid ""
 msgstr ""
 "A Aliança da Fronteira é formada por sobreviventes das tentativas iniciais "
 "de expansão humana no espaço."
+
+msgid "Goddard"
+msgstr "Goddard"
 
 msgid "House Goddard"
 msgstr "Casa Goddard"
@@ -10131,6 +8388,9 @@ msgstr ""
 "A Casa Za'lek é o coração científico do Império. Até pouco tempo atrás eram "
 "uma Grande Casa secreta, mas tornaram-se muito mais abertos recentemente."
 
+msgid "Air Freshener"
+msgstr "Purfificador de Ar"
+
 msgid "Accessory"
 msgstr "Acessório"
 
@@ -10145,6 +8405,9 @@ msgstr ""
 "perfumes não têm nenhum impacto devido aos poderosos sistemas de filtragem "
 "das naves modernas, atualmente são meramente decorativos."
 
+msgid "Black Cat Doll"
+msgstr "Boneco de Gato Preto"
+
 msgid ""
 "A crude doll of a black cat made from authentic \"Felis catus\" fur you made "
 "that was all over your ship. It's quite cute."
@@ -10156,6 +8419,9 @@ msgstr ""
 msgid "#pOnly active when in stealth.#0"
 msgstr "#pAtivo apenas no modo camuflado.#0"
 
+msgid "Broken Nebular Shielding Prototype"
+msgstr "Protótipo de Escudo de Proteção Nebular Danificado"
+
 msgid ""
 "A broken prototype for a novel shielding device that is supposed to enable "
 "travel into the Sol Nebula. However, due to its malfunction you almost died. "
@@ -10166,6 +8432,9 @@ msgstr ""
 "permite viajar para dentro da Nebulosa Sol. Porém, devido ao mau "
 "funcionamento quase morreste. Por outro lado ele parece absorver energia "
 "nociva e emitir radiação térmica para o espaço."
+
+msgid "Commemorative Stein"
+msgstr "Caneca Comemorativa"
 
 msgid ""
 "This is a stein commemorating the terraforming and establishment of a "
@@ -10184,15 +8453,24 @@ msgstr ""
 "há uma inscrição dizendo \"Dane-se a PUAAA, vida longa ao Herói de Antlejos!"
 "\" com uma assinatura ilegível."
 
+msgid "Cyborg Feather"
+msgstr ""
+
 msgid ""
 "A feather from a cyborg duck. Although the quill is made of some lightweight "
 "metal alloy, the rest looks surprisingly close to a normal feather."
 msgstr ""
 
+msgid "Fancy Key Chain"
+msgstr "Molho de Chaves Extravagante"
+
 msgid ""
 "A small statue of a crossed-eyed gorilla lifting a Goddard Battlecruiser."
 msgstr ""
 "Uma estatueta de um gorila vesgo erguendo um Cruzador de Batalha Goddard."
+
+msgid "Fuzzy Dice"
+msgstr "Dados Felpudos"
 
 msgid ""
 "A pair of fuzzy dice that can be hung inside your ship. Apparently they are "
@@ -10208,11 +8486,18 @@ msgstr ""
 msgid "#pImproves luck!#0"
 msgstr "#pMelhora a Sorte!#0"
 
+#, fuzzy
+msgid "Goatee Marker"
+msgstr "Piratas Saqueadores"
+
 msgid ""
 "A rare limited edition Goatee Marker, meant exclusive for drawing not only "
 "facial hair, but Goatees in particular. It seems to have been partially used "
 "and has the marauder logo on the bottom."
 msgstr ""
+
+msgid "Handbook for Dvaered Good Manners"
+msgstr "Manual de Boas Maneiras Dvaered"
 
 msgid ""
 "When does a gentleman use the head of another gentleman as a trophy in their "
@@ -10233,6 +8518,9 @@ msgstr ""
 "patentes mais altas\" -- Coronel Urnus, Gerente do Escritório Executivo no "
 "Alto Comando"
 
+msgid "Jack's Eyepatch"
+msgstr ""
+
 msgid ""
 "A ragged eyepatch that seems to have seen its share of adventures among the "
 "stars."
@@ -10240,6 +8528,9 @@ msgstr ""
 
 msgid "#pDoubles the range of blink drives.#0"
 msgstr ""
+
+msgid "Left Boot"
+msgstr "Bota Esquerda"
 
 msgid ""
 "The left boot of a high-ranking Empire official. It doesn't seem to fit you "
@@ -10252,6 +8543,9 @@ msgstr ""
 
 msgid "#pSmells funky.#0"
 msgstr "#pTem um cheiro esquisito.#0"
+
+msgid "Love Letter"
+msgstr "Carta de Amor"
 
 msgid ""
 "A misplaced love letter that you were supposed to deliver, reading the first "
@@ -10266,9 +8560,15 @@ msgstr ""
 msgid "#rLove is in the air.#0"
 msgstr "#rO Amor está no ar.#0"
 
+msgid "Pentagram of Valor"
+msgstr "Pentagrama da Coragem"
+
 msgid "A token of commitment to the FLF cause. It smells oddly of fish."
 msgstr ""
 "Um símbolo de compromisso com a causa da FLF. Cheira estranhamente a peixe."
+
+msgid "Pilot Doll"
+msgstr "Boneco piloto"
 
 msgid ""
 "A doll made by orphans out of their old clothes. You believe it's supposed "
@@ -10280,9 +8580,17 @@ msgstr ""
 "importante aqui é a intenção e não o resultado."
 
 #, fuzzy
+msgid "Racing Trophy (Bronze)"
+msgstr "Troféu de Corrida"
+
+#, fuzzy
 msgid "The racing trophy you won with your piloting skills."
 msgstr ""
 "Troféu de corrida conquistado com excelente pilotagem. Fica ótimo na parede!"
+
+#, fuzzy
+msgid "Racing Trophy (Gold)"
+msgstr "Troféu de Corrida"
 
 #, fuzzy
 msgid ""
@@ -10292,11 +8600,18 @@ msgstr ""
 "Troféu de corrida conquistado com excelente pilotagem. Fica ótimo na parede!"
 
 #, fuzzy
+msgid "Racing Trophy (Silver)"
+msgstr "Troféu de Corrida"
+
+#, fuzzy
 msgid ""
 "The racing trophy you won with your excellent piloting skills. Looks great "
 "on the wall!"
 msgstr ""
 "Troféu de corrida conquistado com excelente pilotagem. Fica ótimo na parede!"
+
+msgid "Rackham's Razor"
+msgstr ""
 
 msgid ""
 "An ornately engraved sword with a lightly curved, razor-sharp nanosteel "
@@ -10308,6 +8623,9 @@ msgstr ""
 msgid "#gDouble effect when flying a pirate ship.#0"
 msgstr ""
 
+msgid "Sandwich Holder"
+msgstr "Porta-Sanduíches"
+
 msgid ""
 "It appears to be a limited edition Nexus Shipyards sandwich holder. Very "
 "useful for hands-free eating of sandwiches in zero gravity. Apparently the "
@@ -10317,12 +8635,18 @@ msgstr ""
 "Muito útil para o consumo de sanduíches em gravidade zero com as mãos "
 "livres. Aparentemente o chefe adora sanduíches."
 
+msgid "Satellite Mock-up"
+msgstr "Maquete de Satélite"
+
 msgid ""
 "A mock-up of a satellite you helped launch into the Nebula. It even has cute "
 "blinking lights!"
 msgstr ""
 "Uma maqueta de um satélite que ajudaste a lançar na Nebulosa. Tem até luzes "
 "adoráveis que piscam!"
+
+msgid "Star of Valor"
+msgstr "Estrela da Coragem"
 
 msgid ""
 "A shiny medal for your contribution to the Dvaered cause. On the back it "
@@ -10331,12 +8655,19 @@ msgstr ""
 "Uma medalha brilhante pela tua contribuição para a causa Dvaraed. Atrás diz "
 "\"não indicado para uso retal\". Espera… o quê?"
 
+#. get the drink
+msgid "Swamp Bombing"
+msgstr "Bomba de Pântano"
+
 msgid ""
 "A fairly mediocre cocktail that you don't intend to drink. At least it looks "
 "good as an accessory."
 msgstr ""
 "Um cocktail bastante medíocre que não pretendes beber. Pelo menos é bonito "
 "como acessório."
+
+msgid "Toy Drone"
+msgstr "Drone de Brinquedo"
 
 msgid ""
 "A small toy drone that can fly around the ship. The AI doesn't seem to work "
@@ -10346,6 +8677,9 @@ msgstr ""
 "Um pequeno drone de brinquedo que pode voar pela nave. A IA não parece "
 "funcionar muito bem e tem o hábito de bater nas paredes e apitar o tempo "
 "todo, mas é bem bonitinho."
+
+msgid "Trading Card (Common)"
+msgstr "Carta Colecionável (Comum)"
 
 msgid ""
 "A #oHyena#0 trading card game card of common rarity. It describes in detail "
@@ -10358,6 +8692,9 @@ msgstr ""
 "os primeiros modelos da Hiena causavam tanta tensão nos pilotos que eles "
 "podiam ser esmagados durante grandes acelerações?"
 
+msgid "Trading Card (Rare)"
+msgstr "Carta Colecionável (Rara)"
+
 msgid ""
 "A #oGolden Llama#0 trading card game card of #prare#0 rarity. Instead of "
 "going into the important details of the ship, it just shows a high "
@@ -10366,6 +8703,9 @@ msgstr ""
 "Uma carta colecionável #oLhama Dourada#0 e #prara#0. Ao invés de esmiuçar os "
 "detalhes importantes da nave, mostra apenas uma representação holográfica em "
 "alta definição da suposta Lhama Dourada."
+
+msgid "Trading Card (Uncommon)"
+msgstr "Carta Colecionável (Incomum)"
 
 msgid ""
 "A #oDvaered Vigilance#0 trading card game card of #buncommon#0 rarity. It "
@@ -10380,6 +8720,9 @@ msgstr ""
 "permitindo que a tripulação a opere para além dos níveis de danos que "
 "incapacitariam naves normais?"
 
+msgid "Ugly Statue"
+msgstr "Estátua Feia"
+
 msgid ""
 "A statue given to you by Baron Sauterfeldt for your fine work. You would "
 "feel more grateful if he hadn't mentioned that his lover was making him get "
@@ -10393,6 +8736,9 @@ msgstr ""
 "borboleta tocando um ukulele e a sua cabeça balança ao redor com a "
 "aceleração da nave. Que bom gosto…"
 
+msgid "Vacuum Cleaner?"
+msgstr "Aspirador de Pó?"
+
 msgid ""
 "Found on a Four Winds fighter that was carrying a Ragnarok beam. It seems to "
 "increase the performance of your engine when the ship's mass is high. It is "
@@ -10404,8 +8750,17 @@ msgstr ""
 "Certamente não é um aspirador de pó verdadeiro, mas não sabes o nome real "
 "deste equipamento."
 
+msgid "Adaptive Jump"
+msgstr "Salto Adaptável"
+
 msgid "Bioship Organ"
 msgstr "Orgão de Bionave"
+
+#. Movement skill tree
+#. Only for up to destroyers
+#. Needs adrenal gland slot
+msgid "Adrenal Gland I"
+msgstr "Glândula Adrenal I"
 
 msgid ""
 "The bioship adrenal gland organ is able to generate immense amounts of "
@@ -10415,6 +8770,45 @@ msgstr ""
 "O órgão da bionave glândula adrenal é capaz de gerar quantidades imensas de "
 "adrenalina a partir de energia bruta, permitindo que a nave tenha um aumento "
 "temporário de movimento."
+
+msgid "Adrenal Gland II"
+msgstr "Glândula Adrenal II"
+
+msgid "Adrenal Gland III"
+msgstr "Glândula Adrenal III"
+
+msgid "Adrenaline Hormones"
+msgstr "Hormonas de Adrenalina"
+
+#. Health tree
+#. For everyone!
+#. Uses intrinsics only
+msgid "Bulky Abdomen"
+msgstr "Abdómen Volumoso"
+
+#. Misc tree
+#. For everyone!
+#. All intrinsics
+msgid "Cargo Sacs"
+msgstr "Sacos de Carga"
+
+#. Stealth skill tree
+#. For up to cruiser
+#. Uses intrinsics only
+msgid "Compound Eyes"
+msgstr "Olhos Compostos"
+
+#. Plasma tree
+#. For everyone!
+#. Requires plasma slot for tier 5
+msgid "Corrosion I"
+msgstr "Corrosão I"
+
+msgid "Corrosion II"
+msgstr "Corrosão II"
+
+msgid "Enhanced Smell"
+msgstr "Faro Melhorado"
 
 msgid ""
 "Through careful manipulation of the brain stem, the bioship can be induced "
@@ -10430,6 +8824,9 @@ msgstr ""
 msgid "Active for 5 seconds since armour was last damaged."
 msgstr "Ativo por 5 segundos a partir do último dano à blindagem."
 
+msgid "Feral Rage II"
+msgstr "Fúria Selvagem II"
+
 msgid ""
 "Through careful manipulation of the brain stem, the bioship can be induced "
 "into a primitive state of feral rage in which forward and turret weapon "
@@ -10443,6 +8840,9 @@ msgstr ""
 "estado semelhante a um transe é necessário que a blindagem esteja "
 "danificada. A acoplagem adicional com o cerebelo permite ao transe também "
 "aumentar temporariamente a agilidade da nave."
+
+msgid "Feral Rage III"
+msgstr "Fúria Selvagem III"
 
 #, fuzzy
 msgid ""
@@ -10468,10 +8868,51 @@ msgstr ""
 "Ativo por 7 segundos a partir do último dano à blindagem ou pode ser "
 "manualmente alternado com um arrefecimento de 30 segundos."
 
+msgid "Fuel Bladder"
+msgstr "Bexiga de Combustível"
+
+msgid "Hard Shell"
+msgstr "Carapaça Rígida"
+
+msgid "Hunter's Instinct"
+msgstr "Instinto de Caçador"
+
+msgid "Natural Healing I"
+msgstr "Cura Natural I"
+
+msgid "Natural Healing II"
+msgstr "Cura Natural II"
+
+msgid "Plasma Burst"
+msgstr "Salva de Plasma"
+
 msgid "Deals 300 plasma damage to all hostile ships in 200 range."
 msgstr ""
 "Causa 300 de dano de plasma em todas as naves hostis num raio de alcance de "
 "200."
+
+msgid "Reflective Shell"
+msgstr "Concha Refletora"
+
+msgid "Silence"
+msgstr "Silêncio"
+
+msgid "The Bite - Blood Lust"
+msgstr "A Mordida - Sede por Sangue"
+
+#, fuzzy
+msgid "The Bite - Cannibal"
+msgstr "A Mordida - Sede por Sangue"
+
+msgid "The Bite - Improved"
+msgstr "A Mordida - Melhorada"
+
+msgid "The Bite"
+msgstr "A Mordida"
+
+#, fuzzy
+msgid "Bioship Thorn"
+msgstr "Orgão de Bionave"
 
 #. Speed Lights
 #. Make sure it's valid.
@@ -10479,6 +8920,18 @@ msgstr ""
 #, c-format
 msgid "None"
 msgstr "Nada"
+
+msgid "Tracking Antennae"
+msgstr "Antenas Rastreadoras"
+
+msgid "Tunnelling Organ"
+msgstr "Órgão de Tunelamento"
+
+msgid "Wanderer"
+msgstr "Andarilho"
+
+msgid "Dummy Engine"
+msgstr "Motor Simulado"
 
 msgid "Core Systems (Engine)"
 msgstr "Sistemas Principais (Motor)"
@@ -10490,6 +8943,9 @@ msgstr ""
 "Isto é um motor simulado para ser utilizado apenas em missões e que não faz "
 "nada. NÃO COMPRAR."
 
+msgid "Beat Up Large Engine"
+msgstr "Motor Desgastado Grande"
+
 msgid ""
 "Clogged, corroded and cracked in every way possible while still remaining in "
 "functional condition, this engine really belongs on the scrap heap."
@@ -10497,6 +8953,9 @@ msgstr ""
 "Entupido, corroído e rachado de todas as maneiras possíveis enquanto ainda "
 "está em condições funcionais, este motor pertence realmente a um monte de "
 "sucata."
+
+msgid "Krain Remige Engine"
+msgstr "Motor Krain Remige"
 
 #, fuzzy
 msgid "K. Remige Engine"
@@ -10518,6 +8977,10 @@ msgstr ""
 "para naves mais pesadas."
 
 #, fuzzy
+msgid "Melendez Mammoth Engine"
+msgstr "Motor Melendez Mamute XL"
+
+#, fuzzy
 msgid "M. Mammoth Engine"
 msgstr "Motor Melendez Mamute XL"
 
@@ -10528,6 +8991,9 @@ msgid ""
 "maintained. Many bulk freight corporations only turn a profit thanks to the "
 "Mammoth line of engines."
 msgstr ""
+
+msgid "Nexus Bolt 3000 Engine"
+msgstr "Motor Nexus Raio 3000"
 
 #, fuzzy
 msgid "N. Bolt 3000 Engine"
@@ -10541,6 +9007,9 @@ msgstr ""
 "O Raio 3000 é um motor raramente usado projetado para cruzadores. Como a "
 "maioria dos motores Nexus, o seu ponto forte não é velocidade mas o baixo "
 "consumo de energia o que o torna uma opção atraente para alguns pilotos."
+
+msgid "Tricon Typhoon Engine"
+msgstr "Motor Tricon Tufão"
 
 #, fuzzy
 msgid "T. Typhoon Engine"
@@ -10558,6 +9027,10 @@ msgstr ""
 "limite a naves com poderosos reatores."
 
 #, fuzzy
+msgid "Unicorp Eagle 3000 Engine"
+msgstr "Motor Unicorp Águia 6500"
+
+#, fuzzy
 msgid "U. Eagle 3000 Engine"
 msgstr "Motor Unicorp Águia 6500"
 
@@ -10566,6 +9039,13 @@ msgid ""
 "captains who can afford better. While spaceworthy, the engine's performance "
 "renders it a liability in combat and uneconomical for freight hauling."
 msgstr ""
+
+msgid "Beat Up Medium Engine"
+msgstr "Motor Desgastado Médio"
+
+#, fuzzy
+msgid "Krain Patagium Twin Engine"
+msgstr "Motor Krain Patágio"
 
 #, fuzzy
 msgid "K. Patagium Twin Engine"
@@ -10585,6 +9065,10 @@ msgstr ""
 "maior massa."
 
 #, fuzzy
+msgid "Melendez Buffalo Engine"
+msgstr "Motor Melendez Búfalo XL"
+
+#, fuzzy
 msgid "M. Buffalo Engine"
 msgstr "Motor Melendez Búfalo XL"
 
@@ -10594,6 +9078,9 @@ msgid ""
 "typical freight-oriented engine, the Buffalo possesses good top speed, poor "
 "handling, and excellent fuel capacity."
 msgstr ""
+
+msgid "Nexus Arrow 700 Engine"
+msgstr "Motor Nexo Flecha 700"
 
 #, fuzzy
 msgid "N. Arrow 700 Engine"
@@ -10608,6 +9095,9 @@ msgstr ""
 "O Flecha 700 é um respeitável motor para corvetas por um preço respeitável, "
 "oferecendo aos capitães a manobrabilidade decente sem drenar demasiado os "
 "reatores da nave."
+
+msgid "Tricon Cyclone Engine"
+msgstr "Motor Tricon Ciclone"
 
 #, fuzzy
 msgid "T. Cyclone Engine"
@@ -10624,6 +9114,10 @@ msgstr ""
 "mercenários mais ricos utilizam o Ciclone nas suas corvetas."
 
 #, fuzzy
+msgid "Unicorp Falcon 700 Engine"
+msgstr "Motor Unicorp Falcão 1400"
+
+#, fuzzy
 msgid "U. Falcon 700 Engine"
 msgstr "Motor Unicorp Falcão 1400"
 
@@ -10634,6 +9128,13 @@ msgid ""
 "when engaged in battle."
 msgstr ""
 
+msgid "Beat Up Small Engine"
+msgstr "Motor Desgastado Pequeno"
+
+#, fuzzy
+msgid "Melendez Ox Engine"
+msgstr "Motor Melendez Boi XL"
+
 #, fuzzy
 msgid "M. Ox Engine"
 msgstr "Motor Melendez Boi XL"
@@ -10643,6 +9144,9 @@ msgid ""
 "The Ox enables small vessels to haul more cargo or weapons without resorting "
 "to larger and more power-hungry models."
 msgstr ""
+
+msgid "Nexus Dart 160 Engine"
+msgstr "Motor Nexo Dardo 160"
 
 #, fuzzy
 msgid "N. Dart 160 Engine"
@@ -10658,6 +9162,9 @@ msgstr ""
 "destaque em velocidade, oferece boa manobrabilidade e eficiência de energia "
 "por um preço razoável. Um motor muito popular entre utilizadores, tanto "
 "militares quanto civis."
+
+msgid "Tricon Zephyr Engine"
+msgstr "Motor Tricon Zéfiro"
 
 #, fuzzy
 msgid "T. Zephyr Engine"
@@ -10677,6 +9184,10 @@ msgstr ""
 "motores Tricon geralmente podem pagar pelas melhorias requeridas de reatores."
 
 #, fuzzy
+msgid "Unicorp Hawk 160 Engine"
+msgstr "Motor Unicorp Gavião 360"
+
+#, fuzzy
 msgid "U. Hawk 160 Engine"
 msgstr "Motor Unicorp Gavião 360"
 
@@ -10685,6 +9196,9 @@ msgid ""
 "their ships. It's not particularly effective, but it's a lightweight engine "
 "with low energy demands, making it a solid choice for small vessels."
 msgstr ""
+
+msgid "Za'lek Test Engine"
+msgstr "Motor de Teste Za'lek"
 
 #, fuzzy
 msgid "Z. Test Engine"
@@ -10701,6 +9215,9 @@ msgstr ""
 "possam testar novos sistemas de refrigeração e propulsão. Estes motores são "
 "frequentemente modificados por estudantes, o que os torna pouco confiáveis."
 
+msgid "Dummy Plating"
+msgstr "Revestimento Simulado"
+
 msgid "Core Systems (Hull)"
 msgstr "Sistemas Primários (Casco)"
 
@@ -10711,6 +9228,9 @@ msgstr ""
 "Isto é um casco simulado para ser utilizado apenas em missões e que não faz "
 "nada. NÃO COMPRAR."
 
+msgid "Nexus Phantasm Weave"
+msgstr ""
+
 msgid "N. Phantasm Weave"
 msgstr ""
 
@@ -10720,12 +9240,18 @@ msgid ""
 "without sacrificing protection."
 msgstr ""
 
+msgid "Patchwork Heavy Plating"
+msgstr "Blindagem Pesada de Retalhos"
+
 msgid ""
 "On the plus side, it keeps air from venting into space. But that's about it. "
 "This kind of hull maintenance is simply unacceptable."
 msgstr ""
 "Como vantagem, esta blindagem impede que o ar escape para o espaço, mas é só "
 "isso. Este tipo de manutenção de casco é simplesmente inaceitável."
+
+msgid "Red Star Large Cargo Hull"
+msgstr "Casco de Carga Grande Estrela Vermelha"
 
 #, fuzzy
 msgid "RS. Large Cargo Hull"
@@ -10747,6 +9273,9 @@ msgstr ""
 "eletromagnética integrados permitem que mesmo as maiores naves tenham a "
 "oportunidade desviarem mísseis dirigidos a elas."
 
+msgid "S&K Large Cargo Hull"
+msgstr "Casco de Carga Grande S&K"
+
 msgid ""
 "This cargo hull from Schafer & Kane Industries makes use of state-of-the-art "
 "defensive alloys, which allows it to free up even more space for cargo "
@@ -10756,6 +9285,10 @@ msgstr ""
 "ponta, o que permite que seja libertado ainda mais espaço para carga sem "
 "sacrificar muito a durabilidade."
 
+#, fuzzy
+msgid "S&K War Plating"
+msgstr "Revestimento de Combate Pesado S&K"
+
 msgid ""
 "This heavy plating developed by Schafer & Kane Industries can endure "
 "prolonged battle. Quite a few captains and their crews owe their lives to "
@@ -10764,6 +9297,9 @@ msgstr ""
 "Este revestimento pesado desenvolvido pelas Indústrias Schafer & Kane pode "
 "suportar batalhas prolongadas. Um bom número de capitães e as suas "
 "tripulações devem a vida a esta configuração de blindagem."
+
+msgid "Unicorp D-58 Heavy Plating"
+msgstr "Revestimento Pesado Unicorp D-58"
 
 #, fuzzy
 msgid "U. D-58 Heavy Plating"
@@ -10777,6 +9313,9 @@ msgstr ""
 "Embora seja um projeto respeitável, o revestimento D-58 é superado por armas "
 "pesadas modernas, com a maioria dos capitães experientes a optar por "
 "revestimentos mais pesados e avançados."
+
+msgid "Krain Nanotubes Foam Padding"
+msgstr ""
 
 #, fuzzy
 msgid "K. Nanofoam Padding"
@@ -10795,6 +9334,9 @@ msgid ""
 "It does come at a hefty price tag, though."
 msgstr ""
 
+msgid "Nexus Ghost Weave"
+msgstr ""
+
 msgid "N. Ghost Weave"
 msgstr ""
 
@@ -10806,6 +9348,12 @@ msgstr ""
 "As naves médias geralmente não se importam de permanecerem detetáveis, mas "
 "ainda assim os Estaleiros Nexo desenvolveram uma modificação de casco que "
 "ajuda neste aspeto"
+
+msgid "Patchwork Medium Plating"
+msgstr "Revestimento de Retalhos Médio"
+
+msgid "Red Star Medium Cargo Hull"
+msgstr "Casco de Carga Médio Estrela Vermelha"
 
 #, fuzzy
 msgid "RS. Medium Cargo Hull"
@@ -10830,6 +9378,10 @@ msgstr ""
 "as torres inimigas a rastrearem um pouco mais devagar."
 
 #, fuzzy
+msgid "S&K Battle Plating"
+msgstr "Revestimento de Combate Pesado S&K"
+
+#, fuzzy
 msgid ""
 "Designed for medium-sized vessels, Schafer & Kane's medium combat plating "
 "provides ample protection utilizing the latest in defensive materials."
@@ -10838,12 +9390,18 @@ msgstr ""
 "Combate Médio Schafer e Kane oferece ampla proteção utilizando o que há de "
 "mais recente em materiais defensivos."
 
+msgid "S&K Medium Cargo Hull"
+msgstr "Casco de Carga Médio S&K"
+
 msgid ""
 "Schafer & Kane Industries have developed a hull modification that provides "
 "both ample cargo space and protection."
 msgstr ""
 "As Indústrias Schafer & Kane desenvolveram uma modificação de casco que "
 "oferece ao mesmo tempo amplo espaço de carga e proteção."
+
+msgid "Unicorp D-23 Medium Plating"
+msgstr "Revestimento Médio Unicorp D-23"
 
 #, fuzzy
 msgid "U. D-23 Medium Plating"
@@ -10856,6 +9414,10 @@ msgstr ""
 "O Revestimento D-23 oferece uma camada útil de blindagem a naves médias e "
 "não é muito pesado."
 
+#, fuzzy
+msgid "Nexus Shadow Weave"
+msgstr "Estaleiros Nexo"
+
 msgid "N. Shadow Weave"
 msgstr ""
 
@@ -10867,6 +9429,12 @@ msgstr ""
 "Projetado para naves militares de reconhecimento e patrulha, a configuração "
 "do Revestimento de Camuflagem Leve Nexo conta com o mais recente em "
 "materiais absorventes de sensores e geometria."
+
+msgid "Patchwork Light Plating"
+msgstr "Revestimento de Retalhos Leve"
+
+msgid "Red Star Small Cargo Hull"
+msgstr "Casco de Carga Pequeno Estrela Vermelha"
 
 #, fuzzy
 msgid "RS. Small Cargo Hull"
@@ -10891,6 +9459,10 @@ msgstr ""
 "executem bloqueios de piratas e corsários com mais eficiência."
 
 #, fuzzy
+msgid "S&K Skirmish Plating"
+msgstr "Revestimento de Combate Leve S&K"
+
+#, fuzzy
 msgid ""
 "Schafer & Kane Industries mostly develop for larger ships, but the Skirmish "
 "Plating configuration is a product made for light fighters and in-system "
@@ -10901,6 +9473,9 @@ msgstr ""
 "produto feito para caças ligeiros e naves de patrulha intra-sistema, "
 "oferecendo a proteção ideal."
 
+msgid "S&K Small Cargo Hull"
+msgstr "Casco de Carga Pequeno S&K"
+
 #, fuzzy
 msgid ""
 "Though a pricey investment for couriers, this hull modification from Schafer "
@@ -10910,6 +9485,9 @@ msgstr ""
 "Embora seja um investimento caro para pequenos transportadores, esta "
 "modificação de casco das Indústrias Schafer & Kane oferece uma quantidade "
 "impressionante de espaço de carga sem comprometer a integridade do casco."
+
+msgid "Unicorp D-2 Light Plating"
+msgstr "Revestimento Leve Unicorp D-2"
 
 #, fuzzy
 msgid "U. D-2 Light Plating"
@@ -10923,6 +9501,9 @@ msgstr ""
 "popular entre os fabricantes de naves devido ao seu baixo custo e proteção "
 "adequada, mas não muito inspiradora."
 
+msgid "Dummy Systems"
+msgstr "Sistemas Simulados"
+
 msgid "Core Systems (System)"
 msgstr "Sistemas Principais (sistema)"
 
@@ -10934,6 +9515,10 @@ msgstr ""
 "faz nada. NÃO COMPRAR."
 
 #, fuzzy
+msgid "Milspec Aegis 8501 Core System"
+msgstr "Sistema Principal Milspec Oríon 5501"
+
+#, fuzzy
 msgid "M. Aegis 8501 System"
 msgstr "Sistema Principal Milspec Oríon 5501"
 
@@ -10942,6 +9527,9 @@ msgid ""
 "The Aegis 8501 grants your ship excellent shield strength while preserving a "
 "high level of subsystem control and energy capacity. Fly safe, fly Milspec."
 msgstr ""
+
+msgid "Milspec Orion 8601 Core System"
+msgstr "Sistema Principal Milspec Oríon 8601"
 
 #, fuzzy
 msgid "M. Orion 8601 System"
@@ -10961,6 +9549,10 @@ msgstr ""
 "performance superior em todos os aspetos. Voe com segurança, voe com Milspec."
 
 #, fuzzy
+msgid "Milspec Prometheus 8503 Core System"
+msgstr "Sistema Principal Milspec Thalos 8502"
+
+#, fuzzy
 msgid "M. Prometheus 8503 System"
 msgstr "Sistema Principal Milspec Thalos 8502"
 
@@ -10969,6 +9561,9 @@ msgid ""
 "offense. The 8503 boasts a heavy duty power generator as well as "
 "considerable shielding and subsystem control. Fly safe, fly Milspec."
 msgstr ""
+
+msgid "Milspec Thalos 8502 Core System"
+msgstr "Sistema Principal Milspec Thalos 8502"
 
 #, fuzzy
 msgid "M. Thalos 8502 System"
@@ -10985,6 +9580,9 @@ msgstr ""
 "sério controlo de subsistemas enquanto mantém o alto padrão de energia e "
 "escudos dos quais a Milspec se orgulha. Voe com segurança, voe com Milspec."
 
+msgid "Previous Generation Large Systems"
+msgstr "Sistemas Grandes de Geração Anterior"
+
 #, fuzzy
 msgid "Prev. Gen. Large Systems"
 msgstr "Sistemas Grandes de Geração Anterior"
@@ -10995,6 +9593,9 @@ msgid ""
 msgstr ""
 "Uma bagunça de processadores e geradores improvisada que muitos capitães não "
 "instalariam nas suas naves nem mortos."
+
+msgid "Unicorp PT-440 Core System"
+msgstr "Sistema Principal Unicorp PT-440"
 
 #, fuzzy
 msgid "U. PT-440 System"
@@ -11010,6 +9611,10 @@ msgstr ""
 "uma fração do preço dos competidores neste nicho."
 
 #, fuzzy
+msgid "Milspec Aegis 4701 Core System"
+msgstr "Sistema Principal Milspec Oríon 3701"
+
+#, fuzzy
 msgid "M. Aegis 4701 System"
 msgstr "Sistema Principal Milspec Oríon 3701"
 
@@ -11018,6 +9623,9 @@ msgid ""
 "The Aegis 4701 grants your ship excellent shield strength while preserving a "
 "high level of subsystem control and energy capacity. Fly safe, fly Milspec."
 msgstr ""
+
+msgid "Milspec Orion 4801 Core System"
+msgstr "Sistema Principal Milspec Oríon 4801"
 
 #, fuzzy
 msgid "M. Orion 4801 System"
@@ -11036,6 +9644,10 @@ msgstr ""
 "exigente. Voe com segurança, voe com Milspec."
 
 #, fuzzy
+msgid "Milspec Prometheus 4703 Core System"
+msgstr "Sistema Principal Milspec Thalos 4702"
+
+#, fuzzy
 msgid "M. Prometheus 4703 System"
 msgstr "Sistema Principal Milspec Thalos 4702"
 
@@ -11044,6 +9656,9 @@ msgid ""
 "offense. The Prometheus 4703 boasts a heavy duty power generator as well as "
 "considerable shielding and subsystem control. Fly safe, fly Milspec."
 msgstr ""
+
+msgid "Milspec Thalos 4702 Core System"
+msgstr "Sistema Principal Milspec Thalos 4702"
 
 #, fuzzy
 msgid "M. Thalos 4702 System"
@@ -11060,9 +9675,15 @@ msgstr ""
 "sério controlo de subsistemas enquanto mantém o alto padrão de energia e "
 "escudos dos quais a Milspec se orgulha. Voe com segurança, voe com Milspec."
 
+msgid "Previous Generation Medium Systems"
+msgstr "Sistemas Médios de Geração Anterior"
+
 #, fuzzy
 msgid "Prev. Gen. Medium Systems"
 msgstr "Sistemas Médios de Geração Anterior"
+
+msgid "Unicorp PT-200 Core System"
+msgstr "Sistema Principal Unicorp PT-200"
 
 #, fuzzy
 msgid "U. PT-200 System"
@@ -11076,6 +9697,10 @@ msgstr ""
 "naves médias, o PT-200 oferece performance aceitável a um preço aceitável."
 
 #, fuzzy
+msgid "Milspec Aegis 2201 Core System"
+msgstr "Sistema Principal Milspec Oríon 2301"
+
+#, fuzzy
 msgid "M. Aegis 2201 System"
 msgstr "Sistema Principal Milspec Oríon 2301"
 
@@ -11084,6 +9709,9 @@ msgid ""
 "The Aegis 2201 grants your ship excellent shield strength while preserving a "
 "high level of subsystem control and energy capacity. Fly safe, fly Milspec."
 msgstr ""
+
+msgid "Milspec Orion 2301 Core System"
+msgstr "Sistema Principal Milspec Oríon 2301"
 
 #, fuzzy
 msgid "M. Orion 2301 System"
@@ -11102,6 +9730,10 @@ msgstr ""
 "capitão iniciante. Voe com segurança, voe com Milspec."
 
 #, fuzzy
+msgid "Milspec Prometheus 2203 Core System"
+msgstr "Sistema Principal Milspec Thalos 2202"
+
+#, fuzzy
 msgid "M. Prometheus 2203 System"
 msgstr "Sistema Principal Milspec Thalos 2202"
 
@@ -11110,6 +9742,9 @@ msgid ""
 "offense. The Prometheus 2203 boasts a heavy duty power generator as well as "
 "considerable shielding and subsystem control."
 msgstr ""
+
+msgid "Milspec Thalos 2202 Core System"
+msgstr "Sistema Principal Milspec Thalos 2202"
 
 #, fuzzy
 msgid "M. Thalos 2202 System"
@@ -11126,9 +9761,15 @@ msgstr ""
 "sério controlo de subsistemas enquanto mantém o alto padrão de energia e "
 "escudos dos quais a Milspec se orgulha. Voe com segurança, voe com Milspec."
 
+msgid "Previous Generation Small Systems"
+msgstr "Sistemas Pequenos de Geração Anterior"
+
 #, fuzzy
 msgid "Prev. Gen. Small Systems"
 msgstr "Sistemas Pequenos de Geração Anterior"
+
+msgid "Unicorp PT-16 Core System"
+msgstr "Sistema Principal Unicorp PT-16"
 
 #, fuzzy
 msgid "U. PT-16 System"
@@ -11140,6 +9781,9 @@ msgid ""
 msgstr ""
 "O PT-16 é um Sistema Principal modesto mas dentro do padrão e oferece "
 "performance geral razoável para naves pequenas."
+
+msgid "Drone Bay"
+msgstr "Baía de Drones"
 
 #, fuzzy
 msgid "You need at least 50% reputation with the Empire."
@@ -11157,6 +9801,9 @@ msgstr ""
 "mais segura em situações perigosas. Porém, exigem manutenção cuidadosa. "
 "Todas as ferramentas necessárias para isso são fornecidas com a baía."
 
+msgid "Empire Lancelot Bay"
+msgstr "Baía Lancelot Imperial"
+
 msgid "E. Lancelot Bay"
 msgstr "Baía Lancelot I."
 
@@ -11169,6 +9816,9 @@ msgstr ""
 "Lancelot Imperial. Inclui todos os aparelhos necessários à manutenção e voo "
 "dos caças."
 
+msgid "Hyena Bay"
+msgstr "Baía Hiena"
+
 msgid ""
 "This bay expands on the popular Hyena Dock, doubling the amount of Hyena "
 "interceptors that can be operated. It comes with all the amenities necessary "
@@ -11177,6 +9827,9 @@ msgstr ""
 "Esta baía expande a popular Doca Hiena, dobrando a quantidade de "
 "interceptores Hiena que podem ser controlados. Tem todas as ferramentas "
 "necessárias para manutenção e operação dos interceptores."
+
+msgid "Hyena Dock"
+msgstr "Doca Hiena"
 
 msgid ""
 "This dock allows your ship to carry twin Hyena interceptors. It comes with "
@@ -11187,6 +9840,9 @@ msgstr ""
 "Inclui todos os aparelhos necessários à manutenção e operação dos "
 "interceptores."
 
+msgid "Lancelot Bay"
+msgstr "Baía Lancelot"
+
 msgid ""
 "This fighter bay allows your ship to carry a pair of Lancelot class "
 "fighters. It comes with all the devices required for the maintenance and "
@@ -11195,6 +9851,9 @@ msgstr ""
 "Esta baía de caças permite que atua nave transporte um par de caças do tipo "
 "Lancelot Imperial. Inclui todos os aparelhos necessários à manutenção e voo "
 "dos caças."
+
+msgid "Pirate Hyena Bay"
+msgstr "Baía Hiena Pirata"
 
 msgid "P. Hyena Bay"
 msgstr "Baía Hiena P."
@@ -11210,6 +9869,9 @@ msgstr ""
 "necessárias para manutenção e operação dos interceptores. As Hienas Piratas "
 "podem também auxiliar na pilhagem e na recuperação de destroços."
 
+msgid "Pirate Hyena Dock"
+msgstr "Doca Hiena Pirata"
+
 msgid "P. Hyena Dock"
 msgstr "Doca Hiena P."
 
@@ -11223,6 +9885,9 @@ msgstr ""
 "Pirata. Inclui todos os aparelhos necessários à manutenção e operação dos "
 "interceptores. As Hienas Piratas podem também auxiliar na pilhagem e na "
 "recuperação de destroços."
+
+msgid "Proteron Dalton Bay"
+msgstr "Baía Proteron Dalton"
 
 msgid "P. Dalton Bay"
 msgstr "Baía Dalton P."
@@ -11240,6 +9905,9 @@ msgstr ""
 "classe Proteron Dalton. Ela tem todos os dispositivos necessários para a "
 "manutenção e voo dos interceptores."
 
+msgid "Proteron Dalton Dock"
+msgstr "Doca Proteron Watson"
+
 msgid "P. Dalton Dock"
 msgstr "Doca Watson P."
 
@@ -11251,6 +9919,9 @@ msgstr ""
 "Esta baía de caças permite que a tua nave leve interceptadores de classe "
 "Proteron Dalton. Ela tem com todos os dispositivos necessários para a "
 "manutenção e voo dos interceptadores."
+
+msgid "Sirius Fidelity Bay"
+msgstr "Baía Fidelidade Sirius"
 
 msgid "S. Fidelity Bay"
 msgstr "Baía Fidelidade S."
@@ -11266,6 +9937,9 @@ msgid ""
 msgstr ""
 "Esta baía lança três caças Sirius Fidelidade. Fracos individualmente, são "
 "mais fortes em grupos. Bem a propósito, considerando a sociedade Sirius."
+
+msgid "Sirius Shaman Bay"
+msgstr "Baía Xamã Sirius"
 
 msgid "S. Shaman Bay"
 msgstr "Baía Xamã S."
@@ -11283,6 +9957,9 @@ msgstr ""
 "do tipo Xamã Sirius. Inclui todos os aparelhos necessários à manutenção e "
 "voo dos bombardeiros."
 
+msgid "Soromid Brigand Bay"
+msgstr "Baía Salteador Soromid"
+
 msgid "S. Brigand Bay"
 msgstr "Baía Salteador S."
 
@@ -11299,6 +9976,9 @@ msgstr ""
 "Soromid. Inclui todos os aparelhos necessários à manutenção e operação dos "
 "caças."
 
+msgid "Thurion Perspicacity Bay"
+msgstr "Baía Perspicácia Túrion"
+
 msgid "T. Perspicacity Bay"
 msgstr "Baía Perspicácia T."
 
@@ -11314,6 +9994,9 @@ msgstr ""
 "Esta baía de caças permite que a tua nave transporte um quarteto de caças do "
 "tipo Perspicácia Túrion. Inclui todos os aparelhos necessários à manutenção "
 "e voo dos caças."
+
+msgid "Thurion Perspicacity Dock"
+msgstr "Doca Perspicácia Túrion"
 
 msgid "T. Perspicacity Dock"
 msgstr "Doca Perspicácia T."
@@ -11332,6 +10015,10 @@ msgstr ""
 "Inclui todos os aparelhos necessários à manutenção e voo dos caças."
 
 #, fuzzy
+msgid "Thurion Scintillation Bay"
+msgstr "Cintilação Túrion"
+
+#, fuzzy
 msgid "T. Scintillation Bay"
 msgstr "Cintilação Túrion"
 
@@ -11344,6 +10031,9 @@ msgstr ""
 "Esta baía de caças permite que a tua nave transporte um par de bombardeiros "
 "do tipo Xamã Sirius. Inclui todos os aparelhos necessários à manutenção e "
 "voo dos bombardeiros."
+
+msgid "Za'lek Bomber Drone Bay"
+msgstr "Baía de Drones Bombardeiros Za'lek"
 
 msgid "Z. B. Drone B."
 msgstr "B. Drones B. Z."
@@ -11363,6 +10053,9 @@ msgstr ""
 "nave controladora fique em perigo. Inclui todos os aparelhos necessários à "
 "manutenção e voo dos drones."
 
+msgid "Za'lek Bomber Drone Mini Bay"
+msgstr "Mini Baía de Drones Bombardeiros Za'lek"
+
 msgid "Z. B. Drone mB."
 msgstr "mB. Drones B.Z."
 
@@ -11381,6 +10074,9 @@ msgstr ""
 "nave controladora fique em perigo. Inclui todos os aparelhos necessários à "
 "manutenção e voo dos drones."
 
+msgid "Za'lek Heavy Drone Bay"
+msgstr "Baía de Drones Pesados Za'lek"
+
 msgid "Z. H. Drone B."
 msgstr "B. Drones P. Z."
 
@@ -11396,6 +10092,9 @@ msgstr ""
 "Esta baía permite que a tua nave lance um esquadrão completo capaz de atacar "
 "em grupo todos os tipos de naves exceto as maiores. Inclui todos os "
 "aparelhos necessários à manutenção e voo dos drones."
+
+msgid "Za'lek Heavy Drone Mini Bay"
+msgstr "Mini Baía de Drones Pesados Za'lek"
 
 msgid "Z. H. Drone mB."
 msgstr "mB. Drones P.Z."
@@ -11413,6 +10112,9 @@ msgstr ""
 "poder ofensivo. Inclui todos os aparelhos necessários à manutenção e voo dos "
 "drones."
 
+msgid "Za'lek Light Drone Bay"
+msgstr "Baía de Drones Leves Za'lek"
+
 msgid "Z. L. Drone B."
 msgstr "B. Drones L. Z."
 
@@ -11426,6 +10128,9 @@ msgstr ""
 "são descartáveis, mas em grande número destacam-se na remoção de naves "
 "inimigas ligeiras. Inclui todos os aparelhos necessários à manutenção e voo "
 "dos drones."
+
+msgid "Za'lek Light Drone Mini Bay"
+msgstr "Mini Baía de Drones Leves Za'lek"
 
 msgid "Z. L. Drone mB."
 msgstr "mB. Drones L. Z."
@@ -11456,6 +10161,9 @@ msgid ""
 "Sirichana significantly increasing all aspects of the ship being flown."
 msgstr ""
 
+msgid "Cleansing Flames"
+msgstr ""
+
 msgid ""
 "Flow can be used to purify the immediate environment of the ship, bathing "
 "allies in soothing psychic emanations, while scorching enemies in damaging "
@@ -11476,6 +10184,10 @@ msgstr ""
 "que são atingidas têm a sua energia drenada e as ondas de choque psíquicas "
 "residuais abrandam-nas adicionalmente."
 
+#, fuzzy
+msgid "House of Mirrors"
+msgstr "Casa Sirius"
+
 msgid ""
 "It's not clear how this flow ability came to be, but stories tell of a "
 "pirate who took too many flow mushrooms and ended up locked up in the "
@@ -11485,6 +10197,9 @@ msgid ""
 "to be able to project multiple copies of one's ship to amplify the raw "
 "destructive power. It has become a favourite of those who have been able to "
 "master the skill."
+msgstr ""
+
+msgid "Reality Rip"
 msgstr ""
 
 msgid ""
@@ -11497,6 +10212,9 @@ msgid ""
 "outside."
 msgstr ""
 
+msgid "Seeking Chakra"
+msgstr ""
+
 msgid ""
 "One of the first abilities all Sirii Cadets learn. Flow is focused into a "
 "ball which is then hurled at the target. Proficient users are able to create "
@@ -11506,8 +10224,40 @@ msgstr ""
 "concentrado numa bola que é depois atirada contra o alvo. Utilizadores "
 "experientes são capazes de criar vários chakras de busca ao mesmo tempo."
 
+msgid "Seeking Chakra Large"
+msgstr "Chakra de busca grande"
+
+msgid "Seeking Chakra Medium"
+msgstr "Chakra de busca médio"
+
+msgid "Seeking Chakra Small"
+msgstr "Chakra de busca pequeno"
+
+#, fuzzy
+msgid "Astral Flow Amplifier"
+msgstr "Amplificador"
+
 #, fuzzy
 msgid "Flow Amplifier"
+msgstr "Amplificador"
+
+#, fuzzy
+msgid "Astral Cannon"
+msgstr "Canhão Tesla"
+
+#, fuzzy
+msgid "Greater Astral Cannon"
+msgstr "Canhão Laser do Batoteiro"
+
+#, fuzzy
+msgid "Lesser Astral Cannon"
+msgstr "Canhão Tesla"
+
+msgid "Internal Flow Amplifier"
+msgstr ""
+
+#, fuzzy
+msgid "Large Flow Amplifier"
 msgstr "Amplificador"
 
 msgid ""
@@ -11516,6 +10266,9 @@ msgid ""
 "capabilities. Flow Amplifiers are specially tuned to the crew and allow "
 "significantly amplifying their psychic abilities to aid the ship with "
 "different abilities."
+msgstr ""
+
+msgid "Large Flow Resonator"
 msgstr ""
 
 #, fuzzy
@@ -11529,13 +10282,44 @@ msgid ""
 "half of the full potential."
 msgstr ""
 
+msgid "Large Meditation Chamber"
+msgstr ""
+
 msgid ""
 "A meditation chamber integrated directly into the ship. This allows the crew "
 "to aid the ship's flow capabilities and acts as an auxiliary flow buffer. A "
 "flow amplifier is required for the meditation chamber to take effect."
 msgstr ""
 
+#, fuzzy
+msgid "Medium Flow Amplifier"
+msgstr "Amplificador"
+
+#, fuzzy
+msgid "Medium Flow Resonator"
+msgstr "Compartimento de Combustível Médio"
+
+msgid "Medium Meditation Chamber"
+msgstr ""
+
+#, fuzzy
+msgid "Small Flow Amplifier"
+msgstr "Amplificador"
+
+msgid "Small Flow Resonator"
+msgstr ""
+
+msgid "Small Meditation Chamber"
+msgstr ""
+
+#, fuzzy
+msgid "Bad Shape"
+msgstr "Carapaça Rígida"
+
 msgid "This ship is in bad shape and works much less well than usual."
+msgstr ""
+
+msgid "Black Agate Finishing"
 msgstr ""
 
 msgid ""
@@ -11548,13 +10332,24 @@ msgid ""
 "it."
 msgstr ""
 
+#, fuzzy
+msgid "Defective"
+msgstr "Defensivo"
+
 msgid "The ship has serious design defects that limit its functionality."
 msgstr ""
+
+#, fuzzy
+msgid "Escape Pod"
+msgstr "Escapado"
 
 msgid ""
 "An escape pod that will automatically eject when the ship has taken fatal "
 "damage."
 msgstr ""
+
+msgid "Gauntlet Deluxe"
+msgstr "Manopla de Luxo"
 
 #, fuzzy
 msgid ""
@@ -11570,12 +10365,19 @@ msgstr ""
 "significativa além do alto custo do serviço em si. Devido à natureza das "
 "modificações, apenas uma delas pode ser feita para cada nave."
 
+#, fuzzy
+msgid "Gauntlet Supreme"
+msgstr "Manopla de Luxo"
+
 msgid ""
 "This service focuses on refining and polishing the launcher systems to "
 "maximize the missile fire power of the ship. It is a comprehensive and in-"
 "depth optimization that has to be done on a per-ship basis, with specialized "
 "technicians tuning everything for maximum efficiency. Due to the nature of "
 "the service, only one can be applied to each ship."
+msgstr ""
+
+msgid "Hyperdrive Retool"
 msgstr ""
 
 msgid ""
@@ -11586,6 +10388,10 @@ msgid ""
 "hyperdrive making it a rare modification to find.\n"
 "#oThis outfit can not be removed once equipped.#0"
 msgstr ""
+
+#, fuzzy
+msgid "Luxury Furnishings"
+msgstr "Mensageiro"
 
 msgid ""
 "Most ships are designed to withstand the harshness of space, with the "
@@ -11598,6 +10404,9 @@ msgid ""
 "make-over."
 msgstr ""
 
+msgid "Machiavellian Fortune"
+msgstr "Sorte Maquiavélica"
+
 msgid ""
 "Fortune is like an onrushing river pushing an impenetrable wall of water "
 "ahead of it. It is possible to build dams and walls to try to contain the "
@@ -11607,12 +10416,18 @@ msgstr ""
 "frente. Pode-se construir barragens e paredes para conter o fluxo, mas é "
 "impossível impedir que a água atinja o seu alvo."
 
+msgid "Machiavellian Necessity"
+msgstr "Necessidade Maquiavélica"
+
 msgid ""
 "In order to achieve goals, decisiveness becomes a necessity. A quick strike "
 "can determine the outcome of an encounter."
 msgstr ""
 "Para alcançar objetivos, a determinação torna-se uma necessidade. Uma "
 "investida rápida pode determinar o resultado de um combate."
+
+msgid "Machiavellian Virtue"
+msgstr "Virtude Maquiavélica"
 
 msgid ""
 "Virtue is the bulwark against the fickle whims of fortune. One can master "
@@ -11621,6 +10436,9 @@ msgstr ""
 "A virtude é uma fortaleza contra as vontades inconstantes da sorte. Pode-se "
 "convocar a própria força de vontade dominando o próprio caráter."
 
+msgid "Port & Polish"
+msgstr "Aportar e Polir"
+
 msgid ""
 "Although many ships go through a tuning process during their mass "
 "production, it is far from perfect with imperfections leading to suboptimal "
@@ -11628,6 +10446,9 @@ msgid ""
 "ship to bring out its best. Since it requires taking apart, fine-tuning, and "
 "putting back together large parts of a ship, the cost increases "
 "significantly with the size of the ship."
+msgstr ""
+
+msgid "Wild Space Taint"
 msgstr ""
 
 msgid ""
@@ -11639,8 +10460,15 @@ msgid ""
 "nebula radiation."
 msgstr ""
 
+#, fuzzy
+msgid "Worn Down"
+msgstr "A arrefecer"
+
 msgid "This ship is extremely worn down and is barely functional."
 msgstr ""
+
+msgid "Convulsion Launcher"
+msgstr "Lançador Convulsão"
 
 msgid "Convulsion L."
 msgstr "L. Convulsão"
@@ -11653,6 +10481,9 @@ msgstr ""
 "O míssil tipo interceptor Túrion tem como foco grande agilidade e não poder "
 "destrutivo. Apesar de causar pouco dano a objetos sólidos, é bastante "
 "efetivo em desestabilizar escudos de energia."
+
+msgid "Electron Burst Cannon"
+msgstr "Canhão de Explosão de Eletrões"
 
 msgid "Electron Burst C."
 msgstr "C. Explosão de Eletrões"
@@ -11675,6 +10506,9 @@ msgstr ""
 "Foi desenvolvido pelos Za'lek para ser usado em drones mais pesados e "
 "complementar o baixo alcance e alto dano das suas armas de raio."
 
+msgid "EMP Grenade Launcher"
+msgstr "Lançador de Granada PEM"
+
 msgid "EMP Grenade L."
 msgstr "L. Granada PEM"
 
@@ -11694,6 +10528,9 @@ msgstr ""
 "a a desativada a flutuar no espaço. Os comerciantes preferem-nas porque "
 "mantém os piratas à distância."
 
+msgid "Enygma Systems Huntsman Launcher"
+msgstr "Lançador de Torpedos Caçador Sistemas Enygma"
+
 msgid "E. Huntsman L."
 msgstr "L. T. Caçador S.E."
 
@@ -11710,6 +10547,9 @@ msgstr ""
 "Medusa e o armamento iónico insuficientes, redesenharam o torpedo César IV "
 "da Unicorp como uma arma PEM pesada, capaz de fritar rapidamente os sistemas "
 "mesmo das maiores naves de guerra."
+
+msgid "Enygma Systems Spearhead Launcher"
+msgstr "Lançador de Mísseis Ponta de Lança Sistemas Enygma"
 
 msgid "E. Spearhead L."
 msgstr "L.M. Ponta de Lança S.E."
@@ -11730,6 +10570,9 @@ msgstr ""
 "sólidos. A agilidade limitada do Ponta de Lança torna-o principalmente "
 "adequado para combater naves de classe corveta ou mais pesadas."
 
+msgid "Enygma Systems Turreted Fury Launcher"
+msgstr "Lançador Torretado de Mísseis Fury da Sistemas Enygma"
+
 msgid "E. Fury T. L."
 msgstr ""
 
@@ -11742,6 +10585,9 @@ msgstr ""
 "A Sistemas Enygma desenvolveu um lançador Fury montado numa torreta. Tem um "
 "preço elevado, mas os mísseis Fury podem ser uma forma de desencorajar caças "
 "piratas e um meio eficaz de defesa contra bombardeiros hostis."
+
+msgid "Enygma Systems Turreted Headhunter Launcher"
+msgstr "Lançador Torretado de Mísseis Caçador de Cabeças Sistemas Enygma"
 
 msgid "E. Headhunter T. L."
 msgstr "L. M. Caçador de Cabeças T."
@@ -11757,6 +10603,9 @@ msgstr ""
 "eficazmente os caças e bombardeiros inimigos. O impacto do míssil Caçador de "
 "Cabeças combinado com o lançador giratório da Sistemas Enygma pode compensar "
 "efetivamente os pontos cegos."
+
+msgid "Pincushion Battery"
+msgstr ""
 
 #, fuzzy
 msgid "Pincushion B."
@@ -11775,6 +10624,9 @@ msgid ""
 "Launches 1 missile at the target and 4 additional missiles that will target "
 "random nearby enemies. Lowers shield regeneration by -70% on hit."
 msgstr ""
+
+msgid "Repeating Banshee Launcher"
+msgstr "Lançador de Repetição Banshee"
 
 msgid "R. Banshee L."
 msgstr "L. R. Banshee"
@@ -11796,6 +10648,9 @@ msgstr ""
 "munições é pequena, mas pode ser antecipado que ou o bombardeiro ou seu alvo "
 "serão destruídos antes que elas acabem."
 
+msgid "Shatterer Launcher"
+msgstr "Lançador Estilhaçador"
+
 msgid "Shatterer L."
 msgstr "L. Estilhaçador"
 
@@ -11811,6 +10666,9 @@ msgstr ""
 "Embora fraca individualmente, os números que a Coletividade poderia "
 "apresentar tornam esta arma perigosa."
 
+msgid "Space Mine Layer"
+msgstr "Camada de Mina Espacial"
+
 msgid "Space Mine L."
 msgstr "C. Mina Espacial"
 
@@ -11823,6 +10681,9 @@ msgstr ""
 "patrulhas automatizadas ou tripuladas na maioria das situações. No entanto, "
 "quando o poder explosivo bruto é obrigatório, nada pode ultrapassar a força "
 "destrutiva das minas espaciais."
+
+msgid "Super-Fast Collider Launcher"
+msgstr "Lançador Colisor Super Rápido"
 
 msgid "SFC L."
 msgstr ""
@@ -11840,6 +10701,9 @@ msgstr ""
 "basicamente um foguete Bastão gigante utilizado por naves capitais Dvaered "
 "para atacar inimigos distantes."
 
+msgid "TeraCom Banshee Launcher"
+msgstr "Lançador Banshee TeraCom"
+
 msgid "T. Banshee L."
 msgstr "L. Banshee T."
 
@@ -11854,6 +10718,9 @@ msgstr ""
 "refrigeração de tubos de alta qualidade, dando um aumento significativo à "
 "cadência de disparo. Estes foguetes não guiados, embora lentos, podem causar "
 "danos bastante respeitáveis mesmo em naves bastante grandes."
+
+msgid "TeraCom Fury Launcher"
+msgstr "Lançador Fury TeraCom"
 
 msgid "T. Fury L."
 msgstr "L. Fury T."
@@ -11872,6 +10739,9 @@ msgstr ""
 "suficientemente ágeis para atingir facilmente até algumas das naves mais "
 "rápidas da galáxia."
 
+msgid "TeraCom Headhunter Launcher"
+msgstr "Lançador de Mísseis Caçador de Cabeças TeraCom"
+
 #, fuzzy
 msgid "T. Headhunter L."
 msgstr "Lançador de Mísseis Caçador de Cabeças TeraCom"
@@ -11883,6 +10753,9 @@ msgid ""
 "The Headhunter missiles can deal devastating damage to small and medium-"
 "sized distant enemies, while remaining reasonably fast and agile."
 msgstr ""
+
+msgid "TeraCom Imperator Launcher"
+msgstr "Lançador de Torpedos Imperador TeraCom"
 
 #, fuzzy
 msgid "T. Imperator L."
@@ -11904,6 +10777,9 @@ msgstr ""
 "embora demore algum tempo para alcançar o seu alvo. Os cruzadores mais "
 "rápidos podem ser capazes de evitá-lo completamente."
 
+msgid "TeraCom Mace Launcher"
+msgstr "Lançador de Foguetes Bastão TeraCom"
+
 #, fuzzy
 msgid "T. Mace L."
 msgstr "Lançador de Foguetes Bastão TeraCom"
@@ -11919,6 +10795,9 @@ msgstr ""
 "dano em alvos ligeiros do que a maioria dos canhões de energia do tamanho de "
 "caças, mas tem a desvantagem de ficar sem munições após um curto período de "
 "tempo de disparo."
+
+msgid "TeraCom Medusa Launcher"
+msgstr "Lançador de Mísseis Medusa TeraCom"
 
 #, fuzzy
 msgid "T. Medusa L."
@@ -11937,6 +10816,9 @@ msgstr ""
 "pronta para ser abordada. A ogiva apenas causa danos limitados, por isso "
 "mesmo os alvos com blindagem ligeira podem ser desativados com esta arma. No "
 "entanto a Medusa não é o míssil mais ágil do mercado."
+
+msgid "TeraCom Vengeance Launcher"
+msgstr "Lançador de Mísseis Vingança TeraCom"
 
 #, fuzzy
 msgid "T. Vengeance L."
@@ -11961,6 +10843,9 @@ msgstr ""
 "consideravelmente o tempo necessário para se conseguir uma fixação da mira. "
 "Por vezes, esses poucos segundos podem fazer toda a diferença."
 
+msgid "Turreted Convulsion Launcher"
+msgstr "Lançador de Mísseis Turretado Convulsão"
+
 #, fuzzy
 msgid "T. Convulsion L."
 msgstr "Lançador Convulsão"
@@ -11980,6 +10865,9 @@ msgstr ""
 "Este lançador é montado numa torreta e tem mais capacidade de munições do "
 "que o lançador padrão."
 
+msgid "Unicorp Caesar IV Launcher"
+msgstr "Lançador de Torpedos César IV Unicorp"
+
 #, fuzzy
 msgid "U. Caesar IV L."
 msgstr "Lançador de Torpedos César IV Unicorp"
@@ -11993,6 +10881,9 @@ msgstr ""
 "disponíveis. Embora muito mais lentos do que mísseis e inúteis contra alvos "
 "com grande mobilidade, permanecem manobráveis o suficiente para perseguir "
 "cruzadores."
+
+msgid "Unicorp Storm Launcher"
+msgstr "Lançador de Mísseis Tempestade Unicorp"
 
 #, fuzzy
 msgid "U. Storm L."
@@ -12017,6 +10908,9 @@ msgstr ""
 "Esta é a razão pela qual apenas os esquadrões de elite Imperiais utilizam "
 "esta arma muito mortífera."
 
+msgid "Za'lek Hunter Launcher"
+msgstr "Lançador de Drones Caçador Za'lek"
+
 #, fuzzy
 msgid "Z. Hunter L."
 msgstr "Lançador de Drones Caçador Za'lek"
@@ -12036,6 +10930,9 @@ msgstr ""
 "caçador-matador. Ele acelera em direção ao seu alvo e liberta a sua carga "
 "ferromagnétohidráulica com efeito mortal."
 
+msgid "Za'lek Reaper Launcher"
+msgstr "Lançador de Drones Ceifador Za'lek"
+
 #, fuzzy
 msgid "Z. Reaper L."
 msgstr "Lançador de Drones Ceifador Za'lek"
@@ -12053,8 +10950,14 @@ msgstr ""
 "ferromagnétohidráulica. É a resposta dos Za'lek aos torpedos de nações menos "
 "avançadas e é certamente uma resposta eloquente."
 
+msgid "Local System Map"
+msgstr "Mapa de sistema local"
+
 msgid "This map contains information about the local system."
 msgstr "Este mapa contém informações sobre o sistema estelar local."
+
+msgid "Map: Collective Space"
+msgstr "Mapa: Território da Coletividade"
 
 msgid ""
 "This map charts the known jumps that connect the systems occupied by the "
@@ -12065,12 +10968,19 @@ msgstr ""
 "ocupados pela Coletividade. Infelizmente, o Império não tem informações "
 "precisas sobre as posses da Coletividade na área."
 
+msgid "Map: Dvaered Core"
+msgstr "Mapa: Território Central Dvaered"
+
 msgid ""
 "This map lists the locations of all Dvaered worlds and stations close to the "
 "Dvaered capital."
 msgstr ""
 "Este mapa lista os locais de todos os mundos e estações Dvaered próximos da "
 "capital deles."
+
+#, fuzzy
+msgid "Map: Empire-Soromid Trade Route"
+msgstr "Mapa: Rota Comercial Dvaered-Soromid"
 
 #, fuzzy
 msgid ""
@@ -12080,12 +10990,18 @@ msgstr ""
 "Este mapa contém a rota comercial principal entre os territórios controlados "
 "pelos Dvaered e Soromid."
 
+msgid "Map: Empire Core"
+msgstr "Mapa: Território Central Imperial"
+
 msgid ""
 "This map lists the locations of all Imperial worlds and stations close to "
 "the Imperial capital."
 msgstr ""
 "Este mapa lista os locais de todos os mundos e estações Imperiais próximos "
 "da capital deles."
+
+msgid "Map: FLF-Pirate Route"
+msgstr "Mapa: Rota FLF-Pirata"
 
 msgid ""
 "This map contains the location of the two-way hidden jump point between the "
@@ -12094,12 +11010,18 @@ msgstr ""
 "Este mapa lista os locais de pontos de salto ocultos de ida e volta entre a "
 "base da FLF e a fortaleza Pirata mais próxima."
 
+msgid "Map: FLF Hidden Jumps"
+msgstr "Mapa: Pontos de salto ocultos da FLF"
+
 msgid ""
 "This map contains the location of hidden jump points between the FLF base "
 "and Frontier space."
 msgstr ""
 "Este mapa lista os locais de pontos de salto ocultos entre a base da FLF e "
 "território da Fronteira."
+
+msgid "Map: Inner Nebula Secret Jump"
+msgstr "Mapa: Ponto de salto secreto para a Nebulosa Interior"
 
 msgid ""
 "This map contains the location of a hidden jump point leading to the inner "
@@ -12108,6 +11030,9 @@ msgstr ""
 "Este mapa contém a localização de um ponto de salto oculto que leva à "
 "Nebulosa interior."
 
+msgid "Map: Kretogg's Hypergate"
+msgstr "Mapa: Hiperportal de Kretogg"
+
 msgid ""
 "A map revealing a hidden jump point from Kretogg to NGC-14549, leading to "
 "the Black Lotus Clan-controlled hypergate."
@@ -12115,12 +11040,18 @@ msgstr ""
 "Um mapa que revela um ponto de salto escondido de Kretogg para NGC-14549, "
 "levando ao hiperportal controlado pelo Clã Lótus Negro."
 
+msgid "Map: Kretogg's Secrets"
+msgstr "Mapa: Os Segredos de Kretogg"
+
 msgid ""
 "This map contains the position of hidden jump points leading straight into "
 "Za'lek space."
 msgstr ""
 "Este mapa contém a posição de pontos de salto ocultos que levam diretamente "
 "aos territórios Za'lek."
+
+msgid "Map: Nebula Edge"
+msgstr "Mapa: O Limite da Nebulosa"
 
 #, fuzzy
 msgid ""
@@ -12131,12 +11062,18 @@ msgstr ""
 "limite da Nebulosa. Também lista a posição de duas estações Imperiais ao "
 "longo da rota."
 
+msgid "Map: New Haven's Secrets"
+msgstr "Mapa: Os Segredos de Novo Santuário"
+
 msgid ""
 "This map contains the position of a set of hidden jump points in and around "
 "the New Haven system."
 msgstr ""
 "Este mapa contém um conjunto de pontos de salto ocultos dentro e ao redor do "
 "sistema Novo Santuário."
+
+msgid "Map: Pirate Strongholds"
+msgstr "Mapa: Fortalezas Piratas"
 
 msgid ""
 "This map contains the locations of the pirate clan worlds, and a few "
@@ -12145,6 +11082,10 @@ msgstr ""
 "Este mapa contém os locais de mundos sob influência de clãs piratas e "
 "algumas estações conhecidas por oferecer oportunidades a piratas nas "
 "imediações."
+
+#, fuzzy
+msgid "Map: Qorel Tunnel"
+msgstr "Mapa: Extensão Qorel"
 
 #, fuzzy
 msgid ""
@@ -12159,10 +11100,16 @@ msgstr ""
 "é normalmente muito dispendioso para reduzir o número de pessoas que têm "
 "acesso a eles."
 
+msgid "Map: Sirian Border Systems"
+msgstr "Mapa: Sistema de Fronteira Sirian"
+
 msgid "This map contains the systems that lead to Sirius controlled space."
 msgstr ""
 "Este mapa contém os sistemas que conduzem ao território controlado por "
 "Sirius."
+
+msgid "Map: Sirius Core"
+msgstr "Mapa: Território Central Sirius"
 
 msgid ""
 "This map contains the location of Mutris, home of Sirichana and capital to "
@@ -12170,6 +11117,9 @@ msgid ""
 msgstr ""
 "Este mapa contém a localização de Mutris, lar de Sirichana e capital dos "
 "Sirian, assim como dos sistemas circundantes."
+
+msgid "Map: Sol"
+msgstr "Mapa: Sol"
 
 msgid ""
 "This map contains the location of the Sol system, the origin of mankind. "
@@ -12182,12 +11132,18 @@ msgstr ""
 "através da qual nenhuma nave conhecida na galáxia pode passar. O que existe "
 "além de Sol, se é que existe, é desconhecido."
 
+msgid "Map: The Frontier"
+msgstr "Mapa: A Fronteira"
+
 msgid ""
 "This map contains an east-west route through Frontier space, as well as the "
 "location of the Frontier Council."
 msgstr ""
 "Este mapa contém a rota Leste-Oeste ao longo do território da Fronteira, "
 "assim como a localização do Concílio da Fronteira."
+
+msgid "Map: Thurion Core"
+msgstr "Mapa: Território Central Túrion"
 
 msgid ""
 "This map provides the hidden route to the Thurion core systems outside of "
@@ -12196,12 +11152,18 @@ msgstr ""
 "Este mapa mostra a rota oculta para os sistemas centrais Túrion fora da "
 "Nebulosa."
 
+msgid "Map: Za'lek Core"
+msgstr "Mapa: Território Central Za'lek"
+
 msgid ""
 "This map contains the heart of Za'lek space, including its capital Ruadan "
 "and central hub, Za'lek."
 msgstr ""
 "Este mapa contém o coração do território Za'lek, incluindo a capital Ruadan "
 "e o ponto central, Za'lek."
+
+msgid "Ultra Map"
+msgstr "Ultra Mapa"
 
 msgid "For cheating."
 msgstr "Para fazer batota."
@@ -12250,14 +11212,26 @@ msgstr ""
 msgid "Heavy Weapon"
 msgstr "Arma Pesada"
 
+msgid "GUI - Brushed"
+msgstr "Interface Gráfica - Metal Escovado"
+
 msgid "Outfit corresponding with the \"Brushed\" GUI."
 msgstr "Equipamento correspondente a interface gráfica \"Metal Escovado\"."
+
+msgid "GUI - Legacy"
+msgstr "Interface Gráfica - Legado"
 
 msgid "Outfit corresponding with the \"Legacy\" GUI."
 msgstr "Equipamento correspondente à interface gráfica \"Legado\"."
 
+msgid "GUI - Slim"
+msgstr "Interface Gráfica - Mínimo"
+
 msgid "Outfit corresponding with the \"Slim\" GUI."
 msgstr "Equipamento correspondente à interface gráfica \"Mínimo\"."
+
+msgid "GUI - Slimv2"
+msgstr "Interface Gráfica - Mínimo V2"
 
 msgid "Outfit corresponding with the \"Slimv2\" GUI."
 msgstr "Equipamento correspondente à interface gráfica \"Mínimo V2\"."
@@ -12341,6 +11315,10 @@ msgstr ""
 "receber recompensas."
 
 #, fuzzy
+msgid "Mystery Outfit"
+msgstr "Posto avançado Hystera"
+
+#, fuzzy
 msgid "Gacha"
 msgstr "Vracha"
 
@@ -12349,6 +11327,11 @@ msgid ""
 "You will not know what you get until you buy it."
 msgstr ""
 
+#. Create the lootable entry
+#, fuzzy
+msgid "Treasure Map"
+msgstr "Caçador de Tesouros"
+
 msgid "Map"
 msgstr "Mapa"
 
@@ -12356,6 +11339,10 @@ msgid ""
 "A treasure map leading to something that could turn out to be useful. "
 "However, you won't know what there is until you find it."
 msgstr ""
+
+#, fuzzy
+msgid "Dvaered Flare Battery"
+msgstr "Sistemas centrais Dvaered"
 
 #, fuzzy
 msgid "D. Flare B."
@@ -12377,6 +11364,9 @@ msgid ""
 "flares, which has led to more than one major incident in the past."
 msgstr ""
 
+msgid "Guardian Interception System"
+msgstr ""
+
 #, fuzzy
 msgid "Guardian I.S."
 msgstr "Ruadan II"
@@ -12388,6 +11378,10 @@ msgid ""
 "torpedoes and other heavy ordnance, it excels at tracking lighter missiles "
 "and can even be used to deter small assault craft."
 msgstr ""
+
+#, fuzzy
+msgid "Guardian Overseer System"
+msgstr "Mapa: Sistema de Fronteira Sirian"
 
 #, fuzzy
 msgid "Guardian O.S."
@@ -12419,6 +11413,9 @@ msgid ""
 "tolerances and controls giving it significantly more reliability."
 msgstr ""
 
+msgid "Spittle Tubuloid Cluster"
+msgstr ""
+
 msgid ""
 "Actually consisting of a small colony of space-hardened parasites, known as "
 "Spittle Tubuloids, that leech from the ship energy systems to provide "
@@ -12427,6 +11424,9 @@ msgid ""
 "defence mechanism of spitting large bubbles of plasma. Although the bubbles "
 "are quite weak compared to engineered weapons, their numbers allow them to "
 "efficiently protect the ship they are attached to from non-armoured missiles."
+msgstr ""
+
+msgid "ZIBS-16"
 msgstr ""
 
 msgid ""
@@ -12439,6 +11439,9 @@ msgid ""
 "Field-testing quickly showed that the weapon was of very limited use in non-"
 "point defence roles, which resulted in the creation of the ZIBS-16, and "
 "later ZIBS-32 line of beam-based point defence."
+msgstr ""
+
+msgid "ZIBS-32"
 msgstr ""
 
 msgid ""
@@ -12456,16 +11459,34 @@ msgid ""
 "spaceport bars across the House Za'lek territory."
 msgstr ""
 
+msgid "Base Ripper MK2"
+msgstr "Estripador de Base MK2"
+
 msgid "This weapon is a cheat. It is not meant to be used by players."
 msgstr "Esta arma é uma batota. Não é para ser utilizada por jogadores."
+
+#, fuzzy
+msgid "Bikers Fury Launcher"
+msgstr "Lançador Fury TeraCom"
+
+#, fuzzy
+msgid "Four Winds Laser Cannon"
+msgstr "Canhão Laser do Batoteiro"
 
 #, fuzzy
 msgid "F.W. Laser Cannon"
 msgstr "Canhão Laser do Batoteiro"
 
 #, fuzzy
+msgid "Four Winds Ragnarok Beam"
+msgstr "Raio Ragnarok"
+
+#, fuzzy
 msgid "F.W. Ragnarok Beam"
 msgstr "Raio Ragnarok"
+
+msgid "Active Plating"
+msgstr "Revestimento Ativo"
 
 msgid "Armour Modifier"
 msgstr "Modificador de Blindagem"
@@ -12483,6 +11504,10 @@ msgstr ""
 "espalhadas pelo casco, a resistência da blindagem é substancialmente "
 "aumentada à custa de um aumento dramático da utilização de energia."
 
+#, fuzzy
+msgid "Adaptive Camouflage Plating"
+msgstr "Revestimento de Camuflagem Adaptativa"
+
 msgid ""
 "This armour plating does not provide any protection, instead it makes the "
 "ship harder to detect. It has integrated sensors that measure the ambient "
@@ -12493,6 +11518,10 @@ msgstr ""
 "nave mais difícil de detetar. Tem sensores integrados que medem a radiação "
 "ambiente ao redor da nave e é capaz de emitir a quantidade certa de radiação "
 "para parecer invisível para sensores passivos."
+
+#, fuzzy
+msgid "Auxiliary Processing Unit I"
+msgstr "Unidade de Processamento Auxiliar I"
 
 msgid "A.P.U. I"
 msgstr ""
@@ -12509,6 +11538,10 @@ msgstr ""
 "principal do sistema principal, dando às naves pequenas um pouco mais de "
 "poder de processamento."
 
+#, fuzzy
+msgid "Auxiliary Processing Unit II"
+msgstr "Unidade de Processamento Auxiliar II"
+
 msgid "A.P.U. II"
 msgstr ""
 
@@ -12520,6 +11553,10 @@ msgstr ""
 "Uma unidade de processamento adicional para complementar o processador "
 "principal do sistema principal, dando às naves médias um pouco mais de poder "
 "de processamento."
+
+#, fuzzy
+msgid "Auxiliary Processing Unit III"
+msgstr "Unidade de Processamento Auxiliar III"
 
 msgid "A.P.U. III"
 msgstr ""
@@ -12533,6 +11570,10 @@ msgstr ""
 "principal do sistema principal, dando às naves grandes um pouco mais de "
 "poder de processamento."
 
+#, fuzzy
+msgid "Auxiliary Processing Unit IV"
+msgstr "Unidade de Processamento Auxiliar IV"
+
 msgid "A.P.U. IV"
 msgstr ""
 
@@ -12545,6 +11586,9 @@ msgstr ""
 "principal do sistema principal, dando às naves capitais um pouco mais de "
 "poder de processamento."
 
+msgid "Battery I"
+msgstr "Bateria I"
+
 msgid "Energy Modifier"
 msgstr "Modificador de Energia"
 
@@ -12555,12 +11599,18 @@ msgstr ""
 "Uma grande unidade de bateria projetada para conter 250 GJ de energia. "
 "Pequena o suficiente para ser instalada em muitas naves ligeiras."
 
+msgid "Battery II"
+msgstr "Bateria II"
+
 msgid ""
 "A large battery unit designed to hold 500 GJ of energy. Ideally mounted on "
 "medium-to-large vessels."
 msgstr ""
 "Uma grande unidade de bateria projetada para conter 500 GJ de energia. Ideal "
 "para instalação em naves médias a grandes dimensões."
+
+msgid "Battery III"
+msgstr "Bateria III"
 
 msgid ""
 "A very large battery unit designed to hold 1000 GJ of energy. It can only be "
@@ -12569,12 +11619,18 @@ msgstr ""
 "Uma grande unidade de bateria projetada para conter 1000 GJ de energia. "
 "Apenas pode ser instalada em naves de muito grandes dimensões."
 
+msgid "Battery IV"
+msgstr "Bateria IV"
+
 msgid ""
 "A massive battery unit designed to hold 1500 GJ of energy. Given the mass of "
 "this battery, it's advisable to only mount it on capital ships."
 msgstr ""
 "Uma grande unidade de bateria projetada para conter 1500 GJ de energia. Dada "
 "a massa desta bateria, é aconselhável instalá-la apenas em naves capitais."
+
+msgid "Biometal Armour"
+msgstr "Armadura Biometálica"
 
 msgid ""
 "Biometal is an armour that regenerates itself due to genetically-engineered "
@@ -12588,6 +11644,9 @@ msgstr ""
 "cultivar as bactérias, a Blindagem Biometálica é mais massiva que os outros "
 "tipos e é o revestimento de casco mais caro."
 
+msgid "Compact Lightsail"
+msgstr ""
+
 msgid "Manoeuvrability Modifier"
 msgstr "Modificador de Manobrabilidade"
 
@@ -12597,6 +11656,9 @@ msgid ""
 "similar radiation to propel the ship along. While not useful as a sole "
 "method of propulsion, it can provide a minor aid in the ship's acceleration."
 msgstr ""
+
+msgid "Engine Reroute"
+msgstr "Redirecionamento de Motor"
 
 msgid ""
 "This enhancement routes energy from the ship's energy supplies to the "
@@ -12611,6 +11673,9 @@ msgstr ""
 "curioso é que os motores podem agora também funcionar em marcha-ré para "
 "permitir a travagem com uma pequena perda na capacidade de impulso inverso."
 
+msgid "Improved Stabilizer"
+msgstr "Estabilizador Aperfeiçoado"
+
 msgid ""
 "By improving your ship's stabilization systems drastically, this "
 "modification will allow you to reach higher speeds while still keeping the "
@@ -12621,6 +11686,9 @@ msgstr ""
 "modificação permite atingir velocidades mais elevadas, mantendo a nave "
 "estável. Como outro efeito secundário, os estabilizadores melhorados "
 "permitem inverter os propulsores com uma pequena perda de propulsão."
+
+msgid "Large Cargo Pod"
+msgstr "Compartimento de Carga Grande"
 
 msgid "Cargo Expansion"
 msgstr "Expansão de Carga"
@@ -12635,6 +11703,9 @@ msgstr ""
 "do casco, têm o efeito secundário de aumentar ligeiramente a inércia de "
 "carga."
 
+msgid "Large Fuel Pod"
+msgstr "Compartimento de Combustível Grande"
+
 msgid "Fuel Modifier"
 msgstr "Modificador de Combustível"
 
@@ -12642,6 +11713,9 @@ msgid "The fuel pod allows a ship to store more fuel for hyperspace jumps."
 msgstr ""
 "Os compartimentos de combustível permitem conter mais combustível para "
 "saltos no hiperespaço."
+
+msgid "Large Shield Booster"
+msgstr "Potenciador de Escudo Grande"
 
 msgid "Shield Booster"
 msgstr "Potenciador de Escudo"
@@ -12656,6 +11730,18 @@ msgstr ""
 "aumento da capacidade do escudo, à custa de drenar um pouco da energia da "
 "nave."
 
+msgid "Medium Cargo Pod"
+msgstr "Cápsula de Carga Média"
+
+msgid "Medium Fuel Pod"
+msgstr "Compartimento de Combustível Médio"
+
+msgid "Medium Shield Booster"
+msgstr "Potenciador de Escudo Médio"
+
+msgid "Microbond Plating"
+msgstr "Revestimento de Microligação"
+
 msgid ""
 "Further developed from Nanobond plating, Microbond plating is a less dense, "
 "lighter revision that's still stronger than Plasteel, making it a great "
@@ -12664,6 +11750,9 @@ msgstr ""
 "Um avanço a partir do revestimento de Nanoligação, o revestimento de "
 "Microligação é uma iteração menos densa e mais leve que o Plasaço, tornando-"
 "o uma ótima escolha para reforçar o casco de uma nave de tamanho médio."
+
+msgid "Nanobond Plating"
+msgstr "Revestimento de Nanoligação"
 
 msgid ""
 "Nanobond is the successor to Plasteel. It follows the same approach but has "
@@ -12676,6 +11765,9 @@ msgstr ""
 "particulars O resultado é um material muito mais robusto, ainda que "
 "substancialmente mais caro."
 
+msgid "Nanofiber Structural Enhancement"
+msgstr ""
+
 msgid ""
 "A ship without structural integrity is floating space junk. However, most "
 "modern building standards are usually designed around worst-case scenarios "
@@ -12687,6 +11779,9 @@ msgid ""
 "disclaimer saying it is not suited for combat, but that is more like a "
 "suggestion, right?"
 msgstr ""
+
+msgid "Nebular Shielding Prototype"
+msgstr "Protótipo de Escudo Nebular"
 
 msgid "Shield Modifier"
 msgstr "Modificador de Escudo"
@@ -12705,6 +11800,9 @@ msgstr ""
 "Capaz de compensar até 30 GW de volatilidade nebular. Usa 1 GW de energia "
 "por GW de dano prevenido."
 
+msgid "Plasteel Plating"
+msgstr "Revestimento de Plasaço"
+
 msgid ""
 "Plasteel was one of man's greatest improvements on materials. It's a cheap, "
 "strong armour that seems to take the best from both plastic and steel, "
@@ -12718,6 +11816,9 @@ msgstr ""
 "Segundo Crescimento só foi possível com este material. Embora já não esteja "
 "na vanguarda, o seu baixo preço atrai muitos compradores."
 
+msgid "Reactor Class I"
+msgstr "Reator Classe I"
+
 msgid "Power Modifier"
 msgstr "Modificador de Potência"
 
@@ -12730,6 +11831,9 @@ msgstr ""
 "de energia extra que se necessita. Isto não substitui o reator existente, "
 "mas funciona a par com ele e liga-se diretamente ao fluxo de energia."
 
+msgid "Reactor Class II"
+msgstr "Reator Classe II"
+
 msgid ""
 "The class II reactor uses a newer fusion technology than the class I, "
 "permitting it to have greater energy density. The result is a mid-sized "
@@ -12739,6 +11843,9 @@ msgstr ""
 "Classe I, permitindo ter uma maior densidade energética. O resultado é um "
 "reator de tamanho médio mais adequado em naves com exigências moderadas de "
 "energia."
+
+msgid "Reactor Class III"
+msgstr "Reator Classe III"
 
 msgid ""
 "The immense class III reactor provides enough power for nearly anything. The "
@@ -12754,12 +11861,18 @@ msgstr ""
 "a sua produção de energia seja excessiva para qualquer coisa de menores "
 "dimensões."
 
+msgid "Shield Capacitor I"
+msgstr "Condensador de Escudo I"
+
 msgid ""
 "An enhancement for the shield power system, giving small ships a better "
 "chance of escaping attackers."
 msgstr ""
 "Uma melhoria para o sistema de energia dos escudos, oferecendo às naves "
 "menores uma melhor chance de fugir dos seus agressores."
+
+msgid "Shield Capacitor II"
+msgstr "Condensador de Escudo I"
 
 msgid ""
 "A more powerful shield enhancer, providing better protection during "
@@ -12768,11 +11881,17 @@ msgstr ""
 "Um melhorador de escudo mais potente, oferecendo melhor proteção durante "
 "escaramuças ocasionais."
 
+msgid "Shield Capacitor III"
+msgstr "Condensador de Escudo III"
+
 msgid ""
 "A heavy duty shield enhancer for ships that face combat on a regular basis."
 msgstr ""
 "Um melhorador de escudo reforçado para naves que entram em combate "
 "regularmente."
+
+msgid "Shield Capacitor IV"
+msgstr "Condensador de Escudo IV"
 
 msgid ""
 "The pinnacle in shield boosting technology, reinforcing the defences of "
@@ -12780,6 +11899,18 @@ msgid ""
 msgstr ""
 "O auge da tecnologia de reforço de escudo, fortalecendo as defesas de naves "
 "que lutam nas linhas de frente constantemente."
+
+msgid "Small Cargo Pod"
+msgstr "Compartimento de Carga Pequeno"
+
+msgid "Small Fuel Pod"
+msgstr "Compartimento de Combustível Pequeno"
+
+msgid "Small Shield Booster"
+msgstr "Potenciador de Escudo Pequeno"
+
+msgid "Bioship Pheromone Emitter"
+msgstr "Emissor de Feromonas de Bionave"
 
 msgid "Pheromone Emitter"
 msgstr "Emissor de Feromonas"
@@ -12802,6 +11933,9 @@ msgstr ""
 msgid "Release bioship pheromones when used."
 msgstr "Liberta Feromonas da bionave quando usado."
 
+msgid "Daphne's Leap"
+msgstr "O Salto de Daphne"
+
 msgid "System Improvement"
 msgstr "Melhoramento de sistema"
 
@@ -12820,6 +11954,9 @@ msgstr ""
 "significativamente a quantidade de tempo necessário para saltar, no entanto "
 "isto aumenta o tempo total necessário para saltar devido à necessária "
 "calibração em movimento que faz."
+
+msgid "Executor Shield Aura"
+msgstr "Aura de Escudo Executor"
 
 msgid "Aura"
 msgstr "Aura"
@@ -12849,6 +11986,9 @@ msgstr ""
 "Dá +30% de regeneração do escudo a todas as naves aliadas num raio de 3000 "
 "unidades de distância. O alcance é afetado pelo bónus de deteção."
 
+msgid "Fake Transponder"
+msgstr "Transponder Falso"
+
 msgid ""
 "A fake transponder to make ships appear to be a non-descript and harmless "
 "independent ship."
@@ -12862,6 +12002,9 @@ msgid ""
 msgstr ""
 "Faz com que a nave apareça como independente para as outras. Torna-se "
 "temporariamente inválido quando descoberta."
+
+msgid "Fuel Recycler"
+msgstr "Reciclador de Combustível"
 
 msgid ""
 "While the process of refining fuel for space ships is possible using cheap "
@@ -12886,6 +12029,10 @@ msgstr ""
 msgid "#gAllows converting space resources to fuel.#0"
 msgstr "#gPermite a conversão de recursos espaciais em combustível.#0"
 
+#, fuzzy
+msgid "Fuelshell Plating"
+msgstr "Revestimento de Plasaço"
+
 msgid ""
 "An experimental hull design for scout ships that would allow them to "
 "significantly increase their travel range by using a porous hull material "
@@ -12896,6 +12043,9 @@ msgid ""
 "production. It might have to do with turning the entire ship into a "
 "tinderbox and leaking fuel when sustaining damage, but who knows?"
 msgstr ""
+
+msgid "Hades Torch"
+msgstr "Tocha de Hades"
 
 #, fuzzy
 msgid ""
@@ -12909,6 +12059,9 @@ msgstr ""
 
 msgid "#rHot hot hot!#0"
 msgstr "#rQuente quente quente!#0"
+
+msgid "Homebrew Processing Unit"
+msgstr "Unidade de Processamento Caseira I"
 
 msgid ""
 "This core system is easily recognizable as the work of some amateurs, with "
@@ -12926,6 +12079,9 @@ msgstr ""
 "similares, tem a funcionalidade significativamente melhor desenvolvida "
 "noutras áreas."
 
+msgid "Prototype Systems T-IVa 'Quickshell'"
+msgstr ""
+
 msgid "P.S. T-IVa 'Qickshell'"
 msgstr ""
 
@@ -12938,6 +12094,9 @@ msgid ""
 "that is just a matter of time. It is only a matter of time before Project "
 "Thurion becomes the technological backbone of civilization!\""
 msgstr ""
+
+msgid "Pulse Scanner"
+msgstr "Sonda de Pulso"
 
 #, fuzzy
 msgid ""
@@ -12969,6 +12128,9 @@ msgstr ""
 "Fica ativo por 5 segundos com um período de arrefecimento de 15 segundos.\n"
 "#pPode ser usado para rastrear sinais anómalos.#0"
 
+msgid "Squadron Synchronizer Module"
+msgstr ""
+
 msgid ""
 "It's not clear how Misi got the goods to sell and they evade questions on "
 "the topic, however, the Squadron Synchronizer Module can be easily connected "
@@ -12976,6 +12138,9 @@ msgid ""
 "accurately. At its core it seems to change some of the underlying algorithms "
 "to be more efficient to use less bandwidth."
 msgstr ""
+
+msgid "Valkyrie Beam"
+msgstr "Raio Valquíria"
 
 msgid ""
 "The Valkyrie Beam is a heavily modified version of the Ragnarok Beam, where "
@@ -12995,6 +12160,9 @@ msgstr ""
 "#rDrena 80 de escudo por segundo enquanto dispara e por mais um segundo "
 "depois.#0"
 
+msgid "Veil of Penelope"
+msgstr "Véu de Penélope"
+
 msgid ""
 "This device seems to be almost like a parasite that hooks up to the ship's "
 "systems. It's not exactly clear what it does, but it seems to feed on the "
@@ -13005,6 +12173,9 @@ msgstr ""
 "da nave. Não é exatamente claro o que faz, mas parece alimentar-se da "
 "radiação emitida, permitindo que a nave permaneça sem ser detetada por mais "
 "tempo quando está perto de outras naves."
+
+msgid "ZD-5 Guardian Unit"
+msgstr "Unidade Guardiã ZD-5"
 
 #, fuzzy
 msgid ""
@@ -13030,11 +12201,17 @@ msgstr ""
 "Utiliza energia para impedir danos letais com 50% de eficiência. Só pode "
 "deter um máximo de 200 pontos de dano por segundo."
 
+msgid "Apollo's Gaze"
+msgstr ""
+
 msgid ""
 "This device hooks up to the ship's weapon systems and allows launching "
 "projectiles at higher velocities and further than usual. This indeed comes "
 "with a performance penalty, however."
 msgstr ""
+
+msgid "Asteroid Scanner"
+msgstr "Sonda de Asteroides"
 
 msgid "Mining System"
 msgstr "Sistema de Mineração"
@@ -13053,6 +12230,9 @@ msgstr ""
 "a partir da espectroscopia, e o que é mais impressionante, de inferir a "
 "composição interna através de impedância elétrica inversa. Naturalmente, "
 "isso tem um preço que não pode ser pago por qualquer mineiro."
+
+msgid "Berserk Chip"
+msgstr "Chip Berserk"
 
 msgid "Speed Modifier"
 msgstr "Modificador de Velocidade"
@@ -13085,6 +12265,9 @@ msgstr ""
 "a 30%. Após utilização, há um período de arrefecimento de 8 segundos, "
 "durante o qual o movimento e os danos são reduzidos em 20%."
 
+msgid "Blink Drive"
+msgstr "Unidade Piscada"
+
 #, fuzzy
 msgid ""
 "The blink drive uses hyperdrive technology modified to create a small space-"
@@ -13097,6 +12280,9 @@ msgstr ""
 "instantaneamente curtas distâncias. Os pilotos que utilizam frequentemente "
 "tais aparelhos tendem a ter dores de cabeça mais fortes do que o habitual, "
 "mas deve ser seguro, certo?"
+
+msgid "Boarding Androids MK1"
+msgstr "Androides de Assalto MK 1"
 
 msgid "Boarding Androids"
 msgstr "Androides de Assalto"
@@ -13112,6 +12298,9 @@ msgstr ""
 "plasma/tocha de corte/abridor de lata/espátula, o Andróide de Assalto está "
 "pronto para qualquer situação, seja tática ou culinária."
 
+msgid "Boarding Androids MK2"
+msgstr "Androides de Assalto MK2"
+
 msgid ""
 "The Boarding Android Mark 2 improves upon the wide variety of implements "
 "sported by its predecessor, additionally including scissor-hands and a "
@@ -13121,12 +12310,19 @@ msgstr ""
 "pelo seu predecessor, incluindo além destes, mãos de tesoura e agulha de "
 "costura."
 
+#, fuzzy
+msgid "Cargo Damper"
+msgstr "Espaço de carga"
+
 msgid ""
 "When hauling large amounts of cargo, general-purpose ship engines may become "
 "overwhelmed and deliver a subpar performance. This device can be installed "
 "within a ship's cargo bays to generate a weak directed gravitational field "
 "to reduce the impact of cargo inertia on the ship's mobility and offset the "
 "requirement for bulkier engines."
+msgstr ""
+
+msgid "Catalytic Energy Drill"
 msgstr ""
 
 msgid ""
@@ -13144,9 +12340,15 @@ msgid "#gAllows precise mining of asteroids to extract rare minerals.#0"
 msgstr ""
 "#gPermite a mineração precisa de asteroides para extrair minerais raros.#0"
 
+msgid "Cloaking Device"
+msgstr "Aparelho de Camuflagem"
+
 msgid "Uses 1 MJ of energy per 10 mass and drains shield in 0.5 seconds."
 msgstr ""
 "Utiliza 1 MJ de energia por cada 10 massa e drena o escudo em 0,5 segundos."
+
+msgid "Combat Hologram Projector"
+msgstr "Projetor Holográfico de Combate"
 
 msgid "Holograph Projector"
 msgstr "Projetor Holográfico"
@@ -13169,6 +12371,9 @@ msgid ""
 "Creates a hologram of the current ship to distract the enemy ship target."
 msgstr "Cria um holograma da nave atual para distrair a nave inimiga."
 
+msgid "Agility Combat AI"
+msgstr "IA de Combate de Agilidade"
+
 msgid "Combat AI"
 msgstr "IA de Combate"
 
@@ -13183,6 +12388,9 @@ msgstr ""
 "agilidade. Através da regulação cuidadosa dos propulsores da nave, a IA é "
 "capaz de aumentar tanto a aceleração total como a viragem da nave sem "
 "modificar realmente o equipamento nem aumentar o consumo de energia."
+
+msgid "Bio-Neural Combat AI"
+msgstr "IA de Combate Bio-Neural"
 
 #, fuzzy
 msgid ""
@@ -13199,6 +12407,9 @@ msgstr ""
 "permitindo à nave ganhar aparentemente uma vantagem sobre outras naves em "
 "tempo de reação."
 
+msgid "Cyclic Combat AI"
+msgstr "IA de Combate Cíclica"
+
 #, fuzzy
 msgid ""
 "This Combat AI focuses on the optimization of the firing rhythm of forward-"
@@ -13211,6 +12422,9 @@ msgstr ""
 "IA é capaz de realizar modificações aparentemente triviais de parâmetros que "
 "levam a um aumento global da cadência de tiro."
 
+msgid "Efficiency Combat AI"
+msgstr "IA de Combate de Eficiência"
+
 #, fuzzy
 msgid ""
 "This Combat AI utilizes advanced power routeing and process scheduling "
@@ -13221,6 +12435,9 @@ msgstr ""
 "Esta IA de Combate utiliza roteamento avançado de energia para tornar a "
 "potência computacional da nave mais eficiente, permitindo que mais potência "
 "útil seja gerada sem mudar a utilização total."
+
+msgid "Hive Combat AI"
+msgstr "IA de Combate Colmeia"
 
 #, fuzzy
 msgid "You need at least 10% reputation with House Za'lek."
@@ -13240,6 +12457,9 @@ msgstr ""
 "movimento mais eficiente dos caças e numa melhor capacidade de resposta a "
 "acidentes como caças abatidos."
 
+msgid "Hunting Combat AI"
+msgstr "IA de Combate Caçada"
+
 #, fuzzy
 msgid ""
 "Like a hunter's ambush, the Hunting Combat AI is able to exploit the element "
@@ -13251,6 +12471,9 @@ msgstr ""
 "focar em aproveitar o elemento surpresa e fraquezas dos cascos das naves "
 "inimigas, resultando num aumento significativo dos danos para as armas "
 "torretas, embora com uma cadência de disparo reduzida."
+
+msgid "Pinpoint Combat AI"
+msgstr "IA de Combate Focado"
 
 #, fuzzy
 msgid ""
@@ -13265,6 +12488,9 @@ msgstr ""
 "nave, a IA é capaz de aumentar tanto o alcance como a velocidade de mira de "
 "todos os lançadores de mísseis na nave."
 
+msgid "Scanning Combat AI"
+msgstr "IA de Combate de Sondagem"
+
 #, fuzzy
 msgid ""
 "This Combat AI focuses on optimization of the ship's sensor infrastructure. "
@@ -13274,6 +12500,10 @@ msgstr ""
 "Esta IA de Combate concentra-se na otimização da infra-estrutura dos "
 "sensores da nave. Ao fazer pequenos ajustes durante o funcionamento, é capaz "
 "de aumentar o alcance a partir do qual outras naves são detetadas."
+
+#, fuzzy
+msgid "Charge Conduit"
+msgstr "Conduta de Mira"
 
 msgid "Conduit"
 msgstr ""
@@ -13286,11 +12516,18 @@ msgid ""
 "in most cases."
 msgstr ""
 
+#, fuzzy
+msgid "Pipeline Conduit"
+msgstr "Conduta de Mira"
+
 msgid ""
 "The Pipeline Conduit funnels excess shield energy into the ammunition and "
 "fighter reconstruction pipelines, greatly speeding up those processes at the "
 "cost of extra CPU use."
 msgstr ""
+
+msgid "Targeting Conduit"
+msgstr "Conduta de Mira"
 
 #, fuzzy
 msgid ""
@@ -13304,6 +12541,9 @@ msgstr ""
 "sistemas de mira de um nave, permitindo um bloqueio da mira no alvo muito "
 "mais rápido, embora à custa de um alcance reduzido devido à instabilidade "
 "inerente causada pela sobrecarga dos sistemas."
+
+msgid "Cryogenic Repair Nanobots"
+msgstr "Nanorobôs de Reparação Criogénica"
 
 msgid "Armour Repair"
 msgstr "Reparação de Blindagem"
@@ -13329,6 +12569,9 @@ msgstr ""
 msgid "Restores armour to full when performing an active cooldown."
 msgstr "Restaura a blindagem ao executar um arrefecimento ativo."
 
+msgid "Droid Repair Crew"
+msgstr "Equipa de Andróides de Reparação"
+
 msgid ""
 "This low maintenance droid crew will scour your ship to repair any damage "
 "caused by space hazards. They are very small and able to work both on the "
@@ -13347,6 +12590,9 @@ msgstr ""
 
 msgid "Can only restore armour when below 50%."
 msgstr "Apenas pode restaurar a blindagem quando abaixo de 50%."
+
+msgid "Emergency Shield Booster"
+msgstr "Potenciador de Escudo de Emergência"
 
 msgid "Shield Modification"
 msgstr "Modificador de Escudo"
@@ -13377,6 +12623,9 @@ msgstr ""
 "arrefecimento de 8 segundos. Utiliza 3 MJ de energia para cada MJ de escudo "
 "recuperado."
 
+msgid "Emergency Stasis Inducer"
+msgstr "Indutor de Estase de Emergência"
+
 #, fuzzy
 msgid ""
 "Not much unlike the Neural Accelerator Interface, the Emergency Stasis "
@@ -13403,6 +12652,10 @@ msgstr ""
 "Ativado por danos na blindagem. Dura 3 segundos com um arrefecimento de 8 "
 "segundos."
 
+#, fuzzy
+msgid "Flicker Drive"
+msgstr "Unidade Piscada"
+
 msgid ""
 "The Flicker Drive is a compacted version of the Blink Drive, lowering the "
 "power usage, blinking range, and amount of mass that can be blinked, "
@@ -13412,6 +12665,9 @@ msgid ""
 "make use of afterburners to increase mobility, the Flicker Drive has a "
 "strong following who claim it is superior to any alternatives."
 msgstr ""
+
+msgid "Hellburner"
+msgstr "Pós-Combustor Infernal"
 
 #, fuzzy
 msgid ""
@@ -13428,6 +12684,9 @@ msgstr ""
 "inferior aos modelos comuns, o que resulta num consumo de energia mais "
 "rápido e igualmente num superaquecimento mais rápido."
 
+msgid "Hidden Jump Scanner"
+msgstr "Sonda de Salto Oculto"
+
 msgid ""
 "A specialized piece of sensor technology that can scan its immediate "
 "surroundings for unusual anomalies in the fabric of space. Although short-"
@@ -13441,6 +12700,9 @@ msgstr ""
 "tempo limitado antes de precisar de recarregar, esta sonda é capaz de "
 "descobrir pontos de salto que as sondas comuns regulares não conseguem "
 "detetar."
+
+msgid "Faraday Tempest Coating"
+msgstr "Revestimento Tempestade de Faraday"
 
 msgid "Hull Coating"
 msgstr "Revestimento de Casco"
@@ -13459,6 +12721,9 @@ msgstr ""
 "incapacitantes, dissipando-os com o uso de campos efémeros inofensivos, "
 "acelerando muito a recuperação de danos em sistemas eletrónicos."
 
+msgid "Lattice Thermal Coating"
+msgstr "Malha de Revestimento Térmico"
+
 msgid ""
 "By modifying the micro-facets of the hull's surface using a triply periodic "
 "minimal surface structure, the Lattice Thermal Coating is able to aid in the "
@@ -13466,6 +12731,9 @@ msgid ""
 "allows for outfits to be used in quicker successions reliably and without "
 "long-lasting damage."
 msgstr ""
+
+msgid "Milspec Impacto-Plastic Coating"
+msgstr "Revestimento Impacto-Plástico Milspec"
 
 #, fuzzy
 msgid "M. Impacto-Plastic Coating"
@@ -13479,6 +12747,9 @@ msgstr ""
 "O Revestimento Impacto-Plástico Milspec é baseado em nanoligas com memória "
 "que resistem a impactos e danos, rapidamente recuperando a superfície "
 "protegida de volta ao seu estado original."
+
+msgid "Nebula Resistant Coating"
+msgstr "Revestimento Resistente à Nebulosa"
 
 #, fuzzy
 msgid ""
@@ -13495,6 +12766,10 @@ msgstr ""
 "aos efeitos da nebulosa, este revestimento de casco torna-a "
 "significativamente mais resistente, ainda que a exposição prolongada não "
 "seja recomendada."
+
+#, fuzzy
+msgid "Nexus Concealment Coating"
+msgstr "Revestimento de Camuflagem Nexo"
 
 #, fuzzy
 msgid "N. Concealment Coating"
@@ -13514,6 +12789,9 @@ msgstr ""
 "casco que utiliza auto-projeções emaranhadas quânticas que podem confundir "
 "as leituras gravitacionais."
 
+msgid "Photo-Voltaic Nanobot Coating"
+msgstr "Revestimento Fotovoltaico Nanorobótico"
+
 #, fuzzy
 msgid ""
 "A coating of photo-voltaic nanobot paint covers the ship's entire hull and "
@@ -13526,12 +12804,19 @@ msgstr ""
 "da nave. Os nanorobôs regulam-se automaticamente sem necessitarem de "
 "manutenção depois da colónia se estabelecer."
 
+#, fuzzy
+msgid "Reconstructive Nanobot Coating"
+msgstr "Revestimento Fotovoltaico Nanorobótico"
+
 msgid ""
 "It is possible to establish a colony of repair nanobots directly on the hull "
 "of a ship. Since the design has to account for the potentially harsh "
 "conditions outside the approach has limited effectiveness compared to the "
 "more intrusive solutions, but nevertheless complements them neatly."
 msgstr ""
+
+msgid "Hyperbolic Blink Engine"
+msgstr "Motor de Piscada Hiperbólico"
 
 #, fuzzy
 msgid ""
@@ -13561,6 +12846,9 @@ msgstr ""
 "incorre numa penalidade de 20% de aceleração e de viragem durante o "
 "arrefecimento. O desempenho diminui a partir de 6000 toneladas de massa."
 
+msgid "Jump Scanner"
+msgstr "Sonda de Salto"
+
 msgid ""
 "This device installs a secondary scanning array on the ship. The array is "
 "programmed with the known characteristics of the spatial anomalies "
@@ -13580,11 +12868,17 @@ msgstr ""
 "distância. A sonda não detetará pontos de salto cuja assinatura difere do "
 "tipo padrão."
 
+msgid "Kratos' Glove"
+msgstr ""
+
 msgid ""
 "A module that lets the ship's generator direct energy to its weapons in "
 "larger, more spaced out bursts. It's not perfectly efficient, but has been "
 "proven useful in some combat encounters."
 msgstr ""
+
+msgid "Low Radiation Sensor Modulator"
+msgstr "Modulador de Sensor de Baixa Radiação"
 
 msgid ""
 "By using special modulation highly tuned for low radiation environments, the "
@@ -13596,6 +12890,9 @@ msgstr ""
 "baixa radiação, o Modulador de Sensor de Baixa Radiação é capaz de aumentar "
 "a deteção de naves próximas, ao mesmo tempo que dá mais sensibilidade às "
 "assinaturas de pontos de salto quando a nave está camuflada."
+
+msgid "Milspec Jammer"
+msgstr "Inibidor Milspec"
 
 #, fuzzy
 msgid "M. Jammer"
@@ -13619,6 +12916,9 @@ msgstr ""
 "perceber o lixo que estão a apanhar nos sensores, já terás escapado! Voe com "
 "segurança, voe com Milspec."
 
+msgid "Milspec Scrambler"
+msgstr "Distorçor Milspec"
+
 #, fuzzy
 msgid "M. Scrambler"
 msgstr "Distorçor Milspec"
@@ -13638,6 +12938,9 @@ msgstr ""
 "mínimo para o teu bolso ou para o reator da tua nave! Voe com segurança, voe "
 "com Milspec."
 
+msgid "Neural Accelerator Interface"
+msgstr "Interface Aceleradora Neural"
+
 #, fuzzy
 msgid ""
 "The flow of time is generally not perceived as a constant value, rather it "
@@ -13655,6 +12958,9 @@ msgstr ""
 msgid "Active for 5 seconds with a cooldown of 20 seconds."
 msgstr "Ativo durante 5 segundos com um arrefecimento de 20 segundos."
 
+msgid "Sensor Array"
+msgstr "Conjunto de Sensores"
+
 msgid ""
 "This sensor array uses quadralens-magnified photon modulation to more easily "
 "detect the faint signals emitted by a distant ship, effectively boosting "
@@ -13670,6 +12976,9 @@ msgstr ""
 "rebater o efeito dos instrumentos de camuflagem e também aumenta a precisão "
 "da informação de localização de curto alcance utilizada pelo sistema de "
 "armas da nave."
+
+msgid "S&K Heavy Plasma Drill"
+msgstr "Broca de Plasma Pesada S&K"
 
 #, fuzzy
 msgid ""
@@ -13687,6 +12996,9 @@ msgstr ""
 "Contudo, para as naves que podem usá-la, a Broca de Plasma Pesada pode "
 "transformá-las em formidáveis naves mineiras."
 
+msgid "S&K Plasma Drill"
+msgstr "Broca de Plasma S&K"
+
 msgid ""
 "The S&K Plasma Drill is an alternate approach to conventional mining lances. "
 "Although it requires getting up close to the asteroid and accurate controls "
@@ -13697,6 +13009,10 @@ msgstr ""
 "convencionais. Embora exija a aproximação do asteroide e controlos precisos "
 "para se poder extrair minerais, ela obtém rendimentos significativamente "
 "melhores. Uma sonda de asteroides integrada é apenas a cereja no bolo."
+
+#, fuzzy
+msgid "Stealth Burster"
+msgstr "Camuflagem a:"
 
 #, fuzzy
 msgid ""
@@ -13714,6 +13030,9 @@ msgstr ""
 "aumentar a camuflagem. Contudo, isto é apenas um efeito temporário curto e o "
 "aparelho leva muito tempo a recalibrar e a carregar os condensadores."
 
+msgid "Targeting Array"
+msgstr "Conjunto de Mira"
+
 msgid "Weapon Modifier (Turret)"
 msgstr "Modificador de Arma (Torreta)"
 
@@ -13727,6 +13046,9 @@ msgstr ""
 "rapidamente e minimiza perdas de precisão à distância. Requer um curto "
 "período de tempo para calcular um vetor ideal, diminuindo ligeiramente a "
 "cadência de tiro."
+
+msgid "Unicorp Jammer"
+msgstr "Inibidor Unicorp"
 
 #, fuzzy
 msgid "U. Jammer"
@@ -13748,6 +13070,9 @@ msgstr ""
 "energia. Por este motivo, os sistemas de inibição ficam inativos até serem "
 "necessários e devem ser ativados manualmente."
 
+msgid "Unicorp Light Afterburner"
+msgstr "Pós-Combustor Leve Unicorp"
+
 #, fuzzy
 msgid "U. Light Afterburner"
 msgstr "Pós-Combustor Leve Unicorp"
@@ -13765,6 +13090,9 @@ msgstr ""
 "a energia da nave e também gera calor. Se aquecer demasiado, o efeito "
 "diminui e a turbina desliga-se por completo."
 
+msgid "Unicorp Medium Afterburner"
+msgstr "Pós-Combustor Médio Unicorp"
+
 #, fuzzy
 msgid "U. Medium Afterburner"
 msgstr "Pós-Combustor Médio Unicorp"
@@ -13781,6 +13109,9 @@ msgstr ""
 "quando ativados. Porém, enquanto ativo, o pós-combustor drena constantemente "
 "a energia da nave e também gera calor. Se aquecer demasiado, o efeito "
 "diminui e a turbina desliga-se por completo."
+
+msgid "Unicorp Scrambler"
+msgstr "Distorçor Unicorp"
 
 #, fuzzy
 msgid "U. Scrambler"
@@ -13801,6 +13132,9 @@ msgstr ""
 "dos mísseis inimigos. O efeito é bastante limitado, mas as distorções exigem "
 "muito pouco dos recursos da nave e estão sempre ativas."
 
+msgid "Weakness Harmonizer AI"
+msgstr "IA de Harmonização de Fraqueza"
+
 #, fuzzy
 msgid ""
 "This is an upgrade to the sensor systems that is able to learn from nearby "
@@ -13814,6 +13148,9 @@ msgstr ""
 "subtis que o olho humano não percebe e extrapolar em grande detalhe para "
 "apontar fraquezas nas naves inimigas. Quanto mais naves for capaz de "
 "analisar e extrapolar, tanto mais forte será o efeito."
+
+msgid "Weapons Ionizer"
+msgstr "Ionizador de Armas"
 
 msgid "Weapon Modification"
 msgstr "Modificação de Armas"
@@ -13839,6 +13176,9 @@ msgid "Automatically triggers when target armour is below 50%."
 msgstr ""
 "Automaticamente ativado quando a blindagem do alvo estiver abaixo de 50%."
 
+msgid "Antimatter Lance"
+msgstr "Lança de Antimatéria"
+
 #, fuzzy
 msgid ""
 "The antimatter lance directly attacks the integrity of a ship on a molecular "
@@ -13853,6 +13193,9 @@ msgstr ""
 msgid "Lowers the action speed upon hit by 10% for 7 seconds."
 msgstr ""
 
+msgid "Arc Blade"
+msgstr ""
+
 msgid ""
 "One of the prize weapons of the Black Lotus Armoury. The Arc Blade is an "
 "upscaled version of the Arc Machete, optimized for wrecking havoc on the "
@@ -13862,6 +13205,9 @@ msgid ""
 "pirate captains who purchase it regret their decision."
 msgstr ""
 
+msgid "Arc Machete"
+msgstr ""
+
 msgid ""
 "This weapon unleashes a focused beam of disabling electromagnetic radiation, "
 "able to both effectively shred through a target's shielding and render its "
@@ -13869,6 +13215,9 @@ msgid ""
 "physical harm. It's favoured by the few well-off pirate captains able to get "
 "their hands on one, as well as law enforcement on the hunt for those "
 "pirates, for similar reasons."
+msgstr ""
+
+msgid "Disruptor Artillery S1"
 msgstr ""
 
 msgid "Disruptor A. S1"
@@ -13883,6 +13232,9 @@ msgid ""
 "systems."
 msgstr ""
 
+msgid "Disruptor Artillery S2"
+msgstr ""
+
 msgid "Disruptor A. S2"
 msgstr ""
 
@@ -13890,6 +13242,9 @@ msgid ""
 "The Disruptor Artillery S2 is an upscaled version of the S1 model. Although "
 "the larger dimensions limit the applicability to destroyer-class ships and "
 "up, this comes with perks of longer range and significant more damage."
+msgstr ""
+
+msgid "Disruptor Battery S2"
 msgstr ""
 
 msgid "Disruptor B. S2"
@@ -13906,6 +13261,10 @@ msgid ""
 "that they have a point."
 msgstr ""
 
+#, fuzzy
+msgid "Energy Harpoon"
+msgstr "Capacidade de energia"
+
 msgid ""
 "The Energy Harpoon is an ensemble of stolen and hacked technologies "
 "developed by Skull and Bones engineers over many cycles that finally has "
@@ -13921,6 +13280,10 @@ msgstr ""
 msgid "#oOn hit pulls target.#0"
 msgstr ""
 
+#, fuzzy
+msgid "Flak Gun"
+msgstr "Canhão Vulcão"
+
 msgid ""
 "Fires waste debris in a shotgun-like blast that can be useful in taking down "
 "small craft or hitting large targets. Not widely used due the tendency to "
@@ -13928,6 +13291,9 @@ msgid ""
 "other major issues on the ship. However, this one looks like it is in quite "
 "good shape."
 msgstr ""
+
+msgid "Gauss Gun"
+msgstr "Arma Gauss"
 
 msgid ""
 "The Gauss Gun is one of the oldest weapon designs in the galaxy today, "
@@ -13942,6 +13308,9 @@ msgstr ""
 "As Armas Gauss são populares entre piratas de pouca importância por ser uma "
 "arma fácil de usar e ser confiável."
 
+msgid "Grave Beam"
+msgstr "Raio Túmulo"
+
 msgid ""
 "The Grave Beam is a lighter, faster version of the Ragnarok Beam. It does "
 "not deal as much damage, but its lighter size and more forgiving CPU "
@@ -13951,6 +13320,9 @@ msgstr ""
 "tantos danos, mas o seu tamanho mais leve e as menores exigências de CPU "
 "fazem dele um concorrente competitivo."
 
+msgid "Grave Lance"
+msgstr "Lança Túmulo"
+
 msgid ""
 "The Grave Lance is one of the most powerful Lance weapons around. The "
 "technology behind it is poorly understood by everyone except the Za'lek, who "
@@ -13959,6 +13331,9 @@ msgstr ""
 "A Lança Túmulo é uma das mais poderosas armas de lança que existe. A "
 "tecnologia por trás da arma é mal compreendida por todos, exceto pelos "
 "Za'lek, que a utilizam como arma padrão."
+
+msgid "Heavy Ion Cannon"
+msgstr "Canhão de Iões Pesado"
 
 #, fuzzy
 msgid ""
@@ -13972,6 +13347,9 @@ msgstr ""
 "militares emprega estas armas em equipas de captura especializadas, mas o "
 "seu desenho também é licenciado para utilização pública."
 
+msgid "Heavy Ion Turret"
+msgstr "Torreta de Iões Pesada"
+
 msgid ""
 "The Heavy Ion Turret is a Sirius military design, applying brute force to "
 "its target's internal systems. When coupled with Razor weaponry, it is "
@@ -13981,6 +13359,9 @@ msgstr ""
 "aos sistemas internos do seu alvo. Usada em conjunto com armas do tipo "
 "Navalha, é assustadoramente eficiente em reduzir naves de guerra inimigas a "
 "montes de sucata flutuantes."
+
+msgid "Heavy Laser Turret"
+msgstr "Torreta Laser Pesada"
 
 #, fuzzy
 msgid ""
@@ -13994,12 +13375,18 @@ msgstr ""
 "embora alguns mecanismos fundamentais tenham sido redesenhados para se "
 "adaptarem ao aumento do rendimento energético desta arma."
 
+msgid "Heavy Neutron Disruptor"
+msgstr "Disruptor Neutrónico Pesado"
+
 msgid ""
 "The Heavy Neutron Disruptor improves upon the processes behind the smaller "
 "Neutron Disruptor, giving this weapon greater damage and range."
 msgstr ""
 "O Disruptor Neutrónico Pesado melhora os processos de funcionamento do "
 "disruptor menor, dando a esta arma maior poder destrutivo e alcance."
+
+msgid "Heavy Ripper Cannon"
+msgstr "Canhão Estripador Pesado"
 
 msgid ""
 "By modulating the frequency of the basic Ripper Cannon, the Empire military "
@@ -14014,6 +13401,9 @@ msgstr ""
 "Canhão Estripador Pesado. O principal inconveniente deste modelo é o seu "
 "maior volume, o que o torna impróprio para naves menores."
 
+msgid "Heavy Ripper Turret"
+msgstr "Torreta Estripadora Pesada"
+
 msgid ""
 "Built off the heavy ripper cannon, the ripper turret is the heaviest turret "
 "conventionally available to civilians. Its bulk, high energy requirements, "
@@ -14023,6 +13413,9 @@ msgstr ""
 "torreta mais pesada normalmente disponível para os civis. A sua massa, "
 "exigências de energia e alto dano tornam-na imprópria para naves que não "
 "sejam do tipo capital."
+
+msgid "Ion Cannon"
+msgstr "Canhão de Iões"
 
 #, fuzzy
 msgid ""
@@ -14039,6 +13432,9 @@ msgstr ""
 "e compacto, o que permite que seja montado em pequenas naves. Isto torna o "
 "canhão de iões uma das armas mais populares para piratas mais fracos."
 
+msgid "Laser Cannon MK1"
+msgstr "Canhão Laser MK1"
+
 #, fuzzy
 msgid ""
 "The Laser Cannon MK1 is a standard weapon on many vessels, and the first "
@@ -14051,6 +13447,9 @@ msgstr ""
 "blindagem, sendo eficiente o suficiente para que possam ser instalados "
 "vários mesmo em pequenas naves."
 
+msgid "Laser Cannon MK2"
+msgstr "Canhão Laser MK2"
+
 #, fuzzy
 msgid ""
 "A high-powered version of the Laser Cannon MK1, the MK2 is usually found on "
@@ -14062,6 +13461,9 @@ msgstr ""
 "em naves militares e de execução da lei Imperial. O seu poder de fogo "
 "superior ajuda a manter a ordem entre a população civil e é capaz de lidar "
 "com naves maiores do tipo corveta com alguma esforço."
+
+msgid "Laser Turret MK1"
+msgstr "Torreta Laser MK1"
 
 #, fuzzy
 msgid ""
@@ -14076,6 +13478,9 @@ msgstr ""
 "graus, as torretas laser fornecem um poder de fogo energicamente eficiente "
 "para naves de correio."
 
+msgid "Laser Turret MK2"
+msgstr "Torreta Laser MK2"
+
 #, fuzzy
 msgid ""
 "The Laser Turret MK2 is often found on Imperial fast response fleets, for "
@@ -14086,6 +13491,9 @@ msgstr ""
 "Imperial, para uso contra frotas de naves de pequeno e médio porte. Esta "
 "arma é um dos principais pilares das forças espaciais Imperiais."
 
+msgid "Mass Driver"
+msgstr "Impulsionador de Massa"
+
 msgid ""
 "Mass Drivers fire massive slugs of matter at enemy ships, dealing damage "
 "through kinetic impact and knocking the target back. One of the most "
@@ -14094,6 +13502,9 @@ msgstr ""
 "Os Impulsionadores de Massa disparam balas maciças de matéria nas naves "
 "inimigas, causando danos através do impacto cinético dando um coice ao alvo "
 "para trás. Uma das armas pesadas mais económicas da galáxia."
+
+msgid "Mining Lance MK1"
+msgstr "Lança de Mineração MK1"
 
 #, fuzzy
 msgid ""
@@ -14105,6 +13516,9 @@ msgstr ""
 "As Lanças de Mineração são otimizadas para um alto poder destrutivo a curto "
 "alcance, especializadas para minerar asteroides. Embora possam causar danos "
 "significativos a blindagens pesadas, são inviáveis contra escudos."
+
+msgid "Mining Lance MK2"
+msgstr "Lança de Mineração MK2"
 
 #, fuzzy
 msgid ""
@@ -14124,6 +13538,9 @@ msgstr ""
 "desvantagens da Lança de Mineração MK1, o facto do curto alcance implique "
 "que as naves mineiras sejam atingidas pelos fragmentos dos asteroides."
 
+msgid "Neutron Disruptor"
+msgstr "Disruptor Neutrónico"
+
 msgid ""
 "The Neutron Disruptor uses high-energy pulses that alter the base "
 "composition of molecules, causing heavy damage. This weapon was first "
@@ -14134,6 +13551,9 @@ msgstr ""
 "molecular básica, causando grandes danos. A arma foi inicialmente popular "
 "com a Coletividade, que tinha Drones imunes à radiação retrodifusa letal das "
 "versões iniciais."
+
+msgid "Nexus Drill Lance"
+msgstr "Lança Perfuradora Nexo"
 
 msgid ""
 "Mining lances are known for their destructive capabilities, unfortunately, "
@@ -14152,6 +13572,9 @@ msgstr ""
 "conseguem, tem a desvantagem de reduzir significativamente a quantidade de "
 "materiais extraíveis."
 
+msgid "Orion Beam"
+msgstr "Raio Oríon"
+
 #, fuzzy
 msgid ""
 "The turret-mounted edition of the Orion Lance offers mid-sized ships "
@@ -14161,6 +13584,9 @@ msgstr ""
 "A versão torreta do projeto Orión oferece às naves de tamanho médio um poder "
 "de fogo excecional de curta duração, um potente dissuasor contra naves mais "
 "ligeiras."
+
+msgid "Orion Lance"
+msgstr "Lança Oríon"
 
 #, fuzzy
 msgid ""
@@ -14176,6 +13602,9 @@ msgstr ""
 "arrefecimento líquido, a arma pode disparara rajadas contínuas na forma de "
 "um feixe destrutivo."
 
+msgid "Particle Beam"
+msgstr "Feixe de Partículas"
+
 #, fuzzy
 msgid ""
 "A turret-mounted particle lance. The smallest possible turreted beam weapon, "
@@ -14186,12 +13615,18 @@ msgstr ""
 "Um Feixe de Partículas montado numa torreta. A menor arma deste tipo, usada "
 "como última linha de defesa contra naves ligeiras."
 
+msgid "Particle Lance"
+msgstr "Lança de Partículas"
+
 msgid ""
 "This is the smallest direct beam weapon built, purpose-built by the Za'lek "
 "for their drones. While the beam can instantaneously hit multiple targets "
 "simultaneously, it comes at a downside of a really short range, requiring "
 "the pilot to get very close to their target risking enemy fire."
 msgstr ""
+
+msgid "Plasma Blaster MK1"
+msgstr "Detonador de Plasma MK1"
 
 #, fuzzy
 msgid "Plasma Bl. MK1"
@@ -14209,6 +13644,9 @@ msgstr ""
 "O Detonador de Plasma dispara plasma superaquecido muito eficaz a danificar "
 "blindagem, mas nem tanto contra escudos. A arma é frequentemente usada por "
 "caçadores de recompensas e mercenários pelo seu grande potencial mortífero."
+
+msgid "Plasma Blaster MK2"
+msgstr "Detonador de Plasma MK2"
 
 #, fuzzy
 msgid "Plasma Bl. MK2"
@@ -14229,6 +13667,9 @@ msgstr ""
 "utilizado por alguns militares, tipicamente em combinação com armamento anti-"
 "escudo."
 
+msgid "Plasma Cannon"
+msgstr "Canhão de Plasma"
+
 msgid ""
 "The Plasma Cannon is a scaled-up version of the Plasma Blaster design for "
 "use on Corvettes. It manages to pack a markedly stronger punch, but the "
@@ -14240,6 +13681,9 @@ msgstr ""
 "superior, mas as complexidades de engenharia envolvidas em pôr uma arma tão "
 "poderosa num espaço tão pequeno levou a uma dependência muito maior do "
 "computador central da nave."
+
+msgid "Plasma Cluster Cannon"
+msgstr "Canhão de Plasma Aninhado"
 
 #, fuzzy
 msgid "Plasma C. Cannon"
@@ -14263,6 +13707,10 @@ msgstr ""
 "que as naves Soromid biológicas são capazes de lidar com a sua carga "
 "computacional, apesar de ser uma construção sintética."
 
+#, fuzzy
+msgid "Plasma Eruptor"
+msgstr "Queimadura de plasma"
+
 msgid ""
 "Using a genetically engineered modified plasma organ, the Eruptor is able to "
 "spray large areas of space with highly corrosive plasma. Unlike other plasma "
@@ -14271,6 +13719,9 @@ msgid ""
 "accuracy is comprised, however, as it can spray around a large area, it is "
 "almost guaranteed to hit anything within sight."
 msgstr ""
+
+msgid "Plasma Turret MK1"
+msgstr "Torreta de Plasma MK1"
 
 #, fuzzy
 msgid "Plasma T. MK1"
@@ -14288,6 +13739,9 @@ msgstr ""
 "entre comerciantes e mercadores, mas encontrou um nicho entre mercenários "
 "inexperientes que não têm uma boa mira como os profissionais."
 
+msgid "Plasma Turret MK2"
+msgstr "Torreta de Plasma MK2"
+
 #, fuzzy
 msgid "Plasma T. MK2"
 msgstr "Torreta de Plasma MK2"
@@ -14302,6 +13756,9 @@ msgstr ""
 "ao seu peso estranhamente baixo em comparação com o seu alcance e capacidade "
 "de danos."
 
+msgid "Ragnarok Beam"
+msgstr "Raio Ragnarok"
+
 msgid ""
 "The Ragnarok Beam is one of the most powerful beam class weapons on the "
 "market. It was designed by House Za'lek for capital ship combat, although "
@@ -14311,6 +13768,9 @@ msgid ""
 "fact it can slice through battleship heavy armour like butter makes it a "
 "favourite of pilots who like to get close to their enemies."
 msgstr ""
+
+msgid "Railgun"
+msgstr "Canhão Elétrico"
 
 #, fuzzy
 msgid ""
@@ -14323,6 +13783,9 @@ msgstr ""
 "O Canhão Elétrico usa pulsos magnéticos fortes para acelerar pedaços de "
 "materiais a velocidades extremamente altas. O impacto causado pelos "
 "materiais pode despedaçar até os cascos das naves mais fortes."
+
+msgid "Railgun Turret"
+msgstr "Torreta de Canhão Elétrico"
 
 #, fuzzy
 msgid ""
@@ -14338,6 +13801,9 @@ msgstr ""
 "normalmente associado a estas armas é reduzido à custa de uma leve perda de "
 "velocidade."
 
+msgid "Razor Artillery S1"
+msgstr ""
+
 #, fuzzy
 msgid "Razor A. S1"
 msgstr "Navalha MK1"
@@ -14351,6 +13817,9 @@ msgid ""
 "drain significant energy reserves during that time. While House Sirius "
 "proclaims their use as non-lethal weapons, if care is not taken, they can "
 "prove to be quite lethal."
+msgstr ""
+
+msgid "Razor Artillery S2"
 msgstr ""
 
 #, fuzzy
@@ -14370,6 +13839,9 @@ msgstr ""
 "aproveitada para drenar os escudos de um alvo, abrindo caminho para que "
 "outras armas desfiram o golpe final."
 
+msgid "Razor Artillery S3"
+msgstr ""
+
 #, fuzzy
 msgid "Razor A. S3"
 msgstr "Navalha MK1"
@@ -14386,6 +13858,10 @@ msgstr ""
 "Pregador Sirius e outras corvetas."
 
 #, fuzzy
+msgid "Razor Battery S2"
+msgstr "Bateria I"
+
+#, fuzzy
 msgid "Razor B. S2"
 msgstr "Bateria I"
 
@@ -14395,6 +13871,9 @@ msgid ""
 "shield stripping effect in combination with the heavy systems damage can "
 "quickly demoralize pirates and marauders looking to make some quick credits."
 msgstr ""
+
+msgid "Repeating Railgun"
+msgstr "Canhão Elétrico de Repetição"
 
 msgid ""
 "While the Railgun was devastating in its effects, it wasn't quite "
@@ -14406,6 +13885,9 @@ msgstr ""
 "para o Alto Comando Dvaered. Eles fizeram com que os seus engenheiros "
 "melhorassem a arma, tornando-a mais rápida e pesada, de forma que mais "
 "parecesse um gerador de chuva de meteoritos em miniatura."
+
+msgid "Ripper Cannon"
+msgstr "Canhão Estripador"
 
 msgid ""
 "The Ripper Cannon is a variant on the Laser Cannon that has stronger "
@@ -14421,6 +13903,9 @@ msgstr ""
 "pequenos de armas, mas necessitam de grande poder de fogo para poderem "
 "enfrentar naves mais pesadas de forma eficaz."
 
+msgid "Shredder"
+msgstr "Triturador"
+
 msgid ""
 "The Shredder quite lives up to the name its Dvaered manufacturers gave it. "
 "The sheer damage dealing capacity of this weapon makes Dvaered Corvettes "
@@ -14430,6 +13915,9 @@ msgstr ""
 "A capacidade enorme de danos desta arma tornam as corvetas Dvaered perigosas "
 "de serem enfrentadas por naves que não sejam consideravelmente maiores que "
 "elas."
+
+msgid "Turbolaser"
+msgstr "Laser Turbo"
 
 #, fuzzy
 msgid ""
@@ -14445,6 +13933,9 @@ msgstr ""
 "velocidade das partículas de energia lançadas pelo Turbolaser torna muito "
 "difícil para as naves inimigas efetuarem manobras evasivas."
 
+msgid "Turreted Gauss Gun"
+msgstr "Arma Gauss Turretada"
+
 msgid ""
 "One of the more common countermeasures employed by low-budget merchant "
 "ships, the turret version of the Gauss Gun provides basic defence against "
@@ -14454,6 +13945,9 @@ msgstr ""
 "orçamento, a versão torreta da Arma Gauss proporciona uma defesa básica "
 "contra os piratas solitários. Um atacante mais determinado é, no entanto, "
 "pouco suscetível de ser dissuadido."
+
+msgid "Turreted Vulcan Gun"
+msgstr "Arma Vulcão Turretada"
 
 msgid ""
 "Turreted Vulcan Guns pack the same calibre ammunition as their fixed mount "
@@ -14465,6 +13959,9 @@ msgstr ""
 "escapar ao seu fluxo implacável de projéteis podem ver-se crivadas de "
 "perfurações no casco em pouco tempo."
 
+msgid "Vulcan Gun"
+msgstr "Canhão Vulcão"
+
 msgid ""
 "The Vulcan Gun improves over the Gauss Gun with increased range and damage, "
 "achieved by using a heavier calibre ammunition. A skilled pilot can wreak "
@@ -14475,6 +13972,9 @@ msgstr ""
 "conseguido através da utilização de munições de calibre mais pesado. Um "
 "piloto experiente pode causar sérios danos mesmo a naves de tamanho médio "
 "com um par destas armas na sua nave."
+
+msgid "Drone"
+msgstr "Drone"
 
 msgid "Robotic Interceptor"
 msgstr "Iterceptor Robótico"
@@ -14488,6 +13988,9 @@ msgid ""
 msgstr ""
 "Esta é uma versão modificada do Drone da Coletividade que inclui agora um "
 "sistema de suporte de vida para humanos."
+
+msgid "Drone Carrier"
+msgstr "Porta-Drones"
 
 msgid "Robotic Carrier"
 msgstr "Transportador Robótico"
@@ -14508,8 +14011,14 @@ msgstr ""
 "falta de instalações desnecessárias para tripulação da blindagem pesada, o "
 "Porta-Drones é uma nave ligeira e veloz."
 
+msgid "Drone (Hyena)"
+msgstr "Drone (Hiena)"
+
 msgid "A fully sentient drone disguised as a Hyena."
 msgstr "Um drone totalmente senciente disfarçado de Hiena."
+
+msgid "Heavy Drone"
+msgstr "Drone Pesado"
 
 msgid "Robotic Fighter"
 msgstr "Caça Robótico"
@@ -14521,6 +14030,9 @@ msgstr ""
 "Este Drone Pesado da Coletividade foi modificado por engenheiros para "
 "suportar um piloto humano."
 
+msgid "Dvaered Ancestor"
+msgstr "Ancestral Dvaered"
+
 msgid ""
 "On this military grade version of the Ancestor, the distribution of the "
 "weight on the structure has been optimized in order to allow embarking more "
@@ -14528,6 +14040,9 @@ msgid ""
 msgstr ""
 "Nesta versão militarizada da Ancestral, a distribuição de peso na estrutura "
 "foi otimizada para aumentar o espaço de carga útil."
+
+msgid "Dvaered Arsenal"
+msgstr "Arsenal Dvaered"
 
 #, fuzzy
 msgid "You need at least 60% reputation with House Dvaered."
@@ -14549,6 +14064,9 @@ msgstr ""
 "destinadas à distribuição, ao destacamento de armas e tropas ao invés de "
 "matérias-primas, mercadorias ou mesmo bens de primeira necessidade. "
 "Coloquialmente, também são conhecidas como \"Caixas de Armas Dvaered\"."
+
+msgid "Dvaered Goddard"
+msgstr "Goddard Dvaered"
 
 #, fuzzy
 msgid "You need at least 70% reputation with House Dvaered."
@@ -14572,6 +14090,9 @@ msgstr ""
 "às necessidades dos Chefes Guerreiros Dvaered, o que significa melhor "
 "blindagem, maior dano das armas de proa às custas de uma maior massa."
 
+msgid "Dvaered Phalanx"
+msgstr "Falange Dvaered"
+
 #, fuzzy
 msgid "You need at least 40% reputation with House Dvaered."
 msgstr "Requer 40 de reputação com a Casa Dvaered."
@@ -14583,6 +14104,9 @@ msgid ""
 msgstr ""
 "Nesta versão militarizada da Falange, a distribuição de peso na estrutura "
 "foi otimizada para aumentar o espaço de carga útil."
+
+msgid "Dvaered Retribution"
+msgstr "Retribuição Dvaered"
 
 #, fuzzy
 msgid ""
@@ -14601,6 +14125,9 @@ msgstr ""
 "rebatizada como Retribuição. No entanto, a eletrónica permaneceu "
 "desatualizada."
 
+msgid "Dvaered Vendetta"
+msgstr "Vendetta Dvaered"
+
 msgid ""
 "On this military grade version of the Vendetta, the distribution of the "
 "weight on the structure has been optimized in order to allow embarking more "
@@ -14608,6 +14135,9 @@ msgid ""
 msgstr ""
 "Nesta versão militarizada da Vendetta, a distribuição de peso na estrutura "
 "foi otimizada para aumentar o espaço de carga útil."
+
+msgid "Dvaered Vigilance"
+msgstr "Vigilance Dvaered"
 
 #, fuzzy
 msgid "You need at least 50% reputation with House Dvaered."
@@ -14619,6 +14149,9 @@ msgid ""
 msgstr ""
 "Esta versão militar da Vigilance tem uma distribuição de peso otimizada que "
 "permite transportar mais carga útil."
+
+msgid "Empire Admonisher"
+msgstr "Admoestador Imperial"
 
 msgid "Nexus Shipyards"
 msgstr "Estaleiros Nexo"
@@ -14637,6 +14170,10 @@ msgstr ""
 "funcionalidades à versão base, mas tem blindagem, escudos e dissipação de "
 "calor ligeiramente melhores."
 
+#, fuzzy
+msgid "Empire Admonisher Longbow"
+msgstr "Admoestador Imperial"
+
 msgid ""
 "Standard Empire Admonishers are fabricated to be able to fit many needs, in "
 "a one-size fits all approach. However, there are times when such flexibility "
@@ -14653,6 +14190,9 @@ msgstr ""
 msgid "#bGains as much weapon range bonus as the ship detection.#0"
 msgstr ""
 
+msgid "Empire Hawking"
+msgstr "Hawking Imperial"
+
 #, fuzzy
 msgid "You need at least 60% reputation with the Empire."
 msgstr "Requer 60 de reputação com o Império."
@@ -14666,6 +14206,9 @@ msgstr ""
 "versão base, mas tem blindagem, escudos e dissipação de calor ligeiramente "
 "melhores."
 
+msgid "Empire Lancelot"
+msgstr "Lancelot Imperial"
+
 #, fuzzy
 msgid ""
 "This military grade version of the Lancelot is mostly identical in function "
@@ -14674,6 +14217,10 @@ msgstr ""
 "Esta versão militar do Lancelot é praticamente idêntica em funcionalidades à "
 "versão base, mas tem blindagem, escudos e dissipação de calor ligeiramente "
 "melhores."
+
+#, fuzzy
+msgid "Empire Lancelot Golden Efreeti"
+msgstr "Lancelot Imperial"
 
 msgid ""
 "A high-spec bombing focused Lancelot that is most known by the use with the "
@@ -14684,6 +14231,9 @@ msgid ""
 "switch between targets while depending on missiles and torpedoes."
 msgstr ""
 
+msgid "Empire Pacifier"
+msgstr "Pacificador Imperial"
+
 #, fuzzy
 msgid ""
 "This military grade version of the Pacifier is mostly identical in function "
@@ -14692,6 +14242,10 @@ msgstr ""
 "Esta versão militar do Pacificador é praticamente idêntica em "
 "funcionalidades à versão base, mas tem blindagem, escudos e dissipação de "
 "calor ligeiramente melhores."
+
+#, fuzzy
+msgid "Empire Pacifier Hoplite"
+msgstr "Pacificador Imperial"
 
 msgid ""
 "Designed by an Imperial Combat Bureaucrat for personal use, the Pacifier "
@@ -14710,6 +14264,9 @@ msgstr ""
 msgid "Shields start regenerating again upon full cooldown."
 msgstr ""
 
+msgid "Empire Peacemaker"
+msgstr "Mediador Imperial"
+
 #, fuzzy
 msgid "You need at least 70% reputation with the Empire."
 msgstr "Requer 70 de reputação com o Império."
@@ -14727,6 +14284,9 @@ msgstr ""
 "Imperiais e podem fornecer aos esquadrões de caças e bombardeiros os muito "
 "necessários reabastecimentos. Como a maioria das naves capitais, porém, é "
 "vulnerável a ataques de bombardeiros inimigos."
+
+msgid "Empire Rainmaker"
+msgstr "Criador de Chuva Imperial"
 
 msgid ""
 "The Rainmaker is the largest freighter used by the Empire. It is capable of "
@@ -14748,6 +14308,9 @@ msgstr ""
 "oficial de mudança de nome da nave EE-1891-392 e Criador de Chuva tornou-se "
 "o nome oficial da nave."
 
+msgid "Empire Shark"
+msgstr "Tubarão Imperial"
+
 #, fuzzy
 msgid "You need at least 20% reputation with the Empire."
 msgstr "Requer 20 de reputação com o Império."
@@ -14764,11 +14327,17 @@ msgstr ""
 "melhores. Os materiais de nível militar também tornam-na mais leve que a "
 "versão genérica."
 
+msgid "Kauweke"
+msgstr "Kauweke"
+
 msgid "Elder Feral Bioship"
 msgstr "Bionave Anciã Selvagem"
 
 msgid "Still to do..."
 msgstr "Ainda por fazer…"
+
+msgid "Nohinohi"
+msgstr "Nohinohi"
 
 msgid "Bio-Fighter"
 msgstr "Bio-Caça"
@@ -14788,17 +14357,32 @@ msgstr ""
 "Estas naves são geralmente referidas como \"Bionaves Selvagens\" e não se "
 "sabe muito sobre elas."
 
+msgid "Taitamariki"
+msgstr "Taitamariki"
+
 msgid "Bio-Corvette"
 msgstr "Bio-Corveta"
 
 msgid "Not meant for the player."
 msgstr "Não se destina ao jogador."
 
+msgid "Fort Raelid"
+msgstr "Forte Raelid"
+
 msgid "Station"
 msgstr "Estação"
 
 msgid "This is a base. It's for AI use only. Don't buy it. Seriously."
 msgstr "Isto é uma base. Apenas para uso da IA. Não compre. A sério."
+
+msgid "Fort Raglan"
+msgstr "Forte Raglan"
+
+msgid "One-Wing Goddard"
+msgstr "Goddard de Uma-Asa"
+
+msgid "Psychic Orb"
+msgstr "Orbe Psíquica"
 
 #. We'll need the physics constants
 #. Some defaults
@@ -14938,6 +14522,12 @@ msgstr "Isto é uma base. Apenas para uso da IA. Não compre. A sério."
 msgid "Unknown"
 msgstr "Desconhecido"
 
+msgid "Sindbad"
+msgstr "Sindbad"
+
+msgid "Admonisher"
+msgstr "Admoestador"
+
 msgid ""
 "A very versatile combat ship. Nexus defines the Admonisher as a compromise "
 "between the ruggedness of the Pacifier and the agility of the Lancelot. "
@@ -14947,6 +14537,10 @@ msgstr ""
 "termo entre a robustez do Pacificador e a agilidade do Lancelot. No geral é "
 "uma nave de combate muito sólida."
 
+#, fuzzy
+msgid "Admonisher ΩIIa"
+msgstr "Admoestador"
+
 msgid ""
 "The Admonisher ΩIIa makes the hard choice of sacrificing long-range "
 "engagement capability to be able to excel in dogfighting. The original long-"
@@ -14955,6 +14549,9 @@ msgid ""
 "fighters and bombers with ease. However, the difficulty to equip torpedo "
 "launchers make the ship ill-suited for engagements with larger ships."
 msgstr ""
+
+msgid "Ancestor"
+msgstr "Ancestral"
 
 msgid ""
 "Commonly referred to as the \"Little Goddard\", the Ancestor also has its "
@@ -14966,6 +14563,9 @@ msgstr ""
 "raízes nas máquinas voadoras primitivas usadas pelos homens há muitos anos. "
 "No entanto, ao contrário do Goddard, os aparelhos eletrónicos são fabricados "
 "pela Casa Dvaered, tornando-a consideravelmente inferior nessa área."
+
+msgid "Ancestor HG Eagle-Eye"
+msgstr ""
 
 msgid ""
 "A product of a special collaboration between House Goddard and House "
@@ -14980,6 +14580,10 @@ msgid ""
 "make sure every missile counts."
 msgstr ""
 
+#, fuzzy
+msgid "Bedivere"
+msgstr "Rio"
+
 msgid ""
 "One of the most long-lived designs in spacefaring, the Bedivere was designed "
 "to be able to fulfil a diversity of different roles. Although technically "
@@ -14990,6 +14594,9 @@ msgid ""
 "possible to obtain new Bediveres, given their ease to repair, it seems like "
 "it will take a long time for them to completely disappear."
 msgstr ""
+
+msgid "Gawain"
+msgstr "Gawain"
 
 msgid "Luxury Yacht"
 msgstr "Nave Iate de Luxo"
@@ -15006,6 +14613,10 @@ msgstr ""
 "implementadas no Lancelot e é largamente usada como nave desportiva por ser "
 "extremamente manobrável. As Gawain raramente sobrevivem a situações de "
 "combate por terem pouco espaço para armas e serem relativamente frágeis."
+
+#, fuzzy
+msgid "Gawain XY-37"
+msgstr "Gawain"
 
 msgid ""
 "The Gawain XY-37 was meant to rework the engine and start a new era of "
@@ -15032,6 +14643,9 @@ msgstr ""
 "projeto original mantiveram a nave muito competitiva no mercado. Um clássico "
 "do espaço."
 
+msgid "Goddard Merchantman"
+msgstr ""
+
 msgid ""
 "It all began with an insurance dispute at Manuel Station when a sensor "
 "malfunction resulted in a Zebra being damaged beyond repair while delivering "
@@ -15051,6 +14665,9 @@ msgid ""
 "second hand Goddards are reconfigured and re-sold as 'Merchantman' variants."
 msgstr ""
 
+msgid "Hawking"
+msgstr "Hawking"
+
 msgid ""
 "The Hawking is the flagship vessel of Nexus Shipyards. A large cruiser "
 "designed for extended engagements, it is widely used by the Empire to exert "
@@ -15063,6 +14680,9 @@ msgstr ""
 "exercer controlo sobre os seus territórios. Em termos de poder de fogo "
 "bruto, a Hawking é apenas a segunda nave principal da Casa Goddard, embora a "
 "sua estrutura mais estreita lhe permita apresentar um alvo menor ao inimigo."
+
+msgid "Hyena"
+msgstr "Hiena"
 
 msgid "Aerosys"
 msgstr "Aerosys"
@@ -15085,6 +14705,9 @@ msgstr ""
 "pagar, pois parece que há inúmeras Hienas entre as fileiras dos pilotos mais "
 "notórios e indisciplinados."
 
+msgid "Kestrel"
+msgstr "Francelho"
+
 msgid "Krain Industries"
 msgstr "Indústrias Krain"
 
@@ -15101,6 +14724,10 @@ msgstr ""
 "e poder de fogo com eletrónica de última geração, resultando numa nave "
 "verdadeiramente assustadora nas mãos de um capitão hábil."
 
+#, fuzzy
+msgid "Kestrel Sigma"
+msgstr "Francelho"
+
 msgid ""
 "The Kestrel Sigma features a high-end reflectokinetic hull padding that not "
 "only increases the durability of the ship, but also can affect weapon locks "
@@ -15111,6 +14738,9 @@ msgid ""
 "difficulty of production leading to high failure rates racks up a premium on "
 "the final ship's cost."
 msgstr ""
+
+msgid "Koala"
+msgstr "Koala"
 
 msgid "Melendez Corp."
 msgstr "Melendez Corp."
@@ -15124,6 +14754,10 @@ msgstr ""
 "armamento, mas uma quantidade decente de espaço de carga. Bom para o "
 "empresário que procura obter lucro enquanto atravessa as estrelas."
 
+#, fuzzy
+msgid "Koala Armoured"
+msgstr "Armadura Biometálica"
+
 msgid ""
 "The Koala is one of the sturdier courier ships, with a small size that also "
 "aids it in survival. The armoured variant sacrifices speed for even more "
@@ -15133,6 +14767,9 @@ msgid ""
 "ships efficiently. It is commonly used for the delivery of critical cargo "
 "without raising too much attention."
 msgstr ""
+
+msgid "Lancelot"
+msgstr "Lancelot"
 
 msgid ""
 "One of the prized heavy fighters of Nexus Shipyards. The Lancelot was "
@@ -15149,6 +14786,9 @@ msgstr ""
 "exatamente às especificações originais. É utilizada por agências de "
 "segurança em toda a galáxia pela sua fiabilidade e disponibilidade."
 
+msgid "Llama"
+msgstr "Llama"
+
 msgid ""
 "One of the most widely used ships in the galaxy. Renowned for its stability "
 "and stubbornness. The design hasn't been modified much since its creation "
@@ -15161,6 +14801,9 @@ msgstr ""
 "inicialmente utilizada pela aristocracia e agora utilizada por todos os que "
 "não se podem dar ao luxo de algo melhor."
 
+msgid "Llama Voyager"
+msgstr ""
+
 msgid ""
 "The Llama's popularity is based on the wide availability of the base ship, "
 "and is most pilots introduction to spacefaring. Inspired by the popularity, "
@@ -15170,6 +14813,9 @@ msgid ""
 "ramscoop that is able to capture and filter minuscule space dust to slowly "
 "refill fuel."
 msgstr ""
+
+msgid "Mule"
+msgstr "Mula"
 
 msgid ""
 "A heavy freighter specialized in transporting cargo throughout the galaxy. "
@@ -15182,6 +14828,9 @@ msgstr ""
 "fazer cruzeiros agradáveis. A Mula é um alvo favorito dos piratas, por isso "
 "é aconselhável evitar territórios perigosos."
 
+msgid "Mule Hardhat"
+msgstr ""
+
 msgid ""
 "Specially ordered by the Mining Vrata, the Mule Hardhat is a modified "
 "version of the Mule with a focus on augmenting the mining capabilities. In "
@@ -15191,6 +14840,9 @@ msgid ""
 "popular among miners. However, such changes come with an increase in the "
 "fabrication cost."
 msgstr ""
+
+msgid "Pacifier"
+msgstr "Pacificador"
 
 msgid ""
 "The Pacifier is one of the older and trustier designs of Nexus Shipyards. It "
@@ -15204,6 +14856,9 @@ msgstr ""
 "por grupos saqueadores. O Pacificador conta com uma grande capacidade de "
 "combustível para facilitar longas rotas de patrulha."
 
+msgid "Phalanx"
+msgstr "Falange"
+
 #, fuzzy
 msgid ""
 "The Phalanx is, by Dvaered standards, a fast corvette that can be used as a "
@@ -15216,6 +14871,9 @@ msgstr ""
 "sua alta blindagem torna-a uma corveta capaz, desde que seja equipada com "
 "torretas."
 
+msgid "Plowshare"
+msgstr ""
+
 msgid ""
 "When all your care about cargo, the Plowshare is the vessel you need. By "
 "minimizing defence capabilities, the plowshare is able to dedicate most of "
@@ -15226,6 +14884,9 @@ msgid ""
 "of the cornerstones of modern spacefaring societies."
 msgstr ""
 
+msgid "Quicksilver"
+msgstr "Mercúrio"
+
 msgid ""
 "While still a cargo hauler, the Quicksilver is quite different from "
 "Melendez's other offerings. Featuring a streamlined frame and oversized "
@@ -15234,6 +14895,10 @@ msgstr ""
 "Embora seja um transportador de carga, o Mercúrio é bastante diferente das "
 "outras opções da Melendez. Apresentando uma estrutura aerodinâmica e motores "
 "superdimensionados, é a principal escolha para transporte rápido."
+
+#, fuzzy
+msgid "Quicksilver Mercury"
+msgstr "Mercúrio"
 
 #, fuzzy
 msgid "Luxury Courier"
@@ -15249,6 +14914,9 @@ msgid ""
 "a heft price tag that many can not afford."
 msgstr ""
 
+msgid "Rhino"
+msgstr "Rinoceronte"
+
 msgid ""
 "A particularly durable Melendez design, the Rhino is well-suited to "
 "transporting high-value, high-risk freight. While it has much lower cargo "
@@ -15262,6 +14930,9 @@ msgstr ""
 "forma extremamente eficaz. Os seus compartimentos modulares permitem-lhe "
 "funcionar como transporte de tropas, um facto reconhecido por exércitos "
 "modernos."
+
+msgid "Schroedinger"
+msgstr "Schroedinger"
 
 msgid "Sirius Systems"
 msgstr "Sistemas Sirius"
@@ -15282,6 +14953,9 @@ msgstr ""
 "espaço para armas. Está também equipada com um par de motores Eraedon, o que "
 "a torna altamente manobrável."
 
+msgid "Shark"
+msgstr "Tubarão"
+
 msgid ""
 "A newer Nexus Shipyards design, the Shark is an agile, light fighter "
 "designed for in-system patrolling. While it's not as capable as its larger "
@@ -15292,6 +14966,10 @@ msgstr ""
 "seu parente maior, o Lancelot, o Tubarão é uma adição efetiva a qualquer "
 "frota."
 
+#, fuzzy
+msgid "Shark ΨIIIa"
+msgstr "Dvaer IIIa"
+
 msgid ""
 "With the Shark ΨIIIa, Nexus Shipyards rethinks the Shark as a Scout-class "
 "vessel. The weapon mounts are significantly reduced in exchange for more "
@@ -15300,6 +14978,9 @@ msgid ""
 "unknown, there has been almost no publicity regarding the ΨIIIa and it is "
 "very hard to find."
 msgstr ""
+
+msgid "Starbridge"
+msgstr "Ponte Estelar"
 
 msgid ""
 "The Starbridge is the latest ship designed by Krain Industries. It is a "
@@ -15312,6 +14993,10 @@ msgstr ""
 "e com velocidade máxima comparável. A sua baixa massa deve-se à custa de um "
 "espaço estrutural reduzido."
 
+#, fuzzy
+msgid "Starbridge Sigma"
+msgstr "Ponte Estelar"
+
 msgid ""
 "Heavily modified, the Starbridge Sigma boasts the capability of housing "
 "fighters in new modified weapon mounts. The increased weapon room is "
@@ -15320,6 +15005,10 @@ msgid ""
 "ship is a premium variant of the Starbridge capable of holding its own in "
 "deep space."
 msgstr ""
+
+#, fuzzy
+msgid "Tristan"
+msgstr "Cristen"
 
 msgid ""
 "The Tristan is the predecessor of Nexus Shipyards' popular Lancelot model. "
@@ -15333,6 +15022,9 @@ msgid ""
 "vessels and a large refurbishing and repair community make it so they are "
 "still surprisingly in use, especially by those who can not afford better."
 msgstr ""
+
+msgid "Vendetta"
+msgstr "Vendetta"
 
 #, fuzzy
 msgid ""
@@ -15352,6 +15044,10 @@ msgstr ""
 "bombardeamento verdadeiramente temível e que tem precisamente o poder de "
 "transformar batalhas prolongadas em lutas curtas."
 
+#, fuzzy
+msgid "Vendetta Whiplash"
+msgstr "Vendetta"
+
 msgid ""
 "The Vendetta's great flaw is trying to provide a consistent weapon system, "
 "requiring the ship's system to perform equally at maximum and minimum weapon "
@@ -15362,6 +15058,9 @@ msgid ""
 "to start up, once they are up and running, the firepower is unmatched by any "
 "ship of the same size."
 msgstr ""
+
+msgid "Vigilance"
+msgstr "Vigilance"
 
 msgid ""
 "The Vigilance is the embodiment of Dvaered philosophy. Featuring immense "
@@ -15374,6 +15073,9 @@ msgstr ""
 "atingir o mais fortemente possível com armas na frente. Dadas as suas "
 "origens Dvaered, possui tecnologia inferior às naves equivalentes."
 
+msgid "Zebra"
+msgstr "Zebra"
+
 msgid ""
 "The Zebra bulk freighter is the largest of all of the freighters produced by "
 "Melendez, and one of the most desired ships by all independent civilian "
@@ -15384,6 +15086,10 @@ msgstr ""
 "e é uma das naves mais desejadas por todos os comerciantes civis "
 "independentes. Oferece uma densidade de carga inigualável com uma proteção "
 "razoável."
+
+#, fuzzy
+msgid "Dealbreaker"
+msgstr "destrói escudos"
 
 msgid "Skull and Bones"
 msgstr "Skull & Bones"
@@ -15401,6 +15107,9 @@ msgid ""
 "have come to know and respect."
 msgstr ""
 
+msgid "Pirate Admonisher"
+msgstr "Admoestador Pirata"
+
 #, fuzzy
 msgid ""
 "The stock Admonisher is a powerful vessel, especially for its size. Through "
@@ -15412,6 +15121,9 @@ msgstr ""
 "habitual modificação da Skull & Bones, o Admoestador Pirata apresenta melhor "
 "manobrabilidade, mais espaço para armas e defesas ligeiramente melhoradas, "
 "às custas de capacidade de carga e taxas de regeneração de escudo."
+
+msgid "Pirate Ancestor"
+msgstr "Ancestral Pirata"
 
 msgid ""
 "Ancestors were one of the first ships to be fancied by pirates. The big "
@@ -15425,6 +15137,10 @@ msgstr ""
 "melhores surgiram no mercado, seu uso caiu devido a sua eletrónica e "
 "sistemas de mira arcaicos."
 
+#, fuzzy
+msgid "Pirate Bedivere"
+msgstr "Rio"
+
 msgid ""
 "Realizing the Bedivere's potential as a versatile scavenger vessel, the "
 "Skull and Bones refitted the model for more efficient plundering. In "
@@ -15432,6 +15148,10 @@ msgid ""
 "have been shrunk to make room for more crew and boarding androids. Thus, the "
 "Pirate Bedivere best used in a fleet with more combat-capable ships."
 msgstr ""
+
+#, fuzzy
+msgid "Pirate Blue Shark"
+msgstr "Tubarão Pirata"
 
 msgid ""
 "As any good pirate would know, you can hardly pillage a ship if you blow it "
@@ -15442,6 +15162,9 @@ msgid ""
 "popularity. \"Everyone knows Red makes ships go fast, Blue makes them go "
 "slower!\" is a common ill-informed complaint."
 msgstr ""
+
+msgid "Pirate Hyena"
+msgstr "Hiena Pirata"
 
 msgid ""
 "The Pirate Hyena has quickly become a favourite of pirates far and wide. Not "
@@ -15458,6 +15181,9 @@ msgstr ""
 "modificações para os tornar ainda mais eficientes como coletores e mais "
 "difíceis de atingir do que os seus equivalentes Aerosys."
 
+msgid "Pirate Kestrel"
+msgstr "Francelho Pirata"
+
 #, fuzzy
 msgid ""
 "The Kestrel is one of the best ships offered by Skull and Bones. It is "
@@ -15469,6 +15195,10 @@ msgstr ""
 "ágil para um cruzador, mas não lhe falta o poder de fogo necessário para "
 "questionar a autoridade do Império. Um uma nave potente para os piratas que "
 "podem pagar."
+
+#, fuzzy
+msgid "Pirate Kestrel Yuri's Kiss"
+msgstr "Francelho Pirata"
 
 msgid ""
 "One-Eyed Yuri was a famous ship engineer at Skull and Bones, renown for her "
@@ -15489,6 +15219,9 @@ msgid ""
 "targets are able to react."
 msgstr ""
 
+msgid "Pirate Phalanx"
+msgstr "Falange Pirata"
+
 msgid ""
 "Building upon the already-capable Phalanx chassis, the Skull and Bones "
 "engineers have substantially improved the ship's performance, while only "
@@ -15497,6 +15230,9 @@ msgstr ""
 "Baseando-se no já capaz chassis Falange, os engenheiros da Skull & Bones "
 "melhoraram substancialmente o desempenho da nave, ao mesmo tempo que apenas "
 "sacrificaram ligeiramente a proteção."
+
+msgid "Pirate Revenant"
+msgstr "Pirata Renascido"
 
 msgid ""
 "As Skull and Bones does not have the technology to grow new bioships from "
@@ -15514,6 +15250,9 @@ msgid ""
 "Soromid bioship, and also gains half as much experience."
 msgstr ""
 
+msgid "Pirate Rhino"
+msgstr "Rinoceronte Pirata"
+
 msgid ""
 "The traditional Skull and Bones refit has left the Rhino substantially more "
 "manoeuvrable, though somewhat less armoured. Exploiting its large cargo bay "
@@ -15523,6 +15262,9 @@ msgstr ""
 "substancialmente mais manobrável, embora um pouco menos blindado. "
 "Aproveitando seu grande compartimento de carga e durabilidade, o Rinoceronte "
 "tornou-se uma excelente nave necrófaga."
+
+msgid "Pirate Shark"
+msgstr "Tubarão Pirata"
 
 msgid ""
 "The nimble Nexus Shipyards Shark has proved an excellent canvas for the "
@@ -15535,6 +15277,9 @@ msgstr ""
 "sua manobrabilidade sofre um mínimo para apresentar o máximo de poder de "
 "fogo."
 
+msgid "Pirate Starbridge"
+msgstr "Ponte Estelar Pirata"
+
 msgid ""
 "Even though the Starbridge is already a light and fast destroyer, Skull and "
 "Bones engineers managed to further improve its speed. Due to its large "
@@ -15545,6 +15290,9 @@ msgstr ""
 "engenheiros da Skull & Bones conseguiram melhorar ainda mais a sua "
 "velocidade. Devido ao seu grande poder de fogo e relativa alta velocidade "
 "para a sua classe, a Ponte Estelar é verdadeiramente uma visão assustadora."
+
+msgid "Pirate Vendetta"
+msgstr "Vendetta Pirata"
 
 msgid ""
 "The Pirate Vendetta is even more intimidating than its regular counterpart. "
@@ -15562,6 +15310,9 @@ msgstr ""
 "ficou substancialmente melhor que a original, mas de vez em quando o reator "
 "explode, destruindo a nave. Oxalá que isso não aconteça se estiver a pilotar "
 "uma."
+
+msgid "Pirate Zebra"
+msgstr "Zebra Pirata"
 
 #, fuzzy
 msgid ""
@@ -15582,6 +15333,9 @@ msgstr ""
 "significativamente menor. A versão pirata do Zebra é, no entanto, usada "
 "ocasionalmente como cargueiro."
 
+msgid "Proteron Archimedes"
+msgstr "Arquimedes Proteron"
+
 #, fuzzy
 msgid "You need at least 70% reputation with the Proteron."
 msgstr "Requer 70 de reputação com o Proteron."
@@ -15593,6 +15347,9 @@ msgstr ""
 "O Arquimedes é a espinha dorsal da frota Proteron. Oferecendo grande poder "
 "de fogo e elevada durabilidade, pode ser encontrado sempre no calor da "
 "batalha."
+
+msgid "Proteron Dalton"
+msgstr "Proteron Dalton"
 
 #, fuzzy
 msgid "You need at least 20% reputation with the Proteron."
@@ -15617,6 +15374,9 @@ msgstr ""
 "naves que desencadeou vários esquadrões é conhecido por mudar a maré da "
 "batalha em muitas ocasiões."
 
+msgid "Proteron Euler"
+msgstr "Proteron Euler"
+
 msgid ""
 "The Proteron chose their battles carefully as their slow capital ships "
 "cannot retreat from a battle easily. Thus, they have rather large fleet of "
@@ -15629,6 +15389,9 @@ msgstr ""
 "possuem uma grande frota de naves de reconhecimento, sendo Euler a nave "
 "principal de reconhecimento utilizada. Não está orientada para o combate, "
 "esta nave depende de discrição e velocidade para evitar naves hostis."
+
+msgid "Proteron Gauss"
+msgstr "Proteron Gauss"
 
 #, fuzzy
 msgid "You need at least 50% reputation with the Proteron."
@@ -15645,6 +15408,9 @@ msgstr ""
 "Proteron. Apesar de ter menos pontos fixos para armas que o Pacificador, "
 "isto é compensado pela sua massa inferior e espaço estrutural expandido."
 
+msgid "Proteron Hippocrates"
+msgstr "Hipócrates Proteron"
+
 msgid ""
 "As the Proteron only use carrier-based fighters small fleets lack fighter "
 "support. To make up this issue the Hippocrates was developed, an ultra-light "
@@ -15658,6 +15424,9 @@ msgstr ""
 "de caça às frotas de invasão de Proteron. O Hipócrates também pode ser usado "
 "como plataforma de mísseis usando o hangar para armazenar caixas de munições "
 "adicionais."
+
+msgid "Proteron Pythagoras"
+msgstr "Pitágoras Proteron"
 
 #, fuzzy
 msgid "You need at least 60% reputation with the Proteron."
@@ -15676,6 +15445,9 @@ msgstr ""
 "Normalmente pode ser encontrado a testar a defesa do inimigo, procurando "
 "encontrar um ponto fraco para as pesadas frotas de Proteron atravessarem."
 
+msgid "Proteron Watson"
+msgstr "Watson Proteron"
+
 #, fuzzy
 msgid ""
 "The heart of the Proteron battle fleet is formed by the Watson. Acting as a "
@@ -15687,9 +15459,21 @@ msgstr ""
 "controlo, esta nave coordena o resto da frota na luta pelo domínio da "
 "galáxia."
 
+msgid "Astral Projection Greater"
+msgstr ""
+
 #, fuzzy
 msgid "Sirius Psychic Powers"
 msgstr "Pregador Sirius"
+
+msgid "Astral Projection Lesser"
+msgstr ""
+
+msgid "Astral Projection Normal"
+msgstr ""
+
+msgid "Sirius Divinity"
+msgstr "Divindade Sirius"
 
 #, fuzzy
 msgid "You need at least 70% reputation with House Sirius."
@@ -15709,6 +15493,9 @@ msgstr ""
 "flexibilidade sem igual no combate, servindo como uma nave logística chave "
 "em qualquer frota de tamanho considerável."
 
+msgid "Sirius Dogma"
+msgstr "Dogma Sirius"
+
 msgid ""
 "The backbone of the House Sirius fleet, the Dogma is a sight to behold. "
 "Trimmed in gold and silver and fielding a large array of weapons, the Dogma "
@@ -15717,6 +15504,9 @@ msgstr ""
 "A espinha dorsal da frota da Casa Sirius, a Dogma é um espetáculo a "
 "contemplar. Decorada com ouro e prata e com uma grande variedade de armas, a "
 "Dogma raramente é superada, seja em prestígio seja em poderio militar."
+
+msgid "Sirius Fidelity"
+msgstr "Fidelidade Sirius"
 
 #, fuzzy
 msgid "You need at least 20% reputation with House Sirius."
@@ -15731,6 +15521,9 @@ msgstr ""
 "competente por si só, é frequentemente empregado como um batedor avançado, "
 "trazendo consigo aliados muito mais mortíferos."
 
+msgid "Sirius Preacher"
+msgstr "Pregador Sirius"
+
 #, fuzzy
 msgid "You need at least 40% reputation with House Sirius."
 msgstr "Requer 40 de reputação com a Casa Sirius."
@@ -15743,6 +15536,9 @@ msgstr ""
 "O Pregador, como o seu nome indica, é a principal nave pelo qual a Casa "
 "Sirius projeta a sua mensagem e vontade. Com uma grande variedade de "
 "armamento, o Pregador é hábil em transformar descrentes em devotos."
+
+msgid "Sirius Providence"
+msgstr "Providência Sirius"
 
 #, fuzzy
 msgid "You need at least 60% reputation with House Sirius."
@@ -15759,6 +15555,9 @@ msgstr ""
 "transportam peregrinos, embora a maioria dos Sirius não goste destes "
 "transportes em massa superlotados."
 
+msgid "Sirius Shaman"
+msgstr "Xamã Sirius"
+
 #, fuzzy
 msgid "You need at least 30% reputation with House Sirius."
 msgstr "Requer 30 de reputação com a Casa Sirius."
@@ -15772,6 +15571,9 @@ msgstr ""
 "confundido com um caça ligeiro à distância, ele é tudo menos isso. Como "
 "plataforma ligeira de mísseis construída especialmente para este fim, poucos "
 "inimigos escapam ao alcance do Xamã."
+
+msgid "Soromid Arx"
+msgstr "Arx Soromid"
 
 msgid "Bio-Carrier"
 msgstr "Bio-Porta-Naves"
@@ -15794,6 +15596,9 @@ msgstr ""
 "é tipicamente encontrado em frotas não Soromid, sem sacrificar a sua "
 "capacidade de transporte."
 
+msgid "Soromid Brigand"
+msgstr "Bandido Soromid"
+
 msgid "Bio-Interceptor"
 msgstr "Bio-Interceptor"
 
@@ -15810,6 +15615,9 @@ msgstr ""
 "O Bandido é uma Bionave rápida e manobrável que os Soromid usam para "
 "patrulhas intrasistema e funções policiais. A nave é ligeiramente blindada e "
 "é bastante frágil, mas compensa isso como a facilidade de expansão."
+
+msgid "Soromid Copia"
+msgstr "Copia Soromid"
 
 msgid "Bio-Freighter"
 msgstr "Bio-Cargueiro"
@@ -15830,6 +15638,9 @@ msgstr ""
 "o Copia foi projetado para não se afastar do combate e pode ser muito "
 "mortífero nas mãos certas."
 
+msgid "Soromid Ira"
+msgstr "Ira Soromid"
+
 msgid "Bio-Cruiser"
 msgstr "Bio-Cruzador"
 
@@ -15841,6 +15652,9 @@ msgstr ""
 "O Ira é um cruzador de cultivado com o propósito de liderar forças Soromid. "
 "Embora a sua blindagem seja um pouco fraca, isto raramente poupa aqueles que "
 "se deparam com o seu devastador bombardeamento."
+
+msgid "Soromid Marauder"
+msgstr "Saqueador Soromid"
 
 msgid "Bio-Bomber"
 msgstr "Bio-Bombardeiro"
@@ -15860,6 +15674,9 @@ msgstr ""
 "papel de um bombardeiro, que exige durabilidade e reservas de munição "
 "maiores. Isto torna-a um tanto mais lenta que a sua prima distante."
 
+msgid "Soromid Nyx"
+msgstr "Nyx Soromid"
+
 msgid "Bio-Destroyer"
 msgstr "Bio-Contratorpedeiro"
 
@@ -15872,6 +15689,9 @@ msgstr ""
 "pesado poder de fogo em batalhas acaloradas e suficientemente ágil para se "
 "retirar quando necessário, esta nave forma geralmente a espinha dorsal de "
 "qualquer frota Soromid de grande porte."
+
+msgid "Soromid Odium"
+msgstr "Ódio Soromid"
 
 #, fuzzy
 msgid "You need at least 40% reputation with the Soromid."
@@ -15886,6 +15706,9 @@ msgstr ""
 "quantidade impressionante de pontos fixos para uma nave do seu tamanho. Pode "
 "muitas vezes ser encontrado dominando conflitos militares de menor escala."
 
+msgid "Soromid Reaver"
+msgstr "Saqueador Soromid"
+
 #, fuzzy
 msgid ""
 "Reavers are often found at the forefront of Soromid military engagements. "
@@ -15896,6 +15719,9 @@ msgstr ""
 "militares de Soromid. A sua boa velocidade e manobrabilidade são somadas à "
 "durabilidade, tornando o Saqueador um dos mais eficazes caças pesados da "
 "galáxia."
+
+msgid "Soromid Vox"
+msgstr "Voz Soromid"
 
 msgid "Bio-Battleship"
 msgstr "Bio-Nave de Batalha"
@@ -15909,6 +15735,9 @@ msgstr ""
 "Batalha é o centro de qualquer frota de guerra Soromid e só é chamada em "
 "conflitos notórios."
 
+msgid "Thurion Apprehension"
+msgstr "Apreensão Túrion"
+
 #, fuzzy
 msgid "Thurion Shipyards"
 msgstr "Estaleiros Túrion"
@@ -15918,6 +15747,9 @@ msgid ""
 "paired with advanced electronic defences make it difficult for enemies to "
 "detect the ship, let alone attempt to lock onto it."
 msgstr ""
+
+msgid "Thurion Certitude"
+msgstr "Certeza Túrion"
 
 #, fuzzy
 msgid "You need at least 70% reputation with the Thurion."
@@ -15931,6 +15763,9 @@ msgid ""
 "also unrivaled by other Thurion ships, and the towering presence makes it "
 "clear that the ship is not only for support."
 msgstr ""
+
+msgid "Thurion Ingenuity"
+msgstr "Engenhosidade Túrion"
 
 msgid ""
 "The Thurion Ingenuity is a fighter built for survival. Like all Thurian "
@@ -15948,6 +15783,9 @@ msgstr ""
 "se recarregar e regenerar. Além disso, como todas as naves Túrion, a "
 "eletrónica está bem acima da média."
 
+msgid "Thurion Perspicacity"
+msgstr "Perspicácia Túrion"
+
 #, fuzzy
 msgid "You need at least 20% reputation with the Thurion."
 msgstr "Requer 20 de reputação com os Túrion."
@@ -15962,6 +15800,10 @@ msgstr ""
 "O Perspicácia Túrion é um caça rápido e ligeiro normalmente usado para "
 "explorar ou atacar em grande número."
 
+#, fuzzy
+msgid "Thurion Perspicacity Beta"
+msgstr "Baía Perspicácia Túrion"
+
 msgid ""
 "Originally designed as a fast scout ship, the lack of usability quickly led "
 "to the redesign as a more capable interceptor. The Perspicacity Beta is the "
@@ -15969,6 +15811,9 @@ msgid ""
 "to its small size. However, it can boast an incredible speed boost and "
 "slightly more nebula hardening."
 msgstr ""
+
+msgid "Thurion Scintillation"
+msgstr "Cintilação Túrion"
 
 #, fuzzy
 msgid ""
@@ -15980,12 +15825,18 @@ msgstr ""
 "distâncias. Possui armamentos melhores que qualquer nave Túrion de tamanho "
 "similar, mas inferiores a bombardeiros de outras fações."
 
+msgid "Thurion Taciturnity"
+msgstr "Taciturnidade Túrion"
+
 msgid ""
 "The Thurion Taciturnity is an armoured and stealthy transport capable both "
 "of surviving the harsh nebula and defending itself from attack."
 msgstr ""
 "O Taciturnidade Túrion é um transporte blindado camuflado capaz de "
 "sobreviver aos rigores da nebulosa e se defender de ataques."
+
+msgid "Thurion Virtuosity"
+msgstr "Virtuosidade Túrion"
 
 #, fuzzy
 msgid "You need at least 40% reputation with the Thurion."
@@ -16001,6 +15852,9 @@ msgstr ""
 "ataques frontais. Embora o espaço de armas seja pouco impressionante, a "
 "eletrónica superior da nave e a sua resistência à nebulosa compensam isso."
 
+msgid "Za'lek Bomber Drone"
+msgstr "Bombardeiro Drone Za'lek"
+
 msgid "Robotic Bomber"
 msgstr "Bombardeiro Robótico"
 
@@ -16013,6 +15867,9 @@ msgid ""
 msgstr ""
 "Este é o Bombardeiro Drone Za'lek. Construído para atacar naves pesadas. Não "
 "pode ser pilotado pelo jogador."
+
+msgid "Za'lek Demon"
+msgstr "Demônio Za'lek"
 
 msgid "Za'lek Fabricators"
 msgstr "Fabricantes Za'lek"
@@ -16028,6 +15885,10 @@ msgstr ""
 "manobrabilidade é um ponto fraco, assim como a blindagem, tal como todas as "
 "naves Za'lek, mas isto é apenas um pequeno consolo para o inimigo."
 
+#, fuzzy
+msgid "Za'lek Demon Type IV"
+msgstr "Ferrão Za'lek"
+
 msgid ""
 "The Za'lek Demon Type IV is a departure from the standard autonomous drone-"
 "focused combat philosophy, redesigned to make heavy use of long range "
@@ -16038,6 +15899,9 @@ msgid ""
 "system, and the extra weapon slot and missile system storage required "
 "removing more of the ship's shield emitters and already thin armour."
 msgstr ""
+
+msgid "Za'lek Diablo"
+msgstr "Diabo Za'lek"
 
 #, fuzzy
 msgid "You need at least 70% reputation with House Za'lek."
@@ -16052,12 +15916,18 @@ msgstr ""
 "blindagem e equipado com pesados escudos, a sua função é a de plataforma "
 "para enxames de drones devastadores e não de combate na linha da frente."
 
+msgid "Za'lek Heavy Drone"
+msgstr "Drone Pesado Za'lek"
+
 msgid ""
 "This is the Za'lek Heavy Drone. Fewer and not as crap. Not to be flown by "
 "the player."
 msgstr ""
 "Este é o Drone Pesado Za'lek. Em menor número e não tão mau. Não pode ser "
 "pilotado pelo jogador."
+
+msgid "Za'lek Hephaestus"
+msgstr "Hefesto Za'lek"
 
 msgid ""
 "The crown of the House Za'lek Defence Fleet, these proud buttresses of the "
@@ -16070,12 +15940,18 @@ msgstr ""
 "batalha Za'lek, graças ao seu conjunto superior de sensores. O Hefesto é "
 "raramente visto, mas merece respeito."
 
+msgid "Za'lek Light Drone"
+msgstr "Drone Leve Za'lek"
+
 msgid ""
 "This is the Za'lek Light Drone. Very weak, cheap and numerous. Not to be "
 "flown by the player."
 msgstr ""
 "Este é o Drone Leve Za'lek. Muito fraco, barato e numeroso. Não pode ser "
 "pilotado pelo jogador."
+
+msgid "Za'lek Mammon"
+msgstr "Mammon Za'lek"
 
 msgid ""
 "While House Za'lek relies on drones for most everything, their limited fuel "
@@ -16096,6 +15972,9 @@ msgstr ""
 "compensada pela tecnologia avançada da mesma. No entanto, a estratégia "
 "padrão é confiar nos drones para combater enquanto se afasta."
 
+msgid "Za'lek Mephisto"
+msgstr "Mefisto Za'lek"
+
 msgid ""
 "A mighty ship, the Mephisto has grand energy and shielding management, and "
 "its shields allow it to shrug off a lot of abuse. A core of these ships can "
@@ -16105,6 +15984,10 @@ msgstr ""
 "blindagem, Os seus escudos permitem ignorar um grande nível de dano. Um "
 "grupo destas naves pode reduzir até mesmo frotas poderosas a sucata num "
 "curto espaço de tempo."
+
+#, fuzzy
+msgid "Za'lek Mephisto Type V"
+msgstr "Mefisto Za'lek"
 
 #, fuzzy
 msgid "You need at least 80% reputation with House Za'lek."
@@ -16123,6 +16006,9 @@ msgid ""
 "it very hard to get your hands on one."
 msgstr ""
 
+msgid "Za'lek Scout Drone"
+msgstr "Drone Batedor Za'lek"
+
 msgid "Robotic Scout"
 msgstr "Batedor Robótico"
 
@@ -16132,6 +16018,9 @@ msgid ""
 msgstr ""
 "Este é o Drone Batedor Za'lek. Construído para reconhecimento, não para "
 "batalha. Não pode ser pilotado pelo jogador."
+
+msgid "Za'lek Sting"
+msgstr "Ferrão Za'lek"
 
 msgid ""
 "The Sting Corvette is rather large for its class, but its advanced sensor "
@@ -16147,6 +16036,10 @@ msgstr ""
 "funcionalidade de porta-naves integrada, tornam-na também uma nave ideal "
 "para missões de reconhecimento."
 
+#, fuzzy
+msgid "Za'lek Sting Type II"
+msgstr "Ferrão Za'lek"
+
 msgid ""
 "The Sting Type II reworks the shield systems of the original model. By "
 "rerouting the capacitor recharge loop in a positive feedback loop, "
@@ -16155,6 +16048,10 @@ msgid ""
 "ship that is surprisingly robust as long as shields are up, however, the "
 "moment they go down the hull tends to fail shortly after."
 msgstr ""
+
+#, fuzzy
+msgid "Za'lek Sting Type IV"
+msgstr "Ferrão Za'lek"
 
 msgid ""
 "A lot of the popularity of the Za'lek Sting comes from the large amount of "
@@ -127105,6 +127002,10 @@ msgstr "Órgão de Tentáculo III"
 msgid "Tentacle Organ IV"
 msgstr "Órgão de Tentáculo IV"
 
+#, fuzzy
+msgid "Corsair Engine"
+msgstr "Corsário"
+
 msgid ""
 "there once was a big mighty corsair\n"
 "who was said to be the finest heir\n"
@@ -127112,6 +127013,10 @@ msgid ""
 "almost tied as a spouse\n"
 "before they quickly took to the air"
 msgstr ""
+
+#, fuzzy
+msgid "Corsair Hull Plating"
+msgstr "Revestimento de Casco"
 
 msgid ""
 "wish I be like that lovely corsair\n"
@@ -127121,6 +127026,10 @@ msgid ""
 "irresistible buccaneer stare"
 msgstr ""
 
+#, fuzzy
+msgid "Corsair Systems"
+msgstr "Sistemas Principais"
+
 msgid ""
 "oh, the ferocious mighty corsair\n"
 "never sitting in their captain's chair\n"
@@ -127129,6 +127038,10 @@ msgid ""
 "in space is it also mal de mer?"
 msgstr ""
 
+#, fuzzy
+msgid "Neutralizer"
+msgstr "Neutro"
+
 msgid ""
 "Based on the Heavy Ion Cannon, the Neutralizer is proof to the importance of "
 "specialized engineering. With most of the hardware and software "
@@ -127136,6 +127049,10 @@ msgid ""
 "improvements in nearly all facets. Due to the fact that few were made, it is "
 "a fairly rare find, but an import asset in a pilot's arsenal."
 msgstr ""
+
+#, fuzzy
+msgid "Reaver Cannon"
+msgstr "Canhão Estripador"
 
 msgid ""
 "The complex engineering specifications and difficulty of mass production "
