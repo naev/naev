@@ -529,7 +529,7 @@ impl Context {
                 data.layout.width,
                 data.layout.height,
                 data.layout.height_stride as u32,
-                sdl::pixels::PixelFormat::RGBA8888.into(),
+                sdl::pixels::PixelFormat::ABGR8888.into(),
             )?;
             window.set_icon(sur);
             Ok(())
