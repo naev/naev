@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-09-24 11:09+0900\n"
+"POT-Creation-Date: 2025-09-25 06:03-0400\n"
 "PO-Revision-Date: 2025-07-02 08:02+0000\n"
 "Last-Translator: David Doubek <David.Doubek42@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
@@ -17,6 +17,1761 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
 "X-Generator: Weblate 5.13-dev\n"
+
+msgid "Active Plating"
+msgstr "Aktivní pancíř"
+
+msgid "<widget mainimg />"
+msgstr ""
+
+msgid "# <%= o:name() %>"
+msgstr ""
+
+msgid "<widget wgtdescription />"
+msgstr ""
+
+msgid "## Properties"
+msgstr ""
+
+msgid "<widget wgtsummary />"
+msgstr ""
+
+msgid "## Availability"
+msgstr ""
+
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+msgid "<widget map />"
+msgstr ""
+
+msgid ""
+"You are not aware of anywhere where <%= o:name() %> are available for "
+"purchase."
+msgstr ""
+
+#, fuzzy
+msgid "Adaptive Camouflage Plating"
+msgstr "Adaptivní maskovací pancíř"
+
+msgid "Adaptive Jump"
+msgstr "Adaptivní skok"
+
+#. Movement skill tree
+#. Only for up to destroyers
+#. Needs adrenal gland slot
+msgid "Adrenal Gland I"
+msgstr "Adrenální žláza I"
+
+msgid "Adrenal Gland II"
+msgstr "Adrenální žláza II"
+
+msgid "Adrenal Gland III"
+msgstr "Adrenální žláza III"
+
+msgid "Adrenaline Hormones"
+msgstr "Adrenální hormony"
+
+msgid "Agility Combat AI"
+msgstr "Agilní bojová AI"
+
+msgid "Air Freshener"
+msgstr "Osvěžovač vzduchu"
+
+#, fuzzy
+msgid "Ambush Hunter I"
+msgstr "Lovec ze zálohy"
+
+#, fuzzy
+msgid "Ambush Hunter II"
+msgstr "Lovec ze zálohy"
+
+msgid "Antimatter Lance"
+msgstr "Antihmotové kopí"
+
+msgid "Apollo's Gaze"
+msgstr ""
+
+msgid "Arc Blade"
+msgstr ""
+
+msgid "Arc Machete"
+msgstr ""
+
+msgid "Asteroid Scanner"
+msgstr "Skener asteroidů"
+
+msgid "Astral Cannon"
+msgstr "Astrální dělo"
+
+msgid "Astral Flow Amplifier"
+msgstr "Zesilovač astrálního toku"
+
+#. Set outfit state
+#. Astral projection
+msgid "Astral Projection"
+msgstr "Astrální projekce"
+
+#, fuzzy
+msgid "Auxiliary Processing Unit I"
+msgstr "Pomocná procesní jednotka I"
+
+#, fuzzy
+msgid "Auxiliary Processing Unit II"
+msgstr "Pomocná procesní jednotka II"
+
+#, fuzzy
+msgid "Auxiliary Processing Unit III"
+msgstr "Pomocná procesní jednotka III"
+
+#, fuzzy
+msgid "Auxiliary Processing Unit IV"
+msgstr "Pomocná procesní jednotka IV"
+
+#, fuzzy
+msgid "Avatar of the Sirichana"
+msgstr "Avatar Sirichany"
+
+#, fuzzy
+msgid "Bad Shape"
+msgstr "Tvrdý krunýř"
+
+msgid "Base Ripper MK2"
+msgstr "Base Ripper MK2"
+
+msgid "Battery I"
+msgstr "Baterie I"
+
+msgid "Battery II"
+msgstr "Baterie II"
+
+msgid "Battery III"
+msgstr "Baterie III"
+
+msgid "Battery IV"
+msgstr "Baterie IV"
+
+msgid "Beat Up Large Engine"
+msgstr "Opotřebovaný velký motor"
+
+msgid "Beat Up Medium Engine"
+msgstr "Opotřebovaný střední motor"
+
+msgid "Beat Up Small Engine"
+msgstr "Opotřebovaný malý motor"
+
+msgid "Berserk Chip"
+msgstr "Berserk čip"
+
+msgid "Bikers Fury Launcher"
+msgstr "Bikers Fury Odpalovač"
+
+msgid "Bio-Neural Combat AI"
+msgstr "Bio-neurální bojová AI"
+
+msgid "Biometal Armour"
+msgstr "Biometalický pancíř"
+
+msgid "Bioship Pheromone Emitter"
+msgstr "Feromonový emitér Biolodě"
+
+msgid "Black Agate Finishing"
+msgstr ""
+
+msgid "Black Cat Doll"
+msgstr "Panenka Black Cat"
+
+msgid "Blink Drive"
+msgstr "Bleskový pohon"
+
+msgid "Boarding Androids MK1"
+msgstr "Nalodění Androidů MK1"
+
+msgid "Boarding Androids MK2"
+msgstr "Nalodění Androidů MK2"
+
+msgid "Broken Nebular Shielding Prototype"
+msgstr "Prototyp rozbitého mlhovinového štítu"
+
+#. Health tree
+#. For everyone!
+#. Uses intrinsics only
+msgid "Bulky Abdomen"
+msgstr "Objemná břišní dutina"
+
+#, fuzzy
+msgid "Cargo Damper"
+msgstr "Nákladní vaky"
+
+#. Misc tree
+#. For everyone!
+#. All intrinsics
+msgid "Cargo Sacs"
+msgstr "Nákladní vaky"
+
+msgid "Catalytic Energy Drill"
+msgstr "Katalytický energetický vrták"
+
+#, fuzzy
+msgid "Charge Conduit"
+msgstr "Zaměřovací kanál"
+
+msgid "Cleansing Flames"
+msgstr "Očišťující plameny"
+
+msgid "Cloaking Device"
+msgstr "Maskovací zařízení"
+
+msgid "Combat Hologram Projector"
+msgstr "Bojový holografický projektor"
+
+msgid "Commemorative Stein"
+msgstr "Pamětní Stein"
+
+msgid "Compact Lightsail"
+msgstr ""
+
+#. Stealth skill tree
+#. For up to cruiser
+#. Uses intrinsics only
+msgid "Compound Eyes"
+msgstr "Složené oči"
+
+msgid "Convulsion Launcher"
+msgstr "Konvulzní odpalovač"
+
+#. Plasma tree
+#. For everyone!
+#. Requires plasma slot for tier 5
+msgid "Corrosion I"
+msgstr "Koroze I"
+
+msgid "Corrosion II"
+msgstr "Koroze II"
+
+#, fuzzy
+msgid "Corsair Engine"
+msgstr "Základní systémy (motor)"
+
+#, fuzzy
+msgid "Corsair Hull Plating"
+msgstr "Povlak trupu"
+
+#, fuzzy
+msgid "Corsair Systems"
+msgstr "Jádrové systémy"
+
+msgid "Crippling Plasma"
+msgstr "Ochromující plazma"
+
+msgid "Cryogenic Repair Nanobots"
+msgstr "Kryogenní opravárenští nanoboti"
+
+msgid "Cyborg Feather"
+msgstr "Kyborgské pírko"
+
+msgid "Cyclic Combat AI"
+msgstr "Cyklická bojová AI"
+
+msgid "Daphne's Leap"
+msgstr "Skok Daphne"
+
+#, fuzzy
+msgid "Defective"
+msgstr "Reflexní krunýř"
+
+msgid "Disruptor Artillery S1"
+msgstr "Dělostřelectvo Disruptor S1"
+
+msgid "Disruptor Artillery S2"
+msgstr "Dělostřelectvo Disruptor S2"
+
+msgid "Disruptor Battery S2"
+msgstr "Baterie Disruptor S2"
+
+msgid "Droid Repair Crew"
+msgstr "Posádka opravárenských droidů"
+
+msgid "Drone Bay"
+msgstr "Hangár dronů"
+
+msgid "Dummy Engine"
+msgstr "Atrapa motoru"
+
+msgid "Dummy Plating"
+msgstr "Maketa pancíře"
+
+msgid "Dummy Systems"
+msgstr "Maketa systémů"
+
+#, fuzzy
+msgid "Dvaered Flare Battery"
+msgstr "Doručení zboží Dvaeredu"
+
+msgid "Efficiency Combat AI"
+msgstr "Efektivní bojová AI"
+
+msgid "Electron Burst Cannon"
+msgstr "Dělo s elektronovým výbojem"
+
+msgid "Emergency Shield Booster"
+msgstr "Posilovač nouzového štítu"
+
+msgid "Emergency Stasis Inducer"
+msgstr "Nouzový induktor stáze"
+
+msgid "EMP Grenade Launcher"
+msgstr "EMP odpalovač granátů"
+
+msgid "Empire Lancelot Bay"
+msgstr "Hangár imperiálních Lancelotů"
+
+msgid "Energy Harpoon"
+msgstr "Energetická harpuna"
+
+msgid "Engine Reroute"
+msgstr "Přesměrování motoru"
+
+msgid "Enhanced Smell"
+msgstr "Vylepšený čich"
+
+msgid "Enygma Systems Huntsman Launcher"
+msgstr "Enygma Systems Huntsman Odpalovač"
+
+msgid "Enygma Systems Spearhead Launcher"
+msgstr "Enygma Systems Spearhead Odpalovač"
+
+msgid "Enygma Systems Turreted Fury Launcher"
+msgstr "Enygma Systems Turreted Fury Odpalovač"
+
+msgid "Enygma Systems Turreted Headhunter Launcher"
+msgstr "Enygma Systems Turreted Headhunter Odpalovač"
+
+msgid "Escape Pod"
+msgstr ""
+
+msgid "Executor Shield Aura"
+msgstr "Štítová aura Executora"
+
+msgid "Fake Transponder"
+msgstr "Falešný transpondér"
+
+msgid "Fancy Key Chain"
+msgstr "Ozdobný řetízek na klíče"
+
+msgid "Faraday Tempest Coating"
+msgstr "Povlak Faraday Tempest"
+
+msgid "Feather Drive"
+msgstr "Pohon Feather"
+
+#. Attack tree
+#. For everyone!
+#. Uses feral rage slot (only for ships that get tier 5)
+msgid "Feral Rage I"
+msgstr "Divoký vztek I"
+
+msgid "Feral Rage II"
+msgstr "Divoký hněv II"
+
+msgid "Feral Rage III"
+msgstr "Divoký hněv III"
+
+#, fuzzy
+msgid "Flak Gun"
+msgstr "Dělo Vulcan"
+
+msgid "Flicker Drive"
+msgstr "Flicker jednotka"
+
+#, fuzzy
+msgid "Four Winds Laser Cannon"
+msgstr "Podvodníkovo laserové dělo"
+
+#, fuzzy
+msgid "Four Winds Ragnarok Beam"
+msgstr "Paprsek Ragnarok"
+
+msgid "Fuel Bladder"
+msgstr "Palivový zásobník"
+
+msgid "Fuel Recycler"
+msgstr "Recyklátor paliva"
+
+#, fuzzy
+msgid "Fuelshell Plating"
+msgstr "Plasteel pancíř"
+
+msgid "Fuzzy Dice"
+msgstr "Chlupaté kostky"
+
+msgid "Gauntlet Deluxe"
+msgstr "Gauntlet Deluxe"
+
+msgid "Gauntlet Supreme"
+msgstr "Gauntlet Supreme"
+
+msgid "Gauss Gun"
+msgstr "Gaussova zbraň"
+
+msgid "Goatee Marker"
+msgstr "Fix na kozí bradky"
+
+msgid "Grave Beam"
+msgstr "Hrobový paprsek"
+
+msgid "Grave Lance"
+msgstr "Hrobové kopí"
+
+msgid "Greater Astral Cannon"
+msgstr "Větší astrální dělo"
+
+msgid "Guardian Interception System"
+msgstr "Odchytový systém Guardian"
+
+msgid "Guardian Overseer System"
+msgstr "Guardian Overseer Systém"
+
+msgid "GUI - Brushed"
+msgstr "Grafické uživatelské rozhraní - Vybroušené"
+
+msgid "GUI - Legacy"
+msgstr "Grafické uživatelské rozhraní - Zastaralé"
+
+msgid "GUI - Slim"
+msgstr "Grafické uživatelské rozhraní - Štíhlé"
+
+msgid "GUI - Slimv2"
+msgstr "Grafické uživatelské rozhraní - Štíhlé v2"
+
+msgid "Hades Torch"
+msgstr "Hádova pochodeň"
+
+msgid "Handbook for Dvaered Good Manners"
+msgstr "Příručka dobrých mravů Dvaeredů"
+
+msgid "Hard Shell"
+msgstr "Tvrdý krunýř"
+
+msgid "Heavy Ion Cannon"
+msgstr "Těžké iontové dělo"
+
+msgid "Heavy Ion Turret"
+msgstr "Těžká iontová věž"
+
+msgid "Heavy Laser Turret"
+msgstr "Těžká laserová věž"
+
+msgid "Heavy Neutron Disruptor"
+msgstr "Těžký neutronový disruptor"
+
+msgid "Heavy Ripper Cannon"
+msgstr "Těžké dělo Ripper"
+
+msgid "Heavy Ripper Turret"
+msgstr "Těžká věž Ripper"
+
+msgid "Hellburner"
+msgstr "Hellburner"
+
+msgid "Hidden Jump Scanner"
+msgstr "Skener skrytých skoků"
+
+msgid "Hive Combat AI"
+msgstr "Bojová AI úlu"
+
+msgid "Homebrew Processing Unit"
+msgstr "Domácí zpracovatelská jednotka"
+
+msgid "House of Mirrors"
+msgstr "Zrcadlový dům"
+
+msgid "Hunter's Instinct"
+msgstr "Lovecký instinkt"
+
+msgid "Hunting Combat AI"
+msgstr "Lovecká bojová AI"
+
+msgid "Hyena Bay"
+msgstr "Hangár Hyen"
+
+msgid "Hyena Dock"
+msgstr "Dok Hyen"
+
+msgid "Hyperbolic Blink Engine"
+msgstr "Hyperbolický mžikový motor"
+
+msgid "Hyperdrive Retool"
+msgstr ""
+
+msgid "Improved Stabilizer"
+msgstr "Vylepšený stabilizátor"
+
+msgid "Internal Flow Amplifier"
+msgstr "Interní zesilovač toku"
+
+msgid "Ion Cannon"
+msgstr "Iontové dělo"
+
+msgid "Jack's Eyepatch"
+msgstr ""
+
+msgid "Jump Scanner"
+msgstr "Skener skoků"
+
+msgid "Krain Nanotubes Foam Padding"
+msgstr ""
+
+#, fuzzy
+msgid "Krain Patagium Twin Engine"
+msgstr "Krain Patagium Motor"
+
+msgid "Krain Remige Engine"
+msgstr "Krain Remige Motor"
+
+msgid "Kratos' Glove"
+msgstr ""
+
+msgid "Lancelot Bay"
+msgstr "Dok Lancelotů"
+
+msgid "Large Cargo Pod"
+msgstr "Velký nákladní Pod"
+
+msgid "Large Flow Amplifier"
+msgstr "Velký zesilovač průtoku"
+
+msgid "Large Flow Resonator"
+msgstr "Velký průtokový rezonátor"
+
+msgid "Large Fuel Pod"
+msgstr "Velký palivový zásobník"
+
+msgid "Large Meditation Chamber"
+msgstr "Velká meditační komora"
+
+msgid "Large Shield Booster"
+msgstr "Velký posilovač štítu"
+
+msgid "Laser Cannon MK1"
+msgstr "Laserové dělo MK1"
+
+msgid "Laser Cannon MK2"
+msgstr "Laserové dělo MK2"
+
+msgid "Laser Turret MK1"
+msgstr "Laserová věž MK1"
+
+msgid "Laser Turret MK2"
+msgstr "Laserová věž MK2"
+
+msgid "Lattice Thermal Coating"
+msgstr "Mřížkový tepelný povlak"
+
+msgid "Left Boot"
+msgstr "Levá bota"
+
+msgid "Lesser Astral Cannon"
+msgstr "Menší astrální dělo"
+
+msgid "Local System Map"
+msgstr "Mapa lokálního systému"
+
+msgid "Love Letter"
+msgstr "Milostný dopis"
+
+msgid "Low Radiation Sensor Modulator"
+msgstr "Modulátor senzoru s nízkou radiací"
+
+#, fuzzy
+msgid "Luxury Furnishings"
+msgstr "Luxusní zboží"
+
+msgid "Machiavellian Fortune"
+msgstr "Machiavellistické štěstí"
+
+msgid "Machiavellian Necessity"
+msgstr "Machiavelistická nezbytnost"
+
+msgid "Machiavellian Virtue"
+msgstr "Machiavellistická ctnost"
+
+msgid "Map: Collective Space"
+msgstr "Mapa: prostoru Kolektivu"
+
+msgid "Map: Dvaered Core"
+msgstr "Mapa: Jádro Dvaeredu"
+
+msgid "Map: Empire-Soromid Trade Route"
+msgstr "Mapa: Obchodní cesta mezi Impériem a Soromidu"
+
+msgid "Map: Empire Core"
+msgstr "Mapa: Jádro Impéria"
+
+msgid "Map: FLF-Pirate Route"
+msgstr "Mapa: POF-Pirátská trasa"
+
+msgid "Map: FLF Hidden Jumps"
+msgstr "Mapa: Skryté skoky POF"
+
+msgid "Map: Inner Nebula Secret Jump"
+msgstr "Mapa: Tajný skok ve vnitřní mlhovině"
+
+msgid "Map: Kretogg's Hypergate"
+msgstr "Mapa: Kretoggova hyperbrána"
+
+msgid "Map: Kretogg's Secrets"
+msgstr "Mapa: Kretoggova tajemství"
+
+msgid "Map: Nebula Edge"
+msgstr "Mapa: Okraj mlhoviny"
+
+msgid "Map: New Haven's Secrets"
+msgstr "Mapa: Tajemství New Havenu"
+
+msgid "Map: Pirate Strongholds"
+msgstr "Mapa: Pirátské pevnosti"
+
+msgid "Map: Qorel Tunnel"
+msgstr "Mapa: Qorelský tunel"
+
+msgid "Map: Sirian Border Systems"
+msgstr "Mapa: Hraniční systémy Siria"
+
+msgid "Map: Sirius Core"
+msgstr "Mapa: Jádro Siria"
+
+msgid "Map: Sol"
+msgstr "Mapa: Sol"
+
+msgid "Map: The Frontier"
+msgstr "Mapa: Pohraničí"
+
+msgid "Map: Thurion Core"
+msgstr "Mapa: Jádro Thurionu"
+
+msgid "Map: Za'lek Core"
+msgstr "Mapa: Jádro Za'leku"
+
+msgid "Mass Driver"
+msgstr "Hmotový pohon"
+
+msgid "Medium Cargo Pod"
+msgstr "Střední nákladní Pod"
+
+msgid "Medium Flow Amplifier"
+msgstr "Střední zesilovač toku"
+
+msgid "Medium Flow Resonator"
+msgstr "Střední průtokový rezonátor"
+
+msgid "Medium Fuel Pod"
+msgstr "Střední palivová nádrž"
+
+msgid "Medium Meditation Chamber"
+msgstr "Střední meditační komora"
+
+msgid "Medium Shield Booster"
+msgstr "Střední posilovač štítu"
+
+#, fuzzy
+msgid "Melendez Buffalo Engine"
+msgstr "Melendez Buffalo XL Motor"
+
+#, fuzzy
+msgid "Melendez Mammoth Engine"
+msgstr "Melendez Mammoth XL Motor"
+
+#, fuzzy
+msgid "Melendez Ox Engine"
+msgstr "Melendez Ox XL Motor"
+
+msgid "Microbond Plating"
+msgstr "Microbond pancíř"
+
+#, fuzzy
+msgid "Milspec Aegis 2201 Core System"
+msgstr "Milspec Orion 2301 jádrový systém"
+
+#, fuzzy
+msgid "Milspec Aegis 4701 Core System"
+msgstr "Milspec Orion 3701 jádrový systém"
+
+#, fuzzy
+msgid "Milspec Aegis 8501 Core System"
+msgstr "Milspec Orion 5501 jádrový systém"
+
+msgid "Milspec Impacto-Plastic Coating"
+msgstr "Impakto-plastový povlak Milspec"
+
+msgid "Milspec Jammer"
+msgstr "Milspec rušička"
+
+msgid "Milspec Orion 2301 Core System"
+msgstr "Milspec Orion 2301 jádrový systém"
+
+msgid "Milspec Orion 4801 Core System"
+msgstr "Milspec Orion 4801 jádrový systém"
+
+msgid "Milspec Orion 8601 Core System"
+msgstr "Milspec Orion 8601 Jádrový systém"
+
+#, fuzzy
+msgid "Milspec Prometheus 2203 Core System"
+msgstr "Milspec Thalos 2202 jádrový systém"
+
+#, fuzzy
+msgid "Milspec Prometheus 4703 Core System"
+msgstr "Milspec Thalos 4702 jádrový systém"
+
+#, fuzzy
+msgid "Milspec Prometheus 8503 Core System"
+msgstr "Milspec Thalos 8502 Jádrový systém"
+
+msgid "Milspec Scrambler"
+msgstr "Milspec skrambler"
+
+msgid "Milspec Thalos 2202 Core System"
+msgstr "Milspec Thalos 2202 jádrový systém"
+
+msgid "Milspec Thalos 4702 Core System"
+msgstr "Milspec Thalos 4702 jádrový systém"
+
+msgid "Milspec Thalos 8502 Core System"
+msgstr "Milspec Thalos 8502 Jádrový systém"
+
+msgid "Mining Lance MK1"
+msgstr "Těžební kopí MK1"
+
+msgid "Mining Lance MK2"
+msgstr "Těžební kopí MK2"
+
+#, fuzzy
+msgid "Mystery Outfit"
+msgstr "Vybavení map"
+
+msgid "Nanobond Plating"
+msgstr "Nanobond pancíř"
+
+msgid "Nanofiber Structural Enhancement"
+msgstr ""
+
+msgid "Natural Healing I"
+msgstr "Přírodní léčba I"
+
+msgid "Natural Healing II"
+msgstr "Přírodní léčba II"
+
+msgid "Nebula Resistant Coating"
+msgstr "Povlak odolný proti mlhovině"
+
+msgid "Nebular Shielding Prototype"
+msgstr "Prototyp mlhovinového stínění"
+
+msgid "Neural Accelerator Interface"
+msgstr "Rozhraní neurálního akcelerátoru"
+
+msgid "Neutralizer"
+msgstr ""
+
+msgid "Neutron Disruptor"
+msgstr "Neutronový disruptor"
+
+msgid "Nexus Arrow 700 Engine"
+msgstr "Nexus Arrow 700 Motor"
+
+msgid "Nexus Bolt 3000 Engine"
+msgstr "Nexus Bolt 3000 Motor"
+
+#, fuzzy
+msgid "Nexus Concealment Coating"
+msgstr "Povlak Nexus Stealth"
+
+msgid "Nexus Dart 160 Engine"
+msgstr "Nexus Dart 160 Motor"
+
+msgid "Nexus Drill Lance"
+msgstr "Vrtné kopí Nexus"
+
+msgid "Nexus Ghost Weave"
+msgstr ""
+
+msgid "Nexus Phantasm Weave"
+msgstr ""
+
+#, fuzzy
+msgid "Nexus Shadow Weave"
+msgstr "Loděnice Bedimann"
+
+msgid "Orion Beam"
+msgstr "Paprsek Orion"
+
+msgid "Orion Lance"
+msgstr "Kopí Orion"
+
+msgid "Paralyzing Plasma"
+msgstr "Ochromující plazma"
+
+msgid "Particle Beam"
+msgstr "Částicový paprsek"
+
+msgid "Particle Lance"
+msgstr "Částicové kopí"
+
+msgid "Patchwork Heavy Plating"
+msgstr "Patchworkový těžký pancíř"
+
+msgid "Patchwork Light Plating"
+msgstr "Patchworkový lehký pancíř"
+
+msgid "Patchwork Medium Plating"
+msgstr "Patchworkový střední pancíř"
+
+msgid "Pentagram of Valor"
+msgstr "Pentagram Statečnosti"
+
+msgid "Photo-Voltaic Nanobot Coating"
+msgstr "Foto-voltaický nanobotový povlak"
+
+msgid "Pilot Doll"
+msgstr "Panenka Pilota"
+
+msgid "Pincushion Battery"
+msgstr ""
+
+msgid "Pinpoint Combat AI"
+msgstr "Pinpoint bojová AI"
+
+#, fuzzy
+msgid "Pipeline Conduit"
+msgstr "Zaměřovací kanál"
+
+msgid "Pirate Hyena Bay"
+msgstr "Hangár Pirátských Hyen"
+
+msgid "Pirate Hyena Dock"
+msgstr "Dok Pirátských Hyen"
+
+msgid "Plasma Blaster MK1"
+msgstr "Plazmový blaster MK1"
+
+msgid "Plasma Blaster MK2"
+msgstr "Plazmový blaster MK2"
+
+msgid "Plasma Burst"
+msgstr "Plazmový výbuch"
+
+msgid "Plasma Cannon"
+msgstr "Plazmové dělo"
+
+msgid "Plasma Cluster Cannon"
+msgstr "Plazmové klastrové dělo"
+
+#, fuzzy
+msgid "Plasma Eruptor"
+msgstr "Plazmový žár"
+
+msgid "Plasma Turret MK1"
+msgstr "Plazmová věž MK1"
+
+msgid "Plasma Turret MK2"
+msgstr "Plazmová věž MK2"
+
+msgid "Plasteel Plating"
+msgstr "Plasteel pancíř"
+
+msgid "Port & Polish"
+msgstr "Portování a ladění"
+
+msgid "Previous Generation Large Systems"
+msgstr "Předchozí generace jádrových systémů"
+
+msgid "Previous Generation Medium Systems"
+msgstr "Předchozí generace středních systémů"
+
+msgid "Previous Generation Small Systems"
+msgstr "Předchozí generace malých systémů"
+
+msgid "Proteron Dalton Bay"
+msgstr "Hangár Proteron Daltonů"
+
+msgid "Proteron Dalton Dock"
+msgstr "Dok Proteron Daltonů"
+
+msgid "Prototype Systems T-IVa 'Quickshell'"
+msgstr ""
+
+msgid "Pulse Scanner"
+msgstr "Pulzní skener"
+
+#, fuzzy
+msgid "Racing Trophy (Bronze)"
+msgstr "Závodní trofej"
+
+#, fuzzy
+msgid "Racing Trophy (Gold)"
+msgstr "Závodní trofej"
+
+#, fuzzy
+msgid "Racing Trophy (Silver)"
+msgstr "Závodní trofej"
+
+msgid "Rackham's Razor"
+msgstr "Rackhamova břitva"
+
+msgid "Ragnarok Beam"
+msgstr "Paprsek Ragnarok"
+
+msgid "Railgun"
+msgstr "Railgun"
+
+msgid "Railgun Turret"
+msgstr "Railgunová věž"
+
+msgid "Razor Artillery S1"
+msgstr "Razor Artilérie S1"
+
+msgid "Razor Artillery S2"
+msgstr "Razor Artilérie S2"
+
+msgid "Razor Artillery S3"
+msgstr "Razor Artilérie S3"
+
+msgid "Razor Battery S2"
+msgstr "Baterie Razor S2"
+
+msgid "Reactor Class I"
+msgstr "Reaktor třídy I"
+
+msgid "Reactor Class II"
+msgstr "Reaktor třídy II"
+
+msgid "Reactor Class III"
+msgstr "Reaktor třídy III"
+
+msgid "Reality Rip"
+msgstr "Roztrhání reality"
+
+#, fuzzy
+msgid "Reaver Cannon"
+msgstr "Dělo Ripper"
+
+#, fuzzy
+msgid "Reconstructive Nanobot Coating"
+msgstr "Foto-voltaický nanobotový povlak"
+
+msgid "Reflective Shell"
+msgstr "Reflexní krunýř"
+
+msgid "Repeating Banshee Launcher"
+msgstr "Repeating Banshee Odpalovač"
+
+msgid "Repeating Railgun"
+msgstr "Opakovací railgun"
+
+msgid "Ripper Cannon"
+msgstr "Dělo Ripper"
+
+msgid "Red Star Large Cargo Hull"
+msgstr "Red Star velký nákladní trup"
+
+msgid "Red Star Medium Cargo Hull"
+msgstr "Red Star střední nákladový trup"
+
+msgid "Red Star Small Cargo Hull"
+msgstr "Red Star malý nákladní trup"
+
+msgid "Sandwich Holder"
+msgstr "Držák na sendviče"
+
+msgid "Satellite Mock-up"
+msgstr "Maketa satelitu"
+
+msgid "Scanning Combat AI"
+msgstr "Skenovací bojová AI"
+
+msgid "Seeking Chakra"
+msgstr "Pátrací čakra"
+
+msgid "Seeking Chakra Large"
+msgstr "Velká pátrací čakra"
+
+msgid "Seeking Chakra Medium"
+msgstr "Střední pátrací čakra"
+
+msgid "Seeking Chakra Small"
+msgstr "Malá pátrací čakra"
+
+msgid "Sensor Array"
+msgstr "Soustava senzorů"
+
+msgid "Shatterer Launcher"
+msgstr "Shatterer Odpalovač"
+
+msgid "Shield Capacitor I"
+msgstr "Štítový kondenzátor I"
+
+msgid "Shield Capacitor II"
+msgstr "Štítový kondenzátor II"
+
+msgid "Shield Capacitor III"
+msgstr "Štítový kondenzátor III"
+
+msgid "Shield Capacitor IV"
+msgstr "Štítový kondenzátor IV"
+
+msgid "Shredder"
+msgstr "Shredder"
+
+msgid "Silence"
+msgstr "Ticho"
+
+msgid "Sirius Fidelity Bay"
+msgstr "Hangár Sirius Fidelity"
+
+msgid "Sirius Shaman Bay"
+msgstr "Hangár Sirius Šamanů"
+
+#, fuzzy
+msgid "S&K Battle Plating"
+msgstr "S&K těžký bojový pancíř"
+
+msgid "S&K Heavy Plasma Drill"
+msgstr "S&K těžká plazmová vrtačka"
+
+msgid "S&K Large Cargo Hull"
+msgstr "S&K velký nákladní trup"
+
+msgid "S&K Medium Cargo Hull"
+msgstr "S&K střední nákladový trup"
+
+msgid "S&K Plasma Drill"
+msgstr "S&K plazmová vrtačka"
+
+#, fuzzy
+msgid "S&K Skirmish Plating"
+msgstr "S&K lehký bojový pancíř"
+
+msgid "S&K Small Cargo Hull"
+msgstr "S&K malý nákladní trup"
+
+#, fuzzy
+msgid "S&K War Plating"
+msgstr "S&K těžký bojový pancíř"
+
+msgid "Small Cargo Pod"
+msgstr "Malý nákladní pod"
+
+msgid "Small Flow Amplifier"
+msgstr "Malý zesilovač toku"
+
+msgid "Small Flow Resonator"
+msgstr "Malý průtokový rezonátor"
+
+msgid "Small Fuel Pod"
+msgstr "Malá palivová nádrž"
+
+msgid "Small Meditation Chamber"
+msgstr "Malá meditační komora"
+
+msgid "Small Shield Booster"
+msgstr "Malý zesilovač štítu"
+
+msgid "Soromid Brigand Bay"
+msgstr "Hangár Soromid Brigandů"
+
+msgid "Space Mine Layer"
+msgstr "Vypouštěč vesmírných min"
+
+msgid "Spittle Tubuloid Cluster"
+msgstr "Spittle Tubuloid Klastr"
+
+msgid "Squadron Synchronizer Module"
+msgstr "Modul synchronizace letky"
+
+msgid "Star of Valor"
+msgstr "Hvězda statečnosti"
+
+#, fuzzy
+msgid "Stealth Burster"
+msgstr "Posilovač štítu"
+
+msgid "Super-Fast Collider Launcher"
+msgstr "Super-Fast Collider Odpalovač"
+
+#. get the drink
+msgid "Swamp Bombing"
+msgstr "Bažinatá Bomba"
+
+msgid "Targeting Array"
+msgstr "Zaměřovací pole"
+
+msgid "Targeting Conduit"
+msgstr "Zaměřovací kanál"
+
+msgid "TeraCom Banshee Launcher"
+msgstr "TeraCom Banshee Odpalovač"
+
+msgid "TeraCom Fury Launcher"
+msgstr "TeraCom Fury Odpalovač"
+
+msgid "TeraCom Headhunter Launcher"
+msgstr "TeraCom Headhunter Odpalovač"
+
+msgid "TeraCom Imperator Launcher"
+msgstr "TeraCom Imperator Odpalovač"
+
+msgid "TeraCom Mace Launcher"
+msgstr "TeraCom Mace Odpalovač"
+
+msgid "TeraCom Medusa Launcher"
+msgstr "TeraCom Medusa Odpalovač"
+
+msgid "TeraCom Vengeance Launcher"
+msgstr "TeraCom Vengeance Odpalovač"
+
+msgid "The Bite - Blood Lust"
+msgstr "Kousnutí - Krvavá touha"
+
+#, fuzzy
+msgid "The Bite - Cannibal"
+msgstr "Kousnutí - Krvavá touha"
+
+msgid "The Bite - Improved"
+msgstr "Kousnutí - vylepšené"
+
+msgid "The Bite"
+msgstr "Kousnutí"
+
+#, fuzzy
+msgid "Bioship Thorn"
+msgstr "Orgány Biolodi"
+
+msgid "Thurion Perspicacity Bay"
+msgstr "Hangár Thurion Perspicacity"
+
+msgid "Thurion Perspicacity Dock"
+msgstr "Dok Thurion Perspicacity"
+
+#, fuzzy
+msgid "Thurion Scintillation Bay"
+msgstr "Thurionský Scintillation"
+
+msgid "Toy Drone"
+msgstr "Dron na hraní"
+
+msgid "Tracking Antennae"
+msgstr "Sledovací anténa"
+
+msgid "Trading Card (Common)"
+msgstr "Sběratelská karta (obyčejná)"
+
+msgid "Trading Card (Rare)"
+msgstr "Sběratelská karta (vzácná)"
+
+msgid "Trading Card (Uncommon)"
+msgstr "Sběratelská karta (neobvyklá)"
+
+#. Create the lootable entry
+msgid "Treasure Map"
+msgstr ""
+
+msgid "Tricon Cyclone Engine"
+msgstr "Tricon Cyclone Motor"
+
+msgid "Tricon Typhoon Engine"
+msgstr "Tricon Typhoon Motor"
+
+msgid "Tricon Zephyr Engine"
+msgstr "Tricon Zephyr Motor"
+
+msgid "Tunnelling Organ"
+msgstr "Tunelovací orgány"
+
+msgid "Turbolaser"
+msgstr "Turbolaser"
+
+msgid "Turreted Convulsion Launcher"
+msgstr "Turreted Convulsion Odpalovač"
+
+msgid "Turreted Gauss Gun"
+msgstr "Gaussovo věžové dělo"
+
+msgid "Turreted Vulcan Gun"
+msgstr "Věžové dělo Vulcan"
+
+msgid "Ugly Statue"
+msgstr "Ošklivá socha"
+
+msgid "Ultra Map"
+msgstr "Ultra mapa"
+
+msgid "Unicorp Caesar IV Launcher"
+msgstr "Unicorp Caesar IV Odpalovač"
+
+msgid "Unicorp D-23 Medium Plating"
+msgstr "Unicorp D-23 střední pancíř"
+
+msgid "Unicorp D-2 Light Plating"
+msgstr "Unicorp D-2 lehký pancíř"
+
+msgid "Unicorp D-58 Heavy Plating"
+msgstr "Unicorp D-58 těžký pancíř"
+
+#, fuzzy
+msgid "Unicorp Eagle 3000 Engine"
+msgstr "Unicorp Eagle 6500 Motor"
+
+#, fuzzy
+msgid "Unicorp Falcon 700 Engine"
+msgstr "Unicorp Falcon 1400 Motor"
+
+#, fuzzy
+msgid "Unicorp Hawk 160 Engine"
+msgstr "Unicorp Hawk 360 Motor"
+
+msgid "Unicorp Jammer"
+msgstr "Unicorp Rušička"
+
+msgid "Unicorp Light Afterburner"
+msgstr "Lehké přídavné spalování Unicorp"
+
+msgid "Unicorp Medium Afterburner"
+msgstr "Střední přídavné spalování Unicorp"
+
+msgid "Unicorp PT-16 Core System"
+msgstr "Unicorp PT-16 jádrový systém"
+
+msgid "Unicorp PT-200 Core System"
+msgstr "Unicorp PT-200 jádrový systém"
+
+msgid "Unicorp PT-440 Core System"
+msgstr "Unicorp PT-440 jádrový systém"
+
+msgid "Unicorp Scrambler"
+msgstr "Unicorp skrambler"
+
+msgid "Unicorp Storm Launcher"
+msgstr "Unicorp Storm Odpalovač"
+
+msgid "Vacuum Cleaner?"
+msgstr "Vysavač?"
+
+msgid "Valkyrie Beam"
+msgstr "Paprsek Valkýry"
+
+msgid "Veil of Penelope"
+msgstr "Penelopin závoj"
+
+msgid "Vulcan Gun"
+msgstr "Dělo Vulcan"
+
+msgid "Wanderer"
+msgstr "Poutník"
+
+msgid "Weakness Harmonizer AI"
+msgstr "Harmonizátor slabin AI"
+
+msgid "Weapons Ionizer"
+msgstr "Ionizátor zbraní"
+
+msgid "Wild Space Taint"
+msgstr ""
+
+msgid "Worn Down"
+msgstr ""
+
+msgid "Za'lek Bomber Drone Bay"
+msgstr "Hangár Za'lek bombardér Dronů"
+
+msgid "Za'lek Bomber Drone Mini Bay"
+msgstr "Minihangár Za'lek bombardér Dronů"
+
+msgid "Za'lek Heavy Drone Bay"
+msgstr "Hangár Za'lek těžkých Dronů"
+
+msgid "Za'lek Heavy Drone Mini Bay"
+msgstr "Minihangár Za'lek těžkých Dronů"
+
+msgid "Za'lek Hunter Launcher"
+msgstr "Za'lek Hunter Odpalovač"
+
+msgid "Za'lek Light Drone Bay"
+msgstr "Hangár Za'lek lehkých Dronů"
+
+msgid "Za'lek Light Drone Mini Bay"
+msgstr "Minihangár Za'lek lehkých dronů"
+
+msgid "Za'lek Reaper Launcher"
+msgstr "Za'lek Reaper Odpalovač"
+
+msgid "Za'lek Test Engine"
+msgstr "Testovací motor Za'lek"
+
+msgid "ZD-5 Guardian Unit"
+msgstr "Strážná jednotka ZD-5"
+
+msgid "ZIBS-16"
+msgstr ""
+
+msgid "ZIBS-32"
+msgstr ""
+
+msgid "Admonisher"
+msgstr "Admonisher"
+
+msgid "<widget rightstats />"
+msgstr ""
+
+msgid "# <%= s:name() %>"
+msgstr ""
+
+msgid "* **[Class](ships/classes)**:   <%= _(s:classDisplay()) %>"
+msgstr ""
+
+msgid "* **Fabricator**:   <%= _(s:fabricator()) %>"
+msgstr ""
+
+msgid "* **[Crew](mechanics/boarding)**:   <%= fmt.number(s:crew()) %>"
+msgstr ""
+
+msgid ""
+"* **[Fleet Capacity](mechanics/playerfleet)**:   <%= fmt.number(s:points()) "
+"%>"
+msgstr ""
+
+msgid ""
+"* **[Mass](mechanics/movement)**:   <%= fmt.f(_(\"{mass} {unit}\"), "
+"{mass=fmt.number(s:mass()),unit=naev.unit('mass')}) %>"
+msgstr ""
+
+msgid ""
+"* **[Base Armour](mechanics/damage)**:   <%= fmt.f(_(\"{armour} {unit}\"), "
+"{armour=fmt.number(s:armour()), unit=naev.unit('energy')}) %>"
+msgstr ""
+
+msgid ""
+"* **[Cargo Space](mechanics/cargo)**:   <%= fmt.f(_(\"{cargo} {unit}\"), "
+"{cargo=fmt.number(s:cargo()), unit=naev.unit('mass')})%>"
+msgstr ""
+
+msgid ""
+"* **[Fuel Consumption](mechanics/hyperspace)**:   <%= fmt.f(_(\"{fuel} {unit}"
+"\"), {fuel=fmt.number(s:fuelConsumption()), unit=naev.unit('unit')})%>"
+msgstr ""
+
+msgid "* **[Price](mechanics/credits)**:   <%= fmt.credits(s:price()) %>"
+msgstr ""
+
+msgid "* **License**:   <%= _(s:license()) %>"
+msgstr ""
+
+msgid "Places where the <%= s:name() %> is sold are shown in #ggreen#0."
+msgstr ""
+
+msgid ""
+"You are not aware of anywhere where the <%= s:name() %> is available for "
+"purchase."
+msgstr ""
+
+#, fuzzy
+msgid "Admonisher ΩIIa"
+msgstr "Admonisher"
+
+msgid "Ancestor"
+msgstr "Ancestor"
+
+msgid "Ancestor HG Eagle-Eye"
+msgstr ""
+
+msgid "Astral Projection Greater"
+msgstr "Větší astrální projekce"
+
+msgid "Astral Projection Lesser"
+msgstr "Menší astrální projekce"
+
+msgid "Astral Projection Normal"
+msgstr "Normální astrální projekce"
+
+msgid "Bedivere"
+msgstr ""
+
+#, fuzzy
+msgid "Dealbreaker"
+msgstr "narušovač štítů"
+
+msgid "Drone"
+msgstr "Dron"
+
+msgid "Drone Carrier"
+msgstr "Nosič dronů"
+
+msgid "Drone (Hyena)"
+msgstr "Dron (Hyena)"
+
+msgid "Dvaered Ancestor"
+msgstr "Dvaered Ancestor"
+
+msgid "Dvaered Arsenal"
+msgstr "Dvaered Arsenal"
+
+msgid "Dvaered Goddard"
+msgstr "Dvaered Goddard"
+
+msgid "Dvaered Phalanx"
+msgstr "Dvaered Phalanx"
+
+msgid "Dvaered Retribution"
+msgstr "Dvaered Retribution"
+
+msgid "Dvaered Vendetta"
+msgstr "Dvaered Vendetta"
+
+msgid "Dvaered Vigilance"
+msgstr "Dvaered Vigilance"
+
+msgid "Empire Admonisher"
+msgstr "Imperiální Admonisher"
+
+#, fuzzy
+msgid "Empire Admonisher Longbow"
+msgstr "Imperiální Admonisher"
+
+msgid "Empire Hawking"
+msgstr "Imperiální Hawking"
+
+msgid "Empire Lancelot"
+msgstr "Imperiální Lancelot"
+
+#, fuzzy
+msgid "Empire Lancelot Golden Efreeti"
+msgstr "Imperiální Lancelot"
+
+msgid "Empire Pacifier"
+msgstr "Imperiální Pacifier"
+
+#, fuzzy
+msgid "Empire Pacifier Hoplite"
+msgstr "Imperiální Pacifier"
+
+msgid "Empire Peacemaker"
+msgstr "Imperiální Peacemaker"
+
+msgid "Empire Rainmaker"
+msgstr "Imperiální Rainmaker"
+
+msgid "Empire Shark"
+msgstr "Imperiální Shark"
+
+msgid "Fort Raelid"
+msgstr "Pevnost Raelid"
+
+msgid "Fort Raglan"
+msgstr "Pevnost Raglan"
+
+msgid "Gawain"
+msgstr "Gawain"
+
+#, fuzzy
+msgid "Gawain XY-37"
+msgstr "Gawain"
+
+msgid "Goddard"
+msgstr "Goddard"
+
+msgid "Goddard Merchantman"
+msgstr ""
+
+msgid "Hawking"
+msgstr "Hawking"
+
+msgid "Heavy Drone"
+msgstr "Těžký dron"
+
+msgid "Hyena"
+msgstr "Hyena"
+
+msgid "Kauweke"
+msgstr "Kauweke"
+
+msgid "Kestrel"
+msgstr "Kestrel"
+
+#, fuzzy
+msgid "Kestrel Sigma"
+msgstr "Kestrel"
+
+msgid "Koala"
+msgstr "Koala"
+
+#, fuzzy
+msgid "Koala Armoured"
+msgstr "Biometalický pancíř"
+
+msgid "Lancelot"
+msgstr "Lancelot"
+
+msgid "Llama"
+msgstr "Llama"
+
+msgid "Llama Voyager"
+msgstr ""
+
+msgid "Mule"
+msgstr "Mule"
+
+msgid "Mule Hardhat"
+msgstr ""
+
+msgid "Nohinohi"
+msgstr "Nohinohi"
+
+msgid "One-Wing Goddard"
+msgstr "Jednokřídlý Goddard"
+
+msgid "Pacifier"
+msgstr "Pacifier"
+
+msgid "Phalanx"
+msgstr "Phalanx"
+
+msgid "Pirate Admonisher"
+msgstr "Pirátský Admonisher"
+
+msgid "Pirate Ancestor"
+msgstr "Pirátský Ancestor"
+
+#, fuzzy
+msgid "Pirate Bedivere"
+msgstr "Nájezd pirátů"
+
+#, fuzzy
+msgid "Pirate Blue Shark"
+msgstr "Pirátský Shark"
+
+msgid "Pirate Hyena"
+msgstr "Pirátská Hyena"
+
+msgid "Pirate Kestrel"
+msgstr "Pirátský Kestrel"
+
+#, fuzzy
+msgid "Pirate Kestrel Yuri's Kiss"
+msgstr "Pirátský Kestrel"
+
+msgid "Pirate Phalanx"
+msgstr "Pirátský Phalanx"
+
+msgid "Pirate Revenant"
+msgstr "Pirátský Revenant"
+
+msgid "Pirate Rhino"
+msgstr "Pirátský Rhino"
+
+msgid "Pirate Shark"
+msgstr "Pirátský Shark"
+
+msgid "Pirate Starbridge"
+msgstr "Pirátský Starbridge"
+
+msgid "Pirate Vendetta"
+msgstr "Pirátská Vendetta"
+
+msgid "Pirate Zebra"
+msgstr "Pirátská Zebra"
+
+msgid "Plowshare"
+msgstr ""
+
+msgid "Proteron Archimedes"
+msgstr "Proteronský Archimedes"
+
+msgid "Proteron Dalton"
+msgstr "Proteronský Dalton"
+
+msgid "Proteron Euler"
+msgstr "Proteronský Euler"
+
+msgid "Proteron Gauss"
+msgstr "Proteronský Gauss"
+
+msgid "Proteron Hippocrates"
+msgstr "Proteronský Hippocrates"
+
+msgid "Proteron Pythagoras"
+msgstr "Proteronský Pythagoras"
+
+msgid "Proteron Watson"
+msgstr "Proteronský Watson"
+
+msgid "Psychic Orb"
+msgstr "Psychický orb"
+
+msgid "Quicksilver"
+msgstr "Quicksilver"
+
+#, fuzzy
+msgid "Quicksilver Mercury"
+msgstr "Quicksilver"
+
+msgid "Rhino"
+msgstr "Rhino"
+
+msgid "Schroedinger"
+msgstr "Schroedinger"
+
+msgid "Shark"
+msgstr "Shark"
+
+#, fuzzy
+msgid "Shark ΨIIIa"
+msgstr "Dvaer IIIa"
+
+msgid "Sindbad"
+msgstr "Sindbad"
+
+msgid "Sirius Divinity"
+msgstr "Božství Siria"
+
+msgid "Sirius Dogma"
+msgstr "Sirianské Dogma"
+
+msgid "Sirius Fidelity"
+msgstr "Sirianská Fidelity"
+
+msgid "Sirius Preacher"
+msgstr "Sirianský Preacher"
+
+msgid "Sirius Providence"
+msgstr "Sirianská Providence"
+
+msgid "Sirius Shaman"
+msgstr "Sirianský Shaman"
+
+msgid "Soromid Arx"
+msgstr "Soromidský Arx"
+
+msgid "Soromid Brigand"
+msgstr "Soromidský Brigand"
+
+msgid "Soromid Copia"
+msgstr "Soromidská Copia"
+
+msgid "Soromid Ira"
+msgstr "Soromidská Ira"
+
+msgid "Soromid Marauder"
+msgstr "Soromidský Marauder"
+
+msgid "Soromid Nyx"
+msgstr "Soromidský Nyx"
+
+msgid "Soromid Odium"
+msgstr "Soromidský Odium"
+
+msgid "Soromid Reaver"
+msgstr "Soromidský Reaver"
+
+msgid "Soromid Vox"
+msgstr "Soromidský Vox"
+
+msgid "Starbridge"
+msgstr "Starbridge"
+
+#, fuzzy
+msgid "Starbridge Sigma"
+msgstr "Starbridge"
+
+msgid "Taitamariki"
+msgstr "Taitamariki"
+
+msgid "Thurion Apprehension"
+msgstr "Thurionský Apprehension"
+
+msgid "Thurion Certitude"
+msgstr "Thurionský Certitude"
+
+msgid "Thurion Ingenuity"
+msgstr "Thurionská Ingenuity"
+
+msgid "Thurion Perspicacity"
+msgstr "Thurionská Perspicacity"
+
+#, fuzzy
+msgid "Thurion Perspicacity Beta"
+msgstr "Hangár Thurion Perspicacity"
+
+msgid "Thurion Scintillation"
+msgstr "Thurionský Scintillation"
+
+msgid "Thurion Taciturnity"
+msgstr "Thurionská Taciturnity"
+
+msgid "Thurion Virtuosity"
+msgstr "Thurionská Virtuosity"
+
+#, fuzzy
+msgid "Tristan"
+msgstr "Cristen"
+
+msgid "Vendetta"
+msgstr "Vendetta"
+
+#, fuzzy
+msgid "Vendetta Whiplash"
+msgstr "Vendetta"
+
+msgid "Vigilance"
+msgstr "Vigilance"
+
+msgid "Za'lek Bomber Drone"
+msgstr "Za'lekský bombardovací dron"
+
+msgid "Za'lek Demon"
+msgstr "Za'lekský Demon"
+
+#, fuzzy
+msgid "Za'lek Demon Type IV"
+msgstr "Za'lekský Sting"
+
+msgid "Za'lek Diablo"
+msgstr "Za'lekský Diablo"
+
+msgid "Za'lek Heavy Drone"
+msgstr "Za'lekský těžký dron"
+
+msgid "Za'lek Hephaestus"
+msgstr "Za'lekský Hephaestus"
+
+msgid "Za'lek Light Drone"
+msgstr "Za'lekský lehký dron"
+
+msgid "Za'lek Mammon"
+msgstr "Za'lekský Mammon"
+
+msgid "Za'lek Mephisto"
+msgstr "Za'lekský Mephisto"
+
+#, fuzzy
+msgid "Za'lek Mephisto Type V"
+msgstr "Za'lekský Mephisto"
+
+msgid "Za'lek Scout Drone"
+msgstr "Za'lekský průzkumný dron"
+
+msgid "Za'lek Sting"
+msgstr "Za'lekský Sting"
+
+#, fuzzy
+msgid "Za'lek Sting Type II"
+msgstr "Za'lekský Sting"
+
+#, fuzzy
+msgid "Za'lek Sting Type IV"
+msgstr "Za'lekský Sting"
+
+msgid "Zebra"
+msgstr "Zebra"
 
 msgid "Main"
 msgstr "Hlavní"
@@ -9060,16 +10815,8 @@ msgid ""
 "the story."
 msgstr "Výrazně snižuje obtížnost hry a umožňuje soustředit se na příběh."
 
-#, fuzzy
-msgid "Ambush Hunter I"
-msgstr "Lovec ze zálohy"
-
 msgid "The ship has caught other ships by surprise!"
 msgstr "Loď překvapila ostatní lodě!"
-
-#, fuzzy
-msgid "Ambush Hunter II"
-msgstr "Lovec ze zálohy"
 
 msgid "Antimatter Taint"
 msgstr "Skvrna antihmoty"
@@ -9077,17 +10824,8 @@ msgstr "Skvrna antihmoty"
 msgid "Antimatter is tainting your ship!"
 msgstr "Vaše loď je kontaminována antihmotou!"
 
-#. Set outfit state
-#. Astral projection
-msgid "Astral Projection"
-msgstr "Astrální projekce"
-
 msgid "Ship is being projected."
 msgstr "Loď se projektuje."
-
-#, fuzzy
-msgid "Avatar of the Sirichana"
-msgstr "Avatar Sirichany"
 
 #, fuzzy
 msgid "You are an avatar of the Sirichana!"
@@ -9136,9 +10874,6 @@ msgstr ""
 msgid "Corsair set bonus."
 msgstr ""
 
-msgid "Crippling Plasma"
-msgstr "Ochromující plazma"
-
 msgid "Plasma is interfering with the weapon systems!"
 msgstr "Plazma narušuje zbraňové systémy!"
 
@@ -9179,17 +10914,8 @@ msgstr "Rozpynout"
 msgid "Fade-Out Norender"
 msgstr "Rozpynout"
 
-msgid "Feather Drive"
-msgstr "Pohon Feather"
-
 msgid "Your ship just used Feather Drive!"
 msgstr "Vaše loď právě použila pohon Feather!"
-
-#. Attack tree
-#. For everyone!
-#. Uses feral rage slot (only for ships that get tier 5)
-msgid "Feral Rage I"
-msgstr "Divoký vztek I"
 
 msgid "Fractured Reality"
 msgstr "Roztříštěná realita"
@@ -9221,9 +10947,6 @@ msgstr ""
 
 msgid "Hacked!"
 msgstr ""
-
-msgid "Paralyzing Plasma"
-msgstr "Ochromující plazma"
 
 msgid "Plasma is slowing the ship down!"
 msgstr "Plazma zpomaluje loď!"
@@ -9391,9 +11114,6 @@ msgid ""
 msgstr ""
 "Hraniční alianci tvoří lidé, kteří přežili první pokusy o expanzi člověka do "
 "vesmíru."
-
-msgid "Goddard"
-msgstr "Goddard"
 
 msgid "House Goddard"
 msgstr "Rod Goddard"
@@ -9736,9 +11456,6 @@ msgstr ""
 "Dům Za'lek je vědeckým srdcem Impéria. Donedávna byl tajnůstkářským "
 "velkorodem, ale v poslední době je mnohem otevřenější."
 
-msgid "Air Freshener"
-msgstr "Osvěžovač vzduchu"
-
 msgid "Accessory"
 msgstr "Příslušenství"
 
@@ -9752,9 +11469,6 @@ msgstr ""
 "ozdoby. Dříve se používaly vůně, ale protože ty nemají žádný vliv na výkonné "
 "filtrační systémy moderních lodí, jsou dnes výhradně kosmetické."
 
-msgid "Black Cat Doll"
-msgstr "Panenka Black Cat"
-
 msgid ""
 "A crude doll of a black cat made from authentic \"Felis catus\" fur you made "
 "that was all over your ship. It's quite cute."
@@ -9765,9 +11479,6 @@ msgstr ""
 msgid "#pOnly active when in stealth.#0"
 msgstr "#pAktivní pouze v režimu stealth.#0"
 
-msgid "Broken Nebular Shielding Prototype"
-msgstr "Prototyp rozbitého mlhovinového štítu"
-
 msgid ""
 "A broken prototype for a novel shielding device that is supposed to enable "
 "travel into the Sol Nebula. However, due to its malfunction you almost died. "
@@ -9777,9 +11488,6 @@ msgstr ""
 "Rozbitý prototyp nového mlhovinového štítu, které má umožnit cestování do "
 "mlhoviny Sol. Kvůli jeho poruše jste však málem zemřeli. Na druhou stranu se "
 "zdá, že pohlcuje škodlivou energii a vyzařuje do vesmíru tepelné záření."
-
-msgid "Commemorative Stein"
-msgstr "Pamětní Stein"
 
 msgid ""
 "This is a stein commemorating the terraforming and establishment of a "
@@ -9797,9 +11505,6 @@ msgstr ""
 "spodní straně je nápis \"Kašlu na PUAAA, ať žije hrdina Antlejosu!\" s "
 "nečitelným podpisem."
 
-msgid "Cyborg Feather"
-msgstr "Kyborgské pírko"
-
 #, fuzzy
 msgid ""
 "A feather from a cyborg duck. Although the quill is made of some lightweight "
@@ -9808,16 +11513,10 @@ msgstr ""
 "Pírko z kyborgské kachny. Ačkoli je peří vyrobeno z lehké kovové slitiny, "
 "zbytek se překvapivě podobá normálnímu peří."
 
-msgid "Fancy Key Chain"
-msgstr "Ozdobný řetízek na klíče"
-
 msgid ""
 "A small statue of a crossed-eyed gorilla lifting a Goddard Battlecruiser."
 msgstr ""
 "Malá soška gorily se zkříženýma očima, která zvedá bitevní křižník Goddard."
-
-msgid "Fuzzy Dice"
-msgstr "Chlupaté kostky"
 
 msgid ""
 "A pair of fuzzy dice that can be hung inside your ship. Apparently they are "
@@ -9832,9 +11531,6 @@ msgstr ""
 msgid "#pImproves luck!#0"
 msgstr "#pZvyšuje štěstí!#0"
 
-msgid "Goatee Marker"
-msgstr "Fix na kozí bradky"
-
 msgid ""
 "A rare limited edition Goatee Marker, meant exclusive for drawing not only "
 "facial hair, but Goatees in particular. It seems to have been partially used "
@@ -9843,9 +11539,6 @@ msgstr ""
 "Vzácná limitovaná edice fixu na kozí bradku, která je určena výhradně pro "
 "kreslení nejen vousů, ale zejména kozí bradky. Zdá se, že byl částečně "
 "použit a na spodní straně má logo Nájezdníků."
-
-msgid "Handbook for Dvaered Good Manners"
-msgstr "Příručka dobrých mravů Dvaeredů"
 
 msgid ""
 "When does a gentleman use the head of another gentleman as a trophy in their "
@@ -9865,9 +11558,6 @@ msgstr ""
 "propracovat do nejvyšších pozic.\" -- Plukovník Urnus, vedoucí výkonné "
 "kanceláře vrchního velení"
 
-msgid "Jack's Eyepatch"
-msgstr ""
-
 msgid ""
 "A ragged eyepatch that seems to have seen its share of adventures among the "
 "stars."
@@ -9875,9 +11565,6 @@ msgstr ""
 
 msgid "#pDoubles the range of blink drives.#0"
 msgstr ""
-
-msgid "Left Boot"
-msgstr "Levá bota"
 
 msgid ""
 "The left boot of a high-ranking Empire official. It doesn't seem to fit you "
@@ -9889,9 +11576,6 @@ msgstr ""
 
 msgid "#pSmells funky.#0"
 msgstr "#pVoní funky.#0"
-
-msgid "Love Letter"
-msgstr "Milostný dopis"
 
 msgid ""
 "A misplaced love letter that you were supposed to deliver, reading the first "
@@ -9907,14 +11591,8 @@ msgstr ""
 msgid "#rLove is in the air.#0"
 msgstr "#rLáska je ve vzduchu.#0"
 
-msgid "Pentagram of Valor"
-msgstr "Pentagram Statečnosti"
-
 msgid "A token of commitment to the FLF cause. It smells oddly of fish."
 msgstr "Důkaz závazku vůči POF. Je podivně cítit rybinou."
-
-msgid "Pilot Doll"
-msgstr "Panenka Pilota"
 
 msgid ""
 "A doll made by orphans out of their old clothes. You believe it's supposed "
@@ -9925,18 +11603,10 @@ msgstr ""
 "ale vůbec se ti nepodobá. Důležitý je zde však záměr, nikoliv výsledek."
 
 #, fuzzy
-msgid "Racing Trophy (Bronze)"
-msgstr "Závodní trofej"
-
-#, fuzzy
 msgid "The racing trophy you won with your piloting skills."
 msgstr ""
 "Závodní trofej jsi získal díky svým skvělým pilotním dovednostem. Na zdi "
 "vypadá skvěle!"
-
-#, fuzzy
-msgid "Racing Trophy (Gold)"
-msgstr "Závodní trofej"
 
 #, fuzzy
 msgid ""
@@ -9947,19 +11617,12 @@ msgstr ""
 "vypadá skvěle!"
 
 #, fuzzy
-msgid "Racing Trophy (Silver)"
-msgstr "Závodní trofej"
-
-#, fuzzy
 msgid ""
 "The racing trophy you won with your excellent piloting skills. Looks great "
 "on the wall!"
 msgstr ""
 "Závodní trofej jsi získal díky svým skvělým pilotním dovednostem. Na zdi "
 "vypadá skvěle!"
-
-msgid "Rackham's Razor"
-msgstr "Rackhamova břitva"
 
 msgid ""
 "An ornately engraved sword with a lightly curved, razor-sharp nanosteel "
@@ -9975,9 +11638,6 @@ msgstr ""
 msgid "#gDouble effect when flying a pirate ship.#0"
 msgstr "#gDvojí efekt při letu na pirátské lodi.#0"
 
-msgid "Sandwich Holder"
-msgstr "Držák na sendviče"
-
 msgid ""
 "It appears to be a limited edition Nexus Shipyards sandwich holder. Very "
 "useful for hands-free eating of sandwiches in zero gravity. Apparently the "
@@ -9987,18 +11647,12 @@ msgstr ""
 "Velmi užitečné pro konzumaci sendvičů bez použití rukou v beztíži. Generální "
 "ředitel má zřejmě sendviče opravdu rád."
 
-msgid "Satellite Mock-up"
-msgstr "Maketa satelitu"
-
 msgid ""
 "A mock-up of a satellite you helped launch into the Nebula. It even has cute "
 "blinking lights!"
 msgstr ""
 "Maketa satelitu, který jste pomohli vypustit do mlhoviny. Má dokonce "
 "roztomilá blikající světýlka!"
-
-msgid "Star of Valor"
-msgstr "Hvězda statečnosti"
 
 msgid ""
 "A shiny medal for your contribution to the Dvaered cause. On the back it "
@@ -10007,19 +11661,12 @@ msgstr ""
 "Lesklá medaile za vaši podporu věci Dvaeredu. Na zadní straně je napsáno "
 "\"není určeno k rektálnímu použití\". Počkat, cože?"
 
-#. get the drink
-msgid "Swamp Bombing"
-msgstr "Bažinatá Bomba"
-
 msgid ""
 "A fairly mediocre cocktail that you don't intend to drink. At least it looks "
 "good as an accessory."
 msgstr ""
 "Poměrně průměrný koktejl, který nemáte v úmyslu vypít. Alespoň vypadá dobře "
 "jako doplněk."
-
-msgid "Toy Drone"
-msgstr "Dron na hraní"
 
 msgid ""
 "A small toy drone that can fly around the ship. The AI doesn't seem to work "
@@ -10029,9 +11676,6 @@ msgstr ""
 "Malý dron na hraní, který může létat kolem lodi. Zdá se, že umělá "
 "inteligence nefunguje příliš dobře a má ve zvyku neustále narážet do stěn a "
 "pípat, ale je docela roztomilý."
-
-msgid "Trading Card (Common)"
-msgstr "Sběratelská karta (obyčejná)"
 
 msgid ""
 "A #oHyena#0 trading card game card of common rarity. It describes in detail "
@@ -10043,9 +11687,6 @@ msgstr ""
 "popisuje všechny důležité statistiky hyeny. Věděli jste, že rané modely "
 "Hyeny zatěžovaly piloty natolik, že je mohly při vysoké akceleraci rozdrtit?"
 
-msgid "Trading Card (Rare)"
-msgstr "Sběratelská karta (vzácná)"
-
 msgid ""
 "A #oGolden Llama#0 trading card game card of #prare#0 rarity. Instead of "
 "going into the important details of the ship, it just shows a high "
@@ -10054,9 +11695,6 @@ msgstr ""
 "Karta #oZlatá Llama#0 pro obchodní karetní hru se vzácností #pvzácná#0. "
 "Místo toho, aby se věnovala důležitým detailům lodi, zobrazuje pouze "
 "holografické ztvárnění údajné Zlaté Llamy ve vysokém rozlišení."
-
-msgid "Trading Card (Uncommon)"
-msgstr "Sběratelská karta (neobvyklá)"
 
 msgid ""
 "A #oDvaered Vigilance#0 trading card game card of #buncommon#0 rarity. It "
@@ -10071,9 +11709,6 @@ msgstr ""
 "umožňují posádce překonat poškození, která by normální lodě obvykle vyřadila "
 "z provozu?"
 
-msgid "Ugly Statue"
-msgstr "Ošklivá socha"
-
 msgid ""
 "A statue given to you by Baron Sauterfeldt for your fine work. You would "
 "feel more grateful if he hadn't mentioned that his lover was making him get "
@@ -10086,9 +11721,6 @@ msgstr ""
 "Zdá se, že socha zobrazuje krevetu v motýlku, která hraje na ukulele, a její "
 "hlava se pohupuje se zrychlením lodi. Jak vkusné..."
 
-msgid "Vacuum Cleaner?"
-msgstr "Vysavač?"
-
 msgid ""
 "Found on a Four Winds fighter that was carrying a Ragnarok beam. It seems to "
 "increase the performance of your engine when the ship's mass is high. It is "
@@ -10099,17 +11731,8 @@ msgstr ""
 "vysoké hmotnosti lodi zvyšuje výkon motoru. Rozhodně to není skutečný "
 "vysavač, ale pravé jméno tohoto vybavení neznáte."
 
-msgid "Adaptive Jump"
-msgstr "Adaptivní skok"
-
 msgid "Bioship Organ"
 msgstr "Orgány Biolodi"
-
-#. Movement skill tree
-#. Only for up to destroyers
-#. Needs adrenal gland slot
-msgid "Adrenal Gland I"
-msgstr "Adrenální žláza I"
 
 msgid ""
 "The bioship adrenal gland organ is able to generate immense amounts of "
@@ -10118,45 +11741,6 @@ msgid ""
 msgstr ""
 "Orgán adrenální žlázy biolodi je schopen generovat obrovské množství "
 "adrenalinu ze surové energie, což lodi umožňuje dočasně zvýšit pohyblivost."
-
-msgid "Adrenal Gland II"
-msgstr "Adrenální žláza II"
-
-msgid "Adrenal Gland III"
-msgstr "Adrenální žláza III"
-
-msgid "Adrenaline Hormones"
-msgstr "Adrenální hormony"
-
-#. Health tree
-#. For everyone!
-#. Uses intrinsics only
-msgid "Bulky Abdomen"
-msgstr "Objemná břišní dutina"
-
-#. Misc tree
-#. For everyone!
-#. All intrinsics
-msgid "Cargo Sacs"
-msgstr "Nákladní vaky"
-
-#. Stealth skill tree
-#. For up to cruiser
-#. Uses intrinsics only
-msgid "Compound Eyes"
-msgstr "Složené oči"
-
-#. Plasma tree
-#. For everyone!
-#. Requires plasma slot for tier 5
-msgid "Corrosion I"
-msgstr "Koroze I"
-
-msgid "Corrosion II"
-msgstr "Koroze II"
-
-msgid "Enhanced Smell"
-msgstr "Vylepšený čich"
 
 msgid ""
 "Through careful manipulation of the brain stem, the bioship can be induced "
@@ -10171,9 +11755,6 @@ msgstr ""
 msgid "Active for 5 seconds since armour was last damaged."
 msgstr "Aktivní po dobu 5 sekund od posledního poškození zbroje."
 
-msgid "Feral Rage II"
-msgstr "Divoký hněv II"
-
 msgid ""
 "Through careful manipulation of the brain stem, the bioship can be induced "
 "into a primitive state of feral rage in which forward and turret weapon "
@@ -10185,9 +11766,6 @@ msgstr ""
 "stavu divoké zuřivosti, kdy se výrazně zvýší výkon předních a věžových "
 "zbraní. Pro vstup do stavu transu je nutné poškození pancíře. Další spojení "
 "s mozečkem umožňuje v transu také dočasně zvýšit obratnost lodi."
-
-msgid "Feral Rage III"
-msgstr "Divoký hněv III"
 
 #, fuzzy
 msgid ""
@@ -10211,49 +11789,8 @@ msgstr ""
 "Aktivní po dobu 7 sekund od posledního poškození zbroje nebo lze přepnout "
 "ručně s 30sekundovým chladnutím."
 
-msgid "Fuel Bladder"
-msgstr "Palivový zásobník"
-
-msgid "Hard Shell"
-msgstr "Tvrdý krunýř"
-
-msgid "Hunter's Instinct"
-msgstr "Lovecký instinkt"
-
-msgid "Natural Healing I"
-msgstr "Přírodní léčba I"
-
-msgid "Natural Healing II"
-msgstr "Přírodní léčba II"
-
-msgid "Plasma Burst"
-msgstr "Plazmový výbuch"
-
 msgid "Deals 300 plasma damage to all hostile ships in 200 range."
 msgstr "Způsobí 300 poškození plazmou všem nepřátelským lodím v dosahu 200."
-
-msgid "Reflective Shell"
-msgstr "Reflexní krunýř"
-
-msgid "Silence"
-msgstr "Ticho"
-
-msgid "The Bite - Blood Lust"
-msgstr "Kousnutí - Krvavá touha"
-
-#, fuzzy
-msgid "The Bite - Cannibal"
-msgstr "Kousnutí - Krvavá touha"
-
-msgid "The Bite - Improved"
-msgstr "Kousnutí - vylepšené"
-
-msgid "The Bite"
-msgstr "Kousnutí"
-
-#, fuzzy
-msgid "Bioship Thorn"
-msgstr "Orgány Biolodi"
 
 #. Speed Lights
 #. Make sure it's valid.
@@ -10261,18 +11798,6 @@ msgstr "Orgány Biolodi"
 #, c-format
 msgid "None"
 msgstr ""
-
-msgid "Tracking Antennae"
-msgstr "Sledovací anténa"
-
-msgid "Tunnelling Organ"
-msgstr "Tunelovací orgány"
-
-msgid "Wanderer"
-msgstr "Poutník"
-
-msgid "Dummy Engine"
-msgstr "Atrapa motoru"
 
 msgid "Core Systems (Engine)"
 msgstr "Základní systémy (motor)"
@@ -10284,18 +11809,12 @@ msgstr ""
 "Jedná se o fiktivní motor určený pouze pro použití v misích, který nic "
 "nedělá. NEKUPUJTE."
 
-msgid "Beat Up Large Engine"
-msgstr "Opotřebovaný velký motor"
-
 msgid ""
 "Clogged, corroded and cracked in every way possible while still remaining in "
 "functional condition, this engine really belongs on the scrap heap."
 msgstr ""
 "Tento motor, který je zanesený, zkorodovaný a popraskaný všemi možnými "
 "způsoby a přitom stále funkční, skutečně patří do šrotu."
-
-msgid "Krain Remige Engine"
-msgstr "Krain Remige Motor"
 
 #, fuzzy
 msgid "K. Remige Engine"
@@ -10316,10 +11835,6 @@ msgstr ""
 "motorů, ačkoli je díky svému vyladění nevhodný pro těžší plavidla."
 
 #, fuzzy
-msgid "Melendez Mammoth Engine"
-msgstr "Melendez Mammoth XL Motor"
-
-#, fuzzy
 msgid "M. Mammoth Engine"
 msgstr "Melendez Mammoth XL Motor"
 
@@ -10330,9 +11845,6 @@ msgid ""
 "maintained. Many bulk freight corporations only turn a profit thanks to the "
 "Mammoth line of engines."
 msgstr ""
-
-msgid "Nexus Bolt 3000 Engine"
-msgstr "Nexus Bolt 3000 Motor"
 
 #, fuzzy
 msgid "N. Bolt 3000 Engine"
@@ -10346,9 +11858,6 @@ msgstr ""
 "Bolt 3000 je poněkud neobvykle používaný motor určený pro cestovní lodě. "
 "Stejně jako většina motorů Nexus nevyniká rychlostí, ale jeho nízká spotřeba "
 "energie z něj činí pro některé piloty atraktivní volbu."
-
-msgid "Tricon Typhoon Engine"
-msgstr "Tricon Typhoon Motor"
 
 #, fuzzy
 msgid "T. Typhoon Engine"
@@ -10366,10 +11875,6 @@ msgstr ""
 "omezuje na lodě s výkonnými reaktory."
 
 #, fuzzy
-msgid "Unicorp Eagle 3000 Engine"
-msgstr "Unicorp Eagle 6500 Motor"
-
-#, fuzzy
 msgid "U. Eagle 3000 Engine"
 msgstr "Unicorp Eagle 6500 Motor"
 
@@ -10378,13 +11883,6 @@ msgid ""
 "captains who can afford better. While spaceworthy, the engine's performance "
 "renders it a liability in combat and uneconomical for freight hauling."
 msgstr ""
-
-msgid "Beat Up Medium Engine"
-msgstr "Opotřebovaný střední motor"
-
-#, fuzzy
-msgid "Krain Patagium Twin Engine"
-msgstr "Krain Patagium Motor"
 
 #, fuzzy
 msgid "K. Patagium Twin Engine"
@@ -10403,10 +11901,6 @@ msgstr ""
 "většinu ostatních torpédoborců vhodný kvůli jejich vyšší hmotnosti."
 
 #, fuzzy
-msgid "Melendez Buffalo Engine"
-msgstr "Melendez Buffalo XL Motor"
-
-#, fuzzy
 msgid "M. Buffalo Engine"
 msgstr "Melendez Buffalo XL Motor"
 
@@ -10416,9 +11910,6 @@ msgid ""
 "typical freight-oriented engine, the Buffalo possesses good top speed, poor "
 "handling, and excellent fuel capacity."
 msgstr ""
-
-msgid "Nexus Arrow 700 Engine"
-msgstr "Nexus Arrow 700 Motor"
 
 #, fuzzy
 msgid "N. Arrow 700 Engine"
@@ -10432,9 +11923,6 @@ msgid ""
 msgstr ""
 "Arrow 700 je slušný motor pro korvety za slušnou cenu, který kapitánům "
 "poskytuje slušnou ovladatelnost, aniž by příliš zatěžoval reaktory lodi."
-
-msgid "Tricon Cyclone Engine"
-msgstr "Tricon Cyclone Motor"
 
 #, fuzzy
 msgid "T. Cyclone Engine"
@@ -10451,10 +11939,6 @@ msgstr ""
 "používá Cyclone ve svých korvetách."
 
 #, fuzzy
-msgid "Unicorp Falcon 700 Engine"
-msgstr "Unicorp Falcon 1400 Motor"
-
-#, fuzzy
 msgid "U. Falcon 700 Engine"
 msgstr "Unicorp Falcon 1400 Motor"
 
@@ -10465,13 +11949,6 @@ msgid ""
 "when engaged in battle."
 msgstr ""
 
-msgid "Beat Up Small Engine"
-msgstr "Opotřebovaný malý motor"
-
-#, fuzzy
-msgid "Melendez Ox Engine"
-msgstr "Melendez Ox XL Motor"
-
 #, fuzzy
 msgid "M. Ox Engine"
 msgstr "Melendez Ox XL Motor"
@@ -10481,9 +11958,6 @@ msgid ""
 "The Ox enables small vessels to haul more cargo or weapons without resorting "
 "to larger and more power-hungry models."
 msgstr ""
-
-msgid "Nexus Dart 160 Engine"
-msgstr "Nexus Dart 160 Motor"
 
 #, fuzzy
 msgid "N. Dart 160 Engine"
@@ -10498,9 +11972,6 @@ msgstr ""
 "Dart 160 je dobře vybavený motor pro lehká plavidla. Nevyniká sice "
 "rychlostí, ale za rozumnou cenu nabízí dobrou ovladatelnost a výkonovou "
 "účinnost. Velmi oblíbený motor mezi civilními i vojenskými uživateli."
-
-msgid "Tricon Zephyr Engine"
-msgstr "Tricon Zephyr Motor"
 
 #, fuzzy
 msgid "T. Zephyr Engine"
@@ -10521,10 +11992,6 @@ msgstr ""
 "reaktoru."
 
 #, fuzzy
-msgid "Unicorp Hawk 160 Engine"
-msgstr "Unicorp Hawk 360 Motor"
-
-#, fuzzy
 msgid "U. Hawk 160 Engine"
 msgstr "Unicorp Hawk 360 Motor"
 
@@ -10533,9 +12000,6 @@ msgid ""
 "their ships. It's not particularly effective, but it's a lightweight engine "
 "with low energy demands, making it a solid choice for small vessels."
 msgstr ""
-
-msgid "Za'lek Test Engine"
-msgstr "Testovací motor Za'lek"
 
 #, fuzzy
 msgid "Z. Test Engine"
@@ -10552,9 +12016,6 @@ msgstr ""
 "vědcům Za'leku testovat nové chladicí a pohonné systémy. Tyto motory jsou "
 "velmi často upravovány studenty, což je činí nespolehlivými."
 
-msgid "Dummy Plating"
-msgstr "Maketa pancíře"
-
 msgid "Core Systems (Hull)"
 msgstr "Základní systémy (Trup)"
 
@@ -10565,9 +12026,6 @@ msgstr ""
 "Jedná se o atrapu trupu určenou pouze pro použití v misích, která nic "
 "nedělá. NEKUPUJTE."
 
-msgid "Nexus Phantasm Weave"
-msgstr ""
-
 msgid "N. Phantasm Weave"
 msgstr ""
 
@@ -10577,18 +12035,12 @@ msgid ""
 "without sacrificing protection."
 msgstr ""
 
-msgid "Patchwork Heavy Plating"
-msgstr "Patchworkový těžký pancíř"
-
 msgid ""
 "On the plus side, it keeps air from venting into space. But that's about it. "
 "This kind of hull maintenance is simply unacceptable."
 msgstr ""
 "Pozitivní je, že zabraňuje úniku vzduchu do prostoru. Ale to je asi tak "
 "všechno. Taková údržba trupu je prostě nepřijatelná."
-
-msgid "Red Star Large Cargo Hull"
-msgstr "Red Star velký nákladní trup"
 
 #, fuzzy
 msgid "RS. Large Cargo Hull"
@@ -10608,9 +12060,6 @@ msgstr ""
 "bezpečně dostanou tam, kde je jich nejvíce potřeba. Integrované scramblerové "
 "systémy umožňují i těm největším lodím odvrátit střely."
 
-msgid "S&K Large Cargo Hull"
-msgstr "S&K velký nákladní trup"
-
 msgid ""
 "This cargo hull from Schafer & Kane Industries makes use of state-of-the-art "
 "defensive alloys, which allows it to free up even more space for cargo "
@@ -10620,10 +12069,6 @@ msgstr ""
 "nejmodernější obranné slitiny, které umožňují uvolnit ještě více prostoru "
 "pro náklad, aniž by to bylo na úkor odolnosti."
 
-#, fuzzy
-msgid "S&K War Plating"
-msgstr "S&K těžký bojový pancíř"
-
 msgid ""
 "This heavy plating developed by Schafer & Kane Industries can endure "
 "prolonged battle. Quite a few captains and their crews owe their lives to "
@@ -10632,9 +12077,6 @@ msgstr ""
 "Tento těžký plát vyvinutý společností Schafer & Kane Industries vydrží i "
 "delší boj. Několik kapitánů a jejich posádek vděčí za svůj život právě této "
 "konfiguraci pancíře."
-
-msgid "Unicorp D-58 Heavy Plating"
-msgstr "Unicorp D-58 těžký pancíř"
 
 #, fuzzy
 msgid "U. D-58 Heavy Plating"
@@ -10648,9 +12090,6 @@ msgstr ""
 "Ačkoli se jedná o úctyhodnou konstrukci, je plátování D-58 překonáno "
 "moderními těžkými zbraněmi a většina zkušených kapitánů se rozhoduje pro "
 "těžší a modernější plátování."
-
-msgid "Krain Nanotubes Foam Padding"
-msgstr ""
 
 #, fuzzy
 msgid "K. Nanofoam Padding"
@@ -10669,9 +12108,6 @@ msgid ""
 "It does come at a hefty price tag, though."
 msgstr ""
 
-msgid "Nexus Ghost Weave"
-msgstr ""
-
 msgid "N. Ghost Weave"
 msgstr ""
 
@@ -10682,12 +12118,6 @@ msgid ""
 msgstr ""
 "Středně velké lodě se obvykle nesnaží zůstat neodhaleny, ale loděnice Nexus "
 "přesto vyvinuly úpravu trupu, která v této oblasti pomáhá"
-
-msgid "Patchwork Medium Plating"
-msgstr "Patchworkový střední pancíř"
-
-msgid "Red Star Medium Cargo Hull"
-msgstr "Red Star střední nákladový trup"
 
 #, fuzzy
 msgid "RS. Medium Cargo Hull"
@@ -10710,10 +12140,6 @@ msgstr ""
 "nepřátelské věže sledovat loď jen o něco pomaleji."
 
 #, fuzzy
-msgid "S&K Battle Plating"
-msgstr "S&K těžký bojový pancíř"
-
-#, fuzzy
 msgid ""
 "Designed for medium-sized vessels, Schafer & Kane's medium combat plating "
 "provides ample protection utilizing the latest in defensive materials."
@@ -10722,18 +12148,12 @@ msgstr ""
 "a podobně velká plavidla a poskytuje dostatečnou ochranu s využitím "
 "nejnovějších obranných materiálů."
 
-msgid "S&K Medium Cargo Hull"
-msgstr "S&K střední nákladový trup"
-
 msgid ""
 "Schafer & Kane Industries have developed a hull modification that provides "
 "both ample cargo space and protection."
 msgstr ""
 "Společnost Schafer & Kane Industries vyvinula úpravu trupu, která poskytuje "
 "dostatečný nákladní prostor i ochranu."
-
-msgid "Unicorp D-23 Medium Plating"
-msgstr "Unicorp D-23 střední pancíř"
 
 #, fuzzy
 msgid "U. D-23 Medium Plating"
@@ -10746,10 +12166,6 @@ msgstr ""
 "Pancéřování D-23 poskytuje použitelnou vrstvu pancíře pro střední lodě a "
 "neváží příliš mnoho."
 
-#, fuzzy
-msgid "Nexus Shadow Weave"
-msgstr "Loděnice Bedimann"
-
 msgid "N. Shadow Weave"
 msgstr ""
 
@@ -10761,12 +12177,6 @@ msgstr ""
 "Konfigurace lehkého maskovacího pancéřování společnosti Nexus, určená pro "
 "vojenská průzkumná a hlídková plavidla, se vyznačuje nejnovějšími materiály "
 "a geometrií pohlcujícími senzory."
-
-msgid "Patchwork Light Plating"
-msgstr "Patchworkový lehký pancíř"
-
-msgid "Red Star Small Cargo Hull"
-msgstr "Red Star malý nákladní trup"
 
 #, fuzzy
 msgid "RS. Small Cargo Hull"
@@ -10790,10 +12200,6 @@ msgstr ""
 "soukromníků."
 
 #, fuzzy
-msgid "S&K Skirmish Plating"
-msgstr "S&K lehký bojový pancíř"
-
-#, fuzzy
 msgid ""
 "Schafer & Kane Industries mostly develop for larger ships, but the Skirmish "
 "Plating configuration is a product made for light fighters and in-system "
@@ -10802,9 +12208,6 @@ msgstr ""
 "Schafer & Kane Industries většinou vyvíjí pro větší lodě, ale konfigurace "
 "ultralehkého bojového pancéřování je produkt určený pro lehké stíhačky a "
 "hlídková plavidla v systému, který poskytuje optimální ochranu."
-
-msgid "S&K Small Cargo Hull"
-msgstr "S&K malý nákladní trup"
 
 #, fuzzy
 msgid ""
@@ -10815,9 +12218,6 @@ msgstr ""
 "Ačkoli se jedná o drahou investici pro malé kurýry, tato úprava trupu od "
 "společnosti Schafer & Kane Industries poskytuje působivé množství "
 "nákladového prostoru, aniž by byla ohrožena integrita trupu."
-
-msgid "Unicorp D-2 Light Plating"
-msgstr "Unicorp D-2 lehký pancíř"
 
 #, fuzzy
 msgid "U. D-2 Light Plating"
@@ -10831,9 +12231,6 @@ msgstr ""
 "výrobců lodí oblíbené díky své nízké ceně a přiměřeným, i když ne příliš "
 "inspirativním parametrům."
 
-msgid "Dummy Systems"
-msgstr "Maketa systémů"
-
 msgid "Core Systems (System)"
 msgstr "Jádrové systémy (systém)"
 
@@ -10845,10 +12242,6 @@ msgstr ""
 "nic neumí. NEKUPUJTE."
 
 #, fuzzy
-msgid "Milspec Aegis 8501 Core System"
-msgstr "Milspec Orion 5501 jádrový systém"
-
-#, fuzzy
 msgid "M. Aegis 8501 System"
 msgstr "Milspec Orion 5501 jádrový systém"
 
@@ -10857,9 +12250,6 @@ msgid ""
 "The Aegis 8501 grants your ship excellent shield strength while preserving a "
 "high level of subsystem control and energy capacity. Fly safe, fly Milspec."
 msgstr ""
-
-msgid "Milspec Orion 8601 Core System"
-msgstr "Milspec Orion 8601 Jádrový systém"
 
 #, fuzzy
 msgid "M. Orion 8601 System"
@@ -10879,10 +12269,6 @@ msgstr ""
 "s Milspec."
 
 #, fuzzy
-msgid "Milspec Prometheus 8503 Core System"
-msgstr "Milspec Thalos 8502 Jádrový systém"
-
-#, fuzzy
 msgid "M. Prometheus 8503 System"
 msgstr "Milspec Thalos 8502 Jádrový systém"
 
@@ -10891,9 +12277,6 @@ msgid ""
 "offense. The 8503 boasts a heavy duty power generator as well as "
 "considerable shielding and subsystem control. Fly safe, fly Milspec."
 msgstr ""
-
-msgid "Milspec Thalos 8502 Core System"
-msgstr "Milspec Thalos 8502 Jádrový systém"
 
 #, fuzzy
 msgid "M. Thalos 8502 System"
@@ -10911,9 +12294,6 @@ msgstr ""
 "štítů, kterým se společnost Milspec pyšní. Létejte bezpečně, létejte s "
 "Milspec."
 
-msgid "Previous Generation Large Systems"
-msgstr "Předchozí generace jádrových systémů"
-
 #, fuzzy
 msgid "Prev. Gen. Large Systems"
 msgstr "Předchozí generace jádrových systémů"
@@ -10924,9 +12304,6 @@ msgid ""
 msgstr ""
 "Směsice procesorů a generátorů, kterou by si většina kapitánů na své lodi "
 "nenechala nainstalovat."
-
-msgid "Unicorp PT-440 Core System"
-msgstr "Unicorp PT-440 jádrový systém"
 
 #, fuzzy
 msgid "U. PT-440 System"
@@ -10941,10 +12318,6 @@ msgstr ""
 "nabízí přijatelný výkon pro lehké křižníky za zlomek ceny svých konkurentů."
 
 #, fuzzy
-msgid "Milspec Aegis 4701 Core System"
-msgstr "Milspec Orion 3701 jádrový systém"
-
-#, fuzzy
 msgid "M. Aegis 4701 System"
 msgstr "Milspec Orion 3701 jádrový systém"
 
@@ -10953,9 +12326,6 @@ msgid ""
 "The Aegis 4701 grants your ship excellent shield strength while preserving a "
 "high level of subsystem control and energy capacity. Fly safe, fly Milspec."
 msgstr ""
-
-msgid "Milspec Orion 4801 Core System"
-msgstr "Milspec Orion 4801 jádrový systém"
 
 #, fuzzy
 msgid "M. Orion 4801 System"
@@ -10973,10 +12343,6 @@ msgstr ""
 "doporučujeme jej náročným kapitánům. Létejte bezpečně, létejte s Milspec."
 
 #, fuzzy
-msgid "Milspec Prometheus 4703 Core System"
-msgstr "Milspec Thalos 4702 jádrový systém"
-
-#, fuzzy
 msgid "M. Prometheus 4703 System"
 msgstr "Milspec Thalos 4702 jádrový systém"
 
@@ -10985,9 +12351,6 @@ msgid ""
 "offense. The Prometheus 4703 boasts a heavy duty power generator as well as "
 "considerable shielding and subsystem control. Fly safe, fly Milspec."
 msgstr ""
-
-msgid "Milspec Thalos 4702 Core System"
-msgstr "Milspec Thalos 4702 jádrový systém"
 
 #, fuzzy
 msgid "M. Thalos 4702 System"
@@ -11005,15 +12368,9 @@ msgstr ""
 "štítů, kterým se společnost Milspec pyšní. Létejte bezpečně, létejte s "
 "Milspec."
 
-msgid "Previous Generation Medium Systems"
-msgstr "Předchozí generace středních systémů"
-
 #, fuzzy
 msgid "Prev. Gen. Medium Systems"
 msgstr "Předchozí generace středních systémů"
-
-msgid "Unicorp PT-200 Core System"
-msgstr "Unicorp PT-200 jádrový systém"
 
 #, fuzzy
 msgid "U. PT-200 System"
@@ -11027,10 +12384,6 @@ msgstr ""
 "kategorii středních lodí a poskytuje přijatelný výkon za přijatelnou cenu."
 
 #, fuzzy
-msgid "Milspec Aegis 2201 Core System"
-msgstr "Milspec Orion 2301 jádrový systém"
-
-#, fuzzy
 msgid "M. Aegis 2201 System"
 msgstr "Milspec Orion 2301 jádrový systém"
 
@@ -11039,9 +12392,6 @@ msgid ""
 "The Aegis 2201 grants your ship excellent shield strength while preserving a "
 "high level of subsystem control and energy capacity. Fly safe, fly Milspec."
 msgstr ""
-
-msgid "Milspec Orion 2301 Core System"
-msgstr "Milspec Orion 2301 jádrový systém"
 
 #, fuzzy
 msgid "M. Orion 2301 System"
@@ -11059,10 +12409,6 @@ msgstr ""
 "doporučený pro začínající kapitány. Létejte bezpečně, létejte s Milspec."
 
 #, fuzzy
-msgid "Milspec Prometheus 2203 Core System"
-msgstr "Milspec Thalos 2202 jádrový systém"
-
-#, fuzzy
 msgid "M. Prometheus 2203 System"
 msgstr "Milspec Thalos 2202 jádrový systém"
 
@@ -11071,9 +12417,6 @@ msgid ""
 "offense. The Prometheus 2203 boasts a heavy duty power generator as well as "
 "considerable shielding and subsystem control."
 msgstr ""
-
-msgid "Milspec Thalos 2202 Core System"
-msgstr "Milspec Thalos 2202 jádrový systém"
 
 #, fuzzy
 msgid "M. Thalos 2202 System"
@@ -11091,15 +12434,9 @@ msgstr ""
 "štítů, kterým se společnost Milspec pyšní. Létejte bezpečně, létejte s "
 "Milspec."
 
-msgid "Previous Generation Small Systems"
-msgstr "Předchozí generace malých systémů"
-
 #, fuzzy
 msgid "Prev. Gen. Small Systems"
 msgstr "Předchozí generace malých systémů"
-
-msgid "Unicorp PT-16 Core System"
-msgstr "Unicorp PT-16 jádrový systém"
 
 #, fuzzy
 msgid "U. PT-16 System"
@@ -11111,9 +12448,6 @@ msgid ""
 msgstr ""
 "PT-16 je skromný, ale špičkový jádrový systém, který nabízí přiměřený a "
 "všestranný výkon pro malá plavidla."
-
-msgid "Drone Bay"
-msgstr "Hangár dronů"
 
 #, fuzzy
 msgid "You need at least 50% reputation with the Empire."
@@ -11132,9 +12466,6 @@ msgstr ""
 "pečlivou údržbu. Všechny nástroje potřebné k péči o ně jsou součástí "
 "zásobníku."
 
-msgid "Empire Lancelot Bay"
-msgstr "Hangár imperiálních Lancelotů"
-
 msgid "E. Lancelot Bay"
 msgstr "Hangár I. Lancelotů"
 
@@ -11147,9 +12478,6 @@ msgstr ""
 "Empire Lancelot. Je dodáván se všemi zařízeními potřebnými pro údržbu a let "
 "stíhaček."
 
-msgid "Hyena Bay"
-msgstr "Hangár Hyen"
-
 msgid ""
 "This bay expands on the popular Hyena Dock, doubling the amount of Hyena "
 "interceptors that can be operated. It comes with all the amenities necessary "
@@ -11159,9 +12487,6 @@ msgstr ""
 "zařízení Hyena, která lze provozovat. Je vybavena veškerým příslušenstvím "
 "potřebným pro údržbu a provoz záchytných zařízení."
 
-msgid "Hyena Dock"
-msgstr "Dok Hyen"
-
 msgid ""
 "This dock allows your ship to carry twin Hyena interceptors. It comes with "
 "all the amenities necessary for the maintenance and operation of the "
@@ -11170,9 +12495,6 @@ msgstr ""
 "Tento dok umožňuje vaší lodi nést dva stíhače Hyena. Je vybaven veškerým "
 "zařízením potřebným pro údržbu a provoz záchytných stíhaček."
 
-msgid "Lancelot Bay"
-msgstr "Dok Lancelotů"
-
 msgid ""
 "This fighter bay allows your ship to carry a pair of Lancelot class "
 "fighters. It comes with all the devices required for the maintenance and "
@@ -11180,9 +12502,6 @@ msgid ""
 msgstr ""
 "Tento prostor pro stíhačky umožňuje vaší lodi nést dvojici stíhaček třídy "
 "Lancelot. Je vybaven všemi zařízeními potřebnými pro údržbu a let stíhaček."
-
-msgid "Pirate Hyena Bay"
-msgstr "Hangár Pirátských Hyen"
 
 msgid "P. Hyena Bay"
 msgstr "Hangár P. Hyen"
@@ -11198,9 +12517,6 @@ msgstr ""
 "potřebným pro údržbu a provoz záchytných zařízení. Pirátské hyeny mohou také "
 "pomáhat při vyklízení a plenění lodí."
 
-msgid "Pirate Hyena Dock"
-msgstr "Dok Pirátských Hyen"
-
 msgid "P. Hyena Dock"
 msgstr "Dok P. Hyen"
 
@@ -11213,9 +12529,6 @@ msgstr ""
 "Tento dok umožňuje vaší lodi nést dvojici pirátských stíhaček Hyena. Je "
 "vybaven veškerým zařízením potřebným pro údržbu a provoz záchytných "
 "stíhaček. Pirátské hyeny mohou pomáhat při vyklízení a plenění lodí."
-
-msgid "Proteron Dalton Bay"
-msgstr "Hangár Proteron Daltonů"
 
 msgid "P. Dalton Bay"
 msgstr "Hangár P. Daltonů"
@@ -11233,9 +12546,6 @@ msgstr ""
 "Proteron Dalton. Je vybaven všemi zařízeními potřebnými pro údržbu a let "
 "stíhaček."
 
-msgid "Proteron Dalton Dock"
-msgstr "Dok Proteron Daltonů"
-
 msgid "P. Dalton Dock"
 msgstr "Dok P. Daltonů"
 
@@ -11246,9 +12556,6 @@ msgid ""
 msgstr ""
 "Tento prostor pro stíhačky umožňuje lodi nést dva stíhače třídy Proteron "
 "Dalton. Je vybaven všemi zařízeními potřebnými pro údržbu a let stíhaček."
-
-msgid "Sirius Fidelity Bay"
-msgstr "Hangár Sirius Fidelity"
 
 msgid "S. Fidelity Bay"
 msgstr "Hangár S. Fidelity"
@@ -11266,9 +12573,6 @@ msgstr ""
 "Jednotlivě jsou slabé, ale ve skupině jsou silnější. Vzhledem k sirianské "
 "společnosti je to docela vhodné."
 
-msgid "Sirius Shaman Bay"
-msgstr "Hangár Sirius Šamanů"
-
 msgid "S. Shaman Bay"
 msgstr "Hangár S. Šamanů"
 
@@ -11284,9 +12588,6 @@ msgstr ""
 "Tento prostor pro stíhačky umožňuje vaší lodi nést dvojici bombardérů třídy "
 "Sirius Shaman. Je vybaven všemi zařízeními potřebnými pro údržbu a let "
 "bombardérů."
-
-msgid "Soromid Brigand Bay"
-msgstr "Hangár Soromid Brigandů"
 
 msgid "S. Brigand Bay"
 msgstr "Hangár S. Brigandů"
@@ -11304,9 +12605,6 @@ msgstr ""
 "Soromid Brigand. Je vybaven všemi zařízeními potřebnými pro údržbu a let "
 "stíhaček."
 
-msgid "Thurion Perspicacity Bay"
-msgstr "Hangár Thurion Perspicacity"
-
 msgid "T. Perspicacity Bay"
 msgstr "Hangár T. Perspicacity"
 
@@ -11321,9 +12619,6 @@ msgid ""
 msgstr ""
 "Tento prostor umožňuje vaší lodi nést čtyři stíhačky Thurion Perspicacity. "
 "Je vybaven všemi zařízeními potřebnými pro údržbu a let stíhaček."
-
-msgid "Thurion Perspicacity Dock"
-msgstr "Dok Thurion Perspicacity"
 
 msgid "T. Perspicacity Dock"
 msgstr "Dok T. Perspicacity"
@@ -11342,10 +12637,6 @@ msgstr ""
 "vybaven všemi zařízeními potřebnými pro údržbu a let stíhaček."
 
 #, fuzzy
-msgid "Thurion Scintillation Bay"
-msgstr "Thurionský Scintillation"
-
-#, fuzzy
 msgid "T. Scintillation Bay"
 msgstr "Thurionský Scintillation"
 
@@ -11358,9 +12649,6 @@ msgstr ""
 "Tento prostor pro stíhačky umožňuje vaší lodi nést dvojici bombardérů třídy "
 "Sirius Shaman. Je vybaven všemi zařízeními potřebnými pro údržbu a let "
 "bombardérů."
-
-msgid "Za'lek Bomber Drone Bay"
-msgstr "Hangár Za'lek bombardér Dronů"
 
 msgid "Z. B. Drone B."
 msgstr "H. Z. B-Dronů"
@@ -11379,9 +12667,6 @@ msgstr ""
 "schopny bombardovat nepřátelské hlavní lodě, aniž by se mateřská loď dostala "
 "do nebezpečí. Je vybaven všemi zařízeními potřebnými pro údržbu a let dronů."
 
-msgid "Za'lek Bomber Drone Mini Bay"
-msgstr "Minihangár Za'lek bombardér Dronů"
-
 msgid "Z. B. Drone mB."
 msgstr "Mh. Z. B-Dronů"
 
@@ -11399,9 +12684,6 @@ msgstr ""
 "bombardovat nepřátelské hlavní lodě, aniž by se mateřská loď dostala do "
 "nebezpečí. Je vybaven všemi zařízeními potřebnými pro údržbu a let dronů."
 
-msgid "Za'lek Heavy Drone Bay"
-msgstr "Hangár Za'lek těžkých Dronů"
-
 msgid "Z. H. Drone B."
 msgstr "H. Z. T-Dronů"
 
@@ -11418,9 +12700,6 @@ msgstr ""
 "schopna bojovat se všemi loděmi kromě těch největších. Je vybavena všemi "
 "zařízeními potřebnými pro údržbu a let dronů."
 
-msgid "Za'lek Heavy Drone Mini Bay"
-msgstr "Minihangár Za'lek těžkých Dronů"
-
 msgid "Z. H. Drone mB."
 msgstr "Mh. Z. T-Dronů"
 
@@ -11436,9 +12715,6 @@ msgstr ""
 "Z tohoto prostoru lze vypustit tři těžké drony, což mateřské lodi dodává "
 "značnou sílu. Je vybavena všemi zařízeními potřebnými pro údržbu a let dronů."
 
-msgid "Za'lek Light Drone Bay"
-msgstr "Hangár Za'lek lehkých Dronů"
-
 msgid "Z. L. Drone B."
 msgstr "H. Z. L-Dronů"
 
@@ -11452,9 +12728,6 @@ msgstr ""
 "jsou postradatelné, ale ve velkém počtu vynikají při likvidaci nepřátelských "
 "lehkých plavidel. Je vybavena všemi zařízeními potřebnými pro údržbu a let "
 "dronů."
-
-msgid "Za'lek Light Drone Mini Bay"
-msgstr "Minihangár Za'lek lehkých dronů"
 
 msgid "Z. L. Drone mB."
 msgstr "Mh. Z. L-Dronů"
@@ -11490,9 +12763,6 @@ msgstr ""
 "Obrácením toku dovnitř k sobě samému lze ztělesnit všechny ctnosti "
 "Sirichana, čímž se výrazně zvýší všechny aspekty proplouvané lodi."
 
-msgid "Cleansing Flames"
-msgstr "Očišťující plameny"
-
 msgid ""
 "Flow can be used to purify the immediate environment of the ship, bathing "
 "allies in soothing psychic emanations, while scorching enemies in damaging "
@@ -11515,9 +12785,6 @@ msgstr ""
 "překonat krátké vzdálenosti, ale nepřátelským lodím, které jsou zasaženy, se "
 "vyčerpá energie a zbytkové psychické rázové vlny je navíc zpomalí."
 
-msgid "House of Mirrors"
-msgstr "Zrcadlový dům"
-
 msgid ""
 "It's not clear how this flow ability came to be, but stories tell of a "
 "pirate who took too many flow mushrooms and ended up locked up in the "
@@ -11536,9 +12803,6 @@ msgstr ""
 "více kopií své lodi a zesílit tak hrubou ničivou sílu. To se stalo oblíbenou "
 "dovedností těch, kteří ji dokázali ovládnout."
 
-msgid "Reality Rip"
-msgstr "Roztrhání reality"
-
 msgid ""
 "A technique developed by a dreamer pirate only known as \"Snort\", by "
 "focusing large amounts of flow into a very concentrated area, and then "
@@ -11556,9 +12820,6 @@ msgstr ""
 "rozlišit mezi přítelem a nepřítelem, nekontrolované pole působí na všechny "
 "lodě stejně a zdánlivě zpomaluje čas navenek."
 
-msgid "Seeking Chakra"
-msgstr "Pátrací čakra"
-
 msgid ""
 "One of the first abilities all Sirii Cadets learn. Flow is focused into a "
 "ball which is then hurled at the target. Proficient users are able to create "
@@ -11568,35 +12829,8 @@ msgstr ""
 "soustředí do koule, která je pak vrhána na cíl. Zkušení uživatelé jsou "
 "schopni vytvořit více pátracích čaker najednou."
 
-msgid "Seeking Chakra Large"
-msgstr "Velká pátrací čakra"
-
-msgid "Seeking Chakra Medium"
-msgstr "Střední pátrací čakra"
-
-msgid "Seeking Chakra Small"
-msgstr "Malá pátrací čakra"
-
-msgid "Astral Flow Amplifier"
-msgstr "Zesilovač astrálního toku"
-
 msgid "Flow Amplifier"
 msgstr "Zesilovač toku"
-
-msgid "Astral Cannon"
-msgstr "Astrální dělo"
-
-msgid "Greater Astral Cannon"
-msgstr "Větší astrální dělo"
-
-msgid "Lesser Astral Cannon"
-msgstr "Menší astrální dělo"
-
-msgid "Internal Flow Amplifier"
-msgstr "Interní zesilovač toku"
-
-msgid "Large Flow Amplifier"
-msgstr "Velký zesilovač průtoku"
 
 msgid ""
 "Although all Sirius ships are equipped with internal flow amplifiers, some "
@@ -11610,9 +12844,6 @@ msgstr ""
 "vestavěných průtokových funkcí. Zesilovače toku jsou speciálně vyladěny na "
 "míru posádce a umožňují výrazně zesílit její psychické schopnosti a pomoci "
 "tak lodi s různými schopnostmi."
-
-msgid "Large Flow Resonator"
-msgstr "Velký průtokový rezonátor"
 
 msgid "Flow Modifier"
 msgstr "Modifikátor toku"
@@ -11628,9 +12859,6 @@ msgstr ""
 "umožňuje lodi získat regeneraci toku, i když jen na polovinu plného "
 "potenciálu."
 
-msgid "Large Meditation Chamber"
-msgstr "Velká meditační komora"
-
 msgid ""
 "A meditation chamber integrated directly into the ship. This allows the crew "
 "to aid the ship's flow capabilities and acts as an auxiliary flow buffer. A "
@@ -11640,32 +12868,7 @@ msgstr ""
 "průtokovým schopnostem lodi a funguje jako pomocný nárazník průtoku. Aby "
 "meditační komora mohla účinkovat, je zapotřebí zesilovač průtoku."
 
-msgid "Medium Flow Amplifier"
-msgstr "Střední zesilovač toku"
-
-msgid "Medium Flow Resonator"
-msgstr "Střední průtokový rezonátor"
-
-msgid "Medium Meditation Chamber"
-msgstr "Střední meditační komora"
-
-msgid "Small Flow Amplifier"
-msgstr "Malý zesilovač toku"
-
-msgid "Small Flow Resonator"
-msgstr "Malý průtokový rezonátor"
-
-msgid "Small Meditation Chamber"
-msgstr "Malá meditační komora"
-
-#, fuzzy
-msgid "Bad Shape"
-msgstr "Tvrdý krunýř"
-
 msgid "This ship is in bad shape and works much less well than usual."
-msgstr ""
-
-msgid "Black Agate Finishing"
 msgstr ""
 
 msgid ""
@@ -11678,23 +12881,13 @@ msgid ""
 "it."
 msgstr ""
 
-#, fuzzy
-msgid "Defective"
-msgstr "Reflexní krunýř"
-
 msgid "The ship has serious design defects that limit its functionality."
-msgstr ""
-
-msgid "Escape Pod"
 msgstr ""
 
 msgid ""
 "An escape pod that will automatically eject when the ship has taken fatal "
 "damage."
 msgstr ""
-
-msgid "Gauntlet Deluxe"
-msgstr "Gauntlet Deluxe"
 
 msgid ""
 "The \"Gauntlet Deluxe\" service provides a full retweak and overhaul of the "
@@ -11707,9 +12900,6 @@ msgstr ""
 "předních systémů a zbraňových obvodů věže. Optimalizace dokáže mírně zvýšit "
 "výkon bez výraznější nevýhody kromě vysoké ceny samotné služby. Vzhledem k "
 "povaze služby lze na každou loď použít pouze jednu."
-
-msgid "Gauntlet Supreme"
-msgstr "Gauntlet Supreme"
 
 msgid ""
 "This service focuses on refining and polishing the launcher systems to "
@@ -11724,9 +12914,6 @@ msgstr ""
 "přičemž specializovaní technici vše vyladí pro maximální účinnost. Vzhledem "
 "k povaze služby lze na každou loď použít pouze jednu."
 
-msgid "Hyperdrive Retool"
-msgstr ""
-
 msgid ""
 "Most ships are designed with ample tolerances around the hyperdrive fuel "
 "tanks, in order to avoid unhappy surprises to the captain. However, most "
@@ -11735,10 +12922,6 @@ msgid ""
 "hyperdrive making it a rare modification to find.\n"
 "#oThis outfit can not be removed once equipped.#0"
 msgstr ""
-
-#, fuzzy
-msgid "Luxury Furnishings"
-msgstr "Luxusní zboží"
 
 msgid ""
 "Most ships are designed to withstand the harshness of space, with the "
@@ -11751,9 +12934,6 @@ msgid ""
 "make-over."
 msgstr ""
 
-msgid "Machiavellian Fortune"
-msgstr "Machiavellistické štěstí"
-
 msgid ""
 "Fortune is like an onrushing river pushing an impenetrable wall of water "
 "ahead of it. It is possible to build dams and walls to try to contain the "
@@ -11763,9 +12943,6 @@ msgstr ""
 "stěnu. Je možné stavět hráze a zdi a snažit se tok zadržet, ale neexistuje "
 "způsob, jak zabránit vodě, aby udeřila."
 
-msgid "Machiavellian Necessity"
-msgstr "Machiavelistická nezbytnost"
-
 msgid ""
 "In order to achieve goals, decisiveness becomes a necessity. A quick strike "
 "can determine the outcome of an encounter."
@@ -11773,18 +12950,12 @@ msgstr ""
 "Pro dosažení cílů je rozhodnost nutností. Rychlý úder může rozhodnout o "
 "výsledku střetnutí."
 
-msgid "Machiavellian Virtue"
-msgstr "Machiavellistická ctnost"
-
 msgid ""
 "Virtue is the bulwark against the fickle whims of fortune. One can master "
 "their own will by mastering their own character."
 msgstr ""
 "Ctnost je oporou proti vrtkavým rozmarům štěstěny. Člověk může ovládnout "
 "svou vůli tím, že ovládne svůj charakter."
-
-msgid "Port & Polish"
-msgstr "Portování a ladění"
 
 #, fuzzy
 msgid ""
@@ -11803,9 +12974,6 @@ msgstr ""
 "lodi.\n"
 "#oTuto výbavu nelze po vybavení odstranit.#0"
 
-msgid "Wild Space Taint"
-msgstr ""
-
 msgid ""
 "The ship seems to have been tainted by whatever is subverting people into "
 "the Lost you met in Wild Space. It has spread completely throughout the "
@@ -11815,14 +12983,8 @@ msgid ""
 "nebula radiation."
 msgstr ""
 
-msgid "Worn Down"
-msgstr ""
-
 msgid "This ship is extremely worn down and is barely functional."
 msgstr ""
-
-msgid "Convulsion Launcher"
-msgstr "Konvulzní odpalovač"
 
 msgid "Convulsion L."
 msgstr "Konvulzní O."
@@ -11835,9 +12997,6 @@ msgstr ""
 "Střely třídy Thurion se zaměřují spíše na vysokou obratnost než na ničivou "
 "sílu. Ačkoli způsobuje jen malé poškození fyzických objektů, je poměrně "
 "účinná při narušování štítů."
-
-msgid "Electron Burst Cannon"
-msgstr "Dělo s elektronovým výbojem"
 
 msgid "Electron Burst C."
 msgstr "Dělo s elektron. výb."
@@ -11860,9 +13019,6 @@ msgstr ""
 "vyvinuli pro své těžší drony, aby doplnila krátký dosah a vysoké poškození "
 "jejich paprsků."
 
-msgid "EMP Grenade Launcher"
-msgstr "EMP odpalovač granátů"
-
 msgid "EMP Grenade L."
 msgstr "EMP Grenade Odp."
 
@@ -11881,9 +13037,6 @@ msgstr ""
 "zřídkakdy zničí loď a ta se pak vznáší v prostoru jako vyřazená z provozu. "
 "Obchodníci si je oblíbili, aby udrželi piráty na uzdě."
 
-msgid "Enygma Systems Huntsman Launcher"
-msgstr "Enygma Systems Huntsman Odpalovač"
-
 msgid "E. Huntsman L."
 msgstr "E. Huntsman Odp."
 
@@ -11900,9 +13053,6 @@ msgstr ""
 "iontové zbraně jim připadaly nedostatečné, a proto přepracovali torpédo "
 "Caesar IV společnosti Unicorp na těžkou EMP zbraň, která dokáže rychle "
 "usmažit systémy i těch největších válečných lodí."
-
-msgid "Enygma Systems Spearhead Launcher"
-msgstr "Enygma Systems Spearhead Odpalovač"
 
 msgid "E. Spearhead L."
 msgstr "E. Spearhead Odp."
@@ -11923,9 +13073,6 @@ msgstr ""
 "účinek. Díky omezené pohyblivosti je Spearhead vhodný především pro boj s "
 "korvetami nebo těžšími loděmi."
 
-msgid "Enygma Systems Turreted Fury Launcher"
-msgstr "Enygma Systems Turreted Fury Odpalovač"
-
 msgid "E. Fury T. L."
 msgstr "E. Fury T. Odp."
 
@@ -11939,9 +13086,6 @@ msgstr ""
 "věži. Jeho cena je vysoká, ale střely Fury mohou být účinným prostředkem k "
 "odradení pirátských stíhaček a účinným prostředkem obrany proti nepřátelským "
 "bombardérům."
-
-msgid "Enygma Systems Turreted Headhunter Launcher"
-msgstr "Enygma Systems Turreted Headhunter Odpalovač"
 
 msgid "E. Headhunter T. L."
 msgstr "E. Headhunter T. Odp."
@@ -11957,9 +13101,6 @@ msgstr ""
 "nepřátelskými stíhačkami a bombardéry. Údernost střely Headhunter v "
 "kombinaci s otočným odpalovacím zařízením společnosti Enygma Systems dokáže "
 "účinně kompenzovat případná slepá místa."
-
-msgid "Pincushion Battery"
-msgstr ""
 
 #, fuzzy
 msgid "Pincushion B."
@@ -11978,9 +13119,6 @@ msgid ""
 "Launches 1 missile at the target and 4 additional missiles that will target "
 "random nearby enemies. Lowers shield regeneration by -70% on hit."
 msgstr ""
-
-msgid "Repeating Banshee Launcher"
-msgstr "Repeating Banshee Odpalovač"
 
 msgid "R. Banshee L."
 msgstr "R. Banshee Odp."
@@ -12002,9 +13140,6 @@ msgstr ""
 "předpokládat, že buď bombardér, nebo jeho cíl budou zničeny dříve, než se "
 "vyprázdní."
 
-msgid "Shatterer Launcher"
-msgstr "Shatterer Odpalovač"
-
 msgid "Shatterer L."
 msgstr "Shatterer Odp."
 
@@ -12020,9 +13155,6 @@ msgstr ""
 "slabá, ale díky obrovskému počtu, který může Kolektiv nasadit, je tato zbraň "
 "nebezpečná."
 
-msgid "Space Mine Layer"
-msgstr "Vypouštěč vesmírných min"
-
 msgid "Space Mine L."
 msgstr "Vypouštěč min"
 
@@ -12034,9 +13166,6 @@ msgstr ""
 "Rozlehlost vesmíru omezuje ve většině situací použitelnost vesmírných min "
 "namísto automatických hlídek nebo hlídek s posádkou. Pokud je však zapotřebí "
 "hrubá výbušná síla, nic nemůže překonat ničivou sílu vesmírných min."
-
-msgid "Super-Fast Collider Launcher"
-msgstr "Super-Fast Collider Odpalovač"
 
 msgid "SFC L."
 msgstr "SFC Odpč."
@@ -12053,9 +13182,6 @@ msgstr ""
 "Superrychlý srážeč, většinou označovaný iniciálami SFC, je v podstatě obří "
 "raketou Mace, kterou Dvaered - používají k úderům na vzdálené nepřátele."
 
-msgid "TeraCom Banshee Launcher"
-msgstr "TeraCom Banshee Odpalovač"
-
 msgid "T. Banshee L."
 msgstr "T. Banshee Odpč."
 
@@ -12070,9 +13196,6 @@ msgstr ""
 "kvalitními systémy pro nabíjení a chlazení trubic, které výrazně zvyšují "
 "rychlost střelby. Tyto neřízené rakety jsou sice pomalé, ale mohou způsobit "
 "docela slušné poškození i poměrně velkým lodím."
-
-msgid "TeraCom Fury Launcher"
-msgstr "TeraCom Fury Odpalovač"
 
 msgid "T. Fury L."
 msgstr "T. Fury Odpč."
@@ -12091,9 +13214,6 @@ msgstr ""
 "dostatečně obratné na to, aby snadno zasáhly i ty nejrychlejší lodě v "
 "galaxii."
 
-msgid "TeraCom Headhunter Launcher"
-msgstr "TeraCom Headhunter Odpalovač"
-
 msgid "T. Headhunter L."
 msgstr "T. Headhunter Odpč."
 
@@ -12104,9 +13224,6 @@ msgid ""
 "The Headhunter missiles can deal devastating damage to small and medium-"
 "sized distant enemies, while remaining reasonably fast and agile."
 msgstr ""
-
-msgid "TeraCom Imperator Launcher"
-msgstr "TeraCom Imperator Odpalovač"
 
 msgid "T. Imperator L."
 msgstr "T. Imperator Odpč."
@@ -12126,9 +13243,6 @@ msgstr ""
 "torpédo třídy Imperator devastující ničivou sílu, i když chvíli potrvá, než "
 "dosáhne svého cíle. Rychlejší křižníky jej mohou zcela předstihnout."
 
-msgid "TeraCom Mace Launcher"
-msgstr "TeraCom Mace Odpalovač"
-
 msgid "T. Mace L."
 msgstr "T. Mace Odpč."
 
@@ -12142,9 +13256,6 @@ msgstr ""
 "posílení maximální palebné síly ve vypjatých situacích. Dokáže mnohem lépe "
 "poškozovat lehké cíle než většina energetických kanónů třídy stíhačů, ale "
 "její nevýhodou je, že jí dochází munice již po krátké době střelby."
-
-msgid "TeraCom Medusa Launcher"
-msgstr "TeraCom Medusa Odpalovač"
 
 msgid "T. Medusa L."
 msgstr "T. Medusa Odpč."
@@ -12161,9 +13272,6 @@ msgstr ""
 "systémů lodi, čímž ji zneškodní a připraví k nalodění. Bojová hlavice "
 "způsobuje pouze omezené poškození, takže touto zbraní lze účinně vyřadit i "
 "slabě pancéřované cíle. Medusa však není nejobratnější střelou na trhu."
-
-msgid "TeraCom Vengeance Launcher"
-msgstr "TeraCom Vengeance Odpalovač"
 
 msgid "T. Vengeance L."
 msgstr "T. Vengeance Odpč."
@@ -12186,9 +13294,6 @@ msgstr ""
 "odpalovacího zařízení společnosti TeraCom výrazně zkracuje dobu potřebnou k "
 "dosažení zaměření. Někdy těch pár sekund může rozhodnout."
 
-msgid "Turreted Convulsion Launcher"
-msgstr "Turreted Convulsion Odpalovač"
-
 msgid "T. Convulsion L."
 msgstr "T. Convulsion Odpč."
 
@@ -12207,9 +13312,6 @@ msgstr ""
 "Toto odpalovací zařízení je umístěno na věži a má větší kapacitu munice než "
 "standardní odpalovací zařízení."
 
-msgid "Unicorp Caesar IV Launcher"
-msgstr "Unicorp Caesar IV Odpalovač"
-
 msgid "U. Caesar IV L."
 msgstr "U. Caesar IV Odpč."
 
@@ -12221,9 +13323,6 @@ msgstr ""
 "Torpéda třídy Caesar IV patří k nejběžnějším torpédovým zbraním. Ačkoli jsou "
 "mnohem pomalejší než střely a proti mobilním cílům jsou nepoužitelná, "
 "zůstávají dostatečně obratná, aby mohla pronásledovat křižníky."
-
-msgid "Unicorp Storm Launcher"
-msgstr "Unicorp Storm Odpalovač"
 
 msgid "U. Storm L."
 msgstr "U. Storm Odpč."
@@ -12246,9 +13345,6 @@ msgstr ""
 "příliš nákladný na to, aby jím mohlo být námořnictvo masově vybaveno. To je "
 "důvod, proč tuto velmi smrtící zbraň používají pouze císařské elitní eskadry."
 
-msgid "Za'lek Hunter Launcher"
-msgstr "Za'lek Hunter Odpalovač"
-
 msgid "Z. Hunter L."
 msgstr "Z. Hunter Odpč."
 
@@ -12267,9 +13363,6 @@ msgstr ""
 "svému cíli a vypustí svou feromagneticko-hydraulickou nálož se smrtícím "
 "účinkem."
 
-msgid "Za'lek Reaper Launcher"
-msgstr "Za'lek Reaper Odpalovač"
-
 msgid "Z. Reaper L."
 msgstr "Z. Reaper Odpč."
 
@@ -12285,14 +13378,8 @@ msgstr ""
 "nahrazeno obrovskou feromagnetickou hydraulickou bombou. Je to odpověď "
 "Za'leků na torpéda méně vyspělých národů a rozhodně je to odpověď výmluvná."
 
-msgid "Local System Map"
-msgstr "Mapa lokálního systému"
-
 msgid "This map contains information about the local system."
 msgstr "Tato mapa obsahuje informace o místním systému."
-
-msgid "Map: Collective Space"
-msgstr "Mapa: prostoru Kolektivu"
 
 msgid ""
 "This map charts the known jumps that connect the systems occupied by the "
@@ -12303,18 +13390,12 @@ msgstr ""
 "Kolektivem. Impérium bohužel nemá přesné informace o prostředcích Kolektivu "
 "v této oblasti."
 
-msgid "Map: Dvaered Core"
-msgstr "Mapa: Jádro Dvaeredu"
-
 msgid ""
 "This map lists the locations of all Dvaered worlds and stations close to the "
 "Dvaered capital."
 msgstr ""
 "Na této mapě jsou uvedeny polohy všech dvaeredských světů a stanic v "
 "blízkosti hlavního města Dvaered."
-
-msgid "Map: Empire-Soromid Trade Route"
-msgstr "Mapa: Obchodní cesta mezi Impériem a Soromidu"
 
 msgid ""
 "This map contains the main trade route between Empire and Soromid controlled "
@@ -12323,18 +13404,12 @@ msgstr ""
 "Tato mapa obsahuje hlavní obchodní trasu mezi Impériem a prostorem ovládaným "
 "Soromidy."
 
-msgid "Map: Empire Core"
-msgstr "Mapa: Jádro Impéria"
-
 msgid ""
 "This map lists the locations of all Imperial worlds and stations close to "
 "the Imperial capital."
 msgstr ""
 "Na této mapě jsou uvedeny polohy všech císařských světů a stanic v blízkosti "
 "Imperálního hlavního města."
-
-msgid "Map: FLF-Pirate Route"
-msgstr "Mapa: POF-Pirátská trasa"
 
 msgid ""
 "This map contains the location of the two-way hidden jump point between the "
@@ -12343,18 +13418,12 @@ msgstr ""
 "Tato mapa obsahuje umístění obousměrného skrytého skokového bodu mezi "
 "základnou POF a nejbližší pirátskou pevností."
 
-msgid "Map: FLF Hidden Jumps"
-msgstr "Mapa: Skryté skoky POF"
-
 msgid ""
 "This map contains the location of hidden jump points between the FLF base "
 "and Frontier space."
 msgstr ""
 "Tato mapa obsahuje umístění skrytých skokových bodů mezi základnou POF a "
 "prostorem Frontier."
-
-msgid "Map: Inner Nebula Secret Jump"
-msgstr "Mapa: Tajný skok ve vnitřní mlhovině"
 
 msgid ""
 "This map contains the location of a hidden jump point leading to the inner "
@@ -12363,18 +13432,12 @@ msgstr ""
 "Tato mapa obsahuje polohu skrytého skokového bodu vedoucího do vnitřní "
 "mlhoviny."
 
-msgid "Map: Kretogg's Hypergate"
-msgstr "Mapa: Kretoggova hyperbrána"
-
 msgid ""
 "A map revealing a hidden jump point from Kretogg to NGC-14549, leading to "
 "the Black Lotus Clan-controlled hypergate."
 msgstr ""
 "Mapa odhalující skrytý skokový bod z Kretoggu do NGC-14549, který vede k "
 "hyperbráně ovládané klanem Černý lotos."
-
-msgid "Map: Kretogg's Secrets"
-msgstr "Mapa: Kretoggova tajemství"
 
 msgid ""
 "This map contains the position of hidden jump points leading straight into "
@@ -12383,18 +13446,12 @@ msgstr ""
 "Tato mapa obsahuje polohu skrytých skokových bodů vedoucích přímo do "
 "prostoru Za'leku."
 
-msgid "Map: Nebula Edge"
-msgstr "Mapa: Okraj mlhoviny"
-
 msgid ""
 "This map contains border of the Nebula with Dvaered/Imperial space. It also "
 "lists the deepest Imperial station within the Nebula."
 msgstr ""
 "Tato mapa obsahuje hranici mlhoviny s Dvaeredem/Imperiálním prostorem. Je "
 "zde také uvedena nejhlubší císařská stanice v mlhovině."
-
-msgid "Map: New Haven's Secrets"
-msgstr "Mapa: Tajemství New Havenu"
 
 msgid ""
 "This map contains the position of a set of hidden jump points in and around "
@@ -12403,18 +13460,12 @@ msgstr ""
 "Tato mapa obsahuje polohu sady skrytých skokových bodů v systému New Haven a "
 "jeho okolí."
 
-msgid "Map: Pirate Strongholds"
-msgstr "Mapa: Pirátské pevnosti"
-
 msgid ""
 "This map contains the locations of the pirate clan worlds, and a few "
 "stations that are known to offer opportunities for pirates in the vicinity."
 msgstr ""
 "Tato mapa obsahuje lokace světů pirátských klanů a několik stanic, o kterých "
 "je známo, že nabízejí příležitosti pro piráty v okolí."
-
-msgid "Map: Qorel Tunnel"
-msgstr "Mapa: Qorelský tunel"
 
 msgid ""
 "This map contains the location of the jump points in and out of the Qorel "
@@ -12427,15 +13478,9 @@ msgstr ""
 "polohy těchto velmi speciálních skokových bodů je obvykle velmi nákladné, "
 "aby se snížil počet lidí, kteří k nim mají přístup."
 
-msgid "Map: Sirian Border Systems"
-msgstr "Mapa: Hraniční systémy Siria"
-
 msgid "This map contains the systems that lead to Sirius controlled space."
 msgstr ""
 "Tato mapa obsahuje systémy, které vedou do prostoru pod kontrolou Siria."
-
-msgid "Map: Sirius Core"
-msgstr "Mapa: Jádro Siria"
 
 msgid ""
 "This map contains the location of Mutris, home of Sirichana and capital to "
@@ -12443,9 +13488,6 @@ msgid ""
 msgstr ""
 "Tato mapa obsahuje polohu Mutrisu, domova Sirichany a hlavního města "
 "Sirianů, a okolních systémů."
-
-msgid "Map: Sol"
-msgstr "Mapa: Sol"
 
 msgid ""
 "This map contains the location of the Sol system, the origin of mankind. "
@@ -12458,9 +13500,6 @@ msgstr ""
 "známá loď v galaxii nemůže bezpečně proplout. Co leží za Sol, pokud vůbec "
 "něco, není známo."
 
-msgid "Map: The Frontier"
-msgstr "Mapa: Pohraničí"
-
 msgid ""
 "This map contains an east-west route through Frontier space, as well as the "
 "location of the Frontier Council."
@@ -12468,16 +13507,10 @@ msgstr ""
 "Tato mapa obsahuje východo-západní trasu prostorem Pohraničí a umístění Rady "
 "Pohraničí."
 
-msgid "Map: Thurion Core"
-msgstr "Mapa: Jádro Thurionu"
-
 msgid ""
 "This map provides the hidden route to the Thurion core systems outside of "
 "the Nebula."
 msgstr "Tato mapa poskytuje skrytou cestu k jádru Thurionu mimo mlhovinu."
-
-msgid "Map: Za'lek Core"
-msgstr "Mapa: Jádro Za'leku"
 
 msgid ""
 "This map contains the heart of Za'lek space, including its capital Ruadan "
@@ -12485,9 +13518,6 @@ msgid ""
 msgstr ""
 "Tato mapa obsahuje srdce Za'leku, včetně jeho hlavního města Ruadanu a "
 "centrálního uzlu Za'lek."
-
-msgid "Ultra Map"
-msgstr "Ultra mapa"
 
 msgid "For cheating."
 msgstr "Pro podvádění."
@@ -12534,26 +13564,14 @@ msgstr ""
 msgid "Heavy Weapon"
 msgstr "Těžké zbraně"
 
-msgid "GUI - Brushed"
-msgstr "Grafické uživatelské rozhraní - Vybroušené"
-
 msgid "Outfit corresponding with the \"Brushed\" GUI."
 msgstr "Výbava odpovídající grafickému uživatelskému rozhraní \"Vybroušené\"."
-
-msgid "GUI - Legacy"
-msgstr "Grafické uživatelské rozhraní - Zastaralé"
 
 msgid "Outfit corresponding with the \"Legacy\" GUI."
 msgstr "Výbava odpovídající grafickému uživatelskému rozhraní \"Zastaralé\"."
 
-msgid "GUI - Slim"
-msgstr "Grafické uživatelské rozhraní - Štíhlé"
-
 msgid "Outfit corresponding with the \"Slim\" GUI."
 msgstr "Výbava odpovídající grafickému uživatelskému rozhraní \"Štíhlé\"."
-
-msgid "GUI - Slimv2"
-msgstr "Grafické uživatelské rozhraní - Štíhlé v2"
 
 msgid "Outfit corresponding with the \"Slimv2\" GUI."
 msgstr "Výbava odpovídající grafickému uživatelskému rozhraní \"Štíhlé v2\"."
@@ -12639,20 +13657,12 @@ msgstr ""
 "Tato licence vás opravňuje k plnění žoldáckých misí a především k vybírání "
 "odměn."
 
-#, fuzzy
-msgid "Mystery Outfit"
-msgstr "Vybavení map"
-
 msgid "Gacha"
 msgstr ""
 
 msgid ""
 "A mystery outfit of the finest quality! Guaranteed to be of two star rarity. "
 "You will not know what you get until you buy it."
-msgstr ""
-
-#. Create the lootable entry
-msgid "Treasure Map"
 msgstr ""
 
 msgid "Map"
@@ -12662,10 +13672,6 @@ msgid ""
 "A treasure map leading to something that could turn out to be useful. "
 "However, you won't know what there is until you find it."
 msgstr ""
-
-#, fuzzy
-msgid "Dvaered Flare Battery"
-msgstr "Doručení zboží Dvaeredu"
 
 msgid "D. Flare B."
 msgstr ""
@@ -12686,9 +13692,6 @@ msgid ""
 "flares, which has led to more than one major incident in the past."
 msgstr ""
 
-msgid "Guardian Interception System"
-msgstr "Odchytový systém Guardian"
-
 msgid "Guardian I.S."
 msgstr ""
 
@@ -12704,9 +13707,6 @@ msgstr ""
 "dostatečnou palebnou sílu, aby účinně likvidoval torpéda a další těžkou "
 "munici, vyniká při sledování lehčích střel a lze jej použít i k odstrašení "
 "malých útočných plavidel."
-
-msgid "Guardian Overseer System"
-msgstr "Guardian Overseer Systém"
 
 msgid "Guardian O.S."
 msgstr ""
@@ -12742,9 +13742,6 @@ msgid ""
 "tolerances and controls giving it significantly more reliability."
 msgstr ""
 
-msgid "Spittle Tubuloid Cluster"
-msgstr "Spittle Tubuloid Klastr"
-
 #, fuzzy
 msgid ""
 "Actually consisting of a small colony of space-hardened parasites, known as "
@@ -12764,9 +13761,6 @@ msgstr ""
 "jim umožňuje účinně chránit loď, ke které jsou připojeny, před "
 "nepancéřovanými střelami."
 
-msgid "ZIBS-16"
-msgstr ""
-
 msgid ""
 "The Za'lek Interception Beam System or ZIBS uses uses a 16-faceted "
 "polyhedral focusing crystal which enable very accurate and quick movements, "
@@ -12777,9 +13771,6 @@ msgid ""
 "Field-testing quickly showed that the weapon was of very limited use in non-"
 "point defence roles, which resulted in the creation of the ZIBS-16, and "
 "later ZIBS-32 line of beam-based point defence."
-msgstr ""
-
-msgid "ZIBS-32"
 msgstr ""
 
 msgid ""
@@ -12797,33 +13788,16 @@ msgid ""
 "spaceport bars across the House Za'lek territory."
 msgstr ""
 
-msgid "Base Ripper MK2"
-msgstr "Base Ripper MK2"
-
 msgid "This weapon is a cheat. It is not meant to be used by players."
 msgstr "Tato zbraň je podvod. Hráči ji nemají používat."
-
-msgid "Bikers Fury Launcher"
-msgstr "Bikers Fury Odpalovač"
-
-#, fuzzy
-msgid "Four Winds Laser Cannon"
-msgstr "Podvodníkovo laserové dělo"
 
 #, fuzzy
 msgid "F.W. Laser Cannon"
 msgstr "Podvodníkovo laserové dělo"
 
 #, fuzzy
-msgid "Four Winds Ragnarok Beam"
-msgstr "Paprsek Ragnarok"
-
-#, fuzzy
 msgid "F.W. Ragnarok Beam"
 msgstr "Paprsek Ragnarok"
-
-msgid "Active Plating"
-msgstr "Aktivní pancíř"
 
 msgid "Armour Modifier"
 msgstr "Modifikátor zbroje"
@@ -12840,10 +13814,6 @@ msgstr ""
 "elektromagnetické stínicí cívky rozmístěné po celém trupu se výrazně zvyšuje "
 "pevnost pancíře za cenu dramaticky zvýšené spotřeby energie."
 
-#, fuzzy
-msgid "Adaptive Camouflage Plating"
-msgstr "Adaptivní maskovací pancíř"
-
 msgid ""
 "This armour plating does not provide any protection, instead it makes the "
 "ship harder to detect. It has integrated sensors that measure the ambient "
@@ -12854,10 +13824,6 @@ msgstr ""
 "integrované senzory, které měří okolní záření v okolí lodi, a je schopna "
 "vysílat prostorově rozlišené záření v takovém množství, aby se pro pasivní "
 "senzory jevilo jako neviditelné."
-
-#, fuzzy
-msgid "Auxiliary Processing Unit I"
-msgstr "Pomocná procesní jednotka I"
 
 msgid "A.P.U. I"
 msgstr ""
@@ -12873,10 +13839,6 @@ msgstr ""
 "Přídavná procesorová jednotka, která doplňuje hlavní procesor základního "
 "systému a poskytuje malým lodím o něco větší výpočetní výkon."
 
-#, fuzzy
-msgid "Auxiliary Processing Unit II"
-msgstr "Pomocná procesní jednotka II"
-
 msgid "A.P.U. II"
 msgstr ""
 
@@ -12887,10 +13849,6 @@ msgid ""
 msgstr ""
 "Přídavná procesorová jednotka, která doplňuje hlavní procesor základního "
 "systému a poskytuje středním lodím o něco větší výpočetní výkon."
-
-#, fuzzy
-msgid "Auxiliary Processing Unit III"
-msgstr "Pomocná procesní jednotka III"
 
 msgid "A.P.U. III"
 msgstr ""
@@ -12903,10 +13861,6 @@ msgstr ""
 "Přídavná procesorová jednotka, která doplňuje hlavní procesor základního "
 "systému a poskytuje velkým lodím o něco větší výpočetní výkon."
 
-#, fuzzy
-msgid "Auxiliary Processing Unit IV"
-msgstr "Pomocná procesní jednotka IV"
-
 msgid "A.P.U. IV"
 msgstr ""
 
@@ -12917,9 +13871,6 @@ msgid ""
 msgstr ""
 "Přídavná procesorová jednotka, která doplňuje hlavní procesor základního "
 "systému a poskytuje kapitálním lodím o něco větší výpočetní výkon."
-
-msgid "Battery I"
-msgstr "Baterie I"
 
 msgid "Energy Modifier"
 msgstr "Energetický modifikátor"
@@ -12932,9 +13883,6 @@ msgstr ""
 "Velká bateriová jednotka určená pro 250 MJ energie. Dostatečně malá pro "
 "montáž na mnoho lehkých plavidel."
 
-msgid "Battery II"
-msgstr "Baterie II"
-
 #, fuzzy
 msgid ""
 "A large battery unit designed to hold 500 GJ of energy. Ideally mounted on "
@@ -12942,9 +13890,6 @@ msgid ""
 msgstr ""
 "Velká bateriová jednotka určená pro 500 MJ energie. Ideální pro montáž na "
 "středně velká až velká plavidla."
-
-msgid "Battery III"
-msgstr "Baterie III"
 
 #, fuzzy
 msgid ""
@@ -12954,9 +13899,6 @@ msgstr ""
 "Velmi velká bateriová jednotka určená pro 1200 MJ energie. Lze ji namontovat "
 "pouze na velmi velké lodě."
 
-msgid "Battery IV"
-msgstr "Baterie IV"
-
 #, fuzzy
 msgid ""
 "A massive battery unit designed to hold 1500 GJ of energy. Given the mass of "
@@ -12964,9 +13906,6 @@ msgid ""
 msgstr ""
 "Obrovská bateriová jednotka, která pojme 2000 MJ energie. Vzhledem k "
 "hmotnosti této baterie je vhodné ji montovat pouze na hlavní lodě."
-
-msgid "Biometal Armour"
-msgstr "Biometalický pancíř"
 
 msgid ""
 "Biometal is an armour that regenerates itself due to genetically-engineered "
@@ -12979,9 +13918,6 @@ msgstr ""
 "obtížné kultivaci bakterií má Biometal větší hmotnost než alternativy a je "
 "nejdražším pláštěm trupu."
 
-msgid "Compact Lightsail"
-msgstr ""
-
 msgid "Manoeuvrability Modifier"
 msgstr "Modifikátor manévrovatelnosti"
 
@@ -12991,9 +13927,6 @@ msgid ""
 "similar radiation to propel the ship along. While not useful as a sole "
 "method of propulsion, it can provide a minor aid in the ship's acceleration."
 msgstr ""
-
-msgid "Engine Reroute"
-msgstr "Přesměrování motoru"
 
 msgid ""
 "This enhancement routes energy from the ship's energy supplies to the "
@@ -13008,9 +13941,6 @@ msgstr ""
 "spouštět i zpětným chodem, což umožňuje brzdění s malou ztrátou schopnosti "
 "zpětného tahu."
 
-msgid "Improved Stabilizer"
-msgstr "Vylepšený stabilizátor"
-
 msgid ""
 "By improving your ship's stabilization systems drastically, this "
 "modification will allow you to reach higher speeds while still keeping the "
@@ -13021,9 +13951,6 @@ msgstr ""
 "dosahovat vyšších rychlostí a zároveň udržovat stabilitu lodi. Dalším "
 "vedlejším efektem je, že vylepšené stabilizátory umožňují reverzaci trysek s "
 "malou ztrátou tahu."
-
-msgid "Large Cargo Pod"
-msgstr "Velký nákladní Pod"
 
 msgid "Cargo Expansion"
 msgstr "Rozšíření nákladní dopravy"
@@ -13037,18 +13964,12 @@ msgstr ""
 "tomu, že jsou přidány zvenčí k trupu lodi, mají vedlejší účinek v podobě "
 "mírného zvýšení setrvačnosti nákladu."
 
-msgid "Large Fuel Pod"
-msgstr "Velký palivový zásobník"
-
 msgid "Fuel Modifier"
 msgstr "Modifikátor paliva"
 
 msgid "The fuel pod allows a ship to store more fuel for hyperspace jumps."
 msgstr ""
 "Palivový modul umožňuje lodi uložit více paliva pro skoky hyperprostorem."
-
-msgid "Large Shield Booster"
-msgstr "Velký posilovač štítu"
 
 msgid "Shield Booster"
 msgstr "Posilovač štítu"
@@ -13062,18 +13983,6 @@ msgstr ""
 "Umožní vám rychlejší regeneraci štítu a poskytne vám malé zvýšení kapacity "
 "štítu na úkor odčerpání části energie z lodi."
 
-msgid "Medium Cargo Pod"
-msgstr "Střední nákladní Pod"
-
-msgid "Medium Fuel Pod"
-msgstr "Střední palivová nádrž"
-
-msgid "Medium Shield Booster"
-msgstr "Střední posilovač štítu"
-
-msgid "Microbond Plating"
-msgstr "Microbond pancíř"
-
 msgid ""
 "Further developed from Nanobond plating, Microbond plating is a less dense, "
 "lighter revision that's still stronger than Plasteel, making it a great "
@@ -13082,9 +13991,6 @@ msgstr ""
 "Pancíř Microbond, který byl dále vyvinut z pancéřování Nanobond, je méně "
 "hustá a lehčí revize, která je stále pevnější než povlak Plasteel, takže je "
 "skvělou volbou pro zpevnění trupu středně velké lodi."
-
-msgid "Nanobond Plating"
-msgstr "Nanobond pancíř"
 
 msgid ""
 "Nanobond is the successor to Plasteel. It follows the same approach but has "
@@ -13095,9 +14001,6 @@ msgstr ""
 "Nanobond je nástupcem materiálu Plasteel. Vychází ze stejného přístupu, ale "
 "má výrazně zdokonalený výrobní proces, který zajišťuje větší hustotu částic. "
 "Výsledkem je mnohem robustnější materiál, který je však podstatně dražší."
-
-msgid "Nanofiber Structural Enhancement"
-msgstr ""
 
 msgid ""
 "A ship without structural integrity is floating space junk. However, most "
@@ -13110,9 +14013,6 @@ msgid ""
 "disclaimer saying it is not suited for combat, but that is more like a "
 "suggestion, right?"
 msgstr ""
-
-msgid "Nebular Shielding Prototype"
-msgstr "Prototyp mlhovinového stínění"
 
 msgid "Shield Modifier"
 msgstr "Modifikátor štítu"
@@ -13130,9 +14030,6 @@ msgstr ""
 "Dokáže kompenzovat až 30 MW nestálosti mlhoviny. Spotřebuje 1 MW energie na "
 "1 MW zabráněného poškození."
 
-msgid "Plasteel Plating"
-msgstr "Plasteel pancíř"
-
 msgid ""
 "Plasteel was one of man's greatest improvements on materials. It's a cheap, "
 "strong armour that seems to take the best from both plastic and steel, "
@@ -13146,9 +14043,6 @@ msgstr ""
 "neuvěřitelnou pevnost. Druhý růst byl možný pouze s tímto materiálem. Ačkoli "
 "už není nejmodernější, jeho nízká cena láká mnoho kupujících."
 
-msgid "Reactor Class I"
-msgstr "Reaktor třídy I"
-
 msgid "Power Modifier"
 msgstr "Modifikátor výkonu"
 
@@ -13161,9 +14055,6 @@ msgstr ""
 "potřebnou energii. Nenahrazuje stávající reaktor, ale pracuje vedle něj a "
 "připojuje se přímo k toku energie."
 
-msgid "Reactor Class II"
-msgstr "Reaktor třídy II"
-
 msgid ""
 "The class II reactor uses a newer fusion technology than the class I, "
 "permitting it to have greater energy density. The result is a mid-sized "
@@ -13173,9 +14064,6 @@ msgstr ""
 "mu umožňuje dosáhnout větší hustoty energie. Výsledkem je reaktor střední "
 "velikosti, který je nejvhodnější používat na lodích se středními "
 "energetickými nároky."
-
-msgid "Reactor Class III"
-msgstr "Reaktor třídy III"
 
 msgid ""
 "The immense class III reactor provides enough power for nearly anything. The "
@@ -13190,9 +14078,6 @@ msgstr ""
 "III vedou k tomu, že se pohodlně vejde pouze na velká plavidla, ačkoli jeho "
 "energetický výkon by byl nadměrný pro cokoli menšího."
 
-msgid "Shield Capacitor I"
-msgstr "Štítový kondenzátor I"
-
 msgid ""
 "An enhancement for the shield power system, giving small ships a better "
 "chance of escaping attackers."
@@ -13200,23 +14085,14 @@ msgstr ""
 "Vylepšení systému napájení štítů, které dává malým lodím větší šanci "
 "uniknout útočníkům."
 
-msgid "Shield Capacitor II"
-msgstr "Štítový kondenzátor II"
-
 msgid ""
 "A more powerful shield enhancer, providing better protection during "
 "skirmishes."
 msgstr "Silnější zesilovač štítu, který poskytuje lepší ochranu během potyček."
 
-msgid "Shield Capacitor III"
-msgstr "Štítový kondenzátor III"
-
 msgid ""
 "A heavy duty shield enhancer for ships that face combat on a regular basis."
 msgstr "Silný zesilovač štítu pro lodě, které pravidelně čelí boji."
-
-msgid "Shield Capacitor IV"
-msgstr "Štítový kondenzátor IV"
 
 msgid ""
 "The pinnacle in shield boosting technology, reinforcing the defences of "
@@ -13224,18 +14100,6 @@ msgid ""
 msgstr ""
 "Špičková technologie posilování štítů, která posiluje obranu lodí bojujících "
 "v první linii."
-
-msgid "Small Cargo Pod"
-msgstr "Malý nákladní pod"
-
-msgid "Small Fuel Pod"
-msgstr "Malá palivová nádrž"
-
-msgid "Small Shield Booster"
-msgstr "Malý zesilovač štítu"
-
-msgid "Bioship Pheromone Emitter"
-msgstr "Feromonový emitér Biolodě"
 
 msgid "Pheromone Emitter"
 msgstr "Feromonový emitér"
@@ -13257,9 +14121,6 @@ msgstr ""
 msgid "Release bioship pheromones when used."
 msgstr "Při použití uvolňuje feromony biolodě."
 
-msgid "Daphne's Leap"
-msgstr "Skok Daphne"
-
 msgid "System Improvement"
 msgstr "Zdokonalení systému"
 
@@ -13277,9 +14138,6 @@ msgstr ""
 "je posunut až na hranici svých možností, dokáže výrazně zkrátit dobu "
 "potřebnou ke skoku, avšak za cenu prodloužení celkové doby potřebné ke skoku "
 "kvůli nutné kalibraci za letu."
-
-msgid "Executor Shield Aura"
-msgstr "Štítová aura Executora"
 
 msgid "Aura"
 msgstr "Aura"
@@ -13308,9 +14166,6 @@ msgstr ""
 "Poskytuje +30% regeneraci štítu všem přátelským lodím v okruhu 3000 "
 "jednotek. Dosah je ovlivněn bonusem za detekci."
 
-msgid "Fake Transponder"
-msgstr "Falešný transpondér"
-
 msgid ""
 "A fake transponder to make ships appear to be a non-descript and harmless "
 "independent ship."
@@ -13322,9 +14177,6 @@ msgid ""
 msgstr ""
 "Učiní loď nezávislou na ostatních lodích. Po objevení se stane dočasně "
 "neplatné."
-
-msgid "Fuel Recycler"
-msgstr "Recyklátor paliva"
 
 msgid ""
 "While the process of refining fuel for space ships is possible using cheap "
@@ -13347,10 +14199,6 @@ msgstr ""
 msgid "#gAllows converting space resources to fuel.#0"
 msgstr "#gUmožňuje převod vesmírných zdrojů na palivo.#0"
 
-#, fuzzy
-msgid "Fuelshell Plating"
-msgstr "Plasteel pancíř"
-
 msgid ""
 "An experimental hull design for scout ships that would allow them to "
 "significantly increase their travel range by using a porous hull material "
@@ -13361,9 +14209,6 @@ msgid ""
 "production. It might have to do with turning the entire ship into a "
 "tinderbox and leaking fuel when sustaining damage, but who knows?"
 msgstr ""
-
-msgid "Hades Torch"
-msgstr "Hádova pochodeň"
 
 #, fuzzy
 msgid ""
@@ -13377,9 +14222,6 @@ msgstr ""
 
 msgid "#rHot hot hot!#0"
 msgstr ""
-
-msgid "Homebrew Processing Unit"
-msgstr "Domácí zpracovatelská jednotka"
 
 msgid ""
 "This core system is easily recognizable as the work of some amateurs, with "
@@ -13395,9 +14237,6 @@ msgstr ""
 "lásky a péče. Zatímco štít a výpočetní výkon jsou menší než u většiny "
 "podobných jader, má výrazně lépe propracovanou funkčnost v jiných oblastech."
 
-msgid "Prototype Systems T-IVa 'Quickshell'"
-msgstr ""
-
 msgid "P.S. T-IVa 'Qickshell'"
 msgstr ""
 
@@ -13410,9 +14249,6 @@ msgid ""
 "that is just a matter of time. It is only a matter of time before Project "
 "Thurion becomes the technological backbone of civilization!\""
 msgstr ""
-
-msgid "Pulse Scanner"
-msgstr "Pulzní skener"
 
 #, fuzzy
 msgid ""
@@ -13442,9 +14278,6 @@ msgstr ""
 "Aktivuje se na 5 sekund s 15sekundovým obdobím ochlazení.\n"
 "#pMůže být použito pro sledování signálů anomálií.#0"
 
-msgid "Squadron Synchronizer Module"
-msgstr "Modul synchronizace letky"
-
 msgid ""
 "It's not clear how Misi got the goods to sell and they evade questions on "
 "the topic, however, the Squadron Synchronizer Module can be easily connected "
@@ -13457,9 +14290,6 @@ msgstr ""
 "lodi a zvýšit tak počet lodí, kterým může efektivně a přesně velet. Ve své "
 "podstatě zřejmě mění některé základní algoritmy tak, aby byly efektivnější a "
 "využívaly menší šířku pásma."
-
-msgid "Valkyrie Beam"
-msgstr "Paprsek Valkýry"
 
 msgid ""
 "The Valkyrie Beam is a heavily modified version of the Ragnarok Beam, where "
@@ -13476,9 +14306,6 @@ msgstr ""
 msgid "#rDrains 80 shield per second when firing and for one second after.#0"
 msgstr "#rVyčerpá 80 štítů za sekundu při střelbě a jednu sekundu po ní.#0"
 
-msgid "Veil of Penelope"
-msgstr "Penelopin závoj"
-
 msgid ""
 "This device seems to be almost like a parasite that hooks up to the ship's "
 "systems. It's not exactly clear what it does, but it seems to feed on the "
@@ -13489,9 +14316,6 @@ msgstr ""
 "systémům. Není přesně jasné, co dělá, ale zdá se, že se živí vyzařovaným "
 "zářením, což umožňuje lodi zůstat déle neodhalena, když je v blízkosti "
 "jiných lodí."
-
-msgid "ZD-5 Guardian Unit"
-msgstr "Strážná jednotka ZD-5"
 
 #, fuzzy
 msgid ""
@@ -13516,17 +14340,11 @@ msgstr ""
 "Využívá energii k zastavení smrtelného poškození s 50% účinností. Dokáže "
 "zastavit maximálně 200 poškození za sekundu."
 
-msgid "Apollo's Gaze"
-msgstr ""
-
 msgid ""
 "This device hooks up to the ship's weapon systems and allows launching "
 "projectiles at higher velocities and further than usual. This indeed comes "
 "with a performance penalty, however."
 msgstr ""
-
-msgid "Asteroid Scanner"
-msgstr "Skener asteroidů"
 
 msgid "Mining System"
 msgstr "Těžební systém"
@@ -13545,9 +14363,6 @@ msgstr ""
 "a co je ještě působivější, odvodit vnitřní složení pomocí inverzní "
 "elektrické impedance. To má samozřejmě svou cenu, kterou nemůže zaplatit jen "
 "tak nějaký těžař."
-
-msgid "Berserk Chip"
-msgstr "Berserk čip"
 
 msgid "Speed Modifier"
 msgstr "Modifikátor rychlosti"
@@ -13577,9 +14392,6 @@ msgstr ""
 "integrita trupu klesne pod 30 %. Po použití nastává 8sekundové období "
 "ochlazení, během něhož se pohyb a poškození sníží o 20 %."
 
-msgid "Blink Drive"
-msgstr "Bleskový pohon"
-
 #, fuzzy
 msgid ""
 "The blink drive uses hyperdrive technology modified to create a small space-"
@@ -13591,9 +14403,6 @@ msgstr ""
 "malý časoprostorový záhyb umožňující lodím okamžitě překonávat krátké "
 "vzdálenosti. Piloti, kteří taková zařízení často používají, mívají větší "
 "množství silných bolestí hlavy než obvykle, ale musí to být bezpečné, ne?"
-
-msgid "Boarding Androids MK1"
-msgstr "Nalodění Androidů MK1"
 
 msgid "Boarding Androids"
 msgstr "Nalodění Androidů"
@@ -13609,9 +14418,6 @@ msgstr ""
 "plazmovým blasterem/řeznou svítilnou/otvírákem na konzervy/špachtlí a je "
 "připraven na každou situaci, ať už taktickou, nebo kulinářskou."
 
-msgid "Boarding Androids MK2"
-msgstr "Nalodění Androidů MK2"
-
 msgid ""
 "The Boarding Android Mark 2 improves upon the wide variety of implements "
 "sported by its predecessor, additionally including scissor-hands and a "
@@ -13620,10 +14426,6 @@ msgstr ""
 "Naloďovací Android Mark 2 vylepšuje širokou škálu nástrojů, které měl jeho "
 "předchůdce, a navíc obsahuje nůžky a šicí jehlu."
 
-#, fuzzy
-msgid "Cargo Damper"
-msgstr "Nákladní vaky"
-
 msgid ""
 "When hauling large amounts of cargo, general-purpose ship engines may become "
 "overwhelmed and deliver a subpar performance. This device can be installed "
@@ -13631,9 +14433,6 @@ msgid ""
 "to reduce the impact of cargo inertia on the ship's mobility and offset the "
 "requirement for bulkier engines."
 msgstr ""
-
-msgid "Catalytic Energy Drill"
-msgstr "Katalytický energetický vrták"
 
 msgid ""
 "Designed by the Mining Vrata Guildhouse, the Catalytic Energy Drill takes a "
@@ -13657,14 +14456,8 @@ msgid "#gAllows precise mining of asteroids to extract rare minerals.#0"
 msgstr ""
 "#gUmožňuje přesnou těžbu asteroidů za účelem získání vzácných minerálů.#0"
 
-msgid "Cloaking Device"
-msgstr "Maskovací zařízení"
-
 msgid "Uses 1 MJ of energy per 10 mass and drains shield in 0.5 seconds."
 msgstr "Spotřebuje 1 MJ energie na 10 hmotností a vyčerpá štít za 0,5 sekundy."
-
-msgid "Combat Hologram Projector"
-msgstr "Bojový holografický projektor"
 
 msgid "Holograph Projector"
 msgstr "Holografický projektor"
@@ -13687,9 +14480,6 @@ msgid ""
 msgstr ""
 "Vytvoří hologram aktuální lodi, aby odlákal pozornost cíle nepřátelské lodi."
 
-msgid "Agility Combat AI"
-msgstr "Agilní bojová AI"
-
 msgid "Combat AI"
 msgstr "Bojová AI"
 
@@ -13704,9 +14494,6 @@ msgstr ""
 "obratnost. Pečlivou regulací lodních trysek dokáže UI zvýšit celkové "
 "zrychlení i zatáčení lodi, aniž by ve skutečnosti upravovala hardware nebo "
 "zvyšovala spotřebu energie."
-
-msgid "Bio-Neural Combat AI"
-msgstr "Bio-neurální bojová AI"
 
 #, fuzzy
 msgid ""
@@ -13723,9 +14510,6 @@ msgstr ""
 "předvídat budoucí události, což lodi umožňuje zdánlivě získat výhodu nad "
 "ostatními loděmi v reakčním čase."
 
-msgid "Cyclic Combat AI"
-msgstr "Cyklická bojová AI"
-
 #, fuzzy
 msgid ""
 "This Combat AI focuses on the optimization of the firing rhythm of forward-"
@@ -13738,9 +14522,6 @@ msgstr ""
 "schopna provádět zdánlivě triviální úpravy parametrů, které vedou k "
 "celkovému zvýšení rychlosti střelby."
 
-msgid "Efficiency Combat AI"
-msgstr "Efektivní bojová AI"
-
 #, fuzzy
 msgid ""
 "This Combat AI utilizes advanced power routeing and process scheduling "
@@ -13751,9 +14532,6 @@ msgstr ""
 "Tato bojová umělá inteligence využívá pokročilé směrování energie k "
 "zefektivnění výpočetního výkonu lodi, díky čemuž lze při stejné spotřebě "
 "energie využít více energie."
-
-msgid "Hive Combat AI"
-msgstr "Bojová AI úlu"
 
 #, fuzzy
 msgid "You need at least 10% reputation with House Za'lek."
@@ -13773,9 +14551,6 @@ msgstr ""
 "efektivnější pohyb stíhaček a lepší schopnost reagovat na nehody, například "
 "na ztracené stíhačky."
 
-msgid "Hunting Combat AI"
-msgstr "Lovecká bojová AI"
-
 #, fuzzy
 msgid ""
 "Like a hunter's ambush, the Hunting Combat AI is able to exploit the element "
@@ -13787,9 +14562,6 @@ msgstr ""
 "zaměřit na využití momentu překvapení a slabin trupů nepřátelských lodí, což "
 "vede k výraznému zvýšení poškození věžových zbraní, i když se sníženou "
 "rychlostí střelby."
-
-msgid "Pinpoint Combat AI"
-msgstr "Pinpoint bojová AI"
 
 #, fuzzy
 msgid ""
@@ -13803,9 +14575,6 @@ msgstr ""
 "vesmíru. Díky spojení s lodními odpalovacími systémy je AI schopna zvýšit "
 "dosah i rychlost zaměření všech raketometů na lodi."
 
-msgid "Scanning Combat AI"
-msgstr "Skenovací bojová AI"
-
 #, fuzzy
 msgid ""
 "This Combat AI focuses on optimization of the ship's sensor infrastructure. "
@@ -13815,10 +14584,6 @@ msgstr ""
 "Tato bojová umělá inteligence se zaměřuje na optimalizaci senzorové "
 "infrastruktury lodi. Drobnými úpravami online dokáže účinně zvýšit dosah, na "
 "který jsou ostatní lodě detekovány."
-
-#, fuzzy
-msgid "Charge Conduit"
-msgstr "Zaměřovací kanál"
 
 msgid "Conduit"
 msgstr ""
@@ -13831,18 +14596,11 @@ msgid ""
 "in most cases."
 msgstr ""
 
-#, fuzzy
-msgid "Pipeline Conduit"
-msgstr "Zaměřovací kanál"
-
 msgid ""
 "The Pipeline Conduit funnels excess shield energy into the ammunition and "
 "fighter reconstruction pipelines, greatly speeding up those processes at the "
 "cost of extra CPU use."
 msgstr ""
-
-msgid "Targeting Conduit"
-msgstr "Zaměřovací kanál"
 
 #, fuzzy
 msgid ""
@@ -13855,9 +14613,6 @@ msgstr ""
 "Zaměřovací kanál přesměrovává přebytečnou energii štítu do zaměřovacích "
 "systémů lodi, což umožňuje mnohem rychlejší zaměření cíle, i když za cenu "
 "snížení dosahu kvůli nestabilitě způsobené přetížením systémů."
-
-msgid "Cryogenic Repair Nanobots"
-msgstr "Kryogenní opravárenští nanoboti"
 
 msgid "Armour Repair"
 msgstr "Oprava pancíře"
@@ -13881,9 +14636,6 @@ msgstr ""
 msgid "Restores armour to full when performing an active cooldown."
 msgstr "Obnovuje brnění na plnou hodnotu při aktivním cooldownu."
 
-msgid "Droid Repair Crew"
-msgstr "Posádka opravárenských droidů"
-
 msgid ""
 "This low maintenance droid crew will scour your ship to repair any damage "
 "caused by space hazards. They are very small and able to work both on the "
@@ -13901,9 +14653,6 @@ msgstr ""
 
 msgid "Can only restore armour when below 50%."
 msgstr "Obnoví brnění pouze tehdy, když je nižší než 50 %."
-
-msgid "Emergency Shield Booster"
-msgstr "Posilovač nouzového štítu"
 
 msgid "Shield Modification"
 msgstr "Úprava štítu"
@@ -13932,9 +14681,6 @@ msgstr ""
 "Zvyšuje regeneraci štítu o 500 %. Aktivní po dobu 4 sekund s cooldownem 8 "
 "sekund. Spotřebuje 3 MJ energie za každý MJ obnoveného štítu."
 
-msgid "Emergency Stasis Inducer"
-msgstr "Nouzový induktor stáze"
-
 #, fuzzy
 msgid ""
 "Not much unlike the Neural Accelerator Interface, the Emergency Stasis "
@@ -13958,9 +14704,6 @@ msgid "Triggered on armour damage. Lasts 3 seconds with 8 seconds cooldown."
 msgstr ""
 "Spouští se při poškození brnění. Trvá 3 sekundy s 8sekundovým cooldownem."
 
-msgid "Flicker Drive"
-msgstr "Flicker jednotka"
-
 #, fuzzy
 msgid ""
 "The Flicker Drive is a compacted version of the Blink Drive, lowering the "
@@ -13978,9 +14721,6 @@ msgstr ""
 "většina lodí běžně využívá ke zvýšení mobility přídavné spalování, blikavý "
 "pohon má silné zastánce, kteří tvrdí, že je lepší než všechny alternativy."
 
-msgid "Hellburner"
-msgstr "Hellburner"
-
 #, fuzzy
 msgid ""
 "The Hellburner is one of the best light afterburners on the market. Through "
@@ -13995,9 +14735,6 @@ msgstr ""
 "nižší než u běžných modelů, takže rychleji spotřebovává energii a mnohem "
 "rychleji se přehřívá."
 
-msgid "Hidden Jump Scanner"
-msgstr "Skener skrytých skoků"
-
 msgid ""
 "A specialized piece of sensor technology that can scan its immediate "
 "surroundings for unusual anomalies in the fabric of space. Although short-"
@@ -14010,9 +14747,6 @@ msgstr ""
 "má krátký dosah a dokáže skenovat pouze po omezenou dobu, než se musí dobít, "
 "dokáže tento skener objevit místa skoku, která běžné senzory nedokážou "
 "odhalit."
-
-msgid "Faraday Tempest Coating"
-msgstr "Povlak Faraday Tempest"
 
 msgid "Hull Coating"
 msgstr "Povlak trupu"
@@ -14030,9 +14764,6 @@ msgstr ""
 "čelit zneškodnění zbraní tím, že je rozptýlí prostřednictvím neškodných "
 "evanescentních polí, což značně urychluje obnovu po poškození systému."
 
-msgid "Lattice Thermal Coating"
-msgstr "Mřížkový tepelný povlak"
-
 msgid ""
 "By modifying the micro-facets of the hull's surface using a triply periodic "
 "minimal surface structure, the Lattice Thermal Coating is able to aid in the "
@@ -14040,9 +14771,6 @@ msgid ""
 "allows for outfits to be used in quicker successions reliably and without "
 "long-lasting damage."
 msgstr ""
-
-msgid "Milspec Impacto-Plastic Coating"
-msgstr "Impakto-plastový povlak Milspec"
 
 #, fuzzy
 msgid "M. Impacto-Plastic Coating"
@@ -14056,9 +14784,6 @@ msgstr ""
 "Impakto-plastový povlak Milspec je založen na paměťových nanoslitinách, "
 "které odolávají nárazům i poškození a rychle obnovují chráněný povrch do "
 "původního stavu."
-
-msgid "Nebula Resistant Coating"
-msgstr "Povlak odolný proti mlhovině"
 
 #, fuzzy
 msgid ""
@@ -14074,10 +14799,6 @@ msgstr ""
 "pochopena. Přestože loď není vůči účinkům mlhoviny imunní, tento povlak "
 "trupu ji činí výrazně odolnější, ačkoli dlouhodobé vystavení se stále "
 "nedoporučuje."
-
-#, fuzzy
-msgid "Nexus Concealment Coating"
-msgstr "Povlak Nexus Stealth"
 
 #, fuzzy
 msgid "N. Concealment Coating"
@@ -14096,9 +14817,6 @@ msgstr ""
 "Nexus vyvinuly průlomový nátěr trupu, který využívá kvantově provázané "
 "samoprojekce, jež mohou zmást gravitační snímání."
 
-msgid "Photo-Voltaic Nanobot Coating"
-msgstr "Foto-voltaický nanobotový povlak"
-
 #, fuzzy
 msgid ""
 "A coating of photo-voltaic nanobot paint covers the ship's entire hull and "
@@ -14111,19 +14829,12 @@ msgstr ""
 "lodi. Nanoboti jsou samoregulační a samoopravitelní a po vytvoření kolonie "
 "nevyžadují žádnou údržbu."
 
-#, fuzzy
-msgid "Reconstructive Nanobot Coating"
-msgstr "Foto-voltaický nanobotový povlak"
-
 msgid ""
 "It is possible to establish a colony of repair nanobots directly on the hull "
 "of a ship. Since the design has to account for the potentially harsh "
 "conditions outside the approach has limited effectiveness compared to the "
 "more intrusive solutions, but nevertheless complements them neatly."
 msgstr ""
-
-msgid "Hyperbolic Blink Engine"
-msgstr "Hyperbolický mžikový motor"
 
 #, fuzzy
 msgid ""
@@ -14153,9 +14864,6 @@ msgstr ""
 "má 20% postih za zrychlení a otočení. Výkon se snižuje nad 6000 tun "
 "hmotnosti."
 
-msgid "Jump Scanner"
-msgstr "Skener skoků"
-
 msgid ""
 "This device installs a secondary scanning array on the ship. The array is "
 "programmed with the known characteristics of the spatial anomalies "
@@ -14174,17 +14882,11 @@ msgstr ""
 "detekovat body skoku na větší vzdálenost. Skener nedetekuje skokové body, "
 "jejichž signatura se liší od standardního typu."
 
-msgid "Kratos' Glove"
-msgstr ""
-
 msgid ""
 "A module that lets the ship's generator direct energy to its weapons in "
 "larger, more spaced out bursts. It's not perfectly efficient, but has been "
 "proven useful in some combat encounters."
 msgstr ""
-
-msgid "Low Radiation Sensor Modulator"
-msgstr "Modulátor senzoru s nízkou radiací"
 
 msgid ""
 "By using special modulation highly tuned for low radiation environments, the "
@@ -14196,9 +14898,6 @@ msgstr ""
 "modulátor senzoru s nízkou radiací schopen zvýšit detekci blízkých lodí a "
 "zároveň zvýšit citlivost na signatury skokových bodů, když jsou v maskovacím "
 "módu."
-
-msgid "Milspec Jammer"
-msgstr "Milspec rušička"
 
 #, fuzzy
 msgid "M. Jammer"
@@ -14221,9 +14920,6 @@ msgstr ""
 "nepřátelé stále snaží pochopit, co se jim na senzorech objevuje za smetí, vy "
 "už budete mít útěk za sebou! Létejte bezpečně, létejte s Milspec."
 
-msgid "Milspec Scrambler"
-msgstr "Milspec skrambler"
-
 #, fuzzy
 msgid "M. Scrambler"
 msgstr "Milspec skrambler"
@@ -14243,9 +14939,6 @@ msgstr ""
 "za minimální cenu pro vás nebo reaktor vaší lodi! Létejte bezpečně, létejte "
 "s Milspecem."
 
-msgid "Neural Accelerator Interface"
-msgstr "Rozhraní neurálního akcelerátoru"
-
 #, fuzzy
 msgid ""
 "The flow of time is generally not perceived as a constant value, rather it "
@@ -14262,9 +14955,6 @@ msgstr ""
 msgid "Active for 5 seconds with a cooldown of 20 seconds."
 msgstr "Aktivní po dobu 5 sekund s dobou ochlazení 20 sekund."
 
-msgid "Sensor Array"
-msgstr "Soustava senzorů"
-
 msgid ""
 "This sensor array uses quadralens-magnified photon modulation to more easily "
 "detect the faint signals emitted by a distant ship, effectively boosting "
@@ -14279,9 +14969,6 @@ msgstr ""
 "může být užitečné pro potlačení účinku maskovacích přístrojů a také to "
 "zvyšuje přesnost informací o sledování na krátkou vzdálenost, které používá "
 "zbraňový systém vaší lodi."
-
-msgid "S&K Heavy Plasma Drill"
-msgstr "S&K těžká plazmová vrtačka"
 
 #, fuzzy
 msgid ""
@@ -14299,9 +14986,6 @@ msgstr ""
 "vybavit, však těžký plazmový vrták dokáže proměnit v impozantní těžební "
 "plavidla."
 
-msgid "S&K Plasma Drill"
-msgstr "S&K plazmová vrtačka"
-
 msgid ""
 "The S&K Plasma Drill is an alternate approach to conventional mining lances. "
 "Although it requires getting up close to the asteroid and accurate controls "
@@ -14312,10 +14996,6 @@ msgstr ""
 "Přestože vyžaduje přiblížení k asteroidu a přesné ovládání, aby bylo možné "
 "těžit minerály, dosahuje výrazně lepších výnosů. Integrovaný skener "
 "asteroidů je jen třešničkou na dortu."
-
-#, fuzzy
-msgid "Stealth Burster"
-msgstr "Posilovač štítu"
 
 #, fuzzy
 msgid ""
@@ -14333,9 +15013,6 @@ msgstr ""
 "krátkodobý dočasný účinek a zařízení dlouho trvá, než se překalibruje a "
 "nabije kondenzátory."
 
-msgid "Targeting Array"
-msgstr "Zaměřovací pole"
-
 msgid "Weapon Modifier (Turret)"
 msgstr "Modifikátor zbraně (věž)"
 
@@ -14348,9 +15025,6 @@ msgstr ""
 "Vylepšená zaměřovací soustava umožňuje věžím rychleji zaměřovat cíle a "
 "minimalizuje ztráty přesnosti na dálku. Vyžaduje krátkou dobu pro výpočet "
 "ideálního vektoru, což mírně zpomaluje rychlost střelby."
-
-msgid "Unicorp Jammer"
-msgstr "Unicorp Rušička"
 
 #, fuzzy
 msgid "U. Jammer"
@@ -14371,9 +15045,6 @@ msgstr ""
 "účinnější, ale také to spotřebuje mnohem více energie. Z tohoto důvodu jsou "
 "systémy rušiček neaktivní, dokud nejsou potřeba, a musí se aktivovat ručně."
 
-msgid "Unicorp Light Afterburner"
-msgstr "Lehké přídavné spalování Unicorp"
-
 #, fuzzy
 msgid "U. Light Afterburner"
 msgstr "Lehké přídavné spalování Unicorp"
@@ -14391,9 +15062,6 @@ msgstr ""
 "energii lodi a také vytváří teplo. Pokud se přídavné spalování příliš "
 "zahřeje, jeho účinek se sníží a nakonec se zcela vypne."
 
-msgid "Unicorp Medium Afterburner"
-msgstr "Střední přídavné spalování Unicorp"
-
 #, fuzzy
 msgid "U. Medium Afterburner"
 msgstr "Střední přídavné spalování Unicorp"
@@ -14410,9 +15078,6 @@ msgstr ""
 "rychlosti. Dokud je však přídavné spalování aktivní, neustále vyčerpává "
 "energii lodi a také vytváří teplo. Pokud se přídavné spalování příliš "
 "zahřeje, jeho účinek se sníží a nakonec se zcela vypne."
-
-msgid "Unicorp Scrambler"
-msgstr "Unicorp skrambler"
 
 #, fuzzy
 msgid "U. Scrambler"
@@ -14433,9 +15098,6 @@ msgstr ""
 "omezený, ale na druhou stranu scramblery minimálně zatěžují zdroje lodi a "
 "jsou vždy aktivní."
 
-msgid "Weakness Harmonizer AI"
-msgstr "Harmonizátor slabin AI"
-
 #, fuzzy
 msgid ""
 "This is an upgrade to the sensor systems that is able to learn from nearby "
@@ -14449,9 +15111,6 @@ msgstr ""
 "jemné rysy, které lidské oko přehlédne, a extrapolovat je do velkých "
 "detailů, aby poukázala na slabiny nepřátelských lodí. Čím více lodí je "
 "schopna analyzovat a extrapolovat, tím je efekt silnější."
-
-msgid "Weapons Ionizer"
-msgstr "Ionizátor zbraní"
 
 msgid "Weapon Modification"
 msgstr "Úprava zbraně"
@@ -14475,9 +15134,6 @@ msgstr ""
 msgid "Automatically triggers when target armour is below 50%."
 msgstr "Automaticky se spustí, když je brnění cíle nižší než 50 %."
 
-msgid "Antimatter Lance"
-msgstr "Antihmotové kopí"
-
 msgid ""
 "The antimatter lance directly attacks the integrity of a ship on a molecular "
 "level, rather than trying to brute force its way through the armour of enemy "
@@ -14492,9 +15148,6 @@ msgstr ""
 msgid "Lowers the action speed upon hit by 10% for 7 seconds."
 msgstr "Sníží rychlost akce při zásahu o 10 % na 7 sekund."
 
-msgid "Arc Blade"
-msgstr ""
-
 msgid ""
 "One of the prize weapons of the Black Lotus Armoury. The Arc Blade is an "
 "upscaled version of the Arc Machete, optimized for wrecking havoc on the "
@@ -14502,9 +15155,6 @@ msgid ""
 "that prowl the area between House Za'lek and House Dvaered in search of "
 "careless merchant vessels who have not paid the protection racket. Very few "
 "pirate captains who purchase it regret their decision."
-msgstr ""
-
-msgid "Arc Machete"
 msgstr ""
 
 msgid ""
@@ -14515,9 +15165,6 @@ msgid ""
 "their hands on one, as well as law enforcement on the hunt for those "
 "pirates, for similar reasons."
 msgstr ""
-
-msgid "Disruptor Artillery S1"
-msgstr "Dělostřelectvo Disruptor S1"
 
 msgid "Disruptor A. S1"
 msgstr "Disruptor A. S1"
@@ -14536,9 +15183,6 @@ msgstr ""
 "Disruptor Artillery S1 vrhá vysokoenergetické samostabilizující se iontové "
 "koule, které dokáží v krátké době vyřídit energetické štíty a systémy."
 
-msgid "Disruptor Artillery S2"
-msgstr "Dělostřelectvo Disruptor S2"
-
 msgid "Disruptor A. S2"
 msgstr "Disruptor A. S2"
 
@@ -14550,9 +15194,6 @@ msgstr ""
 "Disruptor Artillery S2 je vylepšená verze modelu S1. Větší rozměry sice "
 "omezují použitelnost pro lodě třídy torpédoborec a vyšší, ale výhodou je "
 "větší dostřel a výrazně větší poškození."
-
-msgid "Disruptor Battery S2"
-msgstr "Baterie Disruptor S2"
 
 msgid "Disruptor B. S2"
 msgstr "Disruptor B. S2"
@@ -14574,9 +15215,6 @@ msgstr ""
 "u jiných standardních zbraní pro kapitální lodě, znalci Disruptorů tvrdí, že "
 "zbraň to bohatě vynahrazuje svou celkovou užitečností. Vzhledem k tomu, že "
 "jen málokdo přežije palbu z Disruptorové baterie S2, možná mají pravdu."
-
-msgid "Energy Harpoon"
-msgstr "Energetická harpuna"
 
 msgid ""
 "The Energy Harpoon is an ensemble of stolen and hacked technologies "
@@ -14602,10 +15240,6 @@ msgstr ""
 msgid "#oOn hit pulls target.#0"
 msgstr "#oPo zásahu přitáhne cíl.#0"
 
-#, fuzzy
-msgid "Flak Gun"
-msgstr "Dělo Vulcan"
-
 msgid ""
 "Fires waste debris in a shotgun-like blast that can be useful in taking down "
 "small craft or hitting large targets. Not widely used due the tendency to "
@@ -14613,9 +15247,6 @@ msgid ""
 "other major issues on the ship. However, this one looks like it is in quite "
 "good shape."
 msgstr ""
-
-msgid "Gauss Gun"
-msgstr "Gaussova zbraň"
 
 msgid ""
 "The Gauss Gun is one of the oldest weapon designs in the galaxy today, "
@@ -14630,9 +15261,6 @@ msgstr ""
 "zbraně jsou oblíbené mezi drobnými piráty, protože se snadno používají a "
 "jsou spolehlivé."
 
-msgid "Grave Beam"
-msgstr "Hrobový paprsek"
-
 msgid ""
 "The Grave Beam is a lighter, faster version of the Ragnarok Beam. It does "
 "not deal as much damage, but its lighter size and more forgiving CPU "
@@ -14642,9 +15270,6 @@ msgstr ""
 "velké poškození, ale jeho menší velikost a šetrnější požadavky na procesor z "
 "něj dělají konkurenceschopného soupeře."
 
-msgid "Grave Lance"
-msgstr "Hrobové kopí"
-
 msgid ""
 "The Grave Lance is one of the most powerful Lance weapons around. The "
 "technology behind it is poorly understood by everyone except the Za'lek, who "
@@ -14653,9 +15278,6 @@ msgstr ""
 "Hrobové kopí je jednou z nejsilnějších kopiníků. Technologii, která za ním "
 "stojí, rozumí jen málokdo kromě Za'leků, kteří ho používají jako standardní "
 "zbraň."
-
-msgid "Heavy Ion Cannon"
-msgstr "Těžké iontové dělo"
 
 #, fuzzy
 msgid ""
@@ -14669,9 +15291,6 @@ msgstr ""
 "specializovaných záchytných týmů, ale konstrukce je licencována i pro "
 "veřejné použití."
 
-msgid "Heavy Ion Turret"
-msgstr "Těžká iontová věž"
-
 msgid ""
 "The Heavy Ion Turret is a Sirius military design, applying brute force to "
 "its target's internal systems. When coupled with Razor weaponry, it is "
@@ -14680,9 +15299,6 @@ msgstr ""
 "Těžká iontová věž je vojenská konstrukce Sirius, která na vnitřní systémy "
 "cíle působí hrubou silou. Ve spojení se zbraněmi Razor je velmi účinná při "
 "redukci nepřátelských válečných lodí na trosky."
-
-msgid "Heavy Laser Turret"
-msgstr "Těžká laserová věž"
 
 msgid ""
 "The Heavy Laser Turret is more or less an upscaled version of the Laser "
@@ -14697,18 +15313,12 @@ msgstr ""
 "pouze pro větší lodě, jen málo pilotů, kteří si ji pořídí, lituje jejího "
 "nákupu."
 
-msgid "Heavy Neutron Disruptor"
-msgstr "Těžký neutronový disruptor"
-
 msgid ""
 "The Heavy Neutron Disruptor improves upon the processes behind the smaller "
 "Neutron Disruptor, giving this weapon greater damage and range."
 msgstr ""
 "Těžký neutronový disruptor zdokonaluje procesy, které byly použity u menšího "
 "neutronového disruptoru, a dává této zbrani větší poškození a dosah."
-
-msgid "Heavy Ripper Cannon"
-msgstr "Těžké dělo Ripper"
 
 msgid ""
 "By modulating the frequency of the basic Ripper Cannon, the Empire military "
@@ -14722,9 +15332,6 @@ msgstr ""
 "jejich úsilí v ničivý těžký Ripper Cannon. Hlavní nevýhodou tohoto modelu je "
 "jeho zvýšená hmotnost, kvůli které není vhodný pro menší lodě."
 
-msgid "Heavy Ripper Turret"
-msgstr "Těžká věž Ripper"
-
 msgid ""
 "Built off the heavy ripper cannon, the ripper turret is the heaviest turret "
 "conventionally available to civilians. Its bulk, high energy requirements, "
@@ -14734,9 +15341,6 @@ msgstr ""
 "která je běžně dostupná pro civilní použití. Kvůli své hmotnosti, vysokým "
 "energetickým nárokům a vysokému poškození je nevhodná pro jiné než hlavní "
 "lodě."
-
-msgid "Ion Cannon"
-msgstr "Iontové dělo"
 
 msgid ""
 "Ion Cannons are primarily nonlethal weapons designed to short out internal "
@@ -14753,9 +15357,6 @@ msgstr ""
 "iontový kanón jednou z nejoblíbenějších zbraní pirátů, ačkoli v případě "
 "potřeby nesmrtící síly nachází velké uplatnění také u policie a milice."
 
-msgid "Laser Cannon MK1"
-msgstr "Laserové dělo MK1"
-
 #, fuzzy
 msgid ""
 "The Laser Cannon MK1 is a standard weapon on many vessels, and the first "
@@ -14768,9 +15369,6 @@ msgstr ""
 "poškodit štíty i pancíř útočících plavidel, přičemž je dostatečně účinné, "
 "aby se jich dalo namontovat několik i na malé lodě."
 
-msgid "Laser Cannon MK2"
-msgstr "Laserové dělo MK2"
-
 msgid ""
 "A high-powered version of the Laser Cannon MK1, the MK2 is usually found on "
 "Imperial law enforcement and military ships. Its superior firepower helps "
@@ -14781,9 +15379,6 @@ msgstr ""
 "imperiálních donucovacích a vojenských lodích. Jeho vynikající palebná síla "
 "pomáhá udržovat pořádek mezi civilním obyvatelstvem a piráty na uzdě. S "
 "jistým úsilím si poradí i s většími korvetními plavidly."
-
-msgid "Laser Turret MK1"
-msgstr "Laserová věž MK1"
 
 #, fuzzy
 msgid ""
@@ -14799,9 +15394,6 @@ msgstr ""
 "energeticky úspornou palebnou sílu. Mezi civilními loděmi jsou vysoce ceněny "
 "jako obrana proti zbloudilým pirátům a nájezdníkům."
 
-msgid "Laser Turret MK2"
-msgstr "Laserová věž MK2"
-
 msgid ""
 "The Laser Turret MK2 is often found on Imperial fast response fleets, for "
 "use against fleets of small to medium ships. Due to the low cost and high "
@@ -14812,9 +15404,6 @@ msgstr ""
 "vysoké palebné síle je tato zbraň jednou z hlavních opor císařských "
 "vesmírných sil."
 
-msgid "Mass Driver"
-msgstr "Hmotový pohon"
-
 msgid ""
 "Mass Drivers fire massive slugs of matter at enemy ships, dealing damage "
 "through kinetic impact and knocking the target back. One of the most "
@@ -14823,9 +15412,6 @@ msgstr ""
 "Hmotové pohony vystřelují na nepřátelské lodě obrovské projektily hmoty, "
 "které způsobují poškození kinetickým nárazem a srážejí cíl zpět. Jedna z "
 "nejúspornějších těžkých zbraní v galaxii."
-
-msgid "Mining Lance MK1"
-msgstr "Těžební kopí MK1"
 
 msgid ""
 "Mining lances are optimized for high destructive power at short range, "
@@ -14838,9 +15424,6 @@ msgstr ""
 "pancíři mohou způsobit značné poškození, proti štítům jsou nepraktická, "
 "nicméně existují příběhy o hornících, kteří je používali k útěku před "
 "nájezdníky v sevřeném..."
-
-msgid "Mining Lance MK2"
-msgstr "Těžební kopí MK2"
 
 msgid ""
 "Mining lances are optimized for high destructive power at short range, "
@@ -14861,9 +15444,6 @@ msgstr ""
 "zprávách o analýze bezpečnosti těžby každoročně uvádějí velký počet takových "
 "incidentů."
 
-msgid "Neutron Disruptor"
-msgstr "Neutronový disruptor"
-
 msgid ""
 "The Neutron Disruptor uses high-energy pulses that alter the base "
 "composition of molecules, causing heavy damage. This weapon was first "
@@ -14874,9 +15454,6 @@ msgstr ""
 "složení molekul a způsobují těžké poškození. Tuto zbraň si nejprve oblíbil "
 "Kolektiv, jehož bezpilotní letouny byly imunní vůči smrtícímu zpětnému "
 "záření prvních verzí."
-
-msgid "Nexus Drill Lance"
-msgstr "Vrtné kopí Nexus"
 
 msgid ""
 "Mining lances are known for their destructive capabilities, unfortunately, "
@@ -14894,9 +15471,6 @@ msgstr ""
 "jiná těžební kopí nejsou schopna, ale má to i tu nevýhodu, že se výrazně "
 "snižuje množství těžitelných materiálů."
 
-msgid "Orion Beam"
-msgstr "Paprsek Orion"
-
 msgid ""
 "The turret-mounted edition of the Orion Lance offers mid-sized ships "
 "exceptional short-duration firepower, a potent deterrent against enemy "
@@ -14905,9 +15479,6 @@ msgstr ""
 "Věžová verze kopí Orion nabízí lodím střední velikosti výjimečnou palebnou "
 "sílu krátkého dosahu, která je silným odstrašujícím prostředkem proti "
 "nepřátelským plavidlům, jež se odváží přiblížit na dostřel."
-
-msgid "Orion Lance"
-msgstr "Kopí Orion"
 
 msgid ""
 "The Orion Lance is a fixed-mount weapon designed to be mounted on fighters "
@@ -14924,9 +15495,6 @@ msgstr ""
 "Částicové kopí, poměrně omezující krátký dosah. Přesto jen velmi málo "
 "nepřátelských lodí přežije střetnutí, jakmile se dostanou na dostřel."
 
-msgid "Particle Beam"
-msgstr "Částicový paprsek"
-
 msgid ""
 "A turret-mounted particle lance. The smallest possible turreted beam weapon, "
 "used as a last-ditch weapon against light enemies. Like the particle lance, "
@@ -14938,9 +15506,6 @@ msgstr ""
 "částicové kopí může zasáhnout více cílů současně, avšak za cenu výrazně "
 "menšího dosahu."
 
-msgid "Particle Lance"
-msgstr "Částicové kopí"
-
 msgid ""
 "This is the smallest direct beam weapon built, purpose-built by the Za'lek "
 "for their drones. While the beam can instantaneously hit multiple targets "
@@ -14951,9 +15516,6 @@ msgstr ""
 "zkonstruovali pro své drony. Paprsek sice dokáže okamžitě zasáhnout více "
 "cílů najednou, ale jeho nevýhodou je opravdu malý dosah, takže se pilot musí "
 "dostat velmi blízko k cíli a riskovat nepřátelskou palbu."
-
-msgid "Plasma Blaster MK1"
-msgstr "Plazmový blaster MK1"
 
 msgid "Plasma Bl. MK1"
 msgstr "Plazmový Bl. MK1"
@@ -14974,9 +15536,6 @@ msgstr ""
 "vysoký potenciál zabíjení, ačkoli spálení plazmou obvykle ztěžuje vyřazení "
 "lodí."
 
-msgid "Plasma Blaster MK2"
-msgstr "Plazmový blaster MK2"
-
 msgid "Plasma Bl. MK2"
 msgstr "Plazmový Bl. MK2"
 
@@ -14995,9 +15554,6 @@ msgstr ""
 "původního modelu MK1 i zde dlouhotrvající plazma výrazně poškodí každou loď, "
 "která má tu smůlu, že ji zasáhne."
 
-msgid "Plasma Cannon"
-msgstr "Plazmové dělo"
-
 msgid ""
 "The Plasma Cannon is a scaled-up version of the Plasma Blaster design for "
 "use on Corvettes. It manages to pack a markedly stronger punch, but the "
@@ -15008,9 +15564,6 @@ msgstr ""
 "na korvetách. Dokáže vyvinout výrazně silnější úder, ale inženýrské "
 "složitosti spojené s umístěním tak silné zbraně do malého prostoru vedou k "
 "mnohem větší závislosti na navádění z centrálního lodního počítače."
-
-msgid "Plasma Cluster Cannon"
-msgstr "Plazmové klastrové dělo"
 
 msgid "Plasma C. Cannon"
 msgstr "Plazmové K. dělo"
@@ -15032,10 +15585,6 @@ msgstr ""
 "ale to také znamená, že biologické lodě Soromidů jsou schopny zvládnout její "
 "výpočetní zátěž, přestože se jedná o syntetickou konstrukci."
 
-#, fuzzy
-msgid "Plasma Eruptor"
-msgstr "Plazmový žár"
-
 msgid ""
 "Using a genetically engineered modified plasma organ, the Eruptor is able to "
 "spray large areas of space with highly corrosive plasma. Unlike other plasma "
@@ -15044,9 +15593,6 @@ msgid ""
 "accuracy is comprised, however, as it can spray around a large area, it is "
 "almost guaranteed to hit anything within sight."
 msgstr ""
-
-msgid "Plasma Turret MK1"
-msgstr "Plazmová věž MK1"
 
 msgid "Plasma T. MK1"
 msgstr "Plazmová V. MK1"
@@ -15063,9 +15609,6 @@ msgstr ""
 "obchodníků a kupců, ale našla si mezeru mezi nezkušenými žoldáky, kteří "
 "nemají tak dobrou praxi v míření jako profesionálové."
 
-msgid "Plasma Turret MK2"
-msgstr "Plazmová věž MK2"
-
 msgid "Plasma T. MK2"
 msgstr "Plazmová V. MK2"
 
@@ -15077,9 +15620,6 @@ msgstr ""
 "Plazmová věž Mark 2 není ve srovnání s jinými středně velkými věžemi nijak "
 "zvlášť působivá, ale korvety ji někdy upřednostňují pro její neobvykle "
 "nízkou hmotnost v porovnání s jejím dosahem a poškozením."
-
-msgid "Ragnarok Beam"
-msgstr "Paprsek Ragnarok"
 
 msgid ""
 "The Ragnarok Beam is one of the most powerful beam class weapons on the "
@@ -15099,9 +15639,6 @@ msgstr ""
 "z něj dělá oblíbenou zbraň pilotů, kteří se rádi dostávají do blízkosti "
 "svých nepřátel."
 
-msgid "Railgun"
-msgstr "Railgun"
-
 msgid ""
 "The railgun is a cannon that uses heavy magnetic pulses to accelerate pieces "
 "of debris to extremely high velocities. The impact caused by the pieces of "
@@ -15113,9 +15650,6 @@ msgstr ""
 "na extrémně vysoké rychlosti. Nárazy způsobené úlomky mohou roztrhat i ty "
 "nejsilnější trupy lodí. Je to oblíbená zbraň rodu Dvaeredů, kteří si "
 "obzvlášť libují ve spoušti, kterou tyto zbraně mohou způsobit svým cílům."
-
-msgid "Railgun Turret"
-msgstr "Railgunová věž"
 
 msgid ""
 "While one railgun is a formidable weapon, the ultimate in brute-force "
@@ -15129,9 +15663,6 @@ msgstr ""
 "pouzdře věže dokáže zmírnit zpětný ráz, který je obvykle spojen s railguny, "
 "a to za cenu mírného snížení rychlosti. Jen velmi málo kapitálních lodí "
 "vydrží dlouho pod palbou těchto zbraní."
-
-msgid "Razor Artillery S1"
-msgstr "Razor Artilérie S1"
 
 msgid "Razor A. S1"
 msgstr "Razor A. S1"
@@ -15155,9 +15686,6 @@ msgstr ""
 "prohlašuje, že se jedná o nesmrtící zbraně, při nedostatečné opatrnosti "
 "mohou být poměrně smrtící."
 
-msgid "Razor Artillery S2"
-msgstr "Razor Artilérie S2"
-
 msgid "Razor A. S2"
 msgstr "Razor A. S2"
 
@@ -15171,9 +15699,6 @@ msgstr ""
 "vyšší celkovou účinnost a má menší potíže s přetížením štítů korvet a "
 "torpédoborců a s vyřazením kritických součástí."
 
-msgid "Razor Artillery S3"
-msgstr "Razor Artilérie S3"
-
 msgid "Razor A. S3"
 msgstr "Razor A. S3"
 
@@ -15186,9 +15711,6 @@ msgstr ""
 "Razor Artilérie S3 je nejsilnějším členem řady Razor, který se osvědčil při "
 "odstraňování štítů z těch, kteří se chtějí postavit proti rodu Sirius. Běžně "
 "ji používají Siriovi Kazatelé a další korvety."
-
-msgid "Razor Battery S2"
-msgstr "Baterie Razor S2"
 
 msgid "Razor B. S2"
 msgstr "Razor B. S2"
@@ -15204,9 +15726,6 @@ msgstr ""
 "kombinaci s velkým poškozením systémů může rychle demoralizovat piráty a "
 "nájezdníky, kteří chtějí rychle získat nějaké kredity."
 
-msgid "Repeating Railgun"
-msgstr "Opakovací railgun"
-
 msgid ""
 "While the Railgun was devastating in its effects, it wasn't quite "
 "devastating enough for Dvaered High Command. They had their engineers "
@@ -15217,9 +15736,6 @@ msgstr ""
 "dostatečně ničivý. Nechali své inženýry vylepšit zbraň na těžší a rychleji "
 "střílející variantu, která není ani tak zbraní, jako spíše miniaturním "
 "generátorem meteoritického deště."
-
-msgid "Ripper Cannon"
-msgstr "Dělo Ripper"
 
 msgid ""
 "The Ripper Cannon is a variant on the Laser Cannon that has stronger "
@@ -15234,9 +15750,6 @@ msgstr ""
 "korvetách, které mají malé zbraňové systémy, ale potřebují silnou palebnou "
 "sílu, aby mohly účinně čelit těžším lodím."
 
-msgid "Shredder"
-msgstr "Shredder"
-
 msgid ""
 "The Shredder quite lives up to the name its Dvaered manufacturers gave it. "
 "The sheer damage dealing capacity of this weapon makes Dvaered Corvettes "
@@ -15245,9 +15758,6 @@ msgstr ""
 "Shredder zcela odpovídá jménu, které mu dali jeho výrobci ze společnosti "
 "Dvaered. Díky obrovskému poškození, které tato zbraň způsobuje, jsou korvety "
 "Dvaered nebezpečné pro lodě, které nejsou podstatně větší než ony."
-
-msgid "Turbolaser"
-msgstr "Turbolaser"
 
 #, fuzzy
 msgid ""
@@ -15263,9 +15773,6 @@ msgstr ""
 "částic vyvrhovaných turbolaserem velmi ztěžuje nepřátelským lodím úhybné "
 "manévry."
 
-msgid "Turreted Gauss Gun"
-msgstr "Gaussovo věžové dělo"
-
 msgid ""
 "One of the more common countermeasures employed by low-budget merchant "
 "ships, the turret version of the Gauss Gun provides basic defence against "
@@ -15276,9 +15783,6 @@ msgstr ""
 "obranu proti osamělým pirátům. Odhodlanějšího útočníka však pravděpodobně "
 "neodradí."
 
-msgid "Turreted Vulcan Gun"
-msgstr "Věžové dělo Vulcan"
-
 msgid ""
 "Turreted Vulcan Guns pack the same calibre ammunition as their fixed mount "
 "brethren. Ships not nimble enough to evade its relentless stream of "
@@ -15287,9 +15791,6 @@ msgstr ""
 "Věžová děla Vulcan mají munici stejné ráže jako jejich pevně namontovaní "
 "bratři. Lodě, které nejsou dostatečně hbité, aby se vyhnuly jejich "
 "neúnavnému proudu střel, mohou být brzy zasaženy průstřelem trupu."
-
-msgid "Vulcan Gun"
-msgstr "Dělo Vulcan"
 
 msgid ""
 "The Vulcan Gun improves over the Gauss Gun with increased range and damage, "
@@ -15301,9 +15802,6 @@ msgstr ""
 "dosaženo použitím munice těžší ráže. Zkušený pilot může s dvojicí "
 "vulkanských děl na lodi způsobit pořádnou spoušť i na středně velkých "
 "plavidlech."
-
-msgid "Drone"
-msgstr "Dron"
 
 msgid "Robotic Interceptor"
 msgstr "Robotický interceptor"
@@ -15317,9 +15815,6 @@ msgid ""
 msgstr ""
 "Jedná se o upravenou verzi dronu Kolektivu, která nyní obsahuje systém "
 "podpory života pro lidi."
-
-msgid "Drone Carrier"
-msgstr "Nosič dronů"
 
 msgid "Robotic Carrier"
 msgstr "Robotický nosič"
@@ -15339,14 +15834,8 @@ msgstr ""
 "Vzhledem k absenci zbytečného zázemí pro posádku a těžkého pancéřování je "
 "Nosič dronů neobvykle lehká a rychlá letadlová loď."
 
-msgid "Drone (Hyena)"
-msgstr "Dron (Hyena)"
-
 msgid "A fully sentient drone disguised as a Hyena."
 msgstr "Plně vnímající dron převlečený za hyenu."
-
-msgid "Heavy Drone"
-msgstr "Těžký dron"
 
 msgid "Robotic Fighter"
 msgstr "Robotický stíhač"
@@ -15358,9 +15847,6 @@ msgstr ""
 "Tento těžký dron Kolektivu byl inženýry upraven tak, aby podporoval lidského "
 "pilota."
 
-msgid "Dvaered Ancestor"
-msgstr "Dvaered Ancestor"
-
 msgid ""
 "On this military grade version of the Ancestor, the distribution of the "
 "weight on the structure has been optimized in order to allow embarking more "
@@ -15368,9 +15854,6 @@ msgid ""
 msgstr ""
 "U této vojenské verze modelu Ancestor bylo optimalizováno rozložení "
 "hmotnosti na konstrukci, aby bylo možné naložit více užitečného nákladu."
-
-msgid "Dvaered Arsenal"
-msgstr "Dvaered Arsenal"
 
 #, fuzzy
 msgid "You need at least 60% reputation with House Dvaered."
@@ -15391,9 +15874,6 @@ msgstr ""
 "skutečnosti, že dopravní lodě rodu Dvaered se obvykle zaměřují na distribuci "
 "a rozmístění zbraní a vojáků přednostně před surovinami, zbožím nebo dokonce "
 "základními potřebami. Hovorově se jim také říkalo \"Dvaeredské zbrojovky\"."
-
-msgid "Dvaered Goddard"
-msgstr "Dvaered Goddard"
 
 #, fuzzy
 msgid "You need at least 70% reputation with House Dvaered."
@@ -15417,9 +15897,6 @@ msgstr ""
 "potřeby válečníků z Dvaeredu, což znamená lepší pancéřování a poškození "
 "předsunutých zbraní za cenu zvýšení hmotnosti."
 
-msgid "Dvaered Phalanx"
-msgstr "Dvaered Phalanx"
-
 #, fuzzy
 msgid "You need at least 40% reputation with House Dvaered."
 msgstr "Potřebujete alespoň 40 reputace u klanu Dvaered."
@@ -15431,9 +15908,6 @@ msgid ""
 msgstr ""
 "U této vojenské verze Phalanxu bylo optimalizováno rozložení hmotnosti na "
 "konstrukci, aby bylo možné naložit více užitečného nákladu."
-
-msgid "Dvaered Retribution"
-msgstr "Dvaered Retribution"
 
 #, fuzzy
 msgid ""
@@ -15450,9 +15924,6 @@ msgstr ""
 "lodi a zároveň na ni připevnili další pevné zbraňové body. Poté byla loď "
 "přejmenována na Retribution. Elektronika však zůstala zastaralá."
 
-msgid "Dvaered Vendetta"
-msgstr "Dvaered Vendetta"
-
 msgid ""
 "On this military grade version of the Vendetta, the distribution of the "
 "weight on the structure has been optimized in order to allow embarking more "
@@ -15460,9 +15931,6 @@ msgid ""
 msgstr ""
 "U této vojenské verze modelu Vendetta bylo optimalizováno rozložení "
 "hmotnosti na konstrukci, aby bylo možné naložit více užitečného nákladu."
-
-msgid "Dvaered Vigilance"
-msgstr "Dvaered Vigilance"
 
 #, fuzzy
 msgid "You need at least 50% reputation with House Dvaered."
@@ -15474,9 +15942,6 @@ msgid ""
 msgstr ""
 "Tato vojenská verze modelu Vigilance má optimalizované rozložení hmotnosti, "
 "což jí umožňuje nést větší užitečné zatížení."
-
-msgid "Empire Admonisher"
-msgstr "Imperiální Admonisher"
 
 msgid "Nexus Shipyards"
 msgstr "Loděnice Nexus"
@@ -15494,10 +15959,6 @@ msgstr ""
 "Tato vojenská verze Admonisheru je z větší části funkčně shodná se "
 "standardním Admonisherem, ale má o něco lepší pancíř, štíty a odvod tepla."
 
-#, fuzzy
-msgid "Empire Admonisher Longbow"
-msgstr "Imperiální Admonisher"
-
 msgid ""
 "Standard Empire Admonishers are fabricated to be able to fit many needs, in "
 "a one-size fits all approach. However, there are times when such flexibility "
@@ -15514,9 +15975,6 @@ msgstr ""
 msgid "#bGains as much weapon range bonus as the ship detection.#0"
 msgstr ""
 
-msgid "Empire Hawking"
-msgstr "Imperiální Hawking"
-
 #, fuzzy
 msgid "You need at least 60% reputation with the Empire."
 msgstr "Potřebujete alespoň 60 reputace u Impéria."
@@ -15529,9 +15987,6 @@ msgstr ""
 "Tato vojenská verze Hawkingu je z větší části funkčně shodná se standardním "
 "Hawkingem, ale má o něco lepší pancéřování, štíty a odvod tepla."
 
-msgid "Empire Lancelot"
-msgstr "Imperiální Lancelot"
-
 #, fuzzy
 msgid ""
 "This military grade version of the Lancelot is mostly identical in function "
@@ -15539,10 +15994,6 @@ msgid ""
 msgstr ""
 "Tato vojenská verze Lancelotu je z větší části funkčně shodná se standardním "
 "Lancelotem, ale má o něco lepší pancéřování, štíty a odvod tepla."
-
-#, fuzzy
-msgid "Empire Lancelot Golden Efreeti"
-msgstr "Imperiální Lancelot"
 
 msgid ""
 "A high-spec bombing focused Lancelot that is most known by the use with the "
@@ -15553,9 +16004,6 @@ msgid ""
 "switch between targets while depending on missiles and torpedoes."
 msgstr ""
 
-msgid "Empire Pacifier"
-msgstr "Imperiální Pacifier"
-
 #, fuzzy
 msgid ""
 "This military grade version of the Pacifier is mostly identical in function "
@@ -15563,10 +16011,6 @@ msgid ""
 msgstr ""
 "Tato vojenská verze Pacifieru je z větší části funkčně shodná se standardním "
 "Pacifierem, ale má o něco lepší pancéřování, štíty a odvod tepla."
-
-#, fuzzy
-msgid "Empire Pacifier Hoplite"
-msgstr "Imperiální Pacifier"
 
 msgid ""
 "Designed by an Imperial Combat Bureaucrat for personal use, the Pacifier "
@@ -15585,9 +16029,6 @@ msgstr ""
 msgid "Shields start regenerating again upon full cooldown."
 msgstr ""
 
-msgid "Empire Peacemaker"
-msgstr "Imperiální Peacemaker"
-
 #, fuzzy
 msgid "You need at least 70% reputation with the Empire."
 msgstr "Potřebujete alespoň 70 reputace u Impéria."
@@ -15605,9 +16046,6 @@ msgstr ""
 "mohou poskytovat stíhacím a bombardovacím letkám tolik potřebné zásoby. "
 "Stejně jako většina hlavních lodí je však zranitelný vůči útokům "
 "nepřátelských bombardérů."
-
-msgid "Empire Rainmaker"
-msgstr "Imperiální Rainmaker"
 
 msgid ""
 "The Rainmaker is the largest freighter used by the Empire. It is capable of "
@@ -15628,9 +16066,6 @@ msgstr ""
 "k doslova dešti zásob. Po těchto událostech byl schválen oficiální formulář "
 "EE-1891-392 na přejmenování lodi a oficiálním jménem lodi se stal Rainmaker."
 
-msgid "Empire Shark"
-msgstr "Imperiální Shark"
-
 #, fuzzy
 msgid "You need at least 20% reputation with the Empire."
 msgstr "Potřebujete alespoň 20 reputace u Impéria."
@@ -15647,17 +16082,11 @@ msgstr ""
 "Díky použitým vojenským materiálům je loď také o něco lehčí než její běžný "
 "protějšek."
 
-msgid "Kauweke"
-msgstr "Kauweke"
-
 msgid "Elder Feral Bioship"
 msgstr "Starší ferální bioloď"
 
 msgid "Still to do..."
 msgstr "Ještě zbývá udělat..."
-
-msgid "Nohinohi"
-msgstr "Nohinohi"
 
 msgid "Bio-Fighter"
 msgstr "Bio-Stíhač"
@@ -15676,17 +16105,11 @@ msgstr ""
 "biologické složky lodi nakonec převládnou nad syntetickými částmi. Tyto lodě "
 "se běžně označují jako \"ferální biolodě\" a není o nich mnoho známo."
 
-msgid "Taitamariki"
-msgstr "Taitamariki"
-
 msgid "Bio-Corvette"
 msgstr "Bio-Korveta"
 
 msgid "Not meant for the player."
 msgstr "Není určeno pro hráče."
-
-msgid "Fort Raelid"
-msgstr "Pevnost Raelid"
 
 msgid "Station"
 msgstr "Stanice"
@@ -15695,15 +16118,6 @@ msgid "This is a base. It's for AI use only. Don't buy it. Seriously."
 msgstr ""
 "Jedná se o základnu. Je určena pouze pro umělou inteligenci. Nekupujte ji. "
 "Vážně."
-
-msgid "Fort Raglan"
-msgstr "Pevnost Raglan"
-
-msgid "One-Wing Goddard"
-msgstr "Jednokřídlý Goddard"
-
-msgid "Psychic Orb"
-msgstr "Psychický orb"
 
 #. We'll need the physics constants
 #. Some defaults
@@ -15843,12 +16257,6 @@ msgstr "Psychický orb"
 msgid "Unknown"
 msgstr "Neznámý"
 
-msgid "Sindbad"
-msgstr "Sindbad"
-
-msgid "Admonisher"
-msgstr "Admonisher"
-
 msgid ""
 "A very versatile combat ship. Nexus defines the Admonisher as a compromise "
 "between the ruggedness of the Pacifier and the agility of the Lancelot. "
@@ -15858,10 +16266,6 @@ msgstr ""
 "robustností Pacifieru a hbitostí Lancelotu. Celkově jde o velmi solidní "
 "bojovou loď."
 
-#, fuzzy
-msgid "Admonisher ΩIIa"
-msgstr "Admonisher"
-
 msgid ""
 "The Admonisher ΩIIa makes the hard choice of sacrificing long-range "
 "engagement capability to be able to excel in dogfighting. The original long-"
@@ -15870,9 +16274,6 @@ msgid ""
 "fighters and bombers with ease. However, the difficulty to equip torpedo "
 "launchers make the ship ill-suited for engagements with larger ships."
 msgstr ""
-
-msgid "Ancestor"
-msgstr "Ancestor"
 
 msgid ""
 "Commonly referred to as the \"Little Goddard\", the Ancestor also has its "
@@ -15884,9 +16285,6 @@ msgstr ""
 "primitivních létajících strojích, které lidé používali před mnoha věky. Na "
 "rozdíl od Goddardu však elektroniku vyrábí rod Dvaeredů, takže v této "
 "oblasti je podstatně horší."
-
-msgid "Ancestor HG Eagle-Eye"
-msgstr ""
 
 msgid ""
 "A product of a special collaboration between House Goddard and House "
@@ -15901,9 +16299,6 @@ msgid ""
 "make sure every missile counts."
 msgstr ""
 
-msgid "Bedivere"
-msgstr ""
-
 msgid ""
 "One of the most long-lived designs in spacefaring, the Bedivere was designed "
 "to be able to fulfil a diversity of different roles. Although technically "
@@ -15914,9 +16309,6 @@ msgid ""
 "possible to obtain new Bediveres, given their ease to repair, it seems like "
 "it will take a long time for them to completely disappear."
 msgstr ""
-
-msgid "Gawain"
-msgstr "Gawain"
 
 msgid "Luxury Yacht"
 msgstr "Luxusní jachta"
@@ -15933,10 +16325,6 @@ msgstr ""
 "a je hojně využívána jako sportovní plavidlo, protože je mimořádně obratná, "
 "ačkoli v boji přežije jen zřídka kvůli svému skromnému zbraňovému prostoru a "
 "relativní křehkosti."
-
-#, fuzzy
-msgid "Gawain XY-37"
-msgstr "Gawain"
 
 msgid ""
 "The Gawain XY-37 was meant to rework the engine and start a new era of "
@@ -15963,9 +16351,6 @@ msgstr ""
 "vylepšování původního designu udržuje na trhu velmi konkurenceschopná. Jedná "
 "se o vesmírnou klasiku."
 
-msgid "Goddard Merchantman"
-msgstr ""
-
 msgid ""
 "It all began with an insurance dispute at Manuel Station when a sensor "
 "malfunction resulted in a Zebra being damaged beyond repair while delivering "
@@ -15985,9 +16370,6 @@ msgid ""
 "second hand Goddards are reconfigured and re-sold as 'Merchantman' variants."
 msgstr ""
 
-msgid "Hawking"
-msgstr "Hawking"
-
 msgid ""
 "The Hawking is the flagship vessel of Nexus Shipyards. A large cruiser "
 "designed for extended engagements, it is widely used by the Empire to exert "
@@ -16000,9 +16382,6 @@ msgstr ""
 "územími. Co se týče hrubé palebné síly, je Hawking druhý po vlajkové lodi "
 "rodu Goddardů, ačkoli jeho užší rám mu umožňuje představovat pro nepřítele "
 "menší cíl."
-
-msgid "Hyena"
-msgstr "Hyena"
 
 msgid "Aerosys"
 msgstr "Aerosys"
@@ -16024,9 +16403,6 @@ msgstr ""
 "komukoli, kdo je ochoten zaplatit, protože se zdá, že v řadách známějších a "
 "neukázněných pilotů je Hyen nespočet."
 
-msgid "Kestrel"
-msgstr "Kestrel"
-
 msgid "Krain Industries"
 msgstr "Krain Industries"
 
@@ -16043,10 +16419,6 @@ msgstr ""
 "sílu s nejmodernější elektronikou, což z něj v rukou schopného kapitána dělá "
 "skutečně obávanou loď."
 
-#, fuzzy
-msgid "Kestrel Sigma"
-msgstr "Kestrel"
-
 msgid ""
 "The Kestrel Sigma features a high-end reflectokinetic hull padding that not "
 "only increases the durability of the ship, but also can affect weapon locks "
@@ -16057,9 +16429,6 @@ msgid ""
 "difficulty of production leading to high failure rates racks up a premium on "
 "the final ship's cost."
 msgstr ""
-
-msgid "Koala"
-msgstr "Koala"
 
 msgid "Melendez Corp."
 msgstr "Melendez Corp."
@@ -16073,10 +16442,6 @@ msgstr ""
 "zbraně, ale slušným množstvím nákladového prostoru. Hodí se pro pracující "
 "podnikatele, kteří chtějí vydělat na své cestě po hvězdách."
 
-#, fuzzy
-msgid "Koala Armoured"
-msgstr "Biometalický pancíř"
-
 msgid ""
 "The Koala is one of the sturdier courier ships, with a small size that also "
 "aids it in survival. The armoured variant sacrifices speed for even more "
@@ -16086,9 +16451,6 @@ msgid ""
 "ships efficiently. It is commonly used for the delivery of critical cargo "
 "without raising too much attention."
 msgstr ""
-
-msgid "Lancelot"
-msgstr "Lancelot"
 
 msgid ""
 "One of the prized heavy fighters of Nexus Shipyards. The Lancelot was "
@@ -16105,9 +16467,6 @@ msgstr ""
 "spolehlivost a dostupnost je používán bezpečnostními agenturami po celé "
 "galaxii."
 
-msgid "Llama"
-msgstr "Llama"
-
 msgid ""
 "One of the most widely used ships in the galaxy. Renowned for its stability "
 "and stubbornness. The design hasn't been modified much since its creation "
@@ -16120,9 +16479,6 @@ msgstr ""
 "použití, kterou nejprve používala aristokracie a nyní ji používají všichni, "
 "kdo si nemohou dovolit lepší."
 
-msgid "Llama Voyager"
-msgstr ""
-
 msgid ""
 "The Llama's popularity is based on the wide availability of the base ship, "
 "and is most pilots introduction to spacefaring. Inspired by the popularity, "
@@ -16132,9 +16488,6 @@ msgid ""
 "ramscoop that is able to capture and filter minuscule space dust to slowly "
 "refill fuel."
 msgstr ""
-
-msgid "Mule"
-msgstr "Mule"
 
 msgid ""
 "A heavy freighter specialized in transporting cargo throughout the galaxy. "
@@ -16147,9 +16500,6 @@ msgstr ""
 "příjemné plavby. Mula je oblíbeným cílem pirátů, proto se důrazně doporučuje "
 "vyhýbat se nebezpečným systémům."
 
-msgid "Mule Hardhat"
-msgstr ""
-
 msgid ""
 "Specially ordered by the Mining Vrata, the Mule Hardhat is a modified "
 "version of the Mule with a focus on augmenting the mining capabilities. In "
@@ -16159,9 +16509,6 @@ msgid ""
 "popular among miners. However, such changes come with an increase in the "
 "fabrication cost."
 msgstr ""
-
-msgid "Pacifier"
-msgstr "Pacifier"
 
 msgid ""
 "The Pacifier is one of the older and trustier designs of Nexus Shipyards. It "
@@ -16173,9 +16520,6 @@ msgstr ""
 "Byl navržen především jako pohraniční hlídkové plavidlo, a proto je schopen "
 "odolávat těžkým nájezdům. Pacifier má vysokou kapacitu paliva, která "
 "usnadňuje dlouhé hlídkové trasy."
-
-msgid "Phalanx"
-msgstr "Phalanx"
 
 #, fuzzy
 msgid ""
@@ -16189,9 +16533,6 @@ msgstr ""
 "dvaeredské konstrukce. Její vysoké pancéřování z ní dělá schopnou korvetu za "
 "předpokladu, že ji někdo vybaví věžemi."
 
-msgid "Plowshare"
-msgstr ""
-
 msgid ""
 "When all your care about cargo, the Plowshare is the vessel you need. By "
 "minimizing defence capabilities, the plowshare is able to dedicate most of "
@@ -16202,9 +16543,6 @@ msgid ""
 "of the cornerstones of modern spacefaring societies."
 msgstr ""
 
-msgid "Quicksilver"
-msgstr "Quicksilver"
-
 msgid ""
 "While still a cargo hauler, the Quicksilver is quite different from "
 "Melendez's other offerings. Featuring a streamlined frame and oversized "
@@ -16213,10 +16551,6 @@ msgstr ""
 "Quicksilver je sice stále nákladním vozem, ale od ostatních Melendezových "
 "nabídek se značně liší. Má zjednodušený rám a nadměrné motory, a je tak "
 "nejlepší volbou pro účelnou přepravu."
-
-#, fuzzy
-msgid "Quicksilver Mercury"
-msgstr "Quicksilver"
 
 #, fuzzy
 msgid "Luxury Courier"
@@ -16232,9 +16566,6 @@ msgid ""
 "a heft price tag that many can not afford."
 msgstr ""
 
-msgid "Rhino"
-msgstr "Rhino"
-
 msgid ""
 "A particularly durable Melendez design, the Rhino is well-suited to "
 "transporting high-value, high-risk freight. While it has much lower cargo "
@@ -16247,9 +16578,6 @@ msgstr ""
 "hustotu nákladu než specializované nákladní lodě, chrání se velmi účinně. "
 "Jeho modulární prostory umožňují, aby fungoval i jako transportní loď pro "
 "přepravu osob, což je skutečnost, která moderním armádám neunikla."
-
-msgid "Schroedinger"
-msgstr "Schroedinger"
 
 msgid "Sirius Systems"
 msgstr "Systémy Sirius"
@@ -16269,9 +16597,6 @@ msgstr ""
 "malému množství zbraňového prostoru. Je také vybavena dvojicí motorů "
 "Eraedon, díky nimž je velmi obratná."
 
-msgid "Shark"
-msgstr "Shark"
-
 msgid ""
 "A newer Nexus Shipyards design, the Shark is an agile, light fighter "
 "designed for in-system patrolling. While it's not as capable as its larger "
@@ -16281,10 +16606,6 @@ msgstr ""
 "letoun určený k hlídkování v systému. I když není tak výkonný jako jeho "
 "větší příbuzný Lancelot, stále je účinným doplňkem každé flotily."
 
-#, fuzzy
-msgid "Shark ΨIIIa"
-msgstr "Dvaer IIIa"
-
 msgid ""
 "With the Shark ΨIIIa, Nexus Shipyards rethinks the Shark as a Scout-class "
 "vessel. The weapon mounts are significantly reduced in exchange for more "
@@ -16293,9 +16614,6 @@ msgid ""
 "unknown, there has been almost no publicity regarding the ΨIIIa and it is "
 "very hard to find."
 msgstr ""
-
-msgid "Starbridge"
-msgstr "Starbridge"
 
 msgid ""
 "The Starbridge is the latest ship designed by Krain Industries. It is a "
@@ -16308,10 +16626,6 @@ msgstr ""
 "srovnatelné maximální rychlosti. Nízká hmotnost je cenou za zmenšený "
 "konstrukční prostor."
 
-#, fuzzy
-msgid "Starbridge Sigma"
-msgstr "Starbridge"
-
 msgid ""
 "Heavily modified, the Starbridge Sigma boasts the capability of housing "
 "fighters in new modified weapon mounts. The increased weapon room is "
@@ -16320,10 +16634,6 @@ msgid ""
 "ship is a premium variant of the Starbridge capable of holding its own in "
 "deep space."
 msgstr ""
-
-#, fuzzy
-msgid "Tristan"
-msgstr "Cristen"
 
 msgid ""
 "The Tristan is the predecessor of Nexus Shipyards' popular Lancelot model. "
@@ -16337,9 +16647,6 @@ msgid ""
 "vessels and a large refurbishing and repair community make it so they are "
 "still surprisingly in use, especially by those who can not afford better."
 msgstr ""
-
-msgid "Vendetta"
-msgstr "Vendetta"
 
 #, fuzzy
 msgid ""
@@ -16359,10 +16666,6 @@ msgstr ""
 "spustit a která má přesně takovou sílu, aby dokázala změnit delší bitvy na "
 "krátké boje."
 
-#, fuzzy
-msgid "Vendetta Whiplash"
-msgstr "Vendetta"
-
 msgid ""
 "The Vendetta's great flaw is trying to provide a consistent weapon system, "
 "requiring the ship's system to perform equally at maximum and minimum weapon "
@@ -16373,9 +16676,6 @@ msgid ""
 "to start up, once they are up and running, the firepower is unmatched by any "
 "ship of the same size."
 msgstr ""
-
-msgid "Vigilance"
-msgstr "Vigilance"
 
 msgid ""
 "The Vigilance is the embodiment of Dvaered philosophy. Featuring immense "
@@ -16388,9 +16688,6 @@ msgstr ""
 "předními zbraněmi. Vzhledem ke svému dvaeredskému původu disponuje horší "
 "technologií oproti svým protějškům."
 
-msgid "Zebra"
-msgstr "Zebra"
-
 msgid ""
 "The Zebra bulk freighter is the largest of all of the freighters produced by "
 "Melendez, and one of the most desired ships by all independent civilian "
@@ -16401,10 +16698,6 @@ msgstr ""
 "společností Melendez a patří mezi nejžádanější lodě všech nezávislých "
 "civilních obchodníků. Zebra nabízí bezkonkurenční hustotu nákladu s "
 "přiměřenou ochranou."
-
-#, fuzzy
-msgid "Dealbreaker"
-msgstr "narušovač štítů"
 
 msgid "Skull and Bones"
 msgstr "Skull and Bones"
@@ -16422,9 +16715,6 @@ msgid ""
 "have come to know and respect."
 msgstr ""
 
-msgid "Pirate Admonisher"
-msgstr "Pirátský Admonisher"
-
 #, fuzzy
 msgid ""
 "The stock Admonisher is a powerful vessel, especially for its size. Through "
@@ -16437,9 +16727,6 @@ msgstr ""
 "manévrovací schopností, větším prostorem pro zbraně a mírně vylepšenou "
 "obranou na úkor kapacity nákladu a rychlosti regenerace pancíře."
 
-msgid "Pirate Ancestor"
-msgstr "Pirátský Ancestor"
-
 msgid ""
 "Ancestors were one of the first ships to be fancied by pirates. The big "
 "intimidating wings and good top speeds would usually get ships to surrender "
@@ -16451,10 +16738,6 @@ msgstr ""
 "se bez jediného výstřelu. Jak se na trhu objevovaly lepší lodě, jejich "
 "používání klesalo kvůli archaické elektronice a zaměřovacím systémům."
 
-#, fuzzy
-msgid "Pirate Bedivere"
-msgstr "Nájezd pirátů"
-
 msgid ""
 "Realizing the Bedivere's potential as a versatile scavenger vessel, the "
 "Skull and Bones refitted the model for more efficient plundering. In "
@@ -16462,10 +16745,6 @@ msgid ""
 "have been shrunk to make room for more crew and boarding androids. Thus, the "
 "Pirate Bedivere best used in a fleet with more combat-capable ships."
 msgstr ""
-
-#, fuzzy
-msgid "Pirate Blue Shark"
-msgstr "Pirátský Shark"
 
 msgid ""
 "As any good pirate would know, you can hardly pillage a ship if you blow it "
@@ -16476,9 +16755,6 @@ msgid ""
 "popularity. \"Everyone knows Red makes ships go fast, Blue makes them go "
 "slower!\" is a common ill-informed complaint."
 msgstr ""
-
-msgid "Pirate Hyena"
-msgstr "Pirátská Hyena"
 
 msgid ""
 "The Pirate Hyena has quickly become a favourite of pirates far and wide. Not "
@@ -16495,9 +16771,6 @@ msgstr ""
 "úpravy, díky nimž jsou jako mrchožrouti ještě účinnější a hůře zasažitelní "
 "než jejich protějšky z Aerosysu."
 
-msgid "Pirate Kestrel"
-msgstr "Pirátský Kestrel"
-
 #, fuzzy
 msgid ""
 "The Kestrel is one of the best ships offered by Skull and Bones. It is "
@@ -16509,10 +16782,6 @@ msgstr ""
 "křižník je mimořádně obratná, přesto jí nechybí palebná síla potřebná ke "
 "zpochybnění autority Impéria. Velmi silná loď pro ty piráty, kteří si ji "
 "mohou dovolit."
-
-#, fuzzy
-msgid "Pirate Kestrel Yuri's Kiss"
-msgstr "Pirátský Kestrel"
 
 msgid ""
 "One-Eyed Yuri was a famous ship engineer at Skull and Bones, renown for her "
@@ -16533,9 +16802,6 @@ msgid ""
 "targets are able to react."
 msgstr ""
 
-msgid "Pirate Phalanx"
-msgstr "Pirátský Phalanx"
-
 msgid ""
 "Building upon the already-capable Phalanx chassis, the Skull and Bones "
 "engineers have substantially improved the ship's performance, while only "
@@ -16543,9 +16809,6 @@ msgid ""
 msgstr ""
 "Na základě již schopného podvozku Phalanx inženýři Skull and Bones podstatně "
 "zlepšili výkon lodi, přičemž jen nepatrně snížili její ochranu."
-
-msgid "Pirate Revenant"
-msgstr "Pirátský Revenant"
 
 #, fuzzy
 msgid ""
@@ -16572,9 +16835,6 @@ msgstr ""
 "existuje mnoho příběhů pirátů, kteří si se svými bioloděmi vytvořili silné "
 "pouto."
 
-msgid "Pirate Rhino"
-msgstr "Pirátský Rhino"
-
 msgid ""
 "The traditional Skull and Bones refit has left the Rhino substantially more "
 "manoeuvrable, though somewhat less armoured. Exploiting its large cargo bay "
@@ -16583,9 +16843,6 @@ msgstr ""
 "Díky tradiční úpravě Skull and Bones je Rhino podstatně obratnější, i když "
 "poněkud hůře pancéřovaný. Díky velkému nákladovému prostoru a odolnosti se "
 "Rhino stal vynikající mrchožroutskou lodí."
-
-msgid "Pirate Shark"
-msgstr "Pirátský Shark"
 
 msgid ""
 "The nimble Nexus Shipyards Shark has proved an excellent canvas for the "
@@ -16598,9 +16855,6 @@ msgstr ""
 "ovladatelnost trpí minimálně, zatímco je schopen vyvinout podstatně větší "
 "palebnou sílu."
 
-msgid "Pirate Starbridge"
-msgstr "Pirátský Starbridge"
-
 msgid ""
 "Even though the Starbridge is already a light and fast destroyer, Skull and "
 "Bones engineers managed to further improve its speed. Due to its large "
@@ -16611,9 +16865,6 @@ msgstr ""
 "společnosti Skull and Bones se podařilo jeho rychlost ještě zvýšit. Díky své "
 "velké palebné síle a relativně vysoké rychlosti je Starbridge na svou třídu "
 "lodí skutečně děsivým zjevem."
-
-msgid "Pirate Vendetta"
-msgstr "Pirátská Vendetta"
 
 #, fuzzy
 msgid ""
@@ -16631,9 +16882,6 @@ msgstr ""
 "nějakým pochybným pupkatým technikem. Loď je ve výsledku podstatně lepší než "
 "původní, ale každou chvíli se reaktor rozpadne na novu a zničí loď. Doufáte, "
 "že se to nestane vám, pokud se do ní dostanete."
-
-msgid "Pirate Zebra"
-msgstr "Pirátská Zebra"
 
 #, fuzzy
 msgid ""
@@ -16653,9 +16901,6 @@ msgstr ""
 "výrazně nižší. Pirátská verze Zebry je nicméně příležitostně používána jako "
 "nákladní loď."
 
-msgid "Proteron Archimedes"
-msgstr "Proteronský Archimedes"
-
 #, fuzzy
 msgid "You need at least 70% reputation with the Proteron."
 msgstr "Potřebujete alespoň 70 reputací u Proteronu."
@@ -16666,9 +16911,6 @@ msgid ""
 msgstr ""
 "Archimedes je páteří flotily Proteronu. Nabízí velkou palebnou sílu a "
 "vysokou odolnost a vždy se nachází v bitevní vřavě."
-
-msgid "Proteron Dalton"
-msgstr "Proteronský Dalton"
 
 #, fuzzy
 msgid "You need at least 20% reputation with the Proteron."
@@ -16692,9 +16934,6 @@ msgstr ""
 "soubojům, ale je známo, že skupina letadlových lodí, která vypustí několik "
 "letek, mnohokrát zvrátí průběh bitvy."
 
-msgid "Proteron Euler"
-msgstr "Proteronský Euler"
-
 msgid ""
 "The Proteron chose their battles carefully as their slow capital ships "
 "cannot retreat from a battle easily. Thus, they have rather large fleet of "
@@ -16707,9 +16946,6 @@ msgstr ""
 "průzkumných plavidel, přičemž Euler je primárně používaným průzkumným "
 "plavidlem. Tato loď není uzpůsobena k boji, spoléhá na utajení a rychlost, "
 "aby se vyhnula nepřátelům."
-
-msgid "Proteron Gauss"
-msgstr "Proteronský Gauss"
 
 #, fuzzy
 msgid "You need at least 50% reputation with the Proteron."
@@ -16726,9 +16962,6 @@ msgstr ""
 "sice méně zbraňových zařízení než Pacifier, ale vynahrazuje to nižší "
 "hmotností a rozšířeným konstrukčním prostorem."
 
-msgid "Proteron Hippocrates"
-msgstr "Proteronský Hippocrates"
-
 msgid ""
 "As the Proteron only use carrier-based fighters small fleets lack fighter "
 "support. To make up this issue the Hippocrates was developed, an ultra-light "
@@ -16741,9 +16974,6 @@ msgstr ""
 "ultralehká letadlová loď Hippocrates, specializovaná na poskytování stíhací "
 "podpory proteronským přepadovým flotilám. Hippokratés může sloužit také jako "
 "raketová platforma, přičemž hangár slouží k uložení dalších beden s municí."
-
-msgid "Proteron Pythagoras"
-msgstr "Proteronský Pythagoras"
 
 #, fuzzy
 msgid "You need at least 60% reputation with the Proteron."
@@ -16762,9 +16992,6 @@ msgstr ""
 "nalézt, jak testuje obranu nepřítele a snaží se najít slabé místo, kterým by "
 "mohly prorazit těžké proteronské flotily."
 
-msgid "Proteron Watson"
-msgstr "Proteronský Watson"
-
 #, fuzzy
 msgid ""
 "The heart of the Proteron battle fleet is formed by the Watson. Acting as a "
@@ -16775,20 +17002,8 @@ msgstr ""
 "jako mobilní odpalovací základna a zároveň jako velitelská a řídicí jednotka "
 "a koordinuje zbytek flotily v boji o nadvládu nad galaxií."
 
-msgid "Astral Projection Greater"
-msgstr "Větší astrální projekce"
-
 msgid "Sirius Psychic Powers"
 msgstr "Psychické síly Siria"
-
-msgid "Astral Projection Lesser"
-msgstr "Menší astrální projekce"
-
-msgid "Astral Projection Normal"
-msgstr "Normální astrální projekce"
-
-msgid "Sirius Divinity"
-msgstr "Božství Siria"
 
 #, fuzzy
 msgid "You need at least 70% reputation with House Sirius."
@@ -16807,9 +17022,6 @@ msgstr ""
 "jí dává jedinečnou flexibilitu v boji a slouží jako klíčové logistické "
 "plavidlo v každé velké flotile."
 
-msgid "Sirius Dogma"
-msgstr "Sirianské Dogma"
-
 msgid ""
 "The backbone of the House Sirius fleet, the Dogma is a sight to behold. "
 "Trimmed in gold and silver and fielding a large array of weapons, the Dogma "
@@ -16818,9 +17030,6 @@ msgstr ""
 "Dogma je páteří flotily rodu Sirius a je na co se dívat. Dogma, ověšená "
 "zlatem a stříbrem a vybavená velkým množstvím zbraní, je jen málokdy "
 "překonána v prestiži i vojenské síle."
-
-msgid "Sirius Fidelity"
-msgstr "Sirianská Fidelity"
 
 #, fuzzy
 msgid "You need at least 20% reputation with House Sirius."
@@ -16835,9 +17044,6 @@ msgstr ""
 "schopná, je často využívána jako předsunutý průzkumník, který s sebou "
 "přináší mnohem smrtonosnější spojence."
 
-msgid "Sirius Preacher"
-msgstr "Sirianský Preacher"
-
 #, fuzzy
 msgid "You need at least 40% reputation with House Sirius."
 msgstr "Potřebujete alespoň 40 reputace v domě Sirius."
@@ -16850,9 +17056,6 @@ msgstr ""
 "Preacher, jak už název napovídá, je hlavním prostředkem, kterým Dům Sirius "
 "předává své poselství a vůli. Preacher disponuje velkým množstvím zbraní a "
 "umí z nevěřících udělat konvertity."
-
-msgid "Sirius Providence"
-msgstr "Sirianská Providence"
 
 #, fuzzy
 msgid "You need at least 60% reputation with House Sirius."
@@ -16868,9 +17071,6 @@ msgstr ""
 "množství zásob. Některé z nich se používají také k přepravě poutníků, i když "
 "většina Siriů tyto přeplněné hromadné transporty nemá ráda."
 
-msgid "Sirius Shaman"
-msgstr "Sirianský Shaman"
-
 #, fuzzy
 msgid "You need at least 30% reputation with House Sirius."
 msgstr "Potřebujete alespoň 30 reputace u rodu Sirius."
@@ -16883,9 +17083,6 @@ msgstr ""
 "Ačkoli jeho relativně elegantní stavba může být z dálky mylně považována za "
 "lehkého bojovníka, Shaman je něco jiného. Je to speciálně zkonstruovaná "
 "lehká raketová platforma a jen málo nepřátel unikne z dosahu Shamana."
-
-msgid "Soromid Arx"
-msgstr "Soromidský Arx"
 
 msgid "Bio-Carrier"
 msgstr "Bio-Letadlová loď"
@@ -16907,9 +17104,6 @@ msgstr ""
 "Arx bývá lehčí letadlovou lodí, než jaká se obvykle vyskytuje v "
 "nesoromidských flotilách, aniž by tím utrpěla nosnost."
 
-msgid "Soromid Brigand"
-msgstr "Soromidský Brigand"
-
 msgid "Bio-Interceptor"
 msgstr "Bio-Interceptor"
 
@@ -16926,9 +17120,6 @@ msgstr ""
 "Brigand je rychlá a obratná loď, kterou Soromidé používají k hlídkování v "
 "systému a k policejním účelům. Loď je slabě pancéřovaná a poměrně křehká, "
 "ale vynahrazuje to tím, že rychle roste, a je tedy relativně postradatelná."
-
-msgid "Soromid Copia"
-msgstr "Soromidská Copia"
 
 msgid "Bio-Freighter"
 msgstr "Bio-nákladní loď"
@@ -16948,9 +17139,6 @@ msgstr ""
 "Na rozdíl od většiny nákladních lodí je Copia navržena tak, aby se "
 "nevyhýbala boji, a ve správných rukou může být velmi smrtící lodí."
 
-msgid "Soromid Ira"
-msgstr "Soromidská Ira"
-
 msgid "Bio-Cruiser"
 msgstr "Bio-Křižník"
 
@@ -16962,9 +17150,6 @@ msgstr ""
 "Ira je speciálně upravený křižník, který se běžně nachází v čele "
 "soromidských sil. Jeho pancíř je sice poněkud slabý, ale to jen zřídkakdy "
 "zachrání ty, kteří se setkají s jeho ničivou palbou."
-
-msgid "Soromid Marauder"
-msgstr "Soromidský Marauder"
 
 msgid "Bio-Bomber"
 msgstr "Bio-Bombardér"
@@ -16984,9 +17169,6 @@ msgstr ""
 "zvýšenou odolnost a muniční komory. Díky tomu je o dost pomalejší než jeho "
 "vzdálený bratranec."
 
-msgid "Soromid Nyx"
-msgstr "Soromidský Nyx"
-
 msgid "Bio-Destroyer"
 msgstr "Bio-Torpédoborec"
 
@@ -16999,9 +17181,6 @@ msgstr ""
 "poskytnout silnou palebnou sílu v prudkých bitvách a je dostatečně obratná, "
 "aby se v případě potřeby stáhla, obvykle tvoří páteř každé velké soromidské "
 "flotily."
-
-msgid "Soromid Odium"
-msgstr "Soromidský Odium"
 
 #, fuzzy
 msgid "You need at least 40% reputation with the Soromid."
@@ -17016,9 +17195,6 @@ msgstr ""
 "působivé množství systémových pevných bodů. Často se s ní setkáte v menších "
 "vojenských střetech."
 
-msgid "Soromid Reaver"
-msgstr "Soromidský Reaver"
-
 #, fuzzy
 msgid ""
 "Reavers are often found at the forefront of Soromid military engagements. "
@@ -17028,9 +17204,6 @@ msgstr ""
 "Reavery se často nacházejí v popředí soromidských vojenských střetnutí. "
 "Jejich dobrá rychlost a ovladatelnost jsou umocněny jejich odolností, díky "
 "čemuž je Reaver jedním z nejúčinnějších těžkých stíhačů v galaxii."
-
-msgid "Soromid Vox"
-msgstr "Soromidský Vox"
 
 msgid "Bio-Battleship"
 msgstr "Bio-Bitevní loď"
@@ -17044,9 +17217,6 @@ msgstr ""
 "jádro jakékoli dané Soromidské válečné flotily a je využívána pouze při "
 "významných střetnutích."
 
-msgid "Thurion Apprehension"
-msgstr "Thurionský Apprehension"
-
 #, fuzzy
 msgid "Thurion Shipyards"
 msgstr "Thurionské loděnice"
@@ -17056,9 +17226,6 @@ msgid ""
 "paired with advanced electronic defences make it difficult for enemies to "
 "detect the ship, let alone attempt to lock onto it."
 msgstr ""
-
-msgid "Thurion Certitude"
-msgstr "Thurionský Certitude"
 
 #, fuzzy
 msgid "You need at least 70% reputation with the Thurion."
@@ -17072,9 +17239,6 @@ msgid ""
 "also unrivaled by other Thurion ships, and the towering presence makes it "
 "clear that the ship is not only for support."
 msgstr ""
-
-msgid "Thurion Ingenuity"
-msgstr "Thurionská Ingenuity"
 
 msgid ""
 "The Thurion Ingenuity is a fighter built for survival. Like all Thurian "
@@ -17091,9 +17255,6 @@ msgstr ""
 "ustoupit, aby se dobil a zregeneroval. Stejně jako každá Thurionská loď je "
 "také elektronika vysoce nadprůměrná."
 
-msgid "Thurion Perspicacity"
-msgstr "Thurionská Perspicacity"
-
 #, fuzzy
 msgid "You need at least 20% reputation with the Thurion."
 msgstr "Potřebujete alespoň 20 reputace u Thurionu."
@@ -17108,10 +17269,6 @@ msgstr ""
 "Thurionská Perspicacity je rychlá, lehká stíhačka typicky používaná pro "
 "průzkum nebo útok v rojích."
 
-#, fuzzy
-msgid "Thurion Perspicacity Beta"
-msgstr "Hangár Thurion Perspicacity"
-
 msgid ""
 "Originally designed as a fast scout ship, the lack of usability quickly led "
 "to the redesign as a more capable interceptor. The Perspicacity Beta is the "
@@ -17119,9 +17276,6 @@ msgid ""
 "to its small size. However, it can boast an incredible speed boost and "
 "slightly more nebula hardening."
 msgstr ""
-
-msgid "Thurion Scintillation"
-msgstr "Thurionský Scintillation"
 
 #, fuzzy
 msgid ""
@@ -17133,18 +17287,12 @@ msgstr ""
 "Je lépe vyzbrojena než jakákoli jiná loď Thurionu srovnatelné velikosti, ale "
 "stále ne tak dobře jako jiné bombardéry než Thurionské."
 
-msgid "Thurion Taciturnity"
-msgstr "Thurionská Taciturnity"
-
 msgid ""
 "The Thurion Taciturnity is an armoured and stealthy transport capable both "
 "of surviving the harsh nebula and defending itself from attack."
 msgstr ""
 "Thurionská Taciturnity je obrněná a tajná transportní loď schopná jak přežít "
 "drsnou mlhovinu, tak se ubránit před útokem."
-
-msgid "Thurion Virtuosity"
-msgstr "Thurionská Virtuosity"
 
 #, fuzzy
 msgid "You need at least 40% reputation with the Thurion."
@@ -17160,9 +17308,6 @@ msgstr ""
 "útoky. Zatímco zbraňový prostor je méně než hvězdný, vynikající elektronika "
 "plavidla a odolnost vůči drsné mlhovině to více než vynahrazují."
 
-msgid "Za'lek Bomber Drone"
-msgstr "Za'lekský bombardovací dron"
-
 msgid "Robotic Bomber"
 msgstr "Robotický bombardér"
 
@@ -17175,9 +17320,6 @@ msgid ""
 msgstr ""
 "Toto je bombardovací dron Za'lek. Postaveno pro útok na těžké lodě. Není "
 "určeno k pilotování hráčem."
-
-msgid "Za'lek Demon"
-msgstr "Za'lekský Demon"
 
 msgid "Za'lek Fabricators"
 msgstr "Výrobci Za'leku"
@@ -17193,10 +17335,6 @@ msgstr ""
 "a má špatné pancéřování, jako všechny Za'lekské lodě, ale to je pro "
 "Za'lekské nepřátele jen malá útěcha."
 
-#, fuzzy
-msgid "Za'lek Demon Type IV"
-msgstr "Za'lekský Sting"
-
 msgid ""
 "The Za'lek Demon Type IV is a departure from the standard autonomous drone-"
 "focused combat philosophy, redesigned to make heavy use of long range "
@@ -17207,9 +17345,6 @@ msgid ""
 "system, and the extra weapon slot and missile system storage required "
 "removing more of the ship's shield emitters and already thin armour."
 msgstr ""
-
-msgid "Za'lek Diablo"
-msgstr "Za'lekský Diablo"
 
 #, fuzzy
 msgid "You need at least 70% reputation with House Za'lek."
@@ -17224,18 +17359,12 @@ msgstr ""
 "vybavené těžkými štíty však mají sloužit jako platforma pro devastující roje "
 "dronů, nikoli pro boj v první linii."
 
-msgid "Za'lek Heavy Drone"
-msgstr "Za'lekský těžký dron"
-
 msgid ""
 "This is the Za'lek Heavy Drone. Fewer and not as crap. Not to be flown by "
 "the player."
 msgstr ""
 "Toto je těžký dron Za'lek. Je jich méně a nejsou tak hloupé. Nemá být řízen "
 "hráčem."
-
-msgid "Za'lek Hephaestus"
-msgstr "Za'lekský Hephaestus"
 
 msgid ""
 "The crown of the House Za'lek Defence Fleet, these proud buttresses of the "
@@ -17248,18 +17377,12 @@ msgstr ""
 "vynikající senzorové výbavě. Hefaistos je k vidění jen zřídka, ale budí "
 "respekt."
 
-msgid "Za'lek Light Drone"
-msgstr "Za'lekský lehký dron"
-
 msgid ""
 "This is the Za'lek Light Drone. Very weak, cheap and numerous. Not to be "
 "flown by the player."
 msgstr ""
 "Toto je Za'lekský lehký dron. Velmi slabý, levný a početný. Nesmí být řízen "
 "hráčem."
-
-msgid "Za'lek Mammon"
-msgstr "Za'lekský Mammon"
 
 msgid ""
 "While House Za'lek relies on drones for most everything, their limited fuel "
@@ -17279,9 +17402,6 @@ msgstr ""
 "pancéřování, i když to částečně vynahrazuje pokročilá technologie štítů. "
 "Standardní strategií je však spoléhat se při útěku na bojové drony."
 
-msgid "Za'lek Mephisto"
-msgstr "Za'lekský Mephisto"
-
 msgid ""
 "A mighty ship, the Mephisto has grand energy and shielding management, and "
 "its shields allow it to shrug off a lot of abuse. A core of these ships can "
@@ -17290,10 +17410,6 @@ msgstr ""
 "Mefisto je mohutná loď, která skvěle hospodaří s energií a štíty a díky nimž "
 "se dokáže vypořádat s velkým množstvím útoků. Jádro těchto lodí dokáže v "
 "krátké době proměnit i silné flotily ve strusku."
-
-#, fuzzy
-msgid "Za'lek Mephisto Type V"
-msgstr "Za'lekský Mephisto"
 
 #, fuzzy
 msgid "You need at least 80% reputation with House Za'lek."
@@ -17312,9 +17428,6 @@ msgid ""
 "it very hard to get your hands on one."
 msgstr ""
 
-msgid "Za'lek Scout Drone"
-msgstr "Za'lekský průzkumný dron"
-
 msgid "Robotic Scout"
 msgstr "Robotický průzkumník"
 
@@ -17324,9 +17437,6 @@ msgid ""
 msgstr ""
 "Toto je průzkumný dron Za'leku. Stvořený pro průzkum, ne pro boj. Není určen "
 "k tomu, aby ho pilotoval hráč."
-
-msgid "Za'lek Sting"
-msgstr "Za'lekský Sting"
 
 msgid ""
 "The Sting Corvette is rather large for its class, but its advanced sensor "
@@ -17340,10 +17450,6 @@ msgstr ""
 "součástí flotil rodu Za'lek. Nízká spotřeba paliva a vysoká autonomie díky "
 "zabudované funkci nosiče z ní činí ideální loď pro průzkumné mise."
 
-#, fuzzy
-msgid "Za'lek Sting Type II"
-msgstr "Za'lekský Sting"
-
 msgid ""
 "The Sting Type II reworks the shield systems of the original model. By "
 "rerouting the capacitor recharge loop in a positive feedback loop, "
@@ -17352,10 +17458,6 @@ msgid ""
 "ship that is surprisingly robust as long as shields are up, however, the "
 "moment they go down the hull tends to fail shortly after."
 msgstr ""
-
-#, fuzzy
-msgid "Za'lek Sting Type IV"
-msgstr "Za'lekský Sting"
 
 msgid ""
 "A lot of the popularity of the Za'lek Sting comes from the large amount of "
@@ -126580,10 +126682,6 @@ msgstr ""
 msgid "Tentacle Organ IV"
 msgstr ""
 
-#, fuzzy
-msgid "Corsair Engine"
-msgstr "Základní systémy (motor)"
-
 msgid ""
 "there once was a big mighty corsair\n"
 "who was said to be the finest heir\n"
@@ -126591,10 +126689,6 @@ msgid ""
 "almost tied as a spouse\n"
 "before they quickly took to the air"
 msgstr ""
-
-#, fuzzy
-msgid "Corsair Hull Plating"
-msgstr "Povlak trupu"
 
 msgid ""
 "wish I be like that lovely corsair\n"
@@ -126604,19 +126698,12 @@ msgid ""
 "irresistible buccaneer stare"
 msgstr ""
 
-#, fuzzy
-msgid "Corsair Systems"
-msgstr "Jádrové systémy"
-
 msgid ""
 "oh, the ferocious mighty corsair\n"
 "never sitting in their captain's chair\n"
 "least they puke out their grub\n"
 "all over the ship hub\n"
 "in space is it also mal de mer?"
-msgstr ""
-
-msgid "Neutralizer"
 msgstr ""
 
 msgid ""
@@ -126626,10 +126713,6 @@ msgid ""
 "improvements in nearly all facets. Due to the fact that few were made, it is "
 "a fairly rare find, but an import asset in a pilot's arsenal."
 msgstr ""
-
-#, fuzzy
-msgid "Reaver Cannon"
-msgstr "Dělo Ripper"
 
 msgid ""
 "The complex engineering specifications and difficulty of mass production "
