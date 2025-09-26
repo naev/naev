@@ -3,7 +3,7 @@ use sdl3 as sdl;
 
 pub fn key_to_str(key: sdl::keyboard::Keycode) -> String {
     let name = key.name();
-    if name == "" {
+    if name.is_empty() {
         format!("SC-{}", key.to_ll())
     } else {
         name
