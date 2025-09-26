@@ -32,6 +32,7 @@ source_rust = files(
    'camera.rs',
    'damagetype.rs',
    'faction.rs',
+   'input.rs',
    'linebreak.rs',
    'model.rs',
    'naev.rs',

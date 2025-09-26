@@ -3923,6 +3923,7 @@ src/info.c
 src/info.h
 src/input.c
 src/input.h
+src/input.rs
 src/intlist.c
 src/intlist.h
 src/joystick.c
