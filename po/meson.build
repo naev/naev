@@ -3,7 +3,7 @@ i18n = import('i18n')
 
 potfiles = custom_target(
    'potfiles',
-   output: 'POTFILES.in',
+   output: 'POTFILES.in', # this is a dummy file as it is output in source, not build
    command: [ files('../utils/update-po.sh'), meson.project_source_root(), meson.project_build_root() ],
    install: false
 )
@@ -30,5 +30,10 @@ gettext_targets = i18n.gettext('naev',
    install_dir: ndata_path / 'dat/gettext',
 )
 
-alias_target( 'pot', gettext_targets[1] )
-alias_target( 'update-po', gettext_targets[2] )
+pot = alias_target( 'pot',
+   potfiles,
+   gettext_targets[1],
+)
+update_po = alias_target( 'update-po',
+   gettext_targets[2],
+)
