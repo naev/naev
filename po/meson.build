@@ -8,7 +8,7 @@ potfiles = custom_target(
    install: false
 )
 
-i18n.gettext('naev',
+gettext_targets = i18n.gettext('naev',
    data_dirs: meson.project_source_root() / 'po',
    args: [
       '--files-from=' + (meson.project_source_root() / 'po/POTFILES.in'),
@@ -29,3 +29,6 @@ i18n.gettext('naev',
       ],
    install_dir: ndata_path / 'dat/gettext',
 )
+
+alias_target( 'pot', gettext_targets[1] )
+alias_target( 'update-po', gettext_targets[2] )
