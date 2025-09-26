@@ -3,8 +3,8 @@ i18n = import('i18n')
 
 potfiles = custom_target(
    'potfiles',
-   output: 'POTFILES.in', # this is a dummy file as it is output in source, not build
-   command: [ files('../utils/update-po.sh'), meson.project_source_root(), meson.project_build_root() ],
+   output: 'POTFILES.in', # this is a dummy file that is output, but we actually use the source instead...
+   command: [ files('../utils/update-po.sh'), meson.project_source_root(), meson.project_build_root(), '@OUTPUT@' ],
    install: false
 )
 

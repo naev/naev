@@ -69,4 +69,6 @@ fi
 if [ "$3" = "--pre-commit" ]; then
    git diff --exit-code po/POTFILES.in && exit 0
    echo Fixing po/POTFILES.in
+else
+   cp po/POTFILES.in "$BUILDDIR/$3"
 fi
