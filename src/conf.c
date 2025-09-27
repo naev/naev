@@ -492,9 +492,12 @@ int conf_loadConfig( const char *file )
          t = lua_type( L, -1 );
          if ( t == LUA_TNUMBER )
             key = (int)lua_tonumber( L, -1 );
-         else if ( t == LUA_TSTRING )
-            key = input_keyConv( lua_tostring( L, -1 ) );
-         else if ( t == LUA_TNIL ) {
+         else if ( t == LUA_TSTRING ) {
+            const char *name = lua_tostring( L, -1 );
+            key              = input_keyFromStr( name );
+            if ( key == SDLK_UNKNOWN )
+               WARN( _( "Keyname '%s' doesn't match any key." ), name );
+         } else if ( t == LUA_TNIL ) {
             WARN( _( "Found keybind with no key field!" ) );
             key = SDLK_UNKNOWN;
          } else {
@@ -1295,7 +1298,7 @@ int conf_saveConfig( const char *file )
       /* Determine the textual name for the key, if a keyboard keybind */
       if ( type == KEYBIND_KEYBOARD )
          quoteLuaString( keyname, sizeof( keyname ) - 1,
-                         SDL_GetKeyName( key ) );
+                         input_keyToStr( key ) );
       /* If SDL can't describe the key, store it as an integer */
       if ( type != KEYBIND_KEYBOARD ||
            strcmp( keyname, "\"unknown key\"" ) == 0 )

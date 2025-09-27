@@ -486,7 +486,7 @@ int input_mouseIsShown( void )
  */
 SDL_Keycode input_keyConv( const char *name )
 {
-   SDL_Keycode k = SDL_GetKeyFromName( name );
+   SDL_Keycode k = input_keyFromStr( name );
    if ( k == SDLK_UNKNOWN )
       WARN( _( "Keyname '%s' doesn't match any key." ), name );
 
@@ -571,7 +571,7 @@ void input_getKeybindDisplay( KeySemanticType keybind, char *buf, int len )
          /*p +=*/scnprintf( &buf[p], len - p, "%c", toupper( key ) );
       else
          /*p +=*/scnprintf( &buf[p], len - p, "%s",
-                            pgettext_var( "keyname", SDL_GetKeyName( key ) ) );
+                            pgettext_var( "keyname", input_keyToStr( key ) ) );
       break;
    }
 
