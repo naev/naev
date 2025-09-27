@@ -1,3 +1,4 @@
+use anyhow::Result;
 use log::warn;
 use sdl3 as sdl;
 
@@ -35,9 +36,43 @@ pub fn key_from_str(name: &str) -> Option<sdl::keyboard::Keycode> {
 
 // Here be C API, yarr
 use sdl::sys::keycode::SDL_Keycode;
+//use sdl::sys::events::SDL_Event;
+use sdl::event::Event;
 use std::collections::HashMap;
 use std::ffi::{CStr, CString, c_char};
 use std::sync::{LazyLock, Mutex};
+
+pub fn _input_handle(
+    sdlctx: &sdl::Sdl,
+    sdlvid: &sdl::VideoSubsystem,
+    sdlevt: &sdl::EventSubsystem,
+    event: Event,
+) -> Result<()> {
+    // Handle mouse motion
+    if event.is_mouse() {
+        //unsafe { input_mouseTimer = conf.mouse_hide; }
+        sdlctx.mouse().show_cursor(true);
+    };
+
+    // Copy and Paste support
+    match event {
+        Event::KeyDown { .. } => {
+            let clipboard = sdlvid.clipboard();
+            if clipboard.has_clipboard_text() {
+                let txtevent = Event::TextInput {
+                    timestamp: sdl::timer::ticks(),
+                    window_id: 0,
+                    text: clipboard.clipboard_text()?,
+                };
+                sdlevt.push_event(txtevent)?;
+                return Ok(());
+            }
+        }
+        _ => (),
+    }
+
+    Ok(())
+}
 
 #[unsafe(no_mangle)]
 pub extern "C" fn input_keyToStr(key: SDL_Keycode) -> *const c_char {
