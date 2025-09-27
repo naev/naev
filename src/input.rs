@@ -55,20 +55,17 @@ pub fn _input_handle(
     };
 
     // Copy and Paste support
-    match event {
-        Event::KeyDown { .. } => {
-            let clipboard = sdlvid.clipboard();
-            if clipboard.has_clipboard_text() {
-                let txtevent = Event::TextInput {
-                    timestamp: sdl::timer::ticks(),
-                    window_id: 0,
-                    text: clipboard.clipboard_text()?,
-                };
-                sdlevt.push_event(txtevent)?;
-                return Ok(());
-            }
+    if let Event::KeyDown { .. } = event {
+        let clipboard = sdlvid.clipboard();
+        if clipboard.has_clipboard_text() {
+            let txtevent = Event::TextInput {
+                timestamp: sdl::timer::ticks(),
+                window_id: 0,
+                text: clipboard.clipboard_text()?,
+            };
+            sdlevt.push_event(txtevent)?;
+            return Ok(());
         }
-        _ => (),
     }
 
     Ok(())
