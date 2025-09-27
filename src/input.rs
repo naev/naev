@@ -34,11 +34,20 @@ pub fn key_from_str(name: &str) -> Option<sdl::keyboard::Keycode> {
 }
 
 // Here be C API, yarr
-use std::ffi::{CStr, c_char};
+use sdl::sys::keycode::SDL_Keycode;
+use std::collections::HashMap;
+use std::ffi::{CStr, CString, c_char};
+use std::sync::{LazyLock, Mutex};
 
 #[unsafe(no_mangle)]
-pub extern "C" fn input_keyToStr(key: sdl::sys::keycode::SDL_Keycode) -> *const c_char {
-    static mut KEYSTR: String = String::new();
+pub extern "C" fn input_keyToStr(key: SDL_Keycode) -> *const c_char {
+    static KEYSTR: LazyLock<Mutex<HashMap<SDL_Keycode, CString>>> =
+        LazyLock::new(|| Mutex::new(HashMap::new()));
+    let mut keystr = KEYSTR.lock().unwrap();
+    if let Some(name) = keystr.get(&key) {
+        return name.as_ptr() as *const c_char;
+    }
+
     let keycode = match sdl::keyboard::Keycode::from_i32(key as i32) {
         Some(kc) => kc,
         None => {
@@ -46,15 +55,13 @@ pub extern "C" fn input_keyToStr(key: sdl::sys::keycode::SDL_Keycode) -> *const 
             return std::ptr::null();
         }
     };
-    #[allow(static_mut_refs)]
-    unsafe {
-        KEYSTR = key_to_str(keycode);
-        KEYSTR.as_ptr() as *const c_char
-    }
+    let name = key_to_str(keycode);
+    keystr.insert(key, CString::new(name).unwrap());
+    keystr[&key].as_ptr() as *const c_char
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn input_keyFromStr(name: *const c_char) -> sdl::sys::keycode::SDL_Keycode {
+pub extern "C" fn input_keyFromStr(name: *const c_char) -> SDL_Keycode {
     let name = unsafe { CStr::from_ptr(name) };
     let key = match key_from_str(&name.to_string_lossy()) {
         Some(kc) => kc,
