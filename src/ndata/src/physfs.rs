@@ -325,10 +325,12 @@ pub fn blacklisted(filename: &str) -> bool {
     realdir.to_str().unwrap() == "naev.BLACKLIST"
 }
 
-pub struct LuaFile<'a> {
-    io: IOStream<'a>,
+pub struct LuaFile {
+    path: String,
+    mode: Mode,
+    io: IOStream<'static>,
 }
-unsafe impl Send for LuaFile<'_> {}
+unsafe impl Send for LuaFile {}
 
 /*
  * @brief Lua bindings to interact with files.
@@ -338,7 +340,7 @@ unsafe impl Send for LuaFile<'_> {}
  * @luamod file
  */
 #[allow(unused_doc_comments)]
-impl UserData for LuaFile<'_> {
+impl UserData for LuaFile {
     fn add_fields<F: mlua::UserDataFields<Self>>(fields: &mut F) {
         //fields.add_field_method_get("x", |_, this| Ok(this.0.x));
         //fields.add_field_method_get("y", |_, this| Ok(this.0.y));
@@ -365,16 +367,14 @@ impl UserData for LuaFile<'_> {
          */
         methods.add_function(
             "open",
-            |_,
-             (path, mode): (String, Mode)|
-             -> mlua::Result<(Option<LuaFile<'static>>, Option<String>)> {
+            |_, (path, mode): (String, Mode)| -> mlua::Result<(Option<LuaFile>, Option<String>)> {
                 let io = match iostream(&path, mode) {
                     Ok(io) => io,
                     Err(e) => {
                         return Ok((None, Some(e.to_string())));
                     }
                 };
-                Ok((Some(LuaFile { io }), None))
+                Ok((Some(LuaFile { path, mode, io }), None))
             },
         );
 
@@ -441,5 +441,30 @@ impl UserData for LuaFile<'_> {
                 }
             },
         );
+        /*
+         * @brief Gets the name of a file object.
+         *
+         *    @luatparam File file File object to get name of.
+         *    @luatreturn string Name of the file object.
+         * @luafunc path
+         */
+        methods.add_method_mut("path", |_, this, ()| -> mlua::Result<String> {
+            Ok(this.path.clone())
+        });
+        /*
+         * @brief Gets the mode a file is currently in.
+         *
+         *    @luatparam File file File to get mode of.
+         *    @luatreturn string Mode of the file (either 'w', 'r', or 'a')
+         * @luafunc mode
+         */
+        methods.add_method_mut("name", |_, this, ()| -> mlua::Result<String> {
+            Ok(match this.mode {
+                Mode::Append => 'a',
+                Mode::Read => 'r',
+                Mode::Write => 'w',
+            }
+            .to_string())
+        });
     }
 }
