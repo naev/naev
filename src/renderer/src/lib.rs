@@ -992,3 +992,17 @@ pub extern "C" fn gl_toggleFullscreen() {
         }
     }
 }
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_setFullscreen(enable: c_int) {
+    let ctx = Context::get();
+    let mut wdw = ctx.window.lock().unwrap();
+    match wdw.set_fullscreen(enable != 0) {
+        Ok(()) => unsafe {
+            naevc::conf.fullscreen = enable as c_int;
+        },
+        Err(e) => {
+            warn_err!(e);
+        }
+    }
+}

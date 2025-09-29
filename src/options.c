@@ -1589,9 +1589,7 @@ static void opt_videoDefaults( unsigned int wid, const char *str )
 
 static void opt_toggleFullscreen( unsigned int wid, const char *str )
 {
-   conf.fullscreen = window_checkboxState( wid, str );
-   if ( !SDL_SetWindowFullscreen( gl_screen.window, conf.fullscreen ) )
-      WARN( "Failed to set full screen state!" );
+   gl_setFullscreen( window_checkboxState( wid, str ) );
 }
 
 /**
