@@ -1,5 +1,7 @@
 /* Documentation mentions global lock in settings. Should be thread-safe _except_ for opening the
  * same file and writing + reading/writing with multiple threads. */
+use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
+use sdl::iostream::IOStream;
 use sdl3 as sdl;
 use std::ffi::{CStr, CString, c_int};
 use std::io::{Error, Read, Result, Seek, SeekFrom, Write};
@@ -91,6 +93,26 @@ pub enum Mode {
     Read,
     /// Write to the file, overwriting previous data.
     Write,
+}
+
+impl FromLua for Mode {
+    fn from_lua(value: Value, _: &Lua) -> mlua::Result<Self> {
+        match value {
+            Value::String(s) => match s.to_string_lossy().as_str() {
+                "a" => Ok(Self::Append),
+                "r" => Ok(Self::Read),
+                "w" => Ok(Self::Write),
+                s => Err(mlua::Error::RuntimeError(format!(
+                    "unable to convert \"{}\" to physfs::Mode",
+                    s
+                ))),
+            },
+            val => Err(mlua::Error::RuntimeError(format!(
+                "unable to convert {} to physfs::Mode",
+                val.type_name()
+            ))),
+        }
+    }
 }
 
 /// A file handle.
@@ -273,7 +295,7 @@ pub fn read_dir(path: &str) -> Result<Vec<String>> {
     Ok(res)
 }
 
-pub fn iostream(filename: &str, mode: Mode) -> Result<sdl::iostream::IOStream<'_>> {
+pub fn iostream(filename: &str, mode: Mode) -> Result<IOStream<'static>> {
     let raw = unsafe {
         let c_filename = CString::new(filename)?;
         let phys = match mode {
@@ -289,9 +311,7 @@ pub fn iostream(filename: &str, mode: Mode) -> Result<sdl::iostream::IOStream<'_
     if raw.is_null() {
         Err(error_as_io_error_with_file("PHYSFS_open", filename))
     } else {
-        Ok(unsafe {
-            sdl::iostream::IOStream::from_ll(raw as *mut sdl::sys::iostream::SDL_IOStream)
-        })
+        Ok(unsafe { IOStream::from_ll(raw as *mut sdl::sys::iostream::SDL_IOStream) })
     }
 }
 
@@ -303,4 +323,123 @@ pub fn blacklisted(filename: &str) -> bool {
     }
     let realdir = unsafe { CStr::from_ptr(realdir) };
     realdir.to_str().unwrap() == "naev.BLACKLIST"
+}
+
+pub struct LuaFile<'a> {
+    io: IOStream<'a>,
+}
+unsafe impl Send for LuaFile<'_> {}
+
+/*
+ * @brief Lua bindings to interact with files.
+ *
+ * @note The API here is designed to be compatible with that of "LÖVE".
+ *
+ * @luamod file
+ */
+#[allow(unused_doc_comments)]
+impl UserData for LuaFile<'_> {
+    fn add_fields<F: mlua::UserDataFields<Self>>(fields: &mut F) {
+        //fields.add_field_method_get("x", |_, this| Ok(this.0.x));
+        //fields.add_field_method_get("y", |_, this| Ok(this.0.y));
+    }
+    fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
+        /*
+        { "__gc", fileL_gc },       { "__eq", fileL_eq },
+        { "new", fileL_new },       { "open", fileL_open },
+        { "close", fileL_close },   { "from_string", fileL_from_string },
+        { "read", fileL_read },     { "write", fileL_write },
+        { "seek", fileL_seek },     { "getFilename", fileL_name },
+        { "getMode", fileL_mode },  { "getSize", fileL_size },
+        { "isOpen", fileL_isopen }, { "filetype", fileL_filetype },
+        { "mkdir", fileL_mkdir },   { "enumerate", fileL_enumerate },
+        { "remove", fileL_remove }, { 0, 0 } }; /**< File metatable methods. */
+            */
+        /*
+         * @brief Opens a new file.
+         *
+         *    @luatparam string path Path to open.
+         *    @luatparam[opt="r"] mode Mode to open the file in (should be 'r', 'w', or
+         *    @luatreturn File New file object.
+         * @luafunc open
+         */
+        methods.add_function(
+            "open",
+            |_,
+             (path, mode): (String, Mode)|
+             -> mlua::Result<(Option<LuaFile<'static>>, Option<String>)> {
+                let io = match iostream(&path, mode) {
+                    Ok(io) => io,
+                    Err(e) => {
+                        return Ok((None, Some(e.to_string())));
+                    }
+                };
+                Ok((Some(LuaFile { io }), None))
+            },
+        );
+
+        /*
+         * @brief Reads from an open file.
+         *
+         *    @luatparam File file File to read from.
+         *    @luatparam[opt] number bytes Number of bytes to read or all if omitted.
+         *    @luatreturn string Read data.
+         *    @luatreturn number Number of bytes actually read.
+         * @luafunc read
+         */
+        methods.add_method_mut(
+            "read",
+            |_, this, bytes: Option<usize>| -> mlua::Result<(String, usize)> {
+                let (out, read) = if let Some(bytes) = bytes {
+                    let mut out: Vec<u8> = vec![0; bytes];
+                    let read = this.io.read(&mut out)?;
+                    out.truncate(read);
+                    (out, read)
+                } else {
+                    let mut out: Vec<u8> = Vec::new();
+                    let read = this.io.read_to_end(&mut out)?;
+                    (out, read)
+                };
+                // Todo something better than this I guess
+                let out = unsafe { String::from_utf8_unchecked(out) };
+                Ok((out, read))
+            },
+        );
+
+        /*
+         * @brief Reads from an open file.
+         *
+         *    @luatparam File file File to write to.
+         *    @luatparam string data Data to write.
+         *    @luatparam[opt] number bytes Number of bytes to write.
+         * @luafunc write
+         */
+        methods.add_method_mut(
+            "write",
+            |_, this, (data, len): (String, Option<usize>)| -> mlua::Result<usize> {
+                let mut bytes = data.into_bytes();
+                if let Some(len) = len {
+                    bytes.truncate(len);
+                }
+                Ok(this.io.write(&bytes)?)
+            },
+        );
+        /*
+         * @brief Seeks in an open file.
+         *
+         *    @luatparam File file File to seek in.
+         *    @luatparam number pos Position to seek to (from start of file).
+         *    @luatreturn boolean true on success.
+         * @luafunc seek
+         */
+        methods.add_method_mut(
+            "seek",
+            |_, this, pos: u64| -> mlua::Result<(bool, Option<String>)> {
+                match this.io.seek(SeekFrom::Start(pos)) {
+                    Ok(res) => Ok((pos == res, None)),
+                    Err(e) => Ok((false, Some(e.to_string()))),
+                }
+            },
+        );
+    }
 }

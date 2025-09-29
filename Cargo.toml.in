@@ -59,6 +59,7 @@ nalgebra = { version = "0.34", features = ["bytemuck", "encase"] }
 encase = { version = "0.12" } # Needed for shader voodoo
 bytemuck = { version = "1.23", features = ["derive"] } # Needed for shader voodoo
 image = { version = "0.25", features = ["rayon"] }
+mlua = { version = "0.11", features = ["luajit", "anyhow", "send", "serialize"] }
 roxmltree = "0.20"
 
 [dependencies]
@@ -78,13 +79,13 @@ bytemuck = { workspace = true }
 encase = { workspace = true }
 roxmltree = { workspace = true }
 image = { workspace = true }
+mlua = { workspace = true }
 constcat = "0.6"
 derive_more = { version = "2", features = ["from", "into"] }
 rand = "0.9"
 rayon = "1.11" # parallel computation
 static_assertions = "1.1"
 palette = "0.7" # Colour conversion
-mlua = { version = "0.11", features = ["luajit", "anyhow", "send", "serialize"] }
 serde_yaml2 = "0.1"
 # gltf-rs crate doesn't support WEBP in any release atm...
 gltf = { git = "https://github.com/gltf-rs/gltf.git", rev = "12fc1b7ce28c7b4c6d1b881a30df24060dccfbda", features = ["extras", "names", "utils", "EXT_texture_webp", "KHR_materials_emissive_strength"] }

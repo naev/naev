@@ -2,6 +2,7 @@ use anyhow::Context as AnyhowContext;
 use anyhow::Result;
 use glow::*;
 use log::{warn, warn_err};
+use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
 use nalgebra::{Matrix3, Vector4};
 use sdl3 as sdl;
 use std::boxed::Box;
@@ -620,6 +621,20 @@ impl Texture {
         Box::into_raw(Box::new(self))
     }
 }
+
+/*
+impl FromLua for Texture {
+    fn from_lua(value: Value, _: &Lua) -> mlua::Result<Self> {
+        match value {
+            Value::UserData(ud) => Ok(ud.borrow::<Self>()?.clone()),
+            val => Err(mlua::Error::RuntimeError(format!(
+                "unable to convert {} to Vec2",
+                val.type_name()
+            ))),
+        }
+    }
+}
+*/
 
 #[derive(Clone, Copy)]
 pub enum AddressMode {
@@ -1881,4 +1896,48 @@ pub extern "C" fn gl_renderScaleAspectMagic(
     // the widgets
     let _ = tex.draw(ctx, x, y, nw, nh);
     //let _ = tex.draw_scale(ctx, x, y, nw, nh, scale);
+}
+
+#[allow(unused_doc_comments)]
+impl UserData for Texture {
+    fn add_fields<F: mlua::UserDataFields<Self>>(fields: &mut F) {
+        //fields.add_field_method_get("x", |_, this| Ok(this.0.x));
+        //fields.add_field_method_get("y", |_, this| Ok(this.0.y));
+    }
+    fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
+        /*
+         * @brief Opens a texture.
+         *
+         * @note open( path, (sx=1), (sy=1) )
+         * @note open( file, (sx=1), (sy=1) )
+         * @note open( data, w, h, (sx=1), (sy=1) )
+         *
+         * @usage t = tex.open( "no_sprites.png" )
+         * @usage t = tex.open( "spritesheet.png", 6, 6 )
+         *
+         *    @luatparam string|File path Path, or File to open.
+         *    @luatparam[opt=1] number w Width when Data or optional number of x sprites
+         * otherwise.
+         *    @luatparam[opt=1] number h Height when Data or optional number of y
+         * sprites otherwise.
+         *    @luatparam[opt=1] number sx Optional number of x sprites when path is
+         * Data.
+         *    @luatparam[opt=1] number sy Optional number of y sprites when path is
+         * Data.
+         *    @luatreturn Tex The opened texture or nil on error.
+         * @luafunc open
+         */
+        /*
+        methods.add_function(
+           "open",
+           |_, (path, w, h, sx, sy): (&str, Option<u32>, Option<u32>, Option<u16>, Option<u16>)| -> mlua::Result<Self> {
+              let w = w.unwrap_or(1);
+              let h = h.unwrap_or(1);
+              let sx = sx.unwrap_or(1);
+              let sy = sy.unwrap_or(1);
+              Ok(v)
+           },
+        );
+        */
+    }
 }
