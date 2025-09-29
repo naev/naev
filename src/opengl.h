@@ -98,6 +98,7 @@ void gl_defViewport( void );
 /*
  * misc
  */
+void   gl_toggleFullscreen( void );
 int    gl_supportsDebug( void );
 void   gl_colourblind( void );
 GLenum gl_stringToFilter( const char *s );

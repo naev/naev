@@ -1277,7 +1277,7 @@ static void input_key( KeySemanticType keynum, double value, double kabs,
       if ( repeat )
          break;
       if ( value == KEY_PRESS )
-         naev_toggleFullscreen();
+         gl_toggleFullscreen();
       break;
    /* pause the games */
    case KST_PAUSE:

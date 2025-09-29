@@ -6,7 +6,7 @@ use nalgebra::{Matrix3, Matrix4, Point3, Vector3, Vector4};
 use sdl3 as sdl;
 use std::ffi::CStr;
 use std::ops::Deref;
-use std::os::raw::{c_char, c_double};
+use std::os::raw::{c_char, c_double, c_int};
 use std::sync::{Arc, Mutex, MutexGuard, OnceLock, RwLock, atomic::AtomicBool, atomic::Ordering};
 
 pub mod buffer;
@@ -289,7 +289,7 @@ impl Dimensions {
 pub struct Context {
     pub sdlvid: sdl::VideoSubsystem,
     pub gl: glow::Context,
-    pub window: sdl::video::Window,
+    pub window: Mutex<sdl::video::Window>,
     pub gl_context: sdl::video::GLContext,
     // We should be able to get rid of this mutex when fully moved to Rust
     pub dimensions: RwLock<Dimensions>,
@@ -326,7 +326,12 @@ unsafe impl Send for Context {}
 pub struct ContextGuard<'sc, 'ctx>(MutexGuard<'sc, &'ctx Context>);
 impl<'sc, 'ctx> ContextGuard<'sc, 'ctx> {
     fn new(guard: MutexGuard<'sc, &'ctx Context>) -> Self {
-        guard.window.gl_make_current(&guard.gl_context).unwrap();
+        guard
+            .window
+            .lock()
+            .unwrap()
+            .gl_make_current(&guard.gl_context)
+            .unwrap();
         ContextGuard(guard)
     }
 }
@@ -365,7 +370,12 @@ impl<'ctx> SafeContext<'ctx> {
 impl Drop for SafeContext<'_> {
     fn drop(&mut self) {
         let guard = self.ctx.lock().unwrap();
-        guard.window.gl_make_current(&guard.gl_context).unwrap();
+        guard
+            .window
+            .lock()
+            .unwrap()
+            .gl_make_current(&guard.gl_context)
+            .unwrap();
     }
 }
 
@@ -797,7 +807,7 @@ impl Context {
         let sdf = sdf::SdfRenderer::new(&gl)?;
         let ctx = Context {
             sdlvid,
-            window,
+            window: Mutex::new(window),
             gl_context,
             gl,
             dimensions,
@@ -823,7 +833,10 @@ impl Context {
     }
 
     pub fn resize(&self) -> Result<()> {
-        let dims = Dimensions::new(&self.window);
+        let dims = {
+            let wdw = self.window.lock().unwrap();
+            Dimensions::new(&wdw)
+        };
         let gl = &self.gl;
         let (vw, vh) = (
             dims.view_width.round() as i32,
@@ -961,6 +974,21 @@ pub extern "C" fn gl_screenshot(cpath: *mut c_char) {
         Ok(_) => (),
         Err(e) => {
             warn!("Failed to take a screenshot: {e}");
+        }
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_toggleFullscreen() {
+    let ctx = Context::get();
+    let mut wdw = ctx.window.lock().unwrap();
+    let fullscreen = wdw.fullscreen_state() != sdl::video::FullscreenType::Off;
+    match wdw.set_fullscreen(!fullscreen) {
+        Ok(()) => unsafe {
+            naevc::conf.fullscreen = !fullscreen as c_int;
+        },
+        Err(e) => {
+            warn_err!(e);
         }
     }
 }

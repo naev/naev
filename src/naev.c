@@ -563,16 +563,6 @@ void naev_resize( void )
    load_force_render = 1;
 }
 
-/*
- * @brief Toggles between windowed and fullscreen mode.
- */
-void naev_toggleFullscreen( void )
-{
-   conf.fullscreen = !conf.fullscreen;
-   if ( !SDL_SetWindowFullscreen( gl_screen.window, conf.fullscreen ) )
-      WARN( "Failed to set full screen state!" );
-}
-
 /**
  * @brief Initializes the fps engine.
  */
