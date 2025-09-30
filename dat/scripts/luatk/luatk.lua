@@ -547,11 +547,11 @@ function luatk.Window:destroy()
       if w==self then
          luatk._dirty = true
          table.remove(luatk._windows,k)
+         if #luatk._windows <= 0 then
+            lk.setTextInput( false ) -- Hack as we can't use __gc
+         end
          return
       end
-   end
-   if #luatk._widgets <= 0 then
-      lk.setTextInput( false ) -- Hack as we can't use __gc
    end
 end
 --[[--

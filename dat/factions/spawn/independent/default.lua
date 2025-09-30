@@ -12,6 +12,7 @@ local spacifier   = ship.get("Pacifier") -- codespell:ignore spacifier
 local shawking    = ship.get("Hawking")
 
 local frontier
+local fmercenary = faction.get("Mercenary")
 
 -- Make pilot more visible
 local function _advert( p )
@@ -33,7 +34,6 @@ local function spawn_advert ()
    return pilots
 end
 
-
 -- @brief Spawns a small patrol fleet.
 local function spawn_solitary_civilians ()
    return scom.doTable( {}, {
@@ -49,7 +49,7 @@ end
 
 local function spawn_bounty_hunter( shiplist )
    local pilots = {}
-   local params = {name=_("Bounty Hunter"), ai="mercenary"}
+   local params = {name=_("Bounty Hunter"), ai="mercenary", faction=fmercenary}
    local shp    = shiplist[ rnd.rnd(1,#shiplist) ]
    scom.addPilot( pilots, shp, params )
    return pilots

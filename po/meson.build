@@ -3,12 +3,12 @@ i18n = import('i18n')
 
 potfiles = custom_target(
    'potfiles',
-   output: 'POTFILES.in',
-   command: [ files('../utils/update-po.sh'), meson.project_source_root(), meson.project_build_root() ],
+   output: 'POTFILES.in', # this is a dummy file that is output, but we actually use the source instead...
+   command: [ files('../utils/update-po.sh'), meson.project_source_root(), meson.project_build_root(), '@OUTPUT@' ],
    install: false
 )
 
-i18n.gettext('naev',
+gettext_targets = i18n.gettext('naev',
    data_dirs: meson.project_source_root() / 'po',
    args: [
       '--files-from=' + (meson.project_source_root() / 'po/POTFILES.in'),
@@ -28,4 +28,12 @@ i18n.gettext('naev',
       '--copyright-holder=' + copyright_holder
       ],
    install_dir: ndata_path / 'dat/gettext',
+)
+
+pot = alias_target( 'pot',
+   potfiles,
+   gettext_targets[1],
+)
+update_po = alias_target( 'update-po',
+   gettext_targets[2],
 )

@@ -643,7 +643,7 @@ static void menuKeybinds_genList( unsigned int wid )
                       toupper( key ) );
          else
             snprintf( str[j], l, "%s <%s%s>", short_desc, mod_text,
-                      pgettext_var( "keyname", SDL_GetKeyName( key ) ) );
+                      pgettext_var( "keyname", input_keyToStr( key ) ) );
          break;
       case KEYBIND_JAXISPOS:
          snprintf( str[j], l, "%s <ja+%d>", short_desc, key );
@@ -734,7 +734,7 @@ static void menuKeybinds_update( unsigned int wid, const char *name )
          snprintf( binding, sizeof( binding ), _( "keyboard:   %s%s%s" ),
                    ( mod != SDL_KMOD_NONE ) ? input_modToText( mod ) : "",
                    ( mod != SDL_KMOD_NONE ) ? " + " : "",
-                   pgettext_var( "keyname", SDL_GetKeyName( key ) ) );
+                   pgettext_var( "keyname", input_keyToStr( key ) ) );
       break;
    case KEYBIND_JAXISPOS:
       snprintf( binding, sizeof( binding ), _( "joy axis pos:   <%d>" ), key );
@@ -1589,9 +1589,7 @@ static void opt_videoDefaults( unsigned int wid, const char *str )
 
 static void opt_toggleFullscreen( unsigned int wid, const char *str )
 {
-   conf.fullscreen = window_checkboxState( wid, str );
-   if ( !SDL_SetWindowFullscreen( gl_screen.window, conf.fullscreen ) )
-      WARN( "Failed to set full screen state!" );
+   gl_setFullscreen( window_checkboxState( wid, str ) );
 }
 
 /**

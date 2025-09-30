@@ -147,7 +147,7 @@ Their voice fades out.]]))
 
    if not accepted then return end
 
-   onion.log(_([[TODO]]))
+   onion.log(_([[An emergency Onion Society Conclave was held where l337_b01 got in a fight with other members. There was a lot of name-calling, and names you didn't recognize being thrown around, and the Conclave ended with l337_b01 leaving in anger]]))
 
    misn.finish(true)
 end

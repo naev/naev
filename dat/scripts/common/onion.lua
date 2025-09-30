@@ -116,12 +116,24 @@ function onion.vn_nexus_notasockpuppet( params )
          }, params) )
 end
 
+function onion.vn_dog( params )
+   params = params or {}
+   params.shader = love_shaders.hologram{strength=0.2}
+   return onion.vn_nexus_dog( params )
+end
+
 function onion.vn_nexus_dog( params )
    return vn.Character.new( onion.npc.dog.name,
          tmerge( {
             image=onion.npc.dog.image,
             colour=onion.npc.dog.colour,
          }, params) )
+end
+
+function onion.vn_lonewolf4( params )
+   params = params or {}
+   params.shader = love_shaders.hologram{strength=0.2}
+   return onion.vn_nexus_lonewolf4( params )
 end
 
 function onion.vn_nexus_lonewolf4( params )
@@ -142,6 +154,8 @@ onion.rewards = {
    misn02 = 400e3,
    misn03 = 600e3,
    misn04 = 800e3,
+   misn07 = 500e3,
+   misn08 = 1e6,
 }
 
 return onion

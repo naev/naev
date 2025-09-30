@@ -3931,6 +3931,7 @@ src/info.c
 src/info.h
 src/input.c
 src/input.h
+src/input.rs
 src/intlist.c
 src/intlist.h
 src/joystick.c
@@ -3994,6 +3995,7 @@ src/ndata.c
 src/ndata.h
 src/ndata/src/env.rs
 src/ndata/src/lib.rs
+src/ndata/src/lua.rs
 src/ndata/src/physfs.rs
 src/nebula.h
 src/nebula.rs

@@ -1,5 +1,4 @@
 function add( p )
-   p:setInvincible(true)
    p:setInvisible(true)
 end
 

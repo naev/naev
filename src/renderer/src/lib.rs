@@ -6,7 +6,7 @@ use nalgebra::{Matrix3, Matrix4, Point3, Vector3, Vector4};
 use sdl3 as sdl;
 use std::ffi::CStr;
 use std::ops::Deref;
-use std::os::raw::{c_char, c_double};
+use std::os::raw::{c_char, c_double, c_int};
 use std::sync::{Arc, Mutex, MutexGuard, OnceLock, RwLock, atomic::AtomicBool, atomic::Ordering};
 
 pub mod buffer;
@@ -289,7 +289,7 @@ impl Dimensions {
 pub struct Context {
     pub sdlvid: sdl::VideoSubsystem,
     pub gl: glow::Context,
-    pub window: sdl::video::Window,
+    pub window: Mutex<sdl::video::Window>,
     pub gl_context: sdl::video::GLContext,
     // We should be able to get rid of this mutex when fully moved to Rust
     pub dimensions: RwLock<Dimensions>,
@@ -326,7 +326,12 @@ unsafe impl Send for Context {}
 pub struct ContextGuard<'sc, 'ctx>(MutexGuard<'sc, &'ctx Context>);
 impl<'sc, 'ctx> ContextGuard<'sc, 'ctx> {
     fn new(guard: MutexGuard<'sc, &'ctx Context>) -> Self {
-        guard.window.gl_make_current(&guard.gl_context).unwrap();
+        guard
+            .window
+            .lock()
+            .unwrap()
+            .gl_make_current(&guard.gl_context)
+            .unwrap();
         ContextGuard(guard)
     }
 }
@@ -365,7 +370,12 @@ impl<'ctx> SafeContext<'ctx> {
 impl Drop for SafeContext<'_> {
     fn drop(&mut self) {
         let guard = self.ctx.lock().unwrap();
-        guard.window.gl_make_current(&guard.gl_context).unwrap();
+        guard
+            .window
+            .lock()
+            .unwrap()
+            .gl_make_current(&guard.gl_context)
+            .unwrap();
     }
 }
 
@@ -510,16 +520,26 @@ impl Context {
         fn set_icon(window: &mut sdl::video::Window) -> Result<()> {
             let filename = format!("{}{}", ndata::GFX_PATH, "icon.webp");
             let rw = ndata::iostream(&filename)?;
-            let img = image::ImageReader::new(std::io::BufReader::new(rw))
-                .with_guessed_format()?
-                .decode()?;
-            let mut data = img.to_rgba8().into_flat_samples();
+            let img = {
+                let mut img = image::ImageReader::new(std::io::BufReader::new(rw))
+                    .with_guessed_format()?
+                    .decode()?
+                    .into_rgba8();
+                // See crate::texture::TextureData::from_image()
+                for p in img.pixels_mut() {
+                    if p.0[3] == 0 {
+                        p.0 = [0u8; 4];
+                    }
+                }
+                img
+            };
+            let mut data = img.into_flat_samples();
             let sur = sdl::surface::Surface::from_data(
                 &mut data.samples,
                 data.layout.width,
                 data.layout.height,
                 data.layout.height_stride as u32,
-                sdl::pixels::PixelFormatEnum::RGBA8888.into(),
+                sdl::pixels::PixelFormat::RGBA32,
             )?;
             window.set_icon(sur);
             Ok(())
@@ -787,7 +807,7 @@ impl Context {
         let sdf = sdf::SdfRenderer::new(&gl)?;
         let ctx = Context {
             sdlvid,
-            window,
+            window: Mutex::new(window),
             gl_context,
             gl,
             dimensions,
@@ -813,7 +833,10 @@ impl Context {
     }
 
     pub fn resize(&self) -> Result<()> {
-        let dims = Dimensions::new(&self.window);
+        let dims = {
+            let wdw = self.window.lock().unwrap();
+            Dimensions::new(&wdw)
+        };
         let gl = &self.gl;
         let (vw, vh) = (
             dims.view_width.round() as i32,
@@ -951,6 +974,35 @@ pub extern "C" fn gl_screenshot(cpath: *mut c_char) {
         Ok(_) => (),
         Err(e) => {
             warn!("Failed to take a screenshot: {e}");
+        }
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_toggleFullscreen() {
+    let ctx = Context::get();
+    let mut wdw = ctx.window.lock().unwrap();
+    let fullscreen = wdw.fullscreen_state() != sdl::video::FullscreenType::Off;
+    match wdw.set_fullscreen(!fullscreen) {
+        Ok(()) => unsafe {
+            naevc::conf.fullscreen = !fullscreen as c_int;
+        },
+        Err(e) => {
+            warn_err!(e);
+        }
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_setFullscreen(enable: c_int) {
+    let ctx = Context::get();
+    let mut wdw = ctx.window.lock().unwrap();
+    match wdw.set_fullscreen(enable != 0) {
+        Ok(()) => unsafe {
+            naevc::conf.fullscreen = enable as c_int;
+        },
+        Err(e) => {
+            warn_err!(e);
         }
     }
 }

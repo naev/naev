@@ -46,10 +46,16 @@ IFS=$'\n'
 readarray -t ART <<< "$(cd artwork; find_files gfx/loading txt | sed 's|^|artwork/|')"
 po/credits_pot.py po/credits.pot dat/AUTHORS "${ART[@]}"
 
-readarray -t MD1 <<< "$(cd dat; find_files naevpedia md | sed 's|^|dat/|')"
-readarray -t MD2 <<< "$(find "${BUILDDIR}/dat/naevpedia" -name "*.md")"
-po/naevpedia_pot.py po/naevpedia.pot "${MD1[@]}" "${MD2[@]}"
+# Only update naevpedia if not run from pre-commit.
+# This is because naevpedia generates files and we can only update them with
+# the build directory known, aka from inside meson.
+if [ "$3" != "--pre-commit" ]; then
+   readarray -t MD1 <<< "$(cd dat; find_files naevpedia md | sed 's|^|dat/|')"
+   readarray -t MD2 <<< "$(find "${BUILDDIR}/dat/naevpedia" -name "*.md")"
+   po/naevpedia_pot.py po/naevpedia.pot "${MD1[@]}" "${MD2[@]}"
+fi
 
+# Generate the POTFILES.in using the sub files and the rest of the stuff
 (
    echo po/naevpedia.pot
    echo po/physfs.pot
@@ -59,8 +65,10 @@ po/naevpedia_pot.py po/naevpedia.pot "${MD1[@]}" "${MD2[@]}"
    find_files dat/outfits py | deterministic_sort
 ) | filter_skipped > po/POTFILES.in
 
+# Finally, the "pre-commit" package requires hooks to fail if they touch any files.
 if [ "$3" = "--pre-commit" ]; then
-   # The "pre-commit" package requires hooks to fail if they touch any files.
    git diff --exit-code po/POTFILES.in && exit 0
    echo Fixing po/POTFILES.in
+else
+   cp po/POTFILES.in "$BUILDDIR/$3"
 fi

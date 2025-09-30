@@ -698,7 +698,7 @@ static int cust_key( SDL_Keycode key, SDL_Keymod mod, int pressed, int isrepeat,
    lua_State *L = cf->L;
    lua_rawgeti( L, LUA_REGISTRYINDEX, cf->keyboard );
    lua_pushboolean( L, pressed );
-   lua_pushstring( L, SDL_GetKeyName( key ) );
+   lua_pushstring( L, input_keyToStr( key ) );
    lua_pushstring( L, input_modToText( mod ) );
    lua_pushboolean( L, isrepeat );
    if ( nlua_pcall( cf->env, 4, 1 ) ) {

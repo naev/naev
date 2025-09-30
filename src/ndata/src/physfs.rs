@@ -1,5 +1,6 @@
 /* Documentation mentions global lock in settings. Should be thread-safe _except_ for opening the
  * same file and writing + reading/writing with multiple threads. */
+use sdl::iostream::IOStream;
 use sdl3 as sdl;
 use std::ffi::{CStr, CString, c_int};
 use std::io::{Error, Read, Result, Seek, SeekFrom, Write};
@@ -91,6 +92,26 @@ pub enum Mode {
     Read,
     /// Write to the file, overwriting previous data.
     Write,
+}
+
+impl mlua::FromLua for Mode {
+    fn from_lua(value: mlua::Value, _: &mlua::Lua) -> mlua::Result<Self> {
+        match value {
+            mlua::Value::String(s) => match s.to_string_lossy().as_str() {
+                "a" => Ok(Self::Append),
+                "r" => Ok(Self::Read),
+                "w" => Ok(Self::Write),
+                s => Err(mlua::Error::RuntimeError(format!(
+                    "unable to convert \"{}\" to physfs::Mode",
+                    s
+                ))),
+            },
+            val => Err(mlua::Error::RuntimeError(format!(
+                "unable to convert {} to physfs::Mode",
+                val.type_name()
+            ))),
+        }
+    }
 }
 
 /// A file handle.
@@ -271,7 +292,7 @@ pub fn read_dir(path: &str) -> Result<Vec<String>> {
     Ok(res)
 }
 
-pub fn iostream(filename: &str, mode: Mode) -> Result<sdl::iostream::IOStream<'_>> {
+pub fn iostream(filename: &str, mode: Mode) -> Result<IOStream<'static>> {
     let raw = unsafe {
         let c_filename = CString::new(filename)?;
         let phys = match mode {
@@ -287,9 +308,7 @@ pub fn iostream(filename: &str, mode: Mode) -> Result<sdl::iostream::IOStream<'_
     if raw.is_null() {
         Err(error_as_io_error_with_file("PHYSFS_open", filename))
     } else {
-        Ok(unsafe {
-            sdl::iostream::IOStream::from_ll(raw as *mut sdl::sys::iostream::SDL_IOStream)
-        })
+        Ok(unsafe { IOStream::from_ll(raw as *mut sdl::sys::iostream::SDL_IOStream) })
     }
 }
 
@@ -310,5 +329,21 @@ impl MediaSource for File {
     }
     fn byte_len(&self) -> Option<u64> {
         self.len().ok()
+    }
+}
+
+pub fn mkdir(path: &str) -> Result<()> {
+    let c_path = CString::new(path).unwrap();
+    match unsafe { naevc::PHYSFS_mkdir(c_path.as_ptr()) } {
+        0 => Err(error_as_io_error_with_file("PHYSFS_mkdir", path)),
+        _ => Ok(()),
+    }
+}
+
+pub fn remove_file(path: &str) -> Result<()> {
+    let c_path = CString::new(path).unwrap();
+    match unsafe { naevc::PHYSFS_delete(c_path.as_ptr()) } {
+        0 => Err(error_as_io_error_with_file("PHYSFS_delete", path)),
+        _ => Ok(()),
     }
 }

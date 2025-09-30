@@ -2,13 +2,14 @@ use anyhow::Context as AnyhowContext;
 use anyhow::Result;
 use glow::*;
 use log::{warn, warn_err};
+#[allow(unused_imports)]
+use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
 use nalgebra::{Matrix3, Vector4};
 use sdl3 as sdl;
 use std::boxed::Box;
-use std::ffi::{CStr, CString};
+use std::ffi::{CStr, CString, c_char, c_double, c_float, c_int, c_uint};
 use std::io::{Read, Seek};
 use std::num::NonZero;
-use std::os::raw::{c_char, c_double, c_float, c_int, c_uint};
 use std::sync::{Arc, LazyLock, Mutex, MutexGuard, Weak, atomic::AtomicU32};
 
 use crate::buffer;
@@ -619,6 +620,65 @@ impl Texture {
         unsafe { Arc::increment_strong_count(Arc::into_raw(self.texture.clone())) }
         Box::into_raw(Box::new(self))
     }
+
+    pub fn sprite_from_dir(&self, dir: f64) -> (usize, usize) {
+        use std::f64::consts::PI;
+        let sxy = self.sx * self.sy;
+        let shard = PI * 2.0 / sxy as f64;
+        let rdir = {
+            let mut rdir = dir + shard * 0.5;
+            if rdir < 0.0 {
+                rdir += 2.0 * PI * (rdir / (PI * 2.0)).abs().ceil()
+            }
+            rdir
+        };
+        let s = {
+            let mut s = (rdir / shard).floor() as usize;
+            if s > sxy - 1 {
+                s %= sxy;
+            }
+            s
+        };
+        (s % self.sx, s / self.sx)
+    }
+}
+
+#[test]
+fn test_sprite_from_dir() {
+    use std::mem::MaybeUninit;
+    let mut tex = MaybeUninit::<Texture>::uninit();
+    let tex = {
+        let tex = unsafe { tex.assume_init_mut() };
+        tex.sx = 8;
+        tex.sy = 2;
+        tex
+    };
+    use std::f64::consts::PI;
+    for (key, val) in vec![
+        (0.0, (0, 0)),
+        (PI, (0, 1)),
+        (-PI, (0, 1)),
+        (PI * 2.0, (0, 0)),
+        (-PI * 2.0, (0, 0)),
+        (PI * 100.0, (0, 0)),
+        (-PI * 100.0, (0, 0)),
+        (PI * 0.5, (4, 0)),
+        (-PI * 0.5, (4, 1)),
+        (PI * 0.25, (2, 0)),
+        (-PI * 0.25, (6, 1)),
+        (PI * 0.75, (6, 0)),
+        (-PI * 0.75, (2, 1)),
+    ] {
+        for off in vec![0.0, -0.19, 0.19] {
+            assert_eq!(
+                tex.sprite_from_dir(key + off),
+                val,
+                "tex.sprite_from_dir( {}+{} )",
+                key,
+                off
+            );
+        }
+    }
 }
 
 #[derive(Clone, Copy)]
@@ -638,6 +698,26 @@ impl AddressMode {
         }) as i32
     }
 }
+impl mlua::FromLua for AddressMode {
+    fn from_lua(value: mlua::Value, _: &mlua::Lua) -> mlua::Result<Self> {
+        match value {
+            mlua::Value::String(s) => match s.to_string_lossy().as_str() {
+                "clamp" => Ok(Self::ClampToEdge),
+                "repeat" => Ok(Self::Repeat),
+                "mirroredrepeat" => Ok(Self::MirrorRepeat),
+                "clampzero" => Ok(Self::ClampToBorder),
+                s => Err(mlua::Error::RuntimeError(format!(
+                    "unable to convert \"{}\" to AddressMode",
+                    s
+                ))),
+            },
+            val => Err(mlua::Error::RuntimeError(format!(
+                "unable to convert {} to AddressMode",
+                val.type_name()
+            ))),
+        }
+    }
+}
 
 #[derive(Clone, Copy)]
 pub enum FilterMode {
@@ -652,6 +732,24 @@ impl FilterMode {
             FilterMode::Linear => glow::LINEAR,
             FilterMode::MipmapLinear => glow::LINEAR_MIPMAP_LINEAR,
         }) as i32
+    }
+}
+impl mlua::FromLua for FilterMode {
+    fn from_lua(value: mlua::Value, _: &mlua::Lua) -> mlua::Result<Self> {
+        match value {
+            mlua::Value::String(s) => match s.to_string_lossy().as_str() {
+                "nearest" => Ok(Self::Nearest),
+                "linear" => Ok(Self::Linear),
+                s => Err(mlua::Error::RuntimeError(format!(
+                    "unable to convert \"{}\" to FilterMode",
+                    s
+                ))),
+            },
+            val => Err(mlua::Error::RuntimeError(format!(
+                "unable to convert {} to FilterMode",
+                val.type_name()
+            ))),
+        }
     }
 }
 
@@ -1881,4 +1979,177 @@ pub extern "C" fn gl_renderScaleAspectMagic(
     // the widgets
     let _ = tex.draw(ctx, x, y, nw, nh);
     //let _ = tex.draw_scale(ctx, x, y, nw, nh, scale);
+}
+
+#[allow(unused_doc_comments)]
+impl UserData for Texture {
+    //fn add_fields<F: mlua::UserDataFields<Self>>(fields: &mut F) {
+    //fields.add_field_method_get("x", |_, this| Ok(this.0.x));
+    //fields.add_field_method_get("y", |_, this| Ok(this.0.y));
+    //}
+    fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
+        /*
+         * @brief Opens a texture.
+         *
+         * @note open( path, (sx=1), (sy=1) )
+         * @note open( file, (sx=1), (sy=1) )
+         * @note open( data, w, h, (sx=1), (sy=1) )
+         *
+         * @usage t = tex.open( "no_sprites.png" )
+         * @usage t = tex.open( "spritesheet.png", 6, 6 )
+         *
+         *    @luatparam string|File path Path, or File to open. In the case of a file, it gets consumed.
+         *    @luatparam[opt=1] number w Width when Data or optional number of x sprites
+         * otherwise.
+         *    @luatparam[opt=1] number h Height when Data or optional number of y
+         * sprites otherwise.
+         *    @luatparam[opt=1] number sx Optional number of x sprites when path is
+         * Data.
+         *    @luatparam[opt=1] number sy Optional number of y sprites when path is
+         * Data.
+         *    @luatreturn Tex The opened texture or nil on error.
+         * @luafunc open
+         */
+        methods.add_function(
+            "open",
+            |_,
+             (path, w, h, sx, sy): (
+                Value,
+                Option<usize>,
+                Option<usize>,
+                Option<usize>,
+                Option<usize>,
+            )|
+             -> mlua::Result<Self> {
+                let io = match path {
+                    Value::String(s) => ndata::iostream(&s.to_string_lossy())?,
+                    Value::UserData(ud) => {
+                        let file = ud.take::<ndata::lua::LuaFile>()?;
+                        file.into_iostream()?
+                    }
+                    val => {
+                        return Err(mlua::Error::RuntimeError(format!(
+                            "invalid path type {}",
+                            val.type_name()
+                        )));
+                    }
+                };
+                Ok(TextureBuilder::new()
+                    .iostream(io)
+                    .width(w)
+                    .height(h)
+                    .sx(sx.unwrap_or(1))
+                    .sy(sy.unwrap_or(1))
+                    .build(Context::get())?)
+            },
+        );
+        /*
+         * @brief Gets the dimensions of the texture.
+         *
+         * @usage w,h, sw,sh = t:dim()
+         *
+         *    @luatparam Tex t Texture to get dimensions of.
+         *    @luatreturn number The width the total image.
+         *    @luatreturn number The height the total image.
+         *    @luatreturn number The width the sprites.
+         *    @luatreturn number The height the sprites.
+         * @luafunc dim
+         */
+        methods.add_method(
+            "dim",
+            |_, this, ()| -> mlua::Result<(usize, usize, f64, f64)> {
+                Ok((this.texture.w, this.texture.h, this.sw, this.sh))
+            },
+        );
+        /*
+         * @brief Gets the number of sprites in the texture.
+         *
+         * @usage sprites, sx,sy = t:sprites()
+         *
+         *    @luatparam Tex t Texture to get sprites of.
+         *    @luatreturn number The total number of sprites.
+         *    @luatreturn number The number of X sprites.
+         *    @luatreturn number The number of Y sprites.
+         * @luafunc sprites
+         */
+        methods.add_method(
+            "sprites",
+            |_, this, ()| -> mlua::Result<(usize, usize, usize)> {
+                Ok((this.sx * this.sy, this.sx, this.sy))
+            },
+        );
+        /*
+         * @brief Gets the sprite that corresponds to a direction.
+         *
+         * @usage sx, sy = t:spriteFromDir( math.pi )
+         *
+         *    @luatparam Tex t Texture to get sprite of.
+         *    @luatparam number a Direction to have sprite facing (in radians).
+         *    @luatreturn number The x position of the sprite.
+         *    @luatreturn number The y position of the sprite.
+         * @luafunc spriteFromDir
+         */
+        methods.add_method(
+            "spriteFromdir",
+            |_, this, dir: f64| -> mlua::Result<(usize, usize)> {
+                let (sx, sy) = this.sprite_from_dir(dir);
+                Ok((sx + 1, sy + 1))
+            },
+        );
+        /*
+         * @brief Sets the texture minification and magnification filters.
+         *
+         *    @luatparam Tex tex Texture to set filter.
+         *    @luatparam string min Minification filter ("nearest" or "linear")
+         *    @luatparam[opt] string mag Magnification filter ("nearest" or "linear").
+         * Defaults to min.
+         * @luafunc setFilter
+         */
+        methods.add_method(
+            "setFilter",
+            |_, this, (min, mag): (FilterMode, Option<FilterMode>)| -> mlua::Result<()> {
+                let mag = mag.unwrap_or(min);
+                let gl = &Context::get().gl;
+                unsafe {
+                    gl.sampler_parameter_i32(this.sampler, glow::TEXTURE_MIN_FILTER, min.to_gl());
+                    gl.sampler_parameter_i32(this.sampler, glow::TEXTURE_MAG_FILTER, mag.to_gl());
+                }
+                Ok(())
+            },
+        );
+        /*
+         * @brief Sets the texture wrapping.
+         *
+         *    @luatparam Tex tex Texture to set filter.
+         *    @luatparam string horiz Horizontal wrapping (`"clamp"`, `"repeat"`, or
+         * `"mirroredrepeat"` )
+         *    @luatparam[opt] string vert Vertical wrapping (`"clamp"`, `"repeat"`, or
+         * `"mirroredrepeat"` )
+         *    @luatparam[opt] string depth Depth wrapping (`"clamp"`, `"repeat"`, or
+         * `"mirroredrepeat"` )
+         * @luafunc setWrap
+         */
+        methods.add_method(
+            "setWrap",
+            |_,
+             this,
+             (horiz, vert, depth): (AddressMode, Option<AddressMode>, Option<AddressMode>)|
+             -> mlua::Result<()> {
+                let vert = vert.unwrap_or(horiz);
+                let depth = depth.unwrap_or(horiz);
+                let gl = &Context::get().gl;
+                unsafe {
+                    gl.sampler_parameter_i32(this.sampler, glow::TEXTURE_WRAP_S, horiz.to_gl());
+                    gl.sampler_parameter_i32(this.sampler, glow::TEXTURE_WRAP_T, vert.to_gl());
+                    gl.sampler_parameter_i32(this.sampler, glow::TEXTURE_WRAP_R, depth.to_gl());
+                }
+                Ok(())
+            },
+        );
+    }
+}
+
+pub fn open_texture(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
+    let proxy = lua.create_proxy::<Texture>()?;
+    Ok(proxy)
 }

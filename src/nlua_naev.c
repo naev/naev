@@ -934,7 +934,9 @@ static int naevL_setTextInput( lua_State *L )
       SDL_StartTextInput( gl_screen.window );
       SDL_SetTextInputArea( gl_screen.window, &input_pos, 0 );
    } else {
+      SDL_ClearComposition( gl_screen.window );
       SDL_StopTextInput( gl_screen.window );
+      SDL_SetTextInputArea( gl_screen.window, NULL, 0 );
       SDL_SetEventEnabled( SDL_EVENT_TEXT_INPUT, 0 );
    }
    return 0;

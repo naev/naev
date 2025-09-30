@@ -25,6 +25,7 @@ local DEFAULT_REWARD = 100e3
 
 local goal_times = require 'missions.neutral.race.times_qex'
 local medal_col = {Bronze= '#o', Silver= '#w', Gold= '#y'}
+local metal_display_name = {Bronze=p_('trophy', 'Bronze'), Silver=p_('trophy', 'Silver'), Gold=p_('trophy', 'Gold')}
 
 local elapsed_time, race_done
 
@@ -227,26 +228,24 @@ function approach_terminal ()
 
       bzr_race:set( track.track )
 
-      txt = txt .. '#n' .. fmt.f('Length: {length} km', {length=fmt.number(track.length)})..'#0\n'
+      txt = txt .. '#n' .. fmt.f(_('Length: {length} km'), {length=fmt.number(track.length)})..'#0\n'
       local yet
-      for _n, i in ipairs({N_('Bronze'), N_('Silver'), N_('Gold')}) do
+      for _n, i in ipairs({'Bronze', 'Silver', 'Gold'}) do
          if not yet and track.besttime >= track.goaltime[i] then
             yet = true
-            txt = txt .. '#b' .. _('Best Time:') .. ' '
+            txt = txt .. '#b' .. _('Best Time: ')
             if track.besttime == math.huge then
                txt = txt .. '#n' .. _('N/A') .. '#0\n'
             else
                txt = txt .. display_time(track.besttime) .. '#0\n'
             end
          end
-         txt = txt .. '#n' .. _('Goal Time:') .. medal_col[i]
-            .. ' ' .. display_time(track.goaltime[i])
-            .. ' ' .. '#n(' .. _(i) .. ')#0\n'
+         txt = txt .. '#n' .. fmt.f(_('Goal Time: {time} ({metal_name})'), {time=medal_col[i] .. display_time(track.goaltime[i]) .. '#n', metal_name=metal_display_name[i]}) .. '#0\n'
       end
       if not yet then
-         txt = txt .. '#b' .. _('Best Time:') .. ' ' .. display_time(track.besttime) .. '#0\n'
+         txt = txt .. '#b' .. _('Best Time: ') .. display_time(track.besttime) .. '#0\n'
       end
-      txt = txt .. '#n' .. _('Reward:') .. ' '
+      txt = txt .. '#n' .. _('Reward: ')
          .. medal_col['Bronze'] .. '0.5#n/' .. medal_col['Silver'] .. '1#n/'
          .. medal_col['Gold'] .. '2#0'
          .. ' #nx ' .. fmt.credits(track.reward) .. '#0\n'
@@ -411,7 +410,7 @@ function race_landed ()
 
    if elapsed_time <= 0.0 then return end
 
-   for i, g in ipairs({N_('Gold'), N_('Silver'), N_('Bronze')}) do
+   for i, g in ipairs({'Gold', 'Silver', 'Bronze'}) do
       if elapsed_time <= mem.track.goaltime[g] then
          local ratio = mem.track.goaltime[g] / elapsed_time - 1.0
          reward = mem.track.reward  * 2^(2-i)
@@ -427,7 +426,7 @@ function race_landed ()
    if elapsed_time < mem.track.besttime or mem.track.besttime <= 0 then
       mem.track.besttime = elapsed_time
       var.push( track_besttime(mem.track), elapsed_time )
-      imp_str = ' ' .. _('This is your new best time!')
+      imp_str = _(' This is your new best time!')
    else
       imp_str = ''
    end
@@ -440,10 +439,10 @@ function race_landed ()
          vn.na(fmt.f(_('You finished the race in {elapsed} and beat the goal time of {goal} ({metal}) but were {short} over the goal time of {ngoal} ({nmetal}).{imp_str} Congratulations!'), {
             elapsed= '#b' .. display_time( elapsed_time ) .. '#0',
             goal= medal_col[beat_time] .. display_time( mem.track.goaltime[beat_time] ) .. '#0',
-            metal= _(beat_time),
+            metal= metal_display_name[beat_time],
             short= '#r' .. display_time( elapsed_time - mem.track.goaltime[nxt] ) .. '#0',
             ngoal= medal_col[nxt] .. display_time( mem.track.goaltime[nxt] ) .. '#0',
-            nmetal= nxt,
+            nmetal= metal_display_name[nxt],
             imp_str= imp_str,
          }))
       else
@@ -483,7 +482,7 @@ function race_landed ()
          vn.na(fmt.f(_([[An individual in a suit and tie suddenly takes you up onto a stage. A large name tag on their jacket says 'Melendez Corporation'. "Congratulations on your win," they say, shaking your hand, "That was a great race! On behalf of Melendez Corporation, and for beating the goal times of all the courses here at {spobname}, I would like to present to you your {metal} trophy!".
 They hand you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it. At least the trophy looks cool.]]),
             {spobname= spob.cur(), metal= completed}))
-         vn.na(fmt.reward(reward_outfit)..'\n'..fmt.reward(reward)..'\n'..fmt.reward(bonus)..' (early finish bonus)')
+         vn.na(fmt.reward(reward_outfit)..'\n'..fmt.reward(reward)..'\n'..fmt.reward(bonus).._(' (early finish bonus)'))
          if completed == 'Silver' or (not already_have['Silver'] and completed == 'Gold') and not diff.isApplied("melendez_dome_xy37") then
             vn.func( function ()
                diff.apply("melendez_dome_xy37")

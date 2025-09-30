@@ -45,7 +45,7 @@ not_unsafe_ptr_arg_deref = "allow"
 
 [workspace.dependencies]
 naevc = { path=@NAEVC@ }
-sdl3 = "0.14"
+sdl3 = "0.15"
 anyhow = "1.0"
 audio = { path="@BUILD@/src/audio" }
 naev_core = { path="@BUILD@/src/core" }
@@ -61,8 +61,8 @@ nalgebra = { version = "0.34", features = ["bytemuck", "encase"] }
 encase = { version = "0.12" } # Needed for shader voodoo
 bytemuck = { version = "1.23", features = ["derive"] } # Needed for shader voodoo
 image = { version = "0.25", features = ["rayon"] }
-roxmltree = "0.20"
 mlua = { version = "0.11", features = ["luajit", "anyhow", "send", "serialize"] }
+roxmltree = "0.20"
 symphonia = "0.5"
 thunderdome = "0.6"
 static_assertions = "1.1"

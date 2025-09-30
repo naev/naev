@@ -57,7 +57,7 @@ local function render_svgs( c, path, npc )
          for i,r in ipairs(npc.replace) do
             svg = string.gsub( svg, r[1], r[2] )
          end
-         local img = lg.newImage( tex.new(file.from_string(svg)) )
+         local img = lg.newImage( tex.open(file.from_string(svg)) )
          img:draw( 0, 0 )
       end
    end

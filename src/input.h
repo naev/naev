@@ -112,7 +112,6 @@ typedef enum {
  * set input
  */
 void        input_setDefault( int wasd );
-SDL_Keycode input_keyConv( const char *name );
 void        input_setKeybind( KeySemanticType keybind, KeybindType type,
                               SDL_Keycode key, SDL_Keymod mod );
 const char *input_modToText( SDL_Keymod mod );
@@ -163,3 +162,7 @@ void input_update( double dt );
 void input_mouseShow( void );
 void input_mouseHide( void );
 int  input_mouseIsShown( void );
+
+// Exported from Rust
+const char *input_keyToStr( SDL_Keycode key );
+SDL_Keycode input_keyFromStr( const char *name );

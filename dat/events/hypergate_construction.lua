@@ -55,8 +55,8 @@ local boss_message_list = {
 }
 
 local mineral_list = { "Therite", "Kermite", "Vixilium" } -- Only rares
-local markup = 1.2 -- Multiplier for amount being paid
-local standing = 0.1 -- Multiplier for standing increase
+local MULTIPLIER_PRICE = 1.2 -- Multiplier for amount being paid
+local MULTIPLIER_STANDING = 0.025 -- Multiplier for standing increase
 
 local id, hypergate, boss, talked_check, traded_amount
 local traded_total = "hypconst_traded_total"
@@ -141,7 +141,7 @@ function boss_hail ()
          for i,m in ipairs(mineral_list) do
             mineral_name_list[i] = _(mineral_list[i])
          end
-         b(fmt.f(_([["We are looking for miners to obtain valuable minerals such as {minerals}. Given the difficulty of acquiring them, we are willing to pay {markup}% of the market price. If you are interested, please bring the minerals and board to do the transaction."]]),{minerals=fmt.list(mineral_name_list),markup=markup*100}))
+         b(fmt.f(_([["We are looking for miners to obtain valuable minerals such as {minerals}. Given the difficulty of acquiring them, we are willing to pay {markup}% of the market price. If you are interested, please bring the minerals and board to do the transaction."]]),{minerals=fmt.list(mineral_name_list),markup=MULTIPLIER_PRICE*100}))
          vn.func( function ()
             boss:setActiveBoard(true)
             hook.pilot( boss, "board", "boss_board" )
@@ -186,7 +186,7 @@ function boss_board ()
    vn.na( function ()
       local s = fmt.f(_([[You board the {ship}, and find that the cargo bay has been set up to efficiently process minerals. There is a holosign with the needed resources and their prices:]]),{ship=boss:name()})
       for i,m in ipairs(minerals) do
-         s = s .. "\n   " .. fmt.f(_("{mineral}: {price}"),{mineral=m, price=fmt.credits(m:price()*markup)})
+         s = s .. "\n   " .. fmt.f(_("{mineral}: {price}"),{mineral=m, price=fmt.credits(m:price()*MULTIPLIER_PRICE)})
       end
       return s
    end )
@@ -202,7 +202,7 @@ function boss_board ()
          if a > 0 then
             table.insert( opts, 1, {
                fmt.f(_("Trade {mineral} for {value} (You have {amount})"),
-                  {mineral=m, amount=fmt.tonnes(a), value=fmt.credits(markup*m:price())}), m:nameRaw() } )
+                  {mineral=m, amount=fmt.tonnes(a), value=fmt.credits(MULTIPLIER_PRICE*m:price())}), m:nameRaw() } )
          end
       end
       table.insert( opts, 1, { _("Ask about the construction."), "ask" } )
@@ -219,14 +219,14 @@ function boss_board ()
       b(function ()
          local a = pp:cargoHas(m)
          return fmt.f(_([[You deliver the {amount} of {mineral}.
-{reward}]]),{amount=a, mineral=m, reward=fmt.reward(a * markup * m:price())})
+{reward}]]),{amount=a, mineral=m, reward=fmt.reward(a * MULTIPLIER_PRICE * m:price())})
       end )
       vn.func( function ()
          local a = pp:cargoHas(m)
          pp:cargoRm( m, a )
-         player.pay( a * markup * m:price() )
+         player.pay( a * MULTIPLIER_PRICE * m:price() )
          -- Add some faction too
-         hypergate:faction():hit( a * standing )
+         hypergate:faction():hit( a * MULTIPLIER_STANDING )
          -- Store how much was traded
          local q = var.peek( traded_amount ) or 0
          var.push( traded_amount, q+a )

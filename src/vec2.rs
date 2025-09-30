@@ -454,10 +454,6 @@ impl UserData for Vec2 {
 
 pub fn open_vec2(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
     let proxy = lua.create_proxy::<Vec2>()?;
-    //env.set("vec2", &proxy)?;
-    // Add to the Naev stuff
-    //let naev: mlua::Table = env.get("naev")?;
-    //naev.set("vec2", proxy)?;
 
     // Only add stuff as necessary
     if let mlua::Value::Nil = lua.named_registry_value("push_vector")? {
@@ -526,5 +522,3 @@ pub unsafe extern "C" fn lua_tovector(L: *mut mlua::lua_State, idx: c_int) -> *m
         vec
     }
 }
-/*
-*/
