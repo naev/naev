@@ -7,10 +7,9 @@ use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
 use nalgebra::{Matrix3, Vector4};
 use sdl3 as sdl;
 use std::boxed::Box;
-use std::ffi::{CStr, CString};
+use std::ffi::{CStr, CString, c_char, c_double, c_float, c_int, c_uint};
 use std::io::{Read, Seek};
 use std::num::NonZero;
-use std::os::raw::{c_char, c_double, c_float, c_int, c_uint};
 use std::sync::{Arc, LazyLock, Mutex, MutexGuard, Weak, atomic::AtomicU32};
 
 use crate::buffer;
@@ -681,20 +680,6 @@ fn test_sprite_from_dir() {
         }
     }
 }
-
-/*
-impl FromLua for Texture {
-    fn from_lua(value: Value, _: &Lua) -> mlua::Result<Self> {
-        match value {
-            Value::UserData(ud) => Ok(ud.borrow::<Self>()?.clone()),
-            val => Err(mlua::Error::RuntimeError(format!(
-                "unable to convert {} to Vec2",
-                val.type_name()
-            ))),
-        }
-    }
-}
-*/
 
 #[derive(Clone, Copy)]
 pub enum AddressMode {
@@ -2162,4 +2147,9 @@ impl UserData for Texture {
             },
         );
     }
+}
+
+pub fn open_texture(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
+    let proxy = lua.create_proxy::<Texture>()?;
+    Ok(proxy)
 }
