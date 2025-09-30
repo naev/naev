@@ -621,6 +621,65 @@ impl Texture {
         unsafe { Arc::increment_strong_count(Arc::into_raw(self.texture.clone())) }
         Box::into_raw(Box::new(self))
     }
+
+    pub fn sprite_from_dir(&self, dir: f64) -> (usize, usize) {
+        use std::f64::consts::PI;
+        let sxy = self.sx * self.sy;
+        let shard = PI * 2.0 / sxy as f64;
+        let rdir = {
+            let mut rdir = dir + shard * 0.5;
+            if rdir < 0.0 {
+                rdir += 2.0 * PI * (rdir / (PI * 2.0)).abs().ceil()
+            }
+            rdir
+        };
+        let s = {
+            let mut s = (rdir / shard).floor() as usize;
+            if s > sxy - 1 {
+                s %= sxy;
+            }
+            s
+        };
+        (s % self.sx, s / self.sx)
+    }
+}
+
+#[test]
+fn test_sprite_from_dir() {
+    use std::mem::MaybeUninit;
+    let mut tex = MaybeUninit::<Texture>::uninit();
+    let tex = {
+        let tex = unsafe { tex.assume_init_mut() };
+        tex.sx = 8;
+        tex.sy = 2;
+        tex
+    };
+    use std::f64::consts::PI;
+    for (key, val) in vec![
+        (0.0, (0, 0)),
+        (PI, (0, 1)),
+        (-PI, (0, 1)),
+        (PI * 2.0, (0, 0)),
+        (-PI * 2.0, (0, 0)),
+        (PI * 100.0, (0, 0)),
+        (-PI * 100.0, (0, 0)),
+        (PI * 0.5, (4, 0)),
+        (-PI * 0.5, (4, 1)),
+        (PI * 0.25, (2, 0)),
+        (-PI * 0.25, (6, 1)),
+        (PI * 0.75, (6, 0)),
+        (-PI * 0.75, (2, 1)),
+    ] {
+        for off in vec![0.0, -0.19, 0.19] {
+            assert_eq!(
+                tex.sprite_from_dir(key + off),
+                val,
+                "tex.sprite_from_dir( {}+{} )",
+                key,
+                off
+            );
+        }
+    }
 }
 
 /*
@@ -1916,7 +1975,7 @@ impl UserData for Texture {
          * @usage t = tex.open( "no_sprites.png" )
          * @usage t = tex.open( "spritesheet.png", 6, 6 )
          *
-         *    @luatparam string|File path Path, or File to open.
+         *    @luatparam string|File path Path, or File to open. In the case of a file, it gets consumed.
          *    @luatparam[opt=1] number w Width when Data or optional number of x sprites
          * otherwise.
          *    @luatparam[opt=1] number h Height when Data or optional number of y
@@ -1959,6 +2018,59 @@ impl UserData for Texture {
                     .sx(sx.unwrap_or(1))
                     .sy(sy.unwrap_or(1))
                     .build(&Context::get())?)
+            },
+        );
+        /*
+         * @brief Gets the dimensions of the texture.
+         *
+         * @usage w,h, sw,sh = t:dim()
+         *
+         *    @luatparam Tex t Texture to get dimensions of.
+         *    @luatreturn number The width the total image.
+         *    @luatreturn number The height the total image.
+         *    @luatreturn number The width the sprites.
+         *    @luatreturn number The height the sprites.
+         * @luafunc dim
+         */
+        methods.add_method(
+            "dim",
+            |_, this, ()| -> mlua::Result<(usize, usize, f64, f64)> {
+                Ok((this.texture.w, this.texture.h, this.sw, this.sh))
+            },
+        );
+        /*
+         * @brief Gets the number of sprites in the texture.
+         *
+         * @usage sprites, sx,sy = t:sprites()
+         *
+         *    @luatparam Tex t Texture to get sprites of.
+         *    @luatreturn number The total number of sprites.
+         *    @luatreturn number The number of X sprites.
+         *    @luatreturn number The number of Y sprites.
+         * @luafunc sprites
+         */
+        methods.add_method(
+            "sprites",
+            |_, this, ()| -> mlua::Result<(usize, usize, usize)> {
+                Ok((this.sx * this.sy, this.sx, this.sy))
+            },
+        );
+        /*
+         * @brief Gets the sprite that corresponds to a direction.
+         *
+         * @usage sx, sy = t:spriteFromDir( math.pi )
+         *
+         *    @luatparam Tex t Texture to get sprite of.
+         *    @luatparam number a Direction to have sprite facing (in radians).
+         *    @luatreturn number The x position of the sprite.
+         *    @luatreturn number The y position of the sprite.
+         * @luafunc spriteFromDir
+         */
+        methods.add_method(
+            "spriteFromdir",
+            |_, this, dir: f64| -> mlua::Result<(usize, usize)> {
+                let (sx, sy) = this.sprite_from_dir(dir);
+                Ok((sx + 1, sy + 1))
             },
         );
     }
