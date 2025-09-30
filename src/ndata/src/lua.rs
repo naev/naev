@@ -307,3 +307,7 @@ impl UserData for LuaFile {
         );
     }
 }
+
+pub fn open_file(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
+    Ok(lua.create_proxy::<LuaFile>()?)
+}
