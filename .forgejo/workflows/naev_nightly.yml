@@ -483,7 +483,7 @@ jobs:
 
       - name: Upload Codeberg Release
         if: ${{ matrix.releasetype == 'codeberg' }}
-        uses: actions/forgejo-release@v2.7.2
+        uses: Synchro/forgejo-release@self-healing
         with:
           direction: upload
           release-dir: "$(pwd)/build/dist"
