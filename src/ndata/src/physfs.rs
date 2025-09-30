@@ -331,3 +331,11 @@ pub fn mkdir(path: &str) -> Result<()> {
         _ => Ok(()),
     }
 }
+
+pub fn remove_file(path: &str) -> Result<()> {
+    let c_path = CString::new(path).unwrap();
+    match unsafe { naevc::PHYSFS_delete(c_path.as_ptr()) } {
+        0 => Err(error_as_io_error_with_file("PHYSFS_delete", path)),
+        _ => Ok(()),
+    }
+}

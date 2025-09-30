@@ -339,22 +339,9 @@ unsafe impl Send for LuaFile {}
  */
 #[allow(unused_doc_comments)]
 impl UserData for LuaFile {
-    //fn add_fields<F: mlua::UserDataFields<Self>>(fields: &mut F) {
-    //fields.add_field_method_get("x", |_, this| Ok(this.0.x));
-    //fields.add_field_method_get("y", |_, this| Ok(this.0.y));
-    //}
     fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
-        /*
-        { "__gc", fileL_gc },       { "__eq", fileL_eq },
-        { "new", fileL_new },       { "open", fileL_open },
-        { "close", fileL_close },   { "from_string", fileL_from_string },
-        { "read", fileL_read },     { "write", fileL_write },
-        { "seek", fileL_seek },     { "getFilename", fileL_name },
-        { "getMode", fileL_mode },  { "getSize", fileL_size },
-        { "isOpen", fileL_isopen }, { "filetype", fileL_filetype },
-        { "mkdir", fileL_mkdir },   { "enumerate", fileL_enumerate },
-        { "remove", fileL_remove }, { 0, 0 } }; /**< File metatable methods. */
-            */
+        //methods.add_meta_method( MetaMethod::Eq, |_, this,
+
         /*
          * @brief Opens a new file.
          *
@@ -509,6 +496,40 @@ impl UserData for LuaFile {
             "mkdir",
             |_, path: String| -> mlua::Result<(bool, Option<String>)> {
                 match physfs::mkdir(&path) {
+                    Ok(()) => Ok((true, None)),
+                    Err(e) => Ok((false, Some(e.to_string()))),
+                }
+            },
+        );
+        /*
+         * @brief Returns a list of files and subdirectories of a directory.
+         *
+         *    @luatparam string dir Name of the directory to check.
+         *    @luatreturn table Table containing all the names (strings) of the
+         * subdirectories and files in the directory.
+         * @luafunc enumerate
+         */
+        methods.add_function(
+            "enumerate",
+            |lua, path: String| -> mlua::Result<mlua::Table> {
+                let t = lua.create_table()?;
+                for f in read_dir(&path)? {
+                    t.raw_push(f)?;
+                }
+                Ok(t)
+            },
+        );
+        /*
+         * @brief Removes a file or directory.
+         *
+         *    @luatparam string path Name of the path to remove.
+         *    @luatreturn boolean True on success.
+         * @luafunc remove
+         */
+        methods.add_function(
+            "remove",
+            |_, path: String| -> mlua::Result<(bool, Option<String>)> {
+                match physfs::remove_file(&path) {
                     Ok(()) => Ok((true, None)),
                     Err(e) => Ok((false, Some(e.to_string()))),
                 }
