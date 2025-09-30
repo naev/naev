@@ -1,5 +1,6 @@
 use crate::physfs::Mode;
 use crate::{FileType, physfs, stat};
+use anyhow::Result;
 use mlua::{UserData, UserDataMethods};
 use sdl::iostream::IOStream;
 use sdl3 as sdl;
@@ -11,10 +12,43 @@ pub struct OpenFile {
 }
 
 pub struct LuaFile {
-    path: String,
+    pub path: String,
     file: Option<OpenFile>,
 }
 unsafe impl Send for LuaFile {}
+
+impl LuaFile {
+    fn open(&mut self, mode: Mode) -> Result<()> {
+        let io = physfs::iostream(&self.path, mode)?;
+        self.file = Some(OpenFile { mode, io });
+        Ok(())
+    }
+
+    pub fn iostream(&self) -> Option<&IOStream<'static>> {
+        if let &Some(ref file) = &self.file {
+            Some(&file.io)
+        } else {
+            None
+        }
+    }
+    pub fn iostream_mut(&mut self) -> Option<&mut IOStream<'static>> {
+        if let &mut Some(ref mut file) = &mut self.file {
+            Some(&mut file.io)
+        } else {
+            None
+        }
+    }
+
+    pub fn into_iostream(mut self) -> Result<IOStream<'static>> {
+        let file = match self.file.take() {
+            Some(file) => file,
+            None => {
+                anyhow::bail!(format!("LuaFile '{}' not open", self.path));
+            }
+        };
+        Ok(file.io)
+    }
+}
 
 macro_rules! file_not_open {
     () => {
@@ -68,7 +102,7 @@ impl UserData for LuaFile {
          *    @luatreturn File New file object.
          * @luafunc new
          */
-        methods.add_function("open", |_, path: String| -> mlua::Result<LuaFile> {
+        methods.add_function("new", |_, path: String| -> mlua::Result<LuaFile> {
             Ok(LuaFile { path, file: None })
         });
         /*
@@ -82,14 +116,13 @@ impl UserData for LuaFile {
          */
         methods.add_method_mut(
             "open",
-            |_, this, (path, mode): (String, Mode)| -> mlua::Result<(bool, Option<String>)> {
-                let io = match physfs::iostream(&path, mode) {
+            |_, this, mode: Mode| -> mlua::Result<(bool, Option<String>)> {
+                match this.open(mode) {
                     Ok(io) => io,
                     Err(e) => {
                         return Ok((false, Some(e.to_string())));
                     }
                 };
-                this.file = Some(OpenFile { mode, io });
                 Ok((true, None))
             },
         );
@@ -100,7 +133,7 @@ impl UserData for LuaFile {
          *    @luatreturn boolean true on success.
          * @luafunc close
          */
-        methods.add_method_mut("open", |_, this, ()| -> mlua::Result<bool> {
+        methods.add_method_mut("close", |_, this, ()| -> mlua::Result<bool> {
             this.file = None;
             Ok(true)
         });

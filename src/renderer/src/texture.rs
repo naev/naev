@@ -1905,40 +1905,61 @@ impl UserData for Texture {
     //fields.add_field_method_get("x", |_, this| Ok(this.0.x));
     //fields.add_field_method_get("y", |_, this| Ok(this.0.y));
     //}
-    //fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
-    /*
-     * @brief Opens a texture.
-     *
-     * @note open( path, (sx=1), (sy=1) )
-     * @note open( file, (sx=1), (sy=1) )
-     * @note open( data, w, h, (sx=1), (sy=1) )
-     *
-     * @usage t = tex.open( "no_sprites.png" )
-     * @usage t = tex.open( "spritesheet.png", 6, 6 )
-     *
-     *    @luatparam string|File path Path, or File to open.
-     *    @luatparam[opt=1] number w Width when Data or optional number of x sprites
-     * otherwise.
-     *    @luatparam[opt=1] number h Height when Data or optional number of y
-     * sprites otherwise.
-     *    @luatparam[opt=1] number sx Optional number of x sprites when path is
-     * Data.
-     *    @luatparam[opt=1] number sy Optional number of y sprites when path is
-     * Data.
-     *    @luatreturn Tex The opened texture or nil on error.
-     * @luafunc open
-     */
-    /*
-    methods.add_function(
-       "open",
-       |_, (path, w, h, sx, sy): (&str, Option<u32>, Option<u32>, Option<u16>, Option<u16>)| -> mlua::Result<Self> {
-          let w = w.unwrap_or(1);
-          let h = h.unwrap_or(1);
-          let sx = sx.unwrap_or(1);
-          let sy = sy.unwrap_or(1);
-          Ok(v)
-       },
-    );
-    */
-    //}
+    fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
+        /*
+         * @brief Opens a texture.
+         *
+         * @note open( path, (sx=1), (sy=1) )
+         * @note open( file, (sx=1), (sy=1) )
+         * @note open( data, w, h, (sx=1), (sy=1) )
+         *
+         * @usage t = tex.open( "no_sprites.png" )
+         * @usage t = tex.open( "spritesheet.png", 6, 6 )
+         *
+         *    @luatparam string|File path Path, or File to open.
+         *    @luatparam[opt=1] number w Width when Data or optional number of x sprites
+         * otherwise.
+         *    @luatparam[opt=1] number h Height when Data or optional number of y
+         * sprites otherwise.
+         *    @luatparam[opt=1] number sx Optional number of x sprites when path is
+         * Data.
+         *    @luatparam[opt=1] number sy Optional number of y sprites when path is
+         * Data.
+         *    @luatreturn Tex The opened texture or nil on error.
+         * @luafunc open
+         */
+        methods.add_function(
+            "open",
+            |_,
+             (path, w, h, sx, sy): (
+                Value,
+                Option<usize>,
+                Option<usize>,
+                Option<usize>,
+                Option<usize>,
+            )|
+             -> mlua::Result<Self> {
+                let io = match path {
+                    Value::String(s) => ndata::iostream(&s.to_string_lossy())?,
+                    Value::UserData(ud) => {
+                        let file = ud.take::<ndata::lua::LuaFile>()?;
+                        file.into_iostream()?
+                    }
+                    val => {
+                        return Err(mlua::Error::RuntimeError(format!(
+                            "invalid path type {}",
+                            val.type_name()
+                        )));
+                    }
+                };
+                Ok(TextureBuilder::new()
+                    .iostream(io)
+                    .width(w)
+                    .height(h)
+                    .sx(sx.unwrap_or(1))
+                    .sy(sy.unwrap_or(1))
+                    .build(&Context::get())?)
+            },
+        );
+    }
 }

@@ -264,7 +264,7 @@ pub fn read_dir_filter(path: &str, predicate: impl Fn(&str) -> bool) -> Result<V
 }
 
 /// Gets an SDL IOStream from a file if exists
-pub fn iostream(path: &str) -> Result<sdl::iostream::IOStream<'_>> {
+pub fn iostream(path: &str) -> Result<sdl::iostream::IOStream<'static>> {
     physfs::iostream(path, physfs::Mode::Read)
 }
 
