@@ -35,6 +35,33 @@ impl UserData for LuaFile {
         //methods.add_meta_method( MetaMethod::Eq, |_, this,
 
         /*
+         * @brief Create a file from a string buffer.
+         *
+         *    @luatparam String str String to use as the memory data.
+         *    @luatparam[opt="memory buffer"] String name Optional name to give the
+         * buffer.
+         *    @luatreturn File The new file wrapping the string.
+         * @luafunc close
+         */
+        methods.add_function(
+            "from_string",
+            |_, (data, name): (String, Option<String>)| -> mlua::Result<LuaFile> {
+                let buffername = name.unwrap_or_else(|| format!("memory buffer"));
+                let data = data.into_bytes();
+                let file = OpenFile {
+                    mode: Mode::Read,
+                    io: match IOStream::from_vec(data) {
+                        Ok(io) => io,
+                        Err(e) => return Err(mlua::Error::RuntimeError(e.to_string())),
+                    },
+                };
+                Ok(LuaFile {
+                    path: buffername,
+                    file: Some(file),
+                })
+            },
+        );
+        /*
          * @brief Opens a new file.
          *
          *    @luatparam string path Path to open.
