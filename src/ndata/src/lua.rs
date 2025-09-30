@@ -5,12 +5,22 @@ use sdl::iostream::IOStream;
 use sdl3 as sdl;
 use std::io::{Read, Seek, Write};
 
-pub struct LuaFile {
-    path: String,
+pub struct OpenFile {
     mode: Mode,
     io: IOStream<'static>,
 }
+
+pub struct LuaFile {
+    path: String,
+    file: Option<OpenFile>,
+}
 unsafe impl Send for LuaFile {}
+
+macro_rules! file_not_open {
+    () => {
+        Err(mlua::Error::RuntimeError("File not open".to_string()))
+    };
+}
 
 /*
  * @brief Lua bindings to interact with files.
@@ -28,23 +38,45 @@ impl UserData for LuaFile {
          * @brief Opens a new file.
          *
          *    @luatparam string path Path to open.
-         *    @luatparam[opt="r"] mode Mode to open the file in (should be 'r', 'w', or
          *    @luatreturn File New file object.
+         * @luafunc new
+         */
+        methods.add_function("open", |_, path: String| -> mlua::Result<LuaFile> {
+            Ok(LuaFile { path, file: None })
+        });
+        /*
+         * @brief Opens a new file.
+         *
+         *    @luatparam File File object to open.
+         *    @luatparam[opt="r"] mode Mode to open the file in (should be 'r', 'w', or
+         * 'a').
+         *    @luatreturn boolean true on success, false and an error string on failure.
          * @luafunc open
          */
-        methods.add_function(
+        methods.add_method_mut(
             "open",
-            |_, (path, mode): (String, Mode)| -> mlua::Result<(Option<LuaFile>, Option<String>)> {
+            |_, this, (path, mode): (String, Mode)| -> mlua::Result<(bool, Option<String>)> {
                 let io = match physfs::iostream(&path, mode) {
                     Ok(io) => io,
                     Err(e) => {
-                        return Ok((None, Some(e.to_string())));
+                        return Ok((false, Some(e.to_string())));
                     }
                 };
-                Ok((Some(LuaFile { path, mode, io }), None))
+                this.file = Some(OpenFile { mode, io });
+                Ok((true, None))
             },
         );
-
+        /*
+         * @brief Closes a file.
+         *
+         *    @luatparam File file File to close.
+         *    @luatreturn boolean true on success.
+         * @luafunc close
+         */
+        methods.add_method_mut("open", |_, this, ()| -> mlua::Result<bool> {
+            this.file = None;
+            Ok(true)
+        });
         /*
          * @brief Reads from an open file.
          *
@@ -57,22 +89,25 @@ impl UserData for LuaFile {
         methods.add_method_mut(
             "read",
             |_, this, bytes: Option<usize>| -> mlua::Result<(String, usize)> {
-                let (out, read) = if let Some(bytes) = bytes {
-                    let mut out: Vec<u8> = vec![0; bytes];
-                    let read = this.io.read(&mut out)?;
-                    out.truncate(read);
-                    (out, read)
+                if let Some(file) = &mut this.file {
+                    let (out, read) = if let Some(bytes) = bytes {
+                        let mut out: Vec<u8> = vec![0; bytes];
+                        let read = file.io.read(&mut out)?;
+                        out.truncate(read);
+                        (out, read)
+                    } else {
+                        let mut out: Vec<u8> = Vec::new();
+                        let read = file.io.read_to_end(&mut out)?;
+                        (out, read)
+                    };
+                    // Todo something better than this I guess
+                    let out = unsafe { String::from_utf8_unchecked(out) };
+                    Ok((out, read))
                 } else {
-                    let mut out: Vec<u8> = Vec::new();
-                    let read = this.io.read_to_end(&mut out)?;
-                    (out, read)
-                };
-                // Todo something better than this I guess
-                let out = unsafe { String::from_utf8_unchecked(out) };
-                Ok((out, read))
+                    file_not_open!()
+                }
             },
         );
-
         /*
          * @brief Reads from an open file.
          *
@@ -84,11 +119,15 @@ impl UserData for LuaFile {
         methods.add_method_mut(
             "write",
             |_, this, (data, len): (String, Option<usize>)| -> mlua::Result<usize> {
-                let mut bytes = data.into_bytes();
-                if let Some(len) = len {
-                    bytes.truncate(len);
+                if let Some(file) = &mut this.file {
+                    let mut bytes = data.into_bytes();
+                    if let Some(len) = len {
+                        bytes.truncate(len);
+                    }
+                    Ok(file.io.write(&bytes)?)
+                } else {
+                    file_not_open!()
                 }
-                Ok(this.io.write(&bytes)?)
             },
         );
         /*
@@ -102,9 +141,13 @@ impl UserData for LuaFile {
         methods.add_method_mut(
             "seek",
             |_, this, pos: u64| -> mlua::Result<(bool, Option<String>)> {
-                match this.io.seek(std::io::SeekFrom::Start(pos)) {
-                    Ok(res) => Ok((pos == res, None)),
-                    Err(e) => Ok((false, Some(e.to_string()))),
+                if let Some(file) = &mut this.file {
+                    match file.io.seek(std::io::SeekFrom::Start(pos)) {
+                        Ok(res) => Ok((pos == res, None)),
+                        Err(e) => Ok((false, Some(e.to_string()))),
+                    }
+                } else {
+                    file_not_open!()
                 }
             },
         );
@@ -113,9 +156,9 @@ impl UserData for LuaFile {
          *
          *    @luatparam File file File object to get name of.
          *    @luatreturn string Name of the file object.
-         * @luafunc name
+         * @luafunc getFilename
          */
-        methods.add_method("name", |_, this, ()| -> mlua::Result<String> {
+        methods.add_method("getFilename", |_, this, ()| -> mlua::Result<String> {
             Ok(this.path.clone())
         });
         /*
@@ -123,25 +166,43 @@ impl UserData for LuaFile {
          *
          *    @luatparam File file File to get mode of.
          *    @luatreturn string Mode of the file (either 'w', 'r', or 'a')
-         * @luafunc mode
+         * @luafunc getMode
          */
-        methods.add_method("mode", |_, this, ()| -> mlua::Result<String> {
-            Ok(match this.mode {
-                Mode::Append => 'a',
-                Mode::Read => 'r',
-                Mode::Write => 'w',
+        methods.add_method("getMode", |_, this, ()| -> mlua::Result<String> {
+            if let Some(file) = &this.file {
+                Ok(match file.mode {
+                    Mode::Append => 'a',
+                    Mode::Read => 'r',
+                    Mode::Write => 'w',
+                }
+                .to_string())
+            } else {
+                Ok('c'.to_string())
             }
-            .to_string())
         });
         /*
          * @brief Gets the size of a file (must be open).
          *
          *    @luatparam File file File to get the size of.
          *    @luatreturn number Size of the file.
-         * @luafunc size
+         * @luafunc getSize
          */
-        methods.add_method("size", |_, this, ()| -> mlua::Result<Option<usize>> {
-            Ok(this.io.len())
+        methods.add_method("getSize", |_, this, ()| -> mlua::Result<Option<usize>> {
+            if let Some(file) = &this.file {
+                Ok(file.io.len())
+            } else {
+                file_not_open!()
+            }
+        });
+        /*
+         * @brief Checks to see if a file is open.
+         *
+         *    @luatparam File file File to check to see if is open.
+         *    @luatreturn boolean true if the file is open, false otherwise.
+         * @luafunc isOpen
+         */
+        methods.add_method("isOpen", |_, this, ()| -> mlua::Result<bool> {
+            Ok(this.file.is_some())
         });
         /*
          * @brief Checks to see the filetype of a path.
