@@ -2040,7 +2040,7 @@ impl UserData for Texture {
                     .height(h)
                     .sx(sx.unwrap_or(1))
                     .sy(sy.unwrap_or(1))
-                    .build(&Context::get())?)
+                    .build(Context::get())?)
             },
         );
         /*

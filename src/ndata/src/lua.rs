@@ -25,7 +25,7 @@ impl LuaFile {
     }
 
     pub fn iostream(&self) -> Option<&IOStream<'static>> {
-        if let &Some(ref file) = &self.file {
+        if let Some(file) = &self.file {
             Some(&file.io)
         } else {
             None
@@ -80,7 +80,13 @@ impl UserData for LuaFile {
         methods.add_function(
             "from_string",
             |_, (data, name): (String, Option<String>)| -> mlua::Result<LuaFile> {
-                let buffername = name.unwrap_or_else(|| format!("memory buffer"));
+                use std::sync::atomic::{AtomicU32, Ordering};
+                static COUNTER: AtomicU32 = AtomicU32::new(0);
+
+                let buffername = name.unwrap_or_else(|| {
+                    let c = COUNTER.fetch_add(1, Ordering::Relaxed);
+                    format!("memory buffer {}", c)
+                });
                 let data = data.into_bytes();
                 let file = OpenFile {
                     mode: Mode::Read,
