@@ -713,6 +713,26 @@ impl AddressMode {
         }) as i32
     }
 }
+impl mlua::FromLua for AddressMode {
+    fn from_lua(value: mlua::Value, _: &mlua::Lua) -> mlua::Result<Self> {
+        match value {
+            mlua::Value::String(s) => match s.to_string_lossy().as_str() {
+                "clamp" => Ok(Self::ClampToEdge),
+                "repeat" => Ok(Self::Repeat),
+                "mirroredrepeat" => Ok(Self::MirrorRepeat),
+                "clampzero" => Ok(Self::ClampToBorder),
+                s => Err(mlua::Error::RuntimeError(format!(
+                    "unable to convert \"{}\" to AddressMode",
+                    s
+                ))),
+            },
+            val => Err(mlua::Error::RuntimeError(format!(
+                "unable to convert {} to AddressMode",
+                val.type_name()
+            ))),
+        }
+    }
+}
 
 #[derive(Clone, Copy)]
 pub enum FilterMode {
@@ -727,6 +747,24 @@ impl FilterMode {
             FilterMode::Linear => glow::LINEAR,
             FilterMode::MipmapLinear => glow::LINEAR_MIPMAP_LINEAR,
         }) as i32
+    }
+}
+impl mlua::FromLua for FilterMode {
+    fn from_lua(value: mlua::Value, _: &mlua::Lua) -> mlua::Result<Self> {
+        match value {
+            mlua::Value::String(s) => match s.to_string_lossy().as_str() {
+                "nearest" => Ok(Self::Nearest),
+                "linear" => Ok(Self::Linear),
+                s => Err(mlua::Error::RuntimeError(format!(
+                    "unable to convert \"{}\" to FilterMode",
+                    s
+                ))),
+            },
+            val => Err(mlua::Error::RuntimeError(format!(
+                "unable to convert {} to FilterMode",
+                val.type_name()
+            ))),
+        }
     }
 }
 
@@ -2071,6 +2109,56 @@ impl UserData for Texture {
             |_, this, dir: f64| -> mlua::Result<(usize, usize)> {
                 let (sx, sy) = this.sprite_from_dir(dir);
                 Ok((sx + 1, sy + 1))
+            },
+        );
+        /*
+         * @brief Sets the texture minification and magnification filters.
+         *
+         *    @luatparam Tex tex Texture to set filter.
+         *    @luatparam string min Minification filter ("nearest" or "linear")
+         *    @luatparam[opt] string mag Magnification filter ("nearest" or "linear").
+         * Defaults to min.
+         * @luafunc setFilter
+         */
+        methods.add_method(
+            "setFilter",
+            |_, this, (min, mag): (FilterMode, Option<FilterMode>)| -> mlua::Result<()> {
+                let mag = mag.unwrap_or(min);
+                let gl = &Context::get().gl;
+                unsafe {
+                    gl.sampler_parameter_i32(this.sampler, glow::TEXTURE_MIN_FILTER, min.to_gl());
+                    gl.sampler_parameter_i32(this.sampler, glow::TEXTURE_MAG_FILTER, mag.to_gl());
+                }
+                Ok(())
+            },
+        );
+        /*
+         * @brief Sets the texture wrapping.
+         *
+         *    @luatparam Tex tex Texture to set filter.
+         *    @luatparam string horiz Horizontal wrapping (`"clamp"`, `"repeat"`, or
+         * `"mirroredrepeat"` )
+         *    @luatparam[opt] string vert Vertical wrapping (`"clamp"`, `"repeat"`, or
+         * `"mirroredrepeat"` )
+         *    @luatparam[opt] string depth Depth wrapping (`"clamp"`, `"repeat"`, or
+         * `"mirroredrepeat"` )
+         * @luafunc setWrap
+         */
+        methods.add_method(
+            "setWrap",
+            |_,
+             this,
+             (horiz, vert, depth): (AddressMode, Option<AddressMode>, Option<AddressMode>)|
+             -> mlua::Result<()> {
+                let vert = vert.unwrap_or(horiz);
+                let depth = depth.unwrap_or(horiz);
+                let gl = &Context::get().gl;
+                unsafe {
+                    gl.sampler_parameter_i32(this.sampler, glow::TEXTURE_WRAP_S, horiz.to_gl());
+                    gl.sampler_parameter_i32(this.sampler, glow::TEXTURE_WRAP_T, vert.to_gl());
+                    gl.sampler_parameter_i32(this.sampler, glow::TEXTURE_WRAP_R, depth.to_gl());
+                }
+                Ok(())
             },
         );
     }
