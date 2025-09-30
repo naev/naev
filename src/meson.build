@@ -17,6 +17,7 @@ source_rust = files(
    'mutex/src/lib.rs',
    'ndata/src/lib.rs',
    'ndata/src/env.rs',
+   'ndata/src/lua.rs',
    'ndata/src/physfs.rs',
    'gettext/src/lib.rs',
    'log/src/lib.rs',

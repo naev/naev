@@ -3987,6 +3987,7 @@ src/ndata.c
 src/ndata.h
 src/ndata/src/env.rs
 src/ndata/src/lib.rs
+src/ndata/src/lua.rs
 src/ndata/src/physfs.rs
 src/nebula.h
 src/nebula.rs
