@@ -10,7 +10,7 @@ pub mod version;
 
 pub use formatx;
 pub use gettext;
-pub use log::*;
+pub use logcore::*;
 pub use semver;
 
 #[cfg(unix)]
@@ -30,13 +30,13 @@ enum Output {
     File(LogFile),
 }
 impl Output {
-    fn write(&mut self, msg: &str, level: log::Level) -> Result<()> {
+    fn write(&mut self, msg: &str, level: logcore::Level) -> Result<()> {
         if msg.is_empty() {
             return Ok(());
         }
 
         // Write to buffer
-        if level <= log::Level::Warn {
+        if level <= logcore::Level::Warn {
             eprintln!("{msg}");
         } else {
             println!("{msg}");
@@ -60,25 +60,25 @@ struct Logger {
     warn_num: AtomicU32,
     output: Mutex<Output>,
 }
-impl log::Log for Logger {
-    fn enabled(&self, metadata: &log::Metadata) -> bool {
+impl logcore::Log for Logger {
+    fn enabled(&self, metadata: &logcore::Metadata) -> bool {
         if metadata.target().starts_with("naga::") {
             return false;
         }
         if cfg!(debug_assertions) {
-            metadata.level() <= log::Level::Debug
+            metadata.level() <= logcore::Level::Debug
         } else {
-            metadata.level() <= log::Level::Info
+            metadata.level() <= logcore::Level::Info
         }
     }
 
-    fn log(&self, record: &log::Record) {
+    fn log(&self, record: &logcore::Record) {
         if !self.enabled(record.metadata()) {
             return;
         }
         let level = record.level();
         let msg = match level {
-            log::Level::Error => {
+            logcore::Level::Error => {
                 // Mark it as having at least one warning on error
                 let _ = self
                     .warn_num
@@ -86,7 +86,7 @@ impl log::Log for Logger {
                 let bt = std::backtrace::Backtrace::force_capture();
                 format!("{}[E] {}", bt, record.args())
             }
-            log::Level::Warn => {
+            logcore::Level::Warn => {
                 let nw = self.warn_num.fetch_add(1, Ordering::SeqCst);
                 let msg = if nw < WARN_MAX {
                     let bt = std::backtrace::Backtrace::force_capture();
@@ -105,9 +105,9 @@ impl log::Log for Logger {
                 }
                 msg
             }
-            log::Level::Info => format!("[I] {}", record.args()),
-            log::Level::Debug => format!("[D] {}", record.args()),
-            log::Level::Trace => {
+            logcore::Level::Info => format!("[I] {}", record.args()),
+            logcore::Level::Debug => format!("[D] {}", record.args()),
+            logcore::Level::Trace => {
                 return;
             }
         };
@@ -151,14 +151,14 @@ impl Logger {
 static LOGGER: LazyLock<Logger> = LazyLock::new(Logger::new);
 
 pub fn init() -> Result<()> {
-    match log::set_logger(&*LOGGER) {
+    match logcore::set_logger(&*LOGGER) {
         Ok(_) => (),
         Err(_) => anyhow::bail!("unable to set_logger"),
     }
     if cfg!(debug_assertions) {
-        log::set_max_level(log::LevelFilter::Debug);
+        logcore::set_max_level(logcore::LevelFilter::Debug);
     } else {
-        log::set_max_level(log::LevelFilter::Info);
+        logcore::set_max_level(logcore::LevelFilter::Info);
     }
     Ok(())
 }
