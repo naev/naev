@@ -344,3 +344,37 @@ impl UserData for LuaFile {
 pub fn open_file(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
     Ok(lua.create_proxy::<LuaFile>()?)
 }
+
+#[test]
+fn test_mlua_file() {
+    let lua = mlua::Lua::new();
+    let globals = lua.globals();
+    globals.set("file", open_file(&lua).unwrap()).unwrap();
+    lua.load(
+        r#"
+        local s = "Hello World!"
+        local f = file.from_string(s)
+        local d = f:read()
+        assert( s==d )
+        local _,n = f:read()
+        assert( n==0 )
+        local r = f:seek(0)
+        assert( r )
+        assert( s:len()==f:getSize() )
+
+        -- Should exist
+        local f = file.new('AUTHORS')
+        local r = f:open()
+        assert( r )
+        local _,n = f:read()
+        assert( n>0 )
+
+        -- Shouldn't exist
+        local f = file.new('DOESNT_EXIST_WILL_ERROR')
+        assert( not f:open() )
+        "#,
+    )
+    .set_name("mlua file test")
+    .exec()
+    .unwrap();
+}
