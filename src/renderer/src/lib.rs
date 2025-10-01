@@ -1009,6 +1009,7 @@ pub extern "C" fn gl_setFullscreen(enable: c_int) {
     }
 }
 
+use mlua::UserDataRef;
 pub struct LuaGfx;
 /*
  * @brief Lua bindings to interact with rendering and the Naev graphical
@@ -1060,6 +1061,67 @@ impl mlua::UserData for LuaGfx {
             };
             Ok(screen.into())
         });
+        /*
+         * @brief Renders a texture.
+         *
+         * This function has variable parameters depending on how you want to render.
+         *
+         * @usage gfx.renderTex( tex, 0., 0. ) -- Render tex at origin
+         * @usage gfx.renderTex( tex, 0., 0., col ) -- Render tex at origin with colour
+         * col
+         * @usage gfx.renderTex( tex, 0., 0., 4, 3 ) -- Render sprite at position 4,3
+         * (top-left is 1,1)
+         * @usage gfx.renderTex( tex, 0., 0., 4, 3, col ) -- Render sprite at position
+         * 4,3 (top-left is 1,1) with colour col
+         *
+         *    @luatparam Tex tex Texture to render.
+         *    @luatparam number pos_x X position to render texture at.
+         *    @luatparam number pos_y Y position to render texture at.
+         *    @luatparam[opt=0] int sprite_x X sprite to render.
+         *    @luatparam[opt=0] int sprite_y Y sprite to render.
+         *    @luatparam[opt] Colour colour Colour to use when rendering.
+         * @luafunc renderTex
+         */
+        methods.add_function(
+            "renderTex",
+            |_,
+             (tex, x, y, sx, sy): (
+                UserDataRef<crate::texture::Texture>,
+                f32,
+                f32,
+                Option<usize>,
+                Option<usize>,
+            )|
+             -> mlua::Result<()> {
+                let sx = sx.unwrap_or(1) - 1;
+                let sy = sy.unwrap_or(1) - 1;
+                let w = tex.texture.w as f32;
+                let h = tex.texture.h as f32;
+                #[rustfmt::skip]
+                let transform: Matrix3<f32> = Matrix3::new(
+                    w as f32, 0.0,      x as f32,
+                    0.0,      h as f32, y as f32,
+                    0.0,      0.0,      1.0,
+                );
+                let tw = tex.sw as f32;
+                let th = tex.sh as f32;
+                let tx = tw * (sx as f32) / w;
+                let ty = th * ((tex.sy as f32) - (sy as f32) - 1.0) / h;
+                #[rustfmt::skip]
+                let texture: Matrix3<f32> = Matrix3::new(
+                    tw as f32, 0.0,      tx as f32,
+                    0.0,      th as f32, ty as f32,
+                    0.0,       0.0,       1.0,
+                );
+                let colour = Vector4::<f32>::from([1.0, 1.0, 1.0, 1.0]);
+                let data = TextureUniform {
+                    texture,
+                    transform,
+                    colour,
+                };
+                Ok(tex.draw_ex(Context::get(), &data)?)
+            },
+        );
     }
 }
 
