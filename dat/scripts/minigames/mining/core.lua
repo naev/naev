@@ -110,7 +110,7 @@ function mining.load()
    end
 
    -- Centre on player
-   cx, cy = naev.gfx.screencoords( naev.camera.pos(), true ):get()
+   cx, cy = naev.gfx.screencoords( naev.camera.pos() ):get()
 
    -- Generate targets
    local difficulty = cc.difficulty or 0

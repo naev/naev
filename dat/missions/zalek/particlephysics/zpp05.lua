@@ -25,7 +25,6 @@ local sokoban = require "minigames.sokoban"
 local audio = require 'love.audio'
 local love = require "love"
 
-
 --local reward = zpp.rewards.zpp05 -- No reward
 local mainpnt, mainsys = spob.getS("Katar I")
 
@@ -175,7 +174,7 @@ local fixed = true
 function renderbg ()
    if fixed then
       local z = camera.getZoom()
-      local x, y = gfx.screencoords( pbeam, true ):get()
+      local x, y = gfx.screencoords( pbeam ):get()
       shader:render( x, y, 75 / z )
    end
    if cutscene then

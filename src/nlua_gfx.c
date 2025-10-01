@@ -169,7 +169,6 @@ static int gfxL_dim( lua_State *L )
  * @brief Gets the screen coordinates from game coordinates.
  *
  *    @luatparam Vec2 Vector of coordinates to transform.
- *    @luatparam[opt=false] boolean Whether or not to invert y axis.
  *    @luatreturn Vec2 Transformed vector.
  * @luafunc screencoords
  */
@@ -177,11 +176,10 @@ static int gfxL_screencoords( lua_State *L )
 {
    vec2        screen;
    double      x, y;
-   const vec2 *game   = luaL_checkvector( L, 1 );
-   int         invert = lua_toboolean( L, 2 );
+   const vec2 *game = luaL_checkvector( L, 1 );
    gl_gameToScreenCoords( &x, &y, game->x, game->y );
-   if ( invert )
-      y = SCREEN_H - y;
+   // Lua uses entirely Love2D coordinates
+   y = SCREEN_H - y;
    vec2_cset( &screen, x, y );
    lua_pushvector( L, screen );
    return 1;

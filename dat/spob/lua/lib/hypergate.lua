@@ -129,7 +129,7 @@ end
 function hypergate.render ()
    update_canvas() -- We want to do this here or it gets slow in autonav
    local z = camera.getZoom()
-   local x, y = gfx.screencoords( mem.pos, true ):get()
+   local x, y = gfx.screencoords( mem.pos ):get()
    z = 1/z
    mem.cvs:draw( x, y, 0, z, z )
 end

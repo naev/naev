@@ -18,7 +18,7 @@ local function update( s, _dt )
 end
 
 local function render_buoy( v, z, w, h )
-   local x, y = gfx.screencoords( v, true ):get()
+   local x, y = gfx.screencoords( v ):get()
    buoy_gfx:draw( x-w*0.5, y-h*0.5, 0, z )
    buoy_gfx:draw( x-w*0.5, y-h*0.5, 0, z )
 end

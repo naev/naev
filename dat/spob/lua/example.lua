@@ -65,7 +65,7 @@ end
 --]]
 function render ()
    local z = camera.getZoom()
-   local x, y = gfx.screencoords( mem.pos, true ):get()
+   local x, y = gfx.screencoords( mem.pos ):get()
    mem.tex:draw( x, y, 0, 1/z )
 end
 
