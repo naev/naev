@@ -1,5 +1,5 @@
 use anyhow::Result;
-use nalgebra::{Point2, Vector2};
+use nalgebra::Vector2;
 use physics::angle_diff;
 use physics::vec2::Vec2;
 use std::os::raw::{c_double, c_int, c_uint};
@@ -13,13 +13,13 @@ const CAMERA_DIR: f64 = std::f64::consts::FRAC_PI_2;
 #[derive(Default, Clone)]
 pub struct Camera {
     /// Current location
-    pos: Point2<f64>,
+    pos: Vector2<f64>,
     /// Fixed camera offset
     offset: Vector2<f64>,
     /// Location of previosu frame
-    old: Point2<f64>,
+    old: Vector2<f64>,
     /// Target location it is trying to go to
-    target: Point2<f64>,
+    target: Vector2<f64>,
     /// Movement from last frame
     der: Vector2<f64>,
     /// Current velocity
@@ -49,7 +49,7 @@ pub static CAMERA: LazyLock<RwLock<Camera>> = LazyLock::new(|| {
 });
 
 impl Camera {
-    pub fn pos(&self) -> Point2<f64> {
+    pub fn pos(&self) -> Vector2<f64> {
         self.pos + self.offset
     }
 
@@ -67,7 +67,8 @@ impl Camera {
                         self.follow_pilot = None;
                         self.fly = false;
                     } else {
-                        let pos = unsafe { Point2::<f64>::new((*p).solid.pos.x, (*p).solid.pos.y) };
+                        let pos =
+                            unsafe { Vector2::<f64>::new((*p).solid.pos.x, (*p).solid.pos.y) };
                         self.update_fly(pos, dt);
                         self.update_pilot_zoom(p, std::ptr::null(), dt);
                     }
@@ -115,7 +116,7 @@ impl Camera {
         }
     }
 
-    fn update_fly(&mut self, pos: Point2<f64>, dt: f64) {
+    fn update_fly(&mut self, pos: Vector2<f64>, dt: f64) {
         let max = self.fly_speed * dt;
         let k = 25. * dt;
         let mut der = (pos - self.pos) * k;
@@ -127,7 +128,7 @@ impl Camera {
         self.pos += der;
 
         /* Stop within 100 pixels. */
-        if nalgebra::distance_squared(&self.pos, &pos) < 100. * 100. {
+        if (self.pos - &pos).norm_squared() < 100.0 * 100.0 {
             self.old = self.pos;
             self.fly = false;
         }
@@ -219,9 +220,9 @@ impl Camera {
             } else {
                 let mut pos = Vector2::<f64>::new(0.0, 0.0);
                 let target_pos =
-                    unsafe { Point2::<f64>::new((*target).solid.pos.x, (*target).solid.pos.y) };
+                    unsafe { Vector2::<f64>::new((*target).solid.pos.x, (*target).solid.pos.y) };
                 let follow_pos =
-                    unsafe { Point2::<f64>::new((*follow).solid.pos.x, (*follow).solid.pos.y) };
+                    unsafe { Vector2::<f64>::new((*follow).solid.pos.x, (*follow).solid.pos.y) };
                 pos += target_pos - follow_pos;
 
                 /* Get distance ratio. */
@@ -256,7 +257,7 @@ impl Camera {
         /*diag2 = pow2(SCREEN_W) + pow2(SCREEN_H);*/
         /*diag2 = pow2( MIN(SCREEN_W, SCREEN_H) );*/
         let diag2: f64 = 100. * 100.;
-        let pos = unsafe { Point2::<f64>::new((*follow).solid.pos.x, (*follow).solid.pos.y) };
+        let pos = unsafe { Vector2::<f64>::new((*follow).solid.pos.x, (*follow).solid.pos.y) };
 
         /* Compensate player movement. */
         let mov = pos - self.old;
@@ -268,7 +269,7 @@ impl Camera {
         /* Compute bias. */
         let mut bias = if !target.is_null() {
             let target_pos =
-                unsafe { Point2::<f64>::new((*target).solid.pos.x, (*target).solid.pos.y) };
+                unsafe { Vector2::<f64>::new((*target).solid.pos.x, (*target).solid.pos.y) };
             target_pos - pos
         } else {
             Default::default()

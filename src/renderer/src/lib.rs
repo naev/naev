@@ -1048,7 +1048,6 @@ impl mlua::UserData for LuaGfx {
          *    @luatreturn Vec2 Transformed vector.
          * @luafunc screencoords
          */
-        /*
         methods.add_function(
             "screencoords",
             |_, (pos, invert): (Vec2, Option<bool>)| -> mlua::Result<Vec2> {
@@ -1057,9 +1056,8 @@ impl mlua::UserData for LuaGfx {
                 let dims = ctx.dimensions.read().unwrap();
                 let mut screen: Vector2<f64> = {
                     let cam = camera::CAMERA.read().unwrap();
-                    let cpos: Vector2<f64> = cam.pos().into();
-                    let view = Vector2::new( dims.view_width as f64, dims.view_height as f64 );
-                    (pos.into_vector2() - cpos) * cam.zoom + view * 0.5
+                    let view = Vector2::new(dims.view_width as f64, dims.view_height as f64);
+                    (pos.into_vector2() - cam.pos()) * cam.zoom + view * 0.5
                 };
                 if invert {
                     screen.y = dims.view_height as f64 - screen.y;
@@ -1067,7 +1065,6 @@ impl mlua::UserData for LuaGfx {
                 Ok(screen.into())
             },
         );
-        */
     }
 }
 
