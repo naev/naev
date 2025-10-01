@@ -5,9 +5,9 @@ use mlua::{FromLua, FromLuaMulti, IntoLua, IntoLuaMulti};
 use std::sync::LazyLock;
 
 use crate::lua::ryaml;
-use crate::vec2;
 use gettext::{gettext, ngettext, pgettext};
 use log::{warn, warn_err, warnx};
+use physics::vec2;
 
 const NLUA_LOAD_TABLE: &str = "_LOADED"; // Table to use to store the status of required libraries.
 const LUA_INCLUDE_PATH: &str = "scripts/"; // Path for Lua includes.

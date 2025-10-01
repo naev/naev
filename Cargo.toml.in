@@ -53,6 +53,7 @@ mutex = { path="@BUILD@/src/mutex" }
 ndata = { path="@BUILD@/src/ndata" }
 renderer = { path="@BUILD@/src/renderer" }
 toolkit = { path="@BUILD@/src/toolkit" }
+physics = { path="@BUILD@/src/physics" }
 formatx = "0.2"
 glow = "0.16"
 nalgebra = { version = "0.34", features = ["bytemuck", "encase"] }
@@ -79,9 +80,9 @@ bytemuck = { workspace = true }
 encase = { workspace = true }
 roxmltree = { workspace = true }
 image = { workspace = true }
+physics = { workspace = true }
 mlua = { workspace = true }
 constcat = "0.6"
-derive_more = { version = "2", features = ["from", "into"] }
 rand = "0.9"
 rayon = "1.11" # parallel computation
 static_assertions = "1.1"

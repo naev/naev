@@ -1,0 +1,19 @@
+[package]
+name = "physics"
+workspace = "@BUILD@"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[lints]
+workspace = true
+
+[lib]
+path = "@SOURCE@/src/physics/src/lib.rs"
+
+[dependencies]
+naevc = { workspace = true }
+anyhow = { workspace = true }
+mlua = { workspace = true }
+nalgebra = { workspace = true }
+derive_more = { version = "2", features = ["from", "into"] }

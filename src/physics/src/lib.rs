@@ -1,5 +1,7 @@
 use std::f64::consts::PI;
 
+pub mod vec2;
+
 /// Converts an angle to the [0, 2*PI] range.
 pub fn angle_clean(a: f64) -> f64 {
     let mut a = a;

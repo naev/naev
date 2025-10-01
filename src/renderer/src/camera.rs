@@ -1,7 +1,7 @@
-use crate::physics::angle_diff;
-use crate::vec2::Vec2;
 use anyhow::Result;
 use nalgebra::{Point2, Vector2};
+use physics::angle_diff;
+use physics::vec2::Vec2;
 use std::os::raw::{c_double, c_int, c_uint};
 use std::sync::{LazyLock, RwLock};
 

@@ -8,6 +8,7 @@ subdir('log')
 subdir('mutex')
 subdir('renderer')
 subdir('toolkit')
+subdir('physics')
 source_rust = files(
    'core/src/lib.rs',
    'core/src/ntime.rs',
@@ -27,10 +28,12 @@ source_rust = files(
    'renderer/src/sdf.rs',
    'renderer/src/shader.rs',
    'renderer/src/texture.rs',
+   'renderer/src/camera.rs',
    'toolkit/src/lib.rs',
    'toolkit/src/widget.rs',
+   'physics/src/lib.rs',
+   'physics/src/vec2.rs',
    'array.rs',
-   'camera.rs',
    'damagetype.rs',
    'faction.rs',
    'input.rs',
@@ -40,11 +43,9 @@ source_rust = files(
    'nebula.rs',
    'nlua.rs',
    'outfit.rs',
-   'physics.rs',
    'rng.rs',
    'ship.rs',
    'slots.rs',
-   'vec2.rs',
    'lua/ryaml.rs',
 )
 ####

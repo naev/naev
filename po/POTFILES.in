@@ -3828,7 +3828,6 @@ src/base64.h
 src/board.c
 src/board.h
 src/camera.h
-src/camera.rs
 src/cgltf.h
 src/claim.c
 src/claim.h
@@ -4120,7 +4119,8 @@ src/physfs_archiver_blacklist.c
 src/physfs_archiver_blacklist.h
 src/physics.c
 src/physics.h
-src/physics.rs
+src/physics/src/lib.rs
+src/physics/src/vec2.rs
 src/pilot.c
 src/pilot.h
 src/pilot_cargo.c
@@ -4155,6 +4155,7 @@ src/queue.h
 src/render.c
 src/render.h
 src/renderer/src/buffer.rs
+src/renderer/src/camera.rs
 src/renderer/src/lib.rs
 src/renderer/src/sdf.rs
 src/renderer/src/shader.rs

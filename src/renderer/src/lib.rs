@@ -2,7 +2,8 @@ use anyhow::Result;
 use encase::{ShaderSize, ShaderType};
 use glow::*;
 use naev_core::start;
-use nalgebra::{Matrix3, Matrix4, Point3, Vector3, Vector4};
+use nalgebra::{Matrix3, Matrix4, Point3, Vector2, Vector3, Vector4};
+use physics::vec2::Vec2;
 use sdl3 as sdl;
 use std::ffi::CStr;
 use std::ops::Deref;
@@ -10,6 +11,7 @@ use std::os::raw::{c_char, c_double, c_int};
 use std::sync::{Arc, Mutex, MutexGuard, OnceLock, RwLock, atomic::AtomicBool, atomic::Ordering};
 
 pub mod buffer;
+pub mod camera;
 pub mod sdf;
 pub mod shader;
 pub mod texture;
@@ -1005,4 +1007,71 @@ pub extern "C" fn gl_setFullscreen(enable: c_int) {
             warn_err!(e);
         }
     }
+}
+
+pub struct LuaGfx;
+/*
+ * @brief Lua bindings to interact with rendering and the Naev graphical
+ * environment.
+ *
+ * An example would be:
+ * @code
+ * t  = tex.open( GFX_PATH"foo/bar.png" ) -- Loads the texture
+ * gfx.renderTex( t, 0., 0. ) -- Draws texture at origin
+ * @endcode
+ *
+ * @luamod gfx
+ */
+impl mlua::UserData for LuaGfx {
+    fn add_methods<M: mlua::UserDataMethods<Self>>(methods: &mut M) {
+        /*
+         * @brief Gets the dimensions of the Naev window.
+         *
+         * @usage screen_w, screen_h = gfx.dim()
+         *
+         * GUI modifications to the screen size.
+         *    @luatreturn number The width of the Naev window.
+         *    @luatreturn number The height of the Naev window.
+         *    @luatreturn scale The scaling factor.
+         * @luafunc dim
+         */
+        methods.add_function("dim", |_, ()| -> mlua::Result<(f32, f32, f32)> {
+            let ctx = Context::get();
+            let dims = ctx.dimensions.read().unwrap();
+            Ok((dims.view_width, dims.view_height, dims.view_scale))
+        });
+        /*
+         * @brief Gets the screen coordinates from game coordinates.
+         *
+         *    @luatparam Vec2 Vector of coordinates to transform.
+         *    @luatparam[opt=false] boolean Whether or not to invert y axis.
+         *    @luatreturn Vec2 Transformed vector.
+         * @luafunc screencoords
+         */
+        /*
+        methods.add_function(
+            "screencoords",
+            |_, (pos, invert): (Vec2, Option<bool>)| -> mlua::Result<Vec2> {
+                let invert = invert.unwrap_or(false);
+                let ctx = Context::get();
+                let dims = ctx.dimensions.read().unwrap();
+                let mut screen: Vector2<f64> = {
+                    let cam = camera::CAMERA.read().unwrap();
+                    let cpos: Vector2<f64> = cam.pos().into();
+                    let view = Vector2::new( dims.view_width as f64, dims.view_height as f64 );
+                    (pos.into_vector2() - cpos) * cam.zoom + view * 0.5
+                };
+                if invert {
+                    screen.y = dims.view_height as f64 - screen.y;
+                }
+                Ok(screen.into())
+            },
+        );
+        */
+    }
+}
+
+pub fn open_gfx(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
+    let proxy = lua.create_proxy::<LuaGfx>()?;
+    Ok(proxy)
 }
