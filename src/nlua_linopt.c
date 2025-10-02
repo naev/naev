@@ -220,7 +220,7 @@ static int linoptL_new( lua_State *L )
 }
 
 /**
- * @brief Adds columns to the linear program.
+ * @brief Gets the size of the linear program.
  *
  *    @luatparam LinOpt lp Linear program to modify.
  *    @luatreturn number Number of columns in the linear program.
