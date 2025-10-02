@@ -4156,6 +4156,7 @@ src/render.c
 src/render.h
 src/renderer/src/buffer.rs
 src/renderer/src/camera.rs
+src/renderer/src/colour.rs
 src/renderer/src/lib.rs
 src/renderer/src/sdf.rs
 src/renderer/src/shader.rs
@@ -4228,7 +4229,6 @@ src/utf8.h
 src/valgrind.h
 src/vec2.c
 src/vec2.h
-src/vec2.rs
 src/vec3.c
 src/vec3.h
 src/weapon.c

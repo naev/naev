@@ -7,7 +7,7 @@ pub struct Vec2(Vector2<f64>);
 
 impl Vec2 {
     /// Creates a new Vec2
-    pub fn new(x: f64, y: f64) -> Self {
+    pub const fn new(x: f64, y: f64) -> Self {
         Vec2(Vector2::new(x, y))
     }
 
@@ -51,7 +51,6 @@ impl FromLua for Vec2 {
  *
  * @luamod vec2
  */
-#[allow(unused_doc_comments)]
 impl UserData for Vec2 {
     fn add_fields<F: mlua::UserDataFields<Self>>(fields: &mut F) {
         fields.add_field_method_get("x", |_, this| Ok(this.0.x));

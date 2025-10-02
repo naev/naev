@@ -12,6 +12,7 @@ use std::sync::{Arc, Mutex, MutexGuard, OnceLock, RwLock, atomic::AtomicBool, at
 
 pub mod buffer;
 pub mod camera;
+pub mod colour;
 pub mod sdf;
 pub mod shader;
 pub mod texture;

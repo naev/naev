@@ -27,5 +27,7 @@ formatx = { workspace = true }
 naev_core = { workspace = true }
 physics = { workspace = true }
 mlua = { workspace = true }
+palette = { workspace = true }
+derive_more = { workspace = true }
 resvg = "0.45"
 naga = { version="26", features=["wgsl-in", "glsl-out"] }

@@ -16,4 +16,4 @@ naevc = { workspace = true }
 anyhow = { workspace = true }
 mlua = { workspace = true }
 nalgebra = { workspace = true }
-derive_more = { version = "2", features = ["from", "into"] }
+derive_more = { workspace = true }
