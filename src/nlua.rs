@@ -459,10 +459,12 @@ impl LuaEnv {
         };
 
         open_lib("vec2", vec2::open_vec2)?;
-        // TODO tex has lots of depnedencies, and we can't implement the FFI interface so it is
+        // TODO tex has lots of dependencies, and we can't implement the FFI interface so it is
         // disabled. Similarly, file doesn't have ffi set up.
         //open_lib("file", ndata::lua::open_file)?;
         //open_lib("tex", renderer::texture::open_texture)?;
+        //open_lib("colour", renderer::colour::open_colour)?;
+        //open_lib("gfx", renderer::open_gfx)?;
 
         let ret = unsafe {
             let env = self as *mut LuaEnv as *mut naevc::nlua_env;
