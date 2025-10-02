@@ -1086,12 +1086,13 @@ impl mlua::UserData for LuaGfx {
         methods.add_function(
             "renderTex",
             |_,
-             (tex, x, y, sx, sy): (
+             (tex, x, y, sx, sy, col): (
                 UserDataRef<crate::texture::Texture>,
                 f32,
                 f32,
                 Option<usize>,
                 Option<usize>,
+                Option<colour::Colour>,
             )|
              -> mlua::Result<()> {
                 let sx = sx.unwrap_or(1) - 1;
@@ -1114,11 +1115,11 @@ impl mlua::UserData for LuaGfx {
                     0.0,      th as f32, ty as f32,
                     0.0,       0.0,       1.0,
                 );
-                let colour = Vector4::<f32>::from([1.0, 1.0, 1.0, 1.0]);
+                let colour = col.unwrap_or(colour::WHITE);
                 let data = TextureUniform {
                     texture,
                     transform,
-                    colour,
+                    colour: colour.into(),
                 };
                 Ok(tex.draw_ex(Context::get(), &data)?)
             },

@@ -4,13 +4,16 @@ use palette::FromColor;
 use palette::{Hsv, LinSrgb, Srgb};
 
 #[derive(Copy, Clone, derive_more::From, derive_more::Into)]
-pub struct Colour(Vector4<f64>);
+pub struct Colour(Vector4<f32>);
+
+pub const WHITE: Colour = Colour::new(1.0, 1.0, 1.0, 1.0);
+pub const BLACK: Colour = Colour::new(1.0, 1.0, 1.0, 1.0);
 
 impl Colour {
-    pub const fn new(r: f64, g: f64, b: f64, a: f64) -> Self {
+    pub const fn new(r: f32, g: f32, b: f32, a: f32) -> Self {
         Colour(Vector4::new(r, g, b, a))
     }
-    pub const fn new_rgb(r: f64, g: f64, b: f64) -> Self {
+    pub const fn new_rgb(r: f32, g: f32, b: f32) -> Self {
         Colour::new(r, g, b, 1.0)
     }
 }
@@ -92,7 +95,7 @@ impl UserData for Colour {
          */
         methods.add_function(
             "new",
-            |_, (r, g, b, a): (f64, f64, f64, Option<f64>)| -> mlua::Result<Self> {
+            |_, (r, g, b, a): (f32, f32, f32, Option<f32>)| -> mlua::Result<Self> {
                 let a = a.unwrap_or(1.0);
                 Ok(Colour::new(r, g, b, a))
             },
@@ -116,7 +119,7 @@ impl UserData for Colour {
         methods.add_function(
             "newHSV",
             |_,
-             (h, s, v, a, gamma): (f64, f64, f64, Option<f64>, Option<bool>)|
+             (h, s, v, a, gamma): (f32, f32, f32, Option<f32>, Option<bool>)|
              -> mlua::Result<Self> {
                 let a = a.unwrap_or(1.0);
                 let gamma = gamma.unwrap_or(false);
@@ -140,7 +143,7 @@ impl UserData for Colour {
          *    @luatreturn number The alpha of the colour.
          * @luafunc alpha
          */
-        methods.add_method("alpha", |_, this, ()| -> mlua::Result<f64> { Ok(this.0.w) });
+        methods.add_method("alpha", |_, this, ()| -> mlua::Result<f32> { Ok(this.0.w) });
         /*
          * @brief Gets the RGB values of a colour.
          *
@@ -158,7 +161,7 @@ impl UserData for Colour {
          */
         methods.add_method(
             "rgb",
-            |_, this, gamma: Option<bool>| -> mlua::Result<(f64, f64, f64)> {
+            |_, this, gamma: Option<bool>| -> mlua::Result<(f32, f32, f32)> {
                 let gamma = gamma.unwrap_or(false);
                 let (r, g, b) = if gamma {
                     Srgb::from_linear(LinSrgb::new(this.0.x, this.0.y, this.0.z)).into_components()
@@ -186,7 +189,7 @@ impl UserData for Colour {
          */
         methods.add_method(
             "rgba",
-            |_, this, gamma: Option<bool>| -> mlua::Result<(f64, f64, f64, f64)> {
+            |_, this, gamma: Option<bool>| -> mlua::Result<(f32, f32, f32, f32)> {
                 let gamma = gamma.unwrap_or(false);
                 let (r, g, b) = if gamma {
                     Srgb::from_linear(LinSrgb::new(this.0.x, this.0.y, this.0.z)).into_components()
@@ -209,7 +212,7 @@ impl UserData for Colour {
          *    @luatreturn number The value of the colour (0-1 value).
          * @luafunc hsv
          */
-        methods.add_method("hsv", |_, this, ()| -> mlua::Result<(f64, f64, f64)> {
+        methods.add_method("hsv", |_, this, ()| -> mlua::Result<(f32, f32, f32)> {
             let hsv = Hsv::from_color(LinSrgb::new(this.0.x, this.0.y, this.0.z));
             let (h, s, v) = hsv.into_components();
             Ok((h.into(), s, v))
@@ -229,7 +232,7 @@ impl UserData for Colour {
          */
         methods.add_method_mut(
             "setRGB",
-            |_, this, (r, g, b): (f64, f64, f64)| -> mlua::Result<()> {
+            |_, this, (r, g, b): (f32, f32, f32)| -> mlua::Result<()> {
                 this.0.x = r;
                 this.0.y = g;
                 this.0.z = b;
@@ -251,7 +254,7 @@ impl UserData for Colour {
          */
         methods.add_method_mut(
             "setHSV",
-            |_, this, (h, s, v): (f64, f64, f64)| -> mlua::Result<()> {
+            |_, this, (h, s, v): (f32, f32, f32)| -> mlua::Result<()> {
                 let (r, g, b) = Srgb::from_color(Hsv::new(h, s, v)).into_components();
                 this.0.x = r;
                 this.0.y = g;
@@ -270,7 +273,7 @@ impl UserData for Colour {
          *    @luatparam number alpha Alpha value to set.
          * @luafunc setAlpha
          */
-        methods.add_method_mut("setAlpha", |_, this, a: f64| -> mlua::Result<()> {
+        methods.add_method_mut("setAlpha", |_, this, a: f32| -> mlua::Result<()> {
             this.0.w = a;
             Ok(())
         });
