@@ -3,7 +3,7 @@ use nalgebra::Vector4;
 use palette::FromColor;
 use palette::{Hsv, LinSrgb, Srgb};
 
-#[derive(Copy, Clone, derive_more::From, derive_more::Into)]
+#[derive(Copy, Clone, derive_more::From, derive_more::Into, PartialEq)]
 pub struct Colour(Vector4<f32>);
 
 pub const WHITE: Colour = Colour::new(1.0, 1.0, 1.0, 1.0);
@@ -74,6 +74,26 @@ impl UserData for Colour {
             },
         );
         /*
+         * @brief Compares two colours to see if they are the same.
+         *
+         *    @luatparam Colour c1 Colour 1 to compare.
+         *    @luatparam Colour c2 Colour 2 to compare.
+         *    @luatreturn boolean true if both colours are the same.
+         * @luafunc __eq
+         */
+        methods.add_meta_method(
+            MetaMethod::Eq,
+            |_, this, other: Value| -> mlua::Result<bool> {
+                match other {
+                    Value::UserData(ud) => match ud.borrow::<Self>() {
+                        Ok(other) => Ok(*this == *other),
+                        Err(_) => Ok(false),
+                    },
+                    _ => Ok(false),
+                }
+            },
+        );
+        /*
          * @brief Creates a new colour. Colours are assumed to be in gamma colour space
          * by default and are converted to linear unless specified.
          *
@@ -95,9 +115,17 @@ impl UserData for Colour {
          */
         methods.add_function(
             "new",
-            |_, (r, g, b, a): (f32, f32, f32, Option<f32>)| -> mlua::Result<Self> {
+            |_,
+             (r, g, b, a, gamma): (f32, f32, f32, Option<f32>, Option<bool>)|
+             -> mlua::Result<Self> {
                 let a = a.unwrap_or(1.0);
-                Ok(Colour::new(r, g, b, a))
+                let gamma = gamma.unwrap_or(false);
+                if gamma {
+                    Ok(Colour::new(r, g, b, a))
+                } else {
+                    let (r, g, b) = Srgb::new(r, g, b).into_linear().into_components();
+                    Ok(Colour::new(r, g, b, a))
+                }
             },
         );
         /*
@@ -297,8 +325,9 @@ impl UserData for Colour {
          * @luafunc gammaToLinear
          */
         methods.add_method("gammaToLinear", |_, this, ()| -> mlua::Result<Colour> {
-            let (r, g, b) =
-                LinSrgb::from_color(Srgb::new(this.0.x, this.0.y, this.0.z)).into_components();
+            let (r, g, b) = Srgb::new(this.0.x, this.0.y, this.0.z)
+                .into_linear()
+                .into_components();
             Ok(Colour::new(r, g, b, this.0.w))
         });
     }
