@@ -4,6 +4,7 @@ test('main_menu',
    find_program('watch-for-msg.py'),
    args: [
       naev_py,
+      '--exitmainmenu',
       'Reached main menu'
    ],
    env: ['WITHGDB=NO'],

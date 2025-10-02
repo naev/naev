@@ -152,6 +152,9 @@ int         naev_main_setup( void )
              nfile_configPath() );
 
    NTracingMessageL( _( "Reached main menu" ) );
+   if ( conf.exit_main_menu ) {
+      exit( 0 );
+   }
 
    /* Incomplete translation note (shows once if we pick an incomplete
     * translation based on user's locale). */
