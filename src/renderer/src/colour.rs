@@ -308,3 +308,23 @@ pub fn open_colour(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
     let proxy = lua.create_proxy::<Colour>()?;
     Ok(proxy)
 }
+
+#[test]
+fn test_mlua_file() {
+    let lua = mlua::Lua::new();
+    let globals = lua.globals();
+    globals.set("colour", open_colour(&lua).unwrap()).unwrap();
+    lua.load(
+        r#"
+local lin = colour.new( 0.5, 0.5, 0.5 )
+local gam = colour.new( 0.5, 0.5, 0.5, nil, true )
+assert( lin ~= gam, "gamma and linear are identical" )
+assert( lin == gam:gammaToLinear(), "gammaToLinear() failed" )
+assert( gam == lin:linearToGamma(), "linearToGamma() failed" )
+assert( lin == lin:linearToGamma():gammaToLinear(), "roundtrip linear -> gamma -> linear failed" )
+        "#,
+    )
+    .set_name("mlua Colour test")
+    .exec()
+    .unwrap();
+}
