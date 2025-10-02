@@ -1,4 +1,4 @@
-use mlua::{Either, FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
+use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
 use nalgebra::Vector4;
 use palette::FromColor;
 use palette::{Hsv, LinSrgb, Srgb};
@@ -52,27 +52,44 @@ impl UserData for Colour {
         fields.add_field_method_get("b", |_, this| Ok(this.0.z));
         fields.add_field_method_get("a", |_, this| Ok(this.0.w));
     }
-    /*
-     * @brief Creates a new colour. Colours are assumed to be in gamma colour space
-     * by default and are converted to linear unless specified.
-     *
-     * @usage colour.new( "Red" ) -- Gets colour by name
-     * @usage colour.new( "Red", 0.5 ) -- Gets colour by name with alpha 0.5
-     * @usage colour.new() -- Creates a white (blank) colour
-     * @usage colour.new( 1., 0., 0. ) -- Creates a bright red colour
-     * @usage colour.new( 1., 0., 0., 0.5 ) -- Creates a bright red colour with
-     * alpha 0.5
-     *
-     *    @luatparam number r Red value of the colour.
-     *    @luatparam number g Green value of the colour.
-     *    @luatparam number b Blue value of the colour.
-     *    @luatparam[opt=1.] number a Alpha value of the colour.
-     *    @luatparam[opt=false] gamma Whether to load the colour in the gamma
-     * colour space.
-     *    @luatreturn Colour A newly created colour.
-     * @luafunc new
-     */
+
     fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
+        /*
+         * @brief Converts a colour to a string.
+         *
+         *    @luatparam Colour col Colour to get string from.
+         *    @luatreturn string A string representing the colour.
+         * @luafunc __tostring
+         */
+        methods.add_meta_method(
+            MetaMethod::ToString,
+            |_, this, ()| -> mlua::Result<String> {
+                Ok(format!(
+                    "Colour( {}, {}, {}, {} )",
+                    this.0.x, this.0.y, this.0.z, this.0.w
+                ))
+            },
+        );
+        /*
+         * @brief Creates a new colour. Colours are assumed to be in gamma colour space
+         * by default and are converted to linear unless specified.
+         *
+         * @usage colour.new( "Red" ) -- Gets colour by name
+         * @usage colour.new( "Red", 0.5 ) -- Gets colour by name with alpha 0.5
+         * @usage colour.new() -- Creates a white (blank) colour
+         * @usage colour.new( 1., 0., 0. ) -- Creates a bright red colour
+         * @usage colour.new( 1., 0., 0., 0.5 ) -- Creates a bright red colour with
+         * alpha 0.5
+         *
+         *    @luatparam number r Red value of the colour.
+         *    @luatparam number g Green value of the colour.
+         *    @luatparam number b Blue value of the colour.
+         *    @luatparam[opt=1.] number a Alpha value of the colour.
+         *    @luatparam[opt=false] gamma Whether to load the colour in the gamma
+         * colour space.
+         *    @luatreturn Colour A newly created colour.
+         * @luafunc new
+         */
         methods.add_function(
             "new",
             |_, (r, g, b, a): (f64, f64, f64, Option<f64>)| -> mlua::Result<Self> {
@@ -197,5 +214,94 @@ impl UserData for Colour {
             let (h, s, v) = hsv.into_components();
             Ok((h.into(), s, v))
         });
+        /*
+         * @brief Sets the colours values from the RGB colour space.
+         *
+         * Values are from 0. to 1.
+         *
+         * @usage col:setRGB( r, g, b )
+         *
+         *    @luatparam Colour col Colour to set RGB values.
+         *    @luatparam number r Red value to set.
+         *    @luatparam number g Green value to set.
+         *    @luatparam number b Blue value to set.
+         * @luafunc setRGB
+         */
+        methods.add_method_mut(
+            "setRGB",
+            |_, this, (r, g, b): (f64, f64, f64)| -> mlua::Result<()> {
+                this.0.x = r;
+                this.0.y = g;
+                this.0.z = b;
+                Ok(())
+            },
+        );
+        /*
+         * @brief Sets the colours values from the HSV colour space.
+         *
+         * Values are from 0. to 1.
+         *
+         * @usage col:setHSV( h, s, v )
+         *
+         *    @luatparam Colour col Colour to set HSV values.
+         *    @luatparam number h Hue value to set.
+         *    @luatparam number s Saturation value to set.
+         *    @luatparam number v Value to set.
+         * @luafunc setHSV
+         */
+        methods.add_method_mut(
+            "setHSV",
+            |_, this, (h, s, v): (f64, f64, f64)| -> mlua::Result<()> {
+                let (r, g, b) = Srgb::from_color(Hsv::new(h, s, v)).into_components();
+                this.0.x = r;
+                this.0.y = g;
+                this.0.z = b;
+                Ok(())
+            },
+        );
+        /*
+         * @brief Sets the alpha of a colour.
+         *
+         * Value is from 0. (transparent) to 1. (opaque).
+         *
+         * @usage col:setAlpha( 0.5 ) -- Make colour half transparent
+         *
+         *    @luatparam Colour col Colour to set alpha of.
+         *    @luatparam number alpha Alpha value to set.
+         * @luafunc setAlpha
+         */
+        methods.add_method_mut("setAlpha", |_, this, a: f64| -> mlua::Result<()> {
+            this.0.w = a;
+            Ok(())
+        });
+        /*
+         * @brief Converts a colour from linear to gamma corrected.
+         *
+         *    @luatparam Colour col Colour to change from linear to gamma.
+         *    @luatreturn Colour Modified colour.
+         * @luafunc linearToGamma
+         */
+        methods.add_method("linearToGamma", |_, this, ()| -> mlua::Result<Colour> {
+            let (r, g, b) =
+                Srgb::from_linear(LinSrgb::new(this.0.x, this.0.y, this.0.z)).into_components();
+            Ok(Colour::new(r, g, b, this.0.w))
+        });
+        /*
+         * @brief Converts a colour from gamma corrected to linear.
+         *
+         *    @luatparam Colour col Colour to change from gamma corrected to linear.
+         *    @luatreturn Colour Modified colour.
+         * @luafunc gammaToLinear
+         */
+        methods.add_method("gammaToLinear", |_, this, ()| -> mlua::Result<Colour> {
+            let (r, g, b) =
+                LinSrgb::from_color(Srgb::new(this.0.x, this.0.y, this.0.z)).into_components();
+            Ok(Colour::new(r, g, b, this.0.w))
+        });
     }
+}
+
+pub fn open_colour(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
+    let proxy = lua.create_proxy::<Colour>()?;
+    Ok(proxy)
 }
