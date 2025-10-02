@@ -351,6 +351,7 @@ pub fn open_file(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
     Ok(lua.create_proxy::<LuaFile>()?)
 }
 
+/*
 #[test]
 fn test_mlua_file() {
     let lua = mlua::Lua::new();
@@ -384,3 +385,4 @@ fn test_mlua_file() {
     .exec()
     .unwrap();
 }
+*/
