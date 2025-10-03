@@ -64,6 +64,7 @@ mlua = { version = "0.11", features = ["luajit", "anyhow", "send", "serialize"] 
 roxmltree = "0.20"
 derive_more = { version = "2", features = ["from", "into"] }
 palette = "0.7" # Colour conversion
+trie-rs = { version = "0.4" }
 
 [dependencies]
 naevc = { workspace = true }

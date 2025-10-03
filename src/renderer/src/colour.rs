@@ -2,6 +2,8 @@ use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
 use nalgebra::Vector4;
 use palette::FromColor;
 use palette::{Hsv, LinSrgb, Srgb};
+use std::sync::LazyLock;
+use trie_rs::map::{Trie, TrieBuilder};
 
 #[derive(Copy, Clone, derive_more::From, derive_more::Into, PartialEq)]
 pub struct Colour(Vector4<f32>);
@@ -9,12 +11,23 @@ pub struct Colour(Vector4<f32>);
 pub const WHITE: Colour = Colour::new(1.0, 1.0, 1.0, 1.0);
 pub const BLACK: Colour = Colour::new(1.0, 1.0, 1.0, 1.0);
 
+static LOOKUP: LazyLock<Trie<u8, Colour>> = LazyLock::new(|| {
+    let mut builder = TrieBuilder::new();
+    builder.push("white", WHITE);
+    builder.push("black", BLACK);
+    builder.build()
+});
+
 impl Colour {
     pub const fn new(r: f32, g: f32, b: f32, a: f32) -> Self {
         Colour(Vector4::new(r, g, b, a))
     }
     pub const fn new_rgb(r: f32, g: f32, b: f32) -> Self {
         Colour::new(r, g, b, 1.0)
+    }
+
+    pub fn from_name(name: &str) -> Option<Self> {
+        LOOKUP.exact_match(name.to_lowercase()).copied()
     }
 }
 
