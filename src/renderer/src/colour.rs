@@ -359,7 +359,7 @@ impl UserData for Colour {
          * @brief Creates a new colour from HSV values. Colours are assumed to be in
          * gamma colour space by default and are converted to linear unless specified.
          *
-         * @usage colour.new( 0., 0.5, 0.5 ) -- Creates a colour with 0 hue, 0.5
+         * @usage colour.new_hsv( 0., 0.5, 0.5 ) -- Creates a colour with 0 hue, 0.5
          * saturation and 0.5 value.
          *
          *    @luatparam number h Hue of the colour (0-360 value).
@@ -369,10 +369,10 @@ impl UserData for Colour {
          *    @luatparam[opt=false] gamma Whether to load the colour in the gamma
          * colour space.
          *    @luatreturn Colour A newly created colour.
-         * @luafunc newHSV
+         * @luafunc new_hsv
          */
         methods.add_function(
-            "newHSV",
+            "new_hsv",
             |_,
              (h, s, v, a, gamma): (f32, f32, f32, Option<f32>, Option<bool>)|
              -> mlua::Result<Self> {
@@ -380,9 +380,9 @@ impl UserData for Colour {
                 let gamma = gamma.unwrap_or(false);
                 let col = Srgb::from_color(Hsv::new(h, s, v));
                 let (r, g, b) = if gamma {
-                    col.into_linear().into_components()
-                } else {
                     col.into_components()
+                } else {
+                    col.into_linear().into_components()
                 };
                 Ok(Colour::new_alpha(r, g, b, a))
             },
@@ -578,6 +578,16 @@ assert( lin ~= gam, "gamma and linear are identical" )
 assert( lin == gam:gammaToLinear(), "gammaToLinear() failed" )
 assert( gam == lin:linearToGamma(), "linearToGamma() failed" )
 assert( lin == lin:linearToGamma():gammaToLinear(), "roundtrip linear -> gamma -> linear failed" )
+assert( lin == colour.new_named("grey50"), "new_named failed" )
+
+local h,s,v = 180, 0.5, 0.5
+local hsv = colour.new_hsv( h,s,v )
+local nh, ns, nv = hsv:hsv()
+assert( (h==nh) and (s==ns) and (v==nv), "hsv:hsv() failed" )
+
+local col = colour.new_named("Aqua")
+local hsv = col.new_hsv( col:hsv() )
+assert( col == hsv, "hsv roundtrip failed" )
         "#,
     )
     .set_name("mlua Colour test")
