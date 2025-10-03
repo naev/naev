@@ -128,7 +128,7 @@ impl Camera {
         self.pos += der;
 
         /* Stop within 100 pixels. */
-        if (self.pos - &pos).norm_squared() < 100.0 * 100.0 {
+        if (self.pos - pos).norm_squared() < 100.0 * 100.0 {
             self.old = self.pos;
             self.fly = false;
         }
@@ -311,13 +311,13 @@ impl Camera {
 }
 
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn cam_zoomOverride(enable: c_int) {
+pub extern "C" fn cam_zoomOverride(enable: c_int) {
     let mut cam = CAMERA.write().unwrap();
     cam.zoom_override = enable != 0;
 }
 
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn cam_setZoom(zoom: c_double) {
+pub extern "C" fn cam_setZoom(zoom: c_double) {
     let mut cam = CAMERA.write().unwrap();
     unsafe {
         cam.zoom = zoom.clamp(naevc::conf.zoom_far, naevc::conf.zoom_near);
@@ -325,7 +325,7 @@ pub unsafe extern "C" fn cam_setZoom(zoom: c_double) {
 }
 
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn cam_setZoomTarget(zoom: c_double, speed: c_double) {
+pub extern "C" fn cam_setZoomTarget(zoom: c_double, speed: c_double) {
     let mut cam = CAMERA.write().unwrap();
     unsafe {
         cam.zoom_target = zoom.clamp(naevc::conf.zoom_far, naevc::conf.zoom_near);
@@ -334,19 +334,19 @@ pub unsafe extern "C" fn cam_setZoomTarget(zoom: c_double, speed: c_double) {
 }
 
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn cam_getZoom() -> c_double {
+pub extern "C" fn cam_getZoom() -> c_double {
     let cam = CAMERA.read().unwrap();
     cam.zoom as c_double
 }
 
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn cam_getZoomTarget() -> c_double {
+pub extern "C" fn cam_getZoomTarget() -> c_double {
     let cam = CAMERA.read().unwrap();
     cam.zoom_target as c_double
 }
 
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn cam_getPos(x: *mut c_double, y: *mut c_double) {
+pub extern "C" fn cam_getPos(x: *mut c_double, y: *mut c_double) {
     let cam = CAMERA.read().unwrap();
     unsafe {
         let pos = cam.pos();
@@ -356,7 +356,7 @@ pub unsafe extern "C" fn cam_getPos(x: *mut c_double, y: *mut c_double) {
 }
 
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn cam_getDPos(dx: *mut c_double, dy: *mut c_double) {
+pub extern "C" fn cam_getDPos(dx: *mut c_double, dy: *mut c_double) {
     let cam = CAMERA.read().unwrap();
     unsafe {
         *dx = cam.der.x as c_double;
@@ -365,7 +365,7 @@ pub unsafe extern "C" fn cam_getDPos(dx: *mut c_double, dy: *mut c_double) {
 }
 
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn cam_getVel(vx: *mut c_double, vy: *mut c_double) {
+pub extern "C" fn cam_getVel(vx: *mut c_double, vy: *mut c_double) {
     let cam = CAMERA.read().unwrap();
     unsafe {
         *vx = cam.vel.x as c_double;
@@ -374,14 +374,14 @@ pub unsafe extern "C" fn cam_getVel(vx: *mut c_double, vy: *mut c_double) {
 }
 
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn cam_vel(vx: c_double, vy: c_double) {
+pub extern "C" fn cam_vel(vx: c_double, vy: c_double) {
     let mut cam = CAMERA.write().unwrap();
     cam.vel.x = vx;
     cam.vel.y = vy;
 }
 
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn cam_setTargetPilot(follow: c_uint, soft_over: c_int) {
+pub extern "C" fn cam_setTargetPilot(follow: c_uint, soft_over: c_int) {
     let mut cam = CAMERA.write().unwrap();
     cam.follow_pilot = match follow {
         0 => None,
@@ -412,7 +412,7 @@ pub unsafe extern "C" fn cam_setTargetPilot(follow: c_uint, soft_over: c_int) {
 }
 
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn cam_setTargetPos(x: c_double, y: c_double, soft_over: c_int) {
+pub extern "C" fn cam_setTargetPos(x: c_double, y: c_double, soft_over: c_int) {
     let mut cam = CAMERA.write().unwrap();
     cam.follow_pilot = None;
     if soft_over == 0 {
@@ -432,19 +432,19 @@ pub unsafe extern "C" fn cam_setTargetPos(x: c_double, y: c_double, soft_over: c
 }
 
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn cam_getTarget() -> c_uint {
+pub extern "C" fn cam_getTarget() -> c_uint {
     let cam = CAMERA.read().unwrap();
     cam.follow_pilot.unwrap_or_default()
 }
 
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn cam_update(dt: c_double) {
+pub extern "C" fn cam_update(dt: c_double) {
     let mut cam = CAMERA.write().unwrap();
     cam.update(dt);
 }
 
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn cam_setOffset(x: c_double, y: c_double) {
+pub extern "C" fn cam_setOffset(x: c_double, y: c_double) {
     let mut cam = CAMERA.write().unwrap();
     cam.offset = Vector2::new(x, y);
 }

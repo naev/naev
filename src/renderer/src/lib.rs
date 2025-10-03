@@ -1101,9 +1101,9 @@ impl mlua::UserData for LuaGfx {
                 let h = tex.texture.h as f32;
                 #[rustfmt::skip]
                 let transform: Matrix3<f32> = Matrix3::new(
-                    w as f32, 0.0,      x as f32,
-                    0.0,      h as f32, y as f32,
-                    0.0,      0.0,      1.0,
+                    w,   0.0,  x,
+                    0.0,  h,   y,
+                    0.0, 0.0, 1.0,
                 );
                 let tw = tex.sw as f32;
                 let th = tex.sh as f32;
@@ -1111,9 +1111,9 @@ impl mlua::UserData for LuaGfx {
                 let ty = th * ((tex.sy as f32) - (sy as f32) - 1.0) / h;
                 #[rustfmt::skip]
                 let texture: Matrix3<f32> = Matrix3::new(
-                    tw as f32, 0.0,      tx as f32,
-                    0.0,      th as f32, ty as f32,
-                    0.0,       0.0,       1.0,
+                    tw,  0.0, tx,
+                    0.0, th,  ty,
+                    0.0, 0.0, 1.0,
                 );
                 let colour = col.unwrap_or(colour::WHITE);
                 let data = TextureUniform {
