@@ -157,22 +157,33 @@ const fn gam_to_lin_const(x: f32) -> f32 {
 }
 
 impl Colour {
+    /// Creates a new Linear colour.
     pub const fn new(r: f32, g: f32, b: f32) -> Self {
         Colour::new_alpha(r, g, b, 1.0)
     }
+
+    /// Creates a new Linear colour with alpha.
     pub const fn new_alpha(r: f32, g: f32, b: f32, a: f32) -> Self {
         Colour(Vector4::new(r, g, b, a))
     }
+
+    /// Creates a new Colour from a gamma-corrected colourspace.
     pub fn from_gamma(r: f32, g: f32, b: f32) -> Self {
         Colour::from_gamma_alpha(r, g, b, 1.0)
     }
+
+    /// Creates a new Colour from a gamma-corrected colourspace with alpha.
     pub fn from_gamma_alpha(r: f32, g: f32, b: f32, a: f32) -> Self {
         let (r, g, b) = Srgb::new(r, g, b).into_linear().into_components();
         Colour::new_alpha(r, g, b, a)
     }
+
+    /// Same as from_gamma, but is slower and const.
     pub const fn from_gamma_const(r: f32, g: f32, b: f32) -> Self {
         Colour::from_gamma_alpha_const(r, g, b, 1.0)
     }
+
+    /// Same as from_gamma_alpha, but is slower and const.
     pub const fn from_gamma_alpha_const(r: f32, g: f32, b: f32, a: f32) -> Self {
         Colour(Vector4::new(
             gam_to_lin_const(r),
@@ -182,15 +193,23 @@ impl Colour {
         ))
     }
 
+    /// Gets a colour from a name. Is case-insensitive.
     pub fn from_name(name: &str) -> Option<Self> {
-        LOOKUP.exact_match(name.to_lowercase()).copied()
+        Colour::from_name_lower(&name.to_lowercase())
+    }
+
+    /// Gets a colour from a lowercase name. Is sensitive to casing.
+    pub fn from_name_lower(name: &str) -> Option<Self> {
+        LOOKUP.exact_match(name).copied()
     }
 }
 
 impl FromLua for Colour {
     fn from_lua(value: Value, _: &Lua) -> mlua::Result<Self> {
         match value {
+            // Straight-forward case of UserData, we can just duplicate data.
             Value::UserData(ud) => Ok(*ud.borrow::<Self>()?),
+            // Case of a String we do a Trie look-up.
             Value::String(name) => match Colour::from_name(&name.to_string_lossy()) {
                 Some(col) => Ok(col),
                 None => Err(mlua::Error::RuntimeError(format!(
@@ -198,6 +217,7 @@ impl FromLua for Colour {
                     name.display()
                 ))),
             },
+            // Table is interpreted as {r,g,b,a} where a can be nil.
             Value::Table(tbl) => {
                 let r: f32 = tbl.get(1)?;
                 let g: f32 = tbl.get(2)?;
@@ -205,6 +225,7 @@ impl FromLua for Colour {
                 let a: Option<f32> = tbl.get(4)?;
                 Ok(Colour::from_gamma_alpha(r, g, b, a.unwrap_or(1.0)))
             }
+            // Other cases are unhandled
             val => Err(mlua::Error::RuntimeError(format!(
                 "unable to convert {} to Colour",
                 val.type_name()
