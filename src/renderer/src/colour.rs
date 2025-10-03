@@ -18,7 +18,7 @@ macro_rules! colour {
 }
 
 macro_rules! colours {
-    ($( $name: ident => ($r: literal, $g: literal, $b: literal ) ),*) => {
+    ($( $name: ident => ($r: expr, $g: expr, $b: expr ) ),*) => {
         $(pub const $name: Colour = Colour::from_gamma_const($r, $g, $b);)*
         static LOOKUP: LazyLock<Trie<u8, Colour>> = LazyLock::new(|| {
             let mut builder = TrieBuilder::new();
@@ -30,51 +30,92 @@ macro_rules! colours {
 
 // Colour constants
 colours![
-    WHITE => ( 1.0, 1.0, 1.0),
-    GREY90 => ( 0.9, 0.9, 0.9),
-    GREY80 => ( 0.8, 0.8, 0.8),
-    GREY70 => ( 0.7, 0.7, 0.7),
-    GREY60 => ( 0.6, 0.6, 0.6),
-    GREY50 => ( 0.5, 0.5, 0.5),
-    GREY40 => ( 0.4, 0.4, 0.4),
-    GREY30 => ( 0.3, 0.3, 0.3),
-    GREY20 => ( 0.2, 0.2, 0.2),
-    GREY10 => ( 0.1, 0.1, 0.1),
-    BLACK => ( 0.0, 0.0, 0.0),
+    WHITE  => (1.0, 1.0, 1.0),
+    GREY90 => (0.9, 0.9, 0.9),
+    GREY80 => (0.8, 0.8, 0.8),
+    GREY70 => (0.7, 0.7, 0.7),
+    GREY60 => (0.6, 0.6, 0.6),
+    GREY50 => (0.5, 0.5, 0.5),
+    GREY40 => (0.4, 0.4, 0.4),
+    GREY30 => (0.3, 0.3, 0.3),
+    GREY20 => (0.2, 0.2, 0.2),
+    GREY10 => (0.1, 0.1, 0.1),
+    BLACK  => (0.0, 0.0, 0.0),
     // Greens
-    DARKGREEN => ( 0.1, 0.5, 0.),
-    GREEN => ( 0.2, 0.8, 0.2),
-    PRIMEGREEN => ( 0.0, 1.0, 0.0),
+    DARKGREEN  => (0.1, 0.5, 0.),
+    GREEN      => (0.2, 0.8, 0.2),
+    PRIMEGREEN => (0.0, 1.0, 0.0),
     // Reds
-    DARKRED => ( 0.6, 0.1, 0.1),
-    RED => ( 0.8, 0.2, 0.2),
-    BRIGHTRED => ( 1.0, 0.6, 0.6),
-    PRIMERED => ( 1.0, 0.0, 0.0),
+    DARKRED   => (0.6, 0.1, 0.1),
+    RED       => (0.8, 0.2, 0.2),
+    BRIGHTRED => (1.0, 0.6, 0.6),
+    PRIMERED  => (1.0, 0.0, 0.0),
     // Oranges
-    ORANGE => ( 0.8, 0.7, 0.1),
+    ORANGE => (0.8, 0.7, 0.1),
     // Yellows
-    GOLD => ( 1.0, 0.84, 0.0),
-    YELLOW => ( 0.8, 0.8, 0.0),
+    GOLD   => (1.0, 0.84, 0.0),
+    YELLOW => (0.8, 0.8, 0.0),
     // Blue
-    MIDNIGHTBLUE => ( 0.1, 0.1, 0.4),
-    DARKBLUE => ( 0.1, 0.1, 0.6),
-    BLUE => ( 0.2, 0.2, 0.8),
-    AQUABLUE => ( 0.3, 0.3, 0.9),
-    AQUA => ( 0.0, 0.75, 1.0),
-    LIGHTBLUE => ( 0.4, 0.4, 1.0),
-    CYAN => ( 0.0, 1.0, 1.0),
-    PRIMEBLUE => ( 0.0, 0.0, 1.0),
+    MIDNIGHTBLUE => (0.1, 0.1, 0.4),
+    DARKBLUE     => (0.1, 0.1, 0.6),
+    BLUE         => (0.2, 0.2, 0.8),
+    AQUABLUE     => (0.3, 0.3, 0.9),
+    AQUA         => (0.0, 0.75, 1.0),
+    LIGHTBLUE    => (0.4, 0.4, 1.0),
+    CYAN         => (0.0, 1.0, 1.0),
+    PRIMEBLUE    => (0.0, 0.0, 1.0),
     // Purples
-    PURPLE => ( 0.9, 0.1, 0.9),
-    DARKPURPLE => ( 0.68, 0.18, 0.64),
+    PURPLE     => (0.9, 0.1, 0.9),
+    DARKPURPLE => (0.68, 0.18, 0.64),
     // Browns
-    BROWN => ( 0.59, 0.28, 0.0),
+    BROWN => (0.59, 0.28, 0.0),
     // Misc.
-    SILVER => ( 0.75, 0.75, 0.75)
+    SILVER => (0.75, 0.75, 0.75),
+
+    // Outfit slot colours
+    // Taken from https://cran.r-project.org/web/packages/khroma/vignettes/tol.html#muted
+    OUTFITHEAVY  => ( 0.8, 0.4, 0.46 ),
+    OUTFITMEDIUM => (0.16, 0.63, 0.81 ),
+    OUTFITLIGHT  => ( 0.75, 0.7, 0.4 ),
+    // Objects
+    INERT      => (221./255., 221./255., 221./255.),
+    NEUTRAL    => (221./255., 204./255., 119./255.),
+    FRIEND     => (68./255., 170./255., 153./255.),
+    HOSTILE    => (204./255.,  68./255., 153./255.),
+    RESTRICTED => (221./255., 153./255.,  51./255.),
+    // Mission Markers
+    // https://packages.tesselle.org/khroma/articles/tol.html#vibrant
+    MARKERNEW      => (51./255., 187./255., 238./255.),
+    MARKERCOMPUTER => (51./255., 187./255., 238./255.),
+    MARKERLOW      => (0./255., 153./255., 136./255.),
+    MARKERHIGH     => (238./255., 119./255., 51./255.),
+    MARKERPLOT     => (238./255., 51./255., 119./255.),
+   // Radar
+    RADARPLAYER   => (0.9, 0.1, 0.9),
+    RADARTARGET   => (1.0, 1.0, 1.0),
+    RADARWEAPON   => (0.8, 0.2, 0.2),
+    RADARHILIGHT  => (0.6, 1.0, 1.0),
+    RADARSCANNING => (1.0, 1.0, 0.6),
+    //RADARVIEWPORT => (  1.0, 1.0, 1.0 ), //, 0.5),
+   // HEALTH
+    SHIELD => (0.2, 0.2, 0.8),
+    ARMOUR => (0.5, 0.5, 0.5),
+    ENERGY => (0.2, 0.8, 0.2),
+    FUEL   => (0.9, 0.1, 0.4),
+   // DEIZ'S SUPER FONT PALETTE
+    FONTRED    => (1.0, 0.4, 0.4),
+    FONTGREEN  => (0.6, 1.0, 0.4),
+    FONTBLUE   => (0.4, 0.6, 1.0),
+    FONTYELLOW => (1.0, 1.0, 0.5),
+    FONTGREY   => (0.7, 0.7, 0.7),
+    FONTPURPLE => (1.0, 0.3, 1.0),
+    FONTORANGE => (1.0, 0.7, 0.3),
+    FONTWHITE  => (0.95, 0.95, 0.95)
 ];
 // Special with transparency (not accessible from names)
 colour!(TRANSPARENT, 0.0, 0.0, 0.0, 0.0);
 colour!(BLACKHILIGHT, 0.0, 0.0, 0.0, 0.4); // Highlight colour over black background
+colour!(RADARVIEWPORT, 1.0, 1.0, 1.0, 0.5);
 
 /*
 static LOOKUP: LazyLock<Trie<u8, Colour>> = LazyLock::new(|| {
