@@ -8,8 +8,8 @@ use trie_rs::map::{Trie, TrieBuilder};
 #[derive(Copy, Clone, derive_more::From, derive_more::Into, PartialEq)]
 pub struct Colour(Vector4<f32>);
 
-pub const WHITE: Colour = Colour::new(1.0, 1.0, 1.0, 1.0);
-pub const BLACK: Colour = Colour::new(1.0, 1.0, 1.0, 1.0);
+pub const WHITE: Colour = Colour::from_gamma_const(1.0, 1.0, 1.0);
+pub const BLACK: Colour = Colour::from_gamma_const(0.0, 0.0, 0.0);
 
 static LOOKUP: LazyLock<Trie<u8, Colour>> = LazyLock::new(|| {
     let mut builder = TrieBuilder::new();
@@ -18,12 +18,52 @@ static LOOKUP: LazyLock<Trie<u8, Colour>> = LazyLock::new(|| {
     builder.build()
 });
 
+/// softfloat doesn't have a native `powf` so we just approximate it
+const fn powf_const(a: f32, b: f32) -> f32 {
+    let a = softfloat::F64::from_f32(softfloat::F32::from_native_f32(a));
+    let b = softfloat::F64::from_f32(softfloat::F32::from_native_f32(b));
+    softfloat::F64::exp(b.mul(a.ln())).to_f32().to_native_f32()
+}
+
+#[test]
+fn test_soft_powf() {
+    let a: f32 = 0.5;
+    assert!(
+        (a.powf(2.4) - powf_const(a, 2.4)).abs() < 1e-9,
+        "softfloat powf"
+    );
+}
+
+/// Constant implementation of Gamma to Linear transformation for use with declaring new colours
+const fn gam_to_lin_const(x: f32) -> f32 {
+    if x <= 0.04045 {
+        1.0 / 12.92 * x
+    } else {
+        powf_const((x + 0.055) / 1.055, 2.4)
+    }
+}
+
 impl Colour {
-    pub const fn new(r: f32, g: f32, b: f32, a: f32) -> Self {
+    pub const fn new(r: f32, g: f32, b: f32) -> Self {
+        Colour::new_alpha(r, g, b, 1.0)
+    }
+    pub const fn new_alpha(r: f32, g: f32, b: f32, a: f32) -> Self {
         Colour(Vector4::new(r, g, b, a))
     }
-    pub const fn new_rgb(r: f32, g: f32, b: f32) -> Self {
-        Colour::new(r, g, b, 1.0)
+    pub fn from_gamma(r: f32, g: f32, b: f32) -> Self {
+        Colour::from_gamma_alpha(r, g, b, 1.0)
+    }
+    pub fn from_gamma_alpha(r: f32, g: f32, b: f32, a: f32) -> Self {
+        let (r, g, b) = Srgb::new(r, g, b).into_linear().into_components();
+        Colour::new_alpha(r, g, b, a)
+    }
+    pub const fn from_gamma_const(r: f32, g: f32, b: f32) -> Self {
+        Colour(Vector4::new(
+            gam_to_lin_const(r),
+            gam_to_lin_const(g),
+            gam_to_lin_const(b),
+            1.0,
+        ))
     }
 
     pub fn from_name(name: &str) -> Option<Self> {
@@ -134,10 +174,10 @@ impl UserData for Colour {
                 let a = a.unwrap_or(1.0);
                 let gamma = gamma.unwrap_or(false);
                 if gamma {
-                    Ok(Colour::new(r, g, b, a))
+                    Ok(Colour::new_alpha(r, g, b, a))
                 } else {
                     let (r, g, b) = Srgb::new(r, g, b).into_linear().into_components();
-                    Ok(Colour::new(r, g, b, a))
+                    Ok(Colour::new_alpha(r, g, b, a))
                 }
             },
         );
@@ -170,7 +210,7 @@ impl UserData for Colour {
                 } else {
                     col.into_components()
                 };
-                Ok(Colour::new(r, g, b, a))
+                Ok(Colour::new_alpha(r, g, b, a))
             },
         );
         /*
@@ -328,7 +368,7 @@ impl UserData for Colour {
         methods.add_method("linearToGamma", |_, this, ()| -> mlua::Result<Colour> {
             let (r, g, b) =
                 Srgb::from_linear(LinSrgb::new(this.0.x, this.0.y, this.0.z)).into_components();
-            Ok(Colour::new(r, g, b, this.0.w))
+            Ok(Colour::new_alpha(r, g, b, this.0.w))
         });
         /*
          * @brief Converts a colour from gamma corrected to linear.
@@ -341,7 +381,7 @@ impl UserData for Colour {
             let (r, g, b) = Srgb::new(this.0.x, this.0.y, this.0.z)
                 .into_linear()
                 .into_components();
-            Ok(Colour::new(r, g, b, this.0.w))
+            Ok(Colour::new_alpha(r, g, b, this.0.w))
         });
     }
 }

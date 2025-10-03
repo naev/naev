@@ -30,5 +30,6 @@ mlua = { workspace = true }
 palette = { workspace = true }
 trie-rs = { workspace = true }
 derive_more = { workspace = true }
+softfloat = { workspace = true }
 resvg = "0.45"
 naga = { version="26", features=["wgsl-in", "glsl-out"] }

@@ -65,6 +65,7 @@ roxmltree = "0.20"
 derive_more = { version = "2", features = ["from", "into"] }
 palette = "0.7" # Colour conversion
 trie-rs = { version = "0.4" }
+softfloat = "1.0"
 
 [dependencies]
 naevc = { workspace = true }
