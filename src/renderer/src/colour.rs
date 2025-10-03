@@ -359,7 +359,7 @@ impl UserData for Colour {
          * @brief Creates a new colour from HSV values. Colours are assumed to be in
          * gamma colour space by default and are converted to linear unless specified.
          *
-         * @usage colour.new_hsv( 0., 0.5, 0.5 ) -- Creates a colour with 0 hue, 0.5
+         * @usage colour.new_hsv( 0, 0.5, 0.5 ) -- Creates a colour with 0 hue, 0.5
          * saturation and 0.5 value.
          *
          *    @luatparam number h Hue of the colour (0-360 value).
@@ -459,7 +459,7 @@ impl UserData for Colour {
          *
          * Values are from 0 to 1 except hue which is 0 to 360.
          *
-         * @usage h,s,v = col:rgb()
+         * @usage h,s,v = col:hsv()
          *
          *    @luatparam Colour col Colour to get HSV values of.
          *    @luatreturn number The hue of the colour (0-360 value).
@@ -468,7 +468,9 @@ impl UserData for Colour {
          * @luafunc hsv
          */
         methods.add_method("hsv", |_, this, ()| -> mlua::Result<(f32, f32, f32)> {
-            let hsv = Hsv::from_color(LinSrgb::new(this.0.x, this.0.y, this.0.z));
+            let hsv = Hsv::from_color(Srgb::from_linear(LinSrgb::new(
+                this.0.x, this.0.y, this.0.z,
+            )));
             let (h, s, v) = hsv.into_components();
             Ok((h.into(), s, v))
         });
@@ -483,10 +485,10 @@ impl UserData for Colour {
          *    @luatparam number r Red value to set.
          *    @luatparam number g Green value to set.
          *    @luatparam number b Blue value to set.
-         * @luafunc setRGB
+         * @luafunc set_rgb
          */
         methods.add_method_mut(
-            "setRGB",
+            "set_rgb",
             |_, this, (r, g, b): (f32, f32, f32)| -> mlua::Result<()> {
                 this.0.x = r;
                 this.0.y = g;
@@ -499,16 +501,16 @@ impl UserData for Colour {
          *
          * Values are from 0. to 1.
          *
-         * @usage col:setHSV( h, s, v )
+         * @usage col:set_hsv( h, s, v )
          *
          *    @luatparam Colour col Colour to set HSV values.
          *    @luatparam number h Hue value to set.
          *    @luatparam number s Saturation value to set.
          *    @luatparam number v Value to set.
-         * @luafunc setHSV
+         * @luafunc set_hsv
          */
         methods.add_method_mut(
-            "setHSV",
+            "set_hsv",
             |_, this, (h, s, v): (f32, f32, f32)| -> mlua::Result<()> {
                 let (r, g, b) = Srgb::from_color(Hsv::new(h, s, v)).into_components();
                 this.0.x = r;
@@ -522,13 +524,13 @@ impl UserData for Colour {
          *
          * Value is from 0. (transparent) to 1. (opaque).
          *
-         * @usage col:setAlpha( 0.5 ) -- Make colour half transparent
+         * @usage col:set_alpha( 0.5 ) -- Make colour half transparent
          *
          *    @luatparam Colour col Colour to set alpha of.
          *    @luatparam number alpha Alpha value to set.
          * @luafunc setAlpha
          */
-        methods.add_method_mut("setAlpha", |_, this, a: f32| -> mlua::Result<()> {
+        methods.add_method_mut("set_alpha", |_, this, a: f32| -> mlua::Result<()> {
             this.0.w = a;
             Ok(())
         });
@@ -537,9 +539,9 @@ impl UserData for Colour {
          *
          *    @luatparam Colour col Colour to change from linear to gamma.
          *    @luatreturn Colour Modified colour.
-         * @luafunc linearToGamma
+         * @luafunc to_gamma
          */
-        methods.add_method("linearToGamma", |_, this, ()| -> mlua::Result<Colour> {
+        methods.add_method("to_gamma", |_, this, ()| -> mlua::Result<Colour> {
             let (r, g, b) =
                 Srgb::from_linear(LinSrgb::new(this.0.x, this.0.y, this.0.z)).into_components();
             Ok(Colour::new_alpha(r, g, b, this.0.w))
@@ -549,9 +551,9 @@ impl UserData for Colour {
          *
          *    @luatparam Colour col Colour to change from gamma corrected to linear.
          *    @luatreturn Colour Modified colour.
-         * @luafunc gammaToLinear
+         * @luafunc to_linear
          */
-        methods.add_method("gammaToLinear", |_, this, ()| -> mlua::Result<Colour> {
+        methods.add_method("to_linear", |_, this, ()| -> mlua::Result<Colour> {
             let (r, g, b) = Srgb::new(this.0.x, this.0.y, this.0.z)
                 .into_linear()
                 .into_components();
@@ -572,22 +574,34 @@ fn test_mlua_file() {
     globals.set("colour", open_colour(&lua).unwrap()).unwrap();
     lua.load(
         r#"
+function close_enough( x, y )
+    return math.abs(x-y) < 1e-6
+end
+
+function close_enough_col( a, b )
+    local ok = true
+    for k,v in ipairs{'r','g','b','a'} do
+        ok = ok and close_enough( a[v], b[v] )
+    end
+    return ok
+end
+
 local lin = colour.new( 0.5, 0.5, 0.5 )
 local gam = colour.new( 0.5, 0.5, 0.5, nil, true )
 assert( lin ~= gam, "gamma and linear are identical" )
-assert( lin == gam:gammaToLinear(), "gammaToLinear() failed" )
-assert( gam == lin:linearToGamma(), "linearToGamma() failed" )
-assert( lin == lin:linearToGamma():gammaToLinear(), "roundtrip linear -> gamma -> linear failed" )
+assert( lin == gam:to_linear(), "to_linear() failed" )
+assert( gam == lin:to_gamma(), "to_gamma() failed" )
+assert( lin == lin:to_gamma():to_linear(), "roundtrip linear -> gamma -> linear failed" )
 assert( lin == colour.new_named("grey50"), "new_named failed" )
 
 local h,s,v = 180, 0.5, 0.5
-local hsv = colour.new_hsv( h,s,v )
+local hsv = colour.new_hsv( h, s, v )
 local nh, ns, nv = hsv:hsv()
-assert( (h==nh) and (s==ns) and (v==nv), "hsv:hsv() failed" )
+assert( close_enough(h,h) and close_enough(s,ns) and close_enough(v,nv), "hsv:hsv() failed" )
 
 local col = colour.new_named("Aqua")
 local hsv = col.new_hsv( col:hsv() )
-assert( col == hsv, "hsv roundtrip failed" )
+assert( close_enough_col( col, hsv ), "hsv roundtrip failed" )
         "#,
     )
     .set_name("mlua Colour test")
