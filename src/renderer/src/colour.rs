@@ -8,8 +8,59 @@ use trie_rs::map::{Trie, TrieBuilder};
 #[derive(Copy, Clone, derive_more::From, derive_more::Into, PartialEq)]
 pub struct Colour(Vector4<f32>);
 
-pub const WHITE: Colour = Colour::from_gamma_const(1.0, 1.0, 1.0);
-pub const BLACK: Colour = Colour::from_gamma_const(0.0, 0.0, 0.0);
+macro_rules! colour {
+    ($name: ident, $r: literal, $g: literal, $b: literal ) => {
+        pub const $name: Colour = Colour::from_gamma_const($r, $g, $b);
+    };
+    ($name: ident, $r: literal, $g: literal, $b: literal, $a: literal ) => {
+        pub const $name: Colour = Colour::from_gamma_alpha_const($r, $g, $b, $a);
+    };
+}
+
+// Colour constants
+colour!(WHITE, 1.0, 1.0, 1.0);
+colour!(GREY90, 0.9, 0.9, 0.9);
+colour!(GREY80, 0.8, 0.8, 0.8);
+colour!(GREY70, 0.7, 0.7, 0.7);
+colour!(GREY60, 0.6, 0.6, 0.6);
+colour!(GREY50, 0.5, 0.5, 0.5);
+colour!(GREY40, 0.4, 0.4, 0.4);
+colour!(GREY30, 0.3, 0.3, 0.3);
+colour!(GREY20, 0.2, 0.2, 0.2);
+colour!(GREY10, 0.1, 0.1, 0.1);
+colour!(BLACK, 0.0, 0.0, 0.0);
+colour!(TRANSPARENT, 0.0, 0.0, 0.0, 0.0);
+// Greens
+colour!(DARKGREEN, 0.1, 0.5, 0.);
+colour!(GREEN, 0.2, 0.8, 0.2);
+colour!(PRIMEGREEN, 0.0, 1.0, 0.0);
+// Reds
+colour!(DARKRED, 0.6, 0.1, 0.1);
+colour!(RED, 0.8, 0.2, 0.2);
+colour!(BRIGHTRED, 1.0, 0.6, 0.6);
+colour!(PRIMERED, 1.0, 0.0, 0.0);
+// Oranges
+colour!(ORANGE, 0.8, 0.7, 0.1);
+// Yellows
+colour!(GOLD, 1.0, 0.84, 0.0);
+colour!(YELLOW, 0.8, 0.8, 0.0);
+// Blue
+colour!(MIDNIGHTBLUE, 0.1, 0.1, 0.4);
+colour!(DARKBLUE, 0.1, 0.1, 0.6);
+colour!(BLUE, 0.2, 0.2, 0.8);
+colour!(AQUABLUE, 0.3, 0.3, 0.9);
+colour!(AQUA, 0.0, 0.75, 1.0);
+colour!(LIGHTBLUE, 0.4, 0.4, 1.0);
+colour!(CYAN, 0.0, 1.0, 1.0);
+colour!(PRIMEBLUE, 0.0, 0.0, 1.0);
+// Purples
+colour!(PURPLE, 0.9, 0.1, 0.9);
+colour!(DARKPURPLE, 0.68, 0.18, 0.64);
+// Browns
+colour!(BROWN, 0.59, 0.28, 0.0);
+// Misc.
+colour!(SILVER, 0.75, 0.75, 0.75);
+colour!(BLACKHILIGHT, 0.0, 0.0, 0.0, 0.4); // Highlight colour over black background
 
 static LOOKUP: LazyLock<Trie<u8, Colour>> = LazyLock::new(|| {
     let mut builder = TrieBuilder::new();
@@ -20,6 +71,7 @@ static LOOKUP: LazyLock<Trie<u8, Colour>> = LazyLock::new(|| {
 
 /// softfloat doesn't have a native `powf` so we just approximate it
 const fn powf_const(a: f32, b: f32) -> f32 {
+    // Have to jump through hoops as there is no F32::exp nor F32::ln
     let a = softfloat::F64::from_f32(softfloat::F32::from_native_f32(a));
     let b = softfloat::F64::from_f32(softfloat::F32::from_native_f32(b));
     softfloat::F64::exp(b.mul(a.ln())).to_f32().to_native_f32()
@@ -58,11 +110,14 @@ impl Colour {
         Colour::new_alpha(r, g, b, a)
     }
     pub const fn from_gamma_const(r: f32, g: f32, b: f32) -> Self {
+        Colour::from_gamma_alpha_const(r, g, b, 1.0)
+    }
+    pub const fn from_gamma_alpha_const(r: f32, g: f32, b: f32, a: f32) -> Self {
         Colour(Vector4::new(
             gam_to_lin_const(r),
             gam_to_lin_const(g),
             gam_to_lin_const(b),
-            1.0,
+            a,
         ))
     }
 
