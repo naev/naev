@@ -198,6 +198,13 @@ impl FromLua for Colour {
                     name.display()
                 ))),
             },
+            Value::Table(tbl) => {
+                let r: f32 = tbl.get(1)?;
+                let g: f32 = tbl.get(2)?;
+                let b: f32 = tbl.get(3)?;
+                let a: Option<f32> = tbl.get(4)?;
+                Ok(Colour::from_gamma_alpha(r, g, b, a.unwrap_or(1.0)))
+            }
             val => Err(mlua::Error::RuntimeError(format!(
                 "unable to convert {} to Colour",
                 val.type_name()
