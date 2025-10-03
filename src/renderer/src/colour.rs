@@ -17,57 +17,73 @@ macro_rules! colour {
     };
 }
 
+macro_rules! colours {
+    ($( $name: ident => ($r: literal, $g: literal, $b: literal ) ),*) => {
+        $(pub const $name: Colour = Colour::from_gamma_const($r, $g, $b);)*
+        static LOOKUP: LazyLock<Trie<u8, Colour>> = LazyLock::new(|| {
+            let mut builder = TrieBuilder::new();
+            $( builder.push(stringify!($name).to_lowercase(), $name); )*
+            builder.build()
+        });
+    };
+}
+
 // Colour constants
-colour!(WHITE, 1.0, 1.0, 1.0);
-colour!(GREY90, 0.9, 0.9, 0.9);
-colour!(GREY80, 0.8, 0.8, 0.8);
-colour!(GREY70, 0.7, 0.7, 0.7);
-colour!(GREY60, 0.6, 0.6, 0.6);
-colour!(GREY50, 0.5, 0.5, 0.5);
-colour!(GREY40, 0.4, 0.4, 0.4);
-colour!(GREY30, 0.3, 0.3, 0.3);
-colour!(GREY20, 0.2, 0.2, 0.2);
-colour!(GREY10, 0.1, 0.1, 0.1);
-colour!(BLACK, 0.0, 0.0, 0.0);
+colours![
+    WHITE => ( 1.0, 1.0, 1.0),
+    GREY90 => ( 0.9, 0.9, 0.9),
+    GREY80 => ( 0.8, 0.8, 0.8),
+    GREY70 => ( 0.7, 0.7, 0.7),
+    GREY60 => ( 0.6, 0.6, 0.6),
+    GREY50 => ( 0.5, 0.5, 0.5),
+    GREY40 => ( 0.4, 0.4, 0.4),
+    GREY30 => ( 0.3, 0.3, 0.3),
+    GREY20 => ( 0.2, 0.2, 0.2),
+    GREY10 => ( 0.1, 0.1, 0.1),
+    BLACK => ( 0.0, 0.0, 0.0),
+    // Greens
+    DARKGREEN => ( 0.1, 0.5, 0.),
+    GREEN => ( 0.2, 0.8, 0.2),
+    PRIMEGREEN => ( 0.0, 1.0, 0.0),
+    // Reds
+    DARKRED => ( 0.6, 0.1, 0.1),
+    RED => ( 0.8, 0.2, 0.2),
+    BRIGHTRED => ( 1.0, 0.6, 0.6),
+    PRIMERED => ( 1.0, 0.0, 0.0),
+    // Oranges
+    ORANGE => ( 0.8, 0.7, 0.1),
+    // Yellows
+    GOLD => ( 1.0, 0.84, 0.0),
+    YELLOW => ( 0.8, 0.8, 0.0),
+    // Blue
+    MIDNIGHTBLUE => ( 0.1, 0.1, 0.4),
+    DARKBLUE => ( 0.1, 0.1, 0.6),
+    BLUE => ( 0.2, 0.2, 0.8),
+    AQUABLUE => ( 0.3, 0.3, 0.9),
+    AQUA => ( 0.0, 0.75, 1.0),
+    LIGHTBLUE => ( 0.4, 0.4, 1.0),
+    CYAN => ( 0.0, 1.0, 1.0),
+    PRIMEBLUE => ( 0.0, 0.0, 1.0),
+    // Purples
+    PURPLE => ( 0.9, 0.1, 0.9),
+    DARKPURPLE => ( 0.68, 0.18, 0.64),
+    // Browns
+    BROWN => ( 0.59, 0.28, 0.0),
+    // Misc.
+    SILVER => ( 0.75, 0.75, 0.75)
+];
+// Special with transparency (not accessible from names)
 colour!(TRANSPARENT, 0.0, 0.0, 0.0, 0.0);
-// Greens
-colour!(DARKGREEN, 0.1, 0.5, 0.);
-colour!(GREEN, 0.2, 0.8, 0.2);
-colour!(PRIMEGREEN, 0.0, 1.0, 0.0);
-// Reds
-colour!(DARKRED, 0.6, 0.1, 0.1);
-colour!(RED, 0.8, 0.2, 0.2);
-colour!(BRIGHTRED, 1.0, 0.6, 0.6);
-colour!(PRIMERED, 1.0, 0.0, 0.0);
-// Oranges
-colour!(ORANGE, 0.8, 0.7, 0.1);
-// Yellows
-colour!(GOLD, 1.0, 0.84, 0.0);
-colour!(YELLOW, 0.8, 0.8, 0.0);
-// Blue
-colour!(MIDNIGHTBLUE, 0.1, 0.1, 0.4);
-colour!(DARKBLUE, 0.1, 0.1, 0.6);
-colour!(BLUE, 0.2, 0.2, 0.8);
-colour!(AQUABLUE, 0.3, 0.3, 0.9);
-colour!(AQUA, 0.0, 0.75, 1.0);
-colour!(LIGHTBLUE, 0.4, 0.4, 1.0);
-colour!(CYAN, 0.0, 1.0, 1.0);
-colour!(PRIMEBLUE, 0.0, 0.0, 1.0);
-// Purples
-colour!(PURPLE, 0.9, 0.1, 0.9);
-colour!(DARKPURPLE, 0.68, 0.18, 0.64);
-// Browns
-colour!(BROWN, 0.59, 0.28, 0.0);
-// Misc.
-colour!(SILVER, 0.75, 0.75, 0.75);
 colour!(BLACKHILIGHT, 0.0, 0.0, 0.0, 0.4); // Highlight colour over black background
 
+/*
 static LOOKUP: LazyLock<Trie<u8, Colour>> = LazyLock::new(|| {
     let mut builder = TrieBuilder::new();
     builder.push("white", WHITE);
     builder.push("black", BLACK);
     builder.build()
 });
+*/
 
 /// softfloat doesn't have a native `powf` so we just approximate it
 const fn powf_const(a: f32, b: f32) -> f32 {
