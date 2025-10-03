@@ -563,10 +563,10 @@ impl Context {
             )
         };
 
-        /* Focus behaviour. */
+        // Focus behaviour.
         sdl::hint::set_video_minimize_on_focus_loss(minimize);
 
-        /* Set up the attributes. */
+        // Set up the attributes.
         let gl_attr = sdlvid.gl_attr();
         gl_attr.set_context_profile(sdl::video::GLProfile::Core);
         gl_attr.set_double_buffer(true);
