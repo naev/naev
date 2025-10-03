@@ -22,6 +22,11 @@ impl FromLua for Vec2 {
             Value::UserData(ud) => Ok(*ud.borrow::<Self>()?),
             Value::Integer(num) => Ok(Self::new(num as f64, num as f64)),
             Value::Number(num) => Ok(Self::new(num, num)),
+            Value::Table(tbl) => {
+                let x: f64 = tbl.get(1)?;
+                let y: f64 = tbl.get(2)?;
+                Ok(Self::new(x, y))
+            }
             val => Err(mlua::Error::RuntimeError(format!(
                 "unable to convert {} to Vec2",
                 val.type_name()

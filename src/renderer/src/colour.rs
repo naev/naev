@@ -148,7 +148,7 @@ fn test_soft_powf() {
 }
 
 /// Constant implementation of Gamma to Linear transformation for use with declaring new colours
-const fn gam_to_lin_const(x: f32) -> f32 {
+const fn gamma_to_linear_const(x: f32) -> f32 {
     if x <= 0.04045 {
         1.0 / 12.92 * x
     } else {
@@ -186,9 +186,9 @@ impl Colour {
     /// Same as from_gamma_alpha, but is slower and const.
     pub const fn from_gamma_alpha_const(r: f32, g: f32, b: f32, a: f32) -> Self {
         Colour(Vector4::new(
-            gam_to_lin_const(r),
-            gam_to_lin_const(g),
-            gam_to_lin_const(b),
+            gamma_to_linear_const(r),
+            gamma_to_linear_const(g),
+            gamma_to_linear_const(b),
             a,
         ))
     }
@@ -210,7 +210,7 @@ impl FromLua for Colour {
             // Straight-forward case of UserData, we can just duplicate data.
             Value::UserData(ud) => Ok(*ud.borrow::<Self>()?),
             // Case of a String we do a Trie look-up.
-            Value::String(name) => match Colour::from_name(&name.to_string_lossy()) {
+            Value::String(name) => match Self::from_name(&name.to_string_lossy()) {
                 Some(col) => Ok(col),
                 None => Err(mlua::Error::RuntimeError(format!(
                     "string '{}' is not a valid Colour",
@@ -223,7 +223,7 @@ impl FromLua for Colour {
                 let g: f32 = tbl.get(2)?;
                 let b: f32 = tbl.get(3)?;
                 let a: Option<f32> = tbl.get(4)?;
-                Ok(Colour::from_gamma_alpha(r, g, b, a.unwrap_or(1.0)))
+                Ok(Self::from_gamma_alpha(r, g, b, a.unwrap_or(1.0)))
             }
             // Other cases are unhandled
             val => Err(mlua::Error::RuntimeError(format!(
