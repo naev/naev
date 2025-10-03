@@ -136,11 +136,15 @@ const fn powf_const(a: f32, b: f32) -> f32 {
 
 #[test]
 fn test_soft_powf() {
-    let a: f32 = 0.5;
-    assert!(
-        (a.powf(2.4) - powf_const(a, 2.4)).abs() < 1e-9,
-        "softfloat powf"
-    );
+    const N: i32 = 100;
+    for x in 0..N {
+        let x = x as f32 / N as f32;
+        assert!(
+            (x.powf(2.4) - powf_const(x, 2.4)).abs() < 1e-9,
+            "softfloat powf( {}, 2.4 )",
+            x
+        );
+    }
 }
 
 /// Constant implementation of Gamma to Linear transformation for use with declaring new colours
@@ -187,7 +191,13 @@ impl FromLua for Colour {
     fn from_lua(value: Value, _: &Lua) -> mlua::Result<Self> {
         match value {
             Value::UserData(ud) => Ok(*ud.borrow::<Self>()?),
-            Value::String(_name) => todo!(),
+            Value::String(name) => match Colour::from_name(&name.to_string_lossy()) {
+                Some(col) => Ok(col),
+                None => Err(mlua::Error::RuntimeError(format!(
+                    "string '{}' is not a valid Colour",
+                    name.display()
+                ))),
+            },
             val => Err(mlua::Error::RuntimeError(format!(
                 "unable to convert {} to Colour",
                 val.type_name()
