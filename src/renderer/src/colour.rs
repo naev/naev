@@ -332,6 +332,30 @@ impl UserData for Colour {
             },
         );
         /*
+         * @brief Creates a new colour by name. Colours are in linear colourspace.
+         *
+         * @usage colour.new_named( "Red" ) -- Gets colour by name
+         * @usage colour.new_named( "Aqua", 0.5 ) -- Gets colour by name with alpha 0.5
+         *    @luatparam string name Name of the colour to get.
+         *    @luatparam[opt=1.] number a Alpha value of the colour.
+         *    @luatreturn Colour A newly created colour or nil if not found.
+         * @luafunc new_named
+         */
+        methods.add_function(
+            "new_named",
+            |_, (name, a): (String, Option<f32>)| -> mlua::Result<Option<Self>> {
+                match Colour::from_name(&name) {
+                    Some(mut col) => {
+                        if let Some(a) = a {
+                            col.0.w = a;
+                        }
+                        Ok(Some(col))
+                    }
+                    None => Ok(None),
+                }
+            },
+        );
+        /*
          * @brief Creates a new colour from HSV values. Colours are assumed to be in
          * gamma colour space by default and are converted to linear unless specified.
          *
