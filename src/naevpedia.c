@@ -33,7 +33,6 @@ int naevpedia_open( const char *path )
       naevpedia_env = nlua_newEnv( "naevpedia" );
       nlua_loadStandard( naevpedia_env );
       nlua_loadTex( naevpedia_env );
-      nlua_loadCol( naevpedia_env );
       nlua_loadBackground( naevpedia_env );
       nlua_loadMusic( naevpedia_env );
       nlua_loadTk( naevpedia_env );

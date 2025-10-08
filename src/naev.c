@@ -314,7 +314,6 @@ nlua_env *loadscreen_load( void )
 
    int r = nlua_loadStandard( load_env );
    r |= nlua_loadTex( load_env );
-   r |= nlua_loadCol( load_env );
    r |= nlua_loadGFX( load_env );
    if ( r )
       WARN( _( "Something went wrong when loading Lua libraries for '%s'!" ),

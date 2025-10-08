@@ -196,7 +196,6 @@ nlua_source = files(
    'nlua_camera.c',
    'nlua_canvas.c',
    'nlua_cli.c',
-   'nlua_colour.c',
    'nlua_commodity.c',
    'nlua_data.c',
    'nlua_diff.c',
