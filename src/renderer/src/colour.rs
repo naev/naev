@@ -239,9 +239,8 @@ impl FromLua for Colour {
  *
  * An example would be:
  * @code
- * col1 = colour.new( "Red" ) -- Get by name
+ * col1 = colour.new_named( "Red" ) -- Get by name
  * col2 = colour.new( 0.5, 0.5, 0.5, 0.3 ) -- Create with RGB values
- * col3 = colour.new() -- White by default
  * col2:setHSV( col1:hsv() ) -- Set colour 2 with colour 1's HSV values
  * @endcode
  *
@@ -300,9 +299,6 @@ impl UserData for Colour {
          * @brief Creates a new colour. Colours are assumed to be in gamma colour space
          * by default and are converted to linear unless specified.
          *
-         * @usage colour.new( "Red" ) -- Gets colour by name
-         * @usage colour.new( "Red", 0.5 ) -- Gets colour by name with alpha 0.5
-         * @usage colour.new() -- Creates a white (blank) colour
          * @usage colour.new( 1., 0., 0. ) -- Creates a bright red colour
          * @usage colour.new( 1., 0., 0., 0.5 ) -- Creates a bright red colour with
          * alpha 0.5
@@ -562,9 +558,84 @@ impl UserData for Colour {
     }
 }
 
+/*
 pub fn open_colour(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
     let proxy = lua.create_proxy::<Colour>()?;
     Ok(proxy)
+}
+*/
+
+pub fn open_colour(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
+    let proxy = lua.create_proxy::<Colour>()?;
+
+    // Only add stuff as necessary
+    if let mlua::Value::Nil = lua.named_registry_value("push_colour")? {
+        let push_colour = lua.create_function(|lua, (r, g, b, a): (f32, f32, f32, f32)| {
+            let col = Colour::new_alpha(r, g, b, a);
+            lua.create_any_userdata(col)
+        })?;
+        lua.set_named_registry_value("push_colour", push_colour)?;
+
+        let get_colour = lua.create_function(|_, mut ud: mlua::UserDataRefMut<Colour>| {
+            let col: *mut Colour = &mut *ud;
+            Ok(Value::LightUserData(mlua::LightUserData(
+                col as *mut c_void,
+            )))
+        })?;
+        lua.set_named_registry_value("get_colour", get_colour)?;
+    }
+
+    Ok(proxy)
+}
+
+use mlua::ffi;
+use std::ffi::{c_char, c_int, c_void};
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn luaL_checkcolour(L: *mut mlua::lua_State, idx: c_int) -> *mut Colour {
+    unsafe {
+        let col = lua_tocolour(L, idx);
+        if col.is_null() {
+            ffi::luaL_typerror(L, idx, c"colour".as_ptr() as *const c_char);
+        }
+        col
+    }
+}
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn lua_iscolour(L: *mut mlua::lua_State, idx: c_int) -> c_int {
+    unsafe { !lua_tocolour(L, idx).is_null() as c_int }
+}
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn lua_pushcolour(L: *mut mlua::lua_State, col: naevc::glColour) {
+    unsafe {
+        ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"push_colour".as_ptr());
+        ffi::lua_pushnumber(L, col.r as f64);
+        ffi::lua_pushnumber(L, col.g as f64);
+        ffi::lua_pushnumber(L, col.b as f64);
+        ffi::lua_pushnumber(L, col.a as f64);
+        ffi::lua_call(L, 4, 1);
+    }
+}
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn lua_tocolour(L: *mut mlua::lua_State, idx: c_int) -> *mut Colour {
+    unsafe {
+        let idx = ffi::lua_absindex(L, idx);
+        ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"get_colour".as_ptr());
+        ffi::lua_pushvalue(L, idx);
+        let col = match ffi::lua_pcall(L, 1, 1, 0) {
+            ffi::LUA_OK => ffi::lua_touserdata(L, -1) as *mut Colour,
+            _ => std::ptr::null_mut(),
+        };
+        ffi::lua_pop(L, 1);
+        col
+    }
 }
 
 #[test]

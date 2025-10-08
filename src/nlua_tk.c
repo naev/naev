@@ -98,7 +98,6 @@ static const luaL_Reg tkL_methods[] = {
 int nlua_loadTk( nlua_env *env )
 {
    nlua_register( env, "tk", tkL_methods, 0 );
-   nlua_loadCol( env );
    nlua_loadGFX( env );
    return 0;
 }

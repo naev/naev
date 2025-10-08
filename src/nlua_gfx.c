@@ -117,7 +117,6 @@ int nlua_loadGFX( nlua_env *env )
 
    /* We also load the texture, colour, font, and transform modules as
     * dependencies. */
-   nlua_loadCol( env );
    nlua_loadTex( env );
    nlua_loadFont( env );
    nlua_loadTransform( env );

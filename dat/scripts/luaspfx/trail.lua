@@ -48,7 +48,7 @@ local function render( sp, x, y, z, dt )
 
       local ncol = naev.colour.new()
       local cs = d.colspread
-      ncol:setHSV( d.col[1]+rnd.rnd()*cs*2 - cs, d.col[2], d.col[3] )
+      ncol:set_hsv( d.col[1]+rnd.rnd()*cs*2 - cs, d.col[2], d.col[3] )
       local col = table.pack( ncol:rgb(true) )
       col[4] = d.col[4]
 

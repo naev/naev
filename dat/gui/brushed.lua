@@ -448,8 +448,8 @@ end
 
 local effects = {}
 function update_effects()
-   local buff_col = colour.new("Friend")
-   local debuff_col = colour.new("Hostile")
+   local buff_col = colour.new_named("Friend")
+   local debuff_col = colour.new_named("Hostile")
    effects = {}
    local effects_added = {}
    for k,e in ipairs(pp:effects()) do

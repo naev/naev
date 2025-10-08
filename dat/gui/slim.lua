@@ -31,13 +31,13 @@ local cols = {}
 local icons = {}
 local has_flow
 
-local cGrey = colour.new("Grey40")
---local cWhite = colour.new("White")
---local cRed = colour.new("Red")
---local cOrange = colour.new("Orange")
---local cCyan = colour.new("Cyan")
-local cFriend = colour.new("Friend")
-local cHostile = colour.new("Hostile")
+local cGrey = colour.new_named("Grey40")
+--local cWhite = colour.new_named("White")
+--local cRed = colour.new_named("Red")
+--local cOrange = colour.new_named("Orange")
+--local cCyan = colour.new_named("Cyan")
+local cFriend = colour.new_named("Friend")
+local cHostile = colour.new_named("Hostile")
 
 local scan_icon, scandone_icon
 
@@ -84,10 +84,10 @@ function create()
    cols.flow    = colour.new( 189/255, 166/255,  85/255 )
    cols.missile = colour.new(cols.txt_enm)
    -- Weaposn
-   cols.weap_off= colour.new( "FontGrey" )
-   cols.weap_pri= colour.new( "FontRed" )
-   cols.weap_sec= colour.new( "FontYellow" )
-   cols.weap_on = colour.new( "FontGreen" )
+   cols.weap_off= colour.new_named( "FontGrey" )
+   cols.weap_pri= colour.new_named( "FontRed" )
+   cols.weap_sec= colour.new_named( "FontYellow" )
+   cols.weap_on = colour.new_named( "FontGreen" )
    -- Active outfit bar
    cols.slot_bg = colour.new(  12/255,  14/255,  20/255 )
 
@@ -718,7 +718,7 @@ local function render_ammoBar( weap, x, y )
       if track == -1 or ptarget == nil then
          trackcol = cols.txt_una
       else -- Handling turret tracking.
-         trackcol = colour.newHSV(125*track, 1, 1)
+         trackcol = colour.new_hsv(125*track, 1, 1)
       end
       lg.setShader( tracking_light )
       lg.setColour( trackcol )

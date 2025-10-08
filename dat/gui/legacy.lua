@@ -35,8 +35,8 @@ function create()
 
    -- Some colours
    col_white   = colour.new()
-   col_warn    = colour.new( "Red" )
-   col_gray    = colour.new( "Grey70" )
+   col_warn    = colour.new_named( "Red" )
+   col_gray    = colour.new_named( "Grey70" )
    col_console = colour.new( 0.1, 0.9, 0.1, 1.0 )
    shield_col  = colour.new( 0.2, 0.2, 0.8, 0.8 )
    armour_col  = colour.new( 0.5, 0.5, 0.5, 0.8 )
