@@ -34,6 +34,7 @@ source_rust = files(
    'toolkit/src/lib.rs',
    'toolkit/src/widget.rs',
    'physics/src/lib.rs',
+   'physics/src/collide.rs',
    'physics/src/vec2.rs',
    'array.rs',
    'damagetype.rs',

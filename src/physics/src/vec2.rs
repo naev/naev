@@ -1,3 +1,4 @@
+use crate::collide;
 use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
 use nalgebra::Vector2;
 use std::os::raw::c_void;
@@ -402,22 +403,11 @@ impl UserData for Vec2 {
          */
         methods.add_method(
             "collideLineLine",
-            |_, s1: &Self, (e1, s2, e2): (Self, Self, Self)| -> mlua::Result<(i32, Vec2)> {
-                let mut crash = Vec2::new(0.0, 0.0);
-                let ret = unsafe {
-                    naevc::CollideLineLine(
-                        s1.0.x,
-                        s1.0.y,
-                        e1.0.x,
-                        e1.0.y,
-                        s2.0.x,
-                        s2.0.y,
-                        e2.0.x,
-                        e2.0.y,
-                        &mut crash as *mut Vec2 as *mut naevc::vec2,
-                    )
-                };
-                Ok((ret, crash))
+            |_, s1: &Self, (e1, s2, e2): (Self, Self, Self)| -> mlua::Result<(i32, Option<Vec2>)> {
+                match collide::line_line((*s1).into(), e1.into(), s2.into(), e2.into()) {
+                    collide::Collision::Single(crash) => Ok((1, Some(crash.into()))),
+                    _ => Ok((0, None)),
+                }
             },
         );
 

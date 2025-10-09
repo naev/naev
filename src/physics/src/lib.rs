@@ -1,5 +1,6 @@
 use std::f64::consts::PI;
 
+pub mod collide;
 pub mod vec2;
 
 /// Converts an angle to the [0, 2*PI] range.
