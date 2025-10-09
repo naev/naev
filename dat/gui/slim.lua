@@ -918,7 +918,7 @@ function render( dt, dt_mod )
       if timers[3] <= -0.5 then
          timers[3] = 0.5
       end
-      colour.setAlpha( cols.missile, math.abs(timers[3]) * 1.2 + .4 )
+      colour.set_alpha( cols.missile, math.abs(timers[3]) * 1.2 + .4 )
       gfx.print( false, missile_lock_text, (screen_w - missile_lock_length)/2, screen_h - 100, cols.missile )
    end
 
