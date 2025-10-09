@@ -9,7 +9,7 @@ local function update( s, _dt )
    if d.ready then
       local p = player.pos()
       local ret = vec2.collideLineLine( d.ppos, p, d.seg1, d.seg2 )
-      if ret==1 then
+      if ret then
          d.ready = false
          d.activate()
       end

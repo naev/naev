@@ -17,3 +17,4 @@ anyhow = { workspace = true }
 mlua = { workspace = true }
 nalgebra = { workspace = true }
 derive_more = { workspace = true }
+parry2d-f64 = "0.25"

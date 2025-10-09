@@ -754,8 +754,7 @@ static int vectorL_normalize( lua_State *L )
  *    @luatparam Vec2 e1 End point of the first segment.
  *    @luatparam Vec2 s2 Start point of the second segment.
  *    @luatparam Vec2 e2 End point of the second segment.
- *    @luatreturn integer 0 if they don't collide, 1 if they collide on a point,
- * 2 if they are parallel, and 3 if they are coincident.
+ *    @luatreturn Vec2 Collision point if they collide.
  * @luafunc collideLineLine
  */
 static int vectorL_collideLineLine( lua_State *L )

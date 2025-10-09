@@ -1,18 +1,19 @@
-use nalgebra::Vector2;
+use nalgebra::{Isometry2, Vector2};
+use parry2d_f64 as parry2d;
 
 pub enum Collision<T> {
-    None,
     Coincident,
     Single(Vector2<T>),
-    //Double(Vector2<T>, Vector2<T>),
+    Double(Vector2<T>, Vector2<T>),
 }
 
+// Computes a collision between two line segments
 pub fn line_line(
     s1: Vector2<f64>,
     e1: Vector2<f64>,
     s2: Vector2<f64>,
     e2: Vector2<f64>,
-) -> Collision<f64> {
+) -> Option<Collision<f64>> {
     let ua_t = (e2.x - s2.x) * (s1.y - s2.y) - (e2.y - s2.y) * (s1.x - s2.x);
     let ub_t = (e1.x - s1.x) * (s1.y - s2.y) - (e1.y - s1.y) * (s1.x - s2.x);
     let u_b = (e2.y - s2.y) * (e1.x - s1.x) - (e2.x - s2.x) * (e1.y - s1.y);
@@ -23,22 +24,48 @@ pub fn line_line(
 
         // Intersection at point
         if (0. <= ua) && (ua <= 1.) && (0. <= ub) && (ub <= 1.) {
-            Collision::Single(Vector2::new(
+            Some(Collision::Single(Vector2::new(
                 s1.x + ua * (e1.x - s1.x),
                 s1.y + ua * (e1.y - s1.y),
-            ))
+            )))
         }
         // No intersection, as point is off the line
         else {
-            Collision::None
+            None
         }
     } else {
         // Coincident
         if (ua_t == 0.) || (ub_t == 0.) {
-            Collision::Coincident
+            Some(Collision::Coincident)
         // Parallel
         } else {
-            Collision::None
+            None
         }
+    }
+}
+
+// Computes collision between a line and a circle
+pub fn line_circle(
+    p1: Vector2<f64>,
+    p2: Vector2<f64>,
+    center: Vector2<f64>,
+    radius: f64,
+) -> Option<Collision<f64>> {
+    let line = parry2d::shape::Segment::new(p1.into(), p2.into());
+    let circle = parry2d::shape::Ball::new(radius);
+    match parry2d::query::contact(
+        &Isometry2::identity(),
+        &line,
+        &Isometry2::translation(center.x, center.y),
+        &circle,
+        0.0,
+    )
+    .unwrap()
+    {
+        Some(c) => Some(Collision::Double(
+            c.point1.coords.into(),
+            c.point2.coords.into(),
+        )),
+        None => None,
     }
 }

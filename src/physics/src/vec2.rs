@@ -397,16 +397,15 @@ impl UserData for Vec2 {
          *    @luatparam Vec2 e1 End point of the first segment.
          *    @luatparam Vec2 s2 Start point of the second segment.
          *    @luatparam Vec2 e2 End point of the second segment.
-         *    @luatreturn integer 0 if they don't collide, 1 if they collide on a point,
-         * 2 if they are parallel, and 3 if they are coincident.
+         *    @luatreturn Vec2 Collision point if they collide.
          * @luafunc collideLineLine
          */
         methods.add_method(
             "collideLineLine",
-            |_, s1: &Self, (e1, s2, e2): (Self, Self, Self)| -> mlua::Result<(i32, Option<Vec2>)> {
+            |_, s1: &Self, (e1, s2, e2): (Self, Self, Self)| -> mlua::Result<Option<Vec2>> {
                 match collide::line_line((*s1).into(), e1.into(), s2.into(), e2.into()) {
-                    collide::Collision::Single(crash) => Ok((1, Some(crash.into()))),
-                    _ => Ok((0, None)),
+                    Some(collide::Collision::Single(crash)) => Ok(Some(crash.into())),
+                    _ => Ok(None),
                 }
             },
         );
@@ -429,20 +428,11 @@ impl UserData for Vec2 {
              center: &Self,
              (radius, p1, p2): (f64, Self, Self)|
              -> mlua::Result<(Option<Vec2>, Option<Vec2>)> {
-                let mut crash = [Vec2::new(0.0, 0.0), Vec2::new(0.0, 0.0)];
-                let ret = unsafe {
-                    naevc::CollideLineCircle(
-                        &p1 as *const Vec2 as *const naevc::vec2,
-                        &p2 as *const Vec2 as *const naevc::vec2,
-                        center as *const Vec2 as *const naevc::vec2,
-                        radius,
-                        &mut crash as *mut Vec2 as *mut naevc::vec2,
-                    )
-                };
-                match ret {
-                    0 => Ok((None, None)),
-                    1 => Ok((Some(crash[0]), None)),
-                    2 => Ok((Some(crash[0]), Some(crash[1]))),
+                match collide::line_circle(p1.into(), p2.into(), (*center).into(), radius) {
+                    Some(collide::Collision::Single(c)) => Ok((Some(c.into()), None)),
+                    Some(collide::Collision::Double(c1, c2)) => {
+                        Ok((Some(c1.into()), Some(c2.into())))
+                    }
                     _ => Ok((None, None)),
                 }
             },
@@ -521,9 +511,8 @@ pub extern "C" fn lua_tovector(L: *mut mlua::lua_State, idx: c_int) -> *mut Vec2
     }
 }
 
-/*
 #[test]
-fn test_mlua_vec2 () {
+fn test_mlua_vec2() {
     let lua = mlua::Lua::new();
     let globals = lua.globals();
     globals.set("vec2", open_vec2(&lua).unwrap()).unwrap();
@@ -543,8 +532,7 @@ local p = vec2.newP( 10, 5 )
 assert( close_enough( p:mod(), 10 ) and close_enough( p:angle(), 5 ), "p:newP()" )
         "#,
     )
-        .set_name("mlua Vec2 test")
-        .exec()
-        .unwrap();
+    .set_name("mlua Vec2 test")
+    .exec()
+    .unwrap();
 }
-*/
