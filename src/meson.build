@@ -15,6 +15,7 @@ source_rust = files(
    'core/src/nxml.rs',
    'core/src/start.rs',
    'core/src/utils.rs',
+   'core/src/lua.rs',
    'mutex/src/lib.rs',
    'ndata/src/lib.rs',
    'ndata/src/env.rs',

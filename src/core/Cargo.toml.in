@@ -19,3 +19,4 @@ gettext = { workspace = true }
 formatx = { workspace = true }
 log = { workspace = true }
 anyhow = { workspace = true }
+mlua = { workspace = true }

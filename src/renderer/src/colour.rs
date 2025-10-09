@@ -367,20 +367,28 @@ impl UserData for Colour {
          *    @luatreturn Colour A newly created colour.
          * @luafunc new_hsv
          */
+        fn new_hsv(
+            _lua: &mlua::Lua,
+            (h, s, v, a, gamma): (f32, f32, f32, Option<f32>, Option<bool>),
+        ) -> mlua::Result<Colour> {
+            let a = a.unwrap_or(1.0);
+            let gamma = gamma.unwrap_or(false);
+            let col = Srgb::from_color(Hsv::new(h, s, v));
+            let (r, g, b) = if gamma {
+                col.into_components()
+            } else {
+                col.into_linear().into_components()
+            };
+            Ok(Colour::new_alpha(r, g, b, a))
+        }
+        methods.add_function("new_hsv", new_hsv);
         methods.add_function(
-            "new_hsv",
-            |_,
+            "newHSV",
+            |lua,
              (h, s, v, a, gamma): (f32, f32, f32, Option<f32>, Option<bool>)|
              -> mlua::Result<Self> {
-                let a = a.unwrap_or(1.0);
-                let gamma = gamma.unwrap_or(false);
-                let col = Srgb::from_color(Hsv::new(h, s, v));
-                let (r, g, b) = if gamma {
-                    col.into_components()
-                } else {
-                    col.into_linear().into_components()
-                };
-                Ok(Colour::new_alpha(r, g, b, a))
+                naev_core::lua::deprecated(lua, "newHSV", Some("new_hsv"))?;
+                new_hsv(lua, (h, s, v, a, gamma))
             },
         );
         /*
@@ -483,13 +491,22 @@ impl UserData for Colour {
          *    @luatparam number b Blue value to set.
          * @luafunc set_rgb
          */
+        fn set_rgb(
+            _lua: &mlua::Lua,
+            this: &mut Colour,
+            (r, g, b): (f32, f32, f32),
+        ) -> mlua::Result<()> {
+            this.0.x = r;
+            this.0.y = g;
+            this.0.z = b;
+            Ok(())
+        }
+        methods.add_method_mut("set_rgb", set_rgb);
         methods.add_method_mut(
-            "set_rgb",
-            |_, this, (r, g, b): (f32, f32, f32)| -> mlua::Result<()> {
-                this.0.x = r;
-                this.0.y = g;
-                this.0.z = b;
-                Ok(())
+            "setRGB",
+            |lua, this, (r, g, b): (f32, f32, f32)| -> mlua::Result<()> {
+                naev_core::lua::deprecated(lua, "setRGB", Some("set_rgb"))?;
+                set_hsv(lua, this, (r, g, b))
             },
         );
         /*
@@ -505,14 +522,24 @@ impl UserData for Colour {
          *    @luatparam number v Value to set.
          * @luafunc set_hsv
          */
+        fn set_hsv(
+            _lua: &mlua::Lua,
+            this: &mut Colour,
+            (h, s, v): (f32, f32, f32),
+        ) -> mlua::Result<()> {
+            let (r, g, b) = Srgb::from_color(Hsv::new(h, s, v)).into_components();
+            this.0.x = r;
+            this.0.y = g;
+            this.0.z = b;
+            Ok(())
+        }
+        methods.add_method_mut("set_hsv", set_hsv);
+        // Remove in 0.14.0
         methods.add_method_mut(
-            "set_hsv",
-            |_, this, (h, s, v): (f32, f32, f32)| -> mlua::Result<()> {
-                let (r, g, b) = Srgb::from_color(Hsv::new(h, s, v)).into_components();
-                this.0.x = r;
-                this.0.y = g;
-                this.0.z = b;
-                Ok(())
+            "setHSV",
+            |lua, this, (h, s, v): (f32, f32, f32)| -> mlua::Result<()> {
+                naev_core::lua::deprecated(lua, "setHSV", Some("set_hsv"))?;
+                set_hsv(lua, this, (h, s, v))
             },
         );
         /*
@@ -524,11 +551,17 @@ impl UserData for Colour {
          *
          *    @luatparam Colour col Colour to set alpha of.
          *    @luatparam number alpha Alpha value to set.
-         * @luafunc setAlpha
+         * @luafunc set_alpha
          */
-        methods.add_method_mut("set_alpha", |_, this, a: f32| -> mlua::Result<()> {
+        fn set_alpha(_lua: &mlua::Lua, this: &mut Colour, a: f32) -> mlua::Result<()> {
             this.0.w = a;
             Ok(())
+        }
+        methods.add_method_mut("set_alpha", set_alpha);
+        // Remove in 0.14.0
+        methods.add_method_mut("setAlpha", |lua, this, a: f32| -> mlua::Result<()> {
+            naev_core::lua::deprecated(lua, "setAlpha", Some("set_alpha"))?;
+            set_alpha(lua, this, a)
         });
         /*
          * @brief Converts a colour from linear to gamma corrected.

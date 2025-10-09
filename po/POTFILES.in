@@ -3852,6 +3852,7 @@ src/console.h
 src/constants.c
 src/constants.h
 src/core/src/lib.rs
+src/core/src/lua.rs
 src/core/src/ntime.rs
 src/core/src/nxml.rs
 src/core/src/start.rs
