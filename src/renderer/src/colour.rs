@@ -392,6 +392,14 @@ impl UserData for Colour {
             },
         );
         /*
+         * @brief Clones a colour.
+         *
+         *    @luatparam Colour col Colour to clone.
+         *    @luatreturn Colour A clone of the colour.
+         * @luafunc clone
+         */
+        methods.add_method("clone", |_, this, ()| -> mlua::Result<Self> { Ok(*this) });
+        /*
          * @brief Gets the alpha of a colour.
          *
          * Value is from from 0. (transparent) to 1. (opaque).
