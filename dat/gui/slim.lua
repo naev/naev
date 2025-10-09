@@ -78,7 +78,7 @@ function create()
    cols.heat    = colour.new( 114/255,  26/255,  14/255 )
    cols.heat2   = colour.new( 222/255,  51/255,  27/255 )
    cols.afb     = cols.heat:clone()
-   cols.afb:setAlpha(.5)
+   cols.afb:set_alpha(.5)
    cols.ready   = colour.new(  14/255, 108/255, 114/255 )
    cols.temperature = cols.heat
    cols.flow    = colour.new( 189/255, 166/255,  85/255 )
