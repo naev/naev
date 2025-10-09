@@ -52,20 +52,27 @@ pub fn line_circle(
     radius: f64,
 ) -> Option<Collision<f64>> {
     let line = parry2d::shape::Segment::new(p1.into(), p2.into());
+    let ident = Isometry2::identity();
     let circle = parry2d::shape::Ball::new(radius);
-    match parry2d::query::contact(
-        &Isometry2::identity(),
-        &line,
-        &Isometry2::translation(center.x, center.y),
-        &circle,
-        0.0,
-    )
-    .unwrap()
-    {
+    let center = Isometry2::translation(center.x, center.y);
+    match parry2d::query::contact(&ident, &line, &center, &circle, 0.0).unwrap() {
+        /*
+        // The point on the line gives the center collision, while the sphere gives surface
         Some(c) => Some(Collision::Double(
             c.point1.coords.into(),
             c.point2.coords.into(),
         )),
+        */
+        Some(c1) => {
+            let line = parry2d::shape::Segment::new(p2.into(), p1.into());
+            let c2 = parry2d::query::contact(&ident, &line, &center, &circle, 0.0)
+                .unwrap()
+                .unwrap();
+            Some(Collision::Double(
+                c1.point2.coords.into(),
+                c2.point2.coords.into(),
+            ))
+        }
         None => None,
     }
 }

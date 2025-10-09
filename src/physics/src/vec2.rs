@@ -549,6 +549,7 @@ assert( vec2.collideCircleLine( center, 1, vec2.new( 2, 0 ), vec2.new( 2, 4 ) ) 
 
 center = vec2.new( 4, 0 )
 assert( vec2.collideCircleLine( center, 1, vec2.new( 2, 0 ), vec2.new( 2, 4 ) ) == nil )
+assert( vec2.collideCircleLine( center, 10, vec2.new( 2, 0 ), vec2.new( 2, 4 ) ) ~= nil )
         "#,
     )
     .set_name("mlua Vec2 test")
