@@ -117,15 +117,6 @@ colour!(TRANSPARENT, 0.0, 0.0, 0.0, 0.0);
 colour!(BLACKHILIGHT, 0.0, 0.0, 0.0, 0.4); // Highlight colour over black background
 colour!(RADARVIEWPORT, 1.0, 1.0, 1.0, 0.5);
 
-/*
-static LOOKUP: LazyLock<Trie<u8, Colour>> = LazyLock::new(|| {
-    let mut builder = TrieBuilder::new();
-    builder.push("white", WHITE);
-    builder.push("black", BLACK);
-    builder.build()
-});
-*/
-
 /// softfloat doesn't have a native `powf` so we just approximate it
 const fn powf_const(a: f32, b: f32) -> f32 {
     // Have to jump through hoops as there is no F32::exp nor F32::ln
@@ -241,7 +232,7 @@ impl FromLua for Colour {
  * @code
  * col1 = colour.new_named( "Red" ) -- Get by name
  * col2 = colour.new( 0.5, 0.5, 0.5, 0.3 ) -- Create with RGB values
- * col2:setHSV( col1:hsv() ) -- Set colour 2 with colour 1's HSV values
+ * col2:set_hsv( col1:hsv() ) -- Set colour 2 with colour 1's HSV values
  * @endcode
  *
  * Colours are assumed to be given as gamma-corrected values and are stored
@@ -598,13 +589,6 @@ impl UserData for Colour {
         });
     }
 }
-
-/*
-pub fn open_colour(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
-    let proxy = lua.create_proxy::<Colour>()?;
-    Ok(proxy)
-}
-*/
 
 pub fn open_colour(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
     let proxy = lua.create_proxy::<Colour>()?;
