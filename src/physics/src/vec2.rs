@@ -488,7 +488,7 @@ use std::os::raw::{c_char, c_int};
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn luaL_checkvector(L: *mut mlua::lua_State, idx: c_int) -> *mut Vec2 {
+pub extern "C" fn luaL_checkvector(L: *mut mlua::lua_State, idx: c_int) -> *mut Vec2 {
     unsafe {
         let vec = lua_tovector(L, idx);
         if vec.is_null() {
@@ -500,13 +500,13 @@ pub unsafe extern "C" fn luaL_checkvector(L: *mut mlua::lua_State, idx: c_int) -
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn lua_isvector(L: *mut mlua::lua_State, idx: c_int) -> c_int {
-    unsafe { !lua_tovector(L, idx).is_null() as c_int }
+pub extern "C" fn lua_isvector(L: *mut mlua::lua_State, idx: c_int) -> c_int {
+    !lua_tovector(L, idx).is_null() as c_int
 }
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn lua_pushvector(L: *mut mlua::lua_State, vec: naevc::vec2) {
+pub extern "C" fn lua_pushvector(L: *mut mlua::lua_State, vec: naevc::vec2) {
     unsafe {
         ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"push_vector".as_ptr());
         ffi::lua_pushnumber(L, vec.x);
@@ -517,7 +517,7 @@ pub unsafe extern "C" fn lua_pushvector(L: *mut mlua::lua_State, vec: naevc::vec
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn lua_tovector(L: *mut mlua::lua_State, idx: c_int) -> *mut Vec2 {
+pub extern "C" fn lua_tovector(L: *mut mlua::lua_State, idx: c_int) -> *mut Vec2 {
     unsafe {
         let idx = ffi::lua_absindex(L, idx);
         ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"get_vector".as_ptr());

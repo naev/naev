@@ -626,7 +626,7 @@ use std::ffi::{c_char, c_int, c_void};
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn luaL_checkcolour(L: *mut mlua::lua_State, idx: c_int) -> *mut Colour {
+pub extern "C" fn luaL_checkcolour(L: *mut mlua::lua_State, idx: c_int) -> *mut Colour {
     unsafe {
         let col = lua_tocolour(L, idx);
         if col.is_null() {
@@ -638,13 +638,13 @@ pub unsafe extern "C" fn luaL_checkcolour(L: *mut mlua::lua_State, idx: c_int) -
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn lua_iscolour(L: *mut mlua::lua_State, idx: c_int) -> c_int {
-    unsafe { !lua_tocolour(L, idx).is_null() as c_int }
+pub extern "C" fn lua_iscolour(L: *mut mlua::lua_State, idx: c_int) -> c_int {
+    !lua_tocolour(L, idx).is_null() as c_int
 }
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn lua_pushcolour(L: *mut mlua::lua_State, col: naevc::glColour) {
+pub extern "C" fn lua_pushcolour(L: *mut mlua::lua_State, col: naevc::glColour) {
     unsafe {
         ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"push_colour".as_ptr());
         ffi::lua_pushnumber(L, col.r as f64);
@@ -657,7 +657,7 @@ pub unsafe extern "C" fn lua_pushcolour(L: *mut mlua::lua_State, col: naevc::glC
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn lua_tocolour(L: *mut mlua::lua_State, idx: c_int) -> *mut Colour {
+pub extern "C" fn lua_tocolour(L: *mut mlua::lua_State, idx: c_int) -> *mut Colour {
     unsafe {
         let idx = ffi::lua_absindex(L, idx);
         ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"get_colour".as_ptr());
