@@ -6,8 +6,7 @@ use std::sync::LazyLock;
 
 use crate::lua::ryaml;
 use gettext::{gettext, ngettext, pgettext};
-use log::{warn, warn_err, warnx};
-use physics::vec2;
+use log::{info, warn, warn_err, warnx};
 
 const NLUA_LOAD_TABLE: &str = "_LOADED"; // Table to use to store the status of required libraries.
 const LUA_INCLUDE_PATH: &str = "scripts/"; // Path for Lua includes.
@@ -191,26 +190,97 @@ impl NLua {
         let math_table: mlua::Table = globals.get("math")?;
         math_table.set("mod", mlua::Nil)?; /* Get rid of math.mod */
 
-        unsafe {
-            globals.set(
-                "print",
-                lua.create_c_function(std::mem::transmute::<CFunctionNaev, CFunctionMLua>(
-                    naevc::cli_print,
-                ))?,
-            )?;
-            globals.set(
-                "printRaw",
-                lua.create_c_function(std::mem::transmute::<CFunctionNaev, CFunctionMLua>(
-                    naevc::cli_printRaw,
-                ))?,
-            )?;
-            globals.set(
-                "warn",
-                lua.create_c_function(std::mem::transmute::<CFunctionNaev, CFunctionMLua>(
-                    naevc::cli_warn,
-                ))?,
-            )?;
+        fn escape_colours(msg: &str) -> String {
+            use colored::Color;
+            fn colour(col: Color) -> String {
+                format!("\x1B[{}m", col.to_fg_str())
+            }
+            let re = regex::Regex::new(r"#(?<c>.)").unwrap();
+            let mut m = re
+                .replace_all(msg, "\0#$c\0")
+                .split('\0')
+                .map(|x| match x {
+                    "##" => "#".to_string(),
+                    "#0" => "\x1B[0m".to_string(),
+                    "#b" => colour(Color::Blue),
+                    "#g" => colour(Color::Green),
+                    "#n" => colour(Color::BrightWhite),
+                    "#o" => colour(Color::BrightRed),
+                    "#p" => colour(Color::Magenta),
+                    "#r" => colour(Color::Red),
+                    "#w" => colour(Color::White),
+                    "#y" => colour(Color::Yellow),
+                    x => x.to_string(),
+                })
+                .collect::<Vec<_>>()
+                .join("");
+            if m.contains("\x1B[") {
+                m.push_str("\x1B[0m");
+            }
+            m
         }
+
+        globals.set(
+            "print",
+            lua.create_function(
+                |_lua, args: mlua::Variadic<mlua::Value>| -> mlua::Result<()> {
+                    let mut msg = String::new();
+                    for a in args {
+                        msg.push_str(&a.to_string()?);
+                        msg.push('\t');
+                    }
+                    info!("{}", escape_colours(&msg));
+                    let cmsg = std::ffi::CString::new(msg).unwrap();
+                    unsafe {
+                        naevc::cli_printCoreString(cmsg.as_ptr(), 0);
+                    }
+                    Ok(())
+                },
+            )?,
+        )?;
+        #[allow(non_snake_case)]
+        unsafe extern "C-unwind" fn traceback_wrap(L: *mut mlua::lua_State) -> i32 {
+            unsafe {
+                let msg = if mlua::ffi::lua_isstring(L, 1) != 0 {
+                    mlua::ffi::lua_tostring(L, 1)
+                } else {
+                    std::ptr::null()
+                };
+                let level = if mlua::ffi::lua_isinteger(L, 2) != 0 {
+                    mlua::ffi::lua_tointeger(L, 2)
+                } else {
+                    1
+                };
+                mlua::ffi::luaL_traceback(L, L, msg, level as i32);
+            }
+            1
+        }
+        let traceback = unsafe { lua.create_c_function(traceback_wrap)? };
+        globals.set(
+            "warn",
+            lua.create_function(
+                move |_lua, args: mlua::Variadic<mlua::Value>| -> mlua::Result<()> {
+                    let mut amsg = String::new();
+                    for a in args {
+                        amsg.push_str(&a.to_string()?);
+                        amsg.push('\t');
+                    }
+                    let tmsg: String = traceback.call::<String>(())?;
+                    let emsg = {
+                        let mut m = escape_colours(&amsg);
+                        m.push('\n');
+                        m.push_str(&tmsg);
+                        m
+                    };
+                    warn!("{}", emsg);
+                    let cmsg = std::ffi::CString::new([amsg, tmsg].join("")).unwrap();
+                    unsafe {
+                        naevc::cli_printCoreString(cmsg.as_ptr(), 1);
+                    }
+                    Ok(())
+                },
+            )?,
+        )?;
 
         // Load common chunk
         let common_data = ndata::read(LUA_COMMON_PATH)?;
@@ -458,12 +528,12 @@ impl LuaEnv {
             Ok(())
         };
 
-        open_lib("vec2", vec2::open_vec2)?;
+        open_lib("vec2", physics::vec2::open_vec2)?;
+        //open_lib("colour", renderer::colour::open_colour)?;
         // TODO tex has lots of dependencies, and we can't implement the FFI interface so it is
         // disabled. Similarly, file doesn't have ffi set up.
         //open_lib("file", ndata::lua::open_file)?;
         //open_lib("tex", renderer::texture::open_texture)?;
-        //open_lib("colour", renderer::colour::open_colour)?;
         //open_lib("gfx", renderer::open_gfx)?;
 
         let ret = unsafe {
@@ -518,21 +588,6 @@ pub unsafe extern "C" fn luaL_tolstring(
     unsafe { mlua::ffi::luaL_tolstring(L, idx, len) }
 }
 
-/*
-#[allow(non_snake_case)]
-#[unsafe(no_mangle)]
-pub unsafe extern "C" fn luaL_traceback(
-    L: *mut mlua::lua_State,
-    L1: *mut mlua::lua_State,
-    msg: *const c_char,
-    level: c_int,
-) {
-    unsafe { mlua::ffi::luaL_traceback(L, L1, msg, level) }
-}
-*/
-
-/*
-*/
 use std::ffi::CStr;
 
 // C API

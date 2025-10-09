@@ -75,9 +75,7 @@ static int    cli_max_lines  = 0;
  */
 static int            cli_script( lua_State *L );
 static const luaL_Reg cli_methods[] = {
-   { "script", cli_script },
-   { "warn", cli_warn },
-   { NULL, NULL } }; /**< Console only functions. */
+   { "script", cli_script }, { NULL, NULL } }; /**< Console only functions. */
 
 /*
  * Prototypes.
@@ -167,76 +165,6 @@ void cli_printCoreString( const char *s, int escape )
       } else
          cli_addMessageMax( &s[iter.l_begin], iter.l_end - iter.l_begin );
    }
-}
-
-/**
- * @brief Back end for the Lua print functionality.
- */
-static int cli_printCore( lua_State *L, int cli_only, int escape )
-{
-   int n = lua_gettop( L );        /* Number of arguments. */
-   lua_getglobal( L, "tostring" ); /* f */
-   lua_pushstring( L, "" );        /* f, s */
-   for ( int i = 1; i <= n; i++ ) {
-      const char *s;
-      lua_pushvalue( L, -2 );               /* f, s, f */
-      lua_pushvalue( L, i );                /* f, s, f, v */
-      if ( lua_pcall( L, 1, 1, 0 ) != 0 ) { /* f, s, r */
-         WARN( _( "Error calling 'tostring':\n%s" ), lua_tostring( L, -1 ) );
-         lua_pop( L, 1 );
-         continue;
-      }
-      s = lua_tostring( L, -1 );
-      if ( s == NULL )
-         return NLUA_ERROR(
-            L, LUA_QL( "tostring" ) " must return a string to " LUA_QL(
-                  "print" ) );
-
-      lua_pushstring( L, "\t" ); /* f, s, '\t' */
-      lua_concat( L, 3 );        /* f, s */
-   }
-
-   const char *s = lua_tostring( L, -1 );
-
-   if ( !cli_only ) {
-      char *tolog = fontcol_toTermEscapeString( s );
-      LOG( "%s", tolog );
-      free( tolog );
-   }
-   cli_printCoreString( s, escape );
-
-   lua_pop( L, 2 ); /* */
-   return 0;
-}
-
-/**
- * @brief Barebones warn implementation for Lua, allowing scripts to print
- * warnings to stderr.
- *
- * @luafunc warn
- */
-int cli_warn( lua_State *L )
-{
-   return nlua_warn( L, 1 );
-}
-
-/**
- * @brief Replacement for the internal Lua print to print to both the console
- * and the terminal.
- */
-int cli_print( lua_State *L )
-{
-   return cli_printCore( L, 0, 0 );
-}
-
-/**
- * @brief Prints raw markup to the console.
- *
- * @luafunc printRaw
- */
-int cli_printRaw( lua_State *L )
-{
-   return cli_printCore( L, 0, 0 );
 }
 
 /**
