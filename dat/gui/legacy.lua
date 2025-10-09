@@ -34,7 +34,7 @@ function create()
    gui.fpsPos( 15, screen_h - 15 - deffont_h );
 
    -- Some colours
-   col_white   = colour.new()
+   col_white   = colour.new_named( "White" )
    col_warn    = colour.new_named( "Red" )
    col_gray    = colour.new_named( "Grey70" )
    col_console = colour.new( 0.1, 0.9, 0.1, 1.0 )
