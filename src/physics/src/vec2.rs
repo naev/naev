@@ -526,10 +526,10 @@ local v = vec2.new( 10, 5 )
 assert( close_enough( v:mod(), 11.180339887498949 ), "v:mod() failed" )
 
 local a = vec2.new( 8, 3 )
-assert( close_enough( v:dist(a), 1.4142135623730951 ), "v:dist(a)" )
+assert( close_enough( v:dist(a), 2*1.4142135623730951 ), "v:dist(a)" )
 
-local p = vec2.newP( 10, 5 )
-assert( close_enough( p:mod(), 10 ) and close_enough( p:angle(), 5 ), "p:newP()" )
+local p = vec2.newP( 10, 3 )
+assert( close_enough( p:mod(), 10 ) and close_enough( p:angle(), 3 ), "p:newP()" )
         "#,
     )
     .set_name("mlua Vec2 test")
