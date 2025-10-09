@@ -517,19 +517,27 @@ impl LuaEnv {
     }
 
     pub fn load_standard(&mut self, lua: &NLua) -> Result<()> {
-        let naev: mlua::Table = self.get("naev")?;
+        // Load naev library first as it gets populated with additonal entries later
+        match unsafe {
+            let env = self as *mut LuaEnv as *mut naevc::nlua_env;
+            naevc::nlua_loadNaev(env)
+        } {
+            0 => (),
+            _ => anyhow::bail!("unable to load standard libraries!"),
+        };
 
+        // Load true Rust dependencies
+        let naev: mlua::Table = self.table.raw_get("naev")?;
         let open_lib = |name: &str,
                         open: fn(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData>|
          -> Result<()> {
             let lib = open(&lua.lua)?;
             self.set(name, &lib)?;
-            naev.set(name, &lib)?;
+            naev.raw_set(name, &lib)?;
             Ok(())
         };
-
         open_lib("vec2", physics::vec2::open_vec2)?;
-        //open_lib("colour", renderer::colour::open_colour)?;
+        open_lib("colour", renderer::colour::open_colour)?;
         // TODO tex has lots of dependencies, and we can't implement the FFI interface so it is
         // disabled. Similarly, file doesn't have ffi set up.
         //open_lib("file", ndata::lua::open_file)?;
@@ -539,7 +547,6 @@ impl LuaEnv {
         let ret = unsafe {
             let env = self as *mut LuaEnv as *mut naevc::nlua_env;
             let mut r: c_int = 0;
-            r |= naevc::nlua_loadNaev(env);
             r |= naevc::nlua_loadVar(env);
             r |= naevc::nlua_loadSpob(env);
             r |= naevc::nlua_loadSystem(env);

@@ -689,7 +689,7 @@ custom_target(
    build_by_default: true,
    command: [
       luacheckrc_extractor,
-      nlua_source + files('src/nlua_vec2.c'),
+      nlua_source + files('src/nlua_vec2.c') + files('src/nlua_colour.c'),
       '--output',
       join_paths(meson.current_source_dir(),'utils','@OUTPUT@'),
    ],

@@ -7,11 +7,6 @@ local object = require 'love.object'
 --local filesystem = require 'love.filesystem'
 local love_math = require 'love.math'
 
-print( colour )
-print( naev.colour )
-print( naev.vec2 )
-print( naev )
-
 local graphics = {
    _bgcol = naev.colour.new( 0, 0, 0, 1 ),
    _fgcol = naev.colour.new( 1, 1, 1, 1 ),
