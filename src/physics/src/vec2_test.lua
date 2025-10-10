@@ -1,12 +1,12 @@
-function close_enough( x, y )
+local function close_enough( x, y )
    return math.abs(x-y) < 1e-8
 end
 
-function close_enough_vec( v1, v2 )
+local function close_enough_vec( v1, v2 )
    return close_enough( v1.x, v2.x ) and close_enough( v1.y, v2.y )
 end
 
-function test_collision( a, b )
+local function test_collision( a, b )
    -- Test number of collisions
    if (a[1]~=nil)~=(b[1]~=nil) or
       (a[2]~=nil)~=(b[2]~=nil) then
