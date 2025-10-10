@@ -69,10 +69,10 @@ pub fn line_circle(
         (d1 - d2 - d3).abs() < TOLERANCE
     }
 
-    /* Case line in circle. */
+    /* Case line is completely in circle. */
     let r2 = cr * cr;
     if ((p1 - cc).norm_squared() < r2) && ((p2 - cc).norm_squared() < r2) {
-        return Some(Collision::Single((p1 + p2) * 0.5));
+        return Some(Collision::Double(p1, p2));
     }
 
     let A = p2.y - p1.y;
@@ -127,9 +127,9 @@ pub fn line_circle(
             (x1, y1, x2, y2)
         } else {
             let y1 = (-b + d) / (2. * a);
-            let x1 = fx(A, B, C, y1);
+            let x1 = fy(A, B, C, y1);
             let y2 = (-b - d) / (2. * a);
-            let x2 = fx(A, B, C, y2);
+            let x2 = fy(A, B, C, y2);
             (x1, y1, x2, y2)
         };
         let on1 = line_point_on_segment(p1, p2, d1, x1, y1);

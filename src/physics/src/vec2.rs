@@ -526,6 +526,24 @@ function close_enough_vec( v1, v2 )
    return close_enough( v1.x, v2.x ) and close_enough( v1.y, v2.y )
 end
 
+function test_collision( a, b )
+   -- Test number of collisions
+   if (a[1]~=nil)~=(b[1]~=nil) or
+      (a[2]~=nil)~=(b[2]~=nil) then
+      return false
+   end
+   -- Sort order
+   if (not a[1] or close_enough_vec( a[1], b[1] )) and
+      (not a[2] or close_enough_vec( a[2], b[2] )) then
+      return true
+   end
+   if (not a[1] or close_enough_vec( a[1], b[2] )) and
+      (not a[2] or close_enough_vec( a[2], b[1] )) then
+      return true
+   end
+   return false
+end
+
 local v = vec2.new( 10, 5 )
 assert( close_enough( v:mod(), 11.180339887498949 ), "v:mod() failed" )
 
@@ -544,12 +562,40 @@ assert( close_enough_vec( vec2.collideLineLine( s1, e1, s2, e2 ), vec2.new(3,2) 
 local off = vec2.new( 3, 0 )
 assert( vec2.collideLineLine( s1+off, e1+off, s2, e2 )==nil )
 
-local center = vec2.new( 2, 2 )
-assert( vec2.collideCircleLine( center, 1, vec2.new( 2, 0 ), vec2.new( 2, 4 ) ) ~= nil )
+assert( test_collision( table.pack(vec2.collideCircleLine(
+   vec2.new( 2, 2 ),
+   1,
+   vec2.new( 2, 0 ),
+   vec2.new( 2, 4 )
+)), {vec2.new(2,1), vec2.new(2,3)} ))
 
-center = vec2.new( 4, 0 )
-assert( vec2.collideCircleLine( center, 1, vec2.new( 2, 0 ), vec2.new( 2, 4 ) ) == nil )
-assert( vec2.collideCircleLine( center, 10, vec2.new( 2, 0 ), vec2.new( 2, 4 ) ) ~= nil )
+assert( test_collision( table.pack(vec2.collideCircleLine(
+   vec2.new( 2, 2 ),
+   1,
+   vec2.new( 0, 2 ),
+   vec2.new( 4, 2 )
+)), {vec2.new(1,2), vec2.new(3,2)} ))
+
+assert( test_collision( table.pack(vec2.collideCircleLine(
+   vec2.new( 3, 3 ),
+   1,
+   vec2.new( 0, 2 ),
+   vec2.new( 4, 2 )
+)), {vec2.new(3,2), nil} ))
+
+assert( test_collision( table.pack(vec2.collideCircleLine(
+   vec2.new( 4, 4 ),
+   1,
+   vec2.new( 0, 2 ),
+   vec2.new( 4, 2 )
+)), {nil, nil} ))
+
+assert( test_collision( table.pack(vec2.collideCircleLine(
+   vec2.new( 4, 4 ),
+   10,
+   vec2.new( 0, 2 ),
+   vec2.new( 4, 2 )
+)), {vec2.new(0,2), vec2.new(4,2)} ))
         "#,
     )
     .set_name("mlua Vec2 test")
