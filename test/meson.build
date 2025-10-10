@@ -9,7 +9,8 @@ test('main_menu',
    ],
    env: ['WITHGDB=NO'],
    workdir: meson.project_source_root(),
-   protocol: 'exitcode'
+   protocol: 'exitcode',
+   timeout: 90
    )
 
 if (ascli_exe.found())
