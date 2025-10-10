@@ -25,7 +25,7 @@ pub fn line_line(
         let ub = ub_t / u_b;
 
         // Intersection at point
-        if (0. <= ua) && (ua <= 1.) && (0. <= ub) && (ub <= 1.) {
+        if (0. ..=1.).contains(&ua) && (0. ..=1.).contains(&ub) {
             Some(Collision::Single(Vector2::new(
                 s1.x + ua * (e1.x - s1.x),
                 s1.y + ua * (e1.y - s1.y),
