@@ -111,9 +111,7 @@ impl UserData for Vec2 {
          *    @luatreturn Vec2 A clone of v.
          * @luafunc clone
          */
-        methods.add_method("clone", |_, vec: &Self, ()| -> mlua::Result<Self> {
-            Ok(*vec)
-        });
+        methods.add_method("clone", |_, vec, ()| -> mlua::Result<Self> { Ok(*vec) });
 
         /*
          * @brief Converts a vector to a string.
@@ -224,7 +222,7 @@ impl UserData for Vec2 {
          *    @luatreturn number The dot product.
          * @luafunc dot
          */
-        methods.add_method("dot", |_, vec: &Self, val: Self| -> mlua::Result<f64> {
+        methods.add_method("dot", |_, vec, val: Self| -> mlua::Result<f64> {
             Ok(vec.0.dot(&val.0))
         });
 
@@ -236,7 +234,7 @@ impl UserData for Vec2 {
          *    @luatreturn number The cross product.
          * @luafunc cross
          */
-        methods.add_method("cross", |_, vec: &Self, val: Self| -> mlua::Result<Self> {
+        methods.add_method("cross", |_, vec, val: Self| -> mlua::Result<Self> {
             Ok(Vec2(vec.0.cross(&val.0)))
         });
 
@@ -250,7 +248,7 @@ impl UserData for Vec2 {
          *    @luatreturn number Y position of the vector.
          * @luafunc get
          */
-        methods.add_method("get", |_, vec: &Self, ()| -> mlua::Result<(f64, f64)> {
+        methods.add_method("get", |_, vec, ()| -> mlua::Result<(f64, f64)> {
             Ok((vec.0.x, vec.0.y))
         });
 
@@ -266,7 +264,7 @@ impl UserData for Vec2 {
          *    @luatreturn number The angle of the vector.
          * @luafunc polar
          */
-        methods.add_method("polar", |_, vec: &Self, ()| -> mlua::Result<(f64, f64)> {
+        methods.add_method("polar", |_, vec, ()| -> mlua::Result<(f64, f64)> {
             let (x, y) = (vec.0.x, vec.0.y);
             Ok((x.hypot(y), y.atan2(x)))
         });
@@ -316,16 +314,13 @@ impl UserData for Vec2 {
          *    @luatreturn number The distance calculated.
          * @luafunc dist
          */
-        methods.add_method(
-            "dist",
-            |_, vec: &Self, val: Option<Vec2>| -> mlua::Result<f64> {
-                let d = match val {
-                    Some(vec2) => (vec.0.x - vec2.0.x).hypot(vec.0.y - vec2.0.y),
-                    None => vec.0.x.hypot(vec.0.y),
-                };
-                Ok(d)
-            },
-        );
+        methods.add_method("dist", |_, vec, val: Option<Vec2>| -> mlua::Result<f64> {
+            let d = match val {
+                Some(vec2) => (vec.0.x - vec2.0.x).hypot(vec.0.y - vec2.0.y),
+                None => vec.0.x.hypot(vec.0.y),
+            };
+            Ok(d)
+        });
 
         /*
          * @brief Gets the squared distance from the Vec2 (saves a sqrt())
@@ -341,16 +336,13 @@ impl UserData for Vec2 {
          *    @luatreturn number The distance calculated.
          * @luafunc dist2
          */
-        methods.add_method(
-            "dist2",
-            |_, vec: &Self, val: Option<Vec2>| -> mlua::Result<f64> {
-                let d = match val {
-                    Some(vec2) => (vec.0.x - vec2.0.x).powf(2.0) + (vec.0.y - vec2.0.y).powf(2.0),
-                    None => vec.0.x.powf(2.0) + vec.0.y.powf(2.0),
-                };
-                Ok(d)
-            },
-        );
+        methods.add_method("dist2", |_, vec, val: Option<Vec2>| -> mlua::Result<f64> {
+            let d = match val {
+                Some(vec2) => (vec.0.x - vec2.0.x).powf(2.0) + (vec.0.y - vec2.0.y).powf(2.0),
+                None => vec.0.x.powf(2.0) + vec.0.y.powf(2.0),
+            };
+            Ok(d)
+        });
 
         /*
          * @brief Gets the modulus of the vector.
@@ -358,7 +350,7 @@ impl UserData for Vec2 {
          *    @luatreturn number The modulus of the vector.
          * @luafunc mod
          */
-        methods.add_method("mod", |_, vec: &Self, ()| -> mlua::Result<f64> {
+        methods.add_method("mod", |_, vec, ()| -> mlua::Result<f64> {
             Ok(vec.0.x.hypot(vec.0.y))
         });
 
@@ -368,7 +360,7 @@ impl UserData for Vec2 {
          *    @luatreturn number The angle of the vector.
          * @luafunc angle
          */
-        methods.add_method("angle", |_, vec: &Self, ()| -> mlua::Result<f64> {
+        methods.add_method("angle", |_, vec, ()| -> mlua::Result<f64> {
             Ok(vec.0.y.atan2(vec.0.x))
         });
 
@@ -381,7 +373,7 @@ impl UserData for Vec2 {
          */
         methods.add_method_mut(
             "normalize",
-            |_, vec: &mut Self, n: Option<f64>| -> mlua::Result<Self> {
+            |_, vec, n: Option<f64>| -> mlua::Result<Self> {
                 let n = n.unwrap_or(1.);
                 let m = n / (vec.0.x.hypot(vec.0.y)).max(1e-6);
                 vec.0.x *= m;
@@ -402,7 +394,7 @@ impl UserData for Vec2 {
          */
         methods.add_method(
             "collideLineLine",
-            |_, s1: &Self, (e1, s2, e2): (Self, Self, Self)| -> mlua::Result<Option<Vec2>> {
+            |_, s1, (e1, s2, e2): (Self, Self, Self)| -> mlua::Result<Option<Vec2>> {
                 match collide::line_line((*s1).into(), e1.into(), s2.into(), e2.into()) {
                     Some(collide::Collision::Single(crash)) => Ok(Some(crash.into())),
                     _ => Ok(None),
@@ -425,7 +417,7 @@ impl UserData for Vec2 {
         methods.add_method(
             "collideCircleLine",
             |_,
-             center: &Self,
+             center,
              (radius, p1, p2): (f64, Self, Self)|
              -> mlua::Result<(Option<Vec2>, Option<Vec2>)> {
                 match collide::line_circle(p1.into(), p2.into(), (*center).into(), radius) {
@@ -572,10 +564,62 @@ local s1 = vec2.new( 2, 2 )
 local e1 = vec2.new( 4, 2 )
 local s2 = vec2.new( 3, 1 )
 local e2 = vec2.new( 3, 3 )
-assert( close_enough_vec( vec2.collideLineLine( s1, e1, s2, e2 ), vec2.new(3,2) ), "line segment collision 1" )
+assert( close_enough_vec( vec2.collideLineLine(
+   s1,
+   e1,
+   s2,
+   e2
+), vec2.new(3,2) ), "line segment collision 1" )
 
 local off = vec2.new( 3, 0 )
-assert( vec2.collideLineLine( s1+off, e1+off, s2, e2 )==nil, "line segment collision 2" )
+assert( vec2.collideLineLine(
+   s1+off,
+   e1+off,
+   s2,
+   e2
+)==nil, "line segment collision 2" )
+
+assert( close_enough_vec( vec2.collideLineLine(
+   vec2.new(0,0),
+   vec2.new(2,2),
+   vec2.new(2,0),
+   vec2.new(0,2)
+), vec2.new(1,1) ), "line segment collision 3" )
+
+assert( vec2.collideLineLine(
+   vec2.new(0,0),
+   vec2.new(0,2),
+   vec2.new(2,0),
+   vec2.new(2,2)
+) == nil, "line segment collision 4" )
+
+assert( close_enough_vec( vec2.collideLineLine(
+   vec2.new(0,0),
+   vec2.new(0,2),
+   vec2.new(0,0),
+   vec2.new(2,0)
+), vec2.new(0,0) ), "line segment collision 5" )
+
+assert( vec2.collideLineLine(
+   vec2.new( 0, 0 ),
+   vec2.new( 0, 0 ),
+   vec2.new( 1, 2 ),
+   vec2.new( 1, 3 )
+)==nil, "line segment collision 6" )
+
+assert( vec2.collideLineLine(
+   vec2.new( 1, 0 ),
+   vec2.new( 0, 0 ),
+   vec2.new( 2, 1 ),
+   vec2.new( 2, 1 )
+)==nil, "line segment collision 7" )
+
+assert( vec2.collideLineLine(
+   vec2.new( 0, 0 ),
+   vec2.new( 0, 0 ),
+   vec2.new( 0, 1 ),
+   vec2.new( 0, 1 )
+)==nil, "line segment collision 8" )
 
 assert( test_collision( {vec2.collideCircleLine(
    vec2.new( 2, 2 ),
@@ -611,6 +655,27 @@ assert( test_collision( {vec2.collideCircleLine(
    vec2.new( 0, 2 ),
    vec2.new( 4, 2 )
 )}, {vec2.new(0,2), vec2.new(4,2)} ), "circle line collision 5")
+
+assert( test_collision( {vec2.collideCircleLine(
+   vec2.new( 4, 4 ),
+   1,
+   vec2.new( 0, 0 ),
+   vec2.new( 0, 0 )
+)}, {nil, nil} ), "circle line collision 6")
+
+assert( test_collision( {vec2.collideCircleLine(
+   vec2.new( 4, 4 ),
+   0,
+   vec2.new( 0, 0 ),
+   vec2.new( 0, 0 )
+)}, {nil, nil} ), "circle line collision 7")
+
+assert( test_collision( {vec2.collideCircleLine(
+   vec2.new( 4, 4 ),
+   0,
+   vec2.new( 0, 0 ),
+   vec2.new( 0, 3 )
+)}, {nil, nil} ), "circle line collision 8")
         "#,
     )
     .set_name("mlua Vec2 test")

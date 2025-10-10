@@ -16,11 +16,17 @@ pub fn line_line(
 ) -> Option<Collision<f64>> {
     // The parry function is more annoying to use, so we stick to our custom implementation
     // parry2d::utils::segments_intersection2d( s1.into(), e1.into(), s2.into(), e2.into() )
+
+    // Handle degenerate line cases
+    if s1 == e1 || s2 == e2 {
+        return None;
+    }
+
     let ua_t = (e2.x - s2.x) * (s1.y - s2.y) - (e2.y - s2.y) * (s1.x - s2.x);
     let ub_t = (e1.x - s1.x) * (s1.y - s2.y) - (e1.y - s1.y) * (s1.x - s2.x);
     let u_b = (e2.y - s2.y) * (e1.x - s1.x) - (e2.x - s2.x) * (e1.y - s1.y);
 
-    if u_b != 0. {
+    if u_b.abs() > TOLERANCE {
         let ua = ua_t / u_b;
         let ub = ub_t / u_b;
 
@@ -37,7 +43,7 @@ pub fn line_line(
         }
     } else {
         // Coincident
-        if (ua_t == 0.) || (ub_t == 0.) {
+        if (ua_t.abs() <= TOLERANCE) && (ub_t.abs() <= TOLERANCE) {
             //Some(Collision::Coincident)
             // Could do something smarter, but it doesn't really matter
             Some(Collision::Single((s1 + e1) * 0.5))
