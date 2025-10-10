@@ -2,7 +2,6 @@ use nalgebra::{Isometry2, Vector2};
 use parry2d_f64 as parry2d;
 
 pub enum Collision<T> {
-    Coincident,
     Single(Vector2<T>),
     Double(Vector2<T>, Vector2<T>),
 }
@@ -14,6 +13,8 @@ pub fn line_line(
     s2: Vector2<f64>,
     e2: Vector2<f64>,
 ) -> Option<Collision<f64>> {
+    // The parry function is more annoying to use, so we stick to our custom implementation
+    // parry2d::utils::segments_intersection2d( s1.into(), e1.into(), s2.into(), e2.into() )
     let ua_t = (e2.x - s2.x) * (s1.y - s2.y) - (e2.y - s2.y) * (s1.x - s2.x);
     let ub_t = (e1.x - s1.x) * (s1.y - s2.y) - (e1.y - s1.y) * (s1.x - s2.x);
     let u_b = (e2.y - s2.y) * (e1.x - s1.x) - (e2.x - s2.x) * (e1.y - s1.y);
@@ -36,7 +37,9 @@ pub fn line_line(
     } else {
         // Coincident
         if (ua_t == 0.) || (ub_t == 0.) {
-            Some(Collision::Coincident)
+            //Some(Collision::Coincident)
+            // Could do something smarter, but it doesn't really matter
+            Some(Collision::Single((s1 + e1) * 0.5))
         // Parallel
         } else {
             None
