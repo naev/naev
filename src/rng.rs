@@ -4,11 +4,11 @@ use std::os::raw::{c_double, c_uint};
 
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn randint() -> c_uint {
-    RNG.with_borrow_mut(|x| x.random::<u32>())
+    rng::<c_uint>()
 }
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn randfp() -> c_double {
-    RNG.with_borrow_mut(|x| x.random::<f64>())
+    rng::<c_double>()
 }
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn Normal(x: c_double) -> c_double {
@@ -38,7 +38,7 @@ where
     RNG.with_borrow_mut(|x| x.random_range(range))
 }
 
-/* Taken from probability package. */
+// Taken from probability package.
 #[allow(clippy::excessive_precision)]
 pub fn normal_inverse(p: f64) -> f64 {
     //should!((0.0..=1.0).contains(&p));
@@ -157,7 +157,7 @@ fn normal(x: f64) -> f64 {
     if x > 0.0f64 { 1.0f64 - series } else { series }
 }
 
-pub struct Rnd;
+struct Rnd;
 /*
  * @brief Bindings for interacting with the random number generator.
  *
