@@ -31,8 +31,7 @@ assert( lin == colour.new_named("grey50"), "new_named failed" )
 
 local h,s,v = 180, 0.5, 0.5
 local hsv = colour.new_hsv( h, s, v )
-local nh, ns, nv = hsv:hsv()
-assert( close_enough(h,nh) and close_enough(s,ns,1e-6) and close_enough(v,nv), "hsv:hsv() failed" )
+assert( close_enough_table( {hsv:hsv()}, {h,s,v}, 1e-6 ), "hsv:hsv() failed" )
 
 local col = colour.new_named("Aqua")
 hsv = col.new_hsv( col:hsv() )
