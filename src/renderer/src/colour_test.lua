@@ -5,6 +5,14 @@ local function close_enough( x, y, tol )
    return math.abs(x-y) < tol
 end
 
+local function close_enough_table( v1, v2, tol )
+   local good = true
+   for k,v in ipairs(v1) do
+      good = good and close_enough( v, v2[k], tol )
+   end
+   return true
+end
+
 local function close_enough_col( a, b, tol )
    local ok = true
    for k,v in ipairs{'r','g','b','a'} do
@@ -29,3 +37,13 @@ assert( close_enough(h,nh) and close_enough(s,ns,1e-6) and close_enough(v,nv), "
 local col = colour.new_named("Aqua")
 hsv = col.new_hsv( col:hsv() )
 assert( close_enough_col( col, hsv, 1e-6 ), "hsv roundtrip failed" )
+
+local r, g, b
+h,s,v = 120, 0.3, 0.6
+r,g,b = colour.hsv_to_rgb(h,s,v)
+assert( h~=r and s~=g and v~=b )
+assert( close_enough_table( {colour.rgb_to_hsv(h,s,v)}, {h,s,v}, 1e-6 ), "hsv_to_rgb_to_hsv" )
+r,g,b = 0.8, 0.2, 0.4
+h,s,v = colour.rgb_to_hsv(r,g,b)
+assert( h~=r and s~=g and v~=b )
+assert( close_enough_table( {colour.hsv_to_rgb(h,s,v)}, {r,g,b}, 1e-6 ), "rgb_to_hsv_to_rgb" )

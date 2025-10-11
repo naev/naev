@@ -47,6 +47,8 @@ static const luaL_Reg colL_methods[] = {
    { "set_alpha", colL_setalpha },
    { "to_gamma", colL_linearToGamma },
    { "to_linear", colL_gammaToLinear },
+   { "hsv_to_rgb", colL_rgb },
+   { "rgb_to_hsv", colL_hsv },
    { 0, 0 } }; /**< Colour metatable methods. */
 
 /**

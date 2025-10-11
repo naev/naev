@@ -478,6 +478,45 @@ impl UserData for Colour {
             Ok((h.into(), s, v))
         });
         /*
+         * @brief Converts RGB (gamma) values to HSV.
+         *
+         * @usage h,s,v = colour.rgb_to_hsv( r, g, b )
+         *
+         *    @luatparam number r Red value to convert.
+         *    @luatparam number g Green value to convert.
+         *    @luatparam number b Blue value to convert.
+         *    @luatreturn number The hue of the colour (0-360 value).
+         *    @luatreturn number The saturation of the colour (0-1 value).
+         *    @luatreturn number The value of the colour (0-1 value).
+         * @luafunc rgb_to_hsv
+         */
+        methods.add_function(
+            "rgb_to_hsv",
+            |_, (r, g, b): (f32, f32, f32)| -> mlua::Result<(f32, f32, f32)> {
+                let (h, s, v) = Hsv::from_color(Srgb::new(r, g, b)).into_components();
+                Ok((h.into(), s, v))
+            },
+        );
+        /*
+         * @brief Converts HSV values to RGB (gamma).
+         *
+         * @usage h,s,v = colour.hsv_to_rgb( h, s, v )
+         *
+         *    @luatparam number h The hue of the colour (0-360 value) to convert.
+         *    @luatparam number s The saturation of the colour (0-1 value) to convert.
+         *    @luatparam number v The value of the colour (0-1 value) to convert.
+         *    @luatreturn number Red value.
+         *    @luatreturn number Green value.
+         *    @luatreturn number Blue value.
+         * @luafunc rgb_to_hsv
+         */
+        methods.add_function(
+            "hsv_to_rgb",
+            |_, (h, s, v): (f32, f32, f32)| -> mlua::Result<(f32, f32, f32)> {
+                Ok(Srgb::from_color(Hsv::new(h, s, v)).into_components())
+            },
+        );
+        /*
          * @brief Sets the colours values from the RGB colour space.
          *
          * Values are from 0. to 1.
