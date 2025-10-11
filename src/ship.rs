@@ -58,17 +58,30 @@ fn get_mut() -> &'static mut [ShipWrapper] {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn ship_gfxLoadNeeded() {
+    // Try to avoid messing with the context and just find what we have to update first
+    let mut needsgfx: Vec<&mut ShipWrapper> = get_mut()
+        .iter_mut()
+        .filter_map(|ptr| {
+            let s = &mut ptr.0;
+            if s.flags & naevc::SHIP_NEEDSGFX == 0 {
+                return None;
+            }
+            s.flags &= !naevc::SHIP_NEEDSGFX;
+            if !s.gfx_3d.is_null() || !s.gfx_space.is_null() {
+                return None;
+            }
+            Some(ptr)
+        })
+        .collect();
+    if needsgfx.is_empty() {
+        return;
+    }
+
+    // Now we can mess with the context to try to load them as necessary
     let needs2d: Mutex<Vec<&mut ShipWrapper>> = Mutex::new(vec![]);
     let ctx = Context::get().as_safe_wrap();
-    get_mut().par_iter_mut().for_each(|ptr| {
+    needsgfx.par_iter_mut().for_each(|ptr| {
         let s = &mut ptr.0;
-        if s.flags & naevc::SHIP_NEEDSGFX == 0 {
-            return;
-        }
-        s.flags &= !naevc::SHIP_NEEDSGFX;
-        if !s.gfx_3d.is_null() || !s.gfx_space.is_null() {
-            return;
-        }
 
         let cpath = unsafe { CStr::from_ptr(s.gfx_path).to_str().unwrap() };
         let base_path = unsafe {
