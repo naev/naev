@@ -44,7 +44,6 @@ for _,vals in ipairs{
       min = math.min( min, r )
       max = math.max( max, r )
    end
-   print( min, max, R )
    assert( min<-R*0.95 and max>R*0.95 and min>=-R and max<=R, "rnd.sigma", R )
 end
 
@@ -79,5 +78,3 @@ for _,F in ipairs{ table_nogen, table_gen } do
       assert( match==N, "sorted permutation matches" )
    end
 end
-
-print("test OK")

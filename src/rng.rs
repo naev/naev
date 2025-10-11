@@ -1,4 +1,4 @@
-use mlua::{Either, Lua, MetaMethod, UserData, UserDataMethods};
+use mlua::{Either, UserData, UserDataMethods};
 use rand::Rng;
 use std::os::raw::{c_double, c_uint};
 
@@ -23,9 +23,11 @@ thread_local! {
     static RNG: std::cell::RefCell<rand::rngs::ThreadRng> = std::cell::RefCell::new(rand::rng());
 }
 
+/*
 pub fn rngi32() -> i32 {
     RNG.with_borrow_mut(|x| x.random::<i32>())
 }
+*/
 
 pub fn rngu32() -> u32 {
     RNG.with_borrow_mut(|x| x.random::<u32>())
@@ -204,9 +206,9 @@ impl UserData for Rnd {
          */
         methods.add_function(
             "rnd",
-            |_, (l, h): (Option<u32>, Option<u32>)| -> mlua::Result<mlua::Number> {
+            |_, (l, h): (Option<i64>, Option<i64>)| -> mlua::Result<mlua::Number> {
                 if let Some(l) = l {
-                    let r = rngu32();
+                    let r = rngu32() as i64;
                     Ok(if let Some(h) = h {
                         if h < l {
                             (r % (l - h + 1)) + h
@@ -294,9 +296,7 @@ impl UserData for Rnd {
          */
         methods.add_function(
             "uniform",
-            |_, (l, h): (f64, f64)| -> mlua::Result<mlua::Number> {
-                Ok((h - l + 1.) * rngf64() + l)
-            },
+            |_, (l, h): (f64, f64)| -> mlua::Result<mlua::Number> { Ok((h - l) * rngf64() + l) },
         );
         /*
          * @brief Gets a random angle, i.e., a random number from 0 to 2*pi.

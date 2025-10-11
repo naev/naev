@@ -538,6 +538,7 @@ impl LuaEnv {
         };
         open_lib("vec2", physics::vec2::open_vec2)?;
         open_lib("colour", renderer::colour::open_colour)?;
+        open_lib("rnd", crate::rng::open_rnd)?;
         // TODO tex has lots of dependencies, and we can't implement the FFI interface so it is
         // disabled. Similarly, file doesn't have ffi set up.
         //open_lib("file", ndata::lua::open_file)?;
@@ -554,7 +555,6 @@ impl LuaEnv {
             r |= naevc::nlua_loadTime(env);
             r |= naevc::nlua_loadPlayer(env);
             r |= naevc::nlua_loadPilot(env);
-            r |= naevc::nlua_loadRnd(env);
             r |= naevc::nlua_loadDiff(env);
             r |= naevc::nlua_loadFaction(env);
             r |= naevc::nlua_loadOutfit(env);
