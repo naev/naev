@@ -1,3 +1,5 @@
+-- luacheck: globals vec2
+
 local function close_enough( x, y )
    return math.abs(x-y) < 1e-8
 end
@@ -30,7 +32,7 @@ v:set( 5, 10 )
 assert( close_enough_vec( v, vec2.new( 5, 10 ) ), "v:set( 5, 10 )" )
 assert( close_enough_vec( -v, vec2.new( -5, -10 ) ), "-v" )
 
-local v = vec2.new( 10, 5 )
+v = vec2.new( 10, 5 )
 local a = vec2.new( 8, 3 )
 assert( close_enough( v:dist(a), 2*1.4142135623730951 ), "v:dist(a)" )
 assert( close_enough( v:dist2(a), (2*1.4142135623730951)^2 ), "v:dist2(a)" )
@@ -44,7 +46,7 @@ assert( close_enough_vec( a/b, vec2.new(8/3, 3/2) ), "a/b" )
 local p = vec2.newP( 10, 3 )
 assert( close_enough( p:mod(), 10 ) and close_enough( p:angle(), 3 ), "p:newP()" )
 
-local v = vec2.new( 57, 13 )
+v = vec2.new( 57, 13 )
 v:normalize()
 assert( close_enough( v:mod(), 1 ), "v:normalize()" )
 

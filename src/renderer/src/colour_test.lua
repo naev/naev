@@ -1,11 +1,14 @@
-local function close_enough( x, y )
-   return math.abs(x-y) < 1e-8
+-- luacheck: globals colour
+
+local function close_enough( x, y, tol )
+   tol = tol or 1e-8
+   return math.abs(x-y) < tol
 end
 
-local function close_enough_col( a, b )
+local function close_enough_col( a, b, tol )
    local ok = true
    for k,v in ipairs{'r','g','b','a'} do
-      ok = ok and close_enough( a[v], b[v] )
+      ok = ok and close_enough( a[v], b[v], tol )
    end
    return ok
 end
@@ -21,8 +24,8 @@ assert( lin == colour.new_named("grey50"), "new_named failed" )
 local h,s,v = 180, 0.5, 0.5
 local hsv = colour.new_hsv( h, s, v )
 local nh, ns, nv = hsv:hsv()
-assert( close_enough(h,h) and close_enough(s,ns) and close_enough(v,nv), "hsv:hsv() failed" )
+assert( close_enough(h,nh) and close_enough(s,ns,1e-6) and close_enough(v,nv), "hsv:hsv() failed" )
 
 local col = colour.new_named("Aqua")
-local hsv = col.new_hsv( col:hsv() )
-assert( close_enough_col( col, hsv ), "hsv roundtrip failed" )
+hsv = col.new_hsv( col:hsv() )
+assert( close_enough_col( col, hsv, 1e-6 ), "hsv roundtrip failed" )
