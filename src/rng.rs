@@ -362,7 +362,7 @@ pub fn open_rnd(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
 fn main() {
     let lua = mlua::Lua::new();
     let globals = lua.globals();
-    globals.set("rnd", open_vec2(&lua).unwrap()).unwrap();
+    globals.set("rnd", open_rnd(&lua).unwrap()).unwrap();
     lua.load(include_str!("rng_test.lua"))
         .set_name("mlua Rng test")
         .exec()
