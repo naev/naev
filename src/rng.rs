@@ -1,3 +1,4 @@
+use mlua::{Either, Lua, MetaMethod, UserData, UserDataMethods};
 use rand::Rng;
 use std::os::raw::{c_double, c_uint};
 
@@ -22,8 +23,20 @@ thread_local! {
     static RNG: std::cell::RefCell<rand::rngs::ThreadRng> = std::cell::RefCell::new(rand::rng());
 }
 
+pub fn rngi32() -> i32 {
+    RNG.with_borrow_mut(|x| x.random::<i32>())
+}
+
+pub fn rngu32() -> u32 {
+    RNG.with_borrow_mut(|x| x.random::<u32>())
+}
+
 pub fn rngf32() -> f32 {
     RNG.with_borrow_mut(|x| x.random::<f32>())
+}
+
+pub fn rngf64() -> f64 {
+    RNG.with_borrow_mut(|x| x.random::<f64>())
 }
 
 /*
@@ -149,4 +162,209 @@ fn normal(x: f64) -> f64 {
     let series =
         1.0f64 - c_0 * (-x * x / 2.0f64).exp() * t * (t * (t * (t * (t * b5 + b4) + b3) + b2) + b1);
     if x > 0.0f64 { 1.0f64 - series } else { series }
+}
+
+pub struct Rnd;
+/*
+ * @brief Bindings for interacting with the random number generator.
+ *
+ * This module not only allows basic random number generation, but it also
+ *  handles more complicated statistical stuff.
+ *
+ * Example usage would be:
+ * @code
+ * if rnd.rnd() < 0.5 then
+ *    -- 50% chance of this happening
+ * else
+ *    -- And 50% chance of this happening
+ * end
+ * @endcode
+ *
+ * @luamod rnd
+ */
+impl UserData for Rnd {
+    fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
+        /*
+         * @brief Gets a random number.  With no parameters it returns a random float
+         * between 0 and 1.
+         *
+         * With one parameter it returns a whole number between 0 and that number
+         *  (both included).  With two parameters it returns a whole number between
+         *  both parameters (both included).
+         *
+         * @usage n = rnd.rnd() -- Number in range [0:1].
+         * @usage n = rnd.rnd(5) -- Number in range [0:5].
+         * @usage n = rnd.rnd(3,5) -- Number in range [3,5].
+         *
+         *    @luatparam number x First parameter, read description for details.
+         *    @luatparam number y Second parameter, read description for details.
+         *    @luatreturn number A randomly generated number, read description for
+         * details.
+         * @luafunc rnd
+         */
+        methods.add_function(
+            "rnd",
+            |_, (l, h): (Option<u32>, Option<u32>)| -> mlua::Result<mlua::Number> {
+                if let Some(l) = l {
+                    let r = rngu32();
+                    Ok(if let Some(h) = h {
+                        if h < l {
+                            (r % (l - h + 1)) + h
+                        } else {
+                            (r % (h - l + 1)) + l
+                        }
+                    } else {
+                        r % l
+                    } as mlua::Number)
+                } else {
+                    Ok(rngf64())
+                }
+            },
+        );
+        /*
+         * @brief Creates a number in the one-sigma range [-1:1].
+         *
+         * A one sigma range means that it creates a number following the normal
+         * distribution but limited to the 63% quadrant.  This means that the number is
+         * biassed towards 0, but can become either 1 or -1.  It's a fancier way of
+         * generating random numbers.
+         *
+         * @usage n = 5.5 + rnd.sigma()/2. -- Creates a number from 5 to 6 slightly
+         * biassed to 5.5.
+         *    @luatreturn number A number from [-1:1] biassed slightly towards 0.
+         * @luafunc sigma
+         */
+        methods.add_function("sigma", |_, ()| -> mlua::Result<mlua::Number> {
+            Ok(normal_inverse(
+                0.158655255 + rngf64() * (1. - 0.158655255 * 2.),
+            ))
+        });
+        /*
+         * @brief Creates a number in the two-sigma range [-2:2].
+         *
+         * This function behaves much like the `rnd.sigma` function but uses the
+         * two-sigma range, meaning that numbers are in the 95% quadrant and thus are
+         * much more random.  They are biassed towards 0 and approximately 63% will be
+         * within
+         * [-1:1].  The rest will be in either the [-2:-1] range or the [1:2] range.
+         *
+         * @usage n = 5.5 + rnd.twosigma()/4. -- Creates a number from 5 to 6 heavily
+         * biassed to 5.5.
+         *
+         *    @luatreturn number A number from [-2:2] biassed heavily towards 0.
+         * @luafunc twosigma
+         */
+        methods.add_function("twosigma", |_, ()| -> mlua::Result<mlua::Number> {
+            Ok(normal_inverse(
+                0.022750132 + rngf64() * (1. - 0.022750132 * 2.),
+            ))
+        });
+        /*
+         * @brief Creates a number in the three-sigma range [-3:3].
+         *
+         * This function behaves much like its sisters `rnd.sigma` and `rnd.twosigma`.
+         * The main difference is that it uses the three-sigma range which is the 99%
+         * quadrant.  It will rarely generate numbers outside the [-2:2] range (about 5%
+         * of the time) and create numbers outside of the [-1:1] range about 37% of the
+         * time.  This can be used when you want extremes to appear rarely.
+         *
+         * @usage n = 5.5 + rnd.threesigma()/6. -- Creates a number from 5 to 6 totally
+         * biassed to 5.5.
+         *
+         *    @luatreturn number A number from [-3:3] biassed totally towards 0.
+         * @luafunc threesigma
+         */
+        methods.add_function("threesigma", |_, ()| -> mlua::Result<mlua::Number> {
+            Ok(normal_inverse(
+                0.0013498985 + rngf64() * (1. - 0.0013498985 * 2.),
+            ))
+        });
+        /*
+         * @brief Gets a random number in the given range, with a uniform distribution.
+         *
+         * @usage n = uniform() -- Real number in the interval [0,1].
+         * @usage n = uniform(5) -- Real number in the interval [0,5].
+         * @usage n = uniform(3,5) -- Real number in the interval [3,5].
+         *
+         *    @luatparam number x First parameter, read description for details.
+         *    @luatparam number y Second parameter, read description for details.
+         *    @luatreturn number A randomly generated number, read description for
+         * details.
+         * @luafunc uniform
+         */
+        methods.add_function(
+            "uniform",
+            |_, (l, h): (f64, f64)| -> mlua::Result<mlua::Number> {
+                Ok((h - l + 1.) * rngf64() + l)
+            },
+        );
+        /*
+         * @brief Gets a random angle, i.e., a random number from 0 to 2*pi.
+         *
+         * @usage vec2.newP(radius, rnd.angle())
+         *    @luatreturn number A randomly generated angle, in radians.
+         * @luafunc angle
+         */
+        methods.add_function("angle", |_, ()| -> mlua::Result<mlua::Number> {
+            Ok(rngf64() * 2. * std::f64::consts::PI)
+        });
+        /*
+         * @brief Creates a random permutation
+         *
+         * This creates a list from 1 to input and then randomly permutes it,
+         * however, if an ordered table is passed as a parameter, that is randomly
+         * permuted instead.
+         *
+         * @usage t = rnd.permutation( 5 )
+         * @usage t = rnd.permutation( {"cat", "dog", "cheese"} )
+         *
+         *    @luatparam number|table input Maximum value to permute to.
+         *    @luatreturn table A randomly permuted table.
+         * @luafunc permutation
+         */
+        methods.add_function(
+            "permutation",
+            |lua, val: Either<u32, mlua::Table>| -> mlua::Result<mlua::Table> {
+                use rand::seq::SliceRandom;
+                let len = match val {
+                    Either::Left(v) => v as usize,
+                    Either::Right(ref tbl) => tbl.len()? as usize,
+                };
+                let mut vals: Vec<usize> = (0..len).collect();
+                RNG.with_borrow_mut(|x| vals.shuffle(x));
+
+                let t = lua.create_table()?;
+                match val {
+                    Either::Left(_) => {
+                        for k in vals {
+                            t.raw_push(k + 1)?;
+                        }
+                    }
+                    Either::Right(tbl) => {
+                        for k in vals {
+                            let v: mlua::Value = tbl.get(k + 1)?;
+                            t.raw_push(v)?;
+                        }
+                    }
+                }
+                Ok(t)
+            },
+        );
+    }
+}
+
+pub fn open_rnd(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
+    let proxy = lua.create_proxy::<Rnd>()?;
+    Ok(proxy)
+}
+
+#[test]
+fn main() {
+    let lua = mlua::Lua::new();
+    let globals = lua.globals();
+    globals.set("rnd", open_vec2(&lua).unwrap()).unwrap();
+    lua.load(include_str!("rng_test.lua"))
+        .set_name("mlua Rng test")
+        .exec()
+        .unwrap();
 }
