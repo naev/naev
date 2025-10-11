@@ -207,6 +207,9 @@ typedef struct PlayerConf_s {
 
    /* Editor. */
    char *dev_data_dir; /**< Path where most data should be. */
+
+   // Special
+   int exit_main_menu;
 } PlayerConf_t;
 extern PlayerConf_t conf; /**< Player configuration. */
 

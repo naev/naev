@@ -15,7 +15,6 @@ unsafe extern "C" {
 }
 
 mod array;
-mod camera;
 mod damagetype;
 mod faction;
 mod input;
@@ -24,11 +23,9 @@ mod model;
 mod nebula;
 mod nlua;
 mod outfit;
-mod physics;
 mod rng;
 mod ship;
 mod slots;
-mod vec2;
 mod lua {
     pub mod ryaml;
 }

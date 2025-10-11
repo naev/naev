@@ -152,6 +152,9 @@ int         naev_main_setup( void )
              nfile_configPath() );
 
    NTracingMessageL( _( "Reached main menu" ) );
+   if ( conf.exit_main_menu ) {
+      exit( 0 );
+   }
 
    /* Incomplete translation note (shows once if we pick an incomplete
     * translation based on user's locale). */
@@ -311,7 +314,6 @@ nlua_env *loadscreen_load( void )
 
    int r = nlua_loadStandard( load_env );
    r |= nlua_loadTex( load_env );
-   r |= nlua_loadCol( load_env );
    r |= nlua_loadGFX( load_env );
    if ( r )
       WARN( _( "Something went wrong when loading Lua libraries for '%s'!" ),

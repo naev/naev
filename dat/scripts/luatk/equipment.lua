@@ -12,9 +12,9 @@ local BOXSEP = 14 -- Separation between inner outfit boxes
 local COL = 60 -- Space between columns
 
 local cOutfit = {
-   Large  = colour.new("OutfitHeavy",  1, true),
-   Medium = colour.new("OutfitMedium", 1, true),
-   Small  = colour.new("OutfitLight",  1, true),
+   Large  = colour.new_named("OutfitHeavy",  1, true),
+   Medium = colour.new_named("OutfitMedium", 1, true),
+   Small  = colour.new_named("OutfitLight",  1, true),
 }
 local function col_slotSize( s )
    return cOutfit[s]

@@ -2,7 +2,8 @@ use anyhow::Result;
 use encase::{ShaderSize, ShaderType};
 use glow::*;
 use naev_core::start;
-use nalgebra::{Matrix3, Matrix4, Point3, Vector3, Vector4};
+use nalgebra::{Matrix3, Matrix4, Point3, Vector2, Vector3, Vector4};
+use physics::vec2::Vec2;
 use sdl3 as sdl;
 use std::ffi::CStr;
 use std::ops::Deref;
@@ -10,6 +11,8 @@ use std::os::raw::{c_char, c_double, c_int};
 use std::sync::{Arc, Mutex, MutexGuard, OnceLock, RwLock, atomic::AtomicBool, atomic::Ordering};
 
 pub mod buffer;
+pub mod camera;
+pub mod colour;
 pub mod sdf;
 pub mod shader;
 pub mod texture;
@@ -560,10 +563,10 @@ impl Context {
             )
         };
 
-        /* Focus behaviour. */
+        // Focus behaviour.
         sdl::hint::set_video_minimize_on_focus_loss(minimize);
 
-        /* Set up the attributes. */
+        // Set up the attributes.
         let gl_attr = sdlvid.gl_attr();
         gl_attr.set_context_profile(sdl::video::GLProfile::Core);
         gl_attr.set_double_buffer(true);
@@ -1005,4 +1008,126 @@ pub extern "C" fn gl_setFullscreen(enable: c_int) {
             warn_err!(e);
         }
     }
+}
+
+use mlua::UserDataRef;
+pub struct LuaGfx;
+/*
+ * @brief Lua bindings to interact with rendering and the Naev graphical
+ * environment.
+ *
+ * An example would be:
+ * @code
+ * t  = tex.open( GFX_PATH"foo/bar.png" ) -- Loads the texture
+ * gfx.renderTex( t, 0., 0. ) -- Draws texture at origin
+ * @endcode
+ *
+ * @luamod gfx
+ */
+impl mlua::UserData for LuaGfx {
+    fn add_methods<M: mlua::UserDataMethods<Self>>(methods: &mut M) {
+        /*
+         * @brief Gets the dimensions of the Naev window.
+         *
+         * @usage screen_w, screen_h = gfx.dim()
+         *
+         * GUI modifications to the screen size.
+         *    @luatreturn number The width of the Naev window.
+         *    @luatreturn number The height of the Naev window.
+         *    @luatreturn scale The scaling factor.
+         * @luafunc dim
+         */
+        methods.add_function("dim", |_, ()| -> mlua::Result<(f32, f32, f32)> {
+            let ctx = Context::get();
+            let dims = ctx.dimensions.read().unwrap();
+            Ok((dims.view_width, dims.view_height, dims.view_scale))
+        });
+        /*
+         * @brief Gets the screen coordinates from game coordinates.
+         *
+         *    @luatparam Vec2 Vector of coordinates to transform.
+         *    @luatparam[opt=false] boolean Whether or not to invert y axis.
+         *    @luatreturn Vec2 Transformed vector.
+         * @luafunc screencoords
+         */
+        methods.add_function("screencoords", |_, pos: Vec2| -> mlua::Result<Vec2> {
+            let ctx = Context::get();
+            let dims = ctx.dimensions.read().unwrap();
+            let screen: Vector2<f64> = {
+                let cam = camera::CAMERA.read().unwrap();
+                let view = Vector2::new(dims.view_width as f64, dims.view_height as f64);
+                let mut screen = (pos.into_vector2() - cam.pos()) * cam.zoom + view * 0.5;
+                screen.y = dims.view_height as f64 - screen.y;
+                screen
+            };
+            Ok(screen.into())
+        });
+        /*
+         * @brief Renders a texture.
+         *
+         * This function has variable parameters depending on how you want to render.
+         *
+         * @usage gfx.renderTex( tex, 0., 0. ) -- Render tex at origin
+         * @usage gfx.renderTex( tex, 0., 0., col ) -- Render tex at origin with colour
+         * col
+         * @usage gfx.renderTex( tex, 0., 0., 4, 3 ) -- Render sprite at position 4,3
+         * (top-left is 1,1)
+         * @usage gfx.renderTex( tex, 0., 0., 4, 3, col ) -- Render sprite at position
+         * 4,3 (top-left is 1,1) with colour col
+         *
+         *    @luatparam Tex tex Texture to render.
+         *    @luatparam number pos_x X position to render texture at.
+         *    @luatparam number pos_y Y position to render texture at.
+         *    @luatparam[opt=0] int sprite_x X sprite to render.
+         *    @luatparam[opt=0] int sprite_y Y sprite to render.
+         *    @luatparam[opt] Colour colour Colour to use when rendering.
+         * @luafunc renderTex
+         */
+        methods.add_function(
+            "renderTex",
+            |_,
+             (tex, x, y, sx, sy, col): (
+                UserDataRef<crate::texture::Texture>,
+                f32,
+                f32,
+                Option<usize>,
+                Option<usize>,
+                Option<colour::Colour>,
+            )|
+             -> mlua::Result<()> {
+                let sx = sx.unwrap_or(1) - 1;
+                let sy = sy.unwrap_or(1) - 1;
+                let w = tex.texture.w as f32;
+                let h = tex.texture.h as f32;
+                #[rustfmt::skip]
+                let transform: Matrix3<f32> = Matrix3::new(
+                    w,   0.0,  x,
+                    0.0,  h,   y,
+                    0.0, 0.0, 1.0,
+                );
+                let tw = tex.sw as f32;
+                let th = tex.sh as f32;
+                let tx = tw * (sx as f32) / w;
+                let ty = th * ((tex.sy as f32) - (sy as f32) - 1.0) / h;
+                #[rustfmt::skip]
+                let texture: Matrix3<f32> = Matrix3::new(
+                    tw,  0.0, tx,
+                    0.0, th,  ty,
+                    0.0, 0.0, 1.0,
+                );
+                let colour = col.unwrap_or(colour::WHITE);
+                let data = TextureUniform {
+                    texture,
+                    transform,
+                    colour: colour.into(),
+                };
+                Ok(tex.draw_ex(Context::get(), &data)?)
+            },
+        );
+    }
+}
+
+pub fn open_gfx(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
+    let proxy = lua.create_proxy::<LuaGfx>()?;
+    Ok(proxy)
 }

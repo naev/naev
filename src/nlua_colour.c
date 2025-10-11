@@ -36,16 +36,19 @@ static const luaL_Reg colL_methods[] = {
    { "__eq", colL_eq },
    { "__tostring", colL_tostring },
    { "new", colL_new },
-   { "newHSV", colL_newHSV },
+   { "new_named", colL_new },
+   { "new_hsv", colL_newHSV },
    { "alpha", colL_alpha },
    { "rgb", colL_rgb },
    { "rgba", colL_rgba },
    { "hsv", colL_hsv },
-   { "setRGB", colL_setrgb },
-   { "setHSV", colL_sethsv },
-   { "setAlpha", colL_setalpha },
-   { "linearToGamma", colL_linearToGamma },
-   { "gammaToLinear", colL_gammaToLinear },
+   { "set_rgb", colL_setrgb },
+   { "set_hsv", colL_sethsv },
+   { "set_alpha", colL_setalpha },
+   { "to_gamma", colL_linearToGamma },
+   { "to_linear", colL_gammaToLinear },
+   { "hsv_to_rgb", colL_rgb },
+   { "rgb_to_hsv", colL_hsv },
    { 0, 0 } }; /**< Colour metatable methods. */
 
 /**
@@ -178,9 +181,6 @@ static int colL_tostring( lua_State *L )
  * @brief Creates a new colour. Colours are assumed to be in gamma colour space
  * by default and are converted to linear unless specified.
  *
- * @usage colour.new( "Red" ) -- Gets colour by name
- * @usage colour.new( "Red", 0.5 ) -- Gets colour by name with alpha 0.5
- * @usage colour.new() -- Creates a white (blank) colour
  * @usage colour.new( 1., 0., 0. ) -- Creates a bright red colour
  * @usage colour.new( 1., 0., 0., 0.5 ) -- Creates a bright red colour with
  * alpha 0.5
@@ -236,7 +236,7 @@ static int colL_new( lua_State *L )
  * @brief Creates a new colour from HSV values. Colours are assumed to be in
  * gamma colour space by default and are converted to linear unless specified.
  *
- * @usage colour.new( 0., 0.5, 0.5 ) -- Creates a colour with 0 hue, 0.5
+ * @usage colour.new_hsv( 0., 0.5, 0.5 ) -- Creates a colour with 0 hue, 0.5
  * saturation and 0.5 value.
  *
  *    @luatparam number h Hue of the colour (0-360 value).
@@ -246,7 +246,7 @@ static int colL_new( lua_State *L )
  *    @luatparam[opt=false] gamma Whether to load the colour in the gamma
  * colour space.
  *    @luatreturn Colour A newly created colour.
- * @luafunc newHSV
+ * @luafunc new_hsv
  */
 static int colL_newHSV( lua_State *L )
 {
@@ -397,7 +397,7 @@ static int colL_hsv( lua_State *L )
  *    @luatparam number r Red value to set.
  *    @luatparam number g Green value to set.
  *    @luatparam number b Blue value to set.
- * @luafunc setRGB
+ * @luafunc set_rgb
  */
 static int colL_setrgb( lua_State *L )
 {
@@ -419,7 +419,7 @@ static int colL_setrgb( lua_State *L )
  *    @luatparam number h Hue value to set.
  *    @luatparam number s Saturation value to set.
  *    @luatparam number v Value to set.
- * @luafunc setHSV
+ * @luafunc set_hsv
  */
 static int colL_sethsv( lua_State *L )
 {
@@ -441,7 +441,7 @@ static int colL_sethsv( lua_State *L )
  *
  *    @luatparam Colour col Colour to set alpha of.
  *    @luatparam number alpha Alpha value to set.
- * @luafunc setAlpha
+ * @luafunc set_alpha
  */
 static int colL_setalpha( lua_State *L )
 {
@@ -455,7 +455,7 @@ static int colL_setalpha( lua_State *L )
  *
  *    @luatparam Colour col Colour to change from linear to gamma.
  *    @luatreturn Colour Modified colour.
- * @luafunc linearToGamma
+ * @luafunc to_gamma
  */
 static int colL_linearToGamma( lua_State *L )
 {
@@ -474,7 +474,7 @@ static int colL_linearToGamma( lua_State *L )
  *
  *    @luatparam Colour col Colour to change from gamma corrected to linear.
  *    @luatreturn Colour Modified colour.
- * @luafunc gammaToLinear
+ * @luafunc to_linear
  */
 static int colL_gammaToLinear( lua_State *L )
 {

@@ -116,8 +116,8 @@ vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
    end
    sov = bgshaders.init( shader_ov, sf, {nobright=true} )
 
-   local h, s, v = colour.new( 92/255, 230/255, 23/255, 1, true ):hsv()
-   r, g, b = colour.newHSV( h, s * nc.nebu_saturation, v, 1, true ):rgb()
+   local h, s, v = colour.rgb_to_hsv( 92/255, 230/255, 23/255 )
+   r, g, b = colour.hsv_to_rgb( h, s * nc.nebu_saturation, v )
    rgba = {r, g, b, 1}
 
    gfx.lightAmbient( r, g, b, 3 )

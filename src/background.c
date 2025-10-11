@@ -487,7 +487,6 @@ static nlua_env *background_create( const char *name )
    env = nlua_newEnv( name );
    nlua_loadStandard( env );
    nlua_loadTex( env );
-   nlua_loadCol( env );
    nlua_loadBackground( env );
    nlua_loadCamera( env );
    nlua_loadGFX( env );

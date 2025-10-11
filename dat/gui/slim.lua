@@ -31,13 +31,13 @@ local cols = {}
 local icons = {}
 local has_flow
 
-local cGrey = colour.new("Grey40")
---local cWhite = colour.new("White")
---local cRed = colour.new("Red")
---local cOrange = colour.new("Orange")
---local cCyan = colour.new("Cyan")
-local cFriend = colour.new("Friend")
-local cHostile = colour.new("Hostile")
+local cGrey = colour.new_named("Grey40")
+--local cWhite = colour.new_named("White")
+--local cRed = colour.new_named("Red")
+--local cOrange = colour.new_named("Orange")
+--local cCyan = colour.new_named("Cyan")
+local cFriend = colour.new_named("Friend")
+local cHostile = colour.new_named("Hostile")
 
 local scan_icon, scandone_icon
 
@@ -77,17 +77,17 @@ function create()
    cols.ammo    = colour.new( 140/255,  94/255,   7/255 )
    cols.heat    = colour.new( 114/255,  26/255,  14/255 )
    cols.heat2   = colour.new( 222/255,  51/255,  27/255 )
-   cols.afb     = colour.new(cols.heat)
-   cols.afb:setAlpha(.5)
+   cols.afb     = cols.heat:clone()
+   cols.afb:set_alpha(.5)
    cols.ready   = colour.new(  14/255, 108/255, 114/255 )
    cols.temperature = cols.heat
    cols.flow    = colour.new( 189/255, 166/255,  85/255 )
-   cols.missile = colour.new(cols.txt_enm)
+   cols.missile = cols.txt_enm
    -- Weaposn
-   cols.weap_off= colour.new( "FontGrey" )
-   cols.weap_pri= colour.new( "FontRed" )
-   cols.weap_sec= colour.new( "FontYellow" )
-   cols.weap_on = colour.new( "FontGreen" )
+   cols.weap_off= colour.new_named( "FontGrey" )
+   cols.weap_pri= colour.new_named( "FontRed" )
+   cols.weap_sec= colour.new_named( "FontYellow" )
+   cols.weap_on = colour.new_named( "FontGreen" )
    -- Active outfit bar
    cols.slot_bg = colour.new(  12/255,  14/255,  20/255 )
 
@@ -718,7 +718,7 @@ local function render_ammoBar( weap, x, y )
       if track == -1 or ptarget == nil then
          trackcol = cols.txt_una
       else -- Handling turret tracking.
-         trackcol = colour.newHSV(125*track, 1, 1)
+         trackcol = colour.new_hsv(125*track, 1, 1)
       end
       lg.setShader( tracking_light )
       lg.setColour( trackcol )
@@ -918,7 +918,7 @@ function render( dt, dt_mod )
       if timers[3] <= -0.5 then
          timers[3] = 0.5
       end
-      colour.setAlpha( cols.missile, math.abs(timers[3]) * 1.2 + .4 )
+      colour.set_alpha( cols.missile, math.abs(timers[3]) * 1.2 + .4 )
       gfx.print( false, missile_lock_text, (screen_w - missile_lock_length)/2, screen_h - 100, cols.missile )
    end
 

@@ -513,6 +513,17 @@ naevcrs = rust.bindgen(
       depends: [naev_rlib_compile],
       command: [ 'env', cargo_env, cargo, 'clippy', cargo_options, ] )
 
+   # Run all our Rust tests (if we have them)
+   test('cargo test --workspace',
+      cargo,
+      env: [cargo_env],
+      timeout: 300,
+      args: ['test', '--workspace'] + cargo_options,
+      workdir: meson.project_build_root(),
+      is_parallel: false, # too slow
+      depends: [naev_rlib_compile],
+   )
+
    # Naevlua is unused and unsupported with rust for now.
    #naevlua_bin = executable(
    #   'naevlua',
@@ -678,7 +689,7 @@ custom_target(
    build_by_default: true,
    command: [
       luacheckrc_extractor,
-      nlua_source + files('src/nlua_vec2.c'),
+      nlua_source + files('src/nlua_vec2.c') + files('src/nlua_colour.c'),
       '--output',
       join_paths(meson.current_source_dir(),'utils','@OUTPUT@'),
    ],

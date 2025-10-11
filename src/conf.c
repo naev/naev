@@ -607,6 +607,7 @@ int conf_parseCLI( int argc, char **argv )
       { "devmode", no_argument, 0, 'D' },
       { "help", no_argument, 0, 'h' },
       { "version", no_argument, 0, 'v' },
+      { "exitmainmenu", no_argument, 0, '\e' },
       { NULL, 0, 0, 0 } };
    int option_index = 1;
    int c            = 0;
@@ -665,6 +666,9 @@ int conf_parseCLI( int argc, char **argv )
       case 'D':
          conf.devmode = 1;
          LOG( _( "Enabling developer mode." ) );
+         break;
+      case '\e':
+         conf.exit_main_menu = 1;
          break;
 
       case 'v':

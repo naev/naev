@@ -4,11 +4,13 @@ test('main_menu',
    find_program('watch-for-msg.py'),
    args: [
       naev_py,
+      '--exitmainmenu',
       'Reached main menu'
    ],
    env: ['WITHGDB=NO'],
    workdir: meson.project_source_root(),
-   protocol: 'exitcode'
+   protocol: 'exitcode',
+   timeout: 90
    )
 
 if (ascli_exe.found())
@@ -44,12 +46,4 @@ test('search_for_unsupported_sysdep_strings',
    find_program('grep'),
    args: ['-q', '%<PRI', join_paths(meson.project_source_root(), 'po', 'naev.pot')],
    should_fail: true,
-)
-
-
-# Run all our Rust tests (if we have them)
-test('cargo test --workspace',
-   find_program('cargo'),
-   args: ['test', '--workspace'],
-   workdir: meson.project_build_root(),
 )

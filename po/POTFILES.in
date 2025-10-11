@@ -611,6 +611,7 @@ dat/ships/neutral/vendetta.xml
 dat/ships/neutral/vendetta_whiplash.xml
 dat/ships/neutral/vigilance.xml
 dat/ships/neutral/zebra.xml
+dat/ships/neutral/zebra_wolfie.xml
 dat/ships/pirate/dealbreaker.xml
 dat/ships/pirate/pirate_admonisher.xml
 dat/ships/pirate/pirate_ancestor.xml
@@ -3332,6 +3333,7 @@ dat/missions/onion/onion04.lua
 dat/missions/onion/onion05.lua
 dat/missions/onion/onion06.lua
 dat/missions/onion/onion07.lua
+dat/missions/onion/onion08.lua
 dat/missions/pirate/blackcat.lua
 dat/missions/pirate/contraband.lua
 dat/missions/pirate/contraband_cake.lua
@@ -3836,7 +3838,6 @@ src/base64.h
 src/board.c
 src/board.h
 src/camera.h
-src/camera.rs
 src/cgltf.h
 src/claim.c
 src/claim.h
@@ -3859,6 +3860,7 @@ src/console.h
 src/constants.c
 src/constants.h
 src/core/src/lib.rs
+src/core/src/lua.rs
 src/core/src/ntime.rs
 src/core/src/nxml.rs
 src/core/src/start.rs
@@ -4128,7 +4130,9 @@ src/physfs_archiver_blacklist.c
 src/physfs_archiver_blacklist.h
 src/physics.c
 src/physics.h
-src/physics.rs
+src/physics/src/collide.rs
+src/physics/src/lib.rs
+src/physics/src/vec2.rs
 src/pilot.c
 src/pilot.h
 src/pilot_cargo.c
@@ -4163,6 +4167,8 @@ src/queue.h
 src/render.c
 src/render.h
 src/renderer/src/buffer.rs
+src/renderer/src/camera.rs
+src/renderer/src/colour.rs
 src/renderer/src/lib.rs
 src/renderer/src/sdf.rs
 src/renderer/src/shader.rs
@@ -4235,7 +4241,6 @@ src/utf8.h
 src/valgrind.h
 src/vec2.c
 src/vec2.h
-src/vec2.rs
 src/vec3.c
 src/vec3.h
 src/weapon.c

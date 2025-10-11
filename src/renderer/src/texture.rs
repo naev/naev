@@ -95,7 +95,7 @@ struct TextureSearch<'a> {
     sdf: bool,
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct TextureData {
     /// Name of the texture
     name: Option<String>,
@@ -367,7 +367,7 @@ impl TextureData {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct Texture {
     pub path: Option<String>,
     name: Option<CString>, // TODO remove when not needed
@@ -1988,6 +1988,20 @@ impl UserData for Texture {
     //fields.add_field_method_get("y", |_, this| Ok(this.0.y));
     //}
     fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
+        /*
+         * @brief Gets a displayable texture string.
+         *
+         *    @luatparam Tex tex Texture to display as a string.
+         *    @luatreturn string A string representing the texture.
+         * @luafunc __tostring
+         */
+        methods.add_method(
+            MetaMethod::ToString,
+            |_, this, ()| -> mlua::Result<String> {
+                let name = this.path.as_deref().unwrap_or("???");
+                Ok(format!("Texture( {} )", &name))
+            },
+        );
         /*
          * @brief Opens a texture.
          *

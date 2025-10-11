@@ -55,6 +55,7 @@ mutex = { path="@BUILD@/src/mutex" }
 ndata = { path="@BUILD@/src/ndata" }
 renderer = { path="@BUILD@/src/renderer" }
 toolkit = { path="@BUILD@/src/toolkit" }
+physics = { path="@BUILD@/src/physics" }
 formatx = "0.2"
 glow = "0.16"
 nalgebra = { version = "0.34", features = ["bytemuck", "encase"] }
@@ -67,6 +68,10 @@ symphonia = "0.5"
 thunderdome = "0.6"
 static_assertions = "1.1"
 tracing-mutex = "0.3"
+derive_more = { version = "2", features = ["from", "into"] }
+palette = "0.7" # Colour conversion
+trie-rs = { version = "0.4" }
+softfloat = "1.0"
 
 [dependencies]
 audio = { workspace = true }
@@ -86,17 +91,19 @@ bytemuck = { workspace = true }
 encase = { workspace = true }
 roxmltree = { workspace = true }
 image = { workspace = true }
+physics = { workspace = true }
 mlua = { workspace = true }
 constcat = "0.6"
-derive_more = { version = "2", features = ["from", "into"] }
 rand = "0.9"
 rayon = "1.11" # parallel computation
 static_assertions = "1.1"
-palette = "0.7" # Colour conversion
+palette = { workspace = true }
 serde_yaml2 = "0.1"
 # gltf-rs crate doesn't support WEBP in any release atm...
 gltf = { git = "https://github.com/gltf-rs/gltf.git", rev = "12fc1b7ce28c7b4c6d1b881a30df24060dccfbda", features = ["extras", "names", "utils", "EXT_texture_webp", "KHR_materials_emissive_strength"] }
 #gltf = { version = "1", features = ["extras", "names", "utils"] }
+colored = "3"
+regex = "1.11"
 
 # Probably useful
 #etagere = "0" # Texture Atlas generation

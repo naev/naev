@@ -9,6 +9,7 @@ subdir('log')
 subdir('mutex')
 subdir('renderer')
 subdir('toolkit')
+subdir('physics')
 source_rust = files(
    'audio/src/lib.rs',
    'audio/src/debug.rs',
@@ -23,6 +24,7 @@ source_rust = files(
    'core/src/nxml.rs',
    'core/src/start.rs',
    'core/src/utils.rs',
+   'core/src/lua.rs',
    'mutex/src/lib.rs',
    'ndata/src/lib.rs',
    'ndata/src/env.rs',
@@ -36,10 +38,14 @@ source_rust = files(
    'renderer/src/sdf.rs',
    'renderer/src/shader.rs',
    'renderer/src/texture.rs',
+   'renderer/src/camera.rs',
+   'renderer/src/colour.rs',
    'toolkit/src/lib.rs',
    'toolkit/src/widget.rs',
+   'physics/src/lib.rs',
+   'physics/src/collide.rs',
+   'physics/src/vec2.rs',
    'array.rs',
-   'camera.rs',
    'damagetype.rs',
    'faction.rs',
    'input.rs',
@@ -49,11 +55,9 @@ source_rust = files(
    'nebula.rs',
    'nlua.rs',
    'outfit.rs',
-   'physics.rs',
    'rng.rs',
    'ship.rs',
    'slots.rs',
-   'vec2.rs',
    'lua/ryaml.rs',
 )
 ####
@@ -202,7 +206,6 @@ nlua_source = files(
    'nlua_camera.c',
    'nlua_canvas.c',
    'nlua_cli.c',
-   'nlua_colour.c',
    'nlua_commodity.c',
    'nlua_data.c',
    'nlua_diff.c',

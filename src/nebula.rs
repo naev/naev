@@ -43,20 +43,20 @@ impl Puff {
     fn new(ctx: &renderer::Context, fg: bool) -> Self {
         let (x, y) = {
             let dims = ctx.dimensions.read().unwrap();
-            let x = (dims.view_width + PUFF_BUFFER) * (rng::rngf32() * 2.0 - 1.0);
-            let y = (dims.view_height + PUFF_BUFFER) * (rng::rngf32() * 2.0 - 1.0);
+            let x = (dims.view_width + PUFF_BUFFER) * (rng::rng::<f32>() * 2.0 - 1.0);
+            let y = (dims.view_height + PUFF_BUFFER) * (rng::rng::<f32>() * 2.0 - 1.0);
             (x, y)
         };
-        let rx = rng::rngf32() * 2000.0 - 1000.0;
-        let ry = rng::rngf32() * 2000.0 - 1000.0;
+        let rx = rng::rng::<f32>() * 2000.0 - 1000.0;
+        let ry = rng::rng::<f32>() * 2000.0 - 1000.0;
         let height = {
-            let rnd = (0.2 * rng::rngf32()).abs();
+            let rnd = (0.2 * rng::rng::<f32>()).abs();
             1.0 + match fg {
                 true => -rnd,
                 false => rnd,
             }
         };
-        let size = 8.0 + rng::rngf32() * 20.0; // [8, 20] radius
+        let size = 8.0 + rng::rng::<f32>() * 20.0; // [8, 20] radius
         Self {
             data: [x, y, height, size],
             rand: [rx, ry],
@@ -365,7 +365,7 @@ impl NebulaData {
         self.view = ((1600. - self.density) * modifier + bonus) * 4.0 * self.scale;
 
         let z = {
-            let cam = crate::camera::CAMERA.read().unwrap();
+            let cam = renderer::camera::CAMERA.read().unwrap();
             let cam_pos = cam.pos();
             self.puff_uniform.offset.x = cam_pos.x as f32;
             self.puff_uniform.offset.y = cam_pos.y as f32;

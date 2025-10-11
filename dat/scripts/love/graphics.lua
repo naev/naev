@@ -60,11 +60,14 @@ local function _gcol( c )
    return r, g, b, a
 end
 local function _scol( r, g, b, a )
-   if type(r)=="table" then
+   local t = type(r)
+   if t=="table" then
       a = r[4]
       b = r[3]
       g = r[2]
       r = r[1]
+   elseif t=='userdata' then
+      return r:clone()
    end
    return naev.colour.new( r, g, b, a or 1 )
 end

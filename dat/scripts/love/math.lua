@@ -142,12 +142,12 @@ end
 
 function love_math.gammaToLinear( r, g, b )
    local col = naev.colour.new( r, g, b )
-   local lr, lg, lb = col:linearToGamma():rgb()
+   local lr, lg, lb = col:rgb() -- Defaults to linear
    return lr, lg, lb
 end
 function love_math.linearToGamma( lr, lg, lb )
-   local col = naev.colour.new( lr, lg, lb )
-   local r, g, b = col:gammaToLinear():rgb()
+   local col = naev.colour.new( lr, lg, lb, nil, true ) -- Store as "gamma"
+   local r, g, b = col:rgb(true) -- Do transformation from linear a second time
    return r, g, b
 end
 

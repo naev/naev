@@ -30,13 +30,11 @@
 #include "nlua_bkg.h"
 #include "nlua_camera.h"
 #include "nlua_cli.h"
-#include "nlua_colour.h"
 #include "nlua_linopt.h"
 #include "nlua_music.h"
 #include "nlua_tex.h"
 #include "nlua_tk.h"
 #include "nluadef.h"
-#include "nstring.h"
 #include "toolkit.h"
 
 #define BUTTON_WIDTH 50  /**< Button width. */
@@ -75,9 +73,7 @@ static int    cli_max_lines  = 0;
  */
 static int            cli_script( lua_State *L );
 static const luaL_Reg cli_methods[] = {
-   { "script", cli_script },
-   { "warn", cli_warn },
-   { NULL, NULL } }; /**< Console only functions. */
+   { "script", cli_script }, { NULL, NULL } }; /**< Console only functions. */
 
 /*
  * Prototypes.
@@ -85,7 +81,6 @@ static const luaL_Reg cli_methods[] = {
 static int  cli_keyhandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod,
                             int isrepeat );
 static void cli_render( double bx, double by, double w, double h, void *data );
-static int  cli_printCore( lua_State *L, int cli_only, int escape );
 static void cli_addMessage( const char *msg );
 static void cli_addMessageMax( const char *msg, const int l );
 void        cli_tabComplete( unsigned int wid );
@@ -104,47 +99,6 @@ static char *cli_escapeString( int *len_out, const char *s, int len )
    *len_out = b;
    return buf;
 }
-
-#define _CID( c ) ( ( (int)c ) - (int)'0' + 1 )
-static char *fontcol_toTermEscapeString( const char *s )
-{
-   static const char *const seq[_CID( 'z' ) + 1] = {
-      [_CID( '0' )] = "\e[0m",    // default
-      [_CID( 'b' )] = "\e[0;34m", // blue
-      [_CID( 'g' )] = "\e[0;32m", // green
-      [_CID( 'n' )] = "\e[1;30m", // grey
-      [_CID( 'o' )] = "\e[0;33m", // orange -> brown
-      [_CID( 'p' )] = "\e[0;35m", // purple or pink? -> magenta
-      [_CID( 'r' )] = "\e[0;31m", // red
-      [_CID( 'w' )] = "\e[0;37m", // white
-      [_CID( 'y' )] = "\e[1;33m"  // yellow
-   };
-   char       *buf;
-   const char *es = seq[_CID( '0' )];
-   int         i, wi = 0, count = 0;
-
-   for ( i = 0; s[i]; i++ )
-      if ( s[i] == FONT_COLOUR_CODE )
-         count++;
-
-   buf = calloc( i + count * 7 + 4 + 1, sizeof( char ) );
-
-   for ( i = 0; s[i]; i++ )
-      if ( s[i] == FONT_COLOUR_CODE &&
-           ( ( es =
-                  seq[( s[i + 1] >= '0' && s[i + 1] <= 'z' ) ? _CID( s[i + 1] )
-                                                             : 0] ) ) ) {
-         wi += sprintf( buf + wi, "%s", es );
-         i++;
-      } else
-         buf[wi++] = s[i];
-
-   if ( es != seq[_CID( '0' )] )
-      sprintf( buf + wi, "%s", seq[_CID( '0' )] );
-
-   return buf;
-}
-#undef _CID
 
 /**
  * @brief Prints a string.
@@ -167,76 +121,6 @@ void cli_printCoreString( const char *s, int escape )
       } else
          cli_addMessageMax( &s[iter.l_begin], iter.l_end - iter.l_begin );
    }
-}
-
-/**
- * @brief Back end for the Lua print functionality.
- */
-static int cli_printCore( lua_State *L, int cli_only, int escape )
-{
-   int n = lua_gettop( L );        /* Number of arguments. */
-   lua_getglobal( L, "tostring" ); /* f */
-   lua_pushstring( L, "" );        /* f, s */
-   for ( int i = 1; i <= n; i++ ) {
-      const char *s;
-      lua_pushvalue( L, -2 );               /* f, s, f */
-      lua_pushvalue( L, i );                /* f, s, f, v */
-      if ( lua_pcall( L, 1, 1, 0 ) != 0 ) { /* f, s, r */
-         WARN( _( "Error calling 'tostring':\n%s" ), lua_tostring( L, -1 ) );
-         lua_pop( L, 1 );
-         continue;
-      }
-      s = lua_tostring( L, -1 );
-      if ( s == NULL )
-         return NLUA_ERROR(
-            L, LUA_QL( "tostring" ) " must return a string to " LUA_QL(
-                  "print" ) );
-
-      lua_pushstring( L, "\t" ); /* f, s, '\t' */
-      lua_concat( L, 3 );        /* f, s */
-   }
-
-   const char *s = lua_tostring( L, -1 );
-
-   if ( !cli_only ) {
-      char *tolog = fontcol_toTermEscapeString( s );
-      LOG( "%s", tolog );
-      free( tolog );
-   }
-   cli_printCoreString( s, escape );
-
-   lua_pop( L, 2 ); /* */
-   return 0;
-}
-
-/**
- * @brief Barebones warn implementation for Lua, allowing scripts to print
- * warnings to stderr.
- *
- * @luafunc warn
- */
-int cli_warn( lua_State *L )
-{
-   return nlua_warn( L, 1 );
-}
-
-/**
- * @brief Replacement for the internal Lua print to print to both the console
- * and the terminal.
- */
-int cli_print( lua_State *L )
-{
-   return cli_printCore( L, 0, 0 );
-}
-
-/**
- * @brief Prints raw markup to the console.
- *
- * @luafunc printRaw
- */
-int cli_printRaw( lua_State *L )
-{
-   return cli_printCore( L, 0, 0 );
 }
 
 /**
@@ -504,7 +388,6 @@ static int cli_initLua( void )
    cli_env = nlua_newEnv( "console" );
    nlua_loadStandard( cli_env );
    nlua_loadTex( cli_env );
-   nlua_loadCol( cli_env );
    nlua_loadBackground( cli_env );
    nlua_loadCLI( cli_env );
    nlua_loadCamera( cli_env );

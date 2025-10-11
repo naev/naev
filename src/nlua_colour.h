@@ -15,7 +15,7 @@
 /*
  * Library loading
  */
-int nlua_loadCol( nlua_env *env );
+// int nlua_loadCol( nlua_env *env );
 
 /*
  * Colour operations
