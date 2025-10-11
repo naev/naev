@@ -340,8 +340,7 @@ impl UserData for Rnd {
 }
 
 pub fn open_rnd(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
-    let proxy = lua.create_proxy::<Rnd>()?;
-    Ok(proxy)
+    Ok(lua.create_proxy::<Rnd>()?)
 }
 
 #[test]
