@@ -23,29 +23,20 @@ thread_local! {
     static RNG: std::cell::RefCell<rand::rngs::ThreadRng> = std::cell::RefCell::new(rand::rng());
 }
 
-/*
-pub fn rngi32() -> i32 {
-    RNG.with_borrow_mut(|x| x.random::<i32>())
-}
-*/
-
-pub fn rngu32() -> u32 {
-    RNG.with_borrow_mut(|x| x.random::<u32>())
+pub fn rng<T>() -> T
+where
+    rand::distr::StandardUniform: rand::prelude::Distribution<T>,
+{
+    RNG.with_borrow_mut(|x| x.random::<T>())
 }
 
-pub fn rngf32() -> f32 {
-    RNG.with_borrow_mut(|x| x.random::<f32>())
+pub fn range<T, R>(range: R) -> T
+where
+    T: std::cmp::PartialOrd + rand::distr::uniform::SampleUniform,
+    R: rand::distr::uniform::SampleRange<T>,
+{
+    RNG.with_borrow_mut(|x| x.random_range(range))
 }
-
-pub fn rngf64() -> f64 {
-    RNG.with_borrow_mut(|x| x.random::<f64>())
-}
-
-/*
-pub fn range(l: i32, h: i32) -> i32 {
-    RNG.with_borrow_mut(|x| x.gen_range(l..h))
-}
-*/
 
 /* Taken from probability package. */
 #[allow(clippy::excessive_precision)]
@@ -208,18 +199,13 @@ impl UserData for Rnd {
             "rnd",
             |_, (l, h): (Option<i64>, Option<i64>)| -> mlua::Result<mlua::Number> {
                 if let Some(l) = l {
-                    let r = rngu32() as i64;
                     Ok(if let Some(h) = h {
-                        if h < l {
-                            (r % (l - h + 1)) + h
-                        } else {
-                            (r % (h - l + 1)) + l
-                        }
+                        if h < l { range(h..=l) } else { range(l..=h) }
                     } else {
-                        r % l
+                        range(0..=l)
                     } as mlua::Number)
                 } else {
-                    Ok(rngf64())
+                    Ok(rng::<f64>())
                 }
             },
         );
@@ -238,7 +224,7 @@ impl UserData for Rnd {
          */
         methods.add_function("sigma", |_, ()| -> mlua::Result<mlua::Number> {
             Ok(normal_inverse(
-                0.158655255 + rngf64() * (1. - 0.158655255 * 2.),
+                0.158655255 + rng::<f64>() * (1. - 0.158655255 * 2.),
             ))
         });
         /*
@@ -258,7 +244,7 @@ impl UserData for Rnd {
          */
         methods.add_function("twosigma", |_, ()| -> mlua::Result<mlua::Number> {
             Ok(normal_inverse(
-                0.022750132 + rngf64() * (1. - 0.022750132 * 2.),
+                0.022750132 + rng::<f64>() * (1. - 0.022750132 * 2.),
             ))
         });
         /*
@@ -278,7 +264,7 @@ impl UserData for Rnd {
          */
         methods.add_function("threesigma", |_, ()| -> mlua::Result<mlua::Number> {
             Ok(normal_inverse(
-                0.0013498985 + rngf64() * (1. - 0.0013498985 * 2.),
+                0.0013498985 + rng::<f64>() * (1. - 0.0013498985 * 2.),
             ))
         });
         /*
@@ -296,7 +282,7 @@ impl UserData for Rnd {
          */
         methods.add_function(
             "uniform",
-            |_, (l, h): (f64, f64)| -> mlua::Result<mlua::Number> { Ok((h - l) * rngf64() + l) },
+            |_, (l, h): (f64, f64)| -> mlua::Result<mlua::Number> { Ok(range(l..=h)) },
         );
         /*
          * @brief Gets a random angle, i.e., a random number from 0 to 2*pi.
@@ -306,7 +292,7 @@ impl UserData for Rnd {
          * @luafunc angle
          */
         methods.add_function("angle", |_, ()| -> mlua::Result<mlua::Number> {
-            Ok(rngf64() * 2. * std::f64::consts::PI)
+            Ok(range(0. ..2. * std::f64::consts::PI))
         });
         /*
          * @brief Creates a random permutation
