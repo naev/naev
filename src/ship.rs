@@ -4,7 +4,6 @@ use log::warn;
 use rayon::prelude::*;
 use renderer::{Context, ContextWrapper};
 use std::ffi::{CStr, CString, c_void};
-use std::sync::Mutex;
 
 struct ShipWrapper(naevc::Ship);
 //unsafe impl Sync for ShipWrapper {}
@@ -78,40 +77,44 @@ pub extern "C" fn ship_gfxLoadNeeded() {
     }
 
     // Now we can mess with the context to try to load them as necessary
-    let needs2d: Mutex<Vec<&mut ShipWrapper>> = Mutex::new(vec![]);
     let ctx = Context::get().as_safe_wrap();
-    needsgfx.par_iter_mut().for_each(|ptr| {
-        let s = &mut ptr.0;
+    let mut needs2d: Vec<_> = needsgfx
+        .par_iter_mut()
+        .filter_map(|ptr| {
+            let s = &mut ptr.0;
 
-        let cpath = unsafe { CStr::from_ptr(s.gfx_path).to_str().unwrap() };
-        let base_path = unsafe {
-            CStr::from_ptr(match s.base_path.is_null() {
-                true => s.base_type,
-                false => s.base_path,
-            })
-            .to_str()
-            .unwrap()
-        };
-        let path = match cpath.starts_with('/') {
-            true => cpath,
-            false => &format!("gfx/ship3d/{base_path}/{cpath}"),
-        };
-        if match ndata::is_file(path) {
-            true => ptr.load_gfx_3d(path, &ctx),
-            false => {
-                let path = format!("gfx/ship3d/{base_path}/{cpath}.gltf");
-                ptr.load_gfx_3d(&path, &ctx)
+            let cpath = unsafe { CStr::from_ptr(s.gfx_path).to_str().unwrap() };
+            let base_path = unsafe {
+                CStr::from_ptr(match s.base_path.is_null() {
+                    true => s.base_type,
+                    false => s.base_path,
+                })
+                .to_str()
+                .unwrap()
+            };
+            let path = match cpath.starts_with('/') {
+                true => cpath,
+                false => &format!("gfx/ship3d/{base_path}/{cpath}"),
+            };
+            if match ndata::is_file(path) {
+                true => ptr.load_gfx_3d(path, &ctx),
+                false => {
+                    let path = format!("gfx/ship3d/{base_path}/{cpath}.gltf");
+                    ptr.load_gfx_3d(&path, &ctx)
+                }
             }
-        }
-        .is_err()
-        {
-            needs2d.lock().unwrap().push(ptr);
-        }
-    });
+            .is_ok()
+            {
+                None
+            } else {
+                Some(ptr)
+            }
+        })
+        .collect();
     drop(ctx); // Need to drop
 
     // 2D doesn't use the safe context system yet, so it can't be threaded with 3D
-    needs2d.lock().unwrap().iter_mut().for_each(|ptr| {
+    needs2d.iter_mut().for_each(|ptr| {
         let s = ptr.0;
         let cpath = unsafe { CStr::from_ptr(s.gfx_path).to_str().unwrap() };
         let base = cpath.split('_').next().unwrap_or("");
