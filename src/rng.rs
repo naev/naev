@@ -186,8 +186,8 @@ impl UserData for Rnd {
          *  both parameters (both included).
          *
          * @usage n = rnd.rnd() -- Number in range [0:1].
-         * @usage n = rnd.rnd(5) -- Number in range [0:5].
-         * @usage n = rnd.rnd(3,5) -- Number in range [3,5].
+         * @usage n = rnd.rnd(5) -- Integer in range [0:5].
+         * @usage n = rnd.rnd(3,5) -- Integer in range [3,5].
          *
          *    @luatparam number x First parameter, read description for details.
          *    @luatparam number y Second parameter, read description for details.
@@ -270,9 +270,9 @@ impl UserData for Rnd {
         /*
          * @brief Gets a random number in the given range, with a uniform distribution.
          *
-         * @usage n = uniform() -- Real number in the interval [0,1].
-         * @usage n = uniform(5) -- Real number in the interval [0,5].
-         * @usage n = uniform(3,5) -- Real number in the interval [3,5].
+         * @usage n = uniform() -- Real number in the interval [0,1).
+         * @usage n = uniform(5) -- Real number in the interval [0,5).
+         * @usage n = uniform(3,5) -- Real number in the interval [3,5).
          *
          *    @luatparam number x First parameter, read description for details.
          *    @luatparam number y Second parameter, read description for details.
@@ -282,7 +282,7 @@ impl UserData for Rnd {
          */
         methods.add_function(
             "uniform",
-            |_, (l, h): (f64, f64)| -> mlua::Result<mlua::Number> { Ok(range(l..=h)) },
+            |_, (l, h): (f64, f64)| -> mlua::Result<mlua::Number> { Ok(range(l..h)) },
         );
         /*
          * @brief Gets a random angle, i.e., a random number from 0 to 2*pi.
