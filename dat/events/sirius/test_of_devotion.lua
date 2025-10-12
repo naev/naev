@@ -163,6 +163,10 @@ function eventleft ( left )
 end
 
 function eventover ()
+   if end_hook then
+      return
+   end
+
    -- Get rid of enemies
    for k,v in ipairs(baddies) do
       if v:exists() then
