@@ -887,10 +887,6 @@ static int pilotL_remove( lua_State *L )
    if ( pilot_isPlayer( p ) )
       player_destroyed();
 
-   /* Run hook or it can break some missions. */
-   if ( !pilot_isFlag( p, PILOT_DEAD ) )
-      pilot_runHook( p, PILOT_HOOK_DEATH );
-
    /* Deletes the pilot. */
    pilot_delete( p );
 
