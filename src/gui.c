@@ -177,13 +177,27 @@ static void logradar( double *x, double *y, double res )
 {
    double m = hypotf( *x, *y ) / res;
    if ( m > radar_linrange ) {
-      m        = log( fabs( m ) ) * radar_logscale;
+      m        = log( m ) * radar_logscale;
       double a = atan2( *y, *x );
       *x       = m * cos( a );
       *y       = m * sin( a );
    } else {
       *x /= res;
       *y /= res;
+   }
+}
+
+static void unlogradar( double *x, double *y, double res )
+{
+   double m = hypotf( *x, *y );
+   if ( m > radar_linrange ) {
+      m        = res * exp( m / radar_logscale );
+      double a = atan2( *y, *x );
+      *x       = m * cos( a );
+      *y       = m * sin( a );
+   } else {
+      *x *= res;
+      *y *= res;
    }
 }
 
@@ -2084,8 +2098,11 @@ int gui_radarClickEvent( SDL_Event *event )
    }
    if ( !in_bounds )
       return 0;
-   x = ( mxr - cx ) * gui_radar.res + player.p->solid.pos.x;
-   y = ( myr - cy ) * gui_radar.res + player.p->solid.pos.y;
+   x = mxr - cx;
+   y = myr - cy;
+   unlogradar( &x, &y, gui_radar.res );
+   x += player.p->solid.pos.x;
+   y += player.p->solid.pos.y;
    return input_clickPos( event, x, y, 1., 10. * gui_radar.res,
                           15. * gui_radar.res );
 }
