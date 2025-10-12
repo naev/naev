@@ -134,9 +134,9 @@ fn require(lua: &mlua::Lua, filename: mlua::String) -> mlua::Result<mlua::Value>
 
     // Failed to load...
     Err(mlua::Error::RuntimeError(format!(
-        "module '{filename}'  not found:{errmsg}",
-        filename = filename.to_str()?,
-        errmsg = errmsg
+                "module '{filename}'  not found:{errmsg}",
+                filename = filename.to_str()?,
+                errmsg = errmsg
     )))
 }
 
@@ -212,7 +212,7 @@ impl NLua {
                     "#y" => colour(Color::Yellow),
                     x => x.to_string(),
                 })
-                .collect::<Vec<_>>()
+            .collect::<Vec<_>>()
                 .join("");
             if m.contains("\x1B[") {
                 m.push_str("\x1B[0m");
@@ -228,12 +228,12 @@ impl NLua {
                     for a in args {
                         msg.push_str(&a.to_string()?);
                         msg.push('\t');
-                    }
+            }
                     info!("{}", escape_colours(&msg));
                     let cmsg = std::ffi::CString::new(msg).unwrap();
                     unsafe {
                         naevc::cli_printCoreString(cmsg.as_ptr(), 0);
-                    }
+            }
                     Ok(())
                 },
             )?,
@@ -279,7 +279,7 @@ impl NLua {
                     }
                     Ok(())
                 },
-            )?,
+        )?,
         )?;
 
         // Load common chunk
@@ -496,6 +496,29 @@ impl NLua {
 }
 
 impl LuaEnv {
+    pub fn current( lua: &mlua::Lua ) -> Option<Self> {
+        let tbl: mlua::Table = match lua.globals().raw_get(crate::nlua::ENV) {
+            Ok(t) => t,
+            Err(e) => {
+                warn_err!(e);
+                return None;
+            },
+        };
+        match LuaEnv::from_table( &lua, tbl ) {
+            Ok(env) => Some(env),
+            Err(e) => {
+                warn_err!(e);
+                None
+            },
+        }
+    }
+
+    /// Sets up a Lua environment from a table. Assumes the table exists.
+    fn from_table( lua: &mlua::Lua, table: mlua::Table ) -> Result<Self> {
+        let rk = lua.create_registry_value(table.clone())?;
+        Ok(LuaEnv{ table, rk } )
+    }
+
     /// Gets a value from the environment
     pub fn get<V: FromLua>(&self, key: impl IntoLua) -> mlua::Result<V> {
         self.table.get(key)
@@ -576,6 +599,17 @@ impl LuaEnv {
     }
 }
 
+impl Clone for LuaEnv {
+    fn clone(&self) -> Self {
+        let t = &self.table;
+        let lua = &&NLUA;
+        LuaEnv {
+            table: t.clone(),
+            rk: lua.lua.create_registry_value(t).unwrap(),
+        }
+    }
+}
+
 pub static NLUA: LazyLock<NLua> = LazyLock::new(|| NLua::new().unwrap());
 pub fn init() -> Result<()> {
     let _unused = &NLUA;
@@ -618,13 +652,7 @@ pub extern "C" fn nlua_dupEnv(env: *mut LuaEnv) -> *mut LuaEnv {
         return env;
     }
     let env = unsafe { &*env };
-    let t = &env.table;
-    let lua = &&NLUA;
-    let newenv = LuaEnv {
-        table: t.clone(),
-        rk: lua.lua.create_registry_value(t).unwrap(),
-    };
-    Box::into_raw(Box::new(newenv))
+    Box::into_raw(Box::new(env.clone()))
 }
 
 #[unsafe(no_mangle)]
