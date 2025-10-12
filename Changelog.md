@@ -47,6 +47,7 @@
     - Escorts now follow the player
     - Autonav will warn the player if jumping or landing will fail the mission
     - Autonav will wait for escorts when landing or taking off
+ - Radar now has a linear area and a logarithmic area (outside of the circle) to show more regional information
 
 #### Content
  - 13 new missions and events
