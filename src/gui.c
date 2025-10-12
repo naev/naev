@@ -187,17 +187,20 @@ static void logradar( double *x, double *y, double res )
    }
 }
 
-static void unlogradar( double *x, double *y, double res )
+static double unlogradar( double *x, double *y, double res )
 {
    double m = hypotf( *x, *y );
    if ( m > radar_linrange ) {
-      m        = res * exp( m / radar_logscale );
-      double a = atan2( *y, *x );
-      *x       = m * cos( a );
-      *y       = m * sin( a );
+      double m2 = res * exp( m / radar_logscale );
+      double a  = atan2( *y, *x );
+      *x        = m2 * cos( a );
+      *y        = m2 * sin( a );
+      // Area of "1" pixel near the location
+      return m2 - res * exp( ( m - 1. ) / radar_logscale );
    } else {
       *x *= res;
       *y *= res;
+      return res;
    }
 }
 
@@ -2110,13 +2113,13 @@ int gui_radarClickEvent( SDL_Event *event )
    }
    if ( !in_bounds )
       return 0;
-   x = mxr - cx;
-   y = myr - cy;
-   unlogradar( &x, &y, gui_radar.res );
+   x                  = mxr - cx;
+   y                  = myr - cy;
+   double sensitivity = unlogradar( &x, &y, gui_radar.res );
    x += player.p->solid.pos.x;
    y += player.p->solid.pos.y;
-   return input_clickPos( event, x, y, 1., 10. * gui_radar.res,
-                          15. * gui_radar.res );
+   return input_clickPos( event, x, y, 1., 10. * sensitivity,
+                          15. * sensitivity );
 }
 
 /**
