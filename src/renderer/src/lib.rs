@@ -478,6 +478,7 @@ impl Context {
             )
         };
         gl_attr.set_context_version(major, minor);
+        //gl_attr.set_share_with_current_context(true);
 
         let mut wdwbuild = sdlvid.window(
             format!(

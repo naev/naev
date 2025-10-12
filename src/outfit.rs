@@ -27,16 +27,29 @@ fn get_mut() -> &'static mut [OutfitWrapper] {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn outfit_gfxStoreLoadNeeded() {
+    // Try to avoid messing with the context and just find what we have to update first
+    let mut needsgfx: Vec<&mut OutfitWrapper> = get_mut()
+        .iter_mut()
+        .filter_map(|ptr| {
+            let o = &mut ptr.0;
+            if o.properties & naevc::OUTFIT_PROP_NEEDSGFX == 0 {
+                return None;
+            }
+            o.properties &= !naevc::OUTFIT_PROP_NEEDSGFX;
+            if !o.gfx_store.is_null() || o.gfx_store_path.is_null() {
+                return None;
+            }
+            Some(ptr)
+        })
+        .collect();
+    if needsgfx.is_empty() {
+        return;
+    }
+
+    // Minimize OpenGL mucking
     let ctx = Context::get().as_safe_wrap();
-    get_mut().par_iter_mut().for_each(|ptr| {
+    needsgfx.par_iter_mut().for_each(|ptr| {
         let o = &mut ptr.0;
-        if o.properties & naevc::OUTFIT_PROP_NEEDSGFX == 0 {
-            return;
-        }
-        o.properties &= !naevc::OUTFIT_PROP_NEEDSGFX;
-        if !o.gfx_store.is_null() || o.gfx_store_path.is_null() {
-            return;
-        }
 
         let gfx_path = unsafe { CStr::from_ptr(o.gfx_store_path).to_str().unwrap() };
         let path = {

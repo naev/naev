@@ -34,7 +34,6 @@
 #include "nlua_gfx.h"
 #include "nlua_gui.h"
 #include "nlua_tk.h"
-#include "nstring.h"
 #include "ntracing.h"
 #include "opengl.h"
 #include "pause.h"
@@ -43,7 +42,6 @@
 #include "player_gui.h"
 #include "render.h"
 #include "space.h"
-#include "spfx.h"
 #include "start.h"
 #include "toolkit.h"
 
@@ -170,6 +168,41 @@ static const glColour *gui_getPilotColour( const Pilot *p );
 static int gui_doFunc( int func_ref, const char *func_name );
 static int gui_prepFunc( int func_ref, const char *func_name );
 static int gui_runFunc( const char *func, int nargs, int nret );
+
+static double radar_linrange =
+   40.; /**< Distance (in pixels) at which it becomes linear. */
+static double radar_logscale = 40.; /**< Factor used to make a smooth transition
+                                       from linear to logarithmic. */
+static void logradar( double *x, double *y, double res )
+{
+   double m = hypotf( *x, *y ) / res;
+   if ( m > radar_linrange ) {
+      m        = log( m ) * radar_logscale;
+      double a = atan2( *y, *x );
+      *x       = m * cos( a );
+      *y       = m * sin( a );
+   } else {
+      *x /= res;
+      *y /= res;
+   }
+}
+
+static double unlogradar( double *x, double *y, double res )
+{
+   double m = hypotf( *x, *y );
+   if ( m > radar_linrange ) {
+      double m2 = res * exp( m / radar_logscale );
+      double a  = atan2( *y, *x );
+      *x        = m2 * cos( a );
+      *y        = m2 * sin( a );
+      // Area of "1" pixel near the location
+      return m2 - res * exp( ( m - 1. ) / radar_logscale );
+   } else {
+      *x *= res;
+      *y *= res;
+      return res;
+   }
+}
 
 /**
  * Sets the GUI to defaults.
@@ -739,6 +772,15 @@ int gui_radarInit( int circle, int w, int h )
    gui_radar.shape = circle ? RADAR_CIRCLE : RADAR_RECT;
    gui_radar.w     = w;
    gui_radar.h     = h;
+   if ( circle ) {
+      // In the case of the circle it's radius directly
+      radar_linrange = (double)w;
+   } else {
+      // Average width + height and compute radius
+      radar_linrange = (double)( w + h ) * 0.5 * 0.5;
+   }
+   // Make it be roughly 80% of the viewport
+   radar_linrange *= 0.8;
    gui_setRadarResolution( player.radar_res );
    return 0;
 }
@@ -775,6 +817,10 @@ void gui_radarRender( double x, double y )
                          y + radar->h / 2. );
    } else if ( radar->shape == RADAR_CIRCLE )
       mat4_translate_xy( &gl_view_matrix, x, y );
+
+   // Draw linear range area
+   const glColour cRange = { .r = 0.45, .g = 0.45, .b = 0.6, .a = 0.1 };
+   gl_renderCircle( 0., 0., radar_linrange, &cRange, 0 );
 
    /*
     * spobs
@@ -1026,18 +1072,19 @@ void gui_renderPilot( const Pilot *p, RadarShape shape, double w, double h,
       x = ( p->solid.pos.x / res );
       y = ( p->solid.pos.y / res );
    } else {
-      x = ( ( p->solid.pos.x - player.p->solid.pos.x ) / res );
-      y = ( ( p->solid.pos.y - player.p->solid.pos.y ) / res );
+      x = p->solid.pos.x - player.p->solid.pos.x;
+      y = p->solid.pos.y - player.p->solid.pos.y;
+      logradar( &x, &y, res );
    }
    /* Get size. */
    ssize = sqrt( (double)ship_size( p->ship ) );
    scale = ( ssize + 1. ) / 2. * ( 1. + RADAR_RES_REF / res );
 
    /* Check if pilot in range. */
-   if ( ( ( shape == RADAR_RECT ) && ( ( ABS( x ) > ( w + scale ) / 2. ) ||
-                                       ( ABS( y ) > ( h + scale ) / 2. ) ) ) ||
+   if ( ( ( shape == RADAR_RECT ) && ( ( ABS( x ) > ( w + scale ) * 0.5 ) ||
+                                       ( ABS( y ) > ( h + scale ) * 0.5 ) ) ) ||
         ( ( shape == RADAR_CIRCLE ) &&
-          ( ( pow2( x ) + pow2( y ) ) > pow2( w ) ) ) ) {
+          ( ( pow2( x ) + pow2( y ) ) > pow2( w + scale ) ) ) ) {
 
       /* Draw little targeted symbol. */
       if ( p->id == player.p->target && !overlay )
@@ -1145,8 +1192,9 @@ void gui_renderAsteroid( const Asteroid *a, double w, double h, double res,
       x = ( a->sol.pos.x / res );
       y = ( a->sol.pos.y / res );
    } else {
-      x = ( ( a->sol.pos.x - player.p->solid.pos.x ) / res );
-      y = ( ( a->sol.pos.y - player.p->solid.pos.y ) / res );
+      x = a->sol.pos.x - player.p->solid.pos.x;
+      y = a->sol.pos.y - player.p->solid.pos.y;
+      logradar( &x, &y, res );
    }
 
    /* Get size. */
@@ -1204,16 +1252,25 @@ void gui_renderViewportFrame( double res, double render_radius, int overlay )
       return;
    }
 
-   const double z           = cam_getZoom() * res;
-   const double vp_corner_x = SCREEN_W / 2.0 / z;
-   const double vp_corner_y = SCREEN_H / 2.0 / z;
+   double vp_corner_x, vp_corner_y;
+   if ( overlay ) {
+      const double z = cam_getZoom() * res;
+      vp_corner_x    = SCREEN_W / 2.0 / z;
+      vp_corner_y    = SCREEN_H / 2.0 / z;
+   } else {
+      const double z = cam_getZoom();
+      // Centered on 0,0 so should be correct
+      vp_corner_x = SCREEN_W / 2.0 / z;
+      vp_corner_y = SCREEN_H / 2.0 / z;
+      logradar( &vp_corner_x, &vp_corner_y, res );
+   }
+
    if ( isfinite( render_radius ) &&
         pow2( vp_corner_x ) + pow2( vp_corner_y ) > pow2( render_radius ) ) {
       return;
    }
 
-   double cx = 0.0;
-   double cy = 0.0;
+   double cx, cy;
    if ( overlay ) {
       /* overlay */
       cam_getPos( &cx, &cy );
@@ -1223,6 +1280,9 @@ void gui_renderViewportFrame( double res, double render_radius, int overlay )
       ovr_center( &ox, &oy );
       cx += ox;
       cy += oy;
+   } else {
+      cx = 0.0;
+      cy = 0.0;
    }
    const double right_angle = M_PI / 2.0;
    glUseProgram( shaders.viewport_frame.program );
@@ -1370,8 +1430,11 @@ void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res,
       cx = spob->pos.x / res;
       cy = spob->pos.y / res;
    } else {
-      cx = ( spob->pos.x - player.p->solid.pos.x ) / res;
-      cy = ( spob->pos.y - player.p->solid.pos.y ) / res;
+      double x = spob->pos.x - player.p->solid.pos.x;
+      double y = spob->pos.y - player.p->solid.pos.y;
+      logradar( &x, &y, res );
+      cx = x;
+      cy = y;
    }
 
    /* Check if in range. */
@@ -1379,7 +1442,7 @@ void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res,
       GLfloat x = ABS( cx ) - r;
       GLfloat y = ABS( cy ) - r;
       /* Out of range. */
-      if ( x * x + y * y > pow2( w - 2 * r ) ) {
+      if ( x * x + y * y > pow2( w + 2. * r ) ) {
          if ( ( player.p->nav_spob == ind ) && !overlay )
             gui_renderRadarOutOfRange( RADAR_CIRCLE, w, w, cx, cy,
                                        &cRadar_tSpob );
@@ -1388,7 +1451,7 @@ void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res,
    } else {
       if ( shape == RADAR_RECT ) {
          /* Out of range. */
-         if ( ( ABS( cx ) - r > w / 2. ) || ( ABS( cy ) - r > h / 2. ) ) {
+         if ( ( ABS( cx ) - r > w * 0.5 ) || ( ABS( cy ) - r > h * 0.5 ) ) {
             if ( ( player.p->nav_spob == ind ) && !overlay )
                gui_renderRadarOutOfRange( RADAR_RECT, w, h, cx, cy,
                                           &cRadar_tSpob );
@@ -1478,14 +1541,17 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h,
       cx = jp->pos.x / res;
       cy = jp->pos.y / res;
    } else {
-      cx = ( jp->pos.x - player.p->solid.pos.x ) / res;
-      cy = ( jp->pos.y - player.p->solid.pos.y ) / res;
+      double jx = jp->pos.x - player.p->solid.pos.x;
+      double jy = jp->pos.y - player.p->solid.pos.y;
+      logradar( &jx, &jy, res );
+      cx = jx;
+      cy = jy;
    }
 
    /* Check if in range. */
    if ( shape == RADAR_RECT ) {
       /* Out of range. */
-      if ( ( ABS( cx ) - r > w / 2. ) || ( ABS( cy ) - r > h / 2. ) ) {
+      if ( ( ABS( cx ) - r > w * 0.5 ) || ( ABS( cy ) - r > h * 0.5 ) ) {
          if ( ( player.p->nav_hyperspace == ind ) && !overlay )
             gui_renderRadarOutOfRange( RADAR_RECT, w, h, cx, cy,
                                        &cRadar_tSpob );
@@ -1495,7 +1561,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h,
       x = ABS( cx ) - r;
       y = ABS( cy ) - r;
       /* Out of range. */
-      if ( x * x + y * y > pow2( w - 2 * r ) ) {
+      if ( x * x + y * y > pow2( w + 2. * r ) ) {
          if ( ( player.p->nav_hyperspace == ind ) && !overlay )
             gui_renderRadarOutOfRange( RADAR_CIRCLE, w, w, cx, cy,
                                        &cRadar_tSpob );
@@ -1970,6 +2036,9 @@ void gui_free( void )
 void gui_setRadarResolution( double res )
 {
    gui_radar.res = CLAMP( RADAR_RES_MIN, RADAR_RES_MAX, res );
+
+   // Scalings for the radar
+   radar_logscale = radar_linrange / log( radar_linrange );
 }
 
 /**
@@ -2044,10 +2113,13 @@ int gui_radarClickEvent( SDL_Event *event )
    }
    if ( !in_bounds )
       return 0;
-   x = ( mxr - cx ) * gui_radar.res + player.p->solid.pos.x;
-   y = ( myr - cy ) * gui_radar.res + player.p->solid.pos.y;
-   return input_clickPos( event, x, y, 1., 10. * gui_radar.res,
-                          15. * gui_radar.res );
+   x                  = mxr - cx;
+   y                  = myr - cy;
+   double sensitivity = unlogradar( &x, &y, gui_radar.res );
+   x += player.p->solid.pos.x;
+   y += player.p->solid.pos.y;
+   return input_clickPos( event, x, y, 1., 10. * sensitivity,
+                          15. * sensitivity );
 }
 
 /**

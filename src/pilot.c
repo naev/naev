@@ -1742,22 +1742,6 @@ void pilot_dead( Pilot *p, unsigned int killer )
 
    /* Run Lua if applicable. */
    pilot_shipLExplodeInit( p );
-
-   /* Kill deployed ships. */
-   for ( int i = 0; i < array_size( p->escorts ); i++ ) {
-      /* Make sure the followers are valid. */
-      Pilot *pe = pilot_get( p->escorts[i].id );
-      if ( ( pe == NULL ) || pilot_isFlag( pe, PILOT_DEAD ) ||
-           pilot_isFlag( pe, PILOT_HIDE ) )
-         continue;
-
-      if ( !pilot_isFlag( pe, PILOT_CARRIED ) )
-         continue;
-
-      /* Update stats, they will include damage over time now. */
-      pilot_setFlag( pe, PILOT_CARRIER_DIED );
-      pilot_calcStats( pe );
-   }
 }
 
 /**
@@ -3008,6 +2992,11 @@ void pilot_delete( Pilot *p )
    if ( pilot_isFlag( p, PILOT_DELETE ) )
       return;
 
+   /* Run hook or it can break some missions. */
+   if ( !pilot_isFlag( p, PILOT_DEAD ) )
+      pilot_runHook( p, PILOT_HOOK_DEATH );
+   /* Can't be cancelled here. */
+
    /* Stop ship stuff. */
    pilot_shipLCleanup( p );
 
@@ -3038,6 +3027,22 @@ void pilot_delete( Pilot *p )
 
    /* Set flag to mark for deletion. */
    pilot_setFlag( p, PILOT_DELETE );
+
+   /* Kill deployed ships. */
+   for ( int i = 0; i < array_size( p->escorts ); i++ ) {
+      /* Make sure the followers are valid. */
+      Pilot *pe = pilot_get( p->escorts[i].id );
+      if ( ( pe == NULL ) || pilot_isFlag( pe, PILOT_DEAD ) ||
+           pilot_isFlag( pe, PILOT_HIDE ) )
+         continue;
+
+      if ( !pilot_isFlag( pe, PILOT_CARRIED ) )
+         continue;
+
+      /* Update stats, they will include damage over time now. */
+      pilot_setFlag( pe, PILOT_CARRIER_DIED );
+      pilot_calcStats( pe );
+   }
 }
 
 /**

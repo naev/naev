@@ -159,6 +159,7 @@ function land()
       vntk.msg(_("Another stop successfully reached"), fmt.f(stoptext, {pnt=scur}))
       mem.joannejumped = true -- She "jumped" into the current system by taking off.
       player.takeoff()
+
    elseif scur == mem.destplanet and mem.joannelanded and mem.stage == 5 then
       laststop_vn()
       mem.stage = mem.stage + 1
@@ -168,13 +169,12 @@ function land()
       mem.joannejumped = true -- She "jumped" into the current system by taking off.
       misn.osdCreate(_("Harja's Vengeance"), {_("Land on Sroolu to get your reward")})
       player.takeoff()
+
    elseif mem.stage < 5 then
       vntk.msg(_("You didn't follow Joanne!"), _("You landed on a planet Joanne didn't land on. Your mission is a failure!"))
       misn.finish(false)
 
    elseif mem.stage == 6 and scur == spob.get("Sroolu") then
-      misn.markerRm(mem.mark)
-
       vn.clear()
       vn.scene()
       local joanne = vn.newCharacter( achack.vn_joanne() )
@@ -221,8 +221,15 @@ function enter()
 
    -- Warn the player if fuel is not sufficient
    if mem.warnFuel then
-      if player.pilot():stats().fuel < 7*player.pilot():stats().fuel_consumption then
-         vntk.msg(_("Fuel Warning"),_("You don't have enough fuel for making 7 jumps. You'll have to buy some from civilian ships on the way."))
+      -- Get maximum jump length
+      local n = system.cur():jumpDist( spob.get(route[1]):system() )
+      for i=1,#route-1 do
+         local a = spob.get( route[i] ):system()
+         local b = spob.get( route[i+1] ):system()
+         n = math.max( n, a:jumpDist(b) )
+      end
+      if player.pilot():stats().fuel < n*player.pilot():stats().fuel_consumption then
+         vntk.msg(_("Fuel Warning"),fmt.f(_("You don't have enough fuel for making {jumps} jumps. You'll have to buy some from civilian ships on the way."),{jumps=n}))
       end
       mem.warnFuel = false
    end
