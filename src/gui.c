@@ -34,7 +34,6 @@
 #include "nlua_gfx.h"
 #include "nlua_gui.h"
 #include "nlua_tk.h"
-#include "nstring.h"
 #include "ntracing.h"
 #include "opengl.h"
 #include "pause.h"
@@ -43,7 +42,6 @@
 #include "player_gui.h"
 #include "render.h"
 #include "space.h"
-#include "spfx.h"
 #include "start.h"
 #include "toolkit.h"
 
@@ -170,6 +168,24 @@ static const glColour *gui_getPilotColour( const Pilot *p );
 static int gui_doFunc( int func_ref, const char *func_name );
 static int gui_prepFunc( int func_ref, const char *func_name );
 static int gui_runFunc( const char *func, int nargs, int nret );
+
+static double radar_linrange =
+   40.; /**< Distance (in pixels) at which it becomes linear. */
+static double radar_logscale = 40.; /**< Factor used to make a smooth transition
+                                       from linear to logarithmic. */
+static void logradar( double *x, double *y, double res )
+{
+   double m = hypotf( *x, *y ) / res;
+   if ( m > radar_linrange ) {
+      m        = log( fabs( m ) ) * radar_logscale;
+      double a = atan2( *y, *x );
+      *x       = m * cos( a );
+      *y       = m * sin( a );
+   } else {
+      *x /= res;
+      *y /= res;
+   }
+}
 
 /**
  * Sets the GUI to defaults.
@@ -739,6 +755,7 @@ int gui_radarInit( int circle, int w, int h )
    gui_radar.shape = circle ? RADAR_CIRCLE : RADAR_RECT;
    gui_radar.w     = w;
    gui_radar.h     = h;
+   radar_linrange  = (double)( w + h ) * 0.5 * 0.5;
    gui_setRadarResolution( player.radar_res );
    return 0;
 }
@@ -1026,8 +1043,9 @@ void gui_renderPilot( const Pilot *p, RadarShape shape, double w, double h,
       x = ( p->solid.pos.x / res );
       y = ( p->solid.pos.y / res );
    } else {
-      x = ( ( p->solid.pos.x - player.p->solid.pos.x ) / res );
-      y = ( ( p->solid.pos.y - player.p->solid.pos.y ) / res );
+      x = p->solid.pos.x - player.p->solid.pos.x;
+      y = p->solid.pos.y - player.p->solid.pos.y;
+      logradar( &x, &y, res );
    }
    /* Get size. */
    ssize = sqrt( (double)ship_size( p->ship ) );
@@ -1145,8 +1163,9 @@ void gui_renderAsteroid( const Asteroid *a, double w, double h, double res,
       x = ( a->sol.pos.x / res );
       y = ( a->sol.pos.y / res );
    } else {
-      x = ( ( a->sol.pos.x - player.p->solid.pos.x ) / res );
-      y = ( ( a->sol.pos.y - player.p->solid.pos.y ) / res );
+      x = a->sol.pos.x - player.p->solid.pos.x;
+      y = a->sol.pos.y - player.p->solid.pos.y;
+      logradar( &x, &y, res );
    }
 
    /* Get size. */
@@ -1204,16 +1223,25 @@ void gui_renderViewportFrame( double res, double render_radius, int overlay )
       return;
    }
 
-   const double z           = cam_getZoom() * res;
-   const double vp_corner_x = SCREEN_W / 2.0 / z;
-   const double vp_corner_y = SCREEN_H / 2.0 / z;
+   double vp_corner_x, vp_corner_y;
+   if ( overlay ) {
+      const double z = cam_getZoom() * res;
+      vp_corner_x    = SCREEN_W / 2.0 / z;
+      vp_corner_y    = SCREEN_H / 2.0 / z;
+   } else {
+      const double z = cam_getZoom();
+      // TODO fix
+      vp_corner_x = SCREEN_W / 2.0 / z;
+      vp_corner_y = SCREEN_H / 2.0 / z;
+      logradar( &vp_corner_x, &vp_corner_y, res );
+   }
+
    if ( isfinite( render_radius ) &&
         pow2( vp_corner_x ) + pow2( vp_corner_y ) > pow2( render_radius ) ) {
       return;
    }
 
-   double cx = 0.0;
-   double cy = 0.0;
+   double cx, cy;
    if ( overlay ) {
       /* overlay */
       cam_getPos( &cx, &cy );
@@ -1223,6 +1251,9 @@ void gui_renderViewportFrame( double res, double render_radius, int overlay )
       ovr_center( &ox, &oy );
       cx += ox;
       cy += oy;
+   } else {
+      cx = 0.0;
+      cy = 0.0;
    }
    const double right_angle = M_PI / 2.0;
    glUseProgram( shaders.viewport_frame.program );
@@ -1370,8 +1401,11 @@ void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res,
       cx = spob->pos.x / res;
       cy = spob->pos.y / res;
    } else {
-      cx = ( spob->pos.x - player.p->solid.pos.x ) / res;
-      cy = ( spob->pos.y - player.p->solid.pos.y ) / res;
+      double x = spob->pos.x - player.p->solid.pos.x;
+      double y = spob->pos.y - player.p->solid.pos.y;
+      logradar( &x, &y, res );
+      cx = x;
+      cy = y;
    }
 
    /* Check if in range. */
@@ -1478,8 +1512,11 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h,
       cx = jp->pos.x / res;
       cy = jp->pos.y / res;
    } else {
-      cx = ( jp->pos.x - player.p->solid.pos.x ) / res;
-      cy = ( jp->pos.y - player.p->solid.pos.y ) / res;
+      double jx = jp->pos.x - player.p->solid.pos.x;
+      double jy = jp->pos.y - player.p->solid.pos.y;
+      logradar( &jx, &jy, res );
+      cx = jx;
+      cy = jy;
    }
 
    /* Check if in range. */
@@ -1970,6 +2007,9 @@ void gui_free( void )
 void gui_setRadarResolution( double res )
 {
    gui_radar.res = CLAMP( RADAR_RES_MIN, RADAR_RES_MAX, res );
+
+   // Scalings for the radar
+   radar_logscale = radar_linrange / log( radar_linrange );
 }
 
 /**
