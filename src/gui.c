@@ -769,7 +769,15 @@ int gui_radarInit( int circle, int w, int h )
    gui_radar.shape = circle ? RADAR_CIRCLE : RADAR_RECT;
    gui_radar.w     = w;
    gui_radar.h     = h;
-   radar_linrange  = (double)( w + h ) * 0.5 * 0.5;
+   if ( circle ) {
+      // In the case of the circle it's radius directly
+      radar_linrange = (double)w;
+   } else {
+      // Average width + height and compute radius
+      radar_linrange = (double)( w + h ) * 0.5 * 0.5;
+   }
+   // Make it be roughly 80% of the viewport
+   radar_linrange *= 0.8;
    gui_setRadarResolution( player.radar_res );
    return 0;
 }
@@ -806,6 +814,10 @@ void gui_radarRender( double x, double y )
                          y + radar->h / 2. );
    } else if ( radar->shape == RADAR_CIRCLE )
       mat4_translate_xy( &gl_view_matrix, x, y );
+
+   // Draw linear range area
+   const glColour cRange = { .r = 0.45, .g = 0.45, .b = 0.6, .a = 0.1 };
+   gl_renderCircle( 0., 0., radar_linrange, &cRange, 0 );
 
    /*
     * spobs
