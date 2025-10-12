@@ -1066,10 +1066,10 @@ void gui_renderPilot( const Pilot *p, RadarShape shape, double w, double h,
    scale = ( ssize + 1. ) / 2. * ( 1. + RADAR_RES_REF / res );
 
    /* Check if pilot in range. */
-   if ( ( ( shape == RADAR_RECT ) && ( ( ABS( x ) > ( w + scale ) / 2. ) ||
-                                       ( ABS( y ) > ( h + scale ) / 2. ) ) ) ||
+   if ( ( ( shape == RADAR_RECT ) && ( ( ABS( x ) > ( w + scale ) * 0.5 ) ||
+                                       ( ABS( y ) > ( h + scale ) * 0.5 ) ) ) ||
         ( ( shape == RADAR_CIRCLE ) &&
-          ( ( pow2( x ) + pow2( y ) ) > pow2( w ) ) ) ) {
+          ( ( pow2( x ) + pow2( y ) ) > pow2( w + scale ) ) ) ) {
 
       /* Draw little targeted symbol. */
       if ( p->id == player.p->target && !overlay )
@@ -1244,7 +1244,7 @@ void gui_renderViewportFrame( double res, double render_radius, int overlay )
       vp_corner_y    = SCREEN_H / 2.0 / z;
    } else {
       const double z = cam_getZoom();
-      // TODO fix
+      // Centered on 0,0 so should be correct
       vp_corner_x = SCREEN_W / 2.0 / z;
       vp_corner_y = SCREEN_H / 2.0 / z;
       logradar( &vp_corner_x, &vp_corner_y, res );
@@ -1427,7 +1427,7 @@ void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res,
       GLfloat x = ABS( cx ) - r;
       GLfloat y = ABS( cy ) - r;
       /* Out of range. */
-      if ( x * x + y * y > pow2( w - 2 * r ) ) {
+      if ( x * x + y * y > pow2( w + 2. * r ) ) {
          if ( ( player.p->nav_spob == ind ) && !overlay )
             gui_renderRadarOutOfRange( RADAR_CIRCLE, w, w, cx, cy,
                                        &cRadar_tSpob );
@@ -1436,7 +1436,7 @@ void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res,
    } else {
       if ( shape == RADAR_RECT ) {
          /* Out of range. */
-         if ( ( ABS( cx ) - r > w / 2. ) || ( ABS( cy ) - r > h / 2. ) ) {
+         if ( ( ABS( cx ) - r > w * 0.5 ) || ( ABS( cy ) - r > h * 0.5 ) ) {
             if ( ( player.p->nav_spob == ind ) && !overlay )
                gui_renderRadarOutOfRange( RADAR_RECT, w, h, cx, cy,
                                           &cRadar_tSpob );
@@ -1536,7 +1536,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h,
    /* Check if in range. */
    if ( shape == RADAR_RECT ) {
       /* Out of range. */
-      if ( ( ABS( cx ) - r > w / 2. ) || ( ABS( cy ) - r > h / 2. ) ) {
+      if ( ( ABS( cx ) - r > w * 0.5 ) || ( ABS( cy ) - r > h * 0.5 ) ) {
          if ( ( player.p->nav_hyperspace == ind ) && !overlay )
             gui_renderRadarOutOfRange( RADAR_RECT, w, h, cx, cy,
                                        &cRadar_tSpob );
@@ -1546,7 +1546,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h,
       x = ABS( cx ) - r;
       y = ABS( cy ) - r;
       /* Out of range. */
-      if ( x * x + y * y > pow2( w - 2 * r ) ) {
+      if ( x * x + y * y > pow2( w + 2. * r ) ) {
          if ( ( player.p->nav_hyperspace == ind ) && !overlay )
             gui_renderRadarOutOfRange( RADAR_CIRCLE, w, w, cx, cy,
                                        &cRadar_tSpob );

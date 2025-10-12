@@ -93,7 +93,7 @@ static char **player_licenses = NULL; /**< Licenses player has. */
 /*
  * Default radar resolution.
  */
-#define RADAR_RES_DEFAULT 50. /**< Default resolution. */
+#define RADAR_RES_DEFAULT 100. /**< Default resolution. */
 
 /*
  * player sounds.
