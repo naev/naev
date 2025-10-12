@@ -26,6 +26,7 @@ mod outfit;
 mod rng;
 mod ship;
 mod slots;
+mod spfx;
 mod lua {
     pub mod ryaml;
 }

@@ -4196,6 +4196,7 @@ src/space.h
 src/space_fdecl.h
 src/spfx.c
 src/spfx.h
+src/spfx.rs
 src/start.h
 src/target.h
 src/tech.c

@@ -58,6 +58,7 @@ source_rust = files(
    'rng.rs',
    'ship.rs',
    'slots.rs',
+   'spfx.rs',
    'lua/ryaml.rs',
 )
 ####
@@ -201,7 +202,6 @@ source = files(
 nlua_source = files(
    'ai.c',
    'nlua_asteroid.c',
-   'nlua_audio.c',
    'nlua_bkg.c',
    'nlua_camera.c',
    'nlua_canvas.c',

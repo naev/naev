@@ -840,10 +840,10 @@ pub fn init() -> Result<()> {
 }
 
 /*
-impl FromLua for Audio {
-    fn from_lua(value: Value, _: &Lua) -> mlua::Result<Self> {
+impl mlua::FromLua for Audio {
+    fn from_lua(value: mlua::Value, _: &mlua::Lua) -> mlua::Result<Self> {
         match value {
-            Value::UserData(ud) => Ok(*ud.borrow::<Self>()?),
+            mlua::Value::UserData(ud) => Ok(*ud.borrow::<Self>()?),
             val => Err(mlua::Error::RuntimeError(format!(
                 "unable to convert {} to Audio",
                 val.type_name()
