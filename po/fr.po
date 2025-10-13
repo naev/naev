@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
 "POT-Creation-Date: 2025-09-26 15:28+0900\n"
-"PO-Revision-Date: 2025-09-15 02:14+0000\n"
-"Last-Translator: Blanc <blanc@noreply.codeberg.org>\n"
-"Language-Team: French <https://translate.codeberg.org/projects/naev/naev/fr/"
-">\n"
+"PO-Revision-Date: 2025-10-13 18:09+0000\n"
+"Last-Translator: AKArien <akarien@noreply.codeberg.org>\n"
+"Language-Team: French <https://translate.codeberg.org/projects/naev/naev/fr/>"
+"\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.13.2\n"
+"X-Generator: Weblate 5.13.3\n"
 
 msgid "Active Plating"
 msgstr "Placage Actif"
@@ -27,26 +27,26 @@ msgid "<widget mainimg />"
 msgstr "<widget wgtfct />"
 
 msgid "# <%= o:name() %>"
-msgstr ""
+msgstr "# <%=o:name() %>"
 
 #, fuzzy
 msgid "<widget wgtdescription />"
 msgstr "<widget wgtfct />"
 
-#, fuzzy
 msgid "## Properties"
-msgstr "Propriétées"
+msgstr "## Propriétées"
 
 #, fuzzy
 msgid "<widget wgtsummary />"
 msgstr "<widget wgtfct />"
 
-#, fuzzy
 msgid "## Availability"
-msgstr "Disponible"
+msgstr "## Disponibilité"
 
+#, fuzzy
 msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
 msgstr ""
+"Les endroits où des <%=0:name() %> sont vendus sont figurés en ##ggreen#0."
 
 #, fuzzy
 msgid "<widget map />"
@@ -55,7 +55,7 @@ msgstr "<widget wgtfct />"
 msgid ""
 "You are not aware of anywhere where <%= o:name() %> are available for "
 "purchase."
-msgstr ""
+msgstr "Aucun endroit connu où <%=o:name() %> est en vente."
 
 #, fuzzy
 msgid "Adaptive Camouflage Plating"
@@ -80,7 +80,7 @@ msgid "Adrenaline Hormones"
 msgstr "Hormones de l'adrénaline"
 
 msgid "Agility Combat AI"
-msgstr ""
+msgstr "IA de combat d’agilité"
 
 msgid "Air Freshener"
 msgstr "Rafraîchisseur d'air"
@@ -106,7 +106,7 @@ msgid "Arc Machete"
 msgstr ""
 
 msgid "Asteroid Scanner"
-msgstr ""
+msgstr "Scanneur d’astéroïdes"
 
 #, fuzzy
 msgid "Astral Cannon"
@@ -121,16 +121,16 @@ msgid "Astral Projection"
 msgstr "Projection Astrale"
 
 msgid "Auxiliary Processing Unit I"
-msgstr ""
+msgstr "Unité de calcul auxiliaire I"
 
 msgid "Auxiliary Processing Unit II"
-msgstr ""
+msgstr "Unité de calcul auxiliaire II"
 
 msgid "Auxiliary Processing Unit III"
-msgstr ""
+msgstr "Unité de calcul auxiliaire III"
 
 msgid "Auxiliary Processing Unit IV"
-msgstr ""
+msgstr "Unité de calcul auxiliaire IV"
 
 #, fuzzy
 msgid "Avatar of the Sirichana"
@@ -144,16 +144,16 @@ msgid "Base Ripper MK2"
 msgstr ""
 
 msgid "Battery I"
-msgstr ""
+msgstr "Batterie I"
 
 msgid "Battery II"
-msgstr ""
+msgstr "Batterie II"
 
 msgid "Battery III"
-msgstr ""
+msgstr "Batterie III"
 
 msgid "Battery IV"
-msgstr ""
+msgstr "Batterie IV"
 
 msgid "Beat Up Large Engine"
 msgstr "Gros Moteur Dépassé"
@@ -171,13 +171,14 @@ msgid "Bikers Fury Launcher"
 msgstr ""
 
 msgid "Bio-Neural Combat AI"
-msgstr ""
+msgstr "IA de combat bio-neurale"
 
 msgid "Biometal Armour"
-msgstr ""
+msgstr "Blindage en bio-métal"
 
+#, fuzzy
 msgid "Bioship Pheromone Emitter"
-msgstr ""
+msgstr "Émetteur de phéromones de bio-vaisseau"
 
 msgid "Black Agate Finishing"
 msgstr ""
@@ -185,14 +186,15 @@ msgstr ""
 msgid "Black Cat Doll"
 msgstr "Poupée chat noir"
 
+#, fuzzy
 msgid "Blink Drive"
-msgstr ""
+msgstr "Conduite de clignotement"
 
 msgid "Boarding Androids MK1"
-msgstr ""
+msgstr "Androïdes d’abordage V1"
 
 msgid "Boarding Androids MK2"
-msgstr ""
+msgstr "Androïdes d’abordage V2"
 
 msgid "Broken Nebular Shielding Prototype"
 msgstr "Prototype de Bouclier Nébuleux Brisé"
@@ -211,10 +213,10 @@ msgstr "Espace de Stockage :"
 #. For everyone!
 #. All intrinsics
 msgid "Cargo Sacs"
-msgstr ""
+msgstr "Sacs de stockage"
 
 msgid "Catalytic Energy Drill"
-msgstr ""
+msgstr "Foreurse à énergie catalytique"
 
 msgid "Charge Conduit"
 msgstr ""
@@ -226,8 +228,9 @@ msgid "Cloaking Device"
 msgstr ""
 
 msgid "Combat Hologram Projector"
-msgstr ""
+msgstr "Projecteur d’hologramme de combat"
 
+#, fuzzy
 msgid "Commemorative Stein"
 msgstr "Stein commémoratif"
 
@@ -275,35 +278,34 @@ msgid "Crippling Plasma"
 msgstr "Plasma incapacitant"
 
 msgid "Cryogenic Repair Nanobots"
-msgstr ""
+msgstr "Nano-robots de réparation cryogénique"
 
 msgid "Cyborg Feather"
 msgstr "Plume de cyborg"
 
 msgid "Cyclic Combat AI"
-msgstr ""
+msgstr "IA de combat cyclique"
 
 msgid "Daphne's Leap"
 msgstr ""
 
-#, fuzzy
 msgid "Defective"
-msgstr "Défensif"
+msgstr "Déficient"
 
 msgid "Disruptor Artillery S1"
-msgstr ""
+msgstr "Artillerie de détraquement S1"
 
 msgid "Disruptor Artillery S2"
-msgstr ""
+msgstr "Artillerie de détraquement S2"
 
 msgid "Disruptor Battery S2"
-msgstr ""
+msgstr "Batterie de détraquement S2"
 
 msgid "Droid Repair Crew"
-msgstr ""
+msgstr "Équipe droïde de réparation"
 
 msgid "Drone Bay"
-msgstr ""
+msgstr "Baie de drone"
 
 msgid "Dummy Engine"
 msgstr "Moteur Factice"
@@ -316,35 +318,37 @@ msgstr "Système Factice"
 
 #, fuzzy
 msgid "Dvaered Flare Battery"
-msgstr "Livraison Dvaered"
+msgstr "Batterie explosive Dvaer"
 
 msgid "Efficiency Combat AI"
-msgstr ""
+msgstr "IA de combat d’efficacité"
 
 msgid "Electron Burst Cannon"
-msgstr ""
+msgstr "Cannon à rafale d’électrons"
 
 msgid "Emergency Shield Booster"
-msgstr ""
+msgstr "Amplificateur de bouclier d’urgence"
 
 msgid "Emergency Stasis Inducer"
-msgstr ""
+msgstr "Inducteur de stase d’urgence"
 
 msgid "EMP Grenade Launcher"
 msgstr ""
 
+#, fuzzy
 msgid "Empire Lancelot Bay"
-msgstr ""
+msgstr "Baie à Lancelots Impérials"
+
+msgid "Energy Harpoon"
+msgstr "Harpon à énergie"
 
 #, fuzzy
-msgid "Energy Harpoon"
-msgstr "Énergie :"
-
 msgid "Engine Reroute"
-msgstr ""
+msgstr "Reconfigurateur de moteur"
 
+#, fuzzy
 msgid "Enhanced Smell"
-msgstr "Odeur améliorée"
+msgstr "Odorat amélioré"
 
 msgid "Enygma Systems Huntsman Launcher"
 msgstr ""
@@ -358,9 +362,8 @@ msgstr ""
 msgid "Enygma Systems Turreted Headhunter Launcher"
 msgstr ""
 
-#, fuzzy
 msgid "Escape Pod"
-msgstr "Escape"
+msgstr "Nacelle d’éjection"
 
 msgid "Executor Shield Aura"
 msgstr ""
@@ -393,22 +396,21 @@ msgstr "Rage Féroce III"
 msgid "Flak Gun"
 msgstr "Cannon Vulcain"
 
+#, fuzzy
 msgid "Flicker Drive"
-msgstr ""
+msgstr "Conduite à battement"
 
-#, fuzzy
 msgid "Four Winds Laser Cannon"
-msgstr "Informateur de Quatre Vents"
+msgstr "Cannon laser des Quatre Vents"
 
-#, fuzzy
 msgid "Four Winds Ragnarok Beam"
-msgstr "Faisceau Ragnarok"
+msgstr "Faisceau Ragnarok des Quatres Vents"
 
 msgid "Fuel Bladder"
 msgstr "Vessie de carburant"
 
 msgid "Fuel Recycler"
-msgstr ""
+msgstr "Recycleur de carburant"
 
 #, fuzzy
 msgid "Fuelshell Plating"
@@ -470,16 +472,16 @@ msgid "Heavy Combat Vessel Licence"
 msgstr "License de Vaisseau de Combat Lourd"
 
 msgid "Heavy Ion Cannon"
-msgstr ""
+msgstr "Cannon à ions lourd"
 
 msgid "Heavy Ion Turret"
-msgstr ""
+msgstr "Tourelle à ions lourde"
 
 msgid "Heavy Laser Turret"
-msgstr ""
+msgstr "Tourelle Laser lourde"
 
 msgid "Heavy Neutron Disruptor"
-msgstr ""
+msgstr "Détraqueur de neutrons lourd"
 
 msgid "Heavy Ripper Cannon"
 msgstr ""
@@ -492,16 +494,18 @@ msgid "Heavy Weapon Licence"
 msgstr "License d'Arme Lourde"
 
 msgid "Hellburner"
-msgstr ""
+msgstr "Moteur à postcombustion infernale"
 
+#, fuzzy
 msgid "Hidden Jump Scanner"
-msgstr ""
+msgstr "Scanneur à points de saut cachés"
 
 msgid "Hive Combat AI"
-msgstr ""
+msgstr "IA de combat de ruche"
 
+#, fuzzy
 msgid "Homebrew Processing Unit"
-msgstr ""
+msgstr "Unité principale fait maison"
 
 #, fuzzy
 msgid "House of Mirrors"
@@ -511,7 +515,7 @@ msgid "Hunter's Instinct"
 msgstr "Instinct de chasseur"
 
 msgid "Hunting Combat AI"
-msgstr ""
+msgstr "IA de combat de chasse"
 
 msgid "Hyena Bay"
 msgstr ""
