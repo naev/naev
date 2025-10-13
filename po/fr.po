@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2025-02-01 11:09+0900\n"
-"PO-Revision-Date: 2025-09-24 12:09+0000\n"
-"Last-Translator: Synchro <synchro@noreply.codeberg.org>\n"
+"PO-Revision-Date: 2025-10-13 22:09+0000\n"
+"Last-Translator: AKArien <akarien@noreply.codeberg.org>\n"
 "Language-Team: French <https://translate.codeberg.org/projects/naev/"
 "naev-0-12-x/fr/>\n"
 "Language: fr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.13.2\n"
+"X-Generator: Weblate 5.13.3\n"
 
 msgid "Main"
 msgstr "Principal"
@@ -8774,6 +8774,7 @@ msgstr ""
 "dysfonctionnement, vous avez failli mourir.D'un autre côté, il semble "
 "absorber l'énergie nocive et émettre de la chaleurdans l'espace."
 
+#, fuzzy
 msgid "Commemorative Stein"
 msgstr "Stein commémoratif"
 
@@ -9111,7 +9112,7 @@ msgstr "Abdomen volumineux"
 #. For everyone!
 #. All intrinsics
 msgid "Cargo Sacs"
-msgstr ""
+msgstr "Sacs de stockage"
 
 #. Stealth skill tree
 #. For up to destroyer
@@ -9128,8 +9129,9 @@ msgstr "Corrosion I"
 msgid "Corrosion II"
 msgstr "Corrosion II"
 
+#, fuzzy
 msgid "Enhanced Smell"
-msgstr "Odeur améliorée"
+msgstr "Odorat amélioré"
 
 msgid ""
 "Through careful manipulation of the brain stem, the bioship can be induced "
@@ -10246,7 +10248,7 @@ msgid ""
 msgstr ""
 
 msgid "Drone Bay"
-msgstr ""
+msgstr "Baie de drone"
 
 msgid ""
 "The Drone Fighter bay uses the advanced Collective technologies to sustain a "
@@ -10256,8 +10258,9 @@ msgid ""
 "bay."
 msgstr ""
 
+#, fuzzy
 msgid "Empire Lancelot Bay"
-msgstr ""
+msgstr "Baie à Lancelots Impérials"
 
 msgid "E. Lancelot Bay"
 msgstr ""
@@ -10777,7 +10780,7 @@ msgid ""
 msgstr ""
 
 msgid "Electron Burst Cannon"
-msgstr ""
+msgstr "Cannon à rafale d’électrons"
 
 msgid "Electron Burst C."
 msgstr ""
@@ -11377,7 +11380,7 @@ msgstr ""
 #, fuzzy
 #| msgid "Dvaered Delivery"
 msgid "Dvaered Flare Battery"
-msgstr "Livraison Dvaered"
+msgstr "Batterie explosive Dvaer"
 
 msgid "D. Flare B."
 msgstr ""
@@ -11472,10 +11475,10 @@ msgid "Bikers Fury Launcher"
 msgstr ""
 
 msgid "Four Winds Laser Cannon"
-msgstr ""
+msgstr "Cannon laser des Quatre Vents"
 
 msgid "Four Winds Ragnarok Beam"
-msgstr ""
+msgstr "Faisceau Ragnarok des Quatres Vents"
 
 msgid "Active Plating"
 msgstr "Placage Actif"
@@ -11537,7 +11540,7 @@ msgid ""
 msgstr ""
 
 msgid "Battery I"
-msgstr ""
+msgstr "Batterie I"
 
 msgid "Energy Modifier"
 msgstr ""
@@ -11548,7 +11551,7 @@ msgid ""
 msgstr ""
 
 msgid "Battery II"
-msgstr ""
+msgstr "Batterie II"
 
 msgid ""
 "A large battery unit designed to hold 500 GJ of energy. Ideally mounted on "
@@ -11556,7 +11559,7 @@ msgid ""
 msgstr ""
 
 msgid "Battery III"
-msgstr ""
+msgstr "Batterie III"
 
 msgid ""
 "A very large battery unit designed to hold 1000 GJ of energy. It can only be "
@@ -11564,7 +11567,7 @@ msgid ""
 msgstr ""
 
 msgid "Battery IV"
-msgstr ""
+msgstr "Batterie IV"
 
 msgid ""
 "A massive battery unit designed to hold 1500 GJ of energy. Given the mass of "
@@ -11572,7 +11575,7 @@ msgid ""
 msgstr ""
 
 msgid "Biometal Armour"
-msgstr ""
+msgstr "Blindage en bio-métal"
 
 msgid ""
 "Biometal is an armour that regenerates itself due to genetically-engineered "
@@ -11581,8 +11584,9 @@ msgid ""
 "mass than alternatives, and is the most expensive hull plating."
 msgstr ""
 
+#, fuzzy
 msgid "Engine Reroute"
-msgstr ""
+msgstr "Reconfigurateur de moteur"
 
 msgid "Manoeuvrability Modifier"
 msgstr ""
@@ -11765,8 +11769,9 @@ msgstr ""
 msgid "Small Shield Booster"
 msgstr ""
 
+#, fuzzy
 msgid "Bioship Pheromone Emitter"
-msgstr ""
+msgstr "Émetteur de phéromones de bio-vaisseau"
 
 msgid "Pheromone Emitter"
 msgstr ""
@@ -11829,7 +11834,7 @@ msgid ""
 msgstr ""
 
 msgid "Fuel Recycler"
-msgstr ""
+msgstr "Recycleur de carburant"
 
 msgid ""
 "While the process of refining fuel for space ships is possible using cheap "
@@ -11857,8 +11862,9 @@ msgstr ""
 msgid "#rHot hot hot!#0"
 msgstr ""
 
+#, fuzzy
 msgid "Homebrew Processing Unit"
-msgstr ""
+msgstr "Unité principale faite maison"
 
 msgid ""
 "This core system is easily recognizable as the work of some amateurs, with "
@@ -11942,7 +11948,7 @@ msgid ""
 msgstr ""
 
 msgid "Asteroid Scanner"
-msgstr ""
+msgstr "Scanneur d’astéroïdes"
 
 msgid "Mining System"
 msgstr "Système de Minage "
@@ -11978,8 +11984,9 @@ msgid ""
 "by 20%."
 msgstr ""
 
+#, fuzzy
 msgid "Blink Drive"
-msgstr ""
+msgstr "Conduite de clignotement"
 
 msgid ""
 "The blink drive uses hyperdrive technology modified to create a small space-"
@@ -11989,7 +11996,7 @@ msgid ""
 msgstr ""
 
 msgid "Boarding Androids MK1"
-msgstr ""
+msgstr "Androïdes d’abordage V1"
 
 msgid "Boarding Androids"
 msgstr ""
@@ -12002,7 +12009,7 @@ msgid ""
 msgstr ""
 
 msgid "Boarding Androids MK2"
-msgstr ""
+msgstr "Androïdes d’abordage V2"
 
 msgid ""
 "The Boarding Android Mark 2 improves upon the wide variety of implements "
@@ -12027,7 +12034,7 @@ msgid ""
 msgstr ""
 
 msgid "Catalytic Energy Drill"
-msgstr ""
+msgstr "Foreurse à énergie catalytique"
 
 msgid ""
 "Designed by the Mining Vrata Guildhouse, the Catalytic Energy Drill takes a "
@@ -12050,7 +12057,7 @@ msgid "Uses 1 MJ of energy per 10 mass and drains shield in 0.5 seconds."
 msgstr ""
 
 msgid "Combat Hologram Projector"
-msgstr ""
+msgstr "Projecteur d’hologramme de combat"
 
 msgid "Holograph Projector"
 msgstr ""
@@ -12068,7 +12075,7 @@ msgid ""
 msgstr ""
 
 msgid "Agility Combat AI"
-msgstr ""
+msgstr "IA de combat d’agilité"
 
 msgid "Combat AI"
 msgstr ""
@@ -12081,7 +12088,7 @@ msgid ""
 msgstr ""
 
 msgid "Bio-Neural Combat AI"
-msgstr ""
+msgstr "IA de combat bio-neurale"
 
 msgid ""
 "Unlike regular Combat AI which consists of pure software, this AI consists "
@@ -12092,7 +12099,7 @@ msgid ""
 msgstr ""
 
 msgid "Cyclic Combat AI"
-msgstr ""
+msgstr "IA de combat cyclique"
 
 msgid ""
 "This Combat AI focuses on the optimization of the firing rhythm of forward "
@@ -12102,7 +12109,7 @@ msgid ""
 msgstr ""
 
 msgid "Efficiency Combat AI"
-msgstr ""
+msgstr "IA de combat d’efficacité"
 
 msgid ""
 "This Combat AI utilizes advanced energy routing to make the ship's computing "
@@ -12111,7 +12118,7 @@ msgid ""
 msgstr ""
 
 msgid "Hive Combat AI"
-msgstr ""
+msgstr "IA de combat de ruche"
 
 msgid "You need at least 10 reputation with House Za'lek."
 msgstr ""
@@ -12125,7 +12132,7 @@ msgid ""
 msgstr ""
 
 msgid "Hunting Combat AI"
-msgstr ""
+msgstr "IA de combat de chasse"
 
 msgid ""
 "Similar to a hunter's ambush, the Hunting Combat AI is able to focus on "
@@ -12155,7 +12162,7 @@ msgid ""
 msgstr ""
 
 msgid "Cryogenic Repair Nanobots"
-msgstr ""
+msgstr "Nano-robots de réparation cryogénique"
 
 msgid "Armour Repair"
 msgstr ""
@@ -12174,7 +12181,7 @@ msgid "Restores armour to full when performing an active cooldown."
 msgstr ""
 
 msgid "Droid Repair Crew"
-msgstr ""
+msgstr "Équipe droïde de réparation"
 
 msgid ""
 "This low maintenance droid crew will scour your ship to repair any damage "
@@ -12189,7 +12196,7 @@ msgid "Can only restore armour when below 50%."
 msgstr ""
 
 msgid "Emergency Shield Booster"
-msgstr ""
+msgstr "Amplificateur de bouclier d’urgence"
 
 msgid "Shield Modification"
 msgstr ""
@@ -12209,7 +12216,7 @@ msgid ""
 msgstr ""
 
 msgid "Emergency Stasis Inducer"
-msgstr ""
+msgstr "Inducteur de stase d’urgence"
 
 msgid ""
 "The emergency stasis inducer works by creating a strong electromagnetic "
@@ -12225,8 +12232,9 @@ msgstr ""
 msgid "Triggered on armour damage. Lasts 3 seconds with 8 seconds cooldown."
 msgstr ""
 
+#, fuzzy
 msgid "Flicker Drive"
-msgstr ""
+msgstr "Conduite à battement"
 
 msgid ""
 "The Flicker Drive is a compacted version of the Blink Drive, lowering the "
@@ -12239,7 +12247,7 @@ msgid ""
 msgstr ""
 
 msgid "Hellburner"
-msgstr ""
+msgstr "Moteur à postcombustion infernale"
 
 msgid ""
 "The Hellburner is one of the best light afterburners on the market. Through "
@@ -12249,8 +12257,9 @@ msgid ""
 "more rapidly and overheats much more quickly."
 msgstr ""
 
+#, fuzzy
 msgid "Hidden Jump Scanner"
-msgstr ""
+msgstr "Scanneur à points de saut cachés"
 
 msgid ""
 "A specialized piece of sensor technology that can scan its immediate "
@@ -12327,7 +12336,7 @@ msgid ""
 msgstr ""
 
 msgid "Hyperbolic Blink Engine"
-msgstr ""
+msgstr "Moteur de clignotement hyperbolique"
 
 msgid ""
 "The hyperbolic blink engine seems to be designed as a response to the "
@@ -12563,7 +12572,7 @@ msgid "Lowers the action speed upon hit by 10% for 7 seconds."
 msgstr ""
 
 msgid "Disruptor Artillery S1"
-msgstr ""
+msgstr "Artillerie de détraquement S1"
 
 msgid "Disruptor A. S1"
 msgstr ""
@@ -12578,7 +12587,7 @@ msgid ""
 msgstr ""
 
 msgid "Disruptor Artillery S2"
-msgstr ""
+msgstr "Artillerie de détraquement S2"
 
 msgid "Disruptor A. S2"
 msgstr ""
@@ -12590,7 +12599,7 @@ msgid ""
 msgstr ""
 
 msgid "Disruptor Battery S2"
-msgstr ""
+msgstr "Batterie de détraquement S2"
 
 msgid "Disruptor B. S2"
 msgstr ""
@@ -12606,10 +12615,8 @@ msgid ""
 "that they have a point."
 msgstr ""
 
-#, fuzzy
-#| msgid "Energy:"
 msgid "Energy Harpoon"
-msgstr "Énergie :"
+msgstr "Harpon à énergie"
 
 msgid ""
 "The Energy Harpoon is an ensemble of stolen and hacked technologies "
@@ -12656,7 +12663,7 @@ msgid ""
 msgstr ""
 
 msgid "Heavy Ion Cannon"
-msgstr ""
+msgstr "Cannon à ions lourd"
 
 msgid ""
 "The Heavy Ion Cannon does a far better job at disabling ships than the "
@@ -12666,7 +12673,7 @@ msgid ""
 msgstr ""
 
 msgid "Heavy Ion Turret"
-msgstr ""
+msgstr "Tourelle à ions lourde"
 
 msgid ""
 "The Heavy Ion Turret is a Sirius military design, applying brute force to "
@@ -12675,7 +12682,7 @@ msgid ""
 msgstr ""
 
 msgid "Heavy Laser Turret"
-msgstr ""
+msgstr "Tourelle Laser lourde"
 
 msgid ""
 "The Heavy Laser Turret is more or less an upscaled version of the Laser "
@@ -12801,7 +12808,7 @@ msgid ""
 msgstr ""
 
 msgid "Heavy Neutron Disruptor"
-msgstr ""
+msgstr "Détraqueur de neutrons lourd"
 
 msgid ""
 "The Heavy Neutron Disruptor improves upon the processes behind the smaller "
