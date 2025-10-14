@@ -459,7 +459,7 @@ local tp_taunt_weak = {
    _("Make the bad man go away, mommy!"),
    _("If you don't stop I'll cry!"),
    _("Here I go, filling my cabin up with tears."),
-   _("U- oh it a-pears my te-rs hav- da-ag-d t-e co-mand cons-le."),
+   _("U- oh it a-pears my te-rs hav- da-ag-d t-e co-mand cons-le."), --codespell:ignore
    _("I a- T. Pr-ct---! Y-- w--l fe-r m- na-e --- Bzzzt!"),
 }
 
