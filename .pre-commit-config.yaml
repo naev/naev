@@ -15,6 +15,11 @@ repos:
       types: [text]
       language: script
       exclude: po/naevpedia.pot
+    - id: line-endings.sh
+      name: mixed line endings (bash)
+      entry: utils/shlinters/line-endings.sh
+      types: [text]
+      language: script
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v6.0.0
   hooks:
@@ -32,7 +37,7 @@ repos:
     #- id: check-illegal-windows-names
     #- id: destroyed-symlinks
     - id: detect-private-key
-    - id: mixed-line-ending
+    #- id: mixed-line-ending
     #- id: pretty-format-json
     - id: check-merge-conflict
       args: [--assume-in-merge]
