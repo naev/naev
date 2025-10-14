@@ -27,11 +27,69 @@ struct LuaSpfx {
 
 #[derive(Copy, Clone, derive_more::From, derive_more::Into)]
 struct LuaSpfxRef(thunderdome::Index);
+impl LuaSpfxRef {
+    pub fn call<S, R>(&self, f: S) -> anyhow::Result<R>
+    where
+        S: Fn(&LuaSpfx) -> R,
+    {
+        let luaspfx = LUASPFX.lock().unwrap();
+        match luaspfx.get(self.0) {
+            Some(spfx) => Ok(f(spfx)),
+            None => anyhow::bail!("LuaSpfx not found"),
+        }
+    }
+
+    pub fn call_mut<S, R>(&self, f: S) -> anyhow::Result<R>
+    where
+        S: Fn(&mut LuaSpfx) -> R,
+    {
+        let mut luaspfx = LUASPFX.lock().unwrap();
+        match luaspfx.get_mut(self.0) {
+            Some(spfx) => Ok(f(spfx)),
+            None => anyhow::bail!("LuaSpfx not found"),
+        }
+    }
+}
 
 static LUASPFX: Mutex<Arena<LuaSpfx>> = Mutex::new(Arena::new());
 
+/*
+ * @brief Lua bindings to interact with spfx.
+ *
+ *
+ * @luamod spfx
+ */
 impl UserData for LuaSpfxRef {
     fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
+        /*
+         * @brief Creates a new special effect.
+         *
+         * @usage spfx.new( 5, update, nil, nil, render, player.pos(),
+         * player.pilot():vel(), sfx ) -- Play effect with update and render functions
+         * at player position/velocity
+         * @usage spfx.new( 10, nil, nil, nil, nil, true, nil, sfx ) -- Play an effect
+         * locally (affected by time compression and autonav stuff)
+         * @usage spfx.new( 10, nil, nil, nil, nil, nil, nil, sfx ) -- Play a global
+         * effect (not affected by time stuff )
+         *
+         *    @luatparam Number ttl Time to live of the effect.
+         *    @luatparam[opt] Function|nil update Update function to use if applicable.
+         *    @luatparam[opt] Function|nil render_bg Background render function to use
+         * if applicable (behind ships).
+         *    @luatparam[opt] Function|nil render_mg Middle render function to use if
+         * applicable (infront of NPC ships, behind player).
+         *    @luatparam[opt] Function|nil render_fg `Foregroundrender` function to use
+         * if applicable (infront of player).
+         *    @luatparam[opt] vec2|boolean pos Position of the effect, or a boolean to
+         * indicate whether or not the effect is local.
+         *    @luatparam[opt] vec2 vel Velocity of the effect.
+         *    @luatparam[opt] audio sfx Sound effect associated with the spfx.
+         *    @luatparam[opt] number radius Radius to use to determine if should render.
+         *    @luatparam[opt] Function|nil remove Function to run when removing the
+         * outfit.
+         *    @luatreturn spfx New spfx corresponding to the data.
+         * @luafunc new
+         */
         methods.add_function(
             "new",
             |lua,
@@ -84,6 +142,29 @@ impl UserData for LuaSpfxRef {
                 Ok(LUASPFX.lock().unwrap().insert(spfx).into())
             },
         );
+        /*
+         * @brief Removes a special effect.
+         *
+         *    @luatparam spfx s Spfx to remove.
+         * @luafunc rm
+         */
+        methods.add_method_mut("rm", |_, this, ()| -> mlua::Result<()> {
+            this.call_mut(|this| {
+                this.cleanup = true;
+                this.ttl = -1.;
+            })?;
+            Ok(())
+        });
+        /*
+         * @brief Gets the position of a spfx.
+         *
+         *    @luatparam spfx s Spfx to get position of.
+         *    @luatreturn vec2 Position of the spfx.
+         * @luafunc pos( s )
+         */
+        methods.add_method_mut("pos", |_, this, ()| -> mlua::Result<Option<Vec2>> {
+            Ok(this.call(|this| this.pos)?)
+        });
     }
 }
 
