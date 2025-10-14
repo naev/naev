@@ -1520,10 +1520,10 @@ void space_update( double dt, double real_dt )
 
    if ( !space_simulating ) {
       int found_something = 0;
+      int n               = array_size( cur_system->spobs );
       /* Spob updates */
-      for ( int i = 0; i < array_size( cur_system->spobs ); i++ ) {
-         HookParam hparam[3];
-         Spob     *pnt = cur_system->spobs[i];
+      for ( int i = 0; i < n; i++ ) {
+         Spob *pnt = cur_system->spobs[i];
 
          /* Must update in some cases. */
          space_updateSpob( pnt, dt, real_dt );
@@ -1539,6 +1539,7 @@ void space_update( double dt, double real_dt )
          spob_setKnown( pnt );
          player_message( _( "You discovered #%c%s#0." ),
                          spob_getColourChar( pnt ), spob_name( pnt ) );
+         HookParam hparam[3];
          hparam[0].type  = HOOK_PARAM_STRING;
          hparam[0].u.str = "spob";
          hparam[1].type  = HOOK_PARAM_SPOB;
