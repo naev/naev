@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
 "POT-Creation-Date: 2025-09-26 15:28+0900\n"
-"PO-Revision-Date: 2025-10-13 18:09+0000\n"
+"PO-Revision-Date: 2025-10-14 19:09+0000\n"
 "Last-Translator: AKArien <akarien@noreply.codeberg.org>\n"
 "Language-Team: French <https://translate.codeberg.org/projects/naev/naev/fr/>"
 "\n"
@@ -505,7 +505,7 @@ msgstr "IA de combat de ruche"
 
 #, fuzzy
 msgid "Homebrew Processing Unit"
-msgstr "Unité principale fait maison"
+msgstr "Unité principale faite maison"
 
 #, fuzzy
 msgid "House of Mirrors"
@@ -524,7 +524,7 @@ msgid "Hyena Dock"
 msgstr ""
 
 msgid "Hyperbolic Blink Engine"
-msgstr ""
+msgstr "Moteur de clignotement hyperbolique"
 
 msgid "Hyperdrive Retool"
 msgstr ""
