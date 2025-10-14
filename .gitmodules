@@ -10,5 +10,5 @@ branch = main
 path = dat/lua-repl
 url = https://github.com/hoelzro/lua-repl.git
 [submodule "utils/shlinters"]
-	path = utils/shlinters
-	url = https://codeberg.org/johann1764/shlinters
+   path = utils/shlinters
+   url = https://codeberg.org/johann1764/shlinters

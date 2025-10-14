@@ -2,12 +2,25 @@
 # See https://pre-commit.com/hooks.html for more hooks
 minimum_pre_commit_version: '3.2.0'
 repos:
+- repo: local
+  hooks:
+    - id: trailing-whitespace.sh
+      name: trim trailing whitespace (bash)
+      entry: utils/shlinters/trailing-whitespace.sh
+      types: [text]
+      language: script
+    - id: end-of-file-fixer.sh
+      name: fix end of files (bash)
+      entry: utils/shlinters/end-of-file-fixer.sh
+      types: [text]
+      language: script
+      exclude: po/naevpedia.pot
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v6.0.0
   hooks:
-    - id: trailing-whitespace
-    - id: end-of-file-fixer
-      exclude: po/naevpedia.pot
+    #- id: trailing-whitespace
+    #- id: end-of-file-fixer
+    #  exclude: po/naevpedia.pot
     - id: check-xml
     - id: check-yaml
     - id: check-toml
@@ -91,27 +104,26 @@ repos:
       files: '^src/'
       args: ["--edition", "2024"]
       language: system
-- repo: https://github.com/koalaman/shellcheck-precommit
-  rev: v0.11.0
+- repo: https://github.com/shellcheck-py/shellcheck-py
+  rev: v0.11.0.1
   hooks:
     - id: shellcheck
       types: [shell]
-      require_serial: False
 - repo: local
   hooks:
     - id: u_codespell
       name: u_codespell
-      entry: utils/shlinters/parallel.sh 2 utils/shlinters/u_codespell/u_codespell -u .u_codespell_unmatch --
+      entry: utils/shlinters/parallel.sh 2 -b utils/shlinters/u_codespell/u_codespell -u .u_codespell_unmatch --
       files: '^dat/'
       types_or: [xml, lua]
       language: script
       require_serial: True
-- repo: https://github.com/codespell-project/codespell
-  rev: v2.4.1
-  hooks:
-    - id: codespell
-      files: '^dat/'
-      types_or: [xml, lua]
+#- repo: https://github.com/codespell-project/codespell
+#  rev: v2.4.1
+#  hooks:
+#    - id: codespell
+#      files: '^dat/'
+#      types_or: [xml, lua]
 - repo: https://github.com/shssoichiro/oxipng
   rev: v9.1.5
   hooks:
