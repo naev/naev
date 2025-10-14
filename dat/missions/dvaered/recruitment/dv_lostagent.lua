@@ -393,7 +393,7 @@ Your task will be to approach, engage and disable his ship. Only afterwards, squ
    vn.jump("lore_menu")
 
    vn.label("imperial")
-   agent(_([[He is cool, isn't he? His codename is Akward Akira, but most people in the business call him Ak-Ak. I am regularly in contact with him as he seems to be in charge of the Dvaered affairs at the Imperial secret services. And for the cyborgs, they are probably Imperial spacemarines which were put at the disposition of Ak-Ak.]])) -- codespell:ignore akward
+   agent(_([[He is cool, isn't he? His codename is Akward Akira, but most people in the business call him Ak-Ak. I am regularly in contact with him as he seems to be in charge of the Dvaered affairs at the Imperial secret services. And for the cyborgs, they are probably Imperial spacemarines which were put at the disposition of Ak-Ak.]])) -- codespell:ignore Akward
    vn.jump("lore_menu")
 
    vn.label("swan")
