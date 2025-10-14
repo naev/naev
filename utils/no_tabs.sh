@@ -2,12 +2,12 @@
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ -z "$*" ] ; then cat << EOF
 usage  $(basename "$0") [-r|-l] <file>..
-  Checks whether its arguments contain tabs.
-  Binary files are silently ignored.
-  If so, the tab positions are shown and a non-zero value is returned.
-  Else, returns 0.
-  If -r is set, silently replaces all tabs with 3 spaces and returns 0.
-  If -l is set, outputs the list of files containing tabs and returns 0.
+   Checks whether its arguments contain tabs.
+   Binary files are silently ignored.
+   If so, the tab positions are shown and a non-zero value is returned.
+   Else, returns 0.
+   If -r is set, silently replaces all tabs with 3 spaces and returns 0.
+   If -l is set, outputs the list of files containing tabs and returns 0.
 EOF
 exit 0
 fi
