@@ -68,7 +68,7 @@ symphonia = "0.5"
 thunderdome = "0.6"
 static_assertions = "1.1"
 tracing-mutex = "0.3"
-derive_more = { version = "2", features = ["from", "into"] }
+derive_more = { version = "2", features = ["from", "into", "mul", "add", "add_assign", "mul_assign"] }
 palette = "0.7" # Colour conversion
 trie-rs = { version = "0.4" }
 softfloat = "1.0"

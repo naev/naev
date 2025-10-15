@@ -1,9 +1,18 @@
 use crate::collide;
 use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
-use nalgebra::Vector2;
+use nalgebra::{Vector2, Vector3};
 use std::os::raw::c_void;
 
-#[derive(Copy, Clone, derive_more::From, derive_more::Into)]
+#[derive(
+    Copy,
+    Clone,
+    derive_more::From,
+    derive_more::Into,
+    derive_more::Mul,
+    derive_more::Add,
+    derive_more::AddAssign,
+    derive_more::MulAssign,
+)]
 pub struct Vec2(Vector2<f64>);
 
 impl Vec2 {
@@ -14,6 +23,10 @@ impl Vec2 {
 
     pub fn into_vector2(self) -> Vector2<f64> {
         self.0
+    }
+
+    pub fn into_vector3(self) -> Vector3<f64> {
+        Vector3::new(self.0.x, self.0.y, 0.)
     }
 }
 
