@@ -1,5 +1,5 @@
 use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
-use nalgebra::Vector4;
+use nalgebra::{Vector3, Vector4};
 use palette::FromColor;
 use palette::{Hsv, LinSrgb, Srgb};
 use std::sync::LazyLock;
@@ -192,6 +192,10 @@ impl Colour {
     /// Gets a colour from a lowercase name. Is sensitive to casing.
     pub fn from_name_lower(name: &str) -> Option<Self> {
         LOOKUP.exact_match(name).copied()
+    }
+
+    pub fn into_vector3(&self) -> Vector3<f32> {
+        Vector3::new(self.0.x, self.0.y, self.0.z)
     }
 }
 

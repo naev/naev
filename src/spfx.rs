@@ -1,7 +1,8 @@
 #![allow(dead_code)]
 use crate::nlua::LuaEnv;
-use mlua::{Either, Function, UserData, UserDataMethods, UserDataRefMut};
+use mlua::{Either, Function, UserData, UserDataMethods};
 use physics::vec2::Vec2;
+use renderer::colour::Colour;
 use std::sync::Mutex;
 use thunderdome::Arena;
 
@@ -14,7 +15,7 @@ struct LuaSpfx {
     pos: Option<Vec2>,
     vel: Option<Vec2>,
     radius: Option<f64>,
-    sfx: Option<UserDataRefMut<audio::Audio>>,
+    sfx: Option<audio::AudioRef>,
     /// Inherited Lua environment
     env: LuaEnv,
     data: mlua::Table,
@@ -101,7 +102,7 @@ impl UserData for LuaSpfxRef {
                 Option<Function>,
                 Option<Either<Vec2, bool>>,
                 Option<Vec2>,
-                Option<UserDataRefMut<audio::Audio>>,
+                Option<audio::AudioRef>,
                 Option<f64>,
                 Option<Function>,
             )|
@@ -218,11 +219,60 @@ impl UserData for LuaSpfxRef {
          *    @luatreturn audio Sound effect of the spfx.
          * @luafunc sfx
          */
+        methods.add_method(
+            "sfx",
+            |_, this, ()| -> mlua::Result<Option<audio::AudioRef>> {
+                Ok(this.call(|this| this.sfx)?)
+            },
+        );
         /*
-        methods.add_method("sfx", |_, this, ()| -> mlua::Result<Option<UserDataRefMut<audio::Audio>>> {
-            Ok(this.call(|this| this.sfx )?)
+         * @brief Gets the data table of a spfx.
+         *
+         * This table is unique to each instance.
+         *
+         *    @luatparam spfx s Spfx to get data table of.
+         *    @luatreturn table Data table of the spfx.
+         * @luafunc data
+         */
+        methods.add_method("data", |_, this, ()| -> mlua::Result<mlua::Table> {
+            Ok(this.call(|this| this.data.clone())?)
         });
-        */
+        /*
+         * @brief Creates a cloud of debris.
+         *
+         *    @luatparam number mass Mass of the cloud.
+         *    @luatparam number radius Radius of the cloud.
+         *    @luatparam Vec2 pos Position of the cloud.
+         *    @luatparam Vec2 vel Velocity of the cloud.
+         * @luafunc debris
+         */
+        methods.add_function(
+            "debris",
+            |_, (mass, radius, pos, vel): (f64, f64, Vec2, Vec2)| -> mlua::Result<()> {
+                let p = pos.into_vector2();
+                let v = vel.into_vector2();
+                unsafe {
+                    naevc::debris_add(mass, radius, p.x, p.y, v.x, v.y);
+                }
+                Ok(())
+            },
+        );
+        /*
+         * @brief Sets the nebula colour.
+         *
+         * @usage spfx.nebulaColour( 0.3, 0.5, 0.8 )
+         * @usage spfx.nebulaColour( colour.new( 0.3, 0.5, 0.8 ) )
+         *
+         *    @luatparam Colour|number col Colour to set.
+         * @luafunc nebulaColour
+         */
+        methods.add_function("nebulaColour", |_, col: Colour| -> mlua::Result<()> {
+            let col = col.into_vector3();
+            unsafe {
+                naevc::spfx_setNebulaColour(col.x.into(), col.y.into(), col.z.into());
+            }
+            Ok(())
+        });
     }
 }
 

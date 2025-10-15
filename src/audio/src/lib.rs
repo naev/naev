@@ -893,7 +893,7 @@ pub fn init() -> Result<()> {
 }
 
 #[derive(Copy, Clone, derive_more::From, derive_more::Into, mlua::FromLua)]
-struct AudioRef(thunderdome::Index);
+pub struct AudioRef(thunderdome::Index);
 impl AudioRef {
     fn new(data: &Option<AudioData>) -> Result<Self> {
         let audio = Audio::new(data)?;
