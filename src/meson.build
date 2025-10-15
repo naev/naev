@@ -232,7 +232,6 @@ nlua_source = files(
    'nlua_shader.c',
    'nlua_ship.c',
    'nlua_shiplog.c',
-   'nlua_spfx.c',
    'nlua_spob.c',
    'nlua_system.c',
    'nlua_tex.c',

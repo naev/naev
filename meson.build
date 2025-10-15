@@ -689,7 +689,9 @@ custom_target(
    build_by_default: true,
    command: [
       luacheckrc_extractor,
-      nlua_source + files('src/nlua_vec2.c') + files('src/nlua_colour.c'),
+      nlua_source +
+      # Manually add C files we still need need to generate luacheckrc code
+         files('src/nlua_vec2.c', 'src/nlua_colour.c', 'src/nlua_spfx.c', 'src/nlua_audio.c'),
       '--output',
       join_paths(meson.current_source_dir(),'utils','@OUTPUT@'),
    ],
