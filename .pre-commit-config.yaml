@@ -69,6 +69,7 @@ repos:
       name: expand tabs (bash)
       entry: utils/shlinters/expand-tabs.sh
       exclude: (^|/)Makefile
+      language: script
       types: [text]
     - id: reindent
       name: reindent
