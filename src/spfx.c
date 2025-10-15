@@ -494,7 +494,7 @@ void spfx_free( void )
    trail_spec_stack = NULL;
 
    /* Get rid of Lua effects. */
-   spfxL_exit();
+   // spfxL_exit();
 }
 
 /**

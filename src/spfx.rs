@@ -1,5 +1,6 @@
 #![allow(dead_code)]
 use crate::nlua::LuaEnv;
+use log::warn_err;
 use mlua::{Either, Function, UserData, UserDataMethods};
 use physics::vec2::Vec2;
 use renderer::colour::Colour;
@@ -53,6 +54,60 @@ impl LuaSpfxRef {
 }
 
 static LUASPFX: Mutex<Arena<LuaSpfx>> = Mutex::new(Arena::new());
+
+pub fn clear() {
+    LUASPFX.lock().unwrap().clear();
+}
+
+pub fn set_speed(s: f32) {
+    for (_, spfx) in LUASPFX.lock().unwrap().iter() {
+        if spfx.global || spfx.cleanup {
+            continue;
+        }
+        if let Some(sfx) = spfx.sfx {
+            match sfx.call(|sfx| {
+                sfx.set_pitch(s);
+            }) {
+                Ok(_) => (),
+                Err(e) => {
+                    warn_err!(e);
+                }
+            }
+        }
+    }
+}
+
+pub fn set_speed_volume(v: f32) {
+    for (_, spfx) in LUASPFX.lock().unwrap().iter() {
+        if spfx.global || spfx.cleanup {
+            continue;
+        }
+        if let Some(sfx) = spfx.sfx {
+            match sfx.call(|sfx| {
+                // Bypasses a lot of the systems we have, is it needed?
+                sfx.set_gain(sfx.volume() * v);
+            }) {
+                Ok(_) => (),
+                Err(e) => {
+                    warn_err!(e);
+                }
+            }
+        }
+    }
+}
+
+pub fn update(dt: f64) {
+    LUASPFX.lock().unwrap().retain(|_, spfx| {
+        spfx.ttl -= dt;
+        if spfx.ttl <= 0. || spfx.cleanup {
+            return false;
+        }
+        true
+    });
+}
+
+//pub fn render_bg( dt: f64 ) {
+//}
 
 /*
  * @brief Lua bindings to interact with spfx.

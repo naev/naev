@@ -557,6 +557,11 @@ impl Audio {
         }
     }
 
+    pub fn set_gain(&self, vol: f32) {
+        check_audio!(self);
+        self.source().parameter_f32(AL_GAIN, vol);
+    }
+
     pub fn volume(&self) -> f32 {
         check_audio!(self);
         match self {
