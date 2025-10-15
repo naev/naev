@@ -351,28 +351,25 @@ pub enum AudioData {
     Buffer(Arc<AudioBuffer>),
 }
 
+pub enum Audio {
+    Static(AudioStatic),
+}
+
 #[derive(PartialEq, Debug)]
-pub struct Audio {
+pub struct AudioStatic {
     source: al::Source,
     slot: Option<AuxiliaryEffectSlot>,
     data: Option<AudioData>,
     volume: f32,
     groupid: Option<thunderdome::Index>,
 }
-macro_rules! check_audio {
-    ($self: ident) => {{
-        if $self.data == None {
-            return Default::default();
-        }
-    }};
-}
-impl Audio {
-    pub fn new(data: &Option<AudioData>) -> Result<Self> {
+impl AudioStatic {
+    fn new(data: &Option<AudioData>) -> Result<Self> {
         match data {
             Some(AudioData::Buffer(buffer)) => Self::new_buffer(buffer),
             None => {
                 let source = al::Source::new()?;
-                Ok(Self {
+                Ok(AudioStatic {
                     source,
                     slot: None,
                     volume: 1.0,
@@ -383,10 +380,10 @@ impl Audio {
         }
     }
 
-    pub fn new_buffer(buffer: &Arc<AudioBuffer>) -> Result<Self> {
+    fn new_buffer(buffer: &Arc<AudioBuffer>) -> Result<Self> {
         let source = al::Source::new()?;
         debug::object_label(debug::consts::AL_SOURCE_EXT, source.raw(), &buffer.name);
-        Ok(Self {
+        Ok(AudioStatic {
             source,
             slot: None,
             volume: 1.0,
@@ -395,51 +392,95 @@ impl Audio {
         })
     }
 
-    pub fn from_path(path: &str, _atype: AudioType) -> Result<Self> {
+    pub fn try_clone(&self) -> Result<Self> {
+        let mut audio = Self::new(&self.data)?;
+        audio.slot = None;
+        audio.volume = self.volume;
+        // TODO copy some other properties over and set volume
+        Ok(audio)
+    }
+}
+
+macro_rules! check_audio {
+    ($self: ident) => {{
+        match $self {
+            Audio::Static(this) => {
+                if this.data == None {
+                    return Default::default();
+                }
+            }
+        }
+    }};
+}
+impl Audio {
+    fn new(data: &Option<AudioData>) -> Result<Self> {
+        Ok(Self::Static(AudioStatic::new(data)?))
+    }
+
+    fn new_buffer(buffer: &Arc<AudioBuffer>) -> Result<Self> {
+        Ok(Self::Static(AudioStatic::new_buffer(buffer)?))
+    }
+
+    fn from_path(path: &str, _atype: AudioType) -> Result<Self> {
         // TODO streaming
         let buffer = Arc::new(AudioBuffer::from_path(path)?);
         Self::new_buffer(&buffer)
     }
 
     fn try_clone(&self) -> Result<Self> {
-        let mut audio = Audio::new(&self.data)?;
-        audio.slot = None;
-        audio.volume = self.volume;
-        // TODO copy some other properties over and set volume
-        Ok(audio)
+        match self {
+            Self::Static(this) => Ok(Self::Static(this.try_clone()?)),
+        }
     }
 
     /// Sets the sound to be in-game as opposed to a GUI or music track.
     pub fn ingame(&self) {
         check_audio!(self);
-        let v = &self.source;
 
-        if HAS_AL_SOFT_SOURCE_SPATIALIZE.load(Ordering::Relaxed) {
-            v.parameter_i32(AL_SOURCE_SPATIALIZE_SOFT, AL_AUTO_SOFT);
+        match self {
+            Self::Static(this) => {
+                let v = &this.source;
+
+                if HAS_AL_SOFT_SOURCE_SPATIALIZE.load(Ordering::Relaxed) {
+                    v.parameter_i32(AL_SOURCE_SPATIALIZE_SOFT, AL_AUTO_SOFT);
+                }
+                v.parameter_f32(AL_REFERENCE_DISTANCE, REFERENCE_DISTANCE);
+                v.parameter_f32(AL_MAX_DISTANCE, MAX_DISTANCE);
+                v.parameter_f32(AL_ROLLOFF_FACTOR, 1.);
+
+                if let Some(efx) = EFX.get() {
+                    v.parameter_3_i32(
+                        AL_AUXILIARY_SEND_FILTER,
+                        efx.direct_slot.raw() as i32,
+                        0,
+                        AL_FILTER_NULL,
+                    );
+                }
+            }
         }
-        v.parameter_f32(AL_REFERENCE_DISTANCE, REFERENCE_DISTANCE);
-        v.parameter_f32(AL_MAX_DISTANCE, MAX_DISTANCE);
-        v.parameter_f32(AL_ROLLOFF_FACTOR, 1.);
+    }
 
-        if let Some(efx) = EFX.get() {
-            v.parameter_3_i32(
-                AL_AUXILIARY_SEND_FILTER,
-                efx.direct_slot.raw() as i32,
-                0,
-                AL_FILTER_NULL,
-            );
+    fn source(&self) -> &al::Source {
+        match self {
+            Self::Static(this) => &this.source,
+        }
+    }
+
+    fn groupid(&self) -> Option<thunderdome::Index> {
+        match self {
+            Self::Static(this) => this.groupid,
         }
     }
 
     fn is_state(&self, state: ALenum) -> bool {
         check_audio!(self);
-        self.source.get_parameter_i32(AL_SOURCE_STATE) == state
+        self.source().get_parameter_i32(AL_SOURCE_STATE) == state
     }
 
     pub fn play(&self) {
         check_audio!(self);
         unsafe {
-            alSourcePlay(self.source.raw());
+            alSourcePlay(self.source().raw());
         }
     }
 
@@ -451,7 +492,7 @@ impl Audio {
     pub fn pause(&self) {
         check_audio!(self);
         unsafe {
-            alSourcePause(self.source.raw());
+            alSourcePause(self.source().raw());
         }
     }
 
@@ -463,7 +504,7 @@ impl Audio {
     pub fn stop(&self) {
         check_audio!(self);
         unsafe {
-            alSourceStop(self.source.raw());
+            alSourceStop(self.source().raw());
         }
     }
 
@@ -475,124 +516,136 @@ impl Audio {
     pub fn rewind(&self) {
         check_audio!(self);
         unsafe {
-            alSourceRewind(self.source.raw());
+            alSourceRewind(self.source().raw());
         }
     }
 
     pub fn seek(&self, offset: f32, unit: AudioSeek) {
         check_audio!(self);
         match unit {
-            AudioSeek::Seconds => self.source.parameter_f32(AL_SEC_OFFSET, offset),
-            AudioSeek::Samples => self.source.parameter_f32(AL_SAMPLE_OFFSET, offset),
+            AudioSeek::Seconds => self.source().parameter_f32(AL_SEC_OFFSET, offset),
+            AudioSeek::Samples => self.source().parameter_f32(AL_SAMPLE_OFFSET, offset),
         }
     }
 
     pub fn tell(&self, unit: AudioSeek) -> f32 {
         check_audio!(self);
         match unit {
-            AudioSeek::Seconds => self.source.get_parameter_f32(AL_SEC_OFFSET),
-            AudioSeek::Samples => self.source.get_parameter_f32(AL_SAMPLE_OFFSET),
+            AudioSeek::Seconds => self.source().get_parameter_f32(AL_SEC_OFFSET),
+            AudioSeek::Samples => self.source().get_parameter_f32(AL_SAMPLE_OFFSET),
         }
     }
 
     pub fn set_volume(&mut self, vol: f32) {
         check_audio!(self);
         let master = AUDIOSYSTEM.volume.read().unwrap().volume;
-        self.source.parameter_f32(AL_GAIN, master * vol);
-        self.volume = vol;
+        self.source().parameter_f32(AL_GAIN, master * vol);
+        match self {
+            Self::Static(this) => {
+                this.volume = vol;
+            }
+        }
     }
 
     pub fn set_volume_raw(&mut self, vol: f32) {
         check_audio!(self);
-        self.source.parameter_f32(AL_GAIN, vol);
-        self.volume = vol;
+        self.source().parameter_f32(AL_GAIN, vol);
+        match self {
+            Self::Static(this) => {
+                this.volume = vol;
+            }
+        }
     }
 
     pub fn volume(&self) -> f32 {
         check_audio!(self);
-        self.volume
+        match self {
+            Self::Static(this) => this.volume,
+        }
     }
 
     pub fn set_relative(&self, relative: bool) {
         check_audio!(self);
-        self.source
+        self.source()
             .parameter_i32(AL_SOURCE_RELATIVE, relative as i32);
     }
 
     pub fn relative(&self) -> bool {
         check_audio!(self);
-        self.source.get_parameter_i32(AL_SOURCE_RELATIVE) != 0
+        self.source().get_parameter_i32(AL_SOURCE_RELATIVE) != 0
     }
 
     pub fn set_position(&self, pos: Vector3<f32>) {
         check_audio!(self);
-        self.source
+        self.source()
             .parameter_3_f32(AL_POSITION, pos.x, pos.y, pos.z);
     }
 
     pub fn position(&self) -> Vector3<f32> {
         check_audio!(self);
-        Vector3::from(self.source.get_parameter_3_f32(AL_POSITION))
+        Vector3::from(self.source().get_parameter_3_f32(AL_POSITION))
     }
 
     pub fn set_velocity(&self, pos: Vector3<f32>) {
         check_audio!(self);
-        self.source
+        self.source()
             .parameter_3_f32(AL_VELOCITY, pos.x, pos.y, pos.z);
     }
 
     pub fn velocity(&self) -> Vector3<f32> {
         check_audio!(self);
-        Vector3::from(self.source.get_parameter_3_f32(AL_VELOCITY))
+        Vector3::from(self.source().get_parameter_3_f32(AL_VELOCITY))
     }
 
     pub fn set_looping(&self, looping: bool) {
         check_audio!(self);
-        self.source.parameter_i32(AL_LOOPING, looping as i32);
+        self.source().parameter_i32(AL_LOOPING, looping as i32);
     }
 
     pub fn looping(&self) -> bool {
         check_audio!(self);
-        self.source.get_parameter_i32(AL_LOOPING) != 0
+        self.source().get_parameter_i32(AL_LOOPING) != 0
     }
 
     pub fn set_pitch(&self, pitch: f32) {
         check_audio!(self);
-        self.source.parameter_f32(AL_PITCH, pitch);
+        self.source().parameter_f32(AL_PITCH, pitch);
     }
 
     pub fn pitch(&self) -> f32 {
         check_audio!(self);
-        self.source.get_parameter_f32(AL_PITCH)
+        self.source().get_parameter_f32(AL_PITCH)
     }
 
     pub fn set_attenuation_distances(&self, reference: f32, max: f32) {
         check_audio!(self);
-        self.source.parameter_f32(AL_REFERENCE_DISTANCE, reference);
-        self.source.parameter_f32(AL_MAX_DISTANCE, max);
+        let src = self.source();
+        src.parameter_f32(AL_REFERENCE_DISTANCE, reference);
+        src.parameter_f32(AL_MAX_DISTANCE, max);
     }
 
     pub fn attenuation_distances(&self) -> (f32, f32) {
         check_audio!(self);
+        let src = self.source();
         (
-            self.source.get_parameter_f32(AL_REFERENCE_DISTANCE),
-            self.source.get_parameter_f32(AL_MAX_DISTANCE),
+            src.get_parameter_f32(AL_REFERENCE_DISTANCE),
+            src.get_parameter_f32(AL_MAX_DISTANCE),
         )
     }
 
     pub fn set_rolloff(&self, rolloff: f32) {
         check_audio!(self);
-        self.source.parameter_f32(AL_ROLLOFF_FACTOR, rolloff);
+        self.source().parameter_f32(AL_ROLLOFF_FACTOR, rolloff);
     }
 
     pub fn rolloff(&self) -> f32 {
         check_audio!(self);
-        self.source.get_parameter_f32(AL_ROLLOFF_FACTOR)
+        self.source().get_parameter_f32(AL_ROLLOFF_FACTOR)
     }
 
     pub fn set_air_absorption_factor(&self, value: f32) {
         check_audio!(self);
-        self.source.parameter_f32(AL_AIR_ABSORPTION_FACTOR, value);
+        self.source().parameter_f32(AL_AIR_ABSORPTION_FACTOR, value);
     }
 
     pub fn into_ptr(self) -> *mut Self {
@@ -816,9 +869,9 @@ impl AudioSystem {
                     // We always lock groups first
                     let mut groups = AUDIOSYSTEM.groups.lock().unwrap();
                     let mut voices = AUDIOSYSTEM.voices.lock().unwrap();
-                    if let Some((vid, v)) = voices.iter().find(|(_, x)| x.source.raw() == id) {
+                    if let Some((vid, v)) = voices.iter().find(|(_, x)| x.source().raw() == id) {
                         // Remove from group too if it has one
-                        if let Some(gid) = v.groupid {
+                        if let Some(gid) = v.groupid() {
                             let group = &mut groups[gid];
                             if let Some(gvid) = group.voices.iter().position(|x| *x == vid) {
                                 group.voices.remove(gvid);
@@ -839,15 +892,39 @@ pub fn init() -> Result<()> {
     Ok(())
 }
 
-static AUDIO: Mutex<Arena<Audio>> = Mutex::new(Arena::new());
 #[derive(Copy, Clone, derive_more::From, derive_more::Into, mlua::FromLua)]
 struct AudioRef(thunderdome::Index);
 impl AudioRef {
+    fn new(data: &Option<AudioData>) -> Result<Self> {
+        let audio = Audio::new(data)?;
+        Ok(AUDIOSYSTEM.voices.lock().unwrap().insert(audio).into())
+    }
+
+    fn new_buffer(buffer: &Arc<AudioBuffer>) -> Result<Self> {
+        let audio = Audio::new_buffer(buffer)?;
+        Ok(AUDIOSYSTEM.voices.lock().unwrap().insert(audio).into())
+    }
+
+    fn from_path(path: &str, _atype: AudioType) -> Result<Self> {
+        // TODO streaming
+        let buffer = Arc::new(AudioBuffer::from_path(path)?);
+        Self::new_buffer(&buffer)
+    }
+
+    fn try_clone(&self) -> Result<Self> {
+        let mut voices = AUDIOSYSTEM.voices.lock().unwrap();
+        let audio = match voices.get(self.0) {
+            Some(audio) => audio.try_clone()?,
+            None => anyhow::bail!("Audio not found"),
+        };
+        Ok(voices.insert(audio).into())
+    }
+
     pub fn call<S, R>(&self, f: S) -> anyhow::Result<R>
     where
         S: Fn(&Audio) -> R,
     {
-        let audio = AUDIO.lock().unwrap();
+        let audio = AUDIOSYSTEM.voices.lock().unwrap();
         match audio.get(self.0) {
             Some(audio) => Ok(f(audio)),
             None => anyhow::bail!("Audio not found"),
@@ -858,7 +935,7 @@ impl AudioRef {
     where
         S: Fn(&mut Audio) -> R,
     {
-        let mut audio = AUDIO.lock().unwrap();
+        let mut audio = AUDIOSYSTEM.voices.lock().unwrap();
         match audio.get_mut(self.0) {
             Some(audio) => Ok(f(audio)),
             None => anyhow::bail!("Audio not found"),
@@ -871,15 +948,7 @@ impl AudioRef {
  *
  * @luamod audio
  */
-impl UserData for Audio {
-    fn add_fields<F: mlua::UserDataFields<Self>>(fields: &mut F) {
-        fields.add_field_method_get("name", |_, this| {
-            Ok(match &this.data {
-                Some(AudioData::Buffer(buffer)) => String::from(&buffer.name),
-                None => String::from("NONE"),
-            })
-        });
-    }
+impl UserData for AudioRef {
     fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
         /*
          * @brief Gets a string representation of an audio file.
@@ -888,14 +957,16 @@ impl UserData for Audio {
          *    @luatreturn string String representation of the audio.
          * @luafunc __tostring
          */
-        methods.add_meta_method(MetaMethod::ToString, |_, audio: &Self, ()| {
-            Ok(format!(
-                "audio( {} )",
-                match &audio.data {
-                    Some(AudioData::Buffer(buffer)) => &buffer.name,
-                    None => "NONE",
-                }
-            ))
+        methods.add_meta_method(MetaMethod::ToString, |_, this: &Self, ()| {
+            Ok(this.call(|this| match this {
+                Audio::Static(this) => format!(
+                    "AudioStatic( {} )",
+                    match &this.data {
+                        Some(AudioData::Buffer(buffer)) => &buffer.name,
+                        None => "NONE",
+                    }
+                ),
+            })?)
         });
         /*
          * @brief Creates a new audio source.
@@ -925,8 +996,8 @@ impl UserData for Audio {
          *    @luatreturn Audio New audio corresponding to the data.
          * @luafunc clone
          */
-        methods.add_method("clone", |_, audio: &Self, ()| -> mlua::Result<Audio> {
-            Ok(audio.try_clone()?)
+        methods.add_method("clone", |_, this, ()| -> mlua::Result<AudioRef> {
+            Ok(this.try_clone()?)
         });
         /*
          * @brief Plays a source.
@@ -934,8 +1005,10 @@ impl UserData for Audio {
          *    @luatparam Audio source Source to play.
          * @luafunc play
          */
-        methods.add_method("play", |_, audio: &Self, ()| -> mlua::Result<()> {
-            audio.play();
+        methods.add_method("play", |_, this, ()| -> mlua::Result<()> {
+            this.call(|this| {
+                this.play();
+            })?;
             Ok(())
         });
         /*
@@ -945,8 +1018,8 @@ impl UserData for Audio {
          *    @luatreturn boolean Whether or not the source is playing.
          * @luafunc isPlaying
          */
-        methods.add_method("isPlaying", |_, audio: &Self, ()| -> mlua::Result<bool> {
-            Ok(audio.is_playing())
+        methods.add_method("isPlaying", |_, this, ()| -> mlua::Result<bool> {
+            Ok(this.call(|this| this.is_playing())?)
         });
         /*
          * @brief Pauses a source.
@@ -954,8 +1027,10 @@ impl UserData for Audio {
          *    @luatparam Audio source Source to pause.
          * @luafunc pause
          */
-        methods.add_method("pause", |_, audio: &Self, ()| -> mlua::Result<()> {
-            audio.pause();
+        methods.add_method("pause", |_, this, ()| -> mlua::Result<()> {
+            this.call(|this| {
+                this.pause();
+            })?;
             Ok(())
         });
         /*
@@ -965,8 +1040,8 @@ impl UserData for Audio {
          *    @luatreturn boolean Whether or not the source is paused.
          * @luafunc isPaused
          */
-        methods.add_method("isPaused", |_, audio: &Self, ()| -> mlua::Result<bool> {
-            Ok(audio.is_paused())
+        methods.add_method("isPaused", |_, this, ()| -> mlua::Result<bool> {
+            Ok(this.call(|this| this.is_paused())?)
         });
         /*
          * @brief Stops a source.
@@ -974,8 +1049,10 @@ impl UserData for Audio {
          *    @luatparam Audio source Source to stop.
          * @luafunc stop
          */
-        methods.add_method("stop", |_, audio: &Self, ()| -> mlua::Result<()> {
-            audio.stop();
+        methods.add_method("stop", |_, this, ()| -> mlua::Result<()> {
+            this.call(|this| {
+                this.stop();
+            })?;
             Ok(())
         });
         /*
@@ -985,8 +1062,8 @@ impl UserData for Audio {
          *    @luatreturn boolean Whether or not the source is stopped.
          * @luafunc isStopped
          */
-        methods.add_method("isStopped", |_, audio: &Self, ()| -> mlua::Result<bool> {
-            Ok(audio.is_stopped())
+        methods.add_method("isStopped", |_, this, ()| -> mlua::Result<bool> {
+            Ok(this.call(|this| this.is_stopped())?)
         });
         /*
          * @brief Rewinds a source.
@@ -994,8 +1071,10 @@ impl UserData for Audio {
          *    @luatparam Audio source Source to rewind.
          * @luafunc rewind
          */
-        methods.add_method("rewind", |_, audio: &Self, ()| -> mlua::Result<()> {
-            audio.rewind();
+        methods.add_method("rewind", |_, this, ()| -> mlua::Result<()> {
+            this.call(|this| {
+                this.rewind();
+            })?;
             Ok(())
         });
         /*
@@ -1008,14 +1087,16 @@ impl UserData for Audio {
          */
         methods.add_method(
             "seek",
-            |_, audio: &Self, (offset, samples): (f32, bool)| -> mlua::Result<()> {
-                audio.seek(
-                    offset,
-                    match samples {
-                        true => AudioSeek::Samples,
-                        false => AudioSeek::Seconds,
-                    },
-                );
+            |_, this, (offset, samples): (f32, bool)| -> mlua::Result<()> {
+                this.call(|this| {
+                    this.seek(
+                        offset,
+                        match samples {
+                            true => AudioSeek::Samples,
+                            false => AudioSeek::Seconds,
+                        },
+                    );
+                })?;
                 Ok(())
             },
         );
@@ -1028,15 +1109,14 @@ impl UserData for Audio {
          *    @luatreturn number Offset of the source or -1 on error.
          * @luafunc tell
          */
-        methods.add_method(
-            "tell",
-            |_, audio: &Self, samples: bool| -> mlua::Result<f32> {
-                Ok(audio.tell(match samples {
+        methods.add_method("tell", |_, this, samples: bool| -> mlua::Result<f32> {
+            Ok(this.call(|this| {
+                this.tell(match samples {
                     true => AudioSeek::Samples,
                     false => AudioSeek::Seconds,
-                }))
-            },
-        );
+                })
+            })?)
+        });
         /*
          * @brief Gets the length of a source.
          *
@@ -1048,14 +1128,16 @@ impl UserData for Audio {
          */
         methods.add_method(
             "getDuration",
-            |_, audio: &Self, samples: bool| -> mlua::Result<f32> {
-                Ok(match &audio.data {
-                    Some(AudioData::Buffer(buffer)) => buffer.duration(match samples {
-                        true => AudioSeek::Samples,
-                        false => AudioSeek::Seconds,
-                    }),
-                    None => 0.0,
-                })
+            |_, this, samples: bool| -> mlua::Result<f32> {
+                Ok(this.call(|this| match this {
+                    Audio::Static(this) => match &this.data {
+                        Some(AudioData::Buffer(buffer)) => buffer.duration(match samples {
+                            true => AudioSeek::Samples,
+                            false => AudioSeek::Seconds,
+                        }),
+                        None => 0.0,
+                    },
+                })?)
             },
         );
         /*
@@ -1068,14 +1150,16 @@ impl UserData for Audio {
          * master.
          * @luafunc setVolume
          */
-        methods.add_method_mut(
+        methods.add_method(
             "setVolume",
-            |_, audio: &mut Self, (volume, ignoremaster): (f32, bool)| -> mlua::Result<()> {
-                if ignoremaster {
-                    audio.set_volume_raw(volume)
-                } else {
-                    audio.set_volume(volume)
-                }
+            |_, this, (volume, ignoremaster): (f32, bool)| -> mlua::Result<()> {
+                this.call_mut(|this| {
+                    if ignoremaster {
+                        this.set_volume_raw(volume)
+                    } else {
+                        this.set_volume(volume)
+                    }
+                })?;
                 Ok(())
             },
         );
@@ -1086,8 +1170,8 @@ impl UserData for Audio {
          *    @luatreturn number Volume the source is set to.
          * @luafunc getVolume
          */
-        methods.add_method("getVolume", |_, audio: &Self, ()| -> mlua::Result<f32> {
-            Ok(audio.volume())
+        methods.add_method("getVolume", |_, this, ()| -> mlua::Result<f32> {
+            Ok(this.call(|this| this.volume())?)
         });
         /*
          * @brief Sets whether a source is relative or not.
@@ -1098,8 +1182,10 @@ impl UserData for Audio {
          */
         methods.add_method(
             "setRelative",
-            |_, audio: &Self, relative: bool| -> mlua::Result<()> {
-                audio.set_relative(relative);
+            |_, this, relative: bool| -> mlua::Result<()> {
+                this.call_mut(|this| {
+                    this.set_relative(relative);
+                })?;
                 Ok(())
             },
         );
@@ -1109,8 +1195,8 @@ impl UserData for Audio {
          *    @luatreturn boolean relative Whether or not to the source is relative.
          * @luafunc isRelative
          */
-        methods.add_method("isRelative", |_, audio: &Self, ()| -> mlua::Result<bool> {
-            Ok(audio.relative())
+        methods.add_method("isRelative", |_, this, ()| -> mlua::Result<bool> {
+            Ok(this.call(|this| this.relative())?)
         });
         /*
          * @brief Sets the position of a source.
@@ -1123,9 +1209,11 @@ impl UserData for Audio {
          */
         methods.add_method(
             "setPosition",
-            |_, audio: &Self, (x, y, z): (f32, f32, f32)| -> mlua::Result<()> {
+            |_, this, (x, y, z): (f32, f32, f32)| -> mlua::Result<()> {
                 let vec: Vector3<f32> = Vector3::new(x, y, z);
-                audio.set_position(vec);
+                this.call_mut(|this| {
+                    this.set_position(vec);
+                })?;
                 Ok(())
             },
         );
@@ -1140,8 +1228,8 @@ impl UserData for Audio {
          */
         methods.add_method(
             "getPosition",
-            |_, audio: &Self, ()| -> mlua::Result<(f32, f32, f32)> {
-                let pos = audio.position();
+            |_, this, ()| -> mlua::Result<(f32, f32, f32)> {
+                let pos = this.call(|this| this.position())?;
                 Ok((pos.x, pos.y, pos.z))
             },
         );
@@ -1156,9 +1244,11 @@ impl UserData for Audio {
          */
         methods.add_method(
             "setVelocity",
-            |_, audio: &Self, (x, y, z): (f32, f32, f32)| -> mlua::Result<()> {
+            |_, this, (x, y, z): (f32, f32, f32)| -> mlua::Result<()> {
                 let vec: Vector3<f32> = Vector3::new(x, y, z);
-                audio.set_velocity(vec);
+                this.call_mut(|this| {
+                    this.set_velocity(vec);
+                })?;
                 Ok(())
             },
         );
@@ -1173,8 +1263,8 @@ impl UserData for Audio {
          */
         methods.add_method(
             "getVelocity",
-            |_, audio: &Self, ()| -> mlua::Result<(f32, f32, f32)> {
-                let vel = audio.velocity();
+            |_, this, ()| -> mlua::Result<(f32, f32, f32)> {
+                let vel = this.call(|this| this.velocity())?;
                 Ok((vel.x, vel.y, vel.z))
             },
         );
@@ -1186,13 +1276,12 @@ impl UserData for Audio {
          * looping.
          * @luafunc setLooping
          */
-        methods.add_method(
-            "setLooping",
-            |_, audio: &Self, looping: bool| -> mlua::Result<()> {
-                audio.set_looping(looping);
-                Ok(())
-            },
-        );
+        methods.add_method("setLooping", |_, this, looping: bool| -> mlua::Result<()> {
+            this.call_mut(|this| {
+                this.set_looping(looping);
+            })?;
+            Ok(())
+        });
         /*
          * @brief Gets the looping state of a source.
          *
@@ -1200,8 +1289,8 @@ impl UserData for Audio {
          *    @luatreturn boolean Whether or not the source is looping.
          * @luafunc isLooping
          */
-        methods.add_method("isLooping", |_, audio: &Self, ()| -> mlua::Result<bool> {
-            Ok(audio.looping())
+        methods.add_method("isLooping", |_, this, ()| -> mlua::Result<bool> {
+            Ok(this.call(|this| this.looping())?)
         });
         /*
          * @brief Sets the pitch of a source.
@@ -1210,13 +1299,12 @@ impl UserData for Audio {
          *    @luatparam number pitch Pitch to set the source to.
          * @luafunc setPitch
          */
-        methods.add_method(
-            "setPitch",
-            |_, audio: &Self, pitch: f32| -> mlua::Result<()> {
-                audio.set_pitch(pitch);
-                Ok(())
-            },
-        );
+        methods.add_method("setPitch", |_, this, pitch: f32| -> mlua::Result<()> {
+            this.call_mut(|this| {
+                this.set_pitch(pitch);
+            })?;
+            Ok(())
+        });
         /*
          * @brief Gets the pitch of a source.
          *
@@ -1224,8 +1312,8 @@ impl UserData for Audio {
          *    @luatreturn number Pitch of the source.
          * @luafunc getPitch
          */
-        methods.add_method("getPitch", |_, audio: &Self, ()| -> mlua::Result<f32> {
-            Ok(audio.pitch())
+        methods.add_method("getPitch", |_, this, ()| -> mlua::Result<f32> {
+            Ok(this.call(|this| this.pitch())?)
         });
         /*
          * @brief Sets the attenuation distances for the audio source.
@@ -1236,8 +1324,10 @@ impl UserData for Audio {
          */
         methods.add_method(
             "setAttenuationDistances",
-            |_, audio: &Self, (reference, max): (f32, f32)| -> mlua::Result<()> {
-                audio.set_attenuation_distances(reference, max);
+            |_, this, (reference, max): (f32, f32)| -> mlua::Result<()> {
+                this.call_mut(|this| {
+                    this.set_attenuation_distances(reference, max);
+                })?;
                 Ok(())
             },
         );
@@ -1251,7 +1341,9 @@ impl UserData for Audio {
          */
         methods.add_method(
             "getAttenuationDistances",
-            |_, audio: &Self, ()| -> mlua::Result<(f32, f32)> { Ok(audio.attenuation_distances()) },
+            |_, this, ()| -> mlua::Result<(f32, f32)> {
+                Ok(this.call(|this| this.attenuation_distances())?)
+            },
         );
         /*
          * @brief Sets the rolloff factor.
@@ -1259,21 +1351,20 @@ impl UserData for Audio {
          *    @luatparam number rolloff New rolloff factor.
          * @luafunc setRolloff
          */
-        methods.add_method(
-            "setRolloff",
-            |_, audio: &Self, rolloff: f32| -> mlua::Result<()> {
-                audio.set_rolloff(rolloff);
-                Ok(())
-            },
-        );
+        methods.add_method("setRolloff", |_, this, rolloff: f32| -> mlua::Result<()> {
+            this.call_mut(|this| {
+                this.set_rolloff(rolloff);
+            })?;
+            Ok(())
+        });
         /*
          * @brief Gets the rolloff factor.
          *
          *    @luatreturn number Rolloff factor or 0. if sound is disabled.
          * @luafunc getRolloff
          */
-        methods.add_method("getRolloff", |_, audio: &Self, ()| -> mlua::Result<f32> {
-            Ok(audio.rolloff())
+        methods.add_method("getRolloff", |_, this, ()| -> mlua::Result<f32> {
+            Ok(this.call(|this| this.rolloff())?)
         });
         /*
          * @brief Sets effects on a source.
@@ -1287,27 +1378,34 @@ impl UserData for Audio {
          */
         methods.add_method(
             "setEffect",
-            |_, audio: &Self, (name, enable): (String, bool)| -> mlua::Result<bool> {
-                let slot = if enable {
-                    let lock = EFX_LIST.lock().unwrap();
-                    let efxid =
-                        match binary_search_by_key_ref(&lock, &name, |e: &LuaAudioEfx| &e.name) {
-                            Ok(efx) => efx,
-                            Err(_) => {
-                                return Err(mlua::Error::RuntimeError(format!(
-                                    "effect '{name}' not found"
-                                )));
-                            }
-                        };
-                    let efx = &lock[efxid];
-                    efx.slot.raw() as ALint
-                } else {
-                    AL_EFFECTSLOT_NULL
-                };
-                audio
-                    .source
-                    .parameter_3_i32(AL_AUXILIARY_SEND_FILTER, slot, 0, AL_FILTER_NULL);
-                Ok(true)
+            |_, this, (name, enable): (String, bool)| -> mlua::Result<bool> {
+                this.call(|this| {
+                    let slot = if enable {
+                        let lock = EFX_LIST.lock().unwrap();
+                        let efxid =
+                            match binary_search_by_key_ref(&lock, &name, |e: &LuaAudioEfx| &e.name)
+                            {
+                                Ok(efx) => efx,
+                                Err(_) => {
+                                    return Err(mlua::Error::RuntimeError(format!(
+                                        "effect '{name}' not found"
+                                    )));
+                                }
+                            };
+                        let efx = &lock[efxid];
+                        efx.slot.raw() as ALint
+                    } else {
+                        AL_EFFECTSLOT_NULL
+                    };
+                    this.source().parameter_3_i32(
+                        AL_AUXILIARY_SEND_FILTER,
+                        slot,
+                        0,
+                        AL_FILTER_NULL,
+                    );
+
+                    Ok(true)
+                })?
             },
         );
         /*
@@ -1450,7 +1548,6 @@ impl UserData for Audio {
                     efx.slot.parameter_f32(AL_EFFECTSLOT_GAIN, volume);
                 }
                 efx.slot.set_effect(Some(&efx.effect));
-
                 Ok(())
             },
         );
@@ -1521,9 +1618,10 @@ impl UserData for Audio {
 }
 
 pub fn open_audio(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
-    Ok(lua.create_proxy::<Audio>()?)
+    Ok(lua.create_proxy::<AudioRef>()?)
 }
 
+/*
 // Here be C API
 use std::ffi::{CStr, c_char, c_double, c_int, c_void};
 
@@ -1854,3 +1952,4 @@ pub extern "C" fn sound_env(env: naevc::SoundEnv_t, param: f64) {
         _ => (),
     }
 }
+*/
