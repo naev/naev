@@ -162,8 +162,54 @@ impl UserData for LuaSpfxRef {
          *    @luatreturn vec2 Position of the spfx.
          * @luafunc pos( s )
          */
-        methods.add_method_mut("pos", |_, this, ()| -> mlua::Result<Option<Vec2>> {
+        methods.add_method("pos", |_, this, ()| -> mlua::Result<Option<Vec2>> {
             Ok(this.call(|this| this.pos)?)
+        });
+        /*
+         * @brief Sets the velocity of a spfx.
+         *
+         *    @luatparam spfx s Spfx to set the velocity of.
+         *    @luatparam vec2 v Velocity to set to.
+         * @luafunc setVel
+         */
+        methods.add_method("vel", |_, this, ()| -> mlua::Result<Option<Vec2>> {
+            Ok(this.call(|this| this.vel)?)
+        });
+        /*
+         * @brief Sets the position of a spfx.
+         *
+         *    @luatparam spfx s Spfx to set the position of.
+         *    @luatparam vec2 p Position to set to.
+         * @luafunc setPos
+         */
+        methods.add_method_mut("setPos", |_, this, pos: Vec2| -> mlua::Result<()> {
+            this.call_mut(|this| match this.pos {
+                Some(_) => {
+                    this.pos = Some(pos);
+                    Ok(())
+                }
+                None => Err(mlua::Error::RuntimeError(
+                    "can't set position of a LuaSpfx with None position".to_string(),
+                )),
+            })?
+        });
+        /*
+         * @brief Sets the velocity of a spfx.
+         *
+         *    @luatparam spfx s Spfx to set the velocity of.
+         *    @luatparam vec2 v Velocity to set to.
+         * @luafunc setVel
+         */
+        methods.add_method_mut("setVel", |_, this, vel: Vec2| -> mlua::Result<()> {
+            this.call_mut(|this| match this.vel {
+                Some(_) => {
+                    this.vel = Some(vel);
+                    Ok(())
+                }
+                None => Err(mlua::Error::RuntimeError(
+                    "can't set position of a LuaSpfx with None velocity".to_string(),
+                )),
+            })?
         });
     }
 }
