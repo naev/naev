@@ -65,10 +65,9 @@ repos:
       entry: utils/doxspell.sh
       language: script
       types: [c]
-    - id: no_tabs
-      name: no_tabs
-      entry: utils/no_tabs.sh
-      language: script
+    - id: expand-tabs.sh
+      name: expand tabs (bash)
+      entry: utils/shlinters/expand-tabs.sh
       exclude: (^|/)Makefile
       types: [text]
     - id: reindent
