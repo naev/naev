@@ -24,3 +24,4 @@ nalgebra = { workspace = true }
 thunderdome = { workspace = true }
 static_assertions = { workspace = true }
 tracing-mutex = { workspace = true }
+derive_more = { workspace = true }

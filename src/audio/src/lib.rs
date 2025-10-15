@@ -497,7 +497,7 @@ impl Audio {
 
     pub fn set_volume(&mut self, vol: f32) {
         check_audio!(self);
-        let master = AUDIO.volume.read().unwrap().volume;
+        let master = AUDIOSYSTEM.volume.read().unwrap().volume;
         self.source.parameter_f32(AL_GAIN, master * vol);
         self.volume = vol;
     }
@@ -814,8 +814,8 @@ impl AudioSystem {
             match m {
                 Message::SourceStopped(id) => {
                     // We always lock groups first
-                    let mut groups = AUDIO.groups.lock().unwrap();
-                    let mut voices = AUDIO.voices.lock().unwrap();
+                    let mut groups = AUDIOSYSTEM.groups.lock().unwrap();
+                    let mut voices = AUDIOSYSTEM.voices.lock().unwrap();
                     if let Some((vid, v)) = voices.iter().find(|(_, x)| x.source.raw() == id) {
                         // Remove from group too if it has one
                         if let Some(gid) = v.groupid {
@@ -832,26 +832,39 @@ impl AudioSystem {
         }
     }
 }
-static AUDIO: LazyLock<AudioSystem> = LazyLock::new(|| AudioSystem::new().unwrap());
+static AUDIOSYSTEM: LazyLock<AudioSystem> = LazyLock::new(|| AudioSystem::new().unwrap());
 
 pub fn init() -> Result<()> {
-    let _ = &*AUDIO;
+    let _ = &*AUDIOSYSTEM;
     Ok(())
 }
 
-/*
-impl mlua::FromLua for Audio {
-    fn from_lua(value: mlua::Value, _: &mlua::Lua) -> mlua::Result<Self> {
-        match value {
-            mlua::Value::UserData(ud) => Ok(*ud.borrow::<Self>()?),
-            val => Err(mlua::Error::RuntimeError(format!(
-                "unable to convert {} to Audio",
-                val.type_name()
-            ))),
+static AUDIO: Mutex<Arena<Audio>> = Mutex::new(Arena::new());
+#[derive(Copy, Clone, derive_more::From, derive_more::Into, mlua::FromLua)]
+struct AudioRef(thunderdome::Index);
+impl AudioRef {
+    pub fn call<S, R>(&self, f: S) -> anyhow::Result<R>
+    where
+        S: Fn(&Audio) -> R,
+    {
+        let audio = AUDIO.lock().unwrap();
+        match audio.get(self.0) {
+            Some(audio) => Ok(f(audio)),
+            None => anyhow::bail!("Audio not found"),
+        }
+    }
+
+    pub fn call_mut<S, R>(&self, f: S) -> anyhow::Result<R>
+    where
+        S: Fn(&mut Audio) -> R,
+    {
+        let mut audio = AUDIO.lock().unwrap();
+        match audio.get_mut(self.0) {
+            Some(audio) => Ok(f(audio)),
+            None => anyhow::bail!("Audio not found"),
         }
     }
 }
-*/
 
 /*
  * @brief Lua bindings to interact with audio.
@@ -1553,7 +1566,7 @@ pub extern "C" fn sound_play(sound: *const Arc<AudioBuffer>) -> *const c_void {
     let sound = unsafe { &*sound };
 
     let audio = Audio::new(&Some(AudioData::Buffer(sound.clone()))).unwrap();
-    let mut voices = AUDIO.voices.lock().unwrap();
+    let mut voices = AUDIOSYSTEM.voices.lock().unwrap();
     let voice = voices.insert(audio);
     unsafe { std::mem::transmute::<thunderdome::Index, *const c_void>(voice) }
 }
@@ -1572,7 +1585,7 @@ pub extern "C" fn sound_playPos(
     }
     let sound = unsafe { &*sound };
 
-    let mut voices = AUDIO.voices.lock().unwrap();
+    let mut voices = AUDIOSYSTEM.voices.lock().unwrap();
     let audio = Audio::new(&Some(AudioData::Buffer(sound.clone()))).unwrap();
     audio.ingame();
     audio.set_position(Vector3::from([px as f32, py as f32, 0.0]));
@@ -1594,7 +1607,7 @@ macro_rules! get_voice {
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_stop(voice: *const c_void) {
     let index = get_voice!(voice);
-    let voices = AUDIO.voices.lock().unwrap();
+    let voices = AUDIOSYSTEM.voices.lock().unwrap();
     let voice = &voices[index];
     voice.stop();
 }
@@ -1608,7 +1621,7 @@ pub extern "C" fn sound_updatePos(
     vy: c_double,
 ) {
     let index = get_voice!(voice);
-    let voices = AUDIO.voices.lock().unwrap();
+    let voices = AUDIOSYSTEM.voices.lock().unwrap();
     let voice = &voices[index];
     voice.set_position(Vector3::from([px as f32, py as f32, 0.0]));
     voice.set_velocity(Vector3::from([vx as f32, vy as f32, 0.0]));
@@ -1634,13 +1647,13 @@ pub extern "C" fn sound_updateListener(
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_update(_dt: c_double) -> i32 {
-    AUDIO.execute_messages();
+    AUDIOSYSTEM.execute_messages();
     0
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_pause() {
-    let voices = AUDIO.voices.lock().unwrap();
+    let voices = AUDIOSYSTEM.voices.lock().unwrap();
     for (_, v) in voices.iter() {
         v.pause();
     }
@@ -1648,7 +1661,7 @@ pub extern "C" fn sound_pause() {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_resume() {
-    let voices = AUDIO.voices.lock().unwrap();
+    let voices = AUDIOSYSTEM.voices.lock().unwrap();
     for (_, v) in voices.iter() {
         v.play();
     }
@@ -1656,12 +1669,12 @@ pub extern "C" fn sound_resume() {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_volume(volume: c_double) {
-    AUDIO.set_volume(volume as f32);
+    AUDIOSYSTEM.set_volume(volume as f32);
     let master = {
-        let vol = AUDIO.volume.read().unwrap();
+        let vol = AUDIOSYSTEM.volume.read().unwrap();
         vol.volume * vol.volume_speed
     };
-    let voices = AUDIO.voices.lock().unwrap();
+    let voices = AUDIOSYSTEM.voices.lock().unwrap();
     for (_, v) in voices.iter() {
         v.source.parameter_f32(AL_GAIN, master * v.volume);
     }
@@ -1669,17 +1682,17 @@ pub extern "C" fn sound_volume(volume: c_double) {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_getVolume() -> c_double {
-    AUDIO.volume.read().unwrap().volume_lin as c_double
+    AUDIOSYSTEM.volume.read().unwrap().volume_lin as c_double
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_getVolumeLog() -> c_double {
-    AUDIO.volume.read().unwrap().volume as c_double
+    AUDIOSYSTEM.volume.read().unwrap().volume as c_double
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_stopAll() {
-    let mut voices = AUDIO.voices.lock().unwrap();
+    let mut voices = AUDIOSYSTEM.voices.lock().unwrap();
     for (_, v) in voices.drain() {
         v.stop();
     }
@@ -1687,12 +1700,12 @@ pub extern "C" fn sound_stopAll() {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_setSpeed(speed: c_double) {
-    AUDIO.set_volume_speed(speed as f32);
+    AUDIOSYSTEM.set_volume_speed(speed as f32);
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_createGroup(size: c_int) -> *const c_void {
-    let mut groups = AUDIO.groups.lock().unwrap();
+    let mut groups = AUDIOSYSTEM.groups.lock().unwrap();
     let group = AudioGroup {
         max: size as usize,
         volume: 1.0,
@@ -1727,7 +1740,7 @@ pub extern "C" fn sound_playGroup(
     let sound = unsafe { &*sound };
 
     let groupid = get_group!(group);
-    let mut groups = AUDIO.groups.lock().unwrap();
+    let mut groups = AUDIOSYSTEM.groups.lock().unwrap();
     let group = &mut groups[groupid];
     if group.voices.len() >= group.max {
         return std::ptr::null();
@@ -1738,7 +1751,7 @@ pub extern "C" fn sound_playGroup(
         audio.set_looping(true);
     }
     audio.groupid = Some(groupid);
-    let mut voices = AUDIO.voices.lock().unwrap();
+    let mut voices = AUDIOSYSTEM.voices.lock().unwrap();
     let voice = voices.insert(audio);
     group.voices.push(voice);
 
@@ -1748,9 +1761,9 @@ pub extern "C" fn sound_playGroup(
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_stopGroup(group: *const c_void) {
     let groupid = get_group!(group);
-    let mut groups = AUDIO.groups.lock().unwrap();
+    let mut groups = AUDIOSYSTEM.groups.lock().unwrap();
     let group = &mut groups[groupid];
-    let voices = AUDIO.voices.lock().unwrap();
+    let voices = AUDIOSYSTEM.voices.lock().unwrap();
     for v in group.voices.drain(..) {
         voices[v].stop();
     }
@@ -1759,9 +1772,9 @@ pub extern "C" fn sound_stopGroup(group: *const c_void) {
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_pauseGroup(group: *const c_void) {
     let groupid = get_group!(group);
-    let groups = AUDIO.groups.lock().unwrap();
+    let groups = AUDIOSYSTEM.groups.lock().unwrap();
     let group = &groups[groupid];
-    let voices = AUDIO.voices.lock().unwrap();
+    let voices = AUDIOSYSTEM.voices.lock().unwrap();
     for v in group.voices.iter() {
         voices[*v].pause();
     }
@@ -1770,9 +1783,9 @@ pub extern "C" fn sound_pauseGroup(group: *const c_void) {
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_resumeGroup(group: *const c_void) {
     let groupid = get_group!(group);
-    let groups = AUDIO.groups.lock().unwrap();
+    let groups = AUDIOSYSTEM.groups.lock().unwrap();
     let group = &groups[groupid];
-    let voices = AUDIO.voices.lock().unwrap();
+    let voices = AUDIOSYSTEM.voices.lock().unwrap();
     for v in group.voices.iter() {
         voices[*v].play();
     }
@@ -1781,7 +1794,7 @@ pub extern "C" fn sound_resumeGroup(group: *const c_void) {
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_speedGroup(group: *const c_void, enable: c_int) {
     let groupid = get_group!(group);
-    let mut groups = AUDIO.groups.lock().unwrap();
+    let mut groups = AUDIOSYSTEM.groups.lock().unwrap();
     let group = &mut groups[groupid];
     group.speed_affects = enable != 0;
     //group.update();
@@ -1790,7 +1803,7 @@ pub extern "C" fn sound_speedGroup(group: *const c_void, enable: c_int) {
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_volumeGroup(group: *const c_void, volume: c_double) {
     let groupid = get_group!(group);
-    let mut groups = AUDIO.groups.lock().unwrap();
+    let mut groups = AUDIOSYSTEM.groups.lock().unwrap();
     let group = &mut groups[groupid];
     group.volume = volume as f32;
     //group.update();
@@ -1799,7 +1812,7 @@ pub extern "C" fn sound_volumeGroup(group: *const c_void, volume: c_double) {
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_pitchGroup(group: *const c_void, pitch: c_double) {
     let groupid = get_group!(group);
-    let mut groups = AUDIO.groups.lock().unwrap();
+    let mut groups = AUDIOSYSTEM.groups.lock().unwrap();
     let group = &mut groups[groupid];
     group.pitch = pitch as f32;
     //group.update();
@@ -1807,7 +1820,7 @@ pub extern "C" fn sound_pitchGroup(group: *const c_void, pitch: c_double) {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_setAbsorption(value: c_double) {
-    AUDIO.set_air_absorption_factor(value as f32);
+    AUDIOSYSTEM.set_air_absorption_factor(value as f32);
 }
 
 #[unsafe(no_mangle)]
@@ -1818,7 +1831,7 @@ pub extern "C" fn sound_env(env: naevc::SoundEnv_t, param: f64) {
                 alSpeedOfSound(3433.0);
                 alDopplerFactor(0.3);
             }
-            AUDIO.set_air_absorption_factor(0.0);
+            AUDIOSYSTEM.set_air_absorption_factor(0.0);
 
             if let Some(efx) = EFX.get() {
                 efx.direct_slot.set_effect(None);
@@ -1830,7 +1843,7 @@ pub extern "C" fn sound_env(env: naevc::SoundEnv_t, param: f64) {
                 alSpeedOfSound(3433.0 / (1.0 + f * 2.0));
                 alDopplerFactor(1.0);
             }
-            AUDIO.set_air_absorption_factor(3.0 * f);
+            AUDIOSYSTEM.set_air_absorption_factor(3.0 * f);
 
             if let Some(efx) = EFX.get() {
                 efx.reverb.parameter_f32(AL_REVERB_DECAY_TIME, 10.0);

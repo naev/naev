@@ -211,6 +211,18 @@ impl UserData for LuaSpfxRef {
                 )),
             })?
         });
+        /*
+         * @brief Gets the sound effect of a spfx.
+         *
+         *    @luatparam spfx s Spfx to get sound effect of.
+         *    @luatreturn audio Sound effect of the spfx.
+         * @luafunc sfx
+         */
+        /*
+        methods.add_method("sfx", |_, this, ()| -> mlua::Result<Option<UserDataRefMut<audio::Audio>>> {
+            Ok(this.call(|this| this.sfx )?)
+        });
+        */
     }
 }
 
