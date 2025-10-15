@@ -146,6 +146,7 @@ impl UserData for LuaSpfxRef {
          *    @luatreturn spfx New spfx corresponding to the data.
          * @luafunc new
          */
+        #[allow(clippy::type_complexity)]
         methods.add_function(
             "new",
             |lua,
@@ -170,7 +171,7 @@ impl UserData for LuaSpfxRef {
                 } else {
                     (None, true)
                 };
-                let env = match LuaEnv::current(&lua) {
+                let env = match LuaEnv::current(lua) {
                     Some(env) => env,
                     None => {
                         return Err(mlua::Error::RuntimeError(

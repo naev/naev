@@ -504,7 +504,7 @@ impl LuaEnv {
                 return None;
             }
         };
-        match LuaEnv::from_table(&lua, tbl) {
+        match LuaEnv::from_table(lua, tbl) {
             Ok(env) => Some(env),
             Err(e) => {
                 warn_err!(e);
