@@ -922,6 +922,35 @@ impl Context {
         let mut writer = ndata::physfs::File::open(filename, ndata::physfs::Mode::Write)?;
         Ok(img.write_to(&mut writer, image::ImageFormat::Png)?)
     }
+
+    /// Converts a point in game coordinates to screen coordinates
+    pub fn game_to_screen_coords(&self, pos: Vector2<f64>) -> Vector2<f64> {
+        let dims = self.dimensions.read().unwrap();
+        let cam = camera::CAMERA.read().unwrap();
+        let view = Vector2::new(dims.view_width as f64, dims.view_height as f64);
+        (pos - cam.pos()) * cam.zoom + view * 0.5
+    }
+
+    /// Converts a point in screen coordinates to game coordinates
+    pub fn screen_to_game_coords(&self, pos: Vector2<f64>) -> Vector2<f64> {
+        let dims = self.dimensions.read().unwrap();
+        let cam = camera::CAMERA.read().unwrap();
+        let view = Vector2::new(dims.view_width as f64, dims.view_height as f64);
+        (pos - view * 0.5) / cam.zoom + cam.pos()
+    }
+
+    /// Converts a point from game to screen coordinates and makes sure it is in range
+    pub fn game_to_screen_coords_inrange(&self, pos: Vector2<f64>, r: f64) -> Option<Vector2<f64>> {
+        let dims = self.dimensions.read().unwrap();
+        let cam = camera::CAMERA.read().unwrap();
+        let view = Vector2::new(dims.view_width as f64, dims.view_height as f64);
+        let screen = (pos - cam.pos()) * cam.zoom + view * 0.5;
+        if screen.x < -r || screen.y < -r || screen.x > view.x + r || screen.y > view.y + r {
+            None
+        } else {
+            Some(screen)
+        }
+    }
 }
 
 #[unsafe(no_mangle)]
@@ -1047,7 +1076,6 @@ impl mlua::UserData for LuaGfx {
          * @brief Gets the screen coordinates from game coordinates.
          *
          *    @luatparam Vec2 Vector of coordinates to transform.
-         *    @luatparam[opt=false] boolean Whether or not to invert y axis.
          *    @luatreturn Vec2 Transformed vector.
          * @luafunc screencoords
          */

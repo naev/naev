@@ -5,6 +5,7 @@ use log::warn_err;
 use mlua::{Either, Function, UserData, UserDataMethods};
 use nalgebra::Vector3;
 use physics::vec2::Vec2;
+use renderer::camera;
 use renderer::colour::Colour;
 use std::sync::Mutex;
 use thunderdome::Arena;
@@ -114,21 +115,67 @@ pub fn update(dt: f64) {
                     sfx.call(|sfx| {
                         sfx.set_position(Vector3::new(pos.x as f32, pos.y as f32, 0.));
                     })
-                    .unwrap();
+                    .unwrap_or_else(|e| {
+                        warn_err!(e);
+                    });
                 }
             }
         }
         if let Some(update) = &spfx.update {
             spfx.env
                 .call::<()>(&lua, &update, (LuaSpfxRef(id), dt))
-                .unwrap();
+                .unwrap_or_else(|e| {
+                    warn_err!(e);
+                });
         }
         true
     });
 }
 
-//pub fn render_bg( dt: f64 ) {
-//}
+enum RenderLayer {
+    Background,
+    Middle,
+    Foreground,
+}
+fn render(layer: RenderLayer, dt: f64) {
+    let lua = &nlua::NLUA;
+    let z = camera::CAMERA.read().unwrap().zoom;
+    for (_, spfx) in LUASPFX.lock().unwrap().iter() {
+        if spfx.cleanup {
+            continue;
+        }
+        let func = match layer {
+            RenderLayer::Background => &spfx.render_bg,
+            RenderLayer::Middle => &spfx.render_mg,
+            RenderLayer::Foreground => &spfx.render_fg,
+        };
+        if let Some(func) = func
+            && let Some(pos) = spfx.pos
+        {
+            if let Some(pos) = renderer::Context::get().game_to_screen_coords_inrange(
+                pos.into_vector2(),
+                spfx.radius.unwrap_or(std::f64::INFINITY),
+            ) {
+                // TODO flip y
+                spfx.env
+                    .call::<()>(&lua, func, (pos.x, pos.y, z, dt))
+                    .unwrap_or_else(|e| {
+                        warn_err!(e);
+                    });
+            }
+        }
+    }
+}
+
+pub fn render_bg(dt: f64) {
+    render(RenderLayer::Background, dt);
+}
+pub fn render_mg(dt: f64) {
+    render(RenderLayer::Middle, dt);
+}
+pub fn render_fg(dt: f64) {
+    render(RenderLayer::Foreground, dt);
+}
 
 /*
  * @brief Lua bindings to interact with spfx.
