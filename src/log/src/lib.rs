@@ -62,7 +62,8 @@ struct Logger {
 }
 impl logcore::Log for Logger {
     fn enabled(&self, metadata: &logcore::Metadata) -> bool {
-        if metadata.target().starts_with("naga::") {
+        let target = metadata.target();
+        if target.starts_with("symphonia") || target.starts_with("naga::") {
             return false;
         }
         if cfg!(debug_assertions) {
