@@ -7,4 +7,19 @@
  <standing>static</standing>
  <allies/>
  <enemies/>
+ <neutrals>
+  <neutral>Independent</neutral>
+  <neutral>Miner</neutral>
+  <neutral>Traders Society</neutral>
+  <neutral>Empire</neutral>
+  <neutral>Dvaered</neutral>
+  <neutral>Za'lek</neutral>
+  <neutral>Soromid</neutral>
+  <neutral>Sirius</neutral>
+  <neutral>Thurion</neutral>
+  <neutral>O'rez</neutral>
+  <neutral>Trader</neutral>
+  <neutral>Yetmer</neutral>
+  <neutral>Frontier</neutral>
+ </neutrals>
 </faction>
