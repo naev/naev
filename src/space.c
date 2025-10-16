@@ -1739,8 +1739,8 @@ void space_init( const char *sysname, int do_simulate )
    if ( do_simulate ) {
       int n, s;
       /* Uint32 time = SDL_GetTicks(); */
-      s              = sound_disabled;
-      sound_disabled = 1;
+      s = sound_disabled();
+      sound_set_disabled( 1 );
       ntime_allowUpdate( 0 );
       n = SYSTEM_SIMULATE_TIME_PRE / fps_min_simulation;
       for ( int i = 0; i < n; i++ )
@@ -1750,7 +1750,7 @@ void space_init( const char *sysname, int do_simulate )
       for ( int i = 0; i < n; i++ )
          update_routine( fps_min_simulation, 0 );
       ntime_allowUpdate( 1 );
-      sound_disabled = s;
+      sound_set_disabled( s );
    }
    player_messageToggle( 1 );
    if ( player.p != NULL ) {

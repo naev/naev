@@ -1957,3 +1957,11 @@ pub extern "C" fn sound_env(env: naevc::SoundEnv_t, param: f64) {
         _ => (),
     }
 }
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sound_disabled() -> c_int {
+    0
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sound_set_disabled(disable: ci_int) {}

@@ -425,7 +425,7 @@ static void music_luaQuit( void )
  */
 int music_choose( const char *situation )
 {
-   if ( music_disabled || sound_disabled )
+   if ( music_disabled || sound_disabled() )
       return 0;
 
    if ( music_runLua( situation ) )

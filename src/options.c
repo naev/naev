@@ -819,7 +819,7 @@ static void opt_setEngineLevel( unsigned int wid, const char *str )
    const char *label  = _( "Engine Volume" );
    double      logvol = 1. / pow( 2., ( 1. - vol ) * 8. );
    conf.engine_vol    = vol;
-   if ( sound_disabled )
+   if ( sound_disabled() )
       snprintf( buf, sizeof( buf ), _( "%s: %s" ), label, _( "Muted" ) );
    else {
       const double magic =

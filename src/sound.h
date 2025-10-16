@@ -17,7 +17,8 @@
 #define ALC_OUTPUT_LIMITER_SOFT 0x199A
 #endif /* ALC_OUTPUT_LIMITER_SOFT */
 
-extern int sound_disabled;
+int  sound_disabled( void );
+void sound_set_disabled( int disabled );
 
 #define SOUND_REFERENCE_DISTANCE 500. /**< OpenAL reference distance. */
 #define SOUND_MAX_DISTANCE 25e3       /**< OpenAL max distance. */
