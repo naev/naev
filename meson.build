@@ -427,11 +427,17 @@ naevcrs = rust.bindgen(
    # pretty good debugging properties. Use 'debug_rust' option to explicitly
    # force Rust to be debug mode.
    if get_option('debug_rust')
+      # Super annoying that the 'dev' target outputs to 'debug', so we have to split the paths
+      # If --artifact-dir stabilizes ( https://github.com/rust-lang/cargo/issues/6790 ),
+      # we can simplify this and just use that straight
       rust_target = 'dev'
+      rust_artifact_dir = 'debug'
    elif get_option('debug')
       rust_target = 'release-with-debug'
+      rust_artifact_dir = 'release-with-debug'
    else
       rust_target = 'release'
+      rust_artifact_dir = 'release'
    endif
    cargo = find_program('cargo', version: cargo_needed_version)
    cargo_data = configuration_data()
@@ -467,7 +473,7 @@ naevcrs = rust.bindgen(
       depends: [naevcrs, naevc_crate, naev_clib, naev_rlib_compile],
       depend_files: source_rust + cargo_toml + buildrs,
       output: 'libnaev.rlib',
-      command: [ copydir, meson.project_build_root(), 'src' / target_triplet / rust_target / '@OUTPUT@', ] )
+      command: [ copydir, meson.project_build_root(), 'src' / target_triplet / rust_artifact_dir / '@OUTPUT@', ] )
    # Also declare it as a library so meson can link with it
    naev_rlib_lib = library(
       'naev_rlib',

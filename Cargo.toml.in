@@ -63,7 +63,7 @@ encase = { version = "0.12" } # Needed for shader voodoo
 bytemuck = { version = "1.23", features = ["derive"] } # Needed for shader voodoo
 image = { version = "0.25", features = ["rayon"] }
 mlua = { version = "0.11", features = ["luajit", "anyhow", "send", "serialize", "macros"] }
-roxmltree = "0.20"
+roxmltree = "0.21"
 symphonia = "0.5"
 thunderdome = "0.6"
 static_assertions = "1.1"
