@@ -30,7 +30,7 @@ def generate_api( modname, filename ):
    read_globals = {{
       {modname} = {{
          fields = {{
-{apilist}       }},
+{apilist}         }},
       }},
    }}
 }}"""
@@ -63,4 +63,4 @@ local stds = {}
       if m != 'naev':  # Do not create a recursive data structure!
          output.write(f"stds.naev.read_globals.naev.fields.{m} = stds.{m}.read_globals.{m}\n")
 
-   output.write("return stds")
+   output.write("return stds\n")
