@@ -403,3 +403,47 @@ impl UserData for LuaSpfxRef {
 pub fn open_spfx(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
     Ok(lua.create_proxy::<LuaSpfxRef>()?)
 }
+
+use std::ffi::c_double;
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub extern "C" fn spfxL_clear() {
+    clear();
+}
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub extern "C" fn spfxL_setSpeed(s: c_double) {
+    set_speed(s as f32);
+}
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub extern "C" fn spfxL_setSpeedVolume(v: c_double) {
+    set_speed(v as f32);
+}
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub extern "C" fn spfxL_update(dt: c_double) {
+    update(dt);
+}
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub extern "C" fn spfxL_renderbg(dt: c_double) {
+    render_bg(dt);
+}
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub extern "C" fn spfxL_rendermg(dt: c_double) {
+    render_mg(dt);
+}
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub extern "C" fn spfxL_renderfg(dt: c_double) {
+    render_fg(dt);
+}
