@@ -118,12 +118,10 @@ repos:
       language: script
     - id: luacheckrc_extractor
       name: Extractor for generated luacheckrc API
-      entry: utils/luacheckrc_extractor.py
-      files: '^src/nlua_*.c'
-      types: [c]
-      always: true
+      entry: utils/luacheckrc_extractor.sh
+      always_run: true
       args: ["--output", "utils/luacheckrc_gen.lua"]
-      language: python
+      language: script
     - id: nluacheck
       name: wrapper for luacheck that understands Naev hooks
       entry: utils/nluacheck.py
