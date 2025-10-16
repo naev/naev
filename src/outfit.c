@@ -1387,25 +1387,25 @@ GLuint outfit_beamShader( const Outfit *o )
 {
    if ( outfit_isBeam( o ) )
       return o->u.bem.shader;
-   return 0;
+   return 0.;
 }
 double outfit_beamMinDelay( const Outfit *o )
 {
    if ( outfit_isBeam( o ) )
       return o->u.bem.min_delay;
-   return 0;
+   return 0.;
 }
 double outfit_beamWarmup( const Outfit *o )
 {
    if ( outfit_isBeam( o ) )
       return o->u.bem.warmup;
-   return 0;
+   return 0.;
 }
 double outfit_boltSpeed( const Outfit *o )
 {
    if ( outfit_isBolt( o ) )
       return o->u.blt.speed;
-   return 0;
+   return 0.;
 }
 /**
  * @brief Gets the outfit's duration.
@@ -2439,7 +2439,7 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
    MELEMENT( temp->u.bem.width == 0., "shader width" );
    MELEMENT( temp->u.bem.spfx_shield == -1, "spfx_shield" );
    MELEMENT( temp->u.bem.spfx_armour == -1, "spfx_armour" );
-   MELEMENT( ( temp->u.bem.warmup >= 0. ) &&
+   MELEMENT( ( temp->u.bem.warmup > 0. ) &&
                 ( temp->u.bem.sound_warmup == NULL ),
              "sound_warmup" );
    MELEMENT( temp->u.bem.sound == NULL, "sound" );
