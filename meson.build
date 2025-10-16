@@ -427,7 +427,7 @@ naevcrs = rust.bindgen(
    # pretty good debugging properties. Use 'debug_rust' option to explicitly
    # force Rust to be debug mode.
    if get_option('debug_rust')
-      rust_target = 'debug'
+      rust_target = 'dev'
    elif get_option('debug')
       rust_target = 'release-with-debug'
    else
