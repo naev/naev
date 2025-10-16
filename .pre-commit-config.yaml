@@ -129,12 +129,6 @@ repos:
 #    - id: codespell
 #      files: '^dat/'
 #      types_or: [xml, lua]
-- repo: https://github.com/shssoichiro/oxipng
-  rev: v9.1.5
-  hooks:
-    - id: oxipng
-      args: ["-o", "max", "--strip", "safe", "--alpha"]
-      types: [png]
 - repo: local
   hooks:
     - id: clang-format
@@ -155,3 +149,9 @@ repos:
       files: '^dat/'
       types: [lua]
       language: python
+- repo: https://github.com/shssoichiro/oxipng
+  rev: v9.1.5
+  hooks:
+    - id: oxipng
+      args: ["-o", "max", "--strip", "safe", "--alpha"]
+      types: [png]
