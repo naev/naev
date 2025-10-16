@@ -1964,4 +1964,4 @@ pub extern "C" fn sound_disabled() -> c_int {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn sound_set_disabled(disable: ci_int) {}
+pub extern "C" fn sound_set_disabled(disable: c_int) {}
