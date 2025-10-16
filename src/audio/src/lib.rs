@@ -110,8 +110,15 @@ impl AudioBuffer {
             if let Some(md) = format.metadata().current() {
                 for t in md.tags() {
                     fn tag_to_f32(t: &Tag) -> Result<f32> {
-                        match t.value {
-                            Value::Float(val) => Ok(val as f32),
+                        dbg!(&t);
+                        match &t.value {
+                            Value::Float(val) => Ok(*val as f32),
+                            // Strings can be like "+3.14 dB" or "0.4728732849"
+                            Value::String(val) => Ok(match val.split_once(" ") {
+                                Some(val) => val.0,
+                                None => val,
+                            }
+                            .parse::<f32>()?),
                             _ => anyhow::bail!("tag is not a float"),
                         }
                     }
