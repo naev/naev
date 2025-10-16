@@ -2083,7 +2083,7 @@ static int aiL_iface( lua_State *L )
       const Pilot *p = luaL_validpilot( L, 1 );
       if ( p != NULL )
          s = &p->solid;
-   } else if ( lua_isasteroid( L, 2 ) ) {
+   } else if ( lua_isasteroid( L, 1 ) ) {
       const Asteroid *a = luaL_validasteroid( L, 1 );
       if ( a != NULL )
          s = &a->sol;
