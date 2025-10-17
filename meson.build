@@ -685,21 +685,3 @@ if (mutagen.found())
       ]
    )
 endif
-
-####
-# luacheckrc
-####
-luacheckrc_extractor = find_program(join_paths('utils','luacheckrc_extractor.py'))
-custom_target(
-   'luacheckrc_gen',
-   build_by_default: true,
-   command: [
-      luacheckrc_extractor,
-      nlua_source + files('src/nlua_vec2.c') + files('src/nlua_colour.c'),
-      '--output',
-      join_paths(meson.current_source_dir(),'utils','@OUTPUT@'),
-   ],
-   output: [
-      'luacheckrc_gen.lua',
-   ]
-)
