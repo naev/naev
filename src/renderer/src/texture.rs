@@ -854,20 +854,56 @@ impl TextureSource {
                 TextureSource::Path(path) => {
                     let img = {
                         let cpath = ndata::simplify_path(&path)?;
-                        let mut rw = ndata::iostream(&cpath)?;
-                        if std::path::Path::new(&cpath)
-                            .extension()
-                            .and_then(|s| s.to_str())
-                            == Some("svg")
-                        {
-                            svg_to_img(&mut rw, w, h)?
-                        } else {
-                            image::ImageReader::with_format(
+
+                        // Small wrapper to simplify things
+                        fn try_load_file(path: &str) -> Result<image::DynamicImage> {
+                            let rw = ndata::iostream(path)?;
+                            Ok(image::ImageReader::with_format(
                                 std::io::BufReader::new(rw),
                                 image::ImageFormat::from_path(path)?,
                             )
                             //let img = image::ImageReader::new(std::io::BufReader::new(rw)).with_guessed_format()?
-                            .decode()?
+                            .decode()?)
+                        }
+
+                        // Figure out what to do based on path
+                        match std::path::Path::new(&cpath)
+                            .extension()
+                            .and_then(|s| s.to_str())
+                        {
+                            Some("svg") => svg_to_img(&mut ndata::iostream(&cpath)?, w, h)?,
+                            Some(_) => try_load_file(&cpath)?,
+                            None => {
+                                // We could just use ImageFormat::all() here, but I figure we want
+                                // a specific order
+                                use image::ImageFormat;
+                                let mut image = None;
+                                'imageformat: for imageformat in &[
+                                    ImageFormat::Avif,
+                                    ImageFormat::WebP,
+                                    ImageFormat::Png,
+                                    ImageFormat::Jpeg,
+                                ] {
+                                    for ext in imageformat.extensions_str() {
+                                        let path = &format!("{}.{}", cpath, ext);
+                                        if ndata::exists(path) {
+                                            image = Some(try_load_file(path)?);
+                                            break 'imageformat;
+                                        }
+                                    }
+                                }
+                                // Try to load svg as a last special case as it is not supported by
+                                // image-rs
+                                if image.is_none() {
+                                    let path = &format!("{}.svg", cpath);
+                                    if ndata::exists(path) {
+                                        image =
+                                            Some(svg_to_img(&mut ndata::iostream(path)?, w, h)?);
+                                    }
+                                }
+                                image
+                                    .context(format!("No image file matching '{}' found", cpath))?
+                            }
                         }
                     };
                     let ctx = &sctx.lock();
