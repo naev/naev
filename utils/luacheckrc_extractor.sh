@@ -1,2 +1,4 @@
-#!/usr/bin/bash
-python utils/luacheckrc_extractor.py $(git ls-files | grep "nlua_.*c$") --output utils/luacheckrc_gen.lua
+#!/bin/bash
+
+readarray -t FILES <<< "$(git ls-files "*/nlua_*.c")"
+./utils/luacheckrc_extractor.py "${FILES[@]}" --output utils/luacheckrc_gen.lua
