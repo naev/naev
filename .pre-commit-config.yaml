@@ -2,12 +2,30 @@
 # See https://pre-commit.com/hooks.html for more hooks
 minimum_pre_commit_version: '3.2.0'
 repos:
+- repo: local
+  hooks:
+    - id: trailing-whitespace.sh
+      name: trim trailing whitespace (bash)
+      entry: utils/shlinters/trailing-whitespace.sh
+      types: [text]
+      language: script
+    - id: end-of-file-fixer.sh
+      name: fix end of files (bash)
+      entry: utils/shlinters/end-of-file-fixer.sh
+      types: [text]
+      language: script
+      exclude: po/naevpedia.pot
+    - id: line-endings.sh
+      name: mixed line endings (bash)
+      entry: utils/shlinters/line-endings.sh
+      types: [text]
+      language: script
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v6.0.0
   hooks:
-    - id: trailing-whitespace
-    - id: end-of-file-fixer
-      exclude: po/naevpedia.pot
+    #- id: trailing-whitespace
+    #- id: end-of-file-fixer
+    #  exclude: po/naevpedia.pot
     - id: check-xml
     - id: check-yaml
     - id: check-toml
@@ -19,7 +37,7 @@ repos:
     #- id: check-illegal-windows-names
     #- id: destroyed-symlinks
     - id: detect-private-key
-    - id: mixed-line-ending
+    #- id: mixed-line-ending
     #- id: pretty-format-json
     - id: check-merge-conflict
       args: [--assume-in-merge]
@@ -47,11 +65,11 @@ repos:
       entry: utils/doxspell.sh
       language: script
       types: [c]
-    - id: no_tabs
-      name: no_tabs
-      entry: utils/no_tabs.sh
-      language: script
+    - id: expand-tabs.sh
+      name: expand tabs (bash)
+      entry: utils/shlinters/expand-tabs.sh
       exclude: (^|/)Makefile
+      language: script
       types: [text]
     - id: reindent
       name: reindent
@@ -96,18 +114,21 @@ repos:
   hooks:
     - id: shellcheck
       types: [shell]
-- repo: https://github.com/codespell-project/codespell
-  rev: v2.4.1
+- repo: local
   hooks:
-    - id: codespell
+    - id: u_codespell
+      name: u_codespell
+      entry: utils/shlinters/parallel.sh 2 -b utils/shlinters/u_codespell/u_codespell -u .u_codespell_unmatch --
       files: '^dat/'
       types_or: [xml, lua]
-- repo: https://github.com/shssoichiro/oxipng
-  rev: v9.1.5
-  hooks:
-    - id: oxipng
-      args: ["-o", "max", "--strip", "safe", "--alpha"]
-      types: [png]
+      language: script
+      require_serial: True
+#- repo: https://github.com/codespell-project/codespell
+#  rev: v2.4.1
+#  hooks:
+#    - id: codespell
+#      files: '^dat/'
+#      types_or: [xml, lua]
 - repo: local
   hooks:
     - id: clang-format
@@ -116,9 +137,21 @@ repos:
       types: [c]
       files: '^src/'
       language: script
+    - id: luacheckrc_extractor
+      name: Extractor for generated luacheckrc API
+      entry: utils/luacheckrc_extractor.sh
+      always_run: true
+      args: ["--output", "utils/luacheckrc_gen.lua"]
+      language: script
     - id: nluacheck
       name: wrapper for luacheck that understands Naev hooks
       entry: utils/nluacheck.py
       files: '^dat/'
       types: [lua]
       language: python
+- repo: https://github.com/shssoichiro/oxipng
+  rev: v9.1.5
+  hooks:
+    - id: oxipng
+      args: ["-o", "max", "--strip", "safe", "--alpha"]
+      types: [png]

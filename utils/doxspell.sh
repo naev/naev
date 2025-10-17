@@ -63,7 +63,7 @@ readarray -t WORDS <<< "$(
     -e "s/\`[^\`]*\`//g"   \
     -e 's/@[^ ]*//g'       \
     -e 's/\w*\('"$NSEPNW"'\)\w*/\1/g'                           |
-   aspell list -l en_GB --personal "$PERS" \
+   aspell list -l en_GB-ize --personal "$PERS" \
       --add-extra-dicts "$PERS_U" --add-extra-dicts "$PERS_O"   |
    sort -u
    #sed 's/\([a-z]\)\([A-Z]\)/\1 \2/g'

@@ -75,8 +75,7 @@ Naev requires the artwork submodule to run from git. You can check out the
 submodules from the cloned repository with:
 
 ```bash
-git submodule init
-git submodule update
+git submodule update --init --recursive
 ```
 
 Note that `git submodule update` has to be run every time you `git pull` to
@@ -112,7 +111,7 @@ directory to see a list of all available options.
 
 **For faster debug builds** (but harder to trace with gdb/lldb), try `--buildtype=debugoptimized -Db_lto=true -Db_lto_mode=thin` in place of the corresponding values above.
 
-#### For up to date build instructions, check out the compilation page in our [Wiki](https://codeberg.org/naev/naev/wiki/Compiling)
+#### For up-to-date build instructions, check out the compilation page in our [Wiki](https://codeberg.org/naev/naev/wiki/Compiling)
 
 ### RUNNING NAEV
 
@@ -127,7 +126,7 @@ below.
 Naev currently supports `meson install` which will install everything that
 is needed.
 
-If you wish to create a .desktop for your desktop environment, logos
+If you wish to create a `.desktop` for your desktop environment, logos
 from 16x16 to 256x256 can be found in `extras/logos/`.
 
 ## UPDATING ART ASSETS
@@ -138,7 +137,7 @@ repository and sometimes are updated. For that reason, it is recommended to
 periodically update the submodules with the following command.
 
 ```bash
-git submodule update
+git submodule update --init --recursive
 ```
 
 You can also set this to be done automatically on git pull with the following

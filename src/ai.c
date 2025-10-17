@@ -1619,41 +1619,52 @@ static int aiL_getflybydistance( lua_State *L )
  *
  * I hate this function and it'll probably need to get changed in the future
  *
- *    @luatparam number vel Velocity of target.
+ *    @luatparam Pilot|Vec2 vel Velocity of target.
  *    @luatreturn number Minimum braking distance.
  *    @luatreturn number Time it will take to brake.
  *    @luafunc minbrakedist
  */
 static int aiL_minbrakedist( lua_State *L )
 {
-   /* More complicated calculation based on relative velocity. */
-   if ( lua_gettop( L ) > 0 ) {
-      double       time, dist, vel;
-      vec2         vv;
-      const Pilot *p = luaL_validpilot( L, 1 );
-
-      /* Set up the vectors. */
-      vec2_cset( &vv, p->solid.vel.x - cur_pilot->solid.vel.x,
-                 p->solid.vel.y - cur_pilot->solid.vel.y );
-
-      /* Run the same calculations. */
-      time = VMOD( vv ) / cur_pilot->accel + ai_dt;
-
-      /* Get relative velocity. */
-      vel = MIN( cur_pilot->speed - VMOD( p->solid.vel ), VMOD( vv ) );
-      if ( vel < 0. )
-         vel = 0.;
-      /* Get distance to brake. */
-      double flytime = time + M_PI / cur_pilot->turn + ai_dt;
-      dist           = vel * (flytime)-0.5 * ( cur_pilot->accel ) * time * time;
-      lua_pushnumber( L, dist );
-      lua_pushnumber( L, flytime );
-   } else {
+   if ( lua_isnoneornil( L, 1 ) ) {
       double flytime;
       double dist = pilot_minbrakedist( cur_pilot, ai_dt, &flytime );
       lua_pushnumber( L, dist );
       lua_pushnumber( L, flytime );
+      return 2;
    }
+
+   /* More complicated calculation based on relative velocity. */
+   double      time, dist, vel;
+   const vec2 *tvel = NULL;
+   if ( lua_ispilot( L, 1 ) ) {
+      const Pilot *p = luaL_validpilot( L, 1 );
+      tvel           = &p->solid.vel;
+   } else if ( lua_isvector( L, 1 ) ) {
+      tvel = lua_tovector( L, 1 );
+   } else {
+      NLUA_INVALID_PARAMETER( L, 1 );
+   }
+
+   /* Set up the vectors. */
+   vec2 vv;
+   vec2_cset( &vv, tvel->x - cur_pilot->solid.vel.x,
+              tvel->y - cur_pilot->solid.vel.y );
+
+   /* Run the same calculations. */
+   double mod = VMOD( vv );
+   time       = VMOD( *tvel ) / cur_pilot->accel + ai_dt;
+
+   /* Get relative velocity. */
+   vel = MIN( cur_pilot->speed - mod, mod );
+   if ( vel < 0. )
+      vel = 0.;
+   /* Get distance to brake. */
+   double flytime = time + M_PI / cur_pilot->turn + ai_dt;
+   dist           = vel * (flytime)-0.5 * ( cur_pilot->accel ) * time * time;
+   lua_pushnumber( L, dist );
+   lua_pushnumber( L, flytime );
+
    return 2;
 }
 
@@ -2063,30 +2074,34 @@ static int aiL_iface( lua_State *L )
 {
    NLUA_MIN_ARGS( 1 );
    vec2  *vec, drift, reference_vector; /* get the position to face */
-   Pilot *p;
    double diff, heading_offset_azimuth, drift_radial, drift_azimuthal;
 
    /* Get first parameter, aka what to face. */
-   p   = NULL;
-   vec = NULL;
-   if ( lua_ispilot( L, 1 ) )
-      p = luaL_validpilot( L, 1 );
-   else if ( lua_isvector( L, 1 ) )
+   const Solid *s = NULL;
+   vec            = NULL;
+   if ( lua_ispilot( L, 1 ) ) {
+      const Pilot *p = luaL_validpilot( L, 1 );
+      if ( p != NULL )
+         s = &p->solid;
+   } else if ( lua_isasteroid( L, 1 ) ) {
+      const Asteroid *a = luaL_validasteroid( L, 1 );
+      if ( a != NULL )
+         s = &a->sol;
+   } else if ( lua_isvector( L, 1 ) )
       vec = lua_tovector( L, 1 );
    else
       NLUA_INVALID_PARAMETER( L, 1 );
 
    if ( vec == NULL ) {
-      if ( p == NULL )
+      if ( s == NULL )
          return 0; /* Return silently when attempting to face an invalid pilot.
                     */
       /* Establish the current pilot velocity and position vectors */
-      vec2_cset( &drift, VX( p->solid.vel ) - VX( cur_pilot->solid.vel ),
-                 VY( p->solid.vel ) - VY( cur_pilot->solid.vel ) );
+      vec2_cset( &drift, VX( s->vel ) - VX( cur_pilot->solid.vel ),
+                 VY( s->vel ) - VY( cur_pilot->solid.vel ) );
       /* Establish the in-line coordinate reference */
-      vec2_cset( &reference_vector,
-                 VX( p->solid.pos ) - VX( cur_pilot->solid.pos ),
-                 VY( p->solid.pos ) - VY( cur_pilot->solid.pos ) );
+      vec2_cset( &reference_vector, VX( s->pos ) - VX( cur_pilot->solid.pos ),
+                 VY( s->pos ) - VY( cur_pilot->solid.pos ) );
    } else {
       /* Establish the current pilot velocity and position vectors */
       vec2_cset( &drift, -VX( cur_pilot->solid.vel ),

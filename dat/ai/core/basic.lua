@@ -999,21 +999,15 @@ function mine_drill( ast )
       return
    end
 
-   local p         = ai.pilot()
-   local mbd       = ai.minbrakedist()
+   local pos = ast:pos()
+   local vel = ast:vel()
+   local mbd,bt = ai.minbrakedist()
+   -- Correct pos based on velocity and braking time
+   pos = pos + vel*bt
+   local dir = ai.iface(ast)
+   local mod = ai.dist(pos)
 
    ai.setasterotarget( ast )
-
-   local target = ast:pos()
-   local vel = ast:vel()
-   local _dist, angle = vec2.polar( p:pos() - target )
-
-   -- First task : place the ship close to the asteroid
-   local goal = ai.face_accurate( target, vel, 0, angle, mem.Kp, mem.Kd )
-
-   local dir  = ai.face(goal)
-   local mod  = ai.dist(goal)
-
    if dir < math.rad(10) and mod > mbd then
       ai.accel()
    elseif mod < mbd then
@@ -1031,8 +1025,8 @@ function mine_drill_brake( ast )
       ai.poptask()
       return
    end
-   ai.setasterotarget( ast )
    ai.brake()
+   ai.setasterotarget( ast )
    ai.pilot():outfitToggle( mem._o.plasma_drill, true )
 end
 -- luacheck: globals mine_shoot (AI Task functions passed by name)

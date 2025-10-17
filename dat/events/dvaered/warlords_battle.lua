@@ -268,8 +268,8 @@ function defence ()
    defenders[2*n+1] = pilot.add( "Dvaered Phalanx", "Dvaered", source_planet, name )
    defenders[2*n+2] = pilot.add( "Dvaered Phalanx", "Dvaered", source_planet, name )
    defenders[2*n+3] = pilot.add( "Dvaered Vigilance", "Dvaered", source_planet, name )
-   local godd       = pilot.add( "Dvaered Goddard", "Dvaered", source_planet, name )
-   defenders[2*n+4] = godd
+   local goddard    = pilot.add( "Dvaered Goddard", "Dvaered", source_planet, name )
+   defenders[2*n+4] = goddard
 
    defenders = arrangeList(defenders)  --The heaviest ships will surround the leader
    local form = formation.random_key()
@@ -280,8 +280,8 @@ function defence ()
       m.formation = form
       m.aggressive = false
 
-      if j ~= godd then
-         j:setLeader(godd)
+      if j ~= goddard then
+         j:setLeader(goddard)
       end
 
       defAttHook[i] = hook.pilot(j, "attacked", "defenderAttacked")
