@@ -1,8 +1,8 @@
 <spob name="Seiben XI">
  <pos x="13500.100677" y="-1905.688336"/>
  <GFX>
-  <space>moon-D02.webp</space>
-  <exterior>snow.webp</exterior>
+  <space>moon-D02</space>
+  <exterior>snow</exterior>
  </GFX>
  <general>
   <class>A</class>

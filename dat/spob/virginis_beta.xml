@@ -1,8 +1,8 @@
 <spob name="Virginis Beta">
  <pos x="-12719.776695" y="-377.163888"/>
  <GFX>
-  <space>moon-I01.webp</space>
-  <exterior>zalek_station1.webp</exterior>
+  <space>moon-I01</space>
+  <exterior>zalek_station1</exterior>
  </GFX>
  <general>
   <class>I</class>

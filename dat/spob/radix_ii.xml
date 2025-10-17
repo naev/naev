@@ -1,8 +1,8 @@
 <spob name="Radix II">
  <pos x="-28443.962814" y="1087.526273"/>
  <GFX>
-  <space>H03.webp</space>
-  <exterior>snow.webp</exterior>
+  <space>H03</space>
+  <exterior>snow</exterior>
  </GFX>
  <general>
   <class>A</class>

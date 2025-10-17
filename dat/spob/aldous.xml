@@ -2,8 +2,8 @@
  <lua>lowclass.lua</lua>
  <pos x="3801.811993" y="-6006.223988"/>
  <GFX>
-  <space>S00.webp</space>
-  <exterior>aquatic2.webp</exterior>
+  <space>S00</space>
+  <exterior>aquatic2</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>

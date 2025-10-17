@@ -2,8 +2,8 @@
  <lua>soromid_mil_restricted.lua</lua>
  <pos x="7378.896977" y="-6488.413784"/>
  <GFX>
-  <space>station-fleetbase.webp</space>
-  <exterior>station05.webp</exterior>
+  <space>station-fleetbase</space>
+  <exterior>station05</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

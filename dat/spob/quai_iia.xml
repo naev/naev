@@ -1,8 +1,8 @@
 <spob name="Quai IIa">
  <pos x="-4580.786389" y="-5995.105532"/>
  <GFX>
-  <space>moon-P00.webp</space>
-  <exterior>uninhabited-rocky-blue-00.webp</exterior>
+  <space>moon-P00</space>
+  <exterior>uninhabited-rocky-blue-00</exterior>
  </GFX>
  <general>
   <class>P</class>

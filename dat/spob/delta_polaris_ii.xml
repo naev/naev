@@ -1,8 +1,8 @@
 <spob name="Delta Polaris II">
  <pos x="-846.400307" y="10970.128986"/>
  <GFX>
-  <space>moon-J01.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>moon-J01</space>
+  <exterior>methane</exterior>
  </GFX>
  <general>
   <class>J</class>

@@ -1,8 +1,8 @@
 <spob name="Niger I">
  <pos x="-25142.222222" y="-2473.333333"/>
  <GFX>
-  <space>P01.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>P01</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <general>
   <class>A</class>

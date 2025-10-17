@@ -1,8 +1,8 @@
 <spob name="New Space Trade Hub">
  <pos x="5215.960226" y="5203.282866"/>
  <GFX>
-  <space>station-commerce2.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>station-commerce2</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Traders Society</faction>

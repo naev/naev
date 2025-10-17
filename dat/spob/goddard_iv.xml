@@ -1,8 +1,8 @@
 <spob name="Goddard IV">
  <pos x="17801.100623" y="12942.126729"/>
  <GFX>
-  <space>P02.webp</space>
-  <exterior>desertic4.webp</exterior>
+  <space>P02</space>
+  <exterior>desertic4</exterior>
  </GFX>
  <general>
   <class>A</class>

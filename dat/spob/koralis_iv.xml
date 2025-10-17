@@ -1,8 +1,8 @@
 <spob name="Koralis IV">
  <pos x="-2040.407967" y="-1971.707362"/>
  <GFX>
-  <space>moon-A00.webp</space>
-  <exterior>aquatic2.webp</exterior>
+  <space>moon-A00</space>
+  <exterior>aquatic2</exterior>
  </GFX>
  <general>
   <class>A</class>

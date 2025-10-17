@@ -1,8 +1,8 @@
 <spob name="Duros Ia">
  <pos x="4108.333454" y="3767.409191"/>
  <GFX>
-  <space>moon-G00.webp</space>
-  <exterior>desertic4.webp</exterior>
+  <space>moon-G00</space>
+  <exterior>desertic4</exterior>
  </GFX>
  <general>
   <class>G</class>

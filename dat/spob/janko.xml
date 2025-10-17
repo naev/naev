@@ -1,8 +1,8 @@
 <spob name="Janko">
  <pos x="8655.709961" y="-2171.134959"/>
  <GFX>
-  <space>M08.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>M08</space>
+  <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

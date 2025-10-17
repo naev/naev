@@ -1,8 +1,8 @@
 <spob name="Perhelion Beta">
  <pos x="5109.740961" y="585.176343"/>
  <GFX>
-  <space>moon-M05.webp</space>
-  <exterior>station01.webp</exterior>
+  <space>moon-M05</space>
+  <exterior>station01</exterior>
  </GFX>
  <general>
   <class>A</class>

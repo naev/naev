@@ -1,8 +1,8 @@
 <spob name="Ramen">
  <pos x="-2483.222826" y="1436.483160"/>
  <GFX>
-  <space>moon-A00.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>moon-A00</space>
+  <exterior>lava</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

@@ -1,8 +1,8 @@
 <spob name="Stormy">
  <pos x="6517.391987" y="7092.455986"/>
  <GFX>
-  <space>I02.webp</space>
-  <exterior>gas.webp</exterior>
+  <space>I02</space>
+  <exterior>gas</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

@@ -1,8 +1,8 @@
 <spob name="Long Rock">
  <pos x="-2891.491375" y="3309.834808"/>
  <GFX>
-  <space>K00.webp</space>
-  <exterior>mining5.webp</exterior>
+  <space>K00</space>
+  <exterior>mining5</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

@@ -1,8 +1,8 @@
 <spob name="Uuries">
  <pos x="18879.572578" y="-2960.851363"/>
  <GFX>
-  <space>D00.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>D00</space>
+  <exterior>forest</exterior>
  </GFX>
  <general>
   <class>A</class>

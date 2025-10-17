@@ -1,8 +1,8 @@
 <spob name="Brock">
  <pos x="-6988.624986" y="-11971.255763"/>
  <GFX>
-  <space>S00.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>S00</space>
+  <exterior>methane</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

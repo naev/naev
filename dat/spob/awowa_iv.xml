@@ -1,8 +1,8 @@
 <spob name="Awowa IV">
  <pos x="-1944.427149" y="1261.646668"/>
  <GFX>
-  <space>moon-H02.webp</space>
-  <exterior>mining2.webp</exterior>
+  <space>moon-H02</space>
+  <exterior>mining2</exterior>
  </GFX>
  <general>
   <class>H</class>

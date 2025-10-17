@@ -1,8 +1,8 @@
 <spob name="Anubis">
  <pos x="4295.188850" y="-6813.153652"/>
  <GFX>
-  <space>Y00.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>Y00</space>
+  <exterior>lava</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

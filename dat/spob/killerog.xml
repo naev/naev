@@ -1,8 +1,8 @@
 <spob name="Killerog">
  <pos x="6514.095071" y="-6322.318953"/>
  <GFX>
-  <space>P04.webp</space>
-  <exterior>snow.webp</exterior>
+  <space>P04</space>
+  <exterior>snow</exterior>
  </GFX>
  <general>
   <class>O</class>

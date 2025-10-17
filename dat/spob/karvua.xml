@@ -1,8 +1,8 @@
 <spob name="Karvua">
  <pos x="-9433.020360" y="1832.393286"/>
  <GFX>
-  <space>moon-Y00.webp</space>
-  <exterior>mining4.webp</exterior>
+  <space>moon-Y00</space>
+  <exterior>mining4</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>

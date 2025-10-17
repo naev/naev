@@ -1,8 +1,8 @@
 <spob name="Atalanta">
  <pos x="25805.000000" y="-5070.000000"/>
  <GFX>
-  <space>P03.webp</space>
-  <exterior>aquatic.webp</exterior>
+  <space>P03</space>
+  <exterior>aquatic</exterior>
  </GFX>
  <presence>
   <faction>Frontier</faction>

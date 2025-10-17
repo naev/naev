@@ -1,8 +1,8 @@
 <spob name="Procyon Shipyards">
  <pos x="8475.845489" y="-5830.602046"/>
  <GFX>
-  <space>station-shipyard.webp</space>
-  <exterior>station04.webp</exterior>
+  <space>station-shipyard</space>
+  <exterior>station04</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

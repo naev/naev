@@ -9,7 +9,7 @@
   <rarity>3</rarity>
   <mass>140</mass>
   <price>2120000</price>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>placeholder</gfx_store>
   <description>This bay allows your ship to carry a pair of Thurion Scintillation bombers. It comes with all the devices required for the maintenance and flight of the bombers.</description>
   <cpu>-450</cpu>
  </general>

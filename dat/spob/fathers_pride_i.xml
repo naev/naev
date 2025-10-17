@@ -1,8 +1,8 @@
 <spob name="Father's Pride I">
  <pos x="-9350.000000" y="6900.000000"/>
  <GFX>
-  <space>D00.webp</space>
-  <exterior>asteroid.webp</exterior>
+  <space>D00</space>
+  <exterior>asteroid</exterior>
  </GFX>
  <general>
   <class>D</class>

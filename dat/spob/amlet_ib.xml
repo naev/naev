@@ -1,8 +1,8 @@
 <spob name="Amlet Ib">
  <pos x="5154.530813" y="9222.997157"/>
  <GFX>
-  <space>D01.webp</space>
-  <exterior>uninhabited-rocky-airless-00.webp</exterior>
+  <space>D01</space>
+  <exterior>uninhabited-rocky-airless-00</exterior>
  </GFX>
  <general>
   <class>D</class>

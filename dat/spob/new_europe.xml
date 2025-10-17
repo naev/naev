@@ -1,8 +1,8 @@
 <spob name="New Europe">
  <pos x="9151.972559" y="-871.217027"/>
  <GFX>
-  <space>M08.webp</space>
-  <exterior>forest2.webp</exterior>
+  <space>M08</space>
+  <exterior>forest2</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

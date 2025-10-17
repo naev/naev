@@ -1,8 +1,8 @@
 <spob name="Cristen">
  <pos x="10673.259801" y="3373.708793"/>
  <GFX>
-  <space>G03.webp</space>
-  <exterior>snow.webp</exterior>
+  <space>G03</space>
+  <exterior>snow</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

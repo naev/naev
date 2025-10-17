@@ -1,8 +1,8 @@
 <spob name="Megala">
  <pos x="-10147.718927" y="1575.074787"/>
  <GFX>
-  <space>S01.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>S01</space>
+  <exterior>methane</exterior>
  </GFX>
  <general>
   <class>S</class>

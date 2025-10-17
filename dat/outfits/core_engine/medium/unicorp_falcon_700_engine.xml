@@ -6,7 +6,7 @@
   <size>medium</size>
   <price>37500</price>
   <description>The Falcon 700 is a budget engine for use on medium-sized vessels. Its middling performance relegates it primarily to use on civilians vessels, as few captains are comfortable relying on bargain-priced propulsion systems when engaged in battle.</description>
-  <gfx_store>unicorp_engine_m.webp</gfx_store>
+  <gfx_store>unicorp_engine_m</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">

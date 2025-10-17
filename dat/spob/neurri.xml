@@ -1,8 +1,8 @@
 <spob name="Neurri">
  <pos x="25997.457782" y="-4421.823264"/>
  <GFX>
-  <space>O02.webp</space>
-  <exterior>mining2.webp</exterior>
+  <space>O02</space>
+  <exterior>mining2</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

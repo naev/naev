@@ -8,7 +8,7 @@
   <mass>40</mass>
   <price>200000</price>
   <description>Enygma Systems found that there was an unexploited niche for weapons built to disable large warships. Finding Medusa missiles and ion weaponry insufficient, they redesigned Unicorp's Caesar IV torpedo as a heavy EMP weapon, capable of rapidly frying the systems of even the largest capital ships.</description>
-  <gfx_store>caesarlauncher_blue.webp</gfx_store>
+  <gfx_store>caesarlauncher_blue</gfx_store>
   <cpu>-16</cpu>
  </general>
  <specific type="launcher" secondary="1">
@@ -21,7 +21,7 @@
   <trackmax>25000</trackmax>
   <amount>6</amount>
   <ammo_mass>4</ammo_mass>
-  <gfx>caesar_blue.webp</gfx>
+  <gfx>caesar_blue</gfx>
   <sound>torpedo</sound>
   <sound_hit>empexplode</sound_hit>
   <spfx_shield>Emp-S</spfx_shield>

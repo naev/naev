@@ -1,8 +1,8 @@
 <spob name="Mirror VIa">
  <pos x="8582.017701" y="-19331.319868"/>
  <GFX>
-  <space>moon-M05.webp</space>
-  <exterior>snow.webp</exterior>
+  <space>moon-M05</space>
+  <exterior>snow</exterior>
  </GFX>
  <general>
   <class>A</class>

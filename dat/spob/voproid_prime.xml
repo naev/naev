@@ -1,8 +1,8 @@
 <spob name="Voproid Prime">
  <pos x="-7228.974523" y="2329.541662"/>
  <GFX>
-  <space>K04.webp</space>
-  <exterior>uninhabited-rocky-red-02.webp</exterior>
+  <space>K04</space>
+  <exterior>uninhabited-rocky-red-02</exterior>
  </GFX>
  <general>
   <class>K</class>

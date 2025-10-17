@@ -1,8 +1,8 @@
 <spob name="Solvac Crops">
  <pos x="6658.627705" y="10334.743487"/>
  <GFX>
-  <space>station-agriculture.webp</space>
-  <exterior>station01.webp</exterior>
+  <space>station-agriculture</space>
+  <exterior>station01</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

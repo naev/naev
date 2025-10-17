@@ -1,8 +1,8 @@
 <spob name="Rulk'ar">
  <pos x="7590.844785" y="5152.573430"/>
  <GFX>
-  <space>K03.webp</space>
-  <exterior>mining.webp</exterior>
+  <space>K03</space>
+  <exterior>mining</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

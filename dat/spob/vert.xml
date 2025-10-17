@@ -1,8 +1,8 @@
 <spob name="Vert">
  <pos x="5666.745964" y="7218.725573"/>
  <GFX>
-  <space>moon-M06.webp</space>
-  <exterior>uninhabited-rocky-green-04.webp</exterior>
+  <space>moon-M06</space>
+  <exterior>uninhabited-rocky-green-04</exterior>
  </GFX>
  <general>
   <class>Y</class>

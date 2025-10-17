@@ -1,8 +1,8 @@
 <spob name="Delta Pavonis II">
  <pos x="-9783.174932" y="9701.669603"/>
  <GFX>
-  <space>C01.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>C01</space>
+  <exterior>lava</exterior>
  </GFX>
  <general>
   <class>C</class>

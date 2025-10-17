@@ -1,8 +1,8 @@
 <spob name="Vargo's Flint">
  <pos x="20296.157003" y="-5796.792188"/>
  <GFX>
-  <space>moon-D02.webp</space>
-  <exterior>uninhabited-rocky-airless-03.webp</exterior>
+  <space>moon-D02</space>
+  <exterior>uninhabited-rocky-airless-03</exterior>
  </GFX>
  <general>
   <class>D</class>

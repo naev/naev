@@ -1,8 +1,8 @@
 <spob name="Zepei">
  <pos x="20400.000000" y="3840.000000"/>
  <GFX>
-  <space>M02.webp</space>
-  <exterior>oceanic.webp</exterior>
+  <space>M02</space>
+  <exterior>oceanic</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

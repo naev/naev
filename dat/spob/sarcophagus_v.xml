@@ -1,8 +1,8 @@
 <spob name="Sarcophagus V">
  <pos x="3962.404419" y="14886.294802"/>
  <GFX>
-  <space>I01.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>I01</space>
+  <exterior>lava</exterior>
  </GFX>
  <general>
   <class>A</class>

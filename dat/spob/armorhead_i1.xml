@@ -1,8 +1,8 @@
 <spob name="Armorhead I-1">
  <pos x="2217.477150" y="2616.925754"/>
  <GFX>
-  <space>I05.webp</space>
-  <exterior>station03.webp</exterior>
+  <space>I05</space>
+  <exterior>station03</exterior>
  </GFX>
  <general>
   <class>I</class>

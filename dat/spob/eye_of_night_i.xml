@@ -1,8 +1,8 @@
 <spob name="Eye of Night I">
  <pos x="-239.444444" y="12235.555556"/>
  <GFX>
-  <space>K02.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>K02</space>
+  <exterior>forest</exterior>
  </GFX>
  <general>
   <class>K</class>

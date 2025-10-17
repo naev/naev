@@ -1,8 +1,8 @@
 <spob name="Rostra">
  <pos x="9164.219886" y="7250.406898"/>
  <GFX>
-  <space>M12.webp</space>
-  <exterior>oceanic.webp</exterior>
+  <space>M12</space>
+  <exterior>oceanic</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

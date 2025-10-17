@@ -1,8 +1,8 @@
 <spob name="Deneb III-a">
  <pos x="-1368.143516" y="4511.175917"/>
  <GFX>
-  <space>D05.webp</space>
-  <exterior>uninhabited-rocky-airless-02.webp</exterior>
+  <space>D05</space>
+  <exterior>uninhabited-rocky-airless-02</exterior>
  </GFX>
  <general>
   <class>R</class>

@@ -1,8 +1,8 @@
 <spob name="Scarlett III">
  <pos x="10588.521232" y="4982.493887"/>
  <GFX>
-  <space>D01.webp</space>
-  <exterior>station00.webp</exterior>
+  <space>D01</space>
+  <exterior>station00</exterior>
  </GFX>
  <general>
   <class>A</class>

@@ -2,8 +2,8 @@
  <lua>dvaered_mil_restricted.lua</lua>
  <pos x="6862.430386" y="-3603.734393"/>
  <GFX>
-  <space>M25.webp</space>
-  <exterior>citadel.webp</exterior>
+  <space>M25</space>
+  <exterior>citadel</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

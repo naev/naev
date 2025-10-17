@@ -6,11 +6,11 @@
   <mass>14</mass>
   <price>70000</price>
   <description>The Shredder quite lives up to the name its Dvaered manufacturers gave it. The sheer damage dealing capacity of this weapon makes Dvaered Corvettes dangerous to engage by ships that aren't substantially larger than they are.</description>
-  <gfx_store>shredder.webp</gfx_store>
+  <gfx_store>shredder</gfx_store>
   <cpu>-72</cpu>
  </general>
  <specific type="bolt">
-  <gfx>gatling.png</gfx>
+  <gfx>gatling</gfx>
   <sound>autocannon</sound>
   <sound_hit>medexp0</sound_hit>
   <spfx_shield>Exp-S</spfx_shield>

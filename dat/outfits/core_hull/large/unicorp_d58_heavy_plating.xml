@@ -6,7 +6,7 @@
   <size>large</size>
   <price>180000</price>
   <description>Though a respectable design, the D-58 plating is outclassed by modern heavy weapons, with most seasoned captains opting for a heavier, more advanced plating.</description>
-  <gfx_store>base_hull_l.webp</gfx_store>
+  <gfx_store>base_hull_l</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">

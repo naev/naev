@@ -6,7 +6,7 @@
   <mass>120</mass>
   <price>220000</price>
   <description>A heavy duty shield enhancer for ships that face combat on a regular basis.</description>
-  <gfx_store>capacitor4.webp</gfx_store>
+  <gfx_store>capacitor4</gfx_store>
  </general>
  <specific type="modification">
   <shield>400</shield>

@@ -1,8 +1,8 @@
 <spob name="Lyncis IIb">
  <pos x="4316.464176" y="-2566.272302"/>
  <GFX>
-  <space>moon-H02.webp</space>
-  <exterior>uninhabited-rocky-yellow-02.webp</exterior>
+  <space>moon-H02</space>
+  <exterior>uninhabited-rocky-yellow-02</exterior>
  </GFX>
  <general>
   <class>H</class>

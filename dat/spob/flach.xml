@@ -1,8 +1,8 @@
 <spob name="Flach">
  <pos x="16436.574074" y="3715.740741"/>
  <GFX>
-  <space>Y00.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>Y00</space>
+  <exterior>lava</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

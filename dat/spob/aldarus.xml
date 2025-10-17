@@ -2,8 +2,8 @@
  <lua>lowclass.lua</lua>
  <pos x="7241.795137" y="-7076.236341"/>
  <GFX>
-  <space>K02.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>K02</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

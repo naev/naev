@@ -1,8 +1,8 @@
 <spob name="Wyrmwood">
  <pos x="-1397.724997" y="2373.913884"/>
  <GFX>
-  <space>moon-P03.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>moon-P03</space>
+  <exterior>methane</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

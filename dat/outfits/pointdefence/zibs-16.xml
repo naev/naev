@@ -7,7 +7,7 @@
   <mass>23</mass>
   <price>150000</price>
   <description>The Za'lek Interception Beam System or ZIBS uses uses a 16-faceted polyhedral focusing crystal which enable very accurate and quick movements, allowing it to effectively intercept incoming missiles and even quickly track small interceptor craft. While most beam weapons make significant concessions to increase the limited weapon range, by minimizing concessions, the initial prototype resulted in a much more powerful penetrating beam. Field-testing quickly showed that the weapon was of very limited use in non-point defence roles, which resulted in the creation of the ZIBS-16, and later ZIBS-32 line of beam-based point defence.</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>placeholder</gfx_store>
   <cpu>-50</cpu>
  </general>
  <specific type="turret beam">

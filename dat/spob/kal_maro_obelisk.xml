@@ -4,8 +4,8 @@
  <marker>spobmarker_obelisk</marker>
  <pos x="4792.821912" y="-10961.912544"/>
  <GFX>
-  <space>obelisk_sirius.webp</space>
-  <comm>obelisk_sirius_comm.webp</comm>
+  <space>obelisk_sirius</space>
+  <comm>obelisk_sirius_comm</comm>
  </GFX>
  <presence>
   <faction>Sirius</faction>

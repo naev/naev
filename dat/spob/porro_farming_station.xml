@@ -1,8 +1,8 @@
 <spob name="Porro Farming Station">
  <pos x="-6364.041587" y="-2491.943995"/>
  <GFX>
-  <space>station-agriculture.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>station-agriculture</space>
+  <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

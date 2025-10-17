@@ -1,8 +1,8 @@
 <spob name="Torg I">
  <pos x="2807.647314" y="2372.115925"/>
  <GFX>
-  <space>moon-C00.webp</space>
-  <exterior>desertic.webp</exterior>
+  <space>moon-C00</space>
+  <exterior>desertic</exterior>
  </GFX>
  <general>
   <class>A</class>

@@ -1,8 +1,8 @@
 <spob name="Vean I">
  <pos x="-3473.059580" y="7808.743882"/>
  <GFX>
-  <space>J09.webp</space>
-  <exterior>uninhabited-rocky-green-02.webp</exterior>
+  <space>J09</space>
+  <exterior>uninhabited-rocky-green-02</exterior>
  </GFX>
  <general>
   <class>J</class>

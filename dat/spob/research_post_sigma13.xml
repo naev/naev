@@ -1,8 +1,8 @@
 <spob name="Research Post Sigma-13">
  <pos x="13999.436084" y="3949.127770"/>
  <GFX>
-  <space>zalek_research_station2.webp</space>
-  <exterior>station_scene.webp</exterior>
+  <space>zalek_research_station2</space>
+  <exterior>station_scene</exterior>
  </GFX>
  <presence>
   <faction>Derelict</faction>

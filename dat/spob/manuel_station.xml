@@ -1,8 +1,8 @@
 <spob name="Manuel Station">
  <pos x="-6490.624381" y="-8887.528980"/>
  <GFX>
-  <space>station-shipyard4.webp</space>
-  <exterior>station03.webp</exterior>
+  <space>station-shipyard4</space>
+  <exterior>station03</exterior>
  </GFX>
  <presence>
   <faction>Goddard</faction>

@@ -2,8 +2,8 @@
  <lua>highclass.lua</lua>
  <pos x="14060.037687" y="4973.423281"/>
  <GFX>
-  <space>station-fleetbase4.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>station-fleetbase4</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>

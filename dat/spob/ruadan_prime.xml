@@ -3,8 +3,8 @@
  <lua>zalek_mil_ruadan.lua</lua>
  <pos x="5279.566099" y="4132.067302"/>
  <GFX>
-  <space>M09.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>M09</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

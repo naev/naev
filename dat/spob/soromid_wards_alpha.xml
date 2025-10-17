@@ -1,8 +1,8 @@
 <spob name="Soromid Wards Alpha">
  <pos x="-1723.417690" y="-4794.935802"/>
  <GFX>
-  <space>station-commerce2.webp</space>
-  <exterior>station01.webp</exterior>
+  <space>station-commerce2</space>
+  <exterior>station01</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

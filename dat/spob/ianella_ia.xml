@@ -1,8 +1,8 @@
 <spob name="Ianella I-a">
  <pos x="-6994.255636" y="-1481.368811"/>
  <GFX>
-  <space>moon-C01.webp</space>
-  <exterior>uninhabited-rocky-airless-01.webp</exterior>
+  <space>moon-C01</space>
+  <exterior>uninhabited-rocky-airless-01</exterior>
  </GFX>
  <general>
   <class>C</class>

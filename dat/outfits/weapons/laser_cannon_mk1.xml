@@ -5,7 +5,7 @@
   <mass>3</mass>
   <price>18000</price>
   <description>The Laser Cannon MK1 is a standard weapon on many vessels, and the first defence of merchants everywhere. The cannon fires charged energy that can do a decent amount of damage to both shield and armour of offending vessels, while remaining efficient enough to mount several even on small ships.</description>
-  <gfx_store>laser.webp</gfx_store>
+  <gfx_store>laser</gfx_store>
   <cpu>-5</cpu>
  </general>
  <specific type="bolt">

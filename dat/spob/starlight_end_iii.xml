@@ -1,8 +1,8 @@
 <spob name="Starlight End III">
  <pos x="-11519.063417" y="16728.066245"/>
  <GFX>
-  <space>I00.webp</space>
-  <exterior>mining5.webp</exterior>
+  <space>I00</space>
+  <exterior>mining5</exterior>
  </GFX>
  <general>
   <class>A</class>

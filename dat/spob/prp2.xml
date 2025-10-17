@@ -1,8 +1,8 @@
 <spob name="PRP-2">
  <pos x="-13713.206143" y="1921.173807"/>
  <GFX>
-  <space>zalek_research_station1.webp</space>
-  <exterior>station01.webp</exterior>
+  <space>zalek_research_station1</space>
+  <exterior>station01</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

@@ -1,8 +1,8 @@
 <spob name="Eenerim">
  <pos x="14893.737658" y="2266.770636"/>
  <GFX>
-  <space>O01.webp</space>
-  <exterior>oceanic.webp</exterior>
+  <space>O01</space>
+  <exterior>oceanic</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

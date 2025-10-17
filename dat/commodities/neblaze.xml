@@ -1,7 +1,7 @@
 <commodity>
  <name>Neblaze</name>
  <description>A potent hallucigenic that lets one feel like they were blazing in the Sol Nebula.</description>
- <gfx_store>medicine.webp</gfx_store>
+ <gfx_store>medicine</gfx_store>
  <price>3000</price>
  <always_can_sell/>
  <price_constant/>

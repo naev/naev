@@ -2,8 +2,8 @@
  <lua>lowclass.lua</lua>
  <pos x="15240.000000" y="-4680.000000"/>
  <GFX>
-  <space>moon-M02.webp</space>
-  <exterior>desertic2.webp</exterior>
+  <space>moon-M02</space>
+  <exterior>desertic2</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

@@ -1,12 +1,12 @@
 <asteroid name="golden">
  <scanned>uncommon</scanned>
- <gfx>asteroid-D01.webp</gfx>
- <gfx>asteroid-D02.webp</gfx>
- <gfx>asteroid-D03.webp</gfx>
- <gfx>asteroid-D04.webp</gfx>
- <gfx>asteroid-D05.webp</gfx>
- <gfx>asteroid-D06.webp</gfx>
- <gfx>asteroid-D14.webp</gfx>
+ <gfx>asteroid-D01</gfx>
+ <gfx>asteroid-D02</gfx>
+ <gfx>asteroid-D03</gfx>
+ <gfx>asteroid-D04</gfx>
+ <gfx>asteroid-D05</gfx>
+ <gfx>asteroid-D06</gfx>
+ <gfx>asteroid-D14</gfx>
  <armour_min>120</armour_min>
  <armour_max>160</armour_max>
  <commodity>

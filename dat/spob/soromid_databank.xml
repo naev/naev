@@ -2,8 +2,8 @@
  <lua>soromid_mil_restricted.lua</lua>
  <pos x="10950.997946" y="12105.389613"/>
  <GFX>
-  <space>station-sphere.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>station-sphere</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

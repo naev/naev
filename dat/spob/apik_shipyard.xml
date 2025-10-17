@@ -1,8 +1,8 @@
 <spob name="Apik Shipyard">
  <pos x="-4955.450149" y="7007.406875"/>
  <GFX>
-  <space>station-shipyard.webp</space>
-  <exterior>aquatic.webp</exterior>
+  <space>station-shipyard</space>
+  <exterior>aquatic</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>

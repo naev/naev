@@ -2,8 +2,8 @@
  <lua>sirius_mil_restricted.lua</lua>
  <pos x="16510.246913" y="862.507713"/>
  <GFX>
-  <space>station-sphere.webp</space>
-  <exterior>station04.webp</exterior>
+  <space>station-sphere</space>
+  <exterior>station04</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

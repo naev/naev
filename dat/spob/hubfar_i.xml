@@ -1,8 +1,8 @@
 <spob name="Hubfar I">
  <pos x="61.628086" y="1140.119597"/>
  <GFX>
-  <space>I08.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>I08</space>
+  <exterior>lava</exterior>
  </GFX>
  <general>
   <class>I</class>

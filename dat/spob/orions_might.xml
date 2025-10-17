@@ -1,8 +1,8 @@
 <spob name="Orion's Might">
  <pos x="-6670.742387" y="6766.976862"/>
  <GFX>
-  <space>I00.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>I00</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <general>
   <class>I</class>

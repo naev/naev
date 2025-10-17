@@ -1,8 +1,8 @@
 <spob name="Brimstone I">
  <pos x="11870.221386" y="-10437.336689"/>
  <GFX>
-  <space>I02.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>I02</space>
+  <exterior>methane</exterior>
  </GFX>
  <general>
   <class>I</class>

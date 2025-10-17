@@ -1,8 +1,8 @@
 <spob name="Shade &amp; Sunshine">
  <pos x="-5993.939706" y="12577.624148"/>
  <GFX>
-  <space>station-agriculture.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>station-agriculture</space>
+  <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

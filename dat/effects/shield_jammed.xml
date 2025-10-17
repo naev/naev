@@ -3,7 +3,7 @@
  <!-- actually increased due to taint -->
  <duration>6</duration>
  <overwrite>shield_jammed</overwrite>
- <icon>/gfx/misc/icons/cracked-shield.webp</icon>
+ <icon>/gfx/misc/icons/cracked-shield</icon>
  <!--<shader>effects/shield_jammed.frag</shader>-->
  <debuff/>
  <stats>

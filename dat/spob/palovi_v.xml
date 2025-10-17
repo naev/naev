@@ -1,8 +1,8 @@
 <spob name="Palovi V">
  <pos x="-5294.940817" y="-7385.734366"/>
  <GFX>
-  <space>I01.webp</space>
-  <exterior>station01.webp</exterior>
+  <space>I01</space>
+  <exterior>station01</exterior>
  </GFX>
  <general>
   <class>A</class>

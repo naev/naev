@@ -1,8 +1,8 @@
 <spob name="Tepvin's Point">
  <pos x="-8635.359788" y="5219.463804"/>
  <GFX>
-  <space>moon-M04.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>moon-M04</space>
+  <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>

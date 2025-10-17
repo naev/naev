@@ -4,7 +4,7 @@
   <mass>0</mass>
   <price>0</price>
   <description>Virtue is the bulwark against the fickle whims of fortune. One can master their own will by mastering their own character.</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>placeholder</gfx_store>
   <rarity>6</rarity>
  </general>
  <specific type="modification">

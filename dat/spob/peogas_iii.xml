@@ -1,8 +1,8 @@
 <spob name="Peogas III">
  <pos x="5881.345646" y="10049.818444"/>
  <GFX>
-  <space>G00.webp</space>
-  <exterior>mining2.webp</exterior>
+  <space>G00</space>
+  <exterior>mining2</exterior>
  </GFX>
  <general>
   <class>A</class>

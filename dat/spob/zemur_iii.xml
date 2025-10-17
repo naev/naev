@@ -1,8 +1,8 @@
 <spob name="Zemur III">
  <pos x="12471.893149" y="2447.867982"/>
  <GFX>
-  <space>moon-H02.webp</space>
-  <exterior>desertic.webp</exterior>
+  <space>moon-H02</space>
+  <exterior>desertic</exterior>
  </GFX>
  <general>
   <class>H</class>

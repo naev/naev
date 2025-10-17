@@ -1,8 +1,8 @@
 <spob name="Hystera I">
  <pos x="-5799.662480" y="4379.456945"/>
  <GFX>
-  <space>I00.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>I00</space>
+  <exterior>forest</exterior>
  </GFX>
  <general>
   <class>I</class>

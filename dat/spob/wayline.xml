@@ -1,8 +1,8 @@
 <spob name="Wayline">
  <pos x="-1404.285821" y="1179.600089"/>
  <GFX>
-  <space>P03.webp</space>
-  <exterior>snow.webp</exterior>
+  <space>P03</space>
+  <exterior>snow</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

@@ -1,8 +1,8 @@
 <spob name="Jemard">
  <pos x="-5923.799568" y="-7950.928562"/>
  <GFX>
-  <space>moon-A00.webp</space>
-  <exterior>gas.webp</exterior>
+  <space>moon-A00</space>
+  <exterior>gas</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

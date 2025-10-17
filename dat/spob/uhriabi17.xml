@@ -1,8 +1,8 @@
 <spob name="Uhriabi-17">
  <pos x="-9350.859525" y="12830.317750"/>
  <GFX>
-  <space>J02.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>J02</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <general>
   <class>J</class>

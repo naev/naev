@@ -1,8 +1,8 @@
 <spob name="Elpa">
  <pos x="2923.241994" y="-9792.061981"/>
  <GFX>
-  <space>H00.webp</space>
-  <exterior>desertic.webp</exterior>
+  <space>H00</space>
+  <exterior>desertic</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>

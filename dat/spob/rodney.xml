@@ -1,8 +1,8 @@
 <spob name="Rodney">
  <pos x="394.710797" y="592.066195"/>
  <GFX>
-  <space>moon-H02.webp</space>
-  <exterior>mining2.webp</exterior>
+  <space>moon-H02</space>
+  <exterior>mining2</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

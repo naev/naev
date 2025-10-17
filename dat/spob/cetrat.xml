@@ -1,8 +1,8 @@
 <spob name="Cetrat">
  <pos x="-5040.078848" y="-3946.220808"/>
  <GFX>
-  <space>O01.webp</space>
-  <exterior>aquatic2.webp</exterior>
+  <space>O01</space>
+  <exterior>aquatic2</exterior>
  </GFX>
  <presence>
   <faction>Frontier</faction>

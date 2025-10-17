@@ -1,8 +1,8 @@
 <spob name="Ullnorn">
  <pos x="2880.000000" y="3600.000000"/>
  <GFX>
-  <space>A00.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>A00</space>
+  <exterior>lava</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

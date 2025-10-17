@@ -1,7 +1,7 @@
 <effect name="Feral Rage I">
  <description>TODO</description>
  <duration>10</duration>
- <icon>/gfx/misc/icons/oni.webp</icon>
+ <icon>/gfx/misc/icons/oni</icon>
  <overwrite>feral_rage</overwrite>
  <buff/>
  <stats>

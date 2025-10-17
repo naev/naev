@@ -1,8 +1,8 @@
 <spob name="Anarbalis III">
  <pos x="10212.291799" y="-1801.492703"/>
  <GFX>
-  <space>O03.webp</space>
-  <exterior>aquatic.webp</exterior>
+  <space>O03</space>
+  <exterior>aquatic</exterior>
  </GFX>
  <general>
   <class>O</class>

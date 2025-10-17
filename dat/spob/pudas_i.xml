@@ -1,8 +1,8 @@
 <spob name="Pudas I">
  <pos x="-360.000000" y="-4920.000000"/>
  <GFX>
-  <space>J00.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>J00</space>
+  <exterior>forest</exterior>
  </GFX>
  <general>
   <class>A</class>

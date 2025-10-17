@@ -9,7 +9,7 @@
   <price>1000000</price>
   <description>A ragged eyepatch that seems to have seen its share of adventures among the stars.</description>
   <desc_extra>#pDoubles the range of blink drives.#0</desc_extra>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>placeholder</gfx_store>
   <rarity>6</rarity>
  </general>
  <!-- Implemented in dat/outfits/lib/blink.lua -->

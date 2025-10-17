@@ -2,8 +2,8 @@
  <lua>lowclass.lua</lua>
  <pos x="9360.000000" y="-6320.000000"/>
  <GFX>
-  <space>G01.webp</space>
-  <exterior>mining5.webp</exterior>
+  <space>G01</space>
+  <exterior>mining5</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

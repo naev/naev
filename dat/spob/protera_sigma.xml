@@ -1,8 +1,8 @@
 <spob name="Protera Sigma">
  <pos x="5541.887113" y="5474.271638"/>
  <GFX>
-  <space>M05.webp</space>
-  <exterior>oceanic2.webp</exterior>
+  <space>M05</space>
+  <exterior>oceanic2</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>

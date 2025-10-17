@@ -1,8 +1,8 @@
 <spob name="Nanek">
  <pos x="3062.309947" y="-1121.717978"/>
  <GFX>
-  <space>H03.webp</space>
-  <exterior>oceanic.webp</exterior>
+  <space>H03</space>
+  <exterior>oceanic</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

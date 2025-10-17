@@ -1,8 +1,8 @@
 <spob name="Mannannan">
  <pos x="-7152.264249" y="-10820.708001"/>
  <GFX>
-  <space>M06.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>M06</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

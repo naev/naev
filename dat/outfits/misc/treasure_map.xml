@@ -7,7 +7,7 @@
   <mass>0</mass>
   <price>125000</price>
   <description>A treasure map leading to something that could turn out to be useful. However, you won't know what there is until you find it.</description>
-  <gfx_store>/gfx/misc/treasure_hunt.webp</gfx_store>
+  <gfx_store>/gfx/misc/treasure_hunt</gfx_store>
   <cpu>0</cpu>
  </general>
  <specific type="modification">

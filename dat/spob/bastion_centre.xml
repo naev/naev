@@ -1,8 +1,8 @@
 <spob name="Bastion Centre">
  <pos x="-596.226354" y="-3709.852869"/>
  <GFX>
-  <space>zalek_station1.webp</space>
-  <exterior>zalek_station1.webp</exterior>
+  <space>zalek_station1</space>
+  <exterior>zalek_station1</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

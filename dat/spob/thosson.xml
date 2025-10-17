@@ -1,8 +1,8 @@
 <spob name="Thosson">
  <pos x="4327.037111" y="-3228.025914"/>
  <GFX>
-  <space>O00.webp</space>
-  <exterior>aquatic.webp</exterior>
+  <space>O00</space>
+  <exterior>aquatic</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

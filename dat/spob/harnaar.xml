@@ -1,8 +1,8 @@
 <spob name="Harnaar">
  <pos x="9263.676140" y="4945.098859"/>
  <GFX>
-  <space>P00.webp</space>
-  <exterior>snow.webp</exterior>
+  <space>P00</space>
+  <exterior>snow</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

@@ -1,8 +1,8 @@
 <spob name="Thymo">
  <pos x="24202.720556" y="-18121.767832"/>
  <GFX>
-  <space>D02.webp</space>
-  <exterior>desertic2.webp</exterior>
+  <space>D02</space>
+  <exterior>desertic2</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

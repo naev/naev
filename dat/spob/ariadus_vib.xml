@@ -1,8 +1,8 @@
 <spob name="Ariadus VIb">
  <pos x="-791.881071" y="-15992.802931"/>
  <GFX>
-  <space>moon-P01.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>moon-P01</space>
+  <exterior>lava</exterior>
  </GFX>
  <general>
   <class>P</class>

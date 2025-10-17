@@ -1,8 +1,8 @@
 <spob name="Hrimfaxi">
  <pos x="2962.677185" y="-7513.628599"/>
  <GFX>
-  <space>O00.webp</space>
-  <exterior>aquatic2.webp</exterior>
+  <space>O00</space>
+  <exterior>aquatic2</exterior>
  </GFX>
  <general>
   <class>O</class>

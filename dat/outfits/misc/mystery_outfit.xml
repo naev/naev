@@ -7,7 +7,7 @@
   <mass>0</mass>
   <price>0</price>
   <description>A mystery outfit of the finest quality! Guaranteed to be of two star rarity. You will not know what you get until you buy it.</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>placeholder</gfx_store>
   <cpu>0</cpu>
  </general>
  <specific type="modification">

@@ -2,8 +2,8 @@
  <lua>highclass.lua</lua>
  <pos x="19330.000000" y="-3515.000000"/>
  <GFX>
-  <space>moon-O00.webp</space>
-  <exterior>oceanic2.webp</exterior>
+  <space>moon-O00</space>
+  <exterior>oceanic2</exterior>
  </GFX>
  <presence>
   <faction>Frontier</faction>

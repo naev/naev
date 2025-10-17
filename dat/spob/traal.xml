@@ -1,8 +1,8 @@
 <spob name="Traal">
  <pos x="-3800.357180" y="-8212.982546"/>
  <GFX>
-  <space>M06.webp</space>
-  <exterior>forest2.webp</exterior>
+  <space>M06</space>
+  <exterior>forest2</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

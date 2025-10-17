@@ -2,8 +2,8 @@
  <name>Water</name>
  <description>An unusual chemical that we humans take for granted, water is necessary for sustaining human life and useful in many industries due to its particular properties. While common, it is not homogeneously dispersed throughout the universe, leading to heavy concentration in some areas and complete absence in others.</description>
  <price>250</price>
- <gfx_store>water.webp</gfx_store>
- <gfx_space>water.webp</gfx_space>
+ <gfx_store>water</gfx_store>
+ <gfx_space>water</gfx_space>
  <standard/>
  <spob_modifier type="A">1.2</spob_modifier>
  <spob_modifier type="B">1.2</spob_modifier>

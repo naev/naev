@@ -1,8 +1,8 @@
 <spob name="Arck">
  <pos x="14520.452708" y="-19462.383187"/>
  <GFX>
-  <space>M01.webp</space>
-  <exterior>oceanic2.webp</exterior>
+  <space>M01</space>
+  <exterior>oceanic2</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

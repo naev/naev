@@ -2,8 +2,8 @@
  <lua>empire_mil_restricted.lua</lua>
  <pos x="12600.753010" y="-199.793412"/>
  <GFX>
-  <space>station-shipyard2.webp</space>
-  <exterior>station03.webp</exterior>
+  <space>station-shipyard2</space>
+  <exterior>station03</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>

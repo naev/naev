@@ -1,8 +1,8 @@
 <spob name="Caladan">
  <pos x="-13061.286600" y="-11944.148856"/>
  <GFX>
-  <space>M01.webp</space>
-  <exterior>oceanic.webp</exterior>
+  <space>M01</space>
+  <exterior>oceanic</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>

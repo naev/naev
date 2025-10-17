@@ -1,8 +1,8 @@
 <spob name="Castrum Akra">
  <pos x="-2449.716430" y="-2403.495366"/>
  <GFX>
-  <space>station-commerce2.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>station-commerce2</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>

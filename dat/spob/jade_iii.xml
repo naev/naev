@@ -1,8 +1,8 @@
 <spob name="Jade III">
  <pos x="13362.250974" y="8050.895984"/>
  <GFX>
-  <space>I05.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>I05</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <general>
   <class>I</class>

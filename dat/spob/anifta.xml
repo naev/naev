@@ -1,8 +1,8 @@
 <spob name="Anifta">
  <pos x="2298.642042" y="5468.919195"/>
  <GFX>
-  <space>G02.webp</space>
-  <exterior>station00.webp</exterior>
+  <space>G02</space>
+  <exterior>station00</exterior>
  </GFX>
  <general>
   <class>G</class>

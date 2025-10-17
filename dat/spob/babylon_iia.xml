@@ -1,8 +1,8 @@
 <spob name="Babylon IIa">
  <pos x="-13380.000000" y="-3240.000000"/>
  <GFX>
-  <space>moon-J00.webp</space>
-  <exterior>mining5.webp</exterior>
+  <space>moon-J00</space>
+  <exterior>mining5</exterior>
  </GFX>
  <general>
   <class>J</class>

@@ -1,8 +1,8 @@
 <spob name="Eryla">
  <pos x="2158.000000" y="1313.000000"/>
  <GFX>
-  <space>moon-A00.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>moon-A00</space>
+  <exterior>lava</exterior>
  </GFX>
  <general>
   <class>A</class>

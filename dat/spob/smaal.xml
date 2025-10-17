@@ -1,8 +1,8 @@
 <spob name="Smaal">
  <pos x="-1517.529997" y="8942.245182"/>
  <GFX>
-  <space>moon-M06.webp</space>
-  <exterior>forest2.webp</exterior>
+  <space>moon-M06</space>
+  <exterior>forest2</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

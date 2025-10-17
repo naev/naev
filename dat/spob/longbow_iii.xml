@@ -1,8 +1,8 @@
 <spob name="Longbow III">
  <pos x="-10867.022724" y="2719.822689"/>
  <GFX>
-  <space>A04.webp</space>
-  <exterior>desertic4.webp</exterior>
+  <space>A04</space>
+  <exterior>desertic4</exterior>
  </GFX>
  <general>
   <class>A</class>

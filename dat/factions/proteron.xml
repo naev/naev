@@ -1,6 +1,6 @@
 <faction name="Proteron">
  <ai>proteron</ai>
- <logo>proteron.webp</logo>
+ <logo>proteron</logo>
  <longname>Sovereign Proteron Autarchy</longname>
  <player>-50</player>
  <colour>purple</colour>

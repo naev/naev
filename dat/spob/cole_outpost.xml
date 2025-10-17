@@ -1,8 +1,8 @@
 <spob name="Cole Outpost">
  <pos x="4713.068117" y="5484.348194"/>
  <GFX>
-  <space>station-commerce3.webp</space>
-  <exterior>station03.webp</exterior>
+  <space>station-commerce3</space>
+  <exterior>station03</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>

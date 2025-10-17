@@ -1,8 +1,8 @@
 <spob name="Gilligan's Memory">
  <pos x="2560.000000" y="-6640.000000"/>
  <GFX>
-  <space>M00.webp</space>
-  <exterior>station03.webp</exterior>
+  <space>M00</space>
+  <exterior>station03</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

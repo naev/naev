@@ -1,8 +1,8 @@
 <spob name="Freshwater Station">
  <pos x="-13589.830053" y="11789.469068"/>
  <GFX>
-  <space>station-agriculture.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>station-agriculture</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

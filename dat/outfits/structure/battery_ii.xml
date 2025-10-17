@@ -6,7 +6,7 @@
   <mass>60</mass>
   <price>75000</price>
   <description>A large battery unit designed to hold 500 GJ of energy. Ideally mounted on medium-to-large vessels.</description>
-  <gfx_store>capacitor2-g.webp</gfx_store>
+  <gfx_store>capacitor2-g</gfx_store>
  </general>
  <specific type="modification">
   <energy>500</energy>

@@ -1,8 +1,8 @@
 <spob name="Merisi II">
  <pos x="9800.000000" y="-21140.000000"/>
  <GFX>
-  <space>O03.webp</space>
-  <exterior>oceanic2.webp</exterior>
+  <space>O03</space>
+  <exterior>oceanic2</exterior>
  </GFX>
  <general>
   <class>A</class>

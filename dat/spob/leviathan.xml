@@ -1,8 +1,8 @@
 <spob name="Leviathan">
  <pos x="-15711.863964" y="3682.524020"/>
  <GFX>
-  <space>M03.webp</space>
-  <exterior>oceanic2.webp</exterior>
+  <space>M03</space>
+  <exterior>oceanic2</exterior>
  </GFX>
  <general>
   <class>A</class>

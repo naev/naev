@@ -1,8 +1,8 @@
 <spob name="Kan'ar">
  <pos x="12237.361896" y="-8924.993262"/>
  <GFX>
-  <space>O05.webp</space>
-  <exterior>aquatic3.webp</exterior>
+  <space>O05</space>
+  <exterior>aquatic3</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

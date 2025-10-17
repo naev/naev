@@ -6,7 +6,7 @@
   <size>small</size>
   <price>37500</price>
   <description>The Dart 160 is a well-rounded engine for light vessels. While it doesn't excel in speed, it offers good handling and power efficiency for a reasonable price. A very popular engine among civilian and military users alike.</description>
-  <gfx_store>nexus_engine_s.webp</gfx_store>
+  <gfx_store>nexus_engine_s</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">

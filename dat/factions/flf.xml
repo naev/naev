@@ -1,6 +1,6 @@
 <faction name="FLF">
  <ai>flf</ai>
- <logo>flf.webp</logo>
+ <logo>flf</logo>
  <longname>Frontier Liberation Front</longname>
  <player>0</player>
  <colour>yellow</colour>

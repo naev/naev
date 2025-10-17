@@ -1,8 +1,8 @@
 <spob name="Unicorp Orbital">
  <pos x="5099.882650" y="-3015.017012"/>
  <GFX>
-  <space>station-commerce.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>station-commerce</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Traders Society</faction>

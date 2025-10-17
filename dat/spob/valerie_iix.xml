@@ -1,8 +1,8 @@
 <spob name="Valerie IIX">
  <pos x="23216.212204" y="-12094.980310"/>
  <GFX>
-  <space>A03.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>A03</space>
+  <exterior>lava</exterior>
  </GFX>
  <general>
   <class>A</class>

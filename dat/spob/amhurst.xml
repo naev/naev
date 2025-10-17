@@ -1,8 +1,8 @@
 <spob name="Amhurst">
  <pos x="3546.227993" y="2108.567996"/>
  <GFX>
-  <space>H04.webp</space>
-  <exterior>desertic4.webp</exterior>
+  <space>H04</space>
+  <exterior>desertic4</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

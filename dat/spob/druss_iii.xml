@@ -1,8 +1,8 @@
 <spob name="Druss III">
  <pos x="-15949.696927" y="13.034873"/>
  <GFX>
-  <space>moon-O00.webp</space>
-  <exterior>oceanic2.webp</exterior>
+  <space>moon-O00</space>
+  <exterior>oceanic2</exterior>
  </GFX>
  <general>
   <class>O</class>

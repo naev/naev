@@ -1,8 +1,8 @@
 <spob name="Limbo I">
  <pos x="7800.000000" y="8350.000000"/>
  <GFX>
-  <space>K02.webp</space>
-  <exterior>station00.webp</exterior>
+  <space>K02</space>
+  <exterior>station00</exterior>
  </GFX>
  <general>
   <class>K</class>

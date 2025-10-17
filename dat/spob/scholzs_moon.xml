@@ -1,8 +1,8 @@
 <spob name="Scholz's Moon">
  <pos x="-4215.084823" y="-5379.217403"/>
  <GFX>
-  <space>moon-Y00.webp</space>
-  <exterior>uninhabited-rocky-magenta-02.webp</exterior>
+  <space>moon-Y00</space>
+  <exterior>uninhabited-rocky-magenta-02</exterior>
  </GFX>
  <presence>
   <faction>Derelict</faction>

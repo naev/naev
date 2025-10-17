@@ -1,8 +1,8 @@
 <spob name="Red Eye">
  <pos x="-28869.029784" y="2847.035299"/>
  <GFX>
-  <space>moon-A00.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>moon-A00</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <general>
   <class>A</class>

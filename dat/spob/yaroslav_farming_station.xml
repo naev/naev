@@ -1,8 +1,8 @@
 <spob name="Yaroslav Farming Station">
  <pos x="9407.126919" y="-2318.658043"/>
  <GFX>
-  <space>station-agriculture.webp</space>
-  <exterior>forest2.webp</exterior>
+  <space>station-agriculture</space>
+  <exterior>forest2</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

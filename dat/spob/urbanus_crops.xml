@@ -1,8 +1,8 @@
 <spob name="Urbanus Crops">
  <pos x="-6464.109968" y="14128.452439"/>
  <GFX>
-  <space>station-agriculture.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>station-agriculture</space>
+  <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

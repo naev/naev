@@ -7,7 +7,7 @@
   <mass>120</mass>
   <price>540000</price>
   <description>An additional processing unit to supplement the main processor of the core system, giving capital ships a little more processing power.</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>placeholder</gfx_store>
  </general>
  <specific type="modification">
   <cpu_max>120</cpu_max>

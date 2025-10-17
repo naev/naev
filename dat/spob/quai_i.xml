@@ -1,8 +1,8 @@
 <spob name="Quai I">
  <pos x="-9142.137428" y="10533.332254"/>
  <GFX>
-  <space>P01.webp</space>
-  <exterior>snow.webp</exterior>
+  <space>P01</space>
+  <exterior>snow</exterior>
  </GFX>
  <general>
   <class>P</class>

@@ -2,8 +2,8 @@
  <lua>highclass.lua</lua>
  <pos x="14354.175136" y="-15731.478785"/>
  <GFX>
-  <space>G02.webp</space>
-  <exterior>mining6.webp</exterior>
+  <space>G02</space>
+  <exterior>mining6</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

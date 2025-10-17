@@ -1,6 +1,6 @@
 <faction name="Collective">
  <ai>collective</ai>
- <logo>collective.webp</logo>
+ <logo>collective</logo>
  <player>-100</player>
  <colour>silver</colour>
  <spawn>collective</spawn>

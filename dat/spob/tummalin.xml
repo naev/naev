@@ -1,8 +1,8 @@
 <spob name="Tummalin">
  <pos x="-10552.541995" y="2257.612042"/>
  <GFX>
-  <space>moon-M04.webp</space>
-  <exterior>oceanic.webp</exterior>
+  <space>moon-M04</space>
+  <exterior>oceanic</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

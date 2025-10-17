@@ -2,7 +2,7 @@
  <name>Luxury Goods</name>
  <description>All sorts of high quality luxury goods.</description>
  <price>630</price>
- <gfx_store>first_class_passenger.webp</gfx_store>
+ <gfx_store>first_class_passenger</gfx_store>
  <standard/>
  <spob_modifier type="0">0.7</spob_modifier>
  <spob_modifier type="1">0.7</spob_modifier>

@@ -1,8 +1,8 @@
 <spob name="Excelcior">
  <pos x="-3067.007994" y="-1955.217596"/>
  <GFX>
-  <space>M13.webp</space>
-  <exterior>forest2.webp</exterior>
+  <space>M13</space>
+  <exterior>forest2</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

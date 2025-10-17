@@ -1,8 +1,8 @@
 <spob name="Tenebros">
  <pos x="-10360.913868" y="-2507.030551"/>
  <GFX>
-  <space>moon-P00.webp</space>
-  <exterior>snow.webp</exterior>
+  <space>moon-P00</space>
+  <exterior>snow</exterior>
  </GFX>
  <general>
   <class>P</class>

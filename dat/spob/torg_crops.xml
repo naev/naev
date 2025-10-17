@@ -1,8 +1,8 @@
 <spob name="Torg Crops">
  <pos x="-2701.724375" y="12569.305869"/>
  <GFX>
-  <space>station-agriculture.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>station-agriculture</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

@@ -1,8 +1,8 @@
 <spob name="Zesta">
  <pos x="-5564.779304" y="11195.805981"/>
  <GFX>
-  <space>A03.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>A03</space>
+  <exterior>lava</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>

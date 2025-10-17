@@ -1,8 +1,8 @@
 <spob name="Sleuth II">
  <pos x="13626.468033" y="3197.703712"/>
  <GFX>
-  <space>J01.webp</space>
-  <exterior>station03.webp</exterior>
+  <space>J01</space>
+  <exterior>station03</exterior>
  </GFX>
  <general>
   <class>A</class>

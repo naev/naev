@@ -6,7 +6,7 @@
   <mass>6</mass>
   <price>43000</price>
   <description>A high-powered version of the Laser Cannon MK1, the MK2 is usually found on Imperial law enforcement and military ships. Its superior firepower helps keep order among the civilian populace and pirates at bay. It is even capable of dealing with larger Corvette vessels with some effort.</description>
-  <gfx_store>laser2.webp</gfx_store>
+  <gfx_store>laser2</gfx_store>
   <cpu>-24</cpu>
  </general>
  <specific type="bolt">
@@ -18,7 +18,7 @@
   <speed>1100</speed>
   <range>1000</range>
   <falloff>850</falloff>
-  <gfx_end>laser1S.png</gfx_end>
+  <gfx_end>laser1S</gfx_end>
   <energy>10</energy>
   <trackmin>0</trackmin>
   <trackmax>3600</trackmax>

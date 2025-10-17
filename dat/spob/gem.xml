@@ -1,8 +1,8 @@
 <spob name="Gem">
  <pos x="-2316.897947" y="-3385.866684"/>
  <GFX>
-  <space>moon-P03.webp</space>
-  <exterior>aquatic.webp</exterior>
+  <space>moon-P03</space>
+  <exterior>aquatic</exterior>
  </GFX>
  <general>
   <class>P</class>

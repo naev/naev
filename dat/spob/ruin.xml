@@ -1,8 +1,8 @@
 <spob name="Ruin">
  <pos x="-9965.733675" y="-3889.141259"/>
  <GFX>
-  <space>G02.webp</space>
-  <exterior>oceanic.webp</exterior>
+  <space>G02</space>
+  <exterior>oceanic</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>

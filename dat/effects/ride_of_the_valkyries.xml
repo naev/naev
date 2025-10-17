@@ -2,7 +2,7 @@
  <description>The Valkyrie beam is draining your shields!</description>
  <duration>1</duration>
  <overwrite>valkyrie_beam</overwrite>
- <icon>/gfx/misc/icons/viking-helmet.webp</icon>
+ <icon>/gfx/misc/icons/viking-helmet</icon>
  <debuff/>
  <stats>
   <shield_regen_malus>80</shield_regen_malus>

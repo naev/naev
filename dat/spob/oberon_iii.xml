@@ -1,8 +1,8 @@
 <spob name="Oberon III">
  <pos x="3686.000000" y="1900.000000"/>
  <GFX>
-  <space>G03.webp</space>
-  <exterior>oceanic2.webp</exterior>
+  <space>G03</space>
+  <exterior>oceanic2</exterior>
  </GFX>
  <general>
   <class>A</class>

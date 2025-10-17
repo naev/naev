@@ -1,8 +1,8 @@
 <spob name="Neexi I">
  <pos x="4600.511991" y="-6762.752627"/>
  <GFX>
-  <space>I02.webp</space>
-  <exterior>oceanic2.webp</exterior>
+  <space>I02</space>
+  <exterior>oceanic2</exterior>
  </GFX>
  <general>
   <class>A</class>

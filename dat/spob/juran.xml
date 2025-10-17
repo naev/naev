@@ -1,8 +1,8 @@
 <spob name="Juran">
  <pos x="13828.797232" y="-10158.621622"/>
  <GFX>
-  <space>M02.webp</space>
-  <exterior>forest2.webp</exterior>
+  <space>M02</space>
+  <exterior>forest2</exterior>
  </GFX>
  <general>
   <class>A</class>

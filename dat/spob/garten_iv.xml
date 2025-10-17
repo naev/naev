@@ -1,8 +1,8 @@
 <spob name="Garten IV">
  <pos x="-10356.476646" y="4202.226925"/>
  <GFX>
-  <space>I05.webp</space>
-  <exterior>aquatic.webp</exterior>
+  <space>I05</space>
+  <exterior>aquatic</exterior>
  </GFX>
  <general>
   <class>I</class>

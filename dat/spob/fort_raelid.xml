@@ -1,8 +1,8 @@
 <spob name="Fort Raelid">
  <pos x="3598.832090" y="-4493.722479"/>
  <GFX>
-  <space>002.webp</space>
-  <exterior>station02.webp</exterior>
+  <space>002</space>
+  <exterior>station02</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

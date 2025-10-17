@@ -1,8 +1,8 @@
 <spob name="Shakar III">
  <pos x="6359.007813" y="-7100.286078"/>
  <GFX>
-  <space>moon-G01.webp</space>
-  <exterior>aquatic.webp</exterior>
+  <space>moon-G01</space>
+  <exterior>aquatic</exterior>
  </GFX>
  <general>
   <class>A</class>

@@ -1,8 +1,8 @@
 <spob name="Corinth 2">
  <pos x="4450.917344" y="-2995.809751"/>
  <GFX>
-  <space>K02.webp</space>
-  <exterior>station05.webp</exterior>
+  <space>K02</space>
+  <exterior>station05</exterior>
  </GFX>
  <general>
   <class>K</class>

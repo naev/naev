@@ -1,8 +1,8 @@
 <spob name="Overture II">
  <pos x="2247.706032" y="9840.356839"/>
  <GFX>
-  <space>L00.webp</space>
-  <exterior>station01.webp</exterior>
+  <space>L00</space>
+  <exterior>station01</exterior>
  </GFX>
  <general>
   <class>A</class>

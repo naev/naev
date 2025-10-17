@@ -5,7 +5,7 @@
   <size>medium</size>
   <price>0</price>
   <description>Clogged, corroded and cracked in every way possible while still remaining in functional condition, this engine really belongs on the scrap heap.</description>
-  <gfx_store>engine3.webp</gfx_store>
+  <gfx_store>engine3</gfx_store>
  </general>
  <specific type="modification">
   <lua_inline>

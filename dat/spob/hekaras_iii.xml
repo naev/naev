@@ -1,8 +1,8 @@
 <spob name="Hekaras III">
  <pos x="2189.636232" y="12176.513671"/>
  <GFX>
-  <space>moon-I00.webp</space>
-  <exterior>station01.webp</exterior>
+  <space>moon-I00</space>
+  <exterior>station01</exterior>
  </GFX>
  <general>
   <class>A</class>

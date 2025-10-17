@@ -2,8 +2,8 @@
  <lua>highclass.lua</lua>
  <pos x="12004.532136" y="-6382.199194"/>
  <GFX>
-  <space>moon-M02.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>moon-M02</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

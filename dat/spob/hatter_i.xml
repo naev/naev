@@ -1,8 +1,8 @@
 <spob name="Hatter I">
  <pos x="8211.628418" y="-1914.511475"/>
  <GFX>
-  <space>A00.webp</space>
-  <exterior>aquatic.webp</exterior>
+  <space>A00</space>
+  <exterior>aquatic</exterior>
  </GFX>
  <general>
   <class>A</class>

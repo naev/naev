@@ -1,8 +1,8 @@
 <spob name="Khaas I">
  <pos x="4273.825103" y="1065.689184"/>
  <GFX>
-  <space>A00.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>A00</space>
+  <exterior>forest</exterior>
  </GFX>
  <general>
   <class>A</class>

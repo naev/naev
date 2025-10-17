@@ -1,8 +1,8 @@
 <spob name="Rotide II">
  <pos x="2048.921363" y="1247.668963"/>
  <GFX>
-  <space>A00.webp</space>
-  <exterior>forest2.webp</exterior>
+  <space>A00</space>
+  <exterior>forest2</exterior>
  </GFX>
  <general>
   <class>A</class>

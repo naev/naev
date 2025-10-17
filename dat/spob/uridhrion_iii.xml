@@ -1,8 +1,8 @@
 <spob name="Uridhrion III">
  <pos x="10635.441801" y="-21279.413764"/>
  <GFX>
-  <space>A03.webp</space>
-  <exterior>station01.webp</exterior>
+  <space>A03</space>
+  <exterior>station01</exterior>
  </GFX>
  <general>
   <class>A</class>

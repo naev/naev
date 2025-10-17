@@ -1,8 +1,8 @@
 <spob name="Yrina">
  <pos x="28159.705105" y="8322.145136"/>
  <GFX>
-  <space>P03.webp</space>
-  <exterior>snow.webp</exterior>
+  <space>P03</space>
+  <exterior>snow</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

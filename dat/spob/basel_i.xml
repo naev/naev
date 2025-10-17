@@ -1,8 +1,8 @@
 <spob name="Basel I">
  <pos x="-1001.400659" y="-860.838607"/>
  <GFX>
-  <space>moon-A00.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>moon-A00</space>
+  <exterior>forest</exterior>
  </GFX>
  <general>
   <class>A</class>

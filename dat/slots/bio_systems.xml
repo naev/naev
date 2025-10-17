@@ -4,7 +4,7 @@
  <exclusive/>
  <required/>
  <locked/>
- <icon>bio.png</icon>
+ <icon>bio</icon>
  <tags>
   <tag>bioship</tag>
   <tag>core</tag>

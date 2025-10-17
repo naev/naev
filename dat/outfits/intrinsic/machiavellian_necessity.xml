@@ -4,7 +4,7 @@
   <mass>0</mass>
   <price>0</price>
   <description>In order to achieve goals, decisiveness becomes a necessity. A quick strike can determine the outcome of an encounter.</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>placeholder</gfx_store>
   <rarity>6</rarity>
  </general>
  <specific type="modification">

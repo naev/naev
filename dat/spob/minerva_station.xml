@@ -1,8 +1,8 @@
 <spob name="Minerva Station">
  <pos x="-3354.178874" y="-10499.199403"/>
  <GFX>
-  <space>station-pointy1.webp</space>
-  <exterior>scrapped_station.webp</exterior>
+  <space>station-pointy1</space>
+  <exterior>scrapped_station</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>

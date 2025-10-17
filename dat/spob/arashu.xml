@@ -1,8 +1,8 @@
 <spob name="Arashu">
  <pos x="-6854.762866" y="-5382.599029"/>
  <GFX>
-  <space>M04.webp</space>
-  <exterior>aquatic3.webp</exterior>
+  <space>M04</space>
+  <exterior>aquatic3</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

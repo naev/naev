@@ -1,8 +1,8 @@
 <spob name="Astana IIV">
  <pos x="-4476.553751" y="-2346.261115"/>
  <GFX>
-  <space>H04.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>H04</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <general>
   <class>H</class>

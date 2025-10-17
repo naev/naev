@@ -1,8 +1,8 @@
 <spob name="Zethus">
  <pos x="-1698.378416" y="6991.868884"/>
  <GFX>
-  <space>I05.webp</space>
-  <exterior>gas.webp</exterior>
+  <space>I05</space>
+  <exterior>gas</exterior>
  </GFX>
  <general>
   <class>I</class>

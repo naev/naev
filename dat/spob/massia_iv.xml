@@ -1,8 +1,8 @@
 <spob name="Massia IV">
  <pos x="-950.807860" y="-15321.049666"/>
  <GFX>
-  <space>D02.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>D02</space>
+  <exterior>methane</exterior>
  </GFX>
  <general>
   <class>A</class>

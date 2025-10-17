@@ -1,8 +1,8 @@
 <spob name="Pund">
  <pos x="5328.000000" y="-17712.000000"/>
  <GFX>
-  <space>P00.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>P00</space>
+  <exterior>lava</exterior>
  </GFX>
  <general>
   <class>A</class>

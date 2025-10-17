@@ -8,7 +8,7 @@
   <mass>0</mass>
   <price>725000</price>
   <description>This Combat AI focuses on optimization of the ship's sensor infrastructure. By making small tweaks to the sensors' tolerances on the fly, it is able to effectively increase the range at which other ships are detected.</description>
-  <gfx_store>scanning_combat_ai.webp</gfx_store>
+  <gfx_store>scanning_combat_ai</gfx_store>
   <limit>combatai</limit>
  </general>
  <specific type="modification">

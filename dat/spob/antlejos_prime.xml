@@ -1,8 +1,8 @@
 <spob name="Antlejos Prime">
  <pos x="3335.537214" y="9095.864562"/>
  <GFX>
-  <space>J04.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>J04</space>
+  <exterior>methane</exterior>
  </GFX>
  <general>
   <class>C</class>

@@ -4,7 +4,7 @@
   <mass>0</mass>
   <price>0</price>
   <description>The ship seems to have been tainted by whatever is subverting people into the Lost you met in Wild Space. It has spread completely throughout the ship, significantly complicating life support systems, for which only a reduced crew can be used. Although your common sense encourages to avoid it, the taint apparently seems to significantly harden the ship against the nebula radiation.</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>placeholder</gfx_store>
   <rarity>6</rarity>
  </general>
  <specific type="modification">

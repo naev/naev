@@ -9,7 +9,7 @@
   <rarity>1</rarity>
   <mass>130</mass>
   <price>1300000</price>
-  <gfx_store>fidelity_fighter.webp</gfx_store>
+  <gfx_store>fidelity_fighter</gfx_store>
   <description>This bay launches three Sirius Fidelity fighters. Weak individually, they are stronger when working together in groups. Quite apropos, given Sirian society.</description>
   <cpu>-440</cpu>
  </general>

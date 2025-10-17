@@ -1,8 +1,8 @@
 <spob name="Tarrum">
  <pos x="-979.392945" y="10377.298010"/>
  <GFX>
-  <space>moon-J01.webp</space>
-  <exterior>mining6.webp</exterior>
+  <space>moon-J01</space>
+  <exterior>mining6</exterior>
  </GFX>
  <general>
   <class>A</class>

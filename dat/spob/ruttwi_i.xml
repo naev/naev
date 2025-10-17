@@ -1,8 +1,8 @@
 <spob name="Ruttwi I">
  <pos x="-17533.120530" y="10806.496424"/>
  <GFX>
-  <space>H00.webp</space>
-  <exterior>mining5.webp</exterior>
+  <space>H00</space>
+  <exterior>mining5</exterior>
  </GFX>
  <general>
   <class>A</class>

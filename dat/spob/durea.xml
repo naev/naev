@@ -1,8 +1,8 @@
 <spob name="Durea">
  <pos x="-18400.000000" y="-3440.000000"/>
  <GFX>
-  <space>G03.webp</space>
-  <exterior>snow.webp</exterior>
+  <space>G03</space>
+  <exterior>snow</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>

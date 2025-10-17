@@ -1,8 +1,8 @@
 <spob name="Onar">
  <pos x="20081.982211" y="-11605.752853"/>
  <GFX>
-  <space>O01.webp</space>
-  <exterior>aquatic3.webp</exterior>
+  <space>O01</space>
+  <exterior>aquatic3</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

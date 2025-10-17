@@ -1,8 +1,8 @@
 <spob name="Jacqueline">
  <pos x="8158.017924" y="1109.305553"/>
  <GFX>
-  <space>X01.webp</space>
-  <exterior>aquatic2.webp</exterior>
+  <space>X01</space>
+  <exterior>aquatic2</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

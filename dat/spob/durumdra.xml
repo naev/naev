@@ -1,8 +1,8 @@
 <spob name="Durumdra">
  <pos x="6810.831786" y="-20480.644679"/>
  <GFX>
-  <space>P01.webp</space>
-  <exterior>snow.webp</exterior>
+  <space>P01</space>
+  <exterior>snow</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

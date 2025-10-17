@@ -1,8 +1,8 @@
 <spob name="Undergate III">
  <pos x="19697.628816" y="6644.689858"/>
  <GFX>
-  <space>I05.webp</space>
-  <exterior>snow.webp</exterior>
+  <space>I05</space>
+  <exterior>snow</exterior>
  </GFX>
  <general>
   <class>A</class>

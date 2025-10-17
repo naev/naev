@@ -1,8 +1,8 @@
 <spob name="Jervis VII">
  <pos x="4104.407779" y="-13146.720951"/>
  <GFX>
-  <space>moon-H02.webp</space>
-  <exterior>mining2.webp</exterior>
+  <space>moon-H02</space>
+  <exterior>mining2</exterior>
  </GFX>
  <general>
   <class>A</class>

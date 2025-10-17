@@ -1,8 +1,8 @@
 <spob name="Holly III">
  <pos x="4330.000000" y="-2500.000000"/>
  <GFX>
-  <space>H01.webp</space>
-  <exterior>desertic.webp</exterior>
+  <space>H01</space>
+  <exterior>desertic</exterior>
  </GFX>
  <presence>
   <faction>Traders Society</faction>

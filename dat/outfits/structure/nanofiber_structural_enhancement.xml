@@ -5,7 +5,7 @@
   <price>220000</price>
   <mass>-50</mass>
   <description>A ship without structural integrity is floating space junk. However, most modern building standards are usually designed around worst-case scenarios with with significant reinforcement. While this does make the ship much more robust, it can be overkill for those not expected to be in combat. Newer nanofiber materials can also suit the job without compromising structural integrity, allowing replacing parts of the ship's structural panels with much lighter ones, significantly reducing the mass. It does come with a big disclaimer saying it is not suited for combat, but that is more like a suggestion, right?</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>placeholder</gfx_store>
  </general>
  <specific type="modification">
   <absorb>-3</absorb>

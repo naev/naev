@@ -1,8 +1,8 @@
 <spob name="P-8493">
  <pos x="-737.706517" y="-2755.028769"/>
  <GFX>
-  <space>J07.webp</space>
-  <exterior>oceanic.webp</exterior>
+  <space>J07</space>
+  <exterior>oceanic</exterior>
  </GFX>
  <general>
   <class>J</class>

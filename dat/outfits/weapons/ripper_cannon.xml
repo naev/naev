@@ -6,7 +6,7 @@
   <mass>12</mass>
   <price>70000</price>
   <description>The Ripper Cannon is a variant on the Laser Cannon that has stronger capacitors and twin, synchronous muzzles. The result is an increase in damage per hit at a cost of tremendously increased CPU requirements. The Ripper Cannon is mostly used by Corvettes which possess small weapon mounts, but need heavy firepower so they can take on heavier ships effectively.</description>
-  <gfx_store>ripper.webp</gfx_store>
+  <gfx_store>ripper</gfx_store>
   <cpu>-72</cpu>
  </general>
  <specific type="bolt">

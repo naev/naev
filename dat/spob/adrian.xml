@@ -1,8 +1,8 @@
 <spob name="Adrian">
  <pos x="-179.477707" y="5286.959359"/>
  <GFX>
-  <space>P04.webp</space>
-  <exterior>snow.webp</exterior>
+  <space>P04</space>
+  <exterior>snow</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

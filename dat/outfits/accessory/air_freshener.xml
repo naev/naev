@@ -8,7 +8,7 @@
   <mass>0</mass>
   <price>1000000</price>
   <description>Apparently air fresheners have been traditionally used in human vehicles as ornaments. They used to have scents but, since these have no impact with modern ships' powerful filtration systems, these days they are entirely cosmetic.</description>
-  <gfx_store>air_freshener.webp</gfx_store>
+  <gfx_store>air_freshener</gfx_store>
   <rarity>6</rarity>
  </general>
  <specific type="modification">

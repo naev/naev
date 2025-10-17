@@ -1,8 +1,8 @@
 <spob name="Aera">
  <pos x="6751.366090" y="-12894.396502"/>
  <GFX>
-  <space>I07.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>I07</space>
+  <exterior>methane</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>

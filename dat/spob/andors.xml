@@ -1,8 +1,8 @@
 <spob name="Andors">
  <pos x="2491.943995" y="1418.491197"/>
  <GFX>
-  <space>P05.webp</space>
-  <exterior>snow.webp</exterior>
+  <space>P05</space>
+  <exterior>snow</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

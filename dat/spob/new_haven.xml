@@ -2,8 +2,8 @@
  <lua>pirate_clanworld.lua</lua>
  <pos x="-29845.859288" y="4223.363841"/>
  <GFX>
-  <space>X01.webp</space>
-  <exterior>gas.webp</exterior>
+  <space>X01</space>
+  <exterior>gas</exterior>
  </GFX>
  <presence>
   <faction>Wild Ones</faction>

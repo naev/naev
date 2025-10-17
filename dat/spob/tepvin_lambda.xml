@@ -1,8 +1,8 @@
 <spob name="Tepvin Lambda">
  <pos x="-8352.728898" y="5826.078995"/>
  <GFX>
-  <space>I01.webp</space>
-  <exterior>oceanic.webp</exterior>
+  <space>I01</space>
+  <exterior>oceanic</exterior>
  </GFX>
  <general>
   <class>J</class>

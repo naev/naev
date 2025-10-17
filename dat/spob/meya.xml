@@ -1,8 +1,8 @@
 <spob name="Meya">
  <pos x="1610.000000" y="-1330.000000"/>
  <GFX>
-  <space>Y00.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>Y00</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <general>
   <class>A</class>

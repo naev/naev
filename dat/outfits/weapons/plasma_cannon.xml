@@ -6,12 +6,12 @@
   <mass>12</mass>
   <price>48000</price>
   <description>The Plasma Cannon is a scaled-up version of the Plasma Blaster design for use on Corvettes. It manages to pack a markedly stronger punch, but the engineering complexities of fitting such a powerful weapon into a small slot lead to much higher dependence on guidance from the ship's central computer.</description>
-  <gfx_store>plasma_cannon.webp</gfx_store>
+  <gfx_store>plasma_cannon</gfx_store>
   <cpu>-72</cpu>
  </general>
  <specific type="bolt">
   <lua>outfits/weapons/plasma2.lua</lua>
-  <gfx>plasma2.png</gfx>
+  <gfx>plasma2</gfx>
   <sound>plasma</sound>
   <spfx_shield>Shi-S</spfx_shield>
   <spfx_armour>Pla-S2</spfx_armour>
@@ -19,7 +19,7 @@
   <speed>700</speed>
   <range>850</range>
   <falloff>700</falloff>
-  <gfx_end>plasma2-end.png</gfx_end>
+  <gfx_end>plasma2-end</gfx_end>
   <energy>45</energy>
   <trackmin>0</trackmin>
   <trackmax>3000</trackmax>

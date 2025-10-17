@@ -1,8 +1,8 @@
 <spob name="Eneguoz II">
  <pos x="6851.814693" y="-2653.657026"/>
  <GFX>
-  <space>K02.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>K02</space>
+  <exterior>forest</exterior>
  </GFX>
  <general>
   <class>K</class>

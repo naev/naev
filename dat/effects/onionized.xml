@@ -2,7 +2,7 @@
  <description>Hacked!</description>
  <duration>inf</duration>
  <overwrite>onionized</overwrite>
- <icon>/gfx/misc/icons/galaxy.webp</icon>
- <shader vertex="effect15x.vert" img="gfx/misc/onion_society.webp">effects/onionized.frag</shader>
+ <icon>/gfx/misc/icons/galaxy</icon>
+ <shader vertex="effect15x.vert" img="gfx/misc/onion_society">effects/onionized.frag</shader>
  <priority>0</priority>
 </effect>

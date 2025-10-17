@@ -1,8 +1,8 @@
 <spob name="Eye of Night II">
  <pos x="-19027.222222" y="13662.222222"/>
  <GFX>
-  <space>A00.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>A00</space>
+  <exterior>lava</exterior>
  </GFX>
  <general>
   <class>A</class>

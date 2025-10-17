@@ -10,7 +10,7 @@
   <mass>30</mass>
   <price>220000</price>
   <description>The Za'lek have found conventional missiles and torpedoes woefully primitive compared to their miniaturized drone technology. Thus, they began work on fabricating kamikaze drones to replace them, and the efforts have been fruitful indeed. The hunter-killer drone accelerates towards its target and unleashes its ferromagnetohydraulic payload to deadly effect.</description>
-  <gfx_store>grenadelauncher.webp</gfx_store>
+  <gfx_store>grenadelauncher</gfx_store>
   <cpu>-19</cpu>
  </general>
  <specific type="turret launcher" secondary="1">
@@ -22,7 +22,7 @@
   <trackmin>0</trackmin>
   <trackmax>10000</trackmax>
   <ammo_mass>0.5</ammo_mass>
-  <gfx>empgrenade.png</gfx>
+  <gfx>empgrenade</gfx>
   <sound>grenadefire</sound>
   <sound_hit>grenade</sound_hit>
   <spfx_shield>Exp-M</spfx_shield>

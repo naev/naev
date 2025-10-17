@@ -1,8 +1,8 @@
 <spob name="Kobopos II">
  <pos x="96.466502" y="418.105524"/>
  <GFX>
-  <space>I01.webp</space>
-  <exterior>station01.webp</exterior>
+  <space>I01</space>
+  <exterior>station01</exterior>
  </GFX>
  <general>
   <class>I</class>

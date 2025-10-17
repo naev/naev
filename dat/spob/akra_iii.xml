@@ -1,8 +1,8 @@
 <spob name="Akra III">
  <pos x="-1987.421180" y="-2782.389652"/>
  <GFX>
-  <space>H01.webp</space>
-  <exterior>desertic.webp</exterior>
+  <space>H01</space>
+  <exterior>desertic</exterior>
  </GFX>
  <general>
   <class>H</class>

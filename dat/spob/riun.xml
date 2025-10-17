@@ -1,8 +1,8 @@
 <spob name="Riun">
  <pos x="-5513.000000" y="4477.000000"/>
  <GFX>
-  <space>moon-J00.webp</space>
-  <exterior>oceanic2.webp</exterior>
+  <space>moon-J00</space>
+  <exterior>oceanic2</exterior>
  </GFX>
  <general>
   <class>A</class>

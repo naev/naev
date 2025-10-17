@@ -1,8 +1,8 @@
 <spob name="Starlight End II">
  <pos x="16680.285999" y="4614.918172"/>
  <GFX>
-  <space>J08.webp</space>
-  <exterior>station04.webp</exterior>
+  <space>J08</space>
+  <exterior>station04</exterior>
  </GFX>
  <general>
   <class>A</class>

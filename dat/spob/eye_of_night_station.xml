@@ -2,8 +2,8 @@
  <display>Ruined Station</display>
  <pos x="8314.000000" y="-21828.000000"/>
  <GFX>
-  <space>001.webp</space>
-  <exterior>station_scene.webp</exterior>
+  <space>001</space>
+  <exterior>station_scene</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

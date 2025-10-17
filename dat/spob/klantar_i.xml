@@ -1,8 +1,8 @@
 <spob name="Klantar I">
  <pos x="-6491.131770" y="20494.399354"/>
  <GFX>
-  <space>O00.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>O00</space>
+  <exterior>forest</exterior>
  </GFX>
  <general>
   <class>A</class>

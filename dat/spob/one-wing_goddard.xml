@@ -1,8 +1,8 @@
 <spob name="One-Wing Goddard">
  <pos x="0.000000" y="0.000000"/>
  <GFX>
-  <space>derelict_goddard.webp</space>
-  <exterior>onewing_goddard.webp</exterior>
+  <space>derelict_goddard</space>
+  <exterior>onewing_goddard</exterior>
  </GFX>
  <presence>
   <faction>Derelict</faction>

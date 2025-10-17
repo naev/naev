@@ -1,8 +1,8 @@
 <spob name="Symm II">
  <pos x="-1657.246162" y="-10680.643750"/>
  <GFX>
-  <space>X01.webp</space>
-  <exterior>aquatic2.webp</exterior>
+  <space>X01</space>
+  <exterior>aquatic2</exterior>
  </GFX>
  <general>
   <class>A</class>

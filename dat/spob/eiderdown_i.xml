@@ -1,8 +1,8 @@
 <spob name="Eiderdown I">
  <pos x="18500.000000" y="-9750.000000"/>
  <GFX>
-  <space>O05.webp</space>
-  <exterior>aquatic.webp</exterior>
+  <space>O05</space>
+  <exterior>aquatic</exterior>
  </GFX>
  <general>
   <class>O</class>

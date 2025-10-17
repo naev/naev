@@ -2,8 +2,8 @@
  <lua>lowclass.lua</lua>
  <pos x="-25201.083266" y="26782.578820"/>
  <GFX>
-  <space>A03.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>A03</space>
+  <exterior>lava</exterior>
  </GFX>
  <presence>
   <faction>Frontier</faction>

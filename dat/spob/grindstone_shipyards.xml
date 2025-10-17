@@ -1,8 +1,8 @@
 <spob name="Grindstone Shipyards">
  <pos x="4611.059564" y="9970.234399"/>
  <GFX>
-  <space>station-shipyard.webp</space>
-  <exterior>station04.webp</exterior>
+  <space>station-shipyard</space>
+  <exterior>station04</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

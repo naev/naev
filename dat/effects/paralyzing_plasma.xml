@@ -2,7 +2,7 @@
  <description>Plasma is slowing the ship down!</description>
  <duration>7.5</duration>
  <overwrite>paralyzing_plasma</overwrite>
- <icon>/gfx/misc/icons/chemical-bolt.webp</icon>
+ <icon>/gfx/misc/icons/chemical-bolt</icon>
  <debuff/>
  <stats>
   <turn_mod>-25</turn_mod>

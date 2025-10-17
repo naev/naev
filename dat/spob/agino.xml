@@ -1,8 +1,8 @@
 <spob name="Agino">
  <pos x="-11489.009570" y="8901.879853"/>
  <GFX>
-  <space>M01.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>M01</space>
+  <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

@@ -1,8 +1,8 @@
 <spob name="Margot">
  <pos x="4985.911364" y="9649.058473"/>
  <GFX>
-  <space>O01.webp</space>
-  <exterior>oceanic.webp</exterior>
+  <space>O01</space>
+  <exterior>oceanic</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

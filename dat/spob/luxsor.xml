@@ -1,8 +1,8 @@
 <spob name="Luxsor">
  <pos x="-638.461900" y="8974.249360"/>
  <GFX>
-  <space>moon-A00.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>moon-A00</space>
+  <exterior>forest</exterior>
  </GFX>
  <general>
   <class>A</class>

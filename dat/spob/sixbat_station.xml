@@ -1,8 +1,8 @@
 <spob name="Sixbat Station">
  <pos x="717.568500" y="1277.514367"/>
  <GFX>
-  <space>station-fleetbase.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>station-fleetbase</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>

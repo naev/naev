@@ -1,8 +1,8 @@
 <spob name="Niger II">
  <pos x="13920.000000" y="-15480.000000"/>
  <GFX>
-  <space>P02.webp</space>
-  <exterior>oceanic.webp</exterior>
+  <space>P02</space>
+  <exterior>oceanic</exterior>
  </GFX>
  <general>
   <class>A</class>

@@ -1,8 +1,8 @@
 <spob name="Solpere">
  <pos x="8328.027135" y="13338.535618"/>
  <GFX>
-  <space>P01.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>P01</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

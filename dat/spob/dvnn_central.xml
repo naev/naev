@@ -1,8 +1,8 @@
 <spob name="DVNN Central">
  <pos x="11185.917396" y="25623.169472"/>
  <GFX>
-  <space>station-powerplant.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>station-powerplant</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

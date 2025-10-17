@@ -1,8 +1,8 @@
 <spob name="Amlet I">
  <pos x="4767.992380" y="10415.287472"/>
  <GFX>
-  <space>I05.webp</space>
-  <exterior>station00.webp</exterior>
+  <space>I05</space>
+  <exterior>station00</exterior>
  </GFX>
  <general>
   <class>I</class>

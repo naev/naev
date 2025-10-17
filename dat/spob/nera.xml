@@ -1,8 +1,8 @@
 <spob name="Nera">
  <pos x="5670.230758" y="14988.019003"/>
  <GFX>
-  <space>moon-O01.webp</space>
-  <exterior>aquatic3.webp</exterior>
+  <space>moon-O01</space>
+  <exterior>aquatic3</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>

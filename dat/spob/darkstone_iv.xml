@@ -1,8 +1,8 @@
 <spob name="Darkstone IV">
  <pos x="14490.000000" y="6930.000000"/>
  <GFX>
-  <space>P03.webp</space>
-  <exterior>oceanic2.webp</exterior>
+  <space>P03</space>
+  <exterior>oceanic2</exterior>
  </GFX>
  <general>
   <class>P</class>

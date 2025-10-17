@@ -2,7 +2,7 @@
  <description>Your ship is being burned by chakra!</description>
  <duration>7</duration>
  <overwrite>chakra_corruption</overwrite>
- <icon>/gfx/misc/icons/unstable-orb.webp</icon>
+ <icon>/gfx/misc/icons/unstable-orb</icon>
  <debuff/>
  <stats>
   <damage>1</damage>

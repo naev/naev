@@ -1,8 +1,8 @@
 <spob name="Proxima Centauri c">
  <pos x="8412.233780" y="4437.222213"/>
  <GFX>
-  <space>I06.webp</space>
-  <exterior>station01.webp</exterior>
+  <space>I06</space>
+  <exterior>station01</exterior>
  </GFX>
  <general>
   <class>I</class>

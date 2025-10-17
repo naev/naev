@@ -1,8 +1,8 @@
 <spob name="Zhang Lu">
  <pos x="10925.661256" y="11337.867925"/>
  <GFX>
-  <space>Y00.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>Y00</space>
+  <exterior>methane</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

@@ -1,8 +1,8 @@
 <spob name="Eiger">
  <pos x="5823.847661" y="4142.301112"/>
  <GFX>
-  <space>J04.webp</space>
-  <exterior>gas.webp</exterior>
+  <space>J04</space>
+  <exterior>gas</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>

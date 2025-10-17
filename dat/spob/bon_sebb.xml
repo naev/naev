@@ -1,8 +1,8 @@
 <spob name="Bon Sebb">
  <pos x="149.553594" y="1795.840346"/>
  <GFX>
-  <space>M06.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>M06</space>
+  <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>

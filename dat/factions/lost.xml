@@ -1,7 +1,7 @@
 <faction name="Lost">
  <mapname>Lost</mapname>
  <ai>lost</ai>
- <logo>marauder.webp</logo>
+ <logo>marauder</logo>
  <player>-100</player>
  <colour>red</colour>
  <spawn>lost</spawn>

@@ -7,7 +7,7 @@
   <mass>16</mass>
   <price>170000</price>
   <description>The Grave Lance is one of the most powerful Lance weapons around. The technology behind it is poorly understood by everyone except the Za'lek, who use it as a standard weapon.</description>
-  <gfx_store>grave_lance.webp</gfx_store>
+  <gfx_store>grave_lance</gfx_store>
   <cpu>-50</cpu>
  </general>
  <specific type="beam">

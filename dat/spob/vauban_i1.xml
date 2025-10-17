@@ -1,8 +1,8 @@
 <spob name="Vauban I-1">
  <pos x="-4293.811192" y="-7054.118386"/>
  <GFX>
-  <space>I07.webp</space>
-  <exterior>uninhabited-rocky-yellow-03.webp</exterior>
+  <space>I07</space>
+  <exterior>uninhabited-rocky-yellow-03</exterior>
  </GFX>
  <general>
   <class>I</class>

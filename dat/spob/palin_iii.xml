@@ -1,8 +1,8 @@
 <spob name="Palin III">
  <pos x="11874.006643" y="8998.686649"/>
  <GFX>
-  <space>K04.webp</space>
-  <exterior>gas.webp</exterior>
+  <space>K04</space>
+  <exterior>gas</exterior>
  </GFX>
  <general>
   <class>K</class>

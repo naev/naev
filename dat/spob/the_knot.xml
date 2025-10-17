@@ -1,8 +1,8 @@
 <spob name="The Knot">
  <pos x="-2283.522243" y="2654.568662"/>
  <GFX>
-  <space>station-commerce2.webp</space>
-  <exterior>hangar2.webp</exterior>
+  <space>station-commerce2</space>
+  <exterior>hangar2</exterior>
  </GFX>
  <presence>
   <faction>Traders Society</faction>

@@ -1,8 +1,8 @@
 <spob name="Arcania">
  <pos x="2848.347435" y="7692.931299"/>
  <GFX>
-  <space>K02.webp</space>
-  <exterior>uninhabited-rocky-yellow-01.webp</exterior>
+  <space>K02</space>
+  <exterior>uninhabited-rocky-yellow-01</exterior>
  </GFX>
  <general>
   <class>K</class>

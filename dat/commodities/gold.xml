@@ -2,8 +2,8 @@
  <name>Gold</name>
  <description>Gold is prized for its combination of resistance to corrosion and for its conductivity, which is used to enhance the lifetime of electronics. Its most demanding application is as a component in decorative articles such as jewelry.</description>
  <price>550</price>
- <gfx_store>gold.webp</gfx_store>
- <gfx_space>gold.webp</gfx_space>
+ <gfx_store>gold</gfx_store>
+ <gfx_space>gold</gfx_space>
  <standard/>
  <spob_modifier type="M">1.1</spob_modifier>
  <spob_modifier type="N">1.25</spob_modifier>

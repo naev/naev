@@ -1,8 +1,8 @@
 <spob name="August">
  <pos x="12020.844486" y="3728.889205"/>
  <GFX>
-  <space>P01.webp</space>
-  <exterior>snow.webp</exterior>
+  <space>P01</space>
+  <exterior>snow</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

@@ -1,8 +1,8 @@
 <spob name="Theras IV">
  <pos x="3404.378873" y="16561.843167"/>
  <GFX>
-  <space>H04.webp</space>
-  <exterior>mining5.webp</exterior>
+  <space>H04</space>
+  <exterior>mining5</exterior>
  </GFX>
  <general>
   <class>I</class>

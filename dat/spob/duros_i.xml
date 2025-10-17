@@ -1,8 +1,8 @@
 <spob name="Duros I">
  <pos x="3676.859815" y="3121.532581"/>
  <GFX>
-  <space>I02.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>I02</space>
+  <exterior>methane</exterior>
  </GFX>
  <general>
   <class>I</class>

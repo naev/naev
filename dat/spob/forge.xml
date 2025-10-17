@@ -1,8 +1,8 @@
 <spob name="Forge">
  <pos x="1100.000000" y="-18950.000000"/>
  <GFX>
-  <space>A04.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>A04</space>
+  <exterior>lava</exterior>
  </GFX>
  <general>
   <class>A</class>

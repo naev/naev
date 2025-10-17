@@ -10,7 +10,7 @@
   <mass>12</mass>
   <price>40000</price>
   <description>This powerful energy weapon is built to bombard from great range with ion bursts, causing debilitating damage to a target's shields and electrical systems, which can leave a ship effectively defenceless. It was developed by the Za'lek for use on their heavier droness to supplement the short range and high damage of their beams.</description>
-  <gfx_store>weapon01.webp</gfx_store>
+  <gfx_store>weapon01</gfx_store>
   <cpu>-10</cpu>
  </general>
  <specific type="launcher">
@@ -21,7 +21,7 @@
   <trackmin>0</trackmin>
   <trackmax>5000</trackmax>
   <ammo_mass>0.1</ammo_mass>
-  <gfx>electron.png</gfx>
+  <gfx>electron</gfx>
   <sound>neutron</sound>
   <sound_hit>empexplode</sound_hit>
   <spfx_shield>Emp-S</spfx_shield>

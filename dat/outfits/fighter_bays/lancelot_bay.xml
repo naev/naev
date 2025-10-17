@@ -5,7 +5,7 @@
   <licence>Light Combat Vessel</licence>
   <mass>145</mass>
   <price>930000</price>
-  <gfx_store>lancelot_fighter.webp</gfx_store>
+  <gfx_store>lancelot_fighter</gfx_store>
   <description>This fighter bay allows your ship to carry a pair of Lancelot class fighters. It comes with all the devices required for the maintenance and flight of the fighters.</description>
   <cpu>-425</cpu>
  </general>

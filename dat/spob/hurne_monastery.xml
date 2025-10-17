@@ -1,8 +1,8 @@
 <spob name="Hurne Monastery">
  <pos x="1077.322056" y="10533.610557"/>
  <GFX>
-  <space>station-fleetbase3.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>station-fleetbase3</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

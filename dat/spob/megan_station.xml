@@ -1,8 +1,8 @@
 <spob name="Megan Station">
  <pos x="10991.232815" y="-5153.224088"/>
  <GFX>
-  <space>station-powerplant.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>station-powerplant</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Frontier</faction>

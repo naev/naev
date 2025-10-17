@@ -1,8 +1,8 @@
 <spob name="Faust VI">
  <pos x="-1081.572915" y="7820.604151"/>
  <GFX>
-  <space>D02.webp</space>
-  <exterior>asteroid.webp</exterior>
+  <space>D02</space>
+  <exterior>asteroid</exterior>
  </GFX>
  <general>
   <class>D</class>

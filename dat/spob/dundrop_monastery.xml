@@ -1,8 +1,8 @@
 <spob name="Dundrop Monastery">
  <pos x="6031.569401" y="7541.218892"/>
  <GFX>
-  <space>station-commerce2.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>station-commerce2</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

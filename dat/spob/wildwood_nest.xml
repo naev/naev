@@ -1,8 +1,8 @@
 <spob name="Wildwood Nest">
  <pos x="-7343.434885" y="-3353.838054"/>
  <GFX>
-  <space>station-commerce3.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>station-commerce3</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

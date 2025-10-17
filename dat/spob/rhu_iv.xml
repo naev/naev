@@ -1,8 +1,8 @@
 <spob name="Rhu IV">
  <pos x="-8998.345350" y="-25997.349828"/>
  <GFX>
-  <space>G03.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>G03</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <general>
   <class>A</class>

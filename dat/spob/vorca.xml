@@ -2,8 +2,8 @@
  <lua>pirate_clanworld.lua</lua>
  <pos x="-12000.000000" y="-22000.000000"/>
  <GFX>
-  <space>Y00.webp</space>
-  <exterior>gas.webp</exterior>
+  <space>Y00</space>
+  <exterior>gas</exterior>
  </GFX>
  <presence>
   <faction>Black Lotus</faction>

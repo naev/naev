@@ -6,7 +6,7 @@
   <mass>0</mass>
   <price>0</price>
   <description>TODO</description>
-  <gfx_store>/gfx/misc/icons/chemical-bolt.webp</gfx_store>
+  <gfx_store>/gfx/misc/icons/chemical-bolt</gfx_store>
  </general>
  <specific type="modification"/>
 </outfit>

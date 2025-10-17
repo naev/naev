@@ -1,8 +1,8 @@
 <spob name="Evergreen">
  <pos x="1930.191663" y="3039.497216"/>
  <GFX>
-  <space>M08.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>M08</space>
+  <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>O'rez</faction>

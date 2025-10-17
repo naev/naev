@@ -1,8 +1,8 @@
 <spob name="Akrikos">
  <pos x="4776.054003" y="4977.952083"/>
  <GFX>
-  <space>J08.webp</space>
-  <exterior>uninhabited-rocky-red-01.webp</exterior>
+  <space>J08</space>
+  <exterior>uninhabited-rocky-red-01</exterior>
  </GFX>
  <general>
   <class>J</class>

@@ -1,8 +1,8 @@
 <spob name="Eiderdown III">
  <pos x="-15550.000000" y="-6550.000000"/>
  <GFX>
-  <space>D01.webp</space>
-  <exterior>asteroid.webp</exterior>
+  <space>D01</space>
+  <exterior>asteroid</exterior>
  </GFX>
  <general>
   <class>D</class>

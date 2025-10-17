@@ -1,4 +1,4 @@
 <spfx name="Emp-S">
- <gfx sx="6" sy="5">emps.webp</gfx>
+ <gfx sx="6" sy="5">emps</gfx>
  <anim>0.400</anim>
 </spfx>

@@ -1,8 +1,8 @@
 <spob name="Urbanus III">
  <pos x="9628.507834" y="-13749.470096"/>
  <GFX>
-  <space>moon-H00.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>moon-H00</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <general>
   <class>A</class>

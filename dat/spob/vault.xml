@@ -1,8 +1,8 @@
 <spob name="Vault">
  <pos x="-298.113177" y="607.267583"/>
  <GFX>
-  <space>P05.webp</space>
-  <exterior>snowy_cliffs.webp</exterior>
+  <space>P05</space>
+  <exterior>snowy_cliffs</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>

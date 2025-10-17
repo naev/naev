@@ -2,8 +2,8 @@
  <lua>lowclass.lua</lua>
  <pos x="20640.000000" y="1920.000000"/>
  <GFX>
-  <space>S00.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>S00</space>
+  <exterior>methane</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

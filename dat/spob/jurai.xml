@@ -1,8 +1,8 @@
 <spob name="Jurai">
  <pos x="3494.242339" y="1924.878737"/>
  <GFX>
-  <space>M04.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>M04</space>
+  <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

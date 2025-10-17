@@ -1,8 +1,8 @@
 <spob name="Rei II">
  <pos x="-3584.272380" y="2023.954802"/>
  <GFX>
-  <space>M05.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>M05</space>
+  <exterior>forest</exterior>
  </GFX>
  <general>
   <class>M</class>

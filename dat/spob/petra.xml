@@ -1,8 +1,8 @@
 <spob name="Petra">
  <pos x="-1490.060305" y="11785.627859"/>
  <GFX>
-  <space>G03.webp</space>
-  <exterior>mining.webp</exterior>
+  <space>G03</space>
+  <exterior>mining</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>

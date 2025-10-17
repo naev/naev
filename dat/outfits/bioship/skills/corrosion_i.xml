@@ -6,7 +6,7 @@
   <mass>0</mass>
   <price>0</price>
   <description>TODO</description>
-  <gfx_store>/gfx/misc/icons/acid-blob.webp</gfx_store>
+  <gfx_store>/gfx/misc/icons/acid-blob</gfx_store>
  </general>
  <specific type="modification"/>
 </outfit>

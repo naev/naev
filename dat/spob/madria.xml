@@ -2,8 +2,8 @@
  <lua>highclass.lua</lua>
  <pos x="-8515.000000" y="-1690.000000"/>
  <GFX>
-  <space>M08.webp</space>
-  <exterior>forest2.webp</exterior>
+  <space>M08</space>
+  <exterior>forest2</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

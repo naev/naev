@@ -1,8 +1,8 @@
 <spob name="Tau Ceti h">
  <pos x="-3871.920103" y="3002.224550"/>
  <GFX>
-  <space>A01.webp</space>
-  <exterior>desertic.webp</exterior>
+  <space>A01</space>
+  <exterior>desertic</exterior>
  </GFX>
  <general>
   <class>A</class>

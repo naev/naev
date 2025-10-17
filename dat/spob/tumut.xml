@@ -1,8 +1,8 @@
 <spob name="Tumut">
  <pos x="3666.871135" y="1895.063654"/>
  <GFX>
-  <space>A04.webp</space>
-  <exterior>mining.webp</exterior>
+  <space>A04</space>
+  <exterior>mining</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

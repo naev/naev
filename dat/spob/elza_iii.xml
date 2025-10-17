@@ -1,8 +1,8 @@
 <spob name="Elza III">
  <pos x="8329.857647" y="-11194.854673"/>
  <GFX>
-  <space>P04.webp</space>
-  <exterior>snow.webp</exterior>
+  <space>P04</space>
+  <exterior>snow</exterior>
  </GFX>
  <general>
   <class>P</class>

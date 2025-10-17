@@ -1,8 +1,8 @@
 <spob name="Cantina Centre">
  <pos x="11117.903978" y="2747.527995"/>
  <GFX>
-  <space>zalek_station2.webp</space>
-  <exterior>zalek_station2.webp</exterior>
+  <space>zalek_station2</space>
+  <exterior>zalek_station2</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

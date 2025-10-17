@@ -1,8 +1,8 @@
 <spob name="HZMM-01">
  <pos x="7054.425087" y="2844.189863"/>
  <GFX>
-  <space>moon-J01.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>moon-J01</space>
+  <exterior>lava</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

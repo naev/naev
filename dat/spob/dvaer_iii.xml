@@ -1,8 +1,8 @@
 <spob name="Dvaer III">
  <pos x="18224.324694" y="2810.763980"/>
  <GFX>
-  <space>O02.webp</space>
-  <exterior>oceanic.webp</exterior>
+  <space>O02</space>
+  <exterior>oceanic</exterior>
  </GFX>
  <general>
   <class>O</class>

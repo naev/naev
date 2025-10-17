@@ -1,8 +1,8 @@
 <spob name="Daravon III">
  <pos x="-16754.944011" y="-4849.488009"/>
  <GFX>
-  <space>O03.webp</space>
-  <exterior>aquatic2.webp</exterior>
+  <space>O03</space>
+  <exterior>aquatic2</exterior>
  </GFX>
  <general>
   <class>O</class>

@@ -1,8 +1,8 @@
 <spob name="Ariadus VI">
  <pos x="-2040.540055" y="-15891.920587"/>
  <GFX>
-  <space>I04.webp</space>
-  <exterior>mining5.webp</exterior>
+  <space>I04</space>
+  <exterior>mining5</exterior>
  </GFX>
  <general>
   <class>I</class>

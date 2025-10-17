@@ -7,7 +7,7 @@
   <unique/>
   <mass>0</mass>
   <price>650000</price>
-  <gfx_store>/gfx/misc/icons/angel-outfit.webp</gfx_store>
+  <gfx_store>/gfx/misc/icons/angel-outfit</gfx_store>
   <description>By turning flow inwards to oneself, one can embody all the virtues of the Sirichana significantly increasing all aspects of the ship being flown.</description>
   <limit>avatar_of_sirichana</limit>
  </general>

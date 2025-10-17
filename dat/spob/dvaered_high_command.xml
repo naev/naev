@@ -3,8 +3,8 @@
  <lua>dvaered_mil_dhc.lua</lua>
  <pos x="-16173.088338" y="-11736.708576"/>
  <GFX>
-  <space>station-battlestation.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>station-battlestation</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

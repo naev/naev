@@ -1,8 +1,8 @@
 <spob name="Raelid II">
  <pos x="-6752.120425" y="8087.623756"/>
  <GFX>
-  <space>D00.webp</space>
-  <exterior>desertic4.webp</exterior>
+  <space>D00</space>
+  <exterior>desertic4</exterior>
  </GFX>
  <general>
   <class>A</class>

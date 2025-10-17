@@ -1,8 +1,8 @@
 <spob name="Savoy Terminal">
  <pos x="-2433.948093" y="-1847.625792"/>
  <GFX>
-  <space>000.webp</space>
-  <exterior>station00.webp</exterior>
+  <space>000</space>
+  <exterior>station00</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

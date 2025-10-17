@@ -1,8 +1,8 @@
 <spob name="Curie">
  <pos x="8372.931824" y="-644.071679"/>
  <GFX>
-  <space>A02.webp</space>
-  <exterior>desertic.webp</exterior>
+  <space>A02</space>
+  <exterior>desertic</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

@@ -1,8 +1,8 @@
 <spob name="Jorcan">
  <pos x="14226.623033" y="-4360.650738"/>
  <GFX>
-  <space>G01.webp</space>
-  <exterior>mining.webp</exterior>
+  <space>G01</space>
+  <exterior>mining</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

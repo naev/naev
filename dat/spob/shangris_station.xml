@@ -1,8 +1,8 @@
 <spob name="Shangris Station">
  <pos x="13172.960754" y="425.307879"/>
  <GFX>
-  <space>station-fleetbase4.webp</space>
-  <exterior>mining6.webp</exterior>
+  <space>station-fleetbase4</space>
+  <exterior>mining6</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>

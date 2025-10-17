@@ -1,8 +1,8 @@
 <spob name="HZNSS-2">
  <pos x="6287.366388" y="715.635198"/>
  <GFX>
-  <space>station-agriculture.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>station-agriculture</space>
+  <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

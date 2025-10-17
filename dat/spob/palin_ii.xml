@@ -1,8 +1,8 @@
 <spob name="Palin II">
  <pos x="9700.717288" y="-8791.275042"/>
  <GFX>
-  <space>moon-J01.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>moon-J01</space>
+  <exterior>lava</exterior>
  </GFX>
  <general>
   <class>J</class>

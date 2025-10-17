@@ -1,8 +1,8 @@
 <spob name="Fortitude I">
  <pos x="-3973.895332" y="-4159.591375"/>
  <GFX>
-  <space>A01.webp</space>
-  <exterior>asteroid.webp</exterior>
+  <space>A01</space>
+  <exterior>asteroid</exterior>
  </GFX>
  <general>
   <class>A</class>

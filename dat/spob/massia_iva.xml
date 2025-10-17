@@ -1,8 +1,8 @@
 <spob name="Massia IVa">
  <pos x="-1088.000000" y="-15096.000000"/>
  <GFX>
-  <space>moon-G01.webp</space>
-  <exterior>aquatic.webp</exterior>
+  <space>moon-G01</space>
+  <exterior>aquatic</exterior>
  </GFX>
  <general>
   <class>A</class>

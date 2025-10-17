@@ -2,8 +2,8 @@
  <lua>jadecourt.lua</lua>
  <pos x="-2507.492761" y="-4718.400357"/>
  <GFX>
-  <space>station-commerce.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>station-commerce</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>

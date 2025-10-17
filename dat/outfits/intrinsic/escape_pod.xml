@@ -4,7 +4,7 @@
   <mass>0</mass>
   <price>0</price>
   <description>An escape pod that will automatically eject when the ship has taken fatal damage.</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>placeholder</gfx_store>
   <limit>escape_pod</limit>
  </general>
  <specific type="modification">

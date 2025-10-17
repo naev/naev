@@ -1,8 +1,8 @@
 <spob name="Vlexon I">
  <pos x="12880.000000" y="-17680.000000"/>
  <GFX>
-  <space>H02.webp</space>
-  <exterior>uninhabited-rocky-yellow-04.webp</exterior>
+  <space>H02</space>
+  <exterior>uninhabited-rocky-yellow-04</exterior>
  </GFX>
  <general>
   <class>H</class>

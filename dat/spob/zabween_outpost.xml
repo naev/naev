@@ -1,8 +1,8 @@
 <spob name="Zabween Outpost">
  <pos x="285.354495" y="12012.328125"/>
  <GFX>
-  <space>000.webp</space>
-  <exterior>station00.webp</exterior>
+  <space>000</space>
+  <exterior>station00</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>

@@ -1,8 +1,8 @@
 <spob name="Malebolge IV">
  <pos x="13118.124000" y="2716.521632"/>
  <GFX>
-  <space>moon-A00.webp</space>
-  <exterior>uninhabited-rocky-red-04.webp</exterior>
+  <space>moon-A00</space>
+  <exterior>uninhabited-rocky-red-04</exterior>
  </GFX>
  <general>
   <class>A</class>

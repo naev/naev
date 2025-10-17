@@ -1,8 +1,8 @@
 <spob name="Opa">
  <pos x="-3548.243133" y="-3056.307753"/>
  <GFX>
-  <space>moon-G01.webp</space>
-  <exterior>aquatic.webp</exterior>
+  <space>moon-G01</space>
+  <exterior>aquatic</exterior>
  </GFX>
  <general>
   <class>A</class>

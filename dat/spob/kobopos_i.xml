@@ -1,8 +1,8 @@
 <spob name="Kobopos I">
  <pos x="-951.955371" y="1935.550028"/>
  <GFX>
-  <space>moon-J00.webp</space>
-  <exterior>mining5.webp</exterior>
+  <space>moon-J00</space>
+  <exterior>mining5</exterior>
  </GFX>
  <general>
   <class>A</class>

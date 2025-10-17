@@ -5,7 +5,7 @@
   <price>0</price>
   <description>Most ships are designed with ample tolerances around the hyperdrive fuel tanks, in order to avoid unhappy surprises to the captain. However, most expert ship engineers will tell you they're not actually necessary, although few will actually go through the trouble and responsibility to retool ship's hyperdrive making it a rare modification to find.
 #oThis outfit can not be removed once equipped.#0</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>placeholder</gfx_store>
   <rarity>2</rarity>
   <limit>hyperdrive_retool</limit>
  </general>

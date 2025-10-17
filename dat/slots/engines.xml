@@ -3,7 +3,7 @@
  <description>This slot is used for engines. Engines propel the ship, which is kind of important. Engines require energy from the core system to function.</description>
  <exclusive/>
  <required/>
- <icon>engines.png</icon>
+ <icon>engines</icon>
  <tags>
   <tag>core</tag>
   <tag>engines</tag>

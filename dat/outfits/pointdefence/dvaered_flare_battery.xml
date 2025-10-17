@@ -8,12 +8,12 @@
   <mass>90</mass>
   <price>570000</price>
   <description>Also known as the Dvareed Firework Battery, the Flare Battery is able to launch cluster munitions with large areas of effects to mow down enemy interceptors and incoming ordinances. What the individuals lack in destructive power is made up for in the sheer amount that are packed into each individual flare. When not being used for destructive purposes, Dvaered Warlords are known for putting on extravagant displays from suborbital positions. Although most Warlords opt for no-explosive munitions in the displays, it is not entirely uncommon for them to just use the normal flares, which has led to more than one major incident in the past.</description>
-  <gfx_store>pd4.webp</gfx_store>
+  <gfx_store>pd4</gfx_store>
   <cpu>-80</cpu>
  </general>
  <specific type="turret launcher">
   <lua>outfits/pointdefence/pointdefence.lua</lua>
-  <gfx col_size="30">empgrenade_blue.png</gfx>
+  <gfx col_size="30">empgrenade_blue</gfx>
   <sound>grenadefire</sound>
   <sound_hit>empexplode</sound_hit>
   <spfx_shield>Firework40</spfx_shield>

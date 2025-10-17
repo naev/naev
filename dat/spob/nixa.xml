@@ -1,8 +1,8 @@
 <spob name="Nixa">
  <pos x="6416.652506" y="-7838.062872"/>
  <GFX>
-  <space>M05.webp</space>
-  <exterior>forest2.webp</exterior>
+  <space>M05</space>
+  <exterior>forest2</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>

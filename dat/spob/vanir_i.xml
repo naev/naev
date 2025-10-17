@@ -1,8 +1,8 @@
 <spob name="Vanir I">
  <pos x="-12550.400000" y="4676.800000"/>
  <GFX>
-  <space>S00.webp</space>
-  <exterior>uninhabited-rocky-green-02.webp</exterior>
+  <space>S00</space>
+  <exterior>uninhabited-rocky-green-02</exterior>
  </GFX>
  <general>
   <class>S</class>

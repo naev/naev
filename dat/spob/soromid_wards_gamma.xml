@@ -2,8 +2,8 @@
  <lua>highclass.lua</lua>
  <pos x="11050.675296" y="6217.996620"/>
  <GFX>
-  <space>station-commerce.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>station-commerce</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

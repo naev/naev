@@ -1,8 +1,8 @@
 <spob name="Apez V">
  <pos x="-5998.401103" y="10755.037640"/>
  <GFX>
-  <space>L00.webp</space>
-  <exterior>station01.webp</exterior>
+  <space>L00</space>
+  <exterior>station01</exterior>
  </GFX>
  <general>
   <class>L</class>

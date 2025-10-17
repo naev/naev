@@ -1,8 +1,8 @@
 <spob name="Wolf II">
  <pos x="3714.113093" y="1291.286631"/>
  <GFX>
-  <space>moon-P02.webp</space>
-  <exterior>snow.webp</exterior>
+  <space>moon-P02</space>
+  <exterior>snow</exterior>
  </GFX>
  <general>
   <class>P</class>

@@ -1,8 +1,8 @@
 <spob name="Khorin">
  <pos x="-8942.255418" y="15319.559921"/>
  <GFX>
-  <space>moon-H00.webp</space>
-  <exterior>desertic2.webp</exterior>
+  <space>moon-H00</space>
+  <exterior>desertic2</exterior>
  </GFX>
  <general>
   <class>A</class>

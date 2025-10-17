@@ -1,8 +1,8 @@
 <spob name="Maus I">
  <pos x="-985.724438" y="-965.188513"/>
  <GFX>
-  <space>moon-M02.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>moon-M02</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <general>
   <class>A</class>

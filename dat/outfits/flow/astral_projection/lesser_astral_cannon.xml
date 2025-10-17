@@ -5,7 +5,7 @@
   <mass>1</mass>
   <price>20000</price>
   <description>TODO</description>
-  <gfx_store>ioncannon.webp</gfx_store>
+  <gfx_store>ioncannon</gfx_store>
   <cpu>0</cpu>
  </general>
  <specific type="bolt">

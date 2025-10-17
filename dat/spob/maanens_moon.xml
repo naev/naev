@@ -2,8 +2,8 @@
  <lua>maanens_moon.lua</lua>
  <pos x="-9325.528927" y="5175.040881"/>
  <GFX>
-  <space>moon-K00.webp</space>
-  <exterior>city3.webp</exterior>
+  <space>moon-K00</space>
+  <exterior>city3</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>

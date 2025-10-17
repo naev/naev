@@ -3,7 +3,7 @@
  <marker>spobmarker_triangle</marker>
  <pos x="8141.500227" y="-4027.415982"/>
  <GFX>
-  <space>hypergate_early_construction_stage.webp</space>
+  <space>hypergate_early_construction_stage</space>
  </GFX>
  <presence>
   <faction>Soromid</faction>

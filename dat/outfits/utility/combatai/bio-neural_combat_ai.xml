@@ -8,7 +8,7 @@
   <mass>1</mass>
   <price>1150000</price>
   <description>Unlike regular Combat AIs which consist of pure software, this AI relies on a quasi-organic coprocessor made with both living tissue and inorganic material. Acting as a small temporal lobe, the coprocessor is able to analyse all the available sensory data to predict future events, allowing the ship to seemingly gain an edge over others in reaction times.</description>
-  <gfx_store>bioneural_combat_ai.webp</gfx_store>
+  <gfx_store>bioneural_combat_ai</gfx_store>
   <limit>combatai</limit>
  </general>
  <specific type="modification">

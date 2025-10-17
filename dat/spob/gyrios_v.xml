@@ -1,8 +1,8 @@
 <spob name="Gyrios V">
  <pos x="29821.651381" y="-16569.391308"/>
  <GFX>
-  <space>moon-C00.webp</space>
-  <exterior>station03.webp</exterior>
+  <space>moon-C00</space>
+  <exterior>station03</exterior>
  </GFX>
  <general>
   <class>A</class>

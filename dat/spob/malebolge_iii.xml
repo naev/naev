@@ -1,8 +1,8 @@
 <spob name="Malebolge III">
  <pos x="-3770.579628" y="-3439.342764"/>
  <GFX>
-  <space>J08.webp</space>
-  <exterior>station01.webp</exterior>
+  <space>J08</space>
+  <exterior>station01</exterior>
  </GFX>
  <general>
   <class>A</class>

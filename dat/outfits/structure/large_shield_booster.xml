@@ -6,7 +6,7 @@
   <mass>120</mass>
   <price>260000</price>
   <description>A shield generator that feeds off the ship's main energy line. It will allow you to regenerate your shield faster and give you a small shield capacity boost, at the expense of draining some of the ship's energy.</description>
-  <gfx_store>shield.webp</gfx_store>
+  <gfx_store>shield</gfx_store>
  </general>
  <specific type="modification">
   <shield>40</shield>

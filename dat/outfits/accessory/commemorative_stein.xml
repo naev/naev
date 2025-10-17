@@ -8,7 +8,7 @@
   <mass>0</mass>
   <price>1000000</price>
   <description>This is a stein commemorating the terraforming and establishment of a permanent colony on Antlejos V. The stein is intricately engraved with what seems to be scenes from the short history of the colony. You can make out what appears to be some individuals wrestling, lots of heavy machinery, and people doing some sort of circle dance. Did that all happen? On the bottom there is an inscription saying "Screw the PUAAA, long live the Hero of Antlejos!" with an illegible signature.</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>placeholder</gfx_store>
   <rarity>6</rarity>
  </general>
  <specific type="modification">

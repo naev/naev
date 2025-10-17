@@ -5,7 +5,7 @@
   <size>medium</size>
   <price>320000</price>
   <description>Designed for medium-sized vessels, Schafer &amp; Kane's medium combat plating provides ample protection utilizing the latest in defensive materials.</description>
-  <gfx_store>combat_hull_m.webp</gfx_store>
+  <gfx_store>combat_hull_m</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">

@@ -1,8 +1,8 @@
 <spob name="Jaan">
  <pos x="-17106.988508" y="-10288.870591"/>
  <GFX>
-  <space>M00.webp</space>
-  <exterior>forest2.webp</exterior>
+  <space>M00</space>
+  <exterior>forest2</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>

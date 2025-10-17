@@ -2,7 +2,7 @@
  <description>Fading in!</description>
  <duration>3</duration>
  <overwrite>fadein</overwrite>
- <icon>/gfx/misc/icons/galaxy.webp</icon>
+ <icon>/gfx/misc/icons/galaxy</icon>
  <shader>effects/fadein.frag</shader>
  <priority>0</priority>
  <stats>

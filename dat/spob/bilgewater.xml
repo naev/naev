@@ -1,8 +1,8 @@
 <spob name="Bilgewater">
  <pos x="-1597.399997" y="2475.969995"/>
  <GFX>
-  <space>Z00.webp</space>
-  <exterior>uninhabited-rocky-yellow-04.webp</exterior>
+  <space>Z00</space>
+  <exterior>uninhabited-rocky-yellow-04</exterior>
  </GFX>
  <general>
   <class>Z</class>

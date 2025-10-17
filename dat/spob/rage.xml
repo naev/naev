@@ -1,8 +1,8 @@
 <spob name="Rage">
  <pos x="-2901.655730" y="-2991.530022"/>
  <GFX>
-  <space>A02.webp</space>
-  <exterior>desertic.webp</exterior>
+  <space>A02</space>
+  <exterior>desertic</exterior>
  </GFX>
  <general>
   <class>A</class>

@@ -1,8 +1,8 @@
 <spob name="Feye IV">
  <pos x="-13276.262204" y="-12777.389788"/>
  <GFX>
-  <space>G01.webp</space>
-  <exterior>desertic.webp</exterior>
+  <space>G01</space>
+  <exterior>desertic</exterior>
  </GFX>
  <general>
   <class>G</class>

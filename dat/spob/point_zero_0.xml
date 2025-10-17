@@ -1,8 +1,8 @@
 <spob name="Point Zero 0">
  <pos x="2957.142857" y="2168.571429"/>
  <GFX>
-  <space>D00.webp</space>
-  <exterior>desertic4.webp</exterior>
+  <space>D00</space>
+  <exterior>desertic4</exterior>
  </GFX>
  <general>
   <class>A</class>

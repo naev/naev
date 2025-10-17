@@ -1,8 +1,8 @@
 <spob name="Godtra">
  <pos x="-5947.221096" y="-5823.731170"/>
  <GFX>
-  <space>M08.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>M08</space>
+  <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

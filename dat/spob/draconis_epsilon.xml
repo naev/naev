@@ -1,8 +1,8 @@
 <spob name="Draconis Epsilon">
  <pos x="30869.632172" y="22915.385326"/>
  <GFX>
-  <space>M01.webp</space>
-  <exterior>station04.webp</exterior>
+  <space>M01</space>
+  <exterior>station04</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>

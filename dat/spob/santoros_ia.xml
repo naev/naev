@@ -1,8 +1,8 @@
 <spob name="Santoros I-a">
  <pos x="10319.203980" y="-1980.775996"/>
  <GFX>
-  <space>moon-P01.webp</space>
-  <exterior>station03.webp</exterior>
+  <space>moon-P01</space>
+  <exterior>station03</exterior>
  </GFX>
  <general>
   <class>P</class>

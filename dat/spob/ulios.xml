@@ -1,8 +1,8 @@
 <spob name="Ulios">
  <pos x="17880.000000" y="-8100.000000"/>
  <GFX>
-  <space>M08.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>M08</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>

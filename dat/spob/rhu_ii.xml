@@ -1,8 +1,8 @@
 <spob name="Rhu II">
  <pos x="-256.700627" y="17156.369158"/>
  <GFX>
-  <space>S01.webp</space>
-  <exterior>station00.webp</exterior>
+  <space>S01</space>
+  <exterior>station00</exterior>
  </GFX>
  <general>
   <class>A</class>

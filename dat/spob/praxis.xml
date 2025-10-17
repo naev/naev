@@ -1,8 +1,8 @@
 <spob name="Praxis">
  <pos x="3350.000000" y="3250.000000"/>
  <GFX>
-  <space>M00.webp</space>
-  <exterior>oceanic2.webp</exterior>
+  <space>M00</space>
+  <exterior>oceanic2</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

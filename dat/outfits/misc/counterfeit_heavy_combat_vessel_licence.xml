@@ -3,7 +3,7 @@
   <rarity>3</rarity>
   <mass>0</mass>
   <price>2500000</price>
-  <gfx_store>licence.webp</gfx_store>
+  <gfx_store>licence</gfx_store>
   <description>Through long-honed craftsmanship, pirate software engineers are able to create near perfect replicas of the Heavy Combat Vessel Licence. However, this comes at a significant mark-up compared to the standard licence prices. This licence will authorize you to buy cruiser and carrier-class ships on worlds that perform background checks.</description>
  </general>
  <specific type="licence">

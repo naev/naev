@@ -1,8 +1,8 @@
 <spob name="Mendez">
  <pos x="-6889.594173" y="-7813.338644"/>
  <GFX>
-  <space>G01.webp</space>
-  <exterior>station03.webp</exterior>
+  <space>G01</space>
+  <exterior>station03</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

@@ -1,8 +1,8 @@
 <spob name="Infinity VII">
  <pos x="6640.426299" y="5346.236486"/>
  <GFX>
-  <space>J01.webp</space>
-  <exterior>station03.webp</exterior>
+  <space>J01</space>
+  <exterior>station03</exterior>
  </GFX>
  <general>
   <class>J</class>

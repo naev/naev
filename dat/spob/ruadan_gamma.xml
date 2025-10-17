@@ -1,8 +1,8 @@
 <spob name="Ruadan Gamma">
  <pos x="19451.648227" y="-12486.984241"/>
  <GFX>
-  <space>O01.webp</space>
-  <exterior>oceanic.webp</exterior>
+  <space>O01</space>
+  <exterior>oceanic</exterior>
  </GFX>
  <general>
   <class>A</class>

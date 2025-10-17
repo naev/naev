@@ -1,8 +1,8 @@
 <spob name="Telika III">
  <pos x="10028.372174" y="8612.168880"/>
  <GFX>
-  <space>C01.webp</space>
-  <exterior>station01.webp</exterior>
+  <space>C01</space>
+  <exterior>station01</exterior>
  </GFX>
  <general>
   <class>C</class>

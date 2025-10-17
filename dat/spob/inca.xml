@@ -1,8 +1,8 @@
 <spob name="Inca">
  <pos x="-6756.276409" y="7401.062317"/>
  <GFX>
-  <space>moon-I01.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>moon-I01</space>
+  <exterior>lava</exterior>
  </GFX>
  <general>
   <class>A</class>

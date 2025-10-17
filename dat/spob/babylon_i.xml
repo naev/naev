@@ -1,8 +1,8 @@
 <spob name="Babylon I">
  <pos x="15900.000000" y="4620.000000"/>
  <GFX>
-  <space>M09.webp</space>
-  <exterior>aquatic2.webp</exterior>
+  <space>M09</space>
+  <exterior>aquatic2</exterior>
  </GFX>
  <general>
   <class>O</class>

@@ -9,7 +9,7 @@
   <rarity>3</rarity>
   <mass>63</mass>
   <price>820000</price>
-  <gfx_store>thurion_perspicacity_fighter.webp</gfx_store>
+  <gfx_store>thurion_perspicacity_fighter</gfx_store>
   <description>This dock allows your ship to carry a pair of Thurion Perspicacity fighters. It comes with all the devices required for the maintenance and flight of the fighters.</description>
   <cpu>-185</cpu>
  </general>

@@ -1,8 +1,8 @@
 <spob name="Beeklo II">
  <pos x="-924.000000" y="21582.000000"/>
  <GFX>
-  <space>G03.webp</space>
-  <exterior>snow.webp</exterior>
+  <space>G03</space>
+  <exterior>snow</exterior>
  </GFX>
  <general>
   <class>G</class>

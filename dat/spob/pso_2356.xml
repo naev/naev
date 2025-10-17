@@ -1,8 +1,8 @@
 <spob name="PSO 2356">
  <pos x="3798.617193" y="15379.767170"/>
  <GFX>
-  <space>I01.webp</space>
-  <exterior>station01.webp</exterior>
+  <space>I01</space>
+  <exterior>station01</exterior>
  </GFX>
  <general>
   <class>A</class>

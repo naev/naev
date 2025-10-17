@@ -1,8 +1,8 @@
 <spob name="Castellum Telika">
  <pos x="-6628.943924" y="-5140.913146"/>
  <GFX>
-  <space>station-sphere.webp</space>
-  <exterior>desertic.webp</exterior>
+  <space>station-sphere</space>
+  <exterior>desertic</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>

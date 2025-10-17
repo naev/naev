@@ -1,8 +1,8 @@
 <spob name="Hadosh II">
  <pos x="-11781.014820" y="7693.271214"/>
  <GFX>
-  <space>A04.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>A04</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <general>
   <class>A</class>

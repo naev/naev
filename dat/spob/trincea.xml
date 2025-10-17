@@ -1,8 +1,8 @@
 <spob name="Trincea">
  <pos x="19000.000000" y="5000.000000"/>
  <GFX>
-  <space>M02.webp</space>
-  <exterior>desertic2.webp</exterior>
+  <space>M02</space>
+  <exterior>desertic2</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

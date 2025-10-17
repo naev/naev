@@ -4,7 +4,7 @@
   <mass>0</mass>
   <price>0</price>
   <description>The ship has serious design defects that limit its functionality.</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>placeholder</gfx_store>
   <limit>badship</limit>
  </general>
  <specific type="modification">

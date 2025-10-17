@@ -1,8 +1,8 @@
 <spob name="Stelman I-3">
  <pos x="-4392.849991" y="-5739.990655"/>
  <GFX>
-  <space>I06.webp</space>
-  <exterior>station01.webp</exterior>
+  <space>I06</space>
+  <exterior>station01</exterior>
  </GFX>
  <general>
   <class>I</class>

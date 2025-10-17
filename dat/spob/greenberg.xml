@@ -1,8 +1,8 @@
 <spob name="Greenberg">
  <pos x="-6733.386104" y="-5801.470834"/>
  <GFX>
-  <space>G03.webp</space>
-  <exterior>desertic2.webp</exterior>
+  <space>G03</space>
+  <exterior>desertic2</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

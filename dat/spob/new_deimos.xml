@@ -1,8 +1,8 @@
 <spob name="New Deimos">
  <pos x="-1403.081683" y="3894.469528"/>
  <GFX>
-  <space>I06.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>I06</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <general>
   <class>A</class>

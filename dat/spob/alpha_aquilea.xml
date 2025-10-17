@@ -1,8 +1,8 @@
 <spob name="Alpha Aquilea">
  <pos x="-425.973332" y="3194.799994"/>
  <GFX>
-  <space>I08.webp</space>
-  <exterior>snow.webp</exterior>
+  <space>I08</space>
+  <exterior>snow</exterior>
  </GFX>
  <general>
   <class>I</class>
