@@ -44,6 +44,7 @@ void gl_exitTextures( void );
 /*
  * Creating.
  */
+int                   gl_texExistsPath( const char *path );
 USE_RESULT glTexture *gl_texExistsOrCreate( const char  *path,
                                             unsigned int flags, int sx, int sy,
                                             int *created );

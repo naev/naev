@@ -1520,6 +1520,29 @@ capi!(tex_srh, srh);
 capi_tex!(tex_vmax, vmax);
 
 #[unsafe(no_mangle)]
+pub extern "C" fn gl_texExistsPath(cpath: *const c_char) -> c_int {
+    let path = &unsafe { CStr::from_ptr(cpath) }.to_string_lossy();
+    if ndata::exists(path) {
+        return 1;
+    }
+    use image::ImageFormat;
+    for imageformat in &[
+        ImageFormat::Avif,
+        ImageFormat::WebP,
+        ImageFormat::Png,
+        ImageFormat::Jpeg,
+    ] {
+        for ext in imageformat.extensions_str() {
+            let path = &format!("{}.{}", path, ext);
+            if ndata::exists(path) {
+                return 1;
+            }
+        }
+    }
+    0
+}
+
+#[unsafe(no_mangle)]
 pub extern "C" fn gl_texExistsOrCreate(
     cpath: *const c_char,
     cflags: c_uint,
