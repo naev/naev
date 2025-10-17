@@ -18,6 +18,7 @@ use crate::openal::*;
 use crate::output_limiter::consts::*;
 use crate::source_spatialize::consts::*;
 use crate::source_spatialize::*;
+use anyhow::Context;
 use naev_core::utils::{binary_search_by_key_ref, sort_by_key_ref};
 use std::sync::atomic::{AtomicU32, Ordering};
 use thunderdome::Arena;
@@ -85,14 +86,32 @@ impl AudioBuffer {
         use symphonia::core::probe::Hint;
         use symphonia::core::sample::{Sample, SampleFormat};
 
+        // If no extension try to autodetect.
+        let ext = std::path::Path::new(path)
+            .extension()
+            .and_then(|s| s.to_str());
+        let path = match ext {
+            Some(_) => path,
+            None => {
+                let mut npath = None;
+                for ext in &["ogg", "wav"] {
+                    let tpath = format!("{}.{}", path, ext);
+                    if ndata::exists(&tpath) {
+                        npath = Some(tpath);
+                        break;
+                    }
+                }
+                &npath
+                    .context(format!("No audio file matching '{}' found", path))?
+                    .to_string()
+            }
+        };
         let src = ndata::open(path)?;
+
         let mss = MediaSourceStream::new(Box::new(src), Default::default());
 
         let mut hint = Hint::new();
-        if let Some(ext) = std::path::Path::new(path)
-            .extension()
-            .and_then(|s| s.to_str())
-        {
+        if let Some(ext) = ext {
             hint.with_extension(ext);
         }
 
