@@ -454,6 +454,7 @@ pub struct AudioStatic {
     data: Option<AudioData>,
     volume: f32,
     groupid: Option<thunderdome::Index>,
+    ingame: bool,
 }
 impl AudioStatic {
     fn new(data: &Option<AudioData>) -> Result<Self> {
@@ -467,6 +468,7 @@ impl AudioStatic {
                     volume: 1.0,
                     data: None,
                     groupid: None,
+                    ingame: false,
                 })
             }
         }
@@ -481,6 +483,7 @@ impl AudioStatic {
             volume: 1.0,
             data: Some(AudioData::Buffer(buffer.clone())),
             groupid: None,
+            ingame: false,
         })
     }
 
@@ -526,12 +529,13 @@ impl Audio {
     }
 
     /// Sets the sound to be in-game as opposed to a GUI or music track.
-    pub fn ingame(&self) {
+    pub fn set_ingame(&mut self) {
         check_audio!(self);
 
         match self {
             Self::Static(this) => {
                 let v = &this.source;
+                this.ingame = true;
 
                 if HAS_AL_SOFT_SOURCE_SPATIALIZE.load(Ordering::Relaxed) {
                     v.parameter_i32(AL_SOURCE_SPATIALIZE_SOFT, AL_AUTO_SOFT);
@@ -1160,8 +1164,6 @@ impl UserData for AudioRef {
          * @luafunc isStopped
          */
         methods.add_method("isStopped", |_, this, ()| -> mlua::Result<bool> {
-            //dbg!(&this);
-            //dbg!(&AUDIO.voices.lock().unwrap());
             Ok(this.call(|this| this.is_stopped())?)
         });
         /*
@@ -1782,8 +1784,8 @@ pub extern "C" fn sound_playPos(
     let sound = unsafe { &*sound };
 
     let mut voices = AUDIO.voices.lock().unwrap();
-    let audio = Audio::new(&Some(AudioData::Buffer(sound.clone()))).unwrap();
-    audio.ingame();
+    let mut audio = Audio::new(&Some(AudioData::Buffer(sound.clone()))).unwrap();
+    audio.set_ingame();
     audio.set_position(Vector3::from([px as f32, py as f32, 0.0]));
     audio.set_velocity(Vector3::from([vx as f32, vy as f32, 0.0]));
     let voice = voices.insert(audio);
@@ -1889,9 +1891,9 @@ pub extern "C" fn sound_getVolumeLog() -> c_double {
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_stopAll() {
     let mut voices = AUDIO.voices.lock().unwrap();
-    for (_, v) in voices.drain() {
-        v.stop();
-    }
+    voices.retain(|_, v| match v {
+        Audio::Static(this) => !this.ingame,
+    });
 }
 
 #[unsafe(no_mangle)]
