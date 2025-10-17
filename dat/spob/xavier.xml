@@ -1,8 +1,8 @@
 <spob name="Xavier">
  <pos x="-1725.191997" y="2044.671996"/>
  <GFX>
-  <space>X00.webp</space>
-  <exterior>uninhabited-rocky-magenta-02.webp</exterior>
+  <space>X00</space>
+  <exterior>uninhabited-rocky-magenta-02</exterior>
  </GFX>
  <general>
   <class>X</class>

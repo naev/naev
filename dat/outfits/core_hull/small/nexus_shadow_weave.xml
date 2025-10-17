@@ -7,7 +7,7 @@
   <priority>7</priority>
   <price>90000</price>
   <description>Designed for military scouting and patrol vessels, Nexus' Light Stealth Plating configuration features the latest in sensor-absorbing materials and geometry.</description>
-  <gfx_store>stealth_hull_t.webp</gfx_store>
+  <gfx_store>stealth_hull_t</gfx_store>
  </general>
  <specific type="modification">
   <lua_inline>

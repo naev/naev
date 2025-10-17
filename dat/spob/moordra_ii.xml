@@ -1,8 +1,8 @@
 <spob name="Moordra II">
  <pos x="-18000.328196" y="5102.641404"/>
  <GFX>
-  <space>J08.webp</space>
-  <exterior>station05.webp</exterior>
+  <space>J08</space>
+  <exterior>station05</exterior>
  </GFX>
  <general>
   <class>A</class>

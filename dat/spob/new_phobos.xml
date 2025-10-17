@@ -1,8 +1,8 @@
 <spob name="New Phobos">
  <pos x="-2831.086139" y="-18662.964893"/>
  <GFX>
-  <space>D01.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>D01</space>
+  <exterior>forest</exterior>
  </GFX>
  <general>
   <class>A</class>

@@ -2,8 +2,8 @@
  <lua>dvaered_mil_restricted.lua</lua>
  <pos x="-2675.964475" y="-6088.010868"/>
  <GFX>
-  <space>station-fleetbase2.webp</space>
-  <exterior>snow.webp</exterior>
+  <space>station-fleetbase2</space>
+  <exterior>snow</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

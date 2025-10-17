@@ -2,8 +2,8 @@
  <lua>lowclass.lua</lua>
  <pos x="-2854.157639" y="6002.748046"/>
  <GFX>
-  <space>H03.webp</space>
-  <exterior>desertic2.webp</exterior>
+  <space>H03</space>
+  <exterior>desertic2</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

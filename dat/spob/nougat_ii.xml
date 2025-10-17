@@ -1,8 +1,8 @@
 <spob name="Nougat II">
  <pos x="-2280.000000" y="-5760.000000"/>
  <GFX>
-  <space>moon-P02.webp</space>
-  <exterior>uninhabited-rocky-cyan-01.webp</exterior>
+  <space>moon-P02</space>
+  <exterior>uninhabited-rocky-cyan-01</exterior>
  </GFX>
  <general>
   <class>P</class>

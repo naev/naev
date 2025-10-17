@@ -1,5 +1,5 @@
 <slot name="fighter_bay">
  <display>Fighter Bays</display>
  <description>This slot can be used for fighter bays.</description>
- <icon>fighter.png</icon>
+ <icon>fighter</icon>
 </slot>

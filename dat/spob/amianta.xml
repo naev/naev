@@ -1,8 +1,8 @@
 <spob name="Amianta">
  <pos x="14165.896522" y="10080.641875"/>
  <GFX>
-  <space>P02.webp</space>
-  <exterior>snow.webp</exterior>
+  <space>P02</space>
+  <exterior>snow</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>

@@ -1,8 +1,8 @@
 <spob name="Kansas I">
  <pos x="-6345.335679" y="-7618.136896"/>
  <GFX>
-  <space>A04.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>A04</space>
+  <exterior>lava</exterior>
  </GFX>
  <general>
   <class>A</class>

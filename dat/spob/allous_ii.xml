@@ -1,8 +1,8 @@
 <spob name="Allous II">
  <pos x="7170.183779" y="2331.706992"/>
  <GFX>
-  <space>J06.webp</space>
-  <exterior>aquatic3.webp</exterior>
+  <space>J06</space>
+  <exterior>aquatic3</exterior>
  </GFX>
  <general>
   <class>J</class>

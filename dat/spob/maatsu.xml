@@ -1,8 +1,8 @@
 <spob name="Maatsu">
  <pos x="-2453.783884" y="-7965.701318"/>
  <GFX>
-  <space>L00.webp</space>
-  <exterior>desertic.webp</exterior>
+  <space>L00</space>
+  <exterior>desertic</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

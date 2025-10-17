@@ -1,8 +1,8 @@
 <spob name="Westeros Nest">
  <pos x="-21014.528804" y="1360.437185"/>
  <GFX>
-  <space>station-fleetbase2.webp</space>
-  <exterior>station03.webp</exterior>
+  <space>station-fleetbase2</space>
+  <exterior>station03</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

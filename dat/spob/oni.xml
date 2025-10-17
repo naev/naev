@@ -1,8 +1,8 @@
 <spob name="Oni">
  <pos x="5369.038878" y="-8497.280539"/>
  <GFX>
-  <space>J04.webp</space>
-  <exterior>gas.webp</exterior>
+  <space>J04</space>
+  <exterior>gas</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

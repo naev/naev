@@ -1,8 +1,8 @@
 <spob name="Jankelo">
  <pos x="26239.708008" y="11834.928284"/>
  <GFX>
-  <space>K04.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>K04</space>
+  <exterior>methane</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

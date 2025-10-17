@@ -1,8 +1,8 @@
 <spob name="Maus III">
  <pos x="10669.670581" y="1287.718863"/>
  <GFX>
-  <space>Y00.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>Y00</space>
+  <exterior>methane</exterior>
  </GFX>
  <general>
   <class>K</class>

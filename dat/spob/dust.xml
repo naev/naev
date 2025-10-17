@@ -1,8 +1,8 @@
 <spob name="Dust">
  <pos x="-3850.000000" y="2940.000000"/>
  <GFX>
-  <space>D01.webp</space>
-  <exterior>asteroid.webp</exterior>
+  <space>D01</space>
+  <exterior>asteroid</exterior>
  </GFX>
  <general>
   <class>D</class>

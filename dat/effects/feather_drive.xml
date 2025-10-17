@@ -1,7 +1,7 @@
 <effect name="Feather Drive">
  <description>Your ship just used Feather Drive!</description>
  <duration>0.3</duration>
- <icon>/gfx/misc/icons/galaxy.webp</icon>
+ <icon>/gfx/misc/icons/galaxy</icon>
  <shader>effects/feather_drive.frag</shader>
  <priority>2</priority>
 </effect>

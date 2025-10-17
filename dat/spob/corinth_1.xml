@@ -1,8 +1,8 @@
 <spob name="Corinth 1">
  <pos x="-13745.682176" y="10005.786912"/>
  <GFX>
-  <space>A00.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>A00</space>
+  <exterior>forest</exterior>
  </GFX>
  <general>
   <class>A</class>

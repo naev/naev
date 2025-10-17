@@ -1,8 +1,8 @@
 <spob name="New Dortmund">
  <pos x="-30820.101542" y="-18688.394805"/>
  <GFX>
-  <space>M07.webp</space>
-  <exterior>forest2.webp</exterior>
+  <space>M07</space>
+  <exterior>forest2</exterior>
  </GFX>
  <presence>
   <faction>Frontier</faction>

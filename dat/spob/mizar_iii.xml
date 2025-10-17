@@ -1,8 +1,8 @@
 <spob name="Mizar III">
  <pos x="-5723.553409" y="10798.490951"/>
  <GFX>
-  <space>H03.webp</space>
-  <exterior>desertic2.webp</exterior>
+  <space>H03</space>
+  <exterior>desertic2</exterior>
  </GFX>
  <general>
   <class>H</class>

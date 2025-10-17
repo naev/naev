@@ -1,8 +1,8 @@
 <spob name="Varaati">
  <pos x="20300.000000" y="21350.000000"/>
  <GFX>
-  <space>M03.webp</space>
-  <exterior>oceanic2.webp</exterior>
+  <space>M03</space>
+  <exterior>oceanic2</exterior>
  </GFX>
  <presence>
   <faction>Frontier</faction>

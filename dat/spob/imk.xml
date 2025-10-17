@@ -1,8 +1,8 @@
 <spob name="Imk">
  <pos x="3303.666819" y="11690.405671"/>
  <GFX>
-  <space>moon-P01.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>moon-P01</space>
+  <exterior>forest</exterior>
  </GFX>
  <general>
   <class>A</class>

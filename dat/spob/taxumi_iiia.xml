@@ -2,8 +2,8 @@
  <lua>soromid_mil_restricted.lua</lua>
  <pos x="-4290.427536" y="1615.597401"/>
  <GFX>
-  <space>moon-M06.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>moon-M06</space>
+  <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

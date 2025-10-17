@@ -1,7 +1,7 @@
 <spob name="Symm IIIa">
  <pos x="3663.680133" y="3548.372981"/>
  <GFX>
-  <space>moon-O00.webp</space>
+  <space>moon-O00</space>
  </GFX>
  <general>
   <class>O</class>

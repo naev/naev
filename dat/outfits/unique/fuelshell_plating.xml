@@ -8,7 +8,7 @@
   <priority>3</priority>
   <price>300000</price>
   <description>An experimental hull design for scout ships that would allow them to significantly increase their travel range by using a porous hull material that can directly store fuel. The novel design allows significantly increasing the fuel reservoirs of any ship without any complicated interventions or structural changes. Although the design was lauded as ahead of its time, it never really gained in popularity to make it into mainline production. It might have to do with turning the entire ship into a tinderbox and leaking fuel when sustaining damage, but who knows?</description>
-  <gfx_store>cargo_hull_m.webp</gfx_store>
+  <gfx_store>cargo_hull_m</gfx_store>
  </general>
  <specific type="modification">
   <lua_inline>

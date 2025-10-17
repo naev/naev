@@ -2,8 +2,8 @@
  <lua>highclass.lua</lua>
  <pos x="25900.000000" y="24990.000000"/>
  <GFX>
-  <space>M04.webp</space>
-  <exterior>oceanic.webp</exterior>
+  <space>M04</space>
+  <exterior>oceanic</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

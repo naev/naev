@@ -1,8 +1,8 @@
 <spob name="Sultan VI">
  <pos x="-11645.489699" y="10969.922617"/>
  <GFX>
-  <space>J00.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>J00</space>
+  <exterior>forest</exterior>
  </GFX>
  <general>
   <class>I</class>

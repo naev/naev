@@ -1,8 +1,8 @@
 <spob name="UX IIX">
  <pos x="16448.723203" y="-12793.912085"/>
  <GFX>
-  <space>I02.webp</space>
-  <exterior>uninhabited-rocky-green-03.webp</exterior>
+  <space>I02</space>
+  <exterior>uninhabited-rocky-green-03</exterior>
  </GFX>
  <general>
   <class>I</class>

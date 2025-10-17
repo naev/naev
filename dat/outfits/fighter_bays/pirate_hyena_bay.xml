@@ -6,7 +6,7 @@
   <rarity>1</rarity>
   <mass>120</mass>
   <price>1400000</price>
-  <gfx_store>pirate_hyena_fighter.webp</gfx_store>
+  <gfx_store>pirate_hyena_fighter</gfx_store>
   <description>This bay expands on the popular Pirate Hyena Dock, doubling the amount of interceptors that can be operated. It comes with all the amenities necessary for the maintenance and operation of the interceptors. The Pirate Hyenas can also assist in ship scavenging and looting.</description>
   <cpu>-370</cpu>
  </general>

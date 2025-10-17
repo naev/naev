@@ -6,7 +6,7 @@
   <mass>0</mass>
   <price>310000</price>
   <description>Modern ionic weaponry has found ways to overcome the armour of a ship and directly attack the vulnerable electronic systems. The Faraday Tempest Coating is able to counteract disabling weaponry by dissipating the radiation it impacts via harmless evanescent fields, greatly speeding up recovery from system damage.</description>
-  <gfx_store>faraday_tempest_coating.webp</gfx_store>
+  <gfx_store>faraday_tempest_coating</gfx_store>
   <limit>hullcoat</limit>
  </general>
  <specific type="modification">

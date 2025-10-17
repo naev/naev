@@ -1,8 +1,8 @@
 <spob name="Andors Refining">
  <pos x="3338.188008" y="1360.953572"/>
  <GFX>
-  <space>station-powerplant.webp</space>
-  <exterior>station00.webp</exterior>
+  <space>station-powerplant</space>
+  <exterior>station00</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

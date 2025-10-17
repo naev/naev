@@ -1,7 +1,7 @@
 <faction name="Goddard">
  <ai>goddard</ai>
  <known/>
- <logo>goddard.webp</logo>
+ <logo>goddard</logo>
  <colour>blue</colour>
  <longname>House Goddard</longname>
  <player>2</player>

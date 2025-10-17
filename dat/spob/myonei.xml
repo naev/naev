@@ -1,8 +1,8 @@
 <spob name="Myonei">
  <pos x="-17821.865227" y="-17114.204956"/>
  <GFX>
-  <space>K03.webp</space>
-  <exterior>gas.webp</exterior>
+  <space>K03</space>
+  <exterior>gas</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

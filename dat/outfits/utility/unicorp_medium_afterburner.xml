@@ -6,7 +6,7 @@
   <mass>12</mass>
   <price>200000</price>
   <description>Afterburners provide your ship with an immediate boost to acceleration and speed when activated. However, while an afterburner is active it will quickly drain the ship's energy. This model is able to provide an emergency speed boost to heavier ships than Unicorp's light afterburner, but requires a larger mount and more energy to run.</description>
-  <gfx_store>afterburner.webp</gfx_store>
+  <gfx_store>afterburner</gfx_store>
   <limit>afterburner</limit>
   <cpu>0</cpu>
  </general>

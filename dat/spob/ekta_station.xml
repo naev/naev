@@ -1,8 +1,8 @@
 <spob name="Ekta Station">
  <pos x="9509.385492" y="-2399.956164"/>
  <GFX>
-  <space>station-shipyard2.webp</space>
-  <exterior>station05.webp</exterior>
+  <space>station-shipyard2</space>
+  <exterior>station05</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>

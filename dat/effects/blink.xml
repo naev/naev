@@ -1,7 +1,7 @@
 <effect name="Blink">
  <description>Your ship just blinked!</description>
  <duration>0.3</duration>
- <icon>/gfx/misc/icons/galaxy.webp</icon>
+ <icon>/gfx/misc/icons/galaxy</icon>
  <shader>effects/blink.frag</shader>
  <priority>2</priority>
 </effect>

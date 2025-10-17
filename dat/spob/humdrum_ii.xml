@@ -1,8 +1,8 @@
 <spob name="Humdrum II">
  <pos x="9600.000000" y="-8340.000000"/>
  <GFX>
-  <space>H02.webp</space>
-  <exterior>station00.webp</exterior>
+  <space>H02</space>
+  <exterior>station00</exterior>
  </GFX>
  <general>
   <class>A</class>

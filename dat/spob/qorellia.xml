@@ -2,8 +2,8 @@
  <lua>pirate_clanworld.lua</lua>
  <pos x="1500.000000" y="1500.000000"/>
  <GFX>
-  <space>moon-G01.webp</space>
-  <exterior>mining2.webp</exterior>
+  <space>moon-G01</space>
+  <exterior>mining2</exterior>
  </GFX>
  <presence>
   <faction>Raven Clan</faction>

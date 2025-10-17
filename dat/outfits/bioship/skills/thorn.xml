@@ -5,7 +5,7 @@
   <mass>10</mass>
   <price>0</price>
   <description>None</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>placeholder</gfx_store>
   <cpu>0</cpu>
  </general>
  <specific type="turret launcher" secondary="1">

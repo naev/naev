@@ -1,8 +1,8 @@
 <spob name="Zeo">
  <pos x="11360.407598" y="6364.565702"/>
  <GFX>
-  <space>M09.webp</space>
-  <exterior>forest2.webp</exterior>
+  <space>M09</space>
+  <exterior>forest2</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>

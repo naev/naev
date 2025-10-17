@@ -1,8 +1,8 @@
 <spob name="Andee IIa">
  <pos x="-17730.525819" y="343.637937"/>
  <GFX>
-  <space>moon-H02.webp</space>
-  <exterior>mining2.webp</exterior>
+  <space>moon-H02</space>
+  <exterior>mining2</exterior>
  </GFX>
  <general>
   <class>H</class>

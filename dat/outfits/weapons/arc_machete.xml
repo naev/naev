@@ -7,7 +7,7 @@
   <mass>33</mass>
   <price>315000</price>
   <description>This weapon unleashes a focused beam of disabling electromagnetic radiation, able to both effectively shred through a target's shielding and render its equipment inoperable in a short amount of time without causing substantial physical harm. It's favoured by the few well-off pirate captains able to get their hands on one, as well as law enforcement on the hunt for those pirates, for similar reasons.</description>
-  <gfx_store>grave_beam.webp</gfx_store>
+  <gfx_store>grave_beam</gfx_store>
   <cpu>-60</cpu>
  </general>
  <specific type="turret beam">

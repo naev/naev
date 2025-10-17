@@ -1,7 +1,7 @@
 <effect name="Astral Projection">
  <description>Ship is being projected.</description>
  <duration>inf</duration>
- <icon>/gfx/misc/icons/angel-outfit.webp</icon>
+ <icon>/gfx/misc/icons/angel-outfit</icon>
  <overwrite>astral_projection</overwrite>
  <shader vertex="effect15x.vert">effects/astral_projection.frag</shader>
  <priority>-1</priority>

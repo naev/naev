@@ -1,8 +1,8 @@
 <spob name="Charcoal">
  <pos x="-8280.921584" y="3577.358124"/>
  <GFX>
-  <space>A03.webp</space>
-  <exterior>station01.webp</exterior>
+  <space>A03</space>
+  <exterior>station01</exterior>
  </GFX>
  <general>
   <class>A</class>

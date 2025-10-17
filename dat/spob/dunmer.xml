@@ -1,8 +1,8 @@
 <spob name="Dunmer">
  <pos x="-3757.585211" y="-10069.112936"/>
  <GFX>
-  <space>moon-M06.webp</space>
-  <exterior>oceanic2.webp</exterior>
+  <space>moon-M06</space>
+  <exterior>oceanic2</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

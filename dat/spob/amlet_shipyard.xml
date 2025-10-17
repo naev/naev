@@ -1,8 +1,8 @@
 <spob name="Amlet Shipyard">
  <pos x="-1534.217232" y="-504.937442"/>
  <GFX>
-  <space>station-shipyard3.webp</space>
-  <exterior>station_scene.webp</exterior>
+  <space>station-shipyard3</space>
+  <exterior>station_scene</exterior>
  </GFX>
  <presence>
   <faction>Yetmer</faction>

@@ -1,8 +1,8 @@
 <spob name="Longbow I">
  <pos x="-1716.135133" y="-6781.358274"/>
  <GFX>
-  <space>G00.webp</space>
-  <exterior>station00.webp</exterior>
+  <space>G00</space>
+  <exterior>station00</exterior>
  </GFX>
  <general>
   <class>A</class>

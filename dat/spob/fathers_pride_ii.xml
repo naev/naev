@@ -1,8 +1,8 @@
 <spob name="Father's Pride II">
  <pos x="10750.000000" y="-11000.000000"/>
  <GFX>
-  <space>H02.webp</space>
-  <exterior>desertic.webp</exterior>
+  <space>H02</space>
+  <exterior>desertic</exterior>
  </GFX>
  <general>
   <class>H</class>

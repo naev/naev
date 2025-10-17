@@ -6,7 +6,7 @@
   <mass>3</mass>
   <price>300000</price>
   <description>The weapons ionizer works by diverting massive amounts of energy from the weapons to an ion field generator. While that makes for an increase in energy use and a massive reduction to phyisical damage output, the ion field allows conventional weapons to do ionizing damage while the outfit is active. It is designed to automatically activate when the target's armour is below 50%, but can also be triggered manually.</description>
-  <gfx_store>accuracy_forward_3.webp</gfx_store>
+  <gfx_store>accuracy_forward_3</gfx_store>
   <limit>ionizer</limit>
   <desc_extra>Automatically triggers when target armour is below 50%.</desc_extra>
  </general>

@@ -1,8 +1,8 @@
 <spob name="PSO 2212">
  <pos x="7238.218736" y="7302.558458"/>
  <GFX>
-  <space>moon-I00.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>moon-I00</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <general>
   <class>A</class>

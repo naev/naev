@@ -1,8 +1,8 @@
 <spob name="Atryssa">
  <pos x="-14448.551980" y="-10881.130960"/>
  <GFX>
-  <space>M11.webp</space>
-  <exterior>oceanic2.webp</exterior>
+  <space>M11</space>
+  <exterior>oceanic2</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

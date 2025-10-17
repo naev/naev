@@ -10,7 +10,7 @@
   <mass>57</mass>
   <price>320000</price>
   <description>This weapon stretches the term 'miniaturized drone' nearly to its breaking point. It is effectively a standard drone platform slimmed down to accommodate a huge ferromagnetohydraulic bomb. It's the Za'lek's answer to torpedoes from less advanced nations, and an eloquent answer it certainly is.</description>
-  <gfx_store>zalek_reaper_launcher.webp</gfx_store>
+  <gfx_store>zalek_reaper_launcher</gfx_store>
   <cpu>-34</cpu>
  </general>
  <specific type="launcher" secondary="1">
@@ -23,7 +23,7 @@
   <trackmax>25000</trackmax>
   <amount>5</amount>
   <ammo_mass>5</ammo_mass>
-  <gfx>zalek_reaper.png</gfx>
+  <gfx>zalek_reaper</gfx>
   <sound>1-second-detachment</sound>
   <sound_hit>lrgexp0</sound_hit>
   <spfx_shield>Exp-L</spfx_shield>

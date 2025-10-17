@@ -2,8 +2,8 @@
  <lua>lowclass.lua</lua>
  <pos x="-17337.694408" y="-16625.248069"/>
  <GFX>
-  <space>moon-M06.webp</space>
-  <exterior>oceanic.webp</exterior>
+  <space>moon-M06</space>
+  <exterior>oceanic</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

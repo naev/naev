@@ -2,7 +2,7 @@
  <display>Hull Modifications (Secondary)</display>
  <description>This slot is used for structural modifications to the ship's hull. This slot represents the base layer of armour plating, and also greatly affects mass and cargo space.</description>
  <exclusive/>
- <icon>hull.png</icon>
+ <icon>hull</icon>
  <tags>
   <tag>core</tag>
   <tag>secondary</tag>

@@ -1,8 +1,8 @@
 <spob name="Za'lek II">
  <pos x="976.188887" y="-6877.694431"/>
  <GFX>
-  <space>Y00.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>Y00</space>
+  <exterior>methane</exterior>
  </GFX>
  <general>
   <class>Y</class>

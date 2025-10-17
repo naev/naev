@@ -8,12 +8,12 @@
   <mass>50</mass>
   <price>120000</price>
   <description>The Ratchet was a popular weapon used during the Dvaered revolts by the Dvaered revolutionaries. Although they lacked power and reliability, they were easily mass produced helping turn the tide of war. Similar to the original Ratchet, the Ratchet Point Defence launches explosive cluster rounds that break and detonate in a large area, making them effective at clearing groups of interceptors or missiles. Unlike the original model, the point defence system has a much higher reliability thanks to tighter tolerances and controls giving it significantly more reliability.</description>
-  <gfx_store>pd3.webp</gfx_store>
+  <gfx_store>pd3</gfx_store>
   <cpu>-30</cpu>
  </general>
  <specific type="turret launcher">
   <lua>outfits/pointdefence/pointdefence.lua</lua>
-  <gfx col_size="20">empgrenade_blue.png</gfx>
+  <gfx col_size="20">empgrenade_blue</gfx>
   <sound>grenadefire</sound>
   <sound_hit>empexplode</sound_hit>
   <spfx_shield>Firework30</spfx_shield>

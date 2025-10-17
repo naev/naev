@@ -1,8 +1,8 @@
 <spob name="Corvus VI-a">
  <pos x="-20337.977201" y="18801.072019"/>
  <GFX>
-  <space>moon-A00.webp</space>
-  <exterior>aquatic2.webp</exterior>
+  <space>moon-A00</space>
+  <exterior>aquatic2</exterior>
  </GFX>
  <general>
   <class>A</class>

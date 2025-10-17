@@ -1,8 +1,8 @@
 <spob name="Drognain">
  <pos x="11736.452755" y="5635.272211"/>
  <GFX>
-  <space>K02.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>K02</space>
+  <exterior>methane</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

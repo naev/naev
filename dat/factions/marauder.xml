@@ -3,7 +3,7 @@
  <longname>Pirate Marauders</longname>
  <ai>marauder</ai>
  <known/>
- <logo>marauder.webp</logo>
+ <logo>marauder</logo>
  <player>-50</player>
  <colour>red</colour>
  <spawn>marauder</spawn>

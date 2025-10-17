@@ -1,8 +1,8 @@
 <spob name="Scinfaxi">
  <pos x="2075.232743" y="-7047.720267"/>
  <GFX>
-  <space>moon-J01.webp</space>
-  <exterior>mining6.webp</exterior>
+  <space>moon-J01</space>
+  <exterior>mining6</exterior>
  </GFX>
  <general>
   <class>A</class>

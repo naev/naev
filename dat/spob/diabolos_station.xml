@@ -1,8 +1,8 @@
 <spob name="Diabolos Station">
  <pos x="12182.413409" y="-6354.687071"/>
  <GFX>
-  <space>station-sphere.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>station-sphere</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

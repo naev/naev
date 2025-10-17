@@ -1,8 +1,8 @@
 <spob name="Dvaer II">
  <pos x="-5061.056717" y="12792.357581"/>
  <GFX>
-  <space>D00.webp</space>
-  <exterior>asteroid.webp</exterior>
+  <space>D00</space>
+  <exterior>asteroid</exterior>
  </GFX>
  <general>
   <class>D</class>

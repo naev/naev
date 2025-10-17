@@ -1,8 +1,8 @@
 <spob name="Umbrella Clinic">
  <pos x="7087.497144" y="-12612.004456"/>
  <GFX>
-  <space>station-fleetbase2.webp</space>
-  <exterior>aquatic.webp</exterior>
+  <space>station-fleetbase2</space>
+  <exterior>aquatic</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

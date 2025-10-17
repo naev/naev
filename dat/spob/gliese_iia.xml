@@ -1,8 +1,8 @@
 <spob name="Gliese II-a">
  <pos x="-2499.541473" y="-1469.562733"/>
  <GFX>
-  <space>D05.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>D05</space>
+  <exterior>methane</exterior>
  </GFX>
  <general>
   <class>D</class>

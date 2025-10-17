@@ -1,8 +1,8 @@
 <spob name="Gruz II">
  <pos x="2654.706991" y="-3478.207935"/>
  <GFX>
-  <space>A04.webp</space>
-  <exterior>oceanic2.webp</exterior>
+  <space>A04</space>
+  <exterior>oceanic2</exterior>
  </GFX>
  <general>
   <class>A</class>

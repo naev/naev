@@ -1,8 +1,8 @@
 <spob name="Orville Shipyard">
  <pos x="-8020.974940" y="-6034.193104"/>
  <GFX>
-  <space>station-shipyard.webp</space>
-  <exterior>station04.webp</exterior>
+  <space>station-shipyard</space>
+  <exterior>station04</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

@@ -1,7 +1,7 @@
 <effect name="Blood Lust">
  <description>The ship has had a taste of blood and wants more!</description>
  <duration>10</duration>
- <icon>/gfx/misc/icons/delighted.webp</icon>
+ <icon>/gfx/misc/icons/delighted</icon>
  <overwrite>bloodlust</overwrite>
  <buff/>
  <stats>

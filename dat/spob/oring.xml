@@ -1,8 +1,8 @@
 <spob name="Oring">
  <pos x="-3986.781946" y="5934.294267"/>
  <GFX>
-  <space>X01.webp</space>
-  <exterior>mining.webp</exterior>
+  <space>X01</space>
+  <exterior>mining</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

@@ -1,8 +1,8 @@
 <spob name="Newmarch D-3">
  <pos x="11244.857836" y="7193.945119"/>
  <GFX>
-  <space>D00.webp</space>
-  <exterior>mining2.webp</exterior>
+  <space>D00</space>
+  <exterior>mining2</exterior>
  </GFX>
  <general>
   <class>D</class>

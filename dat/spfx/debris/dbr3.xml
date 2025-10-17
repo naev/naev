@@ -1,5 +1,5 @@
 <spfx name="Dbr3">
- <gfx sx="6" sy="6">debris3.webp</gfx>
+ <gfx sx="6" sy="6">debris3</gfx>
  <ttl>15</ttl>
  <anim>5</anim>
 </spfx>

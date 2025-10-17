@@ -5,7 +5,7 @@
   <mass>5</mass>
   <price>95000</price>
   <description>The Hellburner is one of the best light afterburners on the market. Through proprietary pressurization ducts, the Hellburner is able to generate far more thrust than generic alternatives. Unfortunately, its energy conversion efficiency is lower than that of more generic models, so it consumes energy more rapidly.</description>
-  <gfx_store>hellburner.webp</gfx_store>
+  <gfx_store>hellburner</gfx_store>
   <limit>afterburner</limit>
   <cpu>0</cpu>
  </general>

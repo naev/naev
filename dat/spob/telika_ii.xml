@@ -1,8 +1,8 @@
 <spob name="Telika II">
  <pos x="5886.385030" y="-4991.607216"/>
  <GFX>
-  <space>J09.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>J09</space>
+  <exterior>lava</exterior>
  </GFX>
  <general>
   <class>J</class>

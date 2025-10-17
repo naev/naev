@@ -2,8 +2,8 @@
  <lua>lowclass.lua</lua>
  <pos x="-5823.896952" y="1664.414834"/>
  <GFX>
-  <space>K05.webp</space>
-  <exterior>mining_shaft.webp</exterior>
+  <space>K05</space>
+  <exterior>mining_shaft</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>

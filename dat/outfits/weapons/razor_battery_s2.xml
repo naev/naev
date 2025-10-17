@@ -7,7 +7,7 @@
   <mass>22</mass>
   <price>130000</price>
   <description>Being the only turreted version of the Razor Artillery series, the Razor Battery S2 sees a lot of application on medium escort ships. The strong shield stripping effect in combination with the heavy systems damage can quickly demoralize pirates and marauders looking to make some quick credits.</description>
-  <gfx_store>razorturret1.webp</gfx_store>
+  <gfx_store>razorturret1</gfx_store>
   <cpu>-50</cpu>
  </general>
  <specific type="turret bolt">

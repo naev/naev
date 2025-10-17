@@ -1,8 +1,8 @@
 <spob name="Esker I">
  <pos x="3965.000000" y="8710.000000"/>
  <GFX>
-  <space>moon-O00.webp</space>
-  <exterior>oceanic.webp</exterior>
+  <space>moon-O00</space>
+  <exterior>oceanic</exterior>
  </GFX>
  <general>
   <class>O</class>

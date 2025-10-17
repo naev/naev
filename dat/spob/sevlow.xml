@@ -1,8 +1,8 @@
 <spob name="Sevlow">
  <pos x="407.177796" y="-431.550837"/>
  <GFX>
-  <space>O02.webp</space>
-  <exterior>oceanic2.webp</exterior>
+  <space>O02</space>
+  <exterior>oceanic2</exterior>
  </GFX>
  <presence>
   <faction>Thurion</faction>

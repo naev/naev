@@ -1,8 +1,8 @@
 <spob name="Pultatis II">
  <pos x="-8250.000000" y="6250.000000"/>
  <GFX>
-  <space>H01.webp</space>
-  <exterior>desertic2.webp</exterior>
+  <space>H01</space>
+  <exterior>desertic2</exterior>
  </GFX>
  <general>
   <class>A</class>

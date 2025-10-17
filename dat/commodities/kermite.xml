@@ -1,8 +1,8 @@
 <commodity>
  <name>Kermite</name>
  <description>Although one of the most rare materials found in asteroids, Kermite has secured a fundamental role in many different technological applications due to its space-time bending effects when subject to particular combinations of pressure and radiation. It is commonly used in certain types of shield generators, which practically ensures its widespread demand throughout the galaxy.</description>
- <gfx_store>kermite.webp</gfx_store>
- <gfx_space>diamonds.webp</gfx_space>
+ <gfx_store>kermite</gfx_store>
+ <gfx_space>diamonds</gfx_space>
  <price>2700</price>
  <always_can_sell/>
  <price_constant/>

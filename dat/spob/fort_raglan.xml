@@ -1,8 +1,8 @@
 <spob name="Fort Raglan">
  <pos x="1830.182334" y="12469.138345"/>
  <GFX>
-  <space>station-battlestation.webp</space>
-  <exterior>station05.webp</exterior>
+  <space>station-battlestation</space>
+  <exterior>station05</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

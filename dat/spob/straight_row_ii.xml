@@ -1,8 +1,8 @@
 <spob name="Straight Row II">
  <pos x="1642.874064" y="-780.158790"/>
  <GFX>
-  <space>moon-A00.webp</space>
-  <exterior>station01.webp</exterior>
+  <space>moon-A00</space>
+  <exterior>station01</exterior>
  </GFX>
  <general>
   <class>A</class>

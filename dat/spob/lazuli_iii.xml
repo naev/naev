@@ -1,8 +1,8 @@
 <spob name="Lazuli III">
  <pos x="-16920.000000" y="-4560.000000"/>
  <GFX>
-  <space>H02.webp</space>
-  <exterior>desertic4.webp</exterior>
+  <space>H02</space>
+  <exterior>desertic4</exterior>
  </GFX>
  <general>
   <class>H</class>

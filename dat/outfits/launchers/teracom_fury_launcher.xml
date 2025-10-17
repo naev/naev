@@ -7,7 +7,7 @@
   <mass>19</mass>
   <price>80000</price>
   <description>TeraCom's Fury Launcher is a high-performance missile launcher equipped with patented target tracking and missile arming technology, allowing pilots to get a lock on targets quickly and easily. While lacking in destructive power, the Fury missiles launched are nimble enough to easily strike even some of the fastest ships in the galaxy.</description>
-  <gfx_store>teracom_fury_launcher.webp</gfx_store>
+  <gfx_store>teracom_fury_launcher</gfx_store>
   <cpu>-6</cpu>
  </general>
  <specific type="launcher" secondary="1">
@@ -20,7 +20,7 @@
   <trackmin>0</trackmin>
   <trackmax>4000</trackmax>
   <ammo_mass>0.4</ammo_mass>
-  <gfx>fury.png</gfx>
+  <gfx>fury</gfx>
   <sound>seeker</sound>
   <sound_hit>medexp1</sound_hit>
   <spfx_shield>Exp-M</spfx_shield>

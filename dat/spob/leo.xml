@@ -1,8 +1,8 @@
 <spob name="Leo">
  <pos x="-5902.764764" y="4792.802567"/>
  <GFX>
-  <space>A00.webp</space>
-  <exterior>mining4.webp</exterior>
+  <space>A00</space>
+  <exterior>mining4</exterior>
  </GFX>
  <general>
   <class>A</class>

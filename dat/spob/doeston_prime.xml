@@ -1,8 +1,8 @@
 <spob name="Doeston Prime">
  <pos x="3101.780922" y="-3707.348429"/>
  <GFX>
-  <space>J07.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>J07</space>
+  <exterior>methane</exterior>
  </GFX>
  <general>
   <class>J</class>

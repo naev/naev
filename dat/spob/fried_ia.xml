@@ -1,8 +1,8 @@
 <spob name="Fried Ia">
  <pos x="-12094.025264" y="1795.654737"/>
  <GFX>
-  <space>moon-P01.webp</space>
-  <exterior>snow.webp</exterior>
+  <space>moon-P01</space>
+  <exterior>snow</exterior>
  </GFX>
  <general>
   <class>P</class>

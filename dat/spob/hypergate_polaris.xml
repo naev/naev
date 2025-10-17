@@ -3,7 +3,7 @@
  <marker>spobmarker_triangle</marker>
  <pos x="0.000000" y="0.000000"/>
  <GFX>
-  <space>hypergate_debris.webp</space>
+  <space>hypergate_debris</space>
  </GFX>
  <presence>
   <faction>Derelict</faction>

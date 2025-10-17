@@ -1,8 +1,8 @@
 <spob name="Serria">
  <pos x="-5967.000000" y="-3263.000000"/>
  <GFX>
-  <space>X00.webp</space>
-  <exterior>desertic.webp</exterior>
+  <space>X00</space>
+  <exterior>desertic</exterior>
  </GFX>
  <general>
   <class>A</class>

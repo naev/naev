@@ -1,8 +1,8 @@
 <spob name="Qex V">
  <pos x="-477.598690" y="4420.129056"/>
  <GFX>
-  <space>moon-G00.webp</space>
-  <exterior>oceanic2.webp</exterior>
+  <space>moon-G00</space>
+  <exterior>oceanic2</exterior>
  </GFX>
  <general>
   <class>A</class>

@@ -1,8 +1,8 @@
 <spob name="Karman II">
  <pos x="-27075.000000" y="-5655.000000"/>
  <GFX>
-  <space>O01.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>O01</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <general>
   <class>A</class>

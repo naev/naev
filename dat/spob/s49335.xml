@@ -1,8 +1,8 @@
 <spob name="S49335">
  <pos x="7450.580597" y="82.784229"/>
  <GFX>
-  <space>001.webp</space>
-  <exterior>station01.webp</exterior>
+  <space>001</space>
+  <exterior>station01</exterior>
  </GFX>
  <presence>
   <faction>Collective</faction>

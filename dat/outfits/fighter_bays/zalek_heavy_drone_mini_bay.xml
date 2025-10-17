@@ -9,7 +9,7 @@
   <rarity>1</rarity>
   <mass>85</mass>
   <price>1100000</price>
-  <gfx_store>zalek_drone_heavy_fighter.webp</gfx_store>
+  <gfx_store>zalek_drone_heavy_fighter</gfx_store>
   <description>This bay can launch three heavy drones, giving the mothership a good deal of punch. It comes with all the devices required for the maintenance and flight of the drones.</description>
   <cpu>-155</cpu>
  </general>

@@ -1,8 +1,8 @@
 <spob name="Cornwal Ordnance">
  <pos x="19513.608336" y="8530.899774"/>
  <GFX>
-  <space>station-commerce.webp</space>
-  <exterior>station03.webp</exterior>
+  <space>station-commerce</space>
+  <exterior>station03</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

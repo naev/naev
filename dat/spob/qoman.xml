@@ -1,8 +1,8 @@
 <spob name="Qoman">
  <pos x="-8896.630538" y="-1774.888885"/>
  <GFX>
-  <space>Y00.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>Y00</space>
+  <exterior>methane</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

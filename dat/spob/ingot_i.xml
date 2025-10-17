@@ -1,8 +1,8 @@
 <spob name="Ingot I">
  <pos x="-9900.000000" y="-3660.000000"/>
  <GFX>
-  <space>C00.webp</space>
-  <exterior>uninhabited-rocky-yellow-02.webp</exterior>
+  <space>C00</space>
+  <exterior>uninhabited-rocky-yellow-02</exterior>
  </GFX>
  <general>
   <class>C</class>

@@ -1,8 +1,8 @@
 <spob name="Deneb III">
  <pos x="-5657.458322" y="-4418.733788"/>
  <GFX>
-  <space>J09.webp</space>
-  <exterior>desertic.webp</exterior>
+  <space>J09</space>
+  <exterior>desertic</exterior>
  </GFX>
  <general>
   <class>J</class>

@@ -1,8 +1,8 @@
 <spob name="Vennis">
  <pos x="9321.283353" y="2238.834901"/>
  <GFX>
-  <space>X00.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>X00</space>
+  <exterior>methane</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

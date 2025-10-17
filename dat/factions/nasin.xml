@@ -2,7 +2,7 @@
  <!-- TODO make dynamic faction. -->
  <ai>baddie</ai>
  <invisible/>
- <logo>sirius.webp</logo>
+ <logo>sirius</logo>
  <standing>nasin</standing>
  <allies/>
  <player>0</player>

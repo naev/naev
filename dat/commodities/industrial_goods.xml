@@ -2,7 +2,7 @@
  <name>Industrial Goods</name>
  <description>An assortment of industrial goods, ranging from cutting lasers to processed metals.</description>
  <price>340</price>
- <gfx_store>recycled_electronics.webp</gfx_store>
+ <gfx_store>recycled_electronics</gfx_store>
  <standard/>
  <period>60</period>
  <population_modifier>-0.25</population_modifier>

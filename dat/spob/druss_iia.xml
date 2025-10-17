@@ -1,8 +1,8 @@
 <spob name="Druss IIa">
  <pos x="11632.195782" y="-6651.822071"/>
  <GFX>
-  <space>moon-J02.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>moon-J02</space>
+  <exterior>methane</exterior>
  </GFX>
  <general>
   <class>J</class>

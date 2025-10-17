@@ -1,8 +1,8 @@
 <spob name="Tora">
  <pos x="6872.147903" y="10793.543034"/>
  <GFX>
-  <space>M08.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>M08</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

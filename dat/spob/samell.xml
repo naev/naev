@@ -1,8 +1,8 @@
 <spob name="Samell">
  <pos x="3130.903994" y="7507.779985"/>
  <GFX>
-  <space>P02.webp</space>
-  <exterior>city2.webp</exterior>
+  <space>P02</space>
+  <exterior>city2</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

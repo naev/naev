@@ -1,8 +1,8 @@
 <spob name="Olario">
  <pos x="-6735.161520" y="5019.953737"/>
  <GFX>
-  <space>X01.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>X01</space>
+  <exterior>lava</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

@@ -1,8 +1,8 @@
 <spob name="Castellan I">
  <pos x="3026.629272" y="2588.564509"/>
  <GFX>
-  <space>D02.webp</space>
-  <exterior>desertic2.webp</exterior>
+  <space>D02</space>
+  <exterior>desertic2</exterior>
  </GFX>
  <general>
   <class>D</class>

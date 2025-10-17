@@ -6,7 +6,7 @@
   <mass>5</mass>
   <price>18000</price>
   <description>The fuel pod allows a ship to store more fuel for hyperspace jumps.</description>
-  <gfx_store>fueltank.webp</gfx_store>
+  <gfx_store>fueltank</gfx_store>
  </general>
  <specific type="modification">
   <fuel>300</fuel>

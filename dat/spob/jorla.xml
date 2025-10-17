@@ -1,8 +1,8 @@
 <spob name="Jorla">
  <pos x="5191.549990" y="-6056.808321"/>
  <GFX>
-  <space>O02.webp</space>
-  <exterior>aquatic3.webp</exterior>
+  <space>O02</space>
+  <exterior>aquatic3</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

@@ -2,8 +2,8 @@
  <lua>lowclass.lua</lua>
  <pos x="-1176.579442" y="26162.619259"/>
  <GFX>
-  <space>moon-D01.webp</space>
-  <exterior>silo.webp</exterior>
+  <space>moon-D01</space>
+  <exterior>silo</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>

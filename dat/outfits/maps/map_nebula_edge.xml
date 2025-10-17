@@ -4,7 +4,7 @@
   <mass>0</mass>
   <price>25000</price>
   <description>This map contains border of the Nebula with Dvaered/Imperial space. It also lists the deepest Imperial station within the Nebula.</description>
-  <gfx_store>map_sector_01.webp</gfx_store>
+  <gfx_store>map_sector_01</gfx_store>
  </general>
  <specific type="map">
   <sys name="Tuoladis">

@@ -1,8 +1,8 @@
 <spob name="Arietis C">
  <pos x="2529.478275" y="10161.088205"/>
  <GFX>
-  <space>Y00.webp</space>
-  <exterior>uninhabited-rocky-magenta-01.webp</exterior>
+  <space>Y00</space>
+  <exterior>uninhabited-rocky-magenta-01</exterior>
  </GFX>
  <general>
   <class>Y</class>

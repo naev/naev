@@ -2,8 +2,8 @@
  <lua>highclass.lua</lua>
  <pos x="13061.773645" y="-3555.275667"/>
  <GFX>
-  <space>M08.webp</space>
-  <exterior>forest2.webp</exterior>
+  <space>M08</space>
+  <exterior>forest2</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

@@ -1,8 +1,8 @@
 <spob name="Ruadan Secundus">
  <pos x="-17989.857080" y="-10114.444352"/>
  <GFX>
-  <space>moon-K00.webp</space>
-  <exterior>aquatic2.webp</exterior>
+  <space>moon-K00</space>
+  <exterior>aquatic2</exterior>
  </GFX>
  <general>
   <class>A</class>

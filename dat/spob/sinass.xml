@@ -1,8 +1,8 @@
 <spob name="Sinass">
  <pos x="-18252.233450" y="-11663.476970"/>
  <GFX>
-  <space>M01.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>M01</space>
+  <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

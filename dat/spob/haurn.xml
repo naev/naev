@@ -1,8 +1,8 @@
 <spob name="Haurn">
  <pos x="-16267.120738" y="12825.307328"/>
  <GFX>
-  <space>moon-M02.webp</space>
-  <exterior>agricultural.webp</exterior>
+  <space>moon-M02</space>
+  <exterior>agricultural</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

@@ -1,8 +1,8 @@
 <spob name="Ulysses III">
  <pos x="2682.507898" y="-7798.093354"/>
  <GFX>
-  <space>J07.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>J07</space>
+  <exterior>methane</exterior>
  </GFX>
  <general>
   <class>A</class>

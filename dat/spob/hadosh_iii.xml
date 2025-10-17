@@ -1,8 +1,8 @@
 <spob name="Hadosh III">
  <pos x="1051.896104" y="19942.611407"/>
  <GFX>
-  <space>P00.webp</space>
-  <exterior>snow.webp</exterior>
+  <space>P00</space>
+  <exterior>snow</exterior>
  </GFX>
  <general>
   <class>A</class>

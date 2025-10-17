@@ -8,7 +8,7 @@
   <mass>0</mass>
   <price>1000000</price>
   <description>A rare limited edition Goatee Marker, meant exclusive for drawing not only facial hair, but Goatees in particular. It seems to have been partially used and has the marauder logo on the bottom.</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>placeholder</gfx_store>
   <rarity>6</rarity>
  </general>
  <specific type="modification">

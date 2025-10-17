@@ -8,7 +8,7 @@
   <mass>0</mass>
   <price>725000</price>
   <description>Developed to solve needle in haystack-type problems, the Pinpoint Combat AI excels at finding and locking onto small objects in the vastness of space. Integrated into a ship's targeting systems, the AI is able to increase both the range and the lock-on speed of all missile launchers on the ship.</description>
-  <gfx_store>pinpoint_combat_ai.webp</gfx_store>
+  <gfx_store>pinpoint_combat_ai</gfx_store>
   <limit>combatai</limit>
  </general>
  <specific type="modification">

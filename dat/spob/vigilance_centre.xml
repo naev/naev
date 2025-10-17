@@ -2,8 +2,8 @@
  <lua>zalek_mil_restricted.lua</lua>
  <pos x="2944.327674" y="3312.368633"/>
  <GFX>
-  <space>zalek_station2.webp</space>
-  <exterior>zalek_station2.webp</exterior>
+  <space>zalek_station2</space>
+  <exterior>zalek_station2</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

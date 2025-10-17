@@ -5,11 +5,11 @@
   <mass>2</mass>
   <price>20000</price>
   <description>Ion Cannons are primarily nonlethal weapons designed to short out internal ship systems and rendering it disabled without killing the crew in the process. The standard Ion Cannon is the most basic and compact design, which allows it to be mounted on small craft. This makes the Ion Cannon one of the most popular weapons for pirates, although it also finds heavy use in policing and militia when nonlethal force is needed.</description>
-  <gfx_store>ioncannon.webp</gfx_store>
+  <gfx_store>ioncannon</gfx_store>
   <cpu>-6</cpu>
  </general>
  <specific type="bolt">
-  <gfx>ionM.png</gfx>
+  <gfx>ionM</gfx>
   <sound>ion</sound>
   <spfx_shield>Shi-S</spfx_shield>
   <spfx_armour>Exp-S</spfx_armour>
@@ -17,7 +17,7 @@
   <speed>600</speed>
   <range>900</range>
   <falloff>750</falloff>
-  <gfx_end>ionM-end.png</gfx_end>
+  <gfx_end>ionM-end</gfx_end>
   <energy>8</energy>
   <trackmin>0</trackmin>
   <trackmax>3000</trackmax>

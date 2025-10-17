@@ -2,7 +2,7 @@
  <description>Ship is ethereal.</description>
  <duration>INF</duration>
  <overwrite>ethereal</overwrite>
- <icon>/gfx/misc/icons/star-cycle.webp</icon>
+ <icon>/gfx/misc/icons/star-cycle</icon>
  <shader vertex="effect15x.vert">effects/ethereal.frag</shader>
  <priority>-1</priority>
 </effect>

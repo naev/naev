@@ -1,8 +1,8 @@
 <spob name="Thavma">
  <pos x="6558.489894" y="9804.611155"/>
  <GFX>
-  <space>M10.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>M10</space>
+  <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>

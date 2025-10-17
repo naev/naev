@@ -2,8 +2,8 @@
  <lua>highclass.lua</lua>
  <pos x="-5765.480628" y="3573.203240"/>
  <GFX>
-  <space>moon-M06.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>moon-M06</space>
+  <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>

@@ -1,8 +1,8 @@
 <spob name="Levo">
  <pos x="1678.901715" y="861.295303"/>
  <GFX>
-  <space>moon-M03.webp</space>
-  <exterior>oceanic.webp</exterior>
+  <space>moon-M03</space>
+  <exterior>oceanic</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>

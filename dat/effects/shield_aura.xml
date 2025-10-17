@@ -2,7 +2,7 @@
  <description>Under the effects of a shield aura.</description>
  <duration>2</duration>
  <overwrite>shields</overwrite>
- <icon>/gfx/misc/icons/shieldcomb.webp</icon>
+ <icon>/gfx/misc/icons/shieldcomb</icon>
  <!--<shader vertex="effect15x.vert">effects/shieldboost.frag</shader>-->
  <buff/>
  <stats>

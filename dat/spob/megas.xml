@@ -1,8 +1,8 @@
 <spob name="Megas">
  <pos x="2803.400303" y="3353.434540"/>
  <GFX>
-  <space>K02.webp</space>
-  <exterior>mining.webp</exterior>
+  <space>K02</space>
+  <exterior>mining</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

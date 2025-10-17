@@ -1,6 +1,6 @@
 <faction name="Thurion">
  <ai>thurion</ai>
- <logo>thurion.webp</logo>
+ <logo>thurion</logo>
  <colour>grey50</colour>
  <player>1</player>
  <spawn>thurion</spawn>

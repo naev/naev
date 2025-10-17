@@ -1,8 +1,8 @@
 <spob name="Gorgate">
  <pos x="5763.521422" y="6955.974130"/>
  <GFX>
-  <space>M02.webp</space>
-  <exterior>aquatic.webp</exterior>
+  <space>M02</space>
+  <exterior>aquatic</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

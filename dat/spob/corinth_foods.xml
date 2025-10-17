@@ -1,8 +1,8 @@
 <spob name="Corinth Foods">
  <pos x="-12538.431327" y="14878.975881"/>
  <GFX>
-  <space>station-commerce.webp</space>
-  <exterior>forest2.webp</exterior>
+  <space>station-commerce</space>
+  <exterior>forest2</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

@@ -7,11 +7,11 @@
   <licence>Heavy Weapon</licence>
   <rarity>2</rarity>
   <description>The Heavy Neutron Disruptor improves upon the processes behind the smaller Neutron Disruptor, giving this weapon greater damage and range.</description>
-  <gfx_store>neutronheavy.webp</gfx_store>
+  <gfx_store>neutronheavy</gfx_store>
   <cpu>-29</cpu>
  </general>
  <specific type="bolt">
-  <gfx>neutron.png</gfx>
+  <gfx>neutron</gfx>
   <sound>neutron</sound>
   <spfx_shield>Shi-S</spfx_shield>
   <spfx_armour>Exp-S</spfx_armour>
@@ -19,7 +19,7 @@
   <speed>800</speed>
   <range>500</range>
   <falloff>425</falloff>
-  <gfx_end>neutron-end.png</gfx_end>
+  <gfx_end>neutron-end</gfx_end>
   <energy>25</energy>
   <trackmin>0</trackmin>
   <trackmax>3000</trackmax>

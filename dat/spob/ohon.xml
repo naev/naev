@@ -1,8 +1,8 @@
 <spob name="Ohon">
  <pos x="1014.526487" y="-9180.435271"/>
  <GFX>
-  <space>M07.webp</space>
-  <exterior>oceanic_landing_pads.webp</exterior>
+  <space>M07</space>
+  <exterior>oceanic_landing_pads</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

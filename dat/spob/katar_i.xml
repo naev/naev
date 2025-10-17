@@ -1,8 +1,8 @@
 <spob name="Katar I">
  <pos x="-4678.865189" y="-6280.187291"/>
  <GFX>
-  <space>moon-X00.webp</space>
-  <exterior>rocky_small.webp</exterior>
+  <space>moon-X00</space>
+  <exterior>rocky_small</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

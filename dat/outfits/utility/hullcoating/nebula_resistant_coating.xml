@@ -7,7 +7,7 @@
   <mass>0</mass>
   <price>1200000</price>
   <description>Protecting ships from nebula radiation is not an easy task given the fluctuations and parameters of the different types of radiation being emitted, much of which is not fully understood. While not making a ship fully immune to the Nebula's effects, this hull coating does provide a significant extra resistance, although prolonged exposure is still not recommended.</description>
-  <gfx_store>nebula_resistant_coating.webp</gfx_store>
+  <gfx_store>nebula_resistant_coating</gfx_store>
   <limit>hullcoat</limit>
  </general>
  <specific type="modification">

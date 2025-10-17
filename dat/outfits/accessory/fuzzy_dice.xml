@@ -9,7 +9,7 @@
   <price>1000000</price>
   <description>A pair of fuzzy dice that can be hung inside your ship. Apparently they are supposed to bring you good fortune. This particular pair is said to have belonged to starship pilot Mireia, who was famous for recovering artefacts from the Nebula before she disappeared mysteriously.</description>
   <desc_extra>#pImproves luck!#0</desc_extra>
-  <gfx_store>fuzzy_dice.webp</gfx_store>
+  <gfx_store>fuzzy_dice</gfx_store>
   <rarity>6</rarity>
  </general>
  <specific type="modification">

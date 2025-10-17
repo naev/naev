@@ -1,8 +1,8 @@
 <spob name="Draconis Gamma">
  <pos x="-24930.000000" y="-9720.000000"/>
  <GFX>
-  <space>D01.webp</space>
-  <exterior>asteroid.webp</exterior>
+  <space>D01</space>
+  <exterior>asteroid</exterior>
  </GFX>
  <general>
   <class>D</class>

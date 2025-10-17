@@ -1,8 +1,8 @@
 <spob name="Kappa Vadornia">
  <pos x="-2606.563001" y="-702.361708"/>
  <GFX>
-  <space>J08.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>J08</space>
+  <exterior>lava</exterior>
  </GFX>
  <general>
   <class>J</class>

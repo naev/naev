@@ -1,8 +1,8 @@
 <spob name="Eiroik">
  <pos x="438.000000" y="1434.000000"/>
  <GFX>
-  <space>Z00.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>Z00</space>
+  <exterior>methane</exterior>
  </GFX>
  <general>
   <class>Z</class>

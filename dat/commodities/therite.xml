@@ -1,8 +1,8 @@
 <commodity>
  <name>Therite</name>
  <description>Therite is an extremely rare compound that is mainly formed by extreme radiation. Although there are multiple theories, the dominant one speculates that it is a quasi-matter projection of self-interfering radiation. However, even without understanding the exact physics behind it, engineers have found a wide range of high-end materials applications for it, from sub-space sensors to reinforced armours, leading to a constant high demand for it.</description>
- <gfx_store>therite.webp</gfx_store>
- <gfx_space>diamonds.webp</gfx_space>
+ <gfx_store>therite</gfx_store>
+ <gfx_space>diamonds</gfx_space>
  <price>2500</price>
  <always_can_sell/>
  <price_constant/>

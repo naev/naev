@@ -2,7 +2,7 @@
  <description>Black!</description>
  <duration>3</duration>
  <overwrite>fadeout</overwrite>
- <icon>/gfx/misc/icons/galaxy.webp</icon>
+ <icon>/gfx/misc/icons/galaxy</icon>
  <shader>effects/fadeout_black.frag</shader>
  <priority>0</priority>
  <stats>

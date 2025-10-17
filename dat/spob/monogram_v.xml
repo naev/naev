@@ -1,8 +1,8 @@
 <spob name="Monogram V">
  <pos x="-2960.195181" y="-11805.148054"/>
  <GFX>
-  <space>moon-C01.webp</space>
-  <exterior>desertic4.webp</exterior>
+  <space>moon-C01</space>
+  <exterior>desertic4</exterior>
  </GFX>
  <general>
   <class>A</class>

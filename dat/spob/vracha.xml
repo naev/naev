@@ -1,8 +1,8 @@
 <spob name="Vracha">
  <pos x="5096.652507" y="-4150.810917"/>
  <GFX>
-  <space>moon-D02.webp</space>
-  <exterior>rocky_small.webp</exterior>
+  <space>moon-D02</space>
+  <exterior>rocky_small</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>

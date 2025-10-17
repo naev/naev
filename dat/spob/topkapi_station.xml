@@ -1,8 +1,8 @@
 <spob name="Topkapi Station">
  <pos x="16417.722190" y="13311.666640"/>
  <GFX>
-  <space>zalek_station1.webp</space>
-  <exterior>zalek_station1.webp</exterior>
+  <space>zalek_station1</space>
+  <exterior>zalek_station1</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

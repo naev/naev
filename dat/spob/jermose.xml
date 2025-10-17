@@ -1,8 +1,8 @@
 <spob name="Jermose">
  <pos x="-2785.720764" y="-9153.238293"/>
  <GFX>
-  <space>O03.webp</space>
-  <exterior>aquatic2.webp</exterior>
+  <space>O03</space>
+  <exterior>aquatic2</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

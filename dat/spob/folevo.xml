@@ -1,8 +1,8 @@
 <spob name="Folevo">
  <pos x="-30202.482562" y="-19224.091941"/>
  <GFX>
-  <space>moon-A01.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>moon-A01</space>
+  <exterior>lava</exterior>
  </GFX>
  <general>
   <class>A</class>

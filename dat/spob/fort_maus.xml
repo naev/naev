@@ -2,8 +2,8 @@
  <lua>dvaered_mil_restricted.lua</lua>
  <pos x="-12143.540902" y="-7680.624142"/>
  <GFX>
-  <space>station-dvaered1.webp</space>
-  <exterior>station03.webp</exterior>
+  <space>station-dvaered1</space>
+  <exterior>station03</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

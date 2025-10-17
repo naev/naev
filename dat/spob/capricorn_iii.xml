@@ -1,8 +1,8 @@
 <spob name="Capricorn III">
  <pos x="35465.029656" y="29824.260295"/>
  <GFX>
-  <space>O03.webp</space>
-  <exterior>station01.webp</exterior>
+  <space>O03</space>
+  <exterior>station01</exterior>
  </GFX>
  <general>
   <class>O</class>

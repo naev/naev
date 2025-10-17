@@ -8,7 +8,7 @@
   <mass>0</mass>
   <price>775000</price>
   <description>This Combat AI focuses on the optimization of the firing rhythm of forward-mounted weapons. Through careful analysis of the weapons' firing cycles, the AI is able to decide on seemingly trivial modifications to their parameters that lead to an overall increase in fire rate.</description>
-  <gfx_store>cyclic_combat_ai.webp</gfx_store>
+  <gfx_store>cyclic_combat_ai</gfx_store>
   <limit>combatai</limit>
  </general>
  <specific type="modification">

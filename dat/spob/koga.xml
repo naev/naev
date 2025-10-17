@@ -1,8 +1,8 @@
 <spob name="Koga">
  <pos x="15545.627381" y="-4711.194876"/>
  <GFX>
-  <space>A00.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>A00</space>
+  <exterior>lava</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>

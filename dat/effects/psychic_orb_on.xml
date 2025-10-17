@@ -1,7 +1,7 @@
 <effect name="Psychic Orb On">
  <description>A psychic orb that is on.</description>
  <duration>inf</duration>
- <icon>/gfx/misc/icons/angel-outfit.webp</icon>
+ <icon>/gfx/misc/icons/angel-outfit</icon>
  <overwrite>psychic_orb</overwrite>
  <shader>effects/psychic_orb_on.frag</shader>
  <priority>-1</priority>

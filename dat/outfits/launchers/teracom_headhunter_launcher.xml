@@ -7,7 +7,7 @@
   <mass>23</mass>
   <price>85000</price>
   <description>This is TeraCom's model Headhunter launcher. Though somewhat pricey and demanding on the ship's resources, the patented tracking and missile arming technology allows pilots to fire their missiles before the competition does. The Headhunter missiles can deal devastating damage to small and medium-sized distant enemies, while remaining reasonably fast and agile.</description>
-  <gfx_store>headhunterlauncher.webp</gfx_store>
+  <gfx_store>headhunterlauncher</gfx_store>
   <cpu>-7</cpu>
  </general>
  <specific type="launcher" secondary="1">
@@ -20,7 +20,7 @@
   <trackmin>0</trackmin>
   <trackmax>6000</trackmax>
   <ammo_mass>1</ammo_mass>
-  <gfx>headhunter.png</gfx>
+  <gfx>headhunter</gfx>
   <sound>missile</sound>
   <sound_hit>medexp0</sound_hit>
   <spfx_shield>Exp-M</spfx_shield>

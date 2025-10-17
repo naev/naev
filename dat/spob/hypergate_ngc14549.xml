@@ -3,7 +3,7 @@
  <marker>spobmarker_triangle</marker>
  <pos x="56.012607" y="80.021407"/>
  <GFX>
-  <space>hypergate_early_construction_stage.webp</space>
+  <space>hypergate_early_construction_stage</space>
  </GFX>
  <presence>
   <faction>Black Lotus</faction>

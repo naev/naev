@@ -1,8 +1,8 @@
 <spob name="Sroolu">
  <pos x="4159.837315" y="-21174.045924"/>
  <GFX>
-  <space>moon-H00.webp</space>
-  <exterior>oceanic.webp</exterior>
+  <space>moon-H00</space>
+  <exterior>oceanic</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

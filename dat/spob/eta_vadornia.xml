@@ -1,8 +1,8 @@
 <spob name="Eta Vadornia">
  <pos x="13066.010241" y="1339.554931"/>
  <GFX>
-  <space>moon-M04.webp</space>
-  <exterior>oceanic_city.webp</exterior>
+  <space>moon-M04</space>
+  <exterior>oceanic_city</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

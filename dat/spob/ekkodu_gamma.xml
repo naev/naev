@@ -1,8 +1,8 @@
 <spob name="Ekkodu Gamma">
  <pos x="10997.063863" y="2318.658043"/>
  <GFX>
-  <space>H00.webp</space>
-  <exterior>desertic3.webp</exterior>
+  <space>H00</space>
+  <exterior>desertic3</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

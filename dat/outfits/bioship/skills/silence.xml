@@ -6,7 +6,7 @@
   <mass>0</mass>
   <price>0</price>
   <description>TODO</description>
-  <gfx_store>/gfx/misc/icons/chameleon-glyph.webp</gfx_store>
+  <gfx_store>/gfx/misc/icons/chameleon-glyph</gfx_store>
  </general>
  <specific type="modification">
   <lua>outfits/bioship/skills/silence.lua</lua>

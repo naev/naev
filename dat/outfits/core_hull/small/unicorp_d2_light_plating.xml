@@ -6,7 +6,7 @@
   <size>small</size>
   <price>14500</price>
   <description>Commonly found on civilian vessels, the D-2 plating is popular with ship manufacturers due to its low cost and adequate, if uninspiring performance.</description>
-  <gfx_store>base_hull_t.webp</gfx_store>
+  <gfx_store>base_hull_t</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">

@@ -7,7 +7,7 @@
   <mass>23</mass>
   <price>390000</price>
   <description>Actually consisting of a small colony of space-hardened parasites, known as Spittle Tubuloids, that leech from the ship energy systems to provide defensive cover. They have been genetically engineered to detect the weak radiation and gravitational signals of incoming ordnance to activate their defence mechanism of spitting large bubbles of plasma. Although the bubbles are quite weak compared to engineered weapons, their numbers allow them to efficiently protect the ship they are attached to from non-armoured missiles.</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>placeholder</gfx_store>
   <cpu>-10</cpu>
  </general>
  <specific type="turret bolt">

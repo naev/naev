@@ -1,8 +1,8 @@
 <spob name="Darkstone V">
  <pos x="24733.275403" y="19602.538851"/>
  <GFX>
-  <space>moon-J00.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>moon-J00</space>
+  <exterior>methane</exterior>
  </GFX>
  <general>
   <class>J</class>

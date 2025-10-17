@@ -1,8 +1,8 @@
 <spob name="Gastan">
  <pos x="4945.550390" y="3067.007994"/>
  <GFX>
-  <space>A04.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>A04</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

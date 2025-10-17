@@ -1,8 +1,8 @@
 <spob name="Jackson II">
  <pos x="-1858.444974" y="9043.669433"/>
  <GFX>
-  <space>K00.webp</space>
-  <exterior>uninhabited-rocky-yellow-00.webp</exterior>
+  <space>K00</space>
+  <exterior>uninhabited-rocky-yellow-00</exterior>
  </GFX>
  <general>
   <class>K</class>

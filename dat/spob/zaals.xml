@@ -2,8 +2,8 @@
  <lua>lowclass.lua</lua>
  <pos x="-8810.900565" y="15899.369441"/>
  <GFX>
-  <space>P03.webp</space>
-  <exterior>snow.webp</exterior>
+  <space>P03</space>
+  <exterior>snow</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

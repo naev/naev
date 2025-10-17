@@ -2,8 +2,8 @@
  <lua>pirate_clanworld.lua</lua>
  <pos x="19365.865907" y="7882.413669"/>
  <GFX>
-  <space>station-round3.webp</space>
-  <exterior>scrapped_station.webp</exterior>
+  <space>station-round3</space>
+  <exterior>scrapped_station</exterior>
  </GFX>
  <presence>
   <faction>Black Lotus</faction>

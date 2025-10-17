@@ -1,8 +1,8 @@
 <spob name="The Wringer">
  <pos x="1951.744467" y="5691.325470"/>
  <GFX>
-  <space>station-ring1.webp</space>
-  <exterior>station02.webp</exterior>
+  <space>station-ring1</space>
+  <exterior>station02</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>

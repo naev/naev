@@ -1,8 +1,8 @@
 <spob name="Sylph IVa">
  <pos x="16877.672963" y="11664.535904"/>
  <GFX>
-  <space>moon-I01.webp</space>
-  <exterior>aquatic.webp</exterior>
+  <space>moon-I01</space>
+  <exterior>aquatic</exterior>
  </GFX>
  <general>
   <class>A</class>

@@ -1,8 +1,8 @@
 <spob name="Janus Farming">
  <pos x="-5154.532907" y="-4133.193687"/>
  <GFX>
-  <space>station-agriculture.webp</space>
-  <exterior>forest2.webp</exterior>
+  <space>station-agriculture</space>
+  <exterior>forest2</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

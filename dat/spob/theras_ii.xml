@@ -1,8 +1,8 @@
 <spob name="Theras II">
  <pos x="8355.533595" y="-4232.622399"/>
  <GFX>
-  <space>moon-P02.webp</space>
-  <exterior>mining2.webp</exterior>
+  <space>moon-P02</space>
+  <exterior>mining2</exterior>
  </GFX>
  <general>
   <class>A</class>

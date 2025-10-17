@@ -1,8 +1,8 @@
 <spob name="Ksher III">
  <pos x="-3652.000000" y="-7524.000000"/>
  <GFX>
-  <space>M01.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>M01</space>
+  <exterior>methane</exterior>
  </GFX>
  <general>
   <class>A</class>

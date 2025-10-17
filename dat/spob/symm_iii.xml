@@ -1,8 +1,8 @@
 <spob name="Symm III">
  <pos x="3873.906595" y="3967.793771"/>
  <GFX>
-  <space>J06.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>J06</space>
+  <exterior>lava</exterior>
  </GFX>
  <general>
   <class>A</class>

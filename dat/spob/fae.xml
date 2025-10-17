@@ -1,8 +1,8 @@
 <spob name="Fae">
  <pos x="1012.894689" y="-4531.610193"/>
  <GFX>
-  <space>I01.webp</space>
-  <exterior>gas.webp</exterior>
+  <space>I01</space>
+  <exterior>gas</exterior>
  </GFX>
  <general>
   <class>I</class>

@@ -1,8 +1,8 @@
 <spob name="Apik II">
  <pos x="-5706.526190" y="7721.039274"/>
  <GFX>
-  <space>C00.webp</space>
-  <exterior>snow.webp</exterior>
+  <space>C00</space>
+  <exterior>snow</exterior>
  </GFX>
  <general>
   <class>C</class>

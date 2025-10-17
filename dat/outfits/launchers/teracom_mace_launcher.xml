@@ -7,7 +7,7 @@
   <mass>10</mass>
   <price>30000</price>
   <description>The Mace class unguided rocket is a cheap, expendable weapon used to boost peak firepower in tight situations. It is far better at dealing damage to light targets than most fighter sized energy cannons, but comes with the disadvantage of running out of ammunition after only a short time of fire.</description>
-  <gfx_store>macelauncher.webp</gfx_store>
+  <gfx_store>macelauncher</gfx_store>
   <cpu>-5</cpu>
  </general>
  <specific type="launcher">
@@ -18,7 +18,7 @@
   <trackmin>0</trackmin>
   <trackmax>5000</trackmax>
   <ammo_mass>0.1</ammo_mass>
-  <gfx>mace.png</gfx>
+  <gfx>mace</gfx>
   <sound>mace</sound>
   <sound_hit>lrgexp0</sound_hit>
   <spfx_shield>Exp-M</spfx_shield>

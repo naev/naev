@@ -1,8 +1,8 @@
 <spob name="Mason I">
  <pos x="-6268.132613" y="-6415.466081"/>
  <GFX>
-  <space>J02.webp</space>
-  <exterior>snow.webp</exterior>
+  <space>J02</space>
+  <exterior>snow</exterior>
  </GFX>
  <general>
   <class>A</class>

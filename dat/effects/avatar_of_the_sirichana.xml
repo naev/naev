@@ -1,7 +1,7 @@
 <effect name="Avatar of the Sirichana">
  <description>You are an avatar of the Sirichana!</description>
  <duration>1</duration>
- <icon>/gfx/misc/icons/angel-outfit.webp</icon>
+ <icon>/gfx/misc/icons/angel-outfit</icon>
  <overwrite>avatar_of_the_sirichana</overwrite>
  <shader vertex="effect2x.vert">effects/avatar_of_the_sirichana.frag</shader>
  <buff/>

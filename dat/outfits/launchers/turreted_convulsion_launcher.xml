@@ -10,7 +10,7 @@
   <description>The Thurion interceptor class missile focus on high agility rather than destructive power. While it does little damage to physical objects it is quite effective at disrupting shields.
 
 This launcher is mounted on a turret and has more ammo capacity than the standard launcher.</description>
-  <gfx_store>turreted_convulsion_launcher.webp</gfx_store>
+  <gfx_store>turreted_convulsion_launcher</gfx_store>
   <cpu>-14</cpu>
  </general>
  <specific type="turret launcher" secondary="1">
@@ -22,7 +22,7 @@ This launcher is mounted on a turret and has more ammo capacity than the standar
   <trackmin>0</trackmin>
   <trackmax>5000</trackmax>
   <ammo_mass>0.4</ammo_mass>
-  <gfx>convulsion.png</gfx>
+  <gfx>convulsion</gfx>
   <sound>seeker</sound>
   <sound_hit>medexp0</sound_hit>
   <spfx_shield>Exp-M</spfx_shield>

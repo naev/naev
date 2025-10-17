@@ -1,8 +1,8 @@
 <spob name="Hekaras IV">
  <pos x="-20146.206410" y="11878.412610"/>
  <GFX>
-  <space>I06.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>I06</space>
+  <exterior>lava</exterior>
  </GFX>
  <general>
   <class>A</class>

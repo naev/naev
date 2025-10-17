@@ -1,8 +1,8 @@
 <spob name="Nartur IV">
  <pos x="-2384.730872" y="26572.715435"/>
  <GFX>
-  <space>I05.webp</space>
-  <exterior>station00.webp</exterior>
+  <space>I05</space>
+  <exterior>station00</exterior>
  </GFX>
  <general>
   <class>A</class>

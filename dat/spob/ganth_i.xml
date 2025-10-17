@@ -1,8 +1,8 @@
 <spob name="Ganth I">
  <pos x="-7430.205851" y="-5372.576113"/>
  <GFX>
-  <space>O02.webp</space>
-  <exterior>uninhabited-rocky-cyan-02.webp</exterior>
+  <space>O02</space>
+  <exterior>uninhabited-rocky-cyan-02</exterior>
  </GFX>
  <general>
   <class>O</class>

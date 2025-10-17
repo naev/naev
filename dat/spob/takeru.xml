@@ -1,8 +1,8 @@
 <spob name="Takeru">
  <pos x="-5332.000000" y="11438.000000"/>
  <GFX>
-  <space>M04.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>M04</space>
+  <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>

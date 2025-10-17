@@ -1,8 +1,8 @@
 <spob name="Akra V">
  <pos x="-22362.490650" y="652.148409"/>
  <GFX>
-  <space>S00.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>S00</space>
+  <exterior>forest</exterior>
  </GFX>
  <general>
   <class>S</class>

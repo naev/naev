@@ -1,8 +1,8 @@
 <spob name="Salsax Nest">
  <pos x="5891.722356" y="1332.614973"/>
  <GFX>
-  <space>station-commerce3.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>station-commerce3</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

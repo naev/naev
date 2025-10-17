@@ -1,8 +1,8 @@
 <spob name="Geron">
  <pos x="2938.557652" y="11505.793602"/>
  <GFX>
-  <space>M06.webp</space>
-  <exterior>oceanic2.webp</exterior>
+  <space>M06</space>
+  <exterior>oceanic2</exterior>
  </GFX>
  <presence>
   <faction>Goddard</faction>

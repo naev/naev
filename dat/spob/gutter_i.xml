@@ -1,8 +1,8 @@
 <spob name="Gutter I">
  <pos x="-4883.507374" y="3850.185524"/>
  <GFX>
-  <space>G01.webp</space>
-  <exterior>mining.webp</exterior>
+  <space>G01</space>
+  <exterior>mining</exterior>
  </GFX>
  <general>
   <class>A</class>

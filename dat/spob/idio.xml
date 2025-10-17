@@ -2,8 +2,8 @@
  <lua>lowclass.lua</lua>
  <pos x="-11470.095195" y="14466.673893"/>
  <GFX>
-  <space>G02.webp</space>
-  <exterior>desertic.webp</exterior>
+  <space>G02</space>
+  <exterior>desertic</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

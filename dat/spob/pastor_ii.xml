@@ -1,8 +1,8 @@
 <spob name="Pastor II">
  <pos x="1311.753817" y="1113.003239"/>
  <GFX>
-  <space>X01.webp</space>
-  <exterior>gas.webp</exterior>
+  <space>X01</space>
+  <exterior>gas</exterior>
  </GFX>
  <general>
   <class>X</class>

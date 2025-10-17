@@ -1,8 +1,8 @@
 <spob name="Draconis Beta">
  <pos x="27270.000000" y="-15570.000000"/>
  <GFX>
-  <space>J00.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>J00</space>
+  <exterior>methane</exterior>
  </GFX>
  <general>
   <class>J</class>

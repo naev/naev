@@ -1,8 +1,8 @@
 <spob name="Opal Station">
  <pos x="-1838.125142" y="11472.033093"/>
  <GFX>
-  <space>000.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>000</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Frontier</faction>

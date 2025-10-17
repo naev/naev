@@ -1,6 +1,6 @@
 <faction name="Traders Society">
  <ai>trader</ai>
- <logo>trader.webp</logo>
+ <logo>trader</logo>
  <longname>Space Traders Society</longname>
  <player>3</player>
  <colour>blue</colour>

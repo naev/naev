@@ -6,7 +6,7 @@
   <mass>1</mass>
   <price>1</price>
   <description>This weapon is a cheat. It is not meant to be used by players.</description>
-  <gfx_store>laser2.webp</gfx_store>
+  <gfx_store>laser2</gfx_store>
   <cpu>-1</cpu>
   <rarity>6</rarity>
  </general>

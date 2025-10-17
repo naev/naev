@@ -1,8 +1,8 @@
 <spob name="Fidelis IV">
  <pos x="15115.790698" y="-12230.952288"/>
  <GFX>
-  <space>moon-D00.webp</space>
-  <exterior>asteroid.webp</exterior>
+  <space>moon-D00</space>
+  <exterior>asteroid</exterior>
  </GFX>
  <general>
   <class>D</class>

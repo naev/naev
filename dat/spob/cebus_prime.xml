@@ -1,8 +1,8 @@
 <spob name="Cebus Prime">
  <pos x="4866.050981" y="-2336.731605"/>
  <GFX>
-  <space>moon-H02.webp</space>
-  <exterior>mining_shaft.webp</exterior>
+  <space>moon-H02</space>
+  <exterior>mining_shaft</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>

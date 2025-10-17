@@ -1,8 +1,8 @@
 <spob name="Sorrow II">
  <pos x="2680.821754" y="5250.712953"/>
  <GFX>
-  <space>K02.webp</space>
-  <exterior>mining_shaft.webp</exterior>
+  <space>K02</space>
+  <exterior>mining_shaft</exterior>
  </GFX>
  <general>
   <class>G</class>

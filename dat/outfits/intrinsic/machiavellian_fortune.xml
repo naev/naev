@@ -4,7 +4,7 @@
   <mass>0</mass>
   <price>0</price>
   <description>Fortune is like an onrushing river pushing an impenetrable wall of water ahead of it. It is possible to build dams and walls to try to contain the flow, but there is no way to prevent the water from hitting.</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>placeholder</gfx_store>
   <rarity>6</rarity>
   <desc_extra>#pImproves luck!#0</desc_extra>
  </general>

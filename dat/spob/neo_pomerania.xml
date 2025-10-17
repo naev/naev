@@ -1,8 +1,8 @@
 <spob name="Neo Pomerania">
  <pos x="4324.481271" y="1380.153597"/>
  <GFX>
-  <space>M13.webp</space>
-  <exterior>oceanic.webp</exterior>
+  <space>M13</space>
+  <exterior>oceanic</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

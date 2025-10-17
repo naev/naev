@@ -2,8 +2,8 @@
  <lua>poller_mass.lua</lua>
  <pos x="-6830.659875" y="-6470.534921"/>
  <GFX>
-  <space>C01.webp</space>
-  <exterior>asteroid.webp</exterior>
+  <space>C01</space>
+  <exterior>asteroid</exterior>
  </GFX>
  <general>
   <class>X</class>

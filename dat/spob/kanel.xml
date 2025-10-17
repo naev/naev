@@ -1,8 +1,8 @@
 <spob name="Kanel">
  <pos x="7260.754073" y="4575.536182"/>
  <GFX>
-  <space>moon-H01.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>moon-H01</space>
+  <exterior>methane</exterior>
  </GFX>
  <general>
   <class>K</class>

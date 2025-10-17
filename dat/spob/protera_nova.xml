@@ -1,8 +1,8 @@
 <spob name="Protera Nova">
  <pos x="187.238109" y="1185.841360"/>
  <GFX>
-  <space>moon-P02.webp</space>
-  <exterior>hangar1.webp</exterior>
+  <space>moon-P02</space>
+  <exterior>hangar1</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>

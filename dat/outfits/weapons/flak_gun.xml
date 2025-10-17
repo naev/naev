@@ -6,13 +6,13 @@
   <mass>22</mass>
   <price>245000</price>
   <description>Fires waste debris in a shotgun-like blast that can be useful in taking down small craft or hitting large targets. Not widely used due the tendency to jam and blow up, which has been known to cause hull breaches, fires, and other major issues on the ship. However, this one looks like it is in quite good shape.</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>placeholder</gfx_store>
   <cpu>-40</cpu>
   <rarity>2</rarity>
  </general>
  <specific type="bolt">
   <lua>outfits/lib/matrix_sell.lua</lua>
-  <gfx>massM.png</gfx>
+  <gfx>massM</gfx>
   <sound>mass</sound>
   <spfx_shield>Shi-S</spfx_shield>
   <spfx_armour>Exp-S</spfx_armour>
@@ -20,7 +20,7 @@
   <speed>500</speed>
   <range>1000</range>
   <falloff>800</falloff>
-  <gfx_end>massM-end.png</gfx_end>
+  <gfx_end>massM-end</gfx_end>
   <energy>66</energy>
   <trackmin>1000</trackmin>
   <trackmax>5000</trackmax>

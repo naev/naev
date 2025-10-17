@@ -1,8 +1,8 @@
 <spob name="Griffin I">
  <pos x="-6522.156506" y="7149.136931"/>
  <GFX>
-  <space>moon-A00.webp</space>
-  <exterior>aquatic2.webp</exterior>
+  <space>moon-A00</space>
+  <exterior>aquatic2</exterior>
  </GFX>
  <general>
   <class>A</class>

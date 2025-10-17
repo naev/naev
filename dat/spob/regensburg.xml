@@ -1,8 +1,8 @@
 <spob name="Regensburg">
  <pos x="-6155.854071" y="-4532.767146"/>
  <GFX>
-  <space>003.webp</space>
-  <exterior>station03.webp</exterior>
+  <space>003</space>
+  <exterior>station03</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>

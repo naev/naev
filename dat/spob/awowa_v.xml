@@ -1,8 +1,8 @@
 <spob name="Awowa V">
  <pos x="5232.591396" y="-5915.373586"/>
  <GFX>
-  <space>G01.webp</space>
-  <exterior>mining5.webp</exterior>
+  <space>G01</space>
+  <exterior>mining5</exterior>
  </GFX>
  <general>
   <class>G</class>

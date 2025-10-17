@@ -1,8 +1,8 @@
 <spob name="Kraft IV">
  <pos x="-10514.897312" y="-5027.946649"/>
  <GFX>
-  <space>S00.webp</space>
-  <exterior>snow.webp</exterior>
+  <space>S00</space>
+  <exterior>snow</exterior>
  </GFX>
  <general>
   <class>S</class>

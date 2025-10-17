@@ -1,8 +1,8 @@
 <spob name="Little Rock">
  <pos x="-1815.726706" y="2195.486540"/>
  <GFX>
-  <space>moon-D02.webp</space>
-  <exterior>station05.webp</exterior>
+  <space>moon-D02</space>
+  <exterior>station05</exterior>
  </GFX>
  <general>
   <class>D</class>

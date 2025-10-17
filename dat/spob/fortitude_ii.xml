@@ -1,8 +1,8 @@
 <spob name="Fortitude II">
  <pos x="5694.944255" y="9618.349768"/>
  <GFX>
-  <space>J08.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>J08</space>
+  <exterior>methane</exterior>
  </GFX>
  <general>
   <class>J</class>

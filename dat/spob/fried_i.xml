@@ -1,8 +1,8 @@
 <spob name="Fried I">
  <pos x="-12500.000000" y="2100.000000"/>
  <GFX>
-  <space>Y00.webp</space>
-  <exterior>gas.webp</exterior>
+  <space>Y00</space>
+  <exterior>gas</exterior>
  </GFX>
  <general>
   <class>Y</class>

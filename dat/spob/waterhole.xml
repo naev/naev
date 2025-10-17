@@ -1,8 +1,8 @@
 <spob name="Waterhole">
  <pos x="-5555.000000" y="-2200.000000"/>
  <GFX>
-  <space>O00.webp</space>
-  <exterior>oceanic2.webp</exterior>
+  <space>O00</space>
+  <exterior>oceanic2</exterior>
  </GFX>
  <general>
   <class>O</class>

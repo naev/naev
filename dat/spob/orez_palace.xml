@@ -2,8 +2,8 @@
  <lua>orez_palace.lua</lua>
  <pos x="2256.802926" y="2319.240990"/>
  <GFX>
-  <space>station-fleetbase4.webp</space>
-  <exterior>station05.webp</exterior>
+  <space>station-fleetbase4</space>
+  <exterior>station05</exterior>
  </GFX>
  <presence>
   <faction>O'rez</faction>

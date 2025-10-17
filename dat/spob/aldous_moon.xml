@@ -1,8 +1,8 @@
 <spob name="Aldous' moon">
  <pos x="3481.905633" y="-5531.743534"/>
  <GFX>
-  <space>moon-A00.webp</space>
-  <exterior>snow.webp</exterior>
+  <space>moon-A00</space>
+  <exterior>snow</exterior>
  </GFX>
  <general>
   <class>A</class>

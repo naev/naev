@@ -1,8 +1,8 @@
 <spob name="Kretogg III">
  <pos x="19900.000000" y="8200.000000"/>
  <GFX>
-  <space>S00.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>S00</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <general>
   <class>A</class>

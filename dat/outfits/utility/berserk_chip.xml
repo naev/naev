@@ -7,7 +7,7 @@
   <price>1230000</price>
   <description>The Berserk Chip is a dangerous thing, used by only the most reckless of pilots. It can be integrated into a ship to override most of the basic functionality, rerouting it into combat capabilities. This comes at a very high expense to the internal systems and physical condition of the ship and can only be used for a short time. Newer versions have a safety shutoff which automatically turn off the chip before hull integrity collapses.</description>
   <desc_extra>Incurs a large amount of shield and armour damage over time, and shuts down automatically when hull integrity is below 20%.</desc_extra>
-  <gfx_store>berserk_chip.webp</gfx_store>
+  <gfx_store>berserk_chip</gfx_store>
   <limit>berserk_chip</limit>
  </general>
  <specific type="modification">

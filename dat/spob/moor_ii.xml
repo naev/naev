@@ -1,8 +1,8 @@
 <spob name="Moor II">
  <pos x="-8933.793803" y="4029.027222"/>
  <GFX>
-  <space>H00.webp</space>
-  <exterior>aquatic2.webp</exterior>
+  <space>H00</space>
+  <exterior>aquatic2</exterior>
  </GFX>
  <general>
   <class>A</class>

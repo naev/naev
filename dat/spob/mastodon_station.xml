@@ -1,8 +1,8 @@
 <spob name="Mastodon Station">
  <pos x="22542.588874" y="1758.254694"/>
  <GFX>
-  <space>station-powerplant.webp</space>
-  <exterior>station03.webp</exterior>
+  <space>station-powerplant</space>
+  <exterior>station03</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

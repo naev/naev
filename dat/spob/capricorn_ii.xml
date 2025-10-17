@@ -1,8 +1,8 @@
 <spob name="Capricorn II">
  <pos x="15400.000000" y="2540.000000"/>
  <GFX>
-  <space>A04.webp</space>
-  <exterior>desertic4.webp</exterior>
+  <space>A04</space>
+  <exterior>desertic4</exterior>
  </GFX>
  <general>
   <class>A</class>

@@ -1,9 +1,9 @@
 <asteroid name="Mossy">
  <scanned>uncommon</scanned>
- <gfx>moss01.webp</gfx>
- <gfx>moss02.webp</gfx>
- <gfx>moss03.webp</gfx>
- <gfx>moss04.webp</gfx>
+ <gfx>moss01</gfx>
+ <gfx>moss02</gfx>
+ <gfx>moss03</gfx>
+ <gfx>moss04</gfx>
  <armour_min>70</armour_min>
  <armour_max>90</armour_max>
  <absorb>20</absorb>

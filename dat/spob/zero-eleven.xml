@@ -1,8 +1,8 @@
 <spob name="Zero-Eleven">
  <pos x="13120.000000" y="-25920.000000"/>
  <GFX>
-  <space>moon-A00.webp</space>
-  <exterior>aquatic.webp</exterior>
+  <space>moon-A00</space>
+  <exterior>aquatic</exterior>
  </GFX>
  <general>
   <class>A</class>

@@ -1,8 +1,8 @@
 <spob name="Tau Secundus">
  <pos x="-6772.829083" y="9757.569064"/>
  <GFX>
-  <space>S00.webp</space>
-  <exterior>oceanic.webp</exterior>
+  <space>S00</space>
+  <exterior>oceanic</exterior>
  </GFX>
  <general>
   <class>A</class>

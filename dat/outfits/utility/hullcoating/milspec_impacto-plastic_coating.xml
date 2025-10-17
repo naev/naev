@@ -7,7 +7,7 @@
   <mass>0</mass>
   <price>315000</price>
   <description>The Milspec Impacto-Plastic Coating is based on memory nano-alloys that resist both impact and damage, quickly restoring the protected surface to its original state.</description>
-  <gfx_store>milspec_impactoplastic_coating.webp</gfx_store>
+  <gfx_store>milspec_impactoplastic_coating</gfx_store>
   <limit>hullcoat</limit>
  </general>
  <specific type="modification">

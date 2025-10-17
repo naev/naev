@@ -1,8 +1,8 @@
 <spob name="Urail">
  <pos x="-14578.000000" y="24198.000000"/>
  <GFX>
-  <space>M00.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>M00</space>
+  <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

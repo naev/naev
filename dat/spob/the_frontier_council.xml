@@ -1,8 +1,8 @@
 <spob name="The Frontier Council">
  <pos x="-4232.400889" y="9914.102486"/>
  <GFX>
-  <space>station-cylinder.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>station-cylinder</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Frontier</faction>

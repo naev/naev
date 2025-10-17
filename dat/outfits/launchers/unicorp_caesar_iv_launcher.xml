@@ -8,7 +8,7 @@
   <mass>41</mass>
   <price>180000</price>
   <description>Caesar IV class torpedoes are among the most common torpedo weapons available. Though much slower than missiles and useless against mobile targets, they remain manoeuvrable enough to chase down cruisers.</description>
-  <gfx_store>caesarlauncher.webp</gfx_store>
+  <gfx_store>caesarlauncher</gfx_store>
   <cpu>-13</cpu>
  </general>
  <specific type="launcher" secondary="1">
@@ -21,7 +21,7 @@
   <trackmax>25000</trackmax>
   <amount>6</amount>
   <ammo_mass>4</ammo_mass>
-  <gfx>caesar.png</gfx>
+  <gfx>caesar</gfx>
   <sound>torpedo</sound>
   <sound_hit>lrgexp0</sound_hit>
   <spfx_shield>Exp-L</spfx_shield>

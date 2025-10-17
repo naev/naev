@@ -1,8 +1,8 @@
 <spob name="Ekkodu Alpha">
  <pos x="-15965.616813" y="-7750.942602"/>
  <GFX>
-  <space>I06.webp</space>
-  <exterior>desertic4.webp</exterior>
+  <space>I06</space>
+  <exterior>desertic4</exterior>
  </GFX>
  <general>
   <class>I</class>

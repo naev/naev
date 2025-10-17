@@ -1,8 +1,8 @@
 <spob name="Haven">
  <pos x="8514.404296" y="8209.228516"/>
  <GFX>
-  <space>A02.webp</space>
-  <exterior>desertic.webp</exterior>
+  <space>A02</space>
+  <exterior>desertic</exterior>
  </GFX>
  <general>
   <class>Z</class>

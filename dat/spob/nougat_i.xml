@@ -1,8 +1,8 @@
 <spob name="Nougat I">
  <pos x="-476.416819" y="10037.915904"/>
  <GFX>
-  <space>M09.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>M09</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <general>
   <class>M</class>

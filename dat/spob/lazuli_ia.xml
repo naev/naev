@@ -1,8 +1,8 @@
 <spob name="Lazuli Ia">
  <pos x="9120.000000" y="13020.000000"/>
  <GFX>
-  <space>moon-H00.webp</space>
-  <exterior>mining3.webp</exterior>
+  <space>moon-H00</space>
+  <exterior>mining3</exterior>
  </GFX>
  <general>
   <class>H</class>

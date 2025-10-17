@@ -1,8 +1,8 @@
 <spob name="Hurada">
  <pos x="-6368.749009" y="-1742.409055"/>
  <GFX>
-  <space>H01.webp</space>
-  <exterior>desertic4.webp</exterior>
+  <space>H01</space>
+  <exterior>desertic4</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>

@@ -1,8 +1,8 @@
 <spob name="Duran Shipyard">
  <pos x="-15054.449668" y="4039.606298"/>
  <GFX>
-  <space>station-shipyard.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>station-shipyard</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

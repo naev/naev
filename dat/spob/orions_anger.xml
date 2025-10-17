@@ -1,8 +1,8 @@
 <spob name="Orion's Anger">
  <pos x="5679.644433" y="2218.611107"/>
  <GFX>
-  <space>A01.webp</space>
-  <exterior>oceanic.webp</exterior>
+  <space>A01</space>
+  <exterior>oceanic</exterior>
  </GFX>
  <general>
   <class>A</class>

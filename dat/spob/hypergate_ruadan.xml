@@ -3,7 +3,7 @@
  <marker>spobmarker_triangle</marker>
  <pos x="10131.451960" y="3980.866234"/>
  <GFX>
-  <space>hypergate_early_construction_stage.webp</space>
+  <space>hypergate_early_construction_stage</space>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

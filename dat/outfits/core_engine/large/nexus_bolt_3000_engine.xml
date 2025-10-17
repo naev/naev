@@ -6,7 +6,7 @@
   <size>large</size>
   <price>600000</price>
   <description>The Bolt 3000 is a somewhat uncommonly used engine designed for cruisers. Like most Nexus engines, it doesn't excel in speed, but its low power consumption makes it an attractive option for some pilots.</description>
-  <gfx_store>nexus_engine_l.webp</gfx_store>
+  <gfx_store>nexus_engine_l</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">

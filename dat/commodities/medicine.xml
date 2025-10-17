@@ -2,7 +2,7 @@
  <name>Medicine</name>
  <description>An assortment of medicines suitable for curing all kinds of ailments.</description>
  <price>750</price>
- <gfx_store>medicine.webp</gfx_store>
+ <gfx_store>medicine</gfx_store>
  <standard/>
  <spob_modifier type="2">1.2</spob_modifier>
  <period>70</period>

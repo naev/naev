@@ -1,8 +1,8 @@
 <spob name="Zhiru">
  <pos x="9549.349193" y="-1582.542056"/>
  <GFX>
-  <space>M04.webp</space>
-  <exterior>oceanic.webp</exterior>
+  <space>M04</space>
+  <exterior>oceanic</exterior>
  </GFX>
  <presence>
   <faction>Goddard</faction>

@@ -1,8 +1,8 @@
 <spob name="Gyrios IV">
  <pos x="21776.061442" y="13731.331447"/>
  <GFX>
-  <space>A02.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>A02</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <general>
   <class>A</class>

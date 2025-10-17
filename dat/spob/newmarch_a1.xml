@@ -1,8 +1,8 @@
 <spob name="Newmarch A-1">
  <pos x="-2890.302562" y="-1497.904875"/>
  <GFX>
-  <space>A00.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>A00</space>
+  <exterior>methane</exterior>
  </GFX>
  <general>
   <class>A</class>

@@ -1,8 +1,8 @@
 <spob name="Point Zero Nidus">
  <pos x="2859.481738" y="1778.531207"/>
  <GFX>
-  <space>station-sphere.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>station-sphere</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

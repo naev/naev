@@ -2,8 +2,8 @@
  <lua>highclass.lua</lua>
  <pos x="160.000000" y="17520.000000"/>
  <GFX>
-  <space>moon-G00.webp</space>
-  <exterior>mining4.webp</exterior>
+  <space>moon-G00</space>
+  <exterior>mining4</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

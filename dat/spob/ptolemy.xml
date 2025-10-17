@@ -1,8 +1,8 @@
 <spob name="Ptolemy">
  <pos x="-6016.873321" y="4419.473325"/>
  <GFX>
-  <space>H02.webp</space>
-  <exterior>desertic3.webp</exterior>
+  <space>H02</space>
+  <exterior>desertic3</exterior>
  </GFX>
  <general>
   <class>C</class>

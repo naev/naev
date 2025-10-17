@@ -1,8 +1,8 @@
 <spob name="Blackwell I">
  <pos x="1057.754972" y="739.568517"/>
  <GFX>
-  <space>moon-J00.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>moon-J00</space>
+  <exterior>forest</exterior>
  </GFX>
  <general>
   <class>X</class>

@@ -1,8 +1,8 @@
 <spob name="Tulla">
  <pos x="-3316.789367" y="-2888.816545"/>
  <GFX>
-  <space>M01.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>M01</space>
+  <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

@@ -1,8 +1,8 @@
 <spob name="Damphyr">
  <pos x="6357.048692" y="-9005.703200"/>
  <GFX>
-  <space>moon-O00.webp</space>
-  <exterior>forest2.webp</exterior>
+  <space>moon-O00</space>
+  <exterior>forest2</exterior>
  </GFX>
  <general>
   <class>O</class>

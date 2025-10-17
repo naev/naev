@@ -2,8 +2,8 @@
  <display>Ruined Station</display>
  <pos x="-4360.187106" y="4175.302847"/>
  <GFX>
-  <space>station-destroyed5.webp</space>
-  <exterior>station04.webp</exterior>
+  <space>station-destroyed5</space>
+  <exterior>station04</exterior>
  </GFX>
  <presence>
   <faction>Derelict</faction>

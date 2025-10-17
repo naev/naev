@@ -1,8 +1,8 @@
 <spob name="UMW-1345a">
  <pos x="-1856.300712" y="4925.939558"/>
  <GFX>
-  <space>C01.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>C01</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <general>
   <class>D</class>

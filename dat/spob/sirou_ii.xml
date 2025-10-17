@@ -1,8 +1,8 @@
 <spob name="Sirou II">
  <pos x="-29355.986872" y="-4312.550623"/>
  <GFX>
-  <space>O01.webp</space>
-  <exterior>oceanic2.webp</exterior>
+  <space>O01</space>
+  <exterior>oceanic2</exterior>
  </GFX>
  <general>
   <class>M</class>

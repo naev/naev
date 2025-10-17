@@ -1,8 +1,8 @@
 <spob name="Khelim">
  <pos x="-5534.972756" y="11532.092902"/>
  <GFX>
-  <space>Y00.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>Y00</space>
+  <exterior>methane</exterior>
  </GFX>
  <presence>
   <faction>Frontier</faction>

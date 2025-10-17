@@ -1,8 +1,8 @@
 <spob name="Crow">
  <pos x="7370.643037" y="3893.363862"/>
  <GFX>
-  <space>M07.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>M07</space>
+  <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

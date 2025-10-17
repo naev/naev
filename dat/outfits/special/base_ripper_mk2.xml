@@ -6,7 +6,7 @@
   <mass>12</mass>
   <price>1</price>
   <description>This weapon is a cheat. It is not meant to be used by players.</description>
-  <gfx_store>ripper.webp</gfx_store>
+  <gfx_store>ripper</gfx_store>
   <cpu>-12</cpu>
   <rarity>6</rarity>
  </general>

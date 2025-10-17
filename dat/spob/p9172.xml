@@ -1,8 +1,8 @@
 <spob name="P-9172">
  <pos x="-6256.483321" y="4153.239992"/>
  <GFX>
-  <space>moon-I01.webp</space>
-  <exterior>station03.webp</exterior>
+  <space>moon-I01</space>
+  <exterior>station03</exterior>
  </GFX>
  <general>
   <class>I</class>

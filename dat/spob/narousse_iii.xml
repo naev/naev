@@ -1,8 +1,8 @@
 <spob name="Narousse III">
  <pos x="543.288947" y="-5926.751427"/>
  <GFX>
-  <space>I03.webp</space>
-  <exterior>mining2.webp</exterior>
+  <space>I03</space>
+  <exterior>mining2</exterior>
  </GFX>
  <general>
   <class>A</class>

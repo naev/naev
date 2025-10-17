@@ -3,7 +3,7 @@
  <marker>spobmarker_triangle</marker>
  <pos x="-11138.452932" y="-1797.573385"/>
  <GFX>
-  <space>hypergate_early_construction_stage.webp</space>
+  <space>hypergate_early_construction_stage</space>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

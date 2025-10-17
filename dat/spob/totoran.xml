@@ -1,8 +1,8 @@
 <spob name="Totoran">
  <pos x="15685.736460" y="21737.451901"/>
  <GFX>
-  <space>M06.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>M06</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

@@ -1,8 +1,8 @@
 <spob name="Merisi IV">
  <pos x="19320.000000" y="490.000000"/>
  <GFX>
-  <space>moon-P02.webp</space>
-  <exterior>uninhabited-rocky-blue-02.webp</exterior>
+  <space>moon-P02</space>
+  <exterior>uninhabited-rocky-blue-02</exterior>
  </GFX>
  <general>
   <class>B</class>

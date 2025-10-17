@@ -1,8 +1,8 @@
 <spob name="Alteris V">
  <pos x="15451.388889" y="-3935.185185"/>
  <GFX>
-  <space>P03.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>P03</space>
+  <exterior>methane</exterior>
  </GFX>
  <general>
   <class>P</class>

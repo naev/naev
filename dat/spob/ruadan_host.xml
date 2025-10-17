@@ -2,8 +2,8 @@
  <lua>zalek_mil_ruadan.lua</lua>
  <pos x="11792.645737" y="7261.141426"/>
  <GFX>
-  <space>station-battlestation.webp</space>
-  <exterior>station03.webp</exterior>
+  <space>station-battlestation</space>
+  <exterior>station03</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

@@ -1,8 +1,8 @@
 <spob name="Manis">
  <pos x="16020.000000" y="-7500.000000"/>
  <GFX>
-  <space>M09.webp</space>
-  <exterior>aquatic2.webp</exterior>
+  <space>M09</space>
+  <exterior>aquatic2</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

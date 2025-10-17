@@ -1,8 +1,8 @@
 <spob name="Perhelion Alpha">
  <pos x="-2137.665534" y="-5766.200038"/>
  <GFX>
-  <space>moon-M03.webp</space>
-  <exterior>oceanic2.webp</exterior>
+  <space>moon-M03</space>
+  <exterior>oceanic2</exterior>
  </GFX>
  <general>
   <class>A</class>

@@ -1,8 +1,8 @@
 <spob name="Gordon's Exchange">
  <pos x="5091.616563" y="3325.289878"/>
  <GFX>
-  <space>station-commerce4.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>station-commerce4</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Traders Society</faction>

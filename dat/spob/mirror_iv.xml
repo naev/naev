@@ -1,8 +1,8 @@
 <spob name="Mirror IV">
  <pos x="-7131.713688" y="-12333.972648"/>
  <GFX>
-  <space>G01.webp</space>
-  <exterior>mining.webp</exterior>
+  <space>G01</space>
+  <exterior>mining</exterior>
  </GFX>
  <general>
   <class>A</class>

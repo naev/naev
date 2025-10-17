@@ -1,8 +1,8 @@
 <spob name="Skater">
  <pos x="-11245.776216" y="-13331.796276"/>
  <GFX>
-  <space>K04.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>K04</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

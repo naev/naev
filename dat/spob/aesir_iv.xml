@@ -1,8 +1,8 @@
 <spob name="Aesir IV">
  <pos x="10900.000000" y="-13900.000000"/>
  <GFX>
-  <space>J04.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>J04</space>
+  <exterior>lava</exterior>
  </GFX>
  <general>
   <class>A</class>

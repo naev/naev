@@ -1,8 +1,8 @@
 <spob name="Phee">
  <pos x="6915.504984" y="1693.555901"/>
  <GFX>
-  <space>K04.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>K04</space>
+  <exterior>lava</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

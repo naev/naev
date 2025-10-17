@@ -1,8 +1,8 @@
 <spob name="Apez II">
  <pos x="7632.757843" y="-8078.617151"/>
  <GFX>
-  <space>J04.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>J04</space>
+  <exterior>methane</exterior>
  </GFX>
  <general>
   <class>J</class>

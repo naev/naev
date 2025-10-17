@@ -1,8 +1,8 @@
 <spob name="Odonga">
  <pos x="3815.459019" y="4401.087613"/>
  <GFX>
-  <space>A01.webp</space>
-  <exterior>station03.webp</exterior>
+  <space>A01</space>
+  <exterior>station03</exterior>
  </GFX>
  <general>
   <class>A</class>

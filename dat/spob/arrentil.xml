@@ -1,8 +1,8 @@
 <spob name="Arrentil">
  <pos x="-12160.000000" y="6880.000000"/>
  <GFX>
-  <space>Y00.webp</space>
-  <exterior>gas.webp</exterior>
+  <space>Y00</space>
+  <exterior>gas</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

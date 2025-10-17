@@ -1,8 +1,8 @@
 <spob name="Secundus Alpha">
  <pos x="-5661.834142" y="-8745.660854"/>
  <GFX>
-  <space>moon-C00.webp</space>
-  <exterior>desertic.webp</exterior>
+  <space>moon-C00</space>
+  <exterior>desertic</exterior>
  </GFX>
  <general>
   <class>A</class>

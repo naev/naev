@@ -1,8 +1,8 @@
 <spob name="Kretogg II">
  <pos x="15300.000000" y="-9250.000000"/>
  <GFX>
-  <space>K03.webp</space>
-  <exterior>oceanic.webp</exterior>
+  <space>K03</space>
+  <exterior>oceanic</exterior>
  </GFX>
  <general>
   <class>A</class>

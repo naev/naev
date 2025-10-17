@@ -1,8 +1,8 @@
 <spob name="Suoer">
  <pos x="23465.000000" y="3380.000000"/>
  <GFX>
-  <space>moon-M04.webp</space>
-  <exterior>aquatic2.webp</exterior>
+  <space>moon-M04</space>
+  <exterior>aquatic2</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

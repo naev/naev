@@ -1,8 +1,8 @@
 <spob name="Arch Arai">
  <pos x="9162.462434" y="16600.550706"/>
  <GFX>
-  <space>moon-P03.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>moon-P03</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

@@ -1,8 +1,8 @@
 <spob name="Gilligan's Tomb">
  <pos x="10279.897602" y="-6531.447050"/>
  <GFX>
-  <space>A00.webp</space>
-  <exterior>aquatic.webp</exterior>
+  <space>A00</space>
+  <exterior>aquatic</exterior>
  </GFX>
  <general>
   <class>A</class>

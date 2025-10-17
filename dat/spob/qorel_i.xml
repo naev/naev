@@ -1,7 +1,7 @@
 <spob name="Qorel I">
  <pos x="-7082.191733" y="1191.072614"/>
  <GFX>
-  <space>I01.webp</space>
+  <space>I01</space>
  </GFX>
  <general>
   <class>J</class>

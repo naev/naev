@@ -1,8 +1,8 @@
 <spob name="INSS-1">
  <pos x="16124.597177" y="-11480.653305"/>
  <GFX>
-  <space>station-agriculture.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>station-agriculture</space>
+  <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>

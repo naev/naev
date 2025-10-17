@@ -1,8 +1,8 @@
 <spob name="BGG-1356">
  <pos x="-13644.458306" y="-15678.185154"/>
  <GFX>
-  <space>O01.webp</space>
-  <exterior>aquatic3.webp</exterior>
+  <space>O01</space>
+  <exterior>aquatic3</exterior>
  </GFX>
  <general>
   <class>O</class>

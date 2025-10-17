@@ -1,8 +1,8 @@
 <spob name="Tuomi's Orb">
  <pos x="-4627.242146" y="559.788451"/>
  <GFX>
-  <space>moon-Y00.webp</space>
-  <exterior>uninhabited-rocky-magenta-04.webp</exterior>
+  <space>moon-Y00</space>
+  <exterior>uninhabited-rocky-magenta-04</exterior>
  </GFX>
  <general>
   <class>Y</class>

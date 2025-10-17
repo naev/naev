@@ -1,8 +1,8 @@
 <spob name="Amaroq III">
  <pos x="8550.000000" y="-22770.000000"/>
  <GFX>
-  <space>O04.webp</space>
-  <exterior>aquatic2.webp</exterior>
+  <space>O04</space>
+  <exterior>aquatic2</exterior>
  </GFX>
  <general>
   <class>O</class>

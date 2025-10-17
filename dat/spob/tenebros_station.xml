@@ -2,8 +2,8 @@
  <display>Abandoned Station</display>
  <pos x="-11229.358884" y="-2381.719840"/>
  <GFX>
-  <space>station-ring1.webp</space>
-  <exterior>station_scene.webp</exterior>
+  <space>station-ring1</space>
+  <exterior>station_scene</exterior>
  </GFX>
  <presence>
   <faction>Derelict</faction>

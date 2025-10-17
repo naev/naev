@@ -10,7 +10,7 @@
   <description>The Pulse Scanner takes an alternate approach to regular scanning devices for detecting ships. The hardware is heavily modified to not work in the continuous regime, but generate an extremely large signal pulse and then analysing the reflection responses that other ships give. This results in being able to significantly improve the detection capability of a ship for short periods of time, although with the side effect of increasing the visibility of the ship generating the pulse. Furthermore, the pulse is strong enough to pick up nearby faint traces and can be useful for detective work.</description>
   <desc_extra>Activates for 5 seconds with a 15 second cooldown period.
 #pCan be used for tracking anomaly signals.#0</desc_extra>
-  <gfx_store>jammer0.webp</gfx_store>
+  <gfx_store>jammer0</gfx_store>
  </general>
  <specific type="modification">
   <lua>outfits/unique/pulse_scanner.lua</lua>

@@ -1,8 +1,8 @@
 <spob name="WSTHVN P-1">
  <pos x="-2939.659716" y="-3642.219900"/>
  <GFX>
-  <space>P02.webp</space>
-  <exterior>uninhabited-rocky-airless-01.webp</exterior>
+  <space>P02</space>
+  <exterior>uninhabited-rocky-airless-01</exterior>
  </GFX>
  <general>
   <class>P</class>

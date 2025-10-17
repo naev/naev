@@ -1,8 +1,8 @@
 <spob name="Sinclair">
  <pos x="-25294.952304" y="-19671.631367"/>
  <GFX>
-  <space>M00.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>M00</space>
+  <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

@@ -1,8 +1,8 @@
 <spob name="Ozogo X">
  <pos x="-15048.345885" y="-9824.157202"/>
  <GFX>
-  <space>J08.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>J08</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <general>
   <class>J</class>

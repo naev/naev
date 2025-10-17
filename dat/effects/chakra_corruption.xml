@@ -2,7 +2,7 @@
  <description>Your ship is corrupted by chakra damage!</description>
  <duration>7</duration>
  <overwrite>chakra_corruption</overwrite>
- <icon>/gfx/misc/icons/unstable-orb.webp</icon>
+ <icon>/gfx/misc/icons/unstable-orb</icon>
  <shader vertex="effect15x.vert">effects/chakra_corruption.frag</shader>
  <debuff/>
  <stats>

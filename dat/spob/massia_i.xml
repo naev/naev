@@ -1,8 +1,8 @@
 <spob name="Massia I">
  <pos x="12852.000000" y="9588.000000"/>
  <GFX>
-  <space>A02.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>A02</space>
+  <exterior>lava</exterior>
  </GFX>
  <general>
   <class>A</class>

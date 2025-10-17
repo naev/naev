@@ -1,8 +1,8 @@
 <spob name="Wunomi">
  <pos x="0.000000" y="0.000000"/>
  <GFX>
-  <space>L00.webp</space>
-  <exterior>station01.webp</exterior>
+  <space>L00</space>
+  <exterior>station01</exterior>
  </GFX>
  <general>
   <class>A</class>

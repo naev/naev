@@ -1,8 +1,8 @@
 <spob name="Urbanus II">
  <pos x="2403.259278" y="-2059.936524"/>
  <GFX>
-  <space>K04.webp</space>
-  <exterior>aquatic2.webp</exterior>
+  <space>K04</space>
+  <exterior>aquatic2</exterior>
  </GFX>
  <general>
   <class>A</class>

@@ -1,8 +1,8 @@
 <spob name="Delta Pavonis I">
  <pos x="3454.768521" y="-3991.342595"/>
  <GFX>
-  <space>J04.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>J04</space>
+  <exterior>forest</exterior>
  </GFX>
  <general>
   <class>A</class>

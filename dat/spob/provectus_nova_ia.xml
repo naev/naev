@@ -1,8 +1,8 @@
 <spob name="Provectus Nova Ia">
  <pos x="-6064.192692" y="-2294.350136"/>
  <GFX>
-  <space>moon-O01.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>moon-O01</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <general>
   <class>A</class>

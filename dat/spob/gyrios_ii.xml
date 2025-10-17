@@ -1,8 +1,8 @@
 <spob name="Gyrios II">
  <pos x="-6205.000000" y="10710.000000"/>
  <GFX>
-  <space>K03.webp</space>
-  <exterior>oceanic.webp</exterior>
+  <space>K03</space>
+  <exterior>oceanic</exterior>
  </GFX>
  <general>
   <class>A</class>

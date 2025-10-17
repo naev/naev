@@ -7,12 +7,12 @@
   <mass>6</mass>
   <price>45000</price>
   <description>The Plasma Blaster MK2 is a high-powered version of the Plasma Blaster MK1, powerful enough to blow all but the heaviest pirate ships out of the sky. Its power is substantial enough that it even gets used by some militaries, typically in combination with anti-shield weaponry. Like the original MK1 model, the lingering plasma will significantly damage any ship that is unlucky enough to get hit.</description>
-  <gfx_store>plasma2.webp</gfx_store>
+  <gfx_store>plasma2</gfx_store>
   <cpu>-24</cpu>
  </general>
  <specific type="bolt">
   <lua>outfits/weapons/plasma2.lua</lua>
-  <gfx>plasma2.png</gfx>
+  <gfx>plasma2</gfx>
   <sound>plasma</sound>
   <spfx_shield>Shi-S</spfx_shield>
   <spfx_armour>Pla-S2</spfx_armour>
@@ -20,7 +20,7 @@
   <speed>700</speed>
   <range>800</range>
   <falloff>650</falloff>
-  <gfx_end>plasma2-end.png</gfx_end>
+  <gfx_end>plasma2-end</gfx_end>
   <energy>16.5</energy>
   <trackmin>0</trackmin>
   <trackmax>3000</trackmax>

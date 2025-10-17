@@ -1,8 +1,8 @@
 <spob name="Galileo Terminal">
  <pos x="3194.799994" y="-7481.156652"/>
  <GFX>
-  <space>003.webp</space>
-  <exterior>station01.webp</exterior>
+  <space>003</space>
+  <exterior>station01</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

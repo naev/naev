@@ -1,8 +1,8 @@
 <spob name="Strangelove Lab">
  <pos x="7500.000000" y="-6000.000000"/>
  <GFX>
-  <space>asteroid/asteroid-D00.webp</space>
-  <exterior>rocky_small.webp</exterior>
+  <space>asteroid/asteroid-D00</space>
+  <exterior>rocky_small</exterior>
  </GFX>
  <presence>
   <faction>Strangelove</faction>

@@ -1,8 +1,8 @@
 <spob name="Zintar V">
  <pos x="23162.713569" y="-6739.528962"/>
  <GFX>
-  <space>I05.webp</space>
-  <exterior>gas.webp</exterior>
+  <space>I05</space>
+  <exterior>gas</exterior>
  </GFX>
  <general>
   <class>I</class>

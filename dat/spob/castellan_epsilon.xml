@@ -1,8 +1,8 @@
 <spob name="Castellan Epsilon">
  <pos x="18083.058544" y="-12066.693018"/>
  <GFX>
-  <space>A03.webp</space>
-  <exterior>station01.webp</exterior>
+  <space>A03</space>
+  <exterior>station01</exterior>
  </GFX>
  <general>
   <class>A</class>

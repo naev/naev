@@ -1,8 +1,8 @@
 <spob name="Overture III">
  <pos x="11880.000000" y="-7860.000000"/>
  <GFX>
-  <space>M02.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>M02</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <general>
   <class>A</class>

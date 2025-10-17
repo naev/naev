@@ -1,7 +1,7 @@
 <effect name="Ambush Hunter I">
  <description>The ship has caught other ships by surprise!</description>
  <duration>10</duration>
- <icon>/gfx/misc/icons/hidden.webp</icon>
+ <icon>/gfx/misc/icons/hidden</icon>
  <overwrite>ambush_hunter_i</overwrite>
  <buff/>
  <stats>

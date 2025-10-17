@@ -8,7 +8,7 @@
   <mass>0</mass>
   <price>825000</price>
   <description>This Combat AI utilizes advanced power routeing and process scheduling controls to better distribute the ship's computing power between tasks, allowing to get more use out of the hardware at hand without any increase in energy use.</description>
-  <gfx_store>efficiency_combat_ai.webp</gfx_store>
+  <gfx_store>efficiency_combat_ai</gfx_store>
   <limit>combatai</limit>
  </general>
  <specific type="modification">

@@ -1,8 +1,8 @@
 <spob name="Behar Prime">
  <pos x="2733.973601" y="1262.321688"/>
  <GFX>
-  <space>A03.webp</space>
-  <exterior>asteroid.webp</exterior>
+  <space>A03</space>
+  <exterior>asteroid</exterior>
  </GFX>
  <general>
   <class>A</class>

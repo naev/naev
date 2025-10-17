@@ -1,8 +1,8 @@
 <spob name="Ekta I">
  <pos x="10276.833832" y="-1905.957803"/>
  <GFX>
-  <space>C01.webp</space>
-  <exterior>station01.webp</exterior>
+  <space>C01</space>
+  <exterior>station01</exterior>
  </GFX>
  <general>
   <class>D</class>

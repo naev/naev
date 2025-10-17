@@ -1,8 +1,8 @@
 <spob name="Zero-Five">
  <pos x="15040.000000" y="10400.000000"/>
  <GFX>
-  <space>moon-P01.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>moon-P01</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <general>
   <class>P</class>

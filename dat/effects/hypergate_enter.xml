@@ -2,7 +2,7 @@
  <description>Entering a hypergate!</description>
  <duration>3</duration>
  <overwrite>wormhole_enter</overwrite>
- <icon>/gfx/misc/icons/galaxy.webp</icon>
+ <icon>/gfx/misc/icons/galaxy</icon>
  <lua>effects/lua/hypergate_enter.lua</lua>
  <shader vertex="effect15x.vert">effects/hypergate_enter.frag</shader>
  <priority>0</priority>

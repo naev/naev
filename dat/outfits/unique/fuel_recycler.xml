@@ -8,7 +8,7 @@
   <price>300000</price>
   <description>While the process of refining fuel for space ships is possible using cheap available materials with the adequate machinery, production is usually limited to large immobile stations or astral bodies. By sacrificing machinery size and complexity, the Fuel Recycler is able to synthesize fuel in a very compact form. The downside is that the device ends up significantly reducing efficiency and requiring large amounts of raw materials to generate fuel. Despite this, such generation can be useful for long space journeys or when in a pinch.</description>
   <desc_extra>#gAllows converting space resources to fuel.#0</desc_extra>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>placeholder</gfx_store>
  </general>
  <specific type="modification">
   <lua>outfits/unique/fuel_recycler.lua</lua>

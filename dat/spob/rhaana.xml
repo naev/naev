@@ -1,8 +1,8 @@
 <spob name="Rhaana">
  <pos x="14760.000000" y="-8235.000000"/>
  <GFX>
-  <space>M02.webp</space>
-  <exterior>desertic4.webp</exterior>
+  <space>M02</space>
+  <exterior>desertic4</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

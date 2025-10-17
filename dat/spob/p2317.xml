@@ -1,8 +1,8 @@
 <spob name="P-2317">
  <pos x="3726.929987" y="650.875333"/>
  <GFX>
-  <space>M19.webp</space>
-  <exterior>uninhabited-jungle.webp</exterior>
+  <space>M19</space>
+  <exterior>uninhabited-jungle</exterior>
  </GFX>
  <general>
   <class>M</class>

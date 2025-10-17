@@ -1,8 +1,8 @@
 <spob name="Ariadus II">
  <pos x="-2249.139196" y="9494.945581"/>
  <GFX>
-  <space>M05.webp</space>
-  <exterior>aquatic2.webp</exterior>
+  <space>M05</space>
+  <exterior>aquatic2</exterior>
  </GFX>
  <general>
   <class>O</class>

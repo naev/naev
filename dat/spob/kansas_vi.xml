@@ -1,8 +1,8 @@
 <spob name="Kansas VI">
  <pos x="4208.895459" y="28055.839435"/>
  <GFX>
-  <space>moon-J01.webp</space>
-  <exterior>oceanic.webp</exterior>
+  <space>moon-J01</space>
+  <exterior>oceanic</exterior>
  </GFX>
  <general>
   <class>A</class>

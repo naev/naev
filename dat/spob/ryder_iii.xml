@@ -1,8 +1,8 @@
 <spob name="Ryder III">
  <pos x="-5977.924371" y="-1941.284718"/>
  <GFX>
-  <space>moon-I00.webp</space>
-  <exterior>asteroid.webp</exterior>
+  <space>moon-I00</space>
+  <exterior>asteroid</exterior>
  </GFX>
  <general>
   <class>I</class>

@@ -6,7 +6,7 @@
   <mass>0</mass>
   <price>470000</price>
   <description>It is possible to establish a colony of repair nanobots directly on the hull of a ship. Since the design has to account for the potentially harsh conditions outside the approach has limited effectiveness compared to the more intrusive solutions, but nevertheless complements them neatly.</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>placeholder</gfx_store>
   <limit>hullcoat</limit>
  </general>
  <specific type="modification">

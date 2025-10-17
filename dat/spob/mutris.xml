@@ -3,8 +3,8 @@
  <lua>sirius_mil_mutris.lua</lua>
  <pos x="26196.025870" y="16073.556994"/>
  <GFX>
-  <space>L00.webp</space>
-  <exterior>mining4.webp</exterior>
+  <space>L00</space>
+  <exterior>mining4</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

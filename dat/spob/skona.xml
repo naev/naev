@@ -1,8 +1,8 @@
 <spob name="Skona">
  <pos x="-10623.852497" y="8565.472416"/>
  <GFX>
-  <space>M14.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>M14</space>
+  <exterior>forest</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>

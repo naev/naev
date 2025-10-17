@@ -2,8 +2,8 @@
  <lua>thurion.lua</lua>
  <pos x="-6767.788609" y="-2307.127415"/>
  <GFX>
-  <space>003.webp</space>
-  <exterior>station03.webp</exterior>
+  <space>003</space>
+  <exterior>station03</exterior>
  </GFX>
  <presence>
   <faction>Thurion</faction>

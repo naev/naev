@@ -2,8 +2,8 @@
  <display>Ruined Ringworld</display>
  <pos x="5099.313287" y="-1559.782213"/>
  <GFX>
-  <space>ringworld_destroyed.webp</space>
-  <exterior>uninhabited-rocky-airless-03.webp</exterior>
+  <space>ringworld_destroyed</space>
+  <exterior>uninhabited-rocky-airless-03</exterior>
  </GFX>
  <presence>
   <faction>Derelict</faction>

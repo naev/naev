@@ -1,8 +1,8 @@
 <spob name="Hatter II">
  <pos x="-2640.000000" y="5412.000000"/>
  <GFX>
-  <space>J00.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>J00</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <general>
   <class>A</class>

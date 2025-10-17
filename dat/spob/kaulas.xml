@@ -1,8 +1,8 @@
 <spob name="Kaulas">
  <pos x="-11188.055425" y="12816.810991"/>
  <GFX>
-  <space>A03.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>A03</space>
+  <exterior>lava</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

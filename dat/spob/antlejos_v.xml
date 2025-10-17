@@ -1,8 +1,8 @@
 <spob name="Antlejos V">
  <pos x="-4600.101436" y="-196.156312"/>
  <GFX>
-  <space>moon-K00.webp</space>
-  <exterior>uninhabited-rocky-airless-02.webp</exterior>
+  <space>moon-K00</space>
+  <exterior>uninhabited-rocky-airless-02</exterior>
  </GFX>
  <general>
   <class>D</class>

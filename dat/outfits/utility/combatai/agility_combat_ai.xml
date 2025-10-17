@@ -8,7 +8,7 @@
   <mass>0</mass>
   <price>525000</price>
   <description>This Combat AI augments a ship's functionality with a focus on agility. Through careful regulation of the ship's thrusters, the AI is able to increase both the overall acceleration and turn of the ship without actually modifying the hardware nor increasing the energy consumption.</description>
-  <gfx_store>agility_combat_ai.webp</gfx_store>
+  <gfx_store>agility_combat_ai</gfx_store>
   <limit>combatai</limit>
  </general>
  <specific type="modification">

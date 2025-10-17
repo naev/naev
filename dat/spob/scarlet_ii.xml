@@ -1,8 +1,8 @@
 <spob name="Scarlet II">
  <pos x="-1999.786603" y="-5743.429194"/>
  <GFX>
-  <space>moon-G00.webp</space>
-  <exterior>oceanic2.webp</exterior>
+  <space>moon-G00</space>
+  <exterior>oceanic2</exterior>
  </GFX>
  <general>
   <class>A</class>

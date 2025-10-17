@@ -1,8 +1,8 @@
 <spob name="Gerhart Central">
  <pos x="10274.476780" y="-6019.003188"/>
  <GFX>
-  <space>zalek_station2.webp</space>
-  <exterior>zalek_station2.webp</exterior>
+  <space>zalek_station2</space>
+  <exterior>zalek_station2</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

@@ -1,8 +1,8 @@
 <spob name="Babylon II">
  <pos x="-15600.000000" y="-3120.000000"/>
  <GFX>
-  <space>P03.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>P03</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <general>
   <class>P</class>

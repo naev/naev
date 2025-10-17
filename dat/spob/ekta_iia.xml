@@ -1,8 +1,8 @@
 <spob name="Ekta IIa">
  <pos x="-3658.985231" y="-8016.971854"/>
  <GFX>
-  <space>moon-D00.webp</space>
-  <exterior>asteroid.webp</exterior>
+  <space>moon-D00</space>
+  <exterior>asteroid</exterior>
  </GFX>
  <general>
   <class>D</class>

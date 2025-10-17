@@ -1,8 +1,8 @@
 <spob name="Ebenezer">
  <pos x="-13000.000000" y="7735.000000"/>
  <GFX>
-  <space>moon-J01.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>moon-J01</space>
+  <exterior>methane</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

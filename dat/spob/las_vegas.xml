@@ -1,8 +1,8 @@
 <spob name="Las Vegas">
  <pos x="3376.705562" y="-1425.149496"/>
  <GFX>
-  <space>D03.webp</space>
-  <exterior>uninhabited-rocky-red-04.webp</exterior>
+  <space>D03</space>
+  <exterior>uninhabited-rocky-red-04</exterior>
  </GFX>
  <general>
   <class>D</class>

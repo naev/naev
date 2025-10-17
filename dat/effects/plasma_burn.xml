@@ -1,7 +1,7 @@
 <effect name="Plasma Burn">
  <description>Plasma is burning the ship!</description>
  <duration>5</duration>
- <icon>/gfx/misc/icons/burning-embers.webp</icon>
+ <icon>/gfx/misc/icons/burning-embers</icon>
  <shader>effects/plasma_burn.frag</shader>
  <debuff/>
  <stats>

@@ -1,8 +1,8 @@
 <spob name="Narousse I">
  <pos x="3487.684954" y="-564.638417"/>
  <GFX>
-  <space>A00.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>A00</space>
+  <exterior>forest</exterior>
  </GFX>
  <general>
   <class>A</class>

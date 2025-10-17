@@ -2,8 +2,8 @@
  <name>Diamond</name>
  <description>Diamond is a form of carbon which has been crystallized due to intense pressure and heat deep beneath the surface of certain types of planets. The material is useful in some cutting applications due to its hardness, and it is commonly used in decorative applications, but diamond is now easy enough to produce synthetically that it is not as sought after as it once was.</description>
  <price>220</price>
- <gfx_store>diamonds.webp</gfx_store>
- <gfx_space>diamonds.webp</gfx_space>
+ <gfx_store>diamonds</gfx_store>
+ <gfx_space>diamonds</gfx_space>
  <standard/>
  <spob_modifier type="F">0.5</spob_modifier>
  <spob_modifier type="K">0.9</spob_modifier>

@@ -1,6 +1,6 @@
 <faction name="Dreamer Clan">
  <ai>dreamer_clan</ai>
- <logo>dreamerclan.webp</logo>
+ <logo>dreamerclan</logo>
  <longname>Dreamer Pirate Clan</longname>
  <player>-10</player>
  <colour>red</colour>

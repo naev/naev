@@ -3,8 +3,8 @@
  <lua>soromid_mil_kataka.lua</lua>
  <pos x="-5945.866695" y="8183.563291"/>
  <GFX>
-  <space>K03.webp</space>
-  <exterior>gas.webp</exterior>
+  <space>K03</space>
+  <exterior>gas</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

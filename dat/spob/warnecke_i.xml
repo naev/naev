@@ -1,8 +1,8 @@
 <spob name="Warnecke I">
  <pos x="1395.547217" y="-381.846862"/>
  <GFX>
-  <space>D07.webp</space>
-  <exterior>uninhabited-rocky-airless-02.webp</exterior>
+  <space>D07</space>
+  <exterior>uninhabited-rocky-airless-02</exterior>
  </GFX>
  <general>
   <class>D</class>

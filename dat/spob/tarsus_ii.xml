@@ -1,8 +1,8 @@
 <spob name="Tarsus II">
  <pos x="7214.700991" y="-6928.427760"/>
  <GFX>
-  <space>G01.webp</space>
-  <exterior>station03.webp</exterior>
+  <space>G01</space>
+  <exterior>station03</exterior>
  </GFX>
  <general>
   <class>A</class>

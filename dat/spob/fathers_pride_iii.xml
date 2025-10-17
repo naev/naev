@@ -1,8 +1,8 @@
 <spob name="Father's Pride III">
  <pos x="-17518.973323" y="-4134.486662"/>
  <GFX>
-  <space>J06.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>J06</space>
+  <exterior>methane</exterior>
  </GFX>
  <general>
   <class>J</class>

@@ -1,8 +1,8 @@
 <spob name="Lyncis IIa">
  <pos x="3067.797331" y="-1823.263932"/>
  <GFX>
-  <space>moon-A00.webp</space>
-  <exterior>desertic.webp</exterior>
+  <space>moon-A00</space>
+  <exterior>desertic</exterior>
  </GFX>
  <general>
   <class>A</class>

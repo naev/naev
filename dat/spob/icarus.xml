@@ -1,8 +1,8 @@
 <spob name="Icarus">
  <pos x="-3624.623724" y="-1715.052669"/>
  <GFX>
-  <space>A04.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>A04</space>
+  <exterior>lava</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

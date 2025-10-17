@@ -1,8 +1,8 @@
 <spob name="Aluben">
  <pos x="1150.000000" y="750.000000"/>
  <GFX>
-  <space>J03.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>J03</space>
+  <exterior>methane</exterior>
  </GFX>
  <general>
   <class>J</class>

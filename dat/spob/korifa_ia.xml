@@ -1,8 +1,8 @@
 <spob name="Korifa Ia">
  <pos x="9686.394456" y="-2877.319390"/>
  <GFX>
-  <space>moon-J00.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>moon-J00</space>
+  <exterior>lava</exterior>
  </GFX>
  <general>
   <class>J</class>

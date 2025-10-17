@@ -1,8 +1,8 @@
 <spob name="Koralis VI">
  <pos x="7391.438009" y="-13450.147648"/>
  <GFX>
-  <space>Y00.webp</space>
-  <exterior>desertic2.webp</exterior>
+  <space>Y00</space>
+  <exterior>desertic2</exterior>
  </GFX>
  <general>
   <class>A</class>

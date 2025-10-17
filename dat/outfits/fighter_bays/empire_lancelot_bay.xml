@@ -9,7 +9,7 @@
   <rarity>1</rarity>
   <mass>145</mass>
   <price>930000</price>
-  <gfx_store>empire_lancelot_fighter.webp</gfx_store>
+  <gfx_store>empire_lancelot_fighter</gfx_store>
   <description>This fighter bay allows your ship to carry a pair of Empire Lancelot class fighters. It comes with all the devices required for the maintenance and flight of the fighters.</description>
   <cpu>-430</cpu>
  </general>

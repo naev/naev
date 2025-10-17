@@ -2,8 +2,8 @@
  <lua>lowclass.lua</lua>
  <pos x="12706.429531" y="4420.183280"/>
  <GFX>
-  <space>moon-G01.webp</space>
-  <exterior>mining_shaft.webp</exterior>
+  <space>moon-G01</space>
+  <exterior>mining_shaft</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

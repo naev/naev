@@ -1,8 +1,8 @@
 <spob name="Vercingetorix">
  <pos x="13707.007864" y="11514.570448"/>
  <GFX>
-  <space>X01.webp</space>
-  <exterior>gas.webp</exterior>
+  <space>X01</space>
+  <exterior>gas</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

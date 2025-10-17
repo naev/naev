@@ -1,8 +1,8 @@
 <spob name="Blunderbuss II">
  <pos x="22600.000000" y="2200.000000"/>
  <GFX>
-  <space>moon-H00.webp</space>
-  <exterior>desertic.webp</exterior>
+  <space>moon-H00</space>
+  <exterior>desertic</exterior>
  </GFX>
  <general>
   <class>H</class>

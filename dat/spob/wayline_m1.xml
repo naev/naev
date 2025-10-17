@@ -1,8 +1,8 @@
 <spob name="Wayline m1">
  <pos x="-895.436882" y="481.579500"/>
  <GFX>
-  <space>moon-P00.webp</space>
-  <exterior>snow.webp</exterior>
+  <space>moon-P00</space>
+  <exterior>snow</exterior>
  </GFX>
  <general>
   <class>P</class>

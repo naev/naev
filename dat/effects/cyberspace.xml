@@ -2,7 +2,7 @@
  <description>You are in cyberspace!</description>
  <duration>INF</duration>
  <overwrite>cyberspace</overwrite>
- <icon>/gfx/misc/icons/star-cycle.webp</icon>
+ <icon>/gfx/misc/icons/star-cycle</icon>
  <shader>effects/cybperspace.frag</shader>
  <priority>-1</priority>
 </effect>

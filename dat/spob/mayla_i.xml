@@ -1,8 +1,8 @@
 <spob name="Mayla I">
  <pos x="-5947.110328" y="2773.263883"/>
  <GFX>
-  <space>A00.webp</space>
-  <exterior>uninhabited-rocky-red-04.webp</exterior>
+  <space>A00</space>
+  <exterior>uninhabited-rocky-red-04</exterior>
  </GFX>
  <general>
   <class>A</class>

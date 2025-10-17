@@ -6,7 +6,7 @@
   <mass>0</mass>
   <price>0</price>
   <description>TODO</description>
-  <gfx_store>/gfx/misc/icons/jellyfish.webp</gfx_store>
+  <gfx_store>/gfx/misc/icons/jellyfish</gfx_store>
  </general>
  <specific type="modification">
   <fuel_mod>100</fuel_mod>

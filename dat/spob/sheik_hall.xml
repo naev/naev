@@ -1,8 +1,8 @@
 <spob name="Sheik Hall">
  <pos x="22036.883334" y="27.050026"/>
  <GFX>
-  <space>moon-A00.webp</space>
-  <exterior>aquatic2.webp</exterior>
+  <space>moon-A00</space>
+  <exterior>aquatic2</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

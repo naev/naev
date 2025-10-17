@@ -1,8 +1,8 @@
 <spob name="Medenus Observatory">
  <pos x="-4753.862391" y="7054.118386"/>
  <GFX>
-  <space>station-powerplant.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>station-powerplant</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

@@ -1,8 +1,8 @@
 <spob name="Silverstone">
  <pos x="-8768.728278" y="746.353155"/>
  <GFX>
-  <space>L00.webp</space>
-  <exterior>desertic4.webp</exterior>
+  <space>L00</space>
+  <exterior>desertic4</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

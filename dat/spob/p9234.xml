@@ -1,8 +1,8 @@
 <spob name="P9234">
  <pos x="-6710.000000" y="715.000000"/>
  <GFX>
-  <space>H00.webp</space>
-  <exterior>oceanic2.webp</exterior>
+  <space>H00</space>
+  <exterior>oceanic2</exterior>
  </GFX>
  <general>
   <class>A</class>

@@ -1,8 +1,8 @@
 <spob name="Ianella IV">
  <pos x="9207.236093" y="-3949.127770"/>
  <GFX>
-  <space>M14.webp</space>
-  <exterior>agricultural.webp</exterior>
+  <space>M14</space>
+  <exterior>agricultural</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

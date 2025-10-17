@@ -1,8 +1,8 @@
 <spob name="Jugreny">
  <pos x="-2500.000000" y="-10800.000000"/>
  <GFX>
-  <space>M02.webp</space>
-  <exterior>aquatic2.webp</exterior>
+  <space>M02</space>
+  <exterior>aquatic2</exterior>
  </GFX>
  <general>
   <class>M</class>

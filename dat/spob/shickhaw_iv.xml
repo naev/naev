@@ -1,8 +1,8 @@
 <spob name="Shickhaw IV">
  <pos x="-1390.848765" y="35214.619688"/>
  <GFX>
-  <space>P01.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>P01</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <general>
   <class>A</class>

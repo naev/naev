@@ -5,7 +5,7 @@
   <size>small</size>
   <price>120000</price>
   <description>Schafer &amp; Kane Industries mostly develop for larger ships, but the Skirmish Plating configuration is a product made for light fighters and in-system patrol craft, providing optimum protection.</description>
-  <gfx_store>combat_hull_t.webp</gfx_store>
+  <gfx_store>combat_hull_t</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">

@@ -1,8 +1,8 @@
 <spob name="Draconis Alpha">
  <pos x="-259.396052" y="11636.934797"/>
  <GFX>
-  <space>K03.webp</space>
-  <exterior>desertic.webp</exterior>
+  <space>K03</space>
+  <exterior>desertic</exterior>
  </GFX>
  <general>
   <class>K</class>

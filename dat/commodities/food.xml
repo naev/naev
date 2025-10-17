@@ -2,7 +2,7 @@
  <name>Food</name>
  <description>Evolving from the military rations of the ancient past, modern packaged meals are rich in nutrients and able to last many cycles in their vacuum-sealed packaging.</description>
  <price>210</price>
- <gfx_store>seaweed.webp</gfx_store>
+ <gfx_store>seaweed</gfx_store>
  <standard/>
  <spob_modifier type="H">0.7</spob_modifier>
  <spob_modifier type="K">0.95</spob_modifier>

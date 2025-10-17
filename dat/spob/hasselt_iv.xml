@@ -1,8 +1,8 @@
 <spob name="Hasselt IV">
  <pos x="20341.623819" y="2004.903126"/>
  <GFX>
-  <space>J02.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>J02</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <general>
   <class>A</class>

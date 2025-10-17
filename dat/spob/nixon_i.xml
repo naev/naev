@@ -1,8 +1,8 @@
 <spob name="Nixon I">
  <pos x="1941.109359" y="2485.503278"/>
  <GFX>
-  <space>moon-A00.webp</space>
-  <exterior>aquatic2.webp</exterior>
+  <space>moon-A00</space>
+  <exterior>aquatic2</exterior>
  </GFX>
  <general>
   <class>A</class>

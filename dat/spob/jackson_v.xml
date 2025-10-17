@@ -1,8 +1,8 @@
 <spob name="Jackson V">
  <pos x="28926.647765" y="4711.520641"/>
  <GFX>
-  <space>J00.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>J00</space>
+  <exterior>traderoom</exterior>
  </GFX>
  <general>
   <class>A</class>

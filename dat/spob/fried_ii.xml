@@ -1,8 +1,8 @@
 <spob name="Fried II">
  <pos x="-8895.688943" y="-12416.732467"/>
  <GFX>
-  <space>S00.webp</space>
-  <exterior>methane.webp</exterior>
+  <space>S00</space>
+  <exterior>methane</exterior>
  </GFX>
  <general>
   <class>S</class>

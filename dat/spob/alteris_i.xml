@@ -1,8 +1,8 @@
 <spob name="Alteris I">
  <pos x="3161.494856" y="-2251.603909"/>
  <GFX>
-  <space>K02.webp</space>
-  <exterior>aquatic2.webp</exterior>
+  <space>K02</space>
+  <exterior>aquatic2</exterior>
  </GFX>
  <general>
   <class>K</class>

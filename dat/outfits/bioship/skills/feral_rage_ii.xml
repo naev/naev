@@ -6,7 +6,7 @@
   <mass>0</mass>
   <price>0</price>
   <description>Through careful manipulation of the brain stem, the bioship can be induced into a primitive state of feral rage in which forward and turret weapon output is significantly increased. Armour damage is needed to enter the trance-like state. Further coupling with the cerebellum allows the trance to also increase the ship agility temporarily.</description>
-  <gfx_store>/gfx/misc/icons/oni.webp</gfx_store>
+  <gfx_store>/gfx/misc/icons/oni</gfx_store>
   <desc_extra>Active for 5 seconds since armour was last damaged.</desc_extra>
  </general>
  <specific type="modification">
