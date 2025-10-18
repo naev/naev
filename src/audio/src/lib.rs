@@ -253,16 +253,16 @@ impl AudioBuffer {
             }
         }
         // Squish the frames together
-        let mut data = match stereo {
+        let mut data: Vec<f32> = match stereo {
             true => {
-                let (left, right): (Vec<_>, Vec<_>) = frames
+                use std::iter::once;
+                frames
                     .iter()
-                    .map(|x| match x {
-                        Frame::Mono(x) => (*x, *x),
-                        Frame::Stereo(l, r) => (*l, *r),
+                    .flat_map(|x| match x {
+                        Frame::Mono(x) => once(*x).chain(once(*x)),
+                        Frame::Stereo(l, r) => once(*l).chain(once(*r)),
                     })
-                    .unzip();
-                [left, right].concat()
+                    .collect()
             }
             false => frames
                 .iter()
