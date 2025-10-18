@@ -942,6 +942,10 @@ impl AudioRef {
         Self::new_buffer(&buffer)
     }
 
+    fn from_audio(audio: Audio) -> Self {
+        Arc::new(AUDIO.voices.lock().unwrap().insert(audio)).into()
+    }
+
     fn try_clone(&self) -> Result<Self> {
         let mut voices = AUDIO.voices.lock().unwrap();
         let audio = match voices.get(*self.0) {
@@ -1692,11 +1696,13 @@ pub extern "C" fn sound_play(sound: *const Arc<AudioBuffer>) -> *const c_void {
         return std::ptr::null();
     }
     let sound = unsafe { &*sound };
-
-    let audio = Audio::new(&Some(AudioData::Buffer(sound.clone()))).unwrap();
-    let mut voices = AUDIO.voices.lock().unwrap();
-    let voice = voices.insert(audio);
-    unsafe { std::mem::transmute::<thunderdome::Index, *const c_void>(voice) }
+    match AudioRef::new_buffer(sound) {
+        Ok(audioref) => unsafe { std::mem::transmute::<AudioRef, *const c_void>(audioref) },
+        Err(e) => {
+            warn_err!(e);
+            std::ptr::null()
+        }
+    }
 }
 
 #[unsafe(no_mangle)]
@@ -1713,13 +1719,18 @@ pub extern "C" fn sound_playPos(
     }
     let sound = unsafe { &*sound };
 
-    let mut voices = AUDIO.voices.lock().unwrap();
-    let mut audio = Audio::new(&Some(AudioData::Buffer(sound.clone()))).unwrap();
+    let mut audio = match Audio::new_buffer(sound) {
+        Ok(audio) => audio,
+        Err(e) => {
+            warn_err!(e);
+            return std::ptr::null();
+        }
+    };
     audio.set_ingame();
     audio.set_position(Vector3::from([px as f32, py as f32, 0.0]));
     audio.set_velocity(Vector3::from([vx as f32, vy as f32, 0.0]));
-    let voice = voices.insert(audio);
-    unsafe { std::mem::transmute::<thunderdome::Index, *const c_void>(voice) }
+    let voice = AudioRef::from_audio(audio);
+    unsafe { std::mem::transmute::<AudioRef, *const c_void>(voice) }
 }
 
 macro_rules! get_voice {
@@ -1728,16 +1739,16 @@ macro_rules! get_voice {
             warn!("recieved NULL");
             return Default::default();
         }
-        unsafe { std::mem::transmute::<*const c_void, thunderdome::Index>($voice) }
+        unsafe { std::mem::transmute::<*const c_void, AudioRef>($voice) }
     }};
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_stop(voice: *const c_void) {
     let index = get_voice!(voice);
-    let voices = AUDIO.voices.lock().unwrap();
-    let voice = &voices[index];
-    voice.stop();
+    if let Err(e) = index.call(|voice| voice.stop()) {
+        warn_err!(e);
+    }
 }
 
 #[unsafe(no_mangle)]
@@ -1749,10 +1760,12 @@ pub extern "C" fn sound_updatePos(
     vy: c_double,
 ) {
     let index = get_voice!(voice);
-    let voices = AUDIO.voices.lock().unwrap();
-    let voice = &voices[index];
-    voice.set_position(Vector3::from([px as f32, py as f32, 0.0]));
-    voice.set_velocity(Vector3::from([vx as f32, vy as f32, 0.0]));
+    if let Err(e) = index.call(|voice| {
+        voice.set_position(Vector3::from([px as f32, py as f32, 0.0]));
+        voice.set_velocity(Vector3::from([vx as f32, vy as f32, 0.0]));
+    }) {
+        warn_err!(e);
+    }
 }
 
 #[unsafe(no_mangle)]
