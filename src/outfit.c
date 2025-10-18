@@ -2887,6 +2887,9 @@ static void outfit_parseSAfterburner( Outfit *temp, const xmlNodePtr parent )
    MELEMENT( temp->u.afb.energy == 0., "energy" );
    // MELEMENT(temp->cpu==0.,"cpu");
    MELEMENT( temp->u.afb.mass_limit == 0., "mass_limit" );
+   MELEMENT( temp->u.afb.sound == NULL, "sound" );
+   // MELEMENT( temp->u.afb.sound_on == NULL, "sound_on" );
+   // MELEMENT( temp->u.afb.sound_off == NULL, "sound_off" );
 #undef MELEMENT
 }
 

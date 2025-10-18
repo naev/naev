@@ -1797,7 +1797,6 @@ pub extern "C" fn sound_playPos(
     vy: c_double,
 ) -> *const c_void {
     if sound.is_null() {
-        warn!("recieved NULL");
         return std::ptr::null();
     }
     let sound = unsafe { &*sound };
@@ -1819,7 +1818,6 @@ pub extern "C" fn sound_playPos(
 macro_rules! get_voice {
     ($voice: ident) => {{
         if $voice.is_null() {
-            warn!("recieved NULL");
             return Default::default();
         }
         unsafe { std::mem::transmute::<*const c_void, AudioRef>($voice) }
@@ -1829,9 +1827,7 @@ macro_rules! get_voice {
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_stop(voice: *const c_void) {
     let index = get_voice!(voice);
-    if let Err(e) = index.call(|voice| voice.stop()) {
-        warn_err!(e);
-    }
+    let _ = index.call(|voice| voice.stop());
 }
 
 #[unsafe(no_mangle)]
@@ -1843,12 +1839,10 @@ pub extern "C" fn sound_updatePos(
     vy: c_double,
 ) {
     let index = get_voice!(voice);
-    if let Err(e) = index.call(|voice| {
+    let _ = index.call(|voice| {
         voice.set_position(Vector3::from([px as f32, py as f32, 0.0]));
         voice.set_velocity(Vector3::from([vx as f32, vy as f32, 0.0]));
-    }) {
-        warn_err!(e);
-    }
+    });
 }
 
 #[unsafe(no_mangle)]
@@ -1944,7 +1938,6 @@ pub extern "C" fn sound_createGroup(size: c_int) -> *const c_void {
 macro_rules! get_group {
     ($group: ident) => {{
         if $group.is_null() {
-            warn!("recieved NULL");
             return Default::default();
         }
         unsafe { std::mem::transmute::<*const c_void, thunderdome::Index>($group) }
@@ -1958,7 +1951,6 @@ pub extern "C" fn sound_playGroup(
     once: c_int,
 ) -> *const c_void {
     if sound.is_null() {
-        warn!("recieved NULL");
         return std::ptr::null();
     }
     let sound = unsafe { &*sound };
