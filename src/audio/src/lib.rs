@@ -87,6 +87,48 @@ impl AudioBuffer {
         use symphonia::core::probe::Hint;
         use symphonia::core::sample::{Sample, SampleFormat};
 
+        enum Frame<T> {
+            Mono(T),
+            Stereo(T, T),
+        }
+
+        fn load_frames_from_buffer_ref(buffer: &AudioBufferRef) -> Result<Vec<Frame<f32>>> {
+            match buffer {
+                AudioBufferRef::U8(buffer) => load_frames_from_buffer(buffer),
+                AudioBufferRef::U16(buffer) => load_frames_from_buffer(buffer),
+                AudioBufferRef::U24(buffer) => load_frames_from_buffer(buffer),
+                AudioBufferRef::U32(buffer) => load_frames_from_buffer(buffer),
+                AudioBufferRef::S8(buffer) => load_frames_from_buffer(buffer),
+                AudioBufferRef::S16(buffer) => load_frames_from_buffer(buffer),
+                AudioBufferRef::S24(buffer) => load_frames_from_buffer(buffer),
+                AudioBufferRef::S32(buffer) => load_frames_from_buffer(buffer),
+                AudioBufferRef::F32(buffer) => load_frames_from_buffer(buffer),
+                AudioBufferRef::F64(buffer) => load_frames_from_buffer(buffer),
+            }
+        }
+
+        fn load_frames_from_buffer<S: Sample>(buffer: &AudioBuffer<S>) -> Result<Vec<Frame<f32>>>
+        where
+            f32: FromSample<S>,
+        {
+            match buffer.spec().channels.count() {
+                1 => Ok(buffer
+                    .chan(0)
+                    .iter()
+                    .map(|sample| Frame::Mono((*sample).into_sample()))
+                    .collect()),
+                2 => Ok(buffer
+                    .chan(0)
+                    .iter()
+                    .zip(buffer.chan(1).iter())
+                    .map(|(left, right)| {
+                        Frame::Stereo((*left).into_sample(), (*right).into_sample())
+                    })
+                    .collect()),
+                _ => anyhow::bail!("Unsupported channel configuration"),
+            }
+        }
+
         // If no extension try to autodetect.
         let ext = std::path::Path::new(path)
             .extension()
@@ -109,20 +151,18 @@ impl AudioBuffer {
         };
         let src = ndata::open(path)?;
 
+        let codecs = symphonia::default::get_codecs();
+        let probe = symphonia::default::get_probe();
         let mss = MediaSourceStream::new(Box::new(src), Default::default());
-
         let mut hint = Hint::new();
         if let Some(ext) = ext {
             hint.with_extension(ext);
         }
 
         // Probe the media source.
-        let meta_opts: MetadataOptions = Default::default();
-        let fmt_opts: FormatOptions = Default::default();
-        let probed = symphonia::default::get_probe().format(&hint, mss, &fmt_opts, &meta_opts)?;
-
-        // Get the instantiated format reader.
-        let mut format = probed.format;
+        let mut format = probe
+            .format(&hint, mss, &Default::default(), &Default::default())?
+            .format;
 
         let (track_gain_db, track_peak) = {
             let mut track_gain_db = 0.;
@@ -167,70 +207,19 @@ impl AudioBuffer {
             (10.0_f32.powf(track_gain_db / 20.0), 1.0 / track_peak)
         };
 
-        // Find the first audio track with a known (decodeable) codec.
-        let track = format
-            .tracks()
-            .iter()
-            .find(|t| t.codec_params.codec != CODEC_TYPE_NULL)
-            .ok_or(anyhow::anyhow!("unsupported codec"))?;
+        let track = format.default_track().context("No default track")?;
+        let track_id = track.id;
 
-        let dec_opts: DecoderOptions = Default::default();
-        let mut decoder = symphonia::default::get_codecs().make(&track.codec_params, &dec_opts)?;
+        let codec_params = &track.codec_params;
+        let sample_rate = codec_params.sample_rate.context("Unknown sample rate")?;
+        let mut decoder = codecs.make(codec_params, &Default::default())?;
 
-        pub enum Frame<T> {
-            Mono(T),
-            Stereo(T, T),
-        }
-
-        pub fn load_frames_from_buffer_ref(buffer: &AudioBufferRef) -> Result<Vec<Frame<f32>>> {
-            match buffer {
-                AudioBufferRef::U8(buffer) => load_frames_from_buffer(buffer),
-                AudioBufferRef::U16(buffer) => load_frames_from_buffer(buffer),
-                AudioBufferRef::U24(buffer) => load_frames_from_buffer(buffer),
-                AudioBufferRef::U32(buffer) => load_frames_from_buffer(buffer),
-                AudioBufferRef::S8(buffer) => load_frames_from_buffer(buffer),
-                AudioBufferRef::S16(buffer) => load_frames_from_buffer(buffer),
-                AudioBufferRef::S24(buffer) => load_frames_from_buffer(buffer),
-                AudioBufferRef::S32(buffer) => load_frames_from_buffer(buffer),
-                AudioBufferRef::F32(buffer) => load_frames_from_buffer(buffer),
-                AudioBufferRef::F64(buffer) => load_frames_from_buffer(buffer),
-            }
-        }
-
-        pub fn load_frames_from_buffer<S: Sample>(
-            buffer: &AudioBuffer<S>,
-        ) -> Result<Vec<Frame<f32>>>
-        where
-            f32: FromSample<S>,
-        {
-            match buffer.spec().channels.count() {
-                1 => Ok(buffer
-                    .chan(0)
-                    .iter()
-                    .map(|sample| Frame::Mono((*sample).into_sample()))
-                    .collect()),
-                2 => Ok(buffer
-                    .chan(0)
-                    .iter()
-                    .zip(buffer.chan(1).iter())
-                    .map(|(left, right)| {
-                        Frame::Stereo((*left).into_sample(), (*right).into_sample())
-                    })
-                    .collect()),
-                _ => anyhow::bail!("Unsupported channel configuration"),
-            }
-        }
-
-        let codec = track.codec_params.clone();
-        let rate = codec
-            .sample_rate
-            .ok_or(anyhow::anyhow!("no sampling rate"))?;
-        let channels = codec.channels.ok_or(anyhow::anyhow!("no channels"))?;
+        let channels = track.codec_params.channels.context("no channels")?;
         if !channels.contains(Channels::FRONT_LEFT) {
             anyhow::bail!("no mono channel");
         }
         let stereo = channels.contains(Channels::FRONT_RIGHT);
-        let track_id = track.id;
+
         let mut frames: Vec<Frame<f32>> = vec![];
         loop {
             // Get the next packet from the media format.
@@ -239,19 +228,17 @@ impl AudioBuffer {
                 Err(Error::ResetRequired) => {
                     unimplemented!();
                 }
-                Err(Error::IoError(e)) => {
-                    if e.kind() == std::io::ErrorKind::UnexpectedEof
-                        && e.to_string() == "end of stream"
-                    {
-                        // End of File
-                        break;
-                    } else {
-                        anyhow::bail!(e);
+                Err(e) => match e {
+                    symphonia::core::errors::Error::IoError(e) => {
+                        if e.kind() == std::io::ErrorKind::UnexpectedEof
+                            && e.to_string() == "end of stream"
+                        {
+                            break;
+                        }
+                        return Err(symphonia::core::errors::Error::IoError(e).into());
                     }
-                }
-                Err(e) => {
-                    anyhow::bail!(e);
-                }
+                    e => anyhow::bail!(e),
+                },
             };
 
             // If the packet does not belong to the selected track, skip over it.
@@ -261,6 +248,7 @@ impl AudioBuffer {
                 frames.append(&mut load_frames_from_buffer_ref(&buffer)?);
             }
         }
+        // Squish the frames together
         let data = match stereo {
             true => {
                 let (left, right): (Vec<_>, Vec<_>) = frames
@@ -291,13 +279,10 @@ impl AudioBuffer {
                 },
                 data.as_ptr() as *const ALvoid,
                 (data.len() * std::mem::size_of::<f32>()) as i32,
-                rate as ALsizei,
+                sample_rate as ALsizei,
             );
         }
-
-        // Set debug stuff
         debug::object_label(debug::consts::AL_BUFFER_EXT, buffer.raw(), path);
-
         Ok(Self {
             name: String::from(path),
             buffer,
