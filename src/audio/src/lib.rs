@@ -71,8 +71,8 @@ pub enum AudioType {
 #[derive(PartialEq, Debug)]
 pub struct AudioBuffer {
     name: String,
-    track_gain_db: f32,
-    track_peak: f32,
+    track_gain_db: Option<f32>,
+    track_peak: Option<f32>,
     buffer: al::Buffer,
 }
 impl AudioBuffer {
@@ -172,8 +172,8 @@ impl AudioBuffer {
 
         // Get replaygain information
         let (track_gain_db, track_peak) = {
-            let mut track_gain_db = 0.;
-            let mut track_peak = 1.;
+            let mut track_gain_db = None;
+            let mut track_peak = None;
             if let Some(md) = format.metadata().current() {
                 for t in md.tags() {
                     fn tag_to_f32(t: &Tag) -> Result<f32> {
@@ -192,7 +192,7 @@ impl AudioBuffer {
                         match key {
                             StandardTagKey::ReplayGainTrackGain => match tag_to_f32(t) {
                                 Ok(f) => {
-                                    track_gain_db = f;
+                                    track_gain_db = Some(f);
                                 }
                                 Err(e) => {
                                     warn_err!(e);
@@ -200,7 +200,7 @@ impl AudioBuffer {
                             },
                             StandardTagKey::ReplayGainTrackPeak => match tag_to_f32(t) {
                                 Ok(f) => {
-                                    track_peak = f;
+                                    track_peak = Some(f);
                                 }
                                 Err(e) => {
                                     warn_err!(e);
@@ -211,7 +211,7 @@ impl AudioBuffer {
                     }
                 }
             }
-            (10.0_f32.powf(track_gain_db / 20.0), 1.0 / track_peak)
+            (track_gain_db, track_peak)
         };
 
         let track = format.default_track().context("No default track")?;
@@ -253,7 +253,7 @@ impl AudioBuffer {
             }
         }
         // Squish the frames together
-        let data = match stereo {
+        let mut data = match stereo {
             true => {
                 let (left, right): (Vec<_>, Vec<_>) = frames
                     .iter()
@@ -272,6 +272,29 @@ impl AudioBuffer {
                 })
                 .collect(),
         };
+        // Filter function for decoded Ogg Vorbis streams taken from "vgfilter.c"
+        if let Some(track_gain_db) = track_gain_db {
+            let scale_factor = 10.0_f32.powf(track_gain_db / 20.0);
+            let max_scale = 1.0 / track_peak.unwrap_or(1.0);
+            if scale_factor > max_scale {
+                for d in &mut data {
+                    let mut cur_sample = *d * scale_factor;
+                    // This is essentially the scaled hard-limiting algorithm
+                    // It looks like the soft-knee to me
+                    // I haven't found a better limiting algorithm yet...
+                    if cur_sample < -0.5 {
+                        cur_sample = ((cur_sample + 0.5) / (1.0 - 0.5)).tanh() * (1.0 - 0.5) - 0.5;
+                    } else if cur_sample > 0.5 {
+                        cur_sample = ((cur_sample - 0.5) / (1.0 - 0.5)).tanh() * (1.0 - 0.5) + 0.5;
+                    }
+                    *d = cur_sample;
+                }
+            } else {
+                for d in &mut data {
+                    *d *= scale_factor;
+                }
+            }
+        }
 
         let buffer = al::Buffer::new()?;
         unsafe {
