@@ -77,8 +77,9 @@ pub struct AudioBuffer {
 }
 impl AudioBuffer {
     fn from_path(path: &str) -> Result<Self> {
-        use symphonia::core::audio::{AudioBuffer, Channels, Signal};
+        use symphonia::core::audio::{AudioBuffer, AudioBufferRef, Channels, Signal};
         use symphonia::core::codecs::{CODEC_TYPE_NULL, Decoder, DecoderOptions};
+        use symphonia::core::conv::{FromSample, IntoSample};
         use symphonia::core::errors::Error;
         use symphonia::core::formats::{FormatOptions, FormatReader};
         use symphonia::core::io::MediaSourceStream;
@@ -176,65 +177,49 @@ impl AudioBuffer {
         let dec_opts: DecoderOptions = Default::default();
         let mut decoder = symphonia::default::get_codecs().make(&track.codec_params, &dec_opts)?;
 
-        // Templated function to load samples of different types
-        /*
-        fn parse_data<T: Sample>(
-            format: &mut Box<dyn FormatReader>,
-            decoder: &mut Box<dyn Decoder>,
-            track_id: u32,
-            stereo: bool,
-        ) -> Result<Vec<T>> {
-
-            let mut buffers: Vec<AudioBuffer<T>> = vec![];
-            loop {
-                // Get the next packet from the media format.
-                let packet = match format.next_packet() {
-                    Ok(packet) => packet,
-                    Err(Error::ResetRequired) => {
-                        unimplemented!();
-                    }
-                    Err(err) => {
-                        anyhow::bail!(err);
-                    }
-                };
-
-                // If the packet does not belong to the selected track, skip over it.
-                if packet.track_id() != track_id {
-                    continue;
-                }
-
-                // Decode the packet into audio samples.
-                match decoder.decode(&packet) {
-                    Ok(decoded) => {
-                        //let spec = decoded.spec();
-                        buffers.push(decoded.make_equivalent());
-                    }
-                    Err(Error::IoError(e)) => {
-                        if e.kind() == std::io::ErrorKind::UnexpectedEof
-                            && e.to_string() == "end of stream"
-                        {
-                            // End of File
-                            break;
-                        } else {
-                            anyhow::bail!(e);
-                        }
-                    }
-                    Err(e) => {
-                        anyhow::bail!(e);
-                    }
-                }
-            }
-            let left = buffers.iter().flat_map(|b| b.chan(0).to_vec());
-            let data: Vec<_> = match stereo {
-                true => {
-                    let right = buffers.iter().flat_map(|b| b.chan(1).to_vec());
-                    left.chain(right).collect()
-                }
-                false => left.collect(),
-            };
-            Ok(data)
+        pub enum Frame<T> {
+            Mono(T),
+            Stereo(T, T),
         }
-        */
+
+        pub fn load_frames_from_buffer_ref(buffer: &AudioBufferRef) -> Result<Vec<Frame<f32>>> {
+            match buffer {
+                AudioBufferRef::U8(buffer) => load_frames_from_buffer(buffer),
+                AudioBufferRef::U16(buffer) => load_frames_from_buffer(buffer),
+                AudioBufferRef::U24(buffer) => load_frames_from_buffer(buffer),
+                AudioBufferRef::U32(buffer) => load_frames_from_buffer(buffer),
+                AudioBufferRef::S8(buffer) => load_frames_from_buffer(buffer),
+                AudioBufferRef::S16(buffer) => load_frames_from_buffer(buffer),
+                AudioBufferRef::S24(buffer) => load_frames_from_buffer(buffer),
+                AudioBufferRef::S32(buffer) => load_frames_from_buffer(buffer),
+                AudioBufferRef::F32(buffer) => load_frames_from_buffer(buffer),
+                AudioBufferRef::F64(buffer) => load_frames_from_buffer(buffer),
+            }
+        }
+
+        pub fn load_frames_from_buffer<S: Sample>(
+            buffer: &AudioBuffer<S>,
+        ) -> Result<Vec<Frame<f32>>>
+        where
+            f32: FromSample<S>,
+        {
+            match buffer.spec().channels.count() {
+                1 => Ok(buffer
+                    .chan(0)
+                    .iter()
+                    .map(|sample| Frame::Mono((*sample).into_sample()))
+                    .collect()),
+                2 => Ok(buffer
+                    .chan(0)
+                    .iter()
+                    .zip(buffer.chan(1).iter())
+                    .map(|(left, right)| {
+                        Frame::Stereo((*left).into_sample(), (*right).into_sample())
+                    })
+                    .collect()),
+                _ => anyhow::bail!("Unsupported channel configuration"),
+            }
+        }
 
         let codec = track.codec_params.clone();
         let rate = codec
@@ -246,7 +231,7 @@ impl AudioBuffer {
         }
         let stereo = channels.contains(Channels::FRONT_RIGHT);
         let track_id = track.id;
-        let mut buffers: Vec<AudioBuffer<f32>> = vec![];
+        let mut frames: Vec<Frame<f32>> = vec![];
         loop {
             // Get the next packet from the media format.
             let packet = match format.next_packet() {
@@ -270,27 +255,30 @@ impl AudioBuffer {
             };
 
             // If the packet does not belong to the selected track, skip over it.
-            if packet.track_id() != track_id {
-                continue;
-            }
-
-            // Decode the packet into audio samples.
-            match decoder.decode(&packet) {
-                Ok(decoded) => {
-                    buffers.push(decoded.make_equivalent());
-                }
-                Err(e) => {
-                    anyhow::bail!(e);
-                }
+            if packet.track_id() == track_id {
+                // Decode the packet into audio samples.
+                let buffer = decoder.decode(&packet)?;
+                frames.append(&mut load_frames_from_buffer_ref(&buffer)?);
             }
         }
-        let left = buffers.iter().flat_map(|b| b.chan(0).to_vec());
-        let data: Vec<_> = match stereo {
+        let data = match stereo {
             true => {
-                let right = buffers.iter().flat_map(|b| b.chan(1).to_vec());
-                left.chain(right).collect()
+                let (left, right): (Vec<_>, Vec<_>) = frames
+                    .iter()
+                    .map(|x| match x {
+                        Frame::Mono(x) => (*x, *x),
+                        Frame::Stereo(l, r) => (*l, *r),
+                    })
+                    .unzip();
+                [left, right].concat()
             }
-            false => left.collect(),
+            false => frames
+                .iter()
+                .map(|x| match x {
+                    Frame::Mono(x) => *x,
+                    Frame::Stereo(l, _) => *l,
+                })
+                .collect(),
         };
 
         let buffer = al::Buffer::new()?;
@@ -306,65 +294,6 @@ impl AudioBuffer {
                 rate as ALsizei,
             );
         }
-
-        /*
-        let buffer = match codec.sample_format {
-            Some(fmt) => {
-                let buffer = al::Buffer::new()?;
-                match fmt {
-                    SampleFormat::U8 | SampleFormat::S8 => {
-                        let data = parse_data::<u8>(&mut format, &mut decoder, track_id, stereo)?;
-                        unsafe {
-                            alBufferData(
-                                buffer.raw(),
-                                match stereo {
-                                    true => AL_FORMAT_STEREO8,
-                                    false => AL_FORMAT_MONO8,
-                                },
-                                data.as_ptr() as *const ALvoid,
-                                (data.len() * std::mem::size_of::<u8>()) as i32,
-                                rate as ALsizei,
-                            );
-                        }
-                    }
-                    // Just make F64 be F32
-                    SampleFormat::F32 | SampleFormat::F64 => {
-                        let data = parse_data::<f32>(&mut format, &mut decoder, track_id, stereo)?;
-                        unsafe {
-                            alBufferData(
-                                buffer.raw(),
-                                match stereo {
-                                    true => AL_FORMAT_STEREO_FLOAT32,
-                                    false => AL_FORMAT_MONO_FLOAT32,
-                                },
-                                data.as_ptr() as *const ALvoid,
-                                (data.len() * std::mem::size_of::<f32>()) as i32,
-                                rate as ALsizei,
-                            );
-                        }
-                    }
-                    //SampleFormat::U16 | SampleFormat::S16 => {
-                    _ => {
-                        let data = parse_data::<i16>(&mut format, &mut decoder, track_id, stereo)?;
-                        unsafe {
-                            alBufferData(
-                                buffer.raw(),
-                                match stereo {
-                                    true => AL_FORMAT_STEREO16,
-                                    false => AL_FORMAT_MONO16,
-                                },
-                                data.as_ptr() as *const ALvoid,
-                                (data.len() * std::mem::size_of::<i16>()) as i32,
-                                rate as ALsizei,
-                            );
-                        }
-                    }
-                }
-                buffer
-            }
-            None => anyhow::bail!("no format!"),
-        };
-        */
 
         // Set debug stuff
         debug::object_label(debug::consts::AL_BUFFER_EXT, buffer.raw(), path);
