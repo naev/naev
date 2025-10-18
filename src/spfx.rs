@@ -67,7 +67,7 @@ pub fn set_speed(s: f32) {
         if spfx.global || spfx.cleanup {
             continue;
         }
-        if let Some(sfx) = spfx.sfx {
+        if let Some(sfx) = &spfx.sfx {
             match sfx.call(|sfx| {
                 sfx.set_pitch(s);
             }) {
@@ -85,7 +85,7 @@ pub fn set_speed_volume(v: f32) {
         if spfx.global || spfx.cleanup {
             continue;
         }
-        if let Some(sfx) = spfx.sfx {
+        if let Some(sfx) = &spfx.sfx {
             match sfx.call(|sfx| {
                 // Bypasses a lot of the systems we have, is it needed?
                 sfx.set_gain(sfx.volume() * v);
@@ -109,7 +109,7 @@ pub fn update(dt: f64) {
         if let Some(pos) = &mut spfx.pos {
             if let Some(vel) = spfx.vel {
                 *pos += vel * dt;
-                if let Some(sfx) = spfx.sfx {
+                if let Some(sfx) = &spfx.sfx {
                     // TODO move Audio ownership to LuaSpfx
                     let pos = pos.into_vector2();
                     sfx.call(|sfx| {
@@ -346,7 +346,7 @@ impl UserData for LuaSpfxRef {
         methods.add_method(
             "sfx",
             |_, this, ()| -> mlua::Result<Option<audio::AudioRef>> {
-                Ok(this.call(|this| this.sfx)?)
+                Ok(this.call(|this| this.sfx.clone())?)
             },
         );
         /*

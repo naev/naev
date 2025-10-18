@@ -787,7 +787,8 @@ impl AudioVolume {
     }
 }
 
-pub enum Message {
+enum Message {
+    RefDropped(thunderdome::Index),
     SourceStopped(ALuint),
 }
 static MESSAGES: Mutex<Vec<Message>> = Mutex::new(Vec::new());
@@ -966,6 +967,9 @@ impl AudioSystem {
     pub fn execute_messages(&self) {
         for m in MESSAGES.lock().unwrap().drain(..) {
             match m {
+                Message::RefDropped(id) => {
+                    AUDIO.voices.lock().unwrap().remove(id);
+                }
                 Message::SourceStopped(id) => {
                     // We always lock groups first
                     let mut groups = AUDIO.groups.lock().unwrap();
@@ -993,17 +997,22 @@ pub fn init() -> Result<()> {
     Ok(())
 }
 
-#[derive(Debug, Copy, Clone, derive_more::From, derive_more::Into, mlua::FromLua)]
-pub struct AudioRef(thunderdome::Index);
+#[derive(Debug, Clone, derive_more::From, mlua::FromLua)]
+pub struct AudioRef(Arc<thunderdome::Index>);
+impl Drop for AudioRef {
+    fn drop(&mut self) {
+        MESSAGES.lock().unwrap().push(Message::RefDropped(*self.0));
+    }
+}
 impl AudioRef {
     fn new(data: &Option<AudioData>) -> Result<Self> {
         let audio = Audio::new(data)?;
-        Ok(AUDIO.voices.lock().unwrap().insert(audio).into())
+        Ok(Arc::new(AUDIO.voices.lock().unwrap().insert(audio)).into())
     }
 
     fn new_buffer(buffer: &Arc<AudioBuffer>) -> Result<Self> {
         let audio = Audio::new_buffer(buffer)?;
-        Ok(AUDIO.voices.lock().unwrap().insert(audio).into())
+        Ok(Arc::new(AUDIO.voices.lock().unwrap().insert(audio)).into())
     }
 
     fn from_path(path: &str, _atype: AudioType) -> Result<Self> {
@@ -1014,11 +1023,11 @@ impl AudioRef {
 
     fn try_clone(&self) -> Result<Self> {
         let mut voices = AUDIO.voices.lock().unwrap();
-        let audio = match voices.get(self.0) {
+        let audio = match voices.get(*self.0) {
             Some(audio) => audio.try_clone()?,
             None => anyhow::bail!("Audio not found"),
         };
-        Ok(voices.insert(audio).into())
+        Ok(Arc::new(voices.insert(audio)).into())
     }
 
     pub fn call<S, R>(&self, f: S) -> anyhow::Result<R>
@@ -1026,7 +1035,7 @@ impl AudioRef {
         S: Fn(&Audio) -> R,
     {
         let audio = AUDIO.voices.lock().unwrap();
-        match audio.get(self.0) {
+        match audio.get(*self.0) {
             Some(audio) => Ok(f(audio)),
             None => anyhow::bail!("Audio not found"),
         }
@@ -1037,7 +1046,7 @@ impl AudioRef {
         S: Fn(&mut Audio) -> R,
     {
         let mut audio = AUDIO.voices.lock().unwrap();
-        match audio.get_mut(self.0) {
+        match audio.get_mut(*self.0) {
             Some(audio) => Ok(f(audio)),
             None => anyhow::bail!("Audio not found"),
         }
@@ -2060,4 +2069,4 @@ pub extern "C" fn sound_disabled() -> c_int {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn sound_set_disabled(disable: c_int) {}
+pub extern "C" fn sound_set_disabled(_disable: c_int) {}
