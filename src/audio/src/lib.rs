@@ -76,6 +76,26 @@ pub struct AudioBuffer {
     buffer: al::Buffer,
 }
 impl AudioBuffer {
+    fn get_valid_path(path: &str) -> Option<String> {
+        let ext = std::path::Path::new(path)
+            .extension()
+            .and_then(|s| s.to_str());
+        match ext {
+            Some(_) => Some(path.to_string()),
+            None => {
+                let mut npath = None;
+                for ext in &["ogg", "flac", "wav"] {
+                    let tpath = format!("{}.{}", path, ext);
+                    if ndata::exists(&tpath) {
+                        npath = Some(tpath);
+                        break;
+                    }
+                }
+                npath
+            }
+        }
+    }
+
     fn from_path(path: &str) -> Result<Self> {
         use symphonia::core::audio::{AudioBuffer, AudioBufferRef, Channels, Signal};
         use symphonia::core::codecs::{CODEC_TYPE_NULL, Decoder, DecoderOptions};
@@ -87,6 +107,7 @@ impl AudioBuffer {
         use symphonia::core::probe::Hint;
         use symphonia::core::sample::{Sample, SampleFormat};
 
+        // Small wrapper for Mono/Stereo frames
         enum Frame<T> {
             Mono(T),
             Stereo(T, T),
@@ -133,24 +154,11 @@ impl AudioBuffer {
         let ext = std::path::Path::new(path)
             .extension()
             .and_then(|s| s.to_str());
-        let path = match ext {
-            Some(_) => path,
-            None => {
-                let mut npath = None;
-                for ext in &["ogg", "flac", "wav"] {
-                    let tpath = format!("{}.{}", path, ext);
-                    if ndata::exists(&tpath) {
-                        npath = Some(tpath);
-                        break;
-                    }
-                }
-                &npath
-                    .context(format!("No audio file matching '{}' found", path))?
-                    .to_string()
-            }
-        };
-        let src = ndata::open(path)?;
+        let path = Self::get_valid_path(path)
+            .context(format!("No audio file matching '{}' found", path))?;
+        let src = ndata::open(&path)?;
 
+        // Load it up
         let codecs = symphonia::default::get_codecs();
         let probe = symphonia::default::get_probe();
         let mss = MediaSourceStream::new(Box::new(src), Default::default());
@@ -158,12 +166,11 @@ impl AudioBuffer {
         if let Some(ext) = ext {
             hint.with_extension(ext);
         }
-
-        // Probe the media source.
         let mut format = probe
             .format(&hint, mss, &Default::default(), &Default::default())?
             .format;
 
+        // Get replaygain information
         let (track_gain_db, track_peak) = {
             let mut track_gain_db = 0.;
             let mut track_peak = 1.;
@@ -225,9 +232,6 @@ impl AudioBuffer {
             // Get the next packet from the media format.
             let packet = match format.next_packet() {
                 Ok(packet) => packet,
-                Err(Error::ResetRequired) => {
-                    unimplemented!();
-                }
                 Err(e) => match e {
                     symphonia::core::errors::Error::IoError(e) => {
                         if e.kind() == std::io::ErrorKind::UnexpectedEof
@@ -282,9 +286,9 @@ impl AudioBuffer {
                 sample_rate as ALsizei,
             );
         }
-        debug::object_label(debug::consts::AL_BUFFER_EXT, buffer.raw(), path);
+        debug::object_label(debug::consts::AL_BUFFER_EXT, buffer.raw(), &path);
         Ok(Self {
-            name: String::from(path),
+            name: path,
             buffer,
             track_gain_db,
             track_peak,
@@ -324,6 +328,9 @@ impl AudioBuffer {
     }
 
     fn get_or_try_load(name: &str) -> Result<Arc<Self>> {
+        let name = AudioBuffer::get_valid_path(name)
+            .context(format!("No audio file matching '{}' found", name))?;
+
         let mut buffers = AUDIO_BUFFER.lock().unwrap();
         for buf in buffers.iter() {
             if let Some(b) = buf.upgrade() {
@@ -332,7 +339,7 @@ impl AudioBuffer {
                 }
             }
         }
-        let data = Arc::new(Self::from_path(name)?);
+        let data = Arc::new(Self::from_path(&name)?);
         buffers.push(Arc::downgrade(&data));
         Ok(data)
     }
