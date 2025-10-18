@@ -681,7 +681,7 @@ pub struct AudioGroup {
     volume: f32,
     pitch: f32,
     speed_affects: bool,
-    voices: Vec<thunderdome::Index>,
+    voices: Vec<AudioRef>,
 }
 
 #[derive(Clone, PartialEq, Copy, Debug)]
@@ -899,12 +899,20 @@ impl AudioSystem {
                         // Remove from group too if it has one
                         if let Some(gid) = v.groupid() {
                             let group = &mut groups[gid];
-                            if let Some(gvid) = group.voices.iter().position(|x| *x == vid) {
+                            if let Some(gvid) = group.voices.iter().position(|x| *x.0 == vid) {
                                 group.voices.remove(gvid);
                             }
                         }
                         // Finally remove the voice
-                        voices.remove(vid);
+                        if let Some(voice) = voices.get(vid) {
+                            match voice {
+                                Audio::Static(voice) => {
+                                    if voice.ingame {
+                                        voices.remove(vid);
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -918,7 +926,7 @@ pub fn init() -> Result<()> {
     Ok(())
 }
 
-#[derive(Debug, Clone, derive_more::From, mlua::FromLua)]
+#[derive(Debug, Clone, PartialEq, derive_more::From, mlua::FromLua)]
 pub struct AudioRef(Arc<thunderdome::Index>);
 impl Drop for AudioRef {
     fn drop(&mut self) {
@@ -1889,15 +1897,12 @@ pub extern "C" fn sound_playGroup(
 
     let mut audio = AudioStatic::new(&Some(AudioData::Buffer(sound.clone()))).unwrap();
     audio.groupid = Some(groupid);
-    let mut voices = AUDIO.voices.lock().unwrap();
     let audio = Audio::Static(audio);
     if once != 0 {
         audio.set_looping(true);
     }
-    let voice = voices.insert(audio);
-    group.voices.push(voice);
-
-    unsafe { std::mem::transmute::<thunderdome::Index, *const c_void>(voice) }
+    let voice = AudioRef::from_audio(audio);
+    unsafe { std::mem::transmute::<AudioRef, *const c_void>(voice) }
 }
 
 #[unsafe(no_mangle)]
@@ -1907,7 +1912,9 @@ pub extern "C" fn sound_stopGroup(group: *const c_void) {
     let group = &mut groups[groupid];
     let voices = AUDIO.voices.lock().unwrap();
     for v in group.voices.drain(..) {
-        voices[v].stop();
+        if let Some(voice) = voices.get(*v.0) {
+            voice.stop();
+        }
     }
 }
 
@@ -1918,7 +1925,9 @@ pub extern "C" fn sound_pauseGroup(group: *const c_void) {
     let group = &groups[groupid];
     let voices = AUDIO.voices.lock().unwrap();
     for v in group.voices.iter() {
-        voices[*v].pause();
+        if let Some(voice) = voices.get(*v.0) {
+            voice.pause();
+        }
     }
 }
 
@@ -1929,7 +1938,9 @@ pub extern "C" fn sound_resumeGroup(group: *const c_void) {
     let group = &groups[groupid];
     let voices = AUDIO.voices.lock().unwrap();
     for v in group.voices.iter() {
-        voices[*v].play();
+        if let Some(voice) = voices.get(*v.0) {
+            voice.play();
+        }
     }
 }
 
