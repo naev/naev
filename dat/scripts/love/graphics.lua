@@ -88,15 +88,16 @@ graphics.Image = class.inheritsFrom( graphics.Drawable )
 graphics.Image._type = "Image"
 function graphics.newImage( filename )
    local ttex
-   if type(filename)=='string' then
+   local ft = type(filename)
+   if ft=='string' then
       ttex = naev.tex.open( filename )
-   elseif type(filename)=='table' and filename.type then
+   elseif ft=='table' and filename.type then
       local ot = filename:type() -- codespell:ignore ot
       if ot=='ImageData' then -- codespell:ignore ot
          ttex = naev.tex.open( filename.d, filename.w, filename.h )
       end
    -- Assume Naev texture
-   elseif type(filename)=='userdata' then
+   elseif ft=='userdata' then
       ttex = filename
    end
    if ttex ~= nil then
