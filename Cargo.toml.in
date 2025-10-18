@@ -38,7 +38,8 @@ edition = "2024"
 # 1.84 New random syntax
 # 1.85 Rust 2024
 # 1.87 str::from_utf8, nalgebra 0.34
-rust-version = "1.87" # Note this has to be set in meson.build too!
+# 1.89 symphonia-adapter-libopus
+rust-version = "1.89" # Note this has to be set in meson.build too!
 
 [workspace.lints.clippy]
 not_unsafe_ptr_arg_deref = "allow"

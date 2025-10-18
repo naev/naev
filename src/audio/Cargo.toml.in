@@ -16,7 +16,6 @@ naevc = { workspace = true }
 mlua = { workspace = true }
 ndata = { workspace = true }
 anyhow = { workspace = true }
-symphonia = { workspace = true }
 log = { workspace = true }
 gettext = { workspace = true }
 naev_core = { workspace = true }
@@ -25,3 +24,6 @@ thunderdome = { workspace = true }
 static_assertions = { workspace = true }
 tracing-mutex = { workspace = true }
 derive_more = { workspace = true }
+symphonia = { workspace = true }
+# no Rust support for Opus, so we use libopus through the adapter
+symphonia-adapter-libopus = "0.2"

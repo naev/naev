@@ -159,7 +159,7 @@ impl AudioBuffer {
         let src = ndata::open(&path)?;
 
         // Load it up
-        let codecs = symphonia::default::get_codecs();
+        let codecs = &CODECS;
         let probe = symphonia::default::get_probe();
         let mss = MediaSourceStream::new(Box::new(src), Default::default());
         let mut hint = Hint::new();
@@ -957,6 +957,14 @@ impl AudioSystem {
     }
 }
 pub static AUDIO: LazyLock<AudioSystem> = LazyLock::new(|| AudioSystem::new().unwrap());
+pub static CODECS: LazyLock<symphonia::core::codecs::CodecRegistry> = LazyLock::new(|| {
+    use symphonia::core::codecs;
+    use symphonia_adapter_libopus::OpusDecoder;
+    let mut codec_registry = codecs::CodecRegistry::new();
+    symphonia::default::register_enabled_codecs(&mut codec_registry);
+    codec_registry.register_all::<OpusDecoder>();
+    codec_registry
+});
 
 pub fn init() -> Result<()> {
     let _ = &*AUDIO;
