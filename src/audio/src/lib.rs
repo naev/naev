@@ -315,7 +315,7 @@ impl AudioBuffer {
         */
     }
 
-    fn get(name: &str) -> Option<Arc<Self>> {
+    pub fn get(name: &str) -> Option<Arc<Self>> {
         let name = match AudioBuffer::get_valid_path(name) {
             Some(name) => name,
             None => {
@@ -334,7 +334,7 @@ impl AudioBuffer {
         None
     }
 
-    fn get_or_try_load(name: &str) -> Result<Arc<Self>> {
+    pub fn get_or_try_load(name: &str) -> Result<Arc<Self>> {
         let name = AudioBuffer::get_valid_path(name)
             .context(format!("No audio file matching '{}' found", name))?;
 
@@ -349,6 +349,10 @@ impl AudioBuffer {
         let data = Arc::new(Self::from_path(&name)?);
         buffers.push(Arc::downgrade(&data));
         Ok(data)
+    }
+
+    fn raw(&self) -> ALuint {
+        self.buffer.raw()
     }
 }
 /// All the shared Static audio data (streaming is separate)
@@ -404,6 +408,7 @@ impl AudioStatic {
 
     fn new_buffer(buffer: &Arc<AudioBuffer>) -> Result<Self> {
         let source = al::Source::new()?;
+        source.parameter_i32(AL_BUFFER, buffer.raw() as ALint);
         debug::object_label(debug::consts::AL_SOURCE_EXT, source.raw(), &buffer.name);
         Ok(AudioStatic {
             source,
@@ -676,10 +681,6 @@ impl Audio {
         check_audio!(self);
         self.source().parameter_f32(AL_AIR_ABSORPTION_FACTOR, value);
     }
-
-    pub fn into_ptr(self) -> *mut Self {
-        Box::into_raw(Box::new(self))
-    }
 }
 
 #[derive(Debug, Default)]
@@ -892,6 +893,12 @@ impl AudioSystem {
         }
     }
 
+    pub fn play_buffer(&self, buf: &Arc<AudioBuffer>) -> Result<AudioRef> {
+        let audio = Audio::new_buffer(buf)?;
+        audio.play();
+        Ok(AudioRef::from_audio(audio))
+    }
+
     pub fn execute_messages(&self) {
         for m in MESSAGES.lock().unwrap().drain(..) {
             match m {
@@ -926,7 +933,7 @@ impl AudioSystem {
         }
     }
 }
-static AUDIO: LazyLock<AudioSystem> = LazyLock::new(|| AudioSystem::new().unwrap());
+pub static AUDIO: LazyLock<AudioSystem> = LazyLock::new(|| AudioSystem::new().unwrap());
 
 pub fn init() -> Result<()> {
     let _ = &*AUDIO;
@@ -2022,3 +2029,26 @@ pub extern "C" fn sound_disabled() -> c_int {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_set_disabled(_disable: c_int) {}
+
+/*
+pub fn test () {
+    audio::init().unwrap();
+    let buf = AudioBuffer::get_or_try_load( "snd/sounds/activate1.ogg" )?;
+    dbg!( buf.duration( AudioSeek::Seconds ) );
+    let audioref = AUDIO.play_buffer(&buf)?;
+        audioref.call( |a| {
+            let src = a.source();
+            unsafe {
+                al::alSourcePlay(  src.raw() );
+                dbg!( al::alGetError() );
+            }
+        })?;
+    for _ in 0..3 {
+        audioref.call( |a| {
+            dbg!(a.tell( AudioSeek::Seconds ) );
+            dbg!(a.is_playing());
+        }).unwrap();
+        std::thread::sleep( std::time::Duration::from_millis(1000) );
+    }
+}
+*/
