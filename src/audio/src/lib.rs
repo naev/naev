@@ -1495,12 +1495,42 @@ impl UserData for AudioRef {
 
                 macro_rules! efx_set_f32 {
                     ($name: literal, $field: ident) => {{
-                        efx.effect.parameter_f32($field, param.get::<f32>($name)?);
+                        match param.get::<mlua::Value>($name)? {
+                            mlua::Value::Nil => (),
+                            mlua::Value::Number(val) => {
+                                efx.effect.parameter_f32($field, val as f32)
+                            }
+                            mlua::Value::Integer(val) => {
+                                efx.effect.parameter_f32($field, val as f32)
+                            }
+                            val => {
+                                return Err(mlua::Error::RuntimeError(format!(
+                                    "invalid type '{}' for paremeter '{}' (expected f32)",
+                                    val.type_name(),
+                                    $name
+                                )));
+                            }
+                        }
                     }};
                 }
                 macro_rules! efx_set_i32 {
                     ($name: literal, $field: ident) => {{
-                        efx.effect.parameter_i32($field, param.get::<i32>($name)?);
+                        match param.get::<mlua::Value>($name)? {
+                            mlua::Value::Nil => (),
+                            mlua::Value::Number(val) => {
+                                efx.effect.parameter_i32($field, val as i32)
+                            }
+                            mlua::Value::Integer(val) => {
+                                efx.effect.parameter_i32($field, val as i32)
+                            }
+                            val => {
+                                return Err(mlua::Error::RuntimeError(format!(
+                                    "invalid type '{}' for paremeter '{}' (expected i32)",
+                                    val.type_name(),
+                                    $name
+                                )));
+                            }
+                        }
                     }};
                 }
 
