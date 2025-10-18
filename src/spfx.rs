@@ -123,7 +123,7 @@ pub fn update(dt: f64) {
         }
         if let Some(update) = &spfx.update {
             spfx.env
-                .call::<()>(&lua, &update, (LuaSpfxRef(id), dt))
+                .call::<()>(lua, update, (LuaSpfxRef(id), dt))
                 .unwrap_or_else(|e| {
                     warn_err!(e);
                 });
@@ -154,11 +154,11 @@ fn render(layer: RenderLayer, dt: f64) {
         {
             if let Some(pos) = renderer::Context::get().game_to_screen_coords_inrange(
                 pos.into_vector2(),
-                spfx.radius.unwrap_or(std::f64::INFINITY),
+                spfx.radius.unwrap_or(f64::INFINITY),
             ) {
                 // TODO flip y
                 spfx.env
-                    .call::<()>(&lua, func, (pos.x, pos.y, z, dt))
+                    .call::<()>(lua, func, (pos.x, pos.y, z, dt))
                     .unwrap_or_else(|e| {
                         warn_err!(e);
                     });
