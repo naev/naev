@@ -316,6 +316,13 @@ impl AudioBuffer {
     }
 
     fn get(name: &str) -> Option<Arc<Self>> {
+        let name = match AudioBuffer::get_valid_path(name) {
+            Some(name) => name,
+            None => {
+                return None;
+            }
+        };
+
         let buffers = AUDIO_BUFFER.lock().unwrap();
         for buf in buffers.iter() {
             if let Some(b) = buf.upgrade() {
