@@ -1753,13 +1753,16 @@ pub extern "C" fn sound_get(name: *const c_char) -> *const Arc<AudioBuffer> {
         return std::ptr::null();
     }
     let name = unsafe { CStr::from_ptr(name).to_string_lossy() };
-    for ext in ["wav", "ogg", "flac"] {
-        let path = format!("snd/sounds/{name}.{ext}");
-        if let Ok(buffer) = AudioBuffer::get_or_try_load(&path) {
-            return Box::into_raw(Box::new(buffer));
-        };
+    match AudioBuffer::get_valid_path(&format!("snd/sounds/{name}")) {
+        Some(path) => match AudioBuffer::get_or_try_load(&path) {
+            Ok(buffer) => Box::into_raw(Box::new(buffer)),
+            Err(e) => {
+                warn_err!(e);
+                std::ptr::null()
+            }
+        },
+        None => std::ptr::null(),
     }
-    std::ptr::null()
 }
 
 #[unsafe(no_mangle)]
