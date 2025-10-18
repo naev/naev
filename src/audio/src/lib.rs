@@ -84,7 +84,7 @@ impl AudioBuffer {
             Some(_) => Some(path.to_string()),
             None => {
                 let mut npath = None;
-                for ext in &["ogg", "flac", "wav"] {
+                for ext in &["opus", "ogg", "flac", "wav"] {
                     let tpath = format!("{}.{}", path, ext);
                     if ndata::exists(&tpath) {
                         npath = Some(tpath);
