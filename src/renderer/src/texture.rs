@@ -616,11 +616,6 @@ impl Texture {
         Ok(())
     }
 
-    pub fn into_ptr(self) -> *mut Self {
-        unsafe { Arc::increment_strong_count(Arc::into_raw(self.texture.clone())) }
-        Box::into_raw(Box::new(self))
-    }
-
     pub fn sprite_from_dir(&self, dir: f64) -> (usize, usize) {
         use std::f64::consts::PI;
         let sxy = self.sx * self.sy;
@@ -640,6 +635,11 @@ impl Texture {
             s
         };
         (s % self.sx, s / self.sx)
+    }
+
+    pub fn into_ptr(self) -> *mut Self {
+        unsafe { Arc::increment_strong_count(Arc::into_raw(self.texture.clone())) }
+        Box::into_raw(Box::new(self))
     }
 }
 

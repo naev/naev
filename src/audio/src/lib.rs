@@ -1820,13 +1820,14 @@ pub fn open_audio(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
 
 // Here be C API
 use std::ffi::{CStr, c_char, c_double, c_int, c_void};
+use std::mem::ManuallyDrop;
 
 // We assume that the index can be cast to a pointer for C to not complain
 // This should hold on 64 bit platforms
 static_assertions::assert_eq_size!(AudioRef, *const c_void);
 
 #[unsafe(no_mangle)]
-pub extern "C" fn sound_get(name: *const c_char) -> *const Arc<AudioBuffer> {
+pub extern "C" fn sound_get(name: *const c_char) -> *const AudioBuffer {
     if name.is_null() {
         warn!("recieved NULL");
         return std::ptr::null();
@@ -1834,7 +1835,7 @@ pub extern "C" fn sound_get(name: *const c_char) -> *const Arc<AudioBuffer> {
     let name = unsafe { CStr::from_ptr(name).to_string_lossy() };
     match AudioBuffer::get_valid_path(&format!("snd/sounds/{name}")) {
         Some(path) => match AudioBuffer::get_or_try_load(&path) {
-            Ok(buffer) => Box::into_raw(Box::new(buffer)),
+            Ok(buffer) => Arc::into_raw(buffer.clone()),
             Err(e) => {
                 warn_err!(e);
                 std::ptr::null()
@@ -1845,23 +1846,23 @@ pub extern "C" fn sound_get(name: *const c_char) -> *const Arc<AudioBuffer> {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn sound_getLength(sound: *const Arc<AudioBuffer>) -> c_double {
+pub extern "C" fn sound_getLength(sound: *const AudioBuffer) -> c_double {
     if sound.is_null() {
         warn!("recieved NULL");
         return 0.0;
     }
-    let sound = unsafe { &*sound };
+    let sound = ManuallyDrop::new(unsafe { Arc::from_raw(sound) });
     sound.duration(AudioSeek::Seconds) as c_double
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn sound_play(sound: *const Arc<AudioBuffer>) -> *const c_void {
+pub extern "C" fn sound_play(sound: *const AudioBuffer) -> *const c_void {
     if sound.is_null() {
         warn!("recieved NULL");
         return std::ptr::null();
     }
-    let sound = unsafe { &*sound };
-    match AUDIO.play_buffer(sound) {
+    let sound = ManuallyDrop::new(unsafe { Arc::from_raw(sound) });
+    match AUDIO.play_buffer(&sound) {
         Ok(audioref) => unsafe { std::mem::transmute::<AudioRef, *const c_void>(audioref) },
         Err(e) => {
             warn_err!(e);
@@ -1872,7 +1873,7 @@ pub extern "C" fn sound_play(sound: *const Arc<AudioBuffer>) -> *const c_void {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_playPos(
-    sound: *const Arc<AudioBuffer>,
+    sound: *const AudioBuffer,
     px: c_double,
     py: c_double,
     vx: c_double,
@@ -1881,9 +1882,9 @@ pub extern "C" fn sound_playPos(
     if sound.is_null() {
         return std::ptr::null();
     }
-    let sound = unsafe { &*sound };
+    let sound = ManuallyDrop::new(unsafe { Arc::from_raw(sound) });
     let voice = match AudioBuilder::new(AudioType::Static)
-        .buffer(sound.clone())
+        .buffer((*sound).clone())
         .position(Some(Vector2::new(px as f32, py as f32)))
         .velocity(Some(Vector2::new(vx as f32, vy as f32)))
         .play(true)
@@ -2042,13 +2043,13 @@ macro_rules! get_group {
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_playGroup(
     group: *const c_void,
-    sound: *const Arc<AudioBuffer>,
+    sound: *const AudioBuffer,
     once: c_int,
 ) -> *const c_void {
     if sound.is_null() {
         return std::ptr::null();
     }
-    let sound = unsafe { &*sound };
+    let sound = ManuallyDrop::new(unsafe { Arc::from_raw(sound) });
 
     let groupid = get_group!(group);
     let mut groups = AUDIO.groups.lock().unwrap();
@@ -2059,7 +2060,7 @@ pub extern "C" fn sound_playGroup(
 
     //audio.groupid = Some(groupid);
     let voice = match AudioBuilder::new(AudioType::Static)
-        .buffer(sound.clone())
+        .buffer((*sound).clone())
         .play(true)
         .looping(once != 0)
         .build()
