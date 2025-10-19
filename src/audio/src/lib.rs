@@ -20,7 +20,7 @@ use crate::source_spatialize::consts::*;
 use crate::source_spatialize::*;
 use anyhow::Context;
 use naev_core::utils::{binary_search_by_key_ref, sort_by_key_ref};
-use std::sync::atomic::{AtomicU32, Ordering};
+use std::sync::atomic::{AtomicBool, AtomicU32, Ordering};
 use symphonia::core::io::MediaSourceStream;
 use thunderdome::Arena;
 
@@ -455,15 +455,72 @@ impl AudioStatic {
 }
 
 pub struct AudioStream {
-    source: al::Source,
+    source: Arc<al::Source>,
+    finish: Arc<AtomicBool>,
     volume: f32,
-    stream: Mutex<MediaSourceStream>,
-    buffers: [al::Buffer; 2],
-    active: u8,
     thread: std::thread::JoinHandle<()>,
-    // Replaygain
-    scale_factor: f32,
-    max_scale: f32,
+}
+impl AudioStream {
+    fn thread(
+        source: Arc<al::Source>,
+        finish: Arc<AtomicBool>,
+        file: ndata::physfs::File,
+    ) -> Result<()> {
+        // Load mediastream
+        let codecs = &CODECS;
+        let probe = symphonia::default::get_probe();
+        let mss = MediaSourceStream::new(Box::new(file), Default::default());
+        let mut format = probe
+            .format(
+                &Default::default(),
+                mss,
+                &Default::default(),
+                &Default::default(),
+            )?
+            .format;
+
+        // Set up buffers
+        let buffers: [al::Buffer; 2] = [al::Buffer::new()?, al::Buffer::new()?];
+
+        let mut active: usize = 0;
+        loop {
+            if finish.load(Ordering::Relaxed) {
+                return Ok(());
+            }
+
+            let state = source.get_parameter_i32(AL_BUFFERS_PROCESSED);
+            if state > 0 {
+                source.unqueue_buffer();
+                // TODO load buffer into &buffers[active]
+                if true {
+                    // TODO handle error condition
+                    return Ok(());
+                } else {
+                    source.queue_buffer(&buffers[active]);
+                    active = 1 - active;
+                }
+            }
+
+            std::thread::sleep(std::time::Duration::from_millis(10));
+        }
+    }
+
+    pub fn from_path(path: &str) -> Result<Self> {
+        let path = AudioBuffer::get_valid_path(path)
+            .context(format!("No audio file matching '{}' found", path))?;
+        let src = ndata::open(&path)?;
+
+        let finish = Arc::new(AtomicBool::new(false));
+        let source = Arc::new(al::Source::new()?);
+
+        let thfsh = finish.clone();
+        let thsrc = source.clone();
+        let th = std::thread::spawn(move || AudioStream::thread(thsrc, thfsh, src));
+
+        source.parameter_f32(AL_GAIN, 1.);
+
+        todo!();
+    }
 }
 
 macro_rules! check_audio {
