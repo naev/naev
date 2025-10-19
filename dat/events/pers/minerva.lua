@@ -37,7 +37,7 @@ return function ()
             m.ad = {
                _("Back in my day we walked uphill, both ways, in the snow to fight for honour!"),
                _("Kids don't know how good they have it these days!"),
-               _("Nobody likes a good honour fight to the death anymore!"),
+               _("Nobody likes a good honour fight to the death any more!"),
             }
             m.taunt = _("Get out of my way punk!")
             m.comm_greet = _([["Can't you see I'm busy complaining, whippersnap!"]])
@@ -45,7 +45,7 @@ return function ()
             local vel = p:vel()
             for i=1,4 do
                local e = pilot.add("Dvaered Vendetta", "Dvaered", pos )
-               e.capturable = true
+               e:memory().capturable = true
                e:setVel( vel )
                e:setLeader( p )
             end
