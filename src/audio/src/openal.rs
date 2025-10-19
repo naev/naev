@@ -475,6 +475,20 @@ impl Source {
         }
         out
     }
+
+    pub fn queue_buffer(&self, buffer: &Buffer) {
+        unsafe {
+            alSourceQueueBuffers(self.raw(), 1, &buffer.0);
+        }
+    }
+
+    pub fn unqueue_buffer(&self) -> ALuint {
+        let mut buf: ALuint = 0;
+        unsafe {
+            alSourceUnqueueBuffers(self.raw(), 1, &mut buf);
+        }
+        buf
+    }
 }
 impl Drop for Source {
     fn drop(&mut self) {
