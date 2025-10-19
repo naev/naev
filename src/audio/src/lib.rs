@@ -21,6 +21,7 @@ use crate::source_spatialize::*;
 use anyhow::Context;
 use naev_core::utils::{binary_search_by_key_ref, sort_by_key_ref};
 use std::sync::atomic::{AtomicU32, Ordering};
+use symphonia::core::io::MediaSourceStream;
 use thunderdome::Arena;
 
 use anyhow::Result;
@@ -103,7 +104,6 @@ impl AudioBuffer {
         use symphonia::core::conv::{FromSample, IntoSample};
         use symphonia::core::errors::Error;
         use symphonia::core::formats::{FormatOptions, FormatReader};
-        use symphonia::core::io::MediaSourceStream;
         use symphonia::core::meta::{MetadataOptions, StandardTagKey, Tag, Value};
         use symphonia::core::probe::Hint;
         use symphonia::core::sample::{Sample, SampleFormat};
@@ -400,8 +400,8 @@ pub enum AudioData {
 
 #[derive(Debug)]
 pub enum Audio {
-    LuaStatic(AudioStatic),
     Static(AudioStatic),
+    LuaStatic(AudioStatic),
 }
 
 #[derive(PartialEq, Debug)]
@@ -452,6 +452,18 @@ impl AudioStatic {
         // TODO copy some other properties over and set volume
         Ok(audio)
     }
+}
+
+pub struct AudioStream {
+    source: al::Source,
+    volume: f32,
+    stream: Mutex<MediaSourceStream>,
+    buffers: [al::Buffer; 2],
+    active: u8,
+    thread: std::thread::JoinHandle<()>,
+    // Replaygain
+    scale_factor: f32,
+    max_scale: f32,
 }
 
 macro_rules! check_audio {
