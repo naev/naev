@@ -740,7 +740,6 @@ impl AudioVolume {
 }
 
 enum Message {
-    RefDropped(thunderdome::Index),
     SourceStopped(ALuint),
 }
 static MESSAGES: Mutex<Vec<Message>> = Mutex::new(Vec::new());
@@ -925,9 +924,6 @@ impl AudioSystem {
     pub fn execute_messages(&self) {
         for m in MESSAGES.lock().unwrap().drain(..) {
             match m {
-                Message::RefDropped(id) => {
-                    AUDIO.voices.lock().unwrap().remove(id);
-                }
                 Message::SourceStopped(id) => {
                     // We always lock groups first
                     let mut groups = AUDIO.groups.lock().unwrap();
@@ -973,11 +969,6 @@ pub fn init() -> Result<()> {
 
 #[derive(Debug, Clone, PartialEq, derive_more::From, mlua::FromLua)]
 pub struct AudioRef(Arc<thunderdome::Index>);
-impl Drop for AudioRef {
-    fn drop(&mut self) {
-        MESSAGES.lock().unwrap().push(Message::RefDropped(*self.0));
-    }
-}
 impl AudioRef {
     fn new(data: &Option<AudioData>) -> Result<Self> {
         let audio = Audio::new(data)?;
