@@ -399,6 +399,7 @@ pub enum AudioData {
 
 #[derive(Debug)]
 pub enum Audio {
+    LuaStatic(AudioStatic),
     Static(AudioStatic),
 }
 
@@ -455,7 +456,7 @@ impl AudioStatic {
 macro_rules! check_audio {
     ($self: ident) => {{
         match $self {
-            Audio::Static(this) => {
+            Audio::Static(this) | Audio::LuaStatic(this) => {
                 if this.data == None {
                     return Default::default();
                 }
@@ -481,6 +482,7 @@ impl Audio {
     fn try_clone(&self) -> Result<Self> {
         match self {
             Self::Static(this) => Ok(Self::Static(this.try_clone()?)),
+            Self::LuaStatic(this) => Ok(Self::LuaStatic(this.try_clone()?)),
         }
     }
 
@@ -509,18 +511,20 @@ impl Audio {
                     );
                 }
             }
+            _ => (),
         }
     }
 
     fn source(&self) -> &al::Source {
         match self {
-            Self::Static(this) => &this.source,
+            Self::Static(this) | Self::LuaStatic(this) => &this.source,
         }
     }
 
     fn groupid(&self) -> Option<thunderdome::Index> {
         match self {
             Self::Static(this) => this.groupid,
+            _ => None,
         }
     }
 
@@ -593,7 +597,7 @@ impl Audio {
         let master = AUDIO.volume.read().unwrap().volume;
         self.source().parameter_f32(AL_GAIN, master * vol);
         match self {
-            Self::Static(this) => {
+            Self::Static(this) | Self::LuaStatic(this) => {
                 this.volume = vol;
             }
         }
@@ -603,7 +607,7 @@ impl Audio {
         check_audio!(self);
         self.source().parameter_f32(AL_GAIN, vol);
         match self {
-            Self::Static(this) => {
+            Self::Static(this) | Self::LuaStatic(this) => {
                 this.volume = vol;
             }
         }
@@ -617,7 +621,7 @@ impl Audio {
     pub fn volume(&self) -> f32 {
         check_audio!(self);
         match self {
-            Self::Static(this) => this.volume,
+            Self::Static(this) | Self::LuaStatic(this) => this.volume,
         }
     }
 
@@ -944,6 +948,7 @@ impl AudioSystem {
                                         voices.remove(vid);
                                     }
                                 }
+                                _ => (),
                             }
                         }
                     }
@@ -1038,7 +1043,7 @@ impl UserData for AudioRef {
          */
         methods.add_meta_method(MetaMethod::ToString, |_, this: &Self, ()| {
             Ok(this.call(|this| match this {
-                Audio::Static(this) => format!(
+                Audio::Static(this) | Audio::LuaStatic(this) => format!(
                     "AudioStatic( {} )",
                     match &this.data {
                         Some(AudioData::Buffer(buffer)) => &buffer.name,
@@ -1209,7 +1214,7 @@ impl UserData for AudioRef {
             "getDuration",
             |_, this, samples: bool| -> mlua::Result<f32> {
                 Ok(this.call(|this| match this {
-                    Audio::Static(this) => match &this.data {
+                    Audio::Static(this) | Audio::LuaStatic(this) => match &this.data {
                         Some(AudioData::Buffer(buffer)) => buffer.duration(match samples {
                             true => AudioSeek::Samples,
                             false => AudioSeek::Seconds,
@@ -1867,7 +1872,9 @@ pub extern "C" fn sound_update(_dt: c_double) -> i32 {
 pub extern "C" fn sound_pause() {
     let voices = AUDIO.voices.lock().unwrap();
     for (_, v) in voices.iter() {
-        v.pause();
+        match v {
+            Audio::Static(_this) | Audio::LuaStatic(_this) => v.pause(),
+        }
     }
 }
 
@@ -1875,7 +1882,9 @@ pub extern "C" fn sound_pause() {
 pub extern "C" fn sound_resume() {
     let voices = AUDIO.voices.lock().unwrap();
     for (_, v) in voices.iter() {
-        v.play();
+        match v {
+            Audio::Static(_this) | Audio::LuaStatic(_this) => v.play(),
+        }
     }
 }
 
@@ -1888,7 +1897,11 @@ pub extern "C" fn sound_volume(volume: c_double) {
     };
     let voices = AUDIO.voices.lock().unwrap();
     for (_, v) in voices.iter() {
-        v.source().parameter_f32(AL_GAIN, master * v.volume());
+        match v {
+            Audio::Static(_this) | Audio::LuaStatic(_this) => {
+                v.source().parameter_f32(AL_GAIN, master * v.volume())
+            }
+        }
     }
 }
 
@@ -1906,7 +1919,11 @@ pub extern "C" fn sound_getVolumeLog() -> c_double {
 pub extern "C" fn sound_stopAll() {
     let mut voices = AUDIO.voices.lock().unwrap();
     voices.retain(|_, v| match v {
-        Audio::Static(this) => !this.ingame,
+        Audio::Static(_this) => {
+            v.stop();
+            false
+        }
+        _ => true,
     });
 }
 
