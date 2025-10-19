@@ -3,7 +3,6 @@ use crate::nlua;
 use crate::nlua::LuaEnv;
 use log::warn_err;
 use mlua::{Either, Function, UserData, UserDataMethods};
-use nalgebra::Vector3;
 use physics::vec2::Vec2;
 use renderer::camera;
 use renderer::colour::Colour;
@@ -113,7 +112,7 @@ pub fn update(dt: f64) {
                     // TODO move Audio ownership to LuaSpfx
                     let pos = pos.into_vector2();
                     sfx.call(|sfx| {
-                        sfx.set_position(Vector3::new(pos.x as f32, pos.y as f32, 0.));
+                        sfx.set_position(pos.cast::<f32>());
                     })
                     .unwrap_or_else(|e| {
                         warn_err!(e);

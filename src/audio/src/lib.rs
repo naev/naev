@@ -27,7 +27,7 @@ use anyhow::Result;
 use gettext::gettext;
 use log::{debug, debugx, warn, warn_err};
 use mlua::{MetaMethod, UserData, UserDataMethods};
-use nalgebra::Vector3;
+use nalgebra::{Vector2, Vector3};
 use std::sync::{Arc, LazyLock, Weak};
 #[cfg(not(debug_assertions))]
 use std::sync::{Mutex, RwLock};
@@ -65,7 +65,8 @@ static EFX_LIST: Mutex<Vec<LuaAudioEfx>> = Mutex::new(Vec::new());
 #[derive(Clone, PartialEq, Copy, Eq, Debug)]
 pub enum AudioType {
     Static,
-    Stream,
+    LuaStatic,
+    LuaStream,
 }
 
 #[derive(PartialEq, Debug)]
@@ -465,20 +466,6 @@ macro_rules! check_audio {
     }};
 }
 impl Audio {
-    fn new(data: &Option<AudioData>) -> Result<Self> {
-        Ok(Self::Static(AudioStatic::new(data)?))
-    }
-
-    fn new_buffer(buffer: &Arc<AudioBuffer>) -> Result<Self> {
-        Ok(Self::Static(AudioStatic::new_buffer(buffer)?))
-    }
-
-    fn from_path(path: &str, _atype: AudioType) -> Result<Self> {
-        // TODO streaming
-        let buffer = Arc::new(AudioBuffer::from_path(path)?);
-        Self::new_buffer(&buffer)
-    }
-
     fn try_clone(&self) -> Result<Self> {
         match self {
             Self::Static(this) => Ok(Self::Static(this.try_clone()?)),
@@ -636,24 +623,46 @@ impl Audio {
         self.source().get_parameter_i32(AL_SOURCE_RELATIVE) != 0
     }
 
-    pub fn set_position(&self, pos: Vector3<f32>) {
+    pub fn set_position(&self, pos: Vector2<f32>) {
+        check_audio!(self);
+        self.source().parameter_3_f32(AL_POSITION, pos.x, pos.y, 0.);
+    }
+
+    pub fn position(&self) -> Vector2<f32> {
+        check_audio!(self);
+        let v3 = Vector3::from(self.source().get_parameter_3_f32(AL_POSITION));
+        Vector2::new(v3.x, v3.y)
+    }
+
+    pub fn set_position_3d(&self, pos: Vector3<f32>) {
         check_audio!(self);
         self.source()
             .parameter_3_f32(AL_POSITION, pos.x, pos.y, pos.z);
     }
 
-    pub fn position(&self) -> Vector3<f32> {
+    pub fn position_3d(&self) -> Vector3<f32> {
         check_audio!(self);
         Vector3::from(self.source().get_parameter_3_f32(AL_POSITION))
     }
 
-    pub fn set_velocity(&self, pos: Vector3<f32>) {
+    pub fn set_velocity(&self, pos: Vector2<f32>) {
+        check_audio!(self);
+        self.source().parameter_3_f32(AL_VELOCITY, pos.x, pos.y, 0.);
+    }
+
+    pub fn velocity(&self) -> Vector2<f32> {
+        check_audio!(self);
+        let v3 = Vector3::from(self.source().get_parameter_3_f32(AL_VELOCITY));
+        Vector2::new(v3.x, v3.y)
+    }
+
+    pub fn set_velocity_3d(&self, pos: Vector3<f32>) {
         check_audio!(self);
         self.source()
             .parameter_3_f32(AL_VELOCITY, pos.x, pos.y, pos.z);
     }
 
-    pub fn velocity(&self) -> Vector3<f32> {
+    pub fn velocity_3d(&self) -> Vector3<f32> {
         check_audio!(self);
         Vector3::from(self.source().get_parameter_3_f32(AL_VELOCITY))
     }
@@ -707,6 +716,107 @@ impl Audio {
     pub fn set_air_absorption_factor(&self, value: f32) {
         check_audio!(self);
         self.source().parameter_f32(AL_AIR_ABSORPTION_FACTOR, value);
+    }
+}
+pub struct AudioBuilder {
+    pos: Option<Vector2<f32>>,
+    vel: Option<Vector2<f32>>,
+    volume: f32,
+    data: Option<AudioData>,
+    path: Option<String>,
+    play: bool,
+    looping: bool,
+    atype: AudioType,
+}
+impl AudioBuilder {
+    pub const fn new(atype: AudioType) -> Self {
+        AudioBuilder {
+            pos: None,
+            vel: None,
+            volume: 1.,
+            data: None,
+            path: None,
+            play: false,
+            looping: false,
+            atype,
+        }
+    }
+
+    pub fn position(mut self, pos: Option<Vector2<f32>>) -> Self {
+        self.pos = pos;
+        self
+    }
+
+    pub fn velocity(mut self, vel: Option<Vector2<f32>>) -> Self {
+        self.vel = vel;
+        self
+    }
+
+    pub fn path(mut self, path: Option<&str>) -> Self {
+        self.path = path.map(|s| s.to_string());
+        self.data = None;
+        self
+    }
+
+    pub fn data(mut self, data: Option<AudioData>) -> Self {
+        self.data = data;
+        self.path = None;
+        self
+    }
+
+    pub fn buffer(mut self, buffer: Arc<AudioBuffer>) -> Self {
+        self.data = Some(AudioData::Buffer(buffer));
+        self.path = None;
+        self
+    }
+
+    pub fn play(mut self, play: bool) -> Self {
+        self.play = play;
+        self
+    }
+
+    pub fn looping(mut self, looping: bool) -> Self {
+        self.looping = looping;
+        self
+    }
+
+    fn build_static(&self) -> Result<AudioStatic> {
+        let audio = if let Some(path) = &self.path {
+            let buf = AudioBuffer::get_or_try_load(&path)?;
+            AudioStatic::new_buffer(&buf)?
+        } else {
+            AudioStatic::new(&self.data)?
+        };
+        Ok(audio)
+    }
+
+    fn build_streaming(&self) -> Result<AudioStatic> {
+        todo!()
+    }
+
+    pub fn build(self) -> Result<AudioRef> {
+        let looping = self.looping;
+        let play = self.play;
+        let mut audio = match self.atype {
+            AudioType::Static => Audio::Static(self.build_static()?),
+            AudioType::LuaStatic => Audio::LuaStatic(self.build_static()?),
+            AudioType::LuaStream => Audio::LuaStatic(self.build_static()?), // TODO
+        };
+        if let Some(pos) = self.pos {
+            audio.set_ingame();
+            audio.set_position(pos);
+            if let Some(vel) = self.vel {
+                audio.set_velocity(vel);
+            }
+        }
+        audio.set_volume(self.volume);
+        if looping {
+            audio.set_looping(true);
+        }
+        if play {
+            audio.play();
+        }
+        Ok(Arc::new(AUDIO.voices.lock().unwrap().insert(audio)).into())
     }
 }
 
@@ -920,9 +1030,10 @@ impl AudioSystem {
     }
 
     pub fn play_buffer(&self, buf: &Arc<AudioBuffer>) -> Result<AudioRef> {
-        let audio = Audio::new_buffer(buf)?;
-        audio.play();
-        Ok(AudioRef::from_audio(audio))
+        AudioBuilder::new(AudioType::Static)
+            .buffer(buf.clone())
+            .play(true)
+            .build()
     }
 
     pub fn execute_messages(&self) {
@@ -940,11 +1051,12 @@ impl AudioSystem {
                                 group.voices.remove(gvid);
                             }
                         }
-                        // Finally remove the voice
+                        // Finally remove the voice, but only if it is actually fine to remove
                         if let Some(voice) = voices.get(vid) {
                             match voice {
                                 Audio::Static(voice) => {
                                     if voice.ingame {
+                                        dbg!("removed", &vid);
                                         voices.remove(vid);
                                     }
                                 }
@@ -975,26 +1087,6 @@ pub fn init() -> Result<()> {
 #[derive(Debug, Clone, PartialEq, derive_more::From, mlua::FromLua)]
 pub struct AudioRef(Arc<thunderdome::Index>);
 impl AudioRef {
-    fn new(data: &Option<AudioData>) -> Result<Self> {
-        let audio = Audio::new(data)?;
-        Ok(Arc::new(AUDIO.voices.lock().unwrap().insert(audio)).into())
-    }
-
-    fn new_buffer(buffer: &Arc<AudioBuffer>) -> Result<Self> {
-        let audio = Audio::new_buffer(buffer)?;
-        Ok(Arc::new(AUDIO.voices.lock().unwrap().insert(audio)).into())
-    }
-
-    fn from_path(path: &str, _atype: AudioType) -> Result<Self> {
-        // TODO streaming
-        let buffer = Arc::new(AudioBuffer::from_path(path)?);
-        Self::new_buffer(&buffer)
-    }
-
-    fn from_audio(audio: Audio) -> Self {
-        Arc::new(AUDIO.voices.lock().unwrap().insert(audio)).into()
-    }
-
     fn try_clone(&self) -> Result<Self> {
         let mut voices = AUDIO.voices.lock().unwrap();
         let audio = match voices.get(*self.0) {
@@ -1064,13 +1156,12 @@ impl UserData for AudioRef {
         methods.add_function(
             "new",
             |_, (val, streaming): (String, bool)| -> mlua::Result<Self> {
-                Ok(Self::from_path(
-                    &val,
-                    match streaming {
-                        true => AudioType::Stream,
-                        false => AudioType::Static,
-                    },
-                )?)
+                Ok(AudioBuilder::new(match streaming {
+                    true => AudioType::LuaStream,
+                    false => AudioType::LuaStatic,
+                })
+                .path(Some(&val))
+                .build()?)
             },
         );
         /*
@@ -1293,8 +1384,8 @@ impl UserData for AudioRef {
          */
         methods.add_method(
             "setPosition",
-            |_, this, (x, y, z): (f32, f32, f32)| -> mlua::Result<()> {
-                let vec: Vector3<f32> = Vector3::new(x, y, z);
+            |_, this, (x, y): (f32, f32)| -> mlua::Result<()> {
+                let vec: Vector2<f32> = Vector2::new(x, y);
                 this.call_mut(|this| {
                     this.set_position(vec);
                 })?;
@@ -1310,26 +1401,22 @@ impl UserData for AudioRef {
          *    @luatreturn number Z position.
          * @luafunc getPosition
          */
-        methods.add_method(
-            "getPosition",
-            |_, this, ()| -> mlua::Result<(f32, f32, f32)> {
-                let pos = this.call(|this| this.position())?;
-                Ok((pos.x, pos.y, pos.z))
-            },
-        );
+        methods.add_method("getPosition", |_, this, ()| -> mlua::Result<(f32, f32)> {
+            let pos = this.call(|this| this.position())?;
+            Ok((pos.x, pos.y))
+        });
         /*
          * @brief Sets the velocity of a source.
          *
          *    @luatparam Audio source Source to set velocity of.
          *    @luatparam number x X velocity.
          *    @luatparam number y Y velocity.
-         *    @luatparam number z Z velocity.
          * @luafunc setVelocity
          */
         methods.add_method(
             "setVelocity",
-            |_, this, (x, y, z): (f32, f32, f32)| -> mlua::Result<()> {
-                let vec: Vector3<f32> = Vector3::new(x, y, z);
+            |_, this, (x, y): (f32, f32)| -> mlua::Result<()> {
+                let vec = Vector2::new(x, y);
                 this.call_mut(|this| {
                     this.set_velocity(vec);
                 })?;
@@ -1342,16 +1429,12 @@ impl UserData for AudioRef {
          *    @luatparam Audio source Source to get velocity of.
          *    @luatreturn number X velocity.
          *    @luatreturn number Y velocity.
-         *    @luatreturn number Z velocity.
          * @luafunc getVelocity
          */
-        methods.add_method(
-            "getVelocity",
-            |_, this, ()| -> mlua::Result<(f32, f32, f32)> {
-                let vel = this.call(|this| this.velocity())?;
-                Ok((vel.x, vel.y, vel.z))
-            },
-        );
+        methods.add_method("getVelocity", |_, this, ()| -> mlua::Result<(f32, f32)> {
+            let vel = this.call(|this| this.velocity())?;
+            Ok((vel.x, vel.y))
+        });
         /*
          * @brief Sets a source to be looping or not.
          *
@@ -1778,7 +1861,7 @@ pub extern "C" fn sound_play(sound: *const Arc<AudioBuffer>) -> *const c_void {
         return std::ptr::null();
     }
     let sound = unsafe { &*sound };
-    match AudioRef::new_buffer(sound) {
+    match AUDIO.play_buffer(sound) {
         Ok(audioref) => unsafe { std::mem::transmute::<AudioRef, *const c_void>(audioref) },
         Err(e) => {
             warn_err!(e);
@@ -1799,18 +1882,19 @@ pub extern "C" fn sound_playPos(
         return std::ptr::null();
     }
     let sound = unsafe { &*sound };
-
-    let mut audio = match Audio::new_buffer(sound) {
-        Ok(audio) => audio,
+    let voice = match AudioBuilder::new(AudioType::Static)
+        .buffer(sound.clone())
+        .position(Some(Vector2::new(px as f32, py as f32)))
+        .velocity(Some(Vector2::new(vx as f32, vy as f32)))
+        .play(true)
+        .build()
+    {
+        Ok(v) => v,
         Err(e) => {
             warn_err!(e);
             return std::ptr::null();
         }
     };
-    audio.set_ingame();
-    audio.set_position(Vector3::from([px as f32, py as f32, 0.0]));
-    audio.set_velocity(Vector3::from([vx as f32, vy as f32, 0.0]));
-    let voice = AudioRef::from_audio(audio);
     unsafe { std::mem::transmute::<AudioRef, *const c_void>(voice) }
 }
 
@@ -1839,8 +1923,8 @@ pub extern "C" fn sound_updatePos(
 ) {
     let index = get_voice!(voice);
     let _ = index.call(|voice| {
-        voice.set_position(Vector3::from([px as f32, py as f32, 0.0]));
-        voice.set_velocity(Vector3::from([vx as f32, vy as f32, 0.0]));
+        voice.set_position(Vector2::new(px as f32, py as f32));
+        voice.set_velocity(Vector2::new(vx as f32, vy as f32));
     });
 }
 
@@ -1858,8 +1942,8 @@ pub extern "C" fn sound_updateListener(
     unsafe {
         alListenerfv(AL_ORIENTATION, ori.as_ptr());
     }
-    set_listener_position(Vector3::from([px as f32, py as f32, 0.0]));
-    set_listener_velocity(Vector3::from([vx as f32, vy as f32, 0.0]));
+    set_listener_position(Vector3::new(px as f32, py as f32, 0.));
+    set_listener_velocity(Vector3::new(vx as f32, vy as f32, 0.));
 }
 
 #[unsafe(no_mangle)]
@@ -1973,13 +2057,19 @@ pub extern "C" fn sound_playGroup(
         return std::ptr::null();
     }
 
-    let mut audio = AudioStatic::new(&Some(AudioData::Buffer(sound.clone()))).unwrap();
-    audio.groupid = Some(groupid);
-    let audio = Audio::Static(audio);
-    if once != 0 {
-        audio.set_looping(true);
-    }
-    let voice = AudioRef::from_audio(audio);
+    //audio.groupid = Some(groupid);
+    let voice = match AudioBuilder::new(AudioType::Static)
+        .buffer(sound.clone())
+        .play(true)
+        .looping(once != 0)
+        .build()
+    {
+        Ok(v) => v,
+        Err(e) => {
+            warn_err!(e);
+            return std::ptr::null();
+        }
+    };
     unsafe { std::mem::transmute::<AudioRef, *const c_void>(voice) }
 }
 
