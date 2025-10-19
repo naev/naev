@@ -145,7 +145,9 @@ function scavenger_hail ( p )
 end
 
 function scavenger_death ()
-   lmisn.fail(_("Scavenger died! You were supposed to protect them!"))
+   if mem.state < 6 then
+      lmisn.fail(_("Scavenger died! You were supposed to protect them!"))
+   end
 end
 
 function scavenger_attacked( _p, attacker )
@@ -379,7 +381,6 @@ function corpse99 ()
    misn.markerMove( mem.marker, base )
 
    scavenger:effectAdd( "Fade-Out" )
-
    mem.state = 6
 end
 
