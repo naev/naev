@@ -115,12 +115,13 @@ void window_addImageArray(
 
 static void iar_updateSpacing( Widget *iar )
 {
-   double w           = iar->w;
-   int    nelem       = iar->dat.iar.nelements;
-   double zoom        = iar->dat.iar.zoom;
-   iar->dat.iar.iw    = round( iar->dat.iar.iwref * zoom );
-   iar->dat.iar.ih    = round( iar->dat.iar.ihref * zoom );
-   iar->dat.iar.xelem = floor( ( w - 10. ) / (double)( iar->dat.iar.iw + 10 ) );
+   double w        = iar->w;
+   int    nelem    = iar->dat.iar.nelements;
+   double zoom     = iar->dat.iar.zoom;
+   iar->dat.iar.iw = round( iar->dat.iar.iwref * zoom );
+   iar->dat.iar.ih = round( iar->dat.iar.ihref * zoom );
+   iar->dat.iar.xelem =
+      MAX( 1, floor( ( w - 10. ) / (double)( iar->dat.iar.iw + 10 ) ) );
    iar->dat.iar.yelem =
       ( iar->dat.iar.xelem == 0 ) ? 0 : ( nelem - 1 ) / iar->dat.iar.xelem + 1;
 }

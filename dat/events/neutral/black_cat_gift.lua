@@ -8,7 +8,8 @@
    if not player.misnDone("Black Cat") then
       return false
    end
-   return system.cur():presences()["Pirate"] > 50
+   local pir = require "common.pirate"
+   return pir.systemPresence() > 50
  </cond>
 </event>
 --]]

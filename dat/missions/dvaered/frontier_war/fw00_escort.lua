@@ -33,7 +33,7 @@ local fw = require "common.frontier_war"
 local lmisn = require "lmisn"
 local fmt = require "format"
 local pir = require "common.pirate"
-local ai_setup = require "ai.core.setup"
+local equipopt = require "equipopt"
 
 -- Mission constants
 local destpla1, destsys1 = spob.getS("Ginni")
@@ -178,19 +178,26 @@ function spawnTam( origin )
    majorTam:setVisplayer()
    majorTam:setFaction( fw.fct_dhc() )
 
-   -- TODO switch to equipopt
-   majorTam:outfitAdd("S&K Skirmish Plating",2)
-   majorTam:outfitAdd("Milspec Orion 2301 Core System",2)
-   majorTam:outfitAdd("Tricon Zephyr Engine",2)
-   majorTam:outfitAdd("Unicorp Light Afterburner")
-   --majorTam:outfitAdd("Solar Panel")
-   majorTam:outfitAdd("Vulcan Gun",3)
-   majorTam:outfitAdd("Gauss Gun",3)
-   majorTam:setHealth(100,100)
-   majorTam:setEnergy(100)
+   equipopt.dvaered( majorTam, {
+      cores = {
+         hull = "S&K Skirmish Plating",
+         hull_secondary = "S&K Skirmish Plating",
+         systems = "Milspec Orion 2301 Core System",
+         systems_secondary = "Milspec Orion 2301 Core System",
+         engines = "Tricon Zephyr Engine",
+         engines_secondary = "Tricon Zephyr Engine",
+      },
+      prefer = {
+         ["Gauss Gun"] = 100,
+         ["Unicorp Light Afterburner"] = 100,
+      },
+      move = 0,
+      max_same_weap = 10,
+      rnd = 0, -- Consistent
+   } )
    majorTam:setFuel(true)
-   majorTam:cargoRm( "all" )
-   ai_setup.setup(majorTam)
+
+   assert( majorTam:fuel() > 0 )
 
    mem.dyingTam = hook.pilot(majorTam, "death", "tamDied")
 end
@@ -365,20 +372,28 @@ function hamelsenAmbush()
    hamelsen = pilot.add( "Shark", fwarlords, pos, _("Colonel Hamelsen"), {ai="baddie_norun", naked=true} )
 
    -- Nice outfits for Colonel Hamelsen (the Hellburner is her life insurance)
-   -- TODO switch to equipopt
-   hamelsen:outfitAdd("S&K Skirmish Plating")
-   hamelsen:outfitAdd("Milspec Orion 2301 Core System")
-   hamelsen:outfitAdd("Tricon Zephyr Engine")
-   hamelsen:outfitAdd("Hellburner")
-   hamelsen:outfitAdd("Milspec Impacto-Plastic Coating")
-   hamelsen:outfitAdd("Improved Stabilizer",2)
-   hamelsen:outfitAdd("Gauss Gun",3)
-   hamelsen:setHealth(100,100)
-   hamelsen:setEnergy(100)
+   equipopt.dvaered( majorTam, {
+      cores = {
+         hull = "S&K Skirmish Plating",
+         systems = "Milspec Orion 2301 Core System",
+         engines = "Tricon Zephyr Engine",
+      },
+      prefer = {
+         ["Gauss Gun"] = 100,
+         ["Hellburner"] = 100,
+         ["Improved Stabilizer"] = 100,
+      },
+      outfits_add = {
+         "Hellburner",
+      },
+      move = 0,
+      max_same_weap = 3,
+      max_same_stru = 2,
+      rnd = 0, -- Consistent
+   } )
    hamelsen:setFuel(true)
    hamelsen:setNoDeath() -- We can't afford to loose our main baddie
    hamelsen:setNoDisable()
-   ai_setup.setup(hamelsen)
 
    mem.attack = hook.pilot( hamelsen, "attacked", "hamelsen_attacked" )
 
