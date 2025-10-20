@@ -331,6 +331,8 @@ local soromid = {
    {"soromid/soromid_dark_01.webp", "dark"},
    {"soromid/soromid_dark_01_v2.webp", "dark"},
    {"soromid/soromid_dark_01_v3.webp", "dark"},
+   -- Image Generators
+   {gen("soromid/soromid_dark_01"), "dark"},
 }
 local soromid_mil = {
    {"soromid/soromid_heavy_military_3.webp", "heavy"},
