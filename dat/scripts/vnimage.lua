@@ -91,8 +91,8 @@ function vni.generator( path )
       height = 300,
    }
    -- Increase size based on scale
-   PORTRAIT.width = PORTRAIT.width / scale
-   PORTRAIT.height = PORTRAIT.height / scale
+   PORTRAIT.width = (PORTRAIT.width or 400) / scale
+   PORTRAIT.height = (PORTRAIT.height or 300) / scale
    npc.replace = tmergei( npc.replace, {
       { [[width="1000"]], fmt.f([[width="{width}"]], PORTRAIT) },
       { [[height="1415"]], fmt.f([[height="{height}"]], PORTRAIT) },
