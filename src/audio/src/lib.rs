@@ -45,6 +45,8 @@ use tracing_mutex::stdsync::{Mutex, RwLock};
 const REFERENCE_DISTANCE: f32 = 500.;
 /// Max distance for sounds to still play at
 const MAX_DISTANCE: f32 = 25_000.;
+/// Number of frames we want to grab when streaming
+const STREAMING_BUFFER_LENGTH: usize = 16 * 1024;
 
 struct LuaAudioEfx {
     name: String,
@@ -535,7 +537,8 @@ impl StreamData {
 
     fn queue_next_buffer(&mut self) -> Result<bool> {
         let mut rewind = false;
-        let frames = loop {
+        let mut frames: Vec<Frame<f32>> = vec![];
+        loop {
             // Get the next packet from the media format.
             let packet = match self.format.next_packet() {
                 Ok(packet) => packet,
@@ -555,7 +558,7 @@ impl StreamData {
                                 )?;
                                 continue;
                             }
-                            break None;
+                            break;
                         }
                         return Err(symphonia::core::errors::Error::IoError(e).into());
                     }
@@ -567,11 +570,14 @@ impl StreamData {
             if packet.track_id() == self.track_id {
                 // Decode the packet into audio samples.
                 let buffer = self.decoder.decode(&packet)?;
-                break Some(Frame::<f32>::load_frames_from_buffer_ref(&buffer)?);
+                frames.append(&mut Frame::<f32>::load_frames_from_buffer_ref(&buffer)?);
+                if frames.len() > STREAMING_BUFFER_LENGTH {
+                    break;
+                }
             }
-        };
+        }
 
-        if let Some(frames) = frames {
+        if frames.len() > 0 {
             let mut data: Vec<f32> = Frame::vec_to_data(frames, self.stereo);
             if let Some(replaygain) = self.replaygain {
                 replaygain.filter(&mut data);
@@ -619,8 +625,7 @@ impl AudioStream {
                 return Ok(());
             }
 
-            let state = data.source.get_parameter_i32(AL_BUFFERS_PROCESSED);
-            if state > 0 {
+            while data.source.get_parameter_i32(AL_BUFFERS_PROCESSED) > 0 {
                 data.source.unqueue_buffer();
                 data.queue_next_buffer()?;
             }
