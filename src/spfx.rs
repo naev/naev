@@ -105,19 +105,19 @@ pub fn update(dt: f64) {
         if spfx.ttl <= 0. || spfx.cleanup {
             return false;
         }
-        if let Some(pos) = &mut spfx.pos {
-            if let Some(vel) = spfx.vel {
-                *pos += vel * dt;
-                if let Some(sfx) = &spfx.sfx {
-                    // TODO move Audio ownership to LuaSpfx
-                    let pos = pos.into_vector2();
-                    sfx.call(|sfx| {
-                        sfx.set_position(pos.cast::<f32>());
-                    })
-                    .unwrap_or_else(|e| {
-                        warn_err!(e);
-                    });
-                }
+        if let Some(pos) = &mut spfx.pos
+            && let Some(vel) = spfx.vel
+        {
+            *pos += vel * dt;
+            if let Some(sfx) = &spfx.sfx {
+                // TODO move Audio ownership to LuaSpfx
+                let pos = pos.into_vector2();
+                sfx.call(|sfx| {
+                    sfx.set_position(pos.cast::<f32>());
+                })
+                .unwrap_or_else(|e| {
+                    warn_err!(e);
+                });
             }
         }
         if let Some(update) = &spfx.update {
@@ -150,18 +150,17 @@ fn render(layer: RenderLayer, dt: f64) {
         };
         if let Some(func) = func
             && let Some(pos) = spfx.pos
-        {
-            if let Some(pos) = renderer::Context::get().game_to_screen_coords_inrange(
+            && let Some(pos) = renderer::Context::get().game_to_screen_coords_inrange(
                 pos.into_vector2(),
                 spfx.radius.unwrap_or(f64::INFINITY),
-            ) {
-                // TODO flip y
-                spfx.env
-                    .call::<()>(lua, func, (pos.x, pos.y, z, dt))
-                    .unwrap_or_else(|e| {
-                        warn_err!(e);
-                    });
-            }
+            )
+        {
+            // TODO flip y
+            spfx.env
+                .call::<()>(lua, func, (pos.x, pos.y, z, dt))
+                .unwrap_or_else(|e| {
+                    warn_err!(e);
+                });
         }
     }
 }
