@@ -46,7 +46,7 @@ not_unsafe_ptr_arg_deref = "allow"
 
 [workspace.dependencies]
 naevc = { path=@NAEVC@ }
-sdl3 = "0.15"
+sdl3 = "0.16"
 anyhow = "1.0"
 audio = { path="@BUILD@/src/audio" }
 naev_core = { path="@BUILD@/src/core" }
