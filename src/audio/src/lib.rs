@@ -22,6 +22,7 @@ use anyhow::Context;
 use naev_core::utils::{binary_search_by_key_ref, sort_by_key_ref};
 use std::sync::atomic::{AtomicBool, AtomicU32, Ordering};
 use symphonia::core::audio::{Channels, Signal};
+use symphonia::core::codecs::Decoder;
 use symphonia::core::formats::FormatReader;
 use symphonia::core::io::MediaSourceStream;
 use thunderdome::Arena;
@@ -517,7 +518,70 @@ impl AudioStream {
         }
         let stereo = channels.contains(Channels::FRONT_RIGHT);
 
+        fn queue_buffer(
+            source: &al::Source,
+            buffers: &[al::Buffer; 2],
+            format: &mut Box<dyn FormatReader>,
+            track_id: u32,
+            decoder: &mut Box<dyn Decoder>,
+            replaygain: &Option<ReplayGain>,
+            stereo: bool,
+            sample_rate: u32,
+            active: &mut usize,
+        ) -> Result<bool> {
+            let frames = loop {
+                // Get the next packet from the media format.
+                let packet = match format.next_packet() {
+                    Ok(packet) => packet,
+                    Err(e) => match e {
+                        symphonia::core::errors::Error::IoError(e) => {
+                            if e.kind() == std::io::ErrorKind::UnexpectedEof
+                                && e.to_string() == "end of stream"
+                            {
+                                break None;
+                            }
+                            return Err(symphonia::core::errors::Error::IoError(e).into());
+                        }
+                        e => anyhow::bail!(e),
+                    },
+                };
+
+                // If the packet does not belong to the selected track, skip over it.
+                if packet.track_id() == track_id {
+                    // Decode the packet into audio samples.
+                    let buffer = decoder.decode(&packet)?;
+                    break Some(Frame::<f32>::load_frames_from_buffer_ref(&buffer)?);
+                }
+            };
+
+            if let Some(frames) = frames {
+                let mut data: Vec<f32> = Frame::vec_to_data(frames, stereo);
+                if let Some(replaygain) = replaygain {
+                    replaygain.filter(&mut data);
+                }
+                buffers[*active].data_f32(&data, stereo, sample_rate as ALsizei);
+                source.queue_buffer(&buffers[*active]);
+                *active = 1 - *active;
+                Ok(true)
+            } else {
+                Ok(false)
+            }
+        }
+
         let mut active: usize = 0;
+        for _ in 0..2 {
+            queue_buffer(
+                &source,
+                &buffers,
+                &mut format,
+                track_id,
+                &mut decoder,
+                &replaygain,
+                stereo,
+                sample_rate,
+                &mut active,
+            )?;
+        }
         loop {
             if finish.load(Ordering::Relaxed) {
                 return Ok(());
@@ -526,45 +590,20 @@ impl AudioStream {
             let state = source.get_parameter_i32(AL_BUFFERS_PROCESSED);
             if state > 0 {
                 source.unqueue_buffer();
-                // TODO load buffer into &buffers[active]
-                let frames = loop {
-                    // Get the next packet from the media format.
-                    let packet = match format.next_packet() {
-                        Ok(packet) => packet,
-                        Err(e) => match e {
-                            symphonia::core::errors::Error::IoError(e) => {
-                                if e.kind() == std::io::ErrorKind::UnexpectedEof
-                                    && e.to_string() == "end of stream"
-                                {
-                                    break None;
-                                }
-                                return Err(symphonia::core::errors::Error::IoError(e).into());
-                            }
-                            e => anyhow::bail!(e),
-                        },
-                    };
-
-                    // If the packet does not belong to the selected track, skip over it.
-                    if packet.track_id() == track_id {
-                        // Decode the packet into audio samples.
-                        let buffer = decoder.decode(&packet)?;
-                        break Some(Frame::<f32>::load_frames_from_buffer_ref(&buffer)?);
-                    }
-                };
-
-                if let Some(frames) = frames {
-                    let mut data: Vec<f32> = Frame::vec_to_data(frames, stereo);
-                    if let Some(replaygain) = replaygain {
-                        replaygain.filter(&mut data);
-                    }
-                    buffers[active].data_f32(&data, stereo, sample_rate as ALsizei);
-                    source.queue_buffer(&buffers[active]);
-                    active = 1 - active;
-                } else {
-                    return Ok(());
-                }
+                queue_buffer(
+                    &source,
+                    &buffers,
+                    &mut format,
+                    track_id,
+                    &mut decoder,
+                    &replaygain,
+                    stereo,
+                    sample_rate,
+                    &mut active,
+                )?;
             }
 
+            // We're just polling now, TODO something based on channels
             std::thread::sleep(std::time::Duration::from_millis(10));
         }
     }
