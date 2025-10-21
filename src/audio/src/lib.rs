@@ -1,4 +1,4 @@
-#![allow(dead_code, unused_imports)]
+//#![allow(dead_code, unused_imports)]
 mod debug;
 mod efx;
 #[macro_use]
@@ -20,11 +20,13 @@ use crate::source_spatialize::consts::*;
 use crate::source_spatialize::*;
 use anyhow::Context;
 use naev_core::utils::{binary_search_by_key_ref, sort_by_key_ref};
-use std::sync::atomic::{AtomicBool, AtomicU32, Ordering};
+use std::sync::atomic::{AtomicBool, Ordering};
 use symphonia::core::audio::{Channels, Signal};
 use symphonia::core::codecs::Decoder;
+use symphonia::core::conv::{FromSample, IntoSample};
 use symphonia::core::formats::FormatReader;
 use symphonia::core::io::MediaSourceStream;
+use symphonia::core::sample::Sample;
 use thunderdome::Arena;
 
 use anyhow::Result;
@@ -38,7 +40,7 @@ use std::sync::{Mutex, RwLock};
 #[cfg(debug_assertions)]
 use tracing_mutex::stdsync::{Mutex, RwLock};
 
-const NUM_VOICES: usize = 64;
+//const NUM_VOICES: usize = 64;
 const REFERENCE_DISTANCE: f32 = 500.;
 const MAX_DISTANCE: f32 = 25_000.;
 
@@ -82,9 +84,6 @@ impl<T> Frame<T> {
     fn load_frames_from_buffer_ref(
         buffer: &symphonia::core::audio::AudioBufferRef,
     ) -> Result<Vec<Frame<f32>>> {
-        use symphonia::core::conv::{FromSample, IntoSample};
-        use symphonia::core::sample::{Sample, SampleFormat};
-
         fn load_frames_from_buffer<S: Sample>(
             buffer: &symphonia::core::audio::AudioBuffer<S>,
         ) -> Result<Vec<Frame<f32>>>
@@ -155,7 +154,7 @@ pub struct ReplayGain {
 }
 impl ReplayGain {
     fn from_formatreader(format: &mut Box<dyn FormatReader>) -> Result<Option<Self>> {
-        use symphonia::core::meta::{MetadataOptions, StandardTagKey, Tag, Value};
+        use symphonia::core::meta::{StandardTagKey, Tag, Value};
         let mut track_gain_db = None;
         let mut track_peak = None;
         if let Some(md) = format.metadata().current() {
@@ -256,14 +255,6 @@ impl AudioBuffer {
     }
 
     fn from_path(path: &str) -> Result<Self> {
-        use symphonia::core::audio::{AudioBuffer, AudioBufferRef, Channels, Signal};
-        use symphonia::core::codecs::{CODEC_TYPE_NULL, Decoder, DecoderOptions};
-        use symphonia::core::conv::{FromSample, IntoSample};
-        use symphonia::core::errors::Error;
-        use symphonia::core::meta::{MetadataOptions, StandardTagKey, Tag, Value};
-        use symphonia::core::probe::Hint;
-        use symphonia::core::sample::{Sample, SampleFormat};
-
         // If no extension try to autodetect.
         let ext = std::path::Path::new(path)
             .extension()
@@ -276,7 +267,7 @@ impl AudioBuffer {
         let codecs = &CODECS;
         let probe = symphonia::default::get_probe();
         let mss = MediaSourceStream::new(Box::new(src), Default::default());
-        let mut hint = Hint::new();
+        let mut hint = symphonia::core::probe::Hint::new();
         if let Some(ext) = ext {
             hint.with_extension(ext);
         }
@@ -403,9 +394,9 @@ impl AudioBuffer {
 pub(crate) static AUDIO_BUFFER: LazyLock<Mutex<Vec<Weak<AudioBuffer>>>> =
     LazyLock::new(|| Mutex::new(Default::default()));
 /// Counter for how many buffers were destroyed
-pub(crate) static GC_COUNTER: AtomicU32 = AtomicU32::new(0);
+//pub(crate) static GC_COUNTER: AtomicU32 = AtomicU32::new(0);
 /// Number of destroyed buffers to start garbage collecting the cache
-pub(crate) const GC_THRESHOLD: u32 = 128;
+//pub(crate) const GC_THRESHOLD: u32 = 128;
 
 #[derive(Clone, PartialEq, Copy, Eq, Debug)]
 pub enum AudioSeek {
@@ -586,6 +577,7 @@ impl StreamData {
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]
 pub struct AudioStream {
     path: String,
     source: Arc<al::Source>,
@@ -1095,6 +1087,7 @@ fn event_callback(event_type: ALenum, object: ALuint, param: ALuint, _message: &
     }
 }
 
+#[allow(dead_code)]
 pub struct AudioSystem {
     device: al::Device,
     context: al::Context,
@@ -1293,11 +1286,9 @@ impl AudioSystem {
 }
 pub static AUDIO: LazyLock<AudioSystem> = LazyLock::new(|| AudioSystem::new().unwrap());
 pub static CODECS: LazyLock<symphonia::core::codecs::CodecRegistry> = LazyLock::new(|| {
-    use symphonia::core::codecs;
-    use symphonia_adapter_libopus::OpusDecoder;
-    let mut codec_registry = codecs::CodecRegistry::new();
+    let mut codec_registry = symphonia::core::codecs::CodecRegistry::new();
     symphonia::default::register_enabled_codecs(&mut codec_registry);
-    codec_registry.register_all::<OpusDecoder>();
+    codec_registry.register_all::<symphonia_adapter_libopus::OpusDecoder>();
     codec_registry
 });
 

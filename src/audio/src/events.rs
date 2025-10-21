@@ -1,5 +1,5 @@
 //! AL_SOFT_events
-#![allow(clippy::upper_case_acronyms)]
+#![allow(clippy::upper_case_acronyms, dead_code)]
 use crate::openal::al_types::*;
 use crate::openal::*;
 use anyhow::Result;

@@ -1,5 +1,5 @@
 //! Sound effects for OpenAL extension
-#![allow(clippy::upper_case_acronyms)]
+#![allow(clippy::upper_case_acronyms, dead_code)]
 use crate::openal as al;
 use crate::openal::al_types::*;
 use crate::openal::*;

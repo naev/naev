@@ -1,4 +1,5 @@
 //! AL_SOFT_buffer_length_query
+#![allow(dead_code)]
 
 pub mod consts {
     use crate::openal::al_types::*;
