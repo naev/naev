@@ -78,103 +78,6 @@ enum Frame<T> {
     Stereo(T, T),
 }
 impl<T> Frame<T> {
-    fn vec_to_data(f: Vec<Frame<T>>, stereo: bool) -> Vec<T>
-    where
-        T: Copy,
-    {
-        match stereo {
-            true => {
-                use std::iter::once;
-                f.iter()
-                    .flat_map(|x| match x {
-                        Frame::Mono(x) => once(*x).chain(once(*x)),
-                        Frame::Stereo(l, r) => once(*l).chain(once(*r)),
-                    })
-                    .collect()
-            }
-            false => f
-                .iter()
-                .map(|x| match x {
-                    Frame::Mono(x) => *x,
-                    Frame::Stereo(l, _) => *l,
-                })
-                .collect(),
-        }
-    }
-}
-
-#[derive(PartialEq, Debug)]
-pub struct AudioBuffer {
-    name: String,
-    track_gain_db: Option<f32>,
-    track_peak: Option<f32>,
-    buffer: al::Buffer,
-}
-impl AudioBuffer {
-    fn get_valid_path(path: &str) -> Option<String> {
-        let ext = std::path::Path::new(path)
-            .extension()
-            .and_then(|s| s.to_str());
-        match ext {
-            Some(_) => Some(path.to_string()),
-            None => {
-                let mut npath = None;
-                for ext in &["opus", "ogg", "flac", "wav"] {
-                    let tpath = format!("{}.{}", path, ext);
-                    if ndata::exists(&tpath) {
-                        npath = Some(tpath);
-                        break;
-                    }
-                }
-                npath
-            }
-        }
-    }
-
-    fn get_replaygain(format: &mut Box<dyn FormatReader>) -> Result<(Option<f32>, Option<f32>)> {
-        use symphonia::core::meta::{MetadataOptions, StandardTagKey, Tag, Value};
-        let mut track_gain_db = None;
-        let mut track_peak = None;
-        if let Some(md) = format.metadata().current() {
-            for t in md.tags() {
-                fn tag_to_f32(t: &Tag) -> Result<f32> {
-                    match &t.value {
-                        Value::Float(val) => Ok(*val as f32),
-                        // Strings can be like "+3.14 dB" or "0.4728732849"
-                        Value::String(val) => Ok(match val.split_once(" ") {
-                            Some(val) => val.0,
-                            None => val,
-                        }
-                        .parse::<f32>()?),
-                        _ => anyhow::bail!("tag is not a float"),
-                    }
-                }
-                if let Some(key) = t.std_key {
-                    match key {
-                        StandardTagKey::ReplayGainTrackGain => match tag_to_f32(t) {
-                            Ok(f) => {
-                                track_gain_db = Some(f);
-                            }
-                            Err(e) => {
-                                warn_err!(e);
-                            }
-                        },
-                        StandardTagKey::ReplayGainTrackPeak => match tag_to_f32(t) {
-                            Ok(f) => {
-                                track_peak = Some(f);
-                            }
-                            Err(e) => {
-                                warn_err!(e);
-                            }
-                        },
-                        _ => (),
-                    };
-                }
-            }
-        }
-        Ok((track_gain_db, track_peak))
-    }
-
     fn load_frames_from_buffer_ref(
         buffer: &symphonia::core::audio::AudioBufferRef,
     ) -> Result<Vec<Frame<f32>>> {
@@ -219,6 +122,138 @@ impl AudioBuffer {
         }
     }
 
+    fn vec_to_data(f: Vec<Frame<T>>, stereo: bool) -> Vec<T>
+    where
+        T: Copy,
+    {
+        match stereo {
+            true => {
+                use std::iter::once;
+                f.iter()
+                    .flat_map(|x| match x {
+                        Frame::Mono(x) => once(*x).chain(once(*x)),
+                        Frame::Stereo(l, r) => once(*l).chain(once(*r)),
+                    })
+                    .collect()
+            }
+            false => f
+                .iter()
+                .map(|x| match x {
+                    Frame::Mono(x) => *x,
+                    Frame::Stereo(l, _) => *l,
+                })
+                .collect(),
+        }
+    }
+}
+
+#[derive(Debug, PartialEq, Copy, Clone)]
+pub struct ReplayGain {
+    scale_factor: f32,
+    max_scale: f32,
+}
+impl ReplayGain {
+    fn from_formatreader(format: &mut Box<dyn FormatReader>) -> Result<Option<Self>> {
+        use symphonia::core::meta::{MetadataOptions, StandardTagKey, Tag, Value};
+        let mut track_gain_db = None;
+        let mut track_peak = None;
+        if let Some(md) = format.metadata().current() {
+            for t in md.tags() {
+                fn tag_to_f32(t: &Tag) -> Result<f32> {
+                    match &t.value {
+                        Value::Float(val) => Ok(*val as f32),
+                        // Strings can be like "+3.14 dB" or "0.4728732849"
+                        Value::String(val) => Ok(match val.split_once(" ") {
+                            Some(val) => val.0,
+                            None => val,
+                        }
+                        .parse::<f32>()?),
+                        _ => anyhow::bail!("tag is not a float"),
+                    }
+                }
+                if let Some(key) = t.std_key {
+                    match key {
+                        StandardTagKey::ReplayGainTrackGain => match tag_to_f32(t) {
+                            Ok(f) => {
+                                track_gain_db = Some(f);
+                            }
+                            Err(e) => {
+                                warn_err!(e);
+                            }
+                        },
+                        StandardTagKey::ReplayGainTrackPeak => match tag_to_f32(t) {
+                            Ok(f) => {
+                                track_peak = Some(f);
+                            }
+                            Err(e) => {
+                                warn_err!(e);
+                            }
+                        },
+                        _ => (),
+                    };
+                }
+            }
+        }
+        if let Some(track_gain_db) = track_gain_db {
+            let scale_factor = 10.0_f32.powf(track_gain_db / 20.0);
+            let max_scale = 1.0 / track_peak.unwrap_or(1.0);
+            Ok(Some(Self {
+                scale_factor,
+                max_scale,
+            }))
+        } else {
+            Ok(None)
+        }
+    }
+
+    fn filter(&self, data: &mut [f32]) {
+        if self.scale_factor > self.max_scale {
+            for d in data {
+                let mut cur_sample = *d * self.scale_factor;
+                // This is essentially the scaled hard-limiting algorithm
+                // It looks like the soft-knee to me
+                // I haven't found a better limiting algorithm yet...
+                if cur_sample < -0.5 {
+                    cur_sample = ((cur_sample + 0.5) / (1.0 - 0.5)).tanh() * (1.0 - 0.5) - 0.5;
+                } else if cur_sample > 0.5 {
+                    cur_sample = ((cur_sample - 0.5) / (1.0 - 0.5)).tanh() * (1.0 - 0.5) + 0.5;
+                }
+                *d = cur_sample;
+            }
+        } else {
+            for d in data {
+                *d *= self.scale_factor;
+            }
+        }
+    }
+}
+
+#[derive(PartialEq, Debug)]
+pub struct AudioBuffer {
+    name: String,
+    buffer: al::Buffer,
+}
+impl AudioBuffer {
+    fn get_valid_path(path: &str) -> Option<String> {
+        let ext = std::path::Path::new(path)
+            .extension()
+            .and_then(|s| s.to_str());
+        match ext {
+            Some(_) => Some(path.to_string()),
+            None => {
+                let mut npath = None;
+                for ext in &["opus", "ogg", "flac", "wav"] {
+                    let tpath = format!("{}.{}", path, ext);
+                    if ndata::exists(&tpath) {
+                        npath = Some(tpath);
+                        break;
+                    }
+                }
+                npath
+            }
+        }
+    }
+
     fn from_path(path: &str) -> Result<Self> {
         use symphonia::core::audio::{AudioBuffer, AudioBufferRef, Channels, Signal};
         use symphonia::core::codecs::{CODEC_TYPE_NULL, Decoder, DecoderOptions};
@@ -249,7 +284,7 @@ impl AudioBuffer {
             .format;
 
         // Get replaygain information
-        let (track_gain_db, track_peak) = Self::get_replaygain(&mut format)?;
+        let replaygain = ReplayGain::from_formatreader(&mut format)?;
 
         let track = format.default_track().context("No default track")?;
         let track_id = track.id;
@@ -286,45 +321,21 @@ impl AudioBuffer {
             if packet.track_id() == track_id {
                 // Decode the packet into audio samples.
                 let buffer = decoder.decode(&packet)?;
-                frames.append(&mut Self::load_frames_from_buffer_ref(&buffer)?);
+                frames.append(&mut Frame::<f32>::load_frames_from_buffer_ref(&buffer)?);
             }
         }
         // Squish the frames together
         let mut data: Vec<f32> = Frame::vec_to_data(frames, stereo);
 
         // Filter function for decoded Ogg Vorbis streams taken from "vgfilter.c"
-        if let Some(track_gain_db) = track_gain_db {
-            let scale_factor = 10.0_f32.powf(track_gain_db / 20.0);
-            let max_scale = 1.0 / track_peak.unwrap_or(1.0);
-            if scale_factor > max_scale {
-                for d in &mut data {
-                    let mut cur_sample = *d * scale_factor;
-                    // This is essentially the scaled hard-limiting algorithm
-                    // It looks like the soft-knee to me
-                    // I haven't found a better limiting algorithm yet...
-                    if cur_sample < -0.5 {
-                        cur_sample = ((cur_sample + 0.5) / (1.0 - 0.5)).tanh() * (1.0 - 0.5) - 0.5;
-                    } else if cur_sample > 0.5 {
-                        cur_sample = ((cur_sample - 0.5) / (1.0 - 0.5)).tanh() * (1.0 - 0.5) + 0.5;
-                    }
-                    *d = cur_sample;
-                }
-            } else {
-                for d in &mut data {
-                    *d *= scale_factor;
-                }
-            }
+        if let Some(replaygain) = replaygain {
+            replaygain.filter(&mut data);
         }
 
         let buffer = al::Buffer::new()?;
         buffer.data_f32(&data, stereo, sample_rate as ALsizei);
         debug::object_label(debug::consts::AL_BUFFER_EXT, buffer.raw(), &path);
-        Ok(Self {
-            name: path,
-            buffer,
-            track_gain_db,
-            track_peak,
-        })
+        Ok(Self { name: path, buffer })
     }
 
     pub fn duration(&self, unit: AudioSeek) -> f32 {
@@ -488,7 +499,7 @@ impl AudioStream {
             .format;
 
         // Replaygain
-        let (track_gain_db, track_peak) = AudioBuffer::get_replaygain(&mut format)?;
+        let replaygain = ReplayGain::from_formatreader(&mut format)?;
 
         let track = format.default_track().context("No default track")?;
         let track_id = track.id;
@@ -537,12 +548,15 @@ impl AudioStream {
                     if packet.track_id() == track_id {
                         // Decode the packet into audio samples.
                         let buffer = decoder.decode(&packet)?;
-                        break Some(AudioBuffer::load_frames_from_buffer_ref(&buffer)?);
+                        break Some(Frame::<f32>::load_frames_from_buffer_ref(&buffer)?);
                     }
                 };
 
                 if let Some(frames) = frames {
-                    let data: Vec<f32> = Frame::vec_to_data(frames, stereo);
+                    let mut data: Vec<f32> = Frame::vec_to_data(frames, stereo);
+                    if let Some(replaygain) = replaygain {
+                        replaygain.filter(&mut data);
+                    }
                     buffers[active].data_f32(&data, stereo, sample_rate as ALsizei);
                     source.queue_buffer(&buffers[active]);
                     active = 1 - active;
