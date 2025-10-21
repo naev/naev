@@ -41,7 +41,9 @@ use std::sync::{Mutex, RwLock};
 use tracing_mutex::stdsync::{Mutex, RwLock};
 
 //const NUM_VOICES: usize = 64;
+/// Reference distance for sounds
 const REFERENCE_DISTANCE: f32 = 500.;
+/// Max distance for sounds to still play at
 const MAX_DISTANCE: f32 = 25_000.;
 
 struct LuaAudioEfx {
@@ -75,12 +77,13 @@ pub enum AudioType {
     LuaStream,
 }
 
-// Small wrapper for Mono/Stereo frames
+/// Small wrapper for Mono/Stereo frames
 enum Frame<T> {
     Mono(T),
     Stereo(T, T),
 }
 impl<T> Frame<T> {
+    /// Loads a Vec of Frame<f32> from an AudioBufferRef
     fn load_frames_from_buffer_ref(
         buffer: &symphonia::core::audio::AudioBufferRef,
     ) -> Result<Vec<Frame<f32>>> {
@@ -122,6 +125,7 @@ impl<T> Frame<T> {
         }
     }
 
+    /// Converts a vector of frames to a raw interleaved data vector usable by OpenAL
     fn vec_to_data(f: Vec<Frame<T>>, stereo: bool) -> Vec<T>
     where
         T: Copy,
@@ -147,12 +151,16 @@ impl<T> Frame<T> {
     }
 }
 
+/// Handles loading and filtering replaygain based on symphonia
 #[derive(Debug, PartialEq, Copy, Clone)]
 pub struct ReplayGain {
+    /// Scale factor computed from Track Gain
     scale_factor: f32,
+    /// Max scale computed from Track Peak
     max_scale: f32,
 }
 impl ReplayGain {
+    /// Extracts the replaygain values from a FormatReader
     fn from_formatreader(format: &mut Box<dyn FormatReader>) -> Result<Option<Self>> {
         use symphonia::core::meta::{StandardTagKey, Tag, Value};
         let mut track_gain_db = None;
@@ -206,6 +214,7 @@ impl ReplayGain {
         }
     }
 
+    /// Filters an audio stream. Ported from vgfilter.c implementation.
     fn filter(&self, data: &mut [f32]) {
         if self.scale_factor > self.max_scale {
             for d in data {
@@ -466,6 +475,7 @@ impl AudioStatic {
     }
 }
 
+/// Structure to help stream data
 struct StreamData {
     source: Arc<al::Source>,
     buffers: [al::Buffer; 2],
