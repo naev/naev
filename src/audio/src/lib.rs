@@ -422,6 +422,7 @@ pub enum AudioData {
 pub enum Audio {
     Static(AudioStatic),
     LuaStatic(AudioStatic),
+    LuaStream(AudioStream),
 }
 
 #[derive(PartialEq, Debug)]
@@ -532,6 +533,7 @@ impl StreamData {
     }
 
     fn queue_next_buffer(&mut self) -> Result<bool> {
+        let mut rewind = false;
         let frames = loop {
             // Get the next packet from the media format.
             let packet = match self.format.next_packet() {
@@ -541,6 +543,17 @@ impl StreamData {
                         if e.kind() == std::io::ErrorKind::UnexpectedEof
                             && e.to_string() == "end of stream"
                         {
+                            if !rewind && self.source.get_parameter_i32(AL_LOOPING) != 0 {
+                                rewind = true; // Only rewind once.
+                                self.format.seek(
+                                    symphonia::core::formats::SeekMode::Coarse,
+                                    symphonia::core::formats::SeekTo::Time {
+                                        time: symphonia::core::units::Time::new(0, 0.),
+                                        track_id: Some(self.track_id),
+                                    },
+                                )?;
+                                continue;
+                            }
                             break None;
                         }
                         return Err(symphonia::core::errors::Error::IoError(e).into());
@@ -572,11 +585,21 @@ impl StreamData {
     }
 }
 
+#[derive(Debug)]
 pub struct AudioStream {
+    path: String,
     source: Arc<al::Source>,
     finish: Arc<AtomicBool>,
     volume: f32,
     thread: std::thread::JoinHandle<Result<()>>,
+}
+impl Drop for AudioStream {
+    fn drop(&mut self) {
+        unsafe {
+            alSourceStop(self.source.raw());
+        }
+        self.finish.store(true, Ordering::Relaxed);
+    }
 }
 impl AudioStream {
     fn thread(
@@ -620,11 +643,19 @@ impl AudioStream {
         source.parameter_f32(AL_GAIN, 1.);
 
         Ok(AudioStream {
+            path: path.to_string(),
             source,
             finish,
             volume: 1.,
             thread,
         })
+    }
+
+    pub fn try_clone(&self) -> Result<Self> {
+        let mut audio = AudioStream::from_path(&self.path)?;
+        audio.volume = self.volume;
+        // TODO copy some other properties
+        Ok(audio)
     }
 }
 
@@ -636,14 +667,15 @@ macro_rules! check_audio {
                     return Default::default();
                 }
             }
+            _ => (),
         }
     }};
 }
 impl Audio {
     fn try_clone(&self) -> Result<Self> {
         match self {
-            Self::Static(this) => Ok(Self::Static(this.try_clone()?)),
-            Self::LuaStatic(this) => Ok(Self::LuaStatic(this.try_clone()?)),
+            Self::Static(this) | Self::LuaStatic(this) => Ok(Self::Static(this.try_clone()?)),
+            Self::LuaStream(this) => Ok(Self::LuaStream(this.try_clone()?)),
         }
     }
 
@@ -652,7 +684,7 @@ impl Audio {
         check_audio!(self);
 
         match self {
-            Self::Static(this) => {
+            Self::Static(this) | Self::LuaStatic(this) => {
                 let v = &this.source;
                 this.ingame = true;
 
@@ -679,6 +711,7 @@ impl Audio {
     fn source(&self) -> &al::Source {
         match self {
             Self::Static(this) | Self::LuaStatic(this) => &this.source,
+            Self::LuaStream(this) => &this.source,
         }
     }
 
@@ -761,6 +794,9 @@ impl Audio {
             Self::Static(this) | Self::LuaStatic(this) => {
                 this.volume = vol;
             }
+            Self::LuaStream(this) => {
+                this.volume = vol;
+            }
         }
     }
 
@@ -769,6 +805,9 @@ impl Audio {
         self.source().parameter_f32(AL_GAIN, vol);
         match self {
             Self::Static(this) | Self::LuaStatic(this) => {
+                this.volume = vol;
+            }
+            Self::LuaStream(this) => {
                 this.volume = vol;
             }
         }
@@ -783,6 +822,7 @@ impl Audio {
         check_audio!(self);
         match self {
             Self::Static(this) | Self::LuaStatic(this) => this.volume,
+            Self::LuaStream(this) => this.volume,
         }
     }
 
@@ -964,17 +1004,25 @@ impl AudioBuilder {
         Ok(audio)
     }
 
-    fn build_streaming(&self) -> Result<AudioStatic> {
-        todo!()
+    fn build_stream(&self) -> Result<AudioStream> {
+        if let Some(path) = &self.path {
+            AudioStream::from_path(&path)
+        } else {
+            anyhow::bail!("Can only create AudioStream from paths");
+        }
     }
 
     pub fn build(self) -> Result<AudioRef> {
+        if false {
+            return Ok(Arc::new(thunderdome::Index::DANGLING).into());
+        }
+
         let looping = self.looping;
         let play = self.play;
         let mut audio = match self.atype {
             AudioType::Static => Audio::Static(self.build_static()?),
             AudioType::LuaStatic => Audio::LuaStatic(self.build_static()?),
-            AudioType::LuaStream => Audio::LuaStatic(self.build_static()?), // TODO
+            AudioType::LuaStream => Audio::LuaStream(self.build_stream()?),
         };
         if let Some(pos) = self.pos {
             audio.set_ingame();
@@ -1316,6 +1364,7 @@ impl UserData for AudioRef {
                         None => "NONE",
                     }
                 ),
+                Audio::LuaStream(this) => format!("AudioStream( {} )", this.path),
             })?)
         });
         /*
@@ -1472,20 +1521,21 @@ impl UserData for AudioRef {
          *    @luatparam Audio source Source to get duration of.
          *    @luatparam[opt="seconds"] string unit Either "seconds" or "samples"
          * indicating the type to report.
-         *    @luatreturn number Duration of the source or -1 on error.
+         *    @luatreturn number Duration of the source or nil on error.
          * @luafunc getDuration
          */
         methods.add_method(
             "getDuration",
-            |_, this, samples: bool| -> mlua::Result<f32> {
+            |_, this, samples: bool| -> mlua::Result<Option<f32>> {
                 Ok(this.call(|this| match this {
                     Audio::Static(this) | Audio::LuaStatic(this) => match &this.data {
-                        Some(AudioData::Buffer(buffer)) => buffer.duration(match samples {
+                        Some(AudioData::Buffer(buffer)) => Some(buffer.duration(match samples {
                             true => AudioSeek::Samples,
                             false => AudioSeek::Seconds,
-                        }),
-                        None => 0.0,
+                        })),
+                        None => None,
                     },
+                    Audio::LuaStream(_this) => None,
                 })?)
             },
         );
@@ -2133,6 +2183,7 @@ pub extern "C" fn sound_pause() {
     for (_, v) in voices.iter() {
         match v {
             Audio::Static(_this) | Audio::LuaStatic(_this) => v.pause(),
+            _ => (),
         }
     }
 }
@@ -2143,6 +2194,7 @@ pub extern "C" fn sound_resume() {
     for (_, v) in voices.iter() {
         match v {
             Audio::Static(_this) | Audio::LuaStatic(_this) => v.play(),
+            _ => (),
         }
     }
 }
@@ -2160,6 +2212,7 @@ pub extern "C" fn sound_volume(volume: c_double) {
             Audio::Static(_this) | Audio::LuaStatic(_this) => {
                 v.source().parameter_f32(AL_GAIN, master * v.volume())
             }
+            _ => (),
         }
     }
 }
