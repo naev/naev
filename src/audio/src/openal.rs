@@ -533,6 +533,21 @@ impl Buffer {
         }
         out
     }
+
+    pub fn data_f32(&self, data: &[f32], stereo: bool, sample_rate: ALsizei) {
+        unsafe {
+            alBufferData(
+                self.raw(),
+                match stereo {
+                    true => AL_FORMAT_STEREO_FLOAT32,
+                    false => AL_FORMAT_MONO_FLOAT32,
+                },
+                data.as_ptr() as *const ALvoid,
+                (data.len() * std::mem::size_of::<f32>()) as i32,
+                sample_rate,
+            );
+        }
+    }
 }
 impl Drop for Buffer {
     fn drop(&mut self) {

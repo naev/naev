@@ -21,6 +21,8 @@ use crate::source_spatialize::*;
 use anyhow::Context;
 use naev_core::utils::{binary_search_by_key_ref, sort_by_key_ref};
 use std::sync::atomic::{AtomicBool, AtomicU32, Ordering};
+use symphonia::core::audio::{Channels, Signal};
+use symphonia::core::formats::FormatReader;
 use symphonia::core::io::MediaSourceStream;
 use thunderdome::Arena;
 
@@ -70,6 +72,37 @@ pub enum AudioType {
     LuaStream,
 }
 
+// Small wrapper for Mono/Stereo frames
+enum Frame<T> {
+    Mono(T),
+    Stereo(T, T),
+}
+impl<T> Frame<T> {
+    fn vec_to_data(f: Vec<Frame<T>>, stereo: bool) -> Vec<T>
+    where
+        T: Copy,
+    {
+        match stereo {
+            true => {
+                use std::iter::once;
+                f.iter()
+                    .flat_map(|x| match x {
+                        Frame::Mono(x) => once(*x).chain(once(*x)),
+                        Frame::Stereo(l, r) => once(*l).chain(once(*r)),
+                    })
+                    .collect()
+            }
+            false => f
+                .iter()
+                .map(|x| match x {
+                    Frame::Mono(x) => *x,
+                    Frame::Stereo(l, _) => *l,
+                })
+                .collect(),
+        }
+    }
+}
+
 #[derive(PartialEq, Debug)]
 pub struct AudioBuffer {
     name: String,
@@ -98,38 +131,59 @@ impl AudioBuffer {
         }
     }
 
-    fn from_path(path: &str) -> Result<Self> {
-        use symphonia::core::audio::{AudioBuffer, AudioBufferRef, Channels, Signal};
-        use symphonia::core::codecs::{CODEC_TYPE_NULL, Decoder, DecoderOptions};
-        use symphonia::core::conv::{FromSample, IntoSample};
-        use symphonia::core::errors::Error;
-        use symphonia::core::formats::{FormatOptions, FormatReader};
+    fn get_replaygain(format: &mut Box<dyn FormatReader>) -> Result<(Option<f32>, Option<f32>)> {
         use symphonia::core::meta::{MetadataOptions, StandardTagKey, Tag, Value};
-        use symphonia::core::probe::Hint;
-        use symphonia::core::sample::{Sample, SampleFormat};
-
-        // Small wrapper for Mono/Stereo frames
-        enum Frame<T> {
-            Mono(T),
-            Stereo(T, T),
-        }
-
-        fn load_frames_from_buffer_ref(buffer: &AudioBufferRef) -> Result<Vec<Frame<f32>>> {
-            match buffer {
-                AudioBufferRef::U8(buffer) => load_frames_from_buffer(buffer),
-                AudioBufferRef::U16(buffer) => load_frames_from_buffer(buffer),
-                AudioBufferRef::U24(buffer) => load_frames_from_buffer(buffer),
-                AudioBufferRef::U32(buffer) => load_frames_from_buffer(buffer),
-                AudioBufferRef::S8(buffer) => load_frames_from_buffer(buffer),
-                AudioBufferRef::S16(buffer) => load_frames_from_buffer(buffer),
-                AudioBufferRef::S24(buffer) => load_frames_from_buffer(buffer),
-                AudioBufferRef::S32(buffer) => load_frames_from_buffer(buffer),
-                AudioBufferRef::F32(buffer) => load_frames_from_buffer(buffer),
-                AudioBufferRef::F64(buffer) => load_frames_from_buffer(buffer),
+        let mut track_gain_db = None;
+        let mut track_peak = None;
+        if let Some(md) = format.metadata().current() {
+            for t in md.tags() {
+                fn tag_to_f32(t: &Tag) -> Result<f32> {
+                    match &t.value {
+                        Value::Float(val) => Ok(*val as f32),
+                        // Strings can be like "+3.14 dB" or "0.4728732849"
+                        Value::String(val) => Ok(match val.split_once(" ") {
+                            Some(val) => val.0,
+                            None => val,
+                        }
+                        .parse::<f32>()?),
+                        _ => anyhow::bail!("tag is not a float"),
+                    }
+                }
+                if let Some(key) = t.std_key {
+                    match key {
+                        StandardTagKey::ReplayGainTrackGain => match tag_to_f32(t) {
+                            Ok(f) => {
+                                track_gain_db = Some(f);
+                            }
+                            Err(e) => {
+                                warn_err!(e);
+                            }
+                        },
+                        StandardTagKey::ReplayGainTrackPeak => match tag_to_f32(t) {
+                            Ok(f) => {
+                                track_peak = Some(f);
+                            }
+                            Err(e) => {
+                                warn_err!(e);
+                            }
+                        },
+                        _ => (),
+                    };
+                }
             }
         }
+        Ok((track_gain_db, track_peak))
+    }
 
-        fn load_frames_from_buffer<S: Sample>(buffer: &AudioBuffer<S>) -> Result<Vec<Frame<f32>>>
+    fn load_frames_from_buffer_ref(
+        buffer: &symphonia::core::audio::AudioBufferRef,
+    ) -> Result<Vec<Frame<f32>>> {
+        use symphonia::core::conv::{FromSample, IntoSample};
+        use symphonia::core::sample::{Sample, SampleFormat};
+
+        fn load_frames_from_buffer<S: Sample>(
+            buffer: &symphonia::core::audio::AudioBuffer<S>,
+        ) -> Result<Vec<Frame<f32>>>
         where
             f32: FromSample<S>,
         {
@@ -150,6 +204,29 @@ impl AudioBuffer {
                 _ => anyhow::bail!("Unsupported channel configuration"),
             }
         }
+        use symphonia::core::audio::AudioBufferRef;
+        match buffer {
+            AudioBufferRef::U8(buffer) => load_frames_from_buffer(buffer),
+            AudioBufferRef::U16(buffer) => load_frames_from_buffer(buffer),
+            AudioBufferRef::U24(buffer) => load_frames_from_buffer(buffer),
+            AudioBufferRef::U32(buffer) => load_frames_from_buffer(buffer),
+            AudioBufferRef::S8(buffer) => load_frames_from_buffer(buffer),
+            AudioBufferRef::S16(buffer) => load_frames_from_buffer(buffer),
+            AudioBufferRef::S24(buffer) => load_frames_from_buffer(buffer),
+            AudioBufferRef::S32(buffer) => load_frames_from_buffer(buffer),
+            AudioBufferRef::F32(buffer) => load_frames_from_buffer(buffer),
+            AudioBufferRef::F64(buffer) => load_frames_from_buffer(buffer),
+        }
+    }
+
+    fn from_path(path: &str) -> Result<Self> {
+        use symphonia::core::audio::{AudioBuffer, AudioBufferRef, Channels, Signal};
+        use symphonia::core::codecs::{CODEC_TYPE_NULL, Decoder, DecoderOptions};
+        use symphonia::core::conv::{FromSample, IntoSample};
+        use symphonia::core::errors::Error;
+        use symphonia::core::meta::{MetadataOptions, StandardTagKey, Tag, Value};
+        use symphonia::core::probe::Hint;
+        use symphonia::core::sample::{Sample, SampleFormat};
 
         // If no extension try to autodetect.
         let ext = std::path::Path::new(path)
@@ -172,48 +249,7 @@ impl AudioBuffer {
             .format;
 
         // Get replaygain information
-        let (track_gain_db, track_peak) = {
-            let mut track_gain_db = None;
-            let mut track_peak = None;
-            if let Some(md) = format.metadata().current() {
-                for t in md.tags() {
-                    fn tag_to_f32(t: &Tag) -> Result<f32> {
-                        match &t.value {
-                            Value::Float(val) => Ok(*val as f32),
-                            // Strings can be like "+3.14 dB" or "0.4728732849"
-                            Value::String(val) => Ok(match val.split_once(" ") {
-                                Some(val) => val.0,
-                                None => val,
-                            }
-                            .parse::<f32>()?),
-                            _ => anyhow::bail!("tag is not a float"),
-                        }
-                    }
-                    if let Some(key) = t.std_key {
-                        match key {
-                            StandardTagKey::ReplayGainTrackGain => match tag_to_f32(t) {
-                                Ok(f) => {
-                                    track_gain_db = Some(f);
-                                }
-                                Err(e) => {
-                                    warn_err!(e);
-                                }
-                            },
-                            StandardTagKey::ReplayGainTrackPeak => match tag_to_f32(t) {
-                                Ok(f) => {
-                                    track_peak = Some(f);
-                                }
-                                Err(e) => {
-                                    warn_err!(e);
-                                }
-                            },
-                            _ => (),
-                        };
-                    }
-                }
-            }
-            (track_gain_db, track_peak)
-        };
+        let (track_gain_db, track_peak) = Self::get_replaygain(&mut format)?;
 
         let track = format.default_track().context("No default track")?;
         let track_id = track.id;
@@ -250,29 +286,12 @@ impl AudioBuffer {
             if packet.track_id() == track_id {
                 // Decode the packet into audio samples.
                 let buffer = decoder.decode(&packet)?;
-                frames.append(&mut load_frames_from_buffer_ref(&buffer)?);
+                frames.append(&mut Self::load_frames_from_buffer_ref(&buffer)?);
             }
         }
         // Squish the frames together
-        let mut data: Vec<f32> = match stereo {
-            true => {
-                use std::iter::once;
-                frames
-                    .iter()
-                    .flat_map(|x| match x {
-                        Frame::Mono(x) => once(*x).chain(once(*x)),
-                        Frame::Stereo(l, r) => once(*l).chain(once(*r)),
-                    })
-                    .collect()
-            }
-            false => frames
-                .iter()
-                .map(|x| match x {
-                    Frame::Mono(x) => *x,
-                    Frame::Stereo(l, _) => *l,
-                })
-                .collect(),
-        };
+        let mut data: Vec<f32> = Frame::vec_to_data(frames, stereo);
+
         // Filter function for decoded Ogg Vorbis streams taken from "vgfilter.c"
         if let Some(track_gain_db) = track_gain_db {
             let scale_factor = 10.0_f32.powf(track_gain_db / 20.0);
@@ -298,18 +317,7 @@ impl AudioBuffer {
         }
 
         let buffer = al::Buffer::new()?;
-        unsafe {
-            alBufferData(
-                buffer.raw(),
-                match stereo {
-                    true => AL_FORMAT_STEREO_FLOAT32,
-                    false => AL_FORMAT_MONO_FLOAT32,
-                },
-                data.as_ptr() as *const ALvoid,
-                (data.len() * std::mem::size_of::<f32>()) as i32,
-                sample_rate as ALsizei,
-            );
-        }
+        buffer.data_f32(&data, stereo, sample_rate as ALsizei);
         debug::object_label(debug::consts::AL_BUFFER_EXT, buffer.raw(), &path);
         Ok(Self {
             name: path,
@@ -458,7 +466,7 @@ pub struct AudioStream {
     source: Arc<al::Source>,
     finish: Arc<AtomicBool>,
     volume: f32,
-    thread: std::thread::JoinHandle<()>,
+    thread: std::thread::JoinHandle<Result<()>>,
 }
 impl AudioStream {
     fn thread(
@@ -479,8 +487,24 @@ impl AudioStream {
             )?
             .format;
 
+        // Replaygain
+        let (track_gain_db, track_peak) = AudioBuffer::get_replaygain(&mut format)?;
+
+        let track = format.default_track().context("No default track")?;
+        let track_id = track.id;
+
         // Set up buffers
         let buffers: [al::Buffer; 2] = [al::Buffer::new()?, al::Buffer::new()?];
+
+        let codec_params = &track.codec_params;
+        let sample_rate = codec_params.sample_rate.context("Unknown sample rate")?;
+        let mut decoder = codecs.make(codec_params, &Default::default())?;
+
+        let channels = track.codec_params.channels.context("no channels")?;
+        if !channels.contains(Channels::FRONT_LEFT) {
+            anyhow::bail!("no mono channel");
+        }
+        let stereo = channels.contains(Channels::FRONT_RIGHT);
 
         let mut active: usize = 0;
         loop {
@@ -492,12 +516,38 @@ impl AudioStream {
             if state > 0 {
                 source.unqueue_buffer();
                 // TODO load buffer into &buffers[active]
-                if true {
-                    // TODO handle error condition
-                    return Ok(());
-                } else {
+                let frames = loop {
+                    // Get the next packet from the media format.
+                    let packet = match format.next_packet() {
+                        Ok(packet) => packet,
+                        Err(e) => match e {
+                            symphonia::core::errors::Error::IoError(e) => {
+                                if e.kind() == std::io::ErrorKind::UnexpectedEof
+                                    && e.to_string() == "end of stream"
+                                {
+                                    break None;
+                                }
+                                return Err(symphonia::core::errors::Error::IoError(e).into());
+                            }
+                            e => anyhow::bail!(e),
+                        },
+                    };
+
+                    // If the packet does not belong to the selected track, skip over it.
+                    if packet.track_id() == track_id {
+                        // Decode the packet into audio samples.
+                        let buffer = decoder.decode(&packet)?;
+                        break Some(AudioBuffer::load_frames_from_buffer_ref(&buffer)?);
+                    }
+                };
+
+                if let Some(frames) = frames {
+                    let data: Vec<f32> = Frame::vec_to_data(frames, stereo);
+                    buffers[active].data_f32(&data, stereo, sample_rate as ALsizei);
                     source.queue_buffer(&buffers[active]);
                     active = 1 - active;
+                } else {
+                    return Ok(());
                 }
             }
 
@@ -515,11 +565,16 @@ impl AudioStream {
 
         let thfsh = finish.clone();
         let thsrc = source.clone();
-        let th = std::thread::spawn(move || AudioStream::thread(thsrc, thfsh, src));
+        let thread = std::thread::spawn(move || AudioStream::thread(thsrc, thfsh, src));
 
         source.parameter_f32(AL_GAIN, 1.);
 
-        todo!();
+        Ok(AudioStream {
+            source,
+            finish,
+            volume: 1.,
+            thread,
+        })
     }
 }
 
