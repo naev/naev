@@ -46,7 +46,7 @@ const REFERENCE_DISTANCE: f32 = 500.;
 /// Max distance for sounds to still play at
 const MAX_DISTANCE: f32 = 25_000.;
 /// Number of frames we want to grab when streaming
-const STREAMING_BUFFER_LENGTH: usize = 16 * 1024;
+const STREAMING_BUFFER_LENGTH: usize = 1 * 1024;
 
 struct LuaAudioEfx {
     name: String,
@@ -579,6 +579,8 @@ impl StreamData {
 
         if frames.len() > 0 {
             let mut data: Vec<f32> = Frame::vec_to_data(frames, self.stereo);
+            //use std::time::SystemTime;
+            //dbg!( SystemTime::now().duration_since(SystemTime::UNIX_EPOCH)?.as_secs(), data.len(), self.source.get_parameter_i32(AL_SOURCE_STATE) );
             if let Some(replaygain) = self.replaygain {
                 replaygain.filter(&mut data);
             }
@@ -625,9 +627,11 @@ impl AudioStream {
                 return Ok(());
             }
 
-            while data.source.get_parameter_i32(AL_BUFFERS_PROCESSED) > 0 {
-                data.source.unqueue_buffer();
-                data.queue_next_buffer()?;
+            if data.source.get_parameter_i32(AL_SOURCE_STATE) == AL_PLAYING {
+                for _ in 0..data.source.get_parameter_i32(AL_BUFFERS_PROCESSED) {
+                    data.source.unqueue_buffer();
+                    data.queue_next_buffer()?;
+                }
             }
 
             // We're just polling now, TODO something based on channels
