@@ -5,7 +5,7 @@
   <slot prop_extra="systems_secondary" prop="systems">utility</slot>
   <size>large</size>
   <price>1400000</price>
-  <description>Milspec cares about your personal safety. Your protection is our concern, and has developed the Aegis 8501 as the ultimate bulwark for your ship. Our patented technology guarantees you the highest level of protection, while making no sacrifices on energy or subsystem control. With the Aegis 8501 you are not only purchasing core systems, you are making a statement: you do not compromise on your protection. Fly safe, fly Milspec.</description>
+  <description>Milspec cares about your personal safety. Your protection is our number-one concern. The Aegis 8501 is the ultimate bulwark for your ship, equipped with patented shielding technology of impeccable strength, and maintaining energy and subsystem control above par. With the Aegis 8501, you make a statement: you do not compromise on your protection. Fly safe, fly Milspec.</description>
   <gfx_store>core_system_shield_l1</gfx_store>
   <priority>3</priority>
  </general>
