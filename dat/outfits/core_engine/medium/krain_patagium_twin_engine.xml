@@ -6,7 +6,9 @@
   <size>medium</size>
   <priority>3</priority>
   <price>550000</price>
-  <description>The Patagium is a destroyer engine developed by Krain Industries to be used in the Starbridge. While its performance exceeds other destroyer engines in terms of maximum speed and maneuverability, the engine is not adequate for most other destroyers due to their higher mass.</description>
+  <description>The Patagium is a destroyer twin engine developed by Krain Industries to be used in the Starbridge. While its performance exceeds other destroyer engines in terms of maximum speed and manoeuvrability, the engine is not adequate for most other destroyers due to their higher mass.
+
+Due to very carefully chosen calibration hyperparameters, the Patagium does not work with other engines and requires twin Patagium engines to be installed for it to work.</description>
   <gfx_store>krain_patagium_engine</gfx_store>
  </general>
  <specific type="modification">
