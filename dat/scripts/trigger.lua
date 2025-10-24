@@ -97,7 +97,12 @@ function _hook_trigger_timer( params )
    params._current = c+1
    if params._current <= #params then
       local t = params[c+1][1]
-      hook.timer( t, "_hook_trigger_timer", params )
+      -- Allow chaining multiple instantly
+      if t <= 0 then
+         _hook_trigger_timer( params )
+      else
+         hook.timer( t, "_hook_trigger_timer", params )
+      end
    end
 end
 
