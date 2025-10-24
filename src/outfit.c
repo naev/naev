@@ -406,7 +406,8 @@ int outfit_filterStructure( const Outfit *o )
 
 int outfit_filterCore( const Outfit *o )
 {
-   return sp_exclusive( o->slot.spid );
+   return outfit_isProp( o, OUTFIT_PROP_CORE );
+   // return sp_exclusive( o->slot.spid );
 }
 
 int outfit_filterOther( const Outfit *o )
@@ -3573,6 +3574,15 @@ int outfit_load( void )
    /* Second pass. */
    for ( int i = 0; i < noutfits; i++ ) {
       Outfit *o = &outfit_stack[i];
+
+      /* Parse tags. */
+      for ( int j = 0; j < array_size( o->tags ); j++ ) {
+         if ( strcmp( o->tags[j], "core" ) == 0 ) {
+            outfit_setProp( o, OUTFIT_PROP_CORE );
+            break;
+         }
+      }
+
       if ( ( o->lua_file == NULL ) && ( o->lua_inline == NULL ) )
          continue;
 
