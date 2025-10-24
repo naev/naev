@@ -22,4 +22,7 @@
    require 'outfits.unique.fuelshell_plating'
   </lua_inline>
  </specific>
+ <tags>
+  <tag>core</tag>
+ </tags>
 </outfit>
