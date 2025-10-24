@@ -5,7 +5,7 @@
   <slot prop_extra="systems_secondary" prop="systems">utility</slot>
   <size>medium</size>
   <price>200000</price>
-  <description>Milspec knows that a ship is merely the sum of its parts, and that means that the more parts, the better the ship. The Thalos 4702 provides serious subsystem control whilst retaining the high standard in energy and shielding that Milspec prides itself on. Fly safe, fly Milspec.</description>
+  <description>Milspec knows that having to make computational power compromises in outfits leads to becoming a chunk of floating scrap metal. The Thalos 4702 provides serious computational power whilst retaining the high standard in energy and shielding that Milspec prides itself on. No need to compromise on outfits, equip them all! Fly safe, fly Milspec.</description>
   <gfx_store>core_system_cpu_m1</gfx_store>
   <priority>3</priority>
  </general>
