@@ -5,7 +5,7 @@
   <slot prop_extra="systems_secondary" prop="systems">utility</slot>
   <size>medium</size>
   <price>200000</price>
-  <description>Milspec prides itself in taking care of all our customers. Your protection is our number-one concern. The Aegis 4701 grants your ship excellent shield strength while making no compromises in energy or computational power, and explore the universe with ease. Fly safe, fly Milspec.</description>
+  <description>Milspec prides itself in putting customers' safety first. Your protection is our number-one concern. The Aegis 4701 grants your ship excellent shield strength without compromising on energy or compute, so you can explore the universe at peace of mind. Fly safe, fly Milspec.</description>
   <gfx_store>core_system_shield_m1</gfx_store>
   <priority>3</priority>
  </general>

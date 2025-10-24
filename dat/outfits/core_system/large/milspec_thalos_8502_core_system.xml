@@ -5,7 +5,7 @@
   <slot prop_extra="systems_secondary" prop="systems">utility</slot>
   <size>large</size>
   <price>1400000</price>
-  <description>Milspec knows that more fighter bays means more fun, and that more fighter bays means higher CPU requirements. The Thalos 8502 provides some serious computational power whilst retaining the high standard in energy and shielding that Milspec prides itself on. Fly safe, fly Milspec.</description>
+  <description>Milspec knows the difference a few extra fighters can make on a battlefield. The Thalos 8502 provides some serious computational power, perfect for jam-packed carriers, whilst retaining the high standard in energy and shielding that Milspec prides itself on. Fly safe, fly Milspec.</description>
   <gfx_store>core_system_cpu_l1</gfx_store>
   <priority>3</priority>
  </general>

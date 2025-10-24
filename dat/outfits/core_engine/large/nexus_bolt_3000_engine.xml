@@ -5,7 +5,7 @@
   <slot prop_extra="engines_secondary" prop="engines">structure</slot>
   <size>large</size>
   <price>600000</price>
-  <description>Originally developed by Nexus Shipyards as part of the Hawking-class battleship project, the Bolt 3000 provides a well-rounded balance for large ships. Like most Nexus engines, it doesn't excel in speed, but its low power consumption and utility makes it an attractive and flexible option for some pilots.</description>
+  <description>Originally developed by Nexus Shipyards to suit the needs of the Hawking battleship, the Bolt 3000 is a well-rounded balanced choice for large ships. Like most Nexus engines, it doesn't excel in speed, but its comparatively low power consumption and high flexibility make it an attractive option for some pilots.</description>
   <gfx_store>nexus_engine_l</gfx_store>
   <priority>3</priority>
  </general>
