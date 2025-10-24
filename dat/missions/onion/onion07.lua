@@ -21,6 +21,10 @@
 --]]
 --[[
    Onion 07
+
+   Simple mission mainly there to set up some flavour and story stuff.
+
+   Player sets up honeypot, does some scans, and beats up mercenaries.
 --]]
 local fmt = require "format"
 local vn = require "vn"

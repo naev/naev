@@ -20,19 +20,22 @@
 </mission>
 --]]
 --[[
-   Onion 07
+   Onion 08
+
+   Player has to take down lonewolf4 in his modified zebra uber-carrier
 --]]
 local fmt = require "format"
 local vn = require "vn"
 local onion = require "common.onion"
 local love_shaders = require "love_shaders"
---local trigger = require "trigger"
+local trigger = require "trigger"
 --local fleet = require "fleet"
 local lmisn = require "lmisn"
 local pilotai = require "pilotai"
 local equipopt = require "equipopt"
 local pulse = require "luaspfx.pulse"
 local alert = require "luaspfx.alert"
+local blink = require "luaspfx.blink"
 local CTS = require "constants"
 --local tut = require "common.tutorial"
 
@@ -52,7 +55,7 @@ local STATE_WOLF_DEFEATED = 3
 mem.state = nil
 
 function create()
-   misn.finish(false)
+   if not var.peek("testing") then return misn.finish() end -- Not ready yet
 
    -- Hard claims now
    if not misn.claim( {SYSTEM_START, SYSTEM_END} ) then return misn.finish(false) end
@@ -73,7 +76,7 @@ function accept ()
    vn.newCharacter( l337 )
    vn.transition("electric")
 
-   l337()
+   l337("...")
    vn.func( function() accepted = true end )
 
    vn.done("electric")
@@ -86,6 +89,12 @@ function accept ()
    mem.state = 0
    hook.enter("enter")
    hook.land("land")
+
+   misn.markerAdd( SYSTEM_START )
+   misn.osdCreate( title, {
+      fmt.f(_("Confront lonewolf4 at the {sys} system!"),
+      {sys=SYSTEM_START}),
+   })
 end
 
 local function get_fct()
@@ -120,9 +129,13 @@ end
 function enter ()
    local scur = system.cur()
    if scur==SYSTEM_START and mem.state==0 then
+      pilot.clear()
+      pilot.toggleSpawn(false)
       hook.timer( 5, "fight1_start1" )
 
    elseif scur==SYSTEM_END and mem.state==STATE_WOLF_RANAWAY then
+      pilot.clear()
+      pilot.toggleSpawn(false)
       spawn_wolf( vec2.new() )
 
    elseif mem.state ~= 0 and mem.state~=STATE_WOLF_RANAWAY then
@@ -144,7 +157,7 @@ function energy_surge_hook( pos )
    } do
       local p = pos + vec2.newP( 300*math.sqrt(rnd.rnd()), rnd.angle() )
       local d = pilot.add( s, fct, p )
-      d:effectAdd("Fade-In")
+      d:effectAdd("Blink")
       d:setHostile(true)
       -- Slow them down so the player can "dodge"
       d:intrinsicSet("speed_mod", -50)
@@ -184,7 +197,7 @@ Stage 1 fight:
 --]]
 local real, fake1, fake2, bosses, discovered
 function fight1_start1 ()
-   player.msg(_([[l337_b01: ]]))
+   player.msg(_([[l337_b01: ]]), true)
    mem.state = STATE_FIGHT1_START
 
    local rad = system.cur():radius()*0.8
@@ -284,13 +297,46 @@ function fight1_attacked( plt )
             p:effectAdd("Fade-Out")
          end
       end
+
+      real:broadcast(_(""))
+
+      hook.timer( 0.5, "fight1_timer" )
+   end
+end
+
+function fight1_timer ()
+   if not real:exists() or real:shield() < 1 then
+      local pos = real:pos()
+      blink( real, pos )
+      real:rm()
+      energy_surge( pos )
+
+      hook.timer( 9, "fight1_end1" )
+      trigger{
+         { 9, _("l337_b01: What the hell was that?") },
+         { 5, fmt.f(_("l337_b01: Wait, they're nearby in the {sys} system!"),
+            {sys=SYSTEM_END}) },
+         { 0, function ()
+            misn.osdCreate( title, {
+               fmt.f(_("Chase lonewolf4 to the {sys} system!"),
+                  {sys=SYSTEM_END}),
+            })
+            misn.markerRm()
+            misn.markerAdd( SYSTEM_END )
+            mem.state = STATE_WOLF_RANAWAY
+         end },
+         { 5, fmt.f(_("l337_b01: No time to lose, onwards to {sys} system!"),
+            {sys=SYSTEM_END}) },
+      }
+   else
+      hook.timer( 0.5, "fight1_timer" )
    end
 end
 
 --[[
 
 Stage 2 fight:
-0. Shields are done permanently
+0. Shields are down permanently
 1. Does an energy surge attack every so often
 2. When starts to take damage, charges up for 10 seconds and jumps away
 
