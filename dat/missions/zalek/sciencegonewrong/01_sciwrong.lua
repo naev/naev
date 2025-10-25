@@ -92,7 +92,7 @@ end
 
 
 function sys_enter ()
-   if system.cur() == mem.t_sys[2] and mem.targetalive then
+   if system.cur()==mem.t_sys[2] and mem.targetalive and not mem.boarded then
       local dist = rnd.rnd() * system.cur():radius() *1/2
       local location = vec2.newP(dist, rnd.angle())
       target = pilot.add( "Soromid Odium", "Soromid", location, shpnm )
@@ -103,7 +103,7 @@ function sys_enter ()
       target:setVisplayer(true)
       mem.hidle = hook.pilot(target, "idle", "targetIdle")
       mem.hexp = hook.pilot(target, "exploded", "targetExploded")
-      mem.hboard = hook.pilot(target, "board", "targetBoard")
+      mem.hboarh = hook.pilot(target, "board", "targetBoard")
       targetIdle()
    end
 end
