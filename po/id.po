@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-10-24 10:54+0900\n"
+"POT-Creation-Date: 2025-10-24 20:48+0900\n"
 "PO-Revision-Date: 2025-08-10 15:02+0000\n"
 "Last-Translator: Ta123Asri <taufiqdi15@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/naev/naev/id/"
@@ -10358,11 +10358,11 @@ msgid "N. Bolt 3000 Engine"
 msgstr "Mesin Bolt 3000 (N)"
 
 msgid ""
-"Originally developed by Nexus Shipyards as part of the Hawking-class "
-"battleship project, the Bolt 3000 provides a well-rounded balance for large "
-"ships. Like most Nexus engines, it doesn't excel in speed, but its low power "
-"consumption and utility makes it an attractive and flexible option for some "
-"pilots."
+"Originally developed by Nexus Shipyards to suit the needs of the Hawking "
+"battleship, the Bolt 3000 is a well-rounded balanced choice for large ships. "
+"Like most Nexus engines, it doesn't excel in speed, but its comparatively "
+"low power consumption and high flexibility make it an attractive option for "
+"some pilots."
 msgstr ""
 
 msgid "T. Typhoon Engine"
@@ -10372,8 +10372,8 @@ msgid ""
 "Development of the Typhoon engine was something of a prestige project for "
 "Tricon. Providing cruisers with superb handling and speed, it's a favourite "
 "of many captains, though its high power consumption limits it to ships with "
-"powerful reactors. It also can play a role as a manoeuvrability enhancing "
-"secondary engine, commonly found on light battleships.."
+"powerful reactors. It's also commonly found to be of use as a "
+"manoeuvrability-enhancing secondary engine on light battleships."
 msgstr ""
 
 #, fuzzy
@@ -10391,14 +10391,12 @@ msgid "K. Patagium Twin Engine"
 msgstr "Mesin Patagium (K)"
 
 msgid ""
-"The Patagium is a destroyer twin engine developed by Krain Industries to be "
-"used in the Starbridge. While its performance exceeds other destroyer "
-"engines in terms of maximum speed and manoeuvrability, the engine is not "
-"adequate for most other destroyers due to their higher mass.\n"
-"\n"
-"Due to very carefully chosen calibration hyperparameters, the Patagium does "
-"not work with other engines and requires twin Patagium engines to be "
-"installed for it to work."
+"The Patagium is an engine developed by Krain Industries, carefully tailored "
+"for use on their Destroyer-class Starbridge. While it exceeds the "
+"alternatives in maximum speed and manoeuvrability, the engine is not "
+"adequate for most other destroyers due to their higher mass. Due to the very "
+"particular calibration hyperparameters, the Patagium can only operate in a "
+"twin configuration."
 msgstr ""
 
 #, fuzzy
@@ -10447,10 +10445,10 @@ msgstr "Mesin Ox XL (M)"
 
 msgid ""
 "A powerful engine for its size, though not a particularly manoeuvrable one. "
-"The provided hefty engine mass limit enables small vessels to haul more "
-"cargo or weapons at high top speeds, making it significantly appealing to "
-"small-scale traders. Increased fuel reserves and improved atmospheric flight "
-"are also other selling points of the Ox."
+"On the slow and steady side as it is, it lets small vessels bring more cargo "
+"or outfits along without slowing to a crawl, giving it a good reputation in "
+"trader circles. Above-par fuel reserves and atmospheric flight capabilities "
+"are some of the other selling points of the Ox."
 msgstr ""
 
 msgid "N. Dart 160 Engine"
@@ -10665,12 +10663,11 @@ msgid "M. Aegis 8501 System"
 msgstr ""
 
 msgid ""
-"Milspec cares about your personal safety. Your protection is our concern, "
-"and has developed the Aegis 8501 as the ultimate bulwark for your ship. Our "
-"patented technology guarantees you the highest level of protection, while "
-"making no sacrifices on energy or subsystem control. With the Aegis 8501 you "
-"are not only purchasing core systems, you are making a statement: you do not "
-"compromise on your protection. Fly safe, fly Milspec."
+"Milspec cares about your personal safety. Your protection is our number-one "
+"concern. The Aegis 8501 is the ultimate bulwark for your ship, equipped with "
+"patented shielding technology of impeccable strength, and maintaining energy "
+"and subsystem control above par. With the Aegis 8501, you make a statement: "
+"you do not compromise on your protection. Fly safe, fly Milspec."
 msgstr ""
 
 msgid "M. Orion 8601 System"
@@ -10678,10 +10675,10 @@ msgstr ""
 
 msgid ""
 "Milspec develops high performance hardware for your ship, to make sure you "
-"can take on all the dangers the universe might throw at you on your travels "
+"can take all the dangers the universe might throw at you on your travels "
 "head-on. The Orion 8601 core system is a high-end universal solution for the "
-"largest of ships, making no compromises in CPU, energy, and shields. Fly "
-"safe, fly Milspec."
+"largest of ships, with zero compromise on computing power, energy, or "
+"shields. Fly safe, fly Milspec."
 msgstr ""
 
 msgid "M. Prometheus 8503 System"
@@ -10690,19 +10687,18 @@ msgstr ""
 msgid ""
 "Milspec offers solutions for pilots looking to power large arrays of "
 "powerful weapons. The Prometheus 8503 boasts a heavy-duty power generator to "
-"meet the power requirements of your high-power turrets and point defence "
-"systems, as well as considerable shielding and subsystem control. Fly safe, "
-"fly Milspec."
+"meet the power requirements of battleship-class weapon systems, as well as "
+"considerable shielding and subsystem control. Fly safe, fly Milspec."
 msgstr ""
 
 msgid "M. Thalos 8502 System"
 msgstr ""
 
 msgid ""
-"Milspec knows that more fighter bays means more fun, and that more fighter "
-"bays means higher CPU requirements. The Thalos 8502 provides some serious "
-"computational power whilst retaining the high standard in energy and "
-"shielding that Milspec prides itself on. Fly safe, fly Milspec."
+"Milspec knows the difference a few extra fighters can make on a battlefield. "
+"The Thalos 8502 provides some serious computational power, perfect for jam-"
+"packed carriers, whilst retaining the high standard in energy and shielding "
+"that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
 
 msgid "Prev. Gen. Large Systems"
@@ -10726,10 +10722,10 @@ msgid "M. Aegis 4701 System"
 msgstr ""
 
 msgid ""
-"Milspec prides itself in taking care of all our customers. Your protection "
-"is our number-one concern. The Aegis 4701 grants your ship excellent shield "
-"strength while making no compromises in energy or computational power, and "
-"explore the universe with ease. Fly safe, fly Milspec."
+"Milspec prides itself in putting customers' safety first. Your protection is "
+"our number-one concern. The Aegis 4701 grants your ship excellent shield "
+"strength without compromising on energy or compute, so you can explore the "
+"universe at peace of mind. Fly safe, fly Milspec."
 msgstr ""
 
 msgid "M. Orion 4801 System"
@@ -10771,18 +10767,18 @@ msgid "U. PT-200 System"
 msgstr ""
 
 msgid ""
-"Continuing Unicorp's PT series of core systems in the medium ship category, "
-"the PT-200 gives acceptable performance for an acceptable price."
+"Continuing Unicorp's PT lineup of core systems in the medium ship category, "
+"the PT-200 offers acceptable performance at an acceptable price."
 msgstr ""
 
 msgid "M. Aegis 2201 System"
 msgstr ""
 
 msgid ""
-"Milspec cares about your personal safety. Your protection is our concern. "
-"The Aegis 2201 grants your ship excellent shield strength while preserving a "
-"high level of subsystem control and energy capacity. Now you can sip a glass "
-"of tea as marauder cannons futilely bounce off your shields. Fly safe, fly "
+"Milspec cares about your personal safety. Your protection is our number-one "
+"concern. The Aegis 2201 grants your ship excellent shield strength while "
+"preserving a high level of subsystem control and energy capacity. Let "
+"yourself relax as hostile fire bounces off your shields. Fly safe, fly "
 "Milspec."
 msgstr ""
 
@@ -10793,8 +10789,8 @@ msgid ""
 "Milspec develops high performance hardware for your ship, to make sure you "
 "are always optimally prepared for the dangers the universe might throw at "
 "you on your travels. The Orion 2301 core system is affordable yet capable, "
-"recommended for the beginning captain, providing a good balance between CPU, "
-"energy, and shields. Fly safe, fly Milspec."
+"with balanced features at superior quality, recommended for the beginning "
+"captain. Fly safe, fly Milspec."
 msgstr ""
 
 msgid "M. Prometheus 2203 System"
@@ -10802,9 +10798,9 @@ msgstr ""
 
 msgid ""
 "Milspec offers solutions for pilots who believe the best defence is a good "
-"offence. The Prometheus 2203 boasts a heavy-duty power generator to meet the "
-"power requirements of your heavy-duty weapon systems, as well as "
-"considerable shielding and subsystem control. Fly safe, fly Milspec."
+"offence. The Prometheus 2203 boasts a heavy-duty power generator to satisfy "
+"the heaviest of weapons, as well as considerable shielding and subsystem "
+"control. Fly safe, fly Milspec."
 msgstr ""
 
 msgid "M. Thalos 2202 System"
@@ -10824,7 +10820,7 @@ msgid "U. PT-16 System"
 msgstr ""
 
 msgid ""
-"The PT-16 is a modest but to-spec core system offering reasonable, all-round "
+"The PT-16 is a modest but to-spec core system offering reasonable all-round "
 "performance for small vessels."
 msgstr ""
 
@@ -49887,6 +49883,8 @@ msgstr ""
 #. Provides a composable proximity callback: you can use "proximity" as a hook, with the function to call if the player's in range
 #. as an argument.
 #.
+#. This module is superseded by the "trigger" module and you likely want to use that instead of this one.
+#.
 #. @module proximity
 #. --
 #. --
@@ -84081,7 +84079,6 @@ msgstr ""
 #.
 #. Onion 07
 #. --
-#. local trigger = require "trigger"
 #. local fleet = require "fleet"
 #. local tut = require "common.tutorial"
 #. Reference to honeypot (trap)
@@ -84123,10 +84120,22 @@ msgstr ""
 msgid "l337_b01: \"Another hologram!?\""
 msgstr ""
 
+msgid "l337_b01: What the hell was that?"
+msgstr ""
+
+msgid "l337_b01: Wait, they're nearby in the {sys} system!"
+msgstr ""
+
+msgid "Chase lonewolf4 to the {sys} system!"
+msgstr ""
+
+msgid "l337_b01: No time to lose, onwards to {sys} system!"
+msgstr ""
+
 #.
 #.
 #. Stage 2 fight:
-#. 0. Shields are done permanently
+#. 0. Shields are down permanently
 #. 1. Does an energy surge attack every so often
 #. 2. When starts to take damage, charges up for 10 seconds and jumps away
 #.
@@ -107462,10 +107471,6 @@ msgstr ""
 #. --
 #. local filesystem = require 'love.filesystem'
 #. Helper functions
-#, lua-format
-msgid "Unknown fill mode '%s'"
-msgstr ""
-
 #. TODO don't do this for every drawing...
 #. Rendering to canvas
 #. Rendering to screen
@@ -110436,6 +110441,7 @@ msgstr ""
 #. @tparam function fn Function to call when all the pilots are defeated.
 #. --
 #. Display on top of the player
+#. Allow chaining multiple instantly
 #. --
 #. Can be used to set up a chain of timer events, which will be chained automatically without needing to define additional hook functions.
 #.
@@ -119403,6 +119409,10 @@ msgstr "%s: %s%s %s [%s %s]"
 #. *< The outfit needs to load graphics.
 #. *< The outfit does not get turned off by stealth.
 #. *< Hide the outfit shipstats from Lua stuff in the                              descriptions.
+#. We use a core property obtained from tags for now as we need a way to
+#. distinguish them
+#. TODO remove when we use a more flexible / better tab system
+#. *< Outfit is a core.
 #. Outfit filter labels. [Doc comments are also translator notes and must
 #. * precede the #define.]
 #. * Colour-coded abbreviation for "Weapon [outfit]", short enough to use as a
