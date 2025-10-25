@@ -149,7 +149,7 @@ local function equip_dvaered( p, opt_params )
       if dvrcor then
          cores = dvrcor()
       else
-         cores = ecores.get( p, { hulls="elite" } )
+         cores = ecores.get( p, { systems="standard", hulls="elite", engines="standard" } )
       end
    end
 
