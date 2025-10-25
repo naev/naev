@@ -1,15 +1,16 @@
 <outfit name="Targeting Array">
  <general>
-  <typename>Weapon Modifier (Turret)</typename>
+  <typename>Weapon Modifier (Launcher)</typename>
   <slot>utility</slot>
   <size>medium</size>
-  <mass>7</mass>
+  <mass>2</mass>
   <price>430000</price>
-  <description>An improved targeting array allows your missiles to more quickly acquire targets, and minimizes accuracy losses at range. It requires a short period to compute an ideal vector, slightly slowing firing rates.</description>
+  <description>An improved targeting array allows your missile systems to more quickly acquire targets, and minimizes accuracy losses at range. It requires a short period to compute an ideal vector, slightly slowing firing rates.</description>
   <gfx_store>accuracy_turret</gfx_store>
  </general>
  <specific type="modification">
   <launch_lockon>-15</launch_lockon>
+  <launch_range>5</launch_range>
   <launch_rate>-5</launch_rate>
  </specific>
 </outfit>

@@ -2,7 +2,7 @@ local fmt = require "format"
 
 local active = 4 -- active time in seconds
 local cooldown = 15 -- cooldown time in seconds
-local boost = 5 -- How much the shield regen is increased by
+local boost = 4 -- How much the shield regen is increased by
 local efficiency = 3 -- GJ of energy used per shield recovered
 
 function descextra( _p, _o, _po )
