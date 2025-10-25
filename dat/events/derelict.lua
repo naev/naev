@@ -529,6 +529,7 @@ function badevent()
                local dist = 800 + 200 * ship.get(v):size()
                local p = pilot.add( v, "Marauder", pos + vec2.newP( dist + rnd.rnd()*0.5*dist, rnd.angle() ) )
                p:setHostile( true ) -- Should naturally attack the player
+               p:memory().capturable = true -- Let the player capture them
                table.insert( pirates, p )
                if not leader then
                   leader = p
