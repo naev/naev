@@ -107,8 +107,8 @@ local function spawn_wolf( pos, hologram )
    local p = pilot.add("Zebra Wolfie", get_fct(), pos, _("lonewolf4"), {naked=true} )
    p:intrinsicSet( "shield", 4000 )
    p:intrinsicSet( "armour", 4000 )
-   p:intrinsicSet( "fbay_capacity", 50 )
-   p:intrinsicSet( "fbay_reload", 100 )
+   --p:intrinsicSet( "fbay_capacity", 50 )
+   --p:intrinsicSet( "fbay_reload", 100 )
    p:intrinsicSet( "cpu_max", 1000 )
    equipopt.zalek( p, {
       max_same_weap = 2,
@@ -237,10 +237,10 @@ function fight1_start1 ()
 
       hook.pilot( b, "discovered", "fight1_discovered" )
       hook.pilot( b, "attacked", "fight1_attacked" )
-      hook.timer( 10, "fight1_launch", b )
    end
    pilotai.patrol( bosses, waypoints )
 
+   hook.timer( 1, "fight1_launch" )
    hook.timer( 5, "fight1_start2")
 end
 function fight1_start2 ()
@@ -251,11 +251,15 @@ function fight1_start2 ()
    pp:intrinsicSet("ew_stealth", 300 )
    player.msg(_([[l337_b01: "We've been spotted! Looks like lonewolf4 wants a fight!"]]),true)
 end
-function fight1_launch( b )
-   if not b:exists() then return end
+-- Take turns launching
+local last_launch, last_hilighted
+function fight1_launch()
+   last_launch = ((last_launch or rnd.rnd(1,#bosses)) % #bosses)+1
+   local b = bosses[last_launch]
 
    local hologram = b:memory()._hologram
    local fct = get_fct()
+   local drones = {}
    for i=1,3 do
       local shp = "Za'lek Light Drone"
       if rnd.rnd() then
@@ -263,16 +267,32 @@ function fight1_launch( b )
       end
       local p = pilot.add( shp, fct, b:pos()+vec2.newP( 20*rnd.rnd(), rnd.angle() ) )
       if hologram then
-         p:intrinsicSet( "ew_detect", 100 )
+         p:intrinsicSet( "ew_hide", 100 )
+         p:intrinsicSet( "ew_signature", -25 )
+         p:intrinsicSet( "ew_detect", 250 )
          p:intrinsicSet( "weapon_damage", -10000 )
          p:memory()._hologram = hologram
       end
+
+      table.insert( drones, p )
    end
 
-   hook.timer( 15+5*rnd.rnd(), "fight1_launch", b )
+   -- Always try to mark the last drone coming in
+   if last_hilighted and last_hilighted:exists() then
+      last_hilighted:setHilight(false)
+   end
+   drones[1]:setHilight(true)
+   last_hilighted = drones[1]
+   trigger.distance_player( drones[1], 1500, function ()
+      drones[1]:setHilight(false)
+   end )
+
+   -- Delay based on number of existing fighters
+   local nplts = #pilot.get(fct)-3
+   hook.timer( 10+nplts+5*rnd.rnd(), "fight1_launch", b )
 end
 function fight1_discovered( plt )
-   plt:setHilight()
+   plt:setHilight(true)
    if discovered then return end
    player.msg(_([[l337_b01: "Looks like a heavily modified Zebra. Take it out!"]]), true)
    discovered = true
