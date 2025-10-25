@@ -98,7 +98,9 @@ function accept ()
 end
 
 local function get_fct()
-   return faction.dynAdd("Mercenary", _("lonewolf4"), _("lonewolf4") )
+   return faction.dynAdd("Mercenary", _("lonewolf4"), _("lonewolf4"), {
+      player=-100,
+   })
 end
 
 local function spawn_wolf( pos, hologram )
@@ -174,7 +176,7 @@ function energy_surge_end_hook( drones )
    end
 end
 local function energy_surge( pos )
-   player.msg(_("Energy surge detected!"))
+   player.msg("#r".._("Energy surge detected!").."#0",true)
    alert( pos, {
       size = 300,
    } )
@@ -197,8 +199,10 @@ Stage 1 fight:
 --]]
 local real, fake1, fake2, bosses, discovered
 function fight1_start1 ()
-   player.msg(_([[l337_b01: ]]), true)
    mem.state = STATE_FIGHT1_START
+
+   player.autonavReset(5)
+   player.msg(_("l337_b01: What's this? I'm getting some unusual readings?"),true)
 
    local rad = system.cur():radius()*0.8
    local ang = player.pos():angle()
@@ -227,8 +231,9 @@ function fight1_start1 ()
    bosses = { real, fake1, fake2 }
    for k,b in ipairs(bosses) do
       -- They should only be uncoverable at 3000 units
-      b:intrinsicSet( "ew_stealth", -99 )
+      b:intrinsicSet( "ew_stealth", -99.999 )
       b:intrinsicSet( "ew_stealth_min", min_stealth )
+      b:tryStealth()
 
       hook.pilot( b, "discovered", "fight1_discovered" )
       hook.pilot( b, "attacked", "fight1_attacked" )
@@ -244,7 +249,7 @@ function fight1_start2 ()
    } )
    local pp = player.pilot()
    pp:intrinsicSet("ew_stealth", 300 )
-   player.msg(_([[l337_b01: "We've been spotted! Looks like lonewolf4 wants a fight!"]]))
+   player.msg(_([[l337_b01: "We've been spotted! Looks like lonewolf4 wants a fight!"]]),true)
 end
 function fight1_launch( b )
    if not b:exists() then return end
@@ -281,7 +286,7 @@ function fight1_attacked( plt )
       local b = {}
       for k,p in ipairs(bosses) do
          if p~=plt and p:exists() then
-            table.insert(b)
+            table.insert(b,p)
          end
       end
       bosses = b
@@ -298,8 +303,7 @@ function fight1_attacked( plt )
          end
       end
 
-      real:broadcast(_(""))
-
+      real:broadcast(_("Thy greed doth sow the seeds of thine undoing."))
       hook.timer( 0.5, "fight1_timer" )
    end
 end
