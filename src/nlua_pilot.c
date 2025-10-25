@@ -3973,9 +3973,13 @@ static int pilotL_outfitRm( lua_State *L )
        * outfits. */
       if ( strcmp( outfit, "all" ) == 0 ) {
          for ( int i = 0; i < array_size( p->outfits ); i++ ) {
+            if ( p->outfits[i]->outfit == NULL )
+               continue;
             if ( p->outfits[i]->sslot->required )
                continue;
             if ( p->outfits[i]->sslot->locked )
+               continue;
+            if ( outfit_isProp( p->outfits[i]->outfit, OUTFIT_PROP_CORE ) )
                continue;
             pilot_rmOutfitRaw( p, p->outfits[i] );
             removed++;
