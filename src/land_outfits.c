@@ -290,6 +290,16 @@ static int outfitLand_filter( const Outfit *o )
    Pilot              *p;
    const PlayerShip_t *ps;
 
+   /* Ignore already owned licenses. */
+   if ( outfit_isLicense( o ) &&
+        player_hasLicense( outfit_licenseProvides( o ) ) )
+      return 0;
+
+   /* Ignore already owned maps. */
+   if ( ( outfit_isMap( o ) && map_isUseless( o ) ) ||
+        ( outfit_isLocalMap( o ) && localmap_isUseless( o ) ) )
+      return 0;
+
    switch ( outfit_Mode ) {
    case 0:
       return 1;
