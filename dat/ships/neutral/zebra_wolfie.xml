@@ -11,12 +11,9 @@
   <cargo>70</cargo>
  </characteristics>
  <slots>
-  <weapon exclusive="1" size="large" prop="fighter_bay"/>
-  <weapon exclusive="1" size="large" prop="fighter_bay"/>
+  <weapon exclusive="1" prop="fighter_bay" size="large"/>
+  <weapon exclusive="1" prop="fighter_bay" size="large"/>
   <weapon prop="fighter_bay" size="large"/>
-  <weapon prop="fighter_bay" size="large"/>
-  <weapon size="large"/>
-  <weapon size="large"/>
   <utility prop="systems" name="systems" size="large">Unicorp PT-440 Core System</utility>
   <utility prop="systems_secondary" name="systems_secondary" size="large">Unicorp PT-440 Core System</utility>
   <utility prop="accessory" name="accessory" size="large"/>
@@ -40,7 +37,8 @@
   <accel_mod>-20</accel_mod>
   <turn_mod>-20</turn_mod>
   <energy_mod>-20</energy_mod>
-  <cpu_mod>20</cpu_mod>
+  <cpu_mod>-35</cpu_mod>
   <fbay_reload>50</fbay_reload>
+  <fbay_capacity>50</fbay_capacity>
  </stats>
 </ship>
