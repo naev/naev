@@ -9,18 +9,28 @@
 --]]
 local lib = {}
 
+local TIMER_RESOLUTION = 0.2
+
 function _hook_distance( params )
-   if player.pos():dist2( params.target ) <= params.dist2 then
+   local tpos = params.target
+   -- Check to see if is a pilot
+   if tpos.exists then
+      if not tpos:exists() then
+         return
+      end
+      tpos = tpos:pos()
+   end
+   if player.pos():dist2( tpos ) <= params.dist2 then
       params.fn( params.fnparams )
    else
-      hook.timer( 1, "_hook_distance", params )
+      hook.timer( TIMER_RESOLUTION, "_hook_distance", params )
    end
 end
 
 --[[--
 Runs a function 'fn' once when the player is within a distance of a target position.
 
-   @tparam vec2 target Target position.
+   @tparam vec2|pilot target Target position.
    @tparam number distance Distance from the target position to trigger.
    @tparam function fn Function to run when within the distance.
    @param fnparams Parameter to pass to fn.
@@ -32,7 +42,7 @@ function lib.distance_player( target, distance, fn, fnparams )
       dist2    = distance^2,
       fnparams = fnparams,
    }
-   hook.timer( 1, "_hook_distance", params )
+   hook.timer( TIMER_RESOLUTION, "_hook_distance", params )
 end
 
 local function pilot_defeated( plt, params )
