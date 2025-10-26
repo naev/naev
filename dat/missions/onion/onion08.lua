@@ -198,7 +198,7 @@ Stage 1 fight:
 3. WHen shield drops to 0, jumps out in a cloud of drones.
 
 --]]
-local real, fake1, fake2, bosses, discovered
+local real, fake1, fake2, bosses, discovered, fight1_start3
 function fight1_start1 ()
    mem.state = STATE_FIGHT1_START
 
@@ -241,9 +241,13 @@ function fight1_start1 ()
    end
    pilotai.patrol( bosses, waypoints )
 
-   hook.timer( 1, "fight1_check_holograms" )
-   hook.timer( 1, "fight1_launch" )
    hook.timer( 5, "fight1_start2")
+end
+function fight1_start2 ()
+   local mpos = vec2.new(0,0)
+   player.msg(_([[l337_b01: "I need to do a full sweep. Head to the marked position!"]]), true)
+   system.markerAdd( mpos )
+   trigger.distance_player( mpos, 1000, fight1_start3 )
 end
 function fight1_check_holograms ()
    local nearby = 0
@@ -258,8 +262,11 @@ function fight1_check_holograms ()
    end
    hook.timer( 1, "fight1_check_holograms" )
 end
-function fight1_start2 ()
-   pulse( player.pos() + vec2.newP( 100, rnd.angle() ), nil, {
+function fight1_start3 ()
+   system.markerClear()
+   local pos = player.pos() + vec2.newP( 200, rnd.angle() )
+   pilot.add( "Za'lek Scout Drone", get_fct(), pos, nil, {ai="baddiepatrol"} )
+   pulse( pos, nil, {
       col = {0.1, 0.8, 0.3, 0.5},
    } )
    local pp = player.pilot()
@@ -268,6 +275,8 @@ function fight1_start2 ()
       p:intrinsicSet("ew_stealth", 300 )
    end
    player.msg(_([[l337_b01: "We've been spotted! Looks like lonewolf4 wants a fight!"]]),true)
+   hook.timer( 1, "fight1_check_holograms" )
+   fight1_launch()
 end
 -- Take turns launching
 local last_launch, last_hilighted, launched
