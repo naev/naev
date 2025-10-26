@@ -122,6 +122,9 @@ static int pilot_cargoAddInternal( Pilot *pilot, const Commodity *cargo,
       /* We'll warn and clamp to 0 for missions. */
       WARN( "Trying to add mission cargo with negative quantity! (q=%d)", q );
       q = 0;
+   } else if ( ( q <= 0 ) && ( id == 0 ) ) {
+      // Don't actually add 0 quantity normal outfits
+      return 0;
    }
 
    /* If not mission cargo check to see if already exists. */
@@ -160,10 +163,12 @@ int pilot_cargoAddRaw( Pilot *pilot, const Commodity *cargo, int quantity,
                        unsigned int id )
 {
    int q = pilot_cargoAddInternal( pilot, cargo, quantity, id );
-   pilot->cargo_free -= q;
-   pilot->mass_cargo += q;
-   pilot->solid.mass += pilot->stats.cargo_inertia * q;
-   pilot_updateMass( pilot );
+   if ( q > 0 ) {
+      pilot->cargo_free -= q;
+      pilot->mass_cargo += q;
+      pilot->solid.mass += pilot->stats.cargo_inertia * q;
+      pilot_updateMass( pilot );
+   }
    gui_setGeneric( pilot );
    return q;
 }
