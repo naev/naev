@@ -108,8 +108,9 @@ local function spawn_wolf( pos, hologram )
    local p = pilot.add("Zebra Wolfie", get_fct(), pos, _("lonewolf4"), {naked=true} )
    p:intrinsicSet( "shield", 4000 )
    p:intrinsicSet( "armour", 4000 )
-   --p:intrinsicSet( "fbay_capacity", 50 )
-   --p:intrinsicSet( "fbay_reload", 100 )
+   p:intrinsicSet( "shield_regen_mod", -50 ) -- Or too bulky
+   p:intrinsicSet( "fbay_capacity", -50 ) -- Lower number of drones
+   p:intrinsicSet( "fbay_reload", 100 ) -- Instead give reload bonus
    p:intrinsicSet( "cpu_max", 1000 )
    equipopt.zalek( p, {
       max_same_weap = 2,
@@ -119,6 +120,9 @@ local function spawn_wolf( pos, hologram )
       outfits_add = {
          "Guardian Overseer System",
          "Guardian Interception System",
+      },
+      type_range = {
+         ["Point Defence"] = { min=1 },
       },
    } )
    if hologram then
@@ -341,6 +345,10 @@ function fight1_attacked( plt )
    if mem.state ~= STATE_FIGHT1_START then return end
 
    if plt:memory()._hologram then
+      -- Clear deployed drones
+      for k,p in ipairs(plt:followers()) do
+         p:effectAdd("Fade-Out")
+      end
       plt:effectAdd("Fade-Out")
       local b = {}
       for k,p in ipairs(bosses) do
@@ -353,10 +361,6 @@ function fight1_attacked( plt )
          player.msg(_([[l337_b01: "A hologram!? The real ship must be out there still."]]), true)
       else
          player.msg(_([[l337_b01: "Another hologram!?"]]), true)
-      end
-      -- Clear deployed drones
-      for k,p in ipairs(b:followers()) do
-         p:effectAdd("Fade-Out")
       end
    else
       mem.state = STATE_FIGHT1_UNCOVERED
@@ -379,7 +383,7 @@ function fight1_timer ()
       energy_surge( pos )
 
       hook.timer( 9, "fight1_end1" )
-      trigger{
+      trigger.timer_chain{
          { 9, _("l337_b01: What the hell was that?") },
          { 5, fmt.f(_("l337_b01: Wait, they're nearby in the {sys} system!"),
             {sys=SYSTEM_END}) },
