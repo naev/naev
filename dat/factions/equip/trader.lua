@@ -21,6 +21,13 @@ local cargo_chance = {
    ["Carrier"]       = 0.6,
 }
 
+local trader_outfits = eoutfits.merge{
+   {
+      "Cargo Damper",
+   },
+   eoutfits.standard.set,
+}
+
 --[[
 -- @brief Does Trader pilot equipping
 --
@@ -36,7 +43,7 @@ function equip( p )
    local cores = ecores.get( p, { all="standard" } )
 
    -- Try to equip
-   local ret = equipopt.optimize.optimize( p, cores, eoutfits.standard.set, params )
+   local ret = equipopt.optimize.optimize( p, cores, trader_outfits, params )
 
    -- Add cargo
    local cc = cargo_chance[ p:ship():class() ]
