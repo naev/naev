@@ -58,6 +58,7 @@ local cargo_misn
 local function _cargo()
    if not cargo_misn then
       cargo_misn = commodity.new( N_("Secret Cargo"), N_("A pink container with two stickers on it. First one reads 'teddy bears', and second one reads 'bio-hazard, do not open without protection'"), {} )
+      cargo_misn:illegalto( {"Empire", "Dvaered", "Soromid", "Sirius", "Za'lek", "Frontier"} )
    end
    return cargo_misn
 end
