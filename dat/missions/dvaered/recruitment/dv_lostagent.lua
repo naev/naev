@@ -52,6 +52,8 @@ local vn       = require 'vn'
 local vntk     = require 'vntk'
 local dv       = require "common.dvaered"
 
+local title = _("Dvaered Delivery")
+
 
 -- Define the cargo commodity
 local cargo_misn
@@ -135,7 +137,7 @@ Oh, I almost forgot! There is one thing you are authorized to know: this cargo i
    misn.setDesc( fmt.f(_("You have to transfer a parcel to the Empire at {pnt} ({sys})"), {pnt=mem.spob1,sys=sys}))
    mem.misn_marker = misn.markerAdd( mem.spob1 )
    mem.misn_state = 0
-   misn.osdCreate( _("Dvaered Delivery"), {
+   misn.osdCreate( title, {
       fmt.f(_("Go to {sys} and land on {pnt}. Avoid being scanned on the way."), {sys=sys, pnt=mem.spob1} ),
    } )
 
@@ -208,8 +210,9 @@ But it is too risky to wait for them here. This means that we have to take the c
 
       mem.misn_state = 1
       misn.osdDestroy()
-      misn.osdCreate( _("Dvaered Delivery"), {
-         fmt.f(_("Go to {sys} and land on {pnt}. Avoid being scanned on the way."), {sys=mem.sys2, pnt=mem.spob2} ),
+      misn.osdCreate( title, {
+         fmt.f(_("Go to {sys} and land on {pnt}. Avoid being scanned on the way."),
+            {sys=mem.sys2, pnt=mem.spob2} ),
       } )
       misn.markerRm()
       mem.misn_marker = misn.markerAdd( mem.spob2 )
@@ -251,6 +254,9 @@ A seemingly-unarmed man steps forward. He must be the imperial agent in charge o
       misn.cargoRm( mem.cid ) -- Done with the cargo
       misn.markerRm()
       mem.misn_state = 2
+      misn.osdCreate( title, {
+         fmt.f(_("Meet Bony Boudica at the {pnt} bar in the {sys} system."), {sys=mem.spob1:system(), pnt=mem.spob1} ),
+      } )
 
    -- Player meets Boudica again after having captured Shaky Swan.
    elseif mem.misn_state == 5 and spob.cur() == mem.spob2 then
@@ -277,8 +283,7 @@ And again, be ensured that your initial reward will be dramatically increased fr
       misn.markerRm()
       mem.misn_marker = misn.markerAdd( mem.duchpnt )
 
-      misn.osdDestroy()
-      misn.osdCreate( _("Dvaered Delivery (gone wild)"), {
+      misn.osdCreate( _("Dvaered Delivery (Gone Wild)"), {
          fmt.f(_("Go to {sys} and kill Chilperic Duchmol."), {sys=mem.duchsys} ),
          fmt.f(_("Go back to {pnt} and (hopefully) get your reward."), {pnt=mem.spob2} ),
       } )
@@ -368,10 +373,10 @@ function discussWithAg()
 
    vn.label("menu")
    vn.menu{
-      {_("Ask for details on the operation"), "details"},
-      {_("Tell her you need more information on the context"), "lore_menu"},
-      {_("Protest and tell her you initially were only supposed to deliver a parcel"), "protest"},
-      {_("Tell her you know what to do"), "accept"},
+      {_("Ask for details on the operation."), "details"},
+      {_("Tell her you need more information on the context."), "lore_menu"},
+      {_("Protest and tell her you initially were only supposed to deliver a parcel."), "protest"},
+      {_("Tell her you know what to do."), "accept"},
    }
 
    vn.label("details")
@@ -455,7 +460,7 @@ Then you would have to bare that monstrous responsibility on your shoulders. Jus
    mem.misn_marker = misn.markerAdd( mem.flfsys )
    mem.misn_state = 3
    misn.osdDestroy()
-   misn.osdCreate( _("Dvaered Delivery (not going as expected)"), {
+   misn.osdCreate( _("Dvaered Delivery (Not Going as Expected)"), {
       fmt.f(_("Go to {sys} and disable Shaky Swan. Target is supposed to come from {syso}."), {sys=mem.flfsys, syso=mem.flfoys} ),
       _("Wait for squadron 138 to jump in to arrest Shaky Swan. DO NOT BOARD THE SHIP YOURSELF!"),
       fmt.f(_("Go back to {pnt} to get your reward."), {pnt=mem.spob2} ),
