@@ -81,7 +81,7 @@ end
 function accept()
    local sys
    mem.spob1, sys      = spob.getS("Zhiru")
-   mem.spob2, mem.sys2 = spob.getS("Caladan")
+   mem.spob2, mem.sys2 = spob.getS("Spica")
    local mass      = 4 -- Cargo mass. Ideally doable on schroedinger (it should be fairly easy)
    mem.sys_cur = system.cur()
 
