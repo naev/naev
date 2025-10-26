@@ -1,8 +1,8 @@
 local constants = {
    -- Constants used by the Engine
    PHYSICS_SPEED_DAMP   = 4, -- Was 3 until 0.13.0
-   STEALTH_MIN_DIST     = 1000., -- Minimum distance (excluding system factors)
-   SHIP_MIN_MASS        = 0.5, -- Minimum amount of the ship mass it can reach (was 0 until 0.13.0)
+   STEALTH_MIN_DIST     = 1000., -- Minimum distance a ship can stealth at (excluding system factors and ship stat modifiers)
+   SHIP_MIN_MASS        = 0.5, -- Minimum amount of the ship mass that can reach (was 0 until 0.13.0)
 
    EW_JUMP_BONUS_RANGE  = 2500, -- Range from jump at which a stealth bonus is applied
    EW_ASTEROID_DIST     = 7.5e3, -- Range at which an asteroid with hide==1 is detected
