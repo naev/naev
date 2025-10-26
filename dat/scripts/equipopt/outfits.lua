@@ -41,8 +41,8 @@ outfits.standard.weapons = {
    "Guardian Interception System",
 }
 outfits.standard.utility = {
-   "Unicorp Scrambler", "Sensor Array", "Unicorp Light Afterburner",
-   "Emergency Shield Booster", "Unicorp Medium Afterburner",
+   "Unicorp Scrambler", "Unicorp Jammer", "Sensor Array", "Unicorp Light Afterburner",
+   "Milspec Scrambler", "Emergency Shield Booster", "Unicorp Medium Afterburner",
 }
 outfits.standard.structural = {
    -- Heavy Structural
@@ -78,7 +78,9 @@ outfits.elite.weapons = outfits.merge{ {
 outfits.elite.utility = outfits.merge{ {
    "Targeting Array", "Nexus Concealment Coating",
    "Droid Repair Crew", "Hyperbolic Blink Engine",
-   "Flicker Drive", "Milspec Scrambler",
+   "Flicker Drive", "Milspec Jammer", "Agility Combat AI",
+   "Hunting Combat AI", "Pinpoint Combat AI", "Scanning Combat AI",
+   "Cyclic Combat AI", "Efficiency Combat AI", "Neural Accelerator Interface",
    "Milspec Impacto-Plastic Coating", "Photo-Voltaic Nanobot Coating",
    }, outfits.standard.utility,
 }
