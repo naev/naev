@@ -221,6 +221,7 @@ function sp_baddies()
 end
 
 function failed ()
+   if mem.captured then return end
    vn.clear()
    vn.scene()
    local geller = vn.newCharacter( sciwrong.vn_geller() )
@@ -243,7 +244,7 @@ function targetBoard()
    hook.land("land_home")
 
    player.unboard()
-   t_drone:rm()
+   t_drone:effectAdd("Fade-Out")
 end
 
 function drone_jumped ()
@@ -338,7 +339,6 @@ function drone_selfdestruct()
 end
 
 function drone_disableable()
-   tk.msg(_([[On your ship]]),_([["There you go! Get it!"]]))
    t_drone:setNoDisable(false)
    if mem.jumps == 2 then
       vn.clear()
@@ -348,6 +348,8 @@ function drone_disableable()
       geller(_([["This is strange. The engines are starting to heat up... oh, shit, if they continue like this the drone will explode in about 20 seconds! You'd better hurry!"]]))
       vn.run()
       hook.timer(18.0+rnd.uniform(0.001, 4.0), "drone_selfdestruct")
+   else
+      player.msg(_([[Dr. Geller: "There you go! Get it!"]]),true)
    end
 end
 -- last hook
