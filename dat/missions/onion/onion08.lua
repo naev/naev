@@ -100,6 +100,7 @@ end
 local function get_fct()
    return faction.dynAdd("Mercenary", _("lonewolf4"), _("lonewolf4"), {
       player=-100,
+      ai="baddie",
    })
 end
 
@@ -240,8 +241,22 @@ function fight1_start1 ()
    end
    pilotai.patrol( bosses, waypoints )
 
+   hook.timer( 1, "fight1_check_holograms" )
    hook.timer( 1, "fight1_launch" )
    hook.timer( 5, "fight1_start2")
+end
+function fight1_check_holograms ()
+   local nearby = 0
+   for k,p in ipairs( pilot.getInrange( player.pos(), 1500 ) ) do
+      if p:memory()._hologram then
+         nearby = nearby+1
+      end
+   end
+   if nearby >= 4 then
+      player.msg(_([[l337_b01: "Wait, some ships are not doing damage... Are they holograms?"]]), true)
+      return
+   end
+   hook.timer( 1, "fight1_check_holograms" )
 end
 function fight1_start2 ()
    pulse( player.pos() + vec2.newP( 100, rnd.angle() ), nil, {
@@ -249,32 +264,42 @@ function fight1_start2 ()
    } )
    local pp = player.pilot()
    pp:intrinsicSet("ew_stealth", 300 )
+   for k,p in ipairs(pp:followers()) do
+      p:intrinsicSet("ew_stealth", 300 )
+   end
    player.msg(_([[l337_b01: "We've been spotted! Looks like lonewolf4 wants a fight!"]]),true)
 end
 -- Take turns launching
-local last_launch, last_hilighted
+local last_launch, last_hilighted, launched
 function fight1_launch()
+   -- Finishes when he's uncovered
+   if mem.state >= STATE_FIGHT1_UNCOVERED then
+      return
+   end
+
    last_launch = ((last_launch or rnd.rnd(1,#bosses)) % #bosses)+1
    local b = bosses[last_launch]
 
+   launched = launched or {}
    local hologram = b:memory()._hologram
    local fct = get_fct()
    local drones = {}
    for i=1,3 do
       local shp = "Za'lek Light Drone"
-      if rnd.rnd() then
+      if i==1 then
          shp = "Za'lek Heavy Drone"
       end
-      local p = pilot.add( shp, fct, b:pos()+vec2.newP( 20*rnd.rnd(), rnd.angle() ) )
+      local p = pilot.add( shp, fct, b:pos()+vec2.newP( 20*rnd.rnd(), rnd.angle() ), nil, {ai="baddiepatrol"} )
+      p:intrinsicSet( "ew_hide", 100 )
+      p:intrinsicSet( "ew_signature", -25 )
+      p:intrinsicSet( "ew_detect", 250 )
       if hologram then
-         p:intrinsicSet( "ew_hide", 100 )
-         p:intrinsicSet( "ew_signature", -25 )
-         p:intrinsicSet( "ew_detect", 250 )
          p:intrinsicSet( "weapon_damage", -10000 )
          p:memory()._hologram = hologram
       end
 
       table.insert( drones, p )
+      table.insert( launched, p )
    end
 
    -- Always try to mark the last drone coming in
@@ -288,8 +313,13 @@ function fight1_launch()
    end )
 
    -- Delay based on number of existing fighters
+   -- plts => plts^1.25
+   -- 5  => 8
+   -- 10 => 18
+   -- 15 => 30
+   -- 20 => 42
    local nplts = #pilot.get(fct)-3
-   hook.timer( 10+nplts+5*rnd.rnd(), "fight1_launch", b )
+   hook.timer( 5+5*rnd.rnd()+nplts^1.25, "fight1_launch", b )
 end
 function fight1_discovered( plt )
    plt:setHilight(true)
@@ -315,21 +345,25 @@ function fight1_attacked( plt )
       else
          player.msg(_([[l337_b01: "Another hologram!?"]]), true)
       end
+      -- Clear deployed drones
+      for k,p in ipairs(b:followers()) do
+         p:effectAdd("Fade-Out")
+      end
    else
       mem.state = STATE_FIGHT1_UNCOVERED
-      for k,p in ipairs(pilot.get()) do
-         if p:memory()._hologram then
+      for k,p in ipairs(launched) do
+         if p:exists() then
             p:effectAdd("Fade-Out")
          end
       end
 
-      real:broadcast(_("Thy greed doth sow the seeds of thine undoing."))
+      real:broadcast(_("Thy greed doth sow the seeds of thine undoing!"))
       hook.timer( 0.5, "fight1_timer" )
    end
 end
 
 function fight1_timer ()
-   if not real:exists() or real:shield() < 1 then
+   if not real:exists() or real:shield() < 0.01 then
       local pos = real:pos()
       blink( real, pos )
       real:rm()
