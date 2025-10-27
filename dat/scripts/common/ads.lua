@@ -33,7 +33,7 @@ local ads = {
       _("Unicorp: low price and high quality!"),
       _("Life is short, spend it at Minerva Station in the Limbo System!"),
       _("Insuperable Sleekness. Introducing the Krain Industries Starbridge."),
-      _("Take care of the ones you do love. Let your Enygma System Turreted Launchers deal with the ones you don't!"),
+      _("Take care of the ones you do love. Let your Enygma Systems Turreted Launchers deal with the ones you don't!"),
    },
    ads_empire = {
       _("Do you love your Emperor as much as he loves you?"),
