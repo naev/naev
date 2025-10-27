@@ -643,11 +643,15 @@ const char *outfit_getPrice( const Outfit *outfit, unsigned int q,
       return pricestr;
    }
 
-   str = luaL_checkstring( naevL, -4 );
-   strncpy( pricestr, str, sizeof( pricestr ) - 1 );
+   str      = luaL_checkstring( naevL, -4 );
    *price   = 0;
    *canbuy  = lua_toboolean( naevL, -3 );
    *cansell = lua_toboolean( naevL, -2 );
+   // Collour red if can't buy
+   if ( !*canbuy )
+      snprintf( pricestr, sizeof( pricestr ) - 1, "#r%s#0", str );
+   else
+      strncpy( pricestr, str, sizeof( pricestr ) - 1 );
    if ( player_has != NULL ) {
       str = luaL_optstring( naevL, -1, NULL );
       if ( str == NULL )
