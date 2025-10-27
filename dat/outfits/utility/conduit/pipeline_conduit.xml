@@ -4,6 +4,7 @@
   <limit>conduit</limit>
   <slot>utility</slot>
   <size>small</size>
+  <rarity>1</rarity>
   <mass>4</mass>
   <price>705000</price>
   <gfx_store>placeholder</gfx_store>

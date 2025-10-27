@@ -3,6 +3,7 @@
   <typename>Manoeuvrability Modifier</typename>
   <slot>structure</slot>
   <size>small</size>
+  <rarity>2</rarity>
   <mass>3</mass>
   <price>80000</price>
   <description>Not much unlike the more primitive solar sails widely used prior to the Second Growth, this is a small array of panels made to exploit sunlight and similar radiation to propel the ship along. While not useful as a sole method of propulsion, it can provide a minor aid in the ship's acceleration.</description>
