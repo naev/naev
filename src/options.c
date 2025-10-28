@@ -23,6 +23,7 @@
 #include "dialogue.h"
 #include "difficulty.h"
 #include "input.h"
+#include "land.h"
 #include "log.h"
 #include "music.h"
 #include "ndata.h"
@@ -33,6 +34,7 @@
 #include "player.h"
 #include "plugin.h"
 #include "render.h"
+#include "save.h"
 #include "sound.h"
 #include "toolkit.h"
 
@@ -200,9 +202,18 @@ static void opt_OK( unsigned int wid, const char *str )
    ret |= opt_videoSave( opt_windows[OPT_WIN_VIDEO], str );
 
    if ( opt_restart && !prompted_restart ) {
-      if ( dialogue_YesNo( _( "Warning" ), "#r%s#0",
+      int         can_save  = naev_canSave();
+      const char *msg_extra = "";
+      if ( !can_save )
+         msg_extra = _( "\n#r!! CURRENT PROGRESS WILL BE LOST !!#0" );
+      else if ( player.p != NULL )
+         msg_extra = _( "\nYour current  progress will be saved" );
+      if ( dialogue_YesNo( _( "Warning" ), "#r%s#0%s",
                            _( "Naev must be restarted for some changes to take "
-                              "effect. Do you wish to restart Naev now?" ) ) ) {
+                              "effect. Do you wish to restart Naev now?" ),
+                           msg_extra ) ) {
+         if ( can_save )
+            save_all();
          conf_saveConfig( CONF_FILE_PATH );
          naev_restart();
       }
