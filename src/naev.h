@@ -103,3 +103,4 @@ int         naev_main_setup( void );
 void        main_loop( int nested );
 extern char CONF_FILE_PATH[PATH_MAX];
 int         naev_restart( void );
+int         naev_canSave( void );

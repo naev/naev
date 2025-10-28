@@ -769,3 +769,8 @@ double naev_getrealdt( void )
 {
    return real_dt;
 }
+
+int naev_canSave( void )
+{
+   return land_canSave();
+}
