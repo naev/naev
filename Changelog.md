@@ -48,6 +48,7 @@
     - Autonav will warn the player if jumping or landing will fail the mission
     - Autonav will wait for escorts when landing or taking off
  - Radar now has a linear area and a logarithmic area (outside the circle) to show more regional information
+ - Support for automatically restarting Naev when changing options that require it
 
 #### Content
  - 13 new missions and events

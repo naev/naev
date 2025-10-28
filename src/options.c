@@ -199,9 +199,14 @@ static void opt_OK( unsigned int wid, const char *str )
    ret |= opt_audioSave( opt_windows[OPT_WIN_AUDIO], str );
    ret |= opt_videoSave( opt_windows[OPT_WIN_VIDEO], str );
 
-   if ( opt_restart && !prompted_restart )
-      dialogue_msg( _( "Warning" ), "#r%s#0",
-                    _( "Restart Naev for changes to take effect." ) );
+   if ( opt_restart && !prompted_restart ) {
+      if ( dialogue_YesNo( _( "Warning" ), "#r%s#0",
+                           _( "Naev must be restarted for some changes to take "
+                              "effect. Do you wish to restart Naev now?" ) ) ) {
+         conf_saveConfig( CONF_FILE_PATH );
+         naev_restart();
+      }
+   }
 
    /* Close window if no errors occurred. */
    if ( !ret ) {

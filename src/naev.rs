@@ -54,6 +54,16 @@ pub fn restart() -> Result<()> {
         }
     }
 }
+#[unsafe(no_mangle)]
+pub extern "C" fn naev_restart() -> c_int {
+    match restart() {
+        Ok(()) => 0,
+        Err(e) => {
+            warn_err!(e);
+            1
+        }
+    }
+}
 
 /// Entry Point
 pub fn naev() -> Result<()> {

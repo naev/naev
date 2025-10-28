@@ -97,6 +97,8 @@ gltf = { git = "https://github.com/gltf-rs/gltf.git", rev = "12fc1b7ce28c7b4c6d1
 #gltf = { version = "1", features = ["extras", "names", "utils"] }
 colored = "3"
 regex = "1.11"
+# cargo-util usess cargo internals and says you shouldn't use it in external
+# packages, yet without any other alternative, here we are :)
 cargo-util = "0.2"
 
 # Probably useful
