@@ -204,10 +204,12 @@ static void opt_OK( unsigned int wid, const char *str )
    if ( opt_restart && !prompted_restart ) {
       int         can_save  = naev_canSave();
       const char *msg_extra = "";
-      if ( !can_save )
-         msg_extra = _( "\n#r!! CURRENT PROGRESS WILL BE LOST !!#0" );
-      else if ( player.p != NULL )
-         msg_extra = _( "\nYour current  progress will be saved" );
+      if ( player.p != NULL ) {
+         if ( !can_save )
+            msg_extra = _( "\n#r!! CURRENT PROGRESS WILL BE LOST !!#0" );
+         else
+            msg_extra = _( "\nYour current  progress will be saved." );
+      }
       if ( dialogue_YesNo( _( "Warning" ), "#r%s#0%s",
                            _( "Naev must be restarted for some changes to take "
                               "effect. Do you wish to restart Naev now?" ),
