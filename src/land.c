@@ -182,6 +182,10 @@ static int land_hasLocalMap( void )
  */
 int land_canSave( void )
 {
+   /* Has to be landed. */
+   if ( !landed )
+      return 0;
+
    /* Overrided case. */
    if ( player_isFlag( PLAYER_NOSAVE ) )
       return 0;
