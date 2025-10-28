@@ -143,7 +143,7 @@ function enter ()
    elseif scur==SYSTEM_END and mem.state==STATE_WOLF_RANAWAY then
       pilot.clear()
       pilot.toggleSpawn(false)
-      spawn_wolf( vec2.new() )
+      hook.timer( 5, "fight2_start1" )
 
    elseif mem.state ~= 0 and mem.state~=STATE_WOLF_RANAWAY then
       return lmisn.fail("you abandoned the attack on lonewolf4!")
@@ -248,7 +248,7 @@ function fight1_start1 ()
    hook.timer( 5, "fight1_start2")
 end
 function fight1_start2 ()
-   local mpos = vec2.new(0,0)
+   local mpos = system.cur():waypoints("lonewolf4_start")
    player.msg(_([[l337_b01: "I need to do a full sweep. Head to the marked position!"]]), true)
    system.markerAdd( mpos )
    trigger.distance_player( mpos, 1000, fight1_start3 )
@@ -371,6 +371,7 @@ function fight1_attacked( plt )
       end
 
       real:broadcast(_("Thy greed doth sow the seeds of thine undoing!"))
+      real:setHilight(true)
       hook.timer( 0.5, "fight1_timer" )
    end
 end
@@ -405,13 +406,19 @@ function fight1_timer ()
 end
 
 --[[
-
 Stage 2 fight:
 0. Shields are down permanently
 1. Does an energy surge attack every so often
 2. When starts to take damage, charges up for 10 seconds and jumps away
-
 --]]
+local finalboss
+function fight2_start1 ()
+   local pos = system.cur():waypoints("lonewolf4_spawn")
+   finalboss = spawn_wolf( pos )
+   finalboss:intrinsicSet( "shield", -1e6 ) -- no shields
+   finalboss:intrinsicSet( "armour_regen_mod", -1e6 ) -- No armour regen
+   finalboss:setHilight(true)
+end
 
 function land ()
    if mem.state==STATE_WOLF_DEFEATED and spob.cur()==SPOB_EPILOGUE then
