@@ -143,7 +143,7 @@ function enter ()
    elseif scur==SYSTEM_END and mem.state==STATE_WOLF_RANAWAY then
       pilot.clear()
       pilot.toggleSpawn(false)
-      hook.timer( 5, "fight2_start1" )
+      hook.timer( 1, "fight2_start1" )
 
    elseif mem.state ~= 0 and mem.state~=STATE_WOLF_RANAWAY then
       return lmisn.fail("you abandoned the attack on lonewolf4!")
@@ -188,7 +188,7 @@ local function energy_surge( pos )
    hook.timer( 3, "energy_surge_hook", pos )
 end
 
-local function _energy_surge_at_player ()
+local function energy_surge_at_player ()
    local pp = player.pilot()
    local pos = pp:pos() + 3 * pp:vel()
    energy_surge( pos + vec2.newP( math.sqrt(rnd.rnd())*50, rnd.angle() ) )
@@ -381,7 +381,7 @@ function fight1_timer ()
       local pos = real:pos()
       blink( real, pos )
       real:rm()
-      energy_surge( pos )
+      energy_surge_at_player()
 
       hook.timer( 9, "fight1_end1" )
       trigger.timer_chain{
@@ -415,9 +415,16 @@ local finalboss
 function fight2_start1 ()
    local pos = system.cur():waypoints("lonewolf4_spawn")
    finalboss = spawn_wolf( pos )
+   finalboss:effectAdd("Fade-In")
    finalboss:intrinsicSet( "shield", -1e6 ) -- no shields
    finalboss:intrinsicSet( "armour_regen_mod", -1e6 ) -- No armour regen
    finalboss:setHilight(true)
+   finalboss:setVisplayer(true)
+
+   hook.timer( 8, "fight2_energy_surge" )
+end
+function fight2_energy_surge ()
+   energy_surge_at_player()
 end
 
 function land ()
