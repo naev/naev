@@ -104,8 +104,9 @@ local function get_fct()
    })
 end
 
-local function spawn_wolf( pos, hologram )
+local function spawn_wolf( pos, hologram, f )
    local p = pilot.add("Zebra Wolfie", get_fct(), pos, _("lonewolf4"), {naked=true} )
+   if f then f(p) end
    p:intrinsicSet( "shield", 4000 )
    p:intrinsicSet( "armour", 4000 )
    p:intrinsicSet( "shield_regen_mod", -50 ) -- Or too bulky
@@ -413,10 +414,11 @@ local finalboss
 local health_state
 function fight2_start1 ()
    local pos = system.cur():waypoints("lonewolf4_spawn")
-   finalboss = spawn_wolf( pos )
+   finalboss = spawn_wolf( pos, false, function (p)
+      p:intrinsicSet( "shield", -1e6 ) -- no shields
+      p:intrinsicSet( "armour_regen_mod", -1e6 ) -- No armour regen
+   end )
    finalboss:effectAdd("Fade-In")
-   finalboss:intrinsicSet( "shield", -1e6 ) -- no shields
-   finalboss:intrinsicSet( "armour_regen_mod", -1e6 ) -- No armour regen
    finalboss:setHilight(true)
    finalboss:setVisplayer(true)
 
@@ -439,10 +441,10 @@ function fight2_energy_surge ()
    hook.timer( 25 + rnd.rnd()*5, "fight2_energy_surge" )
 end
 local health_threshold = {
-   {75 , _("TODO")},
-   {50,  _("TODO")},
-   {25,  _("TODO")},
-   {10, _("TODO")},
+   {75 , _("From whence hast thou been devising such treachery, l337_b01?"), _("You took the words out of my mouth!")},
+   {50,  _("Now my eyes doth see the truth, Tenebros Station was naught but a start!"), _("Let me explain!")},
+   {25,  _("O bitter fate, to think we once walked the same path!")},
+   {10, _("Curse you and your betrayal!")},
 }
 function fight2_health ()
    if not finalboss:exists() then return end
@@ -451,6 +453,11 @@ function fight2_health ()
    if finalboss:armour() < ht[1] then
       health_state = health_state+1
       finalboss:broadcast( ht[2] )
+      if ht[3] then
+         trigger.timer_chain{
+            { 5, fmt.f(_([[l337_b01: "{msg}"]]), {msg=ht[3]} ) },
+         }
+      end
       energy_surge_at_player()
       last_surge = naev.ticksGame()
 
