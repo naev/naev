@@ -1067,7 +1067,7 @@ static void sysedit_renderAsteroidExclusion( double bx, double by,
    /* Translate asteroid field center's coords. */
    tx = bx + aexcl->pos.x * z;
    ty = by + aexcl->pos.y * z;
-   r  = aexcl->radius * sysedit_zoom;
+   r  = aexcl->radius * z;
    rr = r * sin( M_PI / 4. );
 
    if ( selected ) {
