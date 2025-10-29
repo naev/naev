@@ -45,7 +45,7 @@ local title = _("The Lone Wolf")
 
 local SYSTEM_START = system.get("Oxuram")
 local SYSTEM_END = system.get("PSO")
-local SPOB_EPILOGUE, _SYSTEM_EPLOGUE = spob.getS("PSO Monitor")
+local SPOB_EPILOGUE = spob.getS("PSO 2434")
 
 -- Mission states
 local STATE_FIGHT1_START = 1
@@ -195,12 +195,10 @@ local function energy_surge_at_player ()
 end
 
 --[[
-
 Stage 1 fight:
 1. Sends drones periodically while moving around - there are 2 holograms doing the same (but they are hologram drones)
 2. When player damages the real one switches into combat mode.
 3. WHen shield drops to 0, jumps out in a cloud of drones.
-
 --]]
 local real, fake1, fake2, bosses, discovered, fight1_start3
 function fight1_start1 ()
@@ -412,6 +410,7 @@ Stage 2 fight:
 2. When starts to take damage, charges up for 10 seconds and jumps away
 --]]
 local finalboss
+local health_state
 function fight2_start1 ()
    local pos = system.cur():waypoints("lonewolf4_spawn")
    finalboss = spawn_wolf( pos )
@@ -421,10 +420,64 @@ function fight2_start1 ()
    finalboss:setHilight(true)
    finalboss:setVisplayer(true)
 
+   health_state = 1
+   hook.pilot( finalboss, "death", "fight2_death" )
    hook.timer( 8, "fight2_energy_surge" )
+   hook.timer( 1, "fight2_health" )
 end
+local last_surge = 0
 function fight2_energy_surge ()
+   local t = naev.ticksGame()
+   local off = t-last_surge
+   if off < 15 then
+      hook.timer( 25-off, "fight2_energy_surge" )
+      return
+   end
+   last_surge = t
+
    energy_surge_at_player()
+   hook.timer( 25 + rnd.rnd()*5, "fight2_energy_surge" )
+end
+local health_threshold = {
+   {75 , _("TODO")},
+   {50,  _("TODO")},
+   {25,  _("TODO")},
+   {10, _("TODO")},
+}
+function fight2_health ()
+   if not finalboss:exists() then return end
+   local ht = health_threshold[health_state]
+   if not ht then return end
+   if finalboss:armour() < ht[1] then
+      health_state = health_state+1
+      finalboss:broadcast( ht[2] )
+      energy_surge_at_player()
+      last_surge = naev.ticksGame()
+
+      local pos = finalboss:pos()
+      blink( finalboss, pos )
+      finalboss:setPos( pos + vec2.newP( 1500+500*rnd.rnd(), rnd.angle() ) )
+   end
+   hook.timer(1, "fight2_health" )
+end
+local last_blink
+function fight2_death ()
+   -- Avoiding hook triggering itself
+   if last_blink then return end
+   last_blink = true
+   blink( finalboss, finalboss:pos() )
+   finalboss:rm()
+
+   hook.timer( 10, "fight2_epilogue" )
+end
+function fight2_epilogue ()
+   diff.apply( "onion08" )
+   misn.markerAdd( SPOB_EPILOGUE )
+   mem.state = STATE_WOLF_DEFEATED
+   misn.osdCreate( title, {
+      fmt.f(_("Investigate {spb} ({sys} system)"),
+      {spb=SPOB_EPILOGUE, sys=SYSTEM_END}),
+   })
 end
 
 function land ()
