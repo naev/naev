@@ -44,5 +44,7 @@
    <pos x="7500.000000" y="1000.000000"/>
   </asteroid>
  </asteroids>
- <waypoint x="3500" y="-1500">lonewolf4_spawn</waypoint>
+ <waypoints>
+  <waypoint x="3500.000000" y="-1500.000000">lonewolf4_spawn</waypoint>
+ </waypoints>
 </ssys>
