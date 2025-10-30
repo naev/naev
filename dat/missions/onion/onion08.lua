@@ -190,11 +190,12 @@ function energy_surge_end_hook( drones )
    end
 end
 local function energy_surge( pos )
+   player.autonavReset( 5 )
    player.msg("#r".._("Energy surge detected!").."#0",true)
    alert( pos, {
       size = 300,
    } )
-   hook.timer( 3, "energy_surge_hook", pos )
+   hook.timer( 2.2, "energy_surge_hook", pos )
 end
 
 local function energy_surge_at_player ()
@@ -434,6 +435,15 @@ function fight2_start1 ()
    hook.pilot( finalboss, "death", "fight2_death" )
    hook.timer( 8, "fight2_energy_surge" )
    hook.timer( 1, "fight2_health" )
+   trigger.timer_chain{
+      { 5, _([[l337_b01: "Stop this lonewolf4! It doesn't have to end this way!"]]) },
+      { 11, function ()
+         finalboss:broadcast(_("Have at thee cursed wench!"))
+      end },
+      { 14, function ()
+         fight2_energy_surge()
+      end },
+   }
 end
 local last_surge = 0
 function fight2_energy_surge ()
