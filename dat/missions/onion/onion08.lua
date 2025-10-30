@@ -110,9 +110,8 @@ local function get_fct()
    })
 end
 
-local function spawn_wolf( pos, hologram, f )
+local function spawn_wolf( pos, hologram, part2 )
    local p = pilot.add("Zebra Wolfie", get_fct(), pos, _("lonewolf4"), {naked=true} )
-   if f then f(p) end
    p:intrinsicSet( "shield", 1000 )
    p:intrinsicSet( "armour", 1000 )
    p:intrinsicSet( "absorb", -25 )
@@ -120,7 +119,7 @@ local function spawn_wolf( pos, hologram, f )
    p:intrinsicSet( "fbay_capacity", -50 ) -- Lower number of drones
    p:intrinsicSet( "fbay_reload", 100 ) -- Instead give reload bonus
    p:intrinsicSet( "cpu_max", 1000 )
-   equipopt.zalek( p, {
+   local params = {
       max_same_weap = 2,
       rnd = 0,
       fighterbay = 1.5,
@@ -132,7 +131,15 @@ local function spawn_wolf( pos, hologram, f )
       type_range = {
          ["Point Defence"] = { min=1 },
       },
-   } )
+   }
+   if part2 then
+      p:intrinsicSet( "shield", -1e6 ) -- no shields
+      p:intrinsicSet( "armour_regen_mod", -1e6 ) -- No armour regen
+      params.fighterbay = 0
+      params.max_weap = 2
+      params.turret = 2
+   end
+   equipopt.zalek( p, params )
    if hologram then
       p:intrinsicSet( "weapon_damage", -10000 )
       p:intrinsicSet( "fbay_damage", -10000 )
@@ -423,24 +430,21 @@ local finalboss
 local health_state
 function fight2_start1 ()
    local pos = system.cur():waypoints("lonewolf4_spawn")
-   finalboss = spawn_wolf( pos, false, function (p)
-      p:intrinsicSet( "shield", -1e6 ) -- no shields
-      p:intrinsicSet( "armour_regen_mod", -1e6 ) -- No armour regen
-   end )
+   finalboss = spawn_wolf( pos, false, true )
    finalboss:effectAdd("Fade-In")
    finalboss:setHilight(true)
    finalboss:setVisplayer(true)
+   finalboss:setNoDisable(true)
 
    health_state = 1
    hook.pilot( finalboss, "death", "fight2_death" )
-   hook.timer( 8, "fight2_energy_surge" )
    hook.timer( 1, "fight2_health" )
    trigger.timer_chain{
       { 5, _([[l337_b01: "Stop this lonewolf4! It doesn't have to end this way!"]]) },
-      { 11, function ()
+      { 6, function ()
          finalboss:broadcast(_("Have at thee cursed wench!"))
       end },
-      { 14, function ()
+      { 3, function ()
          fight2_energy_surge()
       end },
    }
@@ -510,7 +514,7 @@ function fight2_epilogue ()
    vn.newCharacter( l337 )
    vn.transition("electric")
 
-   l337(_())
+   l337(_(""))
 
    vn.done("electric")
    vn.run()
