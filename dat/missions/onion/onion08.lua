@@ -208,7 +208,11 @@ end
 local function energy_surge_at_player ()
    local pp = player.pilot()
    local pos = pp:pos() + 3 * pp:vel()
-   energy_surge( pos + vec2.newP( math.sqrt(rnd.rnd())*50, rnd.angle() ) )
+   local range = 50
+   if pp:flags("stealth") then
+      range = 500
+   end
+   energy_surge( pos + vec2.newP( math.sqrt(rnd.rnd())*range, rnd.angle() ) )
 end
 
 --[[
