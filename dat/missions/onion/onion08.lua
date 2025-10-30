@@ -64,7 +64,7 @@ function create()
    misn.setNPC( _("l337_b01"), prt.t.tex, _([[Follow up with l337_b01.]]) )
    misn.setReward(_("???") )
    misn.setTitle( title )
-   misn.setDesc(fmt.f(_([[TODO]])))
+   misn.setDesc(fmt.f(_([[Confront lonewolf4.]])))
 end
 
 function accept ()
@@ -76,7 +76,13 @@ function accept ()
    vn.newCharacter( l337 )
    vn.transition("electric")
 
-   l337("...")
+   if not mem.talked then
+      l337(_([[]]))
+      vn.func( function () mem.talked = true end )
+   else
+      l337(_([[]]))
+   end
+
    vn.func( function() accepted = true end )
 
    vn.done("electric")
@@ -107,9 +113,10 @@ end
 local function spawn_wolf( pos, hologram, f )
    local p = pilot.add("Zebra Wolfie", get_fct(), pos, _("lonewolf4"), {naked=true} )
    if f then f(p) end
-   p:intrinsicSet( "shield", 4000 )
-   p:intrinsicSet( "armour", 4000 )
-   p:intrinsicSet( "shield_regen_mod", -50 ) -- Or too bulky
+   p:intrinsicSet( "shield", 1000 )
+   p:intrinsicSet( "armour", 1000 )
+   p:intrinsicSet( "absorb", -25 )
+   p:intrinsicSet( "shield_regen_mod", -60 ) -- Or too bulky
    p:intrinsicSet( "fbay_capacity", -50 ) -- Lower number of drones
    p:intrinsicSet( "fbay_reload", 100 ) -- Instead give reload bonus
    p:intrinsicSet( "cpu_max", 1000 )
@@ -177,7 +184,8 @@ end
 function energy_surge_end_hook( drones )
    for k,d in ipairs(drones) do
       if d:exists() then
-         d:effectAdd("Fade-Out")
+         blink( d, d:pos() )
+         d:rm()
       end
    end
 end
@@ -238,6 +246,7 @@ function fight1_start1 ()
       b:intrinsicSet( "ew_stealth", -99.999 )
       b:intrinsicSet( "ew_stealth_min", min_stealth )
       b:tryStealth()
+      b:memory().enemyclose = 3000
 
       hook.pilot( b, "discovered", "fight1_discovered" )
       hook.pilot( b, "attacked", "fight1_attacked" )
@@ -382,7 +391,6 @@ function fight1_timer ()
       real:rm()
       energy_surge_at_player()
 
-      hook.timer( 9, "fight1_end1" )
       trigger.timer_chain{
          { 9, _("l337_b01: What the hell was that?") },
          { 5, fmt.f(_("l337_b01: Wait, they're nearby in the {sys} system!"),
@@ -443,7 +451,7 @@ end
 local health_threshold = {
    {75 , _("From whence hast thou been devising such treachery, l337_b01?"), _("You took the words out of my mouth!")},
    {50,  _("Now my eyes doth see the truth, Tenebros Station was naught but a start!"), _("Let me explain!")},
-   {25,  _("O bitter fate, to think we once walked the same path!")},
+   {25,  _("O bitter fate, to think we once walked the same path!"), _("Stop this madness!")},
    {10, _("Curse you and your betrayal!")},
 }
 function fight2_health ()
@@ -485,8 +493,20 @@ function fight2_epilogue ()
       fmt.f(_("Investigate {spb} ({sys} system)"),
       {spb=SPOB_EPILOGUE, sys=SYSTEM_END}),
    })
+
+   vn.clear()
+   vn.scene()
+   local l337 = onion.vn_l337b01()
+   vn.newCharacter( l337 )
+   vn.transition("electric")
+
+   l337(_())
+
+   vn.done("electric")
+   vn.run()
 end
 
+-- End of it all
 function land ()
    if mem.state==STATE_WOLF_DEFEATED and spob.cur()==SPOB_EPILOGUE then
       vn.clear()
