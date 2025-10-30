@@ -41,4 +41,7 @@
   <fbay_reload>50</fbay_reload>
   <fbay_capacity>50</fbay_capacity>
  </stats>
+ <tags>
+  <tag>special</tag>
+ </tags>
 </ship>
