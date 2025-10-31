@@ -26,6 +26,7 @@
 --]]
 local fmt = require "format"
 local vn = require "vn"
+local vne = require "vnextras"
 local onion = require "common.onion"
 local love_shaders = require "love_shaders"
 local trigger = require "trigger"
@@ -37,7 +38,7 @@ local pulse = require "luaspfx.pulse"
 local alert = require "luaspfx.alert"
 local blink = require "luaspfx.blink"
 local CTS = require "constants"
---local tut = require "common.tutorial"
+local tut = require "common.tutorial"
 
 -- Reference to honeypot (trap)
 local title = _("The Lone Wolf")
@@ -566,7 +567,10 @@ function fight2_epilogue ()
    vn.newCharacter( l337 )
    vn.transition("electric")
 
-   l337(_(""))
+   l337(_([[A flustered l337_b01 pops up on your holodeck.
+"Betrayal? What the hell were they going on about?"]]))
+   l337(fmt.f(_([["Wait, I've tracked their signal! It seems lie the ship crash-landed on {spb}. Hurry, they might still be alive!"]]),
+      {spb=SPOB_EPILOGUE}))
 
    vn.done("electric")
    vn.run()
@@ -577,11 +581,171 @@ function land ()
    if mem.state==STATE_WOLF_DEFEATED and spob.cur()==SPOB_EPILOGUE then
       vn.clear()
       vn.scene()
-      local l337 = onion.vn_l337b01()
-      vn.newCharacter( l337 )
-      vn.transition("electric")
+      vn.transition()
 
-      l337()
+      vn.na(fmt.f(_([[You enter the orbit of {spb} and scour the violent atmosphere for signals of the downed Zebra carrier.]]),
+         {spb=SPOB_EPILOGUE}))
+
+      local l337 = onion.vn_l337b01()
+      vn.appear( l337, "electric" )
+      l337(_([["Here, let me adjust the tune the scanning frequencies to the natural harmonics."]]))
+      vn.na(_([[As if magic, your sensors begin to hazily pick up a large man-made structure that has had some unexpected percussive maintenance performed on it by the planet's surface.]]))
+      l337(_([["There it is, we have to check it out!"]]))
+
+      vn.move( l337, "right" )
+      local sai = tut.vn_shipai{ pos="left" }
+      vn.appear( sai, "electric" )
+
+      sai(_([["Pardon for the intrusion, but I would advise against atmospheric entry. My models predict a survival rate of 7.3%."]]))
+      l337(_([["And my models predict there's no way in hell we can give up now! We have to get to the bottom of this."]]))
+      vn.menu{
+         {_([["We're going in!"]]), "01_goin" },
+         {fmt.f(_([["{sai}, do a double check."]]), {sai=tut.ainame()}), "01_double"},
+      }
+
+      vn.label("01_goin")
+      l337(_([["I knew you'd not give up now! We're coming for you lonewolf4!"]]))
+      vn.jump("01_cont")
+
+      vn.label("01_double")
+      sai(_([["New calculations point to NO PROBLEM."
+The avatar flickers a second.
+"... p...nt to NO PROBLEM."]]))
+      l337(_([["All is good, let's go!"]]))
+      vn.na(_([[Looks like there is no choice but to go in.]]))
+      vn.jump("01_cont")
+
+      vn.label("01_cont")
+      l337(_([["Nice AI btw, wonder why it takes up so much computational power though. Hard to fit with it."]]))
+      -- TODO VN shaking (not text though) and maybe wind sound?
+      vn.na(_([[You push the throttle and begin the approach to the wreckage, as the ferocious planetary eternal storm begins to wrack your ship. This might get bumpy.]]))
+      vn.na(_([[Your ship breaks through the atmosphere, as the planet promptly makes sure you understand that the Demon-class label is not just for show. You quickly have to shut off the emergency warning systems before they permanently damage your hearing.]]))
+      vn.na(_([[You think you hear something coming from your Ship AI, but can't make it out through the howling of your atmospheric rendezvous, so you pump up the volume on the holodeck.]]))
+      sai(_([["SHIELDS AT 7%. WILL NOT HOLD MUCH LONGER."]]))
+      l337(fmt.f(_([["I'VE REROUTED EXCESS VITAL ENERGY TO SHIELDS, NO PROBLEMO. {player} HAS GOT IT COVERED."]]),
+         {player=string.upper(player.name())}))
+      vn.na(_([[You hear a long crunch as some part of your ship decides to practice free fall skydiving, that's not good.]]))
+      sai(_([["SHIELDS DOWN. HULL INTEGRITY FAILING."]]))
+      l337(_([["RE- *CRACKLE* -ERGY- *POP*"
+l337_b01's avatar freezes. Seems like the storm is incompatible with transmissions.]]))
+      vn.na(_([[Trying to hold your balance, you guesstimate the heading of the Zebra wreckage, and wing it.]]))
+      vn.na(_([[After what seems like an eternity of a cacophony of fuselage discontentment, your ship crashes into something, sending you flying. ]]))
+
+      vn.scene()
+      vn.transition("blur")
+      local memory = vne.flashbackTextStart( _("Haziness"), {transition="blinkin"})
+      local function m( txt ) memory("\n"..txt,true) end
+      memory(_([[So soft... So quiet...]]))
+      m(_([[What is that?]]))
+      m(_([[...]]))
+      m(_([[A gust of wind. Relaxing.]]))
+      m(_([[...]]))
+      m(_([[What were you doing?]]))
+      m(_([[Probably not important...]]))
+      m(_([[...]]))
+      m(_([[Back to sleep.]]))
+      m(_([[Wait... ... ...What is that?]]))
+      m(_([[Trixie?]]))
+      vne.flashbackTextEnd{ notransition=true }
+
+      --vn.scene() -- vn.scene() is done in vne.flashbackTextEnd
+      vn.newCharacter( l337 )
+      vn.newCharacter( sai )
+      vn.transition("blinkout")
+
+      vn.na(_([[You gasp for breath. Shit, feels like your lungs are on fire. Now it's all over the floor. Nasty.]]))
+      l337(fmt.f(_([["{player}! {player}! Don't scare me lie that! Not after Trixie!"]]),
+         {player=player.name()}))
+      sai(_([["Vital signs confirmed stabilized."]]))
+      vn.na(_([[Wait, where are you? Your ship? What about the storm? You... crashed?]]))
+      l337(fmt.f(_([["You with us, {player}?"]]),
+         {player=player.name()}))
+      vn.menu{
+         {_([["Give me a second."]]), "02_second"},
+         {_([["I'me fine."]]), "02_fine"},
+      }
+
+      vn.label("02_second")
+      vn.na(_([[You take a few deep breaths. Once the adrenaline wears off, you're going to be in for a world of pain.]]))
+      vn.jump("02_cont")
+
+      vn.label("02_fine")
+      vn.na(_([[You try to smile, but it comes out more as a grimace. You hope that's not a broken rib.]]))
+      vn.jump("02_cont")
+
+      vn.label("02_cont")
+      sai(_([["Recommend urgent medical treatment. Preliminary prognostic at least 2 minor fractures."]]))
+      l337(_([["We're so close, I've managed to break the code to the Wolfie! You should be able to break into to it easy now."]]))
+      vn.menu{
+         {_([["Wolfie?"]]), "03_wolfie"},
+         {_([["What happened?"]]), "03_what"},
+      }
+
+      vn.label("03_wolfie")
+      l337(_([["lonewolf4's carrier! It's quite a remarkable design. The only thing that really remains of the Zebra is the outer hull, the interior has been completely refitted!"]]))
+      vn.jump("03_cont")
+
+      vn.label("03_what")
+      l337(_([["You made it to lonewolf4's carrier! It's quite a remarkable design. The only thing that really remains of the Zebra is the outer hull, the interior has been completely refitted!"]]))
+      vn.jump("03_cont")
+
+      vn.label("03_cont")
+      vn.na(_([[You clamber around until you can pull out a med kit and give yourself a nice stim boost. That should keep you going for a bit, but you'll need proper medical care afterwards. Assuming there is an afterwards...]]))
+      l337(_([["It seems like there is somewhat of a clearing here generated by whatever the hell the Wolfie is sporting. Not sure how long it will last."]]))
+      l337(_([["There's still lifeform readings, but they aren't strong. You have to hurry and check it out!"]]))
+      vn.na(_([[You groan as you lift yourself up. Looks like it's time to finish this.]]))
+      sai(_([["Correction, at least 3 minor fractures now."]]))
+      vn.na(fmt.f(_([[Ignoring {sai}'s complaints, you don an atmospheric suit and head outside.]]),
+         {sai=tut.ainame()}))
+      vn.na(_([[As you exit the ship's lock, you quickly realize that outside is actually inside, as your ship seems to have crashed directly into lonewolf4's carrier.]]))
+      vn.na(_([[Weapon in hand you make your way through the wreck of the ship. It seems like there's not much of corridors, it's all maintenance tubes which force you to crawl through, occasionally having to blast through debris. What the hell is with this ship's design?]]))
+      vn.na(_([[You push yourself through another tunnel and find yourself in a surprisingly wide room with some faint illumination. In the centre seems to be a damaged pod with someone in it. Wait is that blood?]]))
+
+      l337(_([["lonewolf4? Let me see if I can interface with it!"]]))
+      vn.na(_([[You look around the room, it looks like a mess, even before everything was scattered around in the crash.]]))
+      l337(_([["Got it!"]]))
+
+      vn.move( sai, "farleft" )
+      vn.move( l337, "farright" )
+      local wolf = onion.vn_lonewolf4()
+      vn.appear( wolf, "electric" )
+      wolf(_([["..."
+There is a long pause as the wolf avatar stares at you.
+"Cometh to gloat l337_b01? Doth the fruits of thy schemes delight thy heart?"]]))
+      l337(fmt.f(_([["YOU were the one that peeled Trixie. YOU are the one who tried to kill {player} and even me if you had the chance! YOU ARE THE ONE FUCKING SHIT UP!"]]),
+         {player=player.name()}))
+      wolf(_([[lonewolf4 seems to speak a bit slower than usual.
+"Evenst on the brink of triumph, dost thy tongue naught but dealeth guile. Wilt thou, all keys in hand, take for thyself the seat of God?" ]]))
+      l337(_([["Even now you speak in riddles. Can't you just make it easier! Why... after Trixie... after everything..."]]))
+      wolf(_([[There is a small pause.
+"Tenebros Station. Thou slayeth the entire Station, and with that, my family."]]))
+      l337(_([["Tenebros Station? You know nothing about Tenebros station!! That was a set-up!"]]))
+      wolf(_([[Unphased, lonewolf4 continues, "Upon the last breath of v3c70r, doth hath realized the keys were...   ...were at hand, and thus thou trodth'... trodth' on the path of betrayal."]]))
+      l337(_([["That's all wrong! *sniff* You've got it all wrong! v3c70r, Trixie, we all did it for the greater good!"]]))
+      wolf(_([["Doth thou not wonder, if perhaps we have lived too long? These games, are they naught but born of the rotten body and mind?"]]))
+      l337(_([[...]]))
+      wolf(_([["Look at me l337_b01, lookth' at the... ...the pass of the centa-cycles."]]))
+      l337(_([["You can't quit now! You've got it all wrong!"]]))
+      wolf(_([["It is... what it... is."]]))
+      -- TODO change music
+      l337(_([[...]]))
+      sai(_([["External vital signs extinguished."]]))
+      wolf(_([[The avatar is motionless, almost placid.]]))
+      l337(_([["Enough."]]))
+      vn.disappear( wolf, "electric")
+
+      vn.label("questions")
+      vn.menu{
+         {_([["What was that?"]]), "04_cont"},
+         {_([["Tenebros Station?"]]), "04_cont"},
+         {_([["Centa-cycles?"]]), "04_cont"},
+         {_([["v3c70r?"]]), "04_cont"},
+         {_([["..."]]), "04_cont"},
+      }
+
+      vn.label("04_cont")
+      l337(_([[They let out a deep sigh.
+"I'm sure you have a lot of questions, but I think I should explain from the beginning."]]))
 
       vn.sfxVictory()
       vn.func( function () player.pay( reward ) end )
