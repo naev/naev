@@ -41,7 +41,7 @@ local CTS = require "constants"
 
 -- Reference to honeypot (trap)
 local title = _("The Lone Wolf")
---local reward = onion.rewards.misn08
+local reward = onion.rewards.misn08
 
 local SYSTEM_START = system.get("Oxuram")
 local SYSTEM_END = system.get("PSO")
@@ -76,20 +76,68 @@ function accept ()
    vn.newCharacter( l337 )
    vn.transition("electric")
 
+   l337(_([[l337_b01's familiar avatar pops up on your holodeck.]]))
    if not mem.talked then
-      l337(_([[]]))
+      l337(_([["Heyo!"]]))
+      l337(_([["I've been tracking the fake bounty that they set on you. Their nearly completely covered their trails, however, they are no match for my counterespionage skills!"]]))
+      local guess = var.peek("onion_guess_insider")
+      if guess=="lonewolf4" then
+         l337(_([["It looks like we were right with our guess! The signs point to lonewolf4, and it also seems like I was able to pinpoint their location to boot!"]]))
+      else
+         l337(fmt.f(_([["It looks like it wasn't {guess} as you guessed, but lonewolf4. Seems like my technomancer instincts were right on the spot. Not only was I able figure out their identity, but I've been able to pinpoint their location too!"]]),
+            {guess=guess}))
+      end
+      l337(fmt.f(_([["I was able to track the signal all the way to the {sys} system, which is a bit surprising given that the Nexus connection there must be unreliable, but they must have ways to work around that or something."]]),
+         {sys=SYSTEM_START}))
+      l337(_([["All that is left is to head down there and confront them, finally putting a stop to add these horrors."]]))
+      vn.menu{
+         {_([["The end is neigh!"]]), "01_end"},
+         {_([["Justice for Trixie."]]), "01_trixie"},
+         {_([["Are you alright?"]]), "01_alright"},
+      }
+
+      vn.label("01_end")
+      l337(_([["All's well that ends well. Although I don't think we can reach the happy ending any more, not without Trixie..."
+They let out a sigh.]]))
+      vn.jump("01_cont")
+
+      vn.label("01_trixie")
+      l337(_([["Trixie will never be forgotten! There was so much they wanted to do... I guess the best way to honour their memory is to follow their dreams."]]))
+      vn.jump("01_cont")
+
+      vn.label("01_alright")
+      l337(_([["Better than before, thank you. But can't stop now with the end in sight! Once this is over I'll finally have some peace of mind and can clean up stuff. There is so much about Trixie I still need to look into."]]))
+      vn.jump("01_cont")
+
+      vn.label("01_cont")
+      l337(fmt.f(_([["We would have never made it this far if it wasn't for you, {player}. Thank your again!"
+Determination builds up in their voice.
+"You ready to put an end to lonewolf4's rampage?"]]),
+         {player=player.name()}))
+
       vn.func( function () mem.talked = true end )
    else
-      l337(_([[]]))
+      l337(_([["Ready to put a stop to lonewolf4's rampage?"]]))
    end
+   vn.menu{
+      {_([["Let's do this."]]), "accept"},
+      {_([["I need time to prepare."]]), "later"},
+   }
 
-   vn.func( function() accepted = true end )
+   vn.label("later")
+   l337(_([["I'll keep tracking them. Get in touch with me when you're ready."]]))
+   vn.done("electric")
+
+   vn.label("accept")
+   vn.func( function() accepted=true end )
+   l337(fmt.f(_([["Let's put an end to this! On to {sys}! I'll be hitching a ride on your electronics, hopefully your Ship AI doesn't mind."]]),
+      {sys=SYSTEM_START}))
+   vn.na(_([[You think you hear a small electronic voice saying "I do mind.", but it could just be your imagination...]]))
 
    vn.done("electric")
    vn.run()
 
    if not accepted then return end
-
    misn.accept()
 
    mem.state = 0
@@ -534,6 +582,10 @@ function land ()
       vn.transition("electric")
 
       l337()
+
+      vn.sfxVictory()
+      vn.func( function () player.pay( reward ) end )
+      vn.na(fmt.reward(reward))
 
       vn.done("electric")
       vn.run()
