@@ -86,7 +86,8 @@ repos:
       language: python
     - id: potfiles
       name: check for stale POTFILES.in
-      entry: utils/update-po.sh . . --pre-commit
+      entry: utils/update-po.sh
+      args: [".", ".", "--pre-commit"]
       language: script
       always_run: true
       pass_filenames: false
@@ -116,13 +117,23 @@ repos:
       types: [shell]
 - repo: local
   hooks:
+# parallel.sh is giving errors sometimes, so just have pre-commit handle it
+#    - id: u_codespell
+#      name: u_codespell
+#      entry: utils/shlinters/parallel.sh
+#      files: '^dat/'
+#      types_or: [xml, lua]
+#      language: script
+#      args: ["2", "-b", "utils/shlinters/u_codespell/u_codespell", "-u", ".u_codespell_unmatch", "--"]
+#      require_serial: true
     - id: u_codespell
       name: u_codespell
-      entry: utils/shlinters/parallel.sh 2 -b utils/shlinters/u_codespell/u_codespell -u .u_codespell_unmatch --
+      entry: utils/shlinters/u_codespell/u_codespell
       files: '^dat/'
       types_or: [xml, lua]
       language: script
-      require_serial: True
+      args: ["-u", ".u_codespell_unmatch", "--"]
+      require_serial: true
 #- repo: https://github.com/codespell-project/codespell
 #  rev: v2.4.1
 #  hooks:
