@@ -995,11 +995,13 @@ function vn.StateMenu.new( items, handler )
    s._items = nil
    s.handler = handler
    s._choose = vn.StateMenu._choose
+   s._visited = {}
    return s
 end
 function vn.StateMenu:_init()
    -- Check to see if function
    if type(self.items)=="function" then
+      self._visited = {} -- Always clear for functions
       self._items = self.items()
    else
       self._items = self.items
@@ -1024,6 +1026,9 @@ function vn.StateMenu:_init()
    self._elem = {}
    for k,v in ipairs(self._items) do
       local text = string.format("#w%d#0. %s", k, v[1])
+      if self._visited[k] then
+         text = "#n"..text.."#0"
+      end
       local sw, wrapped = font:getWrap( text, wmax )
       sw = sw + 2*tb
       local sh =  2*tb + font:getHeight() + font:getLineHeight() * (#wrapped-1)
@@ -1109,6 +1114,7 @@ function vn.StateMenu:_choose( n )
       what  = self._items[n][1],
       colour= vn._default._bufcol,
    }
+   self.visited[n] = true
    _finish( self )
 end
 --[[
