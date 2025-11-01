@@ -1717,7 +1717,10 @@ Runs a specified function and continues execution.
    @tparam func func Function to run.
 --]]
 function vn.func( func )
-   vn._checkstarted()
+   if vn._started then
+      func()
+      return
+   end
    local s = vn.State.new()
    s._init = function (self)
       func()
