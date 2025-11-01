@@ -1554,7 +1554,7 @@ Inserts a jump. This skips to a certain label.
 --]]
 function vn.jump( label )
    if vn._started then
-      vn._jump( label )
+      return vn._jump( label )
    end
    table.insert( vn._states, vn.StateJump.new( label ) )
 end
