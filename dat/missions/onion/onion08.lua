@@ -617,10 +617,11 @@ The avatar flickers a second.
 
       vn.label("01_cont")
       l337(_([["Nice AI btw, wonder why it takes up so much computational power though. Hard to fit with it."]]))
-      -- TODO VN shaking (not text though) and maybe wind sound?
+      -- TODO storm background + wind sound
       vn.na(_([[You push the throttle and begin the approach to the wreckage, as the ferocious planetary eternal storm begins to wrack your ship. This might get bumpy.]]))
       vn.na(_([[Your ship breaks through the atmosphere, as the planet promptly makes sure you understand that the Demon-class label is not just for show. You quickly have to shut off the emergency warning systems before they permanently damage your hearing.]]))
       vn.na(_([[You think you hear something coming from your Ship AI, but can't make it out through the howling of your atmospheric rendezvous, so you pump up the volume on the holodeck.]]))
+      -- TODO storm max
       sai(_([["SHIELDS AT 7%. WILL NOT HOLD MUCH LONGER."]]))
       l337(fmt.f(_([["I'VE REROUTED EXCESS VITAL ENERGY TO SHIELDS, NO PROBLEMO. {player} HAS GOT IT COVERED."]]),
          {player=string.upper(player.name())}))
@@ -649,6 +650,7 @@ l337_b01's avatar freezes. Seems like the storm is incompatible with transmissio
       vne.flashbackTextEnd{ notransition=true }
 
       --vn.scene() -- vn.scene() is done in vne.flashbackTextEnd
+      -- TODO storm weaker
       vn.newCharacter( l337 )
       vn.newCharacter( sai )
       vn.transition("blinkout")
@@ -697,15 +699,16 @@ l337_b01's avatar freezes. Seems like the storm is incompatible with transmissio
       sai(_([["Correction, at least 3 minor fractures now."]]))
       vn.na(fmt.f(_([[Ignoring {sai}'s complaints, you don an atmospheric suit and head outside.]]),
          {sai=tut.ainame()}))
+      vn.disappear(sai, "electric")
       vn.na(_([[As you exit the ship's lock, you quickly realize that outside is actually inside, as your ship seems to have crashed directly into lonewolf4's carrier.]]))
       vn.na(_([[Weapon in hand you make your way through the wreck of the ship. It seems like there's not much of corridors, it's all maintenance tubes which force you to crawl through, occasionally having to blast through debris. What the hell is with this ship's design?]]))
+      -- TODO make storm weaker
       vn.na(_([[You push yourself through another tunnel and find yourself in a surprisingly wide room with some faint illumination. In the centre seems to be a damaged pod with someone in it. Wait is that blood?]]))
 
       l337(_([["lonewolf4? Let me see if I can interface with it!"]]))
       vn.na(_([[You look around the room, it looks like a mess, even before everything was scattered around in the crash.]]))
       l337(_([["Got it!"]]))
 
-      vn.move( sai, "farleft" )
       vn.move( l337, "farright" )
       local wolf = onion.vn_lonewolf4()
       vn.appear( wolf, "electric" )
@@ -733,6 +736,7 @@ There is a long pause as the wolf avatar stares at you.
       wolf(_([[The avatar is motionless, almost placid.]]))
       l337(_([["Enough."]]))
       vn.disappear( wolf, "electric")
+      vn.move( l337, "centre" )
 
       vn.label("questions")
       vn.menu{
@@ -746,6 +750,115 @@ There is a long pause as the wolf avatar stares at you.
       vn.label("04_cont")
       l337(_([[They let out a deep sigh.
 "I'm sure you have a lot of questions, but I think I should explain from the beginning."]]))
+      l337(_([["Us, the Onion Society, we're an old society. Now you see us bickering and fighting, but we were quite a tight group originally: l337_b01, DOG, lonewolf4, notasockpuppet, underworlder, v3c70r, and Trixie."]]))
+      l337(_([["We would spend most of our time doing stupid stunts, but one day, we got lucky and stumbled upon a backdoor to the Nexus backbone."]]))
+      l337(_([["Even young, we realized the potential of it: the full control of the entire inter-galactic network. After arguing, we decided to lock it and split the keys, and pass the problem of dealing with it to our future selves. I'll spare you the details, but we made it so without all the keys, you wouldn't be able to unlock it. So unless we ever got together, the Nexus would stay as it was."]]))
+      l337(_([["We also made sure that if anything happened to any one of us, the keys would after some time, a Dead Man's switch. So it would never get completely lost. And then, we just went about our business as usual, now with each of us having a key as a Keeper of the Secrets."]]))
+      vn.label("05_menu")
+      vn.menu{
+         {_([["How old is old?"]]), "05_old"},
+         {_([["Stupid Stunts?"]]), "05_stunts"},
+         {_([[Continue.]]), "05_cont"},
+      }
+
+      vn.label("05_old")
+      l337(_([["Over 100 cycles, closer to 200 I think. Living so long takes a hard toll on the body... and the mind. It takes a lot of resources to keep organics running for so long..."]]))
+      l337(_([["Maybe lonewolf4 is right. Maybe we have lived too long?"]]))
+      vn.menu{
+         {_([["Short lives are for a reason."]]), "05_old_yes"},
+         {_([["Time shouldn't confine us."]]), "05_old_no"},
+      }
+      vn.label("05_old_yes")
+      l337(_([["I guess so. Maybe having a deadline makes you appreciate things more."]]))
+      vn.jump("05_menu")
+
+      vn.label("05_old_no")
+      l337(_([["Maybe you are right. This is not a problem of longevity, but of character."]]))
+      vn.jump("05_menu")
+
+      vn.label("05_stunts")
+      l337(_([["The usual script kiddie stuff: hijack a planetary intercom system, reroute thousands of tonnes of manure to be dumped on aristocrat mansions, leak corporate and government databases. The usual an aspiring technomancer does."]]))
+      l337(_([[They let out a sigh.
+"Those were carefree times..."]]))
+      vn.jump("05_menu")
+
+      vn.label("05_cont")
+      l337(_([["Going about our things, some of us noticed something big happening at Tenebros Station. Like conspiracy-type stuff, but it turned out to be true. At the time there was an Imperial project experimenting with mind-control drugs, something they developed by reverse engineering the Sirius or something like that. Hard to tell when half the documents are lies."]]))
+      l337(_([["I think v3c70r stumbled upon it while tracking some refugee diversion database changes, and then they brought me, l337_b01, and Trixie into it."]]))
+      vn.menu{
+         {_([["You and l337_b01!?!"]]), "06_l337"},
+         {_([[Let them continue.]]), "06_cont"},
+      }
+
+      vn.label("06_l337")
+      l337(_([["I'll get that to a second, but as you may have guessed, I wasn't always l337_b01..."]]))
+      vn.jump("06_cont")
+
+      vn.label("06_cont")
+      l337(_([["So, we put together what we called Operation Dissonance, to figure out what was going on, and if possible, sabotage the project. Back then, as we were younger, l337_b01 and v3c70r decided to go in person, while Trixie and I stayed back providing support."]]))
+      l337(_([["Things didn't go on as expected. We quickly found out that the project was actually in the last stage, and was going to be activated on all the inhabitants of the station."]]))
+      l337(_([["You have to understand, that if that happened, this could easily spread around the galaxy, with tons of sleeper agents able to do who knows what. So we had to take a tough decision, either take out the station and avoid the worst, or try to clean up afterwards."]]))
+      l337(_([[They let out another deep sigh.
+"The project looked really bad, so we decided to... sabotage the station and terminate the life support. v3c70r ad l337_b01 were still there, so I was against it, but time was running out, and we had few choices..."]]))
+      l337(_([["But, that's where... that's where I screwed up..."
+They pause.
+"I triggered a fail-safe system, and all the leeway we may have had disappeared..."]]))
+      l337(_([["They... they didn't make it."
+You hear a gulp.
+"Trixie was desperate, and tried everything, but she also took a toll. The neural feedback damaged her... they was never the same."]]))
+      l337(_([["Modern medicine can do wonders to the body, but the mind, technology hasn't changed much in hundreds of cycles... and Trixie was no exception..."]]))
+      l337(_([["At the end, l337_b01, my mentor, was able to pass their private codes to me, to keep their legacy. To fully become l337_b01, I peeled myself and pinned all the blame on DEADBEEF, my old self."]]))
+      l337(_([["While taking care of Trixie, who barely remembered anything, I found out that lonewolf4 had some family on the station. And they never forgot and... never forgave..."]]))
+      l337(_([["The Onion Society, and most of us were never the same after that..."]]))
+      l337(_([[There is a pause.
+"I think you're the first person I share all of this with."]]))
+      vn.label("07_menu")
+      vn.menu{
+         {_([["So what happened to the station?"]]), "07_station"},
+         {_([["l337_b01 was your mentor?"]]), "07_l337"},
+         {_([["Mind Control?"]]), "07_mindcontrol"},
+         {_([["How did lonewolf4 not notice?"]]), "07_lonewolf4"},
+         {_([["Thanks for sharing."]]), "07_share"},
+         {_([["What do we do next?"]]), "07_next"},
+      }
+
+      vn.label("07_station")
+      vn.jump("07_menu")
+
+      vn.label("07_l337")
+      vn.jump("07_menu")
+
+      vn.label("07_mindcontrol")
+      vn.jump("07_menu")
+
+      vn.label("07_lonewolf4")
+      vn.jump("07_menu")
+
+      vn.label("07_share")
+      l337(_([["It does feel like I took a big weight off my chest. Even though it's been a long time, I still sometimes wake up from nightmares of Tenebros Station. Maybe I'll be able to finally rest."]]))
+      vn.jump("07_cont")
+
+      vn.label("07_next")
+      l337(_([[They pause a second.
+"That's a great question. Let me think."]]))
+      vn.jump("07_cont")
+
+      vn.label("07_cont")
+      l337(_([["First things first, we have to get you out of here. You're fine for now, but I'm not sure how long the lull in the storm will last, and when it's gone, you're not going to have much time."]]))
+      vn.move( l337, "righT" )
+      vn.appear( sai, "electric" )
+      sai(fmt.f(_([["Analysis show that the Wolfie has a non-standard blink engine with 78% functionality remaining. Proposal: rewire blink engine target to the {shipname} to exist atmosphere. Projections show +INF% chance of survival versus remaining."]]),
+         {shipname=player.pilot():name()}))
+      l337(_([["What's the projected survival chance?"]]))
+      sai(_([["NaN%"]]))
+      l337(_([["Not good chances, but I don't think we have many other choices. Can the ship survive an atmospheric ascend?"]]))
+      sai(_([["Negative."]]))
+      l337(_([["Looks like we're going to have to trust lonewolf4's engineering. They were always an ace at this stuff, so it may work?"]]))
+      l337(fmt.f(_([["{player}, I think I can handle this, you should head back to the ship."]]),
+         {player=player.name()}))
+      vn.na(_([[You pay your respects to lonewolf4 and leave the Wolfie behind.]]))
+      -- TODO make storm stronger
+      vn.na(_([[Your ship groans around you as the storm shifts in intensity.]]))
 
       vn.sfxVictory()
       vn.func( function () player.pay( reward ) end )
@@ -754,6 +867,11 @@ There is a long pause as the wolf avatar stares at you.
       vn.done("electric")
       vn.run()
 
+      -- Update description
+      diff.remove("onion08")
+      diff.apply("onion08v2")
+      -- Can't stay landed on this hellhole
+      player.takeoff()
       misn.finish(true)
    end
 end

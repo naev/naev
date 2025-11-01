@@ -22,7 +22,7 @@
 --[[
    Onion05
 
-   TODO explanation
+   Try to get information on a long-lost Nexus backdoor.
 --]]
 local fmt = require "format"
 local vn = require "vn"
