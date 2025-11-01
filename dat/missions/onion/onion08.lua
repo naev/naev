@@ -46,13 +46,16 @@ local reward = onion.rewards.misn08
 
 local SYSTEM_START = system.get("Oxuram")
 local SYSTEM_END = system.get("PSO")
-local SPOB_EPILOGUE = spob.getS("PSO 2434")
+local SPOB_EPILOGUE = spob.get("PSO 2434")
+local SPOB_WAKEUP = spob.get("PSO Monitor")
 
 -- Mission states
+local STATE_START = 0
 local STATE_FIGHT1_START = 1
 local STATE_FIGHT1_UNCOVERED = 2
 local STATE_WOLF_RANAWAY = 2
 local STATE_WOLF_DEFEATED = 3
+local STATE_EPILOGUE = 4
 mem.state = nil
 
 function create()
@@ -141,7 +144,7 @@ Determination builds up in their voice.
    if not accepted then return end
    misn.accept()
 
-   mem.state = 0
+   mem.state = STATE_START
    hook.enter("enter")
    hook.land("land")
 
@@ -199,7 +202,7 @@ end
 
 function enter ()
    local scur = system.cur()
-   if scur==SYSTEM_START and mem.state==0 then
+   if scur==SYSTEM_START and mem.state==STATE_START then
       pilot.clear()
       pilot.toggleSpawn(false)
       hook.timer( 5, "fight1_start1" )
@@ -209,7 +212,7 @@ function enter ()
       pilot.toggleSpawn(false)
       hook.timer( 1, "fight2_start1" )
 
-   elseif mem.state ~= 0 and mem.state~=STATE_WOLF_RANAWAY then
+   elseif mem.state~=STATE_START and mem.state~=STATE_WOLF_RANAWAY then
       return lmisn.fail("you abandoned the attack on lonewolf4!")
 
    end
@@ -577,7 +580,10 @@ function fight2_epilogue ()
 end
 
 -- End of it all
+local tint, epilogue
 function land ()
+   if mem.state==STATE_EPILOGUE then epilogue() end
+
    -- Land hook only runs at the final epilogue when landing
    if mem.state~=STATE_WOLF_DEFEATED or spob.cur()~=SPOB_EPILOGUE then return end
 
@@ -914,6 +920,55 @@ You hear a gulp.
    vn.na(_([[Your stomach lurches as reality warps around you. You slowly open your eyes, and it looks like you are once more in space. Nice predictable empty space.]]))
    sai(_([["Shields recovering."]]))
    l337(_([["You made it!"]]))
+   vn.na(_([[And with that, your body gives out as it becomes aware of its grievances.]]))
+
+   -- Fade to black and then set a black shader before we transition
+   vne.flashbackTextStart( _("Haziness"), {transition="blinkin"})
+   tint = love_shaders.tint{ colour = {0, 0, 0, 1} }
+   vn.func( function ()
+      tint:addPPShader()
+   end )
+   vn.run()
+
+   -- Update description
+   diff.remove("onion08")
+   diff.apply("onion08v2")
+   -- Can't stay landed on this hellhole
+   player.takeoff()
+   mem.state = STATE_EPILOGUE
+   hook.safe( "epilogue_land" )
+end
+
+function epilogue_land ()
+   player.land( SPOB_WAKEUP )
+end
+
+function epilogue ()
+   vn.clear()
+   vn.scene()
+
+   -- Undo the global shader stuff
+   vne.flashbackTextStart( _("Haziness"), {transition="blinkin"})
+   vn.func( function ()
+      tint:rmPPShader()
+   end )
+   vne.flashbackTextEnd{ notransition=true }
+   --vn.scene() -- vn.scene() is done in vne.flashbackTextEnd
+   local l337 = onion.vn_l337b01{ pos="right" }
+   local sai = tut.vn_shipai{ pos="left" }
+   vn.newCharacter( l337 )
+   vn.newCharacter( sai )
+   vn.transition("blinkout")
+
+   sai(fmt.f(_([["{player} has become conscious. Terminating program to find a new ship captain. I mean, welcome back to the world of the living."]]),
+      {player=player.name()}))
+   l337(_([["You're back! I was so worried!"]]))
+   vn.menu{
+      {_([["Where am I?"]]), "01_cont"},
+      {_([["What happened?"]]), "01_cont"},
+   }
+
+   vn.label("01_cont")
 
    vn.sfxVictory()
    vn.func( function () player.pay( reward ) end )
@@ -922,10 +977,5 @@ You hear a gulp.
    vn.done("electric")
    vn.run()
 
-   -- Update description
-   diff.remove("onion08")
-   diff.apply("onion08v2")
-   -- Can't stay landed on this hellhole
-   player.takeoff()
    misn.finish(true)
 end
