@@ -117,22 +117,14 @@ repos:
       types: [shell]
 - repo: local
   hooks:
-# parallel.sh is giving errors sometimes, so just have pre-commit handle it
-#    - id: u_codespell
-#      name: u_codespell
-#      entry: utils/shlinters/parallel.sh
-#      files: '^dat/'
-#      types_or: [xml, lua]
-#      language: script
-#      args: ["2", "-b", "utils/shlinters/u_codespell/u_codespell", "-u", ".u_codespell_unmatch", "--"]
-#      require_serial: true
     - id: u_codespell
       name: u_codespell
-      entry: utils/shlinters/u_codespell/u_codespell
+      entry: utils/shlinters/parallel.sh
       files: '^dat/'
       types_or: [xml, lua]
       language: script
-      args: ["-u", ".u_codespell_unmatch", "--"]
+      args: ["2", "-b", "utils/shlinters/u_codespell/u_codespell", "-u", ".u_codespell_unmatch", "--"]
+      require_serial: true
 #- repo: https://github.com/codespell-project/codespell
 #  rev: v2.4.1
 #  hooks:
