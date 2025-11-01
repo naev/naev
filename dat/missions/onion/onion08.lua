@@ -579,6 +579,35 @@ end
 -- End of it all
 function land ()
    if mem.state==STATE_WOLF_DEFEATED and spob.cur()==SPOB_EPILOGUE then
+      local stormshader = love_shaders.sandstorm{
+         colour = {0.9, 0.2, 0.8, 0.5},
+      }
+      local function storm_strength( str )
+         -- TODO modify sounds too
+         stormshader:send( "u_strength", str )
+      end
+      local function start_storm( str )
+         str = str or 0.5
+         local lw, lh = love.graphics.getDimensions()
+         vn.setBackground( function ()
+            vn.setColour( {1, 1, 1, 1} )
+            local oldshader = love.graphics.getShader()
+            love.graphics.setShader( stormshader )
+            love.graphics.draw( love_shaders.img, 0, 0, 0, lw, lh )
+            love.graphics.setShader( oldshader )
+         end )
+         vn.setUpdateFunc( function( dt )
+            stormshader:update(dt)
+         end )
+         -- TODO add sound too
+         storm_strength( str )
+      end
+      local function stop_storm ()
+         vn.setBackground( nil )
+         vn.setUpdateFunc( nil )
+         -- TODO stop sound too
+      end
+
       vn.clear()
       vn.scene()
       vn.transition()
@@ -617,11 +646,11 @@ The avatar flickers a second.
 
       vn.label("01_cont")
       l337(_([["Nice AI btw, wonder why it takes up so much computational power though. Hard to fit with it."]]))
-      -- TODO storm background + wind sound
+      vn.func( start_storm )
       vn.na(_([[You push the throttle and begin the approach to the wreckage, as the ferocious planetary eternal storm begins to wrack your ship. This might get bumpy.]]))
       vn.na(_([[Your ship breaks through the atmosphere, as the planet promptly makes sure you understand that the Demon-class label is not just for show. You quickly have to shut off the emergency warning systems before they permanently damage your hearing.]]))
       vn.na(_([[You think you hear something coming from your Ship AI, but can't make it out through the howling of your atmospheric rendezvous, so you pump up the volume on the holodeck.]]))
-      -- TODO storm max
+      storm_strength( 0.8 )
       sai(_([["SHIELDS AT 7%. WILL NOT HOLD MUCH LONGER."]]))
       l337(fmt.f(_([["I'VE REROUTED EXCESS VITAL ENERGY TO SHIELDS, NO PROBLEMO. {player} HAS GOT IT COVERED."]]),
          {player=string.upper(player.name())}))
@@ -633,6 +662,7 @@ l337_b01's avatar freezes. Seems like the storm is incompatible with transmissio
       vn.na(_([[After what seems like an eternity of a cacophony of fuselage discontentment, your ship crashes into something, sending you flying. ]]))
 
       vn.scene()
+      vn.func( stop_storm )
       vn.transition("blur")
       local memory = vne.flashbackTextStart( _("Haziness"), {transition="blinkin"})
       local function m( txt ) memory("\n"..txt,true) end
@@ -650,7 +680,9 @@ l337_b01's avatar freezes. Seems like the storm is incompatible with transmissio
       vne.flashbackTextEnd{ notransition=true }
 
       --vn.scene() -- vn.scene() is done in vne.flashbackTextEnd
-      -- TODO storm weaker
+      vn.func( function ()
+         start_storm( 0.4 )
+      end )
       vn.newCharacter( l337 )
       vn.newCharacter( sai )
       vn.transition("blinkout")
@@ -702,7 +734,7 @@ l337_b01's avatar freezes. Seems like the storm is incompatible with transmissio
       vn.disappear(sai, "electric")
       vn.na(_([[As you exit the ship's lock, you quickly realize that outside is actually inside, as your ship seems to have crashed directly into lonewolf4's carrier.]]))
       vn.na(_([[Weapon in hand you make your way through the wreck of the ship. It seems like there's not much of corridors, it's all maintenance tubes which force you to crawl through, occasionally having to blast through debris. What the hell is with this ship's design?]]))
-      -- TODO make storm weaker
+      storm_strength( 0.2 )
       vn.na(_([[You push yourself through another tunnel and find yourself in a surprisingly wide room with some faint illumination. In the centre seems to be a damaged pod with someone in it. Wait is that blood?]]))
 
       l337(_([["lonewolf4? Let me see if I can interface with it!"]]))
@@ -823,15 +855,25 @@ You hear a gulp.
       }
 
       vn.label("07_station")
+      l337(_([["With no life support everyone died. The project was scrapped and attributed to a malfunction, so that inspections would be cut short. The entire place was cordoned off, and probably blown into bit by the Incident. There shouldn't be any public records left. It was over 100 cycles ago, and I made sure to purge all the data."]]))
+      l337(_([["I still do think that there might have been another way. If only we noticed sooner..."]]))
       vn.jump("07_menu")
 
       vn.label("07_l337")
+      l337(_([["Yes. They took me up as a disciple and taught be all the technomancery I know. If it wasn't for l337_b01, I probably would have gotten fried by gangs, pirates, or even bureaucrats a long time ago. I owe them my life."]]))
+      l337(_([["l337_b01 was the best technomancer there was. I've never been able to be half as good as they were."]]))
       vn.jump("07_menu")
 
       vn.label("07_mindcontrol")
+      l337(_([["It was one of the endless horrible Imperial projects destined to run out of control. Their plan was to embed conditioning as a virus into humans so that they could trigger it remotely to control people. It was also engineered to spread like a virus, so it would spread across the Empire."]]))
+      l337(_([["I have no idea what they were thinking or how well it would work, but it was a recipe for disaster on all levels. Probably got approved and developed through chained bureaucratic debacles. But the risk was real, and it all had to be stopped."]]))
+      l337(_([["I made sure all data of the plans was completely wiped so it couldn't be developed again. Haven't heard about it since."]]))
       vn.jump("07_menu")
 
       vn.label("07_lonewolf4")
+      l337(_([["It was surprisingly kept very well as a secret. Only a small team was developing it. If we hadn't stumbled upon it by chance, I don't think we would have ever found it."]]))
+      l337(_([["Not to mention it's much harder to notice things when you aren't looking. It's one thing to hack into governmental databases, and another to do the same level of scrutiny to an arbitrary small station, even if your family are there."]]))
+      l337(_([["If we had known lonewolf4's family was involved, we would have brought him into the operation, but there was so little time. It was just one thing after another."]]))
       vn.jump("07_menu")
 
       vn.label("07_share")
@@ -857,8 +899,19 @@ You hear a gulp.
       l337(fmt.f(_([["{player}, I think I can handle this, you should head back to the ship."]]),
          {player=player.name()}))
       vn.na(_([[You pay your respects to lonewolf4 and leave the Wolfie behind.]]))
-      -- TODO make storm stronger
+      storm_strength( 0.8 )
       vn.na(_([[Your ship groans around you as the storm shifts in intensity.]]))
+      sai(_([["Shield integrity beginning to fail."]]))
+      l337(_([["Give me a second, almost got it. I'm going to have to disable the protective field first, so hang on tight."]]))
+      vn.na(_([[You sense a deep rumbling as the howling winds continue to pick up.]]))
+      sai(_([["Shields down."]]))
+      l337(_([["One sec..."]]))
+      vn.na(_([[You grab on to your commander chair as the ship begins to slide, pulled by the storm. Your fractures kindly decide to remind you of their existence as the stim effect begins to fade.]]))
+      l337(_([["Now!"]]))
+      vn.func( stop_storm )
+      vn.na(_([[Your stomach lurches as reality warps around you. You slowly open your eyes, and it looks like you are once more in space. Nice predictable empty space.]]))
+      sai(_([["Shields recovering."]]))
+      l337(_([["You made it!"]]))
 
       vn.sfxVictory()
       vn.func( function () player.pay( reward ) end )
