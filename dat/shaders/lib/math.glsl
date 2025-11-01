@@ -26,6 +26,9 @@ vec3 mod289(vec3 x) {
 vec2 mod289(vec2 x) {
    return x - floor(x * (1.0 / 289.0)) * 289.0;
 }
+float mod289(float x) {
+   return x - floor(x * (1.0 / 289.0)) * 289.0;
+}
 
 // Modulo 7 without a division
 vec4 mod7(vec4 x) {
@@ -40,6 +43,12 @@ vec4 permute(vec4 x) {
    return mod289((34.0 * x + 10.0) * x);
 }
 vec3 permute(vec3 x) {
+   return mod289((34.0 * x + 10.0) * x);
+}
+vec2 permute(vec2 x) {
+   return mod289((34.0 * x + 10.0) * x);
+}
+float permute(float x) {
    return mod289((34.0 * x + 10.0) * x);
 }
 
