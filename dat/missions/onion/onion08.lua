@@ -14,6 +14,9 @@
    end
    return true
  </cond>
+ <tags>
+  <tag>fleetcap_10</tag>
+ </tags>
  <notes>
   <campaign>Onion Society</campaign>
  </notes>
@@ -940,6 +943,8 @@ You hear a gulp.
 end
 
 function epilogue_land ()
+   -- Player was out for 20 periods or 56 hours
+   time.inc( time.new(0,20,0) )
    player.land( SPOB_WAKEUP )
 end
 
