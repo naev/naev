@@ -77,7 +77,7 @@ end
 function accept ()
    local accepted = false
 
-   vn.clear()
+   vn.reset()
    vn.scene()
    local l337 = onion.vn_l337b01()
    vn.newCharacter( l337 )
@@ -205,7 +205,13 @@ end
 
 function enter ()
    local scur = system.cur()
-   if scur==SYSTEM_START and mem.state==STATE_START then
+   if mem.state==STATE_EPILOGUE then
+      -- Player was out for 20 periods or 56 hours
+      time.inc( time.new(0,20,0) )
+      player.allowSave(true)
+      player.land( SPOB_WAKEUP )
+
+   elseif scur==SYSTEM_START and mem.state==STATE_START then
       pilot.clear()
       pilot.toggleSpawn(false)
       hook.timer( 5, "fight1_start1" )
@@ -575,7 +581,7 @@ function fight2_epilogue ()
       {spb=SPOB_EPILOGUE, sys=SYSTEM_END}),
    })
 
-   vn.clear()
+   vn.reset()
    vn.scene()
    local l337 = onion.vn_l337b01()
    vn.newCharacter( l337 )
@@ -593,7 +599,7 @@ end
 -- End of it all
 local tint, epilogue
 function land ()
-   if mem.state==STATE_EPILOGUE then epilogue() end
+   if mem.state==STATE_EPILOGUE then return epilogue() end
 
    -- Land hook only runs at the final epilogue when landing
    if mem.state~=STATE_WOLF_DEFEATED or spob.cur()~=SPOB_EPILOGUE then return end
@@ -629,7 +635,7 @@ function land ()
       vn.musicStop( stormsound )
    end
 
-   vn.clear()
+   vn.reset()
    vn.scene()
    vn.transition()
 
@@ -945,19 +951,13 @@ You hear a gulp.
    diff.remove("onion08")
    diff.apply("onion08v2")
    -- Can't stay landed on this hellhole
-   player.takeoff()
+   player.allowSave(false)
    mem.state = STATE_EPILOGUE
-   hook.safe( "epilogue_land" )
-end
-
-function epilogue_land ()
-   -- Player was out for 20 periods or 56 hours
-   time.inc( time.new(0,20,0) )
-   player.land( SPOB_WAKEUP )
+   player.takeoff()
 end
 
 function epilogue ()
-   vn.clear()
+   vn.reset()
    vn.scene()
 
    -- Undo the global shader stuff
