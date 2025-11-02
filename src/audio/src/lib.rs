@@ -46,7 +46,7 @@ const REFERENCE_DISTANCE: f32 = 500.;
 /// Max distance for sounds to still play at
 const MAX_DISTANCE: f32 = 25_000.;
 /// Number of frames we want to grab when streaming
-const STREAMING_BUFFER_LENGTH: usize = 1 * 1024;
+const STREAMING_BUFFER_LENGTH: usize = 1024;
 
 struct LuaAudioEfx {
     name: String,
@@ -371,10 +371,10 @@ impl AudioBuffer {
 
         let buffers = AUDIO_BUFFER.lock().unwrap();
         for buf in buffers.iter() {
-            if let Some(b) = buf.upgrade() {
-                if b.name == name {
-                    return Some(b);
-                }
+            if let Some(b) = buf.upgrade()
+                && b.name == name
+            {
+                return Some(b);
             }
         }
         None
@@ -386,10 +386,10 @@ impl AudioBuffer {
 
         let mut buffers = AUDIO_BUFFER.lock().unwrap();
         for buf in buffers.iter() {
-            if let Some(b) = buf.upgrade() {
-                if b.name == name {
-                    return Ok(b);
-                }
+            if let Some(b) = buf.upgrade()
+                && b.name == name
+            {
+                return Ok(b);
             }
         }
         let data = Arc::new(Self::from_path(&name)?);
@@ -577,7 +577,7 @@ impl StreamData {
             }
         }
 
-        if frames.len() > 0 {
+        if !frames.is_empty() {
             let mut data: Vec<f32> = Frame::vec_to_data(frames, self.stereo);
             //use std::time::SystemTime;
             //dbg!( SystemTime::now().duration_since(SystemTime::UNIX_EPOCH)?.as_secs(), data.len(), self.source.get_parameter_i32(AL_SOURCE_STATE) );
@@ -1007,7 +1007,7 @@ impl AudioBuilder {
 
     fn build_static(&self) -> Result<AudioStatic> {
         let audio = if let Some(path) = &self.path {
-            let buf = AudioBuffer::get_or_try_load(&path)?;
+            let buf = AudioBuffer::get_or_try_load(path)?;
             AudioStatic::new_buffer(&buf)?
         } else {
             AudioStatic::new(&self.data)?
@@ -1017,7 +1017,7 @@ impl AudioBuilder {
 
     fn build_stream(&self) -> Result<AudioStream> {
         if let Some(path) = &self.path {
-            AudioStream::from_path(&path)
+            AudioStream::from_path(path)
         } else {
             anyhow::bail!("Can only create AudioStream from paths");
         }
@@ -1286,16 +1286,12 @@ impl AudioSystem {
                             }
                         }
                         // Finally remove the voice, but only if it is actually fine to remove
-                        if let Some(voice) = voices.get(vid) {
-                            match voice {
-                                Audio::Static(voice) => {
-                                    if voice.ingame {
-                                        dbg!("removed", &vid);
-                                        voices.remove(vid);
-                                    }
-                                }
-                                _ => (),
-                            }
+                        if let Some(voice) = voices.get(vid)
+                            && let Audio::Static(voice) = voice
+                            && voice.ingame
+                        {
+                            dbg!("removed", &vid);
+                            voices.remove(vid);
                         }
                     }
                 }
@@ -1538,13 +1534,14 @@ impl UserData for AudioRef {
             "getDuration",
             |_, this, samples: bool| -> mlua::Result<Option<f32>> {
                 Ok(this.call(|this| match this {
-                    Audio::Static(this) | Audio::LuaStatic(this) => match &this.data {
-                        Some(AudioData::Buffer(buffer)) => Some(buffer.duration(match samples {
-                            true => AudioSeek::Samples,
-                            false => AudioSeek::Seconds,
-                        })),
-                        None => None,
-                    },
+                    Audio::Static(this) | Audio::LuaStatic(this) => {
+                        this.data.as_ref().map(|AudioData::Buffer(buffer)| {
+                            buffer.duration(match samples {
+                                true => AudioSeek::Samples,
+                                false => AudioSeek::Seconds,
+                            })
+                        })
+                    }
                     Audio::LuaStream(_this) => None,
                 })?)
             },

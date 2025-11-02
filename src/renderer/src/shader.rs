@@ -297,11 +297,11 @@ impl ProgramSource {
                 Binding::UniformBlock(bname, bidx) => {
                     for v in vertrefl.uniforms.iter().chain(fragrefl.uniforms.iter()) {
                         let gv = &module.global_variables[*v.0];
-                        if let Some(varname) = &gv.name {
-                            if bname == varname {
-                                Binding::UniformBlock(v.1.clone(), *bidx).apply(gl, program, name);
-                                matched = true;
-                            }
+                        if let Some(varname) = &gv.name
+                            && bname == varname
+                        {
+                            Binding::UniformBlock(v.1.clone(), *bidx).apply(gl, program, name);
+                            matched = true;
                         }
                     }
                 }
@@ -310,11 +310,11 @@ impl ProgramSource {
                     for v in fragrefl.texture_mapping.iter() {
                         if let Some(sampler) = v.1.sampler {
                             let gv = &module.global_variables[sampler];
-                            if let Some(varname) = &gv.name {
-                                if bname == varname {
-                                    Binding::Sampler(v.0.clone(), *bidx).apply(gl, program, name);
-                                    matched = true;
-                                }
+                            if let Some(varname) = &gv.name
+                                && bname == varname
+                            {
+                                Binding::Sampler(v.0.clone(), *bidx).apply(gl, program, name);
+                                matched = true;
                             }
                         }
                     }

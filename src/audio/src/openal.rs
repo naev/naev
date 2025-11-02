@@ -543,7 +543,7 @@ impl Buffer {
                     false => AL_FORMAT_MONO_FLOAT32,
                 },
                 data.as_ptr() as *const ALvoid,
-                (data.len() * std::mem::size_of::<f32>()) as i32,
+                std::mem::size_of_val(data) as i32,
                 sample_rate,
             );
         }

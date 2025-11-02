@@ -173,12 +173,11 @@ impl TextureData {
         textures: &MutexGuard<'_, Vec<Weak<TextureData>>>,
     ) -> Option<Arc<Self>> {
         for tex in textures.iter() {
-            if let Some(t) = tex.upgrade() {
-                if let Some(tname) = &t.name {
-                    if tname == name {
-                        return Some(t);
-                    }
-                }
+            if let Some(t) = tex.upgrade()
+                && let Some(tname) = &t.name
+                && tname == name
+            {
+                return Some(t);
             }
         }
         None
@@ -190,17 +189,15 @@ impl TextureData {
         textures: &MutexGuard<'_, Vec<Weak<TextureData>>>,
     ) -> Option<Arc<Self>> {
         for tex in textures.iter() {
-            if let Some(t) = tex.upgrade() {
-                if let Some(tname) = &t.name {
-                    if s.name == tname
-                        && s.srgb == t.srgb
-                        && s.flipv == t.flipv
-                        && s.mipmaps == t.mipmaps
-                        && s.sdf == t.sdf
-                    {
-                        return Some(t);
-                    }
-                }
+            if let Some(t) = tex.upgrade()
+                && let Some(tname) = &t.name
+                && s.name == tname
+                && s.srgb == t.srgb
+                && s.flipv == t.flipv
+                && s.mipmaps == t.mipmaps
+                && s.sdf == t.sdf
+            {
+                return Some(t);
             }
         }
         None
