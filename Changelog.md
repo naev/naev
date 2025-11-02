@@ -53,9 +53,9 @@
 #### Content
  - 28 new missions and events
     - Go treasure hunting
- - 11 new ship variants
  - 27 new outfits and reworked cores
     - Outfit sets that gain bonuses as more elements of the set are equipped
+ - 11 new ship variants
  - New sensor anomalies
  - Two new intertwined minor houses of the Empire with new systems and lore
  - More space objects with new things to explore
@@ -70,7 +70,7 @@
 
 #### Engine
  - Began porting to Rust
- - Engine now uses SDL3
+ - Engine now uses SDL3 instead of SDL2
  - Engine supports modifying some important constants such as those related to the physics model for use in plugins
  - Use instancing instead of geometry shaders for space dust
  - Ship Lua scripting supports "onshootany" now
@@ -99,6 +99,7 @@
  - SVG image support
  - WGSL shader support
  - trigger library to handle commonly mission code
+ - Game will automatically try to detect extensions for image files
 
 #### Fixes
  - The Bite turns off afterburners
