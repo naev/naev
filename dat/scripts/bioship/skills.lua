@@ -265,7 +265,7 @@ skills.set.attack = {
       requires = { "attack4" },
       slot = "feral_rage",
       outfit = "Feral Rage III",
-      desc = _("The state of feral rage duration is increased to 7 seconds with a 30% damage bonus, and can be triggered manually with a 30 second cooldown.."),
+      desc = _("The state of feral rage duration is increased to 7 seconds with a 30% damage bonus, and can be triggered manually with a 30 second cooldown between uses."),
       icon = "oni.webp",
    },
 }
