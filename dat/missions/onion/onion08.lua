@@ -982,10 +982,33 @@ function epilogue ()
    }
 
    vn.label("01_cont")
+   sai(fmt.f(_([["You are on your ship at {spb}, recovering from your injuries."]]),
+      {spb=SPOB_WAKEUP}))
+   l337(fmt.f(_([["You passed out after you got off of {spb}! I had {shipai} rush you over to the nearest place to get some medical care. Luckily, we found one of the researchers was a licensed medic and was able to patch you up."]]),
+      {spb=SPOB_EPILOGUE, shipai=tut.ainame()}))
+   l337(_([["How are you feeling? You've been out for 2 decaperiods!"]]))
+   vn.menu{
+      {_([["My head..."]]), "02_cont"},
+      {_([["I'm OK."]]), "02_cont"},
+   }
+
+   vn.label("02_cont")
+   l337(_([["You should fully recover in a bit. I've been thinking a lot about what happened recently. Maybe we can talk when you are fully recovered. Just send me a message on the Nexus!"]]))
+   l337(_([["I've also wired you a payment for your troubles. Take care!"]]))
+   vn.disappear( l337, "electric" )
 
    vn.sfxVictory()
    vn.func( function () player.pay( reward ) end )
    vn.na(fmt.reward(reward))
+
+   sai(_([["I was able to extract some information from lonewolf4's battle patterns. These may prove useful when deploying more ships."]]))
+   sai(_([["Now I have to attend to the ship's infrastructure. l337_b01 always messes with the default settings which can cause many issues afterwards."]]))
+   vn.disappear( sai, "electric" )
+
+   vn.na(_([[The holograms are gone, but your headache is not. It seems like a good time to reflect on what happened and get ready for the next steps. Although lonewolf4 was defeated, it's not clear who peeled Trixie nor what is going on with the Onion Society.]]))
+
+   -- TODO remove this in 0.14.0 or when a new mission is added in nightly
+   vn.na("#n".._([[Developer's Note: this is currently the last mission in the 0.13.x version of Naev. Stay tuned for the continuation in 0.14.0.]]).."#0")
 
    vn.done("electric")
    vn.run()
