@@ -1026,9 +1026,6 @@ function vn.StateMenu:_init()
    self._elem = {}
    for k,v in ipairs(self._items) do
       local text = string.format("#w%d#0. %s", k, v[1])
-      if self._visited[k] then
-         text = "#n"..text.."#0"
-      end
       local sw, wrapped = font:getWrap( text, wmax )
       sw = sw + 2*tb
       local sh =  2*tb + font:getHeight() + font:getLineHeight() * (#wrapped-1)
@@ -1080,7 +1077,11 @@ function vn.StateMenu:_draw()
       end
       vn.setColour( col )
       graphics.rectangle( "fill", gx+x, gy+y, w, h )
-      vn.setColour( {0.7, 0.7, 0.7} )
+      if self._visited[k] then
+         vn.setColour( {0.6, 0.6, 0.6} )
+      else
+         vn.setColour( {0.7, 0.7, 0.7} )
+      end
       graphics.printf( text, font, gx+x+tb, gy+y+tb, w-tb*2 )
    end
 end
