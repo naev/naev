@@ -39,7 +39,7 @@ Development Manual](https://naev.org/devmanual/) (WIP).
 
 Naev's dependencies are intended to be widely available. In addition to a
 graphics card and driver supporting at least OpenGL 3.3, Naev requires:
-* rust 1.85 or later
+* rust 1.87 or later
 * bindgen 0.72 or later
 * SDL3`*`
 * libxml2
@@ -155,7 +155,7 @@ artwork submodule.
 To get in touch, you can visit [naev.org](https://naev.org/) which links to the project's Discord chat and Wiki.
 There are also Lua API docs there.
 
-Before committing, it's advisable to install [pre-commit](https://pre-commit.com/) 2.17 or newer, and run `pre-commit install` from the Naev git directory root.
+Before committing, it's advisable to install [pre-commit](https://pre-commit.com/) 3.2 or newer, and run `pre-commit install` from the Naev git directory root.
 pre-commit will run automatically when commiting files, but can also be run manually with `pre-commit run -a`.
 The dev team is teaching `pre-commit` to handle various fussy and forgettable steps.
 
@@ -185,7 +185,7 @@ To avoid merge conflicts, it is recommended to not include updated `po/naev.pot`
 Under the hood: `po/POTFILES.in` is a catalogue of files that may have translatable text.
 We keep it synced using pre-commit hooks (or manually: `meson compile potfiles`).
 The `naev-pot` Meson target is built using standard `xgettext`, plus additional rules.
-(Rules for `AUTHORS` and `intro` are in `po/update-po.sh`. Rules for XML data files are in `po/its/translation.its`.)
+(Rules for `AUTHORS` are in `po/update-po.sh`. Rules for XML data files are in `po/its/translation.its`.)
 Individual translations can be updated via `meson compile naev-update-po`, but _don't do this_ without a good reason, because Weblate does the same job more carefully.
 
 ## CRASHES AND PROBLEMS
