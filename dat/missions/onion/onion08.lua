@@ -242,8 +242,8 @@ function energy_surge_hook( pos )
       d:effectAdd("Blink")
       d:setHostile(true)
       -- Slow them down so the player can "dodge"
-      d:intrinsicSet("speed_mod", -50)
-      d:intrinsicSet("accel_mod", -50)
+      d:intrinsicSet("speed_mod", -65)
+      d:intrinsicSet("accel_mod", -65)
       table.insert( drones, d )
    end
    hook.timer( 5, "energy_surge_end_hook", drones )
