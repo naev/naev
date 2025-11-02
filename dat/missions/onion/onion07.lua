@@ -41,11 +41,12 @@ local title = _("Onion and Honey")
 local reward = onion.rewards.misn07
 
 -- Mission states
+local STATE_START = 0
 local STATE_TALKED_TO_DOG = 1
 local STATE_SET_UP_HONEYPOT = 2
 local STATE_FINISH_SCANS = 3
 local STATE_BEAT_MERCENARIES = 4
-mem.state = nil
+mem.state = STATE_START
 
 -- Candidates are somewhat uninhabited spobs along the main trade lanes
 local TARGETSYS_CANDIDATES = {
@@ -270,7 +271,7 @@ They have to take a deep breath.
 
    misn.accept()
 
-   mem.state = 0
+   mem.state = STATE_START
    reset_osd()
    hook.enter("enter")
 end
@@ -280,6 +281,7 @@ function enter ()
    local scur = system.cur()
    if mem.state < STATE_TALKED_TO_DOG then
       hook.timer( 8, "dog" )
+
    elseif scur==mem.targetsys and mem.state<=STATE_TALKED_TO_DOG then
 
       -- Try to get a good position
@@ -323,11 +325,13 @@ function enter ()
       -- Make random mercenaries attack the player
       hook.timerClear()
       hook.timer( 30*rnd.rnd(), "mercenaries_gone_bad" )
+
    else
       -- Reset state
-      mem.state = 0
+      mem.state = math.min( mem.state, STATE_TALKED_TO_DOG )
       hook.timerClear()
       reset_osd()
+
    end
 end
 
