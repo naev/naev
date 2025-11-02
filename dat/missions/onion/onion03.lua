@@ -72,7 +72,7 @@ function accept ()
    local l337 = vn.newCharacter( onion.vn_l337b01() )
    vn.music( onion.loops.hacker )
    vn.transition("electric")
-   vn.na(_([[You answer the incoming connection and a familiar hologram appears on-screen.]]))
+   vn.na(_([[You accept the incoming connection and a familiar hologram appears on-screen.]]))
    l337(fmt.f(_([["Hey {player}, how's it going? Anyway, enough small chat. One of my relay backdoors seems to be down, and I need you to short the Empire-Dvaered connection for me in {sys}. You up for the task, right?"]]),
       {player=player.name(), sys=sys1}))
    vn.menu{

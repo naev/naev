@@ -89,7 +89,7 @@ function accept ()
    vn.newCharacter( trixie )
    vn.music( onion.loops.hacker )
    vn.transition("electric")
-   vn.na(_([[You answer the incoming connection and some familiar holograms appear on-screen.]]))
+   vn.na(_([[You accept the incoming connection and some familiar holograms appear on-screen.]]))
    l337(fmt.f(_([["Heyo, how's it going {player}?"]]),
       {player=player.name()}))
    trixie(_([["Yo."]]))

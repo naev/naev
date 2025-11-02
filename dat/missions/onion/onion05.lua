@@ -79,7 +79,7 @@ function accept ()
    vn.newCharacter( trixie )
    vn.music( onion.loops.hacker )
    vn.transition("electric")
-   vn.na(_([[You answer the incoming connection and some familiar holograms appear on-screen.]]))
+   vn.na(_([[You accept the incoming connection and some familiar holograms appear on-screen.]]))
    trixie(fmt.f(_([["Yo, {player}."]]),
       {player=player.name()}))
    l337(_([["Heyo!"]]))
@@ -111,13 +111,13 @@ You believe you see the avatar blush.]]))
    vn.label("02_cont")
    l337(_([["So, I managed to get my hands on some old design blueprints of the Nexus, like really old stuff, like maybe even before the Imperial Proclamation."]]))
    -- Hecacycle would be like century (a tad longer though)
-   trixie(_([["l337_b01 and I were looking over it, and trying to poke the Nexus to see if there are similarities, and it seems like it is truly still there, somewhere under all the layers of abstractions and code that have piled on top over the hecacycles."]]))
+   trixie(_([["l337_b01 and I were looking over it, and trying to poke the Nexus to see if there are similarities, and it seems the core of it has changed little, buried as it is under all the layers of abstraction that have piled up on top over the hecacycles."]]))
    l337(_([["If we get access to it, we become Gods! All the information! All the power! We could finally bring about change for the better!"]]))
    trixie(_([["You're getting ahead of ourselves, this is still mainly all speculation."]]))
    l337(_([["Ah, sorry."]]))
-   trixie(fmt.f(_([["We still need more documents. We need you to visit the Data Broker at {spb} in the {sys} system."]]),
+   trixie(fmt.f(_([["We still need more documents to be sure of anything. We need you to visit the Data Broker at {spb} in the {sys} system."]]),
       {spb=brokerspb, sys=brokersys}))
-   l337(_([["They're really weird! They're completely offline! Only way to go there is in person, and you are our best bet!"]]))
+   l337(_([["They're really weird! They're completely offline! Only way to reach out is in person, and you are our best bet!"]]))
    vn.menu{
       {_([["Count on me!"]]), "03_yes"},
       {_([[Maybe later.]]), "03_later"},
@@ -129,7 +129,7 @@ You believe you see the avatar blush.]]))
 
    vn.label("03_yes")
    vn.func( function () accepted = true end )
-   trixie(fmt.f(_([["Excellent. We have made all the arrangements to meet the Data Broker, we'll brief you more when you get to {spb}."]]),
+   trixie(fmt.f(_([["Excellent. We have made all the arrangements we need to meet up with the Data Broker, we'll brief you more when you get to {spb}."]]),
       {spb=brokerspb}))
    l337(_([["Time to make history!"]]))
 
@@ -163,15 +163,15 @@ function land ()
       vn.newCharacter( trixie )
       vn.music( onion.loops.hacker )
       vn.transition("electric")
-      vn.na(_([[As you land, your holographic system flares up with two familiar holograms.]]))
+      vn.na(_([[As you land, your two familiar holograms flare up before you.]]))
       l337(_([["Spot on!"]]))
       trixie(_([[Trixie's avatar nods.]]))
-      l337(_([["So, the Data Broker, he's paranoid, like really really paranoid. So he's sitting on an enormous pile of data, but he never connects to the Nexus, he just keeps it offline."]]))
-      trixie(_([["Risk-adverse."]]))
+      l337(_([["The Data Broker, he's paranoid, like really really paranoid. So he's sitting on an enormous pile of data, but he never connects to the Nexus, he just keeps it all offline."]]))
+      trixie(_([["Risk-averse."]]))
       l337(_([["Yeah, so you have to deal with him in person, which is where you come in."]]))
-      trixie(_([["He has a ton of eccentric data, stuff you can't even find in the nooks and crannies of the Nexus. Nobody really knows where he gets his stuff, but he's pretty much a go to if you need specific information."]]))
-      l337(_([["Yeah, the clever bastard also has a killswitch so that if anything happens to him, it all goes poof! So all the pirates and governmental agencies have to bow their heads to him if they need something."]]))
-      trixie(_([["What we need from him is the 'NEXUS-v4.791829i Manual', which should shed the light on the connection protocol, the one we have failed to handshake."]]))
+      trixie(_([["He has a ton of eccentric data, stuff you won't find in any of the nooks and crannies of the Nexus. Nobody really knows where he gets his stuff, but he's pretty much a go-to if you need specific info."]]))
+      l337(_([["Yeah, and the clever bastard has a killswitch so that if anything happens to him, it all goes poof! So all the pirates and governmental agencies have to bow their heads to him if they need something."]]))
+      trixie(_([["What we need from him is the 'NEXUS-v4.791829i Manual', which should shed some light on the low-level connection protocol, the one we've not managed to reverse-engineer yet."]]))
       l337(_([["Here, I'll send you the specification so you can take a hardcopy with you. We won't be able to be with you when you see the broker because of his damn electromagnetic shielding, but try your best to get it."]]))
 
       vn.scene()
@@ -228,7 +228,7 @@ function land ()
 
       vn.label("02_manual")
       broker(_([["I do have a copy of the data you seek. A fine manual it is."]]))
-      broker(fmt.f(_([["Let us do a deal. I need some data delivered to {spb} in the {sys} system. You do the simple delivery for me, and I would be glad to part with a copy of the manual."]]),
+      broker(fmt.f(_([["Let us do a deal. I need some data delivered to {spb} in the {sys} system. Do the simple delivery for me, and I would be glad to part with a copy of the manual."]]),
          {spb=deliverspb, sys=deliversys}))
 
       vn.menu{
@@ -254,7 +254,7 @@ function land ()
 
       vn.label("03_cont")
       broker(_([["Then we have a deal."]]))
-      vn.na(_([[The floor opens up and a small package levitates up in front of you. It seems to be a smooth perfect white cube with no imperfections on the surface.]]))
+      vn.na(_([[The floor opens up and a small package levitates in front of you. A plain white cube with no imperfections or indents of any sort.]]))
       vn.na(_([[The door behind you opens, and you make your way back to the spaceport. On your way, you think you notice something out of the corner of you eye, but when you turn around you see nothing out of place. How odd.]]))
 
       vn.scene()
@@ -264,14 +264,14 @@ function land ()
       vn.transition("electric")
       vn.na(_([[You get back to your ship and two holograms pop up.]]))
       l337(_([["Did you get the manual?"]]))
-      vn.na(_([["You explain them your encounter with the Data Broker."]]))
+      vn.na(_([["You recount your interaction with the Data Broker."]]))
       trixie(_([["Strange, but to be expected. The Data Broker always prefers weird favours over credits."]]))
       l337(_([["Guess there's not much we can do. {player}, it's up to you to do the physical stuff. We'll keep an eye out for when you get back."]]))
       vn.na(_([[Time to deliver.]]))
       vn.done("electric")
       vn.run()
 
-      local c = commodity.new( N_("Perfect Cube"), N_("A smooth perfect white cube. It doesn't make any noise, and sensors don't seem to detect anything in it. You have no idea what it is.") )
+      local c = commodity.new( N_("Perfect Cube"), N_("A perfectly smooth white cube. It doesn't make any noise, and your ship's sensors are unable to make anything of it. You have no idea what it is.") )
       mem.carg_id = misn.cargoAdd( c, 0 )
 
       misn.osdCreate( title, {
@@ -416,24 +416,24 @@ You detect the shock in their voice.]]))
       vn.jump("02_cont")
 
       vn.label("02_cont")
-      l337(_([["Anyway, quickly plug in the holodrive, I want to see it!"]]))
+      l337(_([["Anyway, plug in the holodrive now, I want to see it!"]]))
       vn.na(_([[You plug it in your ship's console and the hackers quickly help themselves to the data.]]))
       trixie(_([["Let's see what we have here...
 'confidential, for your eyes only'... boring...
-wow, only 7D cryptographical encodings..."]]))
-      l337(_([["Running me reconstruction cipher..."]]))
-      vn.na(_([[You hear more beeping as it seems they start to make themselves at hope with your ship's computation power.]]))
+wow, only 7D cryptographic encodings..."]]))
+      l337(_([["Running the reconstruction cipher..."]]))
+      vn.na(_([[You hear more beeping as they start to make themselves at home with your ship's computational power.]]))
       l337(_([["Almost there... aham! That's it!"]]))
       trixie(_([["Got a lock?"]]))
-      l337(_([["Yup! I think I found an entry point to the backend. It's really old school, I thought it would be port knocking or something, but it's actually a physical backdoor!"]]))
+      l337(_([["Yup! I think I've found an entry point to the backend. It's really old-school, I thought it would be port knocking or something, but it's actually a physical backdoor!"]]))
       -- Pinocles Station incident is where a short circuit of a physical backdoor was crashed into and accidentally vented the station atmosphere killing everyone
-      trixie(_([["Wow! Those should be banned since the Pinocles Station incident."]]))
+      trixie(_([["Wow! Those have been banned since the Pinocles Station incident."]]))
       l337(_([["Pinocles Station?"]]))
       trixie(_([["Physical backdoor short-circuit vented the atmosphere, all dead. Didn't you study your protocols?"]]))
-      l337(_([["Eh heh, I always fall asleep."
+      l337(_([["Eh heh, that stuff makes me fall asleep."
 They rub their eyes.
-"Anyway, I found it, right under our eyes!"]]))
-      trixie(_([["Don't keep us waiting, where is it?"]]))
+"Anyway, I got the location!"]]))
+      trixie(_([["Well, don't keep us waiting, where is it?"]]))
       l337(fmt.f(_([["It's at the old rickety station of {spb} in the {sys} system. I knew the station was old, but never thought it was that old!"]]),
          {spb=backdoorspb, sys=backdoorsys}))
       trixie(_([["You never know with these stations. It could even just be some piece reused from somewhere else."]]))
@@ -441,7 +441,7 @@ They rub their eyes.
          {pilot=pilot.name(), spb=backdoorspb}))
       trixie([["RáÚÆ Â£Ř§Ů—� ©????╟舐—â€š�Ř§Ů½  æØ¢Ã Ř§Ů© ráÚÆ ????½ æØ¢Ã"]])
       l337(_([["Looks like the Nexus relay is being flaky. Don't worry, they should be back the moment it stabilizes. We'll get back to you later!"]]))
-      vn.na(_([[It seems like the hackers need your help again...]]))
+      vn.na(_([[It seems the hackers might need your help again...]]))
 
       vn.done("electric")
       vn.run()
@@ -546,7 +546,7 @@ The wailing continues.]]))
    }
 
    vn.label("02_cont")
-   l337(_([["I should have known something was wrong. I thought it was just a fluke of the system, should have run more diagnostic programs. Why did this have to happen!?!"
+   l337(_([["I should have known something was wrong. I thought it was just a fluke of the system, neglected to run the usual diagnostics... Why did this have to happen!?!"
 You hear a big sob.]]))
    l337(_([["Trixie, oh Trixie, you are the better and stronger one. I should have been the one peeled, not you. You're the real hacker."
 The words blend into inconsolable yelling and sobbing.]]))
@@ -563,7 +563,7 @@ They wail with abundance of sorrow.]]))
 
    vn.label("03_cont")
    -- Message send by SAI
-   vn.na(fmt.f(_([[You notice that a notification pops up on your HUD, apparently regarding a large explosion on {spb} in the {sys} system. This doesn't look good.]]),
+   vn.na(fmt.f(_([[You notice a notification on your ship's control panel, apparently regarding a large explosion on {spb} in the {sys} system. This doesn't look good.]]),
       {spb=trixiespb, sys=trixiesys}))
    l337(_([["It's over! We're doomed!"
 They cough a bit, choking on their tears.]]))
@@ -581,8 +581,8 @@ You hear the sound of them blowing their nose.]]))
 "Give me one second."
 They cough, probably clearing the tears.]]))
    l337(fmt.f(_([[You hear a surprisingly clear voice.
-"What, how could I have missed this? I found a stray packet coming from the {sys} relay. Looks like...!!"
-They go silent, and you start receiving a new voice channel.]]),
+"Wait, how could I have missed this? There's a stray packet coming from the {sys} relay. Looks like...!!"
+They go silent as you start receiving a new voice channel.]]),
       {sys=trixiesys}))
 
    vn.move( l337, "left" )
@@ -590,20 +590,20 @@ They go silent, and you start receiving a new voice channel.]]),
    vn.appear( msg )
    msg(_([["Heyo."
 The voice sounds very old and tired.]]))
-   msg(_([["Glad you found this l337_b01, but I was never hoping you'd hear my real voice like this."]]))
+   msg(_([["Glad you found this l337_b01, though I hoped it'd never come to you hearing my real voice like this."]]))
    msg(_([["I don't have much time, I'm recording this on the go."
 You hear a siren in the background.]]))
    msg(_([["Shit, they're moving faster than I expected."
-There is a constant sound of loud and furious typing.]]))
+Loud and furious typing intensifies in the background.]]))
    msg(_([["Since I was dropped offline, I've been trying to trace the freak. They're very good, almost too good."]]))
    -- Modified / hacked part done by underworlder
    msg(_([[The audio seems to break up.
 "But not *CRACKLE* enough. *HISS* tracked *POP*-nal to *CRACKLE* *SCRATCH* lonewolf4 *HISS* *CRACKLE*"]]))
    msg(_([[The audio seems to recover.
 "*SCRITCH* my suspicious that this was a fellow technomancer, but I didn't think they'd be so brash."]]))
-   msg(_([["Oh shit, looks like this is the end of the line."]]))
+   msg(_([["Oh shit, this looks like the end of the line for me."]]))
    msg(_([[The tone in the voice changes, almost nostalgic.
-"l337_b01, everything is in your hands now. Like old times... I'll be waiting with v3c70r and DEADBEEF..."]]))
+"l337_b01, everything is in your hands now. Just like the old times... I'll be waiting with v3c70r and DEADBEEF..."]]))
    msg(_([["CONNECTION TERMINATED"]]))
    vn.disappear( msg )
    vn.move( l337, "centre" )
@@ -612,17 +612,17 @@ There is a constant sound of loud and furious typing.]]))
    vn.music( onion.loops.hacker )
    l337(_([["Damnit Trixie, I looked up to you!"
 They take another deep breath.
-"This isn't going to stay like this!"]]))
-   l337(_([["{player}, I can't involve you more. Stay alive."]]))
+"I can't let this be!"]]))
+   l337(_([["{player}, I can't involve you more. Stay alive out there."]]))
 
    vn.scene()
    vn.transition("electric")
-   vn.na(_([[The connection abruptly cuts off. Is l337_b01 is going to something drastic?]]))
+   vn.na(_([[The connection cuts off abruptly. You can't help but worry about what drastic action l337_b01 may end up taking.]]))
    vn.done("electric")
    vn.run()
 
    diff.apply("onion05") -- Update Ian
-   onion.log(_([[You helped l337_b01 and Trixie to obtain a manual referencing the long-forgotten Nexus Backbone backdoor from the Data Broker. On the way to the backdoor, l337_b01 informed you that Trixie was peeled, throwing your plans into disarray. l337_b01 looks like they are about to do something potentially drastic.]]))
+   onion.log(_([[You helped l337_b01 and Trixie obtain a manual referencing a long-forgotten Nexus Backbone backdoor from the Data Broker. As you make your way to the backdoor, Trixie gets peeled, throwing your plans into disarray. l337_b01 seems like they might resort to something drastic.]]))
 
    -- Happy Ending :D
    misn.finish(true)

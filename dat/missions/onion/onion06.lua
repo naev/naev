@@ -36,7 +36,7 @@ local title = _("Emergency Conclave")
 -- Create the mission
 function create()
    local prt = love_shaders.shaderimage2canvas( love_shaders.hologram(), onion.img_onion() )
-   misn.setNPC( _("Onion Society Conclave"), prt.t.tex, _([[It seems like your Ship AI is able to set you up with a connection to the Onion Society Conclave.]]) )
+   misn.setNPC( _("Onion Society Conclave"), prt.t.tex, _([[It seems like your Ship AI is able to set you up with a connection to an Onion Society Conclave.]]) )
    misn.setReward(_("???") )
    misn.setTitle( title )
    misn.setDesc(_([[Join the emergency Onion Society conclave.]]))
@@ -63,12 +63,12 @@ The hologram slightly flickers.
    }
 
    vn.label("decline")
-   vn.na(_([[You think it's maybe best to not join a risky Onion Society Conclave. Maybe later.]]))
+   vn.na(_([[With tensions high, you decide it's best to hold off on joining an Onion Society Conclave.]]))
    vn.done( tut.shipai.transition )
 
    vn.label("explain")
-   sai(_([["I hope you are not offended, I was able to record the protocol last time you joined, and should be able to run the connections synchronously to join like before."]]))
-   sai(_([["I've done some modifications so that your presence to be less noticeable, but it is likely you will be noticed."]]))
+   sai(_([["Hopefully this is of no offense - I was able to record the protocol last time you joined, and should be able to replicate the connection to join like before."]]))
+   sai(_([["I've done some modifications to further mask your presence, but more likely than no you will be noticed."]]))
    vn.jump("menu")
 
    vn.label("accept")
@@ -97,10 +97,10 @@ The hologram slightly flickers.
    local lonewolf4 = vn.newCharacter( onion.vn_nexus_lonewolf4{pos=6*offset, flip=false} )
    vn.music( onion.loops.circus )
    vn.transition()
-   vn.na(_([[You join what seems like an already started Conclave.]]))
+   vn.na(_([[You join what seems like a Conclave already in progress.]]))
    l337(_([["And that's it? TRIXIE WAS DAMN PEELED, YOU HEARTLESS BASTARDS!"]]))
-   puppet(_([["Oh please, just because your protégé screwed up, it's no need to cause a scene. They weren't even a keeper!"]]))
-   lonewolf4(_([["Trixie's untimely demised is another grave misfortune, yet another in this cosmic tragedy. We shall spare some tears, but the Onion Society shall persist, such as it always has, in defiance of annihilation."]]))
+   puppet(_([["Oh please, no need to cause a scene just because your protégé screwed up. They weren't even a keeper!"]]))
+   lonewolf4(_([["Trixie's untimely demise is another grave misfortune, yet another in this cosmic tragedy. We shall spare some tears, but the Onion Society shall persist, such as it always has, in defiance of annihilation."]]))
    dog(_([["..."]]))
    l337(_([["You MONSTERS! All you think about is power! We're supposed to be a SOCIETY!"]]))
    puppet(_([["We're a society of MONSTERS! Ha ha ha"]]))
@@ -108,7 +108,7 @@ The hologram slightly flickers.
    puppet(_([["4 keepers! 4 monster keepers! Ha ha ha"]]))
    lonewolf4(_([["Silence! Begone is the time of buffoonery! Are naught the outcomes of these perilous times decided by the council?"]]))
    vn.musicPitch( nil, 1.1 ) -- Music should be faster and more chaotic if possible
-   l337(_([["THERE WOULD BE 5 KEEPERS STILL IF WE HAD SAVED TRIXIE!"]]))
+   l337(_([["THERE WOULD BE 5 KEEPERS STILL HAD WE SAVED TRIXIE!"]]))
    puppet(_([["5 keepers! 5 keepers! Ha ha ha"]]))
    vn.na(_([[lonewolf4 mutters something under their breath and puppet stiffens up.]]))
    underworlder(_([["C'mon, no rough play in the council."]]))
@@ -145,7 +145,7 @@ Their voice fades out.]]))
 
    if not accepted then return end
 
-   onion.log(_([[An emergency Onion Society Conclave was held where l337_b01 got in a fight with other members. There was a lot of name-calling, and names you didn't recognize being thrown around, and the Conclave ended with l337_b01 leaving in anger]]))
+   onion.log(_([[An emergency Onion Society Conclave was held where l337_b01 got in a fight with other members. There was a lot of name-calling, and names you didn't recognize being thrown around, and the Conclave ended with l337_b01 leaving in anger.]]))
 
    misn.finish(true)
 end
