@@ -182,6 +182,7 @@ local key_translation = {
 local function _keyboard( pressed, key, _mod, isrepeat )
    if not love._firsttick then return false end
    if not love.keyboard then return false end
+   if not key then return false end
    local k = string.lower( key )
    local t = key_translation[k]
    if t then
