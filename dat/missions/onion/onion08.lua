@@ -62,8 +62,6 @@ local STATE_EPILOGUE = 4
 mem.state = nil
 
 function create()
-   if not var.peek("testing") then return misn.finish() end -- Not ready yet
-
    -- Hard claims now
    if not misn.claim( {SYSTEM_START, SYSTEM_END} ) then return misn.finish(false) end
 
@@ -1013,5 +1011,7 @@ function epilogue ()
    vn.done("electric")
    vn.run()
 
+   onion.log(fmt.f(_([[You confronted lonewolf4 who l337_b01 believed peeled Trixie. After an intense fight, lonewolf4's flagship crashed into {spb}. You and l337_b01 were able to talk to them before they passed and l337_b01 explained details about the history of the Onion Society, and what happened on Tenebros Station that lead to the death of v3c70r and the original l337_b01.]]),
+      {spb=SPOB_EPILOGUE}))
    misn.finish(true)
 end
