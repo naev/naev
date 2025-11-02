@@ -469,7 +469,7 @@ void menu_small( int docheck, int info, int options, int allowsave )
    if ( menu_isOpen( MENU_SMALL ) )
       return;
 
-   can_save = allowsave && landed && !player_isFlag( PLAYER_NOSAVE );
+   can_save             = allowsave && land_canSave();
    menu_small_allowsave = allowsave;
 
    h   = MENU_HEIGHT - ( BUTTON_HEIGHT + 20 ) * ( !info + !options );
