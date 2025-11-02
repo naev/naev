@@ -437,7 +437,7 @@ function scan( _pp, tgt )
 end
 
 function land ()
-   vn.clear()
+   vn.reset()
    vn.scene()
    local l337 = onion.vn_l337b01()
    vn.newCharacter( l337 )

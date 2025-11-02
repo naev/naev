@@ -79,6 +79,7 @@ function accept ()
    vn.scene()
    local l337 = onion.vn_l337b01()
    vn.newCharacter( l337 )
+   vn.music( onion.loops.hacker )
    vn.transition("electric")
 
    l337(_([[l337_b01's familiar avatar pops up on your holodeck.]]))
@@ -583,6 +584,7 @@ function fight2_epilogue ()
    vn.scene()
    local l337 = onion.vn_l337b01()
    vn.newCharacter( l337 )
+   -- Short so we skip music here
    vn.transition("electric")
 
    l337(_([[A flustered l337_b01 pops up on your holodeck.
@@ -605,11 +607,12 @@ function land ()
    local stormshader = love_shaders.sandstorm{
       colour = {0.9, 0.2, 0.8, 0.5},
    }
-   local stormsound
+   local stormsound, mainsong
    local function storm_strength( str )
       -- TODO modify sounds too
       stormshader:send( "u_strength", str )
       vn.musicVolume( stormsound, str )
+      vn.musicVolume( mainsong, 1.0-str )
    end
    local function start_storm( str )
       str = str or 0.5
@@ -624,18 +627,20 @@ function land ()
       vn.setUpdateFunc( function( dt )
          stormshader:update(dt)
       end )
-      stormsound = vn.music( "snd/sounds/loops/sandstorm.mp3" )
+      stormsound = vn.music( "snd/sounds/loops/sandstorm.mp3", nil, true )
       storm_strength( str )
    end
    local function stop_storm ()
       vn.setBackground( nil )
       vn.setUpdateFunc( nil )
       vn.musicStop( stormsound )
+      vn.musicVolume( mainsong, 1.0 )
    end
 
    vn.reset()
    vn.scene()
    vn.transition()
+   mainsong = vn.music( onion.loops.hacker )
 
    vn.na(fmt.f(_([[You enter the orbit of {spb} and scour the violent atmosphere for signals of the downed Zebra carrier.]]),
       {spb=SPOB_EPILOGUE}))
@@ -957,6 +962,7 @@ end
 function epilogue ()
    vn.reset()
    vn.scene()
+   vn.music( onion.loops.hacker ) -- Song sadly restarts here
 
    -- Undo the global shader stuff
    vne.flashbackTextStart( _("Haziness"), {transition="blinkin"})
