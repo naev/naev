@@ -104,8 +104,8 @@ function accept ()
       vn.na(_([[You send a connection request to the Nexus address of l337_b01.]]))
       vn.na(_([[There is no response, but you keep on trying.]]))
       vn.na(_([[...]]))
-      vn.na(_([[Maybe a bit more?]]))
-      vn.na(_([[...]]))
+      vn.na(_([[.....]]))
+      vn.na(_([[.......]]))
       vn.na(_([[You're about to give up for now when the connection gets through.]]))
 
       vn.scene()
@@ -232,7 +232,7 @@ They let out a sigh.]]))
       l337(_([["I was thinking that it is probably lonewolf4, you can see them trying to pin the blame on me. It's almost as like they are trying to escalate the situation to their own game!"]]))
 
       vn.label("05_cont")
-      l337(_([["I've always got the creeps from them. With their entire weird role-playing and funny talk."]]))
+      l337(_([["I've always got the creeps from them. With their weird role-playing and funny talk and everything."]]))
       l337(_([["We can't sit back and let them win. Trixie would..."
 They have to take a deep breath.
 "Trixie would never quit! And I'm not going to either!"]]))
@@ -245,7 +245,7 @@ They have to take a deep breath.
       vn.transition("electric")
 
       vn.na(_([[You open a channel with l337_b01.]]))
-      l337(fmt.f(_([["You ready to set up the honeypot to trap the bastard. The {sys} system would be a good place to set this up. You in?"]]),
+      l337(fmt.f(_([["Ready to set up the honeypot to trap the bastard? The {sys} system would be a good place to set this up. You in?"]]),
          {sys=mem.targetsys}))
    end
 
@@ -343,10 +343,10 @@ function dog()
    vn.transition("electric")
 
    vn.na(_([[Your systems flicker for a second, before a familiar hologram appears.]]))
-   dog(fmt.f(_([["Pardon the intrusion, {name}. I do not have much time, so I will keep this short."]]),
+   dog(fmt.f(_([["Pardon the intrusion, {name}. I do not have much time, so I will keep this brief."]]),
       {name=player.name()}))
-   dog(_([["I worry you are getting too deep. l337_b01 is drawn more towards passion than reason, and I worry about their safety."]]))
-   dog(_([["You should not proceed further, as such recklessness may endanger us all."]]))
+   dog(_([["I worry you are getting too deep into this mess. l337_b01 is drawn more towards passion than reason, and I worry about their safety."]]))
+   dog(_([["You should not proceed further, as their recklessness may endanger us all."]]))
    vn.na(_([[The hologram fades as your systems flicker once more and everything returns to normal. What was that all about?]]))
 
    vn.done("electric")
@@ -445,21 +445,21 @@ function land ()
    vn.transition("electric")
 
    vn.na(_([[You land and are promptly greeted by l337_b01's hologram.]]))
-   l337(_([["Putting a fake bounty on your ship was unexpected, but thanks to that, I was able to get more information."]]))
-   l337(_([["I had to clear the fake bounty, so I'm still a bit behind on analysing the collected data, but I should be able to churn through it in a bit."]]))
-   l337(_([["Get in touch with me in a bit, and we'll finally unmask who is behind everything!"]]))
-   vn.na(_([[The connection closes as l337_b01 focuses computational resources on signal processing.]]))
+   l337(_([["The fake bounty on your ship was unexpected, but even then, it led me to more information."]]))
+   l337(_([["I've had to take some time getting rid of it, so I'm still a bit behind on analysing the collected data, but I should be able to churn through it in a bit."]]))
+   l337(_([["Get in touch with me then, and we'll finally unmask the evildoer!"]]))
+   vn.na(_([[The connection closes as l337_b01 shifts their focus to signal processing.]]))
 
    vn.scene()
    vn.transition("electric")
-   vn.na(_([[As you recline in your captain's chair you notice you got an incoming transfer from some anonymous account, but you can guess who sent it to you.]]))
+   vn.na(_([[As you recline in your captain's chair you are notified of an anonymous credit transfer to your account. It doesn't take long to guess who that's coming from.]]))
    vn.sfxVictory()
    vn.func( function () player.pay( reward ) end )
    vn.na(fmt.reward(reward))
 
    vn.run()
 
-   onion.log(_([[You helped l337_b01 set up a honeypot to intercept communication and try to unmask whoever is behind the recent incidents. A fake bounty was set up on your ship, but you were able to overcome mercenaries set on you.]]))
+   onion.log(_([[You helped l337_b01 set up a honeypot to intercept communications in an attempt to unmask whoever is behind the recent incidents. A fake bounty was put on your ship, but you were able to overcome the mercenaries sent after you.]]))
 
    misn.finish(true)
 end
