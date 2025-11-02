@@ -593,9 +593,11 @@ function land ()
    local stormshader = love_shaders.sandstorm{
       colour = {0.9, 0.2, 0.8, 0.5},
    }
+   local stormsound
    local function storm_strength( str )
       -- TODO modify sounds too
       stormshader:send( "u_strength", str )
+      vn.musicVolume( stormsound, str )
    end
    local function start_storm( str )
       str = str or 0.5
@@ -610,13 +612,13 @@ function land ()
       vn.setUpdateFunc( function( dt )
          stormshader:update(dt)
       end )
-      -- TODO add sound too
+      stormsound = vn.music( "snd/sounds/loops/sandstorm.mp3" )
       storm_strength( str )
    end
    local function stop_storm ()
       vn.setBackground( nil )
       vn.setUpdateFunc( nil )
-      -- TODO stop sound too
+      vn.musicStop( stormsound )
    end
 
    vn.clear()

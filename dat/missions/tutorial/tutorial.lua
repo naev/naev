@@ -380,9 +380,10 @@ function spawn_captain_tp ()
    p:setEnergy( 100 )
    p:setFuel( true )
 
-   p:setHostile()
-   p:setVisplayer()
-   p:setHilight()
+   p:setHostile(true)
+   p:setVisplayer(true)
+   p:setHilight(true)
+   p:setNoBoard(true)
    hook.pilot( p, "death", "pilot_death" )
 
    -- Don't distress just in case
