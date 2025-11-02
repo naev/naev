@@ -1080,7 +1080,7 @@ function vn.StateMenu:_draw()
       if self._visited[k] then
          vn.setColour( {0.6, 0.6, 0.6} )
       else
-         vn.setColour( {0.7, 0.7, 0.7} )
+         vn.setColour( {0.8, 0.8, 0.8} )
       end
       graphics.printf( text, font, gx+x+tb, gy+y+tb, w-tb*2 )
    end
