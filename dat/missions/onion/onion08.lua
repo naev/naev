@@ -683,8 +683,8 @@ l337_b01's avatar freezes. Seems like the storm is incompatible with transmissio
    vn.na(_([[After what seems like an eternity of a cacophony of fuselage discontentment, your ship crashes into something, sending you flying. ]]))
 
    vn.scene()
-   vn.func( stop_storm )
    vn.transition("blur")
+   vn.func( stop_storm )
    local memory = vne.flashbackTextStart( _("Haziness"), {transition="blinkin"})
    local function m( txt ) memory("\n"..txt,true) end
    memory(_([[So soft... So quiet...]]))
@@ -752,7 +752,6 @@ l337_b01's avatar freezes. Seems like the storm is incompatible with transmissio
    sai(_([["Correction, at least 3 minor fractures now."]]))
    vn.na(fmt.f(_([[Ignoring {sai}'s complaints, you don an atmospheric suit and head outside.]]),
       {sai=tut.ainame()}))
-   vn.disappear(sai, "electric")
    vn.na(_([[As you exit the ship's lock, you quickly realize that outside is actually inside, as your ship seems to have crashed directly into lonewolf4's carrier.]]))
    vn.na(_([[Weapon in hand you make your way through the wreck of the ship. It seems like there's not much of corridors, it's all maintenance tubes which force you to crawl through, occasionally having to blast through debris. What the hell is with this ship's design?]]))
    storm_strength( 0.2 )
@@ -908,8 +907,7 @@ You hear a gulp.
 
    vn.label("07_cont")
    l337(_([["First things first, we have to get you out of here. You're fine for now, but I'm not sure how long the lull in the storm will last, and when it's gone, you're not going to have much time."]]))
-   vn.move( l337, "righT" )
-   vn.appear( sai, "electric" )
+   vn.move( l337, "right" )
    sai(fmt.f(_([["Analysis show that the Wolfie has a non-standard blink engine with 78% functionality remaining. Proposal: rewire blink engine target to the {shipname} to exist atmosphere. Projections show +INF% chance of survival versus remaining."]]),
       {shipname=player.pilot():name()}))
    l337(_([["What's the projected survival chance?"]]))
@@ -939,7 +937,7 @@ You hear a gulp.
    vne.flashbackTextStart( _("Haziness"), {transition="blinkin"})
    tint = love_shaders.tint{ colour = {0, 0, 0, 1} }
    vn.func( function ()
-      tint:addPPShader()
+      tint.shader:addPPShader()
    end )
    vn.run()
 
@@ -965,7 +963,7 @@ function epilogue ()
    -- Undo the global shader stuff
    vne.flashbackTextStart( _("Haziness"), {transition="blinkin"})
    vn.func( function ()
-      tint:rmPPShader()
+      tint.shader:rmPPShader()
    end )
    vne.flashbackTextEnd{ notransition=true }
    --vn.scene() -- vn.scene() is done in vne.flashbackTextEnd
