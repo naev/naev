@@ -51,10 +51,10 @@
  - Support for automatically restarting Naev when changing options that require it
 
 #### Content
- - 13 new missions and events
+ - 28 new missions and events
     - Go treasure hunting
- - 8 new ship variants
- - 19 new outfits and reworked cores
+ - 11 new ship variants
+ - 27 new outfits and reworked cores
     - Outfit sets that gain bonuses as more elements of the set are equipped
  - New sensor anomalies
  - Two new intertwined minor houses of the Empire with new systems and lore
