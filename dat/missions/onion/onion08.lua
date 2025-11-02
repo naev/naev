@@ -190,9 +190,9 @@ local function spawn_wolf( pos, hologram, part2 )
    if part2 then
       p:intrinsicSet( "shield", -1e6 ) -- no shields
       p:intrinsicSet( "armour_regen_mod", -1e6 ) -- No armour regen
+      table.insert( params.outfits_add, "Heavy Laser Turret" )
       params.fighterbay = 0
-      params.max_weap = 2
-      params.turret = 2
+      params.turret = 3
    end
    equipopt.zalek( p, params )
    if hologram then
@@ -510,6 +510,8 @@ function fight2_start1 ()
 end
 local last_surge = 0
 function fight2_energy_surge ()
+   if not finalboss:exists() then return end
+
    local t = naev.ticksGame()
    local off = t-last_surge
    if off < 15 then
@@ -556,10 +558,16 @@ function fight2_death ()
    blink( finalboss, finalboss:pos() )
    finalboss:rm()
 
+   -- Clear all the other ships too
+   for k,p in ipairs(pilot.get(get_fct())) do
+      blink( p, p:pos() )
+      p:rm()
+   end
    hook.timer( 10, "fight2_epilogue" )
 end
 function fight2_epilogue ()
    diff.apply( "onion08" )
+   misn.markerRm()
    misn.markerAdd( SPOB_EPILOGUE )
    mem.state = STATE_WOLF_DEFEATED
    misn.osdCreate( title, {
