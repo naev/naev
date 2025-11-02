@@ -96,7 +96,7 @@ function accept ()
    l337(_([["It's called building hype! Got to give the people what they love!"]]))
    -- Vnexer is basically like a vtuber (virtual youtuber) but on the Nexus
    trixie(_([["Have you been binging on self-help Vnexers again?"]]))
-   l337(_([["Err, no? W-Why w-w-would you think that?"O
+   l337(_([["Err, no? W-Why w-w-would you think that?"
 You believe you see the avatar blush.]]))
    trixie(_([["Never mind... On with it, or I'll do it myself!"]]))
    l337(_([["Ahem! So anyway, remember the talk about the Nexus backbone hack?"]]))
@@ -266,7 +266,8 @@ function land ()
       l337(_([["Did you get the manual?"]]))
       vn.na(_([["You recount your interaction with the Data Broker."]]))
       trixie(_([["Strange, but to be expected. The Data Broker always prefers weird favours over credits."]]))
-      l337(_([["Guess there's not much we can do. {player}, it's up to you to do the physical stuff. We'll keep an eye out for when you get back."]]))
+      l337(fmt.f(_([["Guess there's not much we can do. {player}, it's up to you to do the physical stuff. We'll keep an eye out for when you get back."]]),
+         {player=player.name()}))
       vn.na(_([[Time to deliver.]]))
       vn.done("electric")
       vn.run()
@@ -358,7 +359,7 @@ function land ()
       broker(_([["It seems like you do not understand the data. I did not try to kill you, I just had you do me a favour by eliminating certain nuisances."]]))
       broker(_([["The delivery was necessary to set up the conditions for success. And you completed the task most excellently."]]))
       broker(_([["Here, let me provide you with the data that you require."]]))
-      vn.label("01_data")
+      vn.jump("01_data")
 
       vn.label("01_sit")
       broker(_([["So it seems you understood our deal. Let me provide you with the data that you required."]]))
@@ -437,8 +438,8 @@ They rub their eyes.
       l337(fmt.f(_([["It's at the old rickety station of {spb} in the {sys} system. I knew the station was old, but never thought it was that old!"]]),
          {spb=backdoorspb, sys=backdoorsys}))
       trixie(_([["You never know with these stations. It could even just be some piece reused from somewhere else."]]))
-      l337(fmt.f(_([["Only one way to find out! {pilot}, onwards to {spb}!"]]),
-         {pilot=pilot.name(), spb=backdoorspb}))
+      l337(fmt.f(_([["Only one way to find out! {player}, onwards to {spb}!"]]),
+         {player=player.name(), spb=backdoorspb}))
       trixie([["RáÚÆ Â£Ř§Ů—� ©????╟舐—â€š�Ř§Ů½  æØ¢Ã Ř§Ů© ráÚÆ ????½ æØ¢Ã"]])
       l337(_([["Looks like the Nexus relay is being flaky. Don't worry, they should be back the moment it stabilizes. We'll get back to you later!"]]))
       vn.na(_([[It seems the hackers might need your help again...]]))
@@ -477,6 +478,7 @@ function enter ()
          "Ancestor",
       }, fct, pos, _("Mercenary"), {ai="baddiepos"} )
       for k,p in ipairs(enemies) do
+         p:memory().capturable = true
          p:setHostile(true)
       end
       boss = enemies[1]
@@ -496,7 +498,7 @@ function bossdead ()
    -- Have one say something about running away
    local say = false
    for k,p in ipairs(enemies) do
-      if p:exists() then
+      if p:exists() and p:armour() > 10 then
          if not say then
             p:broadcast(_("Shit! Get out of here!"))
             say = true
@@ -613,7 +615,8 @@ Loud and furious typing intensifies in the background.]]))
    l337(_([["Damnit Trixie, I looked up to you!"
 They take another deep breath.
 "I can't let this be!"]]))
-   l337(_([["{player}, I can't involve you more. Stay alive out there."]]))
+   l337(fmt.f(_([["{player}, I can't involve you more. Stay alive out there."]]),
+      {player=player.name()}))
 
    vn.scene()
    vn.transition("electric")
