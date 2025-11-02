@@ -278,7 +278,7 @@ end
 local ships_scanned = {}
 function enter ()
    local scur = system.cur()
-   if mem.state<STATE_TALKED_TO_DOG then
+   if mem.state < STATE_TALKED_TO_DOG then
       hook.timer( 8, "dog" )
    elseif scur==mem.targetsys and mem.state<=STATE_TALKED_TO_DOG then
 
@@ -325,7 +325,7 @@ function enter ()
       hook.timer( 30*rnd.rnd(), "mercenaries_gone_bad" )
    else
       -- Reset state
-      mem.state = nil
+      mem.state = 0
       hook.timerClear()
       reset_osd()
    end
