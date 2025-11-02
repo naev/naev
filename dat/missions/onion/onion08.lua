@@ -476,7 +476,7 @@ function fight1_timer ()
             misn.markerAdd( SYSTEM_END )
             mem.state = STATE_WOLF_RANAWAY
          end },
-         { 5, fmt.f(_("l337_b01: No time to lose, onwards to {sys} system!"),
+         { 5, fmt.f(_("l337_b01: No time to lose, onwards to the {sys} system!"),
             {sys=SYSTEM_END}) },
       }
    else
