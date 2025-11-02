@@ -1115,7 +1115,7 @@ function vn.StateMenu:_choose( n )
       what  = self._items[n][1],
       colour= vn._default._bufcol,
    }
-   self.visited[n] = true
+   self._visited[n] = true
    _finish( self )
 end
 --[[
@@ -1571,7 +1571,6 @@ This gets automatically reset when the VN finishes.
    @tparam boolean dontstop Don't stop other music.
 --]]
 function vn.music( filename, params, dontstop )
-   vn._checkstarted()
    local m = {}
    if filename == nil then
       vn.func( function ()
