@@ -5,7 +5,7 @@
   <slot prop_extra="systems_secondary" prop="systems">utility</slot>
   <size>small</size>
   <price>70000</price>
-  <description>Milspec offers solutions for pilots who believe the best defence is a good offense. The Prometheus 2203 boasts a heavy duty power generator as well as considerable shielding and subsystem control.</description>
+  <description>Milspec offers solutions for pilots who believe the best defence is a good offence. The Prometheus 2203 boasts a heavy-duty power generator to satisfy the heaviest of weapons, as well as considerable shielding and subsystem control. Fly safe, fly Milspec.</description>
   <gfx_store>core_system_power_s1</gfx_store>
   <priority>3</priority>
  </general>

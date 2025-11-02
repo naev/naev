@@ -22,7 +22,7 @@
 --[[
    Onion05
 
-   TODO explanation
+   Try to get information on a long-lost Nexus backdoor.
 --]]
 local fmt = require "format"
 local vn = require "vn"
@@ -56,8 +56,6 @@ mem.state = STATE_ACCEPTED
 
 -- Create the mission
 function create()
-   if not var.peek("testing") then return misn.finish() end -- Not ready yet
-
    -- Claims some systems
    if not misn.claim{  deliversys } then
       return misn.finish(false)
@@ -304,11 +302,11 @@ function land ()
       vn.func( function ()
          mem.cube_trashed = true
       end )
-      vn.na(_([[Dejected, you chuck the cube into the nearest bin and head back to your ship. Seems like the Data Broker has explaining to do.]]))
+      vn.na(_([[Dejected, you chuck the cube into the nearest bin and head back to your ship. Seems like the Data Broker has some explaining to do.]]))
       vn.done()
 
       vn.label("01_take")
-      vn.na(_([[Dejected, you take the cube back with you to your ship. Seems like the Data Broker has explaining to do.]]))
+      vn.na(_([[Dejected, you take the cube back with you to your ship. Seems like the Data Broker has some explaining to do.]]))
       vn.run()
 
       if not mem.cube_trashed then
@@ -331,7 +329,7 @@ function land ()
       vn.scene()
       local broker = vn.newCharacter( _("Data Broker") )
       vn.transition()
-      vn.na(_([[You land and head back to the Data Broker's headquarters. You still feel watched on the way there, but it is different than last time.]]))
+      vn.na(_([[You land and head back to the Data Broker's headquarters. You still feel watched on the way there, but it is different from the last time.]]))
       vn.na(_([[When you get to the location, the door discretely opens and you once again find yourself in the room with the chair.]]))
       broker(fmt.f(_([["Welcome back, {player}."]]),
          {player=player.name()}))

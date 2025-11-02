@@ -264,6 +264,8 @@ function Map:draw( bx, by )
 
    -- Render jump route
    if not self.hidetarget then
+      local sx, sy, sw, sh = luatk.joinScissors( x, y, w, h )
+
       luatk.rerender() -- Animated, so we have to draw every frame
       local cpos = system.cur():pos()
       local mx, my = self.pos:get()
@@ -316,6 +318,7 @@ function Map:draw( bx, by )
       end
 
       lg.setShader(shd)
+      lg.setScissor( sx, sy, sw, sh )
    end
 
    -- Allow for custom rendering

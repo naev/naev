@@ -40,7 +40,11 @@ function intro.run( filename )
       end
       intro.init()
       for l in lineiter(data) do
-         intro.text(_(l))
+         if l=="" then
+            intro.text("")
+         else
+            intro.text(_(l))
+         end
       end
    end
 

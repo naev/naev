@@ -520,7 +520,8 @@ end
 -- For approaching a target with velocity, and staying at a radius distance
 local function autonav_approach_vel( pos, vel, radius )
    local pp = player.pilot()
-   local turn = pp:turn() -- TODO probably change the code
+   local turn = pp:turn()
+   local pppos = pp:pos()
 
    local rvel = vel - pp:vel()
    local timeFactor = math.pi/turn + rvel:mod() / pp:accel() / 2
@@ -531,14 +532,14 @@ local function autonav_approach_vel( pos, vel, radius )
    local angle = math.pi + vel:angle()
 
    local point = pos + vec2.newP( radius, angle )
-   local dir = (point-pp:pos())*Kp + rvel*Kd
+   local dir = (point-pppos)*Kp + rvel*Kd
 
    local off = ai.face( dir:angle() )
    if math.abs(off) < math.rad(10) and dir:mod() > 300 then
       ai.accel(1)
    end
 
-   return pos:dist( pp:pos() )
+   return pos:dist( pppos )
 end
 
 -- Jumped into a system and delaying until velocity is somewhat normal
@@ -947,6 +948,20 @@ function autonav_plt_follow ()
    end
 end
 
+local function autonav_plt_board_approach_brake ()
+   if ai.brake() then
+      -- Finally try to board
+      local brd = player.tryBoard(false)
+      if brd=="ok" then
+         autonav_end()
+      elseif brd=="retry" then
+         autonav_set( autonav_plt_board_approach )
+      else
+         _autonav_abort(_("cannot board"))
+      end
+   end
+end
+
 -- Getting close to board a pilot
 function autonav_plt_board_approach ()
    local plt = target_plt
@@ -965,18 +980,13 @@ function autonav_plt_board_approach ()
    end
 
    local pos = plt:pos()
-   autonav_approach_vel( pos, plt:vel(), 0 )
-   if not tc_rampdown then
+   -- Assume disabled ship is stopped
+   local ret = autonav_approach( pos, true )
+   if ret then
+      autonav_set( autonav_plt_board_approach_brake )
+   elseif not tc_rampdown then
       path = {pos}
       autonav_rampdown(true)
-   end
-
-   -- Finally try to board
-   local brd = player.tryBoard(false)
-   if brd=="ok" then
-      autonav_end()
-   elseif brd~="retry" then
-      _autonav_abort(_("cannot board"))
    end
 end
 

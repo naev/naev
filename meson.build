@@ -70,7 +70,7 @@ subdir('utils')
 # Version Generation
 version_result = run_command(gen_version, meson.project_version(), check: true)
 version = version_result.stdout().strip()
-meson.add_dist_script(add_to_package, 'dat/VERSION')
+meson.add_dist_script(add_to_package, meson.source_root() / 'dat/VERSION', 'dat/VERSION' )
 summary('tag', version)
 
 # Initialization
@@ -448,6 +448,10 @@ naevcrs = rust.bindgen(
    cargo_data.set('BUILD', meson.project_build_root() )
    cargo_data.set('SOURCE', meson.project_source_root() )
    cargo_toml = configure_file( input: 'Cargo.toml.in', output: 'Cargo.toml', configuration: cargo_data )
+   #meson.add_dist_script(add_to_package, cargo_toml.full_path(), cargo_toml )
+   # flatpak needs Cargo.lock in the source tarball to be able to generate stuff
+   # https://github.com/flatpak/flatpak-builder-tools/tree/master/cargo
+   meson.add_dist_script( cargo_lock, cargo_toml.full_path() )
    buildrs = configure_file( input: 'build.rs.in', output: 'build.rs', configuration: cargo_data )
    cargo_env = [ 'CARGO_HOME=' + meson.project_build_root() / 'cargo-home' ]
    cargo_options = [ '--manifest-path', cargo_toml ]

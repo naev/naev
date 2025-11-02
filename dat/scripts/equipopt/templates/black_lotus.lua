@@ -12,6 +12,6 @@ pir.outfits = eoutfits.merge{ pir.outfits, {
 pir.params_overwrite = tcopy( pir.params_overwrite )
 -- slightly prefer disable weapons
 pir.params_overwrite.disable = 1.1
-pir.params_overwrite.damage = 1.1
+--pir.params_overwrite.damage = 1.1
 
 return pir.make_equip( pir )

@@ -71,7 +71,7 @@ The `plugin.xml` file is specific to plugins and does not exist in the base game
  <author>Me</author>
  <version>1.0</version>
  <description>A cool example plugin.</description>
- <compatibility>^0\.10\..*</compatibility>
+ <naev_version>&gt;= 0.13.0</naev_version>
  <priority>3</priority>
  <source>https://source</source>
 </plugin>
@@ -83,7 +83,7 @@ The important fields are listed below:
 * `author`: contains the name of the author(s) of the plugin.
 * `version`: contains the version of the plugin. This can be any arbitrary string.
 * `description`: contains the description of the plugin. This should be easy to understand for players when searching for plugins.
-* `compatibility`: contains compatibility information. Specifically, it must be a regex string that will be tested against the current Naev string. Something like `^0\.10\..*` will match any version string that starts with `"0.10."`. Please refer to a regular expression guide such as [regexr](https://regexr.com/) for more information on how to write regex.
+* `naev_version`: specifies which verisons of naev are compatible. This is based on [semver](https://semver.org/) and allows comparisons with existing versions. For example, `>= 0.13` would mean a version after 0.13.0 (including betas), while something like `>= 0.13, < 0.14` would specify something newer than `0.13.0` but older than `0.14.0`. Please note that since this is XML, you have to escape `>` with `&gt;` and `<` with `&gt;`.
 * `priority`: indicates the loading order of the plugin. The default value is 5 and a lower value indicates higher priority. Higher priority allows the plugin to overwrite files of lower priority plugins. For example, if two plugins have a file `missions/test.lua`, the one with the lower priority would take preference and overwrite the file of the other plugin.
 * `source`: points to where a newer version can be obtained or downloaded. This could be a website or other location.
 

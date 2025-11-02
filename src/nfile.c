@@ -136,7 +136,7 @@ const char *nfile_configPath( void )
       snprintf( naev_configPath, sizeof( naev_configPath ), "%s/naev/", path );
       free( path );
 #elif SDL_PLATFORM_WIN32
-      char *path = SDL_getenv( "APPDATA" );
+      const char *path = SDL_getenv( "APPDATA" );
       if ( path == NULL ) {
          WARN( _( "%%APPDATA%% isn't set, using current directory." ) );
          path = ".";
@@ -144,7 +144,7 @@ const char *nfile_configPath( void )
       snprintf( naev_configPath, sizeof( naev_configPath ), "%s/naev/", path );
 #else
       // TODO just use SDL instead of custom implementations?
-      char *prefpath = SDL_GetPrefPath( "Naev DevTeam", "Naev" );
+      const char *prefpath = SDL_GetPrefPath( "Naev DevTeam", "Naev" );
       strncpy( naev_configPath, sizeof( naev_configPath ), prefpath );
       SDL_free( prefpath );
 #endif

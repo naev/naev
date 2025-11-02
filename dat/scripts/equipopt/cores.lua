@@ -11,11 +11,9 @@ local function choose_one_table( t )
    return choose_one( t )
 end
 
-
-local having_secondary={"Fighter","Bomber","Destroyer","Battleship","Carrier","Courier","Freighter","Armoured Transport","Bulk Freighter"}
+-- Compute classes that have a secondary slot
 local have_secondary={}
-
-for _i,x in ipairs(having_secondary) do
+for _i,x in ipairs{"Fighter","Bomber","Destroyer","Battleship","Carrier","Courier","Freighter","Armoured Transport","Bulk Freighter"} do
    have_secondary[x]=true
 end
 

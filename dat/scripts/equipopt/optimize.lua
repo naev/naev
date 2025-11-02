@@ -101,6 +101,7 @@ local goodness_special = {
    ["TeraCom Mace Launcher"] = 0.5,
    ["Unicorp Caesar IV Launcher"] = 0.6, -- high damage but slow with bad tracking
    ["Enygma Systems Huntsman Launcher"] = 0.6,
+   ["TeraCom Imperator Launcher"] = 0.6,
    ["Enygma Systems Spearhead Launcher"] = 0.6, -- high damage but shield only
    ["TeraCom Vengeance Launcher"] = 0.6,
    ["TeraCom Medusa Launcher"] = 0.6,           -- really high disable

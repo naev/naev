@@ -2,7 +2,7 @@
  <pos x="10617.598299" y="-9561.397421"/>
  <GFX>
   <space>X01</space>
-  <exterior>forest</exterior>
+  <exterior>uninhabited-rocky-magenta-01.webp</exterior>
  </GFX>
  <general>
   <class>X</class>

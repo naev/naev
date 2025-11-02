@@ -5,7 +5,7 @@
   <slot prop_extra="systems_secondary" prop="systems">utility</slot>
   <size>medium</size>
   <price>300000</price>
-  <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 4801 core system is affordable yet capable, recommended for the discerning captain. Fly safe, fly Milspec.</description>
+  <description>Milspec develops high performance hardware for your ship, letting you keep your mind at ease as you tackle the dangers the universe might throw at you on your travels. The Orion 4801 core system is affordable yet capable, recommended for the discerning captain who is looking for well-balanced high-end systems. Fly safe, fly Milspec.</description>
   <gfx_store>core_system_refined_m1</gfx_store>
   <priority>3</priority>
  </general>

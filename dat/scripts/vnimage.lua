@@ -87,9 +87,12 @@ function vni.generator( path )
       viewxe = 100+800,
       viewye = 0+600,
       -- Width and height are final render
-      width  = 400 / scale,
-      height = 300 / scale,
+      width  = 400,
+      height = 300,
    }
+   -- Increase size based on scale
+   PORTRAIT.width = (PORTRAIT.width or 400) / scale
+   PORTRAIT.height = (PORTRAIT.height or 300) / scale
    npc.replace = tmergei( npc.replace, {
       { [[width="1000"]], fmt.f([[width="{width}"]], PORTRAIT) },
       { [[height="1415"]], fmt.f([[height="{height}"]], PORTRAIT) },
@@ -328,6 +331,8 @@ local soromid = {
    {"soromid/soromid_dark_01.webp", "dark"},
    {"soromid/soromid_dark_01_v2.webp", "dark"},
    {"soromid/soromid_dark_01_v3.webp", "dark"},
+   -- Image Generators
+   {gen("soromid/soromid_dark_01"), "dark"},
 }
 local soromid_mil = {
    {"soromid/soromid_heavy_military_3.webp", "heavy"},

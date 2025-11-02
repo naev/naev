@@ -30,6 +30,9 @@ function cargo.add( p )
    local q = 0
    for i=1,ncargo do
       cf = p:cargoFree()
+      if cf <= 0 then
+         break
+      end
       local amount = rnd.rnd( math.floor(0.5*cf/ncargo), math.floor(cf) )
       q = q + p:cargoAdd( avail_cargo[ rnd.rnd( 1, #avail_cargo ) ]:nameRaw(), amount )
    end

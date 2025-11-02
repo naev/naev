@@ -83,7 +83,7 @@ return function ()
                m.capturable = true
                m.ad = { _("Oh shit, did I miss another deadline?"),
                         _("I'll never get into tenure track with my current Z-index…"),
-                        _("Seventh time in a row my papers was rejected…"), }
+                        _("Seventh time in a row my paper was rejected…"), }
                m.comm_greet = _([["Even when I close my eyes, the endless deadlines haunt my dreams."]])
                m.taunt = _("Just put me out of this misery.")
                m.bribe_prompt = _([["If you pay off {credits} of my student loans, I'll go back to my deadlines."]])

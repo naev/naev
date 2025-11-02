@@ -6,6 +6,7 @@ local love = require 'love'
 local object = require 'love.object'
 --local filesystem = require 'love.filesystem'
 local love_math = require 'love.math'
+local fmt = require "format"
 
 local graphics = {
    _bgcol = naev.colour.new( 0, 0, 0, 1 ),
@@ -19,7 +20,7 @@ local graphics = {
 local function _mode(m)
    if     m=="fill" then return false
    elseif m=="line" then return true
-   else   error( string.format(_("Unknown fill mode '%s'"), m ) )
+   else   error( fmt.f("Unknown fill mode '{m}'", {m=m} ) )
    end
 end
 local function _H( x, y, r, sx, sy )
@@ -317,20 +318,25 @@ end
 function graphics.clear( ... )
    local arg = {...}
    local col
+   local t = type(arg[1])
    if #arg==0 then
       col = graphics._bgcol
-   elseif type(arg[1])=="number" then
+   elseif t=="number" then
       local r = arg[1]
       local g = arg[2]
       local b = arg[3]
       local a = arg[4] or 1
       col = _scol( r, g, b, a )
-   elseif type(arg[1])=="table" then
+   elseif t=="table" then
       local r = arg[1][1]
       local g = arg[1][2]
       local b = arg[1][3]
       local a = arg[1][4] or 1
       col = _scol( r, g, b, a )
+   elseif t=="userdata" then
+      col = arg[1]
+   else
+      error(fmt.f("unknown colour type '{t}'"), {t=t})
    end
    if graphics._canvas then
       graphics._canvas.canvas:clear( col )

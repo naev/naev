@@ -8,6 +8,8 @@
   <gfx_store>placeholder</gfx_store>
  </general>
  <specific type="modification">
-  <cargo_inertia>-12</cargo_inertia>
+  <cargo_inertia>-20</cargo_inertia>
+  <energy_regen_mod>-10</energy_regen_mod>
+  <energy_regen_malus>2</energy_regen_malus>
  </specific>
 </outfit>

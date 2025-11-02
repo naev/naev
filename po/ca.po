@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.12.0-alpha.2\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-09-26 15:28+0900\n"
+"POT-Creation-Date: 2025-10-24 20:48+0900\n"
 "PO-Revision-Date: 2024-09-20 13:40+0000\n"
 "Last-Translator: Pau Barrachina Ribes <barrachinaribesp@gmail.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/naev/naev/ca/>\n"
@@ -2562,7 +2562,8 @@ msgstr "Lotus Negre"
 #. if not player.misnDone("Black Cat") then
 #. return false
 #. end
-#. return system.cur():presences()["Pirate"] > 50
+#. local pir = require "common.pirate"
+#. return pir.systemPresence() > 50
 #. </cond>
 #. </event>
 #. --
@@ -10231,9 +10232,11 @@ msgid "N. Bolt 3000 Engine"
 msgstr ""
 
 msgid ""
-"The Bolt 3000 is a somewhat uncommonly used engine designed for cruisers. "
-"Like most Nexus engines, it doesn't excel in speed, but its low power "
-"consumption makes it an attractive option for some pilots."
+"Originally developed by Nexus Shipyards to suit the needs of the Hawking "
+"battleship, the Bolt 3000 is a well-rounded balanced choice for large ships. "
+"Like most Nexus engines, it doesn't excel in speed, but its comparatively "
+"low power consumption and high flexibility make it an attractive option for "
+"some pilots."
 msgstr ""
 
 msgid "T. Typhoon Engine"
@@ -10243,7 +10246,8 @@ msgid ""
 "Development of the Typhoon engine was something of a prestige project for "
 "Tricon. Providing cruisers with superb handling and speed, it's a favourite "
 "of many captains, though its high power consumption limits it to ships with "
-"powerful reactors."
+"powerful reactors. It's also commonly found to be of use as a "
+"manoeuvrability-enhancing secondary engine on light battleships."
 msgstr ""
 
 msgid "U. Eagle 3000 Engine"
@@ -10259,10 +10263,12 @@ msgid "K. Patagium Twin Engine"
 msgstr ""
 
 msgid ""
-"The Patagium is a destroyer engine developed by Krain Industries to be used "
-"in the Starbridge. While its performance exceeds other destroyer engines in "
-"terms of maximum speed and maneuverability, the engine is not adequate for "
-"most other destroyers due to their higher mass."
+"The Patagium is an engine developed by Krain Industries, carefully tailored "
+"for use on their Destroyer-class Starbridge. While it exceeds the "
+"alternatives in maximum speed and manoeuvrability, the engine is not "
+"adequate for most other destroyers due to their higher mass. Due to the very "
+"particular calibration hyperparameters, the Patagium can only operate in a "
+"twin configuration."
 msgstr ""
 
 msgid "M. Buffalo Engine"
@@ -10308,8 +10314,10 @@ msgstr ""
 
 msgid ""
 "A powerful engine for its size, though not a particularly manoeuvrable one. "
-"The Ox enables small vessels to haul more cargo or weapons without resorting "
-"to larger and more power-hungry models."
+"On the slow and steady side as it is, it lets small vessels bring more cargo "
+"or outfits along without slowing to a crawl, giving it a good reputation in "
+"trader circles. Above-par fuel reserves and atmospheric flight capabilities "
+"are some of the other selling points of the Ox."
 msgstr ""
 
 msgid "N. Dart 160 Engine"
@@ -10517,9 +10525,11 @@ msgid "M. Aegis 8501 System"
 msgstr ""
 
 msgid ""
-"Milspec cares about your personal safety. Your protection is our concern. "
-"The Aegis 8501 grants your ship excellent shield strength while preserving a "
-"high level of subsystem control and energy capacity. Fly safe, fly Milspec."
+"Milspec cares about your personal safety. Your protection is our number-one "
+"concern. The Aegis 8501 is the ultimate bulwark for your ship, equipped with "
+"patented shielding technology of impeccable strength, and maintaining energy "
+"and subsystem control above par. With the Aegis 8501, you make a statement: "
+"you do not compromise on your protection. Fly safe, fly Milspec."
 msgstr ""
 
 msgid "M. Orion 8601 System"
@@ -10527,18 +10537,19 @@ msgstr ""
 
 msgid ""
 "Milspec develops high performance hardware for your ship, to make sure you "
-"are always optimally prepared for the dangers the universe might throw at "
-"you on your travels. The Orion 8601 core system is a high-end solution for "
-"capital ships, providing superior performance in every field. Fly safe, fly "
-"Milspec."
+"can take all the dangers the universe might throw at you on your travels "
+"head-on. The Orion 8601 core system is a high-end universal solution for the "
+"largest of ships, with zero compromise on computing power, energy, or "
+"shields. Fly safe, fly Milspec."
 msgstr ""
 
 msgid "M. Prometheus 8503 System"
 msgstr ""
 
 msgid ""
-"Milspec offers solutions for pilots who believe the best defence is a good "
-"offense. The 8503 boasts a heavy duty power generator as well as "
+"Milspec offers solutions for pilots looking to power large arrays of "
+"powerful weapons. The Prometheus 8503 boasts a heavy-duty power generator to "
+"meet the power requirements of battleship-class weapon systems, as well as "
 "considerable shielding and subsystem control. Fly safe, fly Milspec."
 msgstr ""
 
@@ -10546,9 +10557,9 @@ msgid "M. Thalos 8502 System"
 msgstr ""
 
 msgid ""
-"Milspec knows that a ship is merely the sum of its parts, and that means "
-"that the more parts, the better the ship. The Thalos 8502 provides serious "
-"subsystem control whilst retaining the high standard in energy and shielding "
+"Milspec knows the difference a few extra fighters can make on a battlefield. "
+"The Thalos 8502 provides some serious computational power, perfect for jam-"
+"packed carriers, whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
 
@@ -10565,7 +10576,7 @@ msgstr ""
 
 msgid ""
 "Criticized by some as nothing more than a cluster of PT-310 systems, the "
-"PT-440 nevertheless offers acceptable performance for light cruisers at a "
+"PT-440 nevertheless offers acceptable performance for large ships at a "
 "fraction of its competitors' prices."
 msgstr ""
 
@@ -10573,38 +10584,42 @@ msgid "M. Aegis 4701 System"
 msgstr ""
 
 msgid ""
-"Milspec cares about your personal safety. Your protection is our concern. "
-"The Aegis 4701 grants your ship excellent shield strength while preserving a "
-"high level of subsystem control and energy capacity. Fly safe, fly Milspec."
+"Milspec prides itself in putting customers' safety first. Your protection is "
+"our number-one concern. The Aegis 4701 grants your ship excellent shield "
+"strength without compromising on energy or compute, so you can explore the "
+"universe at peace of mind. Fly safe, fly Milspec."
 msgstr ""
 
 msgid "M. Orion 4801 System"
 msgstr ""
 
 msgid ""
-"Milspec develops high performance hardware for your ship, to make sure you "
-"are always optimally prepared for the dangers the universe might throw at "
-"you on your travels. The Orion 4801 core system is affordable yet capable, "
-"recommended for the discerning captain. Fly safe, fly Milspec."
+"Milspec develops high performance hardware for your ship, letting you keep "
+"your mind at ease as you tackle the dangers the universe might throw at you "
+"on your travels. The Orion 4801 core system is affordable yet capable, "
+"recommended for the discerning captain who is looking for well-balanced high-"
+"end systems. Fly safe, fly Milspec."
 msgstr ""
 
 msgid "M. Prometheus 4703 System"
 msgstr ""
 
 msgid ""
-"Milspec offers solutions for pilots who believe the best defence is a good "
-"offense. The Prometheus 4703 boasts a heavy duty power generator as well as "
-"considerable shielding and subsystem control. Fly safe, fly Milspec."
+"Milspec offers solutions for pilots who believe in energy weapon supremacy. "
+"The Prometheus 4703 boasts a heavy-duty power generator to meet the power "
+"requirements of your artillery weapons, as well as considerable shielding "
+"and subsystem control. Fly safe, fly Milspec."
 msgstr ""
 
 msgid "M. Thalos 4702 System"
 msgstr ""
 
 msgid ""
-"Milspec knows that a ship is merely the sum of its parts, and that means "
-"that the more parts, the better the ship. The Thalos 4702 provides serious "
-"subsystem control whilst retaining the high standard in energy and shielding "
-"that Milspec prides itself on. Fly safe, fly Milspec."
+"Milspec knows that having to make computational power compromises in outfits "
+"leads to becoming a chunk of floating scrap metal. The Thalos 4702 provides "
+"serious computational power whilst retaining the high standard in energy and "
+"shielding that Milspec prides itself on. No need to compromise on outfits, "
+"equip them all! Fly safe, fly Milspec."
 msgstr ""
 
 msgid "Prev. Gen. Medium Systems"
@@ -10614,17 +10629,19 @@ msgid "U. PT-200 System"
 msgstr ""
 
 msgid ""
-"Continuing Unicorp's PT series of core systems in the medium ship category, "
-"the PT-200 gives acceptable performance for an acceptable price."
+"Continuing Unicorp's PT lineup of core systems in the medium ship category, "
+"the PT-200 offers acceptable performance at an acceptable price."
 msgstr ""
 
 msgid "M. Aegis 2201 System"
 msgstr ""
 
 msgid ""
-"Milspec cares about your personal safety. Your protection is our concern. "
-"The Aegis 2201 grants your ship excellent shield strength while preserving a "
-"high level of subsystem control and energy capacity. Fly safe, fly Milspec."
+"Milspec cares about your personal safety. Your protection is our number-one "
+"concern. The Aegis 2201 grants your ship excellent shield strength while "
+"preserving a high level of subsystem control and energy capacity. Let "
+"yourself relax as hostile fire bounces off your shields. Fly safe, fly "
+"Milspec."
 msgstr ""
 
 msgid "M. Orion 2301 System"
@@ -10634,7 +10651,8 @@ msgid ""
 "Milspec develops high performance hardware for your ship, to make sure you "
 "are always optimally prepared for the dangers the universe might throw at "
 "you on your travels. The Orion 2301 core system is affordable yet capable, "
-"recommended for the beginning captain. Fly safe, fly Milspec."
+"with balanced features at superior quality, recommended for the beginning "
+"captain. Fly safe, fly Milspec."
 msgstr ""
 
 msgid "M. Prometheus 2203 System"
@@ -10642,8 +10660,9 @@ msgstr ""
 
 msgid ""
 "Milspec offers solutions for pilots who believe the best defence is a good "
-"offense. The Prometheus 2203 boasts a heavy duty power generator as well as "
-"considerable shielding and subsystem control."
+"offence. The Prometheus 2203 boasts a heavy-duty power generator to satisfy "
+"the heaviest of weapons, as well as considerable shielding and subsystem "
+"control. Fly safe, fly Milspec."
 msgstr ""
 
 msgid "M. Thalos 2202 System"
@@ -10663,7 +10682,7 @@ msgid "U. PT-16 System"
 msgstr ""
 
 msgid ""
-"The PT-16 is a modest but to-spec core system offering reasonable, all-round "
+"The PT-16 is a modest but to-spec core system offering reasonable all-round "
 "performance for small vessels."
 msgstr ""
 
@@ -13698,6 +13717,9 @@ msgid ""
 "protection."
 msgstr ""
 
+msgid "Custom"
+msgstr ""
+
 msgid "Skull and Bones"
 msgstr ""
 
@@ -14156,7 +14178,7 @@ msgid ""
 "focused combat philosophy, redesigned to make heavy use of long range "
 "weapons such as Za'lek Reaper suicide drones. To achieve this goal, this "
 "Demon sports a completely reworked electronics system, with top-notch "
-"specially tailoured lock-on algorithms. However, as per the no free lunch "
+"specially tailored lock-on algorithms. However, as per the no free lunch "
 "theorem, this comes at a cost of a much weaker drone command and control "
 "system, and the extra weapon slot and missile system storage required "
 "removing more of the ship's shield emitters and already thin armour."
@@ -20664,9 +20686,9 @@ msgid ""
 "organizations in the Space Traders Society, the Mining Vrata Guildhouse "
 "wields a considerable amount of influence and power. As such, the station "
 "has an extravagant spacious design, significantly diverging from the "
-"standard space-concious space station layouts, likely permitted by using the "
-"nearby planets as storage facilities, allowing the station itself to focus "
-"mainly on its social functionality and trade.\n"
+"standard space-conscious space station layouts, likely permitted by using "
+"the nearby planets as storage facilities, allowing the station itself to "
+"focus mainly on its social functionality and trade.\n"
 "Although the station is almost entirely devoted to the Mining Vrata, other "
 "organizations in the Space Traders Society also have small chapterhouses "
 "located throughout the station."
@@ -28490,7 +28512,7 @@ msgstr ""
 msgid "Westhaven"
 msgstr ""
 
-#. codespell:ignore wight
+#. codespell:ignore Wight
 msgid "Willow"
 msgstr ""
 
@@ -29631,7 +29653,7 @@ msgstr ""
 #. --
 #. luacheck: globals mine (AI Task functions passed by name)
 #. luacheck: globals mine_drill (AI Task functions passed by name)
-#. First task : place the ship close to the asteroid
+#. Correct pos based on velocity and braking time
 #. luacheck: globals mine_drill_brake (AI Task functions passed by name)
 #. luacheck: globals mine_shoot (AI Task functions passed by name)
 #. See if there's a gatherable; if so, pop this task and gather instead
@@ -31659,7 +31681,6 @@ msgstr ""
 #. More than 30 degree error
 #. Distance left to start breaking
 #. For approaching a target with velocity, and staying at a radius distance
-#. TODO probably change the code
 #. Jumped into a system and delaying until velocity is somewhat normal
 #. Ignore autonav until speed is acceptable
 #. hades torch: speed*1.65
@@ -31751,14 +31772,15 @@ msgstr ""
 #. See if there's someone else in the original fleet we can follow now
 #. Follow with the same range that stops stealth (see pilot_ewStealthGetNearby)
 #. Only ramps down if we can board
-#. Getting close to board a pilot
-msgid "Autonav: boarding target {plt} has been lost."
-msgstr ""
-
 #. Finally try to board
 msgid "cannot board"
 msgstr ""
 
+#. Getting close to board a pilot
+msgid "Autonav: boarding target {plt} has been lost."
+msgstr ""
+
+#. Assume disabled ship is stopped
 #. Run quite often when the player tries to think. dt is game time
 #. Run with the physics backend
 #. If we reset we skip the iteration
@@ -34121,7 +34143,7 @@ msgid "Major Tam"
 msgstr ""
 
 #. Nice outfits for Colonel Hamelsen (the Hellburner is her life insurance)
-#. TODO switch to equipopt
+#. Consistent
 #. We can't afford to loose our main baddie
 #. Pre-position Captain Leblanc and her mates, but as Dvaered
 #. Mission constants
@@ -34929,9 +34951,6 @@ msgid "Defensive"
 msgstr ""
 
 msgid "Hyper-Defensive"
-msgstr ""
-
-msgid "Custom"
 msgstr ""
 
 msgid "Escort Manager"
@@ -43879,7 +43898,7 @@ msgstr ""
 msgid "Kids don't know how good they have it these days!"
 msgstr ""
 
-msgid "Nobody likes a good honour fight to the death anymore!"
+msgid "Nobody likes a good honour fight to the death any more!"
 msgstr ""
 
 msgid "Get out of my way punk!"
@@ -49493,6 +49512,8 @@ msgstr ""
 #. Provides a composable proximity callback: you can use "proximity" as a hook, with the function to call if the player's in range
 #. as an argument.
 #.
+#. This module is superseded by the "trigger" module and you likely want to use that instead of this one.
+#.
 #. @module proximity
 #. --
 #. --
@@ -50165,10 +50186,10 @@ msgstr ""
 #. Caution: the below **are** accessed via _G.
 #. luacheck: globals armour energy shield speed stress (_G[v])
 #. Namespaces
-#. local cWhite = colour.new("White")
-#. local cRed = colour.new("Red")
-#. local cOrange = colour.new("Orange")
-#. local cCyan = colour.new("Cyan")
+#. local cWhite = colour.new_named("White")
+#. local cRed = colour.new_named("Red")
+#. local cOrange = colour.new_named("Orange")
+#. local cCyan = colour.new_named("Cyan")
 #. Get player
 #. Set default formation
 #. Get sizes
@@ -52507,8 +52528,7 @@ msgstr ""
 msgid "{plt} should be waiting for us in orbit around {pnt}."
 msgstr ""
 
-#. TODO switch to equipopt
-#. majorTam:outfitAdd("Solar Panel")
+#. Consistent
 msgid "Major Tam has jumped for the {sys} system."
 msgstr ""
 
@@ -58039,7 +58059,7 @@ msgid ""
 "disposition of Ak-Ak."
 msgstr ""
 
-#. codespell:ignore akward
+#. codespell:ignore Akward
 msgid ""
 "Shaky Swan is a shifty individual. Really. I don't know much about them, "
 "except for some of their deeds. Some say they used to be an Imperial agent "
@@ -80628,6 +80648,9 @@ msgstr ""
 #. The true amount after which the player is attacked
 #. Try to find a closeby acceptable target
 #. Need to soft claim
+#. local reward = onion.rewards.misn08
+#. Mission states
+#. Hard claims now
 msgid "l337_b01"
 msgstr ""
 
@@ -83474,6 +83497,91 @@ msgid ""
 "your ship, but you were able to overcome mercenaries set on you."
 msgstr ""
 
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <mission name="Onion Society 08">
+#. <unique />
+#. <priority>3</priority>
+#. <chance>100</chance>
+#. <location>Bar</location>
+#. <done>Onion Society 07</done>
+#. <cond>
+#. local c = spob.cur()
+#. local f = c:faction()
+#. if not f or not f:tags("generic") then
+#. return false
+#. end
+#. return true
+#. </cond>
+#. <notes>
+#. <campaign>Onion Society</campaign>
+#. </notes>
+#. </mission>
+#. --
+#.
+#. Onion 07
+#. --
+#. local fleet = require "fleet"
+#. local tut = require "common.tutorial"
+#. Reference to honeypot (trap)
+msgid "The Lone Wolf"
+msgstr ""
+
+msgid "Follow up with l337_b01."
+msgstr ""
+
+#. Slow them down so the player can "dodge"
+msgid "Energy surge detected!"
+msgstr ""
+
+#.
+#.
+#. Stage 1 fight:
+#. 1. Sends drones periodically while moving around - there are 2 holograms doing the same (but they are hologram drones)
+#. 2. When player damages the real one switches into combat mode.
+#. 3. WHen shield drops to 0, jumps out in a cloud of drones.
+#.
+#. --
+msgid "l337_b01: "
+msgstr ""
+
+#. Spawn them
+#. Generate waypoints
+#. Set them up
+#. They should only be uncoverable at 3000 units
+msgid "l337_b01: \"We've been spotted! Looks like lonewolf4 wants a fight!\""
+msgstr ""
+
+msgid "l337_b01: \"Looks like a heavily modified Zebra. Take it out!\""
+msgstr ""
+
+#. Only matters at the beginning
+msgid "l337_b01: \"A hologram!? The real ship must be out there still.\""
+msgstr ""
+
+msgid "l337_b01: \"Another hologram!?\""
+msgstr ""
+
+msgid "l337_b01: What the hell was that?"
+msgstr ""
+
+msgid "l337_b01: Wait, they're nearby in the {sys} system!"
+msgstr ""
+
+msgid "Chase lonewolf4 to the {sys} system!"
+msgstr ""
+
+msgid "l337_b01: No time to lose, onwards to {sys} system!"
+msgstr ""
+
+#.
+#.
+#. Stage 2 fight:
+#. 0. Shields are down permanently
+#. 1. Does an energy surge attack every so often
+#. 2. When starts to take damage, charges up for 10 seconds and jumps away
+#.
+#. --
 #.
 #. <?xml version='1.0' encoding='utf8'?>
 #. <mission name="Black Cat">
@@ -88888,12 +88996,13 @@ msgid ""
 msgstr ""
 
 #. Warn the player if fuel is not sufficient
+#. Get maximum jump length
 msgid "Fuel Warning"
 msgstr ""
 
 msgid ""
-"You don't have enough fuel for making 7 jumps. You'll have to buy some from "
-"civilian ships on the way."
+"You don't have enough fuel for making {jumps} jumps. You'll have to buy some "
+"from civilian ships on the way."
 msgstr ""
 
 msgid "Joanne"
@@ -95313,9 +95422,10 @@ msgstr ""
 msgid "Here I go, filling my cabin up with tears."
 msgstr ""
 
-msgid "U- oh it a-pears my te-rs hav- da--age t-e co-mand cons-le."
+msgid "U- oh it a-pears my te-rs hav- da-ag-d t-e co-mand cons-le."
 msgstr ""
 
+#. codespell:ignore
 msgid "I a- T. Pr-ct---! Y-- w--l fe-r m- na-e --- Bzzzt!"
 msgstr ""
 
@@ -102256,6 +102366,7 @@ msgstr ""
 
 #. Modify by damage
 #. luacheck: ignore
+#. function io.stderr:write(str) printRaw(str) end -- luacheck: ignore
 #. luacheck: ignore
 #.
 #.
@@ -102478,10 +102589,10 @@ msgstr ""
 #. --
 #. Below is a list of changes from 0.12.0 to 0.13.0
 #. getting the gold is now much harder
-#. codespell:ignore proccessing
-#. codespell:ignore proccessing
-#. codespell:ignore proccessing
-#. codespell:ignore proccessing
+#. codespell:ignore Proccessing
+#. codespell:ignore Proccessing
+#. codespell:ignore Proccessing
+#. codespell:ignore Proccessing
 #. Multicore transformation (engines).
 #. Each core in the left is split in 2 cores the right, one in the main core slot, the other one on the secondary core slot.
 #. See finish() above.
@@ -106741,10 +106852,6 @@ msgstr ""
 #. --
 #. local filesystem = require 'love.filesystem'
 #. Helper functions
-#, lua-format
-msgid "Unknown fill mode '%s'"
-msgstr ""
-
 #. TODO don't do this for every drawing...
 #. Rendering to canvas
 #. Rendering to screen
@@ -106850,6 +106957,9 @@ msgstr ""
 #.
 #. -- RandomGenerator class
 #. --
+#. Defaults to linear
+#. Store as "gamma"
+#. Do transformation from linear a second time
 #.
 #. -- Mouse
 #. --
@@ -109705,6 +109815,7 @@ msgstr ""
 #. @tparam function fn Function to call when all the pilots are defeated.
 #. --
 #. Display on top of the player
+#. Allow chaining multiple instantly
 #. --
 #. Can be used to set up a chain of timer events, which will be chained automatically without needing to define additional hook functions.
 #.
@@ -110237,12 +110348,14 @@ msgstr ""
 #. TODO allow defining the crops in metadata.lua
 #. Viewport is reference to the image coordinates
 #. Width and height are final render
+#. Increase size based on scale
 #. Due to limitations of the C-side API, we have to pass the texture as a portrait, while the VN supports canvases
 #. New images
 #. Image generators
 #. New images
 #. Image generators
 #. Temporary function until we only have new images
+#. Image Generators
 #. --
 #. Gets a random portrait fitting for a specific faction.
 #. @tparam fct Faction fct Faction to get images for.
@@ -112535,6 +112648,10 @@ msgstr ""
 msgid "Found keybind with invalid type field!"
 msgstr ""
 
+#, c-format
+msgid "Keyname '%s' doesn't match any key."
+msgstr ""
+
 msgid "Found keybind with no key field!"
 msgstr ""
 
@@ -112848,15 +112965,6 @@ msgstr ""
 msgid ""
 "Failed to write configuration!  You'll most likely have to restore it by "
 "copying your backup configuration over your current configuration."
-msgstr ""
-
-#. f, s, f
-#. f, s, f, v
-#. f, s, r
-#, c-format
-msgid ""
-"Error calling 'tostring':\n"
-"%s"
 msgstr ""
 
 #, c-format
@@ -115327,10 +115435,6 @@ msgid "Takes a screenshot."
 msgstr ""
 
 msgid "Paste from the operating system's clipboard."
-msgstr ""
-
-#, c-format
-msgid "Keyname '%s' doesn't match any key."
 msgstr ""
 
 #, c-format
@@ -118645,6 +118749,10 @@ msgstr ""
 #. *< The outfit needs to load graphics.
 #. *< The outfit does not get turned off by stealth.
 #. *< Hide the outfit shipstats from Lua stuff in the                              descriptions.
+#. We use a core property obtained from tags for now as we need a way to
+#. distinguish them
+#. TODO remove when we use a more flexible / better tab system
+#. *< Outfit is a core.
 #. Outfit filter labels. [Doc comments are also translator notes and must
 #. * precede the #define.]
 #. * Colour-coded abbreviation for "Weapon [outfit]", short enough to use as a

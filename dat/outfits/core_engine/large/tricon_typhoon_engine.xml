@@ -5,7 +5,7 @@
   <slot prop_extra="engines_secondary" prop="engines">structure</slot>
   <size>large</size>
   <price>1800000</price>
-  <description>Development of the Typhoon engine was something of a prestige project for Tricon. Providing cruisers with superb handling and speed, it's a favourite of many captains, though its high power consumption limits it to ships with powerful reactors.</description>
+  <description>Development of the Typhoon engine was something of a prestige project for Tricon. Providing cruisers with superb handling and speed, it's a favourite of many captains, though its high power consumption limits it to ships with powerful reactors. It's also commonly found to be of use as a manoeuvrability-enhancing secondary engine on light battleships.</description>
   <gfx_store>engine2</gfx_store>
   <priority>3</priority>
  </general>

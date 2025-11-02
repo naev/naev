@@ -2,6 +2,8 @@
    Provides a composable proximity callback: you can use "proximity" as a hook, with the function to call if the player's in range
    as an argument.
 
+   This module is superseded by the "trigger" module and you likely want to use that instead of this one.
+
    @module proximity
 --]]
 

@@ -92,7 +92,7 @@ end
 
 
 function sys_enter ()
-   if system.cur() == mem.t_sys[2] and mem.targetalive then
+   if system.cur()==mem.t_sys[2] and mem.targetalive and not mem.boarded then
       local dist = rnd.rnd() * system.cur():radius() *1/2
       local location = vec2.newP(dist, rnd.angle())
       target = pilot.add( "Soromid Odium", "Soromid", location, shpnm )
@@ -103,7 +103,7 @@ function sys_enter ()
       target:setVisplayer(true)
       mem.hidle = hook.pilot(target, "idle", "targetIdle")
       mem.hexp = hook.pilot(target, "exploded", "targetExploded")
-      mem.hboard = hook.pilot(target, "board", "targetBoard")
+      mem.hboarh = hook.pilot(target, "board", "targetBoard")
       targetIdle()
    end
 end
@@ -144,7 +144,7 @@ end
 function targetBoard()
    player.unboard()
    vntk.msg(_([[In the ship]]), {
-      _([[You make your way through the living ship after taking care of its crew. You note the feeling that the ship is personally angry at you which, given the rumours that Soromid ships are alive, gives you the creeps. In any case, you begin to search through the ship and the handheld in your pocket starts beeping.]]),
+      _([[You make your way through the ship after taking care of its crew. You note the feeling that the ship is personally angry at you which, knowing that Soromid ships are living creatures, gives you the creeps. In any case, you begin to search through the ship and the handheld in your pocket starts beeping.]]),
       _([[You manage to locate a box on a table in the crews' chambers. Apparently nobody expected anyone to be foolish enough to try to do what you are doing. You grab the box and head back to your ship. You should make sure to avoid any Soromid patrols on the way back. You don't think they will be too happy with you if they manage to scan your ship.]])
    })
    target:setHilight(false)

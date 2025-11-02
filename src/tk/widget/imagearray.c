@@ -955,9 +955,10 @@ int toolkit_loadImageArrayData( unsigned int wid, const char *name,
    if ( wgt == NULL )
       return -1;
 
-   wgt->dat.iar.selected = iar_data->pos;
-   wgt->dat.iar.pos      = iar_data->offset;
-   wgt->dat.iar.zoom     = iar_data->zoom;
+   wgt->dat.iar.selected =
+      CLAMP( 0, wgt->dat.iar.nelements - 1, iar_data->pos );
+   wgt->dat.iar.pos  = iar_data->offset;
+   wgt->dat.iar.zoom = iar_data->zoom;
    iar_updateSpacing( wgt ); /* Potentially can be necessary if zoom changes. */
 
    return 0;

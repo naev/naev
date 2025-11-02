@@ -182,6 +182,10 @@ static int land_hasLocalMap( void )
  */
 int land_canSave( void )
 {
+   /* Has to be landed. */
+   if ( !landed )
+      return 0;
+
    /* Overrided case. */
    if ( player_isFlag( PLAYER_NOSAVE ) )
       return 0;
@@ -1271,6 +1275,10 @@ void land_genWindows( int load )
    /* Create tabbed window. */
    land_setupTabs();
 
+   /* Have to be set _BEFORE_ the main tabe is created. */
+   if ( !regen )
+      landed = 1;
+
    /*
     * Order here is very important:
     *
@@ -1287,7 +1295,6 @@ void land_genWindows( int load )
 
    /* 2) Set as landed and run hooks. */
    if ( !regen ) {
-      landed = 1;
       music_choose(
          "land" ); /* Must be before hooks in case hooks change music. */
 

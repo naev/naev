@@ -14,5 +14,6 @@
  <specific type="modification">
   <tur_damage>8</tur_damage>
   <tur_energy>-8</tur_energy>
+  <energy_regen_mod>3</energy_regen_mod>
  </specific>
 </outfit>

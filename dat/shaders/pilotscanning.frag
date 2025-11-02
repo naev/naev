@@ -12,8 +12,11 @@ void main (void)
    float m = 1.0 / dimensions.x;
    float d = sdCircle( uv, 1.0 );
    d = abs(d+2.0*m);
-   const float a = radians(15.0);
-   const vec2 va = vec2(sin(a),cos(a));
+   // Some messed up windows driver don't have radians as a constant function...
+   //const float a = radians(15.0);
+   //const vec2 va = vec2(sin(a),cos(a));
+   float a = radians(15.0);
+   vec2 va = vec2(sin(a),cos(a));
    float dpie = sdPie( uv, va, 1.0-2.0*m );
    d = min( d, dpie );
    float alpha = smoothstep(    -m, 0.0, -d);

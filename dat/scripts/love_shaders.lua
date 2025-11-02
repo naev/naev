@@ -371,4 +371,54 @@ function love_shaders.cyberspace( params )
    return graphics.newShader( pixelcode, _vertexcode )
 end
 
+function love_shaders.sandstorm( params )
+   params = params or {}
+   local colour = params.colour or {0.65, 0.52, 0.44, 0.5}
+   local strength = (params.strength or  params.colour[4]) or 0.5
+   local pixelcode = string.format([[
+#include "lib/simplex.glsl"
+
+const vec3 BASECOLOUR = vec3( %f, %f, %f );
+
+uniform float u_time;
+uniform float u_strength;
+
+float fbm( vec2 uv, float s )
+{
+   float n = 0.0;
+   for (float i=1.0; i<3.0; i=i+1.0) {
+      float m = pow( 1.8, i );
+      n += snoise( uv * m * 3.0 * s ) * (1.0 / m);
+   }
+   return n*0.5+0.5;
+}
+
+vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
+{
+   vec2 speed = u_time * vec2( -1.2, 0.7 );
+
+   float n0 = fbm( uv + speed*1.25, 4.0 );
+   float n1 = fbm( uv + speed,      2.0 );
+   float n2 = fbm( uv + speed*0.8,  1.0 );
+
+   float t = 0.1 + max( max( 0.28*n0, 0.34*n1 ), 0.34*n2 );
+
+   vec4 colout;
+   colout.rgb = BASECOLOUR;
+   colout.a = u_strength * t;
+   return colout;
+}
+]], colour[1], colour[2], colour[3] )
+   local shader = graphics.newShader( pixelcode, _vertexcode )
+   shader._dt = 1000. * love_math.random()
+   shader:send( "u_time", shader._dt )
+   shader:send( "u_strength", strength )
+   shader.update = function (self, dt)
+      self._dt = self._dt + dt
+      self:send( "u_time", self._dt )
+   end
+   return shader
+end
+
+
 return love_shaders

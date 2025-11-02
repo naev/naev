@@ -56,6 +56,7 @@ if [ "$3" != "--pre-commit" ]; then
 fi
 
 # Generate the POTFILES.in using the sub files and the rest of the stuff
+TMPFILE=$(mktemp)
 (
    echo po/naevpedia.pot
    echo po/physfs.pot
@@ -63,12 +64,15 @@ fi
    find_files dat xml | deterministic_sort
    ( find_files dat lua; find_files src "[ch]"; find_files src rs) | deterministic_sort
    find_files dat/outfits py | deterministic_sort
-) | filter_skipped > po/POTFILES.in
+) | filter_skipped > "$TMPFILE"
+
+cmp --silent "$TMPFILE" po/POTFILES.in || cp "$TMPFILE" po/POTFILES.in
+rm "$TMPFILE"
 
 # Finally, the "pre-commit" package requires hooks to fail if they touch any files.
 if [ "$3" = "--pre-commit" ]; then
    git diff --exit-code po/POTFILES.in && exit 0
-   echo Fixing po/POTFILES.in
+   echo "Fixing po/POTFILES.in"
 else
    cp po/POTFILES.in "$BUILDDIR/$3"
 fi

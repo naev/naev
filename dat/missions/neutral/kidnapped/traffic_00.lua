@@ -22,6 +22,7 @@ local neu = require "common.neutral"
 local vn = require "vn"
 local vni = require "vnimage"
 local vntk = require "vntk"
+local equipopt = require "equipopt"
 
 -- TODO add some sort of reward I guess
 
@@ -147,6 +148,8 @@ function enter()
 
    if mem.eavesdropped1 and mem.eavesdropped2 and system.cur() == sys2 and (not mem.rescued) then
       kidnappers = pilot.add( "Koala", fkidnappers, spob.get("Zhiru"):pos() + vec2.new(-800,-800), _("Progeny"), {naked=true} )
+      kidnappers:outfitAddIntrinsic("Worn Down")
+      equipopt.generic( kidnappers )
       kidnappers:setHilight(true)
       kidnappers:setVisible(true)
       kidnappers:memory().aggressive = true

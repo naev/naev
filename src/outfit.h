@@ -53,6 +53,10 @@
 #define OUTFIT_PROP_HIDESTATS                                                  \
    ( 1 << 17 ) /**< Hide the outfit shipstats from Lua stuff in the            \
                   descriptions. */
+// We use a core property obtained from tags for now as we need a way to
+// distinguish them
+// TODO remove when we use a more flexible / better tab system
+#define OUTFIT_PROP_CORE ( 1 << 18 ) /**< Outfit is a core. */
 
 /* Outfit filter labels. [Doc comments are also translator notes and must
  * precede the #define.] */

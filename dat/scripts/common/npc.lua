@@ -74,7 +74,7 @@ npc.msg_tip = {
    _([["I heard you can set your weapons to only fire when your target is in range, or just let them fire when you pull the trigger. Sounds handy!"]]),
    function () return fmt.f( _([["Did you know that if a planet doesn't like you, you can often bribe the spaceport operators and land anyway? Just hail the planet with {hailkey}, and click the bribe button! Careful though, it doesn't always work."]]), {hailkey=tut.getKey("hail")} ) end,
    _([["Many factions offer rehabilitation programs to criminals through the mission computer, giving them a chance to get back into their good graces. It can get really expensive for serious offenders though!"]]),
-   _([["These new-fangled missile systems! You can't even fire them unless you get a target lock first! But the same thing goes for your opponents. You can actually make it harder for them to lock on to your ship by equipping scramblers or jammers. Scout class ships are also harder to target."]]),
+   _([["These new-fangled missile systems! You can't even fire them unless you get a target lock first! But the same thing goes for your opponents. You can actually make it harder for them to lock on to your ship by equipping scramblers or jammers."]]),
    --_([["You know how you can't change your ship or your equipment on some planets? Well, it seems you need an outfitter to change equipment, and a shipyard to change ships! Bet you didn't know that."]]),
    _([["Are you trading commodities? You can hold down #bctrl#0 to buy 50 of them at a time, and #bshift#0 to buy 100. And if you press them both at once, you can buy 500 at a time! You can actually do that with outfits too, but why would you want to buy 50 laser cannons?"]]),
    _([["If you're on a mission you just can't beat, you can open the information panel and abort the mission. There's no penalty for doing it, so don't hesitate to try the mission again later."]]),
@@ -106,6 +106,8 @@ npc.msg_tip = {
    _([["If your ship can't outrun or outgun pirates, consider configuring Autonav to always follow patrol lanes when possible. It'll make your trips take a bit longer, but being late beats getting blown up!"]]),
    _([["If you don't have the budget for expensive upgrades, sensor arrays are a decent use of spare utility slots. In combat, a detection bonus will improve the tracking of your weapons, which can make or break an encounter."]]),
    _([["You can set your map to highlight the differences in commodity prices between all the different systems you've been to - it makes it much easier to plan your routes and turn a good profit trading by yourself."]]),
+   _([["Them dual-engine ships can be so finicky sometimes! You don't always want to have two engines equipped at the same time - if your ship isn't carrying much, having just one will let you travel faster. Otherwise, I've found it's usually better to equip a slower one with a larger mass limit as your primary, and a faster one as your secondary, than the other way around."]]),
+   _([["It pays a lot to have the know-how on electronic warfare. A little more armour may add some hectoseconds to your life, but being able to disappear off an enemy ship's radar at the press of a button will save it."]]),
 }
 
 function npc.cache ()

@@ -12,7 +12,7 @@ Meddle with the Onion Society, an eclectic group of the Nexus denizens and hacke
 * **Requirements:** Chapter 1
 * **Main Location:** None
 * **Notable Characters:**
-   * l337_b01: white-hat hacker, also designs script kiddie software. Is in a wheelchair due to a brain disease
+   * l337_b01: white-hat hacker, also designs script kiddie software
    * Trixie: white-hat hacker, has a day job as an Imperial bureaucrat
    * underworlder: infiltrated Imperial agent trying to subvert organization and also catch Trixie
    * DOG: one of the original Project Thurion researchers that is uploaded
@@ -63,7 +63,7 @@ Most of the time they are hacking freely and enjoying their arguments with each 
 1. Find out the project is in the last stage and about to trigger the sleeping agent in all inhabitants of the station, much sooner than anticipatedi due to a screw up by DEADBEEF.
 1. In order to stop greater harm and infiltration in the rest of society, they decide to disable life support and sabotage the systems. Due to complications, v3c70r is killed, and l337_b01, seeing their own end near, entrust DEADBEEF to continue their legacy by passing all private codes in a last act.
 1. Trixie takes neural feedback in a desperate attempt to save l337_b01, which results in early onset Alzheimers.
-1. DEADBEEF hacks database, swapping identities with l337_b01, and doxing his old self (now l337_b01).
+1. DEADBEEF hacks database, swapping identities with l337_b01, and peeling their old self (now l337_b01).
 1. lonewolf4 had family on the station, and had not noticed anything nor participated in the operation. Taken over by grief, blames l337_b01 as the mentor of DEADBEEF for letting this happen.
 
 #### Fallout

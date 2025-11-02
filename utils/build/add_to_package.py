@@ -18,18 +18,17 @@ def copy_file(source_file, dist_file):
       sys.exit(1)
 
 if __name__ == "__main__":
-   if len(sys.argv) != 2:
-      logging.error("Usage: python3 add_to_package.py <filename>")
+   if len(sys.argv) != 3:
+      logging.error("Usage: python3 add_to_package.py <INFILE> <OUTFILE>")
       sys.exit(1)
 
-   source_root = os.getenv("MESON_SOURCE_ROOT")
    dist_root = os.getenv("MESON_DIST_ROOT")
 
-   if not source_root or not dist_root:
-      logging.error("Error: MESON_SOURCE_ROOT or MESON_DIST_ROOT environment variables not set.")
+   if not dist_root:
+      logging.error("Error: MESON_DIST_ROOT environment variable not set.")
       sys.exit(1)
 
-   source_file = os.path.join(source_root, sys.argv[1])
-   dist_file = os.path.join(dist_root, sys.argv[1])
+   source_file = sys.argv[1]
+   dist_file = os.path.join(dist_root, sys.argv[2])
 
    copy_file(source_file, dist_file)

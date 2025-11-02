@@ -469,7 +469,7 @@ void menu_small( int docheck, int info, int options, int allowsave )
    if ( menu_isOpen( MENU_SMALL ) )
       return;
 
-   can_save = allowsave && landed && !player_isFlag( PLAYER_NOSAVE );
+   can_save             = allowsave && land_canSave();
    menu_small_allowsave = allowsave;
 
    h   = MENU_HEIGHT - ( BUTTON_HEIGHT + 20 ) * ( !info + !options );
@@ -599,8 +599,7 @@ static void menu_small_exit( unsigned int wid, const char *str )
    (void)wid;
    (void)str;
 
-   if ( !menu_small_allowsave && landed && land_canSave() &&
-        ( save_loaded != 0 ) ) {
+   if ( !menu_small_allowsave && naev_canSave() && ( save_loaded != 0 ) ) {
       if ( !dialogue_YesNoRaw(
               _( "Exit to Menu?" ),
               _( "Are you sure you wish to exit to menu right now? The game "
@@ -623,9 +622,10 @@ static void menu_small_exit( unsigned int wid, const char *str )
 static void exit_game( void )
 {
    /* if landed we must save anyways */
-   if ( landed && land_canSave() ) {
+   if ( naev_canSave() ) {
       save_all();
-      land_cleanup();
+      if ( landed )
+         land_cleanup();
    }
    SDL_Event quit;
    quit.type = SDL_EVENT_QUIT;

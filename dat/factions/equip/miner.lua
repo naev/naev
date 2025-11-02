@@ -13,9 +13,11 @@ local miner_outfits = eoutfits.merge{
       "Mining Lance MK1",
       "Laser Turret MK1", "Turreted Gauss Gun", "Plasma Turret MK1",
       "Laser Cannon MK1", "Gauss Gun", "Plasma Blaster MK1",
-      -- Other mining stuff
+      -- Other mining-related stuff
       "S&K Heavy Plasma Drill",
       "S&K Plasma Drill",
+      "Asteroid Scanner",
+      "Cargo Damper",
    },
    eoutfits.standard.set,
 }

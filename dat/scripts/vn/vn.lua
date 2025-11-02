@@ -995,11 +995,13 @@ function vn.StateMenu.new( items, handler )
    s._items = nil
    s.handler = handler
    s._choose = vn.StateMenu._choose
+   s._visited = {}
    return s
 end
 function vn.StateMenu:_init()
    -- Check to see if function
    if type(self.items)=="function" then
+      self._visited = {} -- Always clear for functions
       self._items = self.items()
    else
       self._items = self.items
@@ -1075,7 +1077,11 @@ function vn.StateMenu:_draw()
       end
       vn.setColour( col )
       graphics.rectangle( "fill", gx+x, gy+y, w, h )
-      vn.setColour( {0.7, 0.7, 0.7} )
+      if self._visited[k] then
+         vn.setColour( {0.6, 0.6, 0.6} )
+      else
+         vn.setColour( {0.8, 0.8, 0.8} )
+      end
       graphics.printf( text, font, gx+x+tb, gy+y+tb, w-tb*2 )
    end
 end
@@ -1109,6 +1115,7 @@ function vn.StateMenu:_choose( n )
       what  = self._items[n][1],
       colour= vn._default._bufcol,
    }
+   self._visited[n] = true
    _finish( self )
 end
 --[[
@@ -1548,7 +1555,7 @@ Inserts a jump. This skips to a certain label.
 --]]
 function vn.jump( label )
    if vn._started then
-      vn._jump( label )
+      return vn._jump( label )
    end
    table.insert( vn._states, vn.StateJump.new( label ) )
 end
@@ -1564,7 +1571,6 @@ This gets automatically reset when the VN finishes.
    @tparam boolean dontstop Don't stop other music.
 --]]
 function vn.music( filename, params, dontstop )
-   vn._checkstarted()
    local m = {}
    if filename == nil then
       vn.func( function ()
@@ -1711,7 +1717,10 @@ Runs a specified function and continues execution.
    @tparam func func Function to run.
 --]]
 function vn.func( func )
-   vn._checkstarted()
+   if vn._started then
+      func()
+      return
+   end
    local s = vn.State.new()
    s._init = function (self)
       func()

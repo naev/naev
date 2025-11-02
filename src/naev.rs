@@ -15,6 +15,7 @@ unsafe extern "C" {
 }
 
 mod array;
+mod constants;
 mod damagetype;
 mod faction;
 mod input;
@@ -39,6 +40,30 @@ static _QUIT: AtomicBool = AtomicBool::new(false);
 /// Small wrapper to convert a C char* pointer to CStr
 unsafe fn cptr_to_cstr<'a>(s: *const c_char) -> &'a str {
     unsafe { CStr::from_ptr(s).to_str().unwrap() }
+}
+
+/// Restarts the process, *should* be cross-platform
+pub fn restart() -> Result<()> {
+    use std::env;
+    match cargo_util::ProcessBuilder::new(env::current_exe()?)
+        .args(&env::args_os().skip(1).collect::<Vec<_>>())
+        .exec_replace()
+    {
+        Ok(_) => std::process::exit(0),
+        Err(e) => {
+            std::process::exit(e.downcast::<cargo_util::ProcessError>()?.code.unwrap_or(1));
+        }
+    }
+}
+#[unsafe(no_mangle)]
+pub extern "C" fn naev_restart() -> c_int {
+    match restart() {
+        Ok(()) => 0,
+        Err(e) => {
+            warn_err!(e);
+            1
+        }
+    }
 }
 
 /// Entry Point

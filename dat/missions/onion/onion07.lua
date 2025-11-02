@@ -21,6 +21,10 @@
 --]]
 --[[
    Onion 07
+
+   Simple mission mainly there to set up some flavour and story stuff.
+
+   Player sets up honeypot, does some scans, and beats up mercenaries.
 --]]
 local fmt = require "format"
 local vn = require "vn"
@@ -433,7 +437,7 @@ function scan( _pp, tgt )
 end
 
 function land ()
-   vn.clear()
+   vn.reset()
    vn.scene()
    local l337 = onion.vn_l337b01()
    vn.newCharacter( l337 )

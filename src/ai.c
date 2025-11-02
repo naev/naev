@@ -1653,10 +1653,10 @@ static int aiL_minbrakedist( lua_State *L )
 
    /* Run the same calculations. */
    double mod = VMOD( vv );
-   time       = VMOD( *tvel ) / cur_pilot->accel + ai_dt;
+   time       = mod / cur_pilot->accel + ai_dt;
 
-   /* Get relative velocity. */
-   vel = MIN( cur_pilot->speed - mod, mod );
+   /* Get relative velocity of worst-case scenario and current scenario. */
+   vel = MIN( cur_pilot->speed - VMOD( *tvel ), mod );
    if ( vel < 0. )
       vel = 0.;
    /* Get distance to brake. */

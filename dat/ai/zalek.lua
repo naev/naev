@@ -73,6 +73,10 @@ function create()
       return
    end
 
+   mem.scan_msg = _("Initiating routine inspection.")
+   mem.scan_msg_ok = _("No anomalies detected. You may proceed.")
+   mem.scan_msg_bad = _("Anomalies detected! Submit or be eliminated!")
+
    -- See if it's a transport ship
    mem.istransport = pt.transport
 

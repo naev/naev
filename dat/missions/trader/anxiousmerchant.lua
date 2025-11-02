@@ -1,7 +1,8 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Anxious Merchant">
- <priority>3</priority>
+ <unique/>
+ <priority>4</priority>
  <chance>5</chance>
  <location>Bar</location>
  <cond>
@@ -63,6 +64,8 @@ function create()
    end
 
    mem.payment = 14 * (stu_distance + (stu_jumps / 10))
+   -- Made unique so double payment
+   mem.payment = mem.payment*2
 
    -- Range of 5-10 tons for tier 0, 21-58 for tier 4.
    mem.cargo_size = rnd.rnd( 5 + 4 * tier, 10 + 12 * tier )

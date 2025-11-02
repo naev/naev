@@ -2810,6 +2810,8 @@ dat/unidiff/minerva_3d.xml
 dat/unidiff/minerva_3z.xml
 dat/unidiff/onewing_goddard_gone.xml
 dat/unidiff/onion05.xml
+dat/unidiff/onion08.xml
+dat/unidiff/onion08_2.xml
 dat/unidiff/raelid_outpost_death.xml
 dat/unidiff/raglan_outpost_death.xml
 dat/unidiff/sigma13_fixed1.xml
@@ -3103,6 +3105,7 @@ dat/factions/equip/lost.lua
 dat/factions/equip/marauder.lua
 dat/factions/equip/miner.lua
 dat/factions/equip/pirate.lua
+dat/factions/equip/pirate_black_lotus.lua
 dat/factions/equip/proteron.lua
 dat/factions/equip/sirius.lua
 dat/factions/equip/soromid.lua
@@ -3859,6 +3862,7 @@ src/console.c
 src/console.h
 src/constants.c
 src/constants.h
+src/constants.rs
 src/core/src/lib.rs
 src/core/src/lua.rs
 src/core/src/ntime.rs

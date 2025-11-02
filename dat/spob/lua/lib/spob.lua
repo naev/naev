@@ -115,7 +115,7 @@ local function msg_granted_def ()
       }
    elseif fct == f_sirius then
       return {
-         _([["Landing authorized. May Sirichana guide you."]]),
+         _([["Landing authorized. May the Sirichana guide you."]]),
          fmt.f(_([["You are clear to land. Proceed to landing chamber {num}."]]), {num=rnd.rnd(1,100)}),
          _([["Landing accepted. Welcome to Sirichana's domain."]]),
       }

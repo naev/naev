@@ -94,7 +94,7 @@ static inline _private_container *_array_private_container( void *a )
    ( (basic_type *)( _array_create_helper( sizeof( basic_type ), 1 ) ) )
 
 /**
- * @brief Creates a new dynamic array of type `basic_type' with an initial
+ * @brief Creates a new dynamic array of type `basic_type` with an initial
  * capacity
  *
  *    @param basic_type Type of the array to create.

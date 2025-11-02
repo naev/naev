@@ -406,7 +406,8 @@ int outfit_filterStructure( const Outfit *o )
 
 int outfit_filterCore( const Outfit *o )
 {
-   return sp_exclusive( o->slot.spid );
+   return outfit_isProp( o, OUTFIT_PROP_CORE );
+   // return sp_exclusive( o->slot.spid );
 }
 
 int outfit_filterOther( const Outfit *o )
@@ -642,11 +643,15 @@ const char *outfit_getPrice( const Outfit *outfit, unsigned int q,
       return pricestr;
    }
 
-   str = luaL_checkstring( naevL, -4 );
-   strncpy( pricestr, str, sizeof( pricestr ) - 1 );
+   str      = luaL_checkstring( naevL, -4 );
    *price   = 0;
    *canbuy  = lua_toboolean( naevL, -3 );
    *cansell = lua_toboolean( naevL, -2 );
+   // Collour red if can't buy
+   if ( !*canbuy )
+      snprintf( pricestr, sizeof( pricestr ) - 1, "#r%s#0", str );
+   else
+      strncpy( pricestr, str, sizeof( pricestr ) - 1 );
    if ( player_has != NULL ) {
       str = luaL_optstring( naevL, -1, NULL );
       if ( str == NULL )
@@ -3563,6 +3568,15 @@ int outfit_load( void )
    /* Second pass. */
    for ( int i = 0; i < noutfits; i++ ) {
       Outfit *o = &outfit_stack[i];
+
+      /* Parse tags. */
+      for ( int j = 0; j < array_size( o->tags ); j++ ) {
+         if ( strcmp( o->tags[j], "core" ) == 0 ) {
+            outfit_setProp( o, OUTFIT_PROP_CORE );
+            break;
+         }
+      }
+
       if ( ( o->lua_file == NULL ) && ( o->lua_inline == NULL ) )
          continue;
 
