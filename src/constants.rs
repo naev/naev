@@ -82,4 +82,4 @@ impl Constants {
     }
 }
 
-pub static CTS: LazyLock<Constants> = LazyLock::new(|| Constants::load_or_default());
+pub static CTS: LazyLock<Constants> = LazyLock::new(Constants::load_or_default);
