@@ -1,6 +1,6 @@
 <slot name="systems">
  <display>Core Systems</display>
- <description>This slot is used for dedicated core systems of the ship. Other subsystems rely on this system to manage them, and the bulk of the ship's power and shield generation also happens here.</description>
+ <description>This slot is used for dedicated core systems of the ship. Other subsystems rely on those to manage them, and the bulk of the ship's power and shield generation also happens here.</description>
  <exclusive/>
  <required/>
  <icon>systems</icon>
