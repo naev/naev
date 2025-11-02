@@ -6,7 +6,7 @@
  <colour>red</colour>
  <spawn>pirate_black_lotus</spawn>
  <standing>pirate_black_lotus</standing>
- <equip>pirate</equip>
+ <equip>pirate_black_lotus</equip>
  <local_th>5</local_th>
  <useshiddenjumps/>
  <description>The Black Lotus Pirate Clan is a fiercely organized pirate clan located between the Za'lek and Sirius space. Organized crime at its finest.</description>

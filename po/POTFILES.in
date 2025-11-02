@@ -3105,6 +3105,7 @@ dat/factions/equip/lost.lua
 dat/factions/equip/marauder.lua
 dat/factions/equip/miner.lua
 dat/factions/equip/pirate.lua
+dat/factions/equip/pirate_black_lotus.lua
 dat/factions/equip/proteron.lua
 dat/factions/equip/sirius.lua
 dat/factions/equip/soromid.lua
