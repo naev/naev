@@ -43,6 +43,10 @@ function create ()
    local ps = p:ship()
    local price = ps:price()
 
+   mem.scan_msg = _("Analysing ship.")
+   mem.scan_msg_ok = _("You may proceed, wanderer.")
+   mem.scan_msg_bad = _("You'll regret tainting Soromid space with your illicit materials!")
+
    -- See if it's a transport ship
    mem.istransport = ps:tags().transport
 

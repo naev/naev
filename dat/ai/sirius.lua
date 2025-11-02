@@ -27,6 +27,10 @@ local taunt_list_defensive = {
 function create ()
    create_pre()
 
+   mem.scan_msg = _("Appraising ship integrity.")
+   mem.scan_msg_ok = _("Confirmed ship is untainted. May the Sirichana guide you.")
+   mem.scan_msg_bad = _("Your sin has been noticed. Begone!")
+
    local p = ai.pilot()
    local ps = p:ship()
    local price = ps:price()

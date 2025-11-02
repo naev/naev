@@ -30,6 +30,10 @@ function create ()
    local ps = p:ship()
    local price = ps:price()
 
+   mem.scan_msg = _("Checking for contraband.")
+   mem.scan_msg_ok = _("Ship clear. Don't try anything funny.")
+   mem.scan_msg_bad = _("Contraband found! Prepare to die!")
+
    -- See if it's a transport ship
    mem.istransport = ps:tags().transport
 
@@ -72,7 +76,7 @@ function hail ()
       mem.refuel_no = _([["You are not worthy of my attention."]])
    else
       mem.refuel = mem.refuel_base
-      mem.refuel_msg = _([["For you I could make an exception for {credits}."]])
+      mem.refuel_msg = _([["For you, I could make an exception for {credits}."]])
    end
 
    -- Handle bribing
