@@ -641,7 +641,7 @@ naevcrs = rust.bindgen(
 
    if host_machine.system() in ['linux', 'freebsd', 'openbsd', 'netbsd']
       install_data('org.naev.Naev.desktop', install_dir: join_paths (get_option ('datadir'), 'applications'))
-      install_data(org.naev.Naev.metainfo.xml, install_dir: get_option('datadir') / 'metainfo')
+      install_data('org.naev.Naev.metainfo.xml', install_dir: get_option('datadir') / 'metainfo')
 
       install_data(['extras/logos/logo16.png', 'extras/logos/logo32.png', 'extras/logos/logo64.png', 'extras/logos/logo128.png', 'extras/logos/naev.png'],
          rename : ['16x16/apps/org.naev.Naev.png', '32x32/apps/org.naev.Naev.png', '64x64/apps/org.naev.Naev.png', '128x128/apps/org.naev.Naev.png', '256x256/apps/org.naev.Naev.png'],
