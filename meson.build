@@ -244,7 +244,7 @@ if buildExec.disabled() == false
 
    # Luacheck (linter) wrapper
    luacheck = find_program('luacheck', required: false)
-   nluacheck = find_program(join_paths('utils','nluacheck.py'))
+   nluacheck = find_program(files('utils'/'nluacheck.py'))
 
    # Audio
    openal = dependency('openal', required: true)
@@ -342,7 +342,7 @@ if buildExec.disabled() == false
 
    # Generate Rust headers from C
    rust = import('rust')
-   merge_h = find_program('utils/build/merge_h.py')
+   merge_h = find_program(files('utils'/'build'/'merge_h.py'))
    naevch = custom_target(
       'merge headers',
       input: headers,
@@ -400,7 +400,7 @@ naevcrs = rust.bindgen(
    #c_args: bindgen_cargs,
 )
 
-   copydir = find_program('utils/build/copydir.py')
+   copydir = find_program(files('utils'/'build'/'copydir.py'))
    naevc_crate = custom_target(
       'naevc crate',
       input: [ naevcrs, naevc_crate_cargo, configrs ],
@@ -543,7 +543,7 @@ naevcrs = rust.bindgen(
    #   export_dynamic: get_option('debug'),
    #   override_options: ['-DNOMAIN=1'],
    #   install: false)
-   gen_authors = find_program(join_paths('utils','build','gen_authors.py'))
+   gen_authors = find_program(files('utils'/'build'/'gen_authors.py'))
    authors = custom_target(
       'authors',
       command: [
@@ -558,7 +558,7 @@ naevcrs = rust.bindgen(
       install_dir: ndata_path / 'dat',
    )
 
-   gen_gettext_stats = find_program(join_paths('utils','build','gen_gettext_stats.py'))
+   gen_gettext_stats = find_program(files('utils'/'build'/'gen_gettext_stats.py'))
    gettext_stats = custom_target(
       'gettext_stats',
       command: [gen_gettext_stats, '--output', '@OUTPUT@', '@INPUT@'],
@@ -569,7 +569,7 @@ naevcrs = rust.bindgen(
    )
 
    # Need to add other generated data files here as necessary
-   gen_zip_overlay = find_program(join_paths('utils','build','gen_zip_overlay.py'))
+   gen_zip_overlay = find_program(files('utils'/'build'/'gen_zip_overlay.py'))
    gen_zip_command = [gen_zip_overlay, '@OUTPUT@', authors, '--cd', 'gettext_stats', gettext_stats]
    # Note that generated outfits populate build/dat/ which is included with
    # naev.py, so no need to put them in the overlay on top
@@ -674,7 +674,7 @@ subdir('po')
 # Soundtrack
 ####
 if (mutagen.found())
-   soundtrackpy = find_program(join_paths('utils','soundtrack.py'))
+   soundtrackpy = find_program(files('utils'/'soundtrack.py'))
    custom_target(
       'soundtrack',
       command: [
