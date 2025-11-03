@@ -36,7 +36,7 @@ Capturing a ship is a three stage process:
 1. Escort the ship to a spaceport with refuelling capabilities.
 1. Pay to repair the ship.
 
-The cost of repairing a captured ship is the ship's cost, including equipped outfits, multiplied by `(10 + their crew) / (10 + your crew) + 0.25`.
+The cost of repairing a captured ship is the ship's cost, including equipped outfits, multiplied by `(10 + their crew) / (10 + your crew) * 0.85`.
 Additionally, factions do not take kindly to your trying to capture their ships, and you will suffer a large reputation hit when trying to capture ships belonging to any faction.
 Once you successfully capture the ship, you will obtain it, outfits and all, and be able to either use it yourself or [deploy it as an escort](mechanics/playerfleet).
 <% end %>
