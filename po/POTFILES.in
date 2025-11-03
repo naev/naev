@@ -3981,7 +3981,6 @@ src/msgcat.c
 src/msgcat.h
 src/music.c
 src/music.h
-src/mutex/src/lib.rs
 src/naev.c
 src/naev.h
 src/naev.rs

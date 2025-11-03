@@ -5,7 +5,6 @@ subdir('core')
 subdir('ndata')
 subdir('gettext')
 subdir('log')
-subdir('mutex')
 subdir('renderer')
 subdir('toolkit')
 subdir('physics')
@@ -16,7 +15,6 @@ source_rust = files(
    'core/src/start.rs',
    'core/src/utils.rs',
    'core/src/lua.rs',
-   'mutex/src/lib.rs',
    'ndata/src/lib.rs',
    'ndata/src/env.rs',
    'ndata/src/lua.rs',
