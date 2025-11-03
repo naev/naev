@@ -276,6 +276,10 @@ local function loaddoc( filename )
       end
       return fmt.f(_("{constant} {units}"), { constant = value, units = naev.unit(units) } )
    end
+   meta._G.constant_raw = function( name )
+      local CTS = require "constants"
+      return CTS[name]
+   end
 
    -- Translate line by line
    -- TODO ignore <% %> blocks like the python script does.

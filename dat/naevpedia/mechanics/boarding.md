@@ -25,7 +25,7 @@ Higher values will allow you to obtain more loot from the ships you board.
 
 The outfits that you can steal from a ship are random, and the number is influenced by your **Boarding Bonus** modifier.
 Higher modifier values will let you steal more outfits from a ship.
-The cost of repairing a stolen outfit is the base cost multiplied by `(10 + their crew) / (10 + your crew)`.
+The cost of repairing a stolen outfit is the base cost multiplied by `(10 + their crew) / (10 + your crew) * 0.85`.
 
 <% if player.fleetCapacity() > 0 then %>
 ## Capturing
