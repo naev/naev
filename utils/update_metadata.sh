@@ -115,7 +115,7 @@ echo "Regenerating desktop file"
 appstreamcli make-desktop-file "$METAINFO" "$DESKTOP"
 
 echo "Validating metainfo"
-if ! appstreamcli validate "$METAINFO"; then
+if ! appstreamcli validate --pedantic "$METAINFO"; then
    echo "Validation warnings detected: please review above output"
 fi
 
