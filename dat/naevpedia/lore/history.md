@@ -34,7 +34,7 @@ title: History Overview
 <% if faction.get("Collective"):known() then %>
 1. **Collective Goes Rogue** (UST 590)
 <% end %>
-1. **[The Incident](lore/history/incident)** (UST 593:3726.4663)
+1. **The Incident** (UST 593:3726.4663)
 
 ## The First Growth (roughly UST -1000 to UST -400)
 

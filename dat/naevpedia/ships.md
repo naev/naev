@@ -4,6 +4,6 @@ priority: 1
 ---
 # Ships
 
-TODO
+Choose an entry to view via the left sidebar.
 
-[ship stats](mechanics/shipstats)
+[Ship Stats](mechanics/shipstats)
