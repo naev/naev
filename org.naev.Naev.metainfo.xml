@@ -1,13 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2025 Naev DevTeam -->
 <component type="desktop-application">
   <id>org.naev.Naev</id>
-
   <name>Naev</name>
   <summary>2D action/rpg space trading combat game</summary>
   <summary xml:lang="de">2D-Action- und RPG-Weltraumhandels- und Kampfspiel</summary>
   <summary xml:lang="ja">2Dアクション/RPG 宇宙交易戦闘ゲーム</summary>
   <developer id="org.naev">
-   <name>Naev DevTeam</name>
+    <name>Naev DevTeam</name>
   </developer>
   <icon type="stock">org.naev.Naev</icon>
   <url type="homepage">https://naev.org</url>
@@ -19,18 +19,15 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
   <update_contact>bobbens_AT_gmail.com</update_contact>
-
   <recommends>
     <control>pointing</control>
     <control>keyboard</control>
     <!--<control>gamepad</control>-->
   </recommends>
-
   <branding>
     <color type="primary" scheme_preference="light">#62a0ea</color>
     <color type="primary" scheme_preference="dark">#1c71d8</color>
   </branding>
-
   <description>
     <p>
       Naev is a 2D space trading and combat game, taking inspiration from the Escape Velocity series, among others.
@@ -51,14 +48,12 @@
       あなたはトップダウン視点で宇宙船を操縦し、したいことをほぼ自由にすることができます。ジャンルの名前が含むとおり、思うがままに交易をしたり戦いに参加することが可能です。そのうえ、ストーリーを構成する任務の数や、装備と船の数はつねに増えつづけていますし、銀河自体もリリースごとにさらに大きく成長しています。読みものとしての趣向もあって、惑星から装備にいたるすべてに大量の逸話が添えられています。
     </p>
   </description>
-
   <categories>
     <category>Game</category>
     <category>AdventureGame</category>
     <category>ActionGame</category>
     <category>RolePlaying</category>
   </categories>
-
   <releases>
     <release version="0.12.6" type="stable" date="2025-07-09">
       <url type="details">https://naev.org/blarg/2025-07-09_0.12.6/</url>
@@ -166,9 +161,7 @@
       <url type="details">https://naev.org/blarg/2011-06-03_0.5.0</url>
     </release>
   </releases>
-
   <launchable type="desktop-id">org.naev.Naev.desktop</launchable>
-
   <screenshots>
     <screenshot type="default">
       <caption>Flying around in space</caption>
@@ -191,14 +184,12 @@
       <image>https://naev.org/imgs/screenshots_0.12.0/png/rocket_party.png</image>
     </screenshot>
   </screenshots>
-
   <content_rating type="oars-1.0">
     <content_attribute id="violence-fantasy">moderate</content_attribute>
     <content_attribute id="drugs-alcohol">mild</content_attribute>
     <content_attribute id="language-humor">moderate</content_attribute>
     <content_attribute id="money-gambling">mild</content_attribute>
   </content_rating>
-
   <provides>
     <binary>naev</binary>
   </provides>

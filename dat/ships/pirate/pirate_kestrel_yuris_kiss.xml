@@ -26,11 +26,11 @@ The model diverges from the classic Kestrel design by removing the fighter bays 
  </slots>
  <stats>
   <speed_mod>10</speed_mod>
-  <ew_hide>-10</ew_hide>
+  <ew_signature>-25</ew_signature>
   <ew_stealth>-25</ew_stealth>
   <ew_track>25</ew_track>
-  <tur_range>30</tur_range>
-  <fwd_range>30</fwd_range>
+  <weapon_range>30</weapon_range>
+  <weapon_speed>10</weapon_speed>
   <fuel>400</fuel>
  </stats>
 </ship>

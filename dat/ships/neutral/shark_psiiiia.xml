@@ -26,5 +26,6 @@
   <cooldown_mod>-30</cooldown_mod>
   <jump_delay>-50</jump_delay>
   <land_delay>-50</land_delay>
+  <fuel>200</fuel>
  </stats>
 </ship>

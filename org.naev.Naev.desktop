@@ -2,8 +2,8 @@
 Type=Application
 Name=Naev
 Comment=2D action/rpg space trading combat game
-Comment[de]=2D Weltraum Action-/Rollenspiel mit Handels- und Kampfelementen
+Comment[de]=2D-Action- und RPG-Weltraumhandels- und Kampfspiel
 Comment[ja]=2Dアクション/RPG 宇宙交易戦闘ゲーム
 Icon=org.naev.Naev
 Exec=naev
-Categories=Game;AdventureGame;
+Categories=Game;AdventureGame;ActionGame;RolePlaying
