@@ -19,7 +19,7 @@ export LANG=C.UTF-8
 
 METAINFO="org.naev.Naev.metainfo.xml"
 DESKTOP="org.naev.Naev.desktop"
-APP_ID="org.naev.Naev"
+#APP_ID="org.naev.Naev"
 
 TYPE="stable"
 ARGS=()
