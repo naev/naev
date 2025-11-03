@@ -1,7 +1,7 @@
 root = meson.project_source_root()
 
 outfits_dir = meson.project_source_root() / 'dat/outfits/'
-naevpedia_outfits_src = run_command([find_program(meson.project_source_root() / 'utils/find_xml.sh'),
+naevpedia_outfits_src = run_command([find_program(files(meson.project_source_root() / 'utils/find_xml.sh')),
    outfits_dir], check: true)
 
 naevpedia_outfits_sources = []
@@ -9,7 +9,7 @@ foreach ns: naevpedia_outfits_src.stdout().strip().split('\n')
    naevpedia_outfits_sources += [outfits_dir / ns]
 endforeach
 
-outfits_gen = [find_program('outfits.py'), '@INPUT@', '-o', '@OUTPUT@']
+outfits_gen = [find_program(files('outfits.py')), '@INPUT@', '-o', '@OUTPUT@']
 naevpedia_outfits = []
 foreach ns: files(naevpedia_outfits_sources)
    naevpedia_outfits += custom_target(ns.full_path().replace('/', '_'),

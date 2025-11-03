@@ -38,7 +38,7 @@ if genLDoc.disabled() == false
    ldoc = find_program('ldoc', required: genLDoc)
    if ldoc.found()
       c2luadoc = generator(
-         find_program('lua/c2luadoc.sh', required: true),
+         find_program(files('lua'/'c2luadoc.sh')),
          arguments: [doxtractor.full_path(), '@INPUT@', '@OUTPUT@'],
          output   : '@BASENAME@.luadoc',
          depends: [doxtractor],

@@ -1,7 +1,7 @@
 subdir('glcheck')
 
 test('main_menu',
-   find_program('watch-for-msg.py'),
+   find_program(files('watch-for-msg.py')),
    args: [
       naev_py,
       '--exitmainmenu',

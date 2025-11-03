@@ -230,7 +230,7 @@ biooutfits = {
    },
 }
 
-gen_bioship = find_program('generate.py')
+gen_bioship = find_program(files('generate.py'))
 bio_cmd = [gen_bioship, '@INPUT@', '-o', '@OUTPUT@']
 bio_dir = ndata_path / 'dat/outfits/bioship'
 
