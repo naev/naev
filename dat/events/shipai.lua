@@ -215,6 +215,8 @@ function advice ()
    end
    --]=]
 
+   -- TODO message on cooldown for reloading
+
    local msg_asteroids = fmt.f(_([["Asteroid fields can be a good way to make credits. It is simple enough to shoot at asteroids to release minerals and then approach to collect them with your ship's scoop. However, most weapons destroy uncommon and rare materials, and are only suitable for mining common materials. If you want to mine for better materials, you have to use mining-specific weapons or tools such as the {tool1} or {tool2}. You do have to watch out though, as mining is generally a fairly noisy process and can attract unwanted attention."]]),
       {tool1=outfit.get("Mining Lance MK1"), tool2=outfit.get("S&K Plasma Drill")})
    table.insert( adv_rnd, msg_asteroids )
