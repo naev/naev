@@ -3,7 +3,7 @@
  <price>2100000</price>
  <cond>require("buyrep")("Za'lek", 50)</cond>
  <condstr>You need at least 50% reputation with House Za'lek.</condstr>
- <description>A lot of the popularity of the Za'lek Sting comes from the large amount of drones it can deploy for such a small ship. Seeing that, some engineers at Za'lek Fabricators decided to see if they could fit a third fighter bay. It turns out, that, by stripping out a lot of armour and adding auxiliary computational units, it can be made to work. However, these changes do not come cheap.</description>
+ <description>A lot of the popularity of the Za'lek Sting comes from the large amount of drones it can deploy for such a small ship. Seeing that, some engineers at Za'lek Fabricators decided to see if they could fit a third fighter bay into the equation. As it turned out, by stripping out a lot of armour and adding auxiliary computational units, it can be made to work. However, these changes do not come cheap.</description>
  <slots>
   <weapon size="medium" prop="fighter_bay" x="15" y="0" h="2"/>
   <weapon size="medium" prop="fighter_bay" x="4" y="2" h="-5"/>

@@ -3,7 +3,7 @@
  <price>1950000</price>
  <cond>require("buyrep")("Za'lek", 50)</cond>
  <condstr>You need at least 50% reputation with House Za'lek.</condstr>
- <description>The Sting Type II reworks the shield systems of the original model. By rerouting the capacitor recharge loop in a positive feedback loop, regeneration capabilities are significantly increased, at the cost of diminished total shield capacity. The resulting modification results in a ship that is surprisingly robust as long as shields are up, however, the moment they go down the hull tends to fail shortly after.</description>
+ <description>The Sting Type II reworks the shield systems of the original model. By rerouting the capacitor recharge loop in a positive feedback loop, regeneration capabilities are significantly increased, at the cost of diminished total shield capacity. The resulting modification results in a ship that is surprisingly robust as long as the shields are up, however, the moment they go down the hull tends to fail shortly after.</description>
  <stats>
   <armour_mod>-30</armour_mod>
   <shield_mod>-60</shield_mod>
