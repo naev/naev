@@ -9,7 +9,6 @@
   <developer id="org.naev">
    <name>Naev DevTeam</name>
   </developer>
-  <icon type="stock">org.naev.Naev</icon>
   <url type="homepage">https://naev.org</url>
   <url type="bugtracker">https://codeberg.org/naev/naev/issues</url>
   <url type="contribute">https://codeberg.org/naev/naev</url>
