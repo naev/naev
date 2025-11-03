@@ -24,7 +24,6 @@ members = [
    "@BUILD@/src/core",
    "@BUILD@/src/log",
    "@BUILD@/src/gettext",
-   "@BUILD@/src/mutex",
    "@BUILD@/src/ndata",
    "@BUILD@/src/renderer",
    "@BUILD@/src/toolkit",
@@ -49,7 +48,6 @@ anyhow = "1.0"
 naev_core = { path="@BUILD@/src/core" }
 gettext = { path="@BUILD@/src/gettext" }
 log = { path="@BUILD@/src/log" }
-mutex = { path="@BUILD@/src/mutex" }
 ndata = { path="@BUILD@/src/ndata" }
 renderer = { path="@BUILD@/src/renderer" }
 toolkit = { path="@BUILD@/src/toolkit" }
@@ -72,7 +70,6 @@ naevc = { workspace = true }
 naev_core = { workspace = true }
 gettext = { workspace = true }
 log = { workspace = true }
-mutex = { workspace = true }
 ndata = { workspace = true }
 anyhow = { workspace = true }
 formatx = { workspace = true }
