@@ -1,7 +1,7 @@
 <ship name="Quicksilver Mercury" inherits="Quicksilver">
  <rarity>2</rarity>
  <class display="Luxury Courier">Courier</class>
- <price>930000</price>
+ <price>1490000</price>
  <description>A collector's model of the Melendez Quicksilver Courier. This model boasts and much improved engine interface that overcomes much of the limitations of the standard model. Furthermore, a state-of-the-art hyperdrive allows for instant jumping, one of the most popular features of the model. As if it wasn't enough, the finish on the hull uses strategic patterns and reflective materials that can confuse weapon tracking. As expected, the ship comes with a heft price tag that many can not afford.</description>
  <stats>
   <speed_mod>15</speed_mod>
