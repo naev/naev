@@ -108,8 +108,8 @@ else
       "$METAINFO"
 fi
 
-# Reformat XML (We use 3 space tabs)
-xmlstarlet fo -s 3 "$METAINFO" > "${METAINFO}.tmp" && mv "${METAINFO}.tmp" "$METAINFO"
+# Reformat XML (We use 2 space tabs)
+xmlstarlet fo -s 2 "$METAINFO" > "${METAINFO}.tmp" && mv "${METAINFO}.tmp" "$METAINFO"
 
 echo "Regenerating desktop file"
 appstreamcli make-desktop-file "$METAINFO" "$DESKTOP"
