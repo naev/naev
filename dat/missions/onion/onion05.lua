@@ -342,7 +342,7 @@ function land ()
             {_([[Stand silently.]]), "01_stand"},
          }
          if not mem.cube_trashed then
-            table.insert( opts, 1, {_([[Throw the cube.]])}, "01_throw" )
+            table.insert( opts, 1, {_([[Throw the cube.]]), "01_throw"} )
          end
          return opts
       end )
