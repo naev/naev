@@ -7,7 +7,6 @@ use physics::vec2::Vec2;
 use sdl3 as sdl;
 use std::ffi::CStr;
 use std::ops::Deref;
-use std::os::raw::{c_char, c_double, c_int};
 use std::sync::{Arc, Mutex, MutexGuard, OnceLock, RwLock, atomic::AtomicBool, atomic::Ordering};
 
 pub mod buffer;
@@ -922,92 +921,21 @@ impl Context {
         let mut writer = ndata::physfs::File::open(filename, ndata::physfs::Mode::Write)?;
         Ok(img.write_to(&mut writer, image::ImageFormat::Png)?)
     }
-}
 
-#[unsafe(no_mangle)]
-pub extern "C" fn gl_renderRect(
-    x: c_double,
-    y: c_double,
-    w: c_double,
-    h: c_double,
-    c: *mut Vector4<f32>,
-) {
-    let ctx = Context::get();
-    let colour = unsafe { *c };
-    let _ = ctx.draw_rect(x as f32, y as f32, w as f32, h as f32, colour);
-}
-
-#[unsafe(no_mangle)]
-pub extern "C" fn gl_resize() {
-    {
-        let ctx = CONTEXT.get().unwrap();
-        let _ = ctx.resize();
+    /// Converts from in-game coordinates to screen coordinates
+    pub fn game_to_screen_coords(&self, pos: Vector2<f64>) -> Vector2<f64> {
+        let dims = self.dimensions.read().unwrap();
+        let cam = camera::CAMERA.read().unwrap();
+        let view = Vector2::new(dims.view_width as f64, dims.view_height as f64);
+        (pos - cam.pos()) * cam.zoom + view * 0.5
     }
-    unsafe { naevc::gl_resize_c() };
-}
 
-#[unsafe(no_mangle)]
-pub extern "C" fn gl_supportsDebug() -> std::os::raw::c_int {
-    match DEBUG.load(Ordering::Relaxed) {
-        true => 1,
-        false => 0,
-    }
-}
-
-#[unsafe(no_mangle)]
-pub extern "C" fn gl_defViewport() {
-    let ctx = Context::get();
-    let dims = ctx.dimensions.read().unwrap();
-    unsafe {
-        naevc::gl_view_matrix = naevc::mat4_ortho(
-            0.0,
-            dims.view_width.into(),
-            0.0,
-            dims.view_height.into(),
-            -1.0,
-            1.0,
-        );
-    }
-}
-
-#[unsafe(no_mangle)]
-pub extern "C" fn gl_screenshot(cpath: *mut c_char) {
-    let path = unsafe { CStr::from_ptr(cpath) };
-    let ctx = Context::get();
-    match ctx.screenshot(path.to_str().unwrap()) {
-        Ok(_) => (),
-        Err(e) => {
-            warn!("Failed to take a screenshot: {e}");
-        }
-    }
-}
-
-#[unsafe(no_mangle)]
-pub extern "C" fn gl_toggleFullscreen() {
-    let ctx = Context::get();
-    let mut wdw = ctx.window.lock().unwrap();
-    let fullscreen = wdw.fullscreen_state() != sdl::video::FullscreenType::Off;
-    match wdw.set_fullscreen(!fullscreen) {
-        Ok(()) => unsafe {
-            naevc::conf.fullscreen = !fullscreen as c_int;
-        },
-        Err(e) => {
-            warn_err!(e);
-        }
-    }
-}
-
-#[unsafe(no_mangle)]
-pub extern "C" fn gl_setFullscreen(enable: c_int) {
-    let ctx = Context::get();
-    let mut wdw = ctx.window.lock().unwrap();
-    match wdw.set_fullscreen(enable != 0) {
-        Ok(()) => unsafe {
-            naevc::conf.fullscreen = enable as c_int;
-        },
-        Err(e) => {
-            warn_err!(e);
-        }
+    /// Converts from in-game coordinates to screen coordinates
+    pub fn screen_to_game_coords(&self, pos: Vector2<f64>) -> Vector2<f64> {
+        let dims = self.dimensions.read().unwrap();
+        let cam = camera::CAMERA.read().unwrap();
+        let view = Vector2::new(dims.view_width as f64, dims.view_height as f64);
+        (pos - view * 0.5) / cam.zoom + cam.pos()
     }
 }
 
@@ -1131,4 +1059,126 @@ impl mlua::UserData for LuaGfx {
 pub fn open_gfx(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
     let proxy = lua.create_proxy::<LuaGfx>()?;
     Ok(proxy)
+}
+
+// C API
+use std::os::raw::{c_char, c_double, c_int};
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_renderRect(
+    x: c_double,
+    y: c_double,
+    w: c_double,
+    h: c_double,
+    c: *mut Vector4<f32>,
+) {
+    let ctx = Context::get();
+    let colour = unsafe { *c };
+    let _ = ctx.draw_rect(x as f32, y as f32, w as f32, h as f32, colour);
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_resize() {
+    {
+        let ctx = CONTEXT.get().unwrap();
+        let _ = ctx.resize();
+    }
+    unsafe { naevc::gl_resize_c() };
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_supportsDebug() -> std::os::raw::c_int {
+    match DEBUG.load(Ordering::Relaxed) {
+        true => 1,
+        false => 0,
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_defViewport() {
+    let ctx = Context::get();
+    let dims = ctx.dimensions.read().unwrap();
+    unsafe {
+        naevc::gl_view_matrix = naevc::mat4_ortho(
+            0.0,
+            dims.view_width.into(),
+            0.0,
+            dims.view_height.into(),
+            -1.0,
+            1.0,
+        );
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_screenshot(cpath: *mut c_char) {
+    let path = unsafe { CStr::from_ptr(cpath) };
+    let ctx = Context::get();
+    match ctx.screenshot(path.to_str().unwrap()) {
+        Ok(_) => (),
+        Err(e) => {
+            warn!("Failed to take a screenshot: {e}");
+        }
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_toggleFullscreen() {
+    let ctx = Context::get();
+    let mut wdw = ctx.window.lock().unwrap();
+    let fullscreen = wdw.fullscreen_state() != sdl::video::FullscreenType::Off;
+    match wdw.set_fullscreen(!fullscreen) {
+        Ok(()) => unsafe {
+            naevc::conf.fullscreen = !fullscreen as c_int;
+        },
+        Err(e) => {
+            warn_err!(e);
+        }
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_setFullscreen(enable: c_int) {
+    let ctx = Context::get();
+    let mut wdw = ctx.window.lock().unwrap();
+    match wdw.set_fullscreen(enable != 0) {
+        Ok(()) => unsafe {
+            naevc::conf.fullscreen = enable as c_int;
+        },
+        Err(e) => {
+            warn_err!(e);
+        }
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_gameToScreenCoords(
+    nx: *mut c_double,
+    ny: *mut c_double,
+    bx: c_double,
+    by: c_double,
+) {
+    let ctx = Context::get();
+    let p = Vector2::new(bx, by);
+    let v = ctx.game_to_screen_coords(p);
+    unsafe {
+        *nx = v.x;
+        *ny = v.y;
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_screenToGameCoords(
+    nx: *mut c_double,
+    ny: *mut c_double,
+    bx: c_int,
+    by: c_int,
+) {
+    let ctx = Context::get();
+    let p = Vector2::new(bx as c_double, by as c_double);
+    let v = ctx.screen_to_game_coords(p);
+    unsafe {
+        *nx = v.x;
+        *ny = v.y;
+    }
 }

@@ -636,6 +636,7 @@ void gl_renderTextureInterpolate( const glTexture *ta, const glTexture *tb,
                                            inter, &projection, &tex_mat, c );
 }
 
+#if 0
 /**
  * @brief Converts in-game coordinates to screen coordinates.
  *
@@ -677,6 +678,7 @@ void gl_screenToGameCoords( double *nx, double *ny, int bx, int by )
    *nx = ( bx - SCREEN_W * 0.5 ) / z + cx;
    *ny = ( by - SCREEN_H * 0.5 ) / z + cy;
 }
+#endif
 
 /**
  * @brief Blits a sprite, position is relative to the player.
