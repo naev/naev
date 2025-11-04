@@ -15,6 +15,7 @@ source_rust = files(
    'core/src/start.rs',
    'core/src/utils.rs',
    'core/src/lua.rs',
+   'core/src/atomicfloat.rs',
    'ndata/src/lib.rs',
    'ndata/src/env.rs',
    'ndata/src/lua.rs',
