@@ -517,6 +517,8 @@ function jumpin ()
 
    if mem.jumped > 2 then
       hook.timer( 7, "badnews" )
+   elseif system.cur()==backdoorsys then
+      hook.timer( 3, "badnews" )
    end
 end
 
