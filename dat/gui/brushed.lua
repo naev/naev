@@ -794,6 +794,13 @@ function render( _dt )
    gfx.renderTex( main, mod_x, mod_y )
    gui.radarRender( radar_x + mod_x, radar_y + mod_y )
 
+   -- Have to extend it when the player has flow
+   if has_flow then
+      local off = right_side_x - left_side_w + mod_x
+      gfx.renderTexRaw( ext_right, off, mod_y, bar_w*3, end_right_h )
+      gfx.renderTexRaw( end_right, off - bar_w, mod_y, end_right_w, end_right_h, nil, nil, nil, nil, -1, 1 )
+   end
+
    if lockons > 0 then
       gfx.renderTex( icon_lockon, 379 + mod_x, 30 + mod_y )
    end
