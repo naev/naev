@@ -26,6 +26,7 @@ local npc_description= _("A terminal to access the Crimson Gauntlet Virtual Real
 local gauntletsys = system.get("Crimson Gauntlet")
 
 local sfx_clear = audio.new( 'snd/sounds/jingles/victory.ogg' )
+local player_lost_round = false
 
 function create ()
    misn.npcAdd( "approach_gauntlet", _("Crimson Gauntlet Terminal"), npc_portrait, npc_description )
@@ -179,7 +180,7 @@ local function enemy_out( p )
    if idx then
       table.remove( enemies, idx )
    end
-   if mem.wave_started and #enemies == 0 then
+   if mem.wave_started and #enemies==0 and not player_lost_round then
       mem.wave_started = false
       mem.all_enemies_dead()
    end
@@ -194,6 +195,7 @@ function p_death( p )
    enemy_out( p )
 end
 function player_lost_disable ()
+   player_lost_round = true
    local pp = player.pilot()
    if not pp:disabled() then
       return
@@ -208,6 +210,7 @@ function player_lost_disable ()
    end
 end
 function player_lost ()
+   player_lost_round = true
    local pp = player.pilot()
    if pp:armour() > 0 then
       -- Something revived the player, ZD-5 Guardian?
