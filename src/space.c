@@ -1720,7 +1720,8 @@ void space_init( const char *sysname, int do_simulate )
    system_scheduler( 0., 1 );
 
    /* we now know this system */
-   sys_setFlag( cur_system, SYSTEM_KNOWN );
+   if ( !player.discover_off )
+      sys_setFlag( cur_system, SYSTEM_KNOWN );
 
    NTracingZoneName( _ctx_simulating, "space_init[simulation]", 1 );
    /* Simulate system. */
