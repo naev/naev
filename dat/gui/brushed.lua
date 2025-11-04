@@ -144,7 +144,8 @@ function create()
    --Positions
    --Main is at 0,0
 
-   margin = 14
+   -- used to be 14 before corner stuff was removed
+   margin = 0
 
    has_flow = (flowlib.max( pp ) > 0)
 
