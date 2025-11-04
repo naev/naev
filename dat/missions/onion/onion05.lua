@@ -285,7 +285,7 @@ function land ()
       misn.markerAdd( deliverspb )
       mem.state = STATE_METBROKER
 
-   elseif mem.state==STATE_BEATENEMIES and cspb==deliverspb then
+   elseif (mem.state==STATE_BEATENEMIES or mem.state==STATE_METBROKER) and cspb==deliverspb then
       vn.clear()
       vn.scene()
       local worker = vn.newCharacter( _("Dockworker"), {image=vni.generic()} )
@@ -487,13 +487,11 @@ function enter ()
       hook.pilot( boss, "death", "bossdead" )
       -- TODO actually handling aliveness? Meh, just let them kill the player
       pilotai.setTaunt( boss, _("That's the ship! Try to take them alive!") )
-      deliverspb:landDeny()
    end
 end
 
 function bossdead ()
    mem.state = STATE_BEATENEMIES
-   deliverspb:landAllow()
 
    -- Have one say something about running away
    local say = false
