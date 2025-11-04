@@ -879,8 +879,8 @@ You hear a gulp.
       {_([["l337_b01 was your mentor?"]]), "07_l337"},
       {_([["Mind Control?"]]), "07_mindcontrol"},
       {_([["How did lonewolf4 not notice?"]]), "07_lonewolf4"},
-      {_([["Thanks for sharing."]]), "07_share"},
-      {_([["What do we do next?"]]), "07_next"},
+      {_([["Thanks for sharing. (continue)"]]), "07_share"},
+      {_([["What do we do next?" (continue)]]), "07_next"},
    }
 
    vn.label("07_station")
