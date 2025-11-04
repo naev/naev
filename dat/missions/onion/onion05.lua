@@ -496,8 +496,8 @@ function bossdead ()
    -- Have one say something about running away
    local say = false
    for k,p in ipairs(enemies) do
-      if p:exists() and p:armour() > 10 then
-         if not say then
+      if p:exists() then
+         if (not say) and p:armour() > 10 then
             p:broadcast(_("Shit! Get out of here!"))
             say = true
          end
