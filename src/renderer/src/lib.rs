@@ -27,8 +27,8 @@ const MIN_WIDTH: u32 = 1280;
 const MIN_HEIGHT: u32 = 720;
 const MIN_WIDTH_F32: f32 = MIN_WIDTH as f32;
 const MIN_HEIGHT_F32: f32 = MIN_HEIGHT as f32;
-const VIEW_WIDTH: AtomicF32 = AtomicF32::new(0.);
-const VIEW_HEIGHT: AtomicF32 = AtomicF32::new(0.);
+static VIEW_WIDTH: AtomicF32 = AtomicF32::new(0.);
+static VIEW_HEIGHT: AtomicF32 = AtomicF32::new(0.);
 static DEBUG: AtomicBool = AtomicBool::new(false);
 
 fn debug_callback(source: u32, msg_type: u32, id: u32, severity: u32, msg: &str) {
@@ -988,7 +988,7 @@ impl mlua::UserData for LuaGfx {
         methods.add_function("screencoords", |_, pos: Vec2| -> mlua::Result<Vec2> {
             let ctx = Context::get();
             let mut screen = ctx.game_to_screen_coords(pos.into_vector2());
-            screen.y = VIEW_WIDTH.load(Ordering::Relaxed) as f64 - screen.y;
+            screen.y = VIEW_HEIGHT.load(Ordering::Relaxed) as f64 - screen.y;
             Ok(screen.into())
         });
         /*
