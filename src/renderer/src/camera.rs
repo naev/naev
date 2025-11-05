@@ -16,7 +16,7 @@ pub struct Camera {
     pos: Vector2<f64>,
     /// Fixed camera offset
     offset: Vector2<f64>,
-    /// Location of previosu frame
+    /// Location of previous frame
     old: Vector2<f64>,
     /// Target location it is trying to go to
     target: Vector2<f64>,
