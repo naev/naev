@@ -1837,15 +1837,13 @@ static void pilot_renderFramebufferBase( Pilot *p, GLuint fbo, double fw,
 void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh,
                               const Lighting *L )
 {
-   double        x, y, w, h;
+   double        w, h;
    double        timeleft, elapsed;
    const Effect *e = NULL;
 
    /* Transform coordinates. */
    w = p->ship->size;
    h = p->ship->size;
-   gl_gameToScreenCoords( &x, &y, p->solid.pos.x - w / 2.,
-                          p->solid.pos.y - h / 2. );
 
    /* Render effects - already sorted by priority and then timer. */
    for ( int i = 0; i < array_size( p->effects ); i++ ) {

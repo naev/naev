@@ -636,50 +636,6 @@ void gl_renderTextureInterpolate( const glTexture *ta, const glTexture *tb,
                                            inter, &projection, &tex_mat, c );
 }
 
-#if 0
-/**
- * @brief Converts in-game coordinates to screen coordinates.
- *
- *    @param[out] nx New screen X coordinate.
- *    @param[out] ny New screen Y coordinate.
- *    @param bx Game X coordinate to translate.
- *    @param by Game Y coordinate to translate.
- */
-void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by )
-{
-   double cx, cy, z;
-
-   /* Get parameters. */
-   cam_getPos( &cx, &cy );
-   z = cam_getZoom();
-
-   /* calculate position - we'll use relative coords to player */
-   *nx = ( bx - cx ) * z + SCREEN_W * 0.5;
-   *ny = ( by - cy ) * z + SCREEN_H * 0.5;
-}
-
-/**
- * @brief Converts screen coordinates to in-game coordinates.
- *
- *    @param[out] nx New in-game X coordinate.
- *    @param[out] ny New in-game Y coordinate.
- *    @param bx Screen X coordinate to translate.
- *    @param by Screen Y coordinate to translate.
- */
-void gl_screenToGameCoords( double *nx, double *ny, int bx, int by )
-{
-   double cx, cy, z;
-
-   /* Get parameters. */
-   cam_getPos( &cx, &cy );
-   z = cam_getZoom();
-
-   /* calculate position - we'll use relative coords to player */
-   *nx = ( bx - SCREEN_W * 0.5 ) / z + cx;
-   *ny = ( by - SCREEN_H * 0.5 ) / z + cy;
-}
-#endif
-
 /**
  * @brief Blits a sprite, position is relative to the player.
  *
