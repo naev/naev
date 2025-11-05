@@ -68,7 +68,7 @@ The hologram slightly flickers.
 
    vn.label("explain")
    sai(_([["Hopefully this is of no offense - I was able to record the protocol last time you joined, and should be able to replicate the connection to join like before."]]))
-   sai(_([["I've done some modifications to further mask your presence, but more likely than no you will be noticed."]]))
+   sai(_([["I've done some modifications to further mask your presence, but more likely than not you will be noticed."]]))
    vn.jump("menu")
 
    vn.label("accept")
