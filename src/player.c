@@ -1168,6 +1168,7 @@ static void player_renderAimHelper( double dt )
 
    b = pilot_aimAngle( player.p, &target->solid.pos, &target->solid.vel );
 
+   /* TODO this should be based on the weapons... */
    theta = 22. * M_PI / 180.;
 
    /* The angular error will give the exact colour that is used. */
