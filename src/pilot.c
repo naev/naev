@@ -1988,8 +1988,21 @@ void pilot_render( Pilot *p )
    z = cam_getZoom();
    w = p->ship->size;
    h = p->ship->size;
-   gl_gameToScreenCoords( &x, &y, p->solid.pos.x - w / 2.,
-                          p->solid.pos.y - h / 2. );
+   gl_gameToScreenCoords( &x, &y, p->solid.pos.x, p->solid.pos.y );
+
+   /* Check if needs scaling. */
+   if ( pilot_isFlag( p, PILOT_LANDING ) )
+      scale = CLAMP( 0., 1., p->ptimer / p->landing_delay );
+   else if ( pilot_isFlag( p, PILOT_TAKEOFF ) )
+      scale = CLAMP( 0., 1., 1. - p->ptimer / p->landing_delay );
+   else
+      scale = 1.;
+
+   /* On-screen Quad. */
+   double screen_w = w * scale * z;
+   double screen_h = h * scale * z;
+   double screen_x = x - screen_w * 0.5;
+   double screen_y = y - screen_h * 0.5;
 
    /* Check if inbounds */
    if ( ( x < -w ) || ( x > SCREEN_W + w ) || ( y < -h ) ||
@@ -1997,13 +2010,6 @@ void pilot_render( Pilot *p )
       inbounds = 0;
 
    if ( inbounds ) {
-      /* Check if needs scaling. */
-      if ( pilot_isFlag( p, PILOT_LANDING ) )
-         scale = CLAMP( 0., 1., p->ptimer / p->landing_delay );
-      else if ( pilot_isFlag( p, PILOT_TAKEOFF ) )
-         scale = CLAMP( 0., 1., 1. - p->ptimer / p->landing_delay );
-      else
-         scale = 1.;
 
       /* Render effects. */
       for ( int i = 0; i < array_size( p->effects ); i++ ) {
@@ -2040,9 +2046,8 @@ void pilot_render( Pilot *p )
             /* Draw framebuffer with depth on screen. */
             /* TODO fix this shit. Texture coordinates have to be flipped... */
             gl_renderTextureDepthRaw(
-               gl_screen.fbo_tex[2], gl_screen.fbo_depth_tex[2], 0,
-               x + ( 1. - scale ) * z * w * 0.5,
-               y + ( 1. - scale ) * z * h * 0.5, w * scale * z, h * scale * z,
+               gl_screen.fbo_tex[2], gl_screen.fbo_depth_tex[2], 0, screen_x,
+               screen_y, screen_w, screen_h,
                // 0, 0, w / (double)gl_screen.nw, h / (double)gl_screen.nh,
                // NULL,
                0., 0., w / (double)gl_screen.nw, h / (double)gl_screen.nh, NULL,
@@ -2075,10 +2080,9 @@ void pilot_render( Pilot *p )
          /* gl_screen.current_fbo is bound. */
 
          /* Draw the depth. */
-         gl_renderDepthRaw(
-            gl_screen.fbo_depth_tex[2], 0, x + ( 1. - scale ) * z * w * 0.5,
-            y + ( 1. - scale ) * z * h * 0.5, w * scale * z, h * scale * z, 0,
-            0., w / (double)gl_screen.nw, h / (double)gl_screen.nh, 0. );
+         gl_renderDepthRaw( gl_screen.fbo_depth_tex[2], 0, screen_x, screen_y,
+                            screen_w, screen_h, 0, 0., w / (double)gl_screen.nw,
+                            h / (double)gl_screen.nh, 0. );
 
          /* Go to the shader now. */
          glUseProgram( ed->program );
@@ -2100,9 +2104,8 @@ void pilot_render( Pilot *p )
                                      0 );
 
          projection = gl_view_matrix;
-         mat4_translate_scale_xy( &projection, x + ( 1. - scale ) * z * w * 0.5,
-                                  y + ( 1. - scale ) * z * h * 0.5,
-                                  scale * z * w, scale * z * h );
+         mat4_translate_scale_xy( &projection, screen_x, screen_y, screen_w,
+                                  screen_h );
          gl_uniformMat4( ed->projection, &projection );
 
          tex_mat = mat4_identity();
@@ -2151,9 +2154,7 @@ void pilot_render( Pilot *p )
 
    /* Erase the depth so it doesn't affect trails of other pilots. */
    if ( inbounds && ( p->ship->gfx_3d != NULL ) ) {
-      gl_clipRect( x + ( 1. - scale ) * z * w * 0.5,
-                   y + ( 1. - scale ) * z * h * 0.5, w * scale * z,
-                   h * scale * z );
+      gl_clipRect( screen_x, screen_y, screen_w, screen_h );
       glClear( GL_DEPTH_BUFFER_BIT );
       gl_unclipRect();
    }
