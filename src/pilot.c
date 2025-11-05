@@ -4599,6 +4599,7 @@ mat4 pilot_local_transform( const Pilot *p )
    } else
       mat4_rotate( &H, -p->solid.dir + M_PI_2, 0.0, 1.0, 0.0 );
    mat4_rotate( &H, -M_PI / 4.0, 1., 0., 0. );
+   // mat4_scale_xy( &H, 1., M_SQRT2 );
    return H;
 }
 

@@ -27,8 +27,8 @@ const MIN_WIDTH: u32 = 1280;
 const MIN_HEIGHT: u32 = 720;
 const MIN_WIDTH_F32: f32 = MIN_WIDTH as f32;
 const MIN_HEIGHT_F32: f32 = MIN_HEIGHT as f32;
-static VIEW_WIDTH: AtomicF32 = AtomicF32::new(0.);
-static VIEW_HEIGHT: AtomicF32 = AtomicF32::new(0.);
+pub(crate) static VIEW_WIDTH: AtomicF32 = AtomicF32::new(0.);
+pub(crate) static VIEW_HEIGHT: AtomicF32 = AtomicF32::new(0.);
 static DEBUG: AtomicBool = AtomicBool::new(false);
 
 fn debug_callback(source: u32, msg_type: u32, id: u32, severity: u32, msg: &str) {
@@ -927,22 +927,6 @@ impl Context {
         let mut writer = ndata::physfs::File::open(filename, ndata::physfs::Mode::Write)?;
         Ok(img.write_to(&mut writer, image::ImageFormat::Png)?)
     }
-
-    /// Converts from in-game coordinates to screen coordinates
-    pub fn game_to_screen_coords(&self, pos: Vector2<f64>) -> Vector2<f64> {
-        let dims = self.dimensions.read().unwrap();
-        let cam = camera::CAMERA.read().unwrap();
-        let view = Vector2::new(dims.view_width as f64, dims.view_height as f64);
-        (pos - cam.pos()) * cam.zoom + view * 0.5
-    }
-
-    /// Converts from in-game coordinates to screen coordinates
-    pub fn screen_to_game_coords(&self, pos: Vector2<f64>) -> Vector2<f64> {
-        let dims = self.dimensions.read().unwrap();
-        let cam = camera::CAMERA.read().unwrap();
-        let view = Vector2::new(dims.view_width as f64, dims.view_height as f64);
-        (pos - view * 0.5) / cam.zoom + cam.pos()
-    }
 }
 
 use mlua::UserDataRef;
@@ -986,8 +970,10 @@ impl mlua::UserData for LuaGfx {
          * @luafunc screencoords
          */
         methods.add_function("screencoords", |_, pos: Vec2| -> mlua::Result<Vec2> {
-            let ctx = Context::get();
-            let mut screen = ctx.game_to_screen_coords(pos.into_vector2());
+            let mut screen = camera::CAMERA
+                .read()
+                .unwrap()
+                .game_to_screen_coords(pos.into_vector2());
             screen.y = VIEW_HEIGHT.load(Ordering::Relaxed) as f64 - screen.y;
             Ok(screen.into())
         });
@@ -1156,9 +1142,8 @@ pub extern "C" fn gl_gameToScreenCoords(
     bx: c_double,
     by: c_double,
 ) {
-    let ctx = Context::get();
     let p = Vector2::new(bx, by);
-    let v = ctx.game_to_screen_coords(p);
+    let v = camera::CAMERA.read().unwrap().game_to_screen_coords(p);
     unsafe {
         *nx = v.x;
         *ny = v.y;
@@ -1172,9 +1157,8 @@ pub extern "C" fn gl_screenToGameCoords(
     bx: c_int,
     by: c_int,
 ) {
-    let ctx = Context::get();
     let p = Vector2::new(bx as c_double, by as c_double);
-    let v = ctx.screen_to_game_coords(p);
+    let v = camera::CAMERA.read().unwrap().screen_to_game_coords(p);
     unsafe {
         *nx = v.x;
         *ny = v.y;
