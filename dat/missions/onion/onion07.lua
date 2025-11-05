@@ -212,7 +212,7 @@ They go silent for a bit.
 
       vn.label("05_lonewolf4")
       vn.func( function() var.push("onion_guess_insider", "lonewolf4") end )
-      l337(_([["That's exactly what I was thinking! You can see them trying to pin the blame on me! It's almost as like they are trying to escalate the situation to their own game."]]))
+      l337(_([["That's exactly what I was thinking! You can see them trying to pin the blame on me! It's almost as if they are trying to escalate the situation to their own game."]]))
       l337(_([["Good to see we are on the same page."]]))
       vn.jump("05_cont")
 
@@ -230,7 +230,7 @@ They let out a sigh.]]))
       vn.jump("05_thoughts")
 
       vn.label("05_thoughts")
-      l337(_([["I was thinking that it is probably lonewolf4, you can see them trying to pin the blame on me. It's almost as like they are trying to escalate the situation to their own game!"]]))
+      l337(_([["I was thinking that it is probably lonewolf4, you can see them trying to pin the blame on me. It's almost as if they are trying to escalate the situation to their own game!"]]))
 
       vn.label("05_cont")
       l337(_([["I've always got the creeps from them. With their weird role-playing and funny talk and everything."]]))
