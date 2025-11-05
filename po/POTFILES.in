@@ -3854,8 +3854,8 @@ src/console.c
 src/console.h
 src/constants.c
 src/constants.h
-src/constants.rs
 src/core/src/atomicfloat.rs
+src/core/src/constants.rs
 src/core/src/lib.rs
 src/core/src/lua.rs
 src/core/src/ntime.rs

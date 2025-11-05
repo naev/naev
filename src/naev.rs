@@ -15,7 +15,6 @@ unsafe extern "C" {
 }
 
 mod array;
-mod constants;
 mod damagetype;
 mod faction;
 mod input;

@@ -4,15 +4,16 @@ use log::warn_err;
 use std::sync::LazyLock;
 
 pub struct Constants {
-    physics_speed_damp: f32,
-    stealth_min_dist: f32,
-    ship_min_mass: f32,
-    ew_jump_bonus_range: f32,
-    ew_asteroid_dist: f32,
-    ew_jump_detect_dist: f32,
-    ew_spob_detect_dist: f32,
-    pilot_shield_down_time: f32,
-    pilot_disabled_armour: f32,
+    pub physics_speed_damp: f32,
+    pub stealth_min_dist: f32,
+    pub ship_min_mass: f32,
+    pub ew_jump_bonus_range: f32,
+    pub ew_asteroid_dist: f32,
+    pub ew_jump_detect_dist: f32,
+    pub ew_spob_detect_dist: f32,
+    pub pilot_shield_down_time: f32,
+    pub pilot_disabled_armour: f32,
+    pub camera_angle: f32,
 }
 impl Constants {
     fn load() -> Result<Self> {
@@ -43,6 +44,7 @@ impl Constants {
         let ew_spob_detect_dist = get_f32(&tbl, "EW_SPOBDETECT_DIST", 20e3);
         let pilot_shield_down_time = get_f32(&tbl, "PILOT_SHIELD_DOWN_TIME", 5.);
         let pilot_disabled_armour = get_f32(&tbl, "PILOT_DISABLED_ARMOUR", 0.1);
+        let camera_angle = get_f32(&tbl, "CAMERA_ANGLE", std::f32::consts::FRAC_PI_4);
 
         Ok(Self {
             physics_speed_damp,
@@ -54,6 +56,7 @@ impl Constants {
             ew_spob_detect_dist,
             pilot_shield_down_time,
             pilot_disabled_armour,
+            camera_angle,
         })
     }
 
@@ -78,6 +81,7 @@ impl Constants {
             ew_spob_detect_dist: 20e3,
             pilot_shield_down_time: 5.,
             pilot_disabled_armour: 0.1,
+            camera_angle: std::f32::consts::FRAC_PI_4,
         }
     }
 }
