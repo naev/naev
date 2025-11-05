@@ -20,6 +20,10 @@ constants CTS = {
    .EW_SPOBDETECT_DIST     = 20e3,
    .PILOT_SHIELD_DOWN_TIME = 5.0,
    .PILOT_DISABLED_ARMOUR  = 0.1, /* 0 before 0.13.0 */
+   .CAMERA_ANGLE           = M_PI_4,
+   // Meta constant calculated from CAMERA_ANGLE
+   .CAMERA_VIEW     = 1.0,
+   .CAMERA_VIEW_INV = 1.0,
 };
 
 int constants_init( void )
@@ -63,7 +67,12 @@ int constants_init( void )
 
    CT_DBL( PILOT_DISABLED_ARMOUR );
 
+   CT_DBL( CAMERA_ANGLE );
+
 #undef CT_DBL
+
+   CTS.CAMERA_VIEW     = sin( CTS.CAMERA_ANGLE );
+   CTS.CAMERA_VIEW_INV = 1.0 / CTS.CAMERA_VIEW;
 
    lua_close( L );
    return 0;

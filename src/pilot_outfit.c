@@ -176,7 +176,7 @@ int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, vec2 *v )
    if ( ship_isFlag( p->ship, SHIP_3DMOUNTS ) ) {
       vec3 v2;
       mat4 H = pilot_local_transform( p );
-      mat4_mul_vec( &v2, &H, &m->pos );
+      pilot_apply_local_transform( &v2, &H, &m->pos );
       x = v2.v[0];
       y = v2.v[1];
    } else {

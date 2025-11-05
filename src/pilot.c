@@ -2229,7 +2229,7 @@ void pilot_render( Pilot *p )
          /* Visualize the trail emitters. */
          if ( use_3d ) {
             vec3 v2;
-            mat4_mul_vec( &v2, &H, &trail->pos );
+            pilot_apply_local_transform( &v2, &H, &trail->pos );
             v.x = v2.v[0];
             v.y = v2.v[1];
          } else {
@@ -2918,7 +2918,7 @@ void pilot_sample_trails( Pilot *p, int none )
 
       if ( use_3d ) {
          vec3 v;
-         mat4_mul_vec( &v, &H, &trail->pos );
+         pilot_apply_local_transform( &v, &H, &trail->pos );
          dx = v.v[0];
          dy = v.v[1];
          dz = v.v[2];
@@ -4599,8 +4599,13 @@ mat4 pilot_local_transform( const Pilot *p )
    } else
       mat4_rotate( &H, -p->solid.dir + M_PI_2, 0.0, 1.0, 0.0 );
    mat4_rotate( &H, -M_PI / 4.0, 1., 0., 0. );
-   // mat4_scale_xy( &H, 1., M_SQRT2 );
    return H;
+}
+
+void pilot_apply_local_transform( vec3 *out, const mat4 *H, const vec3 *v )
+{
+   mat4_mul_vec( out, H, v );
+   out->v[1] *= CTS.CAMERA_VIEW_INV;
 }
 
 /**

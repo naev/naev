@@ -323,10 +323,9 @@ impl Camera {
         let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed);
         let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed);
         let view = Vector2::new(view_width as f64, view_height as f64);
-        //let mut screen = (pos - self.pos()) * self.zoom;
-        //screen.y *= GAME_TO_SCREEN.load( Ordering::Relaxed );
-        //screen + view * 0.5
-        (pos - self.pos()) * self.zoom + view * 0.5
+        let mut screen = (pos - self.pos()) * self.zoom;
+        screen.y *= GAME_TO_SCREEN.load(Ordering::Relaxed);
+        screen + view * 0.5
     }
 
     /// Converts from in-game coordinates to screen coordinates
@@ -334,10 +333,9 @@ impl Camera {
         let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed);
         let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed);
         let view = Vector2::new(view_width as f64, view_height as f64);
-        //let mut game = (pos - view * 0.5) / self.zoom;
-        //game.y *= SCREEN_TO_GAME.load( Ordering::Relaxed );
-        //game + self.pos()
-        (pos - view * 0.5) / self.zoom + self.pos()
+        let mut game = (pos - view * 0.5) / self.zoom;
+        game.y *= SCREEN_TO_GAME.load(Ordering::Relaxed);
+        game + self.pos()
     }
 }
 
