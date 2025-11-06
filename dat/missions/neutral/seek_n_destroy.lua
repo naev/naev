@@ -290,6 +290,7 @@ function enter ()
          target_ship:setHilight( true )
          target_ship:setVisplayer()
          target_ship:setHostile()
+         target_ship:memory().capturable = true
 
          mem.death_hook = hook.pilot( target_ship, "death", "target_death" )
          mem.board_hook = hook.pilot( target_ship, "board", "target_board" )
@@ -412,9 +413,9 @@ function hail( target )
       return
    end
 
-   -- Don't duplicate if in memory
+   -- Don't duplicate if in memory and can't talk to drones (for now?)
    local m = target:memory()
-   if m._seekndestroy then
+   if m._seekndestroy or m.isdrone then
       return
    end
    m._seekndestroy = true
@@ -748,6 +749,7 @@ end
 function target_board( p )
    mem.stage = 4
    clear_target_hook()
+   p:setDisable() -- Permanently disable
 
    vntk.msg( _("Target captured"), _("You board the ship and, after a short but intense firefight, are able to take the wanted outlaw alive. Time to hand them in to the authorities.") )
    p:setDisable() -- Permanently disable
@@ -757,8 +759,6 @@ function target_board( p )
    misn.osdActive( 3 )
    misn.markerRm(mem.marker)
    pilot.toggleSpawn(true)
-
-   player.unboard()
 end
 
 function clear_target_hook ()
