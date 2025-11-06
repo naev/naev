@@ -154,6 +154,7 @@ void gl_renderRectH( const mat4 *H, const glColour *c, int filled )
    gl_endSolidProgram();
 }
 
+#if 0
 /**
  * @brief Renders a cross at a given position.
  *
@@ -168,6 +169,7 @@ void gl_renderCross( double x, double y, double r, const glColour *c )
    glUniform1f( shaders.crosshairs.paramf, 1. ); /* No outline. */
    gl_renderShader( x, y, r, r, 0., &shaders.crosshairs, c, 1 );
 }
+#endif
 
 /**
  * @brief Renders a triangle at a given position.

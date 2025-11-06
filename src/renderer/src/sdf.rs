@@ -79,3 +79,17 @@ impl SdfRenderer {
 
     draw_sdf_func_ex!(draw_cross_ex, CrossUniform, program_cross, buffer_cross);
 }
+
+use std::ffi::c_double;
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_renderCross(x: c_double, y: c_double, r: c_double, c: *const Vector4<f32>) {
+    let ctx = Context::get();
+    let colour = match c.is_null() {
+        true => Vector4::<f32>::from([1.0, 1.0, 1.0, 1.0]),
+        false => unsafe { *c },
+    };
+    let _ = ctx
+        .sdf
+        .draw_cross(&ctx, x as f32, y as f32, r as f32, colour);
+}

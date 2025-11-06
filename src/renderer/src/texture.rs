@@ -1896,7 +1896,7 @@ pub extern "C" fn gl_renderTexture(
     ty: c_double,
     tw: c_double,
     th: c_double,
-    c: *mut Vector4<f32>,
+    c: *const Vector4<f32>,
     angle: c_double,
 ) {
     if ctex.is_null() {
@@ -1960,7 +1960,7 @@ pub extern "C" fn gl_renderSDF(
     y: c_double,
     w: c_double,
     h: c_double,
-    c: *mut Vector4<f32>,
+    c: *const Vector4<f32>,
     angle: c_double,
     outline: c_double,
 ) {
