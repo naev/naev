@@ -612,6 +612,14 @@ naevcrs = rust.bindgen(
       }
    )
 
+   pluginmgr_cli_py = configure_file(
+      input: join_paths('utils','build','pluginmgr-cli.py'),
+      output: 'pluginmgr-cli.py',
+      configuration: {
+         'pluginmgr_cli_bin' : meson.project_build_root() / 'src' / target_triplet / rust_artifact_dir / 'pluginmgr-cli',
+      }
+   )
+
    gdbinit = configure_file(
       input: join_paths('utils','build','gdbinit.in'),
       output: '.gdbinit',
