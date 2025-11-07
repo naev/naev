@@ -1,13 +1,19 @@
 [package]
 name = "pluginmgr-cli"
-version = "0.1.0"
-edition = "2021"
-description = "Command-line interface for the Naev Plugin Manager"
-license = "GPL-3.0-or-later"
-authors = ["Naev DevTeam & contributors"]
+workspace = "@BUILD@"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[lints]
+workspace = true
+
+[[bin]]
+name = "pluginmgr-cli"
+path = "@SOURCE@/src/pluginmgr-cli/src/main.rs"
 
 [dependencies]
-pluginmgr = { path = "../pluginmgr" }
+pluginmgr = { path = "@BUILD@/src/pluginmgr" }
 anyhow = { workspace = true }
 tracing = { workspace = true }
 tracing-subscriber = { workspace = true }

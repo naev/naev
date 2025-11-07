@@ -27,6 +27,8 @@ members = [
    "@BUILD@/src/ndata",
    "@BUILD@/src/renderer",
    "@BUILD@/src/toolkit",
+   "@BUILD@/src/pluginmgr",
+   "@BUILD@/src/pluginmgr-cli",
 ]
 
 [workspace.package]
@@ -64,6 +66,33 @@ derive_more = { version = "2", features = ["from", "into"] }
 palette = "0.7" # Colour conversion
 trie-rs = { version = "0.4" }
 softfloat = "1.0"
+
+# Plugin Manager dependencies
+thiserror = "1"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+tracing-appender = "0.2"
+# Serialization / XML
+serde = { version = "1", features = ["derive"] }
+serde_json = "1.0"
+quick-xml = { version = "0.36", features = ["serialize", "overlapped-lists"] }
+# Networking and archive handling
+reqwest = { version = "0.12", features = ["json", "stream", "rustls-tls"] }
+zip = { version = "2", default-features = false, features = ["deflate"] }
+# Utilities and filesystem
+walkdir = "2"
+rayon = "1"
+url = "2"
+directories = "5"
+camino = "1"
+fs-err = "2"
+tempfile = "3"
+indicatif = "0.17"
+# Git operations
+git2 = "0.20"
+# Async runtime and byte buffer types
+tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
+bytes = "1"
 
 [dependencies]
 naevc = { workspace = true }

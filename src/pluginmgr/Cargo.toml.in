@@ -1,10 +1,15 @@
 [package]
 name = "pluginmgr"
-version = "0.1.0"
-edition = "2021"
-description = "Core library for managing Naev plugins (repository + local installs)"
-license = "GPL-3.0-or-later"
-authors = ["Naev DevTeam & contributors"]
+workspace = "@BUILD@"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[lints]
+workspace = true
+
+[lib]
+path = "@SOURCE@/src/pluginmgr/src/lib.rs"
 
 [dependencies]
 anyhow = { workspace = true }

@@ -518,6 +518,20 @@ naevcrs = rust.bindgen(
       link_args: naev_bin_link_args,
       install: true)
 
+   # Naev pluginmgr cli for managing plugins.
+   # Inherits the cargo environment above, so should work in cross compilation environments.
+   pluginmgr_cli = custom_target('pluginmgr-cli',
+      depends: [naev_rlib_compile],
+      console: true,
+      command: [
+         'env', cargo_env, cargo,
+         'build',
+         cargo_options,
+         '--package', 'pluginmgr-cli'
+      ],
+      output: 'pluginmgr-cli'
+   )
+
    # Simplifies clippy stuff
    clippy = run_target( 'clippy',
       depends: [naev_rlib_compile],
