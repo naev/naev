@@ -4156,6 +4156,13 @@ src/player_inventory.c
 src/player_inventory.h
 src/plugin.c
 src/plugin.h
+src/pluginmgr/src/install.rs
+src/pluginmgr/src/lib.rs
+src/pluginmgr/src/local.rs
+src/pluginmgr/src/model.rs
+src/pluginmgr/src/mount.rs
+src/pluginmgr/src/repository.rs
+src/pluginmgr/src/validator.rs
 src/quadtree.c
 src/quadtree.h
 src/queue.c

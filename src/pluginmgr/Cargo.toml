@@ -1,0 +1,27 @@
+[package]
+name = "pluginmgr"
+version = "0.1.0"
+edition = "2021"
+description = "Core library for managing Naev plugins (repository + local installs)"
+license = "GPL-3.0-or-later"
+authors = ["Naev DevTeam & contributors"]
+
+[dependencies]
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+serde = { workspace = true }
+quick-xml = { workspace = true }
+reqwest = { workspace = true }
+zip = { workspace = true }
+walkdir = { workspace = true }
+rayon = { workspace = true }
+url = { workspace = true }
+directories = { workspace = true }
+camino = { workspace = true }
+fs-err = { workspace = true }
+tempfile = { workspace = true }
+indicatif = { workspace = true }
+git2 = { workspace = true }
+tokio = { workspace = true }
+bytes = { workspace = true }
