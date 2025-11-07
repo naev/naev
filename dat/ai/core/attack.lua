@@ -95,6 +95,13 @@ function atk.think( target, si, noretarget )
          end
       end
 
+      -- Use berserk chip
+      if mem._o.berserk_chip then
+         if rnd.rnd() < 0.2 and ai.dist( target ) > 2000 and p:energy() > 50 and p:armour() > 30 then
+            p:outfitToggle( mem._o.berserk_chip )
+         end
+      end
+
       -- The bite
       if mem._o.bite and p:outfitReady( mem._o.bite )then
          if ai.dir( target ) < math.rad(30) then
