@@ -97,8 +97,13 @@ function atk.think( target, si, noretarget )
 
       -- Use berserk chip
       if mem._o.berserk_chip then
-         if rnd.rnd() < 0.2 and ai.dist( target ) > 2000 and p:energy() > 50 and p:armour() > 30 then
-            p:outfitToggle( mem._o.berserk_chip )
+         local e = p:energy()
+         local a = p:armour()
+         local range = libatk.primary_range()
+         if rnd.rnd() < 0.2 and ai.dist( target ) < range*1.2 and e > 50 and a > 40 then
+            p:outfitToggle( mem._o.berserk_chip, true )
+         elseif e < 40 or a < 30 then
+            p:outfitToggle( mem._o.berserk_chip, false )
          end
       end
 
