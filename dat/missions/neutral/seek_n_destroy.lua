@@ -312,40 +312,38 @@ end
 
 -- Enemies wait for the player
 function trigger_ambush()
-   local jp = jump.get( system.cur(), mem.last_sys )
-   local x, y
+   local jp = jump.get( system.cur(), mem.last_sys ):pos()
+
+   local leader
    ambush = {}
+   for k,s in ipairs{ mem.aship, mem.bship, mem.bship } do
+      local pos = jp + vec2.newP( 2000+2000*rnd.rnd(), rnd.angle() )
+      local p = pilot.add( mem.aship, mem.target_faction, pos )
 
-   x = 4000 * rnd.rnd() - 2000
-   y = 4000 * rnd.rnd() - 2000
-   local pos = jp:pos() + vec2.new(x,y)
-   ambush[1] = pilot.add( mem.aship, mem.target_faction, pos )
-   x = 4000 * rnd.rnd() - 2000
-   y = 4000 * rnd.rnd() - 2000
-   pos = jp:pos() + vec2.new(x,y)
-   ambush[2] = pilot.add( mem.bship, mem.target_faction, pos )
-   x = 4000 * rnd.rnd() - 2000
-   y = 4000 * rnd.rnd() - 2000
-   pos = jp:pos() + vec2.new(x,y)
-   ambush[3] = pilot.add( mem.bship, mem.target_faction, pos )
+      p:setHostile(true)
+      p:memory().capturable = true
 
-   ambush[1]:setHostile()
-   ambush[2]:setHostile()
-   ambush[3]:setHostile()
-   ambush[1]:control()
-   ambush[2]:control()
-   ambush[3]:control()
-   ambush[1]:attack(player.pilot())
-   ambush[2]:attack(player.pilot())
-   ambush[3]:attack(player.pilot())
+      if not leader then
+         leader = p
+      else
+         p:setLeader(p)
+      end
+
+      table.insert( ambush, p )
+   end
+
+   pilotai.guard( ambush, jp + vec2.newP( 100, rnd.angle() ) )
 
    mem.msg = hook.timer( 1.0, "ambust_msg" )
 end
 
 -- Enemies explain that they are ambushing the player
 function ambust_msg()
-   for i = 1, 3 do
-      ambush[i]:comm( fmt.f( comms.ambush[rnd.rnd(1,#comms.ambush)], {plt=mem.name} ) )
+   for k,p in ipairs(ambush) do
+      if p:exists() then
+         p:comm( fmt.f( comms.ambush[rnd.rnd(1,#comms.ambush)], {plt=mem.name} ) )
+         return
+      end
    end
 end
 
