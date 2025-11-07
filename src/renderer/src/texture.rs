@@ -390,6 +390,7 @@ impl Drop for Texture {
     }
 }
 impl Texture {
+    /// Copies the parameters of a sampler from src to dst
     fn copy_sampler_params(gl: &glow::Context, dst: &glow::Sampler, src: &glow::Sampler) {
         for param in [
             glow::TEXTURE_WRAP_S,
@@ -406,6 +407,7 @@ impl Texture {
         // https://github.com/grovesNL/glow/issues/342
     }
 
+    /// Tries to clone a texture
     pub fn try_clone(&self) -> Result<Self> {
         let ctx = Context::get();
         let gl = &ctx.gl;
@@ -431,10 +433,12 @@ impl Texture {
         })
     }
 
+    /// Scales a texture to a new size
     pub fn scale(&self, ctx: &Context, w: usize, h: usize) -> Result<Self> {
         self.scale_wrap(&ctx.as_wrap(), w, h)
     }
 
+    /// Scales a texture to a new size using a ContextWrapper
     pub fn scale_wrap(&self, wctx: &ContextWrapper, w: usize, h: usize) -> Result<Self> {
         let fbo = FramebufferBuilder::new(Some("Downscaler"))
             .width(w)
@@ -481,10 +485,12 @@ impl Texture {
         Ok(tex)
     }
 
+    /// Binds a texture
     pub fn bind(&self, ctx: &Context, idx: u32) {
         self.bind_gl(&ctx.gl, idx)
     }
 
+    /// Binds a texture directly using an OpenGL context
     pub fn bind_gl(&self, gl: &glow::Context, idx: u32) {
         unsafe {
             gl.active_texture(glow::TEXTURE0 + idx);
@@ -493,10 +499,12 @@ impl Texture {
         }
     }
 
+    /// Unbinds a texture
     pub fn unbind(ctx: &Context) {
         Self::unbind_gl(&ctx.gl)
     }
 
+    /// Unbinds a texture using an OpenGL context
     pub fn unbind_gl(gl: &glow::Context) {
         unsafe {
             gl.bind_texture(glow::TEXTURE_2D, None);
@@ -504,6 +512,7 @@ impl Texture {
         }
     }
 
+    /// Draws a texture
     pub fn draw(&self, ctx: &Context, x: f32, y: f32, w: f32, h: f32) -> Result<()> {
         let dims = ctx.dimensions.read().unwrap();
         #[rustfmt::skip]
@@ -519,6 +528,7 @@ impl Texture {
         self.draw_ex(ctx, &uniform)
     }
 
+    /// Draws a texture using uniform data directly
     pub fn draw_ex(&self, ctx: &Context, uniform: &TextureUniform) -> Result<()> {
         let gl = &ctx.gl;
         ctx.program_texture.use_program(gl);
@@ -538,6 +548,7 @@ impl Texture {
         Ok(())
     }
 
+    /// Draws an SDF texture
     pub fn draw_sdf_ex(
         &self,
         ctx: &Context,
@@ -589,10 +600,12 @@ impl Texture {
         self.draw_scale_ex(ctx, &uniform)
     }
 
+    /// Draws a texture while scaling it
     pub fn draw_scale_ex(&self, ctx: &Context, uniform: &TextureScaleUniform) -> Result<()> {
         self.draw_scale_ex_wrap(&ctx.as_wrap(), uniform)
     }
 
+    /// Draws a texture while scaling it directly with uniform data
     pub fn draw_scale_ex_wrap(
         &self,
         wctx: &ContextWrapper,
@@ -616,11 +629,13 @@ impl Texture {
         Ok(())
     }
 
+    /// Converts a texture into a pointer for use with C API
     pub fn into_ptr(self) -> *mut Self {
         unsafe { Arc::increment_strong_count(Arc::into_raw(self.texture.clone())) }
         Box::into_raw(Box::new(self))
     }
 
+    /// Gets the sprite number from a direction for a spritesheet
     pub fn sprite_from_dir(&self, dir: f64) -> (usize, usize) {
         use std::f64::consts::PI;
         let sxy = self.sx * self.sy;
@@ -2174,7 +2189,7 @@ impl UserData for Texture {
          *
          *    @luatparam Tex tex Texture to set filter.
          *    @luatparam string min Minification filter ("nearest" or "linear")
-         *    @luatparam[opt] string mag Magnification filter ("nearest" or "linear").
+         *    @luatparam[opt=in] string mag Magnification filter ("nearest" or "linear").
          * Defaults to min.
          * @luafunc setFilter
          */
@@ -2196,9 +2211,9 @@ impl UserData for Texture {
          *    @luatparam Tex tex Texture to set filter.
          *    @luatparam string horiz Horizontal wrapping (`"clamp"`, `"repeat"`, or
          * `"mirroredrepeat"` )
-         *    @luatparam[opt] string vert Vertical wrapping (`"clamp"`, `"repeat"`, or
+         *    @luatparam[opt=horiz] string vert Vertical wrapping (`"clamp"`, `"repeat"`, or
          * `"mirroredrepeat"` )
-         *    @luatparam[opt] string depth Depth wrapping (`"clamp"`, `"repeat"`, or
+         *    @luatparam[opt=horiz] string depth Depth wrapping (`"clamp"`, `"repeat"`, or
          * `"mirroredrepeat"` )
          * @luafunc setWrap
          */
