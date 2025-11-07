@@ -27416,74 +27416,78 @@ msgid "* [Great House Za'lek](lore/factions/zalek)"
 msgstr ""
 
 #: dat/naevpedia/lore/factions.md:14
-msgid "* [House Goddard](lore/factions/goddard)"
+msgid "* House Goddard"
 msgstr ""
 
-#: dat/naevpedia/lore/factions.md:16
+#: dat/naevpedia/lore/factions.md:15
+msgid "* House Yetmer-O'rez"
+msgstr ""
+
+#: dat/naevpedia/lore/factions.md:17
 msgid "## Independent Factions"
 msgstr ""
 
-#: dat/naevpedia/lore/factions.md:18
+#: dat/naevpedia/lore/factions.md:19
 msgid "* [Soromid](lore/factions/soromid)"
 msgstr ""
 
-#: dat/naevpedia/lore/factions.md:19
-msgid "* [The Frontier](lore/factions/frontier)"
-msgstr ""
-
 #: dat/naevpedia/lore/factions.md:20
-msgid "* [Frontier Liberation Front](lore/factions/flf)"
+msgid "* The Frontier"
 msgstr ""
 
 #: dat/naevpedia/lore/factions.md:21
-msgid "* [Space Traders Society](lore/factions/spacetraders)"
+msgid "* Frontier Liberation Front"
 msgstr ""
 
 #: dat/naevpedia/lore/factions.md:22
-msgid "   * Mining Vrata"
+msgid "* Space Traders Society"
 msgstr ""
 
 #: dat/naevpedia/lore/factions.md:23
-msgid "   * Astra Vigilis"
+msgid "   * Mining Vrata"
 msgstr ""
 
 #: dat/naevpedia/lore/factions.md:24
+msgid "   * Astra Vigilis"
+msgstr ""
+
+#: dat/naevpedia/lore/factions.md:25
 msgid "   * Imperial Red Star"
 msgstr ""
 
-#: dat/naevpedia/lore/factions.md:26
+#: dat/naevpedia/lore/factions.md:27
 msgid "* [Thurion](lore/factions/thurion)"
 msgstr ""
 
-#: dat/naevpedia/lore/factions.md:29
+#: dat/naevpedia/lore/factions.md:30
 msgid "* [Sovereign Proteron Autarchy](lore/factions/proteron)"
 msgstr ""
 
-#: dat/naevpedia/lore/factions.md:32
+#: dat/naevpedia/lore/factions.md:33
 msgid "## Pirates"
 msgstr ""
 
-#: dat/naevpedia/lore/factions.md:34
+#: dat/naevpedia/lore/factions.md:35
 msgid "* [Galactic Space Pirates](lore/factions/pirates)"
 msgstr ""
 
-#: dat/naevpedia/lore/factions.md:35
+#: dat/naevpedia/lore/factions.md:36
 msgid "* Marauders"
 msgstr ""
 
-#: dat/naevpedia/lore/factions.md:37
+#: dat/naevpedia/lore/factions.md:38
 msgid "* Dreamer Clan"
 msgstr ""
 
-#: dat/naevpedia/lore/factions.md:40
+#: dat/naevpedia/lore/factions.md:41
 msgid "* Raven Clan"
 msgstr ""
 
-#: dat/naevpedia/lore/factions.md:43
+#: dat/naevpedia/lore/factions.md:44
 msgid "* Wild Ones"
 msgstr ""
 
-#: dat/naevpedia/lore/factions.md:46
+#: dat/naevpedia/lore/factions.md:47
 msgid "* Black Lotus"
 msgstr ""
 
@@ -30239,7 +30243,7 @@ msgid "1. **Collective Goes Rogue** (UST 590)"
 msgstr ""
 
 #: dat/naevpedia/lore/history.md:37
-msgid "1. **[The Incident](lore/history/incident)** (UST 593:3726.4663)"
+msgid "1. **The Incident** (UST 593:3726.4663)"
 msgstr ""
 
 #: dat/naevpedia/lore/history.md:39
@@ -30558,19 +30562,6 @@ msgstr ""
 msgid "The galaxy is now an unstable place, full of danger and opportunity. Nobody knows what the future holds, but perhaps, like Daedris, one person can make all the difference."
 msgstr ""
 
-#: dat/naevpedia/lore/history/incident.md:2
-msgid "The Incident"
-msgstr ""
-
-
-#: dat/naevpedia/lore/history/incident.md:4
-msgid "# The Incident"
-msgstr ""
-
-#: dat/naevpedia/lore/history/incident.md:6
-msgid "TODO"
-msgstr ""
-
 #: dat/naevpedia/mechanics.md:2
 msgid "Mechanics Overview"
 msgstr ""
@@ -30852,7 +30843,7 @@ msgid "Higher modifier values will let you steal more outfits from a ship."
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:28
-msgid "The cost of repairing a stolen outfit is the base cost multiplied by `(10 + their crew) / (10 + your crew)`."
+msgid "The cost of repairing a stolen outfit is the base cost multiplied by `(10 + their crew) / (10 + your crew) * 0.85`."
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:31
@@ -30876,7 +30867,7 @@ msgid "1. Pay to repair the ship."
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:39
-msgid "The cost of repairing a captured ship is the ship's cost, including equipped outfits, multiplied by `(10 + their crew) / (10 + your crew) + 0.25`."
+msgid "The cost of repairing a captured ship is the ship's cost, including equipped outfits, multiplied by `(10 + their crew) / (10 + your crew) * 0.85`."
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:40
@@ -31075,38 +31066,46 @@ msgid "Disable damage is also affected by absorption and penetration."
 msgstr ""
 
 #: dat/naevpedia/mechanics/damage.md:28
-msgid "## Damage Types"
+msgid "Finally, ships will also be disabled when their armour goes under <%= fmt.number(constant_raw( \"PILOT_DISABLED_ARMOUR\" )*100) %>%."
 msgstr ""
 
-#: dat/naevpedia/mechanics/damage.md:30
-msgid "There are different damage types that differentiate how much damage is done to shields versus armour, and the amount of knockback."
+#: dat/naevpedia/mechanics/damage.md:29
+msgid "However, this is much less reliable than using weapons that cause disabling damage."
 msgstr ""
 
 #: dat/naevpedia/mechanics/damage.md:31
-msgid "For example, kinetic damage does 80% damage to shields, 115% damage to armour, and 100% knockback."
-msgstr ""
-
-#: dat/naevpedia/mechanics/damage.md:32
-msgid "On the other hand, ion damage does 130% damage to shields, 80% damage to armour, and has 10% knockback."
+msgid "## Damage Types"
 msgstr ""
 
 #: dat/naevpedia/mechanics/damage.md:33
-msgid "Using the best damage type can play a critical role in winning fights."
+msgid "There are different damage types that differentiate how much damage is done to shields versus armour, and the amount of knockback."
+msgstr ""
+
+#: dat/naevpedia/mechanics/damage.md:34
+msgid "For example, kinetic damage does 80% damage to shields, 115% damage to armour, and 100% knockback."
 msgstr ""
 
 #: dat/naevpedia/mechanics/damage.md:35
-msgid "## Shields Down and Regeneration"
+msgid "On the other hand, ion damage does 130% damage to shields, 80% damage to armour, and has 10% knockback."
 msgstr ""
 
-#: dat/naevpedia/mechanics/damage.md:37
-msgid "When a ship's shields get knocked offline, it takes 5 seconds for the shields to start regenerating again, and can be reduced with lower **Shield Down Time**."
+#: dat/naevpedia/mechanics/damage.md:36
+msgid "Using the best damage type can play a critical role in winning fights."
 msgstr ""
 
 #: dat/naevpedia/mechanics/damage.md:38
+msgid "## Shields Down and Regeneration"
+msgstr ""
+
+#: dat/naevpedia/mechanics/damage.md:40
+msgid "When a ship's shields get knocked offline, it takes <%= constant( \"PILOT_SHIELD_DOWN_TIME\" ) %> seconds for the shields to start regenerating again, and can be reduced with lower **Shield Down Time**."
+msgstr ""
+
+#: dat/naevpedia/mechanics/damage.md:41
 msgid "Any damage during this window will restart the time it takes to regenerate shields."
 msgstr ""
 
-#: dat/naevpedia/mechanics/damage.md:39
+#: dat/naevpedia/mechanics/damage.md:42
 msgid "When shields get back up there they will regenerate faster during the first 3 seconds."
 msgstr ""
 
@@ -31612,55 +31611,6 @@ msgstr ""
 msgid "Do note that if you make them angry again, it is likely they will be not as kind as before."
 msgstr ""
 
-#: dat/naevpedia/mechanics/heat.md:2
-msgid "Heat Management"
-msgstr ""
-
-
-#: dat/naevpedia/mechanics/heat.md:4
-msgid "# Heat"
-msgstr ""
-
-#: dat/naevpedia/mechanics/heat.md:6
-msgid "Most outfits generate heat when used."
-msgstr ""
-
-#: dat/naevpedia/mechanics/heat.md:7
-msgid "They will heat up, and in turn, heat up the rest of the ship."
-msgstr ""
-
-#: dat/naevpedia/mechanics/heat.md:8
-msgid "As the temperature goes up, weapons will become increasingly inaccurate and fire at a slower rate."
-msgstr ""
-
-#: dat/naevpedia/mechanics/heat.md:9
-msgid "Weapons become more inaccurate at over 500 K and have lower fire rate at over 1,100 K."
-msgstr ""
-
-#: dat/naevpedia/mechanics/heat.md:11
-msgid "## Active Cooldown"
-msgstr ""
-
-#: dat/naevpedia/mechanics/heat.md:13
-msgid "Although ships cool down naturally through radiation of excess heat, they can perform an active cooldown manoeuvre to dump all excess heat in a short amount of time."
-msgstr ""
-
-#: dat/naevpedia/mechanics/heat.md:14
-msgid "Not only does it get rid of all excess heat, but it will also reload all weapons on the ship."
-msgstr ""
-
-#: dat/naevpedia/mechanics/heat.md:15
-msgid "The downside is the ship will be immovable and unable to defend itself during this time."
-msgstr ""
-
-#: dat/naevpedia/mechanics/heat.md:16
-msgid "An active cooldown can be performed by either double tapping the <%= \"#b\"..naev.keyGet(\"reverse\")..\"#0\" %> key or by pressing the <%= \"#b\"..naev.keyGet(\"cooldown\")..\"#0\" %> key."
-msgstr ""
-
-#: dat/naevpedia/mechanics/heat.md:17
-msgid "The amount of time it takes to do an active cooldown depends on both the mass of the ship and the amount of excess heat."
-msgstr ""
-
 #: dat/naevpedia/mechanics/hyperspace.md:2
 msgid "Hyperspace and Jumping"
 msgstr ""
@@ -31897,90 +31847,102 @@ msgid "They have a maximum amount of ammunition that they can hold, and will slo
 msgstr ""
 
 #: dat/naevpedia/mechanics/launchers.md:21
-msgid "Ammunition can be fully regenerated by performing an active [cooldown](mechanics/heat) and is also regenerated when landing."
+msgid "Ammunition can be fully regenerated by performing an active cooldown and is also regenerated when landing."
 msgstr ""
 
 #: dat/naevpedia/mechanics/launchers.md:23
-msgid "## Lock-On and Calibration"
+msgid "An active cooldown can be performed by either double tapping the <%= \"#b\"..naev.keyGet(\"reverse\")..\"#0\" %> key or by pressing the <%= \"#b\"..naev.keyGet(\"cooldown\")..\"#0\" %> key."
+msgstr ""
+
+#: dat/naevpedia/mechanics/launchers.md:24
+msgid "The downside is the ship will be immovable and unable to defend itself during this time."
 msgstr ""
 
 #: dat/naevpedia/mechanics/launchers.md:25
-msgid "Seeking launchers have both a **Lock-On** and **In-flight Calibration** time."
-msgstr ""
-
-#: dat/naevpedia/mechanics/launchers.md:26
-msgid "**Lock-On** refers to how long it takes to obtain a lock on your current target, and takes an amount of time based on the launcher itself, and the [signature](mechanics/ewarfare) of your target."
+msgid "The amount of time it takes to do an active cooldown depends on both the mass of the ship and the amount of excess heat."
 msgstr ""
 
 #: dat/naevpedia/mechanics/launchers.md:27
-msgid "Until the launchers gets a lock-on, you will not be able to fire it."
+msgid "## Lock-On and Calibration"
 msgstr ""
 
-#: dat/naevpedia/mechanics/launchers.md:28
-msgid "The lock-on status can be seen by an icon on the weapon in the GUI and will turn into a cross-hair when locked on."
+#: dat/naevpedia/mechanics/launchers.md:29
+msgid "Seeking launchers have both a **Lock-On** and **In-flight Calibration** time."
 msgstr ""
 
 #: dat/naevpedia/mechanics/launchers.md:30
-msgid "**In-flight Calibration** refers to the time it takes for the launched munition to start tracking the target."
+msgid "**Lock-On** refers to how long it takes to obtain a lock on your current target, and takes an amount of time based on the launcher itself, and the [signature](mechanics/ewarfare) of your target."
 msgstr ""
 
 #: dat/naevpedia/mechanics/launchers.md:31
-msgid "A circle will slowly appear around the launched munition when it begins in-flight calibration."
+msgid "Until the launchers gets a lock-on, you will not be able to fire it."
 msgstr ""
 
 #: dat/naevpedia/mechanics/launchers.md:32
-msgid "When it starts tracking, the circle will disappear and the munition will begin accelerating and turning towards its target."
+msgid "The lock-on status can be seen by an icon on the weapon in the GUI and will turn into a cross-hair when locked on."
 msgstr ""
 
-#: dat/naevpedia/mechanics/launchers.md:33
-msgid "Note that even when not calibrated, the munition will be able to hit its target."
+#: dat/naevpedia/mechanics/launchers.md:34
+msgid "**In-flight Calibration** refers to the time it takes for the launched munition to start tracking the target."
 msgstr ""
 
 #: dat/naevpedia/mechanics/launchers.md:35
-msgid "## Jamming"
+msgid "A circle will slowly appear around the launched munition when it begins in-flight calibration."
+msgstr ""
+
+#: dat/naevpedia/mechanics/launchers.md:36
+msgid "When it starts tracking, the circle will disappear and the munition will begin accelerating and turning towards its target."
 msgstr ""
 
 #: dat/naevpedia/mechanics/launchers.md:37
-msgid "Each seeking launcher can have **Jam Resistance** allowing it to avoid being jammed by the target it is tracking."
-msgstr ""
-
-#: dat/naevpedia/mechanics/launchers.md:38
-msgid "If the target has **Jamming**, once the munition is in the target's [signature range](mechanics/ewarfare), it will either get jammed or not."
+msgid "Note that even when not calibrated, the munition will be able to hit its target."
 msgstr ""
 
 #: dat/naevpedia/mechanics/launchers.md:39
-msgid "The chance of getting jammed is `Jamming - Jam Resistance`."
-msgstr ""
-
-#: dat/naevpedia/mechanics/launchers.md:40
-msgid "If the munition is jammed, it can be affected by one of the following effects:"
+msgid "## Jamming"
 msgstr ""
 
 #: dat/naevpedia/mechanics/launchers.md:41
-msgid "1. **Slowed:** the munition will move up to half as fast but still track."
+msgid "Each seeking launcher can have **Jam Resistance** allowing it to avoid being jammed by the target it is tracking."
 msgstr ""
 
 #: dat/naevpedia/mechanics/launchers.md:42
-msgid "2. **Guidance Jammed:** the munition will either go straight forward or endlessly loop either to the left or right."
+msgid "If the target has **Jamming**, once the munition is in the target's [signature range](mechanics/ewarfare), it will either get jammed or not."
 msgstr ""
 
 #: dat/naevpedia/mechanics/launchers.md:43
-msgid "3. **Self-Destruct:** the munition will blow up."
+msgid "The chance of getting jammed is `Jamming - Jam Resistance`."
+msgstr ""
+
+#: dat/naevpedia/mechanics/launchers.md:44
+msgid "If the munition is jammed, it can be affected by one of the following effects:"
 msgstr ""
 
 #: dat/naevpedia/mechanics/launchers.md:45
-msgid "## Point Defense"
+msgid "1. **Slowed:** the munition will move up to half as fast but still track."
+msgstr ""
+
+#: dat/naevpedia/mechanics/launchers.md:46
+msgid "2. **Guidance Jammed:** the munition will either go straight forward or endlessly loop either to the left or right."
 msgstr ""
 
 #: dat/naevpedia/mechanics/launchers.md:47
-msgid "Some launcher munitions are susceptible to point defense weapons and will have **Armour** and **Absorption** stats like ships."
-msgstr ""
-
-#: dat/naevpedia/mechanics/launchers.md:48
-msgid "Point defense systems will be able to damage these munitions, and they will explode if they take a total of damage over the amount of armour they have."
+msgid "3. **Self-Destruct:** the munition will blow up."
 msgstr ""
 
 #: dat/naevpedia/mechanics/launchers.md:49
+msgid "## Point Defense"
+msgstr ""
+
+#: dat/naevpedia/mechanics/launchers.md:51
+msgid "Some launcher munitions are susceptible to point defense weapons and will have **Armour** and **Absorption** stats like ships."
+msgstr ""
+
+#: dat/naevpedia/mechanics/launchers.md:52
+msgid "Point defense systems will be able to damage these munitions, and they will explode if they take a total of damage over the amount of armour they have."
+msgstr ""
+
+#: dat/naevpedia/mechanics/launchers.md:53
 msgid "See [damage](mechanics/damage) for how the damage is computed."
 msgstr ""
 
@@ -32313,19 +32275,23 @@ msgstr ""
 msgid "The ships will drift without friction unless they surpass their maximum speed, which will slow down the ship until it returns to the maximum speed."
 msgstr ""
 
-#: dat/naevpedia/mechanics/movement.md:9
+#: dat/naevpedia/mechanics/movement.md:8
+msgid "A ship's maximum speed is determined by their base speed with an added <%= fmt.number(1./constant_raw( \"PHYSICS_SPEED_DAMP\" )*100.) %>% of the ships acceleration."
+msgstr ""
+
+#: dat/naevpedia/mechanics/movement.md:10
 msgid "## Afterburners and Other Movement Outfits"
 msgstr ""
 
-#: dat/naevpedia/mechanics/movement.md:11
+#: dat/naevpedia/mechanics/movement.md:12
 msgid "Movement outfits can be useful for getting away or chasing down other ships."
 msgstr ""
 
-#: dat/naevpedia/mechanics/movement.md:12
+#: dat/naevpedia/mechanics/movement.md:13
 msgid "While outfits may be bound to [weapon sets](mechanics/weaponsets) to use them, most movement outfits can also be triggered by double tapping acceleration with the <%= \"#b\"..naev.keyGet(\"accel\")..\"#0\" %> key."
 msgstr ""
 
-#: dat/naevpedia/mechanics/movement.md:13
+#: dat/naevpedia/mechanics/movement.md:14
 msgid "Furthermore, if supported, double tapping turn with the <%= \"#b\"..naev.keyGet(\"left\")..\"#0\" %> and <%= \"#b\"..naev.keyGet(\"right\")..\"#0\" %> keys."
 msgstr ""
 
@@ -32916,11 +32882,11 @@ msgid "# Outfits"
 msgstr ""
 
 #: dat/naevpedia/outfits.md:7
-msgid "TODO"
+msgid "Choose an entry to view via the left sidebar."
 msgstr ""
 
 #: dat/naevpedia/outfits.md:9
-msgid "[ship stats](mechanics/shipstats)"
+msgid "[Ship Stats](mechanics/shipstats)"
 msgstr ""
 
 #: dat/naevpedia/ships.md:2
@@ -32933,11 +32899,11 @@ msgid "# Ships"
 msgstr ""
 
 #: dat/naevpedia/ships.md:7
-msgid "TODO"
+msgid "Choose an entry to view via the left sidebar."
 msgstr ""
 
 #: dat/naevpedia/ships.md:9
-msgid "[ship stats](mechanics/shipstats)"
+msgid "[Ship Stats](mechanics/shipstats)"
 msgstr ""
 
 #: dat/naevpedia/ships/classes.md:2
