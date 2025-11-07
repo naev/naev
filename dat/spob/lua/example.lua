@@ -27,9 +27,8 @@ function load ()
       mem.tex = lg.newImage( "path/to/image.png" )
       mem.pos = mem.spob:pos()
       mem.tw, mem.th = tex:dim()
-      mem.pos = mem.pos + vec2.new( -mem.tw/2, mem.th/2 )
    end
-   return mem.tex.tex, (mem.tw+mem.th)/4
+   return mem.tex.tex, (mem.tw+mem.th)*0.25
 end
 
 --[[
@@ -66,7 +65,7 @@ end
 function render ()
    local z = camera.getZoom()
    local x, y = gfx.screencoords( mem.pos ):get()
-   mem.tex:draw( x, y, 0, 1/z )
+   mem.tex:draw( x-mem.tw*0.5, y-mem.th*0.5, 0, 1/z )
 end
 
 --[[
