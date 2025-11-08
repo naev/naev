@@ -39,6 +39,7 @@ struct App {
     repo: git2::Repository,
     remote: Vec<PluginInfo>,
     local: Vec<LocalPlugin>,
+    remote_selected: Option<PluginInfo>,
 }
 
 impl App {
@@ -104,6 +105,7 @@ impl App {
             repo,
             remote,
             local,
+            remote_selected: None,
         })
     }
 
@@ -116,12 +118,34 @@ impl App {
     }
 
     fn view(&self) -> iced::Element<'_, Message> {
-        widget::Column::from_vec(
+        use widget::text;
+        let bold = iced::Font {
+            weight: iced::font::Weight::Bold,
+            ..Default::default()
+        };
+        let list = widget::Column::from_vec(
             self.remote
                 .iter()
-                .map(|v| widget::text(v.name.clone()).into())
+                .map(|v| text(v.name.clone()).into())
                 .collect(),
         )
-        .into()
+        .width(iced::Length::Fill)
+        .padding(10);
+        let name = match &self.remote_selected {
+            Some(rs) => &rs.name,
+            None => "N/A",
+        };
+        let author = match &self.remote_selected {
+            Some(rs) => &rs.author,
+            None => "N/A",
+        };
+        let selected = widget::column![
+            text("Name:").font(bold.clone()),
+            text(name).size(30),
+            text("Author(s):").font(bold),
+            text(author).size(30),
+        ]
+        .width(300);
+        widget::row![list, selected,].spacing(20).padding(20).into()
     }
 }
