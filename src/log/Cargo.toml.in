@@ -16,7 +16,7 @@ gettext = { workspace = true }
 naevc = { workspace = true }
 anyhow = { workspace = true }
 formatx = { workspace = true }
-semver = "1.0"
+semver = { workspace = true }
 # We have to rename it so it doesn't conflict
 logcore = { version = "0.4", package = "log" }
 

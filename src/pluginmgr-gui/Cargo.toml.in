@@ -17,4 +17,5 @@ pluginmgr = { path = "@BUILD@/src/pluginmgr" }
 anyhow = { workspace = true }
 directories = { workspace = true }
 git2 = { workspace = true }
-iced = { version = "0.13" }
+semver = { workspace = true }
+iced = { git = "https://github.com/iced-rs/iced", rev = "ea614387f4d94960911b0a7d8ce25c02edb470c5" }

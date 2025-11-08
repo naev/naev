@@ -4,6 +4,7 @@ use pluginmgr::{
     install::Installer, local::LocalManager, model::LocalPlugin, model::PluginInfo,
     model::SourceKind, naev_plugins_dir, repository::Repository,
 };
+use std::collections::HashMap;
 
 struct Conf {
     plugins_url: String,
@@ -24,9 +25,10 @@ impl Default for Conf {
 }
 
 fn main() -> iced::Result {
-    iced::application("Naev Plugin Manager", App::update, App::view)
+    iced::application(App::run, App::update, App::view)
+        .title("Naev Plugin Manager")
         .centered()
-        .run_with(App::run)
+        .run()
 }
 
 #[derive(Debug)]
@@ -39,7 +41,8 @@ struct App {
     repo: git2::Repository,
     remote: Vec<PluginInfo>,
     local: Vec<LocalPlugin>,
-    remote_selected: Option<PluginInfo>,
+    remote_selected: Option<(usize, PluginInfo)>,
+    local_versions: HashMap<String, Option<String>>,
 }
 
 impl App {
@@ -100,12 +103,18 @@ impl App {
         let lm = LocalManager::discover()?;
         let local = lm.list_installed()?;
 
+        let local_versions: HashMap<String, Option<String>> = local
+            .iter()
+            .map(|p| (p.name.to_lowercase(), p.version.clone()))
+            .collect();
+
         Ok(App {
             conf,
             repo,
             remote,
             local,
             remote_selected: None,
+            local_versions,
         })
     }
 
@@ -118,34 +127,51 @@ impl App {
     }
 
     fn view(&self) -> iced::Element<'_, Message> {
-        use widget::text;
-        let bold = iced::Font {
-            weight: iced::font::Weight::Bold,
-            ..Default::default()
+        use widget::{table, text};
+        let bold = |txt| {
+            text(txt).font(iced::Font {
+                weight: iced::font::Weight::Bold,
+                ..Default::default()
+            })
         };
-        let list = widget::Column::from_vec(
-            self.remote
-                .iter()
-                .map(|v| text(v.name.clone()).into())
-                .collect(),
-        )
-        .width(iced::Length::Fill)
-        .padding(10);
+        let plugins = {
+            let installed = table::column(bold("Status"), |this: &PluginInfo| {
+                let localver = self.local_versions.get(&this.name);
+                match localver {
+                    Some(v) => text("installed"),
+                    None => text(""),
+                }
+            });
+            let names = table::column(bold("Name"), |this: &PluginInfo| text(this.name.clone()));
+            let authors = table::column(bold("Author"), |this: &PluginInfo| {
+                text(this.author.clone())
+            });
+            let versions = table::column(bold("Version"), |this: &PluginInfo| {
+                text(match &this.version {
+                    Some(v) => v.clone(),
+                    None => "".to_string(),
+                })
+            });
+            table([installed, names, authors, versions], &self.remote).width(iced::Length::Fill)
+        };
         let name = match &self.remote_selected {
-            Some(rs) => &rs.name,
+            Some(rs) => &rs.1.name,
             None => "N/A",
         };
         let author = match &self.remote_selected {
-            Some(rs) => &rs.author,
+            Some(rs) => &rs.1.author,
             None => "N/A",
         };
         let selected = widget::column![
-            text("Name:").font(bold.clone()),
+            bold("Name:"),
             text(name).size(30),
-            text("Author(s):").font(bold),
+            bold("Author(s):"),
             text(author).size(30),
         ]
         .width(300);
-        widget::row![list, selected,].spacing(20).padding(20).into()
+        widget::row![plugins, selected,]
+            .spacing(20)
+            .padding(20)
+            .into()
     }
 }

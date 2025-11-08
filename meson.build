@@ -10,7 +10,7 @@ project('naev', ['c', 'rust'],
    # Requires meson 1.7.0 for rust_std=2024
    meson_version: '>=1.7.0')
 # Dependency requirements
-rustc_needed_version = '>=1.87.0'
+rustc_needed_version = '>=1.88.0'
 bindgen_needed_version = '>=0.72.0'
 cargo_needed_version = '>=1.77.2'
 

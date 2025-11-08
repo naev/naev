@@ -39,7 +39,8 @@ edition = "2024"
 # 1.84 New random syntax
 # 1.85 Rust 2024
 # 1.87 nalgebra 0.34
-rust-version = "1.87" # Note this has to be set in meson.build too!
+# 1.88 iced 0.14.0
+rust-version = "1.88" # Note this has to be set in meson.build too!
 
 [workspace.lints.clippy]
 not_unsafe_ptr_arg_deref = "allow"
@@ -67,6 +68,7 @@ derive_more = { version = "2", features = ["from", "into"] }
 palette = "0.7" # Colour conversion
 trie-rs = { version = "0.4" }
 softfloat = "1.0"
+semver = "1.0"
 
 # Plugin Manager dependencies
 thiserror = "2"
