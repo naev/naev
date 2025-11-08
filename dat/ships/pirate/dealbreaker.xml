@@ -27,18 +27,18 @@
   <weapon prop="fighter_bay" size="large"/>
   <weapon size="large"/>
   <weapon size="large"/>
-  <utility prop="systems" name="systems" size="large">Unicorp PT-440 Core System</utility>
-  <utility prop="systems_secondary" name="systems_secondary" size="large">Unicorp PT-440 Core System</utility>
+  <utility prop="systems" name="systems" size="large">Previous Generation Large Systems</utility>
+  <utility prop="systems_secondary" name="systems_secondary" size="large">Previous Generation Large Systems</utility>
   <utility prop="accessory" name="accessory" size="large"/>
   <utility size="large"/>
   <utility size="large"/>
   <utility size="large"/>
   <utility size="large"/>
   <utility size="medium"/>
-  <structure prop="engines" name="engines" size="large">Unicorp Eagle 3000 Engine</structure>
-  <structure prop="engines_secondary" name="engines_secondary" size="large">Unicorp Eagle 3000 Engine</structure>
-  <structure prop="hull" name="hull" size="large">Unicorp D-58 Heavy Plating</structure>
-  <structure prop="hull_secondary" name="hull_secondary" size="large">Unicorp D-58 Heavy Plating</structure>
+  <structure prop="engines" name="engines" size="large">Beat Up Large Engine</structure>
+  <structure prop="engines_secondary" name="engines_secondary" size="large">Beat Up Large Engine</structure>
+  <structure prop="hull" name="hull" size="large">Patchwork Heavy Plating</structure>
+  <structure prop="hull_secondary" name="hull_secondary" size="large">Patchwork Heavy Plating</structure>
   <structure size="large"/>
   <structure size="large"/>
   <structure size="large"/>
