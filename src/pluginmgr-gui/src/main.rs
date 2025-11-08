@@ -31,8 +31,9 @@ fn main() -> iced::Result {
         .run()
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 enum Message {
+    Selected(usize),
     Refresh,
 }
 
@@ -120,14 +121,15 @@ impl App {
 
     fn update(&mut self, message: Message) {
         match message {
-            Message::Refresh => {
-                self.refresh().unwrap();
+            Message::Refresh => self.refresh().unwrap(),
+            Message::Selected(id) => {
+                self.remote_selected = Some((id, self.remote[id].clone()));
             }
         }
     }
 
     fn view(&self) -> iced::Element<'_, Message> {
-        use widget::{table, text};
+        use widget::{column, container, grid, mouse_area, row, scrollable, text};
         let bold = |txt| {
             text(txt).font(iced::Font {
                 weight: iced::font::Weight::Bold,
@@ -135,6 +137,34 @@ impl App {
             })
         };
         let plugins = {
+            scrollable( grid(
+                self.remote
+                .iter()
+                .enumerate()
+                .map(|(id,v)| {
+                    let image = text("IMG").width(60).height(60);
+                    let content = column![
+                        bold(v.name.clone()),
+                        text("The abstract will be allowed to have up to 200 characters, so we should simulate something like that. Maybe a bit more. So this is about to become a fully specced abstract with exactly 200 characters."),
+                        text("TAGS"),
+                    ].spacing(5);
+                    let modal = row![
+                        image,
+                        content,
+                    ].spacing(5)
+                        .align_y(iced::alignment::Vertical::Center);
+                    mouse_area( container( modal )
+                        .padding(10)
+                        .style( if let Some(sel) = &self.remote_selected && id==sel.0 {
+                            container::primary
+                        } else {
+                            container::rounded_box
+                        }) )
+                        .on_press( Message::Selected(id) )
+                        .into()
+                } )
+            ).fluid(500).spacing(10).height( grid::Sizing::EvenlyDistribute( iced::Length::Shrink ) ) ).spacing(10)
+            /*
             let installed = table::column(bold("Status"), |this: &PluginInfo| {
                 let localver = self.local_versions.get(&this.name);
                 match localver {
@@ -153,6 +183,7 @@ impl App {
                 })
             });
             table([installed, names, authors, versions], &self.remote).width(iced::Length::Fill)
+            */
         };
         let name = match &self.remote_selected {
             Some(rs) => &rs.1.name,
@@ -163,12 +194,13 @@ impl App {
             None => "N/A",
         };
         let selected = widget::column![
-            bold("Name:"),
-            text(name).size(30),
-            bold("Author(s):"),
-            text(author).size(30),
+            bold("Name:".to_string()),
+            text(name).size(20),
+            bold("Author(s):".to_string()),
+            text(author).size(20),
         ]
-        .width(300);
+        .width(300)
+        .spacing(5);
         widget::row![plugins, selected,]
             .spacing(20)
             .padding(20)
