@@ -35,7 +35,7 @@
    <penetrate>100</penetrate>
    <physical>330</physical>
   </damage>
-  <radius friendlyfire="1">30</radius>
+  <radius friendlyfire="1">50</radius>
   <ai>unguided</ai>
   <armour>50</armour>
   <absorb>30</absorb>
