@@ -5,7 +5,23 @@ use pluginmgr::{
     model::SourceKind, naev_plugins_dir, repository::Repository,
 };
 
-const PLUGINS_URL: &str = "https://codeberg.org/naev/naev-plugins";
+struct Conf {
+    plugins_url: String,
+    plugins_branch: String,
+}
+impl Conf {
+    fn new() -> Self {
+        Default::default()
+    }
+}
+impl Default for Conf {
+    fn default() -> Self {
+        Self {
+            plugins_url: String::from("https://codeberg.org/naev/naev-plugins"),
+            plugins_branch: String::from("main"),
+        }
+    }
+}
 
 fn main() -> iced::Result {
     iced::application("Naev Plugin Manager", App::update, App::view)
@@ -19,6 +35,7 @@ enum Message {
 }
 
 struct App {
+    conf: Conf,
     repo: git2::Repository,
     remote: Vec<PluginInfo>,
     local: Vec<LocalPlugin>,
@@ -30,14 +47,15 @@ impl App {
         (app, Task::none())
     }
 
-    fn refresh_repo(repo: &git2::Repository) -> Result<()> {
-        repo.find_remote("origin")?.fetch(&["main"], None, None)?;
+    fn refresh_repo(conf: &Conf, repo: &git2::Repository) -> Result<()> {
+        repo.find_remote("origin")?
+            .fetch(&[&conf.plugins_branch], None, None)?;
         repo.checkout_head(None)?;
         Ok(())
     }
 
     fn refresh(&mut self) -> Result<()> {
-        Self::refresh_repo(&self.repo)?;
+        Self::refresh_repo(&self.conf, &self.repo)?;
 
         let repo_path = self
             .repo
@@ -54,6 +72,8 @@ impl App {
     }
 
     fn new() -> Result<Self> {
+        let conf = Conf::new();
+
         let proj_dirs = directories::ProjectDirs::from("org", "naev", "naev")
             .context("getting project directorios")?;
         let cache_dir = proj_dirs.cache_dir();
@@ -64,10 +84,10 @@ impl App {
                 Ok(repo) => repo,
                 Err(e) => anyhow::bail!("failed to open: {}", e),
             };
-            Self::refresh_repo(&repo)?;
+            Self::refresh_repo(&conf, &repo)?;
             repo
         } else {
-            match git2::Repository::clone(PLUGINS_URL, &repo_path) {
+            match git2::Repository::clone(&conf.plugins_url, &repo_path) {
                 Ok(repo) => repo,
                 Err(e) => anyhow::bail!("failed to clone: {}", e),
             }
@@ -80,6 +100,7 @@ impl App {
         let local = lm.list_installed()?;
 
         Ok(App {
+            conf,
             repo,
             remote,
             local,
