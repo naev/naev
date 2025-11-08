@@ -1,0 +1,20 @@
+[package]
+name = "pluginmgr-gui"
+workspace = "@BUILD@"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[lints]
+workspace = true
+
+[[bin]]
+name = "pluginmgr-gui"
+path = "@SOURCE@/src/pluginmgr-gui/src/main.rs"
+
+[dependencies]
+pluginmgr = { path = "@BUILD@/src/pluginmgr" }
+anyhow = { workspace = true }
+directories = { workspace = true }
+git2 = { workspace = true }
+iced = { version = "0.13" }

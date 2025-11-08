@@ -531,6 +531,17 @@ naevcrs = rust.bindgen(
       ],
       output: 'pluginmgr-cli'
    )
+   pluginmgr_gui = custom_target('pluginmgr-gui',
+      depends: [naev_rlib_compile],
+      console: true,
+      command: [
+         'env', cargo_env, cargo,
+         'build',
+         cargo_options,
+         '--package', 'pluginmgr-gui'
+      ],
+      output: 'pluginmgr-gui'
+   )
 
    # Simplifies clippy stuff
    clippy = run_target( 'clippy',

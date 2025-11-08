@@ -29,6 +29,7 @@ members = [
    "@BUILD@/src/toolkit",
    "@BUILD@/src/pluginmgr",
    "@BUILD@/src/pluginmgr-cli",
+   "@BUILD@/src/pluginmgr-gui",
 ]
 
 [workspace.package]
@@ -68,7 +69,7 @@ trie-rs = { version = "0.4" }
 softfloat = "1.0"
 
 # Plugin Manager dependencies
-thiserror = "1"
+thiserror = "2"
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 tracing-appender = "0.2"
