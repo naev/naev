@@ -45,8 +45,8 @@ impl<'de> de::Deserialize<'de> for Identifier {
 pub struct PluginStub {
     pub identifier: Identifier,
     pub name: String,
-    source: Source,
-    metadata: reqwest::Url,
+    pub(crate) source: Source,
+    pub(crate) metadata: reqwest::Url,
 }
 impl PluginStub {
     pub fn from_slice(data: &[u8]) -> Result<Self> {
@@ -80,7 +80,7 @@ pub enum Source {
     Local,
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(deny_unknown_fields)]
 pub struct Plugin {
     pub identifier: Identifier,

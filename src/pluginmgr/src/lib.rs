@@ -3,7 +3,7 @@
 pub mod plugin;
 
 use crate::plugin::{Plugin, PluginStub};
-use anyhow::Result;
+use anyhow::{Context, Result};
 use camino::Utf8PathBuf;
 use directories::BaseDirs;
 use log::warn_err;
@@ -11,43 +11,90 @@ use std::fs;
 use std::path::Path;
 
 pub fn discover_local_plugins<P: AsRef<Path>>(root: P) -> Result<Vec<Plugin>> {
-    let mut out = Vec::new();
     if !root.as_ref().exists() {
-        return Ok(out);
+        return Ok(Vec::new());
     }
-    for entry in fs::read_dir(&root)? {
-        match Plugin::from_path(&entry?.path().as_path()) {
-            Ok(plugin) => out.push(plugin),
+    Ok(fs::read_dir(&root)?
+        .filter_map(|entry| {
+            let entry = match entry {
+                Ok(entry) => entry,
+                Err(e) => {
+                    warn_err!(e);
+                    return None;
+                }
+            };
+            match Plugin::from_path(&entry.path().as_path()) {
+                Ok(plugin) => Some(plugin),
+                Err(e) => {
+                    warn_err!(e);
+                    None
+                }
+            }
+        })
+        .collect())
+}
+
+pub fn discover_remote_plugins<T: reqwest::IntoUrl>(url: T, branch: &str) -> Result<Vec<Plugin>> {
+    let proj_dirs = directories::ProjectDirs::from("org", "naev", "naev")
+        .context("getting project directorios")?;
+    let cache_dir = proj_dirs.cache_dir();
+    let repo_path = cache_dir.join("naev-plugins");
+
+    let repo = if repo_path.exists() {
+        let repo = match git2::Repository::open(&repo_path) {
+            Ok(repo) => repo,
+            Err(e) => anyhow::bail!("failed to open: {}", e),
+        };
+        repo.find_remote("origin")?.fetch(&[branch], None, None)?;
+        repo.checkout_head(None)?;
+        repo
+    } else {
+        match git2::Repository::clone(&url.as_str(), &repo_path) {
+            Ok(repo) => repo,
+            Err(e) => anyhow::bail!("failed to clone: {}", e),
+        }
+    };
+    let workdir = repo.workdir().context("naev-plugins directory is bare")?;
+
+    Ok(repository(workdir)?
+        .iter()
+        .filter_map(|stub| match Plugin::from_url(stub.metadata.clone()) {
+            Ok(plugin) => Some(plugin),
             Err(e) => {
                 warn_err!(e);
-                continue;
+                None
             }
-        }
-    }
-    Ok(out)
+        })
+        .collect())
 }
 
 pub fn repository<P: AsRef<Path>>(root: P) -> Result<Vec<PluginStub>> {
     let plugins_dir = root.as_ref().join("plugins");
-    let mut out = Vec::new();
     if !plugins_dir.exists() {
-        return Ok(out);
+        return Ok(Vec::new());
     }
-    for entry in fs::read_dir(plugins_dir)? {
-        let entry = entry?;
-        let path = entry.path();
-        if path.extension().and_then(|s| s.to_str()) != Some("toml") {
-            continue;
-        }
-        match PluginStub::from_path(path.as_path()) {
-            Ok(plugin) => out.push(plugin),
-            Err(e) => {
-                warn_err!(e);
-                continue;
+    Ok(fs::read_dir(&plugins_dir)?
+        .filter_map(|entry| {
+            let entry = match entry {
+                Ok(entry) => entry,
+                Err(e) => {
+                    warn_err!(e);
+                    return None;
+                }
+            };
+            let path = entry.path();
+            if path.extension().and_then(|s| s.to_str()) != Some("toml") {
+                return None;
             }
-        }
-    }
-    Ok(out)
+            match PluginStub::from_path(path.as_path()) {
+                Ok(plugin) => Some(plugin),
+                Err(e) => {
+                    warn_err!(e);
+                    None
+                }
+            }
+        })
+        .collect())
 }
 /*
     /// Opens a mounted view of a local plugin (directory or zip).

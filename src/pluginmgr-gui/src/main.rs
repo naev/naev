@@ -1,6 +1,6 @@
-use anyhow::{Context, Result};
+use anyhow::Result;
 use iced::{Task, widget};
-use pluginmgr::plugin::{Plugin, PluginStub};
+use pluginmgr::plugin::Plugin;
 use std::collections::HashMap;
 
 struct Conf {
@@ -36,10 +36,9 @@ enum Message {
 
 struct App {
     conf: Conf,
-    repo: git2::Repository,
-    remote: Vec<PluginStub>,
+    remote: Vec<Plugin>,
     local: Vec<Plugin>,
-    remote_selected: Option<(usize, PluginStub)>,
+    remote_selected: Option<(usize, Plugin)>,
     local_versions: HashMap<String, semver::Version>,
 }
 
@@ -49,22 +48,9 @@ impl App {
         (app, Task::none())
     }
 
-    fn refresh_repo(conf: &Conf, repo: &git2::Repository) -> Result<()> {
-        repo.find_remote("origin")?
-            .fetch(&[&conf.plugins_branch], None, None)?;
-        repo.checkout_head(None)?;
-        Ok(())
-    }
-
     fn refresh(&mut self) -> Result<()> {
-        Self::refresh_repo(&self.conf, &self.repo)?;
-
-        let repo_path = self
-            .repo
-            .workdir()
-            .context("getting plugins repository workdir")?;
-
-        self.remote = pluginmgr::repository(&repo_path)?;
+        self.remote =
+            pluginmgr::discover_remote_plugins(&self.conf.plugins_url, &self.conf.plugins_branch)?;
         self.remote_selected = None; // TODO try to recover selection
 
         self.local = pluginmgr::discover_local_plugins(pluginmgr::local_plugins_dir()?)?;
@@ -75,26 +61,7 @@ impl App {
     fn new() -> Result<Self> {
         let conf = Conf::new();
 
-        let proj_dirs = directories::ProjectDirs::from("org", "naev", "naev")
-            .context("getting project directorios")?;
-        let cache_dir = proj_dirs.cache_dir();
-        let repo_path = cache_dir.join("naev-plugins");
-
-        let repo = if repo_path.exists() {
-            let repo = match git2::Repository::open(&repo_path) {
-                Ok(repo) => repo,
-                Err(e) => anyhow::bail!("failed to open: {}", e),
-            };
-            Self::refresh_repo(&conf, &repo)?;
-            repo
-        } else {
-            match git2::Repository::clone(&conf.plugins_url, &repo_path) {
-                Ok(repo) => repo,
-                Err(e) => anyhow::bail!("failed to clone: {}", e),
-            }
-        };
-
-        let remote = pluginmgr::repository(&repo_path)?;
+        let remote = pluginmgr::discover_remote_plugins(&conf.plugins_url, &conf.plugins_branch)?;
         let local = pluginmgr::discover_local_plugins(pluginmgr::local_plugins_dir()?)?;
 
         let local_versions: HashMap<String, semver::Version> = local
@@ -104,7 +71,6 @@ impl App {
 
         Ok(App {
             conf,
-            repo,
             remote,
             local,
             remote_selected: None,

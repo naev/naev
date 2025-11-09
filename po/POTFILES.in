@@ -4160,12 +4160,8 @@ src/pluginmgr-cli/src/main.rs
 src/pluginmgr-gui/src/main.rs
 src/pluginmgr/src/install.rs
 src/pluginmgr/src/lib.rs
-src/pluginmgr/src/local.rs
-src/pluginmgr/src/model.rs
 src/pluginmgr/src/mount.rs
 src/pluginmgr/src/plugin.rs
-src/pluginmgr/src/repository.rs
-src/pluginmgr/src/validator.rs
 src/quadtree.c
 src/quadtree.h
 src/queue.c
