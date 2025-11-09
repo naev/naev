@@ -37,7 +37,8 @@ pub fn mount() -> Result<()> {
     Ok(())
 }
 
-use std::ffi::{c_char, c_int};
+use crate::array::Array;
+use std::ffi::{CString, c_char, c_int};
 
 #[unsafe(no_mangle)]
 pub extern "C" fn plugin_check() -> c_int {
@@ -55,14 +56,58 @@ pub extern "C" fn plugin_check() -> c_int {
     i
 }
 
+static PLUGIN_DIR: LazyLock<CString> = LazyLock::new(|| {
+    let dir = match pluginmgr::local_plugins_dir() {
+        Ok(dir) => dir,
+        Err(e) => {
+            warn_err!(e);
+            return Default::default();
+        }
+    };
+    CString::new(dir.as_os_str().as_encoded_bytes()).unwrap()
+});
 #[unsafe(no_mangle)]
 pub extern "C" fn plugin_dir() -> *const c_char {
-    std::ptr::null()
+    PLUGIN_DIR.as_ptr()
 }
 
+#[allow(dead_code)]
+struct CPlugin(naevc::plugin_t);
+unsafe impl Sync for CPlugin {}
+unsafe impl Send for CPlugin {}
+static PLUGIN_LIST: LazyLock<Array<CPlugin>> = LazyLock::new(|| {
+    let mut out = Vec::new();
+    for plugin in PLUGINS.iter() {
+        let mp = if let Some(mp) = &plugin.mountpoint {
+            CString::new(mp.as_os_str().as_encoded_bytes())
+                .unwrap()
+                .into_raw()
+        } else {
+            std::ptr::null_mut()
+        };
+        out.push(CPlugin(naevc::plugin_t {
+            name: CString::new(plugin.name.as_str()).unwrap().into_raw(),
+            author: CString::new(plugin.author.as_str()).unwrap().into_raw(),
+            version: CString::new(plugin.version.to_string()).unwrap().into_raw(),
+            description: CString::new(
+                plugin
+                    .description
+                    .as_ref()
+                    .map_or(plugin.r#abstract.as_str(), |s| s.as_str()),
+            )
+            .unwrap()
+            .into_raw(),
+            mountpoint: mp,
+            total_conversion: plugin.total_conversion as c_int,
+            compatible: plugin.compatible as c_int,
+            priority: plugin.priority as c_int,
+        }))
+    }
+    Array::new(&out).unwrap()
+});
 #[unsafe(no_mangle)]
 pub extern "C" fn plugin_list() -> *const naevc::plugin_t {
-    std::ptr::null()
+    PLUGIN_LIST.as_ptr() as *const naevc::plugin_t
 }
 
 #[unsafe(no_mangle)]
