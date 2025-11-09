@@ -125,8 +125,7 @@ impl Plugin {
         if plugin.r#abstract.len() > 200 {
             anyhow::bail!("abstract exceeds 200 characters");
         }
-        let naev = semver::Version::parse("0.13.0")?;
-        plugin.compatible = plugin.naev_version.matches(&naev);
+        plugin.compatible = plugin.naev_version.matches(&log::version::VERSION);
         Ok(plugin)
     }
 
