@@ -66,7 +66,7 @@ pub fn discover_remote_plugins<T: reqwest::IntoUrl>(url: T, branch: &str) -> Res
 
     Ok(repository(workdir)?
         .iter()
-        .filter_map(|stub| match Plugin::from_url(stub.metadata.clone()) {
+        .filter_map(|stub| match stub.to_plugin() {
             Ok(plugin) => Some(plugin),
             Err(e) => {
                 warn_err!(e);

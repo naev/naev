@@ -62,6 +62,10 @@ impl PluginStub {
         let data = std::fs::read(&path)?;
         Self::from_slice(&data)
     }
+
+    pub fn to_plugin(&self) -> Result<Plugin> {
+        Plugin::from_url(self.metadata.clone())
+    }
 }
 
 #[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq, Eq)]
@@ -70,6 +74,15 @@ pub enum ReleaseStatus {
     Stable,
     Testing,
     Development,
+}
+impl ReleaseStatus {
+    pub fn as_str(&self) -> &'static str {
+        match self {
+            ReleaseStatus::Stable => "stable",
+            ReleaseStatus::Testing => "testing",
+            ReleaseStatus::Development => "development",
+        }
+    }
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
@@ -96,15 +109,19 @@ pub struct Plugin {
     pub tags: Vec<String>,
     pub image_url: Option<reqwest::Url>,
     #[serde(default)]
-    depends: Vec<String>,
+    pub depends: Vec<String>,
     #[serde(default)]
-    recommends: Vec<String>,
-    naev_version: semver::VersionReq,
-    source: Source,
+    pub recommends: Vec<String>,
+    pub naev_version: semver::VersionReq,
+    pub source: Source,
     #[serde(default = "priority_default")]
-    priority: i32,
+    pub priority: i32,
     #[serde(default)]
     pub total_conversion: bool,
+    #[serde(default)]
+    blacklist: Vec<String>,
+    #[serde(default)]
+    whitelist: Vec<String>,
     // Fields below are set after loading
     #[serde(default, skip_deserializing)]
     pub compatible: bool,
@@ -125,7 +142,9 @@ impl Plugin {
         if plugin.r#abstract.len() > 200 {
             anyhow::bail!("abstract exceeds 200 characters");
         }
-        plugin.compatible = plugin.naev_version.matches(&log::version::VERSION);
+        plugin.compatible = plugin
+            .naev_version
+            .matches(&log::version::VERSION_WITHOUT_PRERELEASE);
         Ok(plugin)
     }
 

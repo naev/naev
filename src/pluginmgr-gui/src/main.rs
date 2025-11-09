@@ -21,9 +21,12 @@ impl Default for Conf {
     }
 }
 
+const THEME: iced::Theme = iced::Theme::Dark;
+
 fn main() -> iced::Result {
     iced::application(App::run, App::update, App::view)
         .title("Naev Plugin Manager")
+        .theme(THEME)
         .centered()
         .run()
 }
@@ -82,7 +85,15 @@ impl App {
         match message {
             Message::Refresh => self.refresh().unwrap(),
             Message::Selected(id) => {
-                self.remote_selected = Some((id, self.remote[id].clone()));
+                if let Some((rid, _)) = &self.remote_selected {
+                    self.remote_selected = if id == *rid {
+                        None
+                    } else {
+                        Some((id, self.remote[id].clone()))
+                    }
+                } else {
+                    self.remote_selected = Some((id, self.remote[id].clone()))
+                }
             }
         }
     }
@@ -100,8 +111,8 @@ impl App {
                 grid(self.remote.iter().enumerate().map(|(id, v)| {
                     let image = text("IMG").width(60).height(60);
                     let content = column![
-                        bold(v.name.clone()),
-                        text(v.r#abstract.clone()),
+                        bold(v.name.as_str()),
+                        text(v.r#abstract.as_str()),
                         text(v.tags.join(", ")),
                     ]
                     .spacing(5);
@@ -146,22 +157,40 @@ impl App {
             table([installed, names, authors, versions], &self.remote).width(iced::Length::Fill)
             */
         };
-        let name = match &self.remote_selected {
-            Some(rs) => &rs.1.name,
-            None => "N/A",
+
+        let selected = if let Some((_, sel)) = &self.remote_selected {
+            let info = |txt| text(txt).size(20);
+            widget::column![
+                bold("Name:"),
+                info(sel.name.as_str()),
+                bold("Author(s):"),
+                info(&sel.author),
+                bold("Plugin Version:"),
+                text(sel.version.to_string()).size(20),
+                bold("Naev Version:"),
+                text(format!(
+                    "{}{}",
+                    sel.naev_version,
+                    match sel.compatible {
+                        true => "".to_string(),
+                        false => format!(" [incompatible with Naev {}]", *log::version::VERSION),
+                    }
+                ))
+                .color_maybe(match sel.compatible {
+                    true => None,
+                    false => Some(THEME.palette().danger),
+                })
+                .size(20),
+                bold("Status:"),
+                info(sel.release_status.as_str()),
+                bold("Description"),
+                text(sel.description.as_ref().unwrap_or(&sel.r#abstract)),
+            ]
+            .width(300)
+            .spacing(5)
+        } else {
+            widget::column![text("")].width(300)
         };
-        let author = match &self.remote_selected {
-            Some(rs) => &rs.1.author,
-            None => "N/A",
-        };
-        let selected = widget::column![
-            bold("Name:".to_string()),
-            text(name).size(20),
-            bold("Author(s):".to_string()),
-            text(author).size(20),
-        ]
-        .width(300)
-        .spacing(5);
         widget::row![plugins, selected,]
             .spacing(20)
             .padding(20)

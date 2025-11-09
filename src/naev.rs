@@ -23,6 +23,7 @@ mod model;
 mod nebula;
 mod nlua;
 mod outfit;
+mod plugin;
 mod rng;
 mod ship;
 mod slots;

@@ -8,6 +8,11 @@ use std::sync::LazyLock;
 
 pub static VERSION: LazyLock<semver::Version> =
     LazyLock::new(|| semver::Version::parse(config::PACKAGE_VERSION).unwrap());
+pub static VERSION_WITHOUT_PRERELEASE: LazyLock<semver::Version> = LazyLock::new(|| {
+    let mut v = VERSION.clone();
+    v.pre = semver::Prerelease::EMPTY;
+    v
+});
 pub static VERSION_HUMAN: LazyLock<String> = LazyLock::new(|| {
     format!(
         " {} v{} ({})",
