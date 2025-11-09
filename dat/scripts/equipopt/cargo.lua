@@ -10,7 +10,7 @@ function cargo.add( p )
    end
 
    -- Carried fighters don't get commodities
-   if p:flags("carried") or p:tags().nocargo then
+   if p:flags("carried") or p:ship():tags().nocargo then
       return
    end
 
