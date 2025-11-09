@@ -193,12 +193,12 @@ They go quiet for a second.]]))
       end )
 
       vn.label("05_underworlder")
-      vn.func( function() var.push("onion_guess_insider", "underworlder") end )
+      vn.func( function() var.push("onion_guess_insider", N_("underworlder")) end )
       l337(_([["I thought about them, but they don't seem to have that much to gain in this. They always dislike change, and want to keep things as stable as they can be."]]))
       vn.jump("05_thoughts")
 
       vn.label("05_dog")
-      vn.func( function() var.push("onion_guess_insider", "dog") end )
+      vn.func( function() var.push("onion_guess_insider", N_("DOG")) end )
       l337(_([["Let me think about it."
 They go silent for a bit.
 "I guess DOG is a possibility, however, it is unlikely. They don't have much to gain in this as they are no longer a keeper of the secrets."]]))
@@ -206,23 +206,23 @@ They go silent for a bit.
       vn.jump("05_thoughts")
 
       vn.label("05_notasockpuppet")
-      vn.func( function() var.push("onion_guess_insider", "notasockpuppet") end )
+      vn.func( function() var.push("onion_guess_insider", N_("notasockpuppet")) end )
       l337(_([["notasockpuppet? They're an asshole, but I don't think they have the patience to do something like this. They seem to only be able to focus on things for a couple of periods before they get bored."]]))
       vn.jump("05_thoughts")
 
       vn.label("05_lonewolf4")
-      vn.func( function() var.push("onion_guess_insider", "lonewolf4") end )
+      vn.func( function() var.push("onion_guess_insider", N_("lonewolf4")) end )
       l337(_([["That's exactly what I was thinking! You can see them trying to pin the blame on me! It's almost as if they are trying to escalate the situation to their own game."]]))
       l337(_([["Good to see we are on the same page."]]))
       vn.jump("05_cont")
 
       vn.label("05_ogre")
-      vn.func( function() var.push("onion_guess_insider", "ogre") end )
+      vn.func( function() var.push("onion_guess_insider", N_("ogre")) end )
       l337(_([["You serious? Ogre is long gone. They barely had the skills to tie their own shoelaces let alone do anything serious on the Nexus."]]))
       vn.jump("05_thoughts")
 
       vn.label("05_trixie")
-      vn.func( function() var.push("onion_guess_insider", "trixie") end )
+      vn.func( function() var.push("onion_guess_insider", N_("trixie")) end )
       l337(_([["Don't joke about that."
 They let out a sigh.]]))
       l337(_([["I guess it's not entirely out of the question, but why would they peel themselves? Or was it all a ruse to cover their tracks?"]]))
