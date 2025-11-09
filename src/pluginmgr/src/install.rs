@@ -6,27 +6,30 @@ use std::path::{Path, PathBuf};
 
 /// Placeholder installer. Wire up real git/zip logic later.
 pub struct Installer {
-    pub dest_root: PathBuf,
+    root: PathBuf,
+    plugin: Plugin,
 }
 
 impl Installer {
-    pub fn new<P: AsRef<Path>>(root: P) -> Self {
+    pub fn new<P: AsRef<Path>>(root: P, plugin: &Plugin) -> Self {
         Self {
-            dest_root: root.as_ref().to_owned(),
+            root: root.as_ref().to_owned(),
+            plugin: plugin.clone(),
         }
     }
 
-    pub fn install(self, info: &Plugin) -> Result<()> {
-        match &info.source {
-            Source::Git(url) => self.install_from_git(&info, &url),
-            Source::Download(url) => self.install_from_zip(info, &url),
+    pub fn install(self) -> Result<()> {
+        match &self.plugin.source {
+            Source::Git(url) => self.install_from_git(&url),
+            Source::Download(url) => self.install_from_zip(&url),
             Source::Local => anyhow::bail!("local plugin"),
         }
     }
 
-    fn install_from_git(&self, info: &Plugin, url: &reqwest::Url) -> Result<()> {
+    fn install_from_git(&self, url: &reqwest::Url) -> Result<()> {
+        let info = &self.plugin;
         let name = &info.name;
-        let dest = self.dest_root.join(name);
+        let dest = self.root.join(name);
         if dest.exists() {
             fs::remove_dir_all(&dest).ok();
         }
@@ -37,10 +40,11 @@ impl Installer {
     }
 
     /// Checks whether a git-based plugin has updates available upstream.
-    pub fn check_git_update(&self, info: &Plugin, url: &reqwest::Url) -> Result<Option<String>> {
+    pub fn check_git_update(&self, url: &reqwest::Url) -> Result<Option<String>> {
+        let info = &self.plugin;
         use git2::Repository;
 
-        let dest = self.dest_root.join(&info.name);
+        let dest = self.root.join(&info.name);
 
         if !dest.exists() {
             return Ok(None); // not installed yet
@@ -74,10 +78,11 @@ impl Installer {
     }
 
     /// Performs a git pull if an update is available.
-    pub fn update_git_plugin(&self, info: &Plugin, url: &reqwest::Url) -> Result<()> {
+    pub fn update_git_plugin(&self, url: &reqwest::Url) -> Result<()> {
         use git2::{FetchOptions, Repository};
 
-        let dest = self.dest_root.join(&info.name);
+        let info = &self.plugin;
+        let dest = self.root.join(&info.name);
         let repo = Repository::open(&dest)
             .with_context(|| format!("Failed to open local repo {}", dest.display()))?;
 
@@ -130,9 +135,10 @@ impl Installer {
 
     /// Installs a plugin from a direct zip link by downloading and saving the archive.
     /// The zip file is stored directly in the plugins directory without extraction.
-    pub fn install_from_zip(&self, info: &Plugin, url: &reqwest::Url) -> Result<()> {
+    pub fn install_from_zip(&self, url: &reqwest::Url) -> Result<()> {
+        let info = &self.plugin;
         let name = &info.name;
-        let dest_zip = self.dest_root.join(format!("{}.zip", name));
+        let dest_zip = self.root.join(format!("{}.zip", name));
 
         info!("Downloading plugin '{}' from {}", name, url);
 
@@ -144,7 +150,7 @@ impl Installer {
         })?;
 
         // Ensure destination directory exists
-        fs::create_dir_all(&self.dest_root)?;
+        fs::create_dir_all(&self.root)?;
 
         // Save as a single zip file in plugins dir
         fs::write(&dest_zip, &bytes)?;
@@ -153,9 +159,10 @@ impl Installer {
     }
 
     /// Updates a zip-based plugin by re-downloading and replacing the archive file.
-    pub fn update_zip_plugin(&self, info: &Plugin, url: &reqwest::Url) -> Result<()> {
+    pub fn update_zip_plugin(&self, url: &reqwest::Url) -> Result<()> {
+        let info = &self.plugin;
         let name = &info.name;
-        let dest_zip = self.dest_root.join(format!("{}.zip", name));
+        let dest_zip = self.root.join(format!("{}.zip", name));
 
         // Check version difference (same as before)
         let local = Plugin::from_path(&dest_zip)?;
@@ -186,8 +193,8 @@ impl Installer {
         Ok(())
     }
 
-    pub fn uninstall(&self, name: &str) -> Result<()> {
-        let target = self.dest_root.join(name);
+    pub fn uninstall(self) -> Result<()> {
+        let target = self.root.join(&self.plugin.name);
         if target.exists() {
             fs::remove_dir_all(&target)?;
         }

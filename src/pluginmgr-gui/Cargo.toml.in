@@ -12,6 +12,9 @@ workspace = true
 name = "pluginmgr-gui"
 path = "@SOURCE@/src/pluginmgr-gui/src/main.rs"
 
+[lib]
+path = "@SOURCE@/src/pluginmgr-gui/src/lib.rs"
+
 [dependencies]
 pluginmgr = { path = "@BUILD@/src/pluginmgr" }
 anyhow = { workspace = true }

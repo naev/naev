@@ -19,3 +19,5 @@ const char     *plugin_dir( void );
 int             plugin_check( void );
 const plugin_t *plugin_list( void );
 const char     *plugin_name( const plugin_t *plg );
+int             plugin_manager();
+int             plugin_manager_is_open();

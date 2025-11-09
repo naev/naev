@@ -1856,6 +1856,7 @@ static void opt_plugins_manager( unsigned int wid, const char *name )
 {
    (void)wid;
    (void)name;
+   plugin_manager();
 }
 
 static void opt_plugins_update( unsigned int wid, const char *name )

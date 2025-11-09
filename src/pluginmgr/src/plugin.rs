@@ -4,7 +4,7 @@ use std::ops::Deref;
 use std::path::{Path, PathBuf};
 
 /// Small wrapper for our identifier that has additional deserialization checks
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, PartialEq)]
 pub struct Identifier(String);
 impl Deref for Identifier {
     type Target = String;
@@ -128,6 +128,12 @@ pub struct Plugin {
     #[serde(default, skip_deserializing)]
     pub mountpoint: Option<PathBuf>,
 }
+impl PartialEq for Plugin {
+    fn eq(&self, other: &Self) -> bool {
+        self.identifier == other.identifier
+    }
+}
+impl Eq for Plugin {}
 fn release_status_default() -> ReleaseStatus {
     ReleaseStatus::Stable
 }
