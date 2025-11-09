@@ -4,7 +4,7 @@ use std::ops::Deref;
 use std::path::{Path, PathBuf};
 
 /// Small wrapper for our identifier that has additional deserialization checks
-#[derive(Debug, Clone, Serialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, derive_more::Display, Serialize, PartialEq, Eq, Hash)]
 pub struct Identifier(String);
 impl Deref for Identifier {
     type Target = String;
@@ -76,7 +76,7 @@ pub enum ReleaseStatus {
     Development,
 }
 impl ReleaseStatus {
-    pub fn as_str(&self) -> &'static str {
+    pub const fn as_str(&self) -> &'static str {
         match self {
             ReleaseStatus::Stable => "stable",
             ReleaseStatus::Testing => "testing",
@@ -162,26 +162,28 @@ impl Plugin {
 
     pub fn from_path<P: AsRef<Path>>(path: P) -> Result<Self> {
         let path = path.as_ref();
-        let is_zip = path
-            .extension()
-            .and_then(|e| e.to_str())
-            .is_some_and(|e| e.eq_ignore_ascii_case("zip"));
+        dbg!(&path);
 
-        if is_zip {
-            let data = std::fs::read(path)?;
-            let mut plugin = Self::from_slice(&data)?;
-            plugin.mountpoint = Some(path.to_owned());
-            Ok(plugin)
-        } else if path.is_dir() {
+        if path.is_dir() {
             let metadata = path.join("plugin.toml");
             if metadata.exists() {
-                let data = std::fs::read(path)?;
+                let data = std::fs::read(metadata)?;
                 let mut plugin = Self::from_slice(&data)?;
                 plugin.mountpoint = Some(path.to_owned());
                 Ok(plugin)
             } else {
                 anyhow::bail!("directory without valid 'plugin.toml'");
             }
+        // Is zip file?
+        } else if path
+            .extension()
+            .and_then(|e| e.to_str())
+            .is_some_and(|e| e.eq_ignore_ascii_case("zip"))
+        {
+            let data = std::fs::read(path)?;
+            let mut plugin = Self::from_slice(&data)?;
+            plugin.mountpoint = Some(path.to_owned());
+            Ok(plugin)
         } else {
             // Assume directly pointing at plugin.toml
             let data = std::fs::read(path)?;

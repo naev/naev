@@ -28,8 +28,7 @@ impl Installer {
 
     fn install_from_git(&self, url: &reqwest::Url) -> Result<()> {
         let info = &self.plugin;
-        let name = &info.name;
-        let dest = self.root.join(name);
+        let dest = self.root.join(&*info.identifier);
         if dest.exists() {
             fs::remove_dir_all(&dest).ok();
         }
@@ -44,7 +43,7 @@ impl Installer {
         let info = &self.plugin;
         use git2::Repository;
 
-        let dest = self.root.join(&info.name);
+        let dest = self.root.join(&*info.identifier);
 
         if !dest.exists() {
             return Ok(None); // not installed yet
@@ -82,7 +81,7 @@ impl Installer {
         use git2::{FetchOptions, Repository};
 
         let info = &self.plugin;
-        let dest = self.root.join(&info.name);
+        let dest = self.root.join(&*info.identifier);
         let repo = Repository::open(&dest)
             .with_context(|| format!("Failed to open local repo {}", dest.display()))?;
 
@@ -137,10 +136,9 @@ impl Installer {
     /// The zip file is stored directly in the plugins directory without extraction.
     pub fn install_from_zip(&self, url: &reqwest::Url) -> Result<()> {
         let info = &self.plugin;
-        let name = &info.name;
-        let dest_zip = self.root.join(format!("{}.zip", name));
+        let dest_zip = self.root.join(format!("{}.zip", &info.identifier));
 
-        info!("Downloading plugin '{}' from {}", name, url);
+        info!("Downloading plugin '{}' from {}", &info.name, url);
 
         // Download zip into memory
         let rt = tokio::runtime::Runtime::new()?;
@@ -154,15 +152,14 @@ impl Installer {
 
         // Save as a single zip file in plugins dir
         fs::write(&dest_zip, &bytes)?;
-        info!("Installed '{}' to {}", name, dest_zip.display());
+        info!("Installed '{}' to {}", &info.name, dest_zip.display());
         Ok(())
     }
 
     /// Updates a zip-based plugin by re-downloading and replacing the archive file.
     pub fn update_zip_plugin(&self, url: &reqwest::Url) -> Result<()> {
         let info = &self.plugin;
-        let name = &info.name;
-        let dest_zip = self.root.join(format!("{}.zip", name));
+        let dest_zip = self.root.join(format!("{}.zip", &info.identifier));
 
         // Check version difference (same as before)
         let local = Plugin::from_path(&dest_zip)?;
@@ -170,12 +167,12 @@ impl Installer {
         if info.version <= local.version {
             info!(
                 "{} is already up to date (local v{} >= repo v{})",
-                name, info.version, local.version
+                &info.name, info.version, local.version
             );
             return Ok(());
         }
 
-        info!("Updating zip plugin '{}' from {}", name, url);
+        info!("Updating zip plugin '{}' from {}", &info.name, url);
 
         // Download new archive
         let rt = tokio::runtime::Runtime::new()?;
@@ -188,13 +185,13 @@ impl Installer {
         fs::write(&dest_zip, &bytes)?;
         info!(
             "Successfully updated '{}' to version {:?}",
-            name, info.version
+            &info.name, info.version
         );
         Ok(())
     }
 
     pub fn uninstall(self) -> Result<()> {
-        let target = self.root.join(&self.plugin.name);
+        let target = self.root.join(&*self.plugin.identifier);
         if target.exists() {
             fs::remove_dir_all(&target)?;
         }

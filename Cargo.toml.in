@@ -65,7 +65,7 @@ bytemuck = { version = "1.23", features = ["derive"] } # Needed for shader voodo
 image = { version = "0.25", features = ["rayon"] }
 mlua = { version = "0.11", features = ["luajit", "anyhow", "send", "serialize"] }
 roxmltree = "0.21"
-derive_more = { version = "2", features = ["from", "into"] }
+derive_more = { version = "2", features = ["from", "into", "display"] }
 palette = "0.7" # Colour conversion
 trie-rs = { version = "0.4" }
 softfloat = "1.0"

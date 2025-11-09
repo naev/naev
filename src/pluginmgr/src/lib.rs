@@ -14,6 +14,7 @@ pub fn discover_local_plugins<P: AsRef<Path>>(root: P) -> Result<Vec<Plugin>> {
     }
     Ok(fs::read_dir(&root)?
         .filter_map(|entry| {
+            dbg!(&entry);
             let entry = match entry {
                 Ok(entry) => entry,
                 Err(e) => {
@@ -125,23 +126,31 @@ pub fn repository<P: AsRef<Path>>(root: P) -> Result<Vec<PluginStub>> {
     }
 */
 
-/// Returns the Naev plugins directory for the current platform.
-pub fn local_plugins_dir() -> Result<PathBuf> {
+pub fn cache_dir() -> Result<PathBuf> {
     use directories::BaseDirs;
     let base = BaseDirs::new().ok_or_else(|| anyhow::anyhow!("No home directory found"))?;
 
     #[cfg(target_os = "linux")]
-    let p = base.data_dir().join("naev").join("plugins");
+    let p = base.data_dir().join("naev");
 
     #[cfg(target_os = "macos")]
-    let p = base.data_dir().join("org.naev.Naev").join("plugins");
+    let p = base.data_dir().join("org.naev.Naev");
 
     #[cfg(target_os = "windows")]
-    let p = base.data_dir().join("naev").join("plugins");
+    let p = base.data_dir().join("naev");
     Ok(p)
     /*
-    Ok(Path::new(&ndata::physfs::get_write_dir()).to_path_buf().join("plugins"))
+    Ok(Path::new(&ndata::physfs::get_write_dir()).to_path_buf())
     */
+}
+
+/// Returns the Naev plugins directory for the current platform.
+pub fn local_plugins_dir() -> Result<PathBuf> {
+    Ok(cache_dir()?.join("plugins"))
+}
+
+pub fn local_plugins_disabled_dir() -> Result<PathBuf> {
+    Ok(cache_dir()?.join("plugins-disabled"))
 }
 
 /*

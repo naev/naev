@@ -1,23 +1,24 @@
 use anyhow::Result;
 use iced::{Task, widget};
+use pluginmgr::install::Installer;
 use pluginmgr::plugin::{Identifier, Plugin};
 use std::collections::HashMap;
+use std::path::PathBuf;
 
 struct Conf {
     plugins_url: String,
     plugins_branch: String,
+    install_path: PathBuf,
+    disable_path: PathBuf,
 }
 impl Conf {
-    fn new() -> Self {
-        Default::default()
-    }
-}
-impl Default for Conf {
-    fn default() -> Self {
-        Self {
+    fn new() -> Result<Self> {
+        Ok(Self {
             plugins_url: String::from("https://codeberg.org/naev/naev-plugins"),
             plugins_branch: String::from("main"),
-        }
+            install_path: pluginmgr::local_plugins_dir()?,
+            disable_path: pluginmgr::local_plugins_disabled_dir()?,
+        })
     }
 }
 
@@ -31,10 +32,12 @@ pub fn open() -> iced::Result {
         .run()
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone)]
 enum Message {
-    Close,
     Selected(usize),
+    Install(Plugin),
+    Disable(Plugin),
+    Uninstall(Plugin),
     Refresh,
 }
 
@@ -43,6 +46,14 @@ enum PluginState {
     Installed,
     //Disabled,
     Available,
+}
+impl PluginState {
+    pub const fn as_str(&self) -> &'static str {
+        match self {
+            PluginState::Installed => "installed",
+            PluginState::Available => "available",
+        }
+    }
 }
 
 #[derive(Debug, Clone)]
@@ -82,18 +93,10 @@ impl App {
             pluginmgr::discover_remote_plugins(&self.conf.plugins_url, &self.conf.plugins_branch)?;
         self.selected = None; // TODO try to recover selection
 
-        self.local = pluginmgr::discover_local_plugins(pluginmgr::local_plugins_dir()?)?;
+        self.local = pluginmgr::discover_local_plugins(&self.conf.install_path)?;
 
-        Ok(())
-    }
-
-    fn new() -> Result<Self> {
-        let conf = Conf::new();
-
-        let remote = pluginmgr::discover_remote_plugins(&conf.plugins_url, &conf.plugins_branch)?;
-        let local = pluginmgr::discover_local_plugins(pluginmgr::local_plugins_dir()?)?;
-
-        let mut all: HashMap<Identifier, PluginWrap> = local
+        let mut all: HashMap<Identifier, PluginWrap> = self
+            .local
             .iter()
             .map(|p| {
                 (
@@ -106,7 +109,7 @@ impl App {
                 )
             })
             .collect();
-        for plugin in remote.iter() {
+        for plugin in self.remote.iter() {
             match all.get_mut(&plugin.identifier) {
                 Some(pw) => {
                     pw.remote = Some(plugin.clone());
@@ -123,19 +126,30 @@ impl App {
                 }
             }
         }
+        self.all = all.into_values().collect();
 
-        Ok(App {
+        Ok(())
+    }
+
+    fn new() -> Result<Self> {
+        let conf = Conf::new()?;
+        std::fs::create_dir_all(&conf.install_path)?;
+        std::fs::create_dir_all(&conf.disable_path)?;
+
+        let mut app = App {
             conf,
-            remote,
-            local,
-            all: all.into_values().collect(),
+            remote: Vec::new(),
+            local: Vec::new(),
+            all: Vec::new(),
             selected: None,
-        })
+        };
+        app.refresh()?;
+
+        Ok(app)
     }
 
     fn update(&mut self, message: Message) -> Task<Message> {
         match message {
-            Message::Close => iced::exit(),
             Message::Refresh => {
                 self.refresh().unwrap();
                 Task::none()
@@ -150,6 +164,19 @@ impl App {
                 } else {
                     self.selected = Some((id, self.all[id].clone()))
                 };
+                Task::none()
+            }
+            Message::Install(plugin) => {
+                let _ = Installer::new(&self.conf.install_path, &plugin).install();
+                Task::none()
+            }
+            Message::Disable(plugin) => {
+                // TODO don't brute force like this
+                let _ = Installer::new(&self.conf.disable_path, &plugin).install();
+                Task::none()
+            }
+            Message::Uninstall(plugin) => {
+                let _ = Installer::new(&self.conf.install_path, &plugin).uninstall();
                 Task::none()
             }
         }
@@ -204,14 +231,16 @@ impl App {
             .spacing(10)
         };
 
-        let selected = if let Some((_, sel)) = &self.selected {
-            let sel = sel.plugin();
+        let (selected, buttons) = if let Some((_, wrp)) = &self.selected {
+            let sel = wrp.plugin();
             let info = |txt| text(txt).size(20);
-            column![
+            let col = column![
                 bold("Identifier:"),
                 info(sel.identifier.as_str()),
                 bold("Name:"),
                 info(sel.name.as_str()),
+                bold("State:"),
+                info(wrp.state.as_str()),
                 bold("Author(s):"),
                 info(&sel.author),
                 bold("Plugin Version:"),
@@ -236,17 +265,27 @@ impl App {
                 text(sel.description.as_ref().unwrap_or(&sel.r#abstract)),
             ]
             .width(300)
-            .spacing(5)
+            .spacing(5);
+            (
+                col,
+                match wrp.state {
+                    PluginState::Installed => row![
+                        button("Uninstall").on_press(Message::Uninstall(sel.clone())),
+                        button("Disable").on_press(Message::Disable(sel.clone())),
+                    ],
+                    PluginState::Available => {
+                        row![button("Install").on_press(Message::Install(sel.clone())),]
+                    }
+                },
+            )
         } else {
-            column![text("")].width(300)
+            (column![text("")].width(300), row![button("Install")])
         };
-        let main = row![plugins, selected,].spacing(20).padding(20);
-        let buttons = row![
-            button("Refresh").on_press(Message::Refresh),
-            button("Close").on_press(Message::Close),
-        ]
-        .padding(20)
-        .spacing(10);
-        column![main, buttons].into()
+        let buttons = buttons
+            .push(button("Refresh").on_press(Message::Refresh))
+            .padding(10)
+            .spacing(10);
+        let right = column![buttons, selected].spacing(10);
+        row![plugins, right].spacing(20).padding(20).into()
     }
 }
