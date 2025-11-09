@@ -91,7 +91,7 @@ function accept ()
          l337(_([["It looks like we were right with our guess! The signs point to lonewolf4, and as it seems I've been able to pinpoint their location to boot!"]]))
       else
          l337(fmt.f(_([["It looks like it wasn't {guess} as you guessed, but lonewolf4. Seems like my technomancer instincts were right on the spot. Not only was I able figure out their identity, I've been able to pinpoint their location too!"]]),
-            {guess=guess}))
+            {guess=_(guess)}))
       end
       l337(fmt.f(_([["I was able to track the signal all the way to the {sys} system, which is a bit surprising given that the Nexus connection there must be unreliable, but who knows what ways of working around that they might have?"]]),
          {sys=SYSTEM_START}))
@@ -742,7 +742,7 @@ l337_b01's avatar freezes. Seems like the storm is blocking out their connection
    l337(_([["We're so close, I've managed to break the code to the Wolfie! You should be able to break into to it easily now."]]))
    vn.menu{
       {_([["Wolfie?"]]), "03_wolfie"},
-      {_([["What happened?"]]), "03_what"},
+      {p_("onion08-1", [["What happened?"]]), "03_what"},
    }
 
    vn.label("03_wolfie")
@@ -982,7 +982,7 @@ function epilogue ()
    l337(_([["You're back! I was so worried!"]]))
    vn.menu{
       {_([["Where am I?"]]), "01_cont"},
-      {_([["What happened?"]]), "01_cont"},
+      {p_("onion08-2", [["What happened?"]]), "01_cont"},
    }
 
    vn.label("01_cont")
