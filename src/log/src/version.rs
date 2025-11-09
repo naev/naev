@@ -16,8 +16,6 @@ pub static VERSION_HUMAN: LazyLock<String> = LazyLock::new(|| {
         config::HOST
     )
 });
-// If we can move the naevc::config info into this crate, we could solve this
-//pub static VERSION_HUMAN: String = format!(" {} v{} ({})", config::PACKAGE_NAME, config::PACKAGE_VERSION, config::HOST );
 
 fn binary_comparison(x: u64, y: u64) -> i32 {
     match x.cmp(&y) {
