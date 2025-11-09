@@ -56,13 +56,15 @@
   <structure size="large"/>
  </slots>
  <stats>
+  <armour_mod>-30</armour_mod>
   <shield_mod>50</shield_mod>
   <shield_regen_mod>35</shield_regen_mod>
+  <stress_dissipation>10</stress_dissipation>
   <fbay_capacity>50</fbay_capacity>
   <fbay_rate>50</fbay_rate>
   <fbay_reload>25</fbay_reload>
   <cpu_mod>40</cpu_mod>
-  <ew_detect>40</ew_detect>
+  <ew_detect>25</ew_detect>
  </stats>
  <tags>
   <tag>zalek</tag>
