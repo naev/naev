@@ -27,6 +27,10 @@ camino = { workspace = true }
 fs-err = { workspace = true }
 tempfile = { workspace = true }
 indicatif = { workspace = true }
-git2 = { workspace = true }
 tokio = { workspace = true }
 bytes = { workspace = true }
+semver = { workspace = true }
+git2 = { workspace = true }
+ndata = { workspace = true }
+log = { workspace = true }
+toml = { workspace = true }

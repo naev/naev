@@ -4163,6 +4163,7 @@ src/pluginmgr/src/lib.rs
 src/pluginmgr/src/local.rs
 src/pluginmgr/src/model.rs
 src/pluginmgr/src/mount.rs
+src/pluginmgr/src/plugin.rs
 src/pluginmgr/src/repository.rs
 src/pluginmgr/src/validator.rs
 src/quadtree.c

@@ -1,15 +1,77 @@
-pub mod install;
-pub mod local;
-pub mod model;
-pub mod mount;
-pub mod repository;
-pub mod validator;
+//pub mod install;
+//pub mod mount;
+pub mod plugin;
 
+use crate::plugin::{Plugin, PluginStub};
+use anyhow::Result;
 use camino::Utf8PathBuf;
 use directories::BaseDirs;
+use log::warn_err;
+use std::fs;
+use std::path::Path;
+
+pub fn discover_local_plugins<P: AsRef<Path>>(root: P) -> Result<Vec<Plugin>> {
+    let mut out = Vec::new();
+    if !root.as_ref().exists() {
+        return Ok(out);
+    }
+    for entry in fs::read_dir(&root)? {
+        match Plugin::from_path(&entry?.path().as_path()) {
+            Ok(plugin) => out.push(plugin),
+            Err(e) => {
+                warn_err!(e);
+                continue;
+            }
+        }
+    }
+    Ok(out)
+}
+
+pub fn repository<P: AsRef<Path>>(root: P) -> Result<Vec<PluginStub>> {
+    let plugins_dir = root.as_ref().join("plugins");
+    let mut out = Vec::new();
+    if !plugins_dir.exists() {
+        return Ok(out);
+    }
+    for entry in fs::read_dir(plugins_dir)? {
+        let entry = entry?;
+        let path = entry.path();
+        if path.extension().and_then(|s| s.to_str()) != Some("toml") {
+            continue;
+        }
+        match PluginStub::from_path(path.as_path()) {
+            Ok(plugin) => out.push(plugin),
+            Err(e) => {
+                warn_err!(e);
+                continue;
+            }
+        }
+    }
+    Ok(out)
+}
+/*
+    /// Opens a mounted view of a local plugin (directory or zip).
+    pub fn mount_plugin(&self, name: &str) -> Result<PluginSource> {
+        let plugin_path = self.root.join(name);
+
+        // Some plugins are stored as zips; some as directories
+        let zip_path = plugin_path.with_extension("zip");
+
+        if zip_path.exists() {
+            Ok(PluginSource::open(zip_path)?)
+        } else {
+            Ok(PluginSource::open(plugin_path)?)
+        }
+    }
+
+    pub fn ensure_root(&self) -> Result<()> {
+        fs::create_dir_all(&self.root)?;
+        Ok(())
+    }
+*/
 
 /// Returns the Naev plugins directory for the current platform.
-pub fn naev_plugins_dir() -> anyhow::Result<Utf8PathBuf> {
+pub fn local_plugins_dir() -> anyhow::Result<Utf8PathBuf> {
     let base = BaseDirs::new().ok_or_else(|| anyhow::anyhow!("No home directory found"))?;
 
     #[cfg(target_os = "linux")]
@@ -27,13 +89,7 @@ pub fn naev_plugins_dir() -> anyhow::Result<Utf8PathBuf> {
     Ok(p)
 }
 
-use crate::{
-    install::Installer, local::LocalManager, model::SourceKind, repository::Repository,
-    validator::validate_plugin,
-};
-use anyhow::Result;
-use serde::Serialize;
-
+/*
 /// Summary of a plugin update operation.
 #[derive(Debug, Clone, Serialize)]
 pub struct UpdateSummary {
@@ -143,3 +199,4 @@ pub fn validate_all(lm: &LocalManager) -> Result<Vec<ValidationSummary>> {
 
     Ok(results)
 }
+*/

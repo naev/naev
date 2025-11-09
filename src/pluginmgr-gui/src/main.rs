@@ -1,9 +1,6 @@
 use anyhow::{Context, Result};
 use iced::{Task, widget};
-use pluginmgr::{
-    install::Installer, local::LocalManager, model::LocalPlugin, model::PluginInfo,
-    model::SourceKind, naev_plugins_dir, repository::Repository,
-};
+use pluginmgr::plugin::{Plugin, PluginStub};
 use std::collections::HashMap;
 
 struct Conf {
@@ -40,10 +37,10 @@ enum Message {
 struct App {
     conf: Conf,
     repo: git2::Repository,
-    remote: Vec<PluginInfo>,
-    local: Vec<LocalPlugin>,
-    remote_selected: Option<(usize, PluginInfo)>,
-    local_versions: HashMap<String, Option<String>>,
+    remote: Vec<PluginStub>,
+    local: Vec<Plugin>,
+    remote_selected: Option<(usize, PluginStub)>,
+    local_versions: HashMap<String, semver::Version>,
 }
 
 impl App {
@@ -67,11 +64,10 @@ impl App {
             .workdir()
             .context("getting plugins repository workdir")?;
 
-        let local_repo = Repository::from_local_path(&repo_path);
-        self.remote = local_repo.list_plugins()?;
+        self.remote = pluginmgr::repository(&repo_path)?;
+        self.remote_selected = None; // TODO try to recover selection
 
-        let lm = LocalManager::discover()?;
-        self.local = lm.list_installed()?;
+        self.local = pluginmgr::discover_local_plugins(pluginmgr::local_plugins_dir()?)?;
 
         Ok(())
     }
@@ -98,13 +94,10 @@ impl App {
             }
         };
 
-        let local_repo = Repository::from_local_path(&repo_path);
-        let remote = local_repo.list_plugins()?;
+        let remote = pluginmgr::repository(&repo_path)?;
+        let local = pluginmgr::discover_local_plugins(pluginmgr::local_plugins_dir()?)?;
 
-        let lm = LocalManager::discover()?;
-        let local = lm.list_installed()?;
-
-        let local_versions: HashMap<String, Option<String>> = local
+        let local_versions: HashMap<String, semver::Version> = local
             .iter()
             .map(|p| (p.name.to_lowercase(), p.version.clone()))
             .collect();
@@ -190,7 +183,7 @@ impl App {
             None => "N/A",
         };
         let author = match &self.remote_selected {
-            Some(rs) => &rs.1.author,
+            Some(rs) => &rs.1.identifier,
             None => "N/A",
         };
         let selected = widget::column![
