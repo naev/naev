@@ -1,6 +1,6 @@
 use anyhow::Result;
 use iced::{Task, widget};
-use pluginmgr::plugin::Plugin;
+use pluginmgr::plugin::{Identifier, Plugin};
 use std::collections::HashMap;
 
 struct Conf {
@@ -33,16 +33,42 @@ pub fn open() -> iced::Result {
 
 #[derive(Debug, Clone, Copy)]
 enum Message {
+    Close,
     Selected(usize),
     Refresh,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq)]
+enum PluginState {
+    Installed,
+    //Disabled,
+    Available,
+}
+
+#[derive(Debug, Clone)]
+struct PluginWrap {
+    local: Option<Plugin>,
+    remote: Option<Plugin>,
+    state: PluginState,
+}
+impl PluginWrap {
+    fn plugin(&self) -> &Plugin {
+        if let Some(local) = &self.local {
+            local
+        } else if let Some(remote) = &self.remote {
+            remote
+        } else {
+            unreachable!();
+        }
+    }
 }
 
 struct App {
     conf: Conf,
     remote: Vec<Plugin>,
     local: Vec<Plugin>,
-    remote_selected: Option<(usize, Plugin)>,
-    local_versions: HashMap<String, semver::Version>,
+    all: Vec<PluginWrap>,
+    selected: Option<(usize, PluginWrap)>,
 }
 
 impl App {
@@ -54,7 +80,7 @@ impl App {
     fn refresh(&mut self) -> Result<()> {
         self.remote =
             pluginmgr::discover_remote_plugins(&self.conf.plugins_url, &self.conf.plugins_branch)?;
-        self.remote_selected = None; // TODO try to recover selection
+        self.selected = None; // TODO try to recover selection
 
         self.local = pluginmgr::discover_local_plugins(pluginmgr::local_plugins_dir()?)?;
 
@@ -67,39 +93,70 @@ impl App {
         let remote = pluginmgr::discover_remote_plugins(&conf.plugins_url, &conf.plugins_branch)?;
         let local = pluginmgr::discover_local_plugins(pluginmgr::local_plugins_dir()?)?;
 
-        let local_versions: HashMap<String, semver::Version> = local
+        let mut all: HashMap<Identifier, PluginWrap> = local
             .iter()
-            .map(|p| (p.name.to_lowercase(), p.version.clone()))
+            .map(|p| {
+                (
+                    p.identifier.clone(),
+                    PluginWrap {
+                        local: Some(p.clone()),
+                        remote: None,
+                        state: PluginState::Installed,
+                    },
+                )
+            })
             .collect();
+        for plugin in remote.iter() {
+            match all.get_mut(&plugin.identifier) {
+                Some(pw) => {
+                    pw.remote = Some(plugin.clone());
+                }
+                None => {
+                    all.insert(
+                        plugin.identifier.clone(),
+                        PluginWrap {
+                            local: None,
+                            remote: Some(plugin.clone()),
+                            state: PluginState::Available,
+                        },
+                    );
+                }
+            }
+        }
 
         Ok(App {
             conf,
             remote,
             local,
-            remote_selected: None,
-            local_versions,
+            all: all.into_values().collect(),
+            selected: None,
         })
     }
 
-    fn update(&mut self, message: Message) {
+    fn update(&mut self, message: Message) -> Task<Message> {
         match message {
-            Message::Refresh => self.refresh().unwrap(),
+            Message::Close => iced::exit(),
+            Message::Refresh => {
+                self.refresh().unwrap();
+                Task::none()
+            }
             Message::Selected(id) => {
-                if let Some((rid, _)) = &self.remote_selected {
-                    self.remote_selected = if id == *rid {
+                if let Some((rid, _)) = &self.selected {
+                    self.selected = if id == *rid {
                         None
                     } else {
-                        Some((id, self.remote[id].clone()))
+                        Some((id, self.all[id].clone()))
                     }
                 } else {
-                    self.remote_selected = Some((id, self.remote[id].clone()))
-                }
+                    self.selected = Some((id, self.all[id].clone()))
+                };
+                Task::none()
             }
         }
     }
 
     fn view(&self) -> iced::Element<'_, Message> {
-        use widget::{column, container, grid, mouse_area, row, scrollable, text};
+        use widget::{button, column, container, grid, mouse_area, row, scrollable, text};
         let bold = |txt| {
             text(txt).font(iced::Font {
                 weight: iced::font::Weight::Bold,
@@ -108,19 +165,28 @@ impl App {
         };
         let plugins = {
             scrollable(
-                grid(self.remote.iter().enumerate().map(|(id, v)| {
+                grid(self.all.iter().enumerate().map(|(id, v)| {
+                    let p = v.plugin();
                     let image = text("IMG").width(60).height(60);
                     let content = column![
-                        bold(v.name.as_str()),
-                        text(v.r#abstract.as_str()),
-                        text(v.tags.join(", ")),
+                        row![
+                            bold(p.name.as_str()),
+                            text(match v.state {
+                                PluginState::Installed => "[installed]",
+                                PluginState::Available => "",
+                            })
+                            .color(THEME.palette().warning)
+                        ]
+                        .spacing(5),
+                        text(p.r#abstract.as_str()),
+                        text(p.tags.join(", ")),
                     ]
                     .spacing(5);
                     let modal = row![image, content,]
                         .spacing(5)
                         .align_y(iced::alignment::Vertical::Center);
                     mouse_area(container(modal).padding(10).style(
-                        if let Some(sel) = &self.remote_selected
+                        if let Some(sel) = &self.selected
                             && id == sel.0
                         {
                             container::primary
@@ -136,31 +202,14 @@ impl App {
                 .height(grid::Sizing::EvenlyDistribute(iced::Length::Shrink)),
             )
             .spacing(10)
-            /*
-            let installed = table::column(bold("Status"), |this: &PluginInfo| {
-                let localver = self.local_versions.get(&this.name);
-                match localver {
-                    Some(v) => text("installed"),
-                    None => text(""),
-                }
-            });
-            let names = table::column(bold("Name"), |this: &PluginInfo| text(this.name.clone()));
-            let authors = table::column(bold("Author"), |this: &PluginInfo| {
-                text(this.author.clone())
-            });
-            let versions = table::column(bold("Version"), |this: &PluginInfo| {
-                text(match &this.version {
-                    Some(v) => v.clone(),
-                    None => "".to_string(),
-                })
-            });
-            table([installed, names, authors, versions], &self.remote).width(iced::Length::Fill)
-            */
         };
 
-        let selected = if let Some((_, sel)) = &self.remote_selected {
+        let selected = if let Some((_, sel)) = &self.selected {
+            let sel = sel.plugin();
             let info = |txt| text(txt).size(20);
-            widget::column![
+            column![
+                bold("Identifier:"),
+                info(sel.identifier.as_str()),
                 bold("Name:"),
                 info(sel.name.as_str()),
                 bold("Author(s):"),
@@ -189,11 +238,15 @@ impl App {
             .width(300)
             .spacing(5)
         } else {
-            widget::column![text("")].width(300)
+            column![text("")].width(300)
         };
-        widget::row![plugins, selected,]
-            .spacing(20)
-            .padding(20)
-            .into()
+        let main = row![plugins, selected,].spacing(20).padding(20);
+        let buttons = row![
+            button("Refresh").on_press(Message::Refresh),
+            button("Close").on_press(Message::Close),
+        ]
+        .padding(20)
+        .spacing(10);
+        column![main, buttons].into()
     }
 }

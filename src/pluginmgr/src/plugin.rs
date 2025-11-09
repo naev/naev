@@ -4,7 +4,7 @@ use std::ops::Deref;
 use std::path::{Path, PathBuf};
 
 /// Small wrapper for our identifier that has additional deserialization checks
-#[derive(Debug, Clone, Serialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, PartialEq, Eq, Hash)]
 pub struct Identifier(String);
 impl Deref for Identifier {
     type Target = String;
