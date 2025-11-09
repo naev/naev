@@ -1,7 +1,8 @@
-use crate::model::PluginInfo;
-use anyhow::{Context, Result, bail};
+use crate::plugin::{Plugin, Source};
+use anyhow::{Context, Result};
 use fs_err as fs;
-use std::path::PathBuf;
+use log::{info, warn};
+use std::path::{Path, PathBuf};
 
 /// Placeholder installer. Wire up real git/zip logic later.
 pub struct Installer {
@@ -9,36 +10,36 @@ pub struct Installer {
 }
 
 impl Installer {
-    pub fn new(dest_root: PathBuf) -> Self {
-        Self { dest_root }
-    }
-
-    pub fn install(&self, info: &PluginInfo) -> Result<()> {
-        match info.source_kind() {
-            Some(crate::model::SourceKind::Git) => self.install_from_git(info),
-            Some(crate::model::SourceKind::Link) => self.install_from_zip(info),
-            None => bail!("Plugin does not specify <git> or <link> source"),
+    pub fn new<P: AsRef<Path>>(root: P) -> Self {
+        Self {
+            dest_root: root.as_ref().to_owned(),
         }
     }
 
-    fn install_from_git(&self, info: &PluginInfo) -> Result<()> {
-        let url = info.git.as_deref().context("Missing <git> URL")?;
+    pub fn install(self, info: &Plugin) -> Result<()> {
+        match &info.source {
+            Source::Git(url) => self.install_from_git(&info, &url),
+            Source::Download(url) => self.install_from_zip(info, &url),
+            Source::Local => anyhow::bail!("local plugin"),
+        }
+    }
+
+    fn install_from_git(&self, info: &Plugin, url: &reqwest::Url) -> Result<()> {
         let name = &info.name;
         let dest = self.dest_root.join(name);
         if dest.exists() {
             fs::remove_dir_all(&dest).ok();
         }
         // TODO: use git2::Repository::clone_recurse for submodules; for now, basic clone.
-        let _repo = git2::Repository::clone(url, &dest)
+        let _repo = git2::Repository::clone(url.as_str(), &dest)
             .with_context(|| format!("Cloning {url} into {}", dest.display()))?;
         Ok(())
     }
 
     /// Checks whether a git-based plugin has updates available upstream.
-    pub fn check_git_update(&self, info: &PluginInfo) -> Result<Option<String>> {
+    pub fn check_git_update(&self, info: &Plugin, url: &reqwest::Url) -> Result<Option<String>> {
         use git2::Repository;
 
-        let url = info.git.as_deref().context("Missing <git> URL")?;
         let dest = self.dest_root.join(&info.name);
 
         if !dest.exists() {
@@ -52,7 +53,7 @@ impl Installer {
         {
             let mut remote = repo
                 .find_remote("origin")
-                .or_else(|_| repo.remote("origin", url))
+                .or_else(|_| repo.remote("origin", url.as_str()))
                 .with_context(|| {
                     format!("Could not find or create remote 'origin' for {}", info.name)
                 })?;
@@ -73,10 +74,9 @@ impl Installer {
     }
 
     /// Performs a git pull if an update is available.
-    pub fn update_git_plugin(&self, info: &PluginInfo) -> Result<()> {
+    pub fn update_git_plugin(&self, info: &Plugin, url: &reqwest::Url) -> Result<()> {
         use git2::{FetchOptions, Repository};
 
-        let url = info.git.as_deref().context("Missing <git> URL")?;
         let dest = self.dest_root.join(&info.name);
         let repo = Repository::open(&dest)
             .with_context(|| format!("Failed to open local repo {}", dest.display()))?;
@@ -84,7 +84,7 @@ impl Installer {
         // Prepare remote
         let mut remote = repo
             .find_remote("origin")
-            .or_else(|_| repo.remote("origin", url))
+            .or_else(|_| repo.remote("origin", url.as_str()))
             .with_context(|| {
                 format!("Could not find or create remote 'origin' for {}", info.name)
             })?;
@@ -102,7 +102,7 @@ impl Installer {
         let local_oid = repo.refname_to_id(&local_branch)?;
         let remote_oid = repo.refname_to_id(&remote_branch)?;
         if local_oid == remote_oid {
-            tracing::info!("{} is already up to date.", info.name);
+            info!("{} is already up to date.", info.name);
             return Ok(());
         }
 
@@ -115,11 +115,11 @@ impl Installer {
             ref_heads.set_target(remote_oid, "Fast-forward update")?;
             repo.set_head(&local_branch)?;
             repo.checkout_head(Some(git2::build::CheckoutBuilder::default().force()))?;
-            tracing::info!("Fast-forwarded {} to latest commit.", info.name);
+            info!("Fast-forwarded {} to latest commit.", info.name);
         } else if analysis.is_up_to_date() {
-            tracing::info!("{} is already up to date.", info.name);
+            info!("{} is already up to date.", info.name);
         } else {
-            tracing::warn!(
+            warn!(
                 "{} cannot be fast-forwarded; manual merge required.",
                 info.name
             );
@@ -130,17 +130,16 @@ impl Installer {
 
     /// Installs a plugin from a direct zip link by downloading and saving the archive.
     /// The zip file is stored directly in the plugins directory without extraction.
-    pub fn install_from_zip(&self, info: &PluginInfo) -> Result<()> {
-        let url = info.link.as_deref().context("Missing <link> URL")?;
+    pub fn install_from_zip(&self, info: &Plugin, url: &reqwest::Url) -> Result<()> {
         let name = &info.name;
         let dest_zip = self.dest_root.join(format!("{}.zip", name));
 
-        tracing::info!("Downloading plugin '{}' from {}", name, url);
+        info!("Downloading plugin '{}' from {}", name, url);
 
         // Download zip into memory
         let rt = tokio::runtime::Runtime::new()?;
         let bytes = rt.block_on(async {
-            let resp = reqwest::get(url).await?.error_for_status()?;
+            let resp = reqwest::get(url.clone()).await?.error_for_status()?;
             Ok::<bytes::Bytes, anyhow::Error>(resp.bytes().await?)
         })?;
 
@@ -149,63 +148,40 @@ impl Installer {
 
         // Save as a single zip file in plugins dir
         fs::write(&dest_zip, &bytes)?;
-        tracing::info!("Installed '{}' to {}", name, dest_zip.display());
+        info!("Installed '{}' to {}", name, dest_zip.display());
         Ok(())
     }
 
     /// Updates a zip-based plugin by re-downloading and replacing the archive file.
-    pub fn update_zip_plugin(&self, info: &PluginInfo) -> Result<()> {
-        let url = info.link.as_deref().context("Missing <link> URL")?;
+    pub fn update_zip_plugin(&self, info: &Plugin, url: &reqwest::Url) -> Result<()> {
         let name = &info.name;
         let dest_zip = self.dest_root.join(format!("{}.zip", name));
 
         // Check version difference (same as before)
-        let mut local_version = None;
-        if dest_zip.exists() {
-            let file = fs::File::open(&dest_zip)?;
-            let mut zip = zip::ZipArchive::new(file)?;
-            if zip.file_names().any(|n| n == "plugin.xml") {
-                use std::io::Read;
-                let mut xml_data = String::new();
-                {
-                    let mut f = zip.by_name("plugin.xml")?;
-                    f.read_to_string(&mut xml_data)?;
-                }
-                if let Ok(local_info) =
-                    quick_xml::de::from_str::<crate::model::InstalledPluginInfo>(&xml_data)
-                {
-                    local_version = local_info.version;
-                }
-            }
+        let local = Plugin::from_path(&dest_zip)?;
+
+        if info.version <= local.version {
+            info!(
+                "{} is already up to date (local v{} >= repo v{})",
+                name, info.version, local.version
+            );
+            return Ok(());
         }
 
-        if let (Some(repo_v), Some(local_v)) = (&info.version, &local_version) {
-            if repo_v <= local_v {
-                tracing::info!(
-                    "{} is already up to date (local v{} >= repo v{})",
-                    name,
-                    local_v,
-                    repo_v
-                );
-                return Ok(());
-            }
-        }
-
-        tracing::info!("Updating zip plugin '{}' from {}", name, url);
+        info!("Updating zip plugin '{}' from {}", name, url);
 
         // Download new archive
         let rt = tokio::runtime::Runtime::new()?;
         let bytes = rt.block_on(async {
-            let resp = reqwest::get(url).await?.error_for_status()?;
+            let resp = reqwest::get(url.clone()).await?.error_for_status()?;
             Ok::<bytes::Bytes, anyhow::Error>(resp.bytes().await?)
         })?;
 
         // Overwrite existing archive
         fs::write(&dest_zip, &bytes)?;
-        tracing::info!(
+        info!(
             "Successfully updated '{}' to version {:?}",
-            name,
-            info.version
+            name, info.version
         );
         Ok(())
     }

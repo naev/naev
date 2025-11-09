@@ -1,4 +1,4 @@
-//pub mod install;
+pub mod install;
 //pub mod mount;
 pub mod plugin;
 
