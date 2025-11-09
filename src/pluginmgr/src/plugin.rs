@@ -119,14 +119,14 @@ pub struct Plugin {
     #[serde(default)]
     pub total_conversion: bool,
     #[serde(default)]
-    blacklist: Vec<String>,
+    pub blacklist: Vec<String>,
     #[serde(default)]
-    whitelist: Vec<String>,
+    pub whitelist: Vec<String>,
     // Fields below are set after loading
     #[serde(default, skip_deserializing)]
     pub compatible: bool,
     #[serde(default, skip_deserializing)]
-    mountpoint: Option<PathBuf>,
+    pub mountpoint: Option<PathBuf>,
 }
 fn release_status_default() -> ReleaseStatus {
     ReleaseStatus::Stable

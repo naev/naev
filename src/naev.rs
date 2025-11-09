@@ -188,8 +188,11 @@ fn naevmain() -> Result<()> {
         naevc::conf_parseCLI(argv.len() as c_int, argv.as_mut_ptr()); /* parse CLI arguments */
     }
 
-    // Will propagate error out if necessary
+    // Load the data and plugins.
     ndata::setup()?;
+    // Plugin initialization before checking the data for consistency
+    plugin::mount()?;
+    ndata::check_version()?;
 
     unsafe {
         /* Set up I/O. */

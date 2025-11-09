@@ -771,7 +771,6 @@ static int naevL_plugins( lua_State *L )
       STRING( author );
       STRING( version );
       STRING( description );
-      STRING( compatibility );
       STRING( mountpoint );
 
       INTEGER( priority );
