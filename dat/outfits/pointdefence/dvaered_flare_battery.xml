@@ -31,7 +31,7 @@
    <penetrate>0</penetrate>
    <physical>15</physical>
   </damage>
-  <radius>35</radius>
+  <radius>60</radius>
   <ai>unguided</ai>
   <pointdefence/>
   <miss_explode/>

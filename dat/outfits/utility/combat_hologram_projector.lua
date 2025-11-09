@@ -1,7 +1,7 @@
 local aisetup = require "ai.core.setup"
 
 local cooldown = 20
-local active = 15
+local active = 25
 local dist = 3000 -- Distance to possible change target of hostiles
 local hologram = outfit.get("Combat Hologram Projector")
 
