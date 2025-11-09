@@ -45,8 +45,18 @@ pub fn discover_remote_plugins<T: reqwest::IntoUrl>(url: T, branch: &str) -> Res
             Ok(repo) => repo,
             Err(e) => anyhow::bail!("failed to open: {}", e),
         };
-        repo.find_remote("origin")?.fetch(&[branch], None, None)?;
-        repo.checkout_head(None)?;
+        {
+            repo.find_remote("origin")?.fetch(&[branch], None, None)?;
+            let (object, reference) = repo.revparse_ext(branch).context("git branch not found")?;
+            repo.checkout_tree(&object, None)
+                .context("git failed to checkout")?;
+            match reference {
+                // gref is an actual reference like branches or tags
+                Some(gref) => repo.set_head(gref.name().unwrap()),
+                // this is a commit, not a reference
+                None => repo.set_head_detached(object.id()),
+            }?;
+        }
         repo
     } else {
         match git2::Repository::clone(&url.as_str(), &repo_path) {
