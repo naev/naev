@@ -21,7 +21,7 @@ pub fn discover_local_plugins<P: AsRef<Path>>(root: P) -> Result<Vec<Plugin>> {
                     return None;
                 }
             };
-            match Plugin::from_path(&entry.path().as_path()) {
+            match Plugin::from_path(entry.path().as_path()) {
                 Ok(plugin) => Some(plugin),
                 Err(e) => {
                     warn_err!(e);
@@ -57,7 +57,7 @@ pub fn discover_remote_plugins<T: reqwest::IntoUrl>(url: T, branch: &str) -> Res
         }
         repo
     } else {
-        match git2::Repository::clone(&url.as_str(), &repo_path) {
+        match git2::Repository::clone(url.as_str(), &repo_path) {
             Ok(repo) => repo,
             Err(e) => anyhow::bail!("failed to clone: {}", e),
         }

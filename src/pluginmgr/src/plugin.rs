@@ -159,17 +159,17 @@ impl Plugin {
         let is_zip = path
             .extension()
             .and_then(|e| e.to_str())
-            .map_or(false, |e| e.eq_ignore_ascii_case("zip"));
+            .is_some_and(|e| e.eq_ignore_ascii_case("zip"));
 
         if is_zip {
-            let data = std::fs::read(&path)?;
+            let data = std::fs::read(path)?;
             let mut plugin = Self::from_slice(&data)?;
             plugin.mountpoint = Some(path.to_owned());
             Ok(plugin)
         } else if path.is_dir() {
             let metadata = path.join("plugin.toml");
             if metadata.exists() {
-                let data = std::fs::read(&path)?;
+                let data = std::fs::read(path)?;
                 let mut plugin = Self::from_slice(&data)?;
                 plugin.mountpoint = Some(path.to_owned());
                 Ok(plugin)
@@ -178,9 +178,9 @@ impl Plugin {
             }
         } else {
             // Assume directly pointing at plugin.toml
-            let data = std::fs::read(&path)?;
+            let data = std::fs::read(path)?;
             let mut plugin = Self::from_slice(&data)?;
-            plugin.mountpoint = path.parent().and_then(|e| Some(e.to_owned()));
+            plugin.mountpoint = path.parent().map(|e| e.to_owned());
             Ok(plugin)
         }
     }

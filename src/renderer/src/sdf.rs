@@ -136,7 +136,7 @@ pub extern "C" fn gl_renderCross(x: c_double, y: c_double, r: c_double, c: *cons
     };
     let _ = ctx
         .sdf
-        .draw_cross(&ctx, x as f32, y as f32, r as f32, colour);
+        .draw_cross(ctx, x as f32, y as f32, r as f32, colour);
 }
 
 /*
