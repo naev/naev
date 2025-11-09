@@ -91,8 +91,11 @@ impl App {
     fn refresh(&mut self) -> Result<()> {
         self.remote =
             pluginmgr::discover_remote_plugins(&self.conf.plugins_url, &self.conf.plugins_branch)?;
-        self.selected = None; // TODO try to recover selection
+        self.refresh_local()
+    }
 
+    fn refresh_local(&mut self) -> Result<()> {
+        self.selected = None; // TODO try to recover selection
         self.local = pluginmgr::discover_local_plugins(&self.conf.install_path)?;
 
         let mut all: HashMap<Identifier, PluginWrap> = self
@@ -168,15 +171,19 @@ impl App {
             }
             Message::Install(plugin) => {
                 let _ = Installer::new(&self.conf.install_path, &plugin).install();
+                let _ = self.refresh_local();
                 Task::none()
             }
             Message::Disable(plugin) => {
                 // TODO don't brute force like this
+                let _ = Installer::new(&self.conf.install_path, &plugin).uninstall();
                 let _ = Installer::new(&self.conf.disable_path, &plugin).install();
+                let _ = self.refresh_local();
                 Task::none()
             }
             Message::Uninstall(plugin) => {
                 let _ = Installer::new(&self.conf.install_path, &plugin).uninstall();
+                let _ = self.refresh_local();
                 Task::none()
             }
         }
@@ -271,7 +278,7 @@ impl App {
                 match wrp.state {
                     PluginState::Installed => row![
                         button("Uninstall").on_press(Message::Uninstall(sel.clone())),
-                        button("Disable").on_press(Message::Disable(sel.clone())),
+                        //button("Disable").on_press(Message::Disable(sel.clone())),
                     ],
                     PluginState::Available => {
                         row![button("Install").on_press(Message::Install(sel.clone())),]
