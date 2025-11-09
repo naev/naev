@@ -782,7 +782,7 @@ void weapons_render( const WeaponLayer layer, double dt )
 
 static void weapon_renderBeam( Weapon *w, double dt )
 {
-   double x, y, z;
+   double x, y, ex, ey, z;
    mat4   projection;
    double range = outfit_range( w->outfit ) * w->range_mod;
    double width = outfit_width( w->outfit );
@@ -798,11 +798,17 @@ static void weapon_renderBeam( Weapon *w, double dt )
 
    /* Position. */
    gl_gameToScreenCoords( &x, &y, w->solid.pos.x, w->solid.pos.y );
+   gl_gameToScreenCoords( &ex, &ey,
+                          w->solid.pos.x + cos( w->solid.dir ) * range,
+                          w->solid.pos.y + sin( w->solid.dir ) * range );
+
+   double angle  = atan2( ey - y, ex - x );
+   double length = hypotf( ex - x, ey - y );
 
    projection = gl_view_matrix;
    mat4_translate_xy( &projection, x, y );
-   mat4_rotate2d( &projection, w->solid.dir );
-   mat4_scale_xy( &projection, range * z, width * z );
+   mat4_rotate2d( &projection, angle );
+   mat4_scale_xy( &projection, length * z, width * z );
    mat4_translate_xy( &projection, 0., -0.5 );
 
    /* Set the vertex. */
