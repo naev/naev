@@ -96,33 +96,35 @@ impl App {
             })
         };
         let plugins = {
-            scrollable( grid(
-                self.remote
-                .iter()
-                .enumerate()
-                .map(|(id,v)| {
+            scrollable(
+                grid(self.remote.iter().enumerate().map(|(id, v)| {
                     let image = text("IMG").width(60).height(60);
                     let content = column![
                         bold(v.name.clone()),
-                        text("The abstract will be allowed to have up to 200 characters, so we should simulate something like that. Maybe a bit more. So this is about to become a fully specced abstract with exactly 200 characters."),
-                        text("TAGS"),
-                    ].spacing(5);
-                    let modal = row![
-                        image,
-                        content,
-                    ].spacing(5)
+                        text(v.r#abstract.clone()),
+                        text(v.tags.join(", ")),
+                    ]
+                    .spacing(5);
+                    let modal = row![image, content,]
+                        .spacing(5)
                         .align_y(iced::alignment::Vertical::Center);
-                    mouse_area( container( modal )
-                        .padding(10)
-                        .style( if let Some(sel) = &self.remote_selected && id==sel.0 {
+                    mouse_area(container(modal).padding(10).style(
+                        if let Some(sel) = &self.remote_selected
+                            && id == sel.0
+                        {
                             container::primary
                         } else {
                             container::rounded_box
-                        }) )
-                        .on_press( Message::Selected(id) )
-                        .into()
-                } )
-            ).fluid(500).spacing(10).height( grid::Sizing::EvenlyDistribute( iced::Length::Shrink ) ) ).spacing(10)
+                        },
+                    ))
+                    .on_press(Message::Selected(id))
+                    .into()
+                }))
+                .fluid(500)
+                .spacing(10)
+                .height(grid::Sizing::EvenlyDistribute(iced::Length::Shrink)),
+            )
+            .spacing(10)
             /*
             let installed = table::column(bold("Status"), |this: &PluginInfo| {
                 let localver = self.local_versions.get(&this.name);
@@ -149,7 +151,7 @@ impl App {
             None => "N/A",
         };
         let author = match &self.remote_selected {
-            Some(rs) => &rs.1.identifier,
+            Some(rs) => &rs.1.author,
             None => "N/A",
         };
         let selected = widget::column![
