@@ -125,6 +125,7 @@ pub extern "C" fn plugin_name(plg: *const naevc::plugin_t) -> *const c_char {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn plugin_manager() -> c_int {
+    /*
     match pluginmgr_gui::open() {
         Ok(()) => 0,
         Err(e) => {
@@ -132,6 +133,8 @@ pub extern "C" fn plugin_manager() -> c_int {
             1
         }
     }
+    */
+    0
 }
 
 #[unsafe(no_mangle)]
