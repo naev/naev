@@ -4,11 +4,9 @@ pub mod plugin;
 
 use crate::plugin::{Plugin, PluginStub};
 use anyhow::{Context, Result};
-use camino::Utf8PathBuf;
-use directories::BaseDirs;
 use log::warn_err;
 use std::fs;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 pub fn discover_local_plugins<P: AsRef<Path>>(root: P) -> Result<Vec<Plugin>> {
     if !root.as_ref().exists() {
@@ -128,22 +126,22 @@ pub fn repository<P: AsRef<Path>>(root: P) -> Result<Vec<PluginStub>> {
 */
 
 /// Returns the Naev plugins directory for the current platform.
-pub fn local_plugins_dir() -> anyhow::Result<Utf8PathBuf> {
+pub fn local_plugins_dir() -> Result<PathBuf> {
+    use directories::BaseDirs;
     let base = BaseDirs::new().ok_or_else(|| anyhow::anyhow!("No home directory found"))?;
 
     #[cfg(target_os = "linux")]
-    let p = Utf8PathBuf::from_path_buf(base.data_dir().join("naev").join("plugins"))
-        .map_err(|_| anyhow::anyhow!("Path is not valid UTF-8"))?;
+    let p = base.data_dir().join("naev").join("plugins");
 
     #[cfg(target_os = "macos")]
-    let p = Utf8PathBuf::from_path_buf(base.data_dir().join("org.naev.Naev").join("plugins"))
-        .map_err(|_| anyhow::anyhow!("Path is not valid UTF-8"))?;
+    let p = base.data_dir().join("org.naev.Naev").join("plugins");
 
     #[cfg(target_os = "windows")]
-    let p = Utf8PathBuf::from_path_buf(base.data_dir().join("naev").join("plugins"))
-        .map_err(|_| anyhow::anyhow!("Path is not valid UTF-8"))?;
-
+    let p = base.data_dir().join("naev").join("plugins");
     Ok(p)
+    /*
+    Ok(Path::new(&ndata::physfs::get_write_dir()).to_path_buf().join("plugins"))
+    */
 }
 
 /*
