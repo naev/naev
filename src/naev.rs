@@ -68,22 +68,9 @@ pub extern "C" fn naev_restart() -> c_int {
 /// Entry Point
 pub fn naev() -> Result<()> {
     // Hack for plugin manager mode
-    for arg in std::env::args().skip(1) {
-        if arg == "--pluginmanager" {
-            log::init()?;
-            // Start up physfs
-            unsafe {
-                let argv0 = CString::new(env::ENV.argv0.clone()).unwrap();
-                if !naevc::SDL_PhysFS_Init(argv0.as_ptr() as *const c_char) {
-                    let err = ndata::physfs::error_as_io_error("SDL_PhysFS_init");
-                    return Err(Error::new(err));
-                }
-                naevc::PHYSFS_permitSymbolicLinks(1);
-            }
-            linebreak::init();
-            gettext::init();
-            return Ok(pluginmgr_gui::open()?);
-        }
+    if std::env::args().skip(1).any(|a| a == "--pluginmanager") {
+        setup_logging()?;
+        return Ok(pluginmgr_gui::open()?);
     }
 
     match naevmain() {
@@ -103,8 +90,30 @@ pub fn naev() -> Result<()> {
     }
 }
 
+fn setup_logging() -> Result<()> {
+    // Begin logging infrastructure.
+    log::init().unwrap_or_else(|e| {
+        warn_err!(e);
+    });
+
+    // Start up PHYSFS. TODO move to ndata workspace.
+    unsafe {
+        let argv0 = CString::new(env::ENV.argv0.clone()).unwrap();
+        if !naevc::SDL_PhysFS_Init(argv0.as_ptr() as *const c_char) {
+            let err = ndata::physfs::error_as_io_error("SDL_PhysFS_init");
+            return Err(Error::new(err));
+        }
+        naevc::PHYSFS_permitSymbolicLinks(1);
+    }
+
+    // Set up locales.
+    linebreak::init();
+    gettext::init();
+    Ok(())
+}
+
 fn naevmain() -> Result<()> {
-    /* Load up the argv and argc for the C main. */
+    // Load up the argv and argc for the C main.
     let args: Vec<String> = std::env::args().collect();
     let mut cargs = vec![];
     for a in args {
@@ -112,11 +121,6 @@ fn naevmain() -> Result<()> {
     }
     let mut argv = cargs.into_iter().map(|s| s.into_raw()).collect::<Vec<_>>();
     argv.shrink_to_fit();
-
-    /* Begin logging infrastructure. */
-    log::init().unwrap_or_else(|e| {
-        warn_err!(e);
-    });
 
     // Workarounds
     if cfg!(target_os = "linux") {
@@ -128,21 +132,10 @@ fn naevmain() -> Result<()> {
         }
     }
 
-    /* Start up PHYSFS. */
-    unsafe {
-        let argv0 = CString::new(env::ENV.argv0.clone()).unwrap();
-        if !naevc::SDL_PhysFS_Init(argv0.as_ptr() as *const c_char) {
-            let err = ndata::physfs::error_as_io_error("SDL_PhysFS_init");
-            return Err(Error::new(err));
-        }
-        naevc::PHYSFS_permitSymbolicLinks(1);
-    }
+    // Start logging stuff.
+    setup_logging()?;
 
-    /* Set up locales. */
-    linebreak::init();
-    gettext::init();
-
-    /* Print the version */
+    // Print the version
     info!("{}", &*log::version::VERSION_HUMAN);
     if cfg!(target_os = "linux") {
         match env::ENV.is_appimage {
@@ -153,7 +146,7 @@ fn naevmain() -> Result<()> {
         }
     }
 
-    /* Initialize SDL. */
+    // Initialize SDL.
     let sdlctx = sdl::init()?;
 
     let starttime = sdl::timer::ticks();
@@ -164,7 +157,7 @@ fn naevmain() -> Result<()> {
     }
 
     if cfg!(unix) {
-        /* Set window class and name. */
+        // Set window class and name.
         unsafe {
             std::env::set_var("SDL_VIDEO_X11_WMCLASS", naev_core::APPNAME);
         }
