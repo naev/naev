@@ -78,7 +78,6 @@ static int             opt_lastKeyPress = 0; /**< Last keypress. */
  */
 /* Misc. */
 static void opt_close( unsigned int wid, const char *name );
-static void opt_needRestart( void );
 /* Gameplay. */
 static char **lang_list( int *n );
 static void   opt_gameplay( unsigned int wid );
@@ -192,16 +191,15 @@ void opt_menu( void )
  */
 static void opt_OK( unsigned int wid, const char *str )
 {
-   int ret, prompted_restart;
+   int ret;
 
-   prompted_restart = opt_restart;
-   ret              = 0;
+   ret = 0;
    ret |= opt_gameplaySave( opt_windows[OPT_WIN_GAMEPLAY], str );
    ret |= opt_accessibilitySave( opt_windows[OPT_WIN_ACCESSIBILITY], str );
    ret |= opt_audioSave( opt_windows[OPT_WIN_AUDIO], str );
    ret |= opt_videoSave( opt_windows[OPT_WIN_VIDEO], str );
 
-   if ( opt_restart && !prompted_restart ) {
+   if ( opt_restart ) {
       int         can_save  = naev_canSave();
       const char *msg_extra = "";
       if ( player.p != NULL ) {
@@ -1448,7 +1446,7 @@ static void opt_video( unsigned int wid )
 /**
  * @brief Marks that needs restart.
  */
-static void opt_needRestart( void )
+void opt_needRestart( void )
 {
    const char *s = _( "#rRestart Naev for changes to take effect.#0" );
    opt_restart   = 1;

@@ -1,7 +1,9 @@
 use anyhow::Result;
 use gettext::gettext;
+use log::semver;
 use log::{debug, warn, warn_err};
-use pluginmgr::plugin::Plugin;
+use pluginmgr::plugin::{Identifier, Plugin};
+use std::collections::HashMap;
 use std::sync::LazyLock;
 
 static PLUGINS: LazyLock<Vec<Plugin>> = LazyLock::new(|| {
@@ -21,6 +23,22 @@ static PLUGINS: LazyLock<Vec<Plugin>> = LazyLock::new(|| {
     plugins.sort_by(|a, b| a.priority.cmp(&b.priority));
     plugins
 });
+
+fn changed() -> Result<bool> {
+    fn plugins_to_hashmap(plugins: &Vec<Plugin>) -> HashMap<Identifier, semver::Version> {
+        plugins
+            .iter()
+            .map(|p| (p.identifier.clone(), p.version.clone()))
+            .collect()
+    }
+
+    let loaded = plugins_to_hashmap(&*PLUGINS);
+    let installed = plugins_to_hashmap(&pluginmgr::discover_local_plugins(
+        pluginmgr::local_plugins_dir()?,
+    )?);
+
+    Ok(loaded != installed)
+}
 
 pub fn mount() -> Result<()> {
     debug!("{}", gettext("Loaded plugins:"));
@@ -81,11 +99,20 @@ pub fn manager() -> Result<()> {
                 warn_err!(e);
             }
         };
+        // TODO fix this, not actually thread safe...
         unsafe {
             naevc::window_destroy(wdw);
         }
 
-        // TODO ask about restarting if necessary
+        // Hack for now, TODO should be handled in the options menu in the future... (also not
+        // thread safe)
+        if let Ok(chg) = changed() {
+            if chg {
+                unsafe {
+                    naevc::opt_needRestart();
+                }
+            }
+        }
 
         MANAGER_OPEN.store(false, Ordering::SeqCst);
     });
