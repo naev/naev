@@ -67,6 +67,25 @@ pub extern "C" fn naev_restart() -> c_int {
 
 /// Entry Point
 pub fn naev() -> Result<()> {
+    // Hack for plugin manager mode
+    for arg in std::env::args().skip(1) {
+        if arg == "--pluginmanager" {
+            log::init()?;
+            // Start up physfs
+            unsafe {
+                let argv0 = CString::new(env::ENV.argv0.clone()).unwrap();
+                if !naevc::SDL_PhysFS_Init(argv0.as_ptr() as *const c_char) {
+                    let err = ndata::physfs::error_as_io_error("SDL_PhysFS_init");
+                    return Err(Error::new(err));
+                }
+                naevc::PHYSFS_permitSymbolicLinks(1);
+            }
+            linebreak::init();
+            gettext::init();
+            return Ok(pluginmgr_gui::open()?);
+        }
+    }
+
     match naevmain() {
         Ok(_) => Ok(()),
         Err(e) => {

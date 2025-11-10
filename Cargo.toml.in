@@ -57,6 +57,7 @@ renderer = { path="@BUILD@/src/renderer" }
 toolkit = { path="@BUILD@/src/toolkit" }
 physics = { path="@BUILD@/src/physics" }
 pluginmgr = { path="@BUILD@/src/pluginmgr" }
+pluginmgr-gui = { path="@BUILD@/src/pluginmgr-gui" }
 formatx = "0.2"
 glow = "0.16"
 nalgebra = { version = "0.34", features = ["bytemuck", "encase"] }
@@ -117,6 +118,7 @@ roxmltree = { workspace = true }
 image = { workspace = true }
 physics = { workspace = true }
 pluginmgr = { workspace = true }
+pluginmgr-gui = { workspace = true }
 mlua = { workspace = true }
 constcat = "0.6"
 rand = "0.9"
@@ -124,7 +126,6 @@ rayon = { workspace = true }
 static_assertions = "1.1"
 palette = { workspace = true }
 serde_yaml2 = "0.1"
-#pluginmgr-gui = { path="@BUILD@/src/pluginmgr-gui" }
 # gltf-rs crate doesn't support WEBP in any release atm...
 gltf = { git = "https://github.com/gltf-rs/gltf.git", rev = "12fc1b7ce28c7b4c6d1b881a30df24060dccfbda", features = ["extras", "names", "utils", "EXT_texture_webp", "KHR_materials_emissive_strength"] }
 #gltf = { version = "1", features = ["extras", "names", "utils"] }
