@@ -320,8 +320,8 @@ pub fn iostream<P: AsRef<Path>>(filename: P, mode: Mode) -> Result<IOStream<'sta
     }
 }
 
-pub fn blacklisted(filename: &str) -> bool {
-    let c_filename = CString::new(filename).unwrap();
+pub fn blacklisted<P: AsRef<Path>>(filename: P) -> bool {
+    let c_filename = CString::new(filename.as_ref().as_os_str().as_encoded_bytes()).unwrap();
     let realdir = unsafe { naevc::PHYSFS_getRealDir(c_filename.as_ptr()) };
     if realdir.is_null() {
         return false;

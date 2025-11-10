@@ -1533,8 +1533,8 @@ capi_tex!(tex_vmax, vmax);
 
 #[unsafe(no_mangle)]
 pub extern "C" fn gl_texExistsPath(cpath: *const c_char) -> c_int {
-    let path = &unsafe { CStr::from_ptr(cpath) }.to_string_lossy();
-    if ndata::exists(path) {
+    let path = unsafe { CStr::from_ptr(cpath) }.to_string_lossy();
+    if ndata::exists(&*path) {
         return 1;
     }
     use image::ImageFormat;
