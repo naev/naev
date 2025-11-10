@@ -25,14 +25,14 @@ static PLUGINS: LazyLock<Vec<Plugin>> = LazyLock::new(|| {
 });
 
 fn changed() -> Result<bool> {
-    fn plugins_to_hashmap(plugins: &Vec<Plugin>) -> HashMap<Identifier, semver::Version> {
+    fn plugins_to_hashmap(plugins: &[Plugin]) -> HashMap<Identifier, semver::Version> {
         plugins
             .iter()
             .map(|p| (p.identifier.clone(), p.version.clone()))
             .collect()
     }
 
-    let loaded = plugins_to_hashmap(&*PLUGINS);
+    let loaded = plugins_to_hashmap(&PLUGINS);
     let installed = plugins_to_hashmap(&pluginmgr::discover_local_plugins(
         pluginmgr::local_plugins_dir()?,
     )?);
@@ -106,11 +106,11 @@ pub fn manager() -> Result<()> {
 
         // Hack for now, TODO should be handled in the options menu in the future... (also not
         // thread safe)
-        if let Ok(chg) = changed() {
-            if chg {
-                unsafe {
-                    naevc::opt_needRestart();
-                }
+        if let Ok(chg) = changed()
+            && chg
+        {
+            unsafe {
+                naevc::opt_needRestart();
             }
         }
 
