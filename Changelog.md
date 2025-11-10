@@ -31,6 +31,9 @@
  - Reflective shell now shoots thorns
 
 #### Quality of Life
+ - Plugin manager built directly into Naev
+    - Access to the online plugin repository
+    - Can easily add or remove plugins from local or online sources
  - Autonav improvements
     - Can automatically land when following a ship
     - Improved autonav behaviour when losing a followed ship
