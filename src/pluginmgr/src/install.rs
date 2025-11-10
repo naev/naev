@@ -20,8 +20,8 @@ impl Installer {
 
     pub fn install(self) -> Result<()> {
         match &self.plugin.source {
-            Source::Git(url) => self.install_from_git(&url),
-            Source::Download(url) => self.install_from_zip(&url),
+            Source::Git(url) => self.install_from_git(url),
+            Source::Download(url) => self.install_from_zip(url),
             Source::Local => anyhow::bail!("local plugin"),
         }
     }

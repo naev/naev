@@ -144,7 +144,7 @@ pub fn setup() -> anyhow::Result<()> {
     }
 
     // Finally, we mount the write directory also as read
-    physfs::mount(&physfs::get_write_dir(), false).unwrap_or_else(|e| {
+    physfs::mount(physfs::get_write_dir(), false).unwrap_or_else(|e| {
         warn_err!(e);
     });
     Ok(())

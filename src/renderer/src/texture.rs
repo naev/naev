@@ -2107,7 +2107,7 @@ impl UserData for Texture {
             )|
              -> mlua::Result<Self> {
                 let io = match path {
-                    Value::String(s) => ndata::iostream(&s.to_string_lossy())?,
+                    Value::String(s) => ndata::iostream(s.to_string_lossy())?,
                     Value::UserData(ud) => {
                         let file = ud.take::<ndata::lua::LuaFile>()?;
                         file.into_iostream()?
