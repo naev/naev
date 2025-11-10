@@ -123,6 +123,8 @@ pub extern "C" fn plugin_name(plg: *const naevc::plugin_t) -> *const c_char {
     }
 }
 
+use std::sync::atomic::{AtomicBool, Ordering};
+static MANAGER_OPEN: AtomicBool = AtomicBool::new(false);
 #[unsafe(no_mangle)]
 pub extern "C" fn plugin_manager() -> c_int {
     /*
@@ -134,10 +136,53 @@ pub extern "C" fn plugin_manager() -> c_int {
         }
     }
     */
-    0
-}
+    if MANAGER_OPEN.load(Ordering::SeqCst) {
+        return -1;
+    }
 
-#[unsafe(no_mangle)]
-pub extern "C" fn plugin_manager_is_open() -> c_int {
+    // Find naevplug binary
+
+    let wdw = unsafe {
+        let (w, h) = (300, 200);
+        let wdw = naevc::window_create(
+            c"wdwPluginManager".as_ptr(),
+            c"Plugin Manager".as_ptr(),
+            -1,
+            -1,
+            w,
+            h,
+        );
+        naevc::window_addText(
+            wdw,
+            20,
+            -40,
+            w - 40,
+            h,
+            0,
+            c"txtMsg".as_ptr(),
+            std::ptr::null_mut(),
+            std::ptr::null(),
+            c"Please close the Plugin Manager to continue.".as_ptr(),
+        );
+        wdw
+    };
+
+    MANAGER_OPEN.store(true, Ordering::SeqCst);
+    std::thread::spawn(move || {
+        match cargo_util::ProcessBuilder::new("naevplug").exec() {
+            Ok(()) => (),
+            Err(e) => {
+                warn_err!(e);
+            }
+        };
+        unsafe {
+            naevc::window_destroy(wdw);
+        }
+
+        // TODO ask about restarting if necessary
+
+        MANAGER_OPEN.store(false, Ordering::SeqCst);
+    });
+
     0
 }
