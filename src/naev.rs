@@ -70,6 +70,7 @@ pub fn naev() -> Result<()> {
     // Hack for plugin manager mode
     if std::env::args().skip(1).any(|a| a == "--pluginmanager") {
         setup_logging()?;
+        // TODO load config path so we can set the language and load ndata and such...
         return Ok(pluginmgr_gui::open()?);
     }
 
@@ -148,7 +149,6 @@ fn naevmain() -> Result<()> {
 
     // Initialize SDL.
     let sdlctx = sdl::init()?;
-
     let starttime = sdl::timer::ticks();
 
     unsafe {
@@ -178,7 +178,7 @@ fn naevmain() -> Result<()> {
         naevc::conf_loadConfigPath();
     }
 
-    /* Create the home directory if needed. */
+    // Create the home directory if needed.
     let cpath = unsafe { naevc::nfile_configPath() };
     unsafe {
         if naevc::nfile_dirMakeExist(cpath) != 0 {
@@ -186,7 +186,7 @@ fn naevmain() -> Result<()> {
         }
     }
 
-    /* Set up the configuration. */
+    // Set up the configuration.
     let conf_file_path = unsafe {
         let rpath = cptr_to_cstr(cpath);
         let conf_file =
@@ -207,7 +207,7 @@ fn naevmain() -> Result<()> {
     ndata::check_version()?;
 
     unsafe {
-        /* Set up I/O. */
+        // Set up I/O.
         naevc::gettext_setLanguage(naevc::conf.language); /* now that we can find translations */
         infox!(gettext("Loaded configuration: {}"), conf_file_path);
         let search_path = naevc::PHYSFS_getSearchPath();

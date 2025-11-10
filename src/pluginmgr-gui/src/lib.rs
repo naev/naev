@@ -243,17 +243,17 @@ impl App {
             let sel = wrp.plugin();
             let info = |txt| text(txt).size(20);
             let col = column![
-                bold(gettext("plugins", "Identifier:")),
+                bold(pgettext("plugins", "Identifier:")),
                 info(sel.identifier.as_str()),
                 bold(pgettext("plugins", "Name:")),
                 info(sel.name.as_str()),
-                bold(gettext("plugins", "State:")),
+                bold(pgettext("plugins", "State:")),
                 info(gettext(wrp.state.as_str())),
-                bold(gettext("plugins", "Author(s):")),
+                bold(pgettext("plugins", "Author(s):")),
                 info(&sel.author),
-                bold(gettext("plugins", "Plugin Version:")),
+                bold(pgettext("plugins", "Plugin Version:")),
                 text(sel.version.to_string()).size(20),
-                bold(gettext("plugins", "Naev Version:")),
+                bold(pgettext("plugins", "Naev Version:")),
                 text(format!(
                     "{}{}",
                     sel.naev_version,
@@ -271,9 +271,9 @@ impl App {
                     false => Some(THEME.palette().danger),
                 })
                 .size(20),
-                bold(gettext("plugins", "Status:")),
+                bold(pgettext("plugins", "Status:")),
                 info(gettext(sel.release_status.as_str())),
-                bold(gettext("plugins", "Description")),
+                bold(pgettext("plugins", "Description")),
                 text(sel.description.as_ref().unwrap_or(&sel.r#abstract)),
             ]
             .width(300)
@@ -282,13 +282,13 @@ impl App {
                 col,
                 match wrp.state {
                     PluginState::Installed => row![
-                        button(gettext("plugins", "Uninstall"))
+                        button(pgettext("plugins", "Uninstall"))
                             .on_press(Message::Uninstall(sel.clone())),
                         //button("Disable").on_press(Message::Disable(sel.clone())),
                     ],
                     PluginState::Available => {
                         row![
-                            button(gettext("plugins", "Install"))
+                            button(pgettext("plugins", "Install"))
                                 .on_press(Message::Install(sel.clone())),
                         ]
                     }
@@ -297,11 +297,11 @@ impl App {
         } else {
             (
                 column![text("")].width(300),
-                row![button(gettext("plugins", "Install"))],
+                row![button(pgettext("plugins", "Install"))],
             )
         };
         let buttons = buttons
-            .push(button(gettext("plugins", "Refresh")).on_press(Message::Refresh))
+            .push(button(pgettext("plugins", "Refresh")).on_press(Message::Refresh))
             .padding(10)
             .spacing(10);
         let right = column![buttons, selected].spacing(10);
