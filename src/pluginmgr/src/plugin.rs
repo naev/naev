@@ -3,6 +3,12 @@ use serde::{Deserialize, Serialize, de};
 use std::ops::Deref;
 use std::path::{Path, PathBuf};
 
+// To not pull in all of gettext
+#[allow(non_snake_case)]
+pub const fn N_(s: &str) -> &str {
+    s
+}
+
 /// Small wrapper for our identifier that has additional deserialization checks
 #[derive(Debug, Clone, derive_more::Display, Serialize, PartialEq, Eq, Hash)]
 pub struct Identifier(String);
@@ -78,9 +84,9 @@ pub enum ReleaseStatus {
 impl ReleaseStatus {
     pub const fn as_str(&self) -> &'static str {
         match self {
-            ReleaseStatus::Stable => "stable",
-            ReleaseStatus::Testing => "testing",
-            ReleaseStatus::Development => "development",
+            ReleaseStatus::Stable => N_("stable"),
+            ReleaseStatus::Testing => N_("testing"),
+            ReleaseStatus::Development => N_("development"),
         }
     }
 }

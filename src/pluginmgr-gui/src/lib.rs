@@ -1,5 +1,6 @@
 use anyhow::Result;
 use iced::{Task, widget};
+use log::gettext::{N_, gettext, pgettext};
 use pluginmgr::install::Installer;
 use pluginmgr::plugin::{Identifier, Plugin};
 use std::collections::HashMap;
@@ -26,7 +27,7 @@ const THEME: iced::Theme = iced::Theme::Dark;
 
 pub fn open() -> iced::Result {
     iced::application(App::run, App::update, App::view)
-        .title("Naev Plugin Manager")
+        .title(gettext("Naev Plugin Manager"))
         .theme(THEME)
         .centered()
         .run()
@@ -50,8 +51,8 @@ enum PluginState {
 impl PluginState {
     pub const fn as_str(&self) -> &'static str {
         match self {
-            PluginState::Installed => "installed",
-            PluginState::Available => "available",
+            PluginState::Installed => N_("installed"),
+            PluginState::Available => N_("available"),
         }
     }
 }
@@ -206,7 +207,7 @@ impl App {
                         row![
                             bold(p.name.as_str()),
                             text(match v.state {
-                                PluginState::Installed => "[installed]",
+                                PluginState::Installed => gettext("[installed]"),
                                 PluginState::Available => "",
                             })
                             .color(THEME.palette().warning)
@@ -242,23 +243,27 @@ impl App {
             let sel = wrp.plugin();
             let info = |txt| text(txt).size(20);
             let col = column![
-                bold("Identifier:"),
+                bold(gettext("plugins", "Identifier:")),
                 info(sel.identifier.as_str()),
-                bold("Name:"),
+                bold(pgettext("plugins", "Name:")),
                 info(sel.name.as_str()),
-                bold("State:"),
-                info(wrp.state.as_str()),
-                bold("Author(s):"),
+                bold(gettext("plugins", "State:")),
+                info(gettext(wrp.state.as_str())),
+                bold(gettext("plugins", "Author(s):")),
                 info(&sel.author),
-                bold("Plugin Version:"),
+                bold(gettext("plugins", "Plugin Version:")),
                 text(sel.version.to_string()).size(20),
-                bold("Naev Version:"),
+                bold(gettext("plugins", "Naev Version:")),
                 text(format!(
                     "{}{}",
                     sel.naev_version,
                     match sel.compatible {
                         true => "".to_string(),
-                        false => format!(" [incompatible with Naev {}]", *log::version::VERSION),
+                        false => format!(
+                            " [{} {}]",
+                            gettext("incompatible with Naev "),
+                            *log::version::VERSION
+                        ),
                     }
                 ))
                 .color_maybe(match sel.compatible {
@@ -266,9 +271,9 @@ impl App {
                     false => Some(THEME.palette().danger),
                 })
                 .size(20),
-                bold("Status:"),
-                info(sel.release_status.as_str()),
-                bold("Description"),
+                bold(gettext("plugins", "Status:")),
+                info(gettext(sel.release_status.as_str())),
+                bold(gettext("plugins", "Description")),
                 text(sel.description.as_ref().unwrap_or(&sel.r#abstract)),
             ]
             .width(300)
@@ -277,19 +282,26 @@ impl App {
                 col,
                 match wrp.state {
                     PluginState::Installed => row![
-                        button("Uninstall").on_press(Message::Uninstall(sel.clone())),
+                        button(gettext("plugins", "Uninstall"))
+                            .on_press(Message::Uninstall(sel.clone())),
                         //button("Disable").on_press(Message::Disable(sel.clone())),
                     ],
                     PluginState::Available => {
-                        row![button("Install").on_press(Message::Install(sel.clone())),]
+                        row![
+                            button(gettext("plugins", "Install"))
+                                .on_press(Message::Install(sel.clone())),
+                        ]
                     }
                 },
             )
         } else {
-            (column![text("")].width(300), row![button("Install")])
+            (
+                column![text("")].width(300),
+                row![button(gettext("plugins", "Install"))],
+            )
         };
         let buttons = buttons
-            .push(button("Refresh").on_press(Message::Refresh))
+            .push(button(gettext("plugins", "Refresh")).on_press(Message::Refresh))
             .padding(10)
             .spacing(10);
         let right = column![buttons, selected].spacing(10);

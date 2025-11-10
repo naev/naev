@@ -6,8 +6,8 @@ pub fn init() {
     };
 }
 
-#[allow(non_snake_case, dead_code)]
-pub fn N_(s: &str) -> &str {
+#[allow(non_snake_case)]
+pub const fn N_(s: &str) -> &str {
     s
 }
 
