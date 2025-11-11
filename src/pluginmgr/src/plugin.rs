@@ -168,7 +168,6 @@ impl Plugin {
 
     pub fn from_path<P: AsRef<Path>>(path: P) -> Result<Self> {
         let path = path.as_ref();
-        dbg!(&path);
 
         if path.is_dir() {
             let metadata = path.join("plugin.toml");

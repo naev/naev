@@ -1,17 +1,20 @@
 use anyhow::Result;
 use iced::{Task, widget};
 use log::gettext::{N_, gettext, pgettext};
+use log::warn_err;
 use pluginmgr::install::Installer;
 use pluginmgr::plugin::{Identifier, Plugin};
 use std::collections::HashMap;
 use std::path::PathBuf;
 
+#[derive(Debug, Clone)]
 struct Remote {
     url: reqwest::Url,
     mirror: Option<reqwest::Url>,
     branch: String,
 }
 
+#[derive(Debug, Clone)]
 struct Conf {
     remotes: Vec<Remote>,
     install_path: PathBuf,
@@ -50,6 +53,7 @@ enum Message {
     Disable(Plugin),
     Uninstall(Plugin),
     Refresh,
+    RefreshLocal,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -86,19 +90,23 @@ impl PluginWrap {
     }
 }
 
-struct App {
+#[derive(Debug, Clone)]
+struct Catalog {
     conf: Conf,
     remote: Vec<Plugin>,
     local: Vec<Plugin>,
     disabled: Vec<Plugin>,
     all: Vec<PluginWrap>,
-    selected: Option<(usize, PluginWrap)>,
 }
-
-impl App {
-    fn run() -> (Self, Task<Message>) {
-        let app = Self::new().unwrap();
-        (app, Task::none())
+impl Catalog {
+    fn new(conf: Conf) -> Self {
+        Self {
+            conf,
+            remote: Vec::new(),
+            local: Vec::new(),
+            disabled: Vec::new(),
+            all: Vec::new(),
+        }
     }
 
     fn refresh(&mut self) -> Result<()> {
@@ -131,7 +139,6 @@ impl App {
     }
 
     fn refresh_local(&mut self) -> Result<()> {
-        self.selected = None; // TODO try to recover selection
         self.local = pluginmgr::discover_local_plugins(&self.conf.install_path)?;
         self.disabled = pluginmgr::discover_local_plugins(&self.conf.disable_path)?;
 
@@ -190,6 +197,20 @@ impl App {
 
         Ok(())
     }
+}
+
+#[derive(Debug)]
+struct App {
+    catalog: Catalog,
+    selected: Option<(usize, PluginWrap)>,
+    progress: Option<(String, f32)>,
+}
+
+impl App {
+    fn run() -> (Self, Task<Message>) {
+        let app = Self::new().unwrap();
+        (app, Task::none())
+    }
 
     fn new() -> Result<Self> {
         let conf = Conf::new()?;
@@ -197,22 +218,30 @@ impl App {
         std::fs::create_dir_all(&conf.disable_path)?;
 
         let mut app = App {
-            conf,
-            remote: Vec::new(),
-            local: Vec::new(),
-            disabled: Vec::new(),
-            all: Vec::new(),
+            catalog: Catalog::new(conf),
             selected: None,
+            progress: None,
         };
-        app.refresh()?;
+        app.catalog.refresh()?;
 
         Ok(app)
     }
 
     fn update(&mut self, message: Message) -> Task<Message> {
-        match message {
+        let task = match message {
+            Message::RefreshLocal => {
+                match self.catalog.refresh_local() {
+                    Ok(_) => (),
+                    Err(e) => warn_err!(e),
+                }
+                Task::none()
+            }
             Message::Refresh => {
-                self.refresh().unwrap();
+                //Task::perform( self.catalog.refresh().unwrap(), Message::Refresh )
+                match self.catalog.refresh() {
+                    Ok(_) => (),
+                    Err(e) => warn_err!(e),
+                }
                 Task::none()
             }
             Message::Selected(id) => {
@@ -220,42 +249,64 @@ impl App {
                     self.selected = if id == *rid {
                         None
                     } else {
-                        Some((id, self.all[id].clone()))
+                        Some((id, self.catalog.all[id].clone()))
                     }
                 } else {
-                    self.selected = Some((id, self.all[id].clone()))
+                    self.selected = Some((id, self.catalog.all[id].clone()))
                 };
                 Task::none()
             }
             Message::Install(plugin) => {
-                let _ = Installer::new(&self.conf.install_path, &plugin).install();
-                let _ = self.refresh_local();
+                match Installer::new(&self.catalog.conf.install_path, &plugin).install() {
+                    Ok(_) => (),
+                    Err(e) => warn_err!(e),
+                }
+                let _ = self.catalog.refresh_local();
                 Task::none()
             }
             Message::Enable(plugin) => {
-                let _ = Installer::new(&self.conf.install_path, &plugin)
-                    .move_to(&self.conf.disable_path);
-                let _ = self.refresh_local();
+                match Installer::new(&self.catalog.conf.disable_path, &plugin)
+                    .move_to(&self.catalog.conf.install_path)
+                {
+                    Ok(_) => (),
+                    Err(e) => warn_err!(e),
+                }
+                let _ = self.catalog.refresh_local();
                 Task::none()
             }
             Message::Disable(plugin) => {
-                let _ = Installer::new(&self.conf.install_path, &plugin)
-                    .move_to(&self.conf.install_path);
-                let _ = self.refresh_local();
+                match Installer::new(&self.catalog.conf.install_path, &plugin)
+                    .move_to(&self.catalog.conf.disable_path)
+                {
+                    Ok(_) => (),
+                    Err(e) => warn_err!(e),
+                }
+                let _ = self.catalog.refresh_local();
                 Task::none()
             }
             Message::Uninstall(plugin) => {
-                let _ = Installer::new(&self.conf.install_path, &plugin).uninstall();
-                let _ = self.refresh_local();
+                match Installer::new(&self.catalog.conf.install_path, &plugin).uninstall() {
+                    Ok(_) => (),
+                    Err(e) => warn_err!(e),
+                }
+                let _ = self.catalog.refresh_local();
                 Task::none()
             }
+        };
+        // Clear selection if it's not matched anymore
+        if let Some((id, plg)) = &self.selected {
+            if self.catalog.all[*id].plugin().identifier != plg.plugin().identifier {
+                self.selected = None; // TODO try to recover selection
+            }
         }
+        task
     }
 
     fn view(&self) -> iced::Element<'_, Message> {
         use widget::{button, column, container, grid, mouse_area, row, scrollable, text};
 
-        let idle = true;
+        let idle = self.progress.is_none();
+        let catalog = &self.catalog;
 
         let bold = |txt| {
             text(txt).font(iced::Font {
@@ -265,7 +316,7 @@ impl App {
         };
         let plugins = {
             scrollable(
-                grid(self.all.iter().enumerate().map(|(id, v)| {
+                grid(catalog.all.iter().enumerate().map(|(id, v)| {
                     let p = v.plugin();
                     let image = text("IMG").width(60).height(60);
                     let content = column![
@@ -376,6 +427,7 @@ impl App {
                 row![button(pgettext("plugins", "Install"))],
             )
         };
+        // Add refresh button and format
         let buttons = buttons
             .push(
                 button(pgettext("plugins", "Refresh"))
@@ -383,7 +435,18 @@ impl App {
             )
             .padding(10)
             .spacing(10);
+        // Set up the final screen
         let right = column![buttons, selected].spacing(10);
-        row![plugins, right].spacing(20).padding(20).into()
+        let main = row![plugins, right].spacing(20).padding(20);
+        // Add progress bar at the bottom
+        match &self.progress {
+            Some(p) => column![main, text(&p.0), widget::progress_bar(0.0..=100.0, p.1)],
+            None => column![
+                main,
+                text(pgettext("plugins", "Idle")),
+                widget::progress_bar(0.0..=100.0, 100.0)
+            ],
+        }
+        .into()
     }
 }

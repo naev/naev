@@ -22,20 +22,27 @@ impl Installer {
     pub fn install(self) -> Result<()> {
         match &self.plugin.source {
             Source::Git(url) => self.install_from_git(url),
-            Source::Download(url) => self.install_from_zip(url),
+            Source::Download(url) => self.install_from_zip_url(url),
             Source::Local => anyhow::bail!("local plugin"),
         }
     }
 
     /// Moves a plugin to another directory
-    pub fn move_to<P: AsRef<Path>>(self, dest: P) -> Result<()> {
+    pub fn move_to<P: AsRef<Path>>(self, to: P) -> Result<()> {
         let from = self.root.join(&*self.plugin.identifier);
-        let to = dest.as_ref().join(&*self.plugin.identifier);
-        fs_extra::dir::move_dir(from, to, &Default::default())?;
+        info!(
+            "Moving plugin '{}' from '{}' -> '{}'",
+            &self.plugin.identifier,
+            from.display(),
+            to.as_ref().display()
+        );
+        fs_extra::dir::move_dir(&from, &to, &Default::default())?;
+        info!("Moving completed");
         Ok(())
     }
 
     fn install_from_git(&self, url: &reqwest::Url) -> Result<()> {
+        info!("Installing plugin from git repo '{}'", &url);
         let info = &self.plugin;
         let dest = self.root.join(&*info.identifier);
         if dest.exists() {
@@ -44,6 +51,7 @@ impl Installer {
         // TODO: use git2::Repository::clone_recurse for submodules; for now, basic clone.
         let _repo = git2::Repository::clone(url.as_str(), &dest)
             .with_context(|| format!("Cloning {url} into {}", dest.display()))?;
+        info!("Installed '{}' to {}", &info.name, dest.display());
         Ok(())
     }
 
@@ -143,7 +151,8 @@ impl Installer {
 
     /// Installs a plugin from a direct zip link by downloading and saving the archive.
     /// The zip file is stored directly in the plugins directory without extraction.
-    pub fn install_from_zip(&self, url: &reqwest::Url) -> Result<()> {
+    pub fn install_from_zip_url(&self, url: &reqwest::Url) -> Result<()> {
+        info!("Installing plugin from zip download '{}'", &url);
         let info = &self.plugin;
         let dest_zip = self.root.join(format!("{}.zip", &info.identifier));
 
@@ -200,6 +209,7 @@ impl Installer {
     }
 
     pub fn uninstall(self) -> Result<()> {
+        info!("Uninstalling plugin '{}'", &self.plugin.identifier);
         let target = self.root.join(&*self.plugin.identifier);
         if target.exists() {
             fs::remove_dir_all(&target)?;

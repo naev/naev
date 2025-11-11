@@ -14,7 +14,6 @@ pub fn discover_local_plugins<P: AsRef<Path>>(root: P) -> Result<Vec<Plugin>> {
     }
     Ok(fs::read_dir(&root)?
         .filter_map(|entry| {
-            dbg!(&entry);
             let entry = match entry {
                 Ok(entry) => entry,
                 Err(e) => {
