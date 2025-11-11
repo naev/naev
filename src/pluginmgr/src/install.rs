@@ -29,7 +29,13 @@ impl Installer {
 
     /// Moves a plugin to another directory
     pub fn move_to<P: AsRef<Path>>(self, to: P) -> Result<()> {
-        let from = self.root.join(&*self.plugin.identifier);
+        let from = {
+            // Try to use mount point if applicable, for manually installed stuff
+            match self.plugin.mountpoint {
+                Some(mp) => mp,
+                None => self.root.join(&*self.plugin.identifier),
+            }
+        };
         info!(
             "Moving plugin '{}' from '{}' -> '{}'",
             &self.plugin.identifier,
@@ -208,7 +214,13 @@ impl Installer {
 
     pub fn uninstall(self) -> Result<()> {
         info!("Uninstalling plugin '{}'", &self.plugin.identifier);
-        let target = self.root.join(&*self.plugin.identifier);
+        let target = {
+            // Try to uninstall from mount point first
+            match self.plugin.mountpoint {
+                Some(mp) => mp,
+                None => self.root.join(&*self.plugin.identifier),
+            }
+        };
         if target.exists() {
             fs::remove_dir_all(&target)?;
         }
