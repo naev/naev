@@ -335,8 +335,16 @@ impl App {
                         row![
                             bold(p.name.as_str()),
                             match v.state {
-                                PluginState::Installed =>
-                                    text(gettext("[installed]")).color(THEME.palette().warning),
+                                PluginState::Installed => {
+                                    if let Some(local) = &v.local
+                                        && let Some(remote) = &v.remote
+                                        && local.version < remote.version
+                                    {
+                                        text(gettext("[update]")).color(THEME.palette().danger)
+                                    } else {
+                                        text(gettext("[installed]")).color(THEME.palette().warning)
+                                    }
+                                }
                                 PluginState::Disabled => text(gettext("[disabled]"))
                                     .color(THEME.extended_palette().secondary.strong.color),
                                 PluginState::Available => text(""),
