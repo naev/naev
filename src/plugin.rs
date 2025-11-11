@@ -5,6 +5,7 @@ use log::{debug, warn, warn_err};
 use pluginmgr::plugin::{Identifier, Plugin};
 use std::collections::HashMap;
 use std::sync::LazyLock;
+use std::sync::atomic::{AtomicBool, Ordering};
 
 static PLUGINS: LazyLock<Vec<Plugin>> = LazyLock::new(|| {
     let mut plugins = match pluginmgr::local_plugins_dir() {
@@ -40,22 +41,84 @@ fn changed() -> Result<bool> {
     Ok(loaded != installed)
 }
 
+fn blacklist_append(blk: &str) {
+    let cstr = CString::new(blk).unwrap();
+    unsafe {
+        naevc::blacklist_append(cstr.as_ptr());
+    }
+}
+
+fn whitelist_append(wht: &str) {
+    let cstr = CString::new(wht).unwrap();
+    unsafe {
+        naevc::whitelist_append(cstr.as_ptr());
+    }
+}
+
+static MOUNTED: AtomicBool = AtomicBool::new(false);
 pub fn mount() -> Result<()> {
-    debug!("{}", gettext("Loaded plugins:"));
-    // reverse as we prepend
-    for plugin in PLUGINS.iter().rev() {
+    fn load_plugin(plugin: &Plugin) -> Result<()> {
         if let Some(mountpoint) = &plugin.mountpoint {
-            if let Err(e) = ndata::physfs::mount(mountpoint, false) {
-                warn_err!(e);
+            ndata::physfs::mount(mountpoint, false)?;
+
+            for blk in &plugin.blacklist {
+                blacklist_append(&blk);
             }
+            for wht in &plugin.whitelist {
+                whitelist_append(&wht);
+            }
+
+            if plugin.total_conversion {
+                for blk in [
+                    "^ssys/.*\\.xml",
+                    "^spob/.*\\.xml",
+                    "^spob_virtual/.*\\.xml",
+                    "^factions/.*\\.xml",
+                    "^commodities/.*\\.xml",
+                    "^ships/.*\\.xml",
+                    "^outfits/.*\\.xml",
+                    "^missions/.*\\.lua",
+                    "^events/.*\\.lua",
+                    "^tech/.*\\.xml",
+                    "^asteroids/.*\\.xml",
+                    "^unidiff/.*\\.xml",
+                    "^map_decorator/.*\\.xml",
+                    "^naevpedia/.*\\.xml",
+                    "^intro",
+                ] {
+                    blacklist_append(&blk);
+                }
+                for wht in ["^events/settings.lua"] {
+                    whitelist_append(&wht);
+                }
+            }
+
+            debug!(" * {}", &plugin.name);
         } else {
-            warn!("Plugin '{}' is missing a mountpoint.", plugin.name);
+            anyhow::bail!(format!("Plugin '{}' is missing a mountpoint.", plugin.name));
+        }
+        Ok(())
+    }
+
+    if !MOUNTED.load(Ordering::Relaxed) {
+        MOUNTED.store(true, Ordering::Relaxed);
+
+        unsafe {
+            naevc::blacklist_init();
+        }
+
+        debug!("{}", gettext("Loaded plugins:"));
+        // reverse as we prepend
+        for plugin in PLUGINS.iter().rev() {
+            match load_plugin(&plugin) {
+                Ok(()) => debug!(" * {}", &plugin.name),
+                Err(e) => warn_err!(e),
+            }
         }
     }
     Ok(())
 }
 
-use std::sync::atomic::{AtomicBool, Ordering};
 static MANAGER_OPEN: AtomicBool = AtomicBool::new(false);
 pub fn manager() -> Result<()> {
     if MANAGER_OPEN.load(Ordering::SeqCst) {
