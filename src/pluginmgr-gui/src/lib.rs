@@ -52,8 +52,11 @@ enum Message {
     Enable(Plugin),
     Disable(Plugin),
     Uninstall(Plugin),
-    Refresh(()),
-    RefreshLocal(()),
+    UninstallDisabled(Plugin),
+    Idle,
+    Refresh,
+    RefreshDone,
+    RefreshLocal,
     UpdateCatalog(Catalog),
 }
 
@@ -225,14 +228,14 @@ impl Catalog {
 struct App {
     catalog: Catalog,
     selected: Option<(usize, PluginWrap)>,
-    progress: Option<(String, f32)>,
+    can_refresh: bool,
+    idle: bool,
 }
 
 impl App {
     fn run() -> (Self, Task<Message>) {
         let app = Self::new().unwrap();
-        let catalog = app.catalog.clone();
-        (app, catalog.refresh_task())
+        (app, Task::done(Message::Refresh))
     }
 
     fn new() -> Result<Self> {
@@ -243,7 +246,8 @@ impl App {
         Ok(App {
             catalog: Catalog::new(conf),
             selected: None,
-            progress: None,
+            can_refresh: true,
+            idle: true,
         })
     }
 
@@ -253,8 +257,18 @@ impl App {
                 self.catalog = c;
                 Task::none()
             }
-            Message::RefreshLocal(_) => self.catalog.clone().refresh_local_task(),
-            Message::Refresh(_) => self.catalog.clone().refresh_task(),
+            Message::RefreshLocal => self.catalog.clone().refresh_local_task(),
+            Message::Refresh => {
+                self.can_refresh = false;
+                self.catalog
+                    .clone()
+                    .refresh_task()
+                    .chain(Task::done(Message::RefreshDone))
+            }
+            Message::RefreshDone => {
+                self.can_refresh = true;
+                Task::none()
+            }
             Message::Selected(id) => {
                 if let Some((rid, _)) = &self.selected {
                     self.selected = if id == *rid {
@@ -268,6 +282,7 @@ impl App {
                 Task::none()
             }
             Message::Install(plugin) => {
+                self.idle = false;
                 async fn install_wrapper(installer: Installer) {
                     match installer.install().await {
                         Ok(_) => (),
@@ -276,8 +291,9 @@ impl App {
                 }
                 Task::perform(
                     install_wrapper(Installer::new(&self.catalog.conf.install_path, &plugin)),
-                    Message::RefreshLocal,
+                    |_| Message::RefreshLocal,
                 )
+                .chain(Task::done(Message::Idle))
             }
             Message::Enable(plugin) => {
                 match Installer::new(&self.catalog.conf.disable_path, &plugin)
@@ -304,12 +320,23 @@ impl App {
                 }
                 self.catalog.clone().refresh_local_task()
             }
+            Message::UninstallDisabled(plugin) => {
+                match Installer::new(&self.catalog.conf.disable_path, &plugin).uninstall() {
+                    Ok(_) => (),
+                    Err(e) => warn_err!(e),
+                }
+                self.catalog.clone().refresh_local_task()
+            }
+            Message::Idle => {
+                self.idle = true;
+                Task::none()
+            }
         };
         // Clear selection if it's not matched anymore
-        if let Some((id, plg)) = &self.selected {
-            if self.catalog.all[*id].plugin().identifier != plg.plugin().identifier {
-                self.selected = None; // TODO try to recover selection
-            }
+        if let Some((id, plg)) = &self.selected
+            && self.catalog.all[*id].plugin().identifier != plg.plugin().identifier
+        {
+            self.selected = None; // TODO try to recover selection
         }
         task
     }
@@ -317,8 +344,8 @@ impl App {
     fn view(&self) -> iced::Element<'_, Message> {
         use widget::{button, column, container, grid, mouse_area, row, scrollable, text};
 
-        let idle = self.progress.is_none();
         let catalog = &self.catalog;
+        let idle = self.idle;
 
         let bold = |txt| {
             text(txt).font(iced::Font {
@@ -429,8 +456,9 @@ impl App {
                         row![
                             button(pgettext("plugins", "Enable"))
                                 .on_press_maybe(idle.then_some(Message::Enable(sel.clone()))),
-                            button(pgettext("plugins", "Uninstall"))
-                                .on_press_maybe(idle.then_some(Message::Uninstall(sel.clone()))),
+                            button(pgettext("plugins", "Uninstall")).on_press_maybe(
+                                idle.then_some(Message::UninstallDisabled(sel.clone()))
+                            ),
                         ]
                     }
                     PluginState::Available => {
@@ -451,22 +479,12 @@ impl App {
         let buttons = buttons
             .push(
                 button(pgettext("plugins", "Refresh"))
-                    .on_press_maybe(idle.then_some(Message::Refresh(()))),
+                    .on_press_maybe(self.can_refresh.then_some(Message::Refresh)),
             )
             .padding(10)
             .spacing(10);
         // Set up the final screen
         let right = column![buttons, selected].spacing(10);
-        let main = row![plugins, right].spacing(20).padding(20);
-        // Add progress bar at the bottom
-        match &self.progress {
-            Some(p) => column![main, text(&p.0), widget::progress_bar(0.0..=100.0, p.1)],
-            None => column![
-                main,
-                text(pgettext("plugins", "Idle")),
-                widget::progress_bar(0.0..=100.0, 100.0)
-            ],
-        }
-        .into()
+        row![plugins, right].spacing(20).padding(20).into()
     }
 }
