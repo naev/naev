@@ -8,6 +8,7 @@ use std::path::PathBuf;
 
 struct Remote {
     url: reqwest::Url,
+    mirror: Option<reqwest::Url>,
     branch: String,
 }
 
@@ -21,7 +22,8 @@ impl Conf {
         Ok(Self {
             remotes: vec![Remote {
                 // TODO worth using url-macro library for this?
-                url: reqwest::Url::parse("https://codeberg.org/naev/naev-plugins").unwrap(),
+                url: reqwest::Url::parse("https://codeberg.org/naev/naev-plugins")?,
+                mirror: None,
                 branch: "main".to_string(),
             }],
             install_path: pluginmgr::local_plugins_dir()?,
@@ -32,12 +34,12 @@ impl Conf {
 
 const THEME: iced::Theme = iced::Theme::Dark;
 
-pub fn open() -> iced::Result {
-    iced::application(App::run, App::update, App::view)
+pub fn open() -> Result<()> {
+    Ok(iced::application(App::run, App::update, App::view)
         .title(gettext("Naev Plugin Manager"))
         .theme(THEME)
         .centered()
-        .run()
+        .run()?)
 }
 
 #[derive(Debug, Clone)]
@@ -99,7 +101,19 @@ impl App {
     fn refresh(&mut self) -> Result<()> {
         let mut hm: HashMap<Identifier, Plugin> = HashMap::new();
         for remote in &self.conf.remotes {
-            for plugin in pluginmgr::discover_remote_plugins(remote.url.clone(), &remote.branch)? {
+            let plugins = {
+                match pluginmgr::discover_remote_plugins(remote.url.clone(), &remote.branch) {
+                    Ok(plugins) => Ok(plugins),
+                    Err(e) => {
+                        if let Some(mirror) = &remote.mirror {
+                            pluginmgr::discover_remote_plugins(mirror.clone(), &remote.branch)
+                        } else {
+                            Err(e)
+                        }
+                    }
+                }
+            }?;
+            for plugin in plugins {
                 hm.entry(plugin.identifier.clone())
                     .and_modify(|e| {
                         if e.version < plugin.version {

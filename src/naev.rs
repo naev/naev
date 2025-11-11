@@ -71,7 +71,7 @@ pub fn naev() -> Result<()> {
     if std::env::args().skip(1).any(|a| a == "--pluginmanager") {
         setup_logging()?;
         // TODO load config path so we can set the language and load ndata and such...
-        return Ok(pluginmgr_gui::open()?);
+        return pluginmgr_gui::open();
     }
 
     match naevmain() {
