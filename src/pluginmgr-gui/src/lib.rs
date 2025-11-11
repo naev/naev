@@ -60,7 +60,7 @@ enum Message {
     UpdateCatalog(Catalog),
 }
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 enum PluginState {
     Installed,
     Disabled,
@@ -199,6 +199,17 @@ impl Catalog {
             }
         }
         self.all = all.into_values().collect();
+
+        // Sort by state and then identifier
+        // TODO allow the user to sort or whatever
+        self.all.sort_by(|a, b| {
+            let ord = a.state.cmp(&b.state);
+            if ord == std::cmp::Ordering::Equal {
+                a.plugin().identifier.cmp(&b.plugin().identifier)
+            } else {
+                ord
+            }
+        });
 
         Ok(())
     }
