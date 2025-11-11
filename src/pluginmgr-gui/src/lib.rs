@@ -149,6 +149,26 @@ impl App {
                 )
             })
             .collect();
+        for plugin in self.disabled.iter() {
+            match all.get(&plugin.identifier) {
+                Some(_) => {
+                    anyhow::bail!(format!(
+                        "plugin '{}' is both installed and disabled",
+                        &plugin.name
+                    ));
+                }
+                None => {
+                    all.insert(
+                        plugin.identifier.clone(),
+                        PluginWrap {
+                            local: Some(plugin.clone()),
+                            remote: None,
+                            state: PluginState::Disabled,
+                        },
+                    );
+                }
+            }
+        }
         for plugin in self.remote.iter() {
             match all.get_mut(&plugin.identifier) {
                 Some(pw) => {
@@ -234,6 +254,9 @@ impl App {
 
     fn view(&self) -> iced::Element<'_, Message> {
         use widget::{button, column, container, grid, mouse_area, row, scrollable, text};
+
+        let idle = true;
+
         let bold = |txt| {
             text(txt).font(iced::Font {
                 weight: iced::font::Weight::Bold,
@@ -326,22 +349,23 @@ impl App {
                 col,
                 match wrp.state {
                     PluginState::Installed => row![
-                        button("Disable").on_press(Message::Disable(sel.clone())),
+                        button(pgettext("plugins", "Disable"))
+                            .on_press_maybe(idle.then_some(Message::Disable(sel.clone()))),
                         button(pgettext("plugins", "Uninstall"))
-                            .on_press(Message::Uninstall(sel.clone())),
+                            .on_press_maybe(idle.then_some(Message::Uninstall(sel.clone()))),
                     ],
                     PluginState::Disabled => {
                         row![
                             button(pgettext("plugins", "Enable"))
-                                .on_press(Message::Enable(sel.clone())),
+                                .on_press_maybe(idle.then_some(Message::Enable(sel.clone()))),
                             button(pgettext("plugins", "Uninstall"))
-                                .on_press(Message::Uninstall(sel.clone())),
+                                .on_press_maybe(idle.then_some(Message::Uninstall(sel.clone()))),
                         ]
                     }
                     PluginState::Available => {
                         row![
                             button(pgettext("plugins", "Install"))
-                                .on_press(Message::Install(sel.clone())),
+                                .on_press_maybe(idle.then_some(Message::Install(sel.clone()))),
                         ]
                     }
                 },
@@ -353,7 +377,10 @@ impl App {
             )
         };
         let buttons = buttons
-            .push(button(pgettext("plugins", "Refresh")).on_press(Message::Refresh))
+            .push(
+                button(pgettext("plugins", "Refresh"))
+                    .on_press_maybe(idle.then_some(Message::Refresh)),
+            )
             .padding(10)
             .spacing(10);
         let right = column![buttons, selected].spacing(10);

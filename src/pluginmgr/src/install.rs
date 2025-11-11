@@ -18,6 +18,7 @@ impl Installer {
         }
     }
 
+    /// Installs from a plugin from a source
     pub fn install(self) -> Result<()> {
         match &self.plugin.source {
             Source::Git(url) => self.install_from_git(url),
@@ -26,8 +27,12 @@ impl Installer {
         }
     }
 
+    /// Moves a plugin to another directory
     pub fn move_to<P: AsRef<Path>>(self, dest: P) -> Result<()> {
-        todo!()
+        let from = self.root.join(&*self.plugin.identifier);
+        let to = dest.as_ref().join(&*self.plugin.identifier);
+        fs_extra::dir::move_dir(from, to, &Default::default())?;
+        Ok(())
     }
 
     fn install_from_git(&self, url: &reqwest::Url) -> Result<()> {
