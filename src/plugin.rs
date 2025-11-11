@@ -4,6 +4,7 @@ use log::semver;
 use log::{debug, warn, warn_err};
 use pluginmgr::plugin::{Identifier, Plugin};
 use std::collections::HashMap;
+use std::path::PathBuf;
 use std::sync::LazyLock;
 use std::sync::atomic::{AtomicBool, Ordering};
 
@@ -57,10 +58,8 @@ fn whitelist_append(wht: &str) {
 
 static MOUNTED: AtomicBool = AtomicBool::new(false);
 pub fn mount() -> Result<()> {
-    fn load_plugin(plugin: &Plugin) -> Result<()> {
+    fn load_plugin(plugin: &Plugin) -> Result<PathBuf> {
         if let Some(mountpoint) = &plugin.mountpoint {
-            ndata::physfs::mount(mountpoint, false)?;
-
             for blk in &plugin.blacklist {
                 blacklist_append(&blk);
             }
@@ -92,26 +91,40 @@ pub fn mount() -> Result<()> {
                     whitelist_append(&wht);
                 }
             }
+            Ok(mountpoint.to_path_buf())
         } else {
             anyhow::bail!(format!("Plugin '{}' is missing a mountpoint.", plugin.name));
         }
-        Ok(())
     }
 
     if !MOUNTED.load(Ordering::Relaxed) {
         MOUNTED.store(true, Ordering::Relaxed);
 
+        debug!("{}", gettext("Loaded plugins:"));
+        // reverse as we prepend
+        let mountpoints: Vec<_> = PLUGINS
+            .iter()
+            .rev()
+            .filter_map(|plugin| match load_plugin(&plugin) {
+                Ok(mp) => {
+                    debug!(" * {}", &plugin.name);
+                    Some(mp)
+                }
+                Err(e) => {
+                    warn_err!(e);
+                    None
+                }
+            })
+            .collect();
+
+        // The blacklist_init stuff is horrible and requires us to append the stuff first, before
+        // mounting the plugins...
         unsafe {
             naevc::blacklist_init();
         }
 
-        debug!("{}", gettext("Loaded plugins:"));
-        // reverse as we prepend
-        for plugin in PLUGINS.iter().rev() {
-            match load_plugin(&plugin) {
-                Ok(()) => debug!(" * {}", &plugin.name),
-                Err(e) => warn_err!(e),
-            }
+        for mountpoint in mountpoints.iter() {
+            ndata::physfs::mount(mountpoint, false)?;
         }
     }
     Ok(())
