@@ -6,17 +6,24 @@ use pluginmgr::plugin::{Identifier, Plugin};
 use std::collections::HashMap;
 use std::path::PathBuf;
 
+struct Remote {
+    url: reqwest::Url,
+    branch: String,
+}
+
 struct Conf {
-    plugins_url: String,
-    plugins_branch: String,
+    remotes: Vec<Remote>,
     install_path: PathBuf,
     disable_path: PathBuf,
 }
 impl Conf {
     fn new() -> Result<Self> {
         Ok(Self {
-            plugins_url: String::from("https://codeberg.org/naev/naev-plugins"),
-            plugins_branch: String::from("main"),
+            remotes: vec![Remote {
+                // TODO worth using url-macro library for this?
+                url: reqwest::Url::parse("https://codeberg.org/naev/naev-plugins").unwrap(),
+                branch: "main".to_string(),
+            }],
             install_path: pluginmgr::local_plugins_dir()?,
             disable_path: pluginmgr::local_plugins_disabled_dir()?,
         })
@@ -90,8 +97,19 @@ impl App {
     }
 
     fn refresh(&mut self) -> Result<()> {
-        self.remote =
-            pluginmgr::discover_remote_plugins(&self.conf.plugins_url, &self.conf.plugins_branch)?;
+        let mut hm: HashMap<Identifier, Plugin> = HashMap::new();
+        for remote in &self.conf.remotes {
+            for plugin in pluginmgr::discover_remote_plugins(remote.url.clone(), &remote.branch)? {
+                hm.entry(plugin.identifier.clone())
+                    .and_modify(|e| {
+                        if e.version < plugin.version {
+                            *e = plugin.clone()
+                        }
+                    })
+                    .or_insert(plugin);
+            }
+        }
+        self.remote = hm.into_values().collect();
         self.refresh_local()
     }
 
