@@ -742,7 +742,7 @@ end
 
 local function largeNumber( number, idp )
    local formatted
-   local units = { "k", "M", "B", "T", "Q" }
+   local units = { "k", "M", "G", "T", "Q" }
    if number < 1e4 then
       formatted = math.floor(number)
    elseif number < 1e18 then
