@@ -92,8 +92,6 @@ pub fn mount() -> Result<()> {
                     whitelist_append(&wht);
                 }
             }
-
-            debug!(" * {}", &plugin.name);
         } else {
             anyhow::bail!(format!("Plugin '{}' is missing a mountpoint.", plugin.name));
         }
