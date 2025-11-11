@@ -110,15 +110,15 @@ impl Catalog {
         }
     }
 
-    fn refresh(&mut self) -> Result<()> {
+    async fn refresh_async(&mut self) -> Result<()> {
         let mut hm: HashMap<Identifier, Plugin> = HashMap::new();
         for remote in &self.conf.remotes {
             let plugins = {
-                match pluginmgr::discover_remote_plugins(remote.url.clone(), &remote.branch) {
+                match pluginmgr::discover_remote_plugins(remote.url.clone(), &remote.branch).await {
                     Ok(plugins) => Ok(plugins),
                     Err(e) => {
                         if let Some(mirror) = &remote.mirror {
-                            pluginmgr::discover_remote_plugins(mirror.clone(), &remote.branch)
+                            pluginmgr::discover_remote_plugins(mirror.clone(), &remote.branch).await
                         } else {
                             Err(e)
                         }
@@ -136,7 +136,8 @@ impl Catalog {
             }
         }
         self.remote = hm.into_values().collect();
-        self.refresh_local()
+        self.refresh_local()?;
+        Ok(())
     }
 
     fn refresh_local(&mut self) -> Result<()> {
@@ -199,19 +200,24 @@ impl Catalog {
         Ok(())
     }
 
-    async fn refresh_async(mut catalog: Catalog) -> Catalog {
-        if let Err(e) = catalog.refresh() {
-            dbg!("foo");
-            warn_err!(e);
+    fn refresh_task(self) -> Task<Message> {
+        async fn refresh_wrapper(mut catalog: Catalog) -> Catalog {
+            if let Err(e) = catalog.refresh_async().await {
+                warn_err!(e);
+            }
+            catalog
         }
-        catalog
+        Task::perform(refresh_wrapper(self), Message::UpdateCatalog)
     }
 
-    async fn refresh_local_async(mut catalog: Catalog) -> Catalog {
-        if let Err(e) = catalog.refresh_local() {
-            warn_err!(e);
+    fn refresh_local_task(self) -> Task<Message> {
+        async fn refresh_local_wrapper(mut catalog: Catalog) -> Catalog {
+            if let Err(e) = catalog.refresh_local() {
+                warn_err!(e);
+            }
+            catalog
         }
-        catalog
+        Task::perform(refresh_local_wrapper(self), Message::UpdateCatalog)
     }
 }
 
@@ -225,7 +231,8 @@ struct App {
 impl App {
     fn run() -> (Self, Task<Message>) {
         let app = Self::new().unwrap();
-        (app, Task::none())
+        let catalog = app.catalog.clone();
+        (app, catalog.refresh_task())
     }
 
     fn new() -> Result<Self> {
@@ -233,14 +240,11 @@ impl App {
         std::fs::create_dir_all(&conf.install_path)?;
         std::fs::create_dir_all(&conf.disable_path)?;
 
-        let mut app = App {
+        Ok(App {
             catalog: Catalog::new(conf),
             selected: None,
             progress: None,
-        };
-        app.catalog.refresh()?;
-
-        Ok(app)
+        })
     }
 
     fn update(&mut self, message: Message) -> Task<Message> {
@@ -249,19 +253,8 @@ impl App {
                 self.catalog = c;
                 Task::none()
             }
-            Message::RefreshLocal(_) => Task::perform(
-                Catalog::refresh_local_async(self.catalog.clone()),
-                Message::UpdateCatalog,
-            ),
-            Message::Refresh(_) => {
-                // TODO get async working
-                //Task::perform( Catalog::refresh_async( self.catalog.clone() ), Message::UpdateCatalog )
-                match self.catalog.refresh() {
-                    Ok(_) => (),
-                    Err(e) => warn_err!(e),
-                }
-                Task::none()
-            }
+            Message::RefreshLocal(_) => self.catalog.clone().refresh_local_task(),
+            Message::Refresh(_) => self.catalog.clone().refresh_task(),
             Message::Selected(id) => {
                 if let Some((rid, _)) = &self.selected {
                     self.selected = if id == *rid {
@@ -275,14 +268,14 @@ impl App {
                 Task::none()
             }
             Message::Install(plugin) => {
-                async fn install_wrap(installer: Installer) {
+                async fn install_wrapper(installer: Installer) {
                     match installer.install().await {
                         Ok(_) => (),
                         Err(e) => warn_err!(e),
                     }
                 }
                 Task::perform(
-                    install_wrap(Installer::new(&self.catalog.conf.install_path, &plugin)),
+                    install_wrapper(Installer::new(&self.catalog.conf.install_path, &plugin)),
                     Message::RefreshLocal,
                 )
             }
@@ -293,10 +286,7 @@ impl App {
                     Ok(_) => (),
                     Err(e) => warn_err!(e),
                 }
-                Task::perform(
-                    Catalog::refresh_local_async(self.catalog.clone()),
-                    Message::UpdateCatalog,
-                )
+                self.catalog.clone().refresh_local_task()
             }
             Message::Disable(plugin) => {
                 match Installer::new(&self.catalog.conf.install_path, &plugin)
@@ -305,20 +295,14 @@ impl App {
                     Ok(_) => (),
                     Err(e) => warn_err!(e),
                 }
-                Task::perform(
-                    Catalog::refresh_local_async(self.catalog.clone()),
-                    Message::UpdateCatalog,
-                )
+                self.catalog.clone().refresh_local_task()
             }
             Message::Uninstall(plugin) => {
                 match Installer::new(&self.catalog.conf.install_path, &plugin).uninstall() {
                     Ok(_) => (),
                     Err(e) => warn_err!(e),
                 }
-                Task::perform(
-                    Catalog::refresh_local_async(self.catalog.clone()),
-                    Message::UpdateCatalog,
-                )
+                self.catalog.clone().refresh_local_task()
             }
         };
         // Clear selection if it's not matched anymore

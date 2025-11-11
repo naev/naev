@@ -92,8 +92,9 @@ toml = "0.9"
 # Git operations
 git2 = "0.20"
 # Async runtime and byte buffer types
-tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
+#tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
 bytes = "1"
+futures = "0.3"
 
 [dependencies]
 naevc = { workspace = true }

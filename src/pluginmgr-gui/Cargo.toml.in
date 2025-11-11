@@ -22,6 +22,5 @@ directories = { workspace = true }
 git2 = { workspace = true }
 semver = { workspace = true }
 log = { workspace = true }
-tokio = { workspace = true }
 iced = { git = "https://github.com/iced-rs/iced", rev = "ea614387f4d94960911b0a7d8ce25c02edb470c5", features = ["tokio"] }
 reqwest = { workspace = true }

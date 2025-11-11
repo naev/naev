@@ -31,7 +31,10 @@ pub fn discover_local_plugins<P: AsRef<Path>>(root: P) -> Result<Vec<Plugin>> {
         .collect())
 }
 
-pub fn discover_remote_plugins<T: reqwest::IntoUrl>(url: T, branch: &str) -> Result<Vec<Plugin>> {
+pub async fn discover_remote_plugins<T: reqwest::IntoUrl>(
+    url: T,
+    branch: &str,
+) -> Result<Vec<Plugin>> {
     let proj_dirs = directories::ProjectDirs::from("org", "naev", "naev")
         .context("getting project directorios")?;
     let cache_dir = proj_dirs.cache_dir();
@@ -63,16 +66,19 @@ pub fn discover_remote_plugins<T: reqwest::IntoUrl>(url: T, branch: &str) -> Res
     };
     let workdir = repo.workdir().context("naev-plugins directory is bare")?;
 
-    Ok(repository(workdir)?
-        .iter()
-        .filter_map(|stub| match stub.to_plugin() {
-            Ok(plugin) => Some(plugin),
-            Err(e) => {
-                warn_err!(e);
-                None
+    use futures::StreamExt;
+    Ok(futures::stream::iter(repository(workdir)?)
+        .filter_map(|stub| async move {
+            match stub.to_plugin_async().await {
+                Ok(plugin) => Some(plugin),
+                Err(e) => {
+                    warn_err!(e);
+                    None
+                }
             }
         })
-        .collect())
+        .collect()
+        .await)
 }
 
 pub fn repository<P: AsRef<Path>>(root: P) -> Result<Vec<PluginStub>> {
