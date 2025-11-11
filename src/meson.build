@@ -9,7 +9,7 @@ subdir('renderer')
 subdir('toolkit')
 subdir('physics')
 subdir('pluginmgr')
-subdir('pluginmgr-cli')
+#subdir('pluginmgr-cli')
 subdir('pluginmgr-gui')
 source_rust = files(
    'core/src/lib.rs',

@@ -28,7 +28,7 @@ members = [
    "@BUILD@/src/renderer",
    "@BUILD@/src/toolkit",
    "@BUILD@/src/pluginmgr",
-   "@BUILD@/src/pluginmgr-cli",
+   #"@BUILD@/src/pluginmgr-cli",
    "@BUILD@/src/pluginmgr-gui",
 ]
 
@@ -74,25 +74,20 @@ semver = { version = "1.0", features = ["serde"] }
 
 # Plugin Manager dependencies
 thiserror = "2"
-tracing = "0.1"
-tracing-subscriber = { version = "0.3", features = ["env-filter"] }
-tracing-appender = "0.2"
+fs_extra = "1"
 # Serialization / XML
 serde = { version = "1", features = ["derive"] }
-serde_json = "1.0"
 quick-xml = { version = "0.38", features = ["serialize", "overlapped-lists"] }
 # Networking and archive handling
-reqwest = { version = "0.12", features = ["json", "stream", "rustls-tls", "blocking"] }
+reqwest = { version = "0.12", features = ["stream", "rustls-tls", "blocking"] }
 zip = { version = "6", default-features = false, features = ["deflate"] }
 # Utilities and filesystem
 walkdir = "2"
 rayon = "1.11" # parallel computation
 url = "2"
 directories = "6"
-camino = "1"
 fs-err = "3"
 tempfile = "3"
-indicatif = "0.18"
 toml = "0.9"
 # Git operations
 git2 = "0.20"

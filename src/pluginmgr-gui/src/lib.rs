@@ -46,6 +46,7 @@ pub fn open() -> Result<()> {
 enum Message {
     Selected(usize),
     Install(Plugin),
+    Enable(Plugin),
     Disable(Plugin),
     Uninstall(Plugin),
     Refresh,
@@ -54,13 +55,14 @@ enum Message {
 #[derive(Debug, Clone, Copy, PartialEq)]
 enum PluginState {
     Installed,
-    //Disabled,
+    Disabled,
     Available,
 }
 impl PluginState {
     pub const fn as_str(&self) -> &'static str {
         match self {
             PluginState::Installed => N_("installed"),
+            PluginState::Disabled => N_("disabled"),
             PluginState::Available => N_("available"),
         }
     }
@@ -88,6 +90,7 @@ struct App {
     conf: Conf,
     remote: Vec<Plugin>,
     local: Vec<Plugin>,
+    disabled: Vec<Plugin>,
     all: Vec<PluginWrap>,
     selected: Option<(usize, PluginWrap)>,
 }
@@ -130,6 +133,7 @@ impl App {
     fn refresh_local(&mut self) -> Result<()> {
         self.selected = None; // TODO try to recover selection
         self.local = pluginmgr::discover_local_plugins(&self.conf.install_path)?;
+        self.disabled = pluginmgr::discover_local_plugins(&self.conf.disable_path)?;
 
         let mut all: HashMap<Identifier, PluginWrap> = self
             .local
@@ -176,6 +180,7 @@ impl App {
             conf,
             remote: Vec::new(),
             local: Vec::new(),
+            disabled: Vec::new(),
             all: Vec::new(),
             selected: None,
         };
@@ -207,10 +212,15 @@ impl App {
                 let _ = self.refresh_local();
                 Task::none()
             }
+            Message::Enable(plugin) => {
+                let _ = Installer::new(&self.conf.install_path, &plugin)
+                    .move_to(&self.conf.disable_path);
+                let _ = self.refresh_local();
+                Task::none()
+            }
             Message::Disable(plugin) => {
-                // TODO don't brute force like this
-                let _ = Installer::new(&self.conf.install_path, &plugin).uninstall();
-                let _ = Installer::new(&self.conf.disable_path, &plugin).install();
+                let _ = Installer::new(&self.conf.install_path, &plugin)
+                    .move_to(&self.conf.install_path);
                 let _ = self.refresh_local();
                 Task::none()
             }
@@ -238,11 +248,13 @@ impl App {
                     let content = column![
                         row![
                             bold(p.name.as_str()),
-                            text(match v.state {
-                                PluginState::Installed => gettext("[installed]"),
-                                PluginState::Available => "",
-                            })
-                            .color(THEME.palette().warning)
+                            match v.state {
+                                PluginState::Installed =>
+                                    text(gettext("[installed]")).color(THEME.palette().warning),
+                                PluginState::Disabled => text(gettext("[disabled]"))
+                                    .color(THEME.extended_palette().secondary.strong.color),
+                                PluginState::Available => text(""),
+                            },
                         ]
                         .spacing(5),
                         text(p.r#abstract.as_str()),
@@ -314,10 +326,18 @@ impl App {
                 col,
                 match wrp.state {
                     PluginState::Installed => row![
+                        button("Disable").on_press(Message::Disable(sel.clone())),
                         button(pgettext("plugins", "Uninstall"))
                             .on_press(Message::Uninstall(sel.clone())),
-                        //button("Disable").on_press(Message::Disable(sel.clone())),
                     ],
+                    PluginState::Disabled => {
+                        row![
+                            button(pgettext("plugins", "Enable"))
+                                .on_press(Message::Enable(sel.clone())),
+                            button(pgettext("plugins", "Uninstall"))
+                                .on_press(Message::Uninstall(sel.clone())),
+                        ]
+                    }
                     PluginState::Available => {
                         row![
                             button(pgettext("plugins", "Install"))

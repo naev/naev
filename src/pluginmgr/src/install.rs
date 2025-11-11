@@ -26,6 +26,10 @@ impl Installer {
         }
     }
 
+    pub fn move_to<P: AsRef<Path>>(self, dest: P) -> Result<()> {
+        todo!()
+    }
+
     fn install_from_git(&self, url: &reqwest::Url) -> Result<()> {
         let info = &self.plugin;
         let dest = self.root.join(&*info.identifier);

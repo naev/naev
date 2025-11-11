@@ -520,28 +520,28 @@ naevcrs = rust.bindgen(
 
    # Naev pluginmgr cli for managing plugins.
    # Inherits the cargo environment above, so should work in cross compilation environments.
-   pluginmgr_cli = custom_target('pluginmgr-cli',
-      depends: [naev_rlib_compile],
-      console: true,
-      command: [
-         'env', cargo_env, cargo,
-         'build',
-         cargo_options,
-         '--package', 'pluginmgr-cli'
-      ],
-      output: 'pluginmgr-cli'
-   )
-   pluginmgr_gui = custom_target('pluginmgr-gui',
-      depends: [naev_rlib_compile],
-      console: true,
-      command: [
-         'env', cargo_env, cargo,
-         'build',
-         cargo_options,
-         '--package', 'pluginmgr-gui'
-      ],
-      output: 'pluginmgr-gui'
-   )
+   #pluginmgr_cli = custom_target('pluginmgr-cli',
+   #   depends: [naev_rlib_compile],
+   #   console: true,
+   #   command: [
+   #      'env', cargo_env, cargo,
+   #      'build',
+   #      cargo_options,
+   #      '--package', 'pluginmgr-cli'
+   #   ],
+   #   output: 'pluginmgr-cli'
+   #)
+   #pluginmgr_gui = custom_target('pluginmgr-gui',
+   #   depends: [naev_rlib_compile],
+   #   console: true,
+   #   command: [
+   #      'env', cargo_env, cargo,
+   #      'build',
+   #      cargo_options,
+   #      '--package', 'pluginmgr-gui'
+   #   ],
+   #   output: 'pluginmgr-gui'
+   #)
 
    # Simplifies clippy stuff
    clippy = run_target( 'clippy',
@@ -623,13 +623,13 @@ naevcrs = rust.bindgen(
       }
    )
 
-   pluginmgr_cli_py = configure_file(
-      input: join_paths('utils','build','pluginmgr-cli.py'),
-      output: 'pluginmgr-cli.py',
-      configuration: {
-         'pluginmgr_cli_bin' : meson.project_build_root() / 'src' / target_triplet / rust_artifact_dir / 'pluginmgr-cli',
-      }
-   )
+   #pluginmgr_cli_py = configure_file(
+   #   input: join_paths('utils','build','pluginmgr-cli.py'),
+   #   output: 'pluginmgr-cli.py',
+   #   configuration: {
+   #      'pluginmgr_cli_bin' : meson.project_build_root() / 'src' / target_triplet / rust_artifact_dir / 'pluginmgr-cli',
+   #   }
+   #)
 
    gdbinit = configure_file(
       input: join_paths('utils','build','gdbinit.in'),
