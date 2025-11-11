@@ -52,8 +52,9 @@ enum Message {
     Enable(Plugin),
     Disable(Plugin),
     Uninstall(Plugin),
-    Refresh,
-    RefreshLocal,
+    Refresh(()),
+    RefreshLocal(()),
+    UpdateCatalog(Catalog),
 }
 
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -197,6 +198,21 @@ impl Catalog {
 
         Ok(())
     }
+
+    async fn refresh_async(mut catalog: Catalog) -> Catalog {
+        if let Err(e) = catalog.refresh() {
+            dbg!("foo");
+            warn_err!(e);
+        }
+        catalog
+    }
+
+    async fn refresh_local_async(mut catalog: Catalog) -> Catalog {
+        if let Err(e) = catalog.refresh_local() {
+            warn_err!(e);
+        }
+        catalog
+    }
 }
 
 #[derive(Debug)]
@@ -229,15 +245,17 @@ impl App {
 
     fn update(&mut self, message: Message) -> Task<Message> {
         let task = match message {
-            Message::RefreshLocal => {
-                match self.catalog.refresh_local() {
-                    Ok(_) => (),
-                    Err(e) => warn_err!(e),
-                }
+            Message::UpdateCatalog(c) => {
+                self.catalog = c;
                 Task::none()
             }
-            Message::Refresh => {
-                //Task::perform( self.catalog.refresh().unwrap(), Message::Refresh )
+            Message::RefreshLocal(_) => Task::perform(
+                Catalog::refresh_local_async(self.catalog.clone()),
+                Message::UpdateCatalog,
+            ),
+            Message::Refresh(_) => {
+                // TODO get async working
+                //Task::perform( Catalog::refresh_async( self.catalog.clone() ), Message::UpdateCatalog )
                 match self.catalog.refresh() {
                     Ok(_) => (),
                     Err(e) => warn_err!(e),
@@ -257,12 +275,16 @@ impl App {
                 Task::none()
             }
             Message::Install(plugin) => {
-                match Installer::new(&self.catalog.conf.install_path, &plugin).install() {
-                    Ok(_) => (),
-                    Err(e) => warn_err!(e),
+                async fn install_wrap(installer: Installer) {
+                    match installer.install().await {
+                        Ok(_) => (),
+                        Err(e) => warn_err!(e),
+                    }
                 }
-                let _ = self.catalog.refresh_local();
-                Task::none()
+                Task::perform(
+                    install_wrap(Installer::new(&self.catalog.conf.install_path, &plugin)),
+                    Message::RefreshLocal,
+                )
             }
             Message::Enable(plugin) => {
                 match Installer::new(&self.catalog.conf.disable_path, &plugin)
@@ -271,8 +293,10 @@ impl App {
                     Ok(_) => (),
                     Err(e) => warn_err!(e),
                 }
-                let _ = self.catalog.refresh_local();
-                Task::none()
+                Task::perform(
+                    Catalog::refresh_local_async(self.catalog.clone()),
+                    Message::UpdateCatalog,
+                )
             }
             Message::Disable(plugin) => {
                 match Installer::new(&self.catalog.conf.install_path, &plugin)
@@ -281,16 +305,20 @@ impl App {
                     Ok(_) => (),
                     Err(e) => warn_err!(e),
                 }
-                let _ = self.catalog.refresh_local();
-                Task::none()
+                Task::perform(
+                    Catalog::refresh_local_async(self.catalog.clone()),
+                    Message::UpdateCatalog,
+                )
             }
             Message::Uninstall(plugin) => {
                 match Installer::new(&self.catalog.conf.install_path, &plugin).uninstall() {
                     Ok(_) => (),
                     Err(e) => warn_err!(e),
                 }
-                let _ = self.catalog.refresh_local();
-                Task::none()
+                Task::perform(
+                    Catalog::refresh_local_async(self.catalog.clone()),
+                    Message::UpdateCatalog,
+                )
             }
         };
         // Clear selection if it's not matched anymore
@@ -431,7 +459,7 @@ impl App {
         let buttons = buttons
             .push(
                 button(pgettext("plugins", "Refresh"))
-                    .on_press_maybe(idle.then_some(Message::Refresh)),
+                    .on_press_maybe(idle.then_some(Message::Refresh(()))),
             )
             .padding(10)
             .spacing(10);

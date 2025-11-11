@@ -72,6 +72,10 @@ impl PluginStub {
     pub fn to_plugin(&self) -> Result<Plugin> {
         Plugin::from_url(self.metadata.clone())
     }
+
+    pub async fn to_plugin_async(&self) -> Result<Plugin> {
+        Plugin::from_url_async(self.metadata.clone()).await
+    }
 }
 
 #[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq, Eq)]
@@ -163,6 +167,12 @@ impl Plugin {
     pub fn from_url<T: reqwest::IntoUrl>(url: T) -> Result<Self> {
         let response = reqwest::blocking::get(url)?;
         let content = response.bytes()?;
+        Self::from_slice(&content)
+    }
+
+    pub async fn from_url_async<T: reqwest::IntoUrl>(url: T) -> Result<Self> {
+        let response = reqwest::get(url).await?;
+        let content = response.bytes().await?;
         Self::from_slice(&content)
     }
 

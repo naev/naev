@@ -1,5 +1,4 @@
 pub mod install;
-//pub mod mount;
 pub mod plugin;
 
 use crate::plugin::{Plugin, PluginStub};

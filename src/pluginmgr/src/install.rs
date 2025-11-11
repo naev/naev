@@ -19,10 +19,10 @@ impl Installer {
     }
 
     /// Installs from a plugin from a source
-    pub fn install(self) -> Result<()> {
+    pub async fn install(self) -> Result<()> {
         match &self.plugin.source {
             Source::Git(url) => self.install_from_git(url),
-            Source::Download(url) => self.install_from_zip_url(url),
+            Source::Download(url) => self.install_from_zip_url(url).await,
             Source::Local => anyhow::bail!("local plugin"),
         }
     }
@@ -151,7 +151,7 @@ impl Installer {
 
     /// Installs a plugin from a direct zip link by downloading and saving the archive.
     /// The zip file is stored directly in the plugins directory without extraction.
-    pub fn install_from_zip_url(&self, url: &reqwest::Url) -> Result<()> {
+    pub async fn install_from_zip_url(&self, url: &reqwest::Url) -> Result<()> {
         info!("Installing plugin from zip download '{}'", &url);
         let info = &self.plugin;
         let dest_zip = self.root.join(format!("{}.zip", &info.identifier));
@@ -159,11 +159,10 @@ impl Installer {
         info!("Downloading plugin '{}' from {}", &info.name, url);
 
         // Download zip into memory
-        let rt = tokio::runtime::Runtime::new()?;
-        let bytes = rt.block_on(async {
+        let bytes = {
             let resp = reqwest::get(url.clone()).await?.error_for_status()?;
             Ok::<bytes::Bytes, anyhow::Error>(resp.bytes().await?)
-        })?;
+        }?;
 
         // Ensure destination directory exists
         fs::create_dir_all(&self.root)?;
@@ -175,7 +174,7 @@ impl Installer {
     }
 
     /// Updates a zip-based plugin by re-downloading and replacing the archive file.
-    pub fn update_zip_plugin(&self, url: &reqwest::Url) -> Result<()> {
+    pub async fn update_zip_plugin(&self, url: &reqwest::Url) -> Result<()> {
         let info = &self.plugin;
         let dest_zip = self.root.join(format!("{}.zip", &info.identifier));
 
@@ -193,11 +192,10 @@ impl Installer {
         info!("Updating zip plugin '{}' from {}", &info.name, url);
 
         // Download new archive
-        let rt = tokio::runtime::Runtime::new()?;
-        let bytes = rt.block_on(async {
+        let bytes = {
             let resp = reqwest::get(url.clone()).await?.error_for_status()?;
             Ok::<bytes::Bytes, anyhow::Error>(resp.bytes().await?)
-        })?;
+        }?;
 
         // Overwrite existing archive
         fs::write(&dest_zip, &bytes)?;
