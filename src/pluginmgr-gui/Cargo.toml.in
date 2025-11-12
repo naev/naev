@@ -8,10 +8,6 @@ rust-version.workspace = true
 [lints]
 workspace = true
 
-[[bin]]
-name = "pluginmgr-gui"
-path = "@SOURCE@/src/pluginmgr-gui/src/main.rs"
-
 [lib]
 path = "@SOURCE@/src/pluginmgr-gui/src/lib.rs"
 
