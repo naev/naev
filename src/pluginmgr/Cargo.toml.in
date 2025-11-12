@@ -13,16 +13,12 @@ path = "@SOURCE@/src/pluginmgr/src/lib.rs"
 
 [dependencies]
 anyhow = { workspace = true }
-thiserror = { workspace = true }
 serde = { workspace = true }
 reqwest = { workspace = true }
 zip = { workspace = true }
 walkdir = { workspace = true }
-rayon = { workspace = true }
-url = { workspace = true }
 directories = { workspace = true }
 fs-err = { workspace = true }
-tempfile = { workspace = true }
 bytes = { workspace = true }
 semver = { workspace = true }
 git2 = { workspace = true }
