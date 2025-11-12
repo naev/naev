@@ -61,10 +61,10 @@ pub fn mount() -> Result<()> {
     fn load_plugin(plugin: &Plugin) -> Result<PathBuf> {
         if let Some(mountpoint) = &plugin.mountpoint {
             for blk in &plugin.blacklist {
-                blacklist_append(&blk);
+                blacklist_append(blk);
             }
             for wht in &plugin.whitelist {
-                whitelist_append(&wht);
+                whitelist_append(wht);
             }
 
             if plugin.total_conversion {
@@ -85,11 +85,12 @@ pub fn mount() -> Result<()> {
                     "^naevpedia/.*\\.xml",
                     "^intro",
                 ] {
-                    blacklist_append(&blk);
+                    blacklist_append(blk);
                 }
-                for wht in ["^events/settings.lua"] {
-                    whitelist_append(&wht);
-                }
+                //for wht in ["^events/settings.lua"] {
+                //    whitelist_append(&wht);
+                //}
+                whitelist_append("^events/settings.lua");
             }
             Ok(mountpoint.to_path_buf())
         } else {
@@ -105,7 +106,7 @@ pub fn mount() -> Result<()> {
         let mountpoints: Vec<_> = PLUGINS
             .iter()
             .rev()
-            .filter_map(|plugin| match load_plugin(&plugin) {
+            .filter_map(|plugin| match load_plugin(plugin) {
                 Ok(mp) => {
                     debug!(" * {}", &plugin.name);
                     Some(mp)
