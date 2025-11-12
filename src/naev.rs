@@ -70,7 +70,10 @@ pub fn naev() -> Result<()> {
     // Hack for plugin manager mode
     if std::env::args().skip(1).any(|a| a == "--pluginmanager") {
         setup_logging()?;
-        // TODO load config path so we can set the language and load ndata and such...
+        let _ = setup_conf_and_ndata()?;
+        unsafe {
+            naevc::gettext_setLanguage(naevc::conf.language); /* now that we can find translations */
+        }
         return pluginmgr_gui::open();
     }
 
@@ -113,7 +116,33 @@ fn setup_logging() -> Result<()> {
     Ok(())
 }
 
-fn naevmain() -> Result<()> {
+fn setup_conf_and_ndata() -> Result<String> {
+    unsafe {
+        naevc::conf_setDefaults(); /* set the default config values. */
+        /*
+         * Attempts to load the data path from datapath.lua
+         * At this early point in the load process, the binary path
+         * is the only place likely to be checked.
+         */
+        naevc::conf_loadConfigPath();
+    }
+
+    // Create the home directory if needed.
+    let cpath = unsafe { naevc::nfile_configPath() };
+    unsafe {
+        if naevc::nfile_dirMakeExist(cpath) != 0 {
+            warnx!(gettext("Unable to create config directory '{}'"), "foo");
+        }
+    }
+
+    // Set up the configuration.
+    let conf_file_path = unsafe {
+        let rpath = cptr_to_cstr(cpath);
+        let conf_file =
+            CStr::from_ptr(naevc::CONF_FILE.as_ptr() as *const c_char).to_string_lossy();
+        format!("{rpath}{conf_file}")
+    };
+
     // Load up the argv and argc for the C main.
     let args: Vec<String> = std::env::args().collect();
     let mut cargs = vec![];
@@ -123,6 +152,19 @@ fn naevmain() -> Result<()> {
     let mut argv = cargs.into_iter().map(|s| s.into_raw()).collect::<Vec<_>>();
     argv.shrink_to_fit();
 
+    unsafe {
+        let cconf_file_path = CString::new(conf_file_path.clone()).unwrap();
+        naevc::conf_loadConfig(cconf_file_path.as_ptr()); /* Lua to parse the configuration file */
+        naevc::conf_parseCLI(argv.len() as c_int, argv.as_mut_ptr()); /* parse CLI arguments */
+    }
+
+    // Load the data and plugins.
+    ndata::setup()?;
+
+    Ok(conf_file_path)
+}
+
+fn naevmain() -> Result<()> {
     // Workarounds
     if cfg!(target_os = "linux") {
         // Set AMD_DEBUG environment variable before initializing OpenGL to
@@ -168,40 +210,10 @@ fn naevmain() -> Result<()> {
     unsafe {
         naevc::nxml_init(); /* We'll be parsing XML. */
         naevc::input_init(); /* input has to be initialized for config to work. */
-        naevc::conf_setDefaults(); /* set the default config values. */
-
-        /*
-         * Attempts to load the data path from datapath.lua
-         * At this early point in the load process, the binary path
-         * is the only place likely to be checked.
-         */
-        naevc::conf_loadConfigPath();
     }
 
-    // Create the home directory if needed.
-    let cpath = unsafe { naevc::nfile_configPath() };
-    unsafe {
-        if naevc::nfile_dirMakeExist(cpath) != 0 {
-            warnx!(gettext("Unable to create config directory '{}'"), "foo");
-        }
-    }
+    let conf_file_path = setup_conf_and_ndata()?;
 
-    // Set up the configuration.
-    let conf_file_path = unsafe {
-        let rpath = cptr_to_cstr(cpath);
-        let conf_file =
-            CStr::from_ptr(naevc::CONF_FILE.as_ptr() as *const c_char).to_string_lossy();
-        format!("{rpath}{conf_file}")
-    };
-
-    unsafe {
-        let cconf_file_path = CString::new(conf_file_path.clone()).unwrap();
-        naevc::conf_loadConfig(cconf_file_path.as_ptr()); /* Lua to parse the configuration file */
-        naevc::conf_parseCLI(argv.len() as c_int, argv.as_mut_ptr()); /* parse CLI arguments */
-    }
-
-    // Load the data and plugins.
-    ndata::setup()?;
     // Plugin initialization before checking the data for consistency
     plugin::mount()?;
     ndata::check_version()?;
