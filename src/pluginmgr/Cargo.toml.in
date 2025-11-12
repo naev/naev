@@ -22,7 +22,7 @@ fs-err = { workspace = true }
 bytes = { workspace = true }
 semver = { workspace = true }
 git2 = { workspace = true }
-ndata = { workspace = true }
+#ndata = { workspace = true }
 log = { workspace = true }
 toml = { workspace = true }
 derive_more = { workspace = true }
