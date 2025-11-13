@@ -1,0 +1,5 @@
+[book]
+authors = ["Edgar Simo-Serra"]
+language = "en"
+src = "src"
+title = "Naev Development Manual"
