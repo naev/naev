@@ -642,7 +642,6 @@ impl App {
                 bold(pgettext("plugins", "Description")),
                 text(sel.description.as_ref().unwrap_or(&sel.r#abstract)),
             ]
-            .width(300)
             .spacing(5);
             (
                 col,
@@ -682,7 +681,7 @@ impl App {
             )
         } else {
             (
-                column![text("")].width(300),
+                column![text("")],
                 row![button(pgettext("plugins", "Install"))],
             )
         };
@@ -695,22 +694,26 @@ impl App {
             button(pgettext("plugins", "Force Refresh"))
                 .on_press_maybe(self.can_refresh.then_some(Message::ActionRefresh)),
         ]
-        .spacing(5);
-        let buttons = buttons
-            .push(
-                iced_aw::widget::DropDown::new(
-                    button(pgettext("plugins", "Action")).on_press(Message::DropDownToggle),
-                    actions,
-                    self.drop_action,
+        .spacing(5)
+        .align_x(iced::Alignment::End);
+        let buttons = container(
+            buttons
+                .push(
+                    iced_aw::widget::DropDown::new(
+                        button(pgettext("plugins", "Action")).on_press(Message::DropDownToggle),
+                        actions,
+                        self.drop_action,
+                    )
+                    .width(iced::Length::Fill)
+                    .on_dismiss(Message::DropDownToggle)
+                    .alignment(iced_aw::drop_down::Alignment::Bottom),
                 )
-                .width(iced::Length::Fill)
-                .on_dismiss(Message::DropDownToggle)
-                .alignment(iced_aw::drop_down::Alignment::Bottom),
-            )
-            .padding(10)
-            .spacing(10);
+                .padding(10)
+                .spacing(10),
+        )
+        .align_right(iced::Length::Fill);
         // Set up the final screen
-        let right = column![buttons, selected].spacing(10);
+        let right = column![buttons, selected].spacing(10).width(300);
         row![plugins, right].spacing(20).padding(20).into()
     }
 }
