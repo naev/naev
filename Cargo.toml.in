@@ -45,6 +45,11 @@ rust-version = "1.88" # Note this has to be set in meson.build too!
 [workspace.lints.clippy]
 not_unsafe_ptr_arg_deref = "allow"
 
+[patch.crates-io]
+iced = { git = "https://github.com/iced-rs/iced", rev = "ea614387f4d94960911b0a7d8ce25c02edb470c5" }
+iced_core = { git = "https://github.com/iced-rs/iced", rev = "ea614387f4d94960911b0a7d8ce25c02edb470c5" }
+iced_widget = { git = "https://github.com/iced-rs/iced", rev = "ea614387f4d94960911b0a7d8ce25c02edb470c5" }
+
 [workspace.dependencies]
 naevc = { path=@NAEVC@ }
 sdl3 = "0.15"
@@ -72,6 +77,8 @@ trie-rs = { version = "0.4" }
 softfloat = "1.0"
 semver = { version = "1.0", features = ["serde"] }
 chrono = { version = "0.4", features = ["serde","now"] }
+iced = { git = "https://github.com/iced-rs/iced", rev = "ea614387f4d94960911b0a7d8ce25c02edb470c5", features = ["tokio", "advanced"] }
+iced_aw = { git = "https://github.com/iced-rs/iced_aw.git", rev = "f49e058684b6e03a49b94c0ae6d9fb40db6ef2a2", features = ["drop_down"] }
 
 # Plugin Manager dependencies
 fs_extra = "1"

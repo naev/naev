@@ -15,9 +15,10 @@ path = "@SOURCE@/src/pluginmgr-gui/src/lib.rs"
 pluginmgr = { path = "@BUILD@/src/pluginmgr" }
 anyhow = { workspace = true }
 log = { workspace = true }
-iced = { git = "https://github.com/iced-rs/iced", rev = "ea614387f4d94960911b0a7d8ce25c02edb470c5", features = ["tokio"] }
 reqwest = { workspace = true }
 toml = { workspace = true }
 serde = { workspace = true }
 fs-err = { workspace = true }
 chrono = { workspace = true }
+iced = { workspace = true }
+iced_aw = { workspace = true }

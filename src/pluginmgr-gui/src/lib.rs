@@ -70,14 +70,17 @@ enum Message {
     Selected(usize),
     Install(Plugin),
     Enable(Plugin),
+    Update(Plugin),
     Disable(Plugin),
     Uninstall(Plugin),
     UninstallDisabled(Plugin),
     Idle,
-    Refresh,
     RefreshDone,
     RefreshLocal,
     UpdateCatalog(Catalog),
+    DropDownToggle,
+    ActionRefresh,
+    ActionUpdate,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Deserialize, Serialize)]
@@ -115,6 +118,17 @@ impl PluginWrap {
         }
     }
 
+    fn has_update(&self) -> bool {
+        if let Some(local) = &self.local
+            && let Some(remote) = &self.remote
+            && local.version < remote.version
+        {
+            true
+        } else {
+            false
+        }
+    }
+
     fn from_path<P: AsRef<Path>>(path: P) -> Result<Self> {
         let data = fs::read(path)?;
         Ok(toml::from_slice(&data)?)
@@ -145,6 +159,8 @@ struct Catalog {
     disabled: Vec<Plugin>,
     #[serde(skip, default)]
     all: Vec<PluginWrap>,
+    #[serde(skip, default)]
+    needs_update: Vec<Plugin>,
 }
 impl Catalog {
     fn new(conf: Conf) -> Self {
@@ -155,6 +171,7 @@ impl Catalog {
             local: Vec::new(),
             disabled: Vec::new(),
             all: Vec::new(),
+            needs_update: Vec::new(),
         }
     }
 
@@ -264,6 +281,22 @@ impl Catalog {
             }
         });
 
+        // Finally check to see if there is an update
+        self.needs_update = self
+            .all
+            .iter()
+            .filter_map(|plugin| {
+                if let Some(local) = &plugin.local
+                    && let Some(remote) = &plugin.remote
+                    && local.version < remote.version
+                {
+                    Some(local.clone())
+                } else {
+                    None
+                }
+            })
+            .collect();
+
         self.save_to_cache()
     }
 
@@ -358,6 +391,7 @@ struct App {
     selected: Option<(usize, PluginWrap)>,
     can_refresh: bool,
     idle: bool,
+    drop_action: bool,
 }
 
 impl App {
@@ -376,6 +410,7 @@ impl App {
             selected: None,
             can_refresh: true,
             idle: true,
+            drop_action: false,
         })
     }
 
@@ -390,13 +425,6 @@ impl App {
                 Task::none()
             }
             Message::RefreshLocal => self.catalog.clone().refresh_local_task(),
-            Message::Refresh => {
-                self.can_refresh = false;
-                self.catalog
-                    .clone()
-                    .refresh_task()
-                    .chain(Task::done(Message::RefreshDone))
-            }
             Message::RefreshDone => {
                 self.can_refresh = true;
                 Task::none()
@@ -436,6 +464,19 @@ impl App {
                 }
                 self.catalog.clone().refresh_local_task()
             }
+            Message::Update(plugin) => {
+                async fn update_wrapper(installer: Installer) {
+                    match installer.update().await {
+                        Ok(_) => (),
+                        Err(e) => warn_err!(e),
+                    }
+                }
+                Task::perform(
+                    update_wrapper(Installer::new(&self.catalog.conf.install_path, &plugin)),
+                    |_| Message::RefreshLocal,
+                )
+                .chain(Task::done(Message::Idle))
+            }
             Message::Disable(plugin) => {
                 match Installer::new(&self.catalog.conf.install_path, &plugin)
                     .move_to(&self.catalog.conf.disable_path)
@@ -462,6 +503,37 @@ impl App {
             Message::Idle => {
                 self.idle = true;
                 Task::none()
+            }
+            Message::DropDownToggle => {
+                self.drop_action = !self.drop_action;
+                Task::none()
+            }
+            Message::ActionRefresh => {
+                self.drop_action = false;
+                self.can_refresh = false;
+                self.catalog
+                    .clone()
+                    .refresh_task()
+                    .chain(Task::done(Message::RefreshDone))
+            }
+            Message::ActionUpdate => {
+                self.drop_action = false;
+                self.idle = false;
+                async fn update_wrapper(installer: Installer) {
+                    match installer.update().await {
+                        Ok(_) => (),
+                        Err(e) => warn_err!(e),
+                    }
+                }
+                Task::batch(self.catalog.needs_update.iter().map(|plugin| {
+                    Task::perform(
+                        update_wrapper(Installer::new(&self.catalog.conf.install_path, &plugin)),
+                        |_| Message::RefreshLocal,
+                    )
+                    .discard()
+                }))
+                .chain(Task::done(Message::RefreshLocal))
+                .chain(Task::done(Message::Idle))
             }
         };
         // Clear selection if it's not matched anymore
@@ -495,10 +567,7 @@ impl App {
                             bold(p.name.as_str()),
                             match v.state {
                                 PluginState::Installed => {
-                                    if let Some(local) = &v.local
-                                        && let Some(remote) = &v.remote
-                                        && local.version < remote.version
-                                    {
+                                    if v.has_update() {
                                         text(gettext("[update]")).color(THEME.palette().danger)
                                     } else {
                                         text(gettext("[installed]")).color(THEME.palette().warning)
@@ -578,12 +647,22 @@ impl App {
             (
                 col,
                 match wrp.state {
-                    PluginState::Installed => row![
-                        button(pgettext("plugins", "Disable"))
-                            .on_press_maybe(idle.then_some(Message::Disable(sel.clone()))),
-                        button(pgettext("plugins", "Uninstall"))
-                            .on_press_maybe(idle.then_some(Message::Uninstall(sel.clone()))),
-                    ],
+                    PluginState::Installed => {
+                        let disable = button(pgettext("plugins", "Disable"))
+                            .on_press_maybe(idle.then_some(Message::Disable(sel.clone())));
+                        let uninstall = button(pgettext("plugins", "Uninstall"))
+                            .on_press_maybe(idle.then_some(Message::Uninstall(sel.clone())));
+                        if wrp.has_update() {
+                            row![
+                                button(pgettext("plugins", "Update"))
+                                    .on_press_maybe(idle.then_some(Message::Update(sel.clone()))),
+                                disable,
+                                uninstall
+                            ]
+                        } else {
+                            row![disable, uninstall]
+                        }
+                    }
                     PluginState::Disabled => {
                         row![
                             button(pgettext("plugins", "Enable"))
@@ -608,10 +687,25 @@ impl App {
             )
         };
         // Add refresh button and format
+        let actions = column![
+            button(pgettext("plugins", "Update All")).on_press_maybe(
+                (!self.catalog.needs_update.is_empty() && self.idle)
+                    .then_some(Message::ActionUpdate)
+            ),
+            button(pgettext("plugins", "Force Refresh"))
+                .on_press_maybe(self.can_refresh.then_some(Message::ActionRefresh)),
+        ]
+        .spacing(5);
         let buttons = buttons
             .push(
-                button(pgettext("plugins", "Refresh"))
-                    .on_press_maybe(self.can_refresh.then_some(Message::Refresh)),
+                iced_aw::widget::DropDown::new(
+                    button(pgettext("plugins", "Action")).on_press(Message::DropDownToggle),
+                    actions,
+                    self.drop_action,
+                )
+                .width(iced::Length::Fill)
+                .on_dismiss(Message::DropDownToggle)
+                .alignment(iced_aw::drop_down::Alignment::Bottom),
             )
             .padding(10)
             .spacing(10);

@@ -27,6 +27,15 @@ impl Installer {
         }
     }
 
+    /// Updates from a plugin from a source
+    pub async fn update(self) -> Result<()> {
+        match &self.plugin.source {
+            Source::Git(url) => self.update_git_plugin(url),
+            Source::Download(url) => self.update_zip_plugin(url).await,
+            Source::Local => anyhow::bail!("local plugin"),
+        }
+    }
+
     /// Moves a plugin to another directory
     pub fn move_to<P: AsRef<Path>>(self, to: P) -> Result<()> {
         let from = {
