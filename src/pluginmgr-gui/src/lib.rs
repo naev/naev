@@ -131,7 +131,14 @@ impl PluginWrap {
 
     fn from_path<P: AsRef<Path>>(path: P) -> Result<Self> {
         let data = fs::read(path)?;
-        Ok(toml::from_slice(&data)?)
+        let mut wrap: Self = toml::from_slice(&data)?;
+        if let Some(local) = &mut wrap.local {
+            local.check_compatible();
+        }
+        if let Some(remote) = &mut wrap.remote {
+            remote.check_compatible();
+        }
+        Ok(wrap)
     }
 }
 
@@ -546,10 +553,13 @@ impl App {
     }
 
     fn view(&self) -> iced::Element<'_, Message> {
-        use widget::{button, column, container, grid, mouse_area, row, scrollable, text};
+        use iced::theme::palette::Pair;
+        use widget::{column, container, grid, mouse_area, row, scrollable, text};
 
         let catalog = &self.catalog;
         let idle = self.idle;
+        let palette = THEME.palette();
+        let extended = THEME.extended_palette();
 
         let bold = |txt| {
             text(txt).font(iced::Font {
@@ -557,27 +567,41 @@ impl App {
                 ..Default::default()
             })
         };
+        let button = |txt| widget::button(text(txt));
+        let badge = |txt, col: Pair| {
+            container(text(txt))
+                .style(move |theme| {
+                    container::rounded_box(theme)
+                        .color(col.text)
+                        .background(col.color)
+                })
+                .padding(3.0)
+        };
+
         let plugins = {
             scrollable(
                 grid(catalog.all.iter().enumerate().map(|(id, v)| {
                     let p = v.plugin();
                     let image = text("IMG").width(60).height(60);
+                    let name = bold(p.name.as_str());
+                    let badge = match v.state {
+                        PluginState::Installed => Some(if v.has_update() {
+                            badge(pgettext("plugins", "update"), extended.warning.weak)
+                        } else {
+                            badge(pgettext("plugins", "installed"), extended.success.weak)
+                        }),
+                        PluginState::Disabled => Some(badge(
+                            pgettext("plugins", "disabled"),
+                            extended.background.base,
+                        )),
+                        PluginState::Available => None,
+                    };
+                    // Somewhat like a modal
                     let content = column![
-                        row![
-                            bold(p.name.as_str()),
-                            match v.state {
-                                PluginState::Installed => {
-                                    if v.has_update() {
-                                        text(gettext("[update]")).color(THEME.palette().danger)
-                                    } else {
-                                        text(gettext("[installed]")).color(THEME.palette().warning)
-                                    }
-                                }
-                                PluginState::Disabled => text(gettext("[disabled]"))
-                                    .color(THEME.extended_palette().secondary.strong.color),
-                                PluginState::Available => text(""),
-                            },
-                        ]
+                        match badge {
+                            Some(badge) => row![name, badge,],
+                            None => row![name],
+                        }
                         .spacing(5),
                         text(p.r#abstract.as_str()),
                         text(p.tags.join(", ")),
@@ -586,15 +610,21 @@ impl App {
                     let modal = row![image, content,]
                         .spacing(5)
                         .align_y(iced::alignment::Vertical::Center);
-                    mouse_area(container(modal).padding(10).style(
+                    mouse_area(container(modal).padding(10).style(move |theme| {
+                        let container = container::rounded_box(theme)
+                            .background(iced::Background::Color(extended.background.weakest.color));
                         if let Some(sel) = &self.selected
                             && id == sel.0
                         {
-                            container::primary
+                            container.border(iced::Border {
+                                color: palette.primary,
+                                width: 3.0,
+                                radius: iced::border::Radius::new(2.0),
+                            })
                         } else {
-                            container::rounded_box
-                        },
-                    ))
+                            container
+                        }
+                    }))
                     .on_press(Message::Selected(id))
                     .into()
                 }))
@@ -634,7 +664,7 @@ impl App {
                 ))
                 .color_maybe(match sel.compatible {
                     true => None,
-                    false => Some(THEME.palette().danger),
+                    false => Some(palette.danger),
                 })
                 .size(20),
                 bold(pgettext("plugins", "Status:")),
@@ -709,7 +739,8 @@ impl App {
                     .alignment(iced_aw::drop_down::Alignment::Bottom),
                 )
                 .padding(10)
-                .spacing(10),
+                .spacing(10)
+                .wrap(),
         )
         .align_right(iced::Length::Fill);
         // Set up the final screen

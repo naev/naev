@@ -133,10 +133,9 @@ pub struct Plugin {
     pub blacklist: Vec<String>,
     #[serde(default)]
     pub whitelist: Vec<String>,
-    // Fields below are set after loading
-    #[serde(default, skip)]
+    #[serde(default)]
     pub compatible: bool,
-    #[serde(default, skip)]
+    #[serde(default)]
     pub mountpoint: Option<PathBuf>,
 }
 impl PartialEq for Plugin {
@@ -153,6 +152,13 @@ fn priority_default() -> i32 {
 }
 
 impl Plugin {
+    pub fn check_compatible(&mut self) -> bool {
+        self.compatible = self
+            .naev_version
+            .matches(&log::version::VERSION_WITHOUT_PRERELEASE);
+        self.compatible
+    }
+
     pub fn from_slice(data: &[u8]) -> Result<Self> {
         let mut plugin: Self = toml::from_slice(data)?;
         // Additional validation
@@ -168,13 +174,17 @@ impl Plugin {
     pub fn from_url<T: reqwest::IntoUrl>(url: T) -> Result<Self> {
         let response = reqwest::blocking::get(url)?;
         let content = response.bytes()?;
-        Self::from_slice(&content)
+        let mut plugin = Self::from_slice(&content)?;
+        plugin.mountpoint = None;
+        Ok(plugin)
     }
 
     pub async fn from_url_async<T: reqwest::IntoUrl>(url: T) -> Result<Self> {
         let response = reqwest::get(url).await?;
         let content = response.bytes().await?;
-        Self::from_slice(&content)
+        let mut plugin = Self::from_slice(&content)?;
+        plugin.mountpoint = None;
+        Ok(plugin)
     }
 
     pub fn from_path<P: AsRef<Path>>(path: P) -> Result<Self> {
