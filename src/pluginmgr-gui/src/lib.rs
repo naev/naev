@@ -10,18 +10,32 @@ use std::collections::HashMap;
 use std::io::Write;
 use std::path::{Path, PathBuf};
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 struct Remote {
     url: reqwest::Url,
     mirror: Option<reqwest::Url>,
     branch: String,
 }
 
-#[derive(Debug, Clone)]
+fn local_plugins_dir() -> PathBuf {
+    pluginmgr::local_plugins_dir().unwrap()
+}
+fn local_plugins_disabled_dir() -> PathBuf {
+    pluginmgr::local_plugins_disabled_dir().unwrap()
+}
+fn catalog_cache_dir() -> PathBuf {
+    pluginmgr::cache_dir().unwrap().join("pluginmanager")
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
 struct Conf {
     remotes: Vec<Remote>,
+    refresh_interval: chrono::TimeDelta,
+    #[serde(skip, default = "local_plugins_dir")]
     install_path: PathBuf,
+    #[serde(skip, default = "local_plugins_disabled_dir")]
     disable_path: PathBuf,
+    #[serde(skip, default = "catalog_cache_dir")]
     catalog_cache: PathBuf,
 }
 impl Conf {
@@ -35,6 +49,7 @@ impl Conf {
             install_path: pluginmgr::local_plugins_dir()?,
             disable_path: pluginmgr::local_plugins_disabled_dir()?,
             catalog_cache: pluginmgr::cache_dir()?.join("pluginmanager"),
+            refresh_interval: chrono::TimeDelta::days(1),
         })
     }
 }
@@ -106,23 +121,46 @@ impl PluginWrap {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+struct Metadata {
+    last_updated: chrono::DateTime<chrono::Utc>,
+}
+impl Metadata {
+    fn new() -> Self {
+        Self {
+            last_updated: chrono::DateTime::<chrono::Utc>::MIN_UTC,
+        }
+    }
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
 struct Catalog {
+    meta: Metadata,
     conf: Conf,
+    #[serde(skip, default)]
     remote: Vec<Plugin>,
+    #[serde(skip, default)]
     local: Vec<Plugin>,
+    #[serde(skip, default)]
     disabled: Vec<Plugin>,
+    #[serde(skip, default)]
     all: Vec<PluginWrap>,
 }
 impl Catalog {
     fn new(conf: Conf) -> Self {
         Self {
+            meta: Metadata::new(),
             conf,
             remote: Vec::new(),
             local: Vec::new(),
             disabled: Vec::new(),
             all: Vec::new(),
         }
+    }
+
+    fn from_path<P: AsRef<Path>>(path: P) -> Result<Self> {
+        let data = fs::read(&path)?;
+        Ok(toml::from_slice(&data)?)
     }
 
     async fn refresh_async(&mut self) -> Result<()> {
@@ -151,8 +189,8 @@ impl Catalog {
             }
         }
         self.remote = hm.into_values().collect();
-        self.refresh_local()?;
-        Ok(())
+        self.meta.last_updated = chrono::Local::now().into(); // saved in refresh_local()
+        self.refresh_local()
     }
 
     fn refresh_local(&mut self) -> Result<()> {
@@ -239,13 +277,25 @@ impl Catalog {
                     continue;
                 }
             };
-            let mut file = fs::File::create(&self.conf.catalog_cache.join(&*plugin.identifier))?;
+            let mut file = fs::File::create(
+                &self
+                    .conf
+                    .catalog_cache
+                    .join(format!("{}.toml", plugin.identifier)),
+            )?;
             file.write_all(data.as_bytes())?;
         }
+        // Write metadata
+        let data = toml::to_string(self)?;
+        let mut file = fs::File::create(&self.conf.catalog_cache.join("metadata.toml"))?;
+        file.write_all(data.as_bytes())?;
         Ok(())
     }
 
     fn load_from_cache(&mut self) -> Result<()> {
+        let metacatalog = Catalog::from_path(self.conf.catalog_cache.join("metadata.toml"))?;
+        self.conf = metacatalog.conf;
+        self.meta = metacatalog.meta;
         self.all = fs::read_dir(&self.conf.catalog_cache)?
             .filter_map(|entry| {
                 let entry = match entry {
@@ -257,24 +307,32 @@ impl Catalog {
                 };
                 match PluginWrap::from_path(entry.path().as_path()) {
                     Ok(pw) => Some(pw),
-                    Err(e) => {
-                        warn_err!(e);
-                        None
-                    }
+                    Err(_) => None,
                 }
             })
             .collect();
         Ok(())
     }
 
-    fn load_from_cache_task(self) -> Task<Message> {
-        async fn load_wrapper(mut catalog: Catalog) -> Catalog {
-            if let Err(e) = catalog.load_from_cache() {
+    fn load_from_cache_or_refresh_task(self) -> Task<Message> {
+        async fn wrapper(mut catalog: Catalog) -> Catalog {
+            let refresh = match catalog.load_from_cache() {
+                Ok(()) => {
+                    chrono::Local::now().signed_duration_since(&catalog.meta.last_updated)
+                        >= catalog.conf.refresh_interval
+                }
+
+                Err(e) => {
+                    warn_err!(e);
+                    true
+                }
+            };
+            if refresh && let Err(e) = catalog.refresh_async().await {
                 warn_err!(e);
             }
             catalog
         }
-        Task::perform(load_wrapper(self), Message::UpdateCatalog)
+        Task::perform(wrapper(self), Message::UpdateCatalog).chain(Task::done(Message::Idle))
     }
 
     fn refresh_task(self) -> Task<Message> {
@@ -329,7 +387,7 @@ impl App {
         let task = match message {
             Message::Startup => {
                 self.idle = false;
-                self.catalog.clone().load_from_cache_task()
+                self.catalog.clone().load_from_cache_or_refresh_task()
             }
             Message::UpdateCatalog(c) => {
                 self.catalog = c;

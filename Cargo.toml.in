@@ -71,6 +71,7 @@ palette = "0.7" # Colour conversion
 trie-rs = { version = "0.4" }
 softfloat = "1.0"
 semver = { version = "1.0", features = ["serde"] }
+chrono = { version = "0.4", features = ["serde","now"] }
 
 # Plugin Manager dependencies
 fs_extra = "1"
