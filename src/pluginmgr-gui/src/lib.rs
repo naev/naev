@@ -278,8 +278,7 @@ impl Catalog {
                 }
             };
             let mut file = fs::File::create(
-                &self
-                    .conf
+                self.conf
                     .catalog_cache
                     .join(format!("{}.toml", plugin.identifier)),
             )?;
@@ -287,7 +286,7 @@ impl Catalog {
         }
         // Write metadata
         let data = toml::to_string(self)?;
-        let mut file = fs::File::create(&self.conf.catalog_cache.join("metadata.toml"))?;
+        let mut file = fs::File::create(self.conf.catalog_cache.join("metadata.toml"))?;
         file.write_all(data.as_bytes())?;
         Ok(())
     }
@@ -305,10 +304,7 @@ impl Catalog {
                         return None;
                     }
                 };
-                match PluginWrap::from_path(entry.path().as_path()) {
-                    Ok(pw) => Some(pw),
-                    Err(_) => None,
-                }
+                PluginWrap::from_path(entry.path().as_path()).ok()
             })
             .collect();
         Ok(())
@@ -318,7 +314,7 @@ impl Catalog {
         async fn wrapper(mut catalog: Catalog) -> Catalog {
             let refresh = match catalog.load_from_cache() {
                 Ok(()) => {
-                    chrono::Local::now().signed_duration_since(&catalog.meta.last_updated)
+                    chrono::Local::now().signed_duration_since(catalog.meta.last_updated)
                         >= catalog.conf.refresh_interval
                 }
 
