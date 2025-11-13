@@ -4,7 +4,9 @@ TODO
 
 ### Handling Aborting Missions
 
-When missions are aborted, the `abort` function is run if it exists. Although this function can't stop the mission from aborting, it can be used to clean up the mission stuff, or even start events such as a penalty for quitting halfway through the mission. A representative example is below:
+When missions are aborted, the `abort` function is run if it exists.
+Although this function can't stop the mission from aborting, it can be used to clean up the mission stuff, or even start events such as a penalty for quitting halfway through the mission.
+A representative example is below:
 
 ```lua
 local vntk = require "vntk"
@@ -29,11 +31,18 @@ TODO
 
 ### Cutscenes
 
-Cutscenes are a powerful way of conveying events that the player may or may not interact with. In order to activate cinematic mode, you must use `player.cinematics` function. However, the player will still be controllable and escorts will be doing their thing. If you want to make the player and escorts stop and be invulnerable, you can use the `cinema` library. In particular, the `cinema.on` function enables cinema mode and `cinema.off` disables it.
+Cutscenes are a powerful way of conveying events that the player may or may not interact with.
+In order to activate cinematic mode, you must use `player.cinematics` function.
+However, the player will still be controllable and escorts will be doing their thing.
+If you want to make the player and escorts stop and be invulnerable, you can use the `cinema` library.
+In particular, the `cinema.on` function enables cinema mode and `cinema.off` disables it.
 
-You can also control where the camera is with `camera.set()`. By default, it will try to centre the camera on the player, but if you pass a position or pilot as a parameter, it will move to the position or follow the pilot, respectively.
+You can also control where the camera is with `camera.set()`.
+By default, it will try to centre the camera on the player, but if you pass a position or pilot as a parameter, it will move to the position or follow the pilot, respectively.
 
-The cornerstone of cutscenes is to use hooks to make things happen and show that to the player. In this case, one of the most useful hooks is the `hook.timer` timer hook. Let us put it all together to do a short example.
+The cornerstone of cutscenes is to use hooks to make things happen and show that to the player.
+In this case, one of the most useful hooks is the `hook.timer` timer hook.
+Let us put it all together to do a short example.
 
 ```lua
 local cinema = require "cinema" -- load the cinema library
@@ -56,9 +65,13 @@ function cutscene02 ()
 end
 ```
 
-Breaking down the example above, the cutscene itself is made of 3 functions. The first `cutscene00` initializes the cinematic mode and sets the camera to someguy. Afterwards, `cutscene01` makes someguy say some text and shows it to the player. Finally, in `cutscene02`, the cinematic mode is finished and the camera is returned to the player.
+Breaking down the example above, the cutscene itself is made of 3 functions.
+The first `cutscene00` initializes the cinematic mode and sets the camera to someguy.
+Afterwards, `cutscene01` makes someguy say some text and shows it to the player. Finally, in `cutscene02`, the cinematic mode is finished and the camera is returned to the player.
 
-While that is the basics, there is no limit to what can be done. It is possible to use shaders to create more visual effects, or the luaspfx library. Furthermore, pilots can be controlled and made to do all sorts of actions. There is no limit to what is possible!
+While that is the basics, there is no limit to what can be done.
+It is possible to use shaders to create more visual effects, or the luaspfx library.
+Furthermore, pilots can be controlled and made to do all sorts of actions. There is no limit to what is possible!
 
 ### Unidiff
 
@@ -70,7 +83,8 @@ TODO
 
 ### Event-Mission Communication
 
-In general, events and missions are to be seen as self-contained isolated entities, that is, they do not affect each other outside of mission variables. However, it is possible to exploit the `hook` module API to overcome this limitation with `hook.custom` and `naev.trigger`:
+In general, events and missions are to be seen as self-contained isolated entities, that is, they do not affect each other outside of mission variables.
+However, it is possible to exploit the `hook` module API to overcome this limitation with `hook.custom` and `naev.trigger`:
 
 * `hook.custom`: allows defining an arbitrary hook on an arbitrary string. The function takes two parameters: the first is the string to hook (should not collide with standard names), and the second is the function to run when the hook is triggered.
 * `naev.trigger`: also takes two parameters and allows triggering the hooks set by `hook.custom`. In particular, the first parameter is the same as the first parameter string passed to `hook.custom`, and the second optional parameter is data to pass to the custom hooks.
