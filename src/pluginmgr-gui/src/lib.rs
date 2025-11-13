@@ -1,11 +1,14 @@
 use anyhow::Result;
+use fs_err as fs;
 use iced::{Task, widget};
 use log::gettext::{N_, gettext, pgettext};
 use log::warn_err;
 use pluginmgr::install::Installer;
 use pluginmgr::plugin::{Identifier, Plugin};
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
-use std::path::PathBuf;
+use std::io::Write;
+use std::path::{Path, PathBuf};
 
 #[derive(Debug, Clone)]
 struct Remote {
@@ -19,18 +22,19 @@ struct Conf {
     remotes: Vec<Remote>,
     install_path: PathBuf,
     disable_path: PathBuf,
+    catalog_cache: PathBuf,
 }
 impl Conf {
     fn new() -> Result<Self> {
         Ok(Self {
             remotes: vec![Remote {
-                // TODO worth using url-macro library for this?
                 url: reqwest::Url::parse("https://codeberg.org/naev/naev-plugins")?,
                 mirror: None,
                 branch: "main".to_string(),
             }],
             install_path: pluginmgr::local_plugins_dir()?,
             disable_path: pluginmgr::local_plugins_disabled_dir()?,
+            catalog_cache: pluginmgr::cache_dir()?.join("pluginmanager"),
         })
     }
 }
@@ -47,6 +51,7 @@ pub fn open() -> Result<()> {
 
 #[derive(Debug, Clone)]
 enum Message {
+    Startup,
     Selected(usize),
     Install(Plugin),
     Enable(Plugin),
@@ -60,7 +65,8 @@ enum Message {
     UpdateCatalog(Catalog),
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Deserialize, Serialize)]
+#[serde(rename_all = "lowercase")]
 enum PluginState {
     Installed,
     Disabled,
@@ -76,8 +82,9 @@ impl PluginState {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 struct PluginWrap {
+    identifier: Identifier,
     local: Option<Plugin>,
     remote: Option<Plugin>,
     state: PluginState,
@@ -91,6 +98,11 @@ impl PluginWrap {
         } else {
             unreachable!();
         }
+    }
+
+    fn from_path<P: AsRef<Path>>(path: P) -> Result<Self> {
+        let data = fs::read(path)?;
+        Ok(toml::from_slice(&data)?)
     }
 }
 
@@ -154,6 +166,7 @@ impl Catalog {
                 (
                     p.identifier.clone(),
                     PluginWrap {
+                        identifier: p.identifier.clone(),
                         local: Some(p.clone()),
                         remote: None,
                         state: PluginState::Installed,
@@ -173,6 +186,7 @@ impl Catalog {
                     all.insert(
                         plugin.identifier.clone(),
                         PluginWrap {
+                            identifier: plugin.identifier.clone(),
                             local: Some(plugin.clone()),
                             remote: None,
                             state: PluginState::Disabled,
@@ -190,6 +204,7 @@ impl Catalog {
                     all.insert(
                         plugin.identifier.clone(),
                         PluginWrap {
+                            identifier: plugin.identifier.clone(),
                             local: None,
                             remote: Some(plugin.clone()),
                             state: PluginState::Available,
@@ -211,7 +226,55 @@ impl Catalog {
             }
         });
 
+        self.save_to_cache()
+    }
+
+    fn save_to_cache(&self) -> Result<()> {
+        fs::create_dir_all(&self.conf.catalog_cache)?;
+        for plugin in self.all.iter() {
+            let data = match toml::to_string(&plugin) {
+                Ok(data) => data,
+                Err(e) => {
+                    warn_err!(e);
+                    continue;
+                }
+            };
+            let mut file = fs::File::create(&self.conf.catalog_cache.join(&*plugin.identifier))?;
+            file.write_all(data.as_bytes())?;
+        }
         Ok(())
+    }
+
+    fn load_from_cache(&mut self) -> Result<()> {
+        self.all = fs::read_dir(&self.conf.catalog_cache)?
+            .filter_map(|entry| {
+                let entry = match entry {
+                    Ok(entry) => entry,
+                    Err(e) => {
+                        warn_err!(e);
+                        return None;
+                    }
+                };
+                match PluginWrap::from_path(entry.path().as_path()) {
+                    Ok(pw) => Some(pw),
+                    Err(e) => {
+                        warn_err!(e);
+                        None
+                    }
+                }
+            })
+            .collect();
+        Ok(())
+    }
+
+    fn load_from_cache_task(self) -> Task<Message> {
+        async fn load_wrapper(mut catalog: Catalog) -> Catalog {
+            if let Err(e) = catalog.load_from_cache() {
+                warn_err!(e);
+            }
+            catalog
+        }
+        Task::perform(load_wrapper(self), Message::UpdateCatalog)
     }
 
     fn refresh_task(self) -> Task<Message> {
@@ -246,13 +309,13 @@ struct App {
 impl App {
     fn run() -> (Self, Task<Message>) {
         let app = Self::new().unwrap();
-        (app, Task::done(Message::Refresh))
+        (app, Task::done(Message::Startup))
     }
 
     fn new() -> Result<Self> {
         let conf = Conf::new()?;
-        std::fs::create_dir_all(&conf.install_path)?;
-        std::fs::create_dir_all(&conf.disable_path)?;
+        fs::create_dir_all(&conf.install_path)?;
+        fs::create_dir_all(&conf.disable_path)?;
 
         Ok(App {
             catalog: Catalog::new(conf),
@@ -264,6 +327,10 @@ impl App {
 
     fn update(&mut self, message: Message) -> Task<Message> {
         let task = match message {
+            Message::Startup => {
+                self.idle = false;
+                self.catalog.clone().load_from_cache_task()
+            }
             Message::UpdateCatalog(c) => {
                 self.catalog = c;
                 Task::none()
