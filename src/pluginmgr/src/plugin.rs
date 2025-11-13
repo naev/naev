@@ -134,9 +134,9 @@ pub struct Plugin {
     #[serde(default)]
     pub whitelist: Vec<String>,
     // Fields below are set after loading
-    #[serde(default, skip_deserializing)]
+    #[serde(default, skip)]
     pub compatible: bool,
-    #[serde(default, skip_deserializing)]
+    #[serde(default, skip)]
     pub mountpoint: Option<PathBuf>,
 }
 impl PartialEq for Plugin {
