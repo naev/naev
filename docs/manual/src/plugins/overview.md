@@ -13,6 +13,8 @@ Plugins are found at the following locations by default, and are automatically l
 | Mac OS X | `~/Library/Application Support/org.naev.Naev/plugins` |
 | Windows | `%APPDATA%\naev\plugins` |
 
+You can also see the path that Naev is looking for plugins from the plugins tab of the options menu.
+
 ## Creating a Plugin
 
 Plugins can either be a directory structure or compressed into a single `zip` file which allows for easier distribution.

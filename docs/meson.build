@@ -1,3 +1,5 @@
+subdir('manual')
+
 genCDoc = get_option('docs_c')
 if genCDoc.disabled() == false
    # C documentation

@@ -67,21 +67,7 @@ utils/model-view-c/*.gltf
 utils/model-view-c/*.png
 utils/model-view-c/*.bin
 
-docs/manual/Naev.png
-docs/manual/images/*
-docs/manual/version.tex
-docs/manual/_markdown_naev_dev_manual/
-docs/manual/_minted-naev_dev_manual/
-docs/manual/naev_dev_manual.aux
-docs/manual/naev_dev_manual.fdb_latexmk
-docs/manual/naev_dev_manual.fls
-docs/manual/naev_dev_manual.log
-docs/manual/naev_dev_manual.lol
-docs/manual/naev_dev_manual.markdown.lua
-docs/manual/naev_dev_manual.markdown.out
-docs/manual/naev_dev_manual.out
-docs/manual/naev_dev_manual.pdf
-docs/manual/naev_dev_manual.toc
+docs/manual/book
 
 .vscode
 .kdev4
