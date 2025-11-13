@@ -35,10 +35,7 @@ pub async fn discover_remote_plugins<T: reqwest::IntoUrl>(
     url: T,
     branch: &str,
 ) -> Result<Vec<Plugin>> {
-    let proj_dirs = directories::ProjectDirs::from("org", "naev", "naev")
-        .context("getting project directorios")?;
-    let cache_dir = proj_dirs.cache_dir();
-    let repo_path = cache_dir.join("naev-plugins");
+    let repo_path = cache_dir()?.join("naev-plugins");
 
     let repo = if repo_path.exists() {
         let repo = match git2::Repository::open(&repo_path) {
@@ -131,6 +128,12 @@ pub fn repository<P: AsRef<Path>>(root: P) -> Result<Vec<PluginStub>> {
 */
 
 pub fn cache_dir() -> Result<PathBuf> {
+    let proj_dirs = directories::ProjectDirs::from("org", "naev", "naev")
+        .context("getting project directorios")?;
+    Ok(proj_dirs.cache_dir().to_path_buf())
+}
+
+pub fn write_dir() -> Result<PathBuf> {
     /*
     use directories::BaseDirs;
     let base = BaseDirs::new().ok_or_else(|| anyhow::anyhow!("No home directory found"))?;
@@ -150,11 +153,11 @@ pub fn cache_dir() -> Result<PathBuf> {
 
 /// Returns the Naev plugins directory for the current platform.
 pub fn local_plugins_dir() -> Result<PathBuf> {
-    Ok(cache_dir()?.join("plugins"))
+    Ok(write_dir()?.join("plugins"))
 }
 
 pub fn local_plugins_disabled_dir() -> Result<PathBuf> {
-    Ok(cache_dir()?.join("plugins-disabled"))
+    Ok(write_dir()?.join("plugins-disabled"))
 }
 
 /*

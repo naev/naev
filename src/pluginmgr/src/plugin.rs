@@ -1,4 +1,5 @@
 use anyhow::Result;
+use fs_err as fs;
 use serde::{Deserialize, Serialize, de};
 use std::ops::Deref;
 use std::path::{Path, PathBuf};
@@ -65,7 +66,7 @@ impl PluginStub {
     }
 
     pub fn from_path<P: AsRef<Path>>(path: P) -> Result<Self> {
-        let data = std::fs::read(&path)?;
+        let data = fs::read(&path)?;
         Self::from_slice(&data)
     }
 
@@ -182,7 +183,7 @@ impl Plugin {
         if path.is_dir() {
             let metadata = path.join("plugin.toml");
             if metadata.exists() {
-                let data = std::fs::read(metadata)?;
+                let data = fs::read(metadata)?;
                 let mut plugin = Self::from_slice(&data)?;
                 plugin.mountpoint = Some(path.to_owned());
                 Ok(plugin)
@@ -195,13 +196,13 @@ impl Plugin {
             .and_then(|e| e.to_str())
             .is_some_and(|e| e.eq_ignore_ascii_case("zip"))
         {
-            let data = std::fs::read(path)?;
+            let data = fs::read(path)?;
             let mut plugin = Self::from_slice(&data)?;
             plugin.mountpoint = Some(path.to_owned());
             Ok(plugin)
         } else {
             // Assume directly pointing at plugin.toml
-            let data = std::fs::read(path)?;
+            let data = fs::read(path)?;
             let mut plugin = Self::from_slice(&data)?;
             plugin.mountpoint = path.parent().map(|e| e.to_owned());
             Ok(plugin)
