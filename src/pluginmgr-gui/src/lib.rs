@@ -77,9 +77,8 @@ enum Message {
     Uninstall(Plugin),
     UninstallDisabled(Plugin),
     Idle,
-    RefreshDone,
-    RefreshLocal,
     DropDownToggle,
+    RefreshLocal,
     ActionRefresh,
     ActionUpdate,
 }
@@ -204,7 +203,7 @@ impl Metadata {
 
 #[derive(Debug, Serialize, Deserialize)]
 struct Catalog {
-    meta: Metadata,
+    meta: Mutex<Metadata>,
     conf: Conf,
     /// Contains the reference data of all the plugins
     #[serde(skip, default)]
@@ -213,7 +212,7 @@ struct Catalog {
 impl Catalog {
     fn new(conf: Conf) -> Self {
         Self {
-            meta: Metadata::new(),
+            meta: Mutex::new(Metadata::new()),
             conf,
             data: Mutex::new(HashMap::new()),
         }
@@ -257,6 +256,7 @@ impl Catalog {
                 data.insert(id.clone(), PluginWrap::new_remote(&remote));
             }
         }
+        self.meta.lock().unwrap().last_updated = chrono::Local::now().into();
         Ok(())
     }
 
@@ -290,35 +290,6 @@ impl Catalog {
         }
         data.retain(|_, wrap| wrap.local.is_some() || wrap.remote.is_some());
         drop(data);
-
-        // Sort by state and then identifier
-        // TODO allow the user to sort or whatever
-        /*
-        self.all.sort_by(|a, b| {
-            let ord = a.state.cmp(&b.state);
-            if ord == std::cmp::Ordering::Equal {
-                a.plugin().identifier.cmp(&b.plugin().identifier)
-            } else {
-                ord
-            }
-        });
-
-        // Finally check to see if there is an update
-        self.needs_update = self
-            .all
-            .iter()
-            .filter_map(|plugin| {
-                if let Some(local) = &plugin.local
-                    && let Some(remote) = &plugin.remote
-                    && local.version < remote.version
-                {
-                    Some(local.clone())
-                } else {
-                    None
-                }
-            })
-            .collect();
-        */
 
         self.save_to_cache()
     }
@@ -379,7 +350,6 @@ struct App {
     has_update: bool,
     selected: Option<(usize, PluginWrap)>,
     /// TODO (usize, Identifier)
-    can_refresh: bool,
     idle: bool,
     drop_action: bool,
     // Some useful data
@@ -407,7 +377,6 @@ impl App {
             catalog: Arc::new(Catalog::new(conf)),
             view: Vec::new(),
             selected: None,
-            can_refresh: true,
             has_update: false,
             idle: true,
             drop_action: false,
@@ -417,9 +386,10 @@ impl App {
 
     fn load_from_cache_or_refresh_task(&mut self) -> Task<Message> {
         async fn wrap(c: Arc<Catalog>) {
+            let last_updated = c.meta.lock().unwrap().last_updated;
             let refresh = match c.load_from_cache() {
                 Ok(()) => {
-                    chrono::Local::now().signed_duration_since(c.meta.last_updated)
+                    chrono::Local::now().signed_duration_since(last_updated)
                         >= c.conf.refresh_interval
                 }
 
@@ -449,7 +419,6 @@ impl App {
         }
         self.idle = false;
         Task::perform(wrap(self.catalog.clone()), |_| Message::UpdateView)
-        // TODO udpate meta
     }
 
     fn refresh_local_task(&mut self) -> Task<Message> {
@@ -485,12 +454,8 @@ impl App {
                         ord
                     }
                 });
-                // TODO has_update
-                Task::none()
-            }
-            Message::RefreshLocal => self.refresh_local_task(),
-            Message::RefreshDone => {
-                self.can_refresh = true;
+                self.has_update = self.view.iter().any(|wrap| wrap.has_update());
+                self.idle = true;
                 Task::none()
             }
             Message::Selected(id) => {
@@ -572,32 +537,40 @@ impl App {
                 self.drop_action = !self.drop_action;
                 Task::none()
             }
+            Message::RefreshLocal => self.refresh_local_task(),
             Message::ActionRefresh => {
                 self.drop_action = false;
-                self.can_refresh = false;
                 self.refresh_task()
             }
             Message::ActionUpdate => {
                 self.drop_action = false;
                 self.idle = false;
-                /*
                 async fn update_wrapper(installer: Installer) {
                     match installer.update().await {
                         Ok(_) => (),
                         Err(e) => warn_err!(e),
                     }
                 }
-                Task::batch(self.catalog.needs_update.iter().map(|plugin| {
-                    Task::perform(
-                        update_wrapper(Installer::new(&self.catalog.conf.install_path, &plugin)),
-                        |_| Message::RefreshLocal,
-                    )
-                    .discard()
+                Task::batch(self.view.iter().filter_map(|plugin| {
+                    if plugin.has_update()
+                        && let Some(local) = &plugin.local
+                    {
+                        Some(
+                            Task::perform(
+                                update_wrapper(Installer::new(
+                                    &self.catalog.conf.install_path,
+                                    local,
+                                )),
+                                |_| Message::RefreshLocal,
+                            )
+                            .discard(),
+                        )
+                    } else {
+                        None
+                    }
                 }))
                 .chain(Task::done(Message::RefreshLocal))
                 .chain(Task::done(Message::Idle))
-                */
-                Task::none()
             }
         };
         // Clear selection if it's not matched anymore
@@ -776,7 +749,7 @@ impl App {
             button(pgettext("plugins", "Update All"))
                 .on_press_maybe((!self.has_update && self.idle).then_some(Message::ActionUpdate)),
             button(pgettext("plugins", "Force Refresh"))
-                .on_press_maybe(self.can_refresh.then_some(Message::ActionRefresh)),
+                .on_press_maybe(self.idle.then_some(Message::ActionRefresh)),
         ]
         .spacing(5)
         .align_x(iced::Alignment::End);
