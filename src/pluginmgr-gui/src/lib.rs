@@ -349,8 +349,7 @@ struct App {
     catalog: Arc<Catalog>,
     view: Vec<PluginWrap>,
     has_update: bool,
-    selected: Option<(usize, PluginWrap)>,
-    /// TODO (usize, Identifier)
+    selected: Option<(usize, Identifier)>,
     idle: bool,
     drop_action: bool,
     // Some useful data
@@ -464,10 +463,10 @@ impl App {
                     self.selected = if id == *rid {
                         None
                     } else {
-                        Some((id, self.view[id].clone()))
+                        Some((id, self.view[id].identifier.clone()))
                     }
                 } else {
-                    self.selected = Some((id, self.view[id].clone()))
+                    self.selected = Some((id, self.view[id].identifier.clone()))
                 };
                 Task::none()
             }
@@ -575,10 +574,14 @@ impl App {
             }
         };
         // Clear selection if it's not matched anymore
-        if let Some((id, plg)) = &self.selected
-            && self.view[*id].plugin().identifier != plg.plugin().identifier
-        {
-            self.selected = None; // TODO try to recover selection
+        if let Some((id, identifier)) = &self.selected {
+            if let Some(sel) = self.view.get(*id) {
+                if sel.identifier != *identifier {
+                    self.selected = None; // TODO try to recover selection
+                }
+            } else {
+                self.selected = None;
+            }
         }
         task
     }
@@ -665,7 +668,9 @@ impl App {
             .spacing(10)
         };
 
-        let (selected, buttons) = if let Some((_, wrp)) = &self.selected {
+        let (selected, buttons) = if let Some((id, _)) = &self.selected
+            && let Some(wrp) = self.view.get(*id)
+        {
             let sel = wrp.plugin();
             let info = |txt| text(txt).size(20);
             let col = column![
