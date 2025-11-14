@@ -336,11 +336,9 @@ impl Catalog {
             })
             .await;
 
-        {
-            for (_, wrap) in self.data.lock().unwrap().iter_mut() {
-                if let Err(e) = wrap.load_image(&self.conf.catalog_cache) {
-                    warn_err!(e);
-                }
+        for (_, wrap) in self.data.lock().unwrap().iter_mut() {
+            if let Err(e) = wrap.load_image(&self.conf.catalog_cache) {
+                warn_err!(e);
             }
         }
 
@@ -372,27 +370,24 @@ impl Catalog {
     }
 
     async fn load_from_cache(&self) -> Result<()> {
-        {
-            let mut data = self.data.lock().unwrap();
-            *data = fs::read_dir(&self.conf.catalog_cache)?
-                .filter_map(|entry| {
-                    let entry = match entry {
-                        Ok(entry) => entry,
-                        Err(e) => {
-                            warn_err!(e);
-                            return None;
-                        }
-                    };
-                    let wrap = match PluginWrap::from_path(entry.path().as_path()) {
-                        Ok(wrap) => wrap,
-                        Err(_) => {
-                            return None;
-                        }
-                    };
-                    Some((wrap.identifier.clone(), wrap))
-                })
-                .collect();
-        }
+        *self.data.lock().unwrap() = fs::read_dir(&self.conf.catalog_cache)?
+            .filter_map(|entry| {
+                let entry = match entry {
+                    Ok(entry) => entry,
+                    Err(e) => {
+                        warn_err!(e);
+                        return None;
+                    }
+                };
+                let wrap = match PluginWrap::from_path(entry.path().as_path()) {
+                    Ok(wrap) => wrap,
+                    Err(_) => {
+                        return None;
+                    }
+                };
+                Some((wrap.identifier.clone(), wrap))
+            })
+            .collect();
         self.refresh_local().await?;
         Ok(())
     }
