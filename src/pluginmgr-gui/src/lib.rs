@@ -9,6 +9,7 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::io::Write;
 use std::path::{Path, PathBuf};
+use std::sync::{Arc, Mutex};
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 struct Remote {
@@ -67,6 +68,7 @@ pub fn open() -> Result<()> {
 #[derive(Debug, Clone)]
 enum Message {
     Startup,
+    UpdateView,
     Selected(usize),
     Install(Plugin),
     Enable(Plugin),
@@ -77,7 +79,6 @@ enum Message {
     Idle,
     RefreshDone,
     RefreshLocal,
-    UpdateCatalog(Catalog),
     DropDownToggle,
     ActionRefresh,
     ActionUpdate,
@@ -127,6 +128,16 @@ impl PluginWrap {
             remote: None,
             state: PluginState::Available,
             image: None,
+        }
+    }
+
+    fn update_remote_if_newer(&mut self, remote: &Plugin) {
+        if let Some(dest) = &self.remote {
+            if dest.version <= remote.version {
+                self.remote = Some(remote.clone());
+            }
+        } else {
+            self.remote = Some(remote.clone());
         }
     }
 
@@ -191,31 +202,20 @@ impl Metadata {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 struct Catalog {
     meta: Metadata,
     conf: Conf,
+    /// Contains the reference data of all the plugins
     #[serde(skip, default)]
-    remote: Vec<Plugin>,
-    #[serde(skip, default)]
-    local: Vec<Plugin>,
-    #[serde(skip, default)]
-    disabled: Vec<Plugin>,
-    #[serde(skip, default)]
-    all: Vec<PluginWrap>,
-    #[serde(skip, default)]
-    needs_update: Vec<Plugin>,
+    data: Mutex<HashMap<Identifier, PluginWrap>>,
 }
 impl Catalog {
     fn new(conf: Conf) -> Self {
         Self {
             meta: Metadata::new(),
             conf,
-            remote: Vec::new(),
-            local: Vec::new(),
-            disabled: Vec::new(),
-            all: Vec::new(),
-            needs_update: Vec::new(),
+            data: Mutex::new(HashMap::new()),
         }
     }
 
@@ -224,7 +224,7 @@ impl Catalog {
         Ok(toml::from_slice(&data)?)
     }
 
-    async fn refresh_async(&mut self) -> Result<()> {
+    async fn refresh(&self) -> Result<()> {
         let mut hm: HashMap<Identifier, Plugin> = HashMap::new();
         for remote in &self.conf.remotes {
             let plugins = {
@@ -249,55 +249,51 @@ impl Catalog {
                     .or_insert(plugin);
             }
         }
-        self.remote = hm.into_values().collect();
-        self.meta.last_updated = chrono::Local::now().into(); // saved in refresh_local()
-        self.refresh_local()
+        let mut data = self.data.lock().unwrap();
+        for (id, remote) in hm.iter() {
+            if let Some(wrap) = data.get_mut(id) {
+                wrap.update_remote_if_newer(&remote);
+            } else {
+                data.insert(id.clone(), PluginWrap::new_remote(&remote));
+            }
+        }
+        Ok(())
     }
 
-    fn refresh_local(&mut self) -> Result<()> {
-        self.local = pluginmgr::discover_local_plugins(&self.conf.install_path)?;
-        self.disabled = pluginmgr::discover_local_plugins(&self.conf.disable_path)?;
-
-        let mut all: HashMap<Identifier, PluginWrap> = self
-            .local
-            .iter()
-            .map(|plugin| {
-                (
+    async fn refresh_local(&self) -> Result<()> {
+        let mut data = self.data.lock().unwrap();
+        for (_, wrap) in data.iter_mut() {
+            wrap.local = None;
+            wrap.state = PluginState::Available;
+        }
+        for plugin in pluginmgr::discover_local_plugins(&self.conf.disable_path)? {
+            if let Some(wrap) = data.get_mut(&plugin.identifier) {
+                wrap.local = Some(plugin.clone());
+                wrap.state = PluginState::Disabled;
+            } else {
+                data.insert(
+                    plugin.identifier.clone(),
+                    PluginWrap::new_local(&plugin, PluginState::Disabled),
+                );
+            }
+        }
+        for plugin in pluginmgr::discover_local_plugins(&self.conf.install_path)? {
+            if let Some(wrap) = data.get_mut(&plugin.identifier) {
+                wrap.local = Some(plugin.clone());
+                wrap.state = PluginState::Installed;
+            } else {
+                data.insert(
                     plugin.identifier.clone(),
                     PluginWrap::new_local(&plugin, PluginState::Installed),
-                )
-            })
-            .collect();
-        for plugin in self.disabled.iter() {
-            match all.get(&plugin.identifier) {
-                Some(_) => {
-                    anyhow::bail!(format!(
-                        "plugin '{}' is both installed and disabled",
-                        &plugin.name
-                    ));
-                }
-                None => {
-                    all.insert(
-                        plugin.identifier.clone(),
-                        PluginWrap::new_local(&plugin, PluginState::Disabled),
-                    );
-                }
+                );
             }
         }
-        for plugin in self.remote.iter() {
-            match all.get_mut(&plugin.identifier) {
-                Some(pw) => {
-                    pw.remote = Some(plugin.clone());
-                }
-                None => {
-                    all.insert(plugin.identifier.clone(), PluginWrap::new_remote(&plugin));
-                }
-            }
-        }
-        self.all = all.into_values().collect();
+        data.retain(|_, wrap| wrap.local.is_some() || wrap.remote.is_some());
+        drop(data);
 
         // Sort by state and then identifier
         // TODO allow the user to sort or whatever
+        /*
         self.all.sort_by(|a, b| {
             let ord = a.state.cmp(&b.state);
             if ord == std::cmp::Ordering::Equal {
@@ -322,13 +318,14 @@ impl Catalog {
                 }
             })
             .collect();
+        */
 
         self.save_to_cache()
     }
 
     fn save_to_cache(&self) -> Result<()> {
         fs::create_dir_all(&self.conf.catalog_cache)?;
-        for plugin in self.all.iter() {
+        for (_, plugin) in self.data.lock().unwrap().iter() {
             let data = match toml::to_string(&plugin) {
                 Ok(data) => data,
                 Err(e) => {
@@ -350,11 +347,9 @@ impl Catalog {
         Ok(())
     }
 
-    fn load_from_cache(&mut self) -> Result<()> {
-        let metacatalog = Catalog::from_path(self.conf.catalog_cache.join("metadata.toml"))?;
-        self.conf = metacatalog.conf;
-        self.meta = metacatalog.meta;
-        self.all = fs::read_dir(&self.conf.catalog_cache)?
+    fn load_from_cache(&self) -> Result<()> {
+        let mut data = self.data.lock().unwrap();
+        *data = fs::read_dir(&self.conf.catalog_cache)?
             .filter_map(|entry| {
                 let entry = match entry {
                     Ok(entry) => entry,
@@ -370,58 +365,20 @@ impl Catalog {
                     }
                 };
                 let _ = wrap.load_image(&self.conf.catalog_cache);
-                Some(wrap)
+                Some((wrap.identifier.clone(), wrap))
             })
             .collect();
         Ok(())
-    }
-
-    fn load_from_cache_or_refresh_task(self) -> Task<Message> {
-        async fn wrapper(mut catalog: Catalog) -> Catalog {
-            let refresh = match catalog.load_from_cache() {
-                Ok(()) => {
-                    chrono::Local::now().signed_duration_since(catalog.meta.last_updated)
-                        >= catalog.conf.refresh_interval
-                }
-
-                Err(e) => {
-                    warn_err!(e);
-                    true
-                }
-            };
-            if refresh && let Err(e) = catalog.refresh_async().await {
-                warn_err!(e);
-            }
-            catalog
-        }
-        Task::perform(wrapper(self), Message::UpdateCatalog).chain(Task::done(Message::Idle))
-    }
-
-    fn refresh_task(self) -> Task<Message> {
-        async fn refresh_wrapper(mut catalog: Catalog) -> Catalog {
-            if let Err(e) = catalog.refresh_async().await {
-                warn_err!(e);
-            }
-            catalog
-        }
-        Task::perform(refresh_wrapper(self), Message::UpdateCatalog)
-    }
-
-    fn refresh_local_task(self) -> Task<Message> {
-        async fn refresh_local_wrapper(mut catalog: Catalog) -> Catalog {
-            if let Err(e) = catalog.refresh_local() {
-                warn_err!(e);
-            }
-            catalog
-        }
-        Task::perform(refresh_local_wrapper(self), Message::UpdateCatalog)
     }
 }
 
 #[derive(Debug)]
 struct App {
-    catalog: Catalog,
+    catalog: Arc<Catalog>,
+    view: Vec<PluginWrap>,
+    has_update: bool,
     selected: Option<(usize, PluginWrap)>,
+    /// TODO (usize, Identifier)
     can_refresh: bool,
     idle: bool,
     drop_action: bool,
@@ -447,26 +404,91 @@ impl App {
         )));
 
         Ok(App {
-            catalog: Catalog::new(conf),
+            catalog: Arc::new(Catalog::new(conf)),
+            view: Vec::new(),
             selected: None,
             can_refresh: true,
+            has_update: false,
             idle: true,
             drop_action: false,
             default_logo,
         })
     }
 
+    fn load_from_cache_or_refresh_task(&mut self) -> Task<Message> {
+        async fn wrap(c: Arc<Catalog>) {
+            let refresh = match c.load_from_cache() {
+                Ok(()) => {
+                    chrono::Local::now().signed_duration_since(c.meta.last_updated)
+                        >= c.conf.refresh_interval
+                }
+
+                Err(e) => {
+                    warn_err!(e);
+                    true
+                }
+            };
+            if refresh && let Err(e) = c.refresh().await {
+                warn_err!(e);
+            }
+        }
+        if let Ok(metacatalog) =
+            Catalog::from_path(self.catalog.conf.catalog_cache.join("metadata.toml"))
+        {
+            self.catalog = Arc::new(metacatalog);
+        }
+        self.idle = false;
+        Task::perform(wrap(self.catalog.clone()), |_| Message::UpdateView)
+    }
+
+    fn refresh_task(&mut self) -> Task<Message> {
+        async fn wrap(c: Arc<Catalog>) {
+            if let Err(e) = c.refresh().await {
+                warn_err!(e);
+            }
+        }
+        self.idle = false;
+        Task::perform(wrap(self.catalog.clone()), |_| Message::UpdateView)
+        // TODO udpate meta
+    }
+
+    fn refresh_local_task(&mut self) -> Task<Message> {
+        async fn wrap(c: Arc<Catalog>) {
+            if let Err(e) = c.refresh_local().await {
+                warn_err!(e);
+            }
+        }
+        self.idle = false;
+        Task::perform(wrap(self.catalog.clone()), |_| Message::UpdateView)
+    }
+
     fn update(&mut self, message: Message) -> Task<Message> {
         let task = match message {
             Message::Startup => {
                 self.idle = false;
-                self.catalog.clone().load_from_cache_or_refresh_task()
+                self.load_from_cache_or_refresh_task()
             }
-            Message::UpdateCatalog(c) => {
-                self.catalog = c;
+            Message::UpdateView => {
+                self.view = self
+                    .catalog
+                    .data
+                    .lock()
+                    .unwrap()
+                    .values()
+                    .map(|m| m.clone())
+                    .collect();
+                self.view.sort_by(|a, b| {
+                    let ord = a.state.cmp(&b.state);
+                    if ord == std::cmp::Ordering::Equal {
+                        a.plugin().identifier.cmp(&b.plugin().identifier)
+                    } else {
+                        ord
+                    }
+                });
+                // TODO has_update
                 Task::none()
             }
-            Message::RefreshLocal => self.catalog.clone().refresh_local_task(),
+            Message::RefreshLocal => self.refresh_local_task(),
             Message::RefreshDone => {
                 self.can_refresh = true;
                 Task::none()
@@ -476,10 +498,10 @@ impl App {
                     self.selected = if id == *rid {
                         None
                     } else {
-                        Some((id, self.catalog.all[id].clone()))
+                        Some((id, self.view[id].clone()))
                     }
                 } else {
-                    self.selected = Some((id, self.catalog.all[id].clone()))
+                    self.selected = Some((id, self.view[id].clone()))
                 };
                 Task::none()
             }
@@ -504,7 +526,7 @@ impl App {
                     Ok(_) => (),
                     Err(e) => warn_err!(e),
                 }
-                self.catalog.clone().refresh_local_task()
+                self.refresh_local_task()
             }
             Message::Update(plugin) => {
                 async fn update_wrapper(installer: Installer) {
@@ -526,21 +548,21 @@ impl App {
                     Ok(_) => (),
                     Err(e) => warn_err!(e),
                 }
-                self.catalog.clone().refresh_local_task()
+                self.refresh_local_task()
             }
             Message::Uninstall(plugin) => {
                 match Installer::new(&self.catalog.conf.install_path, &plugin).uninstall() {
                     Ok(_) => (),
                     Err(e) => warn_err!(e),
                 }
-                self.catalog.clone().refresh_local_task()
+                self.refresh_local_task()
             }
             Message::UninstallDisabled(plugin) => {
                 match Installer::new(&self.catalog.conf.disable_path, &plugin).uninstall() {
                     Ok(_) => (),
                     Err(e) => warn_err!(e),
                 }
-                self.catalog.clone().refresh_local_task()
+                self.refresh_local_task()
             }
             Message::Idle => {
                 self.idle = true;
@@ -553,14 +575,12 @@ impl App {
             Message::ActionRefresh => {
                 self.drop_action = false;
                 self.can_refresh = false;
-                self.catalog
-                    .clone()
-                    .refresh_task()
-                    .chain(Task::done(Message::RefreshDone))
+                self.refresh_task()
             }
             Message::ActionUpdate => {
                 self.drop_action = false;
                 self.idle = false;
+                /*
                 async fn update_wrapper(installer: Installer) {
                     match installer.update().await {
                         Ok(_) => (),
@@ -576,11 +596,13 @@ impl App {
                 }))
                 .chain(Task::done(Message::RefreshLocal))
                 .chain(Task::done(Message::Idle))
+                */
+                Task::none()
             }
         };
         // Clear selection if it's not matched anymore
         if let Some((id, plg)) = &self.selected
-            && self.catalog.all[*id].plugin().identifier != plg.plugin().identifier
+            && self.view[*id].plugin().identifier != plg.plugin().identifier
         {
             self.selected = None; // TODO try to recover selection
         }
@@ -591,7 +613,6 @@ impl App {
         use iced::theme::palette::Pair;
         use widget::{column, container, grid, image, mouse_area, row, scrollable, text};
 
-        let catalog = &self.catalog;
         let idle = self.idle;
         let palette = THEME.palette();
         let extended = THEME.extended_palette();
@@ -615,7 +636,7 @@ impl App {
 
         let plugins = {
             scrollable(
-                grid(catalog.all.iter().enumerate().map(|(id, v)| {
+                grid(self.view.iter().enumerate().map(|(id, v)| {
                     let p = v.plugin();
                     let image = image(&self.default_logo).width(60).height(60);
                     let name = bold(p.name.as_str());
@@ -752,10 +773,8 @@ impl App {
         };
         // Add refresh button and format
         let actions = column![
-            button(pgettext("plugins", "Update All")).on_press_maybe(
-                (!self.catalog.needs_update.is_empty() && self.idle)
-                    .then_some(Message::ActionUpdate)
-            ),
+            button(pgettext("plugins", "Update All"))
+                .on_press_maybe((!self.has_update && self.idle).then_some(Message::ActionUpdate)),
             button(pgettext("plugins", "Force Refresh"))
                 .on_press_maybe(self.can_refresh.then_some(Message::ActionRefresh)),
         ]
