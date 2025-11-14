@@ -249,16 +249,18 @@ impl Catalog {
                     .or_insert(plugin);
             }
         }
-        let mut data = self.data.lock().unwrap();
-        for (id, remote) in hm.iter() {
-            if let Some(wrap) = data.get_mut(id) {
-                wrap.update_remote_if_newer(remote);
-            } else {
-                data.insert(id.clone(), PluginWrap::new_remote(remote));
+        {
+            let mut data = self.data.lock().unwrap();
+            for (id, remote) in hm.iter() {
+                if let Some(wrap) = data.get_mut(id) {
+                    wrap.update_remote_if_newer(remote);
+                } else {
+                    data.insert(id.clone(), PluginWrap::new_remote(remote));
+                }
             }
+            self.meta.lock().unwrap().last_updated = chrono::Local::now().into();
         }
-        self.meta.lock().unwrap().last_updated = chrono::Local::now().into();
-        Ok(())
+        self.refresh_local().await
     }
 
     async fn refresh_local(&self) -> Result<()> {
