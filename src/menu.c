@@ -246,7 +246,7 @@ void menu_main( void )
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT, "btnOptions",
                         _( "Options" ), menu_options_button, SDLK_O );
    y -= BUTTON_HEIGHT + 20;
-   window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT, "btnEditor",
+   window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT, "btnExtras",
                         _( "Extras" ), menu_extras_open, SDLK_E );
    y -= BUTTON_HEIGHT + 20;
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT, "btnExit",
