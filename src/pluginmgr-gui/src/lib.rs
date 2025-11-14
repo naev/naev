@@ -481,7 +481,7 @@ impl App {
     }
 
     fn update(&mut self, message: Message) -> Task<Message> {
-        let task = match message {
+        match message {
             Message::Startup => {
                 self.idle = false;
                 self.load_from_cache_or_refresh_task()
@@ -505,6 +505,28 @@ impl App {
                 });
                 self.has_update = self.view.iter().any(|wrap| wrap.has_update());
                 self.idle = true;
+
+                fn recover_selected(
+                    view: &[PluginWrap],
+                    identifier: &Identifier,
+                ) -> Option<(usize, Identifier)> {
+                    for (id, wrap) in view.iter().enumerate() {
+                        if wrap.identifier == *identifier {
+                            return Some((id, identifier.clone()));
+                        }
+                    }
+                    None
+                }
+                // Try to recover selection if it is not matched anymore
+                if let Some((id, identifier)) = &self.selected {
+                    if let Some(sel) = self.view.get(*id) {
+                        if sel.identifier != *identifier {
+                            self.selected = recover_selected(&self.view, identifier);
+                        }
+                    } else {
+                        self.selected = recover_selected(&self.view, identifier);
+                    }
+                }
                 Task::none()
             }
             Message::Selected(id) => {
@@ -621,30 +643,7 @@ impl App {
                 .chain(Task::done(Message::RefreshLocal))
                 .chain(Task::done(Message::Idle))
             }
-        };
-
-        fn recover_selected(
-            view: &[PluginWrap],
-            identifier: &Identifier,
-        ) -> Option<(usize, Identifier)> {
-            for (id, wrap) in view.iter().enumerate() {
-                if wrap.identifier == *identifier {
-                    return Some((id, identifier.clone()));
-                }
-            }
-            None
         }
-        // Try to recover selection if it is not matched anymore
-        if let Some((id, identifier)) = &self.selected {
-            if let Some(sel) = self.view.get(*id) {
-                if sel.identifier != *identifier {
-                    self.selected = recover_selected(&self.view, identifier);
-                }
-            } else {
-                self.selected = recover_selected(&self.view, identifier);
-            }
-        }
-        task
     }
 
     fn view(&self) -> iced::Element<'_, Message> {
