@@ -34,6 +34,7 @@
 #include "pause.h"
 #include "pilot.h"
 #include "player.h"
+#include "plugin.h"
 #include "render.h"
 #include "safelanes.h"
 #include "save.h"
@@ -95,6 +96,8 @@ static void menu_extras_open( unsigned int wid_unused, const char *unused );
 static void menu_extras_close( unsigned int wid, const char *str );
 /* options button. */
 static void menu_options_button( unsigned int wid, const char *str );
+/* plugin manager. */
+static void menu_plugin_manager( unsigned int wid, const char *str );
 
 /**
  * Background system for the menu.
@@ -245,6 +248,9 @@ void menu_main( void )
    y -= BUTTON_HEIGHT + 20;
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT, "btnOptions",
                         _( "Options" ), menu_options_button, SDLK_O );
+   y -= BUTTON_HEIGHT + 20;
+   window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT, "btnPlugins",
+                        _( "Plugin Manager" ), menu_plugin_manager, SDLK_P );
    y -= BUTTON_HEIGHT + 20;
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT, "btnExtras",
                         _( "Extras" ), menu_extras_open, SDLK_E );
@@ -810,4 +816,11 @@ static void menu_extras_close( unsigned int wid, const char *str )
    bg_needs_reset = 0;
    menu_main();
    bg_needs_reset = 1;
+}
+
+static void menu_plugin_manager( unsigned int wid, const char *str )
+{
+   (void)wid;
+   (void)str;
+   plugin_manager();
 }
