@@ -79,6 +79,7 @@ enum Message {
     Idle,
     DropDownToggle,
     RefreshLocal,
+    ActionClearCache,
     ActionRefresh,
     ActionUpdate,
 }
@@ -609,6 +610,13 @@ impl App {
                 Task::none()
             }
             Message::RefreshLocal => self.refresh_local_task(),
+            Message::ActionClearCache => {
+                self.drop_action = false;
+                if let Err(e) = fs::remove_dir_all(&self.catalog.conf.catalog_cache) {
+                    warn_err!(e);
+                }
+                self.refresh_task()
+            }
             Message::ActionRefresh => {
                 self.drop_action = false;
                 self.refresh_task()
@@ -647,6 +655,7 @@ impl App {
     }
 
     fn view(&self) -> iced::Element<'_, Message> {
+        use iced::Length::{Fill, Shrink};
         use iced::theme::palette::Pair;
         use widget::{column, container, grid, image, mouse_area, row, scrollable, text};
 
@@ -723,7 +732,7 @@ impl App {
                 }))
                 .fluid(500)
                 .spacing(10)
-                .height(grid::Sizing::EvenlyDistribute(iced::Length::Shrink)),
+                .height(grid::Sizing::EvenlyDistribute(Shrink)),
             )
             .spacing(10)
         };
@@ -816,9 +825,11 @@ impl App {
                 .on_press_maybe((!self.has_update && self.idle).then_some(Message::ActionUpdate)),
             button(pgettext("plugins", "Force Refresh"))
                 .on_press_maybe(self.idle.then_some(Message::ActionRefresh)),
+            button(pgettext("plugins", "Clear Cache"))
+                .on_press_maybe(self.idle.then_some(Message::ActionClearCache)),
         ]
         .spacing(5)
-        .align_x(iced::Alignment::End);
+        .align_x(iced::Alignment::Center);
         let buttons = container(
             buttons
                 .push(
@@ -827,7 +838,7 @@ impl App {
                         actions,
                         self.drop_action,
                     )
-                    .width(iced::Length::Fill)
+                    .width(Fill)
                     .on_dismiss(Message::DropDownToggle)
                     .alignment(iced_aw::drop_down::Alignment::Bottom),
                 )
@@ -835,7 +846,7 @@ impl App {
                 .spacing(10)
                 .wrap(),
         )
-        .align_right(iced::Length::Fill);
+        .align_right(Fill);
         // Set up the final screen
         let right = column![buttons, selected].spacing(10).width(300);
         row![plugins, right].spacing(20).padding(20).into()
