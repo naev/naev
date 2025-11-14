@@ -290,6 +290,11 @@ impl Catalog {
             }
         }
         data.retain(|_, wrap| wrap.local.is_some() || wrap.remote.is_some());
+        for (_, wrap) in data.iter_mut() {
+            if let Err(e) = wrap.load_image(&self.conf.catalog_cache) {
+                warn_err!(e);
+            }
+        }
         drop(data);
 
         self.save_to_cache()
@@ -319,27 +324,29 @@ impl Catalog {
         Ok(())
     }
 
-    fn load_from_cache(&self) -> Result<()> {
-        let mut data = self.data.lock().unwrap();
-        *data = fs::read_dir(&self.conf.catalog_cache)?
-            .filter_map(|entry| {
-                let entry = match entry {
-                    Ok(entry) => entry,
-                    Err(e) => {
-                        warn_err!(e);
-                        return None;
-                    }
-                };
-                let mut wrap = match PluginWrap::from_path(entry.path().as_path()) {
-                    Ok(wrap) => wrap,
-                    Err(_) => {
-                        return None;
-                    }
-                };
-                let _ = wrap.load_image(&self.conf.catalog_cache);
-                Some((wrap.identifier.clone(), wrap))
-            })
-            .collect();
+    async fn load_from_cache(&self) -> Result<()> {
+        {
+            let mut data = self.data.lock().unwrap();
+            *data = fs::read_dir(&self.conf.catalog_cache)?
+                .filter_map(|entry| {
+                    let entry = match entry {
+                        Ok(entry) => entry,
+                        Err(e) => {
+                            warn_err!(e);
+                            return None;
+                        }
+                    };
+                    let wrap = match PluginWrap::from_path(entry.path().as_path()) {
+                        Ok(wrap) => wrap,
+                        Err(_) => {
+                            return None;
+                        }
+                    };
+                    Some((wrap.identifier.clone(), wrap))
+                })
+                .collect();
+        }
+        self.refresh_local().await?;
         Ok(())
     }
 }
@@ -387,7 +394,7 @@ impl App {
     fn load_from_cache_or_refresh_task(&mut self) -> Task<Message> {
         async fn wrap(c: Arc<Catalog>) {
             let last_updated = c.meta.lock().unwrap().last_updated;
-            let refresh = match c.load_from_cache() {
+            let refresh = match c.load_from_cache().await {
                 Ok(()) => {
                     chrono::Local::now().signed_duration_since(last_updated)
                         >= c.conf.refresh_interval
