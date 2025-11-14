@@ -827,6 +827,9 @@ impl App {
                 .on_press_maybe(self.idle.then_some(Message::ActionRefresh)),
             button(pgettext("plugins", "Clear Cache"))
                 .on_press_maybe(self.idle.then_some(Message::ActionClearCache)),
+            // TODO select and add zip functionality
+            //button(pgettext("plugins", "Add Plugin (Zip)")),
+            //button(pgettext("plugins", "Add Plugin (Directory)")),
         ]
         .spacing(5)
         .align_x(iced::Alignment::Center);
