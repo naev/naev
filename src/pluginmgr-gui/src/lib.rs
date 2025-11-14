@@ -622,14 +622,26 @@ impl App {
                 .chain(Task::done(Message::Idle))
             }
         };
-        // Clear selection if it's not matched anymore
+
+        fn recover_selected(
+            view: &[PluginWrap],
+            identifier: &Identifier,
+        ) -> Option<(usize, Identifier)> {
+            for (id, wrap) in view.iter().enumerate() {
+                if wrap.identifier == *identifier {
+                    return Some((id, identifier.clone()));
+                }
+            }
+            None
+        }
+        // Try to recover selection if it is not matched anymore
         if let Some((id, identifier)) = &self.selected {
             if let Some(sel) = self.view.get(*id) {
                 if sel.identifier != *identifier {
-                    self.selected = None; // TODO try to recover selection
+                    self.selected = recover_selected(&self.view, identifier);
                 }
             } else {
-                self.selected = None;
+                self.selected = recover_selected(&self.view, identifier);
             }
         }
         task
