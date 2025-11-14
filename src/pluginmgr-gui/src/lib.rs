@@ -183,6 +183,7 @@ impl PluginWrap {
             if fs::exists(&path)? {
                 self.image = Some(iced::advanced::image::Handle::from_path(&path));
             } else {
+                todo!();
             }
         }
         Ok(())
@@ -251,9 +252,9 @@ impl Catalog {
         let mut data = self.data.lock().unwrap();
         for (id, remote) in hm.iter() {
             if let Some(wrap) = data.get_mut(id) {
-                wrap.update_remote_if_newer(&remote);
+                wrap.update_remote_if_newer(remote);
             } else {
-                data.insert(id.clone(), PluginWrap::new_remote(&remote));
+                data.insert(id.clone(), PluginWrap::new_remote(remote));
             }
         }
         self.meta.lock().unwrap().last_updated = chrono::Local::now().into();
@@ -444,7 +445,7 @@ impl App {
                     .lock()
                     .unwrap()
                     .values()
-                    .map(|m| m.clone())
+                    .cloned()
                     .collect();
                 self.view.sort_by(|a, b| {
                     let ord = a.state.cmp(&b.state);
