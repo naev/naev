@@ -106,8 +106,30 @@ struct PluginWrap {
     local: Option<Plugin>,
     remote: Option<Plugin>,
     state: PluginState,
+    #[serde(skip, default)]
+    image: Option<iced::advanced::image::Handle>,
 }
 impl PluginWrap {
+    fn new_local(plugin: &Plugin, state: PluginState) -> Self {
+        PluginWrap {
+            identifier: plugin.identifier.clone(),
+            local: Some(plugin.clone()),
+            remote: None,
+            state,
+            image: None,
+        }
+    }
+
+    fn new_remote(plugin: &Plugin) -> Self {
+        PluginWrap {
+            identifier: plugin.identifier.clone(),
+            local: Some(plugin.clone()),
+            remote: None,
+            state: PluginState::Available,
+            image: None,
+        }
+    }
+
     fn plugin(&self) -> &Plugin {
         if let Some(local) = &self.local {
             local
@@ -139,6 +161,21 @@ impl PluginWrap {
             remote.check_compatible();
         }
         Ok(wrap)
+    }
+
+    fn load_image<P: AsRef<Path>>(&mut self, dir: P) -> Result<()> {
+        let plugin = self.plugin();
+        if let Some(url) = &plugin.image_url
+            && let Some(urlpath) = url.to_file_path().ok()
+            && let Some(ext) = urlpath.extension().and_then(|e| e.to_str())
+        {
+            let path = dir.as_ref().join(format!("{}.{}", plugin.identifier, ext));
+            if fs::exists(&path)? {
+                self.image = Some(iced::advanced::image::Handle::from_path(&path));
+            } else {
+            }
+        }
+        Ok(())
     }
 }
 
@@ -224,15 +261,10 @@ impl Catalog {
         let mut all: HashMap<Identifier, PluginWrap> = self
             .local
             .iter()
-            .map(|p| {
+            .map(|plugin| {
                 (
-                    p.identifier.clone(),
-                    PluginWrap {
-                        identifier: p.identifier.clone(),
-                        local: Some(p.clone()),
-                        remote: None,
-                        state: PluginState::Installed,
-                    },
+                    plugin.identifier.clone(),
+                    PluginWrap::new_local(&plugin, PluginState::Installed),
                 )
             })
             .collect();
@@ -247,12 +279,7 @@ impl Catalog {
                 None => {
                     all.insert(
                         plugin.identifier.clone(),
-                        PluginWrap {
-                            identifier: plugin.identifier.clone(),
-                            local: Some(plugin.clone()),
-                            remote: None,
-                            state: PluginState::Disabled,
-                        },
+                        PluginWrap::new_local(&plugin, PluginState::Disabled),
                     );
                 }
             }
@@ -263,15 +290,7 @@ impl Catalog {
                     pw.remote = Some(plugin.clone());
                 }
                 None => {
-                    all.insert(
-                        plugin.identifier.clone(),
-                        PluginWrap {
-                            identifier: plugin.identifier.clone(),
-                            local: None,
-                            remote: Some(plugin.clone()),
-                            state: PluginState::Available,
-                        },
-                    );
+                    all.insert(plugin.identifier.clone(), PluginWrap::new_remote(&plugin));
                 }
             }
         }
@@ -344,7 +363,14 @@ impl Catalog {
                         return None;
                     }
                 };
-                PluginWrap::from_path(entry.path().as_path()).ok()
+                let mut wrap = match PluginWrap::from_path(entry.path().as_path()) {
+                    Ok(wrap) => wrap,
+                    Err(_) => {
+                        return None;
+                    }
+                };
+                let _ = wrap.load_image(&self.conf.catalog_cache);
+                Some(wrap)
             })
             .collect();
         Ok(())
@@ -399,6 +425,8 @@ struct App {
     can_refresh: bool,
     idle: bool,
     drop_action: bool,
+    // Some useful data
+    default_logo: iced::advanced::image::Handle,
 }
 
 impl App {
@@ -412,12 +440,19 @@ impl App {
         fs::create_dir_all(&conf.install_path)?;
         fs::create_dir_all(&conf.disable_path)?;
 
+        // We'll hardcode a logo into the source code for now
+        use iced::advanced::image;
+        let default_logo = image::Handle::from_bytes(image::Bytes::from_static(include_bytes!(
+            "../../../extras/logos/logo64.png"
+        )));
+
         Ok(App {
             catalog: Catalog::new(conf),
             selected: None,
             can_refresh: true,
             idle: true,
             drop_action: false,
+            default_logo,
         })
     }
 
@@ -554,7 +589,7 @@ impl App {
 
     fn view(&self) -> iced::Element<'_, Message> {
         use iced::theme::palette::Pair;
-        use widget::{column, container, grid, mouse_area, row, scrollable, text};
+        use widget::{column, container, grid, image, mouse_area, row, scrollable, text};
 
         let catalog = &self.catalog;
         let idle = self.idle;
@@ -582,7 +617,7 @@ impl App {
             scrollable(
                 grid(catalog.all.iter().enumerate().map(|(id, v)| {
                     let p = v.plugin();
-                    let image = text("IMG").width(60).height(60);
+                    let image = image(&self.default_logo).width(60).height(60);
                     let name = bold(p.name.as_str());
                     let badge = match v.state {
                         PluginState::Installed => Some(if v.has_update() {
