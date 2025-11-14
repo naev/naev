@@ -173,18 +173,34 @@ impl PluginWrap {
         Ok(wrap)
     }
 
-    fn load_image<P: AsRef<Path>>(&mut self, dir: P) -> Result<()> {
+    fn image_path_url<P: AsRef<Path>>(&self, dir: P) -> Option<(PathBuf, reqwest::Url)> {
         let plugin = self.plugin();
         if let Some(url) = &plugin.image_url
             && let Some(urlpath) = url.to_file_path().ok()
             && let Some(ext) = urlpath.extension().and_then(|e| e.to_str())
         {
             let path = dir.as_ref().join(format!("{}.{}", plugin.identifier, ext));
-            if fs::exists(&path)? {
-                self.image = Some(iced::advanced::image::Handle::from_path(&path));
-            } else {
-                todo!();
-            }
+            Some((path.to_path_buf(), url.clone()))
+        } else {
+            None
+        }
+    }
+
+    fn missing_image<P: AsRef<Path>>(&self, dir: P) -> Option<(PathBuf, reqwest::Url)> {
+        if let Some((path, url)) = self.image_path_url(dir)
+            && !fs::exists(&path).ok()?
+        {
+            Some((path, url))
+        } else {
+            None
+        }
+    }
+
+    fn load_image<P: AsRef<Path>>(&mut self, dir: P) -> Result<()> {
+        if let Some((path, _)) = self.image_path_url(dir)
+            && fs::exists(&path)?
+        {
+            self.image = Some(iced::advanced::image::Handle::from_path(&path));
         }
         Ok(())
     }
@@ -264,40 +280,69 @@ impl Catalog {
     }
 
     async fn refresh_local(&self) -> Result<()> {
-        let mut data = self.data.lock().unwrap();
-        for (_, wrap) in data.iter_mut() {
-            wrap.local = None;
-            wrap.state = PluginState::Available;
+        let images = {
+            let mut data = self.data.lock().unwrap();
+            for (_, wrap) in data.iter_mut() {
+                wrap.local = None;
+                wrap.state = PluginState::Available;
+            }
+            for plugin in pluginmgr::discover_local_plugins(&self.conf.disable_path)? {
+                if let Some(wrap) = data.get_mut(&plugin.identifier) {
+                    wrap.local = Some(plugin.clone());
+                    wrap.state = PluginState::Disabled;
+                } else {
+                    data.insert(
+                        plugin.identifier.clone(),
+                        PluginWrap::new_local(&plugin, PluginState::Disabled),
+                    );
+                }
+            }
+            for plugin in pluginmgr::discover_local_plugins(&self.conf.install_path)? {
+                if let Some(wrap) = data.get_mut(&plugin.identifier) {
+                    wrap.local = Some(plugin.clone());
+                    wrap.state = PluginState::Installed;
+                } else {
+                    data.insert(
+                        plugin.identifier.clone(),
+                        PluginWrap::new_local(&plugin, PluginState::Installed),
+                    );
+                }
+            }
+            data.retain(|_, wrap| wrap.local.is_some() || wrap.remote.is_some());
+
+            let images: Vec<(PathBuf, reqwest::Url)> = data
+                .iter()
+                .filter_map(|(_, wrap)| wrap.missing_image(&self.conf.catalog_cache))
+                .collect();
+            images
+        };
+
+        async fn download_image<P: AsRef<Path>, T: reqwest::IntoUrl>(
+            path: P,
+            url: T,
+        ) -> Result<()> {
+            let response = reqwest::get(url).await?;
+            let content = response.bytes().await?;
+            let mut file = fs::File::create(path.as_ref())?;
+            file.write_all(&content)?;
+            Ok(())
         }
-        for plugin in pluginmgr::discover_local_plugins(&self.conf.disable_path)? {
-            if let Some(wrap) = data.get_mut(&plugin.identifier) {
-                wrap.local = Some(plugin.clone());
-                wrap.state = PluginState::Disabled;
-            } else {
-                data.insert(
-                    plugin.identifier.clone(),
-                    PluginWrap::new_local(&plugin, PluginState::Disabled),
-                );
+        use futures::StreamExt;
+        futures::stream::iter(images)
+            .for_each(async |(path, url)| {
+                if let Err(e) = download_image(path, url).await {
+                    warn_err!(e);
+                }
+            })
+            .await;
+
+        {
+            for (_, wrap) in self.data.lock().unwrap().iter_mut() {
+                if let Err(e) = wrap.load_image(&self.conf.catalog_cache) {
+                    warn_err!(e);
+                }
             }
         }
-        for plugin in pluginmgr::discover_local_plugins(&self.conf.install_path)? {
-            if let Some(wrap) = data.get_mut(&plugin.identifier) {
-                wrap.local = Some(plugin.clone());
-                wrap.state = PluginState::Installed;
-            } else {
-                data.insert(
-                    plugin.identifier.clone(),
-                    PluginWrap::new_local(&plugin, PluginState::Installed),
-                );
-            }
-        }
-        data.retain(|_, wrap| wrap.local.is_some() || wrap.remote.is_some());
-        for (_, wrap) in data.iter_mut() {
-            if let Err(e) = wrap.load_image(&self.conf.catalog_cache) {
-                warn_err!(e);
-            }
-        }
-        drop(data);
 
         self.save_to_cache()
     }
