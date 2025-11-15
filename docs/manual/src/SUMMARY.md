@@ -39,8 +39,14 @@
 - [Universe](./univ/overview.md)
    - [Systems](./univ/systems.md)
    - [Spobs](./univ/spobs.md)
-- [Outfits](./outfits/overview.md)
 - [Ships](./ships/overview.md)
+   - [Classes](./ships/classes.md)
+   - [Data Format](./ships/data.md)
+   - [Variants (Inheriting)]()
+   - [Graphics](./ships/graphics.md)
+   - [Lua Programming]()
+   - [Sea of Darkness Tags](./ships/tags.md)
+- [Outfits](./outfits/overview.md)
 - [AI](./ai/overview.md)
 
 # Naev "Sea of Darkness"
