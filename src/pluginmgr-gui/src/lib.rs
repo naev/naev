@@ -124,8 +124,8 @@ impl PluginWrap {
     fn new_remote(plugin: &Plugin) -> Self {
         PluginWrap {
             identifier: plugin.identifier.clone(),
-            local: Some(plugin.clone()),
-            remote: None,
+            local: None,
+            remote: Some(plugin.clone()),
             state: PluginState::Available,
             image: None,
         }
