@@ -30,15 +30,10 @@ impl<'de> de::Deserialize<'de> for Identifier {
                     inner.len(),
                     &"identifier exceeds maximum of 25 characters",
                 ))
-            } else if !inner.is_ascii() {
+            } else if !inner.chars().all(|c| c.is_ascii_alphanumeric()) {
                 Err(de::Error::invalid_value(
                     de::Unexpected::Str(&inner),
-                    &"identifier contains non-ascii characters",
-                ))
-            } else if inner.contains(char::is_whitespace) {
-                Err(de::Error::invalid_value(
-                    de::Unexpected::Str(&inner),
-                    &"identifier contains whitespace",
+                    &"identifier contains non-ascii alphanumeric characters",
                 ))
             } else {
                 Ok(Self(inner))
