@@ -1,0 +1,7 @@
+name = "nebula"
+display = "#pNebula#0"
+shield = 1
+armour = 3
+knockback = 0
+shield_stat = "nebu_absorb"
+armour_stat = "nebu_absorb"

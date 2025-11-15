@@ -1,0 +1,5 @@
+name = "kinetic"
+display = "#oKinetic#0"
+shield = 0.8
+armour = 1.15
+knockback = 1

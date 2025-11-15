@@ -1,0 +1,5 @@
+name = "energy_noknockback"
+display = "#gEnergy#0"
+shield = 1.0
+armour = 1.0
+knockback = 0.0
