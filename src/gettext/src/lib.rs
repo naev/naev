@@ -1,3 +1,4 @@
+use anyhow::Result;
 use std::ffi::{CStr, CString};
 
 pub fn init() {
@@ -6,8 +7,21 @@ pub fn init() {
     };
 }
 
-#[allow(non_snake_case, dead_code)]
-pub fn N_(s: &str) -> &str {
+pub fn set_language(lang: &str) -> Result<()> {
+    let clang = CString::new(lang)?;
+    unsafe {
+        naevc::gettext_setLanguage(clang.as_ptr());
+    }
+    Ok(())
+}
+
+pub fn get_language() -> Result<String> {
+    let lang = unsafe { CStr::from_ptr(naevc::gettext_getLanguage()) };
+    Ok(lang.to_str()?.to_string())
+}
+
+#[allow(non_snake_case)]
+pub const fn N_(s: &str) -> &str {
     s
 }
 

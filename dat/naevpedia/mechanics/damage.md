@@ -25,6 +25,9 @@ Unlike regular damage, disable damage can penetrate shields, however, it suffers
 In particular, it will deal 50% stress when the target has 100% shields, and 100% stress when the target has 0% shields.
 Disable damage is also affected by absorption and penetration.
 
+Finally, ships will also be disabled when their armour goes under <%= fmt.number(constant_raw( "PILOT_DISABLED_ARMOUR" )*100) %>%.
+However, this is much less reliable than using weapons that cause disabling damage.
+
 ## Damage Types
 
 There are different damage types that differentiate how much damage is done to shields versus armour, and the amount of knockback.
@@ -34,6 +37,6 @@ Using the best damage type can play a critical role in winning fights.
 
 ## Shields Down and Regeneration
 
-When a ship's shields get knocked offline, it takes 5 seconds for the shields to start regenerating again, and can be reduced with lower **Shield Down Time**.
+When a ship's shields get knocked offline, it takes <%= constant( "PILOT_SHIELD_DOWN_TIME" ) %> seconds for the shields to start regenerating again, and can be reduced with lower **Shield Down Time**.
 Any damage during this window will restart the time it takes to regenerate shields.
 When shields get back up there they will regenerate faster during the first 3 seconds.

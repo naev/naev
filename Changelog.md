@@ -31,6 +31,9 @@
  - Reflective shell now shoots thorns
 
 #### Quality of Life
+ - Plugin manager built directly into Naev
+    - Access to the online plugin repository
+    - Can easily add or remove plugins from local or online sources
  - Autonav improvements
     - Can automatically land when following a ship
     - Improved autonav behaviour when losing a followed ship
@@ -71,6 +74,7 @@
 #### Engine
  - Began porting to Rust
  - Engine now uses SDL3 instead of SDL2
+ - Camera is isometric-ish instead of using top-view game play (can be modified by plugins)
  - Engine supports modifying some important constants such as those related to the physics model for use in plugins
  - Use instancing instead of geometry shaders for space dust
  - Ship Lua scripting supports "onshootany" now

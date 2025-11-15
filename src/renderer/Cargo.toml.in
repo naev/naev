@@ -19,11 +19,8 @@ ndata = { workspace = true }
 anyhow = { workspace = true }
 nalgebra = { workspace = true }
 encase = { workspace = true }
-bytemuck = { workspace = true }
 sdl3 = { workspace = true }
 image = { workspace = true }
-gettext = { workspace = true }
-formatx = { workspace = true }
 naev_core = { workspace = true }
 physics = { workspace = true }
 mlua = { workspace = true }

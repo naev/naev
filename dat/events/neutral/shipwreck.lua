@@ -76,7 +76,7 @@ function broadcast ()
    if not derelict:exists() then
       return
    end
-   derelict:broadcast( fmt.f(_("SOS. This is {plt}. We are shipwrecked. Please #bboard#0 us by positioning your ship over ours and then #bdouble-clicking#0 on our ship."), {plt=shipname}), true )
+   derelict:broadcast( fmt.f(_("SOS. This is {plt}. We are shipwrecked. Please #bboard#0 us by #bdouble-clicking#0 on our ship."), {plt=shipname}), true )
    timer_delay = timer_delay or 10
    timer_delay = timer_delay + 5
    bctimer = hook.timer(timer_delay, "broadcast")

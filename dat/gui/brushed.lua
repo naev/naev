@@ -67,84 +67,85 @@ function create()
       t:setWrap( "clamp" )
       return t
    end
-   main = tex_open( "main.png" )
-   ext_right = tex_open( "extRight.png" )
-   end_right = tex_open( "endRight.png" )
-   popup_bottom = tex_open( "popupBottom.png" )
-   popup_bottom_side_left = tex_open( "tooltipRightSideLeft.png" )
-   popup_bottom2 = tex_open( "tooltipRightBottom.webp" )
-   popup_body = tex_open( "tooltipRight.webp" )
-   popup_top = tex_open( "tooltipRightTop.webp" )
-   popup_empty = tex_open( "tooltipEmpty.webp" )
-   popup_pilot = tex_open( "pilotFrame.png" )
-   bar_bg = tex_open( "barBg.webp" )
-   bar_frame_light = tex_open( "barFrameLight.png" )
-   bar_frame = tex_open( "barFrame.png" )
-   bar_light = tex_open( "light.png" )
-   bar_lock = tex_open( "lock.webp" )
-   planet_pane_t = tex_open( "frame_planet_top.png" )
-   planet_pane_m = tex_open( "frame_planet_middle.png" )
-   planet_pane_b = tex_open( "frame_planet_bottom.png" )
-   planet_bg = tex_open( "planet_image.png" )
-   fleet_pane_t = tex_open( "frame_fleet_top.webp" )
+   main = tex_open( "main" )
+   ext_right = tex_open( "extRight" )
+   end_right = tex_open( "endRight" )
+   popup_bottom = tex_open( "popupBottom" )
+   popup_bottom_side_left = tex_open( "tooltipRightSideLeft" )
+   popup_bottom2 = tex_open( "tooltipRightBottom" )
+   popup_body = tex_open( "tooltipRight" )
+   popup_top = tex_open( "tooltipRightTop" )
+   popup_empty = tex_open( "tooltipEmpty" )
+   popup_pilot = tex_open( "pilotFrame" )
+   bar_bg = tex_open( "barBg" )
+   bar_frame_light = tex_open( "barFrameLight" )
+   bar_frame = tex_open( "barFrame" )
+   bar_light = tex_open( "light" )
+   bar_lock = tex_open( "lock" )
+   planet_pane_t = tex_open( "frame_planet_top" )
+   planet_pane_m = tex_open( "frame_planet_middle" )
+   planet_pane_b = tex_open( "frame_planet_bottom" )
+   planet_bg = tex_open( "planet_image" )
+   fleet_pane_t = tex_open( "frame_fleet_top" )
    fleet_pane_m = planet_pane_m
    fleet_pane_b = planet_pane_b
-   icon_shield = tex_open( "iconShield.png" )
-   icon_armour = tex_open( "iconArmour.png" )
-   icon_energy = tex_open( "iconEnergy.webp" )
-   icon_fuel = tex_open( "iconFuel.png" )
-   icon_flow = tex_open( "iconEnergy.webp" ) -- TODO
-   icon_Kinetic = tex_open( "kinetic.png" )
-   icon_Radiation = tex_open( "nuclear.png" )
-   icon_EMP = tex_open( "ion.png" )
-   icon_Energy = tex_open( "plasma.png" )
-   icon_Ion = tex_open( "laser.png" )
-   icon_missile = tex_open( "missile.png" )
-   icon_projectile = tex_open( "projectile.png" )
-   icon_beam = tex_open( "beam.png" )
-   icon_weapon2 = tex_open( "weapon2.png" )
-   icon_weapon1 = tex_open( "weapon1.png" )
-   icon_outfit = tex_open( "outfit.png" )
-   icon_pnt_target = tex_open( "iconPntTarg.png" )
-   icon_nav_target = tex_open( "iconNavTarg.png" )
-   icon_money = tex_open( "iconMoney.png" )
-   icon_cargo = tex_open( "iconCargo.webp" )
-   icon_missions = tex_open( "iconMissions.png" )
-   icon_ship = tex_open( "iconShip.png" )
-   icon_weapons = tex_open( "iconWeaps.png" )
-   --icon_autonav = tex_open( "A.png" )
-   icon_lockon = tex_open( "lockon.png" )
-   icon_refire = tex_open( "refireCircle.png" )
-   icon_lockon2 = tex_open( "lockonCircle.png" )
-   field_bg_left = tex_open( "fieldBgLeft1.png" )
-   field_bg_center = { tex_open( "fieldBgCenter1.webp" ), tex_open( "fieldBgCenter2.webp" ) }
-   field_bg_right = { tex_open( "fieldBgRight1.png" ), tex_open( "fieldBgRight2.png" ) }
-   field_frame_left = tex_open( "fieldFrameLeft.png" )
-   field_frame_center = tex_open( "fieldFrameCenter.png" )
-   field_frame_right = tex_open( "fieldFrameRight.png" )
-   target_bg = tex_open( "targetBg.png" )
-   target_frame = tex_open( "targetFrame.png" )
-   question = tex_open( "question.png" )
-   speed_light = tex_open( "speedOn.png" )
-   speed_light_double = tex_open( "speedDouble.png" )
-   speed_light_off = tex_open( "speedOff.webp" )
-   top_bar = tex_open( "topbar.png" )
-   top_bar_left = tex_open( "topbar_left.png" )
-   top_bar_right = tex_open( "topbar_right.png" )
-   top_bar_center = tex_open( "topbarCenter.png" )
-   button_normal = tex_open( "button.png" )
-   button_hilighted = tex_open( "buttonHil2.png" )
-   button_mouseover = tex_open( "buttonHil.png" )
-   button_pressed = tex_open( "buttonPre.png" )
-   button_disabled = tex_open( "buttonDis.png" )
-   gui.targetSpobGFX( tex_open( "radar_planet.png", 2, 2 ) )
-   gui.targetPilotGFX(  tex_open( "radar_ship.png", 2, 2 ) )
+   icon_shield = tex_open( "iconShield" )
+   icon_armour = tex_open( "iconArmour" )
+   icon_energy = tex_open( "iconEnergy" )
+   icon_fuel = tex_open( "iconFuel" )
+   icon_flow = tex_open( "iconEnergy" ) -- TODO
+   icon_Kinetic = tex_open( "kinetic" )
+   icon_Radiation = tex_open( "nuclear" )
+   icon_EMP = tex_open( "ion" )
+   icon_Energy = tex_open( "plasma" )
+   icon_Ion = tex_open( "laser" )
+   icon_missile = tex_open( "missile" )
+   icon_projectile = tex_open( "projectile" )
+   icon_beam = tex_open( "beam" )
+   icon_weapon2 = tex_open( "weapon2" )
+   icon_weapon1 = tex_open( "weapon1" )
+   icon_outfit = tex_open( "outfit" )
+   icon_pnt_target = tex_open( "iconPntTarg" )
+   icon_nav_target = tex_open( "iconNavTarg" )
+   icon_money = tex_open( "iconMoney" )
+   icon_cargo = tex_open( "iconCargo" )
+   icon_missions = tex_open( "iconMissions" )
+   icon_ship = tex_open( "iconShip" )
+   icon_weapons = tex_open( "iconWeaps" )
+   --icon_autonav = tex_open( "A" )
+   icon_lockon = tex_open( "lockon" )
+   icon_refire = tex_open( "refireCircle" )
+   icon_lockon2 = tex_open( "lockonCircle" )
+   field_bg_left = tex_open( "fieldBgLeft1" )
+   field_bg_center = { tex_open( "fieldBgCenter1" ), tex_open( "fieldBgCenter2" ) }
+   field_bg_right = { tex_open( "fieldBgRight1" ), tex_open( "fieldBgRight2" ) }
+   field_frame_left = tex_open( "fieldFrameLeft" )
+   field_frame_center = tex_open( "fieldFrameCenter" )
+   field_frame_right = tex_open( "fieldFrameRight" )
+   target_bg = tex_open( "targetBg" )
+   target_frame = tex_open( "targetFrame" )
+   question = tex_open( "question" )
+   speed_light = tex_open( "speedOn" )
+   speed_light_double = tex_open( "speedDouble" )
+   speed_light_off = tex_open( "speedOff" )
+   top_bar = tex_open( "topbar" )
+   top_bar_left = tex_open( "topbar_left" )
+   top_bar_right = tex_open( "topbar_right" )
+   top_bar_center = tex_open( "topbarCenter" )
+   button_normal = tex_open( "button" )
+   button_hilighted = tex_open( "buttonHil2" )
+   button_mouseover = tex_open( "buttonHil" )
+   button_pressed = tex_open( "buttonPre" )
+   button_disabled = tex_open( "buttonDis" )
+   gui.targetSpobGFX( tex_open( "radar_planet", 2, 2 ) )
+   gui.targetPilotGFX(  tex_open( "radar_ship", 2, 2 ) )
 
 
    --Positions
    --Main is at 0,0
 
-   margin = 14
+   -- used to be 14 before corner stuff was removed
+   margin = 0
 
    has_flow = (flowlib.max( pp ) > 0)
 
@@ -155,6 +156,9 @@ function create()
    local radar_h = 120
    gui.radarInit( false, radar_w, radar_h )
 
+   pl_speed_x = 38
+   pl_speed_y = 2
+
    bar_y = 2
    bar_x = 46
    bar_w, bar_h = bar_bg:dim()
@@ -162,14 +166,12 @@ function create()
    if has_flow then
       table.insert( bars, "flow" )
       bar_x = bar_x - bar_w
+      pl_speed_x = pl_speed_x - bar_w
    end
    for k,v in ipairs( bars ) do
       _G[ "x_" .. v ] = bar_x + (k-1)*(bar_w + 6)
       _G[ "y_" .. v ] = bar_y
    end
-
-   pl_speed_x = 38
-   pl_speed_y = 2
 
    local target_bar_x = 57
    local target_bar_y = 92
@@ -792,6 +794,13 @@ function render( _dt )
    gfx.renderTex( main, mod_x, mod_y )
    gui.radarRender( radar_x + mod_x, radar_y + mod_y )
 
+   -- Have to extend it when the player has flow
+   if has_flow then
+      local off = right_side_x - left_side_w + mod_x
+      gfx.renderTexRaw( ext_right, off, mod_y, bar_w*3, end_right_h )
+      gfx.renderTexRaw( end_right, off - bar_w, mod_y, end_right_w, end_right_h, nil, nil, nil, nil, -1, 1 )
+   end
+
    if lockons > 0 then
       gfx.renderTex( icon_lockon, 379 + mod_x, 30 + mod_y )
    end
@@ -850,7 +859,7 @@ function render( _dt )
             local ta_heat = 0
             local ta_energy = ptarget:energy()
             local ta_name = ptarget:name()
-            gfx.renderTexRaw( ta_gfx, target_image_x + target_image_w/2 - ta_gfx_draw_w/2 + mod_x, target_image_y + target_image_h/2 - ta_gfx_draw_h/2 + mod_y, ta_gfx_draw_w, ta_gfx_draw_h, 1, 1, 0, 0, 1, -1 )
+            gfx.renderTexRaw( ta_gfx, target_image_x + target_image_w/2 - ta_gfx_draw_w/2 + mod_x, target_image_y + target_image_h/2 - ta_gfx_draw_h/2 + mod_y, ta_gfx_draw_w, ta_gfx_draw_h )
             renderBar( "shield", ta_shield, false, false, "target", mod_x, mod_y )
             renderBar( "armour", ta_armour, false, false, "target", mod_x, mod_y, ta_heat, ta_stress )
             renderBar( "energy", ta_energy, false, false, "target", mod_x, mod_y )

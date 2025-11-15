@@ -4,7 +4,7 @@
  <price>1850000</price>
  <cond>require("buyrep")("Empire", 50)</cond>
  <condstr>You need at least 50% reputation with the Empire.</condstr>
- <description>Standard Empire Admonishers are fabricated to be able to fit many needs, in a one-size fits all approach. However, there are times when such flexibility can wind up being instead a limitation. The Longbow drastically changes how the Admonisher performs in combat by specializing in long-range attacks. A complete revamp of the aiming circuitry makes it so that the detection capabilities directly translate into increased weapon range. Furthermore, the ship has changed the weapon mounts to allow equipping heavy weapons that are able to make full use of the new long range compatibilities. As a downside, the ship ends up having much more difficulties when trying to deal with enemy interceptors and fighters.</description>
+ <description>Standard Empire Admonishers are fabricated to suit many needs, in a one-size-fits-all approach. However, there are times when such a focus on flexibility can wind up to be a liability. The Longbow reconfiguration drastically changes how the Admonisher performs in combat by specializing in long-range attacks. A complete revamp of the targeting system makes any improvement to the ship's sensors directly translate into increased weapon range. To make full use of those new capabilities, the weapon mounts have been reworked to support high-caliber weaponry. As a downside, the ship ends up having much more difficulty dealing with enemy interceptors and fighters.</description>
  <desc_extra>#bGains as much weapon range bonus as the ship detection.#0</desc_extra>
  <slots>
   <weapon size="large" x="15" y="0" h="2"/>

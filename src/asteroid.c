@@ -715,7 +715,10 @@ static int asttype_parse( AsteroidType *at, const char *file )
             if ( xml_isNode( cur, "name" ) ) {
                const char *str   = xml_get( cur );
                material.material = commodity_get( str );
-               if ( material.material->gfx_space == NULL )
+               if ( material.material == NULL )
+                  WARN( "Asteroid Type '%s' has invalid Commodity '%s'",
+                        at->name, str );
+               else if ( material.material->gfx_space == NULL )
                   WARN( _( "Asteroid Type '%s' has Commodity '%s' with no "
                            "'gfx_space'." ),
                         at->name, str );

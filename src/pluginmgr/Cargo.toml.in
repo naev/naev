@@ -1,0 +1,30 @@
+[package]
+name = "pluginmgr"
+workspace = "@BUILD@"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[lints]
+workspace = true
+
+[lib]
+path = "@SOURCE@/src/pluginmgr/src/lib.rs"
+
+[dependencies]
+anyhow = { workspace = true }
+serde = { workspace = true }
+reqwest = { workspace = true }
+zip = { workspace = true }
+walkdir = { workspace = true }
+directories = { workspace = true }
+fs-err = { workspace = true }
+bytes = { workspace = true }
+semver = { workspace = true }
+git2 = { workspace = true }
+ndata = { workspace = true }
+log = { workspace = true }
+toml = { workspace = true }
+derive_more = { workspace = true }
+fs_extra = { workspace = true }
+futures = { workspace = true }

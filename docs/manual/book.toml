@@ -1,0 +1,9 @@
+[book]
+title = "Naev Development Manual"
+authors = ["Naev DevTeam"]
+description = "This book covers different aspects of developing for Naev, not only limited to the main repository, but also for developing plugins for the Naev engine."
+src = "src"
+language = "en"
+
+[rust]
+edition = "2024"

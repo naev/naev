@@ -32,9 +32,10 @@ function load( )
 
    -- Position stuff
    mem.pos = mem.spob:pos()
-   mem.tw = 500
-   mem.th = 500
-   mem.pos = mem.pos + vec2.new( -mem.tw/2, mem.th/2 )
+   local size = 500
+   mem.tw = size
+   mem.th = size
+   mem.radius = size*0.5
 
    -- The canvas
    mem.cvs  = lg.newCanvas( mem.tw, mem.th, {dpiscale=1} )
@@ -48,7 +49,7 @@ function load( )
    end
 
    update_canvas()
-   return mem.cvs.t.tex, math.max(mem.tw/2, mem.th/2)
+   return mem.cvs.t.tex, mem.radius
 end
 
 function unload ()
@@ -66,7 +67,7 @@ function render ()
    local z = camera.getZoom()
    local x, y = gfx.screencoords( mem.pos ):get()
    z = 1/z
-   mem.cvs:draw( x, y, 0, z, z )
+   mem.cvs:draw( x-mem.radius, y-mem.radius, 0, z, z )
 end
 
 function update( dt )

@@ -563,6 +563,7 @@ char pilot_getFactionColourChar( const Pilot *p );
 
 /* Misc details. */
 mat4    pilot_local_transform( const Pilot *p );
+void    pilot_apply_local_transform( vec3 *out, const mat4 *H, const vec3 *v );
 void    pilot_msg( const Pilot *p, const Pilot *receiver, const char *type,
                    int index );
 void    pilot_clearTrails( Pilot *p );

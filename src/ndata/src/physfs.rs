@@ -5,6 +5,7 @@ use sdl3 as sdl;
 use std::ffi::{CStr, CString, c_int};
 use std::io::{Error, Read, Result, Seek, SeekFrom, Write};
 use std::os::raw::c_void;
+use std::path::Path;
 use std::sync::atomic::{AtomicPtr, Ordering};
 
 // Some stuff is based on the physfs-rs package.
@@ -22,7 +23,7 @@ pub fn error_as_io_error(func: &str) -> Error {
     ))
 }
 
-pub fn error_as_io_error_with_file(func: &str, file: &str) -> Error {
+pub fn error_as_io_error_with_file<P: AsRef<Path>>(func: &str, file: P) -> Error {
     let cerrstr = unsafe {
         CStr::from_ptr(naevc::PHYSFS_getErrorByCode(
             naevc::PHYSFS_getLastErrorCode(),
@@ -31,13 +32,14 @@ pub fn error_as_io_error_with_file(func: &str, file: &str) -> Error {
     Error::other(format!(
         "PhysicsFS Error with '{}' on file '{}': `{}`",
         func,
-        file,
+        file.as_ref().display(),
         cerrstr.to_str().unwrap_or("Unknown")
     ))
 }
 
-pub fn set_write_dir(path: &str) -> Result<()> {
-    match unsafe { naevc::PHYSFS_setWriteDir(CString::new(path)?.as_ptr()) } {
+pub fn set_write_dir<P: AsRef<Path>>(path: P) -> Result<()> {
+    let s = CString::new(path.as_ref().as_os_str().as_encoded_bytes())?;
+    match unsafe { naevc::PHYSFS_setWriteDir(s.as_ptr()) } {
         0 => Err(error_as_io_error("PHYSFS_setWriteDir")),
         _ => Ok(()),
     }
@@ -64,16 +66,16 @@ pub fn get_pref_dir(org: &str, app: &str) -> Result<String> {
     }
 }
 
-pub fn mount(new_dir: &str, append: bool) -> Result<()> {
-    let cnew_dir = CString::new(new_dir)?;
+pub fn mount<P: AsRef<Path>>(new_dir: P, append: bool) -> Result<()> {
+    let cnew_dir = CString::new(new_dir.as_ref().as_os_str().as_encoded_bytes())?;
     match unsafe { naevc::PHYSFS_mount(cnew_dir.as_ptr(), std::ptr::null(), append as c_int) } {
         0 => Err(error_as_io_error_with_file("PHYSFS_mount", new_dir)),
         _ => Ok(()),
     }
 }
 
-pub fn mount_at(new_dir: &str, mount_point: &str, append: bool) -> Result<()> {
-    let cnew_dir = CString::new(new_dir)?;
+pub fn mount_at<P: AsRef<Path>>(new_dir: P, mount_point: &str, append: bool) -> Result<()> {
+    let cnew_dir = CString::new(new_dir.as_ref().as_os_str().as_encoded_bytes())?;
     let cmount_point = CString::new(mount_point)?;
     match unsafe { naevc::PHYSFS_mount(cnew_dir.as_ptr(), cmount_point.as_ptr(), append as c_int) }
     {
@@ -122,8 +124,8 @@ pub struct File {
 
 impl File {
     /// Opens a file with a specific mode.
-    pub fn open(filename: &str, mode: Mode) -> Result<File> {
-        let c_filename = CString::new(filename)?;
+    pub fn open<P: AsRef<Path>>(filename: P, mode: Mode) -> Result<File> {
+        let c_filename = CString::new(filename.as_ref().as_os_str().as_encoded_bytes())?;
         let raw = unsafe {
             match mode {
                 Mode::Append => naevc::PHYSFS_openAppend(c_filename.as_ptr()),
@@ -264,13 +266,13 @@ impl Drop for File {
     }
 }
 
-pub fn exists(path: &str) -> bool {
-    let cpath = CString::new(path).unwrap();
-    !matches!(unsafe { naevc::PHYSFS_exists(cpath.as_ptr()) }, 0)
+pub fn exists<P: AsRef<Path>>(path: P) -> bool {
+    let c_path = CString::new(path.as_ref().as_os_str().as_encoded_bytes()).unwrap();
+    !matches!(unsafe { naevc::PHYSFS_exists(c_path.as_ptr()) }, 0)
 }
 
-pub fn read_dir(path: &str) -> Result<Vec<String>> {
-    let c_path = CString::new(path)?;
+pub fn read_dir<P: AsRef<Path>>(path: P) -> Result<Vec<String>> {
+    let c_path = CString::new(path.as_ref().as_os_str().as_encoded_bytes()).unwrap();
     let mut list = unsafe { naevc::PHYSFS_enumerateFiles(c_path.as_ptr()) };
     if list.is_null() {
         return Err(error_as_io_error_with_file("PHYSFS_enumerateFiles", path));
@@ -280,7 +282,11 @@ pub fn read_dir(path: &str) -> Result<Vec<String>> {
     let mut res = vec![];
     while !unsafe { *list }.is_null() {
         unsafe {
-            let filename = format!("{}/{}", path, CStr::from_ptr(*list).to_str().unwrap());
+            let filename = format!(
+                "{}/{}",
+                path.as_ref().display(),
+                CStr::from_ptr(*list).to_str().unwrap()
+            );
             res.push(filename);
         }
         list = ((list as usize) + std::mem::size_of_val(&list)) as _;
@@ -292,9 +298,9 @@ pub fn read_dir(path: &str) -> Result<Vec<String>> {
     Ok(res)
 }
 
-pub fn iostream(filename: &str, mode: Mode) -> Result<IOStream<'static>> {
+pub fn iostream<P: AsRef<Path>>(filename: P, mode: Mode) -> Result<IOStream<'static>> {
     let raw = unsafe {
-        let c_filename = CString::new(filename)?;
+        let c_filename = CString::new(filename.as_ref().as_os_str().as_encoded_bytes()).unwrap();
         let phys = match mode {
             Mode::Append => naevc::PHYSFS_openAppend(c_filename.as_ptr()),
             Mode::Read => naevc::PHYSFS_openRead(c_filename.as_ptr()),
@@ -312,8 +318,8 @@ pub fn iostream(filename: &str, mode: Mode) -> Result<IOStream<'static>> {
     }
 }
 
-pub fn blacklisted(filename: &str) -> bool {
-    let c_filename = CString::new(filename).unwrap();
+pub fn blacklisted<P: AsRef<Path>>(filename: P) -> bool {
+    let c_filename = CString::new(filename.as_ref().as_os_str().as_encoded_bytes()).unwrap();
     let realdir = unsafe { naevc::PHYSFS_getRealDir(c_filename.as_ptr()) };
     if realdir.is_null() {
         return false;
@@ -332,16 +338,16 @@ impl MediaSource for File {
     }
 }
 
-pub fn mkdir(path: &str) -> Result<()> {
-    let c_path = CString::new(path).unwrap();
+pub fn mkdir<P: AsRef<Path>>(path: P) -> Result<()> {
+    let c_path = CString::new(path.as_ref().as_os_str().as_encoded_bytes()).unwrap();
     match unsafe { naevc::PHYSFS_mkdir(c_path.as_ptr()) } {
         0 => Err(error_as_io_error_with_file("PHYSFS_mkdir", path)),
         _ => Ok(()),
     }
 }
 
-pub fn remove_file(path: &str) -> Result<()> {
-    let c_path = CString::new(path).unwrap();
+pub fn remove_file<P: AsRef<Path>>(path: P) -> Result<()> {
+    let c_path = CString::new(path.as_ref().as_os_str().as_encoded_bytes()).unwrap();
     match unsafe { naevc::PHYSFS_delete(c_path.as_ptr()) } {
         0 => Err(error_as_io_error_with_file("PHYSFS_delete", path)),
         _ => Ok(()),

@@ -5,7 +5,7 @@
   <slot>utility</slot>
   <size>medium</size>
   <mass>3</mass>
-  <price>390000</price>
+  <price>435000</price>
   <description>Does your work require you to venture into dangerous territory? Are you facing opposition your shields can't handle? The Milspec U-9 "Magus" jammer is what you need! Throw the bloodhounds off your scent with the press of a button. While your enemies are still trying to make sense out of the garbage they're getting on their sensors, you will have already made your escape! Fly safe, fly Milspec.</description>
   <gfx_store>jammer1</gfx_store>
   <limit>jammer</limit>
@@ -13,7 +13,7 @@
  <specific type="modification">
   <active cooldown="5"/>
   <energy_regen_malus>50</energy_regen_malus>
-  <ew_signature>-25</ew_signature>
+  <ew_signature>-30</ew_signature>
   <jam_chance>100</jam_chance>
  </specific>
 </outfit>

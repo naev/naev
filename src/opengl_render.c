@@ -154,6 +154,7 @@ void gl_renderRectH( const mat4 *H, const glColour *c, int filled )
    gl_endSolidProgram();
 }
 
+#if 0
 /**
  * @brief Renders a cross at a given position.
  *
@@ -168,6 +169,7 @@ void gl_renderCross( double x, double y, double r, const glColour *c )
    glUniform1f( shaders.crosshairs.paramf, 1. ); /* No outline. */
    gl_renderShader( x, y, r, r, 0., &shaders.crosshairs, c, 1 );
 }
+#endif
 
 /**
  * @brief Renders a triangle at a given position.
@@ -637,48 +639,6 @@ void gl_renderTextureInterpolate( const glTexture *ta, const glTexture *tb,
 }
 
 /**
- * @brief Converts in-game coordinates to screen coordinates.
- *
- *    @param[out] nx New screen X coordinate.
- *    @param[out] ny New screen Y coordinate.
- *    @param bx Game X coordinate to translate.
- *    @param by Game Y coordinate to translate.
- */
-void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by )
-{
-   double cx, cy, z;
-
-   /* Get parameters. */
-   cam_getPos( &cx, &cy );
-   z = cam_getZoom();
-
-   /* calculate position - we'll use relative coords to player */
-   *nx = ( bx - cx ) * z + SCREEN_W * 0.5;
-   *ny = ( by - cy ) * z + SCREEN_H * 0.5;
-}
-
-/**
- * @brief Converts screen coordinates to in-game coordinates.
- *
- *    @param[out] nx New in-game X coordinate.
- *    @param[out] ny New in-game Y coordinate.
- *    @param bx Screen X coordinate to translate.
- *    @param by Screen Y coordinate to translate.
- */
-void gl_screenToGameCoords( double *nx, double *ny, int bx, int by )
-{
-   double cx, cy, z;
-
-   /* Get parameters. */
-   cam_getPos( &cx, &cy );
-   z = cam_getZoom();
-
-   /* calculate position - we'll use relative coords to player */
-   *nx = ( bx - SCREEN_W * 0.5 ) / z + cx;
-   *ny = ( by - SCREEN_H * 0.5 ) / z + cy;
-}
-
-/**
  * @brief Blits a sprite, position is relative to the player.
  *
  * Since position is in "game coordinates" it is subject to all
@@ -698,17 +658,20 @@ void gl_renderSprite( const glTexture *sprite, double bx, double by, int sx,
 
    /* Translate coords. */
    z = cam_getZoom();
-   gl_gameToScreenCoords( &x, &y, bx - tex_sw( sprite ) * 0.5,
-                          by - tex_sh( sprite ) * 0.5 );
+   gl_gameToScreenCoords( &x, &y, bx, by );
 
    /* Scaled sprite dimensions. */
    w = tex_sw( sprite ) * z;
    h = tex_sh( sprite ) * z;
 
-   /* check if inbounds */
+   /* Check if inbounds. */
    if ( ( x < -w ) || ( x > SCREEN_W + w ) || ( y < -h ) ||
         ( y > SCREEN_H + h ) )
       return;
+
+   /* Correct location. */
+   x -= w * 0.5;
+   y -= h * 0.5;
 
    /* texture coords */
    tx = tex_sw( sprite ) * (double)( sx ) / tex_w( sprite );
@@ -742,8 +705,7 @@ void gl_renderSpriteScale( const glTexture *sprite, double bx, double by,
 
    /* Translate coords. */
    z = cam_getZoom();
-   gl_gameToScreenCoords( &x, &y, bx - tex_sw( sprite ) * 0.5,
-                          by - tex_sh( sprite ) * 0.5 );
+   gl_gameToScreenCoords( &x, &y, bx, by );
 
    /* Scaled sprite dimensions. */
    w = tex_sw( sprite ) * z * scalew;
@@ -753,6 +715,10 @@ void gl_renderSpriteScale( const glTexture *sprite, double bx, double by,
    if ( ( x < -w ) || ( x > SCREEN_W + w ) || ( y < -h ) ||
         ( y > SCREEN_H + h ) )
       return;
+
+   /* Correct location. */
+   x -= w * 0.5;
+   y -= h * 0.5;
 
    /* texture coords */
    tx = tex_sw( sprite ) * (double)( sx ) / tex_w( sprite );
@@ -784,8 +750,7 @@ void gl_renderSpriteRotate( const glTexture *sprite, double bx, double by,
 
    /* Translate coords. */
    z = cam_getZoom();
-   gl_gameToScreenCoords( &x, &y, bx - tex_sw( sprite ) * 0.5,
-                          by - tex_sh( sprite ) * 0.5 );
+   gl_gameToScreenCoords( &x, &y, bx, by );
 
    /* Scaled sprite dimensions. */
    w = tex_sw( sprite ) * z;
@@ -795,6 +760,10 @@ void gl_renderSpriteRotate( const glTexture *sprite, double bx, double by,
    if ( ( x < -w ) || ( x > SCREEN_W + w ) || ( y < -h ) ||
         ( y > SCREEN_H + h ) )
       return;
+
+   /* Correct location. */
+   x -= w * 0.5;
+   y -= h * 0.5;
 
    /* texture coords */
    tx = tex_sw( sprite ) * (double)( sx ) / tex_w( sprite );
@@ -830,8 +799,7 @@ void gl_renderSpriteScaleRotate( const glTexture *sprite, double bx, double by,
 
    /* Translate coords. */
    z = cam_getZoom();
-   gl_gameToScreenCoords( &x, &y, bx - tex_sw( sprite ) * 0.5,
-                          by - tex_sh( sprite ) * 0.5 );
+   gl_gameToScreenCoords( &x, &y, bx, by );
 
    /* Scaled sprite dimensions. */
    w = tex_sw( sprite ) * z * scalew;
@@ -841,6 +809,10 @@ void gl_renderSpriteScaleRotate( const glTexture *sprite, double bx, double by,
    if ( ( x < -w ) || ( x > SCREEN_W + w ) || ( y < -h ) ||
         ( y > SCREEN_H + h ) )
       return;
+
+   /* Correct location. */
+   x -= w * 0.5;
+   y -= h * 0.5;
 
    /* texture coords */
    tx = tex_sw( sprite ) * (double)( sx ) / tex_w( sprite );
@@ -902,8 +874,7 @@ void gl_renderSpriteInterpolateScale( const glTexture *sa, const glTexture *sb,
    double x, y, w, h, tx, ty, z;
 
    /* Translate coords. */
-   gl_gameToScreenCoords( &x, &y, bx - scalew * tex_sw( sa ) * 0.5,
-                          by - scaleh * tex_sh( sa ) * 0.5 );
+   gl_gameToScreenCoords( &x, &y, bx, by );
 
    /* Scaled sprite dimensions. */
    z = cam_getZoom();
@@ -914,6 +885,10 @@ void gl_renderSpriteInterpolateScale( const glTexture *sa, const glTexture *sb,
    if ( ( x < -w ) || ( x > SCREEN_W + w ) || ( y < -h ) ||
         ( y > SCREEN_H + h ) )
       return;
+
+   /* Correct location. */
+   x -= w * 0.5;
+   y -= h * 0.5;
 
    /* texture coords */
    tx = tex_sw( sa ) * (double)( sx ) / tex_w( sa );

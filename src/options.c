@@ -23,7 +23,6 @@
 #include "dialogue.h"
 #include "difficulty.h"
 #include "input.h"
-#include "land.h"
 #include "log.h"
 #include "music.h"
 #include "ndata.h"
@@ -78,7 +77,6 @@ static int             opt_lastKeyPress = 0; /**< Last keypress. */
  */
 /* Misc. */
 static void opt_close( unsigned int wid, const char *name );
-static void opt_needRestart( void );
 /* Gameplay. */
 static char **lang_list( int *n );
 static void   opt_gameplay( unsigned int wid );
@@ -134,7 +132,7 @@ static void opt_unsetKey( unsigned int wid, const char *str );
 /* Plugins menu. */
 static void opt_plugins( unsigned int wid );
 static void opt_plugins_regenList( unsigned int wid );
-static void opt_plugins_add( unsigned int wid, const char *name );
+static void opt_plugins_manager( unsigned int wid, const char *name );
 static void opt_plugins_update( unsigned int wid, const char *name );
 
 /**
@@ -192,16 +190,15 @@ void opt_menu( void )
  */
 static void opt_OK( unsigned int wid, const char *str )
 {
-   int ret, prompted_restart;
+   int ret;
 
-   prompted_restart = opt_restart;
-   ret              = 0;
+   ret = 0;
    ret |= opt_gameplaySave( opt_windows[OPT_WIN_GAMEPLAY], str );
    ret |= opt_accessibilitySave( opt_windows[OPT_WIN_ACCESSIBILITY], str );
    ret |= opt_audioSave( opt_windows[OPT_WIN_AUDIO], str );
    ret |= opt_videoSave( opt_windows[OPT_WIN_VIDEO], str );
 
-   if ( opt_restart && !prompted_restart ) {
+   if ( opt_restart ) {
       int         can_save  = naev_canSave();
       const char *msg_extra = "";
       if ( player.p != NULL ) {
@@ -1448,7 +1445,7 @@ static void opt_video( unsigned int wid )
 /**
  * @brief Marks that needs restart.
  */
-static void opt_needRestart( void )
+void opt_needRestart( void )
 {
    const char *s = _( "#rRestart Naev for changes to take effect.#0" );
    opt_restart   = 1;
@@ -1816,8 +1813,8 @@ static void opt_plugins( unsigned int wid )
    // window_addButton( wid, -20 - 1 * ( BUTTON_WIDTH + 20 ), 20 + 1 * (
    // BUTTON_HEIGHT + 20 ), BUTTON_WIDTH,
    window_addButton( wid, -20 - 1 * ( BUTTON_WIDTH + 20 ), 20, BUTTON_WIDTH,
-                     BUTTON_HEIGHT, "btnPluginAdd", _( "Add Plugin" ),
-                     opt_plugins_add );
+                     BUTTON_HEIGHT, "btnPluginManager", _( "Plugin Manager" ),
+                     opt_plugins_manager );
 }
 
 static void opt_plugins_regenList( unsigned int wid )
@@ -1852,142 +1849,11 @@ static void opt_plugins_regenList( unsigned int wid )
                    opt_plugins_update, NULL );
 }
 
-static void opt_plugins_add_callback( void              *userdata,
-                                      const char *const *filelist, int filter )
+static void opt_plugins_manager( unsigned int wid, const char *name )
 {
-   (void)filter;
-   unsigned int    wid = *(unsigned int *)userdata;
-   const plugin_t *plgs;
-   char            buf[STRMAX], buf_susp[STRMAX], path[PATH_MAX], *fname;
-   int             suspicious = 0;
-   const plugin_t *plg_susp   = NULL;
-
-   if ( filelist == NULL ) {
-      WARN( _( "Error calling %s: %s" ), "SDL_ShowOpenFileDialog",
-            SDL_GetError() );
-      return;
-   } else if ( filelist[0] == NULL ) {
-      /* Cancelled by user.  */
-      return;
-   }
-
-   /* Check to see if valid. */
-   plugin_t *plg = plugin_test( filelist[0] );
-   if ( plg == NULL ) {
-      dialogue_alert( _( "'%s' is not a valid plugin!" ), filelist[0] );
-      return;
-   }
-   /* See if overlaps. */
-   plgs = plugin_list();
-   for ( int i = 0; i < array_size( plgs ); i++ ) {
-      if ( strcmp( plugin_name( &plgs[i] ), plugin_name( plg ) ) == 0 ) {
-         suspicious = 1;
-         plg_susp   = &plgs[i];
-         snprintf( buf_susp, sizeof( buf_susp ),
-                   _( "#nName:#0 %s\n"
-                      "#nAuthor:#0 %s\n"
-                      "#nVersion:#0 %s\n"
-                      "#nDescription:#0 %s" ),
-                   plugin_name( plg_susp ), plg_susp->author, plg_susp->version,
-                   plg_susp->description );
-         break;
-      }
-   }
-
-   /* New plugin path. */
-   fname = strdup( filelist[0] );
-   nfile_concatPaths( path, sizeof( path ), plugin_dir(), basename( fname ) );
-   free( fname );
-
-   /* Get plugin details. */
-   snprintf( buf, sizeof( buf ),
-             _( "#nName:#0 %s\n"
-                "#nAuthor:#0 %s\n"
-                "#nVersion:#0 %s\n"
-                "#nDescription:#0 %s" ),
-             plugin_name( plg ), plg->author, plg->version, plg->description );
-
-   /* Check to see if definately add. */
-   if ( nfile_fileExists( path ) ) {
-      if ( suspicious ) {
-         if ( !dialogue_YesNo(
-                 _( "Update plugin?" ),
-                 _( "Are you sure you want to update the plugin '%s'? This "
-                    "will require a restart to take full "
-                    "effect.\n\n#nNew Plugin Details#0\n%s\n\n#nOld Plugin "
-                    "Details#0\n%s" ),
-                 plugin_name( plg ), buf, buf_susp ) ) {
-            plugin_free( plg );
-            free( plg );
-            return;
-         }
-      } else {
-         fname = strdup( filelist[0] );
-         if ( !dialogue_YesNo(
-                 _( "Overwrite plugin?" ),
-                 _( "Are you sure you want to add '%s' to your list of active "
-                    "plugins? This will overwrite a plugin with the same file "
-                    "name (%s), but not same plug in name. This will require a "
-                    "restart to take full "
-                    "effect.\n\n#nNew Plugin Details#0\n%s" ),
-                 plugin_name( plg ), basename( fname ), buf ) ) {
-            plugin_free( plg );
-            free( plg );
-            free( fname );
-            return;
-         }
-         free( fname );
-      }
-   } else if ( !suspicious ) {
-      if ( !dialogue_YesNo(
-              _( "Add plugin?" ),
-              _( "Are you sure you want to add '%s' to your list of active "
-                 "plugins? This will require a restart to take full "
-                 "effect.\n\n#nNew Plugin Details#0\n%s" ),
-              plugin_name( plg ), buf ) ) {
-         plugin_free( plg );
-         free( plg );
-         return;
-      }
-   } else {
-      if ( !dialogue_YesNo(
-              _( "Add plugin?" ),
-              _( "Are you sure you want to add '%s' to your list of active "
-                 "plugins? #rThis plugin has the same name as one of your "
-                 "existing plugins and make cause issues#0. This will require "
-                 "a restart to take full effect.\n\n#nNew Plugin "
-                 "Details#0\n%s\n\n#nSame name Plugin Details#0\n%s" ),
-              plugin_name( plg ), buf, buf_susp ) ) {
-         plugin_free( plg );
-         free( plg );
-         return;
-      }
-   }
-
-   /* Copy file over. */
-   if ( nfile_copyIfExists( filelist[0], path ) ) {
-      dialogue_alert( _( "Failed to copy '%s' to '%s'!" ), filelist[0], path );
-      plugin_free( plg );
-      free( plg );
-      return;
-   }
-
-   /* Insert plugin. */
-   plugin_insert( plg );
-   free( plg );
-   opt_needRestart();
-   opt_plugins_regenList( wid );
-}
-static void opt_plugins_add( unsigned int wid, const char *name )
-{
+   (void)wid;
    (void)name;
-   const SDL_DialogFileFilter filter[] = {
-      { .name = _( "Naev Plugin File" ), .pattern = "zip" },
-      { NULL, NULL },
-   };
-   /* Open dialogue to load the diff. */
-   SDL_ShowOpenFileDialog( opt_plugins_add_callback, &wid, gl_screen.window,
-                           filter, 1, conf.dev_data_dir, 0 );
+   plugin_manager();
 }
 
 static void opt_plugins_update( unsigned int wid, const char *name )

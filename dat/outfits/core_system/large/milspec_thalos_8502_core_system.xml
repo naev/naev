@@ -18,7 +18,7 @@
       {'energy_regen', 60, 67},
       {'shield', 765, 225},
       {'shield_regen', 14, 2},
-      {'ew_track', 8, 2},
+      {'ew_track', 8, 5},
    })
   </lua_inline>
  </specific>

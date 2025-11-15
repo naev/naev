@@ -20,7 +20,7 @@ function rehab.init( fct, params )
    local txtaccept = params.txtaccept or fmt.f(_([[Your application has been processed. The {fct} security forces will no longer attack you on sight. You may conduct your business in {fct} space again, but remember that you still have a criminal record! If you attack any traders, civilians or {fct} ships, or commit any other felony against this faction, you will immediately become their enemy again.]]),
       {fct=fct})
    local txtsuccess = params.txtsuccess or _([[Congratulations, you have successfully worked your way back into good standing with this faction. Try not to relapse into your life of crime!]])
-   local txtabort = params.txtabort or _([[You have committed another offense against this faction! Your rehabilitation procedure has been cancelled, and your reputation is once again tarnished. You may start another rehabilitation procedure at a later time.]])
+   local txtabort = params.txtabort or _([[You have committed another offence against this faction! Your rehabilitation procedure has been cancelled, and your reputation is once again tarnished. You may start another rehabilitation procedure at a later time.]])
 
    function create()
       -- Note: this mission does not make any system claims.
@@ -50,11 +50,12 @@ function rehab.init( fct, params )
    end
 
    local function setosd ()
+      local r = math.ceil(-mem.rep)
       local osd_msg = { n_(
          "You need to gain %d more reputation",
          "You need to gain %d more reputation",
-         -mem.rep
-      ):format(-mem.rep) }
+         r
+      ):format(r) }
       misn.osdCreate(fmt.f(_("{fct} Rehabilitation"), {fct=fct}), osd_msg)
    end
 
@@ -68,7 +69,7 @@ function rehab.init( fct, params )
       player.pay(-mem.fine)
       vntk.msg(fmt.f(_("{fct} Rehabilitation"), {fct=fct}), {
          txtaccept,
-         _([[While this agreement is active, your reputation will not change, but if you continue to behave properly and perform beneficial services, your past offenses will eventually be stricken from the record.]])
+         _([[While this agreement is active, your reputation will not change, but if you continue to behave properly and perform beneficial services, your past offences will eventually be stricken from the record.]])
       } )
 
 

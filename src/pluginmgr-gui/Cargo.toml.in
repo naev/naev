@@ -1,0 +1,25 @@
+[package]
+name = "pluginmgr-gui"
+workspace = "@BUILD@"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[lints]
+workspace = true
+
+[lib]
+path = "@SOURCE@/src/pluginmgr-gui/src/lib.rs"
+
+[dependencies]
+pluginmgr = { path = "@BUILD@/src/pluginmgr" }
+anyhow = { workspace = true }
+log = { workspace = true }
+reqwest = { workspace = true }
+toml = { workspace = true }
+serde = { workspace = true }
+fs-err = { workspace = true }
+chrono = { workspace = true }
+iced = { workspace = true }
+iced_aw = { workspace = true }
+futures = { workspace = true }

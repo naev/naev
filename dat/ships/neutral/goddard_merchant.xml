@@ -2,16 +2,16 @@
  <gfx sy="12" sx="12" size="125">goddard_merchant.gltf</gfx>
  <rarity>2</rarity>
  <price>6850000</price>
- <description>It all began with an insurance dispute at Manuel Station when a sensor malfunction resulted in a Zebra being damaged beyond repair while delivering a large shipment of gambling chips and bar furniture to Minerva Station. Due to the importance of the cargo job and strict deadline, the insurance provider offered the Zebra captain a used Goddard that had been sold by a retired bounty hunter. The Captain, knowing that a Goddard is worth more than a Zebra, agreed with the idea of later trading it in. The goods would not have fit if it had not been for the idea of filling the fighter bays up to the brim with gambling chips.
+ <description>It all began with an insurance dispute at Manuel Station when a sensor malfunction resulted in a Zebra being damaged beyond repair while delivering a large shipment of gambling chips and bar furniture to Minerva Station. Due to the cargo job's importance and strict deadline, the insurance provider offered the Zebra captain a used Goddard that had recently been sold by a retired bounty hunter. The Captain, knowing that a Goddard is worth more than a Zebra, agreed with the idea of later trading it in. The goods would not have fit had it not been for the idea of filling the fighter bays up to the brim with gambling chips.
 While contemplating a replacement, the captain realized that she encountered none of the regular harassment in the Goddard, which was instead permanently reconfigured for cargo transport. Sightings of the brilliant captain in her trading Goddard turned to gossip and stories, leading to an eventual standardization of the reconfiguration. Although not many captains choose a ship like this for freight, they are common enough that a large amount of second hand Goddards are reconfigured and re-sold as 'Merchantman' variants.</description>
  <health>
   <armour>1900</armour>
  </health>
  <characteristics>
-  <crew>52</crew>
-  <mass>2300</mass>
+  <crew>42</crew>
+  <mass>2200</mass>
   <fuel_consumption>400</fuel_consumption>
-  <cargo>540</cargo>
+  <cargo>590</cargo>
  </characteristics>
  <slots>
   <weapon y="-13" h="2" size="large" x="-10"/>
@@ -40,5 +40,6 @@ While contemplating a replacement, the captain realized that she encountered non
   <speed_mod>-10</speed_mod>
   <armour_mod>5</armour_mod>
   <energy_mod>10</energy_mod>
+  <cargo_inertia>-10</cargo_inertia>
  </stats>
 </ship>

@@ -8,8 +8,9 @@
   <rarity>6</rarity>
  </general>
  <specific type="modification">
-  <weapon_firerate>5</weapon_firerate>
-  <fbay_rate>10</fbay_rate>
-  <weapon_range>5</weapon_range>
+  <weapon_firerate>7</weapon_firerate>
+  <cooldown_mod>-13</cooldown_mod>
+  <fbay_rate>13</fbay_rate>
+  <launch_lockon>-7</launch_lockon>
  </specific>
 </outfit>

@@ -60,6 +60,7 @@ repos:
       entry: utils/rem_xml_head.sh
       types: [xml]
       language: script
+      exclude: org.naev.Naev.metainfo.xml
     - id: doxspell
       name: doxspell
       entry: utils/doxspell.sh

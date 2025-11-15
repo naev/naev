@@ -548,6 +548,84 @@ static void dialogue_inputClose( unsigned int wid, const char *str )
    *loop_done = 1;
 }
 
+double dialogue_fader( const char *title, double min, double max,
+                       double resolution, const char *fmt, ... )
+{
+   char    msg[STRMAX];
+   va_list ap;
+
+   if ( input_dialogue.input_wid )
+      return 0.;
+
+   if ( fmt == NULL )
+      return 0.;
+   va_start( ap, fmt );
+   vsnprintf( msg, sizeof( msg ), fmt, ap );
+   va_end( ap );
+
+   return dialogue_faderRaw( title, min, max, resolution, msg );
+}
+static double fader_value = 0.;
+static void   dialogue_faderCancel( unsigned int wid, const char *str )
+{
+   fader_value = 0.;
+   window_faderValue( wid, "fadInput", 0. );
+   dialogue_close( wid, str );
+}
+static void dialogue_faderCall( unsigned int wid, const char *str )
+{
+   fader_value = window_getFaderValue( wid, str );
+   char val[STRMAX_SHORT];
+   snprintf( val, sizeof( val ), "%.0f", round( fader_value ) );
+   window_modifyText( wid, "txtCaption", val );
+}
+double dialogue_faderRaw( const char *title, double min, double max, double def,
+                          const char *msg )
+{
+   int     w, h, done;
+   glFont *font;
+   fader_value = 0.;
+
+   /* get text height */
+   font = dialogue_getSize( title, msg, &w, &h );
+   h    = gl_printHeightRaw( font, w, msg );
+
+   /* create window */
+   unsigned int wid =
+      window_create( "dlgFader", title, -1, -1, w + 40, h + 160 );
+   window_setData( wid, &done );
+   window_setAccept( wid, dialogue_close );
+   window_setCancel( wid, dialogue_faderCancel );
+   /* text */
+   window_addText( wid, 20, -30, w, h, 0, "txtInput", font, NULL, msg );
+   /* input */
+   char mintext[16];
+   snprintf( mintext, sizeof( mintext ), "%.0f", min );
+   int  mintextw = gl_printWidthRaw( &gl_smallFont, mintext );
+   char maxtext[16];
+   snprintf( maxtext, sizeof( maxtext ), "%.0f", max );
+   int maxtextw = gl_printWidthRaw( &gl_smallFont, maxtext );
+   int captionw = MAX( maxtextw, mintextw );
+   int y        = 20 + 30 + 10 + 5;
+   window_addText( wid, 20, y + 25, w, 20, 1, "txtCaption", font, NULL, NULL );
+   window_addText( wid, 20, y, captionw, 20, 1, "txtMin", &gl_smallFont, NULL,
+                   mintext );
+   window_addText( wid, 20 + w - 5 - captionw, y, captionw, 20, 1, "txtMax",
+                   &gl_smallFont, NULL, maxtext );
+   window_addFader( wid, 20 + captionw + 5, y, w - ( 5 + captionw ) * 2, 20,
+                    "fadInput", min, max, def, dialogue_faderCall );
+
+   /* button */
+   window_addButton( wid, -20 - 100 - 10, 20, 100, 30, "btnClose",
+                     _( "Jettison!" ), dialogue_close );
+   window_addButton( wid, -20, 20, 100, 30, "btnCancel", _( "Cancel" ),
+                     dialogue_faderCancel );
+
+   dialogue_faderCall( wid, "fadInput" ); /* Update the fader. */
+   toolkit_loop( &done, NULL );
+   return fader_value;
+}
+
 static int  dialogue_listSelected = -1;
 static void dialogue_listCancel( unsigned int wid, const char *str )
 {

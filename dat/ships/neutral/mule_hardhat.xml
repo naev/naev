@@ -2,11 +2,18 @@
  <rarity>2</rarity>
  <price>1100000</price>
  <description>Specially ordered by the Mining Vrata, the Mule Hardhat is a modified version of the Mule with a focus on augmenting the mining capabilities. In particular, the hull has been significantly reinforced to be able to withstand occasional collisions with asteroids. A built-in asteroid scanner, in addition to specialized asteroid processing equipment has made it quite popular among miners. However, such changes come with an increase in the fabrication cost.</description>
+ <characteristics>
+  <crew>13</crew>
+  <mass>660</mass>
+  <fuel_consumption>200</fuel_consumption>
+  <cargo>230</cargo>
+ </characteristics>
  <stats>
   <accel_mod>-10</accel_mod>
   <turn_mod>-20</turn_mod>
   <cargo_mod>40</cargo_mod>
   <cargo_inertia>-30</cargo_inertia>
+  <ew_hide>25</ew_hide>
   <mining_bonus>50</mining_bonus>
   <asteroid_scan>500</asteroid_scan>
   <armour_mod>20</armour_mod>

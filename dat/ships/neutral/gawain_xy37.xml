@@ -3,7 +3,7 @@
  <lua>gawain_xy37.lua</lua>
  <price>1200000</price>
  <rarity>3</rarity>
- <description>The Gawain XY-37 was meant to rework the engine and start a new era of extreme speed spacecraft. Although, on paper, the new design seemed flawless, it quickly hit a roadblock in practice when the stability of the entire electro-magnetic grid couldn't keep up with the high engine demands. Although the project was scrapped, some insistent engineers worked on their free time to rework the design into something usable. The result is a ship, that while it seems significantly slower than the baseline model, it really shines when the shields are disabled. A great ship for those who like living life on the edge.</description>
+ <description>The Gawain XY-37 was meant to rework the engine and start a new era of extreme speed spacecraft. Although, on paper, the new design seemed flawless, it quickly hit a roadblock in practice when the stability of the entire electro-magnetic grid couldn't keep up with the high engine demands. Although the project was scrapped, some insistent engineers worked in their free time to tweak the design into something usable. The result is a ship, that while otherwise seeming significantly slower than the baseline model, really shines when the shields are disabled. A great ship for those who like living life on the edge.</description>
  <health>
   <armour>40</armour>
  </health>
@@ -25,5 +25,7 @@
   <turn_mod>20</turn_mod>
   <cargo_mod>-10</cargo_mod>
   <armour_mod>-10</armour_mod>
+  <ew_detect>10</ew_detect>
+  <stress_dissipation>35</stress_dissipation>
  </stats>
 </ship>

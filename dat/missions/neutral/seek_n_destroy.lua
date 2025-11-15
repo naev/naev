@@ -290,6 +290,7 @@ function enter ()
          target_ship:setHilight( true )
          target_ship:setVisplayer()
          target_ship:setHostile()
+         target_ship:memory().capturable = true
 
          mem.death_hook = hook.pilot( target_ship, "death", "target_death" )
          mem.board_hook = hook.pilot( target_ship, "board", "target_board" )
@@ -311,40 +312,38 @@ end
 
 -- Enemies wait for the player
 function trigger_ambush()
-   local jp = jump.get( system.cur(), mem.last_sys )
-   local x, y
+   local jp = jump.get( system.cur(), mem.last_sys ):pos()
+
+   local leader
    ambush = {}
+   for k,s in ipairs{ mem.aship, mem.bship, mem.bship } do
+      local pos = jp + vec2.newP( 2000+2000*rnd.rnd(), rnd.angle() )
+      local p = pilot.add( mem.aship, mem.target_faction, pos )
 
-   x = 4000 * rnd.rnd() - 2000
-   y = 4000 * rnd.rnd() - 2000
-   local pos = jp:pos() + vec2.new(x,y)
-   ambush[1] = pilot.add( mem.aship, mem.target_faction, pos )
-   x = 4000 * rnd.rnd() - 2000
-   y = 4000 * rnd.rnd() - 2000
-   pos = jp:pos() + vec2.new(x,y)
-   ambush[2] = pilot.add( mem.bship, mem.target_faction, pos )
-   x = 4000 * rnd.rnd() - 2000
-   y = 4000 * rnd.rnd() - 2000
-   pos = jp:pos() + vec2.new(x,y)
-   ambush[3] = pilot.add( mem.bship, mem.target_faction, pos )
+      p:setHostile(true)
+      p:memory().capturable = true
 
-   ambush[1]:setHostile()
-   ambush[2]:setHostile()
-   ambush[3]:setHostile()
-   ambush[1]:control()
-   ambush[2]:control()
-   ambush[3]:control()
-   ambush[1]:attack(player.pilot())
-   ambush[2]:attack(player.pilot())
-   ambush[3]:attack(player.pilot())
+      if not leader then
+         leader = p
+      else
+         p:setLeader(p)
+      end
+
+      table.insert( ambush, p )
+   end
+
+   pilotai.guard( ambush, jp + vec2.newP( 100, rnd.angle() ) )
 
    mem.msg = hook.timer( 1.0, "ambust_msg" )
 end
 
 -- Enemies explain that they are ambushing the player
 function ambust_msg()
-   for i = 1, 3 do
-      ambush[i]:comm( fmt.f( comms.ambush[rnd.rnd(1,#comms.ambush)], {plt=mem.name} ) )
+   for k,p in ipairs(ambush) do
+      if p:exists() then
+         p:comm( fmt.f( comms.ambush[rnd.rnd(1,#comms.ambush)], {plt=mem.name} ) )
+         return
+      end
    end
 end
 
@@ -412,9 +411,9 @@ function hail( target )
       return
    end
 
-   -- Don't duplicate if in memory
+   -- Don't duplicate if in memory and can't talk to drones (for now?)
    local m = target:memory()
-   if m._seekndestroy then
+   if m._seekndestroy or m.isdrone then
       return
    end
    m._seekndestroy = true
@@ -748,6 +747,7 @@ end
 function target_board( p )
    mem.stage = 4
    clear_target_hook()
+   p:setDisable() -- Permanently disable
 
    vntk.msg( _("Target captured"), _("You board the ship and, after a short but intense firefight, are able to take the wanted outlaw alive. Time to hand them in to the authorities.") )
    p:setDisable() -- Permanently disable
@@ -757,8 +757,6 @@ function target_board( p )
    misn.osdActive( 3 )
    misn.markerRm(mem.marker)
    pilot.toggleSpawn(true)
-
-   player.unboard()
 end
 
 function clear_target_hook ()

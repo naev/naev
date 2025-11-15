@@ -1,14 +1,14 @@
 <ship name="Kestrel Sigma" inherits="Kestrel">
  <rarity>2</rarity>
  <price>6300000</price>
- <description>The Kestrel Sigma features a high-end reflectokinetic hull padding that not only increases the durability of the ship, but also can affect weapon locks and tracking missiles. A significant rework of the internals allow the padding to fit with minimal effects on the ship functionality, although it can affect the local guidance of ordinance systems. The ship is complemented by a secondary shield circuit that slightly boosts shielding capacity. The difficulty of production leading to high failure rates racks up a premium on the final ship's cost.</description>
+ <description>The Kestrel Sigma features a high-end reflectokinetic hull padding that not only increases the durability of the ship, but can also interfere with weapon tracking and missile locks. A significant rework of the internals allows the padding to fit with minimal effects on the ship's functionality, although it can affect the local guidance of ordinance systems. The ship is complemented by a secondary shield circuit that slightly boosts shielding capacity. The difficulty of production leading to high failure rates racks up a premium on the final ship's cost.</description>
  <stats>
   <shield_mod>15</shield_mod>
   <speed_mod>5</speed_mod>
   <turn_mod>-10</turn_mod>
   <armour_mod>10</armour_mod>
   <absorb>10</absorb>
-  <jam_chance>30</jam_chance>
+  <jam_chance>33</jam_chance>
   <launch_lockon>30</launch_lockon>
   <ew_signature>-15</ew_signature>
  </stats>

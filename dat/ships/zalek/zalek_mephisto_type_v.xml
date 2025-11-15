@@ -3,7 +3,7 @@
  <price>13400000</price>
  <cond>require("buyrep")("Za'lek", 80)</cond>
  <condstr>You need at least 80% reputation with House Za'lek.</condstr>
- <description>The Mephisto Type V features a drastic yet innovative rehaul of the entire weapons systems. It features built-in focusing crystals for beam weapons, that when combined with a energy supercapacitor backend, allows the ship to concentrate beams in devastating attacks. The framework is monolithic, so it can only be activated when only beam weapons and fighter bays are equipped. However, when the conditions are met, the beam weapons can fire at extremely fast rates while still having acceptable energy usage. Although the specifications of the beam focusing crystals are not made public, it is likely they are the limiting factor in mass-producing such ships, and making it very hard to get your hands on one.</description>
+ <description>The Mephisto Type V features a drastic yet innovative rehaul of the entire weapons system. It features built-in focusing crystals for beam weapons, that when combined with a energy supercapacitor backend, allows the ship to concentrate beams in devastating attacks. The framework is monolithic, so it can only be activated when only beam weapons and fighter bays are equipped. However, when the conditions are met, the beam weapons can fire at extremely fast rates while still having acceptable energy usage. Although the specifications of the beam focusing crystals are not made public, it is likely they are a severe limiter on the production of such ships, making it very hard to get your hands on one.</description>
  <stats>
   <armour_mod>-30</armour_mod>
   <shield_mod>50</shield_mod>

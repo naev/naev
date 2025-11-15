@@ -11,14 +11,15 @@ There are a diversity of factions that vie for control of the universe.
 * [Great House Dvaered](lore/factions/dvaered)
 * [Great House Sirius](lore/factions/sirius)
 * [Great House Za'lek](lore/factions/zalek)
-* [House Goddard](lore/factions/goddard)
+* House Goddard
+* House Yetmer-O'rez
 
 ## Independent Factions
 
 * [Soromid](lore/factions/soromid)
-* [The Frontier](lore/factions/frontier)
-* [Frontier Liberation Front](lore/factions/flf)
-* [Space Traders Society](lore/factions/spacetraders)
+* The Frontier
+* Frontier Liberation Front
+* Space Traders Society
    * Mining Vrata
    * Astra Vigilis
    * Imperial Red Star

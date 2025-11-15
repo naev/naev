@@ -3862,7 +3862,8 @@ src/console.c
 src/console.h
 src/constants.c
 src/constants.h
-src/constants.rs
+src/core/src/atomicfloat.rs
+src/core/src/constants.rs
 src/core/src/lib.rs
 src/core/src/lua.rs
 src/core/src/ntime.rs
@@ -3989,7 +3990,6 @@ src/msgcat.c
 src/msgcat.h
 src/music.c
 src/music.h
-src/mutex/src/lib.rs
 src/naev.c
 src/naev.h
 src/naev.rs
@@ -4164,6 +4164,13 @@ src/player_inventory.c
 src/player_inventory.h
 src/plugin.c
 src/plugin.h
+src/plugin.rs
+src/pluginmgr-cli/src/main.rs
+src/pluginmgr-gui/src/lib.rs
+src/pluginmgr/src/install.rs
+src/pluginmgr/src/lib.rs
+src/pluginmgr/src/mount.rs
+src/pluginmgr/src/plugin.rs
 src/quadtree.c
 src/quadtree.h
 src/queue.c

@@ -78,8 +78,8 @@ function wormhole.load ()
          self:send( "u_time", self._dt )
       end
       mem.pos = mem.spob:pos()
-      mem.pos = mem.pos + vec2.new( -mem.size/2, mem.size/2 )
       mem.cvs = lg.newCanvas( mem.size, mem.size, {dpiscale=1} )
+      mem.radius = mem.size*0.5
 
       -- Set up background texture
       local _nw, _nh, ns = gfx.dim()
@@ -100,7 +100,7 @@ function wormhole.load ()
       end
       update_canvas()
    end
-   return mem.cvs.t.tex, mem.size/2
+   return mem.cvs.t.tex, mem.radius
 end
 
 function wormhole.unload ()
@@ -121,7 +121,7 @@ function wormhole.render ()
    local z = camera.getZoom()
    local x, y = gfx.screencoords( mem.pos ):get()
    z = 1/z
-   mem.cvs:draw( x, y, 0, z, z )
+   mem.cvs:draw( x-mem.radius, y-mem.radius, 0, z, z )
 end
 
 function wormhole.can_land ()

@@ -34,6 +34,7 @@
 #include "pause.h"
 #include "pilot.h"
 #include "player.h"
+#include "plugin.h"
 #include "render.h"
 #include "safelanes.h"
 #include "save.h"
@@ -91,12 +92,12 @@ static void menu_death_restart( unsigned int wid, const char *str );
 static void menu_death_main( unsigned int wid, const char *str );
 static void menu_death_close( unsigned int wid, const char *str );
 /* editors menu */
-/* - Universe Editor */
-/* - Back to Main Menu */
-static void menu_editors_open( unsigned int wid_unused, const char *unused );
-static void menu_editors_close( unsigned int wid, const char *str );
+static void menu_extras_open( unsigned int wid_unused, const char *unused );
+static void menu_extras_close( unsigned int wid, const char *str );
 /* options button. */
 static void menu_options_button( unsigned int wid, const char *str );
+/* plugin manager. */
+static void menu_plugin_manager( unsigned int wid, const char *str );
 
 /**
  * Background system for the menu.
@@ -245,16 +246,14 @@ void menu_main( void )
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT, "btnNew",
                         _( "New Game" ), menu_main_new, SDLK_N );
    y -= BUTTON_HEIGHT + 20;
-   if ( conf.devmode ) {
-      window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT, "btnEditor",
-                           _( "Editors" ), menu_editors_open, SDLK_E );
-      y -= BUTTON_HEIGHT + 20;
-   }
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT, "btnOptions",
                         _( "Options" ), menu_options_button, SDLK_O );
    y -= BUTTON_HEIGHT + 20;
-   window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT, "btnCredits",
-                        p_( "Menu|", "Credits" ), menu_main_credits, SDLK_C );
+   window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT, "btnPlugins",
+                        _( "Plugin Manager" ), menu_plugin_manager, SDLK_P );
+   y -= BUTTON_HEIGHT + 20;
+   window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT, "btnExtras",
+                        _( "Extras" ), menu_extras_open, SDLK_E );
    y -= BUTTON_HEIGHT + 20;
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT, "btnExit",
                         _( "Exit Game" ), menu_exit, SDLK_X );
@@ -756,7 +755,7 @@ int menu_askQuit( void )
 /**
  * @brief Provisional Menu for when there will be multiple editors
  */
-static void menu_editors_open( unsigned int wid, const char *unused )
+static void menu_extras_open( unsigned int wid, const char *unused )
 {
    (void)unused;
    int h, y;
@@ -774,12 +773,12 @@ static void menu_editors_open( unsigned int wid, const char *unused )
    space_clearKnown();
 
    /* Set dimensions */
-   y = 20 + ( BUTTON_HEIGHT + 20 ) * 2;
-   h = y + 80;
+   h = 40 + ( BUTTON_HEIGHT + 20 ) * 4;
+   y = -40;
 
-   wid = window_create( "wdwEditors", _( "Editors" ), -1, -1,
+   wid = window_create( "wdwExtras", _( "Extras" ), -1, -1,
                         MENU_WIDTH + EDITORS_EXTRA_WIDTH, h );
-   window_setCancel( wid, menu_editors_close );
+   window_setCancel( wid, menu_extras_close );
 
    /* Set buttons for the editors */
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH + EDITORS_EXTRA_WIDTH,
@@ -791,8 +790,12 @@ static void menu_editors_open( unsigned int wid, const char *unused )
                         mapedit_open, SDLK_M );
    y -= BUTTON_HEIGHT + 20;
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH + EDITORS_EXTRA_WIDTH,
+                        BUTTON_HEIGHT, "btnCredits", p_( "Menu|", "Credits" ),
+                        menu_main_credits, SDLK_C );
+   y -= BUTTON_HEIGHT + 20;
+   window_addButtonKey( wid, 20, y, BUTTON_WIDTH + EDITORS_EXTRA_WIDTH,
                         BUTTON_HEIGHT, "btnMain", _( "Exit to Main Menu" ),
-                        menu_editors_close, SDLK_X );
+                        menu_extras_close, SDLK_X );
 
    /* Editors menu is open. */
    menu_Open( MENU_EDITORS );
@@ -802,7 +805,7 @@ static void menu_editors_open( unsigned int wid, const char *unused )
  * @brief Closes the editors menu.
  *    @param str Unused.
  */
-static void menu_editors_close( unsigned int wid, const char *str )
+static void menu_extras_close( unsigned int wid, const char *str )
 {
    (void)str;
 
@@ -814,4 +817,11 @@ static void menu_editors_close( unsigned int wid, const char *str )
    bg_needs_reset = 0;
    menu_main();
    bg_needs_reset = 1;
+}
+
+static void menu_plugin_manager( unsigned int wid, const char *str )
+{
+   (void)wid;
+   (void)str;
+   plugin_manager();
 }

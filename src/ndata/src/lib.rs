@@ -26,7 +26,7 @@ pub fn setup() -> anyhow::Result<()> {
     unsafe {
         if !naevc::conf.datapath.is_null() {
             let datapath = CStr::from_ptr(naevc::conf.datapath);
-            physfs::set_write_dir(&datapath.to_string_lossy()).unwrap_or_else(|e| {
+            physfs::set_write_dir(&*datapath.to_string_lossy()).unwrap_or_else(|e| {
                 warn_err!(e);
             });
             return Ok(());
@@ -71,7 +71,7 @@ pub fn setup() -> anyhow::Result<()> {
     // Load conf
     if unsafe { !naevc::conf.ndata.is_null() } {
         let path = unsafe { CStr::from_ptr(naevc::conf.ndata).to_string_lossy() };
-        match physfs::mount(&path, true) {
+        match physfs::mount(&*path, true) {
             Err(e) => {
                 warn_err!(e);
             }
@@ -102,7 +102,7 @@ pub fn setup() -> anyhow::Result<()> {
             }
             let buf = unsafe { CStr::from_ptr(buf.as_ptr()) };
             let path = Path::new(&*buf.to_string_lossy()).join("dat");
-            match physfs::mount(&path.to_string_lossy(), true) {
+            match physfs::mount(&*path.to_string_lossy(), true) {
                 Err(e) => {
                     warn_err!(e);
                 }
@@ -113,7 +113,7 @@ pub fn setup() -> anyhow::Result<()> {
         }
     } else if cfg!(target_os = "linux") && env::ENV.is_appimage {
         let path = Path::new(&env::ENV.appdir).join(&*pkgdatadir).join("dat");
-        match physfs::mount(&path.to_string_lossy(), true) {
+        match physfs::mount(&*path.to_string_lossy(), true) {
             Err(e) => {
                 warn_err!(e);
             }
@@ -133,7 +133,7 @@ pub fn setup() -> anyhow::Result<()> {
             break;
         }
         let path = Path::new(s).join("dat");
-        match physfs::mount(&path.to_string_lossy(), true) {
+        match physfs::mount(&*path.to_string_lossy(), true) {
             Err(e) => {
                 warn_err!(e);
             }
@@ -144,15 +144,14 @@ pub fn setup() -> anyhow::Result<()> {
     }
 
     // Finally, we mount the write directory also as read
-    physfs::mount(&physfs::get_write_dir(), false).unwrap_or_else(|e| {
+    physfs::mount(physfs::get_write_dir(), false).unwrap_or_else(|e| {
         warn_err!(e);
     });
+    Ok(())
+}
 
-    // Plugin initialization before checking the data for consistency
-    unsafe {
-        naevc::plugin_init();
-    }
-
+/// Makes sure the ndata was loaded properly.
+pub fn check_version() -> anyhow::Result<()> {
     // If data is not found, we error.
     if !found() {
         anyhow::bail!(formatx!(
@@ -202,7 +201,7 @@ pub fn simplify_path(path: &str) -> Result<String> {
 }
 
 /// Slurps an entire file
-pub fn read(path: &str) -> Result<Vec<u8>> {
+pub fn read<P: AsRef<Path>>(path: P) -> Result<Vec<u8>> {
     let mut f = physfs::File::open(path, physfs::Mode::Read)?;
     let mut out: Vec<u8> = vec![0; f.len()? as usize];
     f.read_exact(out.as_mut())?;
@@ -210,7 +209,7 @@ pub fn read(path: &str) -> Result<Vec<u8>> {
 }
 
 /// Checks to see if a path is a directory
-pub fn is_dir(path: &str) -> bool {
+pub fn is_dir<P: AsRef<Path>>(path: P) -> bool {
     match stat(path) {
         Ok(s) => s.filetype == FileType::Directory,
         Err(_) => false,
@@ -218,7 +217,7 @@ pub fn is_dir(path: &str) -> bool {
 }
 
 /// Checks to see if a path is a file
-pub fn is_file(path: &str) -> bool {
+pub fn is_file<P: AsRef<Path>>(path: P) -> bool {
     match stat(path) {
         Ok(s) => s.filetype == FileType::Regular,
         Err(_) => false,
@@ -226,12 +225,12 @@ pub fn is_file(path: &str) -> bool {
 }
 
 /// Checks to see if a path exists (can be file or directory.
-pub fn exists(path: &str) -> bool {
+pub fn exists<P: AsRef<Path>>(path: P) -> bool {
     physfs::exists(path)
 }
 
 /// Recursively lists all the files in a directory.
-pub fn read_dir(path: &str) -> Result<Vec<String>> {
+pub fn read_dir<P: AsRef<Path>>(path: P) -> Result<Vec<String>> {
     Ok(physfs::read_dir(path)?
         .into_iter()
         .filter_map(|f| match is_dir(&f) {
@@ -246,7 +245,10 @@ pub fn read_dir(path: &str) -> Result<Vec<String>> {
 }
 
 /// Allows applying a filter
-pub fn read_dir_filter(path: &str, predicate: impl Fn(&str) -> bool) -> Result<Vec<String>> {
+pub fn read_dir_filter<P: AsRef<Path>>(
+    path: P,
+    predicate: impl Fn(&str) -> bool,
+) -> Result<Vec<String>> {
     Ok(physfs::read_dir(path)?
         .into_iter()
         .filter_map(|f| match is_dir(&f) {
@@ -264,12 +266,12 @@ pub fn read_dir_filter(path: &str, predicate: impl Fn(&str) -> bool) -> Result<V
 }
 
 /// Gets an SDL IOStream from a file if exists
-pub fn iostream(path: &str) -> Result<sdl::iostream::IOStream<'static>> {
+pub fn iostream<P: AsRef<Path>>(path: P) -> Result<sdl::iostream::IOStream<'static>> {
     physfs::iostream(path, physfs::Mode::Read)
 }
 
 /// Opens a file for reading
-pub fn open(path: &str) -> Result<physfs::File> {
+pub fn open<P: AsRef<Path>>(path: P) -> Result<physfs::File> {
     physfs::File::open(path, physfs::Mode::Read)
 }
 
@@ -292,8 +294,8 @@ pub struct Stat {
 }
 
 /// Gets information about a file or directory
-pub fn stat(filename: &str) -> Result<Stat> {
-    let c_filename = CString::new(filename)?;
+pub fn stat<P: AsRef<Path>>(filename: P) -> Result<Stat> {
+    let c_filename = CString::new(filename.as_ref().as_os_str().as_encoded_bytes()).unwrap();
     let mut st = naevc::PHYSFS_Stat {
         filesize: 0,
         modtime: 0,

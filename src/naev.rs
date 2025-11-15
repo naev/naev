@@ -15,7 +15,6 @@ unsafe extern "C" {
 }
 
 mod array;
-mod constants;
 mod damagetype;
 mod faction;
 mod input;
@@ -24,6 +23,7 @@ mod model;
 mod nebula;
 mod nlua;
 mod outfit;
+mod plugin;
 mod rng;
 mod ship;
 mod slots;
@@ -68,6 +68,16 @@ pub extern "C" fn naev_restart() -> c_int {
 
 /// Entry Point
 pub fn naev() -> Result<()> {
+    // Hack for plugin manager mode
+    if std::env::args().skip(1).any(|a| a == "--pluginmanager") {
+        setup_logging()?;
+        let _ = setup_conf_and_ndata()?;
+        unsafe {
+            naevc::gettext_setLanguage(naevc::conf.language); /* now that we can find translations */
+        }
+        return pluginmgr_gui::open();
+    }
+
     match naevmain() {
         Ok(_) => Ok(()),
         Err(e) => {
@@ -85,8 +95,56 @@ pub fn naev() -> Result<()> {
     }
 }
 
-fn naevmain() -> Result<()> {
-    /* Load up the argv and argc for the C main. */
+fn setup_logging() -> Result<()> {
+    // Begin logging infrastructure.
+    log::init().unwrap_or_else(|e| {
+        warn_err!(e);
+    });
+
+    // Start up PHYSFS. TODO move to ndata workspace.
+    unsafe {
+        let argv0 = CString::new(env::ENV.argv0.clone()).unwrap();
+        if !naevc::SDL_PhysFS_Init(argv0.as_ptr() as *const c_char) {
+            let err = ndata::physfs::error_as_io_error("SDL_PhysFS_init");
+            return Err(Error::new(err));
+        }
+        naevc::PHYSFS_permitSymbolicLinks(1);
+    }
+
+    // Set up locales.
+    linebreak::init();
+    gettext::init();
+    Ok(())
+}
+
+fn setup_conf_and_ndata() -> Result<String> {
+    unsafe {
+        naevc::conf_setDefaults(); /* set the default config values. */
+        /*
+         * Attempts to load the data path from datapath.lua
+         * At this early point in the load process, the binary path
+         * is the only place likely to be checked.
+         */
+        naevc::conf_loadConfigPath();
+    }
+
+    // Create the home directory if needed.
+    let cpath = unsafe { naevc::nfile_configPath() };
+    unsafe {
+        if naevc::nfile_dirMakeExist(cpath) != 0 {
+            warnx!(gettext("Unable to create config directory '{}'"), "foo");
+        }
+    }
+
+    // Set up the configuration.
+    let conf_file_path = unsafe {
+        let rpath = cptr_to_cstr(cpath);
+        let conf_file =
+            CStr::from_ptr(naevc::CONF_FILE.as_ptr() as *const c_char).to_string_lossy();
+        format!("{rpath}{conf_file}")
+    };
+
+    // Load up the argv and argc for the C main.
     let args: Vec<String> = std::env::args().collect();
     let mut cargs = vec![];
     for a in args {
@@ -95,11 +153,19 @@ fn naevmain() -> Result<()> {
     let mut argv = cargs.into_iter().map(|s| s.into_raw()).collect::<Vec<_>>();
     argv.shrink_to_fit();
 
-    /* Begin logging infrastructure. */
-    log::init().unwrap_or_else(|e| {
-        warn_err!(e);
-    });
+    unsafe {
+        let cconf_file_path = CString::new(conf_file_path.clone()).unwrap();
+        naevc::conf_loadConfig(cconf_file_path.as_ptr()); /* Lua to parse the configuration file */
+        naevc::conf_parseCLI(argv.len() as c_int, argv.as_mut_ptr()); /* parse CLI arguments */
+    }
 
+    // Load the data and plugins.
+    ndata::setup()?;
+
+    Ok(conf_file_path)
+}
+
+fn naevmain() -> Result<()> {
     // Workarounds
     if cfg!(target_os = "linux") {
         // Set AMD_DEBUG environment variable before initializing OpenGL to
@@ -110,21 +176,10 @@ fn naevmain() -> Result<()> {
         }
     }
 
-    /* Start up PHYSFS. */
-    unsafe {
-        let argv0 = CString::new(env::ENV.argv0.clone()).unwrap();
-        if !naevc::SDL_PhysFS_Init(argv0.as_ptr() as *const c_char) {
-            let err = ndata::physfs::error_as_io_error("SDL_PhysFS_init");
-            return Err(Error::new(err));
-        }
-        naevc::PHYSFS_permitSymbolicLinks(1);
-    }
+    // Start logging stuff.
+    setup_logging()?;
 
-    /* Set up locales. */
-    linebreak::init();
-    gettext::init();
-
-    /* Print the version */
+    // Print the version
     info!("{}", &*log::version::VERSION_HUMAN);
     if cfg!(target_os = "linux") {
         match env::ENV.is_appimage {
@@ -135,9 +190,8 @@ fn naevmain() -> Result<()> {
         }
     }
 
-    /* Initialize SDL. */
+    // Initialize SDL.
     let sdlctx = sdl::init()?;
-
     let starttime = sdl::timer::ticks();
 
     unsafe {
@@ -146,7 +200,7 @@ fn naevmain() -> Result<()> {
     }
 
     if cfg!(unix) {
-        /* Set window class and name. */
+        // Set window class and name.
         unsafe {
             std::env::set_var("SDL_VIDEO_X11_WMCLASS", naev_core::APPNAME);
         }
@@ -157,43 +211,16 @@ fn naevmain() -> Result<()> {
     unsafe {
         naevc::nxml_init(); /* We'll be parsing XML. */
         naevc::input_init(); /* input has to be initialized for config to work. */
-        naevc::conf_setDefaults(); /* set the default config values. */
-
-        /*
-         * Attempts to load the data path from datapath.lua
-         * At this early point in the load process, the binary path
-         * is the only place likely to be checked.
-         */
-        naevc::conf_loadConfigPath();
     }
 
-    /* Create the home directory if needed. */
-    let cpath = unsafe { naevc::nfile_configPath() };
-    unsafe {
-        if naevc::nfile_dirMakeExist(cpath) != 0 {
-            warnx!(gettext("Unable to create config directory '{}'"), "foo");
-        }
-    }
+    let conf_file_path = setup_conf_and_ndata()?;
 
-    /* Set up the configuration. */
-    let conf_file_path = unsafe {
-        let rpath = cptr_to_cstr(cpath);
-        let conf_file =
-            CStr::from_ptr(naevc::CONF_FILE.as_ptr() as *const c_char).to_string_lossy();
-        format!("{rpath}{conf_file}")
-    };
+    // Plugin initialization before checking the data for consistency
+    plugin::mount()?;
+    ndata::check_version()?;
 
     unsafe {
-        let cconf_file_path = CString::new(conf_file_path.clone()).unwrap();
-        naevc::conf_loadConfig(cconf_file_path.as_ptr()); /* Lua to parse the configuration file */
-        naevc::conf_parseCLI(argv.len() as c_int, argv.as_mut_ptr()); /* parse CLI arguments */
-    }
-
-    // Will propagate error out if necessary
-    ndata::setup()?;
-
-    unsafe {
-        /* Set up I/O. */
+        // Set up I/O.
         naevc::gettext_setLanguage(naevc::conf.language); /* now that we can find translations */
         infox!(gettext("Loaded configuration: {}"), conf_file_path);
         let search_path = naevc::PHYSFS_getSearchPath();

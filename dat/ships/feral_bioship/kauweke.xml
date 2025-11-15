@@ -52,6 +52,7 @@
   <tag>feral</tag>
   <tag>noplayer</tag>
   <tag>noequip</tag>
+  <tag>nocargo</tag>
   <!--<tag>bioship</tag>-->
  </tags>
 </ship>

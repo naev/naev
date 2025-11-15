@@ -1172,9 +1172,17 @@ static void cargo_jettison( unsigned int wid, const char *str )
 
       /* Regenerate list. */
       mission_menu_genList( info_windows[INFO_WIN_MISN], 0 );
-   } else
+   } else {
+      double amount =
+         dialogue_fader( _( "Jettison Cargo?" ), 0., pclist[pos].quantity, 0.,
+                         _( "Jettison how many tonnes of %s?" ),
+                         _( pclist[pos].commodity->name ) );
+      int value = round( amount );
+      if ( value <= 0 )
+         return;
       /* Remove the cargo */
-      pfleet_cargoRm( pclist[pos].commodity, pclist[pos].quantity, 1 );
+      pfleet_cargoRm( pclist[pos].commodity, value, 1 );
+   }
 
    /* We reopen the menu to recreate the list now. */
    ship_update( info_windows[INFO_WIN_SHIP] );

@@ -387,6 +387,7 @@ impl Drop for Texture {
     }
 }
 impl Texture {
+    /// Copies the parameters of a sampler from src to dst
     fn copy_sampler_params(gl: &glow::Context, dst: &glow::Sampler, src: &glow::Sampler) {
         for param in [
             glow::TEXTURE_WRAP_S,
@@ -403,6 +404,7 @@ impl Texture {
         // https://github.com/grovesNL/glow/issues/342
     }
 
+    /// Tries to clone a texture
     pub fn try_clone(&self) -> Result<Self> {
         let ctx = Context::get();
         let gl = &ctx.gl;
@@ -428,10 +430,12 @@ impl Texture {
         })
     }
 
+    /// Scales a texture to a new size
     pub fn scale(&self, ctx: &Context, w: usize, h: usize) -> Result<Self> {
         self.scale_wrap(&ctx.as_wrap(), w, h)
     }
 
+    /// Scales a texture to a new size using a ContextWrapper
     pub fn scale_wrap(&self, wctx: &ContextWrapper, w: usize, h: usize) -> Result<Self> {
         let fbo = FramebufferBuilder::new(Some("Downscaler"))
             .width(w)
@@ -478,10 +482,12 @@ impl Texture {
         Ok(tex)
     }
 
+    /// Binds a texture
     pub fn bind(&self, ctx: &Context, idx: u32) {
         self.bind_gl(&ctx.gl, idx)
     }
 
+    /// Binds a texture directly using an OpenGL context
     pub fn bind_gl(&self, gl: &glow::Context, idx: u32) {
         unsafe {
             gl.active_texture(glow::TEXTURE0 + idx);
@@ -490,10 +496,12 @@ impl Texture {
         }
     }
 
+    /// Unbinds a texture
     pub fn unbind(ctx: &Context) {
         Self::unbind_gl(&ctx.gl)
     }
 
+    /// Unbinds a texture using an OpenGL context
     pub fn unbind_gl(gl: &glow::Context) {
         unsafe {
             gl.bind_texture(glow::TEXTURE_2D, None);
@@ -501,6 +509,7 @@ impl Texture {
         }
     }
 
+    /// Draws a texture
     pub fn draw(&self, ctx: &Context, x: f32, y: f32, w: f32, h: f32) -> Result<()> {
         let dims = ctx.dimensions.read().unwrap();
         #[rustfmt::skip]
@@ -516,6 +525,7 @@ impl Texture {
         self.draw_ex(ctx, &uniform)
     }
 
+    /// Draws a texture using uniform data directly
     pub fn draw_ex(&self, ctx: &Context, uniform: &TextureUniform) -> Result<()> {
         let gl = &ctx.gl;
         ctx.program_texture.use_program(gl);
@@ -535,6 +545,7 @@ impl Texture {
         Ok(())
     }
 
+    /// Draws an SDF texture
     pub fn draw_sdf_ex(
         &self,
         ctx: &Context,
@@ -586,10 +597,12 @@ impl Texture {
         self.draw_scale_ex(ctx, &uniform)
     }
 
+    /// Draws a texture while scaling it
     pub fn draw_scale_ex(&self, ctx: &Context, uniform: &TextureScaleUniform) -> Result<()> {
         self.draw_scale_ex_wrap(&ctx.as_wrap(), uniform)
     }
 
+    /// Draws a texture while scaling it directly with uniform data
     pub fn draw_scale_ex_wrap(
         &self,
         wctx: &ContextWrapper,
@@ -1518,8 +1531,8 @@ capi_tex!(tex_vmax, vmax);
 
 #[unsafe(no_mangle)]
 pub extern "C" fn gl_texExistsPath(cpath: *const c_char) -> c_int {
-    let path = &unsafe { CStr::from_ptr(cpath) }.to_string_lossy();
-    if ndata::exists(path) {
+    let path = unsafe { CStr::from_ptr(cpath) }.to_string_lossy();
+    if ndata::exists(&*path) {
         return 1;
     }
     use image::ImageFormat;
@@ -1893,7 +1906,7 @@ pub extern "C" fn gl_renderTexture(
     ty: c_double,
     tw: c_double,
     th: c_double,
-    c: *mut Vector4<f32>,
+    c: *const Vector4<f32>,
     angle: c_double,
 ) {
     if ctex.is_null() {
@@ -1957,7 +1970,7 @@ pub extern "C" fn gl_renderSDF(
     y: c_double,
     w: c_double,
     h: c_double,
-    c: *mut Vector4<f32>,
+    c: *const Vector4<f32>,
     angle: c_double,
     outline: c_double,
 ) {
@@ -2092,7 +2105,7 @@ impl UserData for Texture {
             )|
              -> mlua::Result<Self> {
                 let io = match path {
-                    Value::String(s) => ndata::iostream(&s.to_string_lossy())?,
+                    Value::String(s) => ndata::iostream(s.to_string_lossy())?,
                     Value::UserData(ud) => {
                         let file = ud.take::<ndata::lua::LuaFile>()?;
                         file.into_iostream()?
@@ -2171,7 +2184,7 @@ impl UserData for Texture {
          *
          *    @luatparam Tex tex Texture to set filter.
          *    @luatparam string min Minification filter ("nearest" or "linear")
-         *    @luatparam[opt] string mag Magnification filter ("nearest" or "linear").
+         *    @luatparam[opt=in] string mag Magnification filter ("nearest" or "linear").
          * Defaults to min.
          * @luafunc setFilter
          */
@@ -2193,9 +2206,9 @@ impl UserData for Texture {
          *    @luatparam Tex tex Texture to set filter.
          *    @luatparam string horiz Horizontal wrapping (`"clamp"`, `"repeat"`, or
          * `"mirroredrepeat"` )
-         *    @luatparam[opt] string vert Vertical wrapping (`"clamp"`, `"repeat"`, or
+         *    @luatparam[opt=horiz] string vert Vertical wrapping (`"clamp"`, `"repeat"`, or
          * `"mirroredrepeat"` )
-         *    @luatparam[opt] string depth Depth wrapping (`"clamp"`, `"repeat"`, or
+         *    @luatparam[opt=horiz] string depth Depth wrapping (`"clamp"`, `"repeat"`, or
          * `"mirroredrepeat"` )
          * @luafunc setWrap
          */

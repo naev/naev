@@ -6,10 +6,12 @@ subdir('core')
 subdir('ndata')
 subdir('gettext')
 subdir('log')
-subdir('mutex')
 subdir('renderer')
 subdir('toolkit')
 subdir('physics')
+subdir('pluginmgr')
+#subdir('pluginmgr-cli')
+subdir('pluginmgr-gui')
 source_rust = files(
    'audio/src/lib.rs',
    'audio/src/debug.rs',
@@ -25,7 +27,8 @@ source_rust = files(
    'core/src/start.rs',
    'core/src/utils.rs',
    'core/src/lua.rs',
-   'mutex/src/lib.rs',
+   'core/src/atomicfloat.rs',
+   'core/src/constants.rs',
    'ndata/src/lib.rs',
    'ndata/src/env.rs',
    'ndata/src/lua.rs',
@@ -45,8 +48,11 @@ source_rust = files(
    'physics/src/lib.rs',
    'physics/src/collide.rs',
    'physics/src/vec2.rs',
+   'pluginmgr/src/lib.rs',
+   'pluginmgr/src/plugin.rs',
+   'pluginmgr/src/install.rs',
+   'pluginmgr-gui/src/lib.rs',
    'array.rs',
-   'constants.rs',
    'damagetype.rs',
    'faction.rs',
    'input.rs',
@@ -55,6 +61,7 @@ source_rust = files(
    'naev.rs',
    'nebula.rs',
    'nlua.rs',
+   'plugin.rs',
    'outfit.rs',
    'rng.rs',
    'ship.rs',
@@ -167,7 +174,6 @@ source = files(
    'player_fleet.c',
    'player_gui.c',
    'player_inventory.c',
-   'plugin.c',
    'quadtree.c',
    'queue.c',
    'render.c',

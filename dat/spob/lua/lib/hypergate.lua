@@ -98,7 +98,6 @@ function hypergate.load()
       -- Position stuff
       mem.pos = mem.spob:pos()
       mem.tw, mem.th = mem.tex:getDimensions()
-      mem.pos = mem.pos + vec2.new( -mem.tw/2, mem.th/2 )
 
       -- The canvas
       mem.cvs  = lg.newCanvas( mem.tw, mem.th, {dpiscale=1} )
@@ -115,7 +114,7 @@ function hypergate.load()
       update_canvas()
    end
 
-   return mem.cvs.t.tex, mem.tw/2
+   return mem.cvs.t.tex, mem.tw*0.5
 end
 
 function hypergate.unload ()
@@ -131,7 +130,7 @@ function hypergate.render ()
    local z = camera.getZoom()
    local x, y = gfx.screencoords( mem.pos ):get()
    z = 1/z
-   mem.cvs:draw( x, y, 0, z, z )
+   mem.cvs:draw( x-mem.tw*0.5, y-mem.th*0.5, 0, z, z )
 end
 
 function hypergate.update( dt )

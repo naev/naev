@@ -18,6 +18,12 @@ mem.guardreturndist = math.huge
 function create ()
    create_pre()
    local p = ai.pilot()
+   local ps = p:ship()
+   local pt = ps:tags()
+   mem.isdrone = pt.drone
+   if mem.isdrone then
+      mem.comm_no = _([["ACCESS DENIED."]])
+   end
 
    -- Default range stuff
    mem.guardpos      = p:pos() -- Just guard current position

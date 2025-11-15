@@ -1,13 +1,12 @@
 use anyhow::Result;
 use encase::{ShaderSize, ShaderType};
 use glow::*;
-use naev_core::start;
+use naev_core::{atomicfloat::AtomicF32, start};
 use nalgebra::{Matrix3, Matrix4, Point3, Vector2, Vector3, Vector4};
 use physics::vec2::Vec2;
 use sdl3 as sdl;
 use std::ffi::CStr;
 use std::ops::Deref;
-use std::os::raw::{c_char, c_double, c_int};
 use std::sync::{Arc, Mutex, MutexGuard, OnceLock, RwLock, atomic::AtomicBool, atomic::Ordering};
 
 pub mod buffer;
@@ -26,8 +25,10 @@ use log::{debug, info, warn, warn_err};
 
 const MIN_WIDTH: u32 = 1280;
 const MIN_HEIGHT: u32 = 720;
-const MIN_WIDTH_F: f32 = MIN_WIDTH as f32;
-const MIN_HEIGHT_F: f32 = MIN_HEIGHT as f32;
+const MIN_WIDTH_F32: f32 = MIN_WIDTH as f32;
+const MIN_HEIGHT_F32: f32 = MIN_HEIGHT as f32;
+pub(crate) static VIEW_WIDTH: AtomicF32 = AtomicF32::new(0.);
+pub(crate) static VIEW_HEIGHT: AtomicF32 = AtomicF32::new(0.);
 static DEBUG: AtomicBool = AtomicBool::new(false);
 
 fn debug_callback(source: u32, msg_type: u32, id: u32, severity: u32, msg: &str) {
@@ -229,7 +230,7 @@ pub fn look_at4(eye: &Vector3<f32>, target: &Vector3<f32>, up: &Vector3<f32>) ->
 }
 
 impl Dimensions {
-    pub fn new(window: &sdl::video::Window) -> Self {
+    fn new(window: &sdl::video::Window) -> Self {
         let (pixels_width, pixels_height) = window.size_in_pixels();
         let (window_width, window_height) = window.size();
         let (dwscale, dhscale) = (
@@ -243,10 +244,10 @@ impl Dimensions {
                 (pixels_width as f32) * scale,
                 (pixels_height as f32) * scale,
             );
-            if vw < MIN_WIDTH_F || vh < MIN_HEIGHT_F {
+            if vw < MIN_WIDTH_F32 || vh < MIN_HEIGHT_F32 {
                 info!("Screen size is too small, upscaling...");
-                let scalew = MIN_WIDTH_F / vw;
-                let scaleh = MIN_HEIGHT_F / vh;
+                let scalew = MIN_WIDTH_F32 / vw;
+                let scaleh = MIN_HEIGHT_F32 / vh;
                 let scale = scale * f32::max(scalew, scaleh);
                 (
                     (window_width as f32) * scale,
@@ -258,6 +259,10 @@ impl Dimensions {
             }
         };
         let projection = ortho3(0.0, view_width, 0.0, view_height);
+
+        // This function is private, so we can update here.
+        VIEW_WIDTH.store(view_width, Ordering::Relaxed);
+        VIEW_HEIGHT.store(view_height, Ordering::Relaxed);
 
         // TODO remove the C stuff
         unsafe {
@@ -953,93 +958,6 @@ impl Context {
     }
 }
 
-#[unsafe(no_mangle)]
-pub extern "C" fn gl_renderRect(
-    x: c_double,
-    y: c_double,
-    w: c_double,
-    h: c_double,
-    c: *mut Vector4<f32>,
-) {
-    let ctx = Context::get();
-    let colour = unsafe { *c };
-    let _ = ctx.draw_rect(x as f32, y as f32, w as f32, h as f32, colour);
-}
-
-#[unsafe(no_mangle)]
-pub extern "C" fn gl_resize() {
-    {
-        let ctx = CONTEXT.get().unwrap();
-        let _ = ctx.resize();
-    }
-    unsafe { naevc::gl_resize_c() };
-}
-
-#[unsafe(no_mangle)]
-pub extern "C" fn gl_supportsDebug() -> std::os::raw::c_int {
-    match DEBUG.load(Ordering::Relaxed) {
-        true => 1,
-        false => 0,
-    }
-}
-
-#[unsafe(no_mangle)]
-pub extern "C" fn gl_defViewport() {
-    let ctx = Context::get();
-    let dims = ctx.dimensions.read().unwrap();
-    unsafe {
-        naevc::gl_view_matrix = naevc::mat4_ortho(
-            0.0,
-            dims.view_width.into(),
-            0.0,
-            dims.view_height.into(),
-            -1.0,
-            1.0,
-        );
-    }
-}
-
-#[unsafe(no_mangle)]
-pub extern "C" fn gl_screenshot(cpath: *mut c_char) {
-    let path = unsafe { CStr::from_ptr(cpath) };
-    let ctx = Context::get();
-    match ctx.screenshot(path.to_str().unwrap()) {
-        Ok(_) => (),
-        Err(e) => {
-            warn!("Failed to take a screenshot: {e}");
-        }
-    }
-}
-
-#[unsafe(no_mangle)]
-pub extern "C" fn gl_toggleFullscreen() {
-    let ctx = Context::get();
-    let mut wdw = ctx.window.lock().unwrap();
-    let fullscreen = wdw.fullscreen_state() != sdl::video::FullscreenType::Off;
-    match wdw.set_fullscreen(!fullscreen) {
-        Ok(()) => unsafe {
-            naevc::conf.fullscreen = !fullscreen as c_int;
-        },
-        Err(e) => {
-            warn_err!(e);
-        }
-    }
-}
-
-#[unsafe(no_mangle)]
-pub extern "C" fn gl_setFullscreen(enable: c_int) {
-    let ctx = Context::get();
-    let mut wdw = ctx.window.lock().unwrap();
-    match wdw.set_fullscreen(enable != 0) {
-        Ok(()) => unsafe {
-            naevc::conf.fullscreen = enable as c_int;
-        },
-        Err(e) => {
-            warn_err!(e);
-        }
-    }
-}
-
 use mlua::UserDataRef;
 pub struct LuaGfx;
 /*
@@ -1080,15 +998,11 @@ impl mlua::UserData for LuaGfx {
          * @luafunc screencoords
          */
         methods.add_function("screencoords", |_, pos: Vec2| -> mlua::Result<Vec2> {
-            let ctx = Context::get();
-            let dims = ctx.dimensions.read().unwrap();
-            let screen: Vector2<f64> = {
-                let cam = camera::CAMERA.read().unwrap();
-                let view = Vector2::new(dims.view_width as f64, dims.view_height as f64);
-                let mut screen = (pos.into_vector2() - cam.pos()) * cam.zoom + view * 0.5;
-                screen.y = dims.view_height as f64 - screen.y;
-                screen
-            };
+            let mut screen = camera::CAMERA
+                .read()
+                .unwrap()
+                .game_to_screen_coords(pos.into_vector2());
+            screen.y = VIEW_HEIGHT.load(Ordering::Relaxed) as f64 - screen.y;
             Ok(screen.into())
         });
         /*
@@ -1159,4 +1073,122 @@ impl mlua::UserData for LuaGfx {
 pub fn open_gfx(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
     let proxy = lua.create_proxy::<LuaGfx>()?;
     Ok(proxy)
+}
+
+// C API
+use std::os::raw::{c_char, c_double, c_int};
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_renderRect(
+    x: c_double,
+    y: c_double,
+    w: c_double,
+    h: c_double,
+    c: *mut Vector4<f32>,
+) {
+    let ctx = Context::get();
+    let colour = unsafe { *c };
+    let _ = ctx.draw_rect(x as f32, y as f32, w as f32, h as f32, colour);
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_resize() {
+    {
+        let ctx = CONTEXT.get().unwrap();
+        let _ = ctx.resize();
+    }
+    unsafe { naevc::gl_resize_c() };
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_supportsDebug() -> std::os::raw::c_int {
+    match DEBUG.load(Ordering::Relaxed) {
+        true => 1,
+        false => 0,
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_defViewport() {
+    unsafe {
+        naevc::gl_view_matrix = naevc::mat4_ortho(
+            0.0,
+            VIEW_WIDTH.load(Ordering::Relaxed).into(),
+            0.0,
+            VIEW_HEIGHT.load(Ordering::Relaxed).into(),
+            -1.0,
+            1.0,
+        );
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_screenshot(cpath: *mut c_char) {
+    let path = unsafe { CStr::from_ptr(cpath) };
+    let ctx = Context::get();
+    match ctx.screenshot(path.to_str().unwrap()) {
+        Ok(_) => (),
+        Err(e) => {
+            warn!("Failed to take a screenshot: {e}");
+        }
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_toggleFullscreen() {
+    let ctx = Context::get();
+    let mut wdw = ctx.window.lock().unwrap();
+    let fullscreen = wdw.fullscreen_state() != sdl::video::FullscreenType::Off;
+    match wdw.set_fullscreen(!fullscreen) {
+        Ok(()) => unsafe {
+            naevc::conf.fullscreen = !fullscreen as c_int;
+        },
+        Err(e) => {
+            warn_err!(e);
+        }
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_setFullscreen(enable: c_int) {
+    let ctx = Context::get();
+    let mut wdw = ctx.window.lock().unwrap();
+    match wdw.set_fullscreen(enable != 0) {
+        Ok(()) => unsafe {
+            naevc::conf.fullscreen = enable as c_int;
+        },
+        Err(e) => {
+            warn_err!(e);
+        }
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_gameToScreenCoords(
+    nx: *mut c_double,
+    ny: *mut c_double,
+    bx: c_double,
+    by: c_double,
+) {
+    let p = Vector2::new(bx, by);
+    let v = camera::CAMERA.read().unwrap().game_to_screen_coords(p);
+    unsafe {
+        *nx = v.x;
+        *ny = v.y;
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_screenToGameCoords(
+    nx: *mut c_double,
+    ny: *mut c_double,
+    bx: c_int,
+    by: c_int,
+) {
+    let p = Vector2::new(bx as c_double, by as c_double);
+    let v = camera::CAMERA.read().unwrap().screen_to_game_coords(p);
+    unsafe {
+        *nx = v.x;
+        *ny = v.y;
+    }
 }

@@ -34,6 +34,11 @@ PRINTF_FORMAT( 4, 5 )
 char *dialogue_input( const char *title, int min, int max, const char *fmt,
                       ... );
 char *dialogue_inputRaw( const char *title, int min, int max, const char *msg );
+/* Fader. */
+double dialogue_fader( const char *title, double min, double max, double def,
+                       const char *fmt, ... );
+double dialogue_faderRaw( const char *title, double min, double max, double def,
+                          const char *msg );
 
 /*
  * Choice dialogues.

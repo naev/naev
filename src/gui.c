@@ -1256,12 +1256,12 @@ void gui_renderViewportFrame( double res, double render_radius, int overlay )
    if ( overlay ) {
       const double z = cam_getZoom() * res;
       vp_corner_x    = SCREEN_W / 2.0 / z;
-      vp_corner_y    = SCREEN_H / 2.0 / z;
+      vp_corner_y    = SCREEN_H / 2.0 / z * CTS.CAMERA_VIEW_INV;
    } else {
       const double z = cam_getZoom();
       // Centered on 0,0 so should be correct
       vp_corner_x = SCREEN_W / 2.0 / z;
-      vp_corner_y = SCREEN_H / 2.0 / z;
+      vp_corner_y = SCREEN_H / 2.0 / z * CTS.CAMERA_VIEW_INV;
       logradar( &vp_corner_x, &vp_corner_y, res );
    }
 

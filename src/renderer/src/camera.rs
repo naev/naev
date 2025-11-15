@@ -1,13 +1,19 @@
 use anyhow::Result;
+use naev_core::atomicfloat::AtomicF64;
 use nalgebra::Vector2;
 use physics::angle_diff;
 use physics::vec2::Vec2;
 use std::os::raw::{c_double, c_int, c_uint};
+use std::sync::atomic::Ordering;
 use std::sync::{LazyLock, RwLock};
 
 // Sound is currently in "screen" coordinates, and doesn't react to ship turning
 // Would probably have to be relative to heading for accessibility support (when enabled)
-const CAMERA_DIR: f64 = std::f64::consts::FRAC_PI_2;
+const SOUND_DIR: f64 = std::f64::consts::FRAC_PI_2;
+
+// Converts y coordinates based on viewing angles
+static GAME_TO_SCREEN: AtomicF64 = AtomicF64::new(1.);
+static SCREEN_TO_GAME: AtomicF64 = AtomicF64::new(1.);
 
 /// Represents tho global camera
 #[derive(Default, Clone)]
@@ -16,7 +22,7 @@ pub struct Camera {
     pos: Vector2<f64>,
     /// Fixed camera offset
     offset: Vector2<f64>,
-    /// Location of previosu frame
+    /// Location of previous frame
     old: Vector2<f64>,
     /// Target location it is trying to go to
     target: Vector2<f64>,
@@ -41,6 +47,9 @@ pub struct Camera {
 }
 
 pub static CAMERA: LazyLock<RwLock<Camera>> = LazyLock::new(|| {
+    let angle_sin = (naev_core::constants::CTS.camera_angle as f64).sin();
+    GAME_TO_SCREEN.store(angle_sin, Ordering::Relaxed);
+    SCREEN_TO_GAME.store(1. / angle_sin, Ordering::Relaxed);
     RwLock::new(Camera {
         zoom: 1.0,
         zoom_speed: unsafe { naevc::conf.zoom_speed },
@@ -95,10 +104,10 @@ impl Camera {
             if p.is_null() {
                 let dx = dt * (old.x - self.pos.x);
                 let dy = dt * (old.y - self.pos.y);
-                naevc::sound_updateListener(CAMERA_DIR, self.pos.x, self.pos.y, dx, dy);
+                naevc::sound_updateListener(SOUND_DIR, self.pos.x, self.pos.y, dx, dy);
             } else {
                 naevc::sound_updateListener(
-                    CAMERA_DIR,
+                    SOUND_DIR,
                     (*p).solid.pos.x,
                     (*p).solid.pos.y,
                     (*p).solid.vel.x,
@@ -308,6 +317,26 @@ impl Camera {
             naevc::background_moveDust(-(mov.x + der.x), -(mov.y + der.y));
         }
     }
+
+    /// Converts from in-game coordinates to screen coordinates
+    pub fn game_to_screen_coords(&self, pos: Vector2<f64>) -> Vector2<f64> {
+        let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed);
+        let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed);
+        let view = Vector2::new(view_width as f64, view_height as f64);
+        let mut screen = (pos - self.pos()) * self.zoom;
+        screen.y *= GAME_TO_SCREEN.load(Ordering::Relaxed);
+        screen + view * 0.5
+    }
+
+    /// Converts from in-game coordinates to screen coordinates
+    pub fn screen_to_game_coords(&self, pos: Vector2<f64>) -> Vector2<f64> {
+        let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed);
+        let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed);
+        let view = Vector2::new(view_width as f64, view_height as f64);
+        let mut game = (pos - view * 0.5) / self.zoom;
+        game.y *= SCREEN_TO_GAME.load(Ordering::Relaxed);
+        game + self.pos()
+    }
 }
 
 #[unsafe(no_mangle)]
@@ -407,7 +436,7 @@ pub extern "C" fn cam_setTargetPilot(follow: c_uint, soft_over: c_int) {
     }
 
     unsafe {
-        naevc::sound_updateListener(CAMERA_DIR, cam.pos.x, cam.pos.y, 0., 0.);
+        naevc::sound_updateListener(SOUND_DIR, cam.pos.x, cam.pos.y, 0., 0.);
     }
 }
 
