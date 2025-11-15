@@ -24,9 +24,9 @@ See the information on the [data structure](./src/data.md) for how it is organiz
 
 ## Plugin Repository
 
-Since 0.13.0, Naev has a built-in plugin explorer and installer, which uses the [plugin repository](https://codeberg.org/naev/naev-plugins) by default.
+Since version 0.13.0, Naev has a built-in plugin explorer and installer, which uses the [plugin repository](https://codeberg.org/naev/naev-plugins) by default.
 This repository contains only the minimum information of the plugins necessary to be able to download and look up the rest of the information.
-To add your plugin, please create a pull request on the repository adding the following information as `.toml` file in `plugins/`:
+To add your plugin, please create a pull request on the repository adding the following information as a `.toml` file in `plugins/`:
 
 ```toml
 identifier = "MyId"
@@ -36,7 +36,11 @@ metadata = "https://codeberg.org/naev/my_plugin/raw/branch/main/plugin.toml"
 ```
 
 Where:
-* **identifier**: refers to a unique identifier for your plugin. This can be referred to by other plugins and should never be changed. Use only ASCII letters and numbers.
-* **name**: is the name of your plugin.
-* **source**: TODO
-* **metadata**: TODO
+* **identifier**: has to be a unique identifier of the plugin, as plugins with the same identifier will overwrite each other.
+  Only ASCII alphanumeric (letters from a-z both uppercase and lowercase, and numbers) are allowed, and it must not exceed 25 characters.
+* **name**: attribute that contains the name of the plugin.
+  This is what the player and other plugins will see when searching or installing the plugin.
+* **source**: defines where the source is located to try to update the plugin when possible.
+  Valid options are `source = { git = "url" }` or `source = { download = "url" }` depending on whether it is a direct download or a git repository.
+* **metadata**: should be a url pointing to where the plugin's `plugin.toml` is available.
+  The plugin manager will use this file to see if updates are necessary.

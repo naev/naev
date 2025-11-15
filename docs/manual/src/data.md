@@ -12,22 +12,26 @@ For completeness, the main directories are described below:
 * `effects/`: contains information about effects that can affect ships.
 * `events/`: contains all the [events](./misn/overview.md).
 * `factions/`: contains all the factions and their related Lua functionality.
-* `glsl/`: contains all the shaders. Some are critical for basic game functionality.
+* `shaders/`: contains all the shaders. Some are critical for basic game functionality.
 * `gui/`: contains the different GUIs
 * `map_decorator/`: contains the information of what images to render on the map.
 * `missions/`: contains all the [missions](./misn/overview.md).
 * `outfits/`: contains all the [outfits](./outfits/overview.md).
-* `scripts/`: this is an optional directory that contains all libraries and useful scripts by convention. It is directly appended to the Lua path, so you can `require` files in this directory directly without having to prepend `scripts.`.
+* `scripts/`: this is an optional directory that contains all libraries and useful scripts by convention.
+  It is directly appended to the Lua path, so you can `require` files in this directory directly without having to prepend `scripts.`.
 * `ships/`: contains all the [ships](./ships/overview.md).
 * `slots/`: contains information about the different ship slot types.
 * `snd/`: contains all the sound and music.
-* `spfx/`: contains all the special effects. Explosions are required by the engine and can not be removed.
+* `spfx/`: contains all the special effects.
+  Explosions are required by the engine and can not be removed.
 * `spob/`: contains all the [space objects](./univ/spobs.md) (planets, stations, etc.).
-* `spob_virtual/`: contains all the virtual space objects. These mainly serve to modify the presence levels of factions in different systems artificially.
+* `spob_virtual/`: contains all the virtual space objects.
+  These mainly serve to modify the presence levels of factions in different systems artificially.
 * `ssys/`: contains all the [star systems](./univ/systems.md).
 * `tech/`: contains all the tech structures.
 * `trails/`: contains all the descriptions of ship trails that are available and their shaders.
-* `unidiff/`: contains all the universe diffs. These are used to create modifications to the game data during a playthrough, such as adding spobs or systems.
+* `unidiff/`: contains all the universe diffs.
+  These are used to create modifications to the game data during a playthrough, such as adding spobs or systems.
 
 In general, recursive iteration is used with all directories.
 This means you don't have to put all the ship XML files directly it `ships/`, but you can use subdirectories, such as `ships/special/`.
