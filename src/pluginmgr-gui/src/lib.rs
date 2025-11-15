@@ -822,7 +822,7 @@ impl App {
         // Add refresh button and format
         let actions = column![
             button(pgettext("plugins", "Update All"))
-                .on_press_maybe((!self.has_update && self.idle).then_some(Message::ActionUpdate)),
+                .on_press_maybe((self.has_update && self.idle).then_some(Message::ActionUpdate)),
             button(pgettext("plugins", "Force Refresh"))
                 .on_press_maybe(self.idle.then_some(Message::ActionRefresh)),
             button(pgettext("plugins", "Clear Cache"))
