@@ -773,10 +773,10 @@ static void menu_extras_open( unsigned int wid, const char *unused )
    space_clearKnown();
 
    /* Set dimensions */
-   y = 20 + ( BUTTON_HEIGHT + 20 ) * 2;
-   h = y + 80;
+   h = 40 + ( BUTTON_HEIGHT + 20 ) * 4;
+   y = -40;
 
-   wid = window_create( "wdwEditors", _( "Editors" ), -1, -1,
+   wid = window_create( "wdwExtras", _( "Extras" ), -1, -1,
                         MENU_WIDTH + EDITORS_EXTRA_WIDTH, h );
    window_setCancel( wid, menu_extras_close );
 
@@ -789,8 +789,9 @@ static void menu_extras_open( unsigned int wid, const char *unused )
                         BUTTON_HEIGHT, "btnMapEdit", _( "Map Outfits" ),
                         mapedit_open, SDLK_M );
    y -= BUTTON_HEIGHT + 20;
-   window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT, "btnCredits",
-                        p_( "Menu|", "Credits" ), menu_main_credits, SDLK_C );
+   window_addButtonKey( wid, 20, y, BUTTON_WIDTH + EDITORS_EXTRA_WIDTH,
+                        BUTTON_HEIGHT, "btnCredits", p_( "Menu|", "Credits" ),
+                        menu_main_credits, SDLK_C );
    y -= BUTTON_HEIGHT + 20;
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH + EDITORS_EXTRA_WIDTH,
                         BUTTON_HEIGHT, "btnMain", _( "Exit to Main Menu" ),
