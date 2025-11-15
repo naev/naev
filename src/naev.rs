@@ -70,6 +70,7 @@ pub fn naev() -> Result<()> {
     // Hack for plugin manager mode
     if std::env::args().skip(1).any(|a| a == "--pluginmanager") {
         setup_logging()?;
+        log::set_max_level(log::LevelFilter::Info);
         let _ = setup_conf_and_ndata()?;
         unsafe {
             naevc::gettext_setLanguage(naevc::conf.language); /* now that we can find translations */
