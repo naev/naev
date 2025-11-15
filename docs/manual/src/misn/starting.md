@@ -5,7 +5,7 @@ Once the mission or event is started, the obligatory `create` function entry poi
 
 ## Mission Header
 
-Let us start by writing a simple mission header.
+Let us start by writing a simple [mission header](./basics/header.md).
 This will be enclosed by long Lua comments `--[[` and `--]]` in the file.
 Below is our simple header.
 
@@ -23,7 +23,6 @@ Below is our simple header.
 
 The mission is named "My First Mission" and has a 50% chance of appearing in any spaceport bar.
 Furthermore, it is marked unique so that once it is successfully completed, it will not appear again to the same player.
-For more information on headers refer to Section `\ref{sec:misn-headers}`{=tex}.
 
 ## Entry Point `create`
 
@@ -44,8 +43,7 @@ Please note that only a single NPC is supported with `misn.setNPC`, if you want 
 There are two important things to note:
 
 1. All human-readable text is enclosed in `_()` for translations.
-  In principle, you should always use `_()` to enclose any text meant for the user to read, which will allow the translation system to automatically deal with it.
-  For more details, please refer to Section `\ref{sec:misn-basic-translation}`{=tex}.
+  In principle, you should always use `_()` to enclose any text meant for the user to read, which will allow the [translation system](./basics/translation.md) to automatically deal with it.
 1. There is an image defined as a string.
   In this case, this refers to an image in `gfx/portraits/`.
   Note that Naev uses a virtual filesystem and the exact place of the file may vary depending on where it is set up.
@@ -118,9 +116,9 @@ The function contains of 3 main parts:
 
 Some important notes.
 
-* We use `fmt.f` to format the strings. In this case, the `{spb}` will be replaced by the `spb` field in the table, which corresponds to the name of the `mem.dest` spob. This is further explained in Section `\ref{sec:misn-basic-fmt}`{=tex}.
-* Variables don't get saved unless they are in the `mem` table. This table gets populated again every time the save game gets loaded. More details in Section `\ref{sec:misn-basic-mem}`{=tex}.
-* You have to pass function names as strings to the family of `hook.*` functions. More details on hooks in Section `\ref{sec:misn-basic-hooks}`{=tex}.
+* We use `fmt.f` to format the strings. In this case, the `{spb}` will be replaced by the `spb` field in the table, which corresponds to the name of the `mem.dest` spob. This is further explained in [Formatting Text](./basics/format.md).
+* Variables don't get saved unless they are in the `mem` table. This table gets populated again every time the save game gets loaded. More details in [Memory Model](./basics/memory.md)
+* You have to pass function names as strings to the family of `hook.*` functions. More details on hooks in [Hooks](./baiscs/hooks.md).
 
 Now this gives us almost the entirety of the mission, but a last crucial component is missing: we need to reward the player when they deliver the cargo to **Caladan**.
 We do this by exploiting the `hook.land` that makes it so our defined `land` function gets called whenever the player lands.
