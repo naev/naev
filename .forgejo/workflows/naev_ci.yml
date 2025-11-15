@@ -100,13 +100,7 @@ jobs:
       - name: Compile AppImage
         id: appimageCompile
         run: |
-          if [[ "$IMAGE_NAME" =~ "naev-steamfrankenruntime" ]]; then
-              ./source/utils/buildAppImage.sh -d -s source -b appImageBuild | tee appImageBuildLog.txt
-              ls ${{ github.workspace }}/appImageBuild/dist/AppDir >/dev/null || exit
-          else
-            ./source/utils/buildAppImage.sh -d -i -s source -b appImageBuild | tee appImageBuildLog.txt
-            ls ${{ github.workspace }}/appImageBuild/dist/*.AppImage >/dev/null || exit
-          fi
+          ./source/utils/buildAppImage.sh -d -i -s source -b appImageBuild | tee appImageBuildLog.txt
 
       - name: Upload AppImage Compile Log
         uses: actions/upload-artifact@v3
@@ -127,11 +121,11 @@ jobs:
             target: x86_64-pc-windows-gnu
 
     runs-on: ${{ matrix.image }}
-    env:
-      PKG_CONFIG: "x86_64-w64-mingw32-pkg-config"
-      PKG_CONFIG_PATH: "/usr/x86_64-w64-mingw32/sys-root/mingw/lib/pkgconfig:/__w/naev/naev/source/subprojects/LuaJIT-04dca7911ea255f37be799c18d74c305b921c1a6/etc"
-      BINDGEN_EXTRA_CLANG_ARGS: "--sysroot=/usr/x86_64-w64-mingw32/sys-root/mingw --target=x86_64-w64-mingw32"
     steps:
+      - name: Configure Build Environment
+        run: |
+          /usr/bin/setup-devenv.sh
+
       - name: Get Source
         uses: actions/download-artifact@v3
         with:
@@ -200,24 +194,17 @@ jobs:
         include:
           - image: naev-macos
             arch: x86_64
-            deploymenttarget: "11.0"
             config: macos_cross_osxcross.ini
           - image: naev-macos
             arch: aarch64
-            deploymenttarget: "13.0"
             config: macos_aarch64_cross_osxcross.ini
 
     runs-on: ${{ matrix.image }}
     env:
       BUILDARCH: "${{ matrix.arch }}"
-      HOST: "${{ matrix.arch }}-apple-darwin23"
-      MACOSX_DEPLOYMENT_TARGET: "${{ matrix.deploymenttarget }}"
-      PKG_CONFIG: "${{ matrix.arch }}-apple-darwin23-pkg-config"
-      PKG_CONFIG_PATH: "/usr/lib/osxcross/macports/pkgs/opt/local/lib/pkgconfig"
-      BINDGEN_EXTRA_CLANG_ARGS: "--sysroot=/usr/lib/osxcross/SDK/MacOSX14.sdk --target=${{ matrix.arch }}-apple-darwin"
 
     steps:
-      - name: Configure environment
+      - name: Configure Build Environment
         run: |
           /usr/bin/setup-devenv.sh
 
