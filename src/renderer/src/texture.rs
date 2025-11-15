@@ -6,6 +6,8 @@ use log::{warn, warn_err};
 use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
 use nalgebra::{Matrix3, Vector4};
 use sdl3 as sdl;
+use serde::de::DeserializeSeed;
+use serde::{Deserialize, Deserializer};
 use std::boxed::Box;
 use std::ffi::{CStr, CString, c_char, c_double, c_float, c_int, c_uint};
 use std::io::{Read, Seek};
@@ -2237,4 +2239,41 @@ impl UserData for Texture {
 pub fn open_texture(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
     let proxy = lua.create_proxy::<Texture>()?;
     Ok(proxy)
+}
+
+pub trait TextureLoader {
+    fn load_texture(&mut self, path: &str) -> Texture;
+}
+
+struct TextureLoaderImpl<'a> {
+    ctx: &'a ContextWrapper<'a>,
+}
+
+impl TextureLoader for TextureLoaderImpl<'_> {
+    fn load_texture(&mut self, path: &str) -> Texture {
+        TextureBuilder::new()
+            .path(path)
+            .sdf(true)
+            .build_wrap(self.ctx)
+            .unwrap()
+    }
+}
+
+struct TextureDeserializer<'a, L> {
+    texture_loader: &'a mut L,
+}
+
+impl<'de, L> DeserializeSeed<'de> for TextureDeserializer<'_, L>
+where
+    L: TextureLoader,
+{
+    type Value = Texture;
+
+    fn deserialize<D>(self, deserializer: D) -> Result<Self::Value, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let path = String::deserialize(deserializer)?;
+        Ok(self.texture_loader.load_texture(&path))
+    }
 }
