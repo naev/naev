@@ -177,8 +177,7 @@ impl PluginWrap {
     fn image_path_url<P: AsRef<Path>>(&self, dir: P) -> Option<(PathBuf, reqwest::Url)> {
         let plugin = self.plugin();
         if let Some(url) = &plugin.image_url
-            && let Some(urlpath) = url.to_file_path().ok()
-            && let Some(ext) = urlpath.extension().and_then(|e| e.to_str())
+            && let Some(ext) = Path::new(url.path()).extension().and_then(|e| e.to_str())
         {
             let path = dir.as_ref().join(format!("{}.{}", plugin.identifier, ext));
             Some((path.to_path_buf(), url.clone()))
@@ -684,7 +683,12 @@ impl App {
             scrollable(
                 grid(self.view.iter().enumerate().map(|(id, v)| {
                     let p = v.plugin();
-                    let image = image(&self.default_logo).width(60).height(60);
+                    let image = image(match &v.image {
+                        Some(img) => img.clone(),
+                        None => self.default_logo.clone(),
+                    })
+                    .width(60)
+                    .height(60);
                     let name = bold(p.name.as_str());
                     let badge = match v.state {
                         PluginState::Installed => Some(if v.has_update() {
