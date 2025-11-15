@@ -713,6 +713,7 @@ impl App {
                             Some(badge) => row![name, badge,],
                             None => row![name],
                         }
+                        .align_y(iced::alignment::Vertical::Center)
                         .spacing(5),
                         text(p.r#abstract.as_str()),
                         text(p.tags.join(", ")),
