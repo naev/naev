@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.12.0-alpha.2\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-11-09 22:57+0900\n"
+"POT-Creation-Date: 2025-11-15 18:43+0900\n"
 "PO-Revision-Date: 2024-09-20 13:40+0000\n"
 "Last-Translator: Pau Barrachina Ribes <barrachinaribesp@gmail.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/naev/naev/ca/>\n"
@@ -117603,15 +117603,14 @@ msgstr ""
 msgid "New Game"
 msgstr ""
 
-msgid "Editors"
-msgstr ""
-
 #. Create window and tabs.
 msgid "Options"
 msgstr ""
 
-msgctxt "Menu|"
-msgid "Credits"
+msgid "Plugin Manager"
+msgstr ""
+
+msgid "Extras"
 msgstr ""
 
 msgid "Exit Game"
@@ -117658,6 +117657,10 @@ msgid "Are you sure you want to quit Naev?"
 msgstr ""
 
 msgid "Map Outfits"
+msgstr ""
+
+msgctxt "Menu|"
+msgid "Credits"
 msgstr ""
 
 msgid "Exit to Main Menu"
@@ -119222,82 +119225,7 @@ msgstr ""
 msgid "Plugins Directory: "
 msgstr ""
 
-msgid "Add Plugin"
-msgstr ""
-
 msgid "No Plugins Found"
-msgstr ""
-
-#, c-format
-msgid "'%s' is not a valid plugin!"
-msgstr ""
-
-#, c-format
-msgid ""
-"#nName:#0 %s\n"
-"#nAuthor:#0 %s\n"
-"#nVersion:#0 %s\n"
-"#nDescription:#0 %s"
-msgstr ""
-
-msgid "Update plugin?"
-msgstr ""
-
-#, c-format
-msgid ""
-"Are you sure you want to update the plugin '%s'? This will require a restart "
-"to take full effect.\n"
-"\n"
-"#nNew Plugin Details#0\n"
-"%s\n"
-"\n"
-"#nOld Plugin Details#0\n"
-"%s"
-msgstr ""
-
-msgid "Overwrite plugin?"
-msgstr ""
-
-#, c-format
-msgid ""
-"Are you sure you want to add '%s' to your list of active plugins? This will "
-"overwrite a plugin with the same file name (%s), but not same plug in name. "
-"This will require a restart to take full effect.\n"
-"\n"
-"#nNew Plugin Details#0\n"
-"%s"
-msgstr ""
-
-msgid "Add plugin?"
-msgstr ""
-
-#, c-format
-msgid ""
-"Are you sure you want to add '%s' to your list of active plugins? This will "
-"require a restart to take full effect.\n"
-"\n"
-"#nNew Plugin Details#0\n"
-"%s"
-msgstr ""
-
-#, c-format
-msgid ""
-"Are you sure you want to add '%s' to your list of active plugins? #rThis "
-"plugin has the same name as one of your existing plugins and make cause "
-"issues#0. This will require a restart to take full effect.\n"
-"\n"
-"#nNew Plugin Details#0\n"
-"%s\n"
-"\n"
-"#nSame name Plugin Details#0\n"
-"%s"
-msgstr ""
-
-#, c-format
-msgid "Failed to copy '%s' to '%s'!"
-msgstr ""
-
-msgid "Naev Plugin File"
 msgstr ""
 
 msgctxt "plugins"
@@ -120551,6 +120479,105 @@ msgstr ""
 
 #, c-format
 msgid "Plugin '%s' PCRE2 compilation failed at offset %d: %s"
+msgstr ""
+
+msgid "Loaded plugins:"
+msgstr ""
+
+msgid "Naev Plugin Manager"
+msgstr ""
+
+msgid "installed"
+msgstr ""
+
+msgid "disabled"
+msgstr ""
+
+msgid "available"
+msgstr ""
+
+msgctxt "plugins"
+msgid "update"
+msgstr ""
+
+msgctxt "plugins"
+msgid "installed"
+msgstr ""
+
+msgctxt "plugins"
+msgid "disabled"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Identifier:"
+msgstr ""
+
+msgctxt "plugins"
+msgid "State:"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Plugin Version:"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Naev Version:"
+msgstr ""
+
+msgid "incompatible with Naev "
+msgstr ""
+
+msgctxt "plugins"
+msgid "Status:"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Description"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Disable"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Uninstall"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Update"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Enable"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Install"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Update All"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Force Refresh"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Clear Cache"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Action"
+msgstr ""
+
+msgid "stable"
+msgstr ""
+
+msgid "testing"
+msgstr ""
+
+msgid "development"
 msgstr ""
 
 #, c-format
