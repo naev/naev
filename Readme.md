@@ -28,12 +28,10 @@ Naev!
 
 ## PLUGINS
 
-Plugins are supported since version 0.10.0. Although we do not have a plugin
-manager yet ([help wanted!](https://codeberg.org/naev/naev/issues/2180)), you can
-look at existing plugins registered on the [naev plugins
-repository](https://codeberg.org/naev/naev-plugins) and install them manually. If
-you want to get started making your own, please take a look at the [Naev
-Development Manual](https://naev.org/devmanual/) (WIP).
+Plugins are supported since version 0.10.0, and a plugin manager is built into
+Naev since 0.13.0 which is accessible from the main menu. If you want to get
+started making your own, please take a look at the [Naev Development
+Manual](https://naev.org/devmanual/) (WIP).
 
 ## DEPENDENCIES
 
