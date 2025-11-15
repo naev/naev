@@ -58,8 +58,13 @@ impl Conf {
 const THEME: iced::Theme = iced::Theme::Dark;
 
 pub fn open() -> Result<()> {
+    let icon = iced::window::icon::from_file_data(App::ICON, None).ok();
     Ok(iced::application(App::run, App::update, App::view)
         .title(gettext("Naev Plugin Manager"))
+        .window(iced::window::Settings {
+            icon,
+            ..Default::default()
+        })
         .theme(THEME)
         .centered()
         .run()?)
@@ -406,6 +411,8 @@ struct App {
 }
 
 impl App {
+    const ICON: &[u8] = include_bytes!("../../../extras/logos/logo64.png");
+
     fn run() -> (Self, Task<Message>) {
         let app = Self::new().unwrap();
         (app, Task::done(Message::Startup))
@@ -418,9 +425,7 @@ impl App {
 
         // We'll hardcode a logo into the source code for now
         use iced::advanced::image;
-        let default_logo = image::Handle::from_bytes(image::Bytes::from_static(include_bytes!(
-            "../../../extras/logos/logo64.png"
-        )));
+        let default_logo = image::Handle::from_bytes(image::Bytes::from_static(Self::ICON));
 
         Ok(App {
             catalog: Arc::new(Catalog::new(conf)),
