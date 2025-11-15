@@ -1,6 +1,7 @@
 # Rarity
 
-Rarity begins at 0 for normal items. It is modified based on the following rules:
+Rarity begins at 0 for normal items.
+It is modified based on the following rules:
 
 1. Items that are acquired conditionally (such as reputation limits) get +1 rarity.
 1. Items that are sold in very specific spobs or not available more generally get +1 rarity.
