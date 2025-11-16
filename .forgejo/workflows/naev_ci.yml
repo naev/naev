@@ -342,6 +342,7 @@ jobs:
         id: compile
         run: |
           meson compile -C build
+          meson compile -C build manual
 
       - name: Upload Compile Log
         uses: actions/upload-artifact@v3
