@@ -2244,7 +2244,7 @@ pub struct TextureDeserializer<'a> {
     pub func: Box<dyn Fn(&ContextWrapper, &str) -> Result<Texture> + Send + Sync + 'static>,
 }
 
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use serde_seeded::DeserializeSeeded;
 impl<'de> DeserializeSeeded<'de, ContextWrapper<'_>> for Texture {
     fn deserialize_seeded<D>(ctx: &ContextWrapper, deserializer: D) -> Result<Self, D::Error>
@@ -2270,6 +2270,19 @@ impl<'de> DeserializeSeeded<'de, TextureDeserializer<'_>> for Texture {
         match (loader.func)(&loader.ctx, &name) {
             Ok(tex) => Ok(tex),
             Err(e) => Err(serde::de::Error::custom(e)),
+        }
+    }
+}
+impl Serialize for Texture {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        match &self.path {
+            Some(path) => serializer.serialize_str(&path),
+            None => Err(serde::ser::Error::custom(
+                "can't serialize texture without a path",
+            )),
         }
     }
 }
