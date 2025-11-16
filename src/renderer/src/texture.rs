@@ -2240,8 +2240,8 @@ pub fn open_texture(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
 }
 
 pub struct TextureDeserializer<'a> {
-    pub ctx: &'a ContextWrapper<'a>,
-    pub func: Box<dyn Fn(&ContextWrapper, &str) -> Result<Texture> + Send + 'static>,
+    pub ctx: ContextWrapper<'a>,
+    pub func: Box<dyn Fn(&ContextWrapper, &str) -> Result<Texture> + Send + Sync + 'static>,
 }
 
 use serde::Deserialize;
@@ -2267,7 +2267,7 @@ impl<'de> DeserializeSeeded<'de, TextureDeserializer<'_>> for Texture {
         D: serde::Deserializer<'de>,
     {
         let name = String::deserialize(deserializer)?;
-        match (loader.func)(loader.ctx, &name) {
+        match (loader.func)(&loader.ctx, &name) {
             Ok(tex) => Ok(tex),
             Err(e) => Err(serde::de::Error::custom(e)),
         }

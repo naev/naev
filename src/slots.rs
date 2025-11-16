@@ -12,9 +12,7 @@ use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_int};
 
 #[derive(Default, DeserializeSeeded)]
-//#[seeded(de(seed(TextureDeserializer<'a>),params('a),bounds('de: 'a, 'a: 'de)))]
-//#[seeded(de(seed(TextureDeserializer<'a>),params('a)))]
-#[seeded(de(seed(ContextWrapper<'a>),params('a)))]
+#[seeded(de(seed(TextureDeserializer<'a>),params('a)))]
 pub struct SlotProperty {
     pub name: String,
     pub display: String,
@@ -40,11 +38,11 @@ pub struct SlotProperty {
 }
 
 impl SlotProperty {
-    fn load(ctx: &ContextWrapper, filename: &str) -> Option<Self> {
+    fn load(texde: &TextureDeserializer, filename: &str) -> Option<Self> {
         let sp = if filename.ends_with(".toml") {
-            Self::load_toml(ctx, filename)
+            Self::load_toml(texde, filename)
         } else if filename.ends_with(".xml") {
-            Self::load_xml(ctx, filename)
+            Self::load_xml(&texde.ctx, filename)
         } else {
             return None;
         };
@@ -57,21 +55,11 @@ impl SlotProperty {
         }
     }
 
-    fn load_toml(ctx: &ContextWrapper, filename: &str) -> Result<Self> {
-        fn sdf_texture(ctx: &ContextWrapper, path: &str) -> Result<texture::Texture> {
-            texture::TextureBuilder::new()
-                .path(&path)
-                .sdf(true)
-                .build_wrap(ctx)
-        }
+    fn load_toml(texde: &TextureDeserializer, filename: &str) -> Result<Self> {
         let data = ndata::read_to_string(filename)?;
-        //let texde = TextureDeserializer{
-        //    ctx,
-        //    func: Box::new(sdf_texture),
-        //};
-        //let mut sp: SlotProperty = SlotProperty::deserialize_seeded( &texde, toml::de::Deserializer::parse( &data )? )?;
         let mut sp: SlotProperty =
-            SlotProperty::deserialize_seeded(ctx, toml::de::Deserializer::parse(&data)?)?;
+            SlotProperty::deserialize_seeded(&texde, toml::de::Deserializer::parse(&data)?)?;
+        // Have to post-process the C stuff for now
         sp.cdisplay = CString::new(sp.display.as_str())?;
         sp.cdescription = CString::new(sp.description.as_str())?;
         sp.ctags = ArrayCString::new(&sp.tags)?;
@@ -165,10 +153,19 @@ pub fn get(name: &str) -> Result<&'static SlotProperty> {
 }
 
 pub fn load() -> Result<Vec<SlotProperty>> {
-    let ctx = Context::get().as_safe_wrap();
+    fn sdf_texture(ctx: &ContextWrapper, path: &str) -> Result<texture::Texture> {
+        texture::TextureBuilder::new()
+            .path(&path)
+            .sdf(true)
+            .build_wrap(ctx)
+    }
+    let texde = TextureDeserializer {
+        ctx: Context::get().as_safe_wrap(),
+        func: Box::new(sdf_texture),
+    };
     let mut sp_data: Vec<SlotProperty> = ndata::read_dir("slots/")?
         .par_iter()
-        .filter_map(|filename| SlotProperty::load(&ctx, filename.as_str()))
+        .filter_map(|filename| SlotProperty::load(&texde, filename.as_str()))
         .collect();
     sort_by_key_ref(&mut sp_data, |sp: &SlotProperty| &sp.name);
     Ok(sp_data)
