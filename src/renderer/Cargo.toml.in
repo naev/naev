@@ -29,5 +29,6 @@ trie-rs = { workspace = true }
 derive_more = { workspace = true }
 softfloat = { workspace = true }
 serde = { workspace = true }
+serde-seeded = { workspace = true }
 resvg = "0.45"
 naga = { version="27", features=["wgsl-in", "glsl-out"] }

@@ -100,6 +100,7 @@ git2 = "0.20"
 #tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
 bytes = "1"
 futures = "0.3"
+serde-seeded = "0"
 
 [dependencies]
 naevc = { workspace = true }
@@ -126,6 +127,7 @@ rand = "0.9"
 rayon = { workspace = true }
 palette = { workspace = true }
 serde = { workspace = true }
+serde-seeded = { workspace = true }
 serde_yaml2 = "0.1"
 toml = { workspace = true }
 # gltf-rs crate doesn't support WEBP in any release atm...

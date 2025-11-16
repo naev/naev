@@ -49,7 +49,7 @@ pub struct DamageType {
 }
 
 impl DamageType {
-    fn load(filename: &str) -> Result<Self> {
+    fn load_xml(filename: &str) -> Result<Self> {
         let data = ndata::read(filename)?;
         let doc = roxmltree::Document::parse(std::str::from_utf8(&data)?)?;
         let root = doc.root_element();
@@ -140,7 +140,7 @@ pub fn load() -> Result<Vec<DamageType>> {
                 }
             // TODO remove XMl support at around 0.14.0 or 0.15.0
             } else if filename.ends_with(".xml") {
-                match DamageType::load(filename.as_str()) {
+                match DamageType::load_xml(filename.as_str()) {
                     Ok(dt) => Some(dt),
                     Err(err) => {
                         warn_err(err.context(format!("unable to load Damage Type '{filename}'!")));

@@ -6,8 +6,6 @@ use log::{warn, warn_err};
 use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
 use nalgebra::{Matrix3, Vector4};
 use sdl3 as sdl;
-use serde::de::DeserializeSeed;
-use serde::{Deserialize, Deserializer};
 use std::boxed::Box;
 use std::ffi::{CStr, CString, c_char, c_double, c_float, c_int, c_uint};
 use std::io::{Read, Seek};
@@ -2241,39 +2239,37 @@ pub fn open_texture(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
     Ok(proxy)
 }
 
-pub trait TextureLoader {
-    fn load_texture(&mut self, path: &str) -> Texture;
+pub struct TextureDeserializer<'a> {
+    pub ctx: &'a ContextWrapper<'a>,
+    pub func: Box<dyn Fn(&ContextWrapper, &str) -> Result<Texture> + Send + 'static>,
 }
 
-struct TextureLoaderImpl<'a> {
-    ctx: &'a ContextWrapper<'a>,
-}
-
-impl TextureLoader for TextureLoaderImpl<'_> {
-    fn load_texture(&mut self, path: &str) -> Texture {
-        TextureBuilder::new()
-            .path(path)
-            .sdf(true)
-            .build_wrap(self.ctx)
-            .unwrap()
+use serde::Deserialize;
+use serde_seeded::DeserializeSeeded;
+impl<'de> DeserializeSeeded<'de, ContextWrapper<'_>> for Texture {
+    fn deserialize_seeded<D>(ctx: &ContextWrapper, deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let name = String::deserialize(deserializer)?;
+        match TextureBuilder::new().path(&name).build_wrap(ctx) {
+            Ok(tex) => Ok(tex),
+            Err(e) => Err(serde::de::Error::custom(e)),
+        }
     }
 }
-
-struct TextureDeserializer<'a, L> {
-    texture_loader: &'a mut L,
-}
-
-impl<'de, L> DeserializeSeed<'de> for TextureDeserializer<'_, L>
-where
-    L: TextureLoader,
-{
-    type Value = Texture;
-
-    fn deserialize<D>(self, deserializer: D) -> Result<Self::Value, D::Error>
+impl<'de> DeserializeSeeded<'de, TextureDeserializer<'_>> for Texture {
+    fn deserialize_seeded<D>(
+        loader: &TextureDeserializer,
+        deserializer: D,
+    ) -> Result<Self, D::Error>
     where
-        D: Deserializer<'de>,
+        D: serde::Deserializer<'de>,
     {
-        let path = String::deserialize(deserializer)?;
-        Ok(self.texture_loader.load_texture(&path))
+        let name = String::deserialize(deserializer)?;
+        match (loader.func)(loader.ctx, &name) {
+            Ok(tex) => Ok(tex),
+            Err(e) => Err(serde::de::Error::custom(e)),
+        }
     }
 }

@@ -1,32 +1,84 @@
-use anyhow::Result;
-use rayon::prelude::*;
-use std::ffi::{CStr, CString};
-use std::os::raw::{c_char, c_int};
-
 use crate::array::ArrayCString;
 use crate::warn;
+use anyhow::Result;
 use log::warn_err;
 use naev_core::utils::{binary_search_by_key_ref, sort_by_key_ref};
 use naev_core::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
+use rayon::prelude::*;
+use renderer::texture::TextureDeserializer;
 use renderer::{Context, ContextWrapper, texture};
+use serde_seeded::DeserializeSeeded;
+use std::ffi::{CStr, CString};
+use std::os::raw::{c_char, c_int};
 
-#[derive(Default)]
+#[derive(Default, DeserializeSeeded)]
+//#[seeded(de(seed(TextureDeserializer<'a>),params('a),bounds('de: 'a, 'a: 'de)))]
+//#[seeded(de(seed(TextureDeserializer<'a>),params('a)))]
+#[seeded(de(seed(ContextWrapper<'a>),params('a)))]
 pub struct SlotProperty {
     pub name: String,
     pub display: String,
-    cdisplay: CString,
     pub description: String,
-    cdescription: CString,
+    #[seeded(default)]
     pub required: bool,
+    #[seeded(default)]
     pub exclusive: bool,
+    #[seeded(default)]
     pub locked: bool,
+    #[seeded(default)]
     pub visible: bool,
+    #[seeded(default)]
     pub icon: Option<texture::Texture>,
     pub tags: Vec<String>,
+    // C stuff to remove in the future
+    #[seeded(skip, default)]
+    cdisplay: CString,
+    #[seeded(skip, default)]
+    cdescription: CString,
+    #[seeded(skip, default)]
     ctags: ArrayCString,
 }
+
 impl SlotProperty {
-    fn load(ctx: &ContextWrapper, filename: &str) -> Result<Self> {
+    fn load(ctx: &ContextWrapper, filename: &str) -> Option<Self> {
+        let sp = if filename.ends_with(".toml") {
+            Self::load_toml(ctx, filename)
+        } else if filename.ends_with(".xml") {
+            Self::load_xml(ctx, filename)
+        } else {
+            return None;
+        };
+        match sp {
+            Ok(sp) => Some(sp),
+            Err(e) => {
+                warn_err!(e);
+                None
+            }
+        }
+    }
+
+    fn load_toml(ctx: &ContextWrapper, filename: &str) -> Result<Self> {
+        fn sdf_texture(ctx: &ContextWrapper, path: &str) -> Result<texture::Texture> {
+            texture::TextureBuilder::new()
+                .path(&path)
+                .sdf(true)
+                .build_wrap(ctx)
+        }
+        let data = ndata::read_to_string(filename)?;
+        //let texde = TextureDeserializer{
+        //    ctx,
+        //    func: Box::new(sdf_texture),
+        //};
+        //let mut sp: SlotProperty = SlotProperty::deserialize_seeded( &texde, toml::de::Deserializer::parse( &data )? )?;
+        let mut sp: SlotProperty =
+            SlotProperty::deserialize_seeded(ctx, toml::de::Deserializer::parse(&data)?)?;
+        sp.cdisplay = CString::new(sp.display.as_str())?;
+        sp.cdescription = CString::new(sp.description.as_str())?;
+        sp.ctags = ArrayCString::new(&sp.tags)?;
+        Ok(sp)
+    }
+
+    fn load_xml(ctx: &ContextWrapper, filename: &str) -> Result<Self> {
         let data = ndata::read(filename)?;
         let doc = roxmltree::Document::parse(std::str::from_utf8(&data)?)?;
         let root = doc.root_element();
@@ -114,18 +166,9 @@ pub fn get(name: &str) -> Result<&'static SlotProperty> {
 
 pub fn load() -> Result<Vec<SlotProperty>> {
     let ctx = Context::get().as_safe_wrap();
-    let files = ndata::read_dir_filter("slots/", |filename| filename.ends_with(".xml"))?;
-    let mut sp_data: Vec<SlotProperty> = files
+    let mut sp_data: Vec<SlotProperty> = ndata::read_dir("slots/")?
         .par_iter()
-        .filter_map(
-            |filename| match SlotProperty::load(&ctx, filename.as_str()) {
-                Ok(sp) => Some(sp),
-                Err(err) => {
-                    warn_err(err.context(format!("unable to load Slot Property '{filename}'!")));
-                    None
-                }
-            },
-        )
+        .filter_map(|filename| SlotProperty::load(&ctx, filename.as_str()))
         .collect();
     sort_by_key_ref(&mut sp_data, |sp: &SlotProperty| &sp.name);
     Ok(sp_data)

@@ -209,6 +209,14 @@ pub fn read<P: AsRef<Path>>(path: P) -> Result<Vec<u8>> {
     Ok(out)
 }
 
+/// Same as read, but converts to string
+pub fn read_to_string<P: AsRef<Path>>(path: P) -> Result<String> {
+    let mut f = physfs::File::open(path, physfs::Mode::Read)?;
+    let mut out = String::new();
+    f.read_to_string(&mut out)?;
+    Ok(out)
+}
+
 /// Checks to see if a path is a directory
 pub fn is_dir<P: AsRef<Path>>(path: P) -> bool {
     match stat(path) {
