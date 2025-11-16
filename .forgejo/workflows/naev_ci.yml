@@ -125,6 +125,17 @@ jobs:
       - name: Configure Build Environment
         run: |
           /usr/bin/setup-devenv.sh
+          # If running in GitHub Actions or Forgejo Actions, persist env vars
+          if [ "${GITHUB_ACTIONS:-}" = "true" ] && [ -n "${GITHUB_ENV:-}" ]; then
+              echo "Running in GitHub/Forgejo Actions, exporting cross-compile vars to GITHUB_ENV"
+
+              {
+                  echo "CC_x86_64_pc_windows_gnu=${CC_x86_64_pc_windows_gnu}"
+                  echo "PKG_CONFIG_x86_64_pc_windows_gnu=${PKG_CONFIG_x86_64_pc_windows_gnu}"
+                  echo "PKG_CONFIG_SYSROOT_DIR_x86_64_pc_windows_gnu=${PKG_CONFIG_SYSROOT_DIR_x86_64_pc_windows_gnu}"
+                  echo "BINDGEN_EXTRA_CLANG_ARGS=${BINDGEN_EXTRA_CLANG_ARGS}"
+              } >> "$GITHUB_ENV"
+          fi
 
       - name: Get Source
         uses: actions/download-artifact@v3
@@ -207,6 +218,28 @@ jobs:
       - name: Configure Build Environment
         run: |
           /usr/bin/setup-devenv.sh
+          # If running in GitHub Actions or Forgejo Actions, persist env vars
+          if [ "${GITHUB_ACTIONS:-}" = "true" ] && [ -n "${GITHUB_ENV:-}" ]; then
+              echo "Running in GitHub/Forgejo Actions, exporting macOS cross-compile vars to GITHUB_ENV"
+
+              {
+                  echo "HOST=${HOST}"
+                  echo "MACOSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET}"
+                  echo "PKG_CONFIG=${PKG_CONFIG}"
+                  echo "PKG_CONFIG_PATH=${PKG_CONFIG_PATH}"
+                  echo "BINDGEN_EXTRA_CLANG_ARGS=${BINDGEN_EXTRA_CLANG_ARGS}"
+
+                  # Cargo linker vars depending on arch
+                  if [ "$BUILDARCH" = "aarch64" ]; then
+                      echo "CARGO_TARGET_AARCH64_APPLE_DARWIN_LINKER=${CARGO_TARGET_AARCH64_APPLE_DARWIN_LINKER}"
+                  elif [ "$BUILDARCH" = "x86_64" ]; then
+                      echo "CARGO_TARGET_X86_64_APPLE_DARWIN_LINKER=${CARGO_TARGET_X86_64_APPLE_DARWIN_LINKER}"
+                  fi
+
+                  # CC var for build target
+                  echo "CC_${BUILDARCH}_apple_darwin=${HOST}-cc"
+              } >> "$GITHUB_ENV"
+          fi
 
       - name: Get Source
         uses: actions/download-artifact@v3
