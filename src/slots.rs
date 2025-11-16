@@ -11,7 +11,7 @@ use serde_seeded::DeserializeSeeded;
 use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_int};
 
-#[derive(Default, DeserializeSeeded)]
+#[derive(Default, DeserializeSeeded, Debug)]
 #[seeded(de(seed(TextureDeserializer<'a>),params('a)))]
 pub struct SlotProperty {
     pub name: String,
@@ -27,6 +27,7 @@ pub struct SlotProperty {
     pub visible: bool,
     #[seeded(default)]
     pub icon: Option<texture::Texture>,
+    #[seeded(default)]
     pub tags: Vec<String>,
     // C stuff to remove in the future
     #[seeded(skip, default)]
@@ -154,6 +155,10 @@ pub fn get(name: &str) -> Result<&'static SlotProperty> {
 
 pub fn load() -> Result<Vec<SlotProperty>> {
     fn sdf_texture(ctx: &ContextWrapper, path: &str) -> Result<texture::Texture> {
+        let path = match path.starts_with('/') {
+            true => path,
+            false => &format!("gfx/slots/{}", path),
+        };
         texture::TextureBuilder::new()
             .path(&path)
             .sdf(true)
@@ -168,6 +173,11 @@ pub fn load() -> Result<Vec<SlotProperty>> {
         .filter_map(|filename| SlotProperty::load(&texde, filename.as_str()))
         .collect();
     sort_by_key_ref(&mut sp_data, |sp: &SlotProperty| &sp.name);
+    sp_data.windows(2).for_each(|w| {
+        if w[0].name == w[1].name {
+            warn!("Slot property '{}' loaded twice!", w[0].name);
+        }
+    });
     Ok(sp_data)
 }
 
