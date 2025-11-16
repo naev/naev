@@ -124,7 +124,15 @@ jobs:
     steps:
       - name: Configure Build Environment
         run: |
-          /usr/bin/setup-devenv.sh
+          # Print a message
+          echo "Configuring the development environment"
+
+          export CC_x86_64_pc_windows_gnu="clang --target=x86_64-pc-windows-gnu"
+
+          export PKG_CONFIG_x86_64_pc_windows_gnu="x86_64-w64-mingw32-pkg-config"
+          export PKG_CONFIG_SYSROOT_DIR_x86_64_pc_windows_gnu="/usr/x86_64-w64-mingw32/sys-root/mingw"
+          export BINDGEN_EXTRA_CLANG_ARGS="--sysroot=/usr/x86_64-w64-mingw32/sys-root/mingw --target=x86_64-w64-mingw32"
+
           # If running in GitHub Actions or Forgejo Actions, persist env vars
           if [ "${GITHUB_ACTIONS:-}" = "true" ] && [ -n "${GITHUB_ENV:-}" ]; then
               echo "Running in GitHub/Forgejo Actions, exporting cross-compile vars to GITHUB_ENV"
@@ -217,10 +225,40 @@ jobs:
     steps:
       - name: Configure Build Environment
         run: |
-          export AARCH64_DEPLOYMENT_TARGET="13.0"
-          export X86_64_DEPLOYMENT_TARGET="11.0"
+          # Set HOST and MACOSX_DEPLOYMENT_TARGET depending on which BUILD_ARCH is selected.
+          # Also configure the macports directory for the right libraries since we build for two different targets.
 
-          /usr/bin/setup-devenv.sh
+          # Pass in either BUILDARCH=aarch64 or BUILDARCH=x86_64 when starting this image to configure it correctly.
+
+          # Print a message
+          echo "Configuring the development environment"
+
+          # Configure depending on BUILDARCH
+          if [ "${BUILDARCH}" = "aarch64" ]; then
+              export HOST="$BUILDARCH-apple-darwin23"
+              export MACOSX_DEPLOYMENT_TARGET="${AARCH64_DEPLOYMENT_TARGET:-13.0}"
+              export CARGO_TARGET_AARCH64_APPLE_DARWIN_LINKER="$HOST-cc"
+              ln -sfn /usr/lib/osxcross/macports.aarch64 /usr/lib/osxcross/macports
+          elif [ "${BUILDARCH}" = "x86_64" ]; then
+              export HOST="$BUILDARCH-apple-darwin23"
+              export MACOSX_DEPLOYMENT_TARGET="${X86_64_DEPLOYMENT_TARGET:-11.0}"
+              export CARGO_TARGET_X86_64_APPLE_DARWIN_LINKER="$HOST-cc"
+              ln -sfn /usr/lib/osxcross/macports.x86_64 /usr/lib/osxcross/macports
+          else
+              echo "Unknown or unset BUILDARCH='$BUILDARCH', defaulting to x86_64"
+              export BUILDARCH="x86_64"
+              export HOST="$BUILDARCH-apple-darwin23"
+              export MACOSX_DEPLOYMENT_TARGET="${X86_64_DEPLOYMENT_TARGET:-}"
+              export CARGO_TARGET_X86_64_APPLE_DARWIN_LINKER="$HOST-cc"
+              ln -sfn /usr/lib/osxcross/macports.x86_64 /usr/lib/osxcross/macports
+          fi
+
+          # Configure pkg-config, bindgen
+          export PKG_CONFIG="$HOST-pkg-config"
+          export PKG_CONFIG_PATH="/usr/lib/osxcross/macports/pkgs/opt/local/lib/pkgconfig"
+          export BINDGEN_EXTRA_CLANG_ARGS="--sysroot=/usr/lib/osxcross/SDK/MacOSX14.sdk --target=$BUILDARCH-apple-darwin"
+          export CC_"$BUILDARCH"_apple_darwin="$HOST-cc"
+
           # If running in GitHub Actions or Forgejo Actions, persist env vars
           if [ "${GITHUB_ACTIONS:-}" = "true" ] && [ -n "${GITHUB_ENV:-}" ]; then
               echo "Running in GitHub/Forgejo Actions, exporting macOS cross-compile vars to GITHUB_ENV"
@@ -243,6 +281,9 @@ jobs:
                   echo "CC_${BUILDARCH}_apple_darwin=${HOST}-cc"
               } >> "$GITHUB_ENV"
           fi
+
+          # Print a "Ready to use" message
+          echo "Ready to use for $HOST with MACOSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET"
 
       - name: Get Source
         uses: actions/download-artifact@v3
