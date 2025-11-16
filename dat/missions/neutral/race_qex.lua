@@ -395,6 +395,7 @@ function start_race ()
 end
 
 function race_complete ()
+   camera.setZoom()
    local pp = player.pilot()
    pp:setNoJump(false)
    pp:setNoLand(false)
@@ -481,7 +482,7 @@ function race_landed ()
       if completed and not already_have[completed] then
          vn.na(fmt.f(_([[An individual in a suit and tie suddenly takes you up onto a stage. A large name tag on their jacket says 'Melendez Corporation'. "Congratulations on your win," they say, shaking your hand, "That was a great race! On behalf of Melendez Corporation, and for beating the goal times of all the courses here at {spobname}, I would like to present to you your {metal} trophy!".
 They hand you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it. At least the trophy looks cool.]]),
-            {spobname= spob.cur(), metal= completed}))
+            {spobname= spob.cur(), metal= metal_display_name[completed]}))
          vn.na(fmt.reward(reward_outfit)..'\n'..fmt.reward(reward)..'\n'..fmt.reward(bonus).._(' (early finish bonus)'))
          if completed == 'Silver' or (not already_have['Silver'] and completed == 'Gold') and not diff.isApplied("melendez_dome_xy37") then
             vn.func( function ()
