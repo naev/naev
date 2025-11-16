@@ -11,4 +11,4 @@ edition = "2024"
 [output.html]
 git-repository-url = "https://codeberg.org/naev/naev"
 git-repository-icon = "fa-code-fork"
-edit-url-template = "https://codeberg.org/naev/naev/_edit/main/docs/manual/src/{path}"
+edit-url-template = "https://codeberg.org/naev/naev/_edit/main/docs/manual/{path}"
