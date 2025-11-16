@@ -59,7 +59,7 @@ impl SlotProperty {
     fn load_toml(texde: &TextureDeserializer, filename: &str) -> Result<Self> {
         let data = ndata::read_to_string(filename)?;
         let mut sp: SlotProperty =
-            SlotProperty::deserialize_seeded(&texde, toml::de::Deserializer::parse(&data)?)?;
+            SlotProperty::deserialize_seeded(texde, toml::de::Deserializer::parse(&data)?)?;
         // Have to post-process the C stuff for now
         sp.cdisplay = CString::new(sp.display.as_str())?;
         sp.cdescription = CString::new(sp.description.as_str())?;
@@ -160,7 +160,7 @@ pub fn load() -> Result<Vec<SlotProperty>> {
             false => &format!("gfx/slots/{}", path),
         };
         texture::TextureBuilder::new()
-            .path(&path)
+            .path(path)
             .sdf(true)
             .build_wrap(ctx)
     }

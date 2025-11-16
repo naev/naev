@@ -60,10 +60,7 @@ impl DamageType {
             }
         });
         let cname = CString::new(name.clone())?;
-        let display = match root.attribute("display") {
-            Some(n) => Some(n.to_string()),
-            None => None,
-        };
+        let display = root.attribute("display").map(|n| n.to_string());
         let mut dt = DamageType {
             name,
             cname,

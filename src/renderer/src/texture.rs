@@ -2239,9 +2239,12 @@ pub fn open_texture(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
     Ok(proxy)
 }
 
+type TextureDeserializerFn =
+    dyn Fn(&ContextWrapper, &str) -> Result<Texture> + Send + Sync + 'static;
+
 pub struct TextureDeserializer<'a> {
     pub ctx: ContextWrapper<'a>,
-    pub func: Box<dyn Fn(&ContextWrapper, &str) -> Result<Texture> + Send + Sync + 'static>,
+    pub func: Box<TextureDeserializerFn>,
 }
 
 use serde::{Deserialize, Serialize};
