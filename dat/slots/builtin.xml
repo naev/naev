@@ -1,5 +1,0 @@
-<slot name="builtin">
- <display>Built-In</display>
- <description>This slot is used by a built-in outfit that can not be removed from the ship.</description>
- <locked/>
-</slot>

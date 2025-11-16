@@ -1,0 +1,4 @@
+name = "fighter_bay"
+display = "Fighter Bays"
+description = "This slot can be used for fighter bays."
+icon = "fighter"

@@ -1,0 +1,5 @@
+name = "accessory"
+display = "Accessory"
+description = "This slot is used to equip accessories that can enhance the ship's performance. Outfits that fit in these slots are not generally acquirable by normal means."
+exclusive = true
+icon = "accessory"

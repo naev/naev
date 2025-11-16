@@ -1,0 +1,6 @@
+name = "hull_secondary"
+display = "Hull Modifications (Secondary)"
+description = "This slot is used for structural modifications to the ship's hull. This slot represents the base layer of armour plating, and also greatly affects mass and cargo space."
+exclusive = true
+icon = "hull"
+tags = ["core", "secondary"]

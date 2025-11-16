@@ -1,0 +1,8 @@
+name = "bio_hull"
+display = "Bioship Shells"
+description = "This slot is used for the shell, the biological equivalent to Hull Modifications. The shell is the last line of defence for the organism, protecting critical organs from damage. It also has a minor impact on its available cargo space."
+required = true
+exclusive = true
+locked = true
+icon = "bio"
+tags = ["bioship", "core"]
