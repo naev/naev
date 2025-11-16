@@ -2279,7 +2279,7 @@ impl Serialize for Texture {
         S: serde::Serializer,
     {
         match &self.path {
-            Some(path) => serializer.serialize_str(&path),
+            Some(path) => serializer.serialize_str(&format!("/{}", path)),
             None => Err(serde::ser::Error::custom(
                 "can't serialize texture without a path",
             )),
