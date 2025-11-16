@@ -217,6 +217,9 @@ jobs:
     steps:
       - name: Configure Build Environment
         run: |
+          export AARCH64_DEPLOYMENT_TARGET="13.0"
+          export X86_64_DEPLOYMENT_TARGET="11.0"
+
           /usr/bin/setup-devenv.sh
           # If running in GitHub Actions or Forgejo Actions, persist env vars
           if [ "${GITHUB_ACTIONS:-}" = "true" ] && [ -n "${GITHUB_ENV:-}" ]; then
