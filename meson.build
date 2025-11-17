@@ -11,13 +11,11 @@ project('naev', ['c', 'rust'],
    meson_version: '>=1.7.0')
 
 # Dependency requirements
-# 1.80 LazyLock
-# 1.84 New random syntax
 # 1.85 Rust 2024
 # 1.87 nalgebra 0.34
 # 1.88 iced 0.14.0
-rustc_version = '1.88'
-rustc_needed_version = '>=@0@.0'.format( rustc_version )
+rust_version = '1.88' # version for Cargo.toml's 'rust-version' field
+rustc_needed_version = '>=@0@.0'.format( rust_version )
 bindgen_needed_version = '>=0.72.0'
 cargo_needed_version = '>=1.77.2'
 
@@ -454,7 +452,7 @@ naevcrs = rust.bindgen(
    cargo_data.set_quoted('NAEVC', naevc_crate.full_path() )
    cargo_data.set('BUILD', meson.project_build_root() )
    cargo_data.set('SOURCE', meson.project_source_root() )
-   cargo_data.set_quoted('RUSTCVERSION', rustc_version )
+   cargo_data.set_quoted('RUSTCVERSION', rust_version )
    cargo_toml = configure_file( input: 'Cargo.toml.in', output: 'Cargo.toml', configuration: cargo_data )
    #meson.add_dist_script(add_to_package, cargo_toml.full_path(), cargo_toml )
    # flatpak needs Cargo.lock in the source tarball to be able to generate stuff
