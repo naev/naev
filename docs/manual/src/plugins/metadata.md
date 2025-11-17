@@ -34,7 +34,7 @@ source = { git = "https://my.awesome.website/plugin/repo.git" }
 ## Optional Fields
 
 * **description**: contains the description of the plugin.
-  This can be as long as necessary.
+  This can be as long as necessary, and can use a limited subset of markdown.
   In the case it is not defined, the **abstract** field will be used in its place.
 * **license**: a free-form string defining the license.
   Usually abbreviated license names such as "GPLv3+", "CC0" or "CC-by-sa 3.0" are used.
