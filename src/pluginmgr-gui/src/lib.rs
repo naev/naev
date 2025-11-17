@@ -644,6 +644,7 @@ impl App {
                 if let Err(e) = fs::remove_dir_all(&self.catalog.conf.catalog_cache) {
                     warn_err!(e);
                 }
+                fs::create_dir_all(&conf.catalog_cache)?;
                 self.refresh_task()
             }
             Message::ActionRefresh => {
