@@ -158,7 +158,10 @@ impl Plugin {
         let mut plugin: Self = toml::from_slice(data)?;
         // Additional validation
         if plugin.r#abstract.len() > 200 {
-            anyhow::bail!("abstract exceeds 200 characters");
+            anyhow::bail!(format!(
+                "plugin '{}' abstract exceeds 200 characters",
+                &plugin.name
+            ));
         }
         plugin.compatible = plugin
             .naev_version
@@ -193,7 +196,10 @@ impl Plugin {
                 plugin.mountpoint = Some(path.to_owned());
                 Ok(plugin)
             } else {
-                anyhow::bail!("directory without valid 'plugin.toml'");
+                anyhow::bail!(format!(
+                    "plugin directory '{}' without valid 'plugin.toml'",
+                    path.display()
+                ));
             }
         // Is zip file?
         } else if path
