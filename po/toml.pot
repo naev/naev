@@ -1,0 +1,186 @@
+# Naev toml files
+# Copyright (C) YEAR Naev Dev Team
+# This file is distributed under the same licence as the naev package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: dat/damagetype/armourbreaker.toml:1
+msgid "armourbreaker"
+msgstr ""
+
+#: dat/damagetype/armourbreaker.toml:1
+msgid "#nArmourbreaker#0"
+msgstr ""
+
+#: dat/damagetype/emp.toml:1
+msgid "emp"
+msgstr ""
+
+#: dat/damagetype/emp.toml:1
+msgid "#bEMP#0"
+msgstr ""
+
+#: dat/damagetype/energy.toml:1
+msgid "energy"
+msgstr ""
+
+#: dat/damagetype/energy.toml:1
+#: dat/damagetype/energy_noknockback.toml:1
+msgid "#gEnergy#0"
+msgstr ""
+
+#: dat/damagetype/energy_noknockback.toml:1
+msgid "energy_noknockback"
+msgstr ""
+
+#: dat/damagetype/explosion_splash.toml:1
+msgid "explosion_splash"
+msgstr ""
+
+#: dat/damagetype/ion.toml:1
+msgid "ion"
+msgstr ""
+
+#: dat/damagetype/ion.toml:1
+msgid "#yIon#0"
+msgstr ""
+
+#: dat/damagetype/kinetic.toml:1
+msgid "kinetic"
+msgstr ""
+
+#: dat/damagetype/kinetic.toml:1
+msgid "#oKinetic#0"
+msgstr ""
+
+#: dat/damagetype/nebula.toml:1
+msgid "nebula"
+msgstr ""
+
+#: dat/damagetype/nebula.toml:1
+msgid "#pNebula#0"
+msgstr ""
+
+#: dat/damagetype/plasma.toml:1
+msgid "plasma"
+msgstr ""
+
+#: dat/damagetype/plasma.toml:1
+msgid "#rPlasma#0"
+msgstr ""
+
+#: dat/slots/accessory.toml:1
+msgid "Accessory"
+msgstr ""
+
+#: dat/slots/accessory.toml:1
+msgid "This slot is used to equip accessories that can enhance the ship's performance. Outfits that fit in these slots are not generally acquirable by normal means."
+msgstr ""
+
+#: dat/slots/bio_engines.toml:1
+msgid "Bioship Gene Drives"
+msgstr ""
+
+#: dat/slots/bio_engines.toml:1
+msgid "This slot is used for the gene drives, the biological equivalent to Engines. Gene drives propel the organism through space."
+msgstr ""
+
+#: dat/slots/bio_hull.toml:1
+msgid "Bioship Shells"
+msgstr ""
+
+#: dat/slots/bio_hull.toml:1
+msgid "This slot is used for the shell, the biological equivalent to Hull Modifications. The shell is the last line of defence for the organism, protecting critical organs from damage. It also has a minor impact on its available cargo space."
+msgstr ""
+
+#: dat/slots/bio_organ.toml:1
+msgid "Bioship Organs"
+msgstr ""
+
+#: dat/slots/bio_organ.toml:1
+msgid "Through biological synthesis, bioships are able to modify and adapt their organs for many different purposes without the need of any external equipment."
+msgstr ""
+
+#: dat/slots/bio_systems.toml:1
+msgid "Bioship Brains"
+msgstr ""
+
+#: dat/slots/bio_systems.toml:1
+msgid "This slot is used for the brain, the biological equivalent to Core Systems. The brain of an organism is responsible for managing the function of the rest of the organism and allocating energy reserves for the battery and shield."
+msgstr ""
+
+#: dat/slots/bio_weapon.toml:1
+msgid "Bioship Weapons"
+msgstr ""
+
+#: dat/slots/bio_weapon.toml:1
+msgid "This slot can be used to grow special organic weapons on bioships. Organic weapons are generally similar to their synthetic counterparts, but tend to be more efficient due to the strong coupling with the ship in comparison to purely synthetic constructs."
+msgstr ""
+
+#: dat/slots/builtin.toml:1
+msgid "Built-In"
+msgstr ""
+
+#: dat/slots/builtin.toml:1
+msgid "This slot is used by a built-in outfit that can not be removed from the ship."
+msgstr ""
+
+#: dat/slots/engines.toml:1
+msgid "Engines"
+msgstr ""
+
+#: dat/slots/engines.toml:1
+#: dat/slots/engines_secondary.toml:1
+msgid "This slot is used for engines. Engines propel the ship, which is kind of important. Engines require energy from the core systems to function."
+msgstr ""
+
+#: dat/slots/engines_secondary.toml:1
+msgid "Engines (Secondary)"
+msgstr ""
+
+#: dat/slots/fighter_bay.toml:1
+msgid "Fighter Bays"
+msgstr ""
+
+#: dat/slots/fighter_bay.toml:1
+msgid "This slot can be used for fighter bays."
+msgstr ""
+
+#: dat/slots/hull.toml:1
+msgid "Hull Modifications"
+msgstr ""
+
+#: dat/slots/hull.toml:1
+#: dat/slots/hull_secondary.toml:1
+msgid "This slot is used for structural modifications to the ship's hull. This slot represents the base layer of armour plating, and also greatly affects mass and cargo space."
+msgstr ""
+
+#: dat/slots/hull_secondary.toml:1
+msgid "Hull Modifications (Secondary)"
+msgstr ""
+
+#: dat/slots/systems.toml:1
+msgid "Core Systems"
+msgstr ""
+
+#: dat/slots/systems.toml:1
+#: dat/slots/systems_secondary.toml:1
+msgid "This slot is used for dedicated core systems of the ship. Other subsystems rely on those to manage them, and the bulk of the ship's power and shield generation also happens here."
+msgstr ""
+
+#: dat/slots/systems_secondary.toml:1
+msgid "Core Systems (Secondary)"
+msgstr ""

@@ -45,6 +45,7 @@ deterministic_sort() { LC_ALL=C sort; }
 IFS=$'\n'
 readarray -t ART <<< "$(cd artwork; find_files gfx/loading txt | sed 's|^|artwork/|')"
 po/credits_pot.py po/credits.pot dat/AUTHORS "${ART[@]}"
+po/toml_pot.py po/toml.pot dat/damagetype/ dat/slots/
 
 # Only update naevpedia if not run from pre-commit.
 # This is because naevpedia generates files and we can only update them with
@@ -61,6 +62,7 @@ TMPFILE=$(mktemp)
    echo po/naevpedia.pot
    echo po/physfs.pot
    echo po/credits.pot
+   echo po/toml.pot
    find_files dat xml | deterministic_sort
    ( find_files dat lua; find_files src "[ch]"; find_files src rs) | deterministic_sort
    find_files dat/outfits py | deterministic_sort
