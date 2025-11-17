@@ -1,3 +1,6 @@
+* 0.12.7 (unreleased)
+   * Fixed crash when jettisoning certain mission cargo
+
 * 0.12.6
    * Dvaered Negotiation 1: update the location of the target on the map
    * Dvaered Sabotage: no longer fail the mission if the target jumps out after boarding
