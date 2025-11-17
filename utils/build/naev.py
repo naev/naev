@@ -86,17 +86,6 @@ def wrapper(*args):
 subprocess.run([sys.executable, os.path.join(source_root, "meson.py"), "compile", "-C", build_root, "naev-gmo"])
 os.makedirs(os.path.join(build_root, "dat/gettext"), exist_ok=True)
 
-# Meson <= 0.59
-for mo_path in os.listdir(os.path.join(build_root, "po")):
-   mo_path = os.path.join(build_root, "po", mo_path)
-   if os.path.isfile(mo_path):
-      mo_name = os.path.basename(mo_path)
-      lang = mo_name.replace(".gmo", "")
-      lang_dir = os.path.join(build_root, "dat/gettext", lang, "LC_MESSAGES")
-      os.makedirs(lang_dir, exist_ok=True)
-      shutil.copy(mo_path, os.path.join(lang_dir, "naev.mo"))
-      logger.info(f"Copied {mo_path} to {os.path.join(lang_dir, 'naev.mo')}")
-
 # Meson >= 0.60
 for mo_path in os.listdir(os.path.join(build_root, "po")):
    mo_path = os.path.join(build_root, "po", mo_path)

@@ -62,7 +62,7 @@ for dirname in dirnames:
       for filename in files:
          filename = root+filename
          with open( filename, 'rb' ) as f:
-            print(f"processing {filename}...")
+            #print(f"processing {filename}...")
             d = toml.load( f )
 
             for t in translates:

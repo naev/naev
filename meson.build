@@ -573,8 +573,7 @@ naevcrs = rust.bindgen(
    )
 
    gen_gettext_stats = find_program(files('utils'/'build'/'gen_gettext_stats.py'))
-   gettext_stats = custom_target(
-      'gettext_stats',
+   gettext_stats = custom_target('gettext_stats',
       command: [gen_gettext_stats, '--output', '@OUTPUT@', '@INPUT@'],
       input: files('po/' + meson.project_name() + '.pot'),
       output: meson.project_name() + '.txt',
@@ -591,8 +590,7 @@ naevcrs = rust.bindgen(
    #foreach target: gen_outfits
    #    gen_zip_command += target
    #endforeach
-   zip_overlay = custom_target(
-      'zip_overlay',
+   zip_overlay = custom_target('zip_overlay',
       command: gen_zip_command,
       output: 'meson_overlay.zip',
       depends: [authors, gettext_stats], # + gen_outfits,

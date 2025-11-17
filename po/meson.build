@@ -1,10 +1,11 @@
 # Building translations
 i18n = import('i18n')
 
+update_po = find_program( files( meson.project_source_root()/'utils/update-po.sh' ) )
 potfiles = custom_target(
    'potfiles',
    output: 'POTFILES.in', # this is a dummy file that is output, but we actually use the source instead...
-   command: [ files('../utils/update-po.sh'), meson.project_source_root(), meson.project_build_root(), '@OUTPUT@' ],
+   command: [ update_po, meson.project_source_root(), meson.project_build_root(), '@OUTPUT@' ],
    install: false
 )
 
