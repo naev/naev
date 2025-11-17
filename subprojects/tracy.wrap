@@ -1,10 +1,10 @@
 [wrap-file]
-directory = tracy-0.12.2
-source_url = https://github.com/wolfpld/tracy/archive/refs/tags/v0.12.2.tar.gz
-source_filename = tracy-0.12.2.tar.gz
-source_hash = 09617765ba5ff1aa6da128d9ba3c608166c5ef05ac28e2bb77f791269d444952
-source_fallback_url = https://github.com/mesonbuild/wrapdb/releases/download/tracy_0.12.2-1/tracy-0.12.2.tar.gz
-wrapdb_version = 0.12.2-1
+directory = tracy-0.13.0
+source_url = https://github.com/wolfpld/tracy/archive/refs/tags/v0.13.0.tar.gz
+source_filename = tracy-0.13.0.tar.gz
+source_hash = b0e972dfeebe42470187c1a47b449c8ee9e8656900bcf87b403175ed50796918
+source_fallback_url = https://github.com/mesonbuild/wrapdb/releases/download/tracy_0.13.0-1/tracy-0.13.0.tar.gz
+wrapdb_version = 0.13.0-1
 
 [provide]
-tracy = tracy_dep
+dependency_names = tracy
