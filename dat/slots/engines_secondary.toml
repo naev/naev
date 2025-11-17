@@ -1,6 +1,6 @@
 name = "engines_secondary"
 display = "Engines (Secondary)"
-description = "This slot is used for engines. Engines propel the ship, which is kind of important. Engines require energy from the core system to function."
+description = "This slot is used for engines. Engines propel the ship, which is kind of important. Engines require energy from the core systems to function."
 exclusive = true
 icon = "engines"
 tags = ["core", "engines", "secondary"]
