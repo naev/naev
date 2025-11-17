@@ -25,23 +25,32 @@ msgstr ""
 """
 
 TRANSLATABLES = {
-   "damagetype": [
-      "name",
-      "display",
-   ],
-   "slots": [
-      "display",
-      "description",
-   ],
+   "damagetype": {
+      "fields": [
+         "name",
+         "display",
+      ],
+      "context": "damagetype",
+
+   },
+   "slots": {
+      'fields': [
+         "display",
+         "description",
+      ],
+      "context": "slotproperty",
+   },
 }
 
 DATA = {}
-def data( filename, string ):
-   field = DATA.get(string)
-   if field:
-      DATA[ string ].append( filename )
-   else:
-      DATA[ string ] = [ filename ]
+def data( filename, string, context=None ):
+   if not context:
+      context = "NONE"
+   if not DATA.get(context):
+      DATA[ context ] = {}
+   if not DATA[ context ].get(string):
+      DATA[ context ][ string ] = []
+   DATA[ context ][ string ].append( filename )
 
 dirnames = sys.argv[2:].copy()
 dirnames.sort()
@@ -65,18 +74,21 @@ for dirname in dirnames:
             #print(f"processing {filename}...")
             d = toml.load( f )
 
-            for t in translates:
+            for t in translates["fields"]:
                value = d.get(t)
                if value:
-                  data( filename, value )
+                  data( filename, value, translates["context"] )
 
 out = HEADER
-for (value,filenames) in DATA.items():
-   out += '\n'
-   for fn in filenames:
-      out += f'#: {fn}:1\n'
-   out += f'msgid "{value}"\n'
-   out += 'msgstr ""\n'
+for (context,datas) in DATA.items():
+   for (value,filenames) in datas.items():
+      out += '\n'
+      for fn in filenames:
+         out += f'#: {fn}:1\n'
+      if context != "NONE":
+         out += f'msgctxt "{context}"\n'
+      out += f'msgid "{value}"\n'
+      out += 'msgstr ""\n'
 
 try:
    with open(sys.argv[1],"r") as fin:
