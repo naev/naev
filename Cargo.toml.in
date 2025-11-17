@@ -35,12 +35,7 @@ members = [
 [workspace.package]
 version = @VERSION@
 edition = "2024"
-# 1.80 LazyLock
-# 1.84 New random syntax
-# 1.85 Rust 2024
-# 1.87 nalgebra 0.34
-# 1.88 iced 0.14.0
-rust-version = "1.88" # Note this has to be set in meson.build too!
+rust-version = @RUSTCVERSION@ # Note this has to be set in meson.build too!
 
 [workspace.lints.clippy]
 not_unsafe_ptr_arg_deref = "allow"
