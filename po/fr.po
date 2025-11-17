@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-11-15 18:43+0900\n"
+"POT-Creation-Date: 2025-11-17 20:20+0900\n"
 "PO-Revision-Date: 2025-10-14 19:09+0000\n"
 "Last-Translator: AKArien <akarien@noreply.codeberg.org>\n"
 "Language-Team: French <https://translate.codeberg.org/projects/naev/naev/fr/"
@@ -9291,6 +9291,167 @@ msgstr "PIRATE VENDETTA"
 msgid "VIGILANCE"
 msgstr "VIGILANCE"
 
+msgid "armourbreaker"
+msgstr "briseur d'armure"
+
+#, fuzzy
+msgid "#nArmourbreaker#0"
+msgstr "briseur d'armure"
+
+msgid "emp"
+msgstr "IEM"
+
+msgid "#bEMP#0"
+msgstr ""
+
+msgid "energy"
+msgstr "énergie"
+
+msgid "#gEnergy#0"
+msgstr "#gÉnergie#0"
+
+msgid "energy_noknockback"
+msgstr ""
+
+msgid "explosion_splash"
+msgstr "projection d'explosion"
+
+msgid "ion"
+msgstr "ion"
+
+msgid "#yIon#0"
+msgstr ""
+
+msgid "kinetic"
+msgstr ""
+
+msgid "#oKinetic#0"
+msgstr ""
+
+msgid "nebula"
+msgstr "nébuleuse"
+
+#, fuzzy
+msgid "#pNebula#0"
+msgstr "nébuleuse"
+
+msgid "plasma"
+msgstr ""
+
+msgid "#rPlasma#0"
+msgstr ""
+
+msgid "Accessory"
+msgstr "Accessoire"
+
+msgid ""
+"This slot is used to equip accessories that can enhance the ship's "
+"performance. Outfits that fit in these slots are not generally acquirable by "
+"normal means."
+msgstr ""
+
+msgid "Bioship Gene Drives"
+msgstr ""
+
+msgid ""
+"This slot is used for the gene drives, the biological equivalent to Engines. "
+"Gene drives propel the organism through space."
+msgstr ""
+
+msgid "Bioship Shells"
+msgstr ""
+
+msgid ""
+"This slot is used for the shell, the biological equivalent to Hull "
+"Modifications. The shell is the last line of defence for the organism, "
+"protecting critical organs from damage. It also has a minor impact on its "
+"available cargo space."
+msgstr ""
+
+msgid "Bioship Organs"
+msgstr ""
+
+msgid ""
+"Through biological synthesis, bioships are able to modify and adapt their "
+"organs for many different purposes without the need of any external "
+"equipment."
+msgstr ""
+
+msgid "Bioship Brains"
+msgstr ""
+
+msgid ""
+"This slot is used for the brain, the biological equivalent to Core Systems. "
+"The brain of an organism is responsible for managing the function of the "
+"rest of the organism and allocating energy reserves for the battery and "
+"shield."
+msgstr ""
+
+msgid "Bioship Weapons"
+msgstr ""
+
+msgid ""
+"This slot can be used to grow special organic weapons on bioships. Organic "
+"weapons are generally similar to their synthetic counterparts, but tend to "
+"be more efficient due to the strong coupling with the ship in comparison to "
+"purely synthetic constructs."
+msgstr ""
+
+msgid "Built-In"
+msgstr ""
+
+msgid ""
+"This slot is used by a built-in outfit that can not be removed from the ship."
+msgstr ""
+
+msgid "Engines"
+msgstr ""
+
+msgid ""
+"This slot is used for engines. Engines propel the ship, which is kind of "
+"important. Engines require energy from the core systems to function."
+msgstr ""
+
+#, fuzzy
+msgid "Engines (Secondary)"
+msgstr "Armes"
+
+msgid "Fighter Bays"
+msgstr ""
+
+msgid "This slot can be used for fighter bays."
+msgstr ""
+
+msgid "Hull Modifications"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"This slot is used for structural modifications to the ship's hull. This slot "
+"represents the base layer of armour plating, and also greatly affects mass "
+"and cargo space."
+msgstr ""
+"Cet emplacement est utilisé pour les modifications structurelles de la coque "
+"du navire. Cet emplacement représente la couche de base du blindage et "
+"influe considérablement sur la masse, l'espace de chargement et les "
+"emplacements d'armes disponibles."
+
+msgid "Hull Modifications (Secondary)"
+msgstr ""
+
+msgid "Core Systems"
+msgstr ""
+
+msgid ""
+"This slot is used for dedicated core systems of the ship. Other subsystems "
+"rely on those to manage them, and the bulk of the ship's power and shield "
+"generation also happens here."
+msgstr ""
+
+#, fuzzy
+msgid "Core Systems (Secondary)"
+msgstr "Systèmes de Base (Système)"
+
 #, fuzzy
 msgid "common"
 msgstr "Commando"
@@ -9637,56 +9798,6 @@ msgstr ""
 "la demande constante a entraîné des prix records pour l'yttrium depuis "
 "l'Incident. Les économistes estiment qu'il s'agit d'un indicateur clé des "
 "difficultés à venir."
-
-msgid "armourbreaker"
-msgstr "briseur d'armure"
-
-#, fuzzy
-msgid "#nArmourbreaker#0"
-msgstr "briseur d'armure"
-
-msgid "emp"
-msgstr "IEM"
-
-msgid "#bEMP#0"
-msgstr ""
-
-msgid "energy"
-msgstr "énergie"
-
-msgid "#gEnergy#0"
-msgstr "#gÉnergie#0"
-
-msgid "energy_noknockback"
-msgstr ""
-
-msgid "explosion_splash"
-msgstr "projection d'explosion"
-
-msgid "ion"
-msgstr "ion"
-
-msgid "#yIon#0"
-msgstr ""
-
-msgid "kinetic"
-msgstr ""
-
-msgid "#oKinetic#0"
-msgstr ""
-
-msgid "nebula"
-msgstr "nébuleuse"
-
-#, fuzzy
-msgid "#pNebula#0"
-msgstr "nébuleuse"
-
-msgid "plasma"
-msgstr ""
-
-msgid "#rPlasma#0"
-msgstr ""
 
 msgid "Default"
 msgstr "Défaut"
@@ -10382,9 +10493,6 @@ msgid ""
 msgstr ""
 "La Maison Za'lek est le cœur scientifique de l'Empire. Ils étaient une "
 "grande maison secrète, mais ils sont récemment devenus plus ouvert."
-
-msgid "Accessory"
-msgstr "Accessoire"
 
 msgid ""
 "Apparently air fresheners have been traditionally used in human vehicles as "
@@ -15049,119 +15157,6 @@ msgid ""
 "auxiliary computational units, it can be made to work. However, these "
 "changes do not come cheap."
 msgstr ""
-
-msgid ""
-"This slot is used to equip accessories that can enhance the ship's "
-"performance. Outfits that fit in these slots are not generally acquirable by "
-"normal means."
-msgstr ""
-
-msgid "Bioship Gene Drives"
-msgstr ""
-
-msgid ""
-"This slot is used for the gene drives, the biological equivalent to Engines. "
-"Gene drives propel the organism through space."
-msgstr ""
-
-msgid "Bioship Shells"
-msgstr ""
-
-msgid ""
-"This slot is used for the shell, the biological equivalent to Hull "
-"Modifications. The shell is the last line of defence for the organism, "
-"protecting critical organs from damage. It also has a minor impact on its "
-"available cargo space."
-msgstr ""
-
-msgid "Bioship Organs"
-msgstr ""
-
-msgid ""
-"Through biological synthesis, bioships are able to modify and adapt their "
-"organs for many different purposes without the need of any external "
-"equipment."
-msgstr ""
-
-msgid "Bioship Brains"
-msgstr ""
-
-msgid ""
-"This slot is used for the brain, the biological equivalent to Core Systems. "
-"The brain of an organism is responsible for managing the function of the "
-"rest of the organism and allocating energy reserves for the battery and "
-"shield."
-msgstr ""
-
-msgid "Bioship Weapons"
-msgstr ""
-
-msgid ""
-"This slot can be used to grow special organic weapons on bioships. Organic "
-"weapons are generally similar to their synthetic counterparts, but tend to "
-"be more efficient due to the strong coupling with the ship in comparison to "
-"purely synthetic constructs."
-msgstr ""
-
-msgid "Built-In"
-msgstr ""
-
-msgid ""
-"This slot is used by a built-in outfit that can not be removed from the ship."
-msgstr ""
-
-msgid "Engines"
-msgstr ""
-
-msgid ""
-"This slot is used for engines. Engines propel the ship, which is kind of "
-"important. Engines require energy from the core systems to function."
-msgstr ""
-
-#, fuzzy
-msgid "Engines (Secondary)"
-msgstr "Armes"
-
-msgid ""
-"This slot is used for engines. Engines propel the ship, which is kind of "
-"important. Engines require energy from the core system to function."
-msgstr ""
-
-msgid "Fighter Bays"
-msgstr ""
-
-msgid "This slot can be used for fighter bays."
-msgstr ""
-
-msgid "Hull Modifications"
-msgstr ""
-
-#, fuzzy
-msgid ""
-"This slot is used for structural modifications to the ship's hull. This slot "
-"represents the base layer of armour plating, and also greatly affects mass "
-"and cargo space."
-msgstr ""
-"Cet emplacement est utilisé pour les modifications structurelles de la coque "
-"du navire. Cet emplacement représente la couche de base du blindage et "
-"influe considérablement sur la masse, l'espace de chargement et les "
-"emplacements d'armes disponibles."
-
-msgid "Hull Modifications (Secondary)"
-msgstr ""
-
-msgid "Core Systems"
-msgstr ""
-
-msgid ""
-"This slot is used for dedicated core systems of the ship. Other subsystems "
-"rely on those to manage them, and the bulk of the ship's power and shield "
-"generation also happens here."
-msgstr ""
-
-#, fuzzy
-msgid "Core Systems (Secondary)"
-msgstr "Systèmes de Base (Système)"
 
 msgid "Abacus"
 msgstr "Abacus"
