@@ -372,7 +372,6 @@ impl Catalog {
     }
 
     fn save_to_cache(&self) -> Result<()> {
-        fs::create_dir_all(&self.conf.catalog_cache)?;
         for (_, plugin) in self.data.lock().unwrap().iter() {
             let data = match toml::to_string(&plugin) {
                 Ok(data) => data,
@@ -443,6 +442,7 @@ impl App {
         let conf = Conf::new()?;
         fs::create_dir_all(&conf.install_path)?;
         fs::create_dir_all(&conf.disable_path)?;
+        fs::create_dir_all(&conf.catalog_cache)?;
 
         // We'll hardcode a logo into the source code for now
         use iced::advanced::image;
