@@ -81,6 +81,7 @@ enum Message {
     Disable(Plugin),
     Uninstall(Plugin),
     UninstallDisabled(Plugin),
+    LinkClicked(widget::markdown::Url),
     Idle,
     DropDownToggle,
     RefreshLocal,
@@ -114,6 +115,8 @@ struct PluginWrap {
     state: PluginState,
     #[serde(skip, default)]
     image: Option<iced::advanced::image::Handle>,
+    #[serde(skip, default)]
+    description_md: Option<Vec<widget::markdown::Item>>,
 }
 impl PluginWrap {
     fn new_local(plugin: &Plugin, state: PluginState) -> Self {
@@ -123,6 +126,10 @@ impl PluginWrap {
             remote: None,
             state,
             image: None,
+            description_md: plugin
+                .description
+                .as_ref()
+                .map(|desc| widget::markdown::parse(desc).collect()),
         }
     }
 
@@ -133,6 +140,10 @@ impl PluginWrap {
             remote: Some(plugin.clone()),
             state: PluginState::Available,
             image: None,
+            description_md: plugin
+                .description
+                .as_ref()
+                .map(|desc| widget::markdown::parse(desc).collect()),
         }
     }
 
@@ -140,9 +151,19 @@ impl PluginWrap {
         if let Some(dest) = &self.remote {
             if dest.version <= remote.version {
                 self.remote = Some(remote.clone());
+                self.description_md = self
+                    .plugin()
+                    .description
+                    .as_ref()
+                    .map(|desc| widget::markdown::parse(desc).collect());
             }
         } else {
             self.remote = Some(remote.clone());
+            self.description_md = self
+                .plugin()
+                .description
+                .as_ref()
+                .map(|desc| widget::markdown::parse(desc).collect());
         }
     }
 
@@ -351,7 +372,6 @@ impl Catalog {
     }
 
     fn save_to_cache(&self) -> Result<()> {
-        fs::create_dir_all(&self.conf.catalog_cache)?;
         for (_, plugin) in self.data.lock().unwrap().iter() {
             let data = match toml::to_string(&plugin) {
                 Ok(data) => data,
@@ -422,6 +442,7 @@ impl App {
         let conf = Conf::new()?;
         fs::create_dir_all(&conf.install_path)?;
         fs::create_dir_all(&conf.disable_path)?;
+        fs::create_dir_all(&conf.catalog_cache)?;
 
         // We'll hardcode a logo into the source code for now
         use iced::advanced::image;
@@ -605,6 +626,10 @@ impl App {
                 }
                 self.refresh_local_task()
             }
+            Message::LinkClicked(_url) => {
+                // TODO actually handle clicked links?
+                Task::none()
+            }
             Message::Idle => {
                 self.idle = true;
                 Task::none()
@@ -784,7 +809,11 @@ impl App {
                 bold(pgettext("plugins", "Status:")),
                 info(gettext(sel.release_status.as_str())),
                 bold(pgettext("plugins", "Description")),
-                text(sel.description.as_ref().unwrap_or(&sel.r#abstract)),
+                if let Some(md) = &wrp.description_md {
+                    widget::markdown::view(md, THEME).map(Message::LinkClicked)
+                } else {
+                    text(&sel.r#abstract).into()
+                }
             ]
             .spacing(5);
             (

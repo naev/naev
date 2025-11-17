@@ -8,6 +8,8 @@ potfiles = custom_target(
    install: false
 )
 
+# Would want to be able to set the potfiles as a dependency, however, not possible as per below
+# https://github.com/mesonbuild/meson/issues/15053
 gettext_targets = i18n.gettext('naev',
    data_dirs: meson.project_source_root() / 'po',
    args: [
@@ -30,6 +32,7 @@ gettext_targets = i18n.gettext('naev',
    install_dir: ndata_path / 'dat/gettext',
 )
 
+# remove these two aliases once the depend issue above is solved
 pot = alias_target( 'pot',
    potfiles,
    gettext_targets[1],

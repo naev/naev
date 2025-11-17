@@ -839,20 +839,13 @@ void mission_cleanup( Mission *misn )
  */
 void mission_shift( int pos )
 {
-   Mission *misn;
-
-   if ( pos >= ( array_size( player_missions ) - 1 ) )
+   if ( pos < 0 || pos >= array_size( player_missions ) ) {
+      WARN( "out of range" );
       return;
+   }
 
-   /* Store specified mission. */
-   misn = player_missions[pos];
-
-   /* Move other missions down. */
-   memmove( &player_missions[pos], &player_missions[pos + 1],
-            sizeof( Mission * ) * ( array_size( player_missions ) - pos - 1 ) );
-
-   /* Put the specified mission at the end of the array. */
-   player_missions[array_size( player_missions ) - 1] = misn;
+   array_erase( &player_missions, &player_missions[pos],
+                &player_missions[pos + 1] );
 }
 
 /**
