@@ -70,11 +70,20 @@ for dirname in dirnames:
                if value:
                   data( filename, value )
 
-with open(sys.argv[1],"w") as fout:
-   fout.write( HEADER )
-   for (value,filenames) in DATA.items():
-      fout.write('\n')
-      for fn in filenames:
-         fout.write( f'#: {fn}:1\n')
-      fout.write( f'msgid "{value}"\n')
-      fout.write( 'msgstr ""\n' )
+out = HEADER
+for (value,filenames) in DATA.items():
+   out += '\n'
+   for fn in filenames:
+      out += f'#: {fn}:1\n'
+   out += f'msgid "{value}"\n'
+   out += 'msgstr ""\n'
+
+try:
+   with open(sys.argv[1],"r") as fin:
+      upstream = fin.read()
+except:
+   upstream = ""
+
+if out != upstream:
+   with open(sys.argv[1],"w") as fout:
+      fout.write( out )
