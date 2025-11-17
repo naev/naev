@@ -641,6 +641,7 @@ impl App {
             Message::RefreshLocal => self.refresh_local_task(),
             Message::ActionClearCache => {
                 self.drop_action = false;
+                self.idle = false;
                 if let Err(e) = fs::remove_dir_all(&self.catalog.conf.catalog_cache) {
                     warn_err!(e);
                 }
@@ -651,6 +652,7 @@ impl App {
             }
             Message::ActionRefresh => {
                 self.drop_action = false;
+                self.idle = false;
                 self.refresh_task()
             }
             Message::ActionUpdate => {
