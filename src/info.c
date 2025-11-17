@@ -1161,7 +1161,7 @@ static void cargo_jettison( unsigned int wid, const char *str )
       /* Now clean up mission. */
       if ( ret != 2 ) {
          mission_cleanup( misn );
-         mission_shift( pos );
+         mission_shift( f );
       }
 
       /* Reset markers. */
