@@ -206,12 +206,8 @@ void menu_main( void )
    menu_main_bkg_system();
 
    /* Set dimensions */
-   y = 20 + ( BUTTON_HEIGHT + 20 ) * 4;
+   y = 20 + ( BUTTON_HEIGHT + 20 ) * 5;
    h = y + 80;
-   if ( conf.devmode ) {
-      h += BUTTON_HEIGHT + 20;
-      y += BUTTON_HEIGHT + 20;
-   }
 
    /* Calculate Logo and window offset. */
    freespace = SCREEN_H - tex_sh( tex ) - h;
