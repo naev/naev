@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.12.0-beta.1\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-11-17 20:20+0900\n"
+"POT-Creation-Date: 2025-11-17 23:06+0900\n"
 "PO-Revision-Date: 2025-07-31 17:02+0000\n"
 "Last-Translator: Valeriy Sosnov <sigus@vivaldi.net>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/naev/naev/ru/>\n"
@@ -11049,75 +11049,96 @@ msgstr "ПИРАТСКАЯ ВЕНДЕТТА"
 msgid "VIGILANCE"
 msgstr "БДИТЕЛЬНОСТЬ"
 
+msgctxt "damagetype"
 msgid "armourbreaker"
-msgstr "бронебойный"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#nArmourbreaker#0"
-msgstr "#nБронебойщик#0"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "emp"
-msgstr "электромагнитный импульс"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#bEMP#0"
-msgstr "#bЭМИ#0"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "energy"
-msgstr "энергия"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#gEnergy#0"
-msgstr "#gЭнергия#0"
+msgstr ""
 
-#, fuzzy
+msgctxt "damagetype"
 msgid "energy_noknockback"
-msgstr "энергия без отбрасывания"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "explosion_splash"
-msgstr "взрывная волна"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "ion"
-msgstr "ионный"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#yIon#0"
-msgstr "#yИонный#0"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "kinetic"
-msgstr "кинетическая"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#oKinetic#0"
-msgstr "#oКинетический#0"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "nebula"
-msgstr "туманность"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#pNebula#0"
-msgstr "#pТуманность#0"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "plasma"
-msgstr "плазма"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#rPlasma#0"
-msgstr "#rПлазма#0"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid "Accessory"
-msgstr "Аксессуар"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used to equip accessories that can enhance the ship's "
 "performance. Outfits that fit in these slots are not generally acquirable by "
 "normal means."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Bioship Gene Drives"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for the gene drives, the biological equivalent to Engines. "
 "Gene drives propel the organism through space."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Bioship Shells"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for the shell, the biological equivalent to Hull "
 "Modifications. The shell is the last line of defence for the organism, "
@@ -11125,18 +11146,22 @@ msgid ""
 "available cargo space."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Bioship Organs"
-msgstr "Органы биокорабля"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "Through biological synthesis, bioships are able to modify and adapt their "
 "organs for many different purposes without the need of any external "
 "equipment."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Bioship Brains"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for the brain, the biological equivalent to Core Systems. "
 "The brain of an organism is responsible for managing the function of the "
@@ -11144,9 +11169,11 @@ msgid ""
 "shield."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Bioship Weapons"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot can be used to grow special organic weapons on bioships. Organic "
 "weapons are generally similar to their synthetic counterparts, but tend to "
@@ -11154,51 +11181,64 @@ msgid ""
 "purely synthetic constructs."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Built-In"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used by a built-in outfit that can not be removed from the ship."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Engines"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for engines. Engines propel the ship, which is kind of "
 "important. Engines require energy from the core systems to function."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Engines (Secondary)"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Fighter Bays"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "This slot can be used for fighter bays."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Hull Modifications"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for structural modifications to the ship's hull. This slot "
 "represents the base layer of armour plating, and also greatly affects mass "
 "and cargo space."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Hull Modifications (Secondary)"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Core Systems"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for dedicated core systems of the ship. Other subsystems "
 "rely on those to manage them, and the bulk of the ship's power and shield "
 "generation also happens here."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Core Systems (Secondary)"
 msgstr ""
 
@@ -12217,6 +12257,9 @@ msgid ""
 msgstr ""
 "Дом За'лек — научное сердце Империи. До недавнего времени они были скрытным "
 "Великим Домом, но в последнее время стали гораздо более открытыми."
+
+msgid "Accessory"
+msgstr "Аксессуар"
 
 msgid ""
 "Apparently air fresheners have been traditionally used in human vehicles as "
@@ -125943,6 +125986,58 @@ msgid ""
 "the extreme long range and high penetration for a weapon of its size, it can "
 "be very deadly."
 msgstr ""
+
+#~ msgid "armourbreaker"
+#~ msgstr "бронебойный"
+
+#~ msgid "#nArmourbreaker#0"
+#~ msgstr "#nБронебойщик#0"
+
+#~ msgid "emp"
+#~ msgstr "электромагнитный импульс"
+
+#~ msgid "#bEMP#0"
+#~ msgstr "#bЭМИ#0"
+
+#~ msgid "energy"
+#~ msgstr "энергия"
+
+#~ msgid "#gEnergy#0"
+#~ msgstr "#gЭнергия#0"
+
+#, fuzzy
+#~ msgid "energy_noknockback"
+#~ msgstr "энергия без отбрасывания"
+
+#~ msgid "explosion_splash"
+#~ msgstr "взрывная волна"
+
+#~ msgid "ion"
+#~ msgstr "ионный"
+
+#~ msgid "#yIon#0"
+#~ msgstr "#yИонный#0"
+
+#~ msgid "kinetic"
+#~ msgstr "кинетическая"
+
+#~ msgid "#oKinetic#0"
+#~ msgstr "#oКинетический#0"
+
+#~ msgid "nebula"
+#~ msgstr "туманность"
+
+#~ msgid "#pNebula#0"
+#~ msgstr "#pТуманность#0"
+
+#~ msgid "plasma"
+#~ msgstr "плазма"
+
+#~ msgid "#rPlasma#0"
+#~ msgstr "#rПлазма#0"
+
+#~ msgid "Bioship Organs"
+#~ msgstr "Органы биокорабля"
 
 #~ msgid "* [House Goddard](lore/factions/goddard)"
 #~ msgstr "* [Дом Годдард](lore/factions/goddard)"

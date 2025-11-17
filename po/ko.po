@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-11-17 20:20+0900\n"
+"POT-Creation-Date: 2025-11-17 23:06+0900\n"
 "PO-Revision-Date: 2024-06-23 14:45+0000\n"
 "Last-Translator: Han Ga Eun <gdd72582@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/naev/naev/ko/>\n"
@@ -9029,84 +9029,96 @@ msgstr ""
 msgid "VIGILANCE"
 msgstr ""
 
+msgctxt "damagetype"
 msgid "armourbreaker"
 msgstr ""
 
+msgctxt "damagetype"
 msgid "#nArmourbreaker#0"
 msgstr ""
 
+msgctxt "damagetype"
 msgid "emp"
 msgstr ""
 
+msgctxt "damagetype"
 msgid "#bEMP#0"
 msgstr ""
 
+msgctxt "damagetype"
 msgid "energy"
 msgstr ""
 
+msgctxt "damagetype"
 msgid "#gEnergy#0"
 msgstr ""
 
+msgctxt "damagetype"
 msgid "energy_noknockback"
 msgstr ""
 
+msgctxt "damagetype"
 msgid "explosion_splash"
 msgstr ""
 
-#, fuzzy
+msgctxt "damagetype"
 msgid "ion"
-msgstr "오리온 빔"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#yIon#0"
 msgstr ""
 
+msgctxt "damagetype"
 msgid "kinetic"
 msgstr ""
 
+msgctxt "damagetype"
 msgid "#oKinetic#0"
 msgstr ""
 
-#, fuzzy
+msgctxt "damagetype"
 msgid "nebula"
-msgstr "%s성운"
+msgstr ""
 
-#, fuzzy
+msgctxt "damagetype"
 msgid "#pNebula#0"
-msgstr "%s성운"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "plasma"
 msgstr ""
 
+msgctxt "damagetype"
 msgid "#rPlasma#0"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Accessory"
-msgstr "엑세서리"
+msgstr ""
 
-#, fuzzy
+msgctxt "slotproperty"
 msgid ""
 "This slot is used to equip accessories that can enhance the ship's "
 "performance. Outfits that fit in these slots are not generally acquirable by "
 "normal means."
 msgstr ""
-"이 슬롯은 선박의 성능을 향상시킬 수있는 액세서리를 장착하는 데 사용됩니다."
 
-#, fuzzy
+msgctxt "slotproperty"
 msgid "Bioship Gene Drives"
-msgstr "바이오십 무기"
+msgstr ""
 
-#, fuzzy
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for the gene drives, the biological equivalent to Engines. "
 "Gene drives propel the organism through space."
 msgstr ""
-"해당 슬롯은 엔진과 동등한 기체의 생물학적 수직 안정판에 사용됩니다. 수직 안정"
-"판은 유기체를 통해 우주에서 이동할 수 있게 해줍니다."
 
-#, fuzzy
+msgctxt "slotproperty"
 msgid "Bioship Shells"
-msgstr "바이오십 셀"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for the shell, the biological equivalent to Hull "
 "Modifications. The shell is the last line of defence for the organism, "
@@ -9114,33 +9126,34 @@ msgid ""
 "available cargo space."
 msgstr ""
 
-#, fuzzy
+msgctxt "slotproperty"
 msgid "Bioship Organs"
-msgstr "바이오십 뇌"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "Through biological synthesis, bioships are able to modify and adapt their "
 "organs for many different purposes without the need of any external "
 "equipment."
 msgstr ""
 
-#, fuzzy
+msgctxt "slotproperty"
 msgid "Bioship Brains"
-msgstr "바이오십 뇌"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for the brain, the biological equivalent to Core Systems. "
 "The brain of an organism is responsible for managing the function of the "
 "rest of the organism and allocating energy reserves for the battery and "
 "shield."
 msgstr ""
-"이 슬롯은 Core Systems와 생물학적으로 동등한 두뇌에 사용됩니다. 유기체의 뇌"
-"는 나머지 유기체의 기능을 관리하고 배터리와 보호막을위한 에너지 비축량을 할당"
-"하는 역할을합니다."
 
+msgctxt "slotproperty"
 msgid "Bioship Weapons"
-msgstr "바이오십 무기"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot can be used to grow special organic weapons on bioships. Organic "
 "weapons are generally similar to their synthetic counterparts, but tend to "
@@ -9148,62 +9161,66 @@ msgid ""
 "purely synthetic constructs."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Built-In"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used by a built-in outfit that can not be removed from the ship."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Engines"
-msgstr "엔지"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for engines. Engines propel the ship, which is kind of "
 "important. Engines require energy from the core systems to function."
 msgstr ""
 
-#, fuzzy
+msgctxt "slotproperty"
 msgid "Engines (Secondary)"
-msgstr "리퍼 캐논"
+msgstr ""
 
-#, fuzzy
+msgctxt "slotproperty"
 msgid "Fighter Bays"
-msgstr "빛 "
+msgstr ""
 
+msgctxt "slotproperty"
 msgid "This slot can be used for fighter bays."
 msgstr ""
 
-#, fuzzy
+msgctxt "slotproperty"
 msgid "Hull Modifications"
-msgstr "선체 수정"
+msgstr ""
 
-#, fuzzy
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for structural modifications to the ship's hull. This slot "
 "represents the base layer of armour plating, and also greatly affects mass "
 "and cargo space."
 msgstr ""
-"이 슬롯은 선박의 선체 구조를 수정하는 데 사용됩니다. 이 슬롯은 갑옷 도금의 기"
-"본 레이어를 나타내며 질량,화물 공간 및 사용 가능한 무기 슬롯에 큰 영향을 미칩"
-"니다."
 
-#, fuzzy
+msgctxt "slotproperty"
 msgid "Hull Modifications (Secondary)"
-msgstr "선체 수정"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid "Core Systems"
-msgstr "핵심 시스템"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for dedicated core systems of the ship. Other subsystems "
 "rely on those to manage them, and the bulk of the ship's power and shield "
 "generation also happens here."
 msgstr ""
 
-#, fuzzy
+msgctxt "slotproperty"
 msgid "Core Systems (Secondary)"
-msgstr "핵심 시스템"
+msgstr ""
 
 msgid "common"
 msgstr ""
@@ -10124,6 +10141,9 @@ msgid ""
 "House Za'lek is the scientific heart of the Empire. Until recently they were "
 "a secretive Great House, but they have recently become much more open."
 msgstr ""
+
+msgid "Accessory"
+msgstr "엑세서리"
 
 msgid ""
 "Apparently air fresheners have been traditionally used in human vehicles as "
@@ -125297,6 +125317,99 @@ msgid ""
 "the extreme long range and high penetration for a weapon of its size, it can "
 "be very deadly."
 msgstr ""
+
+#, fuzzy
+#~ msgid "ion"
+#~ msgstr "오리온 빔"
+
+#, fuzzy
+#~ msgid "nebula"
+#~ msgstr "%s성운"
+
+#, fuzzy
+#~ msgid "#pNebula#0"
+#~ msgstr "%s성운"
+
+#, fuzzy
+#~ msgid ""
+#~ "This slot is used to equip accessories that can enhance the ship's "
+#~ "performance. Outfits that fit in these slots are not generally acquirable "
+#~ "by normal means."
+#~ msgstr ""
+#~ "이 슬롯은 선박의 성능을 향상시킬 수있는 액세서리를 장착하는 데 사용됩니다."
+
+#, fuzzy
+#~ msgid "Bioship Gene Drives"
+#~ msgstr "바이오십 무기"
+
+#, fuzzy
+#~ msgid ""
+#~ "This slot is used for the gene drives, the biological equivalent to "
+#~ "Engines. Gene drives propel the organism through space."
+#~ msgstr ""
+#~ "해당 슬롯은 엔진과 동등한 기체의 생물학적 수직 안정판에 사용됩니다. 수직 "
+#~ "안정판은 유기체를 통해 우주에서 이동할 수 있게 해줍니다."
+
+#, fuzzy
+#~ msgid "Bioship Shells"
+#~ msgstr "바이오십 셀"
+
+#, fuzzy
+#~ msgid "Bioship Organs"
+#~ msgstr "바이오십 뇌"
+
+#, fuzzy
+#~ msgid "Bioship Brains"
+#~ msgstr "바이오십 뇌"
+
+#~ msgid ""
+#~ "This slot is used for the brain, the biological equivalent to Core "
+#~ "Systems. The brain of an organism is responsible for managing the "
+#~ "function of the rest of the organism and allocating energy reserves for "
+#~ "the battery and shield."
+#~ msgstr ""
+#~ "이 슬롯은 Core Systems와 생물학적으로 동등한 두뇌에 사용됩니다. 유기체의 "
+#~ "뇌는 나머지 유기체의 기능을 관리하고 배터리와 보호막을위한 에너지 비축량"
+#~ "을 할당하는 역할을합니다."
+
+#~ msgid "Bioship Weapons"
+#~ msgstr "바이오십 무기"
+
+#~ msgid "Engines"
+#~ msgstr "엔지"
+
+#, fuzzy
+#~ msgid "Engines (Secondary)"
+#~ msgstr "리퍼 캐논"
+
+#, fuzzy
+#~ msgid "Fighter Bays"
+#~ msgstr "빛 "
+
+#, fuzzy
+#~ msgid "Hull Modifications"
+#~ msgstr "선체 수정"
+
+#, fuzzy
+#~ msgid ""
+#~ "This slot is used for structural modifications to the ship's hull. This "
+#~ "slot represents the base layer of armour plating, and also greatly "
+#~ "affects mass and cargo space."
+#~ msgstr ""
+#~ "이 슬롯은 선박의 선체 구조를 수정하는 데 사용됩니다. 이 슬롯은 갑옷 도금"
+#~ "의 기본 레이어를 나타내며 질량,화물 공간 및 사용 가능한 무기 슬롯에 큰 영"
+#~ "향을 미칩니다."
+
+#, fuzzy
+#~ msgid "Hull Modifications (Secondary)"
+#~ msgstr "선체 수정"
+
+#~ msgid "Core Systems"
+#~ msgstr "핵심 시스템"
+
+#, fuzzy
+#~ msgid "Core Systems (Secondary)"
+#~ msgstr "핵심 시스템"
 
 #~ msgid ""
 #~ "This slot is used for engines. Engines propel the ship, which is kind of "

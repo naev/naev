@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-11-17 20:20+0900\n"
+"POT-Creation-Date: 2025-11-17 23:06+0900\n"
 "PO-Revision-Date: 2025-10-14 19:09+0000\n"
 "Last-Translator: AKArien <akarien@noreply.codeberg.org>\n"
 "Language-Team: French <https://translate.codeberg.org/projects/naev/naev/fr/"
@@ -9291,76 +9291,96 @@ msgstr "PIRATE VENDETTA"
 msgid "VIGILANCE"
 msgstr "VIGILANCE"
 
+msgctxt "damagetype"
 msgid "armourbreaker"
-msgstr "briseur d'armure"
+msgstr ""
 
-#, fuzzy
+msgctxt "damagetype"
 msgid "#nArmourbreaker#0"
-msgstr "briseur d'armure"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "emp"
-msgstr "IEM"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#bEMP#0"
 msgstr ""
 
+msgctxt "damagetype"
 msgid "energy"
-msgstr "énergie"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#gEnergy#0"
-msgstr "#gÉnergie#0"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "energy_noknockback"
 msgstr ""
 
+msgctxt "damagetype"
 msgid "explosion_splash"
-msgstr "projection d'explosion"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "ion"
-msgstr "ion"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#yIon#0"
 msgstr ""
 
+msgctxt "damagetype"
 msgid "kinetic"
 msgstr ""
 
+msgctxt "damagetype"
 msgid "#oKinetic#0"
 msgstr ""
 
+msgctxt "damagetype"
 msgid "nebula"
-msgstr "nébuleuse"
+msgstr ""
 
-#, fuzzy
+msgctxt "damagetype"
 msgid "#pNebula#0"
-msgstr "nébuleuse"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "plasma"
 msgstr ""
 
+msgctxt "damagetype"
 msgid "#rPlasma#0"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Accessory"
-msgstr "Accessoire"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used to equip accessories that can enhance the ship's "
 "performance. Outfits that fit in these slots are not generally acquirable by "
 "normal means."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Bioship Gene Drives"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for the gene drives, the biological equivalent to Engines. "
 "Gene drives propel the organism through space."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Bioship Shells"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for the shell, the biological equivalent to Hull "
 "Modifications. The shell is the last line of defence for the organism, "
@@ -9368,18 +9388,22 @@ msgid ""
 "available cargo space."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Bioship Organs"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "Through biological synthesis, bioships are able to modify and adapt their "
 "organs for many different purposes without the need of any external "
 "equipment."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Bioship Brains"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for the brain, the biological equivalent to Core Systems. "
 "The brain of an organism is responsible for managing the function of the "
@@ -9387,9 +9411,11 @@ msgid ""
 "shield."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Bioship Weapons"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot can be used to grow special organic weapons on bioships. Organic "
 "weapons are generally similar to their synthetic counterparts, but tend to "
@@ -9397,60 +9423,66 @@ msgid ""
 "purely synthetic constructs."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Built-In"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used by a built-in outfit that can not be removed from the ship."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Engines"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for engines. Engines propel the ship, which is kind of "
 "important. Engines require energy from the core systems to function."
 msgstr ""
 
-#, fuzzy
+msgctxt "slotproperty"
 msgid "Engines (Secondary)"
-msgstr "Armes"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid "Fighter Bays"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "This slot can be used for fighter bays."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Hull Modifications"
 msgstr ""
 
-#, fuzzy
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for structural modifications to the ship's hull. This slot "
 "represents the base layer of armour plating, and also greatly affects mass "
 "and cargo space."
 msgstr ""
-"Cet emplacement est utilisé pour les modifications structurelles de la coque "
-"du navire. Cet emplacement représente la couche de base du blindage et "
-"influe considérablement sur la masse, l'espace de chargement et les "
-"emplacements d'armes disponibles."
 
+msgctxt "slotproperty"
 msgid "Hull Modifications (Secondary)"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Core Systems"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for dedicated core systems of the ship. Other subsystems "
 "rely on those to manage them, and the bulk of the ship's power and shield "
 "generation also happens here."
 msgstr ""
 
-#, fuzzy
+msgctxt "slotproperty"
 msgid "Core Systems (Secondary)"
-msgstr "Systèmes de Base (Système)"
+msgstr ""
 
 #, fuzzy
 msgid "common"
@@ -10493,6 +10525,9 @@ msgid ""
 msgstr ""
 "La Maison Za'lek est le cœur scientifique de l'Empire. Ils étaient une "
 "grande maison secrète, mais ils sont récemment devenus plus ouvert."
+
+msgid "Accessory"
+msgstr "Accessoire"
 
 msgid ""
 "Apparently air fresheners have been traditionally used in human vehicles as "
@@ -129144,6 +129179,54 @@ msgid ""
 "the extreme long range and high penetration for a weapon of its size, it can "
 "be very deadly."
 msgstr ""
+
+#~ msgid "armourbreaker"
+#~ msgstr "briseur d'armure"
+
+#, fuzzy
+#~ msgid "#nArmourbreaker#0"
+#~ msgstr "briseur d'armure"
+
+#~ msgid "emp"
+#~ msgstr "IEM"
+
+#~ msgid "energy"
+#~ msgstr "énergie"
+
+#~ msgid "#gEnergy#0"
+#~ msgstr "#gÉnergie#0"
+
+#~ msgid "explosion_splash"
+#~ msgstr "projection d'explosion"
+
+#~ msgid "ion"
+#~ msgstr "ion"
+
+#~ msgid "nebula"
+#~ msgstr "nébuleuse"
+
+#, fuzzy
+#~ msgid "#pNebula#0"
+#~ msgstr "nébuleuse"
+
+#, fuzzy
+#~ msgid "Engines (Secondary)"
+#~ msgstr "Armes"
+
+#, fuzzy
+#~ msgid ""
+#~ "This slot is used for structural modifications to the ship's hull. This "
+#~ "slot represents the base layer of armour plating, and also greatly "
+#~ "affects mass and cargo space."
+#~ msgstr ""
+#~ "Cet emplacement est utilisé pour les modifications structurelles de la "
+#~ "coque du navire. Cet emplacement représente la couche de base du blindage "
+#~ "et influe considérablement sur la masse, l'espace de chargement et les "
+#~ "emplacements d'armes disponibles."
+
+#, fuzzy
+#~ msgid "Core Systems (Secondary)"
+#~ msgstr "Systèmes de Base (Système)"
 
 #~ msgid "Editors"
 #~ msgstr "Éditeurs"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-11-17 20:20+0900\n"
+"POT-Creation-Date: 2025-11-17 23:06+0900\n"
 "PO-Revision-Date: 2025-10-27 08:32+0000\n"
 "Last-Translator: Dawedaen <dawedaen@noreply.codeberg.org>\n"
 "Language-Team: Czech <https://translate.codeberg.org/projects/naev/naev/cs/"
@@ -10427,79 +10427,96 @@ msgstr "PIRÁTSKÁ VENDETTA"
 msgid "VIGILANCE"
 msgstr "VIGILANCE"
 
+msgctxt "damagetype"
 msgid "armourbreaker"
-msgstr "rozbíječ pancíře"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#nArmourbreaker#0"
-msgstr "#nRozbíječ pancíře#0"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "emp"
-msgstr "emp"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#bEMP#0"
-msgstr "#bEMP#0"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "energy"
-msgstr "energie"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#gEnergy#0"
-msgstr "#gEnergie#0"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "energy_noknockback"
-msgstr "energy_noknockback"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "explosion_splash"
-msgstr "rozptyl_výbuchu"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "ion"
-msgstr "ion"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#yIon#0"
-msgstr "#yIon#0"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "kinetic"
-msgstr "kinetický"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#oKinetic#0"
-msgstr "#oKinetický#0"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "nebula"
-msgstr "mlhovina"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#pNebula#0"
-msgstr "#pNebula#0"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "plasma"
-msgstr "plazma"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#rPlasma#0"
-msgstr "#rPlazma#0"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid "Accessory"
-msgstr "Příslušenství"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used to equip accessories that can enhance the ship's "
 "performance. Outfits that fit in these slots are not generally acquirable by "
 "normal means."
 msgstr ""
-"Tento slot slouží k vybavení příslušenstvím, které může zvýšit výkon lodi. "
-"Vybavení, které se do těchto slotů vejde, není obvykle možné získat běžnými "
-"prostředky."
 
+msgctxt "slotproperty"
 msgid "Bioship Gene Drives"
-msgstr "Genové jednotky biolodě"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for the gene drives, the biological equivalent to Engines. "
 "Gene drives propel the organism through space."
 msgstr ""
-"Tento slot se používá pro genové pohony, biologickou obdobu motorů. Genové "
-"pohony pohánějí organismus v prostoru."
 
+msgctxt "slotproperty"
 msgid "Bioship Shells"
-msgstr "Pláště biolodě"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for the shell, the biological equivalent to Hull "
 "Modifications. The shell is the last line of defence for the organism, "
@@ -10507,33 +10524,34 @@ msgid ""
 "available cargo space."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Bioship Organs"
-msgstr "Orgány biolodě"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "Through biological synthesis, bioships are able to modify and adapt their "
 "organs for many different purposes without the need of any external "
 "equipment."
 msgstr ""
-"Díky biologické syntéze jsou biolodě schopny upravovat a přizpůsobovat své "
-"orgány k mnoha různým účelům bez potřeby jakéhokoli externího vybavení."
 
+msgctxt "slotproperty"
 msgid "Bioship Brains"
-msgstr "Mozky biolodě"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for the brain, the biological equivalent to Core Systems. "
 "The brain of an organism is responsible for managing the function of the "
 "rest of the organism and allocating energy reserves for the battery and "
 "shield."
 msgstr ""
-"Tento slot se používá pro mozek, biologickou obdobu základních systémů. "
-"Mozek organismu je zodpovědný za řízení funkce zbytku organismu a "
-"přidělování energetických rezerv pro baterii a štít."
 
+msgctxt "slotproperty"
 msgid "Bioship Weapons"
-msgstr "Zbraně biolodě"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot can be used to grow special organic weapons on bioships. Organic "
 "weapons are generally similar to their synthetic counterparts, but tend to "
@@ -10541,59 +10559,66 @@ msgid ""
 "purely synthetic constructs."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Built-In"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used by a built-in outfit that can not be removed from the ship."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Engines"
-msgstr "Motory"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for engines. Engines propel the ship, which is kind of "
 "important. Engines require energy from the core systems to function."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Engines (Secondary)"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Fighter Bays"
-msgstr "Prostory pro stíhačky"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid "This slot can be used for fighter bays."
-msgstr "Tento slot lze použít pro prostory stíhaček."
+msgstr ""
 
+msgctxt "slotproperty"
 msgid "Hull Modifications"
-msgstr "Úpravy trupu"
+msgstr ""
 
-#, fuzzy
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for structural modifications to the ship's hull. This slot "
 "represents the base layer of armour plating, and also greatly affects mass "
 "and cargo space."
 msgstr ""
-"Tento slot se používá pro konstrukční úpravy trupu lodi. Tento slot "
-"představuje základní vrstvu pancéřování a také výrazně ovlivňuje hmotnost, "
-"nákladový prostor a dostupné sloty pro zbraně."
 
-#, fuzzy
+msgctxt "slotproperty"
 msgid "Hull Modifications (Secondary)"
-msgstr "Úpravy trupu"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid "Core Systems"
-msgstr "Jádrové systémy"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for dedicated core systems of the ship. Other subsystems "
 "rely on those to manage them, and the bulk of the ship's power and shield "
 "generation also happens here."
 msgstr ""
 
-#, fuzzy
+msgctxt "slotproperty"
 msgid "Core Systems (Secondary)"
-msgstr "Jádrové systémy (systém)"
+msgstr ""
 
 msgid "common"
 msgstr "běžný"
@@ -11604,6 +11629,9 @@ msgid ""
 msgstr ""
 "Dům Za'lek je vědeckým srdcem Impéria. Donedávna byl tajnůstkářským "
 "velkorodem, ale v poslední době je mnohem otevřenější."
+
+msgid "Accessory"
+msgstr "Příslušenství"
 
 msgid ""
 "Apparently air fresheners have been traditionally used in human vehicles as "
@@ -127798,6 +127826,137 @@ msgid ""
 "the extreme long range and high penetration for a weapon of its size, it can "
 "be very deadly."
 msgstr ""
+
+#~ msgid "armourbreaker"
+#~ msgstr "rozbíječ pancíře"
+
+#~ msgid "#nArmourbreaker#0"
+#~ msgstr "#nRozbíječ pancíře#0"
+
+#~ msgid "emp"
+#~ msgstr "emp"
+
+#~ msgid "#bEMP#0"
+#~ msgstr "#bEMP#0"
+
+#~ msgid "energy"
+#~ msgstr "energie"
+
+#~ msgid "#gEnergy#0"
+#~ msgstr "#gEnergie#0"
+
+#~ msgid "energy_noknockback"
+#~ msgstr "energy_noknockback"
+
+#~ msgid "explosion_splash"
+#~ msgstr "rozptyl_výbuchu"
+
+#~ msgid "ion"
+#~ msgstr "ion"
+
+#~ msgid "#yIon#0"
+#~ msgstr "#yIon#0"
+
+#~ msgid "kinetic"
+#~ msgstr "kinetický"
+
+#~ msgid "#oKinetic#0"
+#~ msgstr "#oKinetický#0"
+
+#~ msgid "nebula"
+#~ msgstr "mlhovina"
+
+#~ msgid "#pNebula#0"
+#~ msgstr "#pNebula#0"
+
+#~ msgid "plasma"
+#~ msgstr "plazma"
+
+#~ msgid "#rPlasma#0"
+#~ msgstr "#rPlazma#0"
+
+#~ msgid ""
+#~ "This slot is used to equip accessories that can enhance the ship's "
+#~ "performance. Outfits that fit in these slots are not generally acquirable "
+#~ "by normal means."
+#~ msgstr ""
+#~ "Tento slot slouží k vybavení příslušenstvím, které může zvýšit výkon "
+#~ "lodi. Vybavení, které se do těchto slotů vejde, není obvykle možné získat "
+#~ "běžnými prostředky."
+
+#~ msgid "Bioship Gene Drives"
+#~ msgstr "Genové jednotky biolodě"
+
+#~ msgid ""
+#~ "This slot is used for the gene drives, the biological equivalent to "
+#~ "Engines. Gene drives propel the organism through space."
+#~ msgstr ""
+#~ "Tento slot se používá pro genové pohony, biologickou obdobu motorů. "
+#~ "Genové pohony pohánějí organismus v prostoru."
+
+#~ msgid "Bioship Shells"
+#~ msgstr "Pláště biolodě"
+
+#~ msgid "Bioship Organs"
+#~ msgstr "Orgány biolodě"
+
+#~ msgid ""
+#~ "Through biological synthesis, bioships are able to modify and adapt their "
+#~ "organs for many different purposes without the need of any external "
+#~ "equipment."
+#~ msgstr ""
+#~ "Díky biologické syntéze jsou biolodě schopny upravovat a přizpůsobovat "
+#~ "své orgány k mnoha různým účelům bez potřeby jakéhokoli externího "
+#~ "vybavení."
+
+#~ msgid "Bioship Brains"
+#~ msgstr "Mozky biolodě"
+
+#~ msgid ""
+#~ "This slot is used for the brain, the biological equivalent to Core "
+#~ "Systems. The brain of an organism is responsible for managing the "
+#~ "function of the rest of the organism and allocating energy reserves for "
+#~ "the battery and shield."
+#~ msgstr ""
+#~ "Tento slot se používá pro mozek, biologickou obdobu základních systémů. "
+#~ "Mozek organismu je zodpovědný za řízení funkce zbytku organismu a "
+#~ "přidělování energetických rezerv pro baterii a štít."
+
+#~ msgid "Bioship Weapons"
+#~ msgstr "Zbraně biolodě"
+
+#~ msgid "Engines"
+#~ msgstr "Motory"
+
+#~ msgid "Fighter Bays"
+#~ msgstr "Prostory pro stíhačky"
+
+#~ msgid "This slot can be used for fighter bays."
+#~ msgstr "Tento slot lze použít pro prostory stíhaček."
+
+#~ msgid "Hull Modifications"
+#~ msgstr "Úpravy trupu"
+
+#, fuzzy
+#~ msgid ""
+#~ "This slot is used for structural modifications to the ship's hull. This "
+#~ "slot represents the base layer of armour plating, and also greatly "
+#~ "affects mass and cargo space."
+#~ msgstr ""
+#~ "Tento slot se používá pro konstrukční úpravy trupu lodi. Tento slot "
+#~ "představuje základní vrstvu pancéřování a také výrazně ovlivňuje "
+#~ "hmotnost, nákladový prostor a dostupné sloty pro zbraně."
+
+#, fuzzy
+#~ msgid "Hull Modifications (Secondary)"
+#~ msgstr "Úpravy trupu"
+
+#~ msgid "Core Systems"
+#~ msgstr "Jádrové systémy"
+
+#, fuzzy
+#~ msgid "Core Systems (Secondary)"
+#~ msgstr "Jádrové systémy (systém)"
 
 #~ msgid ""
 #~ "This slot is used for engines. Engines propel the ship, which is kind of "

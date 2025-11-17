@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.12.0-alpha.2\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-11-17 20:20+0900\n"
+"POT-Creation-Date: 2025-11-17 23:06+0900\n"
 "PO-Revision-Date: 2024-09-20 13:40+0000\n"
 "Last-Translator: Pau Barrachina Ribes <barrachinaribesp@gmail.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/naev/naev/ca/>\n"
@@ -8833,74 +8833,96 @@ msgstr "VENJANÇA PIRATA"
 msgid "VIGILANCE"
 msgstr "VIGILÀNCIA"
 
+msgctxt "damagetype"
 msgid "armourbreaker"
-msgstr "trenca-armadura"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#nArmourbreaker#0"
-msgstr "#ntrenca-armadura#0"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "emp"
-msgstr "pem"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#bEMP#0"
-msgstr "#bPEM#0"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "energy"
-msgstr "energia"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#gEnergy#0"
-msgstr "#genergia#0"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "energy_noknockback"
-msgstr "energy_noknockback"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "explosion_splash"
-msgstr "explosion_splash"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "ion"
-msgstr "ion"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#yIon#0"
-msgstr "#yIon#0"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "kinetic"
-msgstr "cinètica"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#oKinetic#0"
-msgstr "#oCinètica#0"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "nebula"
-msgstr "nebulosa"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#pNebula#0"
-msgstr "#pnebulosa#0"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "plasma"
-msgstr "plasma"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#rPlasma#0"
-msgstr "#rPlasma#0"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid "Accessory"
-msgstr "Accessori"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used to equip accessories that can enhance the ship's "
 "performance. Outfits that fit in these slots are not generally acquirable by "
 "normal means."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Bioship Gene Drives"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for the gene drives, the biological equivalent to Engines. "
 "Gene drives propel the organism through space."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Bioship Shells"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for the shell, the biological equivalent to Hull "
 "Modifications. The shell is the last line of defence for the organism, "
@@ -8908,18 +8930,22 @@ msgid ""
 "available cargo space."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Bioship Organs"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "Through biological synthesis, bioships are able to modify and adapt their "
 "organs for many different purposes without the need of any external "
 "equipment."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Bioship Brains"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for the brain, the biological equivalent to Core Systems. "
 "The brain of an organism is responsible for managing the function of the "
@@ -8927,9 +8953,11 @@ msgid ""
 "shield."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Bioship Weapons"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot can be used to grow special organic weapons on bioships. Organic "
 "weapons are generally similar to their synthetic counterparts, but tend to "
@@ -8937,51 +8965,64 @@ msgid ""
 "purely synthetic constructs."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Built-In"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used by a built-in outfit that can not be removed from the ship."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Engines"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for engines. Engines propel the ship, which is kind of "
 "important. Engines require energy from the core systems to function."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Engines (Secondary)"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Fighter Bays"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "This slot can be used for fighter bays."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Hull Modifications"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for structural modifications to the ship's hull. This slot "
 "represents the base layer of armour plating, and also greatly affects mass "
 "and cargo space."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Hull Modifications (Secondary)"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Core Systems"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for dedicated core systems of the ship. Other subsystems "
 "rely on those to manage them, and the bulk of the ship's power and shield "
 "generation also happens here."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Core Systems (Secondary)"
 msgstr ""
 
@@ -9990,6 +10031,9 @@ msgid ""
 msgstr ""
 "La Casa Za'lek és el cor científic de l'Imperi. Fins fa poc eren una Gran "
 "Casa reservada, però recentment s'han tornat molt més oberts."
+
+msgid "Accessory"
+msgstr "Accessori"
 
 msgid ""
 "Apparently air fresheners have been traditionally used in human vehicles as "
@@ -122355,6 +122399,54 @@ msgid ""
 "the extreme long range and high penetration for a weapon of its size, it can "
 "be very deadly."
 msgstr ""
+
+#~ msgid "armourbreaker"
+#~ msgstr "trenca-armadura"
+
+#~ msgid "#nArmourbreaker#0"
+#~ msgstr "#ntrenca-armadura#0"
+
+#~ msgid "emp"
+#~ msgstr "pem"
+
+#~ msgid "#bEMP#0"
+#~ msgstr "#bPEM#0"
+
+#~ msgid "energy"
+#~ msgstr "energia"
+
+#~ msgid "#gEnergy#0"
+#~ msgstr "#genergia#0"
+
+#~ msgid "energy_noknockback"
+#~ msgstr "energy_noknockback"
+
+#~ msgid "explosion_splash"
+#~ msgstr "explosion_splash"
+
+#~ msgid "ion"
+#~ msgstr "ion"
+
+#~ msgid "#yIon#0"
+#~ msgstr "#yIon#0"
+
+#~ msgid "kinetic"
+#~ msgstr "cinètica"
+
+#~ msgid "#oKinetic#0"
+#~ msgstr "#oCinètica#0"
+
+#~ msgid "nebula"
+#~ msgstr "nebulosa"
+
+#~ msgid "#pNebula#0"
+#~ msgstr "#pnebulosa#0"
+
+#~ msgid "plasma"
+#~ msgstr "plasma"
+
+#~ msgid "#rPlasma#0"
+#~ msgstr "#rPlasma#0"
 
 #, fuzzy
 #~ msgid "* [Frontier Liberation Front](lore/factions/flf)"

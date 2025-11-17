@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-11-17 20:20+0900\n"
+"POT-Creation-Date: 2025-11-17 23:06+0900\n"
 "PO-Revision-Date: 2025-06-28 13:05+0000\n"
 "Last-Translator: Manuela Silva <mmsrs@sky.com>\n"
 "Language-Team: Portuguese (Portugal) <https://hosted.weblate.org/projects/"
@@ -9080,79 +9080,96 @@ msgstr "VENDETTA PIRATA"
 msgid "VIGILANCE"
 msgstr "VIGILANCE"
 
+msgctxt "damagetype"
 msgid "armourbreaker"
-msgstr "destrói blindagem"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#nArmourbreaker#0"
-msgstr "#ndestrói blindagem#0"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "emp"
-msgstr "pulso eletromagnético"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#bEMP#0"
-msgstr "#bpulso eletromagnético#0"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "energy"
-msgstr "energia"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#gEnergy#0"
-msgstr "#gEnergia#0"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "energy_noknockback"
-msgstr "energia_sem_recuo"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "explosion_splash"
-msgstr "explosão esparrinha"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "ion"
-msgstr "iões"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#yIon#0"
-msgstr "#yIões#0"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "kinetic"
-msgstr "cinético"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#oKinetic#0"
-msgstr "#oCinético#0"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "nebula"
-msgstr "nebulosa"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#pNebula#0"
-msgstr "#pNebulosa#0"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "plasma"
-msgstr "plasma"
+msgstr ""
 
+msgctxt "damagetype"
 msgid "#rPlasma#0"
-msgstr "#rPlasma#0"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid "Accessory"
-msgstr "Acessório"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used to equip accessories that can enhance the ship's "
 "performance. Outfits that fit in these slots are not generally acquirable by "
 "normal means."
 msgstr ""
-"Este espaço é utilizado para equipar acessórios que podem melhorar o "
-"desempenho da nave. Os acessórios que cabem nestes espaços não são "
-"geralmente adquiridos por meios normais."
 
+msgctxt "slotproperty"
 msgid "Bioship Gene Drives"
-msgstr "Propulsores Genéticos de Bionave"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for the gene drives, the biological equivalent to Engines. "
 "Gene drives propel the organism through space."
 msgstr ""
-"Este espaço é utilizado para propulsores genéticos, o equivalente biológico "
-"de Motores. Servem para impulsionar o organismo através do espaço."
 
+msgctxt "slotproperty"
 msgid "Bioship Shells"
-msgstr "Carapaças de Bionave"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for the shell, the biological equivalent to Hull "
 "Modifications. The shell is the last line of defence for the organism, "
@@ -9160,34 +9177,34 @@ msgid ""
 "available cargo space."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Bioship Organs"
-msgstr "Órgãos de Bionave"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "Through biological synthesis, bioships are able to modify and adapt their "
 "organs for many different purposes without the need of any external "
 "equipment."
 msgstr ""
-"Através da síntese biológica, as bionaves são capazes de se modificarem e "
-"adaptarem os seus órgãos para muitos fins diferentes sem a necessidade de "
-"qualquer equipamento externo."
 
+msgctxt "slotproperty"
 msgid "Bioship Brains"
-msgstr "Cérebro de Bionave"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for the brain, the biological equivalent to Core Systems. "
 "The brain of an organism is responsible for managing the function of the "
 "rest of the organism and allocating energy reserves for the battery and "
 "shield."
 msgstr ""
-"Este espaço é usado para o cérebro, o equivalente biológico aos Sistemas "
-"Principais. O cérebro de um organismo é responsável por gerir a função do "
-"resto do organismo e alocar reservas de energia para a bateria e o escudo."
 
+msgctxt "slotproperty"
 msgid "Bioship Weapons"
-msgstr "Armas de Bionave"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot can be used to grow special organic weapons on bioships. Organic "
 "weapons are generally similar to their synthetic counterparts, but tend to "
@@ -9195,60 +9212,66 @@ msgid ""
 "purely synthetic constructs."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Built-In"
 msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used by a built-in outfit that can not be removed from the ship."
 msgstr ""
 
+msgctxt "slotproperty"
 msgid "Engines"
-msgstr "Motores"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for engines. Engines propel the ship, which is kind of "
 "important. Engines require energy from the core systems to function."
 msgstr ""
 
-#, fuzzy
+msgctxt "slotproperty"
 msgid "Engines (Secondary)"
-msgstr "Disparar arma secundária"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid "Fighter Bays"
-msgstr "Baías de Caça"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid "This slot can be used for fighter bays."
-msgstr "Este espaço pode ser usado para baías de caças."
+msgstr ""
 
+msgctxt "slotproperty"
 msgid "Hull Modifications"
-msgstr "Modificações de Casco"
+msgstr ""
 
-#, fuzzy
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for structural modifications to the ship's hull. This slot "
 "represents the base layer of armour plating, and also greatly affects mass "
 "and cargo space."
 msgstr ""
-"Este espaço é usado para modificações estruturais no casco da nave. "
-"Representa a camada base do revestimento de blindagem e também afeta muito a "
-"massa, o espaço de carga e os pontos fixos de armas disponíveis."
 
-#, fuzzy
+msgctxt "slotproperty"
 msgid "Hull Modifications (Secondary)"
-msgstr "Modificações de Casco"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid "Core Systems"
-msgstr "Sistemas Principais"
+msgstr ""
 
+msgctxt "slotproperty"
 msgid ""
 "This slot is used for dedicated core systems of the ship. Other subsystems "
 "rely on those to manage them, and the bulk of the ship's power and shield "
 "generation also happens here."
 msgstr ""
 
-#, fuzzy
+msgctxt "slotproperty"
 msgid "Core Systems (Secondary)"
-msgstr "Sistemas Principais (sistema)"
+msgstr ""
 
 msgid "common"
 msgstr "comum"
@@ -10280,6 +10303,9 @@ msgid ""
 msgstr ""
 "A Casa Za'lek é o coração científico do Império. Até pouco tempo atrás eram "
 "uma Grande Casa secreta, mas tornaram-se muito mais abertos recentemente."
+
+msgid "Accessory"
+msgstr "Acessório"
 
 msgid ""
 "Apparently air fresheners have been traditionally used in human vehicles as "
@@ -128210,6 +128236,142 @@ msgid ""
 "the extreme long range and high penetration for a weapon of its size, it can "
 "be very deadly."
 msgstr ""
+
+#~ msgid "armourbreaker"
+#~ msgstr "destrói blindagem"
+
+#~ msgid "#nArmourbreaker#0"
+#~ msgstr "#ndestrói blindagem#0"
+
+#~ msgid "emp"
+#~ msgstr "pulso eletromagnético"
+
+#~ msgid "#bEMP#0"
+#~ msgstr "#bpulso eletromagnético#0"
+
+#~ msgid "energy"
+#~ msgstr "energia"
+
+#~ msgid "#gEnergy#0"
+#~ msgstr "#gEnergia#0"
+
+#~ msgid "energy_noknockback"
+#~ msgstr "energia_sem_recuo"
+
+#~ msgid "explosion_splash"
+#~ msgstr "explosão esparrinha"
+
+#~ msgid "ion"
+#~ msgstr "iões"
+
+#~ msgid "#yIon#0"
+#~ msgstr "#yIões#0"
+
+#~ msgid "kinetic"
+#~ msgstr "cinético"
+
+#~ msgid "#oKinetic#0"
+#~ msgstr "#oCinético#0"
+
+#~ msgid "nebula"
+#~ msgstr "nebulosa"
+
+#~ msgid "#pNebula#0"
+#~ msgstr "#pNebulosa#0"
+
+#~ msgid "plasma"
+#~ msgstr "plasma"
+
+#~ msgid "#rPlasma#0"
+#~ msgstr "#rPlasma#0"
+
+#~ msgid ""
+#~ "This slot is used to equip accessories that can enhance the ship's "
+#~ "performance. Outfits that fit in these slots are not generally acquirable "
+#~ "by normal means."
+#~ msgstr ""
+#~ "Este espaço é utilizado para equipar acessórios que podem melhorar o "
+#~ "desempenho da nave. Os acessórios que cabem nestes espaços não são "
+#~ "geralmente adquiridos por meios normais."
+
+#~ msgid "Bioship Gene Drives"
+#~ msgstr "Propulsores Genéticos de Bionave"
+
+#~ msgid ""
+#~ "This slot is used for the gene drives, the biological equivalent to "
+#~ "Engines. Gene drives propel the organism through space."
+#~ msgstr ""
+#~ "Este espaço é utilizado para propulsores genéticos, o equivalente "
+#~ "biológico de Motores. Servem para impulsionar o organismo através do "
+#~ "espaço."
+
+#~ msgid "Bioship Shells"
+#~ msgstr "Carapaças de Bionave"
+
+#~ msgid "Bioship Organs"
+#~ msgstr "Órgãos de Bionave"
+
+#~ msgid ""
+#~ "Through biological synthesis, bioships are able to modify and adapt their "
+#~ "organs for many different purposes without the need of any external "
+#~ "equipment."
+#~ msgstr ""
+#~ "Através da síntese biológica, as bionaves são capazes de se modificarem e "
+#~ "adaptarem os seus órgãos para muitos fins diferentes sem a necessidade de "
+#~ "qualquer equipamento externo."
+
+#~ msgid "Bioship Brains"
+#~ msgstr "Cérebro de Bionave"
+
+#~ msgid ""
+#~ "This slot is used for the brain, the biological equivalent to Core "
+#~ "Systems. The brain of an organism is responsible for managing the "
+#~ "function of the rest of the organism and allocating energy reserves for "
+#~ "the battery and shield."
+#~ msgstr ""
+#~ "Este espaço é usado para o cérebro, o equivalente biológico aos Sistemas "
+#~ "Principais. O cérebro de um organismo é responsável por gerir a função do "
+#~ "resto do organismo e alocar reservas de energia para a bateria e o escudo."
+
+#~ msgid "Bioship Weapons"
+#~ msgstr "Armas de Bionave"
+
+#~ msgid "Engines"
+#~ msgstr "Motores"
+
+#, fuzzy
+#~ msgid "Engines (Secondary)"
+#~ msgstr "Disparar arma secundária"
+
+#~ msgid "Fighter Bays"
+#~ msgstr "Baías de Caça"
+
+#~ msgid "This slot can be used for fighter bays."
+#~ msgstr "Este espaço pode ser usado para baías de caças."
+
+#~ msgid "Hull Modifications"
+#~ msgstr "Modificações de Casco"
+
+#, fuzzy
+#~ msgid ""
+#~ "This slot is used for structural modifications to the ship's hull. This "
+#~ "slot represents the base layer of armour plating, and also greatly "
+#~ "affects mass and cargo space."
+#~ msgstr ""
+#~ "Este espaço é usado para modificações estruturais no casco da nave. "
+#~ "Representa a camada base do revestimento de blindagem e também afeta "
+#~ "muito a massa, o espaço de carga e os pontos fixos de armas disponíveis."
+
+#, fuzzy
+#~ msgid "Hull Modifications (Secondary)"
+#~ msgstr "Modificações de Casco"
+
+#~ msgid "Core Systems"
+#~ msgstr "Sistemas Principais"
+
+#, fuzzy
+#~ msgid "Core Systems (Secondary)"
+#~ msgstr "Sistemas Principais (sistema)"
 
 #~ msgid ""
 #~ "This slot is used for engines. Engines propel the ship, which is kind of "
