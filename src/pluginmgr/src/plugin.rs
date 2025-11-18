@@ -168,8 +168,12 @@ impl Plugin {
             } else {
                 strerr.clone()
             }),
-            name: (*path.as_ref().to_string_lossy()).to_string(),
-            author: strerr.clone(),
+            name: if let Some(filename) = path.as_ref().file_name() {
+                filename.to_string_lossy().to_string()
+            } else {
+                (*path.as_ref().to_string_lossy()).to_string()
+            },
+            author: (*path.as_ref().to_string_lossy()).to_string(),
             version: semver::Version::new(0, 0, 0),
             r#abstract: strerr.clone(),
             description: Some(format!("Error:\n{}", &err.to_string())),
