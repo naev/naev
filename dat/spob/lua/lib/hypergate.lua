@@ -130,7 +130,7 @@ function hypergate.render ()
    local z = camera.getZoom()
    local x, y = gfx.screencoords( mem.pos ):get()
    z = 1/z
-   mem.cvs:draw( x-mem.tw*0.5, y-mem.th*0.5, 0, z, z )
+   mem.cvs:draw( x-mem.tw*0.5*z, y-mem.th*0.5*z, 0, z, z )
 end
 
 function hypergate.update( dt )

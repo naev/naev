@@ -121,7 +121,8 @@ function wormhole.render ()
    local z = camera.getZoom()
    local x, y = gfx.screencoords( mem.pos ):get()
    z = 1/z
-   mem.cvs:draw( x-mem.radius, y-mem.radius, 0, z, z )
+   local r = mem.radius*z
+   mem.cvs:draw( x-r, y-r, 0, z, z )
 end
 
 function wormhole.can_land ()
