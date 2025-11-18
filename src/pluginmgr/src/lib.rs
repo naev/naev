@@ -36,7 +36,7 @@ pub async fn discover_remote_plugins<T: reqwest::IntoUrl>(
     branch: &str,
 ) -> Result<Vec<Plugin>> {
     use base64::{Engine as _, engine::general_purpose::URL_SAFE};
-    let repo_hash = URL_SAFE.encode(url.as_str());
+    let repo_hash = URL_SAFE.encode(format!("{}:{}", url.as_str(), branch));
     let repo_path = cache_dir()?.join("plugins-repo");
     fs::create_dir_all(&repo_path)?;
     let repo_path = repo_path.join(repo_hash);
