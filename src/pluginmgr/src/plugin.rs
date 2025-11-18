@@ -119,6 +119,7 @@ pub struct Plugin {
     #[serde(default)]
     pub recommends: Vec<String>,
     pub naev_version: semver::VersionReq,
+    #[serde(default = "source_default")]
     pub source: Source,
     #[serde(default = "priority_default")]
     pub priority: i32,
@@ -144,6 +145,9 @@ fn release_status_default() -> ReleaseStatus {
 }
 fn priority_default() -> i32 {
     5
+}
+fn source_default() -> Source {
+    Source::Local
 }
 
 impl Plugin {
