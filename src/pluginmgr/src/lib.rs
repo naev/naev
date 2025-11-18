@@ -6,6 +6,8 @@ use anyhow::{Context, Result};
 use log::{info, warn_err};
 use std::fs;
 use std::path::{Path, PathBuf};
+//use iced::task::{Straw, sipper};
+//use anyhow::Error;
 
 pub fn discover_local_plugins<P: AsRef<Path>>(root: P) -> Result<Vec<Plugin>> {
     if !root.as_ref().exists() {
@@ -84,6 +86,72 @@ pub async fn discover_remote_plugins<T: reqwest::IntoUrl>(
         .collect()
         .await)
 }
+
+/*
+struct Progress {
+    message: String,
+    value: f32,
+}
+pub fn discover_remote_plugins_sraw<T: reqwest::IntoUrl>(
+    url: T,
+    branch: &str,
+) -> impl Straw<Result<Vec<Plugin>>, Progress, Error> {
+    sipper( async move |mut progress| {
+        use base64::{Engine as _, engine::general_purpose::URL_SAFE};
+        let repo_hash = URL_SAFE.encode(format!("{}:{}", url.as_str(), branch));
+        let repo_path = cache_dir()?.join("plugins-repo");
+        fs::create_dir_all(&repo_path)?;
+        let repo_path = repo_path.join(repo_hash);
+
+        let repo = if repo_path.exists() {
+            let repo = match git2::Repository::open(&repo_path) {
+                Ok(repo) => repo,
+                Err(e) => anyhow::bail!("failed to open: {}", e),
+            };
+            {
+                info!("Updating plugin remote '{}'", url.as_str());
+                let _ = progress.send( Progress {
+                    message: "Updating plugin remote '{}'".to_string(),
+                    value: 0.0,
+                } ).await;
+
+                repo.find_remote("origin")?.fetch(&[branch], None, None)?;
+                let (object, reference) = repo.revparse_ext(branch).context("git branch not found")?;
+                repo.checkout_tree(&object, None)
+                    .context("git failed to checkout")?;
+                match reference {
+                    // gref is an actual reference like branches or tags
+                    Some(gref) => repo.set_head(gref.name().unwrap()),
+                    // this is a commit, not a reference
+                    None => repo.set_head_detached(object.id()),
+                }?;
+            }
+            repo
+        } else {
+            info!("Cloning plugin remote '{}'", url.as_str());
+            match git2::Repository::clone(url.as_str(), &repo_path) {
+                Ok(repo) => repo,
+                Err(e) => anyhow::bail!("failed to clone: {}", e),
+            }
+        };
+        let workdir = repo.workdir().context("naev-plugins directory is bare")?;
+
+        use futures::StreamExt;
+        Ok(futures::stream::iter(repository(workdir)?)
+            .filter_map(|stub| async move {
+                match stub.to_plugin_async().await {
+                    Ok(plugin) => Some(plugin),
+                    Err(e) => {
+                        warn_err!(e);
+                        None
+                    }
+                }
+            })
+            .collect()
+            .await)
+    })
+}
+*/
 
 pub fn repository<P: AsRef<Path>>(root: P) -> Result<Vec<PluginStub>> {
     let plugins_dir = root.as_ref().join("plugins");

@@ -944,7 +944,7 @@ impl App {
                 ])
                 .padding(10)
                 .align_y(Vertical::Center)
-                .width(300),
+                .width(400),
             )
             .align_x(Horizontal::Right)
             .align_y(Vertical::Bottom)

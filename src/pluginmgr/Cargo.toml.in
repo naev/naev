@@ -29,3 +29,4 @@ derive_more = { workspace = true }
 fs_extra = { workspace = true }
 futures = { workspace = true }
 base64 = { workspace = true }
+iced = { workspace = true }
