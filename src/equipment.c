@@ -913,7 +913,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw,
       int pos;
       if ( slot->sslot->slot.spid ) {
          pos = scnprintf( alt, sizeof( alt ), "#o%s\n",
-                          _( sp_display( slot->sslot->slot.spid ) ) );
+                          pgettext_var( "slotproperty", sp_display( slot->sslot->slot.spid ) ) );
       } else
          pos = 0;
       pos +=
@@ -930,7 +930,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw,
                            _( " [locked]" ) );
       if ( slot->sslot->slot.spid )
          scnprintf( &alt[pos], sizeof( alt ) - pos, "\n\n%s",
-                    _( sp_description( slot->sslot->slot.spid ) ) );
+                    pgettext_var( "slotproperty", sp_description( slot->sslot->slot.spid ) ) );
       toolkit_drawAltText( bx + wgt->altx, by + wgt->alty, alt );
       return;
    }
