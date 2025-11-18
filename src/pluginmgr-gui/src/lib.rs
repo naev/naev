@@ -869,11 +869,11 @@ impl App {
         // Add refresh button and format
         let actions = column![
             button(pgettext("plugins", "Update All"))
-                .on_press_maybe((self.has_update && self.idle).then_some(Message::ActionUpdate)),
+                .on_press_maybe((self.has_update && idle).then_some(Message::ActionUpdate)),
             button(pgettext("plugins", "Force Refresh"))
-                .on_press_maybe(self.idle.then_some(Message::ActionRefresh)),
+                .on_press_maybe(idle.then_some(Message::ActionRefresh)),
             button(pgettext("plugins", "Clear Cache"))
-                .on_press_maybe(self.idle.then_some(Message::ActionClearCache)),
+                .on_press_maybe(idle.then_some(Message::ActionClearCache)),
             // TODO select and add zip functionality
             //button(pgettext("plugins", "Add Plugin (Zip)")),
             //button(pgettext("plugins", "Add Plugin (Directory)")),
