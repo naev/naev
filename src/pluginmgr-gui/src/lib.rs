@@ -779,66 +779,70 @@ impl App {
                 .padding(3.0)
         };
 
-        let plugins = {
-            scrollable(
-                grid(self.view.iter().enumerate().map(|(id, v)| {
-                    let p = v.plugin();
-                    let image = image(match &v.image {
-                        Some(img) => img.clone(),
-                        None => self.default_logo.clone(),
-                    })
-                    .width(60)
-                    .height(60);
-                    let name = bold(p.name.as_str());
-                    let badge = match v.state {
-                        PluginState::Installed => Some(if v.has_update() {
-                            badge(pgettext("plugins", "update"), extended.warning.weak)
-                        } else {
-                            badge(pgettext("plugins", "installed"), extended.success.weak)
-                        }),
-                        PluginState::Disabled => Some(badge(
-                            pgettext("plugins", "disabled"),
-                            extended.background.base,
-                        )),
-                        PluginState::Available => None,
-                    };
-                    // Somewhat like a modal
-                    let content = column![
-                        match badge {
-                            Some(badge) => row![name, badge,],
-                            None => row![name],
-                        }
-                        .align_y(Vertical::Center)
-                        .spacing(5),
-                        text(p.r#abstract.as_str()),
-                        text(p.tags.join(", ")),
-                    ]
-                    .spacing(5);
-                    let modal = row![image, content,].spacing(5).align_y(Vertical::Center);
-                    mouse_area(container(modal).padding(10).style(move |theme| {
-                        let container = container::rounded_box(theme)
-                            .background(iced::Background::Color(extended.background.weakest.color));
-                        if let Some(sel) = &self.selected
-                            && id == sel.0
-                        {
-                            container.border(iced::Border {
-                                color: palette.primary,
-                                width: 3.0,
-                                radius: iced::border::Radius::new(2.0),
-                            })
-                        } else {
-                            container
-                        }
-                    }))
-                    .on_press(Message::Selected(id))
-                    .into()
+        let plugins = if self.view.is_empty() {
+            grid([
+                container(text(pgettext("plugins", "No plugins found!")).center())
+                    .padding(20)
+                    .into(),
+            ])
+        } else {
+            grid(self.view.iter().enumerate().map(|(id, v)| {
+                let p = v.plugin();
+                let image = image(match &v.image {
+                    Some(img) => img.clone(),
+                    None => self.default_logo.clone(),
+                })
+                .width(60)
+                .height(60);
+                let name = bold(p.name.as_str());
+                let badge = match v.state {
+                    PluginState::Installed => Some(if v.has_update() {
+                        badge(pgettext("plugins", "update"), extended.warning.weak)
+                    } else {
+                        badge(pgettext("plugins", "installed"), extended.success.weak)
+                    }),
+                    PluginState::Disabled => Some(badge(
+                        pgettext("plugins", "disabled"),
+                        extended.background.base,
+                    )),
+                    PluginState::Available => None,
+                };
+                // Somewhat like a modal
+                let content = column![
+                    match badge {
+                        Some(badge) => row![name, badge,],
+                        None => row![name],
+                    }
+                    .align_y(Vertical::Center)
+                    .spacing(5),
+                    text(p.r#abstract.as_str()),
+                    text(p.tags.join(", ")),
+                ]
+                .spacing(5);
+                let modal = row![image, content,].spacing(5).align_y(Vertical::Center);
+                mouse_area(container(modal).padding(10).style(move |theme| {
+                    let container = container::rounded_box(theme)
+                        .background(iced::Background::Color(extended.background.weakest.color));
+                    if let Some(sel) = &self.selected
+                        && id == sel.0
+                    {
+                        container.border(iced::Border {
+                            color: palette.primary,
+                            width: 3.0,
+                            radius: iced::border::Radius::new(2.0),
+                        })
+                    } else {
+                        container
+                    }
                 }))
-                .fluid(500)
-                .spacing(10)
-                .height(grid::Sizing::EvenlyDistribute(Shrink)),
-            )
+                .on_press(Message::Selected(id))
+                .into()
+            }))
+            .fluid(500)
             .spacing(10)
+            .height(grid::Sizing::EvenlyDistribute(Shrink))
         };
+        let plugins = scrollable(plugins).spacing(10);
 
         let (selected, buttons) = if let Some((id, _)) = &self.selected
             && let Some(wrp) = self.view.get(*id)
