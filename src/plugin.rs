@@ -137,16 +137,12 @@ pub fn manager() -> Result<()> {
         anyhow::bail!("plugin manager already open!");
     }
 
+    let title = CString::new(gettext("Plugin Manager"))?;
+    let msg = CString::new(gettext("Please close the Plugin Manager to continue."))?;
     let wdw = unsafe {
-        let (w, h) = (300, 200);
-        let wdw = naevc::window_create(
-            c"wdwPluginManager".as_ptr(),
-            c"Plugin Manager".as_ptr(),
-            -1,
-            -1,
-            w,
-            h,
-        );
+        let w = 300;
+        let h = 60 + naevc::gl_printHeightRaw(std::ptr::null(), w - 40, msg.as_ptr());
+        let wdw = naevc::window_create(c"wdwPluginManager".as_ptr(), title.as_ptr(), -1, -1, w, h);
         naevc::window_addText(
             wdw,
             20,
@@ -157,7 +153,7 @@ pub fn manager() -> Result<()> {
             c"txtMsg".as_ptr(),
             std::ptr::null_mut(),
             std::ptr::null(),
-            c"Please close the Plugin Manager to continue.".as_ptr(),
+            msg.as_ptr(),
         );
         wdw
     };
