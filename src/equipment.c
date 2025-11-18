@@ -912,8 +912,10 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw,
    if ( o == NULL ) {
       int pos;
       if ( slot->sslot->slot.spid ) {
-         pos = scnprintf( alt, sizeof( alt ), "#o%s\n",
-                          pgettext_var( "slotproperty", sp_display( slot->sslot->slot.spid ) ) );
+         pos =
+            scnprintf( alt, sizeof( alt ), "#o%s\n",
+                       pgettext_var( "slotproperty",
+                                     sp_display( slot->sslot->slot.spid ) ) );
       } else
          pos = 0;
       pos +=
@@ -930,7 +932,8 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw,
                            _( " [locked]" ) );
       if ( slot->sslot->slot.spid )
          scnprintf( &alt[pos], sizeof( alt ) - pos, "\n\n%s",
-                    pgettext_var( "slotproperty", sp_description( slot->sslot->slot.spid ) ) );
+                    pgettext_var( "slotproperty",
+                                  sp_description( slot->sslot->slot.spid ) ) );
       toolkit_drawAltText( bx + wgt->altx, by + wgt->alty, alt );
       return;
    }
@@ -1002,7 +1005,7 @@ static void equipment_renderShip( double bx, double by, double bw, double bh,
    py = by + ( bh - ph ) / 2;
 
    /* Render background. */
-   gl_renderRect( px, py, pw, ph, &cBlack );
+   gl_renderRect( bx, by, bw, bh, &cBlack );
 
    /* Use framebuffer to draw, have to use an additional one. */
    s = ceil(
@@ -1016,7 +1019,7 @@ static void equipment_renderShip( double bx, double by, double bw, double bh,
    mat4 projection = gl_view_matrix;
    mat4_translate_scale_xy( &projection, px, py, pw, ph );
    mat4 tex_mat = mat4_identity();
-   mat4_translate_scale_xy( &tex_mat, 0., 0., s / swd->s, s / swd->s );
+   mat4_scale_xy( &tex_mat, s / swd->s, s / swd->s );
    gl_renderTextureRawH( swd->tex, 0, &projection, &tex_mat, NULL );
 
 #ifdef DEBUGGING
