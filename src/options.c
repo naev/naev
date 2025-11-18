@@ -1756,8 +1756,10 @@ static void opt_setGameSpeed( unsigned int wid, const char *str )
    char   buf[STRMAX_SHORT];
    double prevspeed = conf.game_speed;
    conf.game_speed  = window_getFaderValue( wid, str );
-   player.speed *= conf.game_speed / prevspeed;
-   pause_setSpeed( player.speed );
+   if ( player.p != NULL ) {
+      player.speed *= conf.game_speed / prevspeed;
+      pause_setSpeed( player.speed );
+   }
    snprintf( buf, sizeof( buf ), _( "Game speed: %.0f%%" ),
              round( 100. * conf.game_speed ) );
    window_modifyText( wid, "txtGameSpeed", buf );
