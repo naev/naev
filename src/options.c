@@ -1447,6 +1447,10 @@ static void opt_video( unsigned int wid )
  */
 void opt_needRestart( void )
 {
+   /* Options not open. */
+   if ( opt_wid <= 0 )
+      return;
+
    const char *s = _( "#rRestart Naev for changes to take effect.#0" );
    opt_restart   = 1;
 
