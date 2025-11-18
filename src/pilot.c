@@ -1910,8 +1910,8 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh,
       gl_uniformMat4( ed->projection, &projection );
 
       tex_mat = mat4_identity();
-      mat4_translate_scale_xy( &tex_mat, 0., 0., w / (double)gl_screen.nw,
-                               h / (double)gl_screen.nh );
+      mat4_scale_xy( &tex_mat, w / (double)gl_screen.nw,
+                     h / (double)gl_screen.nh );
       gl_uniformMat4( ed->tex_mat, &tex_mat );
 
       glUniform3f( ed->dimensions, SCREEN_W, SCREEN_H, 1. );
@@ -2109,8 +2109,8 @@ void pilot_render( Pilot *p )
          gl_uniformMat4( ed->projection, &projection );
 
          tex_mat = mat4_identity();
-         mat4_translate_scale_xy( &tex_mat, 0., 0., w / (double)gl_screen.nw,
-                                  h / (double)gl_screen.nh );
+         mat4_scale_xy( &tex_mat, w / (double)gl_screen.nw,
+                        h / (double)gl_screen.nh );
          gl_uniformMat4( ed->tex_mat, &tex_mat );
 
          glUniform3f( ed->dimensions, SCREEN_W, SCREEN_H, cam_getZoom() );
