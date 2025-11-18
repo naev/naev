@@ -1,4 +1,5 @@
 use anyhow::Result;
+use formatx::formatx;
 use fs_err as fs;
 use iced::{Task, widget};
 use log::gettext::{N_, gettext, pgettext};
@@ -82,6 +83,9 @@ enum Message {
     Uninstall(Plugin),
     UninstallDisabled(Plugin),
     LinkClicked(widget::markdown::Url),
+    ProgressNew(Progress),
+    ProgressMessage(String, f32),
+    Progress(f32),
     Idle,
     DropDownToggle,
     RefreshLocal,
@@ -418,13 +422,21 @@ impl Catalog {
     }
 }
 
+#[derive(Debug, Clone)]
+struct Progress {
+    title: String,
+    message: String,
+    /// [0.0, 1.0] value
+    value: f32,
+}
+
 #[derive(Debug)]
 struct App {
     catalog: Arc<Catalog>,
     view: Vec<PluginWrap>,
     has_update: bool,
     selected: Option<(usize, Identifier)>,
-    idle: bool,
+    progress: Option<Progress>,
     drop_action: bool,
     // Some useful data
     default_logo: iced::advanced::image::Handle,
@@ -453,7 +465,7 @@ impl App {
             view: Vec::new(),
             selected: None,
             has_update: false,
-            idle: true,
+            progress: None,
             drop_action: false,
             default_logo,
         })
@@ -482,36 +494,86 @@ impl App {
         {
             self.catalog = Arc::new(metacatalog);
         }
-        self.idle = false;
-        Task::perform(wrap(self.catalog.clone()), |_| Message::UpdateView)
+        Task::done(Message::ProgressNew(Progress {
+            title: pgettext("plugins", "Starting Up").to_string(),
+            message: "".to_string(),
+            value: 0.0,
+        }))
+        .chain(Task::perform(wrap(self.catalog.clone()), |_| {
+            Message::UpdateView
+        }))
     }
 
-    fn refresh_task(&mut self) -> Task<Message> {
+    fn refresh_task(&self) -> Task<Message> {
         async fn wrap(c: Arc<Catalog>) {
             if let Err(e) = c.refresh().await {
                 warn_err!(e);
             }
         }
-        self.idle = false;
-        Task::perform(wrap(self.catalog.clone()), |_| Message::UpdateView)
+        Task::done(Message::ProgressNew(Progress {
+            title: pgettext("plugins", "Refreshing").to_string(),
+            message: pgettext("plugins", "Refreshing local and remote repositories").to_string(),
+            value: 0.0,
+        }))
+        .chain(Task::perform(wrap(self.catalog.clone()), |_| {
+            Message::UpdateView
+        }))
     }
 
-    fn refresh_local_task(&mut self) -> Task<Message> {
+    fn refresh_local_task(&self) -> Task<Message> {
         async fn wrap(c: Arc<Catalog>) {
             if let Err(e) = c.refresh_local().await {
                 warn_err!(e);
             }
         }
-        self.idle = false;
-        Task::perform(wrap(self.catalog.clone()), |_| Message::UpdateView)
+        Task::done(Message::ProgressNew(Progress {
+            title: pgettext("plugins", "Refreshing").to_string(),
+            message: pgettext("plugins", "Refreshing local repositories").to_string(),
+            value: 0.0,
+        }))
+        .chain(Task::perform(wrap(self.catalog.clone()), |_| {
+            Message::UpdateView
+        }))
+    }
+
+    fn install_task(&self, plugin: &Plugin) -> Task<Message> {
+        async fn install_wrapper(installer: Installer) {
+            match installer.install().await {
+                Ok(_) => (),
+                Err(e) => warn_err!(e),
+            }
+        }
+        Task::done(Message::ProgressNew(Progress {
+            title: pgettext("plugins", "Installing").to_string(),
+            message: match formatx!(pgettext("plugins", "Installing plugin '{}'"), &plugin.name) {
+                Ok(msg) => msg,
+                Err(_) => pgettext("plugins", "Installing unknown plugin").to_string(),
+            }
+            .to_string(),
+            value: 0.0,
+        }))
+        .chain(Task::perform(
+            install_wrapper(Installer::new(&self.catalog.conf.install_path, &plugin)),
+            |_| Message::RefreshLocal,
+        ))
+    }
+
+    fn update_task(&self, plugin: &Plugin) -> Task<Message> {
+        async fn update_wrapper(installer: Installer) {
+            match installer.update().await {
+                Ok(_) => (),
+                Err(e) => warn_err!(e),
+            }
+        }
+        Task::perform(
+            update_wrapper(Installer::new(&self.catalog.conf.install_path, plugin)),
+            |_| Message::RefreshLocal,
+        )
     }
 
     fn update(&mut self, message: Message) -> Task<Message> {
         match message {
-            Message::Startup => {
-                self.idle = false;
-                self.load_from_cache_or_refresh_task()
-            }
+            Message::Startup => self.load_from_cache_or_refresh_task(),
             Message::UpdateView => {
                 self.view = self
                     .catalog
@@ -530,7 +592,7 @@ impl App {
                     }
                 });
                 self.has_update = self.view.iter().any(|wrap| wrap.has_update());
-                self.idle = true;
+                self.progress = None;
 
                 fn recover_selected(
                     view: &[PluginWrap],
@@ -567,20 +629,7 @@ impl App {
                 };
                 Task::none()
             }
-            Message::Install(plugin) => {
-                self.idle = false;
-                async fn install_wrapper(installer: Installer) {
-                    match installer.install().await {
-                        Ok(_) => (),
-                        Err(e) => warn_err!(e),
-                    }
-                }
-                Task::perform(
-                    install_wrapper(Installer::new(&self.catalog.conf.install_path, &plugin)),
-                    |_| Message::RefreshLocal,
-                )
-                .chain(Task::done(Message::Idle))
-            }
+            Message::Install(plugin) => self.install_task(&plugin),
             Message::Enable(plugin) => {
                 match Installer::new(&self.catalog.conf.disable_path, &plugin)
                     .move_to(&self.catalog.conf.install_path)
@@ -590,19 +639,7 @@ impl App {
                 }
                 self.refresh_local_task()
             }
-            Message::Update(plugin) => {
-                async fn update_wrapper(installer: Installer) {
-                    match installer.update().await {
-                        Ok(_) => (),
-                        Err(e) => warn_err!(e),
-                    }
-                }
-                Task::perform(
-                    update_wrapper(Installer::new(&self.catalog.conf.install_path, &plugin)),
-                    |_| Message::RefreshLocal,
-                )
-                .chain(Task::done(Message::Idle))
-            }
+            Message::Update(plugin) => self.update_task(&plugin),
             Message::Disable(plugin) => {
                 match Installer::new(&self.catalog.conf.install_path, &plugin)
                     .move_to(&self.catalog.conf.disable_path)
@@ -630,8 +667,25 @@ impl App {
                 // TODO actually handle clicked links?
                 Task::none()
             }
+            Message::ProgressNew(progress) => {
+                self.progress = Some(progress);
+                Task::none()
+            }
+            Message::ProgressMessage(message, value) => {
+                if let Some(progress) = &mut self.progress {
+                    progress.message = message;
+                    progress.value = value;
+                }
+                Task::none()
+            }
+            Message::Progress(value) => {
+                if let Some(progress) = &mut self.progress {
+                    progress.value = value;
+                }
+                Task::none()
+            }
             Message::Idle => {
-                self.idle = true;
+                self.progress = None;
                 Task::none()
             }
             Message::DropDownToggle => {
@@ -641,7 +695,6 @@ impl App {
             Message::RefreshLocal => self.refresh_local_task(),
             Message::ActionClearCache => {
                 self.drop_action = false;
-                self.idle = false;
                 if let Err(e) = fs::remove_dir_all(&self.catalog.conf.catalog_cache) {
                     warn_err!(e);
                 }
@@ -652,38 +705,21 @@ impl App {
             }
             Message::ActionRefresh => {
                 self.drop_action = false;
-                self.idle = false;
                 self.refresh_task()
             }
             Message::ActionUpdate => {
                 self.drop_action = false;
-                self.idle = false;
-                async fn update_wrapper(installer: Installer) {
-                    match installer.update().await {
-                        Ok(_) => (),
-                        Err(e) => warn_err!(e),
-                    }
-                }
                 Task::batch(self.view.iter().filter_map(|plugin| {
                     if plugin.has_update()
                         && let Some(local) = &plugin.local
                     {
-                        Some(
-                            Task::perform(
-                                update_wrapper(Installer::new(
-                                    &self.catalog.conf.install_path,
-                                    local,
-                                )),
-                                |_| Message::RefreshLocal,
-                            )
-                            .discard(),
-                        )
+                        // Discard the RefreshLocal event so we do it at the end
+                        Some(self.update_task(&local).discard())
                     } else {
                         None
                     }
                 }))
                 .chain(Task::done(Message::RefreshLocal))
-                .chain(Task::done(Message::Idle))
             }
         }
     }
@@ -693,7 +729,7 @@ impl App {
         use iced::theme::palette::Pair;
         use widget::{column, container, grid, image, mouse_area, row, scrollable, text};
 
-        let idle = self.idle;
+        let idle = self.progress.is_none();
         let palette = THEME.palette();
         let extended = THEME.extended_palette();
 
@@ -899,6 +935,7 @@ impl App {
         .align_right(Fill);
         // Set up the final screen
         let right = column![buttons, selected].spacing(10).width(300);
-        row![plugins, right].spacing(20).padding(20).into()
+        let main = row![plugins, right].spacing(20).padding(20);
+        main.into()
     }
 }
