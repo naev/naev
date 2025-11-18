@@ -726,6 +726,7 @@ impl App {
 
     fn view(&self) -> iced::Element<'_, Message> {
         use iced::Length::{Fill, Shrink};
+        use iced::alignment::{Horizontal, Vertical};
         use iced::theme::palette::Pair;
         use widget::{column, container, grid, image, mouse_area, row, scrollable, text};
 
@@ -779,15 +780,13 @@ impl App {
                             Some(badge) => row![name, badge,],
                             None => row![name],
                         }
-                        .align_y(iced::alignment::Vertical::Center)
+                        .align_y(Vertical::Center)
                         .spacing(5),
                         text(p.r#abstract.as_str()),
                         text(p.tags.join(", ")),
                     ]
                     .spacing(5);
-                    let modal = row![image, content,]
-                        .spacing(5)
-                        .align_y(iced::alignment::Vertical::Center);
+                    let modal = row![image, content,].spacing(5).align_y(Vertical::Center);
                     mouse_area(container(modal).padding(10).style(move |theme| {
                         let container = container::rounded_box(theme)
                             .background(iced::Background::Color(extended.background.weakest.color));
@@ -935,7 +934,24 @@ impl App {
         .align_right(Fill);
         // Set up the final screen
         let right = column![buttons, selected].spacing(10).width(300);
-        let main = row![plugins, right].spacing(20).padding(20);
+        let main = row![plugins, right].spacing(20).padding(20).height(Fill);
+        if let Some(progress) = &self.progress {
+            let over = container(
+                container(column![
+                    bold(&progress.title),
+                    text(&progress.message),
+                    widget::progress_bar(0.0..=1.0, progress.value),
+                ])
+                .padding(10)
+                .align_y(Vertical::Center)
+                .width(300),
+            )
+            .align_x(Horizontal::Right)
+            .align_y(Vertical::Bottom)
+            .width(Fill)
+            .height(Fill);
+            return widget::stack![main, over].into();
+        }
         main.into()
     }
 }
