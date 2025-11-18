@@ -2993,8 +2993,11 @@ void pilot_delete( Pilot *p )
 
    /* Run hook or it can break some missions. */
    if ( !pilot_isFlag( p, PILOT_DEAD ) && !pilot_isFlag( p, PILOT_HYP_END ) &&
-        !pilot_isFlag( p, PILOT_LANDING ) )
-      pilot_runHook( p, PILOT_HOOK_DEATH );
+        !pilot_isFlag( p, PILOT_LANDING ) ) {
+      HookParam hparam;
+      hparam.type = HOOK_PARAM_NIL;
+      pilot_runHookParam( p, PILOT_HOOK_DEATH, &hparam, 1 );
+   }
    /* Can't be cancelled here. */
 
    /* Stop ship stuff. */
