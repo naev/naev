@@ -4,7 +4,7 @@ use iced::{Task, widget};
 use log::gettext::{N_, gettext, pgettext};
 use log::warn_err;
 use pluginmgr::install::Installer;
-use pluginmgr::plugin::{Identifier, Plugin};
+use pluginmgr::plugin::{Identifier, Plugin, ReleaseStatus};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::io::Write;
@@ -812,8 +812,11 @@ impl App {
                 })
                 .size(20),
                 bold(pgettext("plugins", "Status:")),
-                info(gettext(sel.release_status.as_str())),
-                bold(pgettext("plugins", "Description")),
+                info(gettext(sel.release_status.as_str())).color_maybe(match sel.release_status {
+                    ReleaseStatus::Stable => None,
+                    _ => Some(palette.warning),
+                }),
+                widget::space::vertical().height(iced::Length::Fixed(5.0)),
                 if let Some(md) = &wrp.description_md {
                     widget::markdown::view(md, THEME).map(Message::LinkClicked)
                 } else {
