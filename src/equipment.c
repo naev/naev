@@ -1011,6 +1011,12 @@ static void equipment_renderShip( double bx, double by, double bw, double bh,
    s = ceil(
       s / gl_screen.scale ); /* Have to correct for the true rendered size. */
    glGetIntegerv( GL_FRAMEBUFFER_BINDING, &fbo );
+   /* Brute force aproach to clearing the buffer because everything is wrong.
+    * Shouldn't too bad because it's only here that is the issue.
+    * Next three lines shouldn't exist... */
+   glBindFramebuffer( GL_FRAMEBUFFER, swd->fbo );
+   glDisable( GL_SCISSOR_TEST );
+   glClear( GL_COLOR_BUFFER_BIT );
    ship_renderFramebuffer( p->ship, swd->fbo, gl_screen.nw, gl_screen.nh,
                            swd->dir, 0., 0., p->r, p->tsx, p->tsy, &cWhite,
                            &L_store_const );
