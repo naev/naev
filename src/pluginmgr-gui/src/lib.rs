@@ -558,6 +558,28 @@ impl App {
         ))
     }
 
+    fn move_task(&self, plugin: &Plugin, from: &PathBuf, to: &PathBuf) -> Task<Message> {
+        async fn enable_wrapper(installer: Installer, path: PathBuf) {
+            match installer.move_to(path) {
+                Ok(_) => (),
+                Err(e) => warn_err!(e),
+            }
+        }
+        Task::done(Message::ProgressNew(Progress {
+            title: pgettext("plugins", "Moving").to_string(),
+            message: match formatx!(pgettext("plugins", "Moving plugin '{}'"), &plugin.name) {
+                Ok(msg) => msg,
+                Err(_) => pgettext("plugins", "Moving unknown plugin").to_string(),
+            }
+            .to_string(),
+            value: 0.0,
+        }))
+        .chain(Task::perform(
+            enable_wrapper(Installer::new(from, &plugin), to.clone()),
+            |_| Message::RefreshLocal,
+        ))
+    }
+
     fn update_task(&self, plugin: &Plugin) -> Task<Message> {
         async fn update_wrapper(installer: Installer) {
             match installer.update().await {
@@ -569,6 +591,28 @@ impl App {
             update_wrapper(Installer::new(&self.catalog.conf.install_path, plugin)),
             |_| Message::RefreshLocal,
         )
+    }
+
+    fn uninstall_task(&self, plugin: &Plugin, path: &PathBuf) -> Task<Message> {
+        async fn uninstall_wrapper(installer: Installer) {
+            match installer.uninstall() {
+                Ok(_) => (),
+                Err(e) => warn_err!(e),
+            }
+        }
+        Task::done(Message::ProgressNew(Progress {
+            title: pgettext("plugins", "Removing").to_string(),
+            message: match formatx!(pgettext("plugins", "Removing plugin '{}'"), &plugin.name) {
+                Ok(msg) => msg,
+                Err(_) => pgettext("plugins", "Removing unknown plugin").to_string(),
+            }
+            .to_string(),
+            value: 0.0,
+        }))
+        .chain(Task::perform(
+            uninstall_wrapper(Installer::new(path, &plugin)),
+            |_| Message::RefreshLocal,
+        ))
     }
 
     fn update(&mut self, message: Message) -> Task<Message> {
@@ -630,38 +674,22 @@ impl App {
                 Task::none()
             }
             Message::Install(plugin) => self.install_task(&plugin),
-            Message::Enable(plugin) => {
-                match Installer::new(&self.catalog.conf.disable_path, &plugin)
-                    .move_to(&self.catalog.conf.install_path)
-                {
-                    Ok(_) => (),
-                    Err(e) => warn_err!(e),
-                }
-                self.refresh_local_task()
-            }
+            Message::Enable(plugin) => self.move_task(
+                &plugin,
+                &self.catalog.conf.disable_path,
+                &self.catalog.conf.install_path,
+            ),
             Message::Update(plugin) => self.update_task(&plugin),
-            Message::Disable(plugin) => {
-                match Installer::new(&self.catalog.conf.install_path, &plugin)
-                    .move_to(&self.catalog.conf.disable_path)
-                {
-                    Ok(_) => (),
-                    Err(e) => warn_err!(e),
-                }
-                self.refresh_local_task()
-            }
+            Message::Disable(plugin) => self.move_task(
+                &plugin,
+                &self.catalog.conf.install_path,
+                &self.catalog.conf.disable_path,
+            ),
             Message::Uninstall(plugin) => {
-                match Installer::new(&self.catalog.conf.install_path, &plugin).uninstall() {
-                    Ok(_) => (),
-                    Err(e) => warn_err!(e),
-                }
-                self.refresh_local_task()
+                self.uninstall_task(&plugin, &self.catalog.conf.install_path)
             }
             Message::UninstallDisabled(plugin) => {
-                match Installer::new(&self.catalog.conf.disable_path, &plugin).uninstall() {
-                    Ok(_) => (),
-                    Err(e) => warn_err!(e),
-                }
-                self.refresh_local_task()
+                self.uninstall_task(&plugin, &self.catalog.conf.disable_path)
             }
             Message::LinkClicked(_url) => {
                 // TODO actually handle clicked links?
