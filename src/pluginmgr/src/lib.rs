@@ -3,7 +3,7 @@ pub mod plugin;
 
 use crate::plugin::{Plugin, PluginStub};
 use anyhow::{Context, Result};
-use log::warn_err;
+use log::{info, warn_err};
 use std::fs;
 use std::path::{Path, PathBuf};
 
@@ -35,7 +35,11 @@ pub async fn discover_remote_plugins<T: reqwest::IntoUrl>(
     url: T,
     branch: &str,
 ) -> Result<Vec<Plugin>> {
-    let repo_path = cache_dir()?.join("naev-plugins");
+    use base64::{Engine as _, engine::general_purpose::URL_SAFE};
+    let repo_hash = URL_SAFE.encode(url.as_str());
+    let repo_path = cache_dir()?.join("plugins-repo");
+    fs::create_dir_all(&repo_path)?;
+    let repo_path = repo_path.join(repo_hash);
 
     let repo = if repo_path.exists() {
         let repo = match git2::Repository::open(&repo_path) {
@@ -43,6 +47,7 @@ pub async fn discover_remote_plugins<T: reqwest::IntoUrl>(
             Err(e) => anyhow::bail!("failed to open: {}", e),
         };
         {
+            info!("Updating plugin remote '{}'", url.as_str());
             repo.find_remote("origin")?.fetch(&[branch], None, None)?;
             let (object, reference) = repo.revparse_ext(branch).context("git branch not found")?;
             repo.checkout_tree(&object, None)
@@ -56,6 +61,7 @@ pub async fn discover_remote_plugins<T: reqwest::IntoUrl>(
         }
         repo
     } else {
+        info!("Cloning plugin remote '{}'", url.as_str());
         match git2::Repository::clone(url.as_str(), &repo_path) {
             Ok(repo) => repo,
             Err(e) => anyhow::bail!("failed to clone: {}", e),
