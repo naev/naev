@@ -10,6 +10,9 @@ pub const fn N_(s: &str) -> &str {
     s
 }
 
+/// Error identifier
+const ID_ERROR: &str = "ERROR";
+
 /// Small wrapper for our identifier that has additional deserialization checks
 #[derive(Debug, Clone, derive_more::Display, Serialize, PartialEq, Eq, Hash)]
 pub struct Identifier(String);
@@ -34,6 +37,11 @@ impl<'de> de::Deserialize<'de> for Identifier {
                 Err(de::Error::invalid_value(
                     de::Unexpected::Str(&inner),
                     &"identifier contains non-ascii alphanumeric characters",
+                ))
+            } else if inner.starts_with(ID_ERROR) {
+                Err(de::Error::invalid_value(
+                    de::Unexpected::Str(&inner),
+                    &"identifier can not start with 'ERROR'",
                 ))
             } else {
                 Ok(Self(inner))
@@ -140,17 +148,48 @@ impl PartialEq for Plugin {
     }
 }
 impl Eq for Plugin {}
-fn release_status_default() -> ReleaseStatus {
+const fn release_status_default() -> ReleaseStatus {
     ReleaseStatus::Stable
 }
-fn priority_default() -> i32 {
+const fn priority_default() -> i32 {
     5
 }
-fn source_default() -> Source {
+const fn source_default() -> Source {
     Source::Local
 }
 
 impl Plugin {
+    /// Generates a plugin from a path and an error.
+    pub fn from_error<P: AsRef<Path>>(path: P, err: anyhow::Error) -> Self {
+        let strerr = ID_ERROR.to_string();
+        Self {
+            identifier: Identifier(if let Some(filename) = path.as_ref().file_name() {
+                format!("{}-{}", &strerr, filename.to_string_lossy())
+            } else {
+                strerr.clone()
+            }),
+            name: (*path.as_ref().to_string_lossy()).to_string(),
+            author: strerr.clone(),
+            version: semver::Version::new(0, 0, 0),
+            r#abstract: strerr.clone(),
+            description: Some(format!("Error:\n{}", &err.to_string())),
+            license: None,
+            release_status: ReleaseStatus::Development,
+            tags: Vec::new(),
+            image_url: None,
+            depends: Vec::new(),
+            recommends: Vec::new(),
+            naev_version: semver::VersionReq::STAR,
+            source: source_default(),
+            priority: priority_default(),
+            total_conversion: false,
+            blacklist: Vec::new(),
+            whitelist: Vec::new(),
+            compatible: true,
+            mountpoint: Some(path.as_ref().to_path_buf()),
+        }
+    }
+
     pub fn check_compatible(&mut self) -> bool {
         self.compatible = self
             .naev_version

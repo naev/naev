@@ -20,11 +20,12 @@ pub fn discover_local_plugins<P: AsRef<Path>>(root: P) -> Result<Vec<Plugin>> {
                     return None;
                 }
             };
-            match Plugin::from_path(entry.path().as_path()) {
+            let path = entry.path();
+            match Plugin::from_path(&path) {
                 Ok(plugin) => Some(plugin),
                 Err(e) => {
                     warn_err!(e);
-                    None
+                    Some(Plugin::from_error(&path, e))
                 }
             }
         })
