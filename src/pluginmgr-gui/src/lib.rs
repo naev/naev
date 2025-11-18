@@ -940,8 +940,9 @@ impl App {
                 container(column![
                     bold(&progress.title),
                     text(&progress.message),
-                    widget::progress_bar(0.0..=1.0, progress.value),
+                    widget::progress_bar(0.0..=1.0, progress.value).girth(15.0),
                 ])
+                .style(container::rounded_box)
                 .padding(10)
                 .align_y(Vertical::Center)
                 .width(400),
@@ -949,7 +950,8 @@ impl App {
             .align_x(Horizontal::Right)
             .align_y(Vertical::Bottom)
             .width(Fill)
-            .height(Fill);
+            .height(Fill)
+            .padding(10);
             return widget::stack![main, over].into();
         }
         main.into()
