@@ -1790,7 +1790,7 @@ static int playerL_outfitRm( lua_State *L )
  * @note Should be given when landed, ideally on a spob with a shipyard.
  * Furthermore, this invalidates all player.pilot() references.
  *
- * @usage player.shipAdd( "Pirate Kestrel", _("Seiryuu"), _("") ) -- Gives the
+ * @usage player.shipAdd( "Pirate Kestrel", _("Seiryuu") ) -- Gives the
  * player a Pirate Kestrel named Seiryuu if player cancels the naming.
  *
  *    @luatparam string ship Name of the ship to add.
