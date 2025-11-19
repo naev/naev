@@ -1,7 +1,7 @@
 use anyhow::{Error, Result};
 use formatx::formatx;
 use fs_err as fs;
-use iced::task::{Straw, sipper};
+use iced::task::{Sipper, Straw, sipper};
 use iced::{Task, widget};
 use log::gettext::{N_, gettext, pgettext};
 use log::warn_err;
@@ -85,10 +85,10 @@ enum Message {
     UninstallDisabled(Plugin),
     LinkClicked(widget::markdown::Url),
     ProgressNew(Progress),
-    ProgressUpdate(String, f32),
     Progress(f32),
-    ProgressIncrement(f32),
-    Idle,
+    //ProgressUpdate(String, f32),
+    //ProgressIncrement(f32),
+    //Idle,
     DropDownToggle,
     RefreshLocal,
     ActionClearCache,
@@ -272,54 +272,6 @@ impl Catalog {
         Ok(toml::from_slice(&data)?)
     }
 
-    async fn refresh(&self) -> Result<()> {
-        self.refresh_callback(async |_| {}).await
-    }
-
-    async fn refresh_callback<F>(&self, mut pfn: F) -> Result<()>
-    where
-        F: AsyncFnMut(f32),
-    {
-        let mut hm: HashMap<Identifier, Plugin> = HashMap::new();
-        let n = self.conf.remotes.len() as f32;
-        for (i, remote) in self.conf.remotes.iter().enumerate() {
-            let plugins = {
-                match pluginmgr::discover_remote_plugins(remote.url.clone(), &remote.branch).await {
-                    Ok(plugins) => Ok(plugins),
-                    Err(e) => {
-                        if let Some(mirror) = &remote.mirror {
-                            pluginmgr::discover_remote_plugins(mirror.clone(), &remote.branch).await
-                        } else {
-                            Err(e)
-                        }
-                    }
-                }
-            }?;
-            for plugin in plugins {
-                hm.entry(plugin.identifier.clone())
-                    .and_modify(|e| {
-                        if e.version < plugin.version {
-                            *e = plugin.clone()
-                        }
-                    })
-                    .or_insert(plugin);
-            }
-            pfn(0.5 * ((i + 1) as f32) / n).await;
-        }
-        {
-            let mut data = self.data.lock().unwrap();
-            for (id, remote) in hm.iter() {
-                if let Some(wrap) = data.get_mut(id) {
-                    wrap.update_remote_if_newer(remote);
-                } else {
-                    data.insert(id.clone(), PluginWrap::new_remote(remote));
-                }
-            }
-            self.meta.lock().unwrap().last_updated = chrono::Local::now().into();
-        }
-        self.refresh_local().await
-    }
-
     async fn refresh_local(&self) -> Result<()> {
         let images = {
             let mut data = self.data.lock().unwrap();
@@ -484,7 +436,7 @@ impl App {
 
     fn load_from_cache_or_refresh_task(&mut self) -> Task<Message> {
         fn wrap(c: Arc<Catalog>) -> impl Straw<(), f32, Error> {
-            sipper(async move |mut _progress| {
+            sipper(async move |sender| {
                 let last_updated = c.meta.lock().unwrap().last_updated;
                 let refresh = match c.load_from_cache().await {
                     Ok(()) => {
@@ -497,9 +449,7 @@ impl App {
                         true
                     }
                 };
-                //let pfn = async |f32| { progress.send( f32 ).await; };
-                //if refresh && let Err(e) = c.refresh_callback( pfn ).await {
-                if refresh && let Err(e) = c.refresh().await {
+                if refresh && let Err(e) = App::refresh_straw(c).run(&sender).await {
                     warn_err!(e);
                 }
                 Ok(())
@@ -523,25 +473,76 @@ impl App {
         }))
     }
 
-    fn refresh_task(&self) -> Task<Message> {
-        fn wrap(c: Arc<Catalog>) -> impl Straw<(), f32, Error> {
-            sipper(async move |mut progress| {
-                let pfn = async move |f32| {
-                    progress.send(f32).await;
-                };
-                if let Err(e) = c.refresh_callback(pfn).await {
-                    warn_err!(e);
+    fn refresh_straw(c: Arc<Catalog>) -> impl Straw<(), f32, Error> {
+        sipper(async move |mut sender| {
+            let mut hm: HashMap<Identifier, Plugin> = HashMap::new();
+            let progress = Arc::new(Mutex::new(0.0));
+            let inc = 1.0 / (c.conf.remotes.len() as f32);
+            for remote in &c.conf.remotes {
+                let plugins = {
+                    match pluginmgr::discover_remote_plugins(remote.url.clone(), &remote.branch)
+                        .with(|v| {
+                            let lock = progress.lock().unwrap();
+                            *lock + v * inc
+                        })
+                        .run(&sender)
+                        .await
+                    {
+                        Ok(plugins) => Ok(plugins),
+                        Err(e) => {
+                            if let Some(mirror) = &remote.mirror {
+                                pluginmgr::discover_remote_plugins(mirror.clone(), &remote.branch)
+                                    .with(|v| {
+                                        let lock = progress.lock().unwrap();
+                                        *lock + v * inc
+                                    })
+                                    .run(&sender)
+                                    .await
+                            } else {
+                                Err(e)
+                            }
+                        }
+                    }
+                }?;
+                for plugin in plugins {
+                    hm.entry(plugin.identifier.clone())
+                        .and_modify(|e| {
+                            if e.version < plugin.version {
+                                *e = plugin.clone()
+                            }
+                        })
+                        .or_insert(plugin);
                 }
-                Ok(())
-            })
-        }
+                let val = {
+                    let mut lock = progress.lock().unwrap();
+                    *lock += inc;
+                    *lock
+                };
+                sender.send(val).await;
+            }
+            {
+                let mut data = c.data.lock().unwrap();
+                for (id, remote) in hm.iter() {
+                    if let Some(wrap) = data.get_mut(id) {
+                        wrap.update_remote_if_newer(remote);
+                    } else {
+                        data.insert(id.clone(), PluginWrap::new_remote(remote));
+                    }
+                }
+                c.meta.lock().unwrap().last_updated = chrono::Local::now().into();
+            }
+            c.refresh_local().await
+        })
+    }
+
+    fn refresh_task(&self) -> Task<Message> {
         Task::done(Message::ProgressNew(Progress {
             title: pgettext("plugins", "Refreshing").to_string(),
             message: pgettext("plugins", "Refreshing local and remote repositories").to_string(),
             value: 0.0,
         }))
         .chain(Task::sip(
-            wrap(self.catalog.clone()),
+            Self::refresh_straw(self.catalog.clone()),
             Message::Progress,
             |_| Message::UpdateView,
         ))
@@ -726,15 +727,16 @@ impl App {
                 self.progress = Some(progress);
                 Task::none()
             }
-            Message::ProgressUpdate(message, value) => {
+            Message::Progress(value) => {
                 if let Some(progress) = &mut self.progress {
-                    progress.message = message;
                     progress.value = value;
                 }
                 Task::none()
             }
-            Message::Progress(value) => {
+            /*
+            Message::ProgressUpdate(message, value) => {
                 if let Some(progress) = &mut self.progress {
+                    progress.message = message;
                     progress.value = value;
                 }
                 Task::none()
@@ -749,6 +751,7 @@ impl App {
                 self.progress = None;
                 Task::none()
             }
+            */
             Message::DropDownToggle => {
                 self.drop_action = !self.drop_action;
                 Task::none()

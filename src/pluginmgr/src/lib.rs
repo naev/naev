@@ -2,12 +2,12 @@ pub mod install;
 pub mod plugin;
 
 use crate::plugin::{Plugin, PluginStub};
-use anyhow::{Context, Result};
+use anyhow::{Context, Error, Result};
+use iced::task::{Sipper, Straw, sipper};
 use log::{info, warn_err};
 use std::fs;
 use std::path::{Path, PathBuf};
-//use iced::task::{Straw, sipper};
-//use anyhow::Error;
+use std::sync::{Arc, Mutex};
 
 pub fn discover_local_plugins<P: AsRef<Path>>(root: P) -> Result<Vec<Plugin>> {
     if !root.as_ref().exists() {
@@ -34,82 +34,11 @@ pub fn discover_local_plugins<P: AsRef<Path>>(root: P) -> Result<Vec<Plugin>> {
         .collect())
 }
 
-pub async fn discover_remote_plugins<T: reqwest::IntoUrl>(
+pub fn discover_remote_plugins<T: reqwest::IntoUrl>(
     url: T,
     branch: &str,
-) -> Result<Vec<Plugin>> {
-    discover_remote_plugins_callback(url, branch, async |_| {}).await
-}
-
-pub async fn discover_remote_plugins_callback<F, T>(
-    url: T,
-    branch: &str,
-    mut pfn: F,
-) -> Result<Vec<Plugin>>
-where
-    F: AsyncFnMut(f32),
-    T: reqwest::IntoUrl,
-{
-    use base64::{Engine as _, engine::general_purpose::URL_SAFE};
-    let repo_hash = URL_SAFE.encode(format!("{}:{}", url.as_str(), branch));
-    let repo_path = cache_dir()?.join("plugins-repo");
-    fs::create_dir_all(&repo_path)?;
-    let repo_path = repo_path.join(repo_hash);
-
-    let repo = if repo_path.exists() {
-        let repo = match git2::Repository::open(&repo_path) {
-            Ok(repo) => repo,
-            Err(e) => anyhow::bail!("failed to open: {}", e),
-        };
-        {
-            info!("Updating plugin remote '{}'", url.as_str());
-            repo.find_remote("origin")?.fetch(&[branch], None, None)?;
-            let (object, reference) = repo.revparse_ext(branch).context("git branch not found")?;
-            repo.checkout_tree(&object, None)
-                .context("git failed to checkout")?;
-            match reference {
-                // gref is an actual reference like branches or tags
-                Some(gref) => repo.set_head(gref.name().unwrap()),
-                // this is a commit, not a reference
-                None => repo.set_head_detached(object.id()),
-            }?;
-        }
-        repo
-    } else {
-        info!("Cloning plugin remote '{}'", url.as_str());
-        match git2::Repository::clone(url.as_str(), &repo_path) {
-            Ok(repo) => repo,
-            Err(e) => anyhow::bail!("failed to clone: {}", e),
-        }
-    };
-    let workdir = repo.workdir().context("naev-plugins directory is bare")?;
-    pfn(0.2);
-
-    use futures::StreamExt;
-    Ok(futures::stream::iter(repository(workdir)?)
-        .filter_map(|stub| async move {
-            match stub.to_plugin_async().await {
-                Ok(plugin) => Some(plugin),
-                Err(e) => {
-                    warn_err!(e);
-                    None
-                }
-            }
-        })
-        .collect()
-        .await)
-}
-
-/*
-struct Progress {
-    message: String,
-    value: f32,
-}
-pub fn discover_remote_plugins_sraw<T: reqwest::IntoUrl>(
-    url: T,
-    branch: &str,
-) -> impl Straw<Result<Vec<Plugin>>, Progress, Error> {
-    sipper( async move |mut progress| {
+) -> impl Straw<Vec<Plugin>, f32, Error> {
+    sipper(async move |mut sender| {
         use base64::{Engine as _, engine::general_purpose::URL_SAFE};
         let repo_hash = URL_SAFE.encode(format!("{}:{}", url.as_str(), branch));
         let repo_path = cache_dir()?.join("plugins-repo");
@@ -123,13 +52,9 @@ pub fn discover_remote_plugins_sraw<T: reqwest::IntoUrl>(
             };
             {
                 info!("Updating plugin remote '{}'", url.as_str());
-                let _ = progress.send( Progress {
-                    message: "Updating plugin remote '{}'".to_string(),
-                    value: 0.0,
-                } ).await;
-
                 repo.find_remote("origin")?.fetch(&[branch], None, None)?;
-                let (object, reference) = repo.revparse_ext(branch).context("git branch not found")?;
+                let (object, reference) =
+                    repo.revparse_ext(branch).context("git branch not found")?;
                 repo.checkout_tree(&object, None)
                     .context("git failed to checkout")?;
                 match reference {
@@ -148,15 +73,38 @@ pub fn discover_remote_plugins_sraw<T: reqwest::IntoUrl>(
             }
         };
         let workdir = repo.workdir().context("naev-plugins directory is bare")?;
+        sender.send(0.2).await;
 
+        fn load_stub(stub: &PluginStub) -> impl Straw<Plugin, f32, Error> {
+            sipper(async move |mut sender| {
+                let ret = stub.to_plugin_async().await;
+                sender.send(1.0).await;
+                ret
+            })
+        }
         use futures::StreamExt;
-        Ok(futures::stream::iter(repository(workdir)?)
-            .filter_map(|stub| async move {
-                match stub.to_plugin_async().await {
-                    Ok(plugin) => Some(plugin),
-                    Err(e) => {
-                        warn_err!(e);
-                        None
+        let repo = repository(workdir)?;
+        let inc = 0.8 / (repo.len() as f32);
+        let progress = Arc::new(Mutex::new(0.2));
+        Ok(futures::stream::iter(repo)
+            .filter_map(|stub| {
+                let value = sender.clone();
+                let progress = progress.clone();
+                async move {
+                    match load_stub(&stub)
+                        .with(|val| {
+                            let mut lock = progress.lock().unwrap();
+                            *lock += val * inc;
+                            *lock
+                        })
+                        .run(&value)
+                        .await
+                    {
+                        Ok(plugin) => Some(plugin),
+                        Err(e) => {
+                            warn_err!(e);
+                            None
+                        }
                     }
                 }
             })
@@ -164,7 +112,6 @@ pub fn discover_remote_plugins_sraw<T: reqwest::IntoUrl>(
             .await)
     })
 }
-*/
 
 pub fn repository<P: AsRef<Path>>(root: P) -> Result<Vec<PluginStub>> {
     let plugins_dir = root.as_ref().join("plugins");
@@ -247,115 +194,3 @@ pub fn local_plugins_dir() -> Result<PathBuf> {
 pub fn local_plugins_disabled_dir() -> Result<PathBuf> {
     Ok(write_dir()?.join("plugins-disabled"))
 }
-
-/*
-/// Summary of a plugin update operation.
-#[derive(Debug, Clone, Serialize)]
-pub struct UpdateSummary {
-    pub name: String,
-    pub status: String,
-}
-
-/// Validation summary result for a plugin.
-#[derive(Debug, Clone, Serialize)]
-pub struct ValidationSummary {
-    pub name: String,
-    pub valid: bool,
-    pub issues: Vec<String>,
-}
-
-/// Checks all installed plugins against the repository and updates them if needed.
-/// Works for both Git and ZIP-based plugins.
-pub fn update_all(
-    repo: &Repository,
-    lm: &LocalManager,
-    inst: &Installer,
-) -> Result<Vec<UpdateSummary>> {
-    let repo_plugins = repo.list_plugins()?;
-    let local_plugins = lm.list_installed()?;
-
-    let mut summaries = Vec::new();
-
-    for plugin in repo_plugins {
-        let local = local_plugins
-            .iter()
-            .find(|p| p.name.eq_ignore_ascii_case(&plugin.name));
-
-        let mut status = "Up to date".to_string();
-
-        if let Some(local) = local {
-            // Determine if update needed
-            let needs_update = match (&plugin.version, &local.version) {
-                (Some(r), Some(l)) if r > l => true,
-                _ if matches!(plugin.source_kind(), Some(SourceKind::Git)) => {
-                    inst.check_git_update(&plugin)?.is_some()
-                }
-                _ => false,
-            };
-
-            if needs_update {
-                match plugin.source_kind() {
-                    Some(SourceKind::Git) => {
-                        inst.update_git_plugin(&plugin)?;
-                        status = "Updated (git)".to_string();
-                    }
-                    Some(SourceKind::Link) => {
-                        inst.update_zip_plugin(&plugin)?;
-                        status = "Updated (zip)".to_string();
-                    }
-                    None => status = "Unknown source".to_string(),
-                }
-            }
-        } else {
-            status = "Not installed".to_string();
-        }
-
-        summaries.push(UpdateSummary {
-            name: plugin.name.clone(),
-            status,
-        });
-    }
-
-    Ok(summaries)
-}
-
-/// Validate all installed plugins (both zip and folder types).
-pub fn validate_all(lm: &LocalManager) -> Result<Vec<ValidationSummary>> {
-    let local_plugins = lm.list_installed()?;
-    let mut results = Vec::new();
-
-    for plugin in local_plugins {
-        let path = &plugin.path;
-        let mut issues = Vec::new();
-
-        let result = validate_plugin(path);
-
-        match result {
-            Ok(report) if report.is_valid() => {
-                results.push(ValidationSummary {
-                    name: plugin.name.clone(),
-                    valid: true,
-                    issues,
-                });
-            }
-            Ok(report) => {
-                issues.extend(report.errors.clone());
-                results.push(ValidationSummary {
-                    name: plugin.name.clone(),
-                    valid: false,
-                    issues,
-                });
-            }
-            Err(e) => {
-                results.push(ValidationSummary {
-                    name: plugin.name.clone(),
-                    valid: false,
-                    issues: vec![format!("Validation error: {}", e)],
-                });
-            }
-        }
-    }
-
-    Ok(results)
-}
-*/
