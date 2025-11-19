@@ -125,7 +125,12 @@ pub fn mount() -> Result<()> {
         }
 
         for mountpoint in mountpoints.iter() {
-            ndata::physfs::mount(mountpoint, false)?;
+            match ndata::physfs::mount(mountpoint, false) {
+                Ok(_) => (),
+                Err(e) => {
+                    warn_err!(e);
+                }
+            }
         }
     }
     Ok(())
