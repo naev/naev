@@ -19,6 +19,7 @@
 #include "camera.h"
 #include "conf.h"
 #include "console.h"
+#include "dialogue.h"
 #include "escort.h"
 #include "gui.h"
 #include "hook.h"
@@ -33,6 +34,7 @@
 #include "pilot.h"
 #include "player.h"
 #include "player_autonav.h"
+#include "save.h"
 #include "toolkit.h"
 
 /* keybinding structure */
@@ -1835,6 +1837,30 @@ static int input_doubleClickTest( unsigned int *time, const void **last,
 void input_handle( SDL_Event *event )
 {
    int ismouse;
+
+   if ( naev_event_resize( event->type ) ) {
+      naev_resize();
+      return;
+   } else if ( event->type == SDL_NEEDSRESTART ) {
+      int         can_save  = naev_canSave();
+      const char *msg_extra = "";
+      if ( player.p != NULL ) {
+         if ( !can_save )
+            msg_extra = _( "\n#r!! CURRENT PROGRESS WILL BE LOST !!#0" );
+         else
+            msg_extra = _( "\nYour current  progress will be saved." );
+      }
+      if ( dialogue_YesNo( _( "Warning" ), "#r%s#0%s",
+                           _( "Naev must be restarted for some changes to take "
+                              "effect. Do you wish to restart Naev now?" ),
+                           msg_extra ) ) {
+         if ( can_save )
+            save_all();
+         conf_saveConfig( CONF_FILE_PATH );
+         naev_restart();
+         return;
+      }
+   }
 
    /* Special case mouse stuff. */
    if ( ( event->type == SDL_EVENT_MOUSE_MOTION ) ||

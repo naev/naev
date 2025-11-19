@@ -199,23 +199,10 @@ static void opt_OK( unsigned int wid, const char *str )
    ret |= opt_videoSave( opt_windows[OPT_WIN_VIDEO], str );
 
    if ( opt_restart ) {
-      int         can_save  = naev_canSave();
-      const char *msg_extra = "";
-      if ( player.p != NULL ) {
-         if ( !can_save )
-            msg_extra = _( "\n#r!! CURRENT PROGRESS WILL BE LOST !!#0" );
-         else
-            msg_extra = _( "\nYour current  progress will be saved." );
-      }
-      if ( dialogue_YesNo( _( "Warning" ), "#r%s#0%s",
-                           _( "Naev must be restarted for some changes to take "
-                              "effect. Do you wish to restart Naev now?" ),
-                           msg_extra ) ) {
-         if ( can_save )
-            save_all();
-         conf_saveConfig( CONF_FILE_PATH );
-         naev_restart();
-      }
+      SDL_Event event;
+      memset( &event, 0, sizeof( event ) );
+      event.type = SDL_NEEDSRESTART;
+      SDL_PushEvent( &event );
    }
 
    /* Close window if no errors occurred. */

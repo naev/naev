@@ -89,6 +89,7 @@
 
 static int          quit         = 0; /**< For primary loop */
 Uint32              SDL_LOOPDONE = 0; /**< For custom event to exit loops. */
+Uint32              SDL_NEEDSRESTART = 0;
 static Uint64       last_t      = 0; /**< used to calculate FPS and movement. */
 static SDL_Surface *naev_icon   = NULL; /**< Icon. */
 static int          fps_skipped = 0;    /**< Skipped last frame? */
@@ -145,7 +146,8 @@ int  naev_main_setup( void )
 #endif /* DEBUGGING */
 
    /* Start counting things and such. */
-   SDL_LOOPDONE = SDL_RegisterEvents( 1 );
+   SDL_LOOPDONE     = SDL_RegisterEvents( 1 );
+   SDL_NEEDSRESTART = SDL_RegisterEvents( 2 );
 
    /* Set the configuration. */
    snprintf( CONF_FILE_PATH, sizeof( CONF_FILE_PATH ), "%s" CONF_FILE,
@@ -239,9 +241,6 @@ int naev_main_events( void )
             quit = 1; /* quit is handled here */
             break;
          }
-      } else if ( naev_event_resize( event.type ) ) {
-         naev_resize();
-         continue;
       }
       input_handle( &event ); /* handles all the events and player keybinds */
    }

@@ -181,6 +181,18 @@ pub fn manager() -> Result<()> {
             && chg
         {
             unsafe {
+                let mut event = naevc::SDL_Event {
+                    user: naevc::SDL_UserEvent {
+                        type_: naevc::SDL_NEEDSRESTART,
+                        reserved: 0,
+                        timestamp: 0,
+                        windowID: 0,
+                        code: 0,
+                        data1: std::ptr::null_mut(),
+                        data2: std::ptr::null_mut(),
+                    },
+                };
+                naevc::SDL_PushEvent(&mut event);
                 naevc::opt_needRestart();
             }
         }
