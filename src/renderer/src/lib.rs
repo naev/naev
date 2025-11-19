@@ -1,13 +1,14 @@
 use anyhow::Result;
 use encase::{ShaderSize, ShaderType};
 use glow::*;
-use naev_core::{atomicfloat::AtomicF32, start};
+use naev_core::start;
 use nalgebra::{Matrix3, Matrix4, Point3, Vector2, Vector3, Vector4};
 use physics::vec2::Vec2;
 use sdl3 as sdl;
 use std::ffi::CStr;
 use std::ops::Deref;
 use std::sync::{Arc, Mutex, MutexGuard, OnceLock, RwLock, atomic::AtomicBool, atomic::Ordering};
+use utils::atomicfloat::AtomicF32;
 
 pub mod buffer;
 pub mod camera;

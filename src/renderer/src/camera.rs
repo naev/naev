@@ -1,11 +1,11 @@
 use anyhow::Result;
-use naev_core::atomicfloat::AtomicF64;
 use nalgebra::Vector2;
 use physics::angle_diff;
 use physics::vec2::Vec2;
 use std::os::raw::{c_double, c_int, c_uint};
 use std::sync::atomic::Ordering;
 use std::sync::{LazyLock, RwLock};
+use utils::atomicfloat::AtomicF64;
 
 // Sound is currently in "screen" coordinates, and doesn't react to ship turning
 // Would probably have to be relative to heading for accessibility support (when enabled)

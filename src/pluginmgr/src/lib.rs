@@ -38,6 +38,18 @@ pub async fn discover_remote_plugins<T: reqwest::IntoUrl>(
     url: T,
     branch: &str,
 ) -> Result<Vec<Plugin>> {
+    discover_remote_plugins_callback(url, branch, async |_| {}).await
+}
+
+pub async fn discover_remote_plugins_callback<F, T>(
+    url: T,
+    branch: &str,
+    mut pfn: F,
+) -> Result<Vec<Plugin>>
+where
+    F: AsyncFnMut(f32),
+    T: reqwest::IntoUrl,
+{
     use base64::{Engine as _, engine::general_purpose::URL_SAFE};
     let repo_hash = URL_SAFE.encode(format!("{}:{}", url.as_str(), branch));
     let repo_path = cache_dir()?.join("plugins-repo");
@@ -71,6 +83,7 @@ pub async fn discover_remote_plugins<T: reqwest::IntoUrl>(
         }
     };
     let workdir = repo.workdir().context("naev-plugins directory is bare")?;
+    pfn(0.2);
 
     use futures::StreamExt;
     Ok(futures::stream::iter(repository(workdir)?)

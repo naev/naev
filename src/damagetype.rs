@@ -5,8 +5,8 @@ use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_int};
 
 use log::{warn, warn_err};
-use naev_core::utils::{binary_search_by_key_ref, sort_by_key_ref};
 use naev_core::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
+use utils::{binary_search_by_key_ref, sort_by_key_ref};
 
 #[derive(Debug, Clone, Copy)]
 struct Stat(usize);

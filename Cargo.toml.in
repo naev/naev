@@ -22,6 +22,7 @@ overflow-checks = true
 resolver = "3"
 members = [
    "@BUILD@/src/core",
+   "@BUILD@/src/utils",
    "@BUILD@/src/log",
    "@BUILD@/src/gettext",
    "@BUILD@/src/ndata",
@@ -50,6 +51,7 @@ naevc = { path=@NAEVC@ }
 sdl3 = "0.15"
 anyhow = "1.0"
 naev_core = { path="@BUILD@/src/core" }
+utils = { path="@BUILD@/src/utils" }
 gettext = { path="@BUILD@/src/gettext" }
 log = { path="@BUILD@/src/log" }
 ndata = { path="@BUILD@/src/ndata" }
@@ -101,6 +103,7 @@ serde-seeded = "0"
 [dependencies]
 naevc = { workspace = true }
 naev_core = { workspace = true }
+utils = { workspace = true }
 gettext = { workspace = true }
 log = { workspace = true }
 ndata = { workspace = true }
