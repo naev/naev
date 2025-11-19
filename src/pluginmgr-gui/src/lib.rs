@@ -86,6 +86,7 @@ enum Message {
     ProgressNew(Progress),
     ProgressMessage(String, f32),
     Progress(f32),
+    ProgressIncrement(f32),
     Idle,
     DropDownToggle,
     RefreshLocal,
@@ -709,6 +710,12 @@ impl App {
             Message::Progress(value) => {
                 if let Some(progress) = &mut self.progress {
                     progress.value = value;
+                }
+                Task::none()
+            }
+            Message::ProgressIncrement(value) => {
+                if let Some(progress) = &mut self.progress {
+                    progress.value += value;
                 }
                 Task::none()
             }

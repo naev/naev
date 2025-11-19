@@ -1143,7 +1143,7 @@ static void player_renderStealthUnderlay( double dt )
       r = detectz * t->stats.ew_detect;
       if ( r > 0. ) {
          glUseProgram( shaders.stealthaura.program );
-         gl_renderShader( x, y, r, r * CTS.CAMERA_VIEW_INV, 0.,
+         gl_renderShader( x, y, r, r * CTS.CAMERA_VIEW, 0.,
                           &shaders.stealthaura, &col, 1 );
       }
    }
