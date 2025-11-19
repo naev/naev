@@ -1,6 +1,7 @@
-use anyhow::Result;
+use anyhow::{Error, Result};
 use formatx::formatx;
 use fs_err as fs;
+use iced::task::{Straw, sipper};
 use iced::{Task, widget};
 use log::gettext::{N_, gettext, pgettext};
 use log::warn_err;
@@ -84,7 +85,7 @@ enum Message {
     UninstallDisabled(Plugin),
     LinkClicked(widget::markdown::Url),
     ProgressNew(Progress),
-    ProgressMessage(String, f32),
+    ProgressUpdate(String, f32),
     Progress(f32),
     ProgressIncrement(f32),
     Idle,
@@ -237,7 +238,7 @@ impl PluginWrap {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Copy, Clone, Serialize, Deserialize)]
 struct Metadata {
     last_updated: chrono::DateTime<chrono::Utc>,
 }
@@ -272,8 +273,16 @@ impl Catalog {
     }
 
     async fn refresh(&self) -> Result<()> {
+        self.refresh_callback(async |_| {}).await
+    }
+
+    async fn refresh_callback<F>(&self, mut pfn: F) -> Result<()>
+    where
+        F: AsyncFnMut(f32),
+    {
         let mut hm: HashMap<Identifier, Plugin> = HashMap::new();
-        for remote in &self.conf.remotes {
+        let n = self.conf.remotes.len() as f32;
+        for (i, remote) in self.conf.remotes.iter().enumerate() {
             let plugins = {
                 match pluginmgr::discover_remote_plugins(remote.url.clone(), &remote.branch).await {
                     Ok(plugins) => Ok(plugins),
@@ -295,6 +304,7 @@ impl Catalog {
                     })
                     .or_insert(plugin);
             }
+            pfn(0.5 * ((i + 1) as f32) / n).await;
         }
         {
             let mut data = self.data.lock().unwrap();
@@ -473,22 +483,27 @@ impl App {
     }
 
     fn load_from_cache_or_refresh_task(&mut self) -> Task<Message> {
-        async fn wrap(c: Arc<Catalog>) {
-            let last_updated = c.meta.lock().unwrap().last_updated;
-            let refresh = match c.load_from_cache().await {
-                Ok(()) => {
-                    chrono::Local::now().signed_duration_since(last_updated)
-                        >= c.conf.refresh_interval
-                }
+        fn wrap(c: Arc<Catalog>) -> impl Straw<(), f32, Error> {
+            sipper(async move |mut _progress| {
+                let last_updated = c.meta.lock().unwrap().last_updated;
+                let refresh = match c.load_from_cache().await {
+                    Ok(()) => {
+                        chrono::Local::now().signed_duration_since(last_updated)
+                            >= c.conf.refresh_interval
+                    }
 
-                Err(e) => {
+                    Err(e) => {
+                        warn_err!(e);
+                        true
+                    }
+                };
+                //let pfn = async |f32| { progress.send( f32 ).await; };
+                //if refresh && let Err(e) = c.refresh_callback( pfn ).await {
+                if refresh && let Err(e) = c.refresh().await {
                     warn_err!(e);
-                    true
                 }
-            };
-            if refresh && let Err(e) = c.refresh().await {
-                warn_err!(e);
-            }
+                Ok(())
+            })
         }
         if let Ok(metacatalog) =
             Catalog::from_path(self.catalog.conf.catalog_cache.join("metadata.toml"))
@@ -500,25 +515,36 @@ impl App {
             message: "".to_string(),
             value: 0.0,
         }))
+        //.chain(Task::sip(wrap(self.catalog.clone()), Message::Progress, |_| {
+        //    Message::UpdateView
+        //}))
         .chain(Task::perform(wrap(self.catalog.clone()), |_| {
             Message::UpdateView
         }))
     }
 
     fn refresh_task(&self) -> Task<Message> {
-        async fn wrap(c: Arc<Catalog>) {
-            if let Err(e) = c.refresh().await {
-                warn_err!(e);
-            }
+        fn wrap(c: Arc<Catalog>) -> impl Straw<(), f32, Error> {
+            sipper(async move |mut progress| {
+                let pfn = async move |f32| {
+                    progress.send(f32).await;
+                };
+                if let Err(e) = c.refresh_callback(pfn).await {
+                    warn_err!(e);
+                }
+                Ok(())
+            })
         }
         Task::done(Message::ProgressNew(Progress {
             title: pgettext("plugins", "Refreshing").to_string(),
             message: pgettext("plugins", "Refreshing local and remote repositories").to_string(),
             value: 0.0,
         }))
-        .chain(Task::perform(wrap(self.catalog.clone()), |_| {
-            Message::UpdateView
-        }))
+        .chain(Task::sip(
+            wrap(self.catalog.clone()),
+            Message::Progress,
+            |_| Message::UpdateView,
+        ))
     }
 
     fn refresh_local_task(&self) -> Task<Message> {
@@ -554,12 +580,12 @@ impl App {
             value: 0.0,
         }))
         .chain(Task::perform(
-            install_wrapper(Installer::new(&self.catalog.conf.install_path, &plugin)),
+            install_wrapper(Installer::new(&self.catalog.conf.install_path, plugin)),
             |_| Message::RefreshLocal,
         ))
     }
 
-    fn move_task(&self, plugin: &Plugin, from: &PathBuf, to: &PathBuf) -> Task<Message> {
+    fn move_task<P: AsRef<Path>>(&self, plugin: &Plugin, from: P, to: P) -> Task<Message> {
         async fn enable_wrapper(installer: Installer, path: PathBuf) {
             match installer.move_to(path) {
                 Ok(_) => (),
@@ -576,7 +602,7 @@ impl App {
             value: 0.0,
         }))
         .chain(Task::perform(
-            enable_wrapper(Installer::new(from, &plugin), to.clone()),
+            enable_wrapper(Installer::new(from, plugin), to.as_ref().to_path_buf()),
             |_| Message::RefreshLocal,
         ))
     }
@@ -611,7 +637,7 @@ impl App {
             value: 0.0,
         }))
         .chain(Task::perform(
-            uninstall_wrapper(Installer::new(path, &plugin)),
+            uninstall_wrapper(Installer::new(path, plugin)),
             |_| Message::RefreshLocal,
         ))
     }
@@ -700,7 +726,7 @@ impl App {
                 self.progress = Some(progress);
                 Task::none()
             }
-            Message::ProgressMessage(message, value) => {
+            Message::ProgressUpdate(message, value) => {
                 if let Some(progress) = &mut self.progress {
                     progress.message = message;
                     progress.value = value;
@@ -749,7 +775,7 @@ impl App {
                         && let Some(local) = &plugin.local
                     {
                         // Discard the RefreshLocal event so we do it at the end
-                        Some(self.update_task(&local).discard())
+                        Some(self.update_task(local).discard())
                     } else {
                         None
                     }
