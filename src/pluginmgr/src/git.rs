@@ -1,5 +1,5 @@
 use crate::install::Progress;
-use anyhow::{Context, Error};
+use anyhow::{Context, Error, Result};
 use iced::task::{Straw, sipper};
 use std::path::Path;
 
@@ -9,20 +9,14 @@ pub fn clone<P: AsRef<Path>, U: reqwest::IntoUrl>(
 ) -> impl Straw<git2::Repository, Progress, Error> {
     sipper(async move |mut sender| {
         // Have to wrap the async sender.send to make it a FnMut
-        let (send, recv) = tokio::sync::mpsc::unbounded_channel();
+        let (send, mut recv) = tokio::sync::mpsc::unbounded_channel();
         let on_progress = move |item| {
             send.send(item).unwrap();
         };
-        tokio::spawn(async move {
-            let mut recv = recv;
-            while let Some(item) = recv.recv().await {
-                sender.send(item).await;
-            }
-        });
 
         let path = path.as_ref().to_path_buf();
         let url = url.as_str().to_string();
-        tokio::task::spawn_blocking(move || {
+        let task = tokio::task::spawn_blocking(move || -> Result<git2::Repository> {
             // Prepare callbacks.
             let mut callbacks = git2::RemoteCallbacks::new();
             callbacks.transfer_progress(move |prog: git2::Progress| {
@@ -42,8 +36,16 @@ pub fn clone<P: AsRef<Path>, U: reqwest::IntoUrl>(
             Ok(git2::build::RepoBuilder::new()
                 .fetch_options(fo)
                 .clone(&url, path.as_ref())?)
-        })
-        .await?
+        });
+
+        while let Some(item) = recv.recv().await {
+            sender.send(item).await;
+        }
+
+        match task.await? {
+            Ok(repo) => Ok(repo),
+            Err(e) => Err(e.into()),
+        }
     })
 }
 
