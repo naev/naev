@@ -585,7 +585,7 @@ impl App {
     }
 
     fn move_task<P: AsRef<Path>>(&self, plugin: &Plugin, from: P, to: P) -> Task<Message> {
-        async fn enable_wrapper(installer: Installer, path: PathBuf) {
+        async fn wrap(installer: Installer, path: PathBuf) {
             match installer.move_to(path) {
                 Ok(_) => (),
                 Err(e) => warn_err!(e),
@@ -601,26 +601,30 @@ impl App {
             value: 0.0,
         }))
         .chain(Task::perform(
-            enable_wrapper(Installer::new(from, plugin), to.as_ref().to_path_buf()),
+            wrap(Installer::new(from, plugin), to.as_ref().to_path_buf()),
             |_| Message::RefreshLocal,
         ))
     }
 
     fn update_task(&self, plugin: &Plugin) -> Task<Message> {
-        async fn update_wrapper(installer: Installer) {
-            match installer.update().await {
-                Ok(_) => (),
-                Err(e) => warn_err!(e),
+        Task::done(Message::ProgressNew(Progress {
+            title: pgettext("plugins", "Updating").to_string(),
+            message: match formatx!(pgettext("plugins", "Updating plugin '{}'"), &plugin.name) {
+                Ok(msg) => msg,
+                Err(_) => pgettext("plugins", "Updating unknown plugin").to_string(),
             }
-        }
-        Task::perform(
-            update_wrapper(Installer::new(&self.catalog.conf.install_path, plugin)),
-            |_| Message::RefreshLocal,
-        )
+            .to_string(),
+            value: 0.0,
+        }))
+        .chain(Task::sip(
+            Installer::new(&self.catalog.conf.install_path, plugin).update(),
+            Message::Progress,
+            |_| Message::UpdateView,
+        ))
     }
 
     fn uninstall_task(&self, plugin: &Plugin, path: &PathBuf) -> Task<Message> {
-        async fn uninstall_wrapper(installer: Installer) {
+        async fn wrap(installer: Installer) {
             match installer.uninstall() {
                 Ok(_) => (),
                 Err(e) => warn_err!(e),
@@ -635,10 +639,9 @@ impl App {
             .to_string(),
             value: 0.0,
         }))
-        .chain(Task::perform(
-            uninstall_wrapper(Installer::new(path, plugin)),
-            |_| Message::RefreshLocal,
-        ))
+        .chain(Task::perform(wrap(Installer::new(path, plugin)), |_| {
+            Message::RefreshLocal
+        }))
     }
 
     fn update(&mut self, message: Message) -> Task<Message> {
