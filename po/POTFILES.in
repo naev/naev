@@ -4134,6 +4134,7 @@ src/plugin.h
 src/plugin.rs
 src/pluginmgr-cli/src/main.rs
 src/pluginmgr-gui/src/lib.rs
+src/pluginmgr/src/git.rs
 src/pluginmgr/src/install.rs
 src/pluginmgr/src/lib.rs
 src/pluginmgr/src/mount.rs

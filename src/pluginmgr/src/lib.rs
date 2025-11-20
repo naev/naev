@@ -1,3 +1,4 @@
+pub mod git;
 pub mod install;
 pub mod plugin;
 

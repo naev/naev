@@ -4,6 +4,11 @@ use fs_err as fs;
 use log::{info, warn};
 use std::path::{Path, PathBuf};
 
+pub struct Progress {
+    pub message: Option<String>,
+    pub value: f32,
+}
+
 /// Placeholder installer. Wire up real git/zip logic later.
 pub struct Installer {
     root: PathBuf,
