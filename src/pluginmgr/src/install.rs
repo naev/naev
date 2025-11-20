@@ -1,9 +1,9 @@
 use crate::git;
 use crate::plugin::{Plugin, Source};
-use anyhow::{Context, Error, Result};
+use anyhow::{Error, Result};
 use fs_err as fs;
 use iced::task::{Sipper, Straw, sipper};
-use log::{info, warn};
+use log::info;
 use std::path::{Path, PathBuf};
 
 #[derive(Debug, Clone)]
@@ -36,23 +36,19 @@ impl Installer {
 
     /// Installs from a plugin from a source
     pub fn install(self) -> impl Straw<(), Progress, Error> {
-        sipper(async move |sender| {
-            match &self.plugin.source {
-                Source::Git(url) => self.install_from_git(url.clone()).run(&sender).await,
-                Source::Download(url) => todo!(), //self.install_from_zip_url(url.into()).run(&sender).await,
-                Source::Local => anyhow::bail!("local plugin"),
-            }
+        sipper(async move |sender| match &self.plugin.source {
+            Source::Git(url) => self.install_from_git(url.clone()).run(&sender).await,
+            Source::Download(url) => self.install_from_zip_url(url.clone()).run(&sender).await,
+            Source::Local => anyhow::bail!("local plugin"),
         })
     }
 
     /// Updates from a plugin from a source
     pub fn update(self) -> impl Straw<(), Progress, Error> {
-        sipper(async move |sender| {
-            match &self.plugin.source {
-                Source::Git(url) => self.update_git_plugin(url.clone()).run(&sender).await,
-                Source::Download(url) => todo!(), //self.update_zip_plugin(url).await,
-                Source::Local => anyhow::bail!("local plugin"),
-            }
+        sipper(async move |sender| match &self.plugin.source {
+            Source::Git(_url) => self.update_git_plugin().run(&sender).await,
+            Source::Download(url) => self.update_zip_plugin(url.clone()).run(&sender).await,
+            Source::Local => anyhow::bail!("local plugin"),
         })
     }
 
@@ -86,10 +82,7 @@ impl Installer {
     }
 
     /// Performs a git pull if an update is available.
-    pub fn update_git_plugin<U: reqwest::IntoUrl>(
-        &self,
-        url: U,
-    ) -> impl Straw<(), Progress, Error> {
+    pub fn update_git_plugin(&self) -> impl Straw<(), Progress, Error> {
         sipper(async move |sender| {
             let info = &self.plugin;
             let dest = self.root.join(&*info.identifier);
@@ -128,36 +121,41 @@ impl Installer {
     }
 
     /// Updates a zip-based plugin by re-downloading and replacing the archive file.
-    pub async fn update_zip_plugin(&self, url: &reqwest::Url) -> Result<()> {
-        let info = &self.plugin;
-        let dest_zip = self.root.join(format!("{}.zip", &info.identifier));
+    pub fn update_zip_plugin<U: reqwest::IntoUrl>(
+        &self,
+        url: U,
+    ) -> impl Straw<(), Progress, Error> {
+        sipper(async move |mut _sender| {
+            let info = &self.plugin;
+            let dest_zip = self.root.join(format!("{}.zip", &info.identifier));
 
-        // Check version difference (same as before)
-        let local = Plugin::from_path(&dest_zip)?;
+            // Check version difference (same as before)
+            let local = Plugin::from_path(&dest_zip)?;
 
-        if info.version <= local.version {
+            if info.version <= local.version {
+                info!(
+                    "{} is already up to date (local v{} >= repo v{})",
+                    &info.name, info.version, local.version
+                );
+                return Ok(());
+            }
+
+            info!("Updating zip plugin '{}' from {}", &info.name, url.as_str());
+
+            // Download new archive
+            let bytes = {
+                let resp = reqwest::get(url).await?.error_for_status()?;
+                Ok::<bytes::Bytes, anyhow::Error>(resp.bytes().await?)
+            }?;
+
+            // Overwrite existing archive
+            fs::write(&dest_zip, &bytes)?;
             info!(
-                "{} is already up to date (local v{} >= repo v{})",
-                &info.name, info.version, local.version
+                "Successfully updated '{}' to version {:?}",
+                &info.name, info.version
             );
-            return Ok(());
-        }
-
-        info!("Updating zip plugin '{}' from {}", &info.name, url);
-
-        // Download new archive
-        let bytes = {
-            let resp = reqwest::get(url.clone()).await?.error_for_status()?;
-            Ok::<bytes::Bytes, anyhow::Error>(resp.bytes().await?)
-        }?;
-
-        // Overwrite existing archive
-        fs::write(&dest_zip, &bytes)?;
-        info!(
-            "Successfully updated '{}' to version {:?}",
-            &info.name, info.version
-        );
-        Ok(())
+            Ok(())
+        })
     }
 
     pub fn uninstall(self) -> Result<()> {
