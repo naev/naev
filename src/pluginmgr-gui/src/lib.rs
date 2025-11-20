@@ -5,6 +5,7 @@ use iced::task::{Sipper, Straw, sipper};
 use iced::{Task, widget};
 use log::gettext::{N_, gettext, pgettext};
 use log::warn_err;
+use pluginmgr::install;
 use pluginmgr::install::Installer;
 use pluginmgr::plugin::{Identifier, Plugin, ReleaseStatus};
 use serde::{Deserialize, Serialize};
@@ -85,10 +86,7 @@ enum Message {
     UninstallDisabled(Plugin),
     LinkClicked(widget::markdown::Url),
     ProgressNew(Progress),
-    Progress(f32),
-    //ProgressUpdate(String, f32),
-    //ProgressIncrement(f32),
-    //Idle,
+    Progress(install::Progress),
     DropDownToggle,
     RefreshLocal,
     ActionClearCache,
@@ -435,7 +433,7 @@ impl App {
     }
 
     fn load_from_cache_or_refresh_task(&mut self) -> Task<Message> {
-        fn wrap(c: Arc<Catalog>) -> impl Straw<(), f32, Error> {
+        fn wrap(c: Arc<Catalog>) -> impl Straw<(), install::Progress, Error> {
             sipper(async move |sender| {
                 let last_updated = c.meta.lock().unwrap().last_updated;
                 let refresh = match c.load_from_cache().await {
@@ -473,7 +471,7 @@ impl App {
         }))
     }
 
-    fn refresh_straw(c: Arc<Catalog>) -> impl Straw<(), f32, Error> {
+    fn refresh_straw(c: Arc<Catalog>) -> impl Straw<(), install::Progress, Error> {
         sipper(async move |mut sender| {
             let mut hm: HashMap<Identifier, Plugin> = HashMap::new();
             let progress = Arc::new(Mutex::new(0.0));
@@ -483,7 +481,7 @@ impl App {
                     match pluginmgr::discover_remote_plugins(remote.url.clone(), &remote.branch)
                         .with(|v| {
                             let lock = progress.lock().unwrap();
-                            *lock + v * inc
+                            (*lock + v.value * inc).into()
                         })
                         .run(&sender)
                         .await
@@ -494,7 +492,7 @@ impl App {
                                 pluginmgr::discover_remote_plugins(mirror.clone(), &remote.branch)
                                     .with(|v| {
                                         let lock = progress.lock().unwrap();
-                                        *lock + v * inc
+                                        (*lock + v.value * inc).into()
                                     })
                                     .run(&sender)
                                     .await
@@ -518,7 +516,7 @@ impl App {
                     *lock += inc;
                     *lock
                 };
-                sender.send(val).await;
+                sender.send(val.into()).await;
             }
             {
                 let mut data = c.data.lock().unwrap();
@@ -729,29 +727,13 @@ impl App {
             }
             Message::Progress(value) => {
                 if let Some(progress) = &mut self.progress {
-                    progress.value = value;
+                    if let Some(message) = &value.message {
+                        progress.message = message.clone();
+                    }
+                    progress.value = value.value;
                 }
                 Task::none()
             }
-            /*
-            Message::ProgressUpdate(message, value) => {
-                if let Some(progress) = &mut self.progress {
-                    progress.message = message;
-                    progress.value = value;
-                }
-                Task::none()
-            }
-            Message::ProgressIncrement(value) => {
-                if let Some(progress) = &mut self.progress {
-                    progress.value += value;
-                }
-                Task::none()
-            }
-            Message::Idle => {
-                self.progress = None;
-                Task::none()
-            }
-            */
             Message::DropDownToggle => {
                 self.drop_action = !self.drop_action;
                 Task::none()

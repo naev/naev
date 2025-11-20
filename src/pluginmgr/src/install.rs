@@ -4,9 +4,23 @@ use fs_err as fs;
 use log::{info, warn};
 use std::path::{Path, PathBuf};
 
+#[derive(Debug, Clone)]
 pub struct Progress {
     pub message: Option<String>,
     pub value: f32,
+}
+impl Into<f32> for Progress {
+    fn into(self) -> f32 {
+        self.value
+    }
+}
+impl From<f32> for Progress {
+    fn from(value: f32) -> Self {
+        Progress {
+            message: None,
+            value,
+        }
+    }
 }
 
 /// Placeholder installer. Wire up real git/zip logic later.

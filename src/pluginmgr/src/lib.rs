@@ -2,10 +2,13 @@ pub mod git;
 pub mod install;
 pub mod plugin;
 
+use crate::install::Progress;
 use crate::plugin::{Plugin, PluginStub};
 use anyhow::{Context, Error, Result};
+use formatx::formatx;
 use iced::task::{Sipper, Straw, sipper};
-use log::{info, warn_err};
+use log::gettext::pgettext;
+use log::warn_err;
 use std::fs;
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, Mutex};
@@ -38,48 +41,54 @@ pub fn discover_local_plugins<P: AsRef<Path>>(root: P) -> Result<Vec<Plugin>> {
 pub fn discover_remote_plugins<T: reqwest::IntoUrl>(
     url: T,
     branch: &str,
-) -> impl Straw<Vec<Plugin>, f32, Error> {
+) -> impl Straw<Vec<Plugin>, Progress, Error> {
     sipper(async move |mut sender| {
         use base64::{Engine as _, engine::general_purpose::URL_SAFE};
         let repo_hash = URL_SAFE.encode(format!("{}:{}", url.as_str(), branch));
         let repo_path = cache_dir()?.join("plugins-repo");
         fs::create_dir_all(&repo_path)?;
         let repo_path = repo_path.join(repo_hash);
+        let urlstr = url.as_str().to_string();
 
+        let sendmap = |mut prog: Progress| -> Progress {
+            prog.value *= 0.2;
+            prog
+        };
         let repo = if repo_path.exists() {
-            let repo = match git2::Repository::open(&repo_path) {
-                Ok(repo) => repo,
-                Err(e) => anyhow::bail!("failed to open: {}", e),
-            };
-            {
-                info!("Updating plugin remote '{}'", url.as_str());
-                repo.find_remote("origin")?.fetch(&[branch], None, None)?;
-                let (object, reference) =
-                    repo.revparse_ext(branch).context("git branch not found")?;
-                repo.checkout_tree(&object, None)
-                    .context("git failed to checkout")?;
-                match reference {
-                    // gref is an actual reference like branches or tags
-                    Some(gref) => repo.set_head(gref.name().unwrap()),
-                    // this is a commit, not a reference
-                    None => repo.set_head_detached(object.id()),
-                }?;
-            }
-            repo
+            sender
+                .send(Progress {
+                    message: formatx!(pgettext("plugins", "Updating plugin remote {}"), &urlstr)
+                        .ok(),
+                    value: 0.0,
+                })
+                .await;
+            git::pull(&repo_path).with(sendmap).run(&sender).await?
         } else {
-            info!("Cloning plugin remote '{}'", url.as_str());
-            match git2::Repository::clone(url.as_str(), &repo_path) {
-                Ok(repo) => repo,
-                Err(e) => anyhow::bail!("failed to clone: {}", e),
-            }
+            sender
+                .send(Progress {
+                    message: formatx!(pgettext("plugins", "Cloning plugin remote {}"), &urlstr)
+                        .ok(),
+                    value: 0.0,
+                })
+                .await;
+            git::clone(&repo_path, url)
+                .with(sendmap)
+                .run(&sender)
+                .await?
         };
         let workdir = repo.workdir().context("naev-plugins directory is bare")?;
-        sender.send(0.2).await;
+        sender
+            .send(Progress {
+                message: formatx!(pgettext("plugins", "Updating plugins found in {}"), &urlstr)
+                    .ok(),
+                value: 0.2,
+            })
+            .await;
 
         fn load_stub(stub: &PluginStub) -> impl Straw<Plugin, f32, Error> {
             sipper(async move |mut sender| {
                 let ret = stub.to_plugin_async().await;
-                sender.send(1.0).await;
+                sender.send(1.0.into()).await;
                 ret
             })
         }
@@ -96,7 +105,7 @@ pub fn discover_remote_plugins<T: reqwest::IntoUrl>(
                         .with(|val| {
                             let mut lock = progress.lock().unwrap();
                             *lock += val * inc;
-                            *lock
+                            (*lock).into()
                         })
                         .run(&value)
                         .await

@@ -30,3 +30,5 @@ fs_extra = { workspace = true }
 futures = { workspace = true }
 base64 = { workspace = true }
 iced = { workspace = true }
+tokio = { workspace = true }
+formatx = { workspace = true }
