@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: naev 0.12.0-beta.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2025-02-01 11:09+0900\n"
-"PO-Revision-Date: 2025-07-31 17:02+0000\n"
-"Last-Translator: Valeriy Sosnov <sigus@vivaldi.net>\n"
-"Language-Team: Russian <https://hosted.weblate.org/projects/naev/naev-0-12-x/"
-"ru/>\n"
+"PO-Revision-Date: 2025-11-20 16:10+0000\n"
+"Last-Translator: aaaxpel <aaaxpel@noreply.codeberg.org>\n"
+"Language-Team: Russian <https://translate.codeberg.org/projects/naev/"
+"naev-0-12-x/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.13-dev\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 5.14\n"
 
 msgid "Main"
 msgstr "Главная"
@@ -8691,7 +8691,7 @@ msgid ""
 msgstr ""
 
 msgid "Frontier"
-msgstr ""
+msgstr "Пограничник"
 
 msgid "Frontier Alliance"
 msgstr ""
@@ -8745,7 +8745,7 @@ msgstr ""
 #. Add tag-appropriate descriptions
 #. hook.pilot( rampant, "idle", "idle" )
 msgid "Pirate"
-msgstr ""
+msgstr "Пират"
 
 msgid "Pirate Marauders"
 msgstr ""
@@ -12875,7 +12875,7 @@ msgid ""
 msgstr ""
 
 msgid "Plasma Cannon"
-msgstr ""
+msgstr "Плазменная Пушка"
 
 msgid ""
 "The Plasma Cannon is a scaled-up version of the Plasma Blaster design for "
@@ -32270,7 +32270,7 @@ msgstr ""
 #. Strafer stops following the player
 #. Add some fuel, far away so that no npc gathers it
 msgid "Fuel"
-msgstr ""
+msgstr "Топливо"
 
 msgid ""
 "Fuel\n"
@@ -32421,7 +32421,7 @@ msgid "Close"
 msgstr "Закрыть"
 
 msgid "Jettison"
-msgstr "Сброс"
+msgstr "Еттисон"
 
 #. Player stole something to make it not spaceworthy, sorry bud, you're
 #. not waking up.
@@ -35015,7 +35015,7 @@ msgstr ""
 #. Gets someone to make a message (useful for hook.timer)
 #. Equips a Vendetta with full mace rockets
 msgid "Warlords"
-msgstr ""
+msgstr "Военачальники"
 
 #. Spawns a merchant ship that explains what happens
 msgid "Trader {ship}"
@@ -43241,7 +43241,7 @@ msgstr ""
 #. Keep on beating
 #. Make it so it's much easier to dodge for the player
 msgid "Major Malik"
-msgstr ""
+msgstr "Майор Малик"
 
 msgid ""
 "Back in my day we walked uphill, both ways, in the snow to fight for honour!"
@@ -58662,7 +58662,7 @@ msgstr ""
 #. target destination
 #. In case no suitable planets are in range.
 msgid "Lieutenant"
-msgstr ""
+msgstr "Лейтенант"
 
 msgid "You see an Empire Lieutenant who seems to be looking at you."
 msgstr ""
@@ -115607,7 +115607,7 @@ msgid "Courier"
 msgstr "Курьер"
 
 msgid "Freighter"
-msgstr "Транспорт"
+msgstr "Грузовое судно"
 
 msgid "Bulk Freighter"
 msgstr "Тяжелый транспорт"
