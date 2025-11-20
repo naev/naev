@@ -563,12 +563,6 @@ impl App {
     }
 
     fn install_task(&self, plugin: &Plugin) -> Task<Message> {
-        async fn install_wrapper(installer: Installer) {
-            match installer.install().await {
-                Ok(_) => (),
-                Err(e) => warn_err!(e),
-            }
-        }
         Task::done(Message::ProgressNew(Progress {
             title: pgettext("plugins", "Installing").to_string(),
             message: match formatx!(pgettext("plugins", "Installing plugin '{}'"), &plugin.name) {
@@ -578,8 +572,9 @@ impl App {
             .to_string(),
             value: 0.0,
         }))
-        .chain(Task::perform(
-            install_wrapper(Installer::new(&self.catalog.conf.install_path, plugin)),
+        .chain(Task::sip(
+            Installer::new(&self.catalog.conf.install_path, plugin).install(),
+            Message::Progress,
             |_| Message::RefreshLocal,
         ))
     }

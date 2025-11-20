@@ -1,8 +1,10 @@
 use crate::git;
 use crate::plugin::{Plugin, Source};
 use anyhow::{Error, Result};
+use formatx::formatx;
 use fs_err as fs;
 use iced::task::{Sipper, Straw, sipper};
+use log::gettext::pgettext;
 use log::info;
 use std::path::{Path, PathBuf};
 
@@ -36,19 +38,43 @@ impl Installer {
 
     /// Installs from a plugin from a source
     pub fn install(self) -> impl Straw<(), Progress, Error> {
-        sipper(async move |sender| match &self.plugin.source {
-            Source::Git(url) => self.install_from_git(url.clone()).run(&sender).await,
-            Source::Download(url) => self.install_from_zip_url(url.clone()).run(&sender).await,
-            Source::Local => anyhow::bail!("local plugin"),
+        sipper(async move |mut sender| {
+            sender
+                .send(Progress {
+                    message: formatx!(
+                        pgettext("plugins", "Installing plugin '{}'"),
+                        &self.plugin.name
+                    )
+                    .ok(),
+                    value: 0.0,
+                })
+                .await;
+            match &self.plugin.source {
+                Source::Git(url) => self.install_from_git(url.clone()).run(&sender).await,
+                Source::Download(url) => self.install_from_zip_url(url.clone()).run(&sender).await,
+                Source::Local => anyhow::bail!("local plugin"),
+            }
         })
     }
 
     /// Updates from a plugin from a source
     pub fn update(self) -> impl Straw<(), Progress, Error> {
-        sipper(async move |sender| match &self.plugin.source {
-            Source::Git(_url) => self.update_git_plugin().run(&sender).await,
-            Source::Download(url) => self.update_zip_plugin(url.clone()).run(&sender).await,
-            Source::Local => anyhow::bail!("local plugin"),
+        sipper(async move |mut sender| {
+            sender
+                .send(Progress {
+                    message: formatx!(
+                        pgettext("plugins", "Updating plugin '{}'"),
+                        &self.plugin.name
+                    )
+                    .ok(),
+                    value: 0.0,
+                })
+                .await;
+            match &self.plugin.source {
+                Source::Git(_url) => self.update_git_plugin().run(&sender).await,
+                Source::Download(url) => self.update_zip_plugin(url.clone()).run(&sender).await,
+                Source::Local => anyhow::bail!("local plugin"),
+            }
         })
     }
 
@@ -72,7 +98,7 @@ impl Installer {
         Ok(())
     }
 
-    fn install_from_git<U: reqwest::IntoUrl>(&self, url: U) -> impl Straw<(), Progress, Error> {
+    pub fn install_from_git<U: reqwest::IntoUrl>(&self, url: U) -> impl Straw<(), Progress, Error> {
         sipper(async move |sender| {
             let info = &self.plugin;
             let dest = self.root.join(&*info.identifier);

@@ -20,25 +20,30 @@ pub fn clone<P: AsRef<Path>, U: reqwest::IntoUrl>(
             }
         });
 
-        // Prepare callbacks.
-        let mut callbacks = git2::RemoteCallbacks::new();
-        callbacks.transfer_progress(move |prog: git2::Progress| {
-            let p = (prog.received_objects() as f32) / (prog.total_objects() as f32);
-            on_progress(Progress {
-                message: None,
-                value: p,
+        let path = path.as_ref().to_path_buf();
+        let url = url.as_str().to_string();
+        tokio::task::spawn_blocking(move || {
+            // Prepare callbacks.
+            let mut callbacks = git2::RemoteCallbacks::new();
+            callbacks.transfer_progress(move |prog: git2::Progress| {
+                let p = (prog.received_objects() as f32) / (prog.total_objects() as f32);
+                on_progress(Progress {
+                    message: None,
+                    value: p,
+                });
+                true
             });
-            true
-        });
 
-        // Prepare fetch options.
-        let mut fo = git2::FetchOptions::new();
-        fo.remote_callbacks(callbacks);
+            // Prepare fetch options.
+            let mut fo = git2::FetchOptions::new();
+            fo.remote_callbacks(callbacks);
 
-        // Clone
-        Ok(git2::build::RepoBuilder::new()
-            .fetch_options(fo)
-            .clone(url.as_str(), path.as_ref())?)
+            // Clone
+            Ok(git2::build::RepoBuilder::new()
+                .fetch_options(fo)
+                .clone(&url, path.as_ref())?)
+        })
+        .await?
     })
 }
 
