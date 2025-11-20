@@ -11,7 +11,7 @@ pub const fn N_(s: &str) -> &str {
     s
 }
 
-/// Error identifier
+/// Error identifier. Plugin identifiers are not allowed to start with this string.
 const ID_ERROR: &str = "ERROR";
 
 /// Small wrapper for our identifier that has additional deserialization checks
@@ -83,6 +83,7 @@ impl PluginStub {
     }
 }
 
+/// The status of a plugin
 #[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum ReleaseStatus {
@@ -91,6 +92,7 @@ pub enum ReleaseStatus {
     Development,
 }
 impl ReleaseStatus {
+    /// Gets the status as a human interpretable string
     pub const fn as_str(&self) -> &'static str {
         match self {
             ReleaseStatus::Stable => N_("stable"),
@@ -100,6 +102,7 @@ impl ReleaseStatus {
     }
 }
 
+/// A source location of a plugin used to update or download them
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum Source {
@@ -162,7 +165,8 @@ const fn source_default() -> Source {
 }
 
 impl Plugin {
-    /// Generates a plugin from a path and an error.
+    /// Generates a plugin from a path and an error, useful to load plugins that have errors and
+    /// visualize them to the player.
     pub fn from_error<P: AsRef<Path>>(path: P, err: anyhow::Error) -> Self {
         let path = path.as_ref();
         let strerr = ID_ERROR.to_string();
@@ -200,6 +204,7 @@ impl Plugin {
         }
     }
 
+    /// Checks to see if a plugin located at a specific path is disabled or not.
     pub fn is_disabled<P: AsRef<Path>>(path: P) -> bool {
         let path = path.as_ref();
         if let Some(filename) = path.file_name() {
@@ -216,6 +221,7 @@ impl Plugin {
         }
     }
 
+    /// Disables or enables a plugin.
     pub fn disable(&self, disable: bool) -> Result<()> {
         if let Some(path) = &self.mountpoint
             && let Some(filename) = path.file_name()
@@ -239,6 +245,7 @@ impl Plugin {
         }
     }
 
+    /// Checks to see if a plugin is compatible with the current version.
     pub fn check_compatible(&mut self) -> bool {
         self.compatible = self
             .naev_version
@@ -246,6 +253,8 @@ impl Plugin {
         self.compatible
     }
 
+    /// Loads a plugin from a slice, but doesn't set extra data like the mountpoint or whether or
+    /// not it is disabled.
     pub fn from_slice(data: &[u8]) -> Result<Self> {
         let mut plugin: Self = toml::from_slice(data)?;
         // Additional validation
@@ -261,22 +270,27 @@ impl Plugin {
         Ok(plugin)
     }
 
+    /// Loads a plugin description from a description file at a url.
     pub fn from_url<T: reqwest::IntoUrl>(url: T) -> Result<Self> {
         let response = reqwest::blocking::get(url)?;
         let content = response.bytes()?;
         let mut plugin = Self::from_slice(&content)?;
-        plugin.mountpoint = None;
+        plugin.mountpoint = None; // Make sure it's disabled
+        plugin.disabled = false;
         Ok(plugin)
     }
 
+    /// Loads a plugin description from a description file at a url asynchronously.
     pub async fn from_url_async<T: reqwest::IntoUrl>(url: T) -> Result<Self> {
         let response = reqwest::get(url).await?;
         let content = response.bytes().await?;
         let mut plugin = Self::from_slice(&content)?;
         plugin.mountpoint = None;
+        plugin.disabled = false;
         Ok(plugin)
     }
 
+    /// Tries to load a plugin from a path. Will store the mountpoint and disabled status too.
     pub fn from_path<P: AsRef<Path>>(path: P) -> Result<Self> {
         let path = path.as_ref();
         let disabled = Self::is_disabled(path);

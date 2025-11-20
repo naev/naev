@@ -8,6 +8,7 @@ use log::gettext::pgettext;
 use log::info;
 use std::path::{Path, PathBuf};
 
+/// Reports the progress of the installer.
 #[derive(Debug, Clone)]
 pub struct Progress {
     pub message: Option<String>,
@@ -22,12 +23,11 @@ impl From<f32> for Progress {
     }
 }
 
-/// Placeholder installer. Wire up real git/zip logic later.
+/// Installer structure to handle manipulating plugins.
 pub struct Installer {
     root: PathBuf,
     plugin: Plugin,
 }
-
 impl Installer {
     pub fn new<P: AsRef<Path>>(root: P, plugin: &Plugin) -> Self {
         Self {
@@ -82,6 +82,7 @@ impl Installer {
         })
     }
 
+    /// Installs a plugin from a git repository.
     pub fn install_from_git<U: reqwest::IntoUrl>(&self, url: U) -> impl Straw<(), Progress, Error> {
         sipper(async move |sender| {
             let info = &self.plugin;
@@ -168,6 +169,7 @@ impl Installer {
         })
     }
 
+    /// Uninstalls a plugin by removing it.
     pub fn uninstall(self) -> impl Straw<(), Progress, Error> {
         sipper(async move |mut sender| {
             sender

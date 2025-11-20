@@ -13,6 +13,7 @@ use std::fs;
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, Mutex};
 
+/// Discovers local plugins at a specific past ignoring hidden paths
 pub fn discover_local_plugins<P: AsRef<Path>>(root: P) -> Result<Vec<Plugin>> {
     if !root.as_ref().exists() {
         return Ok(Vec::new());
@@ -44,6 +45,7 @@ pub fn discover_local_plugins<P: AsRef<Path>>(root: P) -> Result<Vec<Plugin>> {
         .collect())
 }
 
+/// Discovers and caches remote plugins from a git plugin repository
 pub fn discover_remote_plugins<T: reqwest::IntoUrl>(
     url: T,
     branch: &str,
@@ -129,6 +131,7 @@ pub fn discover_remote_plugins<T: reqwest::IntoUrl>(
     })
 }
 
+/// Gets the plugin stubs from a local path
 pub fn repository<P: AsRef<Path>>(root: P) -> Result<Vec<PluginStub>> {
     let plugins_dir = root.as_ref().join("plugins");
     if !plugins_dir.exists() {
@@ -157,33 +160,15 @@ pub fn repository<P: AsRef<Path>>(root: P) -> Result<Vec<PluginStub>> {
         })
         .collect())
 }
-/*
-    /// Opens a mounted view of a local plugin (directory or zip).
-    pub fn mount_plugin(&self, name: &str) -> Result<PluginSource> {
-        let plugin_path = self.root.join(name);
 
-        // Some plugins are stored as zips; some as directories
-        let zip_path = plugin_path.with_extension("zip");
-
-        if zip_path.exists() {
-            Ok(PluginSource::open(zip_path)?)
-        } else {
-            Ok(PluginSource::open(plugin_path)?)
-        }
-    }
-
-    pub fn ensure_root(&self) -> Result<()> {
-        fs::create_dir_all(&self.root)?;
-        Ok(())
-    }
-*/
-
+/// Gets the cache directory used by the project
 pub fn cache_dir() -> Result<PathBuf> {
     let proj_dirs = directories::ProjectDirs::from("org", "naev", "naev")
         .context("getting project directorios")?;
     Ok(proj_dirs.cache_dir().to_path_buf())
 }
 
+/// Gets the write directory used by the project
 pub fn write_dir() -> Result<PathBuf> {
     /*
     use directories::BaseDirs;

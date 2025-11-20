@@ -3,6 +3,7 @@ use anyhow::{Context, Error, Result};
 use iced::task::{Straw, sipper};
 use std::path::Path;
 
+/// Clones a git repository located at a url to a specific path
 pub fn clone<P: AsRef<Path>, U: reqwest::IntoUrl>(
     path: P,
     url: U,
@@ -49,6 +50,7 @@ pub fn clone<P: AsRef<Path>, U: reqwest::IntoUrl>(
     })
 }
 
+/// Performs the equivalent to `git pull` on a git repository located at a specific path
 pub fn pull<P: AsRef<Path>>(path: P) -> impl Straw<git2::Repository, Progress, Error> {
     sipper(async move |mut sender| {
         // Have to wrap the async sender.send to make it a FnMut
