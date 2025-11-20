@@ -11,7 +11,10 @@ use std::sync::atomic::{AtomicBool, Ordering};
 static PLUGINS: LazyLock<Vec<Plugin>> = LazyLock::new(|| {
     let mut plugins = match pluginmgr::local_plugins_dir() {
         Ok(path) => match pluginmgr::discover_local_plugins(path) {
-            Ok(local) => local,
+            Ok(mut local) => {
+                local.retain(|p| !p.disabled);
+                local
+            }
             Err(e) => {
                 warn_err!(e);
                 Vec::new()

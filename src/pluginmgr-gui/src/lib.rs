@@ -23,9 +23,6 @@ struct Remote {
 fn local_plugins_dir() -> PathBuf {
     pluginmgr::local_plugins_dir().unwrap()
 }
-fn local_plugins_disabled_dir() -> PathBuf {
-    pluginmgr::local_plugins_disabled_dir().unwrap()
-}
 fn catalog_cache_dir() -> PathBuf {
     pluginmgr::cache_dir().unwrap().join("pluginmanager")
 }
@@ -36,8 +33,6 @@ struct Conf {
     refresh_interval: chrono::TimeDelta,
     #[serde(skip, default = "local_plugins_dir")]
     install_path: PathBuf,
-    #[serde(skip, default = "local_plugins_disabled_dir")]
-    disable_path: PathBuf,
     #[serde(skip, default = "catalog_cache_dir")]
     catalog_cache: PathBuf,
 }
@@ -50,7 +45,6 @@ impl Conf {
                 branch: "main".to_string(),
             }],
             install_path: pluginmgr::local_plugins_dir()?,
-            disable_path: pluginmgr::local_plugins_disabled_dir()?,
             catalog_cache: pluginmgr::cache_dir()?.join("pluginmanager"),
             refresh_interval: chrono::TimeDelta::days(1),
         })
@@ -82,7 +76,6 @@ enum Message {
     Update(Plugin),
     Disable(Plugin),
     Uninstall(Plugin),
-    UninstallDisabled(Plugin),
     LinkClicked(widget::markdown::Url),
     ProgressNew(Progress),
     Progress(install::Progress),
@@ -346,7 +339,6 @@ impl App {
     fn new() -> Result<Self> {
         let conf = Conf::new()?;
         fs::create_dir_all(&conf.install_path)?;
-        fs::create_dir_all(&conf.disable_path)?;
         fs::create_dir_all(&conf.catalog_cache)?;
 
         // We'll hardcode a logo into the source code for now
@@ -497,25 +489,18 @@ impl App {
                     wrap.local = None;
                     wrap.state = PluginState::Available;
                 }
-                for plugin in pluginmgr::discover_local_plugins(&c.conf.disable_path)? {
-                    if let Some(wrap) = data.get_mut(&plugin.identifier) {
-                        wrap.local = Some(plugin.clone());
-                        wrap.state = PluginState::Disabled;
-                    } else {
-                        data.insert(
-                            plugin.identifier.clone(),
-                            PluginWrap::new_local(&plugin, PluginState::Disabled),
-                        );
-                    }
-                }
                 for plugin in pluginmgr::discover_local_plugins(&c.conf.install_path)? {
+                    let state = match plugin.disabled {
+                        true => PluginState::Disabled,
+                        false => PluginState::Installed,
+                    };
                     if let Some(wrap) = data.get_mut(&plugin.identifier) {
                         wrap.local = Some(plugin.clone());
-                        wrap.state = PluginState::Installed;
+                        wrap.state = state;
                     } else {
                         data.insert(
                             plugin.identifier.clone(),
-                            PluginWrap::new_local(&plugin, PluginState::Installed),
+                            PluginWrap::new_local(&plugin, state),
                         );
                     }
                 }
@@ -584,15 +569,6 @@ impl App {
     fn install_task(&self, plugin: &Plugin) -> Task<Message> {
         Self::start_task(pgettext("plugins", "Installing")).chain(Task::sip(
             Installer::new(&self.catalog.conf.install_path, plugin).install(),
-            Message::Progress,
-            |_| Message::RefreshLocal,
-        ))
-    }
-
-    fn move_task<P: AsRef<Path>>(&self, plugin: &Plugin, from: P, to: P) -> Task<Message> {
-        #[allow(clippy::unnecessary_to_owned)]
-        Self::start_task(pgettext("plugins", "Moving")).chain(Task::sip(
-            Installer::new(from, plugin).move_to(to.as_ref().to_path_buf()),
             Message::Progress,
             |_| Message::RefreshLocal,
         ))
@@ -673,22 +649,17 @@ impl App {
                 Task::none()
             }
             Message::Install(plugin) => self.install_task(&plugin),
-            Message::Enable(plugin) => self.move_task(
-                &plugin,
-                &self.catalog.conf.disable_path,
-                &self.catalog.conf.install_path,
-            ),
+            Message::Enable(plugin) => {
+                let _ = plugin.disable(false);
+                self.refresh_local_task()
+            }
             Message::Update(plugin) => self.update_task(&plugin),
-            Message::Disable(plugin) => self.move_task(
-                &plugin,
-                &self.catalog.conf.install_path,
-                &self.catalog.conf.disable_path,
-            ),
+            Message::Disable(plugin) => {
+                let _ = plugin.disable(true);
+                self.refresh_local_task()
+            }
             Message::Uninstall(plugin) => {
                 self.uninstall_task(&plugin, &self.catalog.conf.install_path)
-            }
-            Message::UninstallDisabled(plugin) => {
-                self.uninstall_task(&plugin, &self.catalog.conf.disable_path)
             }
             Message::LinkClicked(_url) => {
                 // TODO actually handle clicked links?
@@ -905,9 +876,8 @@ impl App {
                         row![
                             button(pgettext("plugins", "Enable"))
                                 .on_press_maybe(idle.then_some(Message::Enable(sel.clone()))),
-                            button(pgettext("plugins", "Uninstall")).on_press_maybe(
-                                idle.then_some(Message::UninstallDisabled(sel.clone()))
-                            ),
+                            button(pgettext("plugins", "Uninstall"))
+                                .on_press_maybe(idle.then_some(Message::Uninstall(sel.clone()))),
                         ]
                     }
                     PluginState::Available => {

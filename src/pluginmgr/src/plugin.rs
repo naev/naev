@@ -1,6 +1,7 @@
 use anyhow::Result;
 use fs_err as fs;
 use serde::{Deserialize, Serialize, de};
+use std::io::Write;
 use std::ops::Deref;
 use std::path::{Path, PathBuf};
 
@@ -141,6 +142,8 @@ pub struct Plugin {
     pub compatible: bool,
     #[serde(default)]
     pub mountpoint: Option<PathBuf>,
+    #[serde(default)]
+    pub disabled: bool,
 }
 impl PartialEq for Plugin {
     fn eq(&self, other: &Self) -> bool {
@@ -161,19 +164,21 @@ const fn source_default() -> Source {
 impl Plugin {
     /// Generates a plugin from a path and an error.
     pub fn from_error<P: AsRef<Path>>(path: P, err: anyhow::Error) -> Self {
+        let path = path.as_ref();
         let strerr = ID_ERROR.to_string();
+        let disabled = Self::is_disabled(path);
         Self {
-            identifier: Identifier(if let Some(filename) = path.as_ref().file_name() {
+            identifier: Identifier(if let Some(filename) = path.file_name() {
                 format!("{}-{}", &strerr, filename.to_string_lossy())
             } else {
                 strerr.clone()
             }),
-            name: if let Some(filename) = path.as_ref().file_name() {
+            name: if let Some(filename) = path.file_name() {
                 filename.to_string_lossy().to_string()
             } else {
-                (*path.as_ref().to_string_lossy()).to_string()
+                (*path.to_string_lossy()).to_string()
             },
-            author: (*path.as_ref().to_string_lossy()).to_string(),
+            author: (*path.to_string_lossy()).to_string(),
             version: semver::Version::new(0, 0, 0),
             r#abstract: strerr.clone(),
             description: Some(format!("Error:\n{}", &err.to_string())),
@@ -190,7 +195,47 @@ impl Plugin {
             blacklist: Vec::new(),
             whitelist: Vec::new(),
             compatible: true,
-            mountpoint: Some(path.as_ref().to_path_buf()),
+            mountpoint: Some(path.to_path_buf()),
+            disabled,
+        }
+    }
+
+    pub fn is_disabled<P: AsRef<Path>>(path: P) -> bool {
+        let path = path.as_ref();
+        if let Some(filename) = path.file_name() {
+            path.parent()
+                .and_then(|p| {
+                    Some(
+                        p.join(format!(".{}.disabled", filename.to_string_lossy()))
+                            .exists(),
+                    )
+                })
+                .unwrap_or(false)
+        } else {
+            false
+        }
+    }
+
+    pub fn disable(&self, disable: bool) -> Result<()> {
+        if let Some(path) = &self.mountpoint
+            && let Some(filename) = path.file_name()
+            && let Some(disabled) = path
+                .parent()
+                .and_then(|p| Some(p.join(format!(".{}.disabled", filename.to_string_lossy()))))
+        {
+            if disabled.exists() {
+                if !disable {
+                    fs::remove_file(disabled)?;
+                }
+            } else {
+                if disable {
+                    let mut file = fs::File::create(disabled)?;
+                    file.write_all(b"disabled")?;
+                }
+            }
+            Ok(())
+        } else {
+            anyhow::bail!("failed set disable state");
         }
     }
 
@@ -234,6 +279,7 @@ impl Plugin {
 
     pub fn from_path<P: AsRef<Path>>(path: P) -> Result<Self> {
         let path = path.as_ref();
+        let disabled = Self::is_disabled(path);
 
         if path.is_dir() {
             let metadata = path.join("plugin.toml");
@@ -241,6 +287,7 @@ impl Plugin {
                 let data = fs::read(metadata)?;
                 let mut plugin = Self::from_slice(&data)?;
                 plugin.mountpoint = Some(path.to_owned());
+                plugin.disabled = disabled;
                 Ok(plugin)
             } else {
                 anyhow::bail!(format!(
@@ -257,12 +304,14 @@ impl Plugin {
             let data = fs::read(path)?;
             let mut plugin = Self::from_slice(&data)?;
             plugin.mountpoint = Some(path.to_owned());
+            plugin.disabled = disabled;
             Ok(plugin)
         } else {
             // Assume directly pointing at plugin.toml
             let data = fs::read(path)?;
             let mut plugin = Self::from_slice(&data)?;
             plugin.mountpoint = path.parent().map(|e| e.to_owned());
+            plugin.disabled = disabled;
             Ok(plugin)
         }
     }

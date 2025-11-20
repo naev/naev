@@ -82,34 +82,6 @@ impl Installer {
         })
     }
 
-    /// Moves a plugin to another directory
-    pub fn move_to<P: AsRef<Path>>(self, to: P) -> impl Straw<(), Progress, Error> {
-        sipper(async move |mut sender| {
-            let from = {
-                // Try to use mount point if applicable, for manually installed stuff
-                match self.plugin.mountpoint {
-                    Some(mp) => mp,
-                    None => self.root.join(&*self.plugin.identifier),
-                }
-            };
-            sender
-                .send(Progress {
-                    message: formatx!(
-                        pgettext("plugins", "Moving plugin '{}' from '{}' -> '{}'"),
-                        &self.plugin.identifier,
-                        from.display(),
-                        to.as_ref().display()
-                    )
-                    .ok(),
-                    value: 0.0,
-                })
-                .await;
-            fs_extra::dir::move_dir(&from, &to, &Default::default())?;
-            sender.send(1.0.into()).await;
-            Ok(())
-        })
-    }
-
     pub fn install_from_git<U: reqwest::IntoUrl>(&self, url: U) -> impl Straw<(), Progress, Error> {
         sipper(async move |sender| {
             let info = &self.plugin;

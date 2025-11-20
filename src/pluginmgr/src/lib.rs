@@ -27,12 +27,18 @@ pub fn discover_local_plugins<P: AsRef<Path>>(root: P) -> Result<Vec<Plugin>> {
                 }
             };
             let path = entry.path();
-            match Plugin::from_path(&path) {
-                Ok(plugin) => Some(plugin),
-                Err(e) => {
-                    warn_err!(e);
-                    Some(Plugin::from_error(&path, e))
+            if let Some(filename) = path.file_name()
+                && !filename.to_string_lossy().starts_with('.')
+            {
+                match Plugin::from_path(&path) {
+                    Ok(plugin) => Some(plugin),
+                    Err(e) => {
+                        warn_err!(e);
+                        Some(Plugin::from_error(&path, e))
+                    }
                 }
+            } else {
+                None
             }
         })
         .collect())
@@ -199,8 +205,4 @@ pub fn write_dir() -> Result<PathBuf> {
 /// Returns the Naev plugins directory for the current platform.
 pub fn local_plugins_dir() -> Result<PathBuf> {
     Ok(write_dir()?.join("plugins"))
-}
-
-pub fn local_plugins_disabled_dir() -> Result<PathBuf> {
-    Ok(write_dir()?.join("plugins-disabled"))
 }
