@@ -3,7 +3,24 @@
 <event name="Shipwreck">
  <location>enter</location>
  <chance>3</chance>
- <cond>require("common.pirate").systemPresence() &gt; 0</cond>
+ <cond>
+   local cursys = system.cur()
+
+   -- Avoid restricted systems
+   if cursys:tags().restricted then
+      return false
+   end
+
+   -- Don't do volatile systems
+   local _nebu_dens, nebu_vol = cursys:nebula()
+   if nebu_vol &gt; 0 then
+      return false
+   end
+
+   -- Must have pirates, but not too much
+   local pir = require("common.pirate").systemPresence()
+   return pir &gt; 0 and pir &lt; 300
+ </cond>
  <unique />
  <notes>
   <tier>1</tier>
@@ -29,17 +46,6 @@ function create ()
 
    -- Make sure system isn't claimed, but we don't claim it
    if not naev.claimTest( cursys ) then evt.finish() end
-
-   -- Don't do volatile systems
-   local _nebu_dens, nebu_vol = cursys:nebula()
-   if nebu_vol > 0 then
-      evt.finish()
-   end
-
-   -- Don't spawn in restricted space (just in case)
-   if cursys:tags().restricted then
-      evt.finish()
-   end
 
    -- The _("Shipwrecked {plt}") will be a random trader vessel.
    local r = rnd.rnd()
