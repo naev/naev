@@ -1,6 +1,6 @@
 use crate::git;
 use crate::plugin::{Plugin, Source};
-use anyhow::{Error, Result};
+use anyhow::Error;
 use formatx::formatx;
 use fs_err as fs;
 use iced::task::{Sipper, Straw, sipper};
@@ -53,7 +53,9 @@ impl Installer {
                 Source::Git(url) => self.install_from_git(url.clone()).run(&sender).await,
                 Source::Download(url) => self.install_from_zip_url(url.clone()).run(&sender).await,
                 Source::Local => anyhow::bail!("local plugin"),
-            }
+            }?;
+            sender.send(1.0.into()).await;
+            Ok(())
         })
     }
 
@@ -74,28 +76,38 @@ impl Installer {
                 Source::Git(_url) => self.update_git_plugin().run(&sender).await,
                 Source::Download(url) => self.update_zip_plugin(url.clone()).run(&sender).await,
                 Source::Local => anyhow::bail!("local plugin"),
-            }
+            }?;
+            sender.send(1.0.into()).await;
+            Ok(())
         })
     }
 
     /// Moves a plugin to another directory
-    pub fn move_to<P: AsRef<Path>>(self, to: P) -> Result<()> {
-        let from = {
-            // Try to use mount point if applicable, for manually installed stuff
-            match self.plugin.mountpoint {
-                Some(mp) => mp,
-                None => self.root.join(&*self.plugin.identifier),
-            }
-        };
-        info!(
-            "Moving plugin '{}' from '{}' -> '{}'",
-            &self.plugin.identifier,
-            from.display(),
-            to.as_ref().display()
-        );
-        fs_extra::dir::move_dir(&from, &to, &Default::default())?;
-        info!("Moving completed");
-        Ok(())
+    pub fn move_to<P: AsRef<Path>>(self, to: P) -> impl Straw<(), Progress, Error> {
+        sipper(async move |mut sender| {
+            let from = {
+                // Try to use mount point if applicable, for manually installed stuff
+                match self.plugin.mountpoint {
+                    Some(mp) => mp,
+                    None => self.root.join(&*self.plugin.identifier),
+                }
+            };
+            sender
+                .send(Progress {
+                    message: formatx!(
+                        pgettext("plugins", "Moving plugin '{}' from '{}' -> '{}'"),
+                        &self.plugin.identifier,
+                        from.display(),
+                        to.as_ref().display()
+                    )
+                    .ok(),
+                    value: 0.0,
+                })
+                .await;
+            fs_extra::dir::move_dir(&from, &to, &Default::default())?;
+            sender.send(1.0.into()).await;
+            Ok(())
+        })
     }
 
     pub fn install_from_git<U: reqwest::IntoUrl>(&self, url: U) -> impl Straw<(), Progress, Error> {
@@ -184,18 +196,30 @@ impl Installer {
         })
     }
 
-    pub fn uninstall(self) -> Result<()> {
-        info!("Uninstalling plugin '{}'", &self.plugin.identifier);
-        let target = {
-            // Try to uninstall from mount point first
-            match self.plugin.mountpoint {
-                Some(mp) => mp,
-                None => self.root.join(&*self.plugin.identifier),
+    pub fn uninstall(self) -> impl Straw<(), Progress, Error> {
+        sipper(async move |mut sender| {
+            sender
+                .send(Progress {
+                    message: formatx!(
+                        pgettext("plugins", "Uninstalling plugin '{}'"),
+                        &self.plugin.identifier
+                    )
+                    .ok(),
+                    value: 0.0,
+                })
+                .await;
+            let target = {
+                // Try to uninstall from mount point first
+                match self.plugin.mountpoint {
+                    Some(mp) => mp,
+                    None => self.root.join(&*self.plugin.identifier),
+                }
+            };
+            if target.exists() {
+                fs::remove_dir_all(&target)?;
             }
-        };
-        if target.exists() {
-            fs::remove_dir_all(&target)?;
-        }
-        Ok(())
+            sender.send(1.0.into()).await;
+            Ok(())
+        })
     }
 }

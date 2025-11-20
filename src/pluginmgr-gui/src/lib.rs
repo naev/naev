@@ -1,5 +1,4 @@
 use anyhow::{Error, Result};
-use formatx::formatx;
 use fs_err as fs;
 use iced::task::{Sipper, Straw, sipper};
 use iced::{Task, widget};
@@ -270,72 +269,6 @@ impl Catalog {
         Ok(toml::from_slice(&data)?)
     }
 
-    async fn refresh_local(&self) -> Result<()> {
-        let images = {
-            let mut data = self.data.lock().unwrap();
-            for (_, wrap) in data.iter_mut() {
-                wrap.local = None;
-                wrap.state = PluginState::Available;
-            }
-            for plugin in pluginmgr::discover_local_plugins(&self.conf.disable_path)? {
-                if let Some(wrap) = data.get_mut(&plugin.identifier) {
-                    wrap.local = Some(plugin.clone());
-                    wrap.state = PluginState::Disabled;
-                } else {
-                    data.insert(
-                        plugin.identifier.clone(),
-                        PluginWrap::new_local(&plugin, PluginState::Disabled),
-                    );
-                }
-            }
-            for plugin in pluginmgr::discover_local_plugins(&self.conf.install_path)? {
-                if let Some(wrap) = data.get_mut(&plugin.identifier) {
-                    wrap.local = Some(plugin.clone());
-                    wrap.state = PluginState::Installed;
-                } else {
-                    data.insert(
-                        plugin.identifier.clone(),
-                        PluginWrap::new_local(&plugin, PluginState::Installed),
-                    );
-                }
-            }
-            data.retain(|_, wrap| wrap.local.is_some() || wrap.remote.is_some());
-
-            let images: Vec<(PathBuf, reqwest::Url)> = data
-                .iter()
-                .filter_map(|(_, wrap)| wrap.missing_image(&self.conf.catalog_cache))
-                .collect();
-            images
-        };
-
-        async fn download_image<P: AsRef<Path>, T: reqwest::IntoUrl>(
-            path: P,
-            url: T,
-        ) -> Result<()> {
-            let response = reqwest::get(url).await?;
-            let content = response.bytes().await?;
-            let mut file = fs::File::create(path.as_ref())?;
-            file.write_all(&content)?;
-            Ok(())
-        }
-        use futures::StreamExt;
-        futures::stream::iter(images)
-            .for_each(async |(path, url)| {
-                if let Err(e) = download_image(path, url).await {
-                    warn_err!(e);
-                }
-            })
-            .await;
-
-        for (_, wrap) in self.data.lock().unwrap().iter_mut() {
-            if let Err(e) = wrap.load_image(&self.conf.catalog_cache) {
-                warn_err!(e);
-            }
-        }
-
-        self.save_to_cache()
-    }
-
     fn save_to_cache(&self) -> Result<()> {
         for (_, plugin) in self.data.lock().unwrap().iter() {
             let data = match toml::to_string(&plugin) {
@@ -378,7 +311,6 @@ impl Catalog {
                 Some((wrap.identifier.clone(), wrap))
             })
             .collect();
-        self.refresh_local().await?;
         Ok(())
     }
 }
@@ -447,8 +379,11 @@ impl App {
                         true
                     }
                 };
-                if refresh && let Err(e) = App::refresh_straw(c).run(&sender).await {
+                if refresh && let Err(e) = App::refresh_straw(c.clone()).run(&sender).await {
                     warn_err!(e);
+                } else {
+                    // refresh_straw will already run refresh_local_straw
+                    App::refresh_local_straw(c).run(&sender).await?;
                 }
                 Ok(())
             })
@@ -463,19 +398,26 @@ impl App {
             message: "".to_string(),
             value: 0.0,
         }))
-        //.chain(Task::sip(wrap(self.catalog.clone()), Message::Progress, |_| {
-        //    Message::UpdateView
-        //}))
-        .chain(Task::perform(wrap(self.catalog.clone()), |_| {
-            Message::UpdateView
-        }))
+        .chain(Task::sip(
+            wrap(self.catalog.clone()),
+            Message::Progress,
+            |_| Message::UpdateView,
+        ))
     }
 
     fn refresh_straw(c: Arc<Catalog>) -> impl Straw<(), install::Progress, Error> {
         sipper(async move |mut sender| {
+            sender
+                .send(install::Progress {
+                    message: Some(
+                        pgettext("plugins", "Refreshing remote repositories").to_string(),
+                    ),
+                    value: 0.0,
+                })
+                .await;
             let mut hm: HashMap<Identifier, Plugin> = HashMap::new();
             let progress = Arc::new(Mutex::new(0.0));
-            let inc = 1.0 / (c.conf.remotes.len() as f32);
+            let inc = 0.9 / (c.conf.remotes.len() as f32);
             for remote in &c.conf.remotes {
                 let plugins = {
                     match pluginmgr::discover_remote_plugins(remote.url.clone(), &remote.branch)
@@ -529,17 +471,102 @@ impl App {
                 }
                 c.meta.lock().unwrap().last_updated = chrono::Local::now().into();
             }
-            c.refresh_local().await
+            Self::refresh_local_straw(c)
+                .with(|mut v| {
+                    v.value = 0.9 + 0.1 * v.value;
+                    v
+                })
+                .run(&sender)
+                .await
         })
     }
 
-    fn refresh_task(&self) -> Task<Message> {
+    fn refresh_local_straw(c: Arc<Catalog>) -> impl Straw<(), install::Progress, Error> {
+        sipper(async move |mut sender| {
+            sender
+                .send(install::Progress {
+                    message: Some(
+                        pgettext("plugins", "Refreshing local and remote repositories").to_string(),
+                    ),
+                    value: 0.0,
+                })
+                .await;
+            let images = {
+                let mut data = c.data.lock().unwrap();
+                for (_, wrap) in data.iter_mut() {
+                    wrap.local = None;
+                    wrap.state = PluginState::Available;
+                }
+                for plugin in pluginmgr::discover_local_plugins(&c.conf.disable_path)? {
+                    if let Some(wrap) = data.get_mut(&plugin.identifier) {
+                        wrap.local = Some(plugin.clone());
+                        wrap.state = PluginState::Disabled;
+                    } else {
+                        data.insert(
+                            plugin.identifier.clone(),
+                            PluginWrap::new_local(&plugin, PluginState::Disabled),
+                        );
+                    }
+                }
+                for plugin in pluginmgr::discover_local_plugins(&c.conf.install_path)? {
+                    if let Some(wrap) = data.get_mut(&plugin.identifier) {
+                        wrap.local = Some(plugin.clone());
+                        wrap.state = PluginState::Installed;
+                    } else {
+                        data.insert(
+                            plugin.identifier.clone(),
+                            PluginWrap::new_local(&plugin, PluginState::Installed),
+                        );
+                    }
+                }
+                data.retain(|_, wrap| wrap.local.is_some() || wrap.remote.is_some());
+
+                let images: Vec<(PathBuf, reqwest::Url)> = data
+                    .iter()
+                    .filter_map(|(_, wrap)| wrap.missing_image(&c.conf.catalog_cache))
+                    .collect();
+                images
+            };
+
+            async fn download_image<P: AsRef<Path>, T: reqwest::IntoUrl>(
+                path: P,
+                url: T,
+            ) -> Result<()> {
+                let response = reqwest::get(url).await?;
+                let content = response.bytes().await?;
+                let mut file = fs::File::create(path.as_ref())?;
+                file.write_all(&content)?;
+                Ok(())
+            }
+            use futures::StreamExt;
+            futures::stream::iter(images)
+                .for_each(async |(path, url)| {
+                    if let Err(e) = download_image(path, url).await {
+                        warn_err!(e);
+                    }
+                })
+                .await;
+
+            for (_, wrap) in c.data.lock().unwrap().iter_mut() {
+                if let Err(e) = wrap.load_image(&c.conf.catalog_cache) {
+                    warn_err!(e);
+                }
+            }
+
+            c.save_to_cache()
+        })
+    }
+
+    fn start_task(title: &str) -> Task<Message> {
         Task::done(Message::ProgressNew(Progress {
-            title: pgettext("plugins", "Refreshing").to_string(),
-            message: pgettext("plugins", "Refreshing local and remote repositories").to_string(),
+            title: title.to_string(),
+            message: "".to_string(),
             value: 0.0,
         }))
-        .chain(Task::sip(
+    }
+
+    fn refresh_task(&self) -> Task<Message> {
+        Self::start_task(pgettext("plugins", "Refreshing")).chain(Task::sip(
             Self::refresh_straw(self.catalog.clone()),
             Message::Progress,
             |_| Message::UpdateView,
@@ -547,32 +574,15 @@ impl App {
     }
 
     fn refresh_local_task(&self) -> Task<Message> {
-        async fn wrap(c: Arc<Catalog>) {
-            if let Err(e) = c.refresh_local().await {
-                warn_err!(e);
-            }
-        }
-        Task::done(Message::ProgressNew(Progress {
-            title: pgettext("plugins", "Refreshing").to_string(),
-            message: pgettext("plugins", "Refreshing local repositories").to_string(),
-            value: 0.0,
-        }))
-        .chain(Task::perform(wrap(self.catalog.clone()), |_| {
-            Message::UpdateView
-        }))
+        Self::start_task(pgettext("plugins", "Refreshing")).chain(Task::sip(
+            Self::refresh_local_straw(self.catalog.clone()),
+            Message::Progress,
+            |_| Message::UpdateView,
+        ))
     }
 
     fn install_task(&self, plugin: &Plugin) -> Task<Message> {
-        Task::done(Message::ProgressNew(Progress {
-            title: pgettext("plugins", "Installing").to_string(),
-            message: match formatx!(pgettext("plugins", "Installing plugin '{}'"), &plugin.name) {
-                Ok(msg) => msg,
-                Err(_) => pgettext("plugins", "Installing unknown plugin").to_string(),
-            }
-            .to_string(),
-            value: 0.0,
-        }))
-        .chain(Task::sip(
+        Self::start_task(pgettext("plugins", "Installing")).chain(Task::sip(
             Installer::new(&self.catalog.conf.install_path, plugin).install(),
             Message::Progress,
             |_| Message::RefreshLocal,
@@ -580,38 +590,15 @@ impl App {
     }
 
     fn move_task<P: AsRef<Path>>(&self, plugin: &Plugin, from: P, to: P) -> Task<Message> {
-        async fn wrap(installer: Installer, path: PathBuf) {
-            match installer.move_to(path) {
-                Ok(_) => (),
-                Err(e) => warn_err!(e),
-            }
-        }
-        Task::done(Message::ProgressNew(Progress {
-            title: pgettext("plugins", "Moving").to_string(),
-            message: match formatx!(pgettext("plugins", "Moving plugin '{}'"), &plugin.name) {
-                Ok(msg) => msg,
-                Err(_) => pgettext("plugins", "Moving unknown plugin").to_string(),
-            }
-            .to_string(),
-            value: 0.0,
-        }))
-        .chain(Task::perform(
-            wrap(Installer::new(from, plugin), to.as_ref().to_path_buf()),
+        Self::start_task(pgettext("plugins", "Moving")).chain(Task::sip(
+            Installer::new(from, plugin).move_to(to.as_ref().to_path_buf()),
+            Message::Progress,
             |_| Message::RefreshLocal,
         ))
     }
 
     fn update_task(&self, plugin: &Plugin) -> Task<Message> {
-        Task::done(Message::ProgressNew(Progress {
-            title: pgettext("plugins", "Updating").to_string(),
-            message: match formatx!(pgettext("plugins", "Updating plugin '{}'"), &plugin.name) {
-                Ok(msg) => msg,
-                Err(_) => pgettext("plugins", "Updating unknown plugin").to_string(),
-            }
-            .to_string(),
-            value: 0.0,
-        }))
-        .chain(Task::sip(
+        Self::start_task(pgettext("plugins", "Updating")).chain(Task::sip(
             Installer::new(&self.catalog.conf.install_path, plugin).update(),
             Message::Progress,
             |_| Message::UpdateView,
@@ -619,24 +606,11 @@ impl App {
     }
 
     fn uninstall_task(&self, plugin: &Plugin, path: &PathBuf) -> Task<Message> {
-        async fn wrap(installer: Installer) {
-            match installer.uninstall() {
-                Ok(_) => (),
-                Err(e) => warn_err!(e),
-            }
-        }
-        Task::done(Message::ProgressNew(Progress {
-            title: pgettext("plugins", "Removing").to_string(),
-            message: match formatx!(pgettext("plugins", "Removing plugin '{}'"), &plugin.name) {
-                Ok(msg) => msg,
-                Err(_) => pgettext("plugins", "Removing unknown plugin").to_string(),
-            }
-            .to_string(),
-            value: 0.0,
-        }))
-        .chain(Task::perform(wrap(Installer::new(path, plugin)), |_| {
-            Message::RefreshLocal
-        }))
+        Self::start_task(pgettext("plugins", "Removing")).chain(Task::sip(
+            Installer::new(path, plugin).uninstall(),
+            Message::Progress,
+            |_| Message::RefreshLocal,
+        ))
     }
 
     fn update(&mut self, message: Message) -> Task<Message> {
