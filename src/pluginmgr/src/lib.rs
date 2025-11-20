@@ -88,7 +88,7 @@ pub fn discover_remote_plugins<T: reqwest::IntoUrl>(
         fn load_stub(stub: &PluginStub) -> impl Straw<Plugin, f32, Error> {
             sipper(async move |mut sender| {
                 let ret = stub.to_plugin_async().await;
-                sender.send(1.0.into()).await;
+                sender.send(1.0).await;
                 ret
             })
         }

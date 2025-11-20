@@ -590,6 +590,7 @@ impl App {
     }
 
     fn move_task<P: AsRef<Path>>(&self, plugin: &Plugin, from: P, to: P) -> Task<Message> {
+        #[allow(clippy::unnecessary_to_owned)]
         Self::start_task(pgettext("plugins", "Moving")).chain(Task::sip(
             Installer::new(from, plugin).move_to(to.as_ref().to_path_buf()),
             Message::Progress,
