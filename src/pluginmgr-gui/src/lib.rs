@@ -57,6 +57,11 @@ impl Conf {
 }
 
 const THEME: iced::Theme = iced::Theme::Dark;
+const SHADOW: iced::Shadow = iced::Shadow {
+    color: iced::Color::BLACK,
+    offset: iced::Vector { x: 0.0, y: 0.0 },
+    blur_radius: 5.0,
+};
 
 /// Opens the plugin manager. Requires a different process if using OpenGL / Vulkan.
 pub fn open() -> Result<()> {
@@ -804,10 +809,10 @@ impl App {
     }
 
     fn view(&self) -> iced::Element<'_, Message> {
-        use iced::Length::{Fill, Shrink};
+        use iced::Length::{Fill, FillPortion, Shrink};
         use iced::alignment::{Horizontal, Vertical};
         use iced::theme::palette::Pair;
-        use widget::{column, container, grid, image, mouse_area, row, scrollable, text};
+        use widget::{column, container, grid, image, mouse_area, row, scrollable, space, text};
 
         let idle = self.progress.is_none();
         let palette = THEME.palette();
@@ -872,18 +877,24 @@ impl App {
                 .spacing(5);
                 let modal = row![image, content,].spacing(5).align_y(Vertical::Center);
                 mouse_area(container(modal).padding(10).style(move |theme| {
-                    let container = container::rounded_box(theme)
-                        .background(iced::Background::Color(extended.background.weakest.color));
-                    if let Some(sel) = &self.selected
+                    let extended = theme.extended_palette();
+                    let border = if let Some(sel) = &self.selected
                         && id == sel.0
                     {
-                        container.border(iced::Border {
+                        iced::Border {
                             color: palette.primary,
                             width: 3.0,
                             radius: iced::border::Radius::new(2.0),
-                        })
+                        }
                     } else {
-                        container
+                        iced::border::rounded(2)
+                    };
+                    widget::container::Style {
+                        background: Some(extended.background.weakest.color.into()),
+                        text_color: Some(extended.background.weakest.text),
+                        border,
+                        shadow: SHADOW,
+                        ..Default::default()
                     }
                 }))
                 .on_press(Message::Selected(id))
@@ -1018,26 +1029,36 @@ impl App {
         let right = column![buttons, selected].spacing(10).width(300);
         let mut main = widget::stack![row![plugins, right].spacing(20).padding(20).height(Fill)];
         if self.log_open {
-            let over = container(
-                container(
-                    scrollable(widget::Column::with_children(self.log.iter().map(|l| {
-                        text(&l.message)
-                            .color_maybe(match l.ltype {
-                                LogType::Info => None,
-                                LogType::Error => Some(palette.danger),
-                            })
-                            .into()
-                    })))
-                    .spacing(10),
-                )
-                .style(container::rounded_box)
-                .padding(10),
-            )
+            let logview = scrollable(widget::Column::with_children(self.log.iter().map(|l| {
+                text(&l.message)
+                    .color_maybe(match l.ltype {
+                        LogType::Info => None,
+                        LogType::Error => Some(palette.danger),
+                    })
+                    .into()
+            })))
+            .spacing(10)
+            .height(Fill)
+            .width(Fill)
+            .anchor_bottom();
+            let over = container(column![
+                space().height(FillPortion(2)),
+                row![
+                    space().width(FillPortion(1)),
+                    container(logview)
+                        .style(container::rounded_box)
+                        .padding(10)
+                        .style(widget::container::dark)
+                        .width(FillPortion(8)),
+                    space().width(FillPortion(1)),
+                ]
+                .height(FillPortion(1)),
+            ])
             .center_x(Fill)
             .align_y(Vertical::Bottom)
             .width(Fill)
             .height(Fill)
-            .padding(50);
+            .padding(20);
             main = main.push(over);
         }
         main = main.push(
@@ -1055,7 +1076,16 @@ impl App {
                     text(&progress.message),
                     widget::progress_bar(0.0..=1.0, progress.value).girth(15.0),
                 ])
-                .style(container::rounded_box)
+                .style(|theme| {
+                    let extended = theme.extended_palette();
+                    widget::container::Style {
+                        background: Some(extended.background.weak.color.into()),
+                        text_color: Some(extended.background.weak.text),
+                        border: iced::border::rounded(2),
+                        shadow: SHADOW,
+                        ..Default::default()
+                    }
+                })
                 .padding(10)
                 .align_y(Vertical::Center)
                 .width(400),
