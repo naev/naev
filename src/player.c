@@ -528,7 +528,6 @@ PlayerShip_t *player_newShip( const Ship *ship, const char *def_name, int trade,
       player_rmShip( old_name );
    }
 
-   free( ship_name );
    pfleet_update();
 
    /* Update ship list if landed. */
@@ -536,6 +535,16 @@ PlayerShip_t *player_newShip( const Ship *ship, const char *def_name, int trade,
       int w = land_getWid( LAND_WINDOW_EQUIPMENT );
       equipment_regenLists( w, 0, 1 );
    }
+
+   /* The return value, ps, could now be stale due to sorting in player_shipsSort */
+   for ( int i = 0; i < array_size( player_stack ); i++ ) {
+      if ( strcmp( ship_name, player_stack[i].p->name ) == 0 ) {
+         ps = &player_stack[i];
+         break;
+      }
+   }
+
+   free( ship_name );
 
    return ps;
 }
