@@ -86,8 +86,8 @@ enum Message {
     LinkClicked(widget::markdown::Url),
     ProgressNew(Progress),
     Progress(install::Progress),
-    Log(LogEntry),
     LogResult(Result<(), LogEntry>),
+    LogToggle,
     DropDownToggle,
     RefreshLocal(Result<(), LogEntry>),
     ActionClearCache,
@@ -96,24 +96,15 @@ enum Message {
 }
 impl Message {
     fn update_view(result: Result<()>) -> Self {
-        Message::UpdateView(result.map_err(|e| LogEntry {
-            ltype: LogType::Error,
-            message: format!("Error: {}", e),
-        }))
+        Message::UpdateView(result.map_err(|e| e.into()))
     }
 
     fn refresh_local(result: Result<()>) -> Self {
-        Message::RefreshLocal(result.map_err(|e| LogEntry {
-            ltype: LogType::Error,
-            message: format!("Error: {}", e),
-        }))
+        Message::RefreshLocal(result.map_err(|e| e.into()))
     }
 
     fn log_result(result: Result<()>) -> Self {
-        Message::LogResult(result.map_err(|e| LogEntry {
-            ltype: LogType::Error,
-            message: format!("Error: {}", e),
-        }))
+        Message::LogResult(result.map_err(|e| e.into()))
     }
 }
 
@@ -357,6 +348,14 @@ impl From<Error> for LogEntry {
         LogEntry {
             ltype: LogType::Error,
             message: format!("Error: {}", e),
+        }
+    }
+}
+impl LogEntry {
+    fn info(message: String) -> Self {
+        LogEntry {
+            ltype: LogType::Info,
+            message,
         }
     }
 }
@@ -730,29 +729,32 @@ impl App {
             }
             Message::ProgressNew(progress) => {
                 self.progress = Some(progress);
+                if let Some(progress) = &self.progress {
+                    self.log.push(LogEntry::info(progress.title.clone()));
+                    if !progress.message.is_empty() {
+                        self.log.push(LogEntry::info(progress.message.clone()));
+                    }
+                }
                 Task::none()
             }
             Message::Progress(value) => {
                 if let Some(progress) = &mut self.progress {
                     if let Some(message) = &value.message {
                         progress.message = message.clone();
-                        self.log.push(LogEntry {
-                            ltype: LogType::Info,
-                            message: message.clone(),
-                        });
+                        self.log.push(LogEntry::info(message.clone()));
                     }
                     progress.value = value.value;
                 }
-                Task::none()
-            }
-            Message::Log(entry) => {
-                self.log.push(entry);
                 Task::none()
             }
             Message::LogResult(result) => {
                 if let Err(entry) = result {
                     self.log.push(entry);
                 }
+                Task::none()
+            }
+            Message::LogToggle => {
+                self.log_open = !self.log_open;
                 Task::none()
             }
             Message::DropDownToggle => {
@@ -1014,7 +1016,38 @@ impl App {
         .align_right(Fill);
         // Set up the final screen
         let right = column![buttons, selected].spacing(10).width(300);
-        let main = row![plugins, right].spacing(20).padding(20).height(Fill);
+        let mut main = widget::stack![row![plugins, right].spacing(20).padding(20).height(Fill)];
+        if self.log_open {
+            let over = container(
+                container(
+                    scrollable(widget::Column::with_children(self.log.iter().map(|l| {
+                        text(&l.message)
+                            .color_maybe(match l.ltype {
+                                LogType::Info => None,
+                                LogType::Error => Some(palette.danger),
+                            })
+                            .into()
+                    })))
+                    .spacing(10),
+                )
+                .style(container::rounded_box)
+                .padding(10),
+            )
+            .center_x(Fill)
+            .align_y(Vertical::Bottom)
+            .width(Fill)
+            .height(Fill)
+            .padding(50);
+            main = main.push(over);
+        }
+        main = main.push(
+            container(button(pgettext("plugins", "Logs")).on_press(Message::LogToggle))
+                .align_x(Horizontal::Left)
+                .align_y(Vertical::Bottom)
+                .width(Fill)
+                .height(Fill)
+                .padding(10),
+        );
         if let Some(progress) = &self.progress {
             let over = container(
                 container(column![
@@ -1032,7 +1065,7 @@ impl App {
             .width(Fill)
             .height(Fill)
             .padding(10);
-            return widget::stack![main, over].into();
+            main = main.push(over);
         }
         main.into()
     }
