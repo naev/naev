@@ -8,6 +8,7 @@ use pluginmgr::install;
 use pluginmgr::install::Installer;
 use pluginmgr::plugin::{Identifier, Plugin, ReleaseStatus};
 use serde::{Deserialize, Serialize};
+use std::borrow::Cow;
 use std::collections::HashMap;
 use std::io::Write;
 use std::path::{Path, PathBuf};
@@ -66,10 +67,27 @@ const SHADOW: iced::Shadow = iced::Shadow {
 /// Opens the plugin manager. Requires a different process if using OpenGL / Vulkan.
 pub fn open() -> Result<()> {
     let icon = iced::window::icon::from_file_data(App::ICON, None).ok();
+
+    // Load the fonts the same way Naev does
+    let fonts: Vec<_> = gettext("Cabin-SemiBold.otf,NanumBarunGothicBold.ttf,SourceCodePro-Semibold.ttf,IBMPlexSansJP-Medium.otf")
+       .split(',').filter_map( |f| {
+           match ndata::read(f) {
+               Ok(data) => Some(Cow::from(data)),
+               Err(e) => {
+                   warn_err!(e);
+                   None
+               },
+           }
+       }).collect();
+
     Ok(iced::application(App::run, App::update, App::view)
         .title(gettext("Naev Plugin Manager"))
         .window(iced::window::Settings {
             icon,
+            ..Default::default()
+        })
+        .settings(iced::Settings {
+            fonts,
             ..Default::default()
         })
         .theme(THEME)

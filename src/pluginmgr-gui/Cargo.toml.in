@@ -23,3 +23,4 @@ chrono = { workspace = true }
 iced = { workspace = true }
 iced_aw = { workspace = true }
 futures = { workspace = true }
+ndata = { workspace = true }
