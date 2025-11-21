@@ -812,7 +812,9 @@ impl App {
         use iced::Length::{Fill, FillPortion, Shrink};
         use iced::alignment::{Horizontal, Vertical};
         use iced::theme::palette::Pair;
-        use widget::{column, container, grid, image, mouse_area, row, scrollable, space, text};
+        use widget::{
+            column, container, grid, image, mouse_area, row, scrollable, space, text, tooltip,
+        };
 
         let idle = self.progress.is_none();
         let palette = THEME.palette();
@@ -906,16 +908,38 @@ impl App {
         };
         let plugins = scrollable(plugins).spacing(10);
 
+        let tooltip_container = |txt| {
+            container(text(txt))
+                .padding(10)
+                /*
+                .style(|theme: &iced::Theme| {
+                    let extended = theme.extended_palette();
+                    widget::container::Style {
+                        background: Some(extended.background.weakest.color.into()),
+                        border: iced::border::rounded(2),
+                        shadow: SHADOW,
+                        ..Default::default()
+                    }
+                })
+                */
+                .style(widget::container::dark)
+                .max_width(300)
+        };
         let (selected, buttons) = if let Some((id, _)) = &self.selected
             && let Some(wrp) = self.view.get(*id)
         {
             let sel = wrp.plugin();
             let info = |txt| text(txt).size(20);
+            let tooltip_pos = tooltip::Position::FollowCursor;
             let col = column![
-                bold(pgettext("plugins", "Identifier:")),
-                info(sel.identifier.as_str()),
+                //bold(pgettext("plugins", "Identifier:")),
+                //info(sel.identifier.as_str()),
                 bold(pgettext("plugins", "Name:")),
-                info(sel.name.as_str()),
+                tooltip(
+                    info(sel.name.as_str()),
+                    tooltip_container(format!("Identifier: {}", sel.identifier.as_str())),
+                    tooltip_pos,
+                ),
                 bold(pgettext("plugins", "State:")),
                 info(gettext(wrp.state.as_str())),
                 bold(pgettext("plugins", "Author(s):")),
@@ -941,10 +965,20 @@ impl App {
                 })
                 .size(20),
                 bold(pgettext("plugins", "Status:")),
-                info(gettext(sel.release_status.as_str())).color_maybe(match sel.release_status {
-                    ReleaseStatus::Stable => None,
-                    _ => Some(palette.warning),
-                }),
+                tooltip(
+                    info(gettext(sel.release_status.as_str())).color_maybe(
+                        match sel.release_status {
+                            ReleaseStatus::Stable => None,
+                            _ => Some(palette.warning),
+                        }
+                    ),
+                    tooltip_container(format!(
+                        "{}: {}",
+                        gettext(sel.release_status.as_str()),
+                        gettext(sel.release_status.description())
+                    )),
+                    tooltip_pos,
+                ),
                 widget::space::vertical().height(iced::Length::Fixed(5.0)),
                 if let Some(md) = &wrp.description_md {
                     widget::markdown::view(md, THEME).map(Message::LinkClicked)
@@ -995,19 +1029,31 @@ impl App {
             )
         };
         // Add refresh button and format
-        let actions = column![
-            button(pgettext("plugins", "Update All"))
-                .on_press_maybe((self.has_update && idle).then_some(Message::ActionUpdate)),
-            button(pgettext("plugins", "Force Refresh"))
-                .on_press_maybe(idle.then_some(Message::ActionRefresh)),
-            button(pgettext("plugins", "Clear Cache"))
-                .on_press_maybe(idle.then_some(Message::ActionClearCache)),
-            // TODO select and add zip functionality
-            //button(pgettext("plugins", "Add Plugin (Zip)")),
-            //button(pgettext("plugins", "Add Plugin (Directory)")),
-        ]
-        .spacing(5)
-        .align_x(iced::Alignment::Center);
+        let actions = container(
+            column![
+                button(pgettext("plugins", "Update All"))
+                    .on_press_maybe((self.has_update && idle).then_some(Message::ActionUpdate)),
+                button(pgettext("plugins", "Force Refresh"))
+                    .on_press_maybe(idle.then_some(Message::ActionRefresh)),
+                button(pgettext("plugins", "Clear Cache"))
+                    .on_press_maybe(idle.then_some(Message::ActionClearCache)),
+                // TODO select and add zip functionality
+                //button(pgettext("plugins", "Add Plugin (Zip)")),
+                //actionutton(pgettext("plugins", "Add Plugin (Directory)")),
+            ]
+            .spacing(10)
+            .align_x(iced::Alignment::Center),
+        )
+        .padding(10)
+        .style(|theme: &iced::Theme| {
+            let extended = theme.extended_palette();
+            widget::container::Style {
+                background: Some(extended.background.weak.color.scale_alpha(0.2).into()),
+                border: iced::border::rounded(2),
+                shadow: SHADOW,
+                ..Default::default()
+            }
+        });
         let buttons = container(
             buttons
                 .push(

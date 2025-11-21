@@ -100,6 +100,19 @@ impl ReleaseStatus {
             ReleaseStatus::Development => N_("development"),
         }
     }
+
+    /// Gets the description.
+    pub const fn description(&self) -> &'static str {
+        match self {
+            ReleaseStatus::Stable => N_("The plugin is completely playable."),
+            ReleaseStatus::Testing => {
+                N_("The plugin is being tested, and may contain bugs or other issues.")
+            }
+            ReleaseStatus::Development => N_(
+                "The plugin is under heavy development and will be full of missing content and bugs.",
+            ),
+        }
+    }
 }
 
 /// A source location of a plugin used to update or download them
