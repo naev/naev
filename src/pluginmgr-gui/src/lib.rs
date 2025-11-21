@@ -746,8 +746,10 @@ impl App {
             Message::Uninstall(plugin) => {
                 self.uninstall_task(&plugin, &self.catalog.conf.install_path)
             }
-            Message::LinkClicked(_url) => {
-                // TODO actually handle clicked links?
+            Message::LinkClicked(url) => {
+                if let Err(e) = webbrowser::open(url.as_str()) {
+                    warn_err!(e);
+                }
                 Task::none()
             }
             Message::ProgressNew(progress) => {
