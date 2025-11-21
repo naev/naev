@@ -45,7 +45,7 @@ pub fn clone<P: AsRef<Path>, U: reqwest::IntoUrl>(
 
         match task.await? {
             Ok(repo) => Ok(repo),
-            Err(e) => Err(e.into()),
+            Err(e) => Err(e),
         }
     })
 }

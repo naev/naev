@@ -209,11 +209,9 @@ impl Plugin {
         let path = path.as_ref();
         if let Some(filename) = path.file_name() {
             path.parent()
-                .and_then(|p| {
-                    Some(
-                        p.join(format!(".{}.disabled", filename.to_string_lossy()))
-                            .exists(),
-                    )
+                .map(|p| {
+                    p.join(format!(".{}.disabled", filename.to_string_lossy()))
+                        .exists()
                 })
                 .unwrap_or(false)
         } else {
@@ -227,17 +225,15 @@ impl Plugin {
             && let Some(filename) = path.file_name()
             && let Some(disabled) = path
                 .parent()
-                .and_then(|p| Some(p.join(format!(".{}.disabled", filename.to_string_lossy()))))
+                .map(|p| p.join(format!(".{}.disabled", filename.to_string_lossy())))
         {
             if disabled.exists() {
                 if !disable {
                     fs::remove_file(disabled)?;
                 }
-            } else {
-                if disable {
-                    let mut file = fs::File::create(disabled)?;
-                    file.write_all(b"disabled")?;
-                }
+            } else if disable {
+                let mut file = fs::File::create(disabled)?;
+                file.write_all(b"disabled")?;
             }
             Ok(())
         } else {
