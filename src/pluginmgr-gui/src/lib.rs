@@ -13,6 +13,7 @@ use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, Mutex};
 
+/// A remote plugin repository.
 #[derive(Debug, Clone, Deserialize, Serialize)]
 struct Remote {
     url: reqwest::Url,
@@ -20,13 +21,17 @@ struct Remote {
     branch: String,
 }
 
+/// Location of the plugins directory.
 fn local_plugins_dir() -> PathBuf {
     pluginmgr::local_plugins_dir().unwrap()
 }
+
+/// Location of the cache directory for storing information about plugins.
 fn catalog_cache_dir() -> PathBuf {
     pluginmgr::cache_dir().unwrap().join("pluginmanager")
 }
 
+/// Plugin manager configuration.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 struct Conf {
     remotes: Vec<Remote>,
@@ -53,6 +58,7 @@ impl Conf {
 
 const THEME: iced::Theme = iced::Theme::Dark;
 
+/// Opens the plugin manager. Requires a different process if using OpenGL / Vulkan.
 pub fn open() -> Result<()> {
     let icon = iced::window::icon::from_file_data(App::ICON, None).ok();
     Ok(iced::application(App::run, App::update, App::view)
@@ -66,10 +72,11 @@ pub fn open() -> Result<()> {
         .run()?)
 }
 
+/// Application internal messages.
 #[derive(Debug, Clone)]
 enum Message {
     Startup,
-    UpdateView,
+    UpdateView(Result<(), LogEntry>),
     Selected(usize),
     Install(Plugin),
     Enable(Plugin),
@@ -79,13 +86,38 @@ enum Message {
     LinkClicked(widget::markdown::Url),
     ProgressNew(Progress),
     Progress(install::Progress),
+    Log(LogEntry),
+    LogResult(Result<(), LogEntry>),
     DropDownToggle,
-    RefreshLocal,
+    RefreshLocal(Result<(), LogEntry>),
     ActionClearCache,
     ActionRefresh,
     ActionUpdate,
 }
+impl Message {
+    fn update_view(result: Result<()>) -> Self {
+        Message::UpdateView(result.map_err(|e| LogEntry {
+            ltype: LogType::Error,
+            message: format!("Error: {}", e),
+        }))
+    }
 
+    fn refresh_local(result: Result<()>) -> Self {
+        Message::RefreshLocal(result.map_err(|e| LogEntry {
+            ltype: LogType::Error,
+            message: format!("Error: {}", e),
+        }))
+    }
+
+    fn log_result(result: Result<()>) -> Self {
+        Message::LogResult(result.map_err(|e| LogEntry {
+            ltype: LogType::Error,
+            message: format!("Error: {}", e),
+        }))
+    }
+}
+
+/// Different potential plugin states.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Deserialize, Serialize)]
 #[serde(rename_all = "lowercase")]
 enum PluginState {
@@ -103,6 +135,7 @@ impl PluginState {
     }
 }
 
+/// A wrapper containing local and remote information about plugins.
 #[derive(Debug, Clone, Deserialize, Serialize)]
 struct PluginWrap {
     identifier: Identifier,
@@ -309,6 +342,26 @@ impl Catalog {
 }
 
 #[derive(Debug, Clone)]
+enum LogType {
+    Info,
+    Error,
+}
+
+#[derive(Debug, Clone)]
+struct LogEntry {
+    ltype: LogType,
+    message: String,
+}
+impl From<Error> for LogEntry {
+    fn from(e: Error) -> Self {
+        LogEntry {
+            ltype: LogType::Error,
+            message: format!("Error: {}", e),
+        }
+    }
+}
+
+#[derive(Debug, Clone)]
 struct Progress {
     title: String,
     message: String,
@@ -324,6 +377,8 @@ struct App {
     selected: Option<(usize, Identifier)>,
     progress: Option<Progress>,
     drop_action: bool,
+    log: Vec<LogEntry>,
+    log_open: bool,
     // Some useful data
     default_logo: iced::advanced::image::Handle,
 }
@@ -352,6 +407,8 @@ impl App {
             has_update: false,
             progress: None,
             drop_action: false,
+            log: Vec::new(),
+            log_open: false,
             default_logo,
         })
     }
@@ -393,7 +450,7 @@ impl App {
         .chain(Task::sip(
             wrap(self.catalog.clone()),
             Message::Progress,
-            |_| Message::UpdateView,
+            Message::update_view,
         ))
     }
 
@@ -554,7 +611,7 @@ impl App {
         Self::start_task(pgettext("plugins", "Refreshing")).chain(Task::sip(
             Self::refresh_straw(self.catalog.clone()),
             Message::Progress,
-            |_| Message::UpdateView,
+            Message::update_view,
         ))
     }
 
@@ -562,7 +619,7 @@ impl App {
         Self::start_task(pgettext("plugins", "Refreshing")).chain(Task::sip(
             Self::refresh_local_straw(self.catalog.clone()),
             Message::Progress,
-            |_| Message::UpdateView,
+            Message::update_view,
         ))
     }
 
@@ -570,7 +627,7 @@ impl App {
         Self::start_task(pgettext("plugins", "Installing")).chain(Task::sip(
             Installer::new(&self.catalog.conf.install_path, plugin).install(),
             Message::Progress,
-            |_| Message::RefreshLocal,
+            Message::refresh_local,
         ))
     }
 
@@ -578,7 +635,7 @@ impl App {
         Self::start_task(pgettext("plugins", "Updating")).chain(Task::sip(
             Installer::new(&self.catalog.conf.install_path, plugin).update(),
             Message::Progress,
-            |_| Message::UpdateView,
+            Message::refresh_local,
         ))
     }
 
@@ -586,14 +643,20 @@ impl App {
         Self::start_task(pgettext("plugins", "Removing")).chain(Task::sip(
             Installer::new(path, plugin).uninstall(),
             Message::Progress,
-            |_| Message::RefreshLocal,
+            Message::refresh_local,
         ))
     }
 
     fn update(&mut self, message: Message) -> Task<Message> {
         match message {
             Message::Startup => self.load_from_cache_or_refresh_task(),
-            Message::UpdateView => {
+            Message::UpdateView(value) => {
+                // If a previous task errored, we log it
+                if let Err(e) = value {
+                    self.log.push(e);
+                    self.log_open = true;
+                    return Task::none();
+                }
                 self.view = self
                     .catalog
                     .data
@@ -673,8 +736,22 @@ impl App {
                 if let Some(progress) = &mut self.progress {
                     if let Some(message) = &value.message {
                         progress.message = message.clone();
+                        self.log.push(LogEntry {
+                            ltype: LogType::Info,
+                            message: message.clone(),
+                        });
                     }
                     progress.value = value.value;
+                }
+                Task::none()
+            }
+            Message::Log(entry) => {
+                self.log.push(entry);
+                Task::none()
+            }
+            Message::LogResult(result) => {
+                if let Err(entry) = result {
+                    self.log.push(entry);
                 }
                 Task::none()
             }
@@ -682,7 +759,13 @@ impl App {
                 self.drop_action = !self.drop_action;
                 Task::none()
             }
-            Message::RefreshLocal => self.refresh_local_task(),
+            Message::RefreshLocal(value) => match value {
+                Ok(()) => self.refresh_local_task(),
+                Err(e) => {
+                    self.log.push(e);
+                    Task::none()
+                }
+            },
             Message::ActionClearCache => {
                 self.drop_action = false;
                 if let Err(e) = fs::remove_dir_all(&self.catalog.conf.catalog_cache) {
@@ -699,17 +782,21 @@ impl App {
             }
             Message::ActionUpdate => {
                 self.drop_action = false;
-                Task::batch(self.view.iter().filter_map(|plugin| {
-                    if plugin.has_update()
-                        && let Some(local) = &plugin.local
-                    {
-                        // Discard the RefreshLocal event so we do it at the end
-                        Some(self.update_task(local).discard())
-                    } else {
-                        None
-                    }
-                }))
-                .chain(Task::done(Message::RefreshLocal))
+                Self::start_task(pgettext("plugins", "Updating"))
+                    .chain(Task::batch(self.view.iter().filter_map(|plugin| {
+                        if plugin.has_update()
+                            && let Some(local) = &plugin.local
+                        {
+                            Some(Task::sip(
+                                Installer::new(&self.catalog.conf.install_path, local).update(),
+                                Message::Progress,
+                                Message::log_result,
+                            ))
+                        } else {
+                            None
+                        }
+                    })))
+                    .chain(Task::done(Message::RefreshLocal(Ok(()))))
             }
         }
     }
