@@ -70,11 +70,19 @@ local function load_shader ()
    return cvs
 end
 
+local IMAGE_EXT = {
+   ".avif",
+   ".webp",
+   ".png",
+   ".jpg",
+   ".jpeg",
+}
 local function load_gfx ()
    local basepath = "gfx/loading/"
    local files = {}
    for k,f in ipairs( lf.getDirectoryItems( basepath ) ) do
-      if string.match( f, ".webp$" ) then
+      local ext = f:match("^.+(%..+)$")
+      if inlist( IMAGE_EXT, ext ) then
          table.insert( files, f )
       end
    end
