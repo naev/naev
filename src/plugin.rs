@@ -38,9 +38,11 @@ fn changed() -> Result<bool> {
     }
 
     let loaded = plugins_to_hashmap(&PLUGINS);
-    let installed = plugins_to_hashmap(&pluginmgr::discover_local_plugins(
-        pluginmgr::local_plugins_dir()?,
-    )?);
+    let installed = plugins_to_hashmap(&{
+        let mut plgs = pluginmgr::discover_local_plugins(pluginmgr::local_plugins_dir()?)?;
+        plgs.retain(|p| !p.disabled);
+        plgs
+    });
 
     Ok(loaded != installed)
 }

@@ -124,7 +124,7 @@ pub enum Source {
     Local,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(deny_unknown_fields)]
 pub struct Plugin {
     pub identifier: Identifier,
@@ -161,12 +161,6 @@ pub struct Plugin {
     #[serde(default)]
     pub disabled: bool,
 }
-impl PartialEq for Plugin {
-    fn eq(&self, other: &Self) -> bool {
-        self.identifier == other.identifier
-    }
-}
-impl Eq for Plugin {}
 const fn release_status_default() -> ReleaseStatus {
     ReleaseStatus::Stable
 }
