@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-11-17 23:06+0900\n"
+"POT-Creation-Date: 2025-11-22 20:50+0900\n"
 "PO-Revision-Date: 2025-08-10 15:02+0000\n"
 "Last-Translator: Ta123Asri <taufiqdi15@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/naev/naev/id/"
@@ -15576,7 +15576,24 @@ msgstr ""
 #. <event name="Shipwreck">
 #. <location>enter</location>
 #. <chance>3</chance>
-#. <cond>require("common.pirate").systemPresence() &gt; 0</cond>
+#. <cond>
+#. local cursys = system.cur()
+#.
+#. -- Avoid restricted systems
+#. if cursys:tags().restricted then
+#. return false
+#. end
+#.
+#. -- Don't do volatile systems
+#. local _nebu_dens, nebu_vol = cursys:nebula()
+#. if nebu_vol &gt; 0 then
+#. return false
+#. end
+#.
+#. -- Must have pirates, but not too much
+#. local pir = require("common.pirate").systemPresence()
+#. return pir &gt; 0 and pir &lt; 300
+#. </cond>
 #. <unique />
 #. <notes>
 #. <tier>1</tier>
@@ -28840,14 +28857,11 @@ msgstr "El Ego de Deiz"
 msgid "Your first space-worthy ship!"
 msgstr "Kapal pertamamu yang bisa menjelajahi luar angkasa!"
 
-#, fuzzy
 msgid ""
 "Alsafi II is a barren world that other than some indications of prospection "
-"sites looking for mineral, is devoid of anything of interest, a part from a "
+"sites looking for mineral, is devoid of anything of interest, apart from a "
 "small one-man druglab operation."
 msgstr ""
-"Alsafi II adalah planet hampa yang tidak menarik sama sekali kalau tak ada "
-"tanda-tanda prospeksi penambangan mineral."
 
 msgid ""
 "A cold and barren inhospitable moon devoid of all life except for a small "
@@ -32265,7 +32279,7 @@ msgstr "Tak cukup bahan bakar untuk lompatan autonav."
 #. Alpha can be used to control the intensity of the radiosity and multiplies the RGB values
 #. r=colour.new(0.94, 0.30, 0.00, 8) }, Too red otherwise
 #. r=colour.new(0.57, 0.00, 0.00, 8) }, Too red otherwise
-#. { i="redgiant02.webp", r=colour.new(0.82, 0.53, 0.26, 5) }, -- Unused, would need colour tweaks
+#. { i="redgiant02", r=colour.new(0.82, 0.53, 0.26, 5) }, -- Unused, would need colour tweaks
 #. Set up parameters
 #. Avoid repeating stars
 #. Load and set stuff
@@ -39624,8 +39638,6 @@ msgstr ""
 
 #. Non-persistent state
 #. Make sure system isn't claimed, but we don't claim it
-#. Don't do volatile systems
-#. Don't spawn in restricted space (just in case)
 #. The _("Shipwrecked {plt}") will be a random trader vessel.
 #. Create the derelict.
 msgid "Shipwrecked {plt}"
@@ -117185,6 +117197,21 @@ msgstr ""
 msgid "unknown"
 msgstr ""
 
+msgid ""
+"\n"
+"#r!! CURRENT PROGRESS WILL BE LOST !!#0"
+msgstr ""
+
+msgid ""
+"\n"
+"Your current  progress will be saved."
+msgstr ""
+
+msgid ""
+"Naev must be restarted for some changes to take effect. Do you wish to "
+"restart Naev now?"
+msgstr ""
+
 #, c-format
 msgid "Key '%s' not found!"
 msgstr "Kunci '%s' tidak ditemukan!"
@@ -118578,6 +118605,7 @@ msgid "Initializing video output failed, exiting…"
 msgstr ""
 
 #. Default font path.
+#. Load the fonts the same way Naev does
 msgid ""
 "Cabin-SemiBold.otf,NanumBarunGothicBold.ttf,SourceCodePro-"
 "Semibold.ttf,IBMPlexSansJP-Medium.otf"
@@ -119353,6 +119381,10 @@ msgstr ""
 msgid "Waypoint '%s' not found for system '%s'!"
 msgstr ""
 
+#, c-format
+msgid "Trying to load invalid texture %s"
+msgstr ""
+
 msgid "Texture dimensions must be positive"
 msgstr ""
 
@@ -119598,21 +119630,6 @@ msgstr "Input"
 
 msgid "Plugins"
 msgstr "Plugin"
-
-msgid ""
-"\n"
-"#r!! CURRENT PROGRESS WILL BE LOST !!#0"
-msgstr ""
-
-msgid ""
-"\n"
-"Your current  progress will be saved."
-msgstr ""
-
-msgid ""
-"Naev must be restarted for some changes to take effect. Do you wish to "
-"restart Naev now?"
-msgstr ""
 
 #, c-format
 msgid "system (%s[%3.0f%%] %s#0)"
@@ -119915,6 +119932,8 @@ msgstr ""
 msgid "No Plugins Found"
 msgstr ""
 
+#. bold(pgettext("plugins", "Identifier:")),
+#. info(sel.identifier.as_str()),
 msgctxt "plugins"
 msgid "Name:"
 msgstr ""
@@ -121146,31 +121165,10 @@ msgstr ""
 msgid "GUI '%s' does not exist as a file: '%s' not found."
 msgstr ""
 
-#, c-format
-msgid "Failed to mount plugin '%s': %s"
-msgstr ""
-
-#, c-format
-msgid "Plugin '%s' has no name!"
-msgstr "Plugin '%s' tidak memiliki nama!"
-
-#, c-format
-msgid "Plugin '%s' has unknown metadata node '%s'!"
-msgstr "Plugin '%s' memiliki noda metadata '%s' yang tidak diketahui!"
-
-#, c-format
-msgid "Plugin '%s' missing/invalid '%s' element"
-msgstr "Plugin '%s' element '%s' tidak ada/invalid"
-
-#, c-format
-msgid "Plugin '%s' does not have a valid '%s'!"
-msgstr "Plugin '%s' tidak punya '%s' yang valid!"
-
-#, c-format
-msgid "Plugin '%s' PCRE2 compilation failed at offset %d: %s"
-msgstr ""
-
 msgid "Loaded plugins:"
+msgstr ""
+
+msgid "Please close the Plugin Manager to continue."
 msgstr ""
 
 msgid "Naev Plugin Manager"
@@ -121186,6 +121184,38 @@ msgid "available"
 msgstr ""
 
 msgctxt "plugins"
+msgid "Starting Up"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Refreshing remote repositories"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Refreshing local and remote repositories"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Refreshing"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Installing"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Updating"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Removing"
+msgstr ""
+
+msgctxt "plugins"
+msgid "No plugins found!"
+msgstr ""
+
+msgctxt "plugins"
 msgid "update"
 msgstr ""
 
@@ -121198,15 +121228,15 @@ msgid "disabled"
 msgstr ""
 
 msgctxt "plugins"
-msgid "Identifier:"
-msgstr ""
-
-msgctxt "plugins"
 msgid "State:"
 msgstr ""
 
 msgctxt "plugins"
 msgid "Plugin Version:"
+msgstr ""
+
+msgctxt "plugins"
+msgid "{} [{} available]"
 msgstr ""
 
 msgctxt "plugins"
@@ -121218,10 +121248,6 @@ msgstr ""
 
 msgctxt "plugins"
 msgid "Status:"
-msgstr ""
-
-msgctxt "plugins"
-msgid "Description"
 msgstr ""
 
 msgctxt "plugins"
@@ -121260,6 +121286,34 @@ msgctxt "plugins"
 msgid "Action"
 msgstr ""
 
+msgctxt "plugins"
+msgid "Logs"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Installing plugin '{}'"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Updating plugin '{}'"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Uninstalling plugin '{}'"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Updating plugin remote {}"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Cloning plugin remote {}"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Updating plugins found in {}"
+msgstr ""
+
 msgid "stable"
 msgstr ""
 
@@ -121267,6 +121321,17 @@ msgid "testing"
 msgstr ""
 
 msgid "development"
+msgstr ""
+
+msgid "The plugin is completely playable."
+msgstr ""
+
+msgid "The plugin is being tested, and may contain bugs or other issues."
+msgstr ""
+
+msgid ""
+"The plugin is under heavy development and will be full of missing content "
+"and bugs."
 msgstr ""
 
 #, c-format
@@ -123062,6 +123127,31 @@ msgid ""
 "the extreme long range and high penetration for a weapon of its size, it can "
 "be very deadly."
 msgstr ""
+
+#, fuzzy
+#~ msgid ""
+#~ "Alsafi II is a barren world that other than some indications of "
+#~ "prospection sites looking for mineral, is devoid of anything of interest, "
+#~ "a part from a small one-man druglab operation."
+#~ msgstr ""
+#~ "Alsafi II adalah planet hampa yang tidak menarik sama sekali kalau tak "
+#~ "ada tanda-tanda prospeksi penambangan mineral."
+
+#, c-format
+#~ msgid "Plugin '%s' has no name!"
+#~ msgstr "Plugin '%s' tidak memiliki nama!"
+
+#, c-format
+#~ msgid "Plugin '%s' has unknown metadata node '%s'!"
+#~ msgstr "Plugin '%s' memiliki noda metadata '%s' yang tidak diketahui!"
+
+#, c-format
+#~ msgid "Plugin '%s' missing/invalid '%s' element"
+#~ msgstr "Plugin '%s' element '%s' tidak ada/invalid"
+
+#, c-format
+#~ msgid "Plugin '%s' does not have a valid '%s'!"
+#~ msgstr "Plugin '%s' tidak punya '%s' yang valid!"
 
 #, fuzzy
 #~ msgid "armourbreaker"
