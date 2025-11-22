@@ -114,6 +114,7 @@ enum Message {
     LogToggle,
     DropDownToggle,
     RefreshLocal(Result<(), LogEntry>),
+    FilterChange(String),
     ActionClearCache,
     ActionRefresh,
     ActionUpdate,
@@ -416,6 +417,7 @@ struct App {
     drop_action: bool,
     log: Vec<LogEntry>,
     log_open: bool,
+    filter: String,
     // Some useful data
     default_logo: iced::advanced::image::Handle,
 }
@@ -446,6 +448,7 @@ impl App {
             drop_action: false,
             log: Vec::new(),
             log_open: false,
+            filter: "".to_string(),
             default_logo,
         })
     }
@@ -684,6 +687,61 @@ impl App {
         ))
     }
 
+    /// Updates the view if applicable
+    fn update_view(&mut self) -> Task<Message> {
+        self.view = self
+            .catalog
+            .data
+            .lock()
+            .unwrap()
+            .values()
+            .filter(|p| {
+                if self.filter.is_empty() {
+                    return true;
+                }
+                let plg = p.plugin();
+                let filter = self.filter.to_lowercase();
+                plg.name.to_lowercase().contains(&filter)
+                    || plg.r#abstract.to_lowercase().contains(&filter)
+                    || plg.tags.iter().any(|t| t.to_lowercase().contains(&filter))
+                    || plg.release_status.as_str().contains(&filter)
+            })
+            .cloned()
+            .collect();
+        self.view.sort_by(|a, b| {
+            let ord = a.state.cmp(&b.state);
+            if ord == std::cmp::Ordering::Equal {
+                a.plugin().identifier.cmp(&b.plugin().identifier)
+            } else {
+                ord
+            }
+        });
+        self.has_update = self.view.iter().any(|wrap| wrap.has_update());
+
+        fn recover_selected(
+            view: &[PluginWrap],
+            identifier: &Identifier,
+        ) -> Option<(usize, Identifier)> {
+            for (id, wrap) in view.iter().enumerate() {
+                if wrap.identifier == *identifier {
+                    return Some((id, identifier.clone()));
+                }
+            }
+            None
+        }
+        // Try to recover selection if it is not matched anymore
+        if let Some((id, identifier)) = &self.selected {
+            if let Some(sel) = self.view.get(*id) {
+                if sel.identifier != *identifier {
+                    self.selected = recover_selected(&self.view, identifier);
+                }
+            } else {
+                self.selected = recover_selected(&self.view, identifier);
+            }
+        }
+        Task::none()
+    }
+
     fn update(&mut self, message: Message) -> Task<Message> {
         match message {
             Message::Startup => self.load_from_cache_or_refresh_task(),
@@ -695,47 +753,8 @@ impl App {
                     self.progress = None;
                     return Task::none();
                 }
-                self.view = self
-                    .catalog
-                    .data
-                    .lock()
-                    .unwrap()
-                    .values()
-                    .cloned()
-                    .collect();
-                self.view.sort_by(|a, b| {
-                    let ord = a.state.cmp(&b.state);
-                    if ord == std::cmp::Ordering::Equal {
-                        a.plugin().identifier.cmp(&b.plugin().identifier)
-                    } else {
-                        ord
-                    }
-                });
-                self.has_update = self.view.iter().any(|wrap| wrap.has_update());
                 self.progress = None;
-
-                fn recover_selected(
-                    view: &[PluginWrap],
-                    identifier: &Identifier,
-                ) -> Option<(usize, Identifier)> {
-                    for (id, wrap) in view.iter().enumerate() {
-                        if wrap.identifier == *identifier {
-                            return Some((id, identifier.clone()));
-                        }
-                    }
-                    None
-                }
-                // Try to recover selection if it is not matched anymore
-                if let Some((id, identifier)) = &self.selected {
-                    if let Some(sel) = self.view.get(*id) {
-                        if sel.identifier != *identifier {
-                            self.selected = recover_selected(&self.view, identifier);
-                        }
-                    } else {
-                        self.selected = recover_selected(&self.view, identifier);
-                    }
-                }
-                Task::none()
+                self.update_view()
             }
             Message::Selected(id) => {
                 if let Some((rid, _)) = &self.selected {
@@ -809,6 +828,10 @@ impl App {
                     Task::none()
                 }
             },
+            Message::FilterChange(value) => {
+                self.filter = value;
+                self.update_view()
+            }
             Message::ActionClearCache => {
                 self.drop_action = false;
                 if let Err(e) = fs::remove_dir_all(&self.catalog.conf.catalog_cache) {
@@ -849,7 +872,8 @@ impl App {
         use iced::alignment::{Horizontal, Vertical};
         use iced::theme::palette::Pair;
         use widget::{
-            column, container, grid, image, mouse_area, row, scrollable, space, text, tooltip,
+            column, container, grid, image, mouse_area, row, scrollable, space, text, text_input,
+            tooltip,
         };
 
         let idle = self.progress.is_none();
@@ -942,7 +966,11 @@ impl App {
             .spacing(10)
             .height(grid::Sizing::EvenlyDistribute(Shrink))
         };
-        let plugins = scrollable(plugins).spacing(10);
+        let plugins = column![
+            text_input(gettext("Search..."), &self.filter).on_input(Message::FilterChange),
+            scrollable(plugins).spacing(10)
+        ]
+        .spacing(5);
 
         let tooltip_container = |txt| {
             container(text(txt))
@@ -1099,7 +1127,6 @@ impl App {
             .spacing(10)
             .align_x(iced::Alignment::Center),
         )
-        .padding(10)
         .style(|theme: &iced::Theme| {
             let extended = theme.extended_palette();
             widget::container::Style {
@@ -1121,7 +1148,6 @@ impl App {
                     .on_dismiss(Message::DropDownToggle)
                     .alignment(iced_aw::drop_down::Alignment::Bottom),
                 )
-                .padding(10)
                 .spacing(10)
                 .wrap(),
         )
