@@ -196,10 +196,6 @@ pub fn warn(msg: &str) {
     warn!("{msg}");
 }
 
-pub fn warn_err(err: anyhow::Error) {
-    warn_err!(err);
-}
-
 #[macro_export]
 macro_rules! infox {
     ($($arg:tt)*) => {
@@ -223,7 +219,7 @@ macro_rules! warnx {
 
 #[macro_export]
 macro_rules! warn_err {
-    ($err:ident) => {
+    ($err:expr) => {
         $crate::warn!("{:?}", $err);
     };
 }

@@ -913,8 +913,9 @@ impl TextureSource {
                                             Some(svg_to_img(&mut ndata::iostream(path)?, w, h)?);
                                     }
                                 }
-                                image
-                                    .context(format!("No image file matching '{}' found", cpath))?
+                                image.with_context(|| {
+                                    format!("No image file matching '{}' found", cpath)
+                                })?
                             }
                         }
                     };
@@ -1727,7 +1728,7 @@ pub extern "C" fn gl_newSprite(
     let out = match builder.build(ctx) {
         Ok(tex) => tex.into_ptr(),
         Err(e) => {
-            warn_err(e.context("unable to build texture for new sprite"));
+            warn_err!(e.context("unable to build texture for new sprite"));
             std::ptr::null_mut()
         }
     };
@@ -1791,7 +1792,7 @@ pub extern "C" fn gl_newSpriteRWops(
     let out = match builder.build(ctx) {
         Ok(tex) => tex.into_ptr(),
         Err(e) => {
-            warn_err(e.context("unable to build texture for new sprite from rwops"));
+            warn_err!(e.context("unable to build texture for new sprite from rwops"));
             std::ptr::null_mut()
         }
     };
@@ -1859,7 +1860,7 @@ pub extern "C" fn gl_rawTexture(
     let out = match builder.build(ctx) {
         Ok(tex) => tex.into_ptr(),
         Err(e) => {
-            warn_err(e.context("unable to build texture for raw texture"));
+            warn_err!(e.context("unable to build texture for raw texture"));
             std::ptr::null_mut()
         }
     };

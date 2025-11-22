@@ -131,7 +131,7 @@ pub fn load() -> Result<Vec<DamageType>> {
                 match load_toml(filename.as_str()) {
                     Ok(dt) => Some(dt),
                     Err(e) => {
-                        warn_err!(e); //rr.context(format!("unable to load Damage Type '{filename}'!")));
+                        warn_err!(e.context(format!("unable to load Damage Type '{filename}'!")));
                         None
                     }
                 }
@@ -140,7 +140,7 @@ pub fn load() -> Result<Vec<DamageType>> {
                 match DamageType::load_xml(filename.as_str()) {
                     Ok(dt) => Some(dt),
                     Err(err) => {
-                        warn_err(err.context(format!("unable to load Damage Type '{filename}'!")));
+                        warn_err!(err.context(format!("unable to load Damage Type '{filename}'!")));
                         None
                     }
                 }

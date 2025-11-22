@@ -519,7 +519,7 @@ impl Context {
         window
             .set_minimum_size(MIN_WIDTH, MIN_HEIGHT)
             .unwrap_or_else(|err| {
-                warn_err(anyhow::Error::new(err).context("unable to set minimum window size."))
+                warn_err!(anyhow::Error::new(err).context("unable to set minimum window size."))
             });
         let gl_context = match window.gl_create_context() {
             Ok(ctx) => ctx,
@@ -611,7 +611,7 @@ impl Context {
                 false => 0,
             })
             .unwrap_or_else(|err| {
-                warn_err(anyhow::Error::msg(err).context("unable to set OpenGL swap interval"))
+                warn_err!(anyhow::Error::msg(err).context("unable to set OpenGL swap interval"))
             });
 
         match gl_attr.framebuffer_srgb_compatible() {

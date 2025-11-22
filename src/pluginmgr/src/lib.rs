@@ -155,7 +155,7 @@ pub fn repository<P: AsRef<Path>>(root: P) -> Result<Vec<PluginStub>> {
 /// Gets the cache directory used by the project
 pub fn cache_dir() -> Result<PathBuf> {
     let proj_dirs = directories::ProjectDirs::from("org", "naev", "naev")
-        .context("getting project directorios")?;
+        .context("getting project directories")?;
     Ok(proj_dirs.cache_dir().to_path_buf())
 }
 

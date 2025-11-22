@@ -930,7 +930,7 @@ pub extern "C" fn _faction_isStatic(id: c_int) -> c_int {
         false => 0,
     })
     .unwrap_or_else(|err| {
-        warn_err(err);
+        warn_err!(err);
         0
     })
 }
@@ -942,7 +942,7 @@ pub extern "C" fn _faction_isInvisible(id: c_int) -> c_int {
         false => 0,
     })
     .unwrap_or_else(|err| {
-        warn_err(err);
+        warn_err!(err);
         0
     })
 }
@@ -954,7 +954,7 @@ pub extern "C" fn _faction_setInvisible(id: c_int, state: c_int) -> c_int {
         0
     })
     .unwrap_or_else(|err| {
-        warn_err(err);
+        warn_err!(err);
         -1
     })
 }
@@ -966,7 +966,7 @@ pub extern "C" fn _faction_isKnown(id: c_int) -> c_int {
         false => 0,
     })
     .unwrap_or_else(|err| {
-        warn_err(err);
+        warn_err!(err);
         0
     })
 }
@@ -978,7 +978,7 @@ pub extern "C" fn _faction_setKnown(id: c_int, state: c_int) -> c_int {
         0
     })
     .unwrap_or_else(|err| {
-        warn_err(err);
+        warn_err!(err);
         -1
     })
 }
@@ -990,7 +990,7 @@ pub extern "C" fn _faction_name(id: c_int) -> *const c_char {
         fct.data.cname.as_ptr()
     })
     .unwrap_or_else(|err| {
-        warn_err(err);
+        warn_err!(err);
         std::ptr::null()
     })
 }
@@ -1005,7 +1005,7 @@ pub extern "C" fn _faction_shortname(id: c_int) -> *const c_char {
         unsafe { naevc::gettext_rust(ptr) }
     })
     .unwrap_or_else(|err| {
-        warn_err(err);
+        warn_err!(err);
         std::ptr::null()
     })
 }
@@ -1020,7 +1020,7 @@ pub extern "C" fn _faction_longname(id: c_int) -> *const c_char {
         unsafe { naevc::gettext_rust(ptr) }
     })
     .unwrap_or_else(|err| {
-        warn_err(err);
+        warn_err!(err);
         std::ptr::null()
     })
 }
@@ -1035,7 +1035,7 @@ pub extern "C" fn _faction_mapname(id: c_int) -> *const c_char {
         unsafe { naevc::gettext_rust(ptr) }
     })
     .unwrap_or_else(|err| {
-        warn_err(err);
+        warn_err!(err);
         std::ptr::null()
     })
 }
@@ -1047,7 +1047,7 @@ pub extern "C" fn _faction_description(id: c_int) -> *const c_char {
         unsafe { naevc::gettext_rust(ptr) }
     })
     .unwrap_or_else(|err| {
-        warn_err(err);
+        warn_err!(err);
         std::ptr::null()
     })
 }
@@ -1055,7 +1055,7 @@ pub extern "C" fn _faction_description(id: c_int) -> *const c_char {
 #[unsafe(no_mangle)]
 pub extern "C" fn _faction_default_ai(id: c_int) -> *const c_char {
     faction_c_call(id, |fct| fct.data.cai.as_ptr()).unwrap_or_else(|err| {
-        warn_err(err);
+        warn_err!(err);
         std::ptr::null()
     })
 }
@@ -1063,7 +1063,7 @@ pub extern "C" fn _faction_default_ai(id: c_int) -> *const c_char {
 #[unsafe(no_mangle)]
 pub extern "C" fn _faction_tags(id: c_int) -> *mut *const c_char {
     faction_c_call(id, |fct| fct.data.ctags.as_ptr()).unwrap_or_else(|err| {
-        warn_err(err);
+        warn_err!(err);
         std::ptr::null_mut()
     })
 }
@@ -1071,7 +1071,7 @@ pub extern "C" fn _faction_tags(id: c_int) -> *mut *const c_char {
 #[unsafe(no_mangle)]
 pub extern "C" fn _faction_lane_length_per_presence(id: c_int) -> c_double {
     faction_c_call(id, |fct| fct.data.lane_length_per_presence as c_double).unwrap_or_else(|err| {
-        warn_err(err);
+        warn_err!(err);
         0.0
     })
 }
@@ -1079,7 +1079,7 @@ pub extern "C" fn _faction_lane_length_per_presence(id: c_int) -> c_double {
 #[unsafe(no_mangle)]
 pub extern "C" fn _faction_lane_base_cost(id: c_int) -> c_double {
     faction_c_call(id, |fct| fct.data.lane_base_cost as c_double).unwrap_or_else(|err| {
-        warn_err(err);
+        warn_err!(err);
         0.0
     })
 }
@@ -1091,7 +1091,7 @@ pub extern "C" fn _faction_logo(id: c_int) -> *const naevc::glTexture {
         None => std::ptr::null(),
     })
     .unwrap_or_else(|err| {
-        warn_err(err);
+        warn_err!(err);
         std::ptr::null()
     })
 }
@@ -1102,7 +1102,7 @@ pub extern "C" fn _faction_colour(id: c_int) -> *const naevc::glColour {
         &fct.data.ccolour as *const Vector4<f32> as *const naevc::glColour
     })
     .unwrap_or_else(|err| {
-        warn_err(err);
+        warn_err!(err);
         std::ptr::null()
     })
 }
