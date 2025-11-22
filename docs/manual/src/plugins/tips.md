@@ -17,7 +17,7 @@ To do this, first we define the unidiff that adds "My Outfit" to "Base Tech Grou
 <?xml version="1.0" encoding="UTF-8"?>
 <unidiff name="my_plugin_unidiff">
  <tech name="Base Tech Group">
-  <add>My Outfit</add>
+  <item_add>My Outfit</item_add>
  </tech>
 </unidiff>
 ```
