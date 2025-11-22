@@ -10,8 +10,8 @@ local tut = {}
 
 -- TODO replace with real portrait
 tut.shipai = {
-   portrait = "tutorial.webp", -- Actually would need hologram applied
-   image = "tutorial.webp",
+   portrait = "tutorial", -- Actually would need hologram applied
+   image = "tutorial",
    name = _("Ship AI"),
    colour = { 0, 1, 1 },
    transition = "electric",

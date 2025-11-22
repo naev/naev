@@ -29,7 +29,7 @@ local npc_patrons -- Non-persistent state
 local gambling_priority = 3
 local important_npc_priority = 4
 local terminal = minerva.terminal
-local blackjack_portrait = "blackjack.png"
+local blackjack_portrait = "blackjack"
 local chuckaluck_portrait, chuckaluck_image
 if var.peek("minerva_chuckaluck_change") then
    -- Becomes a random NPC

@@ -8,8 +8,8 @@ local vn = require "vn"
 local antlejos = {}
 
 antlejos.verner = {
-   portrait = "verner.webp",
-   image = "verner.webp",
+   portrait = "verner",
+   image = "verner",
    name = _("Verner"),
    colour = nil,
    description = _("Verner seems to be taking a break from all the terraforming and relaxing at the new spaceport bar."),

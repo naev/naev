@@ -7,5 +7,5 @@ hypergate.setup{
       [50]  = 0.4,
       [30]  = 0.8,
    },
-   tex = "hypergate_soromid_activated.webp",
+   tex = "hypergate_soromid_activated",
 }

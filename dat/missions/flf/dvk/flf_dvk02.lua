@@ -46,7 +46,7 @@ function create ()
       misn.finish( false )
    end
 
-   misn.setNPC( _("Benito"), "flf/unique/benito.webp", _("It seems Benito wants something from you again. Something about her looks a little off this time around.") )
+   misn.setNPC( _("Benito"), "flf/unique/benito", _("It seems Benito wants something from you again. Something about her looks a little off this time around.") )
 end
 
 

@@ -18,7 +18,7 @@
 local vn = require 'vn'
 local minerva = require 'common.minerva'
 
-local thug1_image = "scavenger1.png"
+local thug1_image = "scavenger1"
 
 function create ()
    vn.clear()

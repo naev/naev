@@ -9,8 +9,8 @@ local gauntletsys = system.get("Crimson Gauntlet")
 local totoran = {
    guide = {
       name = _("Crimson Gauntlet Guide"),
-      portrait = "dvaered_thug1.png",
-      image = "dvaered_thug1.png",
+      portrait = "dvaered_thug1",
+      image = "dvaered_thug1",
       desc = _("Information on the Crimson Gauntlet."),
       colour = {0.9, 0.1, 0.25},
    }

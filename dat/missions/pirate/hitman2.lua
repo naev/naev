@@ -32,7 +32,7 @@ local targetsystem = system.get("Delta Pavonis")
 local reward = 500e3
 
 local npc_name = _("Shifty Trader")
-local npc_portrait = "neutral/unique/shifty_merchant.webp"
+local npc_portrait = "neutral/unique/shifty_merchant"
 local npc_image = portrait.getFullPath( npc_portrait )
 
 local attack_finished -- Forward-declared functions

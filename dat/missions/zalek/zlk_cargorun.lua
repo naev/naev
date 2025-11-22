@@ -30,7 +30,7 @@ local payment = 400e3
 local cargo_space = 20
 
 local npc_name = _("Logan")
-local npc_portrait = "zalek/unique/logan.webp"
+local npc_portrait = "zalek/unique/logan"
 local npc_image = portrait.getFullPath( npc_portrait )
 
 function create ()

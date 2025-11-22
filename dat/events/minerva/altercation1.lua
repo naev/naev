@@ -22,11 +22,11 @@ local vn = require 'vn'
 local love_shaders = require 'love_shaders'
 local minerva = require 'common.minerva'
 
-local zalek_holo = "zalek_thug1.png"
-local zalek_image = "zalek_thug1.png"
+local zalek_holo = "zalek_thug1"
+local zalek_image = "zalek_thug1"
 local zalek_colour = {1, 0.4, 0.4}
-local dvaered_holo = "dvaered_thug1.png"
-local dvaered_image = "dvaered_thug1.png"
+local dvaered_holo = "dvaered_thug1"
+local dvaered_image = "dvaered_thug1"
 local dvaered_colour = {1, 0.7, 0.3}
 
 -- Non-persistent state

@@ -49,9 +49,9 @@ end
 
 local track_list = require "missions.neutral.race.tracks_qex"
 
-local npc_portrait   = "minerva_terminal.png"
+local npc_portrait   = "minerva_terminal"
 local npc_description= _("A terminal to let you participate in the different available races.")
-local laid_back_portrait = portrait.getFullPath("neutral/unique/laidback.webp")
+local laid_back_portrait = portrait.getFullPath("neutral/unique/laidback")
 
 local function track_besttime( track )
    return "race_bt_"..track.name

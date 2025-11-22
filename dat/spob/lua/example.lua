@@ -24,7 +24,7 @@ end
 --]]
 function load ()
    if tex==nil then
-      mem.tex = lg.newImage( "path/to/image.png" )
+      mem.tex = lg.newImage( "path/to/image" )
       mem.pos = mem.spob:pos()
       mem.tw, mem.th = tex:dim()
    end

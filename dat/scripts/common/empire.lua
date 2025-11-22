@@ -23,7 +23,7 @@ function emp.addCollectiveLog( text )
 end
 
 emp.czesc = {
-   portrait = "empire/unique/czesc.webp",
+   portrait = "empire/unique/czesc",
    name = _("Lieutenant Czesc"),
    colour = nil,
    transition = "pixelize",
@@ -31,7 +31,7 @@ emp.czesc = {
 }
 emp.czesc.image = portrait.getFullPath(emp.czesc.portrait)
 emp.soldner = {
-   portrait = "empire/unique/soldner.webp",
+   portrait = "empire/unique/soldner",
    name = _("Commander Soldner"),
    colour = nil,
    transition = "pixelize",

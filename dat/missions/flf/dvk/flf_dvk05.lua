@@ -44,7 +44,7 @@ function create ()
    mem.late_arrival = false
    mem.late_arrival_delay = rnd.uniform( 10.0, 120.0 )
 
-   misn.setNPC( _("Benito"), "flf/unique/benito.webp", _("Benito is shuffling around papers and overall appearing a bit stressed. Perhaps you should see what is the matter.") )
+   misn.setNPC( _("Benito"), "flf/unique/benito", _("Benito is shuffling around papers and overall appearing a bit stressed. Perhaps you should see what is the matter.") )
 end
 
 

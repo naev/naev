@@ -39,7 +39,7 @@ function create ()
       misn.finish(false)
    end
    mem.curplanet = spob.cur()
-   misn.setNPC(_("A laid back person"), "neutral/unique/laidback.webp", _("You see a laid back person, who appears to be one of the locals, looking around the bar, apparently in search of a suitable pilot."))
+   misn.setNPC(_("A laid back person"), "neutral/unique/laidback", _("You see a laid back person, who appears to be one of the locals, looking around the bar, apparently in search of a suitable pilot."))
    mem.credits_easy = rnd.rnd(20e3, 100e3)
    mem.credits_hard = rnd.rnd(200e3, 300e3)
 end

@@ -70,7 +70,7 @@ function create ()
       return
    end
 
-   npc = misn.npcAdd( "approach", _("C"), "unknown.webp", _("Get in touch with the voice over the speakers.") )
+   npc = misn.npcAdd( "approach", _("C"), "unknown", _("Get in touch with the voice over the speakers.") )
 end
 
 function approach ()

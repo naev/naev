@@ -42,7 +42,7 @@ local LOOTABLES = {
 
       -- Create the lootable entry
       return {
-         image = lg.newImage("gfx/misc/treasure_hunt.webp"),
+         image = lg.newImage("gfx/misc/treasure_hunt"),
          text = _("Treasure Map"),
          q = 1,
          type = "func",
@@ -160,7 +160,7 @@ local function compute_lootables ( plt )
    local creds = plt:credits()
    if creds > 0 then
       table.insert( lootables, {
-         image = lg.newImage("gfx/misc/credits.webp"),
+         image = lg.newImage("gfx/misc/credits"),
          text = _("Credits"),
          q = math.floor( 0.5 + creds*loot_mod ),
          type = "credits",

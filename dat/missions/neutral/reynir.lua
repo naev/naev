@@ -49,7 +49,7 @@ local vn = require "vn"
 local portrait = require "portrait"
 
 local npc_name = _("Reynir")
-local npc_portrait = "neutral/unique/reynir.webp"
+local npc_portrait = "neutral/unique/reynir"
 local npc_image = portrait.getFullPath( npc_portrait )
 
 function create ()

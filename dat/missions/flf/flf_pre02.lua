@@ -43,7 +43,7 @@ function create ()
    mem.missys = system.get( "Arcanis" )
    if not misn.claim( mem.missys ) then misn.finish( false ) end
 
-   misn.setNPC( _("FLF petty officer"), "flf/unique/benito.webp", _("There is a low-ranking officer of the Frontier Liberation Front sitting at one of the tables. She seems somewhat more receptive than most people in the bar.") )
+   misn.setNPC( _("FLF petty officer"), "flf/unique/benito", _("There is a low-ranking officer of the Frontier Liberation Front sitting at one of the tables. She seems somewhat more receptive than most people in the bar.") )
 end
 
 

@@ -37,7 +37,7 @@ function create ()
       misn.finish( false )
    end
 
-   misn.setNPC( _("Benito"), "flf/unique/benito.webp", _("Benito is seated at a table with several other FLF soldiers. She motions for you to come over.") )
+   misn.setNPC( _("Benito"), "flf/unique/benito", _("Benito is seated at a table with several other FLF soldiers. She motions for you to come over.") )
 end
 
 

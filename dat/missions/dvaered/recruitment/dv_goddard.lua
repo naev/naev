@@ -48,14 +48,14 @@ local pir      = require "common.pirate"
 local cargo_misn
 local function _cargo()
    if not cargo_misn then
-      cargo_misn = commodity.new( N_("Saboteurs"), N_("A group of saboteurs"), {gfx_space="person.webp"} )
+      cargo_misn = commodity.new( N_("Saboteurs"), N_("A group of saboteurs"), {gfx_space="person"} )
    end
    return cargo_misn
 end
 
-local agentPort = "dvaered/dv_military_m2.webp"
-local cyborPort = "neutral/male12.webp"
-local civilPort = "neutral/female2.webp"
+local agentPort = "dvaered/dv_military_m2"
+local cyborPort = "neutral/male12"
+local civilPort = "neutral/female2"
 
 local silent_taunts = { _("Poor lone little Llama!"),
                         _("I am the 'Silent Death'!"),

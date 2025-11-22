@@ -8,5 +8,5 @@ hypergate.setup{
       [50]  = 0.5,
       [20]  = 0.8,
    },
-   tex = "hypergate_dvaered_activated.webp",
+   tex = "hypergate_dvaered_activated",
 }

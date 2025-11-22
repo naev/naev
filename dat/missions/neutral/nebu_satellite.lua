@@ -45,7 +45,7 @@ local articles = {
 }
 
 local npc_name = _("Scientists")
-local npc_portrait = "neutral/unique/neil.webp"
+local npc_portrait = "neutral/unique/neil"
 local npc_image = portrait.getFullPath( npc_portrait )
 
 function create ()

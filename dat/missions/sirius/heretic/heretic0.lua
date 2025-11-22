@@ -38,7 +38,7 @@ function create()
    --set the mission stuff
    misn.setReward(mem.reward)
    misn.setTitle(_("The Gauntlet"))
-   misn.setNPC(_("A Scrappy Man"), "sirius/unique/strangeman.webp", _("You see a rougher looking man sitting at the bar and guzzling a brownish ale."))
+   misn.setNPC(_("A Scrappy Man"), "sirius/unique/strangeman", _("You see a rougher looking man sitting at the bar and guzzling a brownish ale."))
 end
 
 function accept()

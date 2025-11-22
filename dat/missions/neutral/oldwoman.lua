@@ -41,7 +41,7 @@ local complaints = {
 }
 
 local npc_name = _("An old woman")
-local npc_portrait = "neutral/unique/oldwoman.webp"
+local npc_portrait = "neutral/unique/oldwoman"
 local npc_image = portrait.getFullPath( npc_portrait )
 
 function create ()

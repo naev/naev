@@ -9,26 +9,26 @@ local nebu_research = {
    -- Main Characters
    student = {
       name = _("Robert Hofer"),
-      portrait = "zalek/unique/student.webp",
-      image = "gfx/portraits/zalek/unique/student.webp",
+      portrait = "zalek/unique/student",
+      image = "gfx/portraits/zalek/unique/student",
       colour = {0.9, 0.4, 0.1}, -- Orangish
    },
    mensing = {
       name = _("Dr. Mensing"),
-      portrait = "zalek/unique/mensing.webp",
-      image = "gfx/portraits/zalek/unique/mensing.webp",
+      portrait = "zalek/unique/mensing",
+      image = "gfx/portraits/zalek/unique/mensing",
       colour = {0.9, 0.2, 0.2}, -- Red
    },
    dvaered_officer = {
       name = _("Dvaered Officer"),
-      portrait = "dvaered/dv_military_m8.webp",
-      image = "gfx/portraits/dvaered/dv_military_m8.webp",
+      portrait = "dvaered/dv_military_m8",
+      image = "gfx/portraits/dvaered/dv_military_m8",
       colour = {0.7, 0.3, 0.05}, -- Orangish
    },
    empire_captain = {
       name = _("Empire Captain"),
-      portrait = "empire/empire_mil_f5.webp",
-      image = "gfx/portraits/empire/empire_mil_f5.webp",
+      portrait = "empire/empire_mil_f5",
+      image = "gfx/portraits/empire/empire_mil_f5",
       colour = {0.2, 0.7, 0.1}, -- greenish
    },
    log = function( text )

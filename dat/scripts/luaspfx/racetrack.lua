@@ -66,7 +66,7 @@ local function racetrack_new( pos, rot, activate, params )
       local track_bg_shader_frag = lf.read( "scripts/luaspfx/shaders/track.frag" )
       track_shader = lg.newShader( track_bg_shader_frag )
 
-      buoy_gfx = lg.newImage( "gfx/spob/space/jumpbuoy.webp" )
+      buoy_gfx = lg.newImage( "gfx/spob/space/jumpbuoy" )
       buoy_w, buoy_h = buoy_gfx:getDimensions()
    end
 

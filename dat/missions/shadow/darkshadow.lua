@@ -461,9 +461,9 @@ end
 -- Get the NPCs to appear
 function spobNpcs()
    if spob.cur() == jorekplanet1 and mem.stage == 2 then
-      mem.barmanNPC = misn.npcAdd("barman", _("Barman"), "neutral/barman.webp", _("The barman seems to be eyeing you in particular."), 4)
+      mem.barmanNPC = misn.npcAdd("barman", _("Barman"), "neutral/barman", _("The barman seems to be eyeing you in particular."), 4)
    elseif spob.cur() == jorekplanet2 and mem.stage == 3 then
-      mem.joreknpc = misn.npcAdd("jorek", _("Jorek"), "neutral/unique/jorek.webp", _("There he is, Jorek McArthy, the man you've been chasing across half the galaxy. What he's doing on this piece of junk is unclear."), 4)
+      mem.joreknpc = misn.npcAdd("jorek", _("Jorek"), "neutral/unique/jorek", _("There he is, Jorek McArthy, the man you've been chasing across half the galaxy. What he's doing on this piece of junk is unclear."), 4)
    end
 end
 
@@ -471,7 +471,7 @@ end
 function barman()
    vn.clear()
    vn.scene()
-   local barman = vn.newCharacter( _("Barman"), {image=portrait.getFullPath("neutral/barman.webp")} )
+   local barman = vn.newCharacter( _("Barman"), {image=portrait.getFullPath("neutral/barman")} )
    vn.transition()
 
    vn.na(_([[You meet the barman's stare. He hesitates for a moment, then speaks up.]]))

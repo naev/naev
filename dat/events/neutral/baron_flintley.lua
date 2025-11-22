@@ -18,7 +18,7 @@ local fmt = require "format"
 local vn = require "vn"
 local portrait = require "portrait"
 
-local prt = "neutral/unique/flintley.webp"
+local prt = "neutral/unique/flintley"
 
 function create ()
    evt.npcAdd("flintley", _("Flintley"), prt, _("Flintley is here. He nervously sips from his drink, clearly uncomfortable in this environment."), 6)

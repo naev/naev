@@ -37,7 +37,7 @@ local payment = 500e3
 local willie -- Non-persistent state
 
 local npc_name = _("Drunkard")
-local npc_portrait = "neutral/unique/drunkard.webp"
+local npc_portrait = "neutral/unique/drunkard"
 local npc_image = portrait.getFullPath( npc_portrait )
 
 local cargo_amount = 45

@@ -36,7 +36,7 @@ local vntk = require "vntk"
 local portrait = require "portrait"
 
 local npc_name = _("Drinking Aristocrat")
-local npc_portrait = "neutral/unique/aristocrat.webp"
+local npc_portrait = "neutral/unique/aristocrat"
 local npc_image = portrait.getFullPath( npc_portrait )
 
 local payment = 200e3

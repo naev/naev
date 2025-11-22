@@ -12,8 +12,8 @@ local zpp = {}
 
 -- Fullname: Noona Sanderaite
 zpp.noona = {
-   portrait = "noona.png",
-   image = "noona.png",
+   portrait = "noona",
+   image = "noona",
    name = _("Noona"),
    colour = { 1, 0.8, 0.8},
    transition = "hexagon",

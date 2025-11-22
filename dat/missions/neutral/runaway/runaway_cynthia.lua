@@ -43,7 +43,7 @@ local cargodesc = N_("A young teenager.")
 local targetworld, targetworld_sys = spob.getS("Zhiru")
 
 local npc_name = _("Cynthia")
-local npc_portrait = "neutral/unique/cynthia.webp"
+local npc_portrait = "neutral/unique/cynthia"
 local npc_image = portrait.getFullPath( npc_portrait )
 
 function create ()

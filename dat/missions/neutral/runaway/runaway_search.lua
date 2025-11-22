@@ -31,11 +31,11 @@ local releasereward = 25e3
 local reward = 300e3
 
 local npc_name = _("Old Man")
-local npc_portrait = "neutral/unique/cynthia_father.webp"
+local npc_portrait = "neutral/unique/cynthia_father"
 local npc_image = portrait.getFullPath( npc_portrait )
 
 local npc2_name = _("Cynthia")
-local npc2_portrait = "neutral/unique/cynthia.webp"
+local npc2_portrait = "neutral/unique/cynthia"
 local npc2_image = portrait.getFullPath( npc2_portrait )
 
 
@@ -52,7 +52,7 @@ local catchworld = spob.get("Torloth")
 local homeworld, homesys = spob.getS("Zhiru")
 
 function create ()
-   misn.setNPC( _("Old Man"), "neutral/unique/cynthia_father.webp", _("An old man sits at a table with some missing person papers.") )
+   misn.setNPC( _("Old Man"), "neutral/unique/cynthia_father", _("An old man sits at a table with some missing person papers.") )
 end
 
 local function init_search()

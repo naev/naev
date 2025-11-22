@@ -43,8 +43,8 @@ local cinema = require "cinema"
 
 local maikki_portrait = minerva.maikki.portrait
 
-local oldman_portrait = "old_man.png"
-local oldman_image = "old_man.png"
+local oldman_portrait = "old_man"
+local oldman_image = "old_man"
 
 local mainsys = system.get("Limbo")
 local searchspob, searchsys = spob.getS("Cerberus Outpost")

@@ -104,7 +104,7 @@ function land ()
       end
 
       local lied = false
-      local pd = vn.Character.new( _("Za'lek Individual"), {image="zalek_thug1.png"} )
+      local pd = vn.Character.new( _("Za'lek Individual"), {image="zalek_thug1"} )
       vn.clear()
       vn.scene()
       vn.transition()

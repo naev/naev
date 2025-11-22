@@ -50,7 +50,7 @@ function create ()
    mem.timelimit1 = 20 -- In STP
    mem.timelimit2 = 50 -- In STP
 
-   misn.setNPC( _("A dark-haired woman"), "neutral/unique/rebina_casual.webp", _("You spot a dark-haired woman sitting at the bar. Her elegant features and dress make her stand out, yet her presence here seems almost natural, as if she's in the right place at the right time, waiting for the right person. You wonder why she's all by herself.") )
+   misn.setNPC( _("A dark-haired woman"), "neutral/unique/rebina_casual", _("You spot a dark-haired woman sitting at the bar. Her elegant features and dress make her stand out, yet her presence here seems almost natural, as if she's in the right place at the right time, waiting for the right person. You wonder why she's all by herself.") )
 end
 
 function accept()
@@ -141,7 +141,7 @@ function land()
       sol2img, sol2prt = vni.empireMilitary()
       sol3img, sol3prt = vni.empireMilitary()
 
-      misn.npcAdd( "jorek", _("An unpleasant man."), "neutral/unique/jorek.webp", _("A middle-aged, cranky looking man is sitting at a table by himself. You are fairly certain that this is the fellow you're looking for.") )
+      misn.npcAdd( "jorek", _("An unpleasant man."), "neutral/unique/jorek", _("A middle-aged, cranky looking man is sitting at a table by himself. You are fairly certain that this is the fellow you're looking for.") )
       misn.npcAdd( "officer", _("Officer at the bar"), offprt, _("You see a military officer with a drink at the bar. They don't seem to be very interested in it, though...") )
       misn.npcAdd( "soldier1", _("Soldier at the news kiosk"), sol1prt, _("You see a soldier at a news kiosk. For some reason, they keep reading the same articles over and over again.") )
       local desc = _("Two soldiers are sharing a table near the exit, playing cards. Neither of them seems very into the game.")

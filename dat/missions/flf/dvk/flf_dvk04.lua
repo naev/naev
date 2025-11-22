@@ -40,7 +40,7 @@ function create ()
    mem.credits = 400e3
    mem.reputation = 3
 
-   misn.setNPC( _("Benito"), "flf/unique/benito.webp", _("Benito looks in your direction and waves you over. It seems your services are needed again.") )
+   misn.setNPC( _("Benito"), "flf/unique/benito", _("Benito looks in your direction and waves you over. It seems your services are needed again.") )
 end
 
 

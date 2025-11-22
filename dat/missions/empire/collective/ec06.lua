@@ -48,7 +48,7 @@ function create ()
       misn.finish( false )
    end
 
-   misn.setNPC( _("Keer"), "empire/unique/keer.webp", _("You see Commodore Keer at a table with a couple of other pilots. She motions for you to sit down with them.") )
+   misn.setNPC( _("Keer"), "empire/unique/keer", _("You see Commodore Keer at a table with a couple of other pilots. She motions for you to sit down with them.") )
 end
 
 

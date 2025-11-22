@@ -36,7 +36,7 @@ local targsys2 = system.get("C-59")
 
 function create ()
    -- Note: this mission does not make any system claims.
-   misn.setNPC( _("Dimitri"), "empire/unique/dimitri.webp", _("You notice Lt. Commander Dimitri motioning for you to come over to him.") )
+   misn.setNPC( _("Dimitri"), "empire/unique/dimitri", _("You notice Lt. Commander Dimitri motioning for you to come over to him.") )
 end
 
 

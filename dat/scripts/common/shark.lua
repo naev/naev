@@ -20,7 +20,7 @@ end
 
 shark.arnold = {
    name = _("Arnold Smith"),
-   portrait = "neutral/unique/arnoldsmith.webp",
+   portrait = "neutral/unique/arnoldsmith",
    colour = nil,
    transition = "pixelize",
    description = _([[The Nexus employee seems to be looking for pilots. Maybe he has another task for you.]]),
@@ -29,7 +29,7 @@ shark.arnold.image = portrait.getFullPath(shark.arnold.portrait)
 
 shark.agent = {
    name = _("Nexus' Agent"),
-   portrait = "neutral/unique/nexus_agent.webp",
+   portrait = "neutral/unique/nexus_agent",
 }
 shark.agent.image = portrait.getFullPath(shark.agent.portrait)
 

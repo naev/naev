@@ -39,7 +39,7 @@ function create()
    mem.reward = math.floor((100e3+(math.random(5,8)*2e3)*(mem.nasin_rep^1.315))*.01+.5)/.01
    mem.homeasset = spob.cur()
    --set some mission stuff
-   misn.setNPC(_("Draga"), "sirius/unique/draga.webp", _("Draga is running around, helping the few Nasin in the bar to get stuff together and get out."))
+   misn.setNPC(_("Draga"), "sirius/unique/draga", _("Draga is running around, helping the few Nasin in the bar to get stuff together and get out."))
 end
 
 function accept()

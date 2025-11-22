@@ -36,23 +36,23 @@ local love_shaders = require 'love_shaders'
 local fmt = require "format"
 
 local hint1_name = _("Prof. Sato") -- Computer Science / Mathematics
-local hint1_portrait = "zalek1.png"
-local hint1_image = "zalek1.png"
+local hint1_portrait = "zalek1"
+local hint1_image = "zalek1"
 local hint1_colour = nil
 
 local hint2_name = _("Prof. Stova") -- Material Science
-local hint3_portrait = "zalek3.webp"
-local hint3_image = "zalek3.webp"
+local hint3_portrait = "zalek3"
+local hint3_image = "zalek3"
 local hint2_colour = nil
 
 local hint3_name = _("Prof. Hsu") -- Philosophy
-local hint2_portrait = "zalek2.png"
-local hint2_image = "zalek2.png"
+local hint2_portrait = "zalek2"
+local hint2_image = "zalek2"
 local hint3_colour = nil
 
 local hint4_name = _("Dr. Cayne") -- Dr. Shrimp
-local hint4_portrait = "drshrimp.png"
-local hint4_image = "drshrimp.png"
+local hint4_portrait = "drshrimp"
+local hint4_image = "drshrimp"
 local hint4_colour = nil
 
 local ecc_portrait = minerva.strangelove.portrait

@@ -41,11 +41,11 @@ local reward = 50e3 -- Can get doubled, must be global!
 local reward_outfit = outfit.get("Love Letter")
 
 local npc_name = _("Old-Fashioned Man")
-local npc_portrait = "neutral/unique/michal.webp"
+local npc_portrait = "neutral/unique/michal"
 local npc_image = portrait.getFullPath( npc_portrait )
 
 local npc2_name = _("Young Woman")
-local npc2_portrait = "neutral/unique/paddy.webp"
+local npc2_portrait = "neutral/unique/paddy"
 local npc2_image = portrait.getFullPath( npc2_portrait )
 
 function create () --No system shall be claimed by mission

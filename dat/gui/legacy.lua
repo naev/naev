@@ -50,11 +50,11 @@ function create()
       t:setWrap( "clamp" )
       return t
    end
-   frame    = tex_open( "minimal.png" )
-   energy   = tex_open( "minimal_energy.png" )
-   fuel     = tex_open( "minimal_fuel.png" )
-   gui.targetSpobGFX( tex_open( "minimal_planet.png", 2, 2 ) )
-   gui.targetPilotGFX( tex_open( "minimal_pilot.png", 2, 2 ) )
+   frame    = tex_open( "minimal" )
+   energy   = tex_open( "minimal_energy" )
+   fuel     = tex_open( "minimal_fuel" )
+   gui.targetSpobGFX( tex_open( "minimal_planet", 2, 2 ) )
+   gui.targetPilotGFX( tex_open( "minimal_pilot", 2, 2 ) )
 
    -- OSD
    gui.osdInit( 30, screen_h-90, 150, 300 )

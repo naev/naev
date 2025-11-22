@@ -18,8 +18,8 @@ end
 function baron.vn_baron( params )
    return vn.Character.new( _("Baron Sauterfeldt"),
          tmerge( {
-            portrait="neutral/unique/baron_sauterfeldt.webp",
-            image="neutral/unique/baron_sauterfeldt.webp",
+            portrait="neutral/unique/baron_sauterfeldt",
+            image="neutral/unique/baron_sauterfeldt",
          }, params) )
 end
 
