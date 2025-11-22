@@ -1,5 +1,7 @@
-use anyhow::Result;
+use crate::install::Progress;
+use anyhow::{Error, Result};
 use fs_err as fs;
+use iced::task::{Straw, sipper};
 use serde::{Deserialize, Serialize, de};
 use std::io::Write;
 use std::ops::Deref;
@@ -80,6 +82,14 @@ impl PluginStub {
 
     pub async fn to_plugin_async(&self) -> Result<Plugin> {
         Plugin::from_url_async(self.metadata.clone()).await
+    }
+
+    pub fn to_plugin_straw(&self) -> impl Straw<Plugin, Progress, Error> {
+        sipper(async move |mut sender| {
+            let ret = self.to_plugin_async().await;
+            sender.send(1.0.into()).await;
+            ret
+        })
     }
 }
 

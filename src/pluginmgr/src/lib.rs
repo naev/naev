@@ -93,41 +93,32 @@ pub fn discover_remote_plugins<T: reqwest::IntoUrl>(
             })
             .await;
 
-        fn load_stub(stub: &PluginStub) -> impl Straw<Plugin, f32, Error> {
-            sipper(async move |mut sender| {
-                let ret = stub.to_plugin_async().await;
-                sender.send(1.0).await;
-                ret
-            })
-        }
         use futures::StreamExt;
         let repo = repository(workdir)?;
         let inc = 0.8 / (repo.len() as f32);
         let progress = Arc::new(Mutex::new(0.2));
-        Ok(futures::stream::iter(repo)
-            .filter_map(|stub| {
-                let value = sender.clone();
-                let progress = progress.clone();
+
+        Ok(futures::stream::iter(repo.into_iter())
+            .map(|stub| {
+                let prog = progress.clone();
+                let send = sender.clone();
                 async move {
-                    match load_stub(&stub)
-                        .with(|val| {
-                            let mut lock = progress.lock().unwrap();
-                            *lock += val * inc;
+                    stub.to_plugin_straw()
+                        .with(|v| {
+                            let mut lock = prog.lock().unwrap();
+                            *lock += v.value * inc;
                             (*lock).into()
                         })
-                        .run(&value)
+                        .run(&send)
                         .await
-                    {
-                        Ok(plugin) => Some(plugin),
-                        Err(e) => {
-                            warn_err!(e);
-                            None
-                        }
-                    }
                 }
             })
-            .collect()
-            .await)
+            .buffer_unordered(4)
+            .collect::<Vec<_>>()
+            .await
+            .into_iter()
+            .flatten()
+            .collect())
     })
 }
 
