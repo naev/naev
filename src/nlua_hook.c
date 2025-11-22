@@ -742,6 +742,8 @@ static int hookL_shipsell( lua_State *L )
  * swapped to, the name of the ship swapped from, and the ship swapped from (if
  * applicable).
  *
+ * @usage function my_hook( toshipname, toship, fromshipname, fromship ) ... end
+ *
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
  *    @luatreturn number Hook identifier.
