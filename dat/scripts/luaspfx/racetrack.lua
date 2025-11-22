@@ -32,7 +32,7 @@ local function render( sp, x, y, z )
 
    if d.col then
       local sw = d.size * 0.2 * z
-      local sh = d.size * z * VIEW
+      local sh = d.size * z
       local sw2 = sw*0.5
       local sh2 = sh*0.5
       local old_shader = lg.getShader()
