@@ -1004,11 +1004,14 @@ impl App {
                     sel.naev_version,
                     match sel.compatible {
                         true => "".to_string(),
-                        false => format!(
-                            " [{} {}]",
-                            gettext("incompatible with Naev "),
+                        false => formatx!(
+                            pgettext("plugins", " [incompatible with Naev {}]"),
+                            &*log::version::VERSION
+                        )
+                        .unwrap_or(format!(
+                            " [incompatible with Naev {}]",
                             *log::version::VERSION
-                        ),
+                        )),
                     }
                 ))
                 .color_maybe(match sel.compatible {
