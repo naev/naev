@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-11-22 21:29+0900\n"
+"POT-Creation-Date: 2025-11-22 22:58+0900\n"
 "PO-Revision-Date: 2023-04-10 00:50+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
@@ -123085,6 +123085,9 @@ msgstr ""
 
 msgctxt "plugins"
 msgid "disabled"
+msgstr ""
+
+msgid "Filter..."
 msgstr ""
 
 msgctxt "plugins"
