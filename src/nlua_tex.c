@@ -109,9 +109,17 @@ glTexture *luaL_validtex( lua_State *L, int ind, const char *searchpath )
    char path[PATH_MAX];
    if ( lua_istex( L, ind ) )
       return gl_dupTexture( luaL_checktex( L, ind ) );
-   ndata_getPathDefault( path, sizeof( path ), searchpath,
-                         luaL_checkstring( L, ind ) );
-   return gl_newImage( path, 0 );
+   const char *filename = luaL_checkstring( L, ind );
+   // Won't raise an error if file not found.
+   glTexture *t = gl_tryNewImage( filename, 0 );
+   if ( t != NULL )
+      return t;
+   snprintf( path, sizeof( path ), "%s%s", searchpath, filename );
+   t = gl_newImage( path, 0 );
+   if ( t != NULL )
+      return t;
+   NLUA_ERROR( L, _( "Trying to load invalid texture %s" ), filename );
+   return NULL;
 }
 /**
  * @brief Pushes a texture on the stack.

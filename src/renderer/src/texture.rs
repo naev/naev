@@ -1669,6 +1669,35 @@ pub extern "C" fn gl_newImage(cpath: *const c_char, flags: c_uint) -> *mut Textu
     gl_newSprite(cpath, 1, 1, flags)
 }
 
+/// Like gl_tryNewImage, but ignores errors.
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_tryNewImage(cpath: *const c_char, cflags: c_uint) -> *mut Texture {
+    let ctx = Context::get(); /* Lock early. */
+    let path = unsafe { CStr::from_ptr(cpath) };
+    let flags = Flags::from(cflags);
+
+    unsafe {
+        naevc::gl_contextSet();
+    }
+
+    let mut builder = TextureBuilder::new()
+        .path(&path.to_string_lossy())
+        .srgb(!flags.notsrgb)
+        .mipmaps(flags.mipmaps);
+    if flags.clamp_alpha {
+        builder = builder.border(Some(Vector4::<f32>::new(0., 0., 0., 0.)));
+    }
+
+    let out = match builder.build(ctx) {
+        Ok(tex) => tex.into_ptr(),
+        Err(_) => std::ptr::null_mut(),
+    };
+    unsafe {
+        naevc::gl_contextUnset();
+    }
+    out
+}
+
 #[unsafe(no_mangle)]
 pub extern "C" fn gl_newSprite(
     cpath: *const c_char,

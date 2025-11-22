@@ -46,7 +46,7 @@ fn error_to_errorkind(error: naevc::PHYSFS_ErrorCode) -> ErrorKind {
 
 // Some stuff is based on the physfs-rs package.
 // Modified to not use a global context and use functions from naevc
-pub(crate) fn error_as_io_error(func: &str) -> Error {
+pub fn error_as_io_error(func: &str) -> Error {
     let code = unsafe { naevc::PHYSFS_getLastErrorCode() };
     let cerrstr = unsafe { CStr::from_ptr(naevc::PHYSFS_getErrorByCode(code)) };
     Error::new(
@@ -59,7 +59,7 @@ pub(crate) fn error_as_io_error(func: &str) -> Error {
     )
 }
 
-pub(crate) fn error_as_io_error_with_file<P: AsRef<Path>>(func: &str, file: P) -> Error {
+pub fn error_as_io_error_with_file<P: AsRef<Path>>(func: &str, file: P) -> Error {
     let code = unsafe { naevc::PHYSFS_getLastErrorCode() };
     let cerrstr = unsafe { CStr::from_ptr(naevc::PHYSFS_getErrorByCode(code)) };
     Error::new(
