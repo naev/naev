@@ -1056,6 +1056,7 @@ static int naevL_difficultyLevel( lua_State *L )
 static int naevL_supported_image_ext( lua_State *L )
 {
    int i = 1;
+   // TODO do this properly in Rust with image-rs
 #define EXT( s )                                                               \
    lua_pushstring( L, ( s ) );                                                 \
    lua_rawseti( L, -2, i++ );
