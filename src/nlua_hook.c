@@ -738,8 +738,9 @@ static int hookL_shipsell( lua_State *L )
 /**
  * @brief Hooks the function to the player swapping their ship.
  *
- * The hook receives the name of the ship swapped to and the name of the ship
- * swapped from (if applicable).
+ * The hook receives four parameters: the name of the ship swapped to, the ship
+ * swapped to, the name of the ship swapped from, and the ship swapped from (if
+ * applicable).
  *
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
