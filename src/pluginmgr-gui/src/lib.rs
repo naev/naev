@@ -967,7 +967,7 @@ impl App {
             .height(grid::Sizing::EvenlyDistribute(Shrink))
         };
         let plugins = column![
-            text_input(gettext("Search..."), &self.filter).on_input(Message::FilterChange),
+            text_input(gettext("Filter..."), &self.filter).on_input(Message::FilterChange),
             scrollable(plugins).spacing(10)
         ]
         .spacing(5);
