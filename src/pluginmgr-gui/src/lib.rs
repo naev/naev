@@ -692,6 +692,7 @@ impl App {
                 if let Err(e) = value {
                     self.log.push(e);
                     self.log_open = true;
+                    self.progress = None;
                     return Task::none();
                 }
                 self.view = self
