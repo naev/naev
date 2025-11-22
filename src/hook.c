@@ -144,8 +144,10 @@ static Mission *hook_getMission( Hook *hook );
 
 static int should_run_hook( void )
 {
+   // Can't test for PILOT_DEAD or PILOT_EXPLODED or it breaks hooks.
+   // PLAYER_DESTROYED should be set right after exploded if not regenerated.
    return ( ( player.p != NULL ) && !player_isFlag( PLAYER_DESTROYED ) &&
-            !pilot_isFlag( player.p, PILOT_DEAD ) );
+            !pilot_isFlag( player.p, PILOT_DELETE ) );
 }
 
 /**
