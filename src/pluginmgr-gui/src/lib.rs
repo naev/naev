@@ -1,4 +1,5 @@
 use anyhow::{Error, Result};
+use formatx::formatx;
 use fs_err as fs;
 use iced::task::{Sipper, Straw, sipper};
 use iced::{Task, widget};
@@ -190,27 +191,41 @@ impl PluginWrap {
         }
     }
 
+    fn update_description(&mut self) {
+        self.description_md = self
+            .plugin()
+            .description
+            .as_ref()
+            .map(|desc| widget::markdown::parse(desc).collect());
+    }
+
     fn update_remote_if_newer(&mut self, remote: &Plugin) {
         if let Some(dest) = &self.remote {
             if dest.version <= remote.version {
                 self.remote = Some(remote.clone());
-                self.description_md = self
-                    .plugin()
-                    .description
-                    .as_ref()
-                    .map(|desc| widget::markdown::parse(desc).collect());
+                self.update_description();
             }
         } else {
             self.remote = Some(remote.clone());
-            self.description_md = self
-                .plugin()
-                .description
-                .as_ref()
-                .map(|desc| widget::markdown::parse(desc).collect());
+            self.update_description();
         }
     }
 
     fn plugin(&self) -> &Plugin {
+        if let Some(local) = &self.local
+            && let Some(remote) = &self.remote
+        {
+            if local.version <= remote.version {
+                remote
+            } else {
+                local
+            }
+        } else {
+            self.plugin_prefer_local()
+        }
+    }
+
+    fn plugin_prefer_local(&self) -> &Plugin {
         if let Some(local) = &self.local {
             local
         } else if let Some(remote) = &self.remote {
@@ -948,7 +963,7 @@ impl App {
         let (selected, buttons) = if let Some((id, _)) = &self.selected
             && let Some(wrp) = self.view.get(*id)
         {
-            let sel = wrp.plugin();
+            let sel = wrp.plugin_prefer_local();
             let info = |txt| text(txt).size(20);
             let tooltip_pos = tooltip::Position::FollowCursor;
             let col = column![
@@ -965,7 +980,23 @@ impl App {
                 bold(pgettext("plugins", "Author(s):")),
                 info(&sel.author),
                 bold(pgettext("plugins", "Plugin Version:")),
-                text(sel.version.to_string()).size(20),
+                if let Some(local) = &wrp.local
+                    && let Some(remote) = &wrp.remote
+                    && local.version < remote.version
+                {
+                    text(
+                        formatx!(
+                            pgettext("plugins", "{} [{} available]"),
+                            &local.version,
+                            &remote.version
+                        )
+                        .unwrap_or(local.version.to_string()),
+                    )
+                    .size(20)
+                    .color(palette.warning)
+                } else {
+                    text(sel.version.to_string()).size(20)
+                },
                 bold(pgettext("plugins", "Naev Version:")),
                 text(format!(
                     "{}{}",
