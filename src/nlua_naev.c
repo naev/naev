@@ -76,6 +76,7 @@ static int naevL_unit( lua_State *L );
 static int naevL_quadtreeParams( lua_State *L );
 static int naevL_difficulty( lua_State *L );
 static int naevL_difficultyLevel( lua_State *L );
+static int naevL_supported_image_ext( lua_State *L );
 #if DEBUGGING
 static int naevL_debugTrails( lua_State *L );
 static int naevL_debugCollisions( lua_State *L );
@@ -121,6 +122,7 @@ static const luaL_Reg naev_methods[] = {
    { "quadtreeParams", naevL_quadtreeParams },
    { "difficulty", naevL_difficulty },
    { "difficultyLevel", naevL_difficultyLevel },
+   { "supported_image_ext", naevL_supported_image_ext },
 #if DEBUGGING
    { "debugTrails", naevL_debugTrails },
    { "debugCollisions", naevL_debugCollisions },
@@ -1042,6 +1044,27 @@ static int naevL_difficultyLevel( lua_State *L )
 {
    const Difficulty *dif = difficulty_cur();
    lua_pushnumber( L, dif->level );
+   return 1;
+}
+
+/**
+ * @brief Gets the supported image file extensions (useful for searching).
+ *
+ *    @luatreturn table A table with all the supported image file extensions.
+ * @luafunc supported_image_ext
+ */
+static int naevL_supported_image_ext( lua_State *L )
+{
+   int i = 1;
+#define EXT( s )                                                               \
+   lua_pushstring( L, ( s ) );                                                 \
+   lua_rawseti( L, -2, i++ );
+   lua_newtable( L );
+   EXT( ".avif" );
+   EXT( ".webp" );
+   EXT( ".png" );
+   EXT( ".jpg" );
+   EXT( ".jpeg" );
    return 1;
 }
 

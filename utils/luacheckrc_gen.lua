@@ -647,6 +647,7 @@ stds.naev = {
          setTextInput = {},
          shadersReload = {},
          shipstats = {},
+         supported_image_ext = {},
          ticks = {},
          ticksGame = {},
          trigger = {},

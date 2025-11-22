@@ -70,13 +70,7 @@ local function load_shader ()
    return cvs
 end
 
-local IMAGE_EXT = {
-   ".avif",
-   ".webp",
-   ".png",
-   ".jpg",
-   ".jpeg",
-}
+local IMAGE_EXT = naev.supported_image_ext()
 local function load_gfx ()
    local basepath = "gfx/loading/"
    local files = {}
