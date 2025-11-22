@@ -227,7 +227,7 @@ static void map_setup( void )
       /* Check to see if system has landable spobs. */
       sys_rmFlag( sys, SYSTEM_HAS_LANDABLE | SYSTEM_HAS_KNOWN_SPOB |
                           SYSTEM_HAS_KNOWN_FACTION_SPOB |
-                          SYSTEM_HAS_KNOWN_LANDABLE );
+                          SYSTEM_HAS_KNOWN_LANDABLE | SYSTEM_HAS_INHABITED );
       for ( int j = 0; j < array_size( sys->spobs ); j++ ) {
          Spob *p = sys->spobs[j];
          if ( !spob_isKnown( p ) )
@@ -238,6 +238,8 @@ static void map_setup( void )
          if ( !spob_hasService( p, SPOB_SERVICE_LAND ) )
             continue;
          sys_setFlag( sys, SYSTEM_HAS_KNOWN_LANDABLE );
+         if ( spob_hasService( p, SPOB_SERVICE_INHABITED ) )
+            sys_setFlag( sys, SYSTEM_HAS_INHABITED );
          spob_updateLand( p );
          if ( p->can_land )
             sys_setFlag( sys, SYSTEM_HAS_LANDABLE );
@@ -1432,7 +1434,8 @@ void map_renderSystems( double bx, double by, double x, double y, double zoom,
       if ( mode == MAPMODE_EDITOR || mode == MAPMODE_TRAVEL ||
            mode == MAPMODE_TRADE ) {
          const glColour *col;
-         if ( !system_hasSpob( sys ) )
+
+         if ( !sys_isFlag( sys, SYSTEM_HAS_KNOWN_LANDABLE ) )
             continue;
          if ( !sys_isFlag( sys, SYSTEM_HAS_KNOWN_SPOB ) &&
               mode != MAPMODE_EDITOR )
@@ -1445,6 +1448,8 @@ void map_renderSystems( double bx, double by, double x, double y, double zoom,
             col = &cInert;
          else if ( mode == MAPMODE_EDITOR )
             col = &cNeutral;
+         else if ( !sys_isFlag( sys, SYSTEM_HAS_INHABITED ) )
+            col = &cInert;
          else if ( areEnemiesSystem( FACTION_PLAYER, sys->faction, sys ) )
             col = &cHostile;
          else if ( !sys_isFlag( sys, SYSTEM_HAS_LANDABLE ) )
@@ -1454,11 +1459,20 @@ void map_renderSystems( double bx, double by, double x, double y, double zoom,
          else
             col = &cNeutral;
 
+         double size;
+         if ( mode == MAPMODE_EDITOR )
+            size = 0.5;
+         else if ( !sys_isFlag( sys, SYSTEM_HAS_INHABITED ) )
+            size = 0.3;
+         else
+            size = 0.65;
+
          if ( mode == MAPMODE_EDITOR ) {
             /* Radius slightly shorter. */
-            gl_renderCircle( tx, ty, 0.5 * r, col, 1 );
+            gl_renderCircle( tx, ty, size * r, col, 1 );
          } else
-            gl_renderCircle( tx, ty, 0.65 * r, col, 1 );
+            gl_renderCircle( tx, ty, size * r, col, 1 );
+
       } else if ( mode == MAPMODE_DISCOVER ) {
          gl_renderCircle( tx, ty, r, &cInert, 0 );
          if ( sys_isFlag( sys, SYSTEM_DISCOVERED ) )

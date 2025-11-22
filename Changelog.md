@@ -52,6 +52,7 @@
     - Autonav will wait for escorts when landing or taking off
  - Radar now has a linear area and a logarithmic area (outside the circle) to show more regional information
  - Support for automatically restarting Naev when changing options that require it
+ - Systems with uninhabited but landable space objects will have smaller inner circles
 
 #### Content
  - 28 new missions and events
