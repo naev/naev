@@ -856,8 +856,9 @@ static void shipyard_renderSlotsOver( double bx, double by, double bw,
    slot = wgt->slot;
    pos  = 0;
    if ( slot->slot.spid ) {
-      pos = scnprintf( alt, sizeof( alt ), "#o%s\n",
-                       pgettext_var( "slotproperty", sp_display( slot->slot.spid ) ) );
+      pos = scnprintf(
+         alt, sizeof( alt ), "#o%s\n",
+         pgettext_var( "slotproperty", sp_display( slot->slot.spid ) ) );
    } else
       pos = 0;
    pos += scnprintf( &alt[pos], sizeof( alt ) - pos, _( "#%c%s #%c%s #0slot" ),

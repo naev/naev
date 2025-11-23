@@ -2222,7 +2222,8 @@ static void outfit_parseSBolt( Outfit *temp, const xmlNodePtr parent )
    l                 = 0;
    SDESC_ADD( l, temp, p_( "outfitstats", "%s [%s]" ),
               _( outfit_getType( temp ) ),
-              pgettext_var( "damagetype", dtype_damageTypeToStr( temp->u.blt.dmg.type ) ) );
+              pgettext_var( "damagetype",
+                            dtype_damageTypeToStr( temp->u.blt.dmg.type ) ) );
    dtype_raw( temp->u.blt.dmg.type, &dshield, &darmour, &dknockback );
    // new_opts(name, unit, colour, threshold, hidezero, precision)
    l = os_printD( temp->summary_raw, l, darmour * 100., &darmour_opts );
@@ -2417,7 +2418,8 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
    temp->summary_raw = calloc( OUTFIT_SHORTDESC_MAX, 1 );
    l                 = 0;
    SDESC_ADD( l, temp, "%s [%s]", _( outfit_getType( temp ) ),
-              pgettext_var( "damagetype", dtype_damageTypeToStr( temp->u.bem.dmg.type ) ) );
+              pgettext_var( "damagetype",
+                            dtype_damageTypeToStr( temp->u.bem.dmg.type ) ) );
    dtype_raw( temp->u.bem.dmg.type, &dshield, &darmour, &dknockback );
    l = os_printD( temp->summary_raw, l, darmour * 100., &darmour_opts );
    l = os_printD( temp->summary_raw, l, dshield * 100., &dshield_opts );
@@ -2655,7 +2657,8 @@ static void outfit_parseSLauncher( Outfit *temp, const xmlNodePtr parent )
    temp->summary_raw = calloc( OUTFIT_SHORTDESC_MAX, 1 );
    l                 = 0;
    SDESC_ADD( l, temp, "%s [%s]", _( outfit_getType( temp ) ),
-              pgettext_var( "damagetype", dtype_damageTypeToStr( temp->u.lau.dmg.type ) ) );
+              pgettext_var( "damagetype",
+                            dtype_damageTypeToStr( temp->u.lau.dmg.type ) ) );
    dtype_raw( temp->u.lau.dmg.type, &dshield, &darmour, &dknockback );
    l = os_printD( temp->summary_raw, l, darmour * 100., &darmour_opts );
    l = os_printD( temp->summary_raw, l, dshield * 100., &dshield_opts );
@@ -3700,11 +3703,13 @@ int outfit_load( void )
          SDESC_ADD( l, temp, "%s#r%s#0", ( l > 0 ) ? "\n" : "",
                     _( "Only 1 of type per ship" ) );
       if ( o->slot.spid != 0 )
-         SDESC_ADD( l, temp, "%s#o%s#0", ( l > 0 ) ? "\n" : "",
-                    pgettext_var( "slotproperty", sp_display( o->slot.spid ) ) );
+         SDESC_ADD(
+            l, temp, "%s#o%s#0", ( l > 0 ) ? "\n" : "",
+            pgettext_var( "slotproperty", sp_display( o->slot.spid ) ) );
       if ( o->spid_extra != 0 )
-         SDESC_ADD( l, temp, "%s#o%s#0", ( l > 0 ) ? "\n" : "",
-                    pgettext_var( "slotproperty", sp_display( o->spid_extra ) ) );
+         SDESC_ADD(
+            l, temp, "%s#o%s#0", ( l > 0 ) ? "\n" : "",
+            pgettext_var( "slotproperty", sp_display( o->spid_extra ) ) );
 
       /* Mods get special information added here, since it has to be done
        * post-Lua. */

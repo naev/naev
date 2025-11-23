@@ -536,7 +536,8 @@ PlayerShip_t *player_newShip( const Ship *ship, const char *def_name, int trade,
       equipment_regenLists( w, 0, 1 );
    }
 
-   /* The return value, ps, could now be stale due to sorting in player_shipsSort */
+   /* The return value, ps, could now be stale due to sorting in
+    * player_shipsSort */
    for ( int i = 0; i < array_size( player_stack ); i++ ) {
       if ( strcmp( ship_name, player_stack[i].p->name ) == 0 ) {
          ps = &player_stack[i];
