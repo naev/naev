@@ -1293,6 +1293,7 @@ local SEARCHPATH = {
    "gfx/vn/characters/",
 }
 local SEARCHEXT = naev.supported_image_ext()
+table.insert( SEARCHEXT, 1, "" )
 --[[--
 Creates a new character without adding it to the VN.
 <em>Note</em> The character can be added with vn.newCharacter.
