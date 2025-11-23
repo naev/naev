@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.12.0-alpha.2\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-11-23 12:22+0900\n"
+"POT-Creation-Date: 2025-11-23 12:40+0900\n"
 "PO-Revision-Date: 2024-09-20 13:40+0000\n"
 "Last-Translator: Pau Barrachina Ribes <barrachinaribesp@gmail.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/naev/naev/ca/>\n"
@@ -48830,7 +48830,6 @@ msgstr ""
 #. Run on saves older than 0.11.0
 #. Run on saves older than 0.12.0
 #. Run on saves older than 0.13.0
-#. if not save_version or naev.versionTest( save_version, "<0.13.0-beta.1") then
 #. Note that games before 0.10.0 will have lastplayed set days from the unix epoch
 #. Hack to avoid the player seeing the message every time they load a game without quitting
 msgid "Your ship AI, {ainame}, materializes in front of you."
@@ -111543,7 +111542,7 @@ msgstr ""
 #. rollspeed = 0.3,
 #. grain = 0.1 + size*0.001,
 #. Sirius ships need the Internal Flow Amplifier for now, add if missing
-#. TODO get rid of before 0.13.0 release, needed to upgrade older ships atm (new ones just add the intrinsic outfit)
+#. TODO get rid of before 0.14.0 release, needed to upgrade older ships atm (new ones just add the intrinsic outfit)
 #. Update once per second
 #. Maximum value of the bonus
 #. Flow required to start getting a bonus
@@ -117125,10 +117124,6 @@ msgctxt "plugins list"
 msgid ", #%c%s#0"
 msgstr ""
 
-#, c-format
-msgid "Unable to delete %s"
-msgstr ""
-
 msgid "Exit to Menu?"
 msgstr ""
 
@@ -117144,6 +117139,10 @@ msgstr ""
 msgid ""
 "Are you sure you want to permanently delete the character '%s'?\n"
 "#rThis action is irreversible!#0"
+msgstr ""
+
+#, c-format
+msgid "Unable to delete %s"
 msgstr ""
 
 #, c-format
@@ -120797,10 +120796,6 @@ msgid "Ship in %s has invalid or no name"
 msgstr ""
 
 #, c-format
-msgid "Ship '%s': using <GFX> instead of <gfx>!"
-msgstr ""
-
-#, c-format
 msgid "Ship '%s' has NULL tag '%s'!"
 msgstr ""
 
@@ -121614,10 +121609,6 @@ msgstr ""
 #, c-format
 msgid ""
 "Asteroid Exclusion Zone in Star System '%s' has missing/invalid '%s' element"
-msgstr ""
-
-#, c-format
-msgid "System '%s' is using deprecated field 'stars'. Use 'spacedust' instead!"
 msgstr ""
 
 #, c-format

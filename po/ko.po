@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-11-23 12:22+0900\n"
+"POT-Creation-Date: 2025-11-23 12:40+0900\n"
 "PO-Revision-Date: 2024-06-23 14:45+0000\n"
 "Last-Translator: Han Ga Eun <gdd72582@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/naev/naev/ko/>\n"
@@ -50322,7 +50322,6 @@ msgstr ""
 #. Run on saves older than 0.11.0
 #. Run on saves older than 0.12.0
 #. Run on saves older than 0.13.0
-#. if not save_version or naev.versionTest( save_version, "<0.13.0-beta.1") then
 #. Note that games before 0.10.0 will have lastplayed set days from the unix epoch
 #. Hack to avoid the player seeing the message every time they load a game without quitting
 msgid "Your ship AI, {ainame}, materializes in front of you."
@@ -114133,7 +114132,7 @@ msgstr ""
 #. rollspeed = 0.3,
 #. grain = 0.1 + size*0.001,
 #. Sirius ships need the Internal Flow Amplifier for now, add if missing
-#. TODO get rid of before 0.13.0 release, needed to upgrade older ships atm (new ones just add the intrinsic outfit)
+#. TODO get rid of before 0.14.0 release, needed to upgrade older ships atm (new ones just add the intrinsic outfit)
 #. Update once per second
 #. Maximum value of the bonus
 #. Flow required to start getting a bonus
@@ -119900,10 +119899,6 @@ msgctxt "plugins list"
 msgid ", #%c%s#0"
 msgstr ""
 
-#, fuzzy, c-format
-msgid "Unable to delete %s"
-msgstr "사각형을 채울 수 없습니다: %s"
-
 #, fuzzy
 msgid "Exit to Menu?"
 msgstr "기본 메뉴로 나가기"
@@ -119921,6 +119916,10 @@ msgid ""
 "Are you sure you want to permanently delete the character '%s'?\n"
 "#rThis action is irreversible!#0"
 msgstr "'%s'을 영구적으로 삭제 하시겠습니까?"
+
+#, fuzzy, c-format
+msgid "Unable to delete %s"
+msgstr "사각형을 채울 수 없습니다: %s"
 
 #, fuzzy, c-format
 msgid "Unable to delete '%s' directory"
@@ -123676,10 +123675,6 @@ msgstr "'%s'임무에 알 수없는 플래그 노드 '%s'이 (가) 있습니다.
 msgid "Ship in %s has invalid or no name"
 msgstr ""
 
-#, c-format
-msgid "Ship '%s': using <GFX> instead of <gfx>!"
-msgstr ""
-
 #, fuzzy, c-format
 msgid "Ship '%s' has NULL tag '%s'!"
 msgstr "'%s'임무에 알 수없는 플래그 노드 '%s'이 (가) 있습니다."
@@ -124523,10 +124518,6 @@ msgstr "'%s'임무에 알 수없는 플래그 노드 '%s'이 (가) 있습니다.
 msgid ""
 "Asteroid Exclusion Zone in Star System '%s' has missing/invalid '%s' element"
 msgstr "임무 '%s'누락 / 잘못된 '%s'요소"
-
-#, c-format
-msgid "System '%s' is using deprecated field 'stars'. Use 'spacedust' instead!"
-msgstr ""
 
 #, c-format
 msgid "Unknown node '%s' in star system '%s'"
