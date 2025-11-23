@@ -152,7 +152,6 @@ static int pilotL_hasIllegal( lua_State *L );
 static int pilotL_setActiveBoard( lua_State *L );
 static int pilotL_setNoDeath( lua_State *L );
 static int pilotL_disabled( lua_State *L );
-static int pilotL_disable( lua_State *L );
 static int pilotL_setDisable( lua_State *L );
 static int pilotL_cooldown( lua_State *L );
 static int pilotL_setCooldown( lua_State *L );
@@ -381,7 +380,6 @@ static const luaL_Reg pilotL_methods[] = {
    { "setActiveBoard", pilotL_setActiveBoard },
    { "setNoDeath", pilotL_setNoDeath },
    { "disabled", pilotL_disabled },
-   { "disable", pilotL_disable },
    { "setDisable", pilotL_setDisable },
    { "setCooldown", pilotL_setCooldown },
    { "cooldownCycle", pilotL_cooldownCycle },
@@ -3552,13 +3550,6 @@ static int pilotL_disabled( lua_State *L )
 static int pilotL_setNoDeath( lua_State *L )
 {
    return pilotL_setFlagWrapper( L, PILOT_NODEATH );
-}
-
-/* TODO remove in 0.13.0 */
-static int pilotL_disable( lua_State *L )
-{
-   NLUA_DEPRECATED( L, "disable" );
-   return pilotL_setDisable( L );
 }
 
 /**

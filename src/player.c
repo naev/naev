@@ -4328,11 +4328,10 @@ static int player_parseEscorts( xmlNodePtr parent )
       if ( !xml_isNode( node, "escort" ) )
          continue;
 
-      xmlr_attr_strd( node, "type", buf );
       xmlr_attr_strd( node, "name", name );
-      if ( name == NULL ) /* Workaround for < 0.10.0 old saves, TODO remove
-                             around 0.12.0 or 0.13.0. */
-         name = xml_getStrd( node );
+      if ( name == NULL )
+         continue;
+      xmlr_attr_strd( node, "type", buf );
 
       if ( strcmp( buf, "bay" ) == 0 ) {
          const Ship *s = player_tryGetShip( name );

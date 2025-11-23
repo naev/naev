@@ -96,8 +96,6 @@ static void load_snapshot_menu_load( unsigned int wdw, const char *str );
 static void load_snapshot_menu_delete( unsigned int wdw, const char *str );
 static void load_snapshot_menu_save( unsigned int wdw, const char *str );
 static void display_save_info( unsigned int wid, const nsave_t *ns );
-static void move_old_save( const char *path, const char *fname, const char *ext,
-                           const char *new_name );
 static int  load_load( nsave_t *save );
 static int  load_gameInternalHook( void *data );
 static int  load_enumerateCallback( void *data, const char *origdir,
@@ -366,35 +364,18 @@ static int load_enumerateCallback( void *data, const char *origdir,
                                    const char *fname )
 {
    (void)data;
-   char       *path, *backup_path;
+   char       *path;
    const char *fmt;
-   size_t      dir_len, name_len;
+   size_t      dir_len;
    PHYSFS_Stat stat;
 
-   dir_len  = strlen( origdir );
-   name_len = strlen( fname );
+   dir_len = strlen( origdir );
 
    fmt = dir_len && origdir[dir_len - 1] == '/' ? "%s%s" : "%s/%s";
    SDL_asprintf( &path, fmt, origdir, fname );
-   if ( !PHYSFS_stat( path, &stat ) )
+   if ( !PHYSFS_stat( path, &stat ) ) {
       WARN( _( "PhysicsFS: Cannot stat %s: %s" ), path,
             _( PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
-   /* TODO remove this for 0.13.0 */
-   else if ( stat.filetype == PHYSFS_FILETYPE_REGULAR ) {
-      if ( ( name_len < 4 || strcmp( &fname[name_len - 3], ".ns" ) ) &&
-           ( name_len < 11 ||
-             strcmp( &fname[name_len - 10], ".ns.backup" ) ) ) {
-         free( path );
-         return PHYSFS_ENUM_OK;
-      }
-      if ( !PHYSFS_exists( "saves-pre-0.10.0" ) )
-         PHYSFS_mkdir( "saves-pre-0.10.0" );
-      SDL_asprintf( &backup_path, "saves-pre-0.10.0/%s", fname );
-      if ( !ndata_copyIfExists( path, backup_path ) )
-         old_saves_detected = 1;
-      free( backup_path );
-      move_old_save( path, fname, ".ns", "autosave.ns" );
-      move_old_save( path, fname, ".ns.backup", "backup.ns" );
    } else if ( stat.filetype == PHYSFS_FILETYPE_DIRECTORY ) {
       player_saves_t psave;
       psave.name  = NULL;
@@ -961,51 +942,6 @@ static void display_save_info( unsigned int wid, const nsave_t *ns )
       }
    }
    window_modifyText( wid, "txtPilot", buf );
-}
-
-/**
- * @brief Moves old Naev saves to subdirectories.
- *    @param path Path to old file.
- *    @param fname Old filename.
- *    @param ext Extension of file to move.
- *    @param new_name Name for file in subdirectory.
- */
-static void move_old_save( const char *path, const char *fname, const char *ext,
-                           const char *new_name )
-{
-   size_t name_len = strlen( fname );
-   size_t ext_len  = strlen( ext );
-   if ( name_len >= ext_len + 1 &&
-        !strcmp( &fname[name_len - ext_len], ext ) ) {
-      char *new_path;
-      char *dirname               = strdup( fname );
-      dirname[name_len - ext_len] = '\0';
-      SDL_asprintf( &new_path, "saves/%s", dirname );
-      if ( !PHYSFS_exists( new_path ) )
-         PHYSFS_mkdir( new_path );
-      free( new_path );
-      SDL_asprintf( &new_path, "saves/%s/%s", dirname, new_name );
-      /* If it's going to overwrite a file, try to back it up. */
-      if ( PHYSFS_exists( new_path ) ) {
-         int   tries = 0;
-         char *bkp_path;
-         SDL_asprintf( &bkp_path, "%s.bkp", new_path );
-         while ( PHYSFS_exists( bkp_path ) && ( tries++ < 10 ) ) {
-            char *bkp_bkp_path;
-            SDL_asprintf( &bkp_bkp_path, "%s.bkp", bkp_path );
-            free( bkp_path );
-            bkp_path = bkp_bkp_path;
-         }
-         ndata_copyIfExists( new_path, bkp_path );
-         free( bkp_path );
-      }
-      /* Copy over the old file. */
-      if ( !ndata_copyIfExists( path, new_path ) )
-         if ( !PHYSFS_delete( path ) )
-            dialogue_alert( _( "Unable to delete %s" ), path );
-      free( new_path );
-      free( dirname );
-   }
 }
 
 /**

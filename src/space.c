@@ -3221,14 +3221,6 @@ static int system_parse( StarSystem *sys, const char *filename )
             xmlr_strd( cur, "map_shader", sys->map_shader );
             xmlr_strd( cur, "features", sys->features );
             xmlr_int( cur, "spacedust", sys->spacedust );
-            if ( xml_isNode(
-                    cur, "stars" ) ) { /* Renamed to "spacedust" in 0.11.0. TODO
-                                          remove sometime around 0.13.0. */
-               sys->spacedust = xml_getInt( cur );
-               WARN( _( "System '%s' is using deprecated field 'stars'. Use "
-                        "'spacedust' instead!" ),
-                     sys->name );
-            }
             xmlr_float( cur, "radius", sys->radius );
             if ( xml_isNode( cur, "interference" ) ) {
                flags |= FLAG_INTERFERENCESET;

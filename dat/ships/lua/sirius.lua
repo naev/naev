@@ -16,7 +16,7 @@ local amp = outfit.get("Internal Flow Amplifier")
 
 function init( p )
    -- Sirius ships need the Internal Flow Amplifier for now, add if missing
-   -- TODO get rid of before 0.13.0 release, needed to upgrade older ships atm (new ones just add the intrinsic outfit)
+   -- TODO get rid of before 0.14.0 release, needed to upgrade older ships atm (new ones just add the intrinsic outfit)
    local found = false
    for k,o in ipairs(p:outfitsList("intrinsic")) do
       if o==amp then

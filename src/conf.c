@@ -309,7 +309,7 @@ void conf_loadConfigPath( void )
  */
 int conf_loadConfig( const char *file )
 {
-   int         t, cb;
+   int         t;
    SDL_Keycode key;
    int         type;
    int         w, h;
@@ -358,14 +358,6 @@ int conf_loadConfig( const char *file )
    conf_loadBool( L, "fullscreen", conf.fullscreen );
    conf_loadBool( L, "notresizable", conf.notresizable );
    conf_loadBool( L, "minimize", conf.minimize );
-   cb = 0;
-   conf_loadBool( L, "colourblind", cb ); /* TODO remove in 0.13.0 or so. */
-   if ( cb ) {
-      /* Old colourblind used Rod Monochromancy, so we'll restore that in
-       * this case. TODO Remove in 0.13.0 or so. */
-      conf.colourblind_type = 3;
-      conf.colourblind_sim  = 1.; /* Turn on at max. */
-   }
    conf_loadFloat( L, "colourblind_sim", conf.colourblind_sim );
    conf_loadFloat( L, "colourblind_correct", conf.colourblind_correct );
    conf_loadInt( L, "colourblind_type", conf.colourblind_type );
@@ -373,8 +365,6 @@ int conf_loadConfig( const char *file )
    conf_loadBool( L, "healthbars", conf.healthbars );
    conf_loadFloat( L, "bg_brightness", conf.bg_brightness );
    conf_loadBool( L, "puzzle_skip", conf.puzzle_skip );
-   /* TODO leave only nebu_nonuniformity for 0.13.0 */
-   conf_loadFloat( L, "nebu_uniformity", conf.nebu_nonuniformity );
    conf_loadFloat( L, "nebu_nonuniformity", conf.nebu_nonuniformity );
    /* end todo */
    conf_loadFloat( L, "nebu_saturation", conf.nebu_saturation );
