@@ -75,7 +75,7 @@ softfloat = "1.0"
 semver = { version = "1.0", features = ["serde"] }
 chrono = { version = "0.4", features = ["serde","now"] }
 base64 = "0.22"
-iced = { git = "https://github.com/iced-rs/iced", rev = "ea614387f4d94960911b0a7d8ce25c02edb470c5", features = ["tokio", "advanced", "image", "markdown", "sipper"] }
+iced = { git = "https://github.com/iced-rs/iced", rev = "ea614387f4d94960911b0a7d8ce25c02edb470c5", default-features = false, features = ["wgpu", "tokio", "advanced", "image", "markdown", "sipper"] }
 iced_aw = { git = "https://github.com/iced-rs/iced_aw.git", rev = "f49e058684b6e03a49b94c0ae6d9fb40db6ef2a2", features = ["drop_down"] }
 tokio = { version = "1", features = ["sync"] }
 webbrowser = { version = "1" }
