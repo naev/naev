@@ -1,5 +1,5 @@
 use anyhow::Result;
-use log::warn;
+use log::{warn, warn_err};
 use sdl3 as sdl;
 
 pub fn key_to_str(key: sdl::keyboard::Keycode) -> String {
@@ -88,12 +88,24 @@ pub extern "C" fn input_keyToStr(key: SDL_Keycode) -> *const c_char {
         }
     };
     let name = key_to_str(keycode);
-    keystr.insert(key, CString::new(name).unwrap());
+    keystr.insert(
+        key,
+        match CString::new(name) {
+            Ok(name) => name,
+            Err(e) => {
+                warn_err!(e);
+                c"Unknown".into()
+            }
+        },
+    );
     keystr[&key].as_ptr() as *const c_char
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn input_keyFromStr(name: *const c_char) -> SDL_Keycode {
+    if name.is_null() {
+        return sdl::keyboard::Keycode::Unknown.to_ll();
+    }
     let name = unsafe { CStr::from_ptr(name) };
     let key = match key_from_str(&name.to_string_lossy()) {
         Some(kc) => kc,
