@@ -346,13 +346,12 @@ static int hook_runMisn( Hook *hook, const HookParam *param, int claims )
         ( claim_testSys( misn->claims, cur_system->id ) != claims ) )
       return 1;
 
-   /* Delete if only supposed to run once. */
-   if ( hook->once )
-      hook_rmRaw( hook );
-
    /* Set up hook parameters. */
-   if ( misn_runStart( misn, hook->u.misn.func ) )
+   if ( misn_runStart( misn, hook->u.misn.func ) ) {
+      if ( hook->once )
+         hook_rmRaw( hook );
       return 0;
+   }
    n = hook_parseParam( param );
 
    /* Add hook parameters. */
@@ -367,8 +366,12 @@ static int hook_runMisn( Hook *hook, const HookParam *param, int claims )
       /* Don't remove hooks on failure, or it can lead to stuck missions (like
        * rehab). */
       // hook_rmRaw( hook );
+      if ( hook->once )
+         hook_rmRaw( hook );
       return -1;
    }
+   if ( hook->once )
+      hook_rmRaw( hook );
    return 0;
 }
 
@@ -393,10 +396,6 @@ static int hook_runEvent( Hook *hook, const HookParam *param, int claims )
         ( event_testClaims( hook->u.event.parent, cur_system->id ) != claims ) )
       return 1;
 
-   /* Delete if only supposed to run once. */
-   if ( hook->once )
-      hook_rmRaw( hook );
-
    /* Set up hook parameters. */
    if ( !event_exists( hook->u.event.parent ) ) {
       WARN( _( "Hook [%s] '%d' -> '%s' failed, event does not exist. Deleting "
@@ -407,8 +406,11 @@ static int hook_runEvent( Hook *hook, const HookParam *param, int claims )
    }
 
    /* Make sure event is working. */
-   if ( event_runStart( hook->u.event.parent, hook->u.event.func ) )
+   if ( event_runStart( hook->u.event.parent, hook->u.event.func ) ) {
+      if ( hook->once )
+         hook_rmRaw( hook );
       return 0;
+   }
    n = hook_parseParam( param );
 
    /* Add hook parameters. */
@@ -423,8 +425,13 @@ static int hook_runEvent( Hook *hook, const HookParam *param, int claims )
       /* Don't remove hooks on failure, or it can lead to stuck missions (like
        * rehab). */
       // hook_rmRaw( hook );
+      if ( hook->once )
+         hook_rmRaw( hook );
       return -1;
    }
+
+   if ( hook->once )
+      hook_rmRaw( hook );
    return 0;
 }
 
