@@ -22,6 +22,7 @@
 #include "array.h"
 #include "camera.h"
 #include "collision.h"
+#include "constants.h"
 #include "damagetype.h"
 #include "gui.h"
 #include "input.h"
@@ -802,13 +803,11 @@ static void weapon_renderBeam( Weapon *w, double dt )
                           w->solid.pos.x + cos( w->solid.dir ) * range,
                           w->solid.pos.y + sin( w->solid.dir ) * range );
 
-   double angle  = atan2( ey - y, ex - x );
-   double length = hypotf( ex - x, ey - y );
-
    projection = gl_view_matrix;
    mat4_translate_xy( &projection, x, y );
-   mat4_rotate2d( &projection, angle );
-   mat4_scale_xy( &projection, length * z, width * z );
+   mat4_scale_xy( &projection, 1., CTS.CAMERA_VIEW );
+   mat4_rotate2d( &projection, w->solid.dir );
+   mat4_scale_xy( &projection, range * z, width * z );
    mat4_translate_xy( &projection, 0., -0.5 );
 
    /* Set the vertex. */
