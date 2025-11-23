@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-11-22 22:58+0900\n"
+"POT-Creation-Date: 2025-11-23 12:22+0900\n"
 "PO-Revision-Date: 2024-06-23 14:45+0000\n"
 "Last-Translator: Han Ga Eun <gdd72582@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/naev/naev/ko/>\n"
@@ -33220,6 +33220,7 @@ msgid ""
 "You have {credits}. Pay #r{price}#0?"
 msgstr ""
 
+#. Handle escort stuff here
 #, fuzzy
 msgid "The fighter does not respond."
 msgstr "색상 '%s'이 (가) 없습니다!"
@@ -50019,45 +50020,6 @@ msgstr ""
 #. Cost
 #. Updates if ships had core outfits replaced
 #. Add outfit
-#. luacheck: globals nooutfit (used in POI framework)
-msgid "Your ship AI {shipai} materializes before you."
-msgstr ""
-
-msgid ""
-"\"Oh my. It seems like the ship designs changed again. Some ships have got "
-"additional secondary core slots, in which you can equip normal cores. "
-"However, the core outfits will have different properties depending on "
-"whether they are primary or secondary. Similarly, many core outfits have "
-"been discontinued, and for ships with more than one core slot, instead of "
-"equipping a larger one, you can equip two to get the same effect as before!\""
-msgstr ""
-
-msgid ""
-"\"I have tried to automatically update your ships to be similar to before, "
-"but some things may have changed. Make sure you double-check your ships "
-"before taking off!\""
-msgstr ""
-
-msgid ""
-"\"Oh, and some of your ships had more than one upgrade from the Crimson "
-"Gauntlet which are now mutually exclusive with each other.\""
-msgstr ""
-
-msgid ""
-"\"Oh my. It seems like some of your ships had more than one upgrade from the "
-"Crimson Gauntlet which are now mutually exclusive with each other.\""
-msgstr ""
-
-msgid ""
-"\"Both of the outfits have been removed, and you have been refunded a total "
-"of {emblems} for the cost of the outfits. In particular, the following ships "
-"have been modified: {ships}\""
-msgstr ""
-
-#. Runs on saves older than 0.12.0
-#. Have to apply diff to lower pirates if necessary
-#. Player may have not met the proteron but have positive standing due to bugs in how the reputation worked
-#. Reset standing to hostile unless player is in proteron system
 #. Do update tutorial, have to handle older versions here
 msgid "Suddenly, a hologram materializes in front of you."
 msgstr ""
@@ -50102,6 +50064,10 @@ msgid ""
 "explanations and change tutorial options.\""
 msgstr ""
 
+#. luacheck: globals nooutfit (used in POI framework)
+msgid "Your ship AI {shipai} materializes before you."
+msgstr ""
+
 msgid ""
 "\"It seems like there has been a significant update to the game!\n"
 "Many of the new features come with small tutorials in form of missions. I "
@@ -50144,7 +50110,6 @@ msgid ""
 "of the bioship.\""
 msgstr ""
 
-#. sai(_([["This update also provides significant modernization of the engine and many other features. To list a few, the star map is larger and you can save system notes, many new missions and campaigns, health bars are shown for pilots in combat, backgrounds reworked, news and NPCs reworked, unique pilots appear throughout the universe, manual aiming mode, save snapshots, difficulty settings, etc. Some features can be toggled through the #oOptions#0 window, so make sure to check that if interested."]]))
 #. 0.11.0 changes
 msgid ""
 "\"The universe has also undergone drastic changes to fit the game lore and "
@@ -50185,14 +50150,6 @@ msgid ""
 msgstr ""
 
 #. 0.12.0 changes
-#.
-#. 1. Ship Capturing (chapter 1+)
-#. 1. Reputation changes
-#. 1. Holo-Archives
-#. 1. Fuel increase
-#. 1. Stats are additive
-#. 1. Scanning (scan key)
-#. --
 msgid ""
 "\"You will now be able to capture ships that you disable for a price. "
 "However, you will need enough free fleet capacity to add the ship to your "
@@ -50208,32 +50165,6 @@ msgid ""
 "also in-depth sections of lore explaining things about the universe that "
 "grow as you unlock them. You can access the Holo-Archives from the "
 "information menu you open with {infokey}.\""
-msgstr ""
-
-msgid ""
-"\"Reputation has been significantly reworked. It is no longer a single "
-"absolute value for every faction, but computed on a local level. This means "
-"that your actions will mainly have local consequences, and are more "
-"forgiving. However, this only affects local actions such as attacking and "
-"boarding, reputation gained through missions is still global. If that was "
-"not enough, all reputation changes are shown by default, which you can "
-"disable from the information window.\""
-msgstr ""
-
-msgid ""
-"\"Up until now, other ships could scan you, but you couldn't scan them. This "
-"has been changed in the latest release. You can now scan ships with the "
-"{scankey}. However, you will only be able to scan a ship after you have them "
-"as your active target for a while. You will see a spinning icon in the GUI. "
-"When it stops spinning, you will be able to scan!\""
-msgstr ""
-
-msgid ""
-"\"This update also provides a significant modernization of the engine and "
-"many other features. To list a few, fuel has been increased for most ships, "
-"statistics are now additive instead of multiplicative, ship variants, "
-"improved point defence, reworked ship trails, much faster loading, tons of "
-"new content... I hope you enjoy the update!\""
 msgstr ""
 
 msgid ""
@@ -50269,6 +50200,52 @@ msgid ""
 "please modify them from the #oInformation#0 window!\""
 msgstr ""
 
+#. 0.13.0 changes
+msgid ""
+"\"Thanks to new advances in material technology, ships no longer have issues "
+"with overheating. However, it is still possible to perform a cooldown with "
+"{cooldownkey} or double-tappping {reversekey} to refill weapon ammunition "
+"and fighters.\""
+msgstr ""
+
+msgid ""
+"\"Oh my. It seems like the ship designs changed again. Some ships have got "
+"additional secondary core slots, in which you can equip normal cores. "
+"However, the core outfits will have different properties depending on "
+"whether they are primary or secondary. Similarly, many core outfits have "
+"been discontinued, and for ships with more than one core slot, instead of "
+"equipping a larger one, you can equip two to get the same effect as before!\""
+msgstr ""
+
+msgid ""
+"\"I have tried to automatically update your ships to be similar to before, "
+"but some things may have changed. Make sure you double-check your ships "
+"before taking off!\""
+msgstr ""
+
+msgid ""
+"\"Oh, and some of your ships had more than one upgrade from the Crimson "
+"Gauntlet which are now mutually exclusive with each other.\""
+msgstr ""
+
+msgid ""
+"\"Oh my. It seems like some of your ships had more than one upgrade from the "
+"Crimson Gauntlet which are now mutually exclusive with each other.\""
+msgstr ""
+
+msgid ""
+"\"Both of the outfits have been removed, and you have been refunded a total "
+"of {emblems} for the cost of the outfits. In particular, the following ships "
+"have been modified: {ships}\""
+msgstr ""
+
+msgid ""
+"\"This update also provides a significant modernization of the engine and "
+"many other features. To list a few: autonav improvements, music doesn't "
+"restart as much, multiple backups, logarithmic radar, truly isometric "
+"camera, ... I hope you enjoy the update!\""
+msgstr ""
+
 msgid ""
 "\"With that said, would you like me to provide small, in-game advice as you "
 "do things throughout the game? Some might refer to things you are already "
@@ -50296,6 +50273,10 @@ msgid ""
 "let's go adventuring!\""
 msgstr ""
 
+#. Runs on saves older than 0.12.0
+#. Have to apply diff to lower pirates if necessary
+#. Player may have not met the proteron but have positive standing due to bugs in how the reputation worked
+#. Reset standing to hostile unless player is in proteron system
 #. Runs on saves older than 0.11.0
 #. Runs on saves older than 0.10.0
 #. "nelly_met" variable wasn't used in older versions
@@ -50341,7 +50322,7 @@ msgstr ""
 #. Run on saves older than 0.11.0
 #. Run on saves older than 0.12.0
 #. Run on saves older than 0.13.0
-#. didupdate = true
+#. if not save_version or naev.versionTest( save_version, "<0.13.0-beta.1") then
 #. Note that games before 0.10.0 will have lastplayed set days from the unix epoch
 #. Hack to avoid the player seeing the message every time they load a game without quitting
 msgid "Your ship AI, {ainame}, materializes in front of you."
@@ -113201,6 +113182,34 @@ msgstr ""
 #. --    @return String representing the number as a roman numeral.
 #. --
 #. note that this is -not- ipairs.
+#.
+#. Some stuff for helping with player escorts.
+#. --
+#, fuzzy
+msgid "Hold Formation"
+msgstr "팩션:"
+
+msgid "Holding formation."
+msgstr ""
+
+msgid "Return to Ship"
+msgstr ""
+
+msgid "Returning to ship."
+msgstr ""
+
+msgid "Clear Orders"
+msgstr ""
+
+msgid "Clearing orders."
+msgstr ""
+
+msgid "Escort Orders"
+msgstr ""
+
+msgid "Select the order to give to this escort."
+msgstr ""
+
 msgctxt "formation"
 msgid "None"
 msgstr ""
@@ -118072,24 +118081,6 @@ msgid "#gEscorts: #0Returning to ship."
 msgstr ""
 
 msgid "#gEscorts: #0Clearing orders."
-msgstr ""
-
-#. "Attack My Target" order is omitted deliberately since e is your
-#. * target, making "Attack My Target" a useless command.
-#, fuzzy
-msgid "Hold Formation"
-msgstr "팩션:"
-
-msgid "Return To Ship"
-msgstr ""
-
-msgid "Clear Orders"
-msgstr ""
-
-msgid "Escort Orders"
-msgstr ""
-
-msgid "Select the order to give to this escort."
 msgstr ""
 
 msgid "#gEscorts: #0Jumping."
