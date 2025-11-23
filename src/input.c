@@ -492,6 +492,8 @@ int input_mouseIsShown( void )
  */
 SDL_Keycode input_keyConv( const char *name )
 {
+   if ( name == NULL )
+      return SDLK_UNKNOWN;
    SDL_Keycode k = input_keyFromStr( name );
    if ( k == SDLK_UNKNOWN )
       WARN( _( "Keyname '%s' doesn't match any key." ), name );
