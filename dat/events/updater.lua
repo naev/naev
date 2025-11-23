@@ -187,7 +187,6 @@ Many of the new features come with small tutorials in form of missions. I will n
       if hasbioship then
          sai(_([["Bioships have also been reworked completely. Similar to the old ships, they gain ranks through experience. However, instead of the ranks being on a per-outfit level, they are now on per-ship levels. Increasing ranks will give you better core outfits and weapons, while also unlocking skill points that you can use to significantly change the functionality and performance of the bioship."]]))
       end
-      --sai(_([["This update also provides significant modernization of the engine and many other features. To list a few, the star map is larger and you can save system notes, many new missions and campaigns, health bars are shown for pilots in combat, backgrounds reworked, news and NPCs reworked, unique pilots appear throughout the universe, manual aiming mode, save snapshots, difficulty settings, etc. Some features can be toggled through the #oOptions#0 window, so make sure to check that if interested."]]))
    end
 
    -- 0.11.0 changes
@@ -209,10 +208,6 @@ Many of the new features come with small tutorials in form of missions. I will n
       end
       sai(fmt.f(_([["The Holo-Archives has also been added as a repository for information on mechanics, ships, outfits, and lore! Not only does it explain in detail many mechanics that you may have missed, but it also helps you find all the ships and outfits you've met in your travels. If that was not enough, there are also in-depth sections of lore explaining things about the universe that grow as you unlock them. You can access the Holo-Archives from the information menu you open with {infokey}."]]),
          {infokey=tut.getKey("info")}))
-      sai(_([["Reputation has been significantly reworked. It is no longer a single absolute value for every faction, but computed on a local level. This means that your actions will mainly have local consequences, and are more forgiving. However, this only affects local actions such as attacking and boarding, reputation gained through missions is still global. If that was not enough, all reputation changes are shown by default, which you can disable from the information window."]]))
-      sai(fmt.f(_([["Up until now, other ships could scan you, but you couldn't scan them. This has been changed in the latest release. You can now scan ships with the {scankey}. However, you will only be able to scan a ship after you have them as your active target for a while. You will see a spinning icon in the GUI. When it stops spinning, you will be able to scan!"]]),
-         {scankey=tut.getKey("scan")}))
-      sai(_([["This update also provides a significant modernization of the engine and many other features. To list a few, fuel has been increased for most ships, statistics are now additive instead of multiplicative, ship variants, improved point defence, reworked ship trails, much faster loading, tons of new content... I hope you enjoy the update!"]]))
       sai(_([["Weapon sets have also been simplified significantly. Unless you activate 'advanced' mode, there are no weapon set modes. Instead, now you have 2 additional weapon sets for your primary and secondary weapons. Furthermore, for the weapon set hotkeys, if you hold the key, it activates the outfits while held. However, if you tap it, it'll toggle the outfits from on to off, or off to on, depending on the current state. Additionally, by default, it will automatically try to assign all your active outfits to weapon sets, making the automatic setting much easier to use!"]]))
       sai(_([["Would you like me to reset your weapon sets to be automatically handled?"]]))
       vn.menu{
@@ -237,6 +232,8 @@ Many of the new features come with small tutorials in form of missions. I will n
    end
 
    -- 0.13.0 changes
+   sai(fmt.f(_([["Thanks to new advances in material technology, ships no longer have issues with overheating. However, it is still possible to perform a cooldown with {cooldownkey} or double-tappping {reversekey} to refill weapon ammunition and fighters."]]),
+         {cooldownkey=tut.getKey("cooldown"), reversekey=tut.getKey("reverse")}))
    if update_cores then
       sai(_([["Oh my. It seems like the ship designs changed again. Some ships have got additional secondary core slots, in which you can equip normal cores. However, the core outfits will have different properties depending on whether they are primary or secondary. Similarly, many core outfits have been discontinued, and for ships with more than one core slot, instead of equipping a larger one, you can equip two to get the same effect as before!"]]))
       sai(_([["I have tried to automatically update your ships to be similar to before, but some things may have changed. Make sure you double-check your ships before taking off!"]]))
@@ -250,6 +247,7 @@ Many of the new features come with small tutorials in form of missions. I will n
       sai(fmt.f(_([["Both of the outfits have been removed, and you have been refunded a total of {emblems} for the cost of the outfits. In particular, the following ships have been modified: {ships}"]]),
          {emblems=gauntlet.emblems_str(gauntlet_refunded), ships=fmt.list(gauntlet_ships)}))
    end
+   sai(_([["This update also provides a significant modernization of the engine and many other features. To list a few: autonav improvements, music doesn't restart as much, multiple backups, logarithmic radar, truly isometric camera, ... I hope you enjoy the update!"]]))
 
    if not metai then
       sai(_([["With that said, would you like me to provide small, in-game advice as you do things throughout the game? Some might refer to things you are already familiar with, but it could help you learn new things."]]))
@@ -259,14 +257,16 @@ Many of the new features come with small tutorials in form of missions. I will n
       }
 
       vn.label("enable")
-      sai(fmt.f(_([["Great! I'll be giving you short hints as you do things through the game. If you want to change my settings or turn off the hints, please do so from the '#oShip AI#0' button in the #oInformation#0 window you can open with {infokey}. Now, let's go adventuring!"]]),{infokey=tut.getKey("info")}))
+      sai(fmt.f(_([["Great! I'll be giving you short hints as you do things through the game. If you want to change my settings or turn off the hints, please do so from the '#oShip AI#0' button in the #oInformation#0 window you can open with {infokey}. Now, let's go adventuring!"]]),
+         {infokey=tut.getKey("info")}))
       vn.done( tut.shipai.transition )
 
       vn.label("disable")
       vn.func( function ()
          var.push( "tut_disable", true )
       end )
-      sai(fmt.f(_([["OK, I will not be giving you any hints. If you want to change my settings, turn on the hints, or get information and advice, please do so from the '#oShip AI#0' button in the #oInformation#0 window you can open with {infokey}. Now, let's go adventuring!"]]),{infokey=tut.getKey("info")}))
+      sai(fmt.f(_([["OK, I will not be giving you any hints. If you want to change my settings, turn on the hints, or get information and advice, please do so from the '#oShip AI#0' button in the #oInformation#0 window you can open with {infokey}. Now, let's go adventuring!"]]),
+         {infokey=tut.getKey("info")}))
    else
       sai(fmt.f(_([["And that is all! If you want to brush on game mechanics or get more hints, remember you can get in touch with me directly by clicking the '#oShip AI#0' button in the #oInformation#0 window that you can open with {infokey}. Now, let's go adventuring!"]]),
          {infokey=tut.getKey("info")}))
