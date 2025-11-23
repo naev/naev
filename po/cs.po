@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-11-23 12:40+0900\n"
+"POT-Creation-Date: 2025-11-23 22:49+0900\n"
 "PO-Revision-Date: 2025-10-27 08:32+0000\n"
 "Last-Translator: Dawedaen <dawedaen@noreply.codeberg.org>\n"
 "Language-Team: Czech <https://translate.codeberg.org/projects/naev/naev/cs/"
@@ -100948,7 +100948,7 @@ msgid "Land on {startpnt} in the {sys} system by double-clicking on it"
 msgstr ""
 
 msgid ""
-"Go to {destpnt} in the {sys} system by right-clicking it on the overview map"
+"Go to {destpnt} in the {sys} system by double-clicking it on the overview map"
 msgstr ""
 
 msgid "Destroy the practice drone near {destpnt} in the {sys} system"
@@ -101244,7 +101244,7 @@ msgid ""
 "out there! Travelling through systems is accomplished with jump points. Like "
 "planets, you usually need to find these by exploring the area, talking to "
 "the locals, or buying maps. Once you have found a jump point, you can use it "
-"by #bright-clicking#0 on it or using the {jumpkey}.\""
+"by #bdouble-clicking#0 on it or using the {jumpkey}.\""
 msgstr ""
 
 msgid ""
@@ -123011,8 +123011,8 @@ msgctxt "Menu|"
 msgid "Credits"
 msgstr "Zásluhy"
 
-msgid "Exit to Main Menu"
-msgstr "Návrat do hlavní nabídky"
+msgid "Return to Main Menu"
+msgstr ""
 
 #, c-format
 msgid "Mission '%s' not found in stack"
@@ -127877,6 +127877,9 @@ msgid ""
 "the extreme long range and high penetration for a weapon of its size, it can "
 "be very deadly."
 msgstr ""
+
+#~ msgid "Exit to Main Menu"
+#~ msgstr "Návrat do hlavní nabídky"
 
 #, fuzzy
 #~ msgid ""
