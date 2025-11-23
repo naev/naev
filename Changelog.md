@@ -54,7 +54,7 @@
  - Support for automatically restarting Naev when changing options that require it
  - Systems with uninhabited but landable space objects will have smaller inner circles
 
-#### Content
+#### Contents
  - 28 new missions and events
     - Go treasure hunting
  - 27 new outfits and reworked cores
