@@ -3246,11 +3246,15 @@ static int pilotL_setFaction( lua_State *L )
    /* Parse parameters. */
    Pilot *p   = luaL_validpilot( L, 1 );
    int    fid = luaL_validfaction( L, 2 );
+   /* Ignore escalations, we should probably add an API for that case, but it
+    * can be problematic with, for example, the lost faction changing
+    * mechanics. */
    /* Clear munitions or can cause standing escalade. */
+   /*
    if ( p->faction != fid ) {
       weapon_clearPilot( p );
 
-      /* Have to clear tasks targeting the pilot. */
+      // Have to clear tasks targeting the pilot.
       Pilot *const *pilot_stack = pilot_getAll();
       for ( int i = 0; i < array_size( pilot_stack ); i++ ) {
          Pilot *pi = pilot_stack[i];
@@ -3278,6 +3282,7 @@ static int pilotL_setFaction( lua_State *L )
          }
       }
    }
+   */
    /* Set the new faction. */
    p->faction = fid;
    return 0;
