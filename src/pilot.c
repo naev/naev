@@ -4486,7 +4486,6 @@ void pilot_dpseps( const Pilot *p, double *pdps, double *peps )
             mod_energy = p->stats.fwd_energy;
             mod_damage = p->stats.fwd_damage;
             mod_rate   = p->stats.fwd_firerate;
-            mod_erate  = mod_rate;
          } else {
             mod_energy = p->stats.tur_energy;
             mod_damage = p->stats.tur_damage;
@@ -4502,6 +4501,12 @@ void pilot_dpseps( const Pilot *p, double *pdps, double *peps )
          continue;
       }
 
+      // Global modifiers
+      mod_damage *= p->stats.weapon_damage;
+      mod_rate *= p->stats.weapon_firerate;
+      mod_energy *= p->stats.weapon_energy;
+
+      // Compute eps/dps
       dmg = outfit_damage( o );
       dps += mod_rate * mod_damage * dmg->damage;
       eps += mod_erate * mod_energy * MAX( outfit_energy( o ), 0. );
