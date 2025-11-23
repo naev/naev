@@ -261,6 +261,10 @@ static void input_keyevent( const int event, const SDL_Keycode key,
                             const SDL_Keymod mod, const int repeat );
 static int  input_doubleClickTest( unsigned int *time, const void **last,
                                    const void *clicked );
+static int  input_clickedJump( int jump, int autonav );
+static int  input_clickedSpob( int spob, int autonav, int priority );
+static int  input_clickedAsteroid( int field, int asteroid );
+static int  input_clickedPilot( unsigned int pilot, int autonav );
 
 /**
  * @brief Sets the default input keys.
@@ -1606,11 +1610,13 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom,
    }
    /* Right click only controls autonav. */
    else if ( event->button.button == SDL_BUTTON_RIGHT ) {
-      if ( ( pntid >= 0 ) && input_clickedSpob( pntid, 0, 0 ) )
+      if ( ( pntid >= 0 ) && input_clickedSpob( pntid, 0, 0 ) ) {
+         player_autonavPos( x, y );
          return 1;
-      else if ( ( jpid >= 0 ) && input_clickedJump( jpid, 1 ) )
+      } else if ( ( jpid >= 0 ) && input_clickedJump( jpid, 1 ) ) {
+         player_autonavPos( x, y );
          return 1;
-      else if ( ( pid != PLAYER_ID ) && input_clickedPilot( pid, 1 ) )
+      } else if ( ( pid != PLAYER_ID ) && input_clickedPilot( pid, 1 ) )
          return 1;
 
       /* Go to position, if the position is >= 1500 px away. */
@@ -1630,7 +1636,7 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom,
  *    @param autonav Whether to autonav to the target.
  *    @return Whether the click was used.
  */
-int input_clickedJump( int jump, int autonav )
+static int input_clickedJump( int jump, int autonav )
 {
    const JumpPoint *jp = &cur_system->jumps[jump];
 
@@ -1672,7 +1678,7 @@ int input_clickedJump( int jump, int autonav )
  *    @param priority Whether to consider priority targets.
  *    @return Whether the click was used.
  */
-int input_clickedSpob( int spob, int autonav, int priority )
+static int input_clickedSpob( int spob, int autonav, int priority )
 {
    Spob *pnt = cur_system->spobs[spob];
 
@@ -1725,7 +1731,7 @@ int input_clickedSpob( int spob, int autonav, int priority )
  *    @param asteroid Index of the asteroid in the field.
  *    @return Whether the click was used.
  */
-int input_clickedAsteroid( int field, int asteroid )
+static int input_clickedAsteroid( int field, int asteroid )
 {
    // const AsteroidAnchor *anchor = &cur_system->asteroids[field];
    // const Asteroid       *ast    = &anchor->asteroids[asteroid];
@@ -1740,7 +1746,7 @@ int input_clickedAsteroid( int field, int asteroid )
  *    @param autonav Whether this is an autonav action.
  *    @return Whether the click was used.
  */
-int input_clickedPilot( unsigned int pilot, int autonav )
+static int input_clickedPilot( unsigned int pilot, int autonav )
 {
    if ( pilot == PLAYER_ID )
       return 0;
@@ -1792,13 +1798,11 @@ void input_clicked( const void *clicked )
  */
 int input_isDoubleClick( const void *clicked )
 {
-   unsigned int threshold;
-
    if ( conf.mouse_doubleclick <= 0. )
       return 0;
 
    /* Most recent time that constitutes a valid double-click. */
-   threshold =
+   unsigned int threshold =
       input_mouseClickLast + (int)floor( conf.mouse_doubleclick * 1000. );
 
    if ( ( SDL_GetTicks() <= threshold ) && ( clicked == input_lastClicked ) )
