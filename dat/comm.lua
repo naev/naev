@@ -4,6 +4,7 @@
 local vn = require 'vn'
 local fmt = require "format"
 local ccomm = require "common.comm"
+local player_escorts = require "player_escorts"
 
 local bribe_group, bribeable, bribeable_all, bribe_nearby_cost, bribe_all_cost
 
@@ -159,6 +160,12 @@ end
 
 function comm( plt )
    local mem = plt:memory()
+
+   -- Handle escort stuff here
+   if plt:faction() == faction.player() then
+      player_escorts.command_menu( plt )
+      return
+   end
 
    if mem.carried then
       plt:comm(_("The fighter does not respond."), true, true)

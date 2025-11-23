@@ -363,52 +363,6 @@ int escorts_clear( const Pilot *parent )
 }
 
 /**
- * @brief Open a dialogue for the player to issue a command to an escort.
- *
- *    @param e The pilot for the player to issue an order to.
- *    @return 0 on success, 1 if no orders given.
- */
-int escort_playerCommand( const Pilot *e )
-{
-   const char *title, *caption;
-   char       *choice;
-   int         ret = 1;
-
-   /* "Attack My Target" order is omitted deliberately since e is your
-    * target, making "Attack My Target" a useless command. */
-   const char *opts[] = { _( "Hold Formation" ), _( "Return To Ship" ),
-                          _( "Clear Orders" ), _( "Cancel" ) };
-   const int   nopts  = 4;
-
-   /* Must not be NULL */
-   if ( e == NULL )
-      return 1;
-
-   title   = _( "Escort Orders" );
-   caption = _( "Select the order to give to this escort." );
-
-   dialogue_makeChoice( title, caption, nopts );
-   for ( int i = 0; i < nopts; i++ )
-      dialogue_addChoice( title, caption, opts[i] );
-
-   choice = dialogue_runChoice();
-   if ( choice != NULL ) {
-      if ( strcmp( choice, opts[0] ) == 0 ) { /* Hold position */
-         pilot_msg( player.p, e, "e_hold", LUA_NOREF );
-         ret = 0;
-      } else if ( strcmp( choice, opts[1] ) == 0 ) { /* Return to ship */
-         pilot_msg( player.p, e, "e_return", LUA_NOREF );
-         ret = 0;
-      } else if ( strcmp( choice, opts[2] ) == 0 ) { /* Clear orders */
-         pilot_msg( player.p, e, "e_clear", LUA_NOREF );
-         ret = 0;
-      }
-   }
-   free( choice );
-   return ret;
-}
-
-/**
  * @brief Have a pilot order its escorts to jump.
  *
  *    @param parent Pilot giving the order.

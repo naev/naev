@@ -10,7 +10,6 @@
 
 #include "ai.h"
 #include "array.h"
-#include "escort.h"
 #include "hook.h"
 #include "log.h"
 #include "ndata.h"
@@ -108,15 +107,6 @@ int comm_openPilot( unsigned int pilot )
                              { .type = HOOK_PARAM_SENTINEL } };
       hooks_runParam( "hail", hparam );
       pilot_runHook( p, PILOT_HOOK_HAIL );
-   }
-
-   /* Check for player faction (escorts). Should be moved to the comm script
-    * most likely. For now, we just run it after hooks if it hasn't been closed
-    * already. */
-   if ( !comm_commClose && p->faction == FACTION_PLAYER ) {
-      escort_playerCommand( p );
-      ai_unsetPilot( oldmem );
-      return 0;
    }
 
    /* Check to see if pilot wants to communicate. */

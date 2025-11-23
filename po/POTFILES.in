@@ -3694,6 +3694,7 @@ dat/scripts/pilotname/core.lua
 dat/scripts/pilotname/generic.lua
 dat/scripts/pilotname/pirate.lua
 dat/scripts/pilotname/utility.lua
+dat/scripts/player_escorts.lua
 dat/scripts/playerform.lua
 dat/scripts/portrait.lua
 dat/scripts/pp_shaders.lua
