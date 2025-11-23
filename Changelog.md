@@ -2,6 +2,7 @@
  - Fixed game not saving when exiting while landed via the small menu
  - Right-clicking on a spob or jump point will both select it and take you there
  - Fixed VN not looking up images with explicit file extensions
+ - Fixed crash with appimage on certain Linux systems
 
 
 ## 0.13.0-beta.1
