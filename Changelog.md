@@ -1,4 +1,9 @@
-## 0.13.0 (0.13.0-beta.1)
+## 0.13.0-beta.2 (unreleased)
+ - Fixed game not saving when exiting while landed via the small menu
+ - Right-clicking on a spob or jump point will both select it and take you there
+
+
+## 0.13.0-beta.1
 
 #### Gameplay
  - Removed heat mechanic (to be readded as a new mechanic in the future)
