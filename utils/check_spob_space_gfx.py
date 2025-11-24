@@ -12,7 +12,7 @@ elif directory[1] == 'naev':
 else:
    print("Failed to detect where you're running this script from\nPlease enter your path manually")
 
-images  = glob(prefix+"/artwork/gfx/spob/space/*")
+images  = glob(prefix+"/assets/gfx/spob/space/*")
 images  = list(map( lambda x: os.path.basename(x), images ))
 
 imgdict = {}
@@ -51,7 +51,7 @@ with open( "spob_gfx.html", "w" ) as out:
  <body>
    """ )
    for k in sorted( imgdict, key=lambda x: imgdict[x], reverse=True ):
-      path = prefix+"/artwork/gfx/spob/space/"+k
+      path = prefix+"/assets/gfx/spob/space/"+k
       v = imgdict[k]
       out.write(f"""
   <div>
