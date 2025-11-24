@@ -129,7 +129,7 @@
  - `jump_delay` was being applied instead of `jump_warmup` to the engine warm up animation
  - Mass modifiers now affect outfit mass too
  - Ships will no longer appear tilted in the equipment view
- - `dv_antiflf`02: Make the vigilances less pathetic
+ - `dv_antiflf02`: Make the vigilances less pathetic
  - Gauntlet properly resets outfit cooldowns
  - Saves try to save outfits by slot name to be more robust to changes in the future
  - Player can't stealth while disabled
@@ -291,8 +291,8 @@
  - Made `max_fps` actually get respected
  - Fixed nebula trails on the Virtuosity
  - Bumped tracy wrap to 0.11.1
- - fw03`_sirius`: fixed Lua error
- - fw05`_triathlon`: fixed acquired information of ships the player can obtain
+ - `fw03_sirius`: fixed Lua error
+ - `fw05_triathlon`: fixed acquired information of ships the player can obtain
  - nelly02: don't have nelly tell you about disable weapons after disabling her ship
  - Carried fighters don't investigate
  - Minor typo fixes and translation updates
@@ -328,7 +328,7 @@
  - Absorption is no longer limited to the 0% to 100% range
  - `derelict_rescue`: only allow generic target space objects
  - onion04: don't fail if something happens to the gawain after taking the cargo
- - `traffic_`01: don't use hardcoded systems
+ - `traffic_01`: don't use hardcoded systems
  - bounty: fixed error with deadlines in certain cases
  - neburesearch04: don't let the drones see through stealth and disable the player from relanding to skip stage
  - minerva/judugement: fixed error in VN flow
@@ -472,7 +472,7 @@
  - Faster handling of asteroids with large exclusion areas
  - Added `fuel_usage_mod` ship stat
  - Fixed player losing navigation targets when unidiff is applied
- - Fixed ai.idir giving wrong answer by `M_PI_`2 in some cases
+ - Fixed ai.idir giving wrong answer by `M_PI_2` in some cases
  - Threaded more loading components
  - Lua require now caches chunks
  - Dropped `SDL_image` fallback
@@ -512,7 +512,7 @@
  - Fixed camouflage burster not activating stealth
  - Fixed bug where beams were counted as giving energy in the equipment optimizer
  - shadowvigil: claim entire route
- - `sh01`_corvette``: should be completable on easy difficulties now
+ - `sh01_corvette`: should be completable on easy difficulties now
  - patrol: fixed escorts and fighters becoming hostile if hostile to the mission giving faction
  - Fixed debugging paranoid builds under Windows
  - Fixed autonav not respecting shield thresholds
@@ -542,11 +542,11 @@
  - Flicker drive no longer displays -10% signature range bonus twice when equipped
  - Fixed crash when selling deployed ship
  - Gave the Dvaered warlord event better criteria so they don't attack the hypergate
- - `shark/sh01`_corvette``: have the pilot jump in from the same system as the player
+ - `shark/sh01_corvette`: have the pilot jump in from the same system as the player
  - `minerva/kex03`: have mission claim the crimson gauntlet to prevent unwanted spawns
  - `dvaered/gauntlet`: have mission claim the system if it can, but not fail if it can't
- - `trader/`trader_escort``: player can only escort one group of traders at a time
- - `neburesearch/`neburesearch_`01`: use the correct faction when complaining
+ - `trader/trader_escort`: player can only escort one group of traders at a time
+ - `neburesearch/neburesearch_01`: use the correct faction when complaining
  - Fixed some typos and revised writing
  - Translation updates
 
@@ -566,8 +566,8 @@
  - Flicker drives can not be stacked and are mutually exclusive with other blink drives
  - Decreased Nexus Drill Lance mining malus from -80% to -15%
  - Increased all mining yields by roughly 5 times
- - `sciencegonewrong/02`_sciwrong``: make the drones not hostile to other factions
- - `neutral/`baron_comm``: fixed trivial warning when trying to clean up baron comm event
+ - `sciencegonewrong/02_sciwrong`: make the drones not hostile to other factions
+ - `neutral/baron_comm`: fixed trivial warning when trying to clean up baron comm event
  - `neutral/wastedump`: fixed getting rid of cargo while landed
  - Translation updates
 
@@ -608,14 +608,14 @@
  - Fixed bioship "Wanderer" perk giving absolute accel bonus instead of relative
  - Increased Neural Accelerator Interface energy regen malus to -100%
  - `zalek/blackhole/zbh09`: don't error out when a bioship ceases to exist
- - `kidnapped/`traffic_`00`: fixed formatting string telling the player what system to go to
- - `kidnapped/`traffic_`01`: ship should spawn if taking off in the same system, not just jumping in
+ - `kidnapped/traffic_00`: fixed formatting string telling the player what system to go to
+ - `kidnapped/traffic_01`: ship should spawn if taking off in the same system, not just jumping in
  - `tutorial/nelly01`: fixed derelict message not appearing
  - `minerva/pirate4`: fixed save me spam only being print once
- - `neutral/`seek_n_destroy``: fixed warnings when taking off in the same system
+ - `neutral/seek_`n_destroy``: fixed warnings when taking off in the same system
  - `sirius/achack/achack01`: fixed not being able to accept mission
- - `dvaered/`dv_diversion``: fixed not being able to accept mission
- - `dvaered/`dv_bikers``: don't allow the player to use escorts and properly update mission TODO
+ - `dvaered/dv_diversion`: fixed not being able to accept mission
+ - `dvaered/dv_bikers`: don't allow the player to use escorts and properly update mission TODO
  - `sirius/achack03`: fixed not being able to complete the mission
  - `neutral/kidnapped`: fixed inconsistency in the name of the system to go to
  - `shadow/shadowrun`: fixed VN issues not allowing mission completion
@@ -658,11 +658,11 @@
  - Fixed Sirius ships acquired before 0.11.0 not being able to use flow
  - Fixed Cleansing Flames shader
  - Gave some flow abilities custom sound effects
- - `s`rs_ferry``: fixed marker not updating for alternative delivery locations
+ - `srs_ferry`: fixed marker not updating for alternative delivery locations
  - `nelly01`: fixed giving the player twice as much money as needed for an ion cannon
  - `nelly03`: guard against the player changing systems in the middle of mining
  - `zbh06`: made mission easier for the player
- - `s`eek_n_destroy``: fixed mission being failable after the player takes out the target
+ - `seek_`n_destroy``: fixed mission being failable after the player takes out the target
  - `preach`: don't try to claim the system twice
  - Fixed many typos
  - Translation updates
@@ -696,9 +696,9 @@
  - More short names for weapon outfits
  - Fixed pilot.setSpeedLimit not working
  - Added tutorial message when player acquires first point defence weapon
- - `t`est_of_renewal``: fixed weapon set defaults being incorrect and increased enemy damage
- - `s`eek_n_destroy``: missions should work properly when boarding the target
- - `f`lf_diversion``, `f`lf_rogue``: Missions should no longer be able to have ridiculously low credit rewards
+ - `test_`of_renewal``: fixed weapon set defaults being incorrect and increased enemy damage
+ - `seek_`n_destroy``: missions should work properly when boarding the target
+ - `flf_diversion`, `flf_rogue`: Missions should no longer be able to have ridiculously low credit rewards
  - `ec00`: changed it so you can't hail the collective drone
  - `escort`: fixed pilots not flying in formation
  - Fixed many typos
@@ -731,10 +731,10 @@
  - Fixed cargo being lost when swapping ships in missions and events
  - `chapter1`: event claims all the systems just in case
  - `poi`: renamed 'Pristine Derelict' to 'Unusual Derelict'
- - `p`oi_intro``: fixed typo
+ - `poi_intro`: fixed typo
  - `achack03`: fixed mission not being acceptable and harja spawning forever
  - `achack04`: fixed missing formatting string
- - `d`v_bikers``: made missiles significantly more dodgeable and changed location
+ - `dv_bikers`: made missiles significantly more dodgeable and changed location
  - Translation updates
 
 
