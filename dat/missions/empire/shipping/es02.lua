@@ -124,7 +124,7 @@ function land ()
    if mem.landed == mem.ret then
       -- Successfully rescued the VIP
       if mem.misn_stage == 2 then
-         local getlicense = not diff.isApplied( "heavy_combat_vessel_license" )
+         local getlicence = not diff.isApplied( "heavy_combat_vessel_licence" )
 
          vn.clear()
          vn.scene()
@@ -132,14 +132,14 @@ function land ()
          vn.transition( emp.soldner.transition )
 
          vn.na(_([[You land at the starport. It looks like the VIP has already recovered. He thanks you profusely before heading off. You proceed to pay Commander Soldner a visit. He seems to be happy, for once.]]))
-         if getlicense then
+         if getlicence then
             soldner(_([["It seems like you managed to pull it off. I had my doubts at first, but you've proven to be a very skilled pilot. Oh, and I've cleared you for a Heavy Combat Vessel Licence; congratulations! We have nothing more for you now, but check in periodically in case something comes up for you."]]))
             vn.sfxBingo()
             vn.na(_([[You can now purchase the #bHeavy Combat Vessel Licence#0.]]))
 
             vn.func( function ()
                emp.addShippingLog( _([[You successfully rescued a VIP for the Empire and have been cleared for a Heavy Combat Vessel Licence; you can now buy one at the outfitter.]]) )
-               diff.apply("heavy_combat_vessel_license")
+               diff.apply("heavy_combat_vessel_licence")
             end )
          else
             soldner(_([["It seems like you managed to pull it off. I had my doubts at first, but you've proven to be a very skilled pilot. We have nothing more for you now, but check in periodically in case something comes up for you."]]) )

@@ -139,7 +139,7 @@ function land ()
    elseif mem.landed == mem.ret and mem.misn_stage == 2 then
 
       -- Rewards
-      local getlicense = not diff.isApplied( "heavy_weapons_license" )
+      local getlicence = not diff.isApplied( "heavy_weapons_licence" )
 
       vn.clear()
       vn.scene()
@@ -147,7 +147,7 @@ function land ()
       vn.transition( emp.soldner.transition )
 
       -- Flavour text
-      if getlicense then
+      if getlicence then
          soldner(fmt.f(_([[You arrive at {pnt} and report to Commander Soldner. He greets you and starts talking. "I heard you encountered resistance. At least you were able to deliver the package. Great work there. I've managed to get you cleared for a Heavy Weapon Licence. You'll still have to pay the fee for getting it, though.]]),
             {pnt=mem.ret}))
          vn.sfxBingo()
@@ -169,8 +169,8 @@ function land ()
       vn.run()
 
       -- The goods
-      if getlicense then
-         diff.apply("heavy_weapons_license")
+      if getlicence then
+         diff.apply("heavy_weapons_licence")
          emp.addShippingLog( _([[You successfully completed a package delivery for the Empire. As a result, you have been cleared for a Heavy Weapon Licence and can now buy it at an outfitter. Commander Soldner said that you can meet him in the bar at Halir if you're interested in more work.]]) )
       else
          emp.addShippingLog( _([[You successfully completed a package delivery for the Empire. Commander Soldner said that you can meet him in the bar at Halir if you're interested in more work.]]) )
