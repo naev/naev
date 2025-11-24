@@ -612,7 +612,7 @@
  - `kidnapped/traffic_01`: ship should spawn if taking off in the same system, not just jumping in
  - `tutorial/nelly01`: fixed derelict message not appearing
  - `minerva/pirate4`: fixed save me spam only being print once
- - `neutral/seek_`n_destroy``: fixed warnings when taking off in the same system
+ - `neutral/seek_n_destroy`: fixed warnings when taking off in the same system
  - `sirius/achack/achack01`: fixed not being able to accept mission
  - `dvaered/dv_diversion`: fixed not being able to accept mission
  - `dvaered/dv_bikers`: don't allow the player to use escorts and properly update mission TODO
@@ -662,7 +662,7 @@
  - `nelly01`: fixed giving the player twice as much money as needed for an ion cannon
  - `nelly03`: guard against the player changing systems in the middle of mining
  - `zbh06`: made mission easier for the player
- - `seek_`n_destroy``: fixed mission being failable after the player takes out the target
+ - `seek_n_destroy`: fixed mission being failable after the player takes out the target
  - `preach`: don't try to claim the system twice
  - Fixed many typos
  - Translation updates
@@ -696,8 +696,8 @@
  - More short names for weapon outfits
  - Fixed pilot.setSpeedLimit not working
  - Added tutorial message when player acquires first point defence weapon
- - `test_`of_renewal``: fixed weapon set defaults being incorrect and increased enemy damage
- - `seek_`n_destroy``: missions should work properly when boarding the target
+ - `test_of_renewal`: fixed weapon set defaults being incorrect and increased enemy damage
+ - `seek_n_destroy`: missions should work properly when boarding the target
  - `flf_diversion`, `flf_rogue`: Missions should no longer be able to have ridiculously low credit rewards
  - `ec00`: changed it so you can't hail the collective drone
  - `escort`: fixed pilots not flying in formation
