@@ -65,7 +65,7 @@ glow = "0.16"
 nalgebra = { version = "0.34", features = ["bytemuck", "encase"] }
 encase = { version = "0.12" } # Needed for shader voodoo
 bytemuck = { version = "1.23", features = ["derive"] } # Needed for shader voodoo
-image = { version = "0.25", features = ["rayon"] }
+image = { version = "0.25", features = ["rayon", "avif-native"] }
 mlua = { version = "0.11", features = ["luajit", "anyhow", "send", "serialize"] }
 roxmltree = "0.21"
 derive_more = { version = "2", features = ["from", "into", "display"] }
