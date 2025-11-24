@@ -93,7 +93,6 @@ local function load_gfx ()
    local image = lg.newImage( path )
 
    -- Remove trailing whitespace. TODO why do we have to do this? :/
-   print( caption )
    caption = string.gsub( caption, '^%s*(.-)%s*$', '%1' )
 
    return image, _(caption)
