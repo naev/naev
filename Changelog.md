@@ -86,7 +86,7 @@
  - Engine supports modifying some important constants such as those related to the physics model for use in plugins
  - Use instancing instead of geometry shaders for space dust
  - Ship Lua scripting supports "onshootany" now
- - Support for price_mod on tech group commodities
+ - Support for `price_mod` on tech group commodities
  - Mission and Event NPC's priority default to the priority of the parent
  - Local maps can have a range parameter now
  - Intrinsic outfits for ships are defined in \<intrinsics\> instead of \<slots\> now
@@ -126,10 +126,10 @@
  - Can't stack Sirius ferry pilgrim missions anymore
  - Add marker mission to help the player find wild space
  - Bioships will reset their locked slots when swapping ship and loading
- - jump_delay was being applied instead of jump_warmup to the engine warm up animation
+ - `jump_delay` was being applied instead of `jump_warmup` to the engine warm up animation
  - Mass modifiers now affect outfit mass too
  - Ships will no longer appear tilted in the equipment view
- - dv_antiflf02: Make the vigilances less pathetic
+ - `dv_antiflf02`: Make the vigilances less pathetic
  - Gauntlet properly resets outfit cooldowns
  - Saves try to save outfits by slot name to be more robust to changes in the future
  - Player can't stealth while disabled
@@ -196,9 +196,9 @@
  - Fried now shows the stellar winds on the map
  - Reworked aggressivity on distress signals to be more consistent
  - Try to fix trails not appearing on variant ships
- - dv_goddard: The Siren of Halir no longer fails the mission after you get the commandos
- - dv_shopping: Fixed not giving the player the Fancy Key Chain
- - Misi will sell the Fancy Key Chain for those affected by the dv_shopping bug
+ - `dv_goddard`: The Siren of Halir no longer fails the mission after you get the commandos
+ - `dv_shopping`: Fixed not giving the player the Fancy Key Chain
+ - Misi will sell the Fancy Key Chain for those affected by the `dv_shopping` bug
  - oldwoman: The old woman complains again
  - shadowvigil: seiryuu doesn't disappear if you land
  - darkshadow: four wind fighters can hurt the player
@@ -239,14 +239,14 @@
  - Modified condition of many neutral missions so they don't appear in the wrong places
  - Dvaered ships are now also sold in more accessible locations
  - FLF should not cause reputation chains making other factions hostile
- - Fixed the ship_buy hook referring to the ship sold when trading ships
+ - Fixed the `ship_buy` hook referring to the ship sold when trading ships
  - Fixed captured ships having inconsistent load outs and not spawning near the pilot
  - Fixed zebra losing cylinders when thrusting
  - Don't remove builtin weapons when spawning pilots naked
  - Fixed pilot.distress() not sending signals to spobs
  - lovebiz01: fixed condition allowing it to appear anywhere
- - dv_goddard: fixed spawning of Silent Death
- - harjas_vengeance: avoid certain system to make the mission easier to do
+ - `dv_goddard`: fixed spawning of Silent Death
+ - `harjas_vengeance`: avoid certain system to make the mission easier to do
  - minerva missions: fixed a ship not spawning correctly
  - Large cargo hulls now match the cargo difference of the small and medium hulls
  - Minor typo fixes and translation updates
@@ -279,7 +279,7 @@
  - Fixed some visual aberrations when forcing the player to land or jump
  - Prioritize pilots and other objects over uninhabited planets when clicking
  - Fixed bug in rehab missions causing them to get stuck
- - Trading in a ship triggers both ship_sell and ship_buy hooks
+ - Trading in a ship triggers both `ship_sell` and `ship_buy` hooks
  - Disabled Nasin campaign and Defend the System missions
  - Fixed weird commodity global average values
  - Fixed how Lua environments were being stored and referenced
@@ -288,11 +288,11 @@
  - Don't remove hooks on failure, which should make rehab missions a tad more robust
  - Fixed exploit allowing the player to ignore cargo limits
  - Consistently colour the ShipAI messages in the tutorial
- - Made max_fps actually get respected
+ - Made `max_fps` actually get respected
  - Fixed nebula trails on the Virtuosity
  - Bumped tracy wrap to 0.11.1
- - fw03_sirius: fixed Lua error
- - fw05_triathlon: fixed acquired information of ships the player can obtain
+ - `fw03_sirius`: fixed Lua error
+ - `fw05_triathlon`: fixed acquired information of ships the player can obtain
  - nelly02: don't have nelly tell you about disable weapons after disabling her ship
  - Carried fighters don't investigate
  - Minor typo fixes and translation updates
@@ -305,7 +305,7 @@
  - Fixed map decorators not shown in editor
  - Centred buttons at the top of the holo-archives
  - Show if a system has a bar in the map
- - Fixed conf.mouse_doubleclick not disabling when set to 0
+ - Fixed `conf.mouse_doubleclick` not disabling when set to 0
  - Fixed crashes when a faction is assigned a non-existent colour
  - Update the overlay scaling given the player's position
  - Fixed population not being updated by universe diffs
@@ -326,9 +326,9 @@
  - Pirate ambush derelict events break stealth
  - Mining minigame result affects yield more
  - Absorption is no longer limited to the 0% to 100% range
- - derelict_rescue: only allow generic target space objects
+ - `derelict_rescue`: only allow generic target space objects
  - onion04: don't fail if something happens to the gawain after taking the cargo
- - traffic_01: don't use hardcoded systems
+ - `traffic_01`: don't use hardcoded systems
  - bounty: fixed error with deadlines in certain cases
  - neburesearch04: don't let the drones see through stealth and disable the player from relanding to skip stage
  - minerva/judugement: fixed error in VN flow
@@ -375,11 +375,11 @@
  - Fixed point defence requiring toggling thrice to turn off in some cases
  - sensor anomaly: Nelly will no longer appear in too dangerous or risky systems
  - mephisto type v: lowered heat generation
- - seek_n_destroy: fixed hints breaking in certain cases
- - pir_hit_intro: fixed OSD being displayed wrong
+ - `seek_n_destroy`: fixed hints breaking in certain cases
+ - `pir_hit_intro`: fixed OSD being displayed wrong
  - taiomi04: update OSD after boarding ship
  - bounty: fixed OSD getting reset after killing/capturing target
- - ant_supplies: fixed hostility after jumping into system again
+ - `ant_supplies`: fixed hostility after jumping into system again
  - Editor now shows dialogues on errors and allows user to choose directory to save data to
  - Minor typo fixes and translation updates
 
@@ -470,12 +470,12 @@
  - Try to merge saves if multiple directories correspond to the same player
  - More robust weapon set support that can handle multiple overlapping weapon sets
  - Faster handling of asteroids with large exclusion areas
- - Added fuel_usage_mod ship stat
+ - Added `fuel_usage_mod` ship stat
  - Fixed player losing navigation targets when unidiff is applied
- - Fixed ai.idir giving wrong answer by M_PI_2 in some cases
+ - Fixed ai.idir giving wrong answer by `M_PI_2` in some cases
  - Threaded more loading components
  - Lua require now caches chunks
- - Dropped SDL_image fallback
+ - Dropped `SDL_image` fallback
  - Use higher internal timer for all platforms
  - Support for Tracy
  - Spobs that are not landable yet generate presence will be shown on the map
@@ -589,10 +589,10 @@
  - Fixed battery descriptions
  - Discovering a hidden jump will make both directions known
  - Fixed AI trying to scan hostile targets they lost track of
- - Properly save and load reward_value to and from saves
+ - Properly save and load `reward_value` to and from saves
  - Fixed events and missions being able to trigger in obelisk tests
  - Fixed beam weapons not hitting asteroids
- - Properly compute weapon range with launch_range modifiers
+ - Properly compute weapon range with `launch_range` modifiers
  - Fixed some range checks with inrange weapon sets
  - Fixed Empire Pacifier mass being too low
  - Fixed warning when looking at internal flow amplifier descriptions
@@ -834,7 +834,7 @@
 
 #### Engine
  - Map system viewer is more compact
- - Added hook.hail_spob
+ - Added `hook.hail_spob`
  - Events support tags
  - Editor supports tags
  - Library to handle conditionals for mission computer missions
@@ -843,7 +843,7 @@
  - Changed api of evt.claim and misn.claim
  - Missions/events load Lua as chunks instead of compiling each time
  - Significant speed-ups in collision detection with quadtrees
- - Hooks "outfit_buy", "outfit_sell", "ship_sell", and "ship_swap" pass Lua objects instead of strings
+ - Hooks "`outfit_buy`", "`outfit_sell`", "`ship_sell`", and "`ship_swap`" pass Lua objects instead of strings
  - Ships can have extra descriptions that show up on mouse over
  - More Lua API added such as pilot.armour, pilot.shield, or naev.missionList
  - Soromid NPCs can have custom descriptions based on genetics
@@ -916,9 +916,9 @@
  - Fixed clicking on jump points also selecting planets in some cases
  - nelly02: Nelly now stops recommending stuff that only does a little disable
  - shadowvigil: Fixed mission not spawning escorts
- - flf_patrol: Missions should no longer be able to have ridiculously low credit rewards
+ - `flf_patrol`: Missions should no longer be able to have ridiculously low credit rewards
  - Fixed some events not claiming systems that could interfere with other missions
- - hypergate_construction: should actually claim the system
+ - `hypergate_construction`: should actually claim the system
  - Fixed some formatting in the alt text when hovering over outfits in the equipment window
  - ec06: refuel tanker should provide as much fuel as possible
  - taiomi09: fixed smugglers becoming hostile in some cases
@@ -930,7 +930,7 @@
 ## 0.10.4
 
  - Fixed crashes related to multiple effects being active at once
- - Fixed multiple mission_done hooks not passing parameter correctly
+ - Fixed multiple `mission_done` hooks not passing parameter correctly
  - Fixed plugin strings not being initialized with mismatched saves
  - ec06: made the final battle work much better
 
@@ -941,7 +941,7 @@
  - Fixed escorts always being set to aggressive when loading a save
  - Fixed Dvaered standing cap increase being lost after loading game
  - Made space dust a bit less bright when it starts turning into lines
- - derelict_rescue: play money sound instead of victory sound on completion
+ - `derelict_rescue`: play money sound instead of victory sound on completion
  - rehab: fixed crash when aborting rehabilitation missions
  - foundation station, efferey: fixed not using pirate landing script
 
@@ -962,13 +962,13 @@
  - Change music API to make it explicit you can temporarily disable the music engine
  - Set windows compatibility mode to Windows 7 when cross-compiling
  - legacy gui: fixed line artefacts near fuel / energy bars
- - pulse_scanner: fix potential error on init
+ - `pulse_scanner`: fix potential error on init
  - patrol: don't have an invisible time limit to reach the system anymore
  - taiomi: fixed some claims
  - zbh03: landing when hostiles spawned will fail the mission
  - bounties: mention there is a time limit to reach the system, not made explicit though
  - zpp01, zbh01: bumped chance to 30%
- - poi_intro: can't board nelly again
+ - `poi_intro`: can't board nelly again
 
 
 ## 0.10.1
@@ -1212,7 +1212,7 @@
  - Fixed wonky backgrounds during death cutscenes, for the sake of *other* players of course
  - Fixed crash when techs are first patched to planets through unidiff
  - Fixed potential spurious warnings about incomplete translations, even when running in English
- - Fixed failure to resolve regional translations (like pt_BT or pt_PT) from the locale
+ - Fixed failure to resolve regional translations (like `pt_BT` or `pt_PT`) from the locale
  - Fixed VN log text overlap issues
  - Fixed commodities not being added through unidiff
  - Fixed safe lane rendering alpha being wrong
