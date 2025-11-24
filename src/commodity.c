@@ -386,12 +386,11 @@ static int commodity_parse( Commodity *temp, const char *filename )
          WARN( _( "No <gfx_store> node found, using default texture for "
                   "commodity \"%s\"" ),
                temp->name );
-         temp->gfx_store = gl_newImage( COMMODITY_GFX_PATH "_default.webp", 0 );
+         temp->gfx_store = gl_newImage( COMMODITY_GFX_PATH "_default", 0 );
       }
    }
    if ( temp->gfx_space == NULL )
-      temp->gfx_space =
-         gl_newImage( COMMODITY_GFX_PATH "space/_default.webp", 0 );
+      temp->gfx_space = gl_newImage( COMMODITY_GFX_PATH "space/_default", 0 );
 
    if ( temp->price_ref != NULL ) {
       if ( temp->price > 0. )

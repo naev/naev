@@ -1660,7 +1660,7 @@ int gui_init( void )
    osd_setup( 30., SCREEN_H - 90., 150., 300. );
 
    /* Icons. */
-   gui_ico_hail = gl_newSprite( GUI_GFX_PATH "hail.webp", 5, 2, 0 );
+   gui_ico_hail = gl_newSprite( GUI_GFX_PATH "hail", 5, 2, 0 );
 
    /* Quadtrees. */
    il_create( &gui_qtquery, 1 );

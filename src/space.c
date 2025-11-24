@@ -3566,9 +3566,9 @@ int space_load( void )
    systemname_stack = array_create( char * );
 
    /* Load jump point graphic - must be before systems_load(). */
-   jumppoint_gfx = gl_newSprite( SPOB_GFX_SPACE_PATH "jumppoint.webp", 4, 4,
-                                 OPENGL_TEX_MIPMAPS );
-   jumpbuoy_gfx  = gl_newImage( SPOB_GFX_SPACE_PATH "jumpbuoy.webp", 0 );
+   jumppoint_gfx =
+      gl_newSprite( SPOB_GFX_SPACE_PATH "jumppoint", 4, 4, OPENGL_TEX_MIPMAPS );
+   jumpbuoy_gfx = gl_newImage( SPOB_GFX_SPACE_PATH "jumpbuoy", 0 );
 
    /* Load data. */
    spobs_load();

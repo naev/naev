@@ -1743,14 +1743,14 @@ static void equipment_genShipList( unsigned int wid )
    cships[0].caption = strdup( player.p->name );
    cships[0].layers =
       gl_copyTexArray( (const glTexture **)player.p->ship->gfx_overlays );
-   t                = gl_newImage( OVERLAY_GFX_PATH "active.webp", 0 );
+   t                = gl_newImage( OVERLAY_GFX_PATH "active", 0 );
    cships[0].layers = gl_addTexArray( cships[0].layers, t );
    if ( player.ps.favourite ) {
-      t                = gl_newImage( OVERLAY_GFX_PATH "favourite.webp", 0 );
+      t                = gl_newImage( OVERLAY_GFX_PATH "favourite", 0 );
       cships[0].layers = gl_addTexArray( cships[0].layers, t );
    }
    if ( player.p->ship->rarity > 0 ) {
-      snprintf( r, sizeof( r ), OVERLAY_GFX_PATH "rarity_%d.webp",
+      snprintf( r, sizeof( r ), OVERLAY_GFX_PATH "rarity_%d",
                 player.p->ship->rarity );
       t                = gl_newImage( r, 0 );
       cships[0].layers = gl_addTexArray( cships[0].layers, t );
@@ -1764,15 +1764,15 @@ static void equipment_genShipList( unsigned int wid )
          cships[i].layers  = gl_copyTexArray(
             (const glTexture **)ps[i - 1].p->ship->gfx_overlays );
          if ( ps[i - 1].favourite ) {
-            t = gl_newImage( OVERLAY_GFX_PATH "favourite.webp", 0 );
+            t                = gl_newImage( OVERLAY_GFX_PATH "favourite", 0 );
             cships[i].layers = gl_addTexArray( cships[i].layers, t );
          }
          if ( ps[i - 1].deployed ) {
-            t                = gl_newImage( OVERLAY_GFX_PATH "fleet.webp", 0 );
+            t                = gl_newImage( OVERLAY_GFX_PATH "fleet", 0 );
             cships[i].layers = gl_addTexArray( cships[i].layers, t );
          }
          if ( ps[i - 1].p->ship->rarity > 0 ) {
-            snprintf( r, sizeof( r ), OVERLAY_GFX_PATH "rarity_%d.webp",
+            snprintf( r, sizeof( r ), OVERLAY_GFX_PATH "rarity_%d",
                       ps[i - 1].p->ship->rarity );
             t                = gl_newImage( r, 0 );
             cships[i].layers = gl_addTexArray( cships[i].layers, t );

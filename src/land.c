@@ -356,7 +356,7 @@ static int bar_genList( unsigned int wid )
 
    /* Set up missions. */
    if ( mission_portrait == NULL )
-      mission_portrait = gl_newImage( PORTRAIT_GFX_PATH "news.webp", 0 );
+      mission_portrait = gl_newImage( PORTRAIT_GFX_PATH "news", 0 );
    n = npc_getArraySize();
    if ( n <= 0 ) {
       n                    = 1;
@@ -381,7 +381,7 @@ static int bar_genList( unsigned int wid )
          if ( npc_isImportant( i ) ) {
             p->layers = gl_addTexArray(
                p->layers,
-               gl_newImage( OVERLAY_GFX_PATH "portrait_exclamation.webp", 0 ) );
+               gl_newImage( OVERLAY_GFX_PATH "portrait_exclamation", 0 ) );
             marktab = 1;
          }
       }

@@ -201,7 +201,7 @@ void menu_main( void )
 
    /* Load background and friends. */
    gl_freeTexture( main_naevLogo );
-   tex           = gl_newImage( GFX_PATH "Naev.webp", 0 );
+   tex           = gl_newImage( GFX_PATH "Naev", 0 );
    main_naevLogo = tex;
    menu_main_bkg_system();
 

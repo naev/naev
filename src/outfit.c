@@ -3877,7 +3877,7 @@ int outfit_mapParse( void )
 glTexture *rarity_texture( int rarity )
 {
    char s[PATH_MAX];
-   snprintf( s, sizeof( s ), OVERLAY_GFX_PATH "rarity_%d.webp", rarity );
+   snprintf( s, sizeof( s ), OVERLAY_GFX_PATH "rarity_%d", rarity );
    return gl_newImage( s, OPENGL_TEX_MIPMAPS );
 }
 
