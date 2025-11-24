@@ -20,18 +20,20 @@ pub fn key_from_str(name: &str) -> Option<sdl::keyboard::Keycode> {
             }
         };
         return match name.parse::<i32>() {
-            Ok(kc) => match sdl::keyboard::Keycode::from_i32(kc) {
-                Some(kc) => Some(kc),
-                None => {
-                    return None;
-                }
-            },
-            Err(_) => {
-                return None;
-            }
+            Ok(kc) => sdl::keyboard::Keycode::from_i32(kc),
+            Err(_) => None,
         };
     }
-    sdl::keyboard::Keycode::from_name(name)
+    // TODO use this when https://github.com/vhspace/sdl3-rs/pull/263 is merged
+    //sdl::keyboard::Keycode::from_name(name)
+    match CString::new(name) {
+        Ok(name) => match unsafe { naevc::SDL_GetKeyFromName(name.as_ptr() as *const c_char) } {
+            naevc::SDLK_UNKNOWN => None,
+            keycode_id => sdl::keyboard::Keycode::from_i32(keycode_id as i32),
+        },
+        // string contains a nul byte - it won't match anything.
+        Err(_) => None,
+    }
 }
 
 // Here be C API, yarr
