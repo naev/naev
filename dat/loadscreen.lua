@@ -88,7 +88,8 @@ local function load_gfx ()
    local name = files[ rnd.rnd(1,#files) ]
    local path = basepath..name
 
-   local caption = lf.read( path:gsub( extension(path), ".txt" ) )
+   local txtpath = path:gsub( extension(path), ".txt" )
+   local caption = lf.read( txtpath )
    if not caption then caption = N_("Unknown") end
    local image = lg.newImage( path )
 
