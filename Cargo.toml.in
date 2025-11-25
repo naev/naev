@@ -46,8 +46,6 @@ iced = { git = "https://github.com/iced-rs/iced", rev = "ea614387f4d94960911b0a7
 iced_core = { git = "https://github.com/iced-rs/iced", rev = "ea614387f4d94960911b0a7d8ce25c02edb470c5" }
 iced_widget = { git = "https://github.com/iced-rs/iced", rev = "ea614387f4d94960911b0a7d8ce25c02edb470c5" }
 iced_aw = { git = "https://github.com/iced-rs/iced_aw.git", rev = "f49e058684b6e03a49b94c0ae6d9fb40db6ef2a2" }
-dav1d = { git = "https://github.com/rust-av/dav1d-rs", rev = "2d49d209d7fddb98cfba54ac77d3e6415d12083b" }
-dav1d-sys = { git = "https://github.com/rust-av/dav1d-rs", rev = "2d49d209d7fddb98cfba54ac77d3e6415d12083b" }
 image = { git = "https://github.com/image-rs/image", rev = "81b6eac19c50bd1bbe12f42eb39a5d99d0b20c60" }
 gltf = { git = "https://github.com/gltf-rs/gltf.git", rev = "3def30c9caf96f2dbc85238179ea5a6152c5cf22" }
 
@@ -70,7 +68,8 @@ glow = "0.16"
 nalgebra = { version = "0.34", features = ["bytemuck", "encase"] }
 encase = { version = "0.12" } # Needed for shader voodoo
 bytemuck = { version = "1.23", features = ["derive"] } # Needed for shader voodoo
-image = { version = "0.25.9", default-features = false, features = [ "rayon", "avif-native", "jpeg", "png", "webp" ]  }
+# need dav1d 0.11.1 or newer, will appear in the version after 0.25.9
+image = { version = "0.25", default-features = false, features = [ "rayon", "avif-native", "jpeg", "png", "webp" ]  }
 mlua = { version = "0.11", features = ["luajit", "anyhow", "send", "serialize"] }
 roxmltree = "0.21"
 derive_more = { version = "2", features = ["from", "into", "display"] }
