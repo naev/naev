@@ -103,7 +103,7 @@ function vni.generator( path )
    lg.setCanvas()
 
    -- Due to limitations of the C-side API, we have to pass the texture as a portrait, while the VN supports canvases
-   return img, prt.t.tex
+   return img.t.tex, prt.t.tex
 end
 
 local function gen( path )
