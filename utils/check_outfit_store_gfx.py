@@ -13,7 +13,7 @@ else:
    print("Failed to detect where you're running this script from\nPlease enter your path manually")
 
 images  = glob(prefix+"/dat/gfx/outfit/store/*")
-images += glob(prefix+"/artwork/gfx/outfit/store/*")
+images += glob(prefix+"/assets/gfx/outfit/store/*")
 images  = list(map( lambda x: os.path.basename(x), images ))
 
 imgdict = {}
@@ -60,9 +60,9 @@ with open( "outfit_gfx.html", "w" ) as out:
    for k in sorted( imgdict, key=lambda x: imgdict[x], reverse=True ):
       path = prefix+"/dat/gfx/outfit/store/"+k
       if not os.path.isfile( path ):
-         path = prefix+"/artwork/gfx/outfit/store/"+k
+         path = prefix+"/assets/gfx/outfit/store/"+k
       if not os.path.isfile( path ):
-         path = prefix+"/artwork/"+k
+         path = prefix+"/assets/"+k
       v = imgdict[k]
       if v[0] != 1: # for simplicity hide stuff that appears once
          out.write(f"""

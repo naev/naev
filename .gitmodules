@@ -9,3 +9,6 @@ url = https://github.com/hoelzro/lua-repl.git
 path = utils/shlinters
 url = https://codeberg.org/johann1764/shlinters
 branch = main
+[submodule "assets"]
+path = assets
+url = https://codeberg.org/naev/naev-assets-lossy.git

@@ -572,7 +572,7 @@ naevcrs = rust.bindgen(
          '--preamble', '@INPUT0@',
          '@INPUT1@', '@INPUT2@',
       ],
-      input: files('dat/AUTHORS', 'artwork/gfx/ARTWORK_LICENSE.yaml', 'artwork/snd/SOUND_LICENSE.yaml'),
+      input: files('dat/AUTHORS', 'assets/gfx/ARTWORK_LICENSE.yaml', 'assets/snd/SOUND_LICENSE.yaml'),
       output: 'AUTHORS',
       install: true,
       install_dir: ndata_path / 'dat',
@@ -659,7 +659,7 @@ naevcrs = rust.bindgen(
    )
 
    install_subdir(
-      'artwork',
+      'assets',
       install_dir: ndata_path / 'dat',
       exclude_directories: '.git',  # That's a marker used by "git submodule".
       strip_directory: true,

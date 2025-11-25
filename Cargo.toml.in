@@ -69,7 +69,7 @@ nalgebra = { version = "0.34", features = ["bytemuck", "encase"] }
 encase = { version = "0.12" } # Needed for shader voodoo
 bytemuck = { version = "1.23", features = ["derive"] } # Needed for shader voodoo
 # need dav1d 0.11.1 or newer, will appear in the version after 0.25.9
-image = { version = "0.25", default-features = false, features = [ "rayon", "avif-native", "jpeg", "png", "webp" ]  }
+image = { version = "0.25", default-features = false, features = [ "avif-native", "jpeg", "png", "webp" ]  }
 mlua = { version = "0.11", features = ["luajit", "anyhow", "send", "serialize"] }
 roxmltree = "0.21"
 derive_more = { version = "2", features = ["from", "into", "display"] }
