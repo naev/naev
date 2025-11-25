@@ -2,7 +2,7 @@ use crate::model::Model;
 use anyhow::Result;
 use log::{warn, warn_err};
 use rayon::prelude::*;
-use renderer::{Context, ContextWrapper};
+use renderer::{Context, ContextWrapper, texture};
 use std::ffi::{CStr, CString, c_void};
 use std::path::Path;
 
@@ -130,13 +130,7 @@ pub extern "C" fn ship_gfxLoadNeeded() {
             match s.gfx_extension.is_null() {
                 true => &{
                     'imageformat: {
-                        use image::ImageFormat;
-                        for imageformat in &[
-                            ImageFormat::Avif,
-                            ImageFormat::WebP,
-                            ImageFormat::Png,
-                            ImageFormat::Jpeg,
-                        ] {
+                        for imageformat in texture::FORMATS {
                             for ext in imageformat.extensions_str() {
                                 if ndata::is_file(&format!("{}.{}", path, ext)) {
                                     break 'imageformat format!(".{}", ext);

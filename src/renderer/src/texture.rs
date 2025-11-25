@@ -1,6 +1,7 @@
 use anyhow::Context as AnyhowContext;
 use anyhow::Result;
 use glow::*;
+use image::ImageFormat;
 use log::{warn, warn_err};
 #[allow(unused_imports)]
 use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
@@ -18,12 +19,19 @@ use crate::{
 };
 
 /// All the shared texture data to look up
-pub static TEXTURE_DATA: LazyLock<Mutex<Vec<Weak<TextureData>>>> =
+pub(crate) static TEXTURE_DATA: LazyLock<Mutex<Vec<Weak<TextureData>>>> =
     LazyLock::new(|| Mutex::new(Default::default()));
 /// Counter for how many textures were destroyed
-pub static GC_COUNTER: AtomicU32 = AtomicU32::new(0);
+pub(crate) static GC_COUNTER: AtomicU32 = AtomicU32::new(0);
 /// Number of destroyed textures to start garbage collecting the cache
-pub const GC_THRESHOLD: u32 = 128;
+pub(crate) const GC_THRESHOLD: u32 = 128;
+
+pub const FORMATS: [ImageFormat; 4] = [
+    ImageFormat::Avif,
+    ImageFormat::WebP,
+    ImageFormat::Png,
+    ImageFormat::Jpeg,
+];
 
 #[allow(clippy::upper_case_acronyms)]
 #[derive(Clone, Copy, Debug)]
@@ -888,14 +896,8 @@ impl TextureSource {
                             None => {
                                 // We could just use ImageFormat::all() here, but I figure we want
                                 // a specific order
-                                use image::ImageFormat;
                                 let mut image = None;
-                                'imageformat: for imageformat in &[
-                                    ImageFormat::Avif,
-                                    ImageFormat::WebP,
-                                    ImageFormat::Png,
-                                    ImageFormat::Jpeg,
-                                ] {
+                                'imageformat: for imageformat in FORMATS {
                                     for ext in imageformat.extensions_str() {
                                         let path = &format!("{}.{}", cpath, ext);
                                         if ndata::exists(path) {

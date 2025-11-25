@@ -529,13 +529,7 @@ impl Context {
         // Try to load the icon.
         fn set_icon(window: &mut sdl::video::Window) -> Result<()> {
             let filename = 'filename: {
-                use image::ImageFormat;
-                for imageformat in &[
-                    ImageFormat::Avif,
-                    ImageFormat::WebP,
-                    ImageFormat::Png,
-                    ImageFormat::Jpeg,
-                ] {
+                for imageformat in texture::FORMATS {
                     for ext in imageformat.extensions_str() {
                         let path = format!("{}{}.{}", ndata::GFX_PATH, "icon", ext);
                         if ndata::exists(&path) {
