@@ -528,7 +528,23 @@ impl Context {
 
         // Try to load the icon.
         fn set_icon(window: &mut sdl::video::Window) -> Result<()> {
-            let filename = format!("{}{}", ndata::GFX_PATH, "icon.webp");
+            let filename = 'filename: {
+                use image::ImageFormat;
+                for imageformat in &[
+                    ImageFormat::Avif,
+                    ImageFormat::WebP,
+                    ImageFormat::Png,
+                    ImageFormat::Jpeg,
+                ] {
+                    for ext in imageformat.extensions_str() {
+                        let path = format!("{}{}.{}", ndata::GFX_PATH, "icon", ext);
+                        if ndata::exists(&path) {
+                            break 'filename path;
+                        }
+                    }
+                }
+                anyhow::bail!("icon not found")
+            };
             let rw = ndata::iostream(&filename)?;
             let img = {
                 let mut img = image::ImageReader::new(std::io::BufReader::new(rw))

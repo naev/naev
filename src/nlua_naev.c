@@ -1061,7 +1061,7 @@ static int naevL_supported_image_ext( lua_State *L )
    lua_pushstring( L, ( s ) );                                                 \
    lua_rawseti( L, -2, i++ );
    lua_newtable( L );
-   // EXT( ".avif" );
+   EXT( ".avif" );
    EXT( ".webp" );
    EXT( ".png" );
    EXT( ".jpg" );

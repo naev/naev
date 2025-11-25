@@ -891,7 +891,7 @@ impl TextureSource {
                                 use image::ImageFormat;
                                 let mut image = None;
                                 'imageformat: for imageformat in &[
-                                    //ImageFormat::Avif,
+                                    ImageFormat::Avif,
                                     ImageFormat::WebP,
                                     ImageFormat::Png,
                                     ImageFormat::Jpeg,
