@@ -122,15 +122,32 @@ pub extern "C" fn ship_gfxLoadNeeded() {
         let s = ptr.0;
         let cpath = unsafe { CStr::from_ptr(s.gfx_path).to_str().unwrap() };
         let base = cpath.split('_').next().unwrap_or("");
-        let ext = unsafe {
-            match s.gfx_extension.is_null() {
-                true => ".webp",
-                false => CStr::from_ptr(s.gfx_extension).to_str().unwrap(),
-            }
-        };
         let path = match cpath.starts_with('/') {
             true => cpath,
             false => &format!("gfx/ship/{base}/{cpath}"),
+        };
+        let ext = unsafe {
+            match s.gfx_extension.is_null() {
+                true => &{
+                    'imageformat: {
+                        use image::ImageFormat;
+                        for imageformat in &[
+                            ImageFormat::Avif,
+                            ImageFormat::WebP,
+                            ImageFormat::Png,
+                            ImageFormat::Jpeg,
+                        ] {
+                            for ext in imageformat.extensions_str() {
+                                if ndata::is_file(&format!("{}.{}", path, ext)) {
+                                    break 'imageformat format!(".{}", ext);
+                                }
+                            }
+                        }
+                        ".webp".to_string()
+                    }
+                },
+                false => CStr::from_ptr(s.gfx_extension).to_str().unwrap(),
+            }
         };
         match ptr.load_gfx_2d(path, ext) {
             Ok(_) => (),
