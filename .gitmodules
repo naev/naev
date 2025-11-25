@@ -2,10 +2,6 @@
 path = extras/windows/mingw-bundledlls
 url = https://github.com/ProjectSynchro/mingw-bundledlls.git
 branch = ucrt_blacklist
-[submodule "artwork"]
-path = artwork
-url = https://codeberg.org/naev/naev-artwork.git
-branch = main
 [submodule "dat/lua-repl"]
 path = dat/lua-repl
 url = https://github.com/hoelzro/lua-repl.git
