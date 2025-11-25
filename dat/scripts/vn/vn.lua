@@ -1933,7 +1933,7 @@ function vn.run()
          elseif s._type=="Jump" then
             table.insert( jumps, s.label )
          elseif s._type=="Menu" then
-            if type(s.items)=="table" then
+            if type(s.items)=="table" and s.handler==nil then
                for i,m in ipairs(s.items) do
                   table.insert( menu_jumps, m[2] )
                end
