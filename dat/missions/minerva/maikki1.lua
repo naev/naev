@@ -737,7 +737,6 @@ function stealthheartbeat ()
             wreck = pilot.add( "Rhino", "Derelict", pos, _("Ship Wreck") )
             wreck:setDisable()
             wreck:setInvincible(true)
-            wreck:setNoBoard(true)
             hook.pilot( wreck, "board", "board_wreck" )
          end
       -- Else, still travelling to target
@@ -852,8 +851,6 @@ He seems to be clutching his head. A headache perhaps?]]))
 
    vn.done("electric")
    vn.run()
-
-   wreck:setNoBoard(false)
 end
 
 
