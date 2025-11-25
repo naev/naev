@@ -6,6 +6,7 @@ use gltf::Gltf;
 use nalgebra::{Matrix3, Matrix4, Point3, Vector3, Vector4};
 use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_double, c_int, c_uint};
+use std::path::Path;
 use std::rc::Rc;
 
 use log::warn;
@@ -1187,10 +1188,10 @@ struct TextureWrap<'a> {
 }
 
 impl Model {
-    pub fn from_path(ctx: &ContextWrapper, path: &str) -> Result<Self> {
-        use std::path::Path;
+    pub fn from_path<P: AsRef<Path>>(ctx: &ContextWrapper, path: P) -> Result<Self> {
+        let path = path.as_ref();
         let gltf = Gltf::from_reader(ndata::open(path)?)?;
-        let base = match Path::new(path).parent() {
+        let base = match path.parent() {
             Some(val) => val.to_str().unwrap(),
             None => "",
         };
