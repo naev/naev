@@ -1,9 +1,10 @@
 use crate::model::Model;
 use anyhow::Result;
-use log::warn;
+use log::{warn, warn_err};
 use rayon::prelude::*;
 use renderer::{Context, ContextWrapper};
 use std::ffi::{CStr, CString, c_void};
+use std::path::Path;
 
 struct ShipWrapper(naevc::Ship);
 //unsafe impl Sync for ShipWrapper {}
@@ -15,7 +16,7 @@ impl ShipWrapper {
         s.to_string()
     }
 
-    fn load_gfx_3d(&mut self, path: &str, ctx: &ContextWrapper) -> Result<()> {
+    fn load_gfx_3d<P: AsRef<Path>>(&mut self, path: P, ctx: &ContextWrapper) -> Result<()> {
         let m = Model::from_path(ctx, path)?;
         self.0.gfx_3d = m.into_ptr() as *mut naevc::GltfObject;
         unsafe {
@@ -24,8 +25,9 @@ impl ShipWrapper {
         Ok(())
     }
 
-    fn load_gfx_2d(&mut self, path: &str, ext: &str) -> Result<()> {
-        let cpath = CString::new(path).unwrap();
+    fn load_gfx_2d<P: AsRef<Path>>(&mut self, path: P, ext: &str) -> Result<()> {
+        use std::ops::Deref;
+        let cpath = CString::new(path.as_ref().as_os_str().to_string_lossy().deref()).unwrap();
         let cext = CString::new(ext).unwrap();
         unsafe {
             naevc::ship_gfxLoad2D(
@@ -94,20 +96,22 @@ pub extern "C" fn ship_gfxLoadNeeded() {
             };
             let path = match cpath.starts_with('/') {
                 true => cpath,
-                false => &format!("gfx/ship3d/{base_path}/{cpath}"),
+                false => &{
+                    let path = format!("gfx/ship3d/{base_path}/{cpath}");
+                    if ndata::is_file(&path) {
+                        path
+                    } else {
+                        format!("gfx/ship3d/{base_path}/{cpath}.gltf")
+                    }
+                },
             };
-            if match ndata::is_file(path) {
-                true => ptr.load_gfx_3d(path, &ctx),
-                false => {
-                    let path = format!("gfx/ship3d/{base_path}/{cpath}.gltf");
-                    ptr.load_gfx_3d(&path, &ctx)
-                }
-            }
-            .is_ok()
-            {
-                None
-            } else {
+            if !ndata::is_file(path) {
                 Some(ptr)
+            } else {
+                if let Err(e) = ptr.load_gfx_3d(path, &ctx) {
+                    warn_err!(e);
+                }
+                None
             }
         })
         .collect();
