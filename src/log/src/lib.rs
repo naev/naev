@@ -60,15 +60,18 @@ struct Logger {
     warn_num: AtomicU32,
     output: Mutex<Output>,
 }
+const WHITELIST: [&str; 5] = ["naev", "log", "renderer", "pluginmgr", "core"];
 impl logcore::Log for Logger {
     fn enabled(&self, metadata: &logcore::Metadata) -> bool {
-        if metadata.target().starts_with("naga::") {
+        let level = metadata.level();
+        let target = metadata.target();
+        if level > logcore::Level::Warn && !WHITELIST.iter().any(|s| target.starts_with(s)) {
             return false;
         }
         if cfg!(debug_assertions) {
-            metadata.level() <= logcore::Level::Debug
+            level <= logcore::Level::Debug
         } else {
-            metadata.level() <= logcore::Level::Info
+            level <= logcore::Level::Info
         }
     }
 
