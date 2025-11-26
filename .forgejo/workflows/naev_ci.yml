@@ -6,13 +6,18 @@ jobs:
   "Package_Source":
     runs-on: naev-release
     steps:
+      - name: Force Codeberg over SSH
+        run: git config --global url."ssh://git@codeberg.org/".insteadOf https://codeberg.org/
+
       - name: Checkout Naev Repository
         uses: actions/checkout@v4
         with:
           lfs: true
           path: source
           submodules: true
-          token: ${{ secrets.CLONE_PAT }}
+          ssh-key: ${{ secrets.CODEBERG_SSH_KEY }}
+          ssh-known-hosts: ${{ secrets.CODEBERG_SSH_KNOWN_HOSTS }}
+          persist-credentials: false
 
       - name: Package Dist
         run: |
