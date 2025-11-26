@@ -7,7 +7,7 @@ jobs:
     runs-on: naev-release
     steps:
       - name: Force Codeberg over SSH
-        run: git config --global url."ssh://git@codeberg.org/".insteadOf https://codeberg.org/
+        run: git config --global url."ssh://git@codeberg.org/naev/".insteadOf https://codeberg.org/naev/
 
       - name: Checkout Naev Repository
         uses: actions/checkout@v4
