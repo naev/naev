@@ -24,7 +24,7 @@ This name will also be displayed within the game itself.
   * `<jump>`: Defines a jump point.
     * `<target>`: Name of the jump point's destination system. The direction of travel when entering this jump point corresponds to that of the jump line shown on the universe map.
     * `<pos>`: Position of the jump point within the system, expressed as `x` and `y` coordinates relative to the system's `x="0" y="0"` origin point.
-    * `<autopos/>`: Alternative to `<pos>` which prompts the game to generate a position for the jump point. The point will always be placed at the system boundary (the circle defined by <radius>) on a line between the current system centre and the destination system.
+    * `<autopos/>`: Alternative to `<pos>` which prompts the game to generate a position for the jump point. The point will always be placed at the system boundary (the circle defined by `<radius>`) on a line between the current system centre and the destination system.
       * `<exitonly/>: Prevents the player from detecting this jump point or entering it from the current system. These points are used exclusively as the destinations to jumps coming in from other systems.
     * `<hide>`: Modifies the range at which your sensors can discover previously unknown jump points. A value of `1` is the default and indicates no change. Values greater than `1` increase the jump point's detection distance. Values less than `1` but greater than `0` reduce the jump point's detection distance. A value of `0` is a specific exception which labels the jump as part of a Trade Route - the jump point will automatically be discovered when the player enters the system, regardless of distance, and also have some small beacons next to it.
     * `<hidden/>`: Designates the jump as a hidden point which cannot be discovered with standard sensors. In the base Naev scenario, hidden jump points are revealed to the player mainly via mission rewards, by completing certain missions or by equipping and activating a Hidden Jump Scanner outfit.
@@ -35,7 +35,7 @@ This name will also be displayed within the game itself.
     * `<radius>`: Size of the circular asteroid field, expressed in distance units from the field's centre point as defined in the `<pos>` field.
     * `<density>`: Affects how many asteroids are present within the asteroid field's area.
   * `<exclusion>`: Defines an asteroid exclusion zone, creating a "negative" asteroid field. This can be used to create asteroid fields of unique shapes such as rings or crescents.
-    * `<radius>` and <pos> fields function identically to those under <asteroid>.
+    * `<radius>` and `<pos>` fields function identically to those under `<asteroid>`.
 
 ## Defining Jumps
 
