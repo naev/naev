@@ -248,7 +248,7 @@ build_dmg(){
    genisoimage -V Naev -D -R -apple -no-pad -o "$BUILDPATH"/naev-macos.iso "$BUILDPATH/dmg_staging"
    #dmg "$BUILDPATH"/naev-macos.iso "$WORKPATH"/dist/naev-macos.dmg
    #hdiutil convert "$BUILDPATH"/naev-macos.iso -format UDRW -o "$WORKPATH"/dist/naev-macos.dmg
-   dmg build "$BUILDPATH"/naev-macos.iso "$WORKPATH"/dist/naev-macos.dmg
+   dmg dmg "$BUILDPATH"/naev-macos.iso "$WORKPATH"/dist/naev-macos.dmg
 }
 
 package_bundle(){
