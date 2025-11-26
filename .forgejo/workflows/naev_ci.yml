@@ -9,8 +9,10 @@ jobs:
       - name: Checkout Naev Repository
         uses: actions/checkout@v4
         with:
+          lfs: true
           path: source
           submodules: true
+          token: ${{ secrets.CLONE_PAT }}
 
       - name: Package Dist
         run: |

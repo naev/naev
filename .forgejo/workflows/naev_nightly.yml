@@ -13,8 +13,10 @@ jobs:
       - name: Checkout Naev Repository
         uses: actions/checkout@v4
         with:
+          lfs: true
           path: source
           submodules: true
+          token: ${{ secrets.CLONE_PAT }}
 
       - name: Package Dist
         run: |
@@ -415,8 +417,10 @@ jobs:
         if: ${{ matrix.releasetype == 'codeberg' }}
         uses: actions/checkout@v4
         with:
+          lfs: true
           path: build/staging/repo
           fetch-depth: 0
+          token: ${{ secrets.CLONE_PAT }}
 
       - name: Generate Nightly Changelog
         if: ${{ matrix.releasetype == 'codeberg' }}

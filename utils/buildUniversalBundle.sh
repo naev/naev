@@ -83,6 +83,18 @@ check_tools(){
       echo "You don't have rcodesign in PATH"
       echo "Get it from https://github.com/indygreg/apple-platform-rs/releases"
       exit 1
+   elif ! [ -x "$(command -v mkfs.hfsplus)" ]; then
+      echo "You don't have mkfs.hfsplus in PATH"
+      echo "Install hfsprogs (provides the tools needed)."
+      exit 1
+   elif ! [ -x "$(command -v hfsplus)" ]; then
+      echo "You don't have the hfsplus tool in PATH"
+      echo "Install libdmg-hfsplus (provides hfsplus)."
+      exit 1
+   elif ! [ -x "$(command -v dmg)" ]; then
+      echo "You don't have the dmg tool in PATH"
+      echo "Install libdmg-hfsplus (provides dmg)."
+      exit 1
    fi
 }
 
@@ -232,23 +244,36 @@ zip_bundle(){
 }
 
 build_dmg(){
-   # Create working directories
-   mkdir -p "$BUILDPATH/dmg_staging"
+   local staging_dir="$BUILDPATH/dmg_staging"
+   local hfs_image="$BUILDPATH/naev-macos.hfsplus"
+   local dmg_out="$WORKPATH/dist/naev-macos.dmg"
 
-   # Create Applications symlink for DMG installer in dmg staging area
-   ln -s /Applications "$BUILDPATH"/dmg_staging/Applications
+   # Create working directories
+   mkdir -p "$staging_dir"
+   mkdir -p "$(dirname "$dmg_out")"
 
    # Copy all DMG installer assets to dmg staging area
-   cp -r "$DMGASSETSPATH"/. "$BUILDPATH/dmg_staging"
+   cp -r "$DMGASSETSPATH"/. "$staging_dir"
 
    # Copy Universal Naev app bundle to dmg staging area
-   cp -r "$BUILDPATH/Naev.app" "$BUILDPATH/dmg_staging"
+   cp -r "$BUILDPATH/Naev.app" "$staging_dir"
 
-   # Generate ISO image and compress into DMG
-   genisoimage -V Naev -D -R -apple -no-pad -o "$BUILDPATH"/naev-macos.iso "$BUILDPATH/dmg_staging"
-   #dmg "$BUILDPATH"/naev-macos.iso "$WORKPATH"/dist/naev-macos.dmg
-   #hdiutil convert "$BUILDPATH"/naev-macos.iso -format UDRW -o "$WORKPATH"/dist/naev-macos.dmg
-   dmg dmg "$BUILDPATH"/naev-macos.iso "$WORKPATH"/dist/naev-macos.dmg
+   # Size an HFS+ image with some padding and build it
+   local size_kb padding_kb image_kb
+   size_kb=$(du -sk "$staging_dir" | cut -f1)
+   padding_kb=51200 # ~50MB padding for filesystem metadata and safety margin
+   image_kb=$((size_kb + padding_kb))
+   rm -f "$hfs_image"
+   truncate -s "${image_kb}K" "$hfs_image"
+   mkfs.hfsplus -v "Naev" "$hfs_image"
+
+   # Populate the HFS+ image and convert it to a compressed DMG
+   hfsplus "$hfs_image" addall "$staging_dir" /
+   # Add the Applications symlink inside the HFS+ image (avoid resolving it on the host)
+   hfsplus "$hfs_image" rm /Applications >/dev/null 2>&1 || true
+   hfsplus "$hfs_image" symlink /Applications /Applications
+   rm -f "$dmg_out"
+   dmg -c lzma -l 8 build "$hfs_image" "$dmg_out"
 }
 
 package_bundle(){

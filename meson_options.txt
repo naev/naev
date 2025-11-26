@@ -4,7 +4,7 @@ option('debug_rust'     , type: 'boolean', value: false      , description: 'Com
 option('debug_arrays'   , type: 'boolean', value: false      , description: 'Promote run-time warnings to errors.')
 option('steamruntime'   , type: 'boolean', value: false      , description: 'If you like this stuff you should be ashamed..')
 option('target_triplet' , type: 'string',  value: ''         , description: 'Set the target triplet for cross-compilation.')
-option('installer'      , type: 'boolean', value: false      , description: 'For macOS: package as a DMG as well as an app bundle. Requires "genisoimage". For Windows: packages an NSIS-based installer. Requires "makensis".')
+option('installer'      , type: 'boolean', value: false      , description: 'For macOS: package as a DMG as well as an app bundle. Requires mkfs.hfsplus/hfsplus/dmg (hfsprogs + libdmg-hfsplus). For Windows: packages an NSIS-based installer. Requires "makensis".')
 option('release'        , type: 'boolean', value: false      , description: 'Set to true if releasing. Will create archives which are used by the release scripts to build the store releases.')
 option('executable'     , type: 'feature', value: 'enabled'  , description: 'Enable compilation of Naev\'s executable.')
 option('docs_c'         , type: 'feature', value: 'auto'     , description: 'Enable compilation of Naev\'s C documentation.')
