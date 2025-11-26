@@ -17,6 +17,7 @@ jobs:
       - name: Checkout Naev Repository
         uses: actions/checkout@v4
         with:
+          lfs: true
           path: source
           submodules: true
 
@@ -497,6 +498,7 @@ jobs:
         if: ${{ matrix.releasetype == 'codeberg' }}
         uses: actions/checkout@v4
         with:
+          lfs: true
           path: build/staging/repo
           fetch-depth: 0
 
