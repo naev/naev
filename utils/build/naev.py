@@ -95,4 +95,4 @@ for mo_path in os.listdir(os.path.join(build_root, "po")):
       shutil.copytree(mo_path, dest_dir, dirs_exist_ok=True)
       logger.info(f"Copied directory {mo_path} to {dest_dir}")
 
-wrapper(naev_bin, "-d", zip_overlay, "-d", os.path.join(source_root, "dat"), "-d", os.path.join(source_root, "artwork"), "-d", os.path.join(build_root, "dat"), "-d", source_root, *sys.argv[1:])
+wrapper(naev_bin, "-d", zip_overlay, "-d", os.path.join(source_root, "dat"), "-d", os.path.join(source_root, "assets"), "-d", os.path.join(build_root, "dat"), "-d", source_root, *sys.argv[1:])

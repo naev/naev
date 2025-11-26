@@ -34,7 +34,7 @@ local vn = {
       _buffer = "",
       _title = nil,
       _globalalpha = 1,
-      --_soundTalk = audio.newSource( "snd/sounds/ui/letter0.wav" ),
+      --_soundTalk = audio.newSource( "snd/sounds/ui/letter0.ogg" ),
       _pitchValues = {0.7, 0.8, 1.0, 1.2, 1.3},
       _buffer_y = 0,
    },
@@ -45,7 +45,7 @@ local vn = {
       money = audio.newSource( 'snd/sounds/jingles/money.ogg' ),
       victory = audio.newSource( 'snd/sounds/jingles/victory.ogg' ),
       ui = {
-         option = audio.newSource( 'snd/sounds/ui/happy.wav' ),
+         option = audio.newSource( 'snd/sounds/ui/happy.ogg' ),
       },
    },
 }

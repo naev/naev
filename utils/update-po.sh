@@ -43,7 +43,7 @@ deterministic_sort() { LC_ALL=C sort; }
 # language detection and gives them unwanted "c-format" or "lua-format" tags.
 
 IFS=$'\n'
-readarray -t ART <<< "$(cd artwork; find_files gfx/loading txt | sed 's|^|artwork/|')"
+readarray -t ART <<< "$(cd assets; find_files gfx/loading txt | sed 's|^|assets/|')"
 po/credits_pot.py po/credits.pot dat/AUTHORS "${ART[@]}"
 po/toml_pot.py po/toml.pot dat/damagetype/ dat/slots/
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-PIC="$(realpath --relative-to="$PWD" "${SCRIPT_DIR}/../../artwork/gfx/map")"
+PIC="$(realpath --relative-to="$PWD" "${SCRIPT_DIR}/../../assets/gfx/map")"
 MAP="$(realpath --relative-to="$PWD" "${SCRIPT_DIR}/../../dat/map_decorator")"
 
 if [ -f "decorators.inc" ] ; then

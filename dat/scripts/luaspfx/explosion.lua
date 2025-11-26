@@ -85,9 +85,9 @@ local function explosion( pos, vel, radius, damage, params )
       local explosion_shader_frag = lf.read( "shaders/explosion.frag" )
       explosion_shader = lg.newShader( explosion_shader_frag )
       explosion_sfx = {
-         audio.new( "snd/sounds/explosion0.wav" ),
-         audio.new( "snd/sounds/explosion1.wav" ),
-         audio.new( "snd/sounds/explosion2.wav" ),
+         audio.new( "snd/sounds/explosion0.ogg" ),
+         audio.new( "snd/sounds/explosion1.ogg" ),
+         audio.new( "snd/sounds/explosion2.ogg" ),
       }
    end
 
