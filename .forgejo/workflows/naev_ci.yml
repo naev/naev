@@ -12,6 +12,7 @@ jobs:
           lfs: true
           path: source
           submodules: true
+          token: ${{ secrets.CLONE_PAT }}
 
       - name: Package Dist
         run: |
