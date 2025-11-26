@@ -1,4 +1,6 @@
 set height 0
+# too spammy with image-rs 0.25.9 using dav1d-rs 0.11.1
+set print thread-events off
 handle SIGTERM nostop print pass
 handle SIGPIPE nostop
 # Tell gdb to detach before a normal exit, so that LeakSanitizer can do its job.
