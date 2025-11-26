@@ -16,6 +16,7 @@ jobs:
           lfs: true
           path: source
           submodules: true
+          token: ${{ secrets.CLONE_PAT }}
 
       - name: Package Dist
         run: |
@@ -419,6 +420,7 @@ jobs:
           lfs: true
           path: build/staging/repo
           fetch-depth: 0
+          token: ${{ secrets.CLONE_PAT }}
 
       - name: Generate Nightly Changelog
         if: ${{ matrix.releasetype == 'codeberg' }}
