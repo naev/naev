@@ -1,23 +1,17 @@
-on: [push]
+on: [pull_request]
 
-name: CI
+name: Pull Request Testing
 
 jobs:
   "Package_Source":
     runs-on: naev-release
     steps:
-      - name: Force Codeberg over SSH
-        run: git config --global url."ssh://git@codeberg.org/naev/".insteadOf https://codeberg.org/naev/
-
       - name: Checkout Naev Repository
         uses: actions/checkout@v4
         with:
           lfs: false # defer LFS to after cache restore
           path: source
           submodules: true
-          ssh-key: ${{ secrets.CODEBERG_SSH_KEY }}
-          ssh-known-hosts: ${{ secrets.CODEBERG_SSH_KNOWN_HOSTS }}
-          persist-credentials: true
 
       - name: Capture assets submodule revision
         id: assets_rev
@@ -375,13 +369,3 @@ jobs:
         with:
           name: ${{ github.sha }}-ldoc-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
-
-      - name: Trigger Website Build
-        if: ${{ steps.compile.outcome == 'success' && github.ref == 'refs/heads/main' }}
-        run: |
-          curl -X POST \
-            -H "Authorization: token ${{ secrets.WEBSITE_TOKEN }}" \
-            -H "Accept: application/json" \
-            -H "Content-Type: application/json" \
-            "https://codeberg.org/api/v1/repos/naev/naev-website/actions/workflows/api_build.yml/dispatches" \
-            -d '{"ref": "main"}'
