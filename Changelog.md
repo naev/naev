@@ -1,11 +1,12 @@
-## 0.13.0-beta.2 (unreleased)
+## 0.13.0-beta.2
  - Fixed crash with appimage on certain systems
  - Fixed game not saving when exiting while landed via the small menu
+ - Use lossy compression to significantly decrease the size of the game
  - Right-clicking on a spob or jump point will both select it and take you there
  - Fixed VN not looking up images with explicit file extensions
- - maikki1: fixed warning when player boards the ship fast
  - Properly define cargo dependency patches
  - Don't specify webp for PSO-2434
+ - maikki1: fixed warning when player boards the ship fast
  - Fixed new svg-based portrait generator breaking with some API usage
  - Fixed some strings and updated translations
 
