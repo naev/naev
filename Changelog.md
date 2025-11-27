@@ -1,3 +1,6 @@
+## 0.13.0-beta.3 (unreleased)
+ - Make sure reynir only appears when you have free cargo space (reynir.lua)
+
 ## 0.13.0-beta.2
  - Fixed crash with appimage on certain systems
  - Fixed game not saving when exiting while landed via the small menu
