@@ -595,6 +595,7 @@ int conf_parseCLI( int argc, char **argv )
       { "svol", required_argument, 0, 's' },
       { "scale", required_argument, 0, 'X' },
       { "devmode", no_argument, 0, 'D' },
+      { "pluginmanager", no_argument, 0, 'p' },
       { "help", no_argument, 0, 'h' },
       { "version", no_argument, 0, 'v' },
       { "exitmainmenu", no_argument, 0, '\e' },
@@ -607,7 +608,7 @@ int conf_parseCLI( int argc, char **argv )
     * option.
     */
    optind = 0;
-   while ( ( c = getopt_long( argc, argv, "fF:Vd:j:J:W:H:MSm:s:X:Nhv",
+   while ( ( c = getopt_long( argc, argv, "fF:Vd:j:J:W:H:MSm:s:X:Nphv",
                               long_options, &option_index ) ) != -1 ) {
       switch ( c ) {
       case 'd':
@@ -656,6 +657,10 @@ int conf_parseCLI( int argc, char **argv )
       case 'D':
          conf.devmode = 1;
          LOG( _( "Enabling developer mode." ) );
+         break;
+      case 'p':
+         /* Handled on the Rust side to spin up the GUI; parsed here to avoid
+          * getopt noise on platforms like macOS. */
          break;
       case '\e':
          conf.exit_main_menu = 1;
