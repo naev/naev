@@ -43,7 +43,7 @@ repos:
     - id: smd
       name: markdown linter
       entry: utils/shlinters/smd/smd.sh
-      args: ["-i"]
+      args: ["-i", "-s"]
       files: '^Readme.md'
       types: [markdown]
       language: script

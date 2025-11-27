@@ -1,10 +1,8 @@
 ssys map generic processing tools
-===========================================================================
+=================================
 
 
-
-I/O
----
+## I/O
 
  All you need to convert from/to a graph. Input formats:
    * ssysmap: denotes current system map, that is stored in `ssys/*.xml`.
@@ -33,9 +31,7 @@ I/O
      outputs a graph in dot format.
 
 
-
-graphmod
---------
+## graphmod
 
  `graphmod.py` provides all that is necessary to build a graph modifier
  such as the programs described in the section graphmods below. As a
@@ -49,9 +45,7 @@ graphmod
      resulting graph.
 
 
-
-auto-positioning system
------------------------
+## auto-positioning system
 
  Another graph modifier.
 
@@ -64,9 +58,7 @@ auto-positioning system
      See `repos.sh -h`.
 
 
-
-potential
----------
+## potential
 
    * `potential -g` generates the __gravity potential__ of the star map as
      a picture (black means minimum potential, and white means 0 potential
@@ -77,20 +69,14 @@ potential
 
 
 
-
-
 Specific scripts and Current process
-===========================================================================
-
-
+====================================
 
  These are designed to change the star map by **changing systems
  position**.
 
 
-
-graphmods
----------
+## graphmods
 
    * `graphmod_prep.py`: A set virtual edge addition designed to serve as
      a pre-processing for `neato`.
@@ -103,9 +89,7 @@ graphmods
      `reposition`.
 
 
-
-main process
-------------
+## main process
 
  Performed by `process_ssys.sh`. Several steps:
    * generate `map_ini.png` with decorators
@@ -140,15 +124,11 @@ main process
 
 
 
-
-
 Others
-===========================================================================
+======
 
 
-
-ssys process tools
-------------------
+## ssys process tools
 
  These are designed to manage the **internal geometry of systems**, that
  might get affected by the position changes. (because autojumps move when
@@ -163,9 +143,7 @@ ssys process tools
      empty.
 
 
-
-ssys lib
---------
+## ssys lib
 
    * `geometry.py` as the name suggests. Most is really classical:
        - vec for (2d-)vectors. Support for every usual composition with
@@ -186,21 +164,15 @@ ssys lib
    * `ssys.py` everything else.
 
 
-
-ssysmap history
----------------
+## ssysmap history
 
    * `ssysmap_{push, pop, dequeue}.sh` apply the corresponding operations
      to ssys map position history.
 
 
 
-
-
 TODO
-===========================================================================
-
-
+====
 
    * also manage exit\_only jumps when creating new jumps.
    * find a last sol-centering improvement before the big jump.
