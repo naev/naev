@@ -1,10 +1,13 @@
-Damage types follow roughly an Lp with p=1.5 norm. Thus a damage type can give something like below:
-* shield dmg / armour dmg
+Damage types follow roughly an Lp with p=1.5 norm. Thus, a damage type can give something like below:
+* shield damage / armour damage
 * 100% / 100%
 * 159% / 0%
 * 150% / 30%
 * 125% / 75%
 * 110% / 90%
+
+So, if you wanted a weapon to do 150% shield damage, it should probably do 30% armour damage to balance it.
+However, this is just a reference and not a hard rule.
 
 To compute you can use the following python code:
 
