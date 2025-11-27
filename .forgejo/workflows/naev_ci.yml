@@ -12,12 +12,30 @@ jobs:
       - name: Checkout Naev Repository
         uses: actions/checkout@v4
         with:
-          lfs: true
+          lfs: false # defer LFS to after cache restore
           path: source
           submodules: true
           ssh-key: ${{ secrets.CODEBERG_SSH_KEY }}
           ssh-known-hosts: ${{ secrets.CODEBERG_SSH_KNOWN_HOSTS }}
-          persist-credentials: false
+          persist-credentials: true
+
+      - name: Capture assets submodule revision
+        id: assets_rev
+        run: echo "rev=$(git -C source submodule status assets | awk '{print $1}')" >> "$GITHUB_OUTPUT"
+
+      - name: Restore LFS cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            source/.git/lfs/objects
+            source/.git/modules/assets/lfs/objects
+          key: lfs-${{ runner.os }}-${{ steps.assets_rev.outputs.rev }}
+          restore-keys: lfs-${{ runner.os }}-
+
+      - name: Fetch and checkout LFS
+        run: |
+          git -C source/assets lfs fetch --all
+          git -C source/assets lfs checkout
 
       - name: Package Dist
         run: |
