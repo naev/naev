@@ -98,15 +98,6 @@ chmod +x "$STEAMPATH"/content/lin64/naev.x64
 # Move macOS bundle to deployment location
 unzip "$TEMPPATH/naev-macos/naev-macos.zip" -d "$STEAMPATH/content/macos/"
 
-# Make the macOS bundle use the shared data depot instead of bundling its own.
-# The bundle expects data under Contents/Resources/dat; the shared depot lands
-# as "dat" in the game install root, so point the bundle there.
-MAC_APP_PATH="$STEAMPATH/content/macos/Naev.app"
-if [ -d "$MAC_APP_PATH" ]; then
-   rm -rf "$MAC_APP_PATH/Contents/Resources/dat"
-   ln -s ../../../dat "$MAC_APP_PATH/Contents/Resources/dat"
-fi
-
 # Untar Windows binary and DLLs
 tar -Jxf "$TEMPPATH/naev-win64/naev-windows.tar.xz" -C "$STEAMPATH/content/win64"
 
