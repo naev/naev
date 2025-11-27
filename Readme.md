@@ -5,12 +5,8 @@
 
 
 
-
-
 NAEV README
-===========================================================================
-
-
+-----------
 
  ![Naev Logo](https://naev.org/imgs/naev.png)
 
@@ -31,9 +27,7 @@ NAEV README
  will find incomplete or work in progress content as you progress.
 
 
-
-Getting Naev
-------------
+### Getting Naev
 
  Naev is on steam, itch.io, flathub, many linux distributions and more! If
  you don't feel up to the task of compiling it yourself, please see the
@@ -41,9 +35,7 @@ Getting Naev
  started playing Naev!
 
 
-
-Plugins
--------
+### Plugins
 
  Plugins are supported since version 0.10.0, and a plugin manager is built
  into Naev since 0.13.0 which is accessible from the main menu. If you
@@ -51,9 +43,7 @@ Plugins
  [Naev Development Manual](https://naev.org/devmanual/) (WIP).
 
 
-
-Dependencies
-------------
+### Dependencies
 
  Naev's dependencies are intended to be widely available. In addition to a
  graphics card and driver supporting at least OpenGL 3.3, Naev requires:
@@ -79,8 +69,7 @@ Dependencies
  Dependencies marked with `*` will use subprojects if not found in the
  host system.
 
-
-### Details for your OS
+ #### Details for your OS
 
  The Naev wiki has more detailed compilation steps, and lists of packages
  to install, for several operating systems and Linux distros:
@@ -89,11 +78,9 @@ Dependencies
    * [macOS](https://codeberg.org/naev/naev/wiki/Compiling-on-macOS)
 
 
+### Compiling Naev
 
-Compiling Naev
---------------
-
-### Cloning and Submodules
+ #### Cloning and Submodules
 
  Naev requires the artwork submodule to run from git. You can check out
  the submodules from the cloned repository with:
@@ -110,8 +97,7 @@ Compiling Naev
  git config submodule.recurse true
  ```
 
-
-### Compilation
+ #### Compilation
 
  Run:
 
@@ -148,10 +134,9 @@ Compiling Naev
  `--buildtype=debugoptimized` `-Db_lto=true` `-Db_lto_mode=thin` in place
  of the corresponding values above.
 
- #### For up-to-date build instructions, check out the compilation page in our [wiki](https://codeberg.org/naev/naev/wiki/Compiling)
+ ##### For up-to-date build instructions, check out the compilation page in our [wiki](https://codeberg.org/naev/naev/wiki/Compiling)
 
-
-### Running Naev
+ #### Running Naev
 
  You can run Naev directly from the git repository using the `naev.py`
  script which will be generated in the build directory. This script will
@@ -159,8 +144,7 @@ Compiling Naev
  art assets are checked out and up to date as mentioned in the Updating
  Art Assets section below.
 
-
-### Installation
+ #### Installation
 
  Naev currently supports `meson install` which will install everything
  that is needed.
@@ -169,9 +153,7 @@ Compiling Naev
  from 16x16 to 256x256 can be found in `extras/logos/`.
 
 
-
-Updating Art Assets
--------------------
+### Updating Art Assets
 
  Art assets are partially stored in the
  [naev-artwork](https://codeberg.org/naev/naev-artwork) repository and
@@ -193,9 +175,7 @@ Updating Art Assets
  artwork submodule.
 
 
-
-Contributing
-------------
+### Contributing
 
  To get in touch, you can visit [naev.org](https://naev.org/) which links
  to the project's Discord chat and Wiki. There are also Lua API docs
@@ -212,8 +192,7 @@ Contributing
  [Oxford Spelling](https://en.wikipedia.org/wiki/Oxford_spelling) for all
  text in the game.
 
-
-### Online Translation
+ #### Online Translation
 
  Naev is incorporated into Weblate on Codeberg. You can easily translate
  directly with a web interface to your chosen language from Naev's
@@ -233,8 +212,7 @@ Contributing
      example `Violin Monastery` should have `Violin` translated
      phonetically and `Monastery` translated semantically.
 
-
-### Translation for Developers
+ #### Translation for Developers
 
  Naev's translation is handled with gettext. (It's custom, but C and Lua
  code can use the conventional `_()` for gettext and `N_()` for
@@ -257,9 +235,7 @@ Contributing
  reason, because Weblate does the same job more carefully.
 
 
-
-Crashes and Problems
---------------------
+### Crashes and Problems
 
  Please take a look at the [FAQ](https://codeberg.org/naev/naev/wiki/FAQ)
  before submitting a new bug report, as it covers a number of common
@@ -269,9 +245,7 @@ Crashes and Problems
  reading [this page](https://codeberg.org/naev/naev/wiki/Bugs).
 
 
-
-Licence
--------
+### Licence
 
  Naev is open source software compatible with the
  [Debian Free Software Guidelines](https://www.debian.org/social_contract#guidelines)
