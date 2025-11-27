@@ -436,11 +436,19 @@ jobs:
         with:
           path: ${{ github.workspace }}/build/staging
 
+      - name: Force Codeberg over SSH
+        run: git config --global url."ssh://git@codeberg.org/naev/".insteadOf https://codeberg.org/naev/
+
       - name: Checkout Naev Repository
         uses: actions/checkout@v4
         with:
           lfs: false
-          path: source
+          submodules: false
+          path: build/staging/repo
+          fetch-depth: 0
+          ssh-key: ${{ secrets.CODEBERG_SSH_KEY }}
+          ssh-known-hosts: ${{ secrets.CODEBERG_SSH_KNOWN_HOSTS }}
+          persist-credentials: true
 
       - name: Generate Nightly Changelog
         if: ${{ matrix.releasetype == 'codeberg' }}
