@@ -10,13 +10,36 @@ jobs:
   "Package_Source":
     runs-on: naev-release
     steps:
+      - name: Force Codeberg over SSH
+        run: git config --global url."ssh://git@codeberg.org/naev/".insteadOf https://codeberg.org/naev/
+
       - name: Checkout Naev Repository
         uses: actions/checkout@v4
         with:
-          lfs: true
+          lfs: false # restore after cache
           path: source
           submodules: true
-          token: ${{ secrets.CLONE_PAT }}
+          ssh-key: ${{ secrets.CODEBERG_SSH_KEY }}
+          ssh-known-hosts: ${{ secrets.CODEBERG_SSH_KNOWN_HOSTS }}
+          persist-credentials: false
+
+      - name: Capture assets submodule revision
+        id: assets_rev
+        run: echo "rev=$(git -C source submodule status assets | awk '{print $1}')" >> "$GITHUB_OUTPUT"
+
+      - name: Restore LFS cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            source/.git/lfs/objects
+            source/.git/modules/assets/lfs/objects
+          key: lfs-${{ runner.os }}-${{ steps.assets_rev.outputs.rev }}
+          restore-keys: lfs-${{ runner.os }}-
+
+      - name: Fetch and checkout LFS
+        run: |
+          git -C source/assets lfs fetch --all
+          git -C source/assets lfs checkout
 
       - name: Package Dist
         run: |
@@ -413,14 +436,19 @@ jobs:
         with:
           path: ${{ github.workspace }}/build/staging
 
+      - name: Force Codeberg over SSH
+        run: git config --global url."ssh://git@codeberg.org/naev/".insteadOf https://codeberg.org/naev/
+
       - name: Checkout Naev Repository
-        if: ${{ matrix.releasetype == 'codeberg' }}
         uses: actions/checkout@v4
         with:
-          lfs: true
+          lfs: false
+          submodules: false
           path: build/staging/repo
           fetch-depth: 0
-          token: ${{ secrets.CLONE_PAT }}
+          ssh-key: ${{ secrets.CODEBERG_SSH_KEY }}
+          ssh-known-hosts: ${{ secrets.CODEBERG_SSH_KNOWN_HOSTS }}
+          persist-credentials: true
 
       - name: Generate Nightly Changelog
         if: ${{ matrix.releasetype == 'codeberg' }}

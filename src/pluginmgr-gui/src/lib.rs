@@ -71,15 +71,18 @@ pub fn open() -> Result<()> {
 
     // Load the fonts the same way Naev does
     let fonts: Vec<_> = gettext("Cabin-SemiBold.otf,NanumBarunGothicBold.ttf,SourceCodePro-Semibold.ttf,IBMPlexSansJP-Medium.otf")
-       .split(',').filter_map( |f| {
-           match ndata::read(f) {
-               Ok(data) => Some(Cow::from(data)),
-               Err(e) => {
-                   warn_err!(e);
-                   None
-               },
-           }
-       }).collect();
+        .split(',')
+        .filter_map(|f| {
+            let path = format!("fonts/{f}");
+            match ndata::read(&path) {
+                Ok(data) => Some(Cow::from(data)),
+                Err(e) => {
+                    warn_err!(e);
+                    None
+                }
+            }
+        })
+        .collect();
 
     Ok(iced::application(App::run, App::update, App::view)
         .title(gettext("Naev Plugin Manager"))

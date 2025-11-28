@@ -13,6 +13,9 @@
    if not mtest.cargo(true) or not mtest.reweight_active() then
       return false
    end
+   if player.pilot():cargoFree() &lt;= 0 then
+      return false
+   end
    local count = 0
    for i, p in ipairs(system.cur():spobs()) do
       if p:services()["inhabited"] then

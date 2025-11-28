@@ -55,6 +55,12 @@
     <category>RolePlaying</category>
   </categories>
   <releases>
+    <release version="0.13.0-beta.2" type="development" date="2025-11-26">
+      <url type="details">https://naev.org/blarg/2025-11-26_0.13.0-beta.2/</url>
+    </release>
+    <release version="0.13.0-beta.1" type="development" date="2025-11-23">
+      <url type="details">https://naev.org/blarg/2025-11-23_0.13.0-beta.1/</url>
+    </release>
     <release version="0.12.6" type="stable" date="2025-07-09">
       <url type="details">https://naev.org/blarg/2025-07-09_0.12.6/</url>
     </release>
