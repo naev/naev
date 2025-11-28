@@ -82,7 +82,7 @@ function accept ()
       vn.na(_([[Will you help Lucas become a pirate?]]))
    else
       talked = true
-      vn.na(_([[You approach Lucas who seems to be more on the edge than before.]]))
+      vn.na(_([[You approach Lucas, who seems even more on edge than before.]]))
       lucas(_([[He seems to be mumbling to himself.
 "I don't know why I trusted them…"]]))
       vn.menu{
@@ -94,8 +94,8 @@ function accept ()
       lucas(fmt.f(_([[It takes a while for them to notice your presence, but when they do, they give a half-hearted grin.
 "Hey {playername}."]]),
          {playername=player.name()}))
-      lucas(_([["Aw, screw it. I messed up. I put my faith in the system and got rammed over. They teach us like trash, useless garbage."]]))
-      lucas(_([["I thought we were at fault, as if we had done something wrong and had to be punished. However, it was not we who did the wronging."]]))
+      lucas(_([["Aw, screw it. I messed up. I put my faith in the system and got steamrolled. They treat us like trash, useless garbage."]]))
+      lucas(_([["I thought we were at fault, like we'd done something wrong and had to be punished. But we're not the ones who did the wronging."]]))
       vn.menu{
          {p_("lucas02", [["What happened?"]]), "cont02"},
          {_([[…]]), "cont02"},
@@ -103,10 +103,10 @@ function accept ()
 
       vn.label("cont02")
       lucas(_([["My family is dead. All of them. Kaput. Gone."]]))
-      lucas(_([["My sister and mother succumbed at Maanen's Moon, and my father, my poor father, was refused any damn treatments in this so-called civilized society."]]))
-      lucas(_([["The bureaucrats refuse treating illegal nebula refugees. They even wanted to take him back to Maanen's bloody Moon! Heartless bastards."]]))
-      lucas(_([["When he passed away in my arms, I lost all hope. I thought I had no option but to repent and follow my family. But then I realize, why are we at fault? Is it not the role of civilization to look for the betterment of mankind?"]]))
-      lucas(_([["I decided to turn to anger, and want to take my revenge and carve my own path."]]))
+      lucas(_([["My sister and mother died on Maanen's Moon, and my father—my poor father—was denied any damn treatment in this so-called civilized society."]]))
+      lucas(_([["The bureaucrats refuse to treat illegal Nebula refugees. They even wanted to ship him back to Maanen's bloody Moon! Heartless bastards."]]))
+      lucas(_([["When he died in my arms, I lost all hope. I thought my only option was to repent and follow my family. But then I realized, why are we at fault? Isn't civilization supposed to look out for humanity?"]]))
+      lucas(_([["I turned that despair into anger. I want revenge and to carve my own path."]]))
       lucas(_([["This may surprise you, but I've decided to become a pirate."]]))
 
       vn.menu{
@@ -116,13 +116,13 @@ function accept ()
       }
 
       vn.label("cont03_arr")
-      lucas(_([["Wait, you are not surprised?"
+      lucas(_([["Wait, you're not surprised?"
 They lean in and whisper to you.
-"Don't tell me you are a… Wait no, it's probably better to not know now."]]))
+"Don't tell me you're a… Wait, no, it's probably better not to know."]]))
       vn.jump("cont03")
 
       vn.label("cont03_wut")
-      lucas(_([["Pirates are thought to be brutes unfit for society, however, that is just the lower rungs. The pirate clans are actually fully functional societies, and less arbitrary and oppressive than the Empire and the Houses."]]))
+      lucas(_([["People think pirates are brutes unfit for society, but that's only the bottom rung. The pirate clans are fully functional societies—less arbitrary and oppressive than the Empire and the Houses."]]))
       vn.jump("cont03")
 
       vn.label("cont03")
@@ -134,7 +134,7 @@ They lean in and whisper to you.
    }
 
    vn.label("refuse")
-   lucas(_([[They go back to their state of nervous anxiety and hope.]]))
+   lucas(_([[They sink back into anxious fidgeting and hope.]]))
    vn.done( lcs.lucas.transition )
 
    vn.label("accept")
@@ -149,7 +149,7 @@ They lean in and whisper to you.
          vn.jump("pirate_known")
       end
    end )
-   lucas(fmt.f(_([["I've been told some pirates like to hang around {spob} in the {sys} system. We should head over there to see if we can find some lead."]]),
+   lucas(fmt.f(_([["I've been told some pirates like to hang around {spob} in the {sys} system. We should head over there to see if we can find a lead."]]),
       {spob=first_spob, sys=first_sys}))
    vn.na(_([[Lucas eagerly gets on your ship, ready to start a new life. You have a feeling it's not going to be that easy though.]]))
    vn.done( lcs.lucas.transition )
@@ -233,16 +233,16 @@ function approach_pirate ()
    local p = vn.newCharacter( pir_name, {image=pir_image} )
    vn.transition()
 
-   vn.na(fmt.f(_([[You approach the shady character, who doesn't seem very keen on your attention, and begin to make some idle conversation in hopes of drawing out information about {spob}.]]),
+   vn.na(fmt.f(_([[You approach the shady character, who clearly wants you gone, and make idle conversation in hopes of drawing out information about {spob}.]]),
       {spob=last_spob}))
-   p(_([[The character is less than cooperative, and seems more interested in getting rid of you than providing any help. It seems to be an exercise in futility.]]))
-   p(_([[Eventually they start ignoring you and go away. Given the amount of people and security on the station, there is not really anything you can do.]]))
+   p(_([[The character is less than cooperative and seems more interested in shaking you off than helping. It's an exercise in futility.]]))
+   p(_([[Eventually they start ignoring you and leave. Given the amount of people and security on the station, there's not much you can do.]]))
    vn.disappear(p)
-   vn.na(_([[You look around, but it doesn't look like the people here are going to be the most helpful bunch, you'll have to find another way to get the information.]]))
+   vn.na(_([[You look around, but the people here don't seem eager to help. You'll have to find another way to get the information.]]))
    local lucas = lcs.vn_lucas()
    vn.appear( lucas, lcs.lucas.transition )
-   vn.na(_([[You meet up with Lucas, who was also trying to get the information independently, albeit to the same result.]]))
-   lucas(_([[He lets out a large sigh.
+   vn.na(_([[You meet up with Lucas, who also tried to get the information independently, with the same lack of success.]]))
+   lucas(_([[He lets out a long sigh.
 "It doesn't look like we're getting anywhere."]]))
    lucas(_([[His eyes suddenly light up.
 "Maybe it's a long shot, but the best way to become a pirate is probably to pirate, is it not?"]]))
@@ -370,7 +370,7 @@ function board_pirate( p )
    vn.transition()
 
    vn.sfxEerie()
-   vn.na(fmt.f(_([[You board the ship with Lucas and through methods you are not particularly proud of, are able to obtain information of a secret jump likely leading to the Qorel tunnel. You are told that {spob} is somewhere there.]]),
+   vn.na(fmt.f(_([[You board the ship with Lucas and, through methods you're not proud of, pry out information about a secret jump likely leading to the Qorel tunnel. You're told {spob} is somewhere beyond.]]),
       {spob=last_spob}))
 
    vn.run()
