@@ -19,6 +19,13 @@ jobs:
           ssh-known-hosts: ${{ secrets.CODEBERG_SSH_KNOWN_HOSTS }}
           persist-credentials: true
 
+      - name: Cache Meson wrap downloads
+        uses: actions/cache@v3
+        with:
+          path: source/subprojects/packagecache
+          key: wrap-${{ runner.os }}-${{ hashFiles('source/subprojects/*.wrap') }}
+          restore-keys: wrap-${{ runner.os }}-
+
       - name: Capture assets submodule revision
         id: assets_rev
         run: echo "rev=$(git -C source submodule status assets | awk '{print $1}')" >> "$GITHUB_OUTPUT"
@@ -71,6 +78,15 @@ jobs:
         run: |
           mkdir source
           tar -xf naev-*.tar.xz -C source --strip 1
+
+      - name: Cache Cargo home
+        uses: actions/cache@v3
+        with:
+          path: build/cargo-home
+          key: cargo-${{ runner.os }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          restore-keys: |
+            cargo-${{ runner.os }}-${{ matrix.target }}-
+            cargo-${{ runner.os }}-
 
       - name: Meson Setup
         id: setup
@@ -161,6 +177,15 @@ jobs:
           mkdir source
           tar -xf naev-*.tar.xz -C source --strip 1
 
+      - name: Cache Cargo home
+        uses: actions/cache@v3
+        with:
+          path: build/cargo-home
+          key: cargo-${{ runner.os }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          restore-keys: |
+            cargo-${{ runner.os }}-${{ matrix.target }}-
+            cargo-${{ runner.os }}-
+
       - name: Meson Setup
         id: setup
         run: |
@@ -243,6 +268,15 @@ jobs:
           mkdir source
           tar -xf naev-*.tar.xz -C source --strip 1
 
+      - name: Cache Cargo home
+        uses: actions/cache@v3
+        with:
+          path: build/cargo-home
+          key: cargo-${{ runner.os }}-${{ matrix.arch }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          restore-keys: |
+            cargo-${{ runner.os }}-${{ matrix.arch }}-
+            cargo-${{ runner.os }}-
+
       - name: Meson Setup
         id: setup
         run: |
@@ -313,6 +347,15 @@ jobs:
         run: |
           mkdir source
           tar -xf naev-*.tar.xz -C source --strip 1
+
+      - name: Cache Cargo home
+        uses: actions/cache@v3
+        with:
+          path: build/cargo-home
+          key: cargo-${{ runner.os }}-luacheck-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          restore-keys: |
+            cargo-${{ runner.os }}-luacheck-
+            cargo-${{ runner.os }}-
 
       - name: Meson Setup
         id: setup
