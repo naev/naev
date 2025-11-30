@@ -23,16 +23,21 @@ jobs:
           ssh-known-hosts: ${{ secrets.CODEBERG_SSH_KNOWN_HOSTS }}
           persist-credentials: false
 
-      - name: Prefetch Meson subprojects
-        run: |
-          meson subprojects download --sourcedir source
-
       - name: Cache Meson wrap downloads
         uses: actions/cache@v3
         with:
           path: source/subprojects/packagecache
           key: wrap-${{ runner.os }}-${{ hashFiles('source/subprojects/*.wrap') }}
           restore-keys: wrap-${{ runner.os }}-
+
+      - name: Fetch Meson subprojects
+        run: |
+          mkdir -p source/subprojects/packagecache
+          if find source/subprojects/packagecache -mindepth 1 -maxdepth 1 | read || find source/subprojects/packagefiles -mindepth 1 -maxdepth 1 | read; then
+            echo "Using cached Meson subprojects/packagefiles; skip download"
+          else
+            meson subprojects download --sourcedir source
+          fi
 
       - name: Capture assets submodule revision
         id: assets_rev
