@@ -8,7 +8,7 @@
   <price>290000</price>
   <description>Designed for incapacitating enemy fleets, the Pincushion Battery can launch 5 Needle missiles at once, each with their own independent tracking unit. The stochastic guidance system is designed to minimize the necessary computation power, allowing the weapon to be mounted on a large diversity of ships. Each missile contains micro-fragmenting payloads designed to disrupt the shielding of an enemy ship.</description>
   <desc_extra>Launches 1 missile at the target and 4 additional missiles that will target random nearby enemies. Lowers shield regeneration by -70% on hit.</desc_extra>
-  <gfx_store>placeholder</gfx_store>
+  <gfx_store>pincushion_battery</gfx_store>
   <cpu>-9</cpu>
   <rarity>2</rarity>
  </general>
