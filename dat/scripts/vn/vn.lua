@@ -1335,6 +1335,9 @@ function vn.Character.new( who, params )
          end
       elseif pimage._type=="ImageData" then
          img = graphics.newImage( pimage )
+      -- vn code assumes lua graphics image, so rewrap if we think it's a rust-side texture
+      elseif type(pimage)=="userdata" then
+         img = graphics.newImage( pimage )
       else
          img = pimage
       end
