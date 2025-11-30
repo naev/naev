@@ -2,6 +2,7 @@
  - Make sure reynir only appears when you have free cargo space (reynir.lua)
  - Fix loading fonts in the plugin manager on platforms like macOS
  - Fix handling the --pluginmanager flag on platforms like macOS
+ - Replaced a bunch of placeholder outfit graphics
 
 ## 0.13.0-beta.2
  - Fixed crash with appimage on certain systems
