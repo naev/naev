@@ -544,28 +544,11 @@ jobs:
         if: ${{ matrix.releasetype == 'codeberg' }}
         working-directory: ${{ github.workspace }}/build/staging/repo
         run: |
-          tag="${{ github.ref_name }}"
-          # Extract changelog section for the tag; if not found, fall back to full changelog
-          notes="$(awk -v tag="## ${tag}" '
-            BEGIN {found=0}
-            /^## / {
-              if (found) exit
-              if ($0 == tag) {found=1; next}
-            }
-            found {print}
-          ' /build/staging/naev-changelog/Changelog.md)"
-          if [ -z "$notes" ]; then
-            echo "warn: changelog section for ${tag} not found, using full Changelog.md"
-            notes="$(cat /build/staging/naev-changelog/Changelog.md)"
-          fi
-          # Append title line with tag
-          {
-            echo "RELEASE_NOTES<<EOF"
-            echo "# ${tag}"
-            echo ""
-            echo "$notes"
-            echo "EOF"
-          } >> "$GITHUB_ENV"
+          ./utils/ci/generate_release_notes.sh \
+            --mode changelog \
+            --tag "${{ github.ref_name }}" \
+            --changelog "${GITHUB_WORKSPACE}/build/staging/naev-changelog/Changelog.md" \
+            --output "${GITHUB_WORKSPACE}/build/staging/release_notes.md"
 
       - name: Stage Codeberg Release
         if: ${{ matrix.releasetype == 'codeberg' }}
@@ -573,11 +556,6 @@ jobs:
           chmod -R +x build/staging/naev-deployment-assets/berg
           cp -r build/staging/naev-deployment-assets/berg/* "$(pwd)"
           ./BergDeploy.sh -n -t "$(pwd)/build/staging" -o "$(pwd)/build/dist" -r "${{ github.ref_name }}"
-
-      - name: Write Release Notes File
-        if: ${{ matrix.releasetype == 'codeberg' }}
-        run: |
-          printf "%s" "${RELEASE_NOTES}" > build/staging/release_notes.md
 
       - name: Upload Codeberg Release
         if: ${{ matrix.releasetype == 'codeberg' }}

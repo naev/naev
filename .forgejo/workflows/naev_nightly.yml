@@ -545,29 +545,19 @@ jobs:
             PREV_SHA=$(git rev-parse HEAD)
           fi
 
-          # Repo URL base for commit links
-          repo_url="https://codeberg.org/naev/naev/commit"
-
-          # Build date and sha
           build_date="$(date +%Y-%m-%d)"
           build_sha="$(git rev-parse HEAD)"
+          repo_url="https://codeberg.org/naev/naev/commit"
 
-          # Generate changelog into RELEASE_NOTES env var
-          {
-            echo "RELEASE_NOTES<<EOF"
-            echo "## Git SHA: [${build_sha:0:7}](${repo_url}/${build_sha}) Built on ${build_date}"
-            echo ""
-            echo "This is an automated development snapshot build. Debugging is enabled."
-            echo ""
-            echo "Please report any issues you run into on the [issue tracker](https://codeberg.org/naev/naev/issues)!"
-            echo ""
-            echo "### Changes since last build"
-            echo ""
-            git log --pretty=format:"- %s ([%h](${repo_url}/%H))" "${PREV_SHA}..HEAD"
-            echo "EOF"
-          } >> "$GITHUB_ENV"
+          ./utils/ci/generate_release_notes.sh \
+            --mode nightly \
+            --repo-path "$(pwd)" \
+            --prev-sha "${PREV_SHA}" \
+            --build-sha "${build_sha}" \
+            --build-date "${build_date}" \
+            --repo-url "${repo_url}" \
+            --output "${GITHUB_WORKSPACE}/build/staging/release_notes.md"
 
-          # Generate release title into RELEASE_TITLE env var
           echo "RELEASE_TITLE=Nightly Release (${build_date}, ${build_sha:0:7})" >> $GITHUB_ENV
 
       - name: Push 'nightly' tag
@@ -585,14 +575,6 @@ jobs:
           chmod -R +x build/staging/naev-deployment-assets/berg
           cp -r build/staging/naev-deployment-assets/berg/* "$(pwd)"
           ./BergDeploy.sh -n -t "$(pwd)/build/staging" -o "$(pwd)/build/dist" -r "nightly"
-
-      - name: Write Release Notes File
-        if: ${{ matrix.releasetype == 'codeberg' }}
-        run: |
-          printf "%s" "${RELEASE_NOTES}" > build/staging/release_notes.md
-          echo "==== RELEASE NOTES (preview) ===="
-          cat build/staging/release_notes.md
-          echo "==== END RELEASE NOTES ===="
 
       - name: Upload Codeberg Release
         if: ${{ matrix.releasetype == 'codeberg' }}
