@@ -26,6 +26,13 @@ jobs:
           ssh-known-hosts: ${{ secrets.CODEBERG_SSH_KNOWN_HOSTS }}
           persist-credentials: false
 
+      - name: Cache Meson wrap downloads
+        uses: actions/cache@v3
+        with:
+          path: source/subprojects/packagecache
+          key: wrap-${{ runner.os }}-${{ hashFiles('source/subprojects/*.wrap') }}
+          restore-keys: wrap-${{ runner.os }}-
+
       - name: Capture assets submodule revision
         id: assets_rev
         run: echo "rev=$(git -C source submodule status assets | awk '{print $1}')" >> "$GITHUB_OUTPUT"
@@ -156,6 +163,15 @@ jobs:
           mkdir source
           tar -xf source.tar.xz -C source --strip 1
 
+      - name: Cache Cargo home
+        uses: actions/cache@v3
+        with:
+          path: build/cargo-home
+          key: cargo-${{ runner.os }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          restore-keys: |
+            cargo-${{ runner.os }}-${{ matrix.target }}-
+            cargo-${{ runner.os }}-
+
       - name: Meson Setup
         run: |
           meson setup build source \
@@ -271,6 +287,15 @@ jobs:
           mkdir source
           tar -xf source.tar.xz -C source --strip 1
 
+      - name: Cache Cargo home
+        uses: actions/cache@v3
+        with:
+          path: build/cargo-home
+          key: cargo-${{ runner.os }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          restore-keys: |
+            cargo-${{ runner.os }}-${{ matrix.target }}-
+            cargo-${{ runner.os }}-
+
       - name: Meson Setup
         # We disable b_lto here because it messes with backtraces on windows
         run: |
@@ -336,6 +361,15 @@ jobs:
         run: |
           mkdir source
           tar -xf source.tar.xz -C source --strip 1
+
+      - name: Cache Cargo home
+        uses: actions/cache@v3
+        with:
+          path: build/cargo-home
+          key: cargo-${{ runner.os }}-${{ matrix.arch }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          restore-keys: |
+            cargo-${{ runner.os }}-${{ matrix.arch }}-
+            cargo-${{ runner.os }}-
 
       - name: Meson Setup
         run: |
