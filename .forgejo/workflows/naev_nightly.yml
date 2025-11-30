@@ -523,23 +523,27 @@ jobs:
           ssh-known-hosts: ${{ secrets.CODEBERG_SSH_KNOWN_HOSTS }}
           persist-credentials: true
 
+      - name: Fetch previous nightly tag
+        if: ${{ matrix.releasetype == 'codeberg' }}
+        working-directory: ${{ github.workspace }}/build/staging/repo
+        run: |
+          git fetch --tags
+          if git rev-parse nightly >/dev/null 2>&1; then
+            echo "PREV_NIGHTLY_SHA=$(git rev-parse nightly)" >> $GITHUB_ENV
+          fi
+
       - name: Generate Nightly Changelog
         if: ${{ matrix.releasetype == 'codeberg' }}
         working-directory: ${{ github.workspace }}/build/staging/repo
         run: |
-          # Get last nightly commit from the previous release body
-          url="https://codeberg.org/api/v1/repos/naev/naev/releases/tags/nightly"
-          resp=$(curl -s "$url")
-          body=$(echo "$resp" | jq -r .body)
-
-          sha=$(echo "$body" | sed -n 's/.*Git SHA: \[\([a-f0-9]\{7\}\)\].*/\1/p')
-
-          if [ -z "$sha" ]; then
-            echo "No previous SHA found, using first commit"
-            sha=$(git rev-list --max-parents=0 HEAD)
+          # Determine previous nightly SHA from tag (fallback to HEAD^)
+          if [ -n "${PREV_NIGHTLY_SHA:-}" ]; then
+            PREV_SHA="$PREV_NIGHTLY_SHA"
+          elif git rev-parse HEAD^ >/dev/null 2>&1; then
+            PREV_SHA=$(git rev-parse HEAD^)
+          else
+            PREV_SHA=$(git rev-parse HEAD)
           fi
-
-          PREV_SHA=$sha
 
           # Repo URL base for commit links
           repo_url="https://codeberg.org/naev/naev/commit"
