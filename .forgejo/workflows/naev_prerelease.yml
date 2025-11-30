@@ -455,34 +455,34 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: naev-deployment-assets
-          path: ${{ github.workspace }}/build/staging
+          path: ${{ github.workspace }}/build/staging/naev-deployment-assets
 
       - name: Download Version
         uses: actions/download-artifact@v3
         with:
           name: naev-version
-          path: ${{ github.workspace }}/build/staging
+          path: ${{ github.workspace }}/build/staging/naev-version
 
       - name: Download Changelog
         if: ${{ matrix.releasetype == 'codeberg' }}
         uses: actions/download-artifact@v3
         with:
           name: naev-changelog
-          path: ${{ github.workspace }}/build/staging
+          path: ${{ github.workspace }}/build/staging/naev-changelog
 
       - name: Download Source Tarball (codeberg)
         if: ${{ matrix.releasetype == 'codeberg' }}
         uses: actions/download-artifact@v3
         with:
           name: naev-dist
-          path: ${{ github.workspace }}/build/staging
+          path: ${{ github.workspace }}/build/staging/naev-dist
 
       - name: Download Linux Package (codeberg/itch)
         if: ${{ matrix.releasetype == 'codeberg' || matrix.releasetype == 'itch' }}
         uses: actions/download-artifact@v3
         with:
           name: naev-linux-x86-64
-          path: ${{ github.workspace }}/build/staging
+          path: ${{ github.workspace }}/build/staging/naev-linux-x86-64
 
       - name: Download Windows Installer (codeberg)
         if: ${{ matrix.releasetype == 'codeberg' }}
@@ -502,28 +502,28 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: naev-macos
-          path: ${{ github.workspace }}/build/staging
+          path: ${{ github.workspace }}/build/staging/naev-macos
 
       - name: Download NDATA (itch/steam)
         if: ${{ matrix.releasetype == 'itch' || matrix.releasetype == 'steam' }}
         uses: actions/download-artifact@v3
         with:
           name: naev-ndata
-          path: ${{ github.workspace }}/build/staging
+          path: ${{ github.workspace }}/build/staging/naev-ndata
 
       - name: Download Steam Runtime Binary (steam)
         if: ${{ matrix.releasetype == 'steam' }}
         uses: actions/download-artifact@v3
         with:
           name: naev-steamruntime
-          path: ${{ github.workspace }}/build/staging
+          path: ${{ github.workspace }}/build/staging/naev-steamruntime
 
       - name: Download Linux AppDir (steam)
         if: ${{ matrix.releasetype == 'steam' }}
         uses: actions/download-artifact@v3
         with:
           name: naev-linux-appdir-x86-64
-          path: ${{ github.workspace }}/build/staging
+          path: ${{ github.workspace }}/build/staging/naev-linux-appdir-x86-64
 
       - name: Force Codeberg over SSH
         run: git config --global url."ssh://git@codeberg.org/naev/".insteadOf https://codeberg.org/naev/
