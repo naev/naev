@@ -554,17 +554,27 @@ jobs:
           cp -r build/staging/naev-deployment-assets/berg/* "$(pwd)"
           ./BergDeploy.sh -n -t "$(pwd)/build/staging" -o "$(pwd)/build/dist" -r "${{ github.ref_name }}"
 
+      - name: Write Release Notes File
+        if: ${{ matrix.releasetype == 'codeberg' }}
+        run: |
+          printf "%s" "${RELEASE_NOTES}" > build/staging/release_notes.md
+
       - name: Upload Codeberg Release
         if: ${{ matrix.releasetype == 'codeberg' }}
-        uses: Synchro/forgejo-release@self-healing
-        with:
-          direction: upload
-          release-dir: "$(pwd)/build/dist"
-          release-notes: "${{ env.RELEASE_NOTES }}"
-          override: true
-          prerelease: true
-          hide-archive-link: true
-          tag: ${{ github.ref_name }}
+        working-directory: ${{ github.workspace }}/build/staging/repo
+        run: |
+          ./utils/ci/upload_codeberg_release.sh \
+            --tag "${{ github.ref_name }}" \
+            --notes-file "${GITHUB_WORKSPACE}/build/staging/release_notes.md" \
+            --asset-dir "${GITHUB_WORKSPACE}/build/dist" \
+            --prerelease \
+            --overwrite \
+            --owner naev \
+            --repo naev \
+            --api-url https://codeberg.org/api/v1
+        env:
+          CODEBERG_TOKEN: ${{ secrets.CODEBERG_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and Upload itch.io Release
         if: ${{ matrix.releasetype == 'itch' }}
