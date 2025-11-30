@@ -572,6 +572,7 @@ jobs:
             --asset-dir "${GITHUB_WORKSPACE}/build/dist" \
             --prerelease \
             --overwrite \
+            --hide-archive-link \
             --owner naev \
             --repo naev \
             --api-url https://codeberg.org/api/v1
