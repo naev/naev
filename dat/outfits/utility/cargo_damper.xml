@@ -5,7 +5,7 @@
   <mass>5</mass>
   <price>180000</price>
   <description>When hauling large amounts of cargo, general-purpose ship engines may become overwhelmed and deliver a subpar performance. This device can be installed within a ship's cargo bays to generate a weak directed gravitational field to reduce the impact of cargo inertia on the ship's mobility and offset the requirement for bulkier engines.</description>
-  <gfx_store>placeholder</gfx_store>
+  <gfx_store>cargo_damper</gfx_store>
  </general>
  <specific type="modification">
   <cargo_inertia>-20</cargo_inertia>
