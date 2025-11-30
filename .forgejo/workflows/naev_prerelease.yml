@@ -544,8 +544,28 @@ jobs:
         if: ${{ matrix.releasetype == 'codeberg' }}
         working-directory: ${{ github.workspace }}/build/staging/repo
         run: |
-          # Populate RELEASE_NOTES env var
-          echo "RELEASE_NOTES=$(cat /build/staging/naev-changelog/Changelog.md)" >> $GITHUB_ENV
+          tag="${{ github.ref_name }}"
+          # Extract changelog section for the tag; if not found, fall back to full changelog
+          notes="$(awk -v tag="## ${tag}" '
+            BEGIN {found=0}
+            /^## / {
+              if (found) exit
+              if ($0 == tag) {found=1; next}
+            }
+            found {print}
+          ' /build/staging/naev-changelog/Changelog.md)"
+          if [ -z "$notes" ]; then
+            echo "warn: changelog section for ${tag} not found, using full Changelog.md"
+            notes="$(cat /build/staging/naev-changelog/Changelog.md)"
+          fi
+          # Append title line with tag
+          {
+            echo "RELEASE_NOTES<<EOF"
+            echo "# ${tag}"
+            echo ""
+            echo "$notes"
+            echo "EOF"
+          } >> "$GITHUB_ENV"
 
       - name: Stage Codeberg Release
         if: ${{ matrix.releasetype == 'codeberg' }}
