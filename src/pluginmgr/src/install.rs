@@ -192,6 +192,15 @@ impl Installer {
             if target.exists() {
                 fs::remove_dir_all(&target)?;
             }
+            // Remove the disabled file too if it exists
+            if let Some(filename) = target.file_name()
+                && let Some(parent) = target.parent()
+            {
+                let disabled = parent.join(format!(".{}.disabled", filename.to_string_lossy()));
+                if disabled.exists() {
+                    fs::remove_file(disabled)?;
+                }
+            }
             sender.send(1.0.into()).await;
             Ok(())
         })
