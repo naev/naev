@@ -18,7 +18,6 @@
   <speed>1100</speed>
   <range>1000</range>
   <falloff>850</falloff>
-  <gfx_end>laser1S</gfx_end>
   <energy>10</energy>
   <trackmin>0</trackmin>
   <trackmax>3600</trackmax>
