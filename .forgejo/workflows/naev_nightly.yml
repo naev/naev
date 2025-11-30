@@ -78,54 +78,26 @@ jobs:
           path: ${{ github.workspace }}/build/dist/VERSION
           if-no-files-found: error
 
-      - name: Upload AppImage Packaging Script Artifact
+      - name: Upload Packaging Assets
         uses: actions/upload-artifact@v3
         with:
-          name: naev-appimage-packaging
-          path: ${{ github.workspace }}/build/dist/buildAppImage.sh
-          if-no-files-found: error
-
-      - name: Upload Universal Bundle Packaging Script Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: naev-macos-packaging
-          path: ${{ github.workspace }}/build/dist/buildUniversalBundle.sh
-          if-no-files-found: error
-
-      - name: Upload DMG Assets Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: naev-macos-dmg
-          path: ${{ github.workspace }}/build/dist/dmg_assets
+          name: naev-packaging-assets
+          path: |
+            ${{ github.workspace }}/build/dist/buildAppImage.sh
+            ${{ github.workspace }}/build/dist/buildUniversalBundle.sh
+            ${{ github.workspace }}/build/dist/dmg_assets
+            ${{ github.workspace }}/build/dist/entitlements.plist
           if-no-files-found: error
           include-hidden-files: true
 
-      - name: Upload Entitlements PLIST Artifact
+      - name: Upload Deployment Assets
         uses: actions/upload-artifact@v3
         with:
-          name: naev-macos-entitlements
-          path: ${{ github.workspace }}/build/dist/entitlements.plist
-          if-no-files-found: error
-
-      - name: Upload Codeberg Deployment Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: naev-codeberg-deployment
-          path: ${{ github.workspace }}/build/dist/berg/*
-          if-no-files-found: error
-
-      - name: Upload Steam Deployment Script Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: naev-steam-deployment
-          path: ${{ github.workspace }}/build/dist/steam/*
-          if-no-files-found: error
-
-      - name: Upload Itch Deployment Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: naev-itch-deployment
-          path: ${{ github.workspace }}/build/dist/itch/*
+          name: naev-deployment-assets
+          path: |
+            ${{ github.workspace }}/build/dist/berg/*
+            ${{ github.workspace }}/build/dist/steam/*
+            ${{ github.workspace }}/build/dist/itch/*
           if-no-files-found: error
           include-hidden-files: true
 
@@ -228,21 +200,23 @@ jobs:
       ]
     runs-on: naev-release
     steps:
-      - name: Get AppImage Packaging Script
+      - name: Get Packaging Assets
         uses: actions/download-artifact@v3
         with:
-          name: naev-appimage-packaging
+          name: naev-packaging-assets
+          path: packaging
 
       - name: Get AppDir
         uses: actions/download-artifact@v3
         with:
           name: naev-linux-appdir-x86-64
+          path: appdir
 
       - name: Package AppImage
         run: |
-              chmod +x buildAppImage.sh
-              tar -Jxf naev-appdir.tar.xz
-              ./buildAppImage.sh -d -n -p -a "./AppDir" -b build
+              chmod +x packaging/buildAppImage.sh
+              tar -Jxf appdir/naev-appdir.tar.xz
+              ./packaging/buildAppImage.sh -d -n -p -a "./AppDir" -b build
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
@@ -312,11 +286,18 @@ jobs:
         run: |
           meson install -C build
 
-      - name: Upload Artifacts
+      - name: Upload Windows Installer Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: naev-win64
-          path: ${{ github.workspace }}/build/dist/*
+          name: naev-win64-installer
+          path: ${{ github.workspace }}/build/dist/naev-installer.exe
+          if-no-files-found: error
+
+      - name: Upload Windows Tarball Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: naev-win64-tarball
+          path: ${{ github.workspace }}/build/dist/naev-windows.tar.xz
           if-no-files-found: error
 
   "Darwin_Compile_Naev":
@@ -408,18 +389,8 @@ jobs:
       - name: Get Universal Bundle Packaging Script
         uses: actions/download-artifact@v3
         with:
-          name: naev-macos-packaging
-
-      - name: Get DMG Assets
-        uses: actions/download-artifact@v3
-        with:
-          name: naev-macos-dmg
-          path: dmg_assets
-
-      - name: Get Entitlements PLIST
-        uses: actions/download-artifact@v3
-        with:
-          name: naev-macos-entitlements
+          name: naev-packaging-assets
+          path: packaging
 
       - name: Get x86_64 macOS Bundle
         uses: actions/download-artifact@v3
@@ -434,10 +405,10 @@ jobs:
       - name: Package Universal Bundle
         run: |
               mkdir -p arm64 x86_64
-              chmod +x buildUniversalBundle.sh
+              chmod +x packaging/buildUniversalBundle.sh
               unzip naev-macos-aarch64.zip -d arm64
               unzip naev-macos-x86_64.zip -d x86_64
-              ./buildUniversalBundle.sh -d -i ./dmg_assets -e ./entitlements.plist -a ./arm64 -x ./x86_64 -b ./build
+              ./packaging/buildUniversalBundle.sh -d -i ./packaging/dmg_assets -e ./packaging/entitlements.plist -a ./arm64 -x ./x86_64 -b ./build
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
@@ -465,9 +436,71 @@ jobs:
     if: ${{ github.repository == 'naev/naev' }}
 
     steps:
-      - name: Download Artifacts
+      - name: Download Deployment Assets
         uses: actions/download-artifact@v3
         with:
+          name: naev-deployment-assets
+          path: ${{ github.workspace }}/build/staging
+
+      - name: Download Version
+        uses: actions/download-artifact@v3
+        with:
+          name: naev-version
+          path: ${{ github.workspace }}/build/staging
+
+      - name: Download Source Tarball (codeberg)
+        if: ${{ matrix.releasetype == 'codeberg' }}
+        uses: actions/download-artifact@v3
+        with:
+          name: naev-dist
+          path: ${{ github.workspace }}/build/staging
+
+      - name: Download Linux Package (codeberg/itch)
+        if: ${{ matrix.releasetype == 'codeberg' || matrix.releasetype == 'itch' }}
+        uses: actions/download-artifact@v3
+        with:
+          name: naev-linux-x86-64
+          path: ${{ github.workspace }}/build/staging
+
+      - name: Download Windows Installer (codeberg)
+        if: ${{ matrix.releasetype == 'codeberg' }}
+        uses: actions/download-artifact@v3
+        with:
+          name: naev-win64-installer
+          path: ${{ github.workspace }}/build/staging/naev-win64
+
+      - name: Download Windows Tarball (itch/steam)
+        if: ${{ matrix.releasetype == 'itch' || matrix.releasetype == 'steam' }}
+        uses: actions/download-artifact@v3
+        with:
+          name: naev-win64-tarball
+          path: ${{ github.workspace }}/build/staging/naev-win64
+
+      - name: Download macOS Package
+        uses: actions/download-artifact@v3
+        with:
+          name: naev-macos
+          path: ${{ github.workspace }}/build/staging
+
+      - name: Download NDATA (itch/steam)
+        if: ${{ matrix.releasetype == 'itch' || matrix.releasetype == 'steam' }}
+        uses: actions/download-artifact@v3
+        with:
+          name: naev-ndata
+          path: ${{ github.workspace }}/build/staging
+
+      - name: Download Steam Runtime Binary (steam)
+        if: ${{ matrix.releasetype == 'steam' }}
+        uses: actions/download-artifact@v3
+        with:
+          name: naev-steamruntime
+          path: ${{ github.workspace }}/build/staging
+
+      - name: Download Linux AppDir (steam)
+        if: ${{ matrix.releasetype == 'steam' }}
+        uses: actions/download-artifact@v3
+        with:
+          name: naev-linux-appdir-x86-64
           path: ${{ github.workspace }}/build/staging
 
       - name: Force Codeberg over SSH
@@ -539,28 +572,41 @@ jobs:
       - name: Stage Codeberg Release
         if: ${{ matrix.releasetype == 'codeberg' }}
         run: |
-          chmod -R +x build/staging/naev-codeberg-deployment
-          cp -r build/staging/naev-codeberg-deployment/* "$(pwd)"
+          chmod -R +x build/staging/naev-deployment-assets/berg
+          cp -r build/staging/naev-deployment-assets/berg/* "$(pwd)"
           ./BergDeploy.sh -n -t "$(pwd)/build/staging" -o "$(pwd)/build/dist" -r "nightly"
+
+      - name: Write Release Notes File
+        if: ${{ matrix.releasetype == 'codeberg' }}
+        run: |
+          printf "%s" "${RELEASE_NOTES}" > build/staging/release_notes.md
+          echo "==== RELEASE NOTES (preview) ===="
+          cat build/staging/release_notes.md
+          echo "==== END RELEASE NOTES ===="
 
       - name: Upload Codeberg Release
         if: ${{ matrix.releasetype == 'codeberg' }}
-        uses: Synchro/forgejo-release@self-healing
-        with:
-          direction: upload
-          release-dir: "$(pwd)/build/dist"
-          release-notes: "${{ env.RELEASE_NOTES }}"
-          override: true
-          prerelease: true
-          hide-archive-link: true
-          tag: nightly
-          title: ${{ env.RELEASE_TITLE }}
+        working-directory: ${{ github.workspace }}/build/staging/repo
+        run: |
+          ./utils/ci/upload_codeberg_release.sh \
+            --tag nightly \
+            --title "${RELEASE_TITLE}" \
+            --notes-file "${GITHUB_WORKSPACE}/build/staging/release_notes.md" \
+            --asset-dir "${GITHUB_WORKSPACE}/build/dist" \
+            --prerelease \
+            --overwrite \
+            --owner naev \
+            --repo naev \
+            --api-url https://codeberg.org/api/v1
+        env:
+          CODEBERG_TOKEN: ${{ secrets.CODEBERG_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and Upload itch.io Release
         if: ${{ matrix.releasetype == 'itch' }}
         run: |
-          chmod -R +x build/staging/naev-itch-deployment
-          cp -r build/staging/naev-itch-deployment/* "$(pwd)"
+          chmod -R +x build/staging/naev-deployment-assets/itch
+          cp -r build/staging/naev-deployment-assets/itch/* "$(pwd)"
           ./ItchDeploy.sh -n -t "$(pwd)/build/staging" -o "$(pwd)/build/dist"
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
@@ -568,8 +614,8 @@ jobs:
       - name: Build and Upload Steam Release
         if: ${{ matrix.releasetype == 'steam' }}
         run: |
-          chmod -R +x build/staging/naev-steam-deployment
-          cp -r build/staging/naev-steam-deployment/* "$(pwd)"
+          chmod -R +x build/staging/naev-deployment-assets/steam
+          cp -r build/staging/naev-deployment-assets/steam/* "$(pwd)"
           ./SteamDeploy.sh -n -t "$(pwd)/build/staging" -o "$(pwd)/build/dist"
         env:
           STEAMCMD_USER: ${{ secrets.STEAMCMD_USER }}
