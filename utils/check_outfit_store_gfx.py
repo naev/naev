@@ -14,7 +14,7 @@ else:
 
 images  = glob(prefix+"/dat/gfx/outfit/store/*")
 images += glob(prefix+"/assets/gfx/outfit/store/*")
-images  = list(map( lambda x: os.path.basename(x), images ))
+images  = list(map( lambda x: os.path.splitext( os.path.basename(x) )[0], images ))
 
 imgdict = {}
 for i in images:
@@ -26,7 +26,7 @@ def parse_outfit( file ):
       d = f.read()
       m = re.search( "<gfx_store>(.+?)</gfx_store>", d )
       if m:
-         s = m.group(1)
+         s = os.path.splitext(m.group(1))[0]
          v = imgdict.get(s)
          if not v:
             v = [ 0, [] ]
