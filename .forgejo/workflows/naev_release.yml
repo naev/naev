@@ -709,8 +709,9 @@ jobs:
       - name: Build and Upload itch.io Release
         if: ${{ matrix.releasetype == 'itch' }}
         run: |
-          chmod -R +x build/staging/naev-deployment-assets/itch
-          cp -r build/staging/naev-deployment-assets/itch/. "$(pwd)"
+          mv build/staging/naev-deployment-assets/itch build/staging/naev-itch-deployment
+          chmod -R +x build/staging/naev-itch-deployment
+          cp -r build/staging/naev-itch-deployment/. "$(pwd)"
           ./ItchDeploy.sh -t "$(pwd)/build/staging" -o "$(pwd)/build/dist"
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
