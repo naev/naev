@@ -1,4 +1,13 @@
-on: [push]
+on:
+  push:
+    branches:
+      - "**"
+    tags-ignore:
+      - "nightly"
+      - "v*.*.*"
+      - "v*.*.*-alpha*"
+      - "v*.*.*-beta*"
+      - "v*.*.*-rc*"
 
 name: CI
 
