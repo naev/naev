@@ -13,6 +13,10 @@ jobs:
           path: source
           submodules: true
 
+      - name: Prefetch Meson subprojects
+        run: |
+          meson subprojects download --sourcedir source
+
       - name: Cache Meson wrap downloads
         uses: actions/cache@v3
         with:
