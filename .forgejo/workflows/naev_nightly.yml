@@ -99,9 +99,9 @@ jobs:
         with:
           name: naev-deployment-assets
           path: |
-            ${{ github.workspace }}/build/dist/berg/*
-            ${{ github.workspace }}/build/dist/steam/*
-            ${{ github.workspace }}/build/dist/itch/*
+            ${{ github.workspace }}/build/dist/berg
+            ${{ github.workspace }}/build/dist/steam
+            ${{ github.workspace }}/build/dist/itch
           if-no-files-found: error
           include-hidden-files: true
 
@@ -509,8 +509,10 @@ jobs:
 
       - name: Force Codeberg over SSH
         run: git config --global url."ssh://git@codeberg.org/naev/".insteadOf https://codeberg.org/naev/
+        if: ${{ matrix.releasetype == 'codeberg' }}
 
       - name: Checkout Naev Repository
+        if: ${{ matrix.releasetype == 'codeberg' }}
         uses: actions/checkout@v4
         with:
           lfs: false
@@ -546,7 +548,7 @@ jobs:
           build_date="$(date +%Y-%m-%d)"
           build_sha="$(git rev-parse HEAD)"
 
-          # Generate and changelog into RELEASE_NOTES env var
+          # Generate changelog into RELEASE_NOTES env var
           {
             echo "RELEASE_NOTES<<EOF"
             echo "## Git SHA: [${build_sha:0:7}](${repo_url}/${build_sha}) Built on ${build_date}"
@@ -557,9 +559,9 @@ jobs:
             echo ""
             echo "### Changes since last build"
             echo ""
-            git log --pretty=format:"- %s ([%h](${repo_url}/%H))" ${PREV_SHA}..HEAD
+            git log --pretty=format:"- %s ([%h](${repo_url}/%H))" "${PREV_SHA}..HEAD"
             echo "EOF"
-          } >> $GITHUB_ENV
+          } >> "$GITHUB_ENV"
 
           # Generate release title into RELEASE_TITLE env var
           echo "RELEASE_TITLE=Nightly Release (${build_date}, ${build_sha:0:7})" >> $GITHUB_ENV
@@ -610,7 +612,7 @@ jobs:
         if: ${{ matrix.releasetype == 'itch' }}
         run: |
           chmod -R +x build/staging/naev-deployment-assets/itch
-          cp -r build/staging/naev-deployment-assets/itch/* "$(pwd)"
+          cp -r build/staging/naev-deployment-assets/itch/. "$(pwd)"
           ./ItchDeploy.sh -n -t "$(pwd)/build/staging" -o "$(pwd)/build/dist"
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
