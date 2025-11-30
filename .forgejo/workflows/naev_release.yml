@@ -110,9 +110,9 @@ jobs:
         with:
           name: naev-deployment-assets
           path: |
-            ${{ github.workspace }}/build/dist/berg/*
-            ${{ github.workspace }}/build/dist/steam/*
-            ${{ github.workspace }}/build/dist/itch/*
+            ${{ github.workspace }}/build/dist/berg
+            ${{ github.workspace }}/build/dist/steam
+            ${{ github.workspace }}/build/dist/itch
           if-no-files-found: error
           include-hidden-files: true
 
@@ -637,8 +637,10 @@ jobs:
 
       - name: Force Codeberg over SSH
         run: git config --global url."ssh://git@codeberg.org/naev/".insteadOf https://codeberg.org/naev/
+        if: ${{ matrix.releasetype == 'codeberg' }}
 
       - name: Checkout Naev Repository
+        if: ${{ matrix.releasetype == 'codeberg' }}
         uses: actions/checkout@v4
         with:
           lfs: false
@@ -678,7 +680,7 @@ jobs:
         if: ${{ matrix.releasetype == 'itch' }}
         run: |
           chmod -R +x build/staging/naev-deployment-assets/itch
-          cp -r build/staging/naev-deployment-assets/itch/* "$(pwd)"
+          cp -r build/staging/naev-deployment-assets/itch/. "$(pwd)"
           ./ItchDeploy.sh -t "$(pwd)/build/staging" -o "$(pwd)/build/dist"
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
