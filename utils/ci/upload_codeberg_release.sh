@@ -22,6 +22,7 @@ Optional:
   --api-url URL        API base (default: https://codeberg.org/api/v1).
   --prerelease         Mark release as prerelease.
   --overwrite          Delete existing release with same tag first.
+  --hide-archive-link  Hide auto-generated source archives on the release.
 
 Auth:
   CODEBERG_TOKEN or GITHUB_TOKEN must be set in the environment.
@@ -39,6 +40,7 @@ REPO="naev"
 API_URL="https://codeberg.org/api/v1"
 PRERELEASE="false"
 OVERWRITE="false"
+HIDE_ARCHIVE="false"
 
 while [[ $# -gt 0 ]]; do
    case "$1" in
@@ -52,6 +54,7 @@ while [[ $# -gt 0 ]]; do
       --api-url) API_URL="$2"; shift 2 ;;
       --prerelease) PRERELEASE="true"; shift 1 ;;
       --overwrite) OVERWRITE="true"; shift 1 ;;
+      --hide-archive-link) HIDE_ARCHIVE="true"; shift 1 ;;
       -h|--help) usage ;;
       *) usage ;;
    esac
@@ -128,7 +131,8 @@ payload="$(jq -n \
    --arg name "$TITLE" \
    --arg body "$BODY" \
    --argjson prerelease "$PRERELEASE" \
-   '{tag_name:$tag, name:$name, body:$body, draft:false, prerelease:$prerelease}')"
+   --argjson hide "$HIDE_ARCHIVE" \
+   '{tag_name:$tag, name:$name, body:$body, draft:false, prerelease:$prerelease, hide_archive_links:$hide}')"
 
 release_resp="$(api_retry POST "$API_URL/repos/$OWNER/$REPO/releases" "${json_header[@]}" -d "$payload")"
 release_id="$(echo "$release_resp" | jq -r '.id // empty')"
