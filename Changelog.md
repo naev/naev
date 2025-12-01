@@ -4,6 +4,7 @@
  - Fix handling the --pluginmanager flag on platforms like macOS
  - Replaced a bunch of placeholder outfit graphics
  - Uninstalling a plugin will reset its disabled state
+ - Fixed some generic NPCs not talking
 
 ## 0.13.0-beta.2
  - Fixed crash with appimage on certain systems
