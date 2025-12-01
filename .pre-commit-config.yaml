@@ -23,9 +23,6 @@ repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v6.0.0
   hooks:
-    #- id: trailing-whitespace
-    #- id: end-of-file-fixer
-    #  exclude: po/naevpedia.pot
     - id: check-xml
     - id: check-yaml
     - id: check-toml
@@ -43,6 +40,22 @@ repos:
       args: [--assume-in-merge]
 - repo: local
   hooks:
+    - id: smd
+      name: markdown linter
+      entry: utils/shlinters/smd/smd.sh
+      args: ["-i", "-s"]
+      files: '^Readme.md'
+      types: [markdown]
+      language: script
+      require_serial: true
+    - id: smd-w
+      name: markdown linter (wider)
+      entry: utils/shlinters/smd/smd.sh
+      args: ["-i", "-s", "-w", "5"]
+      files: '^Changelog.md'
+      types: [markdown]
+      language: script
+      require_serial: true
     - id: check_luadoc_func
       name: check @lua.. not used outside @luafunc
       entry: utils/check_luadoc_funcs.sh
