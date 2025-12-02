@@ -1,0 +1,7 @@
+name = "systems"
+display = "Core Systems"
+description = "This slot is used for dedicated core systems of the ship. Other subsystems rely on those to manage them, and the bulk of the ship's power and shield generation also happens here."
+required = true
+exclusive = true
+icon = "systems"
+tags = ["core"]

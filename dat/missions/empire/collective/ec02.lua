@@ -43,7 +43,7 @@ function create ()
       misn.finish(false)
    end
 
-   misn.setNPC( _("Dimitri"), "empire/unique/dimitri.webp", _("You notice Lt. Commander Dimitri at one of the booths.") )
+   misn.setNPC( _("Dimitri"), "empire/unique/dimitri", _("You notice Lt. Commander Dimitri at one of the booths.") )
 end
 
 

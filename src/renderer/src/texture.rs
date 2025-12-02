@@ -1,6 +1,7 @@
 use anyhow::Context as AnyhowContext;
 use anyhow::Result;
 use glow::*;
+use image::ImageFormat;
 use log::{warn, warn_err};
 #[allow(unused_imports)]
 use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
@@ -24,6 +25,13 @@ pub(crate) static TEXTURE_DATA: LazyLock<Mutex<Vec<Weak<TextureData>>>> =
 pub(crate) static GC_COUNTER: AtomicU32 = AtomicU32::new(0);
 /// Number of destroyed textures to start garbage collecting the cache
 pub(crate) const GC_THRESHOLD: u32 = 128;
+
+pub const FORMATS: [ImageFormat; 4] = [
+    ImageFormat::Avif,
+    ImageFormat::WebP,
+    ImageFormat::Png,
+    ImageFormat::Jpeg,
+];
 
 #[allow(clippy::upper_case_acronyms)]
 #[derive(Clone, Copy, Debug)]
@@ -886,14 +894,8 @@ impl TextureSource {
                             None => {
                                 // We could just use ImageFormat::all() here, but I figure we want
                                 // a specific order
-                                use image::ImageFormat;
                                 let mut image = None;
-                                'imageformat: for imageformat in &[
-                                    ImageFormat::Avif,
-                                    ImageFormat::WebP,
-                                    ImageFormat::Png,
-                                    ImageFormat::Jpeg,
-                                ] {
+                                'imageformat: for imageformat in FORMATS {
                                     for ext in imageformat.extensions_str() {
                                         let path = &format!("{}.{}", cpath, ext);
                                         if ndata::exists(path) {
@@ -911,8 +913,9 @@ impl TextureSource {
                                             Some(svg_to_img(&mut ndata::iostream(path)?, w, h)?);
                                     }
                                 }
-                                image
-                                    .context(format!("No image file matching '{}' found", cpath))?
+                                image.with_context(|| {
+                                    format!("No image file matching '{}' found", cpath)
+                                })?
                             }
                         }
                     };
@@ -1667,6 +1670,35 @@ pub extern "C" fn gl_newImage(cpath: *const c_char, flags: c_uint) -> *mut Textu
     gl_newSprite(cpath, 1, 1, flags)
 }
 
+/// Like gl_tryNewImage, but ignores errors.
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_tryNewImage(cpath: *const c_char, cflags: c_uint) -> *mut Texture {
+    let ctx = Context::get(); /* Lock early. */
+    let path = unsafe { CStr::from_ptr(cpath) };
+    let flags = Flags::from(cflags);
+
+    unsafe {
+        naevc::gl_contextSet();
+    }
+
+    let mut builder = TextureBuilder::new()
+        .path(&path.to_string_lossy())
+        .srgb(!flags.notsrgb)
+        .mipmaps(flags.mipmaps);
+    if flags.clamp_alpha {
+        builder = builder.border(Some(Vector4::<f32>::new(0., 0., 0., 0.)));
+    }
+
+    let out = match builder.build(ctx) {
+        Ok(tex) => tex.into_ptr(),
+        Err(_) => std::ptr::null_mut(),
+    };
+    unsafe {
+        naevc::gl_contextUnset();
+    }
+    out
+}
+
 #[unsafe(no_mangle)]
 pub extern "C" fn gl_newSprite(
     cpath: *const c_char,
@@ -1696,7 +1728,7 @@ pub extern "C" fn gl_newSprite(
     let out = match builder.build(ctx) {
         Ok(tex) => tex.into_ptr(),
         Err(e) => {
-            warn_err(e.context("unable to build texture for new sprite"));
+            warn_err!(e.context("unable to build texture for new sprite"));
             std::ptr::null_mut()
         }
     };
@@ -1760,7 +1792,7 @@ pub extern "C" fn gl_newSpriteRWops(
     let out = match builder.build(ctx) {
         Ok(tex) => tex.into_ptr(),
         Err(e) => {
-            warn_err(e.context("unable to build texture for new sprite from rwops"));
+            warn_err!(e.context("unable to build texture for new sprite from rwops"));
             std::ptr::null_mut()
         }
     };
@@ -1828,7 +1860,7 @@ pub extern "C" fn gl_rawTexture(
     let out = match builder.build(ctx) {
         Ok(tex) => tex.into_ptr(),
         Err(e) => {
-            warn_err(e.context("unable to build texture for raw texture"));
+            warn_err!(e.context("unable to build texture for raw texture"));
             std::ptr::null_mut()
         }
     };
@@ -2235,4 +2267,55 @@ impl UserData for Texture {
 pub fn open_texture(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
     let proxy = lua.create_proxy::<Texture>()?;
     Ok(proxy)
+}
+
+type TextureDeserializerFn =
+    dyn Fn(&ContextWrapper, &str) -> Result<Texture> + Send + Sync + 'static;
+
+pub struct TextureDeserializer<'a> {
+    pub ctx: ContextWrapper<'a>,
+    pub func: Box<TextureDeserializerFn>,
+}
+
+use serde::{Deserialize, Serialize};
+use serde_seeded::DeserializeSeeded;
+impl<'de> DeserializeSeeded<'de, ContextWrapper<'_>> for Texture {
+    fn deserialize_seeded<D>(ctx: &ContextWrapper, deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let name = String::deserialize(deserializer)?;
+        match TextureBuilder::new().path(&name).build_wrap(ctx) {
+            Ok(tex) => Ok(tex),
+            Err(e) => Err(serde::de::Error::custom(e)),
+        }
+    }
+}
+impl<'de> DeserializeSeeded<'de, TextureDeserializer<'_>> for Texture {
+    fn deserialize_seeded<D>(
+        loader: &TextureDeserializer,
+        deserializer: D,
+    ) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let name = String::deserialize(deserializer)?;
+        match (loader.func)(&loader.ctx, &name) {
+            Ok(tex) => Ok(tex),
+            Err(e) => Err(serde::de::Error::custom(e)),
+        }
+    }
+}
+impl Serialize for Texture {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        match &self.path {
+            Some(path) => serializer.serialize_str(&format!("/{}", path)),
+            None => Err(serde::ser::Error::custom(
+                "can't serialize texture without a path",
+            )),
+        }
+    }
 }

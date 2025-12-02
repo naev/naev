@@ -7,17 +7,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.12.0-beta.1\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-11-15 18:43+0900\n"
-"PO-Revision-Date: 2025-07-31 17:02+0000\n"
-"Last-Translator: Valeriy Sosnov <sigus@vivaldi.net>\n"
-"Language-Team: Russian <https://hosted.weblate.org/projects/naev/naev/ru/>\n"
+"POT-Creation-Date: 2025-11-23 22:49+0900\n"
+"PO-Revision-Date: 2025-11-20 16:10+0000\n"
+"Last-Translator: aaaxpel <aaaxpel@noreply.codeberg.org>\n"
+"Language-Team: Russian <https://translate.codeberg.org/projects/naev/naev/ru/"
+">\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.13-dev\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 5.14\n"
 
 msgid "Active Plating"
 msgstr ""
@@ -882,7 +883,7 @@ msgid "Plasma Burst"
 msgstr "Плазменный взрыв"
 
 msgid "Plasma Cannon"
-msgstr ""
+msgstr "Плазменная Пушка"
 
 msgid "Plasma Cluster Cannon"
 msgstr ""
@@ -11049,6 +11050,199 @@ msgstr "ПИРАТСКАЯ ВЕНДЕТТА"
 msgid "VIGILANCE"
 msgstr "БДИТЕЛЬНОСТЬ"
 
+msgctxt "damagetype"
+msgid "armourbreaker"
+msgstr ""
+
+msgctxt "damagetype"
+msgid "#nArmourbreaker#0"
+msgstr ""
+
+msgctxt "damagetype"
+msgid "emp"
+msgstr ""
+
+msgctxt "damagetype"
+msgid "#bEMP#0"
+msgstr ""
+
+msgctxt "damagetype"
+msgid "energy"
+msgstr ""
+
+msgctxt "damagetype"
+msgid "#gEnergy#0"
+msgstr ""
+
+msgctxt "damagetype"
+msgid "energy_noknockback"
+msgstr ""
+
+msgctxt "damagetype"
+msgid "explosion_splash"
+msgstr ""
+
+msgctxt "damagetype"
+msgid "ion"
+msgstr ""
+
+msgctxt "damagetype"
+msgid "#yIon#0"
+msgstr ""
+
+msgctxt "damagetype"
+msgid "kinetic"
+msgstr ""
+
+msgctxt "damagetype"
+msgid "#oKinetic#0"
+msgstr ""
+
+msgctxt "damagetype"
+msgid "nebula"
+msgstr ""
+
+msgctxt "damagetype"
+msgid "#pNebula#0"
+msgstr ""
+
+msgctxt "damagetype"
+msgid "plasma"
+msgstr ""
+
+msgctxt "damagetype"
+msgid "#rPlasma#0"
+msgstr ""
+
+msgctxt "slotproperty"
+msgid "Accessory"
+msgstr ""
+
+msgctxt "slotproperty"
+msgid ""
+"This slot is used to equip accessories that can enhance the ship's "
+"performance. Outfits that fit in these slots are not generally acquirable by "
+"normal means."
+msgstr ""
+
+msgctxt "slotproperty"
+msgid "Bioship Gene Drives"
+msgstr ""
+
+msgctxt "slotproperty"
+msgid ""
+"This slot is used for the gene drives, the biological equivalent to Engines. "
+"Gene drives propel the organism through space."
+msgstr ""
+
+msgctxt "slotproperty"
+msgid "Bioship Shells"
+msgstr ""
+
+msgctxt "slotproperty"
+msgid ""
+"This slot is used for the shell, the biological equivalent to Hull "
+"Modifications. The shell is the last line of defence for the organism, "
+"protecting critical organs from damage. It also has a minor impact on its "
+"available cargo space."
+msgstr ""
+
+msgctxt "slotproperty"
+msgid "Bioship Organs"
+msgstr ""
+
+msgctxt "slotproperty"
+msgid ""
+"Through biological synthesis, bioships are able to modify and adapt their "
+"organs for many different purposes without the need of any external "
+"equipment."
+msgstr ""
+
+msgctxt "slotproperty"
+msgid "Bioship Brains"
+msgstr ""
+
+msgctxt "slotproperty"
+msgid ""
+"This slot is used for the brain, the biological equivalent to Core Systems. "
+"The brain of an organism is responsible for managing the function of the "
+"rest of the organism and allocating energy reserves for the battery and "
+"shield."
+msgstr ""
+
+msgctxt "slotproperty"
+msgid "Bioship Weapons"
+msgstr ""
+
+msgctxt "slotproperty"
+msgid ""
+"This slot can be used to grow special organic weapons on bioships. Organic "
+"weapons are generally similar to their synthetic counterparts, but tend to "
+"be more efficient due to the strong coupling with the ship in comparison to "
+"purely synthetic constructs."
+msgstr ""
+
+msgctxt "slotproperty"
+msgid "Built-In"
+msgstr ""
+
+msgctxt "slotproperty"
+msgid ""
+"This slot is used by a built-in outfit that can not be removed from the ship."
+msgstr ""
+
+msgctxt "slotproperty"
+msgid "Engines"
+msgstr ""
+
+msgctxt "slotproperty"
+msgid ""
+"This slot is used for engines. Engines propel the ship, which is kind of "
+"important. Engines require energy from the core systems to function."
+msgstr ""
+
+msgctxt "slotproperty"
+msgid "Engines (Secondary)"
+msgstr ""
+
+msgctxt "slotproperty"
+msgid "Fighter Bays"
+msgstr ""
+
+msgctxt "slotproperty"
+msgid "This slot can be used for fighter bays."
+msgstr ""
+
+msgctxt "slotproperty"
+msgid "Hull Modifications"
+msgstr ""
+
+msgctxt "slotproperty"
+msgid ""
+"This slot is used for structural modifications to the ship's hull. This slot "
+"represents the base layer of armour plating, and also greatly affects mass "
+"and cargo space."
+msgstr ""
+
+msgctxt "slotproperty"
+msgid "Hull Modifications (Secondary)"
+msgstr ""
+
+msgctxt "slotproperty"
+msgid "Core Systems"
+msgstr ""
+
+msgctxt "slotproperty"
+msgid ""
+"This slot is used for dedicated core systems of the ship. Other subsystems "
+"rely on those to manage them, and the bulk of the ship's power and shield "
+"generation also happens here."
+msgstr ""
+
+msgctxt "slotproperty"
+msgid "Core Systems (Secondary)"
+msgstr ""
+
 msgid "common"
 msgstr "обычный"
 
@@ -11372,55 +11566,6 @@ msgstr ""
 "Поскольку иттрий играет важную роль в освещении и лазерных технологиях, "
 "постоянный спрос привел к рекордным ценам на него с момента Инцидента. "
 "Экономисты считают, что это ключевой индикатор грядущих тяжелых времен."
-
-msgid "armourbreaker"
-msgstr "бронебойный"
-
-msgid "#nArmourbreaker#0"
-msgstr "#nБронебойщик#0"
-
-msgid "emp"
-msgstr "электромагнитный импульс"
-
-msgid "#bEMP#0"
-msgstr "#bЭМИ#0"
-
-msgid "energy"
-msgstr "энергия"
-
-msgid "#gEnergy#0"
-msgstr "#gЭнергия#0"
-
-#, fuzzy
-msgid "energy_noknockback"
-msgstr "энергия без отбрасывания"
-
-msgid "explosion_splash"
-msgstr "взрывная волна"
-
-msgid "ion"
-msgstr "ионный"
-
-msgid "#yIon#0"
-msgstr "#yИонный#0"
-
-msgid "kinetic"
-msgstr "кинетическая"
-
-msgid "#oKinetic#0"
-msgstr "#oКинетический#0"
-
-msgid "nebula"
-msgstr "туманность"
-
-msgid "#pNebula#0"
-msgstr "#pТуманность#0"
-
-msgid "plasma"
-msgstr "плазма"
-
-msgid "#rPlasma#0"
-msgstr "#rПлазма#0"
 
 msgid "Default"
 msgstr "По умолчанию"
@@ -11754,7 +11899,7 @@ msgstr ""
 "независимость Фронтира от имперской тирании."
 
 msgid "Frontier"
-msgstr "Фронтир"
+msgstr "Пограничник"
 
 msgid "Frontier Alliance"
 msgstr "Альянс Фронтира"
@@ -16865,112 +17010,6 @@ msgid ""
 "changes do not come cheap."
 msgstr ""
 
-msgid ""
-"This slot is used to equip accessories that can enhance the ship's "
-"performance. Outfits that fit in these slots are not generally acquirable by "
-"normal means."
-msgstr ""
-
-msgid "Bioship Gene Drives"
-msgstr ""
-
-msgid ""
-"This slot is used for the gene drives, the biological equivalent to Engines. "
-"Gene drives propel the organism through space."
-msgstr ""
-
-msgid "Bioship Shells"
-msgstr ""
-
-msgid ""
-"This slot is used for the shell, the biological equivalent to Hull "
-"Modifications. The shell is the last line of defence for the organism, "
-"protecting critical organs from damage. It also has a minor impact on its "
-"available cargo space."
-msgstr ""
-
-msgid "Bioship Organs"
-msgstr "Органы биокорабля"
-
-msgid ""
-"Through biological synthesis, bioships are able to modify and adapt their "
-"organs for many different purposes without the need of any external "
-"equipment."
-msgstr ""
-
-msgid "Bioship Brains"
-msgstr ""
-
-msgid ""
-"This slot is used for the brain, the biological equivalent to Core Systems. "
-"The brain of an organism is responsible for managing the function of the "
-"rest of the organism and allocating energy reserves for the battery and "
-"shield."
-msgstr ""
-
-msgid "Bioship Weapons"
-msgstr ""
-
-msgid ""
-"This slot can be used to grow special organic weapons on bioships. Organic "
-"weapons are generally similar to their synthetic counterparts, but tend to "
-"be more efficient due to the strong coupling with the ship in comparison to "
-"purely synthetic constructs."
-msgstr ""
-
-msgid "Built-In"
-msgstr ""
-
-msgid ""
-"This slot is used by a built-in outfit that can not be removed from the ship."
-msgstr ""
-
-msgid "Engines"
-msgstr ""
-
-msgid ""
-"This slot is used for engines. Engines propel the ship, which is kind of "
-"important. Engines require energy from the core systems to function."
-msgstr ""
-
-msgid "Engines (Secondary)"
-msgstr ""
-
-msgid ""
-"This slot is used for engines. Engines propel the ship, which is kind of "
-"important. Engines require energy from the core system to function."
-msgstr ""
-
-msgid "Fighter Bays"
-msgstr ""
-
-msgid "This slot can be used for fighter bays."
-msgstr ""
-
-msgid "Hull Modifications"
-msgstr ""
-
-msgid ""
-"This slot is used for structural modifications to the ship's hull. This slot "
-"represents the base layer of armour plating, and also greatly affects mass "
-"and cargo space."
-msgstr ""
-
-msgid "Hull Modifications (Secondary)"
-msgstr ""
-
-msgid "Core Systems"
-msgstr ""
-
-msgid ""
-"This slot is used for dedicated core systems of the ship. Other subsystems "
-"rely on those to manage them, and the bulk of the ship's power and shield "
-"generation also happens here."
-msgstr ""
-
-msgid "Core Systems (Secondary)"
-msgstr ""
-
 msgid "Abacus"
 msgstr "Абакус"
 
@@ -17993,7 +18032,24 @@ msgstr ""
 #. <event name="Shipwreck">
 #. <location>enter</location>
 #. <chance>3</chance>
-#. <cond>require("common.pirate").systemPresence() &gt; 0</cond>
+#. <cond>
+#. local cursys = system.cur()
+#.
+#. -- Avoid restricted systems
+#. if cursys:tags().restricted then
+#. return false
+#. end
+#.
+#. -- Don't do volatile systems
+#. local _nebu_dens, nebu_vol = cursys:nebula()
+#. if nebu_vol &gt; 0 then
+#. return false
+#. end
+#.
+#. -- Must have pirates, but not too much
+#. local pir = require("common.pirate").systemPresence()
+#. return pir &gt; 0 and pir &lt; 300
+#. </cond>
 #. <unique />
 #. <notes>
 #. <tier>1</tier>
@@ -31429,7 +31485,7 @@ msgstr ""
 
 msgid ""
 "Alsafi II is a barren world that other than some indications of prospection "
-"sites looking for mineral, is devoid of anything of interest, a part from a "
+"sites looking for mineral, is devoid of anything of interest, apart from a "
 "small one-man druglab operation."
 msgstr ""
 
@@ -34868,7 +34924,7 @@ msgstr "Автонавигатор: недостаточно топлива чт
 #. Alpha can be used to control the intensity of the radiosity and multiplies the RGB values
 #. r=colour.new(0.94, 0.30, 0.00, 8) }, Too red otherwise
 #. r=colour.new(0.57, 0.00, 0.00, 8) }, Too red otherwise
-#. { i="redgiant02.webp", r=colour.new(0.82, 0.53, 0.26, 5) }, -- Unused, would need colour tweaks
+#. { i="redgiant02", r=colour.new(0.82, 0.53, 0.26, 5) }, -- Unused, would need colour tweaks
 #. Set up parameters
 #. Avoid repeating stars
 #. Load and set stuff
@@ -35241,7 +35297,7 @@ msgid "Close"
 msgstr "Закрыть"
 
 msgid "Jettison"
-msgstr "Сброс"
+msgstr "Еттисон"
 
 #. Player stole something to make it not spaceworthy, sorry bud, you're not waking up.
 #. Permanently disable
@@ -35431,6 +35487,7 @@ msgstr ""
 "\n"
 "У вас есть {credits}. Заплатить #r{price}#0?"
 
+#. Handle escort stuff here
 msgid "The fighter does not respond."
 msgstr "Истребитель не отвечает."
 
@@ -37961,7 +38018,7 @@ msgstr ""
 #. Gets someone to make a message (useful for hook.timer)
 #. Equips a Vendetta with full mace rockets
 msgid "Warlords"
-msgstr ""
+msgstr "Военачальники"
 
 #. Spawns a merchant ship that explains what happens
 msgid "Trader {ship}"
@@ -42415,8 +42472,6 @@ msgstr ""
 
 #. Non-persistent state
 #. Make sure system isn't claimed, but we don't claim it
-#. Don't do volatile systems
-#. Don't spawn in restricted space (just in case)
 #. The _("Shipwrecked {plt}") will be a random trader vessel.
 #. Create the derelict.
 msgid "Shipwrecked {plt}"
@@ -47115,7 +47170,7 @@ msgstr ""
 #. Keep on beating
 #. Make it so it's much easier to dodge for the player
 msgid "Major Malik"
-msgstr ""
+msgstr "Майор Малик"
 
 msgid ""
 "Back in my day we walked uphill, both ways, in the snow to fight for honour!"
@@ -51656,45 +51711,6 @@ msgstr ""
 #. Cost
 #. Updates if ships had core outfits replaced
 #. Add outfit
-#. luacheck: globals nooutfit (used in POI framework)
-msgid "Your ship AI {shipai} materializes before you."
-msgstr ""
-
-msgid ""
-"\"Oh my. It seems like the ship designs changed again. Some ships have got "
-"additional secondary core slots, in which you can equip normal cores. "
-"However, the core outfits will have different properties depending on "
-"whether they are primary or secondary. Similarly, many core outfits have "
-"been discontinued, and for ships with more than one core slot, instead of "
-"equipping a larger one, you can equip two to get the same effect as before!\""
-msgstr ""
-
-msgid ""
-"\"I have tried to automatically update your ships to be similar to before, "
-"but some things may have changed. Make sure you double-check your ships "
-"before taking off!\""
-msgstr ""
-
-msgid ""
-"\"Oh, and some of your ships had more than one upgrade from the Crimson "
-"Gauntlet which are now mutually exclusive with each other.\""
-msgstr ""
-
-msgid ""
-"\"Oh my. It seems like some of your ships had more than one upgrade from the "
-"Crimson Gauntlet which are now mutually exclusive with each other.\""
-msgstr ""
-
-msgid ""
-"\"Both of the outfits have been removed, and you have been refunded a total "
-"of {emblems} for the cost of the outfits. In particular, the following ships "
-"have been modified: {ships}\""
-msgstr ""
-
-#. Runs on saves older than 0.12.0
-#. Have to apply diff to lower pirates if necessary
-#. Player may have not met the proteron but have positive standing due to bugs in how the reputation worked
-#. Reset standing to hostile unless player is in proteron system
 #. Do update tutorial, have to handle older versions here
 msgid "Suddenly, a hologram materializes in front of you."
 msgstr ""
@@ -51739,6 +51755,10 @@ msgid ""
 "explanations and change tutorial options.\""
 msgstr ""
 
+#. luacheck: globals nooutfit (used in POI framework)
+msgid "Your ship AI {shipai} materializes before you."
+msgstr ""
+
 msgid ""
 "\"It seems like there has been a significant update to the game!\n"
 "Many of the new features come with small tutorials in form of missions. I "
@@ -51781,7 +51801,6 @@ msgid ""
 "of the bioship.\""
 msgstr ""
 
-#. sai(_([["This update also provides significant modernization of the engine and many other features. To list a few, the star map is larger and you can save system notes, many new missions and campaigns, health bars are shown for pilots in combat, backgrounds reworked, news and NPCs reworked, unique pilots appear throughout the universe, manual aiming mode, save snapshots, difficulty settings, etc. Some features can be toggled through the #oOptions#0 window, so make sure to check that if interested."]]))
 #. 0.11.0 changes
 msgid ""
 "\"The universe has also undergone drastic changes to fit the game lore and "
@@ -51822,14 +51841,6 @@ msgid ""
 msgstr ""
 
 #. 0.12.0 changes
-#.
-#. 1. Ship Capturing (chapter 1+)
-#. 1. Reputation changes
-#. 1. Holo-Archives
-#. 1. Fuel increase
-#. 1. Stats are additive
-#. 1. Scanning (scan key)
-#. --
 msgid ""
 "\"You will now be able to capture ships that you disable for a price. "
 "However, you will need enough free fleet capacity to add the ship to your "
@@ -51845,32 +51856,6 @@ msgid ""
 "also in-depth sections of lore explaining things about the universe that "
 "grow as you unlock them. You can access the Holo-Archives from the "
 "information menu you open with {infokey}.\""
-msgstr ""
-
-msgid ""
-"\"Reputation has been significantly reworked. It is no longer a single "
-"absolute value for every faction, but computed on a local level. This means "
-"that your actions will mainly have local consequences, and are more "
-"forgiving. However, this only affects local actions such as attacking and "
-"boarding, reputation gained through missions is still global. If that was "
-"not enough, all reputation changes are shown by default, which you can "
-"disable from the information window.\""
-msgstr ""
-
-msgid ""
-"\"Up until now, other ships could scan you, but you couldn't scan them. This "
-"has been changed in the latest release. You can now scan ships with the "
-"{scankey}. However, you will only be able to scan a ship after you have them "
-"as your active target for a while. You will see a spinning icon in the GUI. "
-"When it stops spinning, you will be able to scan!\""
-msgstr ""
-
-msgid ""
-"\"This update also provides a significant modernization of the engine and "
-"many other features. To list a few, fuel has been increased for most ships, "
-"statistics are now additive instead of multiplicative, ship variants, "
-"improved point defence, reworked ship trails, much faster loading, tons of "
-"new content... I hope you enjoy the update!\""
 msgstr ""
 
 msgid ""
@@ -51904,6 +51889,52 @@ msgid ""
 "please modify them from the #oInformation#0 window!\""
 msgstr ""
 
+#. 0.13.0 changes
+msgid ""
+"\"Thanks to new advances in material technology, ships no longer have issues "
+"with overheating. However, it is still possible to perform a cooldown with "
+"{cooldownkey} or double-tappping {reversekey} to refill weapon ammunition "
+"and fighters.\""
+msgstr ""
+
+msgid ""
+"\"Oh my. It seems like the ship designs changed again. Some ships have got "
+"additional secondary core slots, in which you can equip normal cores. "
+"However, the core outfits will have different properties depending on "
+"whether they are primary or secondary. Similarly, many core outfits have "
+"been discontinued, and for ships with more than one core slot, instead of "
+"equipping a larger one, you can equip two to get the same effect as before!\""
+msgstr ""
+
+msgid ""
+"\"I have tried to automatically update your ships to be similar to before, "
+"but some things may have changed. Make sure you double-check your ships "
+"before taking off!\""
+msgstr ""
+
+msgid ""
+"\"Oh, and some of your ships had more than one upgrade from the Crimson "
+"Gauntlet which are now mutually exclusive with each other.\""
+msgstr ""
+
+msgid ""
+"\"Oh my. It seems like some of your ships had more than one upgrade from the "
+"Crimson Gauntlet which are now mutually exclusive with each other.\""
+msgstr ""
+
+msgid ""
+"\"Both of the outfits have been removed, and you have been refunded a total "
+"of {emblems} for the cost of the outfits. In particular, the following ships "
+"have been modified: {ships}\""
+msgstr ""
+
+msgid ""
+"\"This update also provides a significant modernization of the engine and "
+"many other features. To list a few: autonav improvements, music doesn't "
+"restart as much, multiple backups, logarithmic radar, truly isometric "
+"camera, ... I hope you enjoy the update!\""
+msgstr ""
+
 msgid ""
 "\"With that said, would you like me to provide small, in-game advice as you "
 "do things throughout the game? Some might refer to things you are already "
@@ -51931,6 +51962,10 @@ msgid ""
 "let's go adventuring!\""
 msgstr ""
 
+#. Runs on saves older than 0.12.0
+#. Have to apply diff to lower pirates if necessary
+#. Player may have not met the proteron but have positive standing due to bugs in how the reputation worked
+#. Reset standing to hostile unless player is in proteron system
 #. Runs on saves older than 0.11.0
 #. Runs on saves older than 0.10.0
 #. "nelly_met" variable wasn't used in older versions
@@ -51975,7 +52010,6 @@ msgstr ""
 #. Run on saves older than 0.11.0
 #. Run on saves older than 0.12.0
 #. Run on saves older than 0.13.0
-#. didupdate = true
 #. Note that games before 0.10.0 will have lastplayed set days from the unix epoch
 #. Hack to avoid the player seeing the message every time they load a game without quitting
 msgid "Your ship AI, {ainame}, materializes in front of you."
@@ -63043,7 +63077,7 @@ msgstr ""
 #. target destination
 #. In case no suitable planets are in range.
 msgid "Lieutenant"
-msgstr ""
+msgstr "Лейтенант"
 
 msgid "You see an Empire Lieutenant who seems to be looking at you."
 msgstr ""
@@ -99190,10 +99224,8 @@ msgid "Land on {startpnt} in the {sys} system by double-clicking on it"
 msgstr "Приземлитесь на {startpnt} в системе {sys}, дважды щелкнув по цели"
 
 msgid ""
-"Go to {destpnt} in the {sys} system by right-clicking it on the overview map"
+"Go to {destpnt} in the {sys} system by double-clicking it on the overview map"
 msgstr ""
-"Перейдите к {destpnt} в системе {sys}, щелкнув правой кнопкой мыши по цели "
-"на обзорной карте"
 
 msgid "Destroy the practice drone near {destpnt} in the {sys} system"
 msgstr "Уничтожьте учебный дрон около {destpnt} в системе {sys}"
@@ -99688,21 +99720,14 @@ msgstr ""
 "репутации у различных фракций. Вы, вероятно, будете часто обращаться к нему "
 "в ходе исследования галактики.\""
 
-#, fuzzy
 msgid ""
 "\"I think we should try venturing outside this system. There are many "
 "systems in the galaxy; this one is but a tiny sliver of what can be found "
 "out there! Travelling through systems is accomplished with jump points. Like "
 "planets, you usually need to find these by exploring the area, talking to "
 "the locals, or buying maps. Once you have found a jump point, you can use it "
-"by #bright-clicking#0 on it or using the {jumpkey}.\""
+"by #bdouble-clicking#0 on it or using the {jumpkey}.\""
 msgstr ""
-"\"Я думаю, нам стоит попробовать выйти за пределы этой системы. В галактике "
-"много систем; эта — лишь малая часть того, что можно там найти! Путешествие "
-"по системам осуществляется с помощью точек перехода. Как и в случае с "
-"планетами, их обычно можно найти, исследуя пространство системы, "
-"разговаривая с местными жителями или покупая карты. Найдя точку перехода, вы "
-"можете использовать ее, #bright-click#0 по ней или используя {jumpkey}.\""
 
 msgid ""
 "\"But there is an even better way to navigate across systems! By pressing "
@@ -114105,6 +114130,33 @@ msgstr ""
 #. --    @return String representing the number as a roman numeral.
 #. --
 #. note that this is -not- ipairs.
+#.
+#. Some stuff for helping with player escorts.
+#. --
+msgid "Hold Formation"
+msgstr ""
+
+msgid "Holding formation."
+msgstr ""
+
+msgid "Return to Ship"
+msgstr ""
+
+msgid "Returning to ship."
+msgstr ""
+
+msgid "Clear Orders"
+msgstr ""
+
+msgid "Clearing orders."
+msgstr ""
+
+msgid "Escort Orders"
+msgstr ""
+
+msgid "Select the order to give to this escort."
+msgstr ""
+
 msgctxt "formation"
 msgid "None"
 msgstr ""
@@ -115023,7 +115075,7 @@ msgstr ""
 #. rollspeed = 0.3,
 #. grain = 0.1 + size*0.001,
 #. Sirius ships need the Internal Flow Amplifier for now, add if missing
-#. TODO get rid of before 0.13.0 release, needed to upgrade older ships atm (new ones just add the intrinsic outfit)
+#. TODO get rid of before 0.14.0 release, needed to upgrade older ships atm (new ones just add the intrinsic outfit)
 #. Update once per second
 #. Maximum value of the bonus
 #. Flow required to start getting a bonus
@@ -118864,23 +118916,6 @@ msgstr ""
 msgid "#gEscorts: #0Clearing orders."
 msgstr ""
 
-#. "Attack My Target" order is omitted deliberately since e is your
-#. * target, making "Attack My Target" a useless command.
-msgid "Hold Formation"
-msgstr ""
-
-msgid "Return To Ship"
-msgstr ""
-
-msgid "Clear Orders"
-msgstr ""
-
-msgid "Escort Orders"
-msgstr ""
-
-msgid "Select the order to give to this escort."
-msgstr ""
-
 msgid "#gEscorts: #0Jumping."
 msgstr ""
 
@@ -120065,6 +120100,21 @@ msgstr ""
 msgid "unknown"
 msgstr ""
 
+msgid ""
+"\n"
+"#r!! CURRENT PROGRESS WILL BE LOST !!#0"
+msgstr ""
+
+msgid ""
+"\n"
+"Your current  progress will be saved."
+msgstr ""
+
+msgid ""
+"Naev must be restarted for some changes to take effect. Do you wish to "
+"restart Naev now?"
+msgstr ""
+
 #, c-format
 msgid "Key '%s' not found!"
 msgstr ""
@@ -120629,10 +120679,6 @@ msgctxt "plugins list"
 msgid ", #%c%s#0"
 msgstr ""
 
-#, c-format
-msgid "Unable to delete %s"
-msgstr "Невозможно удалить %s"
-
 msgid "Exit to Menu?"
 msgstr "Выйти в меню?"
 
@@ -120649,6 +120695,10 @@ msgid ""
 "Are you sure you want to permanently delete the character '%s'?\n"
 "#rThis action is irreversible!#0"
 msgstr ""
+
+#, c-format
+msgid "Unable to delete %s"
+msgstr "Невозможно удалить %s"
 
 #, c-format
 msgid "Unable to delete '%s' directory"
@@ -121237,8 +121287,8 @@ msgctxt "Menu|"
 msgid "Credits"
 msgstr "Титры"
 
-msgid "Exit to Main Menu"
-msgstr "Выйти в главное меню"
+msgid "Return to Main Menu"
+msgstr ""
 
 #, c-format
 msgid "Mission '%s' not found in stack"
@@ -121473,6 +121523,7 @@ msgid "Initializing video output failed, exiting…"
 msgstr ""
 
 #. Default font path.
+#. Load the fonts the same way Naev does
 msgid ""
 "Cabin-SemiBold.otf,NanumBarunGothicBold.ttf,SourceCodePro-"
 "Semibold.ttf,IBMPlexSansJP-Medium.otf"
@@ -122243,6 +122294,10 @@ msgstr ""
 msgid "Waypoint '%s' not found for system '%s'!"
 msgstr ""
 
+#, c-format
+msgid "Trying to load invalid texture %s"
+msgstr ""
+
 msgid "Texture dimensions must be positive"
 msgstr ""
 
@@ -122487,21 +122542,6 @@ msgid "Input"
 msgstr ""
 
 msgid "Plugins"
-msgstr ""
-
-msgid ""
-"\n"
-"#r!! CURRENT PROGRESS WILL BE LOST !!#0"
-msgstr ""
-
-msgid ""
-"\n"
-"Your current  progress will be saved."
-msgstr ""
-
-msgid ""
-"Naev must be restarted for some changes to take effect. Do you wish to "
-"restart Naev now?"
 msgstr ""
 
 #, c-format
@@ -122808,6 +122848,8 @@ msgstr ""
 msgid "No Plugins Found"
 msgstr ""
 
+#. bold(pgettext("plugins", "Identifier:")),
+#. info(sel.identifier.as_str()),
 msgctxt "plugins"
 msgid "Name:"
 msgstr ""
@@ -124045,31 +124087,10 @@ msgstr ""
 msgid "GUI '%s' does not exist as a file: '%s' not found."
 msgstr ""
 
-#, c-format
-msgid "Failed to mount plugin '%s': %s"
-msgstr ""
-
-#, c-format
-msgid "Plugin '%s' has no name!"
-msgstr ""
-
-#, c-format
-msgid "Plugin '%s' has unknown metadata node '%s'!"
-msgstr ""
-
-#, c-format
-msgid "Plugin '%s' missing/invalid '%s' element"
-msgstr ""
-
-#, c-format
-msgid "Plugin '%s' does not have a valid '%s'!"
-msgstr ""
-
-#, c-format
-msgid "Plugin '%s' PCRE2 compilation failed at offset %d: %s"
-msgstr ""
-
 msgid "Loaded plugins:"
+msgstr ""
+
+msgid "Please close the Plugin Manager to continue."
 msgstr ""
 
 msgid "Naev Plugin Manager"
@@ -124085,6 +124106,38 @@ msgid "available"
 msgstr ""
 
 msgctxt "plugins"
+msgid "Starting Up"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Refreshing remote repositories"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Refreshing local and remote repositories"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Refreshing"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Installing"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Updating"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Removing"
+msgstr ""
+
+msgctxt "plugins"
+msgid "No plugins found!"
+msgstr ""
+
+msgctxt "plugins"
 msgid "update"
 msgstr ""
 
@@ -124096,8 +124149,7 @@ msgctxt "plugins"
 msgid "disabled"
 msgstr ""
 
-msgctxt "plugins"
-msgid "Identifier:"
+msgid "Filter..."
 msgstr ""
 
 msgctxt "plugins"
@@ -124109,18 +124161,19 @@ msgid "Plugin Version:"
 msgstr ""
 
 msgctxt "plugins"
+msgid "{} [{} available]"
+msgstr ""
+
+msgctxt "plugins"
 msgid "Naev Version:"
 msgstr ""
 
-msgid "incompatible with Naev "
+msgctxt "plugins"
+msgid " [incompatible with Naev {}]"
 msgstr ""
 
 msgctxt "plugins"
 msgid "Status:"
-msgstr ""
-
-msgctxt "plugins"
-msgid "Description"
 msgstr ""
 
 msgctxt "plugins"
@@ -124159,6 +124212,34 @@ msgctxt "plugins"
 msgid "Action"
 msgstr ""
 
+msgctxt "plugins"
+msgid "Logs"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Installing plugin '{}'"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Updating plugin '{}'"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Uninstalling plugin '{}'"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Updating plugin remote {}"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Cloning plugin remote {}"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Updating plugins found in {}"
+msgstr ""
+
 msgid "stable"
 msgstr ""
 
@@ -124166,6 +124247,17 @@ msgid "testing"
 msgstr ""
 
 msgid "development"
+msgstr ""
+
+msgid "The plugin is completely playable."
+msgstr ""
+
+msgid "The plugin is being tested, and may contain bugs or other issues."
+msgstr ""
+
+msgid ""
+"The plugin is under heavy development and will be full of missing content "
+"and bugs."
 msgstr ""
 
 #, c-format
@@ -124204,7 +124296,7 @@ msgid "Courier"
 msgstr "Курьер"
 
 msgid "Freighter"
-msgstr "Транспорт"
+msgstr "Грузовое судно"
 
 msgid "Bulk Freighter"
 msgstr "Тяжелый транспорт"
@@ -124280,10 +124372,6 @@ msgstr ""
 
 #, c-format
 msgid "Ship in %s has invalid or no name"
-msgstr ""
-
-#, c-format
-msgid "Ship '%s': using <GFX> instead of <gfx>!"
 msgstr ""
 
 #, c-format
@@ -125099,10 +125187,6 @@ msgstr ""
 #, c-format
 msgid ""
 "Asteroid Exclusion Zone in Star System '%s' has missing/invalid '%s' element"
-msgstr ""
-
-#, c-format
-msgid "System '%s' is using deprecated field 'stars'. Use 'spacedust' instead!"
 msgstr ""
 
 #, c-format
@@ -125948,6 +126032,85 @@ msgid ""
 "the extreme long range and high penetration for a weapon of its size, it can "
 "be very deadly."
 msgstr ""
+
+#~ msgid ""
+#~ "Go to {destpnt} in the {sys} system by right-clicking it on the overview "
+#~ "map"
+#~ msgstr ""
+#~ "Перейдите к {destpnt} в системе {sys}, щелкнув правой кнопкой мыши по "
+#~ "цели на обзорной карте"
+
+#, fuzzy
+#~ msgid ""
+#~ "\"I think we should try venturing outside this system. There are many "
+#~ "systems in the galaxy; this one is but a tiny sliver of what can be found "
+#~ "out there! Travelling through systems is accomplished with jump points. "
+#~ "Like planets, you usually need to find these by exploring the area, "
+#~ "talking to the locals, or buying maps. Once you have found a jump point, "
+#~ "you can use it by #bright-clicking#0 on it or using the {jumpkey}.\""
+#~ msgstr ""
+#~ "\"Я думаю, нам стоит попробовать выйти за пределы этой системы. В "
+#~ "галактике много систем; эта — лишь малая часть того, что можно там найти! "
+#~ "Путешествие по системам осуществляется с помощью точек перехода. Как и в "
+#~ "случае с планетами, их обычно можно найти, исследуя пространство системы, "
+#~ "разговаривая с местными жителями или покупая карты. Найдя точку перехода, "
+#~ "вы можете использовать ее, #bright-click#0 по ней или используя {jumpkey}."
+#~ "\""
+
+#~ msgid "Exit to Main Menu"
+#~ msgstr "Выйти в главное меню"
+
+#~ msgid "armourbreaker"
+#~ msgstr "бронебойный"
+
+#~ msgid "#nArmourbreaker#0"
+#~ msgstr "#nБронебойщик#0"
+
+#~ msgid "emp"
+#~ msgstr "электромагнитный импульс"
+
+#~ msgid "#bEMP#0"
+#~ msgstr "#bЭМИ#0"
+
+#~ msgid "energy"
+#~ msgstr "энергия"
+
+#~ msgid "#gEnergy#0"
+#~ msgstr "#gЭнергия#0"
+
+#, fuzzy
+#~ msgid "energy_noknockback"
+#~ msgstr "энергия без отбрасывания"
+
+#~ msgid "explosion_splash"
+#~ msgstr "взрывная волна"
+
+#~ msgid "ion"
+#~ msgstr "ионный"
+
+#~ msgid "#yIon#0"
+#~ msgstr "#yИонный#0"
+
+#~ msgid "kinetic"
+#~ msgstr "кинетическая"
+
+#~ msgid "#oKinetic#0"
+#~ msgstr "#oКинетический#0"
+
+#~ msgid "nebula"
+#~ msgstr "туманность"
+
+#~ msgid "#pNebula#0"
+#~ msgstr "#pТуманность#0"
+
+#~ msgid "plasma"
+#~ msgstr "плазма"
+
+#~ msgid "#rPlasma#0"
+#~ msgstr "#rПлазма#0"
+
+#~ msgid "Bioship Organs"
+#~ msgstr "Органы биокорабля"
 
 #~ msgid "* [House Goddard](lore/factions/goddard)"
 #~ msgstr "* [Дом Годдард](lore/factions/goddard)"

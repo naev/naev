@@ -1,5 +1,5 @@
 use anyhow::Result;
-use log::warn;
+use log::{warn, warn_err};
 use sdl3 as sdl;
 
 pub fn key_to_str(key: sdl::keyboard::Keycode) -> String {
@@ -20,18 +20,20 @@ pub fn key_from_str(name: &str) -> Option<sdl::keyboard::Keycode> {
             }
         };
         return match name.parse::<i32>() {
-            Ok(kc) => match sdl::keyboard::Keycode::from_i32(kc) {
-                Some(kc) => Some(kc),
-                None => {
-                    return None;
-                }
-            },
-            Err(_) => {
-                return None;
-            }
+            Ok(kc) => sdl::keyboard::Keycode::from_i32(kc),
+            Err(_) => None,
         };
     }
-    sdl::keyboard::Keycode::from_name(name)
+    // TODO use this when https://github.com/vhspace/sdl3-rs/pull/263 is merged
+    //sdl::keyboard::Keycode::from_name(name)
+    match CString::new(name) {
+        Ok(name) => match unsafe { naevc::SDL_GetKeyFromName(name.as_ptr() as *const c_char) } {
+            naevc::SDLK_UNKNOWN => None,
+            keycode_id => sdl::keyboard::Keycode::from_i32(keycode_id as i32),
+        },
+        // string contains a nul byte - it won't match anything.
+        Err(_) => None,
+    }
 }
 
 // Here be C API, yarr
@@ -88,12 +90,24 @@ pub extern "C" fn input_keyToStr(key: SDL_Keycode) -> *const c_char {
         }
     };
     let name = key_to_str(keycode);
-    keystr.insert(key, CString::new(name).unwrap());
+    keystr.insert(
+        key,
+        match CString::new(name) {
+            Ok(name) => name,
+            Err(e) => {
+                warn_err!(e);
+                c"Unknown".into()
+            }
+        },
+    );
     keystr[&key].as_ptr() as *const c_char
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn input_keyFromStr(name: *const c_char) -> SDL_Keycode {
+    if name.is_null() {
+        return sdl::keyboard::Keycode::Unknown.to_ll();
+    }
     let name = unsafe { CStr::from_ptr(name) };
     let key = match key_from_str(&name.to_string_lossy()) {
         Some(kc) => kc,

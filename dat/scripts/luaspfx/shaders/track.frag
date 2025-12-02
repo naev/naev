@@ -1,6 +1,6 @@
 #include "lib/sdf.glsl"
 
-uniform vec2 u_dimensions = vec2(0.0);
+uniform vec2 u_dimensions;
 
 vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
 {

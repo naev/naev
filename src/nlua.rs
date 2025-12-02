@@ -238,34 +238,17 @@ impl NLua {
                 },
             )?,
         )?;
-        #[allow(non_snake_case)]
-        unsafe extern "C-unwind" fn traceback_wrap(L: *mut mlua::lua_State) -> i32 {
-            unsafe {
-                let msg = if mlua::ffi::lua_isstring(L, 1) != 0 {
-                    mlua::ffi::lua_tostring(L, 1)
-                } else {
-                    std::ptr::null()
-                };
-                let level = if mlua::ffi::lua_isinteger(L, 2) != 0 {
-                    mlua::ffi::lua_tointeger(L, 2)
-                } else {
-                    1
-                };
-                mlua::ffi::luaL_traceback(L, L, msg, level as i32);
-            }
-            1
-        }
-        let traceback = unsafe { lua.create_c_function(traceback_wrap)? };
         globals.set(
             "warn",
             lua.create_function(
-                move |_lua, args: mlua::Variadic<mlua::Value>| -> mlua::Result<()> {
+                move |lua, args: mlua::Variadic<mlua::Value>| -> mlua::Result<()> {
                     let mut amsg = String::new();
                     for a in args {
                         amsg.push_str(&a.to_string()?);
                         amsg.push('\t');
                     }
-                    let tmsg: String = traceback.call::<String>(())?;
+                    let tstr = lua.traceback(None, 1)?;
+                    let tmsg = tstr.to_str()?;
                     let emsg = {
                         let mut m = escape_colours(&amsg);
                         m.push('\n');
@@ -273,7 +256,7 @@ impl NLua {
                         m
                     };
                     warn!("{}", emsg);
-                    let cmsg = std::ffi::CString::new([amsg, tmsg].join("")).unwrap();
+                    let cmsg = std::ffi::CString::new([amsg.as_str(), &tmsg].join("")).unwrap();
                     unsafe {
                         naevc::cli_printCoreString(cmsg.as_ptr(), 1);
                     }

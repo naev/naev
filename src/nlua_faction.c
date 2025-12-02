@@ -58,14 +58,6 @@ static int factionL_tags( lua_State *L );
 static int factionL_dynAdd( lua_State *L );
 static int factionL_dynAlly( lua_State *L );
 static int factionL_dynEnemy( lua_State *L );
-/* Following functions are deprecated and should be removed in 0.13.0. */
-static int factionL_modplayer( lua_State *L );
-static int factionL_modplayersingle( lua_State *L );
-static int factionL_modplayerraw( lua_State *L );
-static int factionL_setplayerstanding( lua_State *L );
-static int factionL_playerstanding( lua_State *L );
-static int factionL_playerstandingdefault( lua_State *L );
-/* End of deprecated functions. */
 
 static const luaL_Reg faction_methods[] = {
    { "exists", factionL_exists },
@@ -87,12 +79,6 @@ static const luaL_Reg faction_methods[] = {
    { "reputationDefault", factionL_reputationDefault },
    { "setReputationGlobal", factionL_setReputationGlobal },
    { "applyLocalThreshold", factionL_applyLocalThreshold },
-   { "modPlayer", factionL_modplayer },
-   { "modPlayerSingle", factionL_modplayersingle },
-   { "modPlayerRaw", factionL_modplayerraw },
-   { "setPlayerStanding", factionL_setplayerstanding },
-   { "playerStanding", factionL_playerstanding },
-   { "playerStandingDefault", factionL_playerstandingdefault },
    { "enemies", factionL_enemies },
    { "allies", factionL_allies },
    { "usesHiddenJumps", factionL_usesHiddenJumps },
@@ -578,138 +564,6 @@ static int factionL_applyLocalThreshold( lua_State *L )
    StarSystem *sys = luaL_validsystem( L, 2 );
    faction_applyLocalThreshold( f, sys );
    return 0;
-}
-
-/**
- * @brief Modifies the player's standing with the faction.
- *
- * Also modifies standing with allies and enemies of the faction.
- *
- * @usage f:modPlayer( -5 ) -- Lowers faction by 5
- *
- *    @luatparam Faction f Faction to modify player's standing with.
- *    @luatparam number mod The modifier to modify faction by.
- *    @luatparam[opt="script"] string reason Reason behind it. This is passed as
- * a string to the faction `hit` function. The engine can generate `destroy` and
- * `distress` sources. For missions the default is `script`.
- * @luafunc modPlayer
- */
-static int factionL_modplayer( lua_State *L )
-{
-   NLUA_DEPRECATED( L, "modPlayer" );
-   int         f      = luaL_validfaction( L, 1 );
-   double      n      = luaL_checknumber( L, 2 );
-   const char *reason = luaL_optstring( L, 3, "script" );
-   faction_modPlayer( f, n, reason );
-   return 0;
-}
-
-/**
- * @brief Modifies the player's standing with the faction.
- *
- * Does not affect other faction standings.
- *
- * @usage f:modPlayerSingle( 10 )
- *
- *    @luatparam Faction f Faction to modify player's standing with.
- *    @luatparam number mod The modifier to modify faction by.
- *    @luatparam[opt="script"] string reason Reason behind it. This is passed as
- * a string to the faction `hit` function. The engine can generate `destroy` and
- * `distress` sources. For missions the default is `script`.
- * @luafunc modPlayerSingle
- */
-static int factionL_modplayersingle( lua_State *L )
-{
-   NLUA_DEPRECATED( L, "modPlayerSingle" );
-   int         f      = luaL_validfaction( L, 1 );
-   double      n      = luaL_checknumber( L, 2 );
-   const char *reason = luaL_optstring( L, 3, "script" );
-   faction_modPlayerSingle( f, n, reason );
-   return 0;
-}
-
-/**
- * @brief Modifies the player's standing with the faction.
- *
- * Does not affect other faction standings and is not processed by the faction
- *  Lua script, so it indicates exactly the amount to be changed.
- *
- * @usage f:modPlayerRaw( 10 )
- *
- *    @luatparam Faction f Faction to modify player's standing with.
- *    @luatparam number mod The modifier to modify faction by.
- * @luafunc modPlayerRaw
- */
-static int factionL_modplayerraw( lua_State *L )
-{
-   NLUA_DEPRECATED( L, "modPlayerRaw" );
-   int    f = luaL_validfaction( L, 1 );
-   double n = luaL_checknumber( L, 2 );
-   faction_modPlayerRaw( f, n );
-   return 0;
-}
-
-/**
- * @brief Sets the player's standing with the faction.
- *
- * @usage f:setPlayerStanding(70) -- Make player an ally
- *
- *    @luatparam Faction f Faction to set the player's standing for.
- *    @luatparam number value Value to set the player's standing to (from -100
- * to 100).
- * @luafunc setPlayerStanding
- */
-static int factionL_setplayerstanding( lua_State *L )
-{
-   NLUA_DEPRECATED( L, "setPlayerStanding" );
-   int    f = luaL_validfaction( L, 1 );
-   double n = luaL_checknumber( L, 2 );
-   faction_setReputation( f, n );
-   return 0;
-}
-
-/**
- * @brief Gets the player's standing with the faction.
- *
- * @usage if f:playerStanding() > 70 then -- Player is an ally
- * @usage _v, str = f:playerStanding(50) -- Get the standing text for a value of
- * 50
- *
- *    @luatparam Faction f Faction to get player's standing with.
- *    @luatparam number value Faction standing value to get string of.
- *    @luatreturn number The value of the standing and the human readable
- * string.
- *    @luatreturn string The text corresponding to the standing (translated).
- * @luafunc playerStanding
- */
-static int factionL_playerstanding( lua_State *L )
-{
-   NLUA_DEPRECATED( L, "playerStanding" );
-   int    f = luaL_validfaction( L, 1 );
-   double n;
-   if ( !lua_isnoneornil( L, 2 ) )
-      n = luaL_checknumber( L, 2 );
-   else
-      n = faction_reputation( f );
-   lua_pushnumber( L, n );
-   lua_pushstring( L, faction_getStandingTextAtValue( f, n ) );
-   return 2;
-}
-
-/**
- * @brief Gets the player's default standing with the faction.
- *
- *    @luatparam Faction f Faction to get player's default standing with.
- *    @luatreturn number The value of the standing.
- * @luafunc playerStandingDefault
- */
-static int factionL_playerstandingdefault( lua_State *L )
-{
-   NLUA_DEPRECATED( L, "playerStandingDefault" );
-   int    f = luaL_validfaction( L, 1 );
-   double n = faction_reputationDefault( f );
-   lua_pushnumber( L, n );
-   return 1;
 }
 
 /**

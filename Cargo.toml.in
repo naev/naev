@@ -23,6 +23,7 @@ resolver = "3"
 members = [
    "@BUILD@/src/audio",
    "@BUILD@/src/core",
+   "@BUILD@/src/utils",
    "@BUILD@/src/log",
    "@BUILD@/src/gettext",
    "@BUILD@/src/ndata",
@@ -36,14 +37,7 @@ members = [
 [workspace.package]
 version = @VERSION@
 edition = "2024"
-# 1.80 LazyLock
-# 1.84 New random syntax
-# 1.85 Rust 2024
-# 1.87 str::from_utf8, nalgebra 0.34
-# 1.87 nalgebra 0.34
-# 1.88 iced 0.14.0
-# 1.89 symphonia-adapter-libopus
-rust-version = "1.89" # Note this has to be set in meson.build too!
+rust-version = @RUSTCVERSION@ # Note this has to be set in meson.build too!
 
 [workspace.lints.clippy]
 not_unsafe_ptr_arg_deref = "allow"
@@ -52,6 +46,9 @@ not_unsafe_ptr_arg_deref = "allow"
 iced = { git = "https://github.com/iced-rs/iced", rev = "ea614387f4d94960911b0a7d8ce25c02edb470c5" }
 iced_core = { git = "https://github.com/iced-rs/iced", rev = "ea614387f4d94960911b0a7d8ce25c02edb470c5" }
 iced_widget = { git = "https://github.com/iced-rs/iced", rev = "ea614387f4d94960911b0a7d8ce25c02edb470c5" }
+iced_aw = { git = "https://github.com/iced-rs/iced_aw.git", rev = "f49e058684b6e03a49b94c0ae6d9fb40db6ef2a2" }
+image = { git = "https://github.com/image-rs/image", rev = "81b6eac19c50bd1bbe12f42eb39a5d99d0b20c60" }
+gltf = { git = "https://github.com/gltf-rs/gltf.git", rev = "3def30c9caf96f2dbc85238179ea5a6152c5cf22" }
 
 [workspace.dependencies]
 naevc = { path=@NAEVC@ }
@@ -59,6 +56,7 @@ sdl3 = "0.16"
 anyhow = "1.0"
 audio = { path="@BUILD@/src/audio" }
 naev_core = { path="@BUILD@/src/core" }
+utils = { path="@BUILD@/src/utils" }
 gettext = { path="@BUILD@/src/gettext" }
 log = { path="@BUILD@/src/log" }
 ndata = { path="@BUILD@/src/ndata" }
@@ -72,8 +70,9 @@ glow = "0.16"
 nalgebra = { version = "0.34", features = ["bytemuck", "encase"] }
 encase = { version = "0.12" } # Needed for shader voodoo
 bytemuck = { version = "1.23", features = ["derive"] } # Needed for shader voodoo
-image = { version = "0.25", features = ["rayon"] }
-mlua = { version = "0.11", features = ["luajit", "anyhow", "send", "serialize", "macros"] }
+# need dav1d 0.11.1 or newer, will appear in the version after 0.25.9
+image = { version = "0.25", default-features = false, features = [ "avif-native", "jpeg", "png", "webp" ]  }
+mlua = { version = "0.11.5", features = ["luajit", "anyhow", "send", "serialize", "macros"] }
 roxmltree = "0.21"
 symphonia = "0.5"
 thunderdome = "0.6"
@@ -85,13 +84,16 @@ trie-rs = { version = "0.4" }
 softfloat = "1.0"
 semver = { version = "1.0", features = ["serde"] }
 chrono = { version = "0.4", features = ["serde","now"] }
-iced = { git = "https://github.com/iced-rs/iced", rev = "ea614387f4d94960911b0a7d8ce25c02edb470c5", features = ["tokio", "advanced", "image"] }
-iced_aw = { git = "https://github.com/iced-rs/iced_aw.git", rev = "f49e058684b6e03a49b94c0ae6d9fb40db6ef2a2", features = ["drop_down"] }
+base64 = "0.22"
+iced = { version = "0.14.0-dev", default-features = false, features = ["wgpu", "tokio", "advanced", "image", "markdown", "sipper"] }
+iced_aw = { version = "0.13.0-dev", features = ["drop_down"] }
+tokio = { version = "1", features = ["sync"] }
+webbrowser = { version = "1" }
 
 # Plugin Manager dependencies
-fs_extra = "1"
 # Serialization / XML
 serde = { version = "1", features = ["derive"] }
+serde-seeded = "0"
 #quick-xml = { version = "0.38", features = ["serialize", "overlapped-lists"] }
 # Networking and archive handling
 reqwest = { version = "0.12", features = ["stream", "rustls-tls", "blocking"] }
@@ -113,6 +115,7 @@ futures = "0.3"
 audio = { workspace = true }
 naevc = { workspace = true }
 naev_core = { workspace = true }
+utils = { workspace = true }
 gettext = { workspace = true }
 log = { workspace = true }
 ndata = { workspace = true }
@@ -136,9 +139,12 @@ constcat = "0.6"
 rand = "0.9"
 rayon = { workspace = true }
 palette = { workspace = true }
+serde = { workspace = true }
+serde-seeded = { workspace = true }
 serde_yaml2 = "0.1"
+toml = { workspace = true }
 # gltf-rs crate doesn't support WEBP in any release atm...
-gltf = { git = "https://github.com/gltf-rs/gltf.git", rev = "12fc1b7ce28c7b4c6d1b881a30df24060dccfbda", features = ["extras", "names", "utils", "EXT_texture_webp", "KHR_materials_emissive_strength"] }
+gltf = { version = "1.4", features = ["extras", "names", "utils", "EXT_texture_webp", "KHR_materials_emissive_strength"] }
 #gltf = { version = "1", features = ["extras", "names", "utils"] }
 colored = "3"
 regex = "1.11"

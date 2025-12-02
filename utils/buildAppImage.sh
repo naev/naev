@@ -159,7 +159,7 @@ build_appimage() {
    fi
 
    OUTPUT="$WORKPATH/dist/naev-$SUFFIX.AppImage"
-   UPDATE_INFORMATION="gh-releases-zsync|naev|naev|$TAG|naev-*.AppImage.zsync"
+   UPDATE_INFORMATION="zsync|https://codeberg.org/naev/naev/releases/download/$TAG/naev-*.AppImage.zsync"
 
    pushd "$WORKPATH/dist"
    "$appimagetool" --comp zstd --no-appstream --mksquashfs-opt -Xcompression-level --mksquashfs-opt 20 -v -u "$UPDATE_INFORMATION" "$APPDIRPATH" "$OUTPUT"

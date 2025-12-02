@@ -1,0 +1,5 @@
+name = "plasma"
+display = "#rPlasma#0"
+shield = 0.7
+armour = 1.3
+knockback = 0.3

@@ -17,17 +17,17 @@ local graphics = require 'love.graphics'
 
 -- List of available posters and index of the corresponding message
 local imagesNmsg = {
-   {"gfx/vn/posters/dvaered/dv_athena.png", 1},
-   {"gfx/vn/posters/dvaered/dv_brunhilde.png", 1},
-   {"gfx/vn/posters/dvaered/dv_goliath.png", 1},
-   {"gfx/vn/posters/dvaered/dv_good_manners_ad.png", 2},
-   {"gfx/vn/posters/dvaered/dv_minotaur.png", 1},
-   {"gfx/vn/posters/dvaered/dv_oeudipe.png", 1} }
+   {"gfx/vn/posters/dvaered/dv_athena", 1},
+   {"gfx/vn/posters/dvaered/dv_brunhilde", 1},
+   {"gfx/vn/posters/dvaered/dv_goliath", 1},
+   {"gfx/vn/posters/dvaered/dv_good_manners_ad", 2},
+   {"gfx/vn/posters/dvaered/dv_minotaur", 1},
+   {"gfx/vn/posters/dvaered/dv_oeudipe", 1} }
 
 -- List of FLF flyers
 local FLFFlyers = {
-   "gfx/vn/posters/flf/flf_spam_small.png",
-   "gfx/vn/posters/flf/flf_spam2.png" }
+   "gfx/vn/posters/flf/flf_spam_small",
+   "gfx/vn/posters/flf/flf_spam2" }
 
 local messages = {}
 messages[1] = _([[This is an advertisement for the Dvaered Army.]])

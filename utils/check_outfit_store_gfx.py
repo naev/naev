@@ -13,8 +13,8 @@ else:
    print("Failed to detect where you're running this script from\nPlease enter your path manually")
 
 images  = glob(prefix+"/dat/gfx/outfit/store/*")
-images += glob(prefix+"/artwork/gfx/outfit/store/*")
-images  = list(map( lambda x: os.path.basename(x), images ))
+images += glob(prefix+"/assets/gfx/outfit/store/*")
+images  = list(map( lambda x: os.path.splitext( os.path.basename(x) )[0], images ))
 
 imgdict = {}
 for i in images:
@@ -26,7 +26,7 @@ def parse_outfit( file ):
       d = f.read()
       m = re.search( "<gfx_store>(.+?)</gfx_store>", d )
       if m:
-         s = m.group(1)
+         s = os.path.splitext(m.group(1))[0]
          v = imgdict.get(s)
          if not v:
             v = [ 0, [] ]
@@ -60,9 +60,9 @@ with open( "outfit_gfx.html", "w" ) as out:
    for k in sorted( imgdict, key=lambda x: imgdict[x], reverse=True ):
       path = prefix+"/dat/gfx/outfit/store/"+k
       if not os.path.isfile( path ):
-         path = prefix+"/artwork/gfx/outfit/store/"+k
+         path = prefix+"/assets/gfx/outfit/store/"+k
       if not os.path.isfile( path ):
-         path = prefix+"/artwork/"+k
+         path = prefix+"/assets/"+k
       v = imgdict[k]
       if v[0] != 1: # for simplicity hide stuff that appears once
          out.write(f"""

@@ -103,6 +103,8 @@ function approach_npc( npcid )
 end
 
 function board( p )
+   if not p:exists() then return end
+
    local m = p:memory()
    if not m.natural then
       return

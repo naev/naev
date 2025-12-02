@@ -10,5 +10,5 @@ hypergate.setup{
       [30]  = 0.8,
       [10]  = 0.9,
    },
-   tex = "hypergate_zalek_activated.webp",
+   tex = "hypergate_zalek_activated",
 }

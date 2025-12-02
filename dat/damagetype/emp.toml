@@ -1,0 +1,5 @@
+name = "emp"
+display = "#bEMP#0"
+shield = 1.7
+armour = 0.1
+knockback = 0.1

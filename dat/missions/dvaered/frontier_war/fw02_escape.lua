@@ -691,7 +691,7 @@ function straferDiscuss()
    strafer:control(false)  -- Strafer stops following the player
 
    -- Add some fuel, far away so that no npc gathers it
-   local cfuel = commodity.new( N_("Fuel"), N_("Tanks of usable fuel."), {gfx_space="fuel.webp"})
+   local cfuel = commodity.new( N_("Fuel"), N_("Tanks of usable fuel."), {gfx_space="fuel"})
    local pos = vec2.new( -1.2*system.cur():radius(), 0 )
    system.addGatherable( cfuel, 1, pos, vec2.new(0,0), 3600 ) -- Lasts for an houer
    mem.Imark = system.markerAdd( pos, _("FUEL") )

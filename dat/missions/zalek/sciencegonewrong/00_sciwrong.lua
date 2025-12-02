@@ -46,14 +46,14 @@ local reward = 1e6
 
 local trader1 = {
    name = _("Trader"),
-   portrait = "neutral/scientist3.webp",
-   image = "gfx/portraits/neutral/scientist3.webp",
+   portrait = "neutral/scientist3",
+   image = "gfx/portraits/neutral/scientist3",
    desc = _("A scientist conspicuously sits in the corner. Perhaps he might be the person you're supposed to get this stuff for."),
 }
 local trader2 = {
    name = _("Contact Person"),
-   portrait = "neutral/unique/dealer.webp",
-   image = "gfx/portraits/neutral/unique/dealer.webp",
+   portrait = "neutral/unique/dealer",
+   image = "gfx/portraits/neutral/unique/dealer",
    desc = _("You see a shifty-looking dealer of some kind. Maybe he has what you're looking for."),
 }
 

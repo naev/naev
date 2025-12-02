@@ -46,7 +46,7 @@ local misn_cargodesc2 = N_("A homebrew processing unit.")
 local misn_cargoamount2 = 4
 
 local npc_name = _("Mia")
-local npc_portrait = "neutral/unique/mia.webp"
+local npc_portrait = "neutral/unique/mia"
 local npc_image = portrait.getFullPath( npc_portrait )
 
 -- the outfit name as in outfit.xml

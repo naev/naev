@@ -25,8 +25,8 @@ local love_shaders = require "love_shaders"
 local love_audio = require 'love.audio'
 local reverb_preset = require 'reverb_preset'
 
-local zalek_image = "zalek_thug1.png"
-local dvaered_image = "dvaered_thug1.png"
+local zalek_image = "zalek_thug1"
+local dvaered_image = "dvaered_thug1"
 local zalek_colour = {1, 0.4, 0.4}
 local dvaered_colour = {1, 0.7, 0.3}
 
@@ -122,7 +122,7 @@ function trial_start ()
    local kex = minerva.vn_kex()
    local maikki = minerva.vn_maikki()
    local ceo = minerva.vn_ceo()
-   local judge = vn.Character.new( _("Judge Holmes"), { image="judge_holmes.webp" } )
+   local judge = vn.Character.new( _("Judge Holmes"), { image="judge_holmes" } )
    local zlk = vn.Character.new( _("Za'lek Lawyer"), { image=zalek_image, colour=zalek_colour } )
    local dvd = vn.Character.new( _("Dvaered Representative"), { image=dvaered_image, colour=dvaered_colour } )
    local scv = vn.Character.new( minerva.scavengera.name,

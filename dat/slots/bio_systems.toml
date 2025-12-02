@@ -1,0 +1,8 @@
+name = "bio_systems"
+display = "Bioship Brains"
+description = "This slot is used for the brain, the biological equivalent to Core Systems. The brain of an organism is responsible for managing the function of the rest of the organism and allocating energy reserves for the battery and shield."
+required = true
+exclusive = true
+locked = true
+icon = "bio"
+tags = ["bioship", "core"]

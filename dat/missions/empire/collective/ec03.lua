@@ -54,7 +54,7 @@ end
 
 function create ()
    -- Note: this mission does not make any system claims.
-   misn.setNPC( _("Dimitri"), "empire/unique/dimitri.webp", _("You see Lt. Commander Dimitri at the bar, as usual.") )
+   misn.setNPC( _("Dimitri"), "empire/unique/dimitri", _("You see Lt. Commander Dimitri at the bar, as usual.") )
 end
 
 

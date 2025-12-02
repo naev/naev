@@ -724,6 +724,7 @@ function heartbeat ()
    if spam < 0 then
       player.msg(fmt.f(_("Trixie: See the {p}? Get closer!"),{p=l}), true )
       player.autonavReset( 5 )
+      spam = 15
    end
    hook.timer( 1, "heartbeat" )
 end

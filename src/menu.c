@@ -201,17 +201,13 @@ void menu_main( void )
 
    /* Load background and friends. */
    gl_freeTexture( main_naevLogo );
-   tex           = gl_newImage( GFX_PATH "Naev.webp", 0 );
+   tex           = gl_newImage( GFX_PATH "Naev", 0 );
    main_naevLogo = tex;
    menu_main_bkg_system();
 
    /* Set dimensions */
-   y = 20 + ( BUTTON_HEIGHT + 20 ) * 4;
+   y = 20 + ( BUTTON_HEIGHT + 20 ) * 5;
    h = y + 80;
-   if ( conf.devmode ) {
-      h += BUTTON_HEIGHT + 20;
-      y += BUTTON_HEIGHT + 20;
-   }
 
    /* Calculate Logo and window offset. */
    freespace = SCREEN_H - tex_sh( tex ) - h;
@@ -559,14 +555,20 @@ static int menu_small_exit_hook( void *unused )
    (void)unused;
    unsigned int wid;
 
-   /* Disable saving. */
-   if ( !menu_small_allowsave )
-      player_setFlag( PLAYER_NOSAVE );
-
    /* Still stuck in a dialogue, so we have to do another hook pass. */
    if ( dialogue_isOpen() ) {
       hook_addFunc( menu_small_exit_hook, NULL, "safe" );
       return 0;
+   }
+
+   /* Save the game. */
+   if ( menu_small_allowsave && land_canSave() ) {
+      if ( save_all() < 0 ) {
+         // TODO, should we stop the player from exiting??
+         dialogue_alert(
+            _( "Failed to save game! You should exit and check the log to see "
+               "what happened and then file a bug report!" ) );
+      }
    }
 
    /* Close info menu if open. */
@@ -794,7 +796,7 @@ static void menu_extras_open( unsigned int wid, const char *unused )
                         menu_main_credits, SDLK_C );
    y -= BUTTON_HEIGHT + 20;
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH + EDITORS_EXTRA_WIDTH,
-                        BUTTON_HEIGHT, "btnMain", _( "Exit to Main Menu" ),
+                        BUTTON_HEIGHT, "btnMain", _( "Return to Main Menu" ),
                         menu_extras_close, SDLK_X );
 
    /* Editors menu is open. */

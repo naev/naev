@@ -27,14 +27,15 @@ source = { git = "https://my.awesome.website/plugin/repo.git" }
 * **naev_version**: specifies which verisons of naev are compatible.
   This is based on [semver](https://semver.org/) and allows comparisons with existing versions.
   For example, `>= 0.13` would mean a version after 0.13.0 (including betas), while something like `>= 0.13, < 0.14` would specify something newer than `0.13.0` but older than `0.14.0`.
-* **source**: defines where the source is located to try to update the plugin when possible.
-  It can be set to `source = "local"` to not search online.
-  Other valid options are `source = { git = "url" }` or `source = { download = "url" }` depending on whether it is a direct download or a git repository.
 
 ## Optional Fields
 
+* **source**: defines where the source is located to try to update the plugin when possible.
+  It can be set to `source = "local"` to not search online, which is the default if not specified.
+  Other valid options are `source = { git = "url" }` or `source = { download = "url" }` depending on whether it is a direct download or a git repository.
+  Note that if set to local, it will have to be updated manually!
 * **description**: contains the description of the plugin.
-  This can be as long as necessary.
+  This can be as long as necessary, and can use a limited subset of markdown.
   In the case it is not defined, the **abstract** field will be used in its place.
 * **license**: a free-form string defining the license.
   Usually abbreviated license names such as "GPLv3+", "CC0" or "CC-by-sa 3.0" are used.

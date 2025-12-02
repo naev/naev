@@ -7,7 +7,7 @@
   <mass>55</mass>
   <price>920000</price>
   <description>The ZIBS-32 was a topic of much controversy when it was first developed, almost leading to important ruptures between multiple military engineering teams. A larger, more powerful counterpart to the ZIBS-16 had just been prototyped, making use of two 16-side faceted polyhedral focusing crystals that would power a single beam. The original designers called it the ZIBS-32, which many other engineers took as a personal affront, considering that it should be called the ZIBS-16x2 (or perhaps even the ZIBS-2x16). Eventually, after many strongly worded letters, several resignations, and the hijacking of a Za'lek Battleship, the issue was officially closed with the name ZIBS-32, and any further discussion became taboo. Although some say you can still find drunk disgruntled Za'lek engineers grumbling about the ZIBS-16x2 in spaceport bars across the House Za'lek territory.</description>
-  <gfx_store>placeholder</gfx_store>
+  <gfx_store>zibs_32</gfx_store>
   <cpu>-110</cpu>
  </general>
  <specific type="turret beam">

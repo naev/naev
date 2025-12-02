@@ -30,11 +30,11 @@ mem.reward = 100e3
 local reward_per_tonne = 5e3
 
 local npc_name = _("Paddy")
-local npc_portrait = "neutral/unique/paddy.webp"
+local npc_portrait = "neutral/unique/paddy"
 local npc_image = portrait.getFullPath( npc_portrait )
 
 local npc2_name = _("Michal")
-local npc2_portrait = "neutral/unique/michal.webp"
+local npc2_portrait = "neutral/unique/michal"
 local npc2_image = portrait.getFullPath( npc2_portrait )
 
 function create () --No system shall be claimed by mission

@@ -67,8 +67,8 @@ local vn = require 'vn'
 local lg = require 'love.graphics'
 local fmt = require "format"
 
-local shiplover_portrait= "shiplover.webp"
-local shiplover_image   = "shiplover.webp"
+local shiplover_portrait= "shiplover"
+local shiplover_image   = "shiplover"
 local shiplover_priority= 5
 
 local question_data, reward -- Non-persistent state

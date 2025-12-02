@@ -44,7 +44,7 @@ function create ()
       abort()
    end
 
-   misn.setNPC( _("Lt. Commander"), "empire/unique/dimitri.webp", _("You see an Empire Lt. Commander who seems to be motioning you over to the counter.") )
+   misn.setNPC( _("Lt. Commander"), "empire/unique/dimitri", _("You see an Empire Lt. Commander who seems to be motioning you over to the counter.") )
 end
 
 

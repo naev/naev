@@ -6,7 +6,7 @@
   <mass>28</mass>
   <price>310000</price>
   <description>Using a genetically engineered modified plasma organ, the Eruptor is able to spray large areas of space with highly corrosive plasma. Unlike other plasma weapons, this specialized plasma burns enemy hulls much longer, causing significantly more damage over time. Due to the volatility of the plasma, accuracy is comprised, however, as it can spray around a large area, it is almost guaranteed to hit anything within sight.</description>
-  <gfx_store>placeholder</gfx_store>
+  <gfx_store>plasma_eruptor</gfx_store>
   <cpu>-45</cpu>
  </general>
  <specific type="bolt">

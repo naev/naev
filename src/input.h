@@ -133,10 +133,6 @@ void       input_disableAll( void );
 void       input_toggleEnable( KeySemanticType key, int enable );
 int        input_clickPos( SDL_Event *event, double x, double y, double zoom,
                            double minpr, double minr );
-int        input_clickedJump( int jump, int autonav );
-int        input_clickedSpob( int spob, int autonav, int priority );
-int        input_clickedAsteroid( int field, int asteroid );
-int        input_clickedPilot( unsigned int pilot, int autonav );
 void       input_clicked( const void *clicked );
 int        input_isDoubleClick( const void *clicked );
 

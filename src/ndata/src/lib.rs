@@ -1,4 +1,4 @@
-use log::{info, warn, warn_err};
+use log::{debug, info, warn, warn_err};
 use sdl3 as sdl;
 use std::ffi::{CStr, CString, c_char};
 use std::io::{Read, Result};
@@ -102,7 +102,7 @@ pub fn setup() -> anyhow::Result<()> {
             }
             let buf = unsafe { CStr::from_ptr(buf.as_ptr()) };
             let path = Path::new(&*buf.to_string_lossy()).join("dat");
-            match physfs::mount(&*path.to_string_lossy(), true) {
+            match physfs::mount(&path, true) {
                 Err(e) => {
                     warn_err!(e);
                 }
@@ -113,7 +113,7 @@ pub fn setup() -> anyhow::Result<()> {
         }
     } else if cfg!(target_os = "linux") && env::ENV.is_appimage {
         let path = Path::new(&env::ENV.appdir).join(&*pkgdatadir).join("dat");
-        match physfs::mount(&*path.to_string_lossy(), true) {
+        match physfs::mount(&path, true) {
             Err(e) => {
                 warn_err!(e);
             }
@@ -133,12 +133,13 @@ pub fn setup() -> anyhow::Result<()> {
             break;
         }
         let path = Path::new(s).join("dat");
-        match physfs::mount(&*path.to_string_lossy(), true) {
-            Err(e) => {
-                warn_err!(e);
+        match physfs::mount(&path, true) {
+            Err(_) => {
+                //warn_err!(e);
+                debug!("Failed to mount path '{}'", &path.to_string_lossy());
             }
             Ok(()) => {
-                info!("Trying default datapath : {}", &path.to_string_lossy());
+                info!("Trying default datapath: '{}'", &path.to_string_lossy());
             }
         }
     }
@@ -205,6 +206,14 @@ pub fn read<P: AsRef<Path>>(path: P) -> Result<Vec<u8>> {
     let mut f = physfs::File::open(path, physfs::Mode::Read)?;
     let mut out: Vec<u8> = vec![0; f.len()? as usize];
     f.read_exact(out.as_mut())?;
+    Ok(out)
+}
+
+/// Same as read, but converts to string
+pub fn read_to_string<P: AsRef<Path>>(path: P) -> Result<String> {
+    let mut f = physfs::File::open(path, physfs::Mode::Read)?;
+    let mut out = String::new();
+    f.read_to_string(&mut out)?;
     Ok(out)
 }
 

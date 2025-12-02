@@ -6,8 +6,8 @@ sciwrong.center_operations = "sciwrong_center_operations"
 
 sciwrong.geller = {
    name = _("Dr. Geller"),
-   portrait = "zalek/unique/geller.webp",
-   image = "gfx/portraits/zalek/unique/geller.webp",
+   portrait = "zalek/unique/geller",
+   image = "gfx/portraits/zalek/unique/geller",
    colour = nil,
 }
 

@@ -34,8 +34,8 @@ local vn = require "vn"
 local money_reward = 200e3
 
 local npc_name = _("A Fyrra civilian")
-local npc_portrait = "sirius/unique/rodentman.webp"
-local npc_image = portrait.getFullPath( "sirius/unique/rodentman.webp" )
+local npc_portrait = "sirius/unique/rodentman"
+local npc_image = portrait.getFullPath( "sirius/unique/rodentman" )
 
 function create ()
     -- Get an M-class Sirius planet at least 2 and at most 4 jumps away. If not found, don't spawn the mission.

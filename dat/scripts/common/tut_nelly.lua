@@ -8,8 +8,8 @@ local vn = require "vn"
 local tutnel = {}
 
 tutnel.nelly = {
-   portrait = "nelly.webp",
-   image = "nelly.webp",
+   portrait = "nelly",
+   image = "nelly",
    name = _("Nelly"),
    colour = nil,
    transition = nil, -- Use default

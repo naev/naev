@@ -1,5 +1,5 @@
 project('naev', ['c', 'rust'],
-   version : '0.13.0-alpha.11',
+   version : '0.13.0-beta.2',
    default_options : [
       'optimization=g',
       'c_std=c11',
@@ -9,8 +9,14 @@ project('naev', ['c', 'rust'],
    ],
    # Requires meson 1.7.0 for rust_std=2024
    meson_version: '>=1.7.0')
+
 # Dependency requirements
-rustc_needed_version = '>=1.89.0'
+# 1.85 Rust 2024
+# 1.87 nalgebra 0.34
+# 1.88 iced 0.14.0
+# 1.89 symphonia-adapter-libopus
+rust_version = '1.89' # version for Cargo.toml's 'rust-version' field
+rustc_needed_version = '>=@0@.0'.format( rust_version )
 bindgen_needed_version = '>=0.72.0'
 cargo_needed_version = '>=1.77.2'
 
@@ -447,6 +453,7 @@ naevcrs = rust.bindgen(
    cargo_data.set_quoted('NAEVC', naevc_crate.full_path() )
    cargo_data.set('BUILD', meson.project_build_root() )
    cargo_data.set('SOURCE', meson.project_source_root() )
+   cargo_data.set_quoted('RUSTCVERSION', rust_version )
    cargo_toml = configure_file( input: 'Cargo.toml.in', output: 'Cargo.toml', configuration: cargo_data )
    #meson.add_dist_script(add_to_package, cargo_toml.full_path(), cargo_toml )
    # flatpak needs Cargo.lock in the source tarball to be able to generate stuff
@@ -566,15 +573,14 @@ naevcrs = rust.bindgen(
          '--preamble', '@INPUT0@',
          '@INPUT1@', '@INPUT2@',
       ],
-      input: files('dat/AUTHORS', 'artwork/gfx/ARTWORK_LICENSE.yaml', 'artwork/snd/SOUND_LICENSE.yaml'),
+      input: files('dat/AUTHORS', 'assets/gfx/ARTWORK_LICENSE.yaml', 'assets/snd/SOUND_LICENSE.yaml'),
       output: 'AUTHORS',
       install: true,
       install_dir: ndata_path / 'dat',
    )
 
    gen_gettext_stats = find_program(files('utils'/'build'/'gen_gettext_stats.py'))
-   gettext_stats = custom_target(
-      'gettext_stats',
+   gettext_stats = custom_target('gettext_stats',
       command: [gen_gettext_stats, '--output', '@OUTPUT@', '@INPUT@'],
       input: files('po/' + meson.project_name() + '.pot'),
       output: meson.project_name() + '.txt',
@@ -591,8 +597,7 @@ naevcrs = rust.bindgen(
    #foreach target: gen_outfits
    #    gen_zip_command += target
    #endforeach
-   zip_overlay = custom_target(
-      'zip_overlay',
+   zip_overlay = custom_target('zip_overlay',
       command: gen_zip_command,
       output: 'meson_overlay.zip',
       depends: [authors, gettext_stats], # + gen_outfits,
@@ -655,7 +660,7 @@ naevcrs = rust.bindgen(
    )
 
    install_subdir(
-      'artwork',
+      'assets',
       install_dir: ndata_path / 'dat',
       exclude_directories: '.git',  # That's a marker used by "git submodule".
       strip_directory: true,

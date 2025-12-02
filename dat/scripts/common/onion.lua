@@ -10,17 +10,17 @@ local onion = {}
 local img_onion
 function onion.img_onion ()
    if not img_onion then
-      img_onion = lg.newImage( "gfx/misc/onion_society.webp" )
+      img_onion = lg.newImage( "gfx/misc/onion_society" )
    end
    return img_onion
 end
 
 function onion.img_l337b01 ()
-   return lg.newImage( "gfx/vn/characters/l337_b01.webp" )
+   return lg.newImage( "gfx/vn/characters/l337_b01" )
 end
 
 function onion.img_trixie ()
-   local img = lg.newImage( "gfx/vn/characters/trixie.webp" )
+   local img = lg.newImage( "gfx/vn/characters/trixie" )
    img:setFilter( "nearest", "nearest" )
    return img
 end
@@ -33,7 +33,7 @@ onion.loops = {
 onion.npc = {
    l337b01 = {
       name = _("l337 b01"),
-      image = "l337_b01.webp",
+      image = "l337_b01",
       colour = {0.05, 1.0, 0.6}, -- Teal-ish
    },
    trixie = {
@@ -42,22 +42,22 @@ onion.npc = {
    },
    dog = {
       name = _("DOG"),
-      image = "DOG.webp",
+      image = "DOG",
       colour = {0.6,0.33,0.0}, -- Dark Brown
    },
    notasockpuppet = {
       name = _("notasockpuppet"),
-      image = "notasockpuppet.webp",
+      image = "notasockpuppet",
       colour = {1.0, 0.2, 0.9}, -- Light Purple
    },
    underworlder = {
       name = _("underworlder"),
-      image = "underworlder.webp",
+      image = "underworlder",
       colour = {0.9, 0.7, 0.25},
    },
    lonewolf4 = {
       name = _("lonewolf4"),
-      image = "lonewolf4.webp",
+      image = "lonewolf4",
       colour = {0.7, 0.7, 0.7},
    }
 }

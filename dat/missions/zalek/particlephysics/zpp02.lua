@@ -97,7 +97,7 @@ local npcguy
 function land ()
    local pcur = spob.cur()
    if (mem.state==1 or mem.state==2) and pcur==mem.destpnt then
-      npcguy = misn.npcAdd( "approach_guy", _("Noona's Colleague"), "zalek2.png", _("You see a Za'lek scientist who seems to fit the description of Noona's colleague.") )
+      npcguy = misn.npcAdd( "approach_guy", _("Noona's Colleague"), "zalek2", _("You see a Za'lek scientist who seems to fit the description of Noona's colleague.") )
 
    elseif mem.state==3 and pcur==retpnt then
       vn.clear()
@@ -129,7 +129,7 @@ function approach_guy ()
    local cargo_space = false
    vn.clear()
    vn.scene()
-   local c = vn.newCharacter( _("Noona's Colleague"), {image="zalek2.png"} )
+   local c = vn.newCharacter( _("Noona's Colleague"), {image="zalek2"} )
    vn.transition()
 
    if mem.state==1 then

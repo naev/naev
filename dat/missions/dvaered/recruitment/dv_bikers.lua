@@ -47,9 +47,9 @@ local baron    = require "common.baron"
 local love_shaders = require "love_shaders"
 local portrait = require "portrait"
 
-local agentPort = "dvaered/dv_military_m2.webp"
-local BBB1Port = "pirate/pirate4.webp"
-local BBB2Port = "pirate/pirate6.webp"
+local agentPort = "dvaered/dv_military_m2"
+local BBB1Port = "pirate/pirate4"
+local BBB2Port = "pirate/pirate6"
 local npc1img, npc1por = vni.generic()
 local npc2img, npc2por = vni.generic()
 local npc3img, npc3por = vni.generic()

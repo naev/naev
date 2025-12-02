@@ -71,21 +71,21 @@ end
 function shadow.vn_rebina( params )
    return vn.Character.new( _("Rebina"),
       tmerge( {
-         image = portrait.getFullPath("neutral/unique/rebina.webp"),
+         image = portrait.getFullPath("neutral/unique/rebina"),
       }, params ) )
 end
 
 function shadow.vn_rebina_casual( params )
    return vn.Character.new( _("Rebina"),
       tmerge( {
-         image = portrait.getFullPath("neutral/unique/rebina_casual.webp"),
+         image = portrait.getFullPath("neutral/unique/rebina_casual"),
       }, params ) )
 end
 
 function shadow.vn_jorek( params )
    return vn.Character.new( _("Jorek"),
       tmerge( {
-         image = portrait.getFullPath("neutral/unique/jorek.webp"),
+         image = portrait.getFullPath("neutral/unique/jorek"),
       }, params ) )
 end
 

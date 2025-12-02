@@ -8,8 +8,8 @@ local thurion = {}
 thurion.prefix = "#n".._("THURION: ").."#0" -- Repeatable mission prefix
 
 thurion.liao = {
-   portrait = "liao.webp",
-   image = "liao.webp",
+   portrait = "liao",
+   image = "liao",
    name = _("Liao"),
    colour = nil,
    transition = "hexagon",
@@ -17,7 +17,7 @@ thurion.liao = {
 
 function thurion.vn_drone( name, params )
    return vn.Character.new( name, tmerge( {
-      image="thurion_drone.webp",
+      image="thurion_drone",
    }, params) )
 end
 

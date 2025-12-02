@@ -1,0 +1,8 @@
+name = "bio_engines"
+display = "Bioship Gene Drives"
+description = "This slot is used for the gene drives, the biological equivalent to Engines. Gene drives propel the organism through space."
+required = true
+exclusive = true
+locked = true
+icon = "bio"
+tags = ["bioship", "core"]

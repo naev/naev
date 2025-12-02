@@ -10,5 +10,5 @@ hypergate.setup{
       [30]  = 0.75,
       [10]  = 0.9,
    },
-   tex = "hypergate_sirius_activated.webp",
+   tex = "hypergate_sirius_activated",
 }

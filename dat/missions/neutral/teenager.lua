@@ -41,7 +41,7 @@ local target -- Non-persistent state
 
 local title = _("The Macho Teenager")
 local npc_name = _("A middle-aged man")
-local npc_portrait = "neutral/unique/middleaged.webp"
+local npc_portrait = "neutral/unique/middleaged"
 local npc_image = portrait.getFullPath( npc_portrait )
 
 function create ()

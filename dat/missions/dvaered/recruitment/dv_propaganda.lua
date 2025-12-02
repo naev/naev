@@ -39,7 +39,7 @@ require "proximity"
 local cargo_flyers
 local function _flyers()
    if not cargo_flyers then
-      cargo_flyers = commodity.new( N_("Propaganda Posters"), N_("Heaps of posters representing big-nose characters hitting each other."), {gfx_space="flyers.webp"} )
+      cargo_flyers = commodity.new( N_("Propaganda Posters"), N_("Heaps of posters representing big-nose characters hitting each other."), {gfx_space="flyers"} )
    end
    return cargo_flyers
 end

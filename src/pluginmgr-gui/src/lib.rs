@@ -1,16 +1,21 @@
-use anyhow::Result;
+use anyhow::{Error, Result};
+use formatx::formatx;
 use fs_err as fs;
+use iced::task::{Sipper, Straw, sipper};
 use iced::{Task, widget};
 use log::gettext::{N_, gettext, pgettext};
 use log::warn_err;
+use pluginmgr::install;
 use pluginmgr::install::Installer;
-use pluginmgr::plugin::{Identifier, Plugin};
+use pluginmgr::plugin::{Identifier, Plugin, ReleaseStatus};
 use serde::{Deserialize, Serialize};
+use std::borrow::Cow;
 use std::collections::HashMap;
 use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, Mutex};
 
+/// A remote plugin repository.
 #[derive(Debug, Clone, Deserialize, Serialize)]
 struct Remote {
     url: reqwest::Url,
@@ -18,24 +23,23 @@ struct Remote {
     branch: String,
 }
 
+/// Location of the plugins directory.
 fn local_plugins_dir() -> PathBuf {
     pluginmgr::local_plugins_dir().unwrap()
 }
-fn local_plugins_disabled_dir() -> PathBuf {
-    pluginmgr::local_plugins_disabled_dir().unwrap()
-}
+
+/// Location of the cache directory for storing information about plugins.
 fn catalog_cache_dir() -> PathBuf {
     pluginmgr::cache_dir().unwrap().join("pluginmanager")
 }
 
+/// Plugin manager configuration.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 struct Conf {
     remotes: Vec<Remote>,
     refresh_interval: chrono::TimeDelta,
     #[serde(skip, default = "local_plugins_dir")]
     install_path: PathBuf,
-    #[serde(skip, default = "local_plugins_disabled_dir")]
-    disable_path: PathBuf,
     #[serde(skip, default = "catalog_cache_dir")]
     catalog_cache: PathBuf,
 }
@@ -48,7 +52,6 @@ impl Conf {
                 branch: "main".to_string(),
             }],
             install_path: pluginmgr::local_plugins_dir()?,
-            disable_path: pluginmgr::local_plugins_disabled_dir()?,
             catalog_cache: pluginmgr::cache_dir()?.join("pluginmanager"),
             refresh_interval: chrono::TimeDelta::days(1),
         })
@@ -56,34 +59,84 @@ impl Conf {
 }
 
 const THEME: iced::Theme = iced::Theme::Dark;
+const SHADOW: iced::Shadow = iced::Shadow {
+    color: iced::Color::BLACK,
+    offset: iced::Vector { x: 0.0, y: 0.0 },
+    blur_radius: 5.0,
+};
 
+/// Opens the plugin manager. Requires a different process if using OpenGL / Vulkan.
 pub fn open() -> Result<()> {
+    let icon = iced::window::icon::from_file_data(App::ICON, None).ok();
+
+    // Load the fonts the same way Naev does
+    let fonts: Vec<_> = gettext("Cabin-SemiBold.otf,NanumBarunGothicBold.ttf,SourceCodePro-Semibold.ttf,IBMPlexSansJP-Medium.otf")
+        .split(',')
+        .filter_map(|f| {
+            let path = format!("fonts/{f}");
+            match ndata::read(&path) {
+                Ok(data) => Some(Cow::from(data)),
+                Err(e) => {
+                    warn_err!(e);
+                    None
+                }
+            }
+        })
+        .collect();
+
     Ok(iced::application(App::run, App::update, App::view)
         .title(gettext("Naev Plugin Manager"))
+        .window(iced::window::Settings {
+            icon,
+            ..Default::default()
+        })
+        .settings(iced::Settings {
+            fonts,
+            ..Default::default()
+        })
         .theme(THEME)
         .centered()
         .run()?)
 }
 
+/// Application internal messages.
 #[derive(Debug, Clone)]
 enum Message {
     Startup,
-    UpdateView,
+    UpdateView(Result<(), LogEntry>),
     Selected(usize),
     Install(Plugin),
     Enable(Plugin),
     Update(Plugin),
     Disable(Plugin),
     Uninstall(Plugin),
-    UninstallDisabled(Plugin),
-    Idle,
+    LinkClicked(widget::markdown::Url),
+    ProgressNew(Progress),
+    Progress(install::Progress),
+    LogResult(Result<(), LogEntry>),
+    LogToggle,
     DropDownToggle,
-    RefreshLocal,
+    RefreshLocal(Result<(), LogEntry>),
+    FilterChange(String),
     ActionClearCache,
     ActionRefresh,
     ActionUpdate,
 }
+impl Message {
+    fn update_view(result: Result<()>) -> Self {
+        Message::UpdateView(result.map_err(|e| e.into()))
+    }
 
+    fn refresh_local(result: Result<()>) -> Self {
+        Message::RefreshLocal(result.map_err(|e| e.into()))
+    }
+
+    fn log_result(result: Result<()>) -> Self {
+        Message::LogResult(result.map_err(|e| e.into()))
+    }
+}
+
+/// Different potential plugin states.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Deserialize, Serialize)]
 #[serde(rename_all = "lowercase")]
 enum PluginState {
@@ -101,6 +154,7 @@ impl PluginState {
     }
 }
 
+/// A wrapper containing local and remote information about plugins.
 #[derive(Debug, Clone, Deserialize, Serialize)]
 struct PluginWrap {
     identifier: Identifier,
@@ -109,6 +163,8 @@ struct PluginWrap {
     state: PluginState,
     #[serde(skip, default)]
     image: Option<iced::advanced::image::Handle>,
+    #[serde(skip, default)]
+    description_md: Option<Vec<widget::markdown::Item>>,
 }
 impl PluginWrap {
     fn new_local(plugin: &Plugin, state: PluginState) -> Self {
@@ -118,6 +174,10 @@ impl PluginWrap {
             remote: None,
             state,
             image: None,
+            description_md: plugin
+                .description
+                .as_ref()
+                .map(|desc| widget::markdown::parse(desc).collect()),
         }
     }
 
@@ -128,20 +188,48 @@ impl PluginWrap {
             remote: Some(plugin.clone()),
             state: PluginState::Available,
             image: None,
+            description_md: plugin
+                .description
+                .as_ref()
+                .map(|desc| widget::markdown::parse(desc).collect()),
         }
+    }
+
+    fn update_description(&mut self) {
+        self.description_md = self
+            .plugin()
+            .description
+            .as_ref()
+            .map(|desc| widget::markdown::parse(desc).collect());
     }
 
     fn update_remote_if_newer(&mut self, remote: &Plugin) {
         if let Some(dest) = &self.remote {
             if dest.version <= remote.version {
                 self.remote = Some(remote.clone());
+                self.update_description();
             }
         } else {
             self.remote = Some(remote.clone());
+            self.update_description();
         }
     }
 
     fn plugin(&self) -> &Plugin {
+        if let Some(local) = &self.local
+            && let Some(remote) = &self.remote
+        {
+            if local.version <= remote.version {
+                remote
+            } else {
+                local
+            }
+        } else {
+            self.plugin_prefer_local()
+        }
+    }
+
+    fn plugin_prefer_local(&self) -> &Plugin {
         if let Some(local) = &self.local {
             local
         } else if let Some(remote) = &self.remote {
@@ -206,7 +294,7 @@ impl PluginWrap {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Copy, Clone, Serialize, Deserialize)]
 struct Metadata {
     last_updated: chrono::DateTime<chrono::Utc>,
 }
@@ -240,113 +328,7 @@ impl Catalog {
         Ok(toml::from_slice(&data)?)
     }
 
-    async fn refresh(&self) -> Result<()> {
-        let mut hm: HashMap<Identifier, Plugin> = HashMap::new();
-        for remote in &self.conf.remotes {
-            let plugins = {
-                match pluginmgr::discover_remote_plugins(remote.url.clone(), &remote.branch).await {
-                    Ok(plugins) => Ok(plugins),
-                    Err(e) => {
-                        if let Some(mirror) = &remote.mirror {
-                            pluginmgr::discover_remote_plugins(mirror.clone(), &remote.branch).await
-                        } else {
-                            Err(e)
-                        }
-                    }
-                }
-            }?;
-            for plugin in plugins {
-                hm.entry(plugin.identifier.clone())
-                    .and_modify(|e| {
-                        if e.version < plugin.version {
-                            *e = plugin.clone()
-                        }
-                    })
-                    .or_insert(plugin);
-            }
-        }
-        {
-            let mut data = self.data.lock().unwrap();
-            for (id, remote) in hm.iter() {
-                if let Some(wrap) = data.get_mut(id) {
-                    wrap.update_remote_if_newer(remote);
-                } else {
-                    data.insert(id.clone(), PluginWrap::new_remote(remote));
-                }
-            }
-            self.meta.lock().unwrap().last_updated = chrono::Local::now().into();
-        }
-        self.refresh_local().await
-    }
-
-    async fn refresh_local(&self) -> Result<()> {
-        let images = {
-            let mut data = self.data.lock().unwrap();
-            for (_, wrap) in data.iter_mut() {
-                wrap.local = None;
-                wrap.state = PluginState::Available;
-            }
-            for plugin in pluginmgr::discover_local_plugins(&self.conf.disable_path)? {
-                if let Some(wrap) = data.get_mut(&plugin.identifier) {
-                    wrap.local = Some(plugin.clone());
-                    wrap.state = PluginState::Disabled;
-                } else {
-                    data.insert(
-                        plugin.identifier.clone(),
-                        PluginWrap::new_local(&plugin, PluginState::Disabled),
-                    );
-                }
-            }
-            for plugin in pluginmgr::discover_local_plugins(&self.conf.install_path)? {
-                if let Some(wrap) = data.get_mut(&plugin.identifier) {
-                    wrap.local = Some(plugin.clone());
-                    wrap.state = PluginState::Installed;
-                } else {
-                    data.insert(
-                        plugin.identifier.clone(),
-                        PluginWrap::new_local(&plugin, PluginState::Installed),
-                    );
-                }
-            }
-            data.retain(|_, wrap| wrap.local.is_some() || wrap.remote.is_some());
-
-            let images: Vec<(PathBuf, reqwest::Url)> = data
-                .iter()
-                .filter_map(|(_, wrap)| wrap.missing_image(&self.conf.catalog_cache))
-                .collect();
-            images
-        };
-
-        async fn download_image<P: AsRef<Path>, T: reqwest::IntoUrl>(
-            path: P,
-            url: T,
-        ) -> Result<()> {
-            let response = reqwest::get(url).await?;
-            let content = response.bytes().await?;
-            let mut file = fs::File::create(path.as_ref())?;
-            file.write_all(&content)?;
-            Ok(())
-        }
-        use futures::StreamExt;
-        futures::stream::iter(images)
-            .for_each(async |(path, url)| {
-                if let Err(e) = download_image(path, url).await {
-                    warn_err!(e);
-                }
-            })
-            .await;
-
-        for (_, wrap) in self.data.lock().unwrap().iter_mut() {
-            if let Err(e) = wrap.load_image(&self.conf.catalog_cache) {
-                warn_err!(e);
-            }
-        }
-
-        self.save_to_cache()
-    }
-
     fn save_to_cache(&self) -> Result<()> {
-        fs::create_dir_all(&self.conf.catalog_cache)?;
         for (_, plugin) in self.data.lock().unwrap().iter() {
             let data = match toml::to_string(&plugin) {
                 Ok(data) => data,
@@ -388,9 +370,44 @@ impl Catalog {
                 Some((wrap.identifier.clone(), wrap))
             })
             .collect();
-        self.refresh_local().await?;
         Ok(())
     }
+}
+
+#[derive(Debug, Clone)]
+enum LogType {
+    Info,
+    Error,
+}
+
+#[derive(Debug, Clone)]
+struct LogEntry {
+    ltype: LogType,
+    message: String,
+}
+impl From<Error> for LogEntry {
+    fn from(e: Error) -> Self {
+        LogEntry {
+            ltype: LogType::Error,
+            message: format!("Error: {}", e),
+        }
+    }
+}
+impl LogEntry {
+    fn info(message: String) -> Self {
+        LogEntry {
+            ltype: LogType::Info,
+            message,
+        }
+    }
+}
+
+#[derive(Debug, Clone)]
+struct Progress {
+    title: String,
+    message: String,
+    /// [0.0, 1.0] value
+    value: f32,
 }
 
 #[derive(Debug)]
@@ -399,13 +416,18 @@ struct App {
     view: Vec<PluginWrap>,
     has_update: bool,
     selected: Option<(usize, Identifier)>,
-    idle: bool,
+    progress: Option<Progress>,
     drop_action: bool,
+    log: Vec<LogEntry>,
+    log_open: bool,
+    filter: String,
     // Some useful data
     default_logo: iced::advanced::image::Handle,
 }
 
 impl App {
+    const ICON: &[u8] = include_bytes!("../../../extras/logos/logo64.png");
+
     fn run() -> (Self, Task<Message>) {
         let app = Self::new().unwrap();
         (app, Task::done(Message::Startup))
@@ -414,120 +436,328 @@ impl App {
     fn new() -> Result<Self> {
         let conf = Conf::new()?;
         fs::create_dir_all(&conf.install_path)?;
-        fs::create_dir_all(&conf.disable_path)?;
+        fs::create_dir_all(&conf.catalog_cache)?;
 
         // We'll hardcode a logo into the source code for now
         use iced::advanced::image;
-        let default_logo = image::Handle::from_bytes(image::Bytes::from_static(include_bytes!(
-            "../../../extras/logos/logo64.png"
-        )));
+        let default_logo = image::Handle::from_bytes(image::Bytes::from_static(Self::ICON));
 
         Ok(App {
             catalog: Arc::new(Catalog::new(conf)),
             view: Vec::new(),
             selected: None,
             has_update: false,
-            idle: true,
+            progress: None,
             drop_action: false,
+            log: Vec::new(),
+            log_open: false,
+            filter: "".to_string(),
             default_logo,
         })
     }
 
     fn load_from_cache_or_refresh_task(&mut self) -> Task<Message> {
-        async fn wrap(c: Arc<Catalog>) {
-            let last_updated = c.meta.lock().unwrap().last_updated;
-            let refresh = match c.load_from_cache().await {
-                Ok(()) => {
-                    chrono::Local::now().signed_duration_since(last_updated)
-                        >= c.conf.refresh_interval
-                }
+        fn wrap(c: Arc<Catalog>) -> impl Straw<(), install::Progress, Error> {
+            sipper(async move |sender| {
+                let last_updated = c.meta.lock().unwrap().last_updated;
+                let refresh = match c.load_from_cache().await {
+                    Ok(()) => {
+                        chrono::Local::now().signed_duration_since(last_updated)
+                            >= c.conf.refresh_interval
+                    }
 
-                Err(e) => {
+                    Err(e) => {
+                        warn_err!(e);
+                        true
+                    }
+                };
+                if refresh && let Err(e) = App::refresh_straw(c.clone()).run(&sender).await {
                     warn_err!(e);
-                    true
+                } else {
+                    // refresh_straw will already run refresh_local_straw
+                    App::refresh_local_straw(c).run(&sender).await?;
                 }
-            };
-            if refresh && let Err(e) = c.refresh().await {
-                warn_err!(e);
-            }
+                Ok(())
+            })
         }
         if let Ok(metacatalog) =
             Catalog::from_path(self.catalog.conf.catalog_cache.join("metadata.toml"))
         {
             self.catalog = Arc::new(metacatalog);
         }
-        self.idle = false;
-        Task::perform(wrap(self.catalog.clone()), |_| Message::UpdateView)
+        Task::done(Message::ProgressNew(Progress {
+            title: pgettext("plugins", "Starting Up").to_string(),
+            message: "".to_string(),
+            value: 0.0,
+        }))
+        .chain(Task::sip(
+            wrap(self.catalog.clone()),
+            Message::Progress,
+            Message::update_view,
+        ))
     }
 
-    fn refresh_task(&mut self) -> Task<Message> {
-        async fn wrap(c: Arc<Catalog>) {
-            if let Err(e) = c.refresh().await {
-                warn_err!(e);
+    fn refresh_straw(c: Arc<Catalog>) -> impl Straw<(), install::Progress, Error> {
+        sipper(async move |mut sender| {
+            sender
+                .send(install::Progress {
+                    message: Some(
+                        pgettext("plugins", "Refreshing remote repositories").to_string(),
+                    ),
+                    value: 0.0,
+                })
+                .await;
+            let mut hm: HashMap<Identifier, Plugin> = HashMap::new();
+            let progress = Arc::new(Mutex::new(0.0));
+            let inc = 0.9 / (c.conf.remotes.len() as f32);
+            for remote in &c.conf.remotes {
+                let plugins = {
+                    match pluginmgr::discover_remote_plugins(remote.url.clone(), &remote.branch)
+                        .with(|v| {
+                            let lock = progress.lock().unwrap();
+                            (*lock + v.value * inc).into()
+                        })
+                        .run(&sender)
+                        .await
+                    {
+                        Ok(plugins) => Ok(plugins),
+                        Err(e) => {
+                            if let Some(mirror) = &remote.mirror {
+                                pluginmgr::discover_remote_plugins(mirror.clone(), &remote.branch)
+                                    .with(|v| {
+                                        let lock = progress.lock().unwrap();
+                                        (*lock + v.value * inc).into()
+                                    })
+                                    .run(&sender)
+                                    .await
+                            } else {
+                                Err(e)
+                            }
+                        }
+                    }
+                }?;
+                for plugin in plugins {
+                    hm.entry(plugin.identifier.clone())
+                        .and_modify(|e| {
+                            if e.version < plugin.version {
+                                *e = plugin.clone()
+                            }
+                        })
+                        .or_insert(plugin);
+                }
+                let val = {
+                    let mut lock = progress.lock().unwrap();
+                    *lock += inc;
+                    *lock
+                };
+                sender.send(val.into()).await;
             }
-        }
-        self.idle = false;
-        Task::perform(wrap(self.catalog.clone()), |_| Message::UpdateView)
+            {
+                let mut data = c.data.lock().unwrap();
+                for (id, remote) in hm.iter() {
+                    if let Some(wrap) = data.get_mut(id) {
+                        wrap.update_remote_if_newer(remote);
+                    } else {
+                        data.insert(id.clone(), PluginWrap::new_remote(remote));
+                    }
+                }
+                c.meta.lock().unwrap().last_updated = chrono::Local::now().into();
+            }
+            Self::refresh_local_straw(c)
+                .with(|mut v| {
+                    v.value = 0.9 + 0.1 * v.value;
+                    v
+                })
+                .run(&sender)
+                .await
+        })
     }
 
-    fn refresh_local_task(&mut self) -> Task<Message> {
-        async fn wrap(c: Arc<Catalog>) {
-            if let Err(e) = c.refresh_local().await {
-                warn_err!(e);
+    fn refresh_local_straw(c: Arc<Catalog>) -> impl Straw<(), install::Progress, Error> {
+        sipper(async move |mut sender| {
+            sender
+                .send(install::Progress {
+                    message: Some(
+                        pgettext("plugins", "Refreshing local and remote repositories").to_string(),
+                    ),
+                    value: 0.0,
+                })
+                .await;
+            let images = {
+                let mut data = c.data.lock().unwrap();
+                for (_, wrap) in data.iter_mut() {
+                    wrap.local = None;
+                    wrap.state = PluginState::Available;
+                }
+                for plugin in pluginmgr::discover_local_plugins(&c.conf.install_path)? {
+                    let state = match plugin.disabled {
+                        true => PluginState::Disabled,
+                        false => PluginState::Installed,
+                    };
+                    if let Some(wrap) = data.get_mut(&plugin.identifier) {
+                        wrap.local = Some(plugin.clone());
+                        wrap.state = state;
+                    } else {
+                        data.insert(
+                            plugin.identifier.clone(),
+                            PluginWrap::new_local(&plugin, state),
+                        );
+                    }
+                }
+                data.retain(|_, wrap| wrap.local.is_some() || wrap.remote.is_some());
+
+                let images: Vec<(PathBuf, reqwest::Url)> = data
+                    .iter()
+                    .filter_map(|(_, wrap)| wrap.missing_image(&c.conf.catalog_cache))
+                    .collect();
+                images
+            };
+
+            async fn download_image<P: AsRef<Path>, T: reqwest::IntoUrl>(
+                path: P,
+                url: T,
+            ) -> Result<()> {
+                let response = reqwest::get(url).await?;
+                let content = response.bytes().await?;
+                let mut file = fs::File::create(path.as_ref())?;
+                file.write_all(&content)?;
+                Ok(())
+            }
+            use futures::StreamExt;
+            futures::stream::iter(images)
+                .for_each(async |(path, url)| {
+                    if let Err(e) = download_image(path, url).await {
+                        warn_err!(e);
+                    }
+                })
+                .await;
+
+            for (_, wrap) in c.data.lock().unwrap().iter_mut() {
+                if let Err(e) = wrap.load_image(&c.conf.catalog_cache) {
+                    warn_err!(e);
+                }
+            }
+
+            c.save_to_cache()
+        })
+    }
+
+    fn start_task(title: &str) -> Task<Message> {
+        Task::done(Message::ProgressNew(Progress {
+            title: title.to_string(),
+            message: "".to_string(),
+            value: 0.0,
+        }))
+    }
+
+    fn refresh_task(&self) -> Task<Message> {
+        Self::start_task(pgettext("plugins", "Refreshing")).chain(Task::sip(
+            Self::refresh_straw(self.catalog.clone()),
+            Message::Progress,
+            Message::update_view,
+        ))
+    }
+
+    fn refresh_local_task(&self) -> Task<Message> {
+        Self::start_task(pgettext("plugins", "Refreshing")).chain(Task::sip(
+            Self::refresh_local_straw(self.catalog.clone()),
+            Message::Progress,
+            Message::update_view,
+        ))
+    }
+
+    fn install_task(&self, plugin: &Plugin) -> Task<Message> {
+        Self::start_task(pgettext("plugins", "Installing")).chain(Task::sip(
+            Installer::new(&self.catalog.conf.install_path, plugin).install(),
+            Message::Progress,
+            Message::refresh_local,
+        ))
+    }
+
+    fn update_task(&self, plugin: &Plugin) -> Task<Message> {
+        Self::start_task(pgettext("plugins", "Updating")).chain(Task::sip(
+            Installer::new(&self.catalog.conf.install_path, plugin).update(),
+            Message::Progress,
+            Message::refresh_local,
+        ))
+    }
+
+    fn uninstall_task(&self, plugin: &Plugin, path: &PathBuf) -> Task<Message> {
+        Self::start_task(pgettext("plugins", "Removing")).chain(Task::sip(
+            Installer::new(path, plugin).uninstall(),
+            Message::Progress,
+            Message::refresh_local,
+        ))
+    }
+
+    /// Updates the view if applicable
+    fn update_view(&mut self) -> Task<Message> {
+        self.view = self
+            .catalog
+            .data
+            .lock()
+            .unwrap()
+            .values()
+            .filter(|p| {
+                if self.filter.is_empty() {
+                    return true;
+                }
+                let plg = p.plugin();
+                let filter = self.filter.to_lowercase();
+                plg.name.to_lowercase().contains(&filter)
+                    || plg.r#abstract.to_lowercase().contains(&filter)
+                    || plg.tags.iter().any(|t| t.to_lowercase().contains(&filter))
+                    || plg.release_status.as_str().contains(&filter)
+            })
+            .cloned()
+            .collect();
+        self.view.sort_by(|a, b| {
+            let ord = a.state.cmp(&b.state);
+            if ord == std::cmp::Ordering::Equal {
+                a.plugin().identifier.cmp(&b.plugin().identifier)
+            } else {
+                ord
+            }
+        });
+        self.has_update = self.view.iter().any(|wrap| wrap.has_update());
+
+        fn recover_selected(
+            view: &[PluginWrap],
+            identifier: &Identifier,
+        ) -> Option<(usize, Identifier)> {
+            for (id, wrap) in view.iter().enumerate() {
+                if wrap.identifier == *identifier {
+                    return Some((id, identifier.clone()));
+                }
+            }
+            None
+        }
+        // Try to recover selection if it is not matched anymore
+        if let Some((id, identifier)) = &self.selected {
+            if let Some(sel) = self.view.get(*id) {
+                if sel.identifier != *identifier {
+                    self.selected = recover_selected(&self.view, identifier);
+                }
+            } else {
+                self.selected = recover_selected(&self.view, identifier);
             }
         }
-        self.idle = false;
-        Task::perform(wrap(self.catalog.clone()), |_| Message::UpdateView)
+        Task::none()
     }
 
     fn update(&mut self, message: Message) -> Task<Message> {
         match message {
-            Message::Startup => {
-                self.idle = false;
-                self.load_from_cache_or_refresh_task()
-            }
-            Message::UpdateView => {
-                self.view = self
-                    .catalog
-                    .data
-                    .lock()
-                    .unwrap()
-                    .values()
-                    .cloned()
-                    .collect();
-                self.view.sort_by(|a, b| {
-                    let ord = a.state.cmp(&b.state);
-                    if ord == std::cmp::Ordering::Equal {
-                        a.plugin().identifier.cmp(&b.plugin().identifier)
-                    } else {
-                        ord
-                    }
-                });
-                self.has_update = self.view.iter().any(|wrap| wrap.has_update());
-                self.idle = true;
-
-                fn recover_selected(
-                    view: &[PluginWrap],
-                    identifier: &Identifier,
-                ) -> Option<(usize, Identifier)> {
-                    for (id, wrap) in view.iter().enumerate() {
-                        if wrap.identifier == *identifier {
-                            return Some((id, identifier.clone()));
-                        }
-                    }
-                    None
+            Message::Startup => self.load_from_cache_or_refresh_task(),
+            Message::UpdateView(value) => {
+                // If a previous task errored, we log it
+                if let Err(e) = value {
+                    self.log.push(e);
+                    self.log_open = true;
+                    self.progress = None;
+                    return Task::none();
                 }
-                // Try to recover selection if it is not matched anymore
-                if let Some((id, identifier)) = &self.selected {
-                    if let Some(sel) = self.view.get(*id) {
-                        if sel.identifier != *identifier {
-                            self.selected = recover_selected(&self.view, identifier);
-                        }
-                    } else {
-                        self.selected = recover_selected(&self.view, identifier);
-                    }
-                }
-                Task::none()
+                self.progress = None;
+                self.update_view()
             }
             Message::Selected(id) => {
                 if let Some((rid, _)) = &self.selected {
@@ -541,77 +771,76 @@ impl App {
                 };
                 Task::none()
             }
-            Message::Install(plugin) => {
-                self.idle = false;
-                async fn install_wrapper(installer: Installer) {
-                    match installer.install().await {
-                        Ok(_) => (),
-                        Err(e) => warn_err!(e),
-                    }
-                }
-                Task::perform(
-                    install_wrapper(Installer::new(&self.catalog.conf.install_path, &plugin)),
-                    |_| Message::RefreshLocal,
-                )
-                .chain(Task::done(Message::Idle))
-            }
+            Message::Install(plugin) => self.install_task(&plugin),
             Message::Enable(plugin) => {
-                match Installer::new(&self.catalog.conf.disable_path, &plugin)
-                    .move_to(&self.catalog.conf.install_path)
-                {
-                    Ok(_) => (),
-                    Err(e) => warn_err!(e),
-                }
+                let _ = plugin.disable(false);
                 self.refresh_local_task()
             }
-            Message::Update(plugin) => {
-                async fn update_wrapper(installer: Installer) {
-                    match installer.update().await {
-                        Ok(_) => (),
-                        Err(e) => warn_err!(e),
-                    }
-                }
-                Task::perform(
-                    update_wrapper(Installer::new(&self.catalog.conf.install_path, &plugin)),
-                    |_| Message::RefreshLocal,
-                )
-                .chain(Task::done(Message::Idle))
-            }
+            Message::Update(plugin) => self.update_task(&plugin),
             Message::Disable(plugin) => {
-                match Installer::new(&self.catalog.conf.install_path, &plugin)
-                    .move_to(&self.catalog.conf.disable_path)
-                {
-                    Ok(_) => (),
-                    Err(e) => warn_err!(e),
-                }
+                let _ = plugin.disable(true);
                 self.refresh_local_task()
             }
             Message::Uninstall(plugin) => {
-                match Installer::new(&self.catalog.conf.install_path, &plugin).uninstall() {
-                    Ok(_) => (),
-                    Err(e) => warn_err!(e),
-                }
-                self.refresh_local_task()
+                self.uninstall_task(&plugin, &self.catalog.conf.install_path)
             }
-            Message::UninstallDisabled(plugin) => {
-                match Installer::new(&self.catalog.conf.disable_path, &plugin).uninstall() {
-                    Ok(_) => (),
-                    Err(e) => warn_err!(e),
+            Message::LinkClicked(url) => {
+                if let Err(e) = webbrowser::open(url.as_str()) {
+                    warn_err!(e);
                 }
-                self.refresh_local_task()
+                Task::none()
             }
-            Message::Idle => {
-                self.idle = true;
+            Message::ProgressNew(progress) => {
+                self.progress = Some(progress);
+                if let Some(progress) = &self.progress {
+                    self.log.push(LogEntry::info(progress.title.clone()));
+                    if !progress.message.is_empty() {
+                        self.log.push(LogEntry::info(progress.message.clone()));
+                    }
+                }
+                Task::none()
+            }
+            Message::Progress(value) => {
+                if let Some(progress) = &mut self.progress {
+                    if let Some(message) = &value.message {
+                        progress.message = message.clone();
+                        self.log.push(LogEntry::info(message.clone()));
+                    }
+                    progress.value = value.value;
+                }
+                Task::none()
+            }
+            Message::LogResult(result) => {
+                if let Err(entry) = result {
+                    self.log.push(entry);
+                }
+                Task::none()
+            }
+            Message::LogToggle => {
+                self.log_open = !self.log_open;
                 Task::none()
             }
             Message::DropDownToggle => {
                 self.drop_action = !self.drop_action;
                 Task::none()
             }
-            Message::RefreshLocal => self.refresh_local_task(),
+            Message::RefreshLocal(value) => match value {
+                Ok(()) => self.refresh_local_task(),
+                Err(e) => {
+                    self.log.push(e);
+                    Task::none()
+                }
+            },
+            Message::FilterChange(value) => {
+                self.filter = value;
+                self.update_view()
+            }
             Message::ActionClearCache => {
                 self.drop_action = false;
                 if let Err(e) = fs::remove_dir_all(&self.catalog.conf.catalog_cache) {
+                    warn_err!(e);
+                }
+                if let Err(e) = fs::create_dir_all(&self.catalog.conf.catalog_cache) {
                     warn_err!(e);
                 }
                 self.refresh_task()
@@ -622,43 +851,35 @@ impl App {
             }
             Message::ActionUpdate => {
                 self.drop_action = false;
-                self.idle = false;
-                async fn update_wrapper(installer: Installer) {
-                    match installer.update().await {
-                        Ok(_) => (),
-                        Err(e) => warn_err!(e),
-                    }
-                }
-                Task::batch(self.view.iter().filter_map(|plugin| {
-                    if plugin.has_update()
-                        && let Some(local) = &plugin.local
-                    {
-                        Some(
-                            Task::perform(
-                                update_wrapper(Installer::new(
-                                    &self.catalog.conf.install_path,
-                                    local,
-                                )),
-                                |_| Message::RefreshLocal,
-                            )
-                            .discard(),
-                        )
-                    } else {
-                        None
-                    }
-                }))
-                .chain(Task::done(Message::RefreshLocal))
-                .chain(Task::done(Message::Idle))
+                Self::start_task(pgettext("plugins", "Updating"))
+                    .chain(Task::batch(self.view.iter().filter_map(|plugin| {
+                        if plugin.has_update()
+                            && let Some(local) = &plugin.local
+                        {
+                            Some(Task::sip(
+                                Installer::new(&self.catalog.conf.install_path, local).update(),
+                                Message::Progress,
+                                Message::log_result,
+                            ))
+                        } else {
+                            None
+                        }
+                    })))
+                    .chain(Task::done(Message::RefreshLocal(Ok(()))))
             }
         }
     }
 
     fn view(&self) -> iced::Element<'_, Message> {
-        use iced::Length::{Fill, Shrink};
+        use iced::Length::{Fill, FillPortion, Shrink};
+        use iced::alignment::{Horizontal, Vertical};
         use iced::theme::palette::Pair;
-        use widget::{column, container, grid, image, mouse_area, row, scrollable, text};
+        use widget::{
+            column, container, grid, image, mouse_area, row, scrollable, space, text, text_input,
+            tooltip,
+        };
 
-        let idle = self.idle;
+        let idle = self.progress.is_none();
         let palette = THEME.palette();
         let extended = THEME.extended_palette();
 
@@ -679,95 +900,149 @@ impl App {
                 .padding(3.0)
         };
 
-        let plugins = {
-            scrollable(
-                grid(self.view.iter().enumerate().map(|(id, v)| {
-                    let p = v.plugin();
-                    let image = image(match &v.image {
-                        Some(img) => img.clone(),
-                        None => self.default_logo.clone(),
-                    })
-                    .width(60)
-                    .height(60);
-                    let name = bold(p.name.as_str());
-                    let badge = match v.state {
-                        PluginState::Installed => Some(if v.has_update() {
-                            badge(pgettext("plugins", "update"), extended.warning.weak)
-                        } else {
-                            badge(pgettext("plugins", "installed"), extended.success.weak)
-                        }),
-                        PluginState::Disabled => Some(badge(
-                            pgettext("plugins", "disabled"),
-                            extended.background.base,
-                        )),
-                        PluginState::Available => None,
+        let plugins = if self.view.is_empty() {
+            grid([
+                container(text(pgettext("plugins", "No plugins found!")).center())
+                    .padding(20)
+                    .into(),
+            ])
+        } else {
+            grid(self.view.iter().enumerate().map(|(id, v)| {
+                let p = v.plugin();
+                let image = image(match &v.image {
+                    Some(img) => img.clone(),
+                    None => self.default_logo.clone(),
+                })
+                .width(60)
+                .height(60);
+                let name = bold(p.name.as_str());
+                let badge = match v.state {
+                    PluginState::Installed => Some(if v.has_update() {
+                        badge(pgettext("plugins", "update"), extended.warning.weak)
+                    } else {
+                        badge(pgettext("plugins", "installed"), extended.success.weak)
+                    }),
+                    PluginState::Disabled => Some(badge(
+                        pgettext("plugins", "disabled"),
+                        extended.background.base,
+                    )),
+                    PluginState::Available => None,
+                };
+                // Somewhat like a modal
+                let content = column![
+                    match badge {
+                        Some(badge) => row![name, badge,],
+                        None => row![name],
+                    }
+                    .align_y(Vertical::Center)
+                    .spacing(5),
+                    text(p.r#abstract.as_str()),
+                    text(p.tags.join(", ")),
+                ]
+                .spacing(5);
+                let modal = row![image, content,].spacing(5).align_y(Vertical::Center);
+                mouse_area(container(modal).padding(10).style(move |theme| {
+                    let extended = theme.extended_palette();
+                    let border = if let Some(sel) = &self.selected
+                        && id == sel.0
+                    {
+                        iced::Border {
+                            color: palette.primary,
+                            width: 3.0,
+                            radius: iced::border::Radius::new(2.0),
+                        }
+                    } else {
+                        iced::border::rounded(2)
                     };
-                    // Somewhat like a modal
-                    let content = column![
-                        match badge {
-                            Some(badge) => row![name, badge,],
-                            None => row![name],
-                        }
-                        .spacing(5),
-                        text(p.r#abstract.as_str()),
-                        text(p.tags.join(", ")),
-                    ]
-                    .spacing(5);
-                    let modal = row![image, content,]
-                        .spacing(5)
-                        .align_y(iced::alignment::Vertical::Center);
-                    mouse_area(container(modal).padding(10).style(move |theme| {
-                        let container = container::rounded_box(theme)
-                            .background(iced::Background::Color(extended.background.weakest.color));
-                        if let Some(sel) = &self.selected
-                            && id == sel.0
-                        {
-                            container.border(iced::Border {
-                                color: palette.primary,
-                                width: 3.0,
-                                radius: iced::border::Radius::new(2.0),
-                            })
-                        } else {
-                            container
-                        }
-                    }))
-                    .on_press(Message::Selected(id))
-                    .into()
+                    widget::container::Style {
+                        background: Some(extended.background.weakest.color.into()),
+                        text_color: Some(extended.background.weakest.text),
+                        border,
+                        shadow: SHADOW,
+                        ..Default::default()
+                    }
                 }))
-                .fluid(500)
-                .spacing(10)
-                .height(grid::Sizing::EvenlyDistribute(Shrink)),
-            )
+                .on_press(Message::Selected(id))
+                .into()
+            }))
+            .fluid(500)
             .spacing(10)
+            .height(grid::Sizing::EvenlyDistribute(Shrink))
         };
+        let plugins = column![
+            text_input(gettext("Filter..."), &self.filter).on_input(Message::FilterChange),
+            scrollable(plugins).spacing(10)
+        ]
+        .spacing(5);
 
+        let tooltip_container = |txt| {
+            container(text(txt))
+                .padding(10)
+                /*
+                .style(|theme: &iced::Theme| {
+                    let extended = theme.extended_palette();
+                    widget::container::Style {
+                        background: Some(extended.background.weakest.color.into()),
+                        border: iced::border::rounded(2),
+                        shadow: SHADOW,
+                        ..Default::default()
+                    }
+                })
+                */
+                .style(widget::container::dark)
+                .max_width(300)
+        };
         let (selected, buttons) = if let Some((id, _)) = &self.selected
             && let Some(wrp) = self.view.get(*id)
         {
-            let sel = wrp.plugin();
+            let sel = wrp.plugin_prefer_local();
             let info = |txt| text(txt).size(20);
+            let tooltip_pos = tooltip::Position::FollowCursor;
             let col = column![
-                bold(pgettext("plugins", "Identifier:")),
-                info(sel.identifier.as_str()),
+                //bold(pgettext("plugins", "Identifier:")),
+                //info(sel.identifier.as_str()),
                 bold(pgettext("plugins", "Name:")),
-                info(sel.name.as_str()),
+                tooltip(
+                    info(sel.name.as_str()),
+                    tooltip_container(format!("Identifier: {}", sel.identifier.as_str())),
+                    tooltip_pos,
+                ),
                 bold(pgettext("plugins", "State:")),
                 info(gettext(wrp.state.as_str())),
                 bold(pgettext("plugins", "Author(s):")),
                 info(&sel.author),
                 bold(pgettext("plugins", "Plugin Version:")),
-                text(sel.version.to_string()).size(20),
+                if let Some(local) = &wrp.local
+                    && let Some(remote) = &wrp.remote
+                    && local.version < remote.version
+                {
+                    text(
+                        formatx!(
+                            pgettext("plugins", "{} [{} available]"),
+                            &local.version,
+                            &remote.version
+                        )
+                        .unwrap_or(local.version.to_string()),
+                    )
+                    .size(20)
+                    .color(palette.warning)
+                } else {
+                    text(sel.version.to_string()).size(20)
+                },
                 bold(pgettext("plugins", "Naev Version:")),
                 text(format!(
                     "{}{}",
                     sel.naev_version,
                     match sel.compatible {
                         true => "".to_string(),
-                        false => format!(
-                            " [{} {}]",
-                            gettext("incompatible with Naev "),
+                        false => formatx!(
+                            pgettext("plugins", " [incompatible with Naev {}]"),
+                            &*log::version::VERSION
+                        )
+                        .unwrap_or(format!(
+                            " [incompatible with Naev {}]",
                             *log::version::VERSION
-                        ),
+                        )),
                     }
                 ))
                 .color_maybe(match sel.compatible {
@@ -776,9 +1051,26 @@ impl App {
                 })
                 .size(20),
                 bold(pgettext("plugins", "Status:")),
-                info(gettext(sel.release_status.as_str())),
-                bold(pgettext("plugins", "Description")),
-                text(sel.description.as_ref().unwrap_or(&sel.r#abstract)),
+                tooltip(
+                    info(gettext(sel.release_status.as_str())).color_maybe(
+                        match sel.release_status {
+                            ReleaseStatus::Stable => None,
+                            _ => Some(palette.warning),
+                        }
+                    ),
+                    tooltip_container(format!(
+                        "{}: {}",
+                        gettext(sel.release_status.as_str()),
+                        gettext(sel.release_status.description())
+                    )),
+                    tooltip_pos,
+                ),
+                widget::space::vertical().height(iced::Length::Fixed(5.0)),
+                if let Some(md) = &wrp.description_md {
+                    widget::markdown::view(md, THEME).map(Message::LinkClicked)
+                } else {
+                    text(&sel.r#abstract).into()
+                }
             ]
             .spacing(5);
             (
@@ -804,9 +1096,8 @@ impl App {
                         row![
                             button(pgettext("plugins", "Enable"))
                                 .on_press_maybe(idle.then_some(Message::Enable(sel.clone()))),
-                            button(pgettext("plugins", "Uninstall")).on_press_maybe(
-                                idle.then_some(Message::UninstallDisabled(sel.clone()))
-                            ),
+                            button(pgettext("plugins", "Uninstall"))
+                                .on_press_maybe(idle.then_some(Message::Uninstall(sel.clone()))),
                         ]
                     }
                     PluginState::Available => {
@@ -824,19 +1115,30 @@ impl App {
             )
         };
         // Add refresh button and format
-        let actions = column![
-            button(pgettext("plugins", "Update All"))
-                .on_press_maybe((self.has_update && self.idle).then_some(Message::ActionUpdate)),
-            button(pgettext("plugins", "Force Refresh"))
-                .on_press_maybe(self.idle.then_some(Message::ActionRefresh)),
-            button(pgettext("plugins", "Clear Cache"))
-                .on_press_maybe(self.idle.then_some(Message::ActionClearCache)),
-            // TODO select and add zip functionality
-            //button(pgettext("plugins", "Add Plugin (Zip)")),
-            //button(pgettext("plugins", "Add Plugin (Directory)")),
-        ]
-        .spacing(5)
-        .align_x(iced::Alignment::Center);
+        let actions = container(
+            column![
+                button(pgettext("plugins", "Update All"))
+                    .on_press_maybe((self.has_update && idle).then_some(Message::ActionUpdate)),
+                button(pgettext("plugins", "Force Refresh"))
+                    .on_press_maybe(idle.then_some(Message::ActionRefresh)),
+                button(pgettext("plugins", "Clear Cache"))
+                    .on_press_maybe(idle.then_some(Message::ActionClearCache)),
+                // TODO select and add zip functionality
+                //button(pgettext("plugins", "Add Plugin (Zip)")),
+                //actionutton(pgettext("plugins", "Add Plugin (Directory)")),
+            ]
+            .spacing(10)
+            .align_x(iced::Alignment::Center),
+        )
+        .style(|theme: &iced::Theme| {
+            let extended = theme.extended_palette();
+            widget::container::Style {
+                background: Some(extended.background.weak.color.scale_alpha(0.2).into()),
+                border: iced::border::rounded(2),
+                shadow: SHADOW,
+                ..Default::default()
+            }
+        });
         let buttons = container(
             buttons
                 .push(
@@ -849,13 +1151,82 @@ impl App {
                     .on_dismiss(Message::DropDownToggle)
                     .alignment(iced_aw::drop_down::Alignment::Bottom),
                 )
-                .padding(10)
                 .spacing(10)
                 .wrap(),
         )
         .align_right(Fill);
         // Set up the final screen
         let right = column![buttons, selected].spacing(10).width(300);
-        row![plugins, right].spacing(20).padding(20).into()
+        let mut main = widget::stack![row![plugins, right].spacing(20).padding(20).height(Fill)];
+        if self.log_open {
+            let logview = scrollable(widget::Column::with_children(self.log.iter().map(|l| {
+                text(&l.message)
+                    .color_maybe(match l.ltype {
+                        LogType::Info => None,
+                        LogType::Error => Some(palette.danger),
+                    })
+                    .into()
+            })))
+            .spacing(10)
+            .height(Fill)
+            .width(Fill)
+            .anchor_bottom();
+            let over = container(column![
+                space().height(FillPortion(2)),
+                row![
+                    space().width(FillPortion(1)),
+                    container(logview)
+                        .style(container::rounded_box)
+                        .padding(10)
+                        .style(widget::container::dark)
+                        .width(FillPortion(8)),
+                    space().width(FillPortion(1)),
+                ]
+                .height(FillPortion(1)),
+            ])
+            .center_x(Fill)
+            .align_y(Vertical::Bottom)
+            .width(Fill)
+            .height(Fill)
+            .padding(20);
+            main = main.push(over);
+        }
+        main = main.push(
+            container(button(pgettext("plugins", "Logs")).on_press(Message::LogToggle))
+                .align_x(Horizontal::Left)
+                .align_y(Vertical::Bottom)
+                .width(Fill)
+                .height(Fill)
+                .padding(10),
+        );
+        if let Some(progress) = &self.progress {
+            let over = container(
+                container(column![
+                    bold(&progress.title),
+                    text(&progress.message),
+                    widget::progress_bar(0.0..=1.0, progress.value).girth(15.0),
+                ])
+                .style(|theme| {
+                    let extended = theme.extended_palette();
+                    widget::container::Style {
+                        background: Some(extended.background.weak.color.into()),
+                        text_color: Some(extended.background.weak.text),
+                        border: iced::border::rounded(2),
+                        shadow: SHADOW,
+                        ..Default::default()
+                    }
+                })
+                .padding(10)
+                .align_y(Vertical::Center)
+                .width(400),
+            )
+            .align_x(Horizontal::Right)
+            .align_y(Vertical::Bottom)
+            .width(Fill)
+            .height(Fill)
+            .padding(10);
+            main = main.push(over);
+        }
+        main.into()
     }
 }

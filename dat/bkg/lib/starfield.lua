@@ -12,20 +12,20 @@ local starfield = {}
 -- Radiosity has been computed by blurring the base images and getting a representative colour
 -- Alpha can be used to control the intensity of the radiosity and multiplies the RGB values
 starfield.stars = {
-   { i="blue01.webp",     r=colour.new(0.90, 0.93, 0.98, 5) },
-   { i="blue02.webp",     r=colour.new(0.88, 0.94, 1.00, 5) },
-   { i="blue04.webp",     r=colour.new(0.91, 0.96, 1.00, 5) },
-   { i="green01.webp",    r=colour.new(0.90, 0.98, 0.89, 5) },
-   { i="green02.webp",    r=colour.new(0.94, 0.99, 0.93, 5) },
-   { i="orange01.webp",   r=colour.new(0.97, 0.85, 0.75, 5) }, -- r=colour.new(0.94, 0.30, 0.00, 8) }, Too red otherwise
-   { i="orange02.webp",   r=colour.new(1.00, 0.95, 0.83, 5) },
-   { i="orange05.webp",   r=colour.new(0.99, 0.93, 0.73, 5) },
-   { i="redgiant01.webp", r=colour.new(0.89, 0.80, 0.80, 5) }, -- r=colour.new(0.57, 0.00, 0.00, 8) }, Too red otherwise
-   --{ i="redgiant02.webp", r=colour.new(0.82, 0.53, 0.26, 5) }, -- Unused, would need colour tweaks
-   { i="white01.webp",    r=colour.new(0.84, 0.96, 0.98, 5) },
-   { i="white02.webp",    r=colour.new(0.94, 0.96, 0.98, 5) },
-   { i="yellow01.webp",   r=colour.new(1.00, 0.98, 0.91, 5) },
-   { i="yellow02.webp",   r=colour.new(1.00, 0.98, 0.79, 5) },
+   { i="blue01",     r=colour.new(0.90, 0.93, 0.98, 5) },
+   { i="blue02",     r=colour.new(0.88, 0.94, 1.00, 5) },
+   { i="blue04",     r=colour.new(0.91, 0.96, 1.00, 5) },
+   { i="green01",    r=colour.new(0.90, 0.98, 0.89, 5) },
+   { i="green02",    r=colour.new(0.94, 0.99, 0.93, 5) },
+   { i="orange01",   r=colour.new(0.97, 0.85, 0.75, 5) }, -- r=colour.new(0.94, 0.30, 0.00, 8) }, Too red otherwise
+   { i="orange02",   r=colour.new(1.00, 0.95, 0.83, 5) },
+   { i="orange05",   r=colour.new(0.99, 0.93, 0.73, 5) },
+   { i="redgiant01", r=colour.new(0.89, 0.80, 0.80, 5) }, -- r=colour.new(0.57, 0.00, 0.00, 8) }, Too red otherwise
+   --{ i="redgiant02", r=colour.new(0.82, 0.53, 0.26, 5) }, -- Unused, would need colour tweaks
+   { i="white01",    r=colour.new(0.84, 0.96, 0.98, 5) },
+   { i="white02",    r=colour.new(0.94, 0.96, 0.98, 5) },
+   { i="yellow01",   r=colour.new(1.00, 0.98, 0.91, 5) },
+   { i="yellow02",   r=colour.new(1.00, 0.98, 0.79, 5) },
 }
 
 local starfield_frag = lf.read('bkg/shaders/starfield.frag')

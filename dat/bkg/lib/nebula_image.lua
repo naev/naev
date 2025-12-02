@@ -9,17 +9,17 @@ require "bkg.default"
 local nebula_image = {}
 
 nebula_image.nebula_list = {
-   "butterfly.webp",
-   "cats_eye.webp",
-   "cats_paw.webp",
-   "crab_nebula.webp",
-   "dobayashi.webp",
-   "ic.webp",
-   "messier.webp",
-   "ncg-2392.webp",
-   "ncg-2440-2.webp",
-   "ncg-2440.webp",
-   "ncg-5189.webp",
+   "butterfly",
+   "cats_eye",
+   "cats_paw",
+   "crab_nebula",
+   "dobayashi",
+   "ic",
+   "messier",
+   "ncg-2392",
+   "ncg-2440-2",
+   "ncg-2440",
+   "ncg-5189",
 }
 
 function nebula_image.init( filename )

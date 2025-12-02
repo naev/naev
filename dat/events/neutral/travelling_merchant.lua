@@ -39,7 +39,7 @@ local p, broadcastid, hailed_player, second_hail, timerdelay, broadcast_first --
 local gen_outfits -- Forward declaration
 
 local trader_name = _("Machiavellian Misi") -- Mireia Sibeko
-local trader_image = "misi.png"
+local trader_image = "misi"
 local trader_colour = {1, 0.3, 1}
 local store_name = _("Machiavellian Misi's \"Fine\" Wares")
 local broadcastmsg = {

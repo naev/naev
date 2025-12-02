@@ -1,13 +1,14 @@
 use anyhow::Result;
 use encase::{ShaderSize, ShaderType};
 use glow::*;
-use naev_core::{atomicfloat::AtomicF32, start};
+use naev_core::start;
 use nalgebra::{Matrix3, Matrix4, Point3, Vector2, Vector3, Vector4};
 use physics::vec2::Vec2;
 use sdl3 as sdl;
 use std::ffi::CStr;
 use std::ops::Deref;
 use std::sync::{Arc, Mutex, MutexGuard, OnceLock, RwLock, atomic::AtomicBool, atomic::Ordering};
+use utils::atomicfloat::AtomicF32;
 
 pub mod buffer;
 pub mod camera;
@@ -518,7 +519,7 @@ impl Context {
         window
             .set_minimum_size(MIN_WIDTH, MIN_HEIGHT)
             .unwrap_or_else(|err| {
-                warn_err(anyhow::Error::new(err).context("unable to set minimum window size."))
+                warn_err!(anyhow::Error::new(err).context("unable to set minimum window size."))
             });
         let gl_context = match window.gl_create_context() {
             Ok(ctx) => ctx,
@@ -527,7 +528,17 @@ impl Context {
 
         // Try to load the icon.
         fn set_icon(window: &mut sdl::video::Window) -> Result<()> {
-            let filename = format!("{}{}", ndata::GFX_PATH, "icon.webp");
+            let filename = 'filename: {
+                for imageformat in texture::FORMATS {
+                    for ext in imageformat.extensions_str() {
+                        let path = format!("{}{}.{}", ndata::GFX_PATH, "icon", ext);
+                        if ndata::exists(&path) {
+                            break 'filename path;
+                        }
+                    }
+                }
+                anyhow::bail!("icon not found")
+            };
             let rw = ndata::iostream(&filename)?;
             let img = {
                 let mut img = image::ImageReader::new(std::io::BufReader::new(rw))
@@ -610,7 +621,7 @@ impl Context {
                 false => 0,
             })
             .unwrap_or_else(|err| {
-                warn_err(anyhow::Error::msg(err).context("unable to set OpenGL swap interval"))
+                warn_err!(anyhow::Error::msg(err).context("unable to set OpenGL swap interval"))
             });
 
         match gl_attr.framebuffer_srgb_compatible() {

@@ -60,16 +60,18 @@ struct Logger {
     warn_num: AtomicU32,
     output: Mutex<Output>,
 }
+const WHITELIST: [&str; 5] = ["naev", "log", "renderer", "pluginmgr", "core"];
 impl logcore::Log for Logger {
     fn enabled(&self, metadata: &logcore::Metadata) -> bool {
+        let level = metadata.level();
         let target = metadata.target();
-        if target.starts_with("symphonia") || target.starts_with("naga::") {
+        if level > logcore::Level::Warn && !WHITELIST.iter().any(|s| target.starts_with(s)) {
             return false;
         }
         if cfg!(debug_assertions) {
-            metadata.level() <= logcore::Level::Debug
+            level <= logcore::Level::Debug
         } else {
-            metadata.level() <= logcore::Level::Info
+            level <= logcore::Level::Info
         }
     }
 
@@ -197,10 +199,6 @@ pub fn warn(msg: &str) {
     warn!("{msg}");
 }
 
-pub fn warn_err(err: anyhow::Error) {
-    warn_err!(err);
-}
-
 #[macro_export]
 macro_rules! infox {
     ($($arg:tt)*) => {
@@ -224,7 +222,7 @@ macro_rules! warnx {
 
 #[macro_export]
 macro_rules! warn_err {
-    ($err:ident) => {
+    ($err:expr) => {
         $crate::warn!("{:?}", $err);
     };
 }

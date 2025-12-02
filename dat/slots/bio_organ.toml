@@ -1,0 +1,7 @@
+name = "bio_organ"
+display = "Bioship Organs"
+description = "Through biological synthesis, bioships are able to modify and adapt their organs for many different purposes without the need of any external equipment."
+exclusive = true
+locked = true
+icon = "bio"
+tags = ["bioship"]

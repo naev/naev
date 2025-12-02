@@ -30,7 +30,7 @@ local vn = require "vn"
 local lg = require "love.graphics"
 
 local mission_name = _("Mapping the Universe")
-local npc_image = "mapmaker.webp"
+local npc_image = "mapmaker"
 
 local targets = {
    {

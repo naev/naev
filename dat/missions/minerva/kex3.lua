@@ -41,8 +41,8 @@ local targetplanet, targetsys = spob.getS("Trincea")
 local lastplanet, lastsys = spob.getS("Totoran")
 local gauntletsys = system.get("Crimson Gauntlet")
 
-local malik_portrait = "major_malik.webp"
-local malik_image = "major_malik.webp"
+local malik_portrait = "major_malik"
+local malik_image = "major_malik"
 
 local money_reward = minerva.rewards.kex3
 

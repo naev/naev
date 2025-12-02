@@ -1,3 +1,5 @@
+pub mod atomicfloat;
+
 /// Useful to sort by a reference to a String, which you can't do with sort_by_key due to
 /// lifetimes.
 pub fn sort_by_key_ref<T, F, K>(a: &mut [T], key: F)

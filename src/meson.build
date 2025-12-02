@@ -10,6 +10,7 @@ subdir('renderer')
 subdir('toolkit')
 subdir('physics')
 subdir('pluginmgr')
+subdir('utils')
 #subdir('pluginmgr-cli')
 subdir('pluginmgr-gui')
 source_rust = files(
@@ -25,10 +26,10 @@ source_rust = files(
    'core/src/ntime.rs',
    'core/src/nxml.rs',
    'core/src/start.rs',
-   'core/src/utils.rs',
    'core/src/lua.rs',
-   'core/src/atomicfloat.rs',
    'core/src/constants.rs',
+   'utils/src/lib.rs',
+   'utils/src/atomicfloat.rs',
    'ndata/src/lib.rs',
    'ndata/src/env.rs',
    'ndata/src/lua.rs',
@@ -51,6 +52,7 @@ source_rust = files(
    'pluginmgr/src/lib.rs',
    'pluginmgr/src/plugin.rs',
    'pluginmgr/src/install.rs',
+   'pluginmgr/src/git.rs',
    'pluginmgr-gui/src/lib.rs',
    'array.rs',
    'damagetype.rs',

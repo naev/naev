@@ -4,6 +4,8 @@ local love_shaders = require 'love_shaders'
 
 local track_shader, buoy_gfx, buoy_w, buoy_h
 
+local VIEW = math.sin( require("constants").CAMERA_ANGLE )
+
 local function update( s, _dt )
    local d = s:data()
    if d.ready then
@@ -18,29 +20,40 @@ local function update( s, _dt )
 end
 
 local function render_buoy( v, z, w, h )
-   local x, y = gfx.screencoords( v ):get()
-   buoy_gfx:draw( x-w*0.5, y-h*0.5, 0, z )
+   local x, y = v:get()
    buoy_gfx:draw( x-w*0.5, y-h*0.5, 0, z )
 end
 
 local function render( sp, x, y, z )
    local d = sp:data()
 
+   local p1 = gfx.screencoords( d.seg1 )
+   local p2 = gfx.screencoords( d.seg2 )
+
    if d.col then
       local sw = d.size * 0.2 * z
       local sh = d.size * z
+      local sw2 = sw*0.5
+      local sh2 = sh*0.5
       local old_shader = lg.getShader()
       track_shader:send( "u_dimensions", sw, sh );
       lg.setShader( track_shader )
       lg.setColour( d.col )
-      love_shaders.img:draw( x-sw*0.5, y-sh*0.5, d.rot, sw, sh )
+      lg.push()
+         lg.translate( x, y )
+         lg.scale( 1, VIEW )
+         lg.rotate( d.rot )
+         lg.translate( -sw2, -sh2 )
+         lg.scale( sw, sh )
+      love_shaders.img:draw( 0, 0 )
+      lg.pop()
       lg.setShader( old_shader )
    end
 
    lg.setColour{1,1,1}
    local w, h = buoy_w*z, buoy_h*z
-   render_buoy( d.seg1, z, w, h )
-   render_buoy( d.seg2, z, w, h )
+   render_buoy( p1, z, w, h )
+   render_buoy( p2, z, w, h )
 end
 
 local racetrack = {}
@@ -53,7 +66,7 @@ local function racetrack_new( pos, rot, activate, params )
       local track_bg_shader_frag = lf.read( "scripts/luaspfx/shaders/track.frag" )
       track_shader = lg.newShader( track_bg_shader_frag )
 
-      buoy_gfx = lg.newImage( "gfx/spob/space/jumpbuoy.webp" )
+      buoy_gfx = lg.newImage( "gfx/spob/space/jumpbuoy" )
       buoy_w, buoy_h = buoy_gfx:getDimensions()
    end
 

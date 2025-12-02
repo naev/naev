@@ -113,7 +113,7 @@ end
 local cargo_flowers
 local function _flowers()
    if not cargo_flowers then
-      cargo_flowers = commodity.new( N_("Flowers"), N_("Pretty flowers."), {gfx_space="flowers.webp"} )
+      cargo_flowers = commodity.new( N_("Flowers"), N_("Pretty flowers."), {gfx_space="flowers"} )
    end
    return cargo_flowers
 end

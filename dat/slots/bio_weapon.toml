@@ -1,0 +1,8 @@
+name = "bio_weapon"
+display = "Bioship Weapons"
+description = "This slot can be used to grow special organic weapons on bioships. Organic weapons are generally similar to their synthetic counterparts, but tend to be more efficient due to the strong coupling with the ship in comparison to purely synthetic constructs."
+exclusive = true
+locked = true
+visible = true
+icon = "bio"
+tags = ["bioship"]

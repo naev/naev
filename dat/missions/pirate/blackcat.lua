@@ -26,7 +26,7 @@ local luaspfx = require "luaspfx"
 local love_shaders = require "love_shaders"
 local lmisn = require "lmisn"
 
-local cat_image = "blackcat.webp"
+local cat_image = "blackcat"
 local cat_colour = nil
 
 local owner_image = vni.generic()

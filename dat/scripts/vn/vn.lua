@@ -34,7 +34,7 @@ local vn = {
       _buffer = "",
       _title = nil,
       _globalalpha = 1,
-      --_soundTalk = audio.newSource( "snd/sounds/ui/letter0.wav" ),
+      --_soundTalk = audio.newSource( "snd/sounds/ui/letter0.ogg" ),
       _pitchValues = {0.7, 0.8, 1.0, 1.2, 1.3},
       _buffer_y = 0,
    },
@@ -45,7 +45,7 @@ local vn = {
       money = audio.newSource( 'snd/sounds/jingles/money.ogg' ),
       victory = audio.newSource( 'snd/sounds/jingles/victory.ogg' ),
       ui = {
-         option = audio.newSource( 'snd/sounds/ui/happy.wav' ),
+         option = audio.newSource( 'snd/sounds/ui/happy.ogg' ),
       },
    },
 }
@@ -1288,6 +1288,12 @@ Makes a character say something.
 --]]
 function vn.Character:say( what, noclear, nowait ) return vn.say( self.who, what, noclear, nowait ) end
 vn.Character_mt = { __index = vn.Character, __call = vn.Character.say }
+local SEARCHPATH = {
+   "",
+   "gfx/vn/characters/",
+}
+local SEARCHEXT = naev.supported_image_ext()
+table.insert( SEARCHEXT, 1, "" )
 --[[--
 Creates a new character without adding it to the VN.
 <em>Note</em> The character can be added with vn.newCharacter.
@@ -1308,16 +1314,15 @@ function vn.Character.new( who, params )
       if timg=='function' then
          img = pimage()
       elseif timg=='string' then
-         local searchpath = {
-            "",
-            "gfx/vn/characters/",
-         }
-         for k,s in ipairs(searchpath) do
-            local info = filesystem.getInfo( s..pimage )
-            if info ~= nil then
-               img = graphics.newImage( s..pimage )
-               if img ~= nil then
-                  break
+         for k,s in ipairs(SEARCHPATH) do
+            for i, ext in ipairs(SEARCHEXT) do
+               local name = s..pimage..ext
+               local info = filesystem.getInfo( name )
+               if info ~= nil then
+                  img = graphics.newImage( name )
+                  if img ~= nil then
+                     break
+                  end
                end
             end
          end
@@ -1329,6 +1334,9 @@ function vn.Character.new( who, params )
             img:setFilter( "linear", "nearest" )
          end
       elseif pimage._type=="ImageData" then
+         img = graphics.newImage( pimage )
+      -- vn code assumes lua graphics image, so rewrap if we think it's a rust-side texture
+      elseif type(pimage)=="userdata" then
          img = graphics.newImage( pimage )
       else
          img = pimage
@@ -1928,7 +1936,7 @@ function vn.run()
          elseif s._type=="Jump" then
             table.insert( jumps, s.label )
          elseif s._type=="Menu" then
-            if type(s.items)=="table" then
+            if type(s.items)=="table" and s.handler==nil then
                for i,m in ipairs(s.items) do
                   table.insert( menu_jumps, m[2] )
                end

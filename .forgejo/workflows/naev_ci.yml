@@ -1,4 +1,13 @@
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - "**"
+    tags-ignore:
+      - "nightly"
+      - "v*.*.*"
+      - "v*.*.*-alpha*"
+      - "v*.*.*-beta*"
+      - "v*.*.*-rc*"
 
 name: CI
 
@@ -6,11 +15,52 @@ jobs:
   "Package_Source":
     runs-on: naev-release
     steps:
+      - name: Force Codeberg over SSH
+        run: git config --global url."ssh://git@codeberg.org/naev/".insteadOf https://codeberg.org/naev/
+
       - name: Checkout Naev Repository
         uses: actions/checkout@v4
         with:
+          lfs: false # defer LFS to after cache restore
           path: source
           submodules: true
+          ssh-key: ${{ secrets.CODEBERG_SSH_KEY }}
+          ssh-known-hosts: ${{ secrets.CODEBERG_SSH_KNOWN_HOSTS }}
+          persist-credentials: true
+
+      - name: Cache Meson wrap downloads
+        uses: actions/cache@v3
+        with:
+          path: source/subprojects/packagecache
+          key: wrap-${{ runner.os }}-${{ hashFiles('source/subprojects/*.wrap') }}
+          restore-keys: wrap-${{ runner.os }}-
+
+      - name: Fetch Meson subprojects
+        run: |
+          mkdir -p source/subprojects/packagecache
+          if find source/subprojects/packagecache -mindepth 1 -maxdepth 1 | read || find source/subprojects/packagefiles -mindepth 1 -maxdepth 1 | read; then
+            echo "Using cached Meson subprojects/packagefiles; skip download"
+          else
+            meson subprojects download --sourcedir source
+          fi
+
+      - name: Capture assets submodule revision
+        id: assets_rev
+        run: echo "rev=$(git -C source submodule status assets | awk '{print $1}')" >> "$GITHUB_OUTPUT"
+
+      - name: Restore LFS cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            source/.git/lfs/objects
+            source/.git/modules/assets/lfs/objects
+          key: lfs-${{ runner.os }}-${{ steps.assets_rev.outputs.rev }}
+          restore-keys: lfs-${{ runner.os }}-
+
+      - name: Fetch and checkout LFS
+        run: |
+          git -C source/assets lfs fetch --all
+          git -C source/assets lfs checkout
 
       - name: Package Dist
         run: |
@@ -46,6 +96,15 @@ jobs:
         run: |
           mkdir source
           tar -xf naev-*.tar.xz -C source --strip 1
+
+      - name: Cache Cargo home
+        uses: actions/cache@v3
+        with:
+          path: build/cargo-home
+          key: cargo-${{ runner.os }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          restore-keys: |
+            cargo-${{ runner.os }}-${{ matrix.target }}-
+            cargo-${{ runner.os }}-
 
       - name: Meson Setup
         id: setup
@@ -100,13 +159,7 @@ jobs:
       - name: Compile AppImage
         id: appimageCompile
         run: |
-          if [[ "$IMAGE_NAME" =~ "naev-steamfrankenruntime" ]]; then
-              ./source/utils/buildAppImage.sh -d -s source -b appImageBuild | tee appImageBuildLog.txt
-              ls ${{ github.workspace }}/appImageBuild/dist/AppDir >/dev/null || exit
-          else
-            ./source/utils/buildAppImage.sh -d -i -s source -b appImageBuild | tee appImageBuildLog.txt
-            ls ${{ github.workspace }}/appImageBuild/dist/*.AppImage >/dev/null || exit
-          fi
+          ./source/utils/buildAppImage.sh -d -i -s source -b appImageBuild | tee appImageBuildLog.txt
 
       - name: Upload AppImage Compile Log
         uses: actions/upload-artifact@v3
@@ -127,11 +180,11 @@ jobs:
             target: x86_64-pc-windows-gnu
 
     runs-on: ${{ matrix.image }}
-    env:
-      PKG_CONFIG: "x86_64-w64-mingw32-pkg-config"
-      PKG_CONFIG_PATH: "/usr/x86_64-w64-mingw32/sys-root/mingw/lib/pkgconfig:/__w/naev/naev/source/subprojects/LuaJIT-04dca7911ea255f37be799c18d74c305b921c1a6/etc"
-      BINDGEN_EXTRA_CLANG_ARGS: "--sysroot=/usr/x86_64-w64-mingw32/sys-root/mingw --target=x86_64-w64-mingw32"
     steps:
+      - name: Configure Build Environment
+        run: |
+          /usr/bin/setup-devenv.sh
+
       - name: Get Source
         uses: actions/download-artifact@v3
         with:
@@ -141,6 +194,15 @@ jobs:
         run: |
           mkdir source
           tar -xf naev-*.tar.xz -C source --strip 1
+
+      - name: Cache Cargo home
+        uses: actions/cache@v3
+        with:
+          path: build/cargo-home
+          key: cargo-${{ runner.os }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          restore-keys: |
+            cargo-${{ runner.os }}-${{ matrix.target }}-
+            cargo-${{ runner.os }}-
 
       - name: Meson Setup
         id: setup
@@ -200,24 +262,17 @@ jobs:
         include:
           - image: naev-macos
             arch: x86_64
-            deploymenttarget: "11.0"
             config: macos_cross_osxcross.ini
           - image: naev-macos
             arch: aarch64
-            deploymenttarget: "13.0"
             config: macos_aarch64_cross_osxcross.ini
 
     runs-on: ${{ matrix.image }}
     env:
       BUILDARCH: "${{ matrix.arch }}"
-      HOST: "${{ matrix.arch }}-apple-darwin23"
-      MACOSX_DEPLOYMENT_TARGET: "${{ matrix.deploymenttarget }}"
-      PKG_CONFIG: "${{ matrix.arch }}-apple-darwin23-pkg-config"
-      PKG_CONFIG_PATH: "/usr/lib/osxcross/macports/pkgs/opt/local/lib/pkgconfig"
-      BINDGEN_EXTRA_CLANG_ARGS: "--sysroot=/usr/lib/osxcross/SDK/MacOSX14.sdk --target=${{ matrix.arch }}-apple-darwin"
 
     steps:
-      - name: Configure environment
+      - name: Configure Build Environment
         run: |
           /usr/bin/setup-devenv.sh
 
@@ -230,6 +285,15 @@ jobs:
         run: |
           mkdir source
           tar -xf naev-*.tar.xz -C source --strip 1
+
+      - name: Cache Cargo home
+        uses: actions/cache@v3
+        with:
+          path: build/cargo-home
+          key: cargo-${{ runner.os }}-${{ matrix.arch }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          restore-keys: |
+            cargo-${{ runner.os }}-${{ matrix.arch }}-
+            cargo-${{ runner.os }}-
 
       - name: Meson Setup
         id: setup
@@ -302,6 +366,15 @@ jobs:
           mkdir source
           tar -xf naev-*.tar.xz -C source --strip 1
 
+      - name: Cache Cargo home
+        uses: actions/cache@v3
+        with:
+          path: build/cargo-home
+          key: cargo-${{ runner.os }}-luacheck-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          restore-keys: |
+            cargo-${{ runner.os }}-luacheck-
+            cargo-${{ runner.os }}-
+
       - name: Meson Setup
         id: setup
         run: |
@@ -355,6 +428,7 @@ jobs:
         id: compile
         run: |
           meson compile -C build
+          meson compile -C build manual
 
       - name: Upload Compile Log
         uses: actions/upload-artifact@v3

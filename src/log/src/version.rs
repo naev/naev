@@ -55,7 +55,7 @@ pub extern "C" fn naev_versionCompare(version: *const c_char) -> c_int {
     let ver = match parse_cstr(version) {
         Ok(v) => v,
         Err(e) => {
-            warn_err(e);
+            warn_err!(e);
             return 0;
         }
     };
@@ -70,14 +70,14 @@ pub extern "C" fn naev_versionCompareTarget(
     let vera = match parse_cstr(version) {
         Ok(v) => v,
         Err(e) => {
-            warn_err(e);
+            warn_err!(e);
             return 0;
         }
     };
     let verb = match parse_cstr(target) {
         Ok(v) => v,
         Err(e) => {
-            warn_err(e);
+            warn_err!(e);
             return 0;
         }
     };
@@ -89,7 +89,7 @@ pub extern "C" fn naev_versionMatchReq(version: *const c_char, req: *const c_cha
     let vera = match parse_cstr(version) {
         Ok(v) => v,
         Err(e) => {
-            warn_err(e);
+            warn_err!(e);
             return 0;
         }
     };
@@ -97,7 +97,7 @@ pub extern "C" fn naev_versionMatchReq(version: *const c_char, req: *const c_cha
     let req = match semver::VersionReq::parse(&reqstr.to_string_lossy()) {
         Ok(r) => r,
         Err(e) => {
-            warn_err(e.into());
+            warn_err!(e);
             return 0;
         }
     };

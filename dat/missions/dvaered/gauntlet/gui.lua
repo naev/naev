@@ -262,7 +262,7 @@ local function gauntlet_gui ()
    local w, h = 800, 470
    local wdw = luatk.newWindow( nil, nil, w, h )
    wdw:setCancel( luatk.close )
-   local icon = lg.newImage("gfx/misc/crimson_gauntlet.webp")
+   local icon = lg.newImage("gfx/misc/crimson_gauntlet")
    local iw, ih = icon:getDimensions()
    iw = iw * 80 / ih
    ih = 80

@@ -1,10 +1,24 @@
 local lib = {}
 
-local tier1_nonweapon, tier1_weapon
+local tier1_nonweapon_list, tier1_weapon_list
 
-function lib.tier1_nonweapon ()
-   if not tier1_nonweapon then
-      tier1_nonweapon = {
+local function get_not_owned( list )
+   local rewards = {}
+   for k, r in ipairs(list) do
+      if player.outfitNum(r) <= 0 then
+         table.insert( rewards, r )
+      end
+   end
+   if #rewards > 0 then
+      return rewards
+   else
+      return list
+   end
+end
+
+local function tier1_nonweapon ()
+   if not tier1_nonweapon_list then
+      tier1_nonweapon_list = {
          outfit.get("Emergency Stasis Inducer"),
          outfit.get("Combat Hologram Projector"),
          --outfit.get("Berserk Chip"),
@@ -13,12 +27,16 @@ function lib.tier1_nonweapon ()
          outfit.get("Biometal Armour"),
       }
    end
-   return tier1_nonweapon[ rnd.rnd(1,#tier1_nonweapon) ]
+   return tier1_nonweapon_list
+end
+function lib.tier1_nonweapon ()
+   local r = get_not_owned( tier1_nonweapon() )
+   return r[ rnd.rnd(1,#r) ]
 end
 
-function lib.tier1_weapon ()
-   if not tier1_weapon then
-      tier1_weapon = {
+local function tier1_weapon ()
+   if not tier1_weapon_list then
+      tier1_weapon_list = {
          outfit.get("Flak Gun"),
          outfit.get("Neutralizer"),
          outfit.get("Reaver Cannon"),
@@ -26,14 +44,16 @@ function lib.tier1_weapon ()
          outfit.get("Plasma Eruptor"),
       }
    end
-   return tier1_weapon[ rnd.rnd(1,#tier1_weapon) ]
+   return tier1_weapon_list
+end
+function lib.tier1_weapon ()
+   local r = get_not_owned( tier1_weapon() )
+   return r[ rnd.rnd(1,#r) ]
 end
 
 function lib.tier1()
-   if rnd.rnd() < 0.5 then
-      return lib.tier1_nonweapon()
-   end
-   return lib.tier1_weapon()
+   local r = get_not_owned( tmergei( tier1_nonweapon(), tier1_weapon()  ) )
+   return r[ rnd.rnd(1,#r) ]
 end
 
 return lib

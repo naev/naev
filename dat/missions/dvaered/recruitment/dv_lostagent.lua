@@ -66,7 +66,7 @@ local function _cargo()
 end
 
 local port = portrait.getMil("Dvaered")
-local agentPort = "neutral/female1.webp"
+local agentPort = "neutral/female1"
 
 function create()
    mem.flfsys  = system.get("Theras")
@@ -224,7 +224,7 @@ But it is too risky to wait for them here. This means that we have to take the c
       vn.clear()
       vn.scene()
       local agent1 = vn.newCharacter( _("Intermediate"), { image=portrait.getFullPath(agentPort) } )
-      local agent2 = vn.newCharacter( _("Imperial Agent"), { image=portrait.getFullPath("neutral/male12.webp") } )
+      local agent2 = vn.newCharacter( _("Imperial Agent"), { image=portrait.getFullPath("neutral/male12") } )
       vn.transition( )
       vn.na(_([[A group is waiting at your dock. Before you proceed with the final landing procedure, Boudica looks at them with binoculars, and then confirms they are the Imperial team.
 You dock at the spaceport and step out on the platform. Workers immediately take your cargo in charge, under the protection of armed cyborgs.]]))

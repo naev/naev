@@ -1,13 +1,16 @@
 # Building translations
 i18n = import('i18n')
 
+update_po = find_program( files( meson.project_source_root()/'utils/update-po.sh' ) )
 potfiles = custom_target(
    'potfiles',
    output: 'POTFILES.in', # this is a dummy file that is output, but we actually use the source instead...
-   command: [ files('../utils/update-po.sh'), meson.project_source_root(), meson.project_build_root(), '@OUTPUT@' ],
+   command: [ update_po, meson.project_source_root(), meson.project_build_root(), '@OUTPUT@' ],
    install: false
 )
 
+# Would want to be able to set the potfiles as a dependency, however, not possible as per below
+# https://github.com/mesonbuild/meson/issues/15053
 gettext_targets = i18n.gettext('naev',
    data_dirs: meson.project_source_root() / 'po',
    args: [
@@ -30,6 +33,7 @@ gettext_targets = i18n.gettext('naev',
    install_dir: ndata_path / 'dat/gettext',
 )
 
+# remove these two aliases once the depend issue above is solved
 pot = alias_target( 'pot',
    potfiles,
    gettext_targets[1],

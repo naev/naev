@@ -41,7 +41,7 @@ function create()
    end
    misn.setReward( mem.reward )
    misn.setTitle( _("The Assault") )
-   misn.setNPC(_("Draga"), "sirius/unique/draga.webp", _("The familiar form of Draga is at a table with some officers. They look busy."))
+   misn.setNPC(_("Draga"), "sirius/unique/draga", _("The familiar form of Draga is at a table with some officers. They look busy."))
 end
 
 function accept()

@@ -23,6 +23,7 @@
 #include "claim.h"
 #include "comm.h"
 #include "conf.h"
+#include "constants.h"
 #include "dialogue.h"
 #include "difficulty.h"
 #include "economy.h"
@@ -529,7 +530,6 @@ PlayerShip_t *player_newShip( const Ship *ship, const char *def_name, int trade,
       player_rmShip( old_name );
    }
 
-   free( ship_name );
    pfleet_update();
 
    /* Update ship list if landed. */
@@ -537,6 +537,17 @@ PlayerShip_t *player_newShip( const Ship *ship, const char *def_name, int trade,
       int w = land_getWid( LAND_WINDOW_EQUIPMENT );
       equipment_regenLists( w, 0, 1 );
    }
+
+   /* The return value, ps, could now be stale due to sorting in
+    * player_shipsSort */
+   for ( int i = 0; i < array_size( player_stack ); i++ ) {
+      if ( strcmp( ship_name, player_stack[i].p->name ) == 0 ) {
+         ps = &player_stack[i];
+         break;
+      }
+   }
+
+   free( ship_name );
 
    return ps;
 }
@@ -1144,7 +1155,8 @@ static void player_renderStealthUnderlay( double dt )
       r = detectz * t->stats.ew_detect;
       if ( r > 0. ) {
          glUseProgram( shaders.stealthaura.program );
-         gl_renderShader( x, y, r, r, 0., &shaders.stealthaura, &col, 1 );
+         gl_renderShader( x, y, r, r * CTS.CAMERA_VIEW, 0.,
+                          &shaders.stealthaura, &col, 1 );
       }
    }
 }
@@ -4319,11 +4331,10 @@ static int player_parseEscorts( xmlNodePtr parent )
       if ( !xml_isNode( node, "escort" ) )
          continue;
 
-      xmlr_attr_strd( node, "type", buf );
       xmlr_attr_strd( node, "name", name );
-      if ( name == NULL ) /* Workaround for < 0.10.0 old saves, TODO remove
-                             around 0.12.0 or 0.13.0. */
-         name = xml_getStrd( node );
+      if ( name == NULL )
+         continue;
+      xmlr_attr_strd( node, "type", buf );
 
       if ( strcmp( buf, "bay" ) == 0 ) {
          const Ship *s = player_tryGetShip( name );

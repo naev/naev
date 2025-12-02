@@ -20,7 +20,7 @@ local logidstr = "log_gauntlet"
 local enemies, enemy_faction, gmods, wave_enemies, wave_killed -- Non-persistent state
 local wave_end -- Forward-declared functions
 
-local npc_portrait   = "/gfx/misc/crimson_gauntlet.webp"
+local npc_portrait   = "/gfx/misc/crimson_gauntlet"
 local npc_description= _("A terminal to access the Crimson Gauntlet Virtual Reality environment. This directly allows you to enter the different challenges and tournaments available.")
 
 local gauntletsys = system.get("Crimson Gauntlet")

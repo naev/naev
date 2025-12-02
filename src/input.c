@@ -19,6 +19,7 @@
 #include "camera.h"
 #include "conf.h"
 #include "console.h"
+#include "dialogue.h"
 #include "escort.h"
 #include "gui.h"
 #include "hook.h"
@@ -33,6 +34,7 @@
 #include "pilot.h"
 #include "player.h"
 #include "player_autonav.h"
+#include "save.h"
 #include "toolkit.h"
 
 /* keybinding structure */
@@ -259,6 +261,10 @@ static void input_keyevent( const int event, const SDL_Keycode key,
                             const SDL_Keymod mod, const int repeat );
 static int  input_doubleClickTest( unsigned int *time, const void **last,
                                    const void *clicked );
+static int  input_clickedJump( int jump, int autonav );
+static int  input_clickedSpob( int spob, int autonav, int priority );
+static int  input_clickedAsteroid( int field, int asteroid );
+static int  input_clickedPilot( unsigned int pilot, int autonav );
 
 /**
  * @brief Sets the default input keys.
@@ -486,6 +492,8 @@ int input_mouseIsShown( void )
  */
 SDL_Keycode input_keyConv( const char *name )
 {
+   if ( name == NULL )
+      return SDLK_UNKNOWN;
    SDL_Keycode k = input_keyFromStr( name );
    if ( k == SDLK_UNKNOWN )
       WARN( _( "Keyname '%s' doesn't match any key." ), name );
@@ -1604,11 +1612,13 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom,
    }
    /* Right click only controls autonav. */
    else if ( event->button.button == SDL_BUTTON_RIGHT ) {
-      if ( ( pntid >= 0 ) && input_clickedSpob( pntid, 0, 0 ) )
+      if ( ( pntid >= 0 ) && input_clickedSpob( pntid, 0, 0 ) ) {
+         player_autonavPos( x, y );
          return 1;
-      else if ( ( jpid >= 0 ) && input_clickedJump( jpid, 1 ) )
+      } else if ( ( jpid >= 0 ) && input_clickedJump( jpid, 1 ) ) {
+         player_autonavPos( x, y );
          return 1;
-      else if ( ( pid != PLAYER_ID ) && input_clickedPilot( pid, 1 ) )
+      } else if ( ( pid != PLAYER_ID ) && input_clickedPilot( pid, 1 ) )
          return 1;
 
       /* Go to position, if the position is >= 1500 px away. */
@@ -1628,7 +1638,7 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom,
  *    @param autonav Whether to autonav to the target.
  *    @return Whether the click was used.
  */
-int input_clickedJump( int jump, int autonav )
+static int input_clickedJump( int jump, int autonav )
 {
    const JumpPoint *jp = &cur_system->jumps[jump];
 
@@ -1670,7 +1680,7 @@ int input_clickedJump( int jump, int autonav )
  *    @param priority Whether to consider priority targets.
  *    @return Whether the click was used.
  */
-int input_clickedSpob( int spob, int autonav, int priority )
+static int input_clickedSpob( int spob, int autonav, int priority )
 {
    Spob *pnt = cur_system->spobs[spob];
 
@@ -1723,7 +1733,7 @@ int input_clickedSpob( int spob, int autonav, int priority )
  *    @param asteroid Index of the asteroid in the field.
  *    @return Whether the click was used.
  */
-int input_clickedAsteroid( int field, int asteroid )
+static int input_clickedAsteroid( int field, int asteroid )
 {
    // const AsteroidAnchor *anchor = &cur_system->asteroids[field];
    // const Asteroid       *ast    = &anchor->asteroids[asteroid];
@@ -1738,7 +1748,7 @@ int input_clickedAsteroid( int field, int asteroid )
  *    @param autonav Whether this is an autonav action.
  *    @return Whether the click was used.
  */
-int input_clickedPilot( unsigned int pilot, int autonav )
+static int input_clickedPilot( unsigned int pilot, int autonav )
 {
    if ( pilot == PLAYER_ID )
       return 0;
@@ -1790,13 +1800,11 @@ void input_clicked( const void *clicked )
  */
 int input_isDoubleClick( const void *clicked )
 {
-   unsigned int threshold;
-
    if ( conf.mouse_doubleclick <= 0. )
       return 0;
 
    /* Most recent time that constitutes a valid double-click. */
-   threshold =
+   unsigned int threshold =
       input_mouseClickLast + (int)floor( conf.mouse_doubleclick * 1000. );
 
    if ( ( SDL_GetTicks() <= threshold ) && ( clicked == input_lastClicked ) )
@@ -1835,6 +1843,30 @@ static int input_doubleClickTest( unsigned int *time, const void **last,
 void input_handle( SDL_Event *event )
 {
    int ismouse;
+
+   if ( naev_event_resize( event->type ) ) {
+      naev_resize();
+      return;
+   } else if ( event->type == SDL_NEEDSRESTART ) {
+      int         can_save  = naev_canSave();
+      const char *msg_extra = "";
+      if ( player.p != NULL ) {
+         if ( !can_save )
+            msg_extra = _( "\n#r!! CURRENT PROGRESS WILL BE LOST !!#0" );
+         else
+            msg_extra = _( "\nYour current  progress will be saved." );
+      }
+      if ( dialogue_YesNo( _( "Warning" ), "#r%s#0%s",
+                           _( "Naev must be restarted for some changes to take "
+                              "effect. Do you wish to restart Naev now?" ),
+                           msg_extra ) ) {
+         if ( can_save )
+            save_all();
+         conf_saveConfig( CONF_FILE_PATH );
+         naev_restart();
+         return;
+      }
+   }
 
    /* Special case mouse stuff. */
    if ( ( event->type == SDL_EVENT_MOUSE_MOTION ) ||

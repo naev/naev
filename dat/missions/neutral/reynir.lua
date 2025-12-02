@@ -13,6 +13,9 @@
    if not mtest.cargo(true) or not mtest.reweight_active() then
       return false
    end
+   if player.pilot():cargoFree() &lt;= 0 then
+      return false
+   end
    local count = 0
    for i, p in ipairs(system.cur():spobs()) do
       if p:services()["inhabited"] then
@@ -49,7 +52,7 @@ local vn = require "vn"
 local portrait = require "portrait"
 
 local npc_name = _("Reynir")
-local npc_portrait = "neutral/unique/reynir.webp"
+local npc_portrait = "neutral/unique/reynir"
 local npc_image = portrait.getFullPath( npc_portrait )
 
 function create ()

@@ -69,6 +69,7 @@
  * Misc stuff.
  */
 extern Uint32       SDL_LOOPDONE;
+extern Uint32       SDL_NEEDSRESTART;
 extern const double fps_min;
 extern double       elapsed_time_mod;
 void                fps_setPos( double x, double y );

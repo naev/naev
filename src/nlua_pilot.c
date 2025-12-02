@@ -152,7 +152,6 @@ static int pilotL_hasIllegal( lua_State *L );
 static int pilotL_setActiveBoard( lua_State *L );
 static int pilotL_setNoDeath( lua_State *L );
 static int pilotL_disabled( lua_State *L );
-static int pilotL_disable( lua_State *L );
 static int pilotL_setDisable( lua_State *L );
 static int pilotL_cooldown( lua_State *L );
 static int pilotL_setCooldown( lua_State *L );
@@ -381,7 +380,6 @@ static const luaL_Reg pilotL_methods[] = {
    { "setActiveBoard", pilotL_setActiveBoard },
    { "setNoDeath", pilotL_setNoDeath },
    { "disabled", pilotL_disabled },
-   { "disable", pilotL_disable },
    { "setDisable", pilotL_setDisable },
    { "setCooldown", pilotL_setCooldown },
    { "cooldownCycle", pilotL_cooldownCycle },
@@ -3248,11 +3246,15 @@ static int pilotL_setFaction( lua_State *L )
    /* Parse parameters. */
    Pilot *p   = luaL_validpilot( L, 1 );
    int    fid = luaL_validfaction( L, 2 );
+   /* Ignore escalations, we should probably add an API for that case, but it
+    * can be problematic with, for example, the lost faction changing
+    * mechanics. */
    /* Clear munitions or can cause standing escalade. */
+   /*
    if ( p->faction != fid ) {
       weapon_clearPilot( p );
 
-      /* Have to clear tasks targeting the pilot. */
+      // Have to clear tasks targeting the pilot.
       Pilot *const *pilot_stack = pilot_getAll();
       for ( int i = 0; i < array_size( pilot_stack ); i++ ) {
          Pilot *pi = pilot_stack[i];
@@ -3280,6 +3282,7 @@ static int pilotL_setFaction( lua_State *L )
          }
       }
    }
+   */
    /* Set the new faction. */
    p->faction = fid;
    return 0;
@@ -3552,13 +3555,6 @@ static int pilotL_disabled( lua_State *L )
 static int pilotL_setNoDeath( lua_State *L )
 {
    return pilotL_setFlagWrapper( L, PILOT_NODEATH );
-}
-
-/* TODO remove in 0.13.0 */
-static int pilotL_disable( lua_State *L )
-{
-   NLUA_DEPRECATED( L, "disable" );
-   return pilotL_setDisable( L );
 }
 
 /**

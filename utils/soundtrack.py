@@ -65,7 +65,7 @@ def process_song(snd_dir, song, song_licensing, track_number):
 
 
 def generate_soundtrack(source_dir, output, generate_csv=False, max_workers=None):
-   snd_dirs = [os.path.join(source_dir, subdir, 'snd') for subdir in ('dat', 'artwork')]
+   snd_dirs = [os.path.join(source_dir, subdir, 'snd') for subdir in ('dat', 'assets')]
 
    # Load licensing information
    song_licensing = {}

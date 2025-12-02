@@ -1910,8 +1910,8 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh,
       gl_uniformMat4( ed->projection, &projection );
 
       tex_mat = mat4_identity();
-      mat4_translate_scale_xy( &tex_mat, 0., 0., w / (double)gl_screen.nw,
-                               h / (double)gl_screen.nh );
+      mat4_scale_xy( &tex_mat, w / (double)gl_screen.nw,
+                     h / (double)gl_screen.nh );
       gl_uniformMat4( ed->tex_mat, &tex_mat );
 
       glUniform3f( ed->dimensions, SCREEN_W, SCREEN_H, 1. );
@@ -2109,8 +2109,8 @@ void pilot_render( Pilot *p )
          gl_uniformMat4( ed->projection, &projection );
 
          tex_mat = mat4_identity();
-         mat4_translate_scale_xy( &tex_mat, 0., 0., w / (double)gl_screen.nw,
-                                  h / (double)gl_screen.nh );
+         mat4_scale_xy( &tex_mat, w / (double)gl_screen.nw,
+                        h / (double)gl_screen.nh );
          gl_uniformMat4( ed->tex_mat, &tex_mat );
 
          glUniform3f( ed->dimensions, SCREEN_W, SCREEN_H, cam_getZoom() );
@@ -2993,8 +2993,11 @@ void pilot_delete( Pilot *p )
 
    /* Run hook or it can break some missions. */
    if ( !pilot_isFlag( p, PILOT_DEAD ) && !pilot_isFlag( p, PILOT_HYP_END ) &&
-        !pilot_isFlag( p, PILOT_LANDING ) )
-      pilot_runHook( p, PILOT_HOOK_DEATH );
+        !pilot_isFlag( p, PILOT_LANDING ) ) {
+      HookParam hparam;
+      hparam.type = HOOK_PARAM_NIL;
+      pilot_runHookParam( p, PILOT_HOOK_DEATH, &hparam, 1 );
+   }
    /* Can't be cancelled here. */
 
    /* Stop ship stuff. */
@@ -4483,7 +4486,6 @@ void pilot_dpseps( const Pilot *p, double *pdps, double *peps )
             mod_energy = p->stats.fwd_energy;
             mod_damage = p->stats.fwd_damage;
             mod_rate   = p->stats.fwd_firerate;
-            mod_erate  = mod_rate;
          } else {
             mod_energy = p->stats.tur_energy;
             mod_damage = p->stats.tur_damage;
@@ -4499,6 +4501,12 @@ void pilot_dpseps( const Pilot *p, double *pdps, double *peps )
          continue;
       }
 
+      // Global modifiers
+      mod_damage *= p->stats.weapon_damage;
+      mod_rate *= p->stats.weapon_firerate;
+      mod_energy *= p->stats.weapon_energy;
+
+      // Compute eps/dps
       dmg = outfit_damage( o );
       dps += mod_rate * mod_damage * dmg->damage;
       eps += mod_erate * mod_energy * MAX( outfit_energy( o ), 0. );

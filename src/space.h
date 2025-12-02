@@ -203,18 +203,20 @@ typedef struct Spob_ {
                  (temporary use by map!) */
 #define SYSTEM_HAS_LANDABLE                                                    \
    ( 1 << 7 ) /**< System has landable spobs (temporary use by map!) */
-#define SYSTEM_HAS_KNOWN_SPOB ( 1 << 8 ) /**< System has a known spob. */
+#define SYSTEM_HAS_INHABITED                                                   \
+   ( 1 << 8 ) /**< System has only uninhabited spobs. */
+#define SYSTEM_HAS_KNOWN_SPOB ( 1 << 9 ) /**< System has a known spob. */
 #define SYSTEM_HAS_KNOWN_FACTION_SPOB                                          \
-   ( 1 << 9 ) /**< System has a known factional spob. */
+   ( 1 << 10 ) /**< System has a known factional spob. */
 #define SYSTEM_NOLANES                                                         \
-   ( 1 << 10 ) /**< System should not use safe lanes at all. */
-#define SYSTEM_PMARKED ( 1 << 11 ) /**< System is marked by a player. */
+   ( 1 << 16 ) /**< System should not use safe lanes at all. */
+#define SYSTEM_PMARKED ( 1 << 17 ) /**< System is marked by a player. */
 #define SYSTEM_INTEREST                                                        \
-   ( 1 << 12 ) /**< System is temporary marked as "of interest". Used when     \
+   ( 1 << 18 ) /**< System is temporary marked as "of interest". Used when     \
                   rendering map. */
-#define SYSTEM_NEBULATRAIL ( 1 << 13 ) /**< System uses nebula trails. */
+#define SYSTEM_NEBULATRAIL ( 1 << 19 ) /**< System uses nebula trails. */
 #define SYSTEM_HIDENEBULADAMAGE                                                \
-   ( 1 << 14 ) /**< HIdes amount of nebula damage. */
+   ( 1 << 20 ) /**< HIdes amount of nebula damage. */
 #define sys_isFlag( s, f )                                                     \
    ( ( s )->flags & ( f ) ) /**< Checks system flag.                           \
                              */

@@ -3,38 +3,74 @@
 use sdl::iostream::IOStream;
 use sdl3 as sdl;
 use std::ffi::{CStr, CString, c_int};
-use std::io::{Error, Read, Result, Seek, SeekFrom, Write};
+use std::io::{Error, ErrorKind, Read, Result, Seek, SeekFrom, Write};
 use std::os::raw::c_void;
 use std::path::Path;
 use std::sync::atomic::{AtomicPtr, Ordering};
 
+fn error_to_errorkind(error: naevc::PHYSFS_ErrorCode) -> ErrorKind {
+    match error {
+        naevc::PHYSFS_ErrorCode_PHYSFS_ERR_OK => ErrorKind::Other,
+        naevc::PHYSFS_ErrorCode_PHYSFS_ERR_OTHER_ERROR => ErrorKind::Other,
+        naevc::PHYSFS_ErrorCode_PHYSFS_ERR_OUT_OF_MEMORY => ErrorKind::OutOfMemory,
+        naevc::PHYSFS_ErrorCode_PHYSFS_ERR_NOT_INITIALIZED => ErrorKind::Other,
+        naevc::PHYSFS_ErrorCode_PHYSFS_ERR_IS_INITIALIZED => ErrorKind::Other,
+        naevc::PHYSFS_ErrorCode_PHYSFS_ERR_ARGV0_IS_NULL => ErrorKind::Other,
+        naevc::PHYSFS_ErrorCode_PHYSFS_ERR_UNSUPPORTED => ErrorKind::Unsupported,
+        naevc::PHYSFS_ErrorCode_PHYSFS_ERR_PAST_EOF => ErrorKind::UnexpectedEof,
+        naevc::PHYSFS_ErrorCode_PHYSFS_ERR_FILES_STILL_OPEN => ErrorKind::Other,
+        naevc::PHYSFS_ErrorCode_PHYSFS_ERR_INVALID_ARGUMENT => ErrorKind::InvalidInput,
+        naevc::PHYSFS_ErrorCode_PHYSFS_ERR_NOT_MOUNTED => ErrorKind::Other,
+        naevc::PHYSFS_ErrorCode_PHYSFS_ERR_NOT_FOUND => ErrorKind::NotFound,
+        naevc::PHYSFS_ErrorCode_PHYSFS_ERR_SYMLINK_FORBIDDEN => ErrorKind::PermissionDenied,
+        naevc::PHYSFS_ErrorCode_PHYSFS_ERR_NO_WRITE_DIR => ErrorKind::Other,
+        naevc::PHYSFS_ErrorCode_PHYSFS_ERR_OPEN_FOR_READING => ErrorKind::Other,
+        naevc::PHYSFS_ErrorCode_PHYSFS_ERR_OPEN_FOR_WRITING => ErrorKind::Other,
+        naevc::PHYSFS_ErrorCode_PHYSFS_ERR_NOT_A_FILE => ErrorKind::Unsupported,
+        naevc::PHYSFS_ErrorCode_PHYSFS_ERR_READ_ONLY => ErrorKind::Unsupported,
+        naevc::PHYSFS_ErrorCode_PHYSFS_ERR_CORRUPT => ErrorKind::InvalidData,
+        naevc::PHYSFS_ErrorCode_PHYSFS_ERR_SYMLINK_LOOP => ErrorKind::Other,
+        naevc::PHYSFS_ErrorCode_PHYSFS_ERR_IO => ErrorKind::Other,
+        naevc::PHYSFS_ErrorCode_PHYSFS_ERR_PERMISSION => ErrorKind::PermissionDenied,
+        naevc::PHYSFS_ErrorCode_PHYSFS_ERR_NO_SPACE => ErrorKind::StorageFull,
+        naevc::PHYSFS_ErrorCode_PHYSFS_ERR_BAD_FILENAME => ErrorKind::InvalidFilename,
+        naevc::PHYSFS_ErrorCode_PHYSFS_ERR_BUSY => ErrorKind::ResourceBusy,
+        naevc::PHYSFS_ErrorCode_PHYSFS_ERR_DIR_NOT_EMPTY => ErrorKind::DirectoryNotEmpty,
+        naevc::PHYSFS_ErrorCode_PHYSFS_ERR_OS_ERROR => ErrorKind::Other,
+        naevc::PHYSFS_ErrorCode_PHYSFS_ERR_DUPLICATE => ErrorKind::Other,
+        naevc::PHYSFS_ErrorCode_PHYSFS_ERR_BAD_PASSWORD => ErrorKind::Other,
+        naevc::PHYSFS_ErrorCode_PHYSFS_ERR_APP_CALLBACK => ErrorKind::Other,
+        _ => ErrorKind::Other,
+    }
+}
+
 // Some stuff is based on the physfs-rs package.
 // Modified to not use a global context and use functions from naevc
 pub fn error_as_io_error(func: &str) -> Error {
-    let cerrstr = unsafe {
-        CStr::from_ptr(naevc::PHYSFS_getErrorByCode(
-            naevc::PHYSFS_getLastErrorCode(),
-        ))
-    };
-    Error::other(format!(
-        "PhysicsFS Error with '{}': `{}`",
-        func,
-        cerrstr.to_str().unwrap_or("Unknown")
-    ))
+    let code = unsafe { naevc::PHYSFS_getLastErrorCode() };
+    let cerrstr = unsafe { CStr::from_ptr(naevc::PHYSFS_getErrorByCode(code)) };
+    Error::new(
+        error_to_errorkind(code),
+        format!(
+            "PhysicsFS Error with '{}': `{}`",
+            func,
+            cerrstr.to_str().unwrap_or("Unknown")
+        ),
+    )
 }
 
 pub fn error_as_io_error_with_file<P: AsRef<Path>>(func: &str, file: P) -> Error {
-    let cerrstr = unsafe {
-        CStr::from_ptr(naevc::PHYSFS_getErrorByCode(
-            naevc::PHYSFS_getLastErrorCode(),
-        ))
-    };
-    Error::other(format!(
-        "PhysicsFS Error with '{}' on file '{}': `{}`",
-        func,
-        file.as_ref().display(),
-        cerrstr.to_str().unwrap_or("Unknown")
-    ))
+    let code = unsafe { naevc::PHYSFS_getLastErrorCode() };
+    let cerrstr = unsafe { CStr::from_ptr(naevc::PHYSFS_getErrorByCode(code)) };
+    Error::new(
+        error_to_errorkind(code),
+        format!(
+            "PhysicsFS Error with '{}' on file '{}': `{}`",
+            func,
+            file.as_ref().display(),
+            cerrstr.to_str().unwrap_or("Unknown")
+        ),
+    )
 }
 
 pub fn set_write_dir<P: AsRef<Path>>(path: P) -> Result<()> {

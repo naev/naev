@@ -42,7 +42,7 @@ local badguys, broship -- Non-persistent state
 local spawn_baddies -- Forward-declared functions
 
 local npc_name = _("Ordinary Woman")
-local npc_portrait = "neutral/unique/fakesister.webp"
+local npc_portrait = "neutral/unique/fakesister"
 local npc_image = portrait.getFullPath( npc_portrait )
 
 function create ()

@@ -71,6 +71,7 @@ pub fn naev() -> Result<()> {
     // Hack for plugin manager mode
     if std::env::args().skip(1).any(|a| a == "--pluginmanager") {
         setup_logging()?;
+        log::set_max_level(log::LevelFilter::Info);
         let _ = setup_conf_and_ndata()?;
         unsafe {
             naevc::gettext_setLanguage(naevc::conf.language); /* now that we can find translations */
@@ -494,7 +495,7 @@ fn load_all(sdlctx: &sdl::Sdl, env: &nlua::LuaEnv) -> Result<()> {
             naevc::effect_load()
         }), /* no dep */
         LoadStage::new_c(gettext("Loading Factions…"), || unsafe {
-            //faction::load().unwrap_or_else( |err| log::warn_err(err) );
+            //faction::load().unwrap_or_else( |err| warn_err!(err) );
             naevc::factions_load()
         }), /* dep for space, missions, AI, commodities */
         LoadStage::new_c(gettext("Loading Commodities…"), || unsafe {
@@ -527,7 +528,7 @@ fn load_all(sdlctx: &sdl::Sdl, env: &nlua::LuaEnv) -> Result<()> {
         }),
         // Run Lua and shit
         LoadStage::new_c(gettext("Finalizing data…"), || unsafe {
-            //faction::load_lua().unwrap_or_else( |err| log::warn_err(err) );
+            //faction::load_lua().unwrap_or_else( |err| warn_err!(err) );
             naevc::factions_loadPost()
                 + naevc::difficulty_load()
                 + naevc::background_init()
@@ -546,11 +547,11 @@ fn load_all(sdlctx: &sdl::Sdl, env: &nlua::LuaEnv) -> Result<()> {
     let mut event_pump = sdlctx.event_pump().unwrap();
     for s in stages {
         loadscreen_update(env, (stage + 1.0) / (nstages + 2.0), s.msg).unwrap_or_else(|err| {
-            log::warn_err(err.context("loadscreen failed to update!"));
+            warn_err!(err.context("loadscreen failed to update!"));
         });
         stage += 1.0;
         (s.f)().unwrap_or_else(|err| {
-            log::warn_err(err.context("loadscreen update function failed to run!"));
+            warn_err!(err.context("loadscreen update function failed to run!"));
         });
 
         // Stops the window from going unresponsive
@@ -558,7 +559,7 @@ fn load_all(sdlctx: &sdl::Sdl, env: &nlua::LuaEnv) -> Result<()> {
     }
 
     loadscreen_update(env, 1.0, gettext("Loading Completed!")).unwrap_or_else(|err| {
-        log::warn_err(err.context("loadscreen failed to update!"));
+        warn_err!(err.context("loadscreen failed to update!"));
     });
     Ok(())
 }

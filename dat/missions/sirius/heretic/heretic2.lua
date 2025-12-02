@@ -43,7 +43,7 @@ function create()
    --set the mission stuff
    misn.setTitle(_("The Patrol"))
    misn.setReward(mem.reward)
-   misn.setNPC(_("An Imposing Man"), "sirius/unique/draga.webp", _("This man leans against the bar while looking right at you."))
+   misn.setNPC(_("An Imposing Man"), "sirius/unique/draga", _("This man leans against the bar while looking right at you."))
 end
 
 function accept()

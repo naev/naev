@@ -14,7 +14,7 @@ skills.set.bite = {
       name = _("Cannibal I"),
       tier = 1,
       desc = _("The ship is able to cannibalize boarded vessels to restore armour. For every 2 points of armour cannibalized, the ship will gain a single point of armour."),
-      icon = "food-chain.webp",
+      icon = "food-chain",
    },
    ["bite2"] = {
       name = _("The Bite"),
@@ -34,7 +34,7 @@ skills.set.bite = {
             cooldown=15,
          })
       end,
-      icon = "fangs.webp",
+      icon = "fangs",
    },
    ["bite3"] = {
       name = _("Cannibal II"),
@@ -45,7 +45,7 @@ skills.set.bite = {
       }),
       outfit = "The Bite - Cannibal",
       slot = "the_bite",
-      icon = "food-chain.webp",
+      icon = "food-chain",
    },
    ["bite4"] = {
       name = _("Blood Lust"),
@@ -56,7 +56,7 @@ skills.set.bite = {
       }),
       outfit = "The Bite - Blood Lust",
       slot = "the_bite",
-      icon = "delighted.webp",
+      icon = "delighted",
    },
    ["bite5"] = {
       name = _("Strong Jaws"),
@@ -67,7 +67,7 @@ skills.set.bite = {
       }),
       outfit = "The Bite - Improved",
       slot = "the_bite",
-      icon = "gluttonous-smile.webp",
+      icon = "gluttonous-smile",
    },
 }
 
@@ -91,7 +91,7 @@ skills.set.move = {
          end
          return true
       end,
-      icon = "lightning-electron.webp",
+      icon = "lightning-electron",
    },
    ["move2"] = {
       name = _("Adrenal Gland II"),
@@ -101,7 +101,7 @@ skills.set.move = {
       slot = "adrenal_gland",
       outfit = "Adrenal Gland II",
       desc = _("The adrenal gland is improved to both last longer and have a stronger effect, although at the cost of more energy usage."),
-      icon = "lightning-electron.webp",
+      icon = "lightning-electron",
    },
    ["move3"] = {
       name = _("Wanderer"),
@@ -109,7 +109,7 @@ skills.set.move = {
       requires = { "move2" },
       desc = _("Gives a 30% accel bonus."),
       outfit = "Wanderer",
-      icon = "manta-ray.webp",
+      icon = "manta-ray",
    },
    ["move4"] = {
       name = _("Adrenal Gland III"),
@@ -119,7 +119,7 @@ skills.set.move = {
       slot = "adrenal_gland",
       outfit = "Adrenal Gland III",
       desc = _("The intense adrenaline is also able to create an accelerated sense of time."),
-      icon = "lightning-electron.webp",
+      icon = "lightning-electron",
    },
 }
 
@@ -132,7 +132,7 @@ skills.set.stealth = {
       tier = 1,
       desc = _("Gives a +20% detection bonus."),
       outfit = "Compound Eyes",
-      icon = "hunter-eyes.webp",
+      icon = "hunter-eyes",
    },
    ["stealth2"] = {
       name =_("Hunter's Instinct"),
@@ -140,7 +140,7 @@ skills.set.stealth = {
       requires = { "stealth1" },
       desc = _("Gives a +40% speed bonus when stealthed."),
       outfit = "Hunter's Instinct",
-      icon = "hidden.webp",
+      icon = "hidden",
    },
    ["stealth3"] = {
       name =_("Ambush Hunter I"),
@@ -148,7 +148,7 @@ skills.set.stealth = {
       requires = { "stealth2" },
       desc = _("+50% damage with weapons for 10 seconds after destealthing."),
       outfit = "Ambush Hunter I",
-      icon = "hidden.webp",
+      icon = "hidden",
    },
    ["stealth4"] = {
       name =_("Silence"),
@@ -156,7 +156,7 @@ skills.set.stealth = {
       requires = { "stealth3" },
       desc = _("Gives a 15% bonus to hide. In stealth mode, gives an additional 15% stealth bonus."),
       outfit = "Silence",
-      icon = "chameleon-glyph.webp",
+      icon = "chameleon-glyph",
    },
    ["stealth5"] = {
       name =_("Ambush Hunter II"),
@@ -164,7 +164,7 @@ skills.set.stealth = {
       requires = { "stealth4" },
       desc = _("+30% weapons range for 10 seconds after destealthing."),
       outfit = "Ambush Hunter II",
-      icon = "hidden.webp",
+      icon = "hidden",
    },
 }
 
@@ -177,7 +177,7 @@ skills.set.health = {
       tier = 1,
       desc = _("Provides an additional 50 armour and 20% armour bonus."),
       outfit = "Bulky Abdomen",
-      icon = "boar.webp",
+      icon = "boar",
    },
    ["health2"] = {
       name = _("Natural Healing I"),
@@ -185,7 +185,7 @@ skills.set.health = {
       requires = { "health1" },
       desc = _("Gives 3 armour regeneration."),
       outfit = "Natural Healing I",
-      icon = "rod-of-asclepius.webp",
+      icon = "rod-of-asclepius",
    },
    ["health3"] = {
       name = _("Hard Shell"),
@@ -193,7 +193,7 @@ skills.set.health = {
       requires = { "health2" },
       desc = _("Gives a 10% absorption bonus."),
       outfit = "Hard Shell",
-      icon = "stegosaurus-scales.webp",
+      icon = "stegosaurus-scales",
    },
    ["health4"] = {
       name = _("Natural Healing II"),
@@ -201,7 +201,7 @@ skills.set.health = {
       requires = { "health3" },
       desc = _("Gives 7 additional armour regeneration."),
       outfit = "Natural Healing II",
-      icon = "rod-of-asclepius.webp",
+      icon = "rod-of-asclepius",
    },
    ["health5"] = {
       name = _("Reflective Shell"),
@@ -218,7 +218,7 @@ skills.set.health = {
          })
       end,
       outfit = "Reflective Shell",
-      icon = "spiked-shell.webp",
+      icon = "spiked-shell",
    },
 }
 
@@ -232,7 +232,7 @@ skills.set.attack = {
       slot = "feral_rage",
       outfit = "Feral Rage I",
       desc = _("Upon receiving armour damage, the bioship enters a short 5 second trance during which forward and turret weapon damage is increased by 20%."),
-      icon = "oni.webp",
+      icon = "oni",
    },
    ["attack2"] = {
       name = _("Adrenaline Hormones"),
@@ -240,7 +240,7 @@ skills.set.attack = {
       requires = { "attack1" },
       desc = _("Gives a 8% bonus to both turret and forward weapon fire rate."),
       outfit = "Adrenaline Hormones",
-      icon = "internal-organ.webp",
+      icon = "internal-organ",
    },
    ["attack3"] = {
       name = _("Feral Rage II"),
@@ -249,7 +249,7 @@ skills.set.attack = {
       slot = "feral_rage",
       outfit = "Feral Rage II",
       desc = _("The damage bonus is increased to 25% and the ship gains 25% speed and accel bonuses, and a 15% turning bonus."),
-      icon = "oni.webp",
+      icon = "oni",
    },
    ["attack4"] = {
       name = _("Antenna Sensitivity"),
@@ -257,7 +257,7 @@ skills.set.attack = {
       requires = { "attack3" },
       desc = _("Gives a 30% tracking bonus."),
       outfit = "Tracking Antennae",
-      icon = "long-antennae-bug.webp",
+      icon = "long-antennae-bug",
    },
    ["attack5"] = {
       name = _("Feral Rage III"),
@@ -266,7 +266,7 @@ skills.set.attack = {
       slot = "feral_rage",
       outfit = "Feral Rage III",
       desc = _("The state of feral rage duration is increased to 7 seconds with a 30% damage bonus, and can be triggered manually with a 30 second cooldown between uses."),
-      icon = "oni.webp",
+      icon = "oni",
    },
 }
 
@@ -279,7 +279,7 @@ skills.set.plasma = {
       tier = 1,
       outfit = "Corrosion I",
       desc = _("Plasma burn duration increased by 50%. Bonus is halved for non-organ weapons."),
-      icon = "acid-blob.webp",
+      icon = "acid-blob",
    },
    ["plasma2"] = {
       name = _("Paralyzing Plasma"),
@@ -287,7 +287,7 @@ skills.set.plasma = {
       outfit = "Paralyzing Plasma",
       requires = { "plasma1" },
       desc = _("Plasma burn slows enemy speed, accel, and turn by 25%."),
-      icon = "chemical-bolt.webp",
+      icon = "chemical-bolt",
    },
    ["plasma3"] = {
       name = _("Crippling Plasma"),
@@ -295,7 +295,7 @@ skills.set.plasma = {
       outfit = "Crippling Plasma",
       requires = { "plasma2" },
       desc = _("Plasma burn slows enemy fire rate by 20%."),
-      icon = "chemical-bolt.webp",
+      icon = "chemical-bolt",
    },
    ["plasma4"] = {
       name = _("Corrosion II"),
@@ -303,7 +303,7 @@ skills.set.plasma = {
       outfit = "Corrosion II",
       requires = { "plasma3" },
       desc = _("Plasma burn duration further increased by 50%. Bonus is halved for non-organ weapons."),
-      icon = "acid-blob.webp",
+      icon = "acid-blob",
    },
    ["plasma5"] = {
       name = _("Plasma Burst"),
@@ -311,7 +311,7 @@ skills.set.plasma = {
       requires = { "plasma4" },
       desc = _("Creates an explosion of plasma affecting all ships around the pilot. Deals 100 damage with 50% penetration to all hostiles ships within 200 range. Deals an additional 200 damage over 10 seconds while lowering speed, accel, and turn by 25% and fire rate by 20%."),
       outfit = "Plasma Burst",
-      icon = "goo-skull.webp",
+      icon = "goo-skull",
       slot = "plasma_burst",
    },
 }
@@ -325,7 +325,7 @@ skills.set.misc = {
       tier = 1,
       desc = _("Increases cargo space by 100% and lowers cargo inertia by 50%."),
       outfit = "Cargo Sacs",
-      icon = "tumor.webp",
+      icon = "tumor",
    },
    ["misc2"] = {
       name = _("Fuel Bladder"),
@@ -333,7 +333,7 @@ skills.set.misc = {
       requires = { "misc1" },
       desc = _("Increases fuel capacity by 100%."),
       outfit = "Fuel Bladder",
-      icon = "jellyfish.webp",
+      icon = "jellyfish",
    },
    ["misc3"] = {
       name = _("Adaptive Jump"),
@@ -341,7 +341,7 @@ skills.set.misc = {
       requires = { "misc2" },
       desc = _("Decreases jumping time by 50%, increases jump detection by 50%, and allowed jump distance by 100%."),
       outfit = "Adaptive Jump",
-      icon = "galaxy.webp",
+      icon = "galaxy",
    },
    ["misc4"] = {
       name = _("Enhanced Smell"),
@@ -349,7 +349,7 @@ skills.set.misc = {
       requires = { "misc3" },
       desc = _("Increases boarding loot bonus by 100%."),
       outfit = "Enhanced Smell",
-      icon = "snout.webp",
+      icon = "snout",
    },
    ["misc5"] = {
       name = _("Tunnelling Organ"),
@@ -357,7 +357,7 @@ skills.set.misc = {
       requires = { "misc4" },
       desc = _("Allows for instant jumping and the ship performs an active cooldown cycle on each jump."),
       outfit = "Tunnelling Organ",
-      icon = "vortex.webp",
+      icon = "vortex",
    },
 }
 

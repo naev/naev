@@ -32,12 +32,12 @@ local artefactplanetA = spob.get("Varaati")
 local artefactplanetB = spob.get("Sinclair")
 local artefactplanetC = spob.get("Hurada")
 local flintplanet, flintsys = spob.getS("Tau Station")
-local flintportait = "neutral/unique/flintley.webp"
+local flintportait = "neutral/unique/flintley"
 local flintimage = portrait.getFullPath(flintportait)
 local reward = baron.rewards.prince
 local reward2 = outfit.get("Ugly Statue")
 
-local prtunfamiliar = "neutral/unique/unfamiliarman.webp"
+local prtunfamiliar = "neutral/unique/unfamiliarman"
 local imgunfamiliar = portrait.getFullPath( prtunfamiliar )
 
 local npc1img, npc1prt = vni.pirateMale()

@@ -70,11 +70,17 @@ local function load_shader ()
    return cvs
 end
 
+local function extension( path )
+   return path:match("^.+(%..+)$")
+end
+
+local IMAGE_EXT = naev.supported_image_ext()
 local function load_gfx ()
    local basepath = "gfx/loading/"
    local files = {}
    for k,f in ipairs( lf.getDirectoryItems( basepath ) ) do
-      if string.match( f, ".webp$" ) then
+      local ext = extension( f )
+      if inlist( IMAGE_EXT, ext ) then
          table.insert( files, f )
       end
    end
@@ -82,7 +88,9 @@ local function load_gfx ()
    local name = files[ rnd.rnd(1,#files) ]
    local path = basepath..name
 
-   local caption = lf.read( path..".txt" )
+   local txtpath = path:gsub( extension(path), ".txt" )
+   local caption = lf.read( txtpath )
+   if not caption then caption = N_("Unknown") end
    local image = lg.newImage( path )
 
    -- Remove trailing whitespace. TODO why do we have to do this? :/

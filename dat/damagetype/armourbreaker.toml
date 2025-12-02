@@ -1,0 +1,5 @@
+name = "armourbreaker"
+display = "#nArmourbreaker#0"
+shield = 0.3
+armour = 1.5
+knockback = 0.5

@@ -64,7 +64,7 @@ function create ()
       misn.finish(false)
    end
 
-   misn.setNPC( _("Dimitri?"), "unknown.webp", _("Dimitri should be around here, but you can't see him. You should probably look for him.") )
+   misn.setNPC( _("Dimitri?"), "unknown", _("Dimitri should be around here, but you can't see him. You should probably look for him.") )
 end
 
 

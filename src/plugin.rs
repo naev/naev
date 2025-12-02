@@ -11,7 +11,10 @@ use std::sync::atomic::{AtomicBool, Ordering};
 static PLUGINS: LazyLock<Vec<Plugin>> = LazyLock::new(|| {
     let mut plugins = match pluginmgr::local_plugins_dir() {
         Ok(path) => match pluginmgr::discover_local_plugins(path) {
-            Ok(local) => local,
+            Ok(mut local) => {
+                local.retain(|p| !p.disabled);
+                local
+            }
             Err(e) => {
                 warn_err!(e);
                 Vec::new()
@@ -35,9 +38,11 @@ fn changed() -> Result<bool> {
     }
 
     let loaded = plugins_to_hashmap(&PLUGINS);
-    let installed = plugins_to_hashmap(&pluginmgr::discover_local_plugins(
-        pluginmgr::local_plugins_dir()?,
-    )?);
+    let installed = plugins_to_hashmap(&{
+        let mut plgs = pluginmgr::discover_local_plugins(pluginmgr::local_plugins_dir()?)?;
+        plgs.retain(|p| !p.disabled);
+        plgs
+    });
 
     Ok(loaded != installed)
 }
@@ -125,7 +130,12 @@ pub fn mount() -> Result<()> {
         }
 
         for mountpoint in mountpoints.iter() {
-            ndata::physfs::mount(mountpoint, false)?;
+            match ndata::physfs::mount(mountpoint, false) {
+                Ok(_) => (),
+                Err(e) => {
+                    warn_err!(e);
+                }
+            }
         }
     }
     Ok(())
@@ -137,16 +147,12 @@ pub fn manager() -> Result<()> {
         anyhow::bail!("plugin manager already open!");
     }
 
+    let title = CString::new(gettext("Plugin Manager"))?;
+    let msg = CString::new(gettext("Please close the Plugin Manager to continue."))?;
     let wdw = unsafe {
-        let (w, h) = (300, 200);
-        let wdw = naevc::window_create(
-            c"wdwPluginManager".as_ptr(),
-            c"Plugin Manager".as_ptr(),
-            -1,
-            -1,
-            w,
-            h,
-        );
+        let w = 300;
+        let h = 60 + naevc::gl_printHeightRaw(std::ptr::null(), w - 40, msg.as_ptr());
+        let wdw = naevc::window_create(c"wdwPluginManager".as_ptr(), title.as_ptr(), -1, -1, w, h);
         naevc::window_addText(
             wdw,
             20,
@@ -157,7 +163,7 @@ pub fn manager() -> Result<()> {
             c"txtMsg".as_ptr(),
             std::ptr::null_mut(),
             std::ptr::null(),
-            c"Please close the Plugin Manager to continue.".as_ptr(),
+            msg.as_ptr(),
         );
         wdw
     };
@@ -185,6 +191,18 @@ pub fn manager() -> Result<()> {
             && chg
         {
             unsafe {
+                let mut event = naevc::SDL_Event {
+                    user: naevc::SDL_UserEvent {
+                        type_: naevc::SDL_NEEDSRESTART,
+                        reserved: 0,
+                        timestamp: 0,
+                        windowID: 0,
+                        code: 0,
+                        data1: std::ptr::null_mut(),
+                        data2: std::ptr::null_mut(),
+                    },
+                };
+                naevc::SDL_PushEvent(&mut event);
                 naevc::opt_needRestart();
             }
         }

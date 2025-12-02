@@ -21,7 +21,7 @@ local fcts = require "factions"
 local apply_all_ships = require 'scripts.map_all_ships'
 
 -- Runs on saves older than 0.13.0
-local function updater0130( _did0120, _did0110, _did0100, _did090 )
+local function updater0130( did0120, did0110, did0100, did090 )
    -- TODO stuff we want to add before the release
    -- 1. Ships autodisabling at low health
    -- 2. More talk on slots
@@ -112,44 +112,8 @@ local function updater0130( _did0120, _did0110, _did0100, _did090 )
 
       apply_all_ships( update_ship )
    end
-
-   if update_cores or update_gauntlet then
-      vn.clear()
-      vn.scene()
-      local sai = vn.newCharacter( tut.vn_shipai() )
-      vn.transition( tut.shipai.transition )
-      vn.na(fmt.f(_([[Your ship AI {shipai} materializes before you.]]),
-         {shipai=tut.ainame()}))
-      if update_cores then
-         sai(_([["Oh my. It seems like the ship designs changed again. Some ships have got additional secondary core slots, in which you can equip normal cores. However, the core outfits will have different properties depending on whether they are primary or secondary. Similarly, many core outfits have been discontinued, and for ships with more than one core slot, instead of equipping a larger one, you can equip two to get the same effect as before!"]]))
-         sai(_([["I have tried to automatically update your ships to be similar to before, but some things may have changed. Make sure you double-check your ships before taking off!"]]))
-      end
-      if update_gauntlet then
-         if update_cores then
-            sai(_([["Oh, and some of your ships had more than one upgrade from the Crimson Gauntlet which are now mutually exclusive with each other."]]))
-         else
-            sai(_([["Oh my. It seems like some of your ships had more than one upgrade from the Crimson Gauntlet which are now mutually exclusive with each other."]]))
-         end
-         sai(fmt.f(_([["Both of the outfits have been removed, and you have been refunded a total of {emblems} for the cost of the outfits. In particular, the following ships have been modified: {ships}"]]),
-            {emblems=gauntlet.emblems_str(gauntlet_refunded), ships=fmt.list(gauntlet_ships)}))
-      end
-      vn.done( tut.shipai.transition )
-      vn.run()
-   end
-
    naev.cache().save_updater = {}
-end
 
--- Runs on saves older than 0.12.0
-local function updater0120( did0110, did0100, did090 )
-   -- Have to apply diff to lower pirates if necessary
-   if player.chapter()=="0" then
-      if not diff.isApplied( "Chapter 0" ) then
-         diff.apply( "Chapter 0" )
-      end
-   else
-      diff.remove( "Chapter 0" )
-   end
 
    local metai = (var.peek("shipai_name") ~= nil)
    local hasbioship = player.pilot():ship():tags().bioship
@@ -158,13 +122,6 @@ local function updater0120( did0110, did0100, did090 )
          hasbioship = true
          break
       end
-   end
-
-   -- Player may have not met the proteron but have positive standing due to bugs in how the reputation worked
-   -- Reset standing to hostile unless player is in proteron system
-   local fproteron = faction.get("Proteron")
-   if not fproteron:known() or system.cur():faction()~=fproteron then
-      fproteron:setReputationGlobal( fproteron:reputationDefault() )
    end
 
    -- Do update tutorial, have to handle older versions here
@@ -230,7 +187,6 @@ Many of the new features come with small tutorials in form of missions. I will n
       if hasbioship then
          sai(_([["Bioships have also been reworked completely. Similar to the old ships, they gain ranks through experience. However, instead of the ranks being on a per-outfit level, they are now on per-ship levels. Increasing ranks will give you better core outfits and weapons, while also unlocking skill points that you can use to significantly change the functionality and performance of the bioship."]]))
       end
-      --sai(_([["This update also provides significant modernization of the engine and many other features. To list a few, the star map is larger and you can save system notes, many new missions and campaigns, health bars are shown for pilots in combat, backgrounds reworked, news and NPCs reworked, unique pilots appear throughout the universe, manual aiming mode, save snapshots, difficulty settings, etc. Some features can be toggled through the #oOptions#0 window, so make sure to check that if interested."]]))
    end
 
    -- 0.11.0 changes
@@ -246,44 +202,53 @@ Many of the new features come with small tutorials in form of missions. I will n
    end
 
    -- 0.12.0 changes
-   --[[
-      1. Ship Capturing (chapter 1+)
-      1. Reputation changes
-      1. Holo-Archives
-      1. Fuel increase
-      1. Stats are additive
-      1. Scanning (scan key)
-   --]]
-   if player.chapter()~="0" then
-      sai(_([["You will now be able to capture ships that you disable for a price. However, you will need enough free fleet capacity to add the ship to your fleet when you capture it. Good thing that the fleet capacity limits have been significantly increased!"]]))
-   end
-   sai(fmt.f(_([["The Holo-Archives has also been added as a repository for information on mechanics, ships, outfits, and lore! Not only does it explain in detail many mechanics that you may have missed, but it also helps you find all the ships and outfits you've met in your travels. If that was not enough, there are also in-depth sections of lore explaining things about the universe that grow as you unlock them. You can access the Holo-Archives from the information menu you open with {infokey}."]]),
-      {infokey=tut.getKey("info")}))
-   sai(_([["Reputation has been significantly reworked. It is no longer a single absolute value for every faction, but computed on a local level. This means that your actions will mainly have local consequences, and are more forgiving. However, this only affects local actions such as attacking and boarding, reputation gained through missions is still global. If that was not enough, all reputation changes are shown by default, which you can disable from the information window."]]))
-   sai(fmt.f(_([["Up until now, other ships could scan you, but you couldn't scan them. This has been changed in the latest release. You can now scan ships with the {scankey}. However, you will only be able to scan a ship after you have them as your active target for a while. You will see a spinning icon in the GUI. When it stops spinning, you will be able to scan!"]]),
-      {scankey=tut.getKey("scan")}))
-   sai(_([["This update also provides a significant modernization of the engine and many other features. To list a few, fuel has been increased for most ships, statistics are now additive instead of multiplicative, ship variants, improved point defence, reworked ship trails, much faster loading, tons of new content... I hope you enjoy the update!"]]))
-   sai(_([["Weapon sets have also been simplified significantly. Unless you activate 'advanced' mode, there are no weapon set modes. Instead, now you have 2 additional weapon sets for your primary and secondary weapons. Furthermore, for the weapon set hotkeys, if you hold the key, it activates the outfits while held. However, if you tap it, it'll toggle the outfits from on to off, or off to on, depending on the current state. Additionally, by default, it will automatically try to assign all your active outfits to weapon sets, making the automatic setting much easier to use!"]]))
-   sai(_([["Would you like me to reset your weapon sets to be automatically handled?"]]))
-   vn.menu{
-      {_("Keep current weapon sets"), "ws_cont"},
-      {_("Reset weapon sets."), "ws_reset"},
-   }
+   if did0120 then
+      if player.chapter()~="0" then
+         sai(_([["You will now be able to capture ships that you disable for a price. However, you will need enough free fleet capacity to add the ship to your fleet when you capture it. Good thing that the fleet capacity limits have been significantly increased!"]]))
+      end
+      sai(fmt.f(_([["The Holo-Archives has also been added as a repository for information on mechanics, ships, outfits, and lore! Not only does it explain in detail many mechanics that you may have missed, but it also helps you find all the ships and outfits you've met in your travels. If that was not enough, there are also in-depth sections of lore explaining things about the universe that grow as you unlock them. You can access the Holo-Archives from the information menu you open with {infokey}."]]),
+         {infokey=tut.getKey("info")}))
+      sai(_([["Weapon sets have also been simplified significantly. Unless you activate 'advanced' mode, there are no weapon set modes. Instead, now you have 2 additional weapon sets for your primary and secondary weapons. Furthermore, for the weapon set hotkeys, if you hold the key, it activates the outfits while held. However, if you tap it, it'll toggle the outfits from on to off, or off to on, depending on the current state. Additionally, by default, it will automatically try to assign all your active outfits to weapon sets, making the automatic setting much easier to use!"]]))
+      sai(_([["Would you like me to reset your weapon sets to be automatically handled?"]]))
+      vn.menu{
+         {_("Keep current weapon sets"), "ws_cont"},
+         {_("Reset weapon sets."), "ws_reset"},
+      }
 
-   vn.label("ws_reset")
-   vn.func( function ()
-      apply_all_ships( function( p )
-         p:weapsetAuto()
+      vn.label("ws_reset")
+      vn.func( function ()
+         apply_all_ships( function( p )
+            p:weapsetAuto()
+         end )
       end )
-   end )
-   sai(_([["I've reset all the weapon sets on all your ships. Hopefully they should be easier to use now!"]]))
-   vn.jump("ws_done")
+      sai(_([["I've reset all the weapon sets on all your ships. Hopefully they should be easier to use now!"]]))
+      vn.jump("ws_done")
 
-   vn.label("ws_cont")
-   sai(_([["OK, your weapon sets won't be updated, but if you need to make changes, please modify them from the #oInformation#0 window!"]]))
-   vn.jump("ws_done")
+      vn.label("ws_cont")
+      sai(_([["OK, your weapon sets won't be updated, but if you need to make changes, please modify them from the #oInformation#0 window!"]]))
+      vn.jump("ws_done")
 
-   vn.label("ws_done")
+      vn.label("ws_done")
+   end
+
+   -- 0.13.0 changes
+   sai(fmt.f(_([["Thanks to new advances in material technology, ships no longer have issues with overheating. However, it is still possible to perform a cooldown with {cooldownkey} or double-tappping {reversekey} to refill weapon ammunition and fighters."]]),
+         {cooldownkey=tut.getKey("cooldown"), reversekey=tut.getKey("reverse")}))
+   if update_cores then
+      sai(_([["Oh my. It seems like the ship designs changed again. Some ships have got additional secondary core slots, in which you can equip normal cores. However, the core outfits will have different properties depending on whether they are primary or secondary. Similarly, many core outfits have been discontinued, and for ships with more than one core slot, instead of equipping a larger one, you can equip two to get the same effect as before!"]]))
+      sai(_([["I have tried to automatically update your ships to be similar to before, but some things may have changed. Make sure you double-check your ships before taking off!"]]))
+   end
+   if update_gauntlet then
+      if update_cores then
+         sai(_([["Oh, and some of your ships had more than one upgrade from the Crimson Gauntlet which are now mutually exclusive with each other."]]))
+      else
+         sai(_([["Oh my. It seems like some of your ships had more than one upgrade from the Crimson Gauntlet which are now mutually exclusive with each other."]]))
+      end
+      sai(fmt.f(_([["Both of the outfits have been removed, and you have been refunded a total of {emblems} for the cost of the outfits. In particular, the following ships have been modified: {ships}"]]),
+         {emblems=gauntlet.emblems_str(gauntlet_refunded), ships=fmt.list(gauntlet_ships)}))
+   end
+   sai(_([["This update also provides a significant modernization of the engine and many other features. To list a few: autonav improvements, music doesn't restart as much, multiple backups, logarithmic radar, truly isometric camera, ... I hope you enjoy the update!"]]))
+
    if not metai then
       sai(_([["With that said, would you like me to provide small, in-game advice as you do things throughout the game? Some might refer to things you are already familiar with, but it could help you learn new things."]]))
       vn.menu{
@@ -292,14 +257,16 @@ Many of the new features come with small tutorials in form of missions. I will n
       }
 
       vn.label("enable")
-      sai(fmt.f(_([["Great! I'll be giving you short hints as you do things through the game. If you want to change my settings or turn off the hints, please do so from the '#oShip AI#0' button in the #oInformation#0 window you can open with {infokey}. Now, let's go adventuring!"]]),{infokey=tut.getKey("info")}))
+      sai(fmt.f(_([["Great! I'll be giving you short hints as you do things through the game. If you want to change my settings or turn off the hints, please do so from the '#oShip AI#0' button in the #oInformation#0 window you can open with {infokey}. Now, let's go adventuring!"]]),
+         {infokey=tut.getKey("info")}))
       vn.done( tut.shipai.transition )
 
       vn.label("disable")
       vn.func( function ()
          var.push( "tut_disable", true )
       end )
-      sai(fmt.f(_([["OK, I will not be giving you any hints. If you want to change my settings, turn on the hints, or get information and advice, please do so from the '#oShip AI#0' button in the #oInformation#0 window you can open with {infokey}. Now, let's go adventuring!"]]),{infokey=tut.getKey("info")}))
+      sai(fmt.f(_([["OK, I will not be giving you any hints. If you want to change my settings, turn on the hints, or get information and advice, please do so from the '#oShip AI#0' button in the #oInformation#0 window you can open with {infokey}. Now, let's go adventuring!"]]),
+         {infokey=tut.getKey("info")}))
    else
       sai(fmt.f(_([["And that is all! If you want to brush on game mechanics or get more hints, remember you can get in touch with me directly by clicking the '#oShip AI#0' button in the #oInformation#0 window that you can open with {infokey}. Now, let's go adventuring!"]]),
          {infokey=tut.getKey("info")}))
@@ -307,6 +274,25 @@ Many of the new features come with small tutorials in form of missions. I will n
 
    vn.done( tut.shipai.transition )
    vn.run()
+end
+
+-- Runs on saves older than 0.12.0
+local function updater0120( _did0110, _did0100, _did090 )
+   -- Have to apply diff to lower pirates if necessary
+   if player.chapter()=="0" then
+      if not diff.isApplied( "Chapter 0" ) then
+         diff.apply( "Chapter 0" )
+      end
+   else
+      diff.remove( "Chapter 0" )
+   end
+
+   -- Player may have not met the proteron but have positive standing due to bugs in how the reputation worked
+   -- Reset standing to hostile unless player is in proteron system
+   local fproteron = faction.get("Proteron")
+   if not fproteron:known() or system.cur():faction()~=fproteron then
+      fproteron:setReputationGlobal( fproteron:reputationDefault() )
+   end
 end
 
 -- Runs on saves older than 0.11.0
@@ -401,9 +387,9 @@ function create ()
       did0120 = true
    end
    -- Run on saves older than 0.13.0
-   if not save_version or naev.versionTest( save_version, "<0.13.0-alpha.11") then
+   if not save_version or naev.versionTest( save_version, "<0.13.0-beta.1") then
       updater0130( did0120, did0110, did0100, did090 )
-      --didupdate = true
+      didupdate = true
    end
 
    -- Note that games before 0.10.0 will have lastplayed set days from the unix epoch

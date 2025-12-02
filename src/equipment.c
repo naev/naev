@@ -912,8 +912,10 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw,
    if ( o == NULL ) {
       int pos;
       if ( slot->sslot->slot.spid ) {
-         pos = scnprintf( alt, sizeof( alt ), "#o%s\n",
-                          _( sp_display( slot->sslot->slot.spid ) ) );
+         pos =
+            scnprintf( alt, sizeof( alt ), "#o%s\n",
+                       pgettext_var( "slotproperty",
+                                     sp_display( slot->sslot->slot.spid ) ) );
       } else
          pos = 0;
       pos +=
@@ -930,7 +932,8 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw,
                            _( " [locked]" ) );
       if ( slot->sslot->slot.spid )
          scnprintf( &alt[pos], sizeof( alt ) - pos, "\n\n%s",
-                    _( sp_description( slot->sslot->slot.spid ) ) );
+                    pgettext_var( "slotproperty",
+                                  sp_description( slot->sslot->slot.spid ) ) );
       toolkit_drawAltText( bx + wgt->altx, by + wgt->alty, alt );
       return;
    }
@@ -1002,12 +1005,18 @@ static void equipment_renderShip( double bx, double by, double bw, double bh,
    py = by + ( bh - ph ) / 2;
 
    /* Render background. */
-   gl_renderRect( px, py, pw, ph, &cBlack );
+   gl_renderRect( bx, by, bw, bh, &cBlack );
 
    /* Use framebuffer to draw, have to use an additional one. */
    s = ceil(
       s / gl_screen.scale ); /* Have to correct for the true rendered size. */
    glGetIntegerv( GL_FRAMEBUFFER_BINDING, &fbo );
+   /* Brute force aproach to clearing the buffer because everything is wrong.
+    * Shouldn't too bad because it's only here that is the issue.
+    * Next three lines shouldn't exist... */
+   glBindFramebuffer( GL_FRAMEBUFFER, swd->fbo );
+   glDisable( GL_SCISSOR_TEST );
+   glClear( GL_COLOR_BUFFER_BIT );
    ship_renderFramebuffer( p->ship, swd->fbo, gl_screen.nw, gl_screen.nh,
                            swd->dir, 0., 0., p->r, p->tsx, p->tsy, &cWhite,
                            &L_store_const );
@@ -1016,7 +1025,7 @@ static void equipment_renderShip( double bx, double by, double bw, double bh,
    mat4 projection = gl_view_matrix;
    mat4_translate_scale_xy( &projection, px, py, pw, ph );
    mat4 tex_mat = mat4_identity();
-   mat4_translate_scale_xy( &tex_mat, 0., 0., s / swd->s, s / swd->s );
+   mat4_scale_xy( &tex_mat, s / swd->s, s / swd->s );
    gl_renderTextureRawH( swd->tex, 0, &projection, &tex_mat, NULL );
 
 #ifdef DEBUGGING
@@ -1734,14 +1743,14 @@ static void equipment_genShipList( unsigned int wid )
    cships[0].caption = strdup( player.p->name );
    cships[0].layers =
       gl_copyTexArray( (const glTexture **)player.p->ship->gfx_overlays );
-   t                = gl_newImage( OVERLAY_GFX_PATH "active.webp", 0 );
+   t                = gl_newImage( OVERLAY_GFX_PATH "active", 0 );
    cships[0].layers = gl_addTexArray( cships[0].layers, t );
    if ( player.ps.favourite ) {
-      t                = gl_newImage( OVERLAY_GFX_PATH "favourite.webp", 0 );
+      t                = gl_newImage( OVERLAY_GFX_PATH "favourite", 0 );
       cships[0].layers = gl_addTexArray( cships[0].layers, t );
    }
    if ( player.p->ship->rarity > 0 ) {
-      snprintf( r, sizeof( r ), OVERLAY_GFX_PATH "rarity_%d.webp",
+      snprintf( r, sizeof( r ), OVERLAY_GFX_PATH "rarity_%d",
                 player.p->ship->rarity );
       t                = gl_newImage( r, 0 );
       cships[0].layers = gl_addTexArray( cships[0].layers, t );
@@ -1755,15 +1764,15 @@ static void equipment_genShipList( unsigned int wid )
          cships[i].layers  = gl_copyTexArray(
             (const glTexture **)ps[i - 1].p->ship->gfx_overlays );
          if ( ps[i - 1].favourite ) {
-            t = gl_newImage( OVERLAY_GFX_PATH "favourite.webp", 0 );
+            t                = gl_newImage( OVERLAY_GFX_PATH "favourite", 0 );
             cships[i].layers = gl_addTexArray( cships[i].layers, t );
          }
          if ( ps[i - 1].deployed ) {
-            t                = gl_newImage( OVERLAY_GFX_PATH "fleet.webp", 0 );
+            t                = gl_newImage( OVERLAY_GFX_PATH "fleet", 0 );
             cships[i].layers = gl_addTexArray( cships[i].layers, t );
          }
          if ( ps[i - 1].p->ship->rarity > 0 ) {
-            snprintf( r, sizeof( r ), OVERLAY_GFX_PATH "rarity_%d.webp",
+            snprintf( r, sizeof( r ), OVERLAY_GFX_PATH "rarity_%d",
                       ps[i - 1].p->ship->rarity );
             t                = gl_newImage( r, 0 );
             cships[i].layers = gl_addTexArray( cships[i].layers, t );

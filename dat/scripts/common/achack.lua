@@ -28,13 +28,13 @@ end
 
 achack.harja = {
    name = _("Harja"),
-   portrait = "sirius/unique/harja.webp",
-   image = portrait.getFullPath("sirius/unique/harja.webp"),
+   portrait = "sirius/unique/harja",
+   image = portrait.getFullPath("sirius/unique/harja"),
 }
 achack.joanne = {
    name = _("Joanne"),
-   portrait = "sirius/unique/joanne.webp",
-   image = portrait.getFullPath("sirius/unique/joanne.webp"),
+   portrait = "sirius/unique/joanne",
+   image = portrait.getFullPath("sirius/unique/joanne"),
 }
 
 function achack.vn_harja( params )

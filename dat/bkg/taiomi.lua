@@ -65,23 +65,23 @@ function background ()
    -- Load graphics
    local images_raw = {
       -- Debris
-      { n = 3, i = lg.newImage( 'gfx/spfx/cargo.webp' ), s = 6, debris = true },
-      { n = 3, i = lg.newImage( 'gfx/spfx/debris0.webp' ), s = 6, debris = true },
-      { n = 3, i = lg.newImage( 'gfx/spfx/debris1.webp' ), s = 6, debris = true },
-      { n = 3, i = lg.newImage( 'gfx/spfx/debris2.webp' ), s = 6, debris = true },
-      { n = 3, i = lg.newImage( 'gfx/spfx/debris3.webp' ), s = 6, debris = true },
-      { n = 3, i = lg.newImage( 'gfx/spfx/debris4.webp' ), s = 6, debris = true },
-      { n = 3, i = lg.newImage( 'gfx/spfx/debris5.webp' ), s = 6, debris = true },
-      { n = 2, i = lg.newImage( 'gfx/spfx/debris_cluster1.webp' ), s = 6, debris = true },
-      { n = 2, i = lg.newImage( 'gfx/spfx/debris_cluster2.webp' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/cargo' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/debris0' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/debris1' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/debris2' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/debris3' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/debris4' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/debris5' ), s = 6, debris = true },
+      { n = 2, i = lg.newImage( 'gfx/spfx/debris_cluster1' ), s = 6, debris = true },
+      { n = 2, i = lg.newImage( 'gfx/spfx/debris_cluster2' ), s = 6, debris = true },
       -- Neutral
-      { n = 2, i = lg.newImage( 'gfx/spfx/derelict_llama1.webp' ), s = 6 },
-      { n = 1, i = lg.newImage( 'gfx/spfx/derelict_koala1.webp' ), s = 6 },
-      { n = 1, i = lg.newImage( 'gfx/spfx/derelict_koala2.webp' ), s = 6 },
-      { n = 1, i = lg.newImage( 'gfx/spfx/derelict_mule1.webp' ), s = 6 },
-      { n = 1, i = lg.newImage( 'gfx/spfx/derelict_phalanx1.webp' ), s = 6 },
-      { n = 1, i = lg.newImage( 'gfx/spfx/derelict_shark1.webp' ), s = 6 },
-      { n = 1, i = lg.newImage( 'gfx/spfx/derelict_vendetta1.webp' ), s = 6 },
+      { n = 2, i = lg.newImage( 'gfx/spfx/derelict_llama1' ), s = 6 },
+      { n = 1, i = lg.newImage( 'gfx/spfx/derelict_koala1' ), s = 6 },
+      { n = 1, i = lg.newImage( 'gfx/spfx/derelict_koala2' ), s = 6 },
+      { n = 1, i = lg.newImage( 'gfx/spfx/derelict_mule1' ), s = 6 },
+      { n = 1, i = lg.newImage( 'gfx/spfx/derelict_phalanx1' ), s = 6 },
+      { n = 1, i = lg.newImage( 'gfx/spfx/derelict_shark1' ), s = 6 },
+      { n = 1, i = lg.newImage( 'gfx/spfx/derelict_vendetta1' ), s = 6 },
       { n = 1, i = sImage.newImage( ship.get("Quicksilver") ), s = 1 },
       { n = 1, i = sImage.newImage( ship.get("Rhino") ), s = 1 },
       -- Pirate
@@ -163,7 +163,7 @@ function background ()
    wing = {
       x = 100,
       y = 150,
-      i = lg.newImage( 'gfx/spfx/derelict_goddard_wing.webp' ),
+      i = lg.newImage( 'gfx/spfx/derelict_goddard_wing' ),
       s = 2,
    }
 

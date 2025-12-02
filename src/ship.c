@@ -1030,11 +1030,8 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
          temp->class = ship_classFromString( xml_get( node ) );
          continue;
       }
-      if ( xml_isNode( node, "gfx" ) || xml_isNode( node, "GFX" ) ) {
+      if ( xml_isNode( node, "gfx" ) ) {
          const char *str = xml_get( node );
-         /* TODO remove for 0.13.0 */
-         if ( xml_isNode( node, "GFX" ) )
-            WARN( _( "Ship '%s': using <GFX> instead of <gfx>!" ), temp->name );
 
          /* Get base graphic name. */
          if ( str == NULL ) {

@@ -13,8 +13,8 @@ zbh.sfx = ferals.sfx
 
 -- Zach Xiao
 zbh.zach = {
-   portrait = "zach.webp",
-   image = "zach.webp",
+   portrait = "zach",
+   image = "zach",
    name = _("Zach"),
    colour = nil,
    transition = "hexagon",
@@ -27,8 +27,8 @@ zbh.icarus = {
    colour = nil,
 }
 zbh.pi = {
-   portrait = "zalek_thug1.png",
-   image = "zalek_thug1.png",
+   portrait = "zalek_thug1",
+   image = "zalek_thug1",
    name = _("Za'lek PI"),
    colour = nil,
 }
