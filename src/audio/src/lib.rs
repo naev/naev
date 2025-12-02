@@ -19,7 +19,6 @@ use crate::output_limiter::consts::*;
 use crate::source_spatialize::consts::*;
 use crate::source_spatialize::*;
 use anyhow::Context;
-use naev_core::utils::{binary_search_by_key_ref, sort_by_key_ref};
 use std::sync::atomic::{AtomicBool, Ordering};
 use symphonia::core::audio::{Channels, Signal};
 use symphonia::core::codecs::Decoder;
@@ -28,6 +27,7 @@ use symphonia::core::formats::FormatReader;
 use symphonia::core::io::MediaSourceStream;
 use symphonia::core::sample::Sample;
 use thunderdome::Arena;
+use utils::{binary_search_by_key_ref, sort_by_key_ref};
 
 use anyhow::Result;
 use gettext::gettext;
