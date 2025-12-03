@@ -53,7 +53,7 @@ pub fn discover_remote_plugins<T: reqwest::IntoUrl>(
     sipper(async move |mut sender| {
         use base64::{Engine as _, engine::general_purpose::URL_SAFE};
         let repo_hash = URL_SAFE.encode(format!("{}:{}", url.as_str(), branch));
-        let repo_path = ndata::cache_dir()?.join("plugins-repo");
+        let repo_path = ndata::cache_dir().join("plugins-repo");
         fs::create_dir_all(&repo_path)?;
         let repo_path = repo_path.join(repo_hash);
         let urlstr = url.as_str().to_string();

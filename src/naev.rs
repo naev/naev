@@ -141,14 +141,7 @@ fn setup_conf_and_ndata() -> Result<String> {
         warn_err!(e);
     }
     let conf_file_path: String = {
-        let mut path = match ndata::pref_dir() {
-            Ok(path) => path,
-            Err(e) => {
-                warn_err!(e);
-                "./".into()
-            }
-        };
-        path.push("conf.lua");
+        let path = ndata::pref_dir().join("conf.lua");
         path.to_string_lossy().to_string()
     };
 

@@ -12,7 +12,7 @@ pub fn migrate_pref() -> Result<()> {
     if cfg!(target_os = "macos") {
         let old = sdl::filesystem::get_pref_path(".", "org.naev.Naev")?;
         if old.is_dir() {
-            let new = crate::pref_dir()?;
+            let new = crate::pref_dir().to_path_buf();
             fs::rename(old, new)?;
         }
         debug!("Migrated Mac OS preferences.");
@@ -26,8 +26,7 @@ pub fn migrate_pref() -> Result<()> {
     .into();
     cconfig.push("conf.lua");
     if cconfig.is_file() {
-        let mut new = crate::pref_dir()?;
-        new.push("conf.lua");
+        let new = crate::pref_dir().join("conf.lua");
         if !new.is_file() {
             fs::rename(cconfig, new)?;
         }
@@ -39,10 +38,10 @@ pub fn migrate_pref() -> Result<()> {
 
 use std::sync::LazyLock;
 static CONFIG_FILE: LazyLock<CString> = LazyLock::new(|| {
-    let mut new = crate::pref_dir().unwrap_or("./".into());
-    new.push("conf.lua");
+    let new = crate::pref_dir().join("conf.lua");
     CString::new(&*new.to_string_lossy()).unwrap()
 });
+/// Config file location for C code
 #[unsafe(no_mangle)]
 pub extern "C" fn ndata_configFile() -> *const c_char {
     CONFIG_FILE.as_ptr()

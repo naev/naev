@@ -1,9 +1,10 @@
-use anyhow::Context;
+use directories::ProjectDirs;
 use log::{debug, info, warn, warn_err};
 use sdl3 as sdl;
 use std::ffi::{CStr, CString, c_char};
 use std::io::{Read, Result};
-use std::path::{Path, PathBuf};
+use std::path::Path;
+use std::sync::LazyLock;
 
 use log::formatx::formatx;
 use log::gettext::gettext;
@@ -21,23 +22,23 @@ fn found() -> bool {
     exists("VERSION") && exists("start.xml")
 }
 
+static PROJECT_DIRS: LazyLock<ProjectDirs> =
+    LazyLock::new(|| match ProjectDirs::from("", "", "naev") {
+        Some(pd) => pd,
+        None => {
+            warn_err!("Unable to find project directories!");
+            ProjectDirs::from_path(".".into()).unwrap()
+        }
+    });
+
 /// Gets the configuration directory
-pub fn pref_dir() -> anyhow::Result<PathBuf> {
-    // For historical reasons predating physfs adoption, this case is different.
-    // TODO fix and migrate stuff over
-    let app = if cfg!(target_os = "macos") {
-        "org.naev.Naev"
-    } else {
-        "naev"
-    };
-    Ok(sdl::filesystem::get_pref_path(".", app)?)
+pub fn pref_dir() -> &'static Path {
+    PROJECT_DIRS.data_dir()
 }
 
 /// Gets the cache directory used by the project
-pub fn cache_dir() -> anyhow::Result<PathBuf> {
-    let proj_dirs = directories::ProjectDirs::from("org", "naev", "naev")
-        .context("getting project directories")?;
-    Ok(proj_dirs.cache_dir().to_path_buf())
+pub fn cache_dir() -> &'static Path {
+    PROJECT_DIRS.cache_dir()
 }
 
 /// Initializes the ndata, has to be called first.
@@ -54,21 +55,16 @@ pub fn setup() -> anyhow::Result<()> {
         }
     }
 
-    match pref_dir() {
-        Ok(pref) => match physfs::set_write_dir(&pref) {
-            Ok(_) => (),
-            Err(e) => {
-                warn_err!(e);
-                info!("Cannot determine data path, using current directory");
-                physfs::set_write_dir("./naev/").unwrap_or_else(|e| {
-                    warn_err!(e);
-                });
-            }
-        },
+    match physfs::set_write_dir(pref_dir()) {
+        Ok(_) => (),
         Err(e) => {
             warn_err!(e);
+            info!("Cannot determine data path, using current directory");
+            physfs::set_write_dir("./naev/").unwrap_or_else(|e| {
+                warn_err!(e);
+            });
         }
-    };
+    }
 
     // Redirect the log after we set up the write directory.
     let logpath = Path::new(&physfs::get_write_dir()).join("logs");

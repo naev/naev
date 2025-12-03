@@ -39,20 +39,11 @@ fn local_plugins_dir() -> PathBuf {
 
 /// Location of the cache directory for storing information about plugins.
 fn catalog_cache_dir() -> PathBuf {
-    ndata::cache_dir().unwrap().join("pluginmanager")
+    ndata::cache_dir().join("pluginmanager")
 }
 
-static CONFIG_FILE: LazyLock<PathBuf> = LazyLock::new(|| {
-    let mut path: PathBuf = match ndata::pref_dir() {
-        Ok(path) => path,
-        Err(e) => {
-            warn_err!(e);
-            "./".into()
-        }
-    };
-    path.set_file_name("pluginmanager.toml");
-    path
-});
+static CONFIG_FILE: LazyLock<PathBuf> =
+    LazyLock::new(|| ndata::pref_dir().join("pluginmanager.toml"));
 
 /// To skip serializing if default.
 fn skip_remotes(remotes: &Vec<Remote>) -> bool {
@@ -90,7 +81,7 @@ impl Conf {
         Ok(Self {
             remotes: REMOTES_DEFAULT.clone(),
             install_path: pluginmgr::local_plugins_dir()?,
-            catalog_cache: ndata::cache_dir()?.join("pluginmanager"),
+            catalog_cache: ndata::cache_dir().join("pluginmanager"),
             refresh_interval: default_refresh_interval(),
         })
     }
