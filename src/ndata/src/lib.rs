@@ -2,7 +2,7 @@ use log::{debug, info, warn, warn_err};
 use sdl3 as sdl;
 use std::ffi::{CStr, CString, c_char};
 use std::io::{Read, Result};
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 use log::formatx::formatx;
 use log::gettext::gettext;
@@ -19,6 +19,18 @@ fn found() -> bool {
     exists("VERSION") && exists("start.xml")
 }
 
+/// Gets the configuration directory
+pub fn get_share_dir() -> Result<PathBuf> {
+    // For historical reasons predating physfs adoption, this case is different.
+    // TODO fix
+    let app = if cfg!(target_os = "macos") {
+        "org.naev.Naev"
+    } else {
+        "naev"
+    };
+    physfs::get_pref_dir(".", app).map(|s| s.into())
+}
+
 /// Initializes the ndata, has to be called first.
 /// Will only return an Err when it is not recoverable.
 pub fn setup() -> anyhow::Result<()> {
@@ -33,13 +45,7 @@ pub fn setup() -> anyhow::Result<()> {
         }
     }
 
-    // For historical reasons predating physfs adoption, this case is different.
-    let app = if cfg!(target_os = "macos") {
-        "org.naev.Naev"
-    } else {
-        "naev"
-    };
-    match physfs::get_pref_dir(".", app) {
+    match get_share_dir() {
         Ok(pref) => match physfs::set_write_dir(&pref) {
             Ok(_) => (),
             Err(e) => {
