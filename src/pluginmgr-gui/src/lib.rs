@@ -24,6 +24,14 @@ struct Remote {
     branch: String,
 }
 
+static REMOTES_DEFAULT: LazyLock<Vec<Remote>> = LazyLock::new(|| {
+    vec![Remote {
+        url: reqwest::Url::parse("https://codeberg.org/naev/naev-plugins").unwrap(),
+        mirror: Some(reqwest::Url::parse("https://github.com/naev/naev-plugins").unwrap()),
+        branch: "main".to_string(),
+    }]
+});
+
 /// Location of the plugins directory.
 fn local_plugins_dir() -> PathBuf {
     pluginmgr::local_plugins_dir().unwrap()
@@ -33,14 +41,6 @@ fn local_plugins_dir() -> PathBuf {
 fn catalog_cache_dir() -> PathBuf {
     pluginmgr::cache_dir().unwrap().join("pluginmanager")
 }
-
-static REMOTES_DEFAULT: LazyLock<Vec<Remote>> = LazyLock::new(|| {
-    vec![Remote {
-        url: reqwest::Url::parse("https://codeberg.org/naev/naev-plugins").unwrap(),
-        mirror: None,
-        branch: "main".to_string(),
-    }]
-});
 /// To skip serializing if default.
 fn skip_remotes(remotes: &Vec<Remote>) -> bool {
     REMOTES_DEFAULT.deref() == remotes
