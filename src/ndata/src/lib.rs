@@ -20,15 +20,15 @@ fn found() -> bool {
 }
 
 /// Gets the configuration directory
-pub fn get_share_dir() -> Result<PathBuf> {
+pub fn get_pref_path() -> anyhow::Result<PathBuf> {
     // For historical reasons predating physfs adoption, this case is different.
-    // TODO fix
+    // TODO fix and migrate stuff over
     let app = if cfg!(target_os = "macos") {
         "org.naev.Naev"
     } else {
         "naev"
     };
-    physfs::get_pref_dir(".", app).map(|s| s.into())
+    Ok(sdl::filesystem::get_pref_path(".", app)?)
 }
 
 /// Initializes the ndata, has to be called first.
@@ -45,7 +45,7 @@ pub fn setup() -> anyhow::Result<()> {
         }
     }
 
-    match get_share_dir() {
+    match get_pref_path() {
         Ok(pref) => match physfs::set_write_dir(&pref) {
             Ok(_) => (),
             Err(e) => {
