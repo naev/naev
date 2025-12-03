@@ -94,6 +94,9 @@ case "$MODE" in
       pushd "$REPO_PATH" >/dev/null
       log_entries=$(git log --pretty=format:"- %s ([%h](${REPO_URL}/%H))" "${PREV_SHA}..${BUILD_SHA}")
       popd >/dev/null
+      if [[ -z "$log_entries" ]]; then
+         log_entries="(no new changes since previous nightly)"
+      fi
       {
          echo "## Git SHA: [${BUILD_SHA:0:7}](${REPO_URL}/${BUILD_SHA}) Built on ${BUILD_DATE}"
          echo
