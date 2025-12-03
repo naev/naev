@@ -41,6 +41,19 @@ fn local_plugins_dir() -> PathBuf {
 fn catalog_cache_dir() -> PathBuf {
     pluginmgr::cache_dir().unwrap().join("pluginmanager")
 }
+
+static CONFIG_FILE: LazyLock<PathBuf> = LazyLock::new(|| {
+    let mut path: PathBuf = match ndata::get_pref_path() {
+        Ok(path) => path,
+        Err(e) => {
+            warn_err!(e);
+            "./".into()
+        }
+    };
+    path.set_file_name("pluginmanager.toml");
+    path
+});
+
 /// To skip serializing if default.
 fn skip_remotes(remotes: &Vec<Remote>) -> bool {
     REMOTES_DEFAULT.deref() == remotes
@@ -371,7 +384,7 @@ impl Catalog {
         }
         // Write metadata
         let data = toml::to_string(self)?;
-        let mut file = fs::File::create(self.conf.catalog_cache.join("metadata.toml"))?;
+        let mut file = fs::File::create(&*CONFIG_FILE)?;
         file.write_all(data.as_bytes())?;
         Ok(())
     }
@@ -505,9 +518,7 @@ impl App {
                 Ok(())
             })
         }
-        if let Ok(metacatalog) =
-            Catalog::from_path(self.catalog.conf.catalog_cache.join("metadata.toml"))
-        {
+        if let Ok(metacatalog) = Catalog::from_path(&*CONFIG_FILE) {
             self.catalog = Arc::new(metacatalog);
         }
         Task::done(Message::ProgressNew(Progress {
