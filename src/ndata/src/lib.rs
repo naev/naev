@@ -1,3 +1,4 @@
+use anyhow::Context;
 use log::{debug, info, warn, warn_err};
 use sdl3 as sdl;
 use std::ffi::{CStr, CString, c_char};
@@ -8,6 +9,7 @@ use log::formatx::formatx;
 use log::gettext::gettext;
 use log::{infox, semver, version};
 
+pub mod cwrap;
 pub mod env;
 pub mod lua;
 pub mod physfs;
@@ -20,7 +22,7 @@ fn found() -> bool {
 }
 
 /// Gets the configuration directory
-pub fn get_pref_path() -> anyhow::Result<PathBuf> {
+pub fn pref_dir() -> anyhow::Result<PathBuf> {
     // For historical reasons predating physfs adoption, this case is different.
     // TODO fix and migrate stuff over
     let app = if cfg!(target_os = "macos") {
@@ -29,6 +31,13 @@ pub fn get_pref_path() -> anyhow::Result<PathBuf> {
         "naev"
     };
     Ok(sdl::filesystem::get_pref_path(".", app)?)
+}
+
+/// Gets the cache directory used by the project
+pub fn cache_dir() -> anyhow::Result<PathBuf> {
+    let proj_dirs = directories::ProjectDirs::from("org", "naev", "naev")
+        .context("getting project directories")?;
+    Ok(proj_dirs.cache_dir().to_path_buf())
 }
 
 /// Initializes the ndata, has to be called first.
@@ -45,7 +54,7 @@ pub fn setup() -> anyhow::Result<()> {
         }
     }
 
-    match get_pref_path() {
+    match pref_dir() {
         Ok(pref) => match physfs::set_write_dir(&pref) {
             Ok(_) => (),
             Err(e) => {

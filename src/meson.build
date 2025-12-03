@@ -25,6 +25,7 @@ source_rust = files(
    'ndata/src/env.rs',
    'ndata/src/lua.rs',
    'ndata/src/physfs.rs',
+   'ndata/src/cwrap.rs',
    'gettext/src/lib.rs',
    'log/src/lib.rs',
    'log/src/version.rs',

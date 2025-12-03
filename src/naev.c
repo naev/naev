@@ -137,8 +137,7 @@ int naev_isQuit( void )
    return quit;
 }
 
-char CONF_FILE_PATH[PATH_MAX];
-int  naev_main_setup( void )
+int naev_main_setup( void )
 {
 #ifdef DEBUGGING
    /* Set Debugging flags. */
@@ -148,10 +147,6 @@ int  naev_main_setup( void )
    /* Start counting things and such. */
    SDL_LOOPDONE     = SDL_RegisterEvents( 1 );
    SDL_NEEDSRESTART = SDL_RegisterEvents( 2 );
-
-   /* Set the configuration. */
-   snprintf( CONF_FILE_PATH, sizeof( CONF_FILE_PATH ), "%s" CONF_FILE,
-             nfile_configPath() );
 
    NTracingMessageL( _( "Reached main menu" ) );
    if ( conf.exit_main_menu ) {
@@ -250,7 +245,7 @@ int naev_main_events( void )
 int naev_main_cleanup( void )
 {
    /* Save configuration. */
-   conf_saveConfig( CONF_FILE_PATH );
+   conf_saveConfig( ndata_configFile() );
 
    /* data unloading */
    unload_all();

@@ -144,60 +144,13 @@ const char *nfile_configPath( void )
       snprintf( naev_configPath, sizeof( naev_configPath ), "%s/naev/", path );
 #else
       // TODO just use SDL instead of custom implementations?
-      const char *prefpath = SDL_GetPrefPath( "Naev DevTeam", "Naev" );
+      const char *prefpath = SDL_GetPrefPath( ".", "naev" );
       strncpy( naev_configPath, sizeof( naev_configPath ), prefpath );
       SDL_free( prefpath );
 #endif
    }
 
    return naev_configPath;
-}
-
-static char naev_cachePath[PATH_MAX] = "\0"; /**< Store Naev's cache path. */
-/**
- * @brief Gets Naev's cache path (for cached data such as generated textures)
- *
- *    @return The xdg cache path.
- */
-const char *nfile_cachePath( void )
-{
-   if ( naev_cachePath[0] == '\0' ) {
-      /* Global override is set. */
-      if ( conf.datapath ) {
-         snprintf( naev_cachePath, sizeof( naev_cachePath ), "%s/",
-                   conf.datapath );
-         return naev_cachePath;
-      }
-#if SDL_PLATFORM_MACOS
-      if ( macos_cachePath( naev_cachePath, sizeof( naev_cachePath ) ) != 0 ) {
-         WARN( _( "Cannot determine cache path, using current directory." ) );
-         snprintf( naev_cachePath, sizeof( naev_cachePath ), "./naev/" );
-      }
-#elif HAS_UNIX
-      char *path = xdgGetRelativeHome( "XDG_CACHE_HOME", "/.cache" );
-      if ( path == NULL ) {
-         WARN( _( "$XDG_CACHE_HOME isn't set, using current directory." ) );
-         path = strdup( "." );
-      }
-
-      snprintf( naev_cachePath, sizeof( naev_cachePath ), "%s/naev/", path );
-      free( path );
-#elif SDL_PLATFORM_WIN32
-      char *path = SDL_getenv( "APPDATA" );
-      if ( path == NULL ) {
-         WARN( _( "%%APPDATA%% isn't set, using current directory." ) );
-         path = ".";
-      }
-      snprintf( naev_cachePath, sizeof( naev_cachePath ), "%s/naev/", path );
-#else
-      // TODO just use SDL instead of custom implementations?
-      char *prefpath = SDL_GetPrefPath( "Naev DevTeam", "Naev" );
-      strncpy( naev_cachePath, sizeof( naev_cachePath ), prefpath );
-      SDL_free( prefpath );
-#endif
-   }
-
-   return naev_cachePath;
 }
 
 /**

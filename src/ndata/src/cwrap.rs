@@ -1,0 +1,49 @@
+use anyhow::Result;
+use fs_err as fs;
+use log::debug;
+use sdl3 as sdl;
+use std::ffi::{CStr, CString, c_char};
+use std::path::PathBuf;
+
+/// Migrates from pre-0.13.0 locations
+/// TODO remove in 0.15.0 (or maybe 0.14.0?)
+pub fn migrate_pref() -> Result<()> {
+    // For historical reasons predating physfs adoption, this case is different.
+    if cfg!(target_os = "macos") {
+        let old = sdl::filesystem::get_pref_path(".", "org.naev.Naev")?;
+        if old.is_dir() {
+            let new = crate::pref_dir()?;
+            fs::rename(old, new)?;
+        }
+        debug!("Migrated Mac OS preferences.");
+    }
+
+    // Migrate configuration over if found
+    let mut cconfig: PathBuf = unsafe {
+        let cpath = naevc::nfile_configPath();
+        CStr::from_ptr(cpath).to_str().unwrap()
+    }
+    .into();
+    cconfig.push("conf.lua");
+    if cconfig.is_file() {
+        let mut new = crate::pref_dir()?;
+        new.push("conf.lua");
+        if !new.is_file() {
+            fs::rename(cconfig, new)?;
+        }
+        debug!("Migrated configuration file.");
+    }
+
+    Ok(())
+}
+
+use std::sync::LazyLock;
+static CONFIG_FILE: LazyLock<CString> = LazyLock::new(|| {
+    let mut new = crate::pref_dir().unwrap_or("./".into());
+    new.push("conf.lua");
+    CString::new(&*new.to_string_lossy()).unwrap()
+});
+#[unsafe(no_mangle)]
+pub extern "C" fn ndata_configFile() -> *const c_char {
+    CONFIG_FILE.as_ptr()
+}

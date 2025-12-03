@@ -29,7 +29,6 @@ int _nfile_concatPaths( char buf[static 1], int maxLength,
    _nfile_concatPaths( buf, maxLength, path, ##__VA_ARGS__, NULL )
 
 const char *nfile_configPath( void );
-const char *nfile_cachePath( void );
 
 int   nfile_dirMakeExist( const char *path );
 int   nfile_dirExists( const char *path );

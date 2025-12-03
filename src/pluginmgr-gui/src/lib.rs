@@ -39,11 +39,11 @@ fn local_plugins_dir() -> PathBuf {
 
 /// Location of the cache directory for storing information about plugins.
 fn catalog_cache_dir() -> PathBuf {
-    pluginmgr::cache_dir().unwrap().join("pluginmanager")
+    ndata::cache_dir().unwrap().join("pluginmanager")
 }
 
 static CONFIG_FILE: LazyLock<PathBuf> = LazyLock::new(|| {
-    let mut path: PathBuf = match ndata::get_pref_path() {
+    let mut path: PathBuf = match ndata::pref_dir() {
         Ok(path) => path,
         Err(e) => {
             warn_err!(e);
@@ -90,7 +90,7 @@ impl Conf {
         Ok(Self {
             remotes: REMOTES_DEFAULT.clone(),
             install_path: pluginmgr::local_plugins_dir()?,
-            catalog_cache: pluginmgr::cache_dir()?.join("pluginmanager"),
+            catalog_cache: ndata::cache_dir()?.join("pluginmanager"),
             refresh_interval: default_refresh_interval(),
         })
     }

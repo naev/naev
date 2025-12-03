@@ -2,7 +2,7 @@
 pub use anyhow;
 use anyhow::{Error, Result};
 use formatx::formatx;
-use log::{debug, debugx, info, infox, warn, warn_err, warnx};
+use log::{debug, info, infox, warn, warn_err, warnx};
 use ndata::env;
 use sdl3 as sdl;
 use std::ffi::{CStr, CString};
@@ -137,11 +137,19 @@ fn setup_conf_and_ndata() -> Result<String> {
     }
 
     // Set up the configuration.
-    let conf_file_path = unsafe {
-        let rpath = cptr_to_cstr(cpath);
-        let conf_file =
-            CStr::from_ptr(naevc::CONF_FILE.as_ptr() as *const c_char).to_string_lossy();
-        format!("{rpath}{conf_file}")
+    if let Err(e) = ndata::cwrap::migrate_pref() {
+        warn_err!(e);
+    }
+    let conf_file_path: String = {
+        let mut path = match ndata::pref_dir() {
+            Ok(path) => path,
+            Err(e) => {
+                warn_err!(e);
+                "./".into()
+            }
+        };
+        path.push("conf.lua");
+        path.to_string_lossy().to_string()
     };
 
     // Load up the argv and argc for the C main.
@@ -240,10 +248,6 @@ fn naevmain() -> Result<()> {
         naevc::PHYSFS_freeList(search_path as *mut c_void);
 
         /* Logging the cache path is noisy, noisy is good at the DEBUG level. */
-        debugx!(
-            gettext("Cache location: {}"),
-            cptr_to_cstr(naevc::nfile_cachePath())
-        );
         infox!(
             gettext("Write location: {}\n"),
             cptr_to_cstr(naevc::PHYSFS_getWriteDir())
