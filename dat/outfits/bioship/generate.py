@@ -169,7 +169,7 @@ for siz, nam, db, temp, gfx, output_pref, outputs in [
       'price':        lerpr(  ref['price']/2, ref['price'] ),
       'mass':         ref['mass'],
       'desc':         desc['engine'],
-      'gfx_store':    lerpt(('organic_engine_'+gfx+'1.webp', 'organic_engine_'+gfx+'2.webp')),
+      'gfx_store':    lerpt(('organic_engine_'+gfx+'1', 'organic_engine_'+gfx+'2')),
       'accel':        lerpr(  0.85*ref['accel'], ref['accel'] ),
       'speed':        lerpr(  0.85*ref['speed'], ref['speed'] ),
       'turn':         lerpr(  0.85*ref['turn'], ref['turn'] ),
@@ -205,7 +205,7 @@ for pref, nam1, nam2, dbl, gfx, output_pref, outputs in [
       'price':        lerpr( ref2['price']/2,  ref2['price'] ),
       'mass':         int(ref2['mass']),
       'desc':         desc['hull'],
-      'gfx_store':    'organic_hull_' + gfx + '.webp',
+      'gfx_store':    'organic_hull_' + gfx,
       'cargo':        lerpr( ref2['cargo'],    round((ref1['cargo']+ref2['cargo'])/2.0) ),
       'absorb':       lerpr( ref1['absorb']-3, ref2['absorb']-3 ),
       'armour':       lerpr( ref1['armour'],   ref2['armour'] )
@@ -257,7 +257,7 @@ for siz, nam, dbl, gfx, output_pref, outputs, cpu in [
 
       'energy' :        lerp(ref['energy'],        ref['energy']*1.25 ),
       'energy_regen' :  lerp(ref['energy_regen'],  ref['energy_regen']*1.25 ),
-      'gfx_store':      'organic_core_'+gfx+'.webp',
+      'gfx_store':      'organic_core_'+gfx,
       'cpu':            lerpr(*cpu),
    } ).run( [ N_(output_pref+' Cerebrum '+s) for s in outputs ] )
 
@@ -275,7 +275,7 @@ BioOutfit( 'weapon.xml.template', {
    'mass':          eerpr(    3,    6, *follow),
    'price' :        eerpr( 19e3, 45e3, *extrapol),
    'desc':          N_("The Stinger Organ is able to convert energy into hot plasma that is able to eat easily through shield and armour of opposing ships over time. While not an especially powerful offensive organ, it is prized for its reliability."),
-   'gfx_store':     lerpt(('organic_plasma_s1.webp', 'organic_plasma_s2.webp', 'organic_plasma_s3.webp')),
+   'gfx_store':     lerpt(('organic_plasma_s1', 'organic_plasma_s2', 'organic_plasma_s3')),
    'specific':      'bolt',
    'gfx':           'plasma',
    'gfx_end':       'plasma2-end',
@@ -312,7 +312,7 @@ BioOutfit( 'weapon.xml.template', {
    'mass' :         eerpr(    6,    16, -1.0/3, 1.0), # have Talon(4) weight as much as a standard med weapon.
    'price' :        eerpr( 45e3,  95e3, *extrapol),
    'desc':          N_("The Talon Organ is an enlarged and more powerful version of the Stinger Organ. Like its smaller counterpart, is able to convert energy into hot plasma that is able to eat easily through shield and armour of opposing ships. The hot plasma is able to cling to ship's shields and hulls dealing continuous damage after impact."),
-   'gfx_store':     'organic_plasma_l.webp',
+   'gfx_store':     'organic_plasma_l',
    'specific':      'bolt',
    'gfx':           'plasma2',
    'gfx_end':       'plasma2-end',
@@ -366,7 +366,7 @@ BioOutfit( 'weapon.xml.template', {
    'mass':          eerpr(         36,          75, *extrapol),
    'price':         eerpr(320e3*16/17, 700e3*16/17, *extrapol),
    'desc':          N_("The Tentacle Organ has the distinction of being the only fully rotating organic weapon while boasting a fully developed power output that is hard to beat with conventional weaponry found throughout the galaxy. The large globs of hot plasma it launches can corrode through seemingly impregnable armours, seeping into and melting ships from the inside upon contact."),
-   'gfx_store':     'organic_plasma_t.webp',
+   'gfx_store':     'organic_plasma_t',
    'specific':      'turret bolt',
    'gfx':           'plasma',
    'gfx_end':       'plasma2-end',
