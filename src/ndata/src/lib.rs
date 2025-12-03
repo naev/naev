@@ -3,7 +3,7 @@ use log::{debug, info, warn, warn_err};
 use sdl3 as sdl;
 use std::ffi::{CStr, CString, c_char};
 use std::io::{Read, Result};
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::sync::LazyLock;
 
 use log::formatx::formatx;
@@ -22,23 +22,44 @@ fn found() -> bool {
     exists("VERSION") && exists("start.xml")
 }
 
-static PROJECT_DIRS: LazyLock<ProjectDirs> =
-    LazyLock::new(|| match ProjectDirs::from("", "", "naev") {
-        Some(pd) => pd,
-        None => {
-            warn_err!("Unable to find project directories!");
-            ProjectDirs::from_path(".".into()).unwrap()
+/// Wrapper
+struct Directories {
+    pref: PathBuf,
+    cache: PathBuf,
+}
+impl Directories {
+    fn new() -> Self {
+        match ProjectDirs::from("", "", "naev") {
+            Some(pd) => Self::from_project_dirs(&pd),
+            None => {
+                // Fall back to SDL for now
+                let path = sdl::filesystem::get_pref_path(".", "naev").unwrap();
+                Self {
+                    cache: path.join("cache"),
+                    pref: path,
+                }
+            }
         }
-    });
+    }
+
+    fn from_project_dirs(pd: &ProjectDirs) -> Self {
+        Self {
+            pref: pd.data_dir().to_path_buf(),
+            cache: pd.cache_dir().to_path_buf(),
+        }
+    }
+}
+
+static PROJECT_DIRS: LazyLock<Directories> = LazyLock::new(|| Directories::new());
 
 /// Gets the configuration directory
 pub fn pref_dir() -> &'static Path {
-    PROJECT_DIRS.data_dir()
+    PROJECT_DIRS.pref.as_path()
 }
 
 /// Gets the cache directory used by the project
 pub fn cache_dir() -> &'static Path {
-    PROJECT_DIRS.cache_dir()
+    PROJECT_DIRS.cache.as_path()
 }
 
 /// Initializes the ndata, has to be called first.
