@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-# Upload a release and assets to Codeberg/Forgejo via API.
-# Designed to replace Synchro/forgejo-release action usage.
+# Upload a release and assets to a Forgejo (Gitea-compatible) instance.
+# Defaults target Codeberg, but everything can be overridden for other servers.
 
 set -euo pipefail
 
 usage() {
    cat <<'EOF'
-Usage: upload_codeberg_release.sh --tag TAG --asset-dir DIR [options]
+Usage: upload_forgejo_release.sh --tag TAG --asset-dir DIR [options]
 
 Required:
   --tag TAG            Release tag to create/update.
@@ -17,15 +17,15 @@ Optional:
   --title TITLE        Release title (defaults to tag).
   --notes TEXT         Release notes (inline text).
   --notes-file FILE    Release notes file (overrides --notes).
-  --owner OWNER        Repository owner (default: naev).
-  --repo REPO          Repository name (default: naev).
-  --api-url URL        API base (default: https://codeberg.org/api/v1).
+  --owner OWNER        Repository owner (default: $FORGEJO_OWNER or naev).
+  --repo REPO          Repository name (default: $FORGEJO_REPO or naev).
+  --api-url URL        API base (default: $FORGEJO_API_URL or https://codeberg.org/api/v1).
   --prerelease         Mark release as prerelease.
   --overwrite          Delete existing release with same tag first.
   --hide-archive-link  Hide auto-generated source archives on the release.
 
 Auth:
-  CODEBERG_TOKEN or GITHUB_TOKEN must be set in the environment.
+  FORGEJO_TOKEN (preferred), else CODEBERG_TOKEN, else GITHUB_TOKEN.
 EOF
    exit 1
 }
@@ -35,9 +35,9 @@ TITLE=""
 BODY=""
 BODY_FILE=""
 ASSET_DIR=""
-OWNER="naev"
-REPO="naev"
-API_URL="https://codeberg.org/api/v1"
+OWNER="${FORGEJO_OWNER:-naev}"
+REPO="${FORGEJO_REPO:-naev}"
+API_URL="${FORGEJO_API_URL:-https://codeberg.org/api/v1}"
 PRERELEASE="false"
 OVERWRITE="false"
 HIDE_ARCHIVE="false"
@@ -60,9 +60,9 @@ while [[ $# -gt 0 ]]; do
    esac
 done
 
-TOKEN="${CODEBERG_TOKEN:-${GITHUB_TOKEN:-}}"
+TOKEN="${FORGEJO_TOKEN:-${CODEBERG_TOKEN:-${GITHUB_TOKEN:-}}}"
 if [[ -z "$TOKEN" ]]; then
-   echo "error: CODEBERG_TOKEN (or GITHUB_TOKEN) must be set" >&2
+   echo "error: FORGEJO_TOKEN (or CODEBERG_TOKEN / GITHUB_TOKEN) must be set" >&2
    exit 1
 fi
 
@@ -92,7 +92,7 @@ retry() {
    local i=1
    while (( i <= attempts )); do
       if "$@"; then
-         return 0
+        return 0
       fi
       echo "warn: attempt $i/$attempts failed, retrying in ${delay}s..." >&2
       sleep "$delay"
@@ -142,7 +142,7 @@ if [[ -z "$release_id" ]]; then
    exit 1
 fi
 
-echo "Created release id $release_id for tag $TAG"
+echo "Created release id $release_id for tag $TAG on $API_URL"
 
 # Upload assets
 shopt -s nullglob
