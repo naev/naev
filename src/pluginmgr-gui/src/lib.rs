@@ -23,6 +23,10 @@ struct Remote {
     branch: String,
 }
 
+const DEFAULT_REMOTE_URL: &str = "https://codeberg.org/naev/naev-plugins";
+const FALLBACK_REMOTE_URL: &str = "https://github.com/naev/naev-plugins";
+const DEFAULT_REMOTE_BRANCH: &str = "main";
+
 /// Location of the plugins directory.
 fn local_plugins_dir() -> PathBuf {
     pluginmgr::local_plugins_dir().unwrap()
@@ -44,17 +48,39 @@ struct Conf {
     catalog_cache: PathBuf,
 }
 impl Conf {
+    fn default_remotes() -> Result<Vec<Remote>> {
+        Ok(vec![Remote {
+            url: reqwest::Url::parse(DEFAULT_REMOTE_URL)?,
+            mirror: Some(reqwest::Url::parse(FALLBACK_REMOTE_URL)?),
+            branch: DEFAULT_REMOTE_BRANCH.to_string(),
+        }])
+    }
+
+    fn apply_defaults(&mut self) -> Result<()> {
+        if self.remotes.is_empty() {
+            self.remotes = Self::default_remotes()?;
+            return Ok(());
+        }
+        for remote in &mut self.remotes {
+            if remote.branch.is_empty() {
+                remote.branch = DEFAULT_REMOTE_BRANCH.to_string();
+            }
+            if remote.mirror.is_none() && remote.url.as_str() == DEFAULT_REMOTE_URL {
+                remote.mirror = Some(reqwest::Url::parse(FALLBACK_REMOTE_URL)?);
+            }
+        }
+        Ok(())
+    }
+
     fn new() -> Result<Self> {
-        Ok(Self {
-            remotes: vec![Remote {
-                url: reqwest::Url::parse("https://codeberg.org/naev/naev-plugins")?,
-                mirror: None,
-                branch: "main".to_string(),
-            }],
+        let mut conf = Self {
+            remotes: Self::default_remotes()?,
             install_path: pluginmgr::local_plugins_dir()?,
             catalog_cache: pluginmgr::cache_dir()?.join("pluginmanager"),
             refresh_interval: chrono::TimeDelta::days(1),
-        })
+        };
+        conf.apply_defaults()?;
+        Ok(conf)
     }
 }
 
@@ -325,7 +351,9 @@ impl Catalog {
 
     fn from_path<P: AsRef<Path>>(path: P) -> Result<Self> {
         let data = fs::read(&path)?;
-        Ok(toml::from_slice(&data)?)
+        let mut catalog: Self = toml::from_slice(&data)?;
+        catalog.conf.apply_defaults()?;
+        Ok(catalog)
     }
 
     fn save_to_cache(&self) -> Result<()> {
