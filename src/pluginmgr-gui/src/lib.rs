@@ -12,11 +12,12 @@ use serde::{Deserialize, Serialize};
 use std::borrow::Cow;
 use std::collections::HashMap;
 use std::io::Write;
+use std::ops::Deref;
 use std::path::{Path, PathBuf};
-use std::sync::{Arc, Mutex};
+use std::sync::{Arc, LazyLock, Mutex};
 
 /// A remote plugin repository.
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 struct Remote {
     url: reqwest::Url,
     mirror: Option<reqwest::Url>,
@@ -33,10 +34,38 @@ fn catalog_cache_dir() -> PathBuf {
     pluginmgr::cache_dir().unwrap().join("pluginmanager")
 }
 
+static REMOTES_DEFAULT: LazyLock<Vec<Remote>> = LazyLock::new(|| {
+    vec![Remote {
+        url: reqwest::Url::parse("https://codeberg.org/naev/naev-plugins").unwrap(),
+        mirror: None,
+        branch: "main".to_string(),
+    }]
+});
+/// To skip serializing if default.
+fn skip_remotes(remotes: &Vec<Remote>) -> bool {
+    REMOTES_DEFAULT.deref() == remotes
+}
+/// To set the default remotes if not found.
+fn default_remotes() -> Vec<Remote> {
+    REMOTES_DEFAULT.clone()
+}
+const REFRESH_INTERVAL_DEFAULT: chrono::TimeDelta = chrono::TimeDelta::days(1);
+fn skip_refresh_interval(interval: &chrono::TimeDelta) -> bool {
+    *interval == REFRESH_INTERVAL_DEFAULT
+}
+fn default_refresh_interval() -> chrono::TimeDelta {
+    REFRESH_INTERVAL_DEFAULT
+}
+
 /// Plugin manager configuration.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 struct Conf {
+    #[serde(skip_serializing_if = "skip_remotes", default = "default_remotes")]
     remotes: Vec<Remote>,
+    #[serde(
+        skip_serializing_if = "skip_refresh_interval",
+        default = "default_refresh_interval"
+    )]
     refresh_interval: chrono::TimeDelta,
     #[serde(skip, default = "local_plugins_dir")]
     install_path: PathBuf,
@@ -46,14 +75,10 @@ struct Conf {
 impl Conf {
     fn new() -> Result<Self> {
         Ok(Self {
-            remotes: vec![Remote {
-                url: reqwest::Url::parse("https://codeberg.org/naev/naev-plugins")?,
-                mirror: None,
-                branch: "main".to_string(),
-            }],
+            remotes: REMOTES_DEFAULT.clone(),
             install_path: pluginmgr::local_plugins_dir()?,
             catalog_cache: pluginmgr::cache_dir()?.join("pluginmanager"),
-            refresh_interval: chrono::TimeDelta::days(1),
+            refresh_interval: default_refresh_interval(),
         })
     }
 }

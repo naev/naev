@@ -1,7 +1,7 @@
 <ship name="Admonisher">
  <points>60</points>
- <base_type>Admonisher</base_type>
- <gfx size="68">admonisher.gltf</gfx>
+ <base_type>Clipper</base_type>
+ <gfx size="68">clipper.gltf</gfx>
  <sound>engine</sound>
  <class>Corvette</class>
  <price>950000</price>
