@@ -5,6 +5,8 @@
    * Fix handling the --pluginmanager flag on platforms like macOS
    * Replaced a bunch of placeholder outfit graphics
    * Uninstalling a plugin will reset its disabled state
+   * Move config file with rest of files and unified code handling local files
+   * Added fallback server for plugin manager
    * Fixed some generic NPCs not talking
 
 
