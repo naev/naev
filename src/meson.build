@@ -252,11 +252,6 @@ naev_source = [
    source,
    nlua_source
 ]
-naevlua_source = [
-   files('naevlua.c'),
-   source,
-   nlua_source
-]
 
 # Headers aren't needed for running the builds,
 # as they can all be found in the defined include derectories.
