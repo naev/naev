@@ -39,7 +39,7 @@ pub fn migrate_pref() -> Result<()> {
 }
 
 use std::sync::LazyLock;
-static CONFIG_FILE: LazyLock<CString> = LazyLock::new(|| {
+pub static CONFIG_FILE: LazyLock<CString> = LazyLock::new(|| {
     let new = crate::pref_dir().join("conf.lua");
     CString::new(&*new.to_string_lossy()).unwrap()
 });

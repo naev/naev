@@ -2,11 +2,13 @@
 pub use anyhow;
 use anyhow::{Error, Result};
 use formatx::formatx;
+use fs_err as fs;
 use log::{debug, info, infox, warn, warn_err, warnx};
 use ndata::env;
 use sdl3 as sdl;
 use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_int, c_uint, c_void}; // Re-export for outter rust shenanigans
+use std::path::PathBuf;
 
 #[link(name = "naev")]
 unsafe extern "C" {
@@ -117,7 +119,7 @@ fn setup_logging() -> Result<()> {
     Ok(())
 }
 
-fn setup_conf_and_ndata() -> Result<String> {
+fn setup_conf_and_ndata() -> Result<PathBuf> {
     unsafe {
         naevc::conf_setDefaults(); /* set the default config values. */
         /*
@@ -128,21 +130,14 @@ fn setup_conf_and_ndata() -> Result<String> {
         naevc::conf_loadConfigPath();
     }
 
-    // Create the home directory if needed.
-    let cpath = unsafe { naevc::nfile_configPath() };
-    unsafe {
-        if naevc::nfile_dirMakeExist(cpath) != 0 {
-            warnx!(gettext("Unable to create config directory '{}'"), "foo");
-        }
-    }
-
     // Set up the configuration.
     if let Err(e) = ndata::cwrap::migrate_pref() {
         warn_err!(e);
     }
-    let conf_file_path: String = {
-        let path = ndata::pref_dir().join("conf.lua");
-        path.to_string_lossy().to_string()
+    let conf_file_path = {
+        let pref = ndata::pref_dir();
+        fs::create_dir_all(pref)?;
+        pref.join("conf.lua")
     };
 
     // Load up the argv and argc for the C main.
@@ -155,7 +150,7 @@ fn setup_conf_and_ndata() -> Result<String> {
     argv.shrink_to_fit();
 
     unsafe {
-        let cconf_file_path = CString::new(conf_file_path.clone()).unwrap();
+        let cconf_file_path = CString::new(conf_file_path.to_string_lossy().to_string()).unwrap();
         naevc::conf_loadConfig(cconf_file_path.as_ptr()); /* Lua to parse the configuration file */
         naevc::conf_parseCLI(argv.len() as c_int, argv.as_mut_ptr()); /* parse CLI arguments */
     }
@@ -223,7 +218,10 @@ fn naevmain() -> Result<()> {
     unsafe {
         // Set up I/O.
         naevc::gettext_setLanguage(naevc::conf.language); /* now that we can find translations */
-        infox!(gettext("Loaded configuration: {}"), conf_file_path);
+        infox!(
+            gettext("Loaded configuration: {}"),
+            conf_file_path.display()
+        );
         let search_path = naevc::PHYSFS_getSearchPath();
         let mut buf = String::from(gettext("Read locations, searched in order:"));
         {
