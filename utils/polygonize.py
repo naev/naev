@@ -698,7 +698,7 @@ def polygonify_all_outfits(gfxPath, polyPath, overwrite):
             not fileName.endswith(("-end.png", "-end.webp", "-end.avif"))) and
             not fileName.startswith("beam_")):
 
-         polyAddress = (polyPath+fileName+".xml")
+         polyAddress = (polyPath+os.path.splitext(fileName)[0]+".xml")
 
          # Test if the file already exists
          if ( not overwrite and os.path.exists(polyAddress) ) :
@@ -737,7 +737,7 @@ def polygonify_all_asteroids( gfxPath, polyPath, overwrite ):
 
    for fileName in os.listdir(gfxPath):
 
-      polyAddress = (polyPath+fileName+".xml")
+      polyAddress = (polyPath+os.path.splitext(fileName)[0]+".xml")
 
       # Test if the file already exists
       if ( not overwrite and os.path.exists(polyAddress) ) :
@@ -769,7 +769,6 @@ def polygonify_all_asteroids( gfxPath, polyPath, overwrite ):
       """
 
       generateXML(polygon,polyAddress)
-
 
 ships = {}
 def parse_ships():
@@ -884,6 +883,8 @@ Examples:
    parser.add_argument("--gfxpath", help="Root path which the graphic assets are located.", type=str, default="assets/gfx/" )
    parser.add_argument("--visualize", help="Whether or not the results should be visualized as a matplotlib animation. Only will process the first ship XML file path", type=bool, default=False, action=argparse.BooleanOptionalAction )
    args, unknown = parser.parse_known_args()
+
+   #polygonify_all_outfits( args.gfxpath, args.outpath, False )
 
    # Comparison mode shows difference between 3D and 2D
    if args.compare:
