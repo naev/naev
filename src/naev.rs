@@ -130,10 +130,13 @@ fn setup_conf_and_ndata() -> Result<PathBuf> {
         naevc::conf_loadConfigPath();
     }
 
-    // Set up the configuration.
-    if let Err(e) = ndata::cwrap::migrate_pref() {
-        warn_err!(e);
+    if unsafe { naevc::conf.datapath.is_null() } {
+        if let Err(e) = ndata::cwrap::migrate_pref() {
+            warn_err!(e);
+        }
     }
+
+    // Set up the configuration
     let conf_file_path = {
         let pref = ndata::pref_dir();
         fs::create_dir_all(pref)?;
