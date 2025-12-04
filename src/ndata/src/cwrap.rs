@@ -13,7 +13,9 @@ pub fn migrate_pref() -> Result<()> {
         let old = sdl::filesystem::get_pref_path(".", "org.naev.Naev")?;
         if old.is_dir() {
             let new = crate::pref_dir().to_path_buf();
-            fs::rename(old, new)?;
+            if new != old {
+                fs::rename(old, new)?;
+            }
         }
         debug!("Migrated Mac OS preferences.");
     }
@@ -29,7 +31,7 @@ pub fn migrate_pref() -> Result<()> {
         let pref = crate::pref_dir();
         fs::create_dir_all(pref)?;
         let new = pref.join("conf.lua");
-        if !new.is_file() {
+        if (cconfig != new) && !new.is_file() {
             fs::rename(cconfig, new)?;
         }
         debug!("Migrated configuration file.");

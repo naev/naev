@@ -29,6 +29,19 @@ struct Directories {
 }
 impl Directories {
     fn new() -> Self {
+        // Global override takes preference if applicable
+        if unsafe { !naevc::conf.datapath.is_null() } {
+            let datapath = unsafe { CStr::from_ptr(naevc::conf.datapath) }
+                .to_string_lossy()
+                .to_string();
+            let path: PathBuf = datapath.into();
+            return Directories {
+                cache: path.join("cache/"),
+                pref: path,
+            };
+        }
+
+        // Try to find normally
         match ProjectDirs::from("", "", "naev") {
             Some(pd) => Self::from_project_dirs(&pd),
             None => {
@@ -65,17 +78,6 @@ pub fn cache_dir() -> &'static Path {
 /// Initializes the ndata, has to be called first.
 /// Will only return an Err when it is not recoverable.
 pub fn setup() -> anyhow::Result<()> {
-    // Global override takes preference if applicable
-    unsafe {
-        if !naevc::conf.datapath.is_null() {
-            let datapath = CStr::from_ptr(naevc::conf.datapath);
-            physfs::set_write_dir(&*datapath.to_string_lossy()).unwrap_or_else(|e| {
-                warn_err!(e);
-            });
-            return Ok(());
-        }
-    }
-
     match physfs::set_write_dir(pref_dir()) {
         Ok(_) => (),
         Err(e) => {
