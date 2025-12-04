@@ -5,7 +5,7 @@
   <size>medium</size>
   <mass>70</mass>
   <price>85000</price>
-  <gfx_store>placeholder</gfx_store>
+  <gfx_store>microbond_plating</gfx_store>
   <description>Further developed from Nanobond plating, Microbond plating is a less dense, lighter revision that's still stronger than Plasteel, making it a great choice to strengthen the hull of a medium-sized ship.</description>
  </general>
  <specific type="modification">

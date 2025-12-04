@@ -7,7 +7,7 @@
   <mass>30</mass>
   <price>60000</price>
   <description>An additional processing unit to supplement the main processor of the core system, giving medium ships a little more processing power.</description>
-  <gfx_store>placeholder</gfx_store>
+  <gfx_store>cpu_ii</gfx_store>
  </general>
  <specific type="modification">
   <cpu_max>40</cpu_max>
