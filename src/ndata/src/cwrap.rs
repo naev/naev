@@ -26,7 +26,9 @@ pub fn migrate_pref() -> Result<()> {
     .into();
     cconfig.push("conf.lua");
     if cconfig.is_file() {
-        let new = crate::pref_dir().join("conf.lua");
+        let pref = crate::pref_dir();
+        fs::create_dir_all(pref)?;
+        let new = pref.join("conf.lua");
         if !new.is_file() {
             fs::rename(cconfig, new)?;
         }

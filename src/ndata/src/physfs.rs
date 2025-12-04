@@ -1,5 +1,6 @@
 /* Documentation mentions global lock in settings. Should be thread-safe _except_ for opening the
  * same file and writing + reading/writing with multiple threads. */
+use fs_err as fs;
 use sdl::iostream::IOStream;
 use sdl3 as sdl;
 use std::ffi::{CStr, CString, c_int};
@@ -74,7 +75,9 @@ pub fn error_as_io_error_with_file<P: AsRef<Path>>(func: &str, file: P) -> Error
 }
 
 pub fn set_write_dir<P: AsRef<Path>>(path: P) -> Result<()> {
-    let s = CString::new(path.as_ref().as_os_str().as_encoded_bytes())?;
+    let path = path.as_ref();
+    fs::create_dir_all(path)?;
+    let s = CString::new(path.as_os_str().as_encoded_bytes())?;
     match unsafe { naevc::PHYSFS_setWriteDir(s.as_ptr()) } {
         0 => Err(error_as_io_error("PHYSFS_setWriteDir")),
         _ => Ok(()),
@@ -82,12 +85,20 @@ pub fn set_write_dir<P: AsRef<Path>>(path: P) -> Result<()> {
 }
 
 pub fn get_base_dir() -> String {
-    let val = unsafe { CStr::from_ptr(naevc::PHYSFS_getBaseDir()) };
+    let dir = unsafe { naevc::PHYSFS_getBaseDir() };
+    if dir.is_null() {
+        return ".".to_string();
+    }
+    let val = unsafe { CStr::from_ptr(dir) };
     String::from(val.to_string_lossy())
 }
 
 pub fn get_write_dir() -> String {
-    let val = unsafe { CStr::from_ptr(naevc::PHYSFS_getWriteDir()) };
+    let dir = unsafe { naevc::PHYSFS_getWriteDir() };
+    if dir.is_null() {
+        return ".".to_string();
+    }
+    let val = unsafe { CStr::from_ptr(dir) };
     String::from(val.to_string_lossy())
 }
 
