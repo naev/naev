@@ -694,8 +694,8 @@ def polygonify_all_outfits(gfxPath, polyPath, overwrite):
    }
 
    for fileName in os.listdir(gfxPath):
-      if ((fileName.endswith((".png", ".webp")) and
-            not fileName.endswith(("-end.png", "-end.webp"))) and
+      if ((fileName.endswith((".png", ".webp", ".avif")) and
+            not fileName.endswith(("-end.png", "-end.webp", "-end.avif"))) and
             not fileName.startswith("beam_")):
 
          polyAddress = (polyPath+fileName+".xml")
@@ -819,7 +819,9 @@ def polygonify_ship( filename, outpath, gfxpath, use2d=True, use3d=True ):
       # Fall back to image
       if use2d and pntNplg==None:
          print("Failed to find 3D model, falling back to 2D")
-         imgpath = f"{gfxpath}/ship/{tag.text.split('_')[0]}/{tag.text}.webp"
+         imgpath = f"{gfxpath}/ship/{tag.text.split('_')[0]}/{tag.text}.avif"
+         if not os.path.isfile(imgpath):
+            imgpath = f"{gfxpath}/ship/{tag.text.split('_')[0]}/{tag.text}.webp"
          if not os.path.isfile(imgpath):
             imgpath = f"{gfxpath}/ship/{tag.text.split('_')[0]}/{tag.text}.png"
          sx = int(tag.get("sx")) if tag.get("sx")!=None else 8
