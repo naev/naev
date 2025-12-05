@@ -6,7 +6,7 @@ use sdl3 as sdl;
 use std::ffi::{CStr, CString, c_int};
 use std::io::{Error, ErrorKind, Read, Result, Seek, SeekFrom, Write};
 use std::os::raw::c_void;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicPtr, Ordering};
 
 fn error_to_errorkind(error: naevc::PHYSFS_ErrorCode) -> ErrorKind {
@@ -84,32 +84,35 @@ pub fn set_write_dir<P: AsRef<Path>>(path: P) -> Result<()> {
     }
 }
 
-pub fn get_base_dir() -> String {
+pub fn get_base_dir() -> PathBuf {
     let dir = unsafe { naevc::PHYSFS_getBaseDir() };
     if dir.is_null() {
-        return ".".to_string();
+        return "./".into();
     }
     let val = unsafe { CStr::from_ptr(dir) };
-    String::from(val.to_string_lossy())
+    val.to_string_lossy().to_string().into()
 }
 
-pub fn get_write_dir() -> String {
+pub fn get_write_dir() -> PathBuf {
     let dir = unsafe { naevc::PHYSFS_getWriteDir() };
     if dir.is_null() {
-        return ".".to_string();
+        return "./".into();
     }
     let val = unsafe { CStr::from_ptr(dir) };
-    String::from(val.to_string_lossy())
+    val.to_string_lossy().to_string().into()
 }
 
-pub fn get_pref_dir(org: &str, app: &str) -> Result<String> {
+pub fn get_pref_dir(org: &str, app: &str) -> Result<PathBuf> {
     let corg = CString::new(org)?;
     let capp = CString::new(app)?;
     let val = unsafe { naevc::PHYSFS_getPrefDir(corg.as_ptr(), capp.as_ptr()) };
     if val.is_null() {
         Err(error_as_io_error("PHYSFS_getPrefDir"))
     } else {
-        unsafe { Ok(String::from(CStr::from_ptr(val).to_string_lossy())) }
+        Ok(unsafe { CStr::from_ptr(val) }
+            .to_string_lossy()
+            .to_string()
+            .into())
     }
 }
 

@@ -90,7 +90,7 @@ pub fn setup() -> anyhow::Result<()> {
     }
 
     // Redirect the log after we set up the write directory.
-    let logpath = Path::new(&physfs::get_write_dir()).join("logs");
+    let logpath = physfs::get_write_dir().join("logs");
     let _ = std::fs::create_dir_all(&logpath);
     let logfile = logpath.join(
         chrono::Local::now()
@@ -161,7 +161,7 @@ pub fn setup() -> anyhow::Result<()> {
     for s in [
         &pkgdatadir,
         naevc::config::PKGDATADIR,
-        &physfs::get_base_dir(),
+        &physfs::get_base_dir().to_string_lossy().to_string(),
     ] {
         if found() {
             break;
