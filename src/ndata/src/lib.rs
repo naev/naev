@@ -39,27 +39,23 @@ impl Directories {
             };
         }
 
-        // Try to find normally
-        match ProjectDirs::from("", "", "naev") {
-            Some(pd) => Self::from_project_dirs(&pd),
-            None => {
-                // Fall back to SDL for now
-                let path = sdl::filesystem::get_pref_path(".", "naev").unwrap();
-                Self {
-                    cache: path.join("cache"),
-                    pref: path,
-                }
+        // We would want to use ProjectDirs for everything, but there is no equivalent to the
+        // sdl3::filesystem::get_pref_dir and instead data_dir() is a subdir so we frankenstein it
+        let pref = match sdl::filesystem::get_pref_path(".", "naev") {
+            Ok(path) => path,
+            Err(e) => {
+                warn_err!(e);
+                ProjectDirs::from("", "", "naev")
+                    .unwrap()
+                    .data_dir()
+                    .to_path_buf()
             }
-        }
-    }
-
-    fn from_project_dirs(pd: &ProjectDirs) -> Self {
-        Self {
-            // TODO should we use the project_path here? Is it OK to use? Gives the closest to the
-            // old behaviour with sdl3 / custom implementation
-            pref: pd.project_path().to_path_buf(),
-            cache: pd.cache_dir().to_path_buf(),
-        }
+        };
+        let cache = match ProjectDirs::from("", "", "naev") {
+            Some(pd) => pd.cache_dir().to_path_buf(),
+            None => pref.join("cache/"),
+        };
+        Self { pref, cache }
     }
 }
 
@@ -365,3 +361,61 @@ pub fn stat<P: AsRef<Path>>(filename: P) -> Result<Stat> {
         }),
     }
 }
+
+/*
+/// Like fs::canonicalize but doesn't require the path to exist.
+/// For String use simplify_path.
+fn normalize_path<P: AsRef<Path>>(path: P) -> Option<PathBuf> {
+    use std::path::Component;
+    let mut test_path = PathBuf::new();
+    for component in path.as_ref().components() {
+        match component {
+            Component::ParentDir => {
+                if !test_path.pop() {
+                    return None;
+                }
+            }
+           Component::CurDir => {}
+            _ => test_path.push(component.as_os_str()),
+        }
+    }
+    Some(test_path)
+}
+
+/// Checks to see if a path is within the base path.
+fn is_path_within_base<P: AsRef<Path>>(path: P, base: P) -> bool {
+    if let (Some(norm_path), Some(norm_base)) = (normalize_path(path), normalize_path(base)) {
+        norm_path.starts_with(norm_base)
+    } else {
+        false
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn normalize_path_test() {
+        assert_eq!(normalize_path(Path::new(".")), Some(PathBuf::from("")));
+        assert_eq!(normalize_path(Path::new("a")), Some(PathBuf::from("a")));
+        assert_eq!(normalize_path(Path::new("./././a/..")), Some(PathBuf::from("")));
+        assert_eq!(normalize_path(Path::new("a/..")), Some(PathBuf::from("")));
+        assert_eq!(normalize_path(Path::new("a/../b")), Some(PathBuf::from("b")));
+        assert_eq!(normalize_path(Path::new("..")), None);
+        assert_eq!(normalize_path(Path::new("a/../..")), None);
+    }
+
+    #[test]
+    fn is_path_within_base_test() {
+        assert!(is_path_within_base(Path::new("a/b/c"), Path::new("a")));
+        assert!(is_path_within_base(Path::new("a/b/c"), Path::new("a/b")));
+        assert!(is_path_within_base(Path::new("a/b/c"), Path::new("a/b/c")));
+        assert!(is_path_within_base(Path::new(""), Path::new("")));
+        assert!(is_path_within_base(Path::new("a/."), Path::new("a/")));
+        assert!(!is_path_within_base(Path::new("a/b/c"), Path::new("a/b/c/d")));
+        assert!(!is_path_within_base(Path::new(""), Path::new("a/b/c/d")));
+        assert!(!is_path_within_base(Path::new("a/.."), Path::new("a/")));
+    }
+}
+*/
