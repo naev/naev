@@ -15,14 +15,12 @@ pub mod env;
 pub mod lua;
 pub mod physfs;
 
-pub const GFX_PATH: &str = "gfx/";
-
 /// Whether or not the data has likely been found
 fn found() -> bool {
     exists("VERSION") && exists("start.xml")
 }
 
-/// Wrapper
+/// Wrapper for directories, which lets us use different fallbacks and overrides
 struct Directories {
     pref: PathBuf,
     cache: PathBuf,
@@ -63,6 +61,7 @@ impl Directories {
     }
 }
 
+/// The local project directories that get cached on init
 static PROJECT_DIRS: LazyLock<Directories> = LazyLock::new(|| Directories::new());
 
 /// Gets the configuration directory

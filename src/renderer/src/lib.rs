@@ -17,6 +17,9 @@ pub mod sdf;
 pub mod shader;
 pub mod texture;
 
+/// Some hardcoded paths to search for things
+pub const GFX_PATH: &str = "gfx/";
+
 use crate::buffer::{
     Buffer, BufferBuilder, BufferTarget, BufferUsage, VertexArray, VertexArrayBuffer,
     VertexArrayBuilder,
@@ -531,7 +534,7 @@ impl Context {
             let filename = 'filename: {
                 for imageformat in texture::FORMATS {
                     for ext in imageformat.extensions_str() {
-                        let path = format!("{}{}.{}", ndata::GFX_PATH, "icon", ext);
+                        let path = format!("{}{}.{}", GFX_PATH, "icon", ext);
                         if ndata::exists(&path) {
                             break 'filename path;
                         }
@@ -948,7 +951,7 @@ pub struct LuaGfx;
  *
  * An example would be:
  * @code
- * t  = tex.open( GFX_PATH"foo/bar.png" ) -- Loads the texture
+ * t  = tex.open( "foo/bar.png" ) -- Loads the texture
  * gfx.renderTex( t, 0., 0. ) -- Draws texture at origin
  * @endcode
  *
