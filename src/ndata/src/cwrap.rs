@@ -9,15 +9,20 @@ use std::path::PathBuf;
 /// TODO remove in 0.15.0 (or maybe 0.14.0?)
 pub fn migrate_pref() -> Result<()> {
     // For historical reasons predating physfs adoption, this case is different.
-    if cfg!(target_os = "macos") {
-        let old = sdl::filesystem::get_pref_path(".", "org.naev.Naev")?;
-        if old.is_dir() {
-            let new = crate::pref_dir().to_path_buf();
-            if new != old {
-                fs::rename(old, new)?;
-            }
+    let old = sdl::filesystem::get_pref_path(
+        ".",
+        if cfg!(target_os = "macos") {
+            "org.naev.Naev"
+        } else {
+            "naev"
+        },
+    )?;
+    if old.is_dir() {
+        let new = crate::pref_dir().to_path_buf();
+        if new != old && !new.is_dir() {
+            fs::rename(old, new)?;
+            debug!("Migrated old preferences.");
         }
-        debug!("Migrated Mac OS preferences.");
     }
 
     // Migrate configuration over if found

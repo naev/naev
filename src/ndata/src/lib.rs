@@ -55,7 +55,9 @@ impl Directories {
 
     fn from_project_dirs(pd: &ProjectDirs) -> Self {
         Self {
-            pref: pd.data_dir().to_path_buf(),
+            // TODO should we use the project_path here? Is it OK to use? Gives the closest to the
+            // old behaviour with sdl3 / custom implementation
+            pref: pd.project_path().to_path_buf(),
             cache: pd.cache_dir().to_path_buf(),
         }
     }
