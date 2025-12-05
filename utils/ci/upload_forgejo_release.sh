@@ -25,7 +25,7 @@ Optional:
   --hide-archive-link  Hide auto-generated source archives on the release.
 
 Auth:
-  FORGEJO_TOKEN (preferred), else CODEBERG_TOKEN, else GITHUB_TOKEN.
+   FORGEJO_TOKEN (preferred), else CODEBERG_TOKEN, else GITHUB_TOKEN.
 EOF
    exit 1
 }
@@ -92,7 +92,7 @@ retry() {
    local i=1
    while (( i <= attempts )); do
       if "$@"; then
-        return 0
+         return 0
       fi
       echo "warn: attempt $i/$attempts failed, retrying in ${delay}s..." >&2
       sleep "$delay"

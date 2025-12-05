@@ -8,8 +8,8 @@ set -euo pipefail
 usage() {
    cat <<'EOF'
 Usage:
-  generate_release_notes.sh --mode changelog --tag TAG --changelog FILE --output FILE
-  generate_release_notes.sh --mode nightly --repo-path PATH --prev-sha SHA --build-sha SHA --build-date DATE --output FILE [--repo-url URL]
+   generate_release_notes.sh --mode changelog --tag TAG --changelog FILE --output FILE
+   generate_release_notes.sh --mode nightly --repo-path PATH --prev-sha SHA --build-sha SHA --build-date DATE --output FILE [--repo-url URL]
 
 Options:
   --mode changelog           Extract section matching "## TAG" from changelog.
@@ -68,8 +68,8 @@ case "$MODE" in
       notes="$(awk -v tag="## ${TAG}" '
          BEGIN {found=0}
          /^## / {
-           if (found) exit
-           if ($0 == tag) {found=1; next}
+            if (found) exit
+            if ($0 == tag) {found=1; next}
          }
          found {print}
       ' "$CHANGELOG")"
