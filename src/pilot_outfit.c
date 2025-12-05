@@ -1234,7 +1234,7 @@ void pilot_calcStats( Pilot *pilot )
    pilot->armour = ac * pilot->armour_max;
    pilot->shield = sc * pilot->shield_max;
    pilot->energy = ec * pilot->energy_max;
-   pilot->fuel   = fc * pilot->fuel_max;
+   pilot->fuel   = round( fc * pilot->fuel_max );
 
    /* Some sanity checks. */
    pilot->stats.time_speedup = MAX( pilot->stats.time_speedup, 0. );
