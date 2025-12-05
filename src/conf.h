@@ -5,8 +5,6 @@
 
 #include <time.h>
 
-#define CONF_FILE "conf.lua" /**< Configuration file by default. */
-
 /**
  * CONFIGURATION DEFAULTS
  */
