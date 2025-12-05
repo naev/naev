@@ -39,19 +39,35 @@ static int do_it(MYFILE *fp, const char *pref)
    int      in_comment = 0;
    unsigned lineno     = 0;
    int      warn_left  = 5;
+   int      crt_indent = 0;
 
    while (my_getline(&line, &line_siz, fp) != -1) {
       lineno++;
       if (in_comment) {
+         int   i;
          char *where;
-         if ((where = strstr(line, "*/"))) {
+         for (i = 0; i < crt_indent + 1 && line[i] == ' '; i++)
+            ;
+         if (line[i] == '\0' || line[i] == '\n') {
+            fprintf(stderr, "%s%u: ", pref, lineno);
+            fprintf(stderr, "Unexpected blank line.\n");
+            continue;
+         }
+
+         if (i < crt_indent + 1) {
+            fprintf(stderr, "%s%u: ", pref, lineno);
+            fprintf(stderr, "Under-indented comment line.\n");
+         }
+         if ((where = strstr(line + i, "*/"))) {
             strcpy(where, "\n");
             in_comment = 0;
          }
-         if (!strncmp(line, " *", 2)) {
+         if (line[i] == '*') {
+            if (line[i + 1] == '\n' || line[i + 1] == '\0')
+               continue;
             int n = sprintf(buff, "%s%u: ", pref, lineno);
 
-            char *const str = line + 2 + (line[2] == ' ' ? 1 : 0);
+            char *const str = line + i + 2 + (line[i + 2] == ' ' ? 1 : 0);
             char *const end = my_strchrnul(str, '\n');
             for (where = end; where[-1] == ' '; where--)
                ;
@@ -61,14 +77,18 @@ static int do_it(MYFILE *fp, const char *pref)
             strcpy(where, end);
             fwrite(str, sizeof(char), strlen(str), stdout);
          } else if (in_comment && warn_left) {
-            *my_strchrnul(line, '\n') = '\0';
+            *my_strchrnul(line + i, '\n') = '\0';
             fprintf(stderr, "%s%u: ", pref, lineno);
-            fprintf(stderr, "Invalid comment line \"%s\"\n", line);
+            fprintf(stderr, "Invalid comment line \"%s\"\n", line + i);
             warn_left--;
          }
-      } else if (!strcmp(line, "/**\n")) {
-         in_comment = 1;
-         fwrite("\n", sizeof(char), 1, stdout);
+      } else {
+         for (crt_indent = 0; line[crt_indent] == ' '; crt_indent++)
+            ;
+         if (!strcmp(line + crt_indent, "/**\n")) {
+            in_comment = 1;
+            fwrite("\n", sizeof(char), 1, stdout);
+         }
       }
    }
 
