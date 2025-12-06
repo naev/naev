@@ -74,16 +74,11 @@ repos:
       types: [xml]
       language: script
       exclude: org.naev.Naev.metainfo.xml
-    - id: doxspell-rust
-      name: doxspell (rust)
+    - id: doxspell
+      name: doxspell
       entry: utils/doxspell.sh
       language: script
-      types: [rust]
-    - id: doxspell-c
-      name: doxspell (c)
-      entry: utils/doxspell.sh
-      language: script
-      types: [c]
+      types_or: [rust, c]
     - id: expand-tabs.sh
       name: expand tabs (bash)
       entry: utils/shlinters/expand-tabs.sh
