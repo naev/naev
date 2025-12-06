@@ -85,7 +85,8 @@ static int do_it(MYFILE *fp, const char *pref)
       } else {
          for (crt_indent = 0; line[crt_indent] == ' '; crt_indent++)
             ;
-         if (!strcmp(line + crt_indent, "/**\n")) {
+         if (!strcmp(line + crt_indent, "/**\n") ||
+             !strcmp(line + crt_indent, "/*@\n")) {
             in_comment = 1;
             fwrite("\n", sizeof(char), 1, stdout);
          }

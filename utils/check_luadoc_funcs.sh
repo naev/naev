@@ -11,7 +11,7 @@ trap 'rm -f "$TMP" "$TMP2" ; exit $res' EXIT
 
 doxt="$("$SCRIPT_DIR"/get_doxtractor.sh)"
 for arg in "$@" ; do
-   "$SCRIPT_DIR/../docs/lua/c2luadoc.sh" "$doxt" "$arg" "$TMP" &
+   "$SCRIPT_DIR/../docs/lua/src2luadoc.sh" "$doxt" "$arg" "$TMP" &
    sed ':a;N;$!ba;s/\n--/\\n--/g' < "$TMP" | grep -v '\(^$\)\|\(@module\)\|\(@function\)' > "$TMP2"
    if [ -s "$TMP2" ] ; then
       echo "$arg:"
