@@ -11,8 +11,8 @@ PERS_U="$SCRIPT_DIR/naev_ugly.aspell.pws"
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ -z "$*" ]; then
    DOC=(
-      "usage  $(basename "$0") <file.c>.."
-      "Apply aspell to the doxygen strings contained in c files provided in input."
+      "usage  $(basename "$0") <file>.."
+      "Apply aspell to the doxygen strings contained in c/rs files provided in input."
       ""
       "When you get a warning, you have 4 options:"
       " - fix the spelling if possible."

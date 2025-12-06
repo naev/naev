@@ -74,8 +74,13 @@ repos:
       types: [xml]
       language: script
       exclude: org.naev.Naev.metainfo.xml
-    - id: doxspell
-      name: doxspell
+    - id: doxspell-rust
+      name: doxspell (rust)
+      entry: utils/doxspell.sh
+      language: script
+      types: [rust]
+    - id: doxspell-c
+      name: doxspell (c)
       entry: utils/doxspell.sh
       language: script
       types: [c]
