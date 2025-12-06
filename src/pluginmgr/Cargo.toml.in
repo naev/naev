@@ -17,7 +17,6 @@ serde = { workspace = true }
 reqwest = { workspace = true }
 zip = { workspace = true }
 walkdir = { workspace = true }
-directories = { workspace = true }
 fs-err = { workspace = true }
 bytes = { workspace = true }
 semver = { workspace = true }
