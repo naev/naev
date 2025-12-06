@@ -2,6 +2,7 @@ po/naevpedia.pot
 po/physfs.pot
 po/credits.pot
 po/toml.pot
+po/outfits_generated.pot
 dat/asteroids/groups/typeA_poor.xml
 dat/asteroids/groups/typeA_rich.xml
 dat/asteroids/groups/typeA_standard.xml

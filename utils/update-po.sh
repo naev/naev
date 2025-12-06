@@ -54,6 +54,10 @@ if [ "$3" != "--pre-commit" ]; then
    readarray -t MD1 <<< "$(cd dat; find_files naevpedia md | sed 's|^|dat/|')"
    readarray -t MD2 <<< "$(find "${BUILDDIR}/dat/naevpedia" -name "*.md")"
    po/naevpedia_pot.py po/naevpedia.pot "${MD1[@]}" "${MD2[@]}"
+
+   readarray -t MD3 <<< "$(find "${BUILDDIR}/dat/outfits" -name "*.xml")"
+   xgettext --its "$1/po/its/translation.its" "${MD3[@]}" -o "po/outfits_generated.pot"
+   sed -i 's/CHARSET/UTF-8/' "po/outfits_generated.pot"
 fi
 
 # Generate the POTFILES.in using the sub files and the rest of the stuff
@@ -63,6 +67,7 @@ TMPFILE=$(mktemp)
    echo po/physfs.pot
    echo po/credits.pot
    echo po/toml.pot
+   echo po/outfits_generated.pot
    find_files dat xml | deterministic_sort
    ( find_files dat lua; find_files src "[ch]"; find_files src rs) | deterministic_sort
    find_files dat/outfits py | deterministic_sort
