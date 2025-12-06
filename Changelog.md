@@ -7,6 +7,7 @@
   * Uninstalling a plugin will reset its disabled state
   * Move config file with rest of files and unified code handling local files
   * Added fallback server for plugin manager
+  * Increased the distance threshold for escorts to automatically jump
   * Fixed bioship outfit graphics being broken
   * Fixed stations not having collision polygons
   * Fixed some generic NPCs not talking

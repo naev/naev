@@ -47,7 +47,7 @@ local fmt = require "format"
 local vntk = require "vntk"
 local aisetup = require "ai.core.setup"
 
-local DISTANCE_THRESHOLD2 = 1000^2
+local DISTANCE_THRESHOLD2 = 2000^2
 local HEARTBEAT_TIMER = 1
 
 local escort_outfits
