@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-11-23 22:49+0900\n"
+"POT-Creation-Date: 2025-12-06 22:10+0900\n"
 "PO-Revision-Date: 2025-10-27 08:32+0000\n"
 "Last-Translator: Dawedaen <dawedaen@noreply.codeberg.org>\n"
 "Language-Team: Czech <https://translate.codeberg.org/projects/naev/naev/cs/"
@@ -10227,7 +10227,7 @@ msgstr "   * Různé opravy a překlepy"
 msgid "   * Many bugs caught (reported in the Discord under ##bugs)"
 msgstr ""
 
-msgid "hypersoop"
+msgid "hsza (aka zaire)"
 msgstr ""
 
 msgid "   * Multiple ship variant and outfit ideas"
@@ -10326,6 +10326,9 @@ msgid "Elven_Moustache"
 msgstr "Elven_Moustache"
 
 msgid "Pyroman"
+msgstr ""
+
+msgid "hsza"
 msgstr ""
 
 msgid "Artwork Contributors"
@@ -10618,6 +10621,315 @@ msgstr ""
 
 msgctxt "slotproperty"
 msgid "Core Systems (Secondary)"
+msgstr ""
+
+msgid "Immane Cerebrum III"
+msgstr ""
+
+msgid "Bioship Brain"
+msgstr ""
+
+msgid ""
+"The brain is a Soromid bioship's equivalent to core systems in synthetic "
+"ships. Possibly the most important organ, the brain provides processing "
+"power and allocates energy to the rest of the organism. All brains start off "
+"undeveloped, but over time, just like the ships themselves, they grow and "
+"improve."
+msgstr ""
+
+msgid "Talon Organ III"
+msgstr ""
+
+msgid "Bioship Weapon Organ"
+msgstr ""
+
+msgid ""
+"The Talon Organ is an enlarged and more powerful version of the Stinger "
+"Organ. Like its smaller counterpart, is able to convert energy into hot "
+"plasma that is able to eat easily through shield and armour of opposing "
+"ships. The hot plasma is able to cling to ship's shields and hulls dealing "
+"continuous damage after impact."
+msgstr ""
+
+msgid "Stinger Organ I"
+msgstr ""
+
+msgid ""
+"The Stinger Organ is able to convert energy into hot plasma that is able to "
+"eat easily through shield and armour of opposing ships over time. While not "
+"an especially powerful offensive organ, it is prized for its reliability."
+msgstr ""
+
+msgid "Largus Gene Drive II"
+msgstr ""
+
+msgid "Bioship Gene Drive"
+msgstr ""
+
+msgid ""
+"The gene drive is a Soromid bioship's equivalent to engines in synthetic "
+"ships. It is charged with moving the organism through space and is even "
+"capable of hyperspace travel. All gene drives start off undeveloped, but "
+"over time, just like the ships themselves, they grow and improve."
+msgstr ""
+
+msgid "Mediocris Cortex II"
+msgstr ""
+
+msgid "Bioship Shell"
+msgstr ""
+
+msgid ""
+"The shell is a Soromid bioship's natural protection, equivalent to hulls of "
+"synthetic ships. The shell is responsible both for protecting the organism's "
+"internal organs and for creating camouflage to reduce the risk of being "
+"detected by hostiles. All shells start off undeveloped, but over time, just "
+"like the ships themselves, they grow and improve."
+msgstr ""
+
+#, fuzzy
+#| msgid "Bioship Gene Drives"
+msgid "Magnus Gene Drive III"
+msgstr "Genové jednotky biolodě"
+
+msgid "Perlevis Cortex I"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bioship Gene Drives"
+msgid "Grandis Gene Drive III"
+msgstr "Genové jednotky biolodě"
+
+msgid "Ponderosus Gene Drive I"
+msgstr ""
+
+msgid "Largus Cortex I"
+msgstr ""
+
+msgid "Tentacle Organ IV"
+msgstr ""
+
+msgid ""
+"The Tentacle Organ has the distinction of being the only fully rotating "
+"organic weapon while boasting a fully developed power output that is hard to "
+"beat with conventional weaponry found throughout the galaxy. The large globs "
+"of hot plasma it launches can corrode through seemingly impregnable armours, "
+"seeping into and melting ships from the inside upon contact."
+msgstr ""
+
+msgid "Immane Cerebrum II"
+msgstr ""
+
+msgid "Laevum Cerebrum I"
+msgstr ""
+
+msgid "Stinger Organ III"
+msgstr ""
+
+msgid "Largus Cortex III"
+msgstr ""
+
+msgid "Laevis Gene Drive II"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bioship Gene Drives"
+msgid "Grandis Gene Drive I"
+msgstr "Genové jednotky biolodě"
+
+msgid "Laevis Gene Drive I"
+msgstr ""
+
+msgid "Ponderosus Gene Drive II"
+msgstr ""
+
+msgid "Stinger Organ II"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bioship Gene Drives"
+msgid "Magnus Gene Drive II"
+msgstr "Genové jednotky biolodě"
+
+msgid "Perlevis Cortex II"
+msgstr ""
+
+msgid "Immanis Gene Drive III"
+msgstr ""
+
+msgid "Tentacle Organ III"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bioship Gene Drives"
+msgid "Laeviter Gene Drive I"
+msgstr "Genové jednotky biolodě"
+
+msgid "Ponderosus Cortex II"
+msgstr ""
+
+msgid "Mediocris Gene Drive I"
+msgstr ""
+
+msgid "Mediocris Gene Drive II"
+msgstr ""
+
+msgid "Perleve Cerebrum I"
+msgstr ""
+
+msgid "Ponderosus Cortex III"
+msgstr ""
+
+msgid "Talon Organ IV"
+msgstr ""
+
+msgid "Ponderosum Cerebrum II"
+msgstr ""
+
+msgid "Mediocris Cortex I"
+msgstr ""
+
+msgid "Laevis Cortex I"
+msgstr ""
+
+msgid "Laeviter Gene Drive II"
+msgstr ""
+
+msgid "Tentacle Organ I"
+msgstr ""
+
+msgid "Immanis Cortex II"
+msgstr ""
+
+msgid "Largus Cortex II"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bioship Gene Drives"
+msgid "Grandis Gene Drive II"
+msgstr "Genové jednotky biolodě"
+
+msgid "Largus Gene Drive I"
+msgstr ""
+
+msgid "Mediocre Cerebrum I"
+msgstr ""
+
+msgid "Ponderosus Cortex I"
+msgstr ""
+
+msgid "Perlevis Gene Drive I"
+msgstr ""
+
+msgid "Perlevis Gene Drive II"
+msgstr ""
+
+msgid "Immanis Gene Drive II"
+msgstr ""
+
+msgid "Perleve Cerebrum II"
+msgstr ""
+
+msgid "Talon Organ I"
+msgstr ""
+
+msgid "Ponderosum Cerebrum I"
+msgstr ""
+
+msgid "Mediocris Gene Drive III"
+msgstr ""
+
+msgid "Immanis Cortex III"
+msgstr ""
+
+msgid "Laevis Cortex II"
+msgstr ""
+
+msgid "Immane Cerebrum I"
+msgstr ""
+
+msgid "Ponderosus Cortex IV"
+msgstr ""
+
+msgid "Mediocre Cerebrum II"
+msgstr ""
+
+msgid "Largum Cerebrum I"
+msgstr ""
+
+msgid "Magnus Gene Drive I"
+msgstr ""
+
+msgid "Ponderosum Cerebrum III"
+msgstr ""
+
+msgid "Tentacle Organ II"
+msgstr ""
+
+msgid "Ponderosus Gene Drive III"
+msgstr ""
+
+msgid "Immanis Cortex I"
+msgstr ""
+
+msgid "Immanis Gene Drive I"
+msgstr ""
+
+msgid "Laevum Cerebrum II"
+msgstr ""
+
+msgid "Largum Cerebrum II"
+msgstr ""
+
+msgid "Talon Organ II"
+msgstr ""
+
+msgid ""
+"The complex engineering specifications and difficulty of mass production "
+"doomed the Reaver Cannon from the start. However, in the right hands, given "
+"the extreme long range and high penetration for a weapon of its size, it can "
+"be very deadly."
+msgstr ""
+
+msgid "Core Systems (Engine)"
+msgstr "Základní systémy (motor)"
+
+msgid ""
+"there once was a big mighty corsair\n"
+"who was said to be the finest heir\n"
+"of some noble great house\n"
+"almost tied as a spouse\n"
+"before they quickly took to the air"
+msgstr ""
+
+msgid ""
+"Based on the Heavy Ion Cannon, the Neutralizer is proof to the importance of "
+"specialized engineering. With most of the hardware and software "
+"significantly modified or replaced, the Neutralizer shows significant "
+"improvements in nearly all facets. Due to the fact that few were made, it is "
+"a fairly rare find, but an import asset in a pilot's arsenal."
+msgstr ""
+
+msgid "Core Systems (System)"
+msgstr "Jádrové systémy (systém)"
+
+msgid ""
+"oh, the ferocious mighty corsair\n"
+"never sitting in their captain's chair\n"
+"least they puke out their grub\n"
+"all over the ship hub\n"
+"in space is it also mal de mer?"
+msgstr ""
+
+msgid "Core Systems (Hull)"
+msgstr "Základní systémy (Trup)"
+
+msgid ""
+"wish I be like that lovely corsair\n"
+"the prettiest of all pirate hair\n"
+"be drinking at the bar\n"
+"eyes green like fluorspar\n"
+"irresistible buccaneer stare"
 msgstr ""
 
 msgid "common"
@@ -11973,9 +12285,6 @@ msgstr "Způsobí 300 poškození plazmou všem nepřátelským lodím v dosahu 
 msgid "None"
 msgstr ""
 
-msgid "Core Systems (Engine)"
-msgstr "Základní systémy (motor)"
-
 msgid ""
 "This is a dummy engine for use in missions only, which does nothing. DO NOT "
 "BUY."
@@ -12184,9 +12493,6 @@ msgstr ""
 "výkonným motorem. Jeho cílem je, aby byl snadno modifikovatelný a umožnil "
 "vědcům Za'leku testovat nové chladicí a pohonné systémy. Tyto motory jsou "
 "velmi často upravovány studenty, což je činí nespolehlivými."
-
-msgid "Core Systems (Hull)"
-msgstr "Základní systémy (Trup)"
 
 msgid ""
 "This is a dummy hull for use in missions only, which does nothing. DO NOT "
@@ -12399,9 +12705,6 @@ msgstr ""
 "Plátování D-2, které se běžně vyskytuje na civilních plavidlech, je u "
 "výrobců lodí oblíbené díky své nízké ceně a přiměřeným, i když ne příliš "
 "inspirativním parametrům."
-
-msgid "Core Systems (System)"
-msgstr "Jádrové systémy (systém)"
 
 msgid ""
 "This is a dummy core system for use in missions only, which does nothing. DO "
@@ -16334,6 +16637,57 @@ msgstr ""
 #. Cargo light
 #. gfx.renderTex( cargo_light_off, ta_cargo_x, ta_cargo_y )
 #. Pilot name
+#. stress is only used for armour
+#. Get values
+#. Draw bar
+#. Draw border
+#. Icon
+#. Sheen
+#. Text
+#. Values
+#. Rather hacky, waiting for fix
+#. Radar
+#. Slots
+#. Right side
+#. There is something in this slot
+#. Background
+#. Image
+#.
+#. if wset[i].heat > 0 then
+#. gfx.renderRect( slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w * wset[i].heat/2, col_slot_heat ) --Heat
+#. end
+#. --
+#. Cooldown
+#. Turn the 0..1 cooldown number into a 0..35 tex id where 0 is ready. Also, reversed
+#. A strange thing: The texture at 6,6 is never drawn, the one at 5,6 only about 50% of the time. Otherwise, they're skipped
+#. is this an error in my code or bobbens' ?
+#. Ammo
+#. Lock-on
+#. Frame
+#. Left side
+#. There is something in this slot
+#. Background
+#. Draw a heat background for certain outfits. TODO: detect if the outfit is heat based somehow!
+#. if aset[i].type == "Afterburner" then
+#. gfx.renderRect( slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w * aset[i].heat, col_slot_heat ) -- Background (heat)
+#. end
+#. Image
+#. Cooldown
+#. Turn the 0..1 cooldown number into a 0..35 tex id where 0 is ready.
+#. A strange thing: The texture at 6,6 is never drawn, the one at 5,6 only about 50% of the time. Otherwise, they're skipped
+#. is this an error in my code or bobbens' ?
+#. "Heat"
+#. Frame
+#. Bars
+#. Fuel
+#. Armour
+#. Shield
+#. Energy
+#. Heat
+#. Speed
+#. Cargo
+#. Money
+#. Time
 #. The player automatically accepts this mission.
 #. This is the initial phase of the mission, when it still only shows up in the mission list. No OSD, reward or markers yet.
 #. Must be accepted beyond this point
@@ -55022,57 +55376,6 @@ msgstr ""
 msgid "Cargo:"
 msgstr ""
 
-#. stress is only used for armour
-#. Get values
-#. Draw bar
-#. Draw border
-#. Icon
-#. Sheen
-#. Text
-#. Values
-#. Rather hacky, waiting for fix
-#. Radar
-#. Slots
-#. Right side
-#. There is something in this slot
-#. Background
-#. Image
-#.
-#. if wset[i].heat > 0 then
-#. gfx.renderRect( slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w * wset[i].heat/2, col_slot_heat ) --Heat
-#. end
-#. --
-#. Cooldown
-#. Turn the 0..1 cooldown number into a 0..35 tex id where 0 is ready. Also, reversed
-#. A strange thing: The texture at 6,6 is never drawn, the one at 5,6 only about 50% of the time. Otherwise, they're skipped
-#. is this an error in my code or bobbens' ?
-#. Ammo
-#. Lock-on
-#. Frame
-#. Left side
-#. There is something in this slot
-#. Background
-#. Draw a heat background for certain outfits. TODO: detect if the outfit is heat based somehow!
-#. if aset[i].type == "Afterburner" then
-#. gfx.renderRect( slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w * aset[i].heat, col_slot_heat ) -- Background (heat)
-#. end
-#. Image
-#. Cooldown
-#. Turn the 0..1 cooldown number into a 0..35 tex id where 0 is ready.
-#. A strange thing: The texture at 6,6 is never drawn, the one at 5,6 only about 50% of the time. Otherwise, they're skipped
-#. is this an error in my code or bobbens' ?
-#. "Heat"
-#. Frame
-#. Bars
-#. Fuel
-#. Armour
-#. Shield
-#. Energy
-#. Heat
-#. Speed
-#. Cargo
-#. Money
-#. Time
 #. Remove trailing whitespace. TODO why do we have to do this? :/
 #. Dimensions
 #. Draw starfield background
@@ -72661,7 +72964,7 @@ msgid ""
 msgstr ""
 
 msgid ""
-"\"Meee? Drinkinging tooo mich? Thatss sshtoopid.\" -- codespell:ignore tooo\n"
+"\"Meee? Drinkinging tooo mich? Thatss sshtoopid.\"\n"
 "He takes another long swig of his drink and burps."
 msgstr ""
 
@@ -72757,8 +73060,7 @@ msgstr ""
 
 #. Get rid of the timeout hook
 msgid ""
-"#pYour ship has detected a curious signal originating from inside the "
-"system.#0"
+"Your ship has detected a curious signal originating from inside the system."
 msgstr ""
 
 msgid "Curious Signal"
@@ -72892,6 +73194,7 @@ msgstr ""
 msgid "That's what you said last time too!"
 msgstr ""
 
+#. Player beat the guys to it
 #, fuzzy
 msgid "You are about to be discovered!"
 msgstr "Chladně se na ně podíváš."
@@ -73856,10 +74159,6 @@ msgstr ""
 
 #. Spawn the drones
 msgid "Feral Alpha Drone"
-msgstr ""
-
-msgid ""
-"Your ship has detected a curious signal originating from inside the system."
 msgstr ""
 
 msgid "Security Drone"
@@ -83464,6 +83763,9 @@ msgstr ""
 #. end
 #. local mtest = require("misn_test")
 #. if not mtest.cargo(true) or not mtest.reweight_active() then
+#. return false
+#. end
+#. if player.pilot():cargoFree() &lt;= 0 then
 #. return false
 #. end
 #. local count = 0
@@ -116080,7 +116382,7 @@ msgstr ""
 #. @module vn
 #.
 #. Internal usage
-#. _soundTalk = audio.newSource( "snd/sounds/ui/letter0.wav" ),
+#. _soundTalk = audio.newSource( "snd/sounds/ui/letter0.ogg" ),
 #. Drawing
 #. Autosize
 #. Options
@@ -116291,6 +116593,7 @@ msgstr ""
 msgid "vn: character image '%s' not found!"
 msgstr ""
 
+#. vn code assumes lua graphics image, so rewrap if we think it's a rust-side texture
 #. --
 #. Renames a character on the fly.
 #. @tparam string newname New name to give the character.
@@ -123249,12 +123552,6 @@ msgid "Naev Failed to start due to a critical error"
 msgstr ""
 
 #, fuzzy
-msgid "Unable to create config directory '{}'"
-msgstr "Nelze vytvořit konfigurační adresář '%s'"
-
-#. Set up I/O.
-#. now that we can find translations
-#, fuzzy
 msgid "Loaded configuration: {}"
 msgstr "Načtená konfigurace: %s"
 
@@ -123262,14 +123559,9 @@ msgid "Read locations, searched in order:"
 msgstr "Přečtené lokality, vyhledané v pořadí:"
 
 #, fuzzy
-msgid "Cache location: {}"
-msgstr "Umístění mezipaměti: %s"
-
-#, fuzzy
 msgid "Write location: {}\n"
 msgstr "Umístění zápisu: %s\n"
 
-#, c-format
 msgid "Initializing video output failed, exiting…"
 msgstr ""
 
@@ -123361,53 +123653,6 @@ msgstr "Načítání dokončeno!"
 msgid " debug"
 msgstr "ladění"
 
-#, c-format
-msgid "Failed to parse version string '%s'!"
-msgstr "Nepodařilo se parsovat verzi řetězce '%s'!"
-
-#, c-format
-msgid "Unable to initialize SDL: %s"
-msgstr "Nelze inicializovat SDL: %s"
-
-#, c-format
-msgid "Unable to initialize SDL Video: %s"
-msgstr "Nelze inicializovat SDL: %s"
-
-#, c-format
-msgid "Unable to create config directory '%s'"
-msgstr "Nelze vytvořit konfigurační adresář '%s'"
-
-msgid "Missing Lua file!"
-msgstr ""
-
-#. now that we can find translations
-#, c-format
-msgid "Loaded configuration: %s"
-msgstr "Načtená konfigurace: %s"
-
-#. Logging the cache path is noisy, noisy is good at the DEBUG level.
-#, c-format
-msgid "Cache location: %s"
-msgstr "Umístění mezipaměti: %s"
-
-#, c-format
-msgid "Write location: %s\n"
-msgstr "Umístění zápisu: %s\n"
-
-#, c-format
-msgid "Failed to load module start data."
-msgstr "Nepodařilo se načíst data pro spuštění modulu."
-
-#, fuzzy, c-format
-msgid ""
-"Script '%s' Lua error:\n"
-"%s"
-msgstr "Chyba výčtu adresáře '%s': %s"
-
-#, c-format
-msgid "Processing '%s'..."
-msgstr ""
-
 #, fuzzy, c-format
 msgid ""
 "Naevpedia '%s' Lua error:\n"
@@ -123459,12 +123704,6 @@ msgstr "$XDG_CONFIG_HOME není nastaveno, používá se aktuální adresář."
 #, c-format
 msgid "%%APPDATA%% isn't set, using current directory."
 msgstr "%%APPDATA%% není nastaveno, používá se aktuální adresář."
-
-msgid "Cannot determine cache path, using current directory."
-msgstr "Nelze určit cestu k mezipaměti, používá se aktuální adresář."
-
-msgid "$XDG_CACHE_HOME isn't set, using current directory."
-msgstr "$XDG_CACHE_HOME není nastaveno, používá se aktuální adresář."
 
 #, c-format
 msgid "Dir '%s' does not exist and unable to create: %s"
@@ -127738,38 +127977,6 @@ msgstr ""
 msgid "Trying to remove beam with ID 0!"
 msgstr ""
 
-msgid ""
-"The brain is a Soromid bioship's equivalent to core systems in synthetic "
-"ships. Possibly the most important organ, the brain provides processing "
-"power and allocates energy to the rest of the organism. All brains start off "
-"undeveloped, but over time, just like the ships themselves, they grow and "
-"improve."
-msgstr ""
-
-msgid ""
-"The gene drive is a Soromid bioship's equivalent to engines in synthetic "
-"ships. It is charged with moving the organism through space and is even "
-"capable of hyperspace travel. All gene drives start off undeveloped, but "
-"over time, just like the ships themselves, they grow and improve."
-msgstr ""
-
-msgid ""
-"The shell is a Soromid bioship's natural protection, equivalent to hulls of "
-"synthetic ships. The shell is responsible both for protecting the organism's "
-"internal organs and for creating camouflage to reduce the risk of being "
-"detected by hostiles. All shells start off undeveloped, but over time, just "
-"like the ships themselves, they grow and improve."
-msgstr ""
-
-msgid "Bioship Brain"
-msgstr ""
-
-msgid "Bioship Gene Drive"
-msgstr ""
-
-msgid "Bioship Shell"
-msgstr ""
-
 #, fuzzy
 msgid " Gene Drive "
 msgstr "Genové jednotky biolodě"
@@ -127781,102 +127988,57 @@ msgstr "Bio-Korveta"
 msgid " Cerebrum "
 msgstr ""
 
-msgid "Bioship Weapon Organ"
-msgstr ""
+#, fuzzy
+#~ msgid "Unable to create config directory '{}'"
+#~ msgstr "Nelze vytvořit konfigurační adresář '%s'"
 
-msgid ""
-"The Stinger Organ is able to convert energy into hot plasma that is able to "
-"eat easily through shield and armour of opposing ships over time. While not "
-"an especially powerful offensive organ, it is prized for its reliability."
-msgstr ""
+#, fuzzy
+#~ msgid "Cache location: {}"
+#~ msgstr "Umístění mezipaměti: %s"
 
-msgid "Stinger Organ I"
-msgstr ""
+#, c-format
+#~ msgid "Failed to parse version string '%s'!"
+#~ msgstr "Nepodařilo se parsovat verzi řetězce '%s'!"
 
-msgid "Stinger Organ II"
-msgstr ""
+#, c-format
+#~ msgid "Unable to initialize SDL: %s"
+#~ msgstr "Nelze inicializovat SDL: %s"
 
-msgid "Stinger Organ III"
-msgstr ""
+#, c-format
+#~ msgid "Unable to initialize SDL Video: %s"
+#~ msgstr "Nelze inicializovat SDL: %s"
 
-msgid ""
-"The Talon Organ is an enlarged and more powerful version of the Stinger "
-"Organ. Like its smaller counterpart, is able to convert energy into hot "
-"plasma that is able to eat easily through shield and armour of opposing "
-"ships. The hot plasma is able to cling to ship's shields and hulls dealing "
-"continuous damage after impact."
-msgstr ""
+#, c-format
+#~ msgid "Unable to create config directory '%s'"
+#~ msgstr "Nelze vytvořit konfigurační adresář '%s'"
 
-msgid "Talon Organ I"
-msgstr ""
+#, c-format
+#~ msgid "Loaded configuration: %s"
+#~ msgstr "Načtená konfigurace: %s"
 
-msgid "Talon Organ II"
-msgstr ""
+#, c-format
+#~ msgid "Cache location: %s"
+#~ msgstr "Umístění mezipaměti: %s"
 
-msgid "Talon Organ III"
-msgstr ""
+#, c-format
+#~ msgid "Write location: %s\n"
+#~ msgstr "Umístění zápisu: %s\n"
 
-msgid "Talon Organ IV"
-msgstr ""
+#, c-format
+#~ msgid "Failed to load module start data."
+#~ msgstr "Nepodařilo se načíst data pro spuštění modulu."
 
-msgid ""
-"The Tentacle Organ has the distinction of being the only fully rotating "
-"organic weapon while boasting a fully developed power output that is hard to "
-"beat with conventional weaponry found throughout the galaxy. The large globs "
-"of hot plasma it launches can corrode through seemingly impregnable armours, "
-"seeping into and melting ships from the inside upon contact."
-msgstr ""
+#, fuzzy, c-format
+#~ msgid ""
+#~ "Script '%s' Lua error:\n"
+#~ "%s"
+#~ msgstr "Chyba výčtu adresáře '%s': %s"
 
-msgid "Tentacle Organ I"
-msgstr ""
+#~ msgid "Cannot determine cache path, using current directory."
+#~ msgstr "Nelze určit cestu k mezipaměti, používá se aktuální adresář."
 
-msgid "Tentacle Organ II"
-msgstr ""
-
-msgid "Tentacle Organ III"
-msgstr ""
-
-msgid "Tentacle Organ IV"
-msgstr ""
-
-msgid ""
-"there once was a big mighty corsair\n"
-"who was said to be the finest heir\n"
-"of some noble great house\n"
-"almost tied as a spouse\n"
-"before they quickly took to the air"
-msgstr ""
-
-msgid ""
-"wish I be like that lovely corsair\n"
-"the prettiest of all pirate hair\n"
-"be drinking at the bar\n"
-"eyes green like fluorspar\n"
-"irresistible buccaneer stare"
-msgstr ""
-
-msgid ""
-"oh, the ferocious mighty corsair\n"
-"never sitting in their captain's chair\n"
-"least they puke out their grub\n"
-"all over the ship hub\n"
-"in space is it also mal de mer?"
-msgstr ""
-
-msgid ""
-"Based on the Heavy Ion Cannon, the Neutralizer is proof to the importance of "
-"specialized engineering. With most of the hardware and software "
-"significantly modified or replaced, the Neutralizer shows significant "
-"improvements in nearly all facets. Due to the fact that few were made, it is "
-"a fairly rare find, but an import asset in a pilot's arsenal."
-msgstr ""
-
-msgid ""
-"The complex engineering specifications and difficulty of mass production "
-"doomed the Reaver Cannon from the start. However, in the right hands, given "
-"the extreme long range and high penetration for a weapon of its size, it can "
-"be very deadly."
-msgstr ""
+#~ msgid "$XDG_CACHE_HOME isn't set, using current directory."
+#~ msgstr "$XDG_CACHE_HOME není nastaveno, používá se aktuální adresář."
 
 #~ msgid "Exit to Main Menu"
 #~ msgstr "Návrat do hlavní nabídky"
@@ -128960,36 +129122,6 @@ msgstr ""
 #, c-format
 #~ msgid "module '%s' not found:%s"
 #~ msgstr "modul '%s' nebyl nalezen:%s"
-
-#, fuzzy
-#~| msgid "Bioship Gene Drives"
-#~ msgid "Laeviter Gene Drive I"
-#~ msgstr "Genové jednotky biolodě"
-
-#, fuzzy
-#~| msgid "Bioship Gene Drives"
-#~ msgid "Grandis Gene Drive I"
-#~ msgstr "Genové jednotky biolodě"
-
-#, fuzzy
-#~| msgid "Bioship Gene Drives"
-#~ msgid "Grandis Gene Drive II"
-#~ msgstr "Genové jednotky biolodě"
-
-#, fuzzy
-#~| msgid "Bioship Gene Drives"
-#~ msgid "Grandis Gene Drive III"
-#~ msgstr "Genové jednotky biolodě"
-
-#, fuzzy
-#~| msgid "Bioship Gene Drives"
-#~ msgid "Magnus Gene Drive II"
-#~ msgstr "Genové jednotky biolodě"
-
-#, fuzzy
-#~| msgid "Bioship Gene Drives"
-#~ msgid "Magnus Gene Drive III"
-#~ msgstr "Genové jednotky biolodě"
 
 #~ msgid "Cheater's Ragnarok Beam"
 #~ msgstr "Podvodníkův paprsek Ragnarok"
