@@ -36,7 +36,7 @@ impl FromLua for Vec2 {
     }
 }
 
-/*
+/*@
  * @brief Represents a 2D vector in Lua.
  *
  * This module allows you to manipulate 2D vectors. Usage is generally as
@@ -63,7 +63,7 @@ impl UserData for Vec2 {
         fields.add_field_method_get("y", |_, this| Ok(this.0.y));
     }
     fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
-        /*
+        /*@
          * @brief Creates a new vector.
          *
          * @usage vec2.new( 5, 3 ) -- creates a vector at (5,3)
@@ -88,7 +88,7 @@ impl UserData for Vec2 {
             },
         );
 
-        /*
+        /*@
          * @brief Creates a new vector using polar coordinates.
          *
          * @usage vec2.newP( 1000, math.pi/2 ) -- creates a vector at (0,1000)
@@ -104,7 +104,7 @@ impl UserData for Vec2 {
             Ok(Vec2::new(m * a.cos(), m * a.sin()))
         });
 
-        /*
+        /*@
          * @brief Creates a clone of a vector.
          *
          *    @luatparam Vec2 v Vector to clone.
@@ -113,7 +113,7 @@ impl UserData for Vec2 {
          */
         methods.add_method("clone", |_, vec, ()| -> mlua::Result<Self> { Ok(*vec) });
 
-        /*
+        /*@
          * @brief Converts a vector to a string.
          *
          *    @luatparam Vector v Vector to convert to as string.
@@ -124,7 +124,7 @@ impl UserData for Vec2 {
             Ok(format!("vec2( {}, {} )", vec.0.x, vec.0.y))
         });
 
-        /*
+        /*@
          * @brief Adds two vectors or a vector and some cartesian coordinates.
          *
          * If x is a vector it adds both vectors, otherwise it adds cartesian
@@ -148,7 +148,7 @@ impl UserData for Vec2 {
             Ok(*vec)
         });
 
-        /*
+        /*@
          * @brief Subtracts two vectors or a vector and some cartesian coordinates.
          *
          * If x is a vector it subtracts both vectors, otherwise it subtracts cartesian
@@ -172,7 +172,7 @@ impl UserData for Vec2 {
             Ok(*vec)
         });
 
-        /*
+        /*@
          * @brief Multiplies a vector by a number.
          *
          * @usage my_vec = my_vec * 3
@@ -191,7 +191,7 @@ impl UserData for Vec2 {
             Ok(*vec)
         });
 
-        /*
+        /*@
          * @brief Divides a vector by a number.
          *
          * @usage my_vec = my_vec / 3
@@ -214,7 +214,7 @@ impl UserData for Vec2 {
             Ok(Vec2::new(-vec.0.x, -vec.0.y))
         });
 
-        /*
+        /*@
          * @brief Dot product of two vectors.
          *
          *    @luatparam Vec2 a First vector.
@@ -226,7 +226,7 @@ impl UserData for Vec2 {
             Ok(vec.0.dot(&val.0))
         });
 
-        /*
+        /*@
          * @brief Cross product of two vectors.
          *
          *    @luatparam Vec2 a First vector.
@@ -238,7 +238,7 @@ impl UserData for Vec2 {
             Ok(Vec2(vec.0.cross(&val.0)))
         });
 
-        /*
+        /*@
          * @brief Gets the cartesian positions of the vector.
          *
          * @usage x,y = my_vec:get()
@@ -252,7 +252,7 @@ impl UserData for Vec2 {
             Ok((vec.0.x, vec.0.y))
         });
 
-        /*
+        /*@
          * @brief Gets polar coordinates of a vector.
          *
          * The angle is in radians.
@@ -269,7 +269,7 @@ impl UserData for Vec2 {
             Ok((x.hypot(y), y.atan2(x)))
         });
 
-        /*
+        /*@
          * @brief Sets the vector by cartesian coordinates.
          *
          * @usage my_vec:set(5, 3) -- my_vec is now (5,3)
@@ -285,7 +285,7 @@ impl UserData for Vec2 {
             Ok(())
         });
 
-        /*
+        /*@
          * @brief Sets the vector by polar coordinates.
          *
          * @usage my_vec:setP( 1, 90 ) -- my_vec is now (0,1)
@@ -301,7 +301,7 @@ impl UserData for Vec2 {
             Ok(())
         });
 
-        /*
+        /*@
          * @brief Gets the distance from the Vec2.
          *
          * @usage my_vec:dist() -- Gets length of the vector (distance from origin).
@@ -322,7 +322,7 @@ impl UserData for Vec2 {
             Ok(d)
         });
 
-        /*
+        /*@
          * @brief Gets the squared distance from the Vec2 (saves a sqrt())
          *
          * @usage my_vec:dist2() -- Gets squared length of the vector (distance squared
@@ -344,7 +344,7 @@ impl UserData for Vec2 {
             Ok(d)
         });
 
-        /*
+        /*@
          * @brief Gets the modulus of the vector.
          *    @luatparam Vec2 v Vector to get modulus of.
          *    @luatreturn number The modulus of the vector.
@@ -354,7 +354,7 @@ impl UserData for Vec2 {
             Ok(vec.0.x.hypot(vec.0.y))
         });
 
-        /*
+        /*@
          * @brief Gets the angle of the vector.
          *    @luatparam Vec2 v Vector to get angle of.
          *    @luatreturn number The angle of the vector.
@@ -364,7 +364,7 @@ impl UserData for Vec2 {
             Ok(vec.0.y.atan2(vec.0.x))
         });
 
-        /*
+        /*@
          * @brief Normalizes a vector.
          *    @luatparam Vec2 v Vector to normalize.
          *    @luatparam[opt=1] number n Length to normalize the vector to.
@@ -382,7 +382,7 @@ impl UserData for Vec2 {
             },
         );
 
-        /*
+        /*@
          * @brief Sees if two line segments collide.
          *
          *    @luatparam Vec2 s1 Start point of the first segment.
@@ -402,7 +402,7 @@ impl UserData for Vec2 {
             },
         );
 
-        /*
+        /*@
          * @brief Computes the intersection of a line segment and a circle.
          *
          *    @luatparam Vector center Center of the circle.

@@ -945,7 +945,7 @@ impl Context {
 
 use mlua::UserDataRef;
 pub struct LuaGfx;
-/*
+/*@
  * @brief Lua bindings to interact with rendering and the Naev graphical
  * environment.
  *
@@ -959,7 +959,7 @@ pub struct LuaGfx;
  */
 impl mlua::UserData for LuaGfx {
     fn add_methods<M: mlua::UserDataMethods<Self>>(methods: &mut M) {
-        /*
+        /*@
          * @brief Gets the dimensions of the Naev window.
          *
          * @usage screen_w, screen_h = gfx.dim()
@@ -975,7 +975,7 @@ impl mlua::UserData for LuaGfx {
             let dims = ctx.dimensions.read().unwrap();
             Ok((dims.view_width, dims.view_height, dims.view_scale))
         });
-        /*
+        /*@
          * @brief Gets the screen coordinates from game coordinates.
          *
          *    @luatparam Vec2 Vector of coordinates to transform.
@@ -991,7 +991,7 @@ impl mlua::UserData for LuaGfx {
             screen.y = VIEW_HEIGHT.load(Ordering::Relaxed) as f64 - screen.y;
             Ok(screen.into())
         });
-        /*
+        /*@
          * @brief Renders a texture.
          *
          * This function has variable parameters depending on how you want to render.

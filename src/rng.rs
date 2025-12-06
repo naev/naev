@@ -158,7 +158,7 @@ fn normal(x: f64) -> f64 {
 }
 
 struct Rnd;
-/*
+/*@
  * @brief Bindings for interacting with the random number generator.
  *
  * This module not only allows basic random number generation, but it also
@@ -177,7 +177,7 @@ struct Rnd;
  */
 impl UserData for Rnd {
     fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
-        /*
+        /*@
          * @brief Gets a random number.  With no parameters it returns a random float
          * between 0 and 1.
          *
@@ -209,7 +209,7 @@ impl UserData for Rnd {
                 }
             },
         );
-        /*
+        /*@
          * @brief Creates a number in the one-sigma range [-1:1].
          *
          * A one sigma range means that it creates a number following the normal
@@ -227,7 +227,7 @@ impl UserData for Rnd {
                 0.158655255 + rng::<f64>() * (1. - 0.158655255 * 2.),
             ))
         });
-        /*
+        /*@
          * @brief Creates a number in the two-sigma range [-2:2].
          *
          * This function behaves much like the `rnd.sigma` function but uses the
@@ -247,7 +247,7 @@ impl UserData for Rnd {
                 0.022750132 + rng::<f64>() * (1. - 0.022750132 * 2.),
             ))
         });
-        /*
+        /*@
          * @brief Creates a number in the three-sigma range [-3:3].
          *
          * This function behaves much like its sisters `rnd.sigma` and `rnd.twosigma`.
@@ -267,7 +267,7 @@ impl UserData for Rnd {
                 0.0013498985 + rng::<f64>() * (1. - 0.0013498985 * 2.),
             ))
         });
-        /*
+        /*@
          * @brief Gets a random number in the given range, with a uniform distribution.
          *
          * @usage n = uniform() -- Real number in the interval [0,1).
@@ -284,7 +284,7 @@ impl UserData for Rnd {
             "uniform",
             |_, (l, h): (f64, f64)| -> mlua::Result<mlua::Number> { Ok(range(l..h)) },
         );
-        /*
+        /*@
          * @brief Gets a random angle, i.e., a random number from 0 to 2*pi.
          *
          * @usage vec2.newP(radius, rnd.angle())
@@ -294,7 +294,7 @@ impl UserData for Rnd {
         methods.add_function("angle", |_, ()| -> mlua::Result<mlua::Number> {
             Ok(range(0. ..2. * std::f64::consts::PI))
         });
-        /*
+        /*@
          * @brief Creates a random permutation
          *
          * This creates a list from 1 to input and then randomly permutes it,

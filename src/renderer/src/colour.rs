@@ -225,7 +225,7 @@ impl FromLua for Colour {
     }
 }
 
-/*
+/*@
  * @brief Lua bindings to interact with colours.
  *
  * An example would be:
@@ -250,7 +250,7 @@ impl UserData for Colour {
     }
 
     fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
-        /*
+        /*@
          * @brief Converts a colour to a string.
          *
          *    @luatparam Colour col Colour to get string from.
@@ -266,7 +266,7 @@ impl UserData for Colour {
                 ))
             },
         );
-        /*
+        /*@
          * @brief Compares two colours to see if they are the same.
          *
          *    @luatparam Colour c1 Colour 1 to compare.
@@ -286,7 +286,7 @@ impl UserData for Colour {
                 }
             },
         );
-        /*
+        /*@
          * @brief Creates a new colour. Colours are assumed to be in gamma colour space
          * by default and are converted to linear unless specified.
          *
@@ -318,7 +318,7 @@ impl UserData for Colour {
                 }
             },
         );
-        /*
+        /*@
          * @brief Creates a new colour by name. Colours are in linear colourspace.
          *
          * @usage colour.new_named( "Red" ) -- Gets colour by name
@@ -342,7 +342,7 @@ impl UserData for Colour {
                 }
             },
         );
-        /*
+        /*@
          * @brief Creates a new colour from HSV values. Colours are assumed to be in
          * gamma colour space by default and are converted to linear unless specified.
          *
@@ -382,7 +382,7 @@ impl UserData for Colour {
                 new_hsv(lua, (h, s, v, a, gamma))
             },
         );
-        /*
+        /*@
          * @brief Clones a colour.
          *
          *    @luatparam Colour col Colour to clone.
@@ -390,7 +390,7 @@ impl UserData for Colour {
          * @luafunc clone
          */
         methods.add_method("clone", |_, this, ()| -> mlua::Result<Self> { Ok(*this) });
-        /*
+        /*@
          * @brief Gets the alpha of a colour.
          *
          * Value is from from 0. (transparent) to 1. (opaque).
@@ -402,7 +402,7 @@ impl UserData for Colour {
          * @luafunc alpha
          */
         methods.add_method("alpha", |_, this, ()| -> mlua::Result<f32> { Ok(this.0.w) });
-        /*
+        /*@
          * @brief Gets the RGB values of a colour.
          *
          * Values are from 0. to 1.
@@ -429,7 +429,7 @@ impl UserData for Colour {
                 Ok((r, g, b))
             },
         );
-        /*
+        /*@
          * @brief Gets the RGBA values of a colour.
          *
          * Values are from 0. to 1.
@@ -457,7 +457,7 @@ impl UserData for Colour {
                 Ok((r, g, b, this.0.w))
             },
         );
-        /*
+        /*@
          * @brief Gets the HSV values of a colour.
          *
          * Values are from 0 to 1 except hue which is 0 to 360.
@@ -477,7 +477,7 @@ impl UserData for Colour {
             let (h, s, v) = hsv.into_components();
             Ok((h.into(), s, v))
         });
-        /*
+        /*@
          * @brief Converts RGB (gamma) values to HSV.
          *
          * @usage h,s,v = colour.rgb_to_hsv( r, g, b )
@@ -497,7 +497,7 @@ impl UserData for Colour {
                 Ok((h.into(), s, v))
             },
         );
-        /*
+        /*@
          * @brief Converts HSV values to RGB (gamma).
          *
          * @usage h,s,v = colour.hsv_to_rgb( h, s, v )
@@ -516,7 +516,7 @@ impl UserData for Colour {
                 Ok(Srgb::from_color(Hsv::new(h, s, v)).into_components())
             },
         );
-        /*
+        /*@
          * @brief Sets the colours values from the RGB colour space.
          *
          * Values are from 0. to 1.
@@ -547,7 +547,7 @@ impl UserData for Colour {
                 set_hsv(lua, this, (r, g, b))
             },
         );
-        /*
+        /*@
          * @brief Sets the colours values from the HSV colour space.
          *
          * Values are from 0. to 1.
@@ -580,7 +580,7 @@ impl UserData for Colour {
                 set_hsv(lua, this, (h, s, v))
             },
         );
-        /*
+        /*@
          * @brief Sets the alpha of a colour.
          *
          * Value is from 0. (transparent) to 1. (opaque).
@@ -601,7 +601,7 @@ impl UserData for Colour {
             naev_core::lua::deprecated(lua, "setAlpha", Some("set_alpha"))?;
             set_alpha(lua, this, a)
         });
-        /*
+        /*@
          * @brief Converts a colour from linear to gamma corrected.
          *
          *    @luatparam Colour col Colour to change from linear to gamma.
@@ -613,7 +613,7 @@ impl UserData for Colour {
                 Srgb::from_linear(LinSrgb::new(this.0.x, this.0.y, this.0.z)).into_components();
             Ok(Colour::new_alpha(r, g, b, this.0.w))
         });
-        /*
+        /*@
          * @brief Converts a colour from gamma corrected to linear.
          *
          *    @luatparam Colour col Colour to change from gamma corrected to linear.
