@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-12-06 22:10+0900\n"
+"POT-Creation-Date: 2025-12-07 21:45+0900\n"
 "PO-Revision-Date: 2025-08-10 15:02+0000\n"
 "Last-Translator: Ta123Asri <taufiqdi15@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/naev/naev/id/"
@@ -53358,8 +53358,10 @@ msgid ""
 "there is a little setback...\" You start to fear he will try to stiff you on "
 "the payment, but he continues: \"I don't know why, but the High Command has "
 "not credited the payment account yet... Well do you know what we are going "
-"to do? I will give you a set of Gauss Guns worth {credits}! One always needs "
-"Gauss Guns, no?\""
+"to do? I will give you {rew}! One always needs Gauss Guns, no?\""
+msgstr ""
+
+msgid "a set of Gauss Guns worth {credits}"
 msgstr ""
 
 msgid ""
@@ -69028,7 +69030,7 @@ msgstr ""
 msgid "\"Look I just want to talk\""
 msgstr ""
 
-msgid "Try to bribe them (#r{credits}#0)"
+msgid "Try to bribe them ({credits})"
 msgstr ""
 
 #. TODO possibly add a pacifist option here too
@@ -74448,6 +74450,31 @@ msgid ""
 "Emergency cargo delivery of {amount} of {cargo} to {pnt} in the {sys} system."
 msgstr ""
 
+#. =Landing=--
+msgid ""
+"The containers of {cargo} are carried out of your ship by a sullen group of "
+"workers. The job takes inordinately long to complete, and the leader pays "
+"you {credits} without speaking a word."
+msgstr ""
+
+msgid ""
+"Shortly after you land, a team rushes the containers of {cargo} out of your "
+"vessel. Before you can even collect your thoughts, one of the workers "
+"presses a credit chip worth {credits} in your hand and departs."
+msgstr ""
+
+msgid ""
+"The containers of {cargo} are unloaded by an exhausted-looking bunch of "
+"dockworkers. Still, they make fairly good time, delivering your pay of "
+"{credits} upon completion of the job."
+msgstr ""
+
+msgid ""
+"The containers of {cargo} are unloaded by a team of robotic drones "
+"supervised by a human overseer, who hands you your pay of {credits} when "
+"they finish."
+msgstr ""
+
 msgid ""
 "The containers of {cargo} are carried out of your ship by a sullen group of "
 "workers. They are not happy that they have to work overtime because you were "
@@ -75310,7 +75337,7 @@ msgid ""
 msgstr ""
 
 #. eventually I'll implement a bonus
-#. p(fmt.f(_([["Oh, and she put in a nice bonus for you of {credits} for such a speedy delivery."]]), {credits=fmt.credits(mem.bonus)}))
+#. p(fmt.f(_([["Oh, and she put in a nice bonus for you of {credits} for such a speedy delivery."]]), {credits="#g"..fmt.credits(mem.bonus).."#0"}))
 msgid ""
 "You check your account balance as he closes the comm channel to find "
 "yourself {credits} richer. Just being alive felt good, but this feels "
@@ -79212,8 +79239,8 @@ msgid ""
 "A man in a suit and tie takes you up onto a stage. A large name tag on his "
 "jacket says 'Melendez Corporation'. \"Congratulations on your win,\" he "
 "says, shaking your hand, \"that was a great race. On behalf of Melendez "
-"Corporation, I would like to present to you your trophy and prize money of "
-"{credits}!\" He hands you one of those fake oversized cheques for the "
+"Corporation, I would like to present to you #gyour trophy#0 and prize money "
+"of {credits}!\" He hands you one of those fake oversized cheques for the "
 "audience, and then a credit chip with the actual prize money on it. At least "
 "the trophy looks cool."
 msgstr ""
@@ -95632,8 +95659,7 @@ msgstr ""
 
 msgid ""
 "You successfully escorted the trading convoy to the destination. There "
-"wasn't a single casualty, and you are rewarded the full amount of #g{credits}"
-"#0."
+"wasn't a single casualty, and you are rewarded the full amount of {credits}."
 msgstr ""
 
 msgid "Success with Casualties"
@@ -95641,8 +95667,8 @@ msgstr ""
 
 msgid ""
 "You've arrived with the trading convoy more or less intact. Your pay is "
-"docked slightly due to the loss of part of the convoy. You receive "
-"#g{credits}#0 of the original promised reward of {reward}."
+"docked slightly due to the loss of part of the convoy. You receive {credits} "
+"of the original promised reward of {reward}."
 msgstr ""
 
 msgid "Success with Heavy Casualties"
@@ -95650,8 +95676,8 @@ msgstr ""
 
 msgid ""
 "You arrive with what's left of the convoy. It's not much, but it's better "
-"than nothing. You are paid a steeply discounted amount of #g{credits}#0 from "
-"the {reward} originally promised."
+"than nothing. You are paid a steeply discounted amount of {credits} from the "
+"{reward} originally promised."
 msgstr ""
 
 #. luacheck: globals trader_create
@@ -96328,7 +96354,7 @@ msgstr ""
 
 msgid ""
 "\"It looks like you won't have enough money to bribe them. Here, take "
-"#g{credits}#0, that should be enough, hopefully.\""
+"{credits}, that should be enough, hopefully.\""
 msgstr ""
 
 msgid "Hail and bribe the pirates"
@@ -102960,7 +102986,7 @@ msgid ""
 msgstr ""
 
 #. eventually I'll implement a bonus
-#. vntk.msg( _("Bonus"), fmt.f(_([["For your trouble, I will add a bonus of {credits} to your fee. I am pleased by your help, captain; I hope we meet again."]]), {credits=fmt.credits(mem.bonus)} ) )
+#. vntk.msg( _("Bonus"), fmt.f(_([["For your trouble, I will add a bonus of {credits} to your fee. I am pleased by your help, captain; I hope we meet again."]]), {credits="#g"..fmt.credits(mem.bonus).."#0"} ) )
 msgid ""
 "You helped a Za'lek scientist deliver some equipment and were paid "
 "generously for the job."
@@ -107837,14 +107863,6 @@ msgstr ""
 #. Mark destination
 #. Have to run logic
 #. Logic to make the pilots automatically jump or land when near the target
-#, fuzzy
-msgid "Landing on {spb}."
-msgstr "Autonav: mendarati {spob}."
-
-#, fuzzy
-msgid "Proceeding to {sys}."
-msgstr "Autonav: menuju ke {sys}."
-
 #. We want to defer it one frame in case an enter hook clears all pilots
 msgid "You jumped into the wrong system."
 msgstr ""
@@ -123211,6 +123229,14 @@ msgstr "Korvet"
 
 msgid " Cerebrum "
 msgstr ""
+
+#, fuzzy
+#~ msgid "Landing on {spb}."
+#~ msgstr "Autonav: mendarati {spob}."
+
+#, fuzzy
+#~ msgid "Proceeding to {sys}."
+#~ msgstr "Autonav: menuju ke {sys}."
 
 #, c-format
 #~ msgid ""
