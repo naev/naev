@@ -18,8 +18,8 @@ fw.wlrd_planet = "Buritt"
 
 -- Character's portraits. TODO: create unique portraits for them
 fw.portrait_tam     = "major_tam" -- Major Tam: main mission giver of this campaign
-fw.portrait_leblanc = "captain_leblanc" -- Captain Leblanc: secondary mission giver and partner for the second half of the campaign
-fw.portrait_klank   = "general_klank"    -- Genenral Klank: boss of Major Tam, has few interactions with the player, excepted for the last mission
+fw.portrait_leblanc = "dvaered/unique/captain_leblanc" -- Captain Leblanc: secondary mission giver and partner for the second half of the campaign
+fw.portrait_klank   = "dvaered/unique/general_klank"    -- Genenral Klank: boss of Major Tam, has few interactions with the player, excepted for the last mission
 fw.portrait_hamfresser = "dvaered/dv_military_m7" -- Captain Hamfresser: player's sidekick for some of the missions
 fw.portrait_strafer = "lieutenant_stafner" -- Lieutenant Stafer: partner of the player for the first half of the campaign, and subordinate of Captain Leblanc
 fw.portrait_nikolov = "sergeant_nikolov" -- Sergeant Nikolov: second in command of Captain Hamfresser
@@ -66,7 +66,7 @@ function fw.equipVendettaMace( pilot )
    pilot:outfitRm("cores")
    pilot:outfitAdd("S&K Skirmish Plating",2)
    pilot:outfitAdd("Tricon Zephyr Engine",2)
-   pilot:outfitAdd("Milspec Orion 3701 Core System")
+   pilot:outfitAdd("Milspec Orion 2301 Core System",2)
    pilot:outfitAdd("Shield Capacitor I")
    pilot:outfitAdd("Milspec Impacto-Plastic Coating")
    pilot:outfitAdd("TeraCom Mace Launcher", 6)
