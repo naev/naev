@@ -314,6 +314,7 @@ function land()
       else
          -- You were late
          mem.reward = mem.reward / (mem.rank + 1)
+         local col
          if mem.rank then
             col='#o'
          else
