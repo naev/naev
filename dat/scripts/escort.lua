@@ -473,7 +473,8 @@ function _escort_heartbeat ()
             if destspob:pos():dist2( p:pos() ) <= DISTANCE_THRESHOLD2 then
                local pm = p:memory()
                if not pm._escort_land or not p:task() then
-                  if string.match( p:taskname(), "^land" )==nil then
+                  local tn = p:taskname()
+                  if not tn or string.match( tn, "^land" )==nil then
                      p:comm( fmt.f(_("Landing on {spb}."), {spb=destspob} ) )
                   end
                   p:control(true)
@@ -485,7 +486,8 @@ function _escort_heartbeat ()
             if nextjump:pos():dist2( p:pos() ) <= DISTANCE_THRESHOLD2 then
                local pm = p:memory()
                if not pm._escort_jump or not p:task() then
-                  if string.match( p:taskname(), "^hyperspace" )==nil then
+                  local tn = p:taskname()
+                  if not tn or string.match( tn, "^hyperspace" )==nil then
                      p:comm( fmt.f(_("Proceeding to {sys}."), {sys=nextsys} ) )
                   end
                   p:control(true)
