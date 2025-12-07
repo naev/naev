@@ -2298,6 +2298,7 @@ static void outfitLOntakeoff( const Pilot *pilot, PilotOutfitSlot *po,
  * @brief Runs Lua outfits when pilot takes off from a spob.
  *
  *    @param pilot Pilot being handled.
+ *    @param spb Spob taking off from.
  */
 void pilot_outfitLOntakeoff( Pilot *pilot, const Spob *spb )
 {
