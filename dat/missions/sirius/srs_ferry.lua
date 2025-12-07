@@ -77,9 +77,9 @@ ferry_land_p2[1] = _("{passenger} bows briefly in gratitude, and silently places
 ferry_land_p2[2] = _("{passenger} crisply counts out your credits, and nods a momentary farewell.")
 
 local ferry_land_p3 = {}
-ferry_land_p3[0] = _("{passenger}, on seeing the time, looks at you with veiled hurt and disappointment, but carefully counts out their full fare of #g{credits}#0.")
-ferry_land_p3[1] = _("{passenger} counts out #o{credits}#0 with pursed lips, and walks off before you have time to say anything.")
-ferry_land_p3[2] = _("{passenger} tersely expresses their displeasure with the late arrival, and snaps #o{credits}#0 down on the seat, with a look suggesting they hardly think you deserve that much.")
+ferry_land_p3[0] = _("{passenger}, on seeing the time, looks at you with veiled hurt and disappointment, but carefully counts out their full fare of {credits}.")
+ferry_land_p3[1] = _("{passenger} counts out {credits} with pursed lips, and walks off before you have time to say anything.")
+ferry_land_p3[2] = _("{passenger} tersely expresses their displeasure with the late arrival, and snaps {credits} down on the seat, with a look suggesting they hardly think you deserve that much.")
 
 -- Customization of car.calculateRoute in common.cargo
 local function ferry_calculateRoute (dplanet, dsys)
@@ -314,7 +314,12 @@ function land()
       else
          -- You were late
          mem.reward = mem.reward / (mem.rank + 1)
-         vntk.msg(_("Late arrival"), fmt.f(ferry_land_p3[mem.rank], {passenger=ferry_land_p1[mem.rank], credits=fmt.credits(mem.reward)}))
+         if mem.rank then
+            col='#o'
+         else
+            col='#g'
+         end
+         vntk.msg(_("Late arrival"), fmt.f(ferry_land_p3[mem.rank], {passenger=ferry_land_p1[mem.rank], credits=col..fmt.credits(mem.reward)..'#0'}))
       end
 
       if mem.change == 2 then
