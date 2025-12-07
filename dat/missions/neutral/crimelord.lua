@@ -193,8 +193,8 @@ function capHailed ()
    vn.scene()
    local p = ccomm.newCharacter( vn, capship )
    vn.transition()
-   p(fmt.f(_([["Excellent work. This data will ensure an arrest and swift prosecution. You've certainly done your part towards cleaning up the region. As for your compensation, I've had #g{credits}#0 transferred to you."]]),
-      {credits=fmt.credits(reward)}))
+   p(fmt.f(_([["Excellent work. This data will ensure an arrest and swift prosecution. You've certainly done your part towards cleaning up the region. As for your compensation, I've had {credits} transferred to you."]]),
+      {credits="#g"..fmt.credits(reward).."#0"}))
    vn.sfxVictory()
    vn.func( function ()
       player.pay( reward )

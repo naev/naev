@@ -156,7 +156,7 @@ function land()
          misn.osdActive(2)
       elseif mem.stage == 7 then
          mensing(_([["That took long enough! I'm glad Professor Voges promised to take care of the funding. The problem was that my recent research is related to a secret project and my funding was shut down - like some kind of conspiracy; can you believe it! Actually I'm not supposed to tell you anything as you could possibly get into a lot of trouble.. forget I said anything! I have much work to do!"]]))
-         vn.na(fmt.f(_([[She gives you a credit chip worth #g{credits}#0 and leaves.]]), {credits=fmt.credits(credits)}))
+         vn.na(fmt.f(_([[She gives you a credit chip worth {credits} and leaves.]]), {credits="#g"..fmt.credits(credits).."#0"}))
          vn.done()
          vn.run()
          player.pay(credits)

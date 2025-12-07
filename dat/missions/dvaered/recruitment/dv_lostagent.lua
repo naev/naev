@@ -314,8 +314,8 @@ And again, be ensured that your initial reward will be dramatically increased fr
       vn.jump("well")
 
       vn.label("well")
-      agent(fmt.f(_([["Now that Chilperic Duchmol aka The Death Dealer is no more, your mission is over and it is my utmost privilege to reward you the sum of #g{credits}#0 in name of the Dvaered High Command."]]),
-         {credits=fmt.credits(reward)}))
+      agent(fmt.f(_([["Now that Chilperic Duchmol aka The Death Dealer is no more, your mission is over and it is my utmost privilege to reward you the sum of {credits} in name of the Dvaered High Command."]]),
+         {credits="#g"..fmt.credits(reward).."#0"}))
       agent(_([["The fact that this mission did not go as planned is actually a rather good thing for you, you know: now you have proven to the Dvaered High Command that you are a reliable pilot. I don't know if you intend to continue working for them, but I have information that suggest that they might offer you more work in the future."]]))
 
       vn.sfxVictory()

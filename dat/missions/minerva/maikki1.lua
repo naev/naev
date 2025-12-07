@@ -799,7 +799,7 @@ He points at the wreck nearby.]]))
 He seems to be clutching his head. A headache perhaps?]]))
    vn.menu( {
       { _([["Look I just want to talk"]]), "trytalk" },
-      { fmt.f(_([[Try to bribe them (#r{credits}#0)]]), {credits=fmt.credits(bribeamount)}), "trybribe" },
+      { fmt.f(_([[Try to bribe them ({credits})]]), {credits="#r"..fmt.credits(bribeamount).."#0"}), "trybribe" },
    })
 
    -- TODO possibly add a pacifist option here too
@@ -823,7 +823,7 @@ He seems to be clutching his head. A headache perhaps?]]))
       end
    end )
    vn.sfxMoney()
-   vn.na(fmt.f(_("You wire them #r{credits}#0."), {credits=fmt.credits(bribeamount)}))
+   vn.na(fmt.f(_("You wire them {credits}."), {credits="#r"..fmt.credits(bribeamount).."#0"}))
    scavB(_([["I guess this isn't worth our trouble. We already got enough stuff for the Za'leks already."]]))
    scavA(_([["C'mon, let's get out of here. This place gives me the creeps. Feel like a ghost is going to pop out any minute."]]))
    scavB(_([["Next round in Doeston is on me."]]))

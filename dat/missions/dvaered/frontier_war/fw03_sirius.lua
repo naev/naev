@@ -216,7 +216,7 @@ function land()
    -- Land for reward
    elseif mem.stage == 2 then
       compute_reward()
-      tk.msg( _("Mission accomplished"), fmt.f(_("Your mission is a success, except for the escape of the enemy leader, Colonel Hamelsen. You can now collect your #g{credits}#0 reward."), {credits=fmt.credits(mem.effective_credits)}) )
+      tk.msg( _("Mission accomplished"), fmt.f(_("Your mission is a success, except for the escape of the enemy leader, Colonel Hamelsen. You can now collect your {credits} reward."), {credits="#g"..fmt.credits(mem.effective_credits).."#0"}) )
       payNfinish()
 
    -- More illegitimate landings
@@ -236,11 +236,11 @@ function land()
    Suddenly, you realize someone whispers behind you "Hey, {player}, you're blocking my firing line!" You turn around and see nothing but a deformed crate that continues to speak: "It's me, Sergeant Nikolov. In the box. Hide yourself better or you will ruin our mission." You then remember that she is a member of the space infantry commandos, and Hamfresser's second in command. Tam probably sent her to execute the enemy pilot.]]), {ship=mem.shi, player=player.name()}) )
          if mem.shi:nameRaw() == "Kestrel" then -- it's Hamelsen and she escapes
             tk.msg( _("End of the hunt"), fmt.f(_([[A few moments later, you hear a message from Nikolov's radio: "Tam here. The target escaped and won't come back to the ship. Clear the spacedock." The spacemarines emerge from the crates and disappear in a flash, while you start heading to the bar. On the way, you meet Strafer who explains the situation: "We identified the hostile pilot: it was Colonel Hamelsen, Battleaddict's former second in command, but she got away using one of her other ships and we lost her track.
-   "Poor woman. It's hard to get a new post when you're the second in command of a dead warlord, you know. So I guess someone managed to hire her to assassinate the major. Anyway, I guess you should have received your payment of #g{credits}#0 by now."]]), {credits=fmt.credits(mem.effective_credits)}) )
+   "Poor woman. It's hard to get a new post when you're the second in command of a dead warlord, you know. So I guess someone managed to hire her to assassinate the major. Anyway, I guess you should have received your payment of {credits} by now."]]), {credits="#g"..fmt.credits(mem.effective_credits).."#0"}) )
          else -- No pity for non-Hamelsen henchmen
             tk.msg( _("End of the hunt"), _([[A bit later, you see a woman coming from the empty corridor, anxiously looking behind her and pulling a key out of her pocket. While still approaching the ship, she presses the key's button and the ship beeps. At that very moment, a sudden and loud fracas erupts from all around you shakes your stomach. The pilot falls without a word. Nikolov and two other soldiers emerge from the crates. The sergeant approaches the pilot, kneels and takes her pulse. She thoughtfully looks at her face "Damn! She looked like a nice person..." And then addresses the soldiers: "All right, folks we pack up!" and the unit enters the ship with the body and takes off.
    You stay alone, on the empty dock, with nothing but your thoughts. Even the broken crates have been picked up by the commandos. You think about all the causes that pilot must have served in her life. The just causes, the evil ones... and all the others. "Meh," you think "killing people in space is definitely much better for morale."]]), "portraits/neutral/female1" )
-            tk.msg( _("End of the hunt"), fmt.f(_([[When you finally go to the bar to think about something else, you get notified on your holowatch that #g{credits}#0 have been transferred to your account. The leader of the ambushers has been identified: it's Colonel Hamelsen, who used to work for Battleaddict before his death. Unfortunately, the Colonel has escaped.]]), {credits=fmt.credits(mem.effective_credits)}) )
+            tk.msg( _("End of the hunt"), fmt.f(_([[When you finally go to the bar to think about something else, you get notified on your holowatch that {credits} have been transferred to your account. The leader of the ambushers has been identified: it's Colonel Hamelsen, who used to work for Battleaddict before his death. Unfortunately, the Colonel has escaped.]]), {credits="#g"..fmt.credits(mem.effective_credits).."#0"}) )
          end
          payNfinish()
       else

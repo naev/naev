@@ -126,10 +126,10 @@ function abort ()
       local msg
       local spb = spob.cur()
       if spb:services().inhabited then
-         msg = fmt.f(_("In your desperation to rid yourself of the garbage, you clumsily eject it from your cargo pod while you are still landed. Garbage spills all over the hangar and local officials immediately take notice. After you apologize profusely and explain the situation was an accident, the officials let you off with a fine of #r{credits}#0."), {credits=fmt.credits(fine)} )
+         msg = fmt.f(_("In your desperation to rid yourself of the garbage, you clumsily eject it from your cargo pod while you are still landed. Garbage spills all over the hangar and local officials immediately take notice. After you apologize profusely and explain the situation was an accident, the officials let you off with a fine of {credits}."), {credits="#r"..fmt.credits(fine).."#0"} )
       else
          fine = fine / 2 -- it's better than dumping in an inhabited place anyway
-         msg = fmt.f(_("Thinking {spob} to be devoid of people, you eject your cargo pod while landed. To your surprise, you find a wandering environmentalist knocking on your ship airlock. You make the mistake of opening the airlock and letting them in. After having to hear a tirade about how you are polluting pristine locations around the galaxy, you end up paying them #r{credits}#0 to leave and clean up the mess you made."), {credits=fmt.credits(fine), spob=spb} )
+         msg = fmt.f(_("Thinking {spob} to be devoid of people, you eject your cargo pod while landed. To your surprise, you find a wandering environmentalist knocking on your ship airlock. You make the mistake of opening the airlock and letting them in. After having to hear a tirade about how you are polluting pristine locations around the galaxy, you end up paying them {credits} to leave and clean up the mess you made."), {credits="#r"..fmt.credits(fine).."#0", spob=spb} )
       end
       vntk.msg(_("Dirty Deed"), msg)
       player.pay( -fine )

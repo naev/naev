@@ -172,7 +172,7 @@ function hail()
    p(_([["Hello again. It's Willie. I'm just here to inform you that the countess has taken care of your payment and transferred it to your account. And don't worry about me, the countess has covered my portion just fine. I'm just glad to have Ol' Bessy here back."]]))
 
 --   eventually I'll implement a bonus
---   p(fmt.f(_([["Oh, and she put in a nice bonus for you of #g{credits}#0 for such a speedy delivery."]]), {credits=fmt.credits(mem.bonus)}))
+--   p(fmt.f(_([["Oh, and she put in a nice bonus for you of {credits} for such a speedy delivery."]]), {credits="#g"..fmt.credits(mem.bonus).."#0"}))
 
    vn.disappear( p )
 
@@ -180,8 +180,8 @@ function hail()
    vn.func( function ()
       player.pay( payment )
    end )
-   vn.na(fmt.f(_([[You check your account balance as he closes the comm channel to find yourself #g{credits}#0 richer. Just being alive felt good, but this feels better. You can't help but think that she might have given him more than just the 25 percent he was asking for, judging by his sunny disposition. At least you have your life though.]]),
-      {credits=fmt.credits(payment)} ) )
+   vn.na(fmt.f(_([[You check your account balance as he closes the comm channel to find yourself {credits} richer. Just being alive felt good, but this feels better. You can't help but think that she might have given him more than just the 25 percent he was asking for, judging by his sunny disposition. At least you have your life though.]]),
+      {credits="#g"..fmt.credits(payment).."#0"} ) )
    vn.na(fmt.reward(payment))
 
    vn.run()
