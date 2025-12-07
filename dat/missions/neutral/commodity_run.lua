@@ -135,7 +135,7 @@ function land ()
       amount = player.fleetCargoRm( mem.chosen_comm, amount )
       local reward = amount * mem.price
       local txt = fmt.f(cargo_land[rnd.rnd(1, #cargo_land)],
-            {cargo=_(mem.chosen_comm), credits=fmt.credits(reward)} )
+            {cargo=_(mem.chosen_comm), credits="#g"..fmt.credits(reward).."#0"} )
       vntk.msg(_("Delivery success!"), txt)
       player.pay(reward)
       if not pir.factionIsPirate( mem.paying_faction ) then

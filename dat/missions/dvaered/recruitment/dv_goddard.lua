@@ -313,7 +313,7 @@ function land()
       end
 
       vn.sfxVictory()
-      vn.na(fmt.f(_([[Colonel Okran pays you {credits}.]]), {credits=fmt.credits(mem.credits)}))
+      vn.na(fmt.f(_([[Colonel Okran pays you {credits}.]]), {credits="#g"..fmt.credits(mem.credits).."#0"}))
 
       vn.done()
       vn.run()

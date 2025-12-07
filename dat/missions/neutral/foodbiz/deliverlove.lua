@@ -154,7 +154,7 @@ function land()
    vn.transition()
 
    paddy(fmt.f(_([[You deliver the letters to a young woman who excitedly takes them and thanks you profusely. It seems you really made her day. When you check your balance, you see that {credits} have been transferred into your account. It also seems like you forgot a letter in the ship, but there were enough that you don't think it will be missed.]]),
-      {credits=fmt.credits(mem.reward)}))
+      {credits="#g"..fmt.credits(mem.reward).."#0"}))
    vn.sfxVictory()
    vn.func( function ()
       player.pay( mem.reward )

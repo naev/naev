@@ -123,7 +123,7 @@ end
 
 function targetDeath()
    local fine = math.max(-20e3, -player.credits())
-   vntk.msg(_("Whoops!"), fmt.f(_([[You have destroyed the Gawain! The family presses charges, and you are sentenced to a {credits} fine in absentia.]]), {credits=fmt.credits(-fine)}))
+   vntk.msg(_("Whoops!"), fmt.f(_([[You have destroyed the Gawain! The family presses charges, and you are sentenced to a {credits} fine in absentia.]]), {credits="#r"..fmt.credits(-fine).."#0"}))
    player.pay(fine) -- I love this statement.
    misn.finish(false) -- be nice and let them repeat
 end

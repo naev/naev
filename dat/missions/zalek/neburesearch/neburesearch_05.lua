@@ -148,7 +148,7 @@ function land()
       } )
       vn.label("continue")
       mensing(fmt.f(_([["Ah right, let's postpone the scientific issues for a moment. You have earned a reward for all the trouble."
-With this she hands you a credit chip worth {credits}.]]), {credits=fmt.credits(credits)}))
+With this she hands you a credit chip worth {credits}.]]), {credits="#g"..fmt.credits(credits).."#0"}))
       vn.na(_("The two of them continue arguing shortly afterwards. You decide it is better to leave now."))
       vn.done()
       vn.run()
