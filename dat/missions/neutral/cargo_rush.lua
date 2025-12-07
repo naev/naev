@@ -55,9 +55,9 @@ local cargo_land = {
 }
 
 local cargo_land_slow = {
-   _("The containers of {cargo} are carried out of your ship by a sullen group of workers. They are not happy that they have to work overtime because you were late. You are paid only {credits} of the {reward} you were promised."),
-   _("Shortly after you land, a team rushes the containers of {cargo} out of your vessel. Your late arrival is stretching quite a few schedules! Your pay is only {credits} instead of {reward} because of that."),
-   _("The containers of {cargo} are unloaded by an exhausted-looking bunch of dockworkers. You missed the deadline, so your reward is only {credits} instead of the {reward} you were hoping for."),
+   _("The containers of {cargo} are carried out of your ship by a sullen group of workers. They are not happy that they have to work overtime because you were late. You are paid only #o{credits}#0u of the {reward} you were promised."),
+   _("Shortly after you land, a team rushes the containers of {cargo} out of your vessel. Your late arrival is stretching quite a few schedules! Your pay is only #o{credits}#0u instead of {reward} because of that."),
+   _("The containers of {cargo} are unloaded by an exhausted-looking bunch of dockworkers. You missed the deadline, so your reward is only #o{credits}#0u instead of the {reward} you were hoping for."),
 }
 
 -- Create the mission

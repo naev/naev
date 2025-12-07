@@ -379,7 +379,7 @@ function complete()
    vn.transition("electric")
 
    vn.na(_([[The Dvaered official opens a communication channel with your ship.]]))
-   dv(fmt.f(_([["Thanks for the distraction. I've sent you a picture of all the medals I was awarded. Oh, and I also deposited {credits} in your account."]]),
+   dv(fmt.f(_([["Thanks for the distraction. I've sent you a picture of all the medals I was awarded. Oh, and I also deposited #g{credits}#0 in your account."]]),
       {credits=fmt.credits(reward)}))
    vn.sfxVictory()
    vn.func( function ()

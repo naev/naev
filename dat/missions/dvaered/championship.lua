@@ -334,11 +334,11 @@ function land()
       elseif mem.stage == 3 and spob.cur() == mispla then  --player will be paid
 
       if mem.level == 5 then  --you are the champion
-         tk.msg(_("You are the new champion"), fmt.f(_([[Congratulations! The staff pays you {credits}.]]), {credits=fmt.credits(mem.reward * 2^mem.level)}))
+         tk.msg(_("You are the new champion"), fmt.f(_([[Congratulations! The staff pays you #g{credits}#0.]]), {credits=fmt.credits(mem.reward * 2^mem.level)}))
       elseif mem.level == 4 then
-         tk.msg(_("You are the vice-champion"), fmt.f(_([[Congratulations! The staff pays you {credits}.]]), {credits=fmt.credits(mem.reward * 2^mem.level)}))
+         tk.msg(_("You are the vice-champion"), fmt.f(_([[Congratulations! The staff pays you #g{credits}#0.]]), {credits=fmt.credits(mem.reward * 2^mem.level)}))
       else
-         tk.msg(_("Thanks for playing"), fmt.f(_([[The staff pays you {credits}.]]), {credits=fmt.credits(mem.reward * 2^mem.level)}))
+         tk.msg(_("Thanks for playing"), fmt.f(_([[The staff pays you #g{credits}#0.]]), {credits=fmt.credits(mem.reward * 2^mem.level)}))
       end
 
       player.pay(mem.reward * 2^mem.level)

@@ -28,9 +28,9 @@ local vntk = require "vntk"
 local lmisn = require "lmisn"
 
 local text = {
-   _("The waste containers are loaded onto your ship and you are paid {credits}. You begin to wonder if accepting this job was really a good idea."),
-   _("Workers pack your cargo hold full of as much garbage as it can carry, then hastily hand you a credit chip containing {credits}. Smelling the garbage, you immediately regret taking the job."),
-   _("Your hold is crammed full with garbage and you are summarily paid {credits}. By the time the overpowering stench emanating from your cargo hold reaches you, it's too late to back down; you're stuck with this garbage until you can find some place to get rid of it."),
+   _("The waste containers are loaded onto your ship and you are paid #g{credits}#0. You begin to wonder if accepting this job was really a good idea."),
+   _("Workers pack your cargo hold full of as much garbage as it can carry, then hastily hand you a credit chip containing #g{credits}#0. Smelling the garbage, you immediately regret taking the job."),
+   _("Your hold is crammed full with garbage and you are summarily paid #g{credits}#0. By the time the overpowering stench emanating from your cargo hold reaches you, it's too late to back down; you're stuck with this garbage until you can find some place to get rid of it."),
 }
 
 local finish_text = {
@@ -126,10 +126,10 @@ function abort ()
       local msg
       local spb = spob.cur()
       if spb:services().inhabited then
-         msg = fmt.f(_("In your desperation to rid yourself of the garbage, you clumsily eject it from your cargo pod while you are still landed. Garbage spills all over the hangar and local officials immediately take notice. After you apologize profusely and explain the situation was an accident, the officials let you off with a fine of {credits}."), {credits=fmt.credits(fine)} )
+         msg = fmt.f(_("In your desperation to rid yourself of the garbage, you clumsily eject it from your cargo pod while you are still landed. Garbage spills all over the hangar and local officials immediately take notice. After you apologize profusely and explain the situation was an accident, the officials let you off with a fine of #r{credits}#0."), {credits=fmt.credits(fine)} )
       else
          fine = fine / 2 -- it's better than dumping in an inhabited place anyway
-         msg = fmt.f(_("Thinking {spob} to be devoid of people, you eject your cargo pod while landed. To your surprise, you find a wandering environmentalist knocking on your ship airlock. You make the mistake of opening the airlock and letting them in. After having to hear a tirade about how you are polluting pristine locations around the galaxy, you end up paying them {credits} to leave and clean up the mess you made."), {credits=fmt.credits(fine), spob=spb} )
+         msg = fmt.f(_("Thinking {spob} to be devoid of people, you eject your cargo pod while landed. To your surprise, you find a wandering environmentalist knocking on your ship airlock. You make the mistake of opening the airlock and letting them in. After having to hear a tirade about how you are polluting pristine locations around the galaxy, you end up paying them #r{credits}#0 to leave and clean up the mess you made."), {credits=fmt.credits(fine), spob=spb} )
       end
       vntk.msg(_("Dirty Deed"), msg)
       player.pay( -fine )

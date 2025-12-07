@@ -329,7 +329,7 @@ function fine_vanish ()
 
    local fine = 100e3
    p(_([["You are accused of violating regulations on the transport of toxic materials. Your ship will be searched now. If there are no contraband substances, we will be out of your hair in just a moment."]]))
-   p(fmt.f(_([[The inspectors search through your ship and cargo hold. It doesn't take long for them to find the phosphine; they confiscate it and fine you {credits}.]]), {credits=fmt.credits(fine)}))
+   p(fmt.f(_([[The inspectors search through your ship and cargo hold. It doesn't take long for them to find the phosphine; they confiscate it and fine you #r{credits}#0.]]), {credits=fmt.credits(fine)}))
    vn.run()
 
    if player.credits() > fine then

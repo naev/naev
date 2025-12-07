@@ -314,7 +314,7 @@ function mainguy_board ()
    vn.scene()
    vn.transition()
    vn.na(_("You storm the transport and head towards the cargo bay, however, once you get there you find it is empty. You proceed to explore the rest of the ship to see if there is anything of interest."))
-   vn.na(fmt.f(_("You are not able to find what you were looking for, but you were able to find {credits} that likely won't be necessary to the crew anymore."), {credits=fmt.credits(reward)}))
+   vn.na(fmt.f(_("You are not able to find what you were looking for, but you were able to find #g{credits}#0u that likely won't be necessary to the crew anymore."), {credits=fmt.credits(reward)}))
    vn.na(_("It might be best to report back to Kex to see if his information was correct."))
    vn.run()
 

@@ -174,12 +174,12 @@ function hail()
       faction.hit("Za'lek", 5)
    end )
    vn.sfxVictory()
-   vn.na(fmt.f(_([[You check your account balance as he closes the comm channel to find yourself {credits} richer. A good compensation indeed. You feel better already.]]),
+   vn.na(fmt.f(_([[You check your account balance as he closes the comm channel to find yourself #g{credits}#0 richer. A good compensation indeed. You feel better already.]]),
       {credits=fmt.credits(payment)} ) .."\n\n"..fmt.reward(payment) )
    vn.run()
 
 --   eventually I'll implement a bonus
---   vntk.msg( _("Bonus"), fmt.f(_([["For your trouble, I will add a bonus of {credits} to your fee. I am pleased by your help, captain; I hope we meet again."]]), {credits=fmt.credits(mem.bonus)} ) )
+--   vntk.msg( _("Bonus"), fmt.f(_([["For your trouble, I will add a bonus of #g{credits}#0 to your fee. I am pleased by your help, captain; I hope we meet again."]]), {credits=fmt.credits(mem.bonus)} ) )
 
    mem.bonus = 0
    logan:setVisplayer(false)

@@ -336,7 +336,7 @@ The man on your right answers: "Certainly not, your Lordship."]]),
       vn.na(_([[The Dvaered colonel and you get promptly dismissed, and he talks with you on the way back.]]))
       local sol = vn.newCharacter( _("Colonel Okran"), { image=portrait.getFullPath(agentPort) } )
       sol(fmt.f(_([["Citizen, you apparently did a pretty good job, out there. I did not fully understand why the Baron Sauterfeldt did want you to get your hands on that… piece of… stuff, but what is certain is that we can now count on him for getting our second battleship."
-"You deserve your reward. Please receive {credits}."]]), {credits=fmt.credits(pay)}))
+"You deserve your reward. Please receive #g{credits}#0."]]), {credits=fmt.credits(pay)}))
       vn.menu{
          {_("Talk with Okran"), "talk"},
          {_("Leave Okran ASAP"), "shutup"},
