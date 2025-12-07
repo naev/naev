@@ -28,9 +28,9 @@ local vntk = require "vntk"
 local lmisn = require "lmisn"
 
 local text = {
-   _("The waste containers are loaded onto your ship and you are paid #g{credits}#0. You begin to wonder if accepting this job was really a good idea."),
-   _("Workers pack your cargo hold full of as much garbage as it can carry, then hastily hand you a credit chip containing #g{credits}#0. Smelling the garbage, you immediately regret taking the job."),
-   _("Your hold is crammed full with garbage and you are summarily paid #g{credits}#0. By the time the overpowering stench emanating from your cargo hold reaches you, it's too late to back down; you're stuck with this garbage until you can find some place to get rid of it."),
+   _("The waste containers are loaded onto your ship and you are paid {credits}. You begin to wonder if accepting this job was really a good idea."),
+   _("Workers pack your cargo hold full of as much garbage as it can carry, then hastily hand you a credit chip containing {credits}. Smelling the garbage, you immediately regret taking the job."),
+   _("Your hold is crammed full with garbage and you are summarily paid {credits}. By the time the overpowering stench emanating from your cargo hold reaches you, it's too late to back down; you're stuck with this garbage until you can find some place to get rid of it."),
 }
 
 local finish_text = {
@@ -96,7 +96,7 @@ function accept ()
 
    lmisn.sfxMoney()
    local txt = text[ rnd.rnd( 1, #text ) ]
-   vntk.msg(_("Waste Containers Loaded"), fmt.f( txt, {credits = fmt.credits( mem.credits ) } ) )
+   vntk.msg(_("Waste Containers Loaded"), fmt.f( txt, {credits = "#g"..fmt.credits( mem.credits ).."#0" } ) )
 
    local c = commodity.new( N_("Waste Containers"), N_("A bunch of waste containers leaking all sorts of indescribable liquids. You hope they don't leak onto your ship.") )
    mem.cid = misn.cargoAdd( c, q )
