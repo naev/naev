@@ -144,7 +144,7 @@ function land( _p, _po )
 end
 
 -- Triggered when pilot takes off (player only)
-function takeoff( _p, _po )
+function takeoff( _p, _po, _spb )
 end
 
 -- Triggered when pilot jumps in (player only)
