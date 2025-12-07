@@ -7,7 +7,6 @@
  * @brief Handles all the space stuff, namely systems and space objects (spobs).
  */
 /** @cond */
-#include "physfs.h"
 #include <math.h>
 #include <stdlib.h>
 
