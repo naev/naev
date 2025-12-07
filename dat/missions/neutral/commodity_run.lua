@@ -38,10 +38,10 @@ mem.misn_title = _("{cargo} Delivery")
 mem.misn_desc = _("{pnt} has an insufficient supply of {cargo} to satisfy the current demand. Go to any planet which sells this commodity and bring as much of it back as possible.")
 
 cargo_land = {
-   _("The containers of {cargo} are carried out of your ship and tallied. After several different workers double-check the register to confirm the amount, you are paid #g{credits}#0 and summarily dismissed."),
-   _("The containers of {cargo} are quickly and efficiently unloaded, labelled, and readied for distribution. The delivery manager thanks you with a credit chip worth #g{credits}#0."),
-   _("The containers of {cargo} are unloaded from your vessel by a team of dockworkers who are in no rush to finish, eventually delivering #g{credits}#0 after the number of tonnes is determined."),
-   _("The containers of {cargo} are unloaded by robotic drones that scan and tally the contents. The human overseer hands you #g{credits}#0 when they finish."),
+   _("The containers of {cargo} are carried out of your ship and tallied. After several different workers double-check the register to confirm the amount, you are paid {credits} and summarily dismissed."),
+   _("The containers of {cargo} are quickly and efficiently unloaded, labelled, and readied for distribution. The delivery manager thanks you with a credit chip worth {credits}."),
+   _("The containers of {cargo} are unloaded from your vessel by a team of dockworkers who are in no rush to finish, eventually delivering {credits} after the number of tonnes is determined."),
+   _("The containers of {cargo} are unloaded by robotic drones that scan and tally the contents. The human overseer hands you {credits} when they finish."),
 }
 
 mem.osd_title = _("Commodity Delivery")
@@ -135,7 +135,7 @@ function land ()
       amount = player.fleetCargoRm( mem.chosen_comm, amount )
       local reward = amount * mem.price
       local txt = fmt.f(cargo_land[rnd.rnd(1, #cargo_land)],
-            {cargo=_(mem.chosen_comm), credits=fmt.credits(reward)} )
+            {cargo=_(mem.chosen_comm), credits="#g"..fmt.credits(reward).."#0"} )
       vntk.msg(_("Delivery success!"), txt)
       player.pay(reward)
       if not pir.factionIsPirate( mem.paying_faction ) then

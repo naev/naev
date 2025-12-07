@@ -48,16 +48,16 @@ piracyrisk[4] = _("#nPiracy Risk:#0 High")
 --=Landing=--
 
 local cargo_land = {
-   _("The containers of {cargo} are carried out of your ship by a sullen group of workers. The job takes inordinately long to complete, and the leader pays you #g{credits}#0 without speaking a word."),
-   _("Shortly after you land, a team rushes the containers of {cargo} out of your vessel. Before you can even collect your thoughts, one of the workers presses a credit chip worth #g{credits}#0 in your hand and departs."),
-   _("The containers of {cargo} are unloaded by an exhausted-looking bunch of dockworkers. Still, they make fairly good time, delivering your pay of #g{credits}#0 upon completion of the job."),
-   _("The containers of {cargo} are unloaded by a team of robotic drones supervised by a human overseer, who hands you your pay of #g{credits}#0 when they finish."),
+   _("The containers of {cargo} are carried out of your ship by a sullen group of workers. The job takes inordinately long to complete, and the leader pays you {credits} without speaking a word."),
+   _("Shortly after you land, a team rushes the containers of {cargo} out of your vessel. Before you can even collect your thoughts, one of the workers presses a credit chip worth {credits} in your hand and departs."),
+   _("The containers of {cargo} are unloaded by an exhausted-looking bunch of dockworkers. Still, they make fairly good time, delivering your pay of {credits} upon completion of the job."),
+   _("The containers of {cargo} are unloaded by a team of robotic drones supervised by a human overseer, who hands you your pay of {credits} when they finish."),
 }
 
 local cargo_land_slow = {
-   _("The containers of {cargo} are carried out of your ship by a sullen group of workers. They are not happy that they have to work overtime because you were late. You are paid only #o{credits}#0 of the {reward} you were promised."),
-   _("Shortly after you land, a team rushes the containers of {cargo} out of your vessel. Your late arrival is stretching quite a few schedules! Your pay is only #o{credits}#0 instead of {reward} because of that."),
-   _("The containers of {cargo} are unloaded by an exhausted-looking bunch of dockworkers. You missed the deadline, so your reward is only #o{credits}#0 instead of the {reward} you were hoping for."),
+   _("The containers of {cargo} are carried out of your ship by a sullen group of workers. They are not happy that they have to work overtime because you were late. You are paid only {credits} of the {reward} you were promised."),
+   _("Shortly after you land, a team rushes the containers of {cargo} out of your vessel. Your late arrival is stretching quite a few schedules! Your pay is only {credits} instead of {reward} because of that."),
+   _("The containers of {cargo} are unloaded by an exhausted-looking bunch of dockworkers. You missed the deadline, so your reward is only {credits} instead of the {reward} you were hoping for."),
 }
 
 -- Create the mission
@@ -154,12 +154,12 @@ function land()
       if mem.intime then
          -- Semi-random message.
          lmisn.sfxMoney()
-         vntk.msg( _("Successful Delivery"), fmt.f(cargo_land[rnd.rnd(1, #cargo_land)], {cargo=_(mem.cargo), credits=fmt.credits(mem.reward)}) )
+         vntk.msg( _("Successful Delivery"), fmt.f(cargo_land[rnd.rnd(1, #cargo_land)], {cargo=_(mem.cargo), credits="#g"..fmt.credits(mem.reward).."#0"}) )
       else
          -- Semi-random message for being late.
          lmisn.sfxMoney()
          vntk.msg( _("Successful Delivery"), fmt.f(cargo_land_slow[rnd.rnd(1, #cargo_land_slow)],
-         {cargo=_(mem.cargo), credits=fmt.credits(mem.reward / 2), reward=fmt.credits(mem.reward)} ) )
+         {cargo=_(mem.cargo), credits="#o"..fmt.credits(mem.reward / 2).."#0", reward=fmt.credits(mem.reward)} ) )
          mem.reward = mem.reward / 2
       end
       player.pay(mem.reward)
