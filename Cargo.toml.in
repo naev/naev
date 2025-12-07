@@ -51,7 +51,7 @@ gltf = { git = "https://github.com/gltf-rs/gltf.git", rev = "3def30c9caf96f2dbc8
 
 [workspace.dependencies]
 naevc = { path=@NAEVC@ }
-sdl3 = "0.15"
+sdl3 = "0.16"
 anyhow = "1.0"
 naev_core = { path="@BUILD@/src/core" }
 utils = { path="@BUILD@/src/utils" }
@@ -67,7 +67,7 @@ formatx = "0.2"
 glow = "0.16"
 nalgebra = { version = "0.34", features = ["bytemuck", "encase"] }
 encase = { version = "0.12" } # Needed for shader voodoo
-bytemuck = { version = "1.23", features = ["derive"] } # Needed for shader voodoo
+bytemuck = { version = "1.24", features = ["derive"] } # Needed for shader voodoo
 # need dav1d 0.11.1 or newer, will appear in the version after 0.25.9
 image = { version = "0.25", default-features = false, features = [ "avif-native", "jpeg", "png", "webp" ]  }
 mlua = { version = "0.11.5", features = ["luajit", "anyhow", "send", "serialize"] }
@@ -139,7 +139,7 @@ fs-err = { workspace = true }
 gltf = { version = "1.4", features = ["extras", "names", "utils", "EXT_texture_webp", "KHR_materials_emissive_strength"] }
 #gltf = { version = "1", features = ["extras", "names", "utils"] }
 colored = "3"
-regex = "1.11"
+regex = "1.12"
 # cargo-util usess cargo internals and says you shouldn't use it in external
 # packages, yet without any other alternative, here we are :)
 cargo-util = "0.2"
