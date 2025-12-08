@@ -96,7 +96,8 @@ static int pilot_weapSetPressToggle( Pilot *p, PilotWeaponSet *ws )
  *
  *    @param p Pilot the weapon set belongs to.
  *    @param id ID of the weapon set.
- *    @param type Is +1 if it's a press or -1 if it's a release.
+ *    @param type Is +1 if it's a press, -1 if it's a release, or +2 if it's a
+ * repeat press.
  *    @return Whether or not something changed.
  */
 int pilot_weapSetPress( Pilot *p, int id, int type )
@@ -130,6 +131,7 @@ int pilot_weapSetPress( Pilot *p, int id, int type )
       if ( type < 0 ) {
          ret        = ( ws->active != 0 );
          ws->active = 0;
+         /* Repeating so convert to hold. */
       } else if ( type > 1 ) {
          ret        = ( ws->active != 1 );
          ws->active = 1;
@@ -1398,7 +1400,7 @@ void pilot_weaponAuto( Pilot *p )
    } else {
       /* Set weapon sets. */
       for ( int i = 2; i < PILOT_WEAPON_SETS; i++ )
-         pilot_weapSetType( p, i, WEAPSET_TYPE_TOGGLE );
+         pilot_weapSetType( p, i, WEAPSET_TYPE_HOLD );
    }
 
    /* Iterate through all the outfits. */
