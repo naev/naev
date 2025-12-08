@@ -1,4 +1,4 @@
-## 0.13.0-beta.3 (unreleased)
+## 0.13.0-beta.3
 
    * Make sure reynir only appears when you have free cargo space (reynir.lua)
    * Fix loading fonts in the plugin manager on platforms like macOS
