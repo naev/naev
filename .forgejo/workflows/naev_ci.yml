@@ -15,15 +15,18 @@ jobs:
   "Package_Source":
     runs-on: naev-release
     steps:
+      - name: Force Codeberg over SSH
+        run: git config --global url."ssh://git@codeberg.org/naev/".insteadOf https://codeberg.org/naev/
+
       - name: Checkout Naev Repository
         uses: actions/checkout@v4
         with:
           lfs: false # defer LFS to after cache restore
           path: source
           submodules: true
-          #ssh-key: ${{ secrets.CODEBERG_SSH_KEY }}
-          #ssh-known-hosts: ${{ secrets.CODEBERG_SSH_KNOWN_HOSTS }}
-          #persist-credentials: true
+          ssh-key: ${{ secrets.CODEBERG_SSH_KEY }}
+          ssh-known-hosts: ${{ secrets.CODEBERG_SSH_KNOWN_HOSTS }}
+          persist-credentials: true
 
       - name: Cache Meson wrap downloads
         uses: actions/cache@v3
