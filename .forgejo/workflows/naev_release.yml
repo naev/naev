@@ -25,7 +25,7 @@ jobs:
           submodules: true
           ssh-key: ${{ secrets.CODEBERG_SSH_KEY }}
           ssh-known-hosts: ${{ secrets.CODEBERG_SSH_KNOWN_HOSTS }}
-          persist-credentials: false
+          persist-credentials: true
 
       - name: Cache Meson wrap downloads
         uses: actions/cache@v3
