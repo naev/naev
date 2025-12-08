@@ -34,6 +34,7 @@ source_rust = files(
    'ndata/src/env.rs',
    'ndata/src/lua.rs',
    'ndata/src/physfs.rs',
+   'ndata/src/cwrap.rs',
    'gettext/src/lib.rs',
    'log/src/lib.rs',
    'log/src/version.rs',
@@ -255,11 +256,6 @@ mac_source = files('glue_macos.m')
 
 naev_source = [
    files('naev.c'),
-   source,
-   nlua_source
-]
-naevlua_source = [
-   files('naevlua.c'),
    source,
    nlua_source
 ]

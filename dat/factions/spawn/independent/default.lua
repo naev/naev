@@ -12,7 +12,7 @@ local spacifier   = ship.get("Pacifier") -- codespell:ignore spacifier
 local shawking    = ship.get("Hawking")
 
 local frontier
-local fmercenary = faction.get("Mercenary")
+local fmercenary = faction.get("Independent Mercenary")
 
 -- Make pilot more visible
 local function _advert( p )

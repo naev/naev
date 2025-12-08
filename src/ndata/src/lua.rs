@@ -56,7 +56,7 @@ macro_rules! file_not_open {
     };
 }
 
-/*
+/*@
  * @brief Lua bindings to interact with files.
  *
  * @note The API here is designed to be compatible with that of "LÖVE".
@@ -68,7 +68,7 @@ impl UserData for LuaFile {
     fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
         //methods.add_meta_method( MetaMethod::Eq, |_, this,
 
-        /*
+        /*@
          * @brief Create a file from a string buffer.
          *
          *    @luatparam String str String to use as the memory data.
@@ -101,7 +101,7 @@ impl UserData for LuaFile {
                 })
             },
         );
-        /*
+        /*@
          * @brief Opens a new file.
          *
          *    @luatparam string path Path to open.
@@ -111,7 +111,7 @@ impl UserData for LuaFile {
         methods.add_function("new", |_, path: String| -> mlua::Result<LuaFile> {
             Ok(LuaFile { path, file: None })
         });
-        /*
+        /*@
          * @brief Opens a new file.
          *
          *    @luatparam File File object to open.
@@ -132,7 +132,7 @@ impl UserData for LuaFile {
                 Ok((true, None))
             },
         );
-        /*
+        /*@
          * @brief Closes a file.
          *
          *    @luatparam File file File to close.
@@ -143,7 +143,7 @@ impl UserData for LuaFile {
             this.file = None;
             Ok(true)
         });
-        /*
+        /*@
          * @brief Reads from an open file.
          *
          *    @luatparam File file File to read from.
@@ -174,7 +174,7 @@ impl UserData for LuaFile {
                 }
             },
         );
-        /*
+        /*@
          * @brief Reads from an open file.
          *
          *    @luatparam File file File to write to.
@@ -196,7 +196,7 @@ impl UserData for LuaFile {
                 }
             },
         );
-        /*
+        /*@
          * @brief Seeks in an open file.
          *
          *    @luatparam File file File to seek in.
@@ -217,7 +217,7 @@ impl UserData for LuaFile {
                 }
             },
         );
-        /*
+        /*@
          * @brief Gets the name of a file object.
          *
          *    @luatparam File file File object to get name of.
@@ -227,7 +227,7 @@ impl UserData for LuaFile {
         methods.add_method("getFilename", |_, this, ()| -> mlua::Result<String> {
             Ok(this.path.clone())
         });
-        /*
+        /*@
          * @brief Gets the mode a file is currently in.
          *
          *    @luatparam File file File to get mode of.
@@ -246,7 +246,7 @@ impl UserData for LuaFile {
                 Ok('c'.to_string())
             }
         });
-        /*
+        /*@
          * @brief Gets the size of a file (must be open).
          *
          *    @luatparam File file File to get the size of.
@@ -260,7 +260,7 @@ impl UserData for LuaFile {
                 file_not_open!()
             }
         });
-        /*
+        /*@
          * @brief Checks to see if a file is open.
          *
          *    @luatparam File file File to check to see if is open.
@@ -270,7 +270,7 @@ impl UserData for LuaFile {
         methods.add_method("isOpen", |_, this, ()| -> mlua::Result<bool> {
             Ok(this.file.is_some())
         });
-        /*
+        /*@
          * @brief Checks to see the filetype of a path.
          *
          *    @luatparam string path Path to check to see what type it is.
@@ -294,7 +294,7 @@ impl UserData for LuaFile {
                 }
             },
         );
-        /*
+        /*@
          * @brief Makes a directory.
          *
          *    @luatparam string dir Name of the directory to make.
@@ -310,7 +310,7 @@ impl UserData for LuaFile {
                 }
             },
         );
-        /*
+        /*@
          * @brief Returns a list of files and subdirectories of a directory.
          *
          *    @luatparam string dir Name of the directory to check.
@@ -328,7 +328,7 @@ impl UserData for LuaFile {
                 Ok(t)
             },
         );
-        /*
+        /*@
          * @brief Removes a file or directory.
          *
          *    @luatparam string path Name of the path to remove.

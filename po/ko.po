@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-11-23 22:49+0900\n"
+"POT-Creation-Date: 2025-12-07 21:45+0900\n"
 "PO-Revision-Date: 2024-06-23 14:45+0000\n"
 "Last-Translator: Han Ga Eun <gdd72582@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/naev/naev/ko/>\n"
@@ -8830,7 +8830,7 @@ msgstr ""
 msgid "   * Many bugs caught (reported in the Discord under ##bugs)"
 msgstr ""
 
-msgid "hypersoop"
+msgid "hsza (aka zaire)"
 msgstr ""
 
 msgid "   * Multiple ship variant and outfit ideas"
@@ -8928,6 +8928,9 @@ msgid "Elven_Moustache"
 msgstr ""
 
 msgid "Pyroman"
+msgstr ""
+
+msgid "hsza"
 msgstr ""
 
 msgid "Artwork Contributors"
@@ -9220,6 +9223,354 @@ msgstr ""
 
 msgctxt "slotproperty"
 msgid "Core Systems (Secondary)"
+msgstr ""
+
+msgid "Immane Cerebrum III"
+msgstr ""
+
+msgid "Bioship Brain"
+msgstr "바이오십 뇌"
+
+msgid ""
+"The brain is a Soromid bioship's equivalent to core systems in synthetic "
+"ships. Possibly the most important organ, the brain provides processing "
+"power and allocates energy to the rest of the organism. All brains start off "
+"undeveloped, but over time, just like the ships themselves, they grow and "
+"improve."
+msgstr ""
+
+msgid "Talon Organ III"
+msgstr ""
+
+#, fuzzy
+msgid "Bioship Weapon Organ"
+msgstr "바이오십 무기"
+
+msgid ""
+"The Talon Organ is an enlarged and more powerful version of the Stinger "
+"Organ. Like its smaller counterpart, is able to convert energy into hot "
+"plasma that is able to eat easily through shield and armour of opposing "
+"ships. The hot plasma is able to cling to ship's shields and hulls dealing "
+"continuous damage after impact."
+msgstr ""
+
+msgid "Stinger Organ I"
+msgstr ""
+
+msgid ""
+"The Stinger Organ is able to convert energy into hot plasma that is able to "
+"eat easily through shield and armour of opposing ships over time. While not "
+"an especially powerful offensive organ, it is prized for its reliability."
+msgstr ""
+
+#, fuzzy
+#| msgid "Bioship Brain"
+msgid "Largus Gene Drive II"
+msgstr "바이오십 뇌"
+
+#, fuzzy
+msgid "Bioship Gene Drive"
+msgstr "바이오십 뇌"
+
+msgid ""
+"The gene drive is a Soromid bioship's equivalent to engines in synthetic "
+"ships. It is charged with moving the organism through space and is even "
+"capable of hyperspace travel. All gene drives start off undeveloped, but "
+"over time, just like the ships themselves, they grow and improve."
+msgstr ""
+
+msgid "Mediocris Cortex II"
+msgstr ""
+
+msgid "Bioship Shell"
+msgstr "바이오십 셀"
+
+msgid ""
+"The shell is a Soromid bioship's natural protection, equivalent to hulls of "
+"synthetic ships. The shell is responsible both for protecting the organism's "
+"internal organs and for creating camouflage to reduce the risk of being "
+"detected by hostiles. All shells start off undeveloped, but over time, just "
+"like the ships themselves, they grow and improve."
+msgstr ""
+
+#, fuzzy
+#| msgid "Bioship Brain"
+msgid "Magnus Gene Drive III"
+msgstr "바이오십 뇌"
+
+msgid "Perlevis Cortex I"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bioship Brain"
+msgid "Grandis Gene Drive III"
+msgstr "바이오십 뇌"
+
+#, fuzzy
+#| msgid "Bioship Brain"
+msgid "Ponderosus Gene Drive I"
+msgstr "바이오십 뇌"
+
+msgid "Largus Cortex I"
+msgstr ""
+
+msgid "Tentacle Organ IV"
+msgstr ""
+
+msgid ""
+"The Tentacle Organ has the distinction of being the only fully rotating "
+"organic weapon while boasting a fully developed power output that is hard to "
+"beat with conventional weaponry found throughout the galaxy. The large globs "
+"of hot plasma it launches can corrode through seemingly impregnable armours, "
+"seeping into and melting ships from the inside upon contact."
+msgstr ""
+
+msgid "Immane Cerebrum II"
+msgstr ""
+
+msgid "Laevum Cerebrum I"
+msgstr ""
+
+msgid "Stinger Organ III"
+msgstr ""
+
+msgid "Largus Cortex III"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bioship Brain"
+msgid "Laevis Gene Drive II"
+msgstr "바이오십 뇌"
+
+#, fuzzy
+#| msgid "Bioship Brain"
+msgid "Grandis Gene Drive I"
+msgstr "바이오십 뇌"
+
+msgid "Laevis Gene Drive I"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bioship Brain"
+msgid "Ponderosus Gene Drive II"
+msgstr "바이오십 뇌"
+
+msgid "Stinger Organ II"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bioship Brain"
+msgid "Magnus Gene Drive II"
+msgstr "바이오십 뇌"
+
+msgid "Perlevis Cortex II"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bioship Brain"
+msgid "Immanis Gene Drive III"
+msgstr "바이오십 뇌"
+
+msgid "Tentacle Organ III"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bioship Brain"
+msgid "Laeviter Gene Drive I"
+msgstr "바이오십 뇌"
+
+msgid "Ponderosus Cortex II"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bioship Brain"
+msgid "Mediocris Gene Drive I"
+msgstr "바이오십 뇌"
+
+#, fuzzy
+#| msgid "Bioship Brain"
+msgid "Mediocris Gene Drive II"
+msgstr "바이오십 뇌"
+
+msgid "Perleve Cerebrum I"
+msgstr ""
+
+msgid "Ponderosus Cortex III"
+msgstr ""
+
+msgid "Talon Organ IV"
+msgstr ""
+
+msgid "Ponderosum Cerebrum II"
+msgstr ""
+
+msgid "Mediocris Cortex I"
+msgstr ""
+
+msgid "Laevis Cortex I"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bioship Brain"
+msgid "Laeviter Gene Drive II"
+msgstr "바이오십 뇌"
+
+msgid "Tentacle Organ I"
+msgstr ""
+
+msgid "Immanis Cortex II"
+msgstr ""
+
+msgid "Largus Cortex II"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bioship Brain"
+msgid "Grandis Gene Drive II"
+msgstr "바이오십 뇌"
+
+#, fuzzy
+#| msgid "Bioship Brain"
+msgid "Largus Gene Drive I"
+msgstr "바이오십 뇌"
+
+msgid "Mediocre Cerebrum I"
+msgstr ""
+
+msgid "Ponderosus Cortex I"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bioship Brain"
+msgid "Perlevis Gene Drive I"
+msgstr "바이오십 뇌"
+
+#, fuzzy
+#| msgid "Bioship Brain"
+msgid "Perlevis Gene Drive II"
+msgstr "바이오십 뇌"
+
+#, fuzzy
+#| msgid "Bioship Brain"
+msgid "Immanis Gene Drive II"
+msgstr "바이오십 뇌"
+
+msgid "Perleve Cerebrum II"
+msgstr ""
+
+msgid "Talon Organ I"
+msgstr ""
+
+msgid "Ponderosum Cerebrum I"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bioship Brain"
+msgid "Mediocris Gene Drive III"
+msgstr "바이오십 뇌"
+
+msgid "Immanis Cortex III"
+msgstr ""
+
+msgid "Laevis Cortex II"
+msgstr ""
+
+msgid "Immane Cerebrum I"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bioship Brain"
+msgid "Ponderosus Cortex IV"
+msgstr "바이오십 뇌"
+
+msgid "Mediocre Cerebrum II"
+msgstr ""
+
+msgid "Largum Cerebrum I"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bioship Brain"
+msgid "Magnus Gene Drive I"
+msgstr "바이오십 뇌"
+
+msgid "Ponderosum Cerebrum III"
+msgstr ""
+
+msgid "Tentacle Organ II"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bioship Brain"
+msgid "Ponderosus Gene Drive III"
+msgstr "바이오십 뇌"
+
+msgid "Immanis Cortex I"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bioship Brain"
+msgid "Immanis Gene Drive I"
+msgstr "바이오십 뇌"
+
+msgid "Laevum Cerebrum II"
+msgstr ""
+
+msgid "Largum Cerebrum II"
+msgstr ""
+
+msgid "Talon Organ II"
+msgstr ""
+
+msgid ""
+"The complex engineering specifications and difficulty of mass production "
+"doomed the Reaver Cannon from the start. However, in the right hands, given "
+"the extreme long range and high penetration for a weapon of its size, it can "
+"be very deadly."
+msgstr ""
+
+#, fuzzy
+msgid "Core Systems (Engine)"
+msgstr "핵심 시스템"
+
+msgid ""
+"there once was a big mighty corsair\n"
+"who was said to be the finest heir\n"
+"of some noble great house\n"
+"almost tied as a spouse\n"
+"before they quickly took to the air"
+msgstr ""
+
+msgid ""
+"Based on the Heavy Ion Cannon, the Neutralizer is proof to the importance of "
+"specialized engineering. With most of the hardware and software "
+"significantly modified or replaced, the Neutralizer shows significant "
+"improvements in nearly all facets. Due to the fact that few were made, it is "
+"a fairly rare find, but an import asset in a pilot's arsenal."
+msgstr ""
+
+#, fuzzy
+msgid "Core Systems (System)"
+msgstr "핵심 시스템"
+
+msgid ""
+"oh, the ferocious mighty corsair\n"
+"never sitting in their captain's chair\n"
+"least they puke out their grub\n"
+"all over the ship hub\n"
+"in space is it also mal de mer?"
+msgstr ""
+
+#, fuzzy
+msgid "Core Systems (Hull)"
+msgstr "핵심 시스템"
+
+msgid ""
+"wish I be like that lovely corsair\n"
+"the prettiest of all pirate hair\n"
+"be drinking at the bar\n"
+"eyes green like fluorspar\n"
+"irresistible buccaneer stare"
 msgstr ""
 
 msgid "common"
@@ -10387,10 +10738,6 @@ msgstr ""
 msgid "None"
 msgstr ""
 
-#, fuzzy
-msgid "Core Systems (Engine)"
-msgstr "핵심 시스템"
-
 msgid ""
 "This is a dummy engine for use in missions only, which does nothing. DO NOT "
 "BUY."
@@ -10562,10 +10909,6 @@ msgid ""
 "are very often modded by students, which makes them unreliable."
 msgstr ""
 
-#, fuzzy
-msgid "Core Systems (Hull)"
-msgstr "핵심 시스템"
-
 msgid ""
 "This is a dummy hull for use in missions only, which does nothing. DO NOT "
 "BUY."
@@ -10721,10 +11064,6 @@ msgid ""
 "Commonly found on civilian vessels, the D-2 plating is popular with ship "
 "manufacturers due to its low cost and adequate, if uninspiring performance."
 msgstr ""
-
-#, fuzzy
-msgid "Core Systems (System)"
-msgstr "핵심 시스템"
 
 msgid ""
 "This is a dummy core system for use in missions only, which does nothing. DO "
@@ -13751,6 +14090,57 @@ msgstr "이것은 기본입니다. AI 전용입니다. 그것을 사지 마십�
 #. Cargo light
 #. gfx.renderTex( cargo_light_off, ta_cargo_x, ta_cargo_y )
 #. Pilot name
+#. stress is only used for armour
+#. Get values
+#. Draw bar
+#. Draw border
+#. Icon
+#. Sheen
+#. Text
+#. Values
+#. Rather hacky, waiting for fix
+#. Radar
+#. Slots
+#. Right side
+#. There is something in this slot
+#. Background
+#. Image
+#.
+#. if wset[i].heat > 0 then
+#. gfx.renderRect( slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w * wset[i].heat/2, col_slot_heat ) --Heat
+#. end
+#. --
+#. Cooldown
+#. Turn the 0..1 cooldown number into a 0..35 tex id where 0 is ready. Also, reversed
+#. A strange thing: The texture at 6,6 is never drawn, the one at 5,6 only about 50% of the time. Otherwise, they're skipped
+#. is this an error in my code or bobbens' ?
+#. Ammo
+#. Lock-on
+#. Frame
+#. Left side
+#. There is something in this slot
+#. Background
+#. Draw a heat background for certain outfits. TODO: detect if the outfit is heat based somehow!
+#. if aset[i].type == "Afterburner" then
+#. gfx.renderRect( slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w * aset[i].heat, col_slot_heat ) -- Background (heat)
+#. end
+#. Image
+#. Cooldown
+#. Turn the 0..1 cooldown number into a 0..35 tex id where 0 is ready.
+#. A strange thing: The texture at 6,6 is never drawn, the one at 5,6 only about 50% of the time. Otherwise, they're skipped
+#. is this an error in my code or bobbens' ?
+#. "Heat"
+#. Frame
+#. Bars
+#. Fuel
+#. Armour
+#. Shield
+#. Energy
+#. Heat
+#. Speed
+#. Cargo
+#. Money
+#. Time
 #. The player automatically accepts this mission.
 #. This is the initial phase of the mission, when it still only shows up in the mission list. No OSD, reward or markers yet.
 #. Must be accepted beyond this point
@@ -51908,57 +52298,6 @@ msgstr ""
 msgid "Cargo:"
 msgstr ""
 
-#. stress is only used for armour
-#. Get values
-#. Draw bar
-#. Draw border
-#. Icon
-#. Sheen
-#. Text
-#. Values
-#. Rather hacky, waiting for fix
-#. Radar
-#. Slots
-#. Right side
-#. There is something in this slot
-#. Background
-#. Image
-#.
-#. if wset[i].heat > 0 then
-#. gfx.renderRect( slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w * wset[i].heat/2, col_slot_heat ) --Heat
-#. end
-#. --
-#. Cooldown
-#. Turn the 0..1 cooldown number into a 0..35 tex id where 0 is ready. Also, reversed
-#. A strange thing: The texture at 6,6 is never drawn, the one at 5,6 only about 50% of the time. Otherwise, they're skipped
-#. is this an error in my code or bobbens' ?
-#. Ammo
-#. Lock-on
-#. Frame
-#. Left side
-#. There is something in this slot
-#. Background
-#. Draw a heat background for certain outfits. TODO: detect if the outfit is heat based somehow!
-#. if aset[i].type == "Afterburner" then
-#. gfx.renderRect( slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w * aset[i].heat, col_slot_heat ) -- Background (heat)
-#. end
-#. Image
-#. Cooldown
-#. Turn the 0..1 cooldown number into a 0..35 tex id where 0 is ready.
-#. A strange thing: The texture at 6,6 is never drawn, the one at 5,6 only about 50% of the time. Otherwise, they're skipped
-#. is this an error in my code or bobbens' ?
-#. "Heat"
-#. Frame
-#. Bars
-#. Fuel
-#. Armour
-#. Shield
-#. Energy
-#. Heat
-#. Speed
-#. Cargo
-#. Money
-#. Time
 #. Remove trailing whitespace. TODO why do we have to do this? :/
 #. Dimensions
 #. Draw starfield background
@@ -54193,8 +54532,10 @@ msgid ""
 "there is a little setback...\" You start to fear he will try to stiff you on "
 "the payment, but he continues: \"I don't know why, but the High Command has "
 "not credited the payment account yet... Well do you know what we are going "
-"to do? I will give you a set of Gauss Guns worth {credits}! One always needs "
-"Gauss Guns, no?\""
+"to do? I will give you {rew}! One always needs Gauss Guns, no?\""
+msgstr ""
+
+msgid "a set of Gauss Guns worth {credits}"
 msgstr ""
 
 msgid ""
@@ -69781,7 +70122,7 @@ msgid ""
 msgstr ""
 
 msgid ""
-"\"Meee? Drinkinging tooo mich? Thatss sshtoopid.\" -- codespell:ignore tooo\n"
+"\"Meee? Drinkinging tooo mich? Thatss sshtoopid.\"\n"
 "He takes another long swig of his drink and burps."
 msgstr ""
 
@@ -69881,8 +70222,7 @@ msgstr "메이데이! 도움을 요청합니다. 무슨 소리죠? 들려요?"
 
 #. Get rid of the timeout hook
 msgid ""
-"#pYour ship has detected a curious signal originating from inside the "
-"system.#0"
+"Your ship has detected a curious signal originating from inside the system."
 msgstr ""
 
 msgid "Curious Signal"
@@ -70016,6 +70356,7 @@ msgstr ""
 msgid "That's what you said last time too!"
 msgstr ""
 
+#. Player beat the guys to it
 #, fuzzy
 msgid "You are about to be discovered!"
 msgstr "나한테 20 크레딧 빚졌잖아!"
@@ -70106,7 +70447,7 @@ msgstr ""
 msgid "\"Look I just want to talk\""
 msgstr ""
 
-msgid "Try to bribe them (#r{credits}#0)"
+msgid "Try to bribe them ({credits})"
 msgstr ""
 
 #. TODO possibly add a pacifist option here too
@@ -71002,10 +71343,6 @@ msgstr ""
 
 #. Spawn the drones
 msgid "Feral Alpha Drone"
-msgstr ""
-
-msgid ""
-"Your ship has detected a curious signal originating from inside the system."
 msgstr ""
 
 #, fuzzy
@@ -75625,6 +75962,31 @@ msgid ""
 "Emergency cargo delivery of {amount} of {cargo} to {pnt} in the {sys} system."
 msgstr "프론티어 시스템"
 
+#. =Landing=--
+msgid ""
+"The containers of {cargo} are carried out of your ship by a sullen group of "
+"workers. The job takes inordinately long to complete, and the leader pays "
+"you {credits} without speaking a word."
+msgstr ""
+
+msgid ""
+"Shortly after you land, a team rushes the containers of {cargo} out of your "
+"vessel. Before you can even collect your thoughts, one of the workers "
+"presses a credit chip worth {credits} in your hand and departs."
+msgstr ""
+
+msgid ""
+"The containers of {cargo} are unloaded by an exhausted-looking bunch of "
+"dockworkers. Still, they make fairly good time, delivering your pay of "
+"{credits} upon completion of the job."
+msgstr ""
+
+msgid ""
+"The containers of {cargo} are unloaded by a team of robotic drones "
+"supervised by a human overseer, who hands you your pay of {credits} when "
+"they finish."
+msgstr ""
+
 msgid ""
 "The containers of {cargo} are carried out of your ship by a sullen group of "
 "workers. They are not happy that they have to work overtime because you were "
@@ -76504,7 +76866,7 @@ msgid ""
 msgstr ""
 
 #. eventually I'll implement a bonus
-#. p(fmt.f(_([["Oh, and she put in a nice bonus for you of {credits} for such a speedy delivery."]]), {credits=fmt.credits(mem.bonus)}))
+#. p(fmt.f(_([["Oh, and she put in a nice bonus for you of {credits} for such a speedy delivery."]]), {credits="#g"..fmt.credits(mem.bonus).."#0"}))
 msgid ""
 "You check your account balance as he closes the comm channel to find "
 "yourself {credits} richer. Just being alive felt good, but this feels "
@@ -80462,8 +80824,8 @@ msgid ""
 "A man in a suit and tie takes you up onto a stage. A large name tag on his "
 "jacket says 'Melendez Corporation'. \"Congratulations on your win,\" he "
 "says, shaking your hand, \"that was a great race. On behalf of Melendez "
-"Corporation, I would like to present to you your trophy and prize money of "
-"{credits}!\" He hands you one of those fake oversized cheques for the "
+"Corporation, I would like to present to you #gyour trophy#0 and prize money "
+"of {credits}!\" He hands you one of those fake oversized cheques for the "
 "audience, and then a credit chip with the actual prize money on it. At least "
 "the trophy looks cool."
 msgstr ""
@@ -80729,6 +81091,9 @@ msgstr ""
 #. end
 #. local mtest = require("misn_test")
 #. if not mtest.cargo(true) or not mtest.reweight_active() then
+#. return false
+#. end
+#. if player.pilot():cargoFree() &lt;= 0 then
 #. return false
 #. end
 #. local count = 0
@@ -97152,8 +97517,7 @@ msgstr ""
 
 msgid ""
 "You successfully escorted the trading convoy to the destination. There "
-"wasn't a single casualty, and you are rewarded the full amount of #g{credits}"
-"#0."
+"wasn't a single casualty, and you are rewarded the full amount of {credits}."
 msgstr ""
 
 msgid "Success with Casualties"
@@ -97161,8 +97525,8 @@ msgstr ""
 
 msgid ""
 "You've arrived with the trading convoy more or less intact. Your pay is "
-"docked slightly due to the loss of part of the convoy. You receive "
-"#g{credits}#0 of the original promised reward of {reward}."
+"docked slightly due to the loss of part of the convoy. You receive {credits} "
+"of the original promised reward of {reward}."
 msgstr ""
 
 msgid "Success with Heavy Casualties"
@@ -97170,8 +97534,8 @@ msgstr ""
 
 msgid ""
 "You arrive with what's left of the convoy. It's not much, but it's better "
-"than nothing. You are paid a steeply discounted amount of #g{credits}#0 from "
-"the {reward} originally promised."
+"than nothing. You are paid a steeply discounted amount of {credits} from the "
+"{reward} originally promised."
 msgstr ""
 
 #. luacheck: globals trader_create
@@ -97857,7 +98221,7 @@ msgstr ""
 
 msgid ""
 "\"It looks like you won't have enough money to bribe them. Here, take "
-"#g{credits}#0, that should be enough, hopefully.\""
+"{credits}, that should be enough, hopefully.\""
 msgstr ""
 
 msgid "Hail and bribe the pirates"
@@ -104589,7 +104953,7 @@ msgid ""
 msgstr ""
 
 #. eventually I'll implement a bonus
-#. vntk.msg( _("Bonus"), fmt.f(_([["For your trouble, I will add a bonus of {credits} to your fee. I am pleased by your help, captain; I hope we meet again."]]), {credits=fmt.credits(mem.bonus)} ) )
+#. vntk.msg( _("Bonus"), fmt.f(_([["For your trouble, I will add a bonus of {credits} to your fee. I am pleased by your help, captain; I hope we meet again."]]), {credits="#g"..fmt.credits(mem.bonus).."#0"} ) )
 msgid ""
 "You helped a Za'lek scientist deliver some equipment and were paid "
 "generously for the job."
@@ -109498,14 +109862,6 @@ msgstr "프론티어 시스템"
 #. Mark destination
 #. Have to run logic
 #. Logic to make the pilots automatically jump or land when near the target
-#, fuzzy
-msgid "Landing on {spb}."
-msgstr "투리온의 불꽃"
-
-#, fuzzy
-msgid "Proceeding to {sys}."
-msgstr "투리온의 불꽃"
-
 #. We want to defer it one frame in case an enter hook clears all pilots
 #, fuzzy
 msgid "You jumped into the wrong system."
@@ -113523,7 +113879,7 @@ msgstr "vn: 알 수 없는 전환 유형 '%s'"
 #. @module vn
 #.
 #. Internal usage
-#. _soundTalk = audio.newSource( "snd/sounds/ui/letter0.wav" ),
+#. _soundTalk = audio.newSource( "snd/sounds/ui/letter0.ogg" ),
 #. Drawing
 #. Autosize
 #. Options
@@ -113735,6 +114091,7 @@ msgstr ""
 msgid "vn: character image '%s' not found!"
 msgstr "셰이더 '%s'을 (를) 찾을 수 없습니다."
 
+#. vn code assumes lua graphics image, so rewrap if we think it's a rust-side texture
 #. --
 #. Renames a character on the fly.
 #. @tparam string newname New name to give the character.
@@ -120737,25 +121094,15 @@ msgstr ""
 msgid "Naev Failed to start due to a critical error"
 msgstr ""
 
-#, fuzzy
-msgid "Unable to create config directory '{}'"
-msgstr "쓰기 위해 '%s'을 (를) 열 수 없습니다."
-
-#. Set up I/O.
-#. now that we can find translations
 msgid "Loaded configuration: {}"
 msgstr ""
 
 msgid "Read locations, searched in order:"
 msgstr ""
 
-msgid "Cache location: {}"
-msgstr ""
-
 msgid "Write location: {}\n"
 msgstr ""
 
-#, c-format
 msgid "Initializing video output failed, exiting…"
 msgstr "비디오 출력 초기화 실패, 종료 중…"
 
@@ -120849,53 +121196,6 @@ msgstr ""
 msgid " debug"
 msgstr ""
 
-#, c-format
-msgid "Failed to parse version string '%s'!"
-msgstr ""
-
-#, c-format
-msgid "Unable to initialize SDL: %s"
-msgstr ""
-
-#, c-format
-msgid "Unable to initialize SDL Video: %s"
-msgstr "SDL 비디오를 초기화할 수 없음: %s"
-
-#, c-format
-msgid "Unable to create config directory '%s'"
-msgstr ""
-
-msgid "Missing Lua file!"
-msgstr ""
-
-#. now that we can find translations
-#, c-format
-msgid "Loaded configuration: %s"
-msgstr ""
-
-#. Logging the cache path is noisy, noisy is good at the DEBUG level.
-#, c-format
-msgid "Cache location: %s"
-msgstr ""
-
-#, c-format
-msgid "Write location: %s\n"
-msgstr ""
-
-#, c-format
-msgid "Failed to load module start data."
-msgstr ""
-
-#, fuzzy, c-format
-msgid ""
-"Script '%s' Lua error:\n"
-"%s"
-msgstr "Mission Lua '%s'구문 오류: %s"
-
-#, c-format
-msgid "Processing '%s'..."
-msgstr ""
-
 #, fuzzy, c-format
 msgid ""
 "Naevpedia '%s' Lua error:\n"
@@ -120947,12 +121247,6 @@ msgstr "현재 디렉토리를 사용하여 $XDG_CONFIG_HOME이 설정되지 않
 #, c-format
 msgid "%%APPDATA%% isn't set, using current directory."
 msgstr "현재 디렉터리를 사용하여 %%APPDATA%%가 설정되지 않았습니다."
-
-msgid "Cannot determine cache path, using current directory."
-msgstr "현재 디렉터리를 사용하여 캐시 경로를 확인할 수 없습니다."
-
-msgid "$XDG_CACHE_HOME isn't set, using current directory."
-msgstr "현재 디렉터리를 사용하여 $XDG_CACHE_HOMEE이 설정되지 않았습니다."
 
 #, c-format
 msgid "Dir '%s' does not exist and unable to create: %s"
@@ -125231,39 +125525,6 @@ msgstr ""
 msgid "Trying to remove beam with ID 0!"
 msgstr ""
 
-msgid ""
-"The brain is a Soromid bioship's equivalent to core systems in synthetic "
-"ships. Possibly the most important organ, the brain provides processing "
-"power and allocates energy to the rest of the organism. All brains start off "
-"undeveloped, but over time, just like the ships themselves, they grow and "
-"improve."
-msgstr ""
-
-msgid ""
-"The gene drive is a Soromid bioship's equivalent to engines in synthetic "
-"ships. It is charged with moving the organism through space and is even "
-"capable of hyperspace travel. All gene drives start off undeveloped, but "
-"over time, just like the ships themselves, they grow and improve."
-msgstr ""
-
-msgid ""
-"The shell is a Soromid bioship's natural protection, equivalent to hulls of "
-"synthetic ships. The shell is responsible both for protecting the organism's "
-"internal organs and for creating camouflage to reduce the risk of being "
-"detected by hostiles. All shells start off undeveloped, but over time, just "
-"like the ships themselves, they grow and improve."
-msgstr ""
-
-msgid "Bioship Brain"
-msgstr "바이오십 뇌"
-
-#, fuzzy
-msgid "Bioship Gene Drive"
-msgstr "바이오십 뇌"
-
-msgid "Bioship Shell"
-msgstr "바이오십 셀"
-
 #, fuzzy
 msgid " Gene Drive "
 msgstr "바이오십 뇌"
@@ -125275,102 +125536,32 @@ msgid " Cerebrum "
 msgstr ""
 
 #, fuzzy
-msgid "Bioship Weapon Organ"
-msgstr "바이오십 무기"
+#~ msgid "Landing on {spb}."
+#~ msgstr "투리온의 불꽃"
 
-msgid ""
-"The Stinger Organ is able to convert energy into hot plasma that is able to "
-"eat easily through shield and armour of opposing ships over time. While not "
-"an especially powerful offensive organ, it is prized for its reliability."
-msgstr ""
+#, fuzzy
+#~ msgid "Proceeding to {sys}."
+#~ msgstr "투리온의 불꽃"
 
-msgid "Stinger Organ I"
-msgstr ""
+#, fuzzy
+#~ msgid "Unable to create config directory '{}'"
+#~ msgstr "쓰기 위해 '%s'을 (를) 열 수 없습니다."
 
-msgid "Stinger Organ II"
-msgstr ""
+#, c-format
+#~ msgid "Unable to initialize SDL Video: %s"
+#~ msgstr "SDL 비디오를 초기화할 수 없음: %s"
 
-msgid "Stinger Organ III"
-msgstr ""
+#, fuzzy, c-format
+#~ msgid ""
+#~ "Script '%s' Lua error:\n"
+#~ "%s"
+#~ msgstr "Mission Lua '%s'구문 오류: %s"
 
-msgid ""
-"The Talon Organ is an enlarged and more powerful version of the Stinger "
-"Organ. Like its smaller counterpart, is able to convert energy into hot "
-"plasma that is able to eat easily through shield and armour of opposing "
-"ships. The hot plasma is able to cling to ship's shields and hulls dealing "
-"continuous damage after impact."
-msgstr ""
+#~ msgid "Cannot determine cache path, using current directory."
+#~ msgstr "현재 디렉터리를 사용하여 캐시 경로를 확인할 수 없습니다."
 
-msgid "Talon Organ I"
-msgstr ""
-
-msgid "Talon Organ II"
-msgstr ""
-
-msgid "Talon Organ III"
-msgstr ""
-
-msgid "Talon Organ IV"
-msgstr ""
-
-msgid ""
-"The Tentacle Organ has the distinction of being the only fully rotating "
-"organic weapon while boasting a fully developed power output that is hard to "
-"beat with conventional weaponry found throughout the galaxy. The large globs "
-"of hot plasma it launches can corrode through seemingly impregnable armours, "
-"seeping into and melting ships from the inside upon contact."
-msgstr ""
-
-msgid "Tentacle Organ I"
-msgstr ""
-
-msgid "Tentacle Organ II"
-msgstr ""
-
-msgid "Tentacle Organ III"
-msgstr ""
-
-msgid "Tentacle Organ IV"
-msgstr ""
-
-msgid ""
-"there once was a big mighty corsair\n"
-"who was said to be the finest heir\n"
-"of some noble great house\n"
-"almost tied as a spouse\n"
-"before they quickly took to the air"
-msgstr ""
-
-msgid ""
-"wish I be like that lovely corsair\n"
-"the prettiest of all pirate hair\n"
-"be drinking at the bar\n"
-"eyes green like fluorspar\n"
-"irresistible buccaneer stare"
-msgstr ""
-
-msgid ""
-"oh, the ferocious mighty corsair\n"
-"never sitting in their captain's chair\n"
-"least they puke out their grub\n"
-"all over the ship hub\n"
-"in space is it also mal de mer?"
-msgstr ""
-
-msgid ""
-"Based on the Heavy Ion Cannon, the Neutralizer is proof to the importance of "
-"specialized engineering. With most of the hardware and software "
-"significantly modified or replaced, the Neutralizer shows significant "
-"improvements in nearly all facets. Due to the fact that few were made, it is "
-"a fairly rare find, but an import asset in a pilot's arsenal."
-msgstr ""
-
-msgid ""
-"The complex engineering specifications and difficulty of mass production "
-"doomed the Reaver Cannon from the start. However, in the right hands, given "
-"the extreme long range and high penetration for a weapon of its size, it can "
-"be very deadly."
-msgstr ""
+#~ msgid "$XDG_CACHE_HOME isn't set, using current directory."
+#~ msgstr "현재 디렉터리를 사용하여 $XDG_CACHE_HOMEE이 설정되지 않았습니다."
 
 #~ msgid "Exit to Main Menu"
 #~ msgstr "기본 메뉴로 나가기"
@@ -125765,121 +125956,6 @@ msgstr ""
 #, fuzzy, c-format
 #~ msgid "System '%s' has unknown stat '%s'."
 #~ msgstr "'%s'임무에 알 수없는 플래그 노드 '%s'이 (가) 있습니다."
-
-#, fuzzy
-#~| msgid "Bioship Brain"
-#~ msgid "Perlevis Gene Drive I"
-#~ msgstr "바이오십 뇌"
-
-#, fuzzy
-#~| msgid "Bioship Brain"
-#~ msgid "Perlevis Gene Drive II"
-#~ msgstr "바이오십 뇌"
-
-#, fuzzy
-#~| msgid "Bioship Brain"
-#~ msgid "Laeviter Gene Drive I"
-#~ msgstr "바이오십 뇌"
-
-#, fuzzy
-#~| msgid "Bioship Brain"
-#~ msgid "Laeviter Gene Drive II"
-#~ msgstr "바이오십 뇌"
-
-#, fuzzy
-#~| msgid "Bioship Brain"
-#~ msgid "Laevis Gene Drive II"
-#~ msgstr "바이오십 뇌"
-
-#, fuzzy
-#~| msgid "Bioship Brain"
-#~ msgid "Mediocris Gene Drive I"
-#~ msgstr "바이오십 뇌"
-
-#, fuzzy
-#~| msgid "Bioship Brain"
-#~ msgid "Mediocris Gene Drive II"
-#~ msgstr "바이오십 뇌"
-
-#, fuzzy
-#~| msgid "Bioship Brain"
-#~ msgid "Mediocris Gene Drive III"
-#~ msgstr "바이오십 뇌"
-
-#, fuzzy
-#~| msgid "Bioship Brain"
-#~ msgid "Largus Gene Drive I"
-#~ msgstr "바이오십 뇌"
-
-#, fuzzy
-#~| msgid "Bioship Brain"
-#~ msgid "Largus Gene Drive II"
-#~ msgstr "바이오십 뇌"
-
-#, fuzzy
-#~| msgid "Bioship Brain"
-#~ msgid "Grandis Gene Drive I"
-#~ msgstr "바이오십 뇌"
-
-#, fuzzy
-#~| msgid "Bioship Brain"
-#~ msgid "Grandis Gene Drive II"
-#~ msgstr "바이오십 뇌"
-
-#, fuzzy
-#~| msgid "Bioship Brain"
-#~ msgid "Grandis Gene Drive III"
-#~ msgstr "바이오십 뇌"
-
-#, fuzzy
-#~| msgid "Bioship Brain"
-#~ msgid "Ponderosus Gene Drive I"
-#~ msgstr "바이오십 뇌"
-
-#, fuzzy
-#~| msgid "Bioship Brain"
-#~ msgid "Ponderosus Gene Drive II"
-#~ msgstr "바이오십 뇌"
-
-#, fuzzy
-#~| msgid "Bioship Brain"
-#~ msgid "Ponderosus Gene Drive III"
-#~ msgstr "바이오십 뇌"
-
-#, fuzzy
-#~| msgid "Bioship Brain"
-#~ msgid "Ponderosus Cortex IV"
-#~ msgstr "바이오십 뇌"
-
-#, fuzzy
-#~| msgid "Bioship Brain"
-#~ msgid "Immanis Gene Drive I"
-#~ msgstr "바이오십 뇌"
-
-#, fuzzy
-#~| msgid "Bioship Brain"
-#~ msgid "Immanis Gene Drive II"
-#~ msgstr "바이오십 뇌"
-
-#, fuzzy
-#~| msgid "Bioship Brain"
-#~ msgid "Immanis Gene Drive III"
-#~ msgstr "바이오십 뇌"
-
-#, fuzzy
-#~| msgid "Bioship Brain"
-#~ msgid "Magnus Gene Drive I"
-#~ msgstr "바이오십 뇌"
-
-#, fuzzy
-#~| msgid "Bioship Brain"
-#~ msgid "Magnus Gene Drive II"
-#~ msgstr "바이오십 뇌"
-
-#, fuzzy
-#~| msgid "Bioship Brain"
-#~ msgid "Magnus Gene Drive III"
-#~ msgstr "바이오십 뇌"
 
 #, fuzzy
 #~ msgid "Cheater's Ragnarok Beam"

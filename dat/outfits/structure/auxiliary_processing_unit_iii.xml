@@ -7,7 +7,7 @@
   <mass>60</mass>
   <price>180000</price>
   <description>An additional processing unit to supplement the main processor of the core system, giving large ships a little more processing power.</description>
-  <gfx_store>placeholder</gfx_store>
+  <gfx_store>cpu_iii</gfx_store>
  </general>
  <specific type="modification">
   <cpu_max>60</cpu_max>

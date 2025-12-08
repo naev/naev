@@ -314,7 +314,13 @@ function land()
       else
          -- You were late
          mem.reward = mem.reward / (mem.rank + 1)
-         vntk.msg(_("Late arrival"), fmt.f(ferry_land_p3[mem.rank], {passenger=ferry_land_p1[mem.rank], credits=fmt.credits(mem.reward)}))
+         local col
+         if mem.rank then
+            col='#o'
+         else
+            col='#g'
+         end
+         vntk.msg(_("Late arrival"), fmt.f(ferry_land_p3[mem.rank], {passenger=ferry_land_p1[mem.rank], credits=col..fmt.credits(mem.reward)..'#0'}))
       end
 
       if mem.change == 2 then

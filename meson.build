@@ -316,7 +316,6 @@ if buildExec.disabled() == false
          install: true, install_dir: 'Contents')
       install_data('extras/logos/naev.icns', install_dir: ndata_path)
       naev_source += mac_source
-      naevlua_source += mac_source
       naev_deps += dependency('Foundation', required: true )
 
    elif host_machine.system() == 'windows'
@@ -336,7 +335,6 @@ if buildExec.disabled() == false
       output: ['shaders.gen.c', 'shaders.gen.h']
    )
    naev_source += shaders_source
-   naevlua_source += shaders_source
    colours_source = custom_target(
       'generate_colours',
       command: [python, '@INPUT@'],
@@ -344,7 +342,6 @@ if buildExec.disabled() == false
       output: ['colours.gen.c', 'colours.gen.h']
    )
    naev_source += colours_source
-   naevlua_source += colours_source
 
    # Generate Rust headers from C
    rust = import('rust')
@@ -555,15 +552,6 @@ naevcrs = rust.bindgen(
       depends: [naev_rlib_compile],
    )
 
-   # Naevlua is unused and unsupported with rust for now.
-   #naevlua_bin = executable(
-   #   'naevlua',
-   #   naevlua_source,
-   #   include_directories: include_dirs,
-   #   dependencies: naev_deps,
-   #   export_dynamic: get_option('debug'),
-   #   override_options: ['-DNOMAIN=1'],
-   #   install: false)
    gen_authors = find_program(files('utils'/'build'/'gen_authors.py'))
    authors = custom_target(
       'authors',

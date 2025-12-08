@@ -1,7 +1,7 @@
 <ship name="Fort Raelid">
  <points>1000</points>
  <base_type>Fort Raelid</base_type>
- <gfx sy="1" sx="1" comm="spob/exterior/station02" polygon="002.webp" noengine="1" size="150">/gfx/spob/space/002.webp</gfx>
+ <gfx sy="1" sx="1" comm="spob/exterior/station02" polygon="002" noengine="1" size="150">/gfx/spob/space/002</gfx>
  <sound>engine</sound>
  <class display="Station">Battleship</class>
  <price>1</price>

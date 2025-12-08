@@ -12,16 +12,25 @@ use serde::{Deserialize, Serialize};
 use std::borrow::Cow;
 use std::collections::HashMap;
 use std::io::Write;
+use std::ops::Deref;
 use std::path::{Path, PathBuf};
-use std::sync::{Arc, Mutex};
+use std::sync::{Arc, LazyLock, Mutex};
 
 /// A remote plugin repository.
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 struct Remote {
     url: reqwest::Url,
     mirror: Option<reqwest::Url>,
     branch: String,
 }
+
+static REMOTES_DEFAULT: LazyLock<Vec<Remote>> = LazyLock::new(|| {
+    vec![Remote {
+        url: reqwest::Url::parse("https://codeberg.org/naev/naev-plugins").unwrap(),
+        mirror: Some(reqwest::Url::parse("https://github.com/naev/naev-plugins").unwrap()),
+        branch: "main".to_string(),
+    }]
+});
 
 /// Location of the plugins directory.
 fn local_plugins_dir() -> PathBuf {
@@ -30,13 +39,37 @@ fn local_plugins_dir() -> PathBuf {
 
 /// Location of the cache directory for storing information about plugins.
 fn catalog_cache_dir() -> PathBuf {
-    pluginmgr::cache_dir().unwrap().join("pluginmanager")
+    ndata::cache_dir().join("pluginmanager")
+}
+
+static CONFIG_FILE: LazyLock<PathBuf> =
+    LazyLock::new(|| ndata::pref_dir().join("pluginmanager.toml"));
+
+/// To skip serializing if default.
+fn skip_remotes(remotes: &Vec<Remote>) -> bool {
+    REMOTES_DEFAULT.deref() == remotes
+}
+/// To set the default remotes if not found.
+fn default_remotes() -> Vec<Remote> {
+    REMOTES_DEFAULT.clone()
+}
+const REFRESH_INTERVAL_DEFAULT: chrono::TimeDelta = chrono::TimeDelta::days(1);
+fn skip_refresh_interval(interval: &chrono::TimeDelta) -> bool {
+    *interval == REFRESH_INTERVAL_DEFAULT
+}
+fn default_refresh_interval() -> chrono::TimeDelta {
+    REFRESH_INTERVAL_DEFAULT
 }
 
 /// Plugin manager configuration.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 struct Conf {
+    #[serde(skip_serializing_if = "skip_remotes", default = "default_remotes")]
     remotes: Vec<Remote>,
+    #[serde(
+        skip_serializing_if = "skip_refresh_interval",
+        default = "default_refresh_interval"
+    )]
     refresh_interval: chrono::TimeDelta,
     #[serde(skip, default = "local_plugins_dir")]
     install_path: PathBuf,
@@ -46,14 +79,10 @@ struct Conf {
 impl Conf {
     fn new() -> Result<Self> {
         Ok(Self {
-            remotes: vec![Remote {
-                url: reqwest::Url::parse("https://codeberg.org/naev/naev-plugins")?,
-                mirror: None,
-                branch: "main".to_string(),
-            }],
+            remotes: REMOTES_DEFAULT.clone(),
             install_path: pluginmgr::local_plugins_dir()?,
-            catalog_cache: pluginmgr::cache_dir()?.join("pluginmanager"),
-            refresh_interval: chrono::TimeDelta::days(1),
+            catalog_cache: ndata::cache_dir().join("pluginmanager"),
+            refresh_interval: default_refresh_interval(),
         })
     }
 }
@@ -99,6 +128,22 @@ pub fn open() -> Result<()> {
         .run()?)
 }
 
+#[derive(Debug, Clone, PartialEq)]
+enum DropDownAction {
+    Update,
+    Refresh,
+    ClearCache,
+}
+impl std::fmt::Display for DropDownAction {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str(match self {
+            Self::Update => pgettext("plugins", "Update All"),
+            Self::Refresh => pgettext("plugins", "Force Refresh"),
+            Self::ClearCache => pgettext("plugins", "Clear Cache"),
+        })
+    }
+}
+
 /// Application internal messages.
 #[derive(Debug, Clone)]
 enum Message {
@@ -110,17 +155,14 @@ enum Message {
     Update(Plugin),
     Disable(Plugin),
     Uninstall(Plugin),
-    LinkClicked(widget::markdown::Url),
+    LinkClicked(widget::markdown::Uri),
     ProgressNew(Progress),
     Progress(install::Progress),
     LogResult(Result<(), LogEntry>),
     LogToggle,
-    DropDownToggle,
+    Action(DropDownAction),
     RefreshLocal(Result<(), LogEntry>),
     FilterChange(String),
-    ActionClearCache,
-    ActionRefresh,
-    ActionUpdate,
 }
 impl Message {
     fn update_view(result: Result<()>) -> Self {
@@ -346,7 +388,7 @@ impl Catalog {
         }
         // Write metadata
         let data = toml::to_string(self)?;
-        let mut file = fs::File::create(self.conf.catalog_cache.join("metadata.toml"))?;
+        let mut file = fs::File::create(&*CONFIG_FILE)?;
         file.write_all(data.as_bytes())?;
         Ok(())
     }
@@ -440,7 +482,7 @@ impl App {
 
         // We'll hardcode a logo into the source code for now
         use iced::advanced::image;
-        let default_logo = image::Handle::from_bytes(image::Bytes::from_static(Self::ICON));
+        let default_logo = image::Handle::from_bytes(Self::ICON);
 
         Ok(App {
             catalog: Arc::new(Catalog::new(conf)),
@@ -480,9 +522,7 @@ impl App {
                 Ok(())
             })
         }
-        if let Ok(metacatalog) =
-            Catalog::from_path(self.catalog.conf.catalog_cache.join("metadata.toml"))
-        {
+        if let Ok(metacatalog) = Catalog::from_path(&*CONFIG_FILE) {
             self.catalog = Arc::new(metacatalog);
         }
         Task::done(Message::ProgressNew(Progress {
@@ -820,10 +860,12 @@ impl App {
                 self.log_open = !self.log_open;
                 Task::none()
             }
+            /*
             Message::DropDownToggle => {
                 self.drop_action = !self.drop_action;
                 Task::none()
             }
+            */
             Message::RefreshLocal(value) => match value {
                 Ok(()) => self.refresh_local_task(),
                 Err(e) => {
@@ -835,7 +877,7 @@ impl App {
                 self.filter = value;
                 self.update_view()
             }
-            Message::ActionClearCache => {
+            Message::Action(DropDownAction::ClearCache) => {
                 self.drop_action = false;
                 if let Err(e) = fs::remove_dir_all(&self.catalog.conf.catalog_cache) {
                     warn_err!(e);
@@ -845,11 +887,11 @@ impl App {
                 }
                 self.refresh_task()
             }
-            Message::ActionRefresh => {
+            Message::Action(DropDownAction::Refresh) => {
                 self.drop_action = false;
                 self.refresh_task()
             }
-            Message::ActionUpdate => {
+            Message::Action(DropDownAction::Update) => {
                 self.drop_action = false;
                 Self::start_task(pgettext("plugins", "Updating"))
                     .chain(Task::batch(self.view.iter().filter_map(|plugin| {
@@ -1114,42 +1156,26 @@ impl App {
                 row![button(pgettext("plugins", "Install"))],
             )
         };
-        // Add refresh button and format
-        let actions = container(
-            column![
-                button(pgettext("plugins", "Update All"))
-                    .on_press_maybe((self.has_update && idle).then_some(Message::ActionUpdate)),
-                button(pgettext("plugins", "Force Refresh"))
-                    .on_press_maybe(idle.then_some(Message::ActionRefresh)),
-                button(pgettext("plugins", "Clear Cache"))
-                    .on_press_maybe(idle.then_some(Message::ActionClearCache)),
-                // TODO select and add zip functionality
-                //button(pgettext("plugins", "Add Plugin (Zip)")),
-                //actionutton(pgettext("plugins", "Add Plugin (Directory)")),
-            ]
-            .spacing(10)
-            .align_x(iced::Alignment::Center),
-        )
-        .style(|theme: &iced::Theme| {
-            let extended = theme.extended_palette();
-            widget::container::Style {
-                background: Some(extended.background.weak.color.scale_alpha(0.2).into()),
-                border: iced::border::rounded(2),
-                shadow: SHADOW,
-                ..Default::default()
-            }
-        });
         let buttons = container(
             buttons
                 .push(
-                    iced_aw::widget::DropDown::new(
-                        button(pgettext("plugins", "Action")).on_press(Message::DropDownToggle),
-                        actions,
-                        self.drop_action,
+                    widget::pick_list(
+                        [
+                            DropDownAction::ClearCache,
+                            DropDownAction::Refresh,
+                            DropDownAction::Update,
+                        ],
+                        None::<DropDownAction>,
+                        Message::Action,
                     )
-                    .width(Fill)
-                    .on_dismiss(Message::DropDownToggle)
-                    .alignment(iced_aw::drop_down::Alignment::Bottom),
+                    .placeholder("Action")
+                    .style(move |_, _| widget::pick_list::Style {
+                        text_color: palette.text,
+                        placeholder_color: palette.text,
+                        handle_color: palette.text,
+                        background: iced::Background::Color(palette.primary),
+                        border: Default::default(),
+                    }),
                 )
                 .spacing(10)
                 .wrap(),

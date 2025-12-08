@@ -2,6 +2,7 @@ po/naevpedia.pot
 po/physfs.pot
 po/credits.pot
 po/toml.pot
+po/outfits_generated.pot
 dat/asteroids/groups/typeA_poor.xml
 dat/asteroids/groups/typeA_rich.xml
 dat/asteroids/groups/typeA_standard.xml
@@ -106,6 +107,7 @@ dat/factions/flf.xml
 dat/factions/frontier.xml
 dat/factions/goddard.xml
 dat/factions/independent.xml
+dat/factions/independent_mercenary.xml
 dat/factions/lost.xml
 dat/factions/marauder.xml
 dat/factions/mercenary.xml
@@ -3971,11 +3973,11 @@ src/naev.c
 src/naev.h
 src/naev.rs
 src/naev_version.c
-src/naevlua.c
 src/naevpedia.c
 src/naevpedia.h
 src/ndata.c
 src/ndata.h
+src/ndata/src/cwrap.rs
 src/ndata/src/env.rs
 src/ndata/src/lib.rs
 src/ndata/src/lua.rs

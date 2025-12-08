@@ -1,62 +1,93 @@
+use directories::ProjectDirs;
 use log::{debug, info, warn, warn_err};
 use sdl3 as sdl;
 use std::ffi::{CStr, CString, c_char};
 use std::io::{Read, Result};
-use std::path::Path;
+use std::path::{Path, PathBuf};
+use std::sync::LazyLock;
 
 use log::formatx::formatx;
 use log::gettext::gettext;
 use log::{infox, semver, version};
 
+pub mod cwrap;
 pub mod env;
 pub mod lua;
 pub mod physfs;
-
-pub const GFX_PATH: &str = "gfx/";
 
 /// Whether or not the data has likely been found
 fn found() -> bool {
     exists("VERSION") && exists("start.xml")
 }
 
+/// Wrapper for directories, which lets us use different fallbacks and overrides
+struct Directories {
+    pref: PathBuf,
+    cache: PathBuf,
+}
+impl Directories {
+    fn new() -> Self {
+        // Global override takes preference if applicable
+        if unsafe { !naevc::conf.datapath.is_null() } {
+            let datapath = unsafe { CStr::from_ptr(naevc::conf.datapath) }
+                .to_string_lossy()
+                .to_string();
+            let path: PathBuf = datapath.into();
+            return Directories {
+                cache: path.join("cache/"),
+                pref: path,
+            };
+        }
+
+        // We would want to use ProjectDirs for everything, but there is no equivalent to the
+        // sdl3::filesystem::get_pref_dir and instead data_dir() is a subdir so we frankenstein it
+        let pref = match sdl::filesystem::get_pref_path(".", "naev") {
+            Ok(path) => path,
+            Err(e) => {
+                warn_err!(e);
+                ProjectDirs::from("", "", "naev")
+                    .unwrap()
+                    .data_dir()
+                    .to_path_buf()
+            }
+        };
+        let cache = match ProjectDirs::from("", "", "naev") {
+            Some(pd) => pd.cache_dir().to_path_buf(),
+            None => pref.join("cache/"),
+        };
+        Self { pref, cache }
+    }
+}
+
+/// The local project directories that get cached on init
+static PROJECT_DIRS: LazyLock<Directories> = LazyLock::new(|| Directories::new());
+
+/// Gets the configuration directory
+pub fn pref_dir() -> &'static Path {
+    PROJECT_DIRS.pref.as_path()
+}
+
+/// Gets the cache directory used by the project
+pub fn cache_dir() -> &'static Path {
+    PROJECT_DIRS.cache.as_path()
+}
+
 /// Initializes the ndata, has to be called first.
 /// Will only return an Err when it is not recoverable.
 pub fn setup() -> anyhow::Result<()> {
-    // Global override takes preference if applicable
-    unsafe {
-        if !naevc::conf.datapath.is_null() {
-            let datapath = CStr::from_ptr(naevc::conf.datapath);
-            physfs::set_write_dir(&*datapath.to_string_lossy()).unwrap_or_else(|e| {
+    match physfs::set_write_dir(pref_dir()) {
+        Ok(_) => (),
+        Err(e) => {
+            warn_err!(e);
+            info!("Cannot determine data path, using current directory");
+            physfs::set_write_dir("./naev/").unwrap_or_else(|e| {
                 warn_err!(e);
             });
-            return Ok(());
         }
     }
 
-    // For historical reasons predating physfs adoption, this case is different.
-    let app = if cfg!(target_os = "macos") {
-        "org.naev.Naev"
-    } else {
-        "naev"
-    };
-    match physfs::get_pref_dir(".", app) {
-        Ok(pref) => match physfs::set_write_dir(&pref) {
-            Ok(_) => (),
-            Err(e) => {
-                warn_err!(e);
-                info!("Cannot determine data path, using current directory");
-                physfs::set_write_dir("./naev/").unwrap_or_else(|e| {
-                    warn_err!(e);
-                });
-            }
-        },
-        Err(e) => {
-            warn_err!(e);
-        }
-    };
-
     // Redirect the log after we set up the write directory.
-    let logpath = Path::new(&physfs::get_write_dir()).join("logs");
+    let logpath = physfs::get_write_dir().join("logs");
     let _ = std::fs::create_dir_all(&logpath);
     let logfile = logpath.join(
         chrono::Local::now()
@@ -127,7 +158,7 @@ pub fn setup() -> anyhow::Result<()> {
     for s in [
         &pkgdatadir,
         naevc::config::PKGDATADIR,
-        &physfs::get_base_dir(),
+        &physfs::get_base_dir().to_string_lossy().to_string(),
     ] {
         if found() {
             break;
@@ -330,3 +361,61 @@ pub fn stat<P: AsRef<Path>>(filename: P) -> Result<Stat> {
         }),
     }
 }
+
+/*
+/// Like fs::canonicalize but doesn't require the path to exist.
+/// For String use simplify_path.
+fn normalize_path<P: AsRef<Path>>(path: P) -> Option<PathBuf> {
+    use std::path::Component;
+    let mut test_path = PathBuf::new();
+    for component in path.as_ref().components() {
+        match component {
+            Component::ParentDir => {
+                if !test_path.pop() {
+                    return None;
+                }
+            }
+           Component::CurDir => {}
+            _ => test_path.push(component.as_os_str()),
+        }
+    }
+    Some(test_path)
+}
+
+/// Checks to see if a path is within the base path.
+fn is_path_within_base<P: AsRef<Path>>(path: P, base: P) -> bool {
+    if let (Some(norm_path), Some(norm_base)) = (normalize_path(path), normalize_path(base)) {
+        norm_path.starts_with(norm_base)
+    } else {
+        false
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn normalize_path_test() {
+        assert_eq!(normalize_path(Path::new(".")), Some(PathBuf::from("")));
+        assert_eq!(normalize_path(Path::new("a")), Some(PathBuf::from("a")));
+        assert_eq!(normalize_path(Path::new("./././a/..")), Some(PathBuf::from("")));
+        assert_eq!(normalize_path(Path::new("a/..")), Some(PathBuf::from("")));
+        assert_eq!(normalize_path(Path::new("a/../b")), Some(PathBuf::from("b")));
+        assert_eq!(normalize_path(Path::new("..")), None);
+        assert_eq!(normalize_path(Path::new("a/../..")), None);
+    }
+
+    #[test]
+    fn is_path_within_base_test() {
+        assert!(is_path_within_base(Path::new("a/b/c"), Path::new("a")));
+        assert!(is_path_within_base(Path::new("a/b/c"), Path::new("a/b")));
+        assert!(is_path_within_base(Path::new("a/b/c"), Path::new("a/b/c")));
+        assert!(is_path_within_base(Path::new(""), Path::new("")));
+        assert!(is_path_within_base(Path::new("a/."), Path::new("a/")));
+        assert!(!is_path_within_base(Path::new("a/b/c"), Path::new("a/b/c/d")));
+        assert!(!is_path_within_base(Path::new(""), Path::new("a/b/c/d")));
+        assert!(!is_path_within_base(Path::new("a/.."), Path::new("a/")));
+    }
+}
+*/

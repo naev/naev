@@ -97,7 +97,7 @@ int  pilot_outfitLOnstealth( Pilot *pilot );
 void pilot_outfitLOnscan( Pilot *pilot );
 void pilot_outfitLOnscanned( Pilot *pilot, const Pilot *scanner );
 void pilot_outfitLOnland( Pilot *pilot );
-void pilot_outfitLOntakeoff( Pilot *pilot );
+void pilot_outfitLOntakeoff( Pilot *pilot, const Spob *spb );
 void pilot_outfitLOnjumpin( Pilot *pilot );
 void pilot_outfitLOnboard( Pilot *pilot, const Pilot *target );
 void pilot_outfitLOnkeydoubletap( Pilot *pilot, OutfitKey key );

@@ -1,11 +1,12 @@
 /* Documentation mentions global lock in settings. Should be thread-safe _except_ for opening the
  * same file and writing + reading/writing with multiple threads. */
+use fs_err as fs;
 use sdl::iostream::IOStream;
 use sdl3 as sdl;
 use std::ffi::{CStr, CString, c_int};
 use std::io::{Error, ErrorKind, Read, Result, Seek, SeekFrom, Write};
 use std::os::raw::c_void;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicPtr, Ordering};
 
 fn error_to_errorkind(error: naevc::PHYSFS_ErrorCode) -> ErrorKind {
@@ -74,31 +75,44 @@ pub fn error_as_io_error_with_file<P: AsRef<Path>>(func: &str, file: P) -> Error
 }
 
 pub fn set_write_dir<P: AsRef<Path>>(path: P) -> Result<()> {
-    let s = CString::new(path.as_ref().as_os_str().as_encoded_bytes())?;
+    let path = path.as_ref();
+    fs::create_dir_all(path)?;
+    let s = CString::new(path.as_os_str().as_encoded_bytes())?;
     match unsafe { naevc::PHYSFS_setWriteDir(s.as_ptr()) } {
         0 => Err(error_as_io_error("PHYSFS_setWriteDir")),
         _ => Ok(()),
     }
 }
 
-pub fn get_base_dir() -> String {
-    let val = unsafe { CStr::from_ptr(naevc::PHYSFS_getBaseDir()) };
-    String::from(val.to_string_lossy())
+pub fn get_base_dir() -> PathBuf {
+    let dir = unsafe { naevc::PHYSFS_getBaseDir() };
+    if dir.is_null() {
+        return "./".into();
+    }
+    let val = unsafe { CStr::from_ptr(dir) };
+    val.to_string_lossy().to_string().into()
 }
 
-pub fn get_write_dir() -> String {
-    let val = unsafe { CStr::from_ptr(naevc::PHYSFS_getWriteDir()) };
-    String::from(val.to_string_lossy())
+pub fn get_write_dir() -> PathBuf {
+    let dir = unsafe { naevc::PHYSFS_getWriteDir() };
+    if dir.is_null() {
+        return "./".into();
+    }
+    let val = unsafe { CStr::from_ptr(dir) };
+    val.to_string_lossy().to_string().into()
 }
 
-pub fn get_pref_dir(org: &str, app: &str) -> Result<String> {
+pub fn get_pref_dir(org: &str, app: &str) -> Result<PathBuf> {
     let corg = CString::new(org)?;
     let capp = CString::new(app)?;
     let val = unsafe { naevc::PHYSFS_getPrefDir(corg.as_ptr(), capp.as_ptr()) };
     if val.is_null() {
         Err(error_as_io_error("PHYSFS_getPrefDir"))
     } else {
-        unsafe { Ok(String::from(CStr::from_ptr(val).to_string_lossy())) }
+        Ok(unsafe { CStr::from_ptr(val) }
+            .to_string_lossy()
+            .to_string()
+            .into())
     }
 }
 

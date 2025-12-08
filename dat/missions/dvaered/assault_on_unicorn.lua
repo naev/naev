@@ -108,7 +108,7 @@ function land()
       vn.scene()
       vn.transition()
       vn.na(fmt.f(_("As you land, you see a Dvaered military official approaching. Thanking you for your hard and diligent work, he hands you the bounty you've earned, a number of chips worth {credits}."),
-         {credits=fmt.credits(mem.bounty_earned)}))
+         {credits="#g"..fmt.credits(mem.bounty_earned).."#0"}))
       vn.sfxMoney()
       vn.func( function ()
          player.pay(mem.bounty_earned)

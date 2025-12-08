@@ -29,6 +29,7 @@
 #include "map.h"
 #include "map_overlay.h"
 #include "menu.h"
+#include "ndata.h"
 #include "nstring.h"
 #include "pause.h"
 #include "pilot.h"
@@ -1862,7 +1863,7 @@ void input_handle( SDL_Event *event )
                            msg_extra ) ) {
          if ( can_save )
             save_all();
-         conf_saveConfig( CONF_FILE_PATH );
+         conf_saveConfig( ndata_configFile() );
          naev_restart();
          return;
       }

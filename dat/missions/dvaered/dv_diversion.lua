@@ -380,7 +380,7 @@ function complete()
 
    vn.na(_([[The Dvaered official opens a communication channel with your ship.]]))
    dv(fmt.f(_([["Thanks for the distraction. I've sent you a picture of all the medals I was awarded. Oh, and I also deposited {credits} in your account."]]),
-      {credits=fmt.credits(reward)}))
+      {credits="#g"..fmt.credits(reward).."#0"}))
    vn.sfxVictory()
    vn.func( function ()
       player.pay(reward)

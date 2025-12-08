@@ -1,0 +1,535 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-07 21:45+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: /home/ess/naev/build/dat/outfits/bioship/immane_cerebrum_iii.xml:1
+msgid "Immane Cerebrum III"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/immane_cerebrum_iii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/immane_cerebrum_ii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/laevum_cerebrum_i.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/perleve_cerebrum_i.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/ponderosum_cerebrum_ii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/mediocre_cerebrum_i.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/perleve_cerebrum_ii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/ponderosum_cerebrum_i.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/immane_cerebrum_i.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/mediocre_cerebrum_ii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/largum_cerebrum_i.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/ponderosum_cerebrum_iii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/laevum_cerebrum_ii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/largum_cerebrum_ii.xml:4
+msgid "Bioship Brain"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/immane_cerebrum_iii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/immane_cerebrum_ii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/laevum_cerebrum_i.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/perleve_cerebrum_i.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/ponderosum_cerebrum_ii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/mediocre_cerebrum_i.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/perleve_cerebrum_ii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/ponderosum_cerebrum_i.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/immane_cerebrum_i.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/mediocre_cerebrum_ii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/largum_cerebrum_i.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/ponderosum_cerebrum_iii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/laevum_cerebrum_ii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/largum_cerebrum_ii.xml:9
+msgid ""
+"The brain is a Soromid bioship's equivalent to core systems in synthetic "
+"ships. Possibly the most important organ, the brain provides processing "
+"power and allocates energy to the rest of the organism. All brains start off "
+"undeveloped, but over time, just like the ships themselves, they grow and "
+"improve."
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/talon_organ_iii.xml:1
+msgid "Talon Organ III"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/talon_organ_iii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/stinger_organ_i.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/tentacle_organ_iv.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/stinger_organ_iii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/stinger_organ_ii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/tentacle_organ_iii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/talon_organ_iv.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/tentacle_organ_i.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/talon_organ_i.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/tentacle_organ_ii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/talon_organ_ii.xml:4
+msgid "Bioship Weapon Organ"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/talon_organ_iii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/talon_organ_iv.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/talon_organ_i.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/talon_organ_ii.xml:9
+msgid ""
+"The Talon Organ is an enlarged and more powerful version of the Stinger "
+"Organ. Like its smaller counterpart, is able to convert energy into hot "
+"plasma that is able to eat easily through shield and armour of opposing "
+"ships. The hot plasma is able to cling to ship's shields and hulls dealing "
+"continuous damage after impact."
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/stinger_organ_i.xml:1
+msgid "Stinger Organ I"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/stinger_organ_i.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/stinger_organ_iii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/stinger_organ_ii.xml:9
+msgid ""
+"The Stinger Organ is able to convert energy into hot plasma that is able to "
+"eat easily through shield and armour of opposing ships over time. While not "
+"an especially powerful offensive organ, it is prized for its reliability."
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/largus_gene_drive_ii.xml:1
+msgid "Largus Gene Drive II"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/largus_gene_drive_ii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/magnus_gene_drive_iii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/grandis_gene_drive_iii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/ponderosus_gene_drive_i.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/laevis_gene_drive_ii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/grandis_gene_drive_i.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/laevis_gene_drive_i.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/ponderosus_gene_drive_ii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/magnus_gene_drive_ii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/immanis_gene_drive_iii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/laeviter_gene_drive_i.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/mediocris_gene_drive_i.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/mediocris_gene_drive_ii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/laeviter_gene_drive_ii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/grandis_gene_drive_ii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/largus_gene_drive_i.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/perlevis_gene_drive_i.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/perlevis_gene_drive_ii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/immanis_gene_drive_ii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/mediocris_gene_drive_iii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/magnus_gene_drive_i.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/ponderosus_gene_drive_iii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/immanis_gene_drive_i.xml:4
+msgid "Bioship Gene Drive"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/largus_gene_drive_ii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/magnus_gene_drive_iii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/grandis_gene_drive_iii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/ponderosus_gene_drive_i.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/laevis_gene_drive_ii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/grandis_gene_drive_i.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/laevis_gene_drive_i.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/ponderosus_gene_drive_ii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/magnus_gene_drive_ii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/immanis_gene_drive_iii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/laeviter_gene_drive_i.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/mediocris_gene_drive_i.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/mediocris_gene_drive_ii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/laeviter_gene_drive_ii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/grandis_gene_drive_ii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/largus_gene_drive_i.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/perlevis_gene_drive_i.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/perlevis_gene_drive_ii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/immanis_gene_drive_ii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/mediocris_gene_drive_iii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/magnus_gene_drive_i.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/ponderosus_gene_drive_iii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/immanis_gene_drive_i.xml:9
+msgid ""
+"The gene drive is a Soromid bioship's equivalent to engines in synthetic "
+"ships. It is charged with moving the organism through space and is even "
+"capable of hyperspace travel. All gene drives start off undeveloped, but "
+"over time, just like the ships themselves, they grow and improve."
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/mediocris_cortex_ii.xml:1
+msgid "Mediocris Cortex II"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/mediocris_cortex_ii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/perlevis_cortex_i.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/largus_cortex_i.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/largus_cortex_iii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/perlevis_cortex_ii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/ponderosus_cortex_ii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/ponderosus_cortex_iii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/mediocris_cortex_i.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/laevis_cortex_i.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/immanis_cortex_ii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/largus_cortex_ii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/ponderosus_cortex_i.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/immanis_cortex_iii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/laevis_cortex_ii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/ponderosus_cortex_iv.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/immanis_cortex_i.xml:4
+msgid "Bioship Shell"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/mediocris_cortex_ii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/perlevis_cortex_i.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/largus_cortex_i.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/largus_cortex_iii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/perlevis_cortex_ii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/ponderosus_cortex_ii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/ponderosus_cortex_iii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/mediocris_cortex_i.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/laevis_cortex_i.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/immanis_cortex_ii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/largus_cortex_ii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/ponderosus_cortex_i.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/immanis_cortex_iii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/laevis_cortex_ii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/ponderosus_cortex_iv.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/immanis_cortex_i.xml:9
+msgid ""
+"The shell is a Soromid bioship's natural protection, equivalent to hulls of "
+"synthetic ships. The shell is responsible both for protecting the organism's "
+"internal organs and for creating camouflage to reduce the risk of being "
+"detected by hostiles. All shells start off undeveloped, but over time, just "
+"like the ships themselves, they grow and improve."
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/magnus_gene_drive_iii.xml:1
+msgid "Magnus Gene Drive III"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/perlevis_cortex_i.xml:1
+msgid "Perlevis Cortex I"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/grandis_gene_drive_iii.xml:1
+msgid "Grandis Gene Drive III"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/ponderosus_gene_drive_i.xml:1
+msgid "Ponderosus Gene Drive I"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/largus_cortex_i.xml:1
+msgid "Largus Cortex I"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/tentacle_organ_iv.xml:1
+msgid "Tentacle Organ IV"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/tentacle_organ_iv.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/tentacle_organ_iii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/tentacle_organ_i.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/tentacle_organ_ii.xml:9
+msgid ""
+"The Tentacle Organ has the distinction of being the only fully rotating "
+"organic weapon while boasting a fully developed power output that is hard to "
+"beat with conventional weaponry found throughout the galaxy. The large globs "
+"of hot plasma it launches can corrode through seemingly impregnable armours, "
+"seeping into and melting ships from the inside upon contact."
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/immane_cerebrum_ii.xml:1
+msgid "Immane Cerebrum II"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/laevum_cerebrum_i.xml:1
+msgid "Laevum Cerebrum I"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/stinger_organ_iii.xml:1
+msgid "Stinger Organ III"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/largus_cortex_iii.xml:1
+msgid "Largus Cortex III"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/laevis_gene_drive_ii.xml:1
+msgid "Laevis Gene Drive II"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/grandis_gene_drive_i.xml:1
+msgid "Grandis Gene Drive I"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/laevis_gene_drive_i.xml:1
+msgid "Laevis Gene Drive I"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/ponderosus_gene_drive_ii.xml:1
+msgid "Ponderosus Gene Drive II"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/stinger_organ_ii.xml:1
+msgid "Stinger Organ II"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/magnus_gene_drive_ii.xml:1
+msgid "Magnus Gene Drive II"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/perlevis_cortex_ii.xml:1
+msgid "Perlevis Cortex II"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/immanis_gene_drive_iii.xml:1
+msgid "Immanis Gene Drive III"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/tentacle_organ_iii.xml:1
+msgid "Tentacle Organ III"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/laeviter_gene_drive_i.xml:1
+msgid "Laeviter Gene Drive I"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/ponderosus_cortex_ii.xml:1
+msgid "Ponderosus Cortex II"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/mediocris_gene_drive_i.xml:1
+msgid "Mediocris Gene Drive I"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/mediocris_gene_drive_ii.xml:1
+msgid "Mediocris Gene Drive II"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/perleve_cerebrum_i.xml:1
+msgid "Perleve Cerebrum I"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/ponderosus_cortex_iii.xml:1
+msgid "Ponderosus Cortex III"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/talon_organ_iv.xml:1
+msgid "Talon Organ IV"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/ponderosum_cerebrum_ii.xml:1
+msgid "Ponderosum Cerebrum II"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/mediocris_cortex_i.xml:1
+msgid "Mediocris Cortex I"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/laevis_cortex_i.xml:1
+msgid "Laevis Cortex I"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/laeviter_gene_drive_ii.xml:1
+msgid "Laeviter Gene Drive II"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/tentacle_organ_i.xml:1
+msgid "Tentacle Organ I"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/immanis_cortex_ii.xml:1
+msgid "Immanis Cortex II"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/largus_cortex_ii.xml:1
+msgid "Largus Cortex II"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/grandis_gene_drive_ii.xml:1
+msgid "Grandis Gene Drive II"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/largus_gene_drive_i.xml:1
+msgid "Largus Gene Drive I"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/mediocre_cerebrum_i.xml:1
+msgid "Mediocre Cerebrum I"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/ponderosus_cortex_i.xml:1
+msgid "Ponderosus Cortex I"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/perlevis_gene_drive_i.xml:1
+msgid "Perlevis Gene Drive I"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/perlevis_gene_drive_ii.xml:1
+msgid "Perlevis Gene Drive II"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/immanis_gene_drive_ii.xml:1
+msgid "Immanis Gene Drive II"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/perleve_cerebrum_ii.xml:1
+msgid "Perleve Cerebrum II"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/talon_organ_i.xml:1
+msgid "Talon Organ I"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/ponderosum_cerebrum_i.xml:1
+msgid "Ponderosum Cerebrum I"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/mediocris_gene_drive_iii.xml:1
+msgid "Mediocris Gene Drive III"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/immanis_cortex_iii.xml:1
+msgid "Immanis Cortex III"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/laevis_cortex_ii.xml:1
+msgid "Laevis Cortex II"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/immane_cerebrum_i.xml:1
+msgid "Immane Cerebrum I"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/ponderosus_cortex_iv.xml:1
+msgid "Ponderosus Cortex IV"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/mediocre_cerebrum_ii.xml:1
+msgid "Mediocre Cerebrum II"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/largum_cerebrum_i.xml:1
+msgid "Largum Cerebrum I"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/magnus_gene_drive_i.xml:1
+msgid "Magnus Gene Drive I"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/ponderosum_cerebrum_iii.xml:1
+msgid "Ponderosum Cerebrum III"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/tentacle_organ_ii.xml:1
+msgid "Tentacle Organ II"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/ponderosus_gene_drive_iii.xml:1
+msgid "Ponderosus Gene Drive III"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/immanis_cortex_i.xml:1
+msgid "Immanis Cortex I"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/immanis_gene_drive_i.xml:1
+msgid "Immanis Gene Drive I"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/laevum_cerebrum_ii.xml:1
+msgid "Laevum Cerebrum II"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/largum_cerebrum_ii.xml:1
+msgid "Largum Cerebrum II"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/talon_organ_ii.xml:1
+msgid "Talon Organ II"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/generated/reaver_cannon.xml:1
+msgid "Reaver Cannon"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/generated/reaver_cannon.xml:8
+msgid ""
+"The complex engineering specifications and difficulty of mass production "
+"doomed the Reaver Cannon from the start. However, in the right hands, given "
+"the extreme long range and high penetration for a weapon of its size, it can "
+"be very deadly."
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/generated/corsair_engine.xml:1
+msgid "Corsair Engine"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/generated/corsair_engine.xml:3
+msgid "Core Systems (Engine)"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/generated/corsair_engine.xml:7
+msgid ""
+"there once was a big mighty corsair\n"
+"who was said to be the finest heir\n"
+"of some noble great house\n"
+"almost tied as a spouse\n"
+"before they quickly took to the air"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/generated/neutralizer.xml:1
+msgid "Neutralizer"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/generated/neutralizer.xml:8
+msgid ""
+"Based on the Heavy Ion Cannon, the Neutralizer is proof to the importance of "
+"specialized engineering. With most of the hardware and software "
+"significantly modified or replaced, the Neutralizer shows significant "
+"improvements in nearly all facets. Due to the fact that few were made, it is "
+"a fairly rare find, but an import asset in a pilot's arsenal."
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/generated/corsair_systems.xml:1
+msgid "Corsair Systems"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/generated/corsair_systems.xml:3
+msgid "Core Systems (System)"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/generated/corsair_systems.xml:7
+msgid ""
+"oh, the ferocious mighty corsair\n"
+"never sitting in their captain's chair\n"
+"least they puke out their grub\n"
+"all over the ship hub\n"
+"in space is it also mal de mer?"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/generated/corsair_hull_plating.xml:1
+msgid "Corsair Hull Plating"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/generated/corsair_hull_plating.xml:3
+msgid "Core Systems (Hull)"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/generated/corsair_hull_plating.xml:7
+msgid ""
+"wish I be like that lovely corsair\n"
+"the prettiest of all pirate hair\n"
+"be drinking at the bar\n"
+"eyes green like fluorspar\n"
+"irresistible buccaneer stare"
+msgstr ""

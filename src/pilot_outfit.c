@@ -21,6 +21,7 @@
 #include "nlua_outfit.h"
 #include "nlua_pilot.h"
 #include "nlua_pilotoutfit.h"
+#include "nlua_spob.h"
 #include "nlua_vec2.h"
 #include "nstring.h"
 #include "ntracing.h"
@@ -2275,6 +2276,7 @@ static void outfitLOntakeoff( const Pilot *pilot, PilotOutfitSlot *po,
    const Outfit *o = po->outfit;
    if ( outfit_luaTakeoff( o ) == LUA_NOREF )
       return;
+   const Spob *spb = data;
 
    nlua_env *env = outfit_luaEnv( o );
 
@@ -2285,7 +2287,8 @@ static void outfitLOntakeoff( const Pilot *pilot, PilotOutfitSlot *po,
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, outfit_luaTakeoff( o ) ); /* f */
    lua_pushpilot( naevL, pilot->id );                               /* f, p */
    lua_pushpilotoutfit( naevL, po ); /* f, p, po */
-   if ( nlua_pcall( env, 2, 0 ) ) {  /* */
+   lua_pushspob( naevL, spob_index( spb ) );
+   if ( nlua_pcall( env, 3, 0 ) ) { /* */
       outfitLRunWarning( pilot, o, "takeoff", lua_tostring( naevL, -1 ) );
       lua_pop( naevL, 1 );
    }
@@ -2295,10 +2298,11 @@ static void outfitLOntakeoff( const Pilot *pilot, PilotOutfitSlot *po,
  * @brief Runs Lua outfits when pilot takes off from a spob.
  *
  *    @param pilot Pilot being handled.
+ *    @param spb Spob taking off from.
  */
-void pilot_outfitLOntakeoff( Pilot *pilot )
+void pilot_outfitLOntakeoff( Pilot *pilot, const Spob *spb )
 {
-   pilot_outfitLRun( pilot, outfitLOntakeoff, NULL );
+   pilot_outfitLRun( pilot, outfitLOntakeoff, spb );
 }
 
 static void outfitLOnjumpin( const Pilot *pilot, PilotOutfitSlot *po,

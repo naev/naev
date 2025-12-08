@@ -304,8 +304,8 @@ static void opt_gameplay( unsigned int wid )
    window_addText( wid, x, y, cw, 20, 1, "txtPlatInfo", NULL, NULL, buf );
    y -= 20;
 
-   snprintf( buf, sizeof( buf ), "#n%s#0%s" CONF_FILE, _( "Config Path: " ),
-             nfile_configPath() );
+   snprintf( buf, sizeof( buf ), "#n%s#0%s", _( "Config Path: " ),
+             ndata_configFile() );
    window_addText( wid, x, y, cw, 20, 1, "txtConfPath", NULL, NULL, buf );
    y -= 40;
    by = y;

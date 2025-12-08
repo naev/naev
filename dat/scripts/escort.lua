@@ -47,7 +47,7 @@ local fmt = require "format"
 local vntk = require "vntk"
 local aisetup = require "ai.core.setup"
 
-local DISTANCE_THRESHOLD2 = 1000^2
+local DISTANCE_THRESHOLD2 = 2000^2
 local HEARTBEAT_TIMER = 1
 
 local escort_outfits
@@ -472,21 +472,19 @@ function _escort_heartbeat ()
          if doland then
             if destspob:pos():dist2( p:pos() ) <= DISTANCE_THRESHOLD2 then
                local pm = p:memory()
-               if not pm._escort_land or not p:task() then
+               if (not pm._escort_land) or (not p:task()) then
                   p:control(true)
                   p:land( destspob )
-                  p:comm( fmt.f(_("Landing on {spb}."), {spb=destspob} ) )
                   pm._escort_land = true
                end
             end
          elseif nextjump then
             if nextjump:pos():dist2( p:pos() ) <= DISTANCE_THRESHOLD2 then
                local pm = p:memory()
-               if not pm._escort_jump or not p:task() then
+               if (not pm._escort_jump) or (not p:task()) then
                   p:control(true)
                   p:setNoJump(false)
                   p:hyperspace( nextjump )
-                  p:comm( fmt.f(_("Proceeding to {sys}."), {sys=nextsys} ) )
                   pm._escort_jump = true
                end
             end

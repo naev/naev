@@ -7,7 +7,6 @@
  * @brief Handles all the space stuff, namely systems and space objects (spobs).
  */
 /** @cond */
-#include "physfs.h"
 #include <math.h>
 #include <stdlib.h>
 
@@ -1765,6 +1764,10 @@ void space_init( const char *sysname, int do_simulate )
             /* Run Lua stuff. */
             pilot_shipLInit( p );
             pilot_outfitLInitAll( p );
+
+            /* Round fuel just in case, since in some cases we can hit rounding
+             * errors. */
+            p->fuel = round( p->fuel );
          }
       }
    }

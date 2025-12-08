@@ -39,8 +39,8 @@ if genLDoc.disabled() == false
    # Lua documentation
    ldoc = find_program('ldoc', required: genLDoc)
    if ldoc.found()
-      c2luadoc = generator(
-         find_program(files('lua'/'c2luadoc.sh')),
+      src2luadoc = generator(
+         find_program(files('lua'/'src2luadoc.sh')),
          arguments: [doxtractor.full_path(), '@INPUT@', '@OUTPUT@'],
          output   : '@BASENAME@.luadoc',
          depends: [doxtractor],
@@ -55,7 +55,7 @@ if genLDoc.disabled() == false
          output   : '@PLAINNAME@'
       )
 
-      clua_source = c2luadoc.process(nlua_source)
+      clua_source = src2luadoc.process(nlua_source)
       llua_source = direct.process(lua_source)
 
       lconfig = files('lua/config.ld')

@@ -1703,12 +1703,10 @@ static void land_changeTab( unsigned int wid, const char *wgt, int old,
  */
 void takeoff( int delay, int nosave )
 {
-   int    h;
-   char  *nt;
-   double a, r;
-#if HAVE_TRACY
+   int         h;
+   char       *nt;
+   double      a, r;
    const Spob *spb = land_spob;
-#endif /* HAVE_TRACY */
 
    if ( !landed )
       return;
@@ -1893,7 +1891,7 @@ void takeoff( int delay, int nosave )
       if ( !pilot_isWithPlayer( p ) )
          continue;
 
-      pilot_outfitLOntakeoff( p );
+      pilot_outfitLOntakeoff( p, spb );
 
       /* Set take off stuff. */
       p->landing_delay = PILOT_TAKEOFF_DELAY * player_dt_default();

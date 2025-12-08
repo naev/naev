@@ -5,6 +5,15 @@
    * Fix handling the --pluginmanager flag on platforms like macOS
    * Replaced a bunch of placeholder outfit graphics
    * Uninstalling a plugin will reset its disabled state
+   * Move config file with rest of files and unified code handling local files
+   * Added fallback server for plugin manager
+   * Increased the distance threshold for escorts to automatically jump
+   * Escorts spam less messages when trying to land or jump
+   * NPCs should now use beam weapons properly instead of turning them off
+     right away
+   * Fixed mercenaries attacking the player when fighting pirates
+   * Fixed bioship outfit graphics being broken
+   * Fixed stations not having collision polygons
    * Fixed some generic NPCs not talking
 
 
@@ -1551,7 +1560,7 @@
    * Revamped and improved some existing locations
    * Several new planets and systems
 
- ### 40 New missions
+ ### 1  New missions
 
    * Challenge adversaries in the Crimson Gauntlet
    * Follow happenings on "Minerva Station"

@@ -1,0 +1,27 @@
+<faction name="Independent Mercenary">
+ <!-- Used for spawning independent mercenaries. See 'Mercenary' for mission or other types of mercenaries. -->
+ <ai>mercenary</ai>
+ <display>Mercenary</display>
+ <static/>
+ <invisible/>
+ <known/>
+ <player>0</player>
+ <standing>static</standing>
+ <allies/>
+ <enemies/>
+ <neutrals>
+  <neutral>Independent</neutral>
+  <neutral>Miner</neutral>
+  <neutral>Traders Society</neutral>
+  <neutral>Empire</neutral>
+  <neutral>Dvaered</neutral>
+  <neutral>Za'lek</neutral>
+  <neutral>Soromid</neutral>
+  <neutral>Sirius</neutral>
+  <neutral>Thurion</neutral>
+  <neutral>O'rez</neutral>
+  <neutral>Trader</neutral>
+  <neutral>Yetmer</neutral>
+  <neutral>Frontier</neutral>
+ </neutrals>
+</faction>

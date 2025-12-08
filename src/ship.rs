@@ -132,7 +132,7 @@ pub extern "C" fn ship_gfxLoadNeeded() {
                     'imageformat: {
                         for imageformat in texture::FORMATS {
                             for ext in imageformat.extensions_str() {
-                                if ndata::is_file(&format!("{}.{}", path, ext)) {
+                                if ndata::is_file(format!("{}.{}", path, ext)) {
                                     break 'imageformat format!(".{}", ext);
                                 }
                             }

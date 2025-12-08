@@ -2089,7 +2089,7 @@ impl UserData for Texture {
     //fields.add_field_method_get("y", |_, this| Ok(this.0.y));
     //}
     fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
-        /*
+        /*@
          * @brief Gets a displayable texture string.
          *
          *    @luatparam Tex tex Texture to display as a string.
@@ -2103,7 +2103,7 @@ impl UserData for Texture {
                 Ok(format!("Texture( {} )", &name))
             },
         );
-        /*
+        /*@
          * @brief Opens a texture.
          *
          * @note open( path, (sx=1), (sy=1) )
@@ -2158,7 +2158,7 @@ impl UserData for Texture {
                     .build(Context::get())?)
             },
         );
-        /*
+        /*@
          * @brief Gets the dimensions of the texture.
          *
          * @usage w,h, sw,sh = t:dim()
@@ -2176,7 +2176,7 @@ impl UserData for Texture {
                 Ok((this.texture.w, this.texture.h, this.sw, this.sh))
             },
         );
-        /*
+        /*@
          * @brief Gets the number of sprites in the texture.
          *
          * @usage sprites, sx,sy = t:sprites()
@@ -2193,7 +2193,7 @@ impl UserData for Texture {
                 Ok((this.sx * this.sy, this.sx, this.sy))
             },
         );
-        /*
+        /*@
          * @brief Gets the sprite that corresponds to a direction.
          *
          * @usage sx, sy = t:spriteFromDir( math.pi )
@@ -2211,7 +2211,7 @@ impl UserData for Texture {
                 Ok((sx + 1, sy + 1))
             },
         );
-        /*
+        /*@
          * @brief Sets the texture minification and magnification filters.
          *
          *    @luatparam Tex tex Texture to set filter.
@@ -2232,7 +2232,7 @@ impl UserData for Texture {
                 Ok(())
             },
         );
-        /*
+        /*@
          * @brief Sets the texture wrapping.
          *
          *    @luatparam Tex tex Texture to set filter.

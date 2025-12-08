@@ -23,7 +23,7 @@
   <trackmin>0</trackmin>
   <trackmax>5000</trackmax>
   <ammo_mass>0.16</ammo_mass>
-  <gfx>fury</gfx>
+  <gfx>pincushion</gfx>
   <sound>seeker</sound>
   <sound_hit>medexp1</sound_hit>
   <spfx_shield>Exp-S</spfx_shield>

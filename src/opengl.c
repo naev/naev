@@ -221,6 +221,10 @@ void gl_resize_c( void )
       gl_fboAddDepth( gl_screen.fbo[i], &gl_screen.fbo_depth_tex[i],
                       gl_screen.rw, gl_screen.rh );
 
+      /* TODO get rid of this when we can. */
+      glLineWidth( 1. / gl_screen.scale );
+      glPointSize( 1. / gl_screen.scale + 2.0 );
+
       /* Names for debugging. */
       if ( gl_supportsDebug() ) {
          char buf[STRMAX_SHORT];

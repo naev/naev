@@ -78,7 +78,7 @@ repos:
       name: doxspell
       entry: utils/doxspell.sh
       language: script
-      types: [c]
+      types_or: [rust, c]
     - id: expand-tabs.sh
       name: expand tabs (bash)
       entry: utils/shlinters/expand-tabs.sh
