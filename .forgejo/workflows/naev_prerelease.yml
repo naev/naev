@@ -178,6 +178,15 @@ jobs:
         env:
           DESTDIR: ${{ github.workspace }}/staging
 
+      - name: Cache Cargo home
+        uses: actions/cache@v3
+        with:
+          path: build/builddir/cargo-home
+          key: cargo-appimage-${{ runner.os }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          restore-keys: |
+            cargo-appimage-${{ runner.os }}-${{ matrix.target }}-
+            cargo-appimage-${{ runner.os }}-
+
       - name: Compile AppImage
         run: |
               ./source/utils/buildAppImage.sh -d -s source -b build

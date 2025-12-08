@@ -141,6 +141,15 @@ jobs:
           name: ${{ matrix.image }}-${{ github.sha }}-install-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
+      - name: Cache Cargo home
+        uses: actions/cache@v3
+        with:
+          path: appImageBuild/builddir/cargo-home
+          key: cargo-appimage-${{ runner.os }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          restore-keys: |
+            cargo-appimage-${{ runner.os }}-${{ matrix.target }}-
+            cargo-appimage-${{ runner.os }}-
+
       - name: Compile AppImage
         id: appimageCompile
         run: |
