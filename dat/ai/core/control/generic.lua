@@ -1168,8 +1168,8 @@ function distress_handler( pilot, attacker )
          end
       else -- neutral
          if mem.whiteknight then
-            local p_m = pilot:memory()
-            if p_m.natural and not aifact:areNeutral(pfact) then
+            -- Only whiteknight with natural pilots
+            if pilot:memory().natural and p:memory().natural and not aifact:areNeutral(pfact) then
                badguy = attacker
             end
          end
