@@ -21,7 +21,6 @@ serde = { workspace = true }
 fs-err = { workspace = true }
 chrono = { workspace = true }
 iced = { workspace = true }
-iced_aw = { workspace = true }
 futures = { workspace = true }
 ndata = { workspace = true }
 webbrowser = { workspace = true }

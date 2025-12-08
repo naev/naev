@@ -42,10 +42,6 @@ rust-version = @RUSTCVERSION@ # Note this has to be set in meson.build too!
 not_unsafe_ptr_arg_deref = "allow"
 
 [patch.crates-io]
-iced = { git = "https://github.com/iced-rs/iced", rev = "ea614387f4d94960911b0a7d8ce25c02edb470c5" }
-iced_core = { git = "https://github.com/iced-rs/iced", rev = "ea614387f4d94960911b0a7d8ce25c02edb470c5" }
-iced_widget = { git = "https://github.com/iced-rs/iced", rev = "ea614387f4d94960911b0a7d8ce25c02edb470c5" }
-iced_aw = { git = "https://github.com/iced-rs/iced_aw.git", rev = "f49e058684b6e03a49b94c0ae6d9fb40db6ef2a2" }
 image = { git = "https://github.com/image-rs/image", rev = "81b6eac19c50bd1bbe12f42eb39a5d99d0b20c60" }
 gltf = { git = "https://github.com/gltf-rs/gltf.git", rev = "3def30c9caf96f2dbc85238179ea5a6152c5cf22" }
 
@@ -79,8 +75,7 @@ softfloat = "1.0"
 semver = { version = "1.0", features = ["serde"] }
 chrono = { version = "0.4", features = ["serde","now"] }
 base64 = "0.22"
-iced = { version = "0.14.0-dev", default-features = false, features = ["wgpu", "tokio", "advanced", "image", "markdown", "sipper"] }
-iced_aw = { version = "0.13.0-dev", features = ["drop_down"] }
+iced = { version = "0.14.0", default-features = false, features = ["wayland", "x11", "wgpu", "tokio", "advanced", "image", "markdown", "sipper"] }
 tokio = { version = "1", features = ["sync"] }
 webbrowser = { version = "1" }
 

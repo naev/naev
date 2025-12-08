@@ -128,6 +128,22 @@ pub fn open() -> Result<()> {
         .run()?)
 }
 
+#[derive(Debug, Clone, PartialEq)]
+enum DropDownAction {
+    Update,
+    Refresh,
+    ClearCache,
+}
+impl std::fmt::Display for DropDownAction {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str(match self {
+            Self::Update => pgettext("plugins", "Update All"),
+            Self::Refresh => pgettext("plugins", "Force Refresh"),
+            Self::ClearCache => pgettext("plugins", "Clear Cache"),
+        })
+    }
+}
+
 /// Application internal messages.
 #[derive(Debug, Clone)]
 enum Message {
@@ -139,17 +155,14 @@ enum Message {
     Update(Plugin),
     Disable(Plugin),
     Uninstall(Plugin),
-    LinkClicked(widget::markdown::Url),
+    LinkClicked(widget::markdown::Uri),
     ProgressNew(Progress),
     Progress(install::Progress),
     LogResult(Result<(), LogEntry>),
     LogToggle,
-    DropDownToggle,
+    Action(DropDownAction),
     RefreshLocal(Result<(), LogEntry>),
     FilterChange(String),
-    ActionClearCache,
-    ActionRefresh,
-    ActionUpdate,
 }
 impl Message {
     fn update_view(result: Result<()>) -> Self {
@@ -469,7 +482,7 @@ impl App {
 
         // We'll hardcode a logo into the source code for now
         use iced::advanced::image;
-        let default_logo = image::Handle::from_bytes(image::Bytes::from_static(Self::ICON));
+        let default_logo = image::Handle::from_bytes(Self::ICON);
 
         Ok(App {
             catalog: Arc::new(Catalog::new(conf)),
@@ -847,10 +860,12 @@ impl App {
                 self.log_open = !self.log_open;
                 Task::none()
             }
+            /*
             Message::DropDownToggle => {
                 self.drop_action = !self.drop_action;
                 Task::none()
             }
+            */
             Message::RefreshLocal(value) => match value {
                 Ok(()) => self.refresh_local_task(),
                 Err(e) => {
@@ -862,7 +877,7 @@ impl App {
                 self.filter = value;
                 self.update_view()
             }
-            Message::ActionClearCache => {
+            Message::Action(DropDownAction::ClearCache) => {
                 self.drop_action = false;
                 if let Err(e) = fs::remove_dir_all(&self.catalog.conf.catalog_cache) {
                     warn_err!(e);
@@ -872,11 +887,11 @@ impl App {
                 }
                 self.refresh_task()
             }
-            Message::ActionRefresh => {
+            Message::Action(DropDownAction::Refresh) => {
                 self.drop_action = false;
                 self.refresh_task()
             }
-            Message::ActionUpdate => {
+            Message::Action(DropDownAction::Update) => {
                 self.drop_action = false;
                 Self::start_task(pgettext("plugins", "Updating"))
                     .chain(Task::batch(self.view.iter().filter_map(|plugin| {
@@ -1141,42 +1156,26 @@ impl App {
                 row![button(pgettext("plugins", "Install"))],
             )
         };
-        // Add refresh button and format
-        let actions = container(
-            column![
-                button(pgettext("plugins", "Update All"))
-                    .on_press_maybe((self.has_update && idle).then_some(Message::ActionUpdate)),
-                button(pgettext("plugins", "Force Refresh"))
-                    .on_press_maybe(idle.then_some(Message::ActionRefresh)),
-                button(pgettext("plugins", "Clear Cache"))
-                    .on_press_maybe(idle.then_some(Message::ActionClearCache)),
-                // TODO select and add zip functionality
-                //button(pgettext("plugins", "Add Plugin (Zip)")),
-                //actionutton(pgettext("plugins", "Add Plugin (Directory)")),
-            ]
-            .spacing(10)
-            .align_x(iced::Alignment::Center),
-        )
-        .style(|theme: &iced::Theme| {
-            let extended = theme.extended_palette();
-            widget::container::Style {
-                background: Some(extended.background.weak.color.scale_alpha(0.2).into()),
-                border: iced::border::rounded(2),
-                shadow: SHADOW,
-                ..Default::default()
-            }
-        });
         let buttons = container(
             buttons
                 .push(
-                    iced_aw::widget::DropDown::new(
-                        button(pgettext("plugins", "Action")).on_press(Message::DropDownToggle),
-                        actions,
-                        self.drop_action,
+                    widget::pick_list(
+                        [
+                            DropDownAction::ClearCache,
+                            DropDownAction::Refresh,
+                            DropDownAction::Update,
+                        ],
+                        None::<DropDownAction>,
+                        Message::Action,
                     )
-                    .width(Fill)
-                    .on_dismiss(Message::DropDownToggle)
-                    .alignment(iced_aw::drop_down::Alignment::Bottom),
+                    .placeholder("Action")
+                    .style(move |_, _| widget::pick_list::Style {
+                        text_color: palette.text,
+                        placeholder_color: palette.text,
+                        handle_color: palette.text,
+                        background: iced::Background::Color(palette.primary),
+                        border: Default::default(),
+                    }),
                 )
                 .spacing(10)
                 .wrap(),
