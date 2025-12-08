@@ -849,13 +849,11 @@ void ai_think( Pilot *pilot, double dt, int dotask )
            pilot_isFlag( cur_pilot, PILOT_MANUAL_CONTROL ) ) {
          lua_rawgeti( naevL, LUA_REGISTRYINDEX,
                       cur_pilot->ai->ref_control_manual );
-         lua_pushnumber( naevL, crate - cur_pilot->tcontrol );
-         ai_run( env, 1 );
       } else {
          lua_rawgeti( naevL, LUA_REGISTRYINDEX, cur_pilot->ai->ref_control );
-         lua_pushnumber( naevL, crate - cur_pilot->tcontrol );
-         ai_run( env, 1 ); /* run control */
       }
+      lua_pushnumber( naevL, crate - cur_pilot->tcontrol );
+      ai_run( env, 1 );
       /* Try to desync control ticks when possible by adding randomness. */
       cur_pilot->tcontrol = crate * ( 0.9 + 0.2 * RNGF() );
 
