@@ -169,16 +169,16 @@ jobs:
               -Ddocs_c=disabled \
               -Ddocs_lua=disabled
 
+      - name: Meson Compile
+        run: |
+          meson compile -C build
+
       - name: Upload Cargo Lock Artifact
         uses: actions/upload-artifact@v3
         with:
           name: naev-${{ matrix.target }}-cargo-lock
           path: ${{ github.workspace }}/build/Cargo.lock
           if-no-files-found: error
-
-      - name: Meson Compile
-        run: |
-          meson compile -C build
 
       - name: Meson Install
         run: |
