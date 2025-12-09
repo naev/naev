@@ -25,7 +25,7 @@ jobs:
           submodules: true
           ssh-key: ${{ secrets.CODEBERG_SSH_KEY }}
           ssh-known-hosts: ${{ secrets.CODEBERG_SSH_KNOWN_HOSTS }}
-          persist-credentials: false
+          persist-credentials: true
 
       - name: Cache Meson wrap downloads
         uses: actions/cache@v3
@@ -173,11 +173,27 @@ jobs:
         run: |
           meson compile -C build
 
+      - name: Upload Cargo Lock Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: naev-${{ matrix.target }}-cargo-lock
+          path: ${{ github.workspace }}/build/Cargo.lock
+          if-no-files-found: error
+
       - name: Meson Install
         run: |
           meson install -C build
         env:
           DESTDIR: ${{ github.workspace }}/staging
+
+      - name: Cache Cargo home
+        uses: actions/cache@v3
+        with:
+          path: build/builddir/cargo-home
+          key: cargo-appimage-${{ runner.os }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          restore-keys: |
+            cargo-appimage-${{ runner.os }}-${{ matrix.target }}-
+            cargo-appimage-${{ runner.os }}-
 
       - name: Compile AppImage
         run: |

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-12-07 21:45+0900\n"
+"POT-Creation-Date: 2025-12-08 20:36+0900\n"
 "PO-Revision-Date: 2025-08-10 15:02+0000\n"
 "Last-Translator: Ta123Asri <taufiqdi15@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/naev/naev/id/"
@@ -10135,50 +10135,8 @@ msgstr ""
 msgid "Independent"
 msgstr "Independen"
 
-msgid "Lost"
+msgid "Independent Mercenary"
 msgstr ""
-
-msgid ""
-"It is not clear what happened, but the Lost were once normal people, "
-"however, excessive exposure to the volatile Nebula has affected them in "
-"disturbing ways."
-msgstr ""
-
-#. And done here :D
-#.
-#. <?xml version='1.0' encoding='utf8'?>
-#. <event name="Haven's Curse">
-#. <location>enter</location>
-#. <chance>100</chance>
-#. <system>Haven</system>
-#. </event>
-#. --
-#. Only works when can inclusively claim the system
-msgid "Marauder"
-msgstr "Perampok"
-
-#. Returns a lore message for the given faction.
-#. Need presence
-#. Create a list of conditional messages
-#. Add tag-appropriate descriptions
-#. hook.pilot( rampant, "idle", "idle" )
-msgid "Pirate"
-msgstr "Perompak"
-
-msgid "Pirate Marauders"
-msgstr "Perompak Perampok"
-
-#, fuzzy
-msgid ""
-"Pirate Marauders are the lowest and most vile of pirates. They are extremely "
-"aggressive and will attack most vessels unprovoked, despite flying ships "
-"that would not be considered space-worthy in civilized areas. Even the "
-"pirate clans have difficulty in dealing with them."
-msgstr ""
-"Perompak Perampok adalah yang paling rendah dan yang paling keji di antara "
-"semua perompak. Mereka sangat agresif dan akan menyerang sebagian besar "
-"kapal tanpa provokasi. Bahkan klan-klan perompak pun kesulitan dalam "
-"mengatur mereka."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -10244,6 +10202,51 @@ msgstr ""
 #. Escort
 msgid "Mercenary"
 msgstr "Tentara Bayaran"
+
+msgid "Lost"
+msgstr ""
+
+msgid ""
+"It is not clear what happened, but the Lost were once normal people, "
+"however, excessive exposure to the volatile Nebula has affected them in "
+"disturbing ways."
+msgstr ""
+
+#. And done here :D
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <event name="Haven's Curse">
+#. <location>enter</location>
+#. <chance>100</chance>
+#. <system>Haven</system>
+#. </event>
+#. --
+#. Only works when can inclusively claim the system
+msgid "Marauder"
+msgstr "Perampok"
+
+#. Returns a lore message for the given faction.
+#. Need presence
+#. Create a list of conditional messages
+#. Add tag-appropriate descriptions
+#. hook.pilot( rampant, "idle", "idle" )
+msgid "Pirate"
+msgstr "Perompak"
+
+msgid "Pirate Marauders"
+msgstr "Perompak Perampok"
+
+#, fuzzy
+msgid ""
+"Pirate Marauders are the lowest and most vile of pirates. They are extremely "
+"aggressive and will attack most vessels unprovoked, despite flying ships "
+"that would not be considered space-worthy in civilized areas. Even the "
+"pirate clans have difficulty in dealing with them."
+msgstr ""
+"Perompak Perampok adalah yang paling rendah dan yang paling keji di antara "
+"semua perompak. Mereka sangat agresif dan akan menyerang sebagian besar "
+"kapal tanpa provokasi. Bahkan klan-klan perompak pun kesulitan dalam "
+"mengatur mereka."
 
 msgid "Miner"
 msgstr "Penambang"
@@ -30655,6 +30658,7 @@ msgstr ""
 #. --
 #. Case player is attacker
 #. neutral
+#. Only whiteknight with natural pilots
 #. Case attackr is ally
 #. Case attacker is enemy
 #. neutral
@@ -121409,6 +121413,18 @@ msgstr ""
 msgid "Naev Plugin Manager"
 msgstr ""
 
+msgctxt "plugins"
+msgid "Update All"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Force Refresh"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Clear Cache"
+msgstr ""
+
 msgid "installed"
 msgstr ""
 
@@ -121507,22 +121523,6 @@ msgstr ""
 
 msgctxt "plugins"
 msgid "Install"
-msgstr ""
-
-msgctxt "plugins"
-msgid "Update All"
-msgstr ""
-
-msgctxt "plugins"
-msgid "Force Refresh"
-msgstr ""
-
-msgctxt "plugins"
-msgid "Clear Cache"
-msgstr ""
-
-msgctxt "plugins"
-msgid "Action"
 msgstr ""
 
 msgctxt "plugins"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-12-07 21:45+0900\n"
+"POT-Creation-Date: 2025-12-08 20:36+0900\n"
 "PO-Revision-Date: 2024-06-23 14:45+0000\n"
 "Last-Translator: Han Ga Eun <gdd72582@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/naev/naev/ko/>\n"
@@ -10195,46 +10195,7 @@ msgstr ""
 msgid "Independent"
 msgstr ""
 
-msgid "Lost"
-msgstr ""
-
-msgid ""
-"It is not clear what happened, but the Lost were once normal people, "
-"however, excessive exposure to the volatile Nebula has affected them in "
-"disturbing ways."
-msgstr ""
-
-#. And done here :D
-#.
-#. <?xml version='1.0' encoding='utf8'?>
-#. <event name="Haven's Curse">
-#. <location>enter</location>
-#. <chance>100</chance>
-#. <system>Haven</system>
-#. </event>
-#. --
-#. Only works when can inclusively claim the system
-#, fuzzy
-msgid "Marauder"
-msgstr "소로미드 약탈자"
-
-#. Returns a lore message for the given faction.
-#. Need presence
-#. Create a list of conditional messages
-#. Add tag-appropriate descriptions
-#. hook.pilot( rampant, "idle", "idle" )
-msgid "Pirate"
-msgstr ""
-
-#, fuzzy
-msgid "Pirate Marauders"
-msgstr "해적 조상"
-
-msgid ""
-"Pirate Marauders are the lowest and most vile of pirates. They are extremely "
-"aggressive and will attack most vessels unprovoked, despite flying ships "
-"that would not be considered space-worthy in civilized areas. Even the "
-"pirate clans have difficulty in dealing with them."
+msgid "Independent Mercenary"
 msgstr ""
 
 #.
@@ -10300,6 +10261,48 @@ msgstr ""
 #. spawning Ancestors
 #. Escort
 msgid "Mercenary"
+msgstr ""
+
+msgid "Lost"
+msgstr ""
+
+msgid ""
+"It is not clear what happened, but the Lost were once normal people, "
+"however, excessive exposure to the volatile Nebula has affected them in "
+"disturbing ways."
+msgstr ""
+
+#. And done here :D
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <event name="Haven's Curse">
+#. <location>enter</location>
+#. <chance>100</chance>
+#. <system>Haven</system>
+#. </event>
+#. --
+#. Only works when can inclusively claim the system
+#, fuzzy
+msgid "Marauder"
+msgstr "소로미드 약탈자"
+
+#. Returns a lore message for the given faction.
+#. Need presence
+#. Create a list of conditional messages
+#. Add tag-appropriate descriptions
+#. hook.pilot( rampant, "idle", "idle" )
+msgid "Pirate"
+msgstr ""
+
+#, fuzzy
+msgid "Pirate Marauders"
+msgstr "해적 조상"
+
+msgid ""
+"Pirate Marauders are the lowest and most vile of pirates. They are extremely "
+"aggressive and will attack most vessels unprovoked, despite flying ships "
+"that would not be considered space-worthy in civilized areas. Even the "
+"pirate clans have difficulty in dealing with them."
 msgstr ""
 
 msgid "Miner"
@@ -31074,6 +31077,7 @@ msgstr ""
 #. --
 #. Case player is attacker
 #. neutral
+#. Only whiteknight with natural pilots
 #. Case attackr is ally
 #. Case attacker is enemy
 #. neutral
@@ -123691,6 +123695,18 @@ msgstr ""
 msgid "Naev Plugin Manager"
 msgstr ""
 
+msgctxt "plugins"
+msgid "Update All"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Force Refresh"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Clear Cache"
+msgstr ""
+
 msgid "installed"
 msgstr ""
 
@@ -123789,22 +123805,6 @@ msgstr ""
 
 msgctxt "plugins"
 msgid "Install"
-msgstr ""
-
-msgctxt "plugins"
-msgid "Update All"
-msgstr ""
-
-msgctxt "plugins"
-msgid "Force Refresh"
-msgstr ""
-
-msgctxt "plugins"
-msgid "Clear Cache"
-msgstr ""
-
-msgctxt "plugins"
-msgid "Action"
 msgstr ""
 
 msgctxt "plugins"
