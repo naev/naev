@@ -2071,7 +2071,7 @@ pub extern "C" fn sound_get(name: *const c_char) -> *const Arc<AudioBuffer> {
         return std::ptr::null();
     }
     let name = unsafe { CStr::from_ptr(name).to_string_lossy() };
-    match AudioBuffer::get_valid_path(&format!("snd/sounds/{name}")) {
+    match AudioBuffer::get_valid_path(format!("snd/sounds/{name}")) {
         Some(path) => match AudioBuffer::get_or_try_load(&path) {
             Ok(buffer) => Box::into_raw(Box::new(buffer.clone())),
             Err(e) => {
@@ -2100,7 +2100,7 @@ pub extern "C" fn sound_play(sound: *const Arc<AudioBuffer>) -> *const c_void {
         return std::ptr::null();
     }
     let sound = unsafe { &*sound };
-    match AUDIO.play_buffer(&sound) {
+    match AUDIO.play_buffer(sound) {
         Ok(audioref) => unsafe { std::mem::transmute::<AudioRef, *const c_void>(audioref) },
         Err(e) => {
             warn_err!(e);
