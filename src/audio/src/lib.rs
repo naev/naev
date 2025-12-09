@@ -1262,7 +1262,6 @@ impl AudioSystem {
     pub fn set_volume_speed(&self, speed: f32) {
         let mut vol = self.volume.write().unwrap();
         vol.volume_speed = speed;
-        drop(vol);
     }
 
     pub fn set_air_absorption_factor(&self, factor: f32) {
