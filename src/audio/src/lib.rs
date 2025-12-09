@@ -703,8 +703,9 @@ impl Audio {
         match self {
             Self::Static(this) | Self::LuaStatic(this) => {
                 let v = &this.source;
-                this.ingame = true;
-
+                if this.ingame {
+                    return;
+                }
                 if HAS_AL_SOFT_SOURCE_SPATIALIZE.load(Ordering::Relaxed) {
                     v.parameter_i32(AL_SOURCE_SPATIALIZE_SOFT, AL_AUTO_SOFT);
                 }
@@ -720,6 +721,7 @@ impl Audio {
                         AL_FILTER_NULL,
                     );
                 }
+                this.ingame = true;
             }
             _ => (),
         }
@@ -1623,6 +1625,7 @@ impl UserData for AudioRef {
                 let vec: Vector2<f32> = Vector2::new(x, y);
                 this.call_mut(|this| {
                     this.set_position(vec);
+                    this.set_ingame();
                 })?;
                 Ok(())
             },
@@ -1654,6 +1657,7 @@ impl UserData for AudioRef {
                 let vec = Vector2::new(x, y);
                 this.call_mut(|this| {
                     this.set_velocity(vec);
+                    this.set_ingame();
                 })?;
                 Ok(())
             },
