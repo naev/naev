@@ -160,6 +160,16 @@ stds.audio = {
       },
    }
 }
+stds.audiodata = {
+   read_globals = {
+      audiodata = {
+         fields = {
+         __tostring = {},
+         new = {},
+         },
+      },
+   }
+}
 stds.bkg = {
    read_globals = {
       bkg = {
@@ -1382,6 +1392,7 @@ stds.vec2 = {
 stds.naev.read_globals.naev.fields.ai = stds.ai.read_globals.ai
 stds.naev.read_globals.naev.fields.asteroid = stds.asteroid.read_globals.asteroid
 stds.naev.read_globals.naev.fields.audio = stds.audio.read_globals.audio
+stds.naev.read_globals.naev.fields.audiodata = stds.audiodata.read_globals.audiodata
 stds.naev.read_globals.naev.fields.bkg = stds.bkg.read_globals.bkg
 stds.naev.read_globals.naev.fields.camera = stds.camera.read_globals.camera
 stds.naev.read_globals.naev.fields.canvas = stds.canvas.read_globals.canvas

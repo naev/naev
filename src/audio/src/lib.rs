@@ -32,7 +32,7 @@ use utils::{binary_search_by_key_ref, sort_by_key_ref};
 use anyhow::Result;
 use gettext::gettext;
 use log::{debug, debugx, warn, warn_err};
-use mlua::{MetaMethod, UserData, UserDataMethods};
+use mlua::{Either, MetaMethod, UserData, UserDataMethods, UserDataRef};
 use nalgebra::{Vector2, Vector3};
 use std::sync::{Arc, LazyLock, Weak};
 #[cfg(not(debug_assertions))]
@@ -1353,15 +1353,46 @@ impl AudioRef {
     }
 }
 
-/*
+/*@
+ * @brief Lua bindings to interact with audio.
+ *
+ * @luamod audiodata
+ */
+impl UserData for AudioData {
+    fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
+        /*@
+         * @brief Gets a string representation of an audiodata.
+         *
+         *    @luatparam AudioData data AudioData to get string representation of.
+         *    @luatreturn string String representation of the data.
+         * @luafunc __tostring
+         */
+        methods.add_meta_method(MetaMethod::ToString, |_, this: &Self, ()| match this {
+            AudioData::Buffer(ab) => Ok(format!("AudioData( {} )", ab.name.display())),
+        });
+        /*@
+         * @brief Creates a new audio data;
+         *
+         *    @luatparam string|File data Data to load the audio from.
+         *    @luatreturn AudioData New audio data.
+         * @luafunc new
+         */
+        methods.add_function("new", |_, filename: String| -> mlua::Result<Self> {
+            let buf = AudioBuffer::get_or_try_load(&filename)?;
+            Ok(AudioData::Buffer(buf))
+        });
+    }
+}
+
+/*@
  * @brief Lua bindings to interact with audio.
  *
  * @luamod audio
  */
 impl UserData for AudioRef {
     fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
-        /*
-         * @brief Gets a string representation of an audio file.
+        /*@
+         * @brief Gets a string representation of an audio.
          *
          *    @luatparam Audio audio Audio to get string representation of.
          *    @luatreturn string String representation of the audio.
@@ -1379,7 +1410,7 @@ impl UserData for AudioRef {
                 Audio::LuaStream(this) => format!("AudioStream( {} )", this.path.display()),
             })?)
         });
-        /*
+        /*@
          * @brief Creates a new audio source.
          *
          *    @luatparam string|File data Data to load the audio from.
@@ -1390,16 +1421,30 @@ impl UserData for AudioRef {
          */
         methods.add_function(
             "new",
-            |_, (val, streaming): (String, bool)| -> mlua::Result<Self> {
-                Ok(AudioBuilder::new(match streaming {
-                    true => AudioType::LuaStream,
-                    false => AudioType::LuaStatic,
-                })
-                .path(Some(&val))
-                .build()?)
+            |_,
+             (val, streaming): (Either<String, UserDataRef<AudioData>>, bool)|
+             -> mlua::Result<Self> {
+                match val {
+                    Either::Left(val) => Ok(AudioBuilder::new(match streaming {
+                        true => AudioType::LuaStream,
+                        false => AudioType::LuaStatic,
+                    })
+                    .path(Some(&val))
+                    .build()?),
+                    Either::Right(val) => {
+                        if streaming {
+                            return Err(mlua::Error::RuntimeError(format!(
+                                "streaming not supported for AudioData"
+                            )));
+                        }
+                        Ok(AudioBuilder::new(AudioType::LuaStatic)
+                            .data(Some(val.clone()))
+                            .build()?)
+                    }
+                }
             },
         );
-        /*
+        /*@
          * @brief Clones an existing audio source.
          *
          *    @luatparam Audio source Audio source to clone.
@@ -1409,7 +1454,7 @@ impl UserData for AudioRef {
         methods.add_method("clone", |_, this, ()| -> mlua::Result<AudioRef> {
             Ok(this.try_clone()?)
         });
-        /*
+        /*@
          * @brief Plays a source.
          *
          *    @luatparam Audio source Source to play.
@@ -1421,7 +1466,7 @@ impl UserData for AudioRef {
             })?;
             Ok(())
         });
-        /*
+        /*@
          * @brief Checks to see if a source is playing.
          *
          *    @luatparam Audio source Source to check to see if is playing.
@@ -1431,7 +1476,7 @@ impl UserData for AudioRef {
         methods.add_method("isPlaying", |_, this, ()| -> mlua::Result<bool> {
             Ok(this.call(|this| this.is_playing())?)
         });
-        /*
+        /*@
          * @brief Pauses a source.
          *
          *    @luatparam Audio source Source to pause.
@@ -1443,7 +1488,7 @@ impl UserData for AudioRef {
             })?;
             Ok(())
         });
-        /*
+        /*@
          * @brief Checks to see if a source is paused.
          *
          *    @luatparam Audio source Source to check to see if is paused.
@@ -1453,7 +1498,7 @@ impl UserData for AudioRef {
         methods.add_method("isPaused", |_, this, ()| -> mlua::Result<bool> {
             Ok(this.call(|this| this.is_paused())?)
         });
-        /*
+        /*@
          * @brief Stops a source.
          *
          *    @luatparam Audio source Source to stop.
@@ -1465,7 +1510,7 @@ impl UserData for AudioRef {
             })?;
             Ok(())
         });
-        /*
+        /*@
          * @brief Checks to see if a source is stopped.
          *
          *    @luatparam Audio source Source to check to see if is stopped.
@@ -1475,7 +1520,7 @@ impl UserData for AudioRef {
         methods.add_method("isStopped", |_, this, ()| -> mlua::Result<bool> {
             Ok(this.call(|this| this.is_stopped())?)
         });
-        /*
+        /*@
          * @brief Rewinds a source.
          *
          *    @luatparam Audio source Source to rewind.
@@ -1487,7 +1532,7 @@ impl UserData for AudioRef {
             })?;
             Ok(())
         });
-        /*
+        /*@
          * @brief Seeks a source.
          *
          *    @luatparam Audio source Source to seek.
@@ -1510,7 +1555,7 @@ impl UserData for AudioRef {
                 Ok(())
             },
         );
-        /*
+        /*@
          * @brief Gets the position of a source.
          *
          *    @luatparam Audio source Source to get position of.
@@ -1527,7 +1572,7 @@ impl UserData for AudioRef {
                 })
             })?)
         });
-        /*
+        /*@
          * @brief Gets the length of a source.
          *
          *    @luatparam Audio source Source to get duration of.
@@ -1552,7 +1597,7 @@ impl UserData for AudioRef {
                 })?)
             },
         );
-        /*
+        /*@
          * @brief Sets the volume of a source.
          *
          *    @luatparam Audio source Source to set volume of.
@@ -1575,7 +1620,7 @@ impl UserData for AudioRef {
                 Ok(())
             },
         );
-        /*
+        /*@
          * @brief Gets the volume of a source.
          *
          *    @luatparam[opt] Audio source Source to get volume of.
@@ -1585,7 +1630,7 @@ impl UserData for AudioRef {
         methods.add_method("getVolume", |_, this, ()| -> mlua::Result<f32> {
             Ok(this.call(|this| this.volume())?)
         });
-        /*
+        /*@
          * @brief Sets whether a source is relative or not.
          *
          *    @luatparam boolean relative Whether or not to make the source relative or
@@ -1601,7 +1646,7 @@ impl UserData for AudioRef {
                 Ok(())
             },
         );
-        /*
+        /*@
          * @brief Gets whether a source is relative or not.
          *
          *    @luatreturn boolean relative Whether or not to the source is relative.
@@ -1610,7 +1655,7 @@ impl UserData for AudioRef {
         methods.add_method("isRelative", |_, this, ()| -> mlua::Result<bool> {
             Ok(this.call(|this| this.relative())?)
         });
-        /*
+        /*@
          * @brief Sets the position of a source.
          *
          *    @luatparam Audio source Source to set position of.
@@ -1630,7 +1675,7 @@ impl UserData for AudioRef {
                 Ok(())
             },
         );
-        /*
+        /*@
          * @brief Gets the position of a source.
          *
          *    @luatparam Audio source Source to get position of.
@@ -1643,7 +1688,7 @@ impl UserData for AudioRef {
             let pos = this.call(|this| this.position())?;
             Ok((pos.x, pos.y))
         });
-        /*
+        /*@
          * @brief Sets the velocity of a source.
          *
          *    @luatparam Audio source Source to set velocity of.
@@ -1662,7 +1707,7 @@ impl UserData for AudioRef {
                 Ok(())
             },
         );
-        /*
+        /*@
          * @brief Gets the velocity of a source.
          *
          *    @luatparam Audio source Source to get velocity of.
@@ -1674,7 +1719,7 @@ impl UserData for AudioRef {
             let vel = this.call(|this| this.velocity())?;
             Ok((vel.x, vel.y))
         });
-        /*
+        /*@
          * @brief Sets a source to be looping or not.
          *
          *    @luatparam Audio source Source to set looping state of.
@@ -1688,7 +1733,7 @@ impl UserData for AudioRef {
             })?;
             Ok(())
         });
-        /*
+        /*@
          * @brief Gets the looping state of a source.
          *
          *    @luatparam Audio source Source to get looping state of.
@@ -1698,7 +1743,7 @@ impl UserData for AudioRef {
         methods.add_method("isLooping", |_, this, ()| -> mlua::Result<bool> {
             Ok(this.call(|this| this.looping())?)
         });
-        /*
+        /*@
          * @brief Sets the pitch of a source.
          *
          *    @luatparam Audio source Source to set pitch of.
@@ -1711,7 +1756,7 @@ impl UserData for AudioRef {
             })?;
             Ok(())
         });
-        /*
+        /*@
          * @brief Gets the pitch of a source.
          *
          *    @luatparam Audio source Source to get pitch of.
@@ -1721,7 +1766,7 @@ impl UserData for AudioRef {
         methods.add_method("getPitch", |_, this, ()| -> mlua::Result<f32> {
             Ok(this.call(|this| this.pitch())?)
         });
-        /*
+        /*@
          * @brief Sets the attenuation distances for the audio source.
          *
          *    @luatparam number ref Reference distance.
@@ -1737,7 +1782,7 @@ impl UserData for AudioRef {
                 Ok(())
             },
         );
-        /*
+        /*@
          * @brief Gets the attenuation distances for the audio source. Set to 0. if
          * audio is disabled.
          *
@@ -1751,7 +1796,7 @@ impl UserData for AudioRef {
                 Ok(this.call(|this| this.attenuation_distances())?)
             },
         );
-        /*
+        /*@
          * @brief Sets the rolloff factor.
          *
          *    @luatparam number rolloff New rolloff factor.
@@ -1763,7 +1808,7 @@ impl UserData for AudioRef {
             })?;
             Ok(())
         });
-        /*
+        /*@
          * @brief Gets the rolloff factor.
          *
          *    @luatreturn number Rolloff factor or 0. if sound is disabled.
@@ -1772,7 +1817,7 @@ impl UserData for AudioRef {
         methods.add_method("getRolloff", |_, this, ()| -> mlua::Result<f32> {
             Ok(this.call(|this| this.rolloff())?)
         });
-        /*
+        /*@
          * @brief Sets effects on a source.
          *
          * @usage source:setEffect( "reverb", true )
@@ -1814,7 +1859,7 @@ impl UserData for AudioRef {
                 })?
             },
         );
-        /*
+        /*@
          * @brief Sets global effects, or creates it if necessary.
          *
          * @usage audio.setEffectData( "reverb", { type="reverb" } )
@@ -1987,7 +2032,7 @@ impl UserData for AudioRef {
                 Ok(())
             },
         );
-        /*
+        /*@
          * @brief Sets global effects, or creates it if necessary.
          *
          * @usage audio.setGlobalEffect( "reverb" )
@@ -2022,7 +2067,7 @@ impl UserData for AudioRef {
                 Ok(())
             },
         );
-        /*
+        /*@
          * @brief Allows setting the speed of sound.
          *
          *    @luatparam[opt=3443] number speed Air speed.
@@ -2037,7 +2082,7 @@ impl UserData for AudioRef {
                 Ok(())
             },
         );
-        /*
+        /*@
          * @brief Sets the Doppler effect factor.
          *
          * Defaults to 0.3 outside of the nebula and 1.0 in the nebula.
@@ -2051,6 +2096,10 @@ impl UserData for AudioRef {
             Ok(())
         });
     }
+}
+
+pub fn open_audiodata(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
+    Ok(lua.create_proxy::<AudioData>()?)
 }
 
 pub fn open_audio(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
@@ -2196,7 +2245,11 @@ pub extern "C" fn sound_pause() {
     let voices = AUDIO.voices.lock().unwrap();
     for (_, v) in voices.iter() {
         match v {
-            Audio::Static(_this) | Audio::LuaStatic(_this) => v.pause(),
+            Audio::Static(_this) | Audio::LuaStatic(_this) => {
+                if v.is_playing() {
+                    v.pause();
+                }
+            }
             _ => (),
         }
     }
@@ -2207,7 +2260,11 @@ pub extern "C" fn sound_resume() {
     let voices = AUDIO.voices.lock().unwrap();
     for (_, v) in voices.iter() {
         match v {
-            Audio::Static(_this) | Audio::LuaStatic(_this) => v.play(),
+            Audio::Static(_this) | Audio::LuaStatic(_this) => {
+                if v.is_paused() {
+                    v.play()
+                }
+            }
             _ => (),
         }
     }

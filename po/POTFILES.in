@@ -3995,6 +3995,7 @@ src/nlua_asteroid.c
 src/nlua_asteroid.h
 src/nlua_audio.c
 src/nlua_audio.h
+src/nlua_audiodata.c
 src/nlua_bkg.c
 src/nlua_bkg.h
 src/nlua_camera.c

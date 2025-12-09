@@ -546,6 +546,7 @@ impl LuaEnv {
         open_lib("colour", renderer::colour::open_colour)?;
         open_lib("rnd", crate::rng::open_rnd)?;
         open_lib("spfx", crate::spfx::open_spfx)?;
+        open_lib("audiodata", audio::open_audiodata)?;
         open_lib("audio", audio::open_audio)?;
         // TODO tex has lots of dependencies, and we can't implement the FFI interface so it is
         // disabled. Similarly, file doesn't have ffi set up.
