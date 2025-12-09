@@ -656,7 +656,6 @@ impl Texture {
     }
 
     pub fn into_ptr(self) -> *mut Self {
-        unsafe { Arc::increment_strong_count(Arc::into_raw(self.texture.clone())) }
         Box::into_raw(Box::new(self))
     }
 }
@@ -1811,7 +1810,6 @@ pub extern "C" fn gl_dupTexture(ctex: *mut Texture) -> *mut Texture {
         naevc::gl_contextSet();
     }
     let tex = unsafe { &*ctex };
-    unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
     let out = Box::into_raw(Box::new(tex.try_clone().unwrap()));
     unsafe {
         naevc::gl_contextUnset();
