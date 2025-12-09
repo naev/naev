@@ -619,25 +619,20 @@ impl Drop for AudioStream {
     }
 }
 impl AudioStream {
-    fn thread(
-        source: Arc<al::Source>,
-        finish: Arc<AtomicBool>,
-        file: ndata::physfs::File,
-    ) -> Result<()> {
-        let mut data = StreamData::from_file(source, file)?;
-
-        for _ in 0..2 {
-            data.queue_next_buffer()?;
-        }
+    fn thread(finish: Arc<AtomicBool>, mut data: StreamData) -> Result<()> {
         loop {
             if finish.load(Ordering::Relaxed) {
                 return Ok(());
             }
 
             if data.source.get_parameter_i32(AL_SOURCE_STATE) == AL_PLAYING {
-                for _ in 0..data.source.get_parameter_i32(AL_BUFFERS_PROCESSED) {
+                let processed = data.source.get_parameter_i32(AL_BUFFERS_PROCESSED);
+                if processed > 0 {
                     data.source.unqueue_buffer();
-                    data.queue_next_buffer()?;
+                    let done = data.queue_next_buffer()?;
+                    if processed == 2 && done {
+                        finish.store(true, Ordering::Relaxed);
+                    }
                 }
             }
 
@@ -655,12 +650,14 @@ impl AudioStream {
 
         let finish = Arc::new(AtomicBool::new(false));
         let source = Arc::new(al::Source::new()?);
+        source.parameter_f32(AL_GAIN, 1.);
 
         let thfsh = finish.clone();
-        let thsrc = source.clone();
-        let thread = std::thread::spawn(move || AudioStream::thread(thsrc, thfsh, src));
-
-        source.parameter_f32(AL_GAIN, 1.);
+        let mut thdata = StreamData::from_file(source.clone(), src)?;
+        for _ in 0..2 {
+            thdata.queue_next_buffer()?;
+        }
+        let thread = std::thread::spawn(move || AudioStream::thread(thfsh, thdata));
 
         Ok(AudioStream {
             path,
@@ -1298,7 +1295,6 @@ impl AudioSystem {
                             && let Audio::Static(voice) = voice
                             && voice.ingame
                         {
-                            dbg!("removed", &vid);
                             voices.remove(vid);
                         }
                     }
