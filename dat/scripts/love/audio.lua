@@ -5,7 +5,15 @@
 local love_audio = {}
 function love_audio.newSource( filename, type )
    -- We actually have most of the API implemented on a C level.
-   return naev.audio.new( filename, type )
+   local stream
+   if type==nil or type=="static" then
+      stream = false
+   elseif type=="stream" then
+      stream = true
+   else
+      error("source type must be either 'static' or 'stream'")
+   end
+   return naev.audio.new( filename, stream )
 end
 function love_audio.setVolume( _volume ) end -- Don't allow setting master volume
 function love_audio.getVolume()
