@@ -19,13 +19,13 @@ use crate::output_limiter::consts::*;
 use crate::source_spatialize::consts::*;
 use crate::source_spatialize::*;
 use anyhow::Context;
+use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicBool, Ordering};
 use symphonia::core::audio::{Channels, Signal};
-use symphonia::core::codecs::Decoder;
 use symphonia::core::conv::{FromSample, IntoSample};
-use symphonia::core::formats::FormatReader;
-use symphonia::core::io::MediaSourceStream;
-use symphonia::core::sample::Sample;
+use symphonia::core::{
+    codecs::Decoder, formats::FormatReader, io::MediaSourceStream, sample::Sample,
+};
 use thunderdome::Arena;
 use utils::{binary_search_by_key_ref, sort_by_key_ref};
 
@@ -241,37 +241,34 @@ impl ReplayGain {
 
 #[derive(PartialEq, Debug)]
 pub struct AudioBuffer {
-    name: String,
+    name: PathBuf,
     buffer: al::Buffer,
 }
 impl AudioBuffer {
-    fn get_valid_path(path: &str) -> Option<String> {
-        let ext = std::path::Path::new(path)
-            .extension()
-            .and_then(|s| s.to_str());
+    fn get_valid_path<P: AsRef<Path>>(path: P) -> Option<PathBuf> {
+        let path = path.as_ref();
+        let ext = path.extension().and_then(|s| s.to_str());
         match ext {
-            Some(_) => Some(path.to_string()),
+            Some(_) => Some(path.to_path_buf()),
             None => {
-                let mut npath = None;
+                let mut path = path.to_path_buf();
                 for ext in &["opus", "ogg", "flac", "wav"] {
-                    let tpath = format!("{}.{}", path, ext);
-                    if ndata::exists(&tpath) {
-                        npath = Some(tpath);
-                        break;
+                    path.set_extension(ext);
+                    if ndata::exists(&path) {
+                        return Some(path);
                     }
                 }
-                npath
+                None
             }
         }
     }
 
-    fn from_path(path: &str) -> Result<Self> {
+    fn from_path<P: AsRef<Path>>(path: P) -> Result<Self> {
+        let path = path.as_ref();
         // If no extension try to autodetect.
-        let ext = std::path::Path::new(path)
-            .extension()
-            .and_then(|s| s.to_str());
+        let ext = path.extension().and_then(|s| s.to_str());
         let path = Self::get_valid_path(path)
-            .context(format!("No audio file matching '{}' found", path))?;
+            .context(format!("No audio file matching '{}' found", path.display()))?;
         let src = ndata::open(&path)?;
 
         // Load it up
@@ -337,7 +334,11 @@ impl AudioBuffer {
 
         let buffer = al::Buffer::new()?;
         buffer.data_f32(&data, stereo, sample_rate as ALsizei);
-        debug::object_label(debug::consts::AL_BUFFER_EXT, buffer.raw(), &path);
+        debug::object_label(
+            debug::consts::AL_BUFFER_EXT,
+            buffer.raw(),
+            &format!("{}", path.display()),
+        );
         Ok(Self { name: path, buffer })
     }
 
@@ -380,9 +381,11 @@ impl AudioBuffer {
         None
     }
 
-    pub fn get_or_try_load(name: &str) -> Result<Arc<Self>> {
-        let name = AudioBuffer::get_valid_path(name)
-            .context(format!("No audio file matching '{}' found", name))?;
+    pub fn get_or_try_load<P: AsRef<Path>>(name: P) -> Result<Arc<Self>> {
+        let name = AudioBuffer::get_valid_path(&name).context(format!(
+            "No audio file matching '{}' found",
+            name.as_ref().display()
+        ))?;
 
         let mut buffers = AUDIO_BUFFER.lock().unwrap();
         for buf in buffers.iter() {
@@ -457,7 +460,11 @@ impl AudioStatic {
     fn new_buffer(buffer: &Arc<AudioBuffer>) -> Result<Self> {
         let source = al::Source::new()?;
         source.parameter_i32(AL_BUFFER, buffer.raw() as ALint);
-        debug::object_label(debug::consts::AL_SOURCE_EXT, source.raw(), &buffer.name);
+        debug::object_label(
+            debug::consts::AL_SOURCE_EXT,
+            source.raw(),
+            &format!("{}", &buffer.name.display()),
+        );
         Ok(AudioStatic {
             source,
             slot: None,
@@ -597,7 +604,7 @@ impl StreamData {
 #[derive(Debug)]
 #[allow(dead_code)]
 pub struct AudioStream {
-    path: String,
+    path: PathBuf,
     source: Arc<al::Source>,
     finish: Arc<AtomicBool>,
     volume: f32,
@@ -639,9 +646,11 @@ impl AudioStream {
         }
     }
 
-    pub fn from_path(path: &str) -> Result<Self> {
-        let path = AudioBuffer::get_valid_path(path)
-            .context(format!("No audio file matching '{}' found", path))?;
+    pub fn from_path<P: AsRef<Path>>(path: P) -> Result<Self> {
+        let path = AudioBuffer::get_valid_path(&path).context(format!(
+            "No audio file matching '{}' found",
+            path.as_ref().display()
+        ))?;
         let src = ndata::open(&path)?;
 
         let finish = Arc::new(AtomicBool::new(false));
@@ -654,7 +663,7 @@ impl AudioStream {
         source.parameter_f32(AL_GAIN, 1.);
 
         Ok(AudioStream {
-            path: path.to_string(),
+            path,
             source,
             finish,
             volume: 1.,
@@ -1363,14 +1372,14 @@ impl UserData for AudioRef {
          */
         methods.add_meta_method(MetaMethod::ToString, |_, this: &Self, ()| {
             Ok(this.call(|this| match this {
-                Audio::Static(this) | Audio::LuaStatic(this) => format!(
-                    "AudioStatic( {} )",
-                    match &this.data {
+                Audio::Static(this) | Audio::LuaStatic(this) => {
+                    let path = match &this.data {
                         Some(AudioData::Buffer(buffer)) => &buffer.name,
-                        None => "NONE",
-                    }
-                ),
-                Audio::LuaStream(this) => format!("AudioStream( {} )", this.path),
+                        None => &PathBuf::new(),
+                    };
+                    format!("AudioStatic( {} )", path.display(),)
+                }
+                Audio::LuaStream(this) => format!("AudioStream( {} )", this.path.display()),
             })?)
         });
         /*
