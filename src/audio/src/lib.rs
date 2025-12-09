@@ -2084,7 +2084,7 @@ pub extern "C" fn sound_get(name: *const c_char) -> *const Arc<AudioBuffer> {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn sound_getLength(sound: *const AudioBuffer) -> c_double {
+pub extern "C" fn sound_getLength(sound: *const Arc<AudioBuffer>) -> c_double {
     if sound.is_null() {
         warn!("recieved NULL");
         return 0.0;
