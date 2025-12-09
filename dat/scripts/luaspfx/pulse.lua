@@ -1,6 +1,5 @@
 local lg = require 'love.graphics'
 local lf = require 'love.filesystem'
---local audio = require 'love.audio'
 local love_shaders = require 'love_shaders'
 
 local pulse_shader

@@ -7,7 +7,7 @@ local luaspfx = require "luaspfx"
 local fmt = require "format"
 
 local pixelcode = lf.read( "spob/lua/shaders/wormhole.frag" )
-local jumpsfx = audio.newSource( 'snd/sounds/wormhole.ogg' )
+local jumpsfx = audio.newSoundData( 'snd/sounds/wormhole.ogg' )
 
 -- Default parameters that can be overwritten
 local SIZE = 256
@@ -91,9 +91,9 @@ function wormhole.load ()
       -- Only play sound if player exists (avoid on menu, etc...)
       if not player.pilot():exists() then
          mem.sfx = audio.newSource( 'snd/sounds/loops/wormhole.ogg' )
-         mem.sfx:setRelative(false)
          local px, py = mem.pos:get()
          mem.sfx:setPosition( px, py, 0 )
+         mem.sfx:setRelative(false)
          mem.sfx:setAttenuationDistances( 500, 25e3 )
          mem.sfx:setLooping(true)
          mem.sfx:play()

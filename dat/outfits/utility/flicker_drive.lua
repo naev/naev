@@ -11,7 +11,7 @@ local cooldown = 3
 local energy = 40
 local ewbonus = -25
 
-local sfx = audio.newSource( 'snd/sounds/blink.ogg' )
+local sfx = audio.newSoundData( 'snd/sounds/blink.ogg' )
 
 function descextra( _p, _o )
    return fmt.f(_([[Blinks you {jumpdist} {unit_dist} forward. Double-tapping left or right lets you blink to the sides. Can only be run once every {cooldown} seconds. Performance degrades over {masslimit} of mass. Blinking costs {energy} {unit_energy} energy.

@@ -6,7 +6,7 @@ local penetration = 0.5
 local radius = 200
 local cooldown = 20
 
-local sfx = audio.newSource( 'snd/sounds/plasma_burst.ogg' )
+local sfx = audio.newSoundData( 'snd/sounds/plasma_burst.ogg' )
 
 local function activate( p, po )
    -- Still on cooldown

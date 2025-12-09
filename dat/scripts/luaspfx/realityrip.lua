@@ -1,5 +1,4 @@
 local lf = require 'love.filesystem'
---local audio = require 'love.audio'
 local pp_shaders = require "pp_shaders"
 
 local rip_bg_shader_frag

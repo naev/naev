@@ -40,10 +40,10 @@ local vn = {
    },
    transitions = transitions,
    _sfx = {
-      bingo = audio.newSource( 'snd/sounds/jingles/success.ogg' ),
-      eerie = audio.newSource( 'snd/sounds/jingles/eerie.ogg' ),
-      money = audio.newSource( 'snd/sounds/jingles/money.ogg' ),
-      victory = audio.newSource( 'snd/sounds/jingles/victory.ogg' ),
+      bingo = audio.newSoundData( 'snd/sounds/jingles/success.ogg' ),
+      eerie = audio.newSoundData( 'snd/sounds/jingles/eerie.ogg' ),
+      money = audio.newSoundData( 'snd/sounds/jingles/money.ogg' ),
+      victory = audio.newSoundData( 'snd/sounds/jingles/victory.ogg' ),
       ui = {
          option = audio.newSource( 'snd/sounds/ui/happy.ogg' ),
       },

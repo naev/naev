@@ -1,6 +1,6 @@
 local lg = require 'love.graphics'
 local lf = require 'love.filesystem'
---local audio = require 'love.audio'
+local audio = require 'love.audio'
 local love_shaders = require 'love_shaders'
 
 local emp_shader, emp_sfx
@@ -52,7 +52,7 @@ local function emp( pos, vel, radius, _disable, params )
       local emp_shader_frag = lf.read( "shaders/emp.frag" )
       emp_shader = lg.newShader( emp_shader_frag )
       emp_sfx = {
-         audio.new( "snd/sounds/empexplode.ogg" ),
+         audio.newSoundData( "snd/sounds/empexplode.ogg" ),
       }
    end
 

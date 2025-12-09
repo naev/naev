@@ -1,6 +1,6 @@
 local lg = require 'love.graphics'
 local lf = require 'love.filesystem'
---local audio = require 'love.audio'
+local audio = require 'love.audio'
 local love_shaders = require 'love_shaders'
 
 local explosion_shader, explosion_sfx
@@ -85,9 +85,9 @@ local function explosion( pos, vel, radius, damage, params )
       local explosion_shader_frag = lf.read( "shaders/explosion.frag" )
       explosion_shader = lg.newShader( explosion_shader_frag )
       explosion_sfx = {
-         audio.new( "snd/sounds/explosion0.ogg" ),
-         audio.new( "snd/sounds/explosion1.ogg" ),
-         audio.new( "snd/sounds/explosion2.ogg" ),
+         audio.newSoundData( "snd/sounds/explosion0.ogg" ),
+         audio.newSoundData( "snd/sounds/explosion1.ogg" ),
+         audio.newSoundData( "snd/sounds/explosion2.ogg" ),
       }
    end
 

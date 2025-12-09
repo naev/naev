@@ -3,7 +3,7 @@ local luaspfx = require 'luaspfx'
 
 local cooldown = 15 -- cooldown time in seconds
 
-local sfx = audio.newSource( 'snd/sounds/ping.ogg' )
+local sfx = audio.newSoundData( 'snd/sounds/ping.ogg' )
 
 function init( p, po )
    mem.timer = nil

@@ -12,8 +12,8 @@ local warmup = 2
 local penalty = -50
 local energy = 400
 
-local sfx = audio.newSource( 'snd/sounds/blink.ogg' )
-local sfx_warmup = audio.newSource( 'snd/sounds/activate1.ogg' )
+local sfx = audio.newSoundData( 'snd/sounds/blink.ogg' )
+local sfx_warmup = audio.newSoundData( 'snd/sounds/activate1.ogg' )
 
 function descextra( _p, _o )
    return fmt.f(_([[Warms up for {warmup} seconds, then blinks you {jumpdist} {unit_dist} roughly in the direction you are facing. Can only be run once every {cooldown} seconds and incurs a {penalty}% accel and turn penalty during cooldown. Performance degrades over {masslimit} of mass. Blinking costs {energy} {unit_energy} energy.]]), {

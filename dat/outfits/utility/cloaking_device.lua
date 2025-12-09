@@ -20,7 +20,7 @@ vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
 ]])
 oshader.fade = 1
 
-local sfx = audio.newSource( 'snd/sounds/activate5.ogg' )
+local sfx = audio.newSoundData( 'snd/sounds/activate5.ogg' )
 
 local function turnon( p, po )
    -- Still on cooldown

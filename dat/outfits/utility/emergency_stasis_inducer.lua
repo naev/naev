@@ -20,7 +20,7 @@ vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
 }
 ]])
 
-local sfx = audio.newSource( 'snd/sounds/activate4.ogg' )
+local sfx = audio.newSoundData( 'snd/sounds/activate4.ogg' )
 
 -- Init function run on creation
 function init( p, po )

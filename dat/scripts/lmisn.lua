@@ -14,10 +14,10 @@ local _sfx
 local function _sfx_load ()
    audio = require 'love.audio'
    _sfx = {
-      bingo = audio.newSource( 'snd/sounds/jingles/success.ogg' ),
-      money = audio.newSource( 'snd/sounds/jingles/money.ogg' ),
-      victory = audio.newSource( 'snd/sounds/jingles/victory.ogg' ),
-      eerie = audio.newSource( 'snd/sounds/jingles/eerie.ogg' ),
+      bingo = audio.newSoundData( 'snd/sounds/jingles/success.ogg' ),
+      money = audio.newSoundData( 'snd/sounds/jingles/money.ogg' ),
+      victory = audio.newSoundData( 'snd/sounds/jingles/victory.ogg' ),
+      eerie = audio.newSoundData( 'snd/sounds/jingles/eerie.ogg' ),
    }
 end
 
@@ -27,8 +27,7 @@ end
 function lmisn.sfxVictory ()
    if not _sfx then _sfx_load() end
 
-   local sfx = _sfx.victory:clone()
-   luaspfx.sfx( false, nil, sfx )
+   luaspfx.sfx( false, nil, _sfx.victory )
 end
 
 --[[--
@@ -37,8 +36,7 @@ end
 function lmisn.sfxMoney ()
    if not _sfx then _sfx_load() end
 
-   local sfx = _sfx.money:clone()
-   luaspfx.sfx( false, nil, sfx )
+   luaspfx.sfx( false, nil, _sfx.money )
 end
 
 --[[--
@@ -47,8 +45,7 @@ end
 function lmisn.sfxBingo()
    if not _sfx then _sfx_load() end
 
-   local sfx = _sfx.bingo:clone()
-   luaspfx.sfx( false, nil, sfx )
+   luaspfx.sfx( false, nil, _sfx.bingo )
 end
 
 --[[--
@@ -57,8 +54,7 @@ end
 function lmisn.sfxEerie ()
    if not _sfx then _sfx_load() end
 
-   local sfx = _sfx.eerie:clone()
-   luaspfx.sfx( false, nil, sfx )
+   luaspfx.sfx( false, nil, _sfx.eerie )
 end
 
 --[[--

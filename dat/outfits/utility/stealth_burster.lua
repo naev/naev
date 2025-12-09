@@ -5,7 +5,7 @@ local fmt = require "format"
 local active = 10 -- active time in seconds
 local cooldown = 20 -- cooldown time in seconds
 
-local sfx = audio.newSource( 'snd/sounds/activate4.ogg' )
+local sfx = audio.newSoundData( 'snd/sounds/activate4.ogg' )
 
 function descextra( _p, _o )
    return fmt.f(_("{duration} second duration with {cooldown} second cooldown. Will not activate if the ship is unable to stealth with the bonus."), {

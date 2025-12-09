@@ -7,7 +7,7 @@ local helper = require "outfits.lib.helper"
 local active = 10 -- active time in seconds
 local cooldown = 15 -- cooldown time in seconds
 
---local sfx = audio.newSource( 'snd/sounds/ping.ogg' )
+--local sfx = audio.newSoundData( 'snd/sounds/ping.ogg' )
 
 local recyclables = {
    -- Rare

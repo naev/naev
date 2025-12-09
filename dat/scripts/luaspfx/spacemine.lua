@@ -1,6 +1,6 @@
 local lg = require 'love.graphics'
 local lf = require 'love.filesystem'
---local audio = require 'love.audio'
+local audio = require 'love.audio'
 local love_shaders = require 'love_shaders'
 local explosion = require 'luaspfx.explosion'
 local luasfx = require "luaspfx.sfx"
@@ -144,7 +144,7 @@ local function spacemine( pos, vel, fct, params )
       local highlight_shader_frag = lf.read( "scripts/luaspfx/shaders/spacemine_highlight.frag" )
       spacemine_shader = lg.newShader( spacemine_shader_frag )
       highlight_shader = lg.newShader( highlight_shader_frag )
-      spacemine_sfx = audio.new( "snd/sounds/detonation_alarm.ogg" )
+      spacemine_sfx = audio.newSoundData( "snd/sounds/detonation_alarm.ogg" )
    end
 
    -- Other params

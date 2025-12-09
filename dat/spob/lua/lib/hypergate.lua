@@ -12,7 +12,7 @@ local prng = require "prng"
 local luaspfx = require "luaspfx"
 
 local pixelcode = lf.read( "spob/lua/shaders/hypergate.frag" )
-local jumpsfx = audio.newSource( 'snd/sounds/hypergate.ogg' )
+local jumpsfx = audio.newSoundData( 'snd/sounds/hypergate.ogg' )
 
 local hypergate = {}
 
