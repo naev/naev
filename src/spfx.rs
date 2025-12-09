@@ -2,7 +2,7 @@
 use crate::nlua;
 use crate::nlua::LuaEnv;
 use log::warn_err;
-use mlua::{Either, Function, UserData, UserDataMethods};
+use mlua::{Either, Function, UserData, UserDataMethods, UserDataRef};
 use physics::vec2::Vec2;
 use renderer::camera;
 use renderer::colour::Colour;
@@ -224,7 +224,7 @@ impl UserData for LuaSpfxRef {
                 Option<Function>,
                 Option<Either<Vec2, bool>>,
                 Option<Vec2>,
-                Option<audio::AudioRef>,
+                Option<Either<audio::AudioRef, UserDataRef<audio::AudioData>>>,
                 Option<f64>,
                 Option<Function>,
             )|
@@ -246,6 +246,23 @@ impl UserData for LuaSpfxRef {
                     }
                 };
                 let data = lua.create_table()?;
+                let sfx = match sfx {
+                    None => None,
+                    Some(Either::Left(audio)) => Some(audio),
+                    Some(Either::Right(data)) => Some(
+                        audio::AudioBuilder::new(audio::AudioType::Static)
+                            .data(Some(data.clone()))
+                            .build()?,
+                    ),
+                };
+                if let Some(ref sfx) = sfx {
+                    sfx.call_mut(|audio| {
+                        if pos.is_some() {
+                            audio.set_ingame();
+                        }
+                        audio.play();
+                    })?;
+                }
                 let spfx = LuaSpfx {
                     global,
                     ttl,
