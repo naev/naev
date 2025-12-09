@@ -60,7 +60,7 @@ impl Directories {
 }
 
 /// The local project directories that get cached on init
-static PROJECT_DIRS: LazyLock<Directories> = LazyLock::new(|| Directories::new());
+static PROJECT_DIRS: LazyLock<Directories> = LazyLock::new(Directories::new);
 
 /// Gets the configuration directory
 pub fn pref_dir() -> &'static Path {
@@ -158,7 +158,7 @@ pub fn setup() -> anyhow::Result<()> {
     for s in [
         &pkgdatadir,
         naevc::config::PKGDATADIR,
-        &physfs::get_base_dir().to_string_lossy().to_string(),
+        physfs::get_base_dir().to_string_lossy().as_ref(),
     ] {
         if found() {
             break;
