@@ -2303,8 +2303,11 @@ pub extern "C" fn sound_updateListener(
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn sound_update(_dt: c_double) -> i32 {
+pub extern "C" fn sound_update(dt: c_double) -> i32 {
     AUDIO.execute_messages();
+    unsafe {
+        naevc::music_update(dt);
+    }
     0
 }
 
