@@ -20,7 +20,7 @@ use crate::source_spatialize::consts::*;
 use crate::source_spatialize::*;
 use anyhow::Context;
 use std::path::{Path, PathBuf};
-use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::atomic::{AtomicBool, AtomicPtr, Ordering};
 use symphonia::core::audio::{Channels, Signal};
 use symphonia::core::conv::{FromSample, IntoSample};
 use symphonia::core::{
@@ -382,6 +382,12 @@ impl AudioBuffer {
     }
 
     pub fn get_or_try_load<P: AsRef<Path>>(name: P) -> Result<Arc<Self>> {
+        if AUDIO.disabled {
+            return Ok(Arc::new(AudioBuffer {
+                name: PathBuf::new(),
+                buffer: al::Buffer(0),
+            }));
+        }
         let name = AudioBuffer::get_valid_path(&name).context(format!(
             "No audio file matching '{}' found",
             name.as_ref().display()
@@ -1032,7 +1038,7 @@ impl AudioBuilder {
     }
 
     pub fn build(self) -> Result<AudioRef> {
-        if false {
+        if AUDIO.disabled {
             return Ok(Arc::new(thunderdome::Index::DANGLING).into());
         }
 
@@ -1116,6 +1122,7 @@ fn event_callback(event_type: ALenum, object: ALuint, param: ALuint, _message: &
 
 #[allow(dead_code)]
 pub struct AudioSystem {
+    disabled: bool,
     device: al::Device,
     context: al::Context,
     freq: i32,
@@ -1125,6 +1132,19 @@ pub struct AudioSystem {
 }
 impl AudioSystem {
     pub fn new() -> Result<Self> {
+        let nosound = unsafe { naevc::conf.nosound != 0 };
+        if nosound {
+            return Ok(Self {
+                disabled: true,
+                device: al::Device(AtomicPtr::new(core::ptr::null_mut())),
+                context: al::Context(AtomicPtr::new(core::ptr::null_mut())),
+                freq: 0,
+                volume: Default::default(),
+                voices: Default::default(),
+                groups: Default::default(),
+            });
+        }
+
         let device = al::Device::new(None)?;
 
         let mut attribs: Vec<ALint> = vec![ALC_MONO_SOURCES, 512, ALC_STEREO_SOURCES, 32];
@@ -1239,6 +1259,7 @@ impl AudioSystem {
         debug!("");
 
         Ok(AudioSystem {
+            disabled: false,
             device,
             context,
             volume: RwLock::new(AudioVolume::new()),
@@ -1322,6 +1343,9 @@ pub fn init() -> Result<()> {
 pub struct AudioRef(Arc<thunderdome::Index>);
 impl AudioRef {
     fn try_clone(&self) -> Result<Self> {
+        if AUDIO.disabled {
+            return Ok(self.clone());
+        }
         let mut voices = AUDIO.voices.lock().unwrap();
         let audio = match voices.get(*self.0) {
             Some(audio) => audio.try_clone()?,
@@ -1330,10 +1354,14 @@ impl AudioRef {
         Ok(Arc::new(voices.insert(audio)).into())
     }
 
-    pub fn call<S, R>(&self, f: S) -> anyhow::Result<R>
+    /// Like call, but allows specifying a default value.
+    pub fn call_or<S, R>(&self, f: S, d: R) -> anyhow::Result<R>
     where
         S: Fn(&Audio) -> R,
     {
+        if AUDIO.disabled {
+            return Ok(d);
+        }
         let audio = AUDIO.voices.lock().unwrap();
         match audio.get(*self.0) {
             Some(audio) => Ok(f(audio)),
@@ -1341,10 +1369,31 @@ impl AudioRef {
         }
     }
 
+    /// Tries to call a function on a voice, returning default value if not available.
+    pub fn call<S, R>(&self, f: S) -> anyhow::Result<R>
+    where
+        S: Fn(&Audio) -> R,
+        R: std::default::Default,
+    {
+        if AUDIO.disabled {
+            return Ok(Default::default());
+        }
+        let audio = AUDIO.voices.lock().unwrap();
+        match audio.get(*self.0) {
+            Some(audio) => Ok(f(audio)),
+            None => anyhow::bail!("Audio not found"),
+        }
+    }
+
+    /// Same as call but allows mutable access.
     pub fn call_mut<S, R>(&self, f: S) -> anyhow::Result<R>
     where
         S: Fn(&mut Audio) -> R,
+        R: std::default::Default,
     {
+        if AUDIO.disabled {
+            return Ok(Default::default());
+        }
         let mut audio = AUDIO.voices.lock().unwrap();
         match audio.get_mut(*self.0) {
             Some(audio) => Ok(f(audio)),
@@ -1830,33 +1879,37 @@ impl UserData for AudioRef {
         methods.add_method(
             "setEffect",
             |_, this, (name, enable): (String, bool)| -> mlua::Result<bool> {
-                this.call(|this| {
-                    let slot = if enable {
-                        let lock = EFX_LIST.lock().unwrap();
-                        let efxid =
-                            match binary_search_by_key_ref(&lock, &name, |e: &LuaAudioEfx| &e.name)
-                            {
-                                Ok(efx) => efx,
-                                Err(_) => {
-                                    return Err(mlua::Error::RuntimeError(format!(
-                                        "effect '{name}' not found"
-                                    )));
-                                }
-                            };
-                        let efx = &lock[efxid];
-                        efx.slot.raw() as ALint
-                    } else {
-                        AL_EFFECTSLOT_NULL
-                    };
-                    this.source().parameter_3_i32(
-                        AL_AUXILIARY_SEND_FILTER,
-                        slot,
-                        0,
-                        AL_FILTER_NULL,
-                    );
+                this.call_or(
+                    |this| {
+                        let slot = if enable {
+                            let lock = EFX_LIST.lock().unwrap();
+                            let efxid =
+                                match binary_search_by_key_ref(&lock, &name, |e: &LuaAudioEfx| {
+                                    &e.name
+                                }) {
+                                    Ok(efx) => efx,
+                                    Err(_) => {
+                                        return Err(mlua::Error::RuntimeError(format!(
+                                            "effect '{name}' not found"
+                                        )));
+                                    }
+                                };
+                            let efx = &lock[efxid];
+                            efx.slot.raw() as ALint
+                        } else {
+                            AL_EFFECTSLOT_NULL
+                        };
+                        this.source().parameter_3_i32(
+                            AL_AUXILIARY_SEND_FILTER,
+                            slot,
+                            0,
+                            AL_FILTER_NULL,
+                        );
 
-                    Ok(true)
-                })?
+                        Ok(true)
+                    },
+                    Ok(true),
+                )?
             },
         );
         /*@
@@ -2115,6 +2168,9 @@ static_assertions::assert_eq_size!(AudioRef, *const c_void);
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_get(name: *const c_char) -> *const Arc<AudioBuffer> {
+    if AUDIO.disabled {
+        return std::ptr::null();
+    }
     if name.is_null() {
         warn!("recieved NULL");
         return std::ptr::null();
@@ -2134,6 +2190,9 @@ pub extern "C" fn sound_get(name: *const c_char) -> *const Arc<AudioBuffer> {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_getLength(sound: *const Arc<AudioBuffer>) -> c_double {
+    if AUDIO.disabled {
+        return 0.0;
+    }
     if sound.is_null() {
         warn!("recieved NULL");
         return 0.0;
@@ -2144,6 +2203,9 @@ pub extern "C" fn sound_getLength(sound: *const Arc<AudioBuffer>) -> c_double {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_play(sound: *const Arc<AudioBuffer>) -> *const c_void {
+    if AUDIO.disabled {
+        return std::ptr::null();
+    }
     if sound.is_null() {
         warn!("recieved NULL");
         return std::ptr::null();
@@ -2166,6 +2228,9 @@ pub extern "C" fn sound_playPos(
     vx: c_double,
     vy: c_double,
 ) -> *const c_void {
+    if AUDIO.disabled {
+        return std::ptr::null();
+    }
     if sound.is_null() {
         return std::ptr::null();
     }

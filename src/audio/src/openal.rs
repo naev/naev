@@ -334,7 +334,7 @@ pub fn set_listener_velocity(velocity: Vector3<f32>) {
     }
 }
 
-pub struct Device(AtomicPtr<ALCdevice>);
+pub struct Device(pub(crate) AtomicPtr<ALCdevice>);
 impl Device {
     pub fn new(devicename: Option<&str>) -> Result<Self> {
         let devicename = devicename.map(|s| CString::new(s).unwrap());
@@ -386,7 +386,7 @@ impl Drop for Device {
     }
 }
 
-pub struct Context(AtomicPtr<ALCcontext>);
+pub struct Context(pub(crate) AtomicPtr<ALCcontext>);
 impl Context {
     pub fn new(device: &Device, attribs: &[ALCenum]) -> Result<Self> {
         let context = unsafe { alcCreateContext(device.raw(), attribs.as_ptr()) };
@@ -499,7 +499,7 @@ impl Drop for Source {
 }
 
 #[derive(PartialEq, Debug)]
-pub struct Buffer(ALuint);
+pub struct Buffer(pub(crate) ALuint);
 impl Buffer {
     pub fn new() -> Result<Self> {
         let mut src = 0;

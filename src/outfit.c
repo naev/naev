@@ -2283,7 +2283,7 @@ static void outfit_parseSBolt( Outfit *temp, const xmlNodePtr parent )
    MELEMENT( temp->u.blt.gfx.size < 0., "gfx" );
    MELEMENT( temp->u.blt.spfx_shield == -1, "spfx_shield" );
    MELEMENT( temp->u.blt.spfx_armour == -1, "spfx_armour" );
-   MELEMENT( temp->u.blt.sound == NULL, "sound" );
+   MELEMENT( !conf.nosound && temp->u.blt.sound == NULL, "sound" );
    MELEMENT( temp->mass == 0., "mass" );
    MELEMENT( temp->u.blt.delay == 0, "delay" );
    MELEMENT( temp->u.blt.speed == 0, "speed" );
@@ -2449,8 +2449,8 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
    MELEMENT( ( temp->u.bem.warmup > 0. ) &&
                 ( temp->u.bem.sound_warmup == NULL ),
              "sound_warmup" );
-   MELEMENT( temp->u.bem.sound == NULL, "sound" );
-   MELEMENT( temp->u.bem.sound_off == NULL, "sound_off" );
+   MELEMENT( !conf.nosound && temp->u.bem.sound == NULL, "sound" );
+   MELEMENT( !conf.nosound && temp->u.bem.sound_off == NULL, "sound_off" );
    MELEMENT( temp->u.bem.delay == 0, "delay" );
    MELEMENT( temp->u.bem.duration == 0, "duration" );
    MELEMENT( temp->u.bem.min_delay < 0, "delay" );
@@ -2750,7 +2750,7 @@ static void outfit_parseSLauncher( Outfit *temp, const xmlNodePtr parent )
    MELEMENT( !outfit_isProp( temp, OUTFIT_PROP_SHOOT_DRY ) &&
                 temp->u.lau.spfx_armour == -1,
              "spfx_armour" );
-   MELEMENT( temp->u.lau.sound == NULL, "sound" );
+   MELEMENT( !conf.nosound && temp->u.lau.sound == NULL, "sound" );
    /* MELEMENT(temp->u.lau.accel==0,"accel"); */
    /* Unguided missiles don't need everything */
    if ( outfit_isSeeker( temp ) ) {
@@ -2895,7 +2895,7 @@ static void outfit_parseSAfterburner( Outfit *temp, const xmlNodePtr parent )
    MELEMENT( temp->u.afb.energy == 0., "energy" );
    // MELEMENT(temp->cpu==0.,"cpu");
    MELEMENT( temp->u.afb.mass_limit == 0., "mass_limit" );
-   MELEMENT( temp->u.afb.sound == NULL, "sound" );
+   MELEMENT( !conf.nosound && temp->u.afb.sound == NULL, "sound" );
    // MELEMENT( temp->u.afb.sound_on == NULL, "sound_on" );
    // MELEMENT( temp->u.afb.sound_off == NULL, "sound_off" );
 #undef MELEMENT
