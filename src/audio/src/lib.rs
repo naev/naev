@@ -643,7 +643,7 @@ impl AudioStream {
             }
 
             // We're just polling now, TODO something based on channels
-            std::thread::sleep(std::time::Duration::from_millis(10));
+            std::thread::sleep(std::time::Duration::from_millis(50));
         }
     }
 
@@ -1375,14 +1375,7 @@ impl AudioRef {
         S: Fn(&Audio) -> R,
         R: std::default::Default,
     {
-        if AUDIO.disabled {
-            return Ok(Default::default());
-        }
-        let audio = AUDIO.voices.lock().unwrap();
-        match audio.get(self.0) {
-            Some(audio) => Ok(f(audio)),
-            None => anyhow::bail!("Audio not found"),
-        }
+        self.call_or(f, Default::default())
     }
 
     /// Same as call but allows mutable access.
@@ -1482,9 +1475,9 @@ impl UserData for AudioRef {
                     .build()?),
                     Either::Right(val) => {
                         if streaming {
-                            return Err(mlua::Error::RuntimeError(format!(
-                                "streaming not supported for AudioData"
-                            )));
+                            return Err(mlua::Error::RuntimeError(
+                                "streaming not supported for AudioData".to_string(),
+                            ));
                         }
                         Ok(AudioBuilder::new(AudioType::LuaStatic)
                             .data(Some(val.clone()))
