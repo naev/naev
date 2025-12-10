@@ -729,7 +729,15 @@ impl Audio {
                 }
                 this.ingame = true;
             }
-            _ => (),
+            Self::LuaStream(_) => (),
+        }
+    }
+
+    pub fn ingame(&self) -> bool {
+        check_audio!(self);
+        match self {
+            Self::Static(this) | Self::LuaStatic(this) => this.ingame,
+            Self::LuaStream(_) => false,
         }
     }
 
