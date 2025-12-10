@@ -1,7 +1,6 @@
 use anyhow::Result;
 use fs_err as fs;
 use log::debug;
-use sdl3 as sdl;
 use std::ffi::{CStr, CString, c_char};
 use std::path::PathBuf;
 
@@ -9,7 +8,7 @@ use std::path::PathBuf;
 /// TODO remove in 0.15.0 (or maybe 0.14.0?)
 pub fn migrate_pref() -> Result<()> {
     // For historical reasons predating physfs adoption, this case is different.
-    let old = physfs::get_pref_path(
+    let old = crate::physfs::get_pref_dir(
         ".",
         if cfg!(target_os = "macos") {
             "org.naev.Naev"
