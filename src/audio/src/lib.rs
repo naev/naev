@@ -1039,7 +1039,7 @@ impl AudioBuilder {
 
     pub fn build(self) -> Result<AudioRef> {
         if AUDIO.disabled {
-            return Ok(Arc::new(thunderdome::Index::DANGLING).into());
+            return Ok(thunderdome::Index::DANGLING.into());
         }
 
         let looping = self.looping;
@@ -1063,7 +1063,7 @@ impl AudioBuilder {
         if play {
             audio.play();
         }
-        Ok(Arc::new(AUDIO.voices.lock().unwrap().insert(audio)).into())
+        Ok(AUDIO.voices.lock().unwrap().insert(audio).into())
     }
 }
 
@@ -1309,7 +1309,7 @@ impl AudioSystem {
                         // Remove from group too if it has one
                         if let Some(gid) = v.groupid() {
                             let group = &mut groups[gid];
-                            if let Some(gvid) = group.voices.iter().position(|x| *x.0 == vid) {
+                            if let Some(gvid) = group.voices.iter().position(|x| x.0 == vid) {
                                 group.voices.remove(gvid);
                             }
                         }
@@ -1340,18 +1340,18 @@ pub fn init() -> Result<()> {
 }
 
 #[derive(Debug, Clone, PartialEq, derive_more::From, mlua::FromLua)]
-pub struct AudioRef(Arc<thunderdome::Index>);
+pub struct AudioRef(thunderdome::Index);
 impl AudioRef {
     fn try_clone(&self) -> Result<Self> {
         if AUDIO.disabled {
             return Ok(self.clone());
         }
         let mut voices = AUDIO.voices.lock().unwrap();
-        let audio = match voices.get(*self.0) {
+        let audio = match voices.get(self.0) {
             Some(audio) => audio.try_clone()?,
             None => anyhow::bail!("Audio not found"),
         };
-        Ok(Arc::new(voices.insert(audio)).into())
+        Ok(voices.insert(audio).into())
     }
 
     /// Like call, but allows specifying a default value.
@@ -1363,7 +1363,7 @@ impl AudioRef {
             return Ok(d);
         }
         let audio = AUDIO.voices.lock().unwrap();
-        match audio.get(*self.0) {
+        match audio.get(self.0) {
             Some(audio) => Ok(f(audio)),
             None => anyhow::bail!("Audio not found"),
         }
@@ -1379,7 +1379,7 @@ impl AudioRef {
             return Ok(Default::default());
         }
         let audio = AUDIO.voices.lock().unwrap();
-        match audio.get(*self.0) {
+        match audio.get(self.0) {
             Some(audio) => Ok(f(audio)),
             None => anyhow::bail!("Audio not found"),
         }
@@ -1395,7 +1395,7 @@ impl AudioRef {
             return Ok(Default::default());
         }
         let mut audio = AUDIO.voices.lock().unwrap();
-        match audio.get_mut(*self.0) {
+        match audio.get_mut(self.0) {
             Some(audio) => Ok(f(audio)),
             None => anyhow::bail!("Audio not found"),
         }
@@ -2241,6 +2241,7 @@ pub extern "C" fn sound_playPos(
         Arc::increment_strong_count(sound);
         Arc::from_raw(sound)
     };
+
     let voice = match AudioBuilder::new(AudioType::Static)
         .buffer(sound.clone())
         .position(Some(Vector2::new(px as f32, py as f32)))
@@ -2462,7 +2463,7 @@ pub extern "C" fn sound_stopGroup(group: *const c_void) {
     let group = &mut groups[groupid];
     let voices = AUDIO.voices.lock().unwrap();
     for v in group.voices.drain(..) {
-        if let Some(voice) = voices.get(*v.0) {
+        if let Some(voice) = voices.get(v.0) {
             voice.stop();
         }
     }
@@ -2475,7 +2476,7 @@ pub extern "C" fn sound_pauseGroup(group: *const c_void) {
     let group = &groups[groupid];
     let voices = AUDIO.voices.lock().unwrap();
     for v in group.voices.iter() {
-        if let Some(voice) = voices.get(*v.0) {
+        if let Some(voice) = voices.get(v.0) {
             voice.pause();
         }
     }
@@ -2488,7 +2489,7 @@ pub extern "C" fn sound_resumeGroup(group: *const c_void) {
     let group = &groups[groupid];
     let voices = AUDIO.voices.lock().unwrap();
     for v in group.voices.iter() {
-        if let Some(voice) = voices.get(*v.0) {
+        if let Some(voice) = voices.get(v.0) {
             voice.play();
         }
     }
