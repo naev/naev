@@ -180,15 +180,15 @@ function escort.reset_ai ()
    -- Clear speed limits and such
    for k,p in ipairs(mem._escort.convoy) do
       if p:exists() then
-         p:setSpeedLimit(0)
-         p:control(false)
-         p:setNoJump(false)
-         p:setNoLand(false)
-         local pt = p:taskname()
-         if pt~="hyperspace" and pt~="land" then
+         local pm = p:memory()
+         if (not pm._escort_jump) and (not pm._escort_land) then
+            p:setSpeedLimit(0)
+            p:control(false)
+            p:setNoJump(false)
+            p:setNoLand(false)
             p:taskClear()
+            p:memory().ignoreorders = not followorders
          end
-         p:memory().ignoreorders = not followorders
       end
    end
 
@@ -235,8 +235,11 @@ function escort.update_leader ()
    local l
    for k,v in ipairs(mem._escort.convoy) do
       if v:exists() then
-         l = v
-         break
+         local pm = v:memory()
+         if (not pm._escort_jump) and (not pm._escort_land) then
+            l = v
+            break
+         end
       end
    end
    if not l then return end
@@ -245,8 +248,8 @@ function escort.update_leader ()
    l:setHilight(true)
    for k,v in ipairs(mem._escort.convoy) do
       if v~=l and v:exists() then
-         local pt = v:taskname()
-         if pt~="hyperspace" and pt~="land" then
+         local pm = v:memory()
+         if (not pm._escort_jump) and (not pm._escort_land) then
             v:taskClear()
          end
          v:setLeader(l)
