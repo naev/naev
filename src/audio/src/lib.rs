@@ -2289,6 +2289,9 @@ pub extern "C" fn sound_updateListener(
     vx: c_double,
     vy: c_double,
 ) {
+    if AUDIO.disabled {
+        return;
+    }
     let dir = dir as f32;
     let (c, s) = (dir.cos(), dir.sin());
     let ori = [c, s, 0.0, 0.0, 0.0, 1.0];
@@ -2337,6 +2340,9 @@ pub extern "C" fn sound_resume() {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_volume(volume: c_double) {
+    if AUDIO.disabled {
+        return;
+    }
     AUDIO.set_volume(volume as f32);
     let master = {
         let vol = AUDIO.volume.read().unwrap();
@@ -2365,9 +2371,12 @@ pub extern "C" fn sound_getVolumeLog() -> c_double {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_stopAll() {
+    if AUDIO.disabled {
+        return;
+    }
     let mut voices = AUDIO.voices.lock().unwrap();
     voices.retain(|_, v| match v {
-        Audio::Static(_this) => {
+        Audio::Static(_this) | Audio::LuaStatic(_this) => {
             v.stop();
             false
         }
