@@ -1,3 +1,9 @@
+## 0.13.0-beta.4
+
+   * Don't reset escort AI when they are already landing or jumping at the
+     right place
+
+
 ## 0.13.0-beta.3
 
    * Make sure reynir only appears when you have free cargo space (reynir.lua)
