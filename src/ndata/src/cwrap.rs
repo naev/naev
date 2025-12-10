@@ -18,9 +18,25 @@ pub fn migrate_pref() -> Result<()> {
     )?;
     if old.is_dir() {
         let new = crate::pref_dir().to_path_buf();
-        if new != old && !new.is_dir() {
-            fs::rename(old, new)?;
-            debug!("Migrated old preferences.");
+        if new != old {
+            // SDL_GetPrefPath seems to create the directory eagerly on some
+            // platforms (notably macOS), so merge contents instead of
+            // bailing when the target already exists.
+            let mut moved_any = false;
+            for entry in fs::read_dir(&old)? {
+                let entry = entry?;
+                let dest = new.join(entry.file_name());
+                if dest.exists() {
+                    continue;
+                }
+                fs::rename(entry.path(), dest)?;
+                moved_any = true;
+            }
+            if moved_any {
+                // Clean up the old directory if it's now empty.
+                let _ = fs::remove_dir(&old);
+                debug!("Migrated old preferences.");
+            }
         }
     }
 
