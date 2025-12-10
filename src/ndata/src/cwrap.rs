@@ -9,7 +9,7 @@ use std::path::PathBuf;
 /// TODO remove in 0.15.0 (or maybe 0.14.0?)
 pub fn migrate_pref() -> Result<()> {
     // For historical reasons predating physfs adoption, this case is different.
-    let old = sdl::filesystem::get_pref_path(
+    let old = physfs::get_pref_path(
         ".",
         if cfg!(target_os = "macos") {
             "org.naev.Naev"
