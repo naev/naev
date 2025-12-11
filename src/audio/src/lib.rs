@@ -1342,7 +1342,6 @@ impl AudioSystem {
                         // Finally remove the voice, but only if it is actually fine to remove
                         if let Some(voice) = voices.get(vid)
                             && let Audio::Static(voice) = voice
-                            && voice.ingame
                         {
                             voices.remove(vid);
                         }
