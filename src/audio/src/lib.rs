@@ -1341,7 +1341,7 @@ impl AudioSystem {
                         }
                         // Finally remove the voice, but only if it is actually fine to remove
                         if let Some(voice) = voices.get(vid)
-                            && let Audio::Static(voice) = voice
+                            && let Audio::Static(_) = voice
                         {
                             voices.remove(vid);
                         }
