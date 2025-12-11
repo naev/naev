@@ -276,7 +276,7 @@ impl UserData for LuaSpfxRef {
                 Option<Function>,
                 Option<Either<Vec2, bool>>,
                 Option<Vec2>,
-                Option<Either<audio::AudioRef, UserDataRef<audio::AudioData>>>,
+                Option<UserDataRef<audio::AudioData>>,
                 Option<f64>,
                 Option<Function>,
             )|
@@ -300,8 +300,7 @@ impl UserData for LuaSpfxRef {
                 let data = lua.create_table()?;
                 let sfx = match sfx {
                     None => None,
-                    Some(Either::Left(audio)) => Some(audio),
-                    Some(Either::Right(audiodata)) => Some(
+                    Some(audiodata) => Some(
                         audio::AudioBuilder::new(audio::AudioType::Static)
                             .data(Some(audiodata.clone()))
                             .build()?,
@@ -417,7 +416,7 @@ impl UserData for LuaSpfxRef {
         methods.add_method(
             "sfx",
             |_, this, ()| -> mlua::Result<Option<audio::AudioRef>> {
-                Ok(this.call(|this| this.sfx.clone())?)
+                Ok(this.call(|this| this.sfx)?)
             },
         );
         /*
