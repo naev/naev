@@ -1,7 +1,6 @@
 #![allow(dead_code)]
 use crate::nlua;
 use crate::nlua::LuaEnv;
-use anyhow::Result;
 use log::{warn, warn_err};
 use mlua::{Either, Function, UserData, UserDataMethods, UserDataRef};
 use physics::vec2::Vec2;
@@ -18,11 +17,10 @@ enum Message {
 }
 static MESSAGES: Mutex<Vec<Message>> = Mutex::new(Vec::new());
 
-fn process_messages() -> Result<()> {
+fn process_messages(luaspfx: &mut std::sync::RwLockWriteGuard<'_, Arena<LuaSpfx>>) {
     pub fn notfound(id: LuaSpfxRef) {
         warn!("LuaSpfx '{:?}' not found", id);
     }
-    let mut luaspfx = LUASPFX.write().unwrap();
     for msg in MESSAGES.lock().unwrap().drain(..) {
         match msg {
             Message::Insert(data) => {
@@ -52,7 +50,6 @@ fn process_messages() -> Result<()> {
             }
         }
     }
-    Ok(())
 }
 
 struct LuaSpfx {
@@ -149,7 +146,9 @@ pub fn set_speed_volume(v: f32) {
 
 pub fn update(dt: f64) {
     let lua = &nlua::NLUA;
-    LUASPFX.write().unwrap().retain(|_, spfx| {
+    let mut luaspfx = LUASPFX.write().unwrap();
+    process_messages(&mut luaspfx);
+    luaspfx.retain(|_, spfx| {
         spfx.ttl -= dt;
         if spfx.ttl <= 0. || spfx.cleanup {
             return false;
