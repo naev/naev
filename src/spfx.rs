@@ -139,7 +139,7 @@ enum RenderLayer {
 fn render(layer: RenderLayer, dt: f64) {
     let lua = &nlua::NLUA;
     let z = camera::CAMERA.read().unwrap().zoom;
-    for (_, spfx) in LUASPFX.lock().unwrap().iter() {
+    for (id, spfx) in LUASPFX.lock().unwrap().iter() {
         if spfx.cleanup {
             continue;
         }
@@ -157,7 +157,7 @@ fn render(layer: RenderLayer, dt: f64) {
         {
             // TODO flip y
             spfx.env
-                .call::<()>(lua, func, (pos.x, pos.y, z, dt))
+                .call::<()>(lua, func, (LuaSpfxRef(id), pos.x, pos.y, z, dt))
                 .unwrap_or_else(|e| {
                     warn_err!(e);
                 });
@@ -249,9 +249,9 @@ impl UserData for LuaSpfxRef {
                 let sfx = match sfx {
                     None => None,
                     Some(Either::Left(audio)) => Some(audio),
-                    Some(Either::Right(data)) => Some(
+                    Some(Either::Right(audiodata)) => Some(
                         audio::AudioBuilder::new(audio::AudioType::Static)
-                            .data(Some(data.clone()))
+                            .data(Some(audiodata.clone()))
                             .build()?,
                     ),
                 };
