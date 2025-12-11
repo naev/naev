@@ -11,42 +11,35 @@ use std::sync::{Mutex, RwLock};
 use thunderdome::Arena;
 
 enum Message {
+    Insert(LuaSpfx),
     Remove(LuaSpfxRef),
     SetPos(LuaSpfxRef, Vec2),
     SetVel(LuaSpfxRef, Vec2),
-}
-impl Message {
-    fn id(&self) -> LuaSpfxRef {
-        *match self {
-            Message::Remove(id) => id,
-            Message::SetPos(id, _) => id,
-            Message::SetVel(id, _) => id,
-        }
-    }
 }
 static MESSAGES: Mutex<Vec<Message>> = Mutex::new(Vec::new());
 
 fn process_messages() -> Result<()> {
     let mut luaspfx = LUASPFX.write().unwrap();
     for msg in MESSAGES.lock().unwrap().drain(..) {
-        let id = msg.id();
-        let spfx = match luaspfx.get_mut(id.into()) {
-            Some(spfx) => spfx,
-            None => {
-                warn!("LuaSpfx '{:?}' not found", id);
-                continue;
-            }
-        };
         match msg {
-            Message::Remove(_) => {
-                spfx.cleanup = true;
-                spfx.ttl = -1.0;
+            Message::Insert(data) => {
+                luaspfx.insert(data);
             }
-            Message::SetPos(_, pos) => {
-                spfx.pos = Some(pos);
+            Message::Remove(id) => {
+                if let Some(spfx) = luaspfx.get_mut(id.into()) {
+                    spfx.cleanup = true;
+                    spfx.ttl = -1.0;
+                }
             }
-            Message::SetVel(_, vel) => {
-                spfx.vel = Some(vel);
+            Message::SetPos(id, pos) => {
+                if let Some(spfx) = luaspfx.get_mut(id.into()) {
+                    spfx.pos = Some(pos);
+                }
+            }
+            Message::SetVel(id, vel) => {
+                if let Some(spfx) = luaspfx.get_mut(id.into()) {
+                    spfx.vel = Some(vel);
+                }
             }
         }
     }
@@ -258,7 +251,8 @@ impl UserData for LuaSpfxRef {
          *    @luatparam[opt] number radius Radius to use to determine if should render.
          *    @luatparam[opt] Function|nil remove Function to run when removing the
          * outfit.
-         *    @luatreturn spfx New spfx corresponding to the data.
+         *    @luatreturn spfx New spfx corresponding to the data or nil if called from a spfx
+         *    callback function.
          * @luafunc new
          */
         #[allow(clippy::type_complexity)]
@@ -277,7 +271,7 @@ impl UserData for LuaSpfxRef {
                 Option<f64>,
                 Option<Function>,
             )|
-             -> mlua::Result<Self> {
+             -> mlua::Result<Option<Self>> {
                 let (pos, global) = if let Some(pos) = pos {
                     match pos {
                         Either::Left(v) => (Some(v), false),
@@ -328,7 +322,18 @@ impl UserData for LuaSpfxRef {
                     data,
                     env,
                 };
-                Ok(LUASPFX.write().unwrap().insert(spfx).into())
+                // If being called from another spfx it will deadlock, so we use a message in that
+                // case. Downside is that no ID is returned.
+                match LUASPFX.try_write() {
+                    std::sync::TryLockResult::Ok(mut guard) => Ok(Some(guard.insert(spfx).into())),
+                    std::sync::TryLockResult::Err(std::sync::TryLockError::WouldBlock) => {
+                        MESSAGES.lock().unwrap().push(Message::Insert(spfx));
+                        Ok(None)
+                    }
+                    std::sync::TryLockResult::Err(std::sync::TryLockError::Poisoned(_)) => Err(
+                        mlua::Error::RuntimeError("LUASPFX lock poisoned".to_string()),
+                    ),
+                }
             },
         );
         /*
