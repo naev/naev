@@ -944,27 +944,49 @@ impl Context {
 
     /// Converts a point in game coordinates to screen coordinates
     pub fn game_to_screen_coords(&self, pos: Vector2<f64>) -> Vector2<f64> {
-        let dims = self.dimensions.read().unwrap();
-        let cam = camera::CAMERA.read().unwrap();
-        let view = Vector2::new(dims.view_width as f64, dims.view_height as f64);
-        (pos - cam.pos()) * cam.zoom + view * 0.5
+        camera::CAMERA.read().unwrap().game_to_screen_coords(pos)
+    }
+
+    /// Converts a point in game coordinates to screen coordinates
+    pub fn game_to_screen_coords_yflip(&self, pos: Vector2<f64>) -> Vector2<f64> {
+        camera::CAMERA
+            .read()
+            .unwrap()
+            .game_to_screen_coords_yflip(pos)
     }
 
     /// Converts a point in screen coordinates to game coordinates
     pub fn screen_to_game_coords(&self, pos: Vector2<f64>) -> Vector2<f64> {
-        let dims = self.dimensions.read().unwrap();
-        let cam = camera::CAMERA.read().unwrap();
-        let view = Vector2::new(dims.view_width as f64, dims.view_height as f64);
-        (pos - view * 0.5) / cam.zoom + cam.pos()
+        camera::CAMERA.read().unwrap().screen_to_game_coords(pos)
     }
 
     /// Converts a point from game to screen coordinates and makes sure it is in range
     pub fn game_to_screen_coords_inrange(&self, pos: Vector2<f64>, r: f64) -> Option<Vector2<f64>> {
-        let dims = self.dimensions.read().unwrap();
-        let cam = camera::CAMERA.read().unwrap();
-        let view = Vector2::new(dims.view_width as f64, dims.view_height as f64);
-        let screen = (pos - cam.pos()) * cam.zoom + view * 0.5;
-        if screen.x < -r || screen.y < -r || screen.x > view.x + r || screen.y > view.y + r {
+        let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed) as f64;
+        let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed) as f64;
+        let screen = camera::CAMERA.read().unwrap().game_to_screen_coords(pos);
+        if screen.x < -r || screen.y < -r || screen.x > view_width + r || screen.y > view_height + r
+        {
+            None
+        } else {
+            Some(screen)
+        }
+    }
+
+    /// Converts a point from game to screen coordinates and makes sure it is in range
+    pub fn game_to_screen_coords_inrange_yflip(
+        &self,
+        pos: Vector2<f64>,
+        r: f64,
+    ) -> Option<Vector2<f64>> {
+        let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed) as f64;
+        let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed) as f64;
+        let screen = camera::CAMERA
+            .read()
+            .unwrap()
+            .game_to_screen_coords_yflip(pos);
+        if screen.x < -r || screen.y < -r || screen.x > view_width + r || screen.y > view_height + r
+        {
             None
         } else {
             Some(screen)
@@ -1012,12 +1034,11 @@ impl mlua::UserData for LuaGfx {
          * @luafunc screencoords
          */
         methods.add_function("screencoords", |_, pos: Vec2| -> mlua::Result<Vec2> {
-            let mut screen = camera::CAMERA
+            Ok(camera::CAMERA
                 .read()
                 .unwrap()
-                .game_to_screen_coords(pos.into_vector2());
-            screen.y = VIEW_HEIGHT.load(Ordering::Relaxed) as f64 - screen.y;
-            Ok(screen.into())
+                .game_to_screen_coords_yflip(pos.into_vector2())
+                .into())
         });
         /*@
          * @brief Renders a texture.

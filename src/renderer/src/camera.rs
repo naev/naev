@@ -337,6 +337,18 @@ impl Camera {
         game.y *= SCREEN_TO_GAME.load(Ordering::Relaxed);
         game + self.pos()
     }
+
+    /// Flips the final y to adjust coordinates
+    pub fn game_to_screen_coords_yflip(&self, pos: Vector2<f64>) -> Vector2<f64> {
+        let view_width = crate::VIEW_WIDTH.load(Ordering::Relaxed);
+        let view_height = crate::VIEW_HEIGHT.load(Ordering::Relaxed);
+        let view = Vector2::new(view_width as f64, view_height as f64);
+        let mut screen = (pos - self.pos()) * self.zoom;
+        screen.y *= GAME_TO_SCREEN.load(Ordering::Relaxed);
+        screen += view * 0.5;
+        screen.y = view.y - screen.y;
+        screen
+    }
 }
 
 #[unsafe(no_mangle)]

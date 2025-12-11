@@ -146,30 +146,32 @@ pub fn set_speed_volume(v: f32) {
 
 pub fn update(dt: f64) {
     let lua = &nlua::NLUA;
-    let mut luaspfx = LUASPFX.write().unwrap();
-    process_messages(&mut luaspfx);
-    luaspfx.retain(|_, spfx| {
-        spfx.ttl -= dt;
-        if spfx.ttl <= 0. || spfx.cleanup {
-            return false;
-        }
-        if let Some(pos) = &mut spfx.pos
-            && let Some(vel) = spfx.vel
-        {
-            *pos += vel * dt;
-            if let Some(sfx) = &spfx.sfx {
-                // TODO move Audio ownership to LuaSpfx
-                let pos = pos.into_vector2();
-                sfx.call(|sfx| {
-                    sfx.set_position(pos.cast::<f32>());
-                })
-                .unwrap_or_else(|e| {
-                    warn_err!(e);
-                });
+    {
+        let mut luaspfx = LUASPFX.write().unwrap();
+        process_messages(&mut luaspfx);
+        luaspfx.retain(|_, spfx| {
+            spfx.ttl -= dt;
+            if spfx.ttl <= 0. || spfx.cleanup {
+                return false;
             }
-        }
-        true
-    });
+            if let Some(pos) = &mut spfx.pos
+                && let Some(vel) = spfx.vel
+            {
+                *pos += vel * dt;
+                if let Some(sfx) = &spfx.sfx {
+                    // TODO move Audio ownership to LuaSpfx
+                    let pos = pos.into_vector2();
+                    sfx.call(|sfx| {
+                        sfx.set_position(pos.cast::<f32>());
+                    })
+                    .unwrap_or_else(|e| {
+                        warn_err!(e);
+                    });
+                }
+            }
+            true
+        });
+    }
     for (id, spfx) in LUASPFX.read().unwrap().iter() {
         if let Some(update) = &spfx.update {
             spfx.env
@@ -200,12 +202,11 @@ fn render(layer: RenderLayer, dt: f64) {
         };
         if let Some(func) = func
             && let Some(pos) = spfx.pos
-            && let Some(pos) = renderer::Context::get().game_to_screen_coords_inrange(
+            && let Some(pos) = renderer::Context::get().game_to_screen_coords_inrange_yflip(
                 pos.into_vector2(),
                 spfx.radius.unwrap_or(f64::INFINITY),
             )
         {
-            // TODO flip y
             spfx.env
                 .call::<()>(lua, func, (LuaSpfxRef(id), pos.x, pos.y, z, dt))
                 .unwrap_or_else(|e| {
