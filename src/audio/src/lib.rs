@@ -1434,6 +1434,26 @@ impl UserData for AudioData {
             let buf = AudioBuffer::get_or_try_load(&filename)?;
             Ok(AudioData::Buffer(buf))
         });
+        /*@
+         * @brief Gets the length of the Audio data.
+         *
+         *    @luatparam AudioData source Source to get duration of.
+         *    @luatparam[opt="seconds"] string unit Either "seconds" or "samples"
+         * indicating the type to report.
+         *    @luatreturn number Duration of the source or nil on error.
+         * @luafunc getDuration
+         */
+        methods.add_method(
+            "getDuration",
+            |_, this, samples: bool| -> mlua::Result<f32> {
+                match this {
+                    AudioData::Buffer(ab) => Ok(ab.duration(match samples {
+                        true => AudioSeek::Samples,
+                        false => AudioSeek::Seconds,
+                    })),
+                }
+            },
+        );
     }
 }
 
