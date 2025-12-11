@@ -45,8 +45,11 @@ use tracing_mutex::stdsync::{Mutex, RwLock};
 const REFERENCE_DISTANCE: f32 = 500.;
 /// Max distance for sounds to still play at
 const MAX_DISTANCE: f32 = 25_000.;
-/// Number of frames we want to grab when streaming
-const STREAMING_BUFFER_LENGTH: usize = 1024;
+/// Number of frames we want to grab when streaming.
+const STREAMING_BUFFER_LENGTH: usize = 32 * 1024;
+/// Amount we sleep per frame when streaming, should be at least enough time to load a single
+/// buffer.
+const STREAMING_SLEEP_DELAY: std::time::Duration = std::time::Duration::from_millis(30);
 
 struct LuaAudioEfx {
     name: String,
@@ -643,7 +646,7 @@ impl AudioStream {
             }
 
             // We're just polling now, TODO something based on channels
-            std::thread::sleep(std::time::Duration::from_millis(50));
+            std::thread::sleep(STREAMING_SLEEP_DELAY);
         }
     }
 
