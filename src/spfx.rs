@@ -19,6 +19,9 @@ enum Message {
 static MESSAGES: Mutex<Vec<Message>> = Mutex::new(Vec::new());
 
 fn process_messages() -> Result<()> {
+    pub fn notfound(id: LuaSpfxRef) {
+        warn!("LuaSpfx '{:?}' not found", id);
+    }
     let mut luaspfx = LUASPFX.write().unwrap();
     for msg in MESSAGES.lock().unwrap().drain(..) {
         match msg {
@@ -29,16 +32,22 @@ fn process_messages() -> Result<()> {
                 if let Some(spfx) = luaspfx.get_mut(id.into()) {
                     spfx.cleanup = true;
                     spfx.ttl = -1.0;
+                } else {
+                    notfound(id);
                 }
             }
             Message::SetPos(id, pos) => {
                 if let Some(spfx) = luaspfx.get_mut(id.into()) {
                     spfx.pos = Some(pos);
+                } else {
+                    notfound(id);
                 }
             }
             Message::SetVel(id, vel) => {
                 if let Some(spfx) = luaspfx.get_mut(id.into()) {
                     spfx.vel = Some(vel);
+                } else {
+                    notfound(id);
                 }
             }
         }
