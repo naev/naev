@@ -365,6 +365,21 @@ impl AudioBuffer {
         */
     }
 
+    pub fn channels(&self) -> u8 {
+        self.buffer.get_parameter_i32(AL_CHANNELS) as u8
+    }
+
+    pub fn frequency(&self) -> u32 {
+        self.buffer.get_parameter_i32(AL_FREQUENCY) as u32
+    }
+
+    pub fn sample_count(&self) -> f32 {
+        let bytes = self.buffer.get_parameter_i32(AL_SIZE);
+        let channels = self.buffer.get_parameter_i32(AL_CHANNELS);
+        let bits = self.buffer.get_parameter_i32(AL_CHANNELS);
+        (bytes * 8 / (channels * bits)) as f32
+    }
+
     pub fn get(name: &str) -> Option<Arc<Self>> {
         let name = match AudioBuffer::get_valid_path(name) {
             Some(name) => name,
@@ -1437,7 +1452,7 @@ impl UserData for AudioData {
         /*@
          * @brief Gets the length of the Audio data.
          *
-         *    @luatparam AudioData source Source to get duration of.
+         *    @luatparam AudioData data Data to get duration of.
          *    @luatparam[opt="seconds"] string unit Either "seconds" or "samples"
          * indicating the type to report.
          *    @luatreturn number Duration of the source or nil on error.
@@ -1454,6 +1469,42 @@ impl UserData for AudioData {
                 }
             },
         );
+        /*@
+         * @brief Gets the number of channels of the Audio data.
+         *
+         *    @luatparam AudioData data Data to get the number of channels of.
+         *    @luatreturn number Number of channels of the data.
+         * @luafunc getChannels
+         */
+        methods.add_method("getChannels", |_, this, ()| -> mlua::Result<u8> {
+            match this {
+                AudioData::Buffer(ab) => Ok(ab.channels()),
+            }
+        });
+        /*@
+         * @brief Gets the number of samples of the Audio data.
+         *
+         *    @luatparam AudioData data Data to get the number of samples of.
+         *    @luatreturn number Number of sampless of the data.
+         * @luafunc getSampleCount
+         */
+        methods.add_method("getSampleCount", |_, this, ()| -> mlua::Result<f32> {
+            match this {
+                AudioData::Buffer(ab) => Ok(ab.sample_count()),
+            }
+        });
+        /*@
+         * @brief Gets the sample rate of the Audio data.
+         *
+         *    @luatparam AudioData data Data to get the sample rate of.
+         *    @luatreturn number The sample rate of the data.
+         * @luafunc getSampleRate
+         */
+        methods.add_method("getSampleRate", |_, this, ()| -> mlua::Result<u32> {
+            match this {
+                AudioData::Buffer(ab) => Ok(ab.frequency()),
+            }
+        });
     }
 }
 
