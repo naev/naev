@@ -60,7 +60,15 @@ struct Logger {
     warn_num: AtomicU32,
     output: Mutex<Output>,
 }
-const WHITELIST: [&str; 5] = ["naev", "log", "renderer", "pluginmgr", "core"];
+const WHITELIST: [&str; 7] = [
+    "naev",
+    "log",
+    "renderer",
+    "pluginmgr",
+    "core",
+    "audio",
+    "ndata",
+];
 impl logcore::Log for Logger {
     fn enabled(&self, metadata: &logcore::Metadata) -> bool {
         let level = metadata.level();
