@@ -1365,12 +1365,12 @@ pub fn init() -> Result<()> {
     Ok(())
 }
 
-#[derive(Debug, Clone, PartialEq, derive_more::From, mlua::FromLua)]
+#[derive(Debug, Clone, Copy, PartialEq, derive_more::From, mlua::FromLua)]
 pub struct AudioRef(thunderdome::Index);
 impl AudioRef {
     fn try_clone(&self) -> Result<Self> {
         if AUDIO.disabled {
-            return Ok(self.clone());
+            return Ok(Self(self.0));
         }
         let mut voices = AUDIO.voices.lock().unwrap();
         let audio = match voices.get(self.0) {
