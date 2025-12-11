@@ -152,6 +152,12 @@ pub fn update(dt: f64) {
         luaspfx.retain(|_, spfx| {
             spfx.ttl -= dt;
             if spfx.ttl <= 0. || spfx.cleanup {
+                // Stop the sound if necessary
+                if let Some(sfx) = spfx.sfx {
+                    let _ = sfx.call(|sfx| {
+                        sfx.stop();
+                    });
+                }
                 return false;
             }
             if let Some(pos) = &mut spfx.pos
