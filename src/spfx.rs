@@ -1,13 +1,57 @@
 #![allow(dead_code)]
 use crate::nlua;
 use crate::nlua::LuaEnv;
-use log::warn_err;
+use anyhow::Result;
+use log::{warn, warn_err};
 use mlua::{Either, Function, UserData, UserDataMethods, UserDataRef};
 use physics::vec2::Vec2;
 use renderer::camera;
 use renderer::colour::Colour;
-use std::sync::Mutex;
+use std::sync::{Mutex, RwLock};
 use thunderdome::Arena;
+
+enum Message {
+    Remove(LuaSpfxRef),
+    SetPos(LuaSpfxRef, Vec2),
+    SetVel(LuaSpfxRef, Vec2),
+}
+impl Message {
+    fn id(&self) -> LuaSpfxRef {
+        *match self {
+            Message::Remove(id) => id,
+            Message::SetPos(id, _) => id,
+            Message::SetVel(id, _) => id,
+        }
+    }
+}
+static MESSAGES: Mutex<Vec<Message>> = Mutex::new(Vec::new());
+
+fn process_messages() -> Result<()> {
+    let mut luaspfx = LUASPFX.write().unwrap();
+    for msg in MESSAGES.lock().unwrap().drain(..) {
+        let id = msg.id();
+        let spfx = match luaspfx.get_mut(id.into()) {
+            Some(spfx) => spfx,
+            None => {
+                warn!("LuaSpfx '{:?}' not found", id);
+                continue;
+            }
+        };
+        match msg {
+            Message::Remove(_) => {
+                spfx.cleanup = true;
+                spfx.ttl = -1.0;
+            }
+            Message::SetPos(_, pos) => {
+                spfx.pos = Some(pos);
+            }
+            Message::SetVel(_, vel) => {
+                spfx.vel = Some(vel);
+            }
+        }
+    }
+    Ok(())
+}
 
 struct LuaSpfx {
     /// Sound ignores pitch changes.
@@ -29,40 +73,43 @@ struct LuaSpfx {
     remove: Option<Function>,
 }
 
-#[derive(Copy, Clone, derive_more::From, derive_more::Into)]
+#[derive(Copy, Clone, derive_more::From, derive_more::Into, Debug)]
 struct LuaSpfxRef(thunderdome::Index);
 impl LuaSpfxRef {
     pub fn call<S, R>(&self, f: S) -> anyhow::Result<R>
     where
         S: Fn(&LuaSpfx) -> R,
     {
-        let luaspfx = LUASPFX.lock().unwrap();
+        let luaspfx = LUASPFX.read().unwrap();
         match luaspfx.get(self.0) {
             Some(spfx) => Ok(f(spfx)),
             None => anyhow::bail!("LuaSpfx not found"),
         }
     }
 
+    // Can't have call_mut or we'll get a mutex deadlock. Use messages instead.
+    /*
     pub fn call_mut<S, R>(&self, f: S) -> anyhow::Result<R>
     where
         S: Fn(&mut LuaSpfx) -> R,
     {
-        let mut luaspfx = LUASPFX.lock().unwrap();
+        let mut luaspfx = LUASPFX.write().unwrap();
         match luaspfx.get_mut(self.0) {
             Some(spfx) => Ok(f(spfx)),
             None => anyhow::bail!("LuaSpfx not found"),
         }
     }
+    */
 }
 
-static LUASPFX: Mutex<Arena<LuaSpfx>> = Mutex::new(Arena::new());
+static LUASPFX: RwLock<Arena<LuaSpfx>> = RwLock::new(Arena::new());
 
 pub fn clear() {
-    LUASPFX.lock().unwrap().clear();
+    LUASPFX.write().unwrap().clear();
 }
 
 pub fn set_speed(s: f32) {
-    for (_, spfx) in LUASPFX.lock().unwrap().iter() {
+    for (_, spfx) in LUASPFX.write().unwrap().iter() {
         if spfx.global || spfx.cleanup {
             continue;
         }
@@ -80,7 +127,7 @@ pub fn set_speed(s: f32) {
 }
 
 pub fn set_speed_volume(v: f32) {
-    for (_, spfx) in LUASPFX.lock().unwrap().iter() {
+    for (_, spfx) in LUASPFX.write().unwrap().iter() {
         if spfx.global || spfx.cleanup {
             continue;
         }
@@ -100,7 +147,7 @@ pub fn set_speed_volume(v: f32) {
 
 pub fn update(dt: f64) {
     let lua = &nlua::NLUA;
-    LUASPFX.lock().unwrap().retain(|id, spfx| {
+    LUASPFX.write().unwrap().retain(|_, spfx| {
         spfx.ttl -= dt;
         if spfx.ttl <= 0. || spfx.cleanup {
             return false;
@@ -120,6 +167,9 @@ pub fn update(dt: f64) {
                 });
             }
         }
+        true
+    });
+    for (id, spfx) in LUASPFX.read().unwrap().iter() {
         if let Some(update) = &spfx.update {
             spfx.env
                 .call::<()>(lua, update, (LuaSpfxRef(id), dt))
@@ -127,8 +177,7 @@ pub fn update(dt: f64) {
                     warn_err!(e);
                 });
         }
-        true
-    });
+    }
 }
 
 enum RenderLayer {
@@ -139,7 +188,7 @@ enum RenderLayer {
 fn render(layer: RenderLayer, dt: f64) {
     let lua = &nlua::NLUA;
     let z = camera::CAMERA.read().unwrap().zoom;
-    for (id, spfx) in LUASPFX.lock().unwrap().iter() {
+    for (id, spfx) in LUASPFX.read().unwrap().iter() {
         if spfx.cleanup {
             continue;
         }
@@ -279,7 +328,7 @@ impl UserData for LuaSpfxRef {
                     data,
                     env,
                 };
-                Ok(LUASPFX.lock().unwrap().insert(spfx).into())
+                Ok(LUASPFX.write().unwrap().insert(spfx).into())
             },
         );
         /*
@@ -289,10 +338,7 @@ impl UserData for LuaSpfxRef {
          * @luafunc rm
          */
         methods.add_method_mut("rm", |_, this, ()| -> mlua::Result<()> {
-            this.call_mut(|this| {
-                this.cleanup = true;
-                this.ttl = -1.;
-            })?;
+            MESSAGES.lock().unwrap().push(Message::Remove(*this));
             Ok(())
         });
         /*
@@ -323,15 +369,13 @@ impl UserData for LuaSpfxRef {
          * @luafunc setPos
          */
         methods.add_method_mut("setPos", |_, this, pos: Vec2| -> mlua::Result<()> {
-            this.call_mut(|this| match this.pos {
-                Some(_) => {
-                    this.pos = Some(pos);
-                    Ok(())
-                }
-                None => Err(mlua::Error::RuntimeError(
+            if this.call(|this| this.pos)?.is_none() {
+                return Err(mlua::Error::RuntimeError(
                     "can't set position of a LuaSpfx with None position".to_string(),
-                )),
-            })?
+                ));
+            }
+            MESSAGES.lock().unwrap().push(Message::SetPos(*this, pos));
+            Ok(())
         });
         /*
          * @brief Sets the velocity of a spfx.
@@ -341,15 +385,13 @@ impl UserData for LuaSpfxRef {
          * @luafunc setVel
          */
         methods.add_method_mut("setVel", |_, this, vel: Vec2| -> mlua::Result<()> {
-            this.call_mut(|this| match this.vel {
-                Some(_) => {
-                    this.vel = Some(vel);
-                    Ok(())
-                }
-                None => Err(mlua::Error::RuntimeError(
-                    "can't set position of a LuaSpfx with None velocity".to_string(),
-                )),
-            })?
+            if this.call(|this| this.vel)?.is_none() {
+                return Err(mlua::Error::RuntimeError(
+                    "can't set velocity of a LuaSpfx with None velocity".to_string(),
+                ));
+            }
+            MESSAGES.lock().unwrap().push(Message::SetVel(*this, vel));
+            Ok(())
         });
         /*
          * @brief Gets the sound effect of a spfx.
