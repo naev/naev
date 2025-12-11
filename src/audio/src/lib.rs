@@ -19,36 +19,35 @@ use crate::output_limiter::consts::*;
 use crate::source_spatialize::consts::*;
 use crate::source_spatialize::*;
 use anyhow::Context;
+use anyhow::Result;
+use gettext::gettext;
+use log::{debug, debugx, warn, warn_err};
+use mlua::{Either, MetaMethod, UserData, UserDataMethods, UserDataRef};
+use nalgebra::{Vector2, Vector3};
 use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicBool, AtomicPtr, Ordering};
+use std::sync::{Arc, LazyLock, Weak};
+#[cfg(not(debug_assertions))]
+use std::sync::{Mutex, RwLock};
 use symphonia::core::audio::{Channels, Signal};
 use symphonia::core::conv::{FromSample, IntoSample};
 use symphonia::core::{
     codecs::Decoder, formats::FormatReader, io::MediaSourceStream, sample::Sample,
 };
 use thunderdome::Arena;
-use utils::{binary_search_by_key_ref, sort_by_key_ref};
-
-use anyhow::Result;
-use gettext::gettext;
-use log::{debug, debugx, warn, warn_err};
-use mlua::{Either, MetaMethod, UserData, UserDataMethods, UserDataRef};
-use nalgebra::{Vector2, Vector3};
-use std::sync::{Arc, LazyLock, Weak};
-#[cfg(not(debug_assertions))]
-use std::sync::{Mutex, RwLock};
 #[cfg(debug_assertions)]
 use tracing_mutex::stdsync::{Mutex, RwLock};
+use utils::{binary_search_by_key_ref, sort_by_key_ref};
 
 //const NUM_VOICES: usize = 64;
 /// Reference distance for sounds
 const REFERENCE_DISTANCE: f32 = 500.;
 /// Max distance for sounds to still play at
 const MAX_DISTANCE: f32 = 25_000.;
-/// Number of frames we want to grab when streaming.
+/// Number of frames we want to grab per buffer when streaming.
 const STREAMING_BUFFER_LENGTH: usize = 32 * 1024;
 /// Amount we sleep per frame when streaming, should be at least enough time to load a single
-/// buffer.
+/// buffer. Should be at least greater than 2 * STREAMING_BUFFER_LENGTH / 48000.
 const STREAMING_SLEEP_DELAY: std::time::Duration = std::time::Duration::from_millis(30);
 
 struct LuaAudioEfx {
@@ -1160,6 +1159,7 @@ impl AudioSystem {
     pub fn new() -> Result<Self> {
         let nosound = unsafe { naevc::conf.nosound != 0 };
         if nosound {
+            debug!("{}", gettext("Sound disabled."));
             return Ok(Self {
                 disabled: true,
                 device: al::Device(AtomicPtr::new(core::ptr::null_mut())),
