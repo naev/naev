@@ -37,6 +37,7 @@ use symphonia::core::{
 use thunderdome::Arena;
 #[cfg(debug_assertions)]
 use tracing_mutex::stdsync::{Mutex, RwLock};
+use utils::atomicfloat::AtomicF32;
 use utils::{binary_search_by_key_ref, sort_by_key_ref};
 
 //const NUM_VOICES: usize = 64;
@@ -1207,6 +1208,20 @@ impl AudioGroupRef {
         Ok(())
     }
 
+    fn reset_speed(group: &AudioGroup) {
+        let speed = AUDIO.speed.load(Ordering::Relaxed);
+        let voices = AUDIO.voices.lock().unwrap();
+        for v in group.voices.iter() {
+            if let Some(voice) = voices.get(v.0) {
+                if group.speed_affects {
+                    voice.set_pitch(group.pitch * speed);
+                } else {
+                    voice.set_pitch(1.);
+                }
+            }
+        }
+    }
+
     pub fn set_speed_affects(&self, enable: bool) -> Result<()> {
         let mut groups = AUDIO.groups.lock().unwrap();
         let group = match groups.get_mut(self.0) {
@@ -1214,7 +1229,7 @@ impl AudioGroupRef {
             None => anyhow::bail!("group not found"),
         };
         group.speed_affects = enable;
-        //group.update();
+        Self::reset_speed(&group);
         Ok(())
     }
 
@@ -1225,7 +1240,15 @@ impl AudioGroupRef {
             None => anyhow::bail!("group not found"),
         };
         group.volume = volume;
-        //group.update();
+
+        let master = AUDIO.volume.read().unwrap().volume;
+        let mut voices = AUDIO.voices.lock().unwrap();
+        for v in group.voices.iter() {
+            if let Some(voice) = voices.get_mut(v.0) {
+                // TODO sound speed stuff
+                voice.set_volume_raw(master * group.volume);
+            }
+        }
         Ok(())
     }
 
@@ -1236,7 +1259,7 @@ impl AudioGroupRef {
             None => anyhow::bail!("group not found"),
         };
         group.pitch = pitch;
-        //group.update();
+        Self::reset_speed(&group);
         Ok(())
     }
 
@@ -1304,6 +1327,7 @@ pub struct AudioSystem {
     device: al::Device,
     context: al::Context,
     freq: i32,
+    speed: AtomicF32,
     volume: RwLock<AudioVolume>,
     voices: Mutex<Arena<Audio>>,
     groups: Mutex<Arena<AudioGroup>>,
@@ -1318,6 +1342,7 @@ impl AudioSystem {
                 device: al::Device(AtomicPtr::new(core::ptr::null_mut())),
                 context: al::Context(AtomicPtr::new(core::ptr::null_mut())),
                 freq: 0,
+                speed: AtomicF32::new(1.0),
                 volume: Default::default(),
                 voices: Default::default(),
                 groups: Default::default(),
@@ -1442,6 +1467,7 @@ impl AudioSystem {
             device,
             context,
             volume: RwLock::new(AudioVolume::new()),
+            speed: AtomicF32::new(1.0),
             freq,
             voices: Mutex::new(Default::default()),
             groups: Mutex::new(Default::default()),
@@ -1461,6 +1487,15 @@ impl AudioSystem {
     pub fn set_volume_speed(&self, speed: f32) {
         let mut vol = self.volume.write().unwrap();
         vol.volume_speed = speed;
+    }
+
+    pub fn set_speed(&self, speed: f32) {
+        self.speed.store(speed, Ordering::Relaxed);
+        for (_, v) in self.voices.lock().unwrap().iter() {
+            if v.groupid().is_none() {
+                v.set_pitch(speed);
+            }
+        }
     }
 
     pub fn set_air_absorption_factor(&self, factor: f32) {
