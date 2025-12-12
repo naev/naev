@@ -459,7 +459,7 @@ pub struct AudioStatic {
     slot: Option<AuxiliaryEffectSlot>,
     data: Option<AudioData>,
     volume: f32,
-    groupid: Option<thunderdome::Index>,
+    groupid: Option<AudioGroupRef>,
     ingame: bool,
 }
 impl AudioStatic {
@@ -764,7 +764,7 @@ impl Audio {
         }
     }
 
-    fn groupid(&self) -> Option<thunderdome::Index> {
+    fn groupid(&self) -> Option<AudioGroupRef> {
         match self {
             Self::Static(this) => this.groupid,
             _ => None,
@@ -989,7 +989,7 @@ pub struct AudioBuilder {
     path: Option<String>,
     play: bool,
     looping: bool,
-    groupid: Option<thunderdome::Index>,
+    groupid: Option<AudioGroupRef>,
     atype: AudioType,
 }
 impl AudioBuilder {
@@ -1045,7 +1045,7 @@ impl AudioBuilder {
         self
     }
 
-    fn groupid(mut self, id: Option<thunderdome::Index>) -> Self {
+    fn groupid(mut self, id: Option<AudioGroupRef>) -> Self {
         self.groupid = id;
         self
     }
@@ -1103,12 +1103,70 @@ impl AudioBuilder {
 }
 
 #[derive(Debug, Default)]
-pub struct AudioGroup {
+struct AudioGroup {
     max: usize,
     volume: f32,
     pitch: f32,
     speed_affects: bool,
     voices: Vec<AudioRef>,
+}
+impl AudioGroup {
+    fn new(max: usize) -> Self {
+        AudioGroup {
+            max,
+            volume: 1.0,
+            pitch: 1.0,
+            speed_affects: true,
+            voices: Vec::new(),
+        }
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct AudioGroupRef(thunderdome::Index);
+impl AudioGroupRef {
+    pub fn new(max: usize) -> Self {
+        AudioGroupRef(AUDIO.groups.lock().unwrap().insert(AudioGroup::new(max)))
+    }
+
+    pub fn play_buffer(&self, buf: &Arc<AudioBuffer>, looping: bool) -> Option<AudioRef> {
+        let groups = AUDIO.groups.lock().unwrap();
+        let group = match groups.get(self.0) {
+            Some(group) => group,
+            None => {
+                return None;
+            }
+        };
+
+        if group.voices.len() >= group.max {
+            return None;
+        }
+
+        match AudioBuilder::new(AudioType::Static)
+            .buffer(buf.clone())
+            .play(true)
+            .looping(looping)
+            .groupid(Some(*self))
+            .build()
+        {
+            Ok(v) => Some(v),
+            Err(e) => {
+                warn_err!(e);
+                None
+            }
+        }
+    }
+
+    fn into_ptr(self) -> *const c_void {
+        unsafe { std::mem::transmute::<thunderdome::Index, *const c_void>(self.0) }
+    }
+
+    fn from_ptr(ptr: *const c_void) -> Self {
+        unsafe {
+            Self(std::mem::transmute::<*const c_void, thunderdome::Index>(
+                ptr,
+            ))
+        }
+    }
 }
 
 #[derive(Clone, PartialEq, Copy, Debug)]
@@ -1348,7 +1406,7 @@ impl AudioSystem {
                     if let Some((vid, v)) = voices.iter().find(|(_, x)| x.source().raw() == id) {
                         // Remove from group too if it has one
                         if let Some(gid) = v.groupid() {
-                            let group = &mut groups[gid];
+                            let group = &mut groups[gid.0];
                             if let Some(gvid) = group.voices.iter().position(|x| x.0 == vid) {
                                 group.voices.remove(gvid);
                             }
@@ -2540,16 +2598,7 @@ pub extern "C" fn sound_setSpeed(speed: c_double) {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_createGroup(size: c_int) -> *const c_void {
-    let mut groups = AUDIO.groups.lock().unwrap();
-    let group = AudioGroup {
-        max: size as usize,
-        volume: 1.0,
-        pitch: 1.0,
-        speed_affects: true,
-        voices: Vec::new(),
-    };
-    let groupid = groups.insert(group);
-    unsafe { std::mem::transmute::<thunderdome::Index, *const c_void>(groupid) }
+    AudioGroupRef::new(size as usize).into_ptr()
 }
 
 macro_rules! get_group {
@@ -2557,7 +2606,7 @@ macro_rules! get_group {
         if $group.is_null() {
             return Default::default();
         }
-        unsafe { std::mem::transmute::<*const c_void, thunderdome::Index>($group) }
+        AudioGroupRef::from_ptr($group)
     }};
 }
 
@@ -2575,39 +2624,28 @@ pub extern "C" fn sound_playGroup(
         Arc::from_raw(sound)
     };
 
-    let groupid = get_group!(group);
-    let mut groups = AUDIO.groups.lock().unwrap();
-    let group = &mut groups[groupid];
-    if group.voices.len() >= group.max {
-        return std::ptr::null();
+    let groupid = AudioGroupRef::from_ptr(group);
+    match groupid.play_buffer(&sound, once != 0) {
+        Some(v) => unsafe { std::mem::transmute::<AudioRef, *const c_void>(v) },
+        None => std::ptr::null(),
     }
-
-    //audio.groupid = Some(groupid);
-    let voice = match AudioBuilder::new(AudioType::Static)
-        .buffer(sound.clone())
-        .play(true)
-        .looping(once != 0)
-        .groupid(Some(groupid))
-        .build()
-    {
-        Ok(v) => v,
-        Err(e) => {
-            warn_err!(e);
-            return std::ptr::null();
-        }
-    };
-    unsafe { std::mem::transmute::<AudioRef, *const c_void>(voice) }
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_stopGroup(group: *const c_void) {
     let groupid = get_group!(group);
     let mut groups = AUDIO.groups.lock().unwrap();
-    let group = &mut groups[groupid];
+    let group = match groups.get_mut(groupid.0) {
+        Some(g) => g,
+        None => {
+            return;
+        }
+    };
     let voices = AUDIO.voices.lock().unwrap();
     for v in group.voices.drain(..) {
         if let Some(voice) = voices.get(v.0) {
             // Will get removed from voices too automatically
+            // TODO fade out
             voice.stop();
         }
     }
@@ -2616,11 +2654,18 @@ pub extern "C" fn sound_stopGroup(group: *const c_void) {
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_pauseGroup(group: *const c_void) {
     let groupid = get_group!(group);
-    let groups = AUDIO.groups.lock().unwrap();
-    let group = &groups[groupid];
+    let mut groups = AUDIO.groups.lock().unwrap();
+    let group = match groups.get_mut(groupid.0) {
+        Some(g) => g,
+        None => {
+            return;
+        }
+    };
     let voices = AUDIO.voices.lock().unwrap();
     for v in group.voices.iter() {
-        if let Some(voice) = voices.get(v.0) {
+        if let Some(voice) = voices.get(v.0)
+            && voice.is_playing()
+        {
             voice.pause();
         }
     }
@@ -2629,11 +2674,18 @@ pub extern "C" fn sound_pauseGroup(group: *const c_void) {
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_resumeGroup(group: *const c_void) {
     let groupid = get_group!(group);
-    let groups = AUDIO.groups.lock().unwrap();
-    let group = &groups[groupid];
+    let mut groups = AUDIO.groups.lock().unwrap();
+    let group = match groups.get_mut(groupid.0) {
+        Some(g) => g,
+        None => {
+            return;
+        }
+    };
     let voices = AUDIO.voices.lock().unwrap();
     for v in group.voices.iter() {
-        if let Some(voice) = voices.get(v.0) {
+        if let Some(voice) = voices.get(v.0)
+            && voice.is_paused()
+        {
             voice.play();
         }
     }
@@ -2643,7 +2695,12 @@ pub extern "C" fn sound_resumeGroup(group: *const c_void) {
 pub extern "C" fn sound_speedGroup(group: *const c_void, enable: c_int) {
     let groupid = get_group!(group);
     let mut groups = AUDIO.groups.lock().unwrap();
-    let group = &mut groups[groupid];
+    let group = match groups.get_mut(groupid.0) {
+        Some(g) => g,
+        None => {
+            return;
+        }
+    };
     group.speed_affects = enable != 0;
     //group.update();
 }
@@ -2652,7 +2709,12 @@ pub extern "C" fn sound_speedGroup(group: *const c_void, enable: c_int) {
 pub extern "C" fn sound_volumeGroup(group: *const c_void, volume: c_double) {
     let groupid = get_group!(group);
     let mut groups = AUDIO.groups.lock().unwrap();
-    let group = &mut groups[groupid];
+    let group = match groups.get_mut(groupid.0) {
+        Some(g) => g,
+        None => {
+            return;
+        }
+    };
     group.volume = volume as f32;
     //group.update();
 }
@@ -2661,7 +2723,12 @@ pub extern "C" fn sound_volumeGroup(group: *const c_void, volume: c_double) {
 pub extern "C" fn sound_pitchGroup(group: *const c_void, pitch: c_double) {
     let groupid = get_group!(group);
     let mut groups = AUDIO.groups.lock().unwrap();
-    let group = &mut groups[groupid];
+    let group = match groups.get_mut(groupid.0) {
+        Some(g) => g,
+        None => {
+            return;
+        }
+    };
     group.pitch = pitch as f32;
     //group.update();
 }
