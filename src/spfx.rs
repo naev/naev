@@ -113,7 +113,7 @@ pub fn set_speed(s: f32) {
             continue;
         }
         if let Some(sfx) = &spfx.sfx {
-            match sfx.call(|sfx| {
+            match sfx.call_mut(|sfx| {
                 sfx.set_pitch(s);
             }) {
                 Ok(_) => (),

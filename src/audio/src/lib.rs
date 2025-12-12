@@ -454,12 +454,33 @@ pub enum Audio {
     LuaStream(AudioStream),
 }
 
+#[derive(Debug, PartialEq)]
+pub struct AudioSource {
+    // Wrap in an Arc so we can use it with both Stream + Statics
+    source: Arc<al::Source>,
+    volume: f32,
+    pitch: f32,
+}
+impl AudioSource {
+    fn new() -> Result<Self> {
+        Ok(Self {
+            source: Arc::new(al::Source::new()?),
+            volume: 1.,
+            pitch: 1.,
+        })
+    }
+
+    #[inline]
+    fn raw(&self) -> ALuint {
+        self.source.raw()
+    }
+}
+
 #[derive(PartialEq, Debug)]
 pub struct AudioStatic {
-    source: al::Source,
+    source: AudioSource,
     slot: Option<AuxiliaryEffectSlot>,
     data: Option<AudioData>,
-    volume: f32,
     groupid: Option<AudioGroupRef>,
     ingame: bool,
 }
@@ -467,32 +488,29 @@ impl AudioStatic {
     fn new(data: &Option<AudioData>) -> Result<Self> {
         match data {
             Some(AudioData::Buffer(buffer)) => Self::new_buffer(buffer),
-            None => {
-                let source = al::Source::new()?;
-                Ok(AudioStatic {
-                    source,
-                    slot: None,
-                    volume: 1.0,
-                    data: None,
-                    groupid: None,
-                    ingame: false,
-                })
-            }
+            None => Ok(AudioStatic {
+                source: AudioSource::new()?,
+                slot: None,
+                data: None,
+                groupid: None,
+                ingame: false,
+            }),
         }
     }
 
     fn new_buffer(buffer: &Arc<AudioBuffer>) -> Result<Self> {
-        let source = al::Source::new()?;
-        source.parameter_i32(AL_BUFFER, buffer.raw() as ALint);
+        let source = AudioSource::new()?;
+        source
+            .source
+            .parameter_i32(AL_BUFFER, buffer.raw() as ALint);
         debug::object_label(
             debug::consts::AL_SOURCE_EXT,
-            source.raw(),
+            source.source.raw(),
             &format!("{}", &buffer.name.display()),
         );
         Ok(AudioStatic {
             source,
             slot: None,
-            volume: 1.0,
             data: Some(AudioData::Buffer(buffer.clone())),
             groupid: None,
             ingame: false,
@@ -502,7 +520,8 @@ impl AudioStatic {
     pub fn try_clone(&self) -> Result<Self> {
         let mut audio = Self::new(&self.data)?;
         audio.slot = None;
-        audio.volume = self.volume;
+        audio.source.volume = self.source.volume;
+        audio.source.pitch = self.source.pitch;
         // TODO copy some other properties over and set volume
         Ok(audio)
     }
@@ -554,6 +573,7 @@ impl StreamData {
         let stereo = channels.contains(Channels::FRONT_RIGHT);
 
         Ok(Self {
+            // We use the raw value so it doesn't get dropped here and double free the source
             source,
             buffers,
             format,
@@ -629,9 +649,8 @@ impl StreamData {
 #[allow(dead_code)]
 pub struct AudioStream {
     path: PathBuf,
-    source: Arc<al::Source>,
+    source: AudioSource,
     finish: Arc<AtomicBool>,
-    volume: f32,
     thread: std::thread::JoinHandle<Result<()>>,
 }
 impl Drop for AudioStream {
@@ -672,11 +691,10 @@ impl AudioStream {
         let src = ndata::open(&path)?;
 
         let finish = Arc::new(AtomicBool::new(false));
-        let source = Arc::new(al::Source::new()?);
-        source.parameter_f32(AL_GAIN, 1.);
+        let source = AudioSource::new()?;
 
         let thfsh = finish.clone();
-        let mut thdata = StreamData::from_file(source.clone(), src)?;
+        let mut thdata = StreamData::from_file(source.source.clone(), src)?;
         for _ in 0..2 {
             thdata.queue_next_buffer()?;
         }
@@ -686,14 +704,14 @@ impl AudioStream {
             path,
             source,
             finish,
-            volume: 1.,
             thread,
         })
     }
 
     pub fn try_clone(&self) -> Result<Self> {
         let mut audio = AudioStream::from_path(&self.path)?;
-        audio.volume = self.volume;
+        audio.source.volume = self.source.volume;
+        audio.source.pitch = self.source.pitch;
         // TODO copy some other properties
         Ok(audio)
     }
@@ -725,7 +743,7 @@ impl Audio {
 
         match self {
             Self::Static(this) | Self::LuaStatic(this) => {
-                let v = &this.source;
+                let v = &this.source.source;
                 if this.ingame {
                     return;
                 }
@@ -758,11 +776,23 @@ impl Audio {
         }
     }
 
-    fn source(&self) -> &al::Source {
+    fn source(&self) -> &AudioSource {
         match self {
             Self::Static(this) | Self::LuaStatic(this) => &this.source,
             Self::LuaStream(this) => &this.source,
         }
+    }
+
+    fn source_mut(&mut self) -> &mut AudioSource {
+        match self {
+            Self::Static(this) | Self::LuaStatic(this) => &mut this.source,
+            Self::LuaStream(this) => &mut this.source,
+        }
+    }
+
+    #[inline]
+    fn al_source(&self) -> &al::Source {
+        &self.source().source
     }
 
     fn groupid(&self) -> Option<AudioGroupRef> {
@@ -774,13 +804,13 @@ impl Audio {
 
     fn is_state(&self, state: ALenum) -> bool {
         check_audio!(self);
-        self.source().get_parameter_i32(AL_SOURCE_STATE) == state
+        self.al_source().get_parameter_i32(AL_SOURCE_STATE) == state
     }
 
     pub fn play(&self) {
         check_audio!(self);
         unsafe {
-            alSourcePlay(self.source().raw());
+            alSourcePlay(self.al_source().raw());
         }
     }
 
@@ -792,7 +822,7 @@ impl Audio {
     pub fn pause(&self) {
         check_audio!(self);
         unsafe {
-            alSourcePause(self.source().raw());
+            alSourcePause(self.al_source().raw());
         }
     }
 
@@ -804,7 +834,7 @@ impl Audio {
     pub fn stop(&self) {
         check_audio!(self);
         unsafe {
-            alSourceStop(self.source().raw());
+            alSourceStop(self.al_source().raw());
         }
     }
 
@@ -816,151 +846,140 @@ impl Audio {
     pub fn rewind(&self) {
         check_audio!(self);
         unsafe {
-            alSourceRewind(self.source().raw());
+            alSourceRewind(self.al_source().raw());
         }
     }
 
     pub fn seek(&self, offset: f32, unit: AudioSeek) {
         check_audio!(self);
         match unit {
-            AudioSeek::Seconds => self.source().parameter_f32(AL_SEC_OFFSET, offset),
-            AudioSeek::Samples => self.source().parameter_f32(AL_SAMPLE_OFFSET, offset),
+            AudioSeek::Seconds => self.al_source().parameter_f32(AL_SEC_OFFSET, offset),
+            AudioSeek::Samples => self.al_source().parameter_f32(AL_SAMPLE_OFFSET, offset),
         }
     }
 
     pub fn tell(&self, unit: AudioSeek) -> f32 {
         check_audio!(self);
         match unit {
-            AudioSeek::Seconds => self.source().get_parameter_f32(AL_SEC_OFFSET),
-            AudioSeek::Samples => self.source().get_parameter_f32(AL_SAMPLE_OFFSET),
+            AudioSeek::Seconds => self.al_source().get_parameter_f32(AL_SEC_OFFSET),
+            AudioSeek::Samples => self.al_source().get_parameter_f32(AL_SAMPLE_OFFSET),
         }
     }
 
     pub fn set_volume(&mut self, vol: f32) {
         check_audio!(self);
         let master = AUDIO.volume.read().unwrap().volume;
-        self.source().parameter_f32(AL_GAIN, master * vol);
-        match self {
-            Self::Static(this) | Self::LuaStatic(this) => {
-                this.volume = vol;
-            }
-            Self::LuaStream(this) => {
-                this.volume = vol;
-            }
-        }
+        let src = self.source_mut();
+        src.source.parameter_f32(AL_GAIN, master * vol);
+        src.volume = vol;
     }
 
     pub fn set_volume_raw(&mut self, vol: f32) {
         check_audio!(self);
-        self.source().parameter_f32(AL_GAIN, vol);
-        match self {
-            Self::Static(this) | Self::LuaStatic(this) => {
-                this.volume = vol;
-            }
-            Self::LuaStream(this) => {
-                this.volume = vol;
-            }
-        }
+        let src = self.source_mut();
+        src.source.parameter_f32(AL_GAIN, vol);
+        src.volume = vol;
     }
 
     pub fn set_gain(&self, vol: f32) {
         check_audio!(self);
-        self.source().parameter_f32(AL_GAIN, vol);
+        self.al_source().parameter_f32(AL_GAIN, vol);
     }
 
     pub fn volume(&self) -> f32 {
         check_audio!(self);
-        match self {
-            Self::Static(this) | Self::LuaStatic(this) => this.volume,
-            Self::LuaStream(this) => this.volume,
-        }
+        self.source().volume
     }
 
     pub fn set_relative(&self, relative: bool) {
         check_audio!(self);
-        self.source()
+        self.al_source()
             .parameter_i32(AL_SOURCE_RELATIVE, relative as i32);
     }
 
     pub fn relative(&self) -> bool {
         check_audio!(self);
-        self.source().get_parameter_i32(AL_SOURCE_RELATIVE) != 0
+        self.al_source().get_parameter_i32(AL_SOURCE_RELATIVE) != 0
     }
 
     pub fn set_position(&self, pos: Vector2<f32>) {
         check_audio!(self);
-        self.source().parameter_3_f32(AL_POSITION, pos.x, pos.y, 0.);
+        self.al_source()
+            .parameter_3_f32(AL_POSITION, pos.x, pos.y, 0.);
     }
 
     pub fn position(&self) -> Vector2<f32> {
         check_audio!(self);
-        let v3 = Vector3::from(self.source().get_parameter_3_f32(AL_POSITION));
+        let v3 = Vector3::from(self.al_source().get_parameter_3_f32(AL_POSITION));
         Vector2::new(v3.x, v3.y)
     }
 
     pub fn set_position_3d(&self, pos: Vector3<f32>) {
         check_audio!(self);
-        self.source()
+        self.al_source()
             .parameter_3_f32(AL_POSITION, pos.x, pos.y, pos.z);
     }
 
     pub fn position_3d(&self) -> Vector3<f32> {
         check_audio!(self);
-        Vector3::from(self.source().get_parameter_3_f32(AL_POSITION))
+        Vector3::from(self.al_source().get_parameter_3_f32(AL_POSITION))
     }
 
     pub fn set_velocity(&self, pos: Vector2<f32>) {
         check_audio!(self);
-        self.source().parameter_3_f32(AL_VELOCITY, pos.x, pos.y, 0.);
+        self.al_source()
+            .parameter_3_f32(AL_VELOCITY, pos.x, pos.y, 0.);
     }
 
     pub fn velocity(&self) -> Vector2<f32> {
         check_audio!(self);
-        let v3 = Vector3::from(self.source().get_parameter_3_f32(AL_VELOCITY));
+        let v3 = Vector3::from(self.al_source().get_parameter_3_f32(AL_VELOCITY));
         Vector2::new(v3.x, v3.y)
     }
 
     pub fn set_velocity_3d(&self, pos: Vector3<f32>) {
         check_audio!(self);
-        self.source()
+        self.al_source()
             .parameter_3_f32(AL_VELOCITY, pos.x, pos.y, pos.z);
     }
 
     pub fn velocity_3d(&self) -> Vector3<f32> {
         check_audio!(self);
-        Vector3::from(self.source().get_parameter_3_f32(AL_VELOCITY))
+        Vector3::from(self.al_source().get_parameter_3_f32(AL_VELOCITY))
     }
 
     pub fn set_looping(&self, looping: bool) {
         check_audio!(self);
-        self.source().parameter_i32(AL_LOOPING, looping as i32);
+        self.al_source().parameter_i32(AL_LOOPING, looping as i32);
     }
 
     pub fn looping(&self) -> bool {
         check_audio!(self);
-        self.source().get_parameter_i32(AL_LOOPING) != 0
+        self.al_source().get_parameter_i32(AL_LOOPING) != 0
     }
 
-    pub fn set_pitch(&self, pitch: f32) {
+    pub fn set_pitch(&mut self, pitch: f32) {
         check_audio!(self);
-        self.source().parameter_f32(AL_PITCH, pitch);
+        let src = self.source_mut();
+        src.source.parameter_f32(AL_PITCH, pitch);
+        src.pitch = pitch;
     }
 
     pub fn pitch(&self) -> f32 {
         check_audio!(self);
-        self.source().get_parameter_f32(AL_PITCH)
+        self.source().pitch
     }
 
     pub fn set_attenuation_distances(&self, reference: f32, max: f32) {
         check_audio!(self);
-        let src = self.source();
+        let src = self.al_source();
         src.parameter_f32(AL_REFERENCE_DISTANCE, reference);
         src.parameter_f32(AL_MAX_DISTANCE, max);
     }
 
     pub fn attenuation_distances(&self) -> (f32, f32) {
         check_audio!(self);
-        let src = self.source();
+        let src = self.al_source();
         (
             src.get_parameter_f32(AL_REFERENCE_DISTANCE),
             src.get_parameter_f32(AL_MAX_DISTANCE),
@@ -969,17 +988,18 @@ impl Audio {
 
     pub fn set_rolloff(&self, rolloff: f32) {
         check_audio!(self);
-        self.source().parameter_f32(AL_ROLLOFF_FACTOR, rolloff);
+        self.al_source().parameter_f32(AL_ROLLOFF_FACTOR, rolloff);
     }
 
     pub fn rolloff(&self) -> f32 {
         check_audio!(self);
-        self.source().get_parameter_f32(AL_ROLLOFF_FACTOR)
+        self.al_source().get_parameter_f32(AL_ROLLOFF_FACTOR)
     }
 
     pub fn set_air_absorption_factor(&self, value: f32) {
         check_audio!(self);
-        self.source().parameter_f32(AL_AIR_ABSORPTION_FACTOR, value);
+        self.al_source()
+            .parameter_f32(AL_AIR_ABSORPTION_FACTOR, value);
     }
 }
 pub struct AudioBuilder {
@@ -1210,9 +1230,9 @@ impl AudioGroupRef {
 
     fn reset_speed(group: &AudioGroup) {
         let speed = AUDIO.speed.load(Ordering::Relaxed);
-        let voices = AUDIO.voices.lock().unwrap();
+        let mut voices = AUDIO.voices.lock().unwrap();
         for v in group.voices.iter() {
-            if let Some(voice) = voices.get(v.0) {
+            if let Some(voice) = voices.get_mut(v.0) {
                 if group.speed_affects {
                     voice.set_pitch(group.pitch * speed);
                 } else {
@@ -1491,7 +1511,7 @@ impl AudioSystem {
 
     pub fn set_speed(&self, speed: f32) {
         self.speed.store(speed, Ordering::Relaxed);
-        for (_, v) in self.voices.lock().unwrap().iter() {
+        for (_, v) in self.voices.lock().unwrap().iter_mut() {
             if v.groupid().is_none() {
                 v.set_pitch(speed);
             }
@@ -1522,7 +1542,7 @@ impl AudioSystem {
                     // We always lock groups first
                     let mut groups = AUDIO.groups.lock().unwrap();
                     let mut voices = AUDIO.voices.lock().unwrap();
-                    if let Some((vid, v)) = voices.iter().find(|(_, x)| x.source().raw() == id) {
+                    if let Some((vid, v)) = voices.iter().find(|(_, x)| x.al_source().raw() == id) {
                         // Remove from group too if it has one
                         if let Some(gid) = v.groupid() {
                             let group = &mut groups[gid.0];
@@ -2215,7 +2235,7 @@ impl UserData for LuaAudioRef {
                         } else {
                             AL_EFFECTSLOT_NULL
                         };
-                        this.source().parameter_3_i32(
+                        this.al_source().parameter_3_i32(
                             AL_AUXILIARY_SEND_FILTER,
                             slot,
                             0,
@@ -2678,7 +2698,7 @@ pub extern "C" fn sound_volume(volume: c_double) {
     for (_, v) in voices.iter() {
         match v {
             Audio::Static(_this) | Audio::LuaStatic(_this) => {
-                v.source().parameter_f32(AL_GAIN, master * v.volume())
+                v.al_source().parameter_f32(AL_GAIN, master * v.volume())
             }
             _ => (),
         }
