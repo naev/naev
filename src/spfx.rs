@@ -61,7 +61,7 @@ struct LuaSpfx {
     pos: Option<Vec2>,
     vel: Option<Vec2>,
     radius: Option<f64>,
-    sfx: Option<audio::AudioRef>,
+    sfx: Option<audio::LuaAudioRef>,
     /// Inherited Lua environment
     env: LuaEnv,
     data: mlua::Table,
@@ -153,7 +153,7 @@ pub fn update(dt: f64) {
             spfx.ttl -= dt;
             if spfx.ttl <= 0. || spfx.cleanup {
                 // Stop the sound if necessary
-                if let Some(sfx) = spfx.sfx {
+                if let Some(sfx) = &spfx.sfx {
                     let _ = sfx.call(|sfx| {
                         sfx.stop();
                     });
@@ -306,11 +306,15 @@ impl UserData for LuaSpfxRef {
                 let data = lua.create_table()?;
                 let sfx = match sfx {
                     None => None,
-                    Some(audiodata) => Some(
-                        audio::AudioBuilder::new(audio::AudioType::Static)
+                    Some(audiodata) => {
+                        let audio = audio::AudioBuilder::new(audio::AudioType::Static)
                             .data(Some(audiodata.clone()))
-                            .build()?,
-                    ),
+                            .build()?;
+                        Some(audio::LuaAudioRef {
+                            audio,
+                            remove_on_drop: true,
+                        })
+                    }
                 };
                 if let Some(ref sfx) = sfx {
                     sfx.call_mut(|audio| {
@@ -421,8 +425,13 @@ impl UserData for LuaSpfxRef {
          */
         methods.add_method(
             "sfx",
-            |_, this, ()| -> mlua::Result<Option<audio::AudioRef>> {
-                Ok(this.call(|this| this.sfx)?)
+            |_, this, ()| -> mlua::Result<Option<audio::LuaAudioRef>> {
+                Ok(this.call(|this| {
+                    this.sfx.as_ref().map(|sfx| audio::LuaAudioRef {
+                        audio: sfx.audio,
+                        remove_on_drop: false,
+                    })
+                })?)
             },
         );
         /*

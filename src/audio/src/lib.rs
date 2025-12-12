@@ -1126,6 +1126,7 @@ impl AudioVolume {
 }
 
 enum Message {
+    Remove(AudioRef),
     SourceStopped(ALuint),
 }
 static MESSAGES: Mutex<Vec<Message>> = Mutex::new(Vec::new());
@@ -1327,6 +1328,9 @@ impl AudioSystem {
     pub fn execute_messages(&self) {
         for m in MESSAGES.lock().unwrap().drain(..) {
             match m {
+                Message::Remove(id) => {
+                    AUDIO.voices.lock().unwrap().remove(id.0);
+                }
                 Message::SourceStopped(id) => {
                     // We always lock groups first
                     let mut groups = AUDIO.groups.lock().unwrap();
@@ -1417,6 +1421,53 @@ impl AudioRef {
             Some(audio) => Ok(f(audio)),
             None => anyhow::bail!("Audio not found"),
         }
+    }
+}
+
+pub struct LuaAudioRef {
+    pub audio: AudioRef,
+    pub remove_on_drop: bool,
+}
+impl Drop for LuaAudioRef {
+    fn drop(&mut self) {
+        if self.remove_on_drop {
+            MESSAGES.lock().unwrap().push(Message::Remove(self.audio));
+        }
+    }
+}
+impl LuaAudioRef {
+    fn try_clone(&self) -> Result<Self> {
+        let audio = self.audio.try_clone()?;
+        Ok(Self {
+            audio,
+            remove_on_drop: self.remove_on_drop,
+        })
+    }
+
+    /// Like call, but allows specifying a default value.
+    pub fn call_or<S, R>(&self, f: S, d: R) -> anyhow::Result<R>
+    where
+        S: Fn(&Audio) -> R,
+    {
+        self.audio.call_or(f, d)
+    }
+
+    /// Tries to call a function on a voice, returning default value if not available.
+    pub fn call<S, R>(&self, f: S) -> anyhow::Result<R>
+    where
+        S: Fn(&Audio) -> R,
+        R: std::default::Default,
+    {
+        self.audio.call(f)
+    }
+
+    /// Same as call but allows mutable access.
+    pub fn call_mut<S, R>(&self, f: S) -> anyhow::Result<R>
+    where
+        S: Fn(&mut Audio) -> R,
+        R: std::default::Default,
+    {
+        self.audio.call_mut(f)
     }
 }
 
@@ -1512,7 +1563,7 @@ impl UserData for AudioData {
  *
  * @luamod audio
  */
-impl UserData for AudioRef {
+impl UserData for LuaAudioRef {
     fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
         /*@
          * @brief Gets a string representation of an audio.
@@ -1547,24 +1598,28 @@ impl UserData for AudioRef {
             |_,
              (val, streaming): (Either<String, UserDataRef<AudioData>>, bool)|
              -> mlua::Result<Self> {
-                match val {
-                    Either::Left(val) => Ok(AudioBuilder::new(match streaming {
+                let audio = match val {
+                    Either::Left(val) => AudioBuilder::new(match streaming {
                         true => AudioType::LuaStream,
                         false => AudioType::LuaStatic,
                     })
                     .path(Some(&val))
-                    .build()?),
+                    .build()?,
                     Either::Right(val) => {
                         if streaming {
                             return Err(mlua::Error::RuntimeError(
                                 "streaming not supported for AudioData".to_string(),
                             ));
                         }
-                        Ok(AudioBuilder::new(AudioType::LuaStatic)
+                        AudioBuilder::new(AudioType::LuaStatic)
                             .data(Some(val.clone()))
-                            .build()?)
+                            .build()?
                     }
-                }
+                };
+                Ok(Self {
+                    audio,
+                    remove_on_drop: true,
+                })
             },
         );
         /*@
@@ -1574,7 +1629,7 @@ impl UserData for AudioRef {
          *    @luatreturn Audio New audio corresponding to the data.
          * @luafunc clone
          */
-        methods.add_method("clone", |_, this, ()| -> mlua::Result<AudioRef> {
+        methods.add_method("clone", |_, this, ()| -> mlua::Result<Self> {
             Ok(this.try_clone()?)
         });
         /*@
@@ -2230,7 +2285,7 @@ pub fn open_audiodata(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
 }
 
 pub fn open_audio(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
-    Ok(lua.create_proxy::<AudioRef>()?)
+    Ok(lua.create_proxy::<LuaAudioRef>()?)
 }
 
 // Here be C API
