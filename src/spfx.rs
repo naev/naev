@@ -10,7 +10,7 @@ use std::sync::{Mutex, RwLock};
 use thunderdome::Arena;
 
 enum Message {
-    Insert(LuaSpfx),
+    Insert(Box<LuaSpfx>),
     Remove(LuaSpfxRef),
     SetPos(LuaSpfxRef, Vec2),
     SetVel(LuaSpfxRef, Vec2),
@@ -24,7 +24,7 @@ fn process_messages(luaspfx: &mut std::sync::RwLockWriteGuard<'_, Arena<LuaSpfx>
     for msg in MESSAGES.lock().unwrap().drain(..) {
         match msg {
             Message::Insert(data) => {
-                luaspfx.insert(data);
+                luaspfx.insert(*data);
             }
             Message::Remove(id) => {
                 if let Some(spfx) = luaspfx.get_mut(id.into()) {
@@ -345,7 +345,10 @@ impl UserData for LuaSpfxRef {
                 match LUASPFX.try_write() {
                     std::sync::TryLockResult::Ok(mut guard) => Ok(Some(guard.insert(spfx).into())),
                     std::sync::TryLockResult::Err(std::sync::TryLockError::WouldBlock) => {
-                        MESSAGES.lock().unwrap().push(Message::Insert(spfx));
+                        MESSAGES
+                            .lock()
+                            .unwrap()
+                            .push(Message::Insert(Box::new(spfx)));
                         Ok(None)
                     }
                     std::sync::TryLockResult::Err(std::sync::TryLockError::Poisoned(_)) => Err(
