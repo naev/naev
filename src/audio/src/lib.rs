@@ -698,7 +698,8 @@ impl AudioStream {
         let src = ndata::open(&path)?;
 
         let finish = Arc::new(AtomicBool::new(false));
-        let source = Source::new()?;
+        let mut source = Source::new()?;
+        source.g_pitch = None;
 
         let thfsh = finish.clone();
         let mut thdata = StreamData::from_file(source.source.clone(), src)?;
