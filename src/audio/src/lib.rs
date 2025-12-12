@@ -876,17 +876,30 @@ impl Audio {
     pub fn set_volume(&mut self, vol: f32) {
         check_audio!(self);
         let master = AUDIO.volume.read().unwrap().volume;
+        let ingame = self.ingame();
         let src = self.source_mut();
         src.volume = vol;
+        let c = if ingame {
+            1.0 - AUDIO.compression_gain.load(Ordering::Relaxed)
+        } else {
+            1.0
+        };
         src.source
-            .parameter_f32(AL_GAIN, master * src.volume * src.g_volume);
+            .parameter_f32(AL_GAIN, c * master * src.volume * src.g_volume);
     }
 
     pub fn set_volume_raw(&mut self, vol: f32) {
         check_audio!(self);
+        let ingame = self.ingame();
         let src = self.source_mut();
         src.volume = vol;
-        src.source.parameter_f32(AL_GAIN, src.volume);
+        let c = if ingame {
+            1.0 - AUDIO.compression_gain.load(Ordering::Relaxed)
+        } else {
+            1.0
+        };
+        src.source
+            .parameter_f32(AL_GAIN, c * src.volume * src.g_volume);
     }
 
     pub fn set_gain(&self, vol: f32) {
@@ -1321,8 +1334,6 @@ pub struct Volume {
     volume: f32,
     /// Linear volume
     volume_lin: f32,
-    /// Volume speed multiplier
-    volume_speed: f32,
 }
 impl Default for Volume {
     fn default() -> Self {
@@ -1334,7 +1345,6 @@ impl Volume {
         Self {
             volume: 1.,
             volume_lin: 1.,
-            volume_speed: 1.,
         }
     }
 }
@@ -1540,33 +1550,51 @@ impl System {
             vol.volume = 0.0;
         }
 
-        let master = {
-            let vol = self.volume.read().unwrap();
-            vol.volume * vol.volume_speed
-        };
+        let master = self.volume.read().unwrap().volume;
+        let cvol = 1.0 - self.compression_gain.load(Ordering::Relaxed);
         for (_, v) in self.voices.lock().unwrap().iter() {
             match v {
-                Audio::Static(_this) | Audio::LuaStatic(_this) => {
-                    v.al_source().parameter_f32(AL_GAIN, master * v.volume())
+                Audio::Static(this) | Audio::LuaStatic(this) => {
+                    let c = if this.ingame { cvol } else { 1.0 };
+                    this.source
+                        .source
+                        .parameter_f32(AL_GAIN, c * master * v.volume())
                 }
                 _ => (),
             }
         }
     }
 
-    pub fn set_volume_speed(&self, speed: f32) {
-        let mut vol = self.volume.write().unwrap();
-        vol.volume_speed = speed;
-    }
-
     pub fn set_speed(&self, speed: f32) {
         self.speed.store(speed, Ordering::Relaxed);
+
+        // Handle compression
+        let c = ((speed - 2.0) / 10.0).clamp(0.0, 1.0);
+        if c > 0. {
+            let _ = self.compression.call_mut(|sfx| {
+                sfx.set_volume(c);
+                sfx.play();
+            });
+        } else if self.compression_gain.load(Ordering::Relaxed) > 0.0 {
+            let _ = self.compression.call_mut(|sfx| {
+                sfx.set_volume(0.0);
+                sfx.stop();
+            });
+        }
+        self.compression_gain.store(c, Ordering::Relaxed);
+
+        // Update the rest of the voices
+        let master = self.volume.read().unwrap().volume;
+        let cvol = 1.0 - c;
         for (_, v) in self.voices.lock().unwrap().iter_mut() {
             let src = v.source();
             if let Some(pitch) = src.g_pitch {
                 src.source
                     .parameter_f32(AL_PITCH, src.pitch * pitch * speed);
             }
+            let c = if v.ingame() { cvol } else { 1.0 };
+            src.source
+                .parameter_f32(AL_GAIN, c * master * src.volume * src.g_volume);
         }
     }
 
@@ -2784,7 +2812,7 @@ pub extern "C" fn sound_stopAll() {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_setSpeed(speed: c_double) {
-    AUDIO.set_volume_speed(speed as f32);
+    AUDIO.set_speed(speed as f32);
 }
 
 #[unsafe(no_mangle)]
