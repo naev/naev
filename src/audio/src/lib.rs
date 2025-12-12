@@ -1380,7 +1380,7 @@ pub struct System {
     volume: RwLock<Volume>,
     voices: Mutex<Arena<Audio>>,
     groups: Mutex<Arena<Group>>,
-    compression: AudioRef,
+    compression: Option<AudioStatic>,
     compression_gain: AtomicF32,
 }
 impl System {
@@ -1397,7 +1397,7 @@ impl System {
                 volume: Default::default(),
                 voices: Default::default(),
                 groups: Default::default(),
-                compression: thunderdome::Index::DANGLING.into(),
+                compression: None,
                 compression_gain: AtomicF32::new(0.0),
             });
         }
@@ -1515,17 +1515,17 @@ impl System {
         debugx!(gettext("   with {}"), extensions.join(", "));
         debug!("");
 
-        let mut voices = thunderdome::Arena::new();
         // Create the compression sound here
-        let compression = {
+        fn load_compression() -> Result<AudioStatic> {
             let name = Buffer::get_valid_path("snd/sounds/compression").unwrap();
             let data = Arc::new(Buffer::from_path(&name)?);
             // LuaStatic won't get cleaned up if stopped
-            let mut audio = Audio::LuaStatic(AudioStatic::new(&Some(AudioData::Buffer(data)))?);
-            // Don't want pitch to change
-            audio.source_mut().g_pitch = None;
-            voices.insert(audio).into()
-        };
+            let comp = AudioStatic::new(&Some(AudioData::Buffer(data)))?;
+            // Should loop infinitely
+            comp.source.source.parameter_i32(AL_LOOPING, AL_TRUE.into());
+            Ok(comp)
+        }
+        let compression = load_compression().ok();
 
         Ok(System {
             disabled: false,
@@ -1534,7 +1534,7 @@ impl System {
             volume: RwLock::new(Volume::new()),
             speed: AtomicF32::new(1.0),
             freq,
-            voices: Mutex::new(voices),
+            voices: Mutex::new(Default::default()),
             groups: Mutex::new(Default::default()),
             compression,
             compression_gain: AtomicF32::new(0.0),
@@ -1567,24 +1567,26 @@ impl System {
 
     pub fn set_speed(&self, speed: f32) {
         self.speed.store(speed, Ordering::Relaxed);
+        let master = self.volume.read().unwrap().volume;
 
         // Handle compression
         let c = ((speed - 2.0) / 10.0).clamp(0.0, 1.0);
-        if c > 0. {
-            let _ = self.compression.call_mut(|sfx| {
-                sfx.set_volume(c);
-                sfx.play();
-            });
-        } else if self.compression_gain.load(Ordering::Relaxed) > 0.0 {
-            let _ = self.compression.call_mut(|sfx| {
-                sfx.set_volume(0.0);
-                sfx.stop();
-            });
+        if let Some(sfx) = &self.compression {
+            if c > 0. {
+                sfx.source.source.parameter_f32(AL_GAIN, master * c);
+                unsafe {
+                    alSourcePlay(sfx.source.raw());
+                }
+            } else if self.compression_gain.load(Ordering::Relaxed) > 0.0 {
+                sfx.source.source.parameter_f32(AL_GAIN, 0.0);
+                unsafe {
+                    alSourcePause(sfx.source.raw());
+                }
+            }
         }
         self.compression_gain.store(c, Ordering::Relaxed);
 
         // Update the rest of the voices
-        let master = self.volume.read().unwrap().volume;
         let cvol = 1.0 - c;
         for (_, v) in self.voices.lock().unwrap().iter_mut() {
             let src = v.source();
