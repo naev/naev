@@ -1102,7 +1102,7 @@ impl AudioBuilder {
     }
 
     pub fn build(self) -> Result<AudioRef> {
-        if AUDIO.disabled {
+        if AUDIO.disabled || SILENT.load(Ordering::Relaxed) {
             return Ok(thunderdome::Index::DANGLING.into());
         }
 
@@ -1659,6 +1659,7 @@ impl System {
         }
     }
 }
+static SILENT: AtomicBool = AtomicBool::new(false);
 pub static AUDIO: LazyLock<System> = LazyLock::new(|| System::new().unwrap());
 pub static CODECS: LazyLock<symphonia::core::codecs::CodecRegistry> = LazyLock::new(|| {
     let mut codec_registry = symphonia::core::codecs::CodecRegistry::new();
@@ -2899,11 +2900,13 @@ pub extern "C" fn sound_env(env: naevc::SoundEnv_t, param: f64) {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_disabled() -> c_int {
-    0
+    AUDIO.disabled as c_int
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn sound_set_disabled(_disable: c_int) {}
+pub extern "C" fn sound_set_disabled(disable: c_int) {
+    SILENT.store(disable != 0, Ordering::Relaxed);
+}
 
 /*
 pub fn test () {
