@@ -243,11 +243,11 @@ impl ReplayGain {
 }
 
 #[derive(PartialEq, Debug)]
-pub struct AudioBuffer {
+pub struct Buffer {
     name: PathBuf,
     buffer: al::Buffer,
 }
-impl AudioBuffer {
+impl Buffer {
     fn get_valid_path<P: AsRef<Path>>(path: P) -> Option<PathBuf> {
         let path = path.as_ref();
         let ext = path.extension().and_then(|s| s.to_str());
@@ -381,7 +381,7 @@ impl AudioBuffer {
     }
 
     pub fn get(name: &str) -> Option<Arc<Self>> {
-        let name = match AudioBuffer::get_valid_path(name) {
+        let name = match Buffer::get_valid_path(name) {
             Some(name) => name,
             None => {
                 return None;
@@ -401,12 +401,12 @@ impl AudioBuffer {
 
     pub fn get_or_try_load<P: AsRef<Path>>(name: P) -> Result<Arc<Self>> {
         if AUDIO.disabled {
-            return Ok(Arc::new(AudioBuffer {
+            return Ok(Arc::new(Buffer {
                 name: PathBuf::new(),
                 buffer: al::Buffer(0),
             }));
         }
-        let name = AudioBuffer::get_valid_path(&name).context(format!(
+        let name = Buffer::get_valid_path(&name).context(format!(
             "No audio file matching '{}' found",
             name.as_ref().display()
         ))?;
@@ -429,7 +429,7 @@ impl AudioBuffer {
     }
 }
 /// All the shared Static audio data (streaming is separate)
-pub(crate) static AUDIO_BUFFER: LazyLock<Mutex<Vec<Weak<AudioBuffer>>>> =
+pub(crate) static AUDIO_BUFFER: LazyLock<Mutex<Vec<Weak<Buffer>>>> =
     LazyLock::new(|| Mutex::new(Default::default()));
 /// Counter for how many buffers were destroyed
 //pub(crate) static GC_COUNTER: AtomicU32 = AtomicU32::new(0);
@@ -444,7 +444,7 @@ pub enum AudioSeek {
 
 #[derive(Debug, PartialEq, Clone)]
 pub enum AudioData {
-    Buffer(Arc<AudioBuffer>),
+    Buffer(Arc<Buffer>),
 }
 
 #[derive(Debug)]
@@ -455,13 +455,13 @@ pub enum Audio {
 }
 
 #[derive(Debug, PartialEq)]
-pub struct AudioSource {
+pub struct Source {
     // Wrap in an Arc so we can use it with both Stream + Statics
     source: Arc<al::Source>,
     volume: f32,
     pitch: f32,
 }
-impl AudioSource {
+impl Source {
     fn new() -> Result<Self> {
         Ok(Self {
             source: Arc::new(al::Source::new()?),
@@ -478,10 +478,10 @@ impl AudioSource {
 
 #[derive(PartialEq, Debug)]
 pub struct AudioStatic {
-    source: AudioSource,
+    source: Source,
     slot: Option<AuxiliaryEffectSlot>,
     data: Option<AudioData>,
-    groupid: Option<AudioGroupRef>,
+    groupid: Option<GroupRef>,
     ingame: bool,
 }
 impl AudioStatic {
@@ -489,7 +489,7 @@ impl AudioStatic {
         match data {
             Some(AudioData::Buffer(buffer)) => Self::new_buffer(buffer),
             None => Ok(AudioStatic {
-                source: AudioSource::new()?,
+                source: Source::new()?,
                 slot: None,
                 data: None,
                 groupid: None,
@@ -498,8 +498,8 @@ impl AudioStatic {
         }
     }
 
-    fn new_buffer(buffer: &Arc<AudioBuffer>) -> Result<Self> {
-        let source = AudioSource::new()?;
+    fn new_buffer(buffer: &Arc<Buffer>) -> Result<Self> {
+        let source = Source::new()?;
         source
             .source
             .parameter_i32(AL_BUFFER, buffer.raw() as ALint);
@@ -649,7 +649,7 @@ impl StreamData {
 #[allow(dead_code)]
 pub struct AudioStream {
     path: PathBuf,
-    source: AudioSource,
+    source: Source,
     finish: Arc<AtomicBool>,
     thread: std::thread::JoinHandle<Result<()>>,
 }
@@ -684,14 +684,14 @@ impl AudioStream {
     }
 
     pub fn from_path<P: AsRef<Path>>(path: P) -> Result<Self> {
-        let path = AudioBuffer::get_valid_path(&path).context(format!(
+        let path = Buffer::get_valid_path(&path).context(format!(
             "No audio file matching '{}' found",
             path.as_ref().display()
         ))?;
         let src = ndata::open(&path)?;
 
         let finish = Arc::new(AtomicBool::new(false));
-        let source = AudioSource::new()?;
+        let source = Source::new()?;
 
         let thfsh = finish.clone();
         let mut thdata = StreamData::from_file(source.source.clone(), src)?;
@@ -776,14 +776,14 @@ impl Audio {
         }
     }
 
-    fn source(&self) -> &AudioSource {
+    fn source(&self) -> &Source {
         match self {
             Self::Static(this) | Self::LuaStatic(this) => &this.source,
             Self::LuaStream(this) => &this.source,
         }
     }
 
-    fn source_mut(&mut self) -> &mut AudioSource {
+    fn source_mut(&mut self) -> &mut Source {
         match self {
             Self::Static(this) | Self::LuaStatic(this) => &mut this.source,
             Self::LuaStream(this) => &mut this.source,
@@ -795,7 +795,7 @@ impl Audio {
         &self.source().source
     }
 
-    fn groupid(&self) -> Option<AudioGroupRef> {
+    fn groupid(&self) -> Option<GroupRef> {
         match self {
             Self::Static(this) => this.groupid,
             _ => None,
@@ -1010,7 +1010,7 @@ pub struct AudioBuilder {
     path: Option<String>,
     play: bool,
     looping: bool,
-    groupid: Option<AudioGroupRef>,
+    groupid: Option<GroupRef>,
     atype: AudioType,
 }
 impl AudioBuilder {
@@ -1050,7 +1050,7 @@ impl AudioBuilder {
         self
     }
 
-    pub fn buffer(mut self, buffer: Arc<AudioBuffer>) -> Self {
+    pub fn buffer(mut self, buffer: Arc<Buffer>) -> Self {
         self.data = Some(AudioData::Buffer(buffer));
         self.path = None;
         self
@@ -1066,14 +1066,14 @@ impl AudioBuilder {
         self
     }
 
-    fn groupid(mut self, id: Option<AudioGroupRef>) -> Self {
+    fn groupid(mut self, id: Option<GroupRef>) -> Self {
         self.groupid = id;
         self
     }
 
     fn build_static(&self) -> Result<AudioStatic> {
         let audio = if let Some(path) = &self.path {
-            let buf = AudioBuffer::get_or_try_load(path)?;
+            let buf = Buffer::get_or_try_load(path)?;
             AudioStatic::new_buffer(&buf)?
         } else {
             AudioStatic::new(&self.data)?
@@ -1124,16 +1124,16 @@ impl AudioBuilder {
 }
 
 #[derive(Debug, Default)]
-struct AudioGroup {
+struct Group {
     max: usize,
     volume: f32,
     pitch: f32,
     speed_affects: bool,
     voices: Vec<AudioRef>,
 }
-impl AudioGroup {
+impl Group {
     fn new(max: usize) -> Self {
-        AudioGroup {
+        Group {
             max,
             volume: 1.0,
             pitch: 1.0,
@@ -1143,13 +1143,13 @@ impl AudioGroup {
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq)]
-pub struct AudioGroupRef(thunderdome::Index);
-impl AudioGroupRef {
+pub struct GroupRef(thunderdome::Index);
+impl GroupRef {
     pub fn new(max: usize) -> Self {
-        AudioGroupRef(AUDIO.groups.lock().unwrap().insert(AudioGroup::new(max)))
+        GroupRef(AUDIO.groups.lock().unwrap().insert(Group::new(max)))
     }
 
-    pub fn play_buffer(&self, buf: &Arc<AudioBuffer>, looping: bool) -> Option<AudioRef> {
+    pub fn play_buffer(&self, buf: &Arc<Buffer>, looping: bool) -> Option<AudioRef> {
         let groups = AUDIO.groups.lock().unwrap();
         let group = match groups.get(self.0) {
             Some(group) => group,
@@ -1228,7 +1228,7 @@ impl AudioGroupRef {
         Ok(())
     }
 
-    fn reset_speed(group: &AudioGroup) {
+    fn reset_speed(group: &Group) {
         let speed = AUDIO.speed.load(Ordering::Relaxed);
         let mut voices = AUDIO.voices.lock().unwrap();
         for v in group.voices.iter() {
@@ -1297,7 +1297,7 @@ impl AudioGroupRef {
 }
 
 #[derive(Clone, PartialEq, Copy, Debug)]
-pub struct AudioVolume {
+pub struct Volume {
     /// Logarithmic volume
     volume: f32,
     /// Linear volume
@@ -1305,12 +1305,12 @@ pub struct AudioVolume {
     /// Volume speed multiplier
     volume_speed: f32,
 }
-impl Default for AudioVolume {
+impl Default for Volume {
     fn default() -> Self {
         Self::new()
     }
 }
-impl AudioVolume {
+impl Volume {
     pub fn new() -> Self {
         Self {
             volume: 1.,
@@ -1342,17 +1342,17 @@ fn event_callback(event_type: ALenum, object: ALuint, param: ALuint, _message: &
 }
 
 #[allow(dead_code)]
-pub struct AudioSystem {
+pub struct System {
     disabled: bool,
     device: al::Device,
     context: al::Context,
     freq: i32,
     speed: AtomicF32,
-    volume: RwLock<AudioVolume>,
+    volume: RwLock<Volume>,
     voices: Mutex<Arena<Audio>>,
-    groups: Mutex<Arena<AudioGroup>>,
+    groups: Mutex<Arena<Group>>,
 }
-impl AudioSystem {
+impl System {
     pub fn new() -> Result<Self> {
         let nosound = unsafe { naevc::conf.nosound != 0 };
         if nosound {
@@ -1482,11 +1482,11 @@ impl AudioSystem {
         debugx!(gettext("   with {}"), extensions.join(", "));
         debug!("");
 
-        Ok(AudioSystem {
+        Ok(System {
             disabled: false,
             device,
             context,
-            volume: RwLock::new(AudioVolume::new()),
+            volume: RwLock::new(Volume::new()),
             speed: AtomicF32::new(1.0),
             freq,
             voices: Mutex::new(Default::default()),
@@ -1525,7 +1525,7 @@ impl AudioSystem {
         }
     }
 
-    pub fn play_buffer(&self, buf: &Arc<AudioBuffer>) -> Result<AudioRef> {
+    pub fn play_buffer(&self, buf: &Arc<Buffer>) -> Result<AudioRef> {
         AudioBuilder::new(AudioType::Static)
             .buffer(buf.clone())
             .play(true)
@@ -1562,7 +1562,7 @@ impl AudioSystem {
         }
     }
 }
-pub static AUDIO: LazyLock<AudioSystem> = LazyLock::new(|| AudioSystem::new().unwrap());
+pub static AUDIO: LazyLock<System> = LazyLock::new(|| System::new().unwrap());
 pub static CODECS: LazyLock<symphonia::core::codecs::CodecRegistry> = LazyLock::new(|| {
     let mut codec_registry = symphonia::core::codecs::CodecRegistry::new();
     symphonia::default::register_enabled_codecs(&mut codec_registry);
@@ -1703,7 +1703,7 @@ impl UserData for AudioData {
          * @luafunc new
          */
         methods.add_function("new", |_, filename: String| -> mlua::Result<Self> {
-            let buf = AudioBuffer::get_or_try_load(&filename)?;
+            let buf = Buffer::get_or_try_load(&filename)?;
             Ok(AudioData::Buffer(buf))
         });
         /*@
@@ -2503,7 +2503,7 @@ use std::ffi::{CStr, c_char, c_double, c_int, c_void};
 static_assertions::assert_eq_size!(AudioRef, *const c_void);
 
 #[unsafe(no_mangle)]
-pub extern "C" fn sound_get(name: *const c_char) -> *const AudioBuffer {
+pub extern "C" fn sound_get(name: *const c_char) -> *const Buffer {
     if AUDIO.disabled {
         return std::ptr::null();
     }
@@ -2512,8 +2512,8 @@ pub extern "C" fn sound_get(name: *const c_char) -> *const AudioBuffer {
         return std::ptr::null();
     }
     let name = unsafe { CStr::from_ptr(name).to_string_lossy() };
-    match AudioBuffer::get_valid_path(format!("snd/sounds/{name}")) {
-        Some(path) => match AudioBuffer::get_or_try_load(&path) {
+    match Buffer::get_valid_path(format!("snd/sounds/{name}")) {
+        Some(path) => match Buffer::get_or_try_load(&path) {
             Ok(buffer) => Arc::into_raw(buffer),
             Err(e) => {
                 warn_err!(e);
@@ -2525,7 +2525,7 @@ pub extern "C" fn sound_get(name: *const c_char) -> *const AudioBuffer {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn sound_getLength(sound: *const AudioBuffer) -> c_double {
+pub extern "C" fn sound_getLength(sound: *const Buffer) -> c_double {
     if AUDIO.disabled {
         return 0.0;
     }
@@ -2538,7 +2538,7 @@ pub extern "C" fn sound_getLength(sound: *const AudioBuffer) -> c_double {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn sound_play(sound: *const AudioBuffer) -> *const c_void {
+pub extern "C" fn sound_play(sound: *const Buffer) -> *const c_void {
     if AUDIO.disabled {
         return std::ptr::null();
     }
@@ -2561,7 +2561,7 @@ pub extern "C" fn sound_play(sound: *const AudioBuffer) -> *const c_void {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_playPos(
-    sound: *const AudioBuffer,
+    sound: *const Buffer,
     px: c_double,
     py: c_double,
     vx: c_double,
@@ -2737,13 +2737,13 @@ pub extern "C" fn sound_setSpeed(speed: c_double) {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_createGroup(size: c_int) -> *const c_void {
-    AudioGroupRef::new(size as usize).into_ptr()
+    GroupRef::new(size as usize).into_ptr()
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_playGroup(
     group: *const c_void,
-    sound: *const AudioBuffer,
+    sound: *const Buffer,
     once: c_int,
 ) -> *const c_void {
     if sound.is_null() {
@@ -2754,7 +2754,7 @@ pub extern "C" fn sound_playGroup(
         Arc::from_raw(sound)
     };
 
-    let groupid = AudioGroupRef::from_ptr(group);
+    let groupid = GroupRef::from_ptr(group);
     match groupid.play_buffer(&sound, once != 0) {
         Some(v) => unsafe { std::mem::transmute::<AudioRef, *const c_void>(v) },
         None => std::ptr::null(),
@@ -2763,7 +2763,7 @@ pub extern "C" fn sound_playGroup(
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_stopGroup(group: *const c_void) {
-    let groupid = AudioGroupRef::from_ptr(group);
+    let groupid = GroupRef::from_ptr(group);
     if let Err(e) = groupid.stop() {
         warn_err!(e);
     }
@@ -2771,7 +2771,7 @@ pub extern "C" fn sound_stopGroup(group: *const c_void) {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_pauseGroup(group: *const c_void) {
-    let groupid = AudioGroupRef::from_ptr(group);
+    let groupid = GroupRef::from_ptr(group);
     if let Err(e) = groupid.pause() {
         warn_err!(e);
     }
@@ -2779,7 +2779,7 @@ pub extern "C" fn sound_pauseGroup(group: *const c_void) {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_resumeGroup(group: *const c_void) {
-    let groupid = AudioGroupRef::from_ptr(group);
+    let groupid = GroupRef::from_ptr(group);
     if let Err(e) = groupid.resume() {
         warn_err!(e);
     }
@@ -2787,7 +2787,7 @@ pub extern "C" fn sound_resumeGroup(group: *const c_void) {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_speedGroup(group: *const c_void, enable: c_int) {
-    let groupid = AudioGroupRef::from_ptr(group);
+    let groupid = GroupRef::from_ptr(group);
     if let Err(e) = groupid.set_speed_affects(enable != 0) {
         warn_err!(e);
     }
@@ -2795,7 +2795,7 @@ pub extern "C" fn sound_speedGroup(group: *const c_void, enable: c_int) {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_volumeGroup(group: *const c_void, volume: c_double) {
-    let groupid = AudioGroupRef::from_ptr(group);
+    let groupid = GroupRef::from_ptr(group);
     if let Err(e) = groupid.set_volume(volume as f32) {
         warn_err!(e);
     }
@@ -2803,7 +2803,7 @@ pub extern "C" fn sound_volumeGroup(group: *const c_void, volume: c_double) {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_pitchGroup(group: *const c_void, pitch: c_double) {
-    let groupid = AudioGroupRef::from_ptr(group);
+    let groupid = GroupRef::from_ptr(group);
     if let Err(e) = groupid.set_pitch(pitch as f32) {
         warn_err!(e);
     }
@@ -2857,7 +2857,7 @@ pub extern "C" fn sound_set_disabled(_disable: c_int) {}
 /*
 pub fn test () {
     audio::init().unwrap();
-    let buf = AudioBuffer::get_or_try_load( "snd/sounds/activate1.ogg" )?;
+    let buf = Buffer::get_or_try_load( "snd/sounds/activate1.ogg" )?;
     dbg!( buf.duration( AudioSeek::Seconds ) );
     let audioref = AUDIO.play_buffer(&buf)?;
         audioref.call( |a| {
