@@ -659,7 +659,6 @@ impl AudioStream {
                 }
             }
 
-            // We're just polling now, TODO something based on channels
             std::thread::sleep(STREAMING_SLEEP_DELAY);
         }
     }
@@ -990,6 +989,7 @@ pub struct AudioBuilder {
     path: Option<String>,
     play: bool,
     looping: bool,
+    groupid: Option<thunderdome::Index>,
     atype: AudioType,
 }
 impl AudioBuilder {
@@ -1002,6 +1002,7 @@ impl AudioBuilder {
             path: None,
             play: false,
             looping: false,
+            groupid: None,
             atype,
         }
     }
@@ -1044,6 +1045,11 @@ impl AudioBuilder {
         self
     }
 
+    fn groupid(mut self, id: Option<thunderdome::Index>) -> Self {
+        self.groupid = id;
+        self
+    }
+
     fn build_static(&self) -> Result<AudioStatic> {
         let audio = if let Some(path) = &self.path {
             let buf = AudioBuffer::get_or_try_load(path)?;
@@ -1070,7 +1076,11 @@ impl AudioBuilder {
         let looping = self.looping;
         let play = self.play;
         let mut audio = match self.atype {
-            AudioType::Static => Audio::Static(self.build_static()?),
+            AudioType::Static => {
+                let mut audio = self.build_static()?;
+                audio.groupid = self.groupid;
+                Audio::Static(audio)
+            }
             AudioType::LuaStatic => Audio::LuaStatic(self.build_static()?),
             AudioType::LuaStream => Audio::LuaStream(self.build_stream()?),
         };
@@ -2577,6 +2587,7 @@ pub extern "C" fn sound_playGroup(
         .buffer(sound.clone())
         .play(true)
         .looping(once != 0)
+        .groupid(Some(groupid))
         .build()
     {
         Ok(v) => v,
@@ -2596,6 +2607,7 @@ pub extern "C" fn sound_stopGroup(group: *const c_void) {
     let voices = AUDIO.voices.lock().unwrap();
     for v in group.voices.drain(..) {
         if let Some(voice) = voices.get(v.0) {
+            // Will get removed from voices too automatically
             voice.stop();
         }
     }
