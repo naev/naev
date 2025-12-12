@@ -1234,6 +1234,13 @@ impl GroupRef {
                 voice.pause();
             }
         }
+        if let Some(sfx) = &AUDIO.compression
+            && sfx.source.source.get_parameter_i32(AL_SOURCE_STATE) == AL_PLAYING
+        {
+            unsafe {
+                alSourcePlay(sfx.source.raw());
+            }
+        }
         Ok(())
     }
 
@@ -1249,6 +1256,13 @@ impl GroupRef {
                 && voice.is_paused()
             {
                 voice.play();
+            }
+        }
+        if let Some(sfx) = &AUDIO.compression
+            && sfx.source.source.get_parameter_i32(AL_SOURCE_STATE) == AL_PAUSED
+        {
+            unsafe {
+                alSourcePlay(sfx.source.raw());
             }
         }
         Ok(())
@@ -1572,16 +1586,20 @@ impl System {
 
         // Handle compression
         let c = ((speed - 2.0) / 10.0).clamp(0.0, 1.0);
+        dbg!(c, master);
         if let Some(sfx) = &self.compression {
+            let als = &sfx.source.source;
             if c > 0. {
-                sfx.source.source.parameter_f32(AL_GAIN, master * c);
-                unsafe {
-                    alSourcePlay(sfx.source.raw());
+                als.parameter_f32(AL_GAIN, master * c);
+                if als.get_parameter_i32(AL_SOURCE_STATE) != AL_PLAYING {
+                    unsafe {
+                        alSourcePlay(als.raw());
+                    }
                 }
             } else if self.compression_gain.load(Ordering::Relaxed) > 0.0 {
-                sfx.source.source.parameter_f32(AL_GAIN, 0.0);
+                als.parameter_f32(AL_GAIN, 0.0);
                 unsafe {
-                    alSourcePause(sfx.source.raw());
+                    alSourceStop(als.raw());
                 }
             }
         }
