@@ -167,12 +167,15 @@ pub fn update(dt: f64) {
                 if let Some(sfx) = &spfx.sfx {
                     // TODO move Audio ownership to LuaSpfx
                     let pos = pos.into_vector2();
-                    sfx.call(|sfx| {
-                        sfx.set_position(pos.cast::<f32>());
-                    })
-                    .unwrap_or_else(|e| {
-                        warn_err!(e);
-                    });
+                    if sfx
+                        .call(|sfx| {
+                            sfx.set_position(pos.cast::<f32>());
+                        })
+                        .is_err()
+                    {
+                        // Remove if errored, most likely not found
+                        spfx.sfx = None;
+                    }
                 }
             }
             true
