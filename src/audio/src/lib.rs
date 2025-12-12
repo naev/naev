@@ -460,6 +460,9 @@ pub struct Source {
     source: Arc<al::Source>,
     volume: f32,
     pitch: f32,
+    // Group values
+    g_volume: f32,
+    g_pitch: Option<f32>,
 }
 impl Source {
     fn new() -> Result<Self> {
@@ -467,6 +470,8 @@ impl Source {
             source: Arc::new(al::Source::new()?),
             volume: 1.,
             pitch: 1.,
+            g_volume: 1.,
+            g_pitch: Some(1.),
         })
     }
 
@@ -870,15 +875,16 @@ impl Audio {
         check_audio!(self);
         let master = AUDIO.volume.read().unwrap().volume;
         let src = self.source_mut();
-        src.source.parameter_f32(AL_GAIN, master * vol);
         src.volume = vol;
+        src.source
+            .parameter_f32(AL_GAIN, master * src.volume * src.g_volume);
     }
 
     pub fn set_volume_raw(&mut self, vol: f32) {
         check_audio!(self);
         let src = self.source_mut();
-        src.source.parameter_f32(AL_GAIN, vol);
         src.volume = vol;
+        src.source.parameter_f32(AL_GAIN, src.volume);
     }
 
     pub fn set_gain(&self, vol: f32) {
@@ -961,8 +967,12 @@ impl Audio {
     pub fn set_pitch(&mut self, pitch: f32) {
         check_audio!(self);
         let src = self.source_mut();
-        src.source.parameter_f32(AL_PITCH, pitch);
         src.pitch = pitch;
+        if let Some(pitch) = src.g_pitch {
+            let speed = AUDIO.speed.load(Ordering::Relaxed);
+            src.source
+                .parameter_f32(AL_PITCH, src.pitch * pitch * speed);
+        }
     }
 
     pub fn pitch(&self) -> f32 {
@@ -1231,12 +1241,16 @@ impl GroupRef {
     fn reset_speed(group: &Group) {
         let speed = AUDIO.speed.load(Ordering::Relaxed);
         let mut voices = AUDIO.voices.lock().unwrap();
+        let pitch = group.speed_affects.then_some(group.pitch);
         for v in group.voices.iter() {
             if let Some(voice) = voices.get_mut(v.0) {
-                if group.speed_affects {
-                    voice.set_pitch(group.pitch * speed);
+                let src = voice.source_mut();
+                src.g_pitch = pitch;
+                if let Some(pitch) = src.g_pitch {
+                    src.source
+                        .parameter_f32(AL_PITCH, src.pitch * pitch * speed);
                 } else {
-                    voice.set_pitch(1.);
+                    src.source.parameter_f32(AL_PITCH, 1.);
                 }
             }
         }
@@ -1266,7 +1280,10 @@ impl GroupRef {
         for v in group.voices.iter() {
             if let Some(voice) = voices.get_mut(v.0) {
                 // TODO sound speed stuff
-                voice.set_volume_raw(master * group.volume);
+                let src = voice.source_mut();
+                src.g_volume = group.volume;
+                src.source
+                    .parameter_f32(AL_GAIN, master * src.volume * src.g_volume);
             }
         }
         Ok(())
@@ -1512,8 +1529,10 @@ impl System {
     pub fn set_speed(&self, speed: f32) {
         self.speed.store(speed, Ordering::Relaxed);
         for (_, v) in self.voices.lock().unwrap().iter_mut() {
-            if v.groupid().is_none() {
-                v.set_pitch(speed);
+            let src = v.source();
+            if let Some(pitch) = src.g_pitch {
+                src.source
+                    .parameter_f32(AL_PITCH, src.pitch * pitch * speed);
             }
         }
     }
