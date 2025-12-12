@@ -462,6 +462,8 @@ pub struct Source {
     pitch: f32,
     // Group values
     g_volume: f32,
+    // Pitch as None means we don't want it to change, while having other values indicates it
+    // should change.
     g_pitch: Option<f32>,
 }
 impl Source {
@@ -1368,6 +1370,8 @@ pub struct System {
     volume: RwLock<Volume>,
     voices: Mutex<Arena<Audio>>,
     groups: Mutex<Arena<Group>>,
+    compression: AudioRef,
+    compression_gain: AtomicF32,
 }
 impl System {
     pub fn new() -> Result<Self> {
@@ -1383,6 +1387,8 @@ impl System {
                 volume: Default::default(),
                 voices: Default::default(),
                 groups: Default::default(),
+                compression: thunderdome::Index::DANGLING.into(),
+                compression_gain: AtomicF32::new(0.0),
             });
         }
 
@@ -1499,6 +1505,18 @@ impl System {
         debugx!(gettext("   with {}"), extensions.join(", "));
         debug!("");
 
+        let mut voices = thunderdome::Arena::new();
+        // Create the compression sound here
+        let compression = {
+            let name = Buffer::get_valid_path("snd/sounds/compression").unwrap();
+            let data = Arc::new(Buffer::from_path(&name)?);
+            // LuaStatic won't get cleaned up if stopped
+            let mut audio = Audio::LuaStatic(AudioStatic::new(&Some(AudioData::Buffer(data)))?);
+            // Don't want pitch to change
+            audio.source_mut().g_pitch = None;
+            voices.insert(audio).into()
+        };
+
         Ok(System {
             disabled: false,
             device,
@@ -1506,8 +1524,10 @@ impl System {
             volume: RwLock::new(Volume::new()),
             speed: AtomicF32::new(1.0),
             freq,
-            voices: Mutex::new(Default::default()),
+            voices: Mutex::new(voices),
             groups: Mutex::new(Default::default()),
+            compression,
+            compression_gain: AtomicF32::new(0.0),
         })
     }
 
@@ -1518,6 +1538,19 @@ impl System {
             vol.volume = 1.0 / 2.0_f32.powf((1.0 - volume) * 8.0);
         } else {
             vol.volume = 0.0;
+        }
+
+        let master = {
+            let vol = self.volume.read().unwrap();
+            vol.volume * vol.volume_speed
+        };
+        for (_, v) in self.voices.lock().unwrap().iter() {
+            match v {
+                Audio::Static(_this) | Audio::LuaStatic(_this) => {
+                    v.al_source().parameter_f32(AL_GAIN, master * v.volume())
+                }
+                _ => (),
+            }
         }
     }
 
@@ -1549,6 +1582,51 @@ impl System {
             .buffer(buf.clone())
             .play(true)
             .build()
+    }
+
+    pub fn pause(&self) {
+        let voices = self.voices.lock().unwrap();
+        for (_, v) in voices.iter() {
+            match v {
+                Audio::Static(_this) | Audio::LuaStatic(_this) => {
+                    if v.is_playing() {
+                        v.pause();
+                    }
+                }
+                _ => (),
+            }
+        }
+    }
+
+    pub fn resume(&self) {
+        let voices = self.voices.lock().unwrap();
+        for (_, v) in voices.iter() {
+            match v {
+                Audio::Static(_this) | Audio::LuaStatic(_this) => {
+                    if v.is_paused() {
+                        v.play()
+                    }
+                }
+                _ => (),
+            }
+        }
+    }
+
+    pub fn stop(&self) {
+        let mut voices = AUDIO.voices.lock().unwrap();
+        voices.retain(|_, v| match v {
+            Audio::Static(_this) => {
+                v.stop();
+                // When stopped should be dropped
+                false
+            }
+            Audio::LuaStatic(_this) => {
+                v.stop();
+                // LuaStatic exist until garbage collected
+                true
+            }
+            _ => true,
+        });
     }
 
     pub fn execute_messages(&self) {
@@ -2675,53 +2753,17 @@ pub extern "C" fn sound_update(dt: c_double) -> i32 {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_pause() {
-    let voices = AUDIO.voices.lock().unwrap();
-    for (_, v) in voices.iter() {
-        match v {
-            Audio::Static(_this) | Audio::LuaStatic(_this) => {
-                if v.is_playing() {
-                    v.pause();
-                }
-            }
-            _ => (),
-        }
-    }
+    AUDIO.pause();
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_resume() {
-    let voices = AUDIO.voices.lock().unwrap();
-    for (_, v) in voices.iter() {
-        match v {
-            Audio::Static(_this) | Audio::LuaStatic(_this) => {
-                if v.is_paused() {
-                    v.play()
-                }
-            }
-            _ => (),
-        }
-    }
+    AUDIO.resume();
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_volume(volume: c_double) {
-    if AUDIO.disabled {
-        return;
-    }
     AUDIO.set_volume(volume as f32);
-    let master = {
-        let vol = AUDIO.volume.read().unwrap();
-        vol.volume * vol.volume_speed
-    };
-    let voices = AUDIO.voices.lock().unwrap();
-    for (_, v) in voices.iter() {
-        match v {
-            Audio::Static(_this) | Audio::LuaStatic(_this) => {
-                v.al_source().parameter_f32(AL_GAIN, master * v.volume())
-            }
-            _ => (),
-        }
-    }
 }
 
 #[unsafe(no_mangle)]
@@ -2736,17 +2778,7 @@ pub extern "C" fn sound_getVolumeLog() -> c_double {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_stopAll() {
-    if AUDIO.disabled {
-        return;
-    }
-    let mut voices = AUDIO.voices.lock().unwrap();
-    voices.retain(|_, v| match v {
-        Audio::Static(_this) | Audio::LuaStatic(_this) => {
-            v.stop();
-            false
-        }
-        _ => true,
-    });
+    AUDIO.stop();
 }
 
 #[unsafe(no_mangle)]
