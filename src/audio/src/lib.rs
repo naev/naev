@@ -1249,7 +1249,7 @@ impl GroupRef {
             None => anyhow::bail!("group not found"),
         };
         group.speed_affects = enable;
-        Self::reset_speed(&group);
+        Self::reset_speed(group);
         Ok(())
     }
 
@@ -1279,7 +1279,7 @@ impl GroupRef {
             None => anyhow::bail!("group not found"),
         };
         group.pitch = pitch;
-        Self::reset_speed(&group);
+        Self::reset_speed(group);
         Ok(())
     }
 
