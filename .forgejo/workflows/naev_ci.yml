@@ -135,12 +135,24 @@ jobs:
         run: |
           meson compile -C build
 
+      - name: Meson Test (luacheck)
+        id: luacheck
+        run: |
+          meson test luacheck -C build
+
       - name: Upload Compile Log
         uses: actions/upload-artifact@v3
         if: ${{ success() || steps.compile.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-compile-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
+
+      - name: Upload Luacheck Log
+        uses: actions/upload-artifact@v3
+        if: ${{ success() || steps.luacheck.outcome == 'failure' }}
+        with:
+          name: ${{ matrix.image }}-${{ github.sha }}-luacheck-log
+          path: ${{ github.workspace }}/build/meson-logs/testlog.txt
 
       - name: Test Install
         id: install
@@ -354,68 +366,14 @@ jobs:
           name: ${{ matrix.image }}.${{ matrix.arch }}-${{ github.sha }}-install-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
-  "Luacheck":
-    runs-on: naev-steamruntime
+  "Documentation":
+    runs-on: naev-docs
     needs:
       [
-        Package_Source,
         Linux_Compile_Naev,
         Windows_Compile_Naev,
         Darwin_Compile_Naev,
       ]
-
-    steps:
-      - name: Get Source
-        uses: actions/download-artifact@v3
-        with:
-          name: naev-dist-${{ github.sha }}
-
-      - name: Extract Source
-        run: |
-          mkdir source
-          tar -xf naev-*.tar.xz -C source --strip 1
-
-      - name: Cache Cargo home
-        uses: actions/cache@v3
-        with:
-          path: build/cargo-home
-          key: cargo-${{ runner.os }}-luacheck-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
-          restore-keys: |
-            cargo-${{ runner.os }}-luacheck-
-            cargo-${{ runner.os }}-
-
-      - name: Meson Setup
-        id: setup
-        run: |
-          meson setup build source \
-              --native-file='source/utils/build/linux.ini' \
-              --buildtype=debug \
-              -Dinstaller=false \
-              -Db_lto=true \
-              -Dauto_features=enabled \
-              -Ddocs_c=disabled \
-              -Ddocs_lua=disabled
-
-      - name: Meson Compile
-        id: compile
-        run: |
-          meson compile -C build
-
-      - name: Meson Test
-        id: test
-        run: |
-          meson test luacheck -C build
-
-      - name: Upload Test Log
-        uses: actions/upload-artifact@v3
-        if: ${{ success() || steps.test.outcome == 'failure' }}
-        with:
-          name: ${{ github.sha }}-lualint-testlog
-          path: ${{ github.workspace }}/build/meson-logs/testlog.txt
-
-  "Documentation":
-    runs-on: naev-docs
-    needs: Luacheck
 
     steps:
       - name: Get Source

@@ -7,7 +7,41 @@ name: Nightly Release
 
 permissions: {}
 jobs:
+  "Nightly_Skip_Check":
+    runs-on: naev-release
+    outputs:
+      skip: ${{ steps.check.outputs.skip }}
+    steps:
+      - name: Force Codeberg over SSH
+        run: git config --global url."ssh://git@codeberg.org/naev/".insteadOf https://codeberg.org/naev/
+
+      - name: Checkout Naev Repository
+        uses: actions/checkout@v4
+        with:
+          lfs: false
+          fetch-depth: 0
+          submodules: false
+          ssh-key: ${{ secrets.CODEBERG_SSH_KEY }}
+          ssh-known-hosts: ${{ secrets.CODEBERG_SSH_KNOWN_HOSTS }}
+          persist-credentials: true
+
+      - name: Check for new commits since last nightly
+        id: check
+        run: |
+          git fetch --tags
+          current_sha="$(git rev-parse HEAD)"
+          nightly_sha="$(git rev-parse nightly 2>/dev/null || true)"
+
+          if [[ -n "${nightly_sha}" && "${current_sha}" == "${nightly_sha}" ]]; then
+            echo "No new commits since last nightly (${current_sha}); skipping build."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
   "Package_Source":
+    needs: "Nightly_Skip_Check"
+    if: ${{ needs.Nightly_Skip_Check.outputs.skip != 'true' }}
     runs-on: naev-release
     steps:
       - name: Force Codeberg over SSH
