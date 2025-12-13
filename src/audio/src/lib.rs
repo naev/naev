@@ -1532,8 +1532,7 @@ impl System {
 
         // Create the compression sound here
         fn load_compression() -> Result<AudioStatic> {
-            let name = Buffer::get_valid_path("snd/sounds/compression").unwrap();
-            let data = Arc::new(Buffer::from_path(&name)?);
+            let data = Arc::new(Buffer::from_path("snd/sounds/compression")?);
             // LuaStatic won't get cleaned up if stopped
             let comp = AudioStatic::new(&Some(AudioData::Buffer(data)))?;
             // Should loop infinitely
@@ -1581,12 +1580,10 @@ impl System {
     }
 
     pub fn set_speed(&self, speed: f32) {
-        self.speed.store(speed, Ordering::Relaxed);
         let master = self.volume.read().unwrap().volume;
 
         // Handle compression
         let c = ((speed - 2.0) / 10.0).clamp(0.0, 1.0);
-        dbg!(c, master);
         if let Some(sfx) = &self.compression {
             let als = &sfx.source.source;
             if c > 0. {
@@ -1604,6 +1601,7 @@ impl System {
             }
         }
         self.compression_gain.store(c, Ordering::Relaxed);
+        self.speed.store(speed, Ordering::Relaxed);
 
         // Update the rest of the voices
         let cvol = 1.0 - c;
