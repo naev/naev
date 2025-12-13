@@ -746,6 +746,7 @@ impl Audio {
                 v.parameter_f32(AL_REFERENCE_DISTANCE, REFERENCE_DISTANCE);
                 v.parameter_f32(AL_MAX_DISTANCE, MAX_DISTANCE);
                 v.parameter_f32(AL_ROLLOFF_FACTOR, 1.);
+                v.parameter_i32(AL_SOURCE_RELATIVE, AL_FALSE.into());
 
                 if let Some(efx) = EFX.get() {
                     v.parameter_3_i32(
@@ -1140,6 +1141,8 @@ impl AudioBuilder {
             if let Some(vel) = self.vel {
                 audio.set_velocity(vel);
             }
+        } else {
+            audio.set_relative(true);
         }
         audio.set_volume(self.volume);
         if looping {
