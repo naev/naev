@@ -637,8 +637,6 @@ impl StreamData {
 
         if !frames.is_empty() {
             let mut data: Vec<f32> = Frame::vec_to_data(frames, self.stereo);
-            //use std::time::SystemTime;
-            //dbg!( SystemTime::now().duration_since(SystemTime::UNIX_EPOCH)?.as_secs(), data.len(), self.source.get_parameter_i32(AL_SOURCE_STATE) );
             if let Some(replaygain) = self.replaygain {
                 replaygain.filter(&mut data);
             }
@@ -1037,6 +1035,8 @@ pub struct AudioBuilder {
     play: bool,
     looping: bool,
     groupid: Option<GroupRef>,
+    group_volume: f32,
+    group_pitch: Option<f32>,
     atype: AudioType,
 }
 impl AudioBuilder {
@@ -1050,6 +1050,8 @@ impl AudioBuilder {
             play: false,
             looping: false,
             groupid: None,
+            group_volume: 1.0,
+            group_pitch: Some(1.0),
             atype,
         }
     }
@@ -1092,8 +1094,18 @@ impl AudioBuilder {
         self
     }
 
-    fn groupid(mut self, id: Option<GroupRef>) -> Self {
+    fn group_id(mut self, id: Option<GroupRef>) -> Self {
         self.groupid = id;
+        self
+    }
+
+    fn group_volume(mut self, volume: f32) -> Self {
+        self.group_volume = volume;
+        self
+    }
+
+    fn group_pitch(mut self, pitch: Option<f32>) -> Self {
+        self.group_pitch = pitch;
         self
     }
 
@@ -1126,6 +1138,10 @@ impl AudioBuilder {
             AudioType::Static => {
                 let mut audio = self.build_static()?;
                 audio.groupid = self.groupid;
+                if self.groupid.is_some() {
+                    audio.source.g_volume = self.group_volume;
+                    audio.source.g_pitch = self.group_pitch;
+                }
                 Audio::Static(audio)
             }
             AudioType::LuaStatic => Audio::LuaStatic(self.build_static()?),
@@ -1192,7 +1208,9 @@ impl GroupRef {
             .buffer(buf.clone())
             .play(true)
             .looping(looping)
-            .groupid(Some(*self))
+            .group_id(Some(*self))
+            .group_volume(group.volume)
+            .group_pitch(group.speed_affects.then_some(group.pitch))
             .build()
         {
             Ok(v) => Some(v),
@@ -2860,7 +2878,7 @@ pub extern "C" fn sound_playGroup(
     };
 
     let groupid = GroupRef::from_ptr(group);
-    match groupid.play_buffer(&sound, once != 0) {
+    match groupid.play_buffer(&sound, once != 1) {
         Some(v) => unsafe { std::mem::transmute::<AudioRef, *const c_void>(v) },
         None => std::ptr::null(),
     }
