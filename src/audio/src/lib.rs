@@ -1556,15 +1556,17 @@ impl System {
     }
 
     pub fn set_volume(&self, volume: f32) {
-        let mut vol = self.volume.write().unwrap();
-        vol.volume_lin = volume;
-        if vol.volume_lin > 0.0 {
-            vol.volume = 1.0 / 2.0_f32.powf((1.0 - volume) * 8.0);
-        } else {
-            vol.volume = 0.0;
-        }
+        let master = {
+            let mut vol = self.volume.write().unwrap();
+            vol.volume_lin = volume;
+            if vol.volume_lin > 0.0 {
+                vol.volume = 1.0 / 2.0_f32.powf((1.0 - volume) * 8.0);
+            } else {
+                vol.volume = 0.0;
+            }
+            vol.volume
+        };
 
-        let master = self.volume.read().unwrap().volume;
         let cvol = 1.0 - self.compression_gain.load(Ordering::Relaxed);
         for (_, v) in self.voices.lock().unwrap().iter() {
             match v {
