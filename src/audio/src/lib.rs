@@ -2878,7 +2878,7 @@ pub extern "C" fn sound_playGroup(
     };
 
     let groupid = GroupRef::from_ptr(group);
-    match groupid.play_buffer(&sound, once != 1) {
+    match groupid.play_buffer(&sound, once == 0) {
         Some(v) => unsafe { std::mem::transmute::<AudioRef, *const c_void>(v) },
         None => std::ptr::null(),
     }
