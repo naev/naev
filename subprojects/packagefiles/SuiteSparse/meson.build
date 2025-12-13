@@ -48,4 +48,6 @@ subdir('COLAMD')
 subdir('CSparse')
 subdir('CHOLMOD')
 
-SuiteSparse_dep = [SuiteSparse_config_dep, AMD_dep, COLAMD_dep, CSparse_dep, CHOLMOD_dep]
+# Place dependent libraries (e.g. CHOLMOD) before the ones they pull symbols
+# from so static linking succeeds on linkers that are sensitive to order.
+SuiteSparse_dep = [CHOLMOD_dep, AMD_dep, COLAMD_dep, CSparse_dep, SuiteSparse_config_dep]
