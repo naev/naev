@@ -138,6 +138,7 @@ if buildExec.disabled() == false
    sdl = dependency('sdl3', version: '>=3.2.0', required: true)
    libunibreak = dependency('libunibreak', required: true, version: '>=4.0', fallback: ['libunibreak'], static: get_option('steamruntime'))
    cmark = dependency('libcmark', required: true, version: '>=0.31.0', fallback: ['cmark', 'cmark_dep'], static: get_option('steamruntime'))
+   opus = dependency( 'opus', required: true )
 
    libxml2 = dependency('libxml-2.0', required: false)
    if not libxml2.found()
