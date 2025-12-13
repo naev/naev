@@ -1161,7 +1161,15 @@ impl AudioBuilder {
         if play {
             audio.play();
         }
-        Ok(AUDIO.voices.lock().unwrap().insert(audio).into())
+        let groupid = audio.groupid();
+        let id: AudioRef = AUDIO.voices.lock().unwrap().insert(audio).into();
+        if let Some(groupid) = groupid {
+            match AUDIO.groups.lock().unwrap().get_mut(groupid.0) {
+                Some(group) => group.voices.push(id),
+                None => warn!("group not found"),
+            }
+        }
+        Ok(id)
     }
 }
 
@@ -1192,26 +1200,29 @@ impl GroupRef {
     }
 
     pub fn play_buffer(&self, buf: &Arc<Buffer>, looping: bool) -> Option<AudioRef> {
-        let groups = AUDIO.groups.lock().unwrap();
-        let group = match groups.get(self.0) {
-            Some(group) => group,
-            None => {
-                warn!("group not found!");
+        let (g_volume, g_pitch) = {
+            let groups = AUDIO.groups.lock().unwrap();
+            let group = match groups.get(self.0) {
+                Some(group) => group,
+                None => {
+                    warn!("group not found!");
+                    return None;
+                }
+            };
+
+            if group.voices.len() >= group.max {
                 return None;
             }
+            (group.volume, group.speed_affects.then_some(group.pitch))
         };
-
-        if group.voices.len() >= group.max {
-            return None;
-        }
 
         match AudioBuilder::new(AudioType::Static)
             .buffer(buf.clone())
             .play(true)
             .looping(looping)
             .group_id(Some(*self))
-            .group_volume(group.volume)
-            .group_pitch(group.speed_affects.then_some(group.pitch))
+            .group_volume(g_volume)
+            .group_pitch(g_pitch)
             .build()
         {
             Ok(v) => Some(v),
