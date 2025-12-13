@@ -2684,6 +2684,7 @@ use std::ffi::{CStr, c_char, c_double, c_int, c_void};
 // We assume that the index can be cast to a pointer for C to not complain
 // This should hold on 64 bit platforms
 static_assertions::assert_eq_size!(AudioRef, *const c_void);
+static_assertions::assert_eq_size!(GroupRef, *const c_void);
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_get(name: *const c_char) -> *const Buffer {
@@ -2785,10 +2786,10 @@ pub extern "C" fn sound_playPos(
 
 macro_rules! get_voice {
     ($voice: ident) => {{
-        if $voice.is_null() {
+        if $voice.is_null() || AUDIO.disabled {
             return Default::default();
         }
-        unsafe { std::mem::transmute::<*const c_void, AudioRef>($voice) }
+        AudioRef::from_ptr($voice)
     }};
 }
 
@@ -2880,6 +2881,15 @@ pub extern "C" fn sound_setSpeed(speed: c_double) {
     AUDIO.set_speed(speed as f32);
 }
 
+macro_rules! get_group {
+    ($group: ident) => {{
+        if $group.is_null() || AUDIO.disabled {
+            return Default::default();
+        }
+        GroupRef::from_ptr($group)
+    }};
+}
+
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_createGroup(size: c_int) -> *const c_void {
     GroupRef::new(size as usize).into_ptr()
@@ -2908,7 +2918,7 @@ pub extern "C" fn sound_playGroup(
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_stopGroup(group: *const c_void) {
-    let groupid = GroupRef::from_ptr(group);
+    let groupid = get_group!(group);
     if let Err(e) = groupid.stop() {
         warn_err!(e);
     }
@@ -2916,7 +2926,7 @@ pub extern "C" fn sound_stopGroup(group: *const c_void) {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_pauseGroup(group: *const c_void) {
-    let groupid = GroupRef::from_ptr(group);
+    let groupid = get_group!(group);
     if let Err(e) = groupid.pause() {
         warn_err!(e);
     }
@@ -2924,7 +2934,7 @@ pub extern "C" fn sound_pauseGroup(group: *const c_void) {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_resumeGroup(group: *const c_void) {
-    let groupid = GroupRef::from_ptr(group);
+    let groupid = get_group!(group);
     if let Err(e) = groupid.resume() {
         warn_err!(e);
     }
@@ -2932,7 +2942,7 @@ pub extern "C" fn sound_resumeGroup(group: *const c_void) {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_speedGroup(group: *const c_void, enable: c_int) {
-    let groupid = GroupRef::from_ptr(group);
+    let groupid = get_group!(group);
     if let Err(e) = groupid.set_speed_affects(enable != 0) {
         warn_err!(e);
     }
@@ -2940,7 +2950,7 @@ pub extern "C" fn sound_speedGroup(group: *const c_void, enable: c_int) {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_volumeGroup(group: *const c_void, volume: c_double) {
-    let groupid = GroupRef::from_ptr(group);
+    let groupid = get_group!(group);
     if let Err(e) = groupid.set_volume(volume as f32) {
         warn_err!(e);
     }
@@ -2948,7 +2958,7 @@ pub extern "C" fn sound_volumeGroup(group: *const c_void, volume: c_double) {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_pitchGroup(group: *const c_void, pitch: c_double) {
-    let groupid = GroupRef::from_ptr(group);
+    let groupid = get_group!(group);
     if let Err(e) = groupid.set_pitch(pitch as f32) {
         warn_err!(e);
     }
