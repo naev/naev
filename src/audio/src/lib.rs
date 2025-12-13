@@ -350,19 +350,6 @@ impl Buffer {
             AudioSeek::Seconds => self.buffer.get_parameter_f32(AL_SEC_LENGTH_SOFT),
             AudioSeek::Samples => self.buffer.get_parameter_i32(AL_SAMPLE_LENGTH_SOFT) as f32,
         }
-        /*
-        let bytes = self.buffer.get_parameter_i32(AL_SIZE);
-        let channels = self.buffer.get_parameter_i32(AL_CHANNELS);
-        let bits = self.buffer.get_parameter_i32(AL_CHANNELS);
-        let samples = (bytes * 8 / (channels * bits)) as f32;
-        match unit {
-            AudioSeek::Seconds => {
-                let freq = self.buffer.get_parameter_i32(AL_FREQUENCY);
-                samples / freq as f32
-            }
-            AudioSeek::Samples => samples,
-        }
-        */
     }
 
     pub fn channels(&self) -> u8 {
@@ -1427,6 +1414,7 @@ pub struct System {
     groups: Mutex<Arena<Group>>,
     compression: Option<AudioStatic>,
     compression_gain: AtomicF32,
+    listener_pos: RwLock<Vector2<f32>>,
 }
 impl System {
     pub fn new() -> Result<Self> {
@@ -1444,6 +1432,7 @@ impl System {
                 groups: Default::default(),
                 compression: None,
                 compression_gain: AtomicF32::new(0.0),
+                listener_pos: RwLock::new(Default::default()),
             });
         }
 
@@ -1582,6 +1571,7 @@ impl System {
             groups: Mutex::new(Default::default()),
             compression,
             compression_gain: AtomicF32::new(0.0),
+            listener_pos: RwLock::new(Default::default()),
         })
     }
 
@@ -2762,6 +2752,12 @@ pub extern "C" fn sound_playPos(
     if sound.is_null() {
         return std::ptr::null();
     }
+
+    let pos = Vector2::new(px as f32, py as f32);
+    if (pos - *AUDIO.listener_pos.read().unwrap()).norm_squared() > MAX_DISTANCE * MAX_DISTANCE {
+        return std::ptr::null();
+    }
+
     let sound = unsafe {
         Arc::increment_strong_count(sound);
         Arc::from_raw(sound)
@@ -2769,7 +2765,7 @@ pub extern "C" fn sound_playPos(
 
     let voice = match AudioBuilder::new(AudioType::Static)
         .buffer(sound.clone())
-        .position(Some(Vector2::new(px as f32, py as f32)))
+        .position(Some(pos))
         .velocity(Some(Vector2::new(vx as f32, vy as f32)))
         .play(true)
         .build()
@@ -2807,8 +2803,10 @@ pub extern "C" fn sound_updatePos(
     vy: c_double,
 ) {
     let index = get_voice!(voice);
+    let pos = Vector2::new(px as f32, py as f32);
+    *AUDIO.listener_pos.write().unwrap() = pos;
     let _ = index.call(|voice| {
-        voice.set_position(Vector2::new(px as f32, py as f32));
+        voice.set_position(pos);
         voice.set_velocity(Vector2::new(vx as f32, vy as f32));
     });
 }
