@@ -172,10 +172,10 @@ jobs:
         uses: actions/cache@v3
         with:
           path: build/cargo-home
-          key: cargo-${{ runner.os }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          key: cargo-${{ matrix.image }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
           restore-keys: |
-            cargo-${{ runner.os }}-${{ matrix.target }}-
-            cargo-${{ runner.os }}-
+            cargo-${{ matrix.image }}-${{ matrix.target }}-
+            cargo-${{ matrix.image }}-
 
       - name: Meson Setup
         run: |
@@ -213,10 +213,10 @@ jobs:
         uses: actions/cache@v3
         with:
           path: build/builddir/cargo-home
-          key: cargo-appimage-${{ runner.os }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          key: cargo-appimage-${{ matrix.image }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
           restore-keys: |
-            cargo-appimage-${{ runner.os }}-${{ matrix.target }}-
-            cargo-appimage-${{ runner.os }}-
+            cargo-appimage-${{ matrix.image }}-${{ matrix.target }}-
+            cargo-appimage-${{ matrix.image }}-
 
       - name: Compile AppImage
         run: |
@@ -314,10 +314,10 @@ jobs:
         uses: actions/cache@v3
         with:
           path: build/cargo-home
-          key: cargo-${{ runner.os }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          key: cargo-${{ matrix.image }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
           restore-keys: |
-            cargo-${{ runner.os }}-${{ matrix.target }}-
-            cargo-${{ runner.os }}-
+            cargo-${{ matrix.image }}-${{ matrix.target }}-
+            cargo-${{ matrix.image }}-
 
       - name: Meson Setup
         # We disable b_lto here because it messes with backtraces on windows
@@ -395,10 +395,10 @@ jobs:
         uses: actions/cache@v3
         with:
           path: build/cargo-home
-          key: cargo-${{ runner.os }}-${{ matrix.arch }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          key: cargo-${{ matrix.image }}-${{ matrix.arch }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
           restore-keys: |
-            cargo-${{ runner.os }}-${{ matrix.arch }}-
-            cargo-${{ runner.os }}-
+            cargo-${{ matrix.image }}-${{ matrix.arch }}-
+            cargo-${{ matrix.image }}-
 
       - name: Meson Setup
         run: |
