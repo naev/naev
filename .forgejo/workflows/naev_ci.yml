@@ -28,13 +28,6 @@ jobs:
           ssh-known-hosts: ${{ secrets.CODEBERG_SSH_KNOWN_HOSTS }}
           persist-credentials: true
 
-      - name: Cache Meson wrap downloads
-        uses: actions/cache@v3
-        with:
-          path: source/subprojects/packagecache
-          key: wrap-${{ runner.os }}-${{ hashFiles('source/subprojects/*.wrap') }}
-          restore-keys: wrap-${{ runner.os }}-
-
       - name: Fetch Meson subprojects
         run: |
           mkdir -p source/subprojects/packagecache
@@ -96,6 +89,13 @@ jobs:
         run: |
           mkdir source
           tar -xf naev-*.tar.xz -C source --strip 1
+
+      - name: Cache Meson wrap downloads
+        uses: actions/cache@v3
+        with:
+          path: source/subprojects/packagecache
+          key: wrap-${{ matrix.image }}-${{ hashFiles('source/subprojects/*.wrap') }}
+          restore-keys: wrap-${{ matrix.image }}-
 
       - name: Cache Cargo home
         uses: actions/cache@v3
@@ -216,6 +216,13 @@ jobs:
           mkdir source
           tar -xf naev-*.tar.xz -C source --strip 1
 
+      - name: Cache Meson wrap downloads
+        uses: actions/cache@v3
+        with:
+          path: source/subprojects/packagecache
+          key: wrap-${{ matrix.image }}-${{ hashFiles('source/subprojects/*.wrap') }}
+          restore-keys: wrap-${{ matrix.image }}-
+
       - name: Cache Cargo home
         uses: actions/cache@v3
         with:
@@ -306,6 +313,13 @@ jobs:
         run: |
           mkdir source
           tar -xf naev-*.tar.xz -C source --strip 1
+
+      - name: Cache Meson wrap downloads
+        uses: actions/cache@v3
+        with:
+          path: source/subprojects/packagecache
+          key: wrap-${{ matrix.image }}-${{ hashFiles('source/subprojects/*.wrap') }}
+          restore-keys: wrap-${{ matrix.image }}-
 
       - name: Cache Cargo home
         uses: actions/cache@v3

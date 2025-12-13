@@ -144,6 +144,13 @@ jobs:
           mkdir source
           tar -xf source.tar.xz -C source --strip 1
 
+      - name: Cache Meson wrap downloads
+        uses: actions/cache@v3
+        with:
+          path: source/subprojects/packagecache
+          key: wrap-${{ matrix.image }}-${{ hashFiles('source/subprojects/*.wrap') }}
+          restore-keys: wrap-${{ matrix.image }}-
+
       - name: Cache Cargo home
         uses: actions/cache@v3
         with:
@@ -286,6 +293,13 @@ jobs:
           mkdir source
           tar -xf source.tar.xz -C source --strip 1
 
+      - name: Cache Meson wrap downloads
+        uses: actions/cache@v3
+        with:
+          path: source/subprojects/packagecache
+          key: wrap-${{ matrix.image }}-${{ hashFiles('source/subprojects/*.wrap') }}
+          restore-keys: wrap-${{ matrix.image }}-
+
       - name: Cache Cargo home
         uses: actions/cache@v3
         with:
@@ -367,6 +381,13 @@ jobs:
         run: |
           mkdir source
           tar -xf source.tar.xz -C source --strip 1
+
+      - name: Cache Meson wrap downloads
+        uses: actions/cache@v3
+        with:
+          path: source/subprojects/packagecache
+          key: wrap-${{ matrix.image }}-${{ hashFiles('source/subprojects/*.wrap') }}
+          restore-keys: wrap-${{ matrix.image }}-
 
       - name: Cache Cargo home
         uses: actions/cache@v3
