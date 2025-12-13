@@ -1324,13 +1324,14 @@ impl GroupRef {
 
         let master = AUDIO.volume.read().unwrap().volume;
         let mut voices = AUDIO.voices.lock().unwrap();
+        let cvol = 1.0 - AUDIO.compression_gain.load(Ordering::Relaxed);
         for v in group.voices.iter() {
             if let Some(voice) = voices.get_mut(v.0) {
-                // TODO sound speed stuff
+                let c = if voice.ingame() { cvol } else { 1.0 };
                 let src = voice.source_mut();
                 src.g_volume = group.volume;
                 src.source
-                    .parameter_f32(AL_GAIN, master * src.volume * src.g_volume);
+                    .parameter_f32(AL_GAIN, c * master * src.volume * src.g_volume);
             }
         }
         Ok(())
