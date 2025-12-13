@@ -329,7 +329,7 @@ jobs:
               --buildtype=debug \
               -Dinstaller=false \
               -Drelease=false \
-              -Db_lto=true \
+              -Db_lto=false \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
               -Ddocs_lua=disabled
