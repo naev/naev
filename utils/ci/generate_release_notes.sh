@@ -65,13 +65,11 @@ case "$MODE" in
          echo "error: changelog '$CHANGELOG' not found" >&2
          exit 1
       fi
-      changelog_tag="## ${TAG#v}"   # Changelog entries do not use a leading 'v'
-      release_tag="## ${TAG}"
-      notes="$(awk -v changelog_tag="${changelog_tag}" -v release_tag="${release_tag}" '
+      notes="$(awk -v tag="## ${TAG}" '
          BEGIN {found=0}
          /^## / {
             if (found) exit
-            if ($0 == changelog_tag || $0 == release_tag) {found=1; next}
+            if ($0 == tag) {found=1; next}
          }
          found {print}
       ' "$CHANGELOG")"
