@@ -1679,15 +1679,19 @@ impl System {
     }
 
     pub fn execute_messages(&self) {
-        for m in MESSAGES.lock().unwrap().drain(..) {
+        let mut messages = MESSAGES.lock().unwrap();
+        if messages.is_empty() {
+            return;
+        }
+        // We always lock groups first
+        let mut groups = AUDIO.groups.lock().unwrap();
+        let mut voices = AUDIO.voices.lock().unwrap();
+        for m in messages.drain(..) {
             match m {
                 Message::Remove(id) => {
-                    AUDIO.voices.lock().unwrap().remove(id.0);
+                    voices.remove(id.0);
                 }
                 Message::SourceStopped(id) => {
-                    // We always lock groups first
-                    let mut groups = AUDIO.groups.lock().unwrap();
-                    let mut voices = AUDIO.voices.lock().unwrap();
                     if let Some((vid, v)) = voices.iter().find(|(_, x)| x.al_source().raw() == id) {
                         // Remove from group too if it has one
                         if let Some(gid) = v.groupid() {
