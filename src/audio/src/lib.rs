@@ -1196,6 +1196,7 @@ impl GroupRef {
         let group = match groups.get(self.0) {
             Some(group) => group,
             None => {
+                warn!("group not found!");
                 return None;
             }
         };
@@ -1797,6 +1798,14 @@ impl AudioRef {
             Some(audio) => Ok(f(audio)),
             None => anyhow::bail!("Audio not found"),
         }
+    }
+
+    pub fn into_ptr(&self) -> *const c_void {
+        unsafe { std::mem::transmute::<Self, *const c_void>(*self) }
+    }
+
+    pub fn from_ptr(ptr: *const c_void) -> Self {
+        unsafe { std::mem::transmute::<*const c_void, AudioRef>(ptr) }
     }
 }
 
@@ -2720,7 +2729,7 @@ pub extern "C" fn sound_play(sound: *const Buffer) -> *const c_void {
         Arc::from_raw(sound)
     };
     match AUDIO.play_buffer(&sound) {
-        Ok(audioref) => unsafe { std::mem::transmute::<AudioRef, *const c_void>(audioref) },
+        Ok(audioref) => audioref.into_ptr(),
         Err(e) => {
             warn_err!(e);
             std::ptr::null()
@@ -2760,7 +2769,7 @@ pub extern "C" fn sound_playPos(
             return std::ptr::null();
         }
     };
-    unsafe { std::mem::transmute::<AudioRef, *const c_void>(voice) }
+    voice.into_ptr()
 }
 
 macro_rules! get_voice {
@@ -2879,7 +2888,7 @@ pub extern "C" fn sound_playGroup(
 
     let groupid = GroupRef::from_ptr(group);
     match groupid.play_buffer(&sound, once == 0) {
-        Some(v) => unsafe { std::mem::transmute::<AudioRef, *const c_void>(v) },
+        Some(v) => v.into_ptr(),
         None => std::ptr::null(),
     }
 }
