@@ -1,11 +1,11 @@
-## 0.13.0-beta.4
+## v0.13.0-beta.4
 
    * Fix Mac OS x not finding old saves
    * Don't reset escort AI when they are already landing or jumping at the
      right place
 
 
-## 0.13.0-beta.3
+## v0.13.0-beta.3
 
    * Make sure reynir only appears when you have free cargo space (reynir.lua)
    * Fix loading fonts in the plugin manager on platforms like macOS
@@ -24,7 +24,7 @@
    * Fixed some generic NPCs not talking
 
 
-## 0.13.0-beta.2
+## v0.13.0-beta.2
 
    * Fixed crash with appimage on certain systems
    * Fixed game not saving when exiting while landed via the small menu
@@ -39,7 +39,7 @@
    * Fixed some strings and updated translations
 
 
-## 0.13.0-beta.1
+## v0.13.0-beta.1
 
  ### Gameplay
 
@@ -212,7 +212,7 @@
    * Translation updates
 
 
-## 0.12.6
+## v0.12.6
 
    * Dvaered Negotiation 1: update the location of the target on the map
    * Dvaered Sabotage: no longer fail the mission if the target jumps out after
@@ -221,7 +221,7 @@
    * Minor typo fixes and translation updates
 
 
-## 0.12.5
+## v0.12.5
 
    * Fixed bug causing lower diversity in ship spawning
    * Fixed autonav not respecting shield thresholds
@@ -232,7 +232,7 @@
    * Minor typo fixes and translation updates
 
 
-## 0.12.4
+## v0.12.4
 
    * More robust jump check to fix crash when creating new systems
    * Gave Pacifier +400 fuel bonus to match description
@@ -245,7 +245,7 @@
    * Minor typo fixes and translation updates
 
 
-## 0.12.3
+## v0.12.3
 
    * Sirius preacher gives +4% shield regeneration, not +4 GW shield
      regeneration
@@ -282,7 +282,7 @@
    * Minor typo fixes and translation updates
 
 
-## 0.12.2
+## v0.12.2
 
    * Made plasma drill much easier to apply to asteroids
    * Don't reset cargo if not space worthy when reloading
@@ -327,7 +327,7 @@
    * Minor typo fixes and translation updates
 
 
-## 0.12.1
+## v0.12.1
 
    * Fixed psychic orbs having trails
    * Crop selected spob name if it goes out of bounds in the GUI
@@ -344,7 +344,7 @@
    * Minor typo fixes and translation updates
 
 
-## 0.12.0
+## v0.12.0
 
    * Don't play wormhole sound on main menu
    * Don't allow the player to sell unique ships
@@ -378,7 +378,7 @@
    * Minor typo fixes and translation updates
 
 
-## 0.12.0-beta.3
+## v0.12.0-beta.3
 
    * Fixed collisions for some ships at certain angles
    * Changed mouse click selection priority, it prefers spobs/jumps and will
@@ -424,7 +424,7 @@
    * Minor typo fixes and translation updates
 
 
-## 0.12.0-beta.2
+## v0.12.0-beta.2
 
    * Fallback for missing holo-archives ship entries
    * Reset proteron reputation more aggressively
@@ -471,7 +471,7 @@
    * Minor typo fixes and translation updates
 
 
-## 0.12.0-beta.1
+## v0.12.0-beta.1
 
  ### Gameplay
 
@@ -633,14 +633,14 @@
      conditions
 
 
-## 0.11.5
+## v0.11.5
 
    * Fixed FLF-Pirate map not providing jump information
    * Fixed the combat hologram projector making escorts hostile
    * Build system no longer libdl on platforms such as BSD
 
 
-## 0.11.4
+## v0.11.4
 
    * More guards against divides by zero in autonav
    * Fixed warnings on certain OpenGL drivers
@@ -670,7 +670,7 @@
    * Translation updates
 
 
-## 0.11.3
+## v0.11.3
 
    * Don't run discovery event when in cinematic mode
    * Do a better job of updating old save autonav settings
@@ -694,13 +694,13 @@
    * Translation updates
 
 
-## 0.11.2
+## v0.11.2
 
    * Stopped autonav from preventing wobble and overshooting by crashing the
      entire game
 
 
-## 0.11.1
+## v0.11.1
 
    * Give all ammo back to player after doing obelisk
    * Fixed player being invincible after completing an obelisk
@@ -759,7 +759,7 @@
    * Translation updates
 
 
-## 0.11.0
+## v0.11.0
 
    * Fixed beams only showing hit explosions on one target being hit instead of
      all
@@ -813,7 +813,7 @@
    * Translation updates
 
 
-## 0.11.0-beta.3
+## v0.11.0-beta.3
 
    * Differentiated more significantly the energy / kinetic / plasma weapon
      types
@@ -855,7 +855,7 @@
    * Translation updates
 
 
-## 0.11.0-beta.2
+## v0.11.0-beta.2
 
    * Slim GUI now shows activated outfits and all weapons all the time
    * Collision system reworked (again) to take into account fast moving
@@ -894,7 +894,7 @@
    * Translation updates
 
 
-## 0.11.0 (beta)
+## v0.11.0 (beta)
 
  ### Gameplay Changes
 
@@ -1082,7 +1082,7 @@
    * Made audio system more robust to running out of source errors
 
 
-## 0.10.6
+## v0.10.6
 
  ### Fixed potential segfault with invalid semver strings
 
@@ -1098,7 +1098,7 @@
    * Fixed typos
 
 
-## 0.10.5
+## v0.10.5
 
    * Start counting effect stacks from 1 not 2
    * Fixed launcher weapons using outfit mass instead of ammo mass
@@ -1124,7 +1124,7 @@
      locale
 
 
-## 0.10.4
+## v0.10.4
 
    * Fixed crashes related to multiple effects being active at once
    * Fixed multiple `mission_done` hooks not passing parameter correctly
@@ -1132,7 +1132,7 @@
    * ec06: made the final battle work much better
 
 
-## 0.10.3
+## v0.10.3
 
    * Fixed crash when using fits currently selected ship outfit filter
    * Fixed escorts always being set to aggressive when loading a save
@@ -1143,7 +1143,7 @@
    * foundation station, efferey: fixed not using pirate landing script
 
 
-## 0.10.2
+## v0.10.2
 
    * Fixed escorts sometimes not following their leader and landing
    * Fixed autonav always wanting to go to the edge of jump points
@@ -1173,7 +1173,7 @@
    * `poi_intro`: can't board nelly again
 
 
-## 0.10.1
+## v0.10.1
 
    * Fixed many stations not marked as stations
    * FLF combatants only appear on FLF spobs
@@ -1189,7 +1189,7 @@
    * reynir: don't add 0 tonnes of hotdogs
 
 
-## 0.10.0
+## v0.10.0
 
    * Made slim the default GUI instead of brushed
    * Contraband missions use vntk instead of tk
@@ -1214,7 +1214,7 @@
    * Fixed other minor issues
 
 
-## 0.10.0-beta.2
+## v0.10.0-beta.2
 
    * Pirates should avoid attacking near safeish areas
    * Fixed crash on load when player has more than one ship
@@ -1226,7 +1226,7 @@
    * Mention escort AI settings when buying a fighter bay tutorial plays
 
 
-## 0.10.0 (beta)
+## v0.10.0 (beta)
 
  ### New Mechanics
 
@@ -1352,7 +1352,7 @@
    * Many typo fixes
 
 
-## 0.9.4
+## v0.9.4
 
    * Fix "No error." log spam with certain video card drivers
    * Fix Lua errors with tiny nebula such as Sarcophagus
@@ -1365,7 +1365,7 @@
    * Update translations, including a new Spanish translation
 
 
-## 0.9.3
+## v0.9.3
 
    * Bug fix: if the German translation was active, casino minigames'
      explanation (Erklärung) didn't work
@@ -1378,7 +1378,7 @@
    * Fixed game hanging when entering some volatile nebula systems
 
 
-## 0.9.2
+## v0.9.2
 
    * Fix reward messages in the Particle Physics campaign
    * Can no longer steal a certain Soromid ship
@@ -1389,7 +1389,7 @@
    * Fix zombie autonav toward deselected targets
 
 
-## 0.9.1
+## v0.9.1
 
    * Minor countermeasures for long player ship names
    * Fix mission breakage in "Minerva Pirates 4", "Runaway Search", "Particle
@@ -1413,7 +1413,7 @@
    * Fixed some offset issues with the slim GUI
 
 
-## 0.9.0
+## v0.9.0
 
    * Fixed glitchy appearance of the map's mode menu
    * Map mode is remembered throughout the gaming session
@@ -1432,7 +1432,7 @@
    * Meow meow
 
 
-## 0.9.0-beta.3
+## v0.9.0-beta.3
 
    * Fixed warning about cargo rush deliveries when you don't know the best
      route
@@ -1474,7 +1474,7 @@
    * More meow
 
 
-## 0.9.0-beta.2
+## v0.9.0-beta.2
 
    * Prevented Naev from losing the player's (pre-0.9.0-beta) licences on first
      load
@@ -1494,7 +1494,7 @@
    * Electron burst cannon is no longer widely available
 
 
-## 0.9.0 (beta)
+## v0.9.0 (beta)
 
  ### New mechanics
 
@@ -1567,7 +1567,7 @@
    * Revamped and improved some existing locations
    * Several new planets and systems
 
- ### 1  New missions
+ ### New missions
 
    * Challenge adversaries in the Crimson Gauntlet
    * Follow happenings on "Minerva Station"
@@ -1622,7 +1622,7 @@
    * Lots of optimization
 
 
-## 0.8.2
+## v0.8.2
 
  ### Gameplay
 
@@ -1643,7 +1643,7 @@
      0.9.x will use Meson for builds.)
 
 
-## 0.8.1
+## v0.8.1
 
  ### Gameplay
 
@@ -1666,7 +1666,7 @@
    * Improved text in minor ways
 
 
-## 0.8.0
+## v0.8.0
 
  ### Gameplay
 
