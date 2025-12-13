@@ -1,6 +1,6 @@
 ## 0.13.0-beta.4
 
-   * Fix mac os x not finding old saves
+   * Fix Mac OS x not finding old saves
    * Don't reset escort AI when they are already landing or jumping at the
      right place
 
