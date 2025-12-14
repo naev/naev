@@ -109,7 +109,7 @@ impl NTime {
             };
             Ok(NTime::new(scu, stp, stu))
         }
-        let re = Regex::new(r"^\s*UST\s+(\d+)(?::(\d+)(?:\.(\d+))?)?\s*$").unwrap();
+        let re = Regex::new(r"^\s*UST\s+(\d+)(?::(\d{4})(?:\.(\d{4}))?)?\s*$").unwrap();
 
         let dates = re
             .captures_iter(input)
@@ -123,18 +123,15 @@ impl NTime {
         let seconds = self.seconds();
         // TODO try to move 2 to variable decimal length, but not that important
         if cycles == 0 && periods == 0 {
-            formatx!(gettext("{:04} s").to_string(), seconds).unwrap()
+            formatx!(gettext("{:04} s"), seconds).unwrap()
         } else if cycles == 0 {
-            formatx!(
-                gettext("{p:.2} s").to_string(),
-                p = periods as f64 + 0.0001 * seconds as f64
-            )
-            .unwrap()
+            formatx!(gettext("{p}.{s:04} p"), p = periods, s = seconds,).unwrap()
         } else {
             formatx!(
-                gettext("UST {c}:{p:04.2}").to_string(),
+                gettext("UST {c}:{p:04}.{s:04}"),
                 c = cycles,
-                p = periods as f64 + 0.0001 * seconds as f64
+                p = periods,
+                s = seconds,
             )
             .unwrap()
         }
@@ -339,6 +336,19 @@ fn test_ntime() {
     assert!(NTime::from_string("cat UST 603:3726.2871").is_err());
     assert!(NTime::from_string("UST 603:3726.2871 cat").is_err());
     assert!(NTime::from_string("UST 603:3726.n2871").is_err());
+    assert!(NTime::from_string("UST 123:123:4567").is_err());
+    assert_eq!(
+        NTime::from_string("  UST   123:0001.9999  ").unwrap(),
+        NTime::new(123, 1, 9999)
+    );
+    assert!(NTime::from_string("UST 123:456.8901").is_err());
+    assert!(NTime::from_string("UST 123:4567.89").is_err());
+    assert!(NTime::from_string("UST 123.8901").is_err());
+    assert!(NTime::from_string("UST 123:0123:4567").is_err());
+    assert_eq!(
+        NTime::from_string("UST 123:0123.4567").unwrap(),
+        NTime::new(123, 123, 4567)
+    );
     assert_eq!(
         NTime::from_string("UST 603:3726.2871").unwrap(),
         NTime::new(603, 3726, 2871)
