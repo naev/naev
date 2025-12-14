@@ -1709,10 +1709,10 @@ impl System {
         });
     }
 
-    pub fn update_listener(&self, pos: Vector2<f64>, vel: Vector2<f64>) {
-        set_listener_position(Vector3::new(pos.x as f32, pos.y as f32, 0.0));
-        set_listener_velocity(Vector3::new(vel.x as f32, vel.y as f32, 0.0));
-        *AUDIO.listener_pos.write().unwrap() = Vector2::new(pos.x as f32, pos.y as f32);
+    pub fn update_listener(&self, pos: Vector2<f32>, vel: Vector2<f32>) {
+        set_listener_position(Vector3::new(pos.x, pos.y, 0.0));
+        set_listener_velocity(Vector3::new(vel.x, vel.y, 0.0));
+        *AUDIO.listener_pos.write().unwrap() = pos;
     }
 
     pub fn execute_messages(&self) {
@@ -2853,7 +2853,10 @@ pub extern "C" fn sound_updateListener(
     if AUDIO.disabled {
         return;
     }
-    AUDIO.update_listener(Vector2::new(px, py), Vector2::new(vx, vy));
+    AUDIO.update_listener(
+        Vector2::new(px as f32, py as f32),
+        Vector2::new(vx as f32, vy as f32),
+    );
 }
 
 #[unsafe(no_mangle)]

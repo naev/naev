@@ -97,12 +97,12 @@ impl Camera {
         }
 
         if p.is_null() {
-            audio::AUDIO.update_listener(self.pos, (old - self.pos) * dt);
+            audio::AUDIO.update_listener(self.pos.cast(), ((old - self.pos) * dt).cast());
         } else {
             unsafe {
                 audio::AUDIO.update_listener(
-                    Vector2::<f64>::new((*p).solid.pos.x, (*p).solid.pos.y),
-                    Vector2::<f64>::new((*p).solid.vel.x, (*p).solid.vel.y),
+                    Vector2::new((*p).solid.pos.x as f32, (*p).solid.pos.y as f32),
+                    Vector2::new((*p).solid.vel.x as f32, (*p).solid.vel.y as f32),
                 );
             }
         }
@@ -437,7 +437,7 @@ pub extern "C" fn cam_setTargetPilot(follow: c_uint, soft_over: c_int) {
         cam.fly = true;
         cam.fly_speed = soft_over.into();
     }
-    audio::AUDIO.update_listener(cam.pos, Default::default());
+    audio::AUDIO.update_listener(cam.pos.cast(), Default::default());
 }
 
 #[unsafe(no_mangle)]
@@ -450,7 +450,7 @@ pub extern "C" fn cam_setTargetPos(x: c_double, y: c_double, soft_over: c_int) {
         cam.old.x = x;
         cam.old.y = y;
         cam.fly = false;
-        audio::AUDIO.update_listener(cam.pos, Default::default());
+        audio::AUDIO.update_listener(cam.pos.cast(), Default::default());
     } else {
         cam.target.x = x;
         cam.target.y = y;
