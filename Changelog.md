@@ -1567,7 +1567,7 @@
    * Revamped and improved some existing locations
    * Several new planets and systems
 
- ### New missions
+ ### 40 New missions
 
    * Challenge adversaries in the Crimson Gauntlet
    * Follow happenings on "Minerva Station"
