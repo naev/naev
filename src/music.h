@@ -44,4 +44,4 @@ MusicInfo_t *music_info( void );
  */
 int  music_choose( const char *situation );
 void music_rechoose( void );
-void music_tempDisable( int disable );
+void music_reset( void );

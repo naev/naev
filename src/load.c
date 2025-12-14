@@ -26,6 +26,7 @@
 #include "log.h"
 #include "menu.h"
 #include "mission.h"
+#include "music.h"
 #include "ndata.h"
 #include "nstring.h"
 #include "nxml.h"
@@ -1327,6 +1328,7 @@ static int load_gameInternalHook( void *data )
    render_postprocessCleanup();
 
    /* Welcome message - must be before space_init. */
+   music_reset();
    player_message( _( "#gWelcome to %s!" ), APPNAME );
    player_message( "#g v%s", naev_version( 0 ) );
 

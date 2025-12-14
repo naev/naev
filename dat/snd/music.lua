@@ -666,3 +666,7 @@ function volume( vol )
       v.m:setVolume( music_vol * v.vol, true )
    end
 end
+
+function reset()
+   music_off = false
+end

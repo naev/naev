@@ -84,6 +84,7 @@ function ghost_back ()
 end
 
 function finish ()
+   music.play()
    evt.finish(false)
 end
 
@@ -506,5 +507,6 @@ function boss_board ()
 
    boss:effectAdd("Fade-Out")
    spb:landDeny(false)
+   music.play()
    evt.finish(true)
 end

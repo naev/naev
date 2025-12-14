@@ -1,3 +1,8 @@
+## v0.13.0-beta.5 (unreleased)
+
+   * Restore music after a certain boss fight event ends
+
+
 ## v0.13.0-beta.4
 
    * Fix Mac OS x not finding old saves
