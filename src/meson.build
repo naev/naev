@@ -22,6 +22,7 @@ source_rust = files(
    'audio/src/buffer_length_query.rs',
    'audio/src/output_limiter.rs',
    'audio/src/events.rs',
+   'audio/src/direct_channels_remix.rs',
    'core/src/lib.rs',
    'core/src/ntime.rs',
    'core/src/nxml.rs',

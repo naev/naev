@@ -4,10 +4,12 @@ mod efx;
 #[macro_use]
 mod openal;
 mod buffer_length_query;
+mod direct_channels_remix;
 mod events;
 mod output_limiter;
 mod source_spatialize;
 use crate::buffer_length_query::consts::*;
+use crate::direct_channels_remix::consts::*;
 use crate::efx::consts::*;
 use crate::efx::*;
 use crate::events::consts::*;
@@ -245,6 +247,7 @@ impl ReplayGain {
 #[derive(PartialEq, Debug)]
 pub struct Buffer {
     name: PathBuf,
+    stereo: bool,
     buffer: al::Buffer,
 }
 impl Buffer {
@@ -342,7 +345,11 @@ impl Buffer {
             buffer.raw(),
             &format!("{}", path.display()),
         );
-        Ok(Self { name: path, buffer })
+        Ok(Self {
+            name: path,
+            stereo,
+            buffer,
+        })
     }
 
     pub fn duration(&self, unit: AudioSeek) -> f32 {
@@ -390,6 +397,7 @@ impl Buffer {
         if AUDIO.disabled {
             return Ok(Arc::new(Buffer {
                 name: PathBuf::new(),
+                stereo: false,
                 buffer: al::Buffer(0),
             }));
         }
@@ -477,6 +485,7 @@ pub struct AudioStatic {
     data: Option<AudioData>,
     groupid: Option<GroupRef>,
     ingame: bool,
+    stereo: bool,
 }
 impl AudioStatic {
     fn new(data: &Option<AudioData>) -> Result<Self> {
@@ -488,6 +497,7 @@ impl AudioStatic {
                 data: None,
                 groupid: None,
                 ingame: false,
+                stereo: false,
             }),
         }
     }
@@ -508,6 +518,7 @@ impl AudioStatic {
             data: Some(AudioData::Buffer(buffer.clone())),
             groupid: None,
             ingame: false,
+            stereo: buffer.stereo,
         })
     }
 
@@ -644,6 +655,7 @@ pub struct AudioStream {
     source: Source,
     finish: Arc<AtomicBool>,
     thread: std::thread::JoinHandle<Result<()>>,
+    stereo: bool,
 }
 impl Drop for AudioStream {
     fn drop(&mut self) {
@@ -688,6 +700,7 @@ impl AudioStream {
 
         let thfsh = finish.clone();
         let mut thdata = StreamData::from_file(source.source.clone(), src)?;
+        let stereo = thdata.stereo;
         for _ in 0..2 {
             thdata.queue_next_buffer()?;
         }
@@ -698,6 +711,7 @@ impl AudioStream {
             source,
             finish,
             thread,
+            stereo,
         })
     }
 
@@ -746,7 +760,7 @@ impl Audio {
                 v.parameter_f32(AL_REFERENCE_DISTANCE, REFERENCE_DISTANCE);
                 v.parameter_f32(AL_MAX_DISTANCE, MAX_DISTANCE);
                 v.parameter_f32(AL_ROLLOFF_FACTOR, 1.);
-                v.parameter_i32(AL_SOURCE_RELATIVE, AL_FALSE.into());
+                v.parameter_i32(AL_DIRECT_CHANNELS_SOFT, AL_FALSE.into());
 
                 if let Some(efx) = EFX.get() {
                     v.parameter_3_i32(
@@ -767,6 +781,14 @@ impl Audio {
         match self {
             Self::Static(this) | Self::LuaStatic(this) => this.ingame,
             Self::LuaStream(_) => false,
+        }
+    }
+
+    pub fn stereo(&self) -> bool {
+        check_audio!(self);
+        match self {
+            Self::Static(this) | Self::LuaStatic(this) => this.stereo,
+            Self::LuaStream(this) => this.stereo,
         }
     }
 
@@ -1141,7 +1163,11 @@ impl AudioBuilder {
             if let Some(vel) = self.vel {
                 audio.set_velocity(vel);
             }
-        } else {
+        } else if audio.stereo() {
+            audio
+                .al_source()
+                .parameter_i32(AL_DIRECT_CHANNELS_SOFT, AL_REMIX_UNMATCHED_SOFT.into());
+        } else if !audio.stereo() {
             audio.set_relative(true);
         }
         audio.set_volume(self.volume);
@@ -1522,6 +1548,7 @@ impl System {
         }
 
         let has_source_spatialize = source_spatialize::supported();
+        let has_direct_channels = direct_channels_remix::supported();
 
         debugx!(gettext("OpenAL started: {} Hz"), freq);
         let al_renderer = al::get_parameter_str(AL_RENDERER)?;
@@ -1549,6 +1576,9 @@ impl System {
         }
         if has_output_limiter {
             extensions.push("output_limiter".to_string());
+        }
+        if has_direct_channels {
+            extensions.push("direct_channels_remix".to_string());
         }
         debugx!(gettext("   with {}"), extensions.join(", "));
         debug!("");

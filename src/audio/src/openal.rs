@@ -302,7 +302,7 @@ pub(crate) fn is_error() -> Option<ALenum> {
 }
 
 pub fn is_extension_present(extname: &CStr) -> bool {
-    matches!(unsafe { alIsExtensionPresent(extname.as_ptr()) }, ALC_TRUE)
+    matches!(unsafe { alIsExtensionPresent(extname.as_ptr()) }, AL_TRUE)
 }
 
 pub fn get_parameter_str(parameter: ALenum) -> Result<String> {

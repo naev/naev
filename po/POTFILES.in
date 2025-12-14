@@ -3809,6 +3809,7 @@ src/asteroid.h
 src/attributes.h
 src/audio/src/buffer_length_query.rs
 src/audio/src/debug.rs
+src/audio/src/direct_channels_remix.rs
 src/audio/src/efx.rs
 src/audio/src/events.rs
 src/audio/src/lib.rs
