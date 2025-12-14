@@ -10,6 +10,7 @@ local function sfx( pos, vel, source, params )
    local ttl = source:getDuration()*1.1
    local s = spfx.new( ttl, nil, nil, nil, nil, pos, vel, source )
    local ss = s:sfx()
+   if not ss then return s end
    if params.dist_ref or params.dist_max then
       local dist_ref = params.dist_ref or 500
       local dist_max = params.dist_max or 25e3

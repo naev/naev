@@ -22,8 +22,8 @@ vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
 }
 ]])
 
-local sfx_start = audio.newSoundData( 'snd/sounds/growl1.ogg' )
-local sfx_bite = audio.newSoundData( 'snd/sounds/crash1.ogg' )
+local sfx_start = audio.newSoundData( 'snd/sounds/growl1' )
+local sfx_bite = audio.newSoundData( 'snd/sounds/crash1' )
 
 local function turnoff_afterburner()
    local pp = player.pilot()

@@ -432,6 +432,9 @@ impl UserData for LuaSpfxRef {
         methods.add_method(
             "sfx",
             |_, this, ()| -> mlua::Result<Option<audio::LuaAudioRef>> {
+                if audio::AUDIO.disabled {
+                    return None;
+                }
                 Ok(this.call(|this| {
                     this.sfx.as_ref().map(|sfx| audio::LuaAudioRef {
                         audio: sfx.audio,
