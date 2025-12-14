@@ -1,6 +1,7 @@
 use anyhow::Result;
 use gettext::gettext;
 use log::warn;
+use serde::Deserialize;
 use std::ffi::CString;
 use std::os::raw::c_char;
 
@@ -9,7 +10,7 @@ use crate::nxml;
 use crate::nxml_warn_node_unknown;
 
 // TODO get rid of CString and use String
-#[derive(Default, Debug)]
+#[derive(Default, Debug, Deserialize)]
 pub struct StartData {
     pub name: CString,
     pub ship: CString,

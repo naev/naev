@@ -1,4 +1,4 @@
-use anyhow::{Context, Result};
+use anyhow::Result;
 use formatx::formatx;
 use gettext::gettext;
 use regex::Regex;
@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer};
 use std::collections::VecDeque;
 use std::ffi::CString;
 use std::os::raw::{c_char, c_double, c_int, c_ulong};
-use std::sync::{Mutex, RwLock};
+use std::sync::{LazyLock, Mutex, RwLock};
 
 pub type NTimeC = i64;
 #[derive(Clone, Copy, PartialEq, Eq, Debug, Default)]
@@ -97,25 +97,43 @@ impl NTime {
         t / 1_000.
     }
     pub fn from_string(input: &str) -> Result<Self> {
-        fn parse(cap: regex::Captures) -> Result<NTime> {
-            let scu: i32 = cap[1].parse()?;
-            let stp = match cap.get(2) {
-                Some(m) => m.as_str().parse::<i32>()?,
-                None => 0,
-            };
-            let stu = match cap.get(3) {
-                Some(m) => m.as_str().parse::<i32>()?,
-                None => 0,
-            };
-            Ok(NTime::new(scu, stp, stu))
-        }
-        let re = Regex::new(r"^\s*UST\s+(\d+)(?::(\d{4})(?:\.(\d{4}))?)?\s*$").unwrap();
+        static RE_UST: LazyLock<Regex> = LazyLock::new(|| {
+            Regex::new(r"^\s*UST\s+(\d+)(?::(\d{4})(?:\.(\d{4}))?)?\s*$").unwrap()
+        });
+        static RE_P: LazyLock<Regex> =
+            LazyLock::new(|| Regex::new(r"^\s*(\d+)(?:\.(\d{4}))?\s+p\s*$").unwrap());
+        static RE_S: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^\s*(\d+)\s+s\s*$").unwrap());
 
-        let dates = re
-            .captures_iter(input)
-            .map(|cap| parse(cap))
-            .collect::<Result<Vec<_>>>()?;
-        dates.into_iter().next().context("not valid date")
+        if let Some(cap) = RE_UST.captures(input) {
+            return Ok(NTime::new(
+                cap[1].parse()?,
+                match cap.get(2) {
+                    Some(m) => m.as_str().parse::<i32>()?,
+                    None => 0,
+                },
+                match cap.get(3) {
+                    Some(m) => m.as_str().parse::<i32>()?,
+                    None => 0,
+                },
+            ));
+        }
+
+        if let Some(cap) = RE_P.captures(input) {
+            return Ok(NTime::new(
+                0,
+                cap[1].parse()?,
+                match cap.get(2) {
+                    Some(m) => m.as_str().parse::<i32>()?,
+                    None => 0,
+                },
+            ));
+        }
+
+        if let Some(cap) = RE_S.captures(input) {
+            return Ok(NTime::new(0, 0, cap[1].parse()?));
+        }
+
+        anyhow::bail!("not valid ntime")
     }
     pub fn as_string(self) -> String {
         let cycles = self.cycles();
@@ -329,7 +347,7 @@ pub fn refresh() {
 }
 
 #[test]
-fn test_ntime() {
+fn test_ntime_ust() {
     assert!(NTime::from_string("cat").is_err());
     assert!(NTime::from_string("UST 123:cat.4567").is_err());
     assert!(NTime::from_string("UST 123:4567.dog").is_err());
@@ -361,4 +379,22 @@ fn test_ntime() {
         NTime::from_string("UST 603").unwrap(),
         NTime::new(603, 0, 0)
     );
+}
+
+#[test]
+fn test_ntime_p() {
+    assert!(NTime::from_string("123.456 p").is_err());
+    assert!(NTime::from_string("123.0456 p cat").is_err());
+    assert!(NTime::from_string("cat 123.0456 p").is_err());
+    assert!(NTime::from_string("123.0456 pp").is_err());
+    assert_eq!(
+        NTime::from_string("123.4567 p").unwrap(),
+        NTime::new(0, 123, 4567)
+    );
+    assert_eq!(NTime::from_string("123 p").unwrap(), NTime::new(0, 123, 0));
+}
+
+#[test]
+fn test_ntime_s() {
+    assert_eq!(NTime::from_string("123 s").unwrap(), NTime::new(0, 0, 123));
 }
