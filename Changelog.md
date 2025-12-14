@@ -1,8 +1,11 @@
 ## v0.13.0-beta.5 (unreleased)
 
+   * Implemented Audio system in Rust
    * Restore music after a certain boss fight event ends
-   * Systems with spobs will now have circles again in the idotr
+   * Systems with spobs will now have circles again in the editor
+   * Plugin manager also sorts by compatibility
    * Fixed waste dumping in REDACTED
+   * Fixed some Soromid portrait generation
 
 
 ## v0.13.0-beta.4
@@ -1574,7 +1577,7 @@
    * Revamped and improved some existing locations
    * Several new planets and systems
 
- ### 40 New missions
+ ### 1  New missions
 
    * Challenge adversaries in the Crimson Gauntlet
    * Follow happenings on "Minerva Station"
