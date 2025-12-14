@@ -339,8 +339,7 @@ local soromid_mil = {
 }
 local function get_soromid( list, species )
    if species == nil then
-      local p = list[ rnd.rnd(1,#list) ]
-      return p[1], p[1], p[2]
+      return _get_list( list )
    end
    local valid = {}
    for k,v in ipairs(list) do
