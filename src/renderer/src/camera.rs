@@ -7,10 +7,6 @@ use std::sync::atomic::Ordering;
 use std::sync::{LazyLock, RwLock};
 use utils::atomicfloat::AtomicF64;
 
-// Sound is currently in "screen" coordinates, and doesn't react to ship turning
-// Would probably have to be relative to heading for accessibility support (when enabled)
-const SOUND_DIR: f64 = std::f64::consts::FRAC_PI_2;
-
 // Converts y coordinates based on viewing angles
 static GAME_TO_SCREEN: AtomicF64 = AtomicF64::new(1.);
 static SCREEN_TO_GAME: AtomicF64 = AtomicF64::new(1.);
@@ -100,18 +96,13 @@ impl Camera {
             self.update_manual_zoom(dt);
         }
 
-        unsafe {
-            if p.is_null() {
-                let dx = dt * (old.x - self.pos.x);
-                let dy = dt * (old.y - self.pos.y);
-                naevc::sound_updateListener(SOUND_DIR, self.pos.x, self.pos.y, dx, dy);
-            } else {
-                naevc::sound_updateListener(
-                    SOUND_DIR,
-                    (*p).solid.pos.x,
-                    (*p).solid.pos.y,
-                    (*p).solid.vel.x,
-                    (*p).solid.vel.y,
+        if p.is_null() {
+            audio::AUDIO.update_listener(self.pos, (old - self.pos) * dt);
+        } else {
+            unsafe {
+                audio::AUDIO.update_listener(
+                    Vector2::<f64>::new((*p).solid.pos.x, (*p).solid.pos.y),
+                    Vector2::<f64>::new((*p).solid.vel.x, (*p).solid.vel.y),
                 );
             }
         }
@@ -446,10 +437,7 @@ pub extern "C" fn cam_setTargetPilot(follow: c_uint, soft_over: c_int) {
         cam.fly = true;
         cam.fly_speed = soft_over.into();
     }
-
-    unsafe {
-        naevc::sound_updateListener(SOUND_DIR, cam.pos.x, cam.pos.y, 0., 0.);
-    }
+    audio::AUDIO.update_listener(cam.pos, Default::default());
 }
 
 #[unsafe(no_mangle)]
@@ -462,6 +450,7 @@ pub extern "C" fn cam_setTargetPos(x: c_double, y: c_double, soft_over: c_int) {
         cam.old.x = x;
         cam.old.y = y;
         cam.fly = false;
+        audio::AUDIO.update_listener(cam.pos, Default::default());
     } else {
         cam.target.x = x;
         cam.target.y = y;
@@ -518,7 +507,7 @@ pub fn open_camera(lua: &mlua::Lua) -> Result<()> {
     /// @luafunc set
     api.set(
         "set",
-        lua.create_function(|_lua, ()| -> mlua::Result<(f64, f64, f64)> {
+        lua.create_function(|_, ()| -> mlua::Result<(f64, f64, f64)> {
             let cam = CAMERA.read().unwrap();
             Ok((cam.pos.x, cam.pos.y, 1.0 / cam.zoom))
         })?,
@@ -531,7 +520,7 @@ pub fn open_camera(lua: &mlua::Lua) -> Result<()> {
     /// @luafunc get
     api.set(
         "get",
-        lua.create_function(|_lua, ()| -> mlua::Result<(f64, f64, f64)> {
+        lua.create_function(|_, ()| -> mlua::Result<(f64, f64, f64)> {
             let cam = CAMERA.read().unwrap();
             Ok((cam.pos.x, cam.pos.y, 1.0 / cam.zoom))
         })?,
@@ -542,9 +531,9 @@ pub fn open_camera(lua: &mlua::Lua) -> Result<()> {
     /// @luafunc pos
     api.set(
         "pos",
-        lua.create_function(|_lua, ()| -> mlua::Result<Vec2> {
+        lua.create_function(|_, ()| -> mlua::Result<Vec2> {
             let cam = CAMERA.read().unwrap();
-            Ok(Vec2::new(cam.pos.x, cam.pos.y))
+            Ok(cam.pos.into())
         })?,
     )?;
     /// @brief Sets the camera zoom.
@@ -562,10 +551,25 @@ pub fn open_camera(lua: &mlua::Lua) -> Result<()> {
     /// @luafunc setZoom
     api.set(
         "setZoom",
-        lua.create_function(|_lua, ()| -> mlua::Result<Vec2> {
-            let cam = CAMERA.read().unwrap();
-            Ok(Vec2::new(cam.pos.x, cam.pos.y))
-        })?,
+        lua.create_function(
+            |_, (zoom, hard_over, speed): (Option<f64>, bool, Option<f64>)| -> mlua::Result<()> {
+                let mut cam = CAMERA.write().unwrap();
+                cam.zoom_speed = speed.unwrap_or(unsafe { naevc::conf.zoom_speed });
+                if let Some(zoom) = zoom {
+                    let zoom = 1.0 / zoom;
+                    cam.zoom_override = true;
+                    let (zf, zn) = unsafe { (naevc::conf.zoom_far, naevc::conf.zoom_near) };
+                    if hard_over {
+                        cam.zoom = zoom.clamp(zf, zn);
+                    }
+                    cam.zoom_target = zoom.clamp(zf, zn);
+                } else {
+                    cam.zoom_override = false;
+                    cam.zoom_target = 1.0;
+                }
+                Ok(())
+            },
+        )?,
     )?;
     /// @brief Gets the camera zoom.
     ///
@@ -575,7 +579,7 @@ pub fn open_camera(lua: &mlua::Lua) -> Result<()> {
     /// @luafunc getZoom
     api.set(
         "getZoom",
-        lua.create_function(|_lua, ()| -> mlua::Result<(f64, f64, f64)> {
+        lua.create_function(|_, ()| -> mlua::Result<(f64, f64, f64)> {
             let cam = CAMERA.read().unwrap();
             let (zoom_far, zoom_near) = unsafe { (naevc::conf.zoom_far, naevc::conf.zoom_near) };
             Ok((1.0 / cam.zoom, 1.0 / zoom_far, 1.0 / zoom_near))
@@ -590,7 +594,7 @@ pub fn open_camera(lua: &mlua::Lua) -> Result<()> {
     /// @luafunc shake
     api.set(
         "shake",
-        lua.create_function(|_lua, amplitude: f64| -> mlua::Result<()> {
+        lua.create_function(|_, amplitude: f64| -> mlua::Result<()> {
             unsafe {
                 naevc::spfx_shake(amplitude);
             }

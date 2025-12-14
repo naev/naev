@@ -1564,6 +1564,13 @@ impl System {
         }
         let compression = load_compression().ok();
 
+        // Sound is currently in "screen" coordinates, and doesn't react to ship turning
+        // Would probably have to be relative to heading for accessibility support (when enabled)
+        let ori = [0.0, 1.0, 0.0, 0.0, 0.0, 1.0];
+        unsafe {
+            alListenerfv(AL_ORIENTATION, ori.as_ptr());
+        }
+
         Ok(System {
             disabled: false,
             device,
@@ -1700,6 +1707,12 @@ impl System {
             }
             _ => true,
         });
+    }
+
+    pub fn update_listener(&self, pos: Vector2<f64>, vel: Vector2<f64>) {
+        set_listener_position(Vector3::new(pos.x as f32, pos.y as f32, 0.0));
+        set_listener_velocity(Vector3::new(vel.x as f32, vel.y as f32, 0.0));
+        *AUDIO.listener_pos.write().unwrap() = Vector2::new(pos.x as f32, pos.y as f32);
     }
 
     pub fn execute_messages(&self) {
@@ -2831,7 +2844,7 @@ pub extern "C" fn sound_updatePos(
 
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_updateListener(
-    dir: c_double,
+    _dir: c_double,
     px: c_double,
     py: c_double,
     vx: c_double,
@@ -2840,14 +2853,7 @@ pub extern "C" fn sound_updateListener(
     if AUDIO.disabled {
         return;
     }
-    let dir = dir as f32;
-    let (c, s) = (dir.cos(), dir.sin());
-    let ori = [c, s, 0.0, 0.0, 0.0, 1.0];
-    unsafe {
-        alListenerfv(AL_ORIENTATION, ori.as_ptr());
-    }
-    set_listener_position(Vector3::new(px as f32, py as f32, 0.));
-    set_listener_velocity(Vector3::new(vx as f32, vy as f32, 0.));
+    AUDIO.update_listener(Vector2::new(px, py), Vector2::new(vx, vy));
 }
 
 #[unsafe(no_mangle)]
