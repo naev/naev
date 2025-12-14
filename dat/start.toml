@@ -1,0 +1,14 @@
+scenario_name = "Sea of Darkness"
+ship_name = "El Ego de Deiz"
+ship_acquired = "Your first space-worthy ship!"
+ship_model = "Llama"
+credits = 30000
+system = "Delta Polaris"
+system_position = [ -12500, -3500 ]
+event = "start_event"
+chapter = "0"
+date = "UST 603:3726.2871"
+gui_default = "slim"
+spob_lua_default = "spob/lua/default.lua"
+dtype_default = "energy"
+local_map_default = "Local System Map"

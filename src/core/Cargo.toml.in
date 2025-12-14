@@ -22,3 +22,5 @@ anyhow = { workspace = true }
 mlua = { workspace = true }
 serde = { workspace = true }
 regex = { workspace = true }
+nalgebra = { workspace = true }
+toml = { workspace = true }

@@ -63,7 +63,7 @@ pluginmgr = { path="@BUILD@/src/pluginmgr" }
 pluginmgr-gui = { path="@BUILD@/src/pluginmgr-gui" }
 formatx = "0.2"
 glow = "0.16"
-nalgebra = { version = "0.34", features = ["bytemuck", "encase"] }
+nalgebra = { version = "0.34", features = ["bytemuck", "encase", "serde-serialize"] }
 encase = { version = "0.12" } # Needed for shader voodoo
 bytemuck = { version = "1.24", features = ["derive"] } # Needed for shader voodoo
 regex = "1.12"

@@ -1,9 +1,11 @@
 use anyhow::Result;
 use gettext::gettext;
-use log::warn;
+use log::{warn, warn_err};
+use nalgebra::Vector2;
 use serde::Deserialize;
 use std::ffi::CString;
 use std::os::raw::c_char;
+use std::path::Path;
 
 use crate::ntime::{NTime, NTimeC};
 use crate::nxml;
@@ -12,13 +14,20 @@ use crate::nxml_warn_node_unknown;
 // TODO get rid of CString and use String
 #[derive(Default, Debug, Deserialize)]
 pub struct StartData {
+    #[serde(rename = "scenario_name")]
     pub name: CString,
+    #[serde(rename = "ship_model")]
     pub ship: CString,
+    #[serde(rename = "ship_name")]
     pub shipname: CString,
+    #[serde(rename = "ship_acquired")]
     pub acquired: CString,
+    #[serde(rename = "gui_default")]
     pub gui: CString,
     pub system: CString,
+    #[serde(default)]
     pub mission: CString,
+    #[serde(default)]
     pub event: CString,
     pub chapter: CString,
     pub spob_lua_default: CString,
@@ -26,8 +35,8 @@ pub struct StartData {
     pub local_map_default: CString,
     pub credits: i64,
     pub date: NTime,
-    pub pos_x: f64,
-    pub pos_y: f64,
+    #[serde(rename = "system_position")]
+    pub pos: Vector2<f64>,
 }
 
 macro_rules! nxml_attr_str {
@@ -63,9 +72,23 @@ macro_rules! nxml_attr_i32 {
 
 impl StartData {
     fn load() -> Result<Self> {
+        if ndata::exists("start.xml") {
+            //warn("start.xml is deprecated, please use start.toml!");
+            Self::load_xml("start.xml")
+        } else {
+            Self::load_toml("start.toml")
+        }
+    }
+
+    fn load_toml<P: AsRef<Path>>(filename: P) -> Result<Self> {
+        let data = ndata::read(filename)?;
+        Ok(toml::from_slice(&data)?)
+    }
+
+    fn load_xml<P: AsRef<Path>>(filename: P) -> Result<Self> {
         let mut start: StartData = Default::default();
 
-        let data = ndata::read("start.xml")?;
+        let data = ndata::read(filename)?;
         let doc = roxmltree::Document::parse(std::str::from_utf8(&data)?)?;
         let root = doc.root_element();
         for node in root.children() {
@@ -110,10 +133,10 @@ impl StartData {
                                     match ccnode.tag_name().name().to_lowercase().as_str() {
                                         "name" => start.system = nxml::node_cstring(ccnode)?,
                                         "x" => {
-                                            start.pos_x = nxml::node_str(ccnode)?.parse()?;
+                                            start.pos.x = nxml::node_str(ccnode)?.parse()?;
                                         }
                                         "y" => {
-                                            start.pos_y = nxml::node_str(ccnode)?.parse()?;
+                                            start.pos.y = nxml::node_str(ccnode)?.parse()?;
                                         }
                                         tag => nxml_warn_node_unknown!(
                                             "Start/player/system",
@@ -156,7 +179,16 @@ impl StartData {
 }
 
 use std::sync::LazyLock;
-static START: LazyLock<StartData> = LazyLock::new(|| StartData::load().unwrap());
+static START: LazyLock<StartData> = LazyLock::new(|| {
+    println!("startdata");
+    match StartData::load() {
+        Ok(data) => data,
+        Err(e) => {
+            warn_err!(e);
+            Default::default()
+        }
+    }
+});
 
 pub fn start() -> &'static StartData {
     &START
@@ -196,7 +228,7 @@ pub extern "C" fn start_date() -> NTimeC {
 #[unsafe(no_mangle)]
 pub extern "C" fn start_position(x: *mut f64, y: *mut f64) {
     unsafe {
-        *x = START.pos_x;
-        *y = START.pos_y;
+        *x = START.pos.x;
+        *y = START.pos.y;
     }
 }
