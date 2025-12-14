@@ -1736,7 +1736,7 @@ impl System {
         }
     }
 }
-static SILENT: AtomicBool = AtomicBool::new(false);
+pub static SILENT: AtomicBool = AtomicBool::new(false);
 pub static AUDIO: LazyLock<System> = LazyLock::new(|| System::new().unwrap());
 pub static CODECS: LazyLock<symphonia::core::codecs::CodecRegistry> = LazyLock::new(|| {
     let mut codec_registry = symphonia::core::codecs::CodecRegistry::new();

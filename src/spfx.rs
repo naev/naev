@@ -6,6 +6,7 @@ use mlua::{Either, Function, UserData, UserDataMethods, UserDataRef};
 use physics::vec2::Vec2;
 use renderer::camera;
 use renderer::colour::Colour;
+use std::sync::atomic::Ordering;
 use std::sync::{Mutex, RwLock};
 use thunderdome::Arena;
 
@@ -432,8 +433,8 @@ impl UserData for LuaSpfxRef {
         methods.add_method(
             "sfx",
             |_, this, ()| -> mlua::Result<Option<audio::LuaAudioRef>> {
-                if audio::AUDIO.disabled {
-                    return None;
+                if audio::SILENT.load(Ordering::Relaxed) {
+                    return Ok(None);
                 }
                 Ok(this.call(|this| {
                     this.sfx.as_ref().map(|sfx| audio::LuaAudioRef {
