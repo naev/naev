@@ -63,10 +63,11 @@ vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
    background_default()
 
    -- Set some fancy effects
-   audio.setEffect( "haze", require("reverb_preset").forest() )
+   audio.setEffectData( "haze", require("reverb_preset").forest() )
    audio.setGlobalEffect( "haze" )
-   audio.setGlobalAirAbsorption( 3000, 1 )
-   audio.setGlobalDopplerFactor( 0.6 ) -- More than normal
+   audio.setSpeedOfSound( 3000 )
+   audio.setAirAbsorption( 1 )
+   audio.setDopplerFactor( 0.6 ) -- More than normal
 
    -- Ambient light is coloured now
    gfx.lightAmbient( 0xE5/0xFF, 0x1A/0xFF, 0x4C/0xFF, 1 )

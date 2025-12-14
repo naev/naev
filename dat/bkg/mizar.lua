@@ -125,7 +125,7 @@ vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
 
    -- Set some fancy effects
    --[[
-   audio.setEffect( "haze", require("reverb_preset").forest() )
+   audio.setEffectData( "haze", require("reverb_preset").forest() )
    audio.setGlobalEffect( "haze" )
    audio.setGlobalAirAbsorption( 3000, 1 )
    audio.setGlobalDopplerFactor( 0.6 ) -- More than normal

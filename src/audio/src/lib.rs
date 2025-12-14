@@ -59,7 +59,7 @@ struct LuaAudioEfx {
 impl LuaAudioEfx {
     pub fn new(name: &str) -> Result<Self> {
         let effect = Effect::new()?;
-        debug::object_label(debug::consts::AL_FILTER_EXT, effect.raw(), name);
+        debug::object_label(debug::consts::AL_EFFECT_EXT, effect.raw(), name);
         let slot = AuxiliaryEffectSlot::new()?;
         debug::object_label(
             debug::consts::AL_AUXILIARY_EFFECT_SLOT_EXT,
@@ -2651,6 +2651,19 @@ impl UserData for LuaAudioRef {
                 unsafe {
                     alSpeedOfSound(speed.unwrap_or(3433.));
                 }
+                Ok(())
+            },
+        );
+        /*@
+         * @brief Allows setting the air absorption factor.
+         *
+         *    @luatparam[opt=0] number absorb Air absorption factor.
+         * @luafunc setAirAbsorption
+         */
+        methods.add_function(
+            "setAirAbsorption",
+            |_, absorb: Option<f32>| -> mlua::Result<()> {
+                AUDIO.set_air_absorption_factor(absorb.unwrap_or(0.0));
                 Ok(())
             },
         );

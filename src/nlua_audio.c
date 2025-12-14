@@ -112,9 +112,11 @@ static const luaL_Reg audioL_methods[] = {
    { "setRolloff", audioL_setRolloff },
    { "getRolloff", audioL_getRolloff },
    { "setEffect", audioL_setEffect },
+   { "setEffectData", audioL_setEffect }, // Stub for script
    { "setGlobalEffect", audioL_setGlobalEffect },
-   { "setGlobalAirAbsorption", audioL_setGlobalAirAbsorption },
-   { "setGlobalDopplerFactor", audioL_setGlobaDopplerFactor },
+   { "setSpeedOfSound", audioL_setGlobalAirAbsorption },
+   { "setAirAbsorption", audioL_setGlobalAirAbsorption },
+   { "setDopplerFactor", audioL_setGlobaDopplerFactor },
    /* Deprecated. */
    { "soundPlay", audioL_soundPlay }, /* Old API */
    { 0, 0 } };                        /**< AudioLua methods. */

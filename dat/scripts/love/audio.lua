@@ -21,12 +21,10 @@ function love_audio.getVolume()
 end
 function love_audio.setPosition( _x, _y, _z ) end -- Don't allow setting position
 function love_audio.setEffect( ... )
-   return naev.audio.setEffect( ... )
+   return naev.audio.setEffectData( ... )
 end
-
 function love_audio.newSoundData( filename )
    return naev.audiodata.new( filename )
 end
-
 
 return love_audio
