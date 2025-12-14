@@ -1,5 +1,8 @@
+use anyhow::{Context, Result};
 use formatx::formatx;
 use gettext::gettext;
+use regex::Regex;
+use serde::{Deserialize, Deserializer};
 use std::collections::VecDeque;
 use std::ffi::CString;
 use std::os::raw::{c_char, c_double, c_int, c_ulong};
@@ -8,6 +11,16 @@ use std::sync::{Mutex, RwLock};
 pub type NTimeC = i64;
 #[derive(Clone, Copy, PartialEq, Eq, Debug, Default)]
 pub struct NTime(i64);
+
+impl<'de> Deserialize<'de> for NTime {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let data = String::deserialize(deserializer)?;
+        Ok(NTime::from_string(&data).unwrap())
+    }
+}
 struct NTimeInternal {
     time: NTime,
     remainder: f64,
@@ -82,6 +95,20 @@ impl NTime {
     pub fn to_seconds(self) -> f64 {
         let t = self.0 as f64;
         t / 1_000.
+    }
+    pub fn from_string(input: &str) -> Result<Self> {
+        fn parse(cap: regex::Captures) -> Result<NTime> {
+            let scu = cap[1].parse::<i32>()?;
+            let stp = cap[2].parse::<i32>()?;
+            let stu = cap[3].parse::<i32>()?;
+            Ok(NTime::new(scu, stp, stu))
+        }
+        let re = Regex::new(r"^\s*UST\s+(\d+):(\d+)\.(\d+)\s*$").unwrap();
+        let dates = re
+            .captures_iter(input)
+            .map(|cap| parse(cap))
+            .collect::<Result<Vec<_>>>()?;
+        dates.into_iter().next().context("not valid date")
     }
     pub fn as_string(self) -> String {
         let cycles = self.cycles();
@@ -295,4 +322,14 @@ pub fn refresh() {
             naevc::economy_update(t.into());
         }
     }
+}
+
+#[test]
+fn test_ntime() {
+    assert!(NTime::from_string("cat").is_err());
+    assert!(NTime::from_string("UST 123:cat.4567").is_err());
+    assert_eq!(
+        NTime::from_string("UST 603:3726.2871").unwrap(),
+        NTime::new(603, 3726, 2871)
+    );
 }

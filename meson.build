@@ -543,7 +543,7 @@ naevcrs = rust.bindgen(
       command: [ 'env', cargo_env, cargo, 'clippy', cargo_options, ] )
 
    # Run all our Rust tests (if we have them)
-   test('cargo test --workspace',
+   test('cargo',
       cargo,
       env: [cargo_env],
       timeout: 300,

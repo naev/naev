@@ -20,3 +20,5 @@ formatx = { workspace = true }
 log = { workspace = true }
 anyhow = { workspace = true }
 mlua = { workspace = true }
+serde = { workspace = true }
+regex = { workspace = true }
