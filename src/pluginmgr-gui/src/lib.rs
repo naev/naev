@@ -753,11 +753,16 @@ impl App {
             .collect();
         self.view.sort_by(|a, b| {
             let ord = a.state.cmp(&b.state);
-            if ord == std::cmp::Ordering::Equal {
-                a.plugin().identifier.cmp(&b.plugin().identifier)
-            } else {
-                ord
+            if ord != std::cmp::Ordering::Equal {
+                return ord;
             }
+            let pa = a.plugin();
+            let pb = b.plugin();
+            let ord = pa.compatible.cmp(&pb.compatible);
+            if ord != std::cmp::Ordering::Equal {
+                return ord;
+            }
+            pa.identifier.cmp(&pb.identifier)
         });
         self.has_update = self.view.iter().any(|wrap| wrap.has_update());
 
