@@ -24,7 +24,7 @@
 #include "ntracing.h"
 #include "sound.h"
 
-#define MUSIC_SUFFIX ".ogg" /**< Suffix of musics. */
+#define MUSIC_SUFFIX ".opus" /**< Suffix of musics. */
 
 int           music_disabled = 0; /**< Whether or not music is disabled. */
 static double music_vol      = 0.;
