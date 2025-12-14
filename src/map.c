@@ -1435,10 +1435,12 @@ void map_renderSystems( double bx, double by, double x, double y, double zoom,
            mode == MAPMODE_TRADE ) {
          const glColour *col;
 
-         if ( !sys_isFlag( sys, SYSTEM_HAS_KNOWN_LANDABLE ) )
-            continue;
-         if ( !sys_isFlag( sys, SYSTEM_HAS_KNOWN_SPOB ) &&
+         if ( ( !sys_isFlag( sys, SYSTEM_HAS_KNOWN_SPOB ) ||
+                !sys_isFlag( sys, SYSTEM_HAS_KNOWN_LANDABLE ) ) &&
               mode != MAPMODE_EDITOR )
+            continue;
+
+         if ( ( mode == MAPMODE_EDITOR ) && ( array_size( sys->spobs ) == 0 ) )
             continue;
 
          /* Spob colours */
@@ -1467,11 +1469,7 @@ void map_renderSystems( double bx, double by, double x, double y, double zoom,
          else
             size = 0.65;
 
-         if ( mode == MAPMODE_EDITOR ) {
-            /* Radius slightly shorter. */
-            gl_renderCircle( tx, ty, size * r, col, 1 );
-         } else
-            gl_renderCircle( tx, ty, size * r, col, 1 );
+         gl_renderCircle( tx, ty, size * r, col, 1 );
 
       } else if ( mode == MAPMODE_DISCOVER ) {
          gl_renderCircle( tx, ty, r, &cInert, 0 );
