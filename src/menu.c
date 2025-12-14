@@ -197,6 +197,7 @@ void menu_main( void )
       space_gfxUnload( cur_system ); /* Should stop wormhole sound and such. */
 
    /* Play load music. */
+   music_reset();
    music_choose( "load" );
 
    /* Load background and friends. */
@@ -668,10 +669,11 @@ static void menu_death_restart( unsigned int wid, const char *str )
  */
 void menu_death( void )
 {
-   unsigned int wid;
+   // TODO something better with the music
+   music_reset();
 
-   wid = window_create( "wdwRIP", _( "Death" ), -1, -1, DEATH_WIDTH,
-                        DEATH_HEIGHT );
+   unsigned int wid = window_create( "wdwRIP", _( "Death" ), -1, -1,
+                                     DEATH_WIDTH, DEATH_HEIGHT );
    window_onClose( wid, menu_death_close );
 
    /* Allow the player to continue if the saved game exists, if not, propose to

@@ -49,6 +49,7 @@ static int       music_lua_pause  = LUA_NOREF;
 static int       music_lua_resume = LUA_NOREF;
 static int       music_lua_info   = LUA_NOREF;
 static int       music_lua_volume = LUA_NOREF;
+static int       music_lua_reset  = LUA_NOREF;
 
 /* functions */
 static int music_runLua( const char *situation );
@@ -393,6 +394,7 @@ static int music_luaInit( void )
    music_lua_resume = nlua_refenvtype( music_env, "resume", LUA_TFUNCTION );
    music_lua_info   = nlua_refenvtype( music_env, "info", LUA_TFUNCTION );
    music_lua_volume = nlua_refenvtype( music_env, "volume", LUA_TFUNCTION );
+   music_lua_reset  = nlua_refenvtype( music_env, "reset", LUA_TFUNCTION );
 
    return 0;
 }
@@ -415,6 +417,7 @@ static void music_luaQuit( void )
    music_lua_resume = LUA_NOREF;
    music_lua_info   = LUA_NOREF;
    music_lua_volume = LUA_NOREF;
+   music_lua_reset  = LUA_NOREF;
 }
 
 /**
@@ -444,4 +447,19 @@ void music_rechoose( void )
 
    /* Lock so it doesn't run in between an update. */
    music_runchoose = 1;
+}
+
+void music_reset( void )
+{
+   if ( music_disabled )
+      return;
+
+   /* Run the resume function in Lua. */
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, music_lua_reset );
+   if ( nlua_pcall( music_env, 0, 0 ) ) { /* error has occurred */
+      WARN( _( "Error while running music function '%s': %s" ), "reset",
+            lua_tostring( naevL, -1 ) );
+      lua_pop( naevL, 1 );
+      return;
+   }
 }

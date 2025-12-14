@@ -1,6 +1,13 @@
+## v0.13.0-beta.5 (unreleased)
+
+   * Restore music after a certain boss fight event ends
+   * Systems with spobs will now have circles again in the idotr
+   * Fixed waste dumping in REDACTED
+
+
 ## v0.13.0-beta.4
 
-   * Fix Mac OS x not finding old saves
+   * Fix Mac OS X not finding old saves
    * Don't reset escort AI when they are already landing or jumping at the
      right place
 
@@ -1567,7 +1574,7 @@
    * Revamped and improved some existing locations
    * Several new planets and systems
 
- ### New missions
+ ### 40 New missions
 
    * Challenge adversaries in the Crimson Gauntlet
    * Follow happenings on "Minerva Station"
