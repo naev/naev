@@ -78,15 +78,15 @@ impl NTime {
     }
     pub fn cycles(self) -> i32 {
         let t = self.0;
-        (t / (5_000 * 10_000 * 1_000)).try_into().unwrap_or(-1)
+        (t / (5_000 * 10_000 * 1_000)).try_into().unwrap_or(0)
     }
     pub fn periods(self) -> i32 {
         let t = self.0;
-        (t / (10_000 * 1_000) % 5_000).try_into().unwrap_or(-1)
+        (t / (10_000 * 1_000) % 5_000).try_into().unwrap_or(0)
     }
     pub fn seconds(self) -> i32 {
         let t = self.0;
-        (t / 1_000 % 10_000).try_into().unwrap_or(-1)
+        (t / 1_000 % 10_000).try_into().unwrap_or(0)
     }
     pub fn remainder(self) -> f64 {
         let t = self.0 as f64;
@@ -98,12 +98,19 @@ impl NTime {
     }
     pub fn from_string(input: &str) -> Result<Self> {
         fn parse(cap: regex::Captures) -> Result<NTime> {
-            let scu = cap[1].parse::<i32>()?;
-            let stp = cap[2].parse::<i32>()?;
-            let stu = cap[3].parse::<i32>()?;
+            let scu: i32 = cap[1].parse()?;
+            let stp = match cap.get(2) {
+                Some(m) => m.as_str().parse::<i32>()?,
+                None => 0,
+            };
+            let stu = match cap.get(3) {
+                Some(m) => m.as_str().parse::<i32>()?,
+                None => 0,
+            };
             Ok(NTime::new(scu, stp, stu))
         }
-        let re = Regex::new(r"^\s*UST\s+(\d+):(\d+)\.(\d+)\s*$").unwrap();
+        let re = Regex::new(r"^\s*UST\s+(\d+)(?::(\d+)(?:\.(\d+))?)?\s*$").unwrap();
+
         let dates = re
             .captures_iter(input)
             .map(|cap| parse(cap))
@@ -328,8 +335,20 @@ pub fn refresh() {
 fn test_ntime() {
     assert!(NTime::from_string("cat").is_err());
     assert!(NTime::from_string("UST 123:cat.4567").is_err());
+    assert!(NTime::from_string("UST 123:4567.dog").is_err());
+    assert!(NTime::from_string("cat UST 603:3726.2871").is_err());
+    assert!(NTime::from_string("UST 603:3726.2871 cat").is_err());
+    assert!(NTime::from_string("UST 603:3726.n2871").is_err());
     assert_eq!(
         NTime::from_string("UST 603:3726.2871").unwrap(),
         NTime::new(603, 3726, 2871)
+    );
+    assert_eq!(
+        NTime::from_string("UST 603:3726").unwrap(),
+        NTime::new(603, 3726, 0)
+    );
+    assert_eq!(
+        NTime::from_string("UST 603").unwrap(),
+        NTime::new(603, 0, 0)
     );
 }
