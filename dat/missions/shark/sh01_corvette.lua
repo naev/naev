@@ -149,6 +149,7 @@ function lets_go()
    equipopt.generic( sharkboy, { disable=2, damage=0 }, "elite" )
    sharkboy:setHostile(true)
    sharkboy:setHilight(true)
+   sharkboy:setFuel(true) -- to jump out
 
    -- On easy difficulty, it's nearly impossible for the player to be disabled...
    local _dif, stats = naev.difficulty(true)
