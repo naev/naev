@@ -118,7 +118,7 @@ function land ()
       -- Some text
       vn.na(_([[As you land, you notice the starport has been emptied. You also notice explosives rigged on some of the columns. This doesn't look good. The marines tell you to sit still while they go out to try to complete the prisoner exchange.
 From the cockpit you see the marines lead the prisoners in front of them with guns to their backs. You see figures step out of the shadows with weapons too; most likely the FLF.]]) )
-      vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
+      vn.music( "snd/sounds/loops/alarm" ) -- blaring alarm
       vn.na(_([[All of a sudden a siren blares and you hear shooting break out. You quickly start your engines and prepare for take off. Shots ring out all over the landing bay, and you can see a couple of corpses as you leave the starport. You remember the explosives just as loud explosions go off behind you. This doesn't look good at all.]]))
       vn.na(_([[You start your climb out of the atmosphere and notice how you're picking up many FLF and Dvaered ships. Looks like you're going to have quite a run to get the hell out of here. This didn't go as you expected.]]) )
 

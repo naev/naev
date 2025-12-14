@@ -64,9 +64,9 @@ function mg.load ()
    -- Load audio if applicable
    if not mg.sfx then
       mg.sfx = {
-         --goal     = la.newSource( 'snd/sounds/sokoban/goal.ogg' ),
-         --invalid  = la.newSource( 'snd/sounds/sokoban/invalid.ogg' ),
-         --level    = la.newSource( 'snd/sounds/sokoban/level.ogg' ),
+         --goal     = la.newSource( 'snd/sounds/sokoban/goal' ),
+         --invalid  = la.newSource( 'snd/sounds/sokoban/invalid' ),
+         --level    = la.newSource( 'snd/sounds/sokoban/level' ),
       }
    end
 

@@ -19,7 +19,7 @@ vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
 }
 ]])
 
-local sfx = audio.newSoundData( 'snd/sounds/activate4.ogg' )
+local sfx = audio.newSoundData( 'snd/sounds/activate4' )
 
 local function turnon( p, po )
    -- Still on cooldown

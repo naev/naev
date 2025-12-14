@@ -14,7 +14,7 @@ local diceio = {
    },
 }
 for i=1,3 do
-   local f = string.format("snd/sounds/gambling/dieThrow%d.ogg",i)
+   local f = string.format("snd/sounds/gambling/dieThrow%d",i)
    local s = la.newSource(f)
    table.insert( diceio.sound.throw, s )
 end

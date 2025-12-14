@@ -25,7 +25,7 @@ local npc_description= _("A terminal to access the Crimson Gauntlet Virtual Real
 
 local gauntletsys = system.get("Crimson Gauntlet")
 
-local sfx_clear = audio.new( 'snd/sounds/jingles/victory.ogg' )
+local sfx_clear = audio.new( 'snd/sounds/jingles/victory' )
 local player_lost_round = false
 
 function create ()

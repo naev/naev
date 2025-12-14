@@ -13,7 +13,7 @@ local pixelcode_enter = lf.read( "shaders/love/obelisk_enter.frag" )
 local pixelcode_exit = lf.read( "shaders/love/obelisk_exit.frag" )
 
 local target, shader
-local sfx = audio.newSource( 'snd/sounds/gamelan_gong.ogg' )
+local sfx = audio.newSource( 'snd/sounds/gamelan_gong' )
 function create ()
    target = var.peek("obelisk_target")
    if not target then

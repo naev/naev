@@ -12,7 +12,7 @@ local pp_shaders = require "pp_shaders"
 local pixelcode = lf.read( "shaders/love/wormhole_travel.frag" )
 
 local target, colour, shader, r
-local sfx = audio.newSource( 'snd/sounds/wormhole.ogg' )
+local sfx = audio.newSource( 'snd/sounds/wormhole' )
 function create ()
    local nc = naev.cache()
    target = nc.wormhole_target

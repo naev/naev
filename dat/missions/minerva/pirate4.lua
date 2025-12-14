@@ -236,7 +236,7 @@ She beams you a smile.
 "What the hell are you guys doing loafing around? We have work to do! I don't pay you to sit on your bums all day!"]])) -- codespell:ignore loafing
    pir(_([[They visibly wince when they hear the angry voice.
 "Let us talk about your payment."]]))
-   vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
+   vn.music( "snd/sounds/loops/alarm" ) -- blaring alarm
    vn.na(_([[Suddenly an alarm starts blaring throughout the ship.]]))
    -- Using boars as slang for Dvaered
    maikki(_([[The familiar and angry voice bellows in the distance.

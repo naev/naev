@@ -21,7 +21,7 @@ local love_shaders = require "love_shaders"
 
 function create()
    local steamshader = love_shaders.steam()
-   local angrysong = 'snd/sounds/songs/feeling-good-08.ogg'
+   local angrysong = 'snd/sounds/songs/feeling-good-08'
    local bgsong = minerva.loops.kex
 
    vn.clear()
@@ -43,7 +43,7 @@ function create()
    vn.na(_("The airlock opens as you approach it, and you find yourself at the entrance of the changing rooms. You get rid of your clothes, take a small towel, and proceed to enter the spa area."))
    -- Start the fancy spa scene!
    vn.scene()
-   vn.music( 'snd/sounds/loops/riviere.ogg' )
+   vn.music( 'snd/sounds/loops/riviere' )
    vn.func( function ()
       local lw, lh = love.graphics.getDimensions()
       vn.setBackground( function ()

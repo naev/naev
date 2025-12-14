@@ -520,18 +520,18 @@ You find yourself in a seemingly infinite field full of odd looking avatars. Is 
    lonewolf4(_([["The signs are all there, yet the cobwebs of your own ineptitude cloud your vision."]]))
    vn.musicStop()
    underworlder(_([["U wot m4"]]))
-   vn.sfx( audio.newSource('snd/sounds/activate5.ogg') )
+   vn.sfx( audio.newSource('snd/sounds/activate5') )
    lonewolf4(_([[lonewolf4 flickers briefly
 "Mortem Tenebrae Obscuritas Infernalis!"]]))
    underworlder(_([["Bring it on!"]]))
-   vn.sfx( audio.newSource("snd/sounds/avatar_of_sirichana.ogg") )
+   vn.sfx( audio.newSource("snd/sounds/avatar_of_sirichana") )
    vn.na(_([[Trixie and l337_b01 seem to mutter something and take cover as lonewolf4 and underworlder seems to be engaging in some sort of digital combat. You can't really follow what is going on, and all you can see are some rendering glitches as the two run around each other.]]))
-   vn.sfx( audio.newSource('snd/sounds/detonation_alarm.ogg') )
+   vn.sfx( audio.newSource('snd/sounds/detonation_alarm') )
    lonewolf4(_([["Exanimo Umbra Obscura Tenebrarum!"]]))
-   vn.sfx( audio.newSource('snd/sounds/activate4.ogg') )
+   vn.sfx( audio.newSource('snd/sounds/activate4') )
    underworlder(_([[underworlder seems to freeze in place.]]))
    dog(_([["Down."]]))
-   vn.sfx( audio.newSource('snd/sounds/crash1.ogg') )
+   vn.sfx( audio.newSource('snd/sounds/crash1') )
    vn.animation( 0.5, function ( x )
       -- easeOutElastic
       local progress = math.pow(2, -10 * x) * math.sin((x * 10 - 0.75) * 2*math.pi/3) + 1

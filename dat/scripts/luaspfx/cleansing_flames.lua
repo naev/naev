@@ -32,7 +32,7 @@ local function flames( pos, vel, radius, params )
       local flames_shader_frag = lf.read( "shaders/cleansing_flames.frag" )
       flames_shader = lg.newShader( flames_shader_frag )
       flames_sfx = {
-         audio.new( "snd/sounds/cleansing_flames.ogg" ),
+         audio.new( "snd/sounds/cleansing_flames" ),
       }
    end
 

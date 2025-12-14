@@ -47,7 +47,7 @@ function accept ()
    z(_([["It looks like deep down inside, bioships are not that different from your standard ship. I've looked carefully over Icarus, and it seems like they have what you could call a 'fracture' on the left module, that has healed poorly. I'll have to cut through most of the armoured flesh to reach it and do some welding to set the injury. Other than that, it seems like bioships are really resilient, as most old wounds are just scars now."]]))
    z(_([["What's curious is that most of the scars seem to be from Za'lek weaponry. The fracture is also likely the result of a ferromagnetohydraulic explosion, likely a hunter drone. However, I can not fathom who would want to kill a bioship instead of take the opportunity to study and examine it. It's like a crime against science itself!"]]))
    z(_([["The main thing I'm not clear about is how to get Icarus to understand the procedure and getting it prepped up. Since I don't have a brain mapping, I can't manipulate the pain receptors either, however, I do have a rough idea that might work."]]))
-   vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
+   vn.music( "snd/sounds/loops/alarm" ) -- blaring alarm
    vn.na(fmt.f(_([[Suddenly a blazing alarm breaks Zach's musings.
 "ALERT: Hostile ships detected inbound from {sys}."]]),{sys=jumpsys}))
    z(_([["Shit! I guess we have to postpone the surgery. Wait, is Icarus still out there?"

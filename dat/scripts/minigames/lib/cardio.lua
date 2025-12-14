@@ -13,7 +13,7 @@ local cardio = {
    },
 }
 for i=1,8 do
-   local f = string.format("snd/sounds/gambling/cardSlide%d.ogg",i)
+   local f = string.format("snd/sounds/gambling/cardSlide%d",i)
    local s = la.newSource(f)
    table.insert( cardio.sound.place, s )
 end

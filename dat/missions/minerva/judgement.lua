@@ -148,7 +148,7 @@ function trial_start ()
    vn.label("01_start")
    vn.func( function () didtrial = true end )
    vn.na(_([[The station seems to be crowded with the many simultaneous trials and ongoings. Watching people bustling around with unpredictable patterns is surprisingly entertaining, however, you remember your purpose and follow Zuri to the assigned courtroom.]]))
-   vn.music( 'snd/music/empire1.ogg' ) -- TODO trial music
+   vn.music( 'snd/music/empire1' ) -- TODO trial music
    -- TODO background?
    vn.na(_([[After getting lost in the corridors overflowing with people several times, you make it to the courtroom. It seems to be quite packed and the ambience electric, with uncertainty about how the upcoming legal drama would unfold.]]))
    zuri(_([[Zuri turns to you.
@@ -591,7 +591,7 @@ Eventually when all argumentation is exhausted the different representatives rep
    judge(_([["This concludes..."]]))
 
    vn.scene()
-   local angrysong = 'snd/sounds/songs/feeling-good-08.ogg'
+   local angrysong = 'snd/sounds/songs/feeling-good-08'
    vn.music( angrysong )
    vn.newCharacter( kex )
    vn.transition("hexagon")
@@ -603,13 +603,13 @@ Eventually when all argumentation is exhausted the different representatives rep
    vn.na(_([[You can see the judge and House representatives shift around uncomfortably.]]))
    kex(_([["Well, it all ends here!"]]))
    vn.func( function () kex.shader = love_shaders.aura() end )
-   vn.sfx( love_audio.newSource( "snd/sounds/activate3.ogg" ) ) -- activation sound
+   vn.sfx( love_audio.newSource( "snd/sounds/activate3" ) ) -- activation sound
    kex(_([[Kex's eyes glow red and you hear the activation sound of some sort of weapon.]]))
    vn.func( function () kex.shader = nil end )
    vn.disappear( kex, "slideup" )
-   vn.sfx( love_audio.newSource( "snd/sounds/crowdpanic01.ogg" ) ) -- some yelling
+   vn.sfx( love_audio.newSource( "snd/sounds/crowdpanic01" ) ) -- some yelling
    vn.na(_([[As people start scrambling and yelling, you hear a shot and Kex falls down as chaos unfolds.]]))
-   vn.sfx( love_audio.newSource( "snd/sounds/autocannon.ogg" ) ) -- autocannon
+   vn.sfx( love_audio.newSource( "snd/sounds/autocannon" ) ) -- autocannon
    vn.na(_([[You hear shots being fired left and right as you duck for cover. The Judge's levitating desk crashes in the background creating a small explosion as things take a turn for the worst.]]))
    vn.menu{
       {_([[Go for the door.]]),"06_getout"},

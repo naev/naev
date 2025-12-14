@@ -138,9 +138,9 @@ function sokoban.load()
    -- Load audio
    if not sokoban.sfx then
       sokoban.sfx = {
-         goal     = audio.newSource( 'snd/sounds/sokoban/goal.ogg' ),
-         invalid  = audio.newSource( 'snd/sounds/sokoban/invalid.ogg' ),
-         level    = audio.newSource( 'snd/sounds/sokoban/level.ogg' ),
+         goal     = audio.newSource( 'snd/sounds/sokoban/goal' ),
+         invalid  = audio.newSource( 'snd/sounds/sokoban/invalid' ),
+         level    = audio.newSource( 'snd/sounds/sokoban/level' ),
          -- TODO: motion = ...
       }
    end

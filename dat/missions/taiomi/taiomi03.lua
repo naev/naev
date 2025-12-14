@@ -243,7 +243,7 @@ local function land_lab ()
 
    vn.label("success_trouble")
    vn.na(_([[You backtrack out of the laboratory complex and head towards the docks. Before you make it out of the complex, an alarm starts blazing!]]))
-   vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
+   vn.music( "snd/sounds/loops/alarm" ) -- blaring alarm
    vn.na(_([[Looks like you weren't as stealthy as you intended to be. You have no choice but to make a run for it. You run crashing through the halls, knocking down stunned researchers you meet and make it to the complex gates.]]))
    vn.na(_([[A large metal curtain begins to close to seal the laboratory. Without any other options, you draw a wind for a final sprint and make a break for it. The security personal doesn't seem entirely prepared for such a situation, and you manage to dodge them, jump over the gates, and slide under past the metal curtain in one slick move.]]))
    vn.na(_([[While keeping your momentum, you make a beeline to your ship with security personal close in pursuit. You take off hot, but it looks like they're going to be on your tail. You're not in the clear yet!]]))

@@ -14,10 +14,10 @@ local _sfx
 local function _sfx_load ()
    audio = require 'love.audio'
    _sfx = {
-      bingo = audio.newSoundData( 'snd/sounds/jingles/success.ogg' ),
-      money = audio.newSoundData( 'snd/sounds/jingles/money.ogg' ),
-      victory = audio.newSoundData( 'snd/sounds/jingles/victory.ogg' ),
-      eerie = audio.newSoundData( 'snd/sounds/jingles/eerie.ogg' ),
+      bingo = audio.newSoundData( 'snd/sounds/jingles/success' ),
+      money = audio.newSoundData( 'snd/sounds/jingles/money' ),
+      victory = audio.newSoundData( 'snd/sounds/jingles/victory' ),
+      eerie = audio.newSoundData( 'snd/sounds/jingles/eerie' ),
    }
 end
 

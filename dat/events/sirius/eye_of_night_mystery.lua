@@ -225,8 +225,8 @@ function land ()
    end )
    vn.transition()
    local mbg = vn.music( der.sfx.ambient )
-   -- Maybe creepy_guitar.ogg?
-   local mfg = vn.music( "snd/sounds/loops/alienplanet.ogg", {volume=0} ) -- Slowly gets stronger
+   -- Maybe creepy_guitar?
+   local mfg = vn.music( "snd/sounds/loops/alienplanet", {volume=0} ) -- Slowly gets stronger
 
    -- Changes the strength of the event
    local function effect_change( str )

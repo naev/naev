@@ -289,8 +289,8 @@ local custom_events = {
 local sfx, discover_trigger -- function forward-declaration
 
 local function sfxDiscovery()
-   --sfx = audio.newSource( 'snd/sounds/jingles/success.ogg' )
-   sfx = audio.newSource( 'snd/sounds/jingles/victory.ogg' )
+   --sfx = audio.newSource( 'snd/sounds/jingles/success' )
+   sfx = audio.newSource( 'snd/sounds/jingles/victory' )
    sfx:play()
 end
 

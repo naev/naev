@@ -627,7 +627,7 @@ function land ()
       vn.setUpdateFunc( function( dt )
          stormshader:update(dt)
       end )
-      stormsound = vn.music( "snd/sounds/loops/sandstorm.ogg", nil, true )
+      stormsound = vn.music( "snd/sounds/loops/sandstorm", nil, true )
       storm_strength( str )
    end
    local function stop_storm ()

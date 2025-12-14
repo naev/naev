@@ -50,7 +50,7 @@ function create()
    vn.scene()
 
    -- Create an eerie atmosphere by cutting off the background music and substituting something spooky
-   vn.music( "snd/music/sirius1.ogg" )
+   vn.music( "snd/music/sirius1" )
 
    vn.setBackground( function()
       local w, h = gfx.dim()

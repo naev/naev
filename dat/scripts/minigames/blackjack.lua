@@ -13,7 +13,7 @@ local bj = { -- too lazy to write blackjack over and over
    }
 }
 for i=1,6 do
-   local f = string.format("snd/sounds/gambling/chipsStack%d.ogg",i)
+   local f = string.format("snd/sounds/gambling/chipsStack%d",i)
    local s = la.newSource(f)
    table.insert( bj.sound.chips, s )
 end

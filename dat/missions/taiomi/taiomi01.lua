@@ -26,7 +26,7 @@ local reward = taiomi.rewards.taiomi01
 local title = _("Secrets of the Hypergates")
 local base, basesys = spob.getS("One-Wing Goddard")
 
-local beep = audio.newSource( "snd/sounds/computer_lock.ogg" )
+local beep = audio.newSource( "snd/sounds/computer_lock" )
 
 --[[
    0: mission started

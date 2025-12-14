@@ -132,7 +132,7 @@ end
 extras.flashbackTextEnd = fullscreenEnd
 
 function extras.alarmStart ()
-   vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
+   vn.music( "snd/sounds/loops/alarm" ) -- blaring alarm
    vn.func( function ()
       local shd = love_shaders.tint{ colour={1.0, 0.0, 0.0} }
       local t = 0

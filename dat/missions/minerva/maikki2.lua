@@ -672,7 +672,7 @@ function ecc_feral_boss_dead ()
    local paperbg = love_shaders.paper()
    vn.clear()
    vn.scene()
-   vn.music( 'snd/sounds/loops/creepy_guitar.ogg' )
+   vn.music( 'snd/sounds/loops/creepy_guitar' )
    vn.func( function ()
       vn.setBackground( function ()
          vn.setColour( {0.2, 0.2, 0.2, 0.8} )
@@ -715,7 +715,7 @@ function ecc_feral_boss_attacked( _p )
       hook.timer( 2.0, "ecc_feral_boss_msg" )
 
       -- We go with nebula music
-      music.play("nebu_battle1.ogg")
+      music.play("nebu_battle1")
    end
 end
 

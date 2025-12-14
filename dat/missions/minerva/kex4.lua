@@ -427,7 +427,7 @@ function jie_board ()
    vn.na(_("Slowly the chair turns to reveal Jie de Luca, holding their head from which blood is gushing out. In their other hand they clutch a weapon, but it doesn't really look like they are in any condition to use it."))
    cjie(_([["Feeling proud of yourself dog? Wagging your tail thinking about getting a prize from your master?"
 They cough and you can see some blood drip from the side of their mouth.]]))
-   vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
+   vn.music( "snd/sounds/loops/alarm" ) -- blaring alarm
    cjie(_([["This is why we can't have nice things…"
 As their head slouches down, you hear an alarm blaring, and a voice announcing "Self-destruct imminent!".]]))
    vn.na(_("You leave Jie behind as you rush to get back to your ship to get away from the explosion."))

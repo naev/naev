@@ -5,7 +5,7 @@ local active = 10 -- active time in seconds
 local cooldown = 15 -- cooldown time in seconds
 local alertrange = 3e3 -- Distance to alert
 
-local sfx = audio.newSoundData( 'snd/sounds/ping.ogg' )
+local sfx = audio.newSoundData( 'snd/sounds/ping' )
 
 local function turnon( p, po )
    -- Still on cooldown

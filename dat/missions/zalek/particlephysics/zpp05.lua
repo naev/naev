@@ -159,8 +159,8 @@ function enter ()
    shader_nebu = zpp.shader_nebula()
    cutscene = false
 
-   heartbeat_single = audio.newSource( 'snd/sounds/heartbeat_single.ogg' )
-   heartbeat_long   = audio.newSource( 'snd/sounds/heartbeat_long.ogg' )
+   heartbeat_single = audio.newSource( 'snd/sounds/heartbeat_single' )
+   heartbeat_long   = audio.newSource( 'snd/sounds/heartbeat_long' )
 end
 
 function update( dt )
@@ -305,7 +305,7 @@ function heartbeat ()
       -- CUTSCENE END
       player.cinematics( false )
       player.landAllow( true )
-      music.play("ambient1.ogg")
+      music.play("ambient1")
       cutscene = false
       mem.state = 2
       love.origin()

@@ -102,10 +102,10 @@ function mining.load()
    -- Load audio
    if not mining.sfx then
       mining.sfx = {
-         start    = audio.newSource( 'snd/sounds/computer_jam.ogg' ),
-         hit      = audio.newSource( 'snd/sounds/sokoban/goal.ogg' ),
-         miss     = audio.newSource( 'snd/sounds/sokoban/invalid.ogg' ),
-         complete = audio.newSource( 'snd/sounds/jingles/success.ogg' ),
+         start    = audio.newSource( 'snd/sounds/computer_jam' ),
+         hit      = audio.newSource( 'snd/sounds/sokoban/goal' ),
+         miss     = audio.newSource( 'snd/sounds/sokoban/invalid' ),
+         complete = audio.newSource( 'snd/sounds/jingles/success' ),
       }
    end
 

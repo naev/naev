@@ -318,7 +318,7 @@ function corpse00 ()
 
    vn.clear()
    vn.scene()
-   vn.music( "snd/sounds/songs/sad_drama.ogg" )
+   vn.music( "snd/sounds/songs/sad_drama" )
    local s = vn.newCharacter( taiomi.vn_scavenger() )
    vn.transition( taiomi.scavenger.transition )
 
@@ -477,7 +477,7 @@ function land ()
       vn.disappear( sai, tut.shipai.transition )
 
       vn.appear( {p,w} )
-      vn.music( "snd/sounds/songs/sad_drama.ogg" ) -- TODO necessary?
+      vn.music( "snd/sounds/songs/sad_drama" ) -- TODO necessary?
       vn.na(_("You hear the squeal of metal rubbing on metal as Elder and Philosopher make their way haphazardly through the ship. They get close to you until they fill your entire field of vision."))
       w(_([[After what seems an eternity, Elder begins to broadcast slow and solemnly over an audio channel.
 "It seems like Scavenger has not returned."]]))

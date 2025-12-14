@@ -202,7 +202,7 @@ function land ()
       vn.label("01_alarm_early")
       vn.disappear( {l337, trixie}, "electric" )
       vn.label("01_alarm")
-      vn.sfx( audio.newSource( 'snd/sounds/loops/alarm.ogg' ) ) -- Just one loop
+      vn.sfx( audio.newSource( 'snd/sounds/loops/alarm' ) ) -- Just one loop
       vn.na(_([[You open the command console and trigger the ship's emergency alarm system. The alarm system, designed for long-range planetary signalling, seems to be amplified and echoed by the spacedock structure, resulting in an onslaught of audible chaos. Everyone in the spacedock turns towards your ship: it looks like you got the attention of the entire floor.]]))
       vn.func( function () badthing = "alarm" end )
       vn.jump("01_cont")
@@ -529,13 +529,13 @@ function breakin ()
    vn.func( function ()
       mem.failedhack = true
    end )
-   vn.music( 'snd/sounds/loops/alarm.ogg' )
+   vn.music( 'snd/sounds/loops/alarm' )
    trixie(_([["Shit, get out of there now!"]]))
    vn.jump("end")
 
    vn.label("mg_success")
    trixie(_([["Got it? Great! Let me access try to access the data."]]))
-   vn.music( 'snd/sounds/loops/alarm.ogg' )
+   vn.music( 'snd/sounds/loops/alarm' )
    trixie(_([["Shit, I'll try to get what I can, but you have to get out of there now!"]]))
    vn.jump("end")
 

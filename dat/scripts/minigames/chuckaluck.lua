@@ -14,7 +14,7 @@ local cl = { -- too lazy to write chuck-a-luck
    }
 }
 for i=1,6 do
-   local f = string.format("snd/sounds/gambling/chipsStack%d.ogg",i)
+   local f = string.format("snd/sounds/gambling/chipsStack%d",i)
    local s = la.newSource(f)
    table.insert( cl.sound.chips, s )
 end

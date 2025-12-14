@@ -128,12 +128,12 @@ local minerva = {
    },
 
    loops = {
-      maikki      = 'snd/sounds/songs/mushroom-background.ogg',
-      kex         = 'snd/sounds/songs/feeling-good-05.ogg',
-      pirate      = 'snd/sounds/songs/hip-hop-background.ogg',
-      strangelove = 'snd/sounds/songs/space-exploration-08.ogg',
-      conflict    = "snd/sounds/songs/run-for-your-life-00.ogg",
-      news        = "snd/sounds/songs/news.ogg",
+      maikki      = 'snd/sounds/songs/mushroom-background',
+      kex         = 'snd/sounds/songs/feeling-good-05',
+      pirate      = 'snd/sounds/songs/hip-hop-background',
+      strangelove = 'snd/sounds/songs/space-exploration-08',
+      conflict    = "snd/sounds/songs/run-for-your-life-00",
+      news        = "snd/sounds/songs/news",
    },
 
    rewards = {

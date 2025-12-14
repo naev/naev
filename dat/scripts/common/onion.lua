@@ -26,8 +26,8 @@ function onion.img_trixie ()
 end
 
 onion.loops = {
-   circus = "snd/sounds/loops/onion_circus.ogg",
-   hacker = "snd/sounds/loops/onion_hacker.ogg",
+   circus = "snd/sounds/loops/onion_circus",
+   hacker = "snd/sounds/loops/onion_hacker",
 }
 
 onion.npc = {

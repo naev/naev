@@ -2,19 +2,19 @@ return {
    -- Priority of the songs here. Lower priority will precede. Defaults to 5 if unspecified.
    priority = 10,
    loading_songs = {
-      "machina.ogg",
+      "machina",
    },
    intro_songs = {
-      "intro.ogg",
+      "intro",
    },
    credits_songs = {
-      "empire1.ogg",
+      "empire1",
    },
    -- Songs chosen randomly when taking off
    takeoff_songs = {
-      "liftoff.ogg",
-      "launch2.ogg",
-      "launch3chatstart.ogg",
+      "liftoff",
+      "launch2",
+      "launch3chatstart",
    },
    -- Neutral ambient songs
    ambient_songs_func = function ()
@@ -23,45 +23,45 @@ return {
       local nebu = sys:nebula() > 0
       if tags.wildspace then
          return {
-            "wild_space.ogg",
+            "wild_space",
          }
       elseif nebu then
          return {
-            "ambient1.ogg",
-            "ambient3.ogg",
-            "dreamy_homage.ogg",
-            "mellow_suspension.ogg",
+            "ambient1",
+            "ambient3",
+            "dreamy_homage",
+            "mellow_suspension",
          }
       end
       return {
-         "ambient2.ogg",
-         "ambient2_5.ogg",
-         "ambient4.ogg",
-         "peace1.ogg",
-         "peace2.ogg",
-         "peace4.ogg",
-         "peace6.ogg",
-         "mission.ogg",
-         "void_sensor.ogg",
-         "ambiphonic.ogg",
-         "terminal.ogg",
-         "eureka.ogg",
-         "78pulse.ogg",
-         "therewillbestars.ogg",
+         "ambient2",
+         "ambient2_5",
+         "ambient4",
+         "peace1",
+         "peace2",
+         "peace4",
+         "peace6",
+         "mission",
+         "void_sensor",
+         "ambiphonic",
+         "terminal",
+         "eureka",
+         "78pulse",
+         "therewillbestars",
       }
    end,
    -- Factional songs. Systems default to songs of dominant factions.
    factional_songs = {
-      -- TODO disco_melody.ogg for dreamer clan
-      Collective = { "collective1.ogg", "automat.ogg" },
-      Pirate     = { "pirate1_theme1.ogg", "pirates_orchestra.ogg", "ambient4.ogg",
-                     "terminal.ogg" },
-      Empire     = { "empire1.ogg", "empire2.ogg"; add_neutral = true },
-      Sirius     = { "sirius1.ogg", "sirius2.ogg"; add_neutral = true },
-      Dvaered    = { "dvaered1.ogg", "dvaered2.ogg"; add_neutral = true },
-      ["Za'lek"] = { "zalek1.ogg", "zalek2.ogg", "approach.ogg"; add_neutral = true },
-      Thurion    = { "motherload.ogg", "dark_city.ogg", "ambient1.ogg", "ambient3.ogg" },
-      Proteron   = { "heartofmachine.ogg", "imminent_threat.ogg", "ambient4.ogg" },
+      -- TODO disco_melody for dreamer clan
+      Collective = { "collective1", "automat" },
+      Pirate     = { "pirate1_theme1", "pirates_orchestra", "ambient4",
+                     "terminal" },
+      Empire     = { "empire1", "empire2"; add_neutral = true },
+      Sirius     = { "sirius1", "sirius2"; add_neutral = true },
+      Dvaered    = { "dvaered1", "dvaered2"; add_neutral = true },
+      ["Za'lek"] = { "zalek1", "zalek2", "approach"; add_neutral = true },
+      Thurion    = { "motherload", "dark_city", "ambient1", "ambient3" },
+      Proteron   = { "heartofmachine", "imminent_threat", "ambient4" },
    },
    combat_songs_func = function ()
       local sys = system.cur()
@@ -69,44 +69,44 @@ return {
       local nebu = sys:nebula() > 0
       if tags.wildspace then
          return {
-            "wild_space.ogg"
+            "wild_space"
          }
       elseif nebu then
          return {
-            "nebu_battle1.ogg",
-            "nebu_battle2.ogg",
+            "nebu_battle1",
+            "nebu_battle2",
          }
       end
       return {
-         "combat1.ogg",
-         "combat2.ogg",
-         "combat3.ogg",
-         "vendetta.ogg",
-         "run_under_the_sun.ogg",
+         "combat1",
+         "combat2",
+         "combat3",
+         "vendetta",
+         "run_under_the_sun",
       }
    end,
    -- Factional combat songs. Defaults to dominant factions.
    factional_combat_songs = {
-      Collective = { "collective2.ogg", "galacticbattle.ogg", "battlesomething1.ogg", "combat3.ogg" },
-      Pirate     = { "battlesomething2.ogg", "blackmoor_tides.ogg", add_neutral = true },
-      Empire     = { "galacticbattle.ogg", "battlesomething2.ogg", add_neutral = true },
-      Goddard    = { "flf_battle1.ogg", "battlesomething1.ogg", add_neutral = true },
-      Dvaered    = { "flf_battle1.ogg", "battlesomething2.ogg", "for_grandeur.ogg", add_neutral = true },
-      ["FLF"]    = { "flf_battle1.ogg", "battlesomething2.ogg", add_neutral = true },
-      Frontier   = { "flf_battle1.ogg", add_neutral = true },
-      Sirius     = { "galacticbattle.ogg", "battlesomething1.ogg", add_neutral = true },
-      Soromid    = { "galacticbattle.ogg", "battlesomething2.ogg", add_neutral = true },
-      ["Za'lek"] = { "collective2.ogg", "galacticbattle.ogg", "battlesomething1.ogg", add_neutral = true }
+      Collective = { "collective2", "galacticbattle", "battlesomething1", "combat3" },
+      Pirate     = { "battlesomething2", "blackmoor_tides", add_neutral = true },
+      Empire     = { "galacticbattle", "battlesomething2", add_neutral = true },
+      Goddard    = { "flf_battle1", "battlesomething1", add_neutral = true },
+      Dvaered    = { "flf_battle1", "battlesomething2", "for_grandeur", add_neutral = true },
+      ["FLF"]    = { "flf_battle1", "battlesomething2", add_neutral = true },
+      Frontier   = { "flf_battle1", add_neutral = true },
+      Sirius     = { "galacticbattle", "battlesomething1", add_neutral = true },
+      Soromid    = { "galacticbattle", "battlesomething2", add_neutral = true },
+      ["Za'lek"] = { "collective2", "galacticbattle", "battlesomething1", add_neutral = true }
    },
    -- Spob-specific songs. Replace songs for certain spobs
    spob_songs = {
-      ["Minerva Station"] = { "meeting_mtfox.ogg" },
-      ["Strangelove Lab"] = { "landing_sinister.ogg" },
-      ["One-Wing Goddard"] = { "/snd/sounds/songs/inca-spa.ogg" },
+      ["Minerva Station"] = { "meeting_mtfox" },
+      ["Strangelove Lab"] = { "landing_sinister" },
+      ["One-Wing Goddard"] = { "/snd/sounds/songs/inca-spa" },
       ["Research Post Sigma-13"] = function ()
             if not diff.isApplied("sigma13_fixed1") and
                not diff.isApplied("sigma13_fixed2") then
-               return "landing_sinister.ogg"
+               return "landing_sinister"
             end
          end,
    },
@@ -120,42 +120,42 @@ return {
       -- Special conditions that limit
       if tags.ruined then
          return {
-            "ruined_suspense.ogg",
-            "dark_orchestra.ogg",
-            "space_emergency.ogg",
+            "ruined_suspense",
+            "dark_orchestra",
+            "space_emergency",
          }
       elseif tags.prison then
          return {
-            "pitch_black_pit.ogg",
+            "pitch_black_pit",
          }
       elseif nebu_dens > 0 and tags.station then
          return {
-            "nordic_saxo.ogg",
+            "nordic_saxo",
          }
       end
 
       -- We'll add stuff here
       local lst = {}
       if tags.urban then
-         tmergei( lst, { "meet_the_fish.ogg" } )
+         tmergei( lst, { "meet_the_fish" } )
       end
       if tags.station then
-         tmergei( lst, { "cosmostation.ogg", "snabba_labba.ogg" } )
+         tmergei( lst, { "cosmostation", "snabba_labba" } )
       end
       if services.shipyard then
-         tmergei( lst, { "gonna_be_gone.ogg" } )
+         tmergei( lst, { "gonna_be_gone" } )
       end
 
       -- Added based on class
       if class == "M" or class=="H" then
-         tmergei( lst, { "agriculture.ogg", "peaceful_world.ogg", "boschs_garden.ogg" } )
+         tmergei( lst, { "agriculture", "peaceful_world", "boschs_garden" } )
       elseif class == "O" then
-         tmergei( lst, { "ocean.ogg" } )
+         tmergei( lst, { "ocean" } )
       elseif class == "P" then
-         tmergei( lst, { "snow.ogg", "nordic_winter_25_for_25.ogg" } )
+         tmergei( lst, { "snow", "nordic_winter_25_for_25" } )
       elseif class=="I" or class=="J" or class=="S" or class=="T" or class=="Y" then
          if not services.inhabited then
-            tmergei( lst, { "methyl_swamp.ogg" } )
+            tmergei( lst, { "methyl_swamp" } )
          end
       end
 
@@ -163,9 +163,9 @@ return {
       if #lst <= 0 then
          -- More generic defaults
          if services.inhabited then
-            tmergei( lst, { "upbeat.ogg" } )
+            tmergei( lst, { "upbeat" } )
          else
-            tmergei( lst, { "end_of_time.ogg", "the_last_mystery.ogg", "winterstorm_1.ogg" } )
+            tmergei( lst, { "end_of_time", "the_last_mystery", "winterstorm_1" } )
          end
       end
 
@@ -173,10 +173,10 @@ return {
    end,
    -- System-specific songs. Replace songs for certain systems
    system_ambient_songs = {
-      ["Taiomi"] = { "/snd/sounds/songs/inca-spa.ogg" },
-      ["Test of Enlightenment"] = { "/snd/sounds/loops/kalimba_atmosphere.ogg" },
-      ["Test of Alacrity"] = { "/snd/sounds/loops/kalimba_atmosphere.ogg" },
-      ["Test of Renewal"] = { "/snd/sounds/loops/kalimba_atmosphere.ogg" },
-      ["Test of Devotion"] = { "/snd/sounds/loops/kalimba_atmosphere.ogg" },
+      ["Taiomi"] = { "/snd/sounds/songs/inca-spa" },
+      ["Test of Enlightenment"] = { "/snd/sounds/loops/kalimba_atmosphere" },
+      ["Test of Alacrity"] = { "/snd/sounds/loops/kalimba_atmosphere" },
+      ["Test of Renewal"] = { "/snd/sounds/loops/kalimba_atmosphere" },
+      ["Test of Devotion"] = { "/snd/sounds/loops/kalimba_atmosphere" },
    },
 }

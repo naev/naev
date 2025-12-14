@@ -296,7 +296,7 @@ function cutscene_start ()
 
    -- TODO better music
    music.stop(true)
-   lmusic.play( "snd/music/empire2.ogg" )
+   lmusic.play( "snd/music/empire2" )
 end
 
 -- Set up the cutscene stuff
@@ -366,7 +366,7 @@ local countdown, countdown_sfx
 function cutscene_main2 ()
    boss:broadcast( boss_broadcast )
    countdown = 5
-   countdown_sfx = audio.newSource( "snd/sounds/hypergate_turnon.ogg" )
+   countdown_sfx = audio.newSource( "snd/sounds/hypergate_turnon" )
    hook.timer( 4, "cutscene_main3" )
    hook.timer( 5+4-6.5, "cutscene_main_sfx" )
 end
@@ -598,7 +598,7 @@ function cutscene_nebu ()
    fg_setup() -- Remove text
 
    -- TODO omnious music and "ghost" ships
-   lmusic.play( "snd/sounds/loops/alienplanet.ogg" )
+   lmusic.play( "snd/sounds/loops/alienplanet" )
 
    hook.timer( 4.3, "fadeout" )
    hook.timer( 5, "cutscene_nebu_fade" )
@@ -632,7 +632,7 @@ function cutscene_cleanup ()
    textoverlay.init( _("CHAPTER 1"), _("The Hypergates Awaken") )
 
    -- TODO different sound than just discovery?
-   sfx = audio.newSource( 'snd/sounds/jingles/victory.ogg' )
+   sfx = audio.newSource( 'snd/sounds/jingles/victory' )
    sfx:play()
 
    -- Initialize fleet capacity

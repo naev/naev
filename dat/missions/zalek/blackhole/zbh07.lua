@@ -187,7 +187,7 @@ Before you have a chance to respond, Zach leaves to do the final preparations.]]
    vn.na(_([[Suddenly, you hear a high pitch drone of an energy capacitor draining. Icarus who hears that to and scrambles to get out of the docks, however, before he can, you are blinded by a flash and knocked off to the side.]]))
    vn.na(_([[You struggle to stand groggily as your eyes start recovering and colour returns to the world. You find yourself amidst a flurry of drones led by Zach who have quickly started to perform the surgery. Given that you are still completely useless in your current state, you drag yourself out of the way and lean against a wall. Time seems to fly by without you noticing, and you close your eyes.]]))
    vn.na(_("…"))
-   vn.music( "snd/sounds/beam_fuzzy.ogg" )
+   vn.music( "snd/sounds/beam_fuzzy" )
    vn.na(_("You nod off and begin to have concussion-induced dreams where you are surrounded by mosquitoes that are buzzing around and making lots of noise. Every so often one of the mosquito says an obscenity, while you sort of float around with them."))
    vn.na(_("…"))
    vn.scene()

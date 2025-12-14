@@ -101,7 +101,7 @@ function land ()
    vn.clear()
    vn.scene()
    local z = vn.newCharacter( zbh.vn_zach() )
-   vn.music( 'snd/music/landing_sinister.ogg' ) -- TODO new song? Also add to music.lua
+   vn.music( 'snd/music/landing_sinister' ) -- TODO new song? Also add to music.lua
    vn.transition( zbh.zach.transition )
    vn.na(_("As you approach the station you can make out clear plasma blast craters on the outer hull. Your ship has to push away floating debris as you make a landing approach at the space docks while Zach is silent the entire time with a dumbfounded look on his face. You don't think this is what he was expecting. After what seems like an eternity, the ship's magnetic docking clamps make contact with the station."))
    z(_([["This can't be happening. It was only supposed to be a two cycle post-doc…"

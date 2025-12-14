@@ -782,7 +782,7 @@ function approach_pir ()
 
    vn.label("02b_button")
    vn.na(_([[You press the big red button, noticing out of the corner of your eye a 'DO NOT PRESS' button a bit too late.]]))
-   vn.sfx( audio.newSource( 'snd/sounds/laser.ogg' ) ) -- TODO potentially change
+   vn.sfx( audio.newSource( 'snd/sounds/laser' ) ) -- TODO potentially change
    vn.label("prototype_shot")
    vn.na(_([[There's a resounding brrrruunnggzzzzz as the prototype fires, with a shock wave launching you to the ground, and the blast misses the target in front of it, partially ricocheting off the laboratory walls until it smashes into a group of bureaucrats, immediately sending them off in pieces.]]))
    vn.label("chaos")

@@ -105,7 +105,7 @@ function takeoff()
    cinema.on()
 
    -- Sinister music landing
-   music.play("landing_sinister.ogg")
+   music.play("landing_sinister")
 
    -- Some text
    tk.msg( _("Collective Espionage"), fmt.f(_([[You quickly land on {pnt} and hide in its deep, dense methane atmosphere. Your monitoring gear flickers into action, hopefully catching something of some use. With some luck, there won't be too many Collective drones when you take off.]]), {pnt=misn_target}) )

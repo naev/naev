@@ -85,7 +85,7 @@ return function ()
             var.push("sirius_awakening",true)
          end )
 
-         vn.music("snd/sounds/loops/kalimba_atmosphere.ogg")
+         vn.music("snd/sounds/loops/kalimba_atmosphere")
          vn.scene()
          local memory = vne.flashbackTextStart( _("Memory"), {transition="blinkin"})
          local function m( txt ) memory("\n"..txt,true) end

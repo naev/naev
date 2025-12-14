@@ -29,7 +29,7 @@ end
 local sfxGong
 function srs.sfxGong()
    if not sfxGong then
-      sfxGong = audio.newSource( 'snd/sounds/gamelan_gong.ogg' )
+      sfxGong = audio.newSource( 'snd/sounds/gamelan_gong' )
    end
    luaspfx.sfx( false, nil, sfxGong )
 end

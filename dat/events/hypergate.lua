@@ -13,7 +13,7 @@ local pixelcode = lf.read( "shaders/love/hypergate_travel.frag" )
 
 
 local target, shader, prevtex
-local sfx = audio.newSource( 'snd/sounds/hypergate.ogg' )
+local sfx = audio.newSource( 'snd/sounds/hypergate' )
 function create ()
    target = var.peek("hypergate_target")
    if not target then

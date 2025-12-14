@@ -27,7 +27,7 @@ local function alert( pos, params )
    params = params or {}
    -- Lazy loading shader / sound
    if not alert_sound then
-      alert_sound = audio.newSoundData('snd/sounds/alarm_warning.ogg')
+      alert_sound = audio.newSoundData('snd/sounds/alarm_warning')
    end
    if not alert_shader then
       local alert_bg_shader_frag = lf.read( "scripts/luaspfx/shaders/alert.frag" )

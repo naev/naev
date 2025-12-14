@@ -160,7 +160,7 @@ function bioship_pay( amount, _reason )
       player.msg("#g".._("Your bioship has enough experience to advance a stage!").."#0")
       textoverlay.init(_("Bioship Rank Up"), nil, { fadein = 1, fadeout = 1, length = 5 })
       if not sfx then
-         sfx = audio.newSource( 'snd/sounds/jingles/victory.ogg' )
+         sfx = audio.newSource( 'snd/sounds/jingles/victory' )
       end
       sfx:play()
       if player.isLanded() then
