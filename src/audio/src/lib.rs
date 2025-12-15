@@ -90,6 +90,14 @@ pub enum AudioType {
     LuaStatic,
     LuaStream,
 }
+impl AudioType {
+    pub fn priority_threshold(&self) -> usize {
+        match self {
+            AudioType::Static | AudioType::LuaStatic => MAX_SOURCES - PRIORITY_SOURCES,
+            AudioType::LuaStream => MAX_SOURCES - 1,
+        }
+    }
+}
 
 /// Small wrapper for Mono/Stereo frames
 enum Frame<T> {
@@ -832,6 +840,14 @@ macro_rules! check_audio {
     }};
 }
 impl Audio {
+    pub fn audio_type(&self) -> AudioType {
+        match self {
+            Self::Static(_) => AudioType::Static,
+            Self::LuaStatic(_) => AudioType::LuaStatic,
+            Self::LuaStream(_) => AudioType::LuaStream,
+        }
+    }
+
     fn try_clone(&self, source: al::Source) -> Result<Self> {
         match self {
             Self::Static(this) | Self::LuaStatic(this) => {
@@ -1245,12 +1261,8 @@ impl AudioBuilder {
         if AUDIO.disabled || SILENT.load(Ordering::Relaxed) {
             return Ok(thunderdome::Index::DANGLING.into());
         }
-        let threshold = match self.atype {
-            AudioType::Static | AudioType::LuaStatic => MAX_SOURCES - PRIORITY_SOURCES,
-            AudioType::LuaStream => MAX_SOURCES - 1,
-        };
         let mut voices = AUDIO.voices.lock().unwrap();
-        if voices.len() >= threshold {
+        if voices.len() >= self.atype.priority_threshold() {
             return Ok(thunderdome::Index::DANGLING.into());
         }
         let source = al::Source::new()?;
@@ -1924,11 +1936,7 @@ impl AudioRef {
         let mut voices = AUDIO.voices.lock().unwrap();
         let audio = match voices.get(self.0) {
             Some(audio) => {
-                let threshold = match audio {
-                    Audio::Static(_) | Audio::LuaStatic(_) => MAX_SOURCES - PRIORITY_SOURCES,
-                    Audio::LuaStream(_) => MAX_SOURCES - 1,
-                };
-                if voices.len() >= threshold {
+                if voices.len() >= audio.audio_type().priority_threshold() {
                     return Ok(thunderdome::Index::DANGLING.into());
                 }
                 let source = al::Source::new()?;
