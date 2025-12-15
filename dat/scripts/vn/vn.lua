@@ -1751,9 +1751,7 @@ function vn.sfx( sfx, params )
    end
    local s = vn.State.new()
    s._init = function (state)
-      local _sfx = sfx:clone()
-      s._sfx = _sfx
-      luaspfx.sfx( false, nil, _sfx, params )
+      luaspfx.sfx( false, nil, sfx, params )
       _finish(state)
    end
    table.insert( vn._states, s )
