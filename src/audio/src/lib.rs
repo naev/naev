@@ -1205,7 +1205,7 @@ impl AudioBuilder {
         } else if stereo {
             audio
                 .al_source()
-                .parameter_i32(AL_DIRECT_CHANNELS_SOFT, AL_REMIX_UNMATCHED_SOFT.into());
+                .parameter_i32(AL_DIRECT_CHANNELS_SOFT, AL_REMIX_UNMATCHED_SOFT);
         } else {
             //if !stereo {
             audio.set_relative(true);
