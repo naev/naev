@@ -324,7 +324,7 @@ end
 
 function board ()
    -- Boarding sound
-   der.sfx.board:play()
+   der.sfxBoard()
 
    vn.clear()
    vn.scene()
@@ -551,5 +551,5 @@ They grab a toolbox and rush over to your boarded ship. You decide not to follow
    player.unboard()
 
    -- Boarding sound
-   der.sfx.unboard:play()
+   der.sfxUnboard()
 end

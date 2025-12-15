@@ -754,7 +754,7 @@ end
 
 function board_close ()
    _board_close()
-   der.sfx.unboard:play()
+   der.sfxUnboard()
 end
 
 function _board( plt )
@@ -897,7 +897,7 @@ function board( plt )
    board_fcthit_txt_msg = nil
    cargo_image_generic = nil
 
-   der.sfx.board:play()
+   der.sfxBoard()
    board_plt = plt
    _board( plt )
    luatk.run()

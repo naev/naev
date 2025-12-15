@@ -175,13 +175,11 @@ function boss_board ()
       minerals[i] = commodity.get(m)
    end
 
-   -- Boarding sound
-   der.sfx.board:play()
-
    vn.reset()
    vn.scene()
    local b = ccomm.newCharacter( vn, boss )
    vn.transition()
+   vn.sfx( der.sfx.board )
 
    vn.na( function ()
       local s = fmt.f(_([[You board the {ship}, and find that the cargo bay has been set up to efficiently process minerals. There is a holosign with the needed resources and their prices:]]),{ship=boss:name()})
@@ -237,11 +235,9 @@ function boss_board ()
    end
 
    vn.label("leave")
+   vn.sfx( der.sfx.unboard )
    vn.run()
    player.unboard()
-
-   -- Boarding sound
-   der.sfx.unboard:play()
 end
 
 function endevent ()
