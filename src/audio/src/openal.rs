@@ -409,7 +409,7 @@ impl Context {
 }
 
 #[derive(PartialEq, Debug)]
-pub struct Source(ALuint);
+pub struct Source(pub(crate) ALuint);
 impl Source {
     pub fn new() -> Result<Self> {
         let mut src = 0;

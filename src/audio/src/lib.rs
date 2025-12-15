@@ -27,6 +27,7 @@ use log::{debug, debugx, warn, warn_err};
 use mlua::{Either, MetaMethod, UserData, UserDataMethods, UserDataRef};
 use nalgebra::{Vector2, Vector3};
 use std::fmt::{Debug, Formatter};
+use std::mem::ManuallyDrop;
 use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicBool, AtomicPtr, Ordering};
 use std::sync::{Arc, LazyLock, Weak};
@@ -521,8 +522,7 @@ pub enum Audio {
 
 #[derive(Debug, PartialEq)]
 pub struct Source {
-    // Wrap in an Arc so we can use it with both Stream + Statics
-    source: Arc<al::Source>,
+    source: al::Source,
     volume: f32,
     pitch: f32,
     // Group values
@@ -534,7 +534,7 @@ pub struct Source {
 impl Source {
     fn new(source: al::Source) -> Self {
         Self {
-            source: Arc::new(source),
+            source,
             volume: 1.,
             pitch: 1.,
             g_volume: 1.,
@@ -604,7 +604,7 @@ impl AudioStatic {
 
 /// Structure to help stream data
 struct StreamData {
-    source: Arc<al::Source>,
+    source: ManuallyDrop<al::Source>,
     buffers: [al::Buffer; 2],
     format: Box<dyn FormatReader>,
     track_id: u32,
@@ -620,7 +620,7 @@ impl Debug for StreamData {
     }
 }
 impl StreamData {
-    fn from_file(source: Arc<al::Source>, file: ndata::physfs::File) -> Result<Self> {
+    fn from_file(source: &al::Source, file: ndata::physfs::File) -> Result<Self> {
         let codecs = &CODECS;
         let probe = symphonia::default::get_probe();
         let mss = MediaSourceStream::new(Box::new(file), Default::default());
@@ -654,7 +654,7 @@ impl StreamData {
 
         Ok(Self {
             // We use the raw value so it doesn't get dropped here and double free the source
-            source,
+            source: ManuallyDrop::new(al::Source(source.0)),
             buffers,
             format,
             track_id,
@@ -728,7 +728,7 @@ impl StreamData {
 pub struct AudioStream {
     path: PathBuf,
     source: Source,
-    finish: Arc<AtomicBool>,
+    finish: Arc<Mutex<bool>>,
     thread: Option<std::thread::JoinHandle<Result<()>>>,
     data: Option<StreamData>,
     stereo: bool,
@@ -738,23 +738,25 @@ impl Drop for AudioStream {
         unsafe {
             alSourceStop(self.source.raw());
         }
-        self.finish.store(true, Ordering::Relaxed);
+        *self.finish.lock().unwrap() = true;
     }
 }
 impl AudioStream {
-    fn thread(finish: Arc<AtomicBool>, mut data: StreamData) -> Result<()> {
+    fn thread(finish: Arc<Mutex<bool>>, mut data: StreamData) -> Result<()> {
         loop {
-            if finish.load(Ordering::Relaxed) {
-                return Ok(());
-            }
+            {
+                // We have to lock here so it won't call something on a source when it has been
+                // invalidated
+                let lock = finish.lock().unwrap();
+                if *lock {
+                    return Ok(());
+                }
 
-            if data.source.get_parameter_i32(AL_SOURCE_STATE) == AL_PLAYING {
-                let processed = data.source.get_parameter_i32(AL_BUFFERS_PROCESSED);
-                if processed > 0 {
-                    data.source.unqueue_buffer();
-                    let done = data.queue_next_buffer()?;
-                    if processed == 2 && done {
-                        finish.store(true, Ordering::Relaxed);
+                if data.source.get_parameter_i32(AL_SOURCE_STATE) == AL_PLAYING {
+                    let processed = data.source.get_parameter_i32(AL_BUFFERS_PROCESSED);
+                    if processed > 0 {
+                        data.source.unqueue_buffer();
+                        data.queue_next_buffer()?;
                     }
                 }
             }
@@ -770,11 +772,11 @@ impl AudioStream {
         ))?;
         let src = ndata::open(&path)?;
 
-        let finish = Arc::new(AtomicBool::new(false));
+        let finish = Arc::new(Mutex::new(false));
         let mut source = Source::new(source);
         source.g_pitch = None;
 
-        let thdata = StreamData::from_file(source.source.clone(), src)?;
+        let thdata = StreamData::from_file(&source.source, src)?;
         let stereo = thdata.stereo;
 
         Ok(AudioStream {
