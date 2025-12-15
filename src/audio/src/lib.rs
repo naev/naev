@@ -1170,6 +1170,8 @@ impl AudioBuilder {
         } else if !audio.stereo() {
             audio.set_relative(true);
         }
+        audio.set_air_absorption_factor(AUDIO.air_absorption.load(Ordering::Relaxed));
+        audio.set_pitch(1.0);
         audio.set_volume(self.volume);
         if looping {
             audio.set_looping(true);
@@ -1445,6 +1447,7 @@ pub struct System {
     compression: Option<AudioStatic>,
     compression_gain: AtomicF32,
     listener_pos: RwLock<Vector2<f32>>,
+    air_absorption: AtomicF32,
 }
 impl System {
     pub fn new() -> Result<Self> {
@@ -1463,6 +1466,7 @@ impl System {
                 compression: None,
                 compression_gain: AtomicF32::new(0.0),
                 listener_pos: RwLock::new(Default::default()),
+                air_absorption: AtomicF32::new(0.0),
             });
         }
 
@@ -1613,6 +1617,7 @@ impl System {
             compression,
             compression_gain: AtomicF32::new(0.0),
             listener_pos: RwLock::new(Default::default()),
+            air_absorption: AtomicF32::new(0.0),
         })
     }
 
@@ -1685,6 +1690,7 @@ impl System {
         for (_, v) in voices.iter() {
             v.set_air_absorption_factor(factor);
         }
+        self.air_absorption.store(factor, Ordering::Relaxed);
     }
 
     pub fn play_buffer(&self, buf: &Arc<Buffer>) -> Result<AudioRef> {
