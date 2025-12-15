@@ -32675,7 +32675,7 @@ msgid "* UST C:PPPP.SSSS"
 msgstr ""
 
 #: dat/naevpedia/mechanics/time.md:14
-msgid "Where \"C\" is the cycle, \"PPPP\" is the period (always displayed as four digits), and \"SSSS\" is the second (always displayed as four digits). So for example, the following hypothetical date indicates cycle 493, period 42, second 2089 (which is about 100 cycles prior to [the Incident](lore/history/incident):"
+msgid "Where \"C\" is the cycle, \"PPPP\" is the period (always displayed as four digits), and \"SSSS\" is the second (always displayed as four digits). So for example, the following hypothetical date indicates cycle 493, period 42, second 2089 (which is about 100 cycles prior to [the Incident](lore/history/incident)):"
 msgstr ""
 
 #: dat/naevpedia/mechanics/time.md:16
@@ -32687,15 +32687,15 @@ msgid "When describing lengths of time, it is commonplace for computer systems t
 msgstr ""
 
 #: dat/naevpedia/mechanics/time.md:20
-msgid "* 783p (read as \"783 periods\")"
+msgid "* 783 p (read as \"783 periods\")"
 msgstr ""
 
 #: dat/naevpedia/mechanics/time.md:21
-msgid "* 42s (read as \"42 seconds\")"
+msgid "* 42 s (read as \"42 seconds\")"
 msgstr ""
 
 #: dat/naevpedia/mechanics/time.md:22
-msgid "* 12.0456p (read as \"12 periods and 456 seconds\")"
+msgid "* 12.0456 p (read as \"12 periods and 456 seconds\")"
 msgstr ""
 
 #: dat/naevpedia/mechanics/time.md:24
