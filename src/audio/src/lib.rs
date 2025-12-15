@@ -43,7 +43,8 @@ use tracing_mutex::stdsync::{Mutex, RwLock};
 use utils::atomicfloat::AtomicF32;
 use utils::{binary_search_by_key_ref, sort_by_key_ref};
 
-//const NUM_VOICES: usize = 64;
+/// OpenAL soft doesn't distinguish between mono and stereo
+const MAX_SOURCES: ALint = 1024;
 /// Reference distance for sounds
 const REFERENCE_DISTANCE: f32 = 500.;
 /// Max distance for sounds to still play at
@@ -1194,17 +1195,19 @@ impl AudioBuilder {
             AudioType::LuaStatic => Audio::LuaStatic(self.build_static()?),
             AudioType::LuaStream => Audio::LuaStream(self.build_stream()?),
         };
+        let stereo = audio.stereo();
         if let Some(pos) = self.pos {
             audio.set_ingame();
             audio.set_position(pos);
             if let Some(vel) = self.vel {
                 audio.set_velocity(vel);
             }
-        } else if audio.stereo() {
+        } else if stereo {
             audio
                 .al_source()
                 .parameter_i32(AL_DIRECT_CHANNELS_SOFT, AL_REMIX_UNMATCHED_SOFT.into());
-        } else if !audio.stereo() {
+        } else {
+            //if !stereo {
             audio.set_relative(true);
         }
         audio.set_air_absorption_factor(AUDIO.air_absorption.load(Ordering::Relaxed));
@@ -1509,7 +1512,8 @@ impl System {
 
         let device = al::Device::new(None)?;
 
-        let mut attribs: Vec<ALint> = vec![ALC_MONO_SOURCES, 512, ALC_STEREO_SOURCES, 32];
+        // Doesn't distinguish between mono and stereo sources
+        let mut attribs: Vec<ALint> = vec![ALC_MONO_SOURCES, MAX_SOURCES];
         let mut has_debug = if cfg!(debug_assertions) {
             let debug = debug::supported(&device);
             if debug {
