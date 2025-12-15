@@ -594,17 +594,13 @@ impl AudioStatic {
         })
     }
 
-    pub fn try_clone(&self) -> Result<Option<Self>> {
-        if AUDIO.voices.lock().unwrap().len() >= MAX_SOURCES - PRIORITY_SOURCES {
-            return Ok(None);
-        }
-
-        let mut audio = Self::new(&self.data, al::Source::new()?)?;
+    pub fn try_clone(&self, source: al::Source) -> Result<Self> {
+        let mut audio = Self::new(&self.data, source)?;
         audio.slot = None;
         audio.source.volume = self.source.volume;
         audio.source.pitch = self.source.pitch;
         // TODO copy some other properties over and set volume
-        Ok(Some(audio))
+        Ok(audio)
     }
 }
 
@@ -814,16 +810,12 @@ impl AudioStream {
         Ok(())
     }
 
-    pub fn try_clone(&self) -> Result<Option<Self>> {
-        if AUDIO.voices.lock().unwrap().len() >= MAX_SOURCES - 1 {
-            return Ok(None);
-        }
-
-        let mut audio = AudioStream::from_path(&self.path, al::Source::new()?)?;
+    pub fn try_clone(&self, source: al::Source) -> Result<Self> {
+        let mut audio = AudioStream::from_path(&self.path, source)?;
         audio.source.volume = self.source.volume;
         audio.source.pitch = self.source.pitch;
         // TODO copy some other properties
-        Ok(Some(audio))
+        Ok(audio)
     }
 }
 
@@ -840,10 +832,12 @@ macro_rules! check_audio {
     }};
 }
 impl Audio {
-    fn try_clone(&self) -> Result<Option<Self>> {
+    fn try_clone(&self, source: al::Source) -> Result<Self> {
         match self {
-            Self::Static(this) | Self::LuaStatic(this) => Ok(this.try_clone()?.map(Self::Static)),
-            Self::LuaStream(this) => Ok(this.try_clone()?.map(Self::LuaStream)),
+            Self::Static(this) | Self::LuaStatic(this) => {
+                Ok(Audio::Static(this.try_clone(source)?))
+            }
+            Self::LuaStream(this) => Ok(Audio::LuaStream(this.try_clone(source)?)),
         }
     }
 
@@ -1255,7 +1249,8 @@ impl AudioBuilder {
             AudioType::Static | AudioType::LuaStatic => MAX_SOURCES - PRIORITY_SOURCES,
             AudioType::LuaStream => MAX_SOURCES - 1,
         };
-        if AUDIO.voices.lock().unwrap().len() >= threshold {
+        let mut voices = AUDIO.voices.lock().unwrap();
+        if voices.len() >= threshold {
             return Ok(thunderdome::Index::DANGLING.into());
         }
         let source = al::Source::new()?;
@@ -1300,7 +1295,7 @@ impl AudioBuilder {
             audio.play();
         }
         let groupid = audio.groupid();
-        let id: AudioRef = AUDIO.voices.lock().unwrap().insert(audio).into();
+        let id: AudioRef = voices.insert(audio).into();
         if let Some(groupid) = groupid {
             match AUDIO.groups.lock().unwrap().get_mut(groupid.0) {
                 Some(group) => group.voices.push(id),
@@ -1928,10 +1923,17 @@ impl AudioRef {
         }
         let mut voices = AUDIO.voices.lock().unwrap();
         let audio = match voices.get(self.0) {
-            Some(audio) => match audio.try_clone()? {
-                Some(audio) => audio,
-                None => return Ok(thunderdome::Index::DANGLING.into()),
-            },
+            Some(audio) => {
+                let threshold = match audio {
+                    Audio::Static(_) | Audio::LuaStatic(_) => MAX_SOURCES - PRIORITY_SOURCES,
+                    Audio::LuaStream(_) => MAX_SOURCES - 1,
+                };
+                if voices.len() >= threshold {
+                    return Ok(thunderdome::Index::DANGLING.into());
+                }
+                let source = al::Source::new()?;
+                audio.try_clone(source)?
+            }
             None => anyhow::bail!("Audio not found"),
         };
         Ok(voices.insert(audio).into())
