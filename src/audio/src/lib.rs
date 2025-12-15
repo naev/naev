@@ -45,7 +45,9 @@ use utils::atomicfloat::AtomicF32;
 use utils::{binary_search_by_key_ref, sort_by_key_ref};
 
 /// OpenAL soft doesn't distinguish between mono and stereo
-const MAX_SOURCES: ALint = 1024;
+const MAX_SOURCES: usize = 512;
+/// Priority sources
+const PRIORITY_SOURCES: usize = 8;
 /// Reference distance for sounds
 const REFERENCE_DISTANCE: f32 = 500.;
 /// Max distance for sounds to still play at
@@ -592,13 +594,17 @@ impl AudioStatic {
         })
     }
 
-    pub fn try_clone(&self) -> Result<Self> {
+    pub fn try_clone(&self) -> Result<Option<Self>> {
+        if AUDIO.voices.lock().unwrap().len() >= MAX_SOURCES - PRIORITY_SOURCES {
+            return Ok(None);
+        }
+
         let mut audio = Self::new(&self.data, al::Source::new()?)?;
         audio.slot = None;
         audio.source.volume = self.source.volume;
         audio.source.pitch = self.source.pitch;
         // TODO copy some other properties over and set volume
-        Ok(audio)
+        Ok(Some(audio))
     }
 }
 
@@ -808,12 +814,16 @@ impl AudioStream {
         Ok(())
     }
 
-    pub fn try_clone(&self) -> Result<Self> {
+    pub fn try_clone(&self) -> Result<Option<Self>> {
+        if AUDIO.voices.lock().unwrap().len() >= MAX_SOURCES - 1 {
+            return Ok(None);
+        }
+
         let mut audio = AudioStream::from_path(&self.path, al::Source::new()?)?;
         audio.source.volume = self.source.volume;
         audio.source.pitch = self.source.pitch;
         // TODO copy some other properties
-        Ok(audio)
+        Ok(Some(audio))
     }
 }
 
@@ -830,10 +840,10 @@ macro_rules! check_audio {
     }};
 }
 impl Audio {
-    fn try_clone(&self) -> Result<Self> {
+    fn try_clone(&self) -> Result<Option<Self>> {
         match self {
-            Self::Static(this) | Self::LuaStatic(this) => Ok(Self::Static(this.try_clone()?)),
-            Self::LuaStream(this) => Ok(Self::LuaStream(this.try_clone()?)),
+            Self::Static(this) | Self::LuaStatic(this) => Ok(this.try_clone()?.map(Self::Static)),
+            Self::LuaStream(this) => Ok(this.try_clone()?.map(Self::LuaStream)),
         }
     }
 
@@ -1241,6 +1251,13 @@ impl AudioBuilder {
         if AUDIO.disabled || SILENT.load(Ordering::Relaxed) {
             return Ok(thunderdome::Index::DANGLING.into());
         }
+        let threshold = match self.atype {
+            AudioType::Static | AudioType::LuaStatic => MAX_SOURCES - PRIORITY_SOURCES,
+            AudioType::LuaStream => MAX_SOURCES - 1,
+        };
+        if AUDIO.voices.lock().unwrap().len() >= threshold {
+            return Ok(thunderdome::Index::DANGLING.into());
+        }
         let source = al::Source::new()?;
 
         let looping = self.looping;
@@ -1576,7 +1593,7 @@ impl System {
         let device = al::Device::new(None)?;
 
         // Doesn't distinguish between mono and stereo sources
-        let mut attribs: Vec<ALint> = vec![ALC_MONO_SOURCES, MAX_SOURCES];
+        let mut attribs: Vec<ALint> = vec![ALC_MONO_SOURCES, MAX_SOURCES as ALint];
         let mut has_debug = if cfg!(debug_assertions) {
             let debug = debug::supported(&device);
             if debug {
@@ -1911,7 +1928,10 @@ impl AudioRef {
         }
         let mut voices = AUDIO.voices.lock().unwrap();
         let audio = match voices.get(self.0) {
-            Some(audio) => audio.try_clone()?,
+            Some(audio) => match audio.try_clone()? {
+                Some(audio) => audio,
+                None => return Ok(thunderdome::Index::DANGLING.into()),
+            },
             None => anyhow::bail!("Audio not found"),
         };
         Ok(voices.insert(audio).into())

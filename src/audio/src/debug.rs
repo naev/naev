@@ -189,6 +189,19 @@ impl Debug {
                 std::ptr::null(),
                 AL_TRUE,
             );
+            /*
+            let ignores: [ALuint;1] = [
+                40965, // Exceeding source limit
+            ];
+            alDebugMessageControlEXT(
+                AL_DEBUG_SOURCE_API_EXT,
+                AL_DEBUG_TYPE_ERROR_EXT,
+                AL_DONT_CARE_EXT,
+                ignores.len() as ALsizei,
+                ignores.as_ptr(),
+                AL_FALSE,
+            );
+            */
             alDebugMessageCallbackEXT(debug_callback, std::ptr::null());
             alIsEnabled(AL_DEBUG_OUTPUT_EXT) != 0
         };
