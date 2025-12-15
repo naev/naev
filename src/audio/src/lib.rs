@@ -54,6 +54,8 @@ const STREAMING_BUFFER_LENGTH: usize = 32 * 1024;
 /// Amount we sleep per frame when streaming, should be at least enough time to load a single
 /// buffer. Should be at least greater than 2 * STREAMING_BUFFER_LENGTH / 48000.
 const STREAMING_SLEEP_DELAY: std::time::Duration = std::time::Duration::from_millis(30);
+/// Crossfade length (ms) used to blend loop start/end to smooth wraps.
+const LOOP_EDGE_BLEND_MS: f32 = 5.0;
 
 struct LuaAudioEfx {
     name: String,
@@ -347,6 +349,64 @@ impl Buffer {
         if let Some(replaygain) = replaygain {
             replaygain.filter(&mut data);
         }
+
+        let channels = if stereo { 2 } else { 1 };
+
+        // Remove DC offset per channel to bring the average near zero before we look at loop edges.
+        fn remove_dc(data: &mut [f32], channels: usize) {
+            for ch in 0..channels {
+                let mut sum = 0.0f64;
+                let mut count = 0usize;
+                for i in (ch..data.len()).step_by(channels) {
+                    sum += data[i] as f64;
+                    count += 1;
+                }
+                if count == 0 {
+                    continue;
+                }
+                let mean = (sum / count as f64) as f32;
+                if mean.abs() < f32::EPSILON {
+                    continue;
+                }
+                for i in (ch..data.len()).step_by(channels) {
+                    data[i] -= mean;
+                }
+            }
+        }
+
+        // Symmetric edge blend: force start/end to the same short crossfaded ramp.
+        fn blend_edges(data: &mut [f32], channels: usize, sample_rate: u32) {
+            let frames =
+                ((sample_rate as f32 * LOOP_EDGE_BLEND_MS / 1000.0).round() as usize).max(1);
+            let needed = frames * channels;
+            if data.len() < needed * 2 {
+                return;
+            }
+
+            let mut head = vec![0.0f32; needed];
+            let mut tail = vec![0.0f32; needed];
+            head.copy_from_slice(&data[..needed]);
+            tail.copy_from_slice(&data[data.len() - needed..]);
+
+            let denom = if frames > 1 { frames as f32 - 1.0 } else { 1.0 };
+            for i in 0..frames {
+                let t = i as f32 / denom; // 0..1
+                let fade_tail = (1.0 - t).powi(2); // ease-out for tail
+                let fade_head = 1.0 - fade_tail; // ease-in for head
+
+                for ch in 0..channels {
+                    let idx = i * channels + ch;
+                    let blended = tail[idx] * fade_tail + head[idx] * fade_head;
+                    // Write the same blended ramp to both edges so wrap is exact.
+                    data[idx] = blended;
+                    let tidx = data.len() - needed + idx;
+                    data[tidx] = blended;
+                }
+            }
+        }
+
+        remove_dc(&mut data, channels);
+        blend_edges(&mut data, channels, sample_rate);
 
         let buffer = al::Buffer::new()?;
         buffer.data_f32(&data, stereo, sample_rate as ALsizei);
