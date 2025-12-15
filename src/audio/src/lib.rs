@@ -26,6 +26,7 @@ use gettext::gettext;
 use log::{debug, debugx, warn, warn_err};
 use mlua::{Either, MetaMethod, UserData, UserDataMethods, UserDataRef};
 use nalgebra::{Vector2, Vector3};
+use std::fmt::{Debug, Formatter};
 use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicBool, AtomicPtr, Ordering};
 use std::sync::{Arc, LazyLock, Weak};
@@ -544,6 +545,11 @@ struct StreamData {
     sample_rate: u32,
     active: usize,
 }
+impl Debug for StreamData {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), std::fmt::Error> {
+        write!(f, "StreamData {{ }}")
+    }
+}
 impl StreamData {
     fn from_file(source: Arc<al::Source>, file: ndata::physfs::File) -> Result<Self> {
         let codecs = &CODECS;
@@ -654,7 +660,8 @@ pub struct AudioStream {
     path: PathBuf,
     source: Source,
     finish: Arc<AtomicBool>,
-    thread: std::thread::JoinHandle<Result<()>>,
+    thread: Option<std::thread::JoinHandle<Result<()>>>,
+    data: Option<StreamData>,
     stereo: bool,
 }
 impl Drop for AudioStream {
@@ -698,21 +705,36 @@ impl AudioStream {
         let mut source = Source::new()?;
         source.g_pitch = None;
 
-        let thfsh = finish.clone();
-        let mut thdata = StreamData::from_file(source.source.clone(), src)?;
+        let thdata = StreamData::from_file(source.source.clone(), src)?;
         let stereo = thdata.stereo;
-        for _ in 0..2 {
-            thdata.queue_next_buffer()?;
-        }
-        let thread = std::thread::spawn(move || AudioStream::thread(thfsh, thdata));
 
         Ok(AudioStream {
             path,
             source,
             finish,
-            thread,
+            thread: None,
+            data: Some(thdata),
             stereo,
         })
+    }
+
+    fn play(&mut self) -> Result<()> {
+        let source = self.source.raw();
+        if self.thread.is_none()
+            && let Some(mut data) = self.data.take()
+        {
+            for _ in 0..2 {
+                data.queue_next_buffer()?;
+            }
+            let finish = self.finish.clone();
+            self.thread = Some(std::thread::spawn(move || {
+                AudioStream::thread(finish, data)
+            }));
+        }
+        unsafe {
+            alSourcePlay(source);
+        }
+        Ok(())
     }
 
     pub fn try_clone(&self) -> Result<Self> {
@@ -823,10 +845,17 @@ impl Audio {
         self.al_source().get_parameter_i32(AL_SOURCE_STATE) == state
     }
 
-    pub fn play(&self) {
+    pub fn play(&mut self) {
         check_audio!(self);
-        unsafe {
-            alSourcePlay(self.al_source().raw());
+        match self {
+            Self::Static(this) | Self::LuaStatic(this) => unsafe {
+                alSourcePlay(this.source.raw());
+            },
+            Self::LuaStream(this) => {
+                if let Err(e) = this.play() {
+                    warn_err!(e);
+                }
+            }
         }
     }
 
@@ -1298,9 +1327,9 @@ impl GroupRef {
             Some(group) => group,
             None => anyhow::bail!("group not found"),
         };
-        let voices = AUDIO.voices.lock().unwrap();
+        let mut voices = AUDIO.voices.lock().unwrap();
         for v in group.voices.iter() {
-            if let Some(voice) = voices.get(v.0)
+            if let Some(voice) = voices.get_mut(v.0)
                 && voice.is_paused()
             {
                 voice.play();
@@ -1715,8 +1744,7 @@ impl System {
     }
 
     pub fn resume(&self) {
-        let voices = self.voices.lock().unwrap();
-        for (_, v) in voices.iter() {
+        for (_, v) in self.voices.lock().unwrap().iter_mut() {
             match v {
                 Audio::Static(_this) | Audio::LuaStatic(_this) => {
                     if v.is_paused() {
@@ -2078,7 +2106,7 @@ impl UserData for LuaAudioRef {
          * @luafunc play
          */
         methods.add_method("play", |_, this, ()| -> mlua::Result<()> {
-            this.call(|this| {
+            this.call_mut(|this| {
                 this.play();
             })?;
             Ok(())
