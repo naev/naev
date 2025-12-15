@@ -17,7 +17,7 @@ pub mod physfs;
 
 /// Whether or not the data has likely been found
 fn found() -> bool {
-    exists("VERSION") && exists("start.xml")
+    exists("VERSION") && (exists("start.xml") || exists("start.toml"))
 }
 
 /// Wrapper for directories, which lets us use different fallbacks and overrides

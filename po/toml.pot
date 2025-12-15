@@ -225,3 +225,15 @@ msgstr ""
 msgctxt "slotproperty"
 msgid "Core Systems (Secondary)"
 msgstr ""
+
+#: dat/start.toml:1
+msgid "El Ego de Deiz"
+msgstr ""
+
+#: dat/start.toml:1
+msgid "Your first space-worthy ship!"
+msgstr ""
+
+#: dat/start.toml:1
+msgid "Sea of Darkness"
+msgstr ""

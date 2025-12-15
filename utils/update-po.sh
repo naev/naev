@@ -45,7 +45,7 @@ deterministic_sort() { LC_ALL=C sort; }
 IFS=$'\n'
 readarray -t ART <<< "$(cd assets; find_files gfx/loading txt | sed 's|^|assets/|')"
 po/credits_pot.py po/credits.pot dat/AUTHORS "${ART[@]}"
-po/toml_pot.py po/toml.pot dat/damagetype/ dat/slots/
+po/toml_pot.py po/toml.pot dat/damagetype/ dat/slots/ dat/start.toml
 
 # Only update naevpedia if not run from pre-commit.
 # This is because naevpedia generates files and we can only update them with

@@ -1,5 +1,6 @@
 ## v0.13.0-beta.5 (unreleased)
 
+   * Introduce start.toml to replace start.xml
    * Implemented Audio system in Rust
    * Restore music after a certain boss fight event ends
    * Systems with spobs will now have circles again in the editor

@@ -73,7 +73,7 @@ macro_rules! nxml_attr_i32 {
 impl StartData {
     fn load() -> Result<Self> {
         if ndata::exists("start.xml") {
-            //warn("start.xml is deprecated, please use start.toml!");
+            warn("start.xml is deprecated, please use start.toml!");
             Self::load_xml("start.xml")
         } else {
             Self::load_toml("start.toml")

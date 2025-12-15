@@ -40,6 +40,13 @@ TRANSLATABLES = {
       ],
       "context": "slotproperty",
    },
+   "start.toml": {
+      'fields': [
+         "ship_name",
+         "ship_acquired",
+         "scenario_name",
+      ],
+   },
 }
 
 DATA = {}
@@ -56,28 +63,43 @@ dirnames = sys.argv[2:].copy()
 dirnames.sort()
 
 for dirname in dirnames:
-   for (root, dirs, files) in os.walk( dirname ):
-      if not root.endswith('/'):
-         root += '/'
+   if os.path.isfile(dirname):
+      datafile = dirname.split('/')[-1]
+      translates = TRANSLATABLES.get(datafile)
 
-      datadir = root.split('/')[-2]
-      translates = TRANSLATABLES.get(datadir)
-      if not translates:
-         print(f"skipping unknown directory {root}")
-         continue
+      with open( dirname, 'rb' ) as f:
+         print(f"processing {dirname}...")
+         d = toml.load( f )
 
-      files = list(filter( lambda x: x.endswith(".toml"),files))
-      files.sort()
-      for filename in files:
-         filename = root+filename
-         with open( filename, 'rb' ) as f:
-            #print(f"processing {filename}...")
-            d = toml.load( f )
+         for t in translates["fields"]:
+            value = d.get(t)
+            if value:
+               data( dirname, value, translates.get("context") )
 
-            for t in translates["fields"]:
-               value = d.get(t)
-               if value:
-                  data( filename, value, translates["context"] )
+   else:
+      for (root, dirs, files) in os.walk( dirname ):
+         if not root.endswith('/'):
+            root += '/'
+
+         datadir = root.split('/')[-2]
+         translates = TRANSLATABLES.get(datadir)
+         if not translates:
+            print(f"skipping unknown directory {root}")
+            continue
+
+         files = list(filter( lambda x: x.endswith(".toml"),files))
+         files.sort()
+
+         for filename in files:
+            filename = root+filename
+            with open( filename, 'rb' ) as f:
+               #print(f"processing {filename}...")
+               d = toml.load( f )
+
+               for t in translates["fields"]:
+                  value = d.get(t)
+                  if value:
+                     data( filename, value, translates.get("context") )
 
 out = HEADER
 for (context,datas) in DATA.items():
