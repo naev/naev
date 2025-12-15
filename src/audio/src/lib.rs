@@ -287,7 +287,15 @@ impl Buffer {
             hint.with_extension(ext);
         }
         let mut format = probe
-            .format(&hint, mss, &Default::default(), &Default::default())?
+            .format(
+                &hint,
+                mss,
+                &symphonia::core::formats::FormatOptions {
+                    enable_gapless: true,
+                    ..Default::default()
+                },
+                &Default::default(),
+            )?
             .format;
 
         // Get replaygain information
