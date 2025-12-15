@@ -55,7 +55,7 @@ const STREAMING_BUFFER_LENGTH: usize = 32 * 1024;
 /// buffer. Should be at least greater than 2 * STREAMING_BUFFER_LENGTH / 48000.
 const STREAMING_SLEEP_DELAY: std::time::Duration = std::time::Duration::from_millis(30);
 /// Crossfade length (ms) used to blend loop start/end to smooth wraps.
-const LOOP_EDGE_BLEND_MS: f32 = 5.0;
+const LOOP_EDGE_BLEND_MS: f32 = 15.0 / 1000.0;
 
 struct LuaAudioEfx {
     name: String,
@@ -376,17 +376,17 @@ impl Buffer {
 
         // Symmetric edge blend: force start/end to the same short crossfaded ramp.
         fn blend_edges(data: &mut [f32], channels: usize, sample_rate: u32) {
-            let frames =
-                ((sample_rate as f32 * LOOP_EDGE_BLEND_MS / 1000.0).round() as usize).max(1);
+            let frames = ((sample_rate as f32 * LOOP_EDGE_BLEND_MS).round() as usize).max(1);
             let needed = frames * channels;
-            if data.len() < needed * 2 {
+            let len = data.len();
+            if len < needed * 2 {
                 return;
             }
 
             let mut head = vec![0.0f32; needed];
             let mut tail = vec![0.0f32; needed];
             head.copy_from_slice(&data[..needed]);
-            tail.copy_from_slice(&data[data.len() - needed..]);
+            tail.copy_from_slice(&data[len - needed..]);
 
             let denom = if frames > 1 { frames as f32 - 1.0 } else { 1.0 };
             for i in 0..frames {
@@ -399,7 +399,7 @@ impl Buffer {
                     let blended = tail[idx] * fade_tail + head[idx] * fade_head;
                     // Write the same blended ramp to both edges so wrap is exact.
                     data[idx] = blended;
-                    let tidx = data.len() - needed + idx;
+                    let tidx = len - needed + idx;
                     data[tidx] = blended;
                 }
             }
@@ -532,14 +532,14 @@ pub struct Source {
     g_pitch: Option<f32>,
 }
 impl Source {
-    fn new() -> Result<Self> {
-        Ok(Self {
-            source: Arc::new(al::Source::new()?),
+    fn new(source: al::Source) -> Self {
+        Self {
+            source: Arc::new(source),
             volume: 1.,
             pitch: 1.,
             g_volume: 1.,
             g_pitch: Some(1.),
-        })
+        }
     }
 
     #[inline]
@@ -558,11 +558,11 @@ pub struct AudioStatic {
     stereo: bool,
 }
 impl AudioStatic {
-    fn new(data: &Option<AudioData>) -> Result<Self> {
+    fn new(data: &Option<AudioData>, source: al::Source) -> Result<Self> {
         match data {
-            Some(AudioData::Buffer(buffer)) => Self::new_buffer(buffer),
+            Some(AudioData::Buffer(buffer)) => Self::new_buffer(buffer, source),
             None => Ok(AudioStatic {
-                source: Source::new()?,
+                source: Source::new(source),
                 slot: None,
                 data: None,
                 groupid: None,
@@ -572,8 +572,8 @@ impl AudioStatic {
         }
     }
 
-    fn new_buffer(buffer: &Arc<Buffer>) -> Result<Self> {
-        let source = Source::new()?;
+    fn new_buffer(buffer: &Arc<Buffer>, source: al::Source) -> Result<Self> {
+        let source = Source::new(source);
         source
             .source
             .parameter_i32(AL_BUFFER, buffer.raw() as ALint);
@@ -593,7 +593,7 @@ impl AudioStatic {
     }
 
     pub fn try_clone(&self) -> Result<Self> {
-        let mut audio = Self::new(&self.data)?;
+        let mut audio = Self::new(&self.data, al::Source::new()?)?;
         audio.slot = None;
         audio.source.volume = self.source.volume;
         audio.source.pitch = self.source.pitch;
@@ -763,7 +763,7 @@ impl AudioStream {
         }
     }
 
-    pub fn from_path<P: AsRef<Path>>(path: P) -> Result<Self> {
+    pub fn from_path<P: AsRef<Path>>(path: P, source: al::Source) -> Result<Self> {
         let path = Buffer::get_valid_path(&path).context(format!(
             "No audio file matching '{}' found",
             path.as_ref().display()
@@ -771,7 +771,7 @@ impl AudioStream {
         let src = ndata::open(&path)?;
 
         let finish = Arc::new(AtomicBool::new(false));
-        let mut source = Source::new()?;
+        let mut source = Source::new(source);
         source.g_pitch = None;
 
         let thdata = StreamData::from_file(source.source.clone(), src)?;
@@ -807,7 +807,7 @@ impl AudioStream {
     }
 
     pub fn try_clone(&self) -> Result<Self> {
-        let mut audio = AudioStream::from_path(&self.path)?;
+        let mut audio = AudioStream::from_path(&self.path, al::Source::new()?)?;
         audio.source.volume = self.source.volume;
         audio.source.pitch = self.source.pitch;
         // TODO copy some other properties
@@ -1217,19 +1217,19 @@ impl AudioBuilder {
         self
     }
 
-    fn build_static(&self) -> Result<AudioStatic> {
+    fn build_static(&self, source: al::Source) -> Result<AudioStatic> {
         let audio = if let Some(path) = &self.path {
             let buf = Buffer::get_or_try_load(path)?;
-            AudioStatic::new_buffer(&buf)?
+            AudioStatic::new_buffer(&buf, source)?
         } else {
-            AudioStatic::new(&self.data)?
+            AudioStatic::new(&self.data, source)?
         };
         Ok(audio)
     }
 
-    fn build_stream(&self) -> Result<AudioStream> {
+    fn build_stream(&self, source: al::Source) -> Result<AudioStream> {
         if let Some(path) = &self.path {
-            AudioStream::from_path(path)
+            AudioStream::from_path(path, source)
         } else {
             anyhow::bail!("Can only create AudioStream from paths");
         }
@@ -1239,12 +1239,13 @@ impl AudioBuilder {
         if AUDIO.disabled || SILENT.load(Ordering::Relaxed) {
             return Ok(thunderdome::Index::DANGLING.into());
         }
+        let source = al::Source::new()?;
 
         let looping = self.looping;
         let play = self.play;
         let mut audio = match self.atype {
             AudioType::Static => {
-                let mut audio = self.build_static()?;
+                let mut audio = self.build_static(source)?;
                 audio.groupid = self.groupid;
                 if self.groupid.is_some() {
                     audio.source.g_volume = self.group_volume;
@@ -1252,8 +1253,8 @@ impl AudioBuilder {
                 }
                 Audio::Static(audio)
             }
-            AudioType::LuaStatic => Audio::LuaStatic(self.build_static()?),
-            AudioType::LuaStream => Audio::LuaStream(self.build_stream()?),
+            AudioType::LuaStatic => Audio::LuaStatic(self.build_static(source)?),
+            AudioType::LuaStream => Audio::LuaStream(self.build_stream(source)?),
         };
         let stereo = audio.stereo();
         if let Some(pos) = self.pos {
@@ -1692,7 +1693,7 @@ impl System {
         fn load_compression() -> Result<AudioStatic> {
             let data = Arc::new(Buffer::from_path("snd/sounds/compression")?);
             // LuaStatic won't get cleaned up if stopped
-            let comp = AudioStatic::new(&Some(AudioData::Buffer(data)))?;
+            let comp = AudioStatic::new(&Some(AudioData::Buffer(data)), al::Source::new()?)?;
             // Should loop infinitely
             comp.source.source.parameter_i32(AL_LOOPING, AL_TRUE.into());
             Ok(comp)
