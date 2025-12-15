@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-12-08 20:36+0900\n"
+"POT-Creation-Date: 2025-12-15 10:12+0900\n"
 "PO-Revision-Date: 2023-04-10 00:50+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
@@ -7769,7 +7769,7 @@ msgid ""
 "digits), and \"SSSS\" is the second (always displayed as four digits). So "
 "for example, the following hypothetical date indicates cycle 493, period 42, "
 "second 2089 (which is about 100 cycles prior to [the Incident](lore/history/"
-"incident):"
+"incident)):"
 msgstr ""
 
 msgid "* UST 493:0042.2089"
@@ -7787,13 +7787,13 @@ msgid ""
 "and cycles separately. Some examples:"
 msgstr ""
 
-msgid "* 783p (read as \"783 periods\")"
+msgid "* 783 p (read as \"783 periods\")"
 msgstr ""
 
-msgid "* 42s (read as \"42 seconds\")"
+msgid "* 42 s (read as \"42 seconds\")"
 msgstr ""
 
-msgid "* 12.0456p (read as \"12 periods and 456 seconds\")"
+msgid "* 12.0456 p (read as \"12 periods and 456 seconds\")"
 msgstr ""
 
 msgid ""
@@ -9173,6 +9173,15 @@ msgstr ""
 
 msgctxt "slotproperty"
 msgid "Core Systems (Secondary)"
+msgstr ""
+
+msgid "El Ego de Deiz"
+msgstr ""
+
+msgid "Your first space-worthy ship!"
+msgstr ""
+
+msgid "Sea of Darkness"
 msgstr ""
 
 msgid "Immane Cerebrum III"
@@ -30781,15 +30790,6 @@ msgstr ""
 msgid "Zylex"
 msgstr ""
 
-msgid "Sea of Darkness"
-msgstr ""
-
-msgid "El Ego de Deiz"
-msgstr ""
-
-msgid "Your first space-worthy ship!"
-msgstr ""
-
 msgid ""
 "Alsafi II is a barren world that other than some indications of prospection "
 "sites looking for mineral, is devoid of anything of interest, apart from a "
@@ -34203,7 +34203,7 @@ msgstr "Spazio libero non sufficiente"
 #. Initialize overlay shader
 #. Set some fancy effects
 #.
-#. audio.setEffect( "haze", require("reverb_preset").forest() )
+#. audio.setEffectData( "haze", require("reverb_preset").forest() )
 #. audio.setGlobalEffect( "haze" )
 #. audio.setGlobalAirAbsorption( 3000, 1 )
 #. audio.setGlobalDopplerFactor( 0.6 ) -- More than normal
@@ -34227,7 +34227,7 @@ msgstr "Spazio libero non sufficiente"
 #. Initialize overlay shader
 #. Set some fancy effects
 #.
-#. audio.setEffect( "haze", require("reverb_preset").forest() )
+#. audio.setEffectData( "haze", require("reverb_preset").forest() )
 #. audio.setGlobalEffect( "haze" )
 #. audio.setGlobalAirAbsorption( 3000, 1 )
 #. audio.setGlobalDopplerFactor( 0.6 ) -- More than normal
@@ -36196,7 +36196,7 @@ msgid "Piracy to Rebel against Reality"
 msgstr ""
 
 #. function forward-declaration
-#. sfx = audio.newSource( 'snd/sounds/jingles/success.ogg' )
+#. sfx = audio.newSource( 'snd/sounds/jingles/success' )
 #. Don't trigger if already done
 #. Trigger
 #. Nothing triggered
@@ -40590,7 +40590,7 @@ msgstr ""
 #. Have to equip here or they shoot during the cutscene
 #. So intrinsics affect
 #. Proper boss music
-#. boss_music = audio.new( "snd/music/blackmoor_tides.ogg", "stream" )
+#. boss_music = audio.new( "snd/music/blackmoor_tides", "stream" )
 #. TODO this _shouldn't_ be necessary, but it seems like even if the Lua
 #. environment is destroyed, for some reason, the boss_music variable
 #. doesn't get garbage collected so it gets stuck playing music until the
@@ -47504,7 +47504,7 @@ msgstr ""
 #. Just in case store here
 #. Once the spob is created, landing will abort the event
 #. In case the player quits while VN is open or something weird
-#. Maybe creepy_guitar.ogg?
+#. Maybe creepy_guitar?
 #. Slowly gets stronger
 #. Changes the strength of the event
 msgid ""
@@ -82425,6 +82425,11 @@ msgid "No More Garbage"
 msgstr ""
 
 msgid ""
+"You eject your waste pods while landed at {spob} without any interference. "
+"Environmentalism be damned!"
+msgstr ""
+
+msgid ""
 "In your desperation to rid yourself of the garbage, you clumsily eject it "
 "from your cargo pod while you are still landed. Garbage spills all over the "
 "hangar and local officials immediately take notice. After you apologize "
@@ -91350,6 +91355,7 @@ msgstr ""
 
 #. Jumping in Toaxis for the battle with a Destroyer class ship
 #. Spawn the enemy Lancelot, equipped with ion cannons (per the plot & to disable rather than murder the player).
+#. to jump out
 #. On easy difficulty, it's nearly impossible for the player to be disabled...
 #. you killed the shark
 msgid "You destroyed the Lancelot."
@@ -105793,7 +105799,7 @@ msgstr ""
 #. local audio = require 'love.audio'
 #. active time in seconds
 #. cooldown time in seconds
-#. local sfx = audio.newSource( 'snd/sounds/ping.ogg' )
+#. local sfx = audio.newSoundData( 'snd/sounds/ping' )
 #. Rare
 #. Uncommon
 #. Common
@@ -110895,17 +110901,14 @@ msgstr ""
 #. params = params or {}
 #. Lazy loading shader / sound
 #. Sound is handled separately in outfit
-#. local audio = require 'love.audio'
 #. EMP look a bit smaller in reality, so we increase in size
 #. Lazy loading shader / sound
 #. Create the emps
-#. local audio = require 'love.audio'
 #. emp_shader:send( "u_grain", d.grain )
 #. EMP look a bit smaller in reality, so we increase in size
 #. d.grain  = params.grain or math.max( 1.0, size/70 )
 #. Lazy loading shader / sound
 #. Create the emps
-#. local audio = require 'love.audio'
 #. Damage and knockback
 #. Shake the screen for the player
 #. Explosions look much smaller in reality, so we double
@@ -110918,14 +110921,11 @@ msgstr ""
 #.
 #. Pure Lua implementation of special effects for use with missions
 #. --
-#. local audio = require 'love.audio'
 #. Lazy loading shader / sound
 #. Sound is handled in outfit
-#. local audio = require 'love.audio'
 #. Lazy loading shader / sound
 #. Sound is handled separately in outfit
 #. Lazy loading shader
-#. local audio = require 'love.audio'
 #. Apply effect to all pilots in range
 #. Lazy loading shader / sound
 #. Sound is handled separately in outfit
@@ -110937,7 +110937,6 @@ msgstr ""
 #. @usage luaspfx.sfx( true, nil, sfx ) -- Global but modified by time speed-up
 #. @usage luaspfx.sfx( false, nil, sfx ) -- Global but not modified by time like GUI events, etc.
 #. --
-#. local audio = require 'love.audio'
 #. How often to check activations in seconds
 #. Time to blow up once activated in seconds
 #. Range of detection
@@ -110975,7 +110974,7 @@ msgstr ""
 #. Lazy loading shader / sound
 #.
 #. spark_sfx = {
-#. audio.new( "snd/sounds/empexplode.ogg" ),
+#. audio.newSoundData( "snd/sounds/empexplode" ),
 #. }
 #. --
 #. Create the sparks
@@ -111311,9 +111310,9 @@ msgstr[1] ""
 #. See if can skip.
 #. Get movement keys
 #. Load audio if applicable
-#. goal     = la.newSource( 'snd/sounds/sokoban/goal.ogg' ),
-#. invalid  = la.newSource( 'snd/sounds/sokoban/invalid.ogg' ),
-#. level    = la.newSource( 'snd/sounds/sokoban/level.ogg' ),
+#. goal     = la.newSource( 'snd/sounds/sokoban/goal' ),
+#. invalid  = la.newSource( 'snd/sounds/sokoban/invalid' ),
+#. level    = la.newSource( 'snd/sounds/sokoban/level' ),
 #. Initialize board
 #. board[i][j] = (love.math.random() > 0.5)
 #. See if can skip.
@@ -111335,7 +111334,7 @@ msgstr[1] ""
 #. See if can skip.
 #. Get movement keys
 #. Load audio if applicable
-#. goal     = la.newSource( 'snd/sounds/sokoban/goal.ogg' ),
+#. goal     = la.newSource( 'snd/sounds/sokoban/goal' ),
 #. Window properties
 msgid "SKIP"
 msgstr ""
@@ -113646,7 +113645,7 @@ msgstr ""
 #. @module vn
 #.
 #. Internal usage
-#. _soundTalk = audio.newSource( "snd/sounds/ui/letter0.ogg" ),
+#. _soundTalk = audio.newSource( "snd/sounds/ui/letter0" ),
 #. Drawing
 #. Autosize
 #. Options
@@ -114441,7 +114440,7 @@ msgstr ""
 #. Songs chosen randomly when taking off
 #. Neutral ambient songs
 #. Factional songs. Systems default to songs of dominant factions.
-#. TODO disco_melody.ogg for dreamer clan
+#. TODO disco_melody for dreamer clan
 #. Factional combat songs. Defaults to dominant factions.
 #. Spob-specific songs. Replace songs for certain spobs
 #. Spob-specific songs.
@@ -116135,6 +116134,21 @@ msgstr ""
 msgid "Unknown Asteroid Type Group '%s'"
 msgstr ""
 
+msgid "Sound disabled."
+msgstr ""
+
+msgid "OpenAL started: {} Hz"
+msgstr ""
+
+msgid "Renderer: {}"
+msgstr ""
+
+msgid "Version: {}"
+msgstr ""
+
+msgid "   with {}"
+msgstr ""
+
 #, c-format
 msgid ""
 "Background script 'renderbg' error:\n"
@@ -116808,10 +116822,10 @@ msgstr ""
 msgid "{:04} s"
 msgstr ""
 
-msgid "{p:.2} s"
+msgid "{p}.{s:04} p"
 msgstr ""
 
-msgid "UST {c}:{p:04.2}"
+msgid "UST {c}:{p:04}.{s:04}"
 msgstr ""
 
 msgid "%04d s"
@@ -120747,9 +120761,6 @@ msgstr ""
 msgid "Initializing subsystems…"
 msgstr ""
 
-msgid "Sound is disabled!"
-msgstr ""
-
 msgid "Problem setting up sound!"
 msgstr ""
 
@@ -123994,9 +124005,6 @@ msgid "OpenAL Reverb not found, disabling."
 msgstr ""
 
 msgid "OpenAL Echo not found, disabling."
-msgstr ""
-
-msgid "Sound disabled."
 msgstr ""
 
 msgid "Unable to create voice mutex."
