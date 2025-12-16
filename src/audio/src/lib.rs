@@ -2899,7 +2899,10 @@ pub extern "C" fn sound_get(name: *const c_char) -> *const Buffer {
                 std::ptr::null()
             }
         },
-        None => std::ptr::null(),
+        None => {
+            warn!("Sound '{}' not found!", name);
+            std::ptr::null()
+        }
     }
 }
 
