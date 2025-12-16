@@ -300,14 +300,14 @@ impl Buffer {
         if let Some(ext) = ext {
             hint.with_extension(ext);
         }
-        // For short/static buffers keep decoder padding (gapless off) to help mask imperfect loop
-        // boundaries.
+        // Enable gapless so encoded padding (e.g. Opus pre-skip/end trim) is removed; loop points
+        // embedded in metadata are expressed in the original, unpadded sample.
         let mut format = probe
             .format(
                 &hint,
                 mss,
                 &symphonia::core::formats::FormatOptions {
-                    enable_gapless: false,
+                    enable_gapless: true,
                     ..Default::default()
                 },
                 &Default::default(),
@@ -408,6 +408,7 @@ impl Buffer {
 
         let total_frames = frames.len();
         let (loop_start, loop_end) = loop_points(format.as_mut(), num_channels, total_frames);
+        let has_loop_points = loop_start.is_some();
         if let Some(start) = loop_start {
             let end = loop_end.unwrap_or(total_frames).min(total_frames);
             if start < end {
@@ -442,6 +443,16 @@ impl Buffer {
             head.copy_from_slice(&data[..needed]);
             tail.copy_from_slice(&data[len - needed..]);
 
+            // If the ends already line up closely, don't introduce a fade that could color the tone.
+            let max_diff = head
+                .iter()
+                .zip(tail.iter())
+                .map(|(h, t)| (h - t).abs())
+                .fold(0.0f32, f32::max);
+            if max_diff < 1e-4 {
+                return;
+            }
+
             let denom = if frames > 1 { frames as f32 - 1.0 } else { 1.0 };
             for i in 0..frames {
                 let t = i as f32 / denom; // 0..1
@@ -464,7 +475,11 @@ impl Buffer {
             }
         }
 
-        crossfade_tail_to_head(&mut data, channels, sample_rate);
+        // If the asset provided explicit loop points, trust them; otherwise apply a tiny
+        // equal-power blend to hide small discontinuities at the wrap.
+        if !has_loop_points {
+            crossfade_tail_to_head(&mut data, channels, sample_rate);
+        }
 
         let buffer = al::Buffer::new()?;
         buffer.data_f32(&data, stereo, sample_rate as ALsizei);
