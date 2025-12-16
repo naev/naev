@@ -57,8 +57,8 @@ const STREAMING_BUFFER_LENGTH: usize = 32 * 1024;
 /// Amount we sleep per frame when streaming, should be at least enough time to load a single
 /// buffer. Should be at least greater than 2 * STREAMING_BUFFER_LENGTH / 48000.
 const STREAMING_SLEEP_DELAY: std::time::Duration = std::time::Duration::from_millis(30);
-/// Crossfade length (seconds) used to blend loop end toward the start to smooth wraps.
-const LOOP_EDGE_BLEND_MS: f32 = 0.005;
+/// Crossfade length (ms) used to blend loop end toward the start to smooth wraps.
+const LOOP_EDGE_BLEND_MS: f32 = 5.0;
 
 struct LuaAudioEfx {
     name: String,
@@ -365,7 +365,8 @@ impl Buffer {
 
         // Crossfade the tail toward the head so the wrap is continuous without altering the attack.
         fn crossfade_tail_to_head(data: &mut [f32], channels: usize, sample_rate: u32) {
-            let frames = ((sample_rate as f32 * LOOP_EDGE_BLEND_MS).round() as usize).max(1);
+            let frames = ((sample_rate as f32 * LOOP_EDGE_BLEND_MS / 1000.0).round() as usize)
+                .max(1);
             let needed = frames * channels;
             let len = data.len();
             if len < needed * 2 {
