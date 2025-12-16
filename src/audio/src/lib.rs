@@ -298,8 +298,7 @@ impl Buffer {
         if let Some(ext) = ext {
             hint.with_extension(ext);
         }
-        // Enable gapless so encoded padding (e.g. Opus pre-skip/end trim) is removed; loop points
-        // embedded in metadata are expressed in the original, unpadded sample.
+        // Enable gapless so encoded padding (e.g. Opus pre-skip/end trim) is removed.
         let mut format = probe
             .format(
                 &hint,
