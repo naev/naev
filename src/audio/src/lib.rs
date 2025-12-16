@@ -443,7 +443,7 @@ impl Buffer {
             head.copy_from_slice(&data[..needed]);
             tail.copy_from_slice(&data[len - needed..]);
 
-            // If the ends already line up closely, don't introduce a fade that could color the tone.
+            // If the ends already line up closely, don't introduce a fade that could coloir the tone.
             let max_diff = head
                 .iter()
                 .zip(tail.iter())
