@@ -57,8 +57,6 @@ const STREAMING_BUFFER_LENGTH: usize = 32 * 1024;
 /// Amount we sleep per frame when streaming, should be at least enough time to load a single
 /// buffer. Should be at least greater than 2 * STREAMING_BUFFER_LENGTH / 48000.
 const STREAMING_SLEEP_DELAY: std::time::Duration = std::time::Duration::from_millis(30);
-/// Crossfade length (ms) used to blend loop end toward the start to smooth wraps.
-const LOOP_EDGE_BLEND_MS: f32 = 5.0;
 
 struct LuaAudioEfx {
     name: String,
@@ -357,67 +355,6 @@ impl Buffer {
             }
         }
 
-        // Honor loop points if present in metadata (common in some loopable assets).
-        fn loop_points(
-            format: &mut dyn FormatReader,
-            channels: usize,
-            total_frames: usize,
-        ) -> (Option<usize>, Option<usize>) {
-            use symphonia::core::meta::{Tag, Value};
-
-            fn tag_val_as_u64(tag: &Tag) -> Option<u64> {
-                match &tag.value {
-                    Value::UnsignedInt(v) => Some(*v),
-                    Value::SignedInt(v) if *v >= 0 => Some(*v as u64),
-                    Value::Float(v) if *v >= 0.0 => Some(*v as u64),
-                    Value::String(s) => s.trim().parse::<u64>().ok(),
-                    _ => None,
-                }
-            }
-
-            let mut start = None;
-            let mut end = None;
-            if let Some(md) = format.metadata().current() {
-                for tag in md.tags() {
-                    let key = tag
-                        .std_key
-                        .map(|k| format!("{k:?}"))
-                        .or_else(|| Some(tag.key.clone()))
-                        .unwrap_or_default()
-                        .to_ascii_uppercase();
-                    let val = tag_val_as_u64(tag);
-                    match key.as_str() {
-                        "LOOPSTART" | "LOOP_START" => {
-                            start = val.map(|v| (v as usize) / channels);
-                        }
-                        "LOOPEND" | "LOOP_END" => {
-                            end = val.map(|v| (v as usize) / channels);
-                        }
-                        "LOOPLENGTH" | "LOOP_LEN" => {
-                            if let (Some(s), Some(v)) = (start, val) {
-                                end = Some(s + (v as usize) / channels);
-                            }
-                        }
-                        _ => {}
-                    }
-                }
-            }
-            let end = end.or(Some(total_frames));
-            (start, end)
-        }
-
-        let total_frames = frames.len();
-        let (loop_start, loop_end) = loop_points(format.as_mut(), num_channels, total_frames);
-        let has_loop_points = loop_start.is_some();
-        if let Some(start) = loop_start {
-            let end = loop_end.unwrap_or(total_frames).min(total_frames);
-            if start < end {
-                let mut drained: Vec<Frame<f32>> = frames.drain(start..end).collect();
-                frames.clear();
-                frames.append(&mut drained);
-            }
-        }
-
         // Squish the frames together
         let mut data: Vec<f32> = Frame::vec_to_data(frames, stereo);
 
@@ -428,58 +365,69 @@ impl Buffer {
 
         let channels = if stereo { 2 } else { 1 };
 
-        // Crossfade the tail toward the head so the wrap is continuous without altering the attack.
-        fn crossfade_tail_to_head(data: &mut [f32], channels: usize, sample_rate: u32) {
-            let frames = ((sample_rate as f32 * LOOP_EDGE_BLEND_MS / 1000.0).round() as usize)
-                .max(1);
-            let needed = frames * channels;
+        // Crossfade overlap: Blend the end of the buffer into the start, then truncate.
+        // This effectively moves the loop seam to be seamless.
+        fn perform_crossfade_overlap(data: &mut Vec<f32>, channels: usize, sample_rate: u32) {
+            let blend_ms = 15.0; // Increased to 15ms for better handling of engine rumble
+            let frames_to_blend = ((sample_rate as f32 * blend_ms / 1000.0).round() as usize).max(1);
+            let needed_samples = frames_to_blend * channels;
+            
+            // Need enough data: Loop body + Overlap
+            if data.len() < needed_samples * 2 {
+                return;
+            }
+
             let len = data.len();
-            if len < needed * 2 {
-                return;
-            }
+            let overlap_start_idx = len - needed_samples;
 
-            let mut head = vec![0.0f32; needed];
-            let mut tail = vec![0.0f32; needed];
-            head.copy_from_slice(&data[..needed]);
-            tail.copy_from_slice(&data[len - needed..]);
-
-            // If the ends already line up closely, don't introduce a fade that could coloir the tone.
-            let max_diff = head
-                .iter()
-                .zip(tail.iter())
-                .map(|(h, t)| (h - t).abs())
-                .fold(0.0f32, f32::max);
-            if max_diff < 1e-4 {
-                return;
-            }
-
-            let denom = if frames > 1 { frames as f32 - 1.0 } else { 1.0 };
-            for i in 0..frames {
-                let t = i as f32 / denom; // 0..1
-                // Equal-power crossfade (sin/cos) to avoid gain dips.
-                let fade_out = (std::f32::consts::FRAC_PI_2 * (1.0 - t)).sin();
-                let fade_in = (std::f32::consts::FRAC_PI_2 * t).sin();
+            // Blend the tail (end) into the head (start)
+            // Head fades IN (0 -> 1), Tail fades OUT (1 -> 0)
+            // But wait, standard crossfade for loop:
+            // We want the END of the loop to transition to the START.
+            // Current State: [Start ... End]
+            // We want to make [Start ... NewEnd] such that NewEnd matches Start.
+            // Actually, usually we take [Start ... End ... Overlap] and blend Overlap into Start.
+            // Here we assume the file *is* the loop, so [Start ... End].
+            // We take the last N samples (End) and blend them into Start.
+            // So Start' = Start * t + End * (1-t) ? No.
+            // Flow: ... -> End -> Start -> ...
+            // We want End -> Start to be smooth.
+            // If we modify Start to looks like End at the beginning:
+            // Start[0] = End[0].
+            // Then End[Last] -> Start[0] is End[Last] -> End[0]. (Smooth-ish?)
+            // Better:
+            // Standard "Crossfade Loop" tool (like in DAWs) usually crossfades the material.
+            // Algorithm: 
+            // 1. Take last N frames.
+            // 2. Mix them into first N frames using Linear Crossfade.
+            //    NewFrame[i] = OldFrame[i] * (i / N) + OldFrame[Len - N + i] * (1 - i / N)
+            //    At i=0: 0 * Head + 1 * Tail = Tail.
+            //    At i=N: 1 * Head + 0 * Tail = Head.
+            // 3. Truncate the last N frames.
+            
+            for i in 0..frames_to_blend {
+                let t = i as f32 / frames_to_blend as f32;
+                let fade_in = t;        // 0 -> 1
+                let fade_out = 1.0 - t; // 1 -> 0
+                
                 for ch in 0..channels {
-                    let idx = i * channels + ch;
-                    let blended = tail[idx] * fade_out + head[idx] * fade_in;
-                    // Only modify the tail so the attack remains untouched.
-                    let tidx = len - needed + idx;
-                    data[tidx] = blended;
+                     let head_idx = i * channels + ch;
+                     let tail_idx = overlap_start_idx + head_idx;
+                     
+                     let original_head = data[head_idx];
+                     let original_tail = data[tail_idx];
+                     
+                     // Linear blend
+                     data[head_idx] = original_head * fade_in + original_tail * fade_out;
                 }
             }
 
-            // Pin the very last sample(s) to the head to remove any residual mismatch.
-            for ch in 0..channels {
-                let tidx = len - channels + ch;
-                data[tidx] = head[ch];
-            }
+            // Truncate the buffer
+            data.truncate(overlap_start_idx);
         }
 
-        // If the asset provided explicit loop points, trust them; otherwise apply a tiny
-        // equal-power blend to hide small discontinuities at the wrap.
-        if !has_loop_points {
-            crossfade_tail_to_head(&mut data, channels, sample_rate);
-        }
+        // Apply crossfade to fix popping (non seamless looping)
+        perform_crossfade_overlap(&mut data, channels, sample_rate);
 
         let buffer = al::Buffer::new()?;
         buffer.data_f32(&data, stereo, sample_rate as ALsizei);
