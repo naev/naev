@@ -300,12 +300,14 @@ impl Buffer {
         if let Some(ext) = ext {
             hint.with_extension(ext);
         }
+        // For short/static buffers keep decoder padding (gapless off) to help mask imperfect loop
+        // boundaries.
         let mut format = probe
             .format(
                 &hint,
                 mss,
                 &symphonia::core::formats::FormatOptions {
-                    enable_gapless: true,
+                    enable_gapless: false,
                     ..Default::default()
                 },
                 &Default::default(),
@@ -357,16 +359,16 @@ impl Buffer {
 
         // Honor loop points if present in metadata (common in some loopable assets).
         fn loop_points(
-            format: &dyn FormatReader,
+            format: &mut dyn FormatReader,
             channels: usize,
             total_frames: usize,
         ) -> (Option<usize>, Option<usize>) {
-            use symphonia::core::meta::{StandardTagKey, Tag, Value};
+            use symphonia::core::meta::{Tag, Value};
 
             fn tag_val_as_u64(tag: &Tag) -> Option<u64> {
                 match &tag.value {
-                    Value::Uint(v) => Some(*v),
-                    Value::Int(v) if *v >= 0 => Some(*v as u64),
+                    Value::UnsignedInt(v) => Some(*v),
+                    Value::SignedInt(v) if *v >= 0 => Some(*v as u64),
                     Value::Float(v) if *v >= 0.0 => Some(*v as u64),
                     Value::String(s) => s.trim().parse::<u64>().ok(),
                     _ => None,
@@ -379,8 +381,8 @@ impl Buffer {
                 for tag in md.tags() {
                     let key = tag
                         .std_key
-                        .map(|k| k.as_str().to_string())
-                        .or_else(|| tag.key.clone())
+                        .map(|k| format!("{k:?}"))
+                        .or_else(|| Some(tag.key.clone()))
                         .unwrap_or_default()
                         .to_ascii_uppercase();
                     let val = tag_val_as_u64(tag);
@@ -405,11 +407,13 @@ impl Buffer {
         }
 
         let total_frames = frames.len();
-        let (loop_start, loop_end) = loop_points(&format, num_channels, total_frames);
+        let (loop_start, loop_end) = loop_points(format.as_mut(), num_channels, total_frames);
         if let Some(start) = loop_start {
             let end = loop_end.unwrap_or(total_frames).min(total_frames);
             if start < end {
-                frames = frames[start..end].to_vec();
+                let mut drained: Vec<Frame<f32>> = frames.drain(start..end).collect();
+                frames.clear();
+                frames.append(&mut drained);
             }
         }
 
@@ -681,7 +685,11 @@ impl StreamData {
             .format(
                 &Default::default(),
                 mss,
-                &Default::default(),
+                // For long streams (music), enable gapless to honor encoder padding.
+                &symphonia::core::formats::FormatOptions {
+                    enable_gapless: true,
+                    ..Default::default()
+                },
                 &Default::default(),
             )?
             .format;
