@@ -327,6 +327,7 @@ impl Buffer {
             anyhow::bail!("no mono channel");
         }
         let stereo = channels.contains(Channels::FRONT_RIGHT);
+        let num_channels = channels.count() as usize;
 
         let mut frames: Vec<Frame<f32>> = vec![];
         loop {
@@ -353,6 +354,65 @@ impl Buffer {
                 frames.append(&mut Frame::<f32>::load_frames_from_buffer_ref(&buffer)?);
             }
         }
+
+        // Honor loop points if present in metadata (common in some loopable assets).
+        fn loop_points(
+            format: &dyn FormatReader,
+            channels: usize,
+            total_frames: usize,
+        ) -> (Option<usize>, Option<usize>) {
+            use symphonia::core::meta::{StandardTagKey, Tag, Value};
+
+            fn tag_val_as_u64(tag: &Tag) -> Option<u64> {
+                match &tag.value {
+                    Value::Uint(v) => Some(*v),
+                    Value::Int(v) if *v >= 0 => Some(*v as u64),
+                    Value::Float(v) if *v >= 0.0 => Some(*v as u64),
+                    Value::String(s) => s.trim().parse::<u64>().ok(),
+                    _ => None,
+                }
+            }
+
+            let mut start = None;
+            let mut end = None;
+            if let Some(md) = format.metadata().current() {
+                for tag in md.tags() {
+                    let key = tag
+                        .std_key
+                        .map(|k| k.as_str().to_string())
+                        .or_else(|| tag.key.clone())
+                        .unwrap_or_default()
+                        .to_ascii_uppercase();
+                    let val = tag_val_as_u64(tag);
+                    match key.as_str() {
+                        "LOOPSTART" | "LOOP_START" => {
+                            start = val.map(|v| (v as usize) / channels);
+                        }
+                        "LOOPEND" | "LOOP_END" => {
+                            end = val.map(|v| (v as usize) / channels);
+                        }
+                        "LOOPLENGTH" | "LOOP_LEN" => {
+                            if let (Some(s), Some(v)) = (start, val) {
+                                end = Some(s + (v as usize) / channels);
+                            }
+                        }
+                        _ => {}
+                    }
+                }
+            }
+            let end = end.or(Some(total_frames));
+            (start, end)
+        }
+
+        let total_frames = frames.len();
+        let (loop_start, loop_end) = loop_points(&format, num_channels, total_frames);
+        if let Some(start) = loop_start {
+            let end = loop_end.unwrap_or(total_frames).min(total_frames);
+            if start < end {
+                frames = frames[start..end].to_vec();
+            }
+        }
+
         // Squish the frames together
         let mut data: Vec<f32> = Frame::vec_to_data(frames, stereo);
 
