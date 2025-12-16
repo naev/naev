@@ -1308,6 +1308,7 @@ impl AudioBuilder {
         }
         let groupid = audio.groupid();
         let id: AudioRef = voices.insert(audio).into();
+        drop(voices);
         if let Some(groupid) = groupid {
             match AUDIO.groups.lock().unwrap().get_mut(groupid.0) {
                 Some(group) => group.voices.push(id),
