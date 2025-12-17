@@ -351,14 +351,6 @@ fn naevmain() -> Result<()> {
         );
     }
 
-    /*
-    {
-        let path = "gfx/ship3d/Admonisher/admonisher.gltf";
-        let ctx = crate::context::Context::get().as_safe_wrap();
-        crate::model::Model::from_path(&ctx, &path)?;
-    }
-    */
-
     // Load game data
     load_all(&sdlctx, load_env)?;
 

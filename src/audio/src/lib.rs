@@ -265,7 +265,7 @@ pub struct BufferData {
     data: Vec<f32>,
 }
 impl BufferData {
-    fn from_path<P: AsRef<Path>>(path: P) -> Result<Self> {
+    pub fn from_path<P: AsRef<Path>>(path: P) -> Result<Self> {
         let path = path.as_ref();
         // If no extension try to autodetect.
         let ext = path.extension().and_then(|s| s.to_str());
@@ -309,6 +309,8 @@ impl BufferData {
             anyhow::bail!("no mono channel");
         }
         let stereo = channels.contains(Channels::FRONT_RIGHT);
+        let delay = codec_params.delay;
+        let padding = codec_params.padding;
 
         let mut frames: Vec<Frame<f32>> = vec![];
         loop {
@@ -341,6 +343,14 @@ impl BufferData {
                 );
                 frames.append(&mut Frame::<f32>::load_frames_from_buffer_ref(&buffer)?);
             }
+        }
+
+        // Clip
+        if let Some(padding) = padding {
+            frames.truncate(padding as usize);
+        }
+        if let Some(delay) = delay {
+            frames.drain(..delay as usize);
         }
 
         // Squish the frames together
