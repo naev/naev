@@ -14,6 +14,9 @@ import urllib.error
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 
+# Default MIME type for unknown files
+DEFAULT_MIME_TYPE = "application/octet-stream"
+
 def parse_args():
    parser = argparse.ArgumentParser(description="Upload a release and assets to a Forgejo (Gitea-compatible) instance.")
    parser.add_argument("--tag", required=True, help="Release tag to create/update.")
@@ -152,8 +155,13 @@ def main():
          with open(filepath, "rb") as f:
             file_data = f.read()
          
+         # Guess MIME type or fallback
+         content_type, _ = mimetypes.guess_type(filename)
+         if content_type is None:
+            content_type = DEFAULT_MIME_TYPE
+            
          asset_headers = headers.copy()
-         asset_headers["Content-Type"] = "application/octet-stream"
+         asset_headers["Content-Type"] = content_type
          
          try:
             retry_api_request(upload_url, method="POST", headers=asset_headers, data=file_data)
