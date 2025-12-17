@@ -720,7 +720,7 @@ jobs:
         if: ${{ matrix.releasetype == 'codeberg' }}
         working-directory: ${{ github.workspace }}/build/staging/repo
         run: |
-          ./utils/ci/upload_forgejo_release.sh \
+          ./utils/ci/upload_forgejo_release.py \
             --tag "${{ github.ref_name }}" \
             --notes-file "${GITHUB_WORKSPACE}/build/staging/release_notes.md" \
             --asset-dir "${GITHUB_WORKSPACE}/build/dist" \
