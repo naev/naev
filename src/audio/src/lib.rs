@@ -4,6 +4,7 @@ mod efx;
 #[macro_use]
 mod openal;
 mod buffer_length_query;
+mod callback_buffer;
 mod direct_channels_remix;
 mod events;
 mod output_limiter;
