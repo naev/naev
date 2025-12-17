@@ -2904,7 +2904,7 @@ pub extern "C" fn sound_get(name: *const c_char) -> *const Buffer {
         return std::ptr::null();
     }
     let name = unsafe { CStr::from_ptr(name).to_string_lossy() };
-    match Buffer::get_or_try_load(&path) {
+    match Buffer::get_or_try_load(format!("snd/sounds/{name}")) {
         Ok(buffer) => Arc::into_raw(buffer),
         Err(e) => {
             warn_err!(e);
