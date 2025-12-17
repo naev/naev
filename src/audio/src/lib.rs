@@ -334,23 +334,23 @@ impl BufferData {
             if packet.track_id() == track_id {
                 // Decode the packet into audio samples.
                 let buffer = decoder.decode(&packet)?;
-                dbg!(
-                    packet.ts,
-                    packet.dur,
-                    packet.trim_start,
-                    packet.trim_end,
-                    Frame::<f32>::load_frames_from_buffer_ref(&buffer)?.len()
-                );
                 frames.append(&mut Frame::<f32>::load_frames_from_buffer_ref(&buffer)?);
             }
         }
 
         // Clip
         if let Some(padding) = padding {
-            frames.truncate(padding as usize);
+            frames.truncate(frames.len() - padding as usize);
         }
         if let Some(delay) = delay {
-            frames.drain(..delay as usize);
+            let delay = delay as usize;
+            if delay >= frames.len() {
+                anyhow::bail!(format!(
+                    "Audio '{}' is truncating all frames!",
+                    path.display()
+                ));
+            }
+            frames.drain(..delay);
         }
 
         // Squish the frames together
