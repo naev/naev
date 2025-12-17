@@ -257,36 +257,19 @@ impl ReplayGain {
     }
 }
 
-#[derive(PartialEq, Debug)]
-pub struct Buffer {
+pub struct BufferData {
     name: PathBuf,
     stereo: bool,
-    buffer: al::Buffer,
+    replay_gain: Option<ReplayGain>,
+    sample_rate: u32,
+    data: Vec<f32>,
 }
-impl Buffer {
-    fn get_valid_path<P: AsRef<Path>>(path: P) -> Option<PathBuf> {
-        let path = path.as_ref();
-        let ext = path.extension().and_then(|s| s.to_str());
-        match ext {
-            Some(_) => Some(path.to_path_buf()),
-            None => {
-                let mut path = path.to_path_buf();
-                for ext in &["opus", "ogg", "flac", "wav"] {
-                    path.set_extension(ext);
-                    if ndata::exists(&path) {
-                        return Some(path);
-                    }
-                }
-                None
-            }
-        }
-    }
-
+impl BufferData {
     fn from_path<P: AsRef<Path>>(path: P) -> Result<Self> {
         let path = path.as_ref();
         // If no extension try to autodetect.
         let ext = path.extension().and_then(|s| s.to_str());
-        let path = Self::get_valid_path(path)
+        let path = Buffer::get_valid_path(path)
             .context(format!("No audio file matching '{}' found", path.display()))?;
         let src = ndata::open(&path)?;
 
@@ -312,7 +295,7 @@ impl Buffer {
             .format;
 
         // Get replaygain information
-        let replaygain = ReplayGain::from_formatreader(&mut format)?;
+        let replay_gain = ReplayGain::from_formatreader(&mut format)?;
 
         let track = format.default_track().context("No default track")?;
         let track_id = track.id;
@@ -349,12 +332,66 @@ impl Buffer {
             if packet.track_id() == track_id {
                 // Decode the packet into audio samples.
                 let buffer = decoder.decode(&packet)?;
+                dbg!(
+                    packet.ts,
+                    packet.dur,
+                    packet.trim_start,
+                    packet.trim_end,
+                    Frame::<f32>::load_frames_from_buffer_ref(&buffer)?.len()
+                );
                 frames.append(&mut Frame::<f32>::load_frames_from_buffer_ref(&buffer)?);
             }
         }
 
         // Squish the frames together
-        let mut data: Vec<f32> = Frame::vec_to_data(frames, stereo);
+        let data: Vec<f32> = Frame::vec_to_data(frames, stereo);
+
+        Ok(Self {
+            name: path,
+            stereo,
+            replay_gain,
+            sample_rate,
+            data,
+        })
+    }
+}
+
+#[derive(PartialEq, Debug)]
+pub struct Buffer {
+    name: PathBuf,
+    stereo: bool,
+    buffer: al::Buffer,
+}
+impl Buffer {
+    fn get_valid_path<P: AsRef<Path>>(path: P) -> Option<PathBuf> {
+        let path = path.as_ref();
+        let ext = path.extension().and_then(|s| s.to_str());
+        match ext {
+            Some(_) => Some(path.to_path_buf()),
+            None => {
+                let mut path = path.to_path_buf();
+                for ext in &["opus", "ogg", "flac", "wav"] {
+                    path.set_extension(ext);
+                    if ndata::exists(&path) {
+                        return Some(path);
+                    }
+                }
+                None
+            }
+        }
+    }
+
+    fn from_path<P: AsRef<Path>>(path: P) -> Result<Self> {
+        let (name, stereo, replaygain, mut data, sample_rate) = {
+            let data = BufferData::from_path(path)?;
+            (
+                data.name,
+                data.stereo,
+                data.replay_gain,
+                data.data,
+                data.sample_rate,
+            )
+        };
 
         // Filter function for decoded Ogg Vorbis streams taken from "vgfilter.c"
         if let Some(replaygain) = replaygain {
@@ -432,10 +469,10 @@ impl Buffer {
         debug::object_label(
             debug::consts::AL_BUFFER_EXT,
             buffer.raw(),
-            &format!("{}", path.display()),
+            &format!("{}", name.display()),
         );
         Ok(Self {
-            name: path,
+            name,
             stereo,
             buffer,
         })
