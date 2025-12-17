@@ -326,7 +326,6 @@ impl Buffer {
             anyhow::bail!("no mono channel");
         }
         let stereo = channels.contains(Channels::FRONT_RIGHT);
-        let num_channels = channels.count() as usize;
 
         let mut frames: Vec<Frame<f32>> = vec![];
         loop {
@@ -362,15 +361,14 @@ impl Buffer {
             replaygain.filter(&mut data);
         }
 
-        let channels = if stereo { 2 } else { 1 };
-
         // Crossfade overlap: Blend the end of the buffer into the start, then truncate.
         // This effectively moves the loop seam to be seamless.
         fn perform_crossfade_overlap(data: &mut Vec<f32>, channels: usize, sample_rate: u32) {
             let blend_ms = 15.0; // Increased to 15ms for better handling of engine rumble
-            let frames_to_blend = ((sample_rate as f32 * blend_ms / 1000.0).round() as usize).max(1);
+            let frames_to_blend =
+                ((sample_rate as f32 * blend_ms / 1000.0).round() as usize).max(1);
             let needed_samples = frames_to_blend * channels;
-            
+
             // Need enough data: Loop body + Overlap
             if data.len() < needed_samples * 2 {
                 return;
@@ -396,28 +394,28 @@ impl Buffer {
             // Then End[Last] -> Start[0] is End[Last] -> End[0]. (Smooth-ish?)
             // Better:
             // Standard "Crossfade Loop" tool (like in DAWs) usually crossfades the material.
-            // Algorithm: 
+            // Algorithm:
             // 1. Take last N frames.
             // 2. Mix them into first N frames using Linear Crossfade.
             //    NewFrame[i] = OldFrame[i] * (i / N) + OldFrame[Len - N + i] * (1 - i / N)
             //    At i=0: 0 * Head + 1 * Tail = Tail.
             //    At i=N: 1 * Head + 0 * Tail = Head.
             // 3. Truncate the last N frames.
-            
+
             for i in 0..frames_to_blend {
                 let t = i as f32 / frames_to_blend as f32;
-                let fade_in = t;        // 0 -> 1
+                let fade_in = t; // 0 -> 1
                 let fade_out = 1.0 - t; // 1 -> 0
-                
+
                 for ch in 0..channels {
-                     let head_idx = i * channels + ch;
-                     let tail_idx = overlap_start_idx + head_idx;
-                     
-                     let original_head = data[head_idx];
-                     let original_tail = data[tail_idx];
-                     
-                     // Linear blend
-                     data[head_idx] = original_head * fade_in + original_tail * fade_out;
+                    let head_idx = i * channels + ch;
+                    let tail_idx = overlap_start_idx + head_idx;
+
+                    let original_head = data[head_idx];
+                    let original_tail = data[tail_idx];
+
+                    // Linear blend
+                    data[head_idx] = original_head * fade_in + original_tail * fade_out;
                 }
             }
 
@@ -426,6 +424,7 @@ impl Buffer {
         }
 
         // Apply crossfade to fix popping (non seamless looping)
+        let channels = if stereo { 2 } else { 1 };
         perform_crossfade_overlap(&mut data, channels, sample_rate);
 
         let buffer = al::Buffer::new()?;
@@ -2905,16 +2904,10 @@ pub extern "C" fn sound_get(name: *const c_char) -> *const Buffer {
         return std::ptr::null();
     }
     let name = unsafe { CStr::from_ptr(name).to_string_lossy() };
-    match Buffer::get_valid_path(format!("snd/sounds/{name}")) {
-        Some(path) => match Buffer::get_or_try_load(&path) {
-            Ok(buffer) => Arc::into_raw(buffer),
-            Err(e) => {
-                warn_err!(e);
-                std::ptr::null()
-            }
-        },
-        None => {
-            warn!("Sound '{}' not found!", name);
+    match Buffer::get_or_try_load(&path) {
+        Ok(buffer) => Arc::into_raw(buffer),
+        Err(e) => {
+            warn_err!(e);
             std::ptr::null()
         }
     }
