@@ -1742,6 +1742,13 @@ impl System {
 
         let has_source_spatialize = source_spatialize::supported();
         let has_direct_channels = direct_channels_remix::supported();
+        let has_callback_buffer = match callback_buffer::init() {
+            Ok(()) => true,
+            Err(e) => {
+                warn_err!(e);
+                false
+            }
+        };
 
         debugx!(gettext("OpenAL started: {} Hz"), freq);
         let al_renderer = al::get_parameter_str(AL_RENDERER)?;
@@ -1772,6 +1779,9 @@ impl System {
         }
         if has_direct_channels {
             extensions.push("direct_channels_remix".to_string());
+        }
+        if has_callback_buffer {
+            extensions.push("callback_buffer".to_string());
         }
         debugx!(gettext("   with {}"), extensions.join(", "));
         debug!("");

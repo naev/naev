@@ -45,23 +45,25 @@ pub struct CallbackBuffer {
     pub alGetBufferPtrvSOFT: ALGETBUFFERPTRSOFT,
 }
 
-impl CallbackBuffer {
-    #[allow(non_snake_case)]
-    pub fn init() -> Result<()> {
-        let alBufferCallbackSOFT = proc_address!(c"alBufferCallbackSOFT", ALBUFFERCALLBACKSOFT);
-        let alGetBufferPtrSOFT = proc_address!(c"alGetBufferPtrSOFT", ALGETBUFFERPTRSOFT);
-        let alGetBuffer3PtrSOFT = proc_address!(c"alGetBuffer3PtrSOFT", ALGETBUFFER3PTRSOFT);
-        let alGetBufferPtrvSOFT = proc_address!(c"alGetBufferPtrvSOFT", ALGETBUFFERPTRSOFT);
+#[allow(non_snake_case)]
+pub fn init() -> Result<()> {
+    if !supported() {
+        anyhow::bail!("AL_SOFT_callback_buffer is unsupported");
+    }
 
-        match CALLBACKBUFFER.set(Self {
-            alBufferCallbackSOFT,
-            alGetBufferPtrSOFT,
-            alGetBuffer3PtrSOFT,
-            alGetBufferPtrvSOFT,
-        }) {
-            Ok(()) => Ok(()),
-            Err(_) => anyhow::bail!("failed to set CALLBACKBUFFER"),
-        }
+    let alBufferCallbackSOFT = proc_address!(c"alBufferCallbackSOFT", ALBUFFERCALLBACKSOFT);
+    let alGetBufferPtrSOFT = proc_address!(c"alGetBufferPtrSOFT", ALGETBUFFERPTRSOFT);
+    let alGetBuffer3PtrSOFT = proc_address!(c"alGetBuffer3PtrSOFT", ALGETBUFFER3PTRSOFT);
+    let alGetBufferPtrvSOFT = proc_address!(c"alGetBufferPtrvSOFT", ALGETBUFFERPTRSOFT);
+
+    match CALLBACKBUFFER.set(CallbackBuffer {
+        alBufferCallbackSOFT,
+        alGetBufferPtrSOFT,
+        alGetBuffer3PtrSOFT,
+        alGetBufferPtrvSOFT,
+    }) {
+        Ok(()) => Ok(()),
+        Err(_) => anyhow::bail!("failed to set CALLBACKBUFFER"),
     }
 }
 
@@ -71,7 +73,7 @@ unsafe extern "C" fn callback_c<F>(
     numbytes: ALsizei,
 ) -> ALsizei
 where
-    F: Fn(&mut [u8]) -> usize + Send,
+    F: FnMut(&mut [u8]) -> usize + Send,
 {
     let sampledata = sampledata as *mut u8;
     let ptr = userptr.cast::<F>();
@@ -83,7 +85,7 @@ where
 
 pub fn callback_buffer<F>(buffer: Buffer, format: ALenum, freq: usize, callback: F) -> Result<()>
 where
-    F: Fn(&mut [u8]) -> usize + Send,
+    F: FnMut(&mut [u8]) -> usize + Send,
 {
     let cb = CALLBACKBUFFER
         .get()
@@ -103,6 +105,6 @@ where
 
 static CALLBACKBUFFER: OnceLock<CallbackBuffer> = OnceLock::new();
 
-pub fn supported(device: &Device) -> bool {
-    device.is_extension_present(c"AL_SOFT_callback_buffer")
+pub fn supported() -> bool {
+    is_extension_present(c"AL_SOFT_callback_buffer")
 }
