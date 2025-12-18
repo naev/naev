@@ -551,6 +551,7 @@ naevcrs = rust.bindgen(
       workdir: meson.project_build_root(),
       is_parallel: false, # too slow
       depends: [naev_rlib_compile],
+      priority: 1,
    )
 
    gen_authors = find_program(files('utils'/'build'/'gen_authors.py'))
