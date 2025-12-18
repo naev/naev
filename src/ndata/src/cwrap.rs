@@ -53,8 +53,8 @@ pub fn migrate_pref() -> Result<()> {
         let new = pref.join("conf.lua");
         if (cconfig != new) && !new.is_file() {
             fs::rename(cconfig, new)?;
+            debug!("Migrated configuration file.");
         }
-        debug!("Migrated configuration file.");
     }
 
     Ok(())
