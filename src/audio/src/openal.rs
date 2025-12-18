@@ -428,6 +428,18 @@ impl Source {
         self.0
     }
 
+    pub fn play(&self) {
+        unsafe {
+            alSourcePlay(self.raw());
+        }
+    }
+
+    pub fn stop(&self) {
+        unsafe {
+            alSourceStop(self.raw());
+        }
+    }
+
     pub fn parameter_f32(&self, param: ALenum, value: ALfloat) {
         unsafe {
             alSourcef(self.raw(), param, value);

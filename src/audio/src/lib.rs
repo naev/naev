@@ -2,7 +2,7 @@
 mod debug;
 mod efx;
 #[macro_use]
-mod openal;
+pub mod openal;
 mod buffer_length_query;
 mod callback_buffer;
 mod direct_channels_remix;
@@ -259,11 +259,11 @@ impl ReplayGain {
 }
 
 pub struct BufferData {
-    name: PathBuf,
-    stereo: bool,
-    replay_gain: Option<ReplayGain>,
-    sample_rate: u32,
-    data: Vec<f32>,
+    pub name: PathBuf,
+    pub stereo: bool,
+    pub replay_gain: Option<ReplayGain>,
+    pub sample_rate: u32,
+    pub data: Vec<f32>,
 }
 impl BufferData {
     pub fn from_path<P: AsRef<Path>>(path: P) -> Result<Self> {
@@ -393,7 +393,7 @@ impl Buffer {
     }
 
     fn from_path<P: AsRef<Path>>(path: P) -> Result<Self> {
-        let (name, stereo, replaygain, mut data, sample_rate) = {
+        let (name, stereo, _replaygain, mut data, sample_rate) = {
             let data = BufferData::from_path(path)?;
             (
                 data.name,
@@ -405,14 +405,14 @@ impl Buffer {
         };
 
         // Filter function for decoded Ogg Vorbis streams taken from "vgfilter.c"
-        if let Some(replaygain) = replaygain {
-            replaygain.filter(&mut data);
-        }
+        //if let Some(replaygain) = replaygain {
+        //    replaygain.filter(&mut data);
+        //}
 
         // Crossfade overlap: Blend the end of the buffer into the start, then truncate.
         // This effectively moves the loop seam to be seamless.
         fn perform_crossfade_overlap(data: &mut Vec<f32>, channels: usize, sample_rate: u32) {
-            let blend_ms = 15.0; // Increased to 15ms for better handling of engine rumble
+            let blend_ms = 5.0; // Increased to 15ms for better handling of engine rumble
             let frames_to_blend =
                 ((sample_rate as f32 * blend_ms / 1000.0).round() as usize).max(1);
             let needed_samples = frames_to_blend * channels;
@@ -607,11 +607,6 @@ impl Source {
             g_pitch: Some(1.),
         }
     }
-
-    #[inline]
-    fn raw(&self) -> ALuint {
-        self.source.raw()
-    }
 }
 
 #[derive(PartialEq, Debug)]
@@ -805,9 +800,7 @@ pub struct AudioStream {
 }
 impl Drop for AudioStream {
     fn drop(&mut self) {
-        unsafe {
-            alSourceStop(self.source.raw());
-        }
+        self.source.source.stop();
         *self.finish.lock().unwrap() = true;
     }
 }
@@ -860,7 +853,6 @@ impl AudioStream {
     }
 
     fn play(&mut self) -> Result<()> {
-        let source = self.source.raw();
         if self.thread.is_none()
             && let Some(mut data) = self.data.take()
         {
@@ -872,9 +864,7 @@ impl AudioStream {
                 AudioStream::thread(finish, data)
             }));
         }
-        unsafe {
-            alSourcePlay(source);
-        }
+        self.source.source.play();
         Ok(())
     }
 
@@ -999,9 +989,7 @@ impl Audio {
     pub fn play(&mut self) {
         check_audio!(self);
         match self {
-            Self::Static(this) | Self::LuaStatic(this) => unsafe {
-                alSourcePlay(this.source.raw());
-            },
+            Self::Static(this) | Self::LuaStatic(this) => this.source.source.play(),
             Self::LuaStream(this) => {
                 if let Err(e) = this.play() {
                     warn_err!(e);
@@ -1029,9 +1017,7 @@ impl Audio {
 
     pub fn stop(&self) {
         check_audio!(self);
-        unsafe {
-            alSourceStop(self.al_source().raw());
-        }
+        self.al_source().stop();
     }
 
     pub fn is_stopped(&self) -> bool {
@@ -1349,6 +1335,7 @@ impl AudioBuilder {
             if let Some(vel) = self.vel {
                 audio.set_velocity(vel);
             }
+            audio.set_air_absorption_factor(AUDIO.air_absorption.load(Ordering::Relaxed));
         } else if stereo {
             audio
                 .al_source()
@@ -1357,7 +1344,6 @@ impl AudioBuilder {
             //if !stereo {
             audio.set_relative(true);
         }
-        audio.set_air_absorption_factor(AUDIO.air_absorption.load(Ordering::Relaxed));
         audio.set_pitch(1.0);
         audio.set_volume(self.volume);
         if looping {
@@ -1473,9 +1459,7 @@ impl GroupRef {
         if let Some(sfx) = &AUDIO.compression
             && sfx.source.source.get_parameter_i32(AL_SOURCE_STATE) == AL_PLAYING
         {
-            unsafe {
-                alSourcePlay(sfx.source.raw());
-            }
+            sfx.source.source.play();
         }
         Ok(())
     }
@@ -1497,9 +1481,7 @@ impl GroupRef {
         if let Some(sfx) = &AUDIO.compression
             && sfx.source.source.get_parameter_i32(AL_SOURCE_STATE) == AL_PAUSED
         {
-            unsafe {
-                alSourcePlay(sfx.source.raw());
-            }
+            sfx.source.source.play();
         }
         Ok(())
     }
@@ -1856,15 +1838,11 @@ impl System {
             if c > 0. {
                 als.parameter_f32(AL_GAIN, master * c);
                 if als.get_parameter_i32(AL_SOURCE_STATE) != AL_PLAYING {
-                    unsafe {
-                        alSourcePlay(als.raw());
-                    }
+                    als.play();
                 }
             } else if self.compression_gain.load(Ordering::Relaxed) > 0.0 {
                 als.parameter_f32(AL_GAIN, 0.0);
-                unsafe {
-                    alSourceStop(als.raw());
-                }
+                als.stop();
             }
         }
         self.compression_gain.store(c, Ordering::Relaxed);
@@ -1887,7 +1865,9 @@ impl System {
     pub fn set_air_absorption_factor(&self, factor: f32) {
         let voices = self.voices.lock().unwrap();
         for (_, v) in voices.iter() {
-            v.set_air_absorption_factor(factor);
+            if v.ingame() {
+                v.set_air_absorption_factor(factor);
+            }
         }
         self.air_absorption.store(factor, Ordering::Relaxed);
     }
