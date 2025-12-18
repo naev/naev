@@ -1355,7 +1355,7 @@ impl AudioBuilder {
         if let Some(groupid) = groupid {
             match AUDIO.groups.lock().unwrap().get_mut(groupid.0) {
                 Some(group) => group.voices.push(id),
-                None => warn!("group not found"),
+                None => warn!("Group not found"),
             }
         }
         Ok(id)
@@ -1394,7 +1394,7 @@ impl GroupRef {
             let group = match groups.get(self.0) {
                 Some(group) => group,
                 None => {
-                    warn!("group not found!");
+                    warn!("Group not found!");
                     return None;
                 }
             };
@@ -1426,7 +1426,7 @@ impl GroupRef {
         let mut groups = AUDIO.groups.lock().unwrap();
         let group = match groups.get_mut(self.0) {
             Some(group) => group,
-            None => anyhow::bail!("group not found"),
+            None => anyhow::bail!("Group not found"),
         };
         let voices = AUDIO.voices.lock().unwrap();
         for v in group.voices.drain(..) {
@@ -1443,7 +1443,7 @@ impl GroupRef {
         let mut groups = AUDIO.groups.lock().unwrap();
         let group = match groups.get_mut(self.0) {
             Some(group) => group,
-            None => anyhow::bail!("group not found"),
+            None => anyhow::bail!("Group not found"),
         };
         let voices = AUDIO.voices.lock().unwrap();
         for v in group.voices.iter() {
@@ -1465,7 +1465,7 @@ impl GroupRef {
         let mut groups = AUDIO.groups.lock().unwrap();
         let group = match groups.get_mut(self.0) {
             Some(group) => group,
-            None => anyhow::bail!("group not found"),
+            None => anyhow::bail!("Group not found"),
         };
         let mut voices = AUDIO.voices.lock().unwrap();
         for v in group.voices.iter() {
@@ -1504,7 +1504,7 @@ impl GroupRef {
         let mut groups = AUDIO.groups.lock().unwrap();
         let group = match groups.get_mut(self.0) {
             Some(group) => group,
-            None => anyhow::bail!("group not found"),
+            None => anyhow::bail!("Group not found"),
         };
         group.speed_affects = enable;
         Self::reset_speed(group);
@@ -1515,7 +1515,7 @@ impl GroupRef {
         let mut groups = AUDIO.groups.lock().unwrap();
         let group = match groups.get_mut(self.0) {
             Some(group) => group,
-            None => anyhow::bail!("group not found"),
+            None => anyhow::bail!("Group not found"),
         };
         group.volume = volume;
 
@@ -1538,7 +1538,7 @@ impl GroupRef {
         let mut groups = AUDIO.groups.lock().unwrap();
         let group = match groups.get_mut(self.0) {
             Some(group) => group,
-            None => anyhow::bail!("group not found"),
+            None => anyhow::bail!("Group not found"),
         };
         group.pitch = pitch;
         Self::reset_speed(group);
