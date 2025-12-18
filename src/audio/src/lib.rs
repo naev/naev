@@ -588,7 +588,7 @@ pub enum Audio {
 
 #[derive(Debug, PartialEq)]
 pub struct Source {
-    source: al::Source,
+    inner: al::Source,
     volume: f32,
     pitch: f32,
     // Group values
@@ -600,7 +600,7 @@ pub struct Source {
 impl Source {
     fn new(source: al::Source) -> Self {
         Self {
-            source,
+            inner: source,
             volume: 1.,
             pitch: 1.,
             g_volume: 1.,
@@ -635,12 +635,10 @@ impl AudioStatic {
 
     fn new_buffer(buffer: &Arc<Buffer>, source: al::Source) -> Result<Self> {
         let source = Source::new(source);
-        source
-            .source
-            .parameter_i32(AL_BUFFER, buffer.raw() as ALint);
+        source.inner.parameter_i32(AL_BUFFER, buffer.raw() as ALint);
         debug::object_label(
             debug::consts::AL_SOURCE_EXT,
-            source.source.raw(),
+            source.inner.raw(),
             &format!("{}", &buffer.name.display()),
         );
         Ok(AudioStatic {
@@ -800,7 +798,7 @@ pub struct AudioStream {
 }
 impl Drop for AudioStream {
     fn drop(&mut self) {
-        self.source.source.stop();
+        self.source.inner.stop();
         *self.finish.lock().unwrap() = true;
     }
 }
@@ -839,7 +837,7 @@ impl AudioStream {
         let mut source = Source::new(source);
         source.g_pitch = None;
 
-        let thdata = StreamData::from_file(&source.source, src)?;
+        let thdata = StreamData::from_file(&source.inner, src)?;
         let stereo = thdata.stereo;
 
         Ok(AudioStream {
@@ -864,7 +862,7 @@ impl AudioStream {
                 AudioStream::thread(finish, data)
             }));
         }
-        self.source.source.play();
+        self.source.inner.play();
         Ok(())
     }
 
@@ -913,7 +911,7 @@ impl Audio {
 
         match self {
             Self::Static(this) | Self::LuaStatic(this) => {
-                let v = &this.source.source;
+                let v = &this.source.inner;
                 if this.ingame {
                     return;
                 }
@@ -971,7 +969,7 @@ impl Audio {
 
     #[inline]
     fn al_source(&self) -> &al::Source {
-        &self.source().source
+        &self.source().inner
     }
 
     fn groupid(&self) -> Option<GroupRef> {
@@ -989,7 +987,7 @@ impl Audio {
     pub fn play(&mut self) {
         check_audio!(self);
         match self {
-            Self::Static(this) | Self::LuaStatic(this) => this.source.source.play(),
+            Self::Static(this) | Self::LuaStatic(this) => this.source.inner.play(),
             Self::LuaStream(this) => {
                 if let Err(e) = this.play() {
                     warn_err!(e);
@@ -1059,7 +1057,7 @@ impl Audio {
         } else {
             1.0
         };
-        src.source
+        src.inner
             .parameter_f32(AL_GAIN, c * master * src.volume * src.g_volume);
     }
 
@@ -1073,7 +1071,7 @@ impl Audio {
         } else {
             1.0
         };
-        src.source
+        src.inner
             .parameter_f32(AL_GAIN, c * src.volume * src.g_volume);
     }
 
@@ -1160,8 +1158,7 @@ impl Audio {
         src.pitch = pitch;
         if let Some(pitch) = src.g_pitch {
             let speed = AUDIO.speed.load(Ordering::Relaxed);
-            src.source
-                .parameter_f32(AL_PITCH, src.pitch * pitch * speed);
+            src.inner.parameter_f32(AL_PITCH, src.pitch * pitch * speed);
         }
     }
 
@@ -1457,9 +1454,9 @@ impl GroupRef {
             }
         }
         if let Some(sfx) = &AUDIO.compression
-            && sfx.source.source.get_parameter_i32(AL_SOURCE_STATE) == AL_PLAYING
+            && sfx.source.inner.get_parameter_i32(AL_SOURCE_STATE) == AL_PLAYING
         {
-            sfx.source.source.play();
+            sfx.source.inner.play();
         }
         Ok(())
     }
@@ -1479,9 +1476,9 @@ impl GroupRef {
             }
         }
         if let Some(sfx) = &AUDIO.compression
-            && sfx.source.source.get_parameter_i32(AL_SOURCE_STATE) == AL_PAUSED
+            && sfx.source.inner.get_parameter_i32(AL_SOURCE_STATE) == AL_PAUSED
         {
-            sfx.source.source.play();
+            sfx.source.inner.play();
         }
         Ok(())
     }
@@ -1495,10 +1492,9 @@ impl GroupRef {
                 let src = voice.source_mut();
                 src.g_pitch = pitch;
                 if let Some(pitch) = src.g_pitch {
-                    src.source
-                        .parameter_f32(AL_PITCH, src.pitch * pitch * speed);
+                    src.inner.parameter_f32(AL_PITCH, src.pitch * pitch * speed);
                 } else {
-                    src.source.parameter_f32(AL_PITCH, 1.);
+                    src.inner.parameter_f32(AL_PITCH, 1.);
                 }
             }
         }
@@ -1531,7 +1527,7 @@ impl GroupRef {
                 let c = if voice.ingame() { cvol } else { 1.0 };
                 let src = voice.source_mut();
                 src.g_volume = group.volume;
-                src.source
+                src.inner
                     .parameter_f32(AL_GAIN, c * master * src.volume * src.g_volume);
             }
         }
@@ -1774,7 +1770,7 @@ impl System {
             // LuaStatic won't get cleaned up if stopped
             let comp = AudioStatic::new(&Some(AudioData::Buffer(data)), al::Source::new()?)?;
             // Should loop infinitely
-            comp.source.source.parameter_i32(AL_LOOPING, AL_TRUE.into());
+            comp.source.inner.parameter_i32(AL_LOOPING, AL_TRUE.into());
             Ok(comp)
         }
         let compression = load_compression().ok();
@@ -1820,7 +1816,7 @@ impl System {
                 Audio::Static(this) | Audio::LuaStatic(this) => {
                     let c = if this.ingame { cvol } else { 1.0 };
                     this.source
-                        .source
+                        .inner
                         .parameter_f32(AL_GAIN, c * master * v.volume())
                 }
                 _ => (),
@@ -1834,7 +1830,7 @@ impl System {
         // Handle compression
         let c = ((speed - 2.0) / 10.0).clamp(0.0, 1.0);
         if let Some(sfx) = &self.compression {
-            let als = &sfx.source.source;
+            let als = &sfx.source.inner;
             if c > 0. {
                 als.parameter_f32(AL_GAIN, master * c);
                 if als.get_parameter_i32(AL_SOURCE_STATE) != AL_PLAYING {
@@ -1853,11 +1849,10 @@ impl System {
         for (_, v) in self.voices.lock().unwrap().iter_mut() {
             let src = v.source();
             if let Some(pitch) = src.g_pitch {
-                src.source
-                    .parameter_f32(AL_PITCH, src.pitch * pitch * speed);
+                src.inner.parameter_f32(AL_PITCH, src.pitch * pitch * speed);
             }
             let c = if v.ingame() { cvol } else { 1.0 };
-            src.source
+            src.inner
                 .parameter_f32(AL_GAIN, c * master * src.volume * src.g_volume);
         }
     }
