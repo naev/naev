@@ -440,6 +440,18 @@ impl Source {
         }
     }
 
+    pub fn pause(&self) {
+        unsafe {
+            alSourcePause(self.raw());
+        }
+    }
+
+    pub fn rewind(&self) {
+        unsafe {
+            alSourceRewind(self.raw());
+        }
+    }
+
     pub fn parameter_f32(&self, param: ALenum, value: ALfloat) {
         unsafe {
             alSourcef(self.raw(), param, value);

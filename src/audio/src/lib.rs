@@ -1003,9 +1003,7 @@ impl Audio {
 
     pub fn pause(&self) {
         check_audio!(self);
-        unsafe {
-            alSourcePause(self.al_source().raw());
-        }
+        self.al_source().pause();
     }
 
     pub fn is_paused(&self) -> bool {
@@ -1025,9 +1023,7 @@ impl Audio {
 
     pub fn rewind(&self) {
         check_audio!(self);
-        unsafe {
-            alSourceRewind(self.al_source().raw());
-        }
+        self.al_source().rewind();
     }
 
     pub fn seek(&self, offset: f32, unit: AudioSeek) {
