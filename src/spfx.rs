@@ -313,6 +313,8 @@ impl UserData for LuaSpfxRef {
                     Some(audiodata) => {
                         let audio = audio::AudioBuilder::new(audio::AudioType::Static)
                             .data(Some(audiodata.clone()))
+                            .position(pos.map(|v| v.into_vector2().cast()))
+                            .play(true)
                             .build()?;
                         Some(audio::LuaAudioRef {
                             audio,
@@ -320,14 +322,6 @@ impl UserData for LuaSpfxRef {
                         })
                     }
                 };
-                if let Some(ref sfx) = sfx {
-                    sfx.call_mut(|audio| {
-                        if pos.is_some() {
-                            audio.set_ingame();
-                        }
-                        audio.play();
-                    })?;
-                }
                 let spfx = LuaSpfx {
                     global,
                     ttl,
