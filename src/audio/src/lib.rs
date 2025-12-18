@@ -339,15 +339,17 @@ impl BufferData {
             }
         }
 
-        // Clip
-        if let Some(padding) = padding {
+        // I'm not sure exactly what's going on here, but the usage of padding+delay seems to be the
+        // opposite to what is mentioned in the Symphonia docs at least as of 0.5.5. As this seems
+        // to give correct results (for now), I am leaving it as is.
+        if let Some(padding) = delay {
             frames.truncate(frames.len() - padding as usize);
         }
-        if let Some(delay) = delay {
+        if let Some(delay) = padding {
             let delay = delay as usize;
             if delay >= frames.len() {
                 anyhow::bail!(format!(
-                    "Audio '{}' is truncating all frames!",
+                    "Audio '{}' is draining all frames!",
                     path.display()
                 ));
             }
@@ -374,7 +376,7 @@ pub struct Buffer {
     buffer: al::Buffer,
 }
 impl Buffer {
-    fn get_valid_path<P: AsRef<Path>>(path: P) -> Option<PathBuf> {
+    pub fn get_valid_path<P: AsRef<Path>>(path: P) -> Option<PathBuf> {
         let path = path.as_ref();
         let ext = path.extension().and_then(|s| s.to_str());
         match ext {
@@ -393,7 +395,7 @@ impl Buffer {
     }
 
     fn from_path<P: AsRef<Path>>(path: P) -> Result<Self> {
-        let (name, stereo, _replaygain, mut data, sample_rate) = {
+        let (name, stereo, replaygain, mut data, sample_rate) = {
             let data = BufferData::from_path(path)?;
             (
                 data.name,
@@ -405,10 +407,11 @@ impl Buffer {
         };
 
         // Filter function for decoded Ogg Vorbis streams taken from "vgfilter.c"
-        //if let Some(replaygain) = replaygain {
-        //    replaygain.filter(&mut data);
-        //}
+        if let Some(replaygain) = replaygain {
+            replaygain.filter(&mut data);
+        }
 
+        /*
         // Crossfade overlap: Blend the end of the buffer into the start, then truncate.
         // This effectively moves the loop seam to be seamless.
         fn perform_crossfade_overlap(data: &mut Vec<f32>, channels: usize, sample_rate: u32) {
@@ -474,6 +477,7 @@ impl Buffer {
         // Apply crossfade to fix popping (non seamless looping)
         let channels = if stereo { 2 } else { 1 };
         perform_crossfade_overlap(&mut data, channels, sample_rate);
+        */
 
         let buffer = al::Buffer::new()?;
         buffer.data_f32(&data, stereo, sample_rate as ALsizei);
@@ -3241,25 +3245,71 @@ pub extern "C" fn sound_set_disabled(disable: c_int) {
     SILENT.store(disable != 0, Ordering::Relaxed);
 }
 
+// TODO fails to link with meson, but as a test it works
 /*
-pub fn test () {
-    audio::init().unwrap();
-    let buf = Buffer::get_or_try_load( "snd/sounds/activate1.ogg" )?;
-    dbg!( buf.duration( AudioSeek::Seconds ) );
-    let audioref = AUDIO.play_buffer(&buf)?;
-        audioref.call( |a| {
-            let src = a.source();
-            unsafe {
-                al::alSourcePlay(  src.raw() );
-                dbg!( al::alGetError() );
-            }
-        })?;
-    for _ in 0..3 {
-        audioref.call( |a| {
-            dbg!(a.tell( AudioSeek::Seconds ) );
-            dbg!(a.is_playing());
-        }).unwrap();
-        std::thread::sleep( std::time::Duration::from_millis(1000) );
+#[test]
+pub fn test_flac_vs_opus () {
+    use std::process::{Command, Stdio};
+
+    ndata::setup().unwrap();
+
+    // Set up audio
+    let attribs: Vec<ALint> = vec![0, 0];
+    let device = al::Device::new(None).unwrap();
+    let context = al::Context::new(&device, &attribs).unwrap();
+    context.set_current().unwrap();
+
+    let path = Buffer::get_valid_path( "snd/sounds/nav" ).unwrap();
+    let path = Path::new("../assets").join(path);
+
+    let temp = ndata::physfs::get_write_dir();
+    let outfile1 = Path::new( "naev_audio_test.flac" );
+    let outfile2 = Path::new( "naev_audio_test.opus" );
+    let out1 = temp.join( &outfile1 );
+    let out2 = temp.join( &outfile2 );
+
+    assert!( Command::new("ffmpeg")
+        .arg("-loglevel")
+        .arg("error")
+        .arg("-i")
+        .arg(&path)
+        .arg("-y")
+        .arg("-c:a")
+        .arg("flac")
+        .arg(&out1)
+        .stdout(Stdio::null())
+        .spawn().unwrap()
+        .wait().unwrap().success() );
+
+    assert!( Command::new("ffmpeg")
+        .arg("-loglevel")
+        .arg("error")
+        .arg("-i")
+        .arg(&path)
+        .arg("-y")
+        .arg("-c:a")
+        .arg("libopus")
+        .arg("-b:a")
+        .arg("256k")
+        .arg("-frame_duration")
+        .arg("40")
+        .arg("-ar")
+        .arg("48000")
+        .arg(&out2)
+        .stdout(Stdio::null())
+        .spawn().unwrap()
+        .wait().unwrap().success() );
+
+    let data1 = BufferData::from_path( &outfile1 ).unwrap();
+    let data2 = BufferData::from_path( &outfile2 ).unwrap();
+    assert_eq!( data1.data.len(), data2.data.len() );
+
+    let mut err = 0.0;
+    for (sa, sb) in data1.data.iter().zip( data2.data.iter() ) {
+        err += (sa-sb).powf(2.0);
     }
+    err /= (data1.data.len() + data2.data.len()) as f32;
+
+    assert!( err < 1e-3 );
 }
 */
