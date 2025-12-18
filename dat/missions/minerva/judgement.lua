@@ -603,13 +603,13 @@ Eventually when all argumentation is exhausted the different representatives rep
    vn.na(_([[You can see the judge and House representatives shift around uncomfortably.]]))
    kex(_([["Well, it all ends here!"]]))
    vn.func( function () kex.shader = love_shaders.aura() end )
-   vn.sfx( love_audio.newSource( "snd/sounds/activate3" ) ) -- activation sound
+   vn.sfx( love_audio.newSoundData( "snd/sounds/activate3" ) ) -- activation sound
    kex(_([[Kex's eyes glow red and you hear the activation sound of some sort of weapon.]]))
    vn.func( function () kex.shader = nil end )
    vn.disappear( kex, "slideup" )
-   vn.sfx( love_audio.newSource( "snd/sounds/crowdpanic01" ) ) -- some yelling
+   vn.sfx( love_audio.newSoundData( "snd/sounds/crowdpanic01" ) ) -- some yelling
    vn.na(_([[As people start scrambling and yelling, you hear a shot and Kex falls down as chaos unfolds.]]))
-   vn.sfx( love_audio.newSource( "snd/sounds/autocannon" ) ) -- autocannon
+   vn.sfx( love_audio.newSoundData( "snd/sounds/autocannon" ) ) -- autocannon
    vn.na(_([[You hear shots being fired left and right as you duck for cover. The Judge's levitating desk crashes in the background creating a small explosion as things take a turn for the worst.]]))
    vn.menu{
       {_([[Go for the door.]]),"06_getout"},

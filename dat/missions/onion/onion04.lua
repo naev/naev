@@ -202,7 +202,7 @@ function land ()
       vn.label("01_alarm_early")
       vn.disappear( {l337, trixie}, "electric" )
       vn.label("01_alarm")
-      vn.sfx( audio.newSource( 'snd/sounds/loops/alarm' ) ) -- Just one loop
+      vn.sfx( audio.newSoundData( 'snd/sounds/loops/alarm' ) ) -- Just one loop
       vn.na(_([[You open the command console and trigger the ship's emergency alarm system. The alarm system, designed for long-range planetary signalling, seems to be amplified and echoed by the spacedock structure, resulting in an onslaught of audible chaos. Everyone in the spacedock turns towards your ship: it looks like you got the attention of the entire floor.]]))
       vn.func( function () badthing = "alarm" end )
       vn.jump("01_cont")
