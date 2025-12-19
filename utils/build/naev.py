@@ -7,6 +7,8 @@
 # Valgrind Client Usage:
 #   1. Start the Valgrind server in Terminal A: ./naev_valgrind.py
 #   2. Run this script in Terminal B:         WITHVALGRIND=true ./naev.py
+#   3. When you are done, you can kill the Valgrind server in Terminal A with Ctrl+C
+#      Or you can type `kill` and then `quit` in the debugger in Terminal B.
 #
 # Environment Variables:
 #   WITHDEBUGGER=false  Disable launching debuggers (default: true).
@@ -90,6 +92,7 @@ def wrapper(*args: str) -> int:
 
    if WITHVALGRIND:
        if debugger == "gdb":
+           vgdb_prefix = os.path.join(build_root, ".vgdb-pipe")
            if not shutil.which("vgdb"):
                logger.error("Error: 'vgdb' utility not found. It is usually part of the valgrind package.")
                return 1
@@ -98,7 +101,7 @@ def wrapper(*args: str) -> int:
               "gdb",
               "--nx",
               "-x", os.path.join(build_root, ".gdbinit"),
-              "-ex", "target remote | vgdb",
+              "-ex", f"target remote | vgdb --vgdb-prefix={vgdb_prefix}",
               "-ex", "continue",
               "--args",
            ] + list(args)

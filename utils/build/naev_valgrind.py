@@ -68,6 +68,9 @@ def wrapper(*args):
 
    logger.info("Waiting for GDB connection via vgdb...")
 
+   # Define an isolated pipe prefix in the build directory to ensure client/server find each other.
+   vgdb_prefix = os.path.join(build_root, ".vgdb-pipe")
+
    valgrind_command = [
       "valgrind",
       "--leak-check=full",
@@ -77,7 +80,8 @@ def wrapper(*args):
       "--error-limit=no",
       "--vex-guest-max-insns=25", # Workaround for temporary storage exhaustion
       "--vgdb=yes",
-      "--vgdb-error=0"
+      "--vgdb-error=0",
+      f"--vgdb-prefix={vgdb_prefix}"
    ]
 
    if VG_TRACE_CHILDREN:
