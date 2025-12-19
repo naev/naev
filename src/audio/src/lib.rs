@@ -45,6 +45,12 @@ use tracing_mutex::stdsync::{Mutex, RwLock};
 use utils::atomicfloat::AtomicF32;
 use utils::{binary_search_by_key_ref, sort_by_key_ref};
 
+// TODO stuff for parity with original sound
+// 1. Implement the sound_playPos checks to use sensor info
+// 2. Implement 100 ms fade-out for groups when stopping them
+// 3. Support for other sound orientations (for accessibility)
+// 4. Have sound absorption affect everything (unnecessary?)
+
 /// OpenAL soft doesn't distinguish between mono and stereo
 const MAX_SOURCES: usize = 512;
 /// Priority sources
@@ -1819,6 +1825,7 @@ impl System {
         let ori = [0.0, 1.0, 0.0, 0.0, 0.0, 1.0];
         unsafe {
             alListenerfv(AL_ORIENTATION, ori.as_ptr());
+            alListenerf(AL_METERS_PER_UNIT, 5.0);
         }
 
         Ok(System {
@@ -3054,6 +3061,25 @@ pub extern "C" fn sound_playPos(
     if (pos - *AUDIO.listener_pos.read().unwrap()).norm_squared() > MAX_DISTANCE * MAX_DISTANCE {
         return std::ptr::null();
     }
+    // Original C code. TODO port or something?
+    /*
+    target = cam_getTarget();
+
+    /* Following a pilot. */
+    p = pilot_get( target );
+    if ( target && ( p != NULL ) ) {
+       if ( !pilot_inRange( p, px, py ) )
+          return 0;
+    }
+    /* Set to a position. */
+    else {
+       double dist;
+       cam_getPos( &cx, &cy );
+       dist = pow2( px - cx ) + pow2( py - cy );
+       if ( dist > pilot_sensorRange() )
+          return 0;
+    }
+    */
 
     let sound = unsafe {
         Arc::increment_strong_count(sound);

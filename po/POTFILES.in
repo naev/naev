@@ -4181,7 +4181,6 @@ src/shipstats.c
 src/shipstats.h
 src/slots.h
 src/slots.rs
-src/sound.c
 src/sound.h
 src/space.c
 src/space.h

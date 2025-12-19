@@ -12,6 +12,9 @@
 
 #include "nlua_spfx.h"
 
+// NOTE THIS IS IMPLEMENTED IN spfx.rs AND ONLY USED TO GENERATE DOCUMENTATION
+// FOR NOW
+
 #include "array.h"
 #include "camera.h"
 #include "debris.h"
