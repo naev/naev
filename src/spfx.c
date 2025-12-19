@@ -768,7 +768,8 @@ void spfx_update_trails( double dt )
       Trail_spfx *trail = trail_spfx_stack[i];
       if ( !trail->refcount && !trail_size( trail ) ) {
          spfx_trail_free( trail );
-         array_erase( &trail_spfx_stack, trail, trail + 1 );
+         array_erase( &trail_spfx_stack, &trail_spfx_stack[i],
+                      &trail_spfx_stack[i + 1] );
       } else {
          spfx_trail_update( trail, dt );
       }
