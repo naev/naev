@@ -764,16 +764,15 @@ Trail_spfx *spfx_trail_create( const TrailSpec *spec )
 void spfx_update_trails( double dt )
 {
    int n = array_size( trail_spfx_stack );
-   for ( int i = 0; i < n; i++ ) {
+   for ( int i = n - 1; i >= 0; i-- ) {
       Trail_spfx *trail = trail_spfx_stack[i];
-      spfx_trail_update( trail, dt );
       if ( !trail->refcount && !trail_size( trail ) ) {
          spfx_trail_free( trail );
-         trail_spfx_stack[i--] = trail_spfx_stack[--n];
+         array_erase( &trail_spfx_stack, trail, trail + 1 );
+      } else {
+         spfx_trail_update( trail, dt );
       }
    }
-   if ( n < array_size( trail_spfx_stack ) )
-      array_resize( &trail_spfx_stack, n );
 }
 
 /**
@@ -824,11 +823,10 @@ static void spfx_trail_update( Trail_spfx *trail, double dt )
 void spfx_trail_sample( Trail_spfx *trail, double x, double y, double z,
                         double dx, double dy, TrailMode mode, int force )
 {
-   TrailPoint p;
-
    if ( !force && trail->spec->style[mode].col.a <= 0. )
       return;
 
+   TrailPoint p;
    p.x    = x;
    p.y    = y;
    p.z    = z;
