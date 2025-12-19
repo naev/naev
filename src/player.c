@@ -938,6 +938,7 @@ static void player_initSound( void )
    /* Allocate channels. */
    player_engine_group =
       sound_createGroup( 1 ); /* Channel for engine noises. */
+   sound_ingameGroup( player_engine_group );
    player_gui_group   = sound_createGroup( 4 );
    player_hyper_group = sound_createGroup( 4 );
    sound_speedGroup( player_gui_group, 0 ); /* Disable pitch shift. */

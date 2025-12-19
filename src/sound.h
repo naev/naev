@@ -112,6 +112,7 @@ void                 sound_resumeGroup( const Group *group );
 void                 sound_speedGroup( const Group *group, int enable );
 void                 sound_volumeGroup( const Group *group, double volume );
 void                 sound_pitchGroup( const Group *group, double pitch );
+void                 sound_ingameGroup( const Group *group );
 
 /*
  * Environmental functions.

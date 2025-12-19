@@ -1205,6 +1205,7 @@ pub struct AudioBuilder {
     volume: f32,
     data: Option<AudioData>,
     path: Option<String>,
+    ingame: bool,
     play: bool,
     looping: bool,
     groupid: Option<GroupRef>,
@@ -1222,6 +1223,7 @@ impl AudioBuilder {
             path: None,
             play: false,
             looping: false,
+            ingame: false,
             groupid: None,
             group_volume: 1.0,
             group_pitch: Some(1.0),
@@ -1264,6 +1266,11 @@ impl AudioBuilder {
 
     pub fn looping(mut self, looping: bool) -> Self {
         self.looping = looping;
+        self
+    }
+
+    pub fn ingame(mut self, ingame: bool) -> Self {
+        self.ingame = ingame;
         self
     }
 
@@ -1341,6 +1348,9 @@ impl AudioBuilder {
             //if !stereo {
             audio.set_relative(true);
         }
+        if self.ingame {
+            audio.set_ingame();
+        }
         audio.set_pitch(1.0);
         audio.set_volume(self.volume);
         if looping {
@@ -1368,6 +1378,7 @@ struct Group {
     volume: f32,
     pitch: f32,
     speed_affects: bool,
+    ingame: bool,
     voices: Vec<AudioRef>,
 }
 impl Group {
@@ -1377,6 +1388,7 @@ impl Group {
             volume: 1.0,
             pitch: 1.0,
             speed_affects: true,
+            ingame: false,
             voices: Vec::new(),
         }
     }
@@ -1389,7 +1401,7 @@ impl GroupRef {
     }
 
     pub fn play_buffer(&self, buf: &Arc<Buffer>, looping: bool) -> Option<AudioRef> {
-        let (g_volume, g_pitch) = {
+        let (g_volume, g_pitch, ingame) = {
             let groups = AUDIO.groups.lock().unwrap();
             let group = match groups.get(self.0) {
                 Some(group) => group,
@@ -1402,12 +1414,17 @@ impl GroupRef {
             if group.voices.len() >= group.max {
                 return None;
             }
-            (group.volume, group.speed_affects.then_some(group.pitch))
+            (
+                group.volume,
+                group.speed_affects.then_some(group.pitch),
+                group.ingame,
+            )
         };
 
         match AudioBuilder::new(AudioType::Static)
             .buffer(buf.clone())
             .play(true)
+            .ingame(ingame)
             .looping(looping)
             .group_id(Some(*self))
             .group_volume(g_volume)
@@ -1479,6 +1496,22 @@ impl GroupRef {
             && sfx.source.inner.get_parameter_i32(AL_SOURCE_STATE) == AL_PAUSED
         {
             sfx.source.inner.play();
+        }
+        Ok(())
+    }
+
+    pub fn set_ingame(&self) -> Result<()> {
+        let mut groups = AUDIO.groups.lock().unwrap();
+        let group = match groups.get_mut(self.0) {
+            Some(group) => group,
+            None => anyhow::bail!("Group not found"),
+        };
+        group.ingame = true;
+        let mut voices = AUDIO.voices.lock().unwrap();
+        for v in group.voices.iter() {
+            if let Some(voice) = voices.get_mut(v.0) {
+                voice.set_ingame();
+            }
         }
         Ok(())
     }
@@ -2516,6 +2549,21 @@ impl UserData for LuaAudioRef {
             Ok((vel.x, vel.y))
         });
         /*@
+         * @brief Sets a source to be "ingame" or affected by parameters like air absorption, game
+         * speed, etc.
+         *
+         *    @luatparam Audio source Source to set looping state of.
+         *    @luatparam boolean enable Whether or not the source should be set to
+         * looping.
+         * @luafunc setLooping
+         */
+        methods.add_method("setIngame", |_, this| -> mlua::Result<()> {
+            this.call_mut(|this| {
+                this.set_ingame();
+            })?;
+            Ok(())
+        });
+        /*@
          * @brief Sets a source to be looping or not.
          *
          *    @luatparam Audio source Source to set looping state of.
@@ -3194,6 +3242,14 @@ pub extern "C" fn sound_volumeGroup(group: *const c_void, volume: c_double) {
 pub extern "C" fn sound_pitchGroup(group: *const c_void, pitch: c_double) {
     let groupid = get_group!(group);
     if let Err(e) = groupid.set_pitch(pitch as f32) {
+        warn_err!(e);
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sound_ingameGroup(group: *const c_void) {
+    let groupid = get_group!(group);
+    if let Err(e) = groupid.set_ingame() {
         warn_err!(e);
     }
 }
