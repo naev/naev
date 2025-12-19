@@ -72,6 +72,10 @@ def get_debugger() -> Optional[str]:
 
 
 def wrapper(*args: str) -> int:
+   if not os.path.exists(os.path.join(source_root, "meson.py")):
+      logger.error(f"Error: meson.py not found at {source_root}. Check your source tree.")
+      return 1
+
    # Environment setup
    if debug_paranoid == "True":
       os.environ["ALSOFT_LOGLEVEL"] = "3"
@@ -86,6 +90,9 @@ def wrapper(*args: str) -> int:
 
    if WITHVALGRIND:
        if debugger == "gdb":
+           if not shutil.which("vgdb"):
+               logger.error("Error: 'vgdb' utility not found. It is usually part of the valgrind package.")
+               return 1
            logger.info("Valgrind Client Mode: Attaching to remote vgdb server...")
            cmd = [
               "gdb",

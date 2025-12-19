@@ -48,6 +48,10 @@ zip_overlay = "@zip_overlay@"
 MESON = [sys.executable, os.path.join(source_root, "meson.py")]
 
 def wrapper(*args):
+   if not os.path.exists(os.path.join(source_root, "meson.py")):
+      logger.error(f"Error: meson.py not found at {source_root}. Check your source tree.")
+      return
+
    if debug_paranoid == "True":
       os.environ["ALSOFT_LOGLEVEL"] = "3"
       os.environ["ALSOFT_TRAP_AL_ERROR"] = "1"
@@ -57,6 +61,11 @@ def wrapper(*args):
    os.environ["ASAN_OPTIONS"] = "halt_on_error=1"
 
    logger.info("Valgrind Server Mode enabled (10x-50x slower).")
+   
+   if not shutil.which("valgrind"):
+      logger.error("Error: valgrind is not installed or not in PATH.")
+      return
+
    logger.info("Waiting for GDB connection via vgdb...")
 
    valgrind_command = [
