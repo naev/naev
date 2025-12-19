@@ -13,6 +13,7 @@
 # Environment Variables:
 #   VG_TRACE_CHILDREN=true  Enable --trace-children=yes in Valgrind.
 #   VG_LOGFILE=filename     Specify a log file for Valgrind output.
+#   STANDALONE=true         Run Valgrind directly without a vgdb server/gdb.
 #
 # Automated Settings (Applied by script):
 #   ALSOFT_LOGLEVEL      Set to 2 (debug) or 3 (paranoid) to help with OpenAL debugging.
@@ -41,6 +42,7 @@ def env_bool(name: str, default: bool) -> bool:
 # Optional VG knobs
 VG_TRACE_CHILDREN = env_bool("VG_TRACE_CHILDREN", False)
 VG_LOGFILE = os.getenv("VG_LOGFILE", "")
+STANDALONE = env_bool("STANDALONE", False)
 
 source_root = "@source_root@"
 build_root = "@build_root@"
@@ -64,13 +66,14 @@ def wrapper(*args):
    os.environ["RUST_BACKTRACE"] = "1"
    os.environ["ASAN_OPTIONS"] = "halt_on_error=1"
 
-   logger.info("Valgrind Server Mode enabled (10x-50x slower).")
-
    if not shutil.which("valgrind"):
       logger.error("Error: valgrind is not installed or not in PATH.")
       return
 
-   logger.info("Waiting for GDB connection via vgdb...")
+   if STANDALONE:
+      logger.info("Valgrind Standalone Mode: Running game directly under Valgrind...")
+   else:
+      logger.info("Valgrind Server Mode: Waiting for GDB connection via vgdb...")
 
    # Define an isolated pipe prefix in the build directory to ensure client/server find each other.
    vgdb_prefix = os.path.join(build_root, ".vgdb-pipe")
@@ -83,10 +86,14 @@ def wrapper(*args):
       "--num-callers=100",
       "--error-limit=no",
       "--vex-guest-max-insns=25", # Workaround for temporary storage exhaustion
-      "--vgdb=yes",
-      "--vgdb-error=0",
-      f"--vgdb-prefix={vgdb_prefix}"
    ]
+
+   if not STANDALONE:
+      valgrind_command += [
+         "--vgdb=yes",
+         "--vgdb-error=0",
+         f"--vgdb-prefix={vgdb_prefix}"
+      ]
 
    if VG_TRACE_CHILDREN:
       valgrind_command += ["--trace-children=yes"]
@@ -95,15 +102,19 @@ def wrapper(*args):
 
    full_command = MESON + ["devenv", "-C", build_root] + valgrind_command + list(args)
 
-   # Ignore SIGINT in the parent so Valgrind handles it directly.
-   old_handler = signal.signal(signal.SIGINT, signal.SIG_IGN)
-
    try:
-      subprocess.Popen(full_command).wait()
+      p = subprocess.Popen(full_command)
+      p.wait()
+   except KeyboardInterrupt:
+      logger.info("\nCtrl+C detected, shutting down Valgrind...")
+      p.terminate()
+      try:
+         p.wait(timeout=5)
+      except subprocess.TimeoutExpired:
+         p.kill()
    except Exception as e:
       logger.error(f"Failed to execute Valgrind: {e}")
    finally:
-      signal.signal(signal.SIGINT, old_handler)
       if sys.platform != "win32":
          os.system("stty sane 2>/dev/null")
 
