@@ -620,6 +620,7 @@ naevcrs = rust.bindgen(
       output: '.gdbinit',
       configuration: {
          'source_root': meson.project_source_root(),
+         'build_root': meson.current_build_dir(),
       }
    )
 

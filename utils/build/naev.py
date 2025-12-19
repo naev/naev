@@ -15,6 +15,7 @@ logger = logging.getLogger(__name__)
 # Set WITHDEBUGGER=false to avoid using debuggers where it is a hindrance.
 PREFERLLDB = os.getenv("PREFERLLDB", "false")
 WITHDEBUGGER = os.getenv("WITHDEBUGGER", "true")
+WITHVALGRIND = os.getenv("WITHVALGRIND", "false")
 
 def get_debugger():
    preferred_debugger = "gdb"
@@ -53,12 +54,48 @@ def wrapper(*args):
    os.environ["ASAN_OPTIONS"] = "halt_on_error=1"
    debugger = get_debugger()
 
-   # Build debugger command
-   if debugger and "gdb" in debugger:
+   # Build command list
+   valgrind_process = None
+   if WITHVALGRIND == "true":
+      valgrind_args = [
+         "valgrind",
+         "--leak-check=full",
+         "--track-origins=yes",
+         "--num-callers=50",
+         "--error-limit=no"
+      ]
+      if debugger:
+         if "lldb" in debugger:
+            logger.warning("Valgrind and LLDB both enabled. Disabling LLDB (vgdb supports GDB).")
+            command = valgrind_args + list(args)
+         else:
+            logger.warning("Valgrind and GDB both enabled. Automating connection with vgdb.")
+            valgrind_args += ["--vgdb=yes", "--vgdb-error=0"]
+            valgrind_command = [sys.executable, os.path.join(source_root, "meson.py"), "devenv", "-C", build_root] + valgrind_args + list(args)
+            
+            # Use gdb with the appropriate connection command
+            command = [
+               debugger,
+               "--nx",
+               "-x", os.path.join(build_root, ".gdbinit"),
+               "-ex", "target remote | vgdb",
+               "-ex", "continue",
+               "--args"
+            ] + list(args)
+            
+            try:
+               valgrind_process = subprocess.Popen(valgrind_command)
+            except Exception as e:
+               logger.error(f"Failed to start Valgrind: {e}")
+               return
+      else:
+         command = valgrind_args + list(args)
+   elif debugger and "gdb" in debugger:
       command = [
          debugger,
          "--nx",
          "-x", os.path.join(build_root, ".gdbinit"),
+         "-ex", "run",
          "--args"
       ] + list(args)
    elif debugger and "lldb" in debugger:
@@ -70,11 +107,11 @@ def wrapper(*args):
    else:
       command = list(args)
 
-   command = [sys.executable, os.path.join(source_root, "meson.py"), "devenv", "-C", build_root] + command
+   full_command = [sys.executable, os.path.join(source_root, "meson.py"), "devenv", "-C", build_root] + command
 
    try:
       # Run the command
-      debugger_process = subprocess.Popen(command)
+      debugger_process = subprocess.Popen(full_command)
       # Wait for the process to complete
       debugger_process.wait()
    except KeyboardInterrupt:
@@ -82,6 +119,10 @@ def wrapper(*args):
       # Send interrupt signal to debugger process
       debugger_process.send_signal(signal.SIGINT)
       debugger_process.wait()
+   finally:
+      if valgrind_process:
+         valgrind_process.terminate()
+         valgrind_process.wait()
 
 subprocess.run([sys.executable, os.path.join(source_root, "meson.py"), "compile", "-C", build_root, "naev-gmo"])
 os.makedirs(os.path.join(build_root, "dat/gettext"), exist_ok=True)

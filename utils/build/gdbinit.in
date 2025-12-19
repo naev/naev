@@ -1,3 +1,5 @@
+add-auto-load-safe-path @source_root@
+add-auto-load-safe-path @build_root@
 set height 0
 # too spammy with image-rs 0.25.9 using dav1d-rs 0.11.1
 set print thread-events off
@@ -12,4 +14,3 @@ commands
 end
 echo .gdbinit: running naev with gdb wrapper\n
 source @source_root@/utils/build/luagdb.txt
-run
