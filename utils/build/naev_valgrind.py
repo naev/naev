@@ -15,7 +15,7 @@
 #   VG_LOGFILE=filename     Specify a log file for Valgrind output (default: build_root/naev_valgrind.log).
 #   WITHDEBUGGER=true       Enable Valgrind server mode (vgdb) for GDB attachment.
 #   VG_ERROR_LIMIT=N        Set --vgdb-error=N (default 0). Increase to stop SIGTRAP storms.
-#   VG_SUPPRESSIONS=file    Path to a Valgrind suppression (.supp) file (default: source_root/naev.supp).
+#   VG_SUPPRESSIONS=file    Path to a Valgrind suppression (.supp) file (default: source_root/utils/build/naev.supp).
 #   VG_ARGS="--flags"       Additional raw arguments to pass to Valgrind.
 #
 # Automated Settings (Applied by script):
@@ -47,8 +47,8 @@ VG_TRACE_CHILDREN = env_bool("VG_TRACE_CHILDREN", False)
 VG_LOGFILE = os.getenv("VG_LOGFILE", os.path.join(build_root, "naev_valgrind.log"))
 WITHDEBUGGER = env_bool("WITHDEBUGGER", False)
 VG_ERROR_LIMIT = os.getenv("VG_ERROR_LIMIT", "0")
-# Default suppressions to naev.supp in source root if it exists
-default_supp = os.path.join(source_root, "naev.supp")
+# Default suppressions to naev.supp in the script's directory if it exists
+default_supp = os.path.join(source_root, "utils", "build", "naev.supp")
 VG_SUPPRESSIONS = os.getenv("VG_SUPPRESSIONS", default_supp if os.path.exists(default_supp) else "")
 VG_ARGS = os.getenv("VG_ARGS", "")
 
