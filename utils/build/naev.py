@@ -5,7 +5,7 @@
 #   ./naev.py
 #
 # Valgrind Client Usage:
-#   1. Start the Valgrind server in Terminal A: ./naev_valgrind.py
+#   1. Start the Valgrind server in Terminal A: WITHDEBUGGER=true ./naev_valgrind.py
 #   2. Run this script in Terminal B:         WITHVALGRIND=true ./naev.py
 #   3. When you are done, you can kill the Valgrind server in Terminal A with Ctrl+C
 #      Or you can type `kill` and then `quit` in the debugger in Terminal B.

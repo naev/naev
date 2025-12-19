@@ -12,8 +12,11 @@
 #
 # Environment Variables:
 #   VG_TRACE_CHILDREN=true  Enable --trace-children=yes in Valgrind.
-#   VG_LOGFILE=filename     Specify a log file for Valgrind output.
-#   STANDALONE=true         Run Valgrind directly without a vgdb server/gdb.
+#   VG_LOGFILE=filename     Specify a log file for Valgrind output (default: build_root/naev_valgrind.log).
+#   WITHDEBUGGER=true       Enable Valgrind server mode (vgdb) for GDB attachment.
+#   VG_ERROR_LIMIT=N        Set --vgdb-error=N (default 0). Increase to stop SIGTRAP storms.
+#   VG_SUPPRESSIONS=file    Path to a Valgrind suppression (.supp) file (default: source_root/naev.supp).
+#   VG_ARGS="--flags"       Additional raw arguments to pass to Valgrind.
 #
 # Automated Settings (Applied by script):
 #   ALSOFT_LOGLEVEL      Set to 2 (debug) or 3 (paranoid) to help with OpenAL debugging.
@@ -41,8 +44,13 @@ def env_bool(name: str, default: bool) -> bool:
 
 # Optional VG knobs
 VG_TRACE_CHILDREN = env_bool("VG_TRACE_CHILDREN", False)
-VG_LOGFILE = os.getenv("VG_LOGFILE", "")
-STANDALONE = env_bool("STANDALONE", False)
+VG_LOGFILE = os.getenv("VG_LOGFILE", os.path.join(build_root, "naev_valgrind.log"))
+WITHDEBUGGER = env_bool("WITHDEBUGGER", False)
+VG_ERROR_LIMIT = os.getenv("VG_ERROR_LIMIT", "0")
+# Default suppressions to naev.supp in source root if it exists
+default_supp = os.path.join(source_root, "naev.supp")
+VG_SUPPRESSIONS = os.getenv("VG_SUPPRESSIONS", default_supp if os.path.exists(default_supp) else "")
+VG_ARGS = os.getenv("VG_ARGS", "")
 
 source_root = "@source_root@"
 build_root = "@build_root@"
@@ -70,7 +78,7 @@ def wrapper(*args):
       logger.error("Error: valgrind is not installed or not in PATH.")
       return
 
-   if STANDALONE:
+   if not WITHDEBUGGER:
       logger.info("Valgrind Standalone Mode: Running game directly under Valgrind...")
    else:
       logger.info("Valgrind Server Mode: Waiting for GDB connection via vgdb...")
@@ -88,12 +96,19 @@ def wrapper(*args):
       "--vex-guest-max-insns=25", # Workaround for temporary storage exhaustion
    ]
 
-   if not STANDALONE:
+   if WITHDEBUGGER:
       valgrind_command += [
          "--vgdb=yes",
-         "--vgdb-error=0",
+         f"--vgdb-error={VG_ERROR_LIMIT}",
          f"--vgdb-prefix={vgdb_prefix}"
       ]
+
+   if VG_SUPPRESSIONS:
+      valgrind_command += [f"--suppressions={VG_SUPPRESSIONS}"]
+
+   if VG_ARGS:
+      import shlex
+      valgrind_command += shlex.split(VG_ARGS)
 
    if VG_TRACE_CHILDREN:
       valgrind_command += ["--trace-children=yes"]

@@ -1,0 +1,11 @@
+# Naev Valgrind Suppression File
+# This file is used to ignore common memory errors and leaks that are either 
+# known false positives or in third-party libraries.
+#
+# Format:
+# {
+#    <suppression_name>
+#    Memcheck:Leak
+#    ...
+#    obj:/usr/lib/libexample.so
+# }
