@@ -87,10 +87,17 @@ def wrapper(*args):
 
    full_command = MESON + ["devenv", "-C", build_root] + valgrind_command + list(args)
 
+   # Ignore SIGINT in the parent so Valgrind handles it directly.
+   old_handler = signal.signal(signal.SIGINT, signal.SIG_IGN)
+
    try:
-      subprocess.run(full_command)
-   except KeyboardInterrupt:
-      pass
+      subprocess.Popen(full_command).wait()
+   except Exception as e:
+      logger.error(f"Failed to execute Valgrind: {e}")
+   finally:
+      signal.signal(signal.SIGINT, old_handler)
+      if sys.platform != "win32":
+         os.system("stty sane 2>/dev/null")
 
 # Build steps
 subprocess.run(MESON + ["compile", "-C", build_root, "naev-gmo"], check=False)
