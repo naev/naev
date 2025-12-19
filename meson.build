@@ -614,6 +614,7 @@ naevcrs = rust.bindgen(
          'build_root': meson.current_build_dir(),
          'source_root': meson.project_source_root(),
          'naev_bin' : naev_bin.full_path(),
+         'naev_supp' : meson.project_source_root() / 'utils/build/naev.supp',
          'zip_overlay' : zip_overlay.full_path(),
          'debug' : debug,
          'debug_paranoid' : paranoid,
