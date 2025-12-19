@@ -65,7 +65,7 @@ def wrapper(*args):
    os.environ["ASAN_OPTIONS"] = "halt_on_error=1"
 
    logger.info("Valgrind Server Mode enabled (10x-50x slower).")
-   
+
    if not shutil.which("valgrind"):
       logger.error("Error: valgrind is not installed or not in PATH.")
       return

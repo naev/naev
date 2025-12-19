@@ -95,39 +95,39 @@ def wrapper(*args: str) -> int:
    debugger = get_debugger()
 
    if WITHVALGRIND:
-       if debugger == "gdb":
-           vgdb_prefix = os.path.join(build_root, ".vgdb-pipe")
-           if not shutil.which("vgdb"):
-               logger.error("Error: 'vgdb' utility not found. It is usually part of the valgrind package.")
-               return 1
-           logger.info("Valgrind Client Mode: Attaching to remote vgdb server...")
-           cmd = [
-              "gdb",
-              "--nx",
-              "-x", os.path.join(build_root, ".gdbinit"),
-              "-ex", f"target remote | vgdb --vgdb-prefix={vgdb_prefix}",
-              "-ex", "continue",
-              "--args",
-           ] + list(args)
-       else:
-           logger.error("Valgrind Client Mode requires GDB. LLDB does not support vgdb.")
-           return 1
+      if debugger == "gdb":
+         vgdb_prefix = os.path.join(build_root, ".vgdb-pipe")
+         if not shutil.which("vgdb"):
+            logger.error("Error: 'vgdb' utility not found. It is usually part of the valgrind package.")
+            return 1
+         logger.info("Valgrind Client Mode: Attaching to remote vgdb server...")
+         cmd = [
+            "gdb",
+            "--nx",
+            "-x", os.path.join(build_root, ".gdbinit"),
+            "-ex", f"target remote | vgdb --vgdb-prefix={vgdb_prefix}",
+            "-ex", "continue",
+            "--args",
+         ] + list(args)
+      else:
+         logger.error("Valgrind Client Mode requires GDB. LLDB does not support vgdb.")
+         return 1
    elif debugger == "gdb":
-       cmd = [
-          "gdb",
-          "--nx",
-          "-x", os.path.join(build_root, ".gdbinit"),
-          "-ex", "run",
-          "--args",
-       ] + list(args)
+      cmd = [
+         "gdb",
+         "--nx",
+         "-x", os.path.join(build_root, ".gdbinit"),
+         "-ex", "run",
+         "--args",
+      ] + list(args)
    elif debugger == "lldb":
-       cmd = [
-          "lldb",
-          "--one-line", f"command script import {os.path.join(build_root, 'lldbinit.py')}",
-          "--",
-       ] + list(args)
+      cmd = [
+         "lldb",
+         "--one-line", f"command script import {os.path.join(build_root, 'lldbinit.py')}",
+         "--",
+      ] + list(args)
    else:
-       cmd = list(args)
+      cmd = list(args)
 
    full_command = MESON + ["devenv", "-C", build_root] + cmd
 
