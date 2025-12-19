@@ -1803,7 +1803,13 @@ impl System {
             // LuaStatic won't get cleaned up if stopped
             let comp = AudioStatic::new(&Some(AudioData::Buffer(data)), al::Source::new()?)?;
             // Should loop infinitely
-            comp.source.inner.parameter_i32(AL_LOOPING, AL_TRUE.into());
+            let als = &comp.source.inner;
+            als.parameter_i32(AL_LOOPING, AL_TRUE.into());
+            if comp.stereo {
+                als.parameter_i32(AL_DIRECT_CHANNELS_SOFT, AL_REMIX_UNMATCHED_SOFT);
+            } else {
+                als.parameter_i32(AL_SOURCE_RELATIVE, AL_TRUE.into());
+            }
             Ok(comp)
         }
         let compression = load_compression().ok();
@@ -2557,7 +2563,7 @@ impl UserData for LuaAudioRef {
          * looping.
          * @luafunc setLooping
          */
-        methods.add_method("setIngame", |_, this| -> mlua::Result<()> {
+        methods.add_method("setIngame", |_, this, ()| -> mlua::Result<()> {
             this.call_mut(|this| {
                 this.set_ingame();
             })?;
