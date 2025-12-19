@@ -607,6 +607,19 @@ naevcrs = rust.bindgen(
       }
    )
 
+   naev_valgrind_py = configure_file(
+      input: join_paths('utils','build','naev_valgrind.py'),
+      output: 'naev_valgrind.py',
+      configuration: {
+         'build_root': meson.current_build_dir(),
+         'source_root': meson.project_source_root(),
+         'naev_bin' : naev_bin.full_path(),
+         'zip_overlay' : zip_overlay.full_path(),
+         'debug' : debug,
+         'debug_paranoid' : paranoid,
+      }
+   )
+
    #pluginmgr_cli_py = configure_file(
    #   input: join_paths('utils','build','pluginmgr-cli.py'),
    #   output: 'pluginmgr-cli.py',

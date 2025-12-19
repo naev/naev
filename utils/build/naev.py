@@ -1,40 +1,48 @@
 #!/usr/bin/env python3
+# Helper script to run Naev with a debugger (GDB/LLDB) or as a Valgrind client.
+#
+# Standard Usage:
+#   ./naev.py
+#
+# Valgrind Client Usage:
+#   1. Start the Valgrind server in Terminal A: ./naev_valgrind.py
+#   2. Run this script in Terminal B:         WITHVALGRIND=true ./naev.py
+#
+# Environment Variables:
+#   WITHDEBUGGER=false  Disable launching debuggers (default: true).
+#   PREFERLLDB=true      Use LLDB instead of GDB if both are available.
+#   WITHVALGRIND=true    Enable Valgrind client mode (attaches to server).
+#
+# Automated Settings (Applied by script):
+#   ALSOFT_LOGLEVEL      Set to 2 (debug) or 3 (paranoid) to help with OpenAL debugging.
+#   ALSOFT_TRAP_AL_ERROR Set to 1 (paranoid only) to catch OpenAL errors immediately.
+#   RUST_BACKTRACE       Always set to 1 to provide detailed Rust error reports.
+#   ASAN_OPTIONS         Always set to halt_on_error=1 for precise memory checking.
+
 import os
 import signal
 import subprocess
 import shutil
 import sys
 import logging
+import time
+from typing import Optional, List
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Prefers GDB over LLDB if both are installed, you can choose your preference
-# by exporting PREFERLLDB=true
-# Set WITHDEBUGGER=false to avoid using debuggers where it is a hindrance.
-PREFERLLDB = os.getenv("PREFERLLDB", "false")
-WITHDEBUGGER = os.getenv("WITHDEBUGGER", "true")
-WITHVALGRIND = os.getenv("WITHVALGRIND", "false")
+def env_bool(name: str, default: bool) -> bool:
+   v = os.getenv(name)
+   if v is None:
+      return default
+   v = v.strip().lower()
+   return v in ("1", "true", "yes", "y", "on")
 
-def get_debugger():
-   preferred_debugger = "gdb"
-
-   if WITHDEBUGGER == "false":
-      logger.info("Debugging disabled.")
-      return
-
-   if PREFERLLDB == "true":
-      preferred_debugger = "lldb"
-
-   if shutil.which(preferred_debugger):
-      return preferred_debugger
-   elif shutil.which("lldb"):
-      return "lldb"
-   elif shutil.which("gdb"):
-      return "gdb"
-   else:
-      logger.error("Error: Neither lldb nor gdb is installed. Debugging disabled.")
+# User-config knobs
+PREFERLLDB   = env_bool("PREFERLLDB", False)
+WITHDEBUGGER = env_bool("WITHDEBUGGER", True)
+WITHVALGRIND = env_bool("WITHVALGRIND", False)
 
 source_root = "@source_root@"
 build_root = "@build_root@"
@@ -43,97 +51,104 @@ debug = "@debug@"
 naev_bin = "@naev_bin@"
 zip_overlay = "@zip_overlay@"
 
-def wrapper(*args):
+MESON = [sys.executable, os.path.join(source_root, "meson.py")]
+
+# Build debugger command
+def get_debugger() -> Optional[str]:
+   if not WITHDEBUGGER:
+      logger.info("Debugging disabled (WITHDEBUGGER=false).")
+      return None
+
+   preferred = "lldb" if PREFERLLDB else "gdb"
+   if shutil.which(preferred):
+      return preferred
+   if shutil.which("gdb"):
+      return "gdb"
+   if shutil.which("lldb"):
+      return "lldb"
+
+   logger.warning("Neither gdb nor lldb found; running without debugger.")
+   return None
+
+
+def wrapper(*args: str) -> int:
+   # Environment setup
    if debug_paranoid == "True":
       os.environ["ALSOFT_LOGLEVEL"] = "3"
       os.environ["ALSOFT_TRAP_AL_ERROR"] = "1"
    elif debug == "True":
       os.environ["ALSOFT_LOGLEVEL"] = "2"
-   os.environ["RUST_BACKTRACE"] = "1"
 
+   os.environ["RUST_BACKTRACE"] = "1"
    os.environ["ASAN_OPTIONS"] = "halt_on_error=1"
+
    debugger = get_debugger()
 
-   # Build command list
-   valgrind_process = None
-   if WITHVALGRIND == "true":
-      valgrind_args = [
-         "valgrind",
-         "--leak-check=full",
-         "--track-origins=yes",
-         "--num-callers=50",
-         "--error-limit=no"
-      ]
-      if debugger:
-         if "lldb" in debugger:
-            logger.warning("Valgrind and LLDB both enabled. Disabling LLDB (vgdb supports GDB).")
-            command = valgrind_args + list(args)
-         else:
-            logger.warning("Valgrind and GDB both enabled. Automating connection with vgdb.")
-            valgrind_args += ["--vgdb=yes", "--vgdb-error=0"]
-            valgrind_command = [sys.executable, os.path.join(source_root, "meson.py"), "devenv", "-C", build_root] + valgrind_args + list(args)
-            
-            # Use gdb with the appropriate connection command
-            command = [
-               debugger,
-               "--nx",
-               "-x", os.path.join(build_root, ".gdbinit"),
-               "-ex", "target remote | vgdb",
-               "-ex", "continue",
-               "--args"
-            ] + list(args)
-            
-            try:
-               valgrind_process = subprocess.Popen(valgrind_command)
-            except Exception as e:
-               logger.error(f"Failed to start Valgrind: {e}")
-               return
-      else:
-         command = valgrind_args + list(args)
-   elif debugger and "gdb" in debugger:
-      command = [
-         debugger,
-         "--nx",
-         "-x", os.path.join(build_root, ".gdbinit"),
-         "-ex", "run",
-         "--args"
-      ] + list(args)
-   elif debugger and "lldb" in debugger:
-      command = [
-         debugger,
-         "--one-line", f"command script import {os.path.join(build_root, 'lldbinit.py')}",
-         "--"
-      ] + list(args)
+   if WITHVALGRIND:
+       if debugger == "gdb":
+           logger.info("Valgrind Client Mode: Attaching to remote vgdb server...")
+           cmd = [
+              "gdb",
+              "--nx",
+              "-x", os.path.join(build_root, ".gdbinit"),
+              "-ex", "target remote | vgdb",
+              "-ex", "continue",
+              "--args",
+           ] + list(args)
+       else:
+           logger.error("Valgrind Client Mode requires GDB. LLDB does not support vgdb.")
+           return 1
+   elif debugger == "gdb":
+       cmd = [
+          "gdb",
+          "--nx",
+          "-x", os.path.join(build_root, ".gdbinit"),
+          "-ex", "run",
+          "--args",
+       ] + list(args)
+   elif debugger == "lldb":
+       cmd = [
+          "lldb",
+          "--one-line", f"command script import {os.path.join(build_root, 'lldbinit.py')}",
+          "--",
+       ] + list(args)
    else:
-      command = list(args)
+       cmd = list(args)
 
-   full_command = [sys.executable, os.path.join(source_root, "meson.py"), "devenv", "-C", build_root] + command
+   full_command = MESON + ["devenv", "-C", build_root] + cmd
 
    try:
       # Run the command
-      debugger_process = subprocess.Popen(full_command)
+      p = subprocess.Popen(full_command)
       # Wait for the process to complete
-      debugger_process.wait()
+      return p.wait()
    except KeyboardInterrupt:
       print("Interrupted by user (Ctrl+C)")
       # Send interrupt signal to debugger process
-      debugger_process.send_signal(signal.SIGINT)
-      debugger_process.wait()
-   finally:
-      if valgrind_process:
-         valgrind_process.terminate()
-         valgrind_process.wait()
-
-subprocess.run([sys.executable, os.path.join(source_root, "meson.py"), "compile", "-C", build_root, "naev-gmo"])
-os.makedirs(os.path.join(build_root, "dat/gettext"), exist_ok=True)
+      p.send_signal(signal.SIGINT)
+      return p.wait()
 
 # Meson >= 0.60
-for mo_path in os.listdir(os.path.join(build_root, "po")):
-   mo_path = os.path.join(build_root, "po", mo_path)
-   if os.path.isdir(mo_path):
-      mo_name = os.path.basename(mo_path)
-      dest_dir = os.path.join(build_root, "dat/gettext", mo_name)
-      shutil.copytree(mo_path, dest_dir, dirs_exist_ok=True)
-      logger.info(f"Copied directory {mo_path} to {dest_dir}")
+if not WITHVALGRIND:
+   subprocess.run(MESON + ["compile", "-C", build_root, "naev-gmo"], check=False)
+   os.makedirs(os.path.join(build_root, "dat/gettext"), exist_ok=True)
+   po_root = os.path.join(build_root, "po")
+   if os.path.isdir(po_root):
+      for mo_name in os.listdir(po_root):
+         mo_path = os.path.join(po_root, mo_name)
+         if os.path.isdir(mo_path):
+            dest_dir = os.path.join(build_root, "dat/gettext", mo_name)
+            shutil.copytree(mo_path, dest_dir, dirs_exist_ok=True)
+            logger.info("Copied directory %s -> %s", mo_path, dest_dir)
 
-wrapper(naev_bin, "-d", zip_overlay, "-d", os.path.join(source_root, "dat"), "-d", os.path.join(source_root, "assets"), "-d", os.path.join(build_root, "dat"), "-d", source_root, *sys.argv[1:])
+# Run target
+rc = wrapper(
+   naev_bin,
+   "-d", zip_overlay,
+   "-d", os.path.join(source_root, "dat"),
+   "-d", os.path.join(source_root, "assets"),
+   "-d", os.path.join(build_root, "dat"),
+   "-d", source_root,
+   *sys.argv[1:],
+)
+raise SystemExit(rc)
