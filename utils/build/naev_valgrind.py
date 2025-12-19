@@ -6,6 +6,10 @@
 #   2. Attach the debugger in Terminal B:     WITHVALGRIND=true ./naev.py
 #      (Alternatively, use 'vgdb' or 'gdb' directly as instructed by this script).
 #
+#   Pro-tip: To see game stdout in the debugger terminal, run `tty` in that
+#            terminal to get its device path (e.g. /dev/pts/1), then start
+#            this server with: ./naev_valgrind.py > /dev/pts/1 2>&1
+#
 # Environment Variables:
 #   VG_TRACE_CHILDREN=true  Enable --trace-children=yes in Valgrind.
 #   VG_LOGFILE=filename     Specify a log file for Valgrind output.

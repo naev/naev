@@ -10,6 +10,10 @@
 #   3. When you are done, you can kill the Valgrind server in Terminal A with Ctrl+C
 #      Or you can type `kill` and then `quit` in the debugger in Terminal B.
 #
+#   Pro-tip: To see game stdout in Terminal B (debugger), run `tty` in B to get
+#            your TTY (e.g. /dev/pts/1), then start the server in A with:
+#            ./naev_valgrind.py > /dev/pts/1 2>&1
+#
 # Environment Variables:
 #   WITHDEBUGGER=false  Disable launching debuggers (default: true).
 #   PREFERLLDB=true      Use LLDB instead of GDB if both are available.
