@@ -9,3 +9,15 @@
 #    ...
 #    obj:/usr/lib/libexample.so
 # }
+{
+   Suppress uninitialized conditional jumps
+   Memcheck:Cond
+   fun:*
+}
+
+{
+   Suppress realloc with size 0 warnings
+   Memcheck:ReallocZero
+   fun:realloc
+   obj:*
+}

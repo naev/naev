@@ -14,8 +14,7 @@
 #   VG_TRACE_CHILDREN=true  Enable --trace-children=yes in Valgrind.
 #   VG_LOGFILE=filename     Specify a log file for Valgrind output (default: build_root/naev_valgrind.log).
 #   WITHDEBUGGER=true       Enable Valgrind server mode (vgdb) for GDB attachment.
-#   VG_ERROR_LIMIT=N        Set --vgdb-error=N (default 0). Increase to stop SIGTRAP storms.
-#   VG_SUPPRESSIONS=file    Path to a Valgrind suppression (.supp) file (default: source_root/utils/build/naev.supp).
+#   VG_SUPPRESSIONS=file    Path to a Valgrind suppression (.supp) file (default: @naev_supp@).
 #   VG_ARGS="--flags"       Additional raw arguments to pass to Valgrind.
 #
 # Automated Settings (Applied by script):
@@ -25,7 +24,6 @@
 #   ASAN_OPTIONS         Always set to halt_on_error=1 for precise memory checking.
 
 import os
-import signal
 import subprocess
 import shutil
 import sys
@@ -42,22 +40,25 @@ def env_bool(name: str, default: bool) -> bool:
    v = v.strip().lower()
    return v in ("1", "true", "yes", "y", "on")
 
-# Optional VG knobs
-VG_TRACE_CHILDREN = env_bool("VG_TRACE_CHILDREN", False)
-VG_LOGFILE = os.getenv("VG_LOGFILE", os.path.join(build_root, "naev_valgrind.log"))
-WITHDEBUGGER = env_bool("WITHDEBUGGER", False)
-VG_ERROR_LIMIT = os.getenv("VG_ERROR_LIMIT", "0")
-# Default suppressions to naev.supp in the script's directory if it exists
-default_supp = os.path.join(source_root, "utils", "build", "naev.supp")
-VG_SUPPRESSIONS = os.getenv("VG_SUPPRESSIONS", default_supp if os.path.exists(default_supp) else "")
-VG_ARGS = os.getenv("VG_ARGS", "")
-
 source_root = "@source_root@"
 build_root = "@build_root@"
 debug_paranoid = "@debug_paranoid@"
 debug = "@debug@"
 naev_bin = "@naev_bin@"
 zip_overlay = "@zip_overlay@"
+
+# Optional VG knobs
+VG_TRACE_CHILDREN = env_bool("VG_TRACE_CHILDREN", False)
+VG_LOGFILE = os.getenv("VG_LOGFILE", os.path.join(build_root, "naev_valgrind.log"))
+WITHDEBUGGER = env_bool("WITHDEBUGGER", False)
+
+# Default suppressions to naev.supp in the utils/build directory
+naev_supp = os.path.join(source_root, "utils", "build", "naev.supp")
+VG_SUPPRESSIONS = [naev_supp]
+if os.getenv("VG_SUPPRESSIONS"):
+   VG_SUPPRESSIONS.extend(os.getenv("VG_SUPPRESSIONS").split(','))
+
+VG_ARGS = os.getenv("VG_ARGS", "")
 
 MESON = [sys.executable, os.path.join(source_root, "meson.py")]
 
@@ -99,12 +100,15 @@ def wrapper(*args):
    if WITHDEBUGGER:
       valgrind_command += [
          "--vgdb=yes",
-         f"--vgdb-error={VG_ERROR_LIMIT}",
-         f"--vgdb-prefix={vgdb_prefix}"
+         "--vgdb-error=0",
+         f"--vgdb-prefix={vgdb_prefix}",
       ]
 
-   if VG_SUPPRESSIONS:
-      valgrind_command += [f"--suppressions={VG_SUPPRESSIONS}"]
+   for suppression in VG_SUPPRESSIONS:
+      if os.path.exists(suppression):
+         valgrind_command += [f"--suppressions={suppression}"]
+      else:
+         logger.warning(f"Suppression file not found: {suppression}")
 
    if VG_ARGS:
       import shlex
@@ -151,5 +155,5 @@ wrapper(
    "-d", os.path.join(source_root, "assets"),
    "-d", os.path.join(build_root, "dat"),
    "-d", source_root,
-   *sys.argv[1:]
+   *sys.argv[1:],
 )
