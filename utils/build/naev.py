@@ -117,16 +117,21 @@ def wrapper(*args: str) -> int:
 
    full_command = MESON + ["devenv", "-C", build_root] + cmd
 
+   # Ignore SIGINT in the parent so the child (debugger/game) handles it.
+   old_handler = signal.signal(signal.SIGINT, signal.SIG_IGN)
+
    try:
-      # Run the command
+      # Run the command and wait for it to complete.
       p = subprocess.Popen(full_command)
-      # Wait for the process to complete
       return p.wait()
-   except KeyboardInterrupt:
-      print("Interrupted by user (Ctrl+C)")
-      # Send interrupt signal to debugger process
-      p.send_signal(signal.SIGINT)
-      return p.wait()
+   except Exception as e:
+      logger.error(f"Failed to execute command: {e}")
+      return 1
+   finally:
+      # Restore SIGINT handler and terminal state
+      signal.signal(signal.SIGINT, old_handler)
+      if sys.platform != "win32":
+         os.system("stty sane 2>/dev/null")
 
 # Meson >= 0.60
 if not WITHVALGRIND:
