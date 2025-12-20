@@ -477,13 +477,18 @@ local function board_capture ()
       if board_fcthit ~= 0 then
          fcthittest = fcthittest + fct:hitTest( -board_fcthit, system.cur(), "board" )
       end
-      factionmsg = fmt.f(_(" Capturing the ship will lower your reputation with {fct} by {amount} (current standing is {current})."),
-         {fct=fct, amount=fmt.number(math.abs(fcthittest)), current=rep})
-      if rep >= 0 and rep+fcthittest < 0 then
-         factionmsg = fmt.f(_([[{msg} This action will make you hostile with {fct}!]]),
-            {msg=factionmsg, fct=fct})
+      -- Just nullify low values
+      if math.abs(fcthittest) < 0.5 then
+         fcthit = 0
+      else
+         factionmsg = fmt.f(_(" Capturing the ship will lower your reputation with {fct} by {amount} (current standing is {current})."),
+            {fct=fct, amount=fmt.number(math.abs(fcthittest)), current=rep})
+         if rep >= 0 and rep+fcthittest < 0 then
+            factionmsg = fmt.f(_([[{msg} This action will make you hostile with {fct}!]]),
+               {msg=factionmsg, fct=fct})
+         end
+         factionmsg = "#r"..factionmsg.."#0"
       end
-      factionmsg = "#r"..factionmsg.."#0"
    end
 
    local capturemsg = fmt.f(_([[Do you wish to capture the {shpname}? You estimate it will cost #o{credits}#0 ({sbonus}%#0 from crew strength) in repairs to successfully restore the ship with outfits, and #o{creditsnaked}#0 without outfits. You have {playercreds}.{fctmsg}
@@ -503,7 +508,9 @@ You will still have to escort the ship and land with it to perform the repairs a
             {shp=board_plt:name(),amount=fmt.credits(cost)}))
 
          -- Faction hit
-         local _realhit = fct:hit( -fcthit, system.cur(), "capture" )
+         if fcthit ~= 0 then
+            local _realhit = fct:hit( -fcthit, system.cur(), "capture" )
+         end
          -- Messages gets done by event separately
          --player.msg("#r"..fmt.f(_("You lost {amt} reputation with {fct}."),{amt=realhit,fct=fct}).."#0")
 
