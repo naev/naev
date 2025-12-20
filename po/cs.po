@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-12-15 10:12+0900\n"
+"POT-Creation-Date: 2025-12-20 17:38+0900\n"
 "PO-Revision-Date: 2025-10-27 08:32+0000\n"
 "Last-Translator: Dawedaen <dawedaen@noreply.codeberg.org>\n"
 "Language-Team: Czech <https://translate.codeberg.org/projects/naev/naev/cs/"
@@ -40320,7 +40320,6 @@ msgstr ""
 msgid "You are not allowed to board the ship!"
 msgstr "Na palubu lodi nesmíte!"
 
-#. Boarding sound
 msgid ""
 "You board the {ship}, and find that the cargo bay has been set up to "
 "efficiently process minerals. There is a holosign with the needed resources "
@@ -40353,7 +40352,6 @@ msgstr ""
 
 #. Add some faction too
 #. Store how much was traded
-#. Boarding sound
 #.
 #. <?xml version='1.0' encoding='utf8'?>
 #. <event name="Hypergate Fleets">
@@ -90936,58 +90934,53 @@ msgid "The person looks stressed and worn out."
 msgstr ""
 
 msgid ""
-"You approach the stressed out individual gnawing at their nails at the bar."
+"You approach the stressed-out individual gnawing at their nails at the bar."
 msgstr ""
 
-msgid ""
-"\"Say, you wouldn't be able to help me find my family? I'll pay, I promise!\""
+msgid "\"Any chance you could help me find my family? I'll pay, I promise!\""
 msgstr ""
 
 msgid "They go back to chewing their nails."
 msgstr ""
 
 msgid ""
-"\"My name is Lucas, I was a Nebula refugee. When I was very young, my family "
-"and I escaped the Incident, but I don't know what happened and I got "
-"separated.\""
+"\"My name is Lucas. I'm a Nebula refugee. When I was very young, my family "
+"and I escaped the Incident, but I don't know what happened-we got separated."
+"\""
 msgstr ""
 
 msgid ""
-"\"I guess I never really thought about it too much, just did what I was told "
-"and went with the flow, but then one day I couldn't. You understand?\""
+"\"I never really thought about it; I just did what I was told and went with "
+"the flow, until one day I couldn't anymore. You understand?\""
 msgstr ""
 
 msgid ""
-"The pause and tighten their fists.\n"
-"\"I guess there was always something missing in me, like something "
-"fundamental was taken away by the Incident. However, I just didn't realize "
-"it, didn't understand.\""
+"They pause and clench their fists.\n"
+"\"There was always something missing in me, like something fundamental the "
+"Incident took away, but I didn't realize it, didn't understand.\""
 msgstr ""
 
 msgid ""
-"\"One day it snapped, and I had a dream remembering stuff I had forgotten "
-"about: my family. I guess I had repressed it for so long. Survival instincts "
-"maybe?\""
+"\"Then something snapped. I had a dream that brought back what I'd buried—my "
+"family. I guess I'd repressed it for so long. Survival instincts maybe?\""
 msgstr ""
 
 msgid ""
-"\"Since then I've been trying to find my family with the credits I was able "
-"to scrounge up working. I don't think they had as much luck as I had, they "
-"are probably stuck on some refugee world. The governments don't care for us "
-"at all. They just toss refugees into barely habitable planets and turn their "
-"eyes away. We are humans too!\""
+"\"Since then I've been trying to find them with the credits I've managed to "
+"scrape together. I don't think they were as lucky; they're probably stuck on "
+"some refugee world. The governments don't care for us at all. They just toss "
+"refugees onto barely habitable planets and look away. We're human too!\""
 msgstr ""
 
 msgid ""
-"\"I've narrowed it down a bit, I think they should be on {spb} in the {sys} "
-"system. Please try to find them! I'll give you all the information I have. "
-"Here take this locket, it is the only thing I have from them.\""
+"\"I've narrowed it down a bit: I think they're on {spb} in the {sys} system. "
+"Please try to find them! I'll give you all the information I have. Here, "
+"take this locket—it's the only thing I have from them.\""
 msgstr ""
 
 msgid ""
-"They hand you an old locket that looks like is missing half of it. It is "
-"fairly simple and made of some resistant metal alloy, but bears signs of "
-"heavy use."
+"They hand you an old locket that looks like it's missing half. It's fairly "
+"simple and made of some rugged metal alloy, but bears signs of heavy use."
 msgstr ""
 
 msgid "\"I'll be waiting here.\""
@@ -91009,34 +91002,32 @@ msgid "Search for the family at {pnt} ({sys} system)"
 msgstr "Doprovod horníka na {pnt} do systému ({sys})"
 
 msgid ""
-"You land and begin to ask around to see if there are any traces of Lucas "
+"You land and begin to ask around to see if there are any traces of Lucas' "
 "family."
 msgstr ""
 
 msgid ""
 "As you converse with many of the refugees at {spb}, you begin to appreciate "
-"the magnitude of the Incident calamity. Many refugees are missing or "
-"searching for family members, with deep psychological scars that are unable "
-"to heal."
+"the calamity of the Incident. Many refugees are missing or searching for "
+"family members, carrying deep psychological scars that won't heal."
 msgstr ""
 
 msgid ""
-"Feeling like searching for a needle in a haystack, you are almost about to "
-"give up when you find an older one-armed refugee. They take a close look at "
-"the locket and mention that they used to share a cell with someone using the "
-"same locket on {spb} in the {sys} system."
+"Feeling like you're searching for a needle in a haystack, you're almost "
+"ready to give up when you find an older one-armed refugee. They take a close "
+"look at the locket and mention they used to share a cell with someone who "
+"had the same locket on {spb} in the {sys} system."
 msgstr ""
 
 msgid ""
-"From their story, it seems like {spb} is a horrible traumatic place, a "
-"refugee limbo where atrocities are commonplace. It also seems like the "
-"planet is locked down, you'll likely have to bribe the authorities to access "
-"it."
+"From their story, {spb} sounds horribly traumatic, a refugee limbo where "
+"atrocities are commonplace. The planet is locked down; you'll likely have to "
+"bribe the authorities to access it."
 msgstr ""
 
 msgid ""
 "They give you the location of the cell where they were and wish you luck. "
-"Looks like you have a lead."
+"Looks like you finally have a lead."
 msgstr ""
 
 #, fuzzy
@@ -91046,13 +91037,12 @@ msgstr "Doprovod horníka na {pnt} do systému ({sys})"
 msgid ""
 "You manage to land on {spb}. Although things are quite quiet and clean "
 "around the spaceport, it all takes a turn for the worse once you pass the "
-"checkpoints and head into the slums towards the location you were given."
+"checkpoints and head into the slums toward the location you were given."
 msgstr ""
 
 msgid ""
-"The atmosphere is dark, almost oppressive, and you feel like you are given "
-"many stares by the locals. It seems likely that they do not get many "
-"visitors."
+"The atmosphere is dark, almost oppressive, and you feel the locals' stares. "
+"They clearly don't get many visitors."
 msgstr ""
 
 msgid ""
@@ -91067,18 +91057,18 @@ msgid "A very weakened old man."
 msgstr ""
 
 msgid ""
-"You open the cell and find yourself with a very weakened old man. At first, "
-"they are scared to death, believing you have come to take their meagre "
-"possessions or their life, however, you are able to calm them down when you "
-"mention that Lucas sent you, and pass out."
+"You open the cell to find a very weakened old man. At first they are "
+"terrified, thinking you've come to take their meagre possessions or their "
+"life, but when you mention Lucas sent you they ease for a moment before "
+"collapsing from shock."
 msgstr ""
 
 msgid ""
 "You quickly look around to see if there is anyone else there. Once you "
-"confirm that the man is the only person you pick them up and make your way "
-"back to the spaceport. Likely due to malnourishment, the old man is a much "
-"lighter load than you had expected. On the way back, surprisingly enough, "
-"people seem to take less notice of you than when you came in."
+"confirm the man is alone, you pick him up and make your way back to the "
+"spaceport. Likely due to malnourishment, the old man is a much lighter load "
+"than you had expected. On the way back, surprisingly enough, people seem to "
+"take less notice of you than when you came in."
 msgstr ""
 
 msgid ""
@@ -91088,9 +91078,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"The old man is in not very good shape and seems to fall into a deep slumber "
-"when you set them aboard the ship, would be best to try to head back to "
-"Lucas as soon as possible."
+"The old man is in rough shape and falls into a deep slumber when you set him "
+"aboard the ship. It would be best to head back to Lucas as soon as possible."
 msgstr ""
 
 msgid ""
@@ -91104,22 +91093,22 @@ msgid ""
 msgstr ""
 
 msgid ""
-"When Lucas sees the old man, his eyes tear up, and he kneels to take a "
-"closer look.\n"
-"\"Dear old man, what have they done to you?\""
+"When Lucas sees the old man, his eyes well up and he kneels to take a closer "
+"look.\n"
+"\"Dear old man, what did they do to you?\""
 msgstr ""
 
 msgid ""
-"Still kneeling, Lucas shuffles forward and emotively hugs the old man. "
-"Probably not the reunion they were looking for, but better than nothing "
+"Still kneeling, Lucas shuffles forward and hugs the old man tightly. "
+"Probably not the reunion he was looking for, but better than nothing "
 "nonetheless."
 msgstr ""
 
 msgid ""
 "After a solemn while, Lucas kisses the old man on the cheek and turns to "
 "you.\n"
-"\"Thank you for what you've done. I think I can take care of it from now on. "
-"I have to see what happened to the others.\""
+"\"Thank you for everything. I can take it from here. I have to see what "
+"happened to the others.\""
 msgstr ""
 
 msgid ""
@@ -91184,7 +91173,7 @@ msgstr "Vezměte Zacha do systému {pnt} ({sys})"
 msgid "Will you help Lucas become a pirate?"
 msgstr ""
 
-msgid "You approach Lucas who seems to be more on the edge than before."
+msgid "You approach Lucas, who seems even more on edge than before."
 msgstr ""
 
 msgid ""
@@ -91202,13 +91191,13 @@ msgid ""
 msgstr ""
 
 msgid ""
-"\"Aw, screw it. I messed up. I put my faith in the system and got rammed "
-"over. They teach us like trash, useless garbage.\""
+"\"Aw, screw it. I messed up. I put my faith in the system and got "
+"steamrolled. They treat us like trash, useless garbage.\""
 msgstr ""
 
 msgid ""
-"\"I thought we were at fault, as if we had done something wrong and had to "
-"be punished. However, it was not we who did the wronging.\""
+"\"I thought we were at fault, like we'd done something wrong and had to be "
+"punished. But we're not the ones who did the wronging.\""
 msgstr ""
 
 #, fuzzy
@@ -91220,25 +91209,24 @@ msgid "\"My family is dead. All of them. Kaput. Gone.\""
 msgstr ""
 
 msgid ""
-"\"My sister and mother succumbed at Maanen's Moon, and my father, my poor "
-"father, was refused any damn treatments in this so-called civilized society."
+"\"My sister and mother died on Maanen's Moon, and my father—my poor father—"
+"was denied any damn treatment in this so-called civilized society.\""
+msgstr ""
+
+msgid ""
+"\"The bureaucrats refuse to treat illegal Nebula refugees. They even wanted "
+"to ship him back to Maanen's bloody Moon! Heartless bastards.\""
+msgstr ""
+
+msgid ""
+"\"When he died in my arms, I lost all hope. I thought my only option was to "
+"repent and follow my family. But then I realized, why are we at fault? Isn't "
+"civilization supposed to look out for humanity?\""
+msgstr ""
+
+msgid ""
+"\"I turned that despair into anger. I want revenge and to carve my own path."
 "\""
-msgstr ""
-
-msgid ""
-"\"The bureaucrats refuse treating illegal nebula refugees. They even wanted "
-"to take him back to Maanen's bloody Moon! Heartless bastards.\""
-msgstr ""
-
-msgid ""
-"\"When he passed away in my arms, I lost all hope. I thought I had no option "
-"but to repent and follow my family. But then I realize, why are we at fault? "
-"Is it not the role of civilization to look for the betterment of mankind?\""
-msgstr ""
-
-msgid ""
-"\"I decided to turn to anger, and want to take my revenge and carve my own "
-"path.\""
 msgstr ""
 
 msgid "\"This may surprise you, but I've decided to become a pirate.\""
@@ -91251,21 +91239,21 @@ msgid "\"Sounds great!\""
 msgstr ""
 
 msgid ""
-"\"Wait, you are not surprised?\"\n"
+"\"Wait, you're not surprised?\"\n"
 "They lean in and whisper to you.\n"
-"\"Don't tell me you are a… Wait no, it's probably better to not know now.\""
+"\"Don't tell me you're a… Wait, no, it's probably better not to know.\""
 msgstr ""
 
 msgid ""
-"\"Pirates are thought to be brutes unfit for society, however, that is just "
-"the lower rungs. The pirate clans are actually fully functional societies, "
-"and less arbitrary and oppressive than the Empire and the Houses.\""
+"\"People think pirates are brutes unfit for society, but that's only the "
+"bottom rung. The pirate clans are fully functional societies—less arbitrary "
+"and oppressive than the Empire and the Houses.\""
 msgstr ""
 
 msgid "\"Will you help me become a pirate?\""
 msgstr ""
 
-msgid "They go back to their state of nervous anxiety and hope."
+msgid "They sink back into anxious fidgeting and hope."
 msgstr ""
 
 msgid ""
@@ -91282,7 +91270,7 @@ msgstr ""
 
 msgid ""
 "\"I've been told some pirates like to hang around {spob} in the {sys} "
-"system. We should head over there to see if we can find some lead.\""
+"system. We should head over there to see if we can find a lead.\""
 msgstr ""
 
 msgid ""
@@ -91402,34 +91390,32 @@ msgid ""
 msgstr ""
 
 msgid ""
-"You approach the shady character, who doesn't seem very keen on your "
-"attention, and begin to make some idle conversation in hopes of drawing out "
-"information about {spob}."
+"You approach the shady character, who clearly wants you gone, and make idle "
+"conversation in hopes of drawing out information about {spob}."
 msgstr ""
 
 msgid ""
-"The character is less than cooperative, and seems more interested in getting "
-"rid of you than providing any help. It seems to be an exercise in futility."
+"The character is less than cooperative and seems more interested in shaking "
+"you off than helping. It's an exercise in futility."
 msgstr ""
 
 msgid ""
-"Eventually they start ignoring you and go away. Given the amount of people "
-"and security on the station, there is not really anything you can do."
+"Eventually they start ignoring you and leave. Given the amount of people and "
+"security on the station, there's not much you can do."
 msgstr ""
 
 msgid ""
-"You look around, but it doesn't look like the people here are going to be "
-"the most helpful bunch, you'll have to find another way to get the "
-"information."
+"You look around, but the people here don't seem eager to help. You'll have "
+"to find another way to get the information."
 msgstr ""
 
 msgid ""
-"You meet up with Lucas, who was also trying to get the information "
-"independently, albeit to the same result."
+"You meet up with Lucas, who also tried to get the information independently, "
+"with the same lack of success."
 msgstr ""
 
 msgid ""
-"He lets out a large sigh.\n"
+"He lets out a long sigh.\n"
 "\"It doesn't look like we're getting anywhere.\""
 msgstr ""
 
@@ -91484,9 +91470,9 @@ msgstr ""
 
 #. Should run just after the comm stuff is done
 msgid ""
-"You board the ship with Lucas and through methods you are not particularly "
-"proud of, are able to obtain information of a secret jump likely leading to "
-"the Qorel tunnel. You are told that {spob} is somewhere there."
+"You board the ship with Lucas and, through methods you're not proud of, pry "
+"out information about a secret jump likely leading to the Qorel tunnel. "
+"You're told {spob} is somewhere beyond."
 msgstr ""
 
 #.
@@ -118923,6 +118909,9 @@ msgstr "Neznámá skupina typů asteroidů '%s'"
 msgid "Sound disabled."
 msgstr ""
 
+msgid "Failed to set ALC_OUTPUT_LIMITER_SOFT"
+msgstr ""
+
 msgid "OpenAL started: {} Hz"
 msgstr ""
 
@@ -118933,6 +118922,13 @@ msgid "Version: {}"
 msgstr ""
 
 msgid "   with {}"
+msgstr ""
+
+#. Dunno why xgettext doesn't work if it's a one-liner...
+msgid "Unable to open default sound device"
+msgstr ""
+
+msgid "Unable to create context"
 msgstr ""
 
 #, c-format
@@ -126852,137 +126848,6 @@ msgstr ""
 
 #, c-format
 msgid "Unknown ship stat type '%s'!"
-msgstr ""
-
-msgid "Unable to open default sound device"
-msgstr ""
-
-msgid "Unable to create OpenAL context"
-msgstr ""
-
-msgid "Failure to set default context"
-msgstr ""
-
-msgid "Failed to set ALC_OUTPUT_LIMITER_SOFT"
-msgstr ""
-
-msgid "OpenAL failed to initialize sources"
-msgstr ""
-
-#. debug magic
-#, c-format
-msgid "OpenAL started: %d Hz"
-msgstr ""
-
-#, c-format
-msgid "Version: %s with EFX %d.%d"
-msgstr ""
-
-#, c-format
-msgid "Version: %s without EFX"
-msgstr ""
-
-msgid "Crashing ALSOFT version detected, disabling EFX"
-msgstr ""
-
-msgid "OpenAL EFX functions not found, disabling EFX."
-msgstr ""
-
-msgid "OpenAL Reverb not found, disabling."
-msgstr ""
-
-msgid "OpenAL Echo not found, disabling."
-msgstr ""
-
-msgid "Unable to create voice mutex."
-msgstr ""
-
-msgid "Sound has invalid value, clamping to [0:1]."
-msgstr ""
-
-msgid "Music disabled."
-msgstr ""
-
-#, c-format
-msgid "Sound '%s' not found in sound list"
-msgstr ""
-
-#, c-format
-msgid "Loaded %d Sound"
-msgid_plural "Loaded %d Sounds"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
-#. Group matched but no free source found..
-#, c-format
-msgid "Group '%d' has no free sounds."
-msgstr ""
-
-#, c-format
-msgid "Group '%d' not found."
-msgstr ""
-
-#, c-format
-msgid "SDL_LoadWav_RW failed: %s"
-msgstr ""
-
-msgid "Invalid WAV format!"
-msgstr ""
-
-msgid "A read from media returned an error."
-msgstr ""
-
-msgid "Internal logic fault; indicates a bug or heap/stack corruption."
-msgstr ""
-
-msgid "Feature not implemented."
-msgstr ""
-
-msgid ""
-"Either an invalid argument, or incompletely initialized argument passed to "
-"libvorbisfile call"
-msgstr ""
-
-msgid "Bitstream is not Vorbis data."
-msgstr ""
-
-msgid "Invalid Vorbis bitstream header."
-msgstr ""
-
-msgid "Vorbis version mismatch."
-msgstr ""
-
-msgid ""
-"The given link exists in the Vorbis data stream, but is not decipherable due "
-"to garbage or corruption."
-msgstr ""
-
-msgid "The given stream is not seekable."
-msgstr ""
-
-msgid "Unknown vorbisfile error."
-msgstr ""
-
-#, c-format
-msgid "Failed to finish loading Ogg file: %s"
-msgstr ""
-
-msgid "Error reading from OGG file!"
-msgstr ""
-
-#, c-format
-msgid "Failed to load sound file '%s'."
-msgstr ""
-
-#, c-format
-msgid "Something went wrong when loading sound file '%s'."
-msgstr ""
-
-#, c-format
-msgid ""
-"Sound '%s' has %d channels but is being played as positional. It should be "
-"mono!"
 msgstr ""
 
 msgid "Inhabited"
