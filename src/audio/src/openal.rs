@@ -1,5 +1,6 @@
 //! OpenAL (Soft) bindings
 #![allow(non_snake_case, dead_code)]
+use gettext::gettext;
 use nalgebra::Vector3;
 use std::ffi::{CStr, CString};
 use std::sync::atomic::{AtomicPtr, Ordering};
@@ -345,7 +346,9 @@ impl Device {
             })
         };
         if device.is_null() {
-            anyhow::bail!("unable to open default sound device");
+            // Dunno why xgettext doesn't work if it's a one-liner...
+            let msg = gettext("Unable to open default sound device");
+            anyhow::bail!(msg);
         }
         Ok(Self(AtomicPtr::new(device)))
     }
@@ -391,7 +394,8 @@ impl Context {
     pub fn new(device: &Device, attribs: &[ALCenum]) -> Result<Self> {
         let context = unsafe { alcCreateContext(device.raw(), attribs.as_ptr()) };
         if context.is_null() {
-            anyhow::bail!("unable to create context");
+            let msg = gettext("Unable to create context");
+            anyhow::bail!(msg);
         }
         Ok(Self(AtomicPtr::new(context)))
     }
@@ -402,7 +406,7 @@ impl Context {
 
     pub fn set_current(&self) -> Result<()> {
         match unsafe { alcMakeContextCurrent(self.raw()) } {
-            ALC_FALSE => anyhow::bail!("unable to set context as current"),
+            ALC_FALSE => anyhow::bail!("Unable to set context as current"),
             _ => Ok(()),
         }
     }

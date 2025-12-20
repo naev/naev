@@ -1726,7 +1726,7 @@ impl System {
         if has_output_limiter
             && device.get_parameter_i32(ALC_OUTPUT_LIMITER_SOFT) != ALC_TRUE as i32
         {
-            warn!("failed to set ALC_OUTPUT_LIMITER_SOFT");
+            warn!("{}", gettext("Failed to set ALC_OUTPUT_LIMITER_SOFT"));
         }
         // Check to see if debugging was enabled
         if has_debug {
