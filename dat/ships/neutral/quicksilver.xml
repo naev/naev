@@ -2,7 +2,7 @@
  <points>40</points>
  <base_type>Quicksilver</base_type>
  <gfx sy="10" sx="10" size="70">quicksilver.gltf</gfx>
- <sound>engine</sound>
+ <sound pitch="0.95">engine_melendez</sound>
  <class>Courier</class>
  <price>510000</price>
  <time_mod>1</time_mod>

@@ -3,7 +3,7 @@
  <base_type>Hawking</base_type>
  <gfx size="139" sx="12" sy="12">hawking_empire.gltf</gfx>
  <rarity>1</rarity>
- <sound>engine</sound>
+ <sound pitch="0.8">engine_nexus</sound>
  <class>Cruiser</class>
  <price>5500000</price>
  <time_mod>1.375</time_mod>

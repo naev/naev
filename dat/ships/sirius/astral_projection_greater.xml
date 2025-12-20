@@ -3,7 +3,7 @@
  <points>30</points>
  <base_type>Astral Projection Greater</base_type>
  <gfx size="140" sx="12" sy="12" noengine="1" comm="outfit/store/placeholder">apparition_cruiser.gltf</gfx>
- <sound>engine</sound>
+ <sound pitch="0.5">engine_sirius</sound>
  <class>Cruiser</class>
  <price>1</price>
  <fabricator>Sirius Psychic Powers</fabricator>

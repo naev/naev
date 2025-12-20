@@ -2,7 +2,7 @@
  <points>60</points>
  <base_type>Phalanx</base_type>
  <gfx size="95" sx="10" sy="10">phalanx.gltf</gfx>
- <sound>engine</sound>
+ <sound pitch="0.85">engine_melendez</sound>
  <class>Corvette</class>
  <price>850000</price>
  <time_mod>1</time_mod>

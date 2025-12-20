@@ -3,7 +3,7 @@
  <!--<base_type>Psychic Orb</base_type>-->
  <base_type>Sphere</base_type>
  <gfx size="46">sphere.gltf</gfx>
- <sound>engine</sound>
+ <sound>engine_nexus</sound>
  <class display="Unknown">Interceptor</class>
  <price>1</price>
  <time_mod>1</time_mod>

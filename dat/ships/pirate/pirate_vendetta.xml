@@ -4,7 +4,7 @@
  <base_type>Vendetta</base_type>
  <gfx size="49">vendetta_pirate.gltf</gfx>
  <rarity>1</rarity>
- <sound>engine</sound>
+ <sound>engine_pirate</sound>
  <class>Fighter</class>
  <price>450000</price>
  <time_mod>0.9</time_mod>

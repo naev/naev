@@ -3,7 +3,7 @@
  <points>1</points>
  <base_type>Escape_Pod</base_type>
  <gfx size="30">escape_pod.gltf</gfx>
- <sound>engine</sound>
+ <sound>engine_nexus</sound>
  <class display="Escape Pod">Interceptor</class>
  <price>1</price>
  <time_mod>1</time_mod>

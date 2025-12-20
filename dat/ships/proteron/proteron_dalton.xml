@@ -3,7 +3,7 @@
  <base_type>Dalton</base_type>
  <gfx size="40">dalton.gltf</gfx>
  <rarity>3</rarity>
- <sound>engine</sound>
+ <sound>engine_proteron</sound>
  <class>Interceptor</class>
  <price>280000</price>
  <time_mod>0.8</time_mod>

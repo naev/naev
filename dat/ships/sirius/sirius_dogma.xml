@@ -4,7 +4,7 @@
  <base_type>Dogma</base_type>
  <gfx sy="12" sx="12" size="128">dogma.gltf</gfx>
  <rarity>1</rarity>
- <sound>engine</sound>
+ <sound pitch="0.65">engine_sirius</sound>
  <class>Battleship</class>
  <price>9400000</price>
  <time_mod>1.375</time_mod>

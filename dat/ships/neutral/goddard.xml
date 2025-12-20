@@ -3,7 +3,7 @@
  <base_type>Goddard</base_type>
  <gfx sy="12" sx="12" size="125">goddard.gltf</gfx>
  <rarity>1</rarity>
- <sound>engine</sound>
+ <sound pitch="0.5">engine_melendez</sound>
  <class>Battleship</class>
  <price>7500000</price>
  <time_mod>1.4</time_mod>

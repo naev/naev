@@ -2,7 +2,7 @@
  <points>30</points>
  <base_type>Hyena</base_type>
  <gfx size="44">hyena.gltf</gfx>
- <sound>engine</sound>
+ <sound>engine_nexus</sound>
  <class>Interceptor</class>
  <price>210000</price>
  <time_mod>0.8</time_mod>

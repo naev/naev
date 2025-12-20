@@ -4,7 +4,7 @@
  <base_type>Perspicacity</base_type>
  <gfx size="50">perspicacity.gltf</gfx>
  <rarity>3</rarity>
- <sound>engine</sound>
+ <sound>engine_thurion</sound>
  <class>Interceptor</class>
  <price>350000</price>
  <time_mod>0.9</time_mod>

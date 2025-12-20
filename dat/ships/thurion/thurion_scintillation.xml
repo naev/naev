@@ -4,7 +4,7 @@
  <base_type>Scintillation</base_type>
  <gfx size="70">scintillation.gltf</gfx>
  <rarity>3</rarity>
- <sound>engine</sound>
+ <sound>engine_thurion</sound>
  <class>Bomber</class>
  <price>750000</price>
  <time_mod>0.9</time_mod>

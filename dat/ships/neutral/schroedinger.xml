@@ -2,7 +2,7 @@
  <points>20</points>
  <base_type>Schroedinger</base_type>
  <gfx size="47">schroedinger.gltf</gfx>
- <sound>engine</sound>
+ <sound>engine_sirius</sound>
  <class>Scout</class>
  <price>180000</price>
  <time_mod>0.9</time_mod>

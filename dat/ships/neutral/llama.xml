@@ -2,7 +2,7 @@
  <points>20</points>
  <base_type>Llama</base_type>
  <gfx size="47">llama.gltf</gfx>
- <sound>engine</sound>
+ <sound>engine_melendez</sound>
  <class>Yacht</class>
  <price>120000</price>
  <time_mod>1</time_mod>

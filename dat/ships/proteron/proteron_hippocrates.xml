@@ -3,7 +3,7 @@
  <base_type>Hippocrates</base_type>
  <gfx sy="10" sx="10" size="88">hippocrates.gltf</gfx>
  <rarity>3</rarity>
- <sound>engine</sound>
+ <sound pitch="0.8">engine_proteron</sound>
  <class>Destroyer</class>
  <price>1900000</price>
  <time_mod>1.1</time_mod>

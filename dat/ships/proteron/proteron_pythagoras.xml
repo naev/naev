@@ -3,7 +3,7 @@
  <base_type>Pythagoras</base_type>
  <gfx size="124" sx="12" sy="12">pythagoras.gltf</gfx>
  <rarity>3</rarity>
- <sound>engine</sound>
+ <sound pitch="0.7">engine_proteron</sound>
  <class>Cruiser</class>
  <price>6000000</price>
  <time_mod>1.35</time_mod>

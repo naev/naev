@@ -4,7 +4,7 @@
  <base_type>Ingenuity</base_type>
  <gfx size="56">ingenuity.gltf</gfx>
  <rarity>3</rarity>
- <sound>engine</sound>
+ <sound>engine_thurion</sound>
  <class>Fighter</class>
  <price>650000</price>
  <time_mod>0.9</time_mod>

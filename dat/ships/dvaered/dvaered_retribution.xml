@@ -4,7 +4,7 @@
  <base_type>Retribution</base_type>
  <gfx size="128" sx="12" sy="12">retribution_dvaered.gltf</gfx>
  <rarity>1</rarity>
- <sound>engine</sound>
+ <sound pitch="0.6">engine_melendez</sound>
  <class>Cruiser</class>
  <price>5000000</price>
  <time_mod>1.375</time_mod>

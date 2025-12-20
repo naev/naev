@@ -2,7 +2,7 @@
  <points>50</points>
  <base_type>Plowshare</base_type>
  <gfx sy="10" sx="10" size="69">plowshare.gltf</gfx>
- <sound>engine</sound>
+ <sound pitch="0.85">engine_melendez</sound>
  <class>Freighter</class>
  <price>500000</price>
  <time_mod>1.25</time_mod>

@@ -3,7 +3,7 @@
  <points>30</points>
  <base_type>Astral Projection Normal</base_type>
  <gfx size="128" sx="10" sy="10" noengine="1" comm="outfit/store/placeholder">apparition_corvette.gltf</gfx>
- <sound>engine</sound>
+ <sound pitch="0.75">engine_sirius</sound>
  <class>Corvette</class>
  <price>1</price>
  <fabricator>Sirius Psychic Powers</fabricator>

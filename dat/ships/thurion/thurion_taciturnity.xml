@@ -4,7 +4,7 @@
  <base_type>Taciturnity</base_type>
  <gfx sy="10" sx="10" size="80">taciturnity.gltf</gfx>
  <rarity>3</rarity>
- <sound>engine</sound>
+ <sound pitch="0.7">engine_thurion</sound>
  <trail_generator y="0" h="0" x="-20">thurion</trail_generator>
  <trail_generator y="23" h="-13" x="-7">nebula</trail_generator>
  <trail_generator y="-23" h="-13" x="-7">nebula</trail_generator>

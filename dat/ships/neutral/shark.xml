@@ -2,7 +2,7 @@
  <points>30</points>
  <base_type>Shark</base_type>
  <gfx size="54">shark.gltf</gfx>
- <sound>engine</sound>
+ <sound>engine_nexus</sound>
  <class>Interceptor</class>
  <price>250000</price>
  <time_mod>0.9</time_mod>

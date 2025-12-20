@@ -3,7 +3,7 @@
  <base_type>Rainmaker</base_type>
  <gfx sy="12" sx="12" size="128">rainmaker_empire.gltf</gfx>
  <rarity>1</rarity>
- <sound>engine</sound>
+ <sound pitch="0.75">engine_nexus</sound>
  <class>Bulk Freighter</class>
  <price>5000000</price>
  <time_mod>1.375</time_mod>

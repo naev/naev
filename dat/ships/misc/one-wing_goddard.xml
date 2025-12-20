@@ -2,7 +2,7 @@
  <points>1000</points>
  <base_type>One-Wing Goddard</base_type>
  <gfx sx="1" sy="1" size="110" polygon="derelict_goddard" comm="spob/exterior/onewing_goddard" noengine="1">/gfx/spob/space/derelict_goddard</gfx>
- <sound>engine</sound>
+ <sound>engine_melendez</sound>
  <class display="Station">Battleship</class>
  <price>1</price>
  <time_mod>1</time_mod>

@@ -2,7 +2,7 @@
  <points>110</points>
  <base_type>Zebra</base_type>
  <gfx sy="12" sx="12" size="120">zebra.gltf</gfx>
- <sound>engine</sound>
+ <sound pitch="0.7">engine_melendez</sound>
  <class>Bulk Freighter</class>
  <price>3500000</price>
  <time_mod>1.375</time_mod>

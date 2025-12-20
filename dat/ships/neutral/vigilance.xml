@@ -2,7 +2,7 @@
  <points>90</points>
  <base_type>Vigilance</base_type>
  <gfx sy="10" sx="10" size="95">vigilance.gltf</gfx>
- <sound>engine</sound>
+ <sound pitch="0.7">engine_melendez</sound>
  <class>Destroyer</class>
  <price>2050000</price>
  <time_mod>1.25</time_mod>

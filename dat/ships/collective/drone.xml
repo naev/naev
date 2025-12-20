@@ -4,7 +4,7 @@
  <base_type>Drone</base_type>
  <gfx size="70">drone.gltf</gfx>
  <rarity>3</rarity>
- <sound>engine</sound>
+ <sound>engine_zalek</sound>
  <class display="Robotic Interceptor">Interceptor</class>
  <price>300000</price>
  <time_mod>0.8</time_mod>

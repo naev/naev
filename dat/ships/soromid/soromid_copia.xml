@@ -4,7 +4,7 @@
  <base_type>Copia</base_type>
  <gfx size="132" sx="12" sy="12">copia.gltf</gfx>
  <rarity>1</rarity>
- <sound>engine_soromid</sound>
+ <sound pitch="0.7">engine_soromid</sound>
  <class display="Bio-Freighter">Bulk Freighter</class>
  <price>5500000</price>
  <time_mod>1.375</time_mod>

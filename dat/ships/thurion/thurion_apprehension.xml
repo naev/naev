@@ -4,7 +4,7 @@
  <base_type>Apprehension</base_type>
  <gfx sy="12" sx="12" size="90">apprehension.gltf</gfx>
  <rarity>3</rarity>
- <sound>engine</sound>
+ <sound pitch="0.8">engine_thurion</sound>
  <class>Destroyer</class>
  <price>2300000</price>
  <time_mod>1.25</time_mod>

@@ -2,7 +2,7 @@
  <points>80</points>
  <base_type>Starbridge</base_type>
  <gfx sy="10" sx="10" size="80">starbridge.gltf</gfx>
- <sound>engine</sound>
+ <sound pitch="0.9">engine_nexus</sound>
  <class>Destroyer</class>
  <price>1700000</price>
  <time_mod>1.25</time_mod>

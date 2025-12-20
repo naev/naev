@@ -4,7 +4,7 @@
  <base_type>Bedivere</base_type>
  <gfx size="83">bedivere.gltf</gfx>
  <rarity>1</rarity>
- <sound>engine</sound>
+ <sound pitch="0.85">engine_pirate</sound>
  <class>Destroyer</class>
  <price>1310000</price>
  <time_mod>1.25</time_mod>

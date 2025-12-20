@@ -4,7 +4,7 @@
  <base_type path="Drone_Carrier">Drone Carrier</base_type>
  <gfx sy="12" sx="12" size="96">drone_carrier.gltf</gfx>
  <rarity>3</rarity>
- <sound>engine</sound>
+ <sound pitch="0.6">engine_zalek</sound>
  <class display="Robotic Carrier">Carrier</class>
  <price>6000000</price>
  <time_mod>1.3</time_mod>

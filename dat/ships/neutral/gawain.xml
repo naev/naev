@@ -2,7 +2,7 @@
  <points>20</points>
  <base_type>Gawain</base_type>
  <gfx size="56">gawain.gltf</gfx>
- <sound>engine</sound>
+ <sound>engine_nexus</sound>
  <class display="Luxury Yacht">Yacht</class>
  <price>500000</price>
  <time_mod>0.9</time_mod>

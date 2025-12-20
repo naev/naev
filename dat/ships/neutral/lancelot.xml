@@ -2,7 +2,7 @@
  <points>40</points>
  <base_type>Lancelot</base_type>
  <gfx size="56">lancelot.gltf</gfx>
- <sound>engine</sound>
+ <sound>engine_nexus</sound>
  <class>Fighter</class>
  <price>450000</price>
  <time_mod>0.9</time_mod>

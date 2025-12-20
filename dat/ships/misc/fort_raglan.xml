@@ -2,7 +2,7 @@
  <points>1000</points>
  <base_type>Fort Raglan</base_type>
  <gfx sy="1" sx="1" comm="spob/exterior/station05" polygon="station-battlestation" noengine="1" size="150">/gfx/spob/space/station-battlestation</gfx>
- <sound>engine</sound>
+ <sound>engine_melendez</sound>
  <class display="Station">Battleship</class>
  <price>1</price>
  <time_mod>1</time_mod>

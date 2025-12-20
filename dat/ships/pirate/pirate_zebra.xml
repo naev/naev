@@ -4,7 +4,7 @@
  <base_type>Zebra</base_type>
  <gfx sy="12" sx="12" size="128">zebra_pirate.gltf</gfx>
  <rarity>2</rarity>
- <sound>engine</sound>
+ <sound pitch="0.6">engine_pirate</sound>
  <class>Carrier</class>
  <price>8000000</price>
  <time_mod>1.5</time_mod>

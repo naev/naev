@@ -2,7 +2,7 @@
  <points>35</points>
  <base_type>Tristan</base_type>
  <gfx size="39">tristan.gltf</gfx>
- <sound>engine</sound>
+ <sound>engine_nexus</sound>
  <class>Fighter</class>
  <price>250000</price>
  <time_mod>1.0</time_mod>

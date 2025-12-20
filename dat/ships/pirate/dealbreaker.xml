@@ -4,7 +4,7 @@
  <base_type>Dealbreaker</base_type>
  <gfx size="125">dealbreaker.gltf</gfx>
  <rarity>2</rarity>
- <sound>engine</sound>
+ <sound pitch="0.7">engine_pirate</sound>
  <class>Battleship</class>
  <price>9200000</price>
  <time_mod>1.4</time_mod>

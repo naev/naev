@@ -3,7 +3,7 @@
  <base_type>Gauss</base_type>
  <gfx sy="10" sx="10" size="100">gauss.gltf</gfx>
  <rarity>3</rarity>
- <sound>engine</sound>
+ <sound pitch="0.8">engine_proteron</sound>
  <class>Destroyer</class>
  <price>2200000</price>
  <time_mod>1.1</time_mod>

@@ -4,7 +4,7 @@
  <base_type>Vigilance</base_type>
  <gfx sy="10" sx="10" size="95">vigilance_dvaered.gltf</gfx>
  <rarity>1</rarity>
- <sound>engine</sound>
+ <sound pitch="0.7">engine_melendez</sound>
  <class>Destroyer</class>
  <price>2200000</price>
  <time_mod>1.25</time_mod>

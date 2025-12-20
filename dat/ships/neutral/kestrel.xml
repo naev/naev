@@ -2,7 +2,7 @@
  <points>130</points>
  <base_type>Kestrel</base_type>
  <gfx size="125" sx="10" sy="10">kestrel.gltf</gfx>
- <sound>engine</sound>
+ <sound pitch="0.9">engine_nexus</sound>
  <class>Cruiser</class>
  <price>3700000</price>
  <time_mod>1.3</time_mod>

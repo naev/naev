@@ -3,7 +3,7 @@
  <base_type>Euler</base_type>
  <gfx size="45">euler.gltf</gfx>
  <rarity>3</rarity>
- <sound>engine</sound>
+ <sound>engine_proteron</sound>
  <class>Scout</class>
  <price>200000</price>
  <time_mod>0.9</time_mod>

@@ -2,7 +2,7 @@
  <points>80</points>
  <base_type>Rhino</base_type>
  <gfx sy="10" sx="10" size="100">rhino.gltf</gfx>
- <sound>engine</sound>
+ <sound pitch="0.9">engine_melendez</sound>
  <class>Armoured Transport</class>
  <price>1400000</price>
  <time_mod>1.25</time_mod>

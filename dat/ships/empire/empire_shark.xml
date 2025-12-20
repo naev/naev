@@ -3,7 +3,7 @@
  <base_type>Shark</base_type>
  <gfx size="54">shark_empire.gltf</gfx>
  <rarity>1</rarity>
- <sound>engine</sound>
+ <sound>engine_nexus</sound>
  <class>Interceptor</class>
  <price>280000</price>
  <time_mod>0.9</time_mod>

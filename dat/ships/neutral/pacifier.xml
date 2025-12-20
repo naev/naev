@@ -2,7 +2,7 @@
  <points>90</points>
  <base_type>Pacifier</base_type>
  <gfx sy="10" sx="10" size="77">pacifier.gltf</gfx>
- <sound>engine</sound>
+ <sound pitch="0.85">engine_nexus</sound>
  <class>Destroyer</class>
  <price>1900000</price>
  <time_mod>1.25</time_mod>

@@ -4,7 +4,7 @@
  <base_type>Certitude</base_type>
  <gfx sy="12" sx="12" size="120">certitude.gltf</gfx>
  <rarity>3</rarity>
- <sound>engine</sound>
+ <sound pitch="0.6">engine_thurion</sound>
  <class>Battleship</class>
  <price>9000000</price>
  <time_mod>1.5</time_mod>

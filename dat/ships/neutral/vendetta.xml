@@ -2,7 +2,7 @@
  <points>50</points>
  <base_type>Vendetta</base_type>
  <gfx size="49">vendetta.gltf</gfx>
- <sound>engine</sound>
+ <sound>engine_melendez</sound>
  <class>Fighter</class>
  <price>400000</price>
  <time_mod>0.9</time_mod>

@@ -8,7 +8,7 @@
   <noplayer/>
  </flags>
  <rarity>6</rarity>
- <sound>engine</sound>
+ <sound>engine_zalek</sound>
  <class display="Robotic Interceptor">Interceptor</class>
  <price>500000</price>
  <time_mod>0.8</time_mod>

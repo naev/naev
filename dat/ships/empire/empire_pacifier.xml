@@ -3,7 +3,7 @@
  <base_type>Pacifier</base_type>
  <gfx sy="10" sx="10" size="77">pacifier_empire.gltf</gfx>
  <rarity>1</rarity>
- <sound>engine</sound>
+ <sound pitch="0.85">engine_nexus</sound>
  <class>Destroyer</class>
  <price>2100000</price>
  <time_mod>1.25</time_mod>

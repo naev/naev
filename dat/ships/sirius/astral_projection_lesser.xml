@@ -3,7 +3,7 @@
  <points>30</points>
  <base_type>Astral Projection Lesser</base_type>
  <gfx size="80" sx="8" sy="8" noengine="1" comm="outfit/store/placeholder">apparition_fighter.gltf</gfx>
- <sound>engine</sound>
+ <sound>engine_sirius</sound>
  <class>Interceptor</class>
  <price>1</price>
  <fabricator>Sirius Psychic Powers</fabricator>
