@@ -384,7 +384,7 @@ end
 
 function multicore.set( p, po )
    local fuel = p:fuel()
-   po:clear()
+   --po:clear()
    if mem.stats then
       for s, val in pairs(mem.stats) do
          po:set(s, val)
