@@ -6,6 +6,7 @@
 
 - [Introduction](./intro.md)
 - [Data Structure](./data.md)
+   - [Scenario Definition `start.toml`](./data/start.md)
 - [Plugin Framework](./plugins/overview.md)
    - [Metadata `plugin.toml`](./plugins/metadata.md)
    - [Tips and Tricks](./plugins/tips.md)

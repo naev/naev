@@ -51,4 +51,4 @@ Furthermore, the following files play a critical role:
 * `rep.lua`: internal file for the console. Do not modify!!
 * `rescue.lua`: script run when the game detects the player is stranded, such as they have a non-spaceworthy ship and are stuck in an uninhabited spob.
 * `save_updater.lua`: used when updating saves to replace old outfits and licenses with newer ones.
-* `start.xml`: determines the starting setting, time and such of the game.
+* `start.toml`: determines the starting setting, time and such of the game.
