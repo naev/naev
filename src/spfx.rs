@@ -315,6 +315,7 @@ impl UserData for LuaSpfxRef {
                             .data(Some(audiodata.clone()))
                             .position(pos.map(|v| v.into_vector2().cast()))
                             .play(true)
+                            .ingame(!global)
                             .build()?;
                         Some(audio::LuaAudioRef {
                             audio,
