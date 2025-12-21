@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2025-02-01 11:09+0900\n"
-"PO-Revision-Date: 2025-08-10 15:02+0000\n"
-"Last-Translator: Ta123Asri <taufiqdi15@gmail.com>\n"
-"Language-Team: Indonesian <https://hosted.weblate.org/projects/naev/"
-"naev-0-12-x/id/>\n"
+"PO-Revision-Date: 2025-12-21 13:21+0000\n"
+"Last-Translator: AntimatterReactor <antimatterreactor@noreply.codeberg.org>\n"
+"Language-Team: Indonesian <https://translate.codeberg.org/projects/naev/naev-"
+"0-12-x/id/>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.13-dev\n"
+"X-Generator: Weblate 5.15.1\n"
 
 msgid "Main"
 msgstr "Utama"
@@ -62,7 +62,7 @@ msgid "# Lore"
 msgstr "Lorelei"
 
 msgid "* [History](lore/history)"
-msgstr ""
+msgstr "* [Sejarah](lore/history)"
 
 msgid "Fabricators"
 msgstr ""
@@ -75,10 +75,8 @@ msgid ""
 "outfits."
 msgstr ""
 
-#, fuzzy
-#| msgid "Independent"
 msgid "## Independent"
-msgstr "Independen"
+msgstr "## Independen"
 
 msgid ""
 "* **Melendez Corp.**: Focuses on large cargo-oriented trade ships and heavy "
@@ -178,15 +176,11 @@ msgid ""
 "* **Robosys**: Provides support and modifications for the Collective ships."
 msgstr ""
 
-#, fuzzy
-#| msgid "Formation"
 msgid "Factions"
-msgstr "Formasi"
+msgstr "Faksi"
 
-#, fuzzy
-#| msgid "Formation"
 msgid "# Factions"
-msgstr "Formasi"
+msgstr "# Faksi"
 
 msgid "There are a diversity of factions that vie for control of the universe."
 msgstr ""
@@ -209,10 +203,8 @@ msgstr ""
 msgid "* [House Goddard](lore/factions/goddard)"
 msgstr ""
 
-#, fuzzy
-#| msgid "Independent"
 msgid "## Independent Factions"
-msgstr "Independen"
+msgstr "## Faksi Independen"
 
 msgid "* [Soromid](lore/factions/soromid)"
 msgstr ""
@@ -223,7 +215,7 @@ msgstr ""
 #, fuzzy
 #| msgid "Frontier Liberation Front"
 msgid "* [Frontier Liberation Front](lore/factions/flf)"
-msgstr "Front Liberasi Frontir"
+msgstr "* [Front Liberasi Frontir](lore/factions/flf)"
 
 msgid "* [Space Traders Society](lore/factions/spacetraders)"
 msgstr ""
@@ -287,8 +279,8 @@ msgid ""
 "House Dvaered is one of the Great Houses of [the Empire](lore/factions/"
 "empire)."
 msgstr ""
-"Wangsa Dvaered adalah salah satu Wangsa Besar di [Kekaisaran].(lore/factions/"
-"empire)"
+"Wangsa Dvaered adalah salah satu Wangsa Besar di [Kekaisaran](lore/factions/"
+"empire)."
 
 msgid ""
 "It evolved from the simple working class of [the Empire](lore/factions/"
@@ -420,10 +412,8 @@ msgstr ""
 msgid "In fact, it can be considered a constitution of sorts."
 msgstr ""
 
-#, fuzzy
-#| msgid "Warlords"
 msgid "### Warlords"
-msgstr "Panglima perang"
+msgstr "### Panglima Perang"
 
 msgid ""
 "When a General retires from High Command, he often takes with him a small "
@@ -467,10 +457,8 @@ msgid ""
 "where they pursue their idea of luxury."
 msgstr ""
 
-#, fuzzy
-#| msgid "Dvaered High Command"
 msgid "### Warlords and Dvaered High Command"
-msgstr "Komando Tinggi Dvaered"
+msgstr "### Panglima Perang dan Komando Tinggi Dvaered"
 
 msgid ""
 "While every Dvaered controlled world is governed by a Warlord at any given "
@@ -494,8 +482,6 @@ msgid ""
 "all of them)."
 msgstr ""
 
-#, fuzzy
-#| msgid "Empire"
 msgid "The Empire"
 msgstr "Kekaisaran"
 
@@ -612,10 +598,8 @@ msgid ""
 "Gamma Polaris system, the official seat of The Emperor."
 msgstr ""
 
-#, fuzzy
-#| msgid "It tore the heart out of the Empire."
 msgid "It is there that all important decisions of the Empire are made."
-msgstr "Insiden itu mengoyakkan jantung Kekaisaran."
+msgstr "Di sana lah dimana semua kebijakan penting Kekaisaran diambil."
 
 msgid ""
 "However, the Empire holds outposts deep in hostile space, like Cerberus "
@@ -700,10 +684,8 @@ msgid ""
 "[Lancelots](ships/empire_lancelot)."
 msgstr ""
 
-#, fuzzy
-#| msgid "local system"
 msgid "## Political System"
-msgstr "sistem lokal"
+msgstr "## Sistem Politik"
 
 msgid ""
 "The Emperor is ultimately the seat of all power and has the ability to "
@@ -866,10 +848,8 @@ msgstr "Klan Gagak"
 msgid "Dreamer Clan"
 msgstr "Klan Pemimpi"
 
-#, fuzzy
-#| msgid "Galactic Space Pirates"
 msgid "# Galactic Space Pirates"
-msgstr "Perompak Angkasa Galaktik"
+msgstr "# Perompak Angkasa Galaktik"
 
 msgid ""
 "The Galactic Space Pirates are split into to main groups, the clans and "
@@ -902,10 +882,8 @@ msgstr ""
 msgid "* **Homeworld:** Varies by Clan"
 msgstr ""
 
-#, fuzzy
-#| msgid "Independent Unpresence"
 msgid "## Independent Pirates"
-msgstr "Independen Tidak Ada"
+msgstr "## Perompak Independen"
 
 msgid ""
 "Formed by individuals that have given up on society and turned to piracy to "
@@ -922,10 +900,8 @@ msgid ""
 "clansworlds."
 msgstr ""
 
-#, fuzzy
-#| msgid "Marauder"
 msgid "## Marauders"
-msgstr "Penjarah"
+msgstr "## Penjarah"
 
 msgid ""
 "Usually formed by individuals that are not fit by the clans due to extreme "
@@ -982,10 +958,8 @@ msgid ""
 "pirates."
 msgstr ""
 
-#, fuzzy
-#| msgid "Wild Ones Pirate Clan"
 msgid "## Wild Ones Clan"
-msgstr "Klan Perompak Para Liar"
+msgstr "## Klan Wild Ones"
 
 msgid ""
 "Formed mainly by [Empire](lore/factions/empire) and [Soromid](lore/factions/"
@@ -1028,10 +1002,8 @@ msgid ""
 "strdreamerclan %>."
 msgstr ""
 
-#, fuzzy
-#| msgid "Raven Clan"
 msgid "## Raven Clan"
-msgstr "Klan Gagak"
+msgstr "## Klan Gagak"
 
 msgid ""
 "Arguably the clan that connects all the pirates and maintains infrastructure "
@@ -1074,10 +1046,8 @@ msgid ""
 "anyone that has the credits to pay."
 msgstr ""
 
-#, fuzzy
-#| msgid "Black Lotus"
 msgid "## Black Lotus"
-msgstr "Seroja Hitam"
+msgstr "## Seroja Hitam"
 
 msgid ""
 "One of the most well organized pirate clans, the Black Lotus prides itself "
@@ -1107,10 +1077,8 @@ msgid ""
 "stability to the area."
 msgstr ""
 
-#, fuzzy
-#| msgid "Dreamer Clan"
 msgid "## Dreamer Clan"
-msgstr "Klan Pemimpi"
+msgstr "## Klan Pengandai"
 
 msgid ""
 "The newest of the main pirate clans, the Dreamer Clan was able to capitalize "
@@ -1163,10 +1131,8 @@ msgstr ""
 msgid "Sovereign Proteron Autarchy"
 msgstr "Autarki Proteron Berdaulat"
 
-#, fuzzy
-#| msgid "Sovereign Proteron Autarchy"
 msgid "# Sovereign Proteron Autarchy"
-msgstr "Autarki Proteron Berdaulat"
+msgstr "# Autarki Proteron Berdaulat"
 
 msgid ""
 "Formed from the former Great House Proteron, the Sovereign Proteron Autarchy "
@@ -1189,10 +1155,8 @@ msgid ""
 "Emperor of caution."
 msgstr ""
 
-#, fuzzy
-#| msgid "Ionization"
 msgid "## Oganization"
-msgstr "Ionisasi"
+msgstr "## Organisasi"
 
 msgid "* **Leader:** High Autarch Python"
 msgstr ""
@@ -1200,10 +1164,8 @@ msgstr ""
 msgid "* **Leading Structure:** Circle of Autarchs"
 msgstr ""
 
-#, fuzzy
-#| msgid "Sovereign Proteron Autarchy"
 msgid "* **Government:** Autarchy"
-msgstr "Autarki Proteron Berdaulat"
+msgstr "* **Pemerintahan:** Autarki"
 
 msgid "* **Formation:** UST 47"
 msgstr ""
@@ -1390,10 +1352,8 @@ msgid ""
 "again be part of the greater Empire."
 msgstr ""
 
-#, fuzzy
-#| msgid "Sovereign Proteron Autarchy"
 msgid "### The Sovereign Proteron Autarchy and the Incident"
-msgstr "Autarki Proteron Berdaulat"
+msgstr "### Autarki Proteron Berdaulat dan Insiden"
 
 msgid ""
 "With its new title, House Proteron enjoyed more freedom and independence "
@@ -1629,15 +1589,11 @@ msgid ""
 "enemy in damage-dealing capability."
 msgstr ""
 
-#, fuzzy
-#| msgid "House Sirius"
 msgid "Great House Sirius"
-msgstr "Wangsa Sirius"
+msgstr "Wangsa Besar Sirius"
 
-#, fuzzy
-#| msgid "House Sirius"
 msgid "# Great House Sirius"
-msgstr "Wangsa Sirius"
+msgstr "# Wangsa Besar Sirius"
 
 msgid ""
 "The House Sirius is one of the Great Houses in [the Empire](lore/factions/"
@@ -1662,14 +1618,8 @@ msgstr ""
 msgid "## Social Structure"
 msgstr ""
 
-#, fuzzy
-#| msgid ""
-#| "House Sirius is defined by its state religion more than anything else, "
-#| "with Sirichana as the focus of worship."
 msgid "House Sirius is defined by its state religion more than anything else."
-msgstr ""
-"Wangsa Sirius memiliki kekhasan yaitu agamanya, dengan Sirichana sebagai "
-"fokus penyembahan."
+msgstr "Wangsa Sirius memiliki kekhasan terutama, yaitu agama kebangsaannya."
 
 msgid ""
 "Its citizens all follow the same faith, and this faith is central to most of "
@@ -1983,10 +1933,8 @@ msgid ""
 "their very souls."
 msgstr ""
 
-#, fuzzy
-#| msgid "House Sirius"
 msgid "## House Sirius: Present day"
-msgstr "Wangsa Sirius"
+msgstr "## Wangsa Sirius: Masa kini"
 
 msgid ""
 "With the Incident in recent history and the Empire on the decline, House "
@@ -2017,10 +1965,8 @@ msgstr ""
 msgid "Soromid"
 msgstr "Soromid"
 
-#, fuzzy
-#| msgid "Soromid"
 msgid "# Soromid"
-msgstr "Soromid"
+msgstr "# Soromid"
 
 msgid ""
 "The Soromid are an important faction, and although they are not a Great "
@@ -2042,10 +1988,8 @@ msgstr ""
 msgid "* **Homeworld:** Kataka (Feye system)"
 msgstr ""
 
-#, fuzzy
-#| msgid "Sorom"
 msgid "### Sorom"
-msgstr "Sorom"
+msgstr "### Sorom"
 
 msgid ""
 "Sorom was a fairly hospitable planet, like many others in the galaxy during "
@@ -2221,10 +2165,8 @@ msgstr ""
 msgid "But it was enough."
 msgstr ""
 
-#, fuzzy
-#| msgid "Soromid"
 msgid "### The Soromid"
-msgstr "Soromid"
+msgstr "### Soromid"
 
 msgid ""
 "The population of Sorom was drastically diminished, but those who survived "
@@ -2431,12 +2373,10 @@ msgid ""
 msgstr ""
 
 msgid "Thurion"
-msgstr "Thurion"
-
-#, fuzzy
-#| msgid "Thurion"
-msgid "# Thurion"
 msgstr "Turion"
+
+msgid "# Thurion"
+msgstr "# Turion"
 
 msgid ""
 "The Thurion were originally a Great Project in [the Empire](lore/factions/"
@@ -2455,10 +2395,8 @@ msgstr ""
 msgid "* **Homeworld:** Sabe (Nava system)"
 msgstr ""
 
-#, fuzzy
-#| msgid "Astral Projection"
 msgid "### Project Thurion"
-msgstr "Proyeksi Astral"
+msgstr "### Proyeksi Turion"
 
 msgid ""
 "Project Thurion was a secret Great Project founded by [the Empire](lore/"
@@ -3079,18 +3017,14 @@ msgid ""
 "but surely into a dictatorship of the gestalt consciousness."
 msgstr ""
 
-#, fuzzy
-#| msgid "House Za'lek"
 msgid "Great House Za'lek"
-msgstr "Wangsa Za'lek"
+msgstr "Wangsa Besar Za'lek"
 
 msgid "(Currently Noona Sanderaite)"
 msgstr ""
 
-#, fuzzy
-#| msgid "House Za'lek"
 msgid "# Great House Za'lek"
-msgstr "Wangsa Za'lek"
+msgstr "# Wangsa Besar Za'lek"
 
 msgid ""
 "House Za'lek is one of the Great Houses in [the Empire](lore/factions/"
@@ -3114,10 +3048,8 @@ msgstr ""
 msgid "* **Homeworld:** Ruadan Prime (Ruadan system)"
 msgstr ""
 
-#, fuzzy
-#| msgid "Traders Society"
 msgid "## Za'lek Society"
-msgstr "Perhimpunan Pedagang"
+msgstr "## Masyarakat Za'lek"
 
 msgid ""
 "As House Za'lek was and is a gigantic think tank, its social structure "
@@ -3177,10 +3109,8 @@ msgid ""
 "so someone out there must be putting theory to practical use."
 msgstr ""
 
-#, fuzzy
-#| msgid "House Za'lek"
 msgid "### Project Za'lek"
-msgstr "Wangsa Za'lek"
+msgstr "### Proyek Za'lek"
 
 msgid ""
 "Project Za'lek was the second Great Project [the Empire](lore/factions/"
@@ -3218,10 +3148,8 @@ msgid ""
 "title of Great House."
 msgstr ""
 
-#, fuzzy
-#| msgid "House Za'lek"
 msgid "### House Za'lek"
-msgstr "Wangsa Za'lek"
+msgstr "### Wangsa Za'lek"
 
 msgid "House Za'lek continued to grow and advance."
 msgstr ""
@@ -3752,15 +3680,11 @@ msgid ""
 "difference."
 msgstr ""
 
-#, fuzzy
-#| msgid "\"Incident?!\""
 msgid "The Incident"
-msgstr "\"Insiden?!\""
+msgstr "Insiden"
 
-#, fuzzy
-#| msgid "\"Incident?!\""
 msgid "# The Incident"
-msgstr "\"Insiden?!\""
+msgstr "# Insiden"
 
 #. Some useful variable names
 #. Add the head guy
@@ -3867,18 +3791,14 @@ msgstr ""
 msgid "Autonav"
 msgstr "Autonav"
 
-#, fuzzy
-#| msgid "Autonav"
 msgid "# Autonav"
-msgstr "Autonav"
+msgstr "# Autonav"
 
 msgid "Bioships"
 msgstr ""
 
-#, fuzzy
-#| msgid "Bioship"
 msgid "# Bioships"
-msgstr "Bioship"
+msgstr "# Kapal Bio"
 
 msgid ""
 "Bioships are hybrid between man-made constructs and living animals, and are "
@@ -7975,7 +7895,7 @@ msgstr ""
 "Kekasiaran."
 
 msgid "Dummy"
-msgstr "Manekin"
+msgstr "Bonekaan"
 
 #. Add the Cargo
 #. Ship to go back to
@@ -8868,7 +8788,7 @@ msgid "Unicorp Eagle 6500 Engine"
 msgstr "Mesin Eagle 6500 Unicorp"
 
 msgid "U. Eagle 6500 Engine"
-msgstr "Mesin Eagle 6500 (U)"
+msgstr "Mesin U. Eagle 6500"
 
 msgid ""
 "The Eagle 6500 is Unicorp's largest and highest-capacity engine, though "
@@ -8948,7 +8868,7 @@ msgid "Unicorp Falcon 1400 Engine"
 msgstr "Mesin Falcon 1400 Unicorp"
 
 msgid "U. Falcon 1400 Engine"
-msgstr "Mesin Falcon 1400 (U)"
+msgstr "Mesin U. Falcon 1400"
 
 msgid ""
 "The Falcon 1400 is a standard low-power medium-heavy engine. It is commonly "
@@ -9015,7 +8935,7 @@ msgid "Unicorp Hawk 360 Engine"
 msgstr "Mesin Hawk 360 Unicorp"
 
 msgid "U. Hawk 360 Engine"
-msgstr "Mesin Hawk 360 (U)"
+msgstr "Mesin U. Hawk 360"
 
 msgid ""
 "The Hawk 360 is aimed at heavy fighters and light-duty cargo vessels. Its "
@@ -9037,7 +8957,7 @@ msgid ""
 msgstr ""
 
 msgid "Dummy Plating"
-msgstr "Plating Dumi"
+msgstr "Pelapis Bonekaan"
 
 msgid "Core Systems (Hull)"
 msgstr "Sistem Inti (Rangka)"
@@ -9082,6 +9002,9 @@ msgid ""
 "prolonged battle. Quite a few captains and their crews owe their lives to "
 "this armour configuration."
 msgstr ""
+"Pelapis berat yang dimanufaktur oleh Schafer & Kane Industries ini dapat "
+"menahan pertempuran berkepanjangan. Cukup banyak kapten dan kru selamat "
+"berkat konfigurasi perisai ini."
 
 msgid "S&K Large Cargo Hull"
 msgstr "Rangka Kargo Besar S&K"
@@ -9100,30 +9023,39 @@ msgid ""
 "modification from Schafer & Kane Industries is generally found only on "
 "important capital ships."
 msgstr ""
+"Dianggap konfigurasi lapis pasaran terbaik, modifikasi lambung kapal dari "
+"Schafer & Kane Industries ini umumnya hanya digunakan oleh kapal induk "
+"penting."
 
 msgid "Unicorp D-58 Heavy Plating"
 msgstr "Pelapis Berat D-58 Unicorp"
 
 msgid "U. D-58 Heavy Plating"
-msgstr "Pelapis Berat D-58 (U)"
+msgstr "Pelapis Berat U. D-58"
 
 msgid ""
 "Though a respectable design, the D-58 plating is outclassed by modern heavy "
 "weapons, with most seasoned captains opting for a heavier, more advanced "
 "plating."
 msgstr ""
+"Walaupun hebat pada masanya, pelapis D-58 kalah oleh senjata berat modern, "
+"sehingga kapten-kapten berpengalaman cenderung menggunakan pelapis yang "
+"lebih berat dan canggih."
 
 msgid "Unicorp D-72 Heavy Plating"
 msgstr "Pelapis Berat D-72 Unicorp"
 
 msgid "U. D-72 Heavy Plating"
-msgstr "Pelapis Berat D-72 (U)"
+msgstr "Pelapis Berat U. D-72"
 
 msgid ""
 "Though a respectable design, the D-72 plating is outclassed by modern heavy "
 "weapons, with most seasoned captains opting for a heavier, more advanced "
 "plating."
 msgstr ""
+"Walaupun hebat pada masanya, pelapis D-72 kalah oleh senjata berat modern, "
+"sehingga kapten-kapten berpengalaman cenderung menggunakan pelapis yang "
+"lebih berat dan canggih."
 
 msgid "Nexus Medium Stealth Plating"
 msgstr ""
@@ -9172,6 +9104,8 @@ msgid ""
 "combat plating provides ample protection utilizing the latest in defensive "
 "materials."
 msgstr ""
+"Dirancang untuk korvet dan kapal seukuran, pelapis tempur menengah Schafer & "
+"Kane menyediakan banyak perlindungan menggunakan material paling mutakhir."
 
 msgid "S&K Medium-Heavy Combat Plating"
 msgstr "Pelapis Tempur Menengah-Berat S&K"
@@ -9181,12 +9115,15 @@ msgid ""
 "heavy combat plating provides excellent protection from everything save "
 "capital-class threats."
 msgstr ""
+"Dirancang untuk perusak dan kapal seukuran, pelapis tempur menengah-berat "
+"Schafer & Kane menyediakan perlindungan sangat baik terhadap apapun selain "
+"ancaman seukuran kapal induk."
 
 msgid "Unicorp D-23 Medium Plating"
-msgstr "Pelapis Tempur Menengah D-23 Unicorp"
+msgstr "Pelapis Menengah D-23 Unicorp"
 
 msgid "U. D-23 Medium Plating"
-msgstr "Pelapis Tempur Menengah D-23 (U)"
+msgstr "Pelapis Menengah U. D-23"
 
 msgid ""
 "D-23 plating provides a serviceable layer of armour to medium ships, and "
@@ -9197,7 +9134,7 @@ msgid "Unicorp D-38 Medium Plating"
 msgstr "Pelapis Tempur Menengah D-38 Unicorp"
 
 msgid "U. D-38 Medium Plating"
-msgstr "Pelapis Tempur Menengah D-38 (U)"
+msgstr "Pelapis Menengah U. D-38"
 
 msgid ""
 "Unicorp's D-24 plating is similar to D-38 plating, but the armour plates are "
@@ -9253,21 +9190,27 @@ msgid ""
 "Schafer & Kane Industries provides an impressive amount of cargo space "
 "without compromising the hull's integrity."
 msgstr ""
+"Walau terkesan mahal untuk kurir kecil, modifikasi lambung kapal dari "
+"Schafer & Kane Industries ini menyediakan banyak ruang kargo tanpa "
+"melemahkan kekuatan rangka."
 
 msgid "S&K Ultralight Combat Plating"
-msgstr ""
+msgstr "Pelapis Tempur Ultra-Ringan S&K"
 
 msgid ""
 "Schafer & Kane Industries mostly develop for larger ships, but the "
 "Ultralight Combat Plating configuration is a product made for light fighters "
 "and in-system patrol craft, providing optimum protection."
 msgstr ""
+"Schafer & Kane Industries biasanya memanufaktur untuk kapal besar, namun "
+"konfigurasi Pelapis Tempur Ultra-Tipis ini adalah sebuah produk optimum "
+"untuk melindungi kapal tempur dan patroli dalam sistem."
 
 msgid "Unicorp D-2 Light Plating"
-msgstr ""
+msgstr "Pelapis Ringan D-2 Unicorp"
 
 msgid "U. D-2 Light Plating"
-msgstr ""
+msgstr "Pelapis Ringan U. D-2"
 
 msgid ""
 "Commonly found on civilian vessels, the D-2 plating is popular with ship "
@@ -10759,7 +10702,7 @@ msgid "Four Winds Ragnarok Beam"
 msgstr ""
 
 msgid "Active Plating"
-msgstr ""
+msgstr "Pelapis Aktif"
 
 msgid "Armour Modifier"
 msgstr ""
@@ -10929,7 +10872,7 @@ msgid "Medium Shield Booster"
 msgstr ""
 
 msgid "Microbond Plating"
-msgstr ""
+msgstr "Pelapis Ikatan Mikro"
 
 msgid ""
 "Further developed from Nanobond plating, Microbond plating is a less dense, "
@@ -10938,7 +10881,7 @@ msgid ""
 msgstr ""
 
 msgid "Nanobond Plating"
-msgstr ""
+msgstr "Pelapis Ikatan Nano"
 
 msgid ""
 "Nanobond is the successor to Plasteel. It follows the same approach but has "
@@ -33998,7 +33941,7 @@ msgstr ""
 #. Gets someone to make a message (useful for hook.timer)
 #. Equips a Vendetta with full mace rockets
 msgid "Warlords"
-msgstr "Panglima perang"
+msgstr "Panglima Perang"
 
 #. Spawns a merchant ship that explains what happens
 msgid "Trader {ship}"
@@ -81555,16 +81498,6 @@ msgstr ""
 #. Should not happen, but putting this here just in case.
 #. Get reason
 #. Set mission details
-#, fuzzy
-#| msgid ""
-#| "The pirate known as {pirname} was recently seen in the {sys} system. "
-#| "{fct} authorities want this pirate alive{reason}. {pirname} is believed "
-#| "to be flying a {shipclass}-class ship. The pirate may disappear if you "
-#| "take too long to reach the {sys} system.\n"
-#| "\n"
-#| "#nTarget:#0 {pirname} ({shipclass}-class ship)\n"
-#| "#nWanted:#0 Alive\n"
-#| "#nLast Seen:#0 {sys} system"
 msgid ""
 "A meddlesome {fct} pilot known as {plt} was recently seen in the {sys} "
 "system. Local crime lords want this pilot dead{reason}. {plt} is known to be "
@@ -81576,15 +81509,15 @@ msgid ""
 "#nLast seen:#0 {sys} system\n"
 "#nTime limit:#0 {deadline}"
 msgstr ""
-"Seorang perompak yang dikenal dengan nama {pirname} baru-baru ini dijumpai "
-"di sistem {sys}. Otoritas {fct} menginginkan perompak ini ditangkap hidup-"
-"hidup karena telah{reason}. Diketahui bahwa {pirname} menahkodai kapal "
-"berjenis {shipclass}. Ia mungkin kabur kalau kamu terlalu lama mencapai "
-"sistem {sys}.\n"
+"Seorang pilot {fct} menyusahkan yang dikenal dengan nama {plt} baru-baru ini "
+"dijumpai di sistem {sys}. Bos geng lokal menginginkan pilot ini mati karena "
+"telah{reason}. Diketahui bahwa {plt} menahkodai kapal berjenis {shipclass}. "
+"Ia mungkin kabur kalau kamu terlalu lama mencapai sistem {sys}.{msg}\n"
 "\n"
-"#nTarget:#0 {pirname} (kapal jenis {shipclass})\n"
-"#nDiinginkan:#0 Hidup-hidup\n"
-"#nTerakhir Terlihat:#0 sistem {sys}"
+"#nTarget:#0 {plt} (kapal jenis {shipclass})\n"
+"#nDiinginkan:#0 Mati\n"
+"#nTerakhir terlihat:#0 sistem {sys}\n"
+"#nTenggat waktu:#0 {deadline}"
 
 #. We're not on a pirate stronghold, so include a clear warning that the
 #. mission is in fact illegal.
@@ -114336,7 +114269,7 @@ msgid "Player ship does not exist! Giving starting ship."
 msgstr ""
 
 msgid "You acquired this ship through save corruption."
-msgstr ""
+msgstr "Kamu mendapatkan kapal ini melalui pengutak-atikan berkas simpan."
 
 msgid "Something went horribly wrong, player does not exist after load..."
 msgstr ""
