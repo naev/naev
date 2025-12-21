@@ -17,8 +17,7 @@ naevc = { workspace = true }
 anyhow = { workspace = true }
 formatx = { workspace = true }
 semver = { workspace = true }
-# We have to rename it so it doesn't conflict
-logcore = { version = "0.4", package = "log" }
+log = "0.4"
 
 [target.'cfg(unix)'.dependencies]
 nix = { version="0.30", features=["signal"] }
