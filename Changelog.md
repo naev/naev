@@ -6,7 +6,10 @@
    * Systems with spobs will now have circles again in the editor
    * Plugin manager also sorts by compatibility
    * Fixed waste dumping in REDACTED
+   * Added some new portraits
    * Fixed some Soromid portrait generation
+   * Hide faction hit message when capturing if nothing happens
+   * Spellchecking and translation updates
 
 
 ## v0.13.0-beta.4
