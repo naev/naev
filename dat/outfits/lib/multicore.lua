@@ -384,12 +384,17 @@ end
 
 function multicore.set( p, po )
    local fuel = p:fuel()
-   -- TODO this po:clear() is actually necessary, but only matters when outfits
-   -- will turn on/off different stats as without the clear they will persist.
-   -- However, currently this makes it so the player loses all their fuel in
-   -- certain configurations. Until this is solved, we can just disabled the
-   -- po:clear() as this does not affect any of the current existing outfits.
-   -- This should be fixed when possible.
+   -- TODO: FIXME
+   -- Commenting the following line is a temporary bugfix for #3081.
+   -- This line *must* be restored when a true bugfix is found,
+   -- as not having it may cause bugs with future outfits.
+   --
+   -- Details: This po:clear() is actually necessary, but only matters when
+   -- outfits will turn on/off different stats as without the clear they will
+   -- persist. However, currently this makes it so the player loses all their
+   -- fuel in certain configurations. Until this is solved, we can just
+   -- disabled the po:clear() as this does not affect any of the current
+   -- existing outfits. This should be fixed when possible.
    --po:clear()
    if mem.stats then
       for s, val in pairs(mem.stats) do
