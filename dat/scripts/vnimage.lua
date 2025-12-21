@@ -175,6 +175,7 @@ local neutral_f = {
    {"neutral/female7n_v3"},
    -- Image generators
    gen( "neutral/female01" ),
+   gen( "neutral/female05" ),
    gen( "neutral/female07" ),
 }
 vni.genericMale = get_list( neutral_m )
