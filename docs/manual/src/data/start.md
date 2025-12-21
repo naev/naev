@@ -38,3 +38,9 @@ spob_lua_default = "spob/lua/default.lua"
 dtype_default = "energy"
 local_map_default = "Local System Map"
 ```
+
+## Making Use of the Starting Event
+
+It is recommended to use the starting event to set up things and introduce the player to your plugin.
+The Lua scripting in the starting event can do all sorts of things like change the player's starting ship, make them land, change the credits, etc.
+It can also be done conditionally on, for example, the player's starting choices.
