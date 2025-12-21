@@ -1,4 +1,4 @@
-## v0.13.0-beta.5 (unreleased)
+## v0.13.0-beta.5
 
    * Introduce start.toml to replace start.xml
    * Implemented Audio system in Rust
@@ -8,6 +8,7 @@
    * Fixed waste dumping in REDACTED
    * Added some new portraits
    * Fixed some Soromid portrait generation
+   * New engine sound effects for different ship makers with more diversity
    * Hide faction hit message when capturing if nothing happens
    * Spellchecking and translation updates
 
