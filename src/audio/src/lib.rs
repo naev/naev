@@ -1894,7 +1894,9 @@ impl System {
         let cvol = 1.0 - c;
         for (_, v) in self.voices.lock().unwrap().iter_mut() {
             let src = v.source();
-            if let Some(pitch) = src.g_pitch {
+            if v.ingame()
+                && let Some(pitch) = src.g_pitch
+            {
                 src.inner.parameter_f32(AL_PITCH, src.pitch * pitch * speed);
             }
             let c = if v.ingame() { cvol } else { 1.0 };
