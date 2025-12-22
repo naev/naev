@@ -179,7 +179,7 @@ impl StartData {
 }
 
 use std::sync::LazyLock;
-static START: LazyLock<StartData> = LazyLock::new(|| match StartData::load() {
+pub static START: LazyLock<StartData> = LazyLock::new(|| match StartData::load() {
     Ok(data) => data,
     Err(e) => {
         warn_err!(e);

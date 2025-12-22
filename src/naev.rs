@@ -257,12 +257,11 @@ fn naevmain() -> Result<()> {
         if naevc::conf.fpu_except != 0 {
             naevc::debug_enableFPUExcept();
         }
+    }
 
-        info!(
-            " {}\n",
-            CStr::from_ptr(naevc::start_name()).to_string_lossy()
-        );
+    info!(" {}\n", naev_core::start::START.name.to_string_lossy());
 
+    unsafe {
         /* Display the SDL version. */
         naevc::print_SDLversion();
     }
