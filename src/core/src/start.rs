@@ -196,7 +196,7 @@ macro_rules! start_c_func_str {
         #[unsafe(no_mangle)]
         pub extern "C" fn $funcname() -> *const c_char {
             match START.$field.is_empty() {
-                true => std::ptr::null_mut(),
+                true => std::ptr::null(),
                 false => START.$field.as_ptr().into(),
             }
         }
