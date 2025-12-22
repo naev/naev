@@ -12,5 +12,6 @@
  <specific type="modification">
   <ew_hide>-15</ew_hide>
   <armour_mod>-10</armour_mod>
+  <jam_chance>6</jam_chance>
  </specific>
 </outfit>
