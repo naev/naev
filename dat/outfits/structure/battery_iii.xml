@@ -3,7 +3,7 @@
   <typename>Energy Modifier</typename>
   <slot>structure</slot>
   <size>large</size>
-  <mass>120</mass>
+  <mass>100</mass>
   <price>225000</price>
   <description>A very large battery unit designed to hold 1000 GJ of energy. It can only be mounted on very large ships.</description>
   <gfx_store>capacitor4-g</gfx_store>
