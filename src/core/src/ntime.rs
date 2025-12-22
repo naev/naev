@@ -18,7 +18,7 @@ impl<'de> Deserialize<'de> for NTime {
         D: Deserializer<'de>,
     {
         let data = String::deserialize(deserializer)?;
-        Ok(NTime::from_string(&data).unwrap())
+        NTime::from_string(&data).map_err(serde::de::Error::custom)
     }
 }
 struct NTimeInternal {
