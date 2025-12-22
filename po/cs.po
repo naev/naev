@@ -123568,8 +123568,8 @@ msgid "PAUSED"
 msgstr "POZASTAVENO"
 
 #, c-format
-msgid "SDL: %d.%d.%d [compiled: %d.%d.%d]"
-msgstr "SDL: %d.%d.%d [zkompilováno: %d.%d.%d]"
+msgid "SDL: {} [compiled: {}]"
+msgstr "SDL: {} [zkompilováno: {}]"
 
 msgid "SDL is newer than compiled version"
 msgstr "SDL je novější než zkompilovaná verze"

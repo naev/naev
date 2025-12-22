@@ -736,26 +736,6 @@ void update_routine( double dt, int dohooks )
 }
 
 /**
- * @brief Prints the SDL version to console.
- */
-void print_SDLversion( void )
-{
-   /* Extract information. */
-   const int compiled = SDL_VERSION;
-   const int linked   = SDL_GetVersion();
-   DEBUG( _( "SDL: %d.%d.%d [compiled: %d.%d.%d]" ),
-          SDL_VERSIONNUM_MAJOR( compiled ), SDL_VERSIONNUM_MINOR( compiled ),
-          SDL_VERSIONNUM_MICRO( compiled ), SDL_VERSIONNUM_MAJOR( linked ),
-          SDL_VERSIONNUM_MINOR( linked ), SDL_VERSIONNUM_MICRO( linked ) );
-
-   /* Check if major/minor version differ. */
-   if ( linked > compiled )
-      WARN( _( "SDL is newer than compiled version" ) );
-   if ( linked < compiled )
-      WARN( _( "SDL is older than compiled version." ) );
-}
-
-/**
  * @brief Gets the last delta-tick.
  */
 double naev_getrealdt( void )

@@ -3,7 +3,7 @@ pub use anyhow;
 use anyhow::{Error, Result};
 use formatx::formatx;
 use fs_err as fs;
-use log::{debug, info, infox, warn, warn_err, warnx};
+use log::{debug, debugx, info, infox, warn, warn_err, warnx};
 use ndata::env;
 use sdl3 as sdl;
 use std::ffi::{CStr, CString};
@@ -261,9 +261,26 @@ fn naevmain() -> Result<()> {
 
     info!(" {}\n", naev_core::start::START.name.to_string_lossy());
 
-    unsafe {
-        /* Display the SDL version. */
-        naevc::print_SDLversion();
+    {
+        let compiled = semver::Version::new(
+            naevc::SDL_MAJOR_VERSION.into(),
+            naevc::SDL_MINOR_VERSION.into(),
+            naevc::SDL_MICRO_VERSION.into(),
+        );
+        let linked = {
+            let linked = sdl::version::version();
+            semver::Version::new(
+                linked.major.into(),
+                linked.minor.into(),
+                linked.patch.into(),
+            )
+        };
+        debugx!(gettext("SDL: {} [compiled: {}]"), &linked, &compiled);
+        if linked > compiled {
+            warn!("{}", gettext("SDL is newer than compiled version"));
+        } else if linked < compiled {
+            warn!("{}", gettext("SDL is older than compiled version."));
+        }
     }
 
     /* Set up OpenGL. */

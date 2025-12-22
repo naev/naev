@@ -12,12 +12,14 @@ pub mod consts {
     pub const AL_BUFFER_CALLBACK_USER_PARAM_SOFT: ALenum = 0x19A1;
 }
 
+#[allow(clippy::upper_case_acronyms)]
 pub type ALBUFFERCALLBACKTYPESOFT = unsafe extern "C" fn(
     userptr: *mut ALvoid,
     sampledata: *mut ALvoid,
     numbytes: ALsizei,
 ) -> ALsizei;
 
+#[allow(clippy::upper_case_acronyms)]
 pub type ALBUFFERCALLBACKSOFT = unsafe extern "C" fn(
     buffer: ALuint,
     format: ALenum,
@@ -26,9 +28,11 @@ pub type ALBUFFERCALLBACKSOFT = unsafe extern "C" fn(
     userptr: *mut ALvoid,
 );
 
+#[allow(clippy::upper_case_acronyms)]
 pub type ALGETBUFFERPTRSOFT =
     unsafe extern "C" fn(buffer: ALuint, param: ALenum, ptr: *mut *mut ALvoid);
 
+#[allow(clippy::upper_case_acronyms)]
 pub type ALGETBUFFER3PTRSOFT = unsafe extern "C" fn(
     buffer: ALuint,
     param: ALenum,

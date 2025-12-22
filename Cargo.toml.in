@@ -140,6 +140,7 @@ serde-seeded = { workspace = true }
 serde_yaml2 = "0.1"
 toml = { workspace = true }
 fs-err = { workspace = true }
+semver = { workspace = true }
 # gltf-rs crate doesn't support WEBP in any release atm...
 gltf = { version = "1.4", features = ["extras", "names", "utils", "EXT_texture_webp", "KHR_materials_emissive_strength"] }
 #gltf = { version = "1", features = ["extras", "names", "utils"] }

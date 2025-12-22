@@ -90,7 +90,6 @@ int    naev_event_resize( Uint32 type );
 int       naev_shouldRenderLoadscreen( void );
 void      naev_doRenderLoadscreen( void );
 void      naev_renderLoadscreen( void );
-void      print_SDLversion( void );
 void      window_caption( void );
 nlua_env *loadscreen_load( void );
 void      loadscreen_unload( void );

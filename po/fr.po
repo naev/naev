@@ -124905,8 +124905,8 @@ msgid "PAUSED"
 msgstr "EN PAUSE"
 
 #, c-format
-msgid "SDL: %d.%d.%d [compiled: %d.%d.%d]"
-msgstr "SDL: %d.%d.%d [compiled: %d.%d.%d]"
+msgid "SDL: {} [compiled: {}]"
+msgstr "SDL: {} [compiled: {}]"
 
 msgid "SDL is newer than compiled version"
 msgstr "SDL is newer than compiled version"
