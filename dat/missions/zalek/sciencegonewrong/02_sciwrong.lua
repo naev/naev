@@ -41,11 +41,7 @@ mem.t_pla[1] = mem.t_sys[1]:spobs()[1]
 --mem.t_pla[2], mem.t_sys[2] = spob.getS("Gastan")
 
 function create ()
-   -- Have to be at centre of operations.
    mem.t_pla[2], mem.t_sys[2] = sciwrong.getCenterOperations()
-   if spob.cur() ~= mem.t_pla[2] then
-      misn.finish(false)
-   end
 
    -- Spaceport bar stuff
    misn.setNPC( _("Dr. Geller"),  sciwrong.geller.portrait, _("You see Dr. Geller going from one person to the next, seemingly asking for something.") )
@@ -206,13 +202,11 @@ end
 function sp_baddies()
    hook.rm(mem.spawnhook)
    badguys = {}
-   badguys = spawn_baddies(mem.t_pla[1])
-   for i=1,#badguys do
-      badguys[i]:setHostile(true)
-   end
    bghook = {}
-   for i=1,#badguys do
-      bghook[i] = hook.pilot(badguys[i], "exploded", "dead_drone",i)
+   badguys = spawn_baddies(mem.t_pla[1])
+   for k, bg in ipairs(badguys) do
+      bg:setHostile(true)
+      bghook[k] = hook.pilot(bg, "exploded", "dead_drone",k)
    end
    local jps = system.cur():jumps(true)
    t_drone:taskClear()
@@ -253,10 +247,10 @@ function drone_jumped ()
    misn.markerRm(mem.mmarker)
    if (mem.jumps==0) then
       mem.mmarker = misn.markerAdd(mem.t_sys[3], "high")
-      for i=1,#badguys do
-         badguys[i]:control()
-         badguys[i]:hyperspace()
-         hook.rm(bghook[i])
+      for k,bg in ipairs(badguys) do
+         bg:control()
+         bg:hyperspace()
+         hook.rm(bghook[k])
       end
       if not mem.fled then
          player.msg(_([[Geller: "Interesting, the other drones are running away..."]]), true)
@@ -377,49 +371,46 @@ end
 function drones_flee ()
    player.msg(_([[Geller: "Interesting, the other drones are running away..."]]),true)
    mem.fled = true
-   for i=1,#badguys do
-      pilot.taskClear(badguys[i])
-      badguys[i]:control(true)
-      --badguys[i]:changeAI("flee")
-      badguys[i]:hyperspace()
+   for k,bg in ipairs(badguys) do
+      pilot.taskClear(bg)
+      bg:control(true)
+      bg:hyperspace()
    end
-   for i=1,#bghook do
-      hook.rm(bghook[i])
+   for k,bh in ipairs(bghook) do
+      hook.rm(bh)
    end
+   bghook = {}
 end
 
 -- check how many drones are left, tell them to leave if <=2
 function dead_drone ()
    -- remove dead drones
-   for i=1,#badguys do
-      if not badguys[i]:exists() then
---         player.msg("If close worked")
-         table.remove(badguys,i)
-         break
+   local newbg = {}
+   for k,bg in ipairs(badguys) do
+      if bg:exists() then
+         table.insert( newbg, bg )
       end
    end
-   if(#badguys<=2) then
-      -- if it is the last attacking drone, make it run away from the player
-      badguys[1]:control()
-      t_drone:control()
-      badguys[2]:control()
-      local jpt = get_nearest_jump(badguys[1])
+   badguys = newbg
+
+   if not mem.fled and #badguys<=2 then
+      local jpt = get_nearest_jump(t_drone)
       local jpt2 = jpt
-      local jpts = system.cur():jumps(true)
-      for i,j_pt in ipairs(jpts) do
+      for i,j_pt in ipairs(system.cur():jumps(true)) do
          if j_pt ~= jpt2 then
             jpt2 = j_pt
             break
          end
       end
-      badguys[1]:hyperspace(jpt2:dest())
+      for k,bg in ipairs(badguys) do
+         bg:control()
+         bg:hyperspace( jpt2:dest() )
+      end
+      -- attacking drones run away
+      t_drone:control()
       t_drone:hyperspace(jpt:dest())
-      badguys[2]:hyperspace()
       player.msg(_([[Geller: "Interesting, the other drones are running away..."]]),true)
       mem.fled = true
-      for i=1,#bghook do
-         hook.rm(bghook[i])
-      end
    end
 end
 
