@@ -617,6 +617,17 @@ impl Source {
             g_pitch: Some(1.),
         }
     }
+
+    fn set_volume(&mut self, volume: f32, master: f32, cvol: f32) {
+        self.volume = volume;
+        self.inner
+            .parameter_f32(AL_GAIN, cvol * master * volume * self.g_volume);
+    }
+
+    fn update_volume(&self, master: f32, cvol: f32) {
+        self.inner
+            .parameter_f32(AL_GAIN, cvol * master * self.volume * self.g_volume);
+    }
 }
 
 #[derive(PartialEq, Debug)]
@@ -1052,33 +1063,32 @@ impl Audio {
         }
     }
 
+    fn update_volume(&self, master: f32, cvol: f32) {
+        let src = self.source();
+        let c = if self.ingame() { 1.0 - cvol } else { 1.0 };
+        src.update_volume(master, c);
+    }
+
     pub fn set_volume(&mut self, vol: f32) {
         check_audio!(self);
         let master = AUDIO.volume.read().unwrap().volume;
+        let cvol = AUDIO.compression_gain.load(Ordering::Relaxed);
         let ingame = self.ingame();
         let src = self.source_mut();
-        src.volume = vol;
-        let c = if ingame {
-            1.0 - AUDIO.compression_gain.load(Ordering::Relaxed)
-        } else {
-            1.0
-        };
-        src.inner
-            .parameter_f32(AL_GAIN, c * master * src.volume * src.g_volume);
+        let c = if ingame { 1.0 - cvol } else { 1.0 };
+        src.set_volume(vol, master, c);
     }
 
     pub fn set_volume_raw(&mut self, vol: f32) {
         check_audio!(self);
         let ingame = self.ingame();
         let src = self.source_mut();
-        src.volume = vol;
         let c = if ingame {
             1.0 - AUDIO.compression_gain.load(Ordering::Relaxed)
         } else {
             1.0
         };
-        src.inner
-            .parameter_f32(AL_GAIN, c * src.volume * src.g_volume);
+        src.set_volume(vol, 1.0, c);
     }
 
     pub fn set_gain(&self, vol: f32) {
@@ -1563,11 +1573,11 @@ impl GroupRef {
         let cvol = 1.0 - AUDIO.compression_gain.load(Ordering::Relaxed);
         for v in group.voices.iter() {
             if let Some(voice) = voices.get_mut(v.0) {
-                let c = if voice.ingame() { cvol } else { 1.0 };
-                let src = voice.source_mut();
-                src.g_volume = group.volume;
-                src.inner
-                    .parameter_f32(AL_GAIN, c * master * src.volume * src.g_volume);
+                {
+                    let src = voice.source_mut();
+                    src.g_volume = group.volume;
+                }
+                voice.update_volume(master, cvol);
             }
         }
         Ok(())
@@ -1859,11 +1869,8 @@ impl System {
         let cvol = 1.0 - self.compression_gain.load(Ordering::Relaxed);
         for (_, v) in self.voices.lock().unwrap().iter() {
             match v {
-                Audio::Static(this) | Audio::LuaStatic(this) => {
-                    let c = if this.ingame { cvol } else { 1.0 };
-                    this.source
-                        .inner
-                        .parameter_f32(AL_GAIN, c * master * v.volume())
+                Audio::Static(_) | Audio::LuaStatic(_) => {
+                    v.update_volume(master, cvol);
                 }
                 _ => (),
             }
@@ -1891,17 +1898,14 @@ impl System {
         self.speed.store(speed, Ordering::Relaxed);
 
         // Update the rest of the voices
-        let cvol = 1.0 - c;
         for (_, v) in self.voices.lock().unwrap().iter_mut() {
-            let src = v.source();
-            if v.ingame()
-                && let Some(pitch) = src.g_pitch
-            {
-                src.inner.parameter_f32(AL_PITCH, src.pitch * pitch * speed);
+            if v.ingame() {
+                let src = v.source();
+                if let Some(pitch) = src.g_pitch {
+                    src.inner.parameter_f32(AL_PITCH, src.pitch * pitch * speed);
+                }
             }
-            let c = if v.ingame() { cvol } else { 1.0 };
-            src.inner
-                .parameter_f32(AL_GAIN, c * master * src.volume * src.g_volume);
+            v.update_volume(master, c);
         }
     }
 
