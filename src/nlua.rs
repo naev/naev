@@ -660,7 +660,9 @@ pub extern "C" fn nlua_pushenv(lua: *mut mlua::lua_State, env: *mut LuaEnv) {
 pub extern "C" fn nlua_resize() {
     let lua = &NLUA;
     let (screen_w, screen_h) = unsafe { (naevc::gl_screen.w, naevc::gl_screen.h) };
-    lua.resize(screen_w, screen_h).unwrap();
+    if let Err(e) = lua.resize(screen_w, screen_h) {
+        warn_err!(e);
+    };
 }
 
 #[unsafe(no_mangle)]
