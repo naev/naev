@@ -1079,7 +1079,7 @@ impl Audio {
 
     fn update_volume(&self, master: f32, cvol: f32) {
         let src = self.source();
-        let c = if self.ingame() { 1.0 - cvol } else { 1.0 };
+        let c = if self.ingame() { cvol } else { 1.0 };
         src.update_volume(master, c);
     }
 
@@ -1550,6 +1550,8 @@ impl GroupRef {
 
     fn reset_speed(group: &Group) {
         let speed = AUDIO.speed.load(Ordering::Relaxed);
+        let master = AUDIO.volume.read().unwrap().volume;
+        let cvol = 1.0 - AUDIO.compression_gain.load(Ordering::Relaxed);
         let mut voices = AUDIO.voices.lock().unwrap();
         let pitch = group.speed_affects.then_some(group.pitch);
         for v in group.voices.iter() {
@@ -1557,6 +1559,7 @@ impl GroupRef {
                 let src = voice.source_mut();
                 src.g_pitch = pitch;
                 src.update_pitch(speed);
+                src.update_volume(master, cvol);
             }
         }
     }
@@ -1581,8 +1584,8 @@ impl GroupRef {
         group.volume = volume;
 
         let master = AUDIO.volume.read().unwrap().volume;
-        let mut voices = AUDIO.voices.lock().unwrap();
         let cvol = 1.0 - AUDIO.compression_gain.load(Ordering::Relaxed);
+        let mut voices = AUDIO.voices.lock().unwrap();
         for v in group.voices.iter() {
             if let Some(voice) = voices.get_mut(v.0) {
                 {
@@ -1910,10 +1913,11 @@ impl System {
         self.speed.store(speed, Ordering::Relaxed);
 
         // Update the rest of the voices
+        let cvol = 1.0 - c;
         for (_, v) in self.voices.lock().unwrap().iter_mut() {
             if v.ingame() {
                 v.update_pitch(speed);
-                v.update_volume(master, c);
+                v.update_volume(master, cvol);
             }
         }
     }
