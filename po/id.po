@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
 "POT-Creation-Date: 2025-12-20 17:38+0900\n"
-"PO-Revision-Date: 2025-12-21 12:21+0000\n"
+"PO-Revision-Date: 2025-12-23 01:42+0000\n"
 "Last-Translator: AntimatterReactor <antimatterreactor@noreply.codeberg.org>\n"
 "Language-Team: Indonesian <https://translate.codeberg.org/projects/naev/naev/"
 "id/>\n"
@@ -1391,9 +1391,8 @@ msgid ""
 "purchase."
 msgstr ""
 
-#, fuzzy
 msgid "Admonisher ΩIIa"
-msgstr "Admoniser"
+msgstr "Admonisher ΩIIa"
 
 msgid "Ancestor"
 msgstr "Ansestor"
@@ -1513,16 +1512,14 @@ msgstr "Kauweke"
 msgid "Kestrel"
 msgstr "Kestrel"
 
-#, fuzzy
 msgid "Kestrel Sigma"
-msgstr "Kestrel"
+msgstr "Kestrel Sigma"
 
 msgid "Koala"
 msgstr "Koala"
 
-#, fuzzy
 msgid "Koala Armoured"
-msgstr "Zirah Biometal"
+msgstr "Berzirah Koala"
 
 msgid "Lancelot"
 msgstr "Lancelot"
@@ -1626,9 +1623,8 @@ msgstr ""
 msgid "Quicksilver"
 msgstr "Quicksilver"
 
-#, fuzzy
 msgid "Quicksilver Mercury"
-msgstr "Quicksilver"
+msgstr "Quicksilver Mercury"
 
 msgid "Rhino"
 msgstr "Rhino"
@@ -7429,9 +7425,8 @@ msgstr ""
 msgid "Ship Stats"
 msgstr "Massa Kapal"
 
-#, fuzzy
 msgid "# Ship Stats"
-msgstr "Massa Kapal"
+msgstr "# Stat Kapal"
 
 msgid ""
 "There are many different important stats for ships that define their "
@@ -7446,9 +7441,8 @@ msgid ""
 "outfits, and other sources such as temporary effects."
 msgstr ""
 
-#, fuzzy
 msgid "## Core Stats"
-msgstr "Sistem Inti"
+msgstr "## Stat Inti"
 
 msgid "The core stats define basic properties of the ship."
 msgstr ""
@@ -7595,9 +7589,8 @@ msgstr ""
 msgid "Abbreviation"
 msgstr ""
 
-#, fuzzy
 msgid "Length of Time"
-msgstr "Jarak: "
+msgstr "Panjang Waktu"
 
 msgid "Equal to (in Earth time)"
 msgstr ""
@@ -7608,9 +7601,8 @@ msgstr ""
 msgid "Seconds"
 msgstr ""
 
-#, fuzzy
 msgid "\"s\""
-msgstr "\"Iya\""
+msgstr "\"s\""
 
 msgid "1 Earth second"
 msgstr ""
@@ -7681,9 +7673,8 @@ msgid ""
 "civilization."
 msgstr ""
 
-#, fuzzy
 msgid "## Explanation"
-msgstr "Ekspansi Kargo"
+msgstr "## Penjelasan"
 
 msgid ""
 "UST consists of three basic components describing different amounts of time: "
@@ -7766,9 +7757,8 @@ msgid ""
 "(ships/quicksilver) take less."
 msgstr ""
 
-#, fuzzy
 msgid "Trading"
-msgstr "Pedagang"
+msgstr "Berdagang"
 
 msgid "# Trading"
 msgstr ""
@@ -7797,9 +7787,8 @@ msgstr ""
 msgid "Weapon Sets"
 msgstr ""
 
-#, fuzzy
 msgid "# Weapon Sets"
-msgstr "Lisensi Senjata Berat"
+msgstr "# Set Senjata"
 
 msgid ""
 "Outfits can be used by assigning them to weapon sets from the information "
@@ -7856,9 +7845,8 @@ msgid ""
 "when released."
 msgstr ""
 
-#, fuzzy
 msgid "## Options"
-msgstr "Pengaturan"
+msgstr "## Pengaturan"
 
 msgid "You can further customize your weapon sets with options."
 msgstr ""
@@ -7951,24 +7939,20 @@ msgstr ""
 msgid "Ships Overview"
 msgstr ""
 
-#, fuzzy
 msgid "# Ships"
-msgstr "Cari Kapal"
+msgstr "# Kapal"
 
-#, fuzzy
 msgid "Ship Classes"
-msgstr "Massa Kapal"
+msgstr "Jenis Kapal"
 
-#, fuzzy
 msgid "# Ship Classes"
-msgstr "Massa Kapal"
+msgstr "# Jenis Kapal"
 
 msgid "Ships are divided between military and civilian class ships."
 msgstr ""
 
-#, fuzzy
 msgid "## Military Ships"
-msgstr "Stasiun Militer"
+msgstr "## Kapal Militer"
 
 msgid ""
 "Military ships are focused on warfare and come in different sizes and "
@@ -8052,9 +8036,8 @@ msgid ""
 "reconnaissance and analysis."
 msgstr ""
 
-#, fuzzy
 msgid "## Civilian Ships"
-msgstr "Stasiun Sipil"
+msgstr "## Kapal Sipil"
 
 msgid ""
 "Civilian ships tend to focus on utility and bonuses such as cargo inertia or "
@@ -8095,113 +8078,88 @@ msgstr ""
 msgid "Armoured Transport"
 msgstr "Transportasi Baja"
 
-#, fuzzy
 msgid "# Armoured Transports"
-msgstr "Kapal Angkut Berzirah"
+msgstr "# Kapal Angkut Berzirah"
 
-#, fuzzy
 msgid "Battleships"
 msgstr "Kapal Perang"
 
-#, fuzzy
 msgid "# Battleships"
-msgstr "Kapal Perang"
+msgstr "# Kapal Perang"
 
-#, fuzzy
 msgid "Bombers"
 msgstr "Pengebom"
 
-#, fuzzy
 msgid "# Bombers"
-msgstr "Pengebom"
+msgstr "# Pengebom"
 
 #, fuzzy
 msgid "Bulk Freighters"
 msgstr "Kapal Angkut Massal"
 
-#, fuzzy
 msgid "# Bulk Freighters"
-msgstr "Kapal Angkut Massal"
+msgstr "# Kapal Angkut Massal"
 
-#, fuzzy
 msgid "Carriers"
 msgstr "Kapal Induk"
 
-#, fuzzy
 msgid "# Carriers"
-msgstr "Kapal Induk"
+msgstr "# Kapal Induk"
 
-#, fuzzy
 msgid "Corvettes"
 msgstr "Korvet"
 
-#, fuzzy
 msgid "# Corvettes"
-msgstr "Korvet"
+msgstr "# Korvet"
 
-#, fuzzy
 msgid "Couriers"
 msgstr "Kurir"
 
-#, fuzzy
 msgid "# Couriers"
-msgstr "Kurir"
+msgstr "# Kurir"
 
 #, fuzzy
 msgid "Cruisers"
 msgstr "Kapal Penjelajah"
 
-#, fuzzy
 msgid "# Cruisers"
-msgstr "Kapal Penjelajah"
+msgstr "# Kapal Penjelajah"
 
-#, fuzzy
 msgid "Destroyers"
 msgstr "Kapal Perusak"
 
-#, fuzzy
 msgid "# Destroyers"
-msgstr "Kapal Perusak"
+msgstr "# Kapal Perusak"
 
-#, fuzzy
 msgid "Fighters"
-msgstr "Pesawat Tempur"
+msgstr "Kapal Tempur"
 
-#, fuzzy
 msgid "# Fighters"
-msgstr "Pesawat Tempur"
+msgstr "# Kapal Tempur"
 
-#, fuzzy
 msgid "Freighters"
 msgstr "Kapal Angkut Barang"
 
-#, fuzzy
 msgid "# Freighters"
-msgstr "Kapal Angkut Barang"
+msgstr "# Kapal Angkut Barang"
 
-#, fuzzy
 msgid "Interceptors"
 msgstr "Pencegat"
 
-#, fuzzy
 msgid "# Interceptors"
-msgstr "Pencegat"
+msgstr "# Pencegat"
 
-#, fuzzy
 msgid "Scouts"
 msgstr "Pengintai"
 
-#, fuzzy
 msgid "# Scouts"
-msgstr "Pengintai"
+msgstr "# Pengintai"
 
-#, fuzzy
 msgid "Yachts"
 msgstr "Kapal Pesiar"
 
-#, fuzzy
 msgid "# Yachts"
-msgstr "Kapal Pesiar"
+msgstr "# Kapal Pesiar"
 
 msgid "no error"
 msgstr "tidak ada kesalahan"
@@ -8708,7 +8666,6 @@ msgstr "   * Gambar karakter baru"
 msgid "Darien Rousseau \"not-pyroman\" (aka \"Pyroman\")"
 msgstr ""
 
-#, fuzzy
 msgid "   * Misc. fixes and spellchecks"
 msgstr "   * Perbaikan salah ketik dan lainnya"
 
@@ -9462,11 +9419,11 @@ msgid ""
 "is commonly used in decorative applications, but diamond is now easy enough "
 "to produce synthetically that it is not as sought after as it once was."
 msgstr ""
-"Berlian adalah sebuah bentuk dari karbon yang telah dikristalisasi karena "
-"tekanan dan panas tinggi di bawah permukaan planet-planet tertentu. "
-"Materialnya berguna di beberapa aplikasi pemotongan karena kekerasannya, dan "
-"juga umumnya digunakan di aplikasi dekoratif, tetapi karena berlian sudah "
-"mudah diproduksi secara sintetis maka benda ini tidak seberharga dahulu."
+"Berlian adalah sebuah bentuk dari karbon yang mengkristal akibat tekanan dan "
+"panas tinggi di bawah permukaan planet tertentu. Material ini berguna "
+"sebagai alat potong khusus karena kekerasannya, dan dulunya sebagai "
+"dekorasi, tetapi karena sekarang mudah diproduksi secara sintetis, berlian "
+"tidak seberharga dulu."
 
 msgid "Food"
 msgstr "Makanan"
@@ -9688,9 +9645,9 @@ msgstr ""
 "Terit adalah sebuah senyawa amat langka yang secara umum terbentuk karena "
 "radiasi ekstrem. Walaupun terdapat berbagai pemikiran mengenai Terit, teori "
 "terkemuka menspekulasi bahwa Terit adalah materi semu hasil proyeksi dari "
-"radiasi yang menginterferensi dirinya sendiri. Tapi, meskipun tidak "
-"mengetahui fisikanya secara eksak, para ahli telah menemukan banyak aplikasi "
-"untuk zat ini, mulai dari sensor sub-angkasa hingga lapis baja yang "
+"radiasi yang menginterferensi dirinya sendiri. Namun, meskipun tidak "
+"mengetahui fisikanya secara persis, para ahli telah menemukan banyak "
+"kegunaan untuk zat ini, mulai dari sensor sub-angkasa hingga lapis baja yang "
 "diperkuat. Akibatnya, selalu ada permintaan yang tinggi untuk Terit."
 
 msgid "Vixilium"
@@ -46923,11 +46880,11 @@ msgid ""
 "food, and distrust sowed the seeds of discord. Once begun, the fever of war "
 "spread from world to world and became a holocaust."
 msgstr ""
-"Namun, masa penjelajahan yang herois ini bertahan hanya sesaat saja, karena "
-"pada akhirnya keserakahan menang atas rasa penasaran. Sekejap mata, konflik "
-"pun muncul kiri-kanan di berbagai koloni. Lahan, bahan bakar, pangan, dan "
-"rasa ketidakpercayaan menabur bibit kekacauan. Setelah mulai, perang pun "
-"menyebar dari satu tempat ke tempat yang lainnya dan menjadi bencana."
+"Namun, masa penjelajahan yang herois ini bertahan hanya sesaat sebelum "
+"keserakahan akhirnya menang atas rasa penasaran. Dalam sekejap mata, konflik "
+"muncul di segala penjuru koloni. Lahan, bahan bakar, pangan, dan kecurigaan "
+"satu sama lain menabur bibit kekacauan. Dan mulailah, perang menyebar tempat "
+"ke tempat dan meledak menjadi bencana."
 
 msgid ""
 "After a hundred years of interstellar conflict, on the ashes that remained, "
@@ -52413,28 +52370,29 @@ msgid ""
 "has come under attack! Since their base is nearby, they will undoubtedly "
 "send reinforcements to help their 'comrade' out of a tight situation.\""
 msgstr ""
-" Tepat saat kamu menduduki kursi terakhir di meja pertemuan, Kolonel Urnus "
-"memulai meeting. \"Selamat datang, kapten sipil. Anda tahu mengapa anda ada "
-"di sini dan anda tahu pertemuan ini tentang apa, jadi mari kita langsung ke "
+"Tepat saat kamu menduduki kursi terakhir di meja, Kolonel Urnus memulai "
+"pertemuan. \"Selamat datang, kapten sipil. Anda tahu mengapa anda ada di "
+"sini dan anda tahu pertemuan ini tentang apa, jadi mari kita langsung ke "
 "inti diskusinya saja. Kami punya bukti yang cukup bahwa teroris FLF "
 "beroperasi dari sebuah markas rahasia. Kami tahu bahwa markas ini terletak "
 "di sekitaran nebula, dan informasi intel terbaru kami mengindikasikan bahwa "
 "markas ini kemungkinan ada di sistem {sys}.\"\n"
 "   Salah satu dinding menyala, memperlihatkan bagian dari peta galaksi. "
 "Sistem {sys} bercahaya merah, berpijar secara halus.\n"
-"   \"Tentunya kami sudah melakukan patroli di sistem ini, namun selama ini "
-"masih belum ada hasil. Sensor kami sangatlah dibatasi keberadaan nebula di "
-"sistem ini, sehingga kemungkinan kami menemukan sarang teroris dengan alat "
-"kami sendiri sangatlah rendah. Untungnya, strategis kami berhasil "
-"merencanakan sesuatu yang mungkin membuat FLF datang ke kita.\"\n"
-"   \"Kita akan menggunakan kapal sipil - kapalmu, tentunya - sebagai umpan,"
-"\" lanjut Urnus. Gambar di dinding membesar ke sistem {sys}, dan panah kecil "
-"menggambarkan kapalmu di dekat titik lompat. \"Kapalmu akan dipasangkan "
-"transponder IFF yang digunakan FLF, sehingga untuk yang tidak melihat dengan "
-"rinci engkau akan terlihat seperti kapal FLF. Tentunya hal ini saja tidak "
-"akan cukup. FLF akan mengira kamu tahu markas mereka dimana, karna kamu "
-"terlihat seperti mereka. Perlu dicatat bahwa transponder itu bekerja paling "
-"efektif di Nebula, dimana markas mereka kemungkinan berada.\"\n"
+"   \"Tentunya sistem ini sudah kami patroli, namun sejauh ini masih tanpa "
+"hasil. Sensor kami sangat terbatas oleh adanya nebula di sistem ini, "
+"sehingga kemungkinan kami menemukan sarang teroris dengan alat kami sendiri "
+"sangatlah rendah. Untungnya, strategis kami berhasil merencanakan sesuatu "
+"yang mungkin membuat FLF datang ke kita.\"\n"
+"   \"Kita akan menggunakan kapal sipil - kapalmu, tentunya - sebagai "
+"umpan,\" lanjut Urnus. Gambar di dinding membesar ke sistem {sys}, dan panah "
+"kecil menggambarkan kapalmu di dekat titik lompat. \"Kapalmu akan "
+"dipasangkan transponder IFF yang digunakan FLF, sehingga untuk yang tidak "
+"melihat dengan rinci engkau akan terlihat seperti kapal FLF. Tentunya hal "
+"ini saja tidak akan cukup. FLF akan mengira kamu tahu markas mereka dimana, "
+"karna kamu terlihat seperti mereka. Perlu dicatat bahwa transponder itu "
+"bekerja paling efektif di dalam Nebula, dimana markas mereka kemungkinan "
+"berada.\"\n"
 "   Gambar di dinding berubah lagi, kali ini menggambarkan beberapa kapal "
 "Wangsa Dvaered mengelilingi kapalmu.\n"
 "   \"Beberapa waktu setelah kamu masuk ke sistem ini, beberapa aset militer "
@@ -52719,13 +52677,13 @@ msgid ""
 msgstr ""
 "Skemanya berubah lagi, kali ini menggambarkan beberapa kelompok titik merah "
 "diantara piringan berpijar dan formasi Dvaered.\n"
-"   \"FLF akan mengirim pesawat tempur dan pengebom untuk melawan kapal-kapal "
+"   \"FLF akan mengirim kapal tempur dan pengebom untuk melawan kapal-kapal "
 "kita. Di sini angka dan komposisi dari kapal mereka tidak diketahui, namun "
 "sepertinya bijaksana untuk mengasumsi bahwa jumlah mereka akan lebih banyak "
 "daripada kita. Tugasmu sebagai pengawal tambahan adalah untuk melindungi "
 "samping formasi dan mencegah kapal FLF mentarget Obstinate. Ingatlah bahwa "
 "Kapal Obstinate hanya mempunyai senjata anti-penempur yang terbatas karena "
-"sebagian besar ruangnya dipakai untuk labuh pesawat tempur. Kapal Obstinate "
+"sebagian besar ruangnya dipakai untuk labuh kapal tempur. Kapal Obstinate "
 "tidak boleh hancur! Inilah tujuan misimu yang paling penting!\"\n"
 "   Di dinding titik-titik merah di serbu titik-titik putih, lalu menghilang. "
 "Kemudian kelompok kedua titik putih muncul di dekat logo Dvaered, dan "
@@ -52738,11 +52696,11 @@ msgstr ""
 "   Piringan berpijar di dinding berangsur menghilang, meninggalkan hanya "
 "armada Dvaered dan kemenangannya.\n"
 "   \"Itu saja. Itu perintah untuk kalian. Kembali ke penempatan kalian "
-"sesuai jadwal. Aku akan berjumpa dengan kalian di {sys}. Semoga beruntung."
-"\"\n"
+"sesuai jadwal. Aku akan berjumpa dengan kalian di {sys}. Semoga "
+"beruntung.\"\n"
 "   Beberapa waktu kemudian, kamu kembali berada di bar labuh Dvaered. Dalam "
 "karirmu hal seperti ini sudah tidak asing, namun masih ada sedikit rasa "
-"khawatir di kalbumu. Kamu memutuskan untuk membeli minuman, demi "
+"khawatir di hatimu. Kamu memutuskan untuk membeli minuman lagi, demi "
 "keberuntungan."
 
 msgid "Destroy the FLF base!"
@@ -73768,9 +73726,9 @@ msgid ""
 msgstr ""
 "Seorang perompak yang dikenal dengan nama {pirname} baru-baru ini dijumpai "
 "di sistem {sys}. Otoritas {fct} menginginkan perompak ini ditangkap hidup "
-"atau mati karena telah{reason}. Diketahui bahwa {pirname} menahkodai kapal "
-"berjenis {shipclass}. Ia mungkin kabur kalau kamu terlalu lama mencapai "
-"sistem {sys}.\n"
+"atau mati{reason}. Diketahui bahwa {pirname} menahkodai kapal berjenis "
+"{shipclass}. Ia mungkin kabur kalau kamu terlalu lama mencapai sistem {sys}"
+".\n"
 "\n"
 "#nTarget:#0 {pirname} (kapal jenis {shipclass})\n"
 "#nDiinginkan:#0 Hidup atau Mati\n"
@@ -73806,9 +73764,9 @@ msgid ""
 msgstr ""
 "Seorang perompak yang dikenal dengan nama {pirname} baru-baru ini dijumpai "
 "di sistem {sys}. Otoritas {fct} menginginkan perompak ini ditangkap hidup-"
-"hidup karena telah{reason}. Diketahui bahwa {pirname} menahkodai kapal "
-"berjenis {shipclass}. Ia mungkin kabur kalau kamu terlalu lama mencapai "
-"sistem {sys}.\n"
+"hidup{reason}. Diketahui bahwa {pirname} menahkodai kapal berjenis "
+"{shipclass}. Ia mungkin kabur kalau kamu terlalu lama mencapai sistem {sys}"
+".\n"
 "\n"
 "#nTarget:#0 {pirname} (kapal jenis {shipclass})\n"
 "#nDiinginkan:#0 Hidup-hidup\n"
@@ -73816,76 +73774,76 @@ msgstr ""
 "#nBatas waktu#0 {deadline}"
 
 msgid " for attempting to undermine the integrity of {spb}"
-msgstr ""
+msgstr " karena berusaha merusak integritas {spb}"
 
 msgid " for endangering the peace of {spb}"
-msgstr ""
+msgstr " karena mengancam kedamaian {spb}"
 
 msgid " for trafficking of weapons"
-msgstr " melakukan penyeludupan senjata"
+msgstr " dengan asas penyeludupan senjata"
 
 msgid " for arms dealing"
-msgstr " memperjual-belikan senjata"
+msgstr " dengan asas jual-beli senjata"
 
 msgid " for armed robbery"
-msgstr " melakukan pencurian bersenjata"
+msgstr " karena telah melakukan pencurian bersenjata"
 
 msgid " for hijacking"
-msgstr " melakukan pembajakan kapal"
+msgstr " karena telah melakukan pembajakan kapal"
 
 msgid " for illegal waste disposal"
-msgstr ""
+msgstr " dengan asas pembuangan limbah secara ilegal"
 
 msgid " for attempted sabotage"
-msgstr " melakukan pencobaan sabotase"
+msgstr " karena berusaha melakukan sabotase"
 
 msgid " for espionage against {spb}"
-msgstr ""
+msgstr " karena melakukan espionase terhadap {spd}"
 
 msgid " for inciting riots in {spb}"
-msgstr ""
+msgstr " karena memprovokasi kericuhan di {spb}"
 
 msgid " for smuggling contraband into {spb}"
-msgstr ""
+msgstr " dengan asas penyeludupan ke {spb}"
 
 msgid " for arson in a restricted area"
-msgstr ""
+msgstr " karena telah melakukan pembakaran di area terlarang"
 
 msgid " for unauthorized access to restricted systems"
-msgstr ""
+msgstr " karena telah memasuki area terlarang tanpa izin"
 
 msgid " for theft of sensitive information"
-msgstr ""
+msgstr " karena telah mencuri informasi rahasia"
 
 msgid " for vandalism of critical infrastructure"
-msgstr ""
+msgstr "dengan asas vandalisme terhadap infrastruktur penting"
 
 msgid " for conspiracy to commit treason"
-msgstr ""
+msgstr " karena berusaha melakukan pengkhianatan"
 
 msgid " for illegal surveillance of {spb} citizens"
-msgstr ""
+msgstr " karena melakukan pengawasan secara ilegal terhadap warga {spb}"
 
 msgid " for unauthorized use of advanced technology"
-msgstr ""
+msgstr " dengan asas penggunaan teknologi canggih tanpa izin"
 
 msgid " for bureaucratic infringements"
 msgstr ""
 
 msgid " for submitting erroneous paperwork"
-msgstr " mengirimkan dokumen yang tidak sah"
+msgstr " dengan asas pengiriman dokumen tidak sah"
 
 msgid " for failing to file taxes in a duly manner"
 msgstr ""
 
 msgid " for insulting the Emperor's pet iguana"
-msgstr ""
+msgstr " karena telah menghina iguana peliharaan sang Kaisar"
 
 msgid " for not declaring bribes in their tax statements"
-msgstr ""
+msgstr " karena tidak mendeklarasi suap di laporan pajak"
 
 msgid " for spreading lies about the Emperor"
-msgstr " menyebarkan fitnah tentang sang Kaisar"
+msgstr " karena telah menyebarkan fitnah tentang sang Kaisar"
 
 msgid " for filing bureaucratic documents in the incorrect order"
 msgstr ""
@@ -87368,9 +87326,9 @@ msgid ""
 "#nTime limit:#0 {deadline}"
 msgstr ""
 "Seorang pilot {fct} menyusahkan yang dikenal dengan nama {plt} baru-baru ini "
-"dijumpai di sistem {sys}. Bos geng lokal menginginkan pilot ini mati karena "
-"telah{reason}. Diketahui bahwa {plt} menahkodai kapal berjenis {shipclass}. "
-"Ia mungkin kabur kalau kamu terlalu lama mencapai sistem {sys}.{msg}\n"
+"dijumpai di sistem {sys}. Bos geng lokal menginginkan pilot ini mati{reason}"
+". Diketahui bahwa {plt} menahkodai kapal berjenis {shipclass}. Ia mungkin "
+"kabur kalau kamu terlalu lama mencapai sistem {sys}.{msg}\n"
 "\n"
 "#nTarget:#0 {plt} (kapal jenis {shipclass})\n"
 "#nDiinginkan:#0 Mati\n"
@@ -105927,7 +105885,6 @@ msgid ""
 "bounty to you, as a token of my appreciation.\""
 msgstr ""
 
-#, fuzzy
 msgid ""
 "The pirate known as {pirname} was recently seen in the {sys} system. {fct} "
 "authorities want this pirate dead or alive. {pirname} is believed to be "
@@ -105939,14 +105896,14 @@ msgid ""
 "#nLast seen:#0 {sys} system"
 msgstr ""
 "Seorang perompak yang dikenal dengan nama {pirname} baru-baru ini dijumpai "
-"di sistem {sys}. Otoritas {fct} menginginkan perompak ini ditangkap hidup-"
-"hidup karena telah{reason}. Diketahui bahwa {pirname} menahkodai kapal "
+"di sistem {sys}. Otoritas {fct} menginginkan perompak ini ditangkap hidup "
+"atau mati karena telah{reason}. Diketahui bahwa {pirname} menahkodai kapal "
 "berjenis {shipclass}. Ia mungkin kabur kalau kamu terlalu lama mencapai "
 "sistem {sys}.\n"
 "\n"
 "#nTarget:#0 {pirname} (kapal jenis {shipclass})\n"
-"#nDiinginkan:#0 Hidup-hidup\n"
-"#nTerakhir Terlihat:#0 sistem {sys}"
+"#nDiinginkan:#0 Hidup atau Mati\n"
+"#nTerakhir terlihat:#0 sistem {sys}"
 
 msgid "Kill or capture {plt}"
 msgstr ""
