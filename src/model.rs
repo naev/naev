@@ -717,7 +717,7 @@ impl Node {
         let mut trail = None;
         let mut mount = None;
         if let Some(extras) = node.extras() {
-            let json: gltf::json::Value = gltf::json::deserialize::from_str(extras.get()).unwrap();
+            let json: gltf::json::Value = gltf::json::deserialize::from_str(extras.get())?;
             if let Some(value) = json.get("NAEV_trail_generator") {
                 trail = match Trail::from_json(value, &transform) {
                     Ok(data) => Some(data),
@@ -1096,15 +1096,14 @@ impl Common {
         let shader = ModelShader::new(ctx)?;
         let shader_shadow = ShadowShader::new(ctx)?;
 
-        fn make_fbo_single(ctx: &ContextWrapper, name: &str, size: usize) -> Framebuffer {
+        fn make_fbo_single(ctx: &ContextWrapper, name: &str, size: usize) -> Result<Framebuffer> {
             let fb = FramebufferBuilder::new(Some(name))
                 .width(size)
                 .height(size)
                 .texture(false)
                 .depth(true)
                 .address_mode(texture::AddressMode::ClampToEdge)
-                .build_wrap(ctx)
-                .unwrap();
+                .build_wrap(ctx)?;
             let lctx = ctx.lock();
             let gl = &lctx.gl;
             fb.bind_gl(gl);
@@ -1133,21 +1132,38 @@ impl Common {
                 gl.draw_buffer(glow::NONE);
             }
             Framebuffer::unbind_gl(gl);
-            fb
+            Ok(fb)
         }
 
-        fn make_fbos(ctx: &ContextWrapper, name: &str, size: usize) -> [Framebuffer; MAX_LIGHTS] {
-            core::array::from_fn::<_, MAX_LIGHTS, _>(|i| {
-                let name = &format!("{name}[{i}]");
-                make_fbo_single(ctx, name, size)
-            })
+        fn make_fbos(
+            ctx: &ContextWrapper,
+            name: &str,
+            size: usize,
+        ) -> Result<[Framebuffer; MAX_LIGHTS]> {
+            let v = (0..MAX_LIGHTS)
+                .map(|i| {
+                    let name = &format!("{name}[{i}]");
+                    make_fbo_single(ctx, name, size)
+                })
+                .collect::<Result<Vec<_>>>()?;
+            let boxed_slice = v.into_boxed_slice();
+            use std::convert::TryInto;
+            let boxed_array: Box<[Framebuffer; MAX_LIGHTS]> = match boxed_slice.try_into() {
+                Ok(ba) => ba,
+                Err(o) => anyhow::bail!(
+                    "Expected a Vec of length {}, but it was {}",
+                    MAX_LIGHTS,
+                    o.len()
+                ),
+            };
+            Ok(*boxed_array)
         }
 
-        let light_fbo_low = make_fbos(ctx, "light_fbo_low", SHADOWMAP_SIZE_LOW);
-        let light_fbo_high = make_fbos(ctx, "light_fbo_high", SHADOWMAP_SIZE_HIGH);
+        let light_fbo_low = make_fbos(ctx, "light_fbo_low", SHADOWMAP_SIZE_LOW)?;
+        let light_fbo_high = make_fbos(ctx, "light_fbo_high", SHADOWMAP_SIZE_HIGH)?;
         // Used for the shadow blurring
-        let shadow_fbo_low = make_fbo_single(ctx, "shadow_fbo_low", SHADOWMAP_SIZE_LOW);
-        let shadow_fbo_high = make_fbo_single(ctx, "shadow_fbo_high", SHADOWMAP_SIZE_HIGH);
+        let shadow_fbo_low = make_fbo_single(ctx, "shadow_fbo_low", SHADOWMAP_SIZE_LOW)?;
+        let shadow_fbo_high = make_fbo_single(ctx, "shadow_fbo_high", SHADOWMAP_SIZE_HIGH)?;
 
         let data = RwLock::new({
             CommonMut {
