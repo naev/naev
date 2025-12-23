@@ -628,6 +628,20 @@ impl Source {
         self.inner
             .parameter_f32(AL_GAIN, cvol * master * self.volume * self.g_volume);
     }
+
+    fn set_pitch(&mut self, pitch: f32, speed: f32) {
+        self.pitch = pitch;
+        self.update_pitch(speed);
+    }
+
+    fn update_pitch(&self, speed: f32) {
+        if let Some(pitch) = self.g_pitch {
+            self.inner
+                .parameter_f32(AL_PITCH, self.pitch * pitch * speed);
+        } else {
+            self.inner.parameter_f32(AL_PITCH, 1.0);
+        }
+    }
 }
 
 #[derive(PartialEq, Debug)]
@@ -1168,14 +1182,16 @@ impl Audio {
         self.al_source().get_parameter_i32(AL_LOOPING) != 0
     }
 
+    fn update_pitch(&self, speed: f32) {
+        let src = self.source();
+        src.update_pitch(speed);
+    }
+
     pub fn set_pitch(&mut self, pitch: f32) {
         check_audio!(self);
         let src = self.source_mut();
-        src.pitch = pitch;
-        if let Some(pitch) = src.g_pitch {
-            let speed = AUDIO.speed.load(Ordering::Relaxed);
-            src.inner.parameter_f32(AL_PITCH, src.pitch * pitch * speed);
-        }
+        let speed = AUDIO.speed.load(Ordering::Relaxed);
+        src.set_pitch(pitch, speed);
     }
 
     pub fn pitch(&self) -> f32 {
@@ -1540,11 +1556,7 @@ impl GroupRef {
             if let Some(voice) = voices.get_mut(v.0) {
                 let src = voice.source_mut();
                 src.g_pitch = pitch;
-                if let Some(pitch) = src.g_pitch {
-                    src.inner.parameter_f32(AL_PITCH, src.pitch * pitch * speed);
-                } else {
-                    src.inner.parameter_f32(AL_PITCH, 1.);
-                }
+                src.update_pitch(speed);
             }
         }
     }
@@ -1900,12 +1912,9 @@ impl System {
         // Update the rest of the voices
         for (_, v) in self.voices.lock().unwrap().iter_mut() {
             if v.ingame() {
-                let src = v.source();
-                if let Some(pitch) = src.g_pitch {
-                    src.inner.parameter_f32(AL_PITCH, src.pitch * pitch * speed);
-                }
+                v.update_pitch(speed);
+                v.update_volume(master, c);
             }
-            v.update_volume(master, c);
         }
     }
 
