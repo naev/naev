@@ -56,9 +56,11 @@ const MAX_SOURCES: usize = 512;
 /// Priority sources
 const PRIORITY_SOURCES: usize = 8;
 /// Reference distance for sounds
-const REFERENCE_DISTANCE: f32 = 500.;
+const REFERENCE_DISTANCE: f32 = 1000.0;
+/// Rolloff value defaults
+const ROLLOFF_FACTOR: f32 = 1.0;
 /// Max distance for sounds to still play at
-const MAX_DISTANCE: f32 = 25_000.;
+const MAX_DISTANCE: f32 = 10_000.;
 /// Number of frames we want to grab per buffer when streaming.
 const STREAMING_BUFFER_LENGTH: usize = 32 * 1024;
 /// Amount we sleep per frame when streaming, should be at least enough time to load a single
@@ -955,7 +957,7 @@ impl Audio {
                 }
                 v.parameter_f32(AL_REFERENCE_DISTANCE, REFERENCE_DISTANCE);
                 v.parameter_f32(AL_MAX_DISTANCE, MAX_DISTANCE);
-                v.parameter_f32(AL_ROLLOFF_FACTOR, 1.);
+                v.parameter_f32(AL_ROLLOFF_FACTOR, ROLLOFF_FACTOR);
                 v.parameter_i32(AL_DIRECT_CHANNELS_SOFT, AL_FALSE.into());
 
                 if let Some(efx) = EFX.get() {
@@ -1779,7 +1781,7 @@ impl System {
 
         // Default global settings
         unsafe {
-            alDistanceModel(AL_INVERSE_DISTANCE_CLAMPED);
+            alDistanceModel(AL_LINEAR_DISTANCE_CLAMPED);
         }
 
         let has_source_spatialize = source_spatialize::supported();
