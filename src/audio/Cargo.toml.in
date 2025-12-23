@@ -13,6 +13,7 @@ path = "@SOURCE@/src/audio/src/lib.rs"
 
 [dependencies]
 naevc = { workspace = true }
+naev_core = { workspace = true }
 mlua = { workspace = true }
 ndata = { workspace = true }
 anyhow = { workspace = true }

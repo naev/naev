@@ -7,6 +7,8 @@ pub struct Constants {
     pub physics_speed_damp: f32,
     pub stealth_min_dist: f32,
     pub ship_min_mass: f32,
+    pub audio_ref_distance: f32,
+    pub audio_max_distance: f32,
     pub ew_jump_bonus_range: f32,
     pub ew_asteroid_dist: f32,
     pub ew_jump_detect_dist: f32,
@@ -38,6 +40,8 @@ impl Constants {
         let physics_speed_damp = get_f32(&tbl, "PHYSICS_SPEED_DAMP", 3.);
         let stealth_min_dist = get_f32(&tbl, "STEALTH_MIN_DIST", 1000.);
         let ship_min_mass = get_f32(&tbl, "SHIP_MIN_MASS", 0.5);
+        let audio_ref_distance = get_f32(&tbl, "AUDIO_REF_DISTANCE", 1e3);
+        let audio_max_distance = get_f32(&tbl, "AUDIO_MAX_DISTANCE", 10e3);
         let ew_jump_bonus_range = get_f32(&tbl, "EW_JUMP_BONUS_RANGE", 2500.);
         let ew_asteroid_dist = get_f32(&tbl, "EW_ASTEROID_DIST", 7.5e3);
         let ew_jump_detect_dist = get_f32(&tbl, "EW_JUMPDETECT_DIST", 7.5e3);
@@ -50,6 +54,8 @@ impl Constants {
             physics_speed_damp,
             stealth_min_dist,
             ship_min_mass,
+            audio_ref_distance,
+            audio_max_distance,
             ew_jump_bonus_range,
             ew_asteroid_dist,
             ew_jump_detect_dist,
@@ -75,6 +81,8 @@ impl Constants {
             physics_speed_damp: 3.,
             stealth_min_dist: 1000.,
             ship_min_mass: 0.5,
+            audio_ref_distance: 1e3,
+            audio_max_distance: 10e3,
             ew_jump_bonus_range: 2500.,
             ew_asteroid_dist: 7.5e3,
             ew_jump_detect_dist: 7.5e3,

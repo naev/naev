@@ -55,12 +55,6 @@ use utils::{binary_search_by_key_ref, sort_by_key_ref};
 const MAX_SOURCES: usize = 512;
 /// Priority sources
 const PRIORITY_SOURCES: usize = 8;
-/// Reference distance for sounds
-const REFERENCE_DISTANCE: f32 = 1000.0;
-/// Rolloff value defaults
-const ROLLOFF_FACTOR: f32 = 1.0;
-/// Max distance for sounds to still play at
-const MAX_DISTANCE: f32 = 10_000.;
 /// Number of frames we want to grab per buffer when streaming.
 const STREAMING_BUFFER_LENGTH: usize = 32 * 1024;
 /// Amount we sleep per frame when streaming, should be at least enough time to load a single
@@ -955,9 +949,10 @@ impl Audio {
                 if HAS_AL_SOFT_SOURCE_SPATIALIZE.load(Ordering::Relaxed) {
                     v.parameter_i32(AL_SOURCE_SPATIALIZE_SOFT, AL_AUTO_SOFT);
                 }
-                v.parameter_f32(AL_REFERENCE_DISTANCE, REFERENCE_DISTANCE);
-                v.parameter_f32(AL_MAX_DISTANCE, MAX_DISTANCE);
-                v.parameter_f32(AL_ROLLOFF_FACTOR, ROLLOFF_FACTOR);
+                let cts = &naev_core::constants::CTS;
+                v.parameter_f32(AL_REFERENCE_DISTANCE, cts.audio_ref_distance);
+                v.parameter_f32(AL_MAX_DISTANCE, cts.audio_max_distance);
+                v.parameter_f32(AL_ROLLOFF_FACTOR, 1.0);
                 v.parameter_i32(AL_DIRECT_CHANNELS_SOFT, AL_FALSE.into());
 
                 if let Some(efx) = EFX.get() {
@@ -1355,6 +1350,16 @@ impl AudioBuilder {
         let play = self.play;
         let mut audio = match self.atype {
             AudioType::Static => {
+                // See if sound actuall is in range to play
+                if let Some(pos) = self.pos {
+                    let max_dist = naev_core::constants::CTS.audio_max_distance;
+                    if (pos - *AUDIO.listener_pos.read().unwrap()).norm_squared()
+                        > max_dist * max_dist
+                    {
+                        return Ok(thunderdome::Index::DANGLING.into());
+                    }
+                }
+                // Build sound normally
                 let mut audio = self.build_static(source)?;
                 audio.groupid = self.groupid;
                 if self.groupid.is_some() {
@@ -3078,30 +3083,6 @@ pub extern "C" fn sound_playPos(
         return std::ptr::null();
     }
 
-    let pos = Vector2::new(px as f32, py as f32);
-    if (pos - *AUDIO.listener_pos.read().unwrap()).norm_squared() > MAX_DISTANCE * MAX_DISTANCE {
-        return std::ptr::null();
-    }
-    // Original C code. TODO port or something?
-    /*
-    target = cam_getTarget();
-
-    /* Following a pilot. */
-    p = pilot_get( target );
-    if ( target && ( p != NULL ) ) {
-       if ( !pilot_inRange( p, px, py ) )
-          return 0;
-    }
-    /* Set to a position. */
-    else {
-       double dist;
-       cam_getPos( &cx, &cy );
-       dist = pow2( px - cx ) + pow2( py - cy );
-       if ( dist > pilot_sensorRange() )
-          return 0;
-    }
-    */
-
     let sound = unsafe {
         Arc::increment_strong_count(sound);
         Arc::from_raw(sound)
@@ -3109,7 +3090,7 @@ pub extern "C" fn sound_playPos(
 
     let voice = match AudioBuilder::new(AudioType::Static)
         .buffer(sound.clone())
-        .position(Some(pos))
+        .position(Some(Vector2::new(px as f32, py as f32)))
         .velocity(Some(Vector2::new(vx as f32, vy as f32)))
         .play(true)
         .build()
