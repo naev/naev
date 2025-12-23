@@ -32,7 +32,7 @@ local elapsed_time, race_done
 local col_next = {0, 1, 1, 0.3}
 local col_past = {1, 0, 1, 0.2}
 
-local sfx = audio.new("snd/sounds/race_start")
+local sfx = audiodata.new("snd/sounds/race_start")
 
 local function lerp(a, b, t)
    return a + (b - a) * t

@@ -53,7 +53,7 @@ stds.Basic={
 
 -- The following standards correspond to useful combinations of libraries
 local PILOT = "+pilot+ship+asteroid"
-local STANDARD = "+naev+var+spob+system+jump+time+player" .. PILOT .. "+rnd+diff+faction+vec2+outfit+commodity+news+shiplog+file+data+linopt+safelanes+spfx+audio"
+local STANDARD = "+naev+var+spob+system+jump+time+player" .. PILOT .. "+rnd+diff+faction+vec2+outfit+commodity+news+shiplog+file+data+linopt+safelanes+spfx+audio+audiodata"
 local GFX = "+gfx+colour+tex+font+transform+shader+canvas"
 local TK = "+tk+colour" .. GFX
 
