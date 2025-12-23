@@ -947,7 +947,7 @@ impl Audio {
                     return;
                 }
                 if HAS_AL_SOFT_SOURCE_SPATIALIZE.load(Ordering::Relaxed) {
-                    v.parameter_i32(AL_SOURCE_SPATIALIZE_SOFT, AL_AUTO_SOFT);
+                    v.parameter_i32(AL_SOURCE_SPATIALIZE_SOFT, AL_TRUE.into());
                 }
                 let cts = &naev_core::constants::CTS;
                 v.parameter_f32(AL_REFERENCE_DISTANCE, cts.audio_ref_distance);

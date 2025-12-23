@@ -1,5 +1,5 @@
 //! AL_SOFT_source_spatialize extension
-#![allow(clippy::upper_case_acronyms)]
+#![allow(clippy::upper_case_acronyms, dead_code)]
 use std::sync::atomic::{AtomicBool, Ordering};
 
 pub mod consts {
