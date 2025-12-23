@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-12-20 17:38+0900\n"
+"POT-Creation-Date: 2025-12-22 20:21+0900\n"
 "PO-Revision-Date: 2025-12-23 01:42+0000\n"
 "Last-Translator: AntimatterReactor <antimatterreactor@noreply.codeberg.org>\n"
 "Language-Team: Indonesian <https://translate.codeberg.org/projects/naev/naev/"
@@ -32776,6 +32776,7 @@ msgstr ""
 #. Get non-locked
 #. Ignore outfits that can't be stolen
 #. Always a bit more expensive, but never more than base
+#. Just nullify low values
 msgid ""
 " Capturing the ship will lower your reputation with {fct} by {amount} "
 "(current standing is {current})."
@@ -52384,15 +52385,14 @@ msgstr ""
 "sehingga kemungkinan kami menemukan sarang teroris dengan alat kami sendiri "
 "sangatlah rendah. Untungnya, strategis kami berhasil merencanakan sesuatu "
 "yang mungkin membuat FLF datang ke kita.\"\n"
-"   \"Kita akan menggunakan kapal sipil - kapalmu, tentunya - sebagai "
-"umpan,\" lanjut Urnus. Gambar di dinding membesar ke sistem {sys}, dan panah "
-"kecil menggambarkan kapalmu di dekat titik lompat. \"Kapalmu akan "
-"dipasangkan transponder IFF yang digunakan FLF, sehingga untuk yang tidak "
-"melihat dengan rinci engkau akan terlihat seperti kapal FLF. Tentunya hal "
-"ini saja tidak akan cukup. FLF akan mengira kamu tahu markas mereka dimana, "
-"karna kamu terlihat seperti mereka. Perlu dicatat bahwa transponder itu "
-"bekerja paling efektif di dalam Nebula, dimana markas mereka kemungkinan "
-"berada.\"\n"
+"   \"Kita akan menggunakan kapal sipil - kapalmu, tentunya - sebagai umpan,"
+"\" lanjut Urnus. Gambar di dinding membesar ke sistem {sys}, dan panah kecil "
+"menggambarkan kapalmu di dekat titik lompat. \"Kapalmu akan dipasangkan "
+"transponder IFF yang digunakan FLF, sehingga untuk yang tidak melihat dengan "
+"rinci engkau akan terlihat seperti kapal FLF. Tentunya hal ini saja tidak "
+"akan cukup. FLF akan mengira kamu tahu markas mereka dimana, karna kamu "
+"terlihat seperti mereka. Perlu dicatat bahwa transponder itu bekerja paling "
+"efektif di dalam Nebula, dimana markas mereka kemungkinan berada.\"\n"
 "   Gambar di dinding berubah lagi, kali ini menggambarkan beberapa kapal "
 "Wangsa Dvaered mengelilingi kapalmu.\n"
 "   \"Beberapa waktu setelah kamu masuk ke sistem ini, beberapa aset militer "
@@ -52696,8 +52696,8 @@ msgstr ""
 "   Piringan berpijar di dinding berangsur menghilang, meninggalkan hanya "
 "armada Dvaered dan kemenangannya.\n"
 "   \"Itu saja. Itu perintah untuk kalian. Kembali ke penempatan kalian "
-"sesuai jadwal. Aku akan berjumpa dengan kalian di {sys}. Semoga "
-"beruntung.\"\n"
+"sesuai jadwal. Aku akan berjumpa dengan kalian di {sys}. Semoga beruntung."
+"\"\n"
 "   Beberapa waktu kemudian, kamu kembali berada di bar labuh Dvaered. Dalam "
 "karirmu hal seperti ini sudah tidak asing, namun masih ada sedikit rasa "
 "khawatir di hatimu. Kamu memutuskan untuk membeli minuman lagi, demi "
@@ -73727,8 +73727,8 @@ msgstr ""
 "Seorang perompak yang dikenal dengan nama {pirname} baru-baru ini dijumpai "
 "di sistem {sys}. Otoritas {fct} menginginkan perompak ini ditangkap hidup "
 "atau mati{reason}. Diketahui bahwa {pirname} menahkodai kapal berjenis "
-"{shipclass}. Ia mungkin kabur kalau kamu terlalu lama mencapai sistem {sys}"
-".\n"
+"{shipclass}. Ia mungkin kabur kalau kamu terlalu lama mencapai sistem "
+"{sys}.\n"
 "\n"
 "#nTarget:#0 {pirname} (kapal jenis {shipclass})\n"
 "#nDiinginkan:#0 Hidup atau Mati\n"
@@ -73765,8 +73765,8 @@ msgstr ""
 "Seorang perompak yang dikenal dengan nama {pirname} baru-baru ini dijumpai "
 "di sistem {sys}. Otoritas {fct} menginginkan perompak ini ditangkap hidup-"
 "hidup{reason}. Diketahui bahwa {pirname} menahkodai kapal berjenis "
-"{shipclass}. Ia mungkin kabur kalau kamu terlalu lama mencapai sistem {sys}"
-".\n"
+"{shipclass}. Ia mungkin kabur kalau kamu terlalu lama mencapai sistem "
+"{sys}.\n"
 "\n"
 "#nTarget:#0 {pirname} (kapal jenis {shipclass})\n"
 "#nDiinginkan:#0 Hidup-hidup\n"
@@ -87326,9 +87326,9 @@ msgid ""
 "#nTime limit:#0 {deadline}"
 msgstr ""
 "Seorang pilot {fct} menyusahkan yang dikenal dengan nama {plt} baru-baru ini "
-"dijumpai di sistem {sys}. Bos geng lokal menginginkan pilot ini mati{reason}"
-". Diketahui bahwa {plt} menahkodai kapal berjenis {shipclass}. Ia mungkin "
-"kabur kalau kamu terlalu lama mencapai sistem {sys}.{msg}\n"
+"dijumpai di sistem {sys}. Bos geng lokal menginginkan pilot ini "
+"mati{reason}. Diketahui bahwa {plt} menahkodai kapal berjenis {shipclass}. "
+"Ia mungkin kabur kalau kamu terlalu lama mencapai sistem {sys}.{msg}\n"
 "\n"
 "#nTarget:#0 {plt} (kapal jenis {shipclass})\n"
 "#nDiinginkan:#0 Mati\n"
@@ -103577,6 +103577,18 @@ msgstr ""
 
 #. Deferred setting of stats
 #. We'll use broader than onadd and onremove here
+#. TODO: FIXME
+#. Commenting the following line is a temporary bugfix for #3081.
+#. This line *must* be restored when a true bugfix is found,
+#. as not having it may cause bugs with future outfits.
+#.
+#. Details: This po:clear() is actually necessary, but only matters when
+#. outfits will turn on/off different stats as without the clear they will
+#. persist. However, currently this makes it so the player loses all their
+#. fuel in certain configurations. Until this is solved, we can just
+#. disabled the po:clear() as this does not affect any of the current
+#. existing outfits. This should be fixed when possible.
+#. po:clear()
 #. Apply a set function if applicable
 #. the subset of if that is active
 #. could not write
@@ -118801,16 +118813,6 @@ msgstr ""
 msgid "PAUSED"
 msgstr ""
 
-#, c-format
-msgid "SDL: %d.%d.%d [compiled: %d.%d.%d]"
-msgstr ""
-
-msgid "SDL is newer than compiled version"
-msgstr ""
-
-msgid "SDL is older than compiled version."
-msgstr ""
-
 msgid "Naev Critical Error"
 msgstr ""
 
@@ -118824,6 +118826,15 @@ msgid "Read locations, searched in order:"
 msgstr ""
 
 msgid "Write location: {}\n"
+msgstr ""
+
+msgid "SDL: {} [compiled: {}]"
+msgstr ""
+
+msgid "SDL is newer than compiled version"
+msgstr ""
+
+msgid "SDL is older than compiled version."
 msgstr ""
 
 msgid "Initializing video output failed, exiting…"

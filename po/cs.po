@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-12-20 17:38+0900\n"
+"POT-Creation-Date: 2025-12-22 20:21+0900\n"
 "PO-Revision-Date: 2025-10-27 08:32+0000\n"
 "Last-Translator: Dawedaen <dawedaen@noreply.codeberg.org>\n"
 "Language-Team: Czech <https://translate.codeberg.org/projects/naev/naev/cs/"
@@ -36742,6 +36742,7 @@ msgstr ""
 #. Get non-locked
 #. Ignore outfits that can't be stolen
 #. Always a bit more expensive, but never more than base
+#. Just nullify low values
 msgid ""
 " Capturing the ship will lower your reputation with {fct} by {amount} "
 "(current standing is {current})."
@@ -108132,6 +108133,18 @@ msgstr ""
 
 #. Deferred setting of stats
 #. We'll use broader than onadd and onremove here
+#. TODO: FIXME
+#. Commenting the following line is a temporary bugfix for #3081.
+#. This line *must* be restored when a true bugfix is found,
+#. as not having it may cause bugs with future outfits.
+#.
+#. Details: This po:clear() is actually necessary, but only matters when
+#. outfits will turn on/off different stats as without the clear they will
+#. persist. However, currently this makes it so the player loses all their
+#. fuel in certain configurations. Until this is solved, we can just
+#. disabled the po:clear() as this does not affect any of the current
+#. existing outfits. This should be fixed when possible.
+#. po:clear()
 #. Apply a set function if applicable
 #. the subset of if that is active
 #. could not write
@@ -123567,16 +123580,6 @@ msgstr ""
 msgid "PAUSED"
 msgstr "POZASTAVENO"
 
-#, c-format
-msgid "SDL: {} [compiled: {}]"
-msgstr "SDL: {} [zkompilováno: {}]"
-
-msgid "SDL is newer than compiled version"
-msgstr "SDL je novější než zkompilovaná verze"
-
-msgid "SDL is older than compiled version."
-msgstr "SDL je starší než zkompilovaná verze."
-
 msgid "Naev Critical Error"
 msgstr ""
 
@@ -123593,6 +123596,15 @@ msgstr "Přečtené lokality, vyhledané v pořadí:"
 #, fuzzy
 msgid "Write location: {}\n"
 msgstr "Umístění zápisu: %s\n"
+
+msgid "SDL: {} [compiled: {}]"
+msgstr "SDL: {} [zkompilováno: {}]"
+
+msgid "SDL is newer than compiled version"
+msgstr "SDL je novější než zkompilovaná verze"
+
+msgid "SDL is older than compiled version."
+msgstr "SDL je starší než zkompilovaná verze."
 
 msgid "Initializing video output failed, exiting…"
 msgstr ""
