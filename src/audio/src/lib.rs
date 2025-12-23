@@ -2102,7 +2102,7 @@ impl Drop for LuaAudioRef {
     }
 }
 impl LuaAudioRef {
-    fn try_clone(&self) -> Result<Self> {
+    pub fn try_clone(&self) -> Result<Self> {
         let audio = self.audio.try_clone()?;
         Ok(Self {
             audio,
