@@ -1,5 +1,7 @@
 ## v0.13.0 (unreleased)
 
+   * Lots of fixes relating audio spatialization
+   * Change and exposed intrinsic audio spatialization settings
    * Mass of batteries has been decreased
    * Adapative camoflauge plating got a bit of jamming
    * Fixed creating Audio objects when they should be AudioData in several
