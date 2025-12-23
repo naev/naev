@@ -20,7 +20,7 @@ local fmt = require "format"
 local pilotai = require "pilotai"
 local audio = require 'love.audio'
 
-local meow = audio.newSource( "snd/sounds/meow" )
+local meow = audio.newSoundSource( "snd/sounds/meow" )
 
 local REWARD = outfit.get("Corsair Engine")
 

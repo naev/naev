@@ -33,7 +33,7 @@ local owner_image = vni.generic()
 local owner_colour = nil
 local owner -- Non-persistent state
 
-local meow = audio.newSource( "snd/sounds/meow" )
+local meow = audio.newSoundData( "snd/sounds/meow" )
 
 local credit_reward = 200e3
 
