@@ -1,5 +1,10 @@
 ## v0.13.0 (unreleased)
 
+   * Mass of batteries has been decreased
+   * Adapative camoflauge plating got a bit of jamming
+   * Fixed creating Audio objects when they should be AudioData in several
+     places in the code
+   * Allow passing Audio to LuaSpfx although warn
    * 02_sciwrong: simplified logic a bit
 
 
