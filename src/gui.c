@@ -1936,12 +1936,6 @@ int gui_load( const char *name )
       gui_env = NULL;
    }
 
-   /* Recreate land window if landed. */
-   if ( landed && land_spob ) {
-      land_genWindows( 0 );
-      window_lower( land_wid );
-   }
-
    /* Add the GUI to the player. */
    player_guiAdd( name );
 
