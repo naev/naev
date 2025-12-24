@@ -8,6 +8,7 @@
      places in the code
    * Allow passing Audio to LuaSpfx although warn
    * 02_sciwrong: simplified logic a bit
+   * Fixed taiomi intro event
 
 
 ## v0.13.0-beta.5

@@ -18,6 +18,7 @@
 --]]
 local vn = require 'vn'
 local vne = require "vnextras"
+local sfx = require "luaspfx.sfx"
 
 local board_flashback -- Forward-declared functions
 local derelict_mule, derelicts, drone, evt_state, fidget_hook, numboarded -- Event state, never saved.
@@ -109,7 +110,7 @@ function heartbeat ()
          player_setup()
          camera.set( derelict_mule:pos() )
          camera.setZoom( math.max(1.5,camera.getZoom()) )
-         vn._sfx.eerie:play()
+         sfx( false, nil, vn._sfx.eerie )
          hook.timer( 6.0, "drone_runaway" )
          hook.timer( 10.0, "returncontrol", 2 )
       end
@@ -122,7 +123,7 @@ function heartbeat ()
          camera.setZoom( math.max(1.5,camera.getZoom()) )
          drone:taskClear()
          drone:hyperspace( "Taiomi" )
-         vn._sfx.eerie:play()
+         sfx( false, nil, vn._sfx.eerie )
          hook.timer( 11.0, "returncontrol", 4 )
          hook.timer( 14.0, "whatwasthat" )
       end
@@ -204,7 +205,7 @@ It seems like we got another commission, but we have to go to some place called 
 
 I want to run back home, but I can't quit so early. They would never stop making fun of me. Maybe Soromid space will be interesting?
 
-We leave to Dune next period.]]))
+We leave for Dune next period.]]))
    log(_([[UST 602:1995
 
 We have made it to Arrakis in the Dune system.
@@ -242,7 +243,7 @@ I have no idea what to do. It is very hard to write in my space suit, but I don'
 
 Something is scratching at the hull. It sounds like a weird animal. I haven't seen any living person in I don't know how long.
 
-There is no atmosphere and I can't take off my suit anymore. I don't see any way out.]]))
+There is no atmosphere and I can't take off my suit any more. I don't see any way out.]]))
    log(_([[UST (the date is blank)
 
 I have lost all notion of time.
@@ -257,7 +258,7 @@ I'm getting cold. I think the heating unit is malfunctioning.
 I may have finally lost my mind. There are weird ships prying and removing the ship components. They seem to behave like some sort of pack of wild animals.]]))
    log(_([[UST (the date is blank)
 
-I don't feel hunger anymore. The numbness sensation is spreading.
+I don't feel hunger any more. The numbness sensation is spreading.
 
 The ships don't seem to pay me much attention as they come and go. They remind me of ants back home.]]))
    log(_([[UST (the date is blank)
