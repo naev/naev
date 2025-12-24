@@ -343,7 +343,6 @@ function start_race ()
       if k >= ngates then
          race_done = true -- This should trigger the timer hook
          omsg_timer = player.omsgAdd(display_time(elapsed_time), 5, 50)
-         lmisn.sfxVictory()
          return
       end
       -- TODO sound effect?
@@ -527,6 +526,7 @@ function update_timer ()
       } )
       hook.timer( 0.1, "update_timer" )
    else
+      lmisn.sfxVictory()
       hook.timer( 5, "race_complete" )
    end
 end
