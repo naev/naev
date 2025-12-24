@@ -25,11 +25,10 @@ vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
 local sfx_start = audio.newSoundData( 'snd/sounds/growl1' )
 local sfx_bite = audio.newSoundData( 'snd/sounds/crash1' )
 
-local function turnoff_afterburner()
-   local pp = player.pilot()
-   for _i,n in ipairs(pp:actives()) do
+local function turnoff_afterburner( p )
+   for _i,n in ipairs(p:actives()) do
       if n.outfit:tags().movement and n.state=="on" then
-         if not pp:outfitToggle( n.slot ) then -- Failed to disable
+         if not p:outfitToggle( n.slot ) then -- Failed to disable
             return true
          end
       end
@@ -65,7 +64,7 @@ local function turnon( p, po )
    end
 
    -- Try to turn off afterburner
-   if turnoff_afterburner() then
+   if turnoff_afterburner(p) then
       return false
    end
 
