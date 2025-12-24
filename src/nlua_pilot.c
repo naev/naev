@@ -5654,9 +5654,13 @@ static int pilotL_control( lua_State *L )
       enable = 1;
    else
       enable = lua_toboolean( L, 2 );
-   if ( lua_isnone( L, 3 ) )
-      cleartasks = enable;
-   else
+   if ( lua_isnone( L, 3 ) ) {
+      if ( enable ) {
+         cleartasks = 1;
+      } else {
+         cleartasks = pilot_isFlag( p, PILOT_MANUAL_CONTROL );
+      }
+   } else
       cleartasks = lua_toboolean( L, 3 );
 
    if ( enable ) {
