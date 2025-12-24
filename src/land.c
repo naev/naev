@@ -999,7 +999,8 @@ static void misn_update( unsigned int wid, const char *str )
  */
 void land_refuel( void )
 {
-   unsigned int w;
+   if ( !land_loaded )
+      return;
 
    /* Full fuel. */
    if ( player.p->fuel >= player.p->fuel_max )
@@ -1012,7 +1013,7 @@ void land_refuel( void )
 
    player.p->fuel = player.p->fuel_max;
 
-   w = land_getWid( LAND_WINDOW_EQUIPMENT );
+   unsigned int w = land_getWid( LAND_WINDOW_EQUIPMENT );
    if ( w > 0 )
       equipment_updateShips( w, NULL ); /* Must update counter. */
 }
@@ -1388,11 +1389,11 @@ void land_genWindows( int load )
     * mission payment. */
    land_updateMainTab();
 
-   /* Refuel if necessary. */
-   land_refuel();
-
    /* Finished loading. */
    land_loaded = 1;
+
+   /* Refuel if necessary, after land_loaded. */
+   land_refuel();
 
    /* Necessary if player.land() was run in an abort() function. */
    if ( !load )

@@ -258,8 +258,9 @@ void outfits_regenList( unsigned int wid, const char *str )
    data = window_getData( wid );
 
    /* Must exist. */
-   if ( ( data->outfits == NULL ) &&
-        ( land_getWid( LAND_WINDOW_OUTFITS ) == 0 ) )
+   if ( !land_tabGenerated( LAND_WINDOW_OUTFITS ) ||
+        ( ( data->outfits == NULL ) &&
+          ( land_getWid( LAND_WINDOW_OUTFITS ) == 0 ) ) )
       return;
 
    /* Save focus. */
