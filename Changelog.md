@@ -3,12 +3,12 @@
    * Lots of fixes relating audio spatialization
    * Change and exposed intrinsic audio spatialization settings
    * Mass of batteries has been decreased
-   * Adapative camoflauge plating got a bit of jamming
+   * Adaptive camouflage plating got a bit of jamming
    * Fixed creating Audio objects when they should be AudioData in several
      places in the code
    * Allow passing Audio to LuaSpfx although warn
    * 02_sciwrong: simplified logic a bit
-   * Fixed taiomi intro event
+   * Fixed Taiomi intro event
 
 
 ## v0.13.0-beta.5
@@ -35,7 +35,7 @@
 
 ## v0.13.0-beta.3
 
-   * Make sure reynir only appears when you have free cargo space (reynir.lua)
+   * Make sure Reynir only appears when you have free cargo space (reynir.lua)
    * Fix loading fonts in the plugin manager on platforms like macOS
    * Fix handling the --pluginmanager flag on platforms like macOS
    * Replaced a bunch of placeholder outfit graphics
@@ -71,7 +71,7 @@
 
  ### Gameplay
 
-   * Removed heat mechanic (to be readded as a new mechanic in the future)
+   * Removed heat mechanic (to be re-added as a new mechanic in the future)
    * Made pirates less dangerous to new players
        - Marauders are now intrinsically weaker than other pirates, especially
          with low pirate presence
@@ -82,7 +82,7 @@
      ability
    * Bioships have had their skills and modifiers slightly reworked to be
      better balanced
-   * Light, medium-heavy and ultraheavy ship now have two core
+   * Light, medium-heavy and ultra-heavy ship now have two core
      hull/systems/engine slots, one main and one secondary
        - Effects of heavier cores can be obtained by stacking smaller ones
    * Engines have been reworked to be more coherent and consistent
@@ -119,7 +119,7 @@
    * Combat and ambient music tries to play from where it was last stopped when
      applicable
    * Gave small untargetable time to player when using hypergates and wormholes
-   * Ships that are scanning you use a different colour hilight
+   * Ships that are scanning you use a different colour highlight
    * Landable but uninhabited space objects use a different icon
    * Deployed fighter equipment is no longer random
    * Added support for multiple automatic backups with 5 by default
@@ -190,7 +190,7 @@
        - Temporary Invincibility
        - Detection Range only affects 'Detected at:' range
        - Ship Visibility that affects detection, signature, and stealth ranges
-   * Intro text is no longer hardcoded and is handled via Lua
+   * Intro text is no longer hard-coded and is handled via Lua
    * SVG image support
    * WGSL shader support
    * trigger library to handle commonly mission code
@@ -229,7 +229,7 @@
    * Improved AI braking skills
    * Game will not save in certain cases like loading the game and immediately
      being forced to take off by a load hook
-   * Improved handling of fullscreen toggling and resolution changes
+   * Improved handling of full screen toggling and resolution changes
    * Faction ships no longer show up as "Unknown" when you first discover a
      faction
    * Space mines in restricted systems have infinite duration
@@ -400,7 +400,7 @@
    * `fw03_sirius`: fixed Lua error
    * `fw05_triathlon`: fixed acquired information of ships the player can
      obtain
-   * nelly02: don't have nelly tell you about disable weapons after disabling
+   * nelly02: don't have Nelly tell you about disable weapons after disabling
      her ship
    * Carried fighters don't investigate
    * Minor typo fixes and translation updates
@@ -433,12 +433,12 @@
    * Fixed escort fighters existing after undeploying escort
    * Fixed Certitude trails
    * Pirate ambush derelict events break stealth
-   * Mining minigame result affects yield more
+   * Mining mini-game result affects yield more
    * Absorption is no longer limited to the 0% to 100% range
    * `derelict_rescue`: only allow generic target space objects
-   * onion04: don't fail if something happens to the gawain after taking the
+   * onion04: don't fail if something happens to the Gawain after taking the
      cargo
-   * `traffic_01`: don't use hardcoded systems
+   * `traffic_01`: don't use hard-coded systems
    * bounty: fixed error with deadlines in certain cases
    * neburesearch04: don't let the drones see through stealth and disable the
      player from relanding to skip stage
