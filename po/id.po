@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
 "POT-Creation-Date: 2025-12-22 20:21+0900\n"
-"PO-Revision-Date: 2025-12-23 01:42+0000\n"
+"PO-Revision-Date: 2025-12-24 04:21+0000\n"
 "Last-Translator: AntimatterReactor <antimatterreactor@noreply.codeberg.org>\n"
 "Language-Team: Indonesian <https://translate.codeberg.org/projects/naev/naev/"
 "id/>\n"
@@ -73816,7 +73816,7 @@ msgid " for theft of sensitive information"
 msgstr " karena telah mencuri informasi rahasia"
 
 msgid " for vandalism of critical infrastructure"
-msgstr "dengan asas vandalisme terhadap infrastruktur penting"
+msgstr "atas dasar aksi vandalisme terhadap infrastruktur penting"
 
 msgid " for conspiracy to commit treason"
 msgstr " karena berusaha melakukan pengkhianatan"
@@ -73831,10 +73831,10 @@ msgid " for bureaucratic infringements"
 msgstr ""
 
 msgid " for submitting erroneous paperwork"
-msgstr " dengan asas pengiriman dokumen tidak sah"
+msgstr " dengan asas pengiriman dokumen yang tidak sah"
 
 msgid " for failing to file taxes in a duly manner"
-msgstr ""
+msgstr " karena tidak melaporkan pajak secara tepat"
 
 msgid " for insulting the Emperor's pet iguana"
 msgstr " karena telah menghina iguana peliharaan sang Kaisar"
@@ -73856,10 +73856,10 @@ msgid " for filing excessive tax deductions"
 msgstr ""
 
 msgid " for falsifying Imperial Decrees"
-msgstr ""
+msgstr " dengan asas pemalsuan Dekrit Kekasiaran"
 
 msgid " for embezzling funds from the Imperial Treasury"
-msgstr ""
+msgstr " dengan asas korupsi dana dari Badan Keuangan Kekaisaran"
 
 msgid " for misrepresenting the Emperor's will to a Great House"
 msgstr ""
@@ -73868,16 +73868,18 @@ msgid " for failing to report a minor rebellion to the Imperial Council"
 msgstr ""
 
 msgid " for accepting bribes from a Minor House"
-msgstr ""
+msgstr " karena telah menerima suap dari sebuah Wangsa Kecil"
 
 msgid " for losing critical documents in the Imperial Archives"
-msgstr ""
+msgstr " karena telah kehilangan dokumen penting di Arsip Kekaisaran"
 
 msgid " for misallocating resources to a favoured Imperial project"
 msgstr ""
 
 msgid " for conspiring with a Great House to undermine the Emperor's authority"
 msgstr ""
+" karena telah berkonspirasi dengan sebuah Wangsa Besar demi menurunkan "
+"otoritas sang Kaisar"
 
 msgid " for submitting fraudulent expense reports to the Imperial Council"
 msgstr ""
@@ -73892,16 +73894,16 @@ msgid " for operating an illegal scientific paper mill"
 msgstr ""
 
 msgid " for creating a large scale botnet"
-msgstr " membuat botnet berskala besar"
+msgstr " atas dasar pembuatan botnet berskala besar"
 
 msgid " for forging the signature of a principal investigator"
-msgstr ""
+msgstr " atas dasar pemalsuan tanda tangan seorang penyelidik utama"
 
 msgid " for fraudulent use of research funds"
-msgstr " menggunakan dana penelitian secara tidak jujur"
+msgstr " dengan asas penggunakan dana penelitian secara tidak jujur"
 
 msgid " for failing to comply with research ethics course"
-msgstr ""
+msgstr " karena gagal mengikuti kursus etika penelitian"
 
 msgid ""
 " for not adding the principal investigator as a co-author on a scientific "
@@ -73909,7 +73911,7 @@ msgid ""
 msgstr ""
 
 msgid " for sending spam e-mails"
-msgstr " mengirimkan e-mail spam"
+msgstr " karena telah mengirimkan e-mail spam"
 
 msgid " for repeatedly crashing a supercomputer cluster with spaghetti code"
 msgstr ""
@@ -73918,13 +73920,13 @@ msgid " for software piracy"
 msgstr ""
 
 msgid " for fake NP=P proofs"
-msgstr " membuat bukti NP=P palsu"
+msgstr " atas dasar pembuktian NP=P palsu"
 
 msgid " for disbelief of science"
-msgstr ""
+msgstr " karena tidak percaya terhadap ilmu pengetahuan"
 
 msgid " for not respecting the scientific method"
-msgstr ""
+msgstr " karena tidak menghormati metode ilmiah"
 
 msgid " for falsifying research data to support a pet theory"
 msgstr ""
