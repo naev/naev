@@ -6,6 +6,7 @@
    * Adaptive camouflage plating got a bit of jamming
    * Fixed creating Audio objects when they should be AudioData in several
      places in the code
+   * NPCs using "The Bite" will no longer turn off the player's afterburner
    * Allow passing Audio to LuaSpfx although warn
    * 02_sciwrong: simplified logic a bit
    * Fixed Taiomi intro event
