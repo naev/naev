@@ -9,6 +9,9 @@ local function sfx( pos, vel, source, params )
    params = params or {}
    local ttl = source:getDuration()*1.1
    local s = spfx.new( ttl, nil, nil, nil, nil, pos, vel, source )
+   -- TODO this should not return here,
+   -- implement builder API to create sfx instead of the current "new" function
+   if not s then return end
    local ss = s:sfx()
    if not ss then return s end
    if params.dist_ref or params.dist_max then
