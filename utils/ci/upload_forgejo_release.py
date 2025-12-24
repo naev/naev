@@ -42,16 +42,16 @@ def get_token():
 def api_request(url, method="GET", headers=None, data=None):
    if headers is None:
       headers = {}
-   
+
    if data is not None:
       if isinstance(data, (dict, list)):
          data = json.dumps(data).encode("utf-8")
          headers["Content-Type"] = "application/json"
       elif isinstance(data, str):
          data = data.encode("utf-8")
-   
+
    req = urllib.request.Request(url, data=data, headers=headers, method=method)
-   
+
    try:
       with urllib.request.urlopen(req) as response:
          if response.status == 204:
@@ -82,7 +82,7 @@ def retry_api_request(url, method="GET", headers=None, data=None, attempts=5):
 def main():
    args = parse_args()
    token = get_token()
-   
+
    if not os.path.isdir(args.asset_dir):
       logging.error(f"Asset dir '{args.asset_dir}' not found")
       sys.exit(1)
@@ -148,21 +148,21 @@ def main():
          # URL encode the filename
          encoded_name = urllib.parse.quote(filename)
          logging.info(f"Uploading asset: {filename} -> {encoded_name}")
-         
+
          upload_url = f"{repo_url}/releases/{release_id}/assets?name={encoded_name}"
-         
+
          # Read file content
          with open(filepath, "rb") as f:
             file_data = f.read()
-         
+
          # Guess MIME type or fallback
          content_type, _ = mimetypes.guess_type(filename)
          if content_type is None:
             content_type = DEFAULT_MIME_TYPE
-            
+
          asset_headers = headers.copy()
          asset_headers["Content-Type"] = content_type
-         
+
          try:
             retry_api_request(upload_url, method="POST", headers=asset_headers, data=file_data)
          except Exception as e:
