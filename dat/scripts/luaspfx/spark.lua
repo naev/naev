@@ -41,7 +41,9 @@ local function spfx_spark( pos, vel, size, params )
    d.r      = rnd.rnd()
    if params.volume then
       local ss = s:sfx()
-      ss:setVolume( params.volume )
+      if ss then
+         ss:setVolume( params.volume )
+      end
    end
 end
 
