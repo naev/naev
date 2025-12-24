@@ -420,6 +420,7 @@ static int nlua_errTraceInternal( lua_State *L, int idx )
  *    @param env Environment.
  *    @param nargs Number of arguments to pass.
  *    @param nresults Number of return values to take.
+ *    @return 0 on success, or -1 on error with message pushed on stack.
  */
 int nlua_pcall( nlua_env *env, int nargs, int nresults )
 {

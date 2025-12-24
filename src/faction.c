@@ -170,22 +170,20 @@ static int faction_getRaw( const char *name )
    if ( strcmp( name, "Escort" ) == 0 )
       return FACTION_PLAYER;
 
-   if ( name != NULL ) {
-      int i;
-      for ( i = 0; i < array_size( faction_stack ); i++ )
-         if ( strcmp( faction_stack[i].name, name ) == 0 )
-            break;
+   int i;
+   for ( i = 0; i < array_size( faction_stack ); i++ )
+      if ( strcmp( faction_stack[i].name, name ) == 0 )
+         break;
 
-      if ( i != array_size( faction_stack ) )
-         return i;
+   if ( i != array_size( faction_stack ) )
+      return i;
 
-      /* Dynamic factions are why we can't have nice things.
+   /* Dynamic factions are why we can't have nice things.
       const Faction f = { .name = (char*)name };
       Faction *found = bsearch( &f, faction_stack, array_size(faction_stack),
       sizeof(Faction), faction_cmp ); if (found != NULL) return found -
       faction_stack;
       */
-   }
    return -1;
 }
 
@@ -875,13 +873,17 @@ static double faction_hitLua( int f, const StarSystem *sys, double mod,
 
    Faction *faction = &faction_stack[f];
 
-   /* Make sure it's not static. */
-   if ( faction_isFlag( faction, FACTION_STATIC ) )
+   /* Make sure it's not static nor dynamic. */
+   if ( faction_isFlag( faction, FACTION_STATIC ) ||
+        faction_isFlag( faction, FACTION_DYNAMIC ) )
       return 0.;
 
    /* Overriden, so doesn't budge. */
    if ( faction_isFlag( faction, FACTION_REPOVERRIDE ) )
       return 0.;
+
+   if ( faction->lua_env == NULL )
+      return 0;
 
    /* Set up the function:
     * standing:hit( sys, amount, source, secondary ) */
@@ -990,13 +992,17 @@ double faction_hitTest( int f, const StarSystem *sys, double mod,
 
    Faction *faction = &faction_stack[f];
 
-   /* Make sure it's not static. */
-   if ( faction_isFlag( faction, FACTION_STATIC ) )
+   /* Make sure it's not static nor dynamic. */
+   if ( faction_isFlag( faction, FACTION_STATIC ) ||
+        faction_isFlag( faction, FACTION_DYNAMIC ) )
       return 0.;
 
    /* Overriden, so doesn't budge. */
    if ( faction_isFlag( faction, FACTION_REPOVERRIDE ) )
       return 0.;
+
+   if ( faction->lua_env == NULL )
+      return 0;
 
    /* Set up the function:
     * standing:hit( sys, amount, source, secondary ) */

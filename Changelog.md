@@ -3,6 +3,7 @@
    * Lots of fixes relating audio spatialization
    * Change and exposed intrinsic audio spatialization settings
    * Mass of batteries has been decreased
+   * More guards against NULL dereferences
    * Adaptive camouflage plating got a bit of jamming
    * Fixed creating Audio objects when they should be AudioData in several
      places in the code
