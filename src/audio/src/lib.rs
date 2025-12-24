@@ -2070,7 +2070,7 @@ impl AudioRef {
     where
         S: Fn(&Audio) -> R,
     {
-        if AUDIO.disabled {
+        if AUDIO.disabled || self.0 == thunderdome::Index::DANGLING {
             return Ok(d);
         }
         let audio = AUDIO.voices.lock().unwrap();
@@ -2095,7 +2095,7 @@ impl AudioRef {
         S: Fn(&mut Audio) -> R,
         R: std::default::Default,
     {
-        if AUDIO.disabled {
+        if AUDIO.disabled || self.0 == thunderdome::Index::DANGLING {
             return Ok(Default::default());
         }
         let mut audio = AUDIO.voices.lock().unwrap();
