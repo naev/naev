@@ -5,12 +5,14 @@
    * Mass of batteries has been decreased
    * More guards against NULL dereferences
    * Adaptive camouflage plating got a bit of jamming
+   * Fixed Lua SPFX erroring out when SFX are omitted
    * Fixed creating Audio objects when they should be AudioData in several
      places in the code
    * NPCs using "The Bite" will no longer turn off the player's afterburner
    * Allow passing Audio to LuaSpfx although warn
    * 02_sciwrong: simplified logic a bit
    * Fixed Taiomi intro event
+   * taiomi10: fixed final cutscene
 
 
 ## v0.13.0-beta.5
