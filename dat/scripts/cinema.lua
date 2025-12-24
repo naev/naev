@@ -24,12 +24,14 @@ function cinema.on( params )
          invincible = p:flags("invincible"),
          control = p:flags("manualcontrol"),
          nodeath = p:flags("nodeath"),
+         nodisable = p:flags("nodisable"),
       }
 
       p:control(true)
       p:brake()
       p:setInvincible(true)
       p:setNoDeath(true)
+      p:setNoDisable(true)
       p:effectClear( false, true, true )
    end
 
@@ -45,9 +47,12 @@ function cinema.off ()
    if not cinema._on then return end
 
    for p,o in pairs(old) do
-      p:control( o.control )
-      p:setInvincible( o.invincible )
-      p:setNoDeath( o.nodeath )
+      if p:exists() then
+         p:control( o.control )
+         p:setInvincible( o.invincible )
+         p:setNoDeath( o.nodeath )
+         p:setNoDisable( o.nodisable )
+      end
    end
 
    camera.set()
