@@ -37,9 +37,9 @@ local base, basesys = spob.getS("One-Wing Goddard")
 --local endsys = system.get("Toros")
 local endsys = system.get("Toaxis")
 
-local HYPERGATE_SFX = audio.newSource( "snd/sounds/hypergate_turnon" )
-local FAILURE_SFX = audio.newSource( "snd/sounds/equipment_failure" )
-local ELECTRIC_SFX = audio.newSource( "snd/sounds/electric_zap" )
+local HYPERGATE_SFX = audio.newSoundData( "snd/sounds/hypergate_turnon" )
+local FAILURE_SFX = audio.newSoundData( "snd/sounds/equipment_failure" )
+local ELECTRIC_SFX = audio.newSoundData( "snd/sounds/electric_zap" )
 local DEFENSE_LENGTH = 60*3 -- Length in seconds
 
 --[[
