@@ -412,10 +412,6 @@ function cutscene04 ()
       dscavenger:moveto( vec2.newP( 100*rnd.rnd(), rnd.angle() ) )
    end
 
-   local pp = player.pilot()
-   pp:setNoDeath(true) -- No death from now on
-   pp:setNoDisable(true) -- makes it more fun, and stops time speed up
-
    hook.timer( 3, "cutscene05" )
 
    misn.osdCreate( title, {
@@ -425,6 +421,10 @@ end
 
 function cutscene05 ()
    cinema.off()
+
+   local pp = player.pilot()
+   pp:setNoDeath(true) -- No death from now on
+   pp:setNoDisable(true) -- makes it more fun, and stops time speed up
 
    hook.timer( 20, "cutscene06" )
 end
