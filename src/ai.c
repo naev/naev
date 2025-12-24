@@ -3195,8 +3195,9 @@ static int aiL_hostile( lua_State *L )
    if ( pilot_isWithPlayer( p ) ) {
 #if DEBUGGING
       if ( pilot_isWithPlayer( cur_pilot ) ) {
-         WARN( "Pilot escort '%s' trying to turn hostile towards player!",
-               cur_pilot->name );
+         NLUA_ERROR( L,
+                     "Pilot escort '%s' trying to turn hostile towards player!",
+                     cur_pilot->name );
          return 0;
       }
 #endif /* DEBUGGING */
