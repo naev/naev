@@ -28,6 +28,7 @@ function cinema.on( params )
       p:control(true)
       p:brake()
       p:setInvincible(true)
+      p:effectClear( false, true, true )
    end
 
    player.cinematics( true, params )
