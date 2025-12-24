@@ -111,7 +111,7 @@ return function ()
       end
       -- Soromid use descriptions based on type (or generic)
       local descriptions = desc_list[ civtype ]
-      if #descriptions<=0 then
+      if (not descriptions) or (#descriptions<=0) then
          descriptions = desc_list["generic"]
       end
       local desc = descriptions[ rnd.rnd(1,#descriptions) ]
