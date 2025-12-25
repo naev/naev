@@ -363,6 +363,8 @@ function board ()
    pp:cargoAdd( "Ore", pp:cargoFree() )
    mem.gotore = true
 
+   derelict:setHilight(false)
+
    player.unboard()
 end
 
