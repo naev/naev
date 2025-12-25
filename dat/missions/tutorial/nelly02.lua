@@ -434,6 +434,9 @@ function timer_pirate( fpir )
          aimem.allowbribe = true
          aimem.bribe_base = 100
          aimem.vulnignore = true -- Ignore vulnerability
+         aimem.spobdistance = 0
+         aimem.lanedistance = 0
+         aimem.jumpdistance = 0
          table.insert( enemies, p )
       end
       player.msg(fmt.f(_([[Nelly: "Wait, are those pirates coming our way?"]])),true)
