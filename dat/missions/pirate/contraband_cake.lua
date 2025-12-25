@@ -6,7 +6,10 @@
  <chance>20</chance>
  <location>Bar</location>
  <cond>
-   if require("common.pirate").systemPresence() &lt; 0 then
+   if require("common.pirate").systemPresence() &lt;= 0 then
+      return false
+   end
+   if player.wealth() &lt; 400e3 then
       return false
    end
    return require("misn_test").reweight_active()
