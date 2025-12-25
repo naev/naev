@@ -55,11 +55,8 @@
     <category>RolePlaying</category>
   </categories>
   <releases>
-    <release version="0.13.0-beta.2" type="development" date="2025-11-26">
-      <url type="details">https://naev.org/blarg/2025-11-26_0.13.0-beta.2/</url>
-    </release>
-    <release version="0.13.0-beta.1" type="development" date="2025-11-23">
-      <url type="details">https://naev.org/blarg/2025-11-23_0.13.0-beta.1/</url>
+    <release version="0.13.0" type="development" date="2025-12-25">
+      <url type="details">https://naev.org/blarg/2025-12-25_0.13.0/</url>
     </release>
     <release version="0.12.6" type="stable" date="2025-07-09">
       <url type="details">https://naev.org/blarg/2025-07-09_0.12.6/</url>
@@ -170,24 +167,24 @@
   <launchable type="desktop-id">org.naev.Naev.desktop</launchable>
   <screenshots>
     <screenshot type="default">
-      <caption>Flying around in space</caption>
-      <image>https://naev.org/imgs/screenshots_0.12.0/png/wunomi.png</image>
+      <caption>The title screen</caption>
+      <image>https://naev.org/imgs/screenshots_0.13.0/title_screen.webp</image>
     </screenshot>
     <screenshot>
       <caption>The shipyard interface</caption>
-      <image>https://naev.org/imgs/screenshots_0.12.0/png/llama_voyager.png</image>
+      <image>https://naev.org/imgs/screenshots_0.13.0/shipyard.webp</image>
     </screenshot>
     <screenshot>
       <caption>A lucky find on a derelict</caption>
-      <image>https://naev.org/imgs/screenshots_0.12.0/png/lucky_find.png</image>
+      <image>https://naev.org/imgs/screenshots_0.13.0/lucky_find.webp</image>
     </screenshot>
     <screenshot>
-      <caption>The in-game Holo Archives contains a lot of information</caption>
-      <image>https://naev.org/imgs/screenshots_0.12.0/png/pirate_kestrel.png</image>
+      <caption>The Anubis black hole</caption>
+      <image>https://naev.org/imgs/screenshots_0.13.0/black_hole.webp</image>
     </screenshot>
     <screenshot>
-      <caption>Another routine patrol</caption>
-      <image>https://naev.org/imgs/screenshots_0.12.0/png/rocket_party.png</image>
+      <caption>Engagement in the Nebula</caption>
+      <image>https://naev.org/imgs/screenshots_0.13.0/nebula_fightew.bep</image>
     </screenshot>
   </screenshots>
   <content_rating type="oars-1.0">

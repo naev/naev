@@ -1,4 +1,4 @@
-## v0.13.0 (unreleased)
+## v0.13.0
 
    * Lots of fixes relating audio spatialization
    * Change and exposed intrinsic audio spatialization settings
