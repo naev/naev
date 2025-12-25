@@ -14,6 +14,7 @@
    * Fixed Taiomi intro event
    * Fixed game freezing when finishing race with too many owned ships
    * taiomi10: fixed final cutscene
+   * nelly01/02: minor fixes and streamlining
 
 
 ## v0.13.0-beta.5
