@@ -1,3 +1,9 @@
+## v0.13.3 (unreleased)
+
+   * Fixed player escorts trying to respond to distress signals against the
+     player
+
+
 ## v0.13.0
 
    * Lots of fixes relating audio spatialization
