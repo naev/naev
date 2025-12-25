@@ -18,6 +18,6 @@ function update( p, _dt )
    -- Maximum at 108.3333 flow
    local mod = math.min( MAXBONUS, math.max( (f-MINFLOW)*BONUS, 0 ) )
    p:shippropSet{
-      time_speedup = mod,
+      action_speed = mod,
    }
 end

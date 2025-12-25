@@ -229,7 +229,7 @@ static const ShipStatsLookup ss_lookup[] = {
             N_( "Engine Mass Limit" ) ),
    D__ELEM( SS_TYPE_D_LOOT_MOD, loot_mod, N_( "Boarding Bonus" ) ),
    DI_ELEM( SS_TYPE_D_TIME_MOD, time_mod, N_( "Time Constant" ) ),
-   D__ELEM( SS_TYPE_D_TIME_SPEEDUP, time_speedup, N_( "Action Speed" ) ),
+   D__ELEM( SS_TYPE_D_ACTION_SPEED, action_speed, N_( "Action Speed" ) ),
    DI_ELEM( SS_TYPE_D_COOLDOWN_TIME, cooldown_time,
             N_( "Ship Cooldown Time" ) ),
    D__ELEM( SS_TYPE_D_JUMP_DISTANCE, jump_distance, N_( "Jump Distance" ) ),
@@ -288,6 +288,16 @@ static const ShipStatsLookup ss_lookup[] = {
 
    /* Sentinel. */
    N__ELEM( SS_TYPE_SENTINEL ) };
+
+typedef struct StatRename {
+   const char *old;
+   const char *new;
+} StatRename;
+static const StatRename ss_rename[] = {
+   // deprecated in 0.14.0, remove around 0.16.0 or so
+   { .old = "time_speedup", .new = "action_speed" },
+   { .old = NULL, .new = NULL },
+};
 
 /*
  * Prototypes.
@@ -798,6 +808,15 @@ ShipStatsType ss_typeFromName( const char *name )
       const ShipStatsLookup *lu = &ss_lookup[i];
       if ( ( lu->name != NULL ) && ( strcmp( name, lu->name ) == 0 ) )
          return lu->type;
+   }
+   for ( int i = 0; ss_rename[i].old != NULL; i++ ) {
+      const StatRename *re = &ss_rename[i];
+      if ( strcmp( name, re->old ) == 0 ) {
+         WARN( "DEPRECATED: ship stat '%s' is deprecated and will be removed, "
+               "use '%s' instead.",
+               re->old, re->new );
+         return ss_typeFromName( re->new );
+      }
    }
 
    WARN( _( "ss_typeFromName: No ship stat matching '%s'" ), name );

@@ -12,7 +12,7 @@ function update( p )
    local last = mem.last or 1
    if last ~= s then
       p:shippropSet{ -- Should overwrite existing values
-         ["time_speedup"]=bonus,
+         ["action_speed"]=bonus,
          ["time_mod"]=-bonus,
       }
       mem.last = s

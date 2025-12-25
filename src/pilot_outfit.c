@@ -687,7 +687,7 @@ int pilot_reportSpaceworthy( const Pilot *p, char *buf, int bufSize )
    SPACEWORTHY_CHECK( p->accel < 0, _( "!! Insufficient Accel" ) );
    SPACEWORTHY_CHECK( p->speed < 0, _( "!! Insufficient Speed" ) );
    SPACEWORTHY_CHECK( p->turn < 0, _( "!! Insufficient Turn" ) );
-   SPACEWORTHY_CHECK( p->stats.time_speedup <= 0.,
+   SPACEWORTHY_CHECK( p->stats.action_speed <= 0.,
                       _( "!! Defies Laws of Physics" ) );
 
    /* Health. */
@@ -1238,7 +1238,7 @@ void pilot_calcStats( Pilot *pilot )
    pilot->fuel   = fc * pilot->fuel_max;
 
    /* Some sanity checks. */
-   pilot->stats.time_speedup = MAX( pilot->stats.time_speedup, 0. );
+   pilot->stats.action_speed = MAX( pilot->stats.action_speed, 0. );
 
    /* Deployed fighters with no mothership take damage over time. */
    if ( pilot_isFlag( pilot, PILOT_CARRIER_DIED ) ) {

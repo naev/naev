@@ -517,7 +517,7 @@ static void think_beam( Weapon *w, double dt )
       rate = p->stats.fwd_firerate;
    else
       rate = p->stats.tur_firerate;
-   dt *= p->stats.time_speedup * rate *
+   dt *= p->stats.action_speed * rate *
          p->stats.weapon_firerate; /* Have to consider time speedup here. */
 
    /* Check if pilot has enough energy left to keep beam active. */
@@ -606,7 +606,7 @@ static void think_beam( Weapon *w, double dt )
 
       double turn = outfit_turn( w->outfit );
       weapon_setTurn( w,
-                      p->stats.time_speedup * CLAMP( -turn, turn, diff / dt ) );
+                      p->stats.action_speed * CLAMP( -turn, turn, diff / dt ) );
       break;
 
    default:
@@ -713,7 +713,7 @@ void weapons_updateCollide( double dt )
          else
             rate = p->stats.tur_firerate;
          beamdt =
-            dt * p->stats.time_speedup * rate *
+            dt * p->stats.action_speed * rate *
             p->stats.weapon_firerate; /* Have to consider time speedup here. */
          /* Beams don't have inherent accuracy. */
          w->timer -= beamdt;
@@ -1983,7 +1983,7 @@ static void weapon_hitBeam( Weapon *w, const WeaponHit *hit, double dt )
    else
       firerate = parent->stats.fwd_firerate;
    mod = w->dam_mod * w->strength * firerate * parent->stats.weapon_firerate *
-         parent->stats.time_speedup * dt;
+         parent->stats.action_speed * dt;
    damage          = odmg->damage * mod;
    dmg.damage      = MAX( 0., damage * ( 1. - w->dam_as_dis_mod ) );
    dmg.penetration = odmg->penetration;

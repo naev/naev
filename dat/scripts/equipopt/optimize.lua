@@ -185,7 +185,7 @@ function optimize.goodness_default( o, p )
    -- Base attributes
    local base = p.cargo*(0.5*math.pow(o.cargo,0.3) + 0.1*(1-os.cargo_inertia)) + p.fuel*0.2*o.fuel
    -- Movement attributes
-   local move = 0.1*o.accel + 0.1*o.speed + 0.2*o.turn + 50*(os.time_speedup-1)
+   local move = 0.1*o.accel + 0.1*o.speed + 0.2*o.turn + 50*(os.action_speed-1)
    -- Health attributes
    local health = 0.01*o.shield + 0.02*o.armour + 0.9*o.shield_regen + 2*o.armour_regen + os.absorb/10
    -- Energy attributes

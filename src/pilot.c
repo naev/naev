@@ -2365,7 +2365,7 @@ void pilot_update( Pilot *pilot, double dt )
    Target wt;
 
    /* Modify the dt with speedup. */
-   dt *= pilot->stats.time_speedup;
+   dt *= pilot->stats.action_speed;
 
    /* Check target validity. */
    target  = pilot_weaponTarget( pilot, &wt );

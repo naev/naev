@@ -154,7 +154,7 @@ function lets_go()
    -- On easy difficulty, it's nearly impossible for the player to be disabled...
    local _dif, stats = naev.difficulty(true)
    local mod = math.max( (stats.armour_mod or 1), 1 )
-   mod = mod * math.max( (stats.time_speedup or 1), 1 )
+   mod = mod * math.max( (stats.action_speed or 1), 1 )
    mod = mod * math.max( (stats.armour_regen or 1), 1 )
    mod = (mod-1)*100
    if mod > 0 then

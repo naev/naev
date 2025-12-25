@@ -119,7 +119,7 @@ typedef enum ShipStatsType {
    SS_TYPE_D_ENGINE_LIMIT_REL,   /**< Modifier for the ship's engine limit. */
    SS_TYPE_D_LOOT_MOD,           /**< Affects boarding rewards. */
    SS_TYPE_D_TIME_MOD,           /**< Time dilation modifier. */
-   SS_TYPE_D_TIME_SPEEDUP,       /**< Makes the pilot operate at a higher dt. */
+   SS_TYPE_D_ACTION_SPEED,       /**< Makes the pilot operate at a higher dt. */
    SS_TYPE_D_COOLDOWN_TIME, /**< Speeds up or slows down the cooldown time. */
    SS_TYPE_D_JUMP_DISTANCE, /**< Modifies the distance from a jump point at
                                which the pilot can jump. */
@@ -345,7 +345,7 @@ typedef struct ShipStats {
    int    crew;                    /**< Crew modifier. */
    double loot_mod;                /**< Boarding loot reward bonus. */
    double time_mod;                /**< Time dilation modifier. */
-   double time_speedup;  /**< Makes the pilot operate at higher speeds. */
+   double action_speed;  /**< Makes the pilot operate at higher speeds. */
    double cooldown_time; /**< Modifies cooldown time. */
    double jump_distance; /**< Modifies how far the pilot can jump from the jump
                             point. */
