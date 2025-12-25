@@ -1263,6 +1263,7 @@ static void weapon_updateCollide( Weapon *w, double dt )
             w->dam_as_dis_mod = p->stats.tur_dam_as_dis - 1.;
             w->range_mod      = p->stats.tur_range * p->stats.weapon_range;
          }
+         w->dam_as_dis_mod *= p->stats.weapon_dam_as_dis - 1.;
          w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod );
       }
       wc.gfx      = NULL;
@@ -2423,6 +2424,7 @@ static void weapon_createBolt( Weapon *w, const Outfit *outfit, double dir,
       w->range_mod      = parent->stats.fwd_range * parent->stats.weapon_range;
       speed_mod *= parent->stats.fwd_speed;
    }
+   w->dam_as_dis_mod *= parent->stats.weapon_dam_as_dis - 1.;
    /* Clamping, but might not actually be necessary if weird things want to be
     * done. */
    w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod );
@@ -2522,6 +2524,12 @@ static void weapon_createAmmo( Weapon *w, const Outfit *outfit, double dir,
       w->real_vel = VMOD( v );
    } else
       w->real_vel = 0.;
+
+   w->dam_as_dis_mod = ( parent->stats.launch_dam_as_dis - 1. ) *
+                       ( parent->stats.weapon_dam_as_dis - 1. );
+   /* Clamping, but might not actually be necessary if weird things want to be
+    * done. */
+   w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod );
 
    /* Handle health if necessary. */
    if ( outfit_launcherArmour( w->outfit ) > 0. ) {
@@ -2691,6 +2699,7 @@ static int weapon_create( Weapon *w, PilotOutfitSlot *po, const Outfit *ref,
          w->dam_as_dis_mod = parent->stats.tur_dam_as_dis - 1.;
          w->range_mod = parent->stats.tur_range * parent->stats.weapon_range;
       }
+      w->dam_as_dis_mod *= parent->stats.weapon_damage - 1.;
       w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod );
 
       break;

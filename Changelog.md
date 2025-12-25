@@ -1,3 +1,8 @@
+## v0.14.0 (unreleased)
+
+   * Added weapon and launcher damage as disable ship stats.
+
+
 ## v0.13.3 (unreleased)
 
    * Fixed player escorts trying to respond to distress signals against the

@@ -63,24 +63,26 @@ typedef enum ShipStatsType {
                                   scanned. */
 
    /* Weapons. These affect Forward, Turret, and Launchers. */
-   SS_TYPE_D_WEAPON_RANGE,    /**< Weapon range. */
-   SS_TYPE_D_WEAPON_DAMAGE,   /**< Weapon damage. */
-   SS_TYPE_D_WEAPON_FIRERATE, /**< Weapon fire rate. */
-   SS_TYPE_D_WEAPON_ENERGY,   /**< Weapon energy usage. */
-   SS_TYPE_D_WEAPON_SPEED,    /**< Weapon speed. */
+   SS_TYPE_D_WEAPON_RANGE,             /**< Weapon range. */
+   SS_TYPE_D_WEAPON_DAMAGE,            /**< Weapon damage. */
+   SS_TYPE_D_WEAPON_FIRERATE,          /**< Weapon fire rate. */
+   SS_TYPE_D_WEAPON_ENERGY,            /**< Weapon energy usage. */
+   SS_TYPE_D_WEAPON_DAMAGE_AS_DISABLE, /**< Weapon damage as disable. */
+   SS_TYPE_D_WEAPON_SPEED,             /**< Weapon speed. */
 
    /* Launchers. */
-   SS_TYPE_D_LAUNCH_RATE,        /**< Launch rate for missiles. */
-   SS_TYPE_D_LAUNCH_RANGE,       /**< Launch range for missiles. */
-   SS_TYPE_D_LAUNCH_DAMAGE,      /**< Launch damage for missiles. */
-   SS_TYPE_D_LAUNCH_ENERGY,      /**< Launch energy for missiles. */
-   SS_TYPE_D_AMMO_CAPACITY,      /**< Capacity of launchers. */
-   SS_TYPE_D_LAUNCH_LOCKON,      /**< Lock-on speed of launchers. */
-   SS_TYPE_D_LAUNCH_CALIBRATION, /**< Calibration speed of launchers. */
-   SS_TYPE_D_LAUNCH_RELOAD,      /**< Regeneration rate of launcher ammo. */
-   SS_TYPE_D_LAUNCH_ACCEL,       /**< Launched ammo accel. */
-   SS_TYPE_D_LAUNCH_SPEED,       /**< Launched ammo speed. */
-   SS_TYPE_D_LAUNCH_TURN,        /**< Launched ammo turn. */
+   SS_TYPE_D_LAUNCH_RATE,              /**< Launch rate for missiles. */
+   SS_TYPE_D_LAUNCH_RANGE,             /**< Launch range for missiles. */
+   SS_TYPE_D_LAUNCH_DAMAGE,            /**< Launch damage for missiles. */
+   SS_TYPE_D_LAUNCH_ENERGY,            /**< Launch energy for missiles. */
+   SS_TYPE_D_LAUNCH_DAMAGE_AS_DISABLE, /**< Launch damage as disable. */
+   SS_TYPE_D_AMMO_CAPACITY,            /**< Capacity of launchers. */
+   SS_TYPE_D_LAUNCH_LOCKON,            /**< Lock-on speed of launchers. */
+   SS_TYPE_D_LAUNCH_CALIBRATION,       /**< Calibration speed of launchers. */
+   SS_TYPE_D_LAUNCH_RELOAD, /**< Regeneration rate of launcher ammo. */
+   SS_TYPE_D_LAUNCH_ACCEL,  /**< Launched ammo accel. */
+   SS_TYPE_D_LAUNCH_SPEED,  /**< Launched ammo speed. */
+   SS_TYPE_D_LAUNCH_TURN,   /**< Launched ammo turn. */
 
    /* Fighter Bays. */
    SS_TYPE_D_FBAY_DAMAGE,   /**< Fighter bay fighter damage bonus (all weapons).
@@ -274,17 +276,19 @@ typedef struct ShipStats {
    double mass;               /**< Absolute mass. */
 
    /* Weapons. */
-   double weapon_range;    /**< Weapon range. */
-   double weapon_damage;   /**< Weapon damage. */
-   double weapon_firerate; /**< Weapon firerate. */
-   double weapon_energy;   /**< Weapon energy usage. */
-   double weapon_speed;    /**< Weapon speed. */
+   double weapon_range;      /**< Weapon range. */
+   double weapon_damage;     /**< Weapon damage. */
+   double weapon_firerate;   /**< Weapon firerate. */
+   double weapon_energy;     /**< Weapon energy usage. */
+   double weapon_dam_as_dis; /**< Weapon damage as disable. */
+   double weapon_speed;      /**< Weapon speed. */
 
    /* Launchers. */
    double launch_rate;        /**< Fire rate of launchers. */
    double launch_range;       /**< Range of launchers. */
    double launch_damage;      /**< Damage of launchers. */
    double launch_energy;      /**< Energy usage of launchers. */
+   double launch_dam_as_dis;  /**< Launcher damage as disable. */
    double ammo_capacity;      /**< Capacity of launchers. */
    double launch_lockon;      /**< Lock on speed of launchers. */
    double launch_calibration; /**< Calibration speed of launchers. */

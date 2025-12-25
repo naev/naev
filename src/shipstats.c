@@ -168,6 +168,8 @@ static const ShipStatsLookup ss_lookup[] = {
             N_( "Weapon Fire Rate" ) ),
    DI_ELEM( SS_TYPE_D_WEAPON_ENERGY, weapon_energy,
             N_( "Weapon Energy Usage" ) ),
+   D__ELEM( SS_TYPE_D_WEAPON_DAMAGE_AS_DISABLE, weapon_dam_as_dis,
+            N_( "Weapon Damage as Disable" ) ),
    D__ELEM( SS_TYPE_D_WEAPON_SPEED, weapon_speed,
             N_( "Weapon Munition Speed" ) ),
 
@@ -176,6 +178,8 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_LAUNCH_DAMAGE, launch_damage, N_( "Damage (Launcher)" ) ),
    DI_ELEM( SS_TYPE_D_LAUNCH_ENERGY, launch_energy,
             N_( "Energy Usage (Launcher)" ) ),
+   D__ELEM( SS_TYPE_D_LAUNCH_DAMAGE_AS_DISABLE, launch_dam_as_dis,
+            N_( "Damage as Disable (Launcher)" ) ),
    D__ELEM( SS_TYPE_D_AMMO_CAPACITY, ammo_capacity, N_( "Ammo Capacity" ) ),
    DI_ELEM( SS_TYPE_D_LAUNCH_LOCKON, launch_lockon, N_( "Launch Lock-on" ) ),
    DI_ELEM( SS_TYPE_D_LAUNCH_CALIBRATION, launch_calibration,
