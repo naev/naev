@@ -94,6 +94,9 @@ local function set_init( p, po )
    end
 end
 
+--[[--
+@brief Sets the stats of the set.
+--]]
 function lib.set( _p, po )
    if mem.active_stats then
       -- Apply the active stats
@@ -103,6 +106,14 @@ function lib.set( _p, po )
    end
 end
 
+--[[--
+@brief Initializes the set libray.
+
+   @luatparam ttring setname Name of the set.
+   @luatparam {Outfit} outfits Ordered table with the outfits in the set.
+   @luaparam bonuses Table of bonuses.
+   @luatparam boolean noset Whether or not to run the lib.set function automatically (such as not multicore).
+--]]
 function lib.init( setname, outfits, bonuses, noset )
    SETNAME = setname
    OUTFITS = outfits
