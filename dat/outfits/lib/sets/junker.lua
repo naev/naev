@@ -75,7 +75,7 @@ function lib.init ( noset )
                end
             end
             if m and m:exists() then
-               po:munition( p, PD, m, nil, nil, nil, true )
+               po:munition( p, PD, m )
                mem.cooldown = DELAY
             end
          end
