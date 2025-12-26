@@ -1,6 +1,8 @@
 ## v0.14.0 (unreleased)
 
+   * 3 new outfits
    * Added weapon and launcher damage as disable ship stats.
+   * Made NGC-11718 a bit more interesting
 
 
 ## v0.13.1 (unreleased)
