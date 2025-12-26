@@ -14,7 +14,7 @@
   <lua>outfits/utility/berserk_chip.lua</lua>
   <energy_regen_mod>-50</energy_regen_mod>
   <time_mod>-50</time_mod>
-  <time_speedup>50</time_speedup>
+  <action_speed>50</action_speed>
   <weapon_firerate>100</weapon_firerate>
  </specific>
 </outfit>

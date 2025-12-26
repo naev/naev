@@ -7,6 +7,6 @@
  <shader>effects/antimatter_taint.frag</shader>
  <debuff/>
  <stats>
-  <time_speedup>-10</time_speedup>
+  <action_speed>-10</action_speed>
  </stats>
 </effect>

@@ -9,5 +9,5 @@
  <turn_mod>-5</turn_mod>
  <weapon_damage>-25</weapon_damage>
  <time_mod>5</time_mod>
- <time_speedup>-5</time_speedup>
+ <action_speed>-5</action_speed>
 </difficulty>

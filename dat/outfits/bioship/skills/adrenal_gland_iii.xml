@@ -18,7 +18,7 @@
   <energy>55</energy>
   <mass_limit>300</mass_limit>
   <time_mod>-25</time_mod>
-  <time_speedup>25</time_speedup>
+  <action_speed>25</action_speed>
  </specific>
  <tags>
   <tag>movement</tag>

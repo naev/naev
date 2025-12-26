@@ -5,6 +5,6 @@
  <overwrite>corsair_set</overwrite>
  <buff/>
  <stats>
-  <time_speedup>33</time_speedup>
+  <action_speed>33</action_speed>
  </stats>
 </effect>

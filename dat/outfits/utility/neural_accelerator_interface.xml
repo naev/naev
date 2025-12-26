@@ -16,6 +16,6 @@
   <lua>outfits/utility/neural_accelerator_interface.lua</lua>
   <energy_regen_mod>-100</energy_regen_mod>
   <time_mod>-50</time_mod>
-  <time_speedup>50</time_speedup>
+  <action_speed>50</action_speed>
  </specific>
 </outfit>

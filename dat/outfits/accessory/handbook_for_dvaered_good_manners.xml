@@ -13,6 +13,6 @@
  </general>
  <specific type="modification">
   <launch_reload>50</launch_reload>
-  <time_speedup>2</time_speedup>
+  <action_speed>2</action_speed>
  </specific>
 </outfit>

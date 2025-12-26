@@ -12,6 +12,6 @@
   <limit>combatai</limit>
  </general>
  <specific type="modification">
-  <time_speedup>3</time_speedup>
+  <action_speed>3</action_speed>
  </specific>
 </outfit>

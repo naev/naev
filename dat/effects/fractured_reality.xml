@@ -12,6 +12,6 @@
   <tur_firerate>-30</tur_firerate>
   <launch_rate>-30</launch_rate>
   <time_mod>-67</time_mod>
-  <time_speedup>200</time_speedup>
+  <action_speed>200</action_speed>
  </stats>
 </effect>

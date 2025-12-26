@@ -11,6 +11,6 @@
  <speed_mod>25</speed_mod>
  <turn_mod>15</turn_mod>
  <time_mod>-20</time_mod>
- <time_speedup>25</time_speedup>
+ <action_speed>25</action_speed>
  <fuel_usage_mod>-50</fuel_usage_mod>
 </difficulty>

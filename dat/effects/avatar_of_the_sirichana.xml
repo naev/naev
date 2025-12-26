@@ -11,7 +11,7 @@
   <speed_mod>25</speed_mod>
   <turn_mod>25</turn_mod>
   <accel_mod>25</accel_mod>
-  <time_speedup>25</time_speedup>
+  <action_speed>25</action_speed>
   <time_mod>-25</time_mod>
   <absorb>20</absorb>
   <jam_chance>30</jam_chance>

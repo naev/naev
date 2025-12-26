@@ -18,7 +18,7 @@
       {'energy_regen', 66, 74},
       {'shield', 850, 250},
       {'shield_regen', 15, 3},
-      {'time_speedup', 1, 0},
+      {'action_speed', 1, 0},
    })
   </lua_inline>
  </specific>
