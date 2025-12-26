@@ -10,6 +10,7 @@ customoutfits = {
       'input'  : 'weapons/heavy_ripper_cannon.xml',
       'output' : 'reaver_cannon.xml',
    },
+   # Corsair Set
    'corsair_systems' : {
       'command': 'corsair_systems.py',
       'input'  : 'core_system/medium/unicorp_pt200_core_system.xml',
@@ -24,6 +25,12 @@ customoutfits = {
       'command': 'corsair_engine.py',
       'input'  : 'core_engine/medium/nexus_arrow_700_engine.xml',
       'output' : 'corsair_engine.xml',
+   },
+   # Junker Set
+   'Junker Hull' : {
+      'command': 'junker_hull.py',
+      'input'  : 'core_hull/small/sk_small_cargo_hull.xml',
+      'output' : 'junker_plates.xml',
    },
 }
 

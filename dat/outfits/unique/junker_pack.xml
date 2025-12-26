@@ -1,0 +1,22 @@
+<outfit name="Junker Pack">
+ <general>
+  <unique/>
+  <rarity>6</rarity>
+  <slot>structure</slot>
+  <size>small</size>
+  <mass>15</mass>
+  <price>125000</price>
+  <description>A mix and match of the best scraps found from derelicts and abandoned facilities across the stars. They are jerry-rigged together to work surprisingly well, providing a diversity of bonuses to the equipping ship, although not excelling in any particular task.</description>
+  <gfx_store>placeholder</gfx_store>
+ </general>
+ <specific type="modification">
+  <lua_inline>
+   require('outfits.lib.sets.junker').init()
+  </lua_inline>
+  <cargo>5</cargo>
+  <fuel>100</fuel>
+  <loot_mod>15</loot_mod>
+  <ew_detect>8</ew_detect>
+  <energy_regen>2</energy_regen>
+ </specific>
+</outfit>

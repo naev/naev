@@ -1,0 +1,80 @@
+local fmt = require "format"
+local set = require "outfits.lib.set"
+
+local DETECT = 25
+local LOOT = 25
+local REGEN = 1
+local PD, DELAY, RANGE
+
+local lib = {}
+
+function lib.init ( noset )
+   set.init( _("Junker Gera"), {
+      outfit.get("Junker Pack"),
+      outfit.get("Junker Plates"),
+      outfit.get("Junker Ion Shotter"),
+   }, {
+      [1] = {
+         desc = fmt.f(_("+{detect}% Detection, +{loot}% Boarding Bonus, +{regen} {units} Armour Regeneration"),
+            {detect=DETECT, loot=LOOT, regen=REGEN, units=naev.unit("power")}),
+         stats = {
+            ["ew_detect"] = DETECT,
+            ["loot_mod"] = LOOT,
+            ["armour_regen"] = REGEN,
+         },
+      },
+      [2] = {
+         desc = _("Provides anti-munition point defence."),
+         func = function (_p, _po, on)
+            mem.set_on = on
+         end,
+      },
+   },
+   noset )
+
+   local onload_old = onload
+   function onload( ... )
+      if onload_old then
+         onload_old( ... )
+      end
+
+      PD = outfit.get("Junker Point Defence")
+      local stats = PD:specificstats()
+      RANGE = stats.range
+      DELAY = stats.delay
+   end
+
+   local init_old = init
+   function init( ... )
+      if init_old then
+         init_old( ... )
+      end
+      mem.cooldown = 0
+   end
+
+   local update_old = update
+   function update( p, po, dt )
+      if update_old then
+         update_old( p, po, dt )
+      end
+
+      -- Handle point defense here
+      if mem.set_on then
+         mem.cooldown = mem.cooldown - dt
+         local m = mem.target
+         if not m or not m:exists() then
+            local mall = munition.getInrange( p:pos(), RANGE, p )
+            if #mall > 0 then
+               m = mall[ rnd.rnd(1,#mall) ] -- Just get a random one
+               mem.target = m
+            end
+         end
+         if m and m:exists() and mem.cooldown <= 0 then
+            po:munition( p, PD, m, nil, nil, nil, true )
+            mem.cooldown = DELAY
+         end
+      end
+   end
+end
+
+return lib
