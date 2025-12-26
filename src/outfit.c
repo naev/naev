@@ -2043,7 +2043,6 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
 
    /* Load the collision polygon. */
    const char *buf = xml_get( node );
-   outfit_loadPLG( temp, buf );
 
    /* Load normal graphics. */
    flags = OPENGL_TEX_MIPMAPS;
@@ -2065,9 +2064,13 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
       free( col );
    }
 
-   /* Validity check: there must be 1 polygon per sprite. */
-   if ( array_size( gfx->polygon.views ) <= 0 )
-      WARN( _( "Outfit '%s' is missing collision polygon!" ), temp->name );
+   /* Validity check: there must be 1 polygon per sprite if no collision size.
+    */
+   else {
+      outfit_loadPLG( temp, buf );
+      if ( array_size( gfx->polygon.views ) <= 0 )
+         WARN( _( "Outfit '%s' is missing collision polygon!" ), temp->name );
+   }
 
    return 0;
 }
