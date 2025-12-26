@@ -11,14 +11,18 @@ general = o['general']
 general['unique'] = None
 general['rarity'] = 6
 general['$price'] = 200e3
-general['description'] = N_("TODO")
+general['description'] = N_("An assortment of different chunks of scavenged ship hulls linked together to form a surprisingly durable hull plating. It comes with a surprising amount of empty area to fit cargo, and the unorthodox design makes it a bit hard for weapon systems to lock onto.")
 
 specific = o['specific']
-specific['mass'] = str( int(specific['mass']) + 5 )
+specific['mass'] = str( int(specific['mass']) + 10 )
 specific['armour']['$pri'] += 20
 specific['armour']['$sec'] += 10
 specific['cargo_mod']['$pri'] -= 15
 specific['cargo_mod']['$sec'] -= 5
+specific['cargo_inertia']['$pri'] -= 15
+specific['cargo_inertia']['$sec'] -= 5
+specific['loot_mod'] = { '$pri': 20, '$sec': 10 }
+specific['ew_signature'] = { '$pri':-10, '$sec': -5 }
 specific['lua_inline_post'] = "require('outfits.lib.sets.junker').init( true )"
 
 data.save()
