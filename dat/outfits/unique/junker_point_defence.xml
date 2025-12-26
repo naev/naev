@@ -1,23 +1,24 @@
 <outfit name="Junker Point Defence">
  <general>
   <slot>weapon</slot>
-  <size>smalll</size>
+  <size>small</size>
   <typename>Point Defence</typename>
-  <mass>0</mass>
+  <mass>1</mass>
   <price>0</price>
   <description>TODO</description>
   <gfx_store>placeholder</gfx_store>
   <cpu>0</cpu>
  </general>
- <specific type="launcher bolt">
+ <specific type="turret launcher">
   <gfx col_size="20">empgrenade_blue</gfx>
   <sound>grenadefire</sound>
   <spfx_shield>Exp-S</spfx_shield>
   <spfx_armour>Exp-S</spfx_armour>
   <delay>3</delay>
-  <amount>30</amount>
+  <amount>1</amount>
   <speed>600</speed>
   <duration>1.2</duration>
+  <reload_time>1</reload_time>
   <trackmin>0</trackmin>
   <trackmax>3800</trackmax>
   <ammo_mass>1</ammo_mass>
