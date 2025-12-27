@@ -1,8 +1,15 @@
 ## v0.14.0 (unreleased)
 
+ ### Content
+
    * 3 new outfits
-   * Added weapon and launcher damage as disable ship stats.
    * Made NGC-11718 a bit more interesting
+
+ ### Engine
+
+   * Added weapon and launcher damage as disable ship stats.
+   * Rewrote the following in rust
+       - Transform module
 
 
 ## v0.13.1 (unreleased)
