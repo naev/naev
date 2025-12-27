@@ -200,7 +200,7 @@ impl UserData for Transform2 {
         /*@
          * @brief Creates an orthogonal matrix.
          *
-         * Assumes near = -1 and far = +1.
+         * As it is 2D, it assumes near = -1 and far = +1.
          *
          *    @luatparam number left Left value.
          *    @luatparam number right Right value.
@@ -251,10 +251,8 @@ impl UserData for Transform2 {
          *    @luatparam Transform T Transform to apply.
          *    @luatparam number x Dimension X-coordinate.
          *    @luatparam number y Dimension Y-coordinate.
-         *    @luatparam number z Dimension Z-coordinate.
          *    @luatreturn number New X coordinate.
          *    @luatreturn number New Y coordinate.
-         *    @luatreturn number New Z coordinate.
          * @luafunc applyDim
          */
         methods.add_method(
