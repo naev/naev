@@ -35,9 +35,11 @@ local portrait = require "portrait"
 local fmt = require "format"
 local cinema = require "cinema"
 local ai_setup = require "ai.core.setup"
+local sfx = require "luaspfx.sfx"
 
 local alpha, attackers, canland, controls, hamelsen, jules, spy, targpos, toldya, wrlrds -- Non-persistent state
 local StraferNspy, equipHyena, scheduleIncoming, spawn1Wrlrd, spawnAlpha, spawnBeta, strNpc -- Forward-declared functions
+local sfx_jump = audiodata.new( "snd/sounds/jump" )
 
 message = fw.message -- common hooks
 
@@ -322,7 +324,7 @@ end
 
 -- Play a beep
 function beepMe()
-   audio.soundPlay( "jump" )
+   sfx( false, nil, sfx_jump )
 end
 
 -- Spawn Warlords, who will annoy the player
@@ -407,7 +409,7 @@ end
 
 -- A ship approaches from DHC: assign it to player
 local function incomingControl( self )
-   audio.soundPlay( "jump" )
+   sfx( false, nil, sfx_jump )
    alpha[1]:comm( fmt.f(_("A-NightClaws Leader to {player}: intercept {plt} and confirm their security clearance code"), {player=player.name(), plt=self} ) )
    self:setHilight()
    self:setVisible()
@@ -522,7 +524,7 @@ end
 
 -- Hamelsen is in range: do as usual
 function incomingHamelsen()
-   audio.soundPlay( "jump" )
+   sfx( false, nil, sfx_jump )
    alpha[1]:comm( fmt.f(_("A-NightClaws Leader to {player}: intercept {plt} and confirm their security clearance code"), {player=player.name(), plt=hamelsen} ) )
    hamelsen:setHilight()
    hamelsen:setVisible()

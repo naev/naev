@@ -37,6 +37,7 @@ local fmt = require "format"
 local pir = require "common.pirate"
 local cinema = require "cinema"
 local ai_setup = require "ai.core.setup"
+local sfx = require "luaspfx.sfx"
 
 -- Mission constants
 local bombMass = 100
@@ -419,7 +420,7 @@ function disableDuel()
    battleaddict:setDisable()
 
    -- Explosion and such
-   audio.soundPlay( "empexplode" )
+   sfx( false, nil, audiodata.new("snd/sounds/empexplode") )
    camera.shake()
    hook.timer(1.0, "moreSound1")
    hook.timer(2.0, "moreSound2")
@@ -442,10 +443,10 @@ function disableDuel()
 end
 
 function moreSound1()
-   audio.soundPlay( "beam_off0" )
+   sfx( false, nil, audiodata.new("snd/sounds/beam_off0") )
 end
 function moreSound2()
-   audio.soundPlay( "hyperspace_powerdown" )
+   sfx( false, nil, audiodata.new("snd/sounds/hyperspace_powerdown") )
 end
 
 -- Fighter duel
