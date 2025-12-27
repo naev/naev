@@ -1,3 +1,4 @@
+use crate::colour::Colour;
 use anyhow::Context as AnyhowContext;
 use anyhow::Result;
 use glow::*;
@@ -6,6 +7,7 @@ use log::{warn, warn_err};
 #[allow(unused_imports)]
 use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
 use nalgebra::{Matrix3, Vector4};
+use physics::transform2::Transform2;
 use sdl3 as sdl;
 use std::boxed::Box;
 use std::ffi::{CStr, CString, c_char, c_double, c_float, c_int, c_uint};
@@ -2082,10 +2084,10 @@ pub extern "C" fn gl_renderScaleAspectMagic(
 
 #[allow(unused_doc_comments)]
 impl UserData for Texture {
-    //fn add_fields<F: mlua::UserDataFields<Self>>(fields: &mut F) {
-    //fields.add_field_method_get("x", |_, this| Ok(this.0.x));
-    //fields.add_field_method_get("y", |_, this| Ok(this.0.y));
-    //}
+    fn add_fields<F: mlua::UserDataFields<Self>>(fields: &mut F) {
+        fields.add_field_method_get("w", |_, this| Ok(this.texture.w));
+        fields.add_field_method_get("h", |_, this| Ok(this.texture.h));
+    }
     fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
         /*@
          * @brief Gets a displayable texture string.
@@ -2257,6 +2259,60 @@ impl UserData for Texture {
                     gl.sampler_parameter_i32(this.sampler, glow::TEXTURE_WRAP_R, depth.to_gl());
                 }
                 Ok(())
+            },
+        );
+
+        /*@
+         * @brief Draws a texture.
+         *
+         * This function has variable parameters depending on how you want to render.
+         *
+         * @usage gfx.renderTex( tex, 0, 0 ) -- Render tex at origin
+         * @usage gfx.renderTex( tex, 0, 0, 128., 128. ) -- Renders at origin with a size of 128
+         * by 128 pixels.
+         *
+         *    @luatparam Tex tex Texture to render.
+         *    @luatparam number pos_x X position to render texture at.
+         *    @luatparam number pos_y Y position to render texture at.
+         *    @luatparam[opt=0] number w Width to render.
+         *    @luatparam[opt=0] number h Height to render.
+         * @luafunc draw
+         */
+        methods.add_method(
+            "draw",
+            |_, this, (x, y, w, h): (f32, f32, Option<f32>, Option<f32>)| -> mlua::Result<()> {
+                let ctx = Context::get();
+                Ok(this.draw(
+                    &ctx,
+                    x,
+                    y,
+                    w.unwrap_or(this.texture.w as f32),
+                    h.unwrap_or(this.texture.h as f32),
+                )?)
+            },
+        );
+        /*@
+         * @brief Draws a texture.
+         *
+         *    @luatparam Tex tex Texture to render.
+         *    @luatparam Transform transform Transform to apply to the vertices.
+         *    @luatparam[opt=transform.new()] Transform texture Transform to apply to the texture.
+         *    @luatparam[opt=WHITE] Colour colour Colour ta apply to the texture when rendering.
+         * @luafunc draw_ex
+         */
+        methods.add_method(
+            "draw_ex",
+            |_,
+             this,
+             (transform, texture, colour): (Transform2, Option<Transform2>, Option<Colour>)|
+             -> mlua::Result<()> {
+                let uniform = TextureUniform {
+                    transform: transform.into(),
+                    texture: texture.unwrap_or(Matrix3::identity().into()).into(),
+                    colour: colour.unwrap_or(crate::colour::WHITE).into(),
+                };
+                let ctx = Context::get();
+                Ok(this.draw_ex(&ctx, &uniform)?)
             },
         );
     }
