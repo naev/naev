@@ -3,7 +3,7 @@
  */
 #pragma once
 
-#include "mat4.h"
+#include "mat3.h"
 #include "nlua.h"
 #include "opengl.h"
 
@@ -22,7 +22,7 @@ int nlua_loadTransform( nlua_env *env );
 /*
  * Transform operations
  */
-mat4 *lua_totransform( lua_State *L, int ind );
-mat4 *luaL_checktransform( lua_State *L, int ind );
-mat4 *lua_pushtransform( lua_State *L, mat4 Transform );
+mat3 *lua_totransform( lua_State *L, int ind );
+mat3 *luaL_checktransform( lua_State *L, int ind );
+mat3 *lua_pushtransform( lua_State *L, mat3 Transform );
 int   lua_istransform( lua_State *L, int ind );

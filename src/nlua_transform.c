@@ -69,9 +69,9 @@ int nlua_loadTransform( nlua_env *env )
  *    @param ind Index position to find the transform.
  *    @return Transform found at the index in the state.
  */
-mat4 *lua_totransform( lua_State *L, int ind )
+mat4 lua_totransform( lua_State *L, int ind )
 {
-   return (mat4 *)lua_touserdata( L, ind );
+   return *(mat4 *)lua_touserdata( L, ind );
 }
 /**
  * @brief Gets transform at index or raises error if there is no transform at
@@ -81,12 +81,11 @@ mat4 *lua_totransform( lua_State *L, int ind )
  *    @param ind Index position to find transform.
  *    @return Transform found at the index in the state.
  */
-mat4 *luaL_checktransform( lua_State *L, int ind )
+mat4 luaL_checktransform( lua_State *L, int ind )
 {
    if ( lua_istransform( L, ind ) )
       return lua_totransform( L, ind );
    luaL_typerror( L, ind, TRANSFORM_METATABLE );
-   return NULL;
 }
 /**
  * @brief Pushes a transform on the stack.

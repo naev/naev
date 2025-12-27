@@ -52,6 +52,7 @@ source_rust = files(
    'physics/src/lib.rs',
    'physics/src/collide.rs',
    'physics/src/vec2.rs',
+   'physics/src/transform2.rs',
    'pluginmgr/src/lib.rs',
    'pluginmgr/src/plugin.rs',
    'pluginmgr/src/install.rs',
@@ -249,7 +250,6 @@ nlua_source = files(
    'nlua_tex.c',
    'nlua_time.c',
    'nlua_tk.c',
-   'nlua_transform.c',
    'nlua_var.c',
 )
 

@@ -17,3 +17,4 @@ anyhow = { workspace = true }
 mlua = { workspace = true }
 nalgebra = { workspace = true }
 derive_more = { workspace = true }
+static_assertions = { workspace = true }

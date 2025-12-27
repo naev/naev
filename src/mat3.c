@@ -11,6 +11,12 @@
 
 #include "mat3.h"
 
+mat3 mat3_identity( void )
+{
+   const mat3 m = { .m = { { 1., 0., 0. }, { 0., 1., 0. }, { 0., 0., 1. } } };
+   return m;
+}
+
 void mat3_print( const mat3 *m )
 {
    for ( int i = 0; i < 3; i++ ) {
@@ -25,6 +31,29 @@ void mat3_from_mat4( mat3 *out, const mat4 *in )
    for ( int i = 0; i < 3; i++ )
       for ( int j = 0; j < 3; j++ )
          out->m[i][j] = in->m[i][j];
+}
+
+void mat4_from_mat3( mat4 *out, const mat3 *in )
+{
+   out->m[0][0] = in->m[0][0];
+   out->m[0][1] = in->m[0][1];
+   out->m[0][2] = 0.0;
+   out->m[0][3] = in->m[0][2];
+
+   out->m[1][0] = in->m[1][0];
+   out->m[1][1] = in->m[1][1];
+   out->m[1][2] = 0.0;
+   out->m[1][3] = in->m[1][2];
+
+   out->m[2][0] = 0.0;
+   out->m[2][1] = 0.0;
+   out->m[2][2] = 1.0;
+   out->m[2][3] = 0.0;
+
+   out->m[3][0] = in->m[2][0];
+   out->m[3][1] = in->m[2][1];
+   out->m[3][2] = 0.0;
+   out->m[3][3] = in->m[2][2];
 }
 
 void mat3_mul_vec( vec3 *out, const mat3 *M, const vec3 *v )

@@ -119,7 +119,7 @@ int nlua_loadGFX( nlua_env *env )
     * dependencies. */
    nlua_loadTex( env );
    nlua_loadFont( env );
-   nlua_loadTransform( env );
+   // nlua_loadTransform( env );
    nlua_loadShader( env );
    nlua_loadCanvas( env );
 
@@ -399,16 +399,19 @@ static int gfxL_renderTexH( lua_State *L )
    const glTexture *t;
    const glColour  *col;
    LuaShader_t     *shader;
-   mat4            *H, *TH, ID;
+   mat3            *M, *TM, ID;
+   mat4             H, TH;
 
-   ID = mat4_identity();
+   ID = mat3_identity();
 
    /* Parameters. */
    t      = luaL_checktex( L, 1 );
    shader = luaL_checkshader( L, 2 );
-   H      = luaL_checktransform( L, 3 );
-   col    = luaL_optcolour( L, 4, &cWhite );
-   TH     = luaL_opttransform( L, 5, &ID );
+   M      = luaL_checktransform( L, 3 );
+   mat4_from_mat3( &H, M );
+   col = luaL_optcolour( L, 4, &cWhite );
+   TM  = luaL_opttransform( L, 5, &ID );
+   mat4_from_mat3( &TH, TM );
 
    glUseProgram( shader->program );
 
@@ -419,7 +422,7 @@ static int gfxL_renderTexH( lua_State *L )
 
    /* Set up texture vertices if necessary. */
    if ( shader->VertexTexCoord >= 0 ) {
-      gl_uniformMat4( shader->ViewSpaceFromLocal, TH );
+      gl_uniformMat4( shader->ViewSpaceFromLocal, &TH );
       glEnableVertexAttribArray( shader->VertexTexCoord );
       gl_vboActivateAttribOffset( gl_squareVBO, shader->VertexTexCoord, 0, 2,
                                   GL_FLOAT, 0 );
@@ -440,7 +443,7 @@ static int gfxL_renderTexH( lua_State *L )
 
    /* Set shader uniforms. */
    gl_uniformColour( shader->ConstantColour, col );
-   gl_uniformMat4( shader->ClipSpaceFromLocal, H );
+   gl_uniformMat4( shader->ClipSpaceFromLocal, &H );
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
@@ -509,12 +512,14 @@ static int gfxL_renderRect( lua_State *L )
 static int gfxL_renderRectH( lua_State *L )
 {
    /* Parse parameters. */
-   const mat4     *H     = luaL_checktransform( L, 1 );
+   const mat3 *M = luaL_checktransform( L, 1 );
+   mat4        H;
+   mat4_from_mat3( &H, M );
    const glColour *col   = luaL_optcolour( L, 2, &cWhite );
    int             empty = lua_toboolean( L, 3 );
 
    /* Render. */
-   gl_renderRectH( H, col, !empty );
+   gl_renderRectH( &H, col, !empty );
 
    return 0;
 }
@@ -558,12 +563,14 @@ static int gfxL_renderCircle( lua_State *L )
 static int gfxL_renderCircleH( lua_State *L )
 {
    /* Parse parameters. */
-   const mat4     *H     = luaL_checktransform( L, 1 );
+   const mat3 *M = luaL_checktransform( L, 1 );
+   mat4        H;
+   mat4_from_mat3( &H, M );
    const glColour *col   = luaL_optcolour( L, 2, &cWhite );
    int             empty = lua_toboolean( L, 3 );
 
    /* Render. */
-   gl_renderCircleH( H, col, !empty );
+   gl_renderCircleH( &H, col, !empty );
    return 0;
 }
 
@@ -581,10 +588,12 @@ static gl_vbo *vbo_lines = NULL;
  */
 static int gfxL_renderLinesH( lua_State *L )
 {
-   GLfloat         buf[256 * 2];
-   int             i = 3;
-   GLuint          n = 0;
-   const mat4     *H = luaL_checktransform( L, 1 );
+   GLfloat     buf[256 * 2];
+   int         i = 3;
+   GLuint      n = 0;
+   const mat3 *M = luaL_checktransform( L, 1 );
+   mat4        H;
+   mat4_from_mat3( &H, M );
    const glColour *c = luaL_optcolour( L, 2, &cWhite );
 
    if ( vbo_lines == NULL ) {
@@ -623,7 +632,7 @@ static int gfxL_renderLinesH( lua_State *L )
                                2 * sizeof( GLfloat ) );
 
    gl_uniformColour( shaders.lines.colour, c );
-   gl_uniformMat4( shaders.lines.projection, H );
+   gl_uniformMat4( shaders.lines.projection, &H );
 
    glDrawArrays( GL_LINE_STRIP, 0, n );
    glUseProgram( 0 );
@@ -878,21 +887,23 @@ static int gfxL_printf( lua_State *L )
  */
 static int gfxL_printH( lua_State *L )
 {
-   const mat4     *H;
+   mat3           *M;
+   mat4            H;
    const glFont   *font;
    const char     *str;
    const glColour *col;
    double          outline;
 
    /* Parse parameters. */
-   H       = luaL_checktransform( L, 1 );
+   M = luaL_checktransform( L, 1 );
+   mat4_from_mat3( &H, M );
    font    = luaL_checkfont( L, 2 );
    str     = luaL_checkstring( L, 3 );
    col     = luaL_optcolour( L, 4, &cWhite );
    outline = luaL_optnumber( L, 5, 0. );
 
    /* Render. */
-   gl_printRawH( font, H, col, outline, str );
+   gl_printRawH( font, &H, col, outline, str );
    return 0;
 }
 

@@ -470,6 +470,7 @@ pub fn open_vec2(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
 
 use mlua::ffi;
 use std::os::raw::{c_char, c_int};
+static_assertions::assert_eq_size!(Vec2, naevc::vec2);
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
