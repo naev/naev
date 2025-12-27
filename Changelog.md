@@ -9,7 +9,7 @@
 
    * Added weapon and launcher damage as disable ship stats.
    * Rewrote the following in rust
-       - Transform module
+       - Lua Transform/Texture/Data/File modules
 
 
 ## v0.13.1 (unreleased)
