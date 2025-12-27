@@ -644,7 +644,7 @@ static int factionL_logo( lua_State *L )
    const glTexture *tex = faction_logo( lf );
    if ( tex == NULL )
       return 0;
-   lua_pushtex( L, gl_dupTexture( tex ) );
+   lua_pushtex( L, tex );
    return 1;
 }
 

@@ -1269,6 +1269,7 @@ stds.tex = {
          __gc = {},
          dim = {},
          new = {},
+         newData = {},
          open = {},
          readData = {},
          setFilter = {},

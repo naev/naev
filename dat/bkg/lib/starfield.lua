@@ -47,7 +47,7 @@ local function star_add( added, num_added )
    local data  = stars[ num ]
    local star  = data.i
    -- Load and set stuff
-   local img   = tex.open( path .. star )
+   local img   = tex.new( path .. star )
    -- Position should depend on whether there's more than a star in the system
    local r     = prng:random() * cur_sys:radius()/3
    if num_added > 0 then

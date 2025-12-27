@@ -115,6 +115,7 @@ int nlua_loadGFX( nlua_env *env )
    /* Register the values */
    nlua_register( env, "gfx", gfxL_methods, 0 );
 
+#if 0
    /* We also load the texture, colour, font, and transform modules as
     * dependencies. */
    nlua_loadTex( env );
@@ -122,6 +123,7 @@ int nlua_loadGFX( nlua_env *env )
    // nlua_loadTransform( env );
    nlua_loadShader( env );
    nlua_loadCanvas( env );
+#endif
 
    return 0;
 }

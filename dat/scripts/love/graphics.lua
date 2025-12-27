@@ -91,11 +91,11 @@ function graphics.newImage( filename )
    local ttex
    local ft = type(filename)
    if ft=='string' then
-      ttex = naev.tex.open( filename )
+      ttex = naev.tex.new( filename )
    elseif ft=='table' and filename.type then
       local ot = filename:type() -- codespell:ignore ot
       if ot=='ImageData' then -- codespell:ignore ot
-         ttex = naev.tex.new( filename.d, filename.w, filename.h )
+         ttex = naev.tex.newData( filename.d, filename.w, filename.h )
       end
    -- Assume Naev texture
    elseif ft=='userdata' then

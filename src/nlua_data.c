@@ -51,7 +51,7 @@ static const luaL_Reg dataL_methods[] = {
  */
 int nlua_loadData( nlua_env *env )
 {
-   nlua_register( env, DATA_METATABLE, dataL_methods, 1 );
+   // nlua_register( env, DATA_METATABLE, dataL_methods, 1 );
    return 0;
 }
 

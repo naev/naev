@@ -551,8 +551,9 @@ impl LuaEnv {
         open_lib("audio", audio::open_audio)?;
         // TODO tex has lots of dependencies, and we can't implement the FFI interface so it is
         // disabled. Similarly, file doesn't have ffi set up.
-        //open_lib("file", ndata::lua::open_file)?;
-        //open_lib("tex", renderer::texture::open_texture)?;
+        open_lib("data", ndata::data::open_data)?;
+        open_lib("file", ndata::lua::open_file)?;
+        open_lib("tex", renderer::texture::open_texture)?;
         //open_lib("gfx", renderer::open_gfx)?;
 
         let ret = unsafe {
@@ -577,6 +578,10 @@ impl LuaEnv {
             r |= naevc::nlua_loadSafelanes(env);
             //r |= naevc::nlua_loadSpfx(env);
             //r |= naevc::nlua_loadAudio(env);
+            r |= naevc::nlua_loadGFX(env);
+            r |= naevc::nlua_loadFont(env);
+            r |= naevc::nlua_loadShader(env);
+            r |= naevc::nlua_loadCanvas(env);
             r
         };
         match ret {

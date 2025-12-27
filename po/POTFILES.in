@@ -3984,6 +3984,7 @@ src/naevpedia.h
 src/ndata.c
 src/ndata.h
 src/ndata/src/cwrap.rs
+src/ndata/src/data.rs
 src/ndata/src/env.rs
 src/ndata/src/lib.rs
 src/ndata/src/lua.rs

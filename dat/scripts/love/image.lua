@@ -50,6 +50,7 @@ function image.ImageData:setPixel( x, y, r, g, b, a )
    self.d:set( pos+2, b )
    self.d:set( pos+3, a )
 end
+--[[
 function image.ImageData:paste( source, dx, dy, sx, sy, sw, sh )
    -- probably very slow
    for y = 0,sh-1 do
@@ -59,6 +60,7 @@ function image.ImageData:paste( source, dx, dy, sx, sy, sw, sh )
    end
    return self
 end
+--]]
 function image.ImageData:mapPixel( pixelFunction, x, y, width, height )
    x = x or 0
    y = y or 0

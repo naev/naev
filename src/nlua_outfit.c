@@ -504,7 +504,7 @@ static int outfitL_icon( lua_State *L )
 {
    const Outfit    *o   = luaL_validoutfit( L, 1 );
    const glTexture *tex = outfit_gfxStore( o );
-   lua_pushtex( L, gl_dupTexture( tex ) );
+   lua_pushtex( L, tex );
    return 1;
 }
 

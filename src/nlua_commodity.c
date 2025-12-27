@@ -488,7 +488,7 @@ static int commodityL_icon( lua_State *L )
    const Commodity *c = luaL_validcommodity( L, 1 );
    if ( c->gfx_store == NULL )
       return 0;
-   lua_pushtex( L, gl_dupTexture( c->gfx_store ) );
+   lua_pushtex( L, c->gfx_store );
    return 1;
 }
 

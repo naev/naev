@@ -29,7 +29,7 @@ function nebula_image.init( filename )
       prng:setSeed( csys:nameRaw() )
 
       local path  = "gfx/bkg/nebula/"..filename
-      local img   = tex.open( path )
+      local img   = tex.new( path )
       local w,h   = img:dim()
       local r     = prng:random() * csys:radius()
       local a     = 2*math.pi*prng:random()

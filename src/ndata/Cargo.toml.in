@@ -21,3 +21,4 @@ mlua = { workspace = true }
 chrono = { workspace = true }
 fs-err = { workspace = true }
 directories = { workspace = true }
+derive_more = { workspace = true }

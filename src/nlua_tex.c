@@ -34,6 +34,7 @@ static int texL_setWrap( lua_State *L );
 static const luaL_Reg texL_methods[] = {
    { "__gc", texL_close },
    { "new", texL_new },
+   { "newData", texL_new },
    { "open", texL_new },
    //{ "readData", texL_readData },
    //{ "writeData", texL_writeData },
@@ -52,7 +53,7 @@ static const luaL_Reg texL_methods[] = {
  */
 int nlua_loadTex( nlua_env *env )
 {
-   nlua_register( env, TEX_METATABLE, texL_methods, 1 );
+   // nlua_register( env, TEX_METATABLE, texL_methods, 1 );
    return 0;
 }
 
@@ -77,10 +78,12 @@ int nlua_loadTex( nlua_env *env )
  *    @param ind Index position to find the texture.
  *    @return Texture found at the index in the state.
  */
+#if 0
 glTexture *lua_totex( lua_State *L, int ind )
 {
    return *( (glTexture **)lua_touserdata( L, ind ) );
 }
+#endif
 /**
  * @brief Gets texture at index or raises error if there is no texture at index.
  *
@@ -88,6 +91,7 @@ glTexture *lua_totex( lua_State *L, int ind )
  *    @param ind Index position to find texture.
  *    @return Texture found at the index in the state.
  */
+#if 0
 glTexture *luaL_checktex( lua_State *L, int ind )
 {
    if ( lua_istex( L, ind ) )
@@ -95,6 +99,7 @@ glTexture *luaL_checktex( lua_State *L, int ind )
    luaL_typerror( L, ind, TEX_METATABLE );
    return NULL;
 }
+#endif
 /**
  * @brief Gets texture directly or from a filename (string) at index or raises
  * error if there is no texture at index.
@@ -128,6 +133,7 @@ glTexture *luaL_validtex( lua_State *L, int ind, const char *searchpath )
  *    @param texture Texture to push.
  *    @return Newly pushed texture.
  */
+#if 0
 glTexture **lua_pushtex( lua_State *L, glTexture *texture )
 {
    glTexture **t = (glTexture **)lua_newuserdata( L, sizeof( glTexture * ) );
@@ -136,6 +142,7 @@ glTexture **lua_pushtex( lua_State *L, glTexture *texture )
    lua_setmetatable( L, -2 );
    return t;
 }
+#endif
 /**
  * @brief Checks to see if ind is a texture.
  *
@@ -143,6 +150,7 @@ glTexture **lua_pushtex( lua_State *L, glTexture *texture )
  *    @param ind Index position to check.
  *    @return 1 if ind is a texture.
  */
+#if 0
 int lua_istex( lua_State *L, int ind )
 {
    int ret;
@@ -158,7 +166,7 @@ int lua_istex( lua_State *L, int ind )
    lua_pop( L, 2 ); /* remove both metatables */
    return ret;
 }
-
+#endif
 /**
  * @brief Frees the texture.
  *

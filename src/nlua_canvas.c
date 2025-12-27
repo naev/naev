@@ -259,7 +259,7 @@ static int canvasL_dims( lua_State *L )
 static int canvasL_getTex( lua_State *L )
 {
    const LuaCanvas_t *lc = luaL_checkcanvas( L, 1 );
-   lua_pushtex( L, gl_dupTexture( lc->tex ) );
+   lua_pushtex( L, lc->tex );
    return 1;
 }
 

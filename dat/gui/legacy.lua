@@ -46,7 +46,7 @@ function create()
    -- Load graphics
    local base = "gfx/gui/legacy/"
    local function tex_open( name, sx, sy )
-      local t = tex.open( base .. name, sx, sy )
+      local t = tex.new( base .. name, sx, sy )
       t:setWrap( "clamp" )
       return t
    end

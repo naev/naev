@@ -85,7 +85,7 @@ function create()
    local base = "gfx/gui/slimv2/"
    local function tex_open( name, sx, sy, basepath )
       basepath = basepath or base
-      local t = tex.open( basepath .. name, sx, sy )
+      local t = tex.new( basepath .. name, sx, sy )
       t:setWrap( "clamp" )
       return t
    end

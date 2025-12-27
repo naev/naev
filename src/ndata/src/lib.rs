@@ -11,6 +11,7 @@ use log::gettext::gettext;
 use log::{infox, semver, version};
 
 pub mod cwrap;
+pub mod data;
 pub mod env;
 pub mod lua;
 pub mod physfs;

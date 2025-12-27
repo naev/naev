@@ -63,7 +63,7 @@ function create()
    --Images
    local base = "gfx/gui/brushed/"
    local function tex_open( name, sx, sy )
-      local t = tex.open( base .. name, sx, sy )
+      local t = tex.new( base .. name, sx, sy )
       t:setWrap( "clamp" )
       return t
    end

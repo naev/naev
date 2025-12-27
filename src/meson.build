@@ -33,6 +33,7 @@ source_rust = files(
    'utils/src/lib.rs',
    'utils/src/atomicfloat.rs',
    'ndata/src/lib.rs',
+   'ndata/src/data.rs',
    'ndata/src/env.rs',
    'ndata/src/lua.rs',
    'ndata/src/physfs.rs',

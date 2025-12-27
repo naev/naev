@@ -5,8 +5,9 @@ use glow::*;
 use image::ImageFormat;
 use log::{warn, warn_err};
 #[allow(unused_imports)]
-use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
+use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, UserDataRef, Value};
 use nalgebra::{Matrix3, Vector4};
+use ndata::data::Data;
 use physics::transform2::Transform2;
 use sdl3 as sdl;
 use std::boxed::Box;
@@ -2123,10 +2124,10 @@ impl UserData for Texture {
          *    @luatparam[opt=1] number sy Optional number of y sprites when path is
          * Data.
          *    @luatreturn Tex The opened texture or nil on error.
-         * @luafunc open
+         * @luafunc new
          */
         methods.add_function(
-            "open",
+            "new",
             |_,
              (path, w, h, sx, sy): (
                 Value,
@@ -2156,6 +2157,16 @@ impl UserData for Texture {
                     .sx(sx.unwrap_or(1))
                     .sy(sy.unwrap_or(1))
                     .build(Context::get())?)
+            },
+        );
+        methods.add_function(
+            "newData",
+            |_, (data, w, h): (UserDataRef<Data>, u32, u32)| -> mlua::Result<Self> {
+                let img: image::DynamicImage =
+                    image::Rgba32FImage::from_vec(w, h, data.clone().into())
+                        .context("can not create image from data")?
+                        .into();
+                Ok(TextureBuilder::new().image(&img).build(Context::get())?)
             },
         );
         /*@
@@ -2324,7 +2335,9 @@ pub fn open_texture(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
     let proxy = lua.create_proxy::<Texture>()?;
 
     if let mlua::Value::Nil = lua.named_registry_value("push_texture")? {
-        let push_texture = lua.create_function(|lua, tex: mlua::UserDataRefMut<Texture>| {
+        let push_texture = lua.create_function(|lua, tex: mlua::LightUserData| {
+            let tex = tex.0 as *mut Texture;
+            let tex = unsafe { &*tex };
             lua.create_any_userdata(tex.try_clone()?)
         })?;
         lua.set_named_registry_value("push_texture", push_texture)?;
@@ -2343,9 +2356,9 @@ pub fn open_texture(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub extern "C" fn luaL_checktexture(L: *mut mlua::lua_State, idx: c_int) -> *mut Texture {
+pub extern "C" fn luaL_checktex(L: *mut mlua::lua_State, idx: c_int) -> *mut Texture {
     unsafe {
-        let tex = lua_totexture(L, idx);
+        let tex = lua_totex(L, idx);
         if tex.is_null() {
             ffi::luaL_typerror(L, idx, c"texture".as_ptr() as *const c_char);
         }
@@ -2355,13 +2368,13 @@ pub extern "C" fn luaL_checktexture(L: *mut mlua::lua_State, idx: c_int) -> *mut
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub extern "C" fn lua_istexture(L: *mut mlua::lua_State, idx: c_int) -> c_int {
-    !lua_totexture(L, idx).is_null() as c_int
+pub extern "C" fn lua_istex(L: *mut mlua::lua_State, idx: c_int) -> c_int {
+    !lua_totex(L, idx).is_null() as c_int
 }
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub extern "C" fn lua_pushtexture(L: *mut mlua::lua_State, tex: *mut Texture) {
+pub extern "C" fn lua_pushtex(L: *mut mlua::lua_State, tex: *mut Texture) {
     unsafe {
         ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"push_texture".as_ptr());
         ffi::lua_pushlightuserdata(L, tex as *mut c_void);
@@ -2371,7 +2384,7 @@ pub extern "C" fn lua_pushtexture(L: *mut mlua::lua_State, tex: *mut Texture) {
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub extern "C" fn lua_totexture(L: *mut mlua::lua_State, idx: c_int) -> *mut Texture {
+pub extern "C" fn lua_totex(L: *mut mlua::lua_State, idx: c_int) -> *mut Texture {
     unsafe {
         let idx = ffi::lua_absindex(L, idx);
         ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"get_texture".as_ptr());
