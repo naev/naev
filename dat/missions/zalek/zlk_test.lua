@@ -32,6 +32,7 @@ local fmt = require "format"
 local lmisn = require "lmisn"
 local zlk = require "common.zalek"
 local vntk = require "vntk"
+local sfx = require "luaspfx.sfx"
 
 local isMounted, isOwned, rmTheOutfit -- Forward-declared functions
 
@@ -196,13 +197,18 @@ function teleportation()
    player.pilot():setEnergy(0)
 end
 
+local sfx_emp
 --player is slowed
 function slow()
 
    -- Cancel autonav.
    player.autonavAbort()
    camera.shake()
-   audio.soundPlay( "empexplode" )
+
+   if not sfx_emp then
+      sfx_emp = audiodata.new("snd/sounds/empexplode");
+   end
+   sfx( true, nil, sfx_emp )
 
    local maxspeed = player.pilot():stats().speed
    local speed = maxspeed/3*(1 + 0.1*rnd.twosigma())

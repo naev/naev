@@ -42,7 +42,7 @@ local vn       = require 'vn'
 local vntk     = require 'vntk'
 local dv       = require "common.dvaered"
 local pir      = require "common.pirate"
-
+local sfx = require "luaspfx.sfx"
 
 -- Define the cargo commodity
 local cargo_misn
@@ -397,7 +397,8 @@ function spreadCommando()
    mem.commandosTimer = 0
    system.addGatherable( _cargo(), 1, mem.commandosInitialPosition, mem.commandosVelocity, 3600, true ) -- Spawn the commando (player-only gatherable) just behind the Koala
    hook.timer( 3, "updateMarkerPosition" )
-   audio.soundPlay( "target" )
+
+   sfx( false, nil, audiodata.new("snd/sounds/target") )
    player.msg("#o".._("Spacewalking commandos in sight.").."#0")
    player.autonavReset(5)
    mem.koala:setHilight(false)
@@ -424,7 +425,7 @@ function gather( comm, qtt )
    hook.rm(mem.gathHook)
    pilot.cargoRm( player.pilot(), comm, qtt ) -- Remove standard cargo and add mission cargo
    mem.cid = misn.cargoAdd( cmisn, mem.mass )
-   audio.soundPlay( "afb_disengage" )
+   sfx( true, nil, audiodata.new("snd/sounds/afb_disengage") )
    player.msg( "#g".._("Commandos recovered.").."#0" )
    misn.osdActive(4)
    misn.markerMove( mem.misn_marker, mem.paypnt )
@@ -474,7 +475,7 @@ function sharkEscaped()
 end
 function sharkAttacked()
    hook.rm(mem.atkhook)
-   audio.soundPlay( "explosion0", mem.shark:pos(), mem.shark:vel() )
+   sfx( mem.shark:pos(), mem.shark:vel(), audiodata.new("snd/sounds/explosion0") )
    mem.shark:setSpeedLimit(50)
 end
 function sharkKilled()
