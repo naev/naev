@@ -98,7 +98,7 @@ impl UserData for Transform2 {
          */
         methods.add_meta_function(MetaMethod::ToString, |_, this: Self| {
             Ok(format!(
-                "transform2( {}, {}, {}\n   {}, {}, {} ) )",
+                "transform2(\n   {}, {}, {},\n   {}, {}, {}\n)",
                 this.0[(0, 0)],
                 this.0[(0, 1)],
                 this.0[(0, 2)],
