@@ -48,6 +48,21 @@ impl LuaFile {
         };
         Ok(file.io)
     }
+
+    pub fn try_clone(&self) -> Result<Self> {
+        let file = if let Some(f) = &self.file {
+            Some(OpenFile {
+                io: physfs::iostream(&self.path, f.mode)?,
+                mode: f.mode,
+            })
+        } else {
+            None
+        };
+        Ok(Self {
+            path: self.path.clone(),
+            file,
+        })
+    }
 }
 
 macro_rules! file_not_open {
@@ -63,7 +78,6 @@ macro_rules! file_not_open {
  *
  * @luamod file
  */
-#[allow(unused_doc_comments)]
 impl UserData for LuaFile {
     fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
         //methods.add_meta_method( MetaMethod::Eq, |_, this,
