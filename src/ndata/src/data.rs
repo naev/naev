@@ -1,9 +1,14 @@
 use anyhow::Context;
-use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
+use mlua::{UserData, UserDataMethods};
 
 #[derive(Clone, derive_more::From, derive_more::Into)]
 pub struct Data(Vec<f32>);
 
+/*@
+ * @brief Lua bindings to interact with data.
+ *
+ * @luamod data
+ */
 impl UserData for Data {
     /*
     fn add_fields<F: mlua::UserDataFields<Self>>(fields: &mut F) {
@@ -13,18 +18,26 @@ impl UserData for Data {
     */
     fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
         /*@
-         * @brief Opens a new data.
+         * @brief Creates a new data.
          *
          *    @luatparam number size Size to allocate for data.
          *    @luatparam string type Type of the data to create (`"number"`)
          *    @luatreturn Data New data object.
          * @luafunc new
          */
-        methods.add_function("new", |_, size: usize| -> mlua::Result<Self> {
-            let mut v: Vec<f32> = Vec::with_capacity(size);
-            v.resize(size, 0.0);
-            Ok(v.into())
-        });
+        methods.add_function(
+            "new",
+            |_, (size, data_type): (usize, String)| -> mlua::Result<Self> {
+                if data_type != "number" {
+                    return Err(mlua::Error::RuntimeError(
+                        "only 'number' type data supported at the moment".to_string(),
+                    ));
+                }
+                let mut v: Vec<f32> = Vec::with_capacity(size);
+                v.resize(size, 0.0);
+                Ok(v.into())
+            },
+        );
         /*@
          * @brief Gets the value of an element.
          *
