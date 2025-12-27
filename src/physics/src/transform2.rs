@@ -5,6 +5,12 @@ use std::os::raw::c_void;
 #[derive(Copy, Clone, derive_more::From, derive_more::Into)]
 pub struct Transform2(Matrix3<f32>);
 
+impl Default for Transform2 {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Transform2 {
     pub const fn new() -> Self {
         Transform2(Matrix3::new(1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0))
@@ -65,7 +71,7 @@ impl UserData for Transform2 {
             |_, data: Option<Either<UserDataRef<Self>, mlua::Table>>| -> mlua::Result<Self> {
                 match data {
                     Some(data) => match data {
-                        Either::Left(data) => Ok(data.clone()),
+                        Either::Left(data) => Ok(*data),
                         Either::Right(data) => {
                             let r1: mlua::Table = data.get(1)?;
                             let x: f32 = r1.get(1)?;
@@ -117,7 +123,7 @@ impl UserData for Transform2 {
             Ok(Transform2(this.0 * val.0))
         });
         methods.add_method_mut("mul", |_, this, val: Self| {
-            this.0 = this.0 * val.0;
+            this.0 *= val.0;
             Ok(*this)
         });
 
