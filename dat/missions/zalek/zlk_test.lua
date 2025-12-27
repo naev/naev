@@ -208,7 +208,7 @@ function slow()
    if not sfx_emp then
       sfx_emp = audiodata.new("snd/sounds/empexplode");
    end
-   sfx( false, nil, sfx_emp )
+   sfx( true, nil, sfx_emp )
 
    local maxspeed = player.pilot():stats().speed
    local speed = maxspeed/3*(1 + 0.1*rnd.twosigma())

@@ -425,7 +425,7 @@ function gather( comm, qtt )
    hook.rm(mem.gathHook)
    pilot.cargoRm( player.pilot(), comm, qtt ) -- Remove standard cargo and add mission cargo
    mem.cid = misn.cargoAdd( cmisn, mem.mass )
-   sfx( false, nil, audiodata.new("snd/sounds/afb_disengage") )
+   sfx( true, nil, audiodata.new("snd/sounds/afb_disengage") )
    player.msg( "#g".._("Commandos recovered.").."#0" )
    misn.osdActive(4)
    misn.markerMove( mem.misn_marker, mem.paypnt )

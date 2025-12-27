@@ -324,7 +324,7 @@ end
 
 -- Play a beep
 function beepMe()
-   sfx( false, nil, sfx_jump )
+   sfx( true, nil, sfx_jump )
 end
 
 -- Spawn Warlords, who will annoy the player
@@ -409,7 +409,7 @@ end
 
 -- A ship approaches from DHC: assign it to player
 local function incomingControl( self )
-   sfx( false, nil, sfx_jump )
+   sfx( true, nil, sfx_jump )
    alpha[1]:comm( fmt.f(_("A-NightClaws Leader to {player}: intercept {plt} and confirm their security clearance code"), {player=player.name(), plt=self} ) )
    self:setHilight()
    self:setVisible()
@@ -524,7 +524,7 @@ end
 
 -- Hamelsen is in range: do as usual
 function incomingHamelsen()
-   sfx( false, nil, sfx_jump )
+   sfx( true, nil, sfx_jump )
    alpha[1]:comm( fmt.f(_("A-NightClaws Leader to {player}: intercept {plt} and confirm their security clearance code"), {player=player.name(), plt=hamelsen} ) )
    hamelsen:setHilight()
    hamelsen:setVisible()

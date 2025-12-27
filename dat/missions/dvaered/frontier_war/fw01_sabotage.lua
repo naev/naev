@@ -420,7 +420,7 @@ function disableDuel()
    battleaddict:setDisable()
 
    -- Explosion and such
-   sfx( false, nil, audiodata.new("snd/sounds/empexplode") )
+   sfx( true, nil, audiodata.new("snd/sounds/empexplode") )
    camera.shake()
    hook.timer(1.0, "moreSound1")
    hook.timer(2.0, "moreSound2")
@@ -443,10 +443,10 @@ function disableDuel()
 end
 
 function moreSound1()
-   sfx( false, nil, audiodata.new("snd/sounds/beam_off0") )
+   sfx( true, nil, audiodata.new("snd/sounds/beam_off0") )
 end
 function moreSound2()
-   sfx( false, nil, audiodata.new("snd/sounds/hyperspace_powerdown") )
+   sfx( true, nil, audiodata.new("snd/sounds/hyperspace_powerdown") )
 end
 
 -- Fighter duel
