@@ -5,9 +5,10 @@ use glow::*;
 use image::ImageFormat;
 use log::{warn, warn_err};
 #[allow(unused_imports)]
-use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, UserDataRef, Value};
+use mlua::{Either, FromLua, Lua, MetaMethod, UserData, UserDataMethods, UserDataRef, Value};
 use nalgebra::{Matrix3, Vector4};
 use ndata::data::Data;
+use ndata::lua::LuaFile;
 use physics::transform2::Transform2;
 use sdl3 as sdl;
 use std::boxed::Box;
@@ -2130,33 +2131,23 @@ impl UserData for Texture {
             "new",
             |_,
              (path, w, h, sx, sy): (
-                Value,
+                Either<String, UserDataRef<LuaFile>>,
                 Option<usize>,
                 Option<usize>,
                 Option<usize>,
                 Option<usize>,
             )|
              -> mlua::Result<Self> {
-                let io = match path {
-                    Value::String(s) => ndata::iostream(s.to_string_lossy())?,
-                    Value::UserData(ud) => {
-                        let file = ud.take::<ndata::lua::LuaFile>()?;
-                        file.into_iostream()?
-                    }
-                    val => {
-                        return Err(mlua::Error::RuntimeError(format!(
-                            "invalid path type {}",
-                            val.type_name()
-                        )));
-                    }
-                };
-                Ok(TextureBuilder::new()
-                    .iostream(io)
+                let mut builder = TextureBuilder::new()
                     .width(w)
                     .height(h)
                     .sx(sx.unwrap_or(1))
-                    .sy(sy.unwrap_or(1))
-                    .build(Context::get())?)
+                    .sy(sy.unwrap_or(1));
+                builder = match path {
+                    Either::Left(s) => builder.path(&s),
+                    Either::Right(file) => builder.iostream(file.try_clone()?.into_iostream()?),
+                };
+                Ok(builder.build(Context::get())?)
             },
         );
         methods.add_function(
