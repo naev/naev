@@ -2318,9 +2318,71 @@ impl UserData for Texture {
     }
 }
 
+use mlua::ffi;
+use std::ffi::c_void;
 pub fn open_texture(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
     let proxy = lua.create_proxy::<Texture>()?;
+
+    if let mlua::Value::Nil = lua.named_registry_value("push_texture")? {
+        let push_texture = lua.create_function(|lua, tex: mlua::UserDataRefMut<Texture>| {
+            lua.create_any_userdata(tex.try_clone()?)
+        })?;
+        lua.set_named_registry_value("push_texture", push_texture)?;
+
+        let get_texture = lua.create_function(|_, mut ud: mlua::UserDataRefMut<Texture>| {
+            let tex: *mut Texture = &mut *ud;
+            Ok(Value::LightUserData(mlua::LightUserData(
+                tex as *mut c_void,
+            )))
+        })?;
+        lua.set_named_registry_value("get_texture", get_texture)?;
+    }
+
     Ok(proxy)
+}
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub extern "C" fn luaL_checktexture(L: *mut mlua::lua_State, idx: c_int) -> *mut Texture {
+    unsafe {
+        let tex = lua_totexture(L, idx);
+        if tex.is_null() {
+            ffi::luaL_typerror(L, idx, c"texture".as_ptr() as *const c_char);
+        }
+        tex
+    }
+}
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub extern "C" fn lua_istexture(L: *mut mlua::lua_State, idx: c_int) -> c_int {
+    !lua_totexture(L, idx).is_null() as c_int
+}
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub extern "C" fn lua_pushtexture(L: *mut mlua::lua_State, tex: *mut Texture) {
+    unsafe {
+        ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"push_texture".as_ptr());
+        ffi::lua_pushlightuserdata(L, tex as *mut c_void);
+        ffi::lua_call(L, 1, 1);
+    }
+}
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub extern "C" fn lua_totexture(L: *mut mlua::lua_State, idx: c_int) -> *mut Texture {
+    unsafe {
+        let idx = ffi::lua_absindex(L, idx);
+        ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"get_texture".as_ptr());
+        ffi::lua_pushvalue(L, idx);
+        let tex = match ffi::lua_pcall(L, 1, 1, 0) {
+            ffi::LUA_OK => ffi::lua_touserdata(L, -1) as *mut Texture,
+            _ => std::ptr::null_mut(),
+        };
+        ffi::lua_pop(L, 1);
+        tex
+    }
 }
 
 type TextureDeserializerFn =

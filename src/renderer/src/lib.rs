@@ -1037,7 +1037,7 @@ impl mlua::UserData for LuaGfx {
             Ok(camera::CAMERA
                 .read()
                 .unwrap()
-                .game_to_screen_coords_yflip(pos.into_vector2())
+                .game_to_screen_coords_yflip(pos.into())
                 .into())
         });
         /*@
