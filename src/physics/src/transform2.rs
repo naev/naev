@@ -4,26 +4,19 @@ use std::os::raw::c_void;
 
 #[derive(Copy, Clone, derive_more::From, derive_more::Into)]
 pub struct Transform2(Matrix3<f32>);
-
 impl Default for Transform2 {
     fn default() -> Self {
         Self::new()
     }
 }
-
 impl Transform2 {
     pub const fn new() -> Self {
         Transform2(Matrix3::new(1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0))
     }
-
     pub const fn new_from(data: &[f32; 6]) -> Self {
         Transform2(Matrix3::new(
             data[0], data[1], data[2], data[3], data[4], data[5], 0.0, 0.0, 1.0,
         ))
-    }
-
-    pub fn into_matrix3(self) -> Matrix3<f32> {
-        self.0
     }
 }
 
@@ -51,19 +44,16 @@ impl FromLua for Transform2 {
 /*@
  * @brief Represents a 2D transformation matrix in Lua.
  *
- * @luamod transform2
+ * @luamod transform
  */
 impl UserData for Transform2 {
     fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
         /*@
-         * @brief Creates a new vector.
+         * @brief Creates a new identity transform.Gets a transform.
          *
-         * @usage vec2.new( 5, 3 ) -- creates a vector at (5,3)
-         * @usage vec2.new() -- creates a vector at (0,0)
-         *
-         *    @luatparam[opt=0] number x If set, the X value for the new vector.
-         *    @luatparam[opt=x] number y If set, the Y value for the new vector.
-         *    @luatreturn Transform2 The new vector.
+         *    @luatparam Transform|Table Either a transform to copy or a 3x2 table with elements of the
+         *    transform matrix.
+         *    @luatreturn Transform A new transform corresponding to an identity matrix.
          * @luafunc new
          */
         methods.add_function(
@@ -88,12 +78,11 @@ impl UserData for Transform2 {
                 }
             },
         );
-
         /*@
-         * @brief Converts a vector to a string.
+         * @brief Gets a string representing the transform.
          *
-         *    @luatparam Vector v Vector to convert to as string.
-         *    @luatreturn string String version of v.
+         *    @luatparam Transform t Transform to get string of.
+         *    @luatreturn string String corresponding to the transform.
          * @luafunc __tostring
          */
         methods.add_meta_function(MetaMethod::ToString, |_, this: Self| {
@@ -107,17 +96,13 @@ impl UserData for Transform2 {
                 this.0[(1, 2)],
             ))
         });
-
         /*@
-         * @brief Multiplies a vector by a number.
+         * @brief Multiplies two transforms (A*B).
          *
-         * @usage my_vec = my_vec * 3
-         * @usage my_vec:mul( 3 )
-         *
-         *    @luatparam Transform2 v Vector to multiply.
-         *    @luatparam number mod Amount to multiply by.
-         *    @luatreturn Transform2 The result of the vector operation.
-         * @luafunc mul
+         *    @luatparam Transform A First element to multiply.
+         *    @luatparam Transform B Second element to multiply.
+         *    @luatreturn Transform Result of multiplication.
+         * @luafunc __mul
          */
         methods.add_meta_function(MetaMethod::Mul, |_, (this, val): (Self, Self)| {
             Ok(Transform2(this.0 * val.0))
@@ -126,7 +111,6 @@ impl UserData for Transform2 {
             this.0 *= val.0;
             Ok(*this)
         });
-
         /*@
          * @brief Gets all the values of the transform.
          *
@@ -147,7 +131,6 @@ impl UserData for Transform2 {
             }
             Ok(t)
         });
-
         /*@
          * @brief Sets an element of a transform.
          *
