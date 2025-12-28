@@ -3,8 +3,8 @@ use formatx::formatx;
 use fs_err as fs;
 use iced::task::{Sipper, Straw, sipper};
 use iced::{Task, widget};
-use log::gettext::{N_, gettext, pgettext};
-use log::warn_err;
+use nlog::gettext::{N_, gettext, pgettext};
+use nlog::warn_err;
 use pluginmgr::install;
 use pluginmgr::install::Installer;
 use pluginmgr::plugin::{Identifier, Plugin, ReleaseStatus};
@@ -1084,11 +1084,11 @@ impl App {
                         true => "".to_string(),
                         false => formatx!(
                             pgettext("plugins", " [incompatible with Naev {}]"),
-                            &*log::version::VERSION
+                            &*nlog::version::VERSION
                         )
                         .unwrap_or(format!(
                             " [incompatible with Naev {}]",
-                            *log::version::VERSION
+                            *nlog::version::VERSION
                         )),
                     }
                 ))

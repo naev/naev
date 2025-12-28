@@ -17,7 +17,7 @@ naev_core = { workspace = true }
 mlua = { workspace = true }
 ndata = { workspace = true }
 anyhow = { workspace = true }
-log = { workspace = true }
+nlog = { workspace = true }
 gettext = { workspace = true }
 helpers = { workspace = true }
 nalgebra = { workspace = true }

@@ -1,7 +1,7 @@
 use anyhow::Result;
 use gettext::gettext;
-use log::semver;
-use log::{debug, warn, warn_err};
+use nlog::semver;
+use nlog::{debug, warn, warn_err};
 use pluginmgr::plugin::{Identifier, Plugin};
 use std::collections::HashMap;
 use std::path::PathBuf;
@@ -224,7 +224,7 @@ pub extern "C" fn plugin_check() -> c_int {
             warn!(
                 "Plugin '{}' does not support Naev version '{}'.",
                 plugin.name,
-                *log::version::VERSION
+                *nlog::version::VERSION
             );
             i += 1;
         }

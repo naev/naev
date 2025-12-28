@@ -1,5 +1,5 @@
 [package]
-name = "log"
+name = "nlog"
 workspace = "@BUILD@"
 version.workspace = true
 edition.workspace = true
@@ -9,7 +9,7 @@ rust-version.workspace = true
 workspace = true
 
 [lib]
-path = "@SOURCE@/src/log/src/lib.rs"
+path = "@SOURCE@/src/nlog/src/lib.rs"
 
 [dependencies]
 gettext = { workspace = true }

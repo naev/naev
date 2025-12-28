@@ -262,7 +262,7 @@ impl Plugin {
     pub fn check_compatible(&mut self) -> bool {
         self.compatible = self
             .naev_version
-            .matches(&log::version::VERSION_WITHOUT_PRERELEASE);
+            .matches(&nlog::version::VERSION_WITHOUT_PRERELEASE);
         self.compatible
     }
 
@@ -279,7 +279,7 @@ impl Plugin {
         }
         plugin.compatible = plugin
             .naev_version
-            .matches(&log::version::VERSION_WITHOUT_PRERELEASE);
+            .matches(&nlog::version::VERSION_WITHOUT_PRERELEASE);
         Ok(plugin)
     }
 

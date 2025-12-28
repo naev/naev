@@ -6,7 +6,7 @@ use std::sync::LazyLock;
 
 use crate::lua::ryaml;
 use gettext::{gettext, ngettext, pgettext};
-use log::{info, warn, warn_err, warnx};
+use nlog::{info, warn, warn_err, warnx};
 
 const NLUA_LOAD_TABLE: &str = "_LOADED"; // Table to use to store the status of required libraries.
 const LUA_INCLUDE_PATH: &str = "scripts/"; // Path for Lua includes.

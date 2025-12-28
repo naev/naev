@@ -13,8 +13,8 @@ use crate::nlua::{NLUA, NLua};
 use crate::{formatx, warn, warnx};
 use gettext::gettext;
 use helpers::{binary_search_by_key_ref, sort_by_key_ref};
-use log::warn_err;
 use naev_core::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
+use nlog::warn_err;
 use renderer::{Context, ContextWrapper, texture};
 
 #[derive(Copy, Clone, Debug, PartialEq)]

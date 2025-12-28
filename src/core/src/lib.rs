@@ -4,11 +4,11 @@ pub mod ntime;
 pub mod nxml;
 pub mod start;
 
-pub use log;
+pub use nlog;
 
 pub static APPNAME: &str = "Naev";
 
 #[unsafe(no_mangle)]
 pub extern "C" fn debug_logBacktrace() {
-    log::info!("{}", std::backtrace::Backtrace::force_capture());
+    nlog::info!("{}", std::backtrace::Backtrace::force_capture());
 }

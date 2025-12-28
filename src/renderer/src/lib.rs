@@ -25,7 +25,7 @@ use crate::buffer::{
     VertexArrayBuilder,
 };
 use crate::shader::{ProgramBuilder, Shader};
-use log::{debug, info, warn, warn_err};
+use nlog::{debug, info, warn, warn_err};
 
 const MIN_WIDTH: u32 = 1280;
 const MIN_HEIGHT: u32 = 720;
@@ -629,7 +629,7 @@ impl Context {
 
         match gl_attr.framebuffer_srgb_compatible() {
             true => (),
-            false => log::warn("unable to set framebuffer to SRGB!"),
+            false => warn("unable to set framebuffer to SRGB!"),
         };
 
         #[cfg(debug_assertions)]

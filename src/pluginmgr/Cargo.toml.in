@@ -22,7 +22,7 @@ bytes = { workspace = true }
 semver = { workspace = true }
 git2 = { workspace = true }
 ndata = { workspace = true }
-log = { workspace = true }
+nlog = { workspace = true }
 toml = { workspace = true }
 derive_more = { workspace = true }
 futures = { workspace = true }

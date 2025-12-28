@@ -1,5 +1,5 @@
 use anyhow::Result;
-use log::{warn, warn_err};
+use nlog::{warn, warn_err};
 use sdl3 as sdl;
 
 pub fn key_to_str(key: sdl::keyboard::Keycode) -> String {

@@ -14,7 +14,7 @@ path = "@SOURCE@/src/ndata/src/lib.rs"
 [dependencies]
 sdl3 = { workspace = true }
 naevc = { workspace = true }
-log = { workspace = true }
+nlog = { workspace = true }
 anyhow = { workspace = true }
 symphonia = { workspace = true }
 mlua = { workspace = true }

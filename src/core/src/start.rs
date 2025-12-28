@@ -1,7 +1,7 @@
 use anyhow::Result;
 use gettext::gettext;
-use log::{warn, warn_err};
 use nalgebra::Vector2;
+use nlog::{warn, warn_err};
 use serde::Deserialize;
 use std::ffi::CString;
 use std::os::raw::c_char;

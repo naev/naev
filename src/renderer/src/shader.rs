@@ -4,7 +4,7 @@ use std::ffi::CStr;
 use std::os::raw::c_char;
 
 use crate::Context;
-use log::{warn, warn_err};
+use nlog::{warn, warn_err};
 
 pub enum ShaderType {
     Fragment,

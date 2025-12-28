@@ -1,6 +1,6 @@
 use crate::model::Model;
 use anyhow::Result;
-use log::{warn, warn_err};
+use nlog::{warn, warn_err};
 use rayon::prelude::*;
 use renderer::{Context, ContextWrapper, texture};
 use std::ffi::{CStr, CString, c_void};

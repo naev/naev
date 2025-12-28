@@ -1,8 +1,8 @@
 #![allow(dead_code)]
 use crate::nlua;
 use crate::nlua::LuaEnv;
-use log::{warn, warn_err};
 use mlua::{Either, Function, UserData, UserDataMethods, UserDataRef};
+use nlog::{warn, warn_err};
 use physics::vec2::Vec2;
 use renderer::camera;
 use renderer::colour::Colour;

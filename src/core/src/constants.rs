@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 use anyhow::Result;
-use log::warn_err;
+use nlog::warn_err;
 use std::sync::LazyLock;
 
 pub struct Constants {

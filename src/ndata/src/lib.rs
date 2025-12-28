@@ -1,14 +1,14 @@
 use directories::ProjectDirs;
-use log::{debug, info, warn, warn_err};
+use nlog::{debug, info, warn, warn_err};
 use sdl3 as sdl;
 use std::ffi::{CStr, CString, c_char};
 use std::io::{Read, Result};
 use std::path::{Path, PathBuf};
 use std::sync::LazyLock;
 
-use log::formatx::formatx;
-use log::gettext::gettext;
-use log::{infox, semver, version};
+use nlog::formatx::formatx;
+use nlog::gettext::gettext;
+use nlog::{infox, semver, version};
 
 pub mod cwrap;
 pub mod data;
@@ -96,7 +96,7 @@ pub fn setup() -> anyhow::Result<()> {
             .to_string(),
     );
     infox!(gettext("Logging to {}"), logfile.to_string_lossy());
-    log::set_log_file(&logfile.to_string_lossy()).unwrap_or_else(|e| {
+    nlog::set_log_file(&logfile.to_string_lossy()).unwrap_or_else(|e| {
         warn_err!(e);
     });
 

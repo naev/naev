@@ -24,7 +24,7 @@ members = [
    "@BUILD@/src/audio",
    "@BUILD@/src/core",
    "@BUILD@/src/helpers",
-   "@BUILD@/src/log",
+   "@BUILD@/src/nlog",
    "@BUILD@/src/gettext",
    "@BUILD@/src/ndata",
    "@BUILD@/src/renderer",
@@ -54,7 +54,7 @@ audio = { path="@BUILD@/src/audio" }
 naev_core = { path="@BUILD@/src/core" }
 helpers = { path="@BUILD@/src/helpers" }
 gettext = { path="@BUILD@/src/gettext" }
-log = { path="@BUILD@/src/log" }
+nlog = { path="@BUILD@/src/nlog" }
 ndata = { path="@BUILD@/src/ndata" }
 renderer = { path="@BUILD@/src/renderer" }
 #toolkit = { path="@BUILD@/src/toolkit" }

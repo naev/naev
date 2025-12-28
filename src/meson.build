@@ -5,7 +5,7 @@ subdir('audio')
 subdir('core')
 subdir('ndata')
 subdir('gettext')
-subdir('log')
+subdir('nlog')
 subdir('renderer')
 subdir('toolkit')
 subdir('physics')
@@ -40,8 +40,8 @@ source_rust = files(
    'ndata/src/physfs.rs',
    'ndata/src/cwrap.rs',
    'gettext/src/lib.rs',
-   'log/src/lib.rs',
-   'log/src/version.rs',
+   'nlog/src/lib.rs',
+   'nlog/src/version.rs',
    'renderer/src/lib.rs',
    'renderer/src/buffer.rs',
    'renderer/src/sdf.rs',

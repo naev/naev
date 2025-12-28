@@ -17,7 +17,7 @@ ndata = { workspace = true }
 roxmltree = { workspace = true }
 gettext = { workspace = true }
 formatx = { workspace = true }
-log = { workspace = true }
+nlog = { workspace = true }
 anyhow = { workspace = true }
 mlua = { workspace = true }
 serde = { workspace = true }

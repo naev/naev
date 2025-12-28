@@ -9,7 +9,7 @@ use std::os::raw::{c_char, c_double, c_int, c_uint};
 use std::path::Path;
 use std::rc::Rc;
 
-use log::warn;
+use nlog::warn;
 use renderer::buffer::{
     Buffer, BufferBuilder, BufferTarget, BufferUsage, VertexArray, VertexArrayBuffer,
     VertexArrayBuilder,

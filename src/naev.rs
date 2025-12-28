@@ -3,8 +3,8 @@ pub use anyhow;
 use anyhow::{Error, Result};
 use formatx::formatx;
 use fs_err as fs;
-use log::{debug, debugx, info, infox, warn, warn_err, warnx};
 use ndata::env;
+use nlog::{debug, debugx, info, infox, warn, warn_err, warnx};
 use sdl3 as sdl;
 use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_int, c_uint, c_void}; // Re-export for outter rust shenanigans
@@ -73,7 +73,7 @@ pub fn naev() -> Result<()> {
     // Hack for plugin manager mode
     if std::env::args().skip(1).any(|a| a == "--pluginmanager") {
         setup_logging()?;
-        log::set_max_level(log::LevelFilter::Info);
+        nlog::set_max_level(nlog::LevelFilter::Info);
         let _ = setup_conf_and_ndata()?;
         unsafe {
             naevc::gettext_setLanguage(naevc::conf.language); /* now that we can find translations */
@@ -100,7 +100,7 @@ pub fn naev() -> Result<()> {
 
 fn setup_logging() -> Result<()> {
     // Begin logging infrastructure.
-    log::init().unwrap_or_else(|e| {
+    nlog::init().unwrap_or_else(|e| {
         warn_err!(e);
     });
 
@@ -180,7 +180,7 @@ fn naevmain() -> Result<()> {
     setup_logging()?;
 
     // Print the version
-    info!("{}", &*log::version::VERSION_HUMAN);
+    info!("{}", &*nlog::version::VERSION_HUMAN);
     if cfg!(target_os = "linux") {
         match env::ENV.is_appimage {
             true => {
@@ -435,7 +435,7 @@ fn naevmain() -> Result<()> {
         naevc::naev_main_cleanup();
     }
 
-    log::close_file();
+    nlog::close_file();
 
     Ok(())
 }

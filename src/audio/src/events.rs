@@ -3,7 +3,7 @@
 use crate::openal::al_types::*;
 use crate::openal::*;
 use anyhow::Result;
-use log::warn;
+use nlog::warn;
 use std::sync::OnceLock;
 
 pub mod consts {

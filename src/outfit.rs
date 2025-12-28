@@ -1,4 +1,4 @@
-use log::warn_err;
+use nlog::warn_err;
 use rayon::prelude::*;
 use renderer::Context;
 use renderer::texture::TextureBuilder;

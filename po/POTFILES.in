@@ -3944,8 +3944,6 @@ src/linebreak.rs
 src/load.c
 src/load.h
 src/log.h
-src/log/src/lib.rs
-src/log/src/version.rs
 src/lua/ryaml.rs
 src/lua_enet.c
 src/lua_enet.h
@@ -3998,6 +3996,8 @@ src/news.c
 src/news.h
 src/nfile.c
 src/nfile.h
+src/nlog/src/lib.rs
+src/nlog/src/version.rs
 src/nlua.c
 src/nlua.h
 src/nlua.rs

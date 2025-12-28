@@ -4,8 +4,8 @@ use anyhow::Error;
 use formatx::formatx;
 use fs_err as fs;
 use iced::task::{Sipper, Straw, sipper};
-use log::gettext::pgettext;
-use log::info;
+use nlog::gettext::pgettext;
+use nlog::info;
 use std::path::{Path, PathBuf};
 
 /// Reports the progress of the installer.

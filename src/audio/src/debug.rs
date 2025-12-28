@@ -3,7 +3,7 @@
 use crate::openal::al_types::*;
 use crate::openal::*;
 use anyhow::Result;
-use log::{debug, warn, warn_err};
+use nlog::{debug, warn, warn_err};
 use std::ffi::CString;
 use std::sync::OnceLock;
 

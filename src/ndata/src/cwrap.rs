@@ -1,6 +1,6 @@
 use anyhow::Result;
 use fs_err as fs;
-use log::debug;
+use nlog::debug;
 use std::ffi::{CStr, CString, c_char};
 use std::path::PathBuf;
 
