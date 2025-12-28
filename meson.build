@@ -355,35 +355,35 @@ if buildExec.disabled() == false
       output: 'naevc.h',
    )
 
-bindgen_args = [
-   '--wrap-unsafe-ops', # Needed to try to lower warnings with 2024 rust https://github.com/rust-lang/rust-bindgen/issues/3147
-   '--override-abi', 'nlua_package_.*=C-unwind',
-   '--override-abi', 'cli_print=C-unwind',
-   '--override-abi', 'cli_printRaw=C-unwind',
-   '--override-abi', 'cli_warn=C-unwind',
-   '--override-abi', 'luaopen_utf8=C-unwind',
-   '--override-abi', 'luaopen_cmark=C-unwind',
-   '--override-abi', 'luaopen_enet=C-unwind',
-   '--raw-line', '#![allow(clippy::all)]\n#![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, improper_ctypes, unnecessary_transmutes)]\npub mod config;',
+   bindgen_args = [
+      '--wrap-unsafe-ops', # Needed to try to lower warnings with 2024 rust https://github.com/rust-lang/rust-bindgen/issues/3147
+      '--override-abi', 'nlua_package_.*=C-unwind',
+      '--override-abi', 'cli_print=C-unwind',
+      '--override-abi', 'cli_printRaw=C-unwind',
+      '--override-abi', 'cli_warn=C-unwind',
+      '--override-abi', 'luaopen_utf8=C-unwind',
+      '--override-abi', 'luaopen_cmark=C-unwind',
+      '--override-abi', 'luaopen_enet=C-unwind',
+      '--raw-line', '#![allow(clippy::all)]\n#![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, improper_ctypes, unnecessary_transmutes)]\npub mod config;',
 
-]
+   ]
 # Handle issues with bindgen and the math.h header
-bindgen_blocklist_items = [
-   '__mingw_ldbl_type_t',
-   'FP_INT_.*',
-   'FP_SUBNORMAL*',
-   'FP_NORMAL*',
-   'FP_NAN*',
-   'FP_INFINITE*',
-   'FP_ZERO*'
-]
+   bindgen_blocklist_items = [
+      '__mingw_ldbl_type_t',
+      'FP_INT_.*',
+      'FP_SUBNORMAL*',
+      'FP_NORMAL*',
+      'FP_NAN*',
+      'FP_INFINITE*',
+      'FP_ZERO*'
+   ]
 
-foreach item : bindgen_blocklist_items
-   bindgen_args += ['--blocklist-item', item]
-endforeach
+   foreach item : bindgen_blocklist_items
+      bindgen_args += ['--blocklist-item', item]
+   endforeach
 
 # Target we are cross-compiling for
-target_triplet = get_option('target_triplet')
+   target_triplet = get_option('target_triplet')
 
 # meson doesn't automatically forward the C arguments to bindgen, so we have to do that ourselves...
 # Related issue https://github.com/mesonbuild/meson/issues/13591
@@ -394,15 +394,15 @@ target_triplet = get_option('target_triplet')
 #endif
 
 # Invoke bindgen to generate Rust bindings
-naevcrs = rust.bindgen(
-   input: naevch,
-   output: 'naevc.rs',
-   include_directories: [include_dirs, '.'],
-   dependencies: naev_deps,
-   language: 'c',
-   args: bindgen_args,
-   #c_args: bindgen_cargs,
-)
+   naevcrs = rust.bindgen(
+      input: naevch,
+      output: 'naevc.rs',
+      include_directories: [include_dirs, '.'],
+      dependencies: naev_deps,
+      language: 'c',
+      args: bindgen_args,
+      #c_args: bindgen_cargs,
+   )
 
    copydir = find_program(files('utils'/'build'/'copydir.py'))
    naevc_crate = custom_target(
