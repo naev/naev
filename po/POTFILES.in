@@ -4003,7 +4003,6 @@ src/nlua.h
 src/nlua.rs
 src/nlua_asteroid.c
 src/nlua_asteroid.h
-src/nlua_audio.c
 src/nlua_audio.h
 src/nlua_audiodata.c
 src/nlua_bkg.c
@@ -4066,13 +4065,11 @@ src/nlua_ship.c
 src/nlua_ship.h
 src/nlua_shiplog.c
 src/nlua_shiplog.h
-src/nlua_spfx.c
 src/nlua_spfx.h
 src/nlua_spob.c
 src/nlua_spob.h
 src/nlua_system.c
 src/nlua_system.h
-src/nlua_tex.c
 src/nlua_tex.h
 src/nlua_time.c
 src/nlua_time.h
