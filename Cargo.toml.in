@@ -113,7 +113,7 @@ naevc = { workspace = true }
 naev_core = { workspace = true }
 helpers = { workspace = true }
 gettext = { workspace = true }
-log = { workspace = true }
+nlog = { workspace = true }
 ndata = { workspace = true }
 anyhow = { workspace = true }
 formatx = { workspace = true }
