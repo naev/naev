@@ -3917,6 +3917,8 @@ src/gui_omsg.c
 src/gui_omsg.h
 src/gui_osd.c
 src/gui_osd.h
+src/helpers/src/atomicfloat.rs
+src/helpers/src/lib.rs
 src/hook.c
 src/hook.h
 src/info.c
@@ -4237,8 +4239,6 @@ src/union_find.c
 src/union_find.h
 src/utf8.c
 src/utf8.h
-src/utils/src/atomicfloat.rs
-src/utils/src/lib.rs
 src/valgrind.h
 src/vec2.c
 src/vec2.h

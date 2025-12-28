@@ -1,5 +1,5 @@
 [package]
-name = "utils"
+name = "helpers"
 workspace = "@BUILD@"
 version.workspace = true
 edition.workspace = true
@@ -9,6 +9,6 @@ rust-version.workspace = true
 workspace = true
 
 [lib]
-path = "@SOURCE@/src/utils/src/lib.rs"
+path = "@SOURCE@/src/helpers/src/lib.rs"
 
 [dependencies]

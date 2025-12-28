@@ -19,7 +19,7 @@ ndata = { workspace = true }
 anyhow = { workspace = true }
 log = { workspace = true }
 gettext = { workspace = true }
-utils = { workspace = true }
+helpers = { workspace = true }
 nalgebra = { workspace = true }
 thunderdome = { workspace = true }
 static_assertions = { workspace = true }

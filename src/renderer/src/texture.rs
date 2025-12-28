@@ -2084,10 +2084,31 @@ pub extern "C" fn gl_renderScaleAspectMagic(
     //let _ = tex.draw_scale(ctx, x, y, nw, nh, scale);
 }
 
-#[allow(unused_doc_comments)]
+/*@
+ * @brief Lua bindings to interact with OpenGL textures.
+ *
+ * This will allow you to load textures.
+ *
+ * An example would be:
+ * @code
+ * t  = tex.open( "foo/bar.png" ) -- Loads the texture
+ * w, h, sw, sh = t:dim()
+ * sprites, x, y = t:sprites()
+ * @endcode
+ *
+ * @luamod tex
+ */
 impl UserData for Texture {
     fn add_fields<F: mlua::UserDataFields<Self>>(fields: &mut F) {
+        /*@
+         * @brief The width of the texture.
+         * @luafield w
+         */
         fields.add_field_method_get("w", |_, this| Ok(this.texture.w));
+        /*@
+         * @brief The height of the texture.
+         * @luafield h
+         */
         fields.add_field_method_get("h", |_, this| Ok(this.texture.h));
     }
     fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {

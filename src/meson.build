@@ -10,7 +10,7 @@ subdir('renderer')
 subdir('toolkit')
 subdir('physics')
 subdir('pluginmgr')
-subdir('utils')
+subdir('helpers')
 #subdir('pluginmgr-cli')
 subdir('pluginmgr-gui')
 source_rust = files(
@@ -30,8 +30,8 @@ source_rust = files(
    'core/src/start.rs',
    'core/src/lua.rs',
    'core/src/constants.rs',
-   'utils/src/lib.rs',
-   'utils/src/atomicfloat.rs',
+   'helpers/src/lib.rs',
+   'helpers/src/atomicfloat.rs',
    'ndata/src/lib.rs',
    'ndata/src/data.rs',
    'ndata/src/env.rs',

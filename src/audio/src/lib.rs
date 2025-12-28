@@ -24,6 +24,8 @@ use crate::source_spatialize::*;
 use anyhow::Context;
 use anyhow::Result;
 use gettext::gettext;
+use helpers::atomicfloat::AtomicF32;
+use helpers::{binary_search_by_key_ref, sort_by_key_ref};
 use log::{debug, debugx, warn, warn_err};
 use mlua::{Either, MetaMethod, UserData, UserDataMethods, UserDataRef};
 use nalgebra::{Vector2, Vector3};
@@ -42,8 +44,6 @@ use symphonia::core::{
 use thunderdome::Arena;
 #[cfg(debug_assertions)]
 use tracing_mutex::stdsync::{Mutex, RwLock};
-use utils::atomicfloat::AtomicF32;
-use utils::{binary_search_by_key_ref, sort_by_key_ref};
 
 // TODO stuff for parity with original sound
 // 1. Implement the sound_playPos checks to use sensor info

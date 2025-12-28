@@ -22,7 +22,7 @@ encase = { workspace = true }
 sdl3 = { workspace = true }
 image = { workspace = true }
 naev_core = { workspace = true }
-utils = { workspace = true }
+helpers = { workspace = true }
 physics = { workspace = true }
 mlua = { workspace = true }
 palette = { workspace = true }

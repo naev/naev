@@ -549,8 +549,6 @@ impl LuaEnv {
         open_lib("spfx", crate::spfx::open_spfx)?;
         open_lib("audiodata", audio::open_audiodata)?;
         open_lib("audio", audio::open_audio)?;
-        // TODO tex has lots of dependencies, and we can't implement the FFI interface so it is
-        // disabled. Similarly, file doesn't have ffi set up.
         open_lib("data", ndata::data::open_data)?;
         open_lib("file", ndata::lua::open_file)?;
         open_lib("tex", renderer::texture::open_texture)?;

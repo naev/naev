@@ -1,11 +1,11 @@
 use anyhow::Result;
+use helpers::atomicfloat::AtomicF64;
 use nalgebra::Vector2;
 use physics::angle_diff;
 use physics::vec2::Vec2;
 use std::os::raw::{c_double, c_int, c_uint};
 use std::sync::atomic::Ordering;
 use std::sync::{LazyLock, RwLock};
-use utils::atomicfloat::AtomicF64;
 
 // Converts y coordinates based on viewing angles
 static GAME_TO_SCREEN: AtomicF64 = AtomicF64::new(1.);
