@@ -15,6 +15,7 @@ subdir('helpers')
 subdir('pluginmgr-gui')
 source_rust = files(
    'audio/src/lib.rs',
+   'audio/src/lua.rs',
    'audio/src/debug.rs',
    'audio/src/efx.rs',
    'audio/src/openal.rs',
