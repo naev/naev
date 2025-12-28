@@ -13,10 +13,8 @@
 #include "log.h"
 #include "nlua.h"
 #include "nlua_bkg.h"
-#include "nlua_colour.h"
 #include "nlua_linopt.h"
 #include "nlua_music.h"
-#include "nlua_tex.h"
 #include "nlua_tk.h"
 
 static nlua_env *naevpedia_env = NULL; /**< Naevpedia environment. */
@@ -32,7 +30,6 @@ int naevpedia_open( const char *path )
    if ( naevpedia_env == NULL ) {
       naevpedia_env = nlua_newEnv( "naevpedia" );
       nlua_loadStandard( naevpedia_env );
-      nlua_loadTex( naevpedia_env );
       nlua_loadBackground( naevpedia_env );
       nlua_loadMusic( naevpedia_env );
       nlua_loadTk( naevpedia_env );

@@ -789,6 +789,8 @@ static int cust_event_window( Uint32 event, Sint32 w, Sint32 h,
 
 /**
  * @brief Forces the toolkit to rerender the screen.
+ *
+ * @luafunc refresh
  */
 static int tkL_refresh( lua_State *L )
 {

@@ -236,7 +236,7 @@ static void spfx_cleanup( LuaSpfxData_t *ls )
  * @brief Lua bindings to interact with spfx.
  *
  *
- * @luamod spfx
+ * @lua_mod spfx
  */
 /**
  * @brief Frees a spfx.

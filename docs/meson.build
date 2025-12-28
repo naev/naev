@@ -25,7 +25,7 @@ if genCDoc.disabled() == false
 
       cdoc = custom_target(
          'cdoc',
-         input       : [source, nlua_source, mac_source, sdf_source, headers],
+         input       : [source, mac_source, sdf_source, headers],
          output      : doxy_output,
          command     : [doxygen, doxyfile],
          install     : true,
@@ -39,11 +39,14 @@ if genLDoc.disabled() == false
    # Lua documentation
    ldoc = find_program('ldoc', required: genLDoc)
    if ldoc.found()
-      src2luadoc = generator(
-         find_program(files('lua'/'src2luadoc.sh')),
-         arguments: [doxtractor.full_path(), '@INPUT@', '@OUTPUT@'],
-         output   : '@BASENAME@.luadoc',
-         depends: [doxtractor],
+
+      cargo = find_program('cargo')
+      docmaker = generator( cargo,
+         arguments: ['run',
+            '--manifest-path', meson.project_source_root() / 'utils/docmaker/Cargo.toml',
+            'ldoc', '@INPUT@', '-o', '@OUTPUT@',
+         ],
+         output: '@BASENAME@.luadoc'
       )
 
       # WARNING: half-assed way to ensure the same directory contains the Lua sources we want to document.
@@ -55,7 +58,7 @@ if genLDoc.disabled() == false
          output   : '@PLAINNAME@'
       )
 
-      clua_source = src2luadoc.process(nlua_source)
+      clua_source = docmaker.process(nlua_source)
       llua_source = direct.process(lua_source)
 
       lconfig = files('lua/config.ld')

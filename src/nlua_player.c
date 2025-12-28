@@ -700,6 +700,10 @@ static int playerL_autonav( lua_State *L )
 
 /**
  * @brief Sets the autonav speed.
+ *
+ *    @luatparam[opt=reset] number speed Speed to set the autonav to.
+ *    @luatparam[opt=speed] number sound Speed to set the sound to.
+ * @luafunc autonavSetSpeed
  */
 static int playerL_autonavSetSpeed( lua_State *L )
 {
@@ -859,7 +863,7 @@ static int playerL_autonavEnd( lua_State *L )
  * @brief Gets the current time modifier for the player.
  *
  *    @luatreturn number Current time modifier.
- * @luafunc dt_defaults
+ * @luafunc dt_default
  */
 static int playerL_dt_default( lua_State *L )
 {
@@ -871,7 +875,7 @@ static int playerL_dt_default( lua_State *L )
  * @brief Gets the current speed of the player.
  *
  *    @luatreturn number Current speed modifier.
- * @luafunc sped
+ * @luafunc speed
  */
 static int playerL_speed( lua_State *L )
 {
@@ -999,6 +1003,9 @@ static int playerL_cinematics( lua_State *L )
 
 /**
  * @brief Checks to see if the game is in cinematics mode.
+ *
+ *    @luatreturn boolean Whether or not the player is in cinematics mode.
+ * @luafunc cinematicsCheck
  */
 static int playerL_cinematicsCheck( lua_State *L )
 {
@@ -2400,7 +2407,7 @@ static int playerL_inventoryOwned( lua_State *L )
  *
  *    @luatparam string name The name of the licence to check.
  *    @luatreturn boolean Whether or not the player has the license.
- * @luafunc hasLicense
+ * @luafunc hasLicence
  */
 static int playerL_hasLicense( lua_State *L )
 {

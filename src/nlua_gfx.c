@@ -648,6 +648,8 @@ static int gfxL_renderLinesH( lua_State *L )
 
 /**
  * @brief Clears the depth buffer.
+ *
+ * @luafunc clearDepth
  */
 static int gfxL_clearDepth( lua_State *L )
 {

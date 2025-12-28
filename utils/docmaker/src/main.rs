@@ -215,7 +215,9 @@ fn main() -> Result<()> {
             );
             output.push_str("local stds = {}\n");
             let mut mods = Vec::new();
-            for file in &lc.input {
+            let mut inputs = lc.input.clone();
+            inputs.sort();
+            for file in &inputs {
                 let txt = fs::read_to_string(file).unwrap();
                 let blocks = extract_docs(&txt);
                 let (modname, txt) = luacheck(&blocks).context(format!("{}", &file.display()))?;
@@ -223,7 +225,9 @@ fn main() -> Result<()> {
                 mods.push(modname);
             }
             for modname in mods {
-                output.push_str(&format!("stds.naev.read_globals.naev.fields.{modname} = stds.{modname}.read_globals.{modname}\n"));
+                if modname != "naev" {
+                    output.push_str(&format!("stds.naev.read_globals.naev.fields.{modname} = stds.{modname}.read_globals.{modname}\n"));
+                }
             }
             output.push_str("return stds\n");
             output

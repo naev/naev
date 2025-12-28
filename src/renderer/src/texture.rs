@@ -8,7 +8,7 @@ use log::{warn, warn_err};
 use mlua::{Either, FromLua, Lua, MetaMethod, UserData, UserDataMethods, UserDataRef, Value};
 use nalgebra::{Matrix3, Vector4};
 use ndata::data::Data;
-use ndata::lua::LuaFile;
+use ndata::luafile::LuaFile;
 use physics::transform2::Transform2;
 use sdl3 as sdl;
 use std::boxed::Box;
@@ -2171,6 +2171,15 @@ impl UserData for Texture {
                 Ok(builder.build(Context::get())?)
             },
         );
+        /*@
+         * @brief Opens a texture from raw data.
+         *
+         *    @luatparam Data data Data to use to create the image.
+         *    @luatparam integer width Width of the image.
+         *    @luatparam integer height Height of the image.
+         *    @luatreturn Tex The opened texture or nil on error.
+         * @luafunc newData
+         */
         methods.add_function(
             "newData",
             |_, (data, w, h): (UserDataRef<Data>, u32, u32)| -> mlua::Result<Self> {

@@ -547,10 +547,10 @@ impl LuaEnv {
         open_lib("colour", renderer::colour::open_colour)?;
         open_lib("rnd", crate::rng::open_rnd)?;
         open_lib("spfx", crate::spfx::open_spfx)?;
-        open_lib("audiodata", audio::lua::open_audiodata)?;
+        open_lib("audiodata", audio::lua_audiodata::open_audiodata)?;
         open_lib("audio", audio::open_audio)?;
         open_lib("data", ndata::data::open_data)?;
-        open_lib("file", ndata::lua::open_file)?;
+        open_lib("file", ndata::luafile::open_file)?;
         open_lib("tex", renderer::texture::open_texture)?;
         //open_lib("gfx", renderer::open_gfx)?;
 
@@ -570,7 +570,6 @@ impl LuaEnv {
             r |= naevc::nlua_loadCommodity(env);
             r |= naevc::nlua_loadNews(env);
             r |= naevc::nlua_loadShiplog(env);
-            r |= naevc::nlua_loadFile(env);
             r |= naevc::nlua_loadData(env);
             r |= naevc::nlua_loadLinOpt(env);
             r |= naevc::nlua_loadSafelanes(env);

@@ -387,7 +387,6 @@ static int cli_initLua( void )
    /* Create the state. */
    cli_env = nlua_newEnv( "console" );
    nlua_loadStandard( cli_env );
-   nlua_loadTex( cli_env );
    nlua_loadBackground( cli_env );
    nlua_loadCLI( cli_env );
    nlua_loadCamera( cli_env );

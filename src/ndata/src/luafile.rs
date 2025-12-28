@@ -89,7 +89,7 @@ impl UserData for LuaFile {
          *    @luatparam[opt="memory buffer"] String name Optional name to give the
          * buffer.
          *    @luatreturn File The new file wrapping the string.
-         * @luafunc close
+         * @luafunc from_string
          */
         methods.add_function(
             "from_string",

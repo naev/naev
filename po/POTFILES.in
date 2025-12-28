@@ -3818,6 +3818,7 @@ src/audio/src/direct_channels_remix.rs
 src/audio/src/efx.rs
 src/audio/src/events.rs
 src/audio/src/lib.rs
+src/audio/src/lua_audiodata.rs
 src/audio/src/openal.rs
 src/audio/src/output_limiter.rs
 src/audio/src/source_spatialize.rs
@@ -3989,7 +3990,7 @@ src/ndata/src/cwrap.rs
 src/ndata/src/data.rs
 src/ndata/src/env.rs
 src/ndata/src/lib.rs
-src/ndata/src/lua.rs
+src/ndata/src/luafile.rs
 src/ndata/src/physfs.rs
 src/nebula.h
 src/nebula.rs
@@ -4013,7 +4014,6 @@ src/nlua_canvas.c
 src/nlua_canvas.h
 src/nlua_cli.c
 src/nlua_cli.h
-src/nlua_colour.c
 src/nlua_colour.h
 src/nlua_commodity.c
 src/nlua_commodity.h
@@ -4057,7 +4057,6 @@ src/nlua_pilotoutfit.c
 src/nlua_pilotoutfit.h
 src/nlua_player.c
 src/nlua_player.h
-src/nlua_rnd.c
 src/nlua_rnd.h
 src/nlua_safelanes.c
 src/nlua_safelanes.h
@@ -4079,11 +4078,9 @@ src/nlua_time.c
 src/nlua_time.h
 src/nlua_tk.c
 src/nlua_tk.h
-src/nlua_transform.c
 src/nlua_transform.h
 src/nlua_var.c
 src/nlua_var.h
-src/nlua_vec2.c
 src/nlua_vec2.h
 src/nluadef.h
 src/nmath.c

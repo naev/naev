@@ -21,7 +21,7 @@ impl Constants {
     fn load() -> Result<Self> {
         let lua = mlua::Lua::new_with(mlua::StdLib::ALL_SAFE, Default::default())?;
         let globals = lua.globals();
-        globals.set("file", ndata::lua::open_file(&lua)?)?;
+        globals.set("file", ndata::luafile::open_file(&lua)?)?;
 
         let chunk = lua.load(ndata::read("constants.lua")?);
         let tbl: mlua::Table = chunk.call(())?;

@@ -51,6 +51,7 @@ static const luaL_Reg dataL_methods[] = {
  */
 int nlua_loadData( nlua_env *env )
 {
+   (void)env;
    // nlua_register( env, DATA_METATABLE, dataL_methods, 1 );
    return 0;
 }
@@ -58,7 +59,7 @@ int nlua_loadData( nlua_env *env )
 /**
  * @brief Lua bindings to interact with data.
  *
- * @luamod data
+ * @lua_mod data
  */
 /**
  * @brief Gets data at index.

@@ -512,7 +512,7 @@ impl UserData for Colour {
          *    @luatreturn number Red value.
          *    @luatreturn number Green value.
          *    @luatreturn number Blue value.
-         * @luafunc rgb_to_hsv
+         * @luafunc hsv_to_rgb
          */
         methods.add_function(
             "hsv_to_rgb",

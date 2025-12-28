@@ -3114,7 +3114,7 @@ static int aiL_hasfighterbays( lua_State *L )
  * @brief Does the pilot have afterburners?
  *
  *    @luatreturn boolean True if the pilot has afterburners.
- * @luafunc hasafterburners
+ * @luafunc hasafterburner
  */
 static int aiL_hasafterburner( lua_State *L )
 {
@@ -3393,7 +3393,7 @@ static int aiL_set_shoot_indicator( lua_State *L )
  * seeker is shot).
  *
  *    @luatreturn boolean true if the shoot_indicator is true.
- *    @luafunc set_shoot_indicator
+ *    @luafunc shoot_indicator
  */
 static int aiL_shoot_indicator( lua_State *L )
 {

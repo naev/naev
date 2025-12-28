@@ -393,7 +393,7 @@ void audio_cleanup( LuaAudio_t *la )
 /**
  * @brief Lua bindings to interact with audio.
  *
- * @luamod audio
+ * @lua_mod audio
  */
 /**
  * @brief Gets a string representation of an audio file.

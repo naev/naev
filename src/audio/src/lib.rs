@@ -1,7 +1,7 @@
 //#![allow(dead_code, unused_imports)]
 mod debug;
 mod efx;
-pub mod lua;
+pub mod lua_audiodata;
 #[macro_use]
 pub mod openal;
 mod buffer_length_query;
@@ -2903,7 +2903,7 @@ impl UserData for LuaAudioRef {
          *
          *    @luatparam number factor Factor to set Doppler effect to. Must be
          * positive.
-         * @luafunc setGlobalDopplerFactor
+         * @luafunc setDopplerFactor
          */
         methods.add_function("setDopplerFactor", |_, factor: f32| -> mlua::Result<()> {
             unsafe { alDopplerFactor(factor) };

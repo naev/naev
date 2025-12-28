@@ -236,15 +236,14 @@ pub fn render_fg(dt: f64) {
     render(RenderLayer::Foreground, dt);
 }
 
-/*
+/*@
  * @brief Lua bindings to interact with spfx.
- *
  *
  * @luamod spfx
  */
 impl UserData for LuaSpfxRef {
     fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
-        /*
+        /*@
          * @brief Creates a new special effect.
          *
          * @usage spfx.new( 5, update, nil, nil, render, player.pos(),
@@ -362,7 +361,7 @@ impl UserData for LuaSpfxRef {
                 }
             },
         );
-        /*
+        /*@
          * @brief Removes a special effect.
          *
          *    @luatparam spfx s Spfx to remove.
@@ -372,7 +371,7 @@ impl UserData for LuaSpfxRef {
             MESSAGES.lock().unwrap().push(Message::Remove(*this));
             Ok(())
         });
-        /*
+        /*@
          * @brief Gets the position of a spfx.
          *
          *    @luatparam spfx s Spfx to get position of.
@@ -382,7 +381,7 @@ impl UserData for LuaSpfxRef {
         methods.add_method("pos", |_, this, ()| -> mlua::Result<Option<Vec2>> {
             Ok(this.call(|this| this.pos)?)
         });
-        /*
+        /*@
          * @brief Sets the velocity of a spfx.
          *
          *    @luatparam spfx s Spfx to set the velocity of.
@@ -392,7 +391,7 @@ impl UserData for LuaSpfxRef {
         methods.add_method("vel", |_, this, ()| -> mlua::Result<Option<Vec2>> {
             Ok(this.call(|this| this.vel)?)
         });
-        /*
+        /*@
          * @brief Sets the position of a spfx.
          *
          *    @luatparam spfx s Spfx to set the position of.
@@ -408,7 +407,7 @@ impl UserData for LuaSpfxRef {
             MESSAGES.lock().unwrap().push(Message::SetPos(*this, pos));
             Ok(())
         });
-        /*
+        /*@
          * @brief Sets the velocity of a spfx.
          *
          *    @luatparam spfx s Spfx to set the velocity of.
@@ -424,7 +423,7 @@ impl UserData for LuaSpfxRef {
             MESSAGES.lock().unwrap().push(Message::SetVel(*this, vel));
             Ok(())
         });
-        /*
+        /*@
          * @brief Gets the sound effect of a spfx.
          *
          *    @luatparam spfx s Spfx to get sound effect of.
@@ -445,7 +444,7 @@ impl UserData for LuaSpfxRef {
                 })?)
             },
         );
-        /*
+        /*@
          * @brief Gets the data table of a spfx.
          *
          * This table is unique to each instance.
@@ -457,7 +456,7 @@ impl UserData for LuaSpfxRef {
         methods.add_method("data", |_, this, ()| -> mlua::Result<mlua::Table> {
             Ok(this.call(|this| this.data.clone())?)
         });
-        /*
+        /*@
          * @brief Creates a cloud of debris.
          *
          *    @luatparam number mass Mass of the cloud.
@@ -477,7 +476,7 @@ impl UserData for LuaSpfxRef {
                 Ok(())
             },
         );
-        /*
+        /*@
          * @brief Sets the nebula colour.
          *
          * @usage spfx.nebulaColour( 0.3, 0.5, 0.8 )

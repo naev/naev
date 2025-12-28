@@ -1006,7 +1006,7 @@ pub struct LuaGfx;
  * gfx.renderTex( t, 0., 0. ) -- Draws texture at origin
  * @endcode
  *
- * @luamod gfx
+ * @lua_mod gfx
  */
 impl mlua::UserData for LuaGfx {
     fn add_methods<M: mlua::UserDataMethods<Self>>(methods: &mut M) {

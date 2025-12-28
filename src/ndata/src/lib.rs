@@ -13,7 +13,7 @@ use log::{infox, semver, version};
 pub mod cwrap;
 pub mod data;
 pub mod env;
-pub mod lua;
+pub mod luafile;
 pub mod physfs;
 
 /// Whether or not the data has likely been found

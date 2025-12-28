@@ -35,6 +35,9 @@
 #include "debug.h" // IWYU pragma: keep
 #include "gltf.h"
 #include "log.h"
+#include "nlua.h"
+#include "nlua_tex.h"
+#include "nluadef.h"
 #include "render.h"
 
 glInfo gl_screen = {
@@ -434,4 +437,31 @@ void gl_exit( void )
 
    /* Shut down the subsystem */
    SDL_QuitSubSystem( SDL_INIT_VIDEO );
+}
+
+/**
+ * @brief Gets texture directly or from a filename (string) at index or raises
+ * error if there is no texture at index.
+ *
+ *    @param L Lua state to get texture from.
+ *    @param ind Index position to find texture.
+ *    @param searchpath Path to search for files.
+ *    @return Texture found at the index in the state.
+ */
+glTexture *luaL_validtex( lua_State *L, int ind, const char *searchpath )
+{
+   char path[PATH_MAX];
+   if ( lua_istex( L, ind ) )
+      return gl_dupTexture( luaL_checktex( L, ind ) );
+   const char *filename = luaL_checkstring( L, ind );
+   // Won't raise an error if file not found.
+   glTexture *t = gl_tryNewImage( filename, 0 );
+   if ( t != NULL )
+      return t;
+   snprintf( path, sizeof( path ), "%s%s", searchpath, filename );
+   t = gl_newImage( path, 0 );
+   if ( t != NULL )
+      return t;
+   NLUA_ERROR( L, _( "Trying to load invalid texture %s" ), filename );
+   return NULL;
 }

@@ -74,7 +74,7 @@ int nlua_loadFileNoEnv( lua_State *L )
  *
  * @note The API here is designed to be compatible with that of "LÖVE".
  *
- * @luamod file
+ * @lua_mod file
  */
 /**
  * @brief Gets file at index.

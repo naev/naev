@@ -15,7 +15,7 @@ subdir('helpers')
 subdir('pluginmgr-gui')
 source_rust = files(
    'audio/src/lib.rs',
-   'audio/src/lua.rs',
+   'audio/src/lua_audiodata.rs',
    'audio/src/debug.rs',
    'audio/src/efx.rs',
    'audio/src/openal.rs',
@@ -36,7 +36,7 @@ source_rust = files(
    'ndata/src/lib.rs',
    'ndata/src/data.rs',
    'ndata/src/env.rs',
-   'ndata/src/lua.rs',
+   'ndata/src/luafile.rs',
    'ndata/src/physfs.rs',
    'ndata/src/cwrap.rs',
    'gettext/src/lib.rs',
@@ -81,6 +81,7 @@ source_rust = files(
 # C Source lists
 ####
 source = files(
+   'ai.c',
    'array.c',
    'asteroid.c',
    'background.c',
@@ -153,6 +154,41 @@ source = files(
    'news.c',
    'nfile.c',
    'nlua.c',
+   'nlua_asteroid.c',
+   'nlua_bkg.c',
+   'nlua_camera.c',
+   'nlua_canvas.c',
+   'nlua_cli.c',
+   'nlua_commodity.c',
+   'nlua_data.c',
+   'nlua_diff.c',
+   'nlua_evt.c',
+   'nlua_faction.c',
+   'nlua_file.c',
+   'nlua_font.c',
+   'nlua_gfx.c',
+   'nlua_gui.c',
+   'nlua_hook.c',
+   'nlua_jump.c',
+   'nlua_linopt.c',
+   'nlua_munition.c',
+   'nlua_misn.c',
+   'nlua_music.c',
+   'nlua_naev.c',
+   'nlua_news.c',
+   'nlua_outfit.c',
+   'nlua_pilot.c',
+   'nlua_pilotoutfit.c',
+   'nlua_player.c',
+   'nlua_safelanes.c',
+   'nlua_shader.c',
+   'nlua_ship.c',
+   'nlua_shiplog.c',
+   'nlua_spob.c',
+   'nlua_system.c',
+   'nlua_time.c',
+   'nlua_tk.c',
+   'nlua_var.c',
    'nmath.c',
    'nopenal.c',
    'npc.c',
@@ -214,46 +250,12 @@ source = files(
    'tk/widget/list.c',
 )
 
-nlua_source = files(
-   'ai.c',
-   'nlua_asteroid.c',
-   'nlua_bkg.c',
-   'nlua_camera.c',
-   'nlua_canvas.c',
-   'nlua_cli.c',
-   'nlua_commodity.c',
-   'nlua_data.c',
-   'nlua_diff.c',
-   'nlua_evt.c',
-   'nlua_faction.c',
-   'nlua_file.c',
-   'nlua_font.c',
-   'nlua_gfx.c',
-   'nlua_gui.c',
-   'nlua_hook.c',
-   'nlua_jump.c',
-   'nlua_linopt.c',
-   'nlua_munition.c',
-   'nlua_misn.c',
-   'nlua_music.c',
-   'nlua_naev.c',
-   'nlua_news.c',
-   'nlua_outfit.c',
-   'nlua_pilot.c',
-   'nlua_pilotoutfit.c',
-   'nlua_player.c',
-   'nlua_rnd.c',
-   'nlua_safelanes.c',
-   'nlua_shader.c',
-   'nlua_ship.c',
-   'nlua_shiplog.c',
-   'nlua_spob.c',
-   'nlua_system.c',
-   'nlua_tex.c',
-   'nlua_time.c',
-   'nlua_tk.c',
-   'nlua_var.c',
-)
+nlua_source_src = run_command([find_program(files(meson.project_source_root() / 'utils/find_nlua.sh')), '..'],
+   check: true)
+nlua_source = []
+foreach ns: nlua_source_src.stdout().strip().split('\n')
+   nlua_source += [ meson.project_source_root() / ns]
+endforeach
 
 sdf_source = files('distance_field.c', 'edtaa3func.c')
 mac_source = files('glue_macos.m')
@@ -261,7 +263,6 @@ mac_source = files('glue_macos.m')
 naev_source = [
    files('naev.c'),
    source,
-   nlua_source
 ]
 
 # Headers aren't needed for running the builds,
