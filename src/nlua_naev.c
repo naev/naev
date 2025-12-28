@@ -679,7 +679,6 @@ static int naevL_cache( lua_State *L )
  *
  *    @luatparam string hookname Name of the hook to be run.
  *    @luaparam arg Parameter to pass to the hooks.
- * @see custom
  * @luafunc trigger
  */
 static int naevL_trigger( lua_State *L )
