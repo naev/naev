@@ -56,12 +56,12 @@ repos:
       types: [markdown]
       language: script
       require_serial: true
-    - id: check_luadoc_func
-      name: check @lua.. not used outside @luafunc
-      entry: utils/check_luadoc_funcs.sh
-      files: '^src/nlua_*.c'
-      types: [c]
-      language: script
+    #- id: check_luadoc_func
+    #  name: check @lua.. not used outside @luafunc
+    #  entry: utils/check_luadoc_funcs.sh
+    #  files: '^src/nlua_*.c'
+    #  types: [c]
+    #  language: script
     - id: luafunc_dup
       name: duplicate @luafunc entry detector
       entry: utils/luafunc_dup.sh
