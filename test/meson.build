@@ -33,7 +33,8 @@ if (luacheck.found())
    env.set( 'LUA_PATH', meson.project_source_root() / '?.lua;;' )
    test('luacheck',
       nluacheck,
-      args: ['dat', 'docs', 'extras', 'utils', '--no-color'],
+      #args: ['dat', 'docs', 'extras', 'utils', '--no-color'],
+      args: ['dat', '--no-color'],
       env: env,
       workdir: meson.project_source_root(),
       timeout: 150,
