@@ -17,6 +17,7 @@
    * Fixed player escorts trying to respond to distress signals against the
      player
    * Fixed several missions using inexistent audio.soundPlay function
+   * Fixed black cat's gift
 
 
 ## v0.13.0
