@@ -679,13 +679,15 @@ static int gfxL_fontSize( lua_State *L )
  *
  * @usage len = gfx.printDim( nil, _("Hello World!") ) -- Length of string with
  * normal font
- * @usage height = gfx.printDim( true, _([["Longer text"]]), 20 ) -- Dimensions
+ * @usage height = gfx.printDim( true, _("Longer text..."), 20 ) -- Dimensions
  * of text block
  *
  *    @luatparam boolean small Whether or not to use the small font.
  *    @luatparam string str Text to calculate length of.
  *    @luatparam[opt] int width Optional parameter to indicate it is a block of
  * text and to use this width.
+ *    @luatreturn number Either the length of the block, or height of the block
+ * of text.
  * @luafunc printDim
  */
 static int gfxL_printDim( lua_State *L )

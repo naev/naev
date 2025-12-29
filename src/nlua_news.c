@@ -143,7 +143,6 @@ static news_t *luaL_validnews( lua_State *L, int ind )
  */
 /**
  * @brief Adds a news article.
- * @usage news.add(faction,title,body,[date_to_rm, [date]])
  *
  * @usage s = news.add( "Empire", "Hello world!", "The Empire wishes to say
  * hello!", 0 ) -- Adds an Empire specific article, with date 0.
