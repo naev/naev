@@ -10,7 +10,7 @@ local lib = {}
 -- Spawn The Junker
 function lib.spawn_pilot( pos )
    local fct = faction.dynAdd( "Mercenary", "junker", _("Junker") )
-   local junker = pilot.add( "Armoured Koala", fct, pos, _("The Junker"), {naked=true, ai="pers"} )
+   local junker = pilot.add( "Koala Armoured", fct, pos, _("The Junker"), {naked=true, ai="pers"} )
    local cores = ecores.get( junker, { all="standard" } )
    cores["hull"] = PLATES
    local outfits = eoutfits.merge{
