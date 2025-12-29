@@ -4,7 +4,9 @@ use anyhow::Result;
 use glow::*;
 use image::ImageFormat;
 #[allow(unused_imports)]
-use mlua::{Either, FromLua, Lua, MetaMethod, UserData, UserDataMethods, UserDataRef, Value};
+use mlua::{
+    Either, FromLua, Lua, MetaMethod, UserData, UserDataMethods, UserDataRef, UserDataRefMut, Value,
+};
 use nalgebra::{Matrix3, Vector4};
 use ndata::data::Data;
 use ndata::luafile::LuaFile;
@@ -2152,7 +2154,7 @@ impl UserData for Texture {
             "new",
             |_,
              (path, w, h, sx, sy): (
-                Either<String, UserDataRef<LuaFile>>,
+                Either<String, UserDataRefMut<LuaFile>>,
                 Option<usize>,
                 Option<usize>,
                 Option<usize>,
@@ -2166,7 +2168,9 @@ impl UserData for Texture {
                     .sy(sy.unwrap_or(1));
                 builder = match path {
                     Either::Left(s) => builder.path(&s),
-                    Either::Right(file) => builder.iostream(file.try_clone()?.into_iostream()?),
+                    Either::Right(mut file) => {
+                        builder.iostream(file.take_iostream().context("file not open")?)
+                    }
                 };
                 Ok(builder.build(Context::get())?)
             },

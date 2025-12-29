@@ -50,6 +50,10 @@ impl LuaFile {
         Ok(file.io)
     }
 
+    pub fn take_iostream(&mut self) -> Option<IOStream<'static>> {
+        self.file.take().map(|file| file.io)
+    }
+
     pub fn try_clone(&self) -> Result<Self> {
         let file = if let Some(f) = &self.file {
             Some(OpenFile {
