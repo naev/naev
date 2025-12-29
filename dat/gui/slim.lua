@@ -93,7 +93,7 @@ function create()
 
    --Load Images
    local function tex_open( name, sx, sy )
-      local t = tex.new( "gfx/gui/slim/" .. name, sx, sy )
+      local t = tex.new( "gfx/gui/slim/" .. name, nil, nil, sx, sy )
       t:setWrap( "clamp" )
       return t
    end
