@@ -67,6 +67,8 @@ utils/model-view-c/*.gltf
 utils/model-view-c/*.png
 utils/model-view-c/*.bin
 
+utils/docmaker/target/*
+
 docs/manual/book
 
 .vscode
