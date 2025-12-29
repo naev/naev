@@ -35,6 +35,8 @@ return function ()
       ship = ship.get("Sirius Preacher"),
       weight = 3,
       func = function ()
+         local notify, eject
+
          vn.clear()
          vn.scene()
          vn.sfx( der.sfx.board )
@@ -61,6 +63,7 @@ return function ()
          vn.na(_("You head back to your ship and notify the local Sirius authorities about the issue. They thank you for the information."))
          vn.func( function ()
             faction.hit( "Sirius", 2 )
+            notify = true
          end )
          vn.jump("cont01")
 
@@ -69,6 +72,7 @@ return function ()
          local creditchip = 50e3
          vn.func( function ()
             player.pay( creditchip )
+            eject = true
          end )
          vn.na( fmt.reward( creditchip ) )
          vn.sfx( der.sfx.unboard )
@@ -124,6 +128,17 @@ return function ()
 
          vn.run()
          player.unboard()
+
+         local msg = _("You found some Sirius corpses aboard a derelict ship. ")
+         if notify then
+            msg = msg.._("You notified the House Sirius authorities who took care of them for you. ")
+         elseif eject then
+            msg = msg.._("You decided to give them a space burial and eject the bodies among the stars. ")
+         else
+            msg = msg.._("You left the bodies as is. ")
+         end
+         msg = msg.._("Afterwards you had a weird vision. Maybe you should start eating less expired space rations.")
+         der.addMiscLog( msg )
          return true
       end
    }
