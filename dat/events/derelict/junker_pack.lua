@@ -1,12 +1,17 @@
 local der = require 'common.derelict'
 local vn = require 'vn'
 local fmt = require 'format'
+local jlib = require "common.junker"
 
 local OUTFIT = outfit.get("Junker Pack")
 
 return function ()
-   -- Must not be psychic
+   -- Must have not gotten the pack yet
    if player.outfitNum(OUTFIT) > 0 then
+      return
+   end
+   -- Must be a system the junker likes
+   if not jlib.good_sys() then
       return
    end
 

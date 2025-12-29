@@ -1,4 +1,5 @@
 local equipopt = require "equipopt"
+local jlib = require "common.junker"
 
 return function ()
    local scur = system.cur()
@@ -116,6 +117,21 @@ return function ()
          end
       }
    }
+
+   if player.outfitNum( "Junker Pack" ) >= 0 and jlib.good_sys() then
+      table.insert( pers, {
+         spawn = function ()
+            local p = jlib.spawn_pilot()
+            if player.outfitNum( "Junker Plates" ) <= 0 then
+               p:setHostile( rnd.rnd()<0.5 )
+            end
+            local m = p:memory()
+            m.comm_greet = _([["Give me back my pack!"]])
+            m.taunt = m.comm_greet
+            return p
+         end
+      } )
+   end
 
    if scur == system.get("Zied") then
       table.insert( pers, {
