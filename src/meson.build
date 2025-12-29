@@ -49,6 +49,7 @@ source_rust = files(
    'renderer/src/texture.rs',
    'renderer/src/camera.rs',
    'renderer/src/colour.rs',
+   'renderer/src/luagfx.rs',
    'toolkit/src/lib.rs',
    'toolkit/src/widget.rs',
    'physics/src/lib.rs',

@@ -4165,6 +4165,7 @@ src/renderer/src/buffer.rs
 src/renderer/src/camera.rs
 src/renderer/src/colour.rs
 src/renderer/src/lib.rs
+src/renderer/src/luagfx.rs
 src/renderer/src/sdf.rs
 src/renderer/src/shader.rs
 src/renderer/src/texture.rs

@@ -13,6 +13,7 @@ use std::sync::{Arc, Mutex, MutexGuard, OnceLock, RwLock, atomic::AtomicBool, at
 pub mod buffer;
 pub mod camera;
 pub mod colour;
+pub mod luagfx;
 pub mod sdf;
 pub mod shader;
 pub mod texture;
@@ -31,8 +32,8 @@ const MIN_WIDTH: u32 = 1280;
 const MIN_HEIGHT: u32 = 720;
 const MIN_WIDTH_F32: f32 = MIN_WIDTH as f32;
 const MIN_HEIGHT_F32: f32 = MIN_HEIGHT as f32;
-pub(crate) static VIEW_WIDTH: AtomicF32 = AtomicF32::new(0.);
-pub(crate) static VIEW_HEIGHT: AtomicF32 = AtomicF32::new(0.);
+pub(crate) static VIEW_WIDTH: AtomicF32 = AtomicF32::new(0.0);
+pub(crate) static VIEW_HEIGHT: AtomicF32 = AtomicF32::new(0.0);
 static DEBUG: AtomicBool = AtomicBool::new(false);
 
 fn debug_callback(source: u32, msg_type: u32, id: u32, severity: u32, msg: &str) {
@@ -992,122 +993,6 @@ impl Context {
             Some(screen)
         }
     }
-}
-
-use mlua::UserDataRef;
-pub struct LuaGfx;
-/*@
- * @brief Lua bindings to interact with rendering and the Naev graphical
- * environment.
- *
- * An example would be:
- * @code
- * t  = tex.open( "foo/bar.png" ) -- Loads the texture
- * gfx.renderTex( t, 0., 0. ) -- Draws texture at origin
- * @endcode
- *
- * @lua_mod gfx
- */
-impl mlua::UserData for LuaGfx {
-    fn add_methods<M: mlua::UserDataMethods<Self>>(methods: &mut M) {
-        /*@
-         * @brief Gets the dimensions of the Naev window.
-         *
-         * @usage screen_w, screen_h = gfx.dim()
-         *
-         * GUI modifications to the screen size.
-         *    @luatreturn number The width of the Naev window.
-         *    @luatreturn number The height of the Naev window.
-         *    @luatreturn scale The scaling factor.
-         * @luafunc dim
-         */
-        methods.add_function("dim", |_, ()| -> mlua::Result<(f32, f32, f32)> {
-            let ctx = Context::get();
-            let dims = ctx.dimensions.read().unwrap();
-            Ok((dims.view_width, dims.view_height, dims.view_scale))
-        });
-        /*@
-         * @brief Gets the screen coordinates from game coordinates.
-         *
-         *    @luatparam Vec2 Vector of coordinates to transform.
-         *    @luatreturn Vec2 Transformed vector.
-         * @luafunc screencoords
-         */
-        methods.add_function("screencoords", |_, pos: Vec2| -> mlua::Result<Vec2> {
-            Ok(camera::CAMERA
-                .read()
-                .unwrap()
-                .game_to_screen_coords_yflip(pos.into())
-                .into())
-        });
-        /*@
-         * @brief Renders a texture.
-         *
-         * This function has variable parameters depending on how you want to render.
-         *
-         * @usage gfx.renderTex( tex, 0., 0. ) -- Render tex at origin
-         * @usage gfx.renderTex( tex, 0., 0., col ) -- Render tex at origin with colour
-         * col
-         * @usage gfx.renderTex( tex, 0., 0., 4, 3 ) -- Render sprite at position 4,3
-         * (top-left is 1,1)
-         * @usage gfx.renderTex( tex, 0., 0., 4, 3, col ) -- Render sprite at position
-         * 4,3 (top-left is 1,1) with colour col
-         *
-         *    @luatparam Tex tex Texture to render.
-         *    @luatparam number pos_x X position to render texture at.
-         *    @luatparam number pos_y Y position to render texture at.
-         *    @luatparam[opt=0] int sprite_x X sprite to render.
-         *    @luatparam[opt=0] int sprite_y Y sprite to render.
-         *    @luatparam[opt] Colour colour Colour to use when rendering.
-         * @luafunc renderTex
-         */
-        methods.add_function(
-            "renderTex",
-            |_,
-             (tex, x, y, sx, sy, col): (
-                UserDataRef<crate::texture::Texture>,
-                f32,
-                f32,
-                Option<usize>,
-                Option<usize>,
-                Option<colour::Colour>,
-            )|
-             -> mlua::Result<()> {
-                let sx = sx.unwrap_or(1) - 1;
-                let sy = sy.unwrap_or(1) - 1;
-                let w = tex.texture.w as f32;
-                let h = tex.texture.h as f32;
-                #[rustfmt::skip]
-                let transform: Matrix3<f32> = Matrix3::new(
-                    w,   0.0,  x,
-                    0.0,  h,   y,
-                    0.0, 0.0, 1.0,
-                );
-                let tw = tex.sw as f32;
-                let th = tex.sh as f32;
-                let tx = tw * (sx as f32) / w;
-                let ty = th * ((tex.sy as f32) - (sy as f32) - 1.0) / h;
-                #[rustfmt::skip]
-                let texture: Matrix3<f32> = Matrix3::new(
-                    tw,  0.0, tx,
-                    0.0, th,  ty,
-                    0.0, 0.0, 1.0,
-                );
-                let colour = col.unwrap_or(colour::WHITE);
-                let data = TextureUniform {
-                    texture,
-                    transform,
-                    colour: colour.into(),
-                };
-                Ok(tex.draw_ex(Context::get(), &data)?)
-            },
-        );
-    }
-}
-
-pub fn open_gfx(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
-    let proxy = lua.create_proxy::<LuaGfx>()?;
-    Ok(proxy)
 }
 
 // C API
