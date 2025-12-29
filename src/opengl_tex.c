@@ -325,7 +325,7 @@ static GLuint gl_loadSurface( SDL_Surface *surface, unsigned int flags,
       if ( flags & OPENGL_TEX_NOTSRGB )
          internalformat = has_alpha ? GL_RGBA : GL_RGB;
       else
-         internalformat = has_alpha ? GL_SRGB_ALPHA : GL_SRGB;
+         internalformat = has_alpha ? GL_SRGB8_ALPHA8 : GL_SRGB8;
 
       *vmax = 1.;
       //glPixelStorei( GL_UNPACK_ALIGNMENT,

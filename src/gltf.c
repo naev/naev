@@ -494,7 +494,7 @@ static int gltf_loadTexture( const GltfObject *obj, Texture *otex,
       if ( notsrgb )
          internalformat = has_alpha ? GL_RGBA : GL_RGB;
       else
-         internalformat = has_alpha ? GL_SRGB_ALPHA : GL_SRGB;
+         internalformat = has_alpha ? GL_SRGB8_ALPHA8 : GL_SRGB8;
       if ( surface->format->format != fmt ) {
          SDL_Surface *temp = surface;
          surface           = SDL_ConvertSurfaceFormat( temp, fmt, 0 );
