@@ -1310,7 +1310,6 @@ stds.tex = {
          fields = {
             __tostring = {},
             new = {},
-            newData = {},
             dim = {},
             sprites = {},
             spriteFromDir = {},

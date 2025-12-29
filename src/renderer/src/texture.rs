@@ -2154,7 +2154,7 @@ impl UserData for Texture {
             "new",
             |_,
              (path, w, h, sx, sy): (
-                Either<String, UserDataRefMut<LuaFile>>,
+                Either<Either<String, UserDataRef<Data>>, UserDataRefMut<LuaFile>>,
                 Option<usize>,
                 Option<usize>,
                 Option<usize>,
@@ -2167,31 +2167,21 @@ impl UserData for Texture {
                     .sx(sx.unwrap_or(1))
                     .sy(sy.unwrap_or(1));
                 builder = match path {
-                    Either::Left(s) => builder.path(&s),
-                    Either::Right(mut file) => {
-                        builder.iostream(file.take_iostream().context("file not open")?)
-                    }
+                    Either::Left(Either::Left(s)) => builder.path(&s),
+                    Either::Left(Either::Right(data)) => {
+                        if let Some(w) = w && let Some(h) = h {
+                            let img: image::DynamicImage =
+                                image::Rgba32FImage::from_vec(w as u32, h as u32, data.clone().into())
+                                .context("can not create image from data")?
+                                .into();
+                            builder.image(&img)
+                        } else {
+                            return Err(mlua::Error::RuntimeError("both width and height must be specified when creating a texture from raw data".to_string()));
+                        }
+                    },
+                    Either::Right(mut file) => builder.iostream(file.take_iostream().context("file not open")?),
                 };
                 Ok(builder.build(Context::get())?)
-            },
-        );
-        /*@
-         * @brief Opens a texture from raw data.
-         *
-         *    @luatparam Data data Data to use to create the image.
-         *    @luatparam integer width Width of the image.
-         *    @luatparam integer height Height of the image.
-         *    @luatreturn Tex The opened texture or nil on error.
-         * @luafunc newData
-         */
-        methods.add_function(
-            "newData",
-            |_, (data, w, h): (UserDataRef<Data>, u32, u32)| -> mlua::Result<Self> {
-                let img: image::DynamicImage =
-                    image::Rgba32FImage::from_vec(w, h, data.clone().into())
-                        .context("can not create image from data")?
-                        .into();
-                Ok(TextureBuilder::new().image(&img).build(Context::get())?)
             },
         );
         /*@
