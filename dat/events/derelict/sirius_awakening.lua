@@ -129,15 +129,15 @@ return function ()
          vn.run()
          player.unboard()
 
-         local msg = _("You found some Sirius corpses aboard a derelict ship. ")
+         local msg_evt
          if notify then
-            msg = msg.._("You notified the House Sirius authorities who took care of them for you. ")
+            msg_evt = _("You notified the House Sirius authorities who took care of them for you. ")
          elseif eject then
-            msg = msg.._("You decided to give them a space burial and eject the bodies among the stars. ")
+            msg_evt = _("You decided to give them a space burial and eject the bodies among the stars. ")
          else
-            msg = msg.._("You left the bodies as is. ")
+            msg_evt = _("You left the bodies as is. ")
          end
-         msg = msg.._("Afterwards you had a weird vision. Maybe you should start eating less expired space rations.")
+         local msg = fmt.f(_("You found some Sirius corpses aboard a derelict ship. {msg} Afterwards you had a weird vision. Maybe you should start eating less expired space rations."), {msg = msg_evt})
          der.addMiscLog( msg )
          return true
       end
