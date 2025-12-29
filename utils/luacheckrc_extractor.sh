@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #readarray -t FILES <<< "$(git ls-files "src/nlua_*.c" "src/ai.c" )"
 #readarray -t LSFILES <<< "$(git ls-files "src/**/*.c" "src/**/*.rs")"

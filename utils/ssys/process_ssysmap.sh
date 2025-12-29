@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 N_ITER=5
 

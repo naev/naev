@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ -z "$*" ]; then args=( "-" ); else args=( "$@" ); fi
 

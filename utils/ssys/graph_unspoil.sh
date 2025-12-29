@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 TMP=$(mktemp)
 trap 'rm -f "$TMP"' EXIT

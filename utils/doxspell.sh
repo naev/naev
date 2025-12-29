@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #TODO: separate dicts by usage (in-game, code, etc.) Don't forget .codespellignore.
 #TODO: port to hunspell using:

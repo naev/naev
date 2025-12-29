@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Run the *.o filetype detection logic from libbacktrace/configure.ac. Meson passes the compiler command line as arguments.
 set -euo pipefail  # Let's not do a https://github.com/valvesoftware/steam-for-linux/issues/3671
 TEMPDIR="$(mktemp -d)"

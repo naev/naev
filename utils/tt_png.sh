@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 BAS_EXPR='2 / 3'
 BAS_SUFF='_tt'

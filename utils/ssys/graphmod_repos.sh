@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # an internal component of process_ssys (used repeatedly there)
 SCRIPT_DIR="$1"

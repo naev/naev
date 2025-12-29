@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ -z "$1" ]; then
    DOC=(

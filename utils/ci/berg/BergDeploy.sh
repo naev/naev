@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # CODEBERG STAGING SCRIPT FOR NAEV
 # This script should be run after downloading all build artefacts.

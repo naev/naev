@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # After building Naev.app, use this script to sign the bundle. Requires a
 # single argument: the signing identity. This should be a code-signing
