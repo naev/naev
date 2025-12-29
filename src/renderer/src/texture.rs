@@ -2241,7 +2241,7 @@ impl UserData for Texture {
          * @luafunc spriteFromDir
          */
         methods.add_method(
-            "spriteFromdir",
+            "spriteFromDir",
             |_, this, dir: f64| -> mlua::Result<(usize, usize)> {
                 let (sx, sy) = this.sprite_from_dir(dir);
                 Ok((sx + 1, sy + 1))
