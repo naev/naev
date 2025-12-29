@@ -1342,7 +1342,7 @@ impl FramebufferBuilder {
             texture: true,
             depth: false,
             filter: FilterMode::Linear,
-            address_mode: AddressMode::ClampToBorder,
+            address_mode: AddressMode::ClampToEdge,
         }
     }
 
