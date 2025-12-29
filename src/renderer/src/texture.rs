@@ -52,8 +52,8 @@ impl TextureFormat {
     pub fn auto(has_alpha: bool, is_srgb: bool) -> i32 {
         (match is_srgb {
             true => match has_alpha {
-                true => glow::SRGB_ALPHA,
-                false => glow::SRGB,
+                true => glow::SRGB8_ALPHA8,
+                false => glow::SRGB8,
             },
             false => match has_alpha {
                 true => glow::RGBA,
@@ -87,8 +87,8 @@ impl TextureFormat {
         (match self {
             Self::RGB => glow::RGB,
             Self::RGBA => glow::RGBA,
-            Self::SRGB => glow::SRGB,
-            Self::SRGBA => glow::SRGB_ALPHA,
+            Self::SRGB => glow::SRGB8,
+            Self::SRGBA => glow::SRGB8_ALPHA8,
             Self::Depth => glow::DEPTH_COMPONENT32,
         }) as i32
     }
