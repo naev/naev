@@ -5,7 +5,6 @@
 
 #include "nlua.h"
 
-int nlua_loadCLI( nlua_env *env ); /* always write only */
 int cli_warn( lua_State *L );
 int cli_print( lua_State *L );
 int cli_printRaw( lua_State *L );

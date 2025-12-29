@@ -4015,7 +4015,6 @@ src/nlua_camera.c
 src/nlua_camera.h
 src/nlua_canvas.c
 src/nlua_canvas.h
-src/nlua_cli.c
 src/nlua_cli.h
 src/nlua_colour.h
 src/nlua_commodity.c
