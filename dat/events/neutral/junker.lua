@@ -7,7 +7,7 @@
 </event>
 --]]
 local vn = require "vn"
-local vni = require "vnimage"
+local ccomm = require "common.comm"
 local jlib = require "common.junker"
 
 local junker
@@ -23,9 +23,10 @@ function create ()
 end
 
 function meet_the_junker ()
+   junker:setHostile(true)
    vn.clear()
    vn.scene()
-   local j = vni.soundonly( "JUNKER" )
+   local j = ccomm.newCharacter( vn, junker )
    vn.transition()
    vn.na(_([[An audio-only connection opens with your ship.]]))
    j(_([["You're the one who stole my pack! Give it back!"]]))
@@ -34,7 +35,6 @@ function meet_the_junker ()
    vn.run()
 
    junker:control(false)
-   junker:setHostile(true)
    junker:setInvincible(false)
    evt.finish(true)
 end

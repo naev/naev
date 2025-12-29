@@ -14,14 +14,14 @@ function lib.spawn_pilot( pos )
    local cores = ecores.get( junker, { all="standard" } )
    cores["hull"] = PLATES
    local outfits = eoutfits.merge{
-      eoutfits[ "standard" ].set
+      eoutfits[ "standard" ].set,
       { "Junker Ion Shotter" },
    }
    local params = eparams.choose( junker )
    params.prefer = {
       ["Junker Ion Shotter"] = 100,
    }
-   equipopt.optimize( junker, cores, outfits, params )
+   equipopt.optimize.optimize( junker, cores, outfits, params )
 
    local m = junker:memory()
    if player.outfitNum( PLATES ) <= 0 then
