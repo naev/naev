@@ -230,6 +230,11 @@ function gen_outfits ()
          table.insert( outfits, "Goatee Marker" )
       end
 
+      -- Got the Junker Pack
+      if player.outfitNum("Junker Pack") then
+         table.insert( outfits, "Junker Ion Shotter" )
+      end
+
       -- Chapter 1
       if player.fleetCapacity() > 0 then
          table.insert( outfits, "Squadron Synchronizer Module" )

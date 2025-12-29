@@ -13,6 +13,7 @@
  <specific type="bolt">
   <lua_inline>
    require('outfits.lib.sets.junker').init()
+   require "outfits.unique.poi_data"
   </lua_inline>
   <gfx>ionM</gfx>
   <sound>ion</sound>
