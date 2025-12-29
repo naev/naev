@@ -27,4 +27,4 @@ tracing-mutex = { workspace = true }
 derive_more = { workspace = true }
 symphonia = { workspace = true }
 # no Rust support for Opus, so we use libopus through the adapter
-symphonia-adapter-libopus = { version = ">=0.2.5", default-features = false }
+symphonia-adapter-libopus = { version = "0.2.5", default-features = false }

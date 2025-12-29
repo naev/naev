@@ -48,7 +48,7 @@ gltf = { git = "https://github.com/gltf-rs/gltf.git", rev = "3def30c9caf96f2dbc8
 
 [workspace.dependencies]
 naevc = { path=@NAEVC@ }
-sdl3 = ">=0.16.4"
+sdl3 = "0.16.4"
 anyhow = "1.0"
 audio = { path="@BUILD@/src/audio" }
 naev_core = { path="@BUILD@/src/core" }
@@ -71,7 +71,7 @@ regex = "1.12"
 image = { version = "0.25", default-features = false, features = [ "avif-native", "jpeg", "png", "webp" ]  }
 mlua = { version = "0.11.5", features = ["luajit", "anyhow", "send", "serialize", "macros"] }
 roxmltree = "0.21"
-symphonia = { version = "0.5.5", features = ["opt-simd"] }
+symphonia = { version = "=0.5.5", features = ["opt-simd"] }
 thunderdome = "0.6"
 static_assertions = "1.1"
 tracing-mutex = "0.3"
