@@ -9,7 +9,7 @@ local PD, DELAY, RANGE, RANGE2
 local lib = {}
 
 function lib.init ( noset )
-   set.init( _("Junker Gera"), {
+   set.init( _("Junker"), {
       outfit.get("Junker Pack"),
       outfit.get("Junker Plates"),
       outfit.get("Junker Ion Shotter"),
