@@ -35,7 +35,7 @@ end
 -- The Junker doesn't like people
 function lib.good_sys( sys )
    sys = sys or system.cur()
-   for spb in sys:spobs() do
+   for k,spb in ipairs(sys:spobs()) do
       if spb:services()["inhabited"] then
          return false
       end
