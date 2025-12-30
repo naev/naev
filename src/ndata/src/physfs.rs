@@ -332,11 +332,7 @@ pub fn read_dir<P: AsRef<Path>>(path: P) -> Result<Vec<String>> {
     let mut res = vec![];
     while !unsafe { *list }.is_null() {
         unsafe {
-            let filename = format!(
-                "{}/{}",
-                path.as_ref().display(),
-                CStr::from_ptr(*list).to_str().unwrap()
-            );
+            let filename = CStr::from_ptr(*list).to_str().unwrap().to_owned();
             res.push(filename);
         }
         list = ((list as usize) + std::mem::size_of_val(&list)) as _;

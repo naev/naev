@@ -271,14 +271,14 @@ pub fn exists<P: AsRef<Path>>(path: P) -> bool {
 }
 
 /// Recursively lists all the files in a directory.
-pub fn read_dir<P: AsRef<Path>>(path: P) -> Result<Vec<String>> {
+pub fn read_dir<P: AsRef<Path>>(path: P) -> Result<Vec<PathBuf>> {
     Ok(physfs::read_dir(path)?
         .into_iter()
         .filter_map(|f| match is_dir(&f) {
-            true => read_dir(&f).ok(),
+            true => read_dir(&f).ok().into(),
             false => match physfs::blacklisted(&f) {
                 true => None,
-                false => Some(vec![f]),
+                false => Some(vec![f.into()]),
             },
         })
         .flatten()
@@ -289,7 +289,7 @@ pub fn read_dir<P: AsRef<Path>>(path: P) -> Result<Vec<String>> {
 pub fn read_dir_filter<P: AsRef<Path>>(
     path: P,
     predicate: impl Fn(&str) -> bool,
-) -> Result<Vec<String>> {
+) -> Result<Vec<PathBuf>> {
     Ok(physfs::read_dir(path)?
         .into_iter()
         .filter_map(|f| match is_dir(&f) {
@@ -297,7 +297,7 @@ pub fn read_dir_filter<P: AsRef<Path>>(
             false => match physfs::blacklisted(&f) {
                 true => None,
                 false => match predicate(&f) {
-                    true => Some(vec![f]),
+                    true => Some(vec![f.into()]),
                     false => None,
                 },
             },

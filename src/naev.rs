@@ -1,10 +1,9 @@
 #![allow(clippy::not_unsafe_ptr_arg_deref)]
 pub use anyhow;
 use anyhow::{Error, Result};
-use formatx::formatx;
 use fs_err as fs;
 use ndata::env;
-use nlog::{debug, debugx, info, infox, warn, warn_err, warnx};
+use nlog::{debug, debugx, info, infox, warn, warn_err};
 use sdl3 as sdl;
 use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_int, c_uint, c_void}; // Re-export for outter rust shenanigans
@@ -18,7 +17,7 @@ unsafe extern "C" {
 
 mod array;
 mod damagetype;
-mod faction;
+//mod faction;
 mod input;
 mod linebreak;
 mod model;

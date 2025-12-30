@@ -1,8 +1,9 @@
 use anyhow::Result;
 use rayon::prelude::*;
 use serde::{Deserialize, Deserializer, de};
-use std::ffi::{CStr, CString};
+use std::ffi::{CStr, CString, OsStr};
 use std::os::raw::{c_char, c_int};
+use std::path::Path;
 
 use helpers::{binary_search_by_key_ref, sort_by_key_ref};
 use naev_core::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
@@ -49,7 +50,7 @@ pub struct DamageType {
 }
 
 impl DamageType {
-    fn load_xml(filename: &str) -> Result<Self> {
+    fn load_xml<P: AsRef<Path>>(filename: P) -> Result<Self> {
         let data = ndata::read(filename)?;
         let doc = roxmltree::Document::parse(std::str::from_utf8(&data)?)?;
         let root = doc.root_element();
@@ -117,7 +118,7 @@ use std::sync::LazyLock;
 static DAMAGE_TYPES: LazyLock<Vec<DamageType>> = LazyLock::new(|| load().unwrap());
 
 pub fn load() -> Result<Vec<DamageType>> {
-    fn load_toml(filename: &str) -> Result<DamageType> {
+    fn load_toml<P: AsRef<Path>>(filename: P) -> Result<DamageType> {
         let data = ndata::read(filename)?;
         let mut dt: DamageType = toml::from_slice(&data)?;
         dt.cname = CString::new(&*dt.name)?;
@@ -127,20 +128,27 @@ pub fn load() -> Result<Vec<DamageType>> {
     let mut dt_data: Vec<DamageType> = ndata::read_dir("damagetype/")?
         .par_iter()
         .filter_map(|filename| {
-            if filename.ends_with(".toml") {
-                match load_toml(filename.as_str()) {
+            let ext = filename.extension();
+            if ext == Some(OsStr::new("toml")) {
+                match load_toml(filename) {
                     Ok(dt) => Some(dt),
                     Err(e) => {
-                        warn_err!(e.context(format!("unable to load Damage Type '{filename}'!")));
+                        warn_err!(e.context(format!(
+                            "unable to load Damage Type '{}'!",
+                            filename.display()
+                        )));
                         None
                     }
                 }
             // TODO remove XMl support at around 0.14.0 or 0.15.0
-            } else if filename.ends_with(".xml") {
-                match DamageType::load_xml(filename.as_str()) {
+            } else if ext == Some(OsStr::new("xml")) {
+                match DamageType::load_xml(filename) {
                     Ok(dt) => Some(dt),
                     Err(err) => {
-                        warn_err!(err.context(format!("unable to load Damage Type '{filename}'!")));
+                        warn_err!(err.context(format!(
+                            "unable to load Damage Type '{}'!",
+                            filename.display()
+                        )));
                         None
                     }
                 }

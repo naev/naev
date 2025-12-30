@@ -63,7 +63,7 @@ source_rust = files(
    'pluginmgr-gui/src/lib.rs',
    'array.rs',
    'damagetype.rs',
-   'faction.rs',
+   #'faction.rs',
    'input.rs',
    'linebreak.rs',
    'model.rs',

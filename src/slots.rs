@@ -8,8 +8,9 @@ use rayon::prelude::*;
 use renderer::texture::TextureDeserializer;
 use renderer::{Context, ContextWrapper, texture};
 use serde_seeded::DeserializeSeeded;
-use std::ffi::{CStr, CString};
+use std::ffi::{CStr, CString, OsStr};
 use std::os::raw::{c_char, c_int};
+use std::path::Path;
 
 #[derive(Default, DeserializeSeeded, Debug)]
 #[seeded(de(seed(TextureDeserializer<'a>),params('a)))]
@@ -39,13 +40,16 @@ pub struct SlotProperty {
 }
 
 impl SlotProperty {
-    fn load(texde: &TextureDeserializer, filename: &str) -> Option<Self> {
-        let sp = if filename.ends_with(".toml") {
-            Self::load_toml(texde, filename)
-        } else if filename.ends_with(".xml") {
-            Self::load_xml(&texde.ctx, filename)
-        } else {
-            return None;
+    fn load<P: AsRef<Path>>(texde: &TextureDeserializer, filename: P) -> Option<Self> {
+        let sp = {
+            let ext = filename.as_ref().extension();
+            if ext == Some(OsStr::new("toml")) {
+                Self::load_toml(texde, filename)
+            } else if ext == Some(OsStr::new("xml")) {
+                Self::load_xml(&texde.ctx, filename)
+            } else {
+                return None;
+            }
         };
         match sp {
             Ok(sp) => Some(sp),
@@ -56,7 +60,7 @@ impl SlotProperty {
         }
     }
 
-    fn load_toml(texde: &TextureDeserializer, filename: &str) -> Result<Self> {
+    fn load_toml<P: AsRef<Path>>(texde: &TextureDeserializer, filename: P) -> Result<Self> {
         let data = ndata::read_to_string(filename)?;
         let mut sp: SlotProperty =
             SlotProperty::deserialize_seeded(texde, toml::de::Deserializer::parse(&data)?)?;
@@ -67,7 +71,7 @@ impl SlotProperty {
         Ok(sp)
     }
 
-    fn load_xml(ctx: &ContextWrapper, filename: &str) -> Result<Self> {
+    fn load_xml<P: AsRef<Path>>(ctx: &ContextWrapper, filename: P) -> Result<Self> {
         let data = ndata::read(filename)?;
         let doc = roxmltree::Document::parse(std::str::from_utf8(&data)?)?;
         let root = doc.root_element();
@@ -170,7 +174,7 @@ pub fn load() -> Result<Vec<SlotProperty>> {
     };
     let mut sp_data: Vec<SlotProperty> = ndata::read_dir("slots/")?
         .par_iter()
-        .filter_map(|filename| SlotProperty::load(&texde, filename.as_str()))
+        .filter_map(|filename| SlotProperty::load(&texde, &filename))
         .collect();
     sort_by_key_ref(&mut sp_data, |sp: &SlotProperty| &sp.name);
     sp_data.windows(2).for_each(|w| {
