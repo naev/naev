@@ -3,13 +3,14 @@
   <typename>Armour Modifier</typename>
   <slot>structure</slot>
   <size>medium</size>
-  <mass>35</mass>
+  <mass>45</mass>
   <price>300000</price>
   <gfx_store>active_plating</gfx_store>
   <description>This plating developed by House Dvaered takes a unique, yet somewhat brute-force approach to increasing armour strength. By constantly pumping energy through electromagnetic shielding coils spread throughout the hull, armour strength is substantially increased at the cost of dramatically increased energy usage.</description>
  </general>
  <specific type="modification">
-  <armour>400</armour>
+  <armour>360</armour>
+  <absorb>5</absorb>
   <energy_regen_mod>-10</energy_regen_mod>
   <energy_regen_malus>2</energy_regen_malus>
  </specific>

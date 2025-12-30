@@ -10,5 +10,6 @@
  </general>
  <specific type="modification">
   <armour>250</armour>
+  <absorb>3</absorb>
  </specific>
 </outfit>
