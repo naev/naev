@@ -1,9 +1,9 @@
-use anyhow::Result;
+use anyhow::{Context, Result};
 use rayon::prelude::*;
 use serde::{Deserialize, Deserializer, de};
 use std::ffi::{CStr, CString, OsStr};
 use std::os::raw::{c_char, c_int};
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 use helpers::{binary_search_by_key_ref, sort_by_key_ref};
 use naev_core::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
@@ -96,6 +96,35 @@ impl DamageType {
         }
         Ok(dt)
     }
+
+    fn load_toml<P: AsRef<Path>>(filename: P) -> Result<Self> {
+        let data = ndata::read(filename)?;
+        let mut dt: DamageType = toml::from_slice(&data)?;
+        dt.cname = CString::new(&*dt.name)?;
+        dt.cdisplay = dt.display.as_ref().and_then(|s| CString::new(&**s).ok());
+        Ok(dt)
+    }
+
+    fn load<P: AsRef<Path>>(filename: P) -> Option<Result<Self>> {
+        let dt = {
+            let ext = filename.as_ref().extension();
+            if ext == Some(OsStr::new("toml")) {
+                Self::load_toml(&filename)
+            // TODO remove XMl support at around 0.14.0 or 0.15.0
+            } else if ext == Some(OsStr::new("xml")) {
+                Self::load_xml(&filename)
+            } else {
+                return None;
+            }
+        }
+        .with_context(|| {
+            format!(
+                "unable to load DamageType '{}'",
+                filename.as_ref().display()
+            )
+        });
+        Some(dt)
+    }
 }
 
 impl Default for DamageType {
@@ -118,43 +147,16 @@ use std::sync::LazyLock;
 static DAMAGE_TYPES: LazyLock<Vec<DamageType>> = LazyLock::new(|| load().unwrap());
 
 pub fn load() -> Result<Vec<DamageType>> {
-    fn load_toml<P: AsRef<Path>>(filename: P) -> Result<DamageType> {
-        let data = ndata::read(filename)?;
-        let mut dt: DamageType = toml::from_slice(&data)?;
-        dt.cname = CString::new(&*dt.name)?;
-        dt.cdisplay = dt.display.as_ref().and_then(|s| CString::new(&**s).ok());
-        Ok(dt)
-    }
-    let mut dt_data: Vec<DamageType> = ndata::read_dir("damagetype/")?
+    let base: PathBuf = "damagetype/".into();
+    let mut dt_data: Vec<DamageType> = ndata::read_dir(&base)?
         .par_iter()
-        .filter_map(|filename| {
-            let ext = filename.extension();
-            if ext == Some(OsStr::new("toml")) {
-                match load_toml(filename) {
-                    Ok(dt) => Some(dt),
-                    Err(e) => {
-                        warn_err!(e.context(format!(
-                            "unable to load Damage Type '{}'!",
-                            filename.display()
-                        )));
-                        None
-                    }
-                }
-            // TODO remove XMl support at around 0.14.0 or 0.15.0
-            } else if ext == Some(OsStr::new("xml")) {
-                match DamageType::load_xml(filename) {
-                    Ok(dt) => Some(dt),
-                    Err(err) => {
-                        warn_err!(err.context(format!(
-                            "unable to load Damage Type '{}'!",
-                            filename.display()
-                        )));
-                        None
-                    }
-                }
-            } else {
+        .filter_map(|filename| match DamageType::load(&base.join(filename)) {
+            Some(Ok(dt)) => Some(dt),
+            Some(Err(e)) => {
+                warn_err!(e);
                 None
             }
+            None => None,
         })
         .collect();
     // Special type of unmodified damage

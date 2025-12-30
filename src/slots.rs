@@ -1,5 +1,6 @@
 use crate::array::ArrayCString;
 use crate::warn;
+use anyhow::Context as AnyhowContext;
 use anyhow::Result;
 use helpers::{binary_search_by_key_ref, sort_by_key_ref};
 use naev_core::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
@@ -10,7 +11,7 @@ use renderer::{Context, ContextWrapper, texture};
 use serde_seeded::DeserializeSeeded;
 use std::ffi::{CStr, CString, OsStr};
 use std::os::raw::{c_char, c_int};
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 #[derive(Default, DeserializeSeeded, Debug)]
 #[seeded(de(seed(TextureDeserializer<'a>),params('a)))]
@@ -40,24 +41,24 @@ pub struct SlotProperty {
 }
 
 impl SlotProperty {
-    fn load<P: AsRef<Path>>(texde: &TextureDeserializer, filename: P) -> Option<Self> {
+    fn load<P: AsRef<Path>>(texde: &TextureDeserializer, filename: P) -> Option<Result<Self>> {
         let sp = {
             let ext = filename.as_ref().extension();
             if ext == Some(OsStr::new("toml")) {
-                Self::load_toml(texde, filename)
+                Self::load_toml(texde, &filename)
             } else if ext == Some(OsStr::new("xml")) {
-                Self::load_xml(&texde.ctx, filename)
+                Self::load_xml(&texde.ctx, &filename)
             } else {
                 return None;
             }
-        };
-        match sp {
-            Ok(sp) => Some(sp),
-            Err(e) => {
-                warn_err!(e);
-                None
-            }
         }
+        .with_context(|| {
+            format!(
+                "unable to load SlotProperty '{}'",
+                filename.as_ref().display()
+            )
+        });
+        Some(sp)
     }
 
     fn load_toml<P: AsRef<Path>>(texde: &TextureDeserializer, filename: P) -> Result<Self> {
@@ -172,9 +173,19 @@ pub fn load() -> Result<Vec<SlotProperty>> {
         ctx: Context::get().as_safe_wrap(),
         func: Box::new(sdf_texture),
     };
-    let mut sp_data: Vec<SlotProperty> = ndata::read_dir("slots/")?
+    let base: PathBuf = "slots/".into();
+    let mut sp_data: Vec<SlotProperty> = ndata::read_dir(&base)?
         .par_iter()
-        .filter_map(|filename| SlotProperty::load(&texde, &filename))
+        .filter_map(
+            |filename| match SlotProperty::load(&texde, &base.join(filename)) {
+                Some(Ok(sp)) => Some(sp),
+                Some(Err(e)) => {
+                    warn_err!(e);
+                    None
+                }
+                None => None,
+            },
+        )
         .collect();
     sort_by_key_ref(&mut sp_data, |sp: &SlotProperty| &sp.name);
     sp_data.windows(2).for_each(|w| {
