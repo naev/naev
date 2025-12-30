@@ -600,21 +600,24 @@ impl Context {
         #[cfg(debug_assertions)]
         gl_attr.set_context_flags().debug().set();
 
-        let (window, gl_context) = match Self::create_context(&sdlvid, &gl_attr, 4, 6) {
-            Ok(v) => v,
-            _ => match Self::create_context(&sdlvid, &gl_attr, 4, 1) {
-                Ok(v) => {
-                    warn!("Falling back to OpenGL 4.1 context!");
-                    v
-                }
-                _ => match Self::create_context(&sdlvid, &gl_attr, 3, 3) {
+        // Try older versions in order
+        let gl_backup = || -> Result<(sdl::video::Window, sdl::video::GLContext)> {
+            for (major, minor) in [(4, 5), (4, 4), (4, 3), (4, 2), (4, 1), (4, 0), (3, 3)] {
+                match Self::create_context(&sdlvid, &gl_attr, major, minor) {
                     Ok(v) => {
-                        warn!("Falling back to OpenGL 3.3 context!");
-                        v
+                        warn!("Falling back to OpenGL {major}.{minor} context!");
+                        return Ok(v);
                     }
-                    _ => anyhow::bail!("Failed to create OpenGL context!"),
-                },
-            },
+                    _ => continue,
+                }
+            }
+            anyhow::bail!("Failed to create OpenGL context!")
+        };
+        let (window, gl_context) = {
+            match Self::create_context(&sdlvid, &gl_attr, 4, 6) {
+                Ok(v) => v,
+                _ => gl_backup()?,
+            }
         };
         let mut gl = unsafe {
             glow::Context::from_loader_function(|s| match sdlvid.gl_get_proc_address(s) {
