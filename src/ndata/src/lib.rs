@@ -272,17 +272,21 @@ pub fn exists<P: AsRef<Path>>(path: P) -> bool {
 
 /// Recursively lists all the files in a directory.
 pub fn read_dir<P: AsRef<Path>>(path: P) -> Result<Vec<PathBuf>> {
-    Ok(physfs::read_dir(path)?
+    let path = path.as_ref();
+    Ok(physfs::read_dir(&path)?
         .into_iter()
-        .filter_map(|f| match is_dir(&f) {
-            true => read_dir(&f).ok().map(|v| {
-                let base: PathBuf = f.into();
-                v.iter().map(|file| base.join(file)).collect()
-            }),
-            false => match physfs::blacklisted(&f) {
-                true => None,
-                false => Some(vec![f.into()]),
-            },
+        .filter_map(|f| {
+            let full = path.join(&f);
+            match is_dir(&full) {
+                true => read_dir(&full).ok().map(|v| {
+                    let base: PathBuf = f.into();
+                    v.iter().map(|file| base.join(file)).collect()
+                }),
+                false => match physfs::blacklisted(&full) {
+                    true => None,
+                    false => Some(vec![f.into()]),
+                },
+            }
         })
         .flatten()
         .collect())
@@ -291,22 +295,26 @@ pub fn read_dir<P: AsRef<Path>>(path: P) -> Result<Vec<PathBuf>> {
 /// Allows applying a filter
 pub fn read_dir_filter<P: AsRef<Path>>(
     path: P,
-    predicate: impl Fn(&str) -> bool,
+    predicate: impl Fn(&PathBuf) -> bool,
 ) -> Result<Vec<PathBuf>> {
+    let path = path.as_ref();
     Ok(physfs::read_dir(path)?
         .into_iter()
-        .filter_map(|f| match is_dir(&f) {
-            true => read_dir_filter(&f, &predicate).ok().map(|v| {
-                let base: PathBuf = f.into();
-                v.iter().map(|file| base.join(file)).collect()
-            }),
-            false => match physfs::blacklisted(&f) {
-                true => None,
-                false => match predicate(&f) {
-                    true => Some(vec![f.into()]),
-                    false => None,
+        .filter_map(|f| {
+            let full = path.join(&f);
+            match is_dir(&full) {
+                true => read_dir_filter(&full, &predicate).ok().map(|v| {
+                    let base: PathBuf = f.into();
+                    v.iter().map(|file| base.join(file)).collect()
+                }),
+                false => match physfs::blacklisted(&f) {
+                    true => None,
+                    false => match predicate(&full) {
+                        true => Some(vec![f.into()]),
+                        false => None,
+                    },
                 },
-            },
+            }
         })
         .flatten()
         .collect())

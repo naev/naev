@@ -5,7 +5,6 @@ use mlua::{UserData, UserDataMethods};
 use sdl::iostream::IOStream;
 use sdl3 as sdl;
 use std::io::{Read, Seek, Write};
-use std::path::Path;
 
 pub struct OpenFile {
     mode: Mode,
@@ -342,7 +341,7 @@ impl UserData for LuaFile {
             |lua, path: String| -> mlua::Result<mlua::Table> {
                 let t = lua.create_table()?;
                 for f in crate::read_dir(&path)? {
-                    t.raw_push(Path::new(&f).file_name())?;
+                    t.raw_push(f)?;
                 }
                 Ok(t)
             },
