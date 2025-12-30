@@ -307,9 +307,9 @@ pub fn read_dir_filter<P: AsRef<Path>>(
                     let base: PathBuf = f.into();
                     v.iter().map(|file| base.join(file)).collect()
                 }),
-                false => match physfs::blacklisted(&f) {
+                false => match physfs::blacklisted(&full) {
                     true => None,
-                    false => match predicate(&full) {
+                    false => match predicate(&f) {
                         true => Some(vec![f.into()]),
                         false => None,
                     },
