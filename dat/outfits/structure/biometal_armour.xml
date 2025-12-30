@@ -10,7 +10,7 @@
  </general>
  <specific type="modification">
   <armour>750</armour>
-  <absorb>2</absorb>
+  <absorb>-2</absorb>
   <armour_regen>2</armour_regen>
  </specific>
 </outfit>
