@@ -275,7 +275,10 @@ pub fn read_dir<P: AsRef<Path>>(path: P) -> Result<Vec<PathBuf>> {
     Ok(physfs::read_dir(path)?
         .into_iter()
         .filter_map(|f| match is_dir(&f) {
-            true => read_dir(&f).ok().into(),
+            true => read_dir(&f).ok().map(|v| {
+                let base: PathBuf = f.into();
+                v.iter().map(|file| base.join(file)).collect()
+            }),
             false => match physfs::blacklisted(&f) {
                 true => None,
                 false => Some(vec![f.into()]),
@@ -293,7 +296,10 @@ pub fn read_dir_filter<P: AsRef<Path>>(
     Ok(physfs::read_dir(path)?
         .into_iter()
         .filter_map(|f| match is_dir(&f) {
-            true => read_dir(&f).ok(),
+            true => read_dir_filter(&f, &predicate).ok().map(|v| {
+                let base: PathBuf = f.into();
+                v.iter().map(|file| base.join(file)).collect()
+            }),
             false => match physfs::blacklisted(&f) {
                 true => None,
                 false => match predicate(&f) {
