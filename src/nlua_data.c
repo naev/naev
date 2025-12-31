@@ -16,7 +16,7 @@
 #include "nluadef.h"
 
 // Helper functions.
-//static size_t dataL_checkpos( lua_State *L, const LuaData_t *ld, long pos );
+// static size_t dataL_checkpos( lua_State *L, const LuaData_t *ld, long pos );
 
 // Data metatable methods.
 /*
