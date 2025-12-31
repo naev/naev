@@ -16,7 +16,7 @@
   <cargo>5</cargo>
   <fuel>100</fuel>
   <energy_regen>2</energy_regen>
-  <energy>60</energy>
-  <cpu_max>4</cpu_max>
+  <energy>35</energy>
+  <cpu_max>3</cpu_max>
  </specific>
 </outfit>

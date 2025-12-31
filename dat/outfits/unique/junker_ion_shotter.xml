@@ -4,11 +4,11 @@
   <rarity>6</rarity>
   <slot>weapon</slot>
   <size>small</size>
-  <mass>5</mass>
+  <mass>4</mass>
   <price>125000</price>
   <description>It's not clear if this weapon was originally a laser cannon or ion cannon, but through many iterations of replacing parts with scraps combined prolonged has changed into something mostly unrecognizable. Functionally, it has evolved to be a mix of energy and ion weapon that would take a Za'lek scientist the good part of the decade to figure out and make for a good article in the peculiarly named Journal of Experimental Weaponry and Penguin Subspecies</description>
   <gfx_store>ioncannon</gfx_store>
-  <cpu>-28</cpu>
+  <cpu>-14</cpu>
  </general>
  <specific type="bolt">
   <lua_inline>
@@ -19,18 +19,18 @@
   <sound>ion</sound>
   <spfx_shield>Shi-S</spfx_shield>
   <spfx_armour>Exp-S</spfx_armour>
-  <delay>2</delay>
+  <delay>3</delay>
   <speed>700</speed>
   <range>1100</range>
   <falloff>900</falloff>
   <gfx_end>ionM-end</gfx_end>
-  <energy>13</energy>
+  <energy>17</energy>
   <trackmin>0</trackmin>
   <trackmax>2800</trackmax>
   <swivel>22</swivel>
   <damage>
    <type>ion</type>
-   <penetrate>8</penetrate>
+   <penetrate>6</penetrate>
    <physical>20</physical>
    <disable>30</disable>
   </damage>
