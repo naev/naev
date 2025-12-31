@@ -7,23 +7,26 @@ data = h.read()
 o = data['outfit']
 o['@name'] = N_('Corsair Hull Plating')
 
-general = o['general']
-general['shortname']= None
-general['unique'] = ''
-general['rarity'] = 6
-general['$price'] = 1e6
-general['description'] = N_("""wish I be like that lovely corsair
+o['general'].update({
+   'shortname': None,
+   'unique': '',
+   'rarity': 6,
+   '$price': 1e6,
+   'description': N_("""wish I be like that lovely corsair
 the prettiest of all pirate hair
 be drinking at the bar
 eyes green like fluorspar
-irresistible buccaneer stare""")
-general['slot']['@prop_extra']= None
+irresistible buccaneer stare"""),
+})
 
-specific = o['specific']
-specific['absorb']['$pri'] -= 4
-specific['ew_stealth_timer'] = -10
-specific['jam_chance'] = 18
-specific['lua_inline_post'] = "require('outfits.core_sets.corsair_hull').init()"
+o['specific'].update({
+   'ew_stealth_timer': -10,
+   'jam_chance': 18,
+   'lua_inline_post': "require('outfits.core_sets.corsair_hull').init()",
+})
+
+o['general']['slot']['@prop_extra']= None
+o['specific']['absorb']['$pri'] -= 4
 
 data.prisec_only(sec= False)
 data.save()
