@@ -295,7 +295,7 @@ pub fn read_dir<P: AsRef<Path>>(path: P) -> Result<Vec<PathBuf>> {
 /// Allows applying a filter
 pub fn read_dir_filter<P: AsRef<Path>>(
     path: P,
-    predicate: impl Fn(&PathBuf) -> bool,
+    predicate: impl Fn(&Path) -> bool,
 ) -> Result<Vec<PathBuf>> {
     let path = path.as_ref();
     Ok(physfs::read_dir(path)?
@@ -309,7 +309,7 @@ pub fn read_dir_filter<P: AsRef<Path>>(
                 }),
                 false => match physfs::blacklisted(&full) {
                     true => None,
-                    false => match predicate(&f) {
+                    false => match predicate(Path::new(&f)) {
                         true => Some(vec![f.into()]),
                         false => None,
                     },
