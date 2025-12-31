@@ -6,7 +6,7 @@
   <size>small</size>
   <mass>4</mass>
   <price>125000</price>
-  <description>It's not clear if this weapon was originally a laser cannon or ion cannon, but through many iterations of replacing parts with scraps combined prolonged has changed into something mostly unrecognizable. Functionally, it has evolved to be a mix of energy and ion weapon that would take a Za'lek scientist the good part of the decade to figure out and make for a good article in the peculiarly named Journal of Experimental Weaponry and Penguin Subspecies</description>
+  <description>It's not clear if this weapon was originally a laser cannon or ion cannon, but through many iterations of replacing parts with scraps combined with prolonged usage has changed into something mostly unrecognizable. Functionally, it has evolved to be a mix of energy and ion weapon that would take a Za'lek scientist the good part of the decade to figure out and make for a good article in the peculiarly named Journal of Experimental Weaponry and Penguin Subspecies</description>
   <gfx_store>ioncannon</gfx_store>
   <cpu>-14</cpu>
  </general>
