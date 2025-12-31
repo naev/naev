@@ -26,7 +26,8 @@
      player
    * Fixed several missions using inexistent audio.soundPlay function
    * Fixed black cat's gift
-   * Explicitly set gl_PointSize in the points shader
+   * Fixed weapons not being scaled logarithmically on the radar
+   * Explicitly set `gl_PointSize` in the points shader
    * Spelling and grammar fixes.
    * Translation updates.
 
