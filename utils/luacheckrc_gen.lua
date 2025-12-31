@@ -361,7 +361,6 @@ stds.gfx = {
             dim = {},
             screencoords = {},
             renderTex = {},
-            renderTexScale = {},
             renderTexRaw = {},
             renderTexH = {},
             renderRect = {},

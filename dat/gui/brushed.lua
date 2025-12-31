@@ -979,7 +979,7 @@ function render( _dt )
       if ta_pnt_faction_gfx then
          local lw, lh = ta_pnt_faction_gfx:dim()
          local ls = 24 / math.max( lw, lh )
-         gfx.renderTexScale( ta_pnt_faction_gfx, ta_pnt_fact_x - ls*lw/2, ta_pnt_fact_y - ls*lh/2, ls*lw, ls*lh )
+         gfx.renderTexRaw( ta_pnt_faction_gfx, ta_pnt_fact_x - ls*lw/2, ta_pnt_fact_y - ls*lh/2, ls*lw, ls*lh )
       end
 
       -- Space out the text.

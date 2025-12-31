@@ -1042,7 +1042,7 @@ function render( dt, dt_mod )
             if ptarget_faction_gfx then
                local lw, lh = ptarget_faction_gfx:dim()
                local ls = 24 / math.max( lw, lh )
-               gfx.renderTexScale( ptarget_faction_gfx, ta_fact_x - ls*lw/2, ta_fact_y - ls*lh/2, ls*lw, ls*lh )
+               gfx.renderTexRaw( ptarget_faction_gfx, ta_fact_x - ls*lw/2, ta_fact_y - ls*lh/2, ls*lw, ls*lh )
             end
 
             -- Player's scanning status
@@ -1154,7 +1154,7 @@ function render( dt, dt_mod )
       if ta_pnt_faction_gfx then
          local lw, lh = ta_pnt_faction_gfx:dim()
          local ls = 24 / math.max( lw, lh )
-         gfx.renderTexScale( ta_pnt_faction_gfx, ta_pnt_fact_x - ls*lw/2, ta_pnt_fact_y - ls*lh/2, ls*lw, ls*lh )
+         gfx.renderTexRaw( ta_pnt_faction_gfx, ta_pnt_fact_x - ls*lw/2, ta_pnt_fact_y - ls*lh/2, ls*lw, ls*lh )
       end
 
       local x1, y1 = nav_spob.pos:get()
