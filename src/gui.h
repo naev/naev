@@ -95,6 +95,7 @@ void gui_mouseMoveEnable( int enabel );
 /*
  * Misc.
  */
+void        gui_logradar( double *x, double *y, double res );
 void        gui_setDefaults( void );
 void        gui_setRadarResolution( double res );
 void        gui_setRadarRel( int mod );
