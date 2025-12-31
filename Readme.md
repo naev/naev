@@ -51,6 +51,7 @@ graphics card and driver supporting at least OpenGL 3.3, Naev requires:
   * bindgen 0.72 or later
   * SDL3`*`
   * libxml2
+  * libopus-dev
   * freetype2
   * OpenAL
   * OpenBLAS
