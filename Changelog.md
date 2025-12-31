@@ -45,7 +45,7 @@
      places in the code
    * NPCs using "The Bite" will no longer turn off the player's afterburner
    * Allow passing Audio to LuaSpfx although warn
-   * 02_sciwrong: simplified logic a bit
+   * `02_sciwrong`: simplified logic a bit
    * Fixed Taiomi intro event
    * Fixed game freezing when finishing race with too many owned ships
    * taiomi10: fixed final cutscene
