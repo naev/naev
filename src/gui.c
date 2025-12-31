@@ -173,7 +173,7 @@ static double radar_linrange =
    40.; /**< Distance (in pixels) at which it becomes linear. */
 static double radar_logscale = 40.; /**< Factor used to make a smooth transition
                                        from linear to logarithmic. */
-static void logradar( double *x, double *y, double res )
+void gui_logradar( double *x, double *y, double res )
 {
    double m = hypotf( *x, *y ) / res;
    if ( m > radar_linrange ) {
@@ -1074,7 +1074,7 @@ void gui_renderPilot( const Pilot *p, RadarShape shape, double w, double h,
    } else {
       x = p->solid.pos.x - player.p->solid.pos.x;
       y = p->solid.pos.y - player.p->solid.pos.y;
-      logradar( &x, &y, res );
+      gui_logradar( &x, &y, res );
    }
    /* Get size. */
    ssize = sqrt( (double)ship_size( p->ship ) );
@@ -1194,7 +1194,7 @@ void gui_renderAsteroid( const Asteroid *a, double w, double h, double res,
    } else {
       x = a->sol.pos.x - player.p->solid.pos.x;
       y = a->sol.pos.y - player.p->solid.pos.y;
-      logradar( &x, &y, res );
+      gui_logradar( &x, &y, res );
    }
 
    /* Get size. */
@@ -1262,7 +1262,7 @@ void gui_renderViewportFrame( double res, double render_radius, int overlay )
       // Centered on 0,0 so should be correct
       vp_corner_x = SCREEN_W / 2.0 / z;
       vp_corner_y = SCREEN_H / 2.0 / z * CTS.CAMERA_VIEW_INV;
-      logradar( &vp_corner_x, &vp_corner_y, res );
+      gui_logradar( &vp_corner_x, &vp_corner_y, res );
    }
 
    if ( isfinite( render_radius ) &&
@@ -1432,7 +1432,7 @@ void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res,
    } else {
       double x = spob->pos.x - player.p->solid.pos.x;
       double y = spob->pos.y - player.p->solid.pos.y;
-      logradar( &x, &y, res );
+      gui_logradar( &x, &y, res );
       cx = x;
       cy = y;
    }
@@ -1543,7 +1543,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h,
    } else {
       double jx = jp->pos.x - player.p->solid.pos.x;
       double jy = jp->pos.y - player.p->solid.pos.y;
-      logradar( &jx, &jy, res );
+      gui_logradar( &jx, &jy, res );
       cx = jx;
       cy = jy;
    }
