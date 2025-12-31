@@ -6,19 +6,20 @@
  *
  * @brief Handles data.
  */
-/** @cond */
+//* @cond
 #include <lauxlib.h>
 #include <stdlib.h>
-/** @endcond */
+//* @endcond
 
 #include "nlua_data.h"
 
 #include "nluadef.h"
 
-/* Helper functions. */
-static size_t dataL_checkpos( lua_State *L, const LuaData_t *ld, long pos );
+// Helper functions.
+//static size_t dataL_checkpos( lua_State *L, const LuaData_t *ld, long pos );
 
-/* Data metatable methods. */
+// Data metatable methods.
+/*
 static int dataL_gc( lua_State *L );
 static int dataL_eq( lua_State *L );
 static int dataL_new( lua_State *L );
@@ -29,7 +30,6 @@ static int dataL_getString( lua_State *L );
 static int dataL_paste( lua_State *L );
 static int dataL_addWeighted( lua_State *L );
 static int dataL_convolve2d( lua_State *L );
-
 static const luaL_Reg dataL_methods[] = {
    { "__gc", dataL_gc },
    { "__eq", dataL_eq },
@@ -41,7 +41,8 @@ static const luaL_Reg dataL_methods[] = {
    { "paste", dataL_paste },
    { "addWeighted", dataL_addWeighted },
    { "convolve2d", dataL_convolve2d },
-   { 0, 0 } }; /**< Data metatable methods. */
+   { 0, 0 } }; //< Data metatable methods.
+*/
 
 /**
  * @brief Loads the data library.
@@ -118,10 +119,10 @@ int lua_isdata( lua_State *L, int ind )
    lua_getfield( L, LUA_REGISTRYINDEX, DATA_METATABLE );
 
    ret = 0;
-   if ( lua_rawequal( L, -1, -2 ) ) /* does it have the correct mt? */
+   if ( lua_rawequal( L, -1, -2 ) ) // does it have the correct mt?
       ret = 1;
 
-   lua_pop( L, 2 ); /* remove both metatables */
+   lua_pop( L, 2 ); // remove both metatables
    return ret;
 }
 
@@ -131,12 +132,14 @@ int lua_isdata( lua_State *L, int ind )
  *    @luatparam Data data Data to free.
  * @luafunc __gc
  */
+/*
 static int dataL_gc( lua_State *L )
 {
    LuaData_t *ld = luaL_checkdata( L, 1 );
    free( ld->data );
    return 0;
 }
+*/
 
 /**
  * @brief Compares two data to see if they are the same.
@@ -146,6 +149,7 @@ static int dataL_gc( lua_State *L )
  *    @luatreturn boolean true if both data are the same.
  * @luafunc __eq
  */
+/*
 static int dataL_eq( lua_State *L )
 {
    LuaData_t *d1, *d2;
@@ -158,6 +162,7 @@ static int dataL_eq( lua_State *L )
    lua_pushboolean( L, ( memcmp( d1->data, d2->data, d1->size ) == 0 ) );
    return 1;
 }
+*/
 
 /**
  * @brief Opens a new data.
@@ -167,6 +172,7 @@ static int dataL_eq( lua_State *L )
  *    @luatreturn Data New data object.
  * @luafunc new
  */
+/*
 static int dataL_new( lua_State *L )
 {
    LuaData_t   ld;
@@ -182,7 +188,9 @@ static int dataL_new( lua_State *L )
    lua_pushdata( L, ld );
    return 1;
 }
+*/
 
+/*
 static size_t dataL_checkpos( lua_State *L, const LuaData_t *ld, long pos )
 {
    size_t mpos;
@@ -195,6 +203,7 @@ static size_t dataL_checkpos( lua_State *L, const LuaData_t *ld, long pos )
          ld->size / ld->elem );
    return mpos;
 }
+*/
 
 /**
  * @brief Gets the value of an element.
@@ -204,6 +213,7 @@ static size_t dataL_checkpos( lua_State *L, const LuaData_t *ld, long pos )
  *    @luatreturn number The entry.
  * @luafunc get
  */
+/*
 static int dataL_get( lua_State *L )
 {
    LuaData_t *ld   = luaL_checkdata( L, 1 );
@@ -217,6 +227,7 @@ static int dataL_get( lua_State *L )
    }
    return 1;
 }
+*/
 
 /**
  * @brief Sets the value of an element.
@@ -226,6 +237,7 @@ static int dataL_get( lua_State *L )
  *    @luatparam number value Value to set it to.
  * @luafunc set
  */
+/*
 static int dataL_set( lua_State *L )
 {
    LuaData_t *ld   = luaL_checkdata( L, 1 );
@@ -241,6 +253,7 @@ static int dataL_set( lua_State *L )
    }
    return 0;
 }
+*/
 
 /**
  * @brief Gets the number of elements.
@@ -249,12 +262,13 @@ static int dataL_set( lua_State *L )
  *    @luatreturn number Data size.
  * @luafunc getSize
  */
-static int dataL_getSize( lua_State *L )
+/*static int dataL_getSize( lua_State *L )
 {
    LuaData_t *ld = luaL_checkdata( L, 1 );
    lua_pushnumber( L, ld->size );
    return 1;
 }
+*/
 
 /**
  * @brief Returns the data contents as a string.
@@ -263,12 +277,14 @@ static int dataL_getSize( lua_State *L )
  *    @luatreturn string The bytes inside.
  * @luafunc getString
  */
+/*
 static int dataL_getString( lua_State *L )
 {
    LuaData_t *ld = luaL_checkdata( L, 1 );
    lua_pushlstring( L, ld->data, ld->size );
    return 1;
 }
+*/
 
 /**
  * @brief Writes the contents of `source` into `dest`.
@@ -280,6 +296,7 @@ static int dataL_getString( lua_State *L )
  *    @luatparam number sw Number of data elements to copy.
  * @luafunc paste
  */
+/*
 static int dataL_paste( lua_State *L )
 {
    LuaData_t  *dest   = luaL_checkdata( L, 1 );
@@ -290,7 +307,7 @@ static int dataL_paste( lua_State *L )
    char       *ddata  = dest->data;
    const char *sdata  = source->data;
 
-   /* Check fits. */
+   // Check fits.
    if ( dx + sw > (long)dest->size )
       return NLUA_ERROR(
          L, _( "size mismatch: out of bound access dest: %d of %d elements" ),
@@ -301,13 +318,14 @@ static int dataL_paste( lua_State *L )
          _( "size mismatch: out of bound access of source: %d of %d elements" ),
          sx + sw, source->size );
 
-   /* Copy memory over. */
+   // Copy memory over.
    memcpy( &ddata[dx], &sdata[sx], sw );
 
-   /* Return destination. */
+   // Return destination.
    lua_pushvalue( L, 1 );
    return 1;
 }
+*/
 
 /**
  * @brief Returns alpha*A + beta*B + bias
@@ -320,6 +338,7 @@ static int dataL_paste( lua_State *L )
  *    @luatreturn Data alpha*A + beta*B + bias.
  * @luafunc addWeighted
  */
+/*
 static int dataL_addWeighted( lua_State *L )
 {
    LuaData_t *A = luaL_checkdata( L, 1 );
@@ -331,7 +350,7 @@ static int dataL_addWeighted( lua_State *L )
    int        i, n;
    float     *o, *a, *b;
 
-   /* Checks. */
+   // Checks.
    if ( A->size != B->size )
       return NLUA_ERROR(
          L, _( "size mismatch: A has %d elements but B has %d elements" ),
@@ -340,13 +359,13 @@ static int dataL_addWeighted( lua_State *L )
       return NLUA_ERROR( L, _( "%s is only implemented for number types" ),
                          __func__ );
 
-   /* Create new data. */
+   // Create new data.
    out.size = A->size;
    out.elem = A->elem;
    out.type = A->type;
    out.data = malloc( out.size );
 
-   /* Interpolate. */
+   // Interpolate.
    n = out.size / out.elem;
    a = (float *)A->data;
    b = (float *)B->data;
@@ -354,10 +373,11 @@ static int dataL_addWeighted( lua_State *L )
    for ( i = 0; i < n; i++ )
       o[i] = a[i] * alpha + b[i] * beta + bias;
 
-   /* Return new data. */
+   // Return new data.
    lua_pushdata( L, out );
    return 1;
 }
+*/
 
 /**
  * @brief Does a convolution. You'd rather be writing shaders, right?
@@ -371,6 +391,7 @@ static int dataL_addWeighted( lua_State *L )
  *    @luareturn (I*K, width, height)
  * @luafunc convolve2d
  */
+/*
 static int dataL_convolve2d( lua_State *L )
 {
    LuaData_t   *lI = luaL_checkdata( L, 1 );
@@ -385,7 +406,7 @@ static int dataL_convolve2d( lua_State *L )
    const float *K = (const float *)lK->data;
    float       *B, *O;
 
-   /* Checks. */
+   // Checks.
    if ( iw * ih * 4 * lI->elem != lI->size )
       return NLUA_ERROR(
          L, _( "size mismatch for data: got %dx%dx4x%d, expected %d" ), iw, ih,
@@ -398,11 +419,11 @@ static int dataL_convolve2d( lua_State *L )
       return NLUA_ERROR( L, _( "%s is only implemented for number types" ),
                          __func__ );
 
-   /* Set up. */
+   // Set up.
    kw2 = ( kw - 1 ) / 2;
    kh2 = ( kh - 1 ) / 2;
 
-   /* Create new data. */
+   // Create new data.
    ow       = iw + kw2;
    oh       = ih + kw2;
    out.elem = lI->elem;
@@ -412,7 +433,7 @@ static int dataL_convolve2d( lua_State *L )
    O        = (float *)out.data;
 
 #define POS( U, V, W ) ( 4 * ( ( V ) * ( W ) + ( U ) ) )
-   /* Create buffer. */
+   // Create buffer.
    bw = ow + 2 * kw2;
    bh = oh + 2 * kh2;
    B  = calloc( bw * bh * 4, sizeof( float ) );
@@ -420,7 +441,7 @@ static int dataL_convolve2d( lua_State *L )
       memcpy( &B[POS( kw2, v + kh2, bw )], &I[POS( 0, v, iw )],
               4 * sizeof( float ) * iw );
 
-   /* Convolve. */
+   // Convolve.
    for ( int v = 0; v < oh; v++ ) {
       for ( int u = 0; u < ow; u++ ) {
          for ( int kv = 0; kv < kh; kv++ ) {
@@ -436,12 +457,13 @@ static int dataL_convolve2d( lua_State *L )
    }
 #undef POS
 
-   /* Cleanup. */
+   // Cleanup.
    free( B );
 
-   /* Return new data. */
+   // Return new data.
    lua_pushdata( L, out );
    lua_pushinteger( L, ow );
    lua_pushinteger( L, oh );
    return 3;
 }
+*/
