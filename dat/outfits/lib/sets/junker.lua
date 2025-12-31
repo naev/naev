@@ -14,7 +14,7 @@ function lib.init ( noset )
       outfit.get("Junker Plates"),
       outfit.get("Junker Ion Shotter"),
    }, {
-      [1] = {
+      [2] = {
          desc = fmt.f(_("+{detect}% Detection, +{loot}% Boarding Bonus, +{regen} {units} Armour Regeneration"),
             {detect=DETECT, loot=LOOT, regen=REGEN, units=naev.unit("power")}),
          stats = {
@@ -23,7 +23,7 @@ function lib.init ( noset )
             ["armour_regen"] = REGEN,
          },
       },
-      [2] = {
+      [3] = {
          desc = _("Provides anti-munition point defence."),
          func = function (_p, _po, on)
             mem.set_on = on
