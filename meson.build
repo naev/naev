@@ -458,7 +458,10 @@ if buildExec.disabled() == false
    # https://github.com/flatpak/flatpak-builder-tools/tree/master/cargo
    meson.add_dist_script( cargo_lock, cargo_toml.full_path() )
    buildrs = configure_file( input: 'build.rs.in', output: 'build.rs', configuration: cargo_data )
-   cargo_env = [ 'CARGO_HOME=' + meson.project_build_root() / 'cargo-home' ]
+   cargo_env = environment()
+   cargo_env.set( 'CARGO_HOME', meson.project_build_root() / 'cargo-home' )
+   # See https://doc.rust-lang.org/rustc/linker-plugin-lto.html
+   cargo_env.set( 'RUSTFLAGS', '-Clinker-plugin-lto' )
    cargo_options = [ '--manifest-path', cargo_toml ]
    cargo_options += [ '--profile', rust_target ]
    cargo_options += [ '--target-dir', meson.project_build_root() / 'src' ]
@@ -472,7 +475,8 @@ if buildExec.disabled() == false
       depend_files: source_rust + cargo_toml + buildrs,
       output: 'src',
       console: true,
-      command: [ 'env', cargo_env, cargo, 'build', cargo_options, ] )
+      env: cargo_env,
+      command: [ cargo, 'build', cargo_options, ] )
    # Now we can copy the compile rlib to a location where meson can understand it
    # TODO When the following gets merged we can simplify this https://github.com/rust-lang/cargo/issues/6790
    naev_rlib = custom_target( 'naev_rlib',
@@ -540,12 +544,13 @@ if buildExec.disabled() == false
    # Simplifies clippy stuff
    clippy = run_target( 'clippy',
       depends: [naev_rlib_compile],
-      command: [ 'env', cargo_env, cargo, 'clippy', cargo_options, ] )
+      env: cargo_env,
+      command: [ cargo, 'clippy', cargo_options, ] )
 
    # Run all our Rust tests (if we have them)
    test('cargo',
       cargo,
-      env: [cargo_env],
+      env: cargo_env,
       timeout: 300,
       args: ['test', '--workspace'] + cargo_options,
       workdir: meson.project_build_root(),
