@@ -174,7 +174,7 @@ end
 
 -- Run when any particle shot by p impacts the target. Unlike onimpact, p is
 -- guaranteed to exist.
-function onanyimpact( _p, _po, _target, _pos, _vel, _o )
+function onanyimpact( _p, _po, _target, _pos, _vel, _o, _armour, _shield )
 end
 
 --[[

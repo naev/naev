@@ -2576,6 +2576,9 @@ typedef struct OnanyimpactData {
    const Pilot  *t;
    const Solid  *w;
    const Outfit *o;
+   double        armour;
+   double        shield;
+   double        disable;
 } OnanyimpactData;
 static void outfitLOnanyimpact( const Pilot *pilot, PilotOutfitSlot *po,
                                 const void *data )
@@ -2600,19 +2603,26 @@ static void outfitLOnanyimpact( const Pilot *pilot, PilotOutfitSlot *po,
    lua_pushvector( naevL, dat->w->pos ); /* f, p, p, x */
    lua_pushvector( naevL, dat->w->vel ); /* f, p, p, x, v */
    lua_pushoutfit( naevL, dat->o );      /* f, p, p, x, v, o */
-   if ( nlua_pcall( env, 6, 0 ) ) {      /* */
+   lua_pushnumber( naevL, dat->armour );
+   lua_pushnumber( naevL, dat->shield );
+   lua_pushnumber( naevL, dat->disable );
+   if ( nlua_pcall( env, 8, 0 ) ) { /* */
       outfitLRunWarning( pilot, o, "ondeath", lua_tostring( naevL, -1 ) );
       lua_pop( naevL, 1 );
    }
    pilot_outfitLunmem( env, oldmem );
 }
 void pilot_outfitLOnanyimpact( Pilot *pilot, Pilot *target, const Solid *w,
-                               const Outfit *o )
+                               const Outfit *o, double armour, double shield,
+                               double disable )
 {
    const OnanyimpactData data = {
-      .t = target,
-      .w = w,
-      .o = o,
+      .t       = target,
+      .w       = w,
+      .o       = o,
+      .armour  = armour,
+      .shield  = shield,
+      .disable = disable,
    };
    pilot_outfitLRun( pilot, outfitLOnanyimpact, &data );
 }

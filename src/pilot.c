@@ -1544,7 +1544,8 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
 
    /* Run if the shooter hasn't died. */
    if ( pshooter != NULL )
-      pilot_outfitLOnanyimpact( (Pilot *)pshooter, p, w, outfit );
+      pilot_outfitLOnanyimpact( (Pilot *)pshooter, p, w, outfit, tdarmour,
+                                tdshield, ddis );
 
    /* On hit Lua outfits activate. */
    pilot_outfitLOnhit( p, tdarmour, tdshield, shooter,

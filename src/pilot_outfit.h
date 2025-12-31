@@ -107,4 +107,5 @@ int  pilot_outfitLMessage( Pilot *pilot, PilotOutfitSlot *po, const char *msg,
                            int data );
 void pilot_outfitLOndeath( Pilot *pilot );
 void pilot_outfitLOnanyimpact( Pilot *pilot, Pilot *target, const Solid *w,
-                               const Outfit *o );
+                               const Outfit *o, double armour, double shield,
+                               double disable );

@@ -11,6 +11,7 @@
    * Added weapon and launcher damage as disable ship stats.
    * Rewrote the following in rust
        - Lua Transform/Texture/Data/File modules
+   * Lua outfit "onanyimpact" reports armour, shield, and disable damage done
 
 
 ## v0.13.1 (unreleased)
