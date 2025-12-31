@@ -4,6 +4,8 @@
      player
    * Fixed several missions using inexistent audio.soundPlay function
    * Fixed black cat's gift
+   * Spelling and grammar fixes.
+   * Translation updates.
 
 
 ## v0.13.0
