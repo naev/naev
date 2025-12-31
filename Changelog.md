@@ -1,6 +1,7 @@
 ## v0.14.0 (unreleased)
 
  ### TODO
+
    * allow quick abort for special missions #3106
 
  ### Content
