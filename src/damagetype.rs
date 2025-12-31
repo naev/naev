@@ -150,7 +150,7 @@ pub fn load() -> Result<Vec<DamageType>> {
     let base: PathBuf = "damagetype/".into();
     let mut dt_data: Vec<DamageType> = ndata::read_dir(&base)?
         .par_iter()
-        .filter_map(|filename| match DamageType::load(&base.join(filename)) {
+        .filter_map(|filename| match DamageType::load(base.join(filename)) {
             Some(Ok(dt)) => Some(dt),
             Some(Err(e)) => {
                 warn_err!(e);

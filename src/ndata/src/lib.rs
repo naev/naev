@@ -273,7 +273,7 @@ pub fn exists<P: AsRef<Path>>(path: P) -> bool {
 /// Recursively lists all the files in a directory.
 pub fn read_dir<P: AsRef<Path>>(path: P) -> Result<Vec<PathBuf>> {
     let path = path.as_ref();
-    Ok(physfs::read_dir(&path)?
+    Ok(physfs::read_dir(path)?
         .into_iter()
         .filter_map(|f| {
             let full = path.join(&f);

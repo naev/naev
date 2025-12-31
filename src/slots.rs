@@ -177,7 +177,7 @@ pub fn load() -> Result<Vec<SlotProperty>> {
     let mut sp_data: Vec<SlotProperty> = ndata::read_dir(&base)?
         .par_iter()
         .filter_map(
-            |filename| match SlotProperty::load(&texde, &base.join(filename)) {
+            |filename| match SlotProperty::load(&texde, base.join(filename)) {
                 Some(Ok(sp)) => Some(sp),
                 Some(Err(e)) => {
                     warn_err!(e);

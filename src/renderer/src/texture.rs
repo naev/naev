@@ -2150,6 +2150,7 @@ impl UserData for Texture {
          *    @luatreturn Tex The opened texture or nil on error.
          * @luafunc new
          */
+        #[allow(clippy::type_complexity)]
         methods.add_function(
             "new",
             |_,
@@ -2309,7 +2310,7 @@ impl UserData for Texture {
             |_, this, (x, y, w, h): (f32, f32, Option<f32>, Option<f32>)| -> mlua::Result<()> {
                 let ctx = Context::get();
                 Ok(this.draw(
-                    &ctx,
+                    ctx,
                     x,
                     y,
                     w.unwrap_or(this.texture.w as f32),
@@ -2338,7 +2339,7 @@ impl UserData for Texture {
                     colour: colour.unwrap_or(crate::colour::WHITE).into(),
                 };
                 let ctx = Context::get();
-                Ok(this.draw_ex(&ctx, &uniform)?)
+                Ok(this.draw_ex(ctx, &uniform)?)
             },
         );
     }
