@@ -240,7 +240,7 @@ def _parse( node, par, key ):
          dict.__setitem__(d, e.tag, _parse(e, d, e.tag))
 
    t = node.text
-   t = t and t.strip() or None
+   t = t and t.strip() or ''
    if d == {} and d.attr == {}:
       return t
    if t:
