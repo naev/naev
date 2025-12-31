@@ -4,13 +4,13 @@
  * `<lua>`: Runs a Lua script in relation to this spob.
  * `<pos>`: Position of the spob within its parent system, defined by `x` and `y` coordinates relative to the system center.
  * `<GFX>`: Category relating to graphics.
-  * `<space>`: Defines the image, in .WEBP format, which represents the spob when travelling through the parent system. The dimensions of the graphic can also influence the area at which a ship can begin its landing sequence.
-  * `<exterior>`: Defines the image, in .WEBP format, displayed on the spob's "Landing Main" tab.
+  * `<space>`: Defines the image which represents the spob when travelling through the parent system. The dimensions of the graphic can also influence the area at which a ship can begin its landing sequence. If extension is omitted, it will be auto-detected.
+  * `<exterior>`: Defines the image displayed on the spob's "Landing Main" tab. If extensio is omitted, it will be auto-detected.
  * `<presence>`: Category relating to faction presence, used to generate patrol lanes within the parent system.
   * `<faction>`: Defines the spob's owning or dominant faction.
   * `<base>`: Defines the base presence of the spob. The maximum base presence of all spobs of the same faction is used as the base presence of the faction in the system. For example, if there are two spobs with base 50 and 100 for a faction in a system, the system's base presence for the faction is 100 and the 50 value is ignored.
   * `<bonus>`: Defines the bonus presence of the spob. The bonus presence of all the spobs of the same faction in a system are added together and added to the presence of the system. For example, for a system with a base presence of 100, if there are two spobs with a bonus of 50 each, the total presence becomes $100+50+50=200$.
-  * `<range>`: The range at which the presence of the spob extends. A value of 0 indicates that the presence range only extends to the current system, while a presence of 2 would indicate that it extends to up to 2 systems away. The presence falloff is defined as $1-\frac{dist}{range+1}$, and is multiplied to both base presence and bonus presence. For example, a spob with 100 presence and a range of 3  would give 75 presesnce to 1 system away, 50 presence to 2 systems away, and 25 presence to 3 systems away.
+  * `<range>`: The range at which the presence of the spob extends. A value of 0 indicates that the presence range only extends to the current system, while a presence of 2 would indicate that it extends to up to 2 systems away. The presence falloff is defined as $1-\frac{dist}{range+1}$, and is multiplied to both base presence and bonus presence. For example, a spob with 100 presence and a range of 3 would give 75 presesnce to 1 system away, 50 presence to 2 systems away, and 25 presence to 3 systems away.
  * `<general>`: Category relating to many functions of the spob including world statistics, available services, etc.
   * `<class>`: Defines the spob's planetary or station class as listed above in the Station Classes and Planetary Classes categories above. This may be referenced by missions or scripts.
   * `<population>`: Defines the spob's habitating population.

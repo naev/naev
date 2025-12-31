@@ -69,7 +69,7 @@ These files are in XML format and contain the following fields:
    * `<quantity>`: Maximum quantity of commodity pickups
 
 This process will let you create an asteroid field in your `<ssys>` .XML file:
-1. Place graphics for your asteroids, in WEBP format, to `/gfx/spob/space/asteroid/`;
+1. Place graphics for your asteroids, to `/gfx/spob/space/asteroid/`;
 2. Write asteroid data files, in XML format, to `/asteroids/types/`;
 3. Write an asteroid group list, in XML format, to `/asteroids/groups/`.
 4. In your `<ssys>` XML file, use the `<asteroid>` field and subfields above to tell the game what asteroids the field will be made of.
