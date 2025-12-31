@@ -311,6 +311,7 @@ void weapon_minimap( double res, double w, double h, const RadarShape shape,
       glEnableVertexAttribArray( shaders.points.vertex );
       glEnableVertexAttribArray( shaders.points.vertex_colour );
       gl_uniformMat4( shaders.points.projection, &gl_view_matrix );
+      glUniform1f( shaders.points.pointsize, 1. / gl_screen.scale + 2.0 );
       gl_vboActivateAttribOffset( weapon_vbo, shaders.points.vertex, 0, 2,
                                   GL_FLOAT, 0 );
       gl_vboActivateAttribOffset( weapon_vbo, shaders.points.vertex_colour,

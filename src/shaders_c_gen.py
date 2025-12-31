@@ -167,7 +167,7 @@ SHADERS = [
       vs_path = "points.vert",
       fs_path = "points.frag",
       attributes = ["vertex", "vertex_colour"],
-      uniforms = ["projection"],
+      uniforms = ["projection", "pointsize"],
    ),
    Shader(
       name = "dust",
