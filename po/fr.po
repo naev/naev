@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-12-22 20:21+0900\n"
+"POT-Creation-Date: 2025-12-31 09:11+0900\n"
 "PO-Revision-Date: 2025-10-14 19:09+0000\n"
 "Last-Translator: AKArien <akarien@noreply.codeberg.org>\n"
 "Language-Team: French <https://translate.codeberg.org/projects/naev/naev/fr/"
@@ -11575,13 +11575,9 @@ msgid "N. Shadow Weave"
 msgstr ""
 
 msgid ""
-"Designed for military scouting and patrol vessels, Nexus' Light Stealth "
-"Plating configuration features the latest in sensor-absorbing materials and "
-"geometry."
+"Designed for military scouting and patrol vessels, Nexus' Shadow Weave "
+"configuration features the latest in sensor-absorbing materials and geometry."
 msgstr ""
-"Conçue pour les navires militaires d'exploration et de patrouille, la "
-"configuration du revêtement furtif léger de Nexus présente les matériaux et "
-"la géométrie les plus récents pour l'absorption des capteurs."
 
 #, fuzzy
 msgid "RS. Small Cargo Hull"
@@ -26148,9 +26144,9 @@ msgstr ""
 
 msgid ""
 "Likely the result of a fairly recent collision of multiple large astral "
-"bodies, Poltergeist Alpha has a highly unstable radioactive that is "
-"constantly releasing radioactive isotopes into the atmosphere. The young "
-"planet is considered highly toxic by any of the different scales used "
+"bodies, Poltergeist Alpha has a highly unstable radioactive exposed core "
+"that is constantly releasing radioactive isotopes into the atmosphere. The "
+"young planet is considered highly toxic by any of the different scales used "
 "throughout the Empire, and can prove to be a real test of a ship's shielding "
 "capabilities. It is probably best not to tarry too long within range of the "
 "radiation."
@@ -35460,8 +35456,9 @@ msgstr ""
 #. Make sure sender exists
 #. Make sure target exists
 #. Make sure pilot is setting their target properly
-#. Player's faction ignores distress calls
 #. Ignore pleads of help when bribed by the attacker
+#. Ignore distress calls from the player
+#. Player's faction ignores distress calls
 #.
 #. Who is the badguy table. Columns refer to attacker, rows to pilot being attacked.
 #.
@@ -38170,6 +38167,8 @@ msgstr ""
 #. Was 3 until 0.13.0
 #. Minimum distance a ship can stealth at (excluding system factors and ship stat modifiers)
 #. Minimum amount of the ship mass that can reach (was 0 until 0.13.0)
+#. Was 500 until 0.13.0, but used inverse model before (now linear)
+#. Was 25e3 until 0.13.0, but used the inverse model before (now linear)
 #. Range from jump at which a stealth bonus is applied
 #. Range at which an asteroid with hide==1 is detected
 #. Range at which a jump with hide==1 is detected
@@ -52241,7 +52240,7 @@ msgid ""
 "I want to run back home, but I can't quit so early. They would never stop "
 "making fun of me. Maybe Soromid space will be interesting?\n"
 "\n"
-"We leave to Dune next period."
+"We leave for Dune next period."
 msgstr ""
 
 msgid ""
@@ -52312,8 +52311,8 @@ msgid ""
 "Something is scratching at the hull. It sounds like a weird animal. I "
 "haven't seen any living person in I don't know how long.\n"
 "\n"
-"There is no atmosphere and I can't take off my suit anymore. I don't see any "
-"way out."
+"There is no atmosphere and I can't take off my suit any more. I don't see "
+"any way out."
 msgstr ""
 
 msgid ""
@@ -52340,7 +52339,7 @@ msgstr ""
 msgid ""
 "UST (the date is blank)\n"
 "\n"
-"I don't feel hunger anymore. The numbness sensation is spreading.\n"
+"I don't feel hunger any more. The numbness sensation is spreading.\n"
 "\n"
 "The ships don't seem to pay me much attention as they come and go. They "
 "remind me of ants back home."
@@ -91416,7 +91415,10 @@ msgstr ""
 #. <chance>20</chance>
 #. <location>Bar</location>
 #. <cond>
-#. if require("common.pirate").systemPresence() &lt; 0 then
+#. if require("common.pirate").systemPresence() &lt;= 0 then
+#. return false
+#. end
+#. if player.wealth() &lt; 400e3 then
 #. return false
 #. end
 #. return require("misn_test").reweight_active()
@@ -100121,11 +100123,11 @@ msgstr ""
 msgid "Buy me some time!"
 msgstr ""
 
-#. No death from now on
-#. makes it more fun, and stops time speed up
 msgid "Buy Scavenger more time!"
 msgstr ""
 
+#. No death from now on
+#. makes it more fun, and stops time speed up
 #. Explosions computed to be rendered for the rest of the scene
 msgid "It's not holding together!"
 msgstr ""
@@ -108306,7 +108308,6 @@ msgstr ""
 #. Mission details
 #. amount of mem.jumps the drone did to escape. Each jump reduces its speed
 #. mem.t_pla[2], mem.t_sys[2] = spob.getS("Gastan")
-#. Have to be at centre of operations.
 #. Spaceport bar stuff
 msgid "Dr. Geller"
 msgstr ""
@@ -108518,11 +108519,9 @@ msgid ""
 msgstr ""
 
 #. tell drones to spread and flee
-#. badguys[i]:changeAI("flee")
 #. check how many drones are left, tell them to leave if <=2
 #. remove dead drones
-#. player.msg("If close worked")
-#. if it is the last attacking drone, make it run away from the player
+#. attacking drones run away
 msgid "Geller: \"Interesting, the other drones are running away...\""
 msgstr ""
 
@@ -114963,6 +114962,8 @@ msgstr ""
 #. @usage luaspfx.sfx( true, nil, sfx ) -- Global but modified by time speed-up
 #. @usage luaspfx.sfx( false, nil, sfx ) -- Global but not modified by time like GUI events, etc.
 #. --
+#. TODO this should not return here,
+#. implement builder API to create sfx instead of the current "new" function
 #. How often to check activations in seconds
 #. Time to blow up once activated in seconds
 #. Range of detection
@@ -129220,6 +129221,15 @@ msgstr "Lettres d’Amour"
 
 msgid " Cerebrum "
 msgstr ""
+
+#~ msgid ""
+#~ "Designed for military scouting and patrol vessels, Nexus' Light Stealth "
+#~ "Plating configuration features the latest in sensor-absorbing materials "
+#~ "and geometry."
+#~ msgstr ""
+#~ "Conçue pour les navires militaires d'exploration et de patrouille, la "
+#~ "configuration du revêtement furtif léger de Nexus présente les matériaux "
+#~ "et la géométrie les plus récents pour l'absorption des capteurs."
 
 #, c-format
 #~ msgid "Loaded %d Sound"
