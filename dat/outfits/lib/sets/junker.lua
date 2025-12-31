@@ -1,8 +1,8 @@
 local fmt = require "format"
 local set = require "outfits.lib.set"
 
-local DETECT = 25
-local LOOT = 25
+local DETECT = 20
+local LOOT = 20
 local REGEN = 1
 local PD, DELAY, RANGE, RANGE2
 

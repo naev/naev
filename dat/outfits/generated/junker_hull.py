@@ -15,14 +15,15 @@ general['description'] = N_("An assortment of different chunks of scavenged ship
 
 specific = o['specific']
 specific['mass'] = str( int(specific['mass']) + 10 )
-specific['armour']['$pri'] += 20
-specific['armour']['$sec'] += 10
-specific['cargo_mod']['$pri'] -= 15
+specific['armour']['$pri'] += 10
+specific['armour']['$sec'] += 5
+specific['absorb']['$pri'] += 1
+specific['cargo_mod']['$pri'] -= 10
 specific['cargo_mod']['$sec'] -= 5
-specific['cargo_inertia']['$pri'] -= 15
-specific['cargo_inertia']['$sec'] -= 5
-specific['loot_mod'] = { '$pri': 20, '$sec': 10 }
-specific['ew_signature'] = { '$pri':-10, '$sec': -5 }
+specific['cargo_inertia']['$pri'] += 10
+specific['cargo_inertia']['$sec'] += 5
+specific['ew_signature'] = { '$pri': -9, '$sec': -5 }
+specific['jam_chance'] = { '$pri': 9, '$sec': 5 }
 specific['lua_inline_post'] = "require('outfits.lib.sets.junker').init( true )"
 
 data.save()
