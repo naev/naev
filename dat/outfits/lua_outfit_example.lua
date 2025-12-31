@@ -197,7 +197,7 @@ end
 
 -- Triggered when a particle shot by p impacts the target. p may not exist if
 -- the pilot that shot the weapon ceased to exist.
-function onimpact( _p, _target, _pos, _vel, _o )
+function onimpact( _p, _target, _pos, _vel, _o, _armour, _shield, _disable )
 end
 
 --- Triggered when a particle times out without hitting a target. p may not

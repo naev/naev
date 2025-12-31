@@ -12,8 +12,9 @@
    * Rewrote the following in rust
        - Lua Transform/Texture/Data/File modules
    * Lua outfit scripting changes:
-       - "onanyimpact" reports armour, shield, and disable damage done
        - "onhit" reports disable damage too [breaking change!!]
+       - "onanyimpact" reports armour, shield, and disable damage done
+       - "onimpact" reports armour, shield, and disable damage done
 
 
 ## v0.13.1 (unreleased)
