@@ -258,8 +258,9 @@ void weapon_minimap( double res, double w, double h, const RadarShape shape,
          continue;
 
       /* Get radar position. */
-      x = ( wp->solid.pos.x - player.p->solid.pos.x ) / res;
-      y = ( wp->solid.pos.y - player.p->solid.pos.y ) / res;
+      x = wp->solid.pos.x - player.p->solid.pos.x;
+      y = wp->solid.pos.y - player.p->solid.pos.y;
+      gui_logradar( &x, &y, res );
 
       /* Make sure in range. */
       if ( shape == RADAR_RECT && ( ABS( x ) > w / 2. || ABS( y ) > h / 2. ) )
