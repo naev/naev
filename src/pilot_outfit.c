@@ -1946,6 +1946,7 @@ static void outfitLOnhit( const Pilot *pilot, PilotOutfitSlot *po,
  *    @param pilot Pilot to run Lua outfits for.
  *    @param armour Armour damage taken by pilot.
  *    @param shield Shield damage taken by pilot.
+ *    @param disable Disable damage taken by the pilot.
  *    @param attacker The attacker that hit the pilot.
  *    @param pos Position of the hit.
  */
