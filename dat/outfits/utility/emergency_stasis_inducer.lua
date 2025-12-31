@@ -63,7 +63,7 @@ function update( p, po, dt )
    end
 end
 
-function onhit( p, po, armour, _shield )
+function onhit( p, po, armour )
    if not mem.active and armour > 0 then
       -- Don't run while cooling off
       if mem.timer and mem.timer > 0 then return end

@@ -17,7 +17,7 @@ function update( _p, po, dt )
    end
 end
 
-function onhit( p, po, armour, _shield, _attacker )
+function onhit( p, po, armour )
    if mem.died then return end
    local a = p:armour(true)
    if armour >= a then -- Lethal damage

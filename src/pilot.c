@@ -1548,7 +1548,7 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
                                 tdshield, ddis );
 
    /* On hit Lua outfits activate. */
-   pilot_outfitLOnhit( p, tdarmour, tdshield, shooter,
+   pilot_outfitLOnhit( p, tdarmour, tdshield, shooter, ddis,
                        ( w != NULL ) ? &w->pos : &p->solid.pos );
 
    /* Run disabled before death. Should be run after on hit effects in case of

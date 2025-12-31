@@ -79,7 +79,7 @@ local function turnon( p, po )
    end
 end
 
-function onhit( p, po, armour, _shield )
+function onhit( p, po, armour )
    if not mem.active and armour > 0 then
       mem.cooldown = false
       -- Already running, so just reset timer

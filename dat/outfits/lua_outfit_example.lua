@@ -101,9 +101,10 @@ end
 -- The onhit function is run when the pilot 'p' takes damage
 -- armour is the amount of armour damage taken (in GJ)
 -- shield is the amount of shield damage taken (in GJ)
+-- disable is the amount of disable damage taken (in GJ)
 -- attacker is the pilot that attacked
 -- pos is the position of the hit
-function onhit( _p, _po, _armour, _shield, _attacker, _pos )
+function onhit( _p, _po, _armour, _shield, _disable, _attacker, _pos )
 end
 
 -- The onshoot function is run when the pilot 'p' shoots ANY weapon. This includes primary / secondary / instant weapon sets
@@ -174,7 +175,7 @@ end
 
 -- Run when any particle shot by p impacts the target. Unlike onimpact, p is
 -- guaranteed to exist.
-function onanyimpact( _p, _po, _target, _pos, _vel, _o, _armour, _shield )
+function onanyimpact( _p, _po, _target, _pos, _vel, _o, _armour, _shield, _disable )
 end
 
 --[[

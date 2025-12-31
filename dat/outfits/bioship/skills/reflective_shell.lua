@@ -20,7 +20,7 @@ function init( _p, _po )
    mem.dmg = 0
 end
 
-function onhit( p, po, armour, _shield, attacker, pos )
+function onhit( p, po, armour, _shield, _disable, attacker, pos )
    local dmg = armour
    if dmg <= 0 then
       return
