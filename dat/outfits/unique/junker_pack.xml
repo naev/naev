@@ -18,5 +18,6 @@
   <energy_regen>2</energy_regen>
   <energy>35</energy>
   <cpu_max>3</cpu_max>
+  <loot_mod>15</loot_mod>
  </specific>
 </outfit>

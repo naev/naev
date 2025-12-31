@@ -1,8 +1,9 @@
 local fmt = require "format"
 local set = require "outfits.lib.set"
 
-local DETECT = 15
+local DETECT = 20
 local LOOT = 20
+local REGEN = 1
 local PD, DELAY, RANGE, RANGE2
 
 local lib = {}
@@ -13,15 +14,16 @@ function lib.init ( noset )
       outfit.get("Junker Plates"),
       outfit.get("Junker Ion Shotter"),
    }, {
-      [1] = {
-         desc = fmt.f(_("+{detect}% Detection, +{loot}% Boarding Bonus"),
+      [2] = {
+         desc = fmt.f(_("+{detect}% Detection, +{loot}% Boarding Bonus, +{regen} {units} Armour Regeneration"),
             {detect=DETECT, loot=LOOT, regen=REGEN, units=naev.unit("power")}),
          stats = {
             ["ew_detect"] = DETECT,
             ["loot_mod"] = LOOT,
+            ["armour_regen"] = REGEN,
          },
       },
-      [2] = {
+      [3] = {
          desc = _("Provides anti-munition point defence."),
          func = function (_p, _po, on)
             mem.set_on = on
