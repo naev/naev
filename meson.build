@@ -461,7 +461,8 @@ if buildExec.disabled() == false
    cargo_env = environment()
    cargo_env.set( 'CARGO_HOME', meson.project_build_root() / 'cargo-home' )
    # See https://doc.rust-lang.org/rustc/linker-plugin-lto.html
-   cargo_env.set( 'RUSTFLAGS', '-Clinker-plugin-lto' )
+   # Should be working, but takes forever and errors out. Dunno
+   #cargo_env.set( 'RUSTFLAGS', '-Clinker-plugin-lto' )
    cargo_options = [ '--manifest-path', cargo_toml ]
    cargo_options += [ '--profile', rust_target ]
    cargo_options += [ '--target-dir', meson.project_build_root() / 'src' ]
