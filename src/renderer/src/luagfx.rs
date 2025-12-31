@@ -139,7 +139,7 @@ impl UserData for LuaGfx {
          */
         #[allow(clippy::type_complexity)]
         methods.add_function(
-            "renderTex",
+            "renderTexRaw",
             |_,
              (tex, x, y, w, h, sx, sy, tx, ty, tw, th, col, angle): (
                 UserDataRef<crate::texture::Texture>,
