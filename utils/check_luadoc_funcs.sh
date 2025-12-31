@@ -9,7 +9,7 @@ TMP2=$(mktemp)
 res=0
 trap 'rm -f "$TMP" "$TMP2" ; exit $res' EXIT
 
-doxt="$("$SCRIPT_DIR"/get_doxtractor.sh)"
+doxt="$SCRIPT_DIR"/doxtractor.sh
 for arg in "$@" ; do
    "$SCRIPT_DIR/../docs/lua/src2luadoc.sh" "$doxt" "$arg" "$TMP" &
    sed ':a;N;$!ba;s/\n--/\\n--/g' < "$TMP" | grep -v '\(^$\)\|\(@module\)\|\(@function\)' > "$TMP2"
