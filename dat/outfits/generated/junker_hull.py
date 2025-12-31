@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 import helper as h
 N_ = lambda text: text
 data = h.read()
@@ -7,8 +8,8 @@ o = data['outfit']
 o['@name'] = N_('Junker Plates')
 
 general = o['general']
-#del general['shortname']
-general['unique'] = None
+general['shortname']= None
+general['unique'] = ''
 general['rarity'] = 6
 general['$price'] = 200e3
 general['description'] = N_("An assortment of different chunks of scavenged ship hulls linked together to form a surprisingly durable hull plating. It comes with a surprising amount of empty area to fit cargo, and the unorthodox design makes it a bit hard for weapon systems to lock onto.")

@@ -149,7 +149,11 @@ class xml_node( dict ):
          return self.__getitem(key)
 
    def __setitem__( self, key, val ):
-      if isinstance(key, str) and key[0] == '$':
+      if val is None:
+         if key in self:
+            del self[key]
+         return
+      elif isinstance(key, str) and key[0] == '$':
          val = _numify(val)
          if val is None:
             raise ValueError(str(val) + ' is not a number.')

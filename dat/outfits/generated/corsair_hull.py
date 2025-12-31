@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 import helper as h
 N_ = lambda text: text
 data = h.read()
@@ -7,8 +8,8 @@ o = data['outfit']
 o['@name'] = N_('Corsair Hull Plating')
 
 general = o['general']
-del general['shortname']
-general['unique'] = None
+general['shortname']= None
+general['unique'] = ''
 general['rarity'] = 6
 general['$price'] = 1e6
 general['description'] = N_("""wish I be like that lovely corsair
@@ -16,7 +17,7 @@ the prettiest of all pirate hair
 be drinking at the bar
 eyes green like fluorspar
 irresistible buccaneer stare""")
-del general['slot']['@prop_extra']
+general['slot']['@prop_extra']= None
 
 specific = o['specific']
 specific['absorb']['$pri'] -= 4
