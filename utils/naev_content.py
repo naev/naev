@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 """
+TODO: update this doc to also explain the dat/outfit/generated/*.py examples.
+
 An elementTree-based implementation of xmltodict. 10% slower than pure elementTree,
 but 2x faster than xmltodict with more functionality and correct output
 (empty element folding, new lines, no useless xml 1.0 header, etc.).
@@ -214,6 +216,28 @@ class xml_node( dict ):
 
    def __ior__( self, other ):
       self.update(other)
+      return self
+
+   def _dset( self, k, v ) :
+      if k in self and isinstance(self[k], xml_node) and isinstance(v, dict):
+         self[k].dupdate(v)
+      else:
+         self[k] = v
+
+   def dupdate( self, *E, **F ):
+      if E:
+         E,*_ = E
+         if hasattr(E, 'keys'):
+            for k in E.keys():
+               self._dset(k, E[k])
+         else:
+            for k, v in E:
+               self._dset(k, v)
+      for k in F:
+         self._dset(k, F[k])
+
+   def __ixor__( self, other ):
+      self.dupdate(other)
       return self
 
    def keys():
