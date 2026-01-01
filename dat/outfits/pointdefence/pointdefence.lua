@@ -59,7 +59,7 @@ end
 
 function update( p, po, dt )
    if not mem.on then return end
-   if p:disabled() then return end
+   if p:disabled() or p:flags("stealth") then return end
 
    mem.dt = mem.dt+dt
 
