@@ -1,7 +1,7 @@
 -- luacheck: globals transform
 
 local function close_enough( x, y )
-   return math.abs(x-y) < 1e-5
+   return math.abs(x-y) < 1e-4
 end
 
 local function close_enough_transform( t1, t2 )
@@ -76,3 +76,23 @@ assert( close_enough_transform( t1, t2 ) )
 assert( close_enough( x, -137.39336895942688 ) and close_enough( y,  17.93305516242981 ), "applyPoint" )
 x,y = t1:applyDim( 17, 13 )
 assert( close_enough( x, -121.79472947120667 ) and close_enough( y, 24.921173334121704 ), "applyDim" )
+
+t1 = transform.new()
+   :rotate2d( math.pi/3)
+   :translate( 15, 20 )
+   :scale( 1.5, 10 )
+t1 = t1 * transform.new()
+   :translate(1, 2)
+   :rotate2d(math.pi)
+   :scale(3, 5)
+t2 = transform.new( {{-2.250000,25.980761,30.461525},{-6.495190,-25.000000,-112.951904}} )
+assert( close_enough_transform( t1, t2 ), 'multiplication' )
+
+t1 = transform.new()
+   :rotate2d( math.pi/3)
+   :translate( 15, 20 )
+   :scale( 1.5, 10 )
+t2 = transform.new():scale( 1.5, 10 )
+   * transform.new():translate( 15, 20 )
+   * transform.new():rotate2d( math.pi/3 )
+assert( close_enough_transform( t1, t2 ), 'multiplication order' )

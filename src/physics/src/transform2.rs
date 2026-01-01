@@ -109,10 +109,10 @@ impl UserData for Transform2 {
          * @luafunc __mul
          */
         methods.add_meta_function(MetaMethod::Mul, |_, (this, val): (Self, Self)| {
-            Ok(Transform2(this.0 * val.0))
+            Ok(Transform2(val.0 * this.0))
         });
         methods.add_method_mut("mul", |_, this, val: Self| {
-            this.0 *= val.0;
+            this.0 = val.0 * this.0;
             Ok(*this)
         });
         /*@
