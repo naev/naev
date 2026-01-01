@@ -92,7 +92,9 @@ serde = { version = "1", features = ["derive"] }
 serde-seeded = "0"
 #quick-xml = { version = "0.38", features = ["serialize", "overlapped-lists"] }
 # Networking and archive handling
-reqwest = { version = "0.13", features = ["stream", "blocking"] }
+# reqwest 0.13 seems to break both windows and mac os x compilaion
+#reqwest = { version = "0.13", features = ["stream", "blocking"] }
+reqwest = { version = "0.12", features = ["stream", "rustls-tls", "blocking"] }
 zip = { version = "7", default-features = false, features = ["deflate"] }
 # Utilities and filesystem
 walkdir = "2"
