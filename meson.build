@@ -20,7 +20,7 @@ rustc_needed_version = '>=@0@.0'.format( rust_version )
 bindgen_needed_version = '>=0.72.0'
 cargo_needed_version = '>=1.77.2'
 
-copyright_year = 2025
+copyright_year = 2026
 forced_fallbacks = get_option('force_fallback_for')
 
 issue_address = 'https://codeberg.org/naev/naev/issues'
