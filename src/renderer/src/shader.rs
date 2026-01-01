@@ -2,6 +2,7 @@ use anyhow::Result;
 use glow::*;
 use std::ffi::CStr;
 use std::os::raw::c_char;
+use std::path::{Path, PathBuf};
 
 use crate::Context;
 use nlog::{warn, warn_err};
@@ -107,7 +108,7 @@ impl Binding {
 
 #[derive(PartialEq)]
 enum ShaderSource {
-    Path(String),
+    Path(PathBuf),
     Data(String),
 }
 impl ShaderSource {
@@ -138,9 +139,8 @@ impl ShaderSource {
         Ok(module_string)
     }
 
-    fn load_file(path: &str) -> Result<String> {
-        let fullpath = format!("{}{}", Self::GLSL_PATH, path);
-        let rawdata = ndata::read(&fullpath)?;
+    fn load_file<P: AsRef<Path>>(path: P) -> Result<String> {
+        let rawdata = ndata::read(&Path::new(Self::GLSL_PATH).join(path))?;
         let data = std::str::from_utf8(&rawdata)?;
         Self::preprocess(data)
     }
@@ -154,7 +154,7 @@ impl ShaderSource {
 
     pub fn name(&self) -> String {
         match self {
-            Self::Path(path) => path.clone(),
+            Self::Path(path) => path.display().to_string(),
             Self::Data(_) => String::from("DATA"),
         }
     }
@@ -454,18 +454,18 @@ impl ProgramBuilder {
         }
     }
 
-    pub fn vert_frag_file(mut self, vertpath: &str, fragpath: &str) -> Self {
+    pub fn vert_frag_file<P: AsRef<Path>>(mut self, vertpath: P, fragpath: P) -> Self {
         self.source = Some(ProgramSource::Glsl(
-            ShaderSource::Path(String::from(vertpath)),
-            ShaderSource::Path(String::from(fragpath)),
+            ShaderSource::Path(vertpath.as_ref().to_path_buf()),
+            ShaderSource::Path(fragpath.as_ref().to_path_buf()),
         ));
         self
     }
 
-    pub fn vert_frag_file_single(mut self, path: &str) -> Self {
-        self.source = Some(ProgramSource::GlslSingle(ShaderSource::Path(String::from(
-            path,
-        ))));
+    pub fn vert_frag_file_single<P: AsRef<Path>>(mut self, path: P) -> Self {
+        self.source = Some(ProgramSource::GlslSingle(ShaderSource::Path(
+            path.as_ref().to_path_buf(),
+        )));
         self
     }
 
@@ -477,8 +477,10 @@ impl ProgramBuilder {
         self
     }
 
-    pub fn wgsl_file(mut self, path: &str) -> Self {
-        self.source = Some(ProgramSource::Wgsl(ShaderSource::Path(String::from(path))));
+    pub fn wgsl_file<P: AsRef<Path>>(mut self, path: P) -> Self {
+        self.source = Some(ProgramSource::Wgsl(ShaderSource::Path(
+            path.as_ref().to_path_buf(),
+        )));
         self
     }
 
@@ -527,8 +529,8 @@ pub extern "C" fn gl_program_backend(
     let ctx = Context::get(); /* Lock early. */
     let vert = unsafe { CStr::from_ptr(cvert) };
     let frag = unsafe { CStr::from_ptr(cfrag) };
-    let mut sb =
-        ProgramBuilder::new(None).vert_frag_file(&vert.to_string_lossy(), &frag.to_string_lossy());
+    let mut sb = ProgramBuilder::new(None)
+        .vert_frag_file(&*vert.to_string_lossy(), &*frag.to_string_lossy());
 
     if !cprepend.is_null() {
         let prepend = unsafe { CStr::from_ptr(cprepend) };
