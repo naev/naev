@@ -53,8 +53,6 @@ class _Rem:
    pass
 
 Rem= _Rem()
-Add= lambda y: (lambda x : x + y)
-Mul= lambda y: (lambda x : x * y)
 
 import xml.etree.ElementTree as ET
 from sys import stderr, stdout
