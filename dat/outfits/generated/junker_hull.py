@@ -8,8 +8,8 @@ o = data['outfit']
 o['@name'] = N_('Junker Plates')
 
 o['general'].update({
-   'shortname': None,
-   'unique': '',
+   'shortname': Rem,
+   'unique': None,
    'rarity': 6,
    '$price': 200e3,
    'description': N_("An assortment of different chunks of scavenged ship hulls linked together to form a surprisingly durable hull plating. It comes with a surprising amount of empty area to fit cargo, and the unorthodox design makes it a bit hard for weapon systems to lock onto."),

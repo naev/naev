@@ -47,6 +47,11 @@ Used as follows:
    # tags. This has been fixed.
 """
 
+class _Rem:
+   pass
+
+Rem= _Rem()
+
 import xml.etree.ElementTree as ET
 from sys import stderr, stdout
 from os import devnull
@@ -149,7 +154,7 @@ class xml_node( dict ):
          return self.__getitem(key)
 
    def __setitem__( self, key, val ):
-      if val is None:
+      if val is Rem:
          if key in self:
             del self[key]
          return
@@ -240,7 +245,7 @@ def _parse( node, par, key ):
          dict.__setitem__(d, e.tag, _parse(e, d, e.tag))
 
    t = node.text
-   t = t and t.strip() or ''
+   t = t and t.strip() or None
    if d == {} and d.attr == {}:
       return t
    if t:

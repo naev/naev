@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 import helper as h
+Rem= h.Rem
+
 N_ = lambda text: text
 data = h.read()
 
@@ -8,8 +10,8 @@ o = data['outfit']
 o['@name'] = N_('Corsair Hull Plating')
 
 o['general'].update({
-   'shortname': None,
-   'unique': '',
+   'shortname': Rem,
+   'unique': None,
    'rarity': 6,
    '$price': 1e6,
    'description': N_("""wish I be like that lovely corsair
@@ -25,7 +27,7 @@ o['specific'].update({
    'lua_inline_post': "require('outfits.core_sets.corsair_hull').init()",
 })
 
-o['general']['slot']['@prop_extra']= None
+o['general']['slot']['@prop_extra']= Rem
 o['specific']['absorb']['$pri'] -= 4
 
 data.prisec_only(sec= False)
