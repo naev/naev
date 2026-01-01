@@ -10,13 +10,19 @@ impl Default for Transform2 {
     }
 }
 impl Transform2 {
+    #[rustfmt::skip]
     pub const fn new() -> Self {
-        Transform2(Matrix3::new(1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0))
+        Transform2(Matrix3::new(
+            1.0, 0.0, 0.0,
+            0.0, 1.0, 0.0,
+            0.0, 0.0, 1.0, ))
     }
+    #[rustfmt::skip]
     pub const fn new_from(data: &[f32; 6]) -> Self {
         Transform2(Matrix3::new(
-            data[0], data[1], data[2], data[3], data[4], data[5], 0.0, 0.0, 1.0,
-        ))
+            data[0], data[1], data[2],
+            data[3], data[4], data[5],
+              0.0,     0.0,     1.0, ))
     }
 }
 
@@ -28,9 +34,9 @@ impl FromLua for Transform2 {
                 let x: f32 = tbl.get(1)?;
                 let y: f32 = tbl.get(2)?;
                 let z: f32 = tbl.get(3)?;
-                let i: f32 = tbl.get(1)?;
-                let j: f32 = tbl.get(2)?;
-                let k: f32 = tbl.get(3)?;
+                let i: f32 = tbl.get(4)?;
+                let j: f32 = tbl.get(5)?;
+                let k: f32 = tbl.get(6)?;
                 Ok(Self::new_from(&[x, y, z, i, j, k]))
             }
             val => Err(mlua::Error::RuntimeError(format!(
@@ -60,20 +66,18 @@ impl UserData for Transform2 {
             "new",
             |_, data: Option<Either<UserDataRef<Self>, mlua::Table>>| -> mlua::Result<Self> {
                 match data {
-                    Some(data) => match data {
-                        Either::Left(data) => Ok(*data),
-                        Either::Right(data) => {
-                            let r1: mlua::Table = data.get(1)?;
-                            let x: f32 = r1.get(1)?;
-                            let y: f32 = r1.get(2)?;
-                            let z: f32 = r1.get(3)?;
-                            let r2: mlua::Table = data.get(2)?;
-                            let i: f32 = r2.get(1)?;
-                            let j: f32 = r2.get(2)?;
-                            let k: f32 = r2.get(3)?;
-                            Ok(Transform2::new_from(&[x, y, z, i, j, k]))
-                        }
-                    },
+                    Some(Either::Left(data)) => Ok(*data),
+                    Some(Either::Right(data)) => {
+                        let r1: mlua::Table = data.get(1)?;
+                        let x: f32 = r1.get(1)?;
+                        let y: f32 = r1.get(2)?;
+                        let z: f32 = r1.get(3)?;
+                        let r2: mlua::Table = data.get(2)?;
+                        let i: f32 = r2.get(1)?;
+                        let j: f32 = r2.get(2)?;
+                        let k: f32 = r2.get(3)?;
+                        Ok(Transform2::new_from(&[x, y, z, i, j, k]))
+                    }
                     None => Ok(Transform2::new()),
                 }
             },
