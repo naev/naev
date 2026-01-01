@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import helper as h
-Rem= h.Rem
+Rem = h.Rem
 
 N_ = lambda text: text
 data = h.read()
@@ -9,7 +9,7 @@ data = h.read()
 o = data['outfit']
 o['@name'] = N_('Corsair Hull Plating')
 
-o['general'].update({
+o['general'] |= {
    'shortname': Rem,
    'unique': None,
    'rarity': 6,
@@ -19,16 +19,16 @@ the prettiest of all pirate hair
 be drinking at the bar
 eyes green like fluorspar
 irresistible buccaneer stare"""),
-})
+}
 
-o['specific'].update({
+o['specific'] |= {
    'ew_stealth_timer': -10,
    'jam_chance': 18,
    'lua_inline_post': "require('outfits.core_sets.corsair_hull').init()",
-})
+}
 
 o['general']['slot']['@prop_extra']= Rem
-o['specific']['absorb']['$pri'] -= 4
+o['specific']['absorb']['$pri'] = lambda x: x - 4
 
 data.prisec_only(sec= False)
 data.save()

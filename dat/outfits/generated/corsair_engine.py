@@ -2,12 +2,12 @@
 
 import helper as h
 N_ = lambda text: text
-Rem=h.Rem
+Rem = h.Rem
 data = h.read()
 
 o = data['outfit']
 o['@name'] = N_('Corsair Engine')
-o['general'].update({
+o['general'] |= {
    'shortname': Rem,
    'unique': None,
    'rarity': 6,
@@ -17,13 +17,14 @@ who was said to be the finest heir
 of some noble great house
 almost tied as a spouse
 before they quickly took to the air"""),
-})
+}
+
 o['general']['slot']['@prop_extra']= Rem
-o['specific'].update({
+o['specific'] |= {
    'time_mod': Rem,
    'jump_distance': 25,
    'lua_inline_post': "require('outfits.core_sets.corsair_engine').init()",
-})
+}
 
 data.prisec_only(sec= False)
 data.save()

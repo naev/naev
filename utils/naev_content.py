@@ -51,6 +51,8 @@ class _Rem:
    pass
 
 Rem= _Rem()
+Add= lambda y: (lambda x : x + y)
+Mul= lambda y: (lambda x : x * y)
 
 import xml.etree.ElementTree as ET
 from sys import stderr, stdout
@@ -158,7 +160,9 @@ class xml_node( dict ):
          if key in self:
             del self[key]
          return
-      elif isinstance(key, str) and key[0] == '$':
+      if callable(val):
+         val = val(self[key])
+      if isinstance(key, str) and key[0] == '$':
          val = _numify(val)
          if val is None:
             raise ValueError(str(val) + ' is not a number.')
