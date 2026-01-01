@@ -149,7 +149,11 @@ class xml_node( dict ):
          return self.__getitem(key)
 
    def __setitem__( self, key, val ):
-      if isinstance(key, str) and key[0] == '$':
+      if val is None:
+         if key in self:
+            del self[key]
+         return
+      elif isinstance(key, str) and key[0] == '$':
          val = _numify(val)
          if val is None:
             raise ValueError(str(val) + ' is not a number.')
@@ -236,7 +240,7 @@ def _parse( node, par, key ):
          dict.__setitem__(d, e.tag, _parse(e, d, e.tag))
 
    t = node.text
-   t = t and t.strip() or None
+   t = t and t.strip() or ''
    if d == {} and d.attr == {}:
       return t
    if t:

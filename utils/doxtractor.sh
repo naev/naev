@@ -1,10 +1,10 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 if [ -z "$*" ]; then args=( "-" ); else args=( "$@" ); fi
 
 sed -s -n -f <(cat <<EOF
 :init
-   s/^\( *\)\/\*@\?\*/\1\n/;t enter
+   s/^\( *\)\/\*@/\1\n/;t enter
    b
 
 :enter

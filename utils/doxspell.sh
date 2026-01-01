@@ -55,7 +55,7 @@ filter() {
 
 SEP=" ?,;.:/!:"
 NSEPNW="[^a-zA-Z$SEP]"
-DOXTRACT="$("$SCRIPT_DIR"/get_doxtractor.sh)"
+DOXTRACT="$SCRIPT_DIR"/doxtractor.sh
 readarray -t WORDS <<< "$(
    "$DOXTRACT" "$@" | cut '-d ' -f 3- |   filter                |
    sed                     \

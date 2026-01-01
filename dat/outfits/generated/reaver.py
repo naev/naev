@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 import helper as h
 N_ = lambda text: text
 data = h.read()

@@ -9,9 +9,9 @@ use mlua::{MetaMethod, UserData, UserDataMethods};
 impl UserData for AudioData {
     fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
         /*@
-         * @brief Gets a string representation of an audiodata.
+         * @brief Gets a string representation of an `AudioData`.
          *
-         *    @luatparam AudioData data AudioData to get string representation of.
+         *    @luatparam AudioData data `AudioData` to get string representation of.
          *    @luatreturn string String representation of the data.
          * @luafunc __tostring
          */
@@ -65,7 +65,7 @@ impl UserData for AudioData {
          * @brief Gets the number of samples of the Audio data.
          *
          *    @luatparam AudioData data Data to get the number of samples of.
-         *    @luatreturn number Number of sampless of the data.
+         *    @luatreturn number Number of samples of the data.
          * @luafunc getSampleCount
          */
         methods.add_method("getSampleCount", |_, this, ()| -> mlua::Result<f32> {

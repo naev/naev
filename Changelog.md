@@ -1,5 +1,9 @@
 ## v0.14.0 (unreleased)
 
+ ### TODO
+
+   * allow quick abort for special missions #3106
+
  ### Content
 
    * 2 new events
@@ -25,7 +29,7 @@
    * Fixed black cat's gift
    * Fixed weapons not being scaled logarithmically on the radar
    * Point defence will no longer fire when stealthed
-   * Explicitly set gl_PointSize in the points shader
+   * Explicitly set `gl_PointSize` in the points shader
    * Spelling and grammar fixes.
    * Translation updates.
 
@@ -42,7 +46,7 @@
      places in the code
    * NPCs using "The Bite" will no longer turn off the player's afterburner
    * Allow passing Audio to LuaSpfx although warn
-   * 02_sciwrong: simplified logic a bit
+   * `02_sciwrong`: simplified logic a bit
    * Fixed Taiomi intro event
    * Fixed game freezing when finishing race with too many owned ships
    * taiomi10: fixed final cutscene
