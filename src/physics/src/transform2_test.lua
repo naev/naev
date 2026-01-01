@@ -1,4 +1,4 @@
--- luacheck: globals vec2
+-- luacheck: globals transform
 
 local function close_enough( x, y )
    return math.abs(x-y) < 1e-5
