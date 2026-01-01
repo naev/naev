@@ -597,30 +597,25 @@ if buildExec.disabled() == false
       build_by_default: true
    )
 
+   naevpy_config = {
+      'build_root': meson.current_build_dir(),
+      'source_root': meson.project_source_root(),
+      'naev_bin' : naev_bin.full_path(),
+      'zip_overlay' : zip_overlay.full_path(),
+      'debug' : debug.to_string(),
+      'debug_paranoid' : paranoid.to_string(),
+   }
+
    naev_py = configure_file(
       input: join_paths('utils','build','naev.py'),
       output: 'naev.py',
-      configuration: {
-         'build_root': meson.current_build_dir(),
-         'source_root': meson.project_source_root(),
-         'naev_bin' : naev_bin.full_path(),
-         'zip_overlay' : zip_overlay.full_path(),
-         'debug' : debug,
-         'debug_paranoid' : paranoid,
-      }
+      configuration: naevpy_config,
    )
 
    naev_valgrind_py = configure_file(
       input: join_paths('utils','build','naev_valgrind.py'),
       output: 'naev_valgrind.py',
-      configuration: {
-         'build_root': meson.current_build_dir(),
-         'source_root': meson.project_source_root(),
-         'naev_bin' : naev_bin.full_path(),
-         'zip_overlay' : zip_overlay.full_path(),
-         'debug' : debug,
-         'debug_paranoid' : paranoid,
-      }
+      configuration: naevpy_config,
    )
 
    #pluginmgr_cli_py = configure_file(
