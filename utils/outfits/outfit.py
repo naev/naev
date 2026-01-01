@@ -7,7 +7,7 @@ from os import path
 script_dir = path.join(path.dirname(__file__), '..')
 sys.path.append(path.realpath(script_dir))
 from xml_name import xml_name as nam2fil
-from naev_xml import naev_xml
+from naev_content import naev_xml, Rem
 import re
 
 MOBILITY_PARAMS = {'speed', 'turn', 'accel', 'thrust'}
@@ -253,5 +253,5 @@ class outfit(naev_xml):
       self._uptodate = True
 
 if __name__ == '__main__':
-   from naev_xml import xml_parser
+   from naev_content import xml_parser
    xml_parser(outfit, 'outfit ')

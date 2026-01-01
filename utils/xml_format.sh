@@ -19,7 +19,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ -z "$*" ]; then
       "     This one expects that the file defines a ssys."
       "     It will add empty jump/spob lists (see MANDATORY_FIELDS in ssys.py)"
       "     if no such list is present."
-      "   - other: uses the generic naev_xml formater."
+      "   - other: uses the generic naev_content formater."
       "     Like all the previous ones, indents the xml and fold empty tags."
       "  The 2 first formatters rely on the third one, that relies on elementTree."
       "  So far, this module does not manages comments, and they are therefore lost."
@@ -59,7 +59,7 @@ readarray -t NON_SSYS <<< "$(grep -v '\<ssys/' <<< "${NON_OUTFITS[*]}")"
    fi
 ) & if [ -n "$ST" ] ; then wait ; fi ; (
    if [ -n "${NON_SSYS[*]}" ] ; then
-      "$SCRIPT_DIR"/naev_xml.py -i "${NON_SSYS[@]}"
+      "$SCRIPT_DIR"/naev_content.py -i "${NON_SSYS[@]}"
       echo -n "[${#NON_SSYS[@]} others] " >&2
    fi
 ) & if [ -n "$ST" ] ; then wait ; fi ; (
@@ -95,7 +95,7 @@ readarray -t NON_SSYS <<< "$(grep -v '\<ssys/' <<< "${NON_OUTFITS[*]}")"
 
    readarray -t NON_SSYS <<< "$(grep -v '\<ssys/' <<< "${NON_OUTFITS[*]}")"
    if [ -n "${NON_SSYS[*]}" ] ; then
-      "$SCRIPT_DIR"/naev_xml.py -c "$PWD" "$PARSE_DIR" "${NON_SSYS[@]}"
+      "$SCRIPT_DIR"/naev_content.py -c "$PWD" "$PARSE_DIR" "${NON_SSYS[@]}"
       res3="$?"
       if [ "$res3" = 0 ] ; then
          echo -n "[${#NON_SSYS[@]} comm. others] " >&2
