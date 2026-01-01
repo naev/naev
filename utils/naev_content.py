@@ -35,7 +35,7 @@ Used as follows:
 
    #  3. At init, you can specify the r and w flags (both True by default).
    #     You get errors in the following cases:
-   #      - r is True and the input file can't be openened
+   #      - r is True and the input file can't be opened
    #      - w is False and you attempt to save
    #     You get warnings in the following cases:
    #      - w is true the dict gets garbage collected while with unsaved changes.
@@ -52,7 +52,7 @@ Used as follows:
 class _Rem:
    pass
 
-Rem= _Rem()
+Rem = _Rem()
 
 import xml.etree.ElementTree as ET
 from sys import stderr, stdout
