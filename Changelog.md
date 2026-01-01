@@ -2,7 +2,13 @@
 
  ### TODO
 
-   * allow quick abort for special missions #3106
+   * Allow quick abort for special missions #3106
+   * The +1 reputation from derelict and Dvaered dogfight contest causes
+     reputation maluses with pirates #3110
+   * Warnings for unreachable delivery times should take `follow lane` into
+     account #2989
+   * Update dat/rescue.lua for the multicore #2931
+   * Fix Dvaered scenario `antiflf03` #2746
 
  ### Content
 

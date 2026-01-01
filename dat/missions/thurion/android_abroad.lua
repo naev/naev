@@ -149,7 +149,7 @@ function land ()
    vn.done( thurion.liao.transition )
    vn.run()
 
-   thurion.addDataLog(fmt.f(_([[You helped a Thurion android named Liaou reach {spb} to begin data extraction operations. They mentioned that you may find missions to further help the Thurion cause on the Mission Bullet Board Systems at {spobs}.]]),
+   thurion.addDataLog(fmt.f(_([[You helped a Thurion android named Liao reach {spb} to begin data extraction operations. They mentioned that you may find missions to further help the Thurion cause on the Mission Bullet Board Systems at {spobs}.]]),
       {spobs=fmt.list{destspb, spb}, spb=destspb}))
 
    misn.finish(true)
