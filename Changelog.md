@@ -10,6 +10,10 @@
    * 3 new outfits
    * Made NGC-11718 a bit more interesting
 
+ ### Quality of Life
+
+   * Default to using lanes when traveling
+
  ### Engine
 
    * Added weapon and launcher damage as disable ship stats.
