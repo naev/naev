@@ -6,8 +6,8 @@
 # Note. In Naev:
 #  - not requiring indentation: sed/ini/toml/6/wrap/po/pot/cls/codespellignore/desktopeditorconfig/spec/.gitmodules/config.ld
 #  - requiring 1-space indentation: xml/template
-#     - xml checked by naev_xml.py
-#     - translation.loc and entitlements.plist are xml -> naev_xml.py again
+#     - xml checked by naev_content.py
+#     - translation.loc and entitlements.plist are xml -> naev_content.py again
 #  - requiring 3-spaces indentation but managed by specific programs:
 #     - rs files are managed by rustfmt.
 #     - c/h files are checked by clang-format.

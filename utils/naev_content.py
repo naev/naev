@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 """
+TODO: update this doc to also explain the dat/outfit/generated/*.py examples.
+
 An elementTree-based implementation of xmltodict. 10% slower than pure elementTree,
 but 2x faster than xmltodict with more functionality and correct output
 (empty element folding, new lines, no useless xml 1.0 header, etc.).
@@ -33,7 +35,7 @@ Used as follows:
 
    #  3. At init, you can specify the r and w flags (both True by default).
    #     You get errors in the following cases:
-   #      - r is True and the input file can't be openened
+   #      - r is True and the input file can't be opened
    #      - w is False and you attempt to save
    #     You get warnings in the following cases:
    #      - w is true the dict gets garbage collected while with unsaved changes.
@@ -46,6 +48,11 @@ Used as follows:
    # xmltodict's unparse was missing a final newline and unable to fold empty
    # tags. This has been fixed.
 """
+
+class _Rem:
+   pass
+
+Rem = _Rem()
 
 import xml.etree.ElementTree as ET
 from sys import stderr, stdout
@@ -149,11 +156,13 @@ class xml_node( dict ):
          return self.__getitem(key)
 
    def __setitem__( self, key, val ):
-      if val is None:
+      if val is Rem:
          if key in self:
             del self[key]
          return
-      elif isinstance(key, str) and key[0] == '$':
+      if callable(val):
+         val = val(self[key])
+      if isinstance(key, str) and key[0] == '$':
          val = _numify(val)
          if val is None:
             raise ValueError(str(val) + ' is not a number.')
@@ -207,6 +216,28 @@ class xml_node( dict ):
       self.update(other)
       return self
 
+   def _dset( self, k, v ) :
+      if k in self and isinstance(self[k], xml_node) and isinstance(v, dict):
+         self[k].dupdate(v)
+      else:
+         self[k] = v
+
+   def dupdate( self, *E, **F ):
+      if E:
+         E,*_ = E
+         if hasattr(E, 'keys'):
+            for k in E.keys():
+               self._dset(k, E[k])
+         else:
+            for k, v in E:
+               self._dset(k, v)
+      for k in F:
+         self._dset(k, F[k])
+
+   def __ixor__( self, other ):
+      self.dupdate(other)
+      return self
+
    def keys():
       return self.attr.keys() + list.keys(self)
 
@@ -240,7 +271,7 @@ def _parse( node, par, key ):
          dict.__setitem__(d, e.tag, _parse(e, d, e.tag))
 
    t = node.text
-   t = t and t.strip() or ''
+   t = t and t.strip() or None
    if d == {} and d.attr == {}:
       return t
    if t:
