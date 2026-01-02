@@ -449,7 +449,7 @@ function race_landed ()
          vn.na(fmt.f(_("You finished the race in {elapsed} and beat the goal time of {goal} ({metal}).{imp_str} Congratulations!"), {
             elapsed= '#b' .. display_time( elapsed_time ) .. '#0',
             goal= medal_col[beat_time] .. display_time( mem.track.goaltime[beat_time] ) .. '#0',
-            metal= beat_time,
+            metal= metal_display_name[beat_time],
             imp_str= imp_str,
          }))
       end
