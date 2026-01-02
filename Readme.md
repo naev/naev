@@ -27,7 +27,7 @@ yet. Although there are a lot of things to do in the game, you will find
 incomplete or work in progress content as you progress.
 
 
-## Getting Naev
+## 1 -  Getting Naev
 
 Naev is on steam, itch.io, flathub, many linux distributions and more! If
 you don't feel up to the task of compiling it yourself, please see the
@@ -35,7 +35,7 @@ you don't feel up to the task of compiling it yourself, please see the
 started playing Naev!
 
 
-## Plugins
+## 2 -  Plugins
 
 Plugins are supported since version 0.10.0, and a plugin manager is built
 into Naev since 0.13.0 which is accessible from the main menu. If you want
@@ -43,7 +43,7 @@ to get started making your own, please take a look at the
 [Naev Development Manual](https://naev.org/devmanual/) (WIP).
 
 
-## Dependencies
+## 3 -  Dependencies
 
 Naev's dependencies are intended to be widely available. In addition to a
 graphics card and driver supporting at least OpenGL 3.3, Naev requires:
@@ -70,7 +70,7 @@ graphics card and driver supporting at least OpenGL 3.3, Naev requires:
 Dependencies marked with `*` will use subprojects if not found in the host
 system.
 
-### Details for your OS
+### 3.1  Details for your OS
 
 The Naev wiki has more detailed compilation steps, and lists of packages
 to install, for several operating systems and Linux distros:
@@ -79,9 +79,9 @@ to install, for several operating systems and Linux distros:
   * [macOS](https://codeberg.org/naev/naev/wiki/Compiling-on-macOS)
 
 
-## Compiling Naev
+## 4 -  Compiling Naev
 
-### Cloning and Submodules
+### 4.1  Cloning and Submodules
 
 Naev requires the artwork submodule to run from git. You can check out the
 submodules from the cloned repository with:
@@ -98,7 +98,7 @@ recommended) by setting the following configuration:
 git config submodule.recurse true
 ```
 
-### Compilation
+### 4.2  Compilation
 
 Run:
 
@@ -135,9 +135,9 @@ supports debuginfod, also add `set debuginfod enabled on` to a file named
 `--buildtype=debugoptimized` `-Db_lto=true` `-Db_lto_mode=thin` in place
 of the corresponding values above.
 
-#### For up-to-date build instructions, check out the compilation page in our [wiki](https://codeberg.org/naev/naev/wiki/Compiling)
+#### 4.2.1  For up-to-date build instructions, check out the compilation page in our [wiki](https://codeberg.org/naev/naev/wiki/Compiling)
 
-### Running Naev
+### 4.3  Running Naev
 
 You can run Naev directly from the git repository using the `naev.py`
 script which will be generated in the build directory. This script will
@@ -145,7 +145,7 @@ automatically set up all the data paths for running Naev. Make sure the
 art assets are checked out and up to date as mentioned in the Updating Art
 Assets section below.
 
-### Installation
+### 4.4  Installation
 
 Naev currently supports `meson install` which will install everything that
 is needed.
@@ -154,7 +154,7 @@ If you wish to create a `.desktop` for your desktop environment, logos
 from 16x16 to 256x256 can be found in `extras/logos/`.
 
 
-## Updating Art Assets
+## 5 -  Updating Art Assets
 
 Art assets are partially stored in the
 [naev-artwork](https://codeberg.org/naev/naev-artwork) repository and
@@ -176,7 +176,7 @@ Afterwards, every time you perform a `git pull`, it will also update the
 artwork submodule.
 
 
-## Contributing
+## 6 -  Contributing
 
 To get in touch, you can visit [naev.org](https://naev.org/) which links
 to the project's Discord chat and Wiki. There are also Lua API docs there.
@@ -191,7 +191,7 @@ various fussy and forgettable steps.
 Naev uses [Oxford Spelling](https://en.wikipedia.org/wiki/Oxford_spelling)
 for all text in the game.
 
-### Online Translation
+### 6.1  Online Translation
 
 Naev is incorporated into Weblate on Codeberg. You can easily translate
 directly with a web interface to your chosen language from Naev's
@@ -211,7 +211,7 @@ Some translation notes:
     example `Violin Monastery` should have `Violin` translated
     phonetically and `Monastery` translated semantically.
 
-### Translation for Developers
+### 6.2  Translation for Developers
 
 Naev's translation is handled with gettext. (It's custom, but C and Lua
 code can use the conventional `_()` for gettext and `N_()` for
@@ -234,7 +234,7 @@ standard `xgettext`, plus additional rules. (Rules for `AUTHORS` are in
 because Weblate does the same job more carefully.
 
 
-## Crashes and Problems
+## 7 -  Crashes and Problems
 
 Please take a look at the [FAQ](https://codeberg.org/naev/naev/wiki/FAQ)
 before submitting a new bug report, as it covers a number of common
@@ -244,7 +244,7 @@ If Naev is crashing during gameplay, please file a bug report after
 reading [this page](https://codeberg.org/naev/naev/wiki/Bugs).
 
 
-## Licence
+## 8 -  Licence
 
 Naev is open source software compatible with the
 [Debian Free Software Guidelines](https://www.debian.org/social_contract#guidelines)
