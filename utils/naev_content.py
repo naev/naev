@@ -216,9 +216,14 @@ class xml_node( dict ):
       self.update(other)
       return self
 
+   def __or__( self, other ):
+      raise NotImplementedError
+
    def _dset( self, k, v ) :
       if k in self and isinstance(self[k], xml_node) and isinstance(v, dict):
          self[k].dupdate(v)
+      elif k in self and isinstance(self[k], _xml_list) and isinstance(v, list):
+         raise NotImplementedError
       else:
          self[k] = v
 
