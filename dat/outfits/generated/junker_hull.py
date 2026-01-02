@@ -7,7 +7,7 @@ data = h.read()
 data['outfit'] ^= {
    '@name': N_('Junker Plates'),
    'general': {
-      'shortname': Rem,
+      'shortname': None,
       'unique': None,
       'rarity': 6,
       '$price': 200e3,
