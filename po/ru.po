@@ -8,20 +8,20 @@ msgstr ""
 "Project-Id-Version: naev 0.12.0-beta.1\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
 "POT-Creation-Date: 2025-12-22 20:21+0900\n"
-"PO-Revision-Date: 2025-11-20 16:10+0000\n"
-"Last-Translator: aaaxpel <aaaxpel@noreply.codeberg.org>\n"
-"Language-Team: Russian <https://translate.codeberg.org/projects/naev/naev/ru/"
-">\n"
+"PO-Revision-Date: 2026-01-02 06:19+0000\n"
+"Last-Translator: madpilot28 <madpilot28@noreply.codeberg.org>\n"
+"Language-Team: Russian <https://translate.codeberg.org/projects/naev/naev-0-"
+"13-x/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.14\n"
+"X-Generator: Weblate 5.15.1\n"
 
 msgid "Active Plating"
-msgstr ""
+msgstr "Активное покрытие"
 
 #, fuzzy
 msgid "<widget mainimg />"
@@ -48,6 +48,8 @@ msgstr "Доступно"
 
 msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
 msgstr ""
+"Места, где продаются товары с расширением <%= o:name() %>, показаны в "
+"#ggreen#0."
 
 #, fuzzy
 msgid "<widget map />"
@@ -56,10 +58,10 @@ msgstr "<widget tableust />"
 msgid ""
 "You are not aware of anywhere where <%= o:name() %> are available for "
 "purchase."
-msgstr ""
+msgstr "Вам неизвестно, где можно приобрести <%= o:name() %>."
 
 msgid "Adaptive Camouflage Plating"
-msgstr ""
+msgstr "Адаптивное камуфляжное покрытие"
 
 msgid "Adaptive Jump"
 msgstr "Адаптивный прыжок"
@@ -80,7 +82,7 @@ msgid "Adrenaline Hormones"
 msgstr "Гормоны адреналина"
 
 msgid "Agility Combat AI"
-msgstr ""
+msgstr "Маневренный боевой искусственный интеллект"
 
 msgid "Air Freshener"
 msgstr "Освежитель воздуха"
@@ -100,19 +102,19 @@ msgid "Apollo's Gaze"
 msgstr ""
 
 msgid "Arc Blade"
-msgstr ""
+msgstr "Дуговой клинок"
 
 msgid "Arc Machete"
 msgstr ""
 
 msgid "Asteroid Scanner"
-msgstr ""
+msgstr "Сканер астероидов"
 
 msgid "Astral Cannon"
-msgstr ""
+msgstr "Астральная пушка"
 
 msgid "Astral Flow Amplifier"
-msgstr ""
+msgstr "Усилитель астрального потока"
 
 #. Set outfit state
 #. Astral projection
@@ -159,37 +161,37 @@ msgid "Battery IV"
 msgstr "Батарея IV"
 
 msgid "Beat Up Large Engine"
-msgstr ""
+msgstr "Потрёпанный большой двигатель"
 
 msgid "Beat Up Medium Engine"
-msgstr ""
+msgstr "Потрёпанный средний двигатель"
 
 msgid "Beat Up Small Engine"
-msgstr ""
+msgstr "Потрёпанный малый  двигатель"
 
 msgid "Berserk Chip"
-msgstr ""
+msgstr "Чип Берсерка"
 
 msgid "Bikers Fury Launcher"
-msgstr ""
+msgstr "Пусковая установка \"Ярость байкеров\""
 
 msgid "Bio-Neural Combat AI"
-msgstr ""
+msgstr "Бионейронный боевой ИИ"
 
 msgid "Biometal Armour"
 msgstr "Биометаллическая броня"
 
 msgid "Bioship Pheromone Emitter"
-msgstr ""
+msgstr "Излучатель феромонов биокорабля"
 
 msgid "Black Agate Finishing"
-msgstr ""
+msgstr "Отделка черным агатом"
 
 msgid "Black Cat Doll"
 msgstr "Кукла чёрного кота"
 
 msgid "Blink Drive"
-msgstr ""
+msgstr "Мигающий Привод"
 
 msgid "Boarding Androids MK1"
 msgstr "Абордажные андроиды МК1"
@@ -217,25 +219,25 @@ msgid "Cargo Sacs"
 msgstr "Грузовые мешки"
 
 msgid "Catalytic Energy Drill"
-msgstr ""
+msgstr "Буровая установка с каталитической энергией"
 
 msgid "Charge Conduit"
-msgstr ""
+msgstr "Зарядный кабель"
 
 msgid "Cleansing Flames"
-msgstr ""
+msgstr "Очищающее пламя"
 
 msgid "Cloaking Device"
 msgstr "Маскировочное устройство"
 
 msgid "Combat Hologram Projector"
-msgstr ""
+msgstr "Боевой голографический проектор"
 
 msgid "Commemorative Stein"
 msgstr "Памятная кружка"
 
 msgid "Compact Lightsail"
-msgstr ""
+msgstr "Компактный световой парус"
 
 #. Stealth skill tree
 #. For up to cruiser
@@ -244,7 +246,7 @@ msgid "Compound Eyes"
 msgstr "Составные глаза"
 
 msgid "Convulsion Launcher"
-msgstr ""
+msgstr "Конвульсионная пусковая установка"
 
 #. Plasma tree
 #. For everyone!
@@ -256,7 +258,7 @@ msgid "Corrosion II"
 msgstr "Коррозия II"
 
 msgid "Corsair Engine"
-msgstr ""
+msgstr "Пиратский двигатель"
 
 msgid "Corsair Hull Plating"
 msgstr ""
@@ -276,7 +278,7 @@ msgid "Crippling Plasma"
 msgstr "Разрушающая плазма"
 
 msgid "Cryogenic Repair Nanobots"
-msgstr ""
+msgstr "Криогенные ремонтные нанороботы"
 
 msgid "Cyborg Feather"
 msgstr "Кибер-перо"
@@ -292,37 +294,37 @@ msgid "Defective"
 msgstr "Отражающая оболочка"
 
 msgid "Disruptor Artillery S1"
-msgstr ""
+msgstr "Disruptor Artillery S1"
 
 msgid "Disruptor Artillery S2"
-msgstr ""
+msgstr "Disruptor Artillery S2"
 
 msgid "Disruptor Battery S2"
-msgstr ""
+msgstr "Разрушительная батарея S2"
 
 msgid "Droid Repair Crew"
-msgstr ""
+msgstr "Бригада ремонтных дроидов"
 
 msgid "Drone Bay"
-msgstr ""
+msgstr "Отсек для дронов"
 
 msgid "Dummy Engine"
-msgstr ""
+msgstr "Макет двигателя"
 
 msgid "Dummy Plating"
-msgstr ""
+msgstr "Макет покрытия"
 
 msgid "Dummy Systems"
-msgstr ""
+msgstr "Макет системы"
 
 msgid "Dvaered Flare Battery"
-msgstr ""
+msgstr "Дваредская сигнальная батарея"
 
 msgid "Efficiency Combat AI"
 msgstr ""
 
 msgid "Electron Burst Cannon"
-msgstr ""
+msgstr "Электронная пушка"
 
 msgid "Emergency Shield Booster"
 msgstr "Экстренный усилитель щита"
@@ -334,10 +336,10 @@ msgid "EMP Grenade Launcher"
 msgstr ""
 
 msgid "Empire Lancelot Bay"
-msgstr ""
+msgstr "отсек имперских Ланселотов"
 
 msgid "Energy Harpoon"
-msgstr ""
+msgstr "Энергетический гарпун"
 
 msgid "Engine Reroute"
 msgstr ""
@@ -346,31 +348,31 @@ msgid "Enhanced Smell"
 msgstr "Улучшенное обоняние"
 
 msgid "Enygma Systems Huntsman Launcher"
-msgstr ""
+msgstr "Пусковая установка Enygma Systems Huntsman"
 
 msgid "Enygma Systems Spearhead Launcher"
-msgstr ""
+msgstr "Пусковая установка Enygma Systems Huntsman"
 
 msgid "Enygma Systems Turreted Fury Launcher"
-msgstr ""
+msgstr "Турельная пусковая установка Enygma Systems Fury"
 
 msgid "Enygma Systems Turreted Headhunter Launcher"
-msgstr ""
+msgstr "Турельная пусковая установка \"Охотник за головами\" от Enygma Systems"
 
 msgid "Escape Pod"
-msgstr ""
+msgstr "Спасательная капсула"
 
 msgid "Executor Shield Aura"
 msgstr ""
 
 msgid "Fake Transponder"
-msgstr ""
+msgstr "поддельный транспондер"
 
 msgid "Fancy Key Chain"
 msgstr "Модная цепочка для ключей"
 
 msgid "Faraday Tempest Coating"
-msgstr ""
+msgstr "Покрытие \"Буря Фарадея\""
 
 msgid "Feather Drive"
 msgstr "Перьевой привод"
@@ -388,13 +390,13 @@ msgid "Feral Rage III"
 msgstr "Дикая ярость III"
 
 msgid "Flak Gun"
-msgstr ""
+msgstr "Зенитный пулемет"
 
 msgid "Flicker Drive"
-msgstr ""
+msgstr "мерцающий привод"
 
 msgid "Four Winds Laser Cannon"
-msgstr ""
+msgstr "Лазерная пушка \"Четыре ветра\""
 
 msgid "Four Winds Ragnarok Beam"
 msgstr ""
@@ -403,10 +405,10 @@ msgid "Fuel Bladder"
 msgstr "Топливный мочевой пузырь"
 
 msgid "Fuel Recycler"
-msgstr ""
+msgstr "Переработчик топлива"
 
 msgid "Fuelshell Plating"
-msgstr ""
+msgstr "Покрытие топливного бака"
 
 msgid "Fuzzy Dice"
 msgstr "Пушистые игральные кубики"
@@ -418,19 +420,19 @@ msgid "Gauntlet Supreme"
 msgstr ""
 
 msgid "Gauss Gun"
-msgstr ""
+msgstr "пушка Гаусса"
 
 msgid "Goatee Marker"
 msgstr "Маркер для бородки"
 
 msgid "Grave Beam"
-msgstr ""
+msgstr "Тяжелый луч"
 
 msgid "Grave Lance"
 msgstr ""
 
 msgid "Greater Astral Cannon"
-msgstr ""
+msgstr "Большая астральная пушка"
 
 msgid "Guardian Interception System"
 msgstr ""
@@ -439,13 +441,13 @@ msgid "Guardian Overseer System"
 msgstr ""
 
 msgid "GUI - Brushed"
-msgstr ""
+msgstr "Графический интерфейс — матовый"
 
 msgid "GUI - Legacy"
-msgstr ""
+msgstr "Графический интерфейс — устаревший"
 
 msgid "GUI - Slim"
-msgstr ""
+msgstr "Графический интерфейс — умный"
 
 msgid "GUI - Slimv2"
 msgstr ""
@@ -464,7 +466,7 @@ msgid "Heavy Combat Vessel Licence"
 msgstr "Лицензия на тяжёлые боевые корабли"
 
 msgid "Heavy Ion Cannon"
-msgstr ""
+msgstr "Heavy Ion Cannon"
 
 msgid "Heavy Ion Turret"
 msgstr "Тяжёлая ионная турель"
@@ -473,38 +475,38 @@ msgid "Heavy Laser Turret"
 msgstr "Тяжёлая лазерная турель"
 
 msgid "Heavy Neutron Disruptor"
-msgstr ""
+msgstr "Разрушитель тяжелых нейтронов"
 
 msgid "Heavy Ripper Cannon"
-msgstr ""
+msgstr "Тяжелая пушка-потрошитель"
 
 msgid "Heavy Ripper Turret"
-msgstr ""
+msgstr "Тяжелая турель-потрошитель"
 
 #, fuzzy
 msgid "Heavy Weapon Licence"
 msgstr "Лицензия на тяжёлое оружие"
 
 msgid "Hellburner"
-msgstr ""
+msgstr "Адский огонь"
 
 msgid "Hidden Jump Scanner"
-msgstr ""
+msgstr "Сканер скрытого прыжка"
 
 msgid "Hive Combat AI"
-msgstr ""
+msgstr "Искусственный интеллект для ведения боя в рое"
 
 msgid "Homebrew Processing Unit"
-msgstr ""
+msgstr "Установка для переработки домашнего пива"
 
 msgid "House of Mirrors"
-msgstr ""
+msgstr "Дом Зеркал"
 
 msgid "Hunter's Instinct"
 msgstr "Охотничий инстинкт"
 
 msgid "Hunting Combat AI"
-msgstr ""
+msgstr "Охотничий боевой ИИ"
 
 msgid "Hyena Bay"
 msgstr ""
@@ -513,34 +515,34 @@ msgid "Hyena Dock"
 msgstr ""
 
 msgid "Hyperbolic Blink Engine"
-msgstr ""
+msgstr "Гиперболический мерцающий двигатель"
 
 msgid "Hyperdrive Retool"
-msgstr ""
+msgstr "Обновление гипердвигателя"
 
 msgid "Improved Stabilizer"
 msgstr "Улучшенный стабилизатор"
 
 msgid "Internal Flow Amplifier"
-msgstr ""
+msgstr "Внутренний усилитель потока"
 
 msgid "Ion Cannon"
-msgstr ""
+msgstr "Ионное орудие"
 
 msgid "Jack's Eyepatch"
 msgstr ""
 
 msgid "Jump Scanner"
-msgstr ""
+msgstr "Сканер прыжка"
 
 msgid "Krain Nanotubes Foam Padding"
-msgstr ""
+msgstr "Пенопластовая набивка из нанотрубок Krain"
 
 msgid "Krain Patagium Twin Engine"
-msgstr ""
+msgstr "Сдвоенный двигатель Krain Patagium"
 
 msgid "Krain Remige Engine"
-msgstr ""
+msgstr "Двигатель Krain Remige"
 
 msgid "Kratos' Glove"
 msgstr ""
@@ -602,7 +604,7 @@ msgid "Love Letter"
 msgstr "Любовное письмо"
 
 msgid "Low Radiation Sensor Modulator"
-msgstr ""
+msgstr "Модулятор датчика низкого уровня излучения"
 
 msgid "Luxury Furnishings"
 msgstr ""
@@ -886,7 +888,7 @@ msgid "Plasma Cannon"
 msgstr "Плазменная Пушка"
 
 msgid "Plasma Cluster Cannon"
-msgstr ""
+msgstr "Плазменная кассетная пушка"
 
 #, fuzzy
 msgid "Plasma Eruptor"
@@ -1127,7 +1129,7 @@ msgid "Targeting Array"
 msgstr ""
 
 msgid "Targeting Conduit"
-msgstr ""
+msgstr "Целевой канал"
 
 msgid "TeraCom Banshee Launcher"
 msgstr ""
@@ -12326,7 +12328,7 @@ msgstr ""
 #. --
 #. Only works when can inclusively claim the system
 msgid "Marauder"
-msgstr "Мародёр"
+msgstr "Мародер"
 
 #. Returns a lore message for the given faction.
 #. Need presence
@@ -21715,7 +21717,7 @@ msgid ""
 msgstr ""
 
 msgid "Haven"
-msgstr ""
+msgstr "Убежище"
 
 msgid "Heii"
 msgstr ""
@@ -48329,7 +48331,7 @@ msgstr ""
 
 #. Gameplay modifiers
 msgid "Stealth"
-msgstr ""
+msgstr "Скрытность"
 
 msgid "Asteroids and Mining"
 msgstr ""
@@ -119870,36 +119872,42 @@ msgid "Are you sure you want to clear all your current weapon sets?"
 msgstr ""
 
 msgid "Enable autoweapons?"
-msgstr ""
+msgstr "Включить автоматическое оружие?"
 
 msgid ""
 "Are you sure you want to enable automatic weapon groups for the ship?\n"
 "\n"
 "This will overwrite all manually-tweaked weapons groups."
 msgstr ""
+"Вы уверены, что хотите включить автоматическое формирование групп вооружения "
+"для корабля?\n"
+"\n"
+"Это перезапишет все группы вооружения, настроенные вручную."
 
 msgctxt "info"
 msgid "Legend"
-msgstr ""
+msgstr "Обозначения:"
 
 msgid "Outfit that can be activated"
-msgstr ""
+msgstr "Снаряжение, которое можно активировать"
 
 msgid "Outfit that is enabled for the weapon set"
-msgstr ""
+msgstr "Снаряжение, которое включено для набора оружия"
 
 msgid " [#bMission#0]"
-msgstr ""
+msgstr " [#bМиссия#0]"
 
 msgid " (#rillegal#0)"
-msgstr ""
+msgstr "  (#законно#0)"
 
 msgid ""
 "This is cargo related to a mission and can only be carried by your main ship."
 msgstr ""
+"Это груз, связанный с миссией, и его можно перевозить только на вашем "
+"основном корабле."
 
 msgid "Carried by the following ships in your fleet:\n"
-msgstr ""
+msgstr "Перевозятся следующими судами вашего флота:\n"
 
 #, c-format
 msgid ""
@@ -119909,6 +119917,8 @@ msgstr ""
 
 msgid "Illegalized by the following factions:\n"
 msgstr ""
+"\n"
+"Нелегально для следующих фракций:\n"
 
 #, c-format
 msgid ""
@@ -119917,21 +119927,21 @@ msgid ""
 msgstr ""
 
 msgid "Abort Mission"
-msgstr ""
+msgstr "Прервать миссию"
 
 msgid "Are you sure you want to abort this mission?"
-msgstr ""
+msgstr "Вы уверены, что хотите прервать это задание?"
 
 #, c-format
 msgid "Cargo '%d' does not belong to any active mission."
-msgstr ""
+msgstr "Груз '%d' не относится ни к одной из активных миссий."
 
 msgid "Jettison Cargo?"
-msgstr ""
+msgstr "Выбросить груз за борт?"
 
 #, c-format
 msgid "Jettison how many tonnes of %s?"
-msgstr ""
+msgstr "Выбросьте за борт сколько тонн %s?"
 
 #, c-format
 msgctxt "standings"
@@ -119952,30 +119962,30 @@ msgstr ""
 
 #, c-format
 msgid "You can have a maximum reputation of %.0f%% with this faction."
-msgstr ""
+msgstr "У вас может быть максимальная репутация в этой фракции, равная %.0f%%."
 
 msgid "Ally Factions:"
-msgstr ""
+msgstr "Союзнические фракции:"
 
 msgid "Enemy Factions:"
-msgstr ""
+msgstr "Вражеские группировки:"
 
 msgid "Abort"
-msgstr ""
+msgstr "Прервать"
 
 msgid "Hide mission"
 msgstr "Скрыть миссию"
 
 msgid "Prioritize the mission"
-msgstr ""
+msgstr "Расставьте приоритеты в своей миссии"
 
 #. no missions
 #. Make sure you have missions.
 msgid "No Missions"
-msgstr ""
+msgstr "Никаких миссий"
 
 msgid "You currently have no active missions."
-msgstr ""
+msgstr "В настоящее время у вас нет активных миссий."
 
 #, c-format
 msgid ""
@@ -119984,6 +119994,8 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"%s\n"
+"#nНаграда:#0 %s"
 
 msgid ""
 "You are currently viewing all logs in the selected log type. Please select a "
@@ -119997,236 +120009,246 @@ msgid ""
 "This will delete ALL \"%s\" log entries. This operation cannot be undone. "
 "Are you sure?"
 msgstr ""
+"Это приведет к удалению ВСЕХ записей журнала \"%s\". Эту операцию невозможно "
+"отменить. Вы уверены?"
 
 msgid "Log message"
-msgstr ""
+msgstr "Сообщение журнала"
 
 msgid "Add a log entry"
-msgstr ""
+msgstr "Добавить запись в журнал"
 
 msgid "Add an entry to your diary:"
-msgstr ""
+msgstr "Добавьте запись в свой дневник:"
 
 msgid "Your Diary"
-msgstr ""
+msgstr "Твой дневник"
 
 #, c-format
 msgid "Add an entry to the log titled '%s':"
-msgstr ""
+msgstr "Добавьте запись в журнал под названием '%s':"
 
 msgid "Cannot add log"
-msgstr ""
+msgstr "Не удается добавить журнал"
 
 msgid "Cannot find this log!  Something went wrong here!"
-msgstr ""
+msgstr "Не удается найти этот журнал!  Что-то здесь пошло не так!"
 
 msgid "View Entry"
-msgstr ""
+msgstr "Посмотреть записи"
 
 msgid "Add Entry"
-msgstr ""
+msgstr "Добавить элемент"
 
 msgid "Select log type:"
-msgstr ""
+msgstr "Выберите тип журнала:"
 
 msgid "Select log title:"
-msgstr ""
+msgstr "Выберите заголовок журнала:"
 
 msgid "Log entries:"
-msgstr ""
+msgstr "Записи в журнале:"
 
 #, c-format
 msgid "Invalid info tab ID: %d"
-msgstr ""
+msgstr "Неверный идентификатор информационной вкладки: %d"
 
 #. Movement
 msgid "Accelerate"
-msgstr ""
+msgstr "Ускорять"
 
 msgid "Makes your ship accelerate forward."
-msgstr ""
+msgstr "Заставляет ваш корабль ускоряться вперед."
 
 msgid "Turn Left"
-msgstr ""
+msgstr "Повернуть налево"
 
 msgid "Makes your ship turn left."
 msgstr ""
 
 msgid "Turn Right"
-msgstr ""
+msgstr "Повернуть направо"
 
 msgid "Makes your ship turn right."
-msgstr ""
+msgstr "Заставляет ваш корабль повернуть направо."
 
 msgid "Reverse"
-msgstr ""
+msgstr "Переворот"
 
 msgid ""
 "Makes your ship face the direction you're moving from. Useful for braking."
 msgstr ""
+"Поворачивает ваш корабль в ту сторону, откуда вы движетесь. Полезно для "
+"торможения."
 
 msgid "Face Target"
-msgstr ""
+msgstr "Носом к цели"
 
 msgid ""
 "Faces the targeted ship if one is targeted, otherwise faces targeted spob, "
 "or jump point."
 msgstr ""
+"Обращен к целевому кораблю, если он является целью, в противном случае "
+"обращен к целевому объекту или точке прыжка."
 
 msgid "Tries to enter stealth mode."
-msgstr ""
+msgstr "Пытается перейти в скрытый режим."
 
 msgid "Toggle Speed"
-msgstr ""
+msgstr "Переключение скорости"
 
 msgid "Toggles speed modifier."
-msgstr ""
+msgstr "Переключает модификатор скорости."
 
 msgid "Pause"
-msgstr ""
+msgstr "Пауза"
 
 msgid "Pauses the game."
-msgstr ""
+msgstr "Приостанавливает игру."
 
 #. Movement modifiers
 msgid "Autonavigation On"
-msgstr ""
+msgstr "Автонавигация на"
 
 msgid "Initializes the autonavigation system."
-msgstr ""
+msgstr "Инициализирует систему автонавигации."
 
 msgid "Approach"
-msgstr ""
+msgstr "обращаться"
 
 msgid ""
 "Attempts to approach the targeted ship or space object, or targets the "
 "nearest landable space object. Requests landing permission if necessary. "
 "Prioritizes ships over space objects."
 msgstr ""
+"Пытается приблизиться к намеченному кораблю или космическому объекту или "
+"нацеливается на ближайший пригодный для посадки космический объект. При "
+"необходимости запрашивает разрешение на посадку. Приоритет отдается "
+"кораблям, а не космическим объектам."
 
 msgid "Mouse Flight"
-msgstr ""
+msgstr "управление полетом мышью"
 
 msgid "Toggles mouse flying."
-msgstr ""
+msgstr "Переключает управление полетом мышью."
 
 msgid "Initiate Jump"
-msgstr ""
+msgstr "Начать прыжок"
 
 msgid "Attempts to jump via a jump point."
-msgstr ""
+msgstr "Пытается совершить прыжок через точку перехода."
 
 #. Targeting
 msgid "Target Next"
-msgstr ""
+msgstr "Следущая цель"
 
 msgid "Cycles through ship targets."
-msgstr ""
+msgstr "Циклически просматривает корабельные цели."
 
 msgid "Target Previous"
-msgstr ""
+msgstr "Предыдущая цель"
 
 msgid "Cycles backwards through ship targets."
-msgstr ""
+msgstr "Переключается в обратном направлении между корабельными целями."
 
 msgid "Target Nearest"
-msgstr ""
+msgstr "Ближайшая цель"
 
 msgid "Targets the nearest non-disabled ship."
-msgstr ""
+msgstr "Нацеливание на ближайший неповрежденный корабль."
 
 msgid "Target Spob"
 msgstr ""
 
 msgid "Cycles through space object targets."
-msgstr ""
+msgstr "Циклически просматривает цели космических объектов."
 
 msgid "Target Jumpgate"
-msgstr ""
+msgstr "Целевые прыжковые врата"
 
 msgid "Cycles through jump points."
-msgstr ""
+msgstr "Циклически проходит через точки перехода."
 
 #. Hostile targets
 msgid "Target Next Hostile"
-msgstr ""
+msgstr "Следующая враждебная цель"
 
 msgid "Cycles through hostile ship targets."
-msgstr ""
+msgstr "Циклически проходит мимо вражеских кораблей-целей."
 
 msgid "Target Previous Hostile"
-msgstr ""
+msgstr "Предыдущая враждебная цель"
 
 msgid "Cycles backwards through hostile ship targets."
-msgstr ""
+msgstr "Перемещается в обратном направлении по вражеским кораблям-целям."
 
 msgid "Target Nearest Hostile"
-msgstr ""
+msgstr "Ближайшая вражеская цель"
 
 msgid "Targets the nearest hostile ship."
-msgstr ""
+msgstr "Нацеливается на ближайший вражеский корабль."
 
 msgid "Clear Target"
-msgstr ""
+msgstr "Очистить цели"
 
 msgid "Clears the currently-targeted ship, spob or jump point."
-msgstr ""
+msgstr "Очищает выбранный в данный момент корабль, объект или точку прыжка."
 
 #. Fighting
 msgid "Fire Primary Weapon"
-msgstr ""
+msgstr "Основное оружие для ведения огня"
 
 msgid "Fires primary weapons."
-msgstr ""
+msgstr "Стреляет из основного оружия."
 
 msgid "Fire Secondary Weapon"
-msgstr ""
+msgstr "Стреляйте из дополнительного оружия"
 
 msgid "Fires secondary weapons."
-msgstr ""
+msgstr "Стреляет из дополнительного оружия."
 
 msgid "Active Cooldown"
-msgstr ""
+msgstr "Активное охлаждение"
 
 msgid "Begins active cooldown."
-msgstr ""
+msgstr "Начинается активное охлаждение."
 
 #. Switching tab s
 msgid "Weapon Set 1"
-msgstr ""
+msgstr "Набор оружия 1"
 
 msgid "Activates weapon set 1."
-msgstr ""
+msgstr "Активирует набор оружия 1."
 
 msgid "Weapon Set 2"
-msgstr ""
+msgstr "Набор оружия 2"
 
 msgid "Activates weapon set 2."
-msgstr ""
+msgstr "Активирует Набор оружия 2"
 
 msgid "Weapon Set 3"
-msgstr ""
+msgstr "Набор оружия 3"
 
 msgid "Activates weapon set 3."
-msgstr ""
+msgstr "Активирует Набор оружия 3"
 
 msgid "Weapon Set 4"
-msgstr ""
+msgstr "Набор оружия 4"
 
 msgid "Activates weapon set 4."
-msgstr ""
+msgstr "Активирует Набор оружия 4"
 
 msgid "Weapon Set 5"
-msgstr ""
+msgstr "Набор оружия 5"
 
 msgid "Activates weapon set 5."
-msgstr ""
+msgstr "Активирует Набор оружия 5"
 
 msgid "Weapon Set 6"
-msgstr ""
+msgstr "Набор оружия 6"
 
 msgid "Activates weapon set 6."
-msgstr ""
+msgstr "Активирует Набор оружия 6"
 
 msgid "Weapon Set 7"
 msgstr ""
@@ -123261,7 +123283,7 @@ msgid "Beam Turret"
 msgstr ""
 
 msgid "Launcher"
-msgstr ""
+msgstr "Пусковая установка"
 
 msgid "Turret Launcher"
 msgstr ""
@@ -124584,7 +124606,7 @@ msgid "Cruiser"
 msgstr "Крейсер"
 
 msgid "Battleship"
-msgstr "Линкор"
+msgstr "военный корабль"
 
 msgid "Carrier"
 msgstr "Авианосец"
@@ -126013,10 +126035,10 @@ msgid "Weapon of type '%s' has no create implemented yet!"
 msgstr ""
 
 msgid "Trying to create a Weapon from a non-Weapon type Outfit"
-msgstr ""
+msgstr "Trying to create a Weapon from a non-Weapon type Outfit"
 
 msgid "Trying to create a Beam Weapon from a non-beam outfit."
-msgstr ""
+msgstr "Пытаюсь создать лучевое оружие из не-лучевого снаряжения."
 
 msgid "Trying to remove beam with ID 0!"
 msgstr ""
