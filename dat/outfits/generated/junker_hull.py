@@ -2,12 +2,13 @@
 
 import helper as h
 N_ = lambda text: text
+Rem = h.Rem
 Add = lambda y: (lambda x: x + y)
 data = h.read()
 data['outfit'] ^= {
    '@name': N_('Junker Plates'),
    'general': {
-      'shortname': None,
+      'shortname': Rem,
       'unique': None,
       'rarity': 6,
       '$price': 200e3,
