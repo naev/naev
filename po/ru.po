@@ -119921,7 +119921,6 @@ msgstr ""
 
 msgid "Illegalized by the following factions:\n"
 msgstr ""
-"\n"
 "Нелегально для следующих фракций:\n"
 
 #, c-format
