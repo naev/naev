@@ -48,7 +48,7 @@ gltf = { git = "https://github.com/gltf-rs/gltf.git", rev = "3def30c9caf96f2dbc8
 
 [workspace.dependencies]
 naevc = { path=@NAEVC@ }
-sdl3 = "0.16.4"
+sdl3 = "0.17"
 anyhow = "1.0"
 audio = { path="@BUILD@/src/audio" }
 naev_core = { path="@BUILD@/src/core" }

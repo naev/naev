@@ -5,7 +5,7 @@ use sdl3 as sdl;
 pub fn key_to_str(key: sdl::keyboard::Keycode) -> String {
     let name = key.name();
     if name.is_empty() {
-        format!("SC-{}", key.to_ll())
+        format!("SC-{}", key.to_ll().0)
     } else {
         name
     }
@@ -73,10 +73,10 @@ pub extern "C" fn input_keyToStr(key: SDL_Keycode) -> *const c_char {
         return name.as_ptr() as *const c_char;
     }
 
-    let keycode = match sdl::keyboard::Keycode::from_i32(key as i32) {
+    let keycode = match sdl::keyboard::Keycode::from_i32(key.0 as i32) {
         Some(kc) => kc,
         None => {
-            warn!("keycode {} not found!", key);
+            warn!("keycode '{}' not found!", key.0);
             return std::ptr::null();
         }
     };
