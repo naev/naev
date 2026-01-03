@@ -3,7 +3,7 @@
    * Fixed audio volume being reset on load every time
    * Fixed player escorts trying to respond to distress signals against the
      player
-   * Fixed several missions using inexistent audio.soundPlay function
+   * Fixed several missions using nonexistent audio.soundPlay function
    * Fixed black cat's gift
    * Fixed weapons not being scaled logarithmically on the radar
    * Point defence will no longer fire when stealthed
