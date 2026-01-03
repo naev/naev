@@ -41,8 +41,8 @@
    * Fixed weapons not being scaled logarithmically on the radar
    * Point defence will no longer fire when stealthed
    * Explicitly set `gl_PointSize` in the points shader
-   * Spelling and grammar fixes.
-   * Translation updates.
+   * Spelling and grammar fixes
+   * Translation updates
 
 
 ## v0.13.0
