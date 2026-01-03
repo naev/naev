@@ -31,8 +31,9 @@
        - "onimpact" reports armour, shield, and disable damage done
 
 
-## v0.13.1 (unreleased)
+## v0.13.1
 
+   * Fixed audio volume being reset on load every time
    * Fixed player escorts trying to respond to distress signals against the
      player
    * Fixed several missions using inexistent audio.soundPlay function
