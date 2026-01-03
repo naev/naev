@@ -1648,6 +1648,15 @@ impl Volume {
             volume_lin: 1.,
         }
     }
+
+    pub fn set(&mut self, volume: f32) {
+        self.volume_lin = volume;
+        if self.volume_lin > 0.0 {
+            self.volume = 1.0 / 2.0_f32.powf((1.0 - volume) * 8.0);
+        } else {
+            self.volume = 0.0;
+        }
+    }
 }
 
 enum Message {
@@ -1860,11 +1869,14 @@ impl System {
             alListenerf(AL_METERS_PER_UNIT, 5.0);
         }
 
+        let mut volume = Volume::new();
+        volume.set(unsafe { naevc::conf.sound } as f32);
+
         Ok(System {
             disabled: false,
             device,
             context,
-            volume: RwLock::new(Volume::new()),
+            volume: RwLock::new(volume),
             speed: AtomicF32::new(1.0),
             freq,
             voices: Mutex::new(Default::default()),
@@ -1879,12 +1891,7 @@ impl System {
     pub fn set_volume(&self, volume: f32) {
         let master = {
             let mut vol = self.volume.write().unwrap();
-            vol.volume_lin = volume;
-            if vol.volume_lin > 0.0 {
-                vol.volume = 1.0 / 2.0_f32.powf((1.0 - volume) * 8.0);
-            } else {
-                vol.volume = 0.0;
-            }
+            vol.set(volume);
             vol.volume
         };
 
