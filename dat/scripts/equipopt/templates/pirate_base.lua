@@ -126,9 +126,6 @@ function pirate_base.make_equip( pbase )
       local cores = opt_params.cores
       if not cores then
          local pircor = pbase.cores[ sname ]
-         if pircor then
-            cores = pircor( p )
-         end
          if ps:tags().bioship then
             local stage = params.bioship_stage
             if not stage then
@@ -136,8 +133,14 @@ function pirate_base.make_equip( pbase )
                stage = math.max( 1, maxstage - prob.poisson_sample( 1 ) )
             end
             bioship.simulate( p, stage, params.bioship_skills )
+            if pircor then
+               cores = pircor( p )
+            end
          elseif not cores then
             cores = ecores.get( p, { all=pbase.class } )
+            if pircor then
+               cores = tmerge( cores, pircor( p ) )
+            end
          end
       end
 

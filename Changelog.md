@@ -31,6 +31,12 @@
        - "onimpact" reports armour, shield, and disable damage done
 
 
+## v0.13.2 (unreleased)
+
+   * Fixed some NPCs spawning with missing core outfits
+   * Fixed space mines bugging out if they have no velocity
+
+
 ## v0.13.1
 
    * Fixed audio volume being reset on load every time

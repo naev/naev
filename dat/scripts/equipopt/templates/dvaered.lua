@@ -146,10 +146,9 @@ local function equip_dvaered( p, opt_params )
    local cores = opt_params.cores
    if not cores then
       local dvrcor = dvaered_cores[ sname ]
+      cores = ecores.get( p, { systems="standard", hulls="elite", engines="standard" } )
       if dvrcor then
-         cores = dvrcor()
-      else
-         cores = ecores.get( p, { systems="standard", hulls="elite", engines="standard" } )
+         cores = tmerge( cores, dvrcor() )
       end
    end
 

@@ -33,9 +33,12 @@ local function update( s, dt )
    d.timer = d.timer + dt
 
    local sp = s:pos()
-   local mod, angle = s:vel():polar()
-   if mod > 1e-3 then
-      s:setVel( vec2.newP( math.max(0,mod-100*dt), angle ) )
+   local sv = s:vel()
+   if sv then
+      local mod, angle = sv:polar()
+      if mod > 1e-3 then
+         s:setVel( vec2.newP( math.max(0,mod-100*dt), angle ) )
+      end
    end
 
    -- Not primed yet
@@ -54,7 +57,7 @@ local function update( s, dt )
          } )
          s:rm() -- Remove
 
-         -- Notify pilots in rangea
+         -- Notify pilots in range
          -- TODO make detection affect this
          pilot.msg( nil, pilot.getInrange( sp, 10e3 ), "explosion" )
       end
