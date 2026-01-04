@@ -146,10 +146,9 @@ local function equip_empire( p, opt_params )
    local cores = opt_params.cores
    if not cores then
       local empcor = empire_cores[ sname ]
+      cores = ecores.get( p, { all="elite" } )
       if empcor then
-         cores = empcor()
-      else
-         cores = ecores.get( p, { all="elite" } )
+         cores = tmerge( cores, empcor() )
       end
    end
 

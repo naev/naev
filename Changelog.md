@@ -1,3 +1,9 @@
+## v0.13.2 (unreleased)
+
+   * Fixed some NPCs spawning with missing core outfits
+   * Fixed space mines bugging out if they have no velocity
+
+
 ## v0.13.1
 
    * Fixed audio volume being reset on load every time
@@ -8,8 +14,8 @@
    * Fixed weapons not being scaled logarithmically on the radar
    * Point defence will no longer fire when stealthed
    * Explicitly set gl_PointSize in the points shader
-   * Spelling and grammar fixes.
-   * Translation updates.
+   * Spelling and grammar fixes
+   * Translation updates
 
 
 ## v0.13.0

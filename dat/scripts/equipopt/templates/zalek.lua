@@ -136,10 +136,9 @@ local function equip_zalek( p, opt_params )
    local cores = opt_params.cores
    if not cores then
       local zlkcor = zalek_cores[ sname ]
+      cores = ecores.get( p, { all="elite" } )
       if zlkcor then
-         cores = zlkcor(p)
-      else
-         cores = ecores.get( p, { all="elite" } )
+         cores = tmerge( cores, zlkcor(p) )
       end
    end
 
