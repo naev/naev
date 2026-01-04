@@ -459,8 +459,8 @@ static int factionL_hit( lua_State *L )
  *
  *    @luatparam Faction f Faction to simulate player's standing with.
  *    @luatparam number mod Amount of reputation to simulate change.
- *    @luatparam System|nil Whether to make the faction hit local at a system,
- * or global.
+ *    @luatparam System|nil extent Whether to make the faction hit local at a
+ * system, or global.
  *    @luatparam[opt="script"] string reason Reason behind it. This is passed as
  * a string to the faction `hit` function. The engine can generate `destroy` and
  * `distress` sources. For missions the default is `script`.
