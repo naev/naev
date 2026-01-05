@@ -35,7 +35,7 @@
 
    * Fixed some NPCs spawning with missing core outfits
    * Fixed space mines bugging out if they have no velocity
-   * Antique derelict no longer causes rep. penalty with pirates
+   * Antique derelict no longer causes reputation penalty with pirates
    * Spelling and grammar fixes
    * Translation updates
 
