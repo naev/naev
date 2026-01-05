@@ -99,7 +99,8 @@ end
 
 function accept()
    mem.level = 0
-   mem.reward = 50e3
+   -- 800,000 for the champion
+   mem.reward = 25e3
 
    if tk.yesno(_("Do you want to take part to a challenge?"), _([["Hello, I'm a member of the staff of the Dvaered dogfight challenge. Here are the rules: you need to take off with a fighter-class ship and to join your starting mark. After that, you will try to disable your opponent. Don't kill them; the security staff won't forgive that. It is forbidden to use missiles, so you won't be allowed to have those equipped while taking off. It's also forbidden to board the opponent's ship and to attack him before the signal is given. You are not allowed to land on any planet or jump away during the championship.
    We are looking for pilots. Are you in?"]])) then
@@ -335,14 +336,17 @@ function land()
 
       if mem.level == 5 then  --you are the champion
          tk.msg(_("You are the new champion"), fmt.f(_([[Congratulations! The staff pays you {credits}.]]), {credits="#g"..fmt.credits(mem.reward * 2^mem.level).."#0"}))
+         faction.hit("Dvaered", 3, nil, "script", true)
       elseif mem.level == 4 then
          tk.msg(_("You are the vice-champion"), fmt.f(_([[Congratulations! The staff pays you {credits}.]]), {credits="#g"..fmt.credits(mem.reward * 2^mem.level).."#0"}))
+         faction.hit("Dvaered", 1, nil, "script", true)
       else
+         -- You gain at most 200000 and can retry.
          tk.msg(_("Thanks for playing"), fmt.f(_([[The staff pays you {credits}.]]), {credits="#g"..fmt.credits(mem.reward * 2^mem.level).."#0"}))
       end
 
       player.pay(mem.reward * 2^mem.level)
-      misn.finish(true)
+      misn.finish(mem.level >= 4)
 
       elseif mem.stage == 2 then
       tk.msg(_("You are dismissed"), _("You weren't supposed to go away."))
