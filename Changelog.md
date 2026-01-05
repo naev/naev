@@ -35,6 +35,8 @@
 
    * Fixed some NPCs spawning with missing core outfits
    * Fixed space mines bugging out if they have no velocity
+   * Spelling and grammar fixes
+   * Translation updates
 
 
 ## v0.13.1
