@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.12.0-beta.1\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-12-31 09:11+0900\n"
+"POT-Creation-Date: 2026-01-04 21:54+0900\n"
 "PO-Revision-Date: 2026-01-04 04:21+0000\n"
 "Last-Translator: madpilot28 <madpilot28@noreply.codeberg.org>\n"
-"Language-Team: Russian <https://translate.codeberg.org/projects/naev/naev/"
-"ru/>\n"
+"Language-Team: Russian <https://translate.codeberg.org/projects/naev/naev/ru/"
+">\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25580,14 +25580,14 @@ msgstr ""
 msgid ""
 "Protera Husk seems to be the remains of a once populous city-world that took "
 "a turn for the worst in the aftermath of the Incident. The planet seems to "
-"have lost most of it's sphericity and has an extremely eccentric orbit. "
-"While this would usually be a major problem for any celestial body, it seems "
-"to be the least of the problems Protera Husk is facing, with radiation "
-"readings off the charts and endless destruction and carnage all over.\n"
+"have lost most of its sphericity and has an extremely eccentric orbit. While "
+"this would usually be a major problem for any celestial body, it seems to be "
+"the least of the problems Protera Husk is facing, with radiation readings "
+"off the charts and endless destruction and carnage all over.\n"
 "\n"
 "The only place to land seems to be the urban remains of the elongated side "
-"of the planet. The rest of the planet is covered in a endless layer of ruins "
-"and decay. As your ship approaches, you pick up a surprising amount of "
+"of the planet. The rest of the planet is covered in an endless layer of "
+"ruins and decay. As your ship approaches, you pick up a surprising amount of "
 "lifeforms, it is best to be careful, you don't think you would be given a "
 "warm welcome by the natives. You keep a low profile on your entry to the "
 "feeble atmosphere, hoping to confuse your ship signature with the orbital "
@@ -112104,7 +112104,7 @@ msgstr ""
 #. Has been triggered
 #. Time to go boom
 #. Remove
-#. Notify pilots in rangea
+#. Notify pilots in range
 #. TODO make detection affect this
 #. Only check once per second
 #. See what can trigger it
@@ -119935,8 +119935,7 @@ msgid ""
 msgstr ""
 
 msgid "Illegalized by the following factions:\n"
-msgstr ""
-"Нелегально для следующих фракций:\n"
+msgstr "Нелегально для следующих фракций:\n"
 
 #, c-format
 msgid ""

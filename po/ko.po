@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2025-12-31 09:11+0900\n"
+"POT-Creation-Date: 2026-01-04 21:54+0900\n"
 "PO-Revision-Date: 2024-06-23 14:45+0000\n"
 "Last-Translator: Han Ga Eun <gdd72582@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/naev/naev/ko/>\n"
@@ -23411,14 +23411,14 @@ msgstr "프로 테론 카한"
 msgid ""
 "Protera Husk seems to be the remains of a once populous city-world that took "
 "a turn for the worst in the aftermath of the Incident. The planet seems to "
-"have lost most of it's sphericity and has an extremely eccentric orbit. "
-"While this would usually be a major problem for any celestial body, it seems "
-"to be the least of the problems Protera Husk is facing, with radiation "
-"readings off the charts and endless destruction and carnage all over.\n"
+"have lost most of its sphericity and has an extremely eccentric orbit. While "
+"this would usually be a major problem for any celestial body, it seems to be "
+"the least of the problems Protera Husk is facing, with radiation readings "
+"off the charts and endless destruction and carnage all over.\n"
 "\n"
 "The only place to land seems to be the urban remains of the elongated side "
-"of the planet. The rest of the planet is covered in a endless layer of ruins "
-"and decay. As your ship approaches, you pick up a surprising amount of "
+"of the planet. The rest of the planet is covered in an endless layer of "
+"ruins and decay. As your ship approaches, you pick up a surprising amount of "
 "lifeforms, it is best to be careful, you don't think you would be given a "
 "warm welcome by the natives. You keep a low profile on your entry to the "
 "feeble atmosphere, hoping to confuse your ship signature with the orbital "
@@ -111167,7 +111167,7 @@ msgstr "존재하지 않는 행성 '%s'을 (를) 로드하지 못했습니다."
 #. Has been triggered
 #. Time to go boom
 #. Remove
-#. Notify pilots in rangea
+#. Notify pilots in range
 #. TODO make detection affect this
 #. Only check once per second
 #. See what can trigger it
