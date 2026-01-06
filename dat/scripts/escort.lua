@@ -61,6 +61,7 @@ Initializes the library by setting all the necessary hooks.
 function escort.init( ships, params )
    params = params or {}
    mem._escort = {
+      convoy = {},
       params = params,
       ships_orig = ships,
       ships = tcopy(ships),

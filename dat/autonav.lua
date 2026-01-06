@@ -65,14 +65,6 @@ local function autonav_setup ()
    include_escorts = var.peek("autonav_include_escorts")
    player.autonavSetPos()
 
-   -- See if escorting
-   local escorts = escort.all_mission_pilots()
-   if match_fleet and (#escorts > 0) then
-      escorting = escorts
-   else
-      escorting = nil
-   end
-
    -- Set time compression maximum
    tc_max = var.peek("autonav_compr_speed") / pp:speedMax()
    local compr_max = var.peek("autonav_compr_max")
@@ -99,6 +91,14 @@ local function autonav_setup ()
       for k,p in pairs(followers) do
          fleet_speed = math.min( fleet_speed, p:speedMax() )
       end
+   end
+
+   -- See if escorting
+   local escorts = escort.all_mission_pilots()
+   if match_fleet and (#escorts > 0) then
+      escorting = escorts
+   else
+      escorting = nil
    end
 
    -- Send message to follows to regroup

@@ -176,6 +176,7 @@ function ambush ()
    local _ffriendly, fhostile = factions()
    local p = pilot.add( "Dvaered Vigilance", fhostile, source_system, _("Asheron Anomaly") )
    p:setHilight(true)
+   p:setHostile(true)
 end
 
 function success () -- luacheck: globals success
