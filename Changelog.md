@@ -3,6 +3,7 @@
    * Fixed errors that occur with the escort library on initialization
    * Fixed some NPCs spawning with missing core outfits
    * Fixed space mines bugging out if they have no velocity
+   * Fixed player forgetting about the FLF when working for them
    * colonel-escort: Fixed enemy not being hostile
    * Antique derelict no longer causes reputation penalty with pirates
    * Spelling and grammar fixes
