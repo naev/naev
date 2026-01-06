@@ -106,6 +106,7 @@ local goodness_special = {
    ["TeraCom Vengeance Launcher"] = 0.6,
    ["TeraCom Medusa Launcher"] = 0.6,           -- really high disable
    ["Droid Repair Crew"] = 0.35, -- Only work until 50%
+   ["Droid Repair Crew MK2"] = 0.2, -- Only work until 25%
    ["Electron Burst Cannon"] = 0.7, -- Shieldbreaker damage
    ["Particle Beam"] = 0.8,
    ["EMP Grenade Launcher"] = 0.36,
