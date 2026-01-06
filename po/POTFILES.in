@@ -460,6 +460,7 @@ dat/outfits/utility/conduit/pipeline_conduit.xml
 dat/outfits/utility/conduit/targeting_conduit.xml
 dat/outfits/utility/cryogenic_repair_nanobots.xml
 dat/outfits/utility/droid_repair_crew.xml
+dat/outfits/utility/droid_repair_crew_mk2.xml
 dat/outfits/utility/emergency_shield_booster.xml
 dat/outfits/utility/emergency_stasis_inducer.xml
 dat/outfits/utility/flicker_drive.xml
@@ -3489,6 +3490,7 @@ dat/outfits/utility/combat_hologram_projector.lua
 dat/outfits/utility/conduit/conduit.lua
 dat/outfits/utility/cryogenic_repair_nanobots.lua
 dat/outfits/utility/droid_repair_crew.lua
+dat/outfits/utility/droid_repair_crew_mk2.lua
 dat/outfits/utility/emergency_shield_booster.lua
 dat/outfits/utility/emergency_stasis_inducer.lua
 dat/outfits/utility/flicker_drive.lua
