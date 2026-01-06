@@ -30,3 +30,4 @@ base64 = { workspace = true }
 iced = { workspace = true }
 tokio = { workspace = true }
 formatx = { workspace = true }
+url = { workspace = true }
