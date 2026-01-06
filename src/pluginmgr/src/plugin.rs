@@ -59,7 +59,7 @@ pub struct PluginStub {
     pub identifier: Identifier,
     pub name: String,
     pub(crate) source: Source,
-    pub(crate) metadata: reqwest::Url,
+    pub(crate) metadata: url::Url,
 }
 impl PluginStub {
     pub fn from_slice(data: &[u8]) -> Result<Self> {

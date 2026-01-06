@@ -93,6 +93,7 @@ serde-seeded = "0"
 #quick-xml = { version = "0.38", features = ["serialize", "overlapped-lists"] }
 # Networking and archive handling
 reqwest = { version = "0.12", features = ["stream", "rustls-tls", "blocking"] }
+url = { version = "2.5", features = ["serde"] }
 zip = { version = "7", default-features = false, features = ["deflate"] }
 # Utilities and filesystem
 walkdir = "2"
