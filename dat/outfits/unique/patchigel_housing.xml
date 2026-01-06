@@ -1,0 +1,19 @@
+<outfit name="PatchiGel Housing">
+ <general>
+  <typename>Core Systems (Hull)</typename>
+  <rarity>6</rarity>
+  <unique/>
+  <slot prop="hull_secondary">structure</slot>
+  <size>small</size>
+  <priority>3</priority>
+  <price>3000000</price>
+  <description>Usually used by repairers when performing critical ship maintenance on the field, PatchiGel quickly allows keeping a highly damaged hull spaceworthy. Although designed for exterior application, housing it under the primary plating allows for quick application to the damaged areas, resulting in a self-healing armour that further increases in healing capacity as damaged. The downside is that it takes up the valuable space necessary for a secondary hull layer.</description>
+  <gfx_store>placeholder</gfx_store>
+ </general>
+ <specific type="modification">
+  <lua>outfits/unique/patchigel_housing.lua</lua>
+ </specific>
+ <tags>
+  <tag>core</tag>
+ </tags>
+</outfit>
