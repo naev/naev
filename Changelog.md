@@ -1,5 +1,6 @@
 ## v0.13.2 (unreleased)
 
+   * Fixed errors that occur with the escort library on initialization
    * Fixed some NPCs spawning with missing core outfits
    * Fixed space mines bugging out if they have no velocity
    * Antique derelict no longer causes reputation penalty with pirates
