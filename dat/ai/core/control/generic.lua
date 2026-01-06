@@ -1137,10 +1137,11 @@ function distress_handler( pilot, attacker )
    local afact   = attacker:faction()
    local aifact  = p:faction()
 
-   local p_ally  = aifact:areAllies(pfact)
-   local a_ally  = aifact:areAllies(afact)
-   local p_enemy = aifact:areEnemies(pfact)
-   local a_enemy = aifact:areEnemies(afact)
+   local scur    = system.cur()
+   local p_ally  = aifact:areAllies(pfact, scur)
+   local a_ally  = aifact:areAllies(afact, scur)
+   local p_enemy = aifact:areEnemies(pfact, scur)
+   local a_enemy = aifact:areEnemies(afact, scur)
    local p_player = pilot:withPlayer()
    local a_player = attacker:withPlayer()
 
@@ -1170,8 +1171,8 @@ function distress_handler( pilot, attacker )
          end
       else -- neutral
          if mem.whiteknight then
-            -- Only whiteknight with natural pilots
-            if pilot:memory().natural and p:memory().natural and not aifact:areNeutral(pfact) then
+            -- Only whiteknight with natural pilots, when player is not ally
+            if pilot:memory().natural and p:memory().natural and not aifact:areNeutral(pfact) and not aifact:areAllies(faction.player(), scur) then
                badguy = attacker
             end
          end
