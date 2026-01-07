@@ -1172,7 +1172,7 @@ function distress_handler( pilot, attacker )
       else -- neutral
          if mem.whiteknight then
             -- Only whiteknight with natural pilots, when player is not ally
-            if pilot:memory().natural and p:memory().natural and not aifact:areNeutral(pfact) and not aifact:areAllies(faction.player(), scur) then
+            if pilot:memory().natural and p:memory().natural and not aifact:areNeutral(pfact) and not aifact:areAllies(afact, scur) then
                badguy = attacker
             end
          end
