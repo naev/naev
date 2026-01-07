@@ -15,7 +15,7 @@ return function ()
       return
    end
    -- Must have not finished event already
-   if not player.evtDone("Meet the Junker") then
+   if player.evtDone("Meet the Junker") then
       return
    end
 
