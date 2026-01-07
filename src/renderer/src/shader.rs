@@ -140,7 +140,7 @@ impl ShaderSource {
     }
 
     fn load_file<P: AsRef<Path>>(path: P) -> Result<String> {
-        let rawdata = ndata::read(&Path::new(Self::GLSL_PATH).join(path))?;
+        let rawdata = ndata::read(Path::new(Self::GLSL_PATH).join(path))?;
         let data = std::str::from_utf8(&rawdata)?;
         Self::preprocess(data)
     }
