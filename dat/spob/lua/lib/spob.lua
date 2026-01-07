@@ -596,12 +596,34 @@ function luaspob.barbg ()
    return mem.barbg()
 end
 
-function luaspob.distress( p, attacker )
+-- This duplicates some of the functionality from the AI distress_handler
+function luaspob.distress( pilot, attacker )
    -- Ignore if the player isn't the bad one
    if not attacker:withPlayer() then return end
 
-   local f = mem.spob:faction()
-   if p:memory().natural and not f:areNeutral( p:faction() ) and not f:areEnemies( p:faction() ) then
+   local pfact   = pilot:faction()
+   local afact   = attacker:faction()
+   local aifact = mem.spob:faction()
+
+   local scur = system.cur()
+   local p_ally  = aifact:areAllies(pfact, scur)
+   local a_ally  = aifact:areAllies(afact, scur)
+   local p_enemy = aifact:areEnemies(pfact, scur)
+   --local a_enemy = aifact:areEnemies(afact, scur)
+
+   -- Determine if player is bad or not
+   local player_bad
+   if p_ally then
+      player_bad = true
+   elseif p_enemy then
+      player_bad = false
+   -- Assumption always "white knight" compared to AI
+   elseif pilot:memory().natural and not aifact:areNeutral( pfact ) and not a_ally then
+      player_bad = true
+   end
+
+   -- Player was bad
+   if player_bad then
       -- Small faction hit
       --f:hit( -1, "distress" ) -- Amplifies distress signals
       mem.spob:setHostile(true)
