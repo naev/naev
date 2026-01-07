@@ -11,6 +11,7 @@
  </general>
  <specific type="modification">
   <lua_inline>
+   notactive = true
    require('outfits.lib.sets.junker').init()
   </lua_inline>
   <cargo>5</cargo>
