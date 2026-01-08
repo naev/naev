@@ -4,8 +4,8 @@
   <slot>utility</slot>
   <size>medium</size>
   <mass>5</mass>
-  <price>810_000</price>
-  <gfx_store>droid</gfx_store>
+  <price>810000</price>
+  <gfx_store>droid_mk2</gfx_store>
   <description>Compared to the base model, the Droid Repair Crew MK2 is able to patch up the ship's hull at twice the speed using a new assorted set of tools, included the coveted PatchiGel©. However, this comes with a trade-off of being even more ineffective unless the hull is at fairly critical conditions, when the gel is most effective.</description>
  </general>
  <specific type="modification">

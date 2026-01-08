@@ -6,7 +6,7 @@
   <mass>1</mass>
   <price>200000</price>
   <description>The Asimov Destructicorp Boarding Android is the latest in robotic hostile takeover technology. Equipped with a multifunction plasma blaster/cutting torch/can opener/spatula, the Boarding Android is ready for any situation, be it tactical or culinary.</description>
-  <gfx_store>cargopod</gfx_store>
+  <gfx_store>boarding_droid_mk1</gfx_store>
  </general>
  <specific type="modification">
   <loot_mod>40</loot_mod>
