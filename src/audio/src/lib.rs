@@ -1186,8 +1186,12 @@ impl Audio {
 
     pub fn set_pitch(&mut self, pitch: f32) {
         check_audio!(self);
+        let speed = if self.ingame() {
+            AUDIO.speed.load(Ordering::Relaxed)
+        } else {
+            1.0
+        };
         let src = self.source_mut();
-        let speed = AUDIO.speed.load(Ordering::Relaxed);
         src.set_pitch(pitch, speed);
     }
 

@@ -1,5 +1,6 @@
 ## v0.13.2 (unreleased)
 
+   * Fixed time compression affecting Lua Audio streams and non-ingame sounds
    * Fixed errors that occur with the escort library on initialization
    * Fixed some NPCs spawning with missing core outfits
    * Fixed space mines bugging out if they have no velocity
