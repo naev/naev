@@ -293,7 +293,7 @@ fn naevmain() -> Result<()> {
         }
 
         //Have to set up fonts before rendering anything.
-        let font_prefix = naevc::FONT_PATH_PREFIX as *const u8 as *const i8;
+        let font_prefix = naevc::FONT_PATH_PREFIX as *const u8 as *const c_char;
         let font_default_path = gettext(
             "Cabin-SemiBold.otf,NanumBarunGothicBold.ttf,SourceCodePro-Semibold.ttf,IBMPlexSansJP-Medium.otf",
         );
