@@ -38,6 +38,7 @@
    * Fixed some NPCs spawning with missing core outfits
    * Fixed space mines bugging out if they have no velocity
    * Fixed player forgetting about the FLF when working for them
+   * Don't display exit to main menu message on load if menu is open
    * colonel-escort: Fixed enemy not being hostile
    * Antique derelict no longer causes reputation penalty with pirates
    * Don't error out if audio effects are not available

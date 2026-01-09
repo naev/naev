@@ -43,11 +43,6 @@ local function updater0130( did0120, did0110, did0100, did090 )
       poi.data_set_known()
    end
 
-   -- Bug that cleared FLF known state
-   if var.peek("disc_frontier") then
-      fcts.setKnown( faction.get("FLF"), true )
-   end
-
    -- Updates if ships have multiple gauntlet intrinsics set
    local update_gauntlet = false
    local gauntlet_refunded = 0
@@ -392,10 +387,16 @@ function create ()
       did0120 = true
    end
    -- Run on saves older than 0.13.0
-   -- Small bug fixed in 0.13.2 requires updating
-   if not save_version or naev.versionTest( save_version, "<0.13.2") then
+   if not save_version or naev.versionTest( save_version, "<0.13.0") then
       updater0130( did0120, did0110, did0100, did090 )
       didupdate = true
+   end
+   -- Small bug fixed in 0.13.2 requires updating
+   if not save_version or naev.versionTest( save_version, "<0.13.2") then
+      -- Bug that cleared FLF known state
+      if var.peek("disc_frontier") then
+         fcts.setKnown( faction.get("FLF"), true )
+      end
    end
 
    -- Note that games before 0.10.0 will have lastplayed set days from the unix epoch

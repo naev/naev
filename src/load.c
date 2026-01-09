@@ -1053,7 +1053,7 @@ static void load_snapshot_menu_load( unsigned int wdw, const char *str )
       return;
 
    /* Disable saving. */
-   if ( disablesave && ( save_loaded != 0 ) ) {
+   if ( disablesave && ( save_loaded != 0 ) && !menu_isOpen( MENU_MAIN ) ) {
       if ( !dialogue_YesNoRaw(
               _( "Exit to Menu?" ),
               _( "Are you sure you wish to exit to menu right now? The game "
