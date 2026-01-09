@@ -9,6 +9,7 @@
    * Antique derelict no longer causes reputation penalty with pirates
    * Don't error out if audio effects are not available
    * Spelling and grammar fixes
+   * Fixed build failure on (some) ARM64 platforms
    * Translation updates
 
 
