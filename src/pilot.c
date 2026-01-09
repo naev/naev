@@ -1372,6 +1372,10 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
           pilot_isFlag( p, PILOT_INVINC_PLAYER ) ) )
       return 0.;
 
+   /* Reduce damage taken. */
+   Damage rdmg = *dmg;
+   rdmg.damage *= p->stats.damage_taken;
+
    /* Defaults. */
    dam_mod = 0.;
    ddmg    = 0.;
@@ -1379,9 +1383,9 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
    shooter = ( pshooter == NULL ) ? 0 : pshooter->id;
 
    /* Calculate the damage. */
-   absorb  = 1. - CLAMP( 0., 1., p->dmg_absorb - dmg->penetration );
-   disable = dmg->disable;
-   dtype_calcDamage( &damage_shield, &damage_armour, absorb, &knockback, dmg,
+   absorb  = 1. - CLAMP( 0., 1., p->dmg_absorb - rdmg.penetration );
+   disable = rdmg.disable;
+   dtype_calcDamage( &damage_shield, &damage_armour, absorb, &knockback, &rdmg,
                      &p->stats );
 
    /*

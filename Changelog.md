@@ -22,7 +22,10 @@
 
  ### Engine
 
-   * Added weapon and launcher damage as disable ship stats.
+   * New ship stats
+       - Weapon Damage
+       - Launcher Damage
+       - Damage Taken
    * Rewrote the following in rust
        - Lua Transform/Texture/Data/File modules
    * Lua outfit scripting changes:
