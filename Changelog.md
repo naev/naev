@@ -1,4 +1,4 @@
-## v0.13.2 (unreleased)
+## v0.13.2
 
    * Fixed time compression affecting Lua Audio streams and non-ingame sounds
    * Fixed errors that occur with the escort library on initialization
