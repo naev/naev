@@ -34,7 +34,13 @@
        - "onimpact" reports armour, shield, and disable damage done
 
 
-## v0.13.2 (unreleased)
+## v0.13.3 (unreleased)
+
+   * `poi_intro`: Made the mission start conditions a bit more relaxed and
+     don't error on reject
+
+
+## v0.13.2
 
    * Fixed time compression affecting Lua Audio streams and non-ingame sounds
    * Fixed errors that occur with the escort library on initialization
