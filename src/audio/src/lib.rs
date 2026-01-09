@@ -1187,8 +1187,12 @@ impl Audio {
 
     pub fn set_pitch(&mut self, pitch: f32) {
         check_audio!(self);
+        let speed = if self.ingame() {
+            AUDIO.speed.load(Ordering::Relaxed)
+        } else {
+            1.0
+        };
         let src = self.source_mut();
-        let speed = AUDIO.speed.load(Ordering::Relaxed);
         src.set_pitch(pitch, speed);
     }
 
@@ -2636,6 +2640,9 @@ impl UserData for LuaAudioRef {
             |_, this, (name, enable): (String, bool)| -> mlua::Result<bool> {
                 this.call_or(
                     |this| {
+                        if EFX.get().is_none() {
+                            return Ok(false);
+                        }
                         let slot = if enable {
                             let lock = EFX_LIST.lock().unwrap();
                             let efxid =
@@ -2679,6 +2686,9 @@ impl UserData for LuaAudioRef {
         methods.add_function(
             "setEffectData",
             |_, (name, param): (String, mlua::Table)| -> mlua::Result<()> {
+                if EFX.get().is_none() {
+                    return Ok(());
+                }
                 let mut lock = EFX_LIST.lock().unwrap();
                 let efxid = match binary_search_by_key_ref(&lock, &name, |e: &LuaAudioEfx| &e.name)
                 {

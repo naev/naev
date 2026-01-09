@@ -33,12 +33,14 @@
 
 ## v0.13.2 (unreleased)
 
+   * Fixed time compression affecting Lua Audio streams and non-ingame sounds
    * Fixed errors that occur with the escort library on initialization
    * Fixed some NPCs spawning with missing core outfits
    * Fixed space mines bugging out if they have no velocity
    * Fixed player forgetting about the FLF when working for them
    * colonel-escort: Fixed enemy not being hostile
    * Antique derelict no longer causes reputation penalty with pirates
+   * Don't error out if audio effects are not available
    * Spelling and grammar fixes
    * Translation updates
 
