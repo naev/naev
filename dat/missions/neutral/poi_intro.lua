@@ -52,6 +52,11 @@ function create ()
          end
       end
 
+      -- Not too hard
+      if pir.systemPresence( sys ) > 400 then
+         return false
+      end
+
       -- For Nelly, we don't want it to be too uninhabited
       local goodneighbour = false
       for k,s in ipairs(sys:adjacentSystems()) do
