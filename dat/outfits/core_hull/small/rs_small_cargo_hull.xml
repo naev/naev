@@ -15,7 +15,6 @@
       {'mass', 28},
       {'cpu', -24, 0},
       {'cargo', 14, 6},
-      --{'absorb', 3, 7},
       {'absorb', 30, 15},
       {'armour', 60, 38},
       {'cargo_inertia', -10, -4},
