@@ -7,17 +7,17 @@ local STATS = {
    Small = {
       armour_regen = 3,
       mass = 20, -- Shadow is 25
-      absorb = 1,
+      absorb = 7,
    },
    Medium = {
       armour_regen = 6,
       mass = 90 ,-- Ghost is 110/130
-      absorb = 3,
+      absorb = 7,
    },
    Large= {
       armour_regen = 12,
       mass = 410, -- Phantasm is 450/550
-      absorb = 5,
+      absorb = 7,
    },
 }
 

@@ -14,7 +14,8 @@
    require('outfits.lib.multicore').init({
       {'mass', 25},
       {'cargo', 5, 2},
-      {'absorb', 3, 6},
+      --{'absorb', 3, 6},
+      {'absorb', 30, 15},
       {'armour', 60, 38},
       {'ew_hide', -10, -5},
    })
