@@ -38,7 +38,7 @@ States
 local reward_outfit = outfit.get("Pulse Scanner")
 
 function create ()
-   local syscand = lmisn.getSysAtDistance( nil, 1, 3, function( sys )
+   local function checksys( sys )
       -- Must be claimable
       if not naev.claimTest( {sys} ) then -- Full claim here
          return
@@ -66,7 +66,13 @@ function create ()
       end
 
       return true
-   end )
+   end
+
+   -- Try to get closer first, if not, allow more far away
+   local syscand = lmisn.getSysAtDistance( nil, 1, 3, checksys )
+   if #syscand <= 0 then
+      syscand = lmisn.getSysAtDistance( nil, 4, 5, checksys )
+   end
 
    -- Failed to start
    if #syscand <= 0 then misn.finish(false) end
@@ -136,6 +142,7 @@ function create ()
 
       -- We want to delay aborting the mission a frame so that the derelict
       -- event thinks it's running fine
+      misn.accept() -- have to accept to use hook
       hook.safe( "delay_abort" )
       return
    end
