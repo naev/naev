@@ -6,6 +6,7 @@
    * Fixed player forgetting about the FLF when working for them
    * colonel-escort: Fixed enemy not being hostile
    * Antique derelict no longer causes reputation penalty with pirates
+   * Don't error out if audio effects are not available
    * Spelling and grammar fixes
    * Translation updates
 
@@ -19,7 +20,7 @@
    * Fixed black cat's gift
    * Fixed weapons not being scaled logarithmically on the radar
    * Point defence will no longer fire when stealthed
-   * Explicitly set gl_PointSize in the points shader
+   * Explicitly set `gl_PointSize` in the points shader
    * Spelling and grammar fixes
    * Translation updates
 
