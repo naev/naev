@@ -393,11 +393,7 @@ function create ()
    end
    -- Run on saves older than 0.13.0
    -- Small bug fixed in 0.13.2 requires updating
-   if var.peek("disc_frontier") then
-      fcts.setKnown( faction.get("FLF"), true )
-   end
-   if not save_version or naev.versionTest( save_version, "<0.13.0") then
-   --if not save_version or naev.versionTest( save_version, "<0.13.2") then
+   if not save_version or naev.versionTest( save_version, "<0.13.2") then
       updater0130( did0120, did0110, did0100, did090 )
       didupdate = true
    end
