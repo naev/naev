@@ -1273,7 +1273,8 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target,
 
    /* Reset autonav if is player. */
    if ( pilot_isPlayer( p ) &&
-        !outfit_isProp( w->outfit, OUTFIT_PROP_WEAP_POINTDEFENSE ) )
+        !outfit_isProp( w->outfit, OUTFIT_PROP_WEAP_POINTDEFENSE ) &&
+        !outfit_isFighterBay( w->outfit ) )
       player_autonavReset( 1. );
 
    return 1;

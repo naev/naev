@@ -19,6 +19,7 @@
  ### Quality of Life
 
    * Default to using lanes when traveling
+   * Deploying fighters no longer resets autonav
 
  ### Engine
 
