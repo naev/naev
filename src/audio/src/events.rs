@@ -94,7 +94,7 @@ pub fn event_control(events_data: &[ALenum], enable: bool) {
             (events.alEventControlSOFT)(
                 events_data.len() as ALint,
                 events_data.as_ptr(),
-                enable as i8,
+                enable as ALboolean,
             );
         },
         None => warn!("Events not enabled"),
