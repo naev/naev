@@ -32,7 +32,7 @@
   <resist>10</resist>
   <damage>
    <type>kinetic</type>
-   <penetrate>12</penetrate>
+   <penetrate>19</penetrate>
    <physical>80</physical>
   </damage>
   <ai>smart</ai>

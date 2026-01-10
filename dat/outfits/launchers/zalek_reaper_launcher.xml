@@ -36,7 +36,7 @@
   <resist>100</resist>
   <damage>
    <type>kinetic</type>
-   <penetrate>80</penetrate>
+   <penetrate>100</penetrate>
    <physical>800</physical>
   </damage>
   <armour>80</armour>

@@ -34,7 +34,7 @@
   <resist>45</resist>
   <damage>
    <type>ion</type>
-   <penetrate>21</penetrate>
+   <penetrate>23</penetrate>
    <physical>125</physical>
    <disable>12</disable>
   </damage>

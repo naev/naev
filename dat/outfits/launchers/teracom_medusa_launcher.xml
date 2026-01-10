@@ -33,7 +33,7 @@
   <resist>20</resist>
   <damage>
    <type>emp</type>
-   <penetrate>24</penetrate>
+   <penetrate>64</penetrate>
    <physical>40</physical>
    <disable>200</disable>
   </damage>

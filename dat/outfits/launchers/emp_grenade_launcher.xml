@@ -27,7 +27,7 @@
   <damage>
    <type>emp</type>
    <penetrate>51</penetrate>
-   <physical>19</physical>
+   <physical>34</physical>
    <disable>89</disable>
   </damage>
   <radius friendlyfire="1">90</radius>
