@@ -379,7 +379,7 @@ BioOutfit( 'weapon.xml.template', {
    #
    'range' :        eerpr(  1750/1.2,  2400/1.2, *extrapol),
    'falloff':       eerpr(  1400/1.2,  1800/1.2, *extrapol),
-   'energy':        eerpr(    49*1.4,   174*1.4, *extrapol_bias),
+   'energy':        eerpr(    49*1.4,   111*1.4, *extrapol_bias),
    'trackmin':      eerpr(  2400/1.2,  6000/1.2, *extrapol),
    'trackmax':      eerpr(  9600/1.2, 24000/1.2, *extrapol),
    'penetrate':     lerpr(  62/1.125,  80/1.125, *extrapol),
