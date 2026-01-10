@@ -1393,6 +1393,10 @@ impl AudioBuilder {
         }
         if self.ingame {
             audio.set_ingame();
+            // Sort of ugly hack, because we don't actually handle position with the groups
+            if self.groupid.is_some() {
+                audio.set_relative(true);
+            }
         }
         audio.set_pitch(1.0);
         audio.set_volume(self.volume);
@@ -1554,6 +1558,8 @@ impl GroupRef {
         for v in group.voices.iter() {
             if let Some(voice) = voices.get_mut(v.0) {
                 voice.set_ingame();
+                // Sort of ugly hack, because we don't actually handle position with the groups
+                voice.set_relative(true);
             }
         }
         Ok(())
