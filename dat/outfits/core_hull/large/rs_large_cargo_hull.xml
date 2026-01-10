@@ -22,6 +22,7 @@
       {'ew_detected', 25, 5},
       {'ew_signature', -20, -12},
       {'jam_chance', 38, 10},
+      {'damage_taken', -4},
    })
   </lua_inline>
  </specific>

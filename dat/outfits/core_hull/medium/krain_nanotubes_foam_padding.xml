@@ -15,6 +15,7 @@
       {'mass', 80},
       {'absorb', 13},
       {'armour', 280},
+      {'damage_taken', -3},
    })
   </lua_inline>
  </specific>

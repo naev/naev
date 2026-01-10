@@ -15,6 +15,7 @@
       {'cargo', 55, 25},
       {'absorb', 95, 17},
       {'armour', 1650, 750},
+      {'damage_taken', -6},
    })
   </lua_inline>
  </specific>

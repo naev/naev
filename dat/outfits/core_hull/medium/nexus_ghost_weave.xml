@@ -17,6 +17,7 @@
       {'absorb', 60, 15},
       {'armour', 160, 170},
       {'ew_hide', -15, -5},
+      {'damage_taken', -3},
    })
   </lua_inline>
  </specific>
