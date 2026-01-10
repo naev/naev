@@ -37,6 +37,7 @@ typedef enum ShipStatsType {
    SS_TYPE_D_CPU_MOD,          /**< CPU multiplier. */
    SS_TYPE_D_COOLDOWN_MOD,     /**< Ability cooldown multiplier. */
    SS_TYPE_D_SHIELDDOWN_MOD,   /**< Time that shields are down. */
+   SS_TYPE_D_DAMAGE_TAKEN,     /**< Damage taken. */
 
    /* Freighter-type. */
    SS_TYPE_D_JUMP_DELAY, /**< Modulates the time that passes during a hyperspace
@@ -246,6 +247,7 @@ typedef struct ShipStats {
    double cpu_mod;        /**< CPU multiplier. */
    double cpu;            /**< CPU usage, does not get multiplied. */
    double cpu_max;        /**< CPU modifier. */
+   double damage_taken;   /**< Damage taken. */
    double absorb;         /**< Flat damage absorption. */
    double cooldown_mod;   /**< Ability cooldown mod. */
    double shielddown_mod; /**< Time shields are down. */

@@ -144,6 +144,7 @@ static const ShipStatsLookup ss_lookup[] = {
    DI_ELEM( SS_TYPE_D_COOLDOWN_MOD, cooldown_mod, N_( "Ability Cooldown" ) ),
    DI_ELEM( SS_TYPE_D_SHIELDDOWN_MOD, shielddown_mod,
             N_( "Shield Down Time" ) ),
+   DI_ELEM( SS_TYPE_D_DAMAGE_TAKEN, damage_taken, N_( "Damage Taken" ) ),
 
    DI_ELEM( SS_TYPE_D_JUMP_DELAY, jump_delay, N_( "Jump Time" ) ),
    DI_ELEM( SS_TYPE_D_LAND_DELAY, land_delay, N_( "Landing Time" ) ),

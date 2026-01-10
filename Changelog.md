@@ -19,10 +19,14 @@
  ### Quality of Life
 
    * Default to using lanes when traveling
+   * Deploying fighters no longer resets autonav
 
  ### Engine
 
-   * Added weapon and launcher damage as disable ship stats.
+   * New ship stats
+       - Weapon Damage
+       - Launcher Damage
+       - Damage Taken
    * Rewrote the following in rust
        - Lua Transform/Texture/Data/File modules
    * Lua outfit scripting changes:
@@ -31,7 +35,13 @@
        - "onimpact" reports armour, shield, and disable damage done
 
 
-## v0.13.2 (unreleased)
+## v0.13.3 (unreleased)
+
+   * `poi_intro`: Made the mission start conditions a bit more relaxed and
+     don't error on reject
+
+
+## v0.13.2
 
    * Fixed time compression affecting Lua Audio streams and non-ingame sounds
    * Fixed errors that occur with the escort library on initialization
