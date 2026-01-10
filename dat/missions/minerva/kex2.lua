@@ -271,6 +271,7 @@ function blockade_attacked ()
 end
 
 -- Spawn enemies that will eventually bog down the player
+local spawn_timer = 20
 function spawn_enemies( fbaroness )
    local function addenemy( shipname )
       local p = pilot.add( shipname, fbaroness, targetplanet )
@@ -293,7 +294,8 @@ function spawn_enemies( fbaroness )
    end
    addenemy( strongenemies[ rnd.rnd(1,#strongenemies) ] )
 
-   mem.spawn_hook = hook.timer( 20.0, "spawn_enemies", fbaroness )
+   spawn_timer = spawn_timer+5
+   mem.spawn_hook = hook.timer( spawn_timer, "spawn_enemies", fbaroness )
 end
 
 function gotaway ()
