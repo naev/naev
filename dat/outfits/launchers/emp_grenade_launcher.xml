@@ -16,7 +16,7 @@
   <trackmin>2000</trackmin>
   <trackmax>8000</trackmax>
   <ammo_mass>0.5</ammo_mass>
-  <gfx spin="0.3">empgrenade_blue</gfx>
+  <gfx spin="0.3" col_size="15">empgrenade_blue</gfx>
   <sound>grenadefire</sound>
   <sound_hit>empexplode</sound_hit>
   <spfx_shield>EmpBlast-M</spfx_shield>
