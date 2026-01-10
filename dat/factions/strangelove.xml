@@ -20,5 +20,8 @@
   <enemy>Miner</enemy>
   <enemy>Trader</enemy>
   <enemy>Traders Society</enemy>
+  <enemy>Independent</enemy>
+  <enemy>Mercenary</enemy>
+  <enemy>Independent Mercenary</enemy>
  </enemies>
 </faction>
