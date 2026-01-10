@@ -1,5 +1,6 @@
 ## v0.13.3 (unreleased)
 
+   * Made it so independents won't land on a certain person's laboratory
    * Fixed engine sounds not playing at correct location
    * `poi_intro`: Made the mission start conditions a bit more relaxed and
      don't error on reject
