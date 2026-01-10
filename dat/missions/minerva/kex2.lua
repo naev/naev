@@ -167,7 +167,7 @@ He plugs in the program directly into a port under his wing and his eyes go blan
    } )
 
    vn.label("accept")
-   kex(fmt.f(_([["Great! Let me get you set up with the program. All you have to do is land on {pnt} and plug it in to any terminal you find around the docks. That should also make it easier for you to get out of there if things go sour."]]), {pnt=targetplanet}))
+   kex(fmt.f(_([["Great! Let me get you set up with the program. All you have to do is land on {pnt} and plug it into any terminal you find around the docks. That should also make it easier for you to get out of there if things go sour."]]), {pnt=targetplanet}))
    vn.func( function ()
       mem.misn_state = 0
    end )
