@@ -8,13 +8,11 @@ effect_name = effect_name or "Plasma Burn"
 damage_mod = damage_mod or 1
 base_duration = base_duration or 5
 
-local damage, penetration, isturret
+local damage
 local onload_old = onload
 function onload( o )
    local s     = o:specificstats()
    damage      = s.damage * damage_mod
-   penetration = s.penetration
-   isturret    = s.isturret
    if onload_old then
       onload_old( o )
    end
@@ -71,21 +69,9 @@ function descextra( p )
    return "#p"..fmt.f(_("Plasma burns deal an extra {damage:.1f} of damage over {duration} seconds on the target{corrosion}."),{damage=dmg, duration=dur, corrosion=cor}).."#0"
 end
 
-function onimpact( p, target )
-   local ts = target:stats()
-   local dmg = damage * (1 - math.min( 1, math.max( 0, ts.absorb - penetration ) ))
+function onimpact( p, target, _pos, _vel, _o, armour, shield )
+   local dmg = armour + shield
    local dur = base_duration
-
-   -- Modify by damage
-   if p:exists() then
-      local mod
-      if isturret then
-         mod = p:shipstat("tur_damage",true)
-      else
-         mod = p:shipstat("fwd_damage",true)
-      end
-      dmg = dmg * mod * p:shipstat("weapon_damage",true)
-   end
 
    if mem.corrosion_ii then
       dur = dur + dur * bonus_mod
