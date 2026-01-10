@@ -54,8 +54,6 @@ fn process_messages(luaspfx: &mut std::sync::RwLockWriteGuard<'_, Arena<LuaSpfx>
 }
 
 struct LuaSpfx {
-    /// Sound ignores pitch changes.
-    global: bool,
     /// Needs cleaning up
     cleanup: bool,
     ttl: f64,
@@ -106,43 +104,6 @@ static LUASPFX: RwLock<Arena<LuaSpfx>> = RwLock::new(Arena::new());
 
 pub fn clear() {
     LUASPFX.write().unwrap().clear();
-}
-
-pub fn set_speed(s: f32) {
-    for (_, spfx) in LUASPFX.write().unwrap().iter() {
-        if spfx.global || spfx.cleanup {
-            continue;
-        }
-        if let Some(sfx) = &spfx.sfx {
-            match sfx.call_mut(|sfx| {
-                sfx.set_pitch(s);
-            }) {
-                Ok(_) => (),
-                Err(e) => {
-                    warn_err!(e);
-                }
-            }
-        }
-    }
-}
-
-pub fn set_speed_volume(v: f32) {
-    for (_, spfx) in LUASPFX.write().unwrap().iter() {
-        if spfx.global || spfx.cleanup {
-            continue;
-        }
-        if let Some(sfx) = &spfx.sfx {
-            match sfx.call(|sfx| {
-                // Bypasses a lot of the systems we have, is it needed?
-                sfx.set_gain(sfx.volume() * v);
-            }) {
-                Ok(_) => (),
-                Err(e) => {
-                    warn_err!(e);
-                }
-            }
-        }
-    }
 }
 
 pub fn update(dt: f64) {
@@ -291,13 +252,13 @@ impl UserData for LuaSpfxRef {
                 Option<Function>,
             )|
              -> mlua::Result<Option<Self>> {
-                let (pos, global) = if let Some(pos) = pos {
+                let (pos, ingame) = if let Some(pos) = pos {
                     match pos {
                         Either::Left(v) => (Some(v), false),
                         Either::Right(g) => (None, g),
                     }
                 } else {
-                    (None, true)
+                    (None, false)
                 };
                 let env = match LuaEnv::current(lua) {
                     Some(env) => env,
@@ -321,7 +282,7 @@ impl UserData for LuaSpfxRef {
                             .data(Some(audiodata.clone()))
                             .position(pos.map(|v| v.into_vector2().cast()))
                             .play(true)
-                            .ingame(!global)
+                            .ingame(ingame)
                             .build()?;
                         Some(audio::LuaAudioRef {
                             audio,
@@ -330,7 +291,6 @@ impl UserData for LuaSpfxRef {
                     }
                 };
                 let spfx = LuaSpfx {
-                    global,
                     ttl,
                     update,
                     cleanup: false,
@@ -506,18 +466,6 @@ use std::ffi::c_double;
 #[unsafe(no_mangle)]
 pub extern "C" fn spfxL_clear() {
     clear();
-}
-
-#[allow(non_snake_case)]
-#[unsafe(no_mangle)]
-pub extern "C" fn spfxL_setSpeed(s: c_double) {
-    set_speed(s as f32);
-}
-
-#[allow(non_snake_case)]
-#[unsafe(no_mangle)]
-pub extern "C" fn spfxL_setSpeedVolume(v: c_double) {
-    set_speed(v as f32);
 }
 
 #[allow(non_snake_case)]

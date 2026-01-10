@@ -6,6 +6,7 @@ use std::os::raw::c_void;
 #[derive(
     Copy,
     Clone,
+    Debug,
     derive_more::From,
     derive_more::Into,
     derive_more::Mul,
