@@ -15,7 +15,7 @@
   <duration>6</duration>
   <range>800</range>
   <turn>40</turn>
-  <energy>125</energy>
+  <energy>80</energy>
   <damage>
    <type>emp</type>
    <penetrate>90</penetrate>
