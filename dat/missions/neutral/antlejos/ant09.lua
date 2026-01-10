@@ -258,7 +258,7 @@ function enter ()
    -- Much more bulky than normal
    mothership:intrinsicSet( "shield", 500 )
    mothership:intrinsicSet( "armour", 1500 )
-   mothership:intrinsicSet( "absorb", 30 )
+   mothership:intrinsicSet( "damage_taken", -30 )
    mothership:setActiveBoard(true) -- Can board them to blow them up
    hook.pilot( mothership, "death", "mothershipdeath" )
    hook.pilot( mothership, "board", "mothershipboard" )

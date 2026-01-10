@@ -17,6 +17,6 @@
   <mining_bonus>50</mining_bonus>
   <asteroid_scan>500</asteroid_scan>
   <armour_mod>20</armour_mod>
-  <absorb>15</absorb>
+  <damage_taken>-15</damage_taken>
  </stats>
 </ship>

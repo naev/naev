@@ -26,7 +26,7 @@
   <cargo_mod>30</cargo_mod>
   <shield_mod>20</shield_mod>
   <armour_mod>80</armour_mod>
-  <absorb>30</absorb>
+  <damage_taken>-30</damage_taken>
   <cargo_inertia>-20</cargo_inertia>
   <ew_hide>25</ew_hide>
   <ew_signature>-25</ew_signature>

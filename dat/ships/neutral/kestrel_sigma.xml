@@ -7,7 +7,7 @@
   <speed_mod>5</speed_mod>
   <turn_mod>-10</turn_mod>
   <armour_mod>10</armour_mod>
-  <absorb>10</absorb>
+  <damage_taken>-10</damage_taken>
   <jam_chance>33</jam_chance>
   <launch_lockon>30</launch_lockon>
   <ew_signature>-15</ew_signature>
