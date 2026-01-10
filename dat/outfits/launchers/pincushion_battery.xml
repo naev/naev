@@ -37,7 +37,7 @@
   <shots>5</shots>
   <damage>
    <type>kinetic</type>
-   <penetrate>24</penetrate>
+   <penetrate>28</penetrate>
    <physical>60</physical>
   </damage>
   <armour>5</armour>

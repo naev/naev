@@ -33,7 +33,7 @@
   <resist>20</resist>
   <damage>
    <type>emp</type>
-   <penetrate>36</penetrate>
+   <penetrate>52</penetrate>
    <physical>600</physical>
   </damage>
   <ai>smart</ai>
