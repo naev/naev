@@ -12,7 +12,7 @@
   <rarity>6</rarity>
  </general>
  <specific type="modification">
-  <damage_taken>-5</damage_taken>
+  <absorb>5</absorb>
   <cooldown_time>-10</cooldown_time>
   <loot_mod>10</loot_mod>
   <stress_dissipation>15</stress_dissipation>

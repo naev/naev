@@ -11,6 +11,6 @@
   <limit>hullcoat</limit>
  </general>
  <specific type="modification">
-  <damage_taken>-10</damage_taken>
+  <absorb>10</absorb>
  </specific>
 </outfit>
