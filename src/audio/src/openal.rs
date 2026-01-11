@@ -44,6 +44,14 @@ pub const ALC_FREQUENCY: ALCint = 0x1007;
 pub const ALC_MONO_SOURCES: ALCint = 0x1010;
 pub const ALC_STEREO_SOURCES: ALCint = 0x1011;
 
+// Error codes
+pub const ALC_NO_ERROR: ALCenum = 0;
+pub const ALC_INVALID_DEVICE: ALCenum = 0xA001;
+pub const ALC_INVALID_CONTEXT: ALCenum = 0xA002;
+pub const ALC_INVALID_ENUM: ALCenum = 0xA003;
+pub const ALC_INVALID_VALUE: ALCenum = 0xA004;
+pub const ALC_OUT_OF_MEMORY: ALCenum = 0xA005;
+
 unsafe extern "C" {
     pub fn alcOpenDevice(devicename: *const ALCchar) -> *mut ALCdevice;
     pub fn alcCloseDevice(device: *mut ALCdevice) -> ALCboolean;
@@ -379,6 +387,18 @@ impl Device {
             alcGetIntegerv(self.raw(), parameter, 1, &mut val);
         }
         val
+    }
+
+    pub fn get_error(&self) -> Option<&'static str> {
+        match unsafe { alcGetError(self.raw()) } {
+            ALC_NO_ERROR => None,
+            ALC_INVALID_DEVICE => Some("invalid device handle"),
+            ALC_INVALID_CONTEXT => Some("invalid context handle"),
+            ALC_INVALID_ENUM => Some("invalid enumeration passed to an ALC call"),
+            ALC_INVALID_VALUE => Some("invalid value passed to an ALC call"),
+            ALC_OUT_OF_MEMORY => Some("out of memory"),
+            _ => None,
+        }
     }
 }
 impl Drop for Device {

@@ -20,6 +20,7 @@ source_rust = files(
    'audio/src/efx.rs',
    'audio/src/openal.rs',
    'audio/src/source_spatialize.rs',
+   'audio/src/reopen_device.rs',
    'audio/src/buffer_length_query.rs',
    'audio/src/output_limiter.rs',
    'audio/src/events.rs',

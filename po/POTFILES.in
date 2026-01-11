@@ -3829,6 +3829,7 @@ src/audio/src/lib.rs
 src/audio/src/lua_audiodata.rs
 src/audio/src/openal.rs
 src/audio/src/output_limiter.rs
+src/audio/src/reopen_device.rs
 src/audio/src/source_spatialize.rs
 src/background.c
 src/background.h

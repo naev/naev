@@ -9,6 +9,7 @@ mod callback_buffer;
 mod direct_channels_remix;
 mod events;
 mod output_limiter;
+mod reopen_device;
 mod source_spatialize;
 use crate::buffer_length_query::consts::*;
 use crate::direct_channels_remix::consts::*;
@@ -18,6 +19,7 @@ use crate::events::consts::*;
 use crate::events::*;
 use crate::openal as al;
 use crate::openal::al_types::*;
+use crate::openal::alc_types::*;
 use crate::openal::*;
 use crate::output_limiter::consts::*;
 use crate::source_spatialize::consts::*;
@@ -1671,6 +1673,7 @@ impl Volume {
 }
 
 enum Message {
+    Disconnect,
     Remove(AudioRef),
     SourceStopped(ALuint),
 }
@@ -1688,6 +1691,8 @@ fn event_callback(event_type: ALenum, object: ALuint, param: ALuint, _message: &
                 .unwrap()
                 .push(Message::SourceStopped(object));
         }
+    } else if event_type == AL_EVENT_TYPE_DISCONNECTED_SOFT {
+        MESSAGES.lock().unwrap().push(Message::Disconnect);
     }
 }
 
@@ -1705,6 +1710,7 @@ pub struct System {
     compression_gain: AtomicF32,
     listener_pos: RwLock<Vector2<f32>>,
     air_absorption: AtomicF32,
+    attribs: Vec<ALCenum>,
 }
 impl System {
     pub fn new() -> Result<Self> {
@@ -1724,13 +1730,14 @@ impl System {
                 compression_gain: AtomicF32::new(0.0),
                 listener_pos: RwLock::new(Default::default()),
                 air_absorption: AtomicF32::new(0.0),
+                attribs: vec![0],
             });
         }
 
         let device = al::Device::new(None)?;
 
         // Doesn't distinguish between mono and stereo sources
-        let mut attribs: Vec<ALint> = vec![ALC_MONO_SOURCES, MAX_SOURCES as ALint];
+        let mut attribs: Vec<ALenum> = vec![ALC_MONO_SOURCES, MAX_SOURCES as ALint];
         let mut has_debug = if cfg!(debug_assertions) {
             let debug = debug::supported(&device);
             if debug {
@@ -1818,6 +1825,17 @@ impl System {
                 false
             }
         };
+        let has_reopen_device = if reopen_device::supported(&device) {
+            match reopen_device::init() {
+                Ok(()) => true,
+                Err(e) => {
+                    warn_err!(e);
+                    false
+                }
+            }
+        } else {
+            false
+        };
 
         debugx!(gettext("OpenAL started: {} Hz"), freq);
         let al_renderer = al::get_parameter_str(AL_RENDERER)?;
@@ -1851,6 +1869,9 @@ impl System {
         }
         if has_callback_buffer {
             extensions.push("callback_buffer".to_string());
+        }
+        if has_reopen_device {
+            extensions.push("reopen_device".to_string());
         }
         debugx!(gettext("   with {}"), extensions.join(", "));
         debug!("");
@@ -1896,6 +1917,7 @@ impl System {
             compression_gain: AtomicF32::new(0.0),
             listener_pos: RwLock::new(Default::default()),
             air_absorption: AtomicF32::new(0.0),
+            attribs,
         })
     }
 
@@ -2024,6 +2046,13 @@ impl System {
         let mut voices = AUDIO.voices.lock().unwrap();
         for m in messages.drain(..) {
             match m {
+                Message::Disconnect => {
+                    if let Some(ro) = reopen_device::REOPENDEVICE.get() {
+                        if let Err(e) = ro.reopen_device(&self.device, None, &self.attribs) {
+                            warn_err!(e);
+                        }
+                    }
+                }
                 Message::Remove(id) => {
                     voices.remove(id.0);
                 }
