@@ -33,6 +33,8 @@
        - "onhit" reports disable damage too [breaking change!!]
        - "onanyimpact" reports armour, shield, and disable damage done
        - "onimpact" reports armour, shield, and disable damage done
+   * Audio should try to switch devices when disconnected or default playback
+     device changes
 
 
 ## v0.13.3 (unreleased)
