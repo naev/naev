@@ -10,7 +10,6 @@
  </general>
  <specific type="modification">
   <armour>360</armour>
-  <absorb>5</absorb>
   <energy_regen_mod>-10</energy_regen_mod>
   <energy_regen_malus>2</energy_regen_malus>
  </specific>
