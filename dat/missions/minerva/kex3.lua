@@ -569,6 +569,9 @@ function maikki_arrives_real( pos )
    p:intrinsicSet( "fwd_dam_as_dis", 50 )
    p:intrinsicSet( "tur_dam_as_dis", 50 )
 
+   -- Be weak as butter
+   pmalik:intrinsicSet( "absorb", -100 )
+
    -- Fancy message
    local mc = minerva.maikkiP.colour
    local col = colour.new( mc[1], mc[2], mc[3], 1.0 )
