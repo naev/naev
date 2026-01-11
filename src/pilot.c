@@ -700,6 +700,7 @@ void pilot_setTurn( Pilot *p, double turn )
 int pilot_isHostile( const Pilot *p )
 {
    if ( !pilot_isFlag( p, PILOT_BRIBED ) &&
+        !pilot_isFlag( p, PILOT_FRIENDLY ) &&
         ( pilot_isFlag( p, PILOT_HOSTILE ) ||
           areEnemiesSystem( FACTION_PLAYER, p->faction, cur_system ) ) )
       return 1;
