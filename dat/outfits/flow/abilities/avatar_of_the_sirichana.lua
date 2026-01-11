@@ -33,8 +33,8 @@ function descextra( p, _o )
    else
       size = 0
    end
-   local s = "#y"..fmt.f(_([[Uses flow to enhance the ships damage by {dmg}%, movement by {mvt}%, absorption by {abs}%, jamming chance by {jam}%, and shield and energy regeneration by {regen}. Furthermore, it accelerates the ship by {accel}%. ]]),
-      {dmg=25, mvt=25, abs=20, jam=30, regen=50, accel=25}).."#0"
+   local s = "#y"..fmt.f(_([[Uses flow to enhance the ships damage by {dmg}%, movement by {mvt}%, damage taken by {abs}%, jamming chance by {jam}%, and shield and energy regeneration by {regen}. Furthermore, it accelerates the ship by {accel}%. ]]),
+      {dmg=25, mvt=25, abs=-25, jam=30, regen=50, accel=25}).."#0"
    for i=1,3 do
       local cost, drain, limit = getStats( nil, i )
       local pfx = flow.prefix(i)
