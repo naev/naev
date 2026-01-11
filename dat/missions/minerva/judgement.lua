@@ -617,7 +617,7 @@ Eventually when all argumentation is exhausted the different representatives rep
    }
 
    vn.label("06_kex")
-   vn.na(_([["You try to make your way to where Kex fell, but don't find them. As the smoke keeps on filling the room, you have no choice but to head towards to the door and try to save yourself. You jump over bodies and try to push yourself out of the room."]]))
+   vn.na(_([[You try to make your way to where Kex fell, but don't find them. As the smoke keeps on filling the room, you have no choice but to head towards to the door and try to save yourself. You jump over bodies and try to push yourself out of the room.]]))
    vn.jump("06")
 
    vn.label("06_getout")
