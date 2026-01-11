@@ -1,5 +1,6 @@
 ## v0.13.3 (unreleased)
 
+   * Made it easier to discover wormholes
    * Fixed pilots that were forced to be friendly attacking the player
    * Fixed some Lua SPFX being playing at different speeds
    * Made it so independents won't land on a certain person's laboratory
