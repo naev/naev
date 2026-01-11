@@ -46,6 +46,8 @@
    * Fixed engine sounds not playing at correct location
    * `poi_intro`: Made the mission start conditions a bit more relaxed and
      don't error on reject
+   * minerva: allow the campaign to continue more smoothly without needing to
+     reland
    * Spelling and grammar fixes
 
 
