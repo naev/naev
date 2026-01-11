@@ -10,6 +10,6 @@
  </general>
  <specific type="modification">
   <lua>outfits/bioship/skills/the_bite.lua</lua>
-  <absorb>50</absorb>
+  <damage_taken>-80</damage_taken>
  </specific>
 </outfit>

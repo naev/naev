@@ -10,6 +10,7 @@
  </general>
  <specific type="modification">
   <armour>360</armour>
+  <damage_taken>-3</damage_taken>
   <energy_regen_mod>-10</energy_regen_mod>
   <energy_regen_malus>2</energy_regen_malus>
  </specific>

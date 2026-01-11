@@ -9,7 +9,7 @@ local INCBONUS = 8   -- Increment per OVERFLOW
 local BONUS    = INCBONUS / OVERFLOW
 
 function descextra( _p, _s )
-   return "#y"..fmt.f(_("For every {over} flow over {min}, increases damage absorption by {inc}% up to {max}%."),
+   return "#y"..fmt.f(_("For every {over} flow over {min}, decreases damage taken by {inc}% up to {max}%."),
       {over=OVERFLOW, min=MINFLOW, inc=INCBONUS, max=MAXBONUS}).."#0"
 end
 
@@ -17,6 +17,6 @@ function update( p, _dt )
    local f = flow.get( p, mem )
    local mod = math.min( MAXBONUS, math.max( (f-MINFLOW)*BONUS, 0 ) )
    p:shippropSet{
-      absorb = mod,
+      damage_taken = -mod,
    }
 end
