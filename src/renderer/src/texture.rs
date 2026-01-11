@@ -2353,8 +2353,14 @@ pub fn open_texture(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
     if let mlua::Value::Nil = lua.named_registry_value("push_texture")? {
         let push_texture = lua.create_function(|lua, tex: mlua::LightUserData| {
             let tex = tex.0 as *mut Texture;
-            let tex = unsafe { &*tex };
-            lua.create_any_userdata(tex.try_clone()?)
+            if tex.is_null() {
+                Err(mlua::Error::RuntimeError(
+                    "push_texture received NULL".to_string(),
+                ))
+            } else {
+                let tex = unsafe { &*tex };
+                lua.create_any_userdata(tex.try_clone()?)
+            }
         })?;
         lua.set_named_registry_value("push_texture", push_texture)?;
 
