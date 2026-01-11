@@ -3831,6 +3831,7 @@ src/audio/src/openal.rs
 src/audio/src/output_limiter.rs
 src/audio/src/reopen_device.rs
 src/audio/src/source_spatialize.rs
+src/audio/src/system_events.rs
 src/background.c
 src/background.h
 src/base64.c
