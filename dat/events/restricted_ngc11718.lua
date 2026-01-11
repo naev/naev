@@ -34,4 +34,9 @@ function create ()
    if player.outfitNum( AURA ) <= 0 or rnd.rnd() < 0.5 then
       spawn_executor()
    end
+   hook.enter("done")
+end
+
+function done ()
+   evt.finish(false)
 end
