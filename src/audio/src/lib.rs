@@ -2083,10 +2083,10 @@ impl System {
         for m in messages.drain(..) {
             match m {
                 Message::Reopen => {
-                    if let Some(ro) = reopen_device::REOPENDEVICE.get() {
-                        if let Err(e) = ro.reopen_device(&self.device, None, &self.attribs) {
-                            warn_err!(e);
-                        }
+                    if let Some(ro) = reopen_device::REOPENDEVICE.get()
+                        && let Err(e) = ro.reopen_device(&self.device, None, &self.attribs)
+                    {
+                        warn_err!(e);
                     }
                 }
                 Message::Remove(id) => {
