@@ -36,14 +36,13 @@ static int escort_command( const Pilot *parent, const char *cmd, int index );
 int escort_addList( Pilot *p, const Ship *ship, EscortType_t type,
                     unsigned int id, int persist )
 {
-   Escort_t *escort;
    if ( p->escorts == NULL )
       p->escorts = array_create( Escort_t );
-   escort          = &array_grow( &p->escorts );
-   escort->ship    = ship;
-   escort->type    = type;
-   escort->id      = id;
-   escort->persist = persist;
+   Escort_t *escort = &array_grow( &p->escorts );
+   escort->ship     = ship;
+   escort->type     = type;
+   escort->id       = id;
+   escort->persist  = persist;
 
    return 0;
 }
@@ -103,14 +102,12 @@ unsigned int escort_create( Pilot *p, const Ship *ship, const vec2 *pos,
                             const vec2 *vel, double dir, EscortType_t type,
                             int add, int dockslot )
 {
-   Pilot       *pe;
-   PilotFlags   f;
-   unsigned int parent;
 
    /* Get important stuff. */
-   parent = p->id;
+   unsigned int parent = p->id;
 
    /* Set flags. */
+   PilotFlags f;
    pilot_clearFlagsRaw( f );
    // pilot_setFlagRaw( f, PILOT_NOJUMP );
    if ( p->faction == FACTION_PLAYER ) {
@@ -121,8 +118,8 @@ unsigned int escort_create( Pilot *p, const Ship *ship, const vec2 *pos,
       pilot_setFlagRaw( f, PILOT_CARRIED );
 
    /* Create the pilot. */
-   pe = pilot_create( ship, NULL, p->faction, "escort", dir, pos, vel, f,
-                      parent, dockslot, NULL );
+   Pilot *pe = pilot_create( ship, NULL, p->faction, "escort", dir, pos, vel, f,
+                             parent, dockslot, NULL );
    pe->parent = parent;
 
    /* Make invincible to player. */
@@ -130,10 +127,10 @@ unsigned int escort_create( Pilot *p, const Ship *ship, const vec2 *pos,
       pilot_setFlag( pe, PILOT_INVINC_PLAYER );
 
    /* Set some flags for consistent behaviour. */
-   if ( pilot_isFlag( p, PILOT_HOSTILE ) )
-      pilot_setFlag( pe, PILOT_HOSTILE );
    if ( pilot_isFlag( p, PILOT_FRIENDLY ) )
       pilot_setFlag( pe, PILOT_FRIENDLY );
+   else if ( pilot_isFlag( p, PILOT_HOSTILE ) )
+      pilot_setFlag( pe, PILOT_HOSTILE );
 
    /* Compute fighter bay bonuses. */
    if ( pilot_isFlagRaw( f, PILOT_CARRIED ) ) {
