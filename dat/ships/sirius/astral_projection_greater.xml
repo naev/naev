@@ -14,7 +14,7 @@
   <turn>150</turn>
  </movement>
  <health>
-  <absorb>60</absorb>
+  <absorb>85</absorb>
   <armour>1300</armour>
   <shield>0</shield>
   <shield_regen>0</shield_regen>
