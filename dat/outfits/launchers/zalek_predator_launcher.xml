@@ -1,0 +1,45 @@
+<outfit name="Za'lek Predator Launcher">
+ <general>
+  <shortname>Z. Predator L.</shortname>
+  <slot>weapon</slot>
+  <size>small</size>
+  <licence>Heavy Weapon</licence>
+  <cond>require("buyrep")("Za'lek", 20)</cond>
+  <condstr>You need at least 20% reputation with House Za'lek.</condstr>
+  <rarity>1</rarity>
+  <mass>17</mass>
+  <price>130000</price>
+  <description>The classic Hunter launcher has proven too unwieldy to equip on the Za'lek's mass-produced bomber drones. The Predator is a downsized version modelled for those drones, but suitable for any light vessel. The compact design of the launcher has nessesitated heavy compromises, especially to the targeting subsystem, to the point of it being closer to a simple missile than a drone by itself. Thus, it's a poor fit for anything other than what it excels at if brought to bear in numbers: harming medium-to-large sized enemy ships from a safe distance.</description>
+  <gfx_store>grenadelauncher</gfx_store>
+  <cpu>-11</cpu>
+ </general>
+ <specific type="turret launcher" secondary="1">
+  <delay>2</delay>
+  <reload_time>40</reload_time>
+  <amount>14</amount>
+  <lockon>5</lockon>
+  <iflockon>2</iflockon>
+  <trackmin>4000</trackmin>
+  <trackmax>10000</trackmax>
+  <ammo_mass>0.4</ammo_mass>
+  <gfx>empgrenade</gfx>
+  <sound>grenadefire</sound>
+  <sound_hit>grenade</sound_hit>
+  <spfx_shield>Exp-M</spfx_shield>
+  <spfx_armour>Exp-M</spfx_armour>
+  <trail_generator x="0">zalek-missile</trail_generator>
+  <duration blowup="armour">8</duration>
+  <accel>180</accel>
+  <turn>25</turn>
+  <speed_max>380</speed_max>
+  <resist>36</resist>
+  <damage>
+   <type>kinetic</type>
+   <penetrate>48</penetrate>
+   <physical>45</physical>
+  </damage>
+  <armour>20</armour>
+  <absorb>4</absorb>
+  <ai>smart</ai>
+ </specific>
+</outfit>
