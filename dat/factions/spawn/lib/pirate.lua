@@ -91,7 +91,7 @@ function spir.initDirectory( dir, faction, params )
             if not pm.lootables then
                pm.lootables = {}
             end
-            table.insert( pm.lootables, "treasure_map" )
+            pm["treasure_map"] = 1
          end
          if postprocess then
             postprocess(p)

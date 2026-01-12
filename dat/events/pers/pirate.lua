@@ -6,7 +6,7 @@ local function add_treasure_map( p )
    if not pm.lootables then
       pm.lootables = {}
    end
-   table.insert( pm.lootables, "treasure_map" )
+   pm.lootables["treasure_map"] = 1
 end
 
 return function ()

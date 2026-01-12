@@ -7,6 +7,7 @@ local fmt = require 'format'
 local der = require "common.derelict"
 local treasure = require "common.treasure_hunt"
 local treasureloot = require "common.loot"
+local poi = require "common.poi"
 
 local board_lootOne -- forward-declared function, defined at bottom of file
 local board_fcthit_check
@@ -16,7 +17,7 @@ local board_close, cargo_resetButton
 
 -- TODO put this in some file and load it there
 local LOOTABLES = {
-   ["treasure_map"] = function (_plt)
+   ["treasure_map"] = function (_plt, _data)
       -- Don't give more if they have too many
       if treasure.maps_owned() >= 3 then
          return nil
@@ -46,12 +47,26 @@ local LOOTABLES = {
          text = _("Treasure Map"),
          q = 1,
          type = "func",
-         bg = nil,
+         bg = special_col,
          alt = fmt.f(_([[Treasure Map
 A map that likely leads to some treasure!{lootstr}]]),
             {lootstr=reward_str}),
          data = function ()
             treasure.give_map_from( data )
+         end
+      }
+   end,
+   ["encrypted_data_matrix"] = function (_plt, num)
+      return {
+         image = nil, -- TODO image
+         text = _("Encrypted Data Matrix"),
+         q = num,
+         type = "func",
+         bg = special_col,
+         alt = _([[Encrypted Data Matrix
+Valuable data? Worthless memes? What could be behind the encryption?]]),
+         data = function ()
+            poi.data_give( num )
          end
       }
    end,
@@ -174,7 +189,7 @@ local function compute_lootables ( plt )
    local fuel = ps.fuel
    if fuel > 0 then
       table.insert( lootables, {
-         image = nil,
+         image = nil, -- TODO image
          text = _("Fuel"),
          q = math.min( math.floor( 0.5 + fuel*loot_mod ), ps.fuel_max ),
          type = "fuel",
@@ -186,10 +201,10 @@ local function compute_lootables ( plt )
 
    local mem = plt:memory()
    if mem.lootables then
-      for k,v in ipairs(mem.lootables) do
-         local l = LOOTABLES[v]
+      for key,data in pairs(mem.lootables) do
+         local l = LOOTABLES[key]
          if l then
-            local loot = l(plt)
+            local loot = l(plt, data)
             if loot then
                table.insert( lootables, loot )
             end
