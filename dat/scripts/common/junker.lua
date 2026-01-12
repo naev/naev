@@ -26,6 +26,11 @@ function lib.spawn_pilot( pos )
    local m = junker:memory()
    if player.outfitNum( PLATES ) <= 0 then
       m.lootable_outfit = PLATES
+   else
+      if not m.lootables then
+         m.lootables = {}
+      end
+      m.lootables["encrypted_data_matrix"] = 1
    end
    m.capturable = true
    junker:outfitAddIntrinsic("Escape Pod")

@@ -128,9 +128,6 @@ return function ()
             local m = p:memory()
             m.comm_greet = _([["Give me back my pack!"]])
             m.taunt = m.comm_greet
-            m.lootables = {
-               ["encrypted_data_matrix"] = 1,
-            }
             return p
          end
       } )
