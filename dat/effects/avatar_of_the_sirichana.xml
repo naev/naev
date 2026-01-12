@@ -13,7 +13,7 @@
   <accel_mod>25</accel_mod>
   <action_speed>25</action_speed>
   <time_mod>-25</time_mod>
-  <absorb>20</absorb>
+  <damage_taken>-25</damage_taken>
   <jam_chance>30</jam_chance>
   <shield_regen_mod>50</shield_regen_mod>
   <energy_regen_mod>50</energy_regen_mod>

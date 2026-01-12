@@ -19,7 +19,7 @@ local function activate( p, po )
    local pos = p:pos()
    for k,t in ipairs(p:getEnemies( radius )) do
       local ts = t:stats()
-      local dmg = damage * (1 - math.min( 1, math.max( 0, ts.absorb - penetration ) ))
+      local dmg = damage * (1 - math.min( 1, math.max( 0, ts.absorb - penetration ) )) * t:shipstat("damage_taken",true)
       local norm, angle = (t:pos() - pos):polar()
       local mod = 1 - norm / radius
       local mass = math.pow( damage / 15, 2 )

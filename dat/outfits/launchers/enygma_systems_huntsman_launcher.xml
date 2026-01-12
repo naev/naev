@@ -34,7 +34,7 @@
   <resist>85</resist>
   <damage>
    <type>emp</type>
-   <penetrate>70</penetrate>
+   <penetrate>100</penetrate>
    <physical>300</physical>
    <disable>600</disable>
   </damage>

@@ -9,7 +9,7 @@
   <rarity>1</rarity>
   <mass>12</mass>
   <price>40000</price>
-  <description>This powerful energy weapon is built to bombard from great range with ion bursts, causing debilitating damage to a target's shields and electrical systems, which can leave a ship effectively defenceless. It was developed by the Za'lek for use on their heavier droness to supplement the short range and high damage of their beams.</description>
+  <description>This powerful energy weapon is built to bombard from great range with ion bursts, causing debilitating damage to a target's shields and electrical systems, which can leave a ship effectively defenceless. It was developed by the Za'lek for use on their heavier drones to supplement the short range and high damage of their beams.</description>
   <gfx_store>weapon01</gfx_store>
   <cpu>-10</cpu>
  </general>
@@ -31,7 +31,7 @@
   <speed>1300</speed>
   <damage>
    <type>ion</type>
-   <penetrate>24</penetrate>
+   <penetrate>20</penetrate>
    <physical>13</physical>
   </damage>
   <ai>unguided</ai>

@@ -19,7 +19,7 @@
   <speed>1200</speed>
   <range>2200</range>
   <falloff>1600</falloff>
-  <energy>153</energy>
+  <energy>98</energy>
   <trackmin>3600</trackmin>
   <trackmax>12000</trackmax>
   <damage>

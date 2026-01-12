@@ -15,7 +15,7 @@
       {'mass', 550},
       {'cpu', -160, 0},
       {'cargo', 270, 130},
-      {'absorb', 56, 12},
+      {'absorb', 85, 20},
       {'armour', 800, 300},
       {'cargo_inertia', -10, -4},
       {'cargo_mod', 10, 4},
