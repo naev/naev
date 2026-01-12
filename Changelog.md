@@ -10,6 +10,16 @@
    * Update dat/rescue.lua for the multicore #2931
    * Fix Dvaered scenario `antiflf03` #2746
 
+ ### Gameplay
+
+   * Absorption values have been reworked so that penetration is more useful
+   * Some skills have been reworked to use damage reduction instead of
+     absorption
+       - Core hulls give more absorption in general
+       - Increased penetration of launchers
+       - Ships take a minimum amount of damage no matter amount of absorption
+   * Ultra-heavy weapons have reduced energy usage
+
  ### Content
 
    * 2 new events
