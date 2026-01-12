@@ -189,13 +189,25 @@ end
 function inspect_moveto( target )
    local dir   = ai.face( target, nil, true )
    __moveto_generic( target, dir )
+   return dir
 end
 
 -- luacheck: globals inspect_attacker
 function inspect_attacker( target )
-   inspect_moveto( target )
+   local dir = inspect_moveto( target )
    -- Activate PD and deploy fighters
    atk.fb_and_pd()
+   -- Try to inspect faster when possible
+   if mem._o and dir < math.rad(10) then
+      local plt = ai.pilot()
+      if mem._o.afterburner and plt:energy() > 85 then
+         plt:outfitToggle( mem._o.afterburner, true )
+      elseif mem._o.blink_drive then
+         plt:outfitToggle( mem._o.blink_drive, true )
+      elseif mem._o.blink_engine then
+         plt:outfitToggle( mem._o.blink_engine, true )
+      end
+   end
 end
 
 
