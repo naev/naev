@@ -35,6 +35,7 @@
        - "onimpact" reports armour, shield, and disable damage done
    * Audio should try to switch devices when disconnected or default playback
      device changes
+   * Intrinsic outfits now stack in the equipment view
 
 
 ## v0.13.3 (unreleased)

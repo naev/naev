@@ -2283,10 +2283,22 @@ void equipment_updateShips( unsigned int wid, const char *str )
       ImageArrayCell *cells;
       int             ncells  = array_size( ship->outfit_intrinsic );
       Outfit const  **outfits = (Outfit const **)array_create( Outfit * );
-      for ( int i = 0; i < ncells; i++ )
-         array_push_back( &outfits, ship->outfit_intrinsic[i].outfit );
+      for ( int i = 0; i < ncells; i++ ) {
+         const Outfit *o     = ship->outfit_intrinsic[i].outfit;
+         int           found = 0;
+         for ( int j = 0; j < array_size( outfits ); j++ ) {
+            if ( outfits[j] == o ) {
+               found = 1;
+               break;
+            }
+         }
+         if ( found )
+            continue;
+         array_push_back( &outfits, o );
+      }
 
-      cells = outfits_imageArrayCells( outfits, &ncells, ship, 0 );
+      ncells = array_size( outfits );
+      cells  = outfits_imageArrayCells( outfits, &ncells, ship, 0 );
 
       window_posWidget( wid, "txtSDesc", &tx, &ty );
       window_dimWidget( wid, "txtSDesc", &tw, &th );
