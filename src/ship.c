@@ -1268,7 +1268,10 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
                         temp->name, xml_get( cur ) );
                   continue;
                }
-               array_push_back( &temp->outfit_intrinsic, o );
+               int count = 1;
+               xmlr_attr_int_def( cur, "count", count, 1 );
+               for ( int i = 0; i < count; i++ )
+                  array_push_back( &temp->outfit_intrinsic, o );
             } else
                WARN( _( "Ship '%s' has unknown intrinsic node '%s'." ),
                      temp->name, cur->name );
