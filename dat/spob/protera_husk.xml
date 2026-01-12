@@ -2,7 +2,7 @@
  <lua>protera_husk.lua</lua>
  <pos x="7830.104028" y="-8539.559224"/>
  <GFX>
-  <space>X00</space>
+  <space>protera_husk</space>
   <exterior>mining4</exterior>
  </GFX>
  <presence>
