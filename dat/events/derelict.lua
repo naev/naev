@@ -324,7 +324,7 @@ function goodevent()
    local fcts = {}
    for f,i in pairs(sysfct) do
       -- Only insert factions that can still gain standing
-      if f:hitTest( 2, "script" ) > 0 then
+      if faction.hitTest( f, 2 ) > 0 then
          table.insert( fcts, f )
       end
    end
