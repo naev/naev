@@ -9,7 +9,7 @@
      don't error on reject
    * minerva: allow the campaign to continue more smoothly without needing to
      reland
-   * Fixed PILOT_SHIELD_DOWN_TIME not being read from constants
+   * Fixed `PILOT_SHIELD_DOWN_TIME` not being read from constants
    * Spelling and grammar fixes
 
 
