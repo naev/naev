@@ -32,5 +32,5 @@ softfloat = { workspace = true }
 serde = { workspace = true }
 serde-seeded = { workspace = true }
 audio = { workspace = true }
-resvg = "0.45"
+resvg = "0.46"
 naga = { version="28", features=["wgsl-in", "glsl-out"] }
