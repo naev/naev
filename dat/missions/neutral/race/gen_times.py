@@ -119,7 +119,7 @@ for nj, j in enumerate(['Bronze', 'Silver', 'Gold']):
       total = {
          'speed': 0, 'accel': 0,
          'speed_fact': 1.0, 'accel_fact': 1.0,
-         'speed_AB': 1.0, 'accel_AB': 1.0, 'time_speedup_AB': 1.0}
+         'speed_AB': 1.0, 'accel_AB': 1.0, 'action_speed_AB': 1.0}
       for k, v in c.items():
          if isinstance(v,tuple):
             v, count = v
@@ -134,7 +134,7 @@ for nj, j in enumerate(['Bronze', 'Silver', 'Gold']):
             o.stack(o)
          else:
             o = naev_xml(fnam)
-         for f in ['speed', 'speed_mod', 'accel', 'accel_mod', 'time_speedup']:
+         for f in ['speed', 'speed_mod', 'accel', 'accel_mod', 'action_speed']:
             if r := o.find(f):
                r *= count
                if k in {'AB', 'AG'}:
@@ -148,7 +148,7 @@ for nj, j in enumerate(['Bronze', 'Silver', 'Gold']):
          del total[f + '_fact']
       in_AB = {k:total[k]*total[k + '_AB'] for k in ['speed', 'accel']}
       final = total['speed'] + total['accel']/PHYSICS_SPEED_DAMP
-      final_AB = (in_AB['speed'] + in_AB['accel']/PHYSICS_SPEED_DAMP) * total['time_speedup_AB']
+      final_AB = (in_AB['speed'] + in_AB['accel']/PHYSICS_SPEED_DAMP) * total['action_speed_AB']
 
       vals = [(a[0].split('/')[-1], a[1]) if isinstance(a, tuple) else a.split('/')[-1] for a in c.values()]
       info('\n' + config_to_str(c))
