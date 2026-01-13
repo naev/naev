@@ -40,6 +40,7 @@ static int commodityL_description( lua_State *L );
 static int commodityL_new( lua_State *L );
 static int commodityL_illegalto( lua_State *L );
 static int commodityL_illegality( lua_State *L );
+static int commodityL_tags( lua_State *L );
 
 static const luaL_Reg commodityL_methods[] = {
    { "__tostring", commodityL_name },
@@ -59,6 +60,7 @@ static const luaL_Reg commodityL_methods[] = {
    { "new", commodityL_new },
    { "illegalto", commodityL_illegalto },
    { "illegality", commodityL_illegality },
+   { "tags", commodityL_tags },
    { 0, 0 } }; /**< Commodity metatable methods. */
 
 /**
@@ -603,4 +605,20 @@ static int commodityL_illegality( lua_State *L )
       lua_rawseti( L, -2, i + 1 );
    }
    return 1;
+}
+
+/**
+ * @brief Gets the commodity tags.
+ *
+ *    @luatparam c Commodity to get tags of.
+ *    @luatparam[opt=nil] string tag Tag to check if exists.
+ *    @luatreturn table|boolean Table of tags where the name is the key and true
+ * is the value or a boolean value if a string is passed as the second parameter
+ * indicating whether or not the specified tag exists.
+ * @luafunc tags
+ */
+static int commodityL_tags( lua_State *L )
+{
+   const Commodity *c = luaL_validcommodity( L, 1 );
+   return nlua_helperTags( L, 2, c->tags );
 }

@@ -231,6 +231,9 @@ static void commodity_freeOne( Commodity *com )
       free( this );
    }
    array_free( com->illegalto );
+   for ( int i = 0; i < array_size( com->tags ); i++ )
+      free( com->tags[i] );
+   array_free( com->tags );
    /* Clear the memory. */
    memset( com, 0, sizeof( Commodity ) );
 }
@@ -370,6 +373,25 @@ static int commodity_parse( Commodity *temp, const char *filename )
          xmlr_attr_strd( node, "type", newdict->name );
          newdict->value         = xml_getFloat( node );
          temp->faction_modifier = newdict;
+         continue;
+      }
+
+      /* Parse tags. */
+      if ( xml_isNode( node, "tags" ) ) {
+         xmlNodePtr cur = node->children;
+         if ( temp->tags == NULL )
+            temp->tags = array_create( char * );
+         do {
+            xml_onlyNodes( cur );
+            if ( xml_isNode( cur, "tag" ) ) {
+               const char *tmp = xml_get( cur );
+               if ( tmp != NULL )
+                  array_push_back( &temp->tags, strdup( tmp ) );
+               continue;
+            }
+            WARN( _( "Commodity '%s' has unknown node in tags '%s'." ),
+                  temp->name, cur->name );
+         } while ( xml_nextNode( cur ) );
          continue;
       }
 

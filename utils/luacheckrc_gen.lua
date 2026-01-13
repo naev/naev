@@ -270,6 +270,7 @@ stds.commodity = {
             new = {},
             illegalto = {},
             illegality = {},
+            tags = {},
          }
       }
    }

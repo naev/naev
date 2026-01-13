@@ -83,6 +83,8 @@ typedef struct Commodity_ {
                                   population. */
    CommodityModifier
       *faction_modifier; /**< Price modifier for different factions. */
+
+   char **tags; /**< Commodity tags. */
 } Commodity;
 
 typedef struct CommodityPrice_ {
