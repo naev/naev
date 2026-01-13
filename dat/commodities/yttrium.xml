@@ -6,4 +6,8 @@
  <price_ref>Gold</price_ref>
  <price_mod>1.47</price_mod>
  <always_can_sell/>
+ <tags>
+  <tag>mining</tag>
+  <tag>uncommon</tag>
+ </tags>
 </commodity>

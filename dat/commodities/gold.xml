@@ -19,4 +19,8 @@
  <faction_modifier type="Black Lotus">1.2</faction_modifier>
  <faction_modifier type="Sirius">1.1</faction_modifier>
  <faction_modifier type="Soromid">0.7</faction_modifier>
+ <tags>
+  <tag>mining</tag>
+  <tag>uncommon</tag>
+ </tags>
 </commodity>

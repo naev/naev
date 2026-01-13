@@ -6,4 +6,8 @@
  <price>5000</price>
  <always_can_sell/>
  <price_constant/>
+ <tags>
+  <tag>mining</tag>
+  <tag>special</tag>
+ </tags>
 </commodity>

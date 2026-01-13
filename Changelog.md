@@ -46,6 +46,7 @@
    * Audio should try to switch devices when disconnected or default playback
      device changes
    * Intrinsic outfits now stack in the equipment view
+   * Commodities now support tags
 
 
 ## v0.13.3 (unreleased)

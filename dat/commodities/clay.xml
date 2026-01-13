@@ -5,4 +5,8 @@
  <price_mod>0.92</price_mod>
  <price_ref>Water</price_ref>
  <always_can_sell/>
+ <tags>
+  <tag>mining</tag>
+  <tag>common</tag>
+ </tags>
 </commodity>

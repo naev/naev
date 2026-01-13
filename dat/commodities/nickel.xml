@@ -5,4 +5,8 @@
  <price_ref>Ore</price_ref>
  <price_mod>1.23</price_mod>
  <always_can_sell/>
+ <tags>
+  <tag>mining</tag>
+  <tag>common</tag>
+ </tags>
 </commodity>

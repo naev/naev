@@ -25,4 +25,8 @@
  <population_modifier>0.7</population_modifier>
  <faction_modifier type="FLF">1.2</faction_modifier>
  <faction_modifier type="Frontier">1.2</faction_modifier>
+ <tags>
+  <tag>mining</tag>
+  <tag>common</tag>
+ </tags>
 </commodity>
