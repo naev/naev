@@ -12,7 +12,6 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 
    /* Signed Distance Function Exclamation Point */
    vec2 p = 2.0*uv-1.0;
-   p.y *= -1.0;
    float dc = sdCircle( p, 1.0 );
    p *= 1.2;
    float d = min( sdCircle( p+vec2(0.0,0.65), 0.15), sdUnevenCapsuleY( p+vec2(0,0.15), 0.1, 0.25, 0.7 ));
