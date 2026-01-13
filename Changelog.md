@@ -22,6 +22,7 @@
 
  ### Content
 
+   * 1 new mission
    * 2 new events
    * 3 new outfits
    * Made NGC-11718 a bit more interesting
