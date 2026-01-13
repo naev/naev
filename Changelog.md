@@ -9,6 +9,7 @@
      don't error on reject
    * minerva: allow the campaign to continue more smoothly without needing to
      reland
+   * Qorellia found their lost Mission BBS
    * Fixed `PILOT_SHIELD_DOWN_TIME` not being read from constants
    * Fixed alert exclamation mark being upside down
    * Spelling and grammar fixes
