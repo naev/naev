@@ -657,7 +657,7 @@ static int systemL_asteroidFields( lua_State *L )
       int        nt  = 0;
       for ( int c = 0; c < array_size( all ); c++ ) {
          if ( asteroids_hasCommodity( a, &all[c] ) ) {
-            lua_pushstring( L, all[c].name );
+            lua_pushcommodity( L, &all[c] );
             lua_rawseti( L, -2, ++nt );
          }
       }
