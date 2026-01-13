@@ -637,19 +637,31 @@ static int systemL_asteroidFields( lua_State *L )
    /* Push all jumps. */
    lua_newtable( L );
    for ( int i = 0; i < array_size( s->asteroids ); i++ ) {
+      const AsteroidAnchor *a = &s->asteroids[i];
       lua_newtable( L );
 
       lua_pushinteger( L, i + 1 );
       lua_setfield( L, -2, "id" );
 
-      lua_pushvector( L, s->asteroids[i].pos );
+      lua_pushvector( L, a->pos );
       lua_setfield( L, -2, "pos" );
 
-      lua_pushnumber( L, s->asteroids[i].density );
+      lua_pushnumber( L, a->density );
       lua_setfield( L, -2, "density" );
 
-      lua_pushnumber( L, s->asteroids[i].radius );
+      lua_pushnumber( L, a->radius );
       lua_setfield( L, -2, "radius" );
+
+      lua_newtable( L );
+      Commodity *all = commodity_getAll();
+      int        nt  = 0;
+      for ( int c = 0; c < array_size( all ); c++ ) {
+         if ( asteroids_hasCommodity( a, &all[c] ) ) {
+            lua_pushstring( L, all[c].name );
+            lua_rawseti( L, -2, ++nt );
+         }
+      }
+      lua_setfield( L, -2, "commodities" );
 
       lua_rawseti( L, -2, i + 1 );
    }

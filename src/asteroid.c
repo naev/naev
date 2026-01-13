@@ -1110,6 +1110,21 @@ void asteroids_free( void )
    gatherable_free();
 }
 
+int asteroids_hasCommodity( const AsteroidAnchor *ast, const Commodity *com )
+{
+   for ( int i = 0; i < array_size( ast->groups ); i++ ) {
+      const AsteroidTypeGroup *g = ast->groups[i];
+      for ( int j = 0; j < array_size( g->types ); j++ ) {
+         const AsteroidType *t = g->types[j];
+         for ( int k = 0; k < array_size( t->material ); k++ ) {
+            if ( t->material[k].material == com )
+               return 1;
+         }
+      }
+   }
+   return 0;
+}
+
 /**
  * @brief See if the position is in an asteroid field.
  *

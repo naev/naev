@@ -163,6 +163,7 @@ AsteroidTypeGroup       *astgroup_getName( const char *name );
 
 /* Misc functions. */
 int  asteroids_inField( const vec2 *p );
+int  asteroids_hasCommodity( const AsteroidAnchor *ast, const Commodity *com );
 void asteroids_computeInternals( AsteroidAnchor *a );
 void asteroid_hit( Asteroid *a, const Damage *dmg, int max_rarity,
                    double mine_bonus );
