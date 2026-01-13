@@ -141,9 +141,12 @@ credits_t economy_getPriceAtTime( const Commodity *com, const StarSystem *sys,
          break;
    }
    if ( i >= array_size( p->commodities ) ) {
-      WARN( _( "Price for commodity '%s' not known on this spob." ),
-            com->name );
-      return 0;
+      credits_t mean = 0;
+      double    std  = 0.;
+      if ( economy_getAveragePrice( com, &mean, &std ) )
+         WARN( _( "Price for commodity '%s' not known on this spob." ),
+               com->name );
+      return mean;
    }
    commPrice = &p->commodityPrice[i];
    /* Calculate price. */
