@@ -20,6 +20,7 @@
        - Ships take a minimum amount of damage no matter amount of absorption
    * Ultra-heavy weapons have reduced energy usage
    * Added accessibility option to disable screen shaking
+   * Gauntlet NPCs get their fighters disabled when they are disabled
 
  ### Content
 

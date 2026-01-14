@@ -190,6 +190,9 @@ function p_disabled( p )
    p:setInvisible( true ) -- can't target
    p:setInvincible( true ) -- just stays there
    enemy_out( p )
+   for k,e in ipairs(p:followers()) do
+      e:setDisable()
+   end
 end
 function p_death( p )
    enemy_out( p )
