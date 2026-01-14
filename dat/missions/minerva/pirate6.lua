@@ -115,7 +115,7 @@ They clear their throat.
    ecb(fmt.f(_([["It has been brought to the attention of the Empire, that the {sys} system has fallen into lawlessness. There have been reports of heavy pirate activity, scuffles between Great Houses, kidnappings, assassinations, and the likes."]]),
       {sys=mainsys}))
    ecb(fmt.f(_([[They hit their fist on a table in front of them.
-The Empire will not stand for such displays of brazen debauchery, and thus invokes EL2897 regarding the sovereignty of the {sys} system."]]),
+"The Empire will not stand for such displays of brazen debauchery, and thus invokes EL2897 regarding the sovereignty of the {sys} system."]]),
       {sys=mainsys}))
    ecb(fmt.f(_([["All interested parties should proceed to the Jade Court in the {sys} system. Deliberations will begin once quorum is reached."]]),
       {sys=trialsys}))
