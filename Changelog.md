@@ -13,6 +13,7 @@
    * Fixed `PILOT_SHIELD_DOWN_TIME` not being read from constants
    * Fixed alert exclamation mark being upside down
    * Spelling and grammar fixes
+   * Translation updates
 
 
 ## v0.13.2
