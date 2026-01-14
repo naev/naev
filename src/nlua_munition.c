@@ -288,16 +288,15 @@ static int weapon_isHostile( const Weapon *w, const Pilot *p )
    if ( p->id == w->parent )
       return 0;
 
+   /* Always try to shoot down stuff targetting self. */
    if ( ( w->target.type == TARGET_PILOT ) && ( w->target.u.id == p->id ) )
       return 1;
 
    /* Let hostiles hit player. */
-   if ( p->faction == FACTION_PLAYER ) {
+   if ( pilot_isWithPlayer( p ) ) {
       const Pilot *parent = pilot_get( w->parent );
-      if ( parent != NULL ) {
-         if ( pilot_isHostile( parent ) )
-            return 1;
-      }
+      if ( parent != NULL )
+         return pilot_areEnemies( p, parent );
    }
 
    /* Hit non-allies. */
