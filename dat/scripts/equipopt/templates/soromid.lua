@@ -91,7 +91,7 @@ local function equip_soromid( p, opt_params  )
          local stage = params.bioship_stage
          if not stage then
             local maxstage = bioship.maxstage( p )
-            stage = math.max( 1, maxstage - prob.poisson_sample( 1 ) )
+            stage = math.max( 1, maxstage - prob.poisson_sample( maxstage/3 ) )
          end
          bioship.simulate( p, stage, params.bioship_skills )
       else
