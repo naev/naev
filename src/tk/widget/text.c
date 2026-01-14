@@ -12,6 +12,7 @@
 /** @endcond */
 
 #include "tk/toolkit_priv.h"
+#include "toolkit.h"
 
 static void txt_render( Widget *txt, double bx, double by );
 static void txt_cleanup( Widget *txt );
@@ -120,6 +121,7 @@ void window_modifyText( const unsigned int wid, const char *name,
    if ( wgt->dat.txt.text )
       free( wgt->dat.txt.text );
    wgt->dat.txt.text = ( newstring ) ? strdup( newstring ) : NULL;
+   toolkit_rerender();
 }
 
 /**
