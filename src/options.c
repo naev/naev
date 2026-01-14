@@ -1212,6 +1212,10 @@ static void opt_accessibility( unsigned int wid )
    window_addText( wid, x, y, 100, 20, 0, "txtSVideo", NULL, cHeader,
                    _( "Video:" ) );
    y -= 20;
+   window_addCheckbox( wid, x, y, cw - 20, 20, "chkDisableScreenShake",
+                       _( "Disable screen shaking" ), NULL,
+                       conf.disable_screen_shake );
+   y -= 30;
    window_addText( wid, x, y - 3, cw - 20, 20, 0, "txtSaturation", NULL, NULL,
                    NULL );
    y -= 20;
@@ -1287,6 +1291,8 @@ static int opt_accessibilitySave( unsigned int wid, const char *str )
 
    /* Checkboxes need saving. */
    conf.puzzle_skip = window_checkboxState( wid, "chkPuzzleSkip" );
+   conf.disable_screen_shake =
+      window_checkboxState( wid, "chkDisableScreenShake" );
 
    /* Colourblind and faders are handled in their respective functions. */
    return 0;

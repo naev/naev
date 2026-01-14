@@ -19,6 +19,7 @@
        - Increased penetration of launchers
        - Ships take a minimum amount of damage no matter amount of absorption
    * Ultra-heavy weapons have reduced energy usage
+   * Added accessibility option to disable screen shaking
 
  ### Content
 

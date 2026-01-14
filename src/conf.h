@@ -130,6 +130,8 @@ typedef struct PlayerConf_s {
    int    low_memory;       /**< Low memory mode. */
    int max_3d_tex_size; /**< How large to make the textures in low memory mode.
                          */
+   int
+      disable_screen_shake; /**< Disables effects like damage or afterburner. */
 
    /* Sound. */
    int

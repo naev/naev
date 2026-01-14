@@ -159,6 +159,7 @@ void conf_setDefaults( void )
    conf.lastversion              = NULL;
    conf.translation_warning_seen = 0;
    memset( &conf.last_played, 0, sizeof( time_t ) );
+   conf.disable_screen_shake = 0;
 
    /* Accessibility. */
    conf.puzzle_skip = PUZZLE_SKIP_DEFAULT;
@@ -372,6 +373,7 @@ int conf_loadConfig( const char *file )
    conf_loadFloat( L, "gamma_correction", conf.gamma_correction );
    conf_loadBool( L, "low_memory", conf.low_memory );
    conf_loadInt( L, "max_3d_tex_size", conf.max_3d_tex_size );
+   conf_loadBool( L, "disable_screen_shake", conf.disable_screen_shake );
 
    /* FPS */
    conf_loadBool( L, "showfps", conf.fps_show );
@@ -952,6 +954,10 @@ int conf_saveConfig( const char *file )
 
    conf_saveComment( _( "Minimize the game on focus loss." ) );
    conf_saveBool( "minimize", conf.minimize );
+   conf_saveEmptyLine();
+
+   conf_saveComment( _( "Disable screen shaking effects." ) );
+   conf_saveBool( "disable_screen_shake", conf.disable_screen_shake );
    conf_saveEmptyLine();
 
    conf_saveComment(
