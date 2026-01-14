@@ -18,9 +18,9 @@ You can also see the path that Naev is looking for plugins from the plugins tab 
 ## Creating a Plugin
 
 Plugins can either be a directory structure or compressed into a single `zip` file which allows for easier distribution.
-You can create them by simply creating a directory with a [plugin.toml metadata file](./plugins/metadata.md), and it should already be usable, although it will do nothing.
+You can create them by simply creating a directory with a [plugin.toml metadata file](./metadata.md), and it should already be usable, although it will do nothing.
 To add functionality to the plugin, you have to add data files for the functionality you want.
-See the information on the [data structure](./src/data.md) for how it is organized, and refer to the other sections for adding or modifying particular functionality.
+See the information on the [data structure](../data.md) for how it is organized, and refer to the other sections for adding or modifying particular functionality.
 
 ## Plugin Repository
 
