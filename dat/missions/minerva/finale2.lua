@@ -129,7 +129,7 @@ function accept ()
 She lets out a sigh.
 "I'll try to give you a short rundown on what we know."]]))
       maikki(_([[She clears her throat.
-"So, our intel hints that they are working on an experimental energy weapon of some time at the station. Should be quite preliminary design, but we don't have much info on the current state of development. Either way, it's going to be useful and/or worth a fortune!"]]))
+"So, our intel hints that they are working on an experimental energy weapon of some time at the station. Should be quite a preliminary design, but we don't have much info on the current state of development. Either way, it's going to be useful and/or worth a fortune!"]]))
       maikki(_([["Apparently, the laboratory is located in a penthouse to not raise suspicion. Security is quite tight around the area, but we've got the likely location narrowed down. I forget where it was, but I'll send you the documents we have on it."]]))
       maikki(_([["We don't really know what we'll find there, but I guess you'll have to improvise? It's pretty much now or never, and we won't get a second chance once the station gets locked down."]]))
       maikki(_([["You'll have to make it to the station on your own, but once you get there, some pirate operatives should be there to help you ransack the place. You won't have too much time, so just try to grab whatever you can and get out of there. Make sure to keep an eye out for any sort of thing that can help Kex. I'm not sure our engineers will be able to figure it out by themselves."]]))
