@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2026-01-04 21:54+0900\n"
+"POT-Creation-Date: 2026-01-14 16:44+0900\n"
 "PO-Revision-Date: 2023-04-10 00:50+0000\n"
 "Last-Translator: Davide Prina <Davide.Prina@tuta.io>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/naev/naev/it/>\n"
@@ -14800,11 +14800,11 @@ msgstr ""
 #. Get player / game info
 #. Some safe defaults
 #. Has to be in percent
-#. See if escorting
 #. Set time compression maximum
 #. Set initial time compression base
 #. Initialize health
 #. Compute slowest fleet speed
+#. See if escorting
 #. Send message to follows to regroup
 #. Start timer to begin time compressing right away
 #. restore sped
@@ -51124,6 +51124,8 @@ msgstr ""
 #. Run on saves older than 0.11.0
 #. Run on saves older than 0.12.0
 #. Run on saves older than 0.13.0
+#. Small bug fixed in 0.13.2 requires updating
+#. Bug that cleared FLF known state
 #. Note that games before 0.10.0 will have lastplayed set days from the unix epoch
 #. Hack to avoid the player seeing the message every time they load a game without quitting
 msgid "Your ship AI, {ainame}, materializes in front of you."
@@ -65654,7 +65656,7 @@ msgstr ""
 msgid ""
 "She clears her throat.\n"
 "\"So, our intel hints that they are working on an experimental energy weapon "
-"of some time at the station. Should be quite preliminary design, but we "
+"of some time at the station. Should be quite a preliminary design, but we "
 "don't have much info on the current state of development. Either way, it's "
 "going to be useful and/or worth a fortune!\""
 msgstr ""
@@ -67539,10 +67541,10 @@ msgid "Try to find Kex."
 msgstr ""
 
 msgid ""
-"\"You try to make your way to where Kex fell, but don't find them. As the "
+"You try to make your way to where Kex fell, but don't find them. As the "
 "smoke keeps on filling the room, you have no choice but to head towards to "
 "the door and try to save yourself. You jump over bodies and try to push "
-"yourself out of the room.\""
+"yourself out of the room."
 msgstr ""
 
 msgid ""
@@ -67613,6 +67615,8 @@ msgid ""
 "getting off of {spb}."
 msgstr ""
 
+#. Have to manually start the mission so that the NPC shows up right away
+#. This skips all the checks the beginning including mission prerequisites so it works
 #. Make sure can land on the Jade Court
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -68238,7 +68242,7 @@ msgstr ""
 
 msgid ""
 "\"Great! Let me get you set up with the program. All you have to do is land "
-"on {pnt} and plug it in to any terminal you find around the docks. That "
+"on {pnt} and plug it into any terminal you find around the docks. That "
 "should also make it easier for you to get out of there if things go sour.\""
 msgstr ""
 
@@ -73263,7 +73267,7 @@ msgstr ""
 
 msgid ""
 "They hit their fist on a table in front of them.\n"
-"The Empire will not stand for such displays of brazen debauchery, and thus "
+"\"The Empire will not stand for such displays of brazen debauchery, and thus "
 "invokes EL2897 regarding the sovereignty of the {sys} system.\""
 msgstr ""
 
@@ -80059,6 +80063,7 @@ msgstr ""
 #. Full claim here
 #. Want no inhabited spobs
 #. For Nelly, we don't want it to be too uninhabited
+#. Try to get closer first, if not, allow more far away
 #. Failed to start
 #. We do a full claim on the final system
 msgid ""
@@ -80116,6 +80121,7 @@ msgstr ""
 
 #. We want to delay aborting the mission a frame so that the derelict
 #. event thinks it's running fine
+#. have to accept to use hook
 #. Mission gets accepted in misnSetup
 #. Clean up
 #. Find the initial point of interest, and path to the real location
