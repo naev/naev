@@ -608,8 +608,11 @@ static void uniedit_options_setpath_callback( void              *userdata,
 static void uniedit_options_setpath( unsigned int wid, const char *unused )
 {
    (void)unused;
-   SDL_ShowOpenFolderDialog( uniedit_options_setpath_callback, &wid,
-                             gl_screen.window, conf.dev_data_dir, 0 );
+   static unsigned int uniedit_callback_wid = 0;
+   uniedit_callback_wid                     = wid;
+   SDL_ShowOpenFolderDialog( uniedit_options_setpath_callback,
+                             &uniedit_callback_wid, gl_screen.window,
+                             conf.dev_data_dir, 0 );
 }
 
 static void uniedit_options_close( unsigned int wid, const char *unused )

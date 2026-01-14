@@ -19,6 +19,7 @@
 #include "array.h"
 #include "conf.h"
 #include "nebula.h"
+#include "nfile.h"
 #include "nxml.h"
 #include "space.h"
 
@@ -330,6 +331,13 @@ int dsys_saveSystem( StarSystem *sys )
 int dsys_saveAll( void )
 {
    StarSystem *sys = system_getAll();
+
+   /* Make directory if doesn't exist. We need something more robust than this.
+    */
+   char *path;
+   SDL_asprintf( &path, "%s/%s", conf.dev_data_dir, "ssys" );
+   nfile_dirMakeExist( path );
+   free( path );
 
    /* Write systems. */
    int ret = 0;

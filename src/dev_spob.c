@@ -16,6 +16,7 @@
 
 #include "array.h"
 #include "conf.h"
+#include "nfile.h"
 #include "nxml.h"
 #include "start.h"
 
@@ -177,6 +178,13 @@ int dpl_saveAll( void )
 {
    const Spob *p   = spob_getAll();
    int         ret = 0;
+
+   /* Make directory if doesn't exist. We need something more robust than this.
+    */
+   char *path;
+   SDL_asprintf( &path, "%s/%s", conf.dev_data_dir, "spob" );
+   nfile_dirMakeExist( path );
+   free( path );
 
    /* Write spobs. */
    for ( int i = 0; i < array_size( p ); i++ )

@@ -66,6 +66,8 @@
    * Qorellia found their lost Mission BBS
    * Fixed `PILOT_SHIELD_DOWN_TIME` not being read from constants
    * Fixed alert exclamation mark being upside down
+   * Fixed unsafe memory access in editor
+   * Editor tries to create ssys and spob path if they don't exist
    * Spelling and grammar fixes
    * Translation updates
 
