@@ -837,6 +837,7 @@ function render( dt, dt_mod )
    elseif hspeed <= 200. then
       render_bar( bardata['speed'], hspeed - 100, txt, cols.txt_wrn, nil, cols.speed2, cols.speed )
    else
+      --[[
       timers[1] = timers[1] - dt / dt_mod
       if timers[1] <=0. then
          timers[1] = 0.5
@@ -847,6 +848,8 @@ function render( dt, dt_mod )
          end
       end
       col = blinkcol
+      --]]
+      col = cols.txt_wrn
       render_bar( bardata['speed'], 100, txt, col, nil, cols.speed2)
    end
 
