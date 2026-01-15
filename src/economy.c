@@ -679,9 +679,9 @@ static int economy_calcPrice( Spob *spob, Commodity *commodity,
 
    /* Use filename of exterior graphic to modify the variation period.
       No rhyme or reason, just gives some variability. */
-   scale = 1 + ( strlen( spob->gfx_exterior ) -
-                 strlen( SPOB_GFX_EXTERIOR_PATH ) - 19 ) /
-                  100.;
+   scale = 1. + (double)( strlen( spob->gfx_exterior ) -
+                          strlen( SPOB_GFX_EXTERIOR_PATH ) - 19 ) /
+                   100.;
    commodityPrice->spobPeriod *= scale;
 
    /* Use population to modify price and variability.  The tanh function scales
@@ -691,11 +691,11 @@ static int economy_calcPrice( Spob *spob, Commodity *commodity,
       population, while for others, prices decrease. */
    factor = -1;
    if ( spob->population > 0 )
-      factor = tanh( ( log( (double)spob->population ) - log( 1e8 ) ) / 2 );
+      factor = tanh( ( log( (double)spob->population ) - log( 1e8 ) ) * 0.5 );
    base = commodity->population_modifier;
-   commodityPrice->price *= 1 + factor * base;
+   commodityPrice->price *= 1. + factor * base;
    commodityPrice->spobVariation *= 0.5 - factor * 0.25;
-   commodityPrice->spobPeriod *= 1 + factor * 0.5;
+   commodityPrice->spobPeriod *= 1. + factor * 0.5;
 
    /* Modify price based on faction (as defined in the xml).
       Some factions place a higher value on certain goods.
@@ -741,22 +741,23 @@ static void economy_modifySystemCommodityPrice( StarSystem *sys )
          /* Largest is approx 35000.  Increased radius will increase price since
             further to travel, and also increase stability, since longer for
             prices to fluctuate, but by a larger amount when they do.*/
-         spob->commodityPrice[j].price *= 1 + sys->radius / 200e3;
-         spob->commodityPrice[j].spobPeriod *= 1 / ( 1 - sys->radius / 200e3 );
+         spob->commodityPrice[j].price *= 1. + sys->radius / 200e3;
+         spob->commodityPrice[j].spobPeriod *=
+            1. / ( 1. - sys->radius / 200e3 );
          spob->commodityPrice[j].spobVariation *=
-            1 / ( 1 - sys->radius / 300e3 );
+            1. / ( 1. - sys->radius / 300e3 );
 
          /* Increase price with volatility, which goes up to about 600.
             And with interference, since systems are harder to find, which goes
             up to about 1000.*/
-         spob->commodityPrice[j].price *= 1 + sys->nebu_volatility / 600.;
-         spob->commodityPrice[j].price *= 1 + sys->interference / 10e3;
+         spob->commodityPrice[j].price *= 1. + sys->nebu_volatility / 600.;
+         spob->commodityPrice[j].price *= 1. + sys->interference / 10e3;
 
          /* Use number of jumps to determine sytsem time period.  More jumps
             means more options for trade so shorter period.  Between 1 to 6
             jumps.  Make the base time 1000.*/
          spob->commodityPrice[j].sysPeriod =
-            2000. / ( array_size( sys->jumps ) + 1 );
+            2000. / (double)( array_size( sys->jumps ) + 1 );
 
          for ( k = 0; k < array_size( avprice ); k++ ) {
             if ( ( strcmp( spob->commodities[j]->name, avprice[k].name ) ==
