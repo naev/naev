@@ -643,7 +643,7 @@ impl Context {
         };
 
         #[cfg(debug_assertions)]
-        if gl.supports_debug() {
+        if gl.supports_debug() && unsafe { naevc::conf.devmode != 0 } {
             match gl_attr.context_flags().has_debug() {
                 true => unsafe {
                     gl.enable(glow::DEBUG_OUTPUT);
