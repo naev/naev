@@ -175,7 +175,8 @@ static int aiL_follow_accurate( lua_State *L ); /* follow_accurate() */
 static int aiL_face_accurate( lua_State *L );   /* face_accurate() */
 static int aiL_drift_facing( lua_State *L ); /* drift_facing(number/pointer) */
 static int aiL_brake( lua_State *L );        /* brake() */
-static int aiL_getnearestspob( lua_State *L ); /* Vec2 getnearestspob() */
+static int
+aiL_getnearestlandspob( lua_State *L );        /* Vec2 getnearestlandspob() */
 static int aiL_getspobfrompos( lua_State *L ); /* Vec2 getspobfrompos() */
 static int aiL_getrndspob( lua_State *L );     /* Vec2 getrndspob() */
 static int aiL_getlandspob( lua_State *L );    /* Vec2 getlandspob() */
@@ -266,7 +267,7 @@ static const luaL_Reg aiL_methods[] = {
    { "getgatherable", aiL_getGatherable },
    { "instantJump", aiL_instantJump },
    /* movement */
-   { "nearestspob", aiL_getnearestspob },
+   { "nearestlandspob", aiL_getnearestlandspob },
    { "spobfrompos", aiL_getspobfrompos },
    { "rndspob", aiL_getrndspob },
    { "landspob", aiL_getlandspob },
@@ -2308,38 +2309,54 @@ static int aiL_brake( lua_State *L )
 /**
  * @brief Get the nearest friendly spob to the pilot.
  *
+ *    @luatparam[opt=false] boolean only_friend Only check for ally spobs.
  *    @luatreturn Spob|nil
- *    @luafunc nearestspob
+ * @luafunc nearestlandspob
  */
-static int aiL_getnearestspob( lua_State *L )
+static int aiL_getnearestlandspob( lua_State *L )
 {
-   double  dist, d;
-   int     j;
-   LuaSpob spob;
+   /* If pilot can't land ignore. */
+   if ( pilot_isFlag( cur_pilot, PILOT_NOLAND ) )
+      return 0;
 
-   /* cycle through spobs */
-   dist = HUGE_VAL;
-   j    = -1;
+   /* Check if we should get only friendlies. */
+   int only_friend = lua_toboolean( L, 1 );
+
+   /* Find nearest. */
+   double mindist  = HUGE_VAL;
+   int    inearest = -1;
    for ( int i = 0; i < array_size( cur_system->spobs ); i++ ) {
-      if ( !spob_hasService( cur_system->spobs[i], SPOB_SERVICE_INHABITED ) )
+      const Spob *pnt = cur_system->spobs[i];
+
+      /* Is Spob restricted. */
+      int restricted = spob_isFlag( pnt, SPOB_RESTRICTED );
+
+      if ( !spob_hasService( pnt, SPOB_SERVICE_LAND ) )
          continue;
-      d = vec2_dist( &cur_system->spobs[i]->pos, &cur_pilot->solid.pos );
-      if ( ( !areEnemies( cur_pilot->faction,
-                          cur_system->spobs[i]->presence.faction ) ) &&
-           ( d < dist ) ) { /* closer friendly spob */
-         j    = i;
-         dist = d;
+      if ( !spob_hasService( pnt, SPOB_SERVICE_INHABITED ) )
+         continue;
+
+      /* Check conditions. */
+      if ( ( only_friend || restricted ) &&
+           !areAllies( cur_pilot->faction, pnt->presence.faction ) )
+         continue;
+      if ( areEnemies( cur_pilot->faction, pnt->presence.faction ) )
+         continue;
+
+      double d = vec2_dist( &cur_system->spobs[i]->pos, &cur_pilot->solid.pos );
+      if ( d < mindist ) {
+         inearest = i;
+         mindist  = d;
       }
    }
 
-   /* no friendly spob found */
-   if ( j == -1 )
+   /* No hit. */
+   if ( inearest < 0 )
       return 0;
 
-   cur_pilot->nav_spob = j;
-   spob                = cur_system->spobs[j]->id;
-   lua_pushspob( L, spob );
-
+   /* we can actually get a random spob now */
+   lua_pushspob( L, cur_system->spobs[inearest]->id );
+   cur_pilot->nav_spob = inearest;
    return 1;
 }
 
@@ -2422,14 +2439,13 @@ static int aiL_getlandspob( lua_State *L )
    int         id;
    LuaSpob     spob;
    const Spob *p;
-   int         only_friend;
 
    /* If pilot can't land ignore. */
    if ( pilot_isFlag( cur_pilot, PILOT_NOLAND ) )
       return 0;
 
    /* Check if we should get only friendlies. */
-   only_friend = lua_toboolean( L, 1 );
+   int only_friend = lua_toboolean( L, 1 );
 
    /* Allocate memory. */
    ind = array_create_size( int, array_size( cur_system->spobs ) );

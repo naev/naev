@@ -506,7 +506,7 @@ function runaway( target )
       t = ai.nearhyptarget()
    end
    if not plt:flags("noland")  then
-      p = ai.nearestspob()
+      p = ai.nearestlandspob( mem.land_friendly )
    end
 
    if p == nil and t == nil then
