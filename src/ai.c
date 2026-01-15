@@ -2655,12 +2655,13 @@ static int aiL_nearhyptarget( lua_State *L )
    double           mindist, dist;
    LuaJump          lj;
 
+   int useshidden = faction_usesHiddenJumps( cur_pilot->faction );
+
    /* Find nearest jump .*/
    mindist = INFINITY;
    jp      = NULL;
    for ( int i = 0; i < array_size( cur_system->jumps ); i++ ) {
       const JumpPoint *jiter = &cur_system->jumps[i];
-      int useshidden         = faction_usesHiddenJumps( cur_pilot->faction );
 
       /* Ignore exit only. */
       if ( jp_isFlag( jiter, JP_EXITONLY ) )
