@@ -16,7 +16,6 @@ typedef struct constants {
    // Gameplay constants
    double PILOT_SHIELD_DOWN_TIME;
    double PILOT_DISABLED_ARMOUR;
-   double PILOT_MINIMUM_DAMAGE_TAKEN;
    double CAMERA_ANGLE;
    double CAMERA_VIEW;
    double CAMERA_VIEW_INV;

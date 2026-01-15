@@ -1384,8 +1384,7 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
    shooter = ( pshooter == NULL ) ? 0 : pshooter->id;
 
    /* Calculate the damage. */
-   absorb  = CLAMP( CTS.PILOT_MINIMUM_DAMAGE_TAKEN, 1.,
-                    1. + rdmg.penetration - p->dmg_absorb );
+   absorb  = 1. - CLAMP( 0., 1., p->dmg_absorb - rdmg.penetration );
    disable = rdmg.disable;
    dtype_calcDamage( &damage_shield, &damage_armour, absorb, &knockback, &rdmg,
                      &p->stats );

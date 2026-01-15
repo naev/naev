@@ -15,7 +15,6 @@ pub struct Constants {
     pub ew_spob_detect_dist: f32,
     pub pilot_shield_down_time: f32,
     pub pilot_disabled_armour: f32,
-    pub pilot_minimum_damage_taken: f32,
     pub camera_angle: f32,
 }
 impl Constants {
@@ -49,7 +48,6 @@ impl Constants {
         let ew_spob_detect_dist = get_f32(&tbl, "EW_SPOBDETECT_DIST", 20e3);
         let pilot_shield_down_time = get_f32(&tbl, "PILOT_SHIELD_DOWN_TIME", 5.);
         let pilot_disabled_armour = get_f32(&tbl, "PILOT_DISABLED_ARMOUR", 0.1);
-        let pilot_minimum_damage_taken = get_f32(&tbl, "PILOT_MINIMUM_DAMAGE_TAKEN", 0.05);
         let camera_angle = get_f32(&tbl, "CAMERA_ANGLE", std::f32::consts::FRAC_PI_4);
 
         Ok(Self {
@@ -64,7 +62,6 @@ impl Constants {
             ew_spob_detect_dist,
             pilot_shield_down_time,
             pilot_disabled_armour,
-            pilot_minimum_damage_taken,
             camera_angle,
         })
     }
@@ -79,7 +76,7 @@ impl Constants {
         }
     }
 
-    const fn default() -> Self {
+    fn default() -> Self {
         Self {
             physics_speed_damp: 3.,
             stealth_min_dist: 1000.,
@@ -92,7 +89,6 @@ impl Constants {
             ew_spob_detect_dist: 20e3,
             pilot_shield_down_time: 5.,
             pilot_disabled_armour: 0.1,
-            pilot_minimum_damage_taken: 0.05,
             camera_angle: std::f32::consts::FRAC_PI_4,
         }
     }
