@@ -391,8 +391,10 @@ class naev_xml( xml_node ):
    def _to_dict( node ):
       for k, v in node.items():
          if isinstance(v, dict):
+            if '#text' in v and (vv := _numify(v['#text'])) is not None:
+               yield k, vv
             yield from naev_xml._to_dict(v)
-         elif (vv := _numify(v)) is not None:
+         elif k != '$#text' and (vv := _numify(v)) is not None:
             yield k, vv
 
    def to_dict( self ):

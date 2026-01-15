@@ -187,13 +187,16 @@ class outfit(naev_xml):
       pri_sec = ('sec', 'pri') if sec else ('pri', 'sec')
       for d, k in self.nodes():
          D, K = d.parent(), d.tag()
+         val = d[k]
+         if k == '$#text':
+            k = '$' + K
          if k[-3:] == pri_sec[1]:
             if pri_sec[0] not in d:
                yield D, '$' + K, 0
          elif k[-3:] == pri_sec[0]:
-            yield D, '$' + K, d[k]
+            yield D, '$' + K, val
          elif k[:1]=='$' and k[1:2]!='@':
-            yield d, k, d[k]
+            yield d, k, val
 
    def to_dict( self ):
       pri = ((k[1:], v) for (_d, k, v) in self.equipped(sec = False))
