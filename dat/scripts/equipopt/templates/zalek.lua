@@ -19,7 +19,7 @@ local zalek_outfits = eoutfits.merge{{
    "Za'lek Hunter Launcher", "Za'lek Reaper Launcher",
    "Grave Lance", "Orion Beam",
    -- Small Weapons
-   "Particle Beam", "Particle Lance", "Orion Lance", "Electron Burst Cannon",
+   "Particle Beam", "Particle Lance", "Orion Lance", "Electron Burst Cannon", "Za'lek Predator Launcher",
    -- Point Defence
    "ZIBS-16", "ZIBS-32",
    -- Utility
