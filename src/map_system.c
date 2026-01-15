@@ -821,8 +821,8 @@ static void map_system_array_update( unsigned int wid, const char *str )
       /* Misc */
       l += scnprintf( &infobuf[l], sizeof( infobuf ) - l, "\n#n%s#0 ",
                       _( "Absorption:" ) );
-      l += scnprintf( &infobuf[l], sizeof( infobuf ) - l, _( "%.0f%% damage" ),
-                      ship->dmg_absorb * 100. );
+      l += scnprintf( &infobuf[l], sizeof( infobuf ) - l, _( "%.0f" ),
+                      ship->dmg_absorb );
       l += scnprintf( &infobuf[l], sizeof( infobuf ) - l, "\n#n%s#0 ",
                       _( "Shield:" ) );
       l += scnprintf( &infobuf[l], sizeof( infobuf ) - l,

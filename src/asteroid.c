@@ -746,8 +746,8 @@ static int asttype_parse( AsteroidType *at, const char *file )
    xmlFreeDoc( doc );
 
    /* Some post-process. */
-   at->absorb      = CLAMP( 0., 1., at->absorb / 100. );
-   at->penetration = CLAMP( 0., 1., at->penetration / 100. );
+   at->absorb      = CLAMP( 0., 1., at->absorb );
+   at->penetration = CLAMP( 0., 1., at->penetration );
 
    /* Checks. */
    if ( at->armour_max < at->armour_min )
@@ -1215,7 +1215,7 @@ void asteroid_hit( Asteroid *a, const Damage *dmg, int max_rarity,
                    double mining_bonus )
 {
    double darmour;
-   double absorb = 1. - CLAMP( 0., 1., a->type->absorb - dmg->penetration );
+   double absorb = pow( 0.99, MAX( 0., a->type->absorb - dmg->penetration ) );
    dtype_calcDamage( NULL, &darmour, absorb, NULL, dmg, NULL );
 
    a->armour -= darmour;

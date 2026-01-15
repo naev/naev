@@ -13,9 +13,9 @@ Disabled ships [can be boarded](mechanics/boarding).
 
 ## Absorption and Penetration
 
-Absorption reduces the amount of damage taken by a ship by a percentage amount.
+Each point of absorption reduces the damage you would take by 1%.
 However, this reduction can be nullified by penetration, which is directly subtracted from the absorption.
-Note that penetration can not increase the damage past 100%, and absorption can only reduce the damage to 0%.
+Note that penetration can not increase the damage past 100%.
 
 ## Disable Damage and Stress
 

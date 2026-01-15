@@ -147,6 +147,7 @@ typedef enum ShipStatsType {
    SS_TYPE_A_ARMOUR_REGEN,       /**< Armour regeneration modifier. */
    SS_TYPE_A_ARMOUR_REGEN_MALUS, /**< Flat armour regeneration modifier (not
                                     multiplied). */
+   SS_TYPE_A_ABSORB,             /**< Damage absorption. */
    SS_TYPE_A_DAMAGE,  /**< Flat damage modifier (eats through shield first then
                          armour like normal damage). */
    SS_TYPE_A_DISABLE, /**< Flat disable modifier (acts like normal disable
@@ -164,7 +165,6 @@ typedef enum ShipStatsType {
    /*
     * P: Absolute percent type datas. Should be continuous.
     */
-   SS_TYPE_P_ABSORB, /**< Damage absorption. */
    /* Nebula. */
    SS_TYPE_P_NEBULA_ABSORB,  /**< Nebula resistance. */
    SS_TYPE_P_JAMMING_CHANCE, /**< Jamming chance for outfits. */

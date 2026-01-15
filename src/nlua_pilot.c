@@ -6780,7 +6780,7 @@ static int pilotL_collisionTest( lua_State *L )
  *    @luatparam Pilot p Pilot being damaged.
  *    @luatparam number dmg Damage being done.
  *    @luatparam[opt=0.] number disable Disable being done.
- *    @luatparam[opt=0.] number penetration Penetration (in %).
+ *    @luatparam[opt=0.] number penetration Penetration.
  *    @luatparam[opt="raw"] string type Damage type being done.
  *    @luatparam[opt=nil] Pilot shooter Pilot doing the damage.
  *    @luatreturn number Amount of damage done.
@@ -6795,7 +6795,7 @@ static int pilotL_damage( lua_State *L )
    p               = luaL_validpilot( L, 1 );
    dmg.damage      = luaL_checknumber( L, 2 );
    dmg.disable     = luaL_optnumber( L, 3, 0. );
-   dmg.penetration = luaL_optnumber( L, 4, 0. ) / 100.;
+   dmg.penetration = luaL_optnumber( L, 4, 0. );
    dmg.type        = dtype_get( luaL_optstring( L, 5, "raw" ) );
    parent = ( lua_isnoneornil( L, 6 ) ) ? NULL : luaL_validpilot( L, 6 );
 

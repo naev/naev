@@ -1014,7 +1014,6 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
 #undef STRDUP_
 
       /* Have to correct some post-processing. */
-      temp->dmg_absorb *= 100.;
       temp->turn *= 180. / M_PI;
    }
 
@@ -1338,7 +1337,6 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
    } while ( xml_nextNode( node ) );
 
    /* Post processing. */
-   temp->dmg_absorb /= 100.;
    temp->turn *= M_PI / 180.; /* Convert to rad. */
 
    /* Check licence. */

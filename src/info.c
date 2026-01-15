@@ -594,8 +594,7 @@ static void ship_update( unsigned int wid )
                  player.p->stats.time_mod * player.p->ship->dt_default * 100. );
    /* Health. */
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n" );
-   l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%.0f%%",
-                   player.p->dmg_absorb * 100. );
+   l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%.0f", player.p->dmg_absorb );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n" );
    l += scnprintf( &buf[l], sizeof( buf ) - l, _( "%s / %s %s" ), sshield,
                    num2strU( player.p->shield_max, 0 ), UNIT_ENERGY );

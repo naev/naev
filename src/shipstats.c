@@ -255,6 +255,7 @@ static const ShipStatsLookup ss_lookup[] = {
             _UNIT_POWER ),
    AI_ELEM( SS_TYPE_A_ARMOUR_REGEN_MALUS, armour_regen_malus,
             N_( "Armour Damage" ), _UNIT_POWER ),
+   A__ELEM( SS_TYPE_A_ABSORB, absorb, N_( "Damage Absorption" ), NULL ),
    AI_ELEM( SS_TYPE_A_DAMAGE, damage, N_( "Damage" ), _UNIT_POWER ),
    AI_ELEM( SS_TYPE_A_DISABLE, disable, N_( "Disable" ), _UNIT_POWER ),
 
@@ -269,8 +270,6 @@ static const ShipStatsLookup ss_lookup[] = {
             N_( "Asteroid Scanner Range" ), _UNIT_DISTANCE ),
    A__ELEM( SS_TYPE_A_NEBULA_VISIBILITY, nebu_visibility,
             N_( "Nebula Visibility" ), _UNIT_DISTANCE ),
-
-   P__ELEM( SS_TYPE_P_ABSORB, absorb, N_( "Damage Absorption" ) ),
 
    P__ELEM( SS_TYPE_P_NEBULA_ABSORB, nebu_absorb, N_( "Nebula Resistance" ) ),
    P__ELEM( SS_TYPE_P_JAMMING_CHANCE, jam_chance,
@@ -866,7 +865,8 @@ static int ss_printD( char *buf, int len, int newline, double d,
 
    return scnprintf( buf, len, p_( "shipstats_double", "%s#%s%s: %+g %s#0" ),
                      ( newline ) ? "\n" : "", ss_printD_colour( d, sl ),
-                     _( sl->display ), d * 100., _( sl->unit ) );
+                     _( sl->display ), d * 100.,
+                     ( sl->unit != NULL ) ? _( sl->unit ) : "" );
 }
 
 /**
@@ -881,7 +881,7 @@ static int ss_printA( char *buf, int len, int newline, double d,
       buf, len, p_( "shipstats_absolute", "%s#%s%s: %+g %s#0" ),
       ( newline ) ? "\n" : "", ss_printD_colour( d, sl ), _( sl->display ),
       d, /* TODO probably use num2strU here, but we want the sign enforced. */
-      _( sl->unit ) );
+      ( sl->unit != NULL ) ? _( sl->unit ) : "" );
 }
 
 /**
@@ -894,7 +894,8 @@ static int ss_printI( char *buf, int len, int newline, int i,
       return 0;
    return scnprintf( buf, len, p_( "shipstats_integer", "%s#%s%s: %+d %s#0" ),
                      ( newline ) ? "\n" : "", ss_printI_colour( i, sl ),
-                     _( sl->display ), i, _( sl->unit ) );
+                     _( sl->display ), i,
+                     ( sl->unit != NULL ) ? _( sl->unit ) : NULL );
 }
 
 /**

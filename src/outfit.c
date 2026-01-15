@@ -124,9 +124,8 @@ static os_opts dknockback_opts = {
    N_( "Knockback" ), _UNIT_PERCENT, 0, 0, 1, 0 };
 static os_opts cpu_opts         = { N_( "CPU" ), _UNIT_CPU, 1, 0, 1, 0 };
 static os_opts mass_opts        = { N_( "Mass" ), _UNIT_MASS, 0, 0, 1, 0 };
-static os_opts penetration_opts = {
-   N_( "Penetration" ), _UNIT_PERCENT, 0, 0, 1, 0 };
-static os_opts damage_opts  = { N_( "Damage" ), _UNIT_ENERGY, 0, 1, 1, 1 };
+static os_opts penetration_opts = { N_( "Penetration" ), NULL, 0, 0, 1, 0 };
+static os_opts damage_opts      = { N_( "Damage" ), _UNIT_ENERGY, 0, 1, 1, 1 };
 static os_opts dps_opts     = { N_( "Damage Rate" ), _UNIT_POWER, 0, 0, 1, 1 };
 static os_opts disable_opts = { N_( "Disable" ), _UNIT_ENERGY, 0, 1, 1, 1 };
 static os_opts disable_rate_opts = {
@@ -1918,9 +1917,6 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
 
    } while ( xml_nextNode( cur ) );
 
-   /* Normalize. */
-   dmg->penetration /= 100.;
-
    return 0;
 }
 
@@ -2247,7 +2243,7 @@ static void outfit_parseSBolt( Outfit *temp, const xmlNodePtr parent )
                        1, (double)temp->u.blt.energy / temp->u.blt.delay,
                        &power_opts );
    /* Standard stats. */
-   l = os_printD( temp->summary_raw, l, temp->u.blt.dmg.penetration * 100.,
+   l = os_printD( temp->summary_raw, l, temp->u.blt.dmg.penetration,
                   &penetration_opts );
    l = os_printD( temp->summary_raw, l, 1. / temp->u.blt.delay,
                   &fire_rate_opts );
@@ -2632,7 +2628,6 @@ static void outfit_parseSLauncher( Outfit *temp, const xmlNodePtr parent )
                   "ammo mass!" ),
                temp->name );
    }
-   temp->u.lau.dmg_absorb /= 100.;
    temp->u.lau.swivel *= M_PI / 180.;
    temp->u.lau.arc *= M_PI / 180.;
    /* Note that arc will be 0. for turrets. */
@@ -2676,7 +2671,7 @@ static void outfit_parseSLauncher( Outfit *temp, const xmlNodePtr parent )
    l = os_printD_rate( temp->summary_raw, l, temp->u.lau.energy, &energy_opts,
                        1, temp->u.lau.delay * temp->u.lau.energy, &power_opts );
    /* Standard stats. */
-   l = os_printD( temp->summary_raw, l, temp->u.lau.dmg.penetration * 100.,
+   l = os_printD( temp->summary_raw, l, temp->u.lau.dmg.penetration,
                   &penetration_opts );
    if ( outfit_isSeeker( temp ) ) {
       l = os_printD( temp->summary_raw, l, temp->u.lau.lockon, &lockon_opts );
@@ -2731,8 +2726,7 @@ static void outfit_parseSLauncher( Outfit *temp, const xmlNodePtr parent )
                      &max_speed_opts );
    l = os_printD( temp->summary_raw, l, temp->u.lau.reload_time, &reload_opts );
    l = os_printD( temp->summary_raw, l, temp->u.lau.armour, &armour_opts );
-   l = os_printD( temp->summary_raw, l, temp->u.lau.dmg_absorb * 100.,
-                  &absorp_opts );
+   l = os_printD( temp->summary_raw, l, temp->u.lau.dmg_absorb, &absorp_opts );
    l = os_printD( temp->summary_raw, l, temp->u.lau.resist * 100.,
                   &jam_res_opts );
    sdesc_miningRarity( &l, temp, temp->u.lau.mining_rarity );

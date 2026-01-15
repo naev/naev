@@ -328,8 +328,8 @@ void shipyard_update( unsigned int wid, const char *str )
    if ( ship->dmg_absorb ) {
       k += scnprintf( &lbl[k], sizeof( lbl ) - k, "\n%s", _( "Absorption:" ) );
       l += scnprintf( &buf[l], sizeof( buf ) - l, "\n" );
-      l += scnprintf( &buf[l], sizeof( buf ) - l, _( "%.0f%% damage" ),
-                      ship->dmg_absorb * 100. );
+      l +=
+         scnprintf( &buf[l], sizeof( buf ) - l, _( "%.0f" ), ship->dmg_absorb );
    }
    if ( ship->shield || ship->shield_regen ) {
       k += scnprintf( &lbl[k], sizeof( lbl ) - k, "\n%s", _( "Shield:" ) );

@@ -15,9 +15,9 @@
    * Absorption values have been reworked so that penetration is more useful
    * Some skills have been reworked to use damage reduction instead of
      absorption
+       - Absorption and penetration are no longer percents
        - Core hulls give more absorption in general
        - Increased penetration of launchers
-       - Ships take a minimum amount of damage no matter amount of absorption
    * Ultra-heavy weapons have reduced energy usage
    * Added accessibility option to disable screen shaking
    * Gauntlet NPCs get their fighters disabled when they are disabled

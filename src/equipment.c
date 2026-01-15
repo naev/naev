@@ -2213,9 +2213,8 @@ void equipment_updateShips( unsigned int wid, const char *str )
                       pilot_ewScanTime( ship ), UNIT_TIME );
       l += scnprintf( &buf[l], sizeof( buf ) - l, "\n\n" );
       /* Health. */
-      l += scnprintf(
-         &buf[l], sizeof( buf ) - l, "#%c%s%.0f%%\n",
-         EQ_COMP( ship->dmg_absorb * 100., ship->ship->dmg_absorb * 100., 0 ) );
+      l += scnprintf( &buf[l], sizeof( buf ) - l, "#%c%s%.0f\n",
+                      EQ_COMP( ship->dmg_absorb, ship->ship->dmg_absorb, 0 ) );
       l += scnprintf( &buf[l], sizeof( buf ) - l, _( "#%c%s%s#0 %s" ),
                       EQ_COMP_I( ship->shield_max, ship->ship->shield, 0 ),
                       num2strU( ship->shield_max, 0 ), UNIT_ENERGY );

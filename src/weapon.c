@@ -1929,9 +1929,8 @@ static void weapon_damage( Weapon *w, const Damage *dmg )
    assert( outfit_isLauncher( w->outfit ) );
 
    double damage_armour;
-   double absorb =
-      1. -
-      CLAMP( 0., 1., outfit_launcherAbsorb( w->outfit ) - dmg->penetration );
+   double absorb = pow(
+      0.99, MAX( 0., outfit_launcherAbsorb( w->outfit ) - dmg->penetration ) );
 
    dtype_calcDamage( NULL, &damage_armour, absorb, NULL, dmg, NULL );
    w->armour -= damage_armour + dmg->disable;
