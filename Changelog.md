@@ -50,6 +50,7 @@
      device changes
    * Intrinsic outfits now stack in the equipment view
    * Commodities now support tags
+   * Beams use separate shaders instead of subroutines now
 
 
 ## v0.13.3 (unreleased)
