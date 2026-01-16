@@ -191,24 +191,6 @@ SHADERS = [
       uniforms = ["projection", "m", "colour", "outline_colour"],
    ),
    Shader(
-      name = "beam",
-      vs_path = "project_pos.vert",
-      fs_path = "beam.frag",
-      attributes = ["vertex"],
-      uniforms = ["projection", "colour", "dt", "r", "dimensions" ],
-      subroutines = {
-         "beam_func" : [
-            "beam_default",
-            "beam_wave",
-            "beam_arc",
-            "beam_helix",
-            "beam_organic",
-            "beam_unstable",
-            "beam_fuzzy",
-         ]
-      }
-   ),
-   Shader(
       name = "jump",
       vs_path = "project_pos.vert",
       fs_path = "jump.frag",

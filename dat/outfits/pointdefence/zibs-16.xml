@@ -27,7 +27,7 @@
   <spfx_armour>Exp-S</spfx_armour>
   <sound>beam_fuzzy</sound>
   <sound_off>beam_fuzzy_off</sound_off>
-  <shader r="0.7" g="0.2" b="0.85" a="1." width="11.5">beam_default</shader>
+  <shader r="0.7" g="0.2" b="0.85" a="1." width="11.5">default</shader>
  </specific>
  <tags>
   <tag>zalek</tag>

@@ -1389,12 +1389,6 @@ const struct Ship *outfit_bayShip( const Outfit *o )
       return o->u.bay.ship;
    return NULL;
 }
-GLuint outfit_beamShader( const Outfit *o )
-{
-   if ( outfit_isBeam( o ) )
-      return o->u.bem.shader;
-   return 0.;
-}
 double outfit_beamMinDelay( const Outfit *o )
 {
    if ( outfit_isBeam( o ) )
@@ -2313,7 +2307,6 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
    int        l;
    xmlNodePtr node;
    double     dshield, darmour, dknockback;
-   char      *shader;
 
    /* Defaults. */
    temp->u.bem.spfx_armour = -1;
@@ -2364,16 +2357,35 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
          xmlr_attr_float( node, "a", temp->u.bem.colour.a );
          xmlr_attr_float( node, "width", temp->u.bem.width );
          col_gammaToLinear( &temp->u.bem.colour );
-         shader = xml_get( node );
-         if ( gl_has( OPENGL_SUBROUTINES ) ) {
-            gl_contextSet();
-            temp->u.bem.shader = glGetSubroutineIndex(
-               shaders.beam.program, GL_FRAGMENT_SHADER, shader );
-            if ( temp->u.bem.shader == GL_INVALID_INDEX )
-               WARN( "Beam outfit '%s' has unknown shader function '%s'",
-                     temp->name, shader );
-            gl_contextUnset();
+         char *shader = xml_get( node );
+         char  name[STRMAX_SHORT];
+         if ( strncmp( shader, "beam_", 5 ) == 0 ) {
+            /* Added in 0.14.0-alphae.1. Remove around 0.14.0 or 0.15.0 */
+            WARN( "Prefixing beam outfit shaders with 'beam_' is deprecated. "
+                  "Please use '%s' instead of '%s'",
+                  &shader[5], shader );
+            snprintf( name, sizeof( name ), "beam/%s.frag", &shader[5] );
+         } else
+            snprintf( name, sizeof( name ), "beam/%s.frag", shader );
+
+         BeamShader *gfx = &temp->u.bem.shader;
+         gl_contextSet();
+         gfx->program = gl_program_vert_frag( "beam.vert", name );
+         if ( gfx->program == 0 ) {
+            WARN( "Beam outfit '%s' has unknown shader function '%s'",
+                  temp->name, shader );
+         } else {
+            gfx->vertex = glGetAttribLocation( gfx->program, "vertex" );
+            gfx->projection =
+               glGetUniformLocation( gfx->program, "projection" );
+            gfx->colour = glGetUniformLocation( gfx->program, "colour" );
+            gfx->dt     = glGetUniformLocation( gfx->program, "dt" );
+            gfx->r      = glGetUniformLocation( gfx->program, "r" );
+            gfx->dimensions =
+               glGetUniformLocation( gfx->program, "dimensions" );
          }
+         gl_contextUnset();
+
          continue;
       }
       if ( xml_isNode( node, "spfx_armour" ) ) {
@@ -4110,13 +4122,14 @@ char **outfit_tags( const Outfit *o )
 void outfit_renderBeam( const Outfit *beam, const Solid *solid,
                         double range_mod, double dt, double r )
 {
-   double x, y, ex, ey, z;
-   mat4   projection;
-   double range = outfit_range( beam ) * range_mod;
-   double width = outfit_width( beam );
+   double            x, y, ex, ey, z;
+   mat4              projection;
+   double            range = outfit_range( beam ) * range_mod;
+   double            width = outfit_width( beam );
+   const BeamShader *gfx   = &beam->u.bem.shader;
 
    /* Load GLSL program */
-   glUseProgram( shaders.beam.program );
+   glUseProgram( gfx->program );
 
    /* Zoom. */
    z = cam_getZoom();
@@ -4134,28 +4147,21 @@ void outfit_renderBeam( const Outfit *beam, const Solid *solid,
    mat4_translate_xy( &projection, 0., -0.5 );
 
    /* Set the vertex. */
-   glEnableVertexAttribArray( shaders.beam.vertex );
-   gl_vboActivateAttribOffset( gl_squareVBO, shaders.beam.vertex, 0, 2,
-                               GL_FLOAT, 0 );
+   glEnableVertexAttribArray( gfx->vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, gfx->vertex, 0, 2, GL_FLOAT, 0 );
 
    /* Set shader uniforms. */
-   gl_uniformMat4( shaders.beam.projection, &projection );
-   gl_uniformColour( shaders.beam.colour, outfit_colour( beam ) );
-   glUniform2f( shaders.beam.dimensions, range, width );
-   glUniform1f( shaders.beam.dt, dt );
-   glUniform1f( shaders.beam.r, r );
-
-   /* Set the subroutine. */
-   if ( gl_has( OPENGL_SUBROUTINES ) ) {
-      GLuint shd = outfit_beamShader( beam );
-      glUniformSubroutinesuiv( GL_FRAGMENT_SHADER, 1, &shd );
-   }
+   gl_uniformMat4( gfx->projection, &projection );
+   gl_uniformColour( gfx->colour, outfit_colour( beam ) );
+   glUniform2f( gfx->dimensions, range, width );
+   glUniform1f( gfx->dt, dt );
+   glUniform1f( gfx->r, r );
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
    /* Clear state. */
-   glDisableVertexAttribArray( shaders.beam.vertex );
+   glDisableVertexAttribArray( gfx->vertex );
    glUseProgram( 0 );
 
    /* anything failed? */

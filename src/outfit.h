@@ -202,6 +202,16 @@ typedef struct OutfitBoltData_ {
    int          spfx_shield; /**< special effect on hit. */
 } OutfitBoltData;
 
+typedef struct BeamShader {
+   GLuint program;
+   GLuint vertex;
+   GLuint projection;
+   GLuint colour;
+   GLuint dt;
+   GLuint r;
+   GLuint dimensions;
+} BeamShader;
+
 /**
  * @brief Represents the particular properties of a beam weapon.
  */
@@ -222,9 +232,9 @@ typedef struct OutfitBeamData_ {
    int mining_rarity; /**< Maximum mining rarity the weapon can mine. */
 
    /* Graphics and sound. */
-   glColour     colour;       /**< Colour to use for the shader. */
-   GLfloat      width;        /**< Width of the beam. */
-   GLuint       shader;       /**< Shader subroutine to use. */
+   glColour     colour; /**< Colour to use for the shader. */
+   GLfloat      width;  /**< Width of the beam. */
+   BeamShader   shader;
    int          spfx_armour;  /**< special effect on hit */
    int          spfx_shield;  /**< special effect on hit */
    const Sound *sound_warmup; /**< Sound to play when warming up. @todo use. */

@@ -24,6 +24,6 @@
   <spfx_armour>Exp-S</spfx_armour>
   <sound>beam_fuzzy</sound>
   <sound_off>beam_fuzzy_off</sound_off>
-  <shader r="1.0" g="0.2" b="0." a="1." width="12.">beam_fuzzy</shader>
+  <shader r="1.0" g="0.2" b="0." a="1." width="12.">fuzzy</shader>
  </specific>
 </outfit>
