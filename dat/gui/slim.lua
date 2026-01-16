@@ -10,6 +10,8 @@ local lf = require "love.filesystem"
 local lg = require "love.graphics"
 local love_shaders = require "love_shaders"
 
+local do_blink = true
+
 local radar_gfx, radar_x, radar_y, screen_h, screen_w
 local aset, cargo, nav_spob, nav_pnt, ptarget, slot_w, slot_h, slot_y, timers
 local ta_pane_w, ta_pane_x, ta_pane_y, ta_pnt_pane_x, ta_pnt_pane_y, pl_pane_x, pl_pane_y
@@ -64,7 +66,8 @@ function create()
    cols.txt_bar = colour.new( 192/255, 198/255, 217/255 )
    cols.txt_top = colour.new( 148/255, 158/255, 192/255 )
    cols.txt_std = colour.new( 111/255, 125/255, 169/255 )
-   cols.txt_wrn = colour.new( 230/255, 210/255,  70/255 )
+   cols.txt_wrn = colour.new( 255/255, 140/255, 120/255 )
+   cols.txt_aft = colour.new( 250/255, 230/255, 140/255 )
    cols.txt_enm = colour.new( 222/255,  28/255,  28/255 )
    --cols.txt_res = colour.new(     1.0,     0.6,     0.0 )
    cols.txt_una = colour.new(  66/255,  72/255,  84/255 )
@@ -351,7 +354,7 @@ function create()
    timers[1] = 0.5
    timers[2] = 0.5
    timers[3] = 0.5
-   blinkcol = cols.txt_enm
+   blinkcol = cols.txt_wrn
    gfxWarn = true
 
    buttons = {}
@@ -835,21 +838,20 @@ function render( dt, dt_mod )
    if hspeed <= 100. then
       render_bar( bardata['speed'], hspeed, txt, cols.txt_bar )
    elseif hspeed <= 200. then
-      render_bar( bardata['speed'], hspeed - 100, txt, cols.txt_wrn, nil, cols.speed2, cols.speed )
+      render_bar( bardata['speed'], hspeed - 100, txt, cols.txt_aft, nil, cols.speed2, cols.speed )
    else
-      --[[
-      timers[1] = timers[1] - dt / dt_mod
-      if timers[1] <=0. then
-         timers[1] = 0.5
-         if blinkcol == cols.txt_una then
-            blinkcol = cols.txt_enm
-         else
-            blinkcol = cols.txt_una
+      if do_blink then
+         timers[1] = timers[1] - dt / dt_mod
+         if timers[1] <=0. then
+            timers[1] = 0.5
+            if blinkcol == cols.txt_wrn then
+               blinkcol = cols.txt_aft
+            else
+               blinkcol = cols.txt_wrn
+            end
          end
       end
       col = blinkcol
-      --]]
-      col = cols.txt_wrn
       render_bar( bardata['speed'], 100, txt, col, nil, cols.speed2)
    end
 
@@ -1028,7 +1030,7 @@ function render( dt, dt_mod )
                   colspe = cols.speed
                else
                   htspeed = math.min( htspeed - 100, 100 )
-                  spetxtcol = cols.txt_wrn
+                  spetxtcol = cols.txt_aft
                   colspe = cols.speed2
                   colspe2 = cols.speed
                end
