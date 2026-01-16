@@ -12,7 +12,7 @@ void main (void) {
    coords = pos_px / 500.0 + vec2( -3.0*ANIM_SPEED*dt, 0 );
    m = 1.5 + 0.5*snoise( coords );
    float a = smoothbeam( pos_tex.y, m );
-   colour_out.rgb = mix( colour.rgb, vec3(1.0), 3.0*smoothbeam( pos_tex.y, 0.1 ) );
+   colour_out.rgb = mix( colour.rgb, vec3(1.0), 7.0*smoothbeam( pos_tex.y, 0.05 ) );
    colour_out.a *= a;
 
    // Do fancy noise effect

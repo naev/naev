@@ -78,6 +78,18 @@ function love.load()
          colour = { 1, 0, 1, 1 },
          type = 7,
       },
+      {
+         name = "beam_leech",
+         h = 16,
+         colour = { 0, 0.5, 1, 1 },
+         type = 9,
+      },
+      {
+         name = "beam_ragged",
+         h = 16,
+         colour = { 0, 0.5, 1, 1 },
+         type = 10,
+      },
    }
    beamoutfits = {
       {

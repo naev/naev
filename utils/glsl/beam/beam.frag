@@ -242,7 +242,7 @@ vec4 beam_default( vec4 color, vec2 pos_tex, vec2 pos_px )
    coords = pos_px / 500.0 + vec2( -3.0*ANIM_SPEED*dt, 0 );
    m = 1.5 + 0.5*snoise( coords );
    float a = smoothbeam( pos_tex.y, m );
-   color.rgb = mix( color.rgb, vec3(1.0), 3.0*smoothbeam( pos_tex.y, 0.1 ) );
+   color.rgb = mix( color.rgb, vec3(1.0), 7.0*smoothbeam( pos_tex.y, 0.05 ) );
    color.a *= a;
 
    // Do fancy noise effect
@@ -414,8 +414,8 @@ vec4 beam_organic( vec4 color, vec2 pos_tex, vec2 pos_px )
    // Modulate alpha based on dispersion
    m = 3.0;
 
-   coords = pos_px + vec2( -200.0*ANIM_SPEED*dt, 0.0 ) + 1000.0 * r;
-   p = 1.0 - 0.7*cellular2x2( 0.13 * coords ).x;
+   coords = pos_px + vec2( -473.0*ANIM_SPEED*dt, 0.0 ) + 1000.0 * r;
+   p = 1.0 - 0.5*cellular2x2( 0.17 * coords ).x;
 
    // Modulate width
    color.a   *= p * smoothbeam( pos_tex.y, m );
@@ -463,23 +463,63 @@ vec4 beam_rainbow( vec4 color, vec2 pos_tex, vec2 pos_px )
    float m;
    const float range = 0.3;
 
-   color.rgb = hsv2rgb( vec3( fract(pos_px.x/200.0 - dt), 0.5, 1.0 ) );
+   color.rgb = hsv2rgb( vec3( fract(pos_px.x/200.0-dt ), 0.5, 1.0 ) );
    color.a *= beamfade( pos_px.x, pos_tex.x );
 
    // Normal beam
-   coords = pos_px / 500.0 + vec2( -3.0*ANIM_SPEED*dt, 0 );
+   coords = pos_px / 5.0 + vec2( -13.7*ANIM_SPEED*dt, 0 );
    m = 1.5 + 0.5*snoise( coords );
    float a = smoothbeam( pos_tex.y, m );
    color.rgb = mix( color.rgb, vec3(1.0), 3.0*smoothbeam( pos_tex.y, 0.1 ) );
    color.a *= a;
 
-   // Do fancy noise effect
-   coords = pos_px * vec2( 0.03, 5.0 ) + vec2( -10.0*ANIM_SPEED*dt, 0.0 ) + 1000.0 * r;
-   float v = snoise( coords );
-   v = max( 0.0, v-(1.0-range) ) * (2.0/range) - 0.1;
-   color.a += v * (1.0 - smoothstep( 0.0, 0.05, pos_tex.x-0.95 ) );
-
    return color;
+}
+
+BEAM_FUNC_PROTOTYPE
+vec4 beam_leech( vec4 colour, vec2 pos_tex, vec2 pos_px )
+{
+   colour.a *= beamfade( pos_px.x, pos_tex.x );
+
+   vec2 pos = pos_tex;
+   //pos.y += 0.2*snoise( vec2(pos_tex.x, dt) );
+   pos.y += 0.15*snoise( pos_px/50.0 + vec2( 9.0*ANIM_SPEED*dt, dt ) );
+   pos.y -= 0.1*snoise( pos_px/25.0 + vec2( -6.0*ANIM_SPEED*dt, dt ) );
+
+   // Normal beam
+   float a = smoothbeam( pos.y, 0.8 );
+   colour.rgb = mix( colour.rgb, vec3(1.0), 7.0*smoothbeam( pos.y, 0.05 ) );
+   colour.a *= a;
+
+   float posx = pos.x * 25.0 - 37.0 * ANIM_SPEED* dt;
+   float s = sin( posx );
+   float c = cos( posx );
+   float sc = sign(-c);
+   c = c * sc;
+   float sm = min( 1.0, c-0.5 ) * step( c, 0.0 );
+   pos.y += 0.3 * s * sc;
+   a = smoothbeam( pos.y, 0.5 ) * step( abs(pos.y), 1.0 ) * sm;
+   colour.rgb -= 0.5*pow(a,4.0);
+
+   return colour;
+}
+
+BEAM_FUNC_PROTOTYPE
+vec4 beam_ragged( vec4 colour, vec2 pos_tex, vec2 pos_px )
+{
+   colour.a *= beamfade( pos_px.x, pos_tex.x );
+
+   // Normal beam
+   float a = smoothbeam( pos_tex.y, 5.0 );
+   colour.rgb = mix( colour.rgb, vec3(1.0), 7.0*smoothbeam( pos_tex.y, 0.05 ) );
+   colour.a *= a;
+
+   vec2 coords = pos_px*vec2(1.,3.)*0.03 + vec2( -17.0*ANIM_SPEED*dt, 0.0 ) + 1000.0 * r;
+   float p = abs(snoise( coords ));
+
+   colour.rgb -= 0.5*p;
+
+   return colour;
 }
 
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
@@ -506,7 +546,11 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    else if (type==7)
       color_out = beam_reverse( color, pos, pos_px );
    else if (type==8)
-      color_out = beam_rainbow( color, pos ,pos_px );
+      color_out = beam_rainbow( color, pos, pos_px );
+   else if (type==9)
+      color_out = beam_leech( color, pos, pos_px );
+   else if (type==10)
+      color_out = beam_ragged( color, pos, pos_px );
    else
       color_out = beam_default( color, pos, pos_px );
 

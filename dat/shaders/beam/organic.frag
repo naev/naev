@@ -12,8 +12,8 @@ void main (void) {
    // Modulate alpha based on dispersion
    m = 3.0;
 
-   coords = pos_px + vec2( -200.0*ANIM_SPEED*dt, 0.0 ) + 1000.0 * r;
-   p = 1.0 - 0.7*cellular2x2( 0.13 * coords ).x;
+   coords = pos_px + vec2( -473.0*ANIM_SPEED*dt, 0.0 ) + 1000.0 * r;
+   p = 1.0 - 0.5*cellular2x2( 0.17 * coords ).x;
 
    // Modulate width
    colour_out.a   *= p * smoothbeam( pos_tex.y, m );
