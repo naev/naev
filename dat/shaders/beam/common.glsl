@@ -6,7 +6,6 @@ const float ANIM_SPEED   = 1.0/1.5; /**< Controls the global speed of the animat
 
 #include "lib/math.glsl"
 
-in vec2 pos;
 in vec2 pos_tex;
 in vec2 pos_px;
 out vec4 colour_out;
