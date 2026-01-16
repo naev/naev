@@ -22,7 +22,9 @@
 #include "outfit.h"
 
 #include "array.h"
+#include "camera.h"
 #include "conf.h"
+#include "constants.h"
 #include "damagetype.h"
 #include "log.h"
 #include "mapData.h" // IWYU pragma: keep
@@ -4103,4 +4105,59 @@ static int os_printD_rate( char *buffer, int i, double val,
 char **outfit_tags( const Outfit *o )
 {
    return o->tags;
+}
+
+void outfit_renderBeam( const Outfit *beam, const Solid *solid,
+                        double range_mod, double dt, double r )
+{
+   double x, y, ex, ey, z;
+   mat4   projection;
+   double range = outfit_range( beam ) * range_mod;
+   double width = outfit_width( beam );
+
+   /* Load GLSL program */
+   glUseProgram( shaders.beam.program );
+
+   /* Zoom. */
+   z = cam_getZoom();
+
+   /* Position. */
+   gl_gameToScreenCoords( &x, &y, solid->pos.x, solid->pos.y );
+   gl_gameToScreenCoords( &ex, &ey, solid->pos.x + cos( solid->dir ) * range,
+                          solid->pos.y + sin( solid->dir ) * range );
+
+   projection = gl_view_matrix;
+   mat4_translate_xy( &projection, x, y );
+   mat4_scale_xy( &projection, 1., CTS.CAMERA_VIEW );
+   mat4_rotate2d( &projection, solid->dir );
+   mat4_scale_xy( &projection, range * z, width * z );
+   mat4_translate_xy( &projection, 0., -0.5 );
+
+   /* Set the vertex. */
+   glEnableVertexAttribArray( shaders.beam.vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.beam.vertex, 0, 2,
+                               GL_FLOAT, 0 );
+
+   /* Set shader uniforms. */
+   gl_uniformMat4( shaders.beam.projection, &projection );
+   gl_uniformColour( shaders.beam.colour, outfit_colour( beam ) );
+   glUniform2f( shaders.beam.dimensions, range, width );
+   glUniform1f( shaders.beam.dt, dt );
+   glUniform1f( shaders.beam.r, r );
+
+   /* Set the subroutine. */
+   if ( gl_has( OPENGL_SUBROUTINES ) ) {
+      GLuint shd = outfit_beamShader( beam );
+      glUniformSubroutinesuiv( GL_FRAGMENT_SHADER, 1, &shd );
+   }
+
+   /* Draw. */
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+   /* Clear state. */
+   glDisableVertexAttribArray( shaders.beam.vertex );
+   glUseProgram( 0 );
+
+   /* anything failed? */
+   gl_checkErr();
 }

@@ -7,6 +7,7 @@
 #include "commodity.h"
 #include "nlua.h"
 #include "opengl_tex.h"
+#include "physics.h"
 #include "shipstats.h"
 #include "sound.h"
 #include "spfx.h"
@@ -635,7 +636,8 @@ const OutfitGFX    *outfit_launcherGFX( const Outfit *o );
 const TrailSpec    *outfit_launcherTrailSpec( const Outfit *o );
 double              outfit_launcherTrailOffset( const Outfit *o );
 const struct Ship  *outfit_bayShip( const Outfit *o );
-GLuint              outfit_beamShader( const Outfit *o );
+void                outfit_renderBeam( const Outfit *beam, const Solid *solid,
+                                       double range_mod, double dt, double r );
 double              outfit_beamMinDelay( const Outfit *o );
 double              outfit_beamWarmup( const Outfit *o );
 double              outfit_boltSpeed( const Outfit *o );

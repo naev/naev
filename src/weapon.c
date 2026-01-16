@@ -783,64 +783,6 @@ void weapons_render( const WeaponLayer layer, double dt )
    NTracingZoneEnd( _ctx );
 }
 
-static void weapon_renderBeam( Weapon *w, double dt )
-{
-   double x, y, ex, ey, z;
-   mat4   projection;
-   double range = outfit_range( w->outfit ) * w->range_mod;
-   double width = outfit_width( w->outfit );
-
-   /* Animation. */
-   w->anim += dt;
-
-   /* Load GLSL program */
-   glUseProgram( shaders.beam.program );
-
-   /* Zoom. */
-   z = cam_getZoom();
-
-   /* Position. */
-   gl_gameToScreenCoords( &x, &y, w->solid.pos.x, w->solid.pos.y );
-   gl_gameToScreenCoords( &ex, &ey,
-                          w->solid.pos.x + cos( w->solid.dir ) * range,
-                          w->solid.pos.y + sin( w->solid.dir ) * range );
-
-   projection = gl_view_matrix;
-   mat4_translate_xy( &projection, x, y );
-   mat4_scale_xy( &projection, 1., CTS.CAMERA_VIEW );
-   mat4_rotate2d( &projection, w->solid.dir );
-   mat4_scale_xy( &projection, range * z, width * z );
-   mat4_translate_xy( &projection, 0., -0.5 );
-
-   /* Set the vertex. */
-   glEnableVertexAttribArray( shaders.beam.vertex );
-   gl_vboActivateAttribOffset( gl_squareVBO, shaders.beam.vertex, 0, 2,
-                               GL_FLOAT, 0 );
-
-   /* Set shader uniforms. */
-   gl_uniformMat4( shaders.beam.projection, &projection );
-   gl_uniformColour( shaders.beam.colour, outfit_colour( w->outfit ) );
-   glUniform2f( shaders.beam.dimensions, range, width );
-   glUniform1f( shaders.beam.dt, w->anim );
-   glUniform1f( shaders.beam.r, w->r );
-
-   /* Set the subroutine. */
-   if ( gl_has( OPENGL_SUBROUTINES ) ) {
-      GLuint shd = outfit_beamShader( w->outfit );
-      glUniformSubroutinesuiv( GL_FRAGMENT_SHADER, 1, &shd );
-   }
-
-   /* Draw. */
-   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-   /* Clear state. */
-   glDisableVertexAttribArray( shaders.beam.vertex );
-   glUseProgram( 0 );
-
-   /* anything failed? */
-   gl_checkErr();
-}
-
 /**
  * @brief Renders an individual weapon.
  *
@@ -936,7 +878,8 @@ static void weapon_render( Weapon *w, double dt )
    /* Beam weapons. */
    case OUTFIT_TYPE_BEAM:
    case OUTFIT_TYPE_TURRET_BEAM:
-      weapon_renderBeam( w, dt );
+      w->anim += dt;
+      outfit_renderBeam( w->outfit, &w->solid, w->range_mod, w->anim, w->r );
       break;
 
    default:
