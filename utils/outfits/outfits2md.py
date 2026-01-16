@@ -16,7 +16,7 @@ def keyfunc( s ):
       try:
          return getfloat(o[s])
       except:
-         return None
+         return 0
    return key
 
 def nfmt( n ):
