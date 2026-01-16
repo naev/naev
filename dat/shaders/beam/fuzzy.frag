@@ -12,7 +12,8 @@ void main (void) {
    coords = vec2( 3.0*ANIM_SPEED*dt, 0.0 );
    m = 4.0 + snoise( coords );
    float a = smoothbeam( pos_tex.y, m );
-   colour_out.rgb = colour.rgb + 3.0 * a * smoothbeam( pos_tex.y, 0.1 );
+   colour_out = colour;
+   colour_out.rgb += 3.0 * a * smoothbeam( pos_tex.y, 0.1 );
    colour_out.a *= a;
    colour_out.a *= beamfade( pos_px.x, pos_tex.x );
 

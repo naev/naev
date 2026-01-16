@@ -21,7 +21,7 @@ void main (void) {
    a += 0.5*smoothbeam( y, 0.5 );
    a = min( a, 1.0 );
    colour_out.rgb = mix( colour.rgb, vec3(1.0), 3.0*smoothbeam( pos_tex.y, 0.1 ) );
-   colour_out.a *= a;
+   colour_out.a = colour.a * a;
    colour_out.a *= beamfade( pos_px.x, pos_tex.x );
 
    // Do fancy noise effect

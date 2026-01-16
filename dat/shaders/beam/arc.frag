@@ -6,7 +6,7 @@ void main (void) {
    vec2 ncoord;
 
    // Modulate alpha base on length
-   colour_out.a *= beamfade( pos_px.x, pos_tex.x );
+   colour_out.a = colour.a * beamfade( pos_px.x, pos_tex.x );
 
    // Modulate alpha based on dispersion
    m = 4.0;

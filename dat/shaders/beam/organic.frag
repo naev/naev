@@ -7,7 +7,7 @@ void main (void) {
    vec2 coords;
    const float range = 0.3;
 
-   colour_out.a *= beamfade( pos_px.x, pos_tex.x );
+   colour_out.a = colour.a * beamfade( pos_px.x, pos_tex.x );
 
    // Modulate alpha based on dispersion
    m = 3.0;

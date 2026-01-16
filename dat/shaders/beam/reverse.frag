@@ -6,7 +6,7 @@ void main (void) {
    float m;
    const float range = 0.3;
 
-   colour_out.a *= beamfade( pos_px.x, pos_tex.x );
+   colour_out.a = colour.a * beamfade( pos_px.x, pos_tex.x );
 
    // Normal beam
    coords = pos_px / 500.0 + vec2( 3.0*ANIM_SPEED*dt, 0 );

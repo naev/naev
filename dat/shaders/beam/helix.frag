@@ -6,7 +6,7 @@ void main (void) {
    vec2 coords;
    const float range = 0.3;
 
-   colour_out.a *= beamfade( pos_px.x, pos_tex.x );
+   colour_out.a = colour.a * beamfade( pos_px.x, pos_tex.x );
 
    m = 0.6 * (0.8 + 0.2*sin( 2.0*M_PI * 0.5*ANIM_SPEED*dt ) );
    p = 2.0*M_PI * (pos_px.x/40.0 - dt * 6.0 + r);
