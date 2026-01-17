@@ -70,6 +70,7 @@
    * Fixed `PILOT_SHIELD_DOWN_TIME` not being read from constants
    * Fixed alert exclamation mark being upside down
    * Fixed unsafe memory access in editor
+   * Fixed cooldown time bar over/underflowing with cooldown time modifiers
    * Editor tries to create ssys and spob path if they don't exist
    * Fixed loading plugin metadata from zip files
    * Removed inexistent heat entry from naevpedia list

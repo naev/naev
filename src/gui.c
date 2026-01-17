@@ -670,7 +670,10 @@ void gui_render( double dt )
       if ( pilot_isFlag( player.p, PILOT_COOLDOWN ) ) {
          if ( gui_prepFunc( gui_lua_render_cooldown, "render_cooldown" ) ==
               0 ) {
-            lua_pushnumber( naevL, player.p->ctimer / player.p->cdelay );
+            lua_pushnumber( naevL, CLAMP( 0., 1.,
+                                          player.p->ctimer /
+                                             ( player.p->stats.cooldown_time *
+                                               player.p->cdelay ) ) );
             lua_pushnumber( naevL, player.p->ctimer );
             gui_runFunc( "render_cooldown", 2, 0 );
          }
