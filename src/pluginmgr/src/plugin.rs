@@ -3,7 +3,7 @@ use anyhow::{Error, Result};
 use fs_err as fs;
 use iced::task::{Straw, sipper};
 use serde::{Deserialize, Serialize, de};
-use std::io::Write;
+use std::io::{Read, Write};
 use std::ops::Deref;
 use std::path::{Path, PathBuf};
 
@@ -328,7 +328,11 @@ impl Plugin {
             .and_then(|e| e.to_str())
             .is_some_and(|e| e.eq_ignore_ascii_case("zip"))
         {
-            let data = fs::read(path)?;
+            let file = fs::File::open(path)?;
+            let mut archive = zip::ZipArchive::new(file)?;
+            let mut metadata = archive.by_name("plugin.toml")?;
+            let mut data = Vec::new();
+            metadata.read_to_end(&mut data)?;
             let mut plugin = Self::from_slice(&data)?;
             plugin.mountpoint = Some(path.to_owned());
             plugin.disabled = disabled;
