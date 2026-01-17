@@ -70,6 +70,7 @@
    * Fixed unsafe memory access in editor
    * Editor tries to create ssys and spob path if they don't exist
    * Fixed loading plugin metadata from zip files
+   * Removed inexistent heat entry from naevpedia list
    * Spelling and grammar fixes
    * Translation updates
 
