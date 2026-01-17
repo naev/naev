@@ -357,7 +357,7 @@ void player_thinkAutonav( Pilot *pplayer, double dt )
 void player_updateAutonav( double dt )
 {
    const double dis_dead = 1.0; /* Time it takes to start ramping up. */
-   const double dis_mod  = 2.0;
+   const double dis_mod  = 3.0;
    // const double dis_max  = 5.0;
    // const double dis_ramp = 3.0;
 
@@ -381,15 +381,15 @@ void player_updateAutonav( double dt )
        *
        * For triangles we have to add the rectangle and triangle areas.
        */
-      double tc_base  = player_dt_default() * player.speed;
-      double dis_max  = MAX( 5., player.p->dtimer / 10. );
-      double dis_ramp = ( dis_max - tc_base ) / dis_mod;
+      double tc_base = player_dt_default() * player.speed;
+      double dis_max = MAX( 5., player.p->dtimer / 10. );
 
       double time_left = player.p->dtimer - player.p->dtimer_accum;
       /* Initial deadtime. */
       if ( ( player.p->dtimer_accum < dis_dead ) || ( time_left < dis_dead ) )
          tc_mod = tc_base;
       else {
+         double dis_ramp = ( dis_max - tc_base ) / dis_mod;
          /* Ramp down. */
          if ( time_left < dis_dead + ( dis_max - tc_base ) * dis_ramp / 2. +
                              tc_base * dis_ramp )
