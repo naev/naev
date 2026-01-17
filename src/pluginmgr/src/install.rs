@@ -189,8 +189,15 @@ impl Installer {
                     None => self.root.join(&*self.plugin.identifier),
                 }
             };
-            if target.exists() {
+            if target.is_file() {
+                fs::remove_file(&target)?;
+            } else if target.is_dir() {
                 fs::remove_dir_all(&target)?;
+            } else {
+                anyhow::bail!(format!(
+                    "Plugin path '{}' is neither a file nor a directory",
+                    target.display()
+                ));
             }
             // Remove the disabled file too if it exists
             if let Some(filename) = target.file_name()

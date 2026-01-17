@@ -16,6 +16,7 @@
    * Fixed cooldown time bar over/underflowing with cooldown time modifiers
    * Editor tries to create ssys and spob path if they don't exist
    * Fixed loading plugin metadata from zip files
+   * Fixed uninstalling zip files from plugin manager
    * Removed inexistent heat entry from naevpedia list
    * Spelling and grammar fixes
    * Translation updates
