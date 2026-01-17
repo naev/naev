@@ -21,6 +21,8 @@
    * Ultra-heavy weapons have reduced energy usage
    * Added accessibility option to disable screen shaking
    * Gauntlet NPCs get their fighters disabled when they are disabled
+   * Stress starts recovering 5 seconds after taking disable damage instead of
+     immediately
 
  ### Content
 

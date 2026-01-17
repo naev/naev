@@ -1489,6 +1489,10 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
       p->stress = 1.;
    }
 
+   /* If took disable damage, disable recovery. */
+   if ( ddis > 0. )
+      p->rtimer = CTS.PILOT_STRESS_RECOVERY_TIME;
+
    /* Can't undisable permanently disabled pilots through shooting. */
    if ( pilot_isFlag( p, PILOT_DISABLED_PERM ) )
       p->stress = p->armour;
@@ -2395,6 +2399,7 @@ void pilot_update( Pilot *pilot, double dt )
    pilot->stimer -= dt;
    if ( pilot->stimer <= 0. )
       pilot->sbonus -= dt;
+   pilot->rtimer -= dt;
    for ( int i = 0; i < MAX_AI_TIMERS; i++ )
       if ( pilot->timer[i] > 0. )
          pilot->timer[i] -= dt;
@@ -2504,13 +2509,17 @@ void pilot_update( Pilot *pilot, double dt )
    /* Update stress. */
    if ( !pilot_isFlag( pilot,
                        PILOT_DISABLED ) ) { /* Case pilot is not disabled. */
-      double stress_falloff =
-         0.3 *
-         sqrt( pilot->solid.mass ); /* Should be about 38 seconds for a 300 mass
+      /* Only updates when timer isn't active. */
+      if ( pilot->rtimer <= 0. ) {
+         double stress_falloff =
+            0.3 *
+            sqrt(
+               pilot->solid.mass ); /* Should be about 38 seconds for a 300 mass
                                        ship with 200 armour, and 172 seconds for
                                        a 6000 mass ship with 4000 armour. */
-      pilot->stress -= stress_falloff * pilot->stats.stress_dissipation * dt;
-      pilot->stress = MAX( pilot->stress, 0 );
+         pilot->stress -= stress_falloff * pilot->stats.stress_dissipation * dt;
+         pilot->stress = MAX( pilot->stress, 0 );
+      }
    } else if ( !pilot_isFlag(
                   pilot,
                   PILOT_DISABLED_PERM ) ) { /* Case pilot is disabled (but
@@ -4427,6 +4436,7 @@ void pilot_clearTimers( Pilot *pilot )
    pilot->ptimer   = 0.; /* Pilot timer. */
    pilot->tcontrol = 0.; /* AI control timer. */
    pilot->stimer   = 0.; /* Shield timer. */
+   pilot->rtimer   = 0.; /* Stress recovery timer. */
    pilot->dtimer   = 0.; /* Disable timer. */
    pilot->otimer   = 0.; /* Outfit timer. */
    for ( int i = 0; i < MAX_AI_TIMERS; i++ )

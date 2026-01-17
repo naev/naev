@@ -419,6 +419,7 @@ typedef struct Pilot_ {
    double     htimer;        /**< Hail animation timer. */
    double     stimer;        /**< Shield regeneration timer. */
    double     sbonus;        /**< Shield regeneration bonus. */
+   double     rtimer;        /**< Stress recovery timer. */
    double     dtimer;        /**< Disable timer. */
    double     dtimer_accum;  /**< Accumulated disable timer. */
    double     otimer;        /**< Lua outfit timer. */

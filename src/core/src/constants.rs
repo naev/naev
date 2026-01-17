@@ -14,6 +14,7 @@ pub struct Constants {
     pub ew_jump_detect_dist: f32,
     pub ew_spob_detect_dist: f32,
     pub pilot_shield_down_time: f32,
+    pub pilot_stress_recovery_time: f32,
     pub pilot_disabled_armour: f32,
     pub camera_angle: f32,
 }
@@ -47,6 +48,7 @@ impl Constants {
         let ew_jump_detect_dist = get_f32(&tbl, "EW_JUMPDETECT_DIST", 7.5e3);
         let ew_spob_detect_dist = get_f32(&tbl, "EW_SPOBDETECT_DIST", 20e3);
         let pilot_shield_down_time = get_f32(&tbl, "PILOT_SHIELD_DOWN_TIME", 5.);
+        let pilot_stress_recovery_time = get_f32(&tbl, "PILOT_STRESS_RECOVERY_TIME", 5.);
         let pilot_disabled_armour = get_f32(&tbl, "PILOT_DISABLED_ARMOUR", 0.1);
         let camera_angle = get_f32(&tbl, "CAMERA_ANGLE", std::f32::consts::FRAC_PI_4);
 
@@ -61,6 +63,7 @@ impl Constants {
             ew_jump_detect_dist,
             ew_spob_detect_dist,
             pilot_shield_down_time,
+            pilot_stress_recovery_time,
             pilot_disabled_armour,
             camera_angle,
         })
@@ -88,6 +91,7 @@ impl Constants {
             ew_jump_detect_dist: 7.5e3,
             ew_spob_detect_dist: 20e3,
             pilot_shield_down_time: 5.,
+            pilot_stress_recovery_time: 5.,
             pilot_disabled_armour: 0.1,
             camera_angle: std::f32::consts::FRAC_PI_4,
         }
