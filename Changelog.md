@@ -69,6 +69,7 @@
    * Fixed alert exclamation mark being upside down
    * Fixed unsafe memory access in editor
    * Editor tries to create ssys and spob path if they don't exist
+   * Fixed loading plugin metadata from zip files
    * Spelling and grammar fixes
    * Translation updates
 
