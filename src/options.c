@@ -1743,9 +1743,12 @@ static void opt_setJumpBrightness( unsigned int wid, const char *str )
    char   buf[STRMAX_SHORT];
    double fad           = window_getFaderValue( wid, str );
    conf.jump_brightness = fad;
-   snprintf( buf, sizeof( buf ), _( "Jump brightness: %.0f%%" ),
+   snprintf( buf, sizeof( buf ), _( "#wJump brightness: %.0f%% (#0colour#w)" ),
              round( 100. * fad ) );
    window_modifyText( wid, "txtJumpBrightness", buf );
+   float    c   = fad * fad;
+   glColour col = { .r = c, .g = c, .b = c, .a = 1. };
+   window_textColour( wid, "txtJumpBrightness", col );
 }
 
 static void opt_setGameSpeed( unsigned int wid, const char *str )

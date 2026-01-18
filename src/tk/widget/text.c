@@ -141,3 +141,12 @@ int window_getTextHeight( const unsigned int wid, const char *name )
 
    return gl_printHeightRaw( wgt->dat.txt.font, wgt->w, wgt->dat.txt.text );
 }
+
+void window_textColour( unsigned int wid, const char *name, glColour col )
+{
+   Widget *wgt = window_getwgt( wid, name );
+   if ( wgt == NULL || wgt->type != WIDGET_TEXT )
+      return;
+   wgt->dat.txt.colour = col;
+   toolkit_rerender();
+}

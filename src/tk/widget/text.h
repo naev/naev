@@ -28,3 +28,4 @@ void window_addText( unsigned int wid, const int x, const int y, /* position */
 void window_modifyText( unsigned int wid, const char *name,
                         const char *newstring );
 int  window_getTextHeight( unsigned int wid, const char *name );
+void window_textColour( unsigned int wid, const char *name, glColour col );
