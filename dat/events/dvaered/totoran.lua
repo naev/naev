@@ -274,7 +274,7 @@ Is there anything else you would like to purchase?"]]), {
          end
          pp:outfitAddIntrinsic( t.outfit )
       elseif t.type == "ship" then
-         player.shipAdd( t.ship )
+         player.shipAdd( t.ship, nil, _("You obtained the ship through your feats at the Totoran Gauntlet.") )
       else
          error(_("unknown tradein type"))
       end
