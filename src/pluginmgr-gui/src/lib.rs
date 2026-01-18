@@ -963,7 +963,11 @@ impl App {
                 })
                 .width(60)
                 .height(60);
-                let name = bold(p.name.as_str());
+                let name = bold(p.name.as_str()).color_maybe(if p.compatible {
+                    None
+                } else {
+                    Some(palette.danger)
+                });
                 let badge = match v.state {
                     PluginState::Installed => Some(if v.has_update() {
                         badge(pgettext("plugins", "update"), extended.warning.weak)
