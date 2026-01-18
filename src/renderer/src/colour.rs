@@ -1,4 +1,4 @@
-use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
+use mlua::{BorrowedStr, FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
 use nalgebra::{Vector3, Vector4};
 use palette::FromColor;
 use palette::{Hsv, LinSrgb, Srgb};
@@ -334,7 +334,7 @@ impl UserData for Colour {
          */
         methods.add_function(
             "new_named",
-            |_, (name, a): (String, Option<f32>)| -> mlua::Result<Option<Self>> {
+            |_, (name, a): (BorrowedStr, Option<f32>)| -> mlua::Result<Option<Self>> {
                 match Colour::from_name(&name) {
                     Some(mut col) => {
                         if let Some(a) = a {

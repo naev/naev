@@ -5,7 +5,8 @@ use glow::*;
 use image::ImageFormat;
 #[allow(unused_imports)]
 use mlua::{
-    Either, FromLua, Lua, MetaMethod, UserData, UserDataMethods, UserDataRef, UserDataRefMut, Value,
+    BorrowedStr, Either, FromLua, Lua, MetaMethod, UserData, UserDataMethods, UserDataRef,
+    UserDataRefMut, Value,
 };
 use nalgebra::{Matrix3, Vector4};
 use ndata::data::Data;
@@ -2155,7 +2156,7 @@ impl UserData for Texture {
             "new",
             |_,
              (path, w, h, sx, sy): (
-                Either<Either<String, UserDataRef<Data>>, UserDataRefMut<LuaFile>>,
+                Either<Either<BorrowedStr, UserDataRef<Data>>, UserDataRefMut<LuaFile>>,
                 Option<usize>,
                 Option<usize>,
                 Option<usize>,

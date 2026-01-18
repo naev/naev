@@ -1,7 +1,7 @@
 #![allow(dead_code, unused_variables)]
 use crate::shader::{ProgramBuilder, Shader};
 use glow::*;
-use mlua::{UserData, UserDataMethods};
+use mlua::{BorrowedStr, UserData, UserDataMethods};
 use nalgebra::{Matrix2, Matrix3, Vector4};
 use trie_rs::map::{Trie, TrieBuilder};
 
@@ -64,7 +64,7 @@ impl UserData for LuaShader {
          */
         methods.add_function(
             "new",
-            |_, (vertex, fragment): (String, String)| -> mlua::Result<Self> {
+            |_, (vertex, fragment): (BorrowedStr, BorrowedStr)| -> mlua::Result<Self> {
                 let ctx = crate::Context::get();
                 let shader = ProgramBuilder::new(None)
                     .vert_frag_data(&vertex, &fragment)
@@ -126,7 +126,7 @@ impl UserData for LuaShader {
             |_,
              this,
              (name, data0, data1, data2, data3): (
-                String,
+                BorrowedStr,
                 mlua::Value,
                 Option<mlua::Value>,
                 Option<mlua::Value>,
@@ -147,7 +147,7 @@ impl UserData for LuaShader {
             |_,
              this,
              (name, data0, data1, data2, data3): (
-                String,
+                BorrowedStr,
                 mlua::Value,
                 Option<mlua::Value>,
                 Option<mlua::Value>,
@@ -165,7 +165,7 @@ impl UserData for LuaShader {
          */
         methods.add_method(
             "hasUniform",
-            |_, this, name: String| -> mlua::Result<bool> {
+            |_, this, name: BorrowedStr| -> mlua::Result<bool> {
                 Ok(this.uniforms.exact_match(&name).is_some())
             },
         );
@@ -181,7 +181,10 @@ impl UserData for LuaShader {
          */
         methods.add_method_mut(
             "addPPShader",
-            |_, _this, (layer, priority): (Option<String>, Option<i32>)| -> mlua::Result<bool> {
+            |_,
+             _this,
+             (layer, priority): (Option<BorrowedStr>, Option<i32>)|
+             -> mlua::Result<bool> {
                 let _priority = priority.unwrap_or(0);
                 let _layer = match layer.as_deref() {
                     None | Some("final") => naevc::PP_LAYER_FINAL,

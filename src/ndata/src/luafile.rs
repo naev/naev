@@ -1,10 +1,11 @@
 use crate::physfs::Mode;
 use crate::{FileType, physfs, stat};
 use anyhow::Result;
-use mlua::{UserData, UserDataMethods};
+use mlua::{BorrowedStr, UserData, UserDataMethods};
 use sdl::iostream::IOStream;
 use sdl3 as sdl;
 use std::io::{Read, Seek, Write};
+use std::ops::Deref;
 
 pub struct OpenFile {
     mode: Mode,
@@ -297,8 +298,8 @@ impl UserData for LuaFile {
          */
         methods.add_function(
             "filetype",
-            |_, path: String| -> mlua::Result<Option<String>> {
-                match stat(&path) {
+            |_, path: BorrowedStr| -> mlua::Result<Option<String>> {
+                match stat(path.deref()) {
                     Ok(s) => Ok(Some(
                         match s.filetype {
                             FileType::Regular => "file",
@@ -321,8 +322,8 @@ impl UserData for LuaFile {
          */
         methods.add_function(
             "mkdir",
-            |_, path: String| -> mlua::Result<(bool, Option<String>)> {
-                match physfs::mkdir(&path) {
+            |_, path: BorrowedStr| -> mlua::Result<(bool, Option<String>)> {
+                match physfs::mkdir(path.deref()) {
                     Ok(()) => Ok((true, None)),
                     Err(e) => Ok((false, Some(e.to_string()))),
                 }
@@ -338,9 +339,9 @@ impl UserData for LuaFile {
          */
         methods.add_function(
             "enumerate",
-            |lua, path: String| -> mlua::Result<mlua::Table> {
+            |lua, path: BorrowedStr| -> mlua::Result<mlua::Table> {
                 let t = lua.create_table()?;
-                for f in crate::read_dir(&path)? {
+                for f in crate::read_dir(path.deref())? {
                     t.raw_push(f)?;
                 }
                 Ok(t)
@@ -355,8 +356,8 @@ impl UserData for LuaFile {
          */
         methods.add_function(
             "remove",
-            |_, path: String| -> mlua::Result<(bool, Option<String>)> {
-                match physfs::remove_file(&path) {
+            |_, path: BorrowedStr| -> mlua::Result<(bool, Option<String>)> {
+                match physfs::remove_file(path.deref()) {
                     Ok(()) => Ok((true, None)),
                     Err(e) => Ok((false, Some(e.to_string()))),
                 }

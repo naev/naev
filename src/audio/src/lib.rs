@@ -30,11 +30,12 @@ use anyhow::Result;
 use gettext::gettext;
 use helpers::atomicfloat::AtomicF32;
 use helpers::{binary_search_by_key_ref, sort_by_key_ref};
-use mlua::{Either, MetaMethod, UserData, UserDataMethods, UserDataRef};
+use mlua::{BorrowedStr, Either, MetaMethod, UserData, UserDataMethods, UserDataRef};
 use nalgebra::{Vector2, Vector3};
 use nlog::{debug, debugx, warn, warn_err};
 use std::fmt::{Debug, Formatter};
 use std::mem::ManuallyDrop;
+use std::ops::Deref;
 use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicBool, AtomicPtr, Ordering};
 use std::sync::{Arc, LazyLock, Weak};
@@ -2282,7 +2283,7 @@ impl UserData for LuaAudioRef {
         methods.add_function(
             "new",
             |_,
-             (val, streaming): (Either<String, UserDataRef<AudioData>>, bool)|
+             (val, streaming): (Either<BorrowedStr, UserDataRef<AudioData>>, bool)|
              -> mlua::Result<Self> {
                 let audio = match val {
                     Either::Left(val) => AudioBuilder::new(match streaming {
@@ -2708,7 +2709,7 @@ impl UserData for LuaAudioRef {
          */
         methods.add_method(
             "setEffect",
-            |_, this, (name, enable): (String, bool)| -> mlua::Result<bool> {
+            |_, this, (name, enable): (BorrowedStr, bool)| -> mlua::Result<bool> {
                 this.call_or(
                     |this| {
                         if EFX.get().is_none() {
@@ -2716,17 +2717,18 @@ impl UserData for LuaAudioRef {
                         }
                         let slot = if enable {
                             let lock = EFX_LIST.lock().unwrap();
-                            let efxid =
-                                match binary_search_by_key_ref(&lock, &name, |e: &LuaAudioEfx| {
-                                    &e.name
-                                }) {
-                                    Ok(efx) => efx,
-                                    Err(_) => {
-                                        return Err(mlua::Error::RuntimeError(format!(
-                                            "effect '{name}' not found"
-                                        )));
-                                    }
-                                };
+                            let efxid = match binary_search_by_key_ref(
+                                &lock,
+                                name.deref(),
+                                |e: &LuaAudioEfx| &e.name,
+                            ) {
+                                Ok(efx) => efx,
+                                Err(_) => {
+                                    return Err(mlua::Error::RuntimeError(format!(
+                                        "effect '{name}' not found"
+                                    )));
+                                }
+                            };
                             let efx = &lock[efxid];
                             efx.slot.raw() as ALint
                         } else {
@@ -2756,24 +2758,28 @@ impl UserData for LuaAudioRef {
          */
         methods.add_function(
             "setEffectData",
-            |_, (name, param): (String, mlua::Table)| -> mlua::Result<()> {
+            |_, (name, param): (BorrowedStr, mlua::Table)| -> mlua::Result<()> {
                 if EFX.get().is_none() {
                     return Ok(());
                 }
                 let mut lock = EFX_LIST.lock().unwrap();
-                let efxid = match binary_search_by_key_ref(&lock, &name, |e: &LuaAudioEfx| &e.name)
-                {
+                let efxid = match binary_search_by_key_ref(
+                    &lock,
+                    name.deref(),
+                    |e: &LuaAudioEfx| &e.name,
+                ) {
                     Ok(efx) => efx,
                     Err(_) => {
                         let efx = LuaAudioEfx::new(&name)?;
                         lock.push(efx);
                         sort_by_key_ref(&mut lock, |e: &LuaAudioEfx| &e.name);
-                        binary_search_by_key_ref(&lock, &name, |e: &LuaAudioEfx| &e.name).unwrap()
+                        binary_search_by_key_ref(&lock, name.deref(), |e: &LuaAudioEfx| &e.name)
+                            .unwrap()
                     }
                 };
                 let efx = &lock[efxid];
 
-                let typename: String = param.get("type")?;
+                let typename: BorrowedStr = param.get("type")?;
                 let volume: Option<f32> = param.get("volume")?;
 
                 macro_rules! efx_set_f32 {
@@ -2932,21 +2938,23 @@ impl UserData for LuaAudioRef {
          */
         methods.add_function(
             "setGlobalEffect",
-            |_, name: Option<String>| -> mlua::Result<()> {
+            |_, name: Option<BorrowedStr>| -> mlua::Result<()> {
                 if let Some(efx) = EFX.get() {
                     let direct_slot = &efx.direct_slot;
                     if let Some(name) = name {
                         let lock = EFX_LIST.lock().unwrap();
-                        let efxid =
-                            match binary_search_by_key_ref(&lock, &name, |e: &LuaAudioEfx| &e.name)
-                            {
-                                Ok(efx) => efx,
-                                Err(_) => {
-                                    return Err(mlua::Error::RuntimeError(format!(
-                                        "effect '{name}' not found"
-                                    )));
-                                }
-                            };
+                        let efxid = match binary_search_by_key_ref(
+                            &lock,
+                            name.deref(),
+                            |e: &LuaAudioEfx| &e.name,
+                        ) {
+                            Ok(efx) => efx,
+                            Err(_) => {
+                                return Err(mlua::Error::RuntimeError(format!(
+                                    "effect '{name}' not found"
+                                )));
+                            }
+                        };
                         let efx = &lock[efxid];
                         direct_slot.set_effect(Some(&efx.effect));
                     } else {

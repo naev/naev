@@ -1,5 +1,5 @@
 use anyhow::Context;
-use mlua::{UserData, UserDataMethods};
+use mlua::{BorrowedStr, UserData, UserDataMethods};
 
 #[derive(Clone, derive_more::From, derive_more::Into)]
 pub struct Data(Vec<f32>);
@@ -27,7 +27,7 @@ impl UserData for Data {
          */
         methods.add_function(
             "new",
-            |_, (size, data_type): (usize, String)| -> mlua::Result<Self> {
+            |_, (size, data_type): (usize, BorrowedStr)| -> mlua::Result<Self> {
                 if data_type != "number" {
                     return Err(mlua::Error::RuntimeError(
                         "only 'number' type data supported at the moment".to_string(),

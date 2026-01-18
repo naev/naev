@@ -1,5 +1,6 @@
 use crate::{AudioData, AudioSeek, Buffer};
-use mlua::{MetaMethod, UserData, UserDataMethods};
+use mlua::{BorrowedStr, MetaMethod, UserData, UserDataMethods};
+use std::ops::Deref;
 
 /*@
  * @brief Lua bindings to interact with audio.
@@ -25,8 +26,8 @@ impl UserData for AudioData {
          *    @luatreturn AudioData New audio data.
          * @luafunc new
          */
-        methods.add_function("new", |_, filename: String| -> mlua::Result<Self> {
-            let buf = Buffer::get_or_try_load(&filename)?;
+        methods.add_function("new", |_, filename: BorrowedStr| -> mlua::Result<Self> {
+            let buf = Buffer::get_or_try_load(filename.deref())?;
             Ok(AudioData::Buffer(buf))
         });
         /*@
