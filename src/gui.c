@@ -725,7 +725,7 @@ void gui_render( double dt )
       glUniform1f( shaders.jump.progress, fade );
       glUniform1f( shaders.jump.direction, direction );
       glUniform2f( shaders.jump.dimensions, gl_screen.nw, gl_screen.nh );
-      glUniform1f( shaders.jump.brightness, conf.jump_brightness );
+      glUniform1f( shaders.jump.brightness, conf.jump_brightness * conf.jump_brightness );
 
       /* Set the subroutine. */
       if ( gl_has( OPENGL_SUBROUTINES ) ) {
