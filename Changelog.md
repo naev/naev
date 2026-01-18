@@ -76,6 +76,7 @@
    * Fixed loading plugin metadata from zip files
    * Fixed uninstalling zip files from plugin manager
    * Removed inexistent heat entry from naevpedia list
+   * Plugin editor will keep descriptions now on reload
    * Spelling and grammar fixes
    * Translation updates
 

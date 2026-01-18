@@ -301,6 +301,7 @@ impl PluginWrap {
         if let Some(remote) = &mut wrap.remote {
             remote.check_compatible();
         }
+        wrap.update_description();
         Ok(wrap)
     }
 
@@ -1187,7 +1188,9 @@ impl App {
         )
         .align_right(Fill);
         // Set up the final screen
-        let right = column![buttons, selected].spacing(10).width(300);
+        let right = column![buttons, scrollable(selected).height(Fill).width(Fill)]
+            .spacing(10)
+            .width(300);
         let mut main = widget::stack![row![plugins, right].spacing(20).padding(20).height(Fill)];
         if self.log_open {
             let logview = scrollable(widget::Column::with_children(self.log.iter().map(|l| {
