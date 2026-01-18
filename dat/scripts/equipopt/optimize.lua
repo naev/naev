@@ -266,7 +266,7 @@ local function print_debug( lp, p, st, ss, outfit_list, params, constraints, ene
    constraints = constraints or {}
    print(string.format(_("CPU: %d / %d [x=%d < %d]"), stn.cpu, stn.cpu_max, constraints[1] or 0, st.cpu_max ))
    print(string.format(_("Energy Regen: %.3f [x=%.3f > %.3f (%.1f)]"), stn.energy_regen, constraints[2] or 0, st.energy_regen - emod*energygoal, emod))
-   print(string.format(_("Mass: %.3f / %.3f [x=3f < %.3f (%.1f)]"), st.mass, ss.engine_limit, constraints[3] or 0, mmod * params.max_mass * ss.engine_limit - st.mass, mmod ))
+   print(string.format(_("Mass: %.3f / %.3f [x=%.3f < %.3f (%.1f)]"), st.mass, ss.engine_limit, constraints[3] or 0, mmod * params.max_mass * ss.engine_limit - st.mass, mmod ))
    if nebu_row then
       local _nebu_dens, nebu_vol = system.cur():nebula()
       print(string.format(_("Shield Regen: %.3f [x=%.3f > %.3f (%.1f)]"), stn.shield_regen, constraints[nebu_row] or 0, nebu_vol*(1-ss.nebu_absorb)-st.shield_regen, 1))
@@ -840,11 +840,11 @@ function optimize.optimize( p, cores, outfit_list, params )
       -- Due to the approximation, sometimes they end up with not enough
       -- energy, we'll try again with more relaxed energy constraints
       local stn = p:stats()
-      if not z or (stn.energy_regen < energygoal and try < 5 and (st.energy_regen - emod*energygoal) > min_energy) then
+      if not z or (stn.energy_regen < energygoal and try <= 5 and (emod*energygoal - stn.energy_regen) > min_energy) then
          p:outfitsEquip( outfits_base ) -- Should restore initial outfits
-         emod = emod * 1.5
-         print(string.format("Pilot %s: optimization attempt %d of %d: emod=%.3f", p:name(), try, 3, emod ))
-         lp:set_row( 2, "energy_regen", math.max( min_energy, st.energy_regen - emod*energygoal ))
+         emod = emod / 1.5
+         print(string.format("Pilot %s: optimization attempt %d of %d: emod=%.3f", p:name(), try, 5, emod ))
+         lp:set_row( 2, "energy_regen", math.max( min_energy, emod*energygoal - stn.energy_regen ))
          done = false
       end
    until done or try >= 5 -- attempts should be fairly fast since we just do optimization step
