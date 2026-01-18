@@ -70,7 +70,9 @@ def nluacheck( filename, extra_opts=[] ):
 if __name__ == "__main__":
    parser = argparse.ArgumentParser( description='Wrapper for luacheck that "understands" Naev hooks.' )
    parser.add_argument('path', metavar='PATH', nargs='+', type=str, help='Name of the path(s) to parse. Recurses over .lua files in the case of directories.')
-   parser.add_argument('-j', '--jobs', metavar='jobs', type=int, default=None, help='Number of jobs to use. Defaults to number of CPUs.')
+   # We disabled job management, see below.
+   #parser.add_argument('-j', '--jobs', metavar='jobs', type=int, default=None, help='Number of jobs to use. Defaults to number of CPUs.')
+
    # Below stuff for compatibility
    parser.add_argument('--filename', type=str, default=None )
    parser.add_argument('--formatter', type=str, default=None )
