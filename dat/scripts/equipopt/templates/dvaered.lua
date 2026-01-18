@@ -64,6 +64,11 @@ local dvaered_params = {
             ["Launcher"] = { max = rnd.rnd(0,2) },
          }
       } end,
+   ["Dvaered Ancestor Calamity"] = function () return {
+         type_range = {
+            ["Bolt Weapon"] = { min = 0 },
+         }
+      } end,
 }
 --local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 local dvaered_cores = { -- Basically elite hulls excluding stealth
