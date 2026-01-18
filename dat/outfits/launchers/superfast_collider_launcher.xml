@@ -31,8 +31,8 @@
   <accel>300</accel>
   <speed>800</speed>
   <damage>
-   <type>plasma</type>
-   <penetrate>110</penetrate>
+   <type>kinetic</type>
+   <penetrate>100</penetrate>
    <physical>330</physical>
   </damage>
   <radius friendlyfire="1">50</radius>
