@@ -47,22 +47,32 @@ def nluacheck( filename, extra_opts=[] ):
    hooks += list(map( lambda x: x[1], PROXIMITY_REGEX.findall( data ) ) )
    hooks = sorted(set(hooks)) # remove duplicates
 
-   args = [ "luacheck" ]
-   args += [ filename ]
-   args += extra_opts
+   args = [ "luacheck", filename ] + extra_opts
    for r in hooks:
       args += [ "--globals", r ]
-   if isstdin:
-      ret = subprocess.run( args, capture_output=True, input=bytes(data,'utf-8') )
-   else:
-      ret = subprocess.run( args, capture_output=True )
-
+   try:
+      if isstdin:
+         ret = subprocess.run( args, capture_output=True, input=bytes(data,'utf-8') )
+      else:
+         ret = subprocess.run( args, capture_output=True )
+   except FileNotFoundError as err:
+      try:
+         subprocess.run( [ "luacheck", "-v" ] )
+      except:
+         sys.stderr.write(
+            "\"luacheck\" was not found. You can install it with:\n"
+            "sudo apt-get install lua-check\n"
+         )
+         sys.exit(2)
+      raise err
    return ret.returncode, ret.stdout, ret.stderr
 
 if __name__ == "__main__":
    parser = argparse.ArgumentParser( description='Wrapper for luacheck that "understands" Naev hooks.' )
    parser.add_argument('path', metavar='PATH', nargs='+', type=str, help='Name of the path(s) to parse. Recurses over .lua files in the case of directories.')
-   parser.add_argument('-j', '--jobs', metavar='jobs', type=int, default=None, help='Number of jobs to use. Defaults to number of CPUs.')
+   # We disabled job management, see below.
+   #parser.add_argument('-j', '--jobs', metavar='jobs', type=int, default=None, help='Number of jobs to use. Defaults to number of CPUs.')
+
    # Below stuff for compatibility
    parser.add_argument('--filename', type=str, default=None )
    parser.add_argument('--formatter', type=str, default=None )
@@ -101,10 +111,8 @@ if __name__ == "__main__":
    else:
       filelist = list(filelist)
       filelist.sort()
-      retlist = map( nluacheck_w, filelist )
-      # Not sure why this broke...
-      #with Pool( args.jobs ) as pool:
-      #   retlist = pool.map( nluacheck_w, filelist )
+      with Pool( args.jobs ) as pool:
+         retlist = pool.map( nluacheck_w, filelist )
    err = 0
    for r in retlist:
       if r[0]!=0:
