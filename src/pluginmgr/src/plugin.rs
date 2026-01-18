@@ -39,7 +39,7 @@ impl<'de> de::Deserialize<'de> for Identifier {
             } else if !inner.chars().all(|c| c.is_ascii_alphanumeric()) {
                 Err(de::Error::invalid_value(
                     de::Unexpected::Str(&inner),
-                    &"identifier contains non-ascii alphanumeric characters (whitespaces included)",
+                    &"&identifier contains non-alphanumeric or non-ascii characters",
                 ))
             } else if inner.starts_with(ID_ERROR) {
                 Err(de::Error::invalid_value(
