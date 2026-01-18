@@ -31,7 +31,7 @@
   <accel>300</accel>
   <speed>800</speed>
   <damage>
-   <type>plasma</type>
+   <type>kinetic</type>
    <penetrate>100</penetrate>
    <physical>330</physical>
   </damage>
