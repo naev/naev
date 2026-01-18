@@ -47,16 +47,24 @@ def nluacheck( filename, extra_opts=[] ):
    hooks += list(map( lambda x: x[1], PROXIMITY_REGEX.findall( data ) ) )
    hooks = sorted(set(hooks)) # remove duplicates
 
-   args = [ "luacheck" ]
-   args += [ filename ]
-   args += extra_opts
+   args = [ "luacheck", filename ] + extra_opts
    for r in hooks:
       args += [ "--globals", r ]
-   if isstdin:
-      ret = subprocess.run( args, capture_output=True, input=bytes(data,'utf-8') )
-   else:
-      ret = subprocess.run( args, capture_output=True )
-
+   try:
+      if isstdin:
+         ret = subprocess.run( args, capture_output=True, input=bytes(data,'utf-8') )
+      else:
+         ret = subprocess.run( args, capture_output=True )
+   except FileNotFoundError as err:
+      try:
+         subprocess.run( [ "luacheck", "-v" ] )
+      except:
+         sys.stderr.write(
+            "\"luacheck\" was not found. You can install it with:\n"
+            "sudo apt-get install lua-check\n"
+         )
+         sys.exit(2)
+      raise err
    return ret.returncode, ret.stdout, ret.stderr
 
 if __name__ == "__main__":
