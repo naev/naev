@@ -81,6 +81,10 @@ var.ancestor = _v{
    { w=1,    s=ship.get("Ancestor") },
    { w=0.05, s=ship.get("Ancestor HG Eagle-Eye") },
 }
+var.dvaered_ancestor = _v{
+   { w=1,    s=ship.get("Dvaered Ancestor") },
+   { w=0.05, s=ship.get("Dvaered Ancestor Calamity") },
+}
 -- Corvette
 var.admonisher = _v{
    { w=1,    s=ship.get("Admonisher") },

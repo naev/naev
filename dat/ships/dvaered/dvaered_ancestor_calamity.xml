@@ -1,0 +1,45 @@
+<ship name="Dvaered Ancestor Calamity" inherits="Dvaered Ancestor">
+ <rarity>3</rarity>
+ <price>850000</price>
+ <cond>require("buyrep")("Dvaered", 40)</cond>
+ <condstr>You need at least 40% reputation with House Dvaered.</condstr>
+ <description>The Super-Fast Collider Launchers have more in common with most torpedo launchers than you'd think. All it takes for them to work just as well on a comparatively tiny bomber-class vessel is a redesign of its weapon mounts to be rigidly integrated with them. The newly possible generous design assumptions have also allowed for a substantial increase in targeting accuracy, much needed for better luck fighting off ships of its own caliber, but Dvaered technology can only be pushed so far, so the result is a ship much heavier yet less armoured than the original Ancestor, although bearing ridiculous firepower.
+ 
+This design carries the legend of one empoverished Lord Calamares, who, as they say, lost their prized Goddard in a bet on the Crimson Gauntlet. Desperate to earn back their pride, they spent the last of their finances on second-hand launchers that barely fit on their last space-worthy ship, a Dvaered Ancestor, to threaten the very warlord they lost the jewel of their once-grand fleet to. Both perished in what passed for a fight, one that would be a footnote in history had it not been taken note of by a High Command officer, who would then order a refined design based on the doomed pilot's idea.</description>
+ <health>
+  <armour>50</armour>
+ </health>
+ <characteristics>
+  <crew>6</crew>
+  <mass>90</mass>
+  <fuel_consumption>100</fuel_consumption>
+  <cargo>6</cargo>
+ </characteristics>
+ <slots>
+  <weapon prop="builtin" y="8" h="-1" size="large" x="-2">Super-Fast Collider Launcher</weapon>
+  <weapon prop="builtin" y="-8" h="-1" size="large" x="-2">Super-Fast Collider Launcher</weapon>
+  <utility prop="systems" name="systems" size="small">Unicorp PT-16 Core System</utility>
+  <utility prop="systems_secondary" name="systems_secondary" size="small">Milspec Thalos 2202 Core System</utility>
+  <utility prop="accessory" name="accessory" size="small"/>
+  <utility size="small"/>
+  <utility size="small"/>
+  <utility size="small"/>
+  <structure prop="engines" name="engines" size="small">Melendez Ox Engine</structure>
+  <structure prop="engines_secondary" name="engines_secondary" size="small">Unicorp Hawk 160 Engine</structure>
+  <structure prop="hull" name="hull" size="small">Unicorp D-2 Light Plating</structure>
+  <structure prop="hull_secondary" name="hull_secondary" size="small">Unicorp D-2 Light Plating</structure>
+  <structure size="small"/>
+  <structure size="small"/>
+  <structure size="small"/>
+  <structure size="small"/>
+ </slots>
+ <stats>
+  <cpu_mod>-25</cpu_mod>
+  <speed_mod>-10</speed_mod>
+  <shield_mod>-10</shield_mod>
+  <ammo_capacity>30</ammo_capacity>
+  <ew_track>30</ew_track>
+  <engine_limit_rel>10</engine_limit_rel>
+  <energy_regen_mod>-25</energy_regen_mod>
+ </stats>
+</ship>
