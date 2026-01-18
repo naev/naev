@@ -183,6 +183,7 @@ function approach_guide ()
          description=_("Unlocks the No Healing Perk, which makes it so you don't get healed between waves. While this increases the challenge difficulty, it also increases the rewards.")},
       {name=_("Gauntlet Deluxe (Ship Upgrade)"), cost=2500, type="intrinsic", outfit=outfit.get("Gauntlet Deluxe")},
       {name=_("Gauntlet Supreme (Ship Upgrade)"), cost=2500, type="intrinsic", outfit=outfit.get("Gauntlet Supreme")},
+      {name=_("Dvaered Ancestor Calamity"), cost=5000, type="ship", ship=ship.get("Dvaered Ancestor Calamity")},
    }
    local tradein_item = nil
    local handler = function (idx)
@@ -205,6 +206,8 @@ function approach_guide ()
          tradein_item.description = t.description
       elseif t.type == "intrinsic" then
          tradein_item.description = t.outfit:summary()
+      elseif t.type == "ship" then
+         tradein_item.description = t.ship:description()
       else
          error(_("unknown tradein type"))
       end
@@ -270,6 +273,8 @@ Is there anything else you would like to purchase?"]]), {
             end
          end
          pp:outfitAddIntrinsic( t.outfit )
+      elseif t.type == "ship" then
+         player.shipAdd( t.ship )
       else
          error(_("unknown tradein type"))
       end
