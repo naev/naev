@@ -11,10 +11,17 @@ script_dir = path.join(path.dirname(__file__), '..', '..', '..', 'utils', 'outfi
 sys.path.append(path.realpath(script_dir))
 from outfit import outfit
 
-def get_outfit_dict( nam, core= False, doubled= False ):
+def get_outfit_dict( nam, core= False, secondary= False ):
    nam = path.realpath(path.join(path.dirname( __file__ ), '..', nam))
    o = outfit(nam, is_multi= core, w= False)
-   o.stack(o if doubled else None)
+   if secondary:
+      if isinstance(secondary, str):
+         secondary = outfit(doubled, is_multi= True, w= False)
+      else
+         secondary = o
+   else:
+      secondary = None
+   o.stack(secondary)
    out = o.to_dict()
    out['size'] = o.size_name()
    return out
@@ -147,22 +154,25 @@ typename['hull'] = N_("Bioship Shell")
 # Laevis Gene Drive     =>  Melendez Ox x2
 # Mediocris Gene Drive  =>  Tricon Cyclone
 # Largus Gene Drive     =>  Tricon Cyclone x2
+# Supernus Gene Drive   =>  Melendez Buffalo + Tricon Cyclone
 # Ponderosus Gene Drive =>  Tricon Typhoon
 # Grandis Gene Drive    =>  Melendez Mammoth
 # Magnus Gene Drive     =>  Tricon Typhoon x2
 # Immanis Gene Drive    =>  Nexus Bolt 3000 x2
-for siz, nam, db, temp, gfx, output_pref, outputs in [
+for siz, nam, sec, temp, gfx, output_pref, outputs in [
    ('small', 'tricon_zephyr_engine.xml',     False,   'gene_drive_tricon',    'fast_s',   'Perlevis',    ['I', 'II']          ),
    ('small', 'tricon_zephyr_engine.xml',     True,    'gene_drive_tricon',    'fast_s',   'Laeviter',    ['I', 'II']          ),
    ('small', 'melendez_ox_engine.xml',       True,    'gene_drive_melendez',  'strong_s', 'Laevis',      ['I', 'II']          ),
    ('medium', 'tricon_cyclone_engine.xml',   False,   'gene_drive_tricon',    'fast_m',   'Mediocris',   ['I', 'II', 'III']   ),
    ('medium', 'tricon_cyclone_engine.xml',   True,    'gene_drive_tricon',    'strong_m', 'Largus',      ['I', 'II']          ),
+   ('medium', 'melendez_buffalo.xml',        'tricon_cyclone_engine.xml',
+                                                      'gene_drive_tricon',    'strong_m', 'Ipsum Largus', ['I', 'II']          ),
    ('large', 'tricon_typhoon_engine.xml',    False,   'gene_drive_tricon',    'fast_l',   'Ponderosus',  ['I', 'II', 'III']   ),
    ('large', 'melendez_mammoth_engine.xml',  False,   'gene_drive_melendez',  'strong_l', 'Grandis',     ['I', 'II', 'III']   ),
    ('large', 'tricon_typhoon_engine.xml',    True,    'gene_drive_tricon',    'strong_l', 'Magnus',      ['I', 'II', 'III']   ),
    ('large', 'nexus_bolt_3000_engine.xml',   True,    'gene_drive',           'strong_l', 'Immanis',     ['I', 'II', 'III']   ),
 ]:
-   ref = get_outfit_dict(path.join('core_engine', siz, nam), True, db)
+   ref = get_outfit_dict(path.join('core_engine', siz, nam), True, sec)
    BioOutfit( temp+'.xml.template', {
       'typename':     typename['engine'],
       'size':         ref['size'],

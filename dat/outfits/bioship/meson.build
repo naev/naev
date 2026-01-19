@@ -46,6 +46,15 @@ biooutfits = {
          'largus_gene_drive_ii.xml',
       ],
    },
+   'supernus_gene_drive' : {
+      'template': 'gene_drive_melendez',
+      'depend_files' : [ 'core_engine/medium/melendez_buffalo_engine.xml',
+                         'core_engine/medium/tricon_cyclone_engine.xml' ],
+      'output' : [
+         'supernus_gene_drive_i.xml',
+         'supernus_gene_drive_ii.xml',
+      ],
+   },
    'ponderosus_gene_drive' : {
       'template': 'gene_drive_tricon',
       'depend_files' : [ 'core_engine/large/tricon_typhoon_engine.xml' ],
