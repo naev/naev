@@ -290,7 +290,7 @@ BioOutfit( 'weapon.xml.template', {
    'energy':        eerpr(    6, 16.5, *follow),
    'trackmin':      0,
    'trackmax':      eerpr( 2000, 3000, *follow),
-   'penetrate':     lerpr(    0,   10, *follow),
+   'penetrate':     lerpr(    0,   15, *follow),
    'damage':        eerp(    20,   27, *extrapol),
    'extra':         '<swivel>22</swivel>',
 } ).run( [
@@ -328,7 +328,7 @@ BioOutfit( 'weapon.xml.template', {
    'energy':        eerpr( 16.5,   66, *extrapol),
    'trackmin':      lerpr(    0, 1000, *extrapol),
    'trackmax':      eerpr( 3000, 5000, *extrapol), # 5000 was 6000
-   'penetrate':     lerpr(   10,   42, *extrapol),
+   'penetrate':     lerpr(   15,   76, *extrapol),
    'damage':        eerp(    27,   68, *extrapol),
    #'range' :       lerp(  1000, 1400 ),
    #'falloff':      lerp(   900, 1200 ),
@@ -382,7 +382,7 @@ BioOutfit( 'weapon.xml.template', {
    'energy':        eerpr(    49*1.4,   111*1.4, *extrapol_bias),
    'trackmin':      eerpr(  2400/1.2,  6000/1.2, *extrapol),
    'trackmax':      eerpr(  9600/1.2, 24000/1.2, *extrapol),
-   'penetrate':     lerpr(  62/1.125,  80/1.125, *extrapol),
+   'penetrate':     lerpr(  131/1.125,  176/1.125, *extrapol),
    'damage':        eerp(     48*1.1,    70*1.1, *extrapol),
    #'range' :       lerp(       1800,  2000 ),
    #'falloff':      lerp(       1500,  1800 ),

@@ -32,7 +32,7 @@
   <speed>800</speed>
   <damage>
    <type>kinetic</type>
-   <penetrate>100</penetrate>
+   <penetrate>200</penetrate>
    <physical>330</physical>
   </damage>
   <radius friendlyfire="1">50</radius>

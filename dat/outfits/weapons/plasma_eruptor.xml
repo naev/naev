@@ -28,7 +28,7 @@
   <radius>20</radius>
   <damage>
    <type>plasma</type>
-   <penetrate>11</penetrate>
+   <penetrate>17</penetrate>
    <physical>2.9</physical>
   </damage>
  </specific>

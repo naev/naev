@@ -28,7 +28,7 @@
   <swivel>26</swivel>
   <damage>
    <type>ion</type>
-   <penetrate>64</penetrate>
+   <penetrate>135</penetrate>
    <physical>25.5</physical>
    <disable>17</disable>
   </damage>
