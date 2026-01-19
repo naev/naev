@@ -13,7 +13,7 @@ def get_number_commits_since(source_root: str, tag: str) -> Optional[str]:
    """Return the short git commit SHA, or None if unavailable."""
    try:
       proc = subprocess.run(
-         ["git", "-C", source_root, "rev-list", f"{tag}..", "--count"],
+         ["git", "-C", source_root, "rev-list", f"{tag}..HEAD", "--", "--count"],
          capture_output=True,
          text=True,
          check=True,
@@ -72,7 +72,7 @@ def get_version(source_root: str, base_version: str) -> str:
    Determine the project version:
       1. If HEAD is exactly at a tag and the repo is clean, use base_version.
          (Assumes base_version has been set to the tag by Meson.)
-      2. Otherwise, build a dev version: base_version + git SHA [+dirty] if .git exists.
+      2. Otherwise, build a dev version: base_version + commit count + git SHA [+dirty] if .git exists.
       3. If no .git, but dat/VERSION exists, read and reuse it.
       4. If nothing else works, fall back to base_version + "+dev".
       The resolved version is always written to dat/VERSION.
@@ -81,7 +81,7 @@ def get_version(source_root: str, base_version: str) -> str:
 
    version = None
 
-   if os.path.isdir(os.path.join(source_root, ".git")):
+   if os.path.isdir(os.path.join(source_root, ".git"))
       if is_tagged_release(source_root) and not is_dirty(source_root):
          # Exact tag, clean repo
          version = base_version
