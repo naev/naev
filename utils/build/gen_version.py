@@ -81,7 +81,7 @@ def get_version(source_root: str, base_version: str) -> str:
 
    version = None
 
-   if os.path.isdir(os.path.join(source_root, ".git"))
+   if os.path.isdir(os.path.join(source_root, ".git")):
       if is_tagged_release(source_root) and not is_dirty(source_root):
          # Exact tag, clean repo
          version = base_version
