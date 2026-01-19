@@ -173,6 +173,10 @@ function accept ()
 end
 
 function land ()
+   if spob.cur() ~= mem.dest then
+      return
+   end
+
    local owned = player.fleetCargoOwned( mem.mineral )
    if owned < mem.minimum then
       return
