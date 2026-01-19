@@ -159,7 +159,9 @@ repos:
       files: '^dat/'
       types: [lua]
       language: python
-      require_serial: true
+      # If we are able to enable the threading again in nluacheck, we would be
+      # able to do threading there and keep it sequential here.
+      #require_serial: true
 - repo: https://github.com/shssoichiro/oxipng
   rev: v9.1.5
   hooks:
