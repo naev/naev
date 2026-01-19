@@ -694,7 +694,7 @@ int outfits_filter( const Outfit **outfits, int                    n,
       const Outfit *o = outfits[i];
 
       /* First run filter. */
-      if ( ( filter != NULL ) && !filter( outfits[i] ) )
+      if ( ( filter != NULL ) && !filter( o ) )
          continue;
 
       /* Try to match name somewhere. */

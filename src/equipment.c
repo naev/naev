@@ -973,7 +973,7 @@ static void equipment_renderShip( double bx, double by, double bw, double bh,
    const unsigned int wid = swd->wid;
 
    /* Must have selected ship. */
-   if ( eq_wgt.selected == NULL )
+   if ( ( eq_wgt.selected == NULL ) || ( eq_wgt.selected->p == NULL ) )
       return;
    p = eq_wgt.selected->p;
 
@@ -1079,7 +1079,7 @@ static void equipment_renderShip( double bx, double by, double bw, double bh,
    }
 #endif /* DEBUGGING */
 
-   if ( ( eq_wgt.slot >= 0 ) &&
+   if ( ( eq_wgt.slot >= 0 ) && ( eq_wgt.slot < array_size( p->outfits ) ) &&
         p->outfits[eq_wgt.slot]->sslot->slot.type == OUTFIT_SLOT_WEAPON ) {
       pilot_getMount( p, p->outfits[eq_wgt.slot], &v );
       px += pw / 2.;
@@ -1817,7 +1817,8 @@ static int equipment_filter( const Outfit *o )
    const PlayerShip_t *ps;
 
    /* Filter only those that fit slot. */
-   if ( ( p != NULL ) && ( eq_wgt.slot >= 0 ) ) {
+   if ( ( p != NULL ) && ( eq_wgt.slot >= 0 ) &&
+        ( eq_wgt.slot < array_size( p->outfits ) ) ) {
       const PilotOutfitSlot *pos = p->outfits[eq_wgt.slot];
       if ( !outfit_fitsSlot( o, &pos->sslot->slot ) )
          return 0;
@@ -2860,6 +2861,8 @@ void equipment_slotDeselect( CstSlotWidget *wgt )
 
 void equipment_slotSelect( CstSlotWidget *wgt, PlayerShip_t *p )
 {
+   if ( wgt->selected != p )
+      wgt->slot = -1;
    wgt->selected = p;
 
    int needsgfx = 0;
