@@ -9,6 +9,6 @@
   <description>Further developed from Nanobond plating, Microbond plating is a less dense, lighter revision that's still stronger than Plasteel, making it a great choice to strengthen the hull of a medium-sized ship.</description>
  </general>
  <specific type="modification">
-  <armour>250</armour> 
+  <armour>250</armour>
  </specific>
 </outfit>
