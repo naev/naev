@@ -189,7 +189,7 @@ function land ()
    vn.scene()
    vn.transition()
    vn.na(fmt.f(_([[Deliver {amount} of {mineral} and collect {reward}?]]), {
-      amount = fmt.tonnes(mem.minimum),
+      amount = fmt.tonnes(owned),
       mineral = mem.mineral,
       reward = fmt.credits(reward),
    }))
@@ -200,6 +200,7 @@ function land ()
    vn.label("ok")
    vn.na(_([[]]))
    vn.func( function ()
+      player.fleetCargoRm( mem.mineral, owned )
       player.pay( reward )
       faction.hit("Traders Society", mem.tier+rnd.rnd(1,2) )
       done = true
