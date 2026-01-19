@@ -198,7 +198,11 @@ function land ()
       {_("Maybe later"), "cancel"},
    }
    vn.label("ok")
-   vn.na(_([[]]))
+   vn.na(fmt.f(_([[You deliver the {amount} of {mineral} and collect {reward}.]]), {
+      amount = fmt.tonnes(owned),
+      mineral = mem.mineral,
+      reward = fmt.credits(reward),
+   }))
    vn.func( function ()
       player.fleetCargoRm( mem.mineral, owned )
       player.pay( reward )
