@@ -1234,7 +1234,7 @@ static void opt_accessibility( unsigned int wid )
                    NULL );
    y -= 20;
    window_addFader( wid, x + 20, y, cw - 60, 20, "fadBGBrightness", 0., 1.,
-                    conf.bg_brightness, opt_setBGBrightness );
+                    linearToGamma( conf.bg_brightness ), opt_setBGBrightness );
    opt_setBGBrightness( wid, "fadBGBrightness" );
    y -= 30;
    window_addText( wid, x, y - 3, cw - 20, 20, 0, "txtJumpBrightness", NULL,
@@ -1697,10 +1697,14 @@ static void opt_setBGBrightness( unsigned int wid, const char *str )
 {
    char   buf[STRMAX_SHORT];
    double fad         = window_getFaderValue( wid, str );
-   conf.bg_brightness = fad;
-   snprintf( buf, sizeof( buf ), _( "BG (Stars, etc.) brightness: %.0f%%" ),
+   conf.bg_brightness = gammaToLinear( fad );
+   snprintf( buf, sizeof( buf ),
+             _( "#wBG (Stars, etc.) brightness: %.0f%% (#0█#w)" ),
              round( 100. * fad ) );
    window_modifyText( wid, "txtBGBrightness", buf );
+   float    c   = conf.bg_brightness;
+   glColour col = { .r = c, .g = c, .b = c, .a = 1. };
+   window_textColour( wid, "txtBGBrightness", col );
 }
 
 static void opt_setSaturation( unsigned int wid, const char *str )

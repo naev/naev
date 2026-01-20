@@ -63,7 +63,8 @@
 #define FPS_SHOW_DEFAULT 0
 #define PAUSE_SHOW_DEFAULT 1
 #define BG_BRIGHTNESS_DEFAULT                                                  \
-   0.7 /**< How much to darken (or lighten) the backgrounds. */
+   gammaToLinear( 0.7 ) /**< How much to darken (or lighten) the backgrounds.  \
+                         */
 #define NEBU_NONUNIFORMITY_DEFAULT                                             \
    1. /**< How much to darken (or lighten) the nebula stuff. */
 #define NEBU_SATURATION_DEFAULT                                                \
