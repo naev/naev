@@ -88,6 +88,10 @@
 #define LUA_REPL_DEFAULT 0
 #define TRANSLATION_WARNING_SEEN_DEFAULT 0
 #define FPU_EXCEPT_DEFAULT 0
+#define MESSAGE_VISIBLE_DEFAULT 5
+#define REPEAT_DELAY_DEFAULT 500
+#define REPEAT_FREQ_DEFAULT 30
+#define CONF_NOSAVE_DEFAULT 0
 /* Audio options */
 #define USE_EFX_DEFAULT 1 /**< Whether or not to use EFX (if using OpenAL). */
 #define MUTE_SOUND_DEFAULT 0      /**< Whether sound should be disabled. */

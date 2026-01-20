@@ -126,15 +126,15 @@ void conf_setDefaults( void )
    conf.joystick_ind = -1;
 
    /* GUI. */
-   conf.mesg_visible        = 5;
+   conf.mesg_visible        = MESSAGE_VISIBLE_DEFAULT;
    conf.map_overlay_opacity = MAP_OVERLAY_OPACITY_DEFAULT;
    conf.big_icons           = BIG_ICONS_DEFAULT;
-   conf.always_radar        = 0;
-   conf.show_viewport       = 0;
+   conf.always_radar        = ALWAYS_RADAR_DEFAULT;
+   conf.show_viewport       = SHOW_VIEWPORT_DEFAULT;
 
    /* Repeat. */
-   conf.repeat_delay = 500;
-   conf.repeat_freq  = 30;
+   conf.repeat_delay = REPEAT_DELAY_DEFAULT;
+   conf.repeat_freq  = REPEAT_FREQ_DEFAULT;
 
    /* Dynamic zoom. */
    conf.zoom_manual = MANUAL_ZOOM_DEFAULT;
@@ -149,12 +149,12 @@ void conf_setDefaults( void )
    conf.font_size_small   = FONT_SIZE_SMALL_DEFAULT;
 
    /* Misc. */
-   conf.redirect_file = 1;
-   conf.nosave        = 0;
-   conf.devmode       = 0;
-   conf.devautosave   = 0;
-   conf.lua_enet      = 0;
-   conf.lua_repl      = 0;
+   conf.redirect_file = REDIRECT_FILE_DEFAULT;
+   conf.nosave        = CONF_NOSAVE_DEFAULT;
+   conf.devmode       = DEVMODE_DEFAULT;
+   conf.devautosave   = DEVAUTOSAVE_DEFAULT;
+   conf.lua_enet      = LUA_ENET_DEFAULT;
+   conf.lua_repl      = LUA_REPL_DEFAULT;
    free( conf.lastversion );
    conf.lastversion              = NULL;
    conf.translation_warning_seen = 0;
@@ -791,8 +791,9 @@ static size_t quoteLuaString( char *str, size_t size, const char *text )
    if ( sizeof( buf ) != pos )                                                 \
       buf[pos++] = '\n';
 
-#define conf_saveInt( n, i )                                                   \
-   pos += scnprintf( &buf[pos], sizeof( buf ) - pos, "%s = %d\n", n, i );
+#define conf_saveInt( n, i, d )                                                \
+   pos += scnprintf( &buf[pos], sizeof( buf ) - pos, "%s%s = %d\n",            \
+                     ( ( i - d ) == 0 ) ? "-- " : "", n, i );
 
 #define conf_saveULong( n, i )                                                 \
    pos += scnprintf( &buf[pos], sizeof( buf ) - pos, "%s = %lu\n", n, i );
@@ -892,7 +893,7 @@ int conf_saveConfig( const char *file )
 
    /* OpenGL. */
    conf_saveComment( _( "Number of save game backups" ) );
-   conf_saveInt( "num_backups", conf.num_backups );
+   conf_saveInt( "num_backups", conf.num_backups, NUM_BACKUPS_DEFAULT );
    conf_saveEmptyLine();
 
    /* Language. */
@@ -917,7 +918,7 @@ int conf_saveConfig( const char *file )
    /* OpenGL. */
    conf_saveComment( _( "The factor to use in Full-Scene Anti-Aliasing" ) );
    conf_saveComment( _( "Anything lower than 2 will simply disable FSAA" ) );
-   conf_saveInt( "fsaa", conf.fsaa );
+   conf_saveInt( "fsaa", conf.fsaa, FSAA_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment( _(
@@ -929,8 +930,8 @@ int conf_saveConfig( const char *file )
    conf_saveComment( _( "The window size or screen resolution" ) );
    conf_saveComment(
       _( "Set both of these to 0 to make Naev try the desktop resolution" ) );
-   conf_saveInt( "width", conf.width );
-   conf_saveInt( "height", conf.height );
+   conf_saveInt( "width", conf.width, 0 );
+   conf_saveInt( "height", conf.height, 0 );
    conf_saveEmptyLine();
 
    conf_saveComment( _( "Factor used to divide the above resolution with" ) );
@@ -969,7 +970,8 @@ int conf_saveConfig( const char *file )
    conf_saveComment( _( "2 is Tritanapia" ) );
    conf_saveComment( _( "3 is Rod Monochromacy" ) );
    conf_saveComment( _( "4 is Cone Monochromacy" ) );
-   conf_saveInt( "colourblind_type", conf.colourblind_type );
+   conf_saveInt( "colourblind_type", conf.colourblind_type,
+                 COLOURBLIND_TYPE_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment( _( "Intensity of the colour blindness correction. A value "
@@ -1035,7 +1037,7 @@ int conf_saveConfig( const char *file )
    conf_saveComment(
       _( "Maximum texture size to use for 3D models when in low memory mode. A "
          "value of less than or equal to 0 disables texture resizing." ) );
-   conf_saveInt( "max_3d_tex_size", conf.max_3d_tex_size );
+   conf_saveInt( "max_3d_tex_size", conf.max_3d_tex_size, MAX_3D_TEX_SIZE );
    conf_saveEmptyLine();
 
    /* FPS */
@@ -1044,7 +1046,7 @@ int conf_saveConfig( const char *file )
    conf_saveEmptyLine();
 
    conf_saveComment( _( "Limit the rendering frame rate" ) );
-   conf_saveInt( "maxfps", conf.fps_max );
+   conf_saveInt( "maxfps", conf.fps_max, FPS_MAX_DEFAULT );
    conf_saveEmptyLine();
 
    /* Pause */
@@ -1079,7 +1081,7 @@ int conf_saveConfig( const char *file )
    if ( conf.joystick_nam != NULL ) {
       conf_saveString( "joystick", conf.joystick_nam );
    } else if ( conf.joystick_ind >= 0 ) {
-      conf_saveInt( "joystick", conf.joystick_ind );
+      conf_saveInt( "joystick", conf.joystick_ind, -1 );
    } else {
       conf_saveString( "joystick", NULL );
    }
@@ -1087,7 +1089,7 @@ int conf_saveConfig( const char *file )
 
    /* GUI. */
    conf_saveComment( _( "Number of lines visible in the comm window." ) );
-   conf_saveInt( "mesg_visible", conf.mesg_visible );
+   conf_saveInt( "mesg_visible", conf.mesg_visible, MESSAGE_VISIBLE_DEFAULT );
    conf_saveComment( _( "Opacity fraction (0-1) for the overlay map." ) );
    conf_saveFloat( "map_overlay_opacity", conf.map_overlay_opacity,
                    MAP_OVERLAY_OPACITY_DEFAULT );
@@ -1104,10 +1106,10 @@ int conf_saveConfig( const char *file )
    /* Key repeat. */
    conf_saveComment(
       _( "Delay in ms before starting to repeat (0 disables)" ) );
-   conf_saveInt( "repeat_delay", conf.repeat_delay );
+   conf_saveInt( "repeat_delay", conf.repeat_delay, REPEAT_DELAY_DEFAULT );
    conf_saveComment(
       _( "Delay in ms between repeats once it starts to repeat" ) );
-   conf_saveInt( "repeat_freq", conf.repeat_freq );
+   conf_saveInt( "repeat_freq", conf.repeat_freq, REPEAT_FREQ_DEFAULT );
    conf_saveEmptyLine();
 
    /* Zoom. */
@@ -1130,16 +1132,19 @@ int conf_saveConfig( const char *file )
    pos +=
       scnprintf( &buf[pos], sizeof( buf ) - pos,
                  _( "-- Console default: %d\n" ), FONT_SIZE_CONSOLE_DEFAULT );
-   conf_saveInt( "font_size_console", conf.font_size_console );
+   conf_saveInt( "font_size_console", conf.font_size_console,
+                 FONT_SIZE_CONSOLE_DEFAULT );
    pos += scnprintf( &buf[pos], sizeof( buf ) - pos,
                      _( "-- Intro default: %d\n" ), FONT_SIZE_INTRO_DEFAULT );
-   conf_saveInt( "font_size_intro", conf.font_size_intro );
+   conf_saveInt( "font_size_intro", conf.font_size_intro,
+                 FONT_SIZE_INTRO_DEFAULT );
    pos += scnprintf( &buf[pos], sizeof( buf ) - pos,
                      _( "-- Default size: %d\n" ), FONT_SIZE_DEF_DEFAULT );
-   conf_saveInt( "font_size_def", conf.font_size_def );
+   conf_saveInt( "font_size_def", conf.font_size_def, FONT_SIZE_DEF_DEFAULT );
    pos += scnprintf( &buf[pos], sizeof( buf ) - pos, _( "-- Small size: %d\n" ),
                      FONT_SIZE_SMALL_DEFAULT );
-   conf_saveInt( "font_size_small", conf.font_size_small );
+   conf_saveInt( "font_size_small", conf.font_size_small,
+                 FONT_SIZE_SMALL_DEFAULT );
 
    /* Misc. */
    conf_saveComment( _( "Redirects log and error output to files" ) );
@@ -1148,7 +1153,8 @@ int conf_saveConfig( const char *file )
 
    conf_saveComment( _( "Doubletap sensitivity (used for double tap accel for "
                         "afterburner or double tap reverse for cooldown)" ) );
-   conf_saveInt( "doubletap_sensitivity", conf.doubletap_sens );
+   conf_saveInt( "doubletap_sensitivity", conf.doubletap_sens,
+                 DOUBLETAP_SENSITIVITY_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment(
@@ -1162,7 +1168,7 @@ int conf_saveConfig( const char *file )
    conf_saveEmptyLine();
 
    conf_saveComment( _( "Mouse-flying accel control" ) );
-   conf_saveInt( "mouse_accel", conf.mouse_accel );
+   conf_saveInt( "mouse_accel", conf.mouse_accel, MOUSE_ACCEL_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment(
@@ -1191,7 +1197,7 @@ int conf_saveConfig( const char *file )
 
    conf_saveComment(
       _( "Save the config every time game exits (rewriting this bit)" ) );
-   conf_saveInt( "conf_nosave", conf.nosave );
+   conf_saveInt( "conf_nosave", conf.nosave, CONF_NOSAVE_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment(
