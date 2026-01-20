@@ -10,11 +10,17 @@ if [ -z "$1" ] || [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
 fi
 
 name="$1"
-fname="$(echo "${name// /_}" | tr '[:upper:]' '[:lower:]')"
+fname="$(echo "${name// /_}" | tr '[:upper:]' '[:lower:]' | tr -d '[/\|$*@&]' | sed 's/_\+/_/g')"
+identifier="$(echo "$name" | tr -d -c '[:alnum:]')"
 
 if [ -d "$fname" ] ; then
-   read -p "directory $fname alread exists, remove the old one ? [Yn] " -n 1 -r
-   if [[ $REPLY =~ ^[Nn]$ ]] ; then
+   if [ -t 0 ]; then
+      read -p "directory $fname alread exists, remove the old one ? [Yn] " -n 1 -r
+      if [[ $REPLY =~ ^[Nn]$ ]] ; then
+         exit 1
+      fi
+   else
+      echo "Error: $fname already exists" >&2
       exit 1
    fi
    rm -fvr "$fname" >&2
@@ -22,9 +28,19 @@ if [ -d "$fname" ] ; then
 fi
 mkdir "$fname"
 
+if [ -f "$fname.zip" ] ; then
+   rm -fv "$fname.zip"
+fi
+
+if [ "${#identifier}" -gt 25 ] ; then
+   trunc="${identifier:0:25}"
+   echo -e "\nWarning: identifier \"$identifier\" truncated into \"$trunc\".\n" >&2
+   identifier="$trunc"
+fi
+
 (cat <<EOF
-   identifier = "$name"
-   name = "$fname"
+   identifier = "$identifier"
+   name = "$name"
    author = "plugin generator"
    version = "1.0.0"
    abstract = "plugin generated from repo status"
