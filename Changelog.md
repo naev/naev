@@ -36,6 +36,7 @@
    * Default to using lanes when traveling
    * Deploying fighters no longer resets autonav
    * Shortened real time that passes when player is disable
+   * Configuration values only save if they are not set to defaults
 
  ### Engine
 
