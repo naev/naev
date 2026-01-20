@@ -1241,7 +1241,8 @@ static void opt_accessibility( unsigned int wid )
                    NULL, NULL );
    y -= 20;
    window_addFader( wid, x + 20, y, cw - 60, 20, "fadJumpBrightness", 0., 1.,
-                    conf.jump_brightness, opt_setJumpBrightness );
+                    linearToGamma( conf.jump_brightness ),
+                    opt_setJumpBrightness );
    opt_setJumpBrightness( wid, "fadJumpBrightness" );
    y -= 30;
 
@@ -1742,11 +1743,11 @@ static void opt_setJumpBrightness( unsigned int wid, const char *str )
 {
    char   buf[STRMAX_SHORT];
    double fad           = window_getFaderValue( wid, str );
-   conf.jump_brightness = fad;
+   conf.jump_brightness = gammaToLinear( fad );
    snprintf( buf, sizeof( buf ), _( "#wJump brightness: %.0f%% (#0█#w)" ),
              round( 100. * fad ) );
    window_modifyText( wid, "txtJumpBrightness", buf );
-   float    c   = fad * fad;
+   float    c   = conf.jump_brightness;
    glColour col = { .r = c, .g = c, .b = c, .a = 1. };
    window_textColour( wid, "txtJumpBrightness", col );
 }
