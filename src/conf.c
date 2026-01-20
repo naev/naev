@@ -797,9 +797,6 @@ static size_t quoteLuaString( char *str, size_t size, const char *text )
    pos += scnprintf( &buf[pos], sizeof( buf ) - pos, "%s%s = %d\n",            \
                      ( ( i - d ) == 0 ) ? "-- " : "", n, i );
 
-#define conf_saveULong( n, i )                                                 \
-   pos += scnprintf( &buf[pos], sizeof( buf ) - pos, "%s = %lu\n", n, i );
-
 #define conf_saveTime( n, i )                                                  \
    pos += scnprintf( &buf[pos], sizeof( buf ) - pos, "%s = %llu\n", n,         \
                      (unsigned long long)i );
@@ -953,7 +950,7 @@ int conf_saveConfig( const char *file )
    conf_saveEmptyLine();
 
    conf_saveComment( _( "Disable allowing resizing the window." ) );
-   conf_saveBool( "notresizable", conf.notresizable, RESIZABLE_DEFAULT );
+   conf_saveBool( "notresizable", conf.notresizable, NOT_RESIZABLE_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment( _( "Minimize the game on focus loss." ) );

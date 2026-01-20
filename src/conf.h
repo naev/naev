@@ -39,8 +39,8 @@
    720 /**< Minimum screen height (below which graphics are downscaled). */
 #define RESOLUTION_W_DEFAULT RESOLUTION_W_MIN /**< Default screen width. */
 #define RESOLUTION_H_DEFAULT RESOLUTION_H_MIN /**< Default screen height. */
-#define RESIZABLE_DEFAULT 1  /**< Whether or not the game is resizable. */
-#define FULLSCREEN_DEFAULT 0 /**< Whether to run in fullscreen mode. */
+#define NOT_RESIZABLE_DEFAULT 0 /**< Whether or not the game is resizable. */
+#define FULLSCREEN_DEFAULT 0    /**< Whether to run in fullscreen mode. */
 #define DISABLE_SCREEN_SHAKE_DEFAULT 0
 #define FSAA_DEFAULT 1  /**< Whether to use Full Screen Anti-Aliasing. */
 #define VSYNC_DEFAULT 0 /**< Whether to wait for vertical sync. */
