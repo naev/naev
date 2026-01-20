@@ -1273,7 +1273,7 @@ static void weapon_updateCollide( Weapon *w, double dt )
          /* Test if hit. */
          if ( !weapon_testCollision(
                  &wc, p->ship->gfx_space, p->tsx, p->tsy, &p->solid,
-                 poly_view( &p->ship->polygon, p->solid.dir ), 0., crash ) )
+                 poly_view( p->ship->polygon, p->solid.dir ), 0., crash ) )
             continue;
 
          /* Handle the hit. */
@@ -1314,13 +1314,11 @@ static void weapon_updateCollide( Weapon *w, double dt )
             if ( a->state != ASTEROID_FG )
                continue;
 
-            if ( array_size( a->polygon->views ) > 0 ) {
-               CollPolyView rpoly;
-               poly_rotate( &rpoly, &a->polygon->views[0], (float)a->ang );
-               coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->sol, &rpoly,
+            if ( a->polygon != NULL ) {
+               CollPolyView *rpoly = poly_rotate( a->polygon, (float)a->ang );
+               coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->sol, rpoly,
                                             0., crash );
-               free( rpoly.x );
-               free( rpoly.y );
+               poly_freeView( rpoly );
             } else
                coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->sol, NULL,
                                             0., crash );
@@ -1596,7 +1594,7 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius,
          /* Test if hit. */
          if ( !weapon_testCollision(
                  &wc, p->ship->gfx_space, p->tsx, p->tsy, &p->solid,
-                 poly_view( &p->ship->polygon, p->solid.dir ), 0., crash ) )
+                 poly_view( p->ship->polygon, p->solid.dir ), 0., crash ) )
             continue;
 
          /* Have pilot take damage and get real damage done. */
@@ -1633,13 +1631,11 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius,
             if ( a->state != ASTEROID_FG )
                continue;
 
-            if ( array_size( a->polygon->views ) > 0 ) {
-               CollPolyView rpoly;
-               poly_rotate( &rpoly, &a->polygon->views[0], (float)a->ang );
-               coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->sol, &rpoly,
+            if ( a->polygon != NULL ) {
+               CollPolyView *rpoly = poly_rotate( a->polygon, (float)a->ang );
+               coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->sol, rpoly,
                                             0., crash );
-               free( rpoly.x );
-               free( rpoly.y );
+               poly_freeView( rpoly );
             } else
                coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->sol, NULL,
                                             0., crash );

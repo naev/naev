@@ -885,9 +885,9 @@ const glTexture **outfit_gfxOverlays( const Outfit *o )
 const CollPoly *outfit_plg( const Outfit *o )
 {
    if ( outfit_isBolt( o ) )
-      return &o->u.blt.gfx.polygon;
+      return o->u.blt.gfx.polygon;
    else if ( outfit_isLauncher( o ) )
-      return &o->u.lau.gfx.polygon;
+      return o->u.lau.gfx.polygon;
    return NULL;
 }
 const ShipStatList *outfit_stats( const Outfit *o )
@@ -1965,7 +1965,7 @@ that can be found in Naev's artwork repo." ),
 
    do { /* load the polygon data */
       if ( xml_isNode( node, "polygons" ) )
-         poly_load( &gfx->polygon, node, file );
+         gfx->polygon = poly_load( node, file );
    } while ( xml_nextNode( node ) );
 
    xmlFreeDoc( doc );
@@ -2038,7 +2038,7 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
 
    /* Load normal graphics. */
    flags = OPENGL_TEX_MIPMAPS;
-   if ( array_size( gfx->polygon.views ) == 0 )
+   if ( gfx->polygon == NULL )
       flags |= OPENGL_TEX_MAPTRANS;
    gfx->tex = xml_parseTexture( node, OUTFIT_GFX_PATH "space/%s", 6, 6, flags );
    if ( gfx->tex == NULL ) {
@@ -2060,7 +2060,7 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
     */
    else {
       outfit_loadPLG( temp, buf );
-      if ( array_size( gfx->polygon.views ) <= 0 )
+      if ( gfx->polygon == NULL )
          WARN( _( "Outfit '%s' is missing collision polygon!" ), temp->name );
    }
 
@@ -3929,7 +3929,7 @@ void outfit_free( void )
       if ( gfx != NULL ) {
          gl_freeTexture( gfx->tex );
          gl_freeTexture( gfx->tex_end );
-         poly_free( &gfx->polygon );
+         poly_free( gfx->polygon );
          glDeleteProgram( gfx->program );
       }
 

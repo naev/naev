@@ -53,14 +53,18 @@ typedef struct AsteroidReward_ {
    int        rarity;   /**< Rarity. */
 } AsteroidReward;
 
+typedef struct AsteroidGfx {
+   glTexture *gfx;
+   CollPoly  *polygon;
+} AsteroidGfx;
+
 /**
  * @brief Represents a type of asteroid.
  */
 typedef struct AsteroidType_ {
    char           *name;        /**< Name of the asteroid type. */
    char           *scanned_msg; /**< Scanned message. */
-   glTexture     **gfxs;        /**< asteroid possible gfxs. */
-   CollPoly       *polygon;     /**< Collision polygons associated to gfxs. */
+   AsteroidGfx    *gfxs;
    AsteroidReward *material;    /**< Materials contained in the asteroid. */
    double          armour_min;  /**< Minimum "armour" of the asteroid. */
    double          armour_max;  /**< Maximum "armour" of the asteroid. */

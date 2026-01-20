@@ -2174,10 +2174,11 @@ void pilot_render( Pilot *p )
 
    /* Useful debug stuff below. */
 #ifdef DEBUGGING
+#if 0
    if ( inbounds && debug_isFlag( DEBUG_MARK_COLLISION ) ) {
       static gl_vbo      *poly_vbo = NULL;
       GLfloat             data[1024];
-      const CollPolyView *poly = poly_view( &p->ship->polygon, p->solid.dir );
+      const CollPolyView *poly = poly_view( p->ship->polygon, p->solid.dir );
       size_t              n =
          MIN( sizeof( data ) / ( sizeof( GLfloat ) * 2 ), (size_t)poly->npt );
       size_t ndata      = n * sizeof( GLfloat ) * 2;
@@ -2219,6 +2220,7 @@ void pilot_render( Pilot *p )
       gl_checkErr();
       glUseProgram( 0 );
    }
+#endif
 
    /* Draw trail emitters on top in debug mode. */
    if ( inbounds && debug_isFlag( DEBUG_MARK_EMITTER ) ) {

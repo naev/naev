@@ -19,6 +19,22 @@
 #include "log.h"
 #include "physics.h"
 
+struct CollPolyView {
+   float *x;    /**< List of X coordinates of the points. */
+   float *y;    /**< List of Y coordinates of the points. */
+   float  xmin; /**< Min of x. */
+   float  xmax; /**< Max of x. */
+   float  ymin; /**< Min of y. */
+   float  ymax; /**< Max of y. */
+   int    npt;  /**< Nb of points in the polygon. */
+};
+
+struct CollPoly {
+   CollPolyView *views;
+   double        dir_inc;
+   double        dir_off;
+};
+
 /*
  * Prototypes
  */
@@ -30,14 +46,15 @@ static int LineOnPolygon( const CollPolyView *at, const vec2 *ap, float x1,
 /**
  * @brief Loads a polygon from an xml node.
  *
- *    @param[out] polygon Polygon.
  *    @param[in] base XML node to parse.
  *    @param[in] name Name to give the polygon for debugging purposes.
  */
-void poly_load( CollPoly *polygon, xmlNodePtr base, const char *name )
+CollPoly *poly_load( xmlNodePtr base, const char *name )
 {
    int n;
    xmlr_attr_int_def( base, "num", n, 32 );
+   CollPoly *polygon = malloc( sizeof( CollPoly ) );
+   memset( polygon, 0, sizeof( CollPoly ) );
    polygon->views = array_create_size( CollPolyView, n );
 
    xmlNodePtr node = base->children;
@@ -115,6 +132,7 @@ void poly_load( CollPoly *polygon, xmlNodePtr base, const char *name )
       //    WARN(_("Polygon '%s' has too many points for view %d (%d points
       //    compared to %f mean)!"),name,i,view->npt, mean);
    }
+   return polygon;
 }
 
 void poly_free( CollPoly *poly )
@@ -125,6 +143,14 @@ void poly_free( CollPoly *poly )
       array_free( view->y );
    }
    array_free( poly->views );
+   free( poly );
+}
+
+void poly_freeView( CollPolyView *view )
+{
+   free( view->x );
+   free( view->y );
+   free( view );
 }
 
 /**
@@ -378,14 +404,14 @@ int CollidePolygon( const CollPolyView *at, const vec2 *ap,
 /**
  * @brief Rotates a polygon.
  *
- *    @param[out] rpolygon Rotated polygon.
- *    @param[in] ipolygon Input polygon.
+ *    @param[in] polygon Input polygon.
  *    @param[in] theta Rotation angle (radian).
  */
-void poly_rotate( CollPolyView *rpolygon, const CollPolyView *ipolygon,
-                  float theta )
+CollPolyView *poly_rotate( const CollPoly *polygon, float theta )
 {
-   float ct, st;
+   float               ct, st;
+   CollPolyView       *rpolygon = malloc( sizeof( CollPolyView ) );
+   const CollPolyView *ipolygon = &polygon->views[0];
 
    rpolygon->npt  = ipolygon->npt;
    rpolygon->x    = malloc( ipolygon->npt * sizeof( float ) );
@@ -409,6 +435,7 @@ void poly_rotate( CollPolyView *rpolygon, const CollPolyView *ipolygon,
       rpolygon->ymin = MIN( rpolygon->ymin, d );
       rpolygon->ymax = MAX( rpolygon->ymax, d );
    }
+   return rpolygon;
 }
 
 const CollPolyView *poly_view( const CollPoly *poly, double dir )

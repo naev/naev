@@ -10,29 +10,16 @@
 /**
  * @brief Represents a polygon used for collision detection.
  */
-typedef struct CollPolyView_ {
-   float *x;    /**< List of X coordinates of the points. */
-   float *y;    /**< List of Y coordinates of the points. */
-   float  xmin; /**< Min of x. */
-   float  xmax; /**< Max of x. */
-   float  ymin; /**< Min of y. */
-   float  ymax; /**< Max of y. */
-   int    npt;  /**< Nb of points in the polygon. */
-} CollPolyView;
-
-typedef struct CollPoly_ {
-   CollPolyView *views;
-   double        dir_inc;
-   double        dir_off;
-} CollPoly;
+typedef struct CollPolyView CollPolyView;
+typedef struct CollPoly     CollPoly;
 
 /* Loads a polygon data from xml. */
-void poly_load( CollPoly *polygon, xmlNodePtr node, const char *name );
-void poly_free( CollPoly *polygon );
+CollPoly *poly_load( xmlNodePtr node, const char *name );
+void      poly_free( CollPoly *polygon );
+void      poly_freeView( CollPolyView *view );
 
 /* Rotates a polygon. */
-void poly_rotate( CollPolyView *rpolygon, const CollPolyView *ipolygon,
-                  float theta );
+CollPolyView *poly_rotate( const CollPoly *polygon, float theta );
 
 /* Gets a polygon view for an angle. */
 const CollPolyView *poly_view( const CollPoly *poly, double dir );

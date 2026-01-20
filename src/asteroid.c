@@ -67,12 +67,12 @@ static glTexture **asteroid_gfx =
 static int asteroid_creating = 0;
 
 /* Prototypes. */
-static int asttype_cmp( const void *p1, const void *p2 );
-static int asttype_parse( AsteroidType *at, const char *file );
-static int asteroid_loadPLG( AsteroidType *temp, const char *buf );
-static int astgroup_cmp( const void *p1, const void *p2 );
-static int astgroup_parse( AsteroidTypeGroup *ag, const char *file );
-static int asttype_load( void );
+static int       asttype_cmp( const void *p1, const void *p2 );
+static int       asttype_parse( AsteroidType *at, const char *file );
+static CollPoly *asteroid_loadPLG( const char *buf );
+static int       astgroup_cmp( const void *p1, const void *p2 );
+static int       astgroup_parse( AsteroidTypeGroup *ag, const char *file );
+static int       asttype_load( void );
 
 static int  asteroid_updateSingle( Asteroid *a );
 static void asteroid_renderSingle( const Asteroid *a );
@@ -320,7 +320,7 @@ void asteroids_init( void )
          for ( int k = 0; k < array_size( ag->types ); k++ ) {
             AsteroidType *at = ag->types[k];
             for ( int x = 0; x < array_size( at->gfxs ); x++ )
-               array_push_back( &debris_gfx, (glTexture *)at->gfxs[x] );
+               array_push_back( &debris_gfx, at->gfxs[x].gfx );
          }
       }
 
@@ -451,8 +451,8 @@ static int asteroid_init( Asteroid *ast, const AsteroidAnchor *field )
 
    /* Randomly init the gfx ID, and associated polygon */
    id           = RNG( 0, array_size( at->gfxs ) - 1 );
-   ast->gfx     = at->gfxs[id];
-   ast->polygon = &at->polygon[id];
+   ast->gfx     = at->gfxs[id].gfx;
+   ast->polygon = at->gfxs[id].polygon;
 
    ast->type   = at;
    ast->armour = at->armour_min + RNGF() * ( at->armour_max - at->armour_min );
@@ -665,8 +665,7 @@ static int asttype_parse( AsteroidType *at, const char *file )
 
    /* Set up the element. */
    memset( at, 0, sizeof( AsteroidType ) );
-   at->gfxs        = array_create( glTexture * );
-   at->polygon     = array_create( CollPoly );
+   at->gfxs        = array_create( AsteroidGfx );
    at->material    = array_create( AsteroidReward );
    at->damage      = 100;
    at->penetration = FULL_PENETRATION;
@@ -693,11 +692,15 @@ static int asttype_parse( AsteroidType *at, const char *file )
       xmlr_float( node, "alert_range", at->alert_range );
 
       if ( xml_isNode( node, "gfx" ) ) {
-         array_push_back(
-            &at->gfxs,
+         AsteroidGfx gfx = {
+            .gfx     = NULL,
+            .polygon = NULL,
+         };
+         gfx.gfx =
             xml_parseTexture( node, SPOB_GFX_SPACE_PATH "asteroid/%s", 1, 1,
-                              OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS ) );
-         asteroid_loadPLG( at, xml_get( node ) );
+                              OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
+         gfx.polygon = asteroid_loadPLG( xml_get( node ) );
+         array_push_back( &at->gfxs, gfx );
          continue;
       } else if ( xml_isNode( node, "commodity" ) ) {
          /* Check that name and quantity are defined. */
@@ -770,10 +773,9 @@ static int asttype_parse( AsteroidType *at, const char *file )
 /**
  * @brief Loads the collision polygon for an asteroid type.
  *
- *    @param temp `AsteroidType` to load into.
  *    @param buf Name of the file.
  */
-static int asteroid_loadPLG( AsteroidType *temp, const char *buf )
+static CollPoly *asteroid_loadPLG( const char *buf )
 {
    char       file[PATH_MAX];
    xmlDocPtr  doc;
@@ -787,31 +789,31 @@ static int asteroid_loadPLG( AsteroidType *temp, const char *buf )
                Please use the script 'polygon_from_sprite.py'\n \
                This file can be found in Naev's artwork repo." ),
             file );
-      return 0;
+      return NULL;
    }
 
    /* Load the XML. */
    doc = xml_parsePhysFS( file );
    if ( doc == NULL )
-      return 0;
+      return NULL;
 
    node = doc->xmlChildrenNode; /* First polygon node */
    if ( node == NULL ) {
       xmlFreeDoc( doc );
       WARN( _( "Malformed %s file: does not contain elements" ), file );
-      return 0;
+      return NULL;
    }
 
+   CollPoly *polygon = NULL;
    do { /* load the polygon data */
       if ( xml_isNode( node, "polygons" ) ) {
-         CollPoly plg;
-         poly_load( &plg, node, file );
-         array_push_back( &temp->polygon, plg );
+         polygon = poly_load( node, file );
+         break;
       }
    } while ( xml_nextNode( node ) );
 
    xmlFreeDoc( doc );
-   return 0;
+   return polygon;
 }
 
 /**
@@ -1080,14 +1082,11 @@ void asteroids_free( void )
       free( at->name );
       free( at->scanned_msg );
       array_free( at->material );
-      for ( int j = 0; j < array_size( at->gfxs ); j++ )
-         gl_freeTexture( at->gfxs[j] );
+      for ( int j = 0; j < array_size( at->gfxs ); j++ ) {
+         gl_freeTexture( at->gfxs[j].gfx );
+         poly_free( at->gfxs[j].polygon );
+      }
       array_free( at->gfxs );
-
-      /* Free collision polygons. */
-      for ( int j = 0; j < array_size( at->polygon ); j++ )
-         poly_free( &at->polygon[j] );
-      array_free( at->polygon );
    }
    array_free( asteroid_types );
    asteroid_types = NULL;

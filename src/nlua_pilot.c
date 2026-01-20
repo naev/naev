@@ -6719,7 +6719,7 @@ static int pilotL_hookClear( lua_State *L )
 
 static const CollPolyView *getCollPoly( const Pilot *p )
 {
-   return poly_view( &p->ship->polygon, p->solid.dir );
+   return poly_view( p->ship->polygon, p->solid.dir );
 }
 /**
  * @brief Tests to see if two ships collide.
@@ -6737,13 +6737,11 @@ static int pilotL_collisionTest( lua_State *L )
 
    /* Asteroid treated separately. */
    if ( lua_isasteroid( L, 2 ) ) {
-      Asteroid    *a = luaL_validasteroid( L, 2 );
-      CollPolyView rpoly;
-      poly_rotate( &rpoly, &a->polygon->views[0], (float)a->ang );
-      int ret = CollidePolygon( getCollPoly( p ), &p->solid.pos, &rpoly,
+      Asteroid     *a     = luaL_validasteroid( L, 2 );
+      CollPolyView *rpoly = poly_rotate( a->polygon, (float)a->ang );
+      int ret = CollidePolygon( getCollPoly( p ), &p->solid.pos, rpoly,
                                 &a->sol.pos, &crash );
-      free( rpoly.x );
-      free( rpoly.y );
+      poly_freeView( rpoly );
       if ( !ret )
          return 0;
       lua_pushvector( L, crash );

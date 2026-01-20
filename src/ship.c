@@ -579,7 +579,7 @@ static int ship_loadSpaceImage( Ship *temp, const char *str, int sx, int sy )
 {
    unsigned int flags = OPENGL_TEX_MIPMAPS;
    /* If no collision polygon, we use transparency mapping. */
-   if ( array_size( temp->polygon.views ) <= 0 )
+   if ( temp->polygon == NULL )
       flags |= OPENGL_TEX_MAPTRANS;
    temp->gfx_space = gl_newSprite( str, sx, sy, flags );
    /* 2D graphics will overwrite the size. */
@@ -746,7 +746,7 @@ static int ship_loadPLG( Ship *temp, const char *buf )
 
    do { /* load the polygon data */
       if ( xml_isNode( node, "polygons" ) )
-         poly_load( &temp->polygon, node, file );
+         temp->polygon = poly_load( node, file );
    } while ( xml_nextNode( node ) );
 
    xmlFreeDoc( doc );
@@ -1844,7 +1844,7 @@ void ships_free( void )
       free( s->polygon_path );
 
       /* Free collision polygons. */
-      poly_free( &s->polygon );
+      poly_free( s->polygon );
 
       /* Free trail emitters. */
       array_free( s->trail_emitters );

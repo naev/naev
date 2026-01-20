@@ -163,7 +163,7 @@ typedef struct Ship {
    int               sy;
 
    /* Collision polygon */
-   CollPoly polygon; /**< Array (array.h): Collision polygons. */
+   CollPoly *polygon; /**< Array (array.h): Collision polygons. */
 
    /* Sound */
    const Sound *sound;        /**< Sound engine uses. */
