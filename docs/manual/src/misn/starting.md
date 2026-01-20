@@ -11,12 +11,11 @@ Below is our simple header.
 
 ```lua
 --[[
+<?xml version='1.0' encoding='utf8'?>
 <mission name="My First Mission">
  <unique />
- <avail>
-  <chance>50</chance>
-  <location>Bar</location>
- </avail>
+ <chance>100</chance>
+ <location>Bar</location>
 </mission>
 --]]
 ```
@@ -33,7 +32,7 @@ Let us write a simple one to create an NPC at the Spaceport Bar where the missio
 ```lua
 function create ()
    misn.setNPC( _("A human."),
-         "neutral/unique/youngbusinessman.webp",
+         "neutral/unique/youngbusinessman.avif",
          _("A human wearing clothes.") )
 end
 ```
@@ -86,7 +85,7 @@ function accept ()
    misn.setTitle( _("Deliver Apples") )
    misn.setReward( fmt.credits( reward ) )
    local desc = fmt.f(_("Take Apples to {spb} ({sys})."),
-         {spb=mem.dest,sys=mem.destsys}) )
+         {spb=mem.dest,sys=mem.destsys})
    misn.setDesc( desc )
 
    -- On-screen display
