@@ -2441,7 +2441,7 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
                   &disable_rate_opts );
    l = os_printD( temp->summary_raw, l, temp->u.bem.energy, &power_opts );
    /* Standard stats. */
-   l = os_printD( temp->summary_raw, l, temp->u.bem.dmg.penetration * 100,
+   l = os_printD( temp->summary_raw, l, temp->u.bem.dmg.penetration,
                   &penetration_opts );
    l = os_printD( temp->summary_raw, l, temp->u.bem.duration, &duration_opts );
    l = os_printD_range( temp->summary_raw, l, temp->u.bem.min_delay,
