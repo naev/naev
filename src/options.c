@@ -1743,7 +1743,7 @@ static void opt_setJumpBrightness( unsigned int wid, const char *str )
    char   buf[STRMAX_SHORT];
    double fad           = window_getFaderValue( wid, str );
    conf.jump_brightness = fad;
-   snprintf( buf, sizeof( buf ), _( "#wJump brightness: %.0f%% (#0colour#w)" ),
+   snprintf( buf, sizeof( buf ), _( "#wJump brightness: %.0f%% (#0█#w)" ),
              round( 100. * fad ) );
    window_modifyText( wid, "txtJumpBrightness", buf );
    float    c   = fad * fad;
