@@ -130,7 +130,7 @@ function land ()
       return
    end
 
-   vn.msg(_("Winner"), _("You win!"))
+   vntk.msg(_("Winner"), _("You win!"))
    neu.addMiscLog( _("You helped deliver apples!") )
    player.pay( reward )
    misn.finish(true)
