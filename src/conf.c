@@ -801,8 +801,9 @@ static size_t quoteLuaString( char *str, size_t size, const char *text )
    pos += scnprintf( &buf[pos], sizeof( buf ) - pos, "%s = %llu\n", n,         \
                      (unsigned long long)i );
 
-#define conf_saveFloat( n, f )                                                 \
-   pos += scnprintf( &buf[pos], sizeof( buf ) - pos, "%s = %f\n", n, f );
+#define conf_saveFloat( n, f, d )                                              \
+   pos += scnprintf( &buf[pos], sizeof( buf ) - pos, "%s%s = %f\n",            \
+                     ( fabs( f - d ) < 1e-4 ) ? "-- " : "", n, f );
 
 #define conf_saveBool( n, b, d )                                               \
    if ( b )                                                                    \
@@ -935,13 +936,13 @@ int conf_saveConfig( const char *file )
    conf_saveComment( _( "Factor used to divide the above resolution with" ) );
    conf_saveComment( _( "This is used to lower the rendering resolution, and "
                         "scale to the above" ) );
-   conf_saveFloat( "scalefactor", conf.scalefactor );
+   conf_saveFloat( "scalefactor", conf.scalefactor, SCALE_FACTOR_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment( _( "Scale factor for rendered nebula backgrounds." ) );
    conf_saveComment(
       _( "Larger values can save time but lead to a blurrier appearance." ) );
-   conf_saveFloat( "nebu_scale", conf.nebu_scale );
+   conf_saveFloat( "nebu_scale", conf.nebu_scale, NEBULA_SCALE_FACTOR_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment( _( "Run Naev in full-screen mode" ) );
@@ -958,7 +959,8 @@ int conf_saveConfig( const char *file )
 
    conf_saveComment(
       _( "Enables colourblind simulation. A value of 0. disables." ) );
-   conf_saveFloat( "colourblind_sim", conf.colourblind_sim );
+   conf_saveFloat( "colourblind_sim", conf.colourblind_sim,
+                   COLOURBLIND_SIM_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment( _( "Type of colourblindness to simulate or correct." ) );
@@ -972,11 +974,12 @@ int conf_saveConfig( const char *file )
 
    conf_saveComment( _( "Intensity of the colour blindness correction. A value "
                         "of 0. disables." ) );
-   conf_saveFloat( "colourblind_correct", conf.colourblind_correct );
+   conf_saveFloat( "colourblind_correct", conf.colourblind_correct,
+                   COLOURBLIND_CORRECT_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment( _( "Slows down the game to improve accessibility." ) );
-   conf_saveFloat( "game_speed", conf.game_speed );
+   conf_saveFloat( "game_speed", conf.game_speed, GAME_SPEED_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment( _( "Enable health bars. These show hostility/friendliness "
@@ -988,30 +991,34 @@ int conf_saveConfig( const char *file )
       _( "Background brightness. 1 is full brightness while setting it to 0 "
          "would make the backgrounds pitch black. Defaults to %.1f." ),
       BG_BRIGHTNESS_DEFAULT );
-   conf_saveFloat( "bg_brightness", conf.bg_brightness );
+   conf_saveFloat( "bg_brightness", conf.bg_brightness, BG_BRIGHTNESS_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment(
       _( "Nebula non-uniformity. 1 is normal nebula while setting it to 0 "
          "would make the nebula a solid colour." ) );
-   conf_saveFloat( "nebu_nonuniformity", conf.nebu_nonuniformity );
+   conf_saveFloat( "nebu_nonuniformity", conf.nebu_nonuniformity,
+                   NEBU_NONUNIFORMITY_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment( _(
       "Nebula saturation. Modifies the base saturation of the nebula colour. "
       "Lower values desaturate the nebulas to make them easier to view." ) );
-   conf_saveFloat( "nebu_saturation", conf.nebu_saturation );
+   conf_saveFloat( "nebu_saturation", conf.nebu_saturation,
+                   NEBU_SATURATION_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment(
       _( "Controls the intensity to which the screen fades when jumping. 1.0 "
          "would be pure white, while 0.0 would be pure black." ) );
-   conf_saveFloat( "jump_brightness", conf.jump_brightness );
+   conf_saveFloat( "jump_brightness", conf.jump_brightness,
+                   JUMP_BRIGHTNESS_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment(
       _( "Gamma correction parameter. A value of 1 disables it (no curve)." ) );
-   conf_saveFloat( "gamma_correction", conf.gamma_correction );
+   conf_saveFloat( "gamma_correction", conf.gamma_correction,
+                   GAMMA_CORRECTION_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment( _( "Enables low memory mode which foregoes using normal "
@@ -1057,12 +1064,13 @@ int conf_saveConfig( const char *file )
    conf_saveComment(
       _( "Volume of sound effects and music, between 0.0 and 1.0" ) );
    conf_saveFloat( "sound",
-                   ( sound_disabled() ) ? conf.sound : sound_getVolume() );
-   conf_saveFloat( "music",
-                   ( music_disabled ) ? conf.music : music_getVolume() );
+                   ( sound_disabled() ) ? conf.sound : sound_getVolume(),
+                   SOUND_VOLUME_DEFAULT );
+   conf_saveFloat( "music", ( music_disabled ) ? conf.music : music_getVolume(),
+                   MUSIC_VOLUME_DEFAULT );
    conf_saveComment(
       _( "Relative engine sound volume. Should be between 0.0 and 1.0" ) );
-   conf_saveFloat( "engine_vol", conf.engine_vol );
+   conf_saveFloat( "engine_vol", conf.engine_vol, ENGINE_VOLUME_DEFAULT );
    conf_saveEmptyLine();
 
    /* Joystick. */
@@ -1081,7 +1089,8 @@ int conf_saveConfig( const char *file )
    conf_saveComment( _( "Number of lines visible in the comm window." ) );
    conf_saveInt( "mesg_visible", conf.mesg_visible );
    conf_saveComment( _( "Opacity fraction (0-1) for the overlay map." ) );
-   conf_saveFloat( "map_overlay_opacity", conf.map_overlay_opacity );
+   conf_saveFloat( "map_overlay_opacity", conf.map_overlay_opacity,
+                   MAP_OVERLAY_OPACITY_DEFAULT );
    conf_saveComment(
       _( "Use bigger icons in the outfit, shipyard, and other lists." ) );
    conf_saveBool( "big_icons", conf.big_icons, BIG_ICONS_DEFAULT );
@@ -1106,12 +1115,12 @@ int conf_saveConfig( const char *file )
    conf_saveComment( _( "At 1.0, no sprites are scaled" ) );
    conf_saveComment( _( "zoom_far should be less then zoom_near" ) );
    conf_saveBool( "zoom_manual", conf.zoom_manual, MANUAL_ZOOM_DEFAULT );
-   conf_saveFloat( "zoom_far", conf.zoom_far );
-   conf_saveFloat( "zoom_near", conf.zoom_near );
+   conf_saveFloat( "zoom_far", conf.zoom_far, ZOOM_FAR_DEFAULT );
+   conf_saveFloat( "zoom_near", conf.zoom_near, ZOOM_NEAR_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment( _( "Zooming speed in factor increments per second" ) );
-   conf_saveFloat( "zoom_speed", conf.zoom_speed );
+   conf_saveFloat( "zoom_speed", conf.zoom_speed, ZOOM_SPEED_DEFAULT );
    conf_saveEmptyLine();
 
    /* Fonts. */
@@ -1158,7 +1167,8 @@ int conf_saveConfig( const char *file )
 
    conf_saveComment(
       _( "Maximum interval to count as a double-click (0 disables)." ) );
-   conf_saveFloat( "mouse_doubleclick", conf.mouse_doubleclick );
+   conf_saveFloat( "mouse_doubleclick", conf.mouse_doubleclick,
+                   MOUSE_DOUBLECLICK_TIME );
    conf_saveEmptyLine();
 
    conf_saveComment(
