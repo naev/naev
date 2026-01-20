@@ -364,12 +364,16 @@ int conf_loadConfig( const char *file )
    conf_loadInt( L, "colourblind_type", conf.colourblind_type );
    conf_loadFloat( L, "game_speed", conf.game_speed );
    conf_loadBool( L, "healthbars", conf.healthbars );
-   conf_loadFloat( L, "bg_brightness", conf.bg_brightness );
+   double bg_brightness = linearToGamma( BG_BRIGHTNESS_DEFAULT );
+   conf_loadFloat( L, "bg_brightness", bg_brightness );
+   conf.bg_brightness = gammaToLinear( bg_brightness );
    conf_loadBool( L, "puzzle_skip", conf.puzzle_skip );
    conf_loadFloat( L, "nebu_nonuniformity", conf.nebu_nonuniformity );
    /* end todo */
    conf_loadFloat( L, "nebu_saturation", conf.nebu_saturation );
-   conf_loadFloat( L, "jump_brightness", conf.jump_brightness );
+   double jump_brightness = linearToGamma( JUMP_BRIGHTNESS_DEFAULT );
+   conf_loadFloat( L, "jump_brightness", jump_brightness );
+   conf.jump_brightness = gammaToLinear( jump_brightness );
    conf_loadFloat( L, "gamma_correction", conf.gamma_correction );
    conf_loadBool( L, "low_memory", conf.low_memory );
    conf_loadInt( L, "max_3d_tex_size", conf.max_3d_tex_size );
@@ -997,7 +1001,8 @@ int conf_saveConfig( const char *file )
       _( "Background brightness. 1 is full brightness while setting it to 0 "
          "would make the backgrounds pitch black. Defaults to %.1f." ),
       BG_BRIGHTNESS_DEFAULT );
-   conf_saveFloat( "bg_brightness", conf.bg_brightness, BG_BRIGHTNESS_DEFAULT );
+   conf_saveFloat( "bg_brightness", linearToGamma( conf.bg_brightness ),
+                   linearToGamma( BG_BRIGHTNESS_DEFAULT ) );
    conf_saveEmptyLine();
 
    conf_saveComment(
@@ -1017,8 +1022,8 @@ int conf_saveConfig( const char *file )
    conf_saveComment(
       _( "Controls the intensity to which the screen fades when jumping. 1.0 "
          "would be pure white, while 0.0 would be pure black." ) );
-   conf_saveFloat( "jump_brightness", conf.jump_brightness,
-                   JUMP_BRIGHTNESS_DEFAULT );
+   conf_saveFloat( "jump_brightness", linearToGamma( conf.jump_brightness ),
+                   linearToGamma( JUMP_BRIGHTNESS_DEFAULT ) );
    conf_saveEmptyLine();
 
    conf_saveComment(
