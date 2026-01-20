@@ -1,56 +1,63 @@
 # Graphics
 
-**NOTE: This section is a bit out of date.
-It is now possible to use 3D ships with GLTF files and define the trails and mount points there.
-This is the preferred way to give ship graphics and will be properly documented in the future.**
+Naev ships can be either added as [sprite sheets](./graphics/2d.md), or, as done usually, from [3D models using the GLTF format](./graphics/3d.md).
+It is recommended to use the GLTF format when possible, as it allows the lighting to change in-game and also makes the animation look much smoother.
 
-Ship graphics are defined in the `<GFX>` node as a string with additional attributes like number of sprites or size also defined in the XML.
-Graphics for each ship are stored in a directory found in `gfx/ship/`, where the base graphics, engine glow graphics, and comm window graphics are placed separately with specific file names.
+## Defining the Graphics
 
-In particular, the `GFX` string name is sensitive to underscores, and the first component up to the first underscore is used as the directory name.
-As an example, with `<GFX>llama</GFX>`, the graphics would have to be put in `gfx/ship/llama/`, while for `<GFX>hyena_pirate</GFX>`, the directory would be `gfx/ship/hyena`.
-The specific graphics are then searched for inside the directory with the full `GFX` string value and a specific prefix.
-Assuming `GFX` is the graphics name and `DIR` is the directory name (up to first underscore in `GFX`), we get:
+Graphics used by a ship are defined in the ship definition using the `gfx` tag, in combination with the `base_type` tag.
+For example, the Llama ship graphics are defined as follows
+```xml
+ <base_type>Llama</base_type>
+ <gfx size="47">llama.gltf</gfx>
+```
+Here, the `base_type` indicates that this ship is a Llama, and can be accessed from Lua with `ship:baseType()`.
+It is also used to define the path to the graphics.
 
-* `gfx/ship/DIR/GFX.webp`: ship base graphic file
-* `gfx/ship/DIR/GFX_engine.webp`: ship engine glow graphics file
-* `gfx/ship/DIR/GFX_comm.webp`: ship communication graphics (used in the comm window)
+Next, the `gfx` tag specifies the exact file indicating the graphics.
+This is different depending on whether you are using 2D or 3D graphics.
+An overview is shown below:
 
-The base graphics are stored as a spritesheet and start facing right before spinning counter-clockwise.
-The top-left sprite faces to the right, and it rotates across the row first before going down to the next row.
-The background should be stored in RGBA with a transparent background.
-An example is shown below:
+| Approach | Data location | Notes |
+| -------- | ------------- | ----- |
+| 3D | `gfx/ship3d/BASETYPE/GFXNAME` | Requires setting `size` attribute. |
+| 2D | `gfx/ship/BASETYPE/GFXNAME` | File extension is automatically search for if not specified. |
 
-![Llama with engine glows.](legacy_images/llama/llama.webp)<br/>
+### Defining 3D Graphics
+
+In the case of 3D, you want to specify the GLTF file path, which will be searched for in `gfx/ship3d/BASETYPE/GFXNAME`.
+So in the case of `llama.gltf` with base type of `Llama`, it will search for in `gfx/ship3d/Llama/llama.gltf` and error if it is not found.
+The `size` tag specifies how many pixels the big it will be scaled in-game.
+See [graphics 3d](./graphics/3d.md) for more details.
+
+### Defining 2D Graphics
+
+In the case of 2D, you have to prepare several spritesheets:
+1. **Ship Spritesheet:** represents the ship when it is not accelerating
+2. **Engine Spritesheet:** represents the ship when it is accelerating
+3. **Comm Image:** used when the player communicates with the ship
+
+An example of a sprite sheet is shown below.
+
+![Llama with engine glows.](./legacy_images/llama/llama.webp)<br/>
 *Example of the ship graphics for the "Llama".
 Starting from top-left position, and going right first before going down, the ship rotates counter-clockwise and starts facing right.
 A black background has been added for visibility.*
 
-The engine glow graphics are similar to the base graphics, but should show engine glow of the ship.
-This graphic gets used instead of the normal graphic when accelerated with some interpolation to fade on and off.
-An example is shown below;
+The images will be searched with the `gfx/ship/BASETYPE/GFXNAME` prefix and extensions will be searched for as necessary.
+In particular, the engine spritesheet will get `_engine` appended, and the comm image will have `_comm` appended.
+See [graphics 2d](./graphics/2d.md) for more details.
 
-![Llama with engine glows.](legacy_images/llama/llama_engine.webp)<br/>
-*Example of the engine glow graphics for the "Llama".
-Notice the yellow glow of the engines.
-A black background has been added for visibility.*
 
-The comm graphics should show the ship facing the player and be higher resolution.
-This image will be shown in large when the player communicates with them.
-An example is shown below:
+### Absolute paths
 
-![Llama with engine glows.](legacy_images/llama/llama_comm.webp)<br/>
-*Example of the comm graphics for the "Llama".*
+You can also avoid searching in the `gfx/` paths by defining an absolute path starting with `/`.
+This lets you load graphics from any location.
+For example, you can use the graphics of a spob for a ship as below:
 
-## Specifying Full Paths
+```xml
+ <gfx sy="1" sx="1" comm="spob/exterior/station02" polygon="002" noengine="1" size="150">/gfx/spob/space/002</gfx>
+```
 
-It is also possible to avoid all the path logic in the `<GFX>` nodes by specifying the graphics individually using other nodes.
-In particular, you can use the following nodes in the XML in place of a single `<GFX>` node to specify graphics:
-
-* `<gfx_space>`: Indicates the full path to the base graphics (`gfx/` is prepended).
-  The `sx` and `sy` attributes should be specified, or they default to 8.
-* `<gfx_engine>`: Indicates the full path to the engine glow graphics (`gfx/` is prepended).
-  The `sx` and `sy` attributes should be specified, or they default to 8.
-* `<gfx_comm>`: Indicates the full path to the comm graphics (`gfx/` is prepended).
-
-This gives more flexibility and allows using, for example, spob station graphics for a "ship".
+Do note that, in this case, you have to specify the communication image, collision polygons, and disable the engine if it does not exist.
+See [2D graphics](./graphics/2d.md) for more details at how to define the additional parameters if necessary.

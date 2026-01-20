@@ -51,6 +51,8 @@
    - [Data Format](./ships/data.md)
    - [Variants (Inheriting)]()
    - [Graphics](./ships/graphics.md)
+      - [3D Graphics](./ships/graphics/3d.md)
+      - [2D Graphics](./ships/graphics/2d.md)
    - [Lua Scripting]()
    - [Common Tags](./ships/tags.md)
 - [Outfits](./outfits/overview.md)
