@@ -19,7 +19,7 @@
   <energy>113</energy>
   <damage>
    <type>energy</type>
-   <penetrate>27</penetrate>
+   <penetrate>41</penetrate>
    <physical>185</physical>
   </damage>
   <pointdefence/>

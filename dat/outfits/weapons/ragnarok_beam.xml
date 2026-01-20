@@ -18,7 +18,7 @@
   <energy>102</energy>
   <damage>
    <type>energy</type>
-   <penetrate>100</penetrate>
+   <penetrate>200</penetrate>
    <physical>152</physical>
   </damage>
   <spfx_shield>Shi-S</spfx_shield>

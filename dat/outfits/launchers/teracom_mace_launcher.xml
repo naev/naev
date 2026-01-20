@@ -29,7 +29,7 @@
   <speed>600</speed>
   <damage>
    <type>kinetic</type>
-   <penetrate>18</penetrate>
+   <penetrate>27</penetrate>
    <physical>15</physical>
   </damage>
   <armour>5</armour>

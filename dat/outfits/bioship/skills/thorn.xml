@@ -27,7 +27,7 @@
   <resist>300</resist>
   <damage>
    <type>kinetic</type>
-   <penetrate>25</penetrate>
+   <penetrate>37</penetrate>
    <physical>25</physical>
    <disable>0</disable>
   </damage>

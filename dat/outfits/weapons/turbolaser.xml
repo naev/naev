@@ -24,7 +24,7 @@
   <trackmax>24000</trackmax>
   <damage>
    <type>energy</type>
-   <penetrate>80</penetrate>
+   <penetrate>176</penetrate>
    <physical>70</physical>
   </damage>
  </specific>

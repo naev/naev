@@ -33,7 +33,7 @@
   <resist>20</resist>
   <damage>
    <type>armourbreaker</type>
-   <penetrate>56</penetrate>
+   <penetrate>84</penetrate>
    <physical>400</physical>
   </damage>
   <armour>40</armour>

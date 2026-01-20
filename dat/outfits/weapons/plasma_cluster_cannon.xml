@@ -27,7 +27,7 @@
   <swivel>22</swivel>
   <damage>
    <type>plasma</type>
-   <penetrate>42</penetrate>
+   <penetrate>76</penetrate>
    <physical>17</physical>
   </damage>
   <shots>4</shots>

@@ -22,7 +22,7 @@
   <duration>90</duration>
   <damage>
    <type>kinetic</type>
-   <penetrate>90</penetrate>
+   <penetrate>162</penetrate>
    <physical>1000</physical>
    <disable>0</disable>
   </damage>
