@@ -806,11 +806,13 @@ static size_t quoteLuaString( char *str, size_t size, const char *text )
 #define conf_saveFloat( n, f )                                                 \
    pos += scnprintf( &buf[pos], sizeof( buf ) - pos, "%s = %f\n", n, f );
 
-#define conf_saveBool( n, b )                                                  \
+#define conf_saveBool( n, b, d )                                               \
    if ( b )                                                                    \
-      pos += scnprintf( &buf[pos], sizeof( buf ) - pos, "%s = true\n", n );    \
+      pos += scnprintf( &buf[pos], sizeof( buf ) - pos, "%s%s = true\n",       \
+                        ( b == d ) ? "-- " : "", n );                          \
    else                                                                        \
-      pos += scnprintf( &buf[pos], sizeof( buf ) - pos, "%s = false\n", n );
+      pos += scnprintf( &buf[pos], sizeof( buf ) - pos, "%s%s = false\n",      \
+                        ( b == d ) ? "-- " : "", n );
 
 #define conf_saveString( n, s )                                                \
    pos += scnprintf( &buf[pos], sizeof( buf ) - pos, "%s = ", n );             \
@@ -921,7 +923,7 @@ int conf_saveConfig( const char *file )
 
    conf_saveComment( _(
       "Synchronize framebuffer updates with the vertical blanking interval" ) );
-   conf_saveBool( "vsync", conf.vsync );
+   conf_saveBool( "vsync", conf.vsync, VSYNC_DEFAULT );
    conf_saveEmptyLine();
 
    /* Window. */
@@ -945,19 +947,20 @@ int conf_saveConfig( const char *file )
    conf_saveEmptyLine();
 
    conf_saveComment( _( "Run Naev in full-screen mode" ) );
-   conf_saveBool( "fullscreen", conf.fullscreen );
+   conf_saveBool( "fullscreen", conf.fullscreen, FULLSCREEN_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment( _( "Disable allowing resizing the window." ) );
-   conf_saveBool( "notresizable", conf.notresizable );
+   conf_saveBool( "notresizable", conf.notresizable, RESIZABLE_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment( _( "Minimize the game on focus loss." ) );
-   conf_saveBool( "minimize", conf.minimize );
+   conf_saveBool( "minimize", conf.minimize, MINIMIZE_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment( _( "Disable screen shaking effects." ) );
-   conf_saveBool( "disable_screen_shake", conf.disable_screen_shake );
+   conf_saveBool( "disable_screen_shake", conf.disable_screen_shake,
+                  DISABLE_SCREEN_SHAKE_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment(
@@ -985,7 +988,7 @@ int conf_saveConfig( const char *file )
 
    conf_saveComment( _( "Enable health bars. These show hostility/friendliness "
                         "and health of pilots on screen." ) );
-   conf_saveBool( "healthbars", conf.healthbars );
+   conf_saveBool( "healthbars", conf.healthbars, HEALTHBARS_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveCommentVar(
@@ -1021,12 +1024,12 @@ int conf_saveConfig( const char *file )
    conf_saveComment( _( "Enables low memory mode which foregoes using normal "
                         "textures and ambient occlusion. Useful when you want "
                         "to run Naev or more limited hardware." ) );
-   conf_saveBool( "low_memory", conf.low_memory );
+   conf_saveBool( "low_memory", conf.low_memory, LOW_MEMORY_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment( _( "Provide an in-game option to skip puzzles that appear "
                         "throughout the game." ) );
-   conf_saveBool( "puzzle_skip", conf.puzzle_skip );
+   conf_saveBool( "puzzle_skip", conf.puzzle_skip, PUZZLE_SKIP_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment(
@@ -1037,7 +1040,7 @@ int conf_saveConfig( const char *file )
 
    /* FPS */
    conf_saveComment( _( "Display a frame rate counter" ) );
-   conf_saveBool( "showfps", conf.fps_show );
+   conf_saveBool( "showfps", conf.fps_show, FPS_SHOW_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment( _( "Limit the rendering frame rate" ) );
@@ -1046,16 +1049,16 @@ int conf_saveConfig( const char *file )
 
    /* Pause */
    conf_saveComment( _( "Show 'PAUSED' on screen while paused" ) );
-   conf_saveBool( "showpause", conf.pause_show );
+   conf_saveBool( "showpause", conf.pause_show, PAUSE_SHOW_DEFAULT );
    conf_saveEmptyLine();
 
    /* Sound. */
    conf_saveComment( _( "Enables EFX extension for OpenAL backend." ) );
-   conf_saveBool( "al_efx", conf.al_efx );
+   conf_saveBool( "al_efx", conf.al_efx, USE_EFX_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment( _( "Disable all sound" ) );
-   conf_saveBool( "nosound", conf.nosound );
+   conf_saveBool( "nosound", conf.nosound, MUTE_SOUND_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment(
@@ -1088,12 +1091,12 @@ int conf_saveConfig( const char *file )
    conf_saveFloat( "map_overlay_opacity", conf.map_overlay_opacity );
    conf_saveComment(
       _( "Use bigger icons in the outfit, shipyard, and other lists." ) );
-   conf_saveBool( "big_icons", conf.big_icons );
+   conf_saveBool( "big_icons", conf.big_icons, BIG_ICONS_DEFAULT );
    conf_saveComment( _(
       "Always show the radar and don't hide it when the overlay is active." ) );
-   conf_saveBool( "always_radar", conf.always_radar );
+   conf_saveBool( "always_radar", conf.always_radar, ALWAYS_RADAR_DEFAULT );
    conf_saveComment( _( "Show the viewport in the radar/overlay." ) );
-   conf_saveBool( "show_viewport", conf.show_viewport );
+   conf_saveBool( "show_viewport", conf.show_viewport, SHOW_VIEWPORT_DEFAULT );
    conf_saveEmptyLine();
 
    /* Key repeat. */
@@ -1109,7 +1112,7 @@ int conf_saveConfig( const char *file )
    conf_saveComment( _( "Minimum and maximum zoom factor to use in-game" ) );
    conf_saveComment( _( "At 1.0, no sprites are scaled" ) );
    conf_saveComment( _( "zoom_far should be less then zoom_near" ) );
-   conf_saveBool( "zoom_manual", conf.zoom_manual );
+   conf_saveBool( "zoom_manual", conf.zoom_manual, MANUAL_ZOOM_DEFAULT );
    conf_saveFloat( "zoom_far", conf.zoom_far );
    conf_saveFloat( "zoom_near", conf.zoom_near );
    conf_saveEmptyLine();
@@ -1138,7 +1141,7 @@ int conf_saveConfig( const char *file )
 
    /* Misc. */
    conf_saveComment( _( "Redirects log and error output to files" ) );
-   conf_saveBool( "redirect_file", conf.redirect_file );
+   conf_saveBool( "redirect_file", conf.redirect_file, REDIRECT_FILE_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment( _( "Doubletap sensitivity (used for double tap accel for "
@@ -1148,12 +1151,12 @@ int conf_saveConfig( const char *file )
 
    conf_saveComment(
       _( "Time (in seconds) to wait until hiding mouse when not used." ) );
-   conf_saveBool( "mouse_hide", conf.mouse_hide );
+   conf_saveBool( "mouse_hide", conf.mouse_hide, MOUSE_HIDE_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment( _( "Whether or not clicking the middle mouse button "
                         "toggles mouse flying mode." ) );
-   conf_saveBool( "mouse_fly", conf.mouse_fly );
+   conf_saveBool( "mouse_fly", conf.mouse_fly, MOUSE_FLY_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment( _( "Mouse-flying accel control" ) );
@@ -1167,20 +1170,20 @@ int conf_saveConfig( const char *file )
 
    conf_saveComment(
       _( "Enables developer mode (universe editor and the likes)" ) );
-   conf_saveBool( "devmode", conf.devmode );
+   conf_saveBool( "devmode", conf.devmode, DEVMODE_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment( _( "Automatic saving for when using the universe editor "
                         "whenever an edit is done" ) );
-   conf_saveBool( "devautosave", conf.devautosave );
+   conf_saveBool( "devautosave", conf.devautosave, DEVAUTOSAVE_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment(
       _( "Enable the lua-enet library, for use by online/multiplayer mods "
          "(CAUTION: online Lua scripts may have security vulnerabilities!)" ) );
-   conf_saveBool( "lua_enet", conf.lua_enet );
+   conf_saveBool( "lua_enet", conf.lua_enet, LUA_ENET_DEFAULT );
    conf_saveComment( _( "Enable the experimental CLI based on lua-repl." ) );
-   conf_saveBool( "lua_repl", conf.lua_repl );
+   conf_saveBool( "lua_repl", conf.lua_repl, LUA_REPL_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment(
@@ -1195,7 +1198,8 @@ int conf_saveConfig( const char *file )
 
    conf_saveComment( _( "Indicates whether we've already warned about "
                         "incomplete game translations." ) );
-   conf_saveBool( "translation_warning_seen", conf.translation_warning_seen );
+   conf_saveBool( "translation_warning_seen", conf.translation_warning_seen,
+                  TRANSLATION_WARNING_SEEN_DEFAULT );
    conf_saveEmptyLine();
 
    conf_saveComment( _( "Time Naev was last played. This gets refreshed each "
@@ -1206,7 +1210,7 @@ int conf_saveConfig( const char *file )
    /* Debugging. */
    conf_saveComment(
       _( "Enables FPU exceptions - only works on DEBUG builds" ) );
-   conf_saveBool( "fpu_except", conf.fpu_except );
+   conf_saveBool( "fpu_except", conf.fpu_except, FPU_EXCEPT_DEFAULT );
    conf_saveEmptyLine();
 
    /* Editor. */

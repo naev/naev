@@ -39,9 +39,11 @@
    720 /**< Minimum screen height (below which graphics are downscaled). */
 #define RESOLUTION_W_DEFAULT RESOLUTION_W_MIN /**< Default screen width. */
 #define RESOLUTION_H_DEFAULT RESOLUTION_H_MIN /**< Default screen height. */
+#define RESIZABLE_DEFAULT 1  /**< Whether or not the game is resizable. */
 #define FULLSCREEN_DEFAULT 0 /**< Whether to run in fullscreen mode. */
-#define FSAA_DEFAULT 1       /**< Whether to use Full Screen Anti-Aliasing. */
-#define VSYNC_DEFAULT 0      /**< Whether to wait for vertical sync. */
+#define DISABLE_SCREEN_SHAKE_DEFAULT 0
+#define FSAA_DEFAULT 1  /**< Whether to use Full Screen Anti-Aliasing. */
+#define VSYNC_DEFAULT 0 /**< Whether to wait for vertical sync. */
 #define SCALE_FACTOR_DEFAULT 1. /**< Default scale factor. */
 #define NEBULA_SCALE_FACTOR_DEFAULT                                            \
    4.                        /**< Default scale factor for nebula rendering. */
@@ -58,6 +60,8 @@
    0. /**< Intensity of the colourblindness correction. */
 #define GAME_SPEED_DEFAULT 1. /**< Game speed. */
 #define HEALTHBARS_DEFAULT 1  /**< Whether or not to show pilot health bars. */
+#define FPS_SHOW_DEFAULT 0
+#define PAUSE_SHOW_DEFAULT 1
 #define BG_BRIGHTNESS_DEFAULT                                                  \
    0.7 /**< How much to darken (or lighten) the backgrounds. */
 #define NEBU_NONUNIFORMITY_DEFAULT                                             \
@@ -76,6 +80,14 @@
 #define FONT_SIZE_SMALL_DEFAULT 11   /**< Default small font size. */
 #define LOW_MEMORY_DEFAULT 0         /**< Default for low memory mode. */
 #define MAX_3D_TEX_SIZE 256          /**< Maximum 3D texture size. */
+#define ALWAYS_RADAR_DEFAULT 0
+#define SHOW_VIEWPORT_DEFAULT 0
+#define DEVMODE_DEFAULT 0
+#define DEVAUTOSAVE_DEFAULT 0
+#define LUA_ENET_DEFAULT 0
+#define LUA_REPL_DEFAULT 0
+#define TRANSLATION_WARNING_SEEN_DEFAULT 0
+#define FPU_EXCEPT_DEFAULT 0
 /* Audio options */
 #define USE_EFX_DEFAULT 1 /**< Whether or not to use EFX (if using OpenAL). */
 #define MUTE_SOUND_DEFAULT 0      /**< Whether sound should be disabled. */
