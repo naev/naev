@@ -11,13 +11,14 @@ script_dir = path.join(path.dirname(__file__), '..', '..', '..', 'utils', 'outfi
 sys.path.append(path.realpath(script_dir))
 from outfit import outfit
 
-def get_outfit_dict( nam, core= False, secondary= False ):
-   nam = path.realpath(path.join(path.dirname( __file__ ), '..', nam))
-   o = outfit(nam, is_multi= core, w= False)
+def get_outfit_dict( thepath, nam, core= False, secondary= False ):
+   pnam = path.realpath(path.join(path.dirname( __file__ ), '..', thepath, nam))
+   o = outfit(pnam, is_multi= core, w= False)
    if secondary:
       if isinstance(secondary, str):
-         secondary = outfit(doubled, is_multi= True, w= False)
-      else
+         nam = path.realpath(path.join(path.dirname( __file__ ), '..', thepath, secondary))
+         secondary = outfit(nam, is_multi= True, w= False)
+      else:
          secondary = o
    else:
       secondary = None
@@ -165,14 +166,14 @@ for siz, nam, sec, temp, gfx, output_pref, outputs in [
    ('small', 'melendez_ox_engine.xml',       True,    'gene_drive_melendez',  'strong_s', 'Laevis',      ['I', 'II']          ),
    ('medium', 'tricon_cyclone_engine.xml',   False,   'gene_drive_tricon',    'fast_m',   'Mediocris',   ['I', 'II', 'III']   ),
    ('medium', 'tricon_cyclone_engine.xml',   True,    'gene_drive_tricon',    'strong_m', 'Largus',      ['I', 'II']          ),
-   ('medium', 'melendez_buffalo.xml',        'tricon_cyclone_engine.xml',
-                                                      'gene_drive_tricon',    'strong_m', 'Ipsum Largus', ['I', 'II']          ),
+   ('medium', 'melendez_buffalo_engine.xml', 'tricon_cyclone_engine.xml',
+                                                      'gene_drive_melendez',  'strong_m', 'Supernus', ['I', 'II']          ),
    ('large', 'tricon_typhoon_engine.xml',    False,   'gene_drive_tricon',    'fast_l',   'Ponderosus',  ['I', 'II', 'III']   ),
    ('large', 'melendez_mammoth_engine.xml',  False,   'gene_drive_melendez',  'strong_l', 'Grandis',     ['I', 'II', 'III']   ),
    ('large', 'tricon_typhoon_engine.xml',    True,    'gene_drive_tricon',    'strong_l', 'Magnus',      ['I', 'II', 'III']   ),
    ('large', 'nexus_bolt_3000_engine.xml',   True,    'gene_drive',           'strong_l', 'Immanis',     ['I', 'II', 'III']   ),
 ]:
-   ref = get_outfit_dict(path.join('core_engine', siz, nam), True, sec)
+   ref = get_outfit_dict(path.join('core_engine', siz), nam, True, sec)
    BioOutfit( temp+'.xml.template', {
       'typename':     typename['engine'],
       'size':         ref['size'],
@@ -207,8 +208,8 @@ for pref, nam1, nam2, dbl, gfx, output_pref, outputs in [
    ('large',  'unicorp_d58_heavy_plating.xml',  'sk_war_plating.xml',      False, 'h', 'Ponderosus', ['I', 'II', 'III', 'IV'] ),
    ('large',  'unicorp_d58_heavy_plating.xml',  'sk_war_plating.xml',      True,  'x', 'Immanis',    ['I', 'II', 'III']       ),
 ]:
-   ref1 = get_outfit_dict(path.join('core_hull', pref, nam1), True, dbl)
-   ref2 = get_outfit_dict(path.join('core_hull', pref, nam2), True, dbl)
+   ref1 = get_outfit_dict(path.join('core_hull', pref), nam1, True, dbl)
+   ref2 = get_outfit_dict(path.join('core_hull', pref), nam2, True, dbl)
    BioOutfit( 'cortex.xml.template', {
       'typename':     typename['hull'],
       'size':         pref,
@@ -240,7 +241,7 @@ for siz, nam, dbl, gfx, output_pref, outputs, cpu in [
    ('large','milspec_orion_8601_core_system.xml',  False, 'l1', 'Ponderosum', ['I', 'II', 'III'],  (   100,   200 )),
    ('large','milspec_orion_8601_core_system.xml',   True, 'l2', 'Immane',     ['I', 'II', 'III'],  ( 370*3, 600*3 ))
 ]:
-   ref = get_outfit_dict(path.join('core_system', siz, nam), True, dbl)
+   ref = get_outfit_dict(path.join('core_system', siz), nam, True, dbl)
 
    if gfx[0] == 's':
       price = 0.5*ref['price']
@@ -248,8 +249,8 @@ for siz, nam, dbl, gfx, output_pref, outputs, cpu in [
       shield = 0.25*ref['shield']
       shield_regen = 0.25*ref['shield_regen']
    else:
-      shield_capacitor = get_outfit_dict(path.join('structure', 'shield_capacitor_ii'+('i' if gfx[0] ==' l' else '')+'.xml'))
-      shield_booster = get_outfit_dict(path.join('structure', ref['size']+'_shield_booster.xml'))
+      shield_capacitor = get_outfit_dict('structure', 'shield_capacitor_ii'+('i' if gfx[0] ==' l' else '')+'.xml')
+      shield_booster = get_outfit_dict('structure', ref['size']+'_shield_booster.xml')
 
       price = 0.5*(shield_booster['price']+shield_capacitor['price'])
       mass = 0.5*(shield_booster['mass']+shield_capacitor['mass'])
