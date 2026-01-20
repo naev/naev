@@ -148,9 +148,12 @@ gltf = { version = "1.4", features = ["extras", "names", "utils", "EXT_texture_w
 #gltf = { version = "1", features = ["extras", "names", "utils"] }
 colored = "3"
 regex = { workspace = true }
+ramer_douglas_peucker = "0.2"
+mint = "0.5"
 # cargo-util usess cargo internals and says you shouldn't use it in external
 # packages, yet without any other alternative, here we are :)
 cargo-util = "0.2"
+
 
 # Probably useful
 #etagere = "0" # Texture Atlas generation

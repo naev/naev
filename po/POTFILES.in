@@ -3850,6 +3850,7 @@ src/cmark_wrap.c
 src/cmark_wrap.h
 src/collision.c
 src/collision.h
+src/collision.rs
 src/colour.c
 src/colour.h
 src/comm.c

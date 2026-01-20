@@ -64,6 +64,7 @@ source_rust = files(
    'pluginmgr/src/git.rs',
    'pluginmgr-gui/src/lib.rs',
    'array.rs',
+   'collision.rs',
    'damagetype.rs',
    #'faction.rs',
    'input.rs',
