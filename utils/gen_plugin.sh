@@ -12,8 +12,14 @@ usage  $(basename "$0") <name> [--author <author>] [--version <version>]
   The properties author and version of the plugin can be specified
   using --author <author> and --version and <version>.
   If unspecified, <author> is \"$author\" and version is \"$version\".
+
+usage  (documentation) $(basename "$0") -h | --help | -d | --doc
+  If -h or --help is set, display this help and quit.
+  If -t or --tut is set, display the tutorial.
 EOF
 exit; fi
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 while [ -n "$*" ] ; do
    case "$1" in
@@ -27,6 +33,9 @@ while [ -n "$*" ] ; do
          version="$1" ;;
       "-h" | "--help")
          $0 -h
+         exit ;;
+      "-t" | "--tut")
+         "$SCRIPT_DIR"/shlinters/smd/smd.sh -s "$SCRIPT_DIR/../docs/manual/src/plugins/plugin_generator_tutorial.md"
          exit ;;
       *)
          if [ -n "$name" ] ; then
