@@ -57,7 +57,7 @@
    * Beams use separate shaders instead of subroutines now
 
 
-## v0.13.3 (unreleased)
+## v0.13.3
 
    * Made it easier to discover wormholes
    * Fixed pilots that were forced to be friendly attacking the player
@@ -79,7 +79,9 @@
    * Removed inexistent heat entry from naevpedia list
    * Plugin editor will keep descriptions now on reload
    * Super Fast Colliders are now properly kinetic damage
+   * Fixed missing cores not getting added properly when save gets updated
    * Fix rare crash when switching ships
+   * Only save configuration settings that deviate from the defaults
    * Spelling and grammar fixes
    * Translation updates
 

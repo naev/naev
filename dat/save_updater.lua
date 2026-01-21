@@ -71,20 +71,18 @@ function finish ()
       ["Milspec Aegis 3601 Core System"]        = true,
    }
 
-   if #changes_done > 0 then
-      for original,value in pairs(changes_done) do
-         if split[original] then
-            player.outfitAdd( value.new, value.q ) -- Have to add an additional core to compensate
-            print( fmt.f("   {original} => {new} x2 [{q}]", {original=original, new=value.new, q=value.q} ) )
+   for original,value in pairs(changes_done) do
+      if split[original] then
+         player.outfitAdd( value.new, value.q ) -- Have to add an additional core to compensate
+         print( fmt.f("   {original} => {new} x2 [{q}]", {original=original, new=value.new, q=value.q} ) )
 
-            -- Used to inform the updater event that cores probably need some checking
-            cache.split_list[value.new] = true
-            cache.split_cores = true
-         elseif value.new ~= nil then
-            print( fmt.f("   {original} => {new} [{q}]", {original=original, new=value.new, q=value.q} ) )
-         else
-            print( fmt.f("   {original} => nil [{q}]", {original=original, q=value.q} ) )
-         end
+         -- Used to inform the updater event that cores probably need some checking
+         cache.split_list[value.new] = true
+         cache.split_cores = true
+      elseif value.new ~= nil then
+         print( fmt.f("   {original} => {new} [{q}]", {original=original, new=value.new, q=value.q} ) )
+      else
+         print( fmt.f("   {original} => nil [{q}]", {original=original, q=value.q} ) )
       end
    end
 end
