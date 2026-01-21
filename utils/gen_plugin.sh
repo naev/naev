@@ -44,7 +44,7 @@ fi
    author = "plugin generator"
    version = "1.0.0"
    abstract = "plugin generated from repo status"
-   license = "CC0"
+   license = "GPLv3+"
    release_status = "development"
    tags = [ ]
    naev_version = ">= $(sed 's/^\([^+]*\).*/\1/' "$SCRIPT_DIR"/../dat/VERSION)"
