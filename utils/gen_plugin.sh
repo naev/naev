@@ -75,12 +75,23 @@ if [ "${#identifier}" -gt 25 ] ; then
    identifier="$trunc"
 fi
 
+git diff --name-status origin/main HEAD "$SCRIPT_DIR"/../dat/ |
+grep \
+   -v -e "^M"$'\t'"/dat/.*\.xml$" \
+   -v -e "^M"$'\t'"/dat/outfits/bioship/generate.py$"
+if ! [ "$?" = "0" ] ; then
+   safe=" (mainline-safe)"
+else
+   echo "Your plugin includes modifications in dat/ on non-xml files."
+fi
+
 (cat <<EOF
    identifier = "$identifier"
    name = "$name"
    author = "plugin generator"
    version = "1.0.0"
    abstract = "plugin generated from repo status"
+   description = "$safe"
    license = "GPLv3+"
    release_status = "development"
    tags = [ ]
