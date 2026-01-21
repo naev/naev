@@ -19,16 +19,16 @@ while [ -n "$*" ] ; do
    case "$1" in
       "--author")
          shift
-         if [ -z "$1" ] ; echo "missing author" >&2 ; exit 1 ; fi
+         if [ -z "$1" ] ; then echo "missing author" >&2 ; exit 1 ; fi
          author="$1" ;;
       "--version")
          shift
-         if [ -z "$1" ] ; echo "missing version" >&2 ; exit 1 ; fi
+         if [ -z "$1" ] ; then echo "missing version" >&2 ; exit 1 ; fi
          version="$1" ;;
       "-h" | "--help")
          $0 -h
          exit ;;
-      "*")
+      *)
          if [ -n "$name" ] ; then
             echo "$1: you already gave a name: $name." >&2
             echo "If you meant \"$1 $name\" as a name, do:" >&2
@@ -61,13 +61,13 @@ if [ -d "$fname" ] ; then
       exit 1
    fi
    rm -fvr "$fname" >&2
-   echo >&2
 fi
 mkdir "$fname"
 
 if [ -f "$fname.zip" ] ; then
    rm -fv "$fname.zip"
 fi
+echo >&2
 
 if [ "${#identifier}" -gt 25 ] ; then
    trunc="${identifier:0:25}"
@@ -76,13 +76,15 @@ if [ "${#identifier}" -gt 25 ] ; then
 fi
 
 git diff --name-status origin/main HEAD "$SCRIPT_DIR"/../dat/ |
-grep \
+grep -q \
    -v -e "^M"$'\t'"/dat/.*\.xml$" \
    -v -e "^M"$'\t'"/dat/outfits/bioship/generate.py$"
 if ! [ "$?" = "0" ] ; then
-   safe=" (mainline-safe)"
+   safe="(mainline-safe)"
 else
-   echo "Your plugin includes modifications in dat/ on non-xml files."
+   echo "Your plugin either adds/removes files or includes modifications " >&2
+   echo "in dat/ on non-xml files -> it won't be considered as mainline-safe." >&2
+   safe="(mainline-UNSAFE)"
 fi
 
 (cat <<EOF
@@ -106,10 +108,12 @@ git diff --name-status origin/main HEAD "$SCRIPT_DIR"/../dat/ |
 sed 's/^R[0-9]*\t\([^\t]\+\)\t\([^\t]\+\)/D\t\1\nA\t\2/' > "$CHANGES"
 
 readarray -t ADDED_FILES <<< "$(sed "s/^[AM]\t//; t; d" "$CHANGES")"
-cp --parents "${ADDED_FILES[@]}" "$fname/"
+if [ -n "${ADDED_FILES[*]}" ] ; then
+   cp --parents "${ADDED_FILES[@]}" "$fname/"
+fi
 
 readarray -t REMOVED_FILES <<< "$(sed "s/^D\t//; t; d" "$CHANGES")"
-if ! [ "${#REMOVED_FILES[@]}" = 0 ] ; then
+if [ -n "${REMOVED_FILES[*]}" ] ; then
    REM_LST="$(IFS=","; echo "[${REMOVED_FILES[*]}]")"
    echo "blacklist = ${REM_LST//,/, }" >> "$fname/plugin.toml"
 fi
