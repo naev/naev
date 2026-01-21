@@ -20,6 +20,7 @@
    * Removed inexistent heat entry from naevpedia list
    * Plugin editor will keep descriptions now on reload
    * Super Fast Colliders are now properly kinetic damage
+   * Fixed missing cores not getting added properly when save gets updated
    * Fix rare crash when switching ships
    * Spelling and grammar fixes
    * Translation updates
