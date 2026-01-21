@@ -2,16 +2,16 @@
 # Plugin Generator: a Tutorial
 
 `plugin_generator` allows you to automatically generate a plugin based on
-your naev repository.
+your Naev repository.
 
-### Step 0: have a naev repository !
+### Step 0: have a Naev repository !
 
 ``` bash
 git clone https://codeberg.org/naev/naev.git my_naev_repo
 cd my_naev_repo
 ```
 
-### Step 1: modify the contents of dat as you see fit
+### Step 1: modify the contents of `dat/` as you see fit
 
 In this example, we replace the Za'lek-Reiben-Regas line with just
 Zal'ek-Regas, and remove Regas spobs.

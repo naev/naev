@@ -40,8 +40,8 @@ while [ -n "$*" ] ; do
       *)
          if [ -n "$name" ] ; then
             echo "$1: you already gave a name: $name." >&2
-            echo "If you meant \"$1 $name\" as a name, do:" >&2
-            echo " > $0 \'$1 $name\'" >&2
+            echo 'If you meant "'"$1 $name"'" as a name, do:' >&2
+            echo -E " > $0 \'$1 $name\'" >&2
             exit 1
          fi
          name="$1";;
@@ -50,7 +50,7 @@ while [ -n "$*" ] ; do
 done
 
 if [ -z "$name" ] ; then
-   "Missing argument: <name> expected." >&2
+   echo "Missing argument: <name> expected." >&2
    exit 1
 fi
 
@@ -61,7 +61,7 @@ identifier="$(echo "$name" | tr -d -c '[:alnum:]')"
 
 if [ -d "$fname" ] ; then
    if [ -t 0 ]; then
-      read -p "directory \"$fname\" alread exists, remove the old one ? [Yn] " -n 1 -r
+      read -p "directory \"$fname\" already exists, remove the old one ? [Yn] " -n 1 -r
       if [[ $REPLY =~ ^[Nn]$ ]] ; then
          exit 1
       fi
@@ -87,14 +87,18 @@ fi
 git diff --name-status origin/main HEAD "$SCRIPT_DIR"/../dat/ |
 grep -q \
    -v -e "^M"$'\t'"/dat/.*\.xml$" \
-   -v -e "^M"$'\t'"/dat/outfits/bioship/generate.py$"
-if ! [ "$?" = "0" ] ; then
+   -v -e "^M"$'\t'"/dat/outfits/bioship/generate.py$" \
+   -v -e "^M"$'\t'"/dat/outfits/generated/"
+
+if ! [ "${PIPESTATUS[1]}" = 0 ] ; then
    safe="(mainline-safe)"
 else
-   echo "Your plugin either adds/removes files or includes modifications " >&2
-   echo "in dat/ on non-xml files -> it won't be considered as mainline-safe." >&2
+   echo "Your plugin either adds/removes files or includes modifications "
+   echo "in dat/ on non-xml files -> it won't be considered as mainline-safe."
+   echo "(/dat/outfits/bioship/generate.py, /dat/outfits/generated/* also allowed)"
+   echo
    safe="(mainline-UNSAFE)"
-fi
+fi >&2
 
 (cat <<EOF
    identifier = "$identifier"
