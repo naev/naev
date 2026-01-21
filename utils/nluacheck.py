@@ -101,8 +101,9 @@ if __name__ == "__main__":
    else:
       filelist = list(filelist)
       filelist.sort()
-      with Pool( args.jobs ) as pool:
-         retlist = pool.map( nluacheck_w, filelist )
+      retlist = map( nluacheck_w, filelist )
+      #with Pool( args.jobs ) as pool:
+      #   retlist = pool.map( nluacheck_w, filelist )
    err = 0
    for r in retlist:
       if r[0]!=0:
