@@ -1,4 +1,4 @@
-## v0.13.3 (unreleased)
+## v0.13.3
 
    * Made it easier to discover wormholes
    * Fixed pilots that were forced to be friendly attacking the player
