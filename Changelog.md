@@ -22,6 +22,7 @@
    * Super Fast Colliders are now properly kinetic damage
    * Fixed missing cores not getting added properly when save gets updated
    * Fix rare crash when switching ships
+   * Only save configuration settings that deviate from the defaults
    * Spelling and grammar fixes
    * Translation updates
 
