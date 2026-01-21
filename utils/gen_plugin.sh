@@ -1,26 +1,63 @@
 #!/bin/env bash
 
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+author="plugin generator"
+version="1.0.0"
 
-if [ -z "$1" ] || [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
-   echo "usage: $0 <name>" >&2
-   echo "The plugin filename will be the name with spaces replaced by _ in lowercase."
-   echo "Generates the directory <plugin filename> and <plugin filename>.zip."
+if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then cat << EOF
+usage  $(basename "$0") <name> [--author <author>] [--version <version>]
+  The plugin filename will be <name> with spaces replaced by _,
+  special characters removed, and in lowercase.
+  Generates the directory <filename> and <filename>.zip.
+
+  The properties author and version of the plugin can be specified
+  using --author <author> and --version and <version>.
+  If unspecified, <author> is \"$author\" and version is \"$version\".
+EOF
+exit; fi
+
+while [ -n "$*" ] ; do
+   case "$1" in
+      "--author")
+         shift
+         if [ -z "$1" ] ; echo "missing author" >&2 ; exit 1 ; fi
+         author="$1" ;;
+      "--version")
+         shift
+         if [ -z "$1" ] ; echo "missing version" >&2 ; exit 1 ; fi
+         version="$1" ;;
+      "-h" | "--help")
+         $0 -h
+         exit ;;
+      "*")
+         if [ -n "$name" ] ; then
+            echo "$1: you already gave a name: $name." >&2
+            echo "If you meant \"$1 $name\" as a name, do:" >&2
+            echo " > $0 \'$1 $name\'" >&2
+            exit 1
+         fi
+         name="$1";;
+   esac
+   shift
+done
+
+if [ -z "$name" ] ; then
+   "Missing argument: <name> expected." >&2
    exit 1
 fi
 
-name="$1"
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
 fname="$(echo "${name// /_}" | tr '[:upper:]' '[:lower:]' | tr -d '[/\|$*@&]' | sed 's/_\+/_/g')"
 identifier="$(echo "$name" | tr -d -c '[:alnum:]')"
 
 if [ -d "$fname" ] ; then
    if [ -t 0 ]; then
-      read -p "directory $fname alread exists, remove the old one ? [Yn] " -n 1 -r
+      read -p "directory \"$fname\" alread exists, remove the old one ? [Yn] " -n 1 -r
       if [[ $REPLY =~ ^[Nn]$ ]] ; then
          exit 1
       fi
    else
-      echo "Error: $fname already exists" >&2
+      echo "Error: \"$fname\" already exists" >&2
       exit 1
    fi
    rm -fvr "$fname" >&2
