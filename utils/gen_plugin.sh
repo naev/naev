@@ -91,7 +91,7 @@ EOF
 
 CHANGES=$(mktemp)
 trap 'rm "$CHANGES"' exit
-git diff --name-status origin/main |
+git diff --name-status origin/main HEAD "$SCRIPT_DIR"/../dat/ |
 sed 's/^R[0-9]*\t\([^\t]\+\)\t\([^\t]\+\)/D\t\1\nA\t\2/' > "$CHANGES"
 
 readarray -t ADDED_FILES <<< "$(sed "s/^[AM]\t//; t; d" "$CHANGES")"
