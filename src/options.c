@@ -1699,7 +1699,7 @@ static void opt_setBGBrightness( unsigned int wid, const char *str )
    double fad         = window_getFaderValue( wid, str );
    conf.bg_brightness = gammaToLinear( fad );
    snprintf( buf, sizeof( buf ),
-             _( "#wBG (Stars, etc.) brightness: %.0f%%  #0███#w" ),
+             _( "#wBG (Stars, etc.) brightness: %.0f%%  #0█#w" ),
              round( 100. * fad ) );
    window_modifyText( wid, "txtBGBrightness", buf );
    float    c   = conf.bg_brightness;
@@ -1748,7 +1748,7 @@ static void opt_setJumpBrightness( unsigned int wid, const char *str )
    char   buf[STRMAX_SHORT];
    double fad           = window_getFaderValue( wid, str );
    conf.jump_brightness = gammaToLinear( fad );
-   snprintf( buf, sizeof( buf ), _( "#wJump brightness: %.0f%%  #0███#w" ),
+   snprintf( buf, sizeof( buf ), _( "#wJump brightness: %.0f%%  #0█#w" ),
              round( 100. * fad ) );
    window_modifyText( wid, "txtJumpBrightness", buf );
    float    c   = conf.jump_brightness;
