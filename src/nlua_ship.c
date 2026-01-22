@@ -31,6 +31,7 @@ static const ShipOutfitSlot *ship_outfitSlotFromID( const Ship *s, int id );
 /* Ship metatable methods. */
 static int shipL_eq( lua_State *L );
 static int shipL_get( lua_State *L );
+static int shipL_exists( lua_State *L );
 static int shipL_getAll( lua_State *L );
 static int shipL_name( lua_State *L );
 static int shipL_nameRaw( lua_State *L );
@@ -71,6 +72,7 @@ static const luaL_Reg shipL_methods[] = {
    { "__tostring", shipL_name },
    { "__eq", shipL_eq },
    { "get", shipL_get },
+   { "exists", shipL_exists },
    { "getAll", shipL_getAll },
    { "name", shipL_name },
    { "nameRaw", shipL_nameRaw },
@@ -258,6 +260,36 @@ static int shipL_get( lua_State *L )
    const Ship *ship = luaL_validship( L, 1 );
    lua_pushship( L, ship );
    return 1;
+}
+
+/**
+ * @brief Gets a ship if it exists, nil otherwise.
+ *
+ * Does not raise any warnings or errors if fails.
+ *
+ * @usage s = ship.exists( "Llama" ) -- Gets the Llama if it exsits
+ *
+ *    @luatparam string s Raw (untranslated) name of the ship to get.
+ *    @luatreturn Ship|nil The ship matching name or nil if not found
+ * @luafunc exists
+ */
+static int shipL_exists( lua_State *L )
+{
+   const Ship *o = NULL;
+   if ( lua_isship( L, 1 ) )
+      o = luaL_checkship( L, 1 );
+   else if ( lua_isstring( L, 1 ) ) {
+      const char *str = lua_tostring( L, 1 );
+      o               = ship_getW( str );
+   } else {
+      luaL_typerror( L, 1, SHIP_METATABLE );
+      return 0;
+   }
+   if ( o != NULL ) {
+      lua_pushship( L, o );
+      return 1;
+   }
+   return 0;
 }
 
 /**
