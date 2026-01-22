@@ -63,6 +63,7 @@
  ### Fixes
 
    * Fixed modifying constants in plugins
+   * Fixed blacklisted files still reported as existing
 
 
 ## v0.13.4 (unreleased)
