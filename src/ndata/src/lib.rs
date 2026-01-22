@@ -265,9 +265,9 @@ pub fn is_file<P: AsRef<Path>>(path: P) -> bool {
     }
 }
 
-/// Checks to see if a path exists (can be file or directory.
+/// Checks to see if a path exists (can be file or directory).
 pub fn exists<P: AsRef<Path>>(path: P) -> bool {
-    physfs::exists(path)
+    physfs::exists(&path) && !physfs::blacklisted(path)
 }
 
 /// Recursively lists all the files in a directory.
