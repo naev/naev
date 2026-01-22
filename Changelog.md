@@ -1,3 +1,8 @@
+## v0.13.4 (unreleased)
+
+   * Fixed online resizing on high dpi screens
+
+
 ## v0.13.3
 
    * Made it easier to discover wormholes
