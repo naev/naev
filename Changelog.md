@@ -58,6 +58,11 @@
    * Intrinsic outfits now stack in the equipment view
    * Commodities now support tags
    * Beams use separate shaders instead of subroutines now
+   * Added support for aac and mp3 audio by default
+
+ ### Fixes
+
+   * Fixed modifying constants in plugins
 
 
 ## v0.13.4 (unreleased)
