@@ -3,12 +3,9 @@
  */
 
 #include <lualib.h>
+#include <math.h>
 
 #include "constants.h"
-
-#include "ndata.h"
-#include "nlua.h"
-#include "nlua_file.h"
 
 constants CTS = {
    .PHYSICS_SPEED_DAMP         = 3., /* Default before 0.13.0. */
@@ -26,56 +23,3 @@ constants CTS = {
    .CAMERA_VIEW     = 1.0,
    .CAMERA_VIEW_INV = 1.0,
 };
-
-int constants_init( void )
-{
-   const char *file = "constants.lua";
-   char       *buf;
-   size_t      size;
-
-   buf = ndata_read( file, &size );
-   if ( buf == NULL ) {
-      WARN( _( "File '%s' not found!" ), file );
-      return -1;
-   }
-
-   lua_State *L = luaL_newstate();
-   luaL_openlibs( L );
-   nlua_loadFileNoEnv( L );
-
-   if ( ( nlua_loadbuffer( L, buf, size, file ) || lua_pcall( L, 0, 1, 0 ) ) ) {
-      WARN( _( "Failed to parse '%s':\n%s" ), file, lua_tostring( L, -1 ) );
-      lua_close( L );
-      return -1;
-   }
-#define CT_DBL( NAME )                                                         \
-   do {                                                                        \
-      lua_getfield( L, -1, ( #NAME ) );                                        \
-      if ( !lua_isnoneornil( L, -1 ) ) {                                       \
-         CTS.NAME = lua_tonumber( L, -1 );                                     \
-      }                                                                        \
-      lua_pop( L, 1 );                                                         \
-   } while ( 0 )
-
-   CT_DBL( PHYSICS_SPEED_DAMP );
-   CT_DBL( STEALTH_MIN_DIST );
-   CT_DBL( SHIP_MIN_MASS );
-
-   CT_DBL( EW_JUMP_BONUS_RANGE );
-   CT_DBL( EW_ASTEROID_DIST );
-   CT_DBL( EW_JUMPDETECT_DIST );
-   CT_DBL( EW_SPOBDETECT_DIST );
-
-   CT_DBL( PILOT_SHIELD_DOWN_TIME );
-   CT_DBL( PILOT_DISABLED_ARMOUR );
-
-   CT_DBL( CAMERA_ANGLE );
-
-#undef CT_DBL
-
-   CTS.CAMERA_VIEW     = sin( CTS.CAMERA_ANGLE );
-   CTS.CAMERA_VIEW_INV = 1.0 / CTS.CAMERA_VIEW;
-
-   lua_close( L );
-   return 0;
-}

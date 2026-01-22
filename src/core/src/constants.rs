@@ -24,6 +24,23 @@ impl Constants {
         let globals = lua.globals();
         globals.set("file", ndata::luafile::open_file(&lua)?)?;
 
+        // TODO fix up this loader stuff
+        let package: mlua::Table = globals.get("package")?;
+        let loaders: mlua::Table = package.get("loaders")?;
+        // TODO reimplement in rust...
+        type CFunctionNaev = unsafe extern "C-unwind" fn(*mut naevc::lua_State) -> i32;
+        type CFunctionMLua = unsafe extern "C-unwind" fn(*mut mlua::lua_State) -> i32;
+        unsafe {
+            loaders.push(
+                lua.create_c_function(std::mem::transmute::<CFunctionNaev, CFunctionMLua>(
+                    naevc::nlua_package_loader_lua,
+                ))?,
+            )?;
+        }
+        const LUA_COMMON_PATH: &str = "common.lua"; // Common Lua functions.
+        let common_data = ndata::read(LUA_COMMON_PATH)?;
+        lua.load(std::str::from_utf8(&common_data)?).exec()?;
+
         let chunk = lua.load(ndata::read("constants.lua")?);
         let tbl: mlua::Table = chunk.call(())?;
 
@@ -51,6 +68,23 @@ impl Constants {
         let pilot_stress_recovery_time = get_f32(&tbl, "PILOT_STRESS_RECOVERY_TIME", 5.);
         let pilot_disabled_armour = get_f32(&tbl, "PILOT_DISABLED_ARMOUR", 0.1);
         let camera_angle = get_f32(&tbl, "CAMERA_ANGLE", std::f32::consts::FRAC_PI_4);
+
+        // TODO remove this
+        unsafe {
+            naevc::CTS.PHYSICS_SPEED_DAMP = physics_speed_damp as f64;
+            naevc::CTS.STEALTH_MIN_DIST = stealth_min_dist as f64;
+            naevc::CTS.SHIP_MIN_MASS = ship_min_mass as f64;
+            naevc::CTS.EW_JUMP_BONUS_RANGE = ew_jump_bonus_range as f64;
+            naevc::CTS.EW_ASTEROID_DIST = ew_asteroid_dist as f64;
+            naevc::CTS.EW_JUMPDETECT_DIST = ew_jump_detect_dist as f64;
+            naevc::CTS.EW_SPOBDETECT_DIST = ew_spob_detect_dist as f64;
+            naevc::CTS.PILOT_SHIELD_DOWN_TIME = pilot_shield_down_time as f64;
+            naevc::CTS.PILOT_STRESS_RECOVERY_TIME = pilot_stress_recovery_time as f64;
+            naevc::CTS.PILOT_DISABLED_ARMOUR = pilot_disabled_armour as f64;
+            naevc::CTS.CAMERA_ANGLE = camera_angle as f64;
+            naevc::CTS.CAMERA_VIEW = naevc::CTS.CAMERA_ANGLE.sin();
+            naevc::CTS.CAMERA_VIEW_INV = 1.0 / naevc::CTS.CAMERA_VIEW;
+        }
 
         Ok(Self {
             physics_speed_damp,
