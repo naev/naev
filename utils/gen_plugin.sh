@@ -1,5 +1,8 @@
 #!/bin/env bash
 
+# Possible improvements:
+#  * --from <sha_reference> (default to origin/main)
+#  * also have one-way safety, useful for dev plugins.
 author="plugin generator"
 version="1.0.0"
 
