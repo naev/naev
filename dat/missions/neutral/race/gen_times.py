@@ -2,7 +2,7 @@
 
 import sys
 from os import path
-dat_dir = path.realpath(path.join(path.dirname(__file__), '..', '..', '..'))
+dat_dir = path.realpath(path.join(path.dirname(__file__), '..', '..'))
 script_dir = path.realpath(path.join(dat_dir, '..', 'utils'))
 sys.path.append(script_dir)
 sys.path.append(path.realpath(path.join(script_dir, 'outfits')))
