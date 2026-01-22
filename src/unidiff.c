@@ -441,7 +441,7 @@ static const HunkProperties hunk_prop[HUNK_TYPE_SENTINAL + 1] = {
 /*
  * Prototypes.
  */
-static int diff_applyInternal( const char *name, int oneshot );
+static int diff_applyInternal( const char *name, int oneshot, int warn );
 NONNULL( 1 ) static UniDiff_t *diff_get( const char *name );
 static UniDiff_t  *diff_newDiff( void );
 static int         diff_removeDiff( UniDiff_t *diff );
@@ -666,7 +666,7 @@ int diff_apply( const char *name )
       if ( player.p->nav_spob >= 0 )
          diff_nav_spob = cur_system->spobs[player.p->nav_spob]->name;
    }
-   return diff_applyInternal( name, 1 );
+   return diff_applyInternal( name, 1, 1 );
 }
 
 /**
@@ -675,9 +675,10 @@ int diff_apply( const char *name )
  *    @param name Diff to apply.
  *    @param oneshot Whether or not this diff should be applied as a single
  * one-shot diff.
+ *    @param warn Whether or not to warn on failure.
  *    @return 0 on success.
  */
-static int diff_applyInternal( const char *name, int oneshot )
+static int diff_applyInternal( const char *name, int oneshot, int warn )
 {
    UniDiffData_t *d;
    UniDiff_t     *diff;
@@ -695,7 +696,8 @@ static int diff_applyInternal( const char *name, int oneshot )
    d = bsearch( &q, diff_available, array_size( diff_available ),
                 sizeof( UniDiffData_t ), diff_cmp );
    if ( d == NULL ) {
-      WARN( _( "UniDiff '%s' not found in %s!" ), name, UNIDIFF_DATA_PATH );
+      if ( warn )
+         WARN( _( "UniDiff '%s' not found in %s!" ), name, UNIDIFF_DATA_PATH );
       return -1;
    }
 
@@ -2018,12 +2020,12 @@ int diff_load( xmlNodePtr parent )
                            "unidiff. Was empty." ) );
                   continue;
                }
-               if ( diff_applyInternal( diffName, 0 ) ) {
+               if ( diff_applyInternal( diffName, 0, 0 ) ) {
                   if ( player_runUpdaterScript( "unidiff", diffName, 0 ) !=
                        0 ) {
                      if ( lua_type( naevL, -1 ) == LUA_TSTRING )
-                        diff_applyInternal( lua_tostring( naevL, -1 ), 0 );
-                     else
+                        diff_applyInternal( lua_tostring( naevL, -1 ), 0, 1 );
+                     else if ( lua_type( naevL, -1 ) != LUA_TNIL )
                         WARN( "Invalid value returned from 'unidiff' in "
                               "'save_updater.lua'" );
                      lua_pop( naevL, 1 );
