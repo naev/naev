@@ -18,8 +18,6 @@
        - Core hulls give more absorption in general
        - Increased penetration of launchers
    * Ultra-heavy weapons have reduced energy usage
-   * The +1 reputation from derelict and Dvaered dogfight contest causes
-     no longer causes reputation penalties with pirates
    * Added accessibility option to disable screen shaking
    * Jump Luminosity made easier to configure; now defaults to darker
    * Gauntlet NPCs get their fighters disabled when they are disabled
