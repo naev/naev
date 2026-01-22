@@ -390,7 +390,7 @@ impl Buffer {
             Some(_) => Some(path.to_path_buf()),
             None => {
                 let mut path = path.to_path_buf();
-                for ext in &["opus", "ogg", "flac", "wav"] {
+                for ext in &["opus", "ogg", "flac", "wav", "aac", "mp3"] {
                     path.set_extension(ext);
                     if ndata::exists(&path) {
                         return Some(path);
