@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-PIC="$(realpath --relative-to="$PWD" "${SCRIPT_DIR}/../../assets/gfx/map")"
-MAP="$(realpath --relative-to="$PWD" "${SCRIPT_DIR}/../../dat/map_decorator")"
+PIC="$(realpath --relative-to="$PWD" "${SCRIPT_DIR}/../../../assets/gfx/map")"
+MAP="$(realpath --relative-to="$PWD" "${SCRIPT_DIR}/../../map_decorator")"
 
 if [ -f "decorators.inc" ] ; then
    echo '"decorators.inc" already exists!' 1>&2

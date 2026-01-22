@@ -38,10 +38,11 @@ import sys
 from os import path
 from sys import argv
 script_dir = path.realpath(path.join(path.dirname(__file__), '..'))
-dat_dir = path.realpath(path.join(script_dir, '..', 'dat'))
+dat_dir = path.realpath(path.join(script_dir, '..'))
 
 sys.path.append(script_dir)
 sys.path.append(path.realpath(path.join(script_dir, 'outfits')))
+
 from outfit import outfit, naev_xml
 from getconst import PHYSICS_SPEED_DAMP
 

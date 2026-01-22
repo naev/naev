@@ -157,7 +157,7 @@ if __name__ == '__main__':
       usage = ' %(prog)s  [-g|-c] [-n] [(-s SORT) | -S]  [filename ...]',
       formatter_class = argparse.RawTextHelpFormatter,
       description = 'By default, outputs text aligned markdown table comparing the outfits respective values.',
-      epilog = '\nTypical usage (from naev root dir) :\n > ./utils/outfits/outfits2md.py dat/outfits/core_system/small/*.xml -C -t | less -RS'
+      epilog = '\nTypical usage (from naev/dat/ dir) :\n > ./utils/outfits/outfits2md.py outfits/core_system/small/*.xml -C -t | less -RS'
    )
    parser.add_argument('-g', '--github', action = 'store_true', help = 'unaligned (therefore smaller) valid github md, for use in posts.')
    parser.add_argument('-c', '--colour', action = 'store_true', help = 'coloured terminal output. You can pipe to "less -RS" if it is too wide.')
