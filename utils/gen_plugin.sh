@@ -5,12 +5,17 @@
 #  * also have one-way safety, useful for dev plugins.
 author="plugin generator"
 version="1.0.0"
+ref='origin/main'
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then cat << EOF
-usage  $(basename "$0") <name> [--author <author>] [--version <version>]
+usage  $(basename "$0") <name> [--ref <src_branch>] [--author <author>] [--version <version>]
   The plugin filename will be <name> with spaces replaced by _,
   special characters removed, and in lowercase.
-  Generates the directory <filename> and <filename>.zip.
+  Generates the directory <filename> and <filename>.zip,
+  based on the difference between current directory status and
+  the reference branch.
+
+  The reference branch can be specified with --ref, it default to origin/main. If a non-default value is chosen, the plugin will be labeled as "unknown mainline-safety".
 
   The properties author and version of the plugin can be specified
   using --author <author> and --version and <version>.
@@ -34,6 +39,15 @@ while [ -n "$*" ] ; do
          shift
          if [ -z "$1" ] ; then echo "missing version" >&2 ; exit 1 ; fi
          version="$1" ;;
+      "--ref")
+         shift
+         if [ -z "$1" ] ; then echo "missing reference branch" >&2 ; exit 1 ; fi
+         if git rev-parse --verify "$1" >/dev/null 2>&1 ; then
+            ref="$1"
+         else
+            echo 'The branch "'"$1"'" does not seem to exist.'
+            exit 2
+         fi ;;
       "-h" | "--help")
          $0 -h
          exit ;;
@@ -42,7 +56,7 @@ while [ -n "$*" ] ; do
          exit ;;
       *)
          if [ -n "$name" ] ; then
-            echo "$1: you already gave a name: $name." >&2
+            echo "$1: you already have given a name: $name." >&2
             echo 'If you meant "'"$1 $name"'" as a name, do:' >&2
             echo -E " > $0 \'$1 $name\'" >&2
             exit 1
@@ -87,7 +101,7 @@ if [ "${#identifier}" -gt 25 ] ; then
    identifier="$trunc"
 fi
 
-git diff --name-status origin/main HEAD "$SCRIPT_DIR"/../dat/ |
+git diff --name-status origin/main "$SCRIPT_DIR"/../dat/ |
 grep -q \
    -v -e "^M"$'\t'"/dat/.*\.xml$" \
    -v -e "^M"$'\t'"/dat/outfits/bioship/generate.py$" \
@@ -101,6 +115,12 @@ else
    echo "(/dat/outfits/bioship/generate.py, /dat/outfits/generated/* also allowed)"
    echo
    safe="(mainline-UNSAFE)"
+fi >&2
+
+if ! [ "$ref" = "origin/main" ] ; then
+   echo "Your reference is not origin/main, so your plugin safety status will be unknown."
+   echo
+   safe='unknown mainline-safety'
 fi >&2
 
 (cat <<EOF
@@ -120,7 +140,7 @@ EOF
 
 CHANGES=$(mktemp)
 trap 'rm "$CHANGES"' exit
-git diff --name-status origin/main HEAD "$SCRIPT_DIR"/../dat/ |
+git diff --name-status origin/main "$SCRIPT_DIR"/../dat/ |
 sed 's/^R[0-9]*\t\([^\t]\+\)\t\([^\t]\+\)/D\t\1\nA\t\2/' > "$CHANGES"
 
 readarray -t ADDED_FILES <<< "$(sed "s/^[AM]\t//; t; d" "$CHANGES")"
