@@ -2,10 +2,9 @@
 
 import sys
 from os import path
-dat_dir = path.realpath(path.join(path.dirname(__file__), '..', '..'))
-script_dir = path.realpath(path.join(dat_dir, '..', 'utils'))
-sys.path.append(script_dir)
-sys.path.append(path.realpath(path.join(script_dir, 'outfits')))
+dat_dir = path.realpath(path.join(path.dirname(__file__), '..', '..', '..'))
+sys.path.append(path.realpath(path.join(dat_dir, '..', 'utils')))
+sys.path.append(path.realpath(path.join(dat_dir, 'utils', 'outfits')))
 from outfit import outfit, naev_xml
 from getconst import PHYSICS_SPEED_DAMP
 
