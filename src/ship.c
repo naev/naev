@@ -1034,7 +1034,7 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
       /* Only handle nodes. */
       xml_onlyNodes( node );
 
-      xmlr_attr_strd_free( node, "display", temp->display );
+      xmlr_strd_free( node, "display", temp->display );
       if ( xml_isNode( node, "class" ) ) {
          xmlr_attr_strd_free( node, "display", temp->class_display );
          temp->class = ship_classFromString( xml_get( node ) );
