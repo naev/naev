@@ -156,7 +156,8 @@ if [ -n "${REMOVED_FILES[*]}" ] ; then
 fi
 
 cd "$fname" || exit
+mv -f dat/* .
+rmdir dat/ 2>/dev/null
 zip -r "$fname".zip -- *
 mv "$fname".zip ..
 echo "$fname".zip
-
