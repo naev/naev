@@ -104,9 +104,9 @@ fi
 
 git diff --name-status origin/main "$SCRIPT_DIR"/../dat/ |
 grep -q \
-   -v -e "^M"$'\t'"/dat/.*\.xml$" \
-   -v -e "^M"$'\t'"/dat/outfits/bioship/generate.py$" \
-   -v -e "^M"$'\t'"/dat/outfits/generated/"
+   -v -e "^M"$'\t'"dat/.*\.xml$" \
+   -v -e "^M"$'\t'"dat/outfits/bioship/generate.py$" \
+   -v -e "^M"$'\t'"dat/outfits/generated/"
 
 if ! [ "${PIPESTATUS[1]}" = 0 ] ; then
    safe="(mainline-safe)"
