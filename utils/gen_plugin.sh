@@ -15,7 +15,8 @@ usage  $(basename "$0") <name> [--ref <src_branch>] [--author <author>] [--versi
   based on the difference between current directory status and
   the reference branch.
 
-  The reference branch can be specified with --ref, it default to origin/main. If a non-default value is chosen, the plugin will be labeled as "unknown mainline-safety".
+  The reference branch can be specified with --ref, it default to origin/main.
+  If a non-default value is chosen, the plugin will be labeled as "unknown mainline-safety".
 
   The properties author and version of the plugin can be specified
   using --author <author> and --version and <version>.
