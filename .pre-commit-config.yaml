@@ -41,6 +41,7 @@ repos:
 - repo: local
   hooks:
     - id: smd
+      # -s -i -P -a -w 5
       name: markdown linter
       entry: utils/shlinters/smd/smd.sh
       args: ["-i", "-s"]
