@@ -13,10 +13,15 @@ mkdir -p "decorators"
 
 grep "<image>" "$MAP"/*.xml | sed 's/^.*<image>\(.*\)<\/image>.*$/\1/' |
 while read -r picnam ; do
-   pic="$PIC"/"$picnam"
+   pic="$PIC"/"$picnam.avif"
    bas="${picnam%.webp}"
    OUT=decorators/$bas.png
-   res=$(identify -verbose "$pic" | grep -m 1 'geometry:')
+   res=$(
+      identify -verbose "$pic" | grep -m 1 'geometry:'
+      if ! [ "${PIPESTATUS[0]}" = 0 ] ; then
+         echo -E 'Error identifying '\""$pic"\". >&2
+      fi
+   )
    if [ "$res" != "" ] ; then
       # shellcheck disable=SC2001
       geom=$(sed "s/^.*geometry: \([0-9]*x[0-9]*\).*$/\1/" <<< "$res")
