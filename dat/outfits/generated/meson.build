@@ -36,7 +36,7 @@ customoutfits = {
 
 # Consider some dependencies to try to propagate changes
 py_outfits_extra_deps = files('helper.py')
-py_outfits_extra_deps += meson.project_source_root() / 'utils/outfits/outfit.py'
+py_outfits_extra_deps += meson.project_source_root() / 'dat/utils/outfits/outfit.py'
 py_outfits_extra_deps += meson.project_source_root() / 'utils/naev_content.py'
 
 gen_outfits = []
