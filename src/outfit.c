@@ -1551,6 +1551,8 @@ const char *outfit_rawname( const Outfit *o )
 }
 const char *outfit_name( const Outfit *o )
 {
+   if ( o->display != NULL )
+      return _( o->display );
    return _( o->name );
 }
 const char *outfit_cond( const Outfit *o )
@@ -3258,6 +3260,7 @@ static int outfit_parse( Outfit *temp, const char *file )
          do {
             xml_onlyNodes( cur );
             xmlr_int( cur, "rarity", temp->rarity );
+            xmlr_strd( cur, "display", temp->display );
             xmlr_strd( cur, "shortname", temp->shortname );
             xmlr_strd( cur, "license", temp->license );
             xmlr_strd( cur, "licence", temp->license );
@@ -3971,6 +3974,7 @@ void outfit_free( void )
       free( o->cond );
       free( o->condstr );
       free( o->name );
+      free( o->display );
       free( o->shortname );
       gl_freeTexture( o->gfx_store );
       free( o->gfx_store_path );

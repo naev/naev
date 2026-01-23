@@ -59,11 +59,14 @@
    * Commodities now support tags
    * Beams use separate shaders instead of subroutines now
    * Added support for aac and mp3 audio by default
+   * Engine supports display names for outfits/ships to replace the internal
+     name for user facing operations
 
  ### Fixes
 
    * Fixed modifying constants in plugins
    * Fixed blacklisted files still reported as existing
+   * Fixed issues around `PHYSICS_SPEED_DAMP==0` support
 
 
 ## v0.13.4 (unreleased)

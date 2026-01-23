@@ -371,6 +371,7 @@ typedef struct OutfitLicenseData_ {
  */
 typedef struct Outfit {
    char *name;      /**< Name of the outfit. */
+   char *display;   /**< Display name of the outfit. */
    char *typename;  /**< Overrides the base type. */
    char *shortname; /**< Shorter version of the name for GUI and such. */
    int   rarity;    /**< Rarity of the outfit. */
