@@ -13,8 +13,8 @@ mkdir -p "decorators"
 
 grep "<image>" "$MAP"/*.xml | sed 's/^.*<image>\(.*\)<\/image>.*$/\1/' |
 while read -r picnam ; do
-   pic="$PIC"/"$picnam.avif"
-   bas="${picnam%.webp}"
+   bas="${picnam%.avif}"
+   pic="$PIC"/"$bas.avif"
    OUT=decorators/$bas.png
    res=$(
       identify -verbose "$pic" | grep -m 1 'geometry:'
