@@ -71,6 +71,7 @@ if [ -z "$name" ] ; then
    echo "Missing argument: <name> expected." >&2
    exit 1
 fi
+name="${name%.zip}"
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
@@ -102,7 +103,7 @@ if [ "${#identifier}" -gt 25 ] ; then
    identifier="$trunc"
 fi
 
-git diff --name-status origin/main "$SCRIPT_DIR"/../dat/ |
+git diff --name-status "$ref" "$SCRIPT_DIR"/../dat/ |
 grep -q \
    -v -e "^M"$'\t'"dat/.*\.xml$" \
    -v -e "^M"$'\t'"dat/outfits/bioship/generate.py$" \
@@ -121,7 +122,7 @@ fi >&2
 if ! [ "$ref" = "origin/main" ] ; then
    echo "Your reference is not origin/main, so your plugin safety status will be unknown."
    echo
-   safe='unknown mainline-safety'
+   safe='(unknown mainline-safety)'
 fi >&2
 
 (cat <<EOF
@@ -129,19 +130,18 @@ fi >&2
    name = "$name"
    author = "plugin generator"
    version = "1.0.0"
-   abstract = "plugin generated from repo status"
-   description = "$safe"
+   abstract = "plugin generated from repo status $safe"
    license = "GPLv3+"
    release_status = "development"
-   tags = [ ]
-   naev_version = ">= $(sed 's/^\([^+]*\).*/\1/' "$SCRIPT_DIR"/../dat/VERSION)"
+   tags = [ "testing" ]
+   naev_version = ">= $(sed 's/^\([0-9]\+\.[0-9]\+\(\.[0-9]\+\)\?\).*/\1/' "$SCRIPT_DIR"/../dat/VERSION)"
    source = "local"
 EOF
 ) | sed 's/^   //' > "$fname/plugin.toml"
 
 CHANGES=$(mktemp)
 trap 'rm "$CHANGES"' exit
-git diff --name-status origin/main "$SCRIPT_DIR"/../dat/ |
+git diff --name-status "$ref" "$SCRIPT_DIR"/../dat/ |
 sed 's/^R[0-9]*\t\([^\t]\+\)\t\([^\t]\+\)/D\t\1\nA\t\2/' > "$CHANGES"
 
 readarray -t ADDED_FILES <<< "$(sed "s/^[AM]\t//; t; d" "$CHANGES")"
