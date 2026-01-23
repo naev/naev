@@ -233,7 +233,10 @@ double solid_maxspeed( const Solid *s, double speed, double accel )
 {
    // s->speed_max can get overwritten to limit speed. Here we want the true
    // max_speed.
-   return speed + accel * s->aerodynamics / CTS.PHYSICS_SPEED_DAMP;
+   if ( CTS.PHYSICS_SPEED_DAMP > 0. )
+      return speed + accel * s->aerodynamics / CTS.PHYSICS_SPEED_DAMP;
+   else
+      return speed;
 }
 
 /**
