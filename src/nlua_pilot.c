@@ -676,9 +676,9 @@ static int pilotL_choosePoint( lua_State *L )
  *
  *    @luatparam Ship|string shipname Name of the ship to add.
  *    @luatparam Faction |stringfaction Faction to give the pilot.
- *    @luatparam System|Spob|Vec2 param Position to create pilot at, if it's a
- * system it'll try to jump in from that system, if it's a spob it'll try to
- * take off from it.
+ *    @luatparam System|Spob|Jump|Vec2 param Position to create pilot at, if
+ * it's a system it'll try to jump in from that system, if it's a spob it'll try
+ * to take off from it.
  *    @luatparam[opt] string pilotname Name to give the pilot. Defaults to
  * ship name.
  *    @luatparam[opt] table parameters Table of extra keyword arguments.
