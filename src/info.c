@@ -566,7 +566,7 @@ static void ship_update( unsigned int wid )
    /* Generic */
    l += scnprintf( &buf[l], sizeof( buf ) - l, "%s", player.p->name );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s",
-                   _( player.p->ship->name ) );
+                   ship_name( player.p->ship ) );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s",
                    _( ship_class( player.p->ship ) ) );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%d",

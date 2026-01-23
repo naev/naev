@@ -717,7 +717,7 @@ static int pilotL_add( lua_State *L )
    /* Get faction from string or number. */
    lf = luaL_validfaction( L, 2 );
    /* Get pilotname argument if provided. */
-   pilotname = luaL_optstring( L, 4, _( ship->name ) );
+   pilotname = luaL_optstring( L, 4, ship_name( ship ) );
 
    /* Handle position/origin argument. */
    if ( lua_isvector( L, 3 ) ) {
@@ -2081,7 +2081,7 @@ static PilotOutfitSlot *luaL_checkslot( lua_State *L, Pilot *p, int idx )
          NLUA_ERROR(
             L,
             _( "Pilot '%s' with ship '%s' does not have a slot with id '%d'!" ),
-            p->name, _( p->ship->name ), slotid );
+            p->name, ship_name( p->ship ), slotid );
          return NULL;
       }
       /* We have to convert from "Lua IDs" to "C" ids by subtracting 1. */
@@ -2093,7 +2093,7 @@ static PilotOutfitSlot *luaL_checkslot( lua_State *L, Pilot *p, int idx )
    if ( s == NULL ) {
       NLUA_WARN(
          L, _( "Pilot '%s' with ship '%s' does not have named slot '%s'!" ),
-         p->name, _( p->ship->name ), slotname );
+         p->name, ship_name( p->ship ), slotname );
       return NULL;
    }
    return s;
@@ -4348,7 +4348,7 @@ static int pilotL_shippropSet( lua_State *L )
       return NLUA_ERROR( L,
                          _( "Trying to set ship property of pilot '%s' flying "
                             "ship '%s' with no ship Lua enabled!" ),
-                         p->name, p->ship->name );
+                         p->name, ship_name( p->ship ) );
 
    /* Case individual parameter. */
    if ( !lua_istable( L, 2 ) ) {
@@ -7055,7 +7055,7 @@ static int pilotL_renderComm( lua_State *L )
    glTexture *tex = ship_gfxComm( p->ship, size, p->tilt, p->solid.dir, NULL );
    if ( tex == NULL ) {
       NLUA_WARN( L, _( "Unable to get ship comm graphic for '%s'." ),
-                 p->ship->name );
+                 ship_name( p->ship ) );
       return 0;
    }
    lua_pushtex( L, tex );

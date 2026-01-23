@@ -2084,7 +2084,7 @@ void equipment_updateShips( unsigned int wid, const char *str )
    hacquired = gl_printLinesRaw( &gl_defFont, wgtw, acquired );
    window_dimWidget( wid, "txtDDesc", &wgtw, &wgth );
    hname      = gl_printLinesRaw( &gl_defFont, wgtw, ship->name );
-   modelname  = _( ship->ship->name );
+   modelname  = ship_name( ship->ship );
    hmodelname = gl_printLinesRaw( &gl_defFont, wgtw, modelname );
 
    /* Helper strings. */
@@ -2791,7 +2791,7 @@ static void equipment_renameShip( unsigned int wid, const char *str )
    Pilot      *ship     = player_getShip( shipname );
    char       *newname  = dialogue_input( _( "Ship Name" ), 1, 60,
                                           _( "Please enter a new name for your %s:" ),
-                                          _( ship->ship->name ) );
+                                          ship_name( ship->ship ) );
 
    /* Player cancelled the dialogue. */
    if ( newname == NULL )

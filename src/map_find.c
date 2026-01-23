@@ -802,7 +802,7 @@ static char **map_fuzzyShips( Ship **s, const char *name )
 
    /* Do fuzzy search. */
    for ( int i = 0; i < array_size( s ); i++ ) {
-      if ( SDL_strcasestr( _( s[i]->name ), name ) != NULL )
+      if ( SDL_strcasestr( ship_name( s[i] ), name ) != NULL )
          array_push_back( &names, s[i]->name );
       else if ( ( s[i]->license != NULL ) &&
                 SDL_strcasestr( _( s[i]->license ), name ) != NULL )

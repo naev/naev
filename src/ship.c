@@ -182,6 +182,13 @@ int ship_compareTech( const void *arg1, const void *arg2 )
    return strcmp( s1->name, s2->name );
 }
 
+const char *ship_name( const Ship *s )
+{
+   if ( s->display != NULL )
+      return _( s->display );
+   return _( s->name );
+}
+
 /**
  * @brief Gets the ship's class name in human readable form.
  *
@@ -980,6 +987,7 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
       temp->rawdata       = doc;
       temp->inherits      = t.inherits;
       temp->name          = t.name;
+      temp->display       = STRDUP_( base->display );
       temp->base_type     = STRDUP_( base->base_type );
       temp->base_path     = STRDUP_( base->base_path );
       temp->class_display = STRDUP_( base->class_display );
@@ -1026,6 +1034,7 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
       /* Only handle nodes. */
       xml_onlyNodes( node );
 
+      xmlr_attr_strd_free( node, "display", temp->display );
       if ( xml_isNode( node, "class" ) ) {
          xmlr_attr_strd_free( node, "display", temp->class_display );
          temp->class = ship_classFromString( xml_get( node ) );
@@ -1806,6 +1815,7 @@ void ships_free( void )
       /* Free stored strings. */
       free( s->inherits );
       free( s->name );
+      free( s->display );
       free( s->class_display );
       free( s->description );
       free( s->desc_extra );

@@ -195,7 +195,7 @@ void shipyard_open( unsigned int wid )
 
       /* Properly create the array. */
       for ( int i = 0; i < nships; i++ ) {
-         cships[i].caption = strdup( _( shipyard_list[i]->name ) );
+         cships[i].caption = strdup( ship_name( shipyard_list[i] ) );
          cships[i].image   = ship_gfxStore( shipyard_list[i], 256, 0., 0., 0. );
          cships[i].layers  = gl_copyTexArray(
             (const glTexture **)shipyard_list[i]->gfx_overlays );
@@ -272,7 +272,7 @@ void shipyard_update( unsigned int wid, const char *str )
    credits2str( buf_credits, player.p->credits, 2 );
 
    k += scnprintf( &lbl[k], sizeof( lbl ) - k, "%s", _( "Model:" ) );
-   l += scnprintf( &buf[l], sizeof( buf ) - l, "%s", _( ship->name ) );
+   l += scnprintf( &buf[l], sizeof( buf ) - l, "%s", ship_name( ship ) );
    k += scnprintf( &lbl[k], sizeof( lbl ) - k, "\n%s", _( "Class:" ) );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s",
                    _( ship_classDisplay( ship ) ) );
@@ -630,14 +630,14 @@ static void shipyard_trade( unsigned int wid, const char *str )
                            _( "Your %s is worth %s, exactly as much as the new "
                               "ship, so no credits need be exchanged. Are you "
                               "sure you want to trade your ship in?" ),
-                           _( player.p->ship->name ), buf2 ) == 0 )
+                           ship_name( player.p->ship ), buf2 ) == 0 )
          return;
    } else if ( targetprice < playerprice ) {
       if ( dialogue_YesNo( _( "Are you sure?" ), /* confirm */
                            _( "Your %s is worth %s, more than the new ship. "
                               "For your ship, you will get the new %s and %s. "
                               "Are you sure you want to trade your ship in?" ),
-                           _( player.p->ship->name ), buf2, _( ship->name ),
+                           ship_name( player.p->ship ), buf2, ship_name( ship ),
                            buf4 ) == 0 )
          return;
    } else if ( targetprice > playerprice ) {
@@ -645,7 +645,7 @@ static void shipyard_trade( unsigned int wid, const char *str )
               _( "Are you sure?" ), /* confirm */
               _( "Your %s is worth %s, so the new ship will cost %s. Are you "
                  "sure you want to trade your ship in?" ),
-              _( player.p->ship->name ), buf2, buf3 ) == 0 )
+              ship_name( player.p->ship ), buf2, buf3 ) == 0 )
          return;
    }
 

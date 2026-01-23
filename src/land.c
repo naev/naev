@@ -1733,14 +1733,16 @@ void takeoff( int delay, int nosave )
          capused += pe->p->ship->points;
          if ( capused > player.fleet_capacity ) {
             overfleet = 1;
-            l += scnprintf( &overfleet_ships[l], sizeof( overfleet_ships ) - l,
-                            "\n%s (%s)", pe->p->name, _( pe->p->ship->name ) );
+            l +=
+               scnprintf( &overfleet_ships[l], sizeof( overfleet_ships ) - l,
+                          "\n%s (%s)", pe->p->name, ship_name( pe->p->ship ) );
             capused -= pe->p->ship->points;
          }
          if ( !pilot_isSpaceworthy( pe->p ) ) {
             badfleet = 1;
-            l += scnprintf( &badfleet_ships[l], sizeof( badfleet_ships ) - l,
-                            "\n%s (%s)", pe->p->name, _( pe->p->ship->name ) );
+            l +=
+               scnprintf( &badfleet_ships[l], sizeof( badfleet_ships ) - l,
+                          "\n%s (%s)", pe->p->name, ship_name( pe->p->ship ) );
          }
          nships++;
       }

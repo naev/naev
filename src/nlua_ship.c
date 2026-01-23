@@ -325,7 +325,7 @@ static int shipL_getAll( lua_State *L )
 static int shipL_name( lua_State *L )
 {
    const Ship *s = luaL_validship( L, 1 );
-   lua_pushstring( L, _( s->name ) );
+   lua_pushstring( L, ship_name( s ) );
    return 1;
 }
 
