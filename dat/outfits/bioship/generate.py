@@ -7,7 +7,7 @@ import math
 N_ = lambda text: text
 
 
-script_dir = path.join(path.dirname(__file__), '..', '..', '..', 'utils', 'outfits')
+script_dir = path.join(path.dirname(__file__), '..', '..', 'utils', 'outfits')
 sys.path.append(path.realpath(script_dir))
 from outfit import outfit
 

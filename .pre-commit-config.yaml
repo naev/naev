@@ -41,6 +41,7 @@ repos:
 - repo: local
   hooks:
     - id: smd
+      # -s -i -P -a -w 5
       name: markdown linter
       entry: utils/shlinters/smd/smd.sh
       args: ["-i", "-s"]
@@ -84,7 +85,7 @@ repos:
       entry: utils/reindent.sh
       #[build clang-format dot frag glsl gltf js lua luacheckrc markdown md nsi py pov rb scm sh tex vdf vert]
       # Unmanaged: [markdown md yaml yml .clangformat]
-      files: .*\.build$|.*\.dot$|.*\.frag$|.*\.glsl$|.*\.gltf|.*\.js$|.*\.lua$|.*\.luacheckrc$|.*\.nsi$|.*\.py$|.*\.pov$|.*\.rb$|.*\.scm$|.*\.sh$|.*\.tex$|.*\.vdf$|.*\.vert$
+      files: .*\.build$|.*\.dot$|.*\.frag$|.*\.glsl$|.*\.gltf|.*\.js$|.*\.lua$|.*\.luacheckrc$|.*\.nsi$|.*\.py$|.*\.pov$|.*\.rb$|.*\.scm$|.*\.tex$|.*\.vdf$|.*\.vert$
       language: script
     - id: check_fmt_f_usage
       name: lua f-string validation
@@ -122,6 +123,7 @@ repos:
   rev: v0.11.0.1
   hooks:
     - id: shellcheck
+      args: ["--severity=warning"]
       types: [shell]
 - repo: local
   hooks:

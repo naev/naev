@@ -87,3 +87,8 @@ source = "local"
 blacklist = [dat/spob/arcadia.xml, dat/spob/gastan.xml, dat/spob/seiben_iv.xml, dat/spob/seiben_xi.xml, dat/ssys/seiben.xml]
 ```
 
+### Need more information ?
+
+``` bash
+ > ./utils/gen_plugin.sh --help
+```

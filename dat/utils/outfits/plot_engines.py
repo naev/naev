@@ -7,7 +7,7 @@ lines = ['unicorp', 'tricon', 'nexus', 'melendez', 'krain', 'beat_up']
 import os
 script_dir = os.path.dirname( __file__ )
 util_dir = script_dir
-engine_dir = os.path.realpath(os.path.join( script_dir, '..', '..', 'dat', 'outfits', 'core_engine'))
+engine_dir = os.path.realpath(os.path.join( script_dir, '..', '..', 'outfits', 'core_engine'))
 
 from glob import glob
 import stat

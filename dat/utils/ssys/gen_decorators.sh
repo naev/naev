@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-PIC="$(realpath --relative-to="$PWD" "${SCRIPT_DIR}/../../assets/gfx/map")"
-MAP="$(realpath --relative-to="$PWD" "${SCRIPT_DIR}/../../dat/map_decorator")"
+PIC="$(realpath --relative-to="$PWD" "${SCRIPT_DIR}/../../../assets/gfx/map")"
+MAP="$(realpath --relative-to="$PWD" "${SCRIPT_DIR}/../../map_decorator")"
 
 if [ -f "decorators.inc" ] ; then
    echo '"decorators.inc" already exists!' 1>&2
@@ -13,10 +13,15 @@ mkdir -p "decorators"
 
 grep "<image>" "$MAP"/*.xml | sed 's/^.*<image>\(.*\)<\/image>.*$/\1/' |
 while read -r picnam ; do
-   pic="$PIC"/"$picnam"
-   bas="${picnam%.webp}"
+   bas="${picnam%.avif}"
+   pic="$PIC"/"$bas.avif"
    OUT=decorators/$bas.png
-   res=$(identify -verbose "$pic" | grep -m 1 'geometry:')
+   res=$(
+      identify -verbose "$pic" | grep -m 1 'geometry:'
+      if ! [ "${PIPESTATUS[0]}" = 0 ] ; then
+         echo -E 'Error identifying '\""$pic"\". >&2
+      fi
+   )
    if [ "$res" != "" ] ; then
       # shellcheck disable=SC2001
       geom=$(sed "s/^.*geometry: \([0-9]*x[0-9]*\).*$/\1/" <<< "$res")

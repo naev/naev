@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-DEC="$(realpath --relative-to="$PWD" "${SCRIPT_DIR}/../../dat/map_decorator")"
+DEC="$(realpath --relative-to="$PWD" "${SCRIPT_DIR}/../../map_decorator")"
 
 grep -r '<\(x\|y\)' "$DEC"/*.xml |
 sed -e 's/^.*\/\(.*\).xml:/\1/' -e 's/^.*<y>\(.*\)<\/y>/\1/' |

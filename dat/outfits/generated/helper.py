@@ -1,6 +1,6 @@
 import sys
 from os import path
-script_dir = path.join(path.dirname(__file__), '..', '..', '..', 'utils')
+script_dir = path.join(path.dirname(__file__), '..', '..', 'utils')
 sys.path.append(path.realpath(script_dir))
 sys.path.append(path.realpath(path.join(script_dir, 'outfits')))
 from outfit import outfit, Rem

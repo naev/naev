@@ -17,7 +17,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 fi
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-cd "$(realpath --relative-to="$PWD" "${SCRIPT_DIR}/../../dat/ssys")" &&
+cd "$(realpath --relative-to="$PWD" "${SCRIPT_DIR}/../../ssys")" &&
 
 if [ ! "$1" = "-e" ] ; then
    join -a1 <(
@@ -27,7 +27,7 @@ if [ ! "$1" = "-e" ] ; then
       sed 's/\([0-9][0-9]*\.[0-9]*[1-9]\)0*\>/\1/g' |
       sort -k 1b,1
    ) <(
-      cd "$SCRIPT_DIR"/../../dat/ || exit 1
+      cd "$SCRIPT_DIR"/../../ || exit 1
 
       join -o 1.2 2.2 <(
             grep '<spob>' ssys/*.xml |
