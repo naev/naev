@@ -5,7 +5,7 @@ for i=1,10000 do
    assert( r >= 0 and r <= 1, "rnd.rnd()" )
 end
 
-for _,vals in ipairs{ {5,10}, {9,3}, {-3,5}, } do --{5,nil} } do
+for _,vals in ipairs{ {9,nil}, {5,10}, {9,3}, {-3,5}, } do --{5,nil} } do
    local l,h = vals[1], vals[2]
    local t = {}
    for i=1,10000 do
@@ -17,7 +17,7 @@ for _,vals in ipairs{ {5,10}, {9,3}, {-3,5}, } do --{5,nil} } do
       l,h = h,l
    elseif h==nil then
       h = l
-      l = 0
+      l = 1
    end
    for k,v in pairs(t) do
       assert( k>=l and k<=h, "rnd.rnd(l,h) valid keys", l, h )

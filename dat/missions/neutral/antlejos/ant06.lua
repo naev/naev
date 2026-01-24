@@ -147,7 +147,7 @@ function enter ()
    table.insert( protesters, supplyship )
 
    for k,s in ipairs{ "Lancelot", "Shark", "Shark" } do
-      local p = pilot.add( s, puaaa, pos+vec2.newP( 100+rnd.rnd(100), rnd.angle() ), _("PUAAA Escort"), {ai="baddiepos"} )
+      local p = pilot.add( s, puaaa, pos+vec2.newP( 100+rnd.rnd(0,100), rnd.angle() ), _("PUAAA Escort"), {ai="baddiepos"} )
       p:setLeader( supplyship )
       table.insert( protesters, p )
    end

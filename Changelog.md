@@ -61,6 +61,7 @@
    * Added support for aac and mp3 audio by default
    * Engine supports display names for outfits/ships to replace the internal
      name for user facing operations
+   * Changed rnd.rnd() syntax to be like math.random
 
  ### Fixes
 
