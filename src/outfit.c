@@ -615,11 +615,13 @@ credits_t outfit_price( const Outfit *o )
 }
 const char *outfit_getPrice( const Outfit *outfit, unsigned int q,
                              credits_t *price, int *canbuy, int *cansell,
-                             char **player_has, const char **reason )
+                             char **player_has, const char **reason_cantbuy,
+                             const char **reason_cantsell )
 {
    static char pricestr[STRMAX_SHORT];
    static char youhave[STRMAX_SHORT];
    static char cantbuyreason[STRMAX_SHORT];
+   static char cantsellreason[STRMAX_SHORT];
    if ( outfit->lua_price == LUA_NOREF ) {
       price2str( pricestr, outfit->price * q, player.p->credits, 2 );
       *price   = outfit->price * q;
@@ -633,7 +635,7 @@ const char *outfit_getPrice( const Outfit *outfit, unsigned int q,
 
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, outfit->lua_price );
    lua_pushinteger( naevL, q );
-   if ( nlua_pcall( outfit->lua_env, 1, 5 ) ) { /* */
+   if ( nlua_pcall( outfit->lua_env, 1, 4 ) ) { /* */
       WARN( _( "Outfit '%s' failed to run '%s':\n%s" ), outfit->name, "price",
             lua_tostring( naevL, -1 ) );
       *price   = 0;
@@ -641,40 +643,51 @@ const char *outfit_getPrice( const Outfit *outfit, unsigned int q,
       *cansell = 0;
       if ( player_has != NULL )
          *player_has = NULL;
-      if ( reason != NULL )
-         *reason = cantbuyreason;
+      if ( reason_cantbuy != NULL )
+         *reason_cantbuy = NULL;
+      if ( reason_cantsell != NULL )
+         *reason_cantsell = NULL;
       lua_pop( naevL, 1 );
       return pricestr;
    }
 
-   str      = luaL_checkstring( naevL, -5 );
+   str      = luaL_checkstring( naevL, -4 );
    *price   = 0;
-   *canbuy  = lua_toboolean( naevL, -4 );
-   *cansell = lua_toboolean( naevL, -3 );
-   // Collour red if can't buy
+   *canbuy  = lua_isboolean( naevL, -3 ) && lua_toboolean( naevL, -3 );
+   *cansell = lua_isboolean( naevL, -2 ) && lua_toboolean( naevL, -2 );
+   // Colour red if can't buy
    if ( !*canbuy )
       snprintf( pricestr, sizeof( pricestr ) - 1, "#r%s#0", str );
    else
       strncpy( pricestr, str, sizeof( pricestr ) - 1 );
    if ( player_has != NULL ) {
-      str = luaL_optstring( naevL, -2, NULL );
+      str = luaL_optstring( naevL, -1, NULL );
       if ( str == NULL )
          *player_has = NULL;
       else {
-         strncpy( cantbuyreason, str, sizeof( cantbuyreason ) - 1 );
-         *player_has = cantbuyreason;
-      }
-   }
-   if ( reason != NULL ) {
-      str = luaL_optstring( naevL, -1, NULL );
-      if ( str == NULL )
-         *reason = NULL;
-      else {
          strncpy( youhave, str, sizeof( youhave ) - 1 );
-         *reason = youhave;
+         *player_has = youhave;
       }
    }
-   lua_pop( naevL, 5 );
+   if ( ( reason_cantbuy != NULL ) && lua_isstring( naevL, -3 ) ) {
+      str = luaL_optstring( naevL, -3, NULL );
+      if ( str == NULL )
+         *reason_cantbuy = NULL;
+      else {
+         strncpy( cantbuyreason, str, sizeof( cantbuyreason ) - 1 );
+         *reason_cantbuy = cantbuyreason;
+      }
+   }
+   if ( ( reason_cantsell != NULL ) && lua_isstring( naevL, -2 ) ) {
+      str = luaL_optstring( naevL, -2, NULL );
+      if ( str == NULL )
+         *reason_cantsell = NULL;
+      else {
+         strncpy( cantsellreason, str, sizeof( cantsellreason ) - 1 );
+         *reason_cantsell = cantsellreason;
+      }
+   }
+   lua_pop( naevL, 4 );
 
    return pricestr;
 }

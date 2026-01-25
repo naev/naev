@@ -39,8 +39,8 @@ end
 -- Called when the price of the outfit for the player is check
 -- Returns 5 values:
 -- 1. The cost string
--- 2. Whether the player can buy it,
--- 3. whether the player can sell it
+-- 2. Whether the player can buy it. If true, they can buy it, otherwise, they can't. Use a string to give a reason why.
+-- 3. whether the player can sell it. If true, they can sell it, otherwise, they can't. Use a string to give a reason why.
 -- 4. An optional what to display for the player "You have:" field. Defaults to displaying the player's owned credits when not specified.
 -- 5. An optional error message when unable to buy
 function price( q )
@@ -48,8 +48,7 @@ function price( q )
    local canbuy = true
    local cansell = true
    local youhave = string.format("%d credits",player.credits())
-   local cantbuyreason = nil
-   return pricestr, canbuy, cansell, youhave, cantbuyreason
+   return pricestr, canbuy, cansell, youhave
 end
 
 -- Run when the player tries to buy an outfit. Should determine whether the

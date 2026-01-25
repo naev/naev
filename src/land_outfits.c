@@ -559,7 +559,7 @@ void outfits_update( unsigned int wid, const char *str )
    } else
       window_modifyText( wid, "txtDescription", _( outfit_descRaw( outfit ) ) );
    buf_price = outfit_getPrice( outfit, outfits_getMod(), &price, &canbuy,
-                                &cansell, &youhave, NULL );
+                                &cansell, &youhave, NULL, NULL );
    credits2str( buf_credits, player.p->credits, 2 );
 
    /* grey out sell button */
@@ -901,7 +901,7 @@ int outfit_canBuy( const Outfit *outfit, int wid )
    failure            = 0;
    const char *reason = NULL;
    outfit_getPrice( outfit, outfits_getMod(), &price, &canbuy, &cansell, NULL,
-                    &reason );
+                    &reason, NULL );
 
    /* Special exception for local map. */
    int sold = 0;
@@ -1101,13 +1101,14 @@ static void outfits_buy( unsigned int wid, const char *str )
  */
 int outfit_canSell( const Outfit *outfit )
 {
-   int       failure = 0;
-   int       canbuy, cansell;
-   credits_t price;
+   int         failure = 0;
+   int         canbuy, cansell;
+   credits_t   price;
+   const char *reason = NULL;
 
    land_errClear();
    outfit_getPrice( outfit, outfits_getMod(), &price, &canbuy, &cansell, NULL,
-                    NULL );
+                    NULL, &reason );
 
    /* Unique item. */
    if ( outfit_isProp( outfit, OUTFIT_PROP_UNIQUE ) ) {
@@ -1137,7 +1138,11 @@ int outfit_canSell( const Outfit *outfit )
    }
    /* Custom condition failed. */
    if ( !cansell ) {
-      land_errDialogueBuild( _( "You are unable to sell this outfit!" ) );
+      if ( reason != NULL ) {
+         land_errDialogueBuild( "%s", reason );
+      } else {
+         land_errDialogueBuild( _( "You are unable to sell this outfit!" ) );
+      }
       failure = 1;
    }
 
