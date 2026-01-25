@@ -1678,11 +1678,12 @@ void space_init( const char *sysname, int do_simulate )
          snprintf( dmgstr, sizeof( dmgstr ),
                    p_( "nebula_volatility", "%.1f %s" ),
                    cur_system->nebu_volatility, UNIT_POWER );
-      player_message( _( "#oEntering System %s on %s." ), _( sysname ), nt );
+      player_message( _( "#oEntering System %s on %s." ),
+                      system_name( cur_system ), nt );
       if ( cur_system->nebu_volatility > 0. )
          player_message( _( "#rWARNING - Volatile nebula detected in %s! "
                             "Taking %s damage!" ),
-                         _( sysname ), dmgstr );
+                         system_name( cur_system ), dmgstr );
       free( nt );
    }
 
