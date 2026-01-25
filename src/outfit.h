@@ -485,7 +485,7 @@ const char    *outfit_license( const Outfit *o );
 credits_t      outfit_price( const Outfit *o );
 const char    *outfit_getPrice( const Outfit *outfit, unsigned int q,
                                 credits_t *price, int *canbuy, int *cansell,
-                                char **player_has );
+                                char **player_has, const char **reason );
 /* outfit types */
 int            outfit_isActive( const Outfit *o );
 int            outfit_isToggleable( const Outfit *o );

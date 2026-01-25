@@ -17,6 +17,7 @@ pub struct Constants {
     pub pilot_stress_recovery_time: f32,
     pub pilot_disabled_armour: f32,
     pub camera_angle: f32,
+    pub warn_buy_intrinsics: bool,
 }
 impl Constants {
     fn load() -> Result<Self> {
@@ -54,6 +55,16 @@ impl Constants {
             };
             v.unwrap_or(def)
         }
+        fn get_bool(tbl: &mlua::Table, name: &str, def: bool) -> bool {
+            let v: Option<bool> = match tbl.get(name) {
+                Ok(v) => v,
+                Err(e) => {
+                    warn_err!(e);
+                    None
+                }
+            };
+            v.unwrap_or(def)
+        }
 
         let physics_speed_damp = get_f32(&tbl, "PHYSICS_SPEED_DAMP", 3.);
         let stealth_min_dist = get_f32(&tbl, "STEALTH_MIN_DIST", 1000.);
@@ -68,6 +79,7 @@ impl Constants {
         let pilot_stress_recovery_time = get_f32(&tbl, "PILOT_STRESS_RECOVERY_TIME", 5.);
         let pilot_disabled_armour = get_f32(&tbl, "PILOT_DISABLED_ARMOUR", 0.1);
         let camera_angle = get_f32(&tbl, "CAMERA_ANGLE", std::f32::consts::FRAC_PI_4);
+        let warn_buy_intrinsics = get_bool(&tbl, "WARN_BUY_INTRINSICS", true);
 
         // TODO remove this
         unsafe {
@@ -84,6 +96,7 @@ impl Constants {
             naevc::CTS.CAMERA_ANGLE = camera_angle as f64;
             naevc::CTS.CAMERA_VIEW = naevc::CTS.CAMERA_ANGLE.sin();
             naevc::CTS.CAMERA_VIEW_INV = 1.0 / naevc::CTS.CAMERA_VIEW;
+            naevc::CTS.WARN_BUY_INTRINSICS = if warn_buy_intrinsics { 1 } else { 0 };
         }
 
         Ok(Self {
@@ -100,6 +113,7 @@ impl Constants {
             pilot_stress_recovery_time,
             pilot_disabled_armour,
             camera_angle,
+            warn_buy_intrinsics,
         })
     }
 
@@ -128,6 +142,7 @@ impl Constants {
             pilot_stress_recovery_time: 5.,
             pilot_disabled_armour: 0.1,
             camera_angle: std::f32::consts::FRAC_PI_4,
+            warn_buy_intrinsics: true,
         }
     }
 }

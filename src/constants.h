@@ -20,6 +20,7 @@ typedef struct constants {
    double CAMERA_ANGLE;
    double CAMERA_VIEW;
    double CAMERA_VIEW_INV;
+   int    WARN_BUY_INTRINSICS;
 } constants;
 
 extern constants CTS;

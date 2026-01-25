@@ -37,16 +37,19 @@ function descextra( _p, _o, _po )
 end
 
 -- Called when the price of the outfit for the player is check
--- Returns 4 values, the cost string, whether the player can buy it,
--- whether the player can sell it, and what to display for the player "You
--- have:" field. Note the last return is optional and defaults to displaying
--- the player's owned credits when not specified.
+-- Returns 5 values:
+-- 1. The cost string
+-- 2. Whether the player can buy it,
+-- 3. whether the player can sell it
+-- 4. An optional what to display for the player "You have:" field. Defaults to displaying the player's owned credits when not specified.
+-- 5. An optional error message when unable to buy
 function price( q )
    local pricestr = string.format("%d credits",500*q) -- Use format library instead
    local canbuy = true
    local cansell = true
    local youhave = string.format("%d credits",player.credits())
-   return pricestr, canbuy, cansell, youhave
+   local cantbuyreason = nil
+   return pricestr, canbuy, cansell, youhave, cantbuyreason
 end
 
 -- Run when the player tries to buy an outfit. Should determine whether the

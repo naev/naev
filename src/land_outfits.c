@@ -18,6 +18,7 @@
 
 #include "array.h"
 #include "cond.h"
+#include "constants.h"
 #include "dialogue.h"
 #include "equipment.h"
 #include "hook.h"
@@ -558,7 +559,7 @@ void outfits_update( unsigned int wid, const char *str )
    } else
       window_modifyText( wid, "txtDescription", _( outfit_descRaw( outfit ) ) );
    buf_price = outfit_getPrice( outfit, outfits_getMod(), &price, &canbuy,
-                                &cansell, &youhave );
+                                &cansell, &youhave, NULL );
    credits2str( buf_credits, player.p->credits, 2 );
 
    /* grey out sell button */
@@ -897,8 +898,10 @@ int outfit_canBuy( const Outfit *outfit, int wid )
       ( LOCAL_MAP_NAME != NULL ) ? outfit_get( LOCAL_MAP_NAME ) : NULL;
 
    land_errClear();
-   failure = 0;
-   outfit_getPrice( outfit, outfits_getMod(), &price, &canbuy, &cansell, NULL );
+   failure            = 0;
+   const char *reason = NULL;
+   outfit_getPrice( outfit, outfits_getMod(), &price, &canbuy, &cansell, NULL,
+                    &reason );
 
    /* Special exception for local map. */
    int sold = 0;
@@ -975,8 +978,12 @@ int outfit_canBuy( const Outfit *outfit, int wid )
    }
    /* Custom condition failed. */
    if ( !canbuy ) {
-      land_errDialogueBuild(
-         _( "You lack the resources to buy this outfit." ) );
+      if ( reason != NULL ) {
+         land_errDialogueBuild( "%s", reason );
+      } else {
+         land_errDialogueBuild(
+            "%s", _( "You lack the resources to buy this outfit." ) );
+      }
       failure = 1;
    }
 
@@ -1037,7 +1044,8 @@ static void outfits_buy( unsigned int wid, const char *str )
    }
 
    /* Give dialogue when trying to buy intrinsic. */
-   if ( outfit_slotType( outfit ) == OUTFIT_SLOT_INTRINSIC )
+   if ( CTS.WARN_BUY_INTRINSICS &&
+        ( outfit_slotType( outfit ) == OUTFIT_SLOT_INTRINSIC ) )
       if ( !dialogue_YesNo(
               _( "Buy Intrinsic Outfit?" ),
               _( "Are you sure you wish to buy '%s'? It will be automatically "
@@ -1098,7 +1106,8 @@ int outfit_canSell( const Outfit *outfit )
    credits_t price;
 
    land_errClear();
-   outfit_getPrice( outfit, outfits_getMod(), &price, &canbuy, &cansell, NULL );
+   outfit_getPrice( outfit, outfits_getMod(), &price, &canbuy, &cansell, NULL,
+                    NULL );
 
    /* Unique item. */
    if ( outfit_isProp( outfit, OUTFIT_PROP_UNIQUE ) ) {
