@@ -15,13 +15,13 @@
 
 #include "array.h"
 #include "commodity.h"
+#include "cond.h"
 #include "conf.h"
 #include "log.h"
 #include "naev.h"
 #include "ndata.h"
 #include "nxml.h"
 #include "outfit.h"
-#include "rng.h"
 #include "ship.h"
 
 #define XML_TECH_ID "Techs" /**< Tech xml document tag. */
@@ -42,9 +42,11 @@ typedef enum tech_item_type_e {
  * @brief Item contained in a tech group.
  */
 typedef struct tech_item_s {
-   tech_item_type_t type;      /**< Type of data. */
-   double           chance;    /**< For probalistic versions. */
-   double           price_mod; /**< Relative price modifier. */
+   tech_item_type_t type;         /**< Type of data. */
+   char            *avail;        /**< Availability conditional. */
+   int              avail_search; /**< Whether or not it appears in searches. */
+   int              avail_chunk;  /**< Compiled chunk. */
+   double           price_mod;    /**< Relative price modifier. */
    union {
       void         *ptr; /**< Pointer when needing to do indifferent voodoo. */
       const Outfit *outfit;       /**< Outfit pointer. */
@@ -93,16 +95,30 @@ static int          tech_addItemGroupPointer( tech_group_t       *grp,
 static tech_item_t *tech_addItemGroup( tech_group_t *grp, const char *name );
 /* Getting by tech. */
 static void **tech_addGroupItem( void **items, tech_item_type_t type,
-                                 const tech_group_t *tech );
+                                 const tech_group_t *tech, int search );
 static void **tech_addGroupItemPrice( void **items, double **pricelist,
                                       tech_item_type_t    type,
-                                      const tech_group_t *tech );
+                                      const tech_group_t *tech, int search );
 
 static int tech_cmp( const void *p1, const void *p2 )
 {
    const tech_group_t *t1 = p1;
    const tech_group_t *t2 = p2;
    return strcmp( t1->name, t2->name );
+}
+
+static int tech_testCond( const tech_item_t *item, int search )
+{
+   if ( ( item->avail != NULL ) && ( search >= 0 ) ) {
+      if ( search ) {
+         if ( !item->avail_search )
+            return 1;
+      } else {
+         if ( !cond_checkChunk( item->avail_chunk, item->avail ) )
+            return 1;
+      }
+   }
+   return 0;
 }
 
 /**
@@ -345,9 +361,12 @@ static int tech_parseXMLData( tech_group_t *tech, xmlNodePtr parent )
 
          /* Don't crash. */
          if ( itm != NULL ) {
-            xmlr_attr_float_def( node, "chance", itm->chance, -1. );
+            xmlr_attr_strd( node, "avail", itm->avail );
+            xmlr_attr_int_def( node, "avail_search", itm->avail_search, 0 );
             xmlr_attr_float_def( node, "price_mod", itm->price_mod, 1. );
          }
+         if ( itm->avail != NULL )
+            itm->avail_chunk = cond_compile( itm->avail );
          free( buf );
          continue;
       }
@@ -638,7 +657,7 @@ static void tech_createMetaGroup( tech_group_t *grp, tech_group_t **tech,
  */
 static void **tech_addGroupItemPrice( void **items, double **price,
                                       tech_item_type_t    type,
-                                      const tech_group_t *tech )
+                                      const tech_group_t *tech, int search )
 {
    /* Set up. */
    int size = array_size( tech->items );
@@ -669,8 +688,8 @@ static void **tech_addGroupItemPrice( void **items, double **price,
       if ( f == 1 )
          continue;
 
-      /* Check chance. */
-      if ( ( item->chance > 0. ) && ( RNGF() < item->chance ) )
+      /* Check conditional. */
+      if ( tech_testCond( item, search ) )
          continue;
 
       /* Add. */
@@ -688,17 +707,18 @@ static void **tech_addGroupItemPrice( void **items, double **price,
       /* Only handle commodities for now. */
       if ( item->type == TECH_TYPE_GROUP )
          items = tech_addGroupItemPrice( items, price, type,
-                                         &tech_groups[item->u.grp] );
+                                         &tech_groups[item->u.grp], search );
       else if ( item->type == TECH_TYPE_GROUP_POINTER )
-         items = tech_addGroupItemPrice( items, price, type, item->u.grpptr );
+         items = tech_addGroupItemPrice( items, price, type, item->u.grpptr,
+                                         search );
    }
 
    return items;
 }
 static void **tech_addGroupItem( void **items, tech_item_type_t type,
-                                 const tech_group_t *tech )
+                                 const tech_group_t *tech, int search )
 {
-   return tech_addGroupItemPrice( items, NULL, type, tech );
+   return tech_addGroupItemPrice( items, NULL, type, tech, search );
 }
 
 /**
@@ -708,27 +728,33 @@ static void **tech_addGroupItem( void **items, tech_item_type_t type,
  *    @param item The item name to search for.
  *    @return Whether or not the item was found.
  */
-int tech_hasItem( const tech_group_t *tech, const char *item )
+int tech_hasItem( const tech_group_t *tech, const char *name, int search )
 {
    if ( tech == NULL )
       return 0;
    int s = array_size( tech->items );
    for ( int i = 0; i < s; i++ ) {
-      const char *buf = tech_getItemName( &tech->items[i] );
-      if ( strcmp( buf, item ) == 0 )
+      const tech_item_t *item = &tech->items[i];
+      const char        *buf  = tech_getItemName( &tech->items[i] );
+      if ( tech_testCond( item, search ) )
+         continue;
+      if ( strcmp( buf, name ) == 0 )
          return 1;
    }
    return 0;
 }
 
 static int tech_hasItemInternal( const tech_group_t *tech,
-                                 const tech_item_t  *item )
+                                 const tech_item_t *item, int search )
 {
    if ( tech == NULL )
       return 0;
    int s = array_size( tech->items );
    for ( int i = 0; i < s; i++ ) {
       const tech_item_t *itemi = &tech->items[i];
+
+      if ( tech_testCond( itemi, search ) )
+         continue;
 
       if ( item->type == itemi->type ) {
          switch ( item->type ) {
@@ -750,10 +776,10 @@ static int tech_hasItemInternal( const tech_group_t *tech,
       }
 
       if ( itemi->type == TECH_TYPE_GROUP ) {
-         if ( tech_hasItemInternal( &tech_groups[itemi->u.grp], item ) )
+         if ( tech_hasItemInternal( &tech_groups[itemi->u.grp], item, search ) )
             return 1;
       } else if ( itemi->type == TECH_TYPE_GROUP_POINTER ) {
-         if ( tech_hasItemInternal( itemi->u.grpptr, item ) )
+         if ( tech_hasItemInternal( itemi->u.grpptr, item, search ) )
             return 1;
       }
    }
@@ -767,13 +793,13 @@ static int tech_hasItemInternal( const tech_group_t *tech,
  *    @param ship Ship to see if is contained in the group.
  *    @return 1 if the ship is contained, 0 otherwise.
  */
-int tech_hasShip( const tech_group_t *tech, const Ship *ship )
+int tech_hasShip( const tech_group_t *tech, const Ship *ship, int search )
 {
    const tech_item_t item = {
       .type   = TECH_TYPE_SHIP,
       .u.ship = ship,
    };
-   return tech_hasItemInternal( tech, &item );
+   return tech_hasItemInternal( tech, &item, search );
 }
 
 /**
@@ -783,13 +809,13 @@ int tech_hasShip( const tech_group_t *tech, const Ship *ship )
  *    @param outfit Outfit to see if is contained in the group.
  *    @return 1 if the outfit is contained, 0 otherwise.
  */
-int tech_hasOutfit( const tech_group_t *tech, const Outfit *outfit )
+int tech_hasOutfit( const tech_group_t *tech, const Outfit *outfit, int search )
 {
    const tech_item_t item = {
       .type     = TECH_TYPE_OUTFIT,
       .u.outfit = outfit,
    };
-   return tech_hasItemInternal( tech, &item );
+   return tech_hasItemInternal( tech, &item, search );
 }
 
 /**
@@ -799,13 +825,14 @@ int tech_hasOutfit( const tech_group_t *tech, const Outfit *outfit )
  *    @param comm Commodity to see if is contained in the group.
  *    @return 1 if the commodity is contained, 0 otherwise.
  */
-int tech_hasCommodity( const tech_group_t *tech, const Commodity *comm )
+int tech_hasCommodity( const tech_group_t *tech, const Commodity *comm,
+                       int search )
 {
    const tech_item_t item = {
       .type   = TECH_TYPE_COMMODITY,
       .u.comm = comm,
    };
-   return tech_hasItemInternal( tech, &item );
+   return tech_hasItemInternal( tech, &item, search );
 }
 
 /**
@@ -867,14 +894,13 @@ char **tech_getAllItemNames( int *n )
  *    @param tech Tech to get outfits from.
  *    @return Array (array.h): Outfits found.
  */
-Outfit **tech_getOutfit( const tech_group_t *tech )
+Outfit **tech_getOutfit( const tech_group_t *tech, int search )
 {
-   Outfit **o;
-
    if ( tech == NULL )
       return NULL;
 
-   o = (Outfit **)tech_addGroupItem( NULL, TECH_TYPE_OUTFIT, tech );
+   Outfit **o =
+      (Outfit **)tech_addGroupItem( NULL, TECH_TYPE_OUTFIT, tech, search );
 
    /* Sort. */
    if ( o != NULL )
@@ -892,16 +918,14 @@ Outfit **tech_getOutfit( const tech_group_t *tech )
  *    @param num Number of elements in the array.
  *    @return Array (array.h): Outfits found.
  */
-Outfit **tech_getOutfitArray( tech_group_t **tech, int num )
+Outfit **tech_getOutfitArray( tech_group_t **tech, int num, int search )
 {
-   tech_group_t grp;
-   Outfit     **o;
-
    if ( tech == NULL )
       return NULL;
 
+   tech_group_t grp;
    tech_createMetaGroup( &grp, tech, num );
-   o = tech_getOutfit( &grp );
+   Outfit **o = tech_getOutfit( &grp, search );
    tech_freeGroup( &grp );
 
    return o;
@@ -915,15 +939,13 @@ Outfit **tech_getOutfitArray( tech_group_t **tech, int num )
  *    @param tech Tech group to get list of ships from.
  *    @return Array (array.h): The ships found.
  */
-Ship **tech_getShip( const tech_group_t *tech )
+Ship **tech_getShip( const tech_group_t *tech, int search )
 {
-   Ship **s;
-
    if ( tech == NULL )
       return NULL;
 
    /* Get the outfits. */
-   s = (Ship **)tech_addGroupItem( NULL, TECH_TYPE_SHIP, tech );
+   Ship **s = (Ship **)tech_addGroupItem( NULL, TECH_TYPE_SHIP, tech, search );
 
    /* Sort. */
    if ( s != NULL )
@@ -941,16 +963,14 @@ Ship **tech_getShip( const tech_group_t *tech )
  *    @param num Number of elements in the array.
  *    @return Array (array.h): Ships found.
  */
-Ship **tech_getShipArray( tech_group_t **tech, int num )
+Ship **tech_getShipArray( tech_group_t **tech, int num, int search )
 {
-   tech_group_t grp;
-   Ship       **s;
-
    if ( tech == NULL )
       return NULL;
 
+   tech_group_t grp;
    tech_createMetaGroup( &grp, tech, num );
-   s = tech_getShip( &grp );
+   Ship **s = tech_getShip( &grp, search );
    tech_freeGroup( &grp );
 
    return s;
@@ -965,7 +985,8 @@ Ship **tech_getShipArray( tech_group_t **tech, int num )
  *    @param[out] price Array of prices.
  *    @return Array (array.h): The commodities found.
  */
-Commodity **tech_getCommodity( const tech_group_t *tech, double **price )
+Commodity **tech_getCommodity( const tech_group_t *tech, double **price,
+                               int search )
 {
    if ( price != NULL )
       *price = NULL;
@@ -976,7 +997,8 @@ Commodity **tech_getCommodity( const tech_group_t *tech, double **price )
 
    /* Get the commodities. */
    Commodity **c = (Commodity **)tech_addGroupItemPrice(
-      NULL, ( price == NULL ) ? NULL : &pricelist, TECH_TYPE_COMMODITY, tech );
+      NULL, ( price == NULL ) ? NULL : &pricelist, TECH_TYPE_COMMODITY, tech,
+      search );
 
    /* Sort. */
    if ( ( c != NULL ) &&
@@ -988,20 +1010,4 @@ Commodity **tech_getCommodity( const tech_group_t *tech, double **price )
       *price = pricelist;
 
    return c;
-}
-
-/**
- * @brief Checks to see if there is an outfit in the tech group.
- */
-int tech_checkOutfit( const tech_group_t *tech, const Outfit *o )
-{
-   Outfit **to = tech_getOutfit( tech );
-   for ( int i = 0; i < array_size( to ); i++ ) {
-      if ( to[i] == o ) {
-         array_free( to );
-         return 1;
-      }
-   }
-   array_free( to );
-   return 0;
 }

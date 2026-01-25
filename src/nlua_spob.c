@@ -946,14 +946,18 @@ static int spobL_gfxComm( lua_State *L )
  * @brief Gets the ships sold at a spob.
  *
  *    @luatparam Spob p Spob to get ships sold at.
+ *    @luatparam[opt=0] integer Search A value that indicates whether to get all
+ * ships that can be sold (-1), only those currently sold (0), or the in-gaem
+ * search results (1).
  *    @luatreturn {Ship,...} An ordered table containing all the ships sold
  * (empty if none sold).
  * @luafunc shipsSold
  */
 static int spobL_shipsSold( lua_State *L )
 {
-   const Spob *p = luaL_validspob( L, 1 );
-   Ship      **s = tech_getShip( p->tech );
+   const Spob *p      = luaL_validspob( L, 1 );
+   int         search = luaL_optinteger( L, 2, 0 );
+   Ship      **s      = tech_getShip( p->tech, search );
 
    /* Push results in a table. */
    lua_newtable( L );
@@ -970,14 +974,18 @@ static int spobL_shipsSold( lua_State *L )
  * @brief Gets the outfits sold at a spob.
  *
  *    @luatparam Spob p Spob to get outfits sold at.
+ *    @luatparam[opt=0] integer Search A value that indicates whether to get all
+ * outfits that can be sold (-1), only those currently sold (0), or the in-gaem
+ * search results (1).
  *    @luatreturn {Outfit,...} An ordered table containing all the outfits sold
  * (empty if none sold).
  * @luafunc outfitsSold
  */
 static int spobL_outfitsSold( lua_State *L )
 {
-   const Spob *p = luaL_validspob( L, 1 );
-   Outfit    **o = tech_getOutfit( p->tech );
+   const Spob *p      = luaL_validspob( L, 1 );
+   int         search = luaL_optinteger( L, 2, 0 );
+   Outfit    **o      = tech_getOutfit( p->tech, search );
 
    /* Push results in a table. */
    lua_newtable( L );

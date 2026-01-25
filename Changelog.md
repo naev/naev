@@ -57,8 +57,9 @@
        - `onimpact` reports armour, shield, and disable damage done
        - `price` now can return reason why it can't be sold or bought
    * New constants
-       - `WARN_BUY_INTRINSICS` controls whether or not the game warns when
-         buying intrinsic outfits
+       - `WARN_BUY_INTRINSICS` controls whether the game warns when buying
+         intrinsic outfits
+   * Tech groups cand have conditional elements and the likes
    * All player visible resources now have a separate user-facing display name
    * Audio should try to switch devices when disconnected or default playback
      device changes

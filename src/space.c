@@ -387,6 +387,10 @@ int spob_setFaction( Spob *p, int faction )
  */
 int spob_addCommodity( Spob *p, Commodity *c )
 {
+   for ( int i = 0; i < array_size( p->commodities ); i++ ) {
+      if ( p->commodities[i] == c )
+         return 0;
+   }
    array_grow( &p->commodities )          = c;
    array_grow( &p->commodityPrice ).price = c->price;
    return 0;
@@ -2665,7 +2669,7 @@ static int spob_updateCommodities( Spob *spb )
    spb->commodities    = array_create( Commodity * );
 
    /* Unique local stuff goes first. */
-   Commodity **tech = tech_getCommodity( spb->tech, NULL );
+   Commodity **tech = tech_getCommodity( spb->tech, NULL, -1 );
    for ( int i = 0; i < array_size( tech ); i++ )
       spob_addCommodity( spb, tech[i] );
    array_free( tech );

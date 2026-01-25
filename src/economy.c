@@ -179,7 +179,7 @@ int economy_getAverageSpobPrice( const Commodity *com, const Spob *p,
 
    double      price_mod = 1.;
    double     *prices    = NULL;
-   Commodity **tech      = tech_getCommodity( p->tech, &prices );
+   Commodity **tech      = tech_getCommodity( p->tech, &prices, 1 );
    for ( int j = 0; j < array_size( tech ); j++ ) {
       if ( tech[j] == com ) {
          price_mod = prices[j];

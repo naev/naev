@@ -173,7 +173,7 @@ void shipyard_open( unsigned int wid )
                    NULL );
 
    /* set up the ships to buy/sell */
-   shipyard_list = tech_getShip( land_spob->tech );
+   shipyard_list = tech_getShip( land_spob->tech, 0 );
    nships        = array_size( shipyard_list );
    cships        = calloc( MAX( 1, nships ), sizeof( ImageArrayCell ) );
    if ( nships <= 0 ) {

@@ -461,7 +461,7 @@ static void outfits_genList( unsigned int wid )
       /* Use custom list; default to landed outfits. */
       iar_outfits[active] = ( data->outfits != NULL )
                                ? array_copy( Outfit *, data->outfits )
-                               : tech_getOutfit( land_spob->tech );
+                               : tech_getOutfit( land_spob->tech, 0 );
    }
    noutfits = outfits_filter( (const Outfit **)iar_outfits[active],
                               array_size( iar_outfits[active] ),
@@ -876,7 +876,7 @@ static int outfit_isSold( const Outfit *outfit, int wid )
       }
       return 0;
    } else if ( ( land_spob != NULL ) &&
-               tech_checkOutfit( land_spob->tech, outfit ) )
+               tech_hasOutfit( land_spob->tech, outfit, 0 ) )
       return 1;
    return 0;
 }

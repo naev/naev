@@ -2700,7 +2700,7 @@ static void sysedit_genTechList( unsigned int wid )
    if ( p->tech != NULL ) {
       char **tmp = tech_getAllItemNames( &j );
       for ( int i = 0; i < j; i++ )
-         if ( !tech_hasItem( p->tech, tmp[i] ) )
+         if ( !tech_hasItem( p->tech, tmp[i], -1 ) )
             n++;
 
       if ( !n ) {
@@ -2710,7 +2710,7 @@ static void sysedit_genTechList( unsigned int wid )
          lack = malloc( sizeof( char * ) * j );
          n    = 0;
          for ( int i = 0; i < j; i++ )
-            if ( !tech_hasItem( p->tech, tmp[i] ) )
+            if ( !tech_hasItem( p->tech, tmp[i], -1 ) )
                lack[n++] = strdup( tmp[i] );
       }
 
@@ -2769,12 +2769,12 @@ static void sysedit_btnRmTech( unsigned int wid, const char *unused )
    Spob *p = sysedit_sys->spobs[sysedit_select[0].u.spob];
 
    if ( uniedit_diffMode ) {
-      if ( tech_hasItem( p->tech, selected ) )
+      if ( tech_hasItem( p->tech, selected, -1 ) )
          sysedit_diffCreateSpobStr( p, HUNK_TYPE_SPOB_TECH_REMOVE,
                                     strdup( selected ) );
    } else {
       int n;
-      if ( tech_hasItem( p->tech, selected ) )
+      if ( tech_hasItem( p->tech, selected, -1 ) )
          tech_rmItemTech( p->tech, selected );
       n = tech_getItemCount( p->tech );
       if ( !n )

@@ -962,7 +962,7 @@ static int shipL_known( lua_State *L )
          continue;
       if ( !spob_isKnown( spb ) )
          continue;
-      if ( tech_hasShip( spb->tech, s ) ) {
+      if ( tech_hasShip( spb->tech, s, 1 ) ) {
          lua_pushboolean( L, 1 );
          return 1;
       }

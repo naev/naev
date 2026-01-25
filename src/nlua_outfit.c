@@ -981,7 +981,7 @@ static int outfitL_known( lua_State *L )
          continue;
       if ( !spob_isKnown( spb ) )
          continue;
-      if ( tech_hasOutfit( spb->tech, o ) ) {
+      if ( tech_hasOutfit( spb->tech, o, 1 ) ) {
          lua_pushboolean( L, 1 );
          return 1;
       }
