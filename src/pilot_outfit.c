@@ -417,11 +417,6 @@ int pilot_addOutfitIntrinsicRaw( Pilot *pilot, const Outfit *outfit )
 {
    PilotOutfitSlot *s;
 
-   if ( !outfit_isMod( outfit ) ) {
-      WARN( _( "Instrinsic outfits must be modifiers!" ) );
-      return -1;
-   }
-
    if ( pilot->outfit_intrinsic == NULL )
       pilot->outfit_intrinsic = array_create( PilotOutfitSlot );
 
@@ -437,11 +432,6 @@ int pilot_addOutfitIntrinsic( Pilot *pilot, const Outfit *outfit )
 {
    PilotOutfitSlot *s;
    int              ret;
-
-   if ( !outfit_isMod( outfit ) ) {
-      WARN( _( "Instrinsic outfits must be modifiers!" ) );
-      return -1;
-   }
 
    if ( pilot->outfit_intrinsic == NULL )
       pilot->outfit_intrinsic = array_create( PilotOutfitSlot );
