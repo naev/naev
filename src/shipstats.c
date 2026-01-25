@@ -199,6 +199,8 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_FBAY_RELOAD, fbay_reload, N_( "Fighter Reload Rate" ) ),
 
    D__ELEM( SS_TYPE_D_FORWARD_DAMAGE, fwd_damage, N_( "Damage (Cannon)" ) ),
+   D__ELEM( SS_TYPE_D_FORWARD_TRACKING, fwd_tracking,
+            N_( "Tracking (Cannon)" ) ),
    D__ELEM( SS_TYPE_D_FORWARD_FIRERATE, fwd_firerate,
             N_( "Fire Rate (Cannon)" ) ),
    DI_ELEM( SS_TYPE_D_FORWARD_ENERGY, fwd_energy,

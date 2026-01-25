@@ -2135,9 +2135,7 @@ static double weapon_aimTurretAngle( const Outfit *outfit, const Pilot *parent,
    /* Compute both the angles we want. */
    if ( pilot_target != NULL ) {
       /* Lead angle is determined from ewarfare. */
-      double trackmin = outfit_trackmin( outfit );
-      double trackmax = outfit_trackmax( outfit );
-      lead = pilot_ewWeaponTrack( parent, pilot_target, trackmin, trackmax );
+      lead = pilot_ewWeaponTrack( parent, pilot_target, outfit );
       // Player interpolates from forward instead of static position, making it
       // easier to aim with fixed forward weapons
       if ( pilot_isPlayer( parent ) && outfit_isForward( outfit ) ) {

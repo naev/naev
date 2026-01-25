@@ -1956,9 +1956,7 @@ static int weapsetItem( lua_State *L, int *k, Pilot *p,
    /* Track. */
    if ( outfit_isBolt( slot->outfit ) ) {
       if ( target != NULL )
-         lua_pushnumber(
-            L, pilot_ewWeaponTrack( p, target, outfit_trackmin( slot->outfit ),
-                                    outfit_trackmax( slot->outfit ) ) );
+         lua_pushnumber( L, pilot_ewWeaponTrack( p, target, slot->outfit ) );
       else
          lua_pushnumber( L, -1 );
       lua_setfield( L, -2, "track" );

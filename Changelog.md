@@ -47,10 +47,12 @@
        - Weapon Damage
        - Launcher Damage
        - Damage Taken
-   * Rewrote the following in rust
+       - Forward Tracking
+   * Fixed turret tracking ship stat that wasn't working
+   * Rewrote the following in Rust
        - Lua Transform/Texture/Data/File modules
    * Lua outfit scripting changes:
-       - "onhit" reports disable damage too [breaking change!!]
+       - "onhit" reports disable damage too **[breaking change!!]**
        - "onanyimpact" reports armour, shield, and disable damage done
        - "onimpact" reports armour, shield, and disable damage done
    * Audio should try to switch devices when disconnected or default playback

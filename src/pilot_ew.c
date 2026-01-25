@@ -407,17 +407,20 @@ int pilot_inRangeJump( const Pilot *p, int i )
  *
  *    @param p Pilot tracking.
  *    @param t Pilot being tracked.
- *    @param trackmin Minimum track limit of the weapon.
- *    @param trackmax Maximum track limit of the weapon.
+ *    @param o Outfit tracking.
  *    @return The lead angle of the weapon.
  */
-double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double trackmin,
-                            double trackmax )
+double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, const Outfit *o )
 {
-   double mod;
    if ( t == NULL )
       return 1.;
-   mod = p->stats.ew_track * p->stats.ew_detect;
+   double mod = p->stats.ew_track * p->stats.ew_detect;
+   if ( outfit_isTurret( o ) )
+      mod *= p->stats.tur_tracking;
+   else
+      mod *= p->stats.fwd_tracking;
+   double trackmin = outfit_trackmin( o );
+   double trackmax = outfit_trackmax( o );
    return CLAMP(
       0., 1.,
       ( t->ew_signature * mod - trackmin ) /
