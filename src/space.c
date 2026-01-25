@@ -3257,7 +3257,7 @@ static int system_parse( StarSystem *sys, const char *filename )
                sys_setFlag( sys, SYSTEM_NOLANES );
                continue;
             }
-            DEBUG( _( "Unknown node '%s' in star system '%s'" ), node->name,
+            DEBUG( _( "Unknown node '%s' in star system '%s'" ), cur->name,
                    sys->name );
          } while ( xml_nextNode( cur ) );
          continue;
