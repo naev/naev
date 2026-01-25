@@ -59,6 +59,7 @@
    * New constants
        - `WARN_BUY_INTRINSICS` controls whether or not the game warns when
          buying intrinsic outfits
+   * All player visible resources now have a separate user-facing display name
    * Audio should try to switch devices when disconnected or default playback
      device changes
    * Intrinsic outfits now stack in the equipment view
