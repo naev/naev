@@ -51,10 +51,14 @@
    * Fixed turret tracking ship stat that wasn't working
    * Rewrote the following in Rust
        - Lua Transform/Texture/Data/File modules
-   * Lua outfit scripting changes:
-       - "onhit" reports disable damage too **[breaking change!!]**
-       - "onanyimpact" reports armour, shield, and disable damage done
-       - "onimpact" reports armour, shield, and disable damage done
+   * Lua outfit scripting changes
+       - `onhit` reports disable damage too **[breaking change!!]**
+       - `onanyimpact` reports armour, shield, and disable damage done
+       - `onimpact` reports armour, shield, and disable damage done
+       - `price` now can return reason why it can't be sold or bought
+   * New constants
+       - `WARN_BUY_INTRINSICS` controls whether or not the game warns when
+         buying intrinsic outfits
    * Audio should try to switch devices when disconnected or default playback
      device changes
    * Intrinsic outfits now stack in the equipment view
