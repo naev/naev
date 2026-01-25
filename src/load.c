@@ -162,6 +162,8 @@ static int load_load( nsave_t *save )
 
             /* Player info. */
             xmlr_strd( node, "location", save->spob );
+            if ( save->spobdisplay != NULL )
+               xmlr_strd( node, "location_display", save->spobdisplay );
             xmlr_ulong( node, "credits", save->credits );
             xmlr_strd( node, "chapter", save->chapter );
             xmlr_strd( node, "difficulty", save->difficulty );
@@ -605,6 +607,7 @@ static void load_freeSave( nsave_t *ns )
    free( ns->version );
    free( ns->data );
    free( ns->spob );
+   free( ns->spobdisplay );
    free( ns->chapter );
    free( ns->difficulty );
    free( ns->shipname );
@@ -925,7 +928,9 @@ static void display_save_info( unsigned int wid, const nsave_t *ns )
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n#n%s", _( "Chapter:" ) );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n#0   %s", ns->chapter );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n#n%s", _( "Space Object:" ) );
-   l += scnprintf( &buf[l], sizeof( buf ) - l, "\n#0   %s", _( ns->spob ) );
+   l += scnprintf( &buf[l], sizeof( buf ) - l, "\n#0   %s",
+                   ( ns->spobdisplay != NULL ) ? _( ns->spobdisplay )
+                                               : _( ns->spob ) );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n#n%s", _( "Credits:" ) );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n#0   %s", credits );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n#n%s", _( "Ship Name:" ) );
