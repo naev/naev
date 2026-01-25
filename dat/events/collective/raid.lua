@@ -5,7 +5,7 @@
  <chance>4</chance>
  <cond>
 local scur = system.cur()
-return system.get("Hades"):jumpDist( scur ) &lt; 7 and scur:faction() == faction.get("Empire") and not diff.isApplied("collective_dead") and not player.evtActive("Collective Raid")
+return system.get("Hades"):jumpDist( scur ) &lt; 2 and scur:faction() == faction.get("Empire") and not diff.isApplied("collective_dead") and not player.evtActive("Collective Raid")
  </cond>
  <priority>5</priority>
 </event>
