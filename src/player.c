@@ -517,9 +517,6 @@ PlayerShip_t *player_newShip( const Ship *ship, const char *def_name, int trade,
       ERR( _( "Player ship isn't valid… This shouldn't happen!" ) );
 
    ps                = player_newShipMake( ship_name );
-   ps->autoweap      = 1;
-   ps->favourite     = 0;
-   ps->p->shipvar    = array_create( lvar );
    ps->acquired      = ( acquired != NULL ) ? strdup( acquired ) : NULL;
    ps->acquired_date = ntime_get();
 
@@ -580,8 +577,6 @@ static PlayerShip_t *player_newShipMake( const char *name )
       pilot_reset( ps->p );
       pilot_setPlayer( ps->p );
    }
-   /* Initialize parent weapon sets. */
-   ws_copy( ps->weapon_sets, ps->p->weapon_sets );
 
    if ( player.p == NULL )
       ERR( _( "Something seriously wonky went on, newly created player does "
@@ -591,6 +586,12 @@ static PlayerShip_t *player_newShipMake( const char *name )
    player.p->credits = player_creds;
    player_creds      = start_credits();
    player_payback    = 0;
+   ps->autoweap      = 1;
+   ps->favourite     = 0;
+   ps->p->shipvar    = array_create( lvar );
+   // Auto weapons and copy over
+   pilot_weaponAuto( ps->p );
+   ws_copy( ps->weapon_sets, ps->p->weapon_sets );
 
    return ps;
 }
