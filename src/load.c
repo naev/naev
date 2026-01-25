@@ -184,6 +184,7 @@ static int load_load( nsave_t *save )
             if ( xml_isNode( node, "ship" ) ) {
                xmlr_attr_strd( node, "name", save->shipname );
                xmlr_attr_strd( node, "model", save->shipmodel );
+               xmlr_attr_strd( node, "display", save->shipmodeldisplay );
                continue;
             }
          } while ( xml_nextNode( node ) );
@@ -608,6 +609,7 @@ static void load_freeSave( nsave_t *ns )
    free( ns->difficulty );
    free( ns->shipname );
    free( ns->shipmodel );
+   free( ns->shipmodeldisplay );
 }
 
 /**
@@ -929,8 +931,9 @@ static void display_save_info( unsigned int wid, const nsave_t *ns )
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n#n%s", _( "Ship Name:" ) );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n#0   %s", ns->shipname );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n#n%s", _( "Ship Model:" ) );
-   l +=
-      scnprintf( &buf[l], sizeof( buf ) - l, "\n#0   %s", _( ns->shipmodel ) );
+   char *shipname =
+      ( ns->shipmodeldisplay == NULL ) ? ns->shipmodel : ns->shipmodeldisplay;
+   l += scnprintf( &buf[l], sizeof( buf ) - l, "\n#0   %s", _( shipname ) );
    if ( array_size( ns->plugins ) > 0 ) {
       l += scnprintf( &buf[l], sizeof( buf ) - l, "\n#n%s", _( "Plugins:" ) );
       l +=

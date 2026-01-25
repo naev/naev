@@ -3551,6 +3551,8 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
    xmlw_startElem( writer, "ship" );
    xmlw_attr( writer, "name", "%s", ship->name );
    xmlw_attr( writer, "model", "%s", ship->ship->name );
+   if ( ship->ship->display != NULL )
+      xmlw_attr( writer, "display", "%s", ship->ship->display );
    xmlw_attr( writer, "favourite", "%d", pship->favourite );
    xmlw_attr( writer, "deployed", "%d", pship->deployed );
 

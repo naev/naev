@@ -44,8 +44,9 @@ typedef struct nsave_s {
    char    *difficulty; /**< Difficulty setting of the player. */
 
    /* Ship info. */
-   char *shipname;  /**< Name of the ship. */
-   char *shipmodel; /**< Model of the ship. */
+   char *shipname;         /**< Name of the ship. */
+   char *shipmodel;        /**< Model of the ship. */
+   char *shipmodeldisplay; /**< Display model of the ship. */
 
    int ret; /**< Used for threaded loading. */
 } nsave_t;
