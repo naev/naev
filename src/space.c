@@ -19,6 +19,7 @@
 #include "background.h"
 #include "camera.h"
 #include "conf.h"
+#include "constants.h"
 #include "damagetype.h"
 #include "dev_uniedit.h"
 #include "economy.h"
@@ -579,8 +580,15 @@ int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, vec2 *pos,
       d *= 1.4; /* Jump in from further out when coming in from stealth. */
 
    /* Calculate new position. */
-   x += d * cos( a );
-   y += d * sin( a );
+   if ( CTS.PHYSICS_SPEED_DAMP > 1e-5 ) {
+      d *= HYPERSPACE_VEL;
+      x += d * cos( a );
+      y += d * sin( a );
+   } else if ( p != NULL ) {
+      d *= p->solid.speed_max;
+      x += d * cos( a );
+      y += d * sin( a );
+   }
 
    /* Add some error. */
    ea = 2. * M_PI * RNGF();
