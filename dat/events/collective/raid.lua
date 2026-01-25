@@ -3,11 +3,11 @@
 <event name="Collective Raid">
  <location>enter</location>
  <chance>4</chance>
+ <chapter>[^0]</chapter>
  <cond>
 local scur = system.cur()
-return system.get("Hades"):jumpDist( scur ) &lt; 2 and scur:faction() == faction.get("Empire") and not diff.isApplied("collective_dead") and not player.evtActive("Collective Raid")
+return system.get("Hades"):jumpDist( scur ) &lt;= 2 and scur:faction() == faction.get("Empire") and not diff.isApplied("collective_dead") and not player.evtActive("Collective Raid")
  </cond>
- <priority>5</priority>
 </event>
 --]]
 --[[
@@ -17,9 +17,8 @@ local careful = require "ai.core.misc.careful"
 local lanes = require "ai.core.misc.lanes"
 
 function create()
-   scur = system.cur()
-   sfct = scur:faction()
-   jmps = scur:jumps()
+   local scur = system.cur()
+   if not evt.claim( {scur}, true ) then evt.finish(false) end
    hook.land("leave")
    hook.jumpout("leave")
    hook.timer( rnd.rnd(4, 20), "fun")
@@ -28,23 +27,33 @@ function create()
 end
 
 function fun()
+   local scur = system.cur()
+   local sfct = scur:faction()
+   local jmps = scur:jumps()
    local mode = rnd.rnd(1)
    if mode == 0 then -- Go in loud in one big clump
       local jmp = jmps[ rnd.rnd( #jmps )]
-      for i = 1,rnd.rnd(7,26) do pilot.add('Drone', 'Collective', jmp, nil ) end
-      for i = 1,rnd.rnd(2,4) do pilot.add('Heavy Drone', 'Collective', jmp, nil ) end
-   end
-   if mode == 1 then -- Spawned in stealth, like space mines
+      for i = 1,rnd.rnd(7,26) do
+         pilot.add('Drone', 'Collective', jmp, nil )
+      end
+      for i = 1,rnd.rnd(2,4) do
+         pilot.add('Heavy Drone', 'Collective', jmp, nil )
+      end
+   elseif mode == 1 then -- Spawned in stealth, like space mines
       local L = lanes.get( sfct, "non-hostile" )
       for i = 1,rnd.rnd(18,31) do
          local rad = scur:radius()*0.81*rnd.rnd()^0.62
          local pos = careful.getSafePointL( L, nil, vec2.new(), rad, 2e3, 2e3, 2e3 )
-         if pos then pilot.add('Drone', 'Collective', pos, nil, {stealth=true} ) end
+         if pos then
+            pilot.add('Drone', 'Collective', pos, nil, {stealth=true} )
+         end
       end
       for i = 1,rnd.rnd(4,6) do
          local rad = scur:radius()*0.86*rnd.rnd()^0.66
          local pos = careful.getSafePointL( L, nil, vec2.new(), rad, 2e3, 2e3, 2e3 )
-         if pos then pilot.add('Heavy Drone', 'Collective', pos, nil, {stealth=true} ) end
+         if pos then
+            pilot.add('Heavy Drone', 'Collective', pos, nil, {stealth=true} )
+         end
       end
    end
 end
