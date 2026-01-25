@@ -893,7 +893,8 @@ int outfit_canBuy( const Outfit *outfit, int wid )
    if ( wid >= 0 )
       data = window_getData( wid );
    int           blackmarket = ( data != NULL ) ? data->blackmarket : 0;
-   const Outfit *omap        = outfit_get( LOCAL_MAP_NAME );
+   const Outfit *omap =
+      ( LOCAL_MAP_NAME != NULL ) ? outfit_get( LOCAL_MAP_NAME ) : NULL;
 
    land_errClear();
    failure = 0;
