@@ -455,7 +455,7 @@ int pilot_rmOutfitIntrinsic( Pilot *pilot, const Outfit *outfit )
       PilotOutfitSlot *s = &pilot->outfit_intrinsic[i];
       if ( s->outfit != outfit )
          continue;
-      ret = pilot_rmOutfitRaw( pilot, s );
+      ret = !pilot_rmOutfitRaw( pilot, s );
       array_erase( &pilot->outfit_intrinsic, s, s + 1 );
       break;
    }
