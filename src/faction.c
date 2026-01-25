@@ -376,7 +376,7 @@ const char *faction_longname( int f )
    }
    if ( faction_stack[f].longname != NULL )
       return _( faction_stack[f].longname );
-   if ( faction_stack[f].displayname != NULL )
+   else if ( faction_stack[f].displayname != NULL )
       return _( faction_stack[f].displayname );
    return _( faction_stack[f].name );
 }
@@ -395,6 +395,8 @@ const char *faction_mapname( int f )
    }
    if ( faction_stack[f].mapname != NULL )
       return _( faction_stack[f].mapname );
+   else if ( faction_stack[f].displayname != NULL )
+      return _( faction_stack[f].displayname );
    return _( faction_stack[f].name );
 }
 
