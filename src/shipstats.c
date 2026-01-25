@@ -278,7 +278,7 @@ static const ShipStatsLookup ss_lookup[] = {
             N_( "Missile jamming chance" ) ),
 
    I__ELEM( SS_TYPE_I_FUEL, fuel, N_( "Fuel" ), _UNIT_UNIT ),
-   I__ELEM( SS_TYPE_I_CARGO, cargo, N_( "Cargo" ), _UNIT_MASS ),
+   I__ELEM( SS_TYPE_I_CARGO, cargo, N_( "Cargo Space" ), _UNIT_MASS ),
    I__ELEM( SS_TYPE_I_CREW, crew, N_( "Crew" ), _UNIT_UNIT ),
 
    B__ELEM( SS_TYPE_B_HIDDEN_JUMP_DETECT, misc_hidden_jump_detect,
