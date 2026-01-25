@@ -376,6 +376,8 @@ const char *faction_longname( int f )
    }
    if ( faction_stack[f].longname != NULL )
       return _( faction_stack[f].longname );
+   if ( faction_stack[f].displayname != NULL )
+      return _( faction_stack[f].displayname );
    return _( faction_stack[f].name );
 }
 

@@ -1097,7 +1097,7 @@ static void cargo_update( unsigned int wid, const char *str )
             continue;
 
          l += scnprintf( &desc[l], sizeof( desc ) - l, _( "\n   - %s" ),
-                         _( faction_name( f ) ) );
+                         faction_shortname( f ) );
       }
    }
    window_modifyText( wid, "txtCargoDesc", desc );

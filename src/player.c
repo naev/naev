@@ -3443,6 +3443,8 @@ int player_save( xmlTextWriterPtr writer )
 
    /* Current ship. */
    xmlw_elem( writer, "location", "%s", land_spob->name );
+   if ( land_spob->display != NULL )
+      xmlw_elem( writer, "location", "%s", land_spob->display );
    player_saveShip( writer, &player.ps ); /* current ship */
 
    /* Ships. */

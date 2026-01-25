@@ -376,7 +376,7 @@ void commodity_update( unsigned int wid, const char *str )
             continue;
 
          l += scnprintf( &buf[l], sizeof( buf ) - l, _( "\n   - %s" ),
-                         _( faction_name( f ) ) );
+                         faction_shortname( f ) );
       }
    }
    window_modifyText( wid, "txtDesc", buf );

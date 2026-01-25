@@ -1067,13 +1067,13 @@ void land_updateMainTab( void )
    tonnes2str( tons, player.p->cargo_free );
    credits2str( cred, player.p->credits, 2 );
    l += scnprintf( &buf[l], sizeof( buf ) - l, _( "%s (%s system)" ),
-                   spob_name( land_spob ), _( cur_system->name ) );
+                   spob_name( land_spob ), system_name( cur_system ) );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n" );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "%s",
                    space_className( land_spob ) );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s",
                    land_spob->presence.faction >= 0
-                      ? _( faction_name( land_spob->presence.faction ) )
+                      ? faction_shortname( land_spob->presence.faction )
                       : _( "None" ) );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s",
                    space_populationStr( land_spob ) );

@@ -1611,8 +1611,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h,
    if ( overlay ) {
       char buf[STRMAX_SHORT];
       snprintf( buf, sizeof( buf ), "%s%s", jump_getSymbol( jp ),
-                sys_isKnown( jp->target ) ? _( jp->target->name )
-                                          : _( "Unknown" ) );
+                system_nameKnown( jp->target ) );
       gl_printMarkerRaw( &gl_smallFont, cx + jp->mo.text_offx,
                          cy + jp->mo.text_offy, &col, buf );
    }

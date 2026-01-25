@@ -3830,7 +3830,7 @@ int outfit_loadPost( void )
          SDESC_ADD( l, o, "\n#r%s#0", _( "Illegal to:" ) );
          for ( int j = 0; j < array_size( o->illegalto ); j++ )
             SDESC_ADD( l, o, _( "\n#r- %s#0" ),
-                       _( faction_name( o->illegalto[j] ) ) );
+                       faction_shortname( o->illegalto[j] ) );
       }
 
       /* Handle initializing module stuff. */

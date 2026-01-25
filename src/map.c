@@ -2051,7 +2051,7 @@ void map_updateFactionPresence( const unsigned int wid, const char *name,
          fp.name  = N_( "Unknown" );
          fp.known = 0;
       } else if ( omniscient )
-         fp.name = faction_name( sys->presence[i].faction );
+         fp.name = faction_shortname( sys->presence[i].faction );
       else
          fp.name = faction_mapname( sys->presence[i].faction );
       fp.value = sys->presence[i].value;
