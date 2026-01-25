@@ -1765,7 +1765,7 @@ int outfit_luaSell( const Outfit *o )
  */
 const char *outfit_shortname( const Outfit *o )
 {
-   return ( o->shortname != NULL ) ? _( o->shortname ) : _( o->name );
+   return ( o->shortname != NULL ) ? _( o->shortname ) : outfit_name( o );
 }
 
 /**
