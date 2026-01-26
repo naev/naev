@@ -726,6 +726,7 @@ static void **tech_addGroupItem( void **items, tech_item_type_t type,
  *
  *    @param tech Tech to search within.
  *    @param item The item name to search for.
+ *    @param search Whether or not this for searching.
  *    @return Whether or not the item was found.
  */
 int tech_hasItem( const tech_group_t *tech, const char *name, int search )
@@ -791,6 +792,7 @@ static int tech_hasItemInternal( const tech_group_t *tech,
  *
  *    @param tech Tech group to look at.
  *    @param ship Ship to see if is contained in the group.
+ *    @param search Whether or not this for searching.
  *    @return 1 if the ship is contained, 0 otherwise.
  */
 int tech_hasShip( const tech_group_t *tech, const Ship *ship, int search )
@@ -807,6 +809,7 @@ int tech_hasShip( const tech_group_t *tech, const Ship *ship, int search )
  *
  *    @param tech Tech group to look at.
  *    @param outfit Outfit to see if is contained in the group.
+ *    @param search Whether or not this for searching.
  *    @return 1 if the outfit is contained, 0 otherwise.
  */
 int tech_hasOutfit( const tech_group_t *tech, const Outfit *outfit, int search )
@@ -823,6 +826,7 @@ int tech_hasOutfit( const tech_group_t *tech, const Outfit *outfit, int search )
  *
  *    @param tech Tech group to look at.
  *    @param comm Commodity to see if is contained in the group.
+ *    @param search Whether or not this for searching.
  *    @return 1 if the commodity is contained, 0 otherwise.
  */
 int tech_hasCommodity( const tech_group_t *tech, const Commodity *comm,
@@ -892,6 +896,7 @@ char **tech_getAllItemNames( int *n )
  * @note The returned list must be freed (but not the pointers).
  *
  *    @param tech Tech to get outfits from.
+ *    @param search Whether or not this for searching.
  *    @return Array (array.h): Outfits found.
  */
 Outfit **tech_getOutfit( const tech_group_t *tech, int search )
@@ -916,6 +921,7 @@ Outfit **tech_getOutfit( const tech_group_t *tech, int search )
  *
  *    @param tech Array of techs to get from.
  *    @param num Number of elements in the array.
+ *    @param search Whether or not this for searching.
  *    @return Array (array.h): Outfits found.
  */
 Outfit **tech_getOutfitArray( tech_group_t **tech, int num, int search )
@@ -937,6 +943,7 @@ Outfit **tech_getOutfitArray( tech_group_t **tech, int num, int search )
  * @note The returned array must be freed (but not the pointers).
  *
  *    @param tech Tech group to get list of ships from.
+ *    @param search Whether or not this for searching.
  *    @return Array (array.h): The ships found.
  */
 Ship **tech_getShip( const tech_group_t *tech, int search )
@@ -961,6 +968,7 @@ Ship **tech_getShip( const tech_group_t *tech, int search )
  *
  *    @param tech Array of techs to get from.
  *    @param num Number of elements in the array.
+ *    @param search Whether or not this for searching.
  *    @return Array (array.h): Ships found.
  */
 Ship **tech_getShipArray( tech_group_t **tech, int num, int search )
@@ -983,6 +991,7 @@ Ship **tech_getShipArray( tech_group_t **tech, int num, int search )
  *
  *    @param tech Tech group to get list of commodities from.
  *    @param[out] price Array of prices.
+ *    @param search Whether or not this for searching.
  *    @return Array (array.h): The commodities found.
  */
 Commodity **tech_getCommodity( const tech_group_t *tech, double **price,
