@@ -725,7 +725,7 @@ static void **tech_addGroupItem( void **items, tech_item_type_t type,
  * @brief Checks whether a given tech group has the specified item.
  *
  *    @param tech Tech to search within.
- *    @param item The item name to search for.
+ *    @param name The item name to search for.
  *    @param search Whether or not this for searching.
  *    @return Whether or not the item was found.
  */
