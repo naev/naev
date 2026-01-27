@@ -199,6 +199,8 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_FBAY_RELOAD, fbay_reload, N_( "Fighter Reload Rate" ) ),
 
    D__ELEM( SS_TYPE_D_FORWARD_DAMAGE, fwd_damage, N_( "Damage (Cannon)" ) ),
+   D__ELEM( SS_TYPE_D_FORWARD_TRACKING, fwd_tracking,
+            N_( "Tracking (Cannon)" ) ),
    D__ELEM( SS_TYPE_D_FORWARD_FIRERATE, fwd_firerate,
             N_( "Fire Rate (Cannon)" ) ),
    DI_ELEM( SS_TYPE_D_FORWARD_ENERGY, fwd_energy,
@@ -276,7 +278,7 @@ static const ShipStatsLookup ss_lookup[] = {
             N_( "Missile jamming chance" ) ),
 
    I__ELEM( SS_TYPE_I_FUEL, fuel, N_( "Fuel" ), _UNIT_UNIT ),
-   I__ELEM( SS_TYPE_I_CARGO, cargo, N_( "Cargo" ), _UNIT_MASS ),
+   I__ELEM( SS_TYPE_I_CARGO, cargo, N_( "Cargo Space" ), _UNIT_MASS ),
    I__ELEM( SS_TYPE_I_CREW, crew, N_( "Crew" ), _UNIT_UNIT ),
 
    B__ELEM( SS_TYPE_B_HIDDEN_JUMP_DETECT, misc_hidden_jump_detect,

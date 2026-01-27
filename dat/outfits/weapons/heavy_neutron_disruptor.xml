@@ -26,7 +26,7 @@
   <swivel>22</swivel>
   <damage>
    <type>energy</type>
-   <penetrate>24</penetrate>
+   <penetrate>36</penetrate>
    <physical>52</physical>
   </damage>
  </specific>

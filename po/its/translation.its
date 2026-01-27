@@ -36,6 +36,7 @@
 
   <!-- Ships -->
   <its:translateRule selector="/ship/@name" translate="yes"/>
+  <its:translateRule selector="/ship/display" translate="yes"/>
   <its:translateRule selector="/ship/fabricator" translate="yes"/>
   <its:translateRule selector="/ship/description" translate="yes"/>
   <its:translateRule selector="/ship/desc_extra" translate="yes"/>
@@ -44,6 +45,7 @@
 
   <!-- Outfits -->
   <its:translateRule selector="/outfit/@name" translate="yes"/>
+  <its:translateRule selector="/outfit/general/display" translate="yes"/>
   <its:translateRule selector="/outfit/general/shortname" translate="yes"/>
   <its:translateRule selector="/outfit/general/typename" translate="yes"/>
   <its:translateRule selector="/outfit/general/description" translate="yes"/>

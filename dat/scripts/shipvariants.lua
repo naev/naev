@@ -29,105 +29,105 @@ end
 
 -- Yacht
 var.llama = _v{
-   { w=1,    s=ship.get("Llama") },
-   { w=0.05, s=ship.get("Llama Voyager") },
+   { w=1,    s=ship.exists("Llama") },
+   { w=0.05, s=ship.exists("Llama Voyager") },
 }
 var.gawain = _v{
-   { w=1,    s=ship.get("Gawain") },
-   { w=0.05,    s=ship.get("Gawain XY-37") },
+   { w=1,    s=ship.exists("Gawain") },
+   { w=0.05,    s=ship.exists("Gawain XY-37") },
 }
 -- Courier
 var.koala = _v{
-   { w=1,    s=ship.get("Koala") },
-   { w=0.05, s=ship.get("Koala Armoured") },
+   { w=1,    s=ship.exists("Koala") },
+   { w=0.05, s=ship.exists("Koala Armoured") },
 }
 var.quicksilver = _v{
-   { w=1,    s=ship.get("Quicksilver") },
-   { w=0.05, s=ship.get("Quicksilver Mercury") },
+   { w=1,    s=ship.exists("Quicksilver") },
+   { w=0.05, s=ship.exists("Quicksilver Mercury") },
 }
 -- Freighter
 var.mule = _v{
-   { w=1,    s=ship.get("Mule") },
-   { w=0.05, s=ship.get("Mule Hardhat") },
+   { w=1,    s=ship.exists("Mule") },
+   { w=0.05, s=ship.exists("Mule Hardhat") },
 }
 -- Armoured Transport
 var.rhino = _v{
-   { w=1,    s=ship.get("Rhino") },
+   { w=1,    s=ship.exists("Rhino") },
 }
 -- Scout
 var.schroedinger = _v{
-   { w=1,    s=ship.get("Schroedinger") },
+   { w=1,    s=ship.exists("Schroedinger") },
 }
 -- Interceptor
 var.shark = _v{
-   { w=1,    s=ship.get("Shark") },
-   { w=0.05, s=ship.get("Shark ΨIIIa") },
+   { w=1,    s=ship.exists("Shark") },
+   { w=0.05, s=ship.exists("Shark ΨIIIa") },
 }
 var.pirate_shark = _v{
-   { w=1,    s=ship.get("Pirate Shark") },
-   { w=0.05, s=ship.get("Pirate Blue Shark") },
+   { w=1,    s=ship.exists("Pirate Shark") },
+   { w=0.05, s=ship.exists("Pirate Blue Shark") },
 }
 -- Fighter
 var.vendetta = _v{
-   { w=1,    s=ship.get("Vendetta") },
-   { w=0.05, s=ship.get("Vendetta Whiplash") },
+   { w=1,    s=ship.exists("Vendetta") },
+   { w=0.05, s=ship.exists("Vendetta Whiplash") },
 }
 var.empire_lancelot = _v{
-   { w=1,    s=ship.get("Empire Lancelot") },
-   { w=0.05, s=ship.get("Empire Lancelot Golden Efreeti") },
+   { w=1,    s=ship.exists("Empire Lancelot") },
+   { w=0.05, s=ship.exists("Empire Lancelot Golden Efreeti") },
 }
 -- Bomber
 var.ancestor = _v{
-   { w=1,    s=ship.get("Ancestor") },
-   { w=0.05, s=ship.get("Ancestor HG Eagle-Eye") },
+   { w=1,    s=ship.exists("Ancestor") },
+   { w=0.05, s=ship.exists("Ancestor HG Eagle-Eye") },
 }
 var.dvaered_ancestor = _v{
-   { w=1,    s=ship.get("Dvaered Ancestor") },
-   { w=0.05, s=ship.get("Dvaered Ancestor Calamity") },
+   { w=1,    s=ship.exists("Dvaered Ancestor") },
+   { w=0.05, s=ship.exists("Dvaered Ancestor Calamity") },
 }
 -- Corvette
 var.admonisher = _v{
-   { w=1,    s=ship.get("Admonisher") },
-   { w=0.05, s=ship.get("Admonisher ΩIIa") },
+   { w=1,    s=ship.exists("Admonisher") },
+   { w=0.05, s=ship.exists("Admonisher ΩIIa") },
 }
 var.empire_admonisher = _v{
-   { w=1,    s=ship.get("Empire Admonisher") },
-   { w=0.05, s=ship.get("Empire Admonisher Longbow") },
+   { w=1,    s=ship.exists("Empire Admonisher") },
+   { w=0.05, s=ship.exists("Empire Admonisher Longbow") },
 }
 var.zalek_sting= _v{
-   { w=1,    s=ship.get("Za'lek Sting") },
-   { w=0.05, s=ship.get("Za'lek Sting Type II") },
-   { w=0.05, s=ship.get("Za'lek Sting Type IV") },
+   { w=1,    s=ship.exists("Za'lek Sting") },
+   { w=0.05, s=ship.exists("Za'lek Sting Type II") },
+   { w=0.05, s=ship.exists("Za'lek Sting Type IV") },
 }
 -- Destroyer
 var.starbridge = _v{
-   { w=1,    s=ship.get("Starbridge") },
-   { w=0.05, s=ship.get("Starbridge Sigma") },
+   { w=1,    s=ship.exists("Starbridge") },
+   { w=0.05, s=ship.exists("Starbridge Sigma") },
 }
 var.zalek_demon = _v{
-   { w=1,    s=ship.get("Za'lek Demon") },
-   { w=0.05, s=ship.get("Za'lek Demon Type IV") },
+   { w=1,    s=ship.exists("Za'lek Demon") },
+   { w=0.05, s=ship.exists("Za'lek Demon Type IV") },
 }
 var.empire_pacifier = _v{
-   { w=1,    s=ship.get("Empire Pacifier") },
-   { w=0.05, s=ship.get("Empire Pacifier Hoplite") },
+   { w=1,    s=ship.exists("Empire Pacifier") },
+   { w=0.05, s=ship.exists("Empire Pacifier Hoplite") },
 }
 -- Cruiser
 var.kestrel = _v{
-   { w=1,    s=ship.get("Kestrel") },
-   { w=0.05, s=ship.get("Kestrel Sigma") },
+   { w=1,    s=ship.exists("Kestrel") },
+   { w=0.05, s=ship.exists("Kestrel Sigma") },
 }
 var.pirate_kestrel = _v{
-   { w=1,    s=ship.get("Pirate Kestrel") },
-   { w=0.05, s=ship.get("Pirate Kestrel Yuri's Kiss") },
+   { w=1,    s=ship.exists("Pirate Kestrel") },
+   { w=0.05, s=ship.exists("Pirate Kestrel Yuri's Kiss") },
 }
 -- Battleship
 var.goddard = _v{
-   { w=1,    s=ship.get("Goddard") },
+   { w=1,    s=ship.exists("Goddard") },
 }
 var.zalek_mephisto = _v{
-   { w=1,    s=ship.get("Za'lek Mephisto") },
-   { w=0.05, s=ship.get("Za'lek Mephisto Type V") },
+   { w=1,    s=ship.exists("Za'lek Mephisto") },
+   { w=0.05, s=ship.exists("Za'lek Mephisto Type V") },
 }
 
 return var

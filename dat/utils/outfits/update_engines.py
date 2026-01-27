@@ -190,7 +190,7 @@ def main( args ):
 
 def gen_line( params ):
    import os
-   outf_dir = os.path.join( os.path.dirname( __file__ ), '..', '..', 'dat', 'outfits')
+   outf_dir = os.path.join( os.path.dirname( __file__ ), '..', '..', 'outfits')
    engine_dir = os.path.join( outf_dir, 'core_engine', 'small', 'beat_up_small_engine.xml')
 
    lin = params[0]
@@ -215,7 +215,7 @@ def gen_line( params ):
 
       nam = lin + ' ' + s + ' Engine'
       o.set_name(nam)
-      fil = nam2fil(nam + '.xml')
+      fil = nam2fil(nam) + '.xml'
 
       sized_params = lambda n: {
          'mass':str(10*n),
@@ -244,7 +244,7 @@ if __name__ == '__main__':
       epilog = '\n'.join([
          'Examples:',
          '  Standard usage:',
-         '   > find dat/outfits/core_engine/ -name "*.xml" | ./utils/outfits/update_engines.py -f',
+         '   > find outfits/core_engine/ -name "*.xml" | ./utils/outfits/update_engines.py -f',
          '  Generate a line called Krain with same params as Krain:',
          '   > ./utils/outfits/update_engines.py -g Krain',
          '  Generate a line called Melendez with same params as Melendez '

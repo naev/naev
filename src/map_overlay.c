@@ -263,8 +263,7 @@ void ovr_refresh( void )
          continue;
       /* Initialize the map overlay stuff. */
       snprintf( buf, sizeof( buf ), "%s%s", jump_getSymbol( jp ),
-                sys_isKnown( jp->target ) ? system_name( jp->target )
-                                          : _( "Unknown" ) );
+                system_nameKnown( jp->target ) );
       pos[items]            = &jp->pos;
       mo[items]             = &jp->mo;
       mo[items]->radius     = tex_sw( jumppoint_gfx ) / 2.;

@@ -207,7 +207,7 @@ function encounterWarlord( name, origin )
 
    warlord = pilot.add( "Dvaered Goddard", "Dvaered", origin, name )
    warlord:control(true)
-   warlord:moveto( origin:pos() + vec2.newP(rnd.rnd(1000), rnd.angle()) )
+   warlord:moveto( origin:pos() + vec2.newP(rnd.rnd(0,1000), rnd.angle()) )
 
    warlord:setHilight()
 
@@ -215,7 +215,7 @@ function encounterWarlord( name, origin )
    for i = 1, 2 do
       p[i] = pilot.add( "Dvaered Vendetta", "Dvaered", origin )
       p[i]:control(true)
-      p[i]:moveto( origin:pos() + vec2.newP(rnd.rnd(1000), rnd.angle()) )
+      p[i]:moveto( origin:pos() + vec2.newP(rnd.rnd(0,1000), rnd.angle()) )
    end
 
    majorTam:control()

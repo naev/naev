@@ -563,7 +563,7 @@ static char **map_outfitsMatch( const char *name )
    char   **names;
 
    /* Get outfits and names. */
-   o = tech_getOutfitArray( map_known_techs, array_size( map_known_techs ) );
+   o = tech_getOutfitArray( map_known_techs, array_size( map_known_techs ), 1 );
    names = map_fuzzyOutfits( o, name );
    qsort( names, array_size( names ), sizeof( char * ), strsort );
    array_free( o );
@@ -754,7 +754,7 @@ static int map_findSearchOutfits( unsigned int wid_map_find, const char *name )
       int         j;
       Spob       *spob;
       StarSystem *sys;
-      Outfit    **olist = tech_getOutfit( map_known_techs[i] );
+      Outfit    **olist = tech_getOutfit( map_known_techs[i], 1 );
       for ( j = array_size( olist ) - 1; j >= 0; j-- )
          if ( olist[j] == o )
             break;
@@ -802,7 +802,7 @@ static char **map_fuzzyShips( Ship **s, const char *name )
 
    /* Do fuzzy search. */
    for ( int i = 0; i < array_size( s ); i++ ) {
-      if ( SDL_strcasestr( _( s[i]->name ), name ) != NULL )
+      if ( SDL_strcasestr( ship_name( s[i] ), name ) != NULL )
          array_push_back( &names, s[i]->name );
       else if ( ( s[i]->license != NULL ) &&
                 SDL_strcasestr( _( s[i]->license ), name ) != NULL )
@@ -826,7 +826,7 @@ static char **map_shipsMatch( const char *name )
    char **names;
 
    /* Get ships and names. */
-   s     = tech_getShipArray( map_known_techs, array_size( map_known_techs ) );
+   s = tech_getShipArray( map_known_techs, array_size( map_known_techs ), 1 );
    names = map_fuzzyShips( s, name );
    qsort( names, array_size( names ), sizeof( char * ), strsort );
    array_free( s );
@@ -892,7 +892,7 @@ static int map_findSearchShips( unsigned int wid_map_find, const char *name )
       int j;
 
       /* Try to find the ship in the spob. */
-      slist = tech_getShip( map_known_techs[i] );
+      slist = tech_getShip( map_known_techs[i], 1 );
       for ( j = array_size( slist ) - 1; j >= 0; j-- )
          if ( slist[j] == s )
             break;

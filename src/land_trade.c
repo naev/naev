@@ -216,7 +216,7 @@ static void commodity_exchange_genList( unsigned int wid )
 
    /* Next add local specialities. */
    double     *prices = NULL;
-   Commodity **tech   = tech_getCommodity( land_spob->tech, &prices );
+   Commodity **tech   = tech_getCommodity( land_spob->tech, &prices, 0 );
    for ( int i = 0; i < array_size( tech ); i++ ) {
       Commodity *com = tech[i];
       /* Ignore if already in the list. */
@@ -376,7 +376,7 @@ void commodity_update( unsigned int wid, const char *str )
             continue;
 
          l += scnprintf( &buf[l], sizeof( buf ) - l, _( "\n   - %s" ),
-                         _( faction_name( f ) ) );
+                         faction_shortname( f ) );
       }
    }
    window_modifyText( wid, "txtDesc", buf );

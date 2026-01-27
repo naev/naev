@@ -98,6 +98,7 @@ typedef enum ShipStatsType {
 
    /* Forward mounts. */
    SS_TYPE_D_FORWARD_DAMAGE,            /**< Damage done by cannons. */
+   SS_TYPE_D_FORWARD_TRACKING,          /**< Tracking of cannons. */
    SS_TYPE_D_FORWARD_FIRERATE,          /**< Firerate of cannons. */
    SS_TYPE_D_FORWARD_ENERGY,            /**< Energy usage of cannons. */
    SS_TYPE_D_FORWARD_DAMAGE_AS_DISABLE, /**< Damage converted to disable. */
@@ -310,6 +311,7 @@ typedef struct ShipStats {
 
    /* Fighter/Corvette type. */
    double fwd_damage;     /**< Damage of forward mounts. */
+   double fwd_tracking;   /**< Tracking of forward mounts. */
    double fwd_firerate;   /**< Rate of fire of forward mounts. */
    double fwd_energy;     /**< Consumption rate of forward mounts. */
    double fwd_dam_as_dis; /**< Damage as disable for forward mounts. */

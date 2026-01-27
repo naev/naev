@@ -26,7 +26,7 @@
   <speed>500</speed>
   <damage>
    <type>emp</type>
-   <penetrate>51</penetrate>
+   <penetrate>76</penetrate>
    <physical>34</physical>
    <disable>89</disable>
   </damage>

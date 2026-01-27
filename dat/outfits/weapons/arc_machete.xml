@@ -18,7 +18,7 @@
   <energy>35</energy>
   <damage>
    <type>emp</type>
-   <penetrate>49</penetrate>
+   <penetrate>88</penetrate>
    <physical>23</physical>
    <disable>51</disable>
   </damage>

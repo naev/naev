@@ -3,6 +3,7 @@
  */
 #pragma once
 
+#include "outfit.h"
 #include "pilot.h"
 
 /*
@@ -19,8 +20,7 @@ int    pilot_inRangeJump( const Pilot *p, int target );
 /*
  * Weapon tracking.
  */
-double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double trackmin,
-                            double trackmax );
+double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, const Outfit *o );
 
 /*
  * Electronic warfare updating.

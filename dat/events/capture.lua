@@ -285,7 +285,7 @@ function enter ()
       spawn = mem.spb
    end
    if not spawn then
-      spawn = player.pos() + vec2.newP( 100+rnd.rnd(20), rnd.angle() )
+      spawn = player.pos() + vec2.newP( 100+rnd.rnd(0,20), rnd.angle() )
    end
    outsys = nil
    mem.spb = nil

@@ -8,12 +8,12 @@ from sys import argv, stderr, path
 getpath = lambda *x: os.path.realpath(os.path.join(*x))
 
 script_dir = os.path.dirname(__file__)
-path.append(getpath(script_dir, '..'))
+path.append(getpath(script_dir, '..', '..', '..', 'utils'))
 
 from xml_name import xml_name as nam2base
 from naev_content import naev_xml
 
-PATH = getpath(script_dir, '..', '..', 'dat')
+PATH = getpath(script_dir, '..', '..')
 
 from geometry import vec
 

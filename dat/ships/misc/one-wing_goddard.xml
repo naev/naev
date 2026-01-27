@@ -15,7 +15,7 @@
   <speed>0.001</speed>
  </movement>
  <health>
-  <absorb>120</absorb>
+  <absorb>230</absorb>
   <shield>0</shield>
   <armour>15000</armour>
   <energy>0</energy>

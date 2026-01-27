@@ -16,6 +16,8 @@ local constants = {
 
    CAMERA_ANGLE         = math.pi/4, -- Camera angle, math.pi/2 would be overhead, math.pi/4 is isometric
 
+   WARN_BUY_INTRINSICS  = true, -- Whether to warn the player when they are buying intrinsic outfits
+
    -- Constants used by multiple Lua scripts
    BITE_ACCEL_MOD = 390, -- like hades_torch (was 500 before 0.13.0)
    BITE_SPEED_MOD = 110, -- like adrenal_glands_ii (was 80 before 0.13.0)

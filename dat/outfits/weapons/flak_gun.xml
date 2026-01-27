@@ -27,7 +27,7 @@
   <swivel>22</swivel>
   <damage>
    <type>kinetic</type>
-   <penetrate>37</penetrate>
+   <penetrate>66</penetrate>
    <physical>27</physical>
   </damage>
   <shots>9</shots>

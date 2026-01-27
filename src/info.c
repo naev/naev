@@ -566,7 +566,7 @@ static void ship_update( unsigned int wid )
    /* Generic */
    l += scnprintf( &buf[l], sizeof( buf ) - l, "%s", player.p->name );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s",
-                   _( player.p->ship->name ) );
+                   ship_name( player.p->ship ) );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s",
                    _( ship_class( player.p->ship ) ) );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%d",
@@ -1097,7 +1097,7 @@ static void cargo_update( unsigned int wid, const char *str )
             continue;
 
          l += scnprintf( &desc[l], sizeof( desc ) - l, _( "\n   - %s" ),
-                         _( faction_name( f ) ) );
+                         faction_shortname( f ) );
       }
    }
    window_modifyText( wid, "txtCargoDesc", desc );

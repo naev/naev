@@ -142,7 +142,7 @@ function enter()
 
       warlord = pilot.add( "Dvaered Goddard", "Dvaered", sabotpla, _("Lord Battleaddict"), {naked=true} )
       warlord:control(true)
-      warlord:moveto( sabotpla:pos() + vec2.newP(rnd.rnd(1000), rnd.angle()) )
+      warlord:moveto( sabotpla:pos() + vec2.newP(rnd.rnd(0,1000), rnd.angle()) )
       warlord:memory().formation = "circleLarge"
       warlord:setHilight()
       equipGoddard( warlord, false )

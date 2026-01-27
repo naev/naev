@@ -147,7 +147,7 @@ if __name__ == '__main__':
    parser = argparse.ArgumentParser(
       formatter_class = argparse.RawTextHelpFormatter,
       description = 'By default, outputs text aligned markdown table comparing the engines respective values, with some new derived fields.',
-      epilog = '\nTypical usage (from naev root dir) :\n > find dat/outfits/core_engine/ -name "*.xml" | ./utils/outfits/engines_stats.py'
+      epilog = '\nTypical usage (from naev/dat/ dir) :\n > find outfits/core_engine/ -name "*.xml" | ./utils/outfits/engine_stats.py'
    )
    parser.add_argument('-g', '--github', action = 'store_true', help = 'unaligned (therefore smaller) valid github md, for use in posts.')
    parser.add_argument('-c', '--colour', action = 'store_true', help = 'coloured terminal output. You can pipe to "less -RS" if the table is too wide.')

@@ -25,7 +25,7 @@
   <trackmax>4000</trackmax>
   <damage>
    <type>ion</type>
-   <penetrate>32</penetrate>
+   <penetrate>48</penetrate>
    <physical>12</physical>
    <disable>8</disable>
   </damage>

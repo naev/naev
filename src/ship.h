@@ -99,6 +99,7 @@ typedef struct Ship {
    void *rawdata;   /**< Raw data trick. */
    char *inherits;  /**< Ship from which it is inheriting values. */
    char *name;      /**< Ship name. */
+   char *display;   /**< Ship display name. */
    char *base_type; /**< Ship's base type, basically used for figuring out what
                        ships are related. */
    char *base_path; /**< Ship's base type path, used for finding graphics and
@@ -214,6 +215,7 @@ const Ship *ship_get( const char *name );
 const Ship *ship_getW( const char *name );
 const char *ship_existsCase( const char *name );
 Ship       *ship_getAll( void );
+const char *ship_name( const Ship * );
 const char *ship_class( const Ship *s );
 const char *ship_classDisplay( const Ship *s );
 const char *ship_classToString( ShipClass class );

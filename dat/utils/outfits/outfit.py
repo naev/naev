@@ -6,6 +6,7 @@ import sys
 from os import path
 script_dir = path.join(path.dirname(__file__), '..')
 sys.path.append(path.realpath(script_dir))
+sys.path.append(path.realpath(path.join(script_dir, '..', '..', 'utils')))
 from xml_name import xml_name as nam2fil
 from naev_content import naev_xml, Rem
 import re

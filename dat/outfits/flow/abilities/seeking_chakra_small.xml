@@ -25,7 +25,7 @@
   <resist>200</resist>
   <damage>
    <type>ion</type>
-   <penetrate>40</penetrate>
+   <penetrate>60</penetrate>
    <physical>30</physical>
    <disable>30</disable>
   </damage>

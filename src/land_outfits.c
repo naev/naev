@@ -18,6 +18,7 @@
 
 #include "array.h"
 #include "cond.h"
+#include "constants.h"
 #include "dialogue.h"
 #include "equipment.h"
 #include "hook.h"
@@ -460,7 +461,7 @@ static void outfits_genList( unsigned int wid )
       /* Use custom list; default to landed outfits. */
       iar_outfits[active] = ( data->outfits != NULL )
                                ? array_copy( Outfit *, data->outfits )
-                               : tech_getOutfit( land_spob->tech );
+                               : tech_getOutfit( land_spob->tech, 0 );
    }
    noutfits = outfits_filter( (const Outfit **)iar_outfits[active],
                               array_size( iar_outfits[active] ),
@@ -558,7 +559,7 @@ void outfits_update( unsigned int wid, const char *str )
    } else
       window_modifyText( wid, "txtDescription", _( outfit_descRaw( outfit ) ) );
    buf_price = outfit_getPrice( outfit, outfits_getMod(), &price, &canbuy,
-                                &cansell, &youhave );
+                                &cansell, &youhave, NULL, NULL );
    credits2str( buf_credits, player.p->credits, 2 );
 
    /* grey out sell button */
@@ -875,7 +876,7 @@ static int outfit_isSold( const Outfit *outfit, int wid )
       }
       return 0;
    } else if ( ( land_spob != NULL ) &&
-               tech_checkOutfit( land_spob->tech, outfit ) )
+               tech_hasOutfit( land_spob->tech, outfit, 0 ) )
       return 1;
    return 0;
 }
@@ -893,11 +894,14 @@ int outfit_canBuy( const Outfit *outfit, int wid )
    if ( wid >= 0 )
       data = window_getData( wid );
    int           blackmarket = ( data != NULL ) ? data->blackmarket : 0;
-   const Outfit *omap        = outfit_get( LOCAL_MAP_NAME );
+   const Outfit *omap =
+      ( LOCAL_MAP_NAME != NULL ) ? outfit_get( LOCAL_MAP_NAME ) : NULL;
 
    land_errClear();
-   failure = 0;
-   outfit_getPrice( outfit, outfits_getMod(), &price, &canbuy, &cansell, NULL );
+   failure            = 0;
+   const char *reason = NULL;
+   outfit_getPrice( outfit, outfits_getMod(), &price, &canbuy, &cansell, NULL,
+                    &reason, NULL );
 
    /* Special exception for local map. */
    int sold = 0;
@@ -974,8 +978,12 @@ int outfit_canBuy( const Outfit *outfit, int wid )
    }
    /* Custom condition failed. */
    if ( !canbuy ) {
-      land_errDialogueBuild(
-         _( "You lack the resources to buy this outfit." ) );
+      if ( reason != NULL ) {
+         land_errDialogueBuild( "%s", reason );
+      } else {
+         land_errDialogueBuild(
+            "%s", _( "You lack the resources to buy this outfit." ) );
+      }
       failure = 1;
    }
 
@@ -1036,7 +1044,8 @@ static void outfits_buy( unsigned int wid, const char *str )
    }
 
    /* Give dialogue when trying to buy intrinsic. */
-   if ( outfit_slotType( outfit ) == OUTFIT_SLOT_INTRINSIC )
+   if ( CTS.WARN_BUY_INTRINSICS &&
+        ( outfit_slotType( outfit ) == OUTFIT_SLOT_INTRINSIC ) )
       if ( !dialogue_YesNo(
               _( "Buy Intrinsic Outfit?" ),
               _( "Are you sure you wish to buy '%s'? It will be automatically "
@@ -1092,12 +1101,14 @@ static void outfits_buy( unsigned int wid, const char *str )
  */
 int outfit_canSell( const Outfit *outfit )
 {
-   int       failure = 0;
-   int       canbuy, cansell;
-   credits_t price;
+   int         failure = 0;
+   int         canbuy, cansell;
+   credits_t   price;
+   const char *reason = NULL;
 
    land_errClear();
-   outfit_getPrice( outfit, outfits_getMod(), &price, &canbuy, &cansell, NULL );
+   outfit_getPrice( outfit, outfits_getMod(), &price, &canbuy, &cansell, NULL,
+                    NULL, &reason );
 
    /* Unique item. */
    if ( outfit_isProp( outfit, OUTFIT_PROP_UNIQUE ) ) {
@@ -1127,7 +1138,11 @@ int outfit_canSell( const Outfit *outfit )
    }
    /* Custom condition failed. */
    if ( !cansell ) {
-      land_errDialogueBuild( _( "You are unable to sell this outfit!" ) );
+      if ( reason != NULL ) {
+         land_errDialogueBuild( "%s", reason );
+      } else {
+         land_errDialogueBuild( _( "You are unable to sell this outfit!" ) );
+      }
       failure = 1;
    }
 

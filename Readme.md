@@ -86,7 +86,7 @@ to install, for several operating systems and Linux distros:
 Naev requires the artwork submodule to run from git. You can check out the
 submodules from the cloned repository with:
 
-```bash
+``` bash
 git submodule update --init --recursive
 ```
 
@@ -94,7 +94,7 @@ Note that `git submodule update` has to be run every time you `git pull`
 to stay up to date. This can also be done automatically (highly
 recommended) by setting the following configuration:
 
-```bash
+``` bash
 git config submodule.recurse true
 ```
 
@@ -102,7 +102,7 @@ git config submodule.recurse true
 
 Run:
 
-```bash
+``` bash
 meson setup builddir .
 cd builddir
 meson compile
@@ -161,14 +161,14 @@ Art assets are partially stored in the
 sometimes are updated. For that reason, it is recommended to periodically
 update the submodules with the following command.
 
-```bash
+``` bash
 git submodule update --init --recursive
 ```
 
 You can also set this to be done automatically on git pull with the
 following command:
 
-```bash
+``` bash
 git config submodule.recurse true
 ```
 

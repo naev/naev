@@ -95,6 +95,13 @@ dev = {}
 dev.weapon_test = require "dev.weapon_test"
 dev.system_tour = function () naev.eventStart("System Tour") end
 
+-- Shows all the map to the player
+dev.show_map = function ()
+   for k,s in ipairs(system.getAll()) do
+      s:setKnown( true, true )
+   end
+end
+
 -- Lazy load equipopt as it requires outfits to be loaded and such
 local equipopt
 dev.debug_goodness = function (...)

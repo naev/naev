@@ -471,6 +471,7 @@ impl LoadStage {
 
 fn load_all(sdlctx: &sdl::Sdl, env: &nlua::LuaEnv) -> Result<()> {
     unsafe {
+        let _ = naev_core::constants::CTS;
         // Misc init stuff
         naevc::render_init();
         naevc::nebu_init();
@@ -480,7 +481,6 @@ fn load_all(sdlctx: &sdl::Sdl, env: &nlua::LuaEnv) -> Result<()> {
         naevc::map_system_init();
         naevc::cond_init();
         naevc::cli_init();
-        naevc::constants_init();
     }
 
     let stages: Vec<LoadStage> = vec![

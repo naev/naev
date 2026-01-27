@@ -4,7 +4,7 @@ N_ITER=5
 
 trap 'exit 0' SIGINT
 DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-DAT=$(realpath --relative-to="$PWD" "${DIR}/../../dat")
+DAT=$(realpath --relative-to="$PWD" "${DIR}/../../")
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
    DOC=(

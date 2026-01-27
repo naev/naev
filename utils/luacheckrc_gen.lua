@@ -1042,6 +1042,7 @@ stds.ship = {
          fields = {
             __eq = {},
             get = {},
+            exists = {},
             getAll = {},
             name = {},
             nameRaw = {},

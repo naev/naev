@@ -31,7 +31,7 @@
   <speed>1300</speed>
   <damage>
    <type>ion</type>
-   <penetrate>20</penetrate>
+   <penetrate>30</penetrate>
    <physical>13</physical>
   </damage>
   <ai>unguided</ai>

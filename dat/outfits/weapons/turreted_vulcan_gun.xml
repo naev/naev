@@ -24,7 +24,7 @@
   <trackmax>4000</trackmax>
   <damage>
    <type>kinetic</type>
-   <penetrate>39</penetrate>
+   <penetrate>58</penetrate>
    <physical>8.5</physical>
   </damage>
  </specific>

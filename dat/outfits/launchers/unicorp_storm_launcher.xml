@@ -36,7 +36,7 @@
   <resist>18</resist>
   <damage>
    <type>kinetic</type>
-   <penetrate>22</penetrate>
+   <penetrate>33</penetrate>
    <physical>20</physical>
   </damage>
   <armour>5</armour>

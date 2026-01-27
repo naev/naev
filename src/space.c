@@ -19,6 +19,7 @@
 #include "background.h"
 #include "camera.h"
 #include "conf.h"
+#include "constants.h"
 #include "damagetype.h"
 #include "dev_uniedit.h"
 #include "economy.h"
@@ -386,6 +387,10 @@ int spob_setFaction( Spob *p, int faction )
  */
 int spob_addCommodity( Spob *p, Commodity *c )
 {
+   for ( int i = 0; i < array_size( p->commodities ); i++ ) {
+      if ( p->commodities[i] == c )
+         return 0;
+   }
    array_grow( &p->commodities )          = c;
    array_grow( &p->commodityPrice ).price = c->price;
    return 0;
@@ -579,8 +584,15 @@ int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, vec2 *pos,
       d *= 1.4; /* Jump in from further out when coming in from stealth. */
 
    /* Calculate new position. */
-   x += d * cos( a );
-   y += d * sin( a );
+   if ( CTS.PHYSICS_SPEED_DAMP > 1e-5 ) {
+      d *= HYPERSPACE_VEL;
+      x += d * cos( a );
+      y += d * sin( a );
+   } else if ( p != NULL ) {
+      d *= p->solid.speed_max;
+      x += d * cos( a );
+      y += d * sin( a );
+   }
 
    /* Add some error. */
    ea = 2. * M_PI * RNGF();
@@ -1670,11 +1682,12 @@ void space_init( const char *sysname, int do_simulate )
          snprintf( dmgstr, sizeof( dmgstr ),
                    p_( "nebula_volatility", "%.1f %s" ),
                    cur_system->nebu_volatility, UNIT_POWER );
-      player_message( _( "#oEntering System %s on %s." ), _( sysname ), nt );
+      player_message( _( "#oEntering System %s on %s." ),
+                      system_name( cur_system ), nt );
       if ( cur_system->nebu_volatility > 0. )
          player_message( _( "#rWARNING - Volatile nebula detected in %s! "
                             "Taking %s damage!" ),
-                         _( sysname ), dmgstr );
+                         system_name( cur_system ), dmgstr );
       free( nt );
    }
 
@@ -2656,7 +2669,7 @@ static int spob_updateCommodities( Spob *spb )
    spb->commodities    = array_create( Commodity * );
 
    /* Unique local stuff goes first. */
-   Commodity **tech = tech_getCommodity( spb->tech, NULL );
+   Commodity **tech = tech_getCommodity( spb->tech, NULL, -1 );
    for ( int i = 0; i < array_size( tech ); i++ )
       spob_addCommodity( spb, tech[i] );
    array_free( tech );
@@ -3249,7 +3262,7 @@ static int system_parse( StarSystem *sys, const char *filename )
                sys_setFlag( sys, SYSTEM_NOLANES );
                continue;
             }
-            DEBUG( _( "Unknown node '%s' in star system '%s'" ), node->name,
+            DEBUG( _( "Unknown node '%s' in star system '%s'" ), cur->name,
                    sys->name );
          } while ( xml_nextNode( cur ) );
          continue;

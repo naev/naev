@@ -547,7 +547,7 @@ char outfit_slotTypeColourFont( OutfitSlotType type )
  */
 size_t outfit_getNameWithClass( const Outfit *outfit, char *buf, size_t size )
 {
-   size_t p = scnprintf( &buf[0], size, "%s", _( outfit->name ) );
+   size_t p = scnprintf( &buf[0], size, "%s", outfit_name( outfit ) );
    if ( outfit->slot.type != OUTFIT_SLOT_NA )
       p += scnprintf( &buf[p], size - p, _( "\n#%c%s #%c%s #0slot" ),
                       outfit_slotSizeColourFont( outfit->slot.size ),
@@ -615,10 +615,13 @@ credits_t outfit_price( const Outfit *o )
 }
 const char *outfit_getPrice( const Outfit *outfit, unsigned int q,
                              credits_t *price, int *canbuy, int *cansell,
-                             char **player_has )
+                             char **player_has, const char **reason_cantbuy,
+                             const char **reason_cantsell )
 {
    static char pricestr[STRMAX_SHORT];
    static char youhave[STRMAX_SHORT];
+   static char cantbuyreason[STRMAX_SHORT];
+   static char cantsellreason[STRMAX_SHORT];
    if ( outfit->lua_price == LUA_NOREF ) {
       price2str( pricestr, outfit->price * q, player.p->credits, 2 );
       *price   = outfit->price * q;
@@ -640,15 +643,19 @@ const char *outfit_getPrice( const Outfit *outfit, unsigned int q,
       *cansell = 0;
       if ( player_has != NULL )
          *player_has = NULL;
+      if ( reason_cantbuy != NULL )
+         *reason_cantbuy = NULL;
+      if ( reason_cantsell != NULL )
+         *reason_cantsell = NULL;
       lua_pop( naevL, 1 );
       return pricestr;
    }
 
    str      = luaL_checkstring( naevL, -4 );
    *price   = 0;
-   *canbuy  = lua_toboolean( naevL, -3 );
-   *cansell = lua_toboolean( naevL, -2 );
-   // Collour red if can't buy
+   *canbuy  = lua_isboolean( naevL, -3 ) && lua_toboolean( naevL, -3 );
+   *cansell = lua_isboolean( naevL, -2 ) && lua_toboolean( naevL, -2 );
+   // Colour red if can't buy
    if ( !*canbuy )
       snprintf( pricestr, sizeof( pricestr ) - 1, "#r%s#0", str );
    else
@@ -660,6 +667,24 @@ const char *outfit_getPrice( const Outfit *outfit, unsigned int q,
       else {
          strncpy( youhave, str, sizeof( youhave ) - 1 );
          *player_has = youhave;
+      }
+   }
+   if ( ( reason_cantbuy != NULL ) && lua_isstring( naevL, -3 ) ) {
+      str = luaL_optstring( naevL, -3, NULL );
+      if ( str == NULL )
+         *reason_cantbuy = NULL;
+      else {
+         strncpy( cantbuyreason, str, sizeof( cantbuyreason ) - 1 );
+         *reason_cantbuy = cantbuyreason;
+      }
+   }
+   if ( ( reason_cantsell != NULL ) && lua_isstring( naevL, -2 ) ) {
+      str = luaL_optstring( naevL, -2, NULL );
+      if ( str == NULL )
+         *reason_cantsell = NULL;
+      else {
+         strncpy( cantsellreason, str, sizeof( cantsellreason ) - 1 );
+         *reason_cantsell = cantsellreason;
       }
    }
    lua_pop( naevL, 4 );
@@ -1551,6 +1576,8 @@ const char *outfit_rawname( const Outfit *o )
 }
 const char *outfit_name( const Outfit *o )
 {
+   if ( o->display != NULL )
+      return _( o->display );
    return _( o->name );
 }
 const char *outfit_cond( const Outfit *o )
@@ -1738,7 +1765,7 @@ int outfit_luaSell( const Outfit *o )
  */
 const char *outfit_shortname( const Outfit *o )
 {
-   return ( o->shortname != NULL ) ? _( o->shortname ) : _( o->name );
+   return ( o->shortname != NULL ) ? _( o->shortname ) : outfit_name( o );
 }
 
 /**
@@ -3258,6 +3285,7 @@ static int outfit_parse( Outfit *temp, const char *file )
          do {
             xml_onlyNodes( cur );
             xmlr_int( cur, "rarity", temp->rarity );
+            xmlr_strd( cur, "display", temp->display );
             xmlr_strd( cur, "shortname", temp->shortname );
             xmlr_strd( cur, "license", temp->license );
             xmlr_strd( cur, "licence", temp->license );
@@ -3802,7 +3830,7 @@ int outfit_loadPost( void )
          SDESC_ADD( l, o, "\n#r%s#0", _( "Illegal to:" ) );
          for ( int j = 0; j < array_size( o->illegalto ); j++ )
             SDESC_ADD( l, o, _( "\n#r- %s#0" ),
-                       _( faction_name( o->illegalto[j] ) ) );
+                       faction_shortname( o->illegalto[j] ) );
       }
 
       /* Handle initializing module stuff. */
@@ -3971,6 +3999,7 @@ void outfit_free( void )
       free( o->cond );
       free( o->condstr );
       free( o->name );
+      free( o->display );
       free( o->shortname );
       gl_freeTexture( o->gfx_store );
       free( o->gfx_store_path );

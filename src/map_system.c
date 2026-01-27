@@ -790,7 +790,7 @@ static void map_system_array_update( unsigned int wid, const char *str )
                    _( ship->license ) );
 
       l += scnprintf( &infobuf[l], sizeof( infobuf ) - l, "#n%s#0 %s",
-                      _( "Model:" ), _( ship->name ) );
+                      _( "Model:" ), ship_name( ship ) );
       l += scnprintf( &infobuf[l], sizeof( infobuf ) - l, "    #n%s#0 %s",
                       _( "Class:" ), _( ship_classDisplay( ship ) ) );
       l += scnprintf( &infobuf[l], sizeof( infobuf ) - l, "\n\n%s\n",
@@ -972,10 +972,10 @@ void map_system_updateSelected( unsigned int wid )
          window_disableButton( wid, "btnBuyCommodPrice" );
       } else {
          /* get number of each to decide how much space the lists can have */
-         outfits  = tech_getOutfit( cur_spobObj_sel->tech );
+         outfits  = tech_getOutfit( cur_spobObj_sel->tech, 1 );
          noutfits = array_size( outfits );
          array_free( outfits );
-         ships  = tech_getShip( cur_spobObj_sel->tech );
+         ships  = tech_getShip( cur_spobObj_sel->tech, 1 );
          nships = array_size( ships );
          array_free( ships );
          ngoods = array_size( cur_spobObj_sel->commodities );
@@ -1047,7 +1047,7 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace,
    if ( !spob_hasService( cur_spobObj_sel, SPOB_SERVICE_OUTFITS ) )
       return;
 
-   cur_spob_sel_outfits = tech_getOutfit( cur_spobObj_sel->tech );
+   cur_spob_sel_outfits = tech_getOutfit( cur_spobObj_sel->tech, 1 );
    noutfits             = array_size( cur_spob_sel_outfits );
 
    if ( noutfits <= 0 )
@@ -1103,7 +1103,7 @@ static void map_system_genShipsList( unsigned int wid, float goodsSpace,
    if ( !spob_hasService( cur_spobObj_sel, SPOB_SERVICE_SHIPYARD ) )
       return;
 
-   cur_spob_sel_ships = tech_getShip( cur_spobObj_sel->tech );
+   cur_spob_sel_ships = tech_getShip( cur_spobObj_sel->tech, 1 );
    nships             = array_size( cur_spob_sel_ships );
 
    if ( nships <= 0 )
@@ -1112,7 +1112,7 @@ static void map_system_genShipsList( unsigned int wid, float goodsSpace,
    cships = calloc( nships, sizeof( ImageArrayCell ) );
    for ( i = 0; i < nships; i++ ) {
       cships[i].image = ship_gfxStore( cur_spob_sel_ships[i], 256, 0., 0., 0. );
-      cships[i].caption = strdup( _( cur_spob_sel_ships[i]->name ) );
+      cships[i].caption = strdup( ship_name( cur_spob_sel_ships[i] ) );
    }
    xw   = ( w - nameWidth - pitch - 60 ) / 2;
    xpos = 35 + pitch + nameWidth + xw;

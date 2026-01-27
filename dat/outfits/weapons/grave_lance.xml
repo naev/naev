@@ -18,7 +18,7 @@
   <swivel>22</swivel>
   <damage>
    <type>energy</type>
-   <penetrate>48</penetrate>
+   <penetrate>88</penetrate>
    <physical>98</physical>
   </damage>
   <spfx_shield>Shi-S</spfx_shield>

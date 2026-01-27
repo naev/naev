@@ -3,8 +3,8 @@
  ### TODO
 
    * Allow quick abort for special missions #3106
-   * The +1 reputation from derelict and Dvaered dogfight contest causes
-     reputation maluses with pirates #3110
+   * Give some reputation reward for first completion of Gauntlet/Qex Race
+     #3110
    * Warnings for unreachable delivery times should take `follow lane` into
      account #2989
    * Update dat/rescue.lua for the multicore #2931
@@ -19,7 +19,10 @@
        - Core hulls give more absorption in general
        - Increased penetration of launchers
    * Ultra-heavy weapons have reduced energy usage
+   * The +1 reputation from derelict and Dvaered dogfight contest causes no
+     longer causes reputation penalties with pirates
    * Added accessibility option to disable screen shaking
+   * Jump Luminosity made easier to configure; now defaults to darker
    * Gauntlet NPCs get their fighters disabled when they are disabled
    * Stress starts recovering 5 seconds after taking disable damage instead of
      immediately
@@ -35,7 +38,7 @@
 
    * Default to using lanes when traveling
    * Deploying fighters no longer resets autonav
-   * Shortened real time that passes when player is disable
+   * Shortened real time that passes when player is disabled
    * Configuration values only save if they are not set to defaults
 
  ### Engine
@@ -44,20 +47,44 @@
        - Weapon Damage
        - Launcher Damage
        - Damage Taken
-   * Rewrote the following in rust
+       - Forward Tracking
+   * Fixed turret tracking ship stat that wasn't working
+   * Rewrote the following in Rust
        - Lua Transform/Texture/Data/File modules
-   * Lua outfit scripting changes:
-       - "onhit" reports disable damage too [breaking change!!]
-       - "onanyimpact" reports armour, shield, and disable damage done
-       - "onimpact" reports armour, shield, and disable damage done
+   * Lua outfit scripting changes
+       - `onhit` reports disable damage too **[breaking change!!]**
+       - `onanyimpact` reports armour, shield, and disable damage done
+       - `onimpact` reports armour, shield, and disable damage done
+       - `price` now can return reason why it can't be sold or bought
+   * New constants
+       - `WARN_BUY_INTRINSICS` controls whether the game warns when buying
+         intrinsic outfits
+   * Tech groups cand have conditional elements and the likes
+   * All player visible resources now have a separate user-facing display name
    * Audio should try to switch devices when disconnected or default playback
      device changes
    * Intrinsic outfits now stack in the equipment view
    * Commodities now support tags
    * Beams use separate shaders instead of subroutines now
+   * Added support for aac and mp3 audio by default
+   * Engine supports display names for outfits/ships to replace the internal
+     name for user facing operations
+   * Changed rnd.rnd() syntax to be like math.random
+
+ ### Fixes
+
+   * Fixed modifying constants in plugins
+   * Fixed blacklisted files still reported as existing
+   * Fixed issues around `PHYSICS_SPEED_DAMP==0` support
+   * Fixed weapon sets not being initialized for new pilots
 
 
-## v0.13.3 (unreleased)
+## v0.13.4 (unreleased)
+
+   * Fixed online resizing on high dpi screens
+
+
+## v0.13.3
 
    * Made it easier to discover wormholes
    * Fixed pilots that were forced to be friendly attacking the player
@@ -79,7 +106,9 @@
    * Removed inexistent heat entry from naevpedia list
    * Plugin editor will keep descriptions now on reload
    * Super Fast Colliders are now properly kinetic damage
+   * Fixed missing cores not getting added properly when save gets updated
    * Fix rare crash when switching ships
+   * Only save configuration settings that deviate from the defaults
    * Spelling and grammar fixes
    * Translation updates
 

@@ -120,8 +120,7 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, Target *wt,
    if ( o->u.ammo.lockon_timer > max ) {
       /* Targetting is linear and can't be faster than the time specified (can
        * be slower though). */
-      double mod = pilot_ewWeaponTrack( p, t, outfit_trackmin( o->outfit ),
-                                        outfit_trackmax( o->outfit ) );
+      double mod = pilot_ewWeaponTrack( p, t, o->outfit );
       if ( p->stats.launch_lockon <= 0. )
          o->u.ammo.lockon_timer = max;
       else
@@ -418,11 +417,6 @@ int pilot_addOutfitIntrinsicRaw( Pilot *pilot, const Outfit *outfit )
 {
    PilotOutfitSlot *s;
 
-   if ( !outfit_isMod( outfit ) ) {
-      WARN( _( "Instrinsic outfits must be modifiers!" ) );
-      return -1;
-   }
-
    if ( pilot->outfit_intrinsic == NULL )
       pilot->outfit_intrinsic = array_create( PilotOutfitSlot );
 
@@ -438,11 +432,6 @@ int pilot_addOutfitIntrinsic( Pilot *pilot, const Outfit *outfit )
 {
    PilotOutfitSlot *s;
    int              ret;
-
-   if ( !outfit_isMod( outfit ) ) {
-      WARN( _( "Instrinsic outfits must be modifiers!" ) );
-      return -1;
-   }
 
    if ( pilot->outfit_intrinsic == NULL )
       pilot->outfit_intrinsic = array_create( PilotOutfitSlot );
@@ -466,7 +455,7 @@ int pilot_rmOutfitIntrinsic( Pilot *pilot, const Outfit *outfit )
       PilotOutfitSlot *s = &pilot->outfit_intrinsic[i];
       if ( s->outfit != outfit )
          continue;
-      ret = pilot_rmOutfitRaw( pilot, s );
+      ret = !pilot_rmOutfitRaw( pilot, s );
       array_erase( &pilot->outfit_intrinsic, s, s + 1 );
       break;
    }
@@ -1348,7 +1337,11 @@ void pilot_updateMass( Pilot *pilot )
 
    /* limit the maximum speed if limiter is active */
    if ( pilot_isFlag( pilot, PILOT_HASSPEEDLIMIT ) ) {
-      pilot->speed = pilot->speed_limit - pilot->accel / CTS.PHYSICS_SPEED_DAMP;
+      if ( CTS.PHYSICS_SPEED_DAMP > 0. )
+         pilot->speed =
+            pilot->speed_limit - pilot->accel / CTS.PHYSICS_SPEED_DAMP;
+      else
+         pilot->speed = pilot->speed_limit;
       /* Speed must never go negative. */
       if ( pilot->speed < 0. ) {
          /* If speed DOES go negative, we have to lower accel. */

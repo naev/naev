@@ -149,17 +149,17 @@ static void solid_update_rk4( Solid *obj, double dt )
    double h, px, py, vx, vy; /* pass, and position/velocity values */
    double vmod, vang, th;
    int    vint;
-   int    limit; /* limit speed? */
 
    /* Save previous position. */
    obj->pre = obj->pos;
 
    /* Initial positions and velocity. */
-   px    = obj->pos.x;
-   py    = obj->pos.y;
-   vx    = obj->vel.x;
-   vy    = obj->vel.y;
-   limit = ( obj->speed_max >= 0. );
+   px             = obj->pos.x;
+   py             = obj->pos.y;
+   vx             = obj->vel.x;
+   vy             = obj->vel.y;
+   int limit      = ( obj->speed_max >= 0. );
+   int limit_damp = limit && ( CTS.PHYSICS_SPEED_DAMP > 0. );
 
    /* Initial RK parameters. */
    if ( dt > RK4_MIN_H )
@@ -182,7 +182,7 @@ static void solid_update_rk4( Solid *obj, double dt )
       double ay = th * sin( obj->dir );
 
       /* Limit the speed. */
-      if ( limit ) {
+      if ( limit_damp ) {
          vmod = MOD( vx, vy );
          if ( vmod > obj->speed_max ) {
             /* We limit by applying a force against it. */
@@ -219,6 +219,15 @@ static void solid_update_rk4( Solid *obj, double dt )
       /* rotation. */
       obj->dir += obj->dir_vel * h;
    }
+   // TODO Maybe limit in the loop instead?
+   if ( limit && !limit_damp ) {
+      vmod = MOD( vx, vy );
+      if ( vmod > obj->speed_max ) {
+         double mod = obj->speed_max / vmod;
+         vx *= mod;
+         vy *= mod;
+      }
+   }
    vec2_cset( &obj->vel, vx, vy );
    vec2_cset( &obj->pos, px, py );
 
@@ -233,7 +242,10 @@ double solid_maxspeed( const Solid *s, double speed, double accel )
 {
    // s->speed_max can get overwritten to limit speed. Here we want the true
    // max_speed.
-   return speed + accel * s->aerodynamics / CTS.PHYSICS_SPEED_DAMP;
+   if ( CTS.PHYSICS_SPEED_DAMP > 0. )
+      return speed + accel * s->aerodynamics / CTS.PHYSICS_SPEED_DAMP;
+   else
+      return speed;
 }
 
 /**

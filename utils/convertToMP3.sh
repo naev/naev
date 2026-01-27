@@ -3,12 +3,12 @@
 set -e
 
 usage() {
-   echo "usage: $(basename "$0") [-d] -i <inputDir> (no trailing '/') -e <fileextension> -o <outputDir> (no trailing '/')"
    cat <<EOF
-Renders audio to mp3, while retaining metadata
-Requires ffmpeg to be installed and available on PATH
+usage: $(basename "$0") [-d] -i <inputDir> (no trailing '/') -e <fileextension> -o <outputDir> (no trailing '/')
+  Renders audio to mp3, while retaining metadata
+  Requires ffmpeg to be installed and available on PATH
 
-Pass in -i <inputDir> (no trailing '/') -f <fileextension> -o <outputDir> (no trailing '/')
+  Pass in -i <inputDir> (no trailing '/') -f <fileextension> -o <outputDir> (no trailing '/')
 EOF
    exit 1
 }

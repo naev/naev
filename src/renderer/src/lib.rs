@@ -814,7 +814,7 @@ impl Context {
             .build_gl(&gl)?;
 
         // Load up initial dimensions
-        let dimensions = RwLock::new(Dimensions::new(&window));
+        let dimensions = Dimensions::new(&window);
 
         // Set up the OpenGL state
         unsafe {
@@ -836,6 +836,13 @@ impl Context {
             // image-rs uses tight packing
             gl.pixel_store_i32(glow::UNPACK_ALIGNMENT, 1);
             gl.pixel_store_i32(glow::PACK_ALIGNMENT, 1);
+
+            gl.viewport(
+                0,
+                0,
+                dimensions.pixels_width as i32,
+                dimensions.pixels_height as i32,
+            );
         }
         let sdf = sdf::SdfRenderer::new(&gl)?;
         let ctx = Context {
@@ -843,7 +850,7 @@ impl Context {
             window: Mutex::new(window),
             gl_context,
             gl,
-            dimensions,
+            dimensions: RwLock::new(dimensions),
             program_texture,
             buffer_texture,
             program_texture_sdf,
@@ -871,10 +878,7 @@ impl Context {
             Dimensions::new(&wdw)
         };
         let gl = &self.gl;
-        let (vw, vh) = (
-            dims.view_width.round() as i32,
-            dims.view_height.round() as i32,
-        );
+        let (vw, vh) = (dims.pixels_width as i32, dims.pixels_height as i32);
         unsafe {
             gl.viewport(0, 0, vw, vh);
             naevc::gl_view_matrix = naevc::mat4_ortho(

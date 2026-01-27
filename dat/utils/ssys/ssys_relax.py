@@ -101,7 +101,7 @@ def ssys_relax( sys, quiet = True, graph = False ):
          for t in ['jump', 'asteroid', 'waypoint']:
             for i, e in enumerate(T[t + 's'][t]):
                d, k = (T[t + 's'][t], i) if t == 'waypoint' else (e, "pos")
-               d[k] = d[k] | vec_to_pos(func(pos_to_vec(d[k])))
+               d[k] |= vec_to_pos(func(pos_to_vec(d[k])))
          p.save()
          return True
    return False

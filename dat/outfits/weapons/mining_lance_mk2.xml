@@ -21,7 +21,7 @@
   <mining_rarity>1</mining_rarity>
   <damage>
    <type>armourbreaker</type>
-   <penetrate>90</penetrate>
+   <penetrate>162</penetrate>
    <physical>130</physical>
   </damage>
   <spfx_shield>Shi-S</spfx_shield>

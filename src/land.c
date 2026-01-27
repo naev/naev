@@ -1067,13 +1067,13 @@ void land_updateMainTab( void )
    tonnes2str( tons, player.p->cargo_free );
    credits2str( cred, player.p->credits, 2 );
    l += scnprintf( &buf[l], sizeof( buf ) - l, _( "%s (%s system)" ),
-                   spob_name( land_spob ), _( cur_system->name ) );
+                   spob_name( land_spob ), system_name( cur_system ) );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n" );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "%s",
                    space_className( land_spob ) );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s",
                    land_spob->presence.faction >= 0
-                      ? _( faction_name( land_spob->presence.faction ) )
+                      ? faction_shortname( land_spob->presence.faction )
                       : _( "None" ) );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s",
                    space_populationStr( land_spob ) );
@@ -1733,14 +1733,16 @@ void takeoff( int delay, int nosave )
          capused += pe->p->ship->points;
          if ( capused > player.fleet_capacity ) {
             overfleet = 1;
-            l += scnprintf( &overfleet_ships[l], sizeof( overfleet_ships ) - l,
-                            "\n%s (%s)", pe->p->name, _( pe->p->ship->name ) );
+            l +=
+               scnprintf( &overfleet_ships[l], sizeof( overfleet_ships ) - l,
+                          "\n%s (%s)", pe->p->name, ship_name( pe->p->ship ) );
             capused -= pe->p->ship->points;
          }
          if ( !pilot_isSpaceworthy( pe->p ) ) {
             badfleet = 1;
-            l += scnprintf( &badfleet_ships[l], sizeof( badfleet_ships ) - l,
-                            "\n%s (%s)", pe->p->name, _( pe->p->ship->name ) );
+            l +=
+               scnprintf( &badfleet_ships[l], sizeof( badfleet_ships ) - l,
+                          "\n%s (%s)", pe->p->name, ship_name( pe->p->ship ) );
          }
          nships++;
       }

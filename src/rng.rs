@@ -202,7 +202,7 @@ impl UserData for Rnd {
                     Ok(if let Some(h) = h {
                         if h < l { range(h..=l) } else { range(l..=h) }
                     } else {
-                        range(0..=l)
+                        range(1..=l)
                     } as mlua::Number)
                 } else {
                     Ok(rng::<f64>())

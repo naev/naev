@@ -37,15 +37,17 @@ typedef struct nsave_s {
    SaveCompatibility compatible; /**< Compatibility status. */
 
    /* Player info. */
-   char    *spob;       /**< Spob player is at. */
-   ntime_t  date;       /**< Date. */
-   uint64_t credits;    /**< Credits player has. */
-   char    *chapter;    /**< Player's current chapter. */
-   char    *difficulty; /**< Difficulty setting of the player. */
+   char    *spob;        /**< Spob player is at. */
+   char    *spobdisplay; /**< Display string for the spob. */
+   ntime_t  date;        /**< Date. */
+   uint64_t credits;     /**< Credits player has. */
+   char    *chapter;     /**< Player's current chapter. */
+   char    *difficulty;  /**< Difficulty setting of the player. */
 
    /* Ship info. */
-   char *shipname;  /**< Name of the ship. */
-   char *shipmodel; /**< Model of the ship. */
+   char *shipname;         /**< Name of the ship. */
+   char *shipmodel;        /**< Model of the ship. */
+   char *shipmodeldisplay; /**< Display model of the ship. */
 
    int ret; /**< Used for threaded loading. */
 } nsave_t;

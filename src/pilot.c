@@ -3431,7 +3431,7 @@ static void pilot_init( Pilot *pilot, const Ship *ship, const char *name,
 
    /* Basic information. */
    pilot->ship = ship;
-   pilot->name = strdup( ( name == NULL ) ? _( ship->name ) : name );
+   pilot->name = strdup( ( name == NULL ) ? ship_name( ship ) : name );
 
    /* faction */
    pilot->faction       = faction;
