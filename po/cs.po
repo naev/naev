@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2026-01-14 16:44+0900\n"
+"POT-Creation-Date: 2026-01-28 11:43+0900\n"
 "PO-Revision-Date: 2025-10-27 08:32+0000\n"
 "Last-Translator: Dawedaen <dawedaen@noreply.codeberg.org>\n"
 "Language-Team: Czech <https://translate.codeberg.org/projects/naev/naev/cs/"
@@ -6815,9 +6815,6 @@ msgstr "* [Elektronický boj](mechanics/ewarfare)"
 
 msgid "* [Effects](mechanics/effects)"
 msgstr "* [Efekty](mechanics/effects)"
-
-msgid "* [Heat](mechanics/heat)"
-msgstr "* [Teplota](mechanics/heat)"
 
 msgid "* [Fleets](mechanics/playerfleet)"
 msgstr "* [Flotily](mechanics/playerfleet)"
@@ -104410,7 +104407,7 @@ msgid "I wonder how close we can get…"
 msgstr ""
 
 msgid ""
-"You hook up to the damage drone and are able to access the control panel. "
+"You hook up to the damaged drone and are able to access the control panel. "
 "Since Zach seems to be distracted, it seems like you have to access it "
 "yourself."
 msgstr ""
@@ -127897,6 +127894,9 @@ msgstr "Bio-Korveta"
 
 msgid " Cerebrum "
 msgstr ""
+
+#~ msgid "* [Heat](mechanics/heat)"
+#~ msgstr "* [Teplota](mechanics/heat)"
 
 #~ msgid ""
 #~ "Designed for military scouting and patrol vessels, Nexus' Light Stealth "
