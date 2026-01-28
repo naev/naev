@@ -1,6 +1,8 @@
 ## v0.13.4 (unreleased)
 
    * Fixed online resizing on high dpi screens
+   * Spelling and grammar fixes
+   * Translation updates
 
 
 ## v0.13.3
