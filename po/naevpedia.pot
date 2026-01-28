@@ -30675,19 +30675,15 @@ msgstr ""
 msgid "* [Effects](mechanics/effects)"
 msgstr ""
 
-#: dat/naevpedia/mechanics.md:37
-msgid "* [Heat](mechanics/heat)"
-msgstr ""
-
-#: dat/naevpedia/mechanics.md:39
+#: dat/naevpedia/mechanics.md:38
 msgid "* [Fleets](mechanics/playerfleet)"
 msgstr ""
 
-#: dat/naevpedia/mechanics.md:42
+#: dat/naevpedia/mechanics.md:41
 msgid "* [Bioships](mechanics/bioships)"
 msgstr ""
 
-#: dat/naevpedia/mechanics.md:45
+#: dat/naevpedia/mechanics.md:44
 msgid "* [Psychic Powers and Flow](mechanics/flow)"
 msgstr ""
 
