@@ -410,7 +410,7 @@ impl UserData for Vec2 {
             "collideLineLine",
             |_, s1, (e1, s2, e2): (Self, Self, Self)| -> mlua::Result<Option<Vec2>> {
                 let hit = collide::line_line((*s1).into(), e1.into(), s2.into(), e2.into());
-                if let Some(h) = hit.get(0) {
+                if let Some(h) = hit.first() {
                     Ok(Some((*h).into()))
                 } else {
                     Ok(None)
@@ -437,7 +437,7 @@ impl UserData for Vec2 {
              (radius, p1, p2): (f64, Self, Self)|
              -> mlua::Result<(Option<Vec2>, Option<Vec2>)> {
                 let hit = collide::line_circle(p1.into(), p2.into(), (*center).into(), radius);
-                if let Some(h1) = hit.get(0) {
+                if let Some(h1) = hit.first() {
                     if let Some(h2) = hit.get(2) {
                         Ok((Some((*h1).into()), Some((*h2).into())))
                     } else {

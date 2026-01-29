@@ -606,7 +606,7 @@ pub extern "C" fn collide_circle_polygon(
 
     let hit = bt.intersect_circle(*ap - *bp, ar);
     for (k, h) in hit.iter().enumerate() {
-        crash[k] = *h;
+        crash[k] = *h + bp;
     }
     hit.len() as c_int
 }
@@ -635,7 +635,7 @@ pub extern "C" fn collide_line_polygon(
         Vector2::new(pos.x + al * ad.cos(), pos.y + al * ad.sin()),
     );
     for (k, h) in hit.iter().enumerate() {
-        crash[k] = *h;
+        crash[k] = *h + bp;
     }
     hit.len() as c_int
 }
@@ -660,7 +660,7 @@ pub extern "C" fn collide_polygon_polygon(
 
     let hit = at.intersect_polygon(bt, *bp - *ap);
     for (k, h) in hit.iter().enumerate() {
-        crash[k] = *h;
+        crash[k] = *h + ap;
     }
     hit.len() as c_int
 }

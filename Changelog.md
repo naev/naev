@@ -70,6 +70,7 @@
    * Engine supports display names for outfits/ships to replace the internal
      name for user facing operations
    * Changed rnd.rnd() syntax to be like math.random
+   * Collision polygon generated baked into the engine
 
  ### Fixes
 
