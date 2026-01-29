@@ -722,41 +722,16 @@ int ship_gfxLoad2D( Ship *s, const char *base, const char *ext )
  */
 static int ship_loadPLG( Ship *temp, const char *buf )
 {
-   char       file[PATH_MAX];
-   xmlDocPtr  doc;
-   xmlNodePtr node;
-
+   char file[PATH_MAX];
    if ( temp->gfx_3d != NULL )
       snprintf( file, sizeof( file ), "%s%s.xml", SHIP_POLYGON_PATH3D, buf );
    else
       snprintf( file, sizeof( file ), "%s%s.xml", SHIP_POLYGON_PATH2D, buf );
-
-   /* See if the file does exist. */
-   if ( !PHYSFS_exists( file ) ) {
+   temp->polygon = poly_load( file );
+   if ( temp->polygon == NULL )
       WARN( _( "%s xml collision polygon does not exist! Please use the "
                "script '%s' found in Naev's main repository." ),
             file, "utils/polygonize.py" );
-      return 0;
-   }
-
-   /* Load the XML. */
-   doc = xml_parsePhysFS( file );
-   if ( doc == NULL )
-      return 0;
-
-   node = doc->xmlChildrenNode; /* First polygon node */
-   if ( node == NULL ) {
-      xmlFreeDoc( doc );
-      WARN( _( "Malformed %s file: does not contain elements" ), file );
-      return 0;
-   }
-
-   do { /* load the polygon data */
-      if ( xml_isNode( node, "polygons" ) )
-         temp->polygon = poly_load( node, file );
-   } while ( xml_nextNode( node ) );
-
-   xmlFreeDoc( doc );
    return 0;
 }
 

@@ -2174,20 +2174,21 @@ void pilot_render( Pilot *p )
 
    /* Useful debug stuff below. */
 #ifdef DEBUGGING
-#if 0
    if ( inbounds && debug_isFlag( DEBUG_MARK_COLLISION ) ) {
       static gl_vbo      *poly_vbo = NULL;
       GLfloat             data[1024];
       const CollPolyView *poly = poly_view( p->ship->polygon, p->solid.dir );
+      int                 npts;
+      const vec2         *points = poly_points( poly, &npts );
       size_t              n =
-         MIN( sizeof( data ) / ( sizeof( GLfloat ) * 2 ), (size_t)poly->npt );
+         MIN( sizeof( data ) / ( sizeof( GLfloat ) * 2 ), (size_t)npts );
       size_t ndata      = n * sizeof( GLfloat ) * 2;
       mat4   projection = gl_view_matrix;
 
       /* Set up the vector data. */
       for ( size_t i = 0; i < n; i++ ) {
-         data[i * 2 + 0] = poly->x[i];
-         data[i * 2 + 1] = poly->y[i];
+         data[i * 2 + 0] = points[i].x;
+         data[i * 2 + 1] = points[i].y;
       }
 
       /* Upload to VBO, creating as necessary. */
@@ -2220,7 +2221,6 @@ void pilot_render( Pilot *p )
       gl_checkErr();
       glUseProgram( 0 );
    }
-#endif
 
    /* Draw trail emitters on top in debug mode. */
    if ( inbounds && debug_isFlag( DEBUG_MARK_EMITTER ) ) {

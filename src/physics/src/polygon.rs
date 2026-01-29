@@ -369,7 +369,7 @@ impl SpinPolygon {
         }
 
         let mut polygons = Vec::new();
-        let xml = std::fs::read_to_string(&path)?;
+        let xml = ndata::read_to_string(&path)?;
         let raw: XmlPolygon = quick_xml::de::from_str(&xml)?;
         for p in raw.polygon {
             let xs = parse_list(&p.x)?;
@@ -396,6 +396,7 @@ impl SpinPolygon {
     }
 
     pub fn view(&self, dir: f64) -> &Polygon {
+        let dir = crate::angle_clean(dir);
         let s = ((dir + self.dir_off) / self.dir_inc).round() as usize;
         let s = s % self.polygons.len();
         &self.polygons[s]
@@ -444,10 +445,7 @@ fn trace_contour(
     };
 
     // Correct angle if negative
-    let mut dir = dir % std::f64::consts::TAU;
-    if dir < 0.0 {
-        dir += std::f64::consts::TAU;
-    }
+    let dir = crate::angle_clean(dir);
 
     let mut contour = Vec::new();
     let mut current = start;
@@ -520,6 +518,26 @@ pub extern "C" fn poly_free_view(poly: *mut Polygon) {
         return;
     }
     let _ = unsafe { Box::from_raw(poly) };
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn poly_view(poly: *const SpinPolygon, dir: f64) -> *const Polygon {
+    if poly.is_null() {
+        return std::ptr::null();
+    }
+    let poly = unsafe { &*poly };
+    poly.view(dir) as *const Polygon
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn poly_points(poly: *const Polygon, n: *mut c_int) -> *const Vector2<f64> {
+    if poly.is_null() {
+        return std::ptr::null();
+    }
+    let poly = unsafe { &*poly };
+    let n = unsafe { &mut *n };
+    *n = poly.points.len() as c_int;
+    poly.points.as_ptr()
 }
 
 #[unsafe(no_mangle)]

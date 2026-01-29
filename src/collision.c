@@ -444,7 +444,6 @@ CollPolyView *poly_rotate( const CollPoly *polygon, float theta )
    }
    return rpolygon;
 }
-#endif
 
 const CollPolyView *poly_view( const CollPoly *poly, double dir )
 {
@@ -462,6 +461,7 @@ const CollPolyView *poly_view( const CollPoly *poly, double dir )
    s     = s % array_size( poly->views );
    return &poly->views[s];
 }
+#endif
 
 /**
  * @brief Checks whether or not a point is inside a polygon.
