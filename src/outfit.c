@@ -1944,10 +1944,9 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
 }
 
 /**
- * @brief Loads the collision polygon for a bolt outfit.
+ * @brief Loads the collision polygon for a bolt or launcher outfit.
  *
  *    @param temp Outfit to load into.
- *    @param buf Name of the file.
  */
 static int outfit_loadPLG( Outfit *temp )
 {

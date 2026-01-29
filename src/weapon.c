@@ -22,7 +22,6 @@
 #include "array.h"
 #include "camera.h"
 #include "collision.h"
-#include "constants.h"
 #include "damagetype.h"
 #include "gui.h"
 #include "input.h"
@@ -958,9 +957,6 @@ static int weapon_checkCanHit( const Weapon *w, const Pilot *p )
  * @brief Tests to see if a weapon collides with a ship.
  *
  *    @param wc Weapon collision data.
- *    @param ctex Collision target texture.
- *    @param csx Collision target texture x sprite.
- *    @param csy Collision target texture y sprite.
  *    @param csol Collision target solid.
  *    @param cpol Collision target collision polygon (NULL if none).
  *    @param cradius Collision radius fallback (if no texture and polygon are
