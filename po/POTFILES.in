@@ -3849,7 +3849,6 @@ src/claim.c
 src/claim.h
 src/cmark_wrap.c
 src/cmark_wrap.h
-src/collision.c
 src/collision.h
 src/colour.c
 src/colour.h

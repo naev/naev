@@ -92,7 +92,6 @@ source = files(
    'base64.c',
    'board.c',
    'claim.c',
-   'collision.c',
    'colour.c',
    'comm.c',
    'commodity.c',
