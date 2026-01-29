@@ -41,13 +41,7 @@ impl ShipWrapper {
         // Load the polygons
         let mut poly_path = path.as_ref().to_path_buf();
         poly_path.set_extension(&ext[1..]);
-        let io = ndata::iostream(&poly_path)?;
-        let img = image::ImageReader::with_format(
-            std::io::BufReader::new(io),
-            image::ImageFormat::from_path(&poly_path)?,
-        )
-        .decode()?;
-        let poly = SpinPolygon::from_image(&img, self.0.sx as u32, self.0.sy as u32);
+        let poly = SpinPolygon::from_image_path(&poly_path, self.0.sx as u32, self.0.sy as u32)?;
         self.0.polygon = Box::into_raw(Box::new(poly)) as *mut naevc::CollPoly;
         Ok(())
     }

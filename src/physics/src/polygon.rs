@@ -61,6 +61,7 @@ impl Polygon {
 
     pub fn from_binary(points: &[bool], width: i32, height: i32, dir: f64) -> Self {
         let (c, start) = trace_contour(points, width, height, dir);
+        let (w2, h2) = (width as f64 * 0.5, height as f64 * 0.5);
         let c: Vec<mint::Point2<i32>> = c
             .iter()
             .map(|v| mint::Point2::<i32> { x: v.x, y: v.y })
@@ -70,7 +71,7 @@ impl Polygon {
             .iter()
             .map(|v| {
                 let m = c[*v];
-                Vector2::new(m.x as f64, m.y as f64)
+                Vector2::new(m.x as f64 - w2, m.y as f64 - h2)
             })
             .collect();
         Self::from_points(points, start)
@@ -333,6 +334,17 @@ pub struct SpinPolygon {
 }
 
 impl SpinPolygon {
+    pub fn from_image_path<P: AsRef<Path>>(path: P, sx: u32, sy: u32) -> Result<Self> {
+        // TODO caching
+        let io = ndata::iostream(&path)?;
+        let img = image::ImageReader::with_format(
+            std::io::BufReader::new(io),
+            image::ImageFormat::from_path(&path)?,
+        )
+        .decode()?;
+        Ok(SpinPolygon::from_image(&img, sx, sy))
+    }
+
     pub fn from_image(img: &image::DynamicImage, sx: u32, sy: u32) -> Self {
         let (w, h) = img.dimensions();
 
@@ -354,7 +366,8 @@ impl SpinPolygon {
             }
         }
         let dir_inc = 1.0 / (sx * sy) as f64 * std::f64::consts::TAU;
-        let dir_off = dir_inc * 0.5;
+        let dir_off = -dir_inc * 0.5;
+        polygons.reverse();
 
         SpinPolygon {
             polygons,
