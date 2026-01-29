@@ -351,8 +351,12 @@ impl SpinPolygon {
 
         let sw = w / sx;
         let sh = h / sy;
-        assert_eq!(sw * sx, w);
-        assert_eq!(sh * sy, h);
+        if (sw * sx != w) || (sh * sy != h) {
+            warn!(
+                "Image is not cleanly divisible by number of sprites ({} x {} / {} x {})",
+                w, h, sx, sy
+            );
+        }
 
         let mut polygons = Vec::new();
         let bimg = img.fast_blur(1.0);
