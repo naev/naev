@@ -165,7 +165,7 @@ repos:
       # able to do threading there and keep it sequential here.
       #require_serial: true
 - repo: https://github.com/shssoichiro/oxipng
-  rev: v9.1.5
+  rev: v10.1.0
   hooks:
     - id: oxipng
       args: ["-o", "max", "--strip", "safe", "--alpha"]
