@@ -684,20 +684,21 @@ mod tests {
             false, false, false, false, false,
         ];
         let poly = Polygon::from_binary(&test, 5, 5, -std::f64::consts::PI * 3. / 4.);
+        let c = v(2.5, 2.5);
         assert_eq!(
             poly,
             Polygon {
                 points: vec![
-                    v(1.0, 1.0),
-                    v(3.0, 1.0),
-                    v(3.0, 3.0),
-                    v(1.0, 3.0),
-                    v(1.0, 1.0),
+                    v(1.0, 1.0) - c,
+                    v(3.0, 1.0) - c,
+                    v(3.0, 3.0) - c,
+                    v(1.0, 3.0) - c,
+                    v(1.0, 1.0) - c,
                 ],
-                xmin: 1.0,
-                xmax: 3.0,
-                ymin: 1.0,
-                ymax: 3.0,
+                xmin: 1.0 - c.x,
+                xmax: 3.0 - c.x,
+                ymin: 1.0 - c.y,
+                ymax: 3.0 - c.y,
                 start: Some(Vector2::new(1, 1)),
             }
         );
@@ -714,22 +715,19 @@ mod tests {
             false, false, false, false, false,
         ];
         let poly = Polygon::from_binary(&test, 5, 5, std::f64::consts::PI * 1. / 4.);
+        let c = v(2.5, 2.5);
         assert_eq!(
             poly,
-            Polygon {
-                points: vec![
-                    v(3.0, 3.0),
-                    v(1.0, 3.0),
-                    v(1.0, 1.0),
-                    v(3.0, 1.0),
-                    v(3.0, 3.0),
+            Polygon::from_points(
+                vec![
+                    v(3.0, 3.0) - c,
+                    v(1.0, 3.0) - c,
+                    v(1.0, 1.0) - c,
+                    v(3.0, 1.0) - c,
+                    v(3.0, 3.0) - c,
                 ],
-                xmin: 1.0,
-                xmax: 3.0,
-                ymin: 1.0,
-                ymax: 3.0,
-                start: Some(Vector2::new(3, 3)),
-            }
+                Some(Vector2::new(3, 3))
+            )
         );
     }
 
@@ -744,22 +742,19 @@ mod tests {
             true, true, true, true, true,
         ];
         let poly = Polygon::from_binary(&test, 5, 5, std::f64::consts::PI * -3. / 4.);
+        let c = v(2.5, 2.5);
         assert_eq!(
             poly,
-            Polygon {
-                points: vec![
-                    v(0.0, 0.0),
-                    v(4.0, 0.0),
-                    v(4.0, 4.0),
-                    v(0.0, 4.0),
-                    v(0.0, 0.0),
+            Polygon::from_points(
+                vec![
+                    v(0.0, 0.0) - c,
+                    v(4.0, 0.0) - c,
+                    v(4.0, 4.0) - c,
+                    v(0.0, 4.0) - c,
+                    v(0.0, 0.0) - c,
                 ],
-                xmin: 0.0,
-                xmax: 4.0,
-                ymin: 0.0,
-                ymax: 4.0,
-                start: Some(Vector2::new(0, 0)),
-            }
+                Some(Vector2::new(0, 0))
+            )
         );
     }
 
@@ -774,22 +769,19 @@ mod tests {
             false, false, true, false, false,
         ];
         let poly = Polygon::from_binary(&test, 5, 5, std::f64::consts::PI * -3. / 4.);
+        let c = v(2.5, 2.5);
         assert_eq!(
             poly,
-            Polygon {
-                points: vec![
-                    v(2.0, 0.0),
-                    v(4.0, 2.0),
-                    v(2.0, 4.0),
-                    v(0.0, 2.0),
-                    v(2.0, 0.0),
+            Polygon::from_points(
+                vec![
+                    v(2.0, 0.0) - c,
+                    v(4.0, 2.0) - c,
+                    v(2.0, 4.0) - c,
+                    v(0.0, 2.0) - c,
+                    v(2.0, 0.0) - c,
                 ],
-                xmin: 0.0,
-                xmax: 4.0,
-                ymin: 0.0,
-                ymax: 4.0,
-                start: Some(Vector2::new(2, 0)),
-            }
+                Some(Vector2::new(2, 0))
+            )
         );
     }
 
@@ -807,22 +799,19 @@ mod tests {
             true, true,  true,  true,  true,  true,  true,
         ];
         let poly = Polygon::from_binary(&test, 7, 7, std::f64::consts::PI * -3. / 4.);
+        let c = v(3.5, 3.5);
         assert_eq!(
             poly,
-            Polygon {
-                points: vec![
-                    v(0.0, 0.0),
-                    v(6.0, 0.0),
-                    v(6.0, 6.0),
-                    v(0.0, 6.0),
-                    v(0.0, 0.0),
+            Polygon::from_points(
+                vec![
+                    v(0.0, 0.0) - c,
+                    v(6.0, 0.0) - c,
+                    v(6.0, 6.0) - c,
+                    v(0.0, 6.0) - c,
+                    v(0.0, 0.0) - c,
                 ],
-                xmin: 0.0,
-                xmax: 6.0,
-                ymin: 0.0,
-                ymax: 6.0,
-                start: Some(Vector2::new(0, 0)),
-            }
+                Some(Vector2::new(0, 0)),
+            )
         );
     }
 
@@ -839,22 +828,20 @@ mod tests {
             }
         }
         let poly = Polygon::from_subimage(&img.into(), 0, 0, N, N, std::f64::consts::PI * -3. / 4.);
+        let c = (N as f64) * 0.5;
+        let c = v(c, c);
         assert_eq!(
             poly,
-            Polygon {
-                points: vec![
-                    v(1.0, 1.0),
-                    v(3.0, 1.0),
-                    v(3.0, 3.0),
-                    v(1.0, 3.0),
-                    v(1.0, 1.0),
+            Polygon::from_points(
+                vec![
+                    v(1.0, 1.0) - c,
+                    v(3.0, 1.0) - c,
+                    v(3.0, 3.0) - c,
+                    v(1.0, 3.0) - c,
+                    v(1.0, 1.0) - c,
                 ],
-                xmin: 1.0,
-                xmax: 3.0,
-                ymin: 1.0,
-                ymax: 3.0,
-                start: Some(Vector2::new(1, 1)),
-            }
+                Some(Vector2::new(1, 1))
+            )
         );
     }
 
@@ -871,22 +858,20 @@ mod tests {
             }
         }
         let poly = Polygon::from_subimage(&img.into(), 0, 0, N, N, std::f64::consts::PI * -3. / 4.);
+        let c = (N as f64) * 0.5;
+        let c = v(c, c);
         assert_eq!(
             poly,
-            Polygon {
-                points: vec![
-                    v(0.0, 0.0),
-                    v(6.0, 0.0),
-                    v(6.0, 6.0),
-                    v(0.0, 6.0),
-                    v(0.0, 0.0),
+            Polygon::from_points(
+                vec![
+                    v(0.0, 0.0) - c,
+                    v(6.0, 0.0) - c,
+                    v(6.0, 6.0) - c,
+                    v(0.0, 6.0) - c,
+                    v(0.0, 0.0) - c,
                 ],
-                xmin: 0.0,
-                xmax: 6.0,
-                ymin: 0.0,
-                ymax: 6.0,
-                start: Some(Vector2::new(0, 0)),
-            }
+                Some(Vector2::new(0, 0))
+            )
         );
     }
 
@@ -971,10 +956,6 @@ mod tests {
             vec![v(0.0, 0.0), v(1.0, 0.0), v(1.0, 1.0), v(0.0, 1.0)],
             None,
         )
-    }
-
-    fn triangle() -> Polygon {
-        Polygon::from_points(vec![v(0.0, 0.0), v(2.0, 0.0), v(1.0, 2.0)], None)
     }
 
     #[test]
