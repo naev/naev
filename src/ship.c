@@ -680,10 +680,6 @@ int ship_gfxLoad2D( Ship *s, const char *base, const char *ext )
    int  engine = !s->noengine;
    char str[PATH_MAX];
 
-   /* Load the polygon. */
-   ship_loadPLG( s,
-                 ( s->polygon_path != NULL ) ? s->polygon_path : s->gfx_path );
-
    /* Get the comm graphic for future loading. */
    if ( s->gfx_comm == NULL )
       SDL_asprintf( &s->gfx_comm, "%s" SHIP_COMM "%s", base, ext );
@@ -727,6 +723,7 @@ static int ship_loadPLG( Ship *temp, const char *buf )
       snprintf( file, sizeof( file ), "%s%s.xml", SHIP_POLYGON_PATH3D, buf );
    else
       snprintf( file, sizeof( file ), "%s%s.xml", SHIP_POLYGON_PATH2D, buf );
+
    temp->polygon = poly_load( file );
    if ( temp->polygon == NULL )
       WARN( _( "%s xml collision polygon does not exist! Please use the "
