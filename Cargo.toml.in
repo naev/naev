@@ -28,6 +28,8 @@ members = [
    "@BUILD@/src/gettext",
    "@BUILD@/src/ndata",
    "@BUILD@/src/renderer",
+   "@BUILD@/src/physics",
+   "@BUILD@/src/collide",
    #"@BUILD@/src/toolkit",
    "@BUILD@/src/pluginmgr",
    #"@BUILD@/src/pluginmgr-cli",
@@ -59,6 +61,7 @@ nlog = { path="@BUILD@/src/nlog" }
 ndata = { path="@BUILD@/src/ndata" }
 renderer = { path="@BUILD@/src/renderer" }
 #toolkit = { path="@BUILD@/src/toolkit" }
+collide = { path="@BUILD@/src/collide" }
 physics = { path="@BUILD@/src/physics" }
 pluginmgr = { path="@BUILD@/src/pluginmgr" }
 pluginmgr-gui = { path="@BUILD@/src/pluginmgr-gui" }
@@ -128,6 +131,7 @@ encase = { workspace = true }
 roxmltree = { workspace = true }
 image = { workspace = true }
 physics = { workspace = true }
+collide = { workspace = true }
 pluginmgr = { workspace = true }
 pluginmgr-gui = { workspace = true }
 mlua = { workspace = true }

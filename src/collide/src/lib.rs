@@ -2,6 +2,8 @@ use arrayvec::ArrayVec;
 use nalgebra::Vector2;
 use nlog::warn;
 
+mod polygon;
+
 pub(crate) const TOLERANCE: f64 = 1e-6;
 
 // The parry function is more annoying to use, so we stick to our custom implementation
