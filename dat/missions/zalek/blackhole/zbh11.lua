@@ -256,7 +256,7 @@ function board_drone ()
       image = lg.newImage( pexp:ship():gfxComm(1024) ),
    } )
    vn.transition( zbh.zach.transition )
-   vn.na(_([[You hook up to the damage drone and are able to access the control panel. Since Zach seems to be distracted, it seems like you have to access it yourself.]]))
+   vn.na(_([[You hook up to the damaged drone and are able to access the control panel. Since Zach seems to be distracted, it seems like you have to access it yourself.]]))
 
    sokoban.vn{ levels={8,9}, header=_("Drone Control Panel") }
    vn.func( function ()
