@@ -409,9 +409,11 @@ impl UserData for Vec2 {
         methods.add_method(
             "collideLineLine",
             |_, s1, (e1, s2, e2): (Self, Self, Self)| -> mlua::Result<Option<Vec2>> {
-                match collide::line_line((*s1).into(), e1.into(), s2.into(), e2.into()) {
-                    Some(collide::Collision::Single(crash)) => Ok(Some(crash.into())),
-                    _ => Ok(None),
+                let hit = collide::line_line((*s1).into(), e1.into(), s2.into(), e2.into());
+                if let Some(h) = hit.get(0) {
+                    Ok(Some((*h).into()))
+                } else {
+                    Ok(None)
                 }
             },
         );
@@ -434,12 +436,15 @@ impl UserData for Vec2 {
              center,
              (radius, p1, p2): (f64, Self, Self)|
              -> mlua::Result<(Option<Vec2>, Option<Vec2>)> {
-                match collide::line_circle(p1.into(), p2.into(), (*center).into(), radius) {
-                    Some(collide::Collision::Single(c)) => Ok((Some(c.into()), None)),
-                    Some(collide::Collision::Double(c1, c2)) => {
-                        Ok((Some(c1.into()), Some(c2.into())))
+                let hit = collide::line_circle(p1.into(), p2.into(), (*center).into(), radius);
+                if let Some(h1) = hit.get(0) {
+                    if let Some(h2) = hit.get(2) {
+                        Ok((Some((*h1).into()), Some((*h2).into())))
+                    } else {
+                        Ok((Some((*h1).into()), None))
                     }
-                    _ => Ok((None, None)),
+                } else {
+                    Ok((None, None))
                 }
             },
         );

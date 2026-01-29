@@ -3851,7 +3851,6 @@ src/cmark_wrap.c
 src/cmark_wrap.h
 src/collision.c
 src/collision.h
-src/collision.rs
 src/colour.c
 src/colour.h
 src/comm.c
@@ -4134,6 +4133,7 @@ src/physics.c
 src/physics.h
 src/physics/src/collide.rs
 src/physics/src/lib.rs
+src/physics/src/polygon.rs
 src/physics/src/transform2.rs
 src/physics/src/vec2.rs
 src/pilot.c

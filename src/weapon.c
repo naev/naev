@@ -1050,15 +1050,15 @@ static int weapon_testCollision( const WeaponCollision *wc,
 
       /* Now we can look at the collision at the corrected point. */
       if ( cpol != NULL ) {
-         ret = CollideLinePolygon( &w->solid.pos, w->solid.dir, wc->beamrange,
-                                   cpol, cpos, crash );
+         ret = collide_line_polygon( &w->solid.pos, w->solid.dir, wc->beamrange,
+                                     cpol, cpos, crash );
       } else if ( ctex != NULL ) {
          ret = CollideLineSprite( &w->solid.pos, w->solid.dir, wc->beamrange,
                                   ctex, csx, csy, cpos, crash );
       } else {
          const vec2 endpoint = { .x = e2x, .y = e2y };
-         ret =
-            CollideLineCircle( &w->solid.pos, &endpoint, cpos, cradius, crash );
+         ret = collide_line_circle( &w->solid.pos, &endpoint, cpos, cradius,
+                                    crash );
       }
       if ( ret > 0 ) {
          NTracingZoneEnd( _ctx );
@@ -1096,14 +1096,14 @@ static int weapon_testCollision( const WeaponCollision *wc,
    if ( cpol != NULL ) {
       /* Case full polygon on polygon collision. */
       if ( wc->polyview != NULL )
-         ret = CollidePolygon( cpol, cpos, wc->polyview, wpos, crash );
+         ret = collide_polygon_polygon( cpol, cpos, wc->polyview, wpos, crash );
       /* GFX on polygon. */
       else if ( ( wc->gfx != NULL ) && ( wc->gfx->tex != NULL ) )
          ret = CollideSpritePolygon( cpol, cpos, wc->gfx->tex, w->sx, w->sy,
                                      wpos, crash );
       /* Circle on polygon. */
       else
-         ret = CollideCirclePolygon( wpos, wc->range, cpol, cpos, crash );
+         ret = collide_circle_polygon( wpos, wc->range, cpol, cpos, crash );
    }
    /* Try to do texture next. */
    else if ( ctex != NULL ) {
@@ -1132,7 +1132,7 @@ static int weapon_testCollision( const WeaponCollision *wc,
                                     wpos, crash );
       /* Trivial circle on circle case. */
       else
-         ret = CollideCircleCircle( wpos, wc->range, cpos, cradius, crash );
+         ret = collide_circle_circle( wpos, wc->range, cpos, cradius, crash );
    }
 
    NTracingZoneEnd( _ctx );
@@ -1318,7 +1318,7 @@ static void weapon_updateCollide( Weapon *w, double dt )
                CollPolyView *rpoly = poly_rotate( a->polygon, (float)a->ang );
                coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->sol, rpoly,
                                             0., crash );
-               poly_freeView( rpoly );
+               poly_free_view( rpoly );
             } else
                coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->sol, NULL,
                                             0., crash );
@@ -1635,7 +1635,7 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius,
                CollPolyView *rpoly = poly_rotate( a->polygon, (float)a->ang );
                coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->sol, rpoly,
                                             0., crash );
-               poly_freeView( rpoly );
+               poly_free_view( rpoly );
             } else
                coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->sol, NULL,
                                             0., crash );

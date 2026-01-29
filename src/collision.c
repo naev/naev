@@ -42,7 +42,12 @@ static int PointInPolygon( const CollPolyView *at, const vec2 *ap, float x,
                            float y );
 static int LineOnPolygon( const CollPolyView *at, const vec2 *ap, float x1,
                           float y1, float x2, float y2, vec2 *crash );
+int CollideLineLine( double s1x, double s1y, double e1x, double e1y, double s2x,
+                     double s2y, double e2x, double e2y, vec2 *crash );
+int CollideLineCircle( const vec2 *p1, const vec2 *p2, const vec2 *cc,
+                       double cr, vec2 crash[2] );
 
+#if 0
 /**
  * @brief Loads a polygon from an xml node.
  *
@@ -152,6 +157,7 @@ void poly_freeView( CollPolyView *view )
    free( view->y );
    free( view );
 }
+#endif
 
 /**
  * @brief Checks whether or not two sprites collide.
@@ -401,6 +407,7 @@ int CollidePolygon( const CollPolyView *at, const vec2 *ap,
    return 0;
 }
 
+#if 0
 /**
  * @brief Rotates a polygon.
  *
@@ -437,6 +444,7 @@ CollPolyView *poly_rotate( const CollPoly *polygon, float theta )
    }
    return rpolygon;
 }
+#endif
 
 const CollPolyView *poly_view( const CollPoly *poly, double dir )
 {
@@ -633,15 +641,15 @@ int CollideLineSprite( const vec2 *ap, double ad, double al,
     */
    hits = 0;
    /* Left border. */
-   if ( CollideLineLine( ap->x, ap->y, ep[0], ep[1], bl[0], bl[1], bl[0], tr[1],
-                         &tmp_crash ) == 1 ) {
+   if ( collide_line_line( ap->x, ap->y, ep[0], ep[1], bl[0], bl[1], bl[0],
+                           tr[1], &tmp_crash ) == 1 ) {
       border[hits].x = tmp_crash.x;
       border[hits].y = tmp_crash.y;
       hits++;
    }
    /* Top border. */
-   if ( CollideLineLine( ap->x, ap->y, ep[0], ep[1], bl[0], tr[1], tr[0], tr[1],
-                         &tmp_crash ) == 1 ) {
+   if ( collide_line_line( ap->x, ap->y, ep[0], ep[1], bl[0], tr[1], tr[0],
+                           tr[1], &tmp_crash ) == 1 ) {
       border[hits].x = tmp_crash.x;
       border[hits].y = tmp_crash.y;
       hits++;
@@ -649,16 +657,16 @@ int CollideLineSprite( const vec2 *ap, double ad, double al,
    /* Now we have to make sure hits isn't 2. */
    /* Right border. */
    if ( ( hits < 2 ) &&
-        CollideLineLine( ap->x, ap->y, ep[0], ep[1], tr[0], tr[1], tr[0], bl[1],
-                         &tmp_crash ) == 1 ) {
+        collide_line_line( ap->x, ap->y, ep[0], ep[1], tr[0], tr[1], tr[0],
+                           bl[1], &tmp_crash ) == 1 ) {
       border[hits].x = tmp_crash.x;
       border[hits].y = tmp_crash.y;
       hits++;
    }
    /* Bottom border. */
    if ( ( hits < 2 ) &&
-        CollideLineLine( ap->x, ap->y, ep[0], ep[1], tr[0], bl[1], bl[0], bl[1],
-                         &tmp_crash ) == 1 ) {
+        collide_line_line( ap->x, ap->y, ep[0], ep[1], tr[0], bl[1], bl[0],
+                           bl[1], &tmp_crash ) == 1 ) {
       border[hits].x = tmp_crash.x;
       border[hits].y = tmp_crash.y;
       hits++;

@@ -6737,9 +6737,9 @@ static int pilotL_collisionTest( lua_State *L )
    if ( lua_isasteroid( L, 2 ) ) {
       Asteroid     *a     = luaL_validasteroid( L, 2 );
       CollPolyView *rpoly = poly_rotate( a->polygon, (float)a->ang );
-      int ret = CollidePolygon( getCollPoly( p ), &p->solid.pos, rpoly,
-                                &a->sol.pos, &crash );
-      poly_freeView( rpoly );
+      int ret = collide_polygon_polygon( getCollPoly( p ), &p->solid.pos, rpoly,
+                                         &a->sol.pos, &crash );
+      poly_free_view( rpoly );
       if ( !ret )
          return 0;
       lua_pushvector( L, crash );
@@ -6761,8 +6761,8 @@ static int pilotL_collisionTest( lua_State *L )
    if ( !pilot_canTarget( t ) )
       return 0;
 
-   int ret = CollidePolygon( getCollPoly( p ), &p->solid.pos, getCollPoly( t ),
-                             &t->solid.pos, &crash );
+   int ret = collide_polygon_polygon( getCollPoly( p ), &p->solid.pos,
+                                      getCollPoly( t ), &t->solid.pos, &crash );
    if ( !ret )
       return 0;
 
