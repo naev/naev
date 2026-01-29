@@ -179,21 +179,14 @@ pub fn line_circle(
             let x2 = fy(A, B, C, y2);
             (x1, y1, x2, y2)
         };
-        let on1 = line_point_on_segment(p1, p2, d1, x1, y1);
-        let on2 = line_point_on_segment(p1, p2, d1, x2, y2);
-        if on1 && on2 {
-            ArrayVec::from([Vector2::new(x1, y1), Vector2::new(x2, y2)])
-        } else if on1 {
-            let mut out = ArrayVec::new();
+        let mut out = ArrayVec::new();
+        if line_point_on_segment(p1, p2, d1, x1, y1) {
             out.push(Vector2::new(x1, y1));
-            out
-        } else if on2 {
-            let mut out = ArrayVec::new();
-            out.push(Vector2::new(x2, y2));
-            out
-        } else {
-            ArrayVec::new()
         }
+        if line_point_on_segment(p1, p2, d1, x2, y2) {
+            out.push(Vector2::new(x2, y2));
+        }
+        out
     }
 }
 

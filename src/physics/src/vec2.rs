@@ -438,7 +438,7 @@ impl UserData for Vec2 {
              -> mlua::Result<(Option<Vec2>, Option<Vec2>)> {
                 let hit = collide::line_circle(p1.into(), p2.into(), (*center).into(), radius);
                 if let Some(h1) = hit.first() {
-                    if let Some(h2) = hit.get(2) {
+                    if let Some(h2) = hit.get(1) {
                         Ok((Some((*h1).into()), Some((*h2).into())))
                     } else {
                         Ok((Some((*h1).into()), None))
