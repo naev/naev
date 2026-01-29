@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.12.0-beta.1\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2026-01-14 16:44+0900\n"
+"POT-Creation-Date: 2026-01-28 11:43+0900\n"
 "PO-Revision-Date: 2026-01-06 09:21+0000\n"
 "Last-Translator: madpilot28 <madpilot28@noreply.codeberg.org>\n"
 "Language-Team: Russian <https://translate.codeberg.org/projects/naev/naev/ru/"
@@ -6927,9 +6927,6 @@ msgstr "* [Радиоэлектронная война](mechanics/ewarfare)"
 
 msgid "* [Effects](mechanics/effects)"
 msgstr "* [Эффекты](mechanics/effects)"
-
-msgid "* [Heat](mechanics/heat)"
-msgstr "* [Нагрев](mechanics/heat)"
 
 msgid "* [Fleets](mechanics/playerfleet)"
 msgstr "* [Флоты](mechanics/playerfleet)"
@@ -102935,7 +102932,7 @@ msgid "I wonder how close we can get…"
 msgstr ""
 
 msgid ""
-"You hook up to the damage drone and are able to access the control panel. "
+"You hook up to the damaged drone and are able to access the control panel. "
 "Since Zach seems to be distracted, it seems like you have to access it "
 "yourself."
 msgstr ""
@@ -126123,6 +126120,9 @@ msgstr "# Корветы"
 
 msgid " Cerebrum "
 msgstr ""
+
+#~ msgid "* [Heat](mechanics/heat)"
+#~ msgstr "* [Нагрев](mechanics/heat)"
 
 #~ msgid ""
 #~ "Where \"C\" is the cycle, \"PPPP\" is the period (always displayed as "
