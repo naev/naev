@@ -1,7 +1,5 @@
 use std::f64::consts::{PI, TAU};
 
-pub mod collide;
-pub mod polygon;
 pub mod transform2;
 pub mod vec2;
 

@@ -1,7 +1,7 @@
 use crate::model::Model;
 use anyhow::Result;
+use collide::polygon::SpinPolygon;
 use nlog::{warn, warn_err};
-use physics::polygon::SpinPolygon;
 use rayon::prelude::*;
 use renderer::{Context, ContextWrapper, texture};
 use std::ffi::{CStr, CString, c_void};

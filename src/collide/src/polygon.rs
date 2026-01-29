@@ -1,4 +1,4 @@
-use crate::collide::{line_circle, line_line};
+use crate::{line_circle, line_line};
 use anyhow::Result;
 use arrayvec::ArrayVec;
 use image::GenericImageView;
@@ -154,7 +154,7 @@ impl Polygon {
             let side = (b.x - a.x) * (p.y - a.y) - (p.x - a.x) * (b.y - a.y);
 
             // Non-zero means it's on a side
-            if side.abs() > crate::collide::TOLERANCE {
+            if side.abs() > crate::TOLERANCE {
                 // Crosses upwards?
                 if a.y <= p.y {
                     // Yes, crosses upwards
@@ -410,7 +410,7 @@ impl SpinPolygon {
     }
 
     pub fn view(&self, dir: f64) -> &Polygon {
-        let dir = crate::angle_clean(dir);
+        let dir = physics::angle_clean(dir);
         let s = ((dir + self.dir_off) / self.dir_inc).round() as usize;
         let s = s % self.polygons.len();
         &self.polygons[s]
@@ -459,7 +459,7 @@ fn trace_contour(
     };
 
     // Correct angle if negative
-    let dir = crate::angle_clean(dir);
+    let dir = physics::angle_clean(dir);
 
     let mut contour = Vec::new();
     let mut current = start;
@@ -937,7 +937,7 @@ mod tests {
     }
 
     fn v_eq(a: Vector2<f64>, b: Vector2<f64>) -> bool {
-        (a - b).norm() < crate::collide::TOLERANCE
+        (a - b).norm() < crate::TOLERANCE
     }
 
     fn v_contains(p: &ArrayVec<Vector2<f64>, 2>, q: Vector2<f64>) -> bool {

@@ -543,6 +543,7 @@ impl LuaEnv {
             Ok(())
         };
         open_lib("vec2", physics::vec2::open_vec2)?;
+        open_lib("collide", crate::lua::collide::open_collide)?;
         open_lib("transform", physics::transform2::open_transform2)?;
         open_lib("colour", renderer::colour::open_colour)?;
         open_lib("rnd", crate::rng::open_rnd)?;

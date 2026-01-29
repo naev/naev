@@ -3839,6 +3839,7 @@ src/audio/src/source_spatialize.rs
 src/audio/src/system_events.rs
 src/background.c
 src/background.h
+src/background.rs
 src/base64.c
 src/base64.h
 src/board.c
@@ -3849,6 +3850,8 @@ src/claim.c
 src/claim.h
 src/cmark_wrap.c
 src/cmark_wrap.h
+src/collide/src/lib.rs
+src/collide/src/polygon.rs
 src/collision.h
 src/colour.c
 src/colour.h
@@ -3958,6 +3961,7 @@ src/linebreak.rs
 src/load.c
 src/load.h
 src/log.h
+src/lua/collide.rs
 src/lua/ryaml.rs
 src/lua_enet.c
 src/lua_enet.h
@@ -4130,9 +4134,7 @@ src/physfs_archiver_blacklist.c
 src/physfs_archiver_blacklist.h
 src/physics.c
 src/physics.h
-src/physics/src/collide.rs
 src/physics/src/lib.rs
-src/physics/src/polygon.rs
 src/physics/src/transform2.rs
 src/physics/src/vec2.rs
 src/pilot.c

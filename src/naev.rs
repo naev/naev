@@ -30,6 +30,7 @@ mod ship;
 mod slots;
 mod spfx;
 mod lua {
+    pub mod collide;
     pub mod ryaml;
 }
 

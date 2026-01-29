@@ -3,6 +3,7 @@
 ####
 subdir('audio')
 subdir('core')
+subdir('collide')
 subdir('ndata')
 subdir('gettext')
 subdir('nlog')
@@ -55,10 +56,10 @@ source_rust = files(
    'toolkit/src/lib.rs',
    'toolkit/src/widget.rs',
    'physics/src/lib.rs',
-   'physics/src/collide.rs',
-   'physics/src/polygon.rs',
    'physics/src/vec2.rs',
    'physics/src/transform2.rs',
+   'collide/src/lib.rs',
+   'collide/src/polygon.rs',
    'pluginmgr/src/lib.rs',
    'pluginmgr/src/plugin.rs',
    'pluginmgr/src/install.rs',
@@ -80,6 +81,7 @@ source_rust = files(
    'slots.rs',
    'spfx.rs',
    'lua/ryaml.rs',
+   'lua/collide.rs',
 )
 ####
 # C Source lists
