@@ -357,8 +357,8 @@ void system_updateAsteroids( StarSystem *sys )
       /* Have to subtract excluded area. */
       for ( int j = 0; j < array_size( sys->astexclude ); j++ ) {
          AsteroidExclusion *exc = &sys->astexclude[j];
-         density -= CollideCircleIntersection( &ast->pos, ast->radius,
-                                               &exc->pos, exc->radius ) *
+         density -= collide_circle_circle( &ast->pos, ast->radius, &exc->pos,
+                                           exc->radius, NULL ) *
                     ast->density / ASTEROID_REF_AREA;
       }
    }

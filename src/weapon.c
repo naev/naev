@@ -125,10 +125,9 @@ static void weapon_damage( Weapon *w, const Damage *dmg );
 static void weapon_hit( Weapon *w, const WeaponHit *hit );
 static void weapon_hitBeam( Weapon *w, const WeaponHit *hit, double dt );
 static void weapon_miss( Weapon *w );
-static int  weapon_testCollision( const WeaponCollision *wc,
-                                  const glTexture *ctex, int csx, int csy,
-                                  const Solid *csol, const CollPolyView *cpol,
-                                  double cradius, vec2 crash[2] );
+static int  weapon_testCollision( const WeaponCollision *wc, const Solid *csol,
+                                  const CollPolyView *cpol, double cradius,
+                                  vec2 crash[2] );
 /* think */
 static void think_seeker( Weapon *w, double dt );
 static void think_beam( Weapon *w, double dt );
@@ -970,10 +969,9 @@ static int weapon_checkCanHit( const Weapon *w, const Pilot *p )
  * detected.
  *    @return Number of collisions detected (0 to 2)
  */
-static int weapon_testCollision( const WeaponCollision *wc,
-                                 const glTexture *ctex, int csx, int csy,
-                                 const Solid *csol, const CollPolyView *cpol,
-                                 double cradius, vec2 crash[2] )
+static int weapon_testCollision( const WeaponCollision *wc, const Solid *csol,
+                                 const CollPolyView *cpol, double cradius,
+                                 vec2 crash[2] )
 {
    NTracingZone( _ctx, 1 );
 
@@ -1052,9 +1050,6 @@ static int weapon_testCollision( const WeaponCollision *wc,
       if ( cpol != NULL ) {
          ret = collide_line_polygon( &w->solid.pos, w->solid.dir, wc->beamrange,
                                      cpol, cpos, crash );
-      } else if ( ctex != NULL ) {
-         ret = CollideLineSprite( &w->solid.pos, w->solid.dir, wc->beamrange,
-                                  ctex, csx, csy, cpos, crash );
       } else {
          const vec2 endpoint = { .x = e2x, .y = e2y };
          ret = collide_line_circle( &w->solid.pos, &endpoint, cpos, cradius,
@@ -1097,42 +1092,14 @@ static int weapon_testCollision( const WeaponCollision *wc,
       /* Case full polygon on polygon collision. */
       if ( wc->polyview != NULL )
          ret = collide_polygon_polygon( cpol, cpos, wc->polyview, wpos, crash );
-      /* GFX on polygon. */
-      else if ( ( wc->gfx != NULL ) && ( wc->gfx->tex != NULL ) )
-         ret = CollideSpritePolygon( cpol, cpos, wc->gfx->tex, w->sx, w->sy,
-                                     wpos, crash );
       /* Circle on polygon. */
       else
          ret = collide_circle_polygon( wpos, wc->range, cpol, cpos, crash );
    }
-   /* Try to do texture next. */
-   else if ( ctex != NULL ) {
-      /* GFX on polygon. */
-      if ( wc->polyview != NULL )
-         ret = CollideSpritePolygon( wc->polyview, wpos, ctex, csx, csy, cpos,
-                                     crash );
-      /* Case texture on texture collision. */
-      else if ( ( wc->gfx != NULL ) && ( wc->gfx->tex != NULL ) )
-         ret = CollideSprite( wc->gfx->tex, w->sx, w->sy, wpos, ctex, csx, csy,
-                              cpos, crash );
-      /* Case no polygon and circle collision. */
-      else
-         ret =
-            CollideCircleSprite( wpos, wc->range, ctex, csx, csy, cpos, crash );
-   }
    /* Finally radius only. */
    else {
-      /* GFX on polygon. */
-      if ( wc->polyview != NULL )
-         ret = CollideSpritePolygon( wc->polyview, wpos, ctex, csx, csy, cpos,
-                                     crash );
-      /* Case texture on texture collision. */
-      else if ( ( wc->gfx != NULL ) && ( wc->gfx->tex != NULL ) )
-         ret = CollideCircleSprite( cpos, cradius, wc->gfx->tex, w->sx, w->sy,
-                                    wpos, crash );
       /* Trivial circle on circle case. */
-      else
-         ret = collide_circle_circle( wpos, wc->range, cpos, cradius, crash );
+      ret = collide_circle_circle( wpos, wc->range, cpos, cradius, crash );
    }
 
    NTracingZoneEnd( _ctx );
@@ -1272,8 +1239,8 @@ static void weapon_updateCollide( Weapon *w, double dt )
 
          /* Test if hit. */
          if ( !weapon_testCollision(
-                 &wc, p->ship->gfx_space, p->tsx, p->tsy, &p->solid,
-                 poly_view( p->ship->polygon, p->solid.dir ), 0., crash ) )
+                 &wc, &p->solid, poly_view( p->ship->polygon, p->solid.dir ),
+                 0., crash ) )
             continue;
 
          /* Handle the hit. */
@@ -1316,12 +1283,10 @@ static void weapon_updateCollide( Weapon *w, double dt )
 
             if ( a->polygon != NULL ) {
                CollPolyView *rpoly = poly_rotate( a->polygon, (float)a->ang );
-               coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->sol, rpoly,
-                                            0., crash );
+               coll = weapon_testCollision( &wc, &a->sol, rpoly, 0., crash );
                poly_free_view( rpoly );
             } else
-               coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->sol, NULL,
-                                            0., crash );
+               coll = weapon_testCollision( &wc, &a->sol, NULL, 0., crash );
 
             /* Missed. */
             if ( !coll )
@@ -1375,9 +1340,8 @@ static void weapon_updateCollide( Weapon *w, double dt )
          }
 
          /* Do the real collision test. */
-         coll = weapon_testCollision( &wc, wchit.gfx->tex, whit->sx, whit->sy,
-                                      &whit->solid, wchit.polyview, wchit.range,
-                                      crash );
+         coll = weapon_testCollision( &wc, &whit->solid, wchit.polyview,
+                                      wchit.range, crash );
          if ( !coll )
             continue;
 
@@ -1593,8 +1557,8 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius,
 
          /* Test if hit. */
          if ( !weapon_testCollision(
-                 &wc, p->ship->gfx_space, p->tsx, p->tsy, &p->solid,
-                 poly_view( p->ship->polygon, p->solid.dir ), 0., crash ) )
+                 &wc, &p->solid, poly_view( p->ship->polygon, p->solid.dir ),
+                 0., crash ) )
             continue;
 
          /* Have pilot take damage and get real damage done. */
@@ -1633,12 +1597,10 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius,
 
             if ( a->polygon != NULL ) {
                CollPolyView *rpoly = poly_rotate( a->polygon, (float)a->ang );
-               coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->sol, rpoly,
-                                            0., crash );
+               coll = weapon_testCollision( &wc, &a->sol, rpoly, 0., crash );
                poly_free_view( rpoly );
             } else
-               coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->sol, NULL,
-                                            0., crash );
+               coll = weapon_testCollision( &wc, &a->sol, NULL, 0., crash );
 
             /* Missed. */
             if ( !coll )
@@ -1679,9 +1641,8 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius,
          }
 
          /* Actually test the collision. */
-         coll = weapon_testCollision( &wc, wchit.gfx->tex, whit->sx, whit->sy,
-                                      &whit->solid, wchit.polyview, wchit.range,
-                                      crash );
+         coll = weapon_testCollision( &wc, &whit->solid, wchit.polyview,
+                                      wchit.range, crash );
          if ( !coll )
             continue;
 

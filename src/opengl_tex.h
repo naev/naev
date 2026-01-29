@@ -22,8 +22,7 @@
 /*
  * Texture flags.
  */
-#define OPENGL_TEX_MAPTRANS ( 1 << 0 ) /**< Create a transparency map. */
-#define OPENGL_TEX_MIPMAPS ( 1 << 1 )  /**< Creates mipmaps. */
+#define OPENGL_TEX_MIPMAPS ( 1 << 1 ) /**< Creates mipmaps. */
 #define OPENGL_TEX_SKIPCACHE                                                   \
    ( 1 << 2 ) /**< Skip caching checks and create new texture. */
 #define OPENGL_TEX_SDF                                                         \

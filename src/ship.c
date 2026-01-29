@@ -585,10 +585,7 @@ int ship_size( const Ship *s )
 static int ship_loadSpaceImage( Ship *temp, const char *str, int sx, int sy )
 {
    unsigned int flags = OPENGL_TEX_MIPMAPS;
-   /* If no collision polygon, we use transparency mapping. */
-   if ( temp->polygon == NULL )
-      flags |= OPENGL_TEX_MAPTRANS;
-   temp->gfx_space = gl_newSprite( str, sx, sy, flags );
+   temp->gfx_space    = gl_newSprite( str, sx, sy, flags );
    /* 2D graphics will overwrite the size. */
    temp->size =
       tex_sw( temp->gfx_space ) * 0.5 + tex_sh( temp->gfx_space ) * 0.5;

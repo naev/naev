@@ -67,12 +67,11 @@ static glTexture **asteroid_gfx =
 static int asteroid_creating = 0;
 
 /* Prototypes. */
-static int       asttype_cmp( const void *p1, const void *p2 );
-static int       asttype_parse( AsteroidType *at, const char *file );
-static CollPoly *asteroid_loadPLG( const char *buf );
-static int       astgroup_cmp( const void *p1, const void *p2 );
-static int       astgroup_parse( AsteroidTypeGroup *ag, const char *file );
-static int       asttype_load( void );
+static int asttype_cmp( const void *p1, const void *p2 );
+static int asttype_parse( AsteroidType *at, const char *file );
+static int astgroup_cmp( const void *p1, const void *p2 );
+static int astgroup_parse( AsteroidTypeGroup *ag, const char *file );
+static int asttype_load( void );
 
 static int  asteroid_updateSingle( Asteroid *a );
 static void asteroid_renderSingle( const Asteroid *a );
@@ -696,10 +695,11 @@ static int asttype_parse( AsteroidType *at, const char *file )
             .gfx     = NULL,
             .polygon = NULL,
          };
-         gfx.gfx =
-            xml_parseTexture( node, SPOB_GFX_SPACE_PATH "asteroid/%s", 1, 1,
-                              OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
-         gfx.polygon = asteroid_loadPLG( xml_get( node ) );
+         gfx.gfx = xml_parseTexture( node, SPOB_GFX_SPACE_PATH "asteroid/%s", 1,
+                                     1, OPENGL_TEX_MIPMAPS );
+         if ( gfx.gfx != NULL )
+            gfx.polygon = poly_load_2d( tex_name( gfx.gfx ), tex_sx( gfx.gfx ),
+                                        tex_sy( gfx.gfx ) );
          array_push_back( &at->gfxs, gfx );
          continue;
       } else if ( xml_isNode( node, "commodity" ) ) {
@@ -768,25 +768,6 @@ static int asttype_parse( AsteroidType *at, const char *file )
 #undef MELEMENT
 
    return 0;
-}
-
-/**
- * @brief Loads the collision polygon for an asteroid type.
- *
- *    @param buf Name of the file.
- */
-static CollPoly *asteroid_loadPLG( const char *buf )
-{
-   char file[PATH_MAX];
-   snprintf( file, sizeof( file ), "%s%s.xml", ASTEROID_POLYGON_PATH, buf );
-   CollPoly *polygon = poly_load_xml( file );
-   /* See if the file does exist. */
-   if ( polygon == NULL )
-      WARN( _( "%s xml collision polygon does not exist!\n \
-               Please use the script 'polygon_from_sprite.py'\n \
-               This file can be found in Naev's artwork repo." ),
-            file );
-   return polygon;
 }
 
 /**

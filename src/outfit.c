@@ -2027,13 +2027,8 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
       return -1;
    }
 
-   /* Load the collision polygon. */
-   const char *buf = xml_get( node );
-
    /* Load normal graphics. */
-   flags = OPENGL_TEX_MIPMAPS;
-   if ( gfx->polygon == NULL )
-      flags |= OPENGL_TEX_MAPTRANS;
+   flags    = OPENGL_TEX_MIPMAPS;
    gfx->tex = xml_parseTexture( node, OUTFIT_GFX_PATH "space/%s", 6, 6, flags );
    if ( gfx->tex == NULL ) {
       WARN( "Failed to load texture for %s!", temp->name );
@@ -2048,11 +2043,7 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
       outfit_setProp( temp, OUTFIT_PROP_WEAP_COLLISION_OVERRIDE );
       gfx->col_size = strtod( col, NULL );
       free( col );
-   }
-
-   /* Validity check: there must be 1 polygon per sprite if no collision size.
-    */
-   else {
+   } else {
       outfit_loadPLG( temp );
       if ( gfx->polygon == NULL )
          WARN( _( "Outfit '%s' is missing collision polygon!" ), temp->name );

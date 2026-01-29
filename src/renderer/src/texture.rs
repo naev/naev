@@ -1481,7 +1481,6 @@ impl FramebufferBuilder {
 
 #[allow(dead_code)]
 struct Flags {
-    maptrans: bool,
     mipmaps: bool,
     skipcache: bool,
     sdf: bool,
@@ -1491,7 +1490,6 @@ struct Flags {
 impl Flags {
     fn from(flags: c_uint) -> Self {
         Flags {
-            maptrans: (flags & naevc::OPENGL_TEX_MAPTRANS) > 0,
             mipmaps: (flags & naevc::OPENGL_TEX_MIPMAPS) > 0,
             skipcache: (flags & naevc::OPENGL_TEX_SKIPCACHE) > 0,
             sdf: (flags & naevc::OPENGL_TEX_SDF) > 0,
