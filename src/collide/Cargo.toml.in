@@ -12,12 +12,8 @@ workspace = true
 path = "@SOURCE@/src/collide/src/lib.rs"
 
 [dependencies]
-naevc = { workspace = true }
 anyhow = { workspace = true }
-mlua = { workspace = true }
 nalgebra = { workspace = true }
-derive_more = { workspace = true }
-static_assertions = { workspace = true }
 image = { workspace = true }
 serde = { workspace = true }
 nlog = { workspace = true }

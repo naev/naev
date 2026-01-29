@@ -18,12 +18,3 @@ mlua = { workspace = true }
 nalgebra = { workspace = true }
 derive_more = { workspace = true }
 static_assertions = { workspace = true }
-image = { workspace = true }
-serde = { workspace = true }
-nlog = { workspace = true }
-ndata = { workspace = true }
-quick-xml = { version = "0.38", features = ["serialize"] }
-ramer_douglas_peucker = "0.2"
-mint = "0.5"
-itertools = "0.14"
-arrayvec = "0.7"
