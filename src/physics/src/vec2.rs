@@ -1,4 +1,3 @@
-use crate::collide;
 use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
 use nalgebra::{Vector2, Vector3};
 use std::os::raw::c_void;
@@ -393,59 +392,6 @@ impl UserData for Vec2 {
                 vec.0.x *= m;
                 vec.0.y *= m;
                 Ok(Vec2(vec.0))
-            },
-        );
-
-        /*@
-         * @brief Sees if two line segments collide.
-         *
-         *    @luatparam Vec2 s1 Start point of the first segment.
-         *    @luatparam Vec2 e1 End point of the first segment.
-         *    @luatparam Vec2 s2 Start point of the second segment.
-         *    @luatparam Vec2 e2 End point of the second segment.
-         *    @luatreturn Vec2 Collision point if they collide.
-         * @luafunc collideLineLine
-         */
-        methods.add_method(
-            "collideLineLine",
-            |_, s1, (e1, s2, e2): (Self, Self, Self)| -> mlua::Result<Option<Vec2>> {
-                let hit = collide::line_line((*s1).into(), e1.into(), s2.into(), e2.into());
-                if let Some(h) = hit.first() {
-                    Ok(Some((*h).into()))
-                } else {
-                    Ok(None)
-                }
-            },
-        );
-
-        /*@
-         * @brief Computes the intersection of a line segment and a circle.
-         *
-         *    @luatparam Vector centre Centre of the circle.
-         *    @luatparam number radius Radius of the circle.
-         *    @luatparam Vector p1 First point of the line segment.
-         *    @luatparam Vector p2 Second point of the line segment.
-         *    @luatreturn Vector|nil First point of collision or nil if no collision.
-         *    @luatreturn Vector|nil Second point of collision or nil if single-point
-         * collision.
-         * @luafunc collideCircleLine
-         */
-        methods.add_method(
-            "collideCircleLine",
-            |_,
-             center,
-             (radius, p1, p2): (f64, Self, Self)|
-             -> mlua::Result<(Option<Vec2>, Option<Vec2>)> {
-                let hit = collide::line_circle(p1.into(), p2.into(), (*center).into(), radius);
-                if let Some(h1) = hit.first() {
-                    if let Some(h2) = hit.get(1) {
-                        Ok((Some((*h1).into()), Some((*h2).into())))
-                    } else {
-                        Ok((Some((*h1).into()), None))
-                    }
-                } else {
-                    Ok((None, None))
-                }
             },
         );
     }

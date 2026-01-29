@@ -2,7 +2,7 @@ use arrayvec::ArrayVec;
 use nalgebra::Vector2;
 use nlog::warn;
 
-mod polygon;
+pub mod polygon;
 
 pub(crate) const TOLERANCE: f64 = 1e-6;
 

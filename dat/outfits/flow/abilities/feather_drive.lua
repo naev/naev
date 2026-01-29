@@ -118,7 +118,7 @@ function ontoggle( p, po, on )
       local tp = t:pos()
       local tw, th = t:ship():dims()
       local tr = (tw+th)*0.25
-      local col1, col2 = vec2.collideCircleLine( tp, tr+pr, pos, newpos )
+      local col1, col2 = collide.circle_line( tp, tr+pr, pos, newpos )
       if col1 then
          col2 = col2 or col1
          local col = (col1+col2)*0.5
