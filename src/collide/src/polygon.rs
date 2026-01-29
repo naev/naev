@@ -1,5 +1,5 @@
 use crate::{line_circle, line_line};
-use anyhow::{Context, Result};
+use anyhow::Result;
 use arrayvec::ArrayVec;
 use image::GenericImageView;
 use itertools::Itertools;
@@ -526,9 +526,7 @@ pub extern "C" fn poly_load_xml(name: *const c_char) -> *mut SpinPolygon {
 pub extern "C" fn poly_load_2d(name: *const c_char, sx: c_int, sy: c_int) -> *mut SpinPolygon {
     let path = unsafe { CStr::from_ptr(name).to_str().unwrap() };
     let path = Path::new(path);
-    match SpinPolygon::from_image_path(path, sx as u32, sy as u32)
-        .with_context(|| format!("generating polygons from '{}'", path.display()))
-    {
+    match SpinPolygon::from_image_path(path, sx as u32, sy as u32) {
         Ok(sp) => Box::into_raw(Box::new(sp)),
         Err(e) => {
             warn_err!(e);
