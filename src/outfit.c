@@ -94,7 +94,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSLocalMap( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSGUI( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent );
-static int  outfit_loadPLG( Outfit *temp, const char *buf );
+static int  outfit_loadPLG( Outfit *temp );
 static int  outfit_loadGFX( Outfit *temp, const xmlNodePtr node );
 static void sdesc_miningRarity( int *l, Outfit *temp, int rarity );
 /* Display */
@@ -1949,11 +1949,9 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
  *    @param temp Outfit to load into.
  *    @param buf Name of the file.
  */
-static int outfit_loadPLG( Outfit *temp, const char *buf )
+static int outfit_loadPLG( Outfit *temp )
 {
-   char       file[PATH_MAX];
    OutfitGFX *gfx;
-
    if ( outfit_isLauncher( temp ) )
       gfx = &temp->u.lau.gfx;
    else if ( outfit_isBolt( temp ) )
@@ -1963,16 +1961,8 @@ static int outfit_loadPLG( Outfit *temp, const char *buf )
             temp->name );
       return -1;
    }
-
-   snprintf( file, sizeof( file ), "%s%s.xml", OUTFIT_POLYGON_PATH, buf );
-   gfx->polygon = poly_load( file );
-
-   /* See if the file does exist. */
-   if ( gfx->polygon == NULL )
-      WARN( _( "%s xml collision polygon does not exist!\n \
-               Please use the script 'polygon_from_sprite.py' \
-that can be found in Naev's artwork repo." ),
-            file );
+   gfx->polygon = poly_load_2d( tex_name( gfx->tex ), tex_sx( gfx->tex ),
+                                tex_sy( gfx->tex ) );
    return 0;
 }
 
@@ -2063,7 +2053,7 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
    /* Validity check: there must be 1 polygon per sprite if no collision size.
     */
    else {
-      outfit_loadPLG( temp, buf );
+      outfit_loadPLG( temp );
       if ( gfx->polygon == NULL )
          WARN( _( "Outfit '%s' is missing collision polygon!" ), temp->name );
    }

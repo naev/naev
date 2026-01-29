@@ -724,7 +724,7 @@ static int ship_loadPLG( Ship *temp, const char *buf )
    else
       snprintf( file, sizeof( file ), "%s%s.xml", SHIP_POLYGON_PATH2D, buf );
 
-   temp->polygon = poly_load( file );
+   temp->polygon = poly_load_xml( file );
    if ( temp->polygon == NULL )
       WARN( _( "%s xml collision polygon does not exist! Please use the "
                "script '%s' found in Naev's main repository." ),

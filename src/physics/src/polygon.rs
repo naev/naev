@@ -336,6 +336,7 @@ pub struct SpinPolygon {
 impl SpinPolygon {
     pub fn from_image_path<P: AsRef<Path>>(path: P, sx: u32, sy: u32) -> Result<Self> {
         // TODO caching
+        let path = ndata::image_path(&path)?;
         let io = ndata::iostream(&path)?;
         let img = image::ImageReader::with_format(
             std::io::BufReader::new(io),
@@ -505,10 +506,23 @@ fn trace_contour(
 use std::ffi::{CStr, c_char, c_int};
 
 #[unsafe(no_mangle)]
-pub extern "C" fn poly_load(name: *const c_char) -> *mut SpinPolygon {
+pub extern "C" fn poly_load_xml(name: *const c_char) -> *mut SpinPolygon {
     let path = unsafe { CStr::from_ptr(name).to_str().unwrap() };
     let path = Path::new(path);
     match SpinPolygon::from_xml(path) {
+        Ok(sp) => Box::into_raw(Box::new(sp)),
+        Err(e) => {
+            warn_err!(e);
+            std::ptr::null_mut::<SpinPolygon>()
+        }
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn poly_load_2d(name: *const c_char, sx: c_int, sy: c_int) -> *mut SpinPolygon {
+    let path = unsafe { CStr::from_ptr(name).to_str().unwrap() };
+    let path = Path::new(path);
+    match SpinPolygon::from_image_path(path, sx as u32, sy as u32) {
         Ok(sp) => Box::into_raw(Box::new(sp)),
         Err(e) => {
             warn_err!(e);

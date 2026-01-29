@@ -779,7 +779,7 @@ static CollPoly *asteroid_loadPLG( const char *buf )
 {
    char file[PATH_MAX];
    snprintf( file, sizeof( file ), "%s%s.xml", ASTEROID_POLYGON_PATH, buf );
-   CollPoly *polygon = poly_load( file );
+   CollPoly *polygon = poly_load_xml( file );
    /* See if the file does exist. */
    if ( polygon == NULL )
       WARN( _( "%s xml collision polygon does not exist!\n \

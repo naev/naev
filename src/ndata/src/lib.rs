@@ -1,6 +1,7 @@
 use directories::ProjectDirs;
 use nlog::{debug, info, warn, warn_err};
 use sdl3 as sdl;
+use std::borrow::Cow;
 use std::ffi::{CStr, CString, c_char};
 use std::io::{Read, Result};
 use std::path::{Path, PathBuf};
@@ -374,6 +375,30 @@ pub fn stat<P: AsRef<Path>>(filename: P) -> Result<Stat> {
             },
             readonly: st.readonly != 0,
         }),
+    }
+}
+
+/// Gets the path to an image if it exists
+pub fn image_path<P: AsRef<Path>>(path: &P) -> anyhow::Result<Cow<'_, Path>> {
+    if path.as_ref().extension().is_some() {
+        Ok(Cow::Borrowed(path.as_ref()))
+    } else {
+        let mut pb = path.as_ref().to_path_buf();
+        use image::ImageFormat;
+        for imageformat in &[
+            ImageFormat::Avif,
+            ImageFormat::WebP,
+            ImageFormat::Png,
+            ImageFormat::Jpeg,
+        ] {
+            for ext in imageformat.extensions_str() {
+                pb.set_extension(ext);
+                if exists(&pb) {
+                    return Ok(Cow::Owned(pb));
+                }
+            }
+        }
+        anyhow::bail!("File not found!")
     }
 }
 

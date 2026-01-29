@@ -14,7 +14,8 @@ typedef struct CollPolyView CollPolyView;
 typedef struct CollPoly     CollPoly;
 
 /* Loads a polygon data from xml. */
-CollPoly *poly_load( const char *name );
+CollPoly *poly_load_xml( const char *name );
+CollPoly *poly_load_2d( const char *name, int sx, int sy );
 void      poly_free( CollPoly *polygon );
 void      poly_free_view( CollPolyView *view );
 
