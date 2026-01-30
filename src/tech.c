@@ -364,9 +364,9 @@ static int tech_parseXMLData( tech_group_t *tech, xmlNodePtr parent )
             xmlr_attr_strd( node, "avail", itm->avail );
             xmlr_attr_int_def( node, "avail_search", itm->avail_search, 0 );
             xmlr_attr_float_def( node, "price_mod", itm->price_mod, 1. );
+            if ( itm->avail != NULL )
+               itm->avail_chunk = cond_compile( itm->avail );
          }
-         if ( itm->avail != NULL )
-            itm->avail_chunk = cond_compile( itm->avail );
          free( buf );
          continue;
       }
