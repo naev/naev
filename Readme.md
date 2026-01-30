@@ -66,7 +66,7 @@ graphics card and driver supporting at least OpenGL 3.3, Naev requires:
   * libunibreak`*`
   * cmark`*`
   * pyyaml (compilation only)
-  * git-lsf (compilation only)
+  * git-lfs (compilation only)
 
 Dependencies marked with `*` will use subprojects if not found in the host
 system.
