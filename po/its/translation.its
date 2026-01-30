@@ -24,6 +24,7 @@
 
   <!-- Commodities -->
   <its:translateRule selector="/commodity/name" translate="yes"/>
+  <its:translateRule selector="/commodity/display" translate="yes"/>
   <its:translateRule selector="/commodity/description" translate="yes"/>
 
   <!-- Spobs -->
