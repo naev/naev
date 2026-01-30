@@ -57,6 +57,7 @@ typedef struct CommodityModifier_ {
  */
 typedef struct Commodity_ {
    char        *name;        /**< Name of the commodity. */
+   char        *display;     /**< Display name of the commodity. */
    char        *description; /**< Description of the commodity. */
    unsigned int flags;       /**< Commodity flags. */
 
@@ -121,7 +122,8 @@ Commodity *commodity_getByIndex( const int indx );
 int        commodity_load( void );
 void       commodity_free( void );
 
-int commodity_checkIllegal( const Commodity *com, int faction );
+const char *commodity_name( const Commodity *com );
+int         commodity_checkIllegal( const Commodity *com, int faction );
 
 /*
  * Temporary commodities.

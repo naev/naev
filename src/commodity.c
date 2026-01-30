@@ -210,6 +210,7 @@ static void commodity_freeOne( Commodity *com )
 {
    CommodityModifier *this, *next;
    free( com->name );
+   free( com->display );
    free( com->description );
    free( com->price_ref );
    gl_freeTexture( com->gfx_store );
@@ -318,6 +319,7 @@ static int commodity_parse( Commodity *temp, const char *filename )
       xml_onlyNodes( node );
 
       xmlr_strd( node, "name", temp->name );
+      xmlr_strd( node, "display", temp->display );
       xmlr_strd( node, "description", temp->description );
       xmlr_int( node, "price", temp->price );
       xmlr_float( node, "price_mod", temp->price_mod );
@@ -435,6 +437,13 @@ static int commodity_parse( Commodity *temp, const char *filename )
 
    xmlFreeDoc( doc );
    return 0;
+}
+
+const char *commodity_name( const Commodity *com )
+{
+   if ( com->display != NULL )
+      return _( com->display );
+   return _( com->name );
 }
 
 /**

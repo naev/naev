@@ -249,7 +249,7 @@ static void commodity_exchange_genList( unsigned int wid )
       for ( int i = 0; i < ngoods; i++ ) {
          const Commodity *com = commodity_list[i].com;
          cgoods[i].image      = gl_dupTexture( com->gfx_store );
-         cgoods[i].caption    = strdup( _( com->name ) );
+         cgoods[i].caption    = strdup( commodity_name( com ) );
          cgoods[i].quantity   = pfleet_cargoOwned( com );
       }
    } else {
@@ -364,7 +364,7 @@ void commodity_update( unsigned int wid, const char *str )
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s", buf_purchase_price );
 
    window_modifyText( wid, "txtDInfo", buf );
-   window_modifyText( wid, "txtName", _( com->name ) );
+   window_modifyText( wid, "txtName", commodity_name( com ) );
    l = 0;
    l += scnprintf( &buf[l], sizeof( buf ) - l, "%s", _( com->description ) );
    if ( array_size( com->illegalto ) > 0 ) {
@@ -438,7 +438,7 @@ static int commodity_canBuy( const CommodityItem *comi, double price_mod )
 
    if ( comi->buyable <= 0 ) {
       land_errDialogueBuild( _( "%s is not sold here!" ),
-                             _( comi->com->name ) );
+                             commodity_name( comi->com ) );
       failure = 1;
    }
 

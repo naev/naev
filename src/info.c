@@ -1024,11 +1024,11 @@ static void cargo_genList( unsigned int wid )
          int illegal          = ( array_size( pc->commodity->illegalto ) > 0 );
 
          if ( pc->quantity > 0 )
-            SDL_asprintf( &buf[i], "%s %d%s%s", _( pc->commodity->name ),
+            SDL_asprintf( &buf[i], "%s %d%s%s", commodity_name( pc->commodity ),
                           pc->quantity, misn ? _( " [#bMission#0]" ) : "",
                           illegal ? _( " (#rillegal#0)" ) : "" );
          else
-            SDL_asprintf( &buf[i], "%s%s%s", _( pc->commodity->name ),
+            SDL_asprintf( &buf[i], "%s%s%s", commodity_name( pc->commodity ),
                           misn ? _( " [#bMission#0]" ) : "",
                           illegal ? _( " (#rillegal#0)" ) : "" );
       }
@@ -1067,9 +1067,9 @@ static void cargo_update( unsigned int wid, const char *str )
    com = pclist[pos].commodity;
 
    if ( !com->description )
-      l = scnprintf( desc, sizeof( desc ), "%s", _( com->name ) );
+      l = scnprintf( desc, sizeof( desc ), "%s", commodity_name( com ) );
    else
-      l = scnprintf( desc, sizeof( desc ), "%s\n\n%s", _( com->name ),
+      l = scnprintf( desc, sizeof( desc ), "%s\n\n%s", commodity_name( com ),
                      _( com->description ) );
 
    /* Only add fleet information with fleet capacity. */
@@ -1175,7 +1175,7 @@ static void cargo_jettison( unsigned int wid, const char *str )
       double amount =
          dialogue_fader( _( "Jettison Cargo?" ), 0., pclist[pos].quantity, 0.,
                          _( "Jettison how many tonnes of %s?" ),
-                         _( pclist[pos].commodity->name ) );
+                         commodity_name( pclist[pos].commodity ) );
       int value = round( amount );
       if ( value <= 0 )
          return;

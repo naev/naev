@@ -286,7 +286,7 @@ static int commodityL_flags( lua_State *L )
 static int commodityL_name( lua_State *L )
 {
    const Commodity *c = luaL_validcommodity( L, 1 );
-   lua_pushstring( L, _( c->name ) );
+   lua_pushstring( L, commodity_name( c ) );
    return 1;
 }
 
