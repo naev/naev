@@ -84,8 +84,13 @@ to install, for several operating systems and Linux distros:
 
 ### 4.1  Cloning and Submodules
 
-Naev requires the artwork submodule to run from git. You can check out the
-submodules from the cloned repository with:
+It is recommended to first run `git lfs install`, so that lfs is used
+automatically in the checkout, however, it can also be run manually
+instead.
+
+First clone this repo with whatever method you wish. Next, Naev requires
+the artwork submodule to run from git. You can check out the submodules
+from the cloned repository with:
 
 ``` bash
 git submodule update --init --recursive
@@ -99,7 +104,9 @@ recommended) by setting the following configuration:
 git config submodule.recurse true
 ```
 
-You also need to get the assets:
+If you did not run `git lfs install` or are getting errors about missing
+assets, you can make sure that they are checked out with git lfs using the
+following commands:
 ``` bash
 cd assets/
 git lfs fetch
