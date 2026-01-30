@@ -66,6 +66,7 @@ graphics card and driver supporting at least OpenGL 3.3, Naev requires:
   * libunibreak`*`
   * cmark`*`
   * pyyaml (compilation only)
+  * git-lsf (compilation only)
 
 Dependencies marked with `*` will use subprojects if not found in the host
 system.
@@ -96,6 +97,14 @@ recommended) by setting the following configuration:
 
 ``` bash
 git config submodule.recurse true
+```
+
+You also need to get the assets:
+``` bash
+cd assets/
+git lfs fetch
+git lfs checkout
+cd ..
 ```
 
 ### 4.2  Compilation
@@ -135,7 +144,10 @@ supports debuginfod, also add `set debuginfod enabled on` to a file named
 `--buildtype=debugoptimized` `-Db_lto=true` `-Db_lto_mode=thin` in place
 of the corresponding values above.
 
-#### 4.2.1  For up-to-date build instructions, check out the compilation page in our [wiki](https://codeberg.org/naev/naev/wiki/Compiling)
+#### Up-to-date build instructions
+
+Check out the compilation page in our
+[wiki](https://codeberg.org/naev/naev/wiki/Compiling)
 
 ### 4.3  Running Naev
 
