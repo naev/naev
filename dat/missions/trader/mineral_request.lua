@@ -75,7 +75,7 @@ function create ()
       return good_comm
    end )
    if #candidates <= 0 then
-      return
+      misn.finish(false)
    end
    local mining_sys = candidates[ rnd.rnd(1,#candidates) ]
 
@@ -112,7 +112,7 @@ function create ()
       return not sys_has_mineral( spb:system() )
    end )
    if not mem.dest then
-      return
+      misn.finish(false)
    end
 
    -- Compute the most efficient mining route
@@ -122,6 +122,10 @@ function create ()
       if d < mindist and sys_has_mineral( sys, mem.mineral ) then
          mindist = d
       end
+   end
+   -- No route found, so abort
+   if mindist >= math.huge then
+      misn.finish(false)
    end
 
    -- Figure out the reward
