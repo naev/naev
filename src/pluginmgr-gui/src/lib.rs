@@ -830,7 +830,48 @@ impl App {
                 self.refresh_local_task()
             }
             Message::Uninstall(plugin) => {
-                self.uninstall_task(&plugin, &self.catalog.conf.install_path, false)
+                // If over 20 MiB, warn
+                if let Ok(s) = fs_extra::dir::get_size(&self.catalog.conf.install_path)
+                    && s > 20 * 1024 * 1024
+                {
+                    use sdl::messagebox::{
+                        ButtonData, ClickedButton, MessageBoxButtonFlag, MessageBoxFlag,
+                        show_message_box,
+                    };
+                    match show_message_box(
+                        MessageBoxFlag::INFORMATION,
+                        &[
+                            ButtonData{
+                                flags: MessageBoxButtonFlag::NOTHING,
+                                button_id: 1,
+                                text: pgettext( "plugins","Move to Trash"),
+                            },
+                            ButtonData{
+                                flags: MessageBoxButtonFlag::ESCAPEKEY_DEFAULT,
+                                button_id: 0,
+                                text: pgettext( "plugins", "Cancel"),
+                            },
+                        ],
+                        pgettext( "plugins", "Uninstall Plugin?" ),
+                        &formatx!(pgettext( "Are you sure you want to delete the very large plugin '{}'? It will be moved to the trash.", &plugin.name )).unwrap_or("Are you sure you want to delete the very large plugin? It will be moved to the trash.".to_string()),
+                        None,
+                        None) {
+                        Ok(ClickedButton::CustomButton(cb)) => {
+                            if cb.button_id == 1 {
+                                self.uninstall_task(&plugin, &self.catalog.conf.install_path, true)
+                            } else {
+                                Task::none()
+                            }
+                        },
+                        Err(e) => {
+                            warn_err!(e);
+                            Task::none()
+                        },
+                        _ => Task::none(),
+                    }
+                } else {
+                    self.uninstall_task(&plugin, &self.catalog.conf.install_path, false)
+                }
             }
             Message::Delete(plugin) => {
                 use sdl::messagebox::{
@@ -843,12 +884,12 @@ impl App {
                         ButtonData{
                             flags: MessageBoxButtonFlag::NOTHING,
                             button_id: 1,
-                            text: "OK",
+                            text: pgettext( "plugins","Move to Trash"),
                         },
                         ButtonData{
                             flags: MessageBoxButtonFlag::ESCAPEKEY_DEFAULT,
                             button_id: 0,
-                            text: "Cancel",
+                            text: pgettext( "plugins", "Cancel"),
                         },
                     ],
                     pgettext( "plugins", "Delete Plugin?" ),
