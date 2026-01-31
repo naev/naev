@@ -189,10 +189,8 @@ impl Installer {
                     None => self.root.join(&*self.plugin.identifier),
                 }
             };
-            if target.is_file() {
-                fs::remove_file(&target)?;
-            } else if target.is_dir() {
-                fs::remove_dir_all(&target)?;
+            if target.is_file() || target.is_dir() {
+                trash::delete(&target)?;
             } else {
                 anyhow::bail!(format!(
                     "Plugin path '{}' is neither a file nor a directory",

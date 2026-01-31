@@ -20,7 +20,7 @@ nlog = { workspace = true }
 ndata = { workspace = true }
 physics = { workspace = true }
 quick-xml = { version = "0.38", features = ["serialize"] }
+itertools = { workspace = true }
+arrayvec = { workspace = true }
 ramer_douglas_peucker = "0.2"
 mint = "0.5"
-itertools = "0.14"
-arrayvec = "0.7"

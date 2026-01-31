@@ -96,7 +96,6 @@ credits_t economy_getPrice( const Commodity *com, const StarSystem *sys,
 credits_t economy_getPriceAtTime( const Commodity *com, const StarSystem *sys,
                                   const Spob *p, ntime_t tme )
 {
-   (void)sys;
    int             i, k;
    double          price;
    double          t;

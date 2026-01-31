@@ -31,3 +31,4 @@ iced = { workspace = true }
 tokio = { workspace = true }
 formatx = { workspace = true }
 url = { workspace = true }
+trash = { workspace = true }

@@ -89,6 +89,8 @@ base64 = "0.22"
 iced = { version = "0.14.0", default-features = false, features = ["wayland", "x11", "wgpu", "tokio", "advanced", "image", "markdown", "sipper"] }
 tokio = { version = "1", features = ["sync"] }
 webbrowser = { version = "1" }
+itertools = "0.14"
+arrayvec = "0.7"
 
 # Plugin Manager dependencies
 # Serialization / XML
@@ -105,6 +107,7 @@ rayon = "1.11" # parallel computation
 directories = "6"
 fs-err = "3"
 toml = "0.9"
+trash = "5"
 # Git operations
 git2 = "0.20"
 # Async runtime and byte buffer types
@@ -152,7 +155,6 @@ gltf = { version = "1.4", features = ["extras", "names", "utils", "EXT_texture_w
 #gltf = { version = "1", features = ["extras", "names", "utils"] }
 colored = "3"
 regex = { workspace = true }
-ramer_douglas_peucker = "0.2"
 mint = "0.5"
 # cargo-util usess cargo internals and says you shouldn't use it in external
 # packages, yet without any other alternative, here we are :)
