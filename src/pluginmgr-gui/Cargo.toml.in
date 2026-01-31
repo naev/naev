@@ -25,3 +25,4 @@ futures = { workspace = true }
 ndata = { workspace = true }
 webbrowser = { workspace = true }
 formatx = { workspace = true }
+sdl3 = { workspace = true }

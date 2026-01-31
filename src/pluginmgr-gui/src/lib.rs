@@ -8,6 +8,7 @@ use nlog::warn_err;
 use pluginmgr::install;
 use pluginmgr::install::Installer;
 use pluginmgr::plugin::{Identifier, Plugin, ReleaseStatus};
+use sdl3 as sdl;
 use serde::{Deserialize, Serialize};
 use std::borrow::Cow;
 use std::collections::HashMap;
@@ -832,7 +833,41 @@ impl App {
                 self.uninstall_task(&plugin, &self.catalog.conf.install_path, false)
             }
             Message::Delete(plugin) => {
-                self.uninstall_task(&plugin, &self.catalog.conf.install_path, true)
+                use sdl::messagebox::{
+                    ButtonData, ClickedButton, MessageBoxButtonFlag, MessageBoxFlag,
+                    show_message_box,
+                };
+                match show_message_box(
+                    MessageBoxFlag::INFORMATION,
+                    &[
+                        ButtonData{
+                            flags: MessageBoxButtonFlag::NOTHING,
+                            button_id: 1,
+                            text: "OK",
+                        },
+                        ButtonData{
+                            flags: MessageBoxButtonFlag::ESCAPEKEY_DEFAULT,
+                            button_id: 0,
+                            text: "Cancel",
+                        },
+                    ],
+                    pgettext( "plugins", "Delete Plugin?" ),
+                    &formatx!(pgettext( "Are you sure you want to delete the local plugin '{}'? It will be moved to the trash.", &plugin.name )).unwrap_or("Are you sure you want to delete the local plugin? It will be moved to the trash.".to_string()),
+                    None,
+                    None) {
+                    Ok(ClickedButton::CustomButton(cb)) => {
+                        if cb.button_id == 1 {
+                            self.uninstall_task(&plugin, &self.catalog.conf.install_path, true)
+                        } else {
+                            Task::none()
+                        }
+                    },
+                    Err(e) => {
+                        warn_err!(e);
+                        Task::none()
+                    },
+                    _ => Task::none(),
+                }
             }
             Message::LinkClicked(url) => {
                 if let Err(e) = webbrowser::open(url.as_str()) {
