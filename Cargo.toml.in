@@ -73,7 +73,7 @@ bytemuck = { version = "1.24", features = ["derive"] } # Needed for shader voodo
 regex = "1.12"
 # need dav1d 0.11.1 or newer, will appear in the version after 0.25.9
 image = { version = "0.25", default-features = false, features = [ "avif-native", "jpeg", "png", "webp" ]  }
-mlua = { version = "0.11.5", features = ["luajit", "anyhow", "send", "serialize", "macros"] }
+mlua = { version = "0.11.6", features = ["luajit", "anyhow", "send", "serialize", "macros"] }
 roxmltree = "0.21"
 symphonia = { version = "=0.5.5", features = ["opt-simd", "aac", "mp3"] }
 thunderdome = "0.6"
@@ -96,7 +96,7 @@ arrayvec = "0.7"
 # Serialization / XML
 serde = { version = "1", features = ["derive"] }
 serde-seeded = "0"
-#quick-xml = { version = "0.38", features = ["serialize", "overlapped-lists"] }
+quick-xml = { version = "0.39", features = ["serialize"] }
 # Networking and archive handling
 reqwest = { version = "0.13", default-features = false, features = ["stream", "blocking", "charset", "http2", "system-proxy", "native-tls"] }
 url = { version = "2.5", features = ["serde"] }

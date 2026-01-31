@@ -19,7 +19,7 @@ serde = { workspace = true }
 nlog = { workspace = true }
 ndata = { workspace = true }
 physics = { workspace = true }
-quick-xml = { version = "0.38", features = ["serialize"] }
+quick-xml = { workspace = true }
 itertools = { workspace = true }
 arrayvec = { workspace = true }
 ramer_douglas_peucker = "0.2"
