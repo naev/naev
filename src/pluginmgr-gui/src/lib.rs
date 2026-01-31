@@ -155,8 +155,7 @@ enum Message {
     Enable(Plugin),
     Update(Plugin),
     Disable(Plugin),
-    Uninstall(Plugin),
-    Delete(Plugin),
+    Uninstall(Plugin, bool),
     LinkClicked(widget::markdown::Uri),
     ProgressNew(Progress),
     Progress(install::Progress),
@@ -829,11 +828,20 @@ impl App {
                 let _ = plugin.disable(true);
                 self.refresh_local_task()
             }
-            Message::Uninstall(plugin) => {
+            Message::Uninstall(plugin, noremote) => {
                 // If over 20 MiB, warn
-                if let Ok(s) = fs_extra::dir::get_size(&self.catalog.conf.install_path)
+                let msg = if let Ok(s) = fs_extra::dir::get_size(&self.catalog.conf.install_path)
                     && s > 20 * 1024 * 1024
                 {
+                    Some(formatx!(pgettext( "Are you sure you want to delete the very large plugin '{}'? It will be moved to the trash.", &plugin.name )).unwrap_or("Are you sure you want to delete the very large plugin? It will be moved to the trash.".to_string()))
+                } else if noremote {
+                    Some(formatx!(pgettext( "Are you sure you want to delete the local plugin '{}'? It will be moved to the trash.", &plugin.name )).unwrap_or("Are you sure you want to delete the local plugin? It will be moved to the trash.".to_string()))
+                } else {
+                    None
+                };
+
+                // Display message prompt if necessary before removing
+                if let Some(msg) = msg {
                     use sdl::messagebox::{
                         ButtonData, ClickedButton, MessageBoxButtonFlag, MessageBoxFlag,
                         show_message_box,
@@ -841,73 +849,37 @@ impl App {
                     match show_message_box(
                         MessageBoxFlag::INFORMATION,
                         &[
-                            ButtonData{
+                            ButtonData {
                                 flags: MessageBoxButtonFlag::NOTHING,
                                 button_id: 1,
-                                text: pgettext( "plugins","Move to Trash"),
+                                text: pgettext("plugins", "Move to Trash"),
                             },
-                            ButtonData{
+                            ButtonData {
                                 flags: MessageBoxButtonFlag::ESCAPEKEY_DEFAULT,
                                 button_id: 0,
-                                text: pgettext( "plugins", "Cancel"),
+                                text: pgettext("plugins", "Cancel"),
                             },
                         ],
-                        pgettext( "plugins", "Uninstall Plugin?" ),
-                        &formatx!(pgettext( "Are you sure you want to delete the very large plugin '{}'? It will be moved to the trash.", &plugin.name )).unwrap_or("Are you sure you want to delete the very large plugin? It will be moved to the trash.".to_string()),
+                        pgettext("plugins", "Delete Plugin?"),
+                        &msg,
                         None,
-                        None) {
+                        None,
+                    ) {
                         Ok(ClickedButton::CustomButton(cb)) => {
                             if cb.button_id == 1 {
                                 self.uninstall_task(&plugin, &self.catalog.conf.install_path, true)
                             } else {
                                 Task::none()
                             }
-                        },
+                        }
                         Err(e) => {
                             warn_err!(e);
                             Task::none()
-                        },
+                        }
                         _ => Task::none(),
                     }
                 } else {
                     self.uninstall_task(&plugin, &self.catalog.conf.install_path, false)
-                }
-            }
-            Message::Delete(plugin) => {
-                use sdl::messagebox::{
-                    ButtonData, ClickedButton, MessageBoxButtonFlag, MessageBoxFlag,
-                    show_message_box,
-                };
-                match show_message_box(
-                    MessageBoxFlag::INFORMATION,
-                    &[
-                        ButtonData{
-                            flags: MessageBoxButtonFlag::NOTHING,
-                            button_id: 1,
-                            text: pgettext( "plugins","Move to Trash"),
-                        },
-                        ButtonData{
-                            flags: MessageBoxButtonFlag::ESCAPEKEY_DEFAULT,
-                            button_id: 0,
-                            text: pgettext( "plugins", "Cancel"),
-                        },
-                    ],
-                    pgettext( "plugins", "Delete Plugin?" ),
-                    &formatx!(pgettext( "Are you sure you want to delete the local plugin '{}'? It will be moved to the trash.", &plugin.name )).unwrap_or("Are you sure you want to delete the local plugin? It will be moved to the trash.".to_string()),
-                    None,
-                    None) {
-                    Ok(ClickedButton::CustomButton(cb)) => {
-                        if cb.button_id == 1 {
-                            self.uninstall_task(&plugin, &self.catalog.conf.install_path, true)
-                        } else {
-                            Task::none()
-                        }
-                    },
-                    Err(e) => {
-                        warn_err!(e);
-                        Task::none()
-                    },
-                    _ => Task::none(),
                 }
             }
             Message::LinkClicked(url) => {
@@ -1207,10 +1179,10 @@ impl App {
             .spacing(5);
             let uninstall = if wrp.remote.is_some() {
                 button(pgettext("plugins", "Uninstall"))
-                    .on_press_maybe(idle.then_some(Message::Uninstall(sel.clone())))
+                    .on_press_maybe(idle.then_some(Message::Uninstall(sel.clone(), false)))
             } else {
                 button(pgettext("plugins", "Delete"))
-                    .on_press_maybe(idle.then_some(Message::Delete(sel.clone())))
+                    .on_press_maybe(idle.then_some(Message::Uninstall(sel.clone(), true)))
             };
             (
                 col,
