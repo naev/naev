@@ -170,7 +170,7 @@ impl Installer {
     }
 
     /// Uninstalls a plugin by removing it.
-    pub fn uninstall(self) -> impl Straw<(), Progress, Error> {
+    pub fn uninstall(self, trash: bool) -> impl Straw<(), Progress, Error> {
         sipper(async move |mut sender| {
             sender
                 .send(Progress {
@@ -189,8 +189,12 @@ impl Installer {
                     None => self.root.join(&*self.plugin.identifier),
                 }
             };
-            if target.is_file() || target.is_dir() {
+            if trash {
                 trash::delete(&target)?;
+            } else if target.is_file() {
+                fs::remove_file(&target)?;
+            } else if target.is_dir() {
+                fs::remove_dir_all(&target)?;
             } else {
                 anyhow::bail!(format!(
                     "Plugin path '{}' is neither a file nor a directory",

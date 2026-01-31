@@ -155,6 +155,7 @@ enum Message {
     Update(Plugin),
     Disable(Plugin),
     Uninstall(Plugin),
+    Delete(Plugin),
     LinkClicked(widget::markdown::Uri),
     ProgressNew(Progress),
     Progress(install::Progress),
@@ -723,9 +724,9 @@ impl App {
         ))
     }
 
-    fn uninstall_task(&self, plugin: &Plugin, path: &PathBuf) -> Task<Message> {
+    fn uninstall_task(&self, plugin: &Plugin, path: &PathBuf, trash: bool) -> Task<Message> {
         Self::start_task(pgettext("plugins", "Removing")).chain(Task::sip(
-            Installer::new(path, plugin).uninstall(),
+            Installer::new(path, plugin).uninstall(trash),
             Message::Progress,
             Message::refresh_local,
         ))
@@ -828,7 +829,10 @@ impl App {
                 self.refresh_local_task()
             }
             Message::Uninstall(plugin) => {
-                self.uninstall_task(&plugin, &self.catalog.conf.install_path)
+                self.uninstall_task(&plugin, &self.catalog.conf.install_path, false)
+            }
+            Message::Delete(plugin) => {
+                self.uninstall_task(&plugin, &self.catalog.conf.install_path, true)
             }
             Message::LinkClicked(url) => {
                 if let Err(e) = webbrowser::open(url.as_str()) {
@@ -1125,14 +1129,19 @@ impl App {
                 }
             ]
             .spacing(5);
+            let uninstall = if wrp.remote.is_some() {
+                button(pgettext("plugins", "Uninstall"))
+                    .on_press_maybe(idle.then_some(Message::Uninstall(sel.clone())))
+            } else {
+                button(pgettext("plugins", "Delete"))
+                    .on_press_maybe(idle.then_some(Message::Delete(sel.clone())))
+            };
             (
                 col,
                 match wrp.state {
                     PluginState::Installed => {
                         let disable = button(pgettext("plugins", "Disable"))
                             .on_press_maybe(idle.then_some(Message::Disable(sel.clone())));
-                        let uninstall = button(pgettext("plugins", "Uninstall"))
-                            .on_press_maybe(idle.then_some(Message::Uninstall(sel.clone())));
                         if wrp.has_update() {
                             row![
                                 button(pgettext("plugins", "Update"))
@@ -1148,8 +1157,7 @@ impl App {
                         row![
                             button(pgettext("plugins", "Enable"))
                                 .on_press_maybe(idle.then_some(Message::Enable(sel.clone()))),
-                            button(pgettext("plugins", "Uninstall"))
-                                .on_press_maybe(idle.then_some(Message::Uninstall(sel.clone()))),
+                            uninstall,
                         ]
                     }
                     PluginState::Available => {
