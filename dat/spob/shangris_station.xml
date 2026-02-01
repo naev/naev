@@ -1,4 +1,5 @@
 <spob name="Shangris Station">
+ <lua>lawless.lua</lua>
  <pos x="13172.960754" y="425.307879"/>
  <GFX>
   <space>station-fleetbase4</space>

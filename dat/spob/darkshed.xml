@@ -1,4 +1,5 @@
 <spob name="Darkshed">
+ <lua>lawless.lua</lua>
  <pos x="-15535.629234" y="-9372.732177"/>
  <GFX>
   <space>station-round2</space>

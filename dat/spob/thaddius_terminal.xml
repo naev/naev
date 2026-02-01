@@ -1,4 +1,5 @@
 <spob name="Thaddius Terminal">
+ <lua>lawless.lua</lua>
  <pos x="1478.954102" y="-804.588905"/>
  <GFX>
   <space>002</space>

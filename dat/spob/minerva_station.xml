@@ -1,4 +1,5 @@
 <spob name="Minerva Station">
+ <lua>lawless.lua</lua>
  <pos x="-3354.178874" y="-10499.199403"/>
  <GFX>
   <space>station-pointy1</space>

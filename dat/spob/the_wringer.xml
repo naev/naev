@@ -1,4 +1,5 @@
 <spob name="The Wringer">
+ <lua>lawless.lua</lua>
  <pos x="1951.744467" y="5691.325470"/>
  <GFX>
   <space>station-ring1</space>

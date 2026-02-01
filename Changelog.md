@@ -26,6 +26,7 @@
    * Gauntlet NPCs get their fighters disabled when they are disabled
    * Stress starts recovering 5 seconds after taking disable damage instead of
      immediately
+   * Independent systems have their own standing and memory
 
  ### Content
 

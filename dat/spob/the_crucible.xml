@@ -1,4 +1,5 @@
 <spob name="The Crucible">
+ <lua>lawless.lua</lua>
  <pos x="5212.946189" y="780.244879"/>
  <GFX>
   <space>station-round1</space>

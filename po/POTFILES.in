@@ -3786,6 +3786,7 @@ dat/spob/lua/kal_maro_obelisk.lua
 dat/spob/lua/kal_niut_obelisk.lua
 dat/spob/lua/kal_sitra_obelisk.lua
 dat/spob/lua/kal_vora_obelisk.lua
+dat/spob/lua/lawless.lua
 dat/spob/lua/lib/hypergate.lua
 dat/spob/lua/lib/obelisk.lua
 dat/spob/lua/lib/spob.lua
