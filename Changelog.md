@@ -32,7 +32,7 @@
 
    * 1 new mission
    * 2 new events
-   * 3 new outfits
+   * 4 new outfits
    * Made NGC-11718 a bit more interesting
 
  ### Quality of Life
@@ -60,6 +60,8 @@
    * New constants
        - `WARN_BUY_INTRINSICS` controls whether the game warns when buying
          intrinsic outfits
+       - `HYPERSPACE_ENTER_MAX/MIN` control distance at which ships jump into
+         systems
    * Tech groups cand have conditional elements and the likes
    * All player visible resources now have a separate user-facing display name
    * Audio should try to switch devices when disconnected or default playback

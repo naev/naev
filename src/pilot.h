@@ -36,9 +36,7 @@
           */
 #define HYPERSPACE_VEL                                                         \
    ( 2. * HYPERSPACE_ACCEL *                                                   \
-     HYPERSPACE_FLY_DELAY )          /**< Velocity at hyperspace. */
-#define HYPERSPACE_ENTER_MIN ( 0.3 ) /**< Minimum entering distance. */
-#define HYPERSPACE_ENTER_MAX ( 0.4 ) /**< Maximum entering distance. */
+     HYPERSPACE_FLY_DELAY ) /**< Velocity at hyperspace. */
 /* Land/takeoff. */
 #define PILOT_LANDING_DELAY 1. /**< Delay for land animation. */
 #define PILOT_TAKEOFF_DELAY 1. /**< Delay for takeoff animation. */

@@ -9,6 +9,8 @@
 
 constants CTS = {
    .PHYSICS_SPEED_DAMP         = 3., /* Default before 0.13.0. */
+   .HYPERSPACE_ENTER_MAX       = 0.4,
+   .HYPERSPACE_ENTER_MIN       = 0.3,
    .STEALTH_MIN_DIST           = 1000.,
    .SHIP_MIN_MASS              = 0.5, /* 0 before 0.13.0 */
    .EW_JUMP_BONUS_RANGE        = 2500.,

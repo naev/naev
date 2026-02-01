@@ -1,6 +1,8 @@
 local constants = {
    -- Constants used by the Engine
    PHYSICS_SPEED_DAMP   = 4, -- Was 3 until 0.13.0
+   HYPERSPACE_ENTER_MAX = 0.4, -- Maximum distance to add when jumping in (multiplied by velocity)
+   HYPERSPACE_ENTER_MIN = 0.3, -- Same as HYPERSPACE_ENTER_MAX, but for minimum distance
    STEALTH_MIN_DIST     = 1000., -- Minimum distance a ship can stealth at (excluding system factors and ship stat modifiers)
    SHIP_MIN_MASS        = 0.5, -- Minimum amount of the ship mass that can reach (was 0 until 0.13.0)
    AUDIO_REF_DISTANCE   = 750, -- Was 500 until 0.13.0, but used inverse model before (now linear)

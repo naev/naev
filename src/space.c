@@ -578,8 +578,8 @@ int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, vec2 *pos,
 
    /* Calculate offset from target position. */
    a = 2. * M_PI - jp->angle;
-   d = RNGF() * ( HYPERSPACE_ENTER_MAX - HYPERSPACE_ENTER_MIN ) +
-       HYPERSPACE_ENTER_MIN;
+   d = RNGF() * ( CTS.HYPERSPACE_ENTER_MAX - CTS.HYPERSPACE_ENTER_MIN ) +
+       CTS.HYPERSPACE_ENTER_MIN;
    if ( ( p != NULL ) && pilot_isFlag( p, PILOT_STEALTH ) )
       d *= 1.4; /* Jump in from further out when coming in from stealth. */
 

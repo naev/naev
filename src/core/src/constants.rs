@@ -5,6 +5,8 @@ use std::sync::LazyLock;
 
 pub struct Constants {
     pub physics_speed_damp: f32,
+    pub hyperspace_enter_max: f32,
+    pub hyperspace_enter_min: f32,
     pub stealth_min_dist: f32,
     pub ship_min_mass: f32,
     pub audio_ref_distance: f32,
@@ -67,6 +69,8 @@ impl Constants {
         }
 
         let physics_speed_damp = get_f32(&tbl, "PHYSICS_SPEED_DAMP", 3.);
+        let hyperspace_enter_max = get_f32(&tbl, "HYPERSPACE_ENTER_MAX", 0.4);
+        let hyperspace_enter_min = get_f32(&tbl, "HYPERSPACE_ENTER_MIN", 0.3);
         let stealth_min_dist = get_f32(&tbl, "STEALTH_MIN_DIST", 1000.);
         let ship_min_mass = get_f32(&tbl, "SHIP_MIN_MASS", 0.5);
         let audio_ref_distance = get_f32(&tbl, "AUDIO_REF_DISTANCE", 1e3);
@@ -84,6 +88,8 @@ impl Constants {
         // TODO remove this
         unsafe {
             naevc::CTS.PHYSICS_SPEED_DAMP = physics_speed_damp as f64;
+            naevc::CTS.HYPERSPACE_ENTER_MAX = hyperspace_enter_max as f64;
+            naevc::CTS.HYPERSPACE_ENTER_MIN = hyperspace_enter_min as f64;
             naevc::CTS.STEALTH_MIN_DIST = stealth_min_dist as f64;
             naevc::CTS.SHIP_MIN_MASS = ship_min_mass as f64;
             naevc::CTS.EW_JUMP_BONUS_RANGE = ew_jump_bonus_range as f64;
@@ -101,6 +107,8 @@ impl Constants {
 
         Ok(Self {
             physics_speed_damp,
+            hyperspace_enter_max,
+            hyperspace_enter_min,
             stealth_min_dist,
             ship_min_mass,
             audio_ref_distance,
@@ -130,6 +138,8 @@ impl Constants {
     fn default() -> Self {
         Self {
             physics_speed_damp: 3.,
+            hyperspace_enter_max: 0.4,
+            hyperspace_enter_min: 0.3,
             stealth_min_dist: 1000.,
             ship_min_mass: 0.5,
             audio_ref_distance: 1e3,
