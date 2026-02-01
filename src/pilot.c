@@ -665,6 +665,7 @@ Pilot *pilot_getTarget( Pilot *p )
    /* Return ptarget if exists and valid. */
    if ( t != NULL ) {
       if ( pilot_isFlag( t, PILOT_DELETE ) ) {
+         p->target  = p->id;
          p->ptarget = NULL;
          t          = NULL;
       }

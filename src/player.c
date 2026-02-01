@@ -1603,6 +1603,7 @@ void player_targetAsteroidSet( int field, int id )
 
    /* Untarget pilot. */
    player.p->target = player.p->id;
+   gui_setTarget();
 }
 
 /**
