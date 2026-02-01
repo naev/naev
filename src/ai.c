@@ -1328,8 +1328,8 @@ static int aiL_poptask( lua_State *L )
    Task *t = ai_curTask( cur_pilot );
    /* Tasks must exist. */
    if ( t == NULL ) {
-      NLUA_WARN(
-         L, _( "Trying to pop task when there are no tasks on the stack." ) );
+      // NLUA_WARN( L, _( "Trying to pop task when there are no tasks on the
+      // stack." ) );
       return 0;
    }
    t->done = 1;
@@ -1391,11 +1391,11 @@ static int aiL_popsubtask( lua_State *L )
    if ( t == NULL )
       return NLUA_ERROR(
          L, _( "Trying to pop task when there are no tasks on the stack." ) );
-   if ( t->subtask == NULL )
-      return NLUA_ERROR( L,
-                         _( "Trying to pop subtask when there are no subtasks "
-                            "for the task '%s'." ),
-                         t->name );
+   if ( t->subtask == NULL ) {
+      // NLUA_ERROR( L, _( "Trying to pop subtask when there are no subtasks for
+      // the task '%s'." ), t->name );
+      return 0;
+   }
 
    /* Exterminate, annihilate destroy. */
    st         = t->subtask;
