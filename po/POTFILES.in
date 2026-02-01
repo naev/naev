@@ -362,6 +362,7 @@ dat/outfits/maps/map_zalek_core.xml
 dat/outfits/maps/ultra_map.xml
 dat/outfits/misc/counterfeit_heavy_combat_vessel_licence.xml
 dat/outfits/misc/counterfeit_heavy_weapon_licence.xml
+dat/outfits/misc/fake_licence.xml
 dat/outfits/misc/gui-brushed.xml
 dat/outfits/misc/gui-legacy.xml
 dat/outfits/misc/gui-slim.xml
@@ -3473,6 +3474,7 @@ dat/outfits/lib/sets/corsair.lua
 dat/outfits/lib/sets/junker.lua
 dat/outfits/lib/twins.lua
 dat/outfits/lua_outfit_example.lua
+dat/outfits/misc/fake_licence.lua
 dat/outfits/misc/mystery_outfit.lua
 dat/outfits/misc/treasure_map.lua
 dat/outfits/pointdefence/pointdefence.lua

@@ -1,0 +1,17 @@
+<outfit name="Fake Licence">
+ <general>
+  <typename>Fake License</typename>
+  <rarity>2</rarity>
+  <slot>none</slot>
+  <size>medium</size>
+  <mass>0</mass>
+  <price>1250000</price>
+  <gfx_store>licence</gfx_store>
+  <description>Unlike the Great Houses, independent goverments have fairly limited databases and resources to spend on tracking individuals. This presents itself as a great opportunity to those who both wish to make a quick credit selling their identity, and those who are in need of such new identity.</description>
+  <priority>99</priority>
+  <cpu>0</cpu>
+ </general>
+ <specific type="modification">
+  <lua>outfits/misc/fake_licence.lua</lua>
+ </specific>
+</outfit>
