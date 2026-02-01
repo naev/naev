@@ -53,6 +53,10 @@ function sbase.init( args )
    param( "scan_min",      -20 )
    param( "scan_mod",      0.1 )
 
+   param( "script_max",    100 )
+   param( "script_min",    -100 )
+   param( "script_mod",    1 )
+
    -- Allows customizing relationships with other factions
    param( "attitude_toward", {} )
 
@@ -142,9 +146,9 @@ local function hit_mod( mod, source, secondary, primary_fct )
       min = sbase.scan_min
       mod = sbase.scan_mod * sbase.rep_from_points( mod )
    elseif source=="script" then -- "script" type is handled here
-      max = reputation_max()
-      min = sbase.rep_min
-      --mod = mod -- Not modified
+      max = sbase.script_max
+      min = sbase.script_min
+      mod = sbase.script_mod * mod
    else
       max = reputation_max()
       min = sbase.rep_min
