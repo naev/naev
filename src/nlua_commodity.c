@@ -26,6 +26,7 @@
 /* Commodity metatable methods. */
 static int commodityL_eq( lua_State *L );
 static int commodityL_get( lua_State *L );
+static int commodityL_exists( lua_State *L );
 static int commodityL_getStandard( lua_State *L );
 static int commodityL_flags( lua_State *L );
 static int commodityL_name( lua_State *L );
@@ -46,6 +47,7 @@ static const luaL_Reg commodityL_methods[] = {
    { "__tostring", commodityL_name },
    { "__eq", commodityL_eq },
    { "get", commodityL_get },
+   { "exists", commodityL_exists },
    { "getStandard", commodityL_getStandard },
    { "flags", commodityL_flags },
    { "name", commodityL_name },
@@ -220,6 +222,30 @@ static int commodityL_get( lua_State *L )
    if ( commodity == NULL ) {
       return NLUA_ERROR( L, _( "Commodity '%s' not found!" ), name );
    }
+
+   /* Push. */
+   lua_pushcommodity( L, commodity );
+   return 1;
+}
+
+/**
+ * @brief Gets a commodity if it exists.
+ *
+ * @usage s = commodity.exists( "Food" ) -- Gets the food commodity
+ *
+ *    @luatparam string s Raw (untranslated) name of the commodity to get.
+ *    @luatreturn Commodity|nil The commodity matching name or nil if error.
+ * @luafunc exists
+ */
+static int commodityL_exists( lua_State *L )
+{
+   /* Handle parameters. */
+   const char *name = luaL_checkstring( L, 1 );
+
+   /* Get commodity. */
+   Commodity *commodity = commodity_getW( name );
+   if ( commodity == NULL )
+      return 0;
 
    /* Push. */
    lua_pushcommodity( L, commodity );
