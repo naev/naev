@@ -1,13 +1,13 @@
 <faction name="Independent">
  <ai>independent</ai>
- <static/>
  <invisible/>
  <known/>
  <player>3</player>
  <colour>blue</colour>
  <spawn>independent</spawn>
- <standing>static</standing>
+ <standing>independent</standing>
  <generator weight="0.7">Trader</generator>
+ <local_th>INF</local_th>
  <allies/>
  <enemies>
   <enemy>Pirate</enemy>
@@ -18,6 +18,20 @@
   <enemy>Black Lotus</enemy>
   <enemy>Collective</enemy>
  </enemies>
+ <neutrals>
+  <neutral>Miner</neutral>
+  <neutral>Traders Society</neutral>
+  <neutral>Empire</neutral>
+  <neutral>Dvaered</neutral>
+  <neutral>Za'lek</neutral>
+  <neutral>Soromid</neutral>
+  <neutral>Sirius</neutral>
+  <neutral>Thurion</neutral>
+  <neutral>O'rez</neutral>
+  <neutral>Trader</neutral>
+  <neutral>Yetmer</neutral>
+  <neutral>Frontier</neutral>
+ </neutrals>
  <tags>
   <tag>generic</tag>
   <tag>civilian</tag>

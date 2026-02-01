@@ -14,17 +14,17 @@ end
 
 function sbase.init( args )
    args = args or {}
-   sbase.fct                = args.fct                              -- The faction
+   sbase.fct                = args.fct -- The faction
 
    local function param( name, def )
       sbase[name] = args[name] or def
    end
 
    -- Some general faction parameters
-   param( "hit_range",     2 ) -- Range at which it affects
+   param( "hit_range",     2 ) -- Range at which it affects for this faction
    param( "rep_min",       -100 )
    param( "rep_max",       30 )
-   param( "secondary_default", 0.5 )
+   param( "secondary_default", 0.5 ) -- When received as secondary
    param( "rep_max_var",   nil ) -- Mission variable to use for limits if defined
    param( "rep_from_points", rep_from_points )
 
@@ -279,8 +279,8 @@ end
 Highly simplified version that doesn't take into account maximum standings and the likes.
 --]]
 function hit_test( _sys, mod, source )
-   local  _max
-   _max, mod = hit_mod( mod, source, 0 )
+   local _min, _max
+   _min, _max, mod = hit_mod( mod, source, 0 )
    -- Case nothing changes, or too small to matter
    if math.abs(mod) < 1e-1 then
       return 0
