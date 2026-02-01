@@ -17,4 +17,18 @@ sbase.init({
       [-30]  = _("Felon"),
       [-50]  = _("Public Enemy"),
    },
+   mod_func = function ( min, max, mod, sys, _source, _secondary, _primary_fct )
+      -- Require an independent spob to "remember"
+      local do_hit = false
+      for k,p in ipairs(sys:spobs()) do
+         if p:faction()==sbase.fct then
+            do_hit = true
+            break
+         end
+      end
+      if not do_hit then
+         return min, max, 0
+      end
+      return min, max, mod
+   end,
 })

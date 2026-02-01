@@ -57,6 +57,9 @@ function sbase.init( args )
    param( "script_min",    -100 )
    param( "script_mod",    1 )
 
+   -- Allow complete customization
+   param( "mod_func",      nil )
+
    -- Allows customizing relationships with other factions
    param( "attitude_toward", {} )
 
@@ -195,6 +198,9 @@ Possible sources:
 function hit( sys, mod, source, secondary, primary_fct )
    local min, max
    min, max, mod = hit_mod( mod, source, secondary, primary_fct )
+   if sbase.mod_func then
+      min, max, mod = sbase.mod_func( min, max, mod, sys, source, secondary, primary_fct )
+   end
 
    -- Case nothing changes, or too small to matter
    if math.abs(mod) < 1e-1 then
