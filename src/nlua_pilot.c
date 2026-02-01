@@ -706,6 +706,8 @@ static int pilotL_add( lua_State *L )
 
    /* Default values. */
    pilot_clearFlagsRaw( flags );
+   vectnull( &vv );
+   vectnull( &vp );
    vectnull( &vn ); /* Need to determine angle. */
    ss   = NULL;
    jump = NULL;
@@ -823,30 +825,26 @@ static int pilotL_add( lua_State *L )
       lua_pop( L, 1 );
    }
 
-   /* Set up velocities and such. */
-   if ( jump != NULL ) {
-      space_calcJumpInPos( cur_system, jump->from, &vp, &vv, &a, NULL );
-      pilot_setFlagRaw( flags, PILOT_HYP_END );
-   }
-
    /* Make sure angle is valid. */
    a = angle_clean( a );
 
    /* Create the pilot. */
    p = pilot_create( ship, pilotname, lf, ai, a, &vp, &vv, flags, 0, 0,
                      (const Outfit **)intrinsics );
-   array_free( intrinsics );
-   lua_pushpilot( L, p->id );
-   if ( jump == NULL ) {
+
+   /* Set up velocities and such. */
+   if ( jump != NULL ) {
+      space_calcJumpInPos( cur_system, jump->from, &p->solid.pos, &p->solid.vel,
+                           &p->solid.dir, p );
+      pilot_setFlagRaw( flags, PILOT_HYP_END );
+   } else {
       ai_newtask( L, p, "idle_wait", 0, 1 );
       p->timer[0] = p->tcontrol;
    }
 
-   /* TODO don't have space_calcJumpInPos called twice when stealth creating. */
-   if ( ( jump != NULL ) && pilot_isFlagRaw( flags, PILOT_STEALTH ) ) {
-      space_calcJumpInPos( cur_system, jump->from, &p->solid.pos, &p->solid.vel,
-                           &p->solid.dir, p );
-   }
+   // Clean up and start AI.
+   array_free( intrinsics );
+   lua_pushpilot( L, p->id );
    return 1;
 }
 

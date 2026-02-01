@@ -549,8 +549,7 @@ int space_hyperspace( Pilot *p )
  *    @param[out] pos Position calculated.
  *    @param[out] vel Velocity calculated.
  *    @param[out] dir Angle calculated.
- *    @param p Pilot that is entering to use stats of (or NULL if not
- * important).
+ *    @param p Pilot that is entering to use stats of.
  */
 int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, vec2 *pos,
                          vec2 *vel, double *dir, const Pilot *p )
@@ -580,7 +579,7 @@ int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, vec2 *pos,
    a = 2. * M_PI - jp->angle;
    d = RNGF() * ( CTS.HYPERSPACE_ENTER_MAX - CTS.HYPERSPACE_ENTER_MIN ) +
        CTS.HYPERSPACE_ENTER_MIN;
-   if ( ( p != NULL ) && pilot_isFlag( p, PILOT_STEALTH ) )
+   if ( pilot_isFlag( p, PILOT_STEALTH ) )
       d *= 1.4; /* Jump in from further out when coming in from stealth. */
 
    /* Calculate new position. */
@@ -588,10 +587,19 @@ int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, vec2 *pos,
       d *= HYPERSPACE_VEL;
       x += d * cos( a );
       y += d * sin( a );
-   } else if ( p != NULL ) {
-      d *= p->solid.speed_max;
+
+      /* Set new velocity. */
+      a += M_PI;
+      vec2_cset( vel, HYPERSPACE_VEL * cos( a ), HYPERSPACE_VEL * sin( a ) );
+   } else {
+      double speed = p->speed;
+      d *= speed;
       x += d * cos( a );
       y += d * sin( a );
+
+      /* Set new velocity. */
+      a += M_PI;
+      vec2_cset( vel, speed * cos( a ), speed * sin( a ) );
    }
 
    /* Add some error. */
@@ -607,10 +615,6 @@ int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, vec2 *pos,
 
    /* Set new position. */
    vec2_cset( pos, x, y );
-
-   /* Set new velocity. */
-   a += M_PI;
-   vec2_cset( vel, HYPERSPACE_VEL * cos( a ), HYPERSPACE_VEL * sin( a ) );
 
    /* Set direction. */
    *dir = angle_clean( a );
