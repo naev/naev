@@ -126,8 +126,8 @@ You just start to marvel at the self-assurance of one so young when she signals 
    mem.marker = misn.markerAdd( mem.destPlanet, "low" )
 
    local distance = vec2.dist( spob.pos(mem.srcPlanet), spob.pos(mem.destPlanet) )
-   local stuperpx = 1 / player.pilot():stats().speed_max * 30 -- from common.cargo
-   mem.expiryDate = time.get() + time.new(0, 0, 10010 + distance * stuperpx + 3300 ) -- takeoff + min travel time + leeway
+   local stuperpx = 30 / (player.pilot():stats().speed_max+1) -- from common.cargo
+   mem.expiryDate = time.get() + time.new(0, 2, 3310 + distance * stuperpx ) -- takeoff + min travel time + leeway
 
    addNerdCargo()
    mem.lhook = hook.land("nerds_land1", "land")
