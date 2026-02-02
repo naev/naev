@@ -14,3 +14,4 @@ path = "@SOURCE@/src/gettext/src/lib.rs"
 [dependencies]
 naevc = { workspace = true }
 anyhow = { workspace = true }
+mlua = { workspace = true }

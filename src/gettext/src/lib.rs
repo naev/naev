@@ -83,3 +83,36 @@ pub fn pgettext<'a>(msgctxt: &'a str, msg_id: &'a str) -> &'a str {
             .expect("ngettext() returned invalid UTF-8")
     }
 }
+
+/// Opens the gettext library
+pub fn open_gettext(lua: &mlua::Lua) -> mlua::Result<()> {
+    let globals = lua.globals();
+    let gettext_table = lua.create_table()?;
+
+    let gettext = lua.create_function(|_lua, msg: String| -> mlua::Result<String> {
+        Ok(gettext(msg.as_str()).to_owned())
+    })?;
+    globals.set("_", gettext.clone())?;
+    gettext_table.set("gettext", gettext)?;
+    let gettext_noop =
+        lua.create_function(|_lua, msg: String| -> mlua::Result<String> { Ok(msg) })?;
+    globals.set("N_", gettext_noop.clone())?;
+    gettext_table.set("gettext_noop", gettext_noop)?;
+    let ngettext = lua.create_function(
+        |_lua, (msg1, msg2, n): (String, String, u64)| -> mlua::Result<String> {
+            Ok(ngettext(msg1.as_str(), msg2.as_str(), n).to_owned())
+        },
+    )?;
+    globals.set("n_", ngettext.clone())?;
+    gettext_table.set("ngettext", ngettext)?;
+    let pgettext = lua.create_function(
+        |_lua, (msg1, msg2): (String, String)| -> mlua::Result<String> {
+            Ok(pgettext(msg1.as_str(), msg2.as_str()).to_owned())
+        },
+    )?;
+    globals.set("p_", pgettext.clone())?;
+    gettext_table.set("pgettext", pgettext)?;
+    globals.set("gettext", gettext_table)?;
+
+    Ok(())
+}

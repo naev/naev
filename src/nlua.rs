@@ -5,7 +5,7 @@ use mlua::{FromLua, FromLuaMulti, IntoLua, IntoLuaMulti};
 use std::sync::LazyLock;
 
 use crate::lua::ryaml;
-use gettext::{gettext, ngettext, pgettext};
+use gettext::gettext;
 use nlog::{info, warn, warn_err, warnx};
 
 const NLUA_LOAD_TABLE: &str = "_LOADED"; // Table to use to store the status of required libraries.
@@ -70,39 +70,6 @@ pub struct NLua {
     envs: mlua::Table,
 }
 
-/// Opens the gettext library
-fn open_gettext(lua: &mlua::Lua) -> mlua::Result<()> {
-    let globals = lua.globals();
-    let gettext_table = lua.create_table()?;
-
-    let gettext = lua.create_function(|_lua, msg: String| -> mlua::Result<String> {
-        Ok(gettext(msg.as_str()).to_owned())
-    })?;
-    globals.set("_", gettext.clone())?;
-    gettext_table.set("gettext", gettext)?;
-    let gettext_noop =
-        lua.create_function(|_lua, msg: String| -> mlua::Result<String> { Ok(msg) })?;
-    globals.set("N_", gettext_noop.clone())?;
-    gettext_table.set("gettext_noop", gettext_noop)?;
-    let ngettext = lua.create_function(
-        |_lua, (msg1, msg2, n): (String, String, u64)| -> mlua::Result<String> {
-            Ok(ngettext(msg1.as_str(), msg2.as_str(), n).to_owned())
-        },
-    )?;
-    globals.set("n_", ngettext.clone())?;
-    gettext_table.set("ngettext", ngettext)?;
-    let pgettext = lua.create_function(
-        |_lua, (msg1, msg2): (String, String)| -> mlua::Result<String> {
-            Ok(pgettext(msg1.as_str(), msg2.as_str()).to_owned())
-        },
-    )?;
-    globals.set("p_", pgettext.clone())?;
-    gettext_table.set("pgettext", pgettext)?;
-    globals.set("gettext", gettext_table)?;
-
-    Ok(())
-}
-
 fn require(lua: &mlua::Lua, filename: mlua::String) -> mlua::Result<mlua::Value> {
     let globals = lua.globals();
 
@@ -156,7 +123,7 @@ impl NLua {
         lua.load_std_libs(mlua::StdLib::DEBUG)?;
 
         // Set up gettext stuff
-        open_gettext(lua)?;
+        gettext::open_gettext(lua)?;
 
         // Add some more functions.
         let globals = lua.globals();

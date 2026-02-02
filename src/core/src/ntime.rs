@@ -135,6 +135,7 @@ impl Converter {
 
     fn try_new() -> Result<Self> {
         let lua = mlua::Lua::new_with(mlua::StdLib::ALL_SAFE, Default::default())?;
+        gettext::open_gettext(&lua)?;
         let globals = lua.globals();
         globals.set("time", open_time(&lua)?)?;
         let chunk = lua.load(ndata::read("time.lua")?);

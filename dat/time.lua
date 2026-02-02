@@ -21,11 +21,11 @@ end
 function to_string( nt )
    local maj, min, inc = nt:split()
    if maj==0 and min==0 then
-      return string.format( "%d s", inc )
+      return string.format( _("%d s"), inc )
    elseif maj==0 then
-      return string.format( "%d.%04d p", min, inc )
+      return string.format( _("%d.%04d p"), min, inc )
    else
-      return string.format( "UST %d:%04d.%04d", maj, min, inc )
+      return string.format( _("UST %d:%04d.%04d"), maj, min, inc )
    end
 end
 
