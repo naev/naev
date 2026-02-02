@@ -3436,11 +3436,10 @@ int player_save( xmlTextWriterPtr writer )
 
    /* Time. */
    xmlw_startElem( writer, "time" );
+   ntime_t cur_time = ntime_get();
    ntime_getR( &cycles, &periods, &seconds, &rem );
-   xmlw_elem( writer, "SCU", "%d", cycles );
-   xmlw_elem( writer, "STP", "%d", periods );
-   xmlw_elem( writer, "STU", "%d", seconds );
-   xmlw_elem( writer, "Remainder", "%lf", rem );
+   xmlw_attr( writer, "remainder", "%lf", rem );
+   xmlw_str( writer, "%lld", (long long)cur_time );
    xmlw_endElem( writer ); /* "time" */
 
    /* Current ship. */
@@ -4010,21 +4009,34 @@ static Spob *player_parse( xmlNodePtr parent )
 
       /* Time. */
       if ( xml_isNode( node, "time" ) ) {
-         double     rem    = -1.;
-         int        cycles = -1, periods = -1, seconds = -1;
-         xmlNodePtr cur = node->xmlChildrenNode;
-         do {
-            xmlr_int( cur, "SCU", cycles );
-            xmlr_int( cur, "STP", periods );
-            xmlr_int( cur, "STU", seconds );
-            xmlr_float( cur, "Remainder", rem );
-         } while ( xml_nextNode( cur ) );
-         if ( ( cycles < 0 ) || ( periods < 0 ) || ( seconds < 0 ) ||
-              ( rem < 0. ) )
-            WARN( _( "Malformed time in save game!" ) );
-         ntime_setR( cycles, periods, seconds, rem );
-         if ( ( cycles >= 0 ) || ( periods >= 0 ) || ( seconds >= 0 ) )
-            time_set = 1;
+         double rem = -1.;
+         xmlr_attr_float_opt( node, "remainder", rem );
+         if ( rem >= 0. ) {
+            const char *val = xml_get( node );
+            if ( val != NULL ) {
+               ntime_t nt = atoll( val );
+               ntime_set_remainder( nt, rem );
+               time_set = 1;
+            } else
+               WARN( _( "Malformed time in save game!" ) );
+         } else {
+            /* Old save format, deprecated in 0.14.0-alpha.3.
+             * TODO remove in 0.16.0? */
+            int        cycles = -1, periods = -1, seconds = -1;
+            xmlNodePtr cur = node->xmlChildrenNode;
+            do {
+               xmlr_int( cur, "SCU", cycles );
+               xmlr_int( cur, "STP", periods );
+               xmlr_int( cur, "STU", seconds );
+               xmlr_float( cur, "Remainder", rem );
+            } while ( xml_nextNode( cur ) );
+            if ( ( cycles < 0 ) || ( periods < 0 ) || ( seconds < 0 ) ||
+                 ( rem < 0. ) )
+               WARN( _( "Malformed time in save game!" ) );
+            ntime_setR( cycles, periods, seconds, rem );
+            if ( ( cycles >= 0 ) || ( periods >= 0 ) || ( seconds >= 0 ) )
+               time_set = 1;
+         }
       }
 
       if ( xml_isNode( node, "ship" ) )

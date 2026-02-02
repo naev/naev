@@ -667,6 +667,11 @@ pub extern "C" fn ntime_set(t: NTimeC) {
     set(NTime(t));
 }
 #[unsafe(no_mangle)]
+pub extern "C" fn ntime_set_remainder(t: NTimeC, rem: c_double) {
+    set(NTime(t));
+    set_remainder(NTime(t), rem);
+}
+#[unsafe(no_mangle)]
 pub extern "C" fn ntime_setR(cycles: c_int, periods: c_int, seconds: c_int, rem: c_double) {
     set_remainder(NTime::new(cycles, periods, seconds), rem);
 }

@@ -34,6 +34,7 @@ void    ntime_prettyBuf( char *str, int max, ntime_t t, int d );
 
 /* set */
 void ntime_set( ntime_t t );
+void ntime_set_remainder( ntime_t t, double rem );
 void ntime_setR( int cycles, int periods, int seconds, double rem );
 void ntime_inc( ntime_t t );
 void ntime_incLagged( ntime_t t );
