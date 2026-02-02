@@ -630,45 +630,16 @@ pub extern "C" fn ntime_pretty(t: NTimeC, d: c_int) -> *mut c_char {
     }
 }
 #[unsafe(no_mangle)]
-pub extern "C" fn ntime_prettyBuf(cstr: *mut c_char, max: c_int, t: NTimeC, d: c_int) {
+pub extern "C" fn ntime_prettyBuf(cstr: *mut c_char, max: c_int, t: NTimeC, _d: c_int) {
     let nt = if t == 0 {
         TIME.read().unwrap().time
     } else {
         NTime(t)
     };
-    let cycles = nt.cycles();
-    let periods = nt.periods();
-    let seconds = nt.seconds();
-    let max = max as usize;
-    if cycles == 0 && periods == 0 {
-        let cmsg = CString::new(gettext("%04d s")).unwrap();
-        unsafe {
-            naevc::scnprintf(cstr, max, cmsg.as_ptr().cast(), seconds);
-        }
-    } else if cycles == 0 || d == 0 {
-        let cmsg = CString::new(gettext("%.*f p")).unwrap();
-        unsafe {
-            naevc::scnprintf(
-                cstr,
-                max,
-                cmsg.as_ptr().cast(),
-                d,
-                periods as c_double + 0.0001 * seconds as c_double,
-            );
-        }
-    } else {
-        let cmsg = CString::new(gettext("UST %d:%.*f")).unwrap();
-        unsafe {
-            naevc::scnprintf(
-                cstr,
-                max,
-                cmsg.as_ptr().cast(),
-                cycles,
-                d,
-                periods as c_double + 0.0001 * seconds as c_double,
-            );
-        }
-    };
+    let cmsg = CString::new(&*nt.to_string()).unwrap();
+    unsafe {
+        naevc::scnprintf(cstr, max as usize, c"%s".as_ptr(), cmsg.as_ptr());
+    }
 }
 #[unsafe(no_mangle)]
 pub extern "C" fn ntime_set(t: NTimeC) {
