@@ -17,7 +17,9 @@ local constants = {
    -- while Minor can be Periods or Days, and finally Increment could be seconds or hours.
    TIMEDATE_MINOR_IN_MAJOR = 5000, -- Number of minor increments in a major time unit
    TIMEDATE_INCREMENT_IN_MINOR = 10000, -- Number of increments per minor time unit
-   TIMEDATE_INCREMENTS_PER_SECOND = 30000, -- How many 1/1000 increments increase per REAL TIME second.
+   TIMEDATE_INCREMENTS_PER_SECOND = 30, -- How many increments increase per REAL TIME second.
+   TIMEDATE_HYPERSPACE_INCREMENTS = 10000, -- Increments that pass when going through hyperspace
+   TIMEDATE_LAND_INCREMENTS = 10000, -- Increments that pass when landing
 
    PILOT_SHIELD_DOWN_TIME = 5, -- Time shield is down after being knocked down to 0
    PILOT_STRESS_RECOVERY_TIME = 5, -- Time for stress to start recovering after taking disable damage (was 0 before 0.14.0)

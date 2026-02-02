@@ -4093,7 +4093,6 @@ src/nlua_spob.h
 src/nlua_system.c
 src/nlua_system.h
 src/nlua_tex.h
-src/nlua_time.c
 src/nlua_time.h
 src/nlua_tk.c
 src/nlua_tk.h

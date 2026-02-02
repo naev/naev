@@ -12,8 +12,8 @@ use std::os::raw::{c_char, c_double, c_int, c_ulong, c_void};
 use std::sync::{LazyLock, Mutex, RwLock};
 
 // Internal multiplier used for everything
-const MULTIPLIER: i64 = 1_000;
-const MULTIPLIER_F: f64 = MULTIPLIER as f64;
+pub(crate) const MULTIPLIER: i64 = 1_000;
+pub(crate) const MULTIPLIER_F: f64 = MULTIPLIER as f64;
 
 pub type NTimeC = i64;
 #[derive(
@@ -261,6 +261,10 @@ impl FromLua for NTime {
 /*@
  * @brief Bindings for interacting with the time.
  *
+ * Time is general, in the sense that it can be configured by `constants.lua` to behave differently.
+ * However, what doesn't change is that it uses fundamentally 3 different units: Major > Minor >
+ * Increment, which correspond to cycles, periods, and seconds in the base game.
+ *
  * Usage is generally something as follows:
  * @code
  * time_limit = time.get() + time.new( 0, 5, 0 )
@@ -274,6 +278,9 @@ impl FromLua for NTime {
  * end
  * @endcode
  *
+ * Time can be fully customized with `time.lua` which should define a `to_string` and `from_string`
+ * function that converts a time to and from strings respectively.
+ *
  * @luamod time
  */
 impl UserData for NTime {
@@ -284,9 +291,9 @@ impl UserData for NTime {
          * @usage t = time.new( 591, 3271, 12801 ) -- Gets a time near when the incident
          * happened.
          *
-         *    @luatparam number cycles Cycles for the new time.
-         *    @luatparam number periods Periods for the new time.
-         *    @luatparam number seconds Seconds for the new time.
+         *    @luatparam number major Major units for the new time (cycles).
+         *    @luatparam number minor Minor units for the new time (periods).
+         *    @luatparam number increment Increment units for the new time (seconds).
          *    @luatreturn Time A newly created time metatable.
          * @luafunc new
          */
@@ -301,9 +308,9 @@ impl UserData for NTime {
          *
          * @usage cycles, periods, seconds = time.cur():split()
          *
-         *    @luatreturn integer Major time component (Cycles).
-         *    @luatreturn integer Minor time component (Periods).
-         *    @luatreturn integer Increment time component (Seconds).
+         *    @luatreturn integer Major time component (cycles).
+         *    @luatreturn integer Minor time component (periods).
+         *    @luatreturn integer Increment time component (seconds).
          * @luafunc split
          */
         methods.add_method("split", |_, this, ()| -> mlua::Result<(i32, i32, i32)> {
@@ -435,7 +442,7 @@ impl UserData for NTime {
          *
          * Note that this can trigger hooks and fail missions and the likes.
          *
-         * @usage time.inc( time.new(0,0,100) ) -- Increments the time by 100 seconds.
+         * @usage time.inc( time.new(0,0,100) ) -- Increments the time by 100 increment units (seconds).
          *
          *    @luatparam Time t Amount to increment or decrement the time by.
          * @luafunc inc

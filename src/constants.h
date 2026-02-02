@@ -16,6 +16,8 @@ typedef struct constants {
    double EW_JUMPDETECT_DIST;
    double EW_SPOBDETECT_DIST;
    // Gameplay constants
+   double TIMEDATE_HYPERSPACE_INCREMENTS;
+   double TIMEDATE_LAND_INCREMENTS;
    double PILOT_SHIELD_DOWN_TIME;
    double PILOT_STRESS_RECOVERY_TIME;
    double PILOT_DISABLED_ARMOUR;

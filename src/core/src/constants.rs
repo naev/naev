@@ -1,4 +1,5 @@
 #![allow(dead_code)]
+use crate::ntime;
 use anyhow::Result;
 use nlog::warn_err;
 use std::sync::LazyLock;
@@ -18,6 +19,8 @@ pub struct Constants {
     pub timedate_minor_in_major: i64,
     pub timedate_increment_in_minor: i64,
     pub timedate_increments_per_second: i64,
+    pub timedate_hyperspace_increments: i64,
+    pub timedate_land_increments: i64,
     pub pilot_shield_down_time: f32,
     pub pilot_stress_recovery_time: f32,
     pub pilot_disabled_armour: f32,
@@ -61,6 +64,7 @@ impl Constants {
             v.unwrap_or(def)
         }
         let get_f32 = get::<f32>;
+        let get_f64 = get::<f64>;
         let get_bool = get::<bool>;
         let get_u64 = get::<u32>;
 
@@ -78,8 +82,18 @@ impl Constants {
         let timedate_minor_in_major = get_u64(&tbl, "TIMEDATE_MINOR_IN_MAJOR", 5_000) as i64;
         let timedate_increment_in_minor =
             get_u64(&tbl, "TIMEDATE_INCREMENT_IN_MINOR", 10_000) as i64;
-        let timedate_increments_per_second =
-            (get_f32(&tbl, "TIMEDATE_MILLIINCREMENTS_PER_SECOND", 30.0) * 1000.0).round() as i64;
+        let timedate_increments_per_second = (get_f64(&tbl, "TIMEDATE_INCREMENTS_PER_SECOND", 30.0)
+            * ntime::MULTIPLIER_F)
+            .round() as i64;
+        let timedate_hyperspace_increments = (get_f64(
+            &tbl,
+            "TIMEDATE_HYPERSPACE_INCREMENT",
+            10_000.0,
+        ) * ntime::MULTIPLIER_F)
+            .round() as i64;
+        let timedate_land_increments = (get_f64(&tbl, "TIMEDATE_LAND_INCREMENT", 10_000.0)
+            * ntime::MULTIPLIER_F)
+            .round() as i64;
         let pilot_shield_down_time = get_f32(&tbl, "PILOT_SHIELD_DOWN_TIME", 5.);
         let pilot_stress_recovery_time = get_f32(&tbl, "PILOT_STRESS_RECOVERY_TIME", 5.);
         let pilot_disabled_armour = get_f32(&tbl, "PILOT_DISABLED_ARMOUR", 0.1);
@@ -100,6 +114,10 @@ impl Constants {
             naevc::CTS.PILOT_SHIELD_DOWN_TIME = pilot_shield_down_time as f64;
             naevc::CTS.PILOT_STRESS_RECOVERY_TIME = pilot_stress_recovery_time as f64;
             naevc::CTS.PILOT_DISABLED_ARMOUR = pilot_disabled_armour as f64;
+            naevc::CTS.TIMEDATE_HYPERSPACE_INCREMENTS =
+                timedate_hyperspace_increments as f64 / ntime::MULTIPLIER_F;
+            naevc::CTS.TIMEDATE_LAND_INCREMENTS =
+                timedate_land_increments as f64 / ntime::MULTIPLIER_F;
             naevc::CTS.CAMERA_ANGLE = camera_angle as f64;
             naevc::CTS.CAMERA_VIEW = naevc::CTS.CAMERA_ANGLE.sin();
             naevc::CTS.CAMERA_VIEW_INV = 1.0 / naevc::CTS.CAMERA_VIEW;
@@ -121,6 +139,8 @@ impl Constants {
             timedate_minor_in_major,
             timedate_increment_in_minor,
             timedate_increments_per_second,
+            timedate_hyperspace_increments,
+            timedate_land_increments,
             pilot_shield_down_time,
             pilot_stress_recovery_time,
             pilot_disabled_armour,
@@ -155,6 +175,8 @@ impl Constants {
             timedate_minor_in_major: 5_000,
             timedate_increment_in_minor: 10_000,
             timedate_increments_per_second: 30_000,
+            timedate_hyperspace_increments: 10_000_000,
+            timedate_land_increments: 10_000_000,
             pilot_shield_down_time: 5.,
             pilot_stress_recovery_time: 5.,
             pilot_disabled_armour: 0.1,
