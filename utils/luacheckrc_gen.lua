@@ -154,6 +154,7 @@ stds.time = {
       time = {
          fields = {
             new = {},
+            split = {},
             cur = {},
             set_current = {},
             add = {},

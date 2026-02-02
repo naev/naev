@@ -98,6 +98,8 @@ impl NTime {
 }
 
 struct Converter {
+    #[allow(dead_code)]
+    lua: Option<Lua>,
     to_string: Option<mlua::Function>,
     from_string: Option<mlua::Function>,
 }
@@ -108,6 +110,7 @@ impl Converter {
             Err(e) => {
                 warn_err!(e);
                 Converter {
+                    lua: None,
                     to_string: None,
                     from_string: None,
                 }
@@ -117,12 +120,14 @@ impl Converter {
 
     fn try_new() -> Result<Self> {
         let lua = mlua::Lua::new_with(mlua::StdLib::ALL_SAFE, Default::default())?;
+        let globals = lua.globals();
+        globals.set("time", open_time(&lua)?)?;
         let chunk = lua.load(ndata::read("time.lua")?);
         chunk.call::<()>(())?;
-        let globals = lua.globals();
         let to_string: mlua::Function = globals.get("to_string")?;
         let from_string: mlua::Function = globals.get("from_string")?;
         Ok(Converter {
+            lua: Some(lua),
             to_string: Some(to_string),
             from_string: Some(from_string),
         })
@@ -272,6 +277,19 @@ impl UserData for NTime {
                 Ok(NTime::new(scu, stp, stu))
             },
         );
+        /*@
+         * @brief Splits the time into the elementary components.
+         *
+         * @usage cycles, periods, seconds = time.cur():split()
+         *
+         *    @luatreturn integer Major time component (Cycles).
+         *    @luatreturn integer Minor time component (Periods).
+         *    @luatreturn integer Increment time component (Seconds).
+         * @luafunc split
+         */
+        methods.add_method("split", |_, this, ()| -> mlua::Result<(i32, i32, i32)> {
+            Ok((this.cycles(), this.periods(), this.seconds()))
+        });
         /*@
          * @brief Gets the current time in internal representation time.
          *
@@ -526,7 +544,7 @@ pub extern "C" fn ntime_split(
     periods: *mut c_int,
     seconds: *mut c_int,
 ) {
-    let nt = NTime(ntime_t);
+    let nt = NTime(nt);
     unsafe {
         *cycles = nt.cycles();
         *periods = nt.periods();
