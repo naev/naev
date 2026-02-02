@@ -729,7 +729,7 @@ pub fn update(dt: f64) {
         return;
     }
     let mut nt = TIME.write().unwrap();
-    let dtt = nt.remainder + dt * 30. * 1000.;
+    let dtt: f64 = nt.remainder + dt * CTS.timedate_increments_per_second;
     let tu = dtt.floor();
     let inc = tu as i64;
     nt.remainder = dtt - tu;

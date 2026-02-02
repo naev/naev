@@ -18,7 +18,7 @@ pub struct Constants {
     pub ew_spob_detect_dist: f32,
     pub timedate_minor_in_major: i64,
     pub timedate_increment_in_minor: i64,
-    pub timedate_increments_per_second: i64,
+    pub timedate_increments_per_second: f64,
     pub timedate_hyperspace_increments: i64,
     pub timedate_land_increments: i64,
     pub pilot_shield_down_time: f32,
@@ -82,9 +82,8 @@ impl Constants {
         let timedate_minor_in_major = get_u64(&tbl, "TIMEDATE_MINOR_IN_MAJOR", 5_000) as i64;
         let timedate_increment_in_minor =
             get_u64(&tbl, "TIMEDATE_INCREMENT_IN_MINOR", 10_000) as i64;
-        let timedate_increments_per_second = (get_f64(&tbl, "TIMEDATE_INCREMENTS_PER_SECOND", 30.0)
-            * ntime::MULTIPLIER_F)
-            .round() as i64;
+        let timedate_increments_per_second =
+            get_f64(&tbl, "TIMEDATE_INCREMENTS_PER_SECOND", 30.0) * ntime::MULTIPLIER_F;
         let timedate_hyperspace_increments = (get_f64(
             &tbl,
             "TIMEDATE_HYPERSPACE_INCREMENT",
@@ -174,7 +173,7 @@ impl Constants {
             ew_spob_detect_dist: 20e3,
             timedate_minor_in_major: 5_000,
             timedate_increment_in_minor: 10_000,
-            timedate_increments_per_second: 30_000,
+            timedate_increments_per_second: 30_000.0,
             timedate_hyperspace_increments: 10_000_000,
             timedate_land_increments: 10_000_000,
             pilot_shield_down_time: 5.,
