@@ -190,7 +190,6 @@ source = files(
    'nlua_shiplog.c',
    'nlua_spob.c',
    'nlua_system.c',
-   'nlua_time.c',
    'nlua_tk.c',
    'nlua_var.c',
    'nmath.c',

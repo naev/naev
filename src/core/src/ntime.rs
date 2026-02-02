@@ -1,15 +1,29 @@
 use anyhow::Result;
 use formatx::formatx;
 use gettext::gettext;
+use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value, ffi};
+use nlog::warn_err;
 use regex::Regex;
 use serde::{Deserialize, Deserializer};
 use std::collections::VecDeque;
 use std::ffi::CString;
-use std::os::raw::{c_char, c_double, c_int, c_ulong};
+use std::os::raw::{c_char, c_double, c_int, c_ulong, c_void};
 use std::sync::{LazyLock, Mutex, RwLock};
 
 pub type NTimeC = i64;
-#[derive(Clone, Copy, PartialEq, Eq, Debug, Default)]
+#[derive(
+    Clone,
+    Copy,
+    derive_more::Add,
+    derive_more::AddAssign,
+    derive_more::Sub,
+    derive_more::SubAssign,
+    PartialOrd,
+    PartialEq,
+    Eq,
+    Debug,
+    Default,
+)]
 pub struct NTime(i64);
 
 impl<'de> Deserialize<'de> for NTime {
@@ -31,27 +45,6 @@ impl NTimeInternal {
             time: NTime(0),
             remainder: 0.,
         }
-    }
-}
-impl<T: Into<i64>> std::ops::Add<T> for NTime {
-    type Output = NTime;
-    fn add(self, other: T) -> Self {
-        NTime(self.0 + other.into())
-    }
-}
-impl<T: Into<i64>> std::ops::AddAssign<T> for NTime {
-    fn add_assign(&mut self, other: T) {
-        self.0 += other.into()
-    }
-}
-impl Ord for NTime {
-    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
-        self.0.cmp(&other.0)
-    }
-}
-impl PartialOrd for NTime {
-    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-        Some(self.cmp(other))
     }
 }
 impl From<NTime> for u32 {
@@ -97,48 +90,48 @@ impl NTime {
         t / 1_000.
     }
     pub fn from_string(input: &str) -> Result<Self> {
-        static RE_UST: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"^\s*UST\s+(\d+)(?::(\d{4})(?:\.(\d{4}))?)?\s*$").unwrap()
-        });
-        static RE_P: LazyLock<Regex> =
-            LazyLock::new(|| Regex::new(r"^\s*(\d+)(?:\.(\d{4}))?\s+p\s*$").unwrap());
-        static RE_S: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^\s*(\d+)\s+s\s*$").unwrap());
-
-        if let Some(cap) = RE_UST.captures(input) {
-            return Ok(NTime::new(
-                cap[1].parse()?,
-                match cap.get(2) {
-                    Some(m) => m.as_str().parse::<i32>()?,
-                    None => 0,
-                },
-                match cap.get(3) {
-                    Some(m) => m.as_str().parse::<i32>()?,
-                    None => 0,
-                },
-            ));
-        }
-
-        if let Some(cap) = RE_P.captures(input) {
-            return Ok(NTime::new(
-                0,
-                cap[1].parse()?,
-                match cap.get(2) {
-                    Some(m) => m.as_str().parse::<i32>()?,
-                    None => 0,
-                },
-            ));
-        }
-
-        if let Some(cap) = RE_S.captures(input) {
-            return Ok(NTime::new(0, 0, cap[1].parse()?));
-        }
-
-        anyhow::bail!("not valid ntime")
+        CONVERTER.from_string(input)
     }
     pub fn as_string(self) -> String {
-        let cycles = self.cycles();
-        let periods = self.periods();
-        let seconds = self.seconds();
+        CONVERTER.to_string(self)
+    }
+}
+
+struct Converter {
+    to_string: Option<mlua::Function>,
+    from_string: Option<mlua::Function>,
+}
+impl Converter {
+    fn new() -> Self {
+        match Self::try_new() {
+            Ok(c) => c,
+            Err(e) => {
+                warn_err!(e);
+                Converter {
+                    to_string: None,
+                    from_string: None,
+                }
+            }
+        }
+    }
+
+    fn try_new() -> Result<Self> {
+        let lua = mlua::Lua::new_with(mlua::StdLib::ALL_SAFE, Default::default())?;
+        let chunk = lua.load(ndata::read("time.lua")?);
+        chunk.call::<()>(())?;
+        let globals = lua.globals();
+        let to_string: mlua::Function = globals.get("to_string")?;
+        let from_string: mlua::Function = globals.get("from_string")?;
+        Ok(Converter {
+            to_string: Some(to_string),
+            from_string: Some(from_string),
+        })
+    }
+
+    fn to_string_default(nt: NTime) -> String {
+        let cycles = nt.cycles();
+        let periods = nt.periods();
+        let seconds = nt.seconds();
         // TODO try to move 2 to variable decimal length, but not that important
         if cycles == 0 && periods == 0 {
             formatx!(gettext("{:04} s"), seconds).unwrap()
@@ -154,11 +147,365 @@ impl NTime {
             .unwrap()
         }
     }
+
+    fn to_string(&self, nt: NTime) -> String {
+        if let Some(to_string) = &self.to_string {
+            match to_string.call(nt) {
+                Ok(s) => s,
+                Err(e) => {
+                    warn_err!(e);
+                    Self::to_string_default(nt)
+                }
+            }
+        } else {
+            Self::to_string_default(nt)
+        }
+    }
+
+    fn from_string(&self, input: &str) -> Result<NTime> {
+        if let Some(from_string) = &self.from_string {
+            Ok(from_string.call(input)?)
+        } else {
+            static RE_UST: LazyLock<Regex> = LazyLock::new(|| {
+                Regex::new(r"^\s*UST\s+(\d+)(?::(\d{4})(?:\.(\d{4}))?)?\s*$").unwrap()
+            });
+            static RE_P: LazyLock<Regex> =
+                LazyLock::new(|| Regex::new(r"^\s*(\d+)(?:\.(\d{4}))?\s+p\s*$").unwrap());
+            static RE_S: LazyLock<Regex> =
+                LazyLock::new(|| Regex::new(r"^\s*(\d+)\s+s\s*$").unwrap());
+
+            if let Some(cap) = RE_UST.captures(input) {
+                return Ok(NTime::new(
+                    cap[1].parse()?,
+                    match cap.get(2) {
+                        Some(m) => m.as_str().parse::<i32>()?,
+                        None => 0,
+                    },
+                    match cap.get(3) {
+                        Some(m) => m.as_str().parse::<i32>()?,
+                        None => 0,
+                    },
+                ));
+            }
+
+            if let Some(cap) = RE_P.captures(input) {
+                return Ok(NTime::new(
+                    0,
+                    cap[1].parse()?,
+                    match cap.get(2) {
+                        Some(m) => m.as_str().parse::<i32>()?,
+                        None => 0,
+                    },
+                ));
+            }
+
+            if let Some(cap) = RE_S.captures(input) {
+                return Ok(NTime::new(0, 0, cap[1].parse()?));
+            }
+
+            anyhow::bail!("not valid ntime")
+        }
+    }
 }
 
 static DEFERLIST: Mutex<VecDeque<NTime>> = Mutex::new(VecDeque::new());
 static TIME: RwLock<NTimeInternal> = RwLock::new(NTimeInternal::new());
 static ENABLED: Mutex<bool> = Mutex::new(true);
+static CONVERTER: LazyLock<Converter> = LazyLock::new(|| Converter::new());
+
+impl FromLua for NTime {
+    fn from_lua(value: Value, _: &Lua) -> mlua::Result<Self> {
+        match value {
+            Value::UserData(ud) => Ok(*ud.borrow::<Self>()?),
+            /*
+            Value::Integer(num) => Ok(Self::new(num as f64, num as f64)),
+            Value::Number(num) => Ok(Self::new(num, num)),
+            Value::Table(tbl) => {
+                let x: f64 = tbl.get(1)?;
+                let y: f64 = tbl.get(2)?;
+                Ok(Self::new(x, y))
+            }
+            */
+            val => Err(mlua::Error::RuntimeError(format!(
+                "unable to convert {} to NTime",
+                val.type_name()
+            ))),
+        }
+    }
+}
+
+/*@
+ * @brief Bindings for interacting with the time.
+ *
+ * Usage is generally something as follows:
+ * @code
+ * time_limit = time.get() + time.new( 0, 5, 0 )
+ * player.msg( string.format("You only have %s left!", time.str(time.get() -
+ * time_limit)) )
+ *
+ * -- Do stuff here
+ *
+ * if time.get() > time_limit then
+ *    -- Limit is up
+ * end
+ * @endcode
+ *
+ * @luamod time
+ */
+impl UserData for NTime {
+    fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
+        /*@
+         * @brief Creates a time. This can be absolute or relative.
+         *
+         * @usage t = time.new( 591, 3271, 12801 ) -- Gets a time near when the incident
+         * happened.
+         *
+         *    @luatparam number cycles Cycles for the new time.
+         *    @luatparam number periods Periods for the new time.
+         *    @luatparam number seconds Seconds for the new time.
+         *    @luatreturn Time A newly created time metatable.
+         * @luafunc new
+         */
+        methods.add_function(
+            "new",
+            |_, (scu, stp, stu): (i32, i32, i32)| -> mlua::Result<Self> {
+                Ok(NTime::new(scu, stp, stu))
+            },
+        );
+        /*@
+         * @brief Gets the current time in internal representation time.
+         *
+         * @usage t = time.cur()
+         *
+         *    @luatreturn Time Time in internal representation time.
+         * @luafunc cur
+         */
+        methods.add_function("cur", |_, ()| -> mlua::Result<Self> {
+            Ok(TIME.read().unwrap().time)
+        });
+        methods.add_function("get", |lua, ()| -> mlua::Result<Self> {
+            crate::lua::deprecated(lua, "get", Some("cur"))?;
+            Ok(TIME.read().unwrap().time)
+        });
+        /*@
+         * @brief Sets the current in-game time.
+         *
+         *    @luatparam Time Time to set to.
+         * @luafunc set_current
+         */
+        methods.add_function("set_current", |_, nt: Self| -> mlua::Result<()> {
+            TIME.write().unwrap().time = nt;
+            Ok(())
+        });
+        /*@
+         * @brief Adds two time metatables.
+         *
+         * Overrides the addition operator.
+         *
+         * @usage new_time = time.get() + time.new( 0, 5, 0 ) -- Adds 5 periods to the
+         * current date
+         * @usage t:add( time.new( 0, 3, 0 ) ) -- Directly modifies t
+         *
+         *    @luatparam Time t1 Time metatable to add to.
+         *    @luatparam Time t2 Time metatable added.
+         * @luafunc add
+         */
+        methods.add_meta_function(
+            MetaMethod::Add,
+            |_, (nt1, nt2): (Self, Self)| -> mlua::Result<Self> { Ok(nt1 + nt2) },
+        );
+        methods.add_method_mut("add", |_, nt1, nt2: Self| -> mlua::Result<Self> {
+            *nt1 += nt2;
+            Ok(*nt1)
+        });
+        /*@
+         * @brief Subtracts two time metatables.
+         *
+         * Overrides the subtraction operator.
+         *
+         * @usage new_time = time.get() - time.new( 0, 3, 0 ) -- Subtracts 3 periods
+         * from the current date
+         * @usage t:sub( time.new( 0, 3, 0 ) ) -- Directly modifies t
+         *
+         *    @luatparam Time t1 Time metatable to subtract from.
+         *    @luatparam Time t2 Time metatable subtracted.
+         * @luafunc sub
+         */
+        methods.add_meta_function(MetaMethod::Sub, |_, (nt1, nt2): (Self, Self)| Ok(nt1 - nt2));
+        methods.add_method_mut("sub", |_, nt1, nt2: Self| {
+            *nt1 -= nt2;
+            Ok(*nt1)
+        });
+        /*@
+         * @brief Checks to see if two time are equal.
+         *
+         * It is recommended to check with < and <= instead of ==.
+         *
+         * @usage if time.new( 630, 5, 78) == time.get() then -- do something if they
+         * match
+         *
+         *    @luatparam Time t1 Time to compare for equality.
+         *    @luatparam Time t2 Time to compare for equality.
+         *    @luatreturn boolean true if they're equal.
+         * @luafunc __eq
+         */
+        methods.add_meta_function(MetaMethod::Eq, |_, (nt1, nt2): (Self, Self)| Ok(nt1 == nt2));
+        /*@
+         * @brief Checks to see if a time is larger or equal to another.
+         *
+         * @usage if time.new( 630, 5, 78) <= time.get() then -- do something if time is
+         * past UST 630:0005.78
+         *
+         *    @luatparam Time t1 Time to see if is is smaller or equal to than t2.
+         *    @luatparam Time t2 Time see if is larger or equal to than t1.
+         *    @luatreturn boolean true if t1 <= t2
+         * @luafunc __le
+         */
+        methods.add_meta_function(MetaMethod::Le, |_, (nt1, nt2): (Self, Self)| Ok(nt1 <= nt2));
+        /*@
+         * @brief Checks to see if a time is strictly larger than another.
+         *
+         * @usage if time.new( 630, 5, 78) < time.get() then -- do something if time is
+         * past UST 630:0005.78
+         *
+         *    @luatparam Time t1 Time to see if is is smaller than t2.
+         *    @luatparam Time t2 Time see if is larger than t1.
+         *    @luatreturn boolean true if t1 < t2
+         * @luafunc __lt
+         */
+        methods.add_meta_function(MetaMethod::Lt, |_, (nt1, nt2): (Self, Self)| Ok(nt1 < nt2));
+        /*@
+         * @brief Converts the time to a pretty human readable format.
+         *
+         * @usage strt = tostring( time.cur() ) -- Gets current time
+         * @usage strt = tostring( time.get() + time.new(0,5,0) ) -- Gets time in 5
+         * periods
+         * @usage strt = t:__tostring() -- Gets the string of t
+         *
+         *    @luatparam Time t Time to convert to pretty format.  If omitted, current
+         * time is used.
+         *    @luatreturn string The time in human readable format.
+         * @luafunc __tostring
+         */
+        methods.add_meta_function(
+            MetaMethod::ToString,
+            |_, nt: Self| -> mlua::Result<String> { Ok(nt.to_string()) },
+        );
+        /*@
+         * @brief Increases or decreases the in-game time.
+         *
+         * Note that this can trigger hooks and fail missions and the likes.
+         *
+         * @usage time.inc( time.new(0,0,100) ) -- Increments the time by 100 seconds.
+         *
+         *    @luatparam Time t Amount to increment or decrement the time by.
+         * @luafunc inc
+         */
+        methods.add_method("inc", |_, nt, ()| -> mlua::Result<()> {
+            inc(*nt);
+            Ok(())
+        });
+        /*@
+         * @brief Gets a number representing this time.
+         *
+         * The best usage for this currently is mission variables.
+         *
+         * @usage num = t:tonumber() -- Getting the number from a time t
+         *
+         *    @luatparam Time t Time to get number of.
+         *    @luatreturn number Number representing time.
+         * @luafunc tonumber
+         */
+        methods.add_method("tonumber", |_, nt, ()| -> mlua::Result<i64> { Ok(nt.0) });
+        /*@
+         * @brief Creates a time from a number representing it.
+         *
+         * The best usage for this currently is mission variables.
+         *
+         * @usage t = time.fromnumber( t:tonumber() ) -- Should get the time t again
+         *
+         *    @luatparam number num Number to get time from.
+         *    @luatreturn Time Time representing number.
+         * @luafunc fromnumber
+         */
+        methods.add_function("fromnumber", |_, n: i64| -> mlua::Result<Self> {
+            Ok(NTime(n))
+        });
+    }
+}
+
+pub fn open_time(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
+    let proxy = lua.create_proxy::<NTime>()?;
+
+    // Only add stuff as necessary
+    if let mlua::Value::Nil = lua.named_registry_value("push_time")? {
+        let push_time = lua.create_function(|lua, n: i64| {
+            let nt = NTime(n);
+            lua.create_any_userdata(nt)
+        })?;
+        lua.set_named_registry_value("push_time", push_time)?;
+
+        let get_time = lua.create_function(|_, mut ud: mlua::UserDataRefMut<NTime>| {
+            let vec: *mut NTime = &mut *ud;
+            Ok(Value::LightUserData(mlua::LightUserData(
+                vec as *mut c_void,
+            )))
+        })?;
+        lua.set_named_registry_value("get_time", get_time)?;
+    }
+
+    Ok(proxy)
+}
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub extern "C" fn luaL_checktime(L: *mut mlua::lua_State, idx: c_int) -> *mut NTime {
+    unsafe {
+        let vec = lua_totime(L, idx);
+        if vec.is_null() {
+            ffi::luaL_typerror(L, idx, c"time".as_ptr() as *const c_char);
+        }
+        vec
+    }
+}
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub extern "C" fn lua_istime(L: *mut mlua::lua_State, idx: c_int) -> c_int {
+    !lua_totime(L, idx).is_null() as c_int
+}
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub extern "C" fn lua_pushtime(L: *mut mlua::lua_State, nt: naevc::ntime_t) {
+    unsafe {
+        ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"push_time".as_ptr());
+        ffi::lua_pushinteger(L, nt);
+        ffi::lua_call(L, 1, 1);
+    }
+}
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub extern "C" fn lua_totime(L: *mut mlua::lua_State, idx: c_int) -> *mut NTime {
+    unsafe {
+        let idx = ffi::lua_absindex(L, idx);
+        ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"get_time".as_ptr());
+        ffi::lua_pushvalue(L, idx);
+        let vec = match ffi::lua_pcall(L, 1, 1, 0) {
+            ffi::LUA_OK => ffi::lua_touserdata(L, -1) as *mut NTime,
+            _ => std::ptr::null_mut(),
+        };
+        ffi::lua_pop(L, 1);
+        vec
+    }
+}
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub extern "C" fn luaL_validtime(L: *mut mlua::lua_State, idx: c_int) -> naevc::ntime_t {
+    unsafe { (*luaL_checktime(L, idx)).0 }
+}
 
 #[unsafe(no_mangle)]
 pub extern "C" fn ntime_update(dt: c_double) {
@@ -399,4 +746,15 @@ fn test_ntime_s() {
     assert!(NTime::from_string("123.45 s").is_err());
     assert!(NTime::from_string("123:45 s").is_err());
     assert_eq!(NTime::from_string("123 s").unwrap(), NTime::new(0, 0, 123));
+}
+
+#[test]
+fn test_mlua_time() {
+    let lua = mlua::Lua::new();
+    let globals = lua.globals();
+    globals.set("time", open_time(&lua).unwrap()).unwrap();
+    lua.load(include_str!("ntime_test.lua"))
+        .set_name("mlua NTime test")
+        .exec()
+        .unwrap();
 }

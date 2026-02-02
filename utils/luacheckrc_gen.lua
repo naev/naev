@@ -149,6 +149,26 @@ stds.audiodata = {
       }
    }
 }
+stds.time = {
+   read_globals = {
+      time = {
+         fields = {
+            new = {},
+            cur = {},
+            set_current = {},
+            add = {},
+            sub = {},
+            __eq = {},
+            __le = {},
+            __lt = {},
+            __tostring = {},
+            inc = {},
+            tonumber = {},
+            fromnumber = {},
+         }
+      }
+   }
+}
 stds.collide = {
    read_globals = {
       collide = {
@@ -1190,25 +1210,6 @@ stds.system = {
       }
    }
 }
-stds.time = {
-   read_globals = {
-      time = {
-         fields = {
-            new = {},
-            add = {},
-            sub = {},
-            __eq = {},
-            __lt = {},
-            __le = {},
-            get = {},
-            str = {},
-            inc = {},
-            tonumber = {},
-            fromnumber = {},
-         }
-      }
-   }
-}
 stds.tk = {
    read_globals = {
       tk = {
@@ -1369,6 +1370,7 @@ stds.spfx = {
 stds.naev.read_globals.naev.fields.ai = stds.ai.read_globals.ai
 stds.naev.read_globals.naev.fields.audio = stds.audio.read_globals.audio
 stds.naev.read_globals.naev.fields.audiodata = stds.audiodata.read_globals.audiodata
+stds.naev.read_globals.naev.fields.time = stds.time.read_globals.time
 stds.naev.read_globals.naev.fields.collide = stds.collide.read_globals.collide
 stds.naev.read_globals.naev.fields.data = stds.data.read_globals.data
 stds.naev.read_globals.naev.fields.file = stds.file.read_globals.file
@@ -1400,7 +1402,6 @@ stds.naev.read_globals.naev.fields.ship = stds.ship.read_globals.ship
 stds.naev.read_globals.naev.fields.shiplog = stds.shiplog.read_globals.shiplog
 stds.naev.read_globals.naev.fields.spob = stds.spob.read_globals.spob
 stds.naev.read_globals.naev.fields.system = stds.system.read_globals.system
-stds.naev.read_globals.naev.fields.time = stds.time.read_globals.time
 stds.naev.read_globals.naev.fields.tk = stds.tk.read_globals.tk
 stds.naev.read_globals.naev.fields.var = stds.var.read_globals.var
 stds.naev.read_globals.naev.fields.transform = stds.transform.read_globals.transform

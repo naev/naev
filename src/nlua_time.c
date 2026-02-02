@@ -75,7 +75,7 @@ int nlua_loadTime( nlua_env *env )
  * end
  * @endcode
  *
- * @luamod time
+ * @lua_mod time
  */
 /**
  * @brief Gets time at index.

@@ -543,6 +543,7 @@ impl LuaEnv {
             Ok(())
         };
         open_lib("vec2", physics::vec2::open_vec2)?;
+        open_lib("time", naev_core::ntime::open_time)?;
         open_lib("collide", crate::lua::collide::open_collide)?;
         open_lib("transform", physics::transform2::open_transform2)?;
         open_lib("colour", renderer::colour::open_colour)?;
@@ -562,7 +563,6 @@ impl LuaEnv {
             r |= naevc::nlua_loadSpob(env);
             r |= naevc::nlua_loadSystem(env);
             r |= naevc::nlua_loadJump(env);
-            r |= naevc::nlua_loadTime(env);
             r |= naevc::nlua_loadPlayer(env);
             r |= naevc::nlua_loadPilot(env);
             r |= naevc::nlua_loadDiff(env);

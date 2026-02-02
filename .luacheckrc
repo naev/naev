@@ -255,6 +255,10 @@ stds.API_pilotship = {globals={
 stds.API_mem = {globals={
    "mem",
 }}
+stds.API_time = {globals={
+   "from_string",
+   "to_string",
+}}
 
 files["dat/ai/**/*.lua"].std = STANDARD .. "+ai+API_ai"
 files["dat/autonav.lua"].std = STANDARD .. "+ai+API_autonav"
@@ -300,8 +304,10 @@ files["docs/**/*.lua"].std = STANDARD .. TK .. "+API_mem+hook+music+misn+camera"
 
 files["**/datapath.lua"].std = "API_datapath"
 
+files["dat/time.lua"].std = "+time+API_time"
+
 exclude_files = {
    -- This file should have no dependencies and sets globals, so we'll just remove it from luachecking
    "dat/common.lua",
-   -- lyaml has errosr, but we have to fix upstream
+   -- lyaml has errors, but we have to fix upstream
    "dat/scripts/lyaml/implicit.lua", "dat/scripts/lyaml/init.lua"}
