@@ -15,6 +15,9 @@ pub struct Constants {
     pub ew_asteroid_dist: f32,
     pub ew_jump_detect_dist: f32,
     pub ew_spob_detect_dist: f32,
+    pub timedate_minor_in_major: i64,
+    pub timedate_increment_in_minor: i64,
+    pub timedate_increments_per_second: i64,
     pub pilot_shield_down_time: f32,
     pub pilot_stress_recovery_time: f32,
     pub pilot_disabled_armour: f32,
@@ -47,8 +50,8 @@ impl Constants {
         let chunk = lua.load(ndata::read("constants.lua")?);
         let tbl: mlua::Table = chunk.call(())?;
 
-        fn get_f32(tbl: &mlua::Table, name: &str, def: f32) -> f32 {
-            let v: Option<f32> = match tbl.get(name) {
+        fn get<T: mlua::FromLua>(tbl: &mlua::Table, name: &str, def: T) -> T {
+            let v: Option<T> = match tbl.get(name) {
                 Ok(v) => v,
                 Err(e) => {
                     warn_err!(e);
@@ -57,16 +60,9 @@ impl Constants {
             };
             v.unwrap_or(def)
         }
-        fn get_bool(tbl: &mlua::Table, name: &str, def: bool) -> bool {
-            let v: Option<bool> = match tbl.get(name) {
-                Ok(v) => v,
-                Err(e) => {
-                    warn_err!(e);
-                    None
-                }
-            };
-            v.unwrap_or(def)
-        }
+        let get_f32 = get::<f32>;
+        let get_bool = get::<bool>;
+        let get_u64 = get::<u32>;
 
         let physics_speed_damp = get_f32(&tbl, "PHYSICS_SPEED_DAMP", 3.);
         let hyperspace_enter_max = get_f32(&tbl, "HYPERSPACE_ENTER_MAX", 0.4);
@@ -79,6 +75,11 @@ impl Constants {
         let ew_asteroid_dist = get_f32(&tbl, "EW_ASTEROID_DIST", 7.5e3);
         let ew_jump_detect_dist = get_f32(&tbl, "EW_JUMPDETECT_DIST", 7.5e3);
         let ew_spob_detect_dist = get_f32(&tbl, "EW_SPOBDETECT_DIST", 20e3);
+        let timedate_minor_in_major = get_u64(&tbl, "TIMEDATE_MINOR_IN_MAJOR", 5_000) as i64;
+        let timedate_increment_in_minor =
+            get_u64(&tbl, "TIMEDATE_INCREMENT_IN_MINOR", 10_000) as i64;
+        let timedate_increments_per_second =
+            (get_f32(&tbl, "TIMEDATE_MILLIINCREMENTS_PER_SECOND", 30.0) * 1000.0).round() as i64;
         let pilot_shield_down_time = get_f32(&tbl, "PILOT_SHIELD_DOWN_TIME", 5.);
         let pilot_stress_recovery_time = get_f32(&tbl, "PILOT_STRESS_RECOVERY_TIME", 5.);
         let pilot_disabled_armour = get_f32(&tbl, "PILOT_DISABLED_ARMOUR", 0.1);
@@ -117,6 +118,9 @@ impl Constants {
             ew_asteroid_dist,
             ew_jump_detect_dist,
             ew_spob_detect_dist,
+            timedate_minor_in_major,
+            timedate_increment_in_minor,
+            timedate_increments_per_second,
             pilot_shield_down_time,
             pilot_stress_recovery_time,
             pilot_disabled_armour,
@@ -148,6 +152,9 @@ impl Constants {
             ew_asteroid_dist: 7.5e3,
             ew_jump_detect_dist: 7.5e3,
             ew_spob_detect_dist: 20e3,
+            timedate_minor_in_major: 5_000,
+            timedate_increment_in_minor: 10_000,
+            timedate_increments_per_second: 30_000,
             pilot_shield_down_time: 5.,
             pilot_stress_recovery_time: 5.,
             pilot_disabled_armour: 0.1,

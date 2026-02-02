@@ -11,6 +11,13 @@ assert( time.new(2,3,4)==time.fromnumber( time.new(2,3,4):tonumber() ), "number 
 assert( time.new(1,0,0) > time.new(0,1,1) )
 assert( time.new(0,100000,0) <= time.new(100,0,0) )
 
+-- Test UST stuff
+for i = 0,100 do
+   for j = 0,100 do
+      assert( time.new(j,i,0) == time.new(0,j*5000,i*10000) )
+   end
+end
+
 -- Test some global stuff
 local t = time.new( 603, 3726, 2871 )
 time.set_current( t )

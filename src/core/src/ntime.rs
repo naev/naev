@@ -1,3 +1,4 @@
+use crate::constants::CTS;
 use anyhow::Result;
 use formatx::formatx;
 use gettext::gettext;
@@ -9,6 +10,10 @@ use std::collections::VecDeque;
 use std::ffi::CString;
 use std::os::raw::{c_char, c_double, c_int, c_ulong, c_void};
 use std::sync::{LazyLock, Mutex, RwLock};
+
+// Internal multiplier used for everything
+const MULTIPLIER: i64 = 1_000;
+const MULTIPLIER_F: f64 = MULTIPLIER as f64;
 
 pub type NTimeC = i64;
 #[derive(
@@ -67,27 +72,37 @@ impl NTime {
         let scu = scu as i64;
         let stp = stp as i64;
         let stu = stu as i64;
-        NTime(scu * (5_000 * 10_000 * 1_000) + stp * (10_000 * 1_000) + stu * 1_000)
+        NTime(
+            MULTIPLIER
+                * (scu * (CTS.timedate_minor_in_major * CTS.timedate_increment_in_minor)
+                    + stp * (CTS.timedate_increment_in_minor)
+                    + stu),
+        )
     }
     pub fn cycles(self) -> i32 {
         let t = self.0;
-        (t / (5_000 * 10_000 * 1_000)).try_into().unwrap_or(0)
+        (t / (CTS.timedate_minor_in_major * CTS.timedate_increment_in_minor * MULTIPLIER))
+            .try_into()
+            .unwrap_or(0)
     }
     pub fn periods(self) -> i32 {
         let t = self.0;
-        (t / (10_000 * 1_000) % 5_000).try_into().unwrap_or(0)
+        (t / (CTS.timedate_increment_in_minor * MULTIPLIER) % CTS.timedate_minor_in_major)
+            .try_into()
+            .unwrap_or(0)
     }
     pub fn seconds(self) -> i32 {
         let t = self.0;
-        (t / 1_000 % 10_000).try_into().unwrap_or(0)
+        (t / MULTIPLIER % CTS.timedate_increment_in_minor)
+            .try_into()
+            .unwrap_or(0)
     }
     pub fn remainder(self) -> f64 {
-        let t = self.0 as f64;
-        t % 1_000.
+        (self.0 % MULTIPLIER) as f64
     }
     pub fn to_seconds(self) -> f64 {
         let t = self.0 as f64;
-        t / 1_000.
+        t / MULTIPLIER_F
     }
     pub fn from_string(input: &str) -> Result<Self> {
         CONVERTER.from_string(input)
@@ -167,48 +182,51 @@ impl Converter {
         }
     }
 
+    fn from_string_default(input: &str) -> Result<NTime> {
+        static RE_UST: LazyLock<Regex> = LazyLock::new(|| {
+            Regex::new(r"^\s*UST\s+(\d+)(?::(\d{4})(?:\.(\d{4}))?)?\s*$").unwrap()
+        });
+        static RE_P: LazyLock<Regex> =
+            LazyLock::new(|| Regex::new(r"^\s*(\d+)(?:\.(\d{4}))?\s+p\s*$").unwrap());
+        static RE_S: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^\s*(\d+)\s+s\s*$").unwrap());
+
+        if let Some(cap) = RE_UST.captures(input) {
+            return Ok(NTime::new(
+                cap[1].parse()?,
+                match cap.get(2) {
+                    Some(m) => m.as_str().parse::<i32>()?,
+                    None => 0,
+                },
+                match cap.get(3) {
+                    Some(m) => m.as_str().parse::<i32>()?,
+                    None => 0,
+                },
+            ));
+        }
+
+        if let Some(cap) = RE_P.captures(input) {
+            return Ok(NTime::new(
+                0,
+                cap[1].parse()?,
+                match cap.get(2) {
+                    Some(m) => m.as_str().parse::<i32>()?,
+                    None => 0,
+                },
+            ));
+        }
+
+        if let Some(cap) = RE_S.captures(input) {
+            return Ok(NTime::new(0, 0, cap[1].parse()?));
+        }
+
+        anyhow::bail!("not valid ntime")
+    }
+
     fn from_string(&self, input: &str) -> Result<NTime> {
         if let Some(from_string) = &self.from_string {
             Ok(from_string.call(input)?)
         } else {
-            static RE_UST: LazyLock<Regex> = LazyLock::new(|| {
-                Regex::new(r"^\s*UST\s+(\d+)(?::(\d{4})(?:\.(\d{4}))?)?\s*$").unwrap()
-            });
-            static RE_P: LazyLock<Regex> =
-                LazyLock::new(|| Regex::new(r"^\s*(\d+)(?:\.(\d{4}))?\s+p\s*$").unwrap());
-            static RE_S: LazyLock<Regex> =
-                LazyLock::new(|| Regex::new(r"^\s*(\d+)\s+s\s*$").unwrap());
-
-            if let Some(cap) = RE_UST.captures(input) {
-                return Ok(NTime::new(
-                    cap[1].parse()?,
-                    match cap.get(2) {
-                        Some(m) => m.as_str().parse::<i32>()?,
-                        None => 0,
-                    },
-                    match cap.get(3) {
-                        Some(m) => m.as_str().parse::<i32>()?,
-                        None => 0,
-                    },
-                ));
-            }
-
-            if let Some(cap) = RE_P.captures(input) {
-                return Ok(NTime::new(
-                    0,
-                    cap[1].parse()?,
-                    match cap.get(2) {
-                        Some(m) => m.as_str().parse::<i32>()?,
-                        None => 0,
-                    },
-                ));
-            }
-
-            if let Some(cap) = RE_S.captures(input) {
-                return Ok(NTime::new(0, 0, cap[1].parse()?));
-            }
-
-            anyhow::bail!("not valid ntime")
+            Self::from_string_default(input)
         }
     }
 }
@@ -674,7 +692,7 @@ pub fn get() -> NTime {
 
 pub fn set(t: NTime) {
     let mut nt = TIME.write().unwrap();
-    let inc = t - nt.time;
+    //let inc = t - nt.time;
     nt.time = t;
     nt.remainder = 0.;
     /*
