@@ -395,7 +395,7 @@ function escort_failure ()
 end
 
 function land_final ()
-   var.push("taiomi09_done", time.get() )
+   var.push("taiomi09_done", time.cur() )
 
    vn.clear()
    vn.scene()
@@ -460,7 +460,7 @@ function land_final ()
    vn.na(fmt.f(_([[You take a well-deserved break and relax on your ship until the Scavenger's construction is complete.
 
 {amount} periods have passed. It is now {date}.]]),
-      {amount=wait_time, date=time.get()}))
+      {amount=wait_time, date=time.cur()}))
    vn.func( function ()
       time.inc( time.new(0,wait_time,0) )
    end )

@@ -538,18 +538,18 @@ function weNeed2land()
    -- In this case, the final advice is useless. Is it worth managing this case ?
 
    -- 2500s is easy to do with anything smaller or like a corvette but short enough to feel pressing.
-   mem.timelimit = time.get() + time.new(0,0,2500)
+   mem.timelimit = time.cur() + time.new(0,0,2500)
    misn.osdCreate(_("Dvaered Escape"), {
-      fmt.f(_("Land anywhere to let Hamfresser steal a medical device. Time left: {time}"), {time=(mem.timelimit - time.get())}),
+      fmt.f(_("Land anywhere to let Hamfresser steal a medical device. Time left: {time}"), {time=(mem.timelimit - time.cur())}),
    })
    -- Increased tick frequency for dramatic effect.
    mem.datehook = hook.date(time.new(0, 0, 20), "tick")
 end
 
 function tick()
-   if mem.timelimit >= time.get() then
+   if mem.timelimit >= time.cur() then
       misn.osdCreate(_("Dvaered Escape"), {
-         fmt.f(_("Land anywhere to let Hamfresser steal a medical device. Time left: {time}"), {time=(mem.timelimit - time.get())}),
+         fmt.f(_("Land anywhere to let Hamfresser steal a medical device. Time left: {time}"), {time=(mem.timelimit - time.cur())}),
       })
    else
       tk.msg(_("The mission failed"), fmt.f(_([[Hamfresser rushes to the bridge. "All is lost, {player}! The guy died. Our mission failed!"]]), {player=player.name()}))

@@ -325,12 +325,12 @@ function create ()
    end
 
    mem.missys = missys
-   mem.deadline = time.get() + time.new( 0, 2 * system.cur():jumpDist(mem.missys, true), rnd.rnd( 100e3, 150e3 ) )
+   mem.deadline = time.cur() + time.new( 0, 2 * system.cur():jumpDist(mem.missys, true), rnd.rnd( 100e3, 150e3 ) )
 
    -- Set mission details
    misn.setTitle( prefix..fmt.f(title[mem.level], {sys=missys}) )
    local mdesc = fmt.f( desc,
-      {pirname=pname, sys=missys, fct=payingfaction, shipclass=_(ship.get(pship):classDisplay()), reason=reason, deadline=(mem.deadline-time.get()) })
+      {pirname=pname, sys=missys, fct=payingfaction, shipclass=_(ship.get(pship):classDisplay()), reason=reason, deadline=(mem.deadline-time.cur()) })
    if not payingfaction:static() then
       mdesc = mdesc.."\n"..fmt.f(_([[#nReputation Gained:#0 {fct}]]),
          {fct=payingfaction})

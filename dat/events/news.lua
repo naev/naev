@@ -173,7 +173,7 @@ function add_header( my_faction )
       return t
    end
 
-   local cur_t = time.get()
+   local cur_t = time.cur()
    local head = sample_one( header_table[my_faction] )
    local body = sample_one( greeting_table[my_faction] )
    local a = news.add( my_faction, head, body, cur_t + time.new( 0, 0, 1 ), 0, -1 ) -- Highest priority
@@ -185,7 +185,7 @@ function add_article( my_faction, force )
       local last_article = var.peek( "news_last_article" )
       if last_article ~= nil then
          local t = time.fromnumber( last_article )
-         if time.get() - t < time.new( 0, 1, 5000 ) then
+         if time.cur() - t < time.new( 0, 1, 5000 ) then
             return false
          end
       end
@@ -231,10 +231,10 @@ function add_article( my_faction, force )
    end
 
    -- Add the news for roughly 10 periods
-   local exp = time.get() + time.new( 0, 10, 5000 * rnd.sigma() )
+   local exp = time.cur() + time.new( 0, 10, 5000 * rnd.sigma() )
    local a = news.add( my_faction, _(head), body, exp, nil, priority )
    a:bind( tag )
-   var.push( "news_last_article", time.get():tonumber() )
+   var.push( "news_last_article", time.cur():tonumber() )
 
    return true
 end
@@ -245,7 +245,7 @@ function add_econ_article( my_faction )
    local t = nil
    local generic = faction.get(my_faction):tags().generic
    if last_article ~= nil then t = time.fromnumber( last_article ) end
-   if (t == nil or time.get() - t > time.new( 0, 2, 0 ))
+   if (t == nil or time.cur() - t > time.new( 0, 2, 0 ))
          and rnd.rnd() < 0.75 and generic then
       local planets = {}
       for i, s in ipairs( lmisn.getSysAtDistance( system.cur(), 2, 4 ) ) do
@@ -258,9 +258,9 @@ function add_econ_article( my_faction )
       end
       if #planets > 0 then
          local p = planets[ rnd.rnd( 1, #planets ) ]
-         local pd = time.get() - time.new(
+         local pd = time.cur() - time.new(
                0, p:system():jumpDist() + rnd.rnd( 0, 1 ), 9000 * rnd.sigma() )
-         local exp = time.get() + time.new( 0, 5, 5000 * rnd.sigma() )
+         local exp = time.cur() + time.new( 0, 5, 5000 * rnd.sigma() )
          local commchoices = p:commoditiesSold()
          local commod = commchoices[ rnd.rnd( 1, #commchoices ) ]
          local price = commod:priceAtTime( p, pd )
@@ -268,7 +268,7 @@ function add_econ_article( my_faction )
          local a = news.add( "Generic", _(head), body, exp, pd, 6 ) -- Slightly lower priority
          a:bind( head )
          p:recordCommodityPriceAtTime( pd )
-         var.push( "news_last_econ_article", time.get():tonumber() )
+         var.push( "news_last_econ_article", time.cur():tonumber() )
       end
    end
 
@@ -282,7 +282,7 @@ function add_econ_article( my_faction )
       return
    end
 
-   local cur_t = time.get()
+   local cur_t = time.cur()
    local body = ""
    for i, sys in ipairs( lmisn.getSysAtDistance( system.cur(), 0, 1 ) ) do
       for j, plnt in ipairs( sys:spobs() ) do

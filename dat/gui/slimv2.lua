@@ -578,7 +578,7 @@ function render( dt, dt_mod )
    gfx.print( true, largeNumber( credits, 2 ), credits_x, credits_y, col_txt_std, credits_w, true )
 
    --Time
-   gfx.print( true, time.str( time.get(), 2 ), time_x, time_y, col_txt_std, time_w, true )
+   gfx.print( true, tostring( time.cur() ), time_x, time_y, col_txt_std, time_w, true )
 end
 
 function cooldown_end ()

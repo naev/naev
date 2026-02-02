@@ -138,8 +138,8 @@ function create()
       allowance = allowance + math.floor((mem.numjumps-1) / jumpsperstop) * stuperjump
    end
 
-   mem.timelimit  = time.get() + time.new(0, 0, allowance)
-   mem.timelimit2 = time.get() + time.new(0, 0, allowance * 1.3)
+   mem.timelimit  = time.cur() + time.new(0, 0, allowance)
+   mem.timelimit2 = time.cur() + time.new(0, 0, allowance * 1.3)
 
    -- Choose mission reward. This depends on the priority and the passenger rank.
    local jumpreward = 15e3
@@ -175,7 +175,7 @@ function accept()
    if mem.timelimit < playerbest then
       if not vntk.yesno( _("Too slow"), fmt.f(_([[The passenger requests arrival within {time_limit}, but it will take at least {time} for your ship to reach {pnt}, missing the deadline.
 
-Accept the mission anyway?]]), {time_limit=(mem.timelimit - time.get()), time=(playerbest - time.get()), pnt=mem.destplanet}) ) then
+Accept the mission anyway?]]), {time_limit=(mem.timelimit - time.cur()), time=(playerbest - time.cur()), pnt=mem.destplanet}) ) then
          return
       end
    end
@@ -332,7 +332,7 @@ function land()
 
       player.pay(mem.reward)
       misn.finish(true)
-   elseif mem.timelimit2 <= time.get() then
+   elseif mem.timelimit2 <= time.cur() then
       -- if we missed the second deadline, drop the person off at the planet.
       vntk.msg(_("Passenger transport failure"), _("You drop the upset pilgrim off at the nearest spaceport."))
       misn.finish(false)
@@ -343,11 +343,11 @@ end
 function tick()
    local osd_msg = {}
    osd_msg[1] = fmt.f(_("Fly to {pnt} in the {sys} system before {time}"), {pnt=mem.destplanet, sys=mem.destsys, time=mem.timelimit})
-   if mem.timelimit >= time.get() then
+   if mem.timelimit >= time.cur() then
       -- Case still in time
-      osd_msg[2] = fmt.f(_("You have {time} remaining"), {time=(mem.timelimit - time.get())})
+      osd_msg[2] = fmt.f(_("You have {time} remaining"), {time=(mem.timelimit - time.cur())})
       misn.osdCreate(_("Pilgrimage transport"), osd_msg)
-   elseif mem.timelimit2 <= time.get() and not mem.overtime then
+   elseif mem.timelimit2 <= time.cur() and not mem.overtime then
       -- Case missed second deadline
       player.msg(_("You're far too late … best to drop your passengers off on the nearest planet before tempers run any higher."))
       misn.osdCreate( _("Pilgrim drop-off"),

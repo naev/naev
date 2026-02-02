@@ -99,7 +99,7 @@ function create ()
 
    -- Try to cache the route to make it so that the same route doesn't appear over and over
    local c = naev.cache()
-   local t = time.get()
+   local t = time.cur()
    if not c.misn_patrols then
       c.misn_patrols = {}
    end

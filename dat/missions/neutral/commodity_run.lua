@@ -61,7 +61,7 @@ local function update_active_runs( change )
    -- Note: This causes a delay (defined in create()) after accepting,
    -- completing, or aborting a commodity run mission. This is
    -- intentional.
-   var.push( "last_commodity_run", time.tonumber( time.get() ) )
+   var.push( "last_commodity_run", time.tonumber( time.cur() ) )
 end
 
 
@@ -82,7 +82,7 @@ function create ()
    local last_run = var.peek( "last_commodity_run" )
    if last_run ~= nil then
       local delay = time.new(0, 7, 0)
-      if time.get() < time.fromnumber(last_run) + delay then
+      if time.cur() < time.fromnumber(last_run) + delay then
          misn.finish(false)
       end
    end

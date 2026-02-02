@@ -111,7 +111,7 @@ local function update_osd ()
       -- Only care if first is selected, or time is ignored
       if active==1 then
          misn.osdCreate( b.osd_title, {
-            fmt.f( b.osd_goto,      {sys=b.system, time_limit=b.deadline, time=(b.deadline-time.get())} ),
+            fmt.f( b.osd_goto,      {sys=b.system, time_limit=b.deadline, time=(b.deadline-time.cur())} ),
             fmt.f( b.osd_objective, {plt=b.targetname} ),
             fmt.f( b.osd_reward,    {fct=b.payingfaction} )
          } )
@@ -147,7 +147,7 @@ end
 function _bounty_date ()
    local b = mem._bounty
    if system.cur() ~= b.system and not b.job_done then
-      if time.get() > mem.deadline then
+      if time.cur() > mem.deadline then
          return lmisn.fail( fmt.f(_("{plt} got away."), {plt=b.targetname} ))
       end
       update_osd()

@@ -922,7 +922,7 @@ function render( _dt )
    gfx.renderTex( top_bar_center, tbar_center_x - tbar_center_w/2, tbar_y + tbar_h - tbar_center_h )
 
    --Time
-   local time_str = time.str(time.get())
+   local time_str = tostring(time.cur())
    gfx.print( false, time_str, screen_w/2 - 78, tbar_y + tbar_h - tbar_center_h + 55, col_text, 156, true )
 
    --System name

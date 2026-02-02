@@ -55,7 +55,7 @@ function create()
    local stu_distance = 0.2 * mem.travel_dist
    local stu_jumps = 10300 * mem.num_jumps
    local stu_takeoff = 10300
-   mem.time_limit = time.get() + time.new(0, 0, stu_distance + stu_jumps + stu_takeoff)
+   mem.time_limit = time.cur() + time.new(0, 0, stu_distance + stu_jumps + stu_takeoff)
 
    -- Allow extra time for refuelling stops.
    local jumpsperstop = 3 + math.min(tier, 3)
@@ -98,7 +98,7 @@ function accept()
    vn.label("tooslow")
    vn.na( function ()
       return fmt.f(_([[The goods have to arrive in {time_limit} but it will take {time} for your ship to reach {pnt}. Accept the mission anyway?]]),
-         {time_limit=(mem.time_limit - time.get()), time=(player_best - time.get()), pnt=mem.dest_planet})
+         {time_limit=(mem.time_limit - time.cur()), time=(player_best - time.cur()), pnt=mem.dest_planet})
    end )
    vn.menu{
       {_([[Accept]]), "accept_force"},
@@ -177,8 +177,8 @@ end
 
 function tick()
    local osd_msg
-   if mem.time_limit >= time.get() then -- still in time
-      osd_msg = {fmt.f(_("Drop off the goods at {pnt} in the {sys} system (You have {time} remaining)"), {pnt=mem.dest_planet, sys=mem.dest_sys, time=(mem.time_limit - time.get())})}
+   if mem.time_limit >= time.cur() then -- still in time
+      osd_msg = {fmt.f(_("Drop off the goods at {pnt} in the {sys} system (You have {time} remaining)"), {pnt=mem.dest_planet, sys=mem.dest_sys, time=(mem.time_limit - time.cur())})}
    else -- missed deadline
       osd_msg = {fmt.f(_("Drop off the goods at {pnt} in the {sys} system (You are late)"), {pnt=mem.dest_planet, sys=mem.dest_sys})}
       mem.intime = false

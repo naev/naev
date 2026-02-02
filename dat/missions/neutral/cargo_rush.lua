@@ -83,8 +83,8 @@ function create()
       allowance = allowance + math.floor((mem.numjumps-1) / jumpsperstop) * stuperjump
    end
 
-   mem.timelimit  = time.get() + time.new(0, 0, allowance)
-   mem.timelimit2 = time.get() + time.new(0, 0, allowance * 1.2)
+   mem.timelimit  = time.cur() + time.new(0, 0, allowance)
+   mem.timelimit2 = time.cur() + time.new(0, 0, allowance * 1.2)
 
    local riskreward
    if mem.avgrisk == 0 then
@@ -130,7 +130,7 @@ function accept()
    if mem.timelimit < playerbest then
       if not tk.yesno( _("Too slow"), fmt.f(
             _("This shipment must arrive within {time_limit}, but it will take at least {time} for your ship to reach {pnt}, missing the deadline. Accept the mission anyway?"),
-            {time_limit=(mem.timelimit - time.get()), time=(playerbest - time.get()), pnt=mem.destplanet} ) ) then
+            {time_limit=(mem.timelimit - time.cur()), time=(playerbest - time.cur()), pnt=mem.destplanet} ) ) then
          return
       end
    elseif system.cur():jumpDist(mem.destsys, false, true) > mem.numjumps then
@@ -171,12 +171,12 @@ end
 -- Date hook
 function tick()
    local osd_msg = {}
-   if mem.timelimit >= time.get() then
+   if mem.timelimit >= time.cur() then
       -- Case still in time
       osd_msg[1] = fmt.f(_("Fly to {pnt} in the {sys} system before {time_limit}\n({time} remaining)"),
-         {pnt=mem.destplanet, sys=mem.destsys, time_limit=mem.timelimit, time=(mem.timelimit - time.get())})
+         {pnt=mem.destplanet, sys=mem.destsys, time_limit=mem.timelimit, time=(mem.timelimit - time.cur())})
       misn.osdCreate(_("Rush cargo mission"), osd_msg)
-   elseif mem.timelimit2 <= time.get() then
+   elseif mem.timelimit2 <= time.cur() then
       -- Case missed second deadline
       player.msg( fmt.f(_("The delivery to {sys} has been cancelled! You were too late."), {sys=mem.destsys}) )
       misn.finish(false)

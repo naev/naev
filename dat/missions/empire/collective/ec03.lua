@@ -123,7 +123,7 @@ function land()
    "Stay alert. We'll probably need your assistance when they get back. Take the free time as a vacation. I heard the weather on Caladan is pretty nice this time of year, maybe you should visit them. We'll keep in touch."]]))
 
       -- Store time commando theoretically landed
-      var.push( "emp_commando", time.tonumber(time.get() + time.new( 0, 10, 0 )) )
+      var.push( "emp_commando", time.tonumber(time.cur() + time.new( 0, 10, 0 )) )
 
       -- Rewards
       player.pay(mem.credits)

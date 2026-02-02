@@ -52,7 +52,7 @@ function lib.create()
 
    local ao = mem._astral_orchids
    local lastpicked = var.peek( varname )
-   local canpick = (not lastpicked) or (lastpicked >= time.get() + ao.regrow_time)
+   local canpick = (not lastpicked) or (lastpicked >= time.cur() + ao.regrow_time)
    local didpoi = (var.peek( "poi_orchids" ) or 0) > 0
    local orchids_found = 0
    for k,v in ipairs(player.evtDoneList()) do
@@ -65,7 +65,7 @@ function lib.create()
    vn.scene()
 
    if not canpick then
-      local pickstatus = (time.get()-lastpicked):tonumber() / ao.regrow_time:tonumber()
+      local pickstatus = (time.cur()-lastpicked):tonumber() / ao.regrow_time:tonumber()
       -- Sorry player
       vn.transition()
       if pickstatus < 0.3 then
@@ -212,7 +212,7 @@ function lib.create()
          return vn.jump("nofit")
       end
       harvested = player.fleetCargoAdd( CROP, ao.harvest_amount )
-      var.push( varname, time.get() )
+      var.push( varname, time.cur() )
       time.inc( time.new( 0, 1, 0 ) ) -- Small time delay, TODO make visible to the player?
    end )
    vn.na( function ()

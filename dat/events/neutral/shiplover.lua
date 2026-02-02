@@ -43,11 +43,11 @@
    -- Only allow once every 10 periods at best
    local lastplayed = var.peek("shiplover_lastplayed")
    if not lastplayed then
-      lastplayed = time.get():tonumber()
+      lastplayed = time.cur():tonumber()
       var.push( "shiplover_lastplayed", lastplayed )
    end
    lastplayed = time.fromnumber( lastplayed )
-   if lastplayed + time.new( 0, 10, 0 ) > time.get() then
+   if lastplayed + time.new( 0, 10, 0 ) > time.cur() then
       return false
    end
 
@@ -418,7 +418,7 @@ They take their leave.]]), {answer=_(question_data.answer)}))
 
    -- Finish event (removes npc)
    if remove_npc then
-      var.push( "shiplover_lastplayed", time.get():tonumber() )
+      var.push( "shiplover_lastplayed", time.cur():tonumber() )
       var.push( "shiplover_lastplanet", spob.cur():nameRaw() )
       evt.finish()
    end

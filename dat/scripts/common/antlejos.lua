@@ -61,11 +61,11 @@ function antlejos.unidiffLevel ()
 end
 
 function antlejos.dateupdate ()
-   var.push( "antlejos_date", time.get() )
+   var.push( "antlejos_date", time.cur() )
 end
 function antlejos.datecheck ()
    local d = var.peek("antlejos_date")
-   return d and d==time.get()
+   return d and d==time.cur()
 end
 
 --[[

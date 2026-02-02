@@ -24,7 +24,7 @@ local timer
 
 function create ()
    local invasion_time = var.peek("invasion_time")
-   if time.get() < time.fromnumber(invasion_time) + time.new(0, 10, 0) then
+   if time.cur() < time.fromnumber(invasion_time) + time.new(0, 10, 0) then
       evt.finish()
    end
 

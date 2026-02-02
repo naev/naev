@@ -82,12 +82,12 @@ function create ()
    end
 
    mem.missys = missys
-   mem.deadline = time.get() + time.new( 0, 2 * system.cur():jumpDist(mem.missys, true), rnd.rnd( 100e3, 150e3 ) )
+   mem.deadline = time.cur() + time.new( 0, 2 * system.cur():jumpDist(mem.missys, true), rnd.rnd( 100e3, 150e3 ) )
 
    -- Set mission details
    misn.setTitle( prefix..fmt.f(title, {sys=missys}) )
    local mdesc = fmt.f( desc,
-      {name=pname, sys=missys, fct=payingfaction, shipclass=_(ship.get(pship):classDisplay()), deadline=(mem.deadline-time.get()) })
+      {name=pname, sys=missys, fct=payingfaction, shipclass=_(ship.get(pship):classDisplay()), deadline=(mem.deadline-time.cur()) })
    misn.setDesc( mdesc )
    misn.setReward( reward )
    misn.setDistance( lmisn.calculateDistance( system.cur(), spob.cur():pos(), missys) )

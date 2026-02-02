@@ -209,7 +209,7 @@ function land ()
       vn.sfxVictory()
       vn.func( function ()
          player.pay( reward )
-         var.push( "lucas01_done", time.get() )
+         var.push( "lucas01_done", time.cur() )
       end )
       vn.na(fmt.reward(reward))
 

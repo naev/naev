@@ -7,7 +7,7 @@
  <cond>
    -- Must be 5 cycles after finishing Lucas 01
    local t = var.peek("lucas01_done")
-   if t and time.get() &lt; t + time.new( 0, 5, 0 ) then
+   if t and time.cur() &lt; t + time.new( 0, 5, 0 ) then
       return false
    end
 

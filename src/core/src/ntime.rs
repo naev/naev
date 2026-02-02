@@ -298,12 +298,10 @@ impl UserData for NTime {
          *    @luatreturn Time Time in internal representation time.
          * @luafunc cur
          */
-        methods.add_function("cur", |_, ()| -> mlua::Result<Self> {
-            Ok(TIME.read().unwrap().time)
-        });
+        methods.add_function("cur", |_, ()| -> mlua::Result<Self> { Ok(get()) });
         methods.add_function("get", |lua, ()| -> mlua::Result<Self> {
             crate::lua::deprecated(lua, "get", Some("cur"))?;
-            Ok(TIME.read().unwrap().time)
+            Ok(get())
         });
         /*@
          * @brief Sets the current in-game time.
@@ -312,7 +310,7 @@ impl UserData for NTime {
          * @luafunc set_current
          */
         methods.add_function("set_current", |_, nt: Self| -> mlua::Result<()> {
-            TIME.write().unwrap().time = nt;
+            set(nt);
             Ok(())
         });
         /*@
@@ -676,8 +674,15 @@ pub fn get() -> NTime {
 
 pub fn set(t: NTime) {
     let mut nt = TIME.write().unwrap();
+    let inc = t - nt.time;
     nt.time = t;
     nt.remainder = 0.;
+    /*
+     * TODO should probably change it if called while player exists.
+    unsafe {
+        naevc::hooks_updateDate(inc.into());
+    }
+    */
 }
 
 pub fn set_remainder(t: NTime, rem: f64) {

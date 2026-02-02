@@ -45,7 +45,7 @@ function create()
    local stuperjump = 10000
    local stupertakeoff = 10500
    local allowance  = traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 250 * numjumps
-   mem.timelimit  = time.get() + time.new(0, 0, allowance)
+   mem.timelimit  = time.cur() + time.new(0, 0, allowance)
 
    -- Spaceport bar stuff
    misn.setNPC(_("Robert"), student_portrait, _("The student is already awaiting you."))
@@ -308,13 +308,13 @@ end
 -- Date hook
 function tick()
    local osd_msg = {}
-   if mem.timelimit <= time.get() then
+   if mem.timelimit <= time.cur() then
       -- Case missed second deadline
       player.msg(_("You were too late. You're never going to be a great scientist!"))
       misn.finish(false)
    else
       osd_msg[1] = fmt.f(_("Fly to {pnt} in the {sys} system before {time_limit}\n({time} remaining)"),
-      { pnt=dest_planet, sys=dest_sys, time_limit=mem.timelimit, time=(mem.timelimit - time.get())})
+      { pnt=dest_planet, sys=dest_sys, time_limit=mem.timelimit, time=(mem.timelimit - time.cur())})
       misn.osdCreate(_("The Substitute Speaker"), osd_msg)
    end
 end

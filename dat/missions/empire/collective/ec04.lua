@@ -3,7 +3,7 @@
 <mission name="Collective Extraction">
  <unique />
  <priority>2</priority>
- <cond>faction.reputationGlobal("Empire") &gt; 5 and var.peek("emp_commando") ~= nil and time.get() &gt; time.fromnumber( var.peek("emp_commando") )</cond>
+ <cond>faction.reputationGlobal("Empire") &gt; 5 and var.peek("emp_commando") ~= nil and time.cur() &gt; time.fromnumber( var.peek("emp_commando") )</cond>
  <done>Collective Distraction</done>
  <chance>100</chance>
  <location>Land</location>

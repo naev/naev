@@ -38,7 +38,7 @@ function create ()
    vn.run()
 
    -- Add some news
-   articles[1].date_to_rm = time.get()+time.new(0,20,0)
+   articles[1].date_to_rm = time.cur()+time.new(0,20,0)
    news.add( articles )
 
    neu.addMiscLog(fmt.f(_([[You helped clear a pirate blockade at the {sys} system, and were met with indifference from the local population.]]),

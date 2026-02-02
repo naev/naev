@@ -162,7 +162,7 @@ function land()
    "Anyway, for now, we will transfer {credits} to your account, as a reward for this mission, and be certain that we will need you again soon!"]]), {credits="#g"..fmt.credits(mem.reward).."#0"}), ("portraits/" .. fw.portrait_tam) )
       player.pay(mem.reward)
 
-      local t = time.get():tonumber()
+      local t = time.cur():tonumber()
       var.push( "invasion_time", t ) -- Timer for the next mission
 
       shiplog.create( "frontier_war", _("Frontier War"), _("Dvaered") )

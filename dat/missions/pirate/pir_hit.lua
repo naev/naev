@@ -135,7 +135,7 @@ function create ()
       misn.finish( false )
    end
 
-   mem.deadline = time.get() + time.new( 0, 2 * system.cur():jumpDist(mem.missys, true), rnd.rnd( 100e3, 150e3 ) )
+   mem.deadline = time.cur() + time.new( 0, 2 * system.cur():jumpDist(mem.missys, true), rnd.rnd( 100e3, 150e3 ) )
 
    mem.name = pilotname.generic()
    mem.level = level_setup()
@@ -153,7 +153,7 @@ function create ()
 #nWanted:#0 Dead
 #nLast seen:#0 {sys} system
 #nTime limit:#0 {deadline}]]),
-      {fct=_(mem.target_faction), plt=mem.name, sys=mem.missys, shipclass=_(ship.get(mem.pship):classDisplay()), msg=faction_text, reason=reason, deadline=tostring(mem.deadline-time.get()) } )
+      {fct=_(mem.target_faction), plt=mem.name, sys=mem.missys, shipclass=_(ship.get(mem.pship):classDisplay()), msg=faction_text, reason=reason, deadline=tostring(mem.deadline-time.cur()) } )
    if pir.factionIsClan(mem.paying_faction) then
       mdesc = mdesc.."\n"..fmt.f(_([[#nReputation Gained:#0 {fct}]]),
          {fct=mem.paying_faction})
@@ -174,7 +174,7 @@ end
 local function update_osd ()
    misn.osdCreate( _("Assassination"), {
       fmt.f( _("Fly to the {sys} system before {time_limit} ({time} remaining)"),
-         {sys=mem.missys, time_limit=mem.deadline, time=(mem.deadline-time.get())} ),
+         {sys=mem.missys, time_limit=mem.deadline, time=(mem.deadline-time.cur())} ),
       fmt.f( _("Kill {plt}"), {plt=mem.name} ),
    } )
 end
@@ -194,7 +194,7 @@ end
 
 function deadline ()
    if system.cur() ~= mem.missys then
-      if time.get() > mem.deadline then
+      if time.cur() > mem.deadline then
          return lmisn.fail( _("Target got away.") )
       end
       update_osd()

@@ -49,7 +49,7 @@ function create ()
    end
    mem.origWorld, mem.origSys      = spob.cur()
 
---   origtime = time.get()
+--   origtime = time.cur()
 end
 
 function accept ()

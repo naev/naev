@@ -76,7 +76,7 @@ function create ()
       misn.finish( false )
    end
 
-   mem.deadline = time.get() + time.new( 0, 3 * system.cur():jumpDist(mem.missys, true), rnd.rnd( 100e3, 150e3 ) )
+   mem.deadline = time.cur() + time.new( 0, 3 * system.cur():jumpDist(mem.missys, true), rnd.rnd( 100e3, 150e3 ) )
 
    mem.name = pilotname.generic()
    mem.retpnt, mem.retsys = spob.cur()
@@ -87,7 +87,7 @@ end
 local function update_osd ()
    misn.osdCreate( _("Dark Compensation"), {
       fmt.f( _("Fly to the {sys} system before {time_limit} ({time} remaining)"),
-         {sys=mem.missys, time_limit=mem.deadline, time=(mem.deadline-time.get())} ),
+         {sys=mem.missys, time_limit=mem.deadline, time=(mem.deadline-time.cur())} ),
       fmt.f( _("Kill {plt}"), {plt=mem.name} ),
       fmt.f( _("Return to {pnt} ({sys} system)"), {pnt=mem.retpnt,sys=mem.retsys} ),
    } )
@@ -157,7 +157,7 @@ end
 
 function deadline ()
    if system.cur() ~= mem.missys and mem.state==1 then
-      if time.get() > mem.deadline then
+      if time.cur() > mem.deadline then
          return lmisn.fail( _("Target got away.") )
       end
       update_osd()

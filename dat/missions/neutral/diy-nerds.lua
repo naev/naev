@@ -127,13 +127,13 @@ You just start to marvel at the self-assurance of one so young when she signals 
 
    local distance = vec2.dist( spob.pos(mem.srcPlanet), spob.pos(mem.destPlanet) )
    local stuperpx = 30 / (player.pilot():stats().speed_max+1) -- from common.cargo
-   mem.expiryDate = time.get() + time.new(0, 2, 3310 + distance * stuperpx ) -- takeoff + min travel time + leeway
+   mem.expiryDate = time.cur() + time.new(0, 2, 3310 + distance * stuperpx ) -- takeoff + min travel time + leeway
 
    addNerdCargo()
    mem.lhook = hook.land("nerds_land1", "land")
    misn.osdCreate( _("DIY Nerds"), {
-      fmt.f(_("Bring the nerds and their box to {pnt} before {time}"), {pnt=mem.destPlanet, time=time.str(mem.expiryDate, 1)}),
-      fmt.f(_("You have {time} remaining"), {time=time.str(mem.expiryDate - time.get(), 1)}),
+      fmt.f(_("Bring the nerds and their box to {pnt} before {time}"), {pnt=mem.destPlanet, time=tostring(mem.expiryDate)}),
+      fmt.f(_("You have {time} remaining"), {time=tostring(mem.expiryDate - time.cur())}),
    })
    mem.dhook = hook.date(time.new(0, 0, 100), "nerds_fly1")
 end
@@ -157,7 +157,7 @@ function nerds_land1()
          vntk.msg(_("Happy nerds"), fmt.f(_([["Good job, {player}," Mia compliments you upon arrival. "We'll now go win the competition and celebrate a bit. You better stay in the system. We will hail you in about 4 or 5 periods, so you can pick us up an' bring us back to {pnt}."
 That said, the nerds shoulder the box and rush towards a banner which reads "Admissions".]]), {player=player.name(), pnt=mem.srcPlanet} ))
          misn.osdCreate( _("DIY Nerds"), {_("Wait several periods in this system until hailed by the nerds for their return trip")} )
-         mem.expiryDate = time.get() + time.new(0, 0, 36000+rnd.rnd(-7500,7500), 0)
+         mem.expiryDate = time.cur() + time.new(0, 0, 36000+rnd.rnd(-7500,7500), 0)
          mem.hailed = false
          mem.impatient = false
          mem.dhook = hook.date(time.new(0, 0, 100), "nerds_fly2")
@@ -182,15 +182,15 @@ end
 
 -- date hooked to update the time in the mission OSD in stage 1 (carting the nerds to the contest)
 function nerds_fly1()
-   mem.intime = mem.expiryDate >= time.get()
+   mem.intime = mem.expiryDate >= time.cur()
    if mem.intime then
       misn.osdCreate( _("DIY Nerds"), {
-         fmt.f(_("Bring the nerds and their box to {pnt} before {time}"), {pnt=mem.destPlanet, time=time.str(mem.expiryDate, 2)}),
-         fmt.f(_("You have {time} remaining"), {time=time.str(mem.expiryDate - time.get(), 1)}),
+         fmt.f(_("Bring the nerds and their box to {pnt} before {time}"), {pnt=mem.destPlanet, time=tostring(mem.expiryDate)}),
+         fmt.f(_("You have {time} remaining"), {time=tostring(mem.expiryDate - time.cur())}),
       })
    else
       misn.osdCreate( _("DIY Nerds"), {
-         fmt.f(_("Bring the nerds and their box to {pnt} before {time}"), {pnt=mem.destPlanet, time=time.str(mem.expiryDate, 2)}),
+         fmt.f(_("Bring the nerds and their box to {pnt} before {time}"), {pnt=mem.destPlanet, time=tostring(mem.expiryDate)}),
          _("You're late and the nerds are getting angry and abusive; land to get rid of the nerds and their box"),
       })
       misn.osdActive(2)
@@ -250,7 +250,7 @@ end
 
 -- date hooked in stage 2 (waiting for the nerds hail you for their return trip)
 function nerds_fly2()
-   if not mem.hailed and time.get() > mem.expiryDate then
+   if not mem.hailed and time.cur() > mem.expiryDate then
       vntk.msg(_("In-system communication"), fmt.f(_([[A beep from your communications equipment tells you that someone wants to talk to you. You realize it is the nerds, and return the hail. "Yo! This is Mia," comes a familiar voice from the speaker. "We're done here. Time to come back and pick us up, we have things to do on {pnt}."]]), {pnt=mem.srcPlanet}) )
       misn.osdCreate( _("DIY Nerds"), {
          fmt.f(_("Pick up the nerds on {pickup_pnt} for their return trip to {dropoff_pnt}"), {pickup_pnt=mem.destPlanet, dropoff_pnt=mem.srcPlanet}),
@@ -258,7 +258,7 @@ function nerds_fly2()
       mem.hailed = true
    end
 
-   mem.intime = time.get() <= mem.expiryDate + time.new(0,3,3000)
+   mem.intime = time.cur() <= mem.expiryDate + time.new(0,3,3000)
 
    -- no pickup since hail+2STP+1STP: mission failed (however, you must still land somewhere)
    if not mem.intime then
@@ -270,7 +270,7 @@ function nerds_fly2()
    end
 
    -- no pickup since hail+2STP
-   if mem.hailed and mem.intime and time.get() > mem.expiryDate + time.new(0,2,0) then
+   if mem.hailed and mem.intime and time.cur() > mem.expiryDate + time.new(0,2,0) then
       if not mem.impatient then
          vntk.msg(_("In-system communication"), _([[Your comm link comes up again. It is the nerds, whom you'd almost forgotten. You hear Mia's voice: "Hey, what are you waiting for? You'd better be here within one period, or we'll get another pilot and pay them, not you!"]]) )
          mem.impatient = true
@@ -278,7 +278,7 @@ function nerds_fly2()
          misn.osdCreate( _("DIY Nerds"), {
             fmt.f(_("Pick up the nerds on {pickup_pnt} for their return trip to {dropoff_pnt}"), {pickup_pnt=mem.destPlanet, dropoff_pnt=mem.srcPlanet}),
                _("The nerds are getting impatient"),
-               fmt.f(_("You have {time} remaining"), {time=time.str(mem.expiryDate + time.new(0,3,0) - time.get(), 2)}),
+               fmt.f(_("You have {time} remaining"), {time=tostring(mem.expiryDate + time.new(0,3,0) - time.cur())}),
          })
          misn.osdActive(2)
    end

@@ -46,7 +46,7 @@ piracyrisk[4] = _("#nPiracy Risk:#0 High")
 function create()
    -- Try to cache the route to make it so that the same route doesn't appear over and over
    local c = naev.cache()
-   local t = time.get()
+   local t = time.cur()
    if not c.misn_escorts or c.misn_escorts._t ~= t then
       c.misn_escorts = { _t=t } -- Regenerate
    end

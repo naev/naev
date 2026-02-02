@@ -288,9 +288,9 @@ What do you do?]]))
          body = fmt.f(_("{spb} in the {sys} system devolved into chaos on {date} when a hacker who identifies as 'Ogre' broke into the station control system. Local authorities estimate the damages in the order of billions of credits, and have issued a reward for any information that will lead to the capture of the saboteur."), {
             spb = destpnt,
             sys = destsys,
-            date = time.get(),
+            date = time.cur(),
          } ),
-         date_to_rm = time.get()+time.new(0,50,0)
+         date_to_rm = time.cur()+time.new(0,50,0)
       },
    }
    onion.log(fmt.f(_([[You accepted a mysterious and buggy mission from the local mission computer, and delivered a package to {spb} in the {sys} system. To your dismay, this triggered a hack on the station, a lot of chaos, and more stress than is healthy. In the end, you got rewarded for your troubles, but you are not sure it was worth it.]]), {

@@ -186,7 +186,7 @@ function land()
       var.pop("flfbase_sysname")
       diff.apply("flf_dead")
       dv.addAntiFLFLog( _([[You aided the Dvaered in the destruction of the secret FLF base, Sindbad. The terrorists are not entirely eliminated, but they have been substantially reduced in number. Colonel Urnus suggested you may be able to help the Dvaered again in a future campaign aimed at "rooting out the source of the problem once and for all".]]) )
-      local t = time.get():tonumber()
+      local t = time.cur():tonumber()
       var.push( "invasion_time", t ) -- Timer for the frontier's invasion
       misn.finish(true)
    end

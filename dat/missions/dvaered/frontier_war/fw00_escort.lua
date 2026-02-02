@@ -49,7 +49,7 @@ local meet_text1 = _([[After Tam boards the Goddard, you wait for about half a p
 function create()
    -- The mission should not appear just after the FLF destruction
    if not (var.peek("invasion_time") == nil or
-         time.get() >= time.fromnumber(var.peek("invasion_time")) + time.new(0, 20, 0)) then
+         time.cur() >= time.fromnumber(var.peek("invasion_time")) + time.new(0, 20, 0)) then
       misn.finish(false)
    end
 

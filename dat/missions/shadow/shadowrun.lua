@@ -107,8 +107,8 @@ function accept()
    if not accepted then misn.finish(false) end
 
    -- Set deadlines
-   mem.deadline1 = time.get() + time.new(0, mem.timelimit1, 0)
-   mem.deadline2 = time.get() + time.new(0, mem.timelimit2, 0)
+   mem.deadline1 = time.cur() + time.new(0, mem.timelimit1, 0)
+   mem.deadline2 = time.cur() + time.new(0, mem.timelimit2, 0)
 
    misn.accept()
 
@@ -117,7 +117,7 @@ function accept()
    misn.setDesc(fmt.f(_("Fly to planet {pnt} in the {sys} system and talk to Jorek. Once Jorek has boarded your ship, proceed to system {sys2} and board the {plt}."), {pnt=pnt, sys=sys, sys2=sys2, plt=shipname}))
    misn.osdCreate(_("Shadowrun"), {
       fmt.f(_("Fly to planet {pnt} in the {sys} system and pick up Jorek"), {pnt=pnt, sys=sys}),
-      fmt.f(_("You have {time} remaining"), {time=(mem.deadline1 - time.get())}),
+      fmt.f(_("You have {time} remaining"), {time=(mem.deadline1 - time.cur())}),
    })
    mem.misn_marker = misn.markerAdd( pnt, "low" )
    mem.shadowrun = 2
@@ -221,18 +221,18 @@ end
 
 function deadline()
    -- Deadline stuff
-   if mem.deadline1 >= time.get() and mem.shadowrun == 2 then
+   if mem.deadline1 >= time.cur() and mem.shadowrun == 2 then
       dateresolution(mem.deadline1)
       misn.osdCreate(_("Shadowrun"), {
          fmt.f(_("Fly to planet {pnt} in the {sys} system and pick up Jorek"), {pnt=pnt, sys=sys}),
-         fmt.f(_("You have {time} remaining"), {time=(mem.deadline1 - time.get())}),
+         fmt.f(_("You have {time} remaining"), {time=(mem.deadline1 - time.cur())}),
       })
-   elseif mem.deadline2 >= time.get() and mem.shadowrun == 3 then
+   elseif mem.deadline2 >= time.cur() and mem.shadowrun == 3 then
       dateresolution(mem.deadline2)
       misn.osdCreate(_("Shadowrun"), {
          _("You could not persuade Jorek to come with you"),
          fmt.f(_("Fly to the {sys} system and dock with (board) {plt} to report your result"), {sys=sys2, plt=shipname}),
-         fmt.f(_("You have {time} remaining"), {time=(mem.deadline2 - time.get())})
+         fmt.f(_("You have {time} remaining"), {time=(mem.deadline2 - time.cur())})
       })
       misn.osdActive(2)
    else
@@ -241,15 +241,15 @@ function deadline()
 end
 
 function dateresolution(time)
-   if time - time.get() < time.new(0, 0, 5000) and mem.dateres > 30 then
+   if time - time.cur() < time.new(0, 0, 5000) and mem.dateres > 30 then
       mem.dateres = 30
       hook.rm(mem.datehook)
       mem.datehook = hook.date(time.new(0, 0, mem.dateres), "deadline")
-   elseif time - time.get() < time.new(0, 1, 0) and mem.dateres > 100 then
+   elseif time - time.cur() < time.new(0, 1, 0) and mem.dateres > 100 then
       mem.dateres = 100
       hook.rm(mem.datehook)
       mem.datehook = hook.date(time.new(0, 0, mem.dateres), "deadline")
-   elseif time - time.get() >= time.new(0, 1, 0) and mem.dateres < 500 then
+   elseif time - time.cur() >= time.new(0, 1, 0) and mem.dateres < 500 then
       mem.dateres = 500
       hook.rm(mem.datehook)
       mem.datehook = hook.date(time.new(0, 0, mem.dateres), "deadline")

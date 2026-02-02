@@ -178,7 +178,7 @@ end
 function car.getTransit( numjumps, traveldist )
    local pstats   = player.pilot():stats()
    local stuperpx = 1 / pstats.speed_max * 30
-   local arrivalt = time.get() + time.new(0, 0, traveldist * stuperpx +
+   local arrivalt = time.cur() + time.new(0, 0, traveldist * stuperpx +
          numjumps * pstats.jump_delay + 10180 + 240 * numjumps)
    return arrivalt
 end
@@ -240,7 +240,7 @@ function car.setDesc( misn_desc, cargo, amount, target, deadline, notes, use_hid
    end
 
    if deadline ~= nil then
-      table.insert( t, fmt.f( _("#nTime limit:#0 {deadline}"), {deadline=tostring(deadline - time.get())} ) )
+      table.insert( t, fmt.f( _("#nTime limit:#0 {deadline}"), {deadline=tostring(deadline - time.cur())} ) )
    end
 
    misn.setDesc( table.concat(t, "\n" ) )

@@ -127,7 +127,7 @@ function create()
    local stuperpx   = 0.3 - 0.015 * mem.tier
    local stuperjump = 11000 - 200 * mem.tier
    local stupertakeoff = 12000 - 50 * mem.tier
-   mem.timelimit  = time.get() + time.new(0, 0, mem.traveldist * stuperpx + mem.numjumps * stuperjump + stupertakeoff + 240 * mem.numjumps)
+   mem.timelimit  = time.cur() + time.new(0, 0, mem.traveldist * stuperpx + mem.numjumps * stuperjump + stupertakeoff + 240 * mem.numjumps)
 
    -- Allow extra time for refuelling stops.
    local jumpsperstop = 3 + math.min(mem.tier, 1)
@@ -161,7 +161,7 @@ function accept()
    if mem.timelimit < playerbest then
       if not vntk.yesno( _("Too slow"), fmt.f(
             _("This shipment must arrive within {time_limit}, but it will take at least {time} for your ship to reach {pnt}, missing the deadline. Accept the mission anyway?"),
-            {time_limit=(mem.timelimit - time.get()), time=(playerbest - time.get()), pnt=mem.destplanet} ) ) then
+            {time_limit=(mem.timelimit - time.cur()), time=(playerbest - time.cur()), pnt=mem.destplanet} ) ) then
          return
       end
    end
@@ -201,13 +201,13 @@ end
 
 -- Date hook
 function tick()
-   if mem.timelimit >= time.get() then
+   if mem.timelimit >= time.cur() then
       -- Case still in time
       misn.osdCreate(fmt.f(_("Smuggling {cargo}"), {cargo=_(mem.cargo)}), {
          fmt.f(_("Fly to {pnt} in the {sys} system before {time_limit}\n({time} remaining)"),
-               {pnt=mem.destplanet, sys=mem.destsys, time_limit=mem.timelimit, time=(mem.timelimit - time.get())})
+               {pnt=mem.destplanet, sys=mem.destsys, time_limit=mem.timelimit, time=(mem.timelimit - time.cur())})
       })
-   elseif mem.timelimit <= time.get() then
+   elseif mem.timelimit <= time.cur() then
       -- Case missed deadline
       lmisn.fail(_("You have failed to deliver the goods on time!"))
    end
