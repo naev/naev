@@ -104,7 +104,13 @@ int xmlw_saveTime( xmlTextWriterPtr writer, const char *name, time_t t )
 
 int xmlw_saveNTime( xmlTextWriterPtr writer, const char *name, ntime_t t )
 {
-   xmlw_elem( writer, name, "%" PRIu64, t );
+   int maj, min, inc;
+   ntime_split( t, &maj, &min, &inc );
+   xmlw_startElem( writer, name );
+   xmlw_attr( writer, "maj", "%d", maj );
+   xmlw_attr( writer, "min", "%d", min );
+   xmlw_attr( writer, "inc", "%d", inc );
+   xmlw_endElem( writer );
    return 0;
 }
 
@@ -116,7 +122,19 @@ int xml_parseTime( xmlNodePtr node, time_t *t )
 
 int xml_parseNTime( xmlNodePtr node, ntime_t *t )
 {
-   *t = xml_getULong( node );
+   /* Old format (until 0.13.0) */
+   if ( xml_get( node ) != NULL ) {
+      // Handles old format
+      uint64_t n = xml_getULong( node );
+      *t = ntime_create( n / ( 5000l * 10000l * 1000l ), n / ( 10000 * 1000 ),
+                         n / 1000 );
+   } else {
+      int maj, min, inc;
+      xmlr_attr_int_def( node, "maj", maj, 0 );
+      xmlr_attr_int_def( node, "min", min, 0 );
+      xmlr_attr_int_def( node, "inc", inc, 0 );
+      *t = ntime_create( maj, min, inc );
+   }
    return 0;
 }
 

@@ -22,6 +22,7 @@ void ntime_update( double dt );
 
 /* get */
 ntime_t ntime_get( void );
+void    ntime_split( ntime_t, int *scu, int *stp, int *stu );
 void    ntime_getR( int *cycles, int *periods, int *seconds, double *rem );
 int     ntime_getCycles( ntime_t t );
 int     ntime_getPeriods( ntime_t t );

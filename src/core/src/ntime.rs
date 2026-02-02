@@ -520,6 +520,20 @@ pub extern "C" fn ntime_get() -> NTimeC {
     get().0
 }
 #[unsafe(no_mangle)]
+pub extern "C" fn ntime_split(
+    nt: naevc::ntime_t,
+    cycles: *mut c_int,
+    periods: *mut c_int,
+    seconds: *mut c_int,
+) {
+    let nt = NTime(ntime_t);
+    unsafe {
+        *cycles = nt.cycles();
+        *periods = nt.periods();
+        *seconds = nt.seconds();
+    }
+}
+#[unsafe(no_mangle)]
 pub extern "C" fn ntime_getR(
     cycles: *mut c_int,
     periods: *mut c_int,
