@@ -72,6 +72,7 @@
    * Added support for aac and mp3 audio by default
    * Changed rnd.rnd() syntax to be like math.random
    * Collision polygon generated baked into the engine
+   * Time system is completely customizable by plugins now
 
  ### Fixes
 
