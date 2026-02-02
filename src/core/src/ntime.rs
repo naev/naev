@@ -409,6 +409,10 @@ impl UserData for NTime {
             MetaMethod::ToString,
             |_, nt: Self| -> mlua::Result<String> { Ok(nt.to_string()) },
         );
+        methods.add_method("str", |lua, this, ()| -> mlua::Result<String> {
+            crate::lua::deprecated(lua, "str", Some("tostring"))?;
+            Ok(this.as_string())
+        });
         /*@
          * @brief Increases or decreases the in-game time.
          *
