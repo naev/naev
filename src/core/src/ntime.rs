@@ -138,7 +138,7 @@ impl Converter {
         gettext::open_gettext(&lua)?;
         let globals = lua.globals();
         globals.set("time", open_time(&lua)?)?;
-        let chunk = lua.load(ndata::read("time.lua")?);
+        let chunk = lua.load(ndata::read("timedate.lua")?);
         chunk.call::<()>(())?;
         let to_string: mlua::Function = globals.get("to_string")?;
         let from_string: mlua::Function = globals.get("from_string")?;

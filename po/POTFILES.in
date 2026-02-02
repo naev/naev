@@ -3818,7 +3818,7 @@ dat/spob/lua/wormhole_zied.lua
 dat/spob/lua/yetmer_orez.lua
 dat/spob/lua/zalek_mil_restricted.lua
 dat/spob/lua/zalek_mil_ruadan.lua
-dat/time.lua
+dat/timedate.lua
 src/SDL_PhysFS.h
 src/SDL_keynames.h
 src/ai.c

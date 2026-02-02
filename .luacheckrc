@@ -304,7 +304,7 @@ files["docs/**/*.lua"].std = STANDARD .. TK .. "+API_mem+hook+music+misn+camera"
 
 files["**/datapath.lua"].std = "API_datapath"
 
-files["dat/time.lua"].std = "+time+API_time"
+files["dat/timedate.lua"].std = "+time+API_time"
 
 exclude_files = {
    -- This file should have no dependencies and sets globals, so we'll just remove it from luachecking
