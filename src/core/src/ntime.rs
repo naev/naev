@@ -222,6 +222,7 @@ impl Converter {
         anyhow::bail!("not valid ntime")
     }
 
+    #[allow(clippy::wrong_self_convention)]
     fn from_string(&self, input: &str) -> Result<NTime> {
         if let Some(from_string) = &self.from_string {
             Ok(from_string.call(input)?)
@@ -234,7 +235,7 @@ impl Converter {
 static DEFERLIST: Mutex<VecDeque<NTime>> = Mutex::new(VecDeque::new());
 static TIME: RwLock<NTimeInternal> = RwLock::new(NTimeInternal::new());
 static ENABLED: Mutex<bool> = Mutex::new(true);
-static CONVERTER: LazyLock<Converter> = LazyLock::new(|| Converter::new());
+static CONVERTER: LazyLock<Converter> = LazyLock::new(Converter::new);
 
 impl FromLua for NTime {
     fn from_lua(value: Value, _: &Lua) -> mlua::Result<Self> {
