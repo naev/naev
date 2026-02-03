@@ -9,6 +9,7 @@
    - [Scenario Definition `start.toml`](./data/start.md)
 - [Plugin Framework](./plugins/overview.md)
    - [Metadata `plugin.toml`](./plugins/metadata.md)
+   - [Engine Constants](./plugins/constants.md)
    - [Tips and Tricks](./plugins/tips.md)
    - [Extending Naev](./plugins/extending_naev.md)
 - [Missions and Events](./misn/overview.md)

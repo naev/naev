@@ -46,9 +46,11 @@ Furthermore, the following files play a critical role:
 * `board.lua`: used when the player boards a ship.
 * `comm.lua`: used when the player hails a ship.
 * `common.lua`: changes to the Lua language that are applied to all scripts.
+* `constants.lua`: defines important engine-related constants. See [Constants](./plugins/constants.md) for more information.
 * `intro`: the introduction text when starting a new game.
 * `loadscreen.lua`: renders the loading screen.
 * `rep.lua`: internal file for the console. Do not modify!!
 * `rescue.lua`: script run when the game detects the player is stranded, such as they have a non-spaceworthy ship and are stuck in an uninhabited spob.
 * `save_updater.lua`: used when updating saves to replace old outfits and licenses with newer ones.
 * `start.toml`: determines the starting setting, time and such of the game.
+* `timedate.lua`: determines how time is display. See [Time and Dates](./plugins/timedate.md) for more information.
