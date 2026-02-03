@@ -2456,7 +2456,7 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
    MELEMENT( ( temp->type != OUTFIT_TYPE_BEAM ) && ( temp->u.bem.turn == 0 ),
              "turn" );
    MELEMENT( temp->u.bem.energy == 0., "energy" );
-   MELEMENT( temp->cpu == 0., "cpu" );
+   // MELEMENT( temp->cpu == 0., "cpu" );
    MELEMENT( temp->u.bem.dmg.damage == 0, "damage" );
 #undef MELEMENT
 }
@@ -2952,7 +2952,7 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
    MELEMENT( temp->u.bay.ship_mass <= 0., "ship_mass" );
    MELEMENT( temp->u.bay.delay == 0, "delay" );
    MELEMENT( temp->u.bay.reload_time == 0., "reload_time" );
-   MELEMENT( temp->cpu == 0., "cpu" );
+   // MELEMENT( temp->cpu == 0., "cpu" );
    MELEMENT( temp->u.bay.amount == 0, "amount" );
 #undef MELEMENT
 }
