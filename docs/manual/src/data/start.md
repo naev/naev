@@ -12,7 +12,7 @@ As it is a [toml](https://toml.io/en/), it is fairly easy to define. Let us look
 * **system**: starting star system.
 * **system_position**: defines the start location in the system. Should be a 2-dimension vector of numbers such as `[ 1000, 300 ]`.
 * **chapter**: starting chapter
-* **date**: starting date. Should be defined in the UST format (see in-game holo-archives for detail on time) such as "UST 603:3726.2871".
+* **date**: starting date. Should be defined in the UST format (see in-game holo-archives for detail on time) such as "UST 603:3726.2871". Note that this uses the `from_string` function defined in the [Time and Date](../plugins/timedate.md) `timedate.lua` file.
 * **event** (optional): event to run when the game is started. Can be used to change things such as randomize starting credits or the likes.
 * **mission** (optional): mission to run when the game is started.
 * **gui_default**: default starting GUI.
