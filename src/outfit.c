@@ -2737,7 +2737,7 @@ static void outfit_parseSLauncher( Outfit *temp, const xmlNodePtr parent )
    // MELEMENT(temp->cpu==0.,"cpu");
    MELEMENT( temp->u.lau.amount == 0., "amount" );
    MELEMENT( temp->u.lau.reload_time == 0., "reload_time" );
-   MELEMENT( temp->u.lau.ammo_mass == 0., "mass" );
+   MELEMENT( temp->u.lau.ammo_mass == 0., "ammo_mass" );
    // MELEMENT(!outfit_isProp(temp,OUTFIT_PROP_SHOOT_DRY)&&temp->u.lau.gfx_space==NULL,"gfx");
    MELEMENT( !outfit_isProp( temp, OUTFIT_PROP_SHOOT_DRY ) &&
                 temp->u.lau.spfx_shield == -1,
