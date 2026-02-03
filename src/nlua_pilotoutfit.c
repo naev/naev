@@ -408,7 +408,8 @@ static int poL_munition( lua_State *L )
    const vec2      *vp    = luaL_optvector( L, 6, &p->solid.pos );
    const vec2      *vv    = luaL_optvector( L, 7, &p->solid.vel );
    int              noaim = lua_toboolean( L, 8 );
-   const Weapon    *w     = weapon_add( po, o, dir, vp, vv, p, &t, 0., !noaim );
+   double           time  = weapon_targetFlyTime( o, p, &t );
+   const Weapon    *w = weapon_add( po, o, dir, vp, vv, p, &t, time, !noaim );
    lua_pushmunition( L, w );
    return 1;
 }
