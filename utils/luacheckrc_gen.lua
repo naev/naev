@@ -821,6 +821,7 @@ stds.pilot = {
             outfitMessageSlot = {},
             outfitAddIntrinsic = {},
             outfitRmIntrinsic = {},
+            outfitHasIntrinsic = {},
             outfitsReset = {},
             fuel = {},
             setFuel = {},

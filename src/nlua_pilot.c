@@ -169,6 +169,7 @@ static int pilotL_outfitInitSlot( lua_State *L );
 static int pilotL_outfitMessageSlot( lua_State *L );
 static int pilotL_outfitAddIntrinsic( lua_State *L );
 static int pilotL_outfitRmIntrinsic( lua_State *L );
+static int pilotL_outfitHasIntrinsic( lua_State *L );
 static int pilotL_outfitsReset( lua_State *L );
 static int pilotL_getFuel( lua_State *L );
 static int pilotL_setFuel( lua_State *L );
@@ -400,6 +401,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "outfitMessageSlot", pilotL_outfitMessageSlot },
    { "outfitAddIntrinsic", pilotL_outfitAddIntrinsic },
    { "outfitRmIntrinsic", pilotL_outfitRmIntrinsic },
+   { "outfitHasIntrinsic", pilotL_outfitHasIntrinsic },
    { "outfitsReset", pilotL_outfitsReset },
    { "fuel", pilotL_getFuel },
    { "setFuel", pilotL_setFuel },
@@ -4160,6 +4162,27 @@ static int pilotL_outfitRmIntrinsic( lua_State *L )
    Pilot        *p = luaL_validpilot( L, 1 );
    const Outfit *o = luaL_validoutfit( L, 2 );
    lua_pushboolean( L, !pilot_rmOutfitIntrinsic( p, o ) );
+   return 1;
+}
+
+/**
+ * @brief Gets how many copies of the intrinsic the pilot has.
+ *
+ *    @luatparam Pilot p Pilot to check intrinsic outfits.
+ *    @luatparam Outfit o Outfit to check.
+ *    @luatreturn number|false Number of copies of the outfit or false if there
+ * are none.
+ * @luafunc outfitHasIntrinsic
+ */
+static int pilotL_outfitHasIntrinsic( lua_State *L )
+{
+   Pilot        *p     = luaL_validpilot( L, 1 );
+   const Outfit *o     = luaL_validoutfit( L, 2 );
+   int           count = pilot_hasIntrinsic( p, o );
+   if ( count == 0 )
+      lua_pushboolean( L, 0 );
+   else
+      lua_pushinteger( L, count );
    return 1;
 }
 
