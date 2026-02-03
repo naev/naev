@@ -447,20 +447,22 @@ int pilot_addOutfitIntrinsic( Pilot *pilot, const Outfit *outfit )
 
 /**
  * @brief Removes an outfit from an intrinsic slot.
+ *
+ *    @return 0 on success.
  */
 int pilot_rmOutfitIntrinsic( Pilot *pilot, const Outfit *outfit )
 {
-   int ret = 0;
+   int ret = -1;
    for ( int i = 0; i < array_size( pilot->outfit_intrinsic ); i++ ) {
       PilotOutfitSlot *s = &pilot->outfit_intrinsic[i];
       if ( s->outfit != outfit )
          continue;
-      ret = !pilot_rmOutfitRaw( pilot, s );
+      ret = pilot_rmOutfitRaw( pilot, s );
       array_erase( &pilot->outfit_intrinsic, s, s + 1 );
       break;
    }
    /* Recalculate the stats */
-   if ( ret )
+   if ( ret == 0 )
       pilot_calcStats( pilot );
    return ret;
 }
