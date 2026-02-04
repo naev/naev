@@ -386,6 +386,7 @@ Calculates the UST time from a position/spob in a system to a position/spob/nil 
 -- takeoff / landing / jumpin /jumpout animations not taken into account
 -- ship assumed to jumpin at jump point with speed_max
 local const = require 'constants'
+local HYPERSPACE_FLY_DELAY = 5
 function lmisn.travel_time( p, src_sys, dst_sys, src_pos, dst_pos)
    local pstats = p:stats()
    local total = 0
@@ -398,7 +399,7 @@ function lmisn.travel_time( p, src_sys, dst_sys, src_pos, dst_pos)
       return 0
    end
    if isSpobOf(src_pos, src_sys) then
-      total = total + pstats.land_delay -- * const.TIMEDATE_LAND_INCREMENTS
+      total = total + (100 + p:shipstat().land_delay) / 100.0 * const.TIMEDATE_LAND_INCREMENTS
       src_pos = src_pos:pos()
    end
    if isSpobOf(dst_pos, dst_sys) then
@@ -410,20 +411,21 @@ function lmisn.travel_time( p, src_sys, dst_sys, src_pos, dst_pos)
 
    if not pstats.misc_instant_jump then
       stops = stops + jumps
-      total = total + pstat.jump_warmup * jumps * const.TIMEDATE_INCREMENTS_PER_SECOND
+      total = total + (100 + p:shipstat().jump_warmup) / 100.0 * HYPERSPACE_FLY_DELAY * jumps * const.TIMEDATE_INCREMENTS_PER_SECOND
    end
    total = total + pstats.jump_delay * jumps -- * const.TIMEDATE_HYPERSPACE_INCREMENTS
 
    -- approximation: we assume the ship instantly get to drift speed when stopping thrust
-   local start_time = stats.speed_max / stats.accel
-   local stop_time = stats.speed / stats.accel
-   local turn_time = 180 / stats.turn
-   local start_dist = stats.speed_max * stats.speed_max / 2 / stats.accel
-   local stop_dist = stats.speed*stats.speed/2/stats.accel + turn_time*stats.speed
+   local start_time = pstats.speed_max / pstats.accel
+   local stop_time = pstats.speed / pstats.accel
+   local turn_time = 180 / pstats.turn
+   local start_dist = pstats.speed_max * pstats.speed_max / 2 / pstats.accel
+   local stop_dist = pstats.speed*pstats.speed/2/pstats.accel + turn_time*pstats.speed
 
    total = total + (stops * stop_time + start_time) * const.TIMEDATE_INCREMENTS_PER_SECOND
    dist = dist - (stops * stop_dist + start_dist)
-   total = total + dist / stats.speed_max * const.TIMEDATE_INCREMENTS_PER_SECOND
+   total = total + dist / pstats.speed_max * const.TIMEDATE_INCREMENTS_PER_SECOND
+   --TODO: manage action_speed
    return time.new(0, 0, total)
 end
 
@@ -434,7 +436,7 @@ function lmisn.player_travel_time(dst_sys, dst_pos)
    else
       where = player.pos()
    end
-   return lmisn.travel_time( player.pilot(), system.current(), dst_sys, where, dst_pos)
+   return lmisn.travel_time( player.pilot(), system.cur(), dst_sys, where, dst_pos)
 end
 
 --[[--

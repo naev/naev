@@ -1203,7 +1203,7 @@ function render( dt, dt_mod )
       fuelstring = _("none")
    end
 
-   local bartext = { _("System:"), sysname, _("Time:"), tostring(time.cur()), _("Credits:"),
+   local bartext = { _("System:"), sysname, _("Time:"), tostring(time.get()), _("Credits:"),
          largeNumber( credits, 2 ), _("Nav:"), navstring, _("Fuel:"), fuelstring, _("Cargo:") }
    for k,v in ipairs(bartext) do
       if k % 2 == 1 then
