@@ -327,6 +327,8 @@ impl UserData for NTime {
          */
         methods.add_function("cur", |_, ()| -> mlua::Result<Self> { Ok(get()) });
         methods.add_function("get", |lua, ()| -> mlua::Result<Self> {
+            // deprecated in 0.14
+            // TODO remove in 0.15
             crate::lua::deprecated(lua, "get", Some("cur"))?;
             Ok(get())
         });
@@ -435,6 +437,8 @@ impl UserData for NTime {
             |_, nt: Self| -> mlua::Result<String> { Ok(nt.to_string()) },
         );
         methods.add_method("str", |lua, this, ()| -> mlua::Result<String> {
+            // deprecated in 0.14
+            // TODO remove in 0.15
             crate::lua::deprecated(lua, "str", Some("tostring"))?;
             Ok(this.as_string())
         });
