@@ -332,6 +332,7 @@ Calculates the distance (in pixels) from a position in a system to a position in
    @tparam Vec2 origin_pos Position to calculate distance from.
    @tparam System dest_sys Target system to calculate distance to.
    @tparam Vec2 dest_pos Target position to calculate distance to.
+           (might be nil, meaning (any) dest_sys entry point.)
    @tparam table params Table of parameters. Currently supported are "use_hidden".
    @return The distance travelled
    @return The jumpPath leading to the target system
@@ -363,24 +364,47 @@ function lmisn.calculateDistance( origin_sys, origin_pos, dest_sys, dest_pos, pa
    return traveldist, jumps
 end
 
--- takeoff / landing animation not taken into account
+local function isSpobOf(sp, sys)
+   for _, spob in ipairs( sys:spobs() ) do
+      if spob == sp then
+         return true
+      end
+   end
+   return false
+end
+
+--[[--
+Calculates the UST time from a position/spob in a system to a position/spob/nil in another system.
+
+   @tparam System origin_sys System to calculate distance from.
+   @tparam Vec2 or Spob origin Position to calculate distance from. If the argument is a spob, taking off time is accounted for.
+   @tparam System dest_sys or nil Target system to calculate distance to. If omitted, use src_sys.
+   @tparam Vec2 or Spob dest_pos or nil Target position to calculate distance to. If target is nil, just aim system entry point. If target is a spob, braking time is accounted for.
+   @return The UST time needed for this travel.
+--]]
+
+-- takeoff / landing / jumpin /jumpout animations not taken into account
 -- ship assumed to jumpin at jump point with speed_max
 local const = require 'constants'
 function lmisn.travel_time( p, src_sys, dst_sys, src_pos, dst_pos)
    local pstats = p:stats()
    local total = 0
    local stops = 0
+
+   if not dst_sys then
+      dst_sys = src_sys
+   end
    if src_sys == dst_sys and src_pos == dst_pos then
       return 0
    end
-   --If is_spob(src_pos) then
-   --   total += pstats.land_delay -- * const.TIMEDATE_LAND_INCREMENTS
-   --   src_pos = src_pos:pos()
-   --end
-   --If is_spob(dst_pos) then
-   --   stops += 1
-   --   dst_pos = dst_pos:pos()
-   --end
+   if isSpobOf(src_pos, src_sys) then
+      total = total + pstats.land_delay -- * const.TIMEDATE_LAND_INCREMENTS
+      src_pos = src_pos:pos()
+   end
+   if isSpobOf(dst_pos, dst_sys) then
+      stops = stops + 1
+      dst_pos = dst_pos:pos()
+   end
    local dist = lmisn.calculateDistance( src_sys, src_pos, dst_sys, dst_pos )
    local jumps = src_sys:jumpDist(dst_sys)
 
