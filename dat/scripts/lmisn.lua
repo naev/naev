@@ -363,6 +363,56 @@ function lmisn.calculateDistance( origin_sys, origin_pos, dest_sys, dest_pos, pa
    return traveldist, jumps
 end
 
+-- takeoff / landing animation not taken into account
+-- ship assumed to jumpin at jump point with max_speed
+local const = require 'constants'
+function lmisn.travel_time( p, src_sys, dst_sys, src_pos, dst_pos)
+   local pstats = p:stats()
+   local total = 0
+   local stops = 0
+   if src_sys == dst_sys and src_pos == dst_pos then
+      return 0
+   end
+   --If is_spob(src_pos) then
+   --   total += pstats.land_delay -- * const.TIMEDATE_LAND_INCREMENTS
+   --   src_pos = src_pos:pos()
+   --end
+   --If is_spob(dst_pos) then
+   --   stops += 1
+   --   dst_pos = dst_pos:pos()
+   --end
+   local dist = lmisn.calculateDistance( src_sys, src_pos, dst_sys, dst_pos )
+   local jumps = src_sys:jumpDist(dst_sys)
+
+   if not pstats.misc_instant_jump then
+      stops = stops + jumps
+      total = total + pstat.jump_warmup * jumps * const.TIMEDATE_INCREMENTS_PER_SECOND
+   end
+   total = total + pstats.jump_delay * jumps -- * const.TIMEDATE_HYPERSPACE_INCREMENTS
+
+   -- approximation: we assume the ship instantly get to drift speed when stopping thrust
+   local start_time = stats.max_speed / stats.accel
+   local stop_time = stats.speed / stats.accel
+   local turn_time = 180 / stats.turn
+   local start_dist = stats.max_speed * stats.max_speed / 2 / stats.accel
+   local stop_dist = stats.speed*stats.speed/2/stats.accel + turn_time*stats.speed
+
+   total = total + (stops * stop_time + start_time) * const.TIMEDATE_INCREMENTS_PER_SECOND
+   dist = dist - (stops * stop_dist + start_dist)
+   total = total + dist / stats.speed_max * const.TIMEDATE_INCREMENTS_PER_SECOND
+   return time.new(0, 0, total)
+end
+
+function lmisn.player_travel_time(dst_sys, dst_pos)
+   local where
+   if player.isLanded() then
+      where = spob.cur()
+   else
+      where = player.pos()
+   end
+   return lmisn.travel_time( player.pilot(), system.current(), dst_sys, where, dst_pos)
+end
+
 --[[--
 Gets the closest jump to a position.
 

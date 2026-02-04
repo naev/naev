@@ -1,6 +1,7 @@
 local lmisn = require "lmisn"
 local pir = require 'common.pirate'
 local fmt = require "format"
+local const = require 'constants'
 
 local car = {}
 
@@ -177,9 +178,9 @@ end
 --]]
 function car.getTransit( numjumps, traveldist )
    local pstats   = player.pilot():stats()
-   local stuperpx = 1 / pstats.speed_max * 30
+   local stuperpx = 1 / pstats.speed_max * const.TIMEDATE_INCREMENTS_PER_SECOND
    local arrivalt = time.cur() + time.new(0, 0, traveldist * stuperpx +
-         numjumps * pstats.jump_delay + 10180 + 240 * numjumps)
+         numjumps * pstats.jump_delay + const.TIMEDATE_LAND_INCREMENTS + 180 + 240 * numjumps)
    return arrivalt
 end
 
