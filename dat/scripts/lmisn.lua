@@ -385,8 +385,8 @@ Calculates the UST time from a position/spob in a system to a position/spob/nil 
 
 -- takeoff / landing / jumpin / jumpout animations not taken into account
 -- ship assumed to jumpin at jump point with speed_max
--- ship assumed to be originally facing the opposite direction
--- ship assumed to have time to reach max_speed between "checkpoints"
+-- ship assumed to be originally motionless and facing the opposite direction
+-- ship assumed to have enough space to reach max_speed between "checkpoints"
 local const = require 'constants'
 local HYPERSPACE_FLY_DELAY = 5
 function lmisn.travel_time( p, src_sys, dst_sys, src_pos, dst_pos)
