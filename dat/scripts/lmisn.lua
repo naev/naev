@@ -364,7 +364,7 @@ function lmisn.calculateDistance( origin_sys, origin_pos, dest_sys, dest_pos, pa
 end
 
 -- takeoff / landing animation not taken into account
--- ship assumed to jumpin at jump point with max_speed
+-- ship assumed to jumpin at jump point with speed_max
 local const = require 'constants'
 function lmisn.travel_time( p, src_sys, dst_sys, src_pos, dst_pos)
    local pstats = p:stats()
@@ -391,10 +391,10 @@ function lmisn.travel_time( p, src_sys, dst_sys, src_pos, dst_pos)
    total = total + pstats.jump_delay * jumps -- * const.TIMEDATE_HYPERSPACE_INCREMENTS
 
    -- approximation: we assume the ship instantly get to drift speed when stopping thrust
-   local start_time = stats.max_speed / stats.accel
+   local start_time = stats.speed_max / stats.accel
    local stop_time = stats.speed / stats.accel
    local turn_time = 180 / stats.turn
-   local start_dist = stats.max_speed * stats.max_speed / 2 / stats.accel
+   local start_dist = stats.speed_max * stats.speed_max / 2 / stats.accel
    local stop_dist = stats.speed*stats.speed/2/stats.accel + turn_time*stats.speed
 
    total = total + (stops * stop_time + start_time) * const.TIMEDATE_INCREMENTS_PER_SECOND
