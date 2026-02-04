@@ -374,7 +374,7 @@ local function isSpobOf(sp, sys)
 end
 
 --[[--
-Calculates the UST time from a position/spob in a system to a position/spob/nil in another system.
+Calculates the UST time from a position/spob in a system to a position/spob/nil in another system. Spobs and systems can be given as strings.
 
    @tparam System origin_sys System to calculate distance from.
    @tparam Vec2 or Spob origin Position to calculate distance from. If the argument is a spob, taking off time is accounted for.
@@ -383,23 +383,38 @@ Calculates the UST time from a position/spob in a system to a position/spob/nil 
    @return The UST time needed for this travel.
 --]]
 
--- takeoff / landing / jumpin /jumpout animations not taken into account
+-- takeoff / landing / jumpin / jumpout animations not taken into account
 -- ship assumed to jumpin at jump point with speed_max
+-- ship assumed to be originally facing the opposite direction
+-- ship assumed to have time to reach max_speed between "checkpoints"
 local const = require 'constants'
 local HYPERSPACE_FLY_DELAY = 5
 function lmisn.travel_time( p, src_sys, dst_sys, src_pos, dst_pos)
    local pstats = p:stats()
+   local delays = 0 -- land/jump times
    local total = 0
    local stops = 0
 
+   if type(src_sys) == type("str") then
+      src_sys = system.get(src_sys)
+   end
+   if type(dst_sys) == type("str") then
+      dst_sys = system.get(dst_sys)
+   end
+   if type(src_pos) == type("str") then
+      src_pos = spob.get(src_pos)
+   end
+   if type(dst_pos) == type("str") then
+      dst_pos = spob.get(dst_pos)
+   end
    if not dst_sys then
       dst_sys = src_sys
    end
-   if src_sys == dst_sys and src_pos == dst_pos then
+   if src_sys == dst_sys and (src_pos == dst_pos or dst_pos == nil) then
       return 0
    end
    if isSpobOf(src_pos, src_sys) then
-      total = total + (100 + p:shipstat().land_delay) / 100.0 * const.TIMEDATE_LAND_INCREMENTS
+      delays = delays + (100 + p:shipstat().land_delay) / 100.0 * const.TIMEDATE_LAND_INCREMENTS
       src_pos = src_pos:pos()
    end
    if isSpobOf(dst_pos, dst_sys) then
@@ -413,20 +428,20 @@ function lmisn.travel_time( p, src_sys, dst_sys, src_pos, dst_pos)
       stops = stops + jumps
       total = total + (100 + p:shipstat().jump_warmup) / 100.0 * HYPERSPACE_FLY_DELAY * jumps * const.TIMEDATE_INCREMENTS_PER_SECOND
    end
-   total = total + pstats.jump_delay * jumps -- * const.TIMEDATE_HYPERSPACE_INCREMENTS
+   delays = delays + pstats.jump_delay * jumps
 
    -- approximation: we assume the ship instantly get to drift speed when stopping thrust
-   local start_time = pstats.speed_max / pstats.accel
-   local stop_time = pstats.speed / pstats.accel
    local turn_time = 180 / pstats.turn
+   local start_time = pstats.speed_max / pstats.accel + turn_time
+   local stop_time = pstats.speed / pstats.accel + turn_time
    local start_dist = pstats.speed_max * pstats.speed_max / 2 / pstats.accel
    local stop_dist = pstats.speed*pstats.speed/2/pstats.accel + turn_time*pstats.speed
 
    total = total + (stops * stop_time + start_time) * const.TIMEDATE_INCREMENTS_PER_SECOND
    dist = dist - (stops * stop_dist + start_dist)
    total = total + dist / pstats.speed_max * const.TIMEDATE_INCREMENTS_PER_SECOND
-   --TODO: manage action_speed
-   return time.new(0, 0, total)
+   --print ('delays / other '..tostring(delays)..' / '..tostring(total))
+   return time.new(0, 0, delays + total / ((100 + p:shipstat().action_speed) / 100.0))
 end
 
 function lmisn.player_travel_time(dst_sys, dst_pos)
