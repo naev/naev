@@ -238,11 +238,12 @@ static void map_setup( void )
          if ( !spob_hasService( p, SPOB_SERVICE_LAND ) )
             continue;
          sys_setFlag( sys, SYSTEM_HAS_KNOWN_LANDABLE );
-         if ( spob_hasService( p, SPOB_SERVICE_INHABITED ) )
-            sys_setFlag( sys, SYSTEM_HAS_INHABITED );
          spob_updateLand( p );
-         if ( p->can_land )
-            sys_setFlag( sys, SYSTEM_HAS_LANDABLE );
+         if ( spob_hasService( p, SPOB_SERVICE_INHABITED ) ) {
+            sys_setFlag( sys, SYSTEM_HAS_INHABITED );
+            if ( p->can_land )
+               sys_setFlag( sys, SYSTEM_HAS_LANDABLE );
+         }
       }
 
       int known = 1;
