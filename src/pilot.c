@@ -877,7 +877,7 @@ double pilot_minbrakedist( const Pilot *p, double dt, double *flytime )
    }
    /* Small compensation for current delta-tick. */
    *flytime = t + M_PI / p->turn + dt;
-   return vel * ( *flytime ) - 0.5 * accel * pow2( t - dt );
+   return MAX( 0., vel * ( *flytime ) - 0.5 * accel * pow2( t - dt ) );
 }
 
 /**
