@@ -405,7 +405,7 @@ function lmisn.travel_time( p, src_sys, dst_sys, src_pos, dst_pos)
    end
 
    if src_sys == dst_sys and (src_pos == dst_pos or src_pos == nil or dst_pos == nil) then
-      return 0
+      return time.new(0, 0, 0)
    end
    if isSpobOf(src_pos, src_sys) then
       delays = delays + (100 + p:shipstat().land_delay) / 100.0 * const.TIMEDATE_LAND_INCREMENTS
