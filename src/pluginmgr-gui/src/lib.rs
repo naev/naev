@@ -2,7 +2,7 @@ use anyhow::{Error, Result};
 use formatx::formatx;
 use fs_err as fs;
 use iced::task::{Sipper, Straw, sipper};
-use iced::{Task, widget};
+use iced::{Task, widget, exit};
 use nlog::gettext::{N_, gettext, pgettext};
 use nlog::warn_err;
 use pluginmgr::install;
@@ -161,6 +161,7 @@ enum Message {
     Progress(install::Progress),
     LogResult(Result<(), LogEntry>),
     LogToggle,
+    Exit,
     Action(DropDownAction),
     RefreshLocal(Result<(), LogEntry>),
     FilterChange(String),
@@ -918,6 +919,9 @@ impl App {
                 self.log_open = !self.log_open;
                 Task::none()
             }
+            Message::Exit=> {
+                exit()
+            }
             /*
             Message::DropDownToggle => {
                 self.drop_action = !self.drop_action;
@@ -1288,6 +1292,14 @@ impl App {
         main = main.push(
             container(button(pgettext("plugins", "Logs")).on_press(Message::LogToggle))
                 .align_x(Horizontal::Left)
+                .align_y(Vertical::Bottom)
+                .width(Fill)
+                .height(Fill)
+                .padding(10),
+        );
+        main = main.push(
+            container(button(pgettext("plugins", "Exit")).on_press(Message::Exit))
+                .align_x(Horizontal::Right)
                 .align_y(Vertical::Bottom)
                 .width(Fill)
                 .height(Fill)
