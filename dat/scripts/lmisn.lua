@@ -397,8 +397,12 @@ function lmisn.travel_time( p, src_sys, dst_sys, src_pos, dst_pos)
 
    src_sys = system.get(src_sys)
    dst_sys = dst_sys and system.get(dst_sys) or src_sys
-   src_pos = src_pos and spob.get(src_pos) or nil
-   dst_pos = dst_pos and spob.get(dst_pos) or nil
+   if type(src_pos) == "string" then
+      src_pos = spob.get(src_pos)
+   end
+   if type(dst_pos) == "string" then
+      dst_pos = spob.get(dst_pos)
+   end
 
    if src_sys == dst_sys and (src_pos == dst_pos or src_pos == nil or dst_pos == nil) then
       return 0
