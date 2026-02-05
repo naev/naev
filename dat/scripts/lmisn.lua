@@ -383,12 +383,15 @@ Calculates the UST time from a position/spob in a system to a position/spob/nil 
    @return The UST time needed for this travel.
 --]]
 
--- takeoff / landing / jumpin / jumpout animations not taken into account
+-- jumpin / jumpout animations not taken into account
 -- ship assumed to jumpin at jump point with speed_max
 -- ship assumed to be originally motionless and facing the opposite direction
 -- ship assumed to have enough space to reach max_speed between "checkpoints"
 local const = require 'constants'
 local HYPERSPACE_DELAY = 5 + 3
+local LANDING_DELAY = 1
+local TAKEOFF_DELAY = 1
+
 function lmisn.travel_time( p, src_sys, dst_sys, src_pos, dst_pos)
    local pstats = p:stats()
    local delays = 0 -- land/jump times
@@ -409,10 +412,12 @@ function lmisn.travel_time( p, src_sys, dst_sys, src_pos, dst_pos)
    end
    if isSpobOf(src_pos, src_sys) then
       delays = delays + (100 + p:shipstat().land_delay) / 100.0 * const.TIMEDATE_LAND_INCREMENTS
+      total = total + TAKEOFF_DELAY * const.TIMEDATE_INCREMENTS_PER_SECOND
       src_pos = src_pos:pos()
    end
    if isSpobOf(dst_pos, dst_sys) then
       stops = stops + 1
+      total = total + LANDING_DELAY * const.TIMEDATE_INCREMENTS_PER_SECOND
       dst_pos = dst_pos:pos()
    end
    local dist = lmisn.calculateDistance( src_sys, src_pos, dst_sys, dst_pos )
