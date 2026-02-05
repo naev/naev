@@ -388,7 +388,8 @@ Calculates the UST time from a position/spob in a system to a position/spob/nil 
 -- ship assumed to be originally motionless and facing the opposite direction
 -- ship assumed to have enough space to reach max_speed between "checkpoints"
 local const = require 'constants'
-local HYPERSPACE_DELAY = 5 + 3
+local HYPERSPACE_FLY_DELAY = 5
+local HYPERSPACE_WARMUP_DELAY = 3
 local LANDING_DELAY = 1
 local TAKEOFF_DELAY = 1
 
@@ -422,11 +423,11 @@ function lmisn.travel_time( p, src_sys, dst_sys, src_pos, dst_pos)
    end
    local dist = lmisn.calculateDistance( src_sys, src_pos, dst_sys, dst_pos )
    local jumps = src_sys:jumpDist(dst_sys)
-
-   if not p:shipstats().misc_instant_jump then
+   if not p:shipstat().misc_instant_jump then
       stops = stops + jumps
-      total = total + (100 + p:shipstat().jump_warmup) / 100.0 * HYPERSPACE_FLY_DELAY * jumps * const.TIMEDATE_INCREMENTS_PER_SECOND
+      total = total + (100 + p:shipstat().jump_warmup) / 100.0 * HYPERSPACE_WARMUP_DELAY * jumps * const.TIMEDATE_INCREMENTS_PER_SECOND
    end
+   total = total + jumps * HYPERSPACE_FLY_DELAY * const.TIMEDATE_INCREMENTS_PER_SECOND
    delays = delays + pstats.jump_delay * jumps
 
    -- approximation: we assume the ship instantly get to drift speed when stopping thrust
