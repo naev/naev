@@ -395,22 +395,12 @@ function lmisn.travel_time( p, src_sys, dst_sys, src_pos, dst_pos)
    local total = 0
    local stops = 0
 
-   if type(src_sys) == type("str") then
-      src_sys = system.get(src_sys)
-   end
-   if type(dst_sys) == type("str") then
-      dst_sys = system.get(dst_sys)
-   end
-   if type(src_pos) == type("str") then
-      src_pos = spob.get(src_pos)
-   end
-   if type(dst_pos) == type("str") then
-      dst_pos = spob.get(dst_pos)
-   end
-   if not dst_sys then
-      dst_sys = src_sys
-   end
-   if src_sys == dst_sys and (src_pos == dst_pos or dst_pos == nil) then
+   src_sys = system.get(src_sys)
+   dst_sys = dst_sys and system.get(dst_sys) or src_sys
+   src_pos = src_pos and spob.get(src_pos) or nil
+   dst_pos = dst_pos and spob.get(dst_pos) or nil
+
+   if src_sys == dst_sys and (src_pos == dst_pos or src_pos == nil or dst_pos == nil) then
       return 0
    end
    if isSpobOf(src_pos, src_sys) then
