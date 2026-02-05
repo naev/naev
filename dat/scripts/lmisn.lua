@@ -418,7 +418,7 @@ function lmisn.travel_time( p, src_sys, dst_sys, src_pos, dst_pos)
    local dist = lmisn.calculateDistance( src_sys, src_pos, dst_sys, dst_pos )
    local jumps = src_sys:jumpDist(dst_sys)
 
-   if not pstats.misc_instant_jump then
+   if not p:shipstats().misc_instant_jump then
       stops = stops + jumps
       total = total + (100 + p:shipstat().jump_warmup) / 100.0 * HYPERSPACE_FLY_DELAY * jumps * const.TIMEDATE_INCREMENTS_PER_SECOND
    end
