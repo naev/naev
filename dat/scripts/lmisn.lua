@@ -389,7 +389,7 @@ Calculates the UST time from a position/spob in a system to a position/spob/nil 
 -- ship assumed to have enough space to reach max_speed between "checkpoints"
 local const = require 'constants'
 local HYPERSPACE_FLY_DELAY = 5
-local HYPERSPACE_WARMUP_DELAY = 3
+local HYPERSPACE_WARMUP_DELAY = 5
 local LANDING_DELAY = 1
 local TAKEOFF_DELAY = 1
 
