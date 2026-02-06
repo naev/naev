@@ -374,12 +374,12 @@ local function isSpobOf(sp, sys)
    return false
 end
 
-local function angle_with_dest( p, src_sys, dst_sys, _src_pos, dst_pos )
+local function angle_with_dest( p, dst_sys, dst_pos )
    local nxt
-   if dst_sys == src_sys then
+   if dst_sys == system.cur() then
       nxt = dst_pos
    else
-      nxt = src_sys:jumpPath( dst_sys )[1]:pos()
+      nxt = system.cur():jumpPath( dst_sys )[1]:pos()
    end
    local v = nxt - p:pos()
    local a = v:angle() - p:dir()
@@ -406,21 +406,25 @@ local TAKEOFF_DELAY = 1
 Calculates the in-game time from a position/spob in a system to a position/spob/nil in another system. Spobs and systems can be given as strings.
 
    @tparam Pilot p Pilot to compute travel time for.
-   @tparam System src_sys System to calculate distance from.
+   @tparam System src_sys System to calculate distance from. If nil, current system.
    @tparam System dst_sys or nil Target system to calculate distance to. If omitted, use src_sys.
-   @tparam Vec2|Spob _src_pos Position to calculate distance from. If the argument is a spob, taking off time is accounted for.
+   @tparam Vec2|Spob _src_pos Position to calculate distance from. If the argument is a spob, taking off time is accounted for. If nil, current pilot position.
    @tparam Vec2|Spob|nil dst_pos Target position to calculate distance to. If target is nil, just aim system entry point. If target is a spob, braking time is accounted for.
    @treturn Time The in-game time needed for this travel.
 --]]
 function lmisn.travel_time( p, src_sys, dst_sys, src_pos, dst_pos )
    local pstats = p:stats()
-   local delays = 0 -- land/jump times
+   local delays = 0 -- land/jump times (everything not affected by action_speed)
    local total = 0
    local stops = 0
-   local angle
+   local angle = 180
 
+   if src_sys == nil then
+      src_sys = system.cur()
+   end
    src_sys = system.get(src_sys)
    dst_sys = dst_sys and system.get(dst_sys) or src_sys
+
    if type(src_pos) == "string" then
       src_pos = spob.get(src_pos)
    end
@@ -428,16 +432,22 @@ function lmisn.travel_time( p, src_sys, dst_sys, src_pos, dst_pos )
       dst_pos = spob.get(dst_pos)
    end
 
-   if src_sys == dst_sys and (src_pos == dst_pos or src_pos == nil or dst_pos == nil) then
+   if src_sys == dst_sys and (src_pos == dst_pos or dst_pos == nil) then
       return time.new(0, 0, 0)
    end
+
+   if src_pos == nil then
+      if src_sys ~= system.cur() then
+         warn('travel_time: nil src_pos with non-current src sys makes no sense.')
+      end
+      src_pos = p:pos()
+      angle = angle_with_dest( p, dst_sys, dst_pos:pos() )
+   end
+
    if isSpobOf(src_pos, src_sys) then
       delays = delays + p:shipstat("land_delay",true) * const.TIMEDATE_LAND_INCREMENTS
       total = total + TAKEOFF_DELAY * const.TIMEDATE_INCREMENTS_PER_SECOND
       src_pos = src_pos:pos()
-      angle = 180
-   else
-      angle = angle_with_dest( p, src_sys, dst_sys, src_pos, dst_pos )
    end
    if isSpobOf(dst_pos, dst_sys) then
       stops = stops + 1
@@ -478,10 +488,8 @@ function lmisn.player_travel_time(dst_sys, dst_pos)
    local where
    if player.isLanded() then
       where = spob.cur()
-   else
-      where = player.pos()
    end
-   return lmisn.travel_time( player.pilot(), system.cur(), dst_sys, where, dst_pos)
+   return lmisn.travel_time( player.pilot(), nil, dst_sys, where, dst_pos)
 end
 
 --[[--
