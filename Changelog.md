@@ -58,10 +58,13 @@
        - `onimpact` reports armour, shield, and disable damage done
        - `price` now can return reason why it can't be sold or bought
    * New constants
+       - `PILOT_STRESS_RECOVERY_TIME` controls how much it takes for stress to
+         start recovering after taking stress damage
        - `WARN_BUY_INTRINSICS` controls whether the game warns when buying
          intrinsic outfits
        - `HYPERSPACE_ENTER_MAX/MIN` control distance at which ships jump into
          systems
+       - `PILOT_HIT_NEUTRALS` allows neutral ships to be hit by crossfire
    * Tech groups cand have conditional elements and the likes
    * All player visible resources now have a separate user-facing display name
    * Audio should try to switch devices when disconnected or default playback
