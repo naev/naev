@@ -4227,7 +4227,7 @@ static Spob *player_parse( xmlNodePtr parent )
  */
 static int player_filterSuitableSpob( Spob *p )
 {
-   return !areEnemies( p->presence.faction, FACTION_PLAYER );
+   return !areEnemiesSystem( p->presence.faction, FACTION_PLAYER, cur_system );
 }
 
 /**

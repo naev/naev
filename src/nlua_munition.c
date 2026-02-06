@@ -300,7 +300,7 @@ static int weapon_isHostile( const Weapon *w, const Pilot *p )
    }
 
    /* Hit non-allies. */
-   if ( areEnemies( w->faction, p->faction ) )
+   if ( areEnemiesSystem( w->faction, p->faction, cur_system ) )
       return 1;
 
    return 0;

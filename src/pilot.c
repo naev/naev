@@ -1173,7 +1173,8 @@ void pilot_distress( Pilot *p, Pilot *attacker, const char *msg )
          if ( spob_hasService( spb, SPOB_SERVICE_INHABITED ) &&
               pilot_inRangeSpob( p, i ) ) {
             spob_distress( spb, p, attacker );
-            if ( !areEnemies( p->faction, spb->presence.faction ) ) {
+            if ( !areEnemiesSystem( p->faction, spb->presence.faction,
+                                    cur_system ) ) {
                r = 1;
             }
          }
@@ -1205,7 +1206,7 @@ void pilot_distress( Pilot *p, Pilot *attacker, const char *msg )
 
       /* Check if should take faction hit. */
       if ( !pilot_isFlag( p, PILOT_DISTRESSED ) &&
-           !areEnemies( p->faction, pi->faction ) )
+           !areEnemiesSystem( p->faction, pi->faction, cur_system ) )
          r = 1;
    }
 
@@ -1252,7 +1253,7 @@ void pilot_rmHostile( Pilot *p )
    pilot_rmFlag( p, PILOT_HOSTILE );
 
    /* Set "bribed" flag if faction has poor reputation */
-   if ( areEnemies( FACTION_PLAYER, p->faction ) )
+   if ( areEnemiesSystem( FACTION_PLAYER, p->faction, cur_system ) )
       pilot_setFlag( p, PILOT_BRIBED );
 }
 

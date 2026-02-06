@@ -1729,7 +1729,8 @@ static int aiL_isenemy( lua_State *L )
    }
 
    /* Check if is ally. */
-   lua_pushboolean( L, areEnemies( cur_pilot->faction, p->faction ) );
+   lua_pushboolean(
+      L, areEnemiesSystem( cur_pilot->faction, p->faction, cur_system ) );
    return 1;
 }
 
@@ -1751,7 +1752,8 @@ static int aiL_isally( lua_State *L )
    }
 
    /* Check if is ally. */
-   lua_pushboolean( L, areAllies( cur_pilot->faction, p->faction ) );
+   lua_pushboolean(
+      L, areAlliesSystem( cur_pilot->faction, p->faction, cur_system ) );
    return 1;
 }
 
@@ -1994,7 +1996,7 @@ static int aiL_careful_face( lua_State *L )
       dist = sqrt( dist ); /* Have to undo the square. */
 
       /* Check if friendly or not */
-      if ( areEnemies( cur_pilot->faction, p_i->faction ) ) {
+      if ( areEnemiesSystem( cur_pilot->faction, p_i->faction, cur_system ) ) {
          double k_mult =
             pilot_relhp( p_i, cur_pilot ) * pilot_reldps( p_i, cur_pilot );
          double factor = k_enemy * k_mult / ( dist * dist * dist );
@@ -2338,9 +2340,11 @@ static int aiL_getnearestlandspob( lua_State *L )
 
       /* Check conditions. */
       if ( ( only_friend || restricted ) &&
-           !areAllies( cur_pilot->faction, pnt->presence.faction ) )
+           !areAlliesSystem( cur_pilot->faction, pnt->presence.faction,
+                             cur_system ) )
          continue;
-      if ( areEnemies( cur_pilot->faction, pnt->presence.faction ) )
+      if ( areEnemiesSystem( cur_pilot->faction, pnt->presence.faction,
+                             cur_system ) )
          continue;
 
       double d = vec2_dist( &cur_system->spobs[i]->pos, &cur_pilot->solid.pos );
@@ -2382,8 +2386,9 @@ static int aiL_getspobfrompos( lua_State *L )
       if ( !spob_hasService( cur_system->spobs[i], SPOB_SERVICE_INHABITED ) )
          continue;
       d = vec2_dist( &cur_system->spobs[i]->pos, pos );
-      if ( ( !areEnemies( cur_pilot->faction,
-                          cur_system->spobs[i]->presence.faction ) ) &&
+      if ( ( !areEnemiesSystem( cur_pilot->faction,
+                                cur_system->spobs[i]->presence.faction,
+                                cur_system ) ) &&
            ( d < dist ) ) { /* closer friendly spob */
          j    = i;
          dist = d;
@@ -2464,9 +2469,11 @@ static int aiL_getlandspob( lua_State *L )
 
       /* Check conditions. */
       if ( ( only_friend || restricted ) &&
-           !areAllies( cur_pilot->faction, pnt->presence.faction ) )
+           !areAlliesSystem( cur_pilot->faction, pnt->presence.faction,
+                             cur_system ) )
          continue;
-      if ( areEnemies( cur_pilot->faction, pnt->presence.faction ) )
+      if ( areEnemiesSystem( cur_pilot->faction, pnt->presence.faction,
+                             cur_system ) )
          continue;
 
       /* Add it. */
