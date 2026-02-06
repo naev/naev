@@ -768,18 +768,9 @@ int pilot_areEnemies( const Pilot *p, const Pilot *target )
    if ( pilot_isWithPlayer( p ) ) {
       if ( pilot_isHostile( target ) )
          return 1;
-      else if ( pilot_isFlag( target, PILOT_FRIENDLY ) )
-         return 0;
-      else if ( pilot_isFlag( target, PILOT_BRIBED ) )
-         return 0;
-   }
-   if ( pilot_isWithPlayer( target ) ) {
+   } else if ( pilot_isWithPlayer( target ) ) {
       if ( pilot_isHostile( p ) )
          return 1;
-      else if ( pilot_isFlag( p, PILOT_FRIENDLY ) )
-         return 0;
-      else if ( pilot_isFlag( p, PILOT_BRIBED ) )
-         return 0;
    } else {
       if ( areEnemiesSystem( p->faction, target->faction, cur_system ) )
          return 1;
