@@ -86,7 +86,7 @@ function accept()
    dv(_([["To protect himself and the Hawk, Khan will have deployed a substantial fleet of escort fighters fleet to defend against any surprise attacks."]]))
    dv(fmt.f(_([["That is where you come in. You will jump into {sys} and find the Hawk and its escorts. Before the Hawk is able to reach hyperspace, you will fire on it, and cause the fighters to engage with you. At this point, you should run away from the Hawk and the jump point, so that the fighters will give chase. Then we will jump into the system and destroy the Hawk before the fighters can return."]]),
       {sys=destsys}))
-   dv(fmt.f(_([["We will jump in approximately 80 hectoseconds after you jump into {sys}, so the fighters must be far enough away by then not to come back and attack us."]]),
+   dv(fmt.f(_([["We will jump in approximately 80 hectostu after you jump into {sys}, so the fighters must be far enough away by then not to come back and attack us."]]),
       {sys=destsys}))
 
    vn.run()

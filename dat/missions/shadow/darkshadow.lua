@@ -124,7 +124,7 @@ function seiryuuBoard()
          {player=player.name()}))
       rebina(fmt.f(_([[The captain turns the holotable back off so she can have your undivided attention. "I have sent Jorek on a recon mission to the planet of {pnt} in the {sys} system. He hasn't reported back to me so far, and that's bad news. Jorek is a reliable agent. If he fails to meet a deadline, then it means he is tied down by factors outside of his control, or worse. I want you to find him. Your position as an outsider will help you fly below the radar of potentially hostile Four Winds operatives. You must go to {pnt} and contact Jorek if you can, or find out where he is if you can't."]]),
          {pnt=jorekplanet1, sys=joreksys1}))
-      vn.na(_([[Captain Rebina stands up, a signal that this briefing is over. You are seen to your ship by a grey-uniformed crewman. You sit in your cockpit for a few hectoseconds before disengaging the docking clamp. What Captain Rebina has told you is a lot to take in. A shadowy organization that guides humanity behind the scenes? And parts of that organization going rogue? The road ahead could well be a bumpy one.]]))
+      vn.na(_([[Captain Rebina stands up, a signal that this briefing is over. You are seen to your ship by a grey-uniformed crewman. You sit in your cockpit for a few hectostu before disengaging the docking clamp. What Captain Rebina has told you is a lot to take in. A shadowy organization that guides humanity behind the scenes? And parts of that organization going rogue? The road ahead could well be a bumpy one.]]))
       vn.run()
 
       accept2()

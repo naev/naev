@@ -107,7 +107,7 @@ npc.msg_tip = {
    _([["If you don't have the budget for expensive upgrades, sensor arrays are a decent use of spare utility slots. In combat, a detection bonus will improve the tracking of your weapons, which can make or break an encounter."]]),
    _([["You can set your map to highlight the differences in commodity prices between all the different systems you've been to - it makes it much easier to plan your routes and turn a good profit trading by yourself."]]),
    _([["Them dual-engine ships can be so finicky sometimes! You don't always want to have two engines equipped at the same time - if your ship isn't carrying much, having just one will let you travel faster. Otherwise, I've found it's usually better to equip a slower one with a larger mass limit as your primary, and a faster one as your secondary, than the other way around."]]),
-   _([["It pays a lot to have the know-how on electronic warfare. A little more armour may add some hectoseconds to your life, but being able to disappear off an enemy ship's radar at the press of a button will save it."]]),
+   _([["It pays a lot to have the know-how on electronic warfare. A little more armour may add some hectostu to your life, but being able to disappear off an enemy ship's radar at the press of a button will save it."]]),
 }
 
 function npc.cache ()

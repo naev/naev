@@ -124,7 +124,7 @@ local function meeting()
 
    vn.label("decline")
    rebina(_([[Captain Rebina sighs. "I see. I don't mind admitting that I hoped you would accept, but it's your decision. I won't force you to do anything you feel uncomfortable with. However, I still hold out the hope that you will change your mind. If you do, come back to see me. You know where to find the Seiryuu."]]))
-   vn.na(_([[Mere hectoseconds later you find yourself back in your cockpit, and the Seiryuu is leaving. It doesn't really come as a surprise that you can't find any reference to your rendezvous with the Seiryuu in your flight logs...]]))
+   vn.na(_([[Mere hectostu later you find yourself back in your cockpit, and the Seiryuu is leaving. It doesn't really come as a surprise that you can't find any reference to your rendezvous with the Seiryuu in your flight logs...]]))
    vn.done("hexagon")
 
    vn.run()
