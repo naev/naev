@@ -21,6 +21,7 @@ typedef struct constants {
    double PILOT_SHIELD_DOWN_TIME;
    double PILOT_STRESS_RECOVERY_TIME;
    double PILOT_DISABLED_ARMOUR;
+   int    PILOT_HIT_NEUTRALS;
    double CAMERA_ANGLE;
    double CAMERA_VIEW;
    double CAMERA_VIEW_INV;

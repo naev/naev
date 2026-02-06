@@ -22,6 +22,7 @@ constants CTS = {
    .PILOT_SHIELD_DOWN_TIME         = 5.0,
    .PILOT_STRESS_RECOVERY_TIME     = 5.0, /* 0 before 0.14.0 */
    .PILOT_DISABLED_ARMOUR          = 0.1, /* 0 before 0.13.0 */
+   .PILOT_HIT_NEUTRALS             = 0,
    .CAMERA_ANGLE                   = M_PI_4,
    .WARN_BUY_INTRINSICS            = 1,
    // Meta constant calculated from CAMERA_ANGLE

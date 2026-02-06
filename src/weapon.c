@@ -22,6 +22,7 @@
 #include "array.h"
 #include "camera.h"
 #include "collision.h"
+#include "constants.h"
 #include "damagetype.h"
 #include "gui.h"
 #include "input.h"
@@ -921,17 +922,26 @@ static int weapon_checkCanHit( const Weapon *w, const Pilot *p )
    if ( ( w->target.type == TARGET_PILOT ) && ( w->target.u.id == p->id ) )
       return 1;
 
+   /*  We fall out early here if we only hit the target. */
+   if ( weapon_isFlag( w, WEAPON_FLAG_ONLYHITTARGET ) )
+      return 0;
+
    /* Can never hit same faction, unless explicitly targetted (see above). */
    if ( p->faction == w->faction )
       return 0;
 
+   /* Different code path for hitting neutrals. */
+   if ( CTS.PILOT_HIT_NEUTRALS ) {
+      if ( areAlliesSystem( w->faction, p->faction, cur_system ) )
+         return 0;
+      return 1;
+   }
+
    /* Player behaves differently. */
    if ( w->faction == FACTION_PLAYER ) {
-
       /* Always hit hostiles. */
       if ( pilot_isHostile( p ) )
          return 1;
-
       /* Miss rest - can be neutral/ally. */
       else
          return 0;
@@ -947,7 +957,7 @@ static int weapon_checkCanHit( const Weapon *w, const Pilot *p )
    }
 
    /* Hit non-allies. */
-   if ( areEnemies( w->faction, p->faction ) )
+   if ( areEnemiesSystem( w->faction, p->faction, cur_system ) )
       return 1;
 
    return 0;
@@ -1218,13 +1228,6 @@ static void weapon_updateCollide( Weapon *w, double dt )
             int isjammed = ( ( w->status == WEAPON_STATUS_JAMMED ) ||
                              ( w->status == WEAPON_STATUS_JAMMED_SLOWED ) );
             if ( !isjammed && ( w->target.type == TARGET_PILOT ) &&
-                 ( p->id != w->target.u.id ) )
-               continue;
-         }
-
-         /* Check if only hit target. */
-         if ( weapon_isFlag( w, WEAPON_FLAG_ONLYHITTARGET ) ) {
-            if ( ( w->target.type == TARGET_PILOT ) &&
                  ( p->id != w->target.u.id ) )
                continue;
          }

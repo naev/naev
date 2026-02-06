@@ -24,6 +24,7 @@ pub struct Constants {
     pub pilot_shield_down_time: f32,
     pub pilot_stress_recovery_time: f32,
     pub pilot_disabled_armour: f32,
+    pub pilot_hit_neutrals: bool,
     pub camera_angle: f32,
     pub warn_buy_intrinsics: bool,
 }
@@ -96,6 +97,7 @@ impl Constants {
         let pilot_shield_down_time = get_f32(&tbl, "PILOT_SHIELD_DOWN_TIME", 5.);
         let pilot_stress_recovery_time = get_f32(&tbl, "PILOT_STRESS_RECOVERY_TIME", 5.);
         let pilot_disabled_armour = get_f32(&tbl, "PILOT_DISABLED_ARMOUR", 0.1);
+        let pilot_hit_neutrals = get_bool(&tbl, "PILOT_HIT_NEUTRALS", false);
         let camera_angle = get_f32(&tbl, "CAMERA_ANGLE", std::f32::consts::FRAC_PI_4);
         let warn_buy_intrinsics = get_bool(&tbl, "WARN_BUY_INTRINSICS", true);
 
@@ -113,6 +115,7 @@ impl Constants {
             naevc::CTS.PILOT_SHIELD_DOWN_TIME = pilot_shield_down_time as f64;
             naevc::CTS.PILOT_STRESS_RECOVERY_TIME = pilot_stress_recovery_time as f64;
             naevc::CTS.PILOT_DISABLED_ARMOUR = pilot_disabled_armour as f64;
+            naevc::CTS.PILOT_HIT_NEUTRALS = pilot_hit_neutrals as i32;
             naevc::CTS.TIMEDATE_HYPERSPACE_INCREMENTS =
                 timedate_hyperspace_increments as f64 / ntime::MULTIPLIER_F;
             naevc::CTS.TIMEDATE_LAND_INCREMENTS =
@@ -120,7 +123,7 @@ impl Constants {
             naevc::CTS.CAMERA_ANGLE = camera_angle as f64;
             naevc::CTS.CAMERA_VIEW = naevc::CTS.CAMERA_ANGLE.sin();
             naevc::CTS.CAMERA_VIEW_INV = 1.0 / naevc::CTS.CAMERA_VIEW;
-            naevc::CTS.WARN_BUY_INTRINSICS = if warn_buy_intrinsics { 1 } else { 0 };
+            naevc::CTS.WARN_BUY_INTRINSICS = warn_buy_intrinsics as i32;
         }
 
         Ok(Self {
@@ -143,6 +146,7 @@ impl Constants {
             pilot_shield_down_time,
             pilot_stress_recovery_time,
             pilot_disabled_armour,
+            pilot_hit_neutrals,
             camera_angle,
             warn_buy_intrinsics,
         })
@@ -179,6 +183,7 @@ impl Constants {
             pilot_shield_down_time: 5.,
             pilot_stress_recovery_time: 5.,
             pilot_disabled_armour: 0.1,
+            pilot_hit_neutrals: false,
             camera_angle: std::f32::consts::FRAC_PI_4,
             warn_buy_intrinsics: true,
         }

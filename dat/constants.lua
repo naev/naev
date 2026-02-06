@@ -24,6 +24,7 @@ local constants = {
    PILOT_SHIELD_DOWN_TIME = 5, -- Time shield is down after being knocked down to 0
    PILOT_STRESS_RECOVERY_TIME = 5, -- Time for stress to start recovering after taking disable damage (was 0 before 0.14.0)
    PILOT_DISABLED_ARMOUR= 0.1, -- Armour rate at which the ship is disabled (was 0 before 0.13.0)
+   PILOT_HIT_NEUTRALS   = false, -- Stray shots will hit neutral ships
 
    CAMERA_ANGLE         = math.pi/4, -- Camera angle, math.pi/2 would be overhead, math.pi/4 is isometric
 
