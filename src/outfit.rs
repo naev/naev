@@ -10,64 +10,64 @@ unsafe impl Send for OutfitWrapper {}
 
 #[allow(dead_code)]
 fn get() -> &'static [OutfitWrapper] {
-    unsafe {
-        let outfits = naevc::outfit_getAll_rust();
-        let n = naevc::array_size_rust(outfits as *const c_void) as usize;
-        std::slice::from_raw_parts(outfits as *const OutfitWrapper, n)
-    }
+   unsafe {
+      let outfits = naevc::outfit_getAll_rust();
+      let n = naevc::array_size_rust(outfits as *const c_void) as usize;
+      std::slice::from_raw_parts(outfits as *const OutfitWrapper, n)
+   }
 }
 
 fn get_mut() -> &'static mut [OutfitWrapper] {
-    unsafe {
-        let outfits = naevc::outfit_getAll_rust();
-        let n = naevc::array_size_rust(outfits as *const c_void) as usize;
-        std::slice::from_raw_parts_mut(outfits as *mut OutfitWrapper, n)
-    }
+   unsafe {
+      let outfits = naevc::outfit_getAll_rust();
+      let n = naevc::array_size_rust(outfits as *const c_void) as usize;
+      std::slice::from_raw_parts_mut(outfits as *mut OutfitWrapper, n)
+   }
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn outfit_gfxStoreLoadNeeded() {
-    // Try to avoid messing with the context and just find what we have to update first
-    let mut needsgfx: Vec<&mut OutfitWrapper> = get_mut()
-        .iter_mut()
-        .filter_map(|ptr| {
-            let o = &mut ptr.0;
-            if o.properties & naevc::OUTFIT_PROP_NEEDSGFX == 0 {
-                return None;
-            }
-            o.properties &= !naevc::OUTFIT_PROP_NEEDSGFX;
-            if !o.gfx_store.is_null() || o.gfx_store_path.is_null() {
-                return None;
-            }
-            Some(ptr)
-        })
-        .collect();
-    if needsgfx.is_empty() {
-        return;
-    }
+   // Try to avoid messing with the context and just find what we have to update first
+   let mut needsgfx: Vec<&mut OutfitWrapper> = get_mut()
+      .iter_mut()
+      .filter_map(|ptr| {
+         let o = &mut ptr.0;
+         if o.properties & naevc::OUTFIT_PROP_NEEDSGFX == 0 {
+            return None;
+         }
+         o.properties &= !naevc::OUTFIT_PROP_NEEDSGFX;
+         if !o.gfx_store.is_null() || o.gfx_store_path.is_null() {
+            return None;
+         }
+         Some(ptr)
+      })
+      .collect();
+   if needsgfx.is_empty() {
+      return;
+   }
 
-    // Minimize OpenGL mucking
-    let ctx = Context::get().as_safe_wrap();
-    needsgfx.par_iter_mut().for_each(|ptr| {
-        let o = &mut ptr.0;
+   // Minimize OpenGL mucking
+   let ctx = Context::get().as_safe_wrap();
+   needsgfx.par_iter_mut().for_each(|ptr| {
+      let o = &mut ptr.0;
 
-        let gfx_path = unsafe { CStr::from_ptr(o.gfx_store_path).to_str().unwrap() };
-        let path = {
-            match gfx_path.chars().next() {
-                Some('/') => String::from(gfx_path),
-                _ => format!("gfx/outfit/store/{gfx_path}"),
-            }
-        };
+      let gfx_path = unsafe { CStr::from_ptr(o.gfx_store_path).to_str().unwrap() };
+      let path = {
+         match gfx_path.chars().next() {
+            Some('/') => String::from(gfx_path),
+            _ => format!("gfx/outfit/store/{gfx_path}"),
+         }
+      };
 
-        let tex = match TextureBuilder::new().path(&path).build_wrap(&ctx) {
-            Ok(tex) => tex,
-            Err(e) => {
-                warn_err!(e);
-                return;
-            }
-        };
-        o.gfx_store = tex.into_ptr() as *mut naevc::glTexture;
-    });
+      let tex = match TextureBuilder::new().path(&path).build_wrap(&ctx) {
+         Ok(tex) => tex,
+         Err(e) => {
+            warn_err!(e);
+            return;
+         }
+      };
+      o.gfx_store = tex.into_ptr() as *mut naevc::glTexture;
+   });
 }
 
 /*

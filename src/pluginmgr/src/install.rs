@@ -11,207 +11,204 @@ use std::path::{Path, PathBuf};
 /// Reports the progress of the installer.
 #[derive(Debug, Clone)]
 pub struct Progress {
-    pub message: Option<String>,
-    pub value: f32,
+   pub message: Option<String>,
+   pub value: f32,
 }
 impl From<f32> for Progress {
-    fn from(value: f32) -> Self {
-        Progress {
-            message: None,
-            value,
-        }
-    }
+   fn from(value: f32) -> Self {
+      Progress {
+         message: None,
+         value,
+      }
+   }
 }
 
 /// Installer structure to handle manipulating plugins.
 pub struct Installer {
-    root: PathBuf,
-    plugin: Plugin,
+   root: PathBuf,
+   plugin: Plugin,
 }
 impl Installer {
-    pub fn new<P: AsRef<Path>>(root: P, plugin: &Plugin) -> Self {
-        Self {
-            root: root.as_ref().to_owned(),
-            plugin: plugin.clone(),
-        }
-    }
+   pub fn new<P: AsRef<Path>>(root: P, plugin: &Plugin) -> Self {
+      Self {
+         root: root.as_ref().to_owned(),
+         plugin: plugin.clone(),
+      }
+   }
 
-    /// Installs from a plugin from a source
-    pub fn install(self) -> impl Straw<(), Progress, Error> {
-        sipper(async move |mut sender| {
-            sender
-                .send(Progress {
-                    message: formatx!(
-                        pgettext("plugins", "Installing plugin '{}'"),
-                        &self.plugin.name
-                    )
-                    .ok(),
-                    value: 0.0,
-                })
-                .await;
-            match &self.plugin.source {
-                Source::Git(url) => self.install_from_git(url.clone()).run(&sender).await,
-                Source::Download(url) => self.install_from_zip_url(url.clone()).run(&sender).await,
-                Source::Local => anyhow::bail!("local plugin"),
-            }?;
-            sender.send(1.0.into()).await;
-            Ok(())
-        })
-    }
+   /// Installs from a plugin from a source
+   pub fn install(self) -> impl Straw<(), Progress, Error> {
+      sipper(async move |mut sender| {
+         sender
+            .send(Progress {
+               message: formatx!(
+                  pgettext("plugins", "Installing plugin '{}'"),
+                  &self.plugin.name
+               )
+               .ok(),
+               value: 0.0,
+            })
+            .await;
+         match &self.plugin.source {
+            Source::Git(url) => self.install_from_git(url.clone()).run(&sender).await,
+            Source::Download(url) => self.install_from_zip_url(url.clone()).run(&sender).await,
+            Source::Local => anyhow::bail!("local plugin"),
+         }?;
+         sender.send(1.0.into()).await;
+         Ok(())
+      })
+   }
 
-    /// Updates from a plugin from a source
-    pub fn update(self) -> impl Straw<(), Progress, Error> {
-        sipper(async move |mut sender| {
-            sender
-                .send(Progress {
-                    message: formatx!(
-                        pgettext("plugins", "Updating plugin '{}'"),
-                        &self.plugin.name
-                    )
-                    .ok(),
-                    value: 0.0,
-                })
-                .await;
-            match &self.plugin.source {
-                Source::Git(_url) => self.update_git_plugin().run(&sender).await,
-                Source::Download(url) => self.update_zip_plugin(url.clone()).run(&sender).await,
-                Source::Local => anyhow::bail!("local plugin"),
-            }?;
-            sender.send(1.0.into()).await;
-            Ok(())
-        })
-    }
+   /// Updates from a plugin from a source
+   pub fn update(self) -> impl Straw<(), Progress, Error> {
+      sipper(async move |mut sender| {
+         sender
+            .send(Progress {
+               message: formatx!(
+                  pgettext("plugins", "Updating plugin '{}'"),
+                  &self.plugin.name
+               )
+               .ok(),
+               value: 0.0,
+            })
+            .await;
+         match &self.plugin.source {
+            Source::Git(_url) => self.update_git_plugin().run(&sender).await,
+            Source::Download(url) => self.update_zip_plugin(url.clone()).run(&sender).await,
+            Source::Local => anyhow::bail!("local plugin"),
+         }?;
+         sender.send(1.0.into()).await;
+         Ok(())
+      })
+   }
 
-    /// Installs a plugin from a git repository.
-    pub fn install_from_git<U: reqwest::IntoUrl>(&self, url: U) -> impl Straw<(), Progress, Error> {
-        sipper(async move |sender| {
-            let info = &self.plugin;
-            let dest = self.root.join(&*info.identifier);
-            git::clone(&dest, url).run(&sender).await?;
-            Ok(())
-        })
-    }
+   /// Installs a plugin from a git repository.
+   pub fn install_from_git<U: reqwest::IntoUrl>(&self, url: U) -> impl Straw<(), Progress, Error> {
+      sipper(async move |sender| {
+         let info = &self.plugin;
+         let dest = self.root.join(&*info.identifier);
+         git::clone(&dest, url).run(&sender).await?;
+         Ok(())
+      })
+   }
 
-    /// Performs a git pull if an update is available.
-    pub fn update_git_plugin(&self) -> impl Straw<(), Progress, Error> {
-        sipper(async move |sender| {
-            let info = &self.plugin;
-            let dest = self.root.join(&*info.identifier);
-            git::pull(&dest).run(&sender).await?;
-            Ok(())
-        })
-    }
+   /// Performs a git pull if an update is available.
+   pub fn update_git_plugin(&self) -> impl Straw<(), Progress, Error> {
+      sipper(async move |sender| {
+         let info = &self.plugin;
+         let dest = self.root.join(&*info.identifier);
+         git::pull(&dest).run(&sender).await?;
+         Ok(())
+      })
+   }
 
-    /// Installs a plugin from a direct zip link by downloading and saving the archive.
-    /// The zip file is stored directly in the plugins directory without extraction.
-    pub fn install_from_zip_url<U: reqwest::IntoUrl>(
-        &self,
-        url: U,
-    ) -> impl Straw<(), Progress, Error> {
-        sipper(async move |mut _sender| {
-            info!("Installing plugin from zip download '{}'", url.as_str());
-            let info = &self.plugin;
-            let dest_zip = self.root.join(format!("{}.zip", &info.identifier));
+   /// Installs a plugin from a direct zip link by downloading and saving the archive.
+   /// The zip file is stored directly in the plugins directory without extraction.
+   pub fn install_from_zip_url<U: reqwest::IntoUrl>(
+      &self,
+      url: U,
+   ) -> impl Straw<(), Progress, Error> {
+      sipper(async move |mut _sender| {
+         info!("Installing plugin from zip download '{}'", url.as_str());
+         let info = &self.plugin;
+         let dest_zip = self.root.join(format!("{}.zip", &info.identifier));
 
-            info!("Downloading plugin '{}' from {}", &info.name, url.as_str());
+         info!("Downloading plugin '{}' from {}", &info.name, url.as_str());
 
-            // Download zip into memory
-            let bytes = {
-                let resp = reqwest::get(url).await?.error_for_status()?;
-                Ok::<bytes::Bytes, anyhow::Error>(resp.bytes().await?)
-            }?;
+         // Download zip into memory
+         let bytes = {
+            let resp = reqwest::get(url).await?.error_for_status()?;
+            Ok::<bytes::Bytes, anyhow::Error>(resp.bytes().await?)
+         }?;
 
-            // Ensure destination directory exists
-            fs::create_dir_all(&self.root)?;
+         // Ensure destination directory exists
+         fs::create_dir_all(&self.root)?;
 
-            // Save as a single zip file in plugins dir
-            fs::write(&dest_zip, &bytes)?;
-            info!("Installed '{}' to {}", &info.name, dest_zip.display());
-            Ok(())
-        })
-    }
+         // Save as a single zip file in plugins dir
+         fs::write(&dest_zip, &bytes)?;
+         info!("Installed '{}' to {}", &info.name, dest_zip.display());
+         Ok(())
+      })
+   }
 
-    /// Updates a zip-based plugin by re-downloading and replacing the archive file.
-    pub fn update_zip_plugin<U: reqwest::IntoUrl>(
-        &self,
-        url: U,
-    ) -> impl Straw<(), Progress, Error> {
-        sipper(async move |mut _sender| {
-            let info = &self.plugin;
-            let dest_zip = self.root.join(format!("{}.zip", &info.identifier));
+   /// Updates a zip-based plugin by re-downloading and replacing the archive file.
+   pub fn update_zip_plugin<U: reqwest::IntoUrl>(&self, url: U) -> impl Straw<(), Progress, Error> {
+      sipper(async move |mut _sender| {
+         let info = &self.plugin;
+         let dest_zip = self.root.join(format!("{}.zip", &info.identifier));
 
-            // Check version difference (same as before)
-            let local = Plugin::from_path(&dest_zip)?;
+         // Check version difference (same as before)
+         let local = Plugin::from_path(&dest_zip)?;
 
-            if info.version <= local.version {
-                info!(
-                    "{} is already up to date (local v{} >= repo v{})",
-                    &info.name, info.version, local.version
-                );
-                return Ok(());
-            }
-
-            info!("Updating zip plugin '{}' from {}", &info.name, url.as_str());
-
-            // Download new archive
-            let bytes = {
-                let resp = reqwest::get(url).await?.error_for_status()?;
-                Ok::<bytes::Bytes, anyhow::Error>(resp.bytes().await?)
-            }?;
-
-            // Overwrite existing archive
-            fs::write(&dest_zip, &bytes)?;
+         if info.version <= local.version {
             info!(
-                "Successfully updated '{}' to version {:?}",
-                &info.name, info.version
+               "{} is already up to date (local v{} >= repo v{})",
+               &info.name, info.version, local.version
             );
-            Ok(())
-        })
-    }
+            return Ok(());
+         }
 
-    /// Uninstalls a plugin by removing it.
-    pub fn uninstall(self, trash: bool) -> impl Straw<(), Progress, Error> {
-        sipper(async move |mut sender| {
-            sender
-                .send(Progress {
-                    message: formatx!(
-                        pgettext("plugins", "Uninstalling plugin '{}'"),
-                        &self.plugin.identifier
-                    )
-                    .ok(),
-                    value: 0.0,
-                })
-                .await;
-            let target = {
-                // Try to uninstall from mount point first
-                match self.plugin.mountpoint {
-                    Some(mp) => mp,
-                    None => self.root.join(&*self.plugin.identifier),
-                }
-            };
-            if trash {
-                trash::delete(&target)?;
-            } else if target.is_file() {
-                fs::remove_file(&target)?;
-            } else if target.is_dir() {
-                fs::remove_dir_all(&target)?;
-            } else {
-                anyhow::bail!(format!(
-                    "Plugin path '{}' is neither a file nor a directory",
-                    target.display()
-                ));
+         info!("Updating zip plugin '{}' from {}", &info.name, url.as_str());
+
+         // Download new archive
+         let bytes = {
+            let resp = reqwest::get(url).await?.error_for_status()?;
+            Ok::<bytes::Bytes, anyhow::Error>(resp.bytes().await?)
+         }?;
+
+         // Overwrite existing archive
+         fs::write(&dest_zip, &bytes)?;
+         info!(
+            "Successfully updated '{}' to version {:?}",
+            &info.name, info.version
+         );
+         Ok(())
+      })
+   }
+
+   /// Uninstalls a plugin by removing it.
+   pub fn uninstall(self, trash: bool) -> impl Straw<(), Progress, Error> {
+      sipper(async move |mut sender| {
+         sender
+            .send(Progress {
+               message: formatx!(
+                  pgettext("plugins", "Uninstalling plugin '{}'"),
+                  &self.plugin.identifier
+               )
+               .ok(),
+               value: 0.0,
+            })
+            .await;
+         let target = {
+            // Try to uninstall from mount point first
+            match self.plugin.mountpoint {
+               Some(mp) => mp,
+               None => self.root.join(&*self.plugin.identifier),
             }
-            // Remove the disabled file too if it exists
-            if let Some(filename) = target.file_name()
-                && let Some(parent) = target.parent()
-            {
-                let disabled = parent.join(format!(".{}.disabled", filename.to_string_lossy()));
-                if disabled.exists() {
-                    fs::remove_file(disabled)?;
-                }
+         };
+         if trash {
+            trash::delete(&target)?;
+         } else if target.is_file() {
+            fs::remove_file(&target)?;
+         } else if target.is_dir() {
+            fs::remove_dir_all(&target)?;
+         } else {
+            anyhow::bail!(format!(
+               "Plugin path '{}' is neither a file nor a directory",
+               target.display()
+            ));
+         }
+         // Remove the disabled file too if it exists
+         if let Some(filename) = target.file_name()
+            && let Some(parent) = target.parent()
+         {
+            let disabled = parent.join(format!(".{}.disabled", filename.to_string_lossy()));
+            if disabled.exists() {
+               fs::remove_file(disabled)?;
             }
-            sender.send(1.0.into()).await;
-            Ok(())
-        })
-    }
+         }
+         sender.send(1.0.into()).await;
+         Ok(())
+      })
+   }
 }

@@ -10,5 +10,5 @@ pub static APPNAME: &str = "Naev";
 
 #[unsafe(no_mangle)]
 pub extern "C" fn debug_logBacktrace() {
-    nlog::info!("{}", std::backtrace::Backtrace::force_capture());
+   nlog::info!("{}", std::backtrace::Backtrace::force_capture());
 }

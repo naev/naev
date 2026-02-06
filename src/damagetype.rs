@@ -12,265 +12,265 @@ use nlog::{warn, warn_err};
 #[derive(Debug, Clone, Copy)]
 struct Stat(usize);
 impl<'de> Deserialize<'de> for Stat {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-    where
-        D: Deserializer<'de>,
-    {
-        //let name = String::deserialize(deserializer)?;
-        //let cname = CString::new(&*name).unwrap();
-        let cname = CString::deserialize(deserializer)?;
-        let sstype = unsafe { naevc::ss_typeFromName(cname.as_ptr()) };
-        if sstype == naevc::ShipStatsType_SS_TYPE_NIL {
-            return Err(de::Error::custom(format!(
-                "ship stat '{}' not found",
-                cname.to_string_lossy()
-            )));
-        }
-        let o = unsafe { naevc::ss_offsetFromType(sstype) };
-        Ok(Stat(o))
-    }
+   fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+   where
+      D: Deserializer<'de>,
+   {
+      //let name = String::deserialize(deserializer)?;
+      //let cname = CString::new(&*name).unwrap();
+      let cname = CString::deserialize(deserializer)?;
+      let sstype = unsafe { naevc::ss_typeFromName(cname.as_ptr()) };
+      if sstype == naevc::ShipStatsType_SS_TYPE_NIL {
+         return Err(de::Error::custom(format!(
+            "ship stat '{}' not found",
+            cname.to_string_lossy()
+         )));
+      }
+      let o = unsafe { naevc::ss_offsetFromType(sstype) };
+      Ok(Stat(o))
+   }
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct DamageType {
-    name: String,
-    display: Option<String>,
-    #[serde(rename = "shield")]
-    shield_mod: f64,
-    #[serde(rename = "armour")]
-    armour_mod: f64,
-    knockback: f64,
-    // Hack for C to be rustified when shipstats get ported
-    shield_stat: Option<Stat>,
-    armour_stat: Option<Stat>,
-    #[serde(skip, default)]
-    cname: CString,
-    #[serde(skip, default)]
-    cdisplay: Option<CString>,
+   name: String,
+   display: Option<String>,
+   #[serde(rename = "shield")]
+   shield_mod: f64,
+   #[serde(rename = "armour")]
+   armour_mod: f64,
+   knockback: f64,
+   // Hack for C to be rustified when shipstats get ported
+   shield_stat: Option<Stat>,
+   armour_stat: Option<Stat>,
+   #[serde(skip, default)]
+   cname: CString,
+   #[serde(skip, default)]
+   cdisplay: Option<CString>,
 }
 
 impl DamageType {
-    fn load_xml<P: AsRef<Path>>(filename: P) -> Result<Self> {
-        let data = ndata::read(filename)?;
-        let doc = roxmltree::Document::parse(std::str::from_utf8(&data)?)?;
-        let root = doc.root_element();
-        let name = String::from(match root.attribute("name") {
-            Some(n) => n,
-            None => {
-                return nxml_err_attr_missing!("Damage Type", "name");
+   fn load_xml<P: AsRef<Path>>(filename: P) -> Result<Self> {
+      let data = ndata::read(filename)?;
+      let doc = roxmltree::Document::parse(std::str::from_utf8(&data)?)?;
+      let root = doc.root_element();
+      let name = String::from(match root.attribute("name") {
+         Some(n) => n,
+         None => {
+            return nxml_err_attr_missing!("Damage Type", "name");
+         }
+      });
+      let cname = CString::new(name.clone())?;
+      let display = root.attribute("display").map(|n| n.to_string());
+      let mut dt = DamageType {
+         name,
+         cname,
+         display,
+         ..DamageType::default()
+      };
+      for node in root.children() {
+         if !node.is_element() {
+            continue;
+         }
+         fn stat_offset(name: &str) -> Option<Stat> {
+            let cname = CString::new(name).unwrap();
+            let sstype = unsafe { naevc::ss_typeFromName(cname.as_ptr()) };
+            if sstype == naevc::ShipStatsType_SS_TYPE_NIL {
+               return None;
             }
-        });
-        let cname = CString::new(name.clone())?;
-        let display = root.attribute("display").map(|n| n.to_string());
-        let mut dt = DamageType {
-            name,
-            cname,
-            display,
-            ..DamageType::default()
-        };
-        for node in root.children() {
-            if !node.is_element() {
-                continue;
+            let o = unsafe { naevc::ss_offsetFromType(sstype) };
+            Some(Stat(o))
+         }
+         match node.tag_name().name().to_lowercase().as_str() {
+            "shield" => {
+               dt.shield_stat = node.attribute("stat").and_then(stat_offset);
+               dt.shield_mod = nxml::node_f64(node)?
             }
-            fn stat_offset(name: &str) -> Option<Stat> {
-                let cname = CString::new(name).unwrap();
-                let sstype = unsafe { naevc::ss_typeFromName(cname.as_ptr()) };
-                if sstype == naevc::ShipStatsType_SS_TYPE_NIL {
-                    return None;
-                }
-                let o = unsafe { naevc::ss_offsetFromType(sstype) };
-                Some(Stat(o))
+            "armour" => {
+               dt.armour_stat = node.attribute("stat").and_then(stat_offset);
+               dt.armour_mod = nxml::node_f64(node)?
             }
-            match node.tag_name().name().to_lowercase().as_str() {
-                "shield" => {
-                    dt.shield_stat = node.attribute("stat").and_then(stat_offset);
-                    dt.shield_mod = nxml::node_f64(node)?
-                }
-                "armour" => {
-                    dt.armour_stat = node.attribute("stat").and_then(stat_offset);
-                    dt.armour_mod = nxml::node_f64(node)?
-                }
-                "knockback" => dt.knockback = nxml::node_f64(node)?,
-                tag => nxml_warn_node_unknown!("Damage Type", &dt.name, tag),
-            }
-        }
-        Ok(dt)
-    }
+            "knockback" => dt.knockback = nxml::node_f64(node)?,
+            tag => nxml_warn_node_unknown!("Damage Type", &dt.name, tag),
+         }
+      }
+      Ok(dt)
+   }
 
-    fn load_toml<P: AsRef<Path>>(filename: P) -> Result<Self> {
-        let data = ndata::read(filename)?;
-        let mut dt: DamageType = toml::from_slice(&data)?;
-        dt.cname = CString::new(&*dt.name)?;
-        dt.cdisplay = dt.display.as_ref().and_then(|s| CString::new(&**s).ok());
-        Ok(dt)
-    }
+   fn load_toml<P: AsRef<Path>>(filename: P) -> Result<Self> {
+      let data = ndata::read(filename)?;
+      let mut dt: DamageType = toml::from_slice(&data)?;
+      dt.cname = CString::new(&*dt.name)?;
+      dt.cdisplay = dt.display.as_ref().and_then(|s| CString::new(&**s).ok());
+      Ok(dt)
+   }
 
-    fn load<P: AsRef<Path>>(filename: P) -> Option<Result<Self>> {
-        let dt = {
-            let ext = filename.as_ref().extension();
-            if ext == Some(OsStr::new("toml")) {
-                Self::load_toml(&filename)
-            // TODO remove XMl support at around 0.14.0 or 0.15.0
-            } else if ext == Some(OsStr::new("xml")) {
-                Self::load_xml(&filename)
-            } else {
-                return None;
-            }
-        }
-        .with_context(|| {
-            format!(
-                "unable to load DamageType '{}'",
-                filename.as_ref().display()
-            )
-        });
-        Some(dt)
-    }
+   fn load<P: AsRef<Path>>(filename: P) -> Option<Result<Self>> {
+      let dt = {
+         let ext = filename.as_ref().extension();
+         if ext == Some(OsStr::new("toml")) {
+            Self::load_toml(&filename)
+         // TODO remove XMl support at around 0.14.0 or 0.15.0
+         } else if ext == Some(OsStr::new("xml")) {
+            Self::load_xml(&filename)
+         } else {
+            return None;
+         }
+      }
+      .with_context(|| {
+         format!(
+            "unable to load DamageType '{}'",
+            filename.as_ref().display()
+         )
+      });
+      Some(dt)
+   }
 }
 
 impl Default for DamageType {
-    fn default() -> Self {
-        DamageType {
-            name: String::default(),
-            cname: CString::default(),
-            display: None,
-            cdisplay: None,
-            shield_mod: 1.0,
-            armour_mod: 1.0,
-            knockback: 0.0,
-            shield_stat: None,
-            armour_stat: None,
-        }
-    }
+   fn default() -> Self {
+      DamageType {
+         name: String::default(),
+         cname: CString::default(),
+         display: None,
+         cdisplay: None,
+         shield_mod: 1.0,
+         armour_mod: 1.0,
+         knockback: 0.0,
+         shield_stat: None,
+         armour_stat: None,
+      }
+   }
 }
 
 use std::sync::LazyLock;
 static DAMAGE_TYPES: LazyLock<Vec<DamageType>> = LazyLock::new(|| load().unwrap());
 
 pub fn load() -> Result<Vec<DamageType>> {
-    let base: PathBuf = "damagetype/".into();
-    let mut dt_data: Vec<DamageType> = ndata::read_dir(&base)?
-        .par_iter()
-        .filter_map(|filename| match DamageType::load(base.join(filename)) {
-            Some(Ok(dt)) => Some(dt),
-            Some(Err(e)) => {
-                warn_err!(e);
-                None
-            }
-            None => None,
-        })
-        .collect();
-    // Special type of unmodified damage
-    dt_data.push(DamageType {
-        name: String::from("raw"),
-        cname: CString::new("raw")?,
-        ..Default::default()
-    });
-    sort_by_key_ref(&mut dt_data, |dt: &DamageType| &dt.name);
-    dt_data.windows(2).for_each(|w| {
-        if w[0].name == w[1].name {
-            warn!("Damage type '{}' loaded twice!", w[0].name);
-        }
-    });
-    Ok(dt_data)
+   let base: PathBuf = "damagetype/".into();
+   let mut dt_data: Vec<DamageType> = ndata::read_dir(&base)?
+      .par_iter()
+      .filter_map(|filename| match DamageType::load(base.join(filename)) {
+         Some(Ok(dt)) => Some(dt),
+         Some(Err(e)) => {
+            warn_err!(e);
+            None
+         }
+         None => None,
+      })
+      .collect();
+   // Special type of unmodified damage
+   dt_data.push(DamageType {
+      name: String::from("raw"),
+      cname: CString::new("raw")?,
+      ..Default::default()
+   });
+   sort_by_key_ref(&mut dt_data, |dt: &DamageType| &dt.name);
+   dt_data.windows(2).for_each(|w| {
+      if w[0].name == w[1].name {
+         warn!("Damage type '{}' loaded twice!", w[0].name);
+      }
+   });
+   Ok(dt_data)
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn dtype_get(name: *const c_char) -> c_int {
-    if name.is_null() {
-        return 0;
-    }
-    let ptr = unsafe { CStr::from_ptr(name) };
-    let name = ptr.to_str().unwrap();
-    match binary_search_by_key_ref(&DAMAGE_TYPES, name, |dt: &DamageType| &dt.name) {
-        Ok(i) => (i + 1) as c_int,
-        Err(_) => {
-            warn!("damage type '{name}' not found");
-            0
-        }
-    }
+   if name.is_null() {
+      return 0;
+   }
+   let ptr = unsafe { CStr::from_ptr(name) };
+   let name = ptr.to_str().unwrap();
+   match binary_search_by_key_ref(&DAMAGE_TYPES, name, |dt: &DamageType| &dt.name) {
+      Ok(i) => (i + 1) as c_int,
+      Err(_) => {
+         warn!("damage type '{name}' not found");
+         0
+      }
+   }
 }
 
 // Assume static here, because it doesn't really change after loading
 #[unsafe(no_mangle)]
 pub fn get_c(dt: c_int) -> Option<&'static DamageType> {
-    DAMAGE_TYPES.get((dt - 1) as usize)
+   DAMAGE_TYPES.get((dt - 1) as usize)
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn dtype_damageTypeToStr(dtid: c_int) -> *const c_char {
-    match get_c(dtid) {
-        Some(dt) => match &dt.cdisplay {
-            Some(d) => d.as_ptr(),
-            None => dt.cname.as_ptr(),
-        },
-        None => std::ptr::null(),
-    }
+   match get_c(dtid) {
+      Some(dt) => match &dt.cdisplay {
+         Some(d) => d.as_ptr(),
+         None => dt.cname.as_ptr(),
+      },
+      None => std::ptr::null(),
+   }
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn dtype_raw(
-    dtid: c_int,
-    shield: *mut f64,
-    armour: *mut f64,
-    knockback: *mut f64,
+   dtid: c_int,
+   shield: *mut f64,
+   armour: *mut f64,
+   knockback: *mut f64,
 ) -> c_int {
-    match get_c(dtid) {
-        Some(dt) => {
-            if !shield.is_null() {
-                unsafe {
-                    *shield = dt.shield_mod;
-                }
+   match get_c(dtid) {
+      Some(dt) => {
+         if !shield.is_null() {
+            unsafe {
+               *shield = dt.shield_mod;
             }
-            if !armour.is_null() {
-                unsafe {
-                    *armour = dt.armour_mod;
-                }
+         }
+         if !armour.is_null() {
+            unsafe {
+               *armour = dt.armour_mod;
             }
-            if !knockback.is_null() {
-                unsafe {
-                    *knockback = dt.knockback;
-                }
+         }
+         if !knockback.is_null() {
+            unsafe {
+               *knockback = dt.knockback;
             }
-            0
-        }
-        None => -1,
-    }
+         }
+         0
+      }
+      None => -1,
+   }
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn dtype_calcDamage(
-    dshield: *mut f64,
-    darmour: *mut f64,
-    absorb: f64,
-    knockback: *mut f64,
-    dmg: *const naevc::Damage,
-    ss: *const naevc::ShipStats,
+   dshield: *mut f64,
+   darmour: *mut f64,
+   absorb: f64,
+   knockback: *mut f64,
+   dmg: *const naevc::Damage,
+   ss: *const naevc::ShipStats,
 ) {
-    fn get_stat(stat: Option<Stat>, ss: *const naevc::ShipStats) -> f64 {
-        match stat {
-            Some(o) => {
-                if ss.is_null() {
-                    1.
-                } else {
-                    (1. - unsafe { naevc::ss_offsetStat(ss, o.0) }).max(0.)
-                }
+   fn get_stat(stat: Option<Stat>, ss: *const naevc::ShipStats) -> f64 {
+      match stat {
+         Some(o) => {
+            if ss.is_null() {
+               1.
+            } else {
+               (1. - unsafe { naevc::ss_offsetStat(ss, o.0) }).max(0.)
             }
-            None => 1.,
-        }
-    }
-    if let Some(dt) = get_c(unsafe { (*dmg).type_ }) {
-        if !dshield.is_null() {
-            let mult = get_stat(dt.shield_stat, ss);
-            unsafe { *dshield = dt.shield_mod * (*dmg).damage * absorb * mult }
-        }
-        if !darmour.is_null() {
-            let mult = get_stat(dt.armour_stat, ss);
-            unsafe { *darmour = dt.armour_mod * (*dmg).damage * absorb * mult }
-        }
-        if !knockback.is_null() {
-            unsafe {
-                *knockback = dt.knockback;
-            }
-        }
-    }
+         }
+         None => 1.,
+      }
+   }
+   if let Some(dt) = get_c(unsafe { (*dmg).type_ }) {
+      if !dshield.is_null() {
+         let mult = get_stat(dt.shield_stat, ss);
+         unsafe { *dshield = dt.shield_mod * (*dmg).damage * absorb * mult }
+      }
+      if !darmour.is_null() {
+         let mult = get_stat(dt.armour_stat, ss);
+         unsafe { *darmour = dt.armour_mod * (*dmg).damage * absorb * mult }
+      }
+      if !knockback.is_null() {
+         unsafe {
+            *knockback = dt.knockback;
+         }
+      }
+   }
 }

@@ -116,7 +116,7 @@ repos:
       name: Rust formatter
       entry: rustfmt
       types: [rust]
-      files: '^src/'
+#      files: '^src/'
       args: ["--edition", "2024"]
       language: system
 - repo: https://github.com/shellcheck-py/shellcheck-py
