@@ -79,9 +79,6 @@ if [ -z "${EXPR[*]}" ] ; then
    exit 0
 fi
 
-echo >&2
-echo "${WORDS[@]}" >&2
-
 SEPE="[$SEP]"
 EXPR='\(\(^\|'"$SEPE"'\)\(\('"$EXPR"'\)\)\($\|'"$SEPE"'\)\)'
 
