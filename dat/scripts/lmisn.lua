@@ -462,17 +462,32 @@ function lmisn.travel_time( p, src_sys, dst_sys, src_pos, dst_pos )
    delays = delays + pstats.jump_delay*jumps
 
    -- approximation: we assume the ship instantly get to drift speed when stopping thrust
-   local turn_time = 180 / pstats.turn
    local start_time = pstats.speed_max / pstats.accel + angle / pstats.turn
-   local stop_time = pstats.speed / pstats.accel + turn_time
    local start_dist = pstats.speed_max * pstats.speed_max / 2 / pstats.accel
+
+   local turn_time = 180 / pstats.turn
+   local stop_time = pstats.speed / pstats.accel + turn_time
    local stop_dist = pstats.speed*pstats.speed/2/pstats.accel + turn_time*pstats.speed
 
+   if p:shipstat("misc_reverse_thrust") then
+      local rev_stop_time = pstats.speed / (pstats.accel * const.PILOT_REVERSE_THRUST)
+      local rev_stop_dist = rev_stop_time * pstats.speed / 2
+      local max_dist = stop_dist
+      if rev_stop_dist > max_dist then
+         max_dist = rev_stop_dist
+      end
+      if rev_stop_time + (max_dist - rev_stop_dist) / pstats.speed_max <
+         stop_time + (max_dist - stop_dist) / pstats.speed_max then
+         stop_time = rev_stop_time
+         stop_dist = rev_stop_dist
+      end
+   end
+
    total = total + (stops * stop_time + start_time) * const.TIMEDATE_INCREMENTS_PER_SECOND
-   dist = dist - (stops * stop_dist + start_dist)
-   total = total + dist / pstats.speed_max * const.TIMEDATE_INCREMENTS_PER_SECOND
+   dist = dist - (stops*stop_dist + start_dist)
+   total = total + dist/pstats.speed_max * const.TIMEDATE_INCREMENTS_PER_SECOND
    --print ('delays / other '..tostring(delays)..' / '..tostring(total))
-   return time.new(0, 0, delays + total / (p:shipstat("action_speed",true)))
+   return time.new(0, 0, delays + total/(p:shipstat("action_speed",true)))
 end
 
 --[[--
