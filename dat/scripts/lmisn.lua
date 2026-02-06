@@ -332,7 +332,7 @@ Calculates the distance (in pixels) from a position in a system to a position in
    @tparam Vec2 origin_pos Position to calculate distance from.
    @tparam System dest_sys Target system to calculate distance to.
    @tparam Vec2 dest_pos Target position to calculate distance to.
-           (might be nil, meaning (any) dest_sys entry point.)
+            (might be nil, meaning (any) dest_sys entry point.)
    @tparam table params Table of parameters. Currently supported are "use_hidden".
    @return The distance travelled
    @return The jumpPath leading to the target system
@@ -374,7 +374,7 @@ local function isSpobOf(sp, sys)
    return false
 end
 
-local function angle_with_dest( p, src_sys, dst_sys, src_pos, dst_pos )
+local function angle_with_dest( p, src_sys, dst_sys, _src_pos, dst_pos )
    local nxt
    if dst_sys == src_sys then
       nxt = dst_pos
@@ -392,16 +392,6 @@ local function angle_with_dest( p, src_sys, dst_sys, src_pos, dst_pos )
    return math.abs(a)
 end
 
---[[--
-Calculates the UST time from a position/spob in a system to a position/spob/nil in another system. Spobs and systems can be given as strings.
-
-   @tparam System origin_sys System to calculate distance from.
-   @tparam Vec2 or Spob origin Position to calculate distance from. If the argument is a spob, taking off time is accounted for.
-   @tparam System dest_sys or nil Target system to calculate distance to. If omitted, use src_sys.
-   @tparam Vec2 or Spob dest_pos or nil Target position to calculate distance to. If target is nil, just aim system entry point. If target is a spob, braking time is accounted for.
-   @return The UST time needed for this travel.
---]]
-
 -- jumpin / jumpout animations not taken into account
 -- ship assumed to jumpin at jump point with speed_max
 -- ship assumed to be originally motionless (and, if landed, facing the opposite direction)
@@ -412,12 +402,22 @@ local HYPERSPACE_WARMUP_DELAY = 5
 local LANDING_DELAY = 1
 local TAKEOFF_DELAY = 1
 
+--[[--
+Calculates the in-game time from a position/spob in a system to a position/spob/nil in another system. Spobs and systems can be given as strings.
+
+   @tparam Pilot p Pilot to compute travel time for.
+   @tparam System src_sys System to calculate distance from.
+   @tparam System dst_sys or nil Target system to calculate distance to. If omitted, use src_sys.
+   @tparam Vec2|Spob _src_pos Position to calculate distance from. If the argument is a spob, taking off time is accounted for.
+   @tparam Vec2|Spob|nil dst_pos Target position to calculate distance to. If target is nil, just aim system entry point. If target is a spob, braking time is accounted for.
+   @treturn Time The in-game time needed for this travel.
+--]]
 function lmisn.travel_time( p, src_sys, dst_sys, src_pos, dst_pos )
    local pstats = p:stats()
    local delays = 0 -- land/jump times
    local total = 0
    local stops = 0
-   local angle = 0
+   local angle
 
    src_sys = system.get(src_sys)
    dst_sys = dst_sys and system.get(dst_sys) or src_sys
@@ -467,6 +467,13 @@ function lmisn.travel_time( p, src_sys, dst_sys, src_pos, dst_pos )
    return time.new(0, 0, delays + total / ((100 + p:shipstat().action_speed) / 100.0))
 end
 
+--[[--
+   Same as lmisn.travel_time, but automatically computes it from the player's current location.
+
+   @tparam System dst_sys or nil Target system to calculate distance to. If omitted, use src_sys.
+   @tparam Vec2|Spob|nil dst_pos Target position to calculate distance to. If target is nil, just aim system entry point. If target is a spob, braking time is accounted for.
+   @treturn Time The in-game time needed for this travel.
+--]]
 function lmisn.player_travel_time(dst_sys, dst_pos)
    local where
    if player.isLanded() then
