@@ -432,7 +432,7 @@ function lmisn.travel_time( p, src_sys, dst_sys, src_pos, dst_pos )
       return time.new(0, 0, 0)
    end
    if isSpobOf(src_pos, src_sys) then
-      delays = delays + (100 + p:shipstat().land_delay) / 100.0 * const.TIMEDATE_LAND_INCREMENTS
+      delays = delays + p:shipstat("land_delay",true) * const.TIMEDATE_LAND_INCREMENTS
       total = total + TAKEOFF_DELAY * const.TIMEDATE_INCREMENTS_PER_SECOND
       src_pos = src_pos:pos()
       angle = 180
@@ -446,9 +446,9 @@ function lmisn.travel_time( p, src_sys, dst_sys, src_pos, dst_pos )
    end
    local dist = lmisn.calculateDistance( src_sys, src_pos, dst_sys, dst_pos )
    local jumps = src_sys:jumpDist(dst_sys)
-   if not p:shipstat().misc_instant_jump then
+   if not p:shipstat("misc_instant_jump") then
       stops = stops + jumps
-      total = total + (100 + p:shipstat().jump_warmup) / 100.0 * HYPERSPACE_WARMUP_DELAY * jumps * const.TIMEDATE_INCREMENTS_PER_SECOND
+      total = total + p:shipstat("jump_warmup",true) * HYPERSPACE_WARMUP_DELAY * jumps * const.TIMEDATE_INCREMENTS_PER_SECOND
    end
    total = total + jumps * HYPERSPACE_FLY_DELAY * const.TIMEDATE_INCREMENTS_PER_SECOND
    delays = delays + pstats.jump_delay * jumps
@@ -464,7 +464,7 @@ function lmisn.travel_time( p, src_sys, dst_sys, src_pos, dst_pos )
    dist = dist - (stops * stop_dist + start_dist)
    total = total + dist / pstats.speed_max * const.TIMEDATE_INCREMENTS_PER_SECOND
    --print ('delays / other '..tostring(delays)..' / '..tostring(total))
-   return time.new(0, 0, delays + total / ((100 + p:shipstat().action_speed) / 100.0))
+   return time.new(0, 0, delays + total / (p:shipstat("action_speed",true)))
 end
 
 --[[--
