@@ -37,7 +37,7 @@ The following is a chart of all time units used in Naev along with the correspon
             { "#n".._("UST unit"),"#n".._("Abbreviation"), "#n".._("Length of Time"), "#n".._("Equal to (in Earth time)"), "#n".._("Used like") },
             { _("Standard Time Unit"),     _([["stu"]]),        _("1 Earth second"), _("1 second"),                 _("Seconds") },
             { _("Hectostu"), _([[N/A]]),        _("100 seconds"),    _("1 minute and 40 seconds"),  _("Minutes") },
-            { _("Periods"),     _([["p"]]),        _("10,000 seconds"), _("2 hours and 47 minutes"),   _("Hours") },
+            { _("Periods"),     _([["p" or "stp"]]),        _("10,000 seconds"), _("2 hours and 47 minutes"),   _("Hours") },
             { _("Decaperiods"), _([[N/A]]),        _("10 periods"),     _("28 hours"),                 _("Days") },
             { _("Cycles"),      _([[N/A]]),        _("5,000 periods"),  _("579 days"),                 _("Years") },
         }
