@@ -155,9 +155,9 @@ impl Converter {
         let seconds = nt.seconds();
         // TODO try to move 2 to variable decimal length, but not that important
         if cycles == 0 && periods == 0 {
-            formatx!(gettext("{:04} s"), seconds).unwrap()
+            formatx!(gettext("{:04} stu"), seconds).unwrap()
         } else if cycles == 0 {
-            formatx!(gettext("{p}.{s:04} p"), p = periods, s = seconds,).unwrap()
+            formatx!(gettext("{p}.{s:04} stp"), p = periods, s = seconds,).unwrap()
         } else {
             formatx!(
                 gettext("UST {c}:{p:04}.{s:04}"),
@@ -780,22 +780,22 @@ fn test_ntime_ust() {
 
 #[test]
 fn test_ntime_p() {
-    assert!(NTime::from_string("123.456 p").is_err());
+    assert!(NTime::from_string("123.456 stp").is_err());
     assert!(NTime::from_string("123.0456 p cat").is_err());
-    assert!(NTime::from_string("cat 123.0456 p").is_err());
+    assert!(NTime::from_string("cat 123.0456 stp").is_err());
     assert!(NTime::from_string("123.0456 pp").is_err());
     assert_eq!(
-        NTime::from_string("123.4567 p").unwrap(),
+        NTime::from_string("123.4567 stp").unwrap(),
         NTime::new(0, 123, 4567)
     );
-    assert_eq!(NTime::from_string("123 p").unwrap(), NTime::new(0, 123, 0));
+    assert_eq!(NTime::from_string("123 stp").unwrap(), NTime::new(0, 123, 0));
 }
 
 #[test]
 fn test_ntime_s() {
-    assert!(NTime::from_string("123.45 s").is_err());
-    assert!(NTime::from_string("123:45 s").is_err());
-    assert_eq!(NTime::from_string("123 s").unwrap(), NTime::new(0, 0, 123));
+    assert!(NTime::from_string("123.45 stu").is_err());
+    assert!(NTime::from_string("123:45 stu").is_err());
+    assert_eq!(NTime::from_string("123 stu").unwrap(), NTime::new(0, 0, 123));
 }
 
 #[test]

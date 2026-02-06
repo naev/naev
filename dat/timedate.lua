@@ -7,11 +7,11 @@ function from_string( str )
    if maj then
       return time.new( tonumber(maj), tonumber(min), tonumber(inc) )
    end
-   min, inc = str:match("^(%d+)%.(%d+) p$")
+   min, inc = str:match("^(%d+)%.(%d+) stp$")
    if min then
       return time.new( 0, tonumber(min), tonumber(inc) )
    end
-   inc = str:match("^(%d+) s$")
+   inc = str:match("^(%d+) stu$")
    if inc then
       return time.new( 0, 0, tonumber(inc) )
    end
@@ -21,9 +21,9 @@ end
 function to_string( nt )
    local maj, min, inc = nt:split()
    if maj==0 and min==0 then
-      return string.format( _("%d s"), inc )
+      return string.format( _("%d stu"), inc )
    elseif maj==0 then
-      return string.format( _("%d.%04d p"), min, inc )
+      return string.format( _("%d.%04d stp"), min, inc )
    else
       return string.format( _("UST %d:%04d.%04d"), maj, min, inc )
    end
