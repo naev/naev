@@ -332,6 +332,7 @@ Calculates the distance (in pixels) from a position in a system to a position in
    @tparam Vec2 origin_pos Position to calculate distance from.
    @tparam System dest_sys Target system to calculate distance to.
    @tparam Vec2 dest_pos Target position to calculate distance to.
+           (might be nil, meaning (any) dest_sys entry point.)
    @tparam table params Table of parameters. Currently supported are "use_hidden".
    @return The distance travelled
    @return The jumpPath leading to the target system
@@ -361,6 +362,119 @@ function lmisn.calculateDistance( origin_sys, origin_pos, dest_sys, dest_pos, pa
       traveldist = traveldist + vec2.dist( pos, dest_pos )
    end
    return traveldist, jumps
+end
+
+
+local function isSpobOf(sp, sys)
+   for _, spob in ipairs( sys:spobs() ) do
+      if spob == sp then
+         return true
+      end
+   end
+   return false
+end
+
+local function angle_with_dest( p, src_sys, dst_sys, src_pos, dst_pos )
+   local nxt
+   if dst_sys == src_sys then
+      nxt = dst_pos
+   else
+      nxt = src_sys:jumpPath( dst_sys )[1]:pos()
+   end
+   local v = nxt - p:pos()
+   local a = v:angle() - p:dir()
+   a = a * 180 / math.pi
+   if a <= -180 then
+      a = a + 360
+   elseif a > 180 then
+      a = a - 360
+   end
+   return math.abs(a)
+end
+
+--[[--
+Calculates the UST time from a position/spob in a system to a position/spob/nil in another system. Spobs and systems can be given as strings.
+
+   @tparam System origin_sys System to calculate distance from.
+   @tparam Vec2 or Spob origin Position to calculate distance from. If the argument is a spob, taking off time is accounted for.
+   @tparam System dest_sys or nil Target system to calculate distance to. If omitted, use src_sys.
+   @tparam Vec2 or Spob dest_pos or nil Target position to calculate distance to. If target is nil, just aim system entry point. If target is a spob, braking time is accounted for.
+   @return The UST time needed for this travel.
+--]]
+
+-- jumpin / jumpout animations not taken into account
+-- ship assumed to jumpin at jump point with speed_max
+-- ship assumed to be originally motionless (and, if landed, facing the opposite direction)
+-- ship assumed to have enough space to reach max_speed between "checkpoints"
+local const = require 'constants'
+local HYPERSPACE_FLY_DELAY = 5
+local HYPERSPACE_WARMUP_DELAY = 5
+local LANDING_DELAY = 1
+local TAKEOFF_DELAY = 1
+
+function lmisn.travel_time( p, src_sys, dst_sys, src_pos, dst_pos )
+   local pstats = p:stats()
+   local delays = 0 -- land/jump times
+   local total = 0
+   local stops = 0
+   local angle = 0
+
+   src_sys = system.get(src_sys)
+   dst_sys = dst_sys and system.get(dst_sys) or src_sys
+   if type(src_pos) == "string" then
+      src_pos = spob.get(src_pos)
+   end
+   if type(dst_pos) == "string" then
+      dst_pos = spob.get(dst_pos)
+   end
+
+   if src_sys == dst_sys and (src_pos == dst_pos or src_pos == nil or dst_pos == nil) then
+      return time.new(0, 0, 0)
+   end
+   if isSpobOf(src_pos, src_sys) then
+      delays = delays + (100 + p:shipstat().land_delay) / 100.0 * const.TIMEDATE_LAND_INCREMENTS
+      total = total + TAKEOFF_DELAY * const.TIMEDATE_INCREMENTS_PER_SECOND
+      src_pos = src_pos:pos()
+      angle = 180
+   else
+      angle = angle_with_dest( p, src_sys, dst_sys, src_pos, dst_pos )
+   end
+   if isSpobOf(dst_pos, dst_sys) then
+      stops = stops + 1
+      total = total + LANDING_DELAY * const.TIMEDATE_INCREMENTS_PER_SECOND
+      dst_pos = dst_pos:pos()
+   end
+   local dist = lmisn.calculateDistance( src_sys, src_pos, dst_sys, dst_pos )
+   local jumps = src_sys:jumpDist(dst_sys)
+   if not p:shipstat().misc_instant_jump then
+      stops = stops + jumps
+      total = total + (100 + p:shipstat().jump_warmup) / 100.0 * HYPERSPACE_WARMUP_DELAY * jumps * const.TIMEDATE_INCREMENTS_PER_SECOND
+   end
+   total = total + jumps * HYPERSPACE_FLY_DELAY * const.TIMEDATE_INCREMENTS_PER_SECOND
+   delays = delays + pstats.jump_delay * jumps
+
+   -- approximation: we assume the ship instantly get to drift speed when stopping thrust
+   local turn_time = 180 / pstats.turn
+   local start_time = pstats.speed_max / pstats.accel + angle / pstats.turn
+   local stop_time = pstats.speed / pstats.accel + turn_time
+   local start_dist = pstats.speed_max * pstats.speed_max / 2 / pstats.accel
+   local stop_dist = pstats.speed*pstats.speed/2/pstats.accel + turn_time*pstats.speed
+
+   total = total + (stops * stop_time + start_time) * const.TIMEDATE_INCREMENTS_PER_SECOND
+   dist = dist - (stops * stop_dist + start_dist)
+   total = total + dist / pstats.speed_max * const.TIMEDATE_INCREMENTS_PER_SECOND
+   --print ('delays / other '..tostring(delays)..' / '..tostring(total))
+   return time.new(0, 0, delays + total / ((100 + p:shipstat().action_speed) / 100.0))
+end
+
+function lmisn.player_travel_time(dst_sys, dst_pos)
+   local where
+   if player.isLanded() then
+      where = spob.cur()
+   else
+      where = player.pos()
+   end
+   return lmisn.travel_time( player.pilot(), system.cur(), dst_sys, where, dst_pos)
 end
 
 --[[--
