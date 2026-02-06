@@ -397,10 +397,7 @@ end
 -- ship assumed to be originally motionless (and, if landed, facing the opposite direction)
 -- ship assumed to have enough space to reach max_speed between "checkpoints"
 local const = require 'constants'
-local HYPERSPACE_FLY_DELAY = 5
-local HYPERSPACE_WARMUP_DELAY = 5
-local LANDING_DELAY = 1
-local TAKEOFF_DELAY = 1
+-- This does not correspond to the constant, but makes the correct predictions.
 
 --[[--
 Calculates the in-game time from a position/spob in a system to a position/spob/nil in another system. Spobs and systems can be given as strings.
@@ -446,22 +443,23 @@ function lmisn.travel_time( p, src_sys, dst_sys, src_pos, dst_pos )
 
    if isSpobOf(src_pos, src_sys) then
       delays = delays + p:shipstat("land_delay",true) * const.TIMEDATE_LAND_INCREMENTS
-      total = total + TAKEOFF_DELAY * const.TIMEDATE_INCREMENTS_PER_SECOND
+      total = total + const.PILOT_TAKEOFF_DELAY * const.TIMEDATE_INCREMENTS_PER_SECOND
       src_pos = src_pos:pos()
    end
    if isSpobOf(dst_pos, dst_sys) then
       stops = stops + 1
-      total = total + LANDING_DELAY * const.TIMEDATE_INCREMENTS_PER_SECOND
+      total = total + const.PILOT_LANDING_DELAY * const.TIMEDATE_INCREMENTS_PER_SECOND
       dst_pos = dst_pos:pos()
    end
    local dist = lmisn.calculateDistance( src_sys, src_pos, dst_sys, dst_pos )
    local jumps = src_sys:jumpDist(dst_sys)
+   local warmup = p:shipstat("jump_warmup",true)
    if not p:shipstat("misc_instant_jump") then
       stops = stops + jumps
-      total = total + p:shipstat("jump_warmup",true) * HYPERSPACE_WARMUP_DELAY * jumps * const.TIMEDATE_INCREMENTS_PER_SECOND
+      total = total + (warmup*const.HYPERSPACE_ENGINE_DELAY + 2) * jumps * const.TIMEDATE_INCREMENTS_PER_SECOND
    end
-   total = total + jumps * HYPERSPACE_FLY_DELAY * const.TIMEDATE_INCREMENTS_PER_SECOND
-   delays = delays + pstats.jump_delay * jumps
+   total = total + jumps * (warmup*const.HYPERSPACE_FLY_DELAY + 0.3) * const.TIMEDATE_INCREMENTS_PER_SECOND
+   delays = delays + pstats.jump_delay*jumps
 
    -- approximation: we assume the ship instantly get to drift speed when stopping thrust
    local turn_time = 180 / pstats.turn

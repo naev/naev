@@ -21,10 +21,16 @@ local constants = {
    TIMEDATE_HYPERSPACE_INCREMENTS = 10000, -- Increments that pass when going through hyperspace
    TIMEDATE_LAND_INCREMENTS = 10000, -- Increments that pass when landing
 
+   -- in real-time seconds
+   HYPERSPACE_ENGINE_DELAY = 3,
+   HYPERSPACE_FLY_DELAY = 5,
+   PILOT_TAKEOFF_DELAY = 1,
+   PILOT_LANDING_DELAY = 1,
    PILOT_SHIELD_DOWN_TIME = 5, -- Time shield is down after being knocked down to 0
    PILOT_STRESS_RECOVERY_TIME = 5, -- Time for stress to start recovering after taking disable damage (was 0 before 0.14.0)
    PILOT_DISABLED_ARMOUR= 0.1, -- Armour rate at which the ship is disabled (was 0 before 0.13.0)
    PILOT_HIT_NEUTRALS   = false, -- Stray shots will hit neutral ships
+   PILOT_REVERSE_THRUST = 0.4, -- Ratio of normal accel to apply when reversing.
 
    CAMERA_ANGLE         = math.pi/4, -- Camera angle, math.pi/2 would be overhead, math.pi/4 is isometric
 
