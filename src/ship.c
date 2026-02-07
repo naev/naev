@@ -1356,8 +1356,8 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
    MELEMENT(temp->shield_regen==0.,"shield_regen");
    MELEMENT(temp->energy==0.,"energy");
    MELEMENT(temp->energy_regen==0.,"energy_regen");
-   MELEMENT(temp->fuel==0.,"fuel");*/
-   MELEMENT( temp->crew == 0, "crew" );
+   MELEMENT(temp->fuel==0.,"fuel");
+   MELEMENT( temp->crew == 0, "crew" );*/
    MELEMENT( temp->mass == 0., "mass" );
    MELEMENT( temp->fuel_consumption == 0, "fuel_consumption" );
    /*MELEMENT(temp->cap_cargo==0,"cargo");
