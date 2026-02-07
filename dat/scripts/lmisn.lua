@@ -374,12 +374,12 @@ local function isSpobOf(sp, sys)
    return false
 end
 
-local function angle_with_dest( p, src_sys, dst_sys, _src_pos, dst_pos )
+local function angle_with_dest( p, dst_sys, dst_pos )
    local nxt
-   if dst_sys == src_sys then
+   if dst_sys == system.cur() then
       nxt = dst_pos
    else
-      nxt = src_sys:jumpPath( dst_sys )[1]:pos()
+      nxt = system.cur():jumpPath( dst_sys )[1]:pos()
    end
    local v = nxt - p:pos()
    local a = v:angle() - p:dir()
@@ -397,30 +397,30 @@ end
 -- ship assumed to be originally motionless (and, if landed, facing the opposite direction)
 -- ship assumed to have enough space to reach max_speed between "checkpoints"
 local const = require 'constants'
-local HYPERSPACE_FLY_DELAY = 5
-local HYPERSPACE_WARMUP_DELAY = 5
-local LANDING_DELAY = 1
-local TAKEOFF_DELAY = 1
 
 --[[--
 Calculates the in-game time from a position/spob in a system to a position/spob/nil in another system. Spobs and systems can be given as strings.
 
    @tparam Pilot p Pilot to compute travel time for.
-   @tparam System src_sys System to calculate distance from.
+   @tparam System src_sys System to calculate distance from. If nil, current system.
    @tparam System dst_sys or nil Target system to calculate distance to. If omitted, use src_sys.
-   @tparam Vec2|Spob _src_pos Position to calculate distance from. If the argument is a spob, taking off time is accounted for.
+   @tparam Vec2|Spob _src_pos Position to calculate distance from. If the argument is a spob, taking off time is accounted for. If nil, current pilot position.
    @tparam Vec2|Spob|nil dst_pos Target position to calculate distance to. If target is nil, just aim system entry point. If target is a spob, braking time is accounted for.
    @treturn Time The in-game time needed for this travel.
 --]]
 function lmisn.travel_time( p, src_sys, dst_sys, src_pos, dst_pos )
    local pstats = p:stats()
-   local delays = 0 -- land/jump times
+   local delays = 0 -- land/jump times (everything not affected by action_speed)
    local total = 0
    local stops = 0
-   local angle
+   local angle = 180
 
+   if src_sys == nil then
+      src_sys = system.cur()
+   end
    src_sys = system.get(src_sys)
    dst_sys = dst_sys and system.get(dst_sys) or src_sys
+
    if type(src_pos) == "string" then
       src_pos = spob.get(src_pos)
    end
@@ -428,43 +428,65 @@ function lmisn.travel_time( p, src_sys, dst_sys, src_pos, dst_pos )
       dst_pos = spob.get(dst_pos)
    end
 
-   if src_sys == dst_sys and (src_pos == dst_pos or src_pos == nil or dst_pos == nil) then
+   if src_sys == dst_sys and (src_pos == dst_pos or dst_pos == nil) then
       return time.new(0, 0, 0)
    end
+
+   if src_pos == nil then
+      if src_sys ~= system.cur() then
+         warn('travel_time: nil src_pos with non-current src sys makes no sense.')
+      end
+      src_pos = p:pos()
+      angle = angle_with_dest( p, dst_sys, dst_pos:pos() )
+   end
+
    if isSpobOf(src_pos, src_sys) then
       delays = delays + p:shipstat("land_delay",true) * const.TIMEDATE_LAND_INCREMENTS
-      total = total + TAKEOFF_DELAY * const.TIMEDATE_INCREMENTS_PER_SECOND
+      total = total + const.PILOT_TAKEOFF_DELAY * const.TIMEDATE_INCREMENTS_PER_SECOND
       src_pos = src_pos:pos()
-      angle = 180
-   else
-      angle = angle_with_dest( p, src_sys, dst_sys, src_pos, dst_pos )
    end
    if isSpobOf(dst_pos, dst_sys) then
       stops = stops + 1
-      total = total + LANDING_DELAY * const.TIMEDATE_INCREMENTS_PER_SECOND
+      total = total + const.PILOT_LANDING_DELAY * const.TIMEDATE_INCREMENTS_PER_SECOND
       dst_pos = dst_pos:pos()
    end
    local dist = lmisn.calculateDistance( src_sys, src_pos, dst_sys, dst_pos )
    local jumps = src_sys:jumpDist(dst_sys)
+   local warmup = p:shipstat("jump_warmup",true)
    if not p:shipstat("misc_instant_jump") then
       stops = stops + jumps
-      total = total + p:shipstat("jump_warmup",true) * HYPERSPACE_WARMUP_DELAY * jumps * const.TIMEDATE_INCREMENTS_PER_SECOND
+      total = total + (warmup*const.HYPERSPACE_ENGINE_DELAY + 2) * jumps * const.TIMEDATE_INCREMENTS_PER_SECOND
    end
-   total = total + jumps * HYPERSPACE_FLY_DELAY * const.TIMEDATE_INCREMENTS_PER_SECOND
-   delays = delays + pstats.jump_delay * jumps
+   total = total + jumps * (warmup*const.HYPERSPACE_FLY_DELAY + 0.3) * const.TIMEDATE_INCREMENTS_PER_SECOND
+   delays = delays + pstats.jump_delay*jumps
 
    -- approximation: we assume the ship instantly get to drift speed when stopping thrust
-   local turn_time = 180 / pstats.turn
    local start_time = pstats.speed_max / pstats.accel + angle / pstats.turn
-   local stop_time = pstats.speed / pstats.accel + turn_time
    local start_dist = pstats.speed_max * pstats.speed_max / 2 / pstats.accel
+
+   local turn_time = 180 / pstats.turn
+   local stop_time = pstats.speed / pstats.accel + turn_time
    local stop_dist = pstats.speed*pstats.speed/2/pstats.accel + turn_time*pstats.speed
 
+   if p:shipstat("misc_reverse_thrust") then
+      local rev_stop_time = pstats.speed / (pstats.accel * const.PILOT_REVERSE_THRUST)
+      local rev_stop_dist = rev_stop_time * pstats.speed / 2
+      local max_dist = stop_dist
+      if rev_stop_dist > max_dist then
+         max_dist = rev_stop_dist
+      end
+      if rev_stop_time + (max_dist - rev_stop_dist) / pstats.speed_max <
+         stop_time + (max_dist - stop_dist) / pstats.speed_max then
+         stop_time = rev_stop_time
+         stop_dist = rev_stop_dist
+      end
+   end
+
    total = total + (stops * stop_time + start_time) * const.TIMEDATE_INCREMENTS_PER_SECOND
-   dist = dist - (stops * stop_dist + start_dist)
-   total = total + dist / pstats.speed_max * const.TIMEDATE_INCREMENTS_PER_SECOND
+   dist = dist - (stops*stop_dist + start_dist)
+   total = total + dist/pstats.speed_max * const.TIMEDATE_INCREMENTS_PER_SECOND
    --print ('delays / other '..tostring(delays)..' / '..tostring(total))
-   return time.new(0, 0, delays + total / (p:shipstat("action_speed",true)))
+   return time.new(0, 0, delays + total/(p:shipstat("action_speed",true)))
 end
 
 --[[--
@@ -478,10 +500,8 @@ function lmisn.player_travel_time(dst_sys, dst_pos)
    local where
    if player.isLanded() then
       where = spob.cur()
-   else
-      where = player.pos()
    end
-   return lmisn.travel_time( player.pilot(), system.cur(), dst_sys, where, dst_pos)
+   return lmisn.travel_time( player.pilot(), nil, dst_sys, where, dst_pos)
 end
 
 --[[--

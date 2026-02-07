@@ -180,7 +180,10 @@ function car.getTransit( numjumps, traveldist )
    local pstats   = player.pilot():stats()
    local stuperpx = 1 / pstats.speed_max * const.TIMEDATE_INCREMENTS_PER_SECOND
    local arrivalt = time.cur() + time.new(0, 0, traveldist * stuperpx +
-         numjumps * pstats.jump_delay + const.TIMEDATE_LAND_INCREMENTS + 180 + 240 * numjumps)
+      numjumps * pstats.jump_delay + const.TIMEDATE_LAND_INCREMENTS +
+      (const.PILOT_LANDING_DELAY+const.PILOT_TAKEOFF_DELAY) * const.TIMEDATE_INCREMENTS_PER_SECOND +
+      (const.HYPERSPACE_ENGINE_DELAY+const.HYPERSPACE_FLY_DELAY) * const.TIMEDATE_INCREMENTS_PER_SECOND * numjumps
+   )
    return arrivalt
 end
 
