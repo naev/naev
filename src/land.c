@@ -1899,7 +1899,7 @@ void takeoff( int delay, int nosave )
       pilot_outfitLOntakeoff( p, spb );
 
       /* Set take off stuff. */
-      p->landing_delay = PILOT_TAKEOFF_DELAY * player_dt_default();
+      p->landing_delay = CTS.PILOT_TAKEOFF_DELAY * player_dt_default();
       p->ptimer        = p->landing_delay;
       pilot_setFlag( p, PILOT_TAKEOFF );
       pilot_setAccel( p, 0. );

@@ -843,7 +843,7 @@ int pilot_brakeCheckReverseThrusters( const Pilot *p )
 
       /* Calculate the time to face forward and apply reverse thrust. */
       diff  = angle_diff( p->solid.dir, VANGLE( p->solid.vel ) );
-      ftime = ABS( diff ) / p->turn + t / PILOT_REVERSE_THRUST;
+      ftime = ABS( diff ) / p->turn + t / CTS.PILOT_REVERSE_THRUST;
 
       if ( btime > ftime )
          return 1;
@@ -861,10 +861,10 @@ double pilot_minbrakedist( const Pilot *p, double dt, double *flytime )
    double accel = p->accel;
    double t     = vel / accel; /* Try to improve accuracy. */
    if ( pilot_brakeCheckReverseThrusters( p ) ) {
-      t /= PILOT_REVERSE_THRUST; /* Have to compensate slower accel. */
+      t /= CTS.PILOT_REVERSE_THRUST; /* Have to compensate slower accel. */
       *flytime = t + dt;
       return vel * ( t + dt ) -
-             0.5 * PILOT_REVERSE_THRUST * accel * pow2( t - dt );
+             0.5 * CTS.PILOT_REVERSE_THRUST * accel * pow2( t - dt );
    }
    /* Small compensation for current delta-tick. */
    *flytime = t + M_PI / p->turn + dt;
@@ -887,9 +887,9 @@ int pilot_brake( Pilot *p, double dt )
       return 1;
 
    if ( pilot_brakeCheckReverseThrusters( p ) ) {
-      dir = VANGLE( p->solid.vel );
-      accel =
-         -MIN( PILOT_REVERSE_THRUST, VMOD( p->solid.vel ) / ( p->accel * dt ) );
+      dir   = VANGLE( p->solid.vel );
+      accel = -MIN( CTS.PILOT_REVERSE_THRUST,
+                    VMOD( p->solid.vel ) / ( p->accel * dt ) );
    } else {
       dir   = VANGLE( p->solid.vel ) + M_PI;
       accel = MIN( 1., VMOD( p->solid.vel ) / ( p->accel * dt ) );
@@ -3129,7 +3129,7 @@ static void pilot_hyperspace( Pilot *p, double dt )
                                _( "Afterburner active: jump aborted." ) );
       } else {
          if ( p->ptimer < 0. ) { /* engines ready */
-            p->ptimer = HYPERSPACE_FLY_DELAY * p->stats.jump_warmup;
+            p->ptimer = CTS.HYPERSPACE_FLY_DELAY * p->stats.jump_warmup;
             pilot_setFlag( p, PILOT_HYPERSPACE );
             if ( p->id == PLAYER_ID )
                p->timer[0] = -1.;
@@ -3173,7 +3173,8 @@ static void pilot_hyperspace( Pilot *p, double dt )
                         p->name, cur_system->name, sys->name );
                } else {
                   pilot_setTurn( p, 0. );
-                  p->ptimer = HYPERSPACE_ENGINE_DELAY * p->stats.jump_warmup *
+                  p->ptimer = CTS.HYPERSPACE_ENGINE_DELAY *
+                              p->stats.jump_warmup *
                               !p->stats.misc_instant_jump;
                   pilot_setFlag( p, PILOT_HYP_BEGIN );
                   /* Player plays sound. */
@@ -3549,7 +3550,7 @@ static void pilot_init( Pilot *pilot, const Ship *ship, const char *name,
 
    /* Check takeoff. */
    if ( pilot_isFlagRaw( flags, PILOT_TAKEOFF ) ) {
-      pilot->landing_delay = PILOT_TAKEOFF_DELAY * pilot->ship->dt_default;
+      pilot->landing_delay = CTS.PILOT_TAKEOFF_DELAY * pilot->ship->dt_default;
       pilot->ptimer        = pilot->landing_delay;
    }
 

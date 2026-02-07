@@ -7,6 +7,7 @@
 
 #include "ai.h"
 #include "commodity.h"
+#include "constants.h"
 #include "effect.h"
 #include "faction.h"
 #include "intlist.h"
@@ -23,8 +24,6 @@
    2 /**< Temporary ID for when a non-player pilot is necessary. */
 
 /* Hyperspace parameters. */
-#define HYPERSPACE_ENGINE_DELAY 3. /**< Time to warm up engine (seconds). */
-#define HYPERSPACE_FLY_DELAY 5. /**< Time it takes to hyperspace (seconds). */
 #define HYPERSPACE_DUST_BLUR                                                   \
    3. /**< How long it takes for space dust to start blurring (seconds). */
 #define HYPERSPACE_DUST_LENGTH                                                 \
@@ -36,17 +35,12 @@
           */
 #define HYPERSPACE_VEL                                                         \
    ( 2. * HYPERSPACE_ACCEL *                                                   \
-     HYPERSPACE_FLY_DELAY ) /**< Velocity at hyperspace. */
-/* Land/takeoff. */
-#define PILOT_LANDING_DELAY 1. /**< Delay for land animation. */
-#define PILOT_TAKEOFF_DELAY 1. /**< Delay for takeoff animation. */
+     CTS.HYPERSPACE_FLY_DELAY ) /**< Velocity at hyperspace. */
 /* Refuelling. */
 #define PILOT_REFUEL_TIME 3. /**< Time to complete refuelling. */
 /* Misc. */
 #define PILOT_SIZE_APPROX 0.8 /**< approximation for pilot size */
 #define PILOT_WEAPON_SETS 12  /**< Number of weapon sets the pilot has. */
-#define PILOT_REVERSE_THRUST                                                   \
-   0.4 /**< Ratio of normal accel to apply when reversing. */
 #define PILOT_PLAYER_NONTARGETABLE_TAKEOFF_DELAY                               \
    5. /**< Time the player is safe (from being targetted) after takeoff. */
 #define PILOT_PLAYER_NONTARGETABLE_JUMPIN_DELAY                                \

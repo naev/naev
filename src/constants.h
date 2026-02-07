@@ -8,6 +8,8 @@ typedef struct constants {
    double PHYSICS_SPEED_DAMP;
    double HYPERSPACE_ENTER_MAX;
    double HYPERSPACE_ENTER_MIN;
+   double HYPERSPACE_ENGINE_DELAY;
+   double HYPERSPACE_FLY_DELAY;
    double STEALTH_MIN_DIST;
    double SHIP_MIN_MASS;
    // Electronic warfare constants
@@ -18,10 +20,13 @@ typedef struct constants {
    // Gameplay constants
    double TIMEDATE_HYPERSPACE_INCREMENTS;
    double TIMEDATE_LAND_INCREMENTS;
+   double PILOT_TAKEOFF_DELAY;
+   double PILOT_LANDING_DELAY;
    double PILOT_SHIELD_DOWN_TIME;
    double PILOT_STRESS_RECOVERY_TIME;
    double PILOT_DISABLED_ARMOUR;
    int    PILOT_HIT_NEUTRALS;
+   double PILOT_REVERSE_THRUST;
    double CAMERA_ANGLE;
    double CAMERA_VIEW;
    double CAMERA_VIEW_INV;

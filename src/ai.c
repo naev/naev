@@ -453,8 +453,8 @@ void ai_thinkSetup( double dt )
 void ai_thinkApply( Pilot *p )
 {
    /* Make sure pilot_acc and pilot_turn are legal */
-   pilot_acc  = CLAMP( -PILOT_REVERSE_THRUST * p->stats.misc_reverse_thrust, 1.,
-                       pilot_acc );
+   pilot_acc  = CLAMP( -CTS.PILOT_REVERSE_THRUST * p->stats.misc_reverse_thrust,
+                       1., pilot_acc );
    pilot_turn = CLAMP( -1., 1., pilot_turn );
 
    /* Set turn and accel. */
@@ -2566,7 +2566,7 @@ static int aiL_land( lua_State *L )
 
    if ( spob->lua_land == LUA_NOREF ) {
       cur_pilot->landing_delay =
-         PILOT_LANDING_DELAY * cur_pilot->ship->dt_default;
+         CTS.PILOT_LANDING_DELAY * cur_pilot->ship->dt_default;
       cur_pilot->ptimer = cur_pilot->landing_delay;
       pilot_setFlag( cur_pilot, PILOT_LANDING );
    } else {

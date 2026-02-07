@@ -1354,7 +1354,7 @@ void player_think( Pilot *pplayer, const double dt )
            player.p->stats.misc_reverse_thrust &&
            !pilot_isFlag( player.p, PILOT_HYP_PREP ) &&
            !pilot_isFlag( player.p, PILOT_HYPERSPACE ) )
-         acc = -PILOT_REVERSE_THRUST;
+         acc = -CTS.PILOT_REVERSE_THRUST;
 
       pilot_setAccel( pplayer, acc );
    }
@@ -1770,7 +1770,7 @@ int player_land( int loud )
 
    /* Start landing. */
    player_soundPause();
-   player.p->landing_delay = PILOT_LANDING_DELAY * player_dt_default();
+   player.p->landing_delay = CTS.PILOT_LANDING_DELAY * player_dt_default();
    player.p->ptimer        = player.p->landing_delay;
    pilot_setFlag( player.p, PILOT_LANDING );
    pilot_setAccel( player.p, 0. );

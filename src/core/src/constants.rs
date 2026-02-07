@@ -21,10 +21,15 @@ pub struct Constants {
    pub timedate_increments_per_second: f64,
    pub timedate_hyperspace_increments: i64,
    pub timedate_land_increments: i64,
+   pub hyperspace_engine_delay: f32,
+   pub hyperspace_fly_delay: f32,
+   pub pilot_takeoff_delay: f32,
+   pub pilot_landing_delay: f32,
    pub pilot_shield_down_time: f32,
    pub pilot_stress_recovery_time: f32,
    pub pilot_disabled_armour: f32,
    pub pilot_hit_neutrals: bool,
+   pub pilot_reverse_thrust: f32,
    pub camera_angle: f32,
    pub warn_buy_intrinsics: bool,
 }
@@ -72,6 +77,8 @@ impl Constants {
       let physics_speed_damp = get_f32(&tbl, "PHYSICS_SPEED_DAMP", 3.);
       let hyperspace_enter_max = get_f32(&tbl, "HYPERSPACE_ENTER_MAX", 0.4);
       let hyperspace_enter_min = get_f32(&tbl, "HYPERSPACE_ENTER_MIN", 0.3);
+      let hyperspace_engine_delay = get_f32(&tbl, "HYPERSPACE_ENGINE_DELAY", 3.);
+      let hyperspace_fly_delay = get_f32(&tbl, "HYPERSPACE_FLY_DELAY", 5.);
       let stealth_min_dist = get_f32(&tbl, "STEALTH_MIN_DIST", 1000.);
       let ship_min_mass = get_f32(&tbl, "SHIP_MIN_MASS", 0.5);
       let audio_ref_distance = get_f32(&tbl, "AUDIO_REF_DISTANCE", 1e3);
@@ -89,10 +96,13 @@ impl Constants {
             as i64;
       let timedate_land_increments =
          (get_f64(&tbl, "TIMEDATE_LAND_INCREMENT", 10_000.0) * ntime::MULTIPLIER_F).round() as i64;
+      let pilot_takeoff_delay = get_f32(&tbl, "PILOT_TAKEOFF_DELAY", 1.);
+      let pilot_landing_delay = get_f32(&tbl, "PILOT_LANDING_DELAY", 1.);
       let pilot_shield_down_time = get_f32(&tbl, "PILOT_SHIELD_DOWN_TIME", 5.);
       let pilot_stress_recovery_time = get_f32(&tbl, "PILOT_STRESS_RECOVERY_TIME", 5.);
       let pilot_disabled_armour = get_f32(&tbl, "PILOT_DISABLED_ARMOUR", 0.1);
       let pilot_hit_neutrals = get_bool(&tbl, "PILOT_HIT_NEUTRALS", false);
+      let pilot_reverse_thrust = get_f32(&tbl, "PILOT_REVERSE_THRUST", 0.4);
       let camera_angle = get_f32(&tbl, "CAMERA_ANGLE", std::f32::consts::FRAC_PI_4);
       let warn_buy_intrinsics = get_bool(&tbl, "WARN_BUY_INTRINSICS", true);
 
@@ -101,16 +111,21 @@ impl Constants {
          naevc::CTS.PHYSICS_SPEED_DAMP = physics_speed_damp as f64;
          naevc::CTS.HYPERSPACE_ENTER_MAX = hyperspace_enter_max as f64;
          naevc::CTS.HYPERSPACE_ENTER_MIN = hyperspace_enter_min as f64;
+         naevc::CTS.HYPERSPACE_ENGINE_DELAY = hyperspace_engine_delay as f64;
+         naevc::CTS.HYPERSPACE_FLY_DELAY = hyperspace_fly_delay as f64;
          naevc::CTS.STEALTH_MIN_DIST = stealth_min_dist as f64;
          naevc::CTS.SHIP_MIN_MASS = ship_min_mass as f64;
          naevc::CTS.EW_JUMP_BONUS_RANGE = ew_jump_bonus_range as f64;
          naevc::CTS.EW_ASTEROID_DIST = ew_asteroid_dist as f64;
          naevc::CTS.EW_JUMPDETECT_DIST = ew_jump_detect_dist as f64;
          naevc::CTS.EW_SPOBDETECT_DIST = ew_spob_detect_dist as f64;
+         naevc::CTS.PILOT_TAKEOFF_DELAY = pilot_takeoff_delay as f64;
+         naevc::CTS.PILOT_LANDING_DELAY = pilot_landing_delay as f64;
          naevc::CTS.PILOT_SHIELD_DOWN_TIME = pilot_shield_down_time as f64;
          naevc::CTS.PILOT_STRESS_RECOVERY_TIME = pilot_stress_recovery_time as f64;
          naevc::CTS.PILOT_DISABLED_ARMOUR = pilot_disabled_armour as f64;
          naevc::CTS.PILOT_HIT_NEUTRALS = pilot_hit_neutrals as i32;
+         naevc::CTS.PILOT_REVERSE_THRUST = pilot_reverse_thrust as f64;
          naevc::CTS.TIMEDATE_HYPERSPACE_INCREMENTS =
             timedate_hyperspace_increments as f64 / ntime::MULTIPLIER_F;
          naevc::CTS.TIMEDATE_LAND_INCREMENTS =
@@ -125,6 +140,8 @@ impl Constants {
          physics_speed_damp,
          hyperspace_enter_max,
          hyperspace_enter_min,
+         hyperspace_engine_delay,
+         hyperspace_fly_delay,
          stealth_min_dist,
          ship_min_mass,
          audio_ref_distance,
@@ -138,10 +155,13 @@ impl Constants {
          timedate_increments_per_second,
          timedate_hyperspace_increments,
          timedate_land_increments,
+         pilot_takeoff_delay,
+         pilot_landing_delay,
          pilot_shield_down_time,
          pilot_stress_recovery_time,
          pilot_disabled_armour,
          pilot_hit_neutrals,
+         pilot_reverse_thrust,
          camera_angle,
          warn_buy_intrinsics,
       })
@@ -162,6 +182,8 @@ impl Constants {
          physics_speed_damp: 3.,
          hyperspace_enter_max: 0.4,
          hyperspace_enter_min: 0.3,
+         hyperspace_engine_delay: 3.0,
+         hyperspace_fly_delay: 5.0,
          stealth_min_dist: 1000.,
          ship_min_mass: 0.5,
          audio_ref_distance: 1e3,
@@ -175,10 +197,13 @@ impl Constants {
          timedate_increments_per_second: 30_000.0,
          timedate_hyperspace_increments: 10_000_000,
          timedate_land_increments: 10_000_000,
+         pilot_takeoff_delay: 1.0,
+         pilot_landing_delay: 1.0,
          pilot_shield_down_time: 5.,
          pilot_stress_recovery_time: 5.,
          pilot_disabled_armour: 0.1,
          pilot_hit_neutrals: false,
+         pilot_reverse_thrust: 0.4,
          camera_angle: std::f32::consts::FRAC_PI_4,
          warn_buy_intrinsics: true,
       }
