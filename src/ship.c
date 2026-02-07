@@ -1341,7 +1341,6 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
    MELEMENT( ( temp->gfx_path == NULL ), "GFX" );
    MELEMENT( temp->size <= 0., "GFX.size" );
    MELEMENT( temp->class == SHIP_CLASS_NULL, "class" );
-   MELEMENT( temp->points == 0, "points" );
    MELEMENT( temp->price == 0, "price" );
    MELEMENT( temp->dt_default <= 0., "time_mod" );
    MELEMENT( temp->fabricator == NULL, "fabricator" );
@@ -1357,7 +1356,8 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
    MELEMENT(temp->energy==0.,"energy");
    MELEMENT(temp->energy_regen==0.,"energy_regen");
    MELEMENT(temp->fuel==0.,"fuel");
-   MELEMENT( temp->crew == 0, "crew" );*/
+   MELEMENT( temp->crew == 0, "crew" );
+   MELEMENT( temp->points == 0, "points" );*/
    MELEMENT( temp->mass == 0., "mass" );
    MELEMENT( temp->fuel_consumption == 0, "fuel_consumption" );
    /*MELEMENT(temp->cap_cargo==0,"cargo");
