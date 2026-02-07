@@ -397,7 +397,6 @@ end
 -- ship assumed to be originally motionless (and, if landed, facing the opposite direction)
 -- ship assumed to have enough space to reach max_speed between "checkpoints"
 local const = require 'constants'
--- This does not correspond to the constant, but makes the correct predictions.
 
 --[[--
 Calculates the in-game time from a position/spob in a system to a position/spob/nil in another system. Spobs and systems can be given as strings.
