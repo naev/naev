@@ -32,7 +32,7 @@ There are a variety of fabricators that produce different ships and outfits.
 * **Thurion Shipyards**: Produce ships with advanced interfaces for digital humans with minimal life support.
 <% end %>
 <% if faction.get("Proteron"):known() then %>
-* **Proteron**: Although they use an antiquated fabrication methods, they have refined them to the point they are extremely competitive with other ships.
+* **Proteron**: Although they use antiquated fabrication methods, they have refined them to the point they are extremely competitive with other ships.
 <% end %>
 <% if player.misnDone("Operation Cold Metal") then %>
 * **Robosys**: Provides support and modifications for the Collective ships.
