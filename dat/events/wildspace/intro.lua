@@ -78,7 +78,7 @@ function land ()
 
    vn.sfx( der.sfx.board )
    vn.na(_([[You slowly approach the location you were given with your ship avoiding the thick structural debris. After a long time of searching, you eventually find a crusty old docking port among the sprawling wreck that seemingly is in working condition. Weapon drawn and in full EVA gear you prepare to go into the rubbish.]]))
-   vn.na(_([[You work your way through the crushed structure, and eventually find your way to what seems to be a working airlock. After fiddling with the controls, you are able to make your way into it and to what seemingly seems to be makeshift and surprisingly working area of the wreck. You make your way forward and eventually find yourself in what seems to be some sort of dirty cantina. You can see some ancient spoiled food and drink on the tables.]]))
+   vn.na(_([[You work your way through the crushed structure, and eventually find your way to what seems to be a working airlock. After fiddling with the controls, you are able to make your way into it and to what seems to be makeshift and surprisingly functional area of the wreck. You make your way forward and eventually find yourself in what seems to be some sort of dirty cantina. You can see some ancient spoiled food and drink on the tables.]]))
 
    vn.scene()
    local c = vn.newCharacter( vni.soundonly( p_("character","C") ) )
@@ -111,9 +111,9 @@ You hear a dull thud echo through the hull.]]))
 "But it seems like not long enough..."]]))
    c(_([["I know we just met, but I want to ask a favour of you. You see, it wasn't this bad, as it is now."]]))
    c(_([[They give a small cough.
-"After the... the Incident, me and my crewmates, we thought we could pull through. We created a colony with the survivors on husk of what was left of the once glorious Protera. However, the worst was yet to come."]]))
+"After the... the Incident, me and my crewmates, we thought we could pull through. We created a colony with the survivors on the husk of what was left of the once glorious Protera. However, the worst was yet to come."]]))
    c(_([["At first we thought it was some sort of pathogen, maybe due to all the debris, however, even with careful quarantine and elimination, it still spread. People would... change."]]))
-   c(_([["It started subtle, violent outbreaks, slight twitching, aversion to bathing, then it got worse. Eventually, they would lash out, attack everyone and everything in some sort of primal irrational rage. Having lost all their remaining humanity, we called the brutes the Lost."]]))
+   c(_([["It started subtle, violent outbreaks, slight twitching, aversion to bathing, then it got worse. Eventually, they would lash out, attack everyone and everything in some sort of irrational primal rage. Having lost all their remaining humanity, we called the brutes the Lost."]]))
    c(_([["Paranoia set in and many were purged, but it didn't stop. Eventually, the survivors split into separate enclaves, all fortified and wary against strangers. It never stopped progressing though..."]]))
    c(_([["Almost everyone I knew was lost, and in the end, me and my roommate Ben, we tried to get out of there, the only..."
 They pause to give a wracking cough, it takes them a while before they can continue.]]))
