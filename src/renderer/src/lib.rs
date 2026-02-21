@@ -920,6 +920,34 @@ impl Context {
       Ok(())
    }
 
+   pub fn draw_rect_half(&self, x: f32, y: f32, w: f32, h: f32, colour: Colour) -> Result<()> {
+      let dims = self.dimensions.read().unwrap();
+      #[rustfmt::skip]
+      let transform = dims.projection * Matrix3::new(
+          w,  0.0,  x,
+         0.0,  h,   y,
+         0.0, 0.0, 1.0,
+      );
+      let uniform = SolidUniform {
+         transform: transform.into(),
+         colour,
+      };
+      let gl = &self.gl;
+      self.program_solid.use_program(gl);
+      self.vao_square.bind(self);
+
+      self
+         .buffer_solid
+         .bind_write_base(self, &uniform.buffer()?, 0)?;
+      unsafe {
+         gl.draw_arrays(glow::TRIANGLE_STRIP, 0, 3);
+      }
+      VertexArray::unbind(self);
+      self.buffer_solid.unbind(self);
+
+      Ok(())
+   }
+
    /// Takes a screenshot of the game
    pub fn screenshot(&self, filename: &str) -> Result<()> {
       let dims = self.dimensions.read().unwrap();
@@ -1013,6 +1041,25 @@ pub extern "C" fn gl_renderRect(
       unsafe { *c }.into()
    };
    if let Err(e) = ctx.draw_rect(x as f32, y as f32, w as f32, h as f32, colour) {
+      warn_err!(e);
+   }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_renderRectHalf(
+   x: c_double,
+   y: c_double,
+   w: c_double,
+   h: c_double,
+   c: *mut Vector4<f32>,
+) {
+   let ctx = Context::get();
+   let colour = if c.is_null() {
+      Colour::default()
+   } else {
+      unsafe { *c }.into()
+   };
+   if let Err(e) = ctx.draw_rect_half(x as f32, y as f32, w as f32, h as f32, colour) {
       warn_err!(e);
    }
 }

@@ -76,9 +76,7 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
 
    gl_renderRectH( &projection, c, 1 );
 }
-#endif
 
-#if 0
 /**
  * @brief Renders a rectangle.
  *
@@ -120,7 +118,6 @@ void gl_renderRectEmptyThick( double x, double y, double w, double h, double b,
    glUseProgram( 0 );
    gl_checkErr();
 }
-#endif
 
 void gl_renderRectHalf( double x, double y, double w, double h,
                         const glColour *c )
@@ -134,7 +131,6 @@ void gl_renderRectHalf( double x, double y, double w, double h,
    gl_endSolidProgram();
 }
 
-#if 0
 /**
  * @brief Renders a rectangle.
  *
