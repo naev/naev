@@ -109005,7 +109005,7 @@ msgstr ""
 #. 0.005 -> 20
 #. 0.0025 -> 10
 #. Tweaked a bit more to be exact
-msgid "fonts/CoveredByYourGrace-Regular.ttf"
+msgid "CoveredByYourGrace-Regular.ttf"
 msgstr ""
 
 #. Must not be too volatile
@@ -113682,7 +113682,7 @@ msgstr ""
 #. Must be composable with a colour, so don't even escape the string.
 #. sort of
 #. codespell:ignore colors
-#. local fontname = _("fonts/CormorantUnicase-Medium.ttf")
+#. local fontname = _("CormorantUnicase-Medium.ttf")
 #. Title
 #. title.font = lg.newFont( fontname, title.h )
 #. Subtitle
@@ -121144,12 +121144,12 @@ msgstr "비디오 출력 초기화 실패, 종료 중…"
 msgid ""
 "Cabin-SemiBold.otf,NanumBarunGothicBold.ttf,SourceCodePro-"
 "Semibold.ttf,IBMPlexSansJP-Medium.otf"
-msgstr "fonts/Cabin-SemiBold.otf,fonts/NanumBarunGothicBold.ttf"
+msgstr "Cabin-SemiBold.otf,NanumBarunGothicBold.ttf"
 
 #. Default monospace font path.
 #, fuzzy
 msgid "SourceCodePro-Semibold.ttf,D2CodingBold.ttf,IBMPlexSansJP-Medium.otf"
-msgstr "fonts/SourceCodePro-Semibold.ttf,fonts/D2CodingBold.ttf"
+msgstr "SourceCodePro-Semibold.ttf,D2CodingBold.ttf"
 
 msgid "Initializing subsystems…"
 msgstr ""

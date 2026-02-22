@@ -113,7 +113,7 @@ function lib.render( systems, jumps, w, h, target, names, rng )
    end
 
    if #names > 0 then
-      local font = lg.newFont( _("fonts/CoveredByYourGrace-Regular.ttf"), 24 )
+      local font = lg.newFont( _("CoveredByYourGrace-Regular.ttf"), 24 )
       for k,s in ipairs(names) do
          local x, y = pos( s:pos():get() )
          local n = s:name()

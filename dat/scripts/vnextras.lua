@@ -101,7 +101,7 @@ function extras.notebookStart( name, params )
    end, {
       name = name or _("Notebook"),
       textcolour = {0, 0, 0},
-      font = lg.newFont( _("fonts/CoveredByYourGrace-Regular.ttf"), 24 ),
+      font = lg.newFont( _("CoveredByYourGrace-Regular.ttf"), 24 ),
       transition = params.transition,
    } )
 end

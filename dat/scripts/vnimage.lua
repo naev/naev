@@ -464,7 +464,7 @@ function vni.soundonly( id, params )
    params = params or {}
    local c = lg.newCanvas( 1000, 1415 )
    local oc = lg.getCanvas()
-   local fl = lg.newFont( "fonts/D2CodingBold.ttf", 300 )
+   local fl = lg.newFont( "D2CodingBold.ttf", 300 )
    local fs = lg.newFont( 64 )
    local col = params.colour or { 1, 0, 0 }
    lg.setCanvas( c )
@@ -489,7 +489,7 @@ function vni.textonly( id, params )
    params = params or {}
    local c = lg.newCanvas( 1000, 1415 )
    local oc = lg.getCanvas()
-   local fl = lg.newFont( "fonts/D2CodingBold.ttf", 300 )
+   local fl = lg.newFont( "D2CodingBold.ttf", 300 )
    local fs = lg.newFont( 64 )
    local col = params.colour or { 1, 0, 0 }
    lg.setCanvas( c )

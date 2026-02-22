@@ -171,7 +171,7 @@ static int fontL_new( lua_State *L )
       fname  = _( FONT_DEFAULT_PATH );
       prefix = FONT_PATH_PREFIX;
    } else
-      prefix = "";
+      prefix = FONT_PATH_PREFIX;
 
    if ( gl_fontInit( &font, fname, h, prefix, FONT_FLAG_DONTREUSE ) )
       return NLUA_ERROR( L, _( "failed to load font '%s'" ), fname );

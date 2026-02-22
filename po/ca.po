@@ -106411,7 +106411,7 @@ msgstr ""
 #. 0.005 -> 20
 #. 0.0025 -> 10
 #. Tweaked a bit more to be exact
-msgid "fonts/CoveredByYourGrace-Regular.ttf"
+msgid "CoveredByYourGrace-Regular.ttf"
 msgstr ""
 
 #. Must not be too volatile
@@ -111050,7 +111050,7 @@ msgstr ""
 #. Must be composable with a colour, so don't even escape the string.
 #. sort of
 #. codespell:ignore colors
-#. local fontname = _("fonts/CormorantUnicase-Medium.ttf")
+#. local fontname = _("CormorantUnicase-Medium.ttf")
 #. Title
 #. title.font = lg.newFont( fontname, title.h )
 #. Subtitle
