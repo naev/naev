@@ -499,7 +499,9 @@ static size_t font_limitSize( glFontStash *stsh, int *width, const char *text,
 
       /* Count length. */
       glFontGlyph *glyph = gl_fontGetGlyph( stsh, ch );
-      adv_x              = gl_fontKernGlyph( stsh, ch, glyph ) + glyph->adv_x;
+      if ( glyph == NULL )
+         continue;
+      adv_x = gl_fontKernGlyph( stsh, ch, glyph ) + glyph->adv_x;
 
       /* See if enough room. */
       n += adv_x;
@@ -1005,7 +1007,8 @@ int gl_printWidthRaw( const glFont *ft_font, const char *text )
 
       /* Increment width. */
       glFontGlyph *glyph = gl_fontGetGlyph( stsh, ch );
-      n += gl_fontKernGlyph( stsh, ch, glyph ) + glyph->adv_x;
+      if ( glyph != NULL )
+         n += gl_fontKernGlyph( stsh, ch, glyph ) + glyph->adv_x;
    }
    nmax = MAX( nmax, n );
 
