@@ -9,6 +9,8 @@ local nw, nh
 local textcanvas, textshader, texttimer, text_fadein, text_fadeout, text_length
 local hookfg, hookupdate
 
+textoverlay.fontname = _("Audiowide-Regular.ttf,NanumBarunGothicBold.ttf,IBMPlexSansJP-Medium.otf,Ubuntu-Regular.ttf")
+
 function textoverlay.init( titletext, subtitletext, opts )
    opts = opts or {}
    text_fadein = opts.fadein or 1.5
@@ -18,18 +20,15 @@ function textoverlay.init( titletext, subtitletext, opts )
    nw, nh = gfx.dim()
 
    local title, subtitle
-   --local fontname = _("fonts/CormorantUnicase-Medium.ttf")
    -- Title
    title = { text=titletext, h=48 }
-   title.font = lg.newFont( title.h )
-   --title.font = lg.newFont( fontname, title.h )
+   title.font = lg.newFont( textoverlay.fontname, title.h )
    title.font:setOutline(3)
    title.w = title.font:getWidth( title.text )
    -- Subtitle
    if subtitletext then
       subtitle = { text=subtitletext, h=32 }
-      subtitle.font = lg.newFont( subtitle.h )
-      --subtitle.font = lg.newFont( fontname, subtitle.h )
+      subtitle.font = lg.newFont( textoverlay.fontname, subtitle.h )
       subtitle.font:setOutline(2)
       subtitle.w = subtitle.font:getWidth( subtitle.text )
    end

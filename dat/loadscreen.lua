@@ -1,6 +1,7 @@
 local lg = require "love.graphics"
 local lf = require 'love.filesystem'
 local love_shaders = require 'love_shaders'
+local textoverlay = require "textoverlay"
 local prng = require("prng").new()
 
 local progressbar_frag = [[
@@ -100,7 +101,7 @@ local function load_gfx ()
 end
 
 local fh = 24
-local font = lg.newFont( fh )
+local font = lg.newFont( textoverlay.fontname, fh )
 local bg = load_shader()
 local shipgfx, shipcaption = load_gfx()
 local captionw = font:getWidth( shipcaption )
