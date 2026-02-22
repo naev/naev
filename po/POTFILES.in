@@ -3855,7 +3855,6 @@ src/base64.h
 src/board.c
 src/board.h
 src/camera.h
-src/cgltf.h
 src/claim.c
 src/claim.h
 src/cmark_wrap.c
@@ -4031,8 +4030,6 @@ src/nlua.h
 src/nlua.rs
 src/nlua_asteroid.c
 src/nlua_asteroid.h
-src/nlua_audio.h
-src/nlua_audiodata.c
 src/nlua_bkg.c
 src/nlua_bkg.h
 src/nlua_camera.c
@@ -4105,8 +4102,6 @@ src/nlua_vec2.h
 src/nluadef.h
 src/nmath.c
 src/nmath.h
-src/nopenal.c
-src/nopenal.h
 src/npc.c
 src/npc.h
 src/nstring.c
@@ -4200,7 +4195,6 @@ src/safelanes.c
 src/safelanes.h
 src/save.c
 src/save.h
-src/semver.c
 src/ship.c
 src/ship.h
 src/ship.rs

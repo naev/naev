@@ -55,7 +55,6 @@ graphics card and driver supporting at least OpenGL 3.3, Naev requires:
   * freetype2
   * OpenAL
   * OpenBLAS
-  * libvorbis
   * intltool
   * SuiteSparse`*`
   * enet`*`

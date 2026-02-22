@@ -3,11 +3,6 @@
  */
 #pragma once
 
-/* We use this file in utils/model-view-c to debug things. */
-#ifdef PACKAGE
-#define HAVE_NAEV
-#endif
-
 #include <stddef.h>
 
 #include "glad.h"
