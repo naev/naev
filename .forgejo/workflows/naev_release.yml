@@ -724,7 +724,6 @@ jobs:
             --tag "${{ github.ref_name }}" \
             --notes-file "${GITHUB_WORKSPACE}/build/staging/release_notes.md" \
             --asset-dir "${GITHUB_WORKSPACE}/build/dist" \
-            --prerelease \
             --overwrite \
             --hide-archive-link \
             --owner naev \
