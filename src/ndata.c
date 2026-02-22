@@ -35,6 +35,16 @@
 static int ndata_enumerateCallback( void *data, const char *origdir,
                                     const char *fname );
 
+int ndata_exists( const char *path )
+{
+   PHYSFS_Stat path_stat;
+   if ( !PHYSFS_stat( path, &path_stat ) )
+      return 0;
+   if ( path_stat.filetype == PHYSFS_FILETYPE_REGULAR )
+      return 1;
+   return 0;
+}
+
 /**
  * @brief Reads a file from the Naev data folder (will be NUL terminated).
  *

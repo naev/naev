@@ -118,6 +118,7 @@
 #define DIFFICULTY_PATH "difficulty/"
 
 const char *ndata_configFile( void );
+int         ndata_exists( const char *path );
 void       *ndata_read( const char *filename, size_t *filesize );
 char      **ndata_listRecursive( const char *path );
 int         ndata_backupIfExists( const char *path );
