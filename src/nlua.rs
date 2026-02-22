@@ -565,7 +565,7 @@ impl LuaEnv {
          r |= naevc::nlua_loadCommodity(env);
          r |= naevc::nlua_loadNews(env);
          r |= naevc::nlua_loadShiplog(env);
-         r |= naevc::nlua_loadData(env);
+         //r |= naevc::nlua_loadData(env);
          r |= naevc::nlua_loadLinOpt(env);
          r |= naevc::nlua_loadSafelanes(env);
          //r |= naevc::nlua_loadSpfx(env);

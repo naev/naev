@@ -56,7 +56,6 @@
 #include "news.h"
 #include "nfile.h"
 #include "nlua_colour.h"
-#include "nlua_data.h"
 #include "nlua_file.h"
 #include "nlua_gfx.h"
 #include "nlua_naev.h"

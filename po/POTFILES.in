@@ -4043,15 +4043,12 @@ src/nlua_cli.h
 src/nlua_colour.h
 src/nlua_commodity.c
 src/nlua_commodity.h
-src/nlua_data.c
-src/nlua_data.h
 src/nlua_diff.c
 src/nlua_diff.h
 src/nlua_evt.c
 src/nlua_evt.h
 src/nlua_faction.c
 src/nlua_faction.h
-src/nlua_file.c
 src/nlua_file.h
 src/nlua_font.c
 src/nlua_font.h
