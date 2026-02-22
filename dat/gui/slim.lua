@@ -44,6 +44,7 @@ local cHostile = colour.new_named("Hostile")
 local scan_icon, scandone_icon
 
 local time_global = 0
+local font_mono = font.new( _( "SourceCodePro-Semibold.ttf,D2CodingBold.ttf,IBMPlexSansJP-Medium.otf" ), 11 )
 function create()
    love.origin()
 
@@ -1218,8 +1219,8 @@ function render( dt, dt_mod )
          else
             col = cols.txt_std
          end
-         gfx.print( true, v, length, 5, col )
-         length = length + gfx.printDim( true, v ) + 10
+         gfx.printf( font_mono, v, length, 5, col )
+         length = length + gfx.printfDim( font_mono, v ) + 10
       end
    end
 
