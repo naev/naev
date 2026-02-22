@@ -236,7 +236,7 @@ int newsL_add( lua_State *L )
       lua_pop( L, 1 );
 
       /* If we're landed, we should regenerate the news buffer. */
-      if ( landed ) {
+      if ( landed && ( land_spob != NULL ) ) {
          generate_news( land_spob->presence.faction );
          if ( land_loaded )
             bar_regen();
@@ -281,7 +281,7 @@ int newsL_add( lua_State *L )
       return NLUA_ERROR( L, _( "Bad arguments" ) );
 
    /* If we're landed, we should regenerate the news buffer. */
-   if ( landed ) {
+   if ( landed && ( land_spob != NULL ) ) {
       generate_news( land_spob->presence.faction );
       if ( land_loaded )
          bar_regen();
@@ -310,7 +310,7 @@ int newsL_rm( lua_State *L )
    }
 
    /* If we're landed, we should regenerate the news buffer. */
-   if ( landed ) {
+   if ( landed && ( land_spob != NULL ) ) {
       generate_news( land_spob->presence.faction );
       if ( land_loaded )
          bar_regen();
