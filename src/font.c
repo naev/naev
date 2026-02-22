@@ -1742,9 +1742,13 @@ int gl_fontInit( glFont *font, const char *fname, const unsigned int h,
    plen     = strlen( prefix );
    for ( size_t i = 0; i <= len; i++ ) {
       if ( ( fname[i] == '\0' ) || ( fname[i] == ',' ) ) {
-         strncpy( fullname, prefix, sizeof( fullname ) - 1 );
-         strncat( fullname, &fname[ch],
+         strncpy( fullname, &fname[ch],
                   MIN( sizeof( fullname ) - 1 - plen, i - ch ) );
+         if ( !ndata_exists( fullname ) ) {
+            strncpy( fullname, prefix, sizeof( fullname ) - 1 );
+            strncat( fullname, &fname[ch],
+                     MIN( sizeof( fullname ) - 1 - plen, i - ch ) );
+         }
          gl_fontstashAddFallback( stsh, fullname, h );
          ch = i;
          if ( fname[i] == ',' )
