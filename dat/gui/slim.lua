@@ -1211,8 +1211,8 @@ function render( dt, dt_mod )
          largeNumber( credits, 2 ), _("Nav:"), navstring, _("Fuel:"), fuelstring, _("Cargo:") }
    for k,v in ipairs(bartext) do
       if k % 2 == 1 then
-         gfx.print( true, v, length, 5, cols.txt_top )
-         length = length + gfx.printDim( true, v .. " " )
+         gfx.printf( font_mono, v, length, 5, cols.txt_top )
+         length = length + gfx.printfDim( font_mono, v .. " " )
       else
          if v == "none" then
             col = cols.txt_una
