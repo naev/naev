@@ -1048,6 +1048,39 @@ vec4 scan( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
    return colour;
 }
 
+vec4 sdf_triangle( vec4 colour, vec2 uv_in, vec2 px )
+{
+   vec2 uv = uv_in*2.0-1.0;
+   float m = 1.0 / dimensions.x;
+
+   float c, s;
+   float t = u_time;
+   s = sin(t);
+   c = cos(t);
+   mat2 R = mat2( c, s, -s, c );
+   //uv = R * uv;
+
+   uv.xy = uv.yx;
+
+   float l = 1.5;
+   if (l > 2.0)
+      s =2.0/l;
+   else
+      s = 1.0;
+   l = l*s;
+   uv.y -= l*0.5;
+
+   uv *= 10.0;
+   s *= 10.0;
+   l *= 10.0;
+
+   float d = sdTriangleIsosceles( uv, vec2(s,-l) );
+
+   colour.a  smoothstep( -m, 0.0, -d );
+
+   return colour;
+}
+
 vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
 {
    vec4 col_out;
@@ -1079,7 +1112,8 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    //col_out = electric( colour, tex, uv, px );
    //col_out = electric2( colour, tex, uv, px );
    //col_out = target( colour, tex, uv, px );
-   col_out = scan( colour, tex, uv, px );
+   //col_out = scan( colour, tex, uv, px );
+   col_out = sdf_triangle( colour, uv, px );
 
    return mix( bg(uv), col_out, col_out.a );
 }

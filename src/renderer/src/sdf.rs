@@ -44,6 +44,15 @@ pub struct CircleHollowUniform {
    pub border: f32,
 }
 
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Default, ShaderType)]
+pub struct TriangleHollowUniform {
+   pub transform: Transform2,
+   pub colour: Colour,
+   pub scale: Vector2<f32>,
+   pub border: f32,
+}
+
 macro_rules! draw_sdf_func_ex {
    ($funcname: ident, $vao: tt, $uniform: ty, $program: tt, $buffer: tt) => {
       pub fn $funcname(&self, ctx: &Context, uniform: &$uniform) -> Result<()> {
@@ -70,6 +79,8 @@ pub struct SdfRenderer {
    buffer_circle: Buffer,
    program_circle_hollow: Shader,
    buffer_circle_hollow: Buffer,
+   program_triangle_hollow: Shader,
+   buffer_triangle_hollow: Buffer,
 }
 impl SdfRenderer {
    pub fn new(gl: &glow::Context) -> Result<Self> {
@@ -113,6 +124,16 @@ impl SdfRenderer {
          .data(&CircleHollowUniform::default().buffer()?)
          .build(gl)?;
 
+      let program_triangle_hollow = ProgramBuilder::new(Some("Triangle Hollow Shader"))
+         .uniform_buffer("triangledata", 0)
+         .wgsl_file("triangle_hollow.wgsl")
+         .build(gl)?;
+      let buffer_triangle_hollow = BufferBuilder::new(Some("Triangle Hollow Buffer"))
+         .target(BufferTarget::Uniform)
+         .usage(BufferUsage::Dynamic)
+         .data(&TriangleHollowUniform::default().buffer()?)
+         .build(gl)?;
+
       Ok(Self {
          program_rect_hollow,
          buffer_rect_hollow,
@@ -122,6 +143,8 @@ impl SdfRenderer {
          buffer_circle,
          program_circle_hollow,
          buffer_circle_hollow,
+         program_triangle_hollow,
+         buffer_triangle_hollow,
       })
    }
 
@@ -235,6 +258,53 @@ impl SdfRenderer {
       program_circle_hollow,
       buffer_circle_hollow
    );
+
+   pub fn draw_triangle_hollow(
+      &self,
+      ctx: &Context,
+      x: f32,
+      y: f32,
+      angle: f32,
+      scale: f32,
+      length: f32,
+      colour: Colour,
+      b: f32,
+   ) -> Result<()> {
+      let dims = ctx.dimensions.read().unwrap();
+      let r = scale;
+      let (q, l) = if length * 1.5 > 2.0 {
+         let s = 2.0 / (length * 1.5);
+         (r * s, r * 2.0)
+      } else {
+         (r, r * length)
+      };
+      let c = angle.cos();
+      let s = angle.sin();
+      #[rustfmt::skip]
+      let transform: Matrix3<f32> = dims.projection * Matrix3::new(
+          c,   s,   x,
+         -s,   c,   y,
+         0.0, 0.0, 1.0,
+      ) * Matrix3::new(
+          r ,0.0, 0.0,
+         0.0,  r,  0.0,
+         0.0, 0.0, 1.0,
+      );
+      let uniform = TriangleHollowUniform {
+         transform: transform.into(),
+         colour,
+         scale: Vector2::new(q, -l),
+         border: b,
+      };
+      self.draw_triangle_hollow_ex(ctx, &uniform)
+   }
+   draw_sdf_func_ex!(
+      draw_triangle_hollow_ex,
+      vao_center,
+      TriangleHollowUniform,
+      program_triangle_hollow,
+      buffer_triangle_hollow
+   );
 }
 
 use std::ffi::{c_double, c_int};
@@ -344,6 +414,31 @@ pub extern "C" fn gl_renderRectH(t: *const Matrix3<f32>, c: *const Vector4<f32>,
       ctx.sdf.draw_rect_hollow_ex(&ctx, &uniform)
    };
    if let Err(e) = ret {
+      warn_err!(e);
+   }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_renderTriangleEmpty(
+   x: c_double,
+   y: c_double,
+   a: c_double,
+   s: c_double,
+   length: c_double,
+   c: *const Vector4<f32>,
+) {
+   let ctx = Context::get();
+   let colour = get_col(c);
+   if let Err(e) = ctx.sdf.draw_triangle_hollow(
+      &ctx,
+      x as f32,
+      y as f32,
+      a as f32,
+      s as f32,
+      length as f32,
+      colour,
+      0.0,
+   ) {
       warn_err!(e);
    }
 }

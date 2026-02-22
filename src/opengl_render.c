@@ -167,7 +167,6 @@ void gl_renderCross( double x, double y, double r, const glColour *c )
    glUniform1f( shaders.crosshairs.paramf, 1. ); /* No outline. */
    gl_renderShader( x, y, r, r, 0., &shaders.crosshairs, c, 1 );
 }
-#endif
 
 /**
  * @brief Renders a triangle at a given position.
@@ -195,6 +194,7 @@ void gl_renderTriangleEmpty( double x, double y, double a, double s,
    glDrawArrays( GL_LINE_STRIP, 0, 4 );
    gl_endSolidProgram();
 }
+#endif
 
 void gl_renderDepthRawH( GLuint depth, const mat4 *projection,
                          const mat4 *tex_mat )
