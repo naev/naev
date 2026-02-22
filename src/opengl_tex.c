@@ -7,6 +7,7 @@
  * @brief This file handles the openGL texture wrapper routines.
  */
 /** @cond */
+#include <SDL3/SDL_mutex.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -14,59 +15,9 @@
 /** @endcond */
 
 #include "array.h"
-#include "distance_field.h"
 #include "log.h"
-#include "md5.h"
-#include "nfile.h"
 #include "opengl.h"
 
-/**
- * @brief Abstraction for rendering sprite sheets.
- *
- * The basic unit all the graphic rendering works with.
- */
-typedef struct glTexture {
-   char *name; /**< name of the graphic */
-
-   /* dimensions */
-   double w; /**< Real width of the image. */
-   double h; /**< Real height of the image. */
-
-   /* sprites */
-   double sx;  /**< Number of sprites on the x axis. */
-   double sy;  /**< Number of sprites on the y axis. */
-   double sw;  /**< Width of a sprite. */
-   double sh;  /**< Height of a sprite. */
-   double srw; /**< Sprite render width - equivalent to sw/w. */
-   double srh; /**< Sprite render height - equivalent to sh/h. */
-
-   /* data */
-   GLuint   texture; /**< the openGL texture itself */
-   uint8_t *trans;   /**< maps the transparency */
-   double   vmax;    /**< Maximum value for SDF textures. */
-
-   /* properties */
-   uint8_t flags; /**< flags used for texture properties */
-} glTexture;
-
-/*
- * graphic list
- */
-/**
- * @brief Represents a node in the texture list.
- */
-typedef struct glTexList_ {
-   glTexture  *tex;  /**< associated texture */
-   const char *path; /**< Path pointer, stored in tex. */
-   int         used; /**< counts how many times texture is being used */
-   /* TODO We currently treat images with different number of sprites as
-    * different images, i.e., they get reloaded and use more memory. However,
-    * it should be possible to do something fancier and share the texture to
-    * avoid this increase of memory (without sharing other parameters). */
-   int          sx;    /**< X sprites */
-   int          sy;    /**< Y sprites */
-   unsigned int flags; /**< Flags being used. */
-} glTexList;
 static SDL_Mutex   *gl_lock = NULL; /**< Lock for OpenGL functions. */
 static SDL_ThreadID tex_mainthread;
 static SDL_Mutex   *tex_lock = NULL; /**< Lock for texture list manipulation. */
@@ -274,93 +225,3 @@ glTexture **gl_addTexArray( glTexture **tex, glTexture *t )
    array_push_back( &tex, t );
    return tex;
 }
-
-// TODO have to port the distance field stuff to rust
-#if 0
-/**
- * @brief Loads a surface into an openGL texture.
- *
- *    @param surface Surface to load into a texture.
- *    @param flags Flags to use.
- *    @param freesur Whether or not to free the surface.
- *    @param[out] vmax The maximum value in the case of an SDF texture.
- *    @return The openGL texture id.
- */
-static GLuint gl_loadSurface( SDL_Surface *surface, unsigned int flags,
-                              int freesur, double *vmax )
-{
-   const SDL_PixelFormatEnum fmt = SDL_PIXELFORMAT_ABGR8888;
-   GLuint                    texture;
-   SDL_Surface              *rgba;
-   int                       has_alpha = surface->format->Amask;
-
-   gl_contextSet();
-
-   /* Get texture. */
-   texture = gl_texParameters( flags );
-
-   /* Now load the texture data up
-    * It doesn't work with indexed ones, so I guess converting is best bet. */
-   if ( surface->format->format != fmt )
-      rgba = SDL_ConvertSurfaceFormat( surface, fmt, 0 );
-   else
-      rgba = surface;
-
-   SDL_LockSurface( rgba );
-   if ( flags & OPENGL_TEX_SDF ) {
-      const float border[] = { 0., 0., 0., 0. };
-      uint8_t    *trans    = SDL_MapAlpha( rgba, 0 );
-      GLfloat    *dataf = make_distance_mapbf( trans, rgba->w, rgba->h, vmax );
-      free( trans );
-      glTexParameterfv( GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, border );
-      glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER );
-      glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER );
-      //glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
-      glTexImage2D( GL_TEXTURE_2D, 0, GL_RED, rgba->w, rgba->h, 0, GL_RED,
-                    GL_FLOAT, dataf );
-      //glPixelStorei( GL_UNPACK_ALIGNMENT, 4 );
-      free( dataf );
-   } else {
-      GLint internalformat;
-      if ( flags & OPENGL_TEX_NOTSRGB )
-         internalformat = has_alpha ? GL_RGBA : GL_RGB;
-      else
-         internalformat = has_alpha ? GL_SRGB8_ALPHA8 : GL_SRGB8;
-
-      *vmax = 1.;
-      //glPixelStorei( GL_UNPACK_ALIGNMENT,
-      //               MIN( rgba->pitch & -rgba->pitch, 8 ) );
-      glTexImage2D( GL_TEXTURE_2D, 0, internalformat, rgba->w, rgba->h, 0,
-                    GL_RGBA, GL_UNSIGNED_BYTE, rgba->pixels );
-      //glPixelStorei( GL_UNPACK_ALIGNMENT, 4 );
-   }
-   SDL_UnlockSurface( rgba );
-   if ( rgba != surface )
-      SDL_DestroySurface( rgba );
-
-   /* Create mipmaps. */
-   if ( flags & OPENGL_TEX_MIPMAPS ) {
-      /* Do fancy stuff. */
-      if ( GLAD_GL_ARB_texture_filter_anisotropic ) {
-         GLfloat param;
-         glGetFloatv( GL_MAX_TEXTURE_MAX_ANISOTROPY, &param );
-         glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY, param );
-      }
-
-      /* Now generate the mipmaps. */
-      glGenerateMipmap( GL_TEXTURE_2D );
-   }
-
-   /* Unbind the texture. */
-   glBindTexture( GL_TEXTURE_2D, 0 );
-
-   /* cleanup */
-   if ( freesur )
-      SDL_DestroySurface( surface );
-   gl_checkErr();
-
-   gl_contextUnset();
-
-   return texture;
-}
-#endif

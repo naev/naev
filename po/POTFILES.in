@@ -3991,8 +3991,6 @@ src/mat3.c
 src/mat3.h
 src/mat4.c
 src/mat4.h
-src/md5.c
-src/md5.h
 src/menu.c
 src/menu.h
 src/mission.c
