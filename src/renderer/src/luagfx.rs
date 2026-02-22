@@ -105,7 +105,7 @@ impl UserData for LuaGfx {
             let data = TextureUniform {
                texture: texture.into(),
                transform: transform.into(),
-               colour: colour.into(),
+               colour,
             };
             Ok(tex.draw_ex(Context::get(), &data)?)
          },
@@ -214,7 +214,7 @@ impl UserData for LuaGfx {
             let data = TextureUniform {
                texture: texture.into(),
                transform: transform.into(),
-               colour: colour.into(),
+               colour,
             };
             Ok(tex.draw_ex(Context::get(), &data)?)
          },

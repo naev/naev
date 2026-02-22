@@ -148,6 +148,7 @@ impl SdfRenderer {
       })
    }
 
+   #[allow(clippy::too_many_arguments)]
    pub fn draw_rect_hollow(
       &self,
       ctx: &Context,
@@ -259,6 +260,7 @@ impl SdfRenderer {
       buffer_circle_hollow
    );
 
+   #[allow(clippy::too_many_arguments)]
    pub fn draw_triangle_hollow(
       &self,
       ctx: &Context,
@@ -342,9 +344,9 @@ pub extern "C" fn gl_renderCircle(
    let y = y as f32;
    let r = r as f32;
    let res = if filled != 0 {
-      ctx.sdf.draw_circle(&ctx, x, y, r, colour)
+      ctx.sdf.draw_circle(ctx, x, y, r, colour)
    } else {
-      ctx.sdf.draw_circle_hollow(&ctx, x, y, r, colour, 0.0)
+      ctx.sdf.draw_circle_hollow(ctx, x, y, r, colour, 0.0)
    };
    if let Err(e) = res {
       warn_err!(e);
@@ -363,7 +365,7 @@ pub extern "C" fn gl_renderRectEmpty(
    let colour = get_col(c);
    if let Err(e) = ctx
       .sdf
-      .draw_rect_hollow(&ctx, x as f32, y as f32, w as f32, h as f32, 0.0, colour)
+      .draw_rect_hollow(ctx, x as f32, y as f32, w as f32, h as f32, 0.0, colour)
    {
       warn_err!(e);
    }
@@ -381,7 +383,7 @@ pub extern "C" fn gl_renderRectEmptyThick(
    let ctx = Context::get();
    let colour = get_col(c);
    if let Err(e) = ctx.sdf.draw_rect_hollow(
-      &ctx,
+      ctx,
       x as f32,
       y as f32,
       w as f32,
@@ -411,7 +413,7 @@ pub extern "C" fn gl_renderRectH(t: *const Matrix3<f32>, c: *const Vector4<f32>,
          dims: Vector2::new(0.0, 0.0),
          border: 0.0,
       };
-      ctx.sdf.draw_rect_hollow_ex(&ctx, &uniform)
+      ctx.sdf.draw_rect_hollow_ex(ctx, &uniform)
    };
    if let Err(e) = ret {
       warn_err!(e);
@@ -430,7 +432,7 @@ pub extern "C" fn gl_renderTriangleEmpty(
    let ctx = Context::get();
    let colour = get_col(c);
    if let Err(e) = ctx.sdf.draw_triangle_hollow(
-      &ctx,
+      ctx,
       x as f32,
       y as f32,
       a as f32,

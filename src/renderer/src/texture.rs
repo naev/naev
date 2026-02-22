@@ -2075,9 +2075,9 @@ impl UserData for Texture {
           (transform, texture, colour): (Transform2, Option<Transform2>, Option<Colour>)|
           -> mlua::Result<()> {
             let uniform = TextureUniform {
-               transform: transform.into(),
-               texture: texture.unwrap_or(Matrix3::identity().into()).into(),
-               colour: colour.unwrap_or(crate::colour::WHITE).into(),
+               transform,
+               texture: texture.unwrap_or(Matrix3::identity().into()),
+               colour: colour.unwrap_or(crate::colour::WHITE),
             };
             let ctx = Context::get();
             Ok(this.draw_ex(ctx, &uniform)?)

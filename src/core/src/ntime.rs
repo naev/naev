@@ -511,10 +511,7 @@ pub extern "C" fn lua_istime(L: *mut mlua::lua_State, idx: c_int) -> c_int {
       let idx = ffi::lua_absindex(L, idx);
       ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"get_time".as_ptr());
       ffi::lua_pushvalue(L, idx);
-      let t = match ffi::lua_pcall(L, 1, 1, 0) {
-         ffi::LUA_OK => true,
-         _ => false,
-      };
+      let t = matches!(ffi::lua_pcall(L, 1, 1, 0), ffi::LUA_OK);
       ffi::lua_pop(L, 1);
       t as c_int
    }

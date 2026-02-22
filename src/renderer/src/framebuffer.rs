@@ -266,7 +266,7 @@ fn reset() {
       let ctx = Context::get();
       let gl = &ctx.gl;
       unsafe {
-         naevc::gl_screen.current_fbo = prev.into();
+         naevc::gl_screen.current_fbo = prev;
          PREVIOUS_FBO.store(0, Ordering::Relaxed);
          if WAS_SCISSORED.load(Ordering::Relaxed) {
             gl.enable(SCISSOR_TEST);
@@ -293,6 +293,8 @@ impl FramebufferWrap {
       Arc::into_raw(self.0)
    }
 
+   /// # Safety
+   /// Same as Arc::from_raw.
    pub unsafe fn from_raw(ptr: *const Framebuffer) -> Self {
       let fb: Arc<Framebuffer> = unsafe { Arc::from_raw(ptr) };
       Self(fb)
