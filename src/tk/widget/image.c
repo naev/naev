@@ -86,6 +86,14 @@ static void img_render( Widget *img, double bx, double by )
    }
 
    if ( img->dat.img.border ) {
+      double scale = MIN( w / tex_w( img->dat.img.image ),
+                          h / tex_h( img->dat.img.image ) );
+      double tw    = tex_w( img->dat.img.image ) * scale;
+      double th    = tex_h( img->dat.img.image ) * scale;
+      x += ( w - tw ) * 0.5;
+      y += ( h - th ) * 0.5;
+      w = tw;
+      h = th;
       /* inner outline (outwards) */
       toolkit_drawOutline( x, y + 1, w - 1, h - 1, 1., toolkit_colLight );
       /* outer outline */
