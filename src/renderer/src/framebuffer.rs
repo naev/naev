@@ -104,7 +104,7 @@ impl Framebuffer {
    }
 
    pub fn screenshot(&self, ctx: &Context) -> Result<image::DynamicImage> {
-      let mut data: Vec<u8> = vec![0; (self.w * self.h * 3) as usize];
+      let mut data: Vec<u8> = vec![0; self.w * self.h * 3];
       let gl = &ctx.gl;
       self.bind(ctx);
       unsafe {
@@ -118,7 +118,7 @@ impl Framebuffer {
             glow::PixelPackData::Slice(Some(&mut data)),
          );
       }
-      Self::unbind(&ctx);
+      Self::unbind(ctx);
       let img = match image::RgbImage::from_vec(self.w as u32, self.h as u32, data) {
          Some(img) => image::DynamicImage::ImageRgb8(img).flipv(),
          None => anyhow::bail!("failed to create ImageBuffer"),

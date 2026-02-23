@@ -1400,7 +1400,7 @@ impl Model {
          .width(size)
          .height(size)
          .depth(true)
-         .build_wrap(&ctx)?;
+         .build_wrap(ctx)?;
 
       let lctx = ctx.lock();
       let gl = &lctx.gl;
@@ -1428,7 +1428,7 @@ impl Model {
             };
             self.render_scene(&lctx, &target, 0, &lighting, &transform.into())?;
             fb.bind(&lctx);
-            let mut data: Vec<u8> = vec![0; (size * size * 4) as usize];
+            let mut data: Vec<u8> = vec![0; (size * size * 4)];
             unsafe {
                gl.viewport(0, 0, size as i32, size as i32);
                gl.read_buffer(glow::COLOR_ATTACHMENT0);
@@ -1449,9 +1449,6 @@ impl Model {
             let bimg = img.fast_blur(1.0);
             let poly = Polygon::from_subimage(&bimg, 0, 0, size as u32, size as u32, dir.into());
             polygons.push(poly);
-
-            let mut writer = std::fs::File::create(&format!("{:04}.png", i))?;
-            img.write_to(&mut writer, image::ImageFormat::Png)?;
          }
       }
       Framebuffer::unbind(&lctx);
