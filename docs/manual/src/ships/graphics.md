@@ -56,8 +56,8 @@ This lets you load graphics from any location.
 For example, you can use the graphics of a spob for a ship as below:
 
 ```xml
- <gfx sy="1" sx="1" comm="spob/exterior/station02" polygon="002" noengine="1" size="150">/gfx/spob/space/002</gfx>
+ <gfx sy="1" sx="1" comm="spob/exterior/station02" noengine="1" size="150">/gfx/spob/space/002</gfx>
 ```
 
-Do note that, in this case, you have to specify the communication image, collision polygons, and disable the engine if it does not exist.
+Do note that, in this case, you have to specify the communication image,and disable the engine if it does not exist.
 See [2D graphics](./graphics/2d.md) for more details at how to define the additional parameters if necessary.

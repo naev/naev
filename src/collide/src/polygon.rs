@@ -403,38 +403,6 @@ impl SpinPolygon {
       }
    }
 
-   pub fn from_xml<P: AsRef<Path>>(path: P) -> Result<Self> {
-      fn parse_list(s: &str) -> Result<Vec<f64>> {
-         s.split(',').map(|v| Ok(v.trim().parse::<f64>()?)).collect()
-      }
-
-      let mut polygons = Vec::new();
-      let xml = ndata::read_to_string(&path)?;
-      let raw: XmlPolygon = quick_xml::de::from_str(&xml)?;
-      for p in raw.polygon {
-         let xs = parse_list(&p.x)?;
-         let ys = parse_list(&p.y)?;
-
-         if xs.len() != ys.len() {
-            anyhow::bail!("x/y length mismatch");
-         }
-
-         let points = xs
-            .into_iter()
-            .zip(ys)
-            .map(|(x, y)| Vector2::new(x, y))
-            .collect::<Vec<Vector2<f64>>>();
-         polygons.push(Polygon::from_points(points, None));
-      }
-      let dir_inc = std::f64::consts::TAU / polygons.len() as f64;
-      let dir_off = dir_inc * 0.5;
-      Ok(SpinPolygon {
-         polygons,
-         dir_inc,
-         dir_off,
-      })
-   }
-
    pub fn view(&self, dir: f64) -> &Polygon {
       let dir = physics::angle_clean(dir);
       let s = ((dir + self.dir_off) / self.dir_inc).round() as usize;
@@ -530,19 +498,6 @@ fn trace_contour(
 
 // C API
 use std::ffi::{CStr, c_char, c_int};
-
-#[unsafe(no_mangle)]
-pub extern "C" fn poly_load_xml(name: *const c_char) -> *mut SpinPolygon {
-   let path = unsafe { CStr::from_ptr(name).to_str().unwrap() };
-   let path = Path::new(path);
-   match SpinPolygon::from_xml(path) {
-      Ok(sp) => Box::into_raw(Box::new(sp)),
-      Err(e) => {
-         warn_err!(e);
-         std::ptr::null_mut::<SpinPolygon>()
-      }
-   }
-}
 
 #[unsafe(no_mangle)]
 pub extern "C" fn poly_load_2d(name: *const c_char, sx: c_int, sy: c_int) -> *mut SpinPolygon {
