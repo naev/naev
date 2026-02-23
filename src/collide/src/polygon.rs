@@ -12,17 +12,6 @@ use std::path::Path;
 
 const ALPHA_THRESHOLD: u8 = 50;
 
-#[derive(Debug, Serialize, Deserialize)]
-pub struct XmlPolygonRaw {
-   x: String,
-   y: String,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-pub struct XmlPolygon {
-   polygon: Vec<XmlPolygonRaw>,
-}
-
 #[derive(Debug, PartialEq, Serialize, Deserialize, Clone)]
 pub struct Polygon {
    /// The points in the polygon.
