@@ -99,12 +99,19 @@ impl Polygon {
          'outer: while let Some(pos) = queue.pop_front() {
             for d in DIRS {
                let n = pos + d;
-               let idx = (n.x * h as i32 + n.y) as usize;
-               if img.get_pixel(x + n.x as u32, y + n.y as u32)[3] > ALPHA_THRESHOLD {
+               if n.x >= 0
+                  && n.y >= 0
+                  && n.x < w as i32
+                  && n.y < h as i32
+                  && img.get_pixel(x + n.x as u32, y + n.y as u32)[3] > ALPHA_THRESHOLD
+               {
                   start = Some(Vector2::new(n.x, n.y));
                   break 'outer;
                }
-               if !visited[idx] {
+               let idx = (n.x * h as i32 + n.y) as usize;
+               if let Some(v) = visited.get(idx)
+                  && !v
+               {
                   visited[idx] = true;
                   queue.push_back(n);
                }
