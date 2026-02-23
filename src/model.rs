@@ -1,6 +1,7 @@
 use anyhow::Context as anyhow_context;
 use anyhow::Result;
 use encase::ShaderType;
+use fs_err as fs;
 use glow::HasContext;
 use gltf::Gltf;
 use nalgebra::{Matrix3, Matrix4, Point3, Rotation3, Vector3, Vector4};
@@ -1374,12 +1375,26 @@ impl Model {
       Ok(())
    }
 
-   pub fn spin_polygon(
+   pub fn spin_polygon<P: AsRef<Path>>(
       &mut self,
       ctx: &ContextWrapper,
+      path: P,
       size: usize,
    ) -> Result<collide::polygon::SpinPolygon> {
       use collide::polygon::{Polygon, SpinPolygon};
+      // Load from cache
+      let stats = ndata::stat(&path)?;
+      let mut hasher = blake3::Hasher::new();
+      hasher.update(path.as_ref().as_os_str().as_encoded_bytes());
+      hasher.update(&stats.modtime.to_ne_bytes());
+      hasher.update(&size.to_ne_bytes());
+      let hash = hasher.finalize();
+      let cache_path = ndata::cache_dir().join(format!("collisions/{hash}"));
+      if let Ok(data) = fs::read(&cache_path)
+         && let Ok(poly) = bitcode::deserialize::<SpinPolygon>(&data)
+      {
+         return Ok(poly);
+      }
 
       let fb = FramebufferBuilder::new(Some("spin_polygon_generator"))
          .width(size)
@@ -1447,12 +1462,14 @@ impl Model {
       let dir_inc = 1.0 / (N as f32) * std::f32::consts::TAU;
       let dir_off = -dir_inc * 0.5;
 
-      //polygons.reverse();
-      Ok(SpinPolygon {
+      let poly = SpinPolygon {
          polygons,
          dir_inc: dir_inc as f64,
          dir_off: dir_off as f64,
-      })
+      };
+      // Store in cache
+      fs::write(&cache_path, bitcode::serialize(&poly)?)?;
+      Ok(poly)
    }
 
    pub fn into_ptr(self) -> *mut Model {

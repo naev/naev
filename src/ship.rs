@@ -18,11 +18,9 @@ impl ShipWrapper {
    }
 
    fn load_gfx_3d<P: AsRef<Path>>(&mut self, path: P, ctx: &ContextWrapper) -> Result<()> {
-      let mut m = Model::from_path(ctx, path)?;
-      {
-         let poly = m.spin_polygon(ctx, self.0.size.round() as usize);
-         self.0.polygon = Box::into_raw(Box::new(poly)) as *mut naevc::CollPoly;
-      }
+      let mut m = Model::from_path(ctx, &path)?;
+      let poly = m.spin_polygon(ctx, path, self.0.size.round() as usize);
+      self.0.polygon = Box::into_raw(Box::new(poly)) as *mut naevc::CollPoly;
       self.0.gfx_3d = m.into_ptr() as *mut naevc::GltfObject;
       unsafe {
          naevc::ship_gfxLoadPost3D(&mut self.0 as *mut naevc::Ship);

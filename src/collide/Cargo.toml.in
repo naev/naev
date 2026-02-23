@@ -23,7 +23,7 @@ quick-xml = { workspace = true }
 itertools = { workspace = true }
 arrayvec = { workspace = true }
 fs-err = { workspace = true }
+bitcode = { workspace = true }
+blake3 = { workspace = true }
 ramer_douglas_peucker = "0.2"
 mint = "0.5"
-bitcode = { version = "0.6", features = ["serde"] }
-blake3 = "1"
