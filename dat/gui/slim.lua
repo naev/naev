@@ -472,8 +472,8 @@ function update_cargo()
    local pp = player.pilot()
    local cargol = pp:cargoList()
    cargofree = string.format( _(" (%s free)"), fmt.tonnes_short( pp:cargoFree() ) )
-   cargofreel = gfx.printDim( true, cargofree )
-   cargoterml = gfx.printDim( true, ", [...]" )
+   cargofreel = gfx.printDim( font_bottom, cargofree )
+   cargoterml = gfx.printDim( font_bottom, ", [...]" )
    cargo = {}
    for k,v in ipairs(cargol) do
       if v.q == 0 then
@@ -1228,7 +1228,7 @@ function render( dt, dt_mod )
    if cargo and #cargo >= 1 then
       for k,v in ipairs(cargo) do
          if cargstring then
-            if screen_w - length - gfx.printDim(true, cargstring .. ", " .. v) < cargofreel + cargoterml then
+            if screen_w - length - gfx.printfDim(font_bottom, cargstring .. ", " .. v) < cargofreel + cargoterml then
                cargstring = cargstring .. ", [...]"
                break
             else
@@ -1238,14 +1238,14 @@ function render( dt, dt_mod )
             cargstring = v
          end
       end
-      gfx.print( true, cargstring, length, 6, cols.txt_std )
+      gfx.printf( font_bottom, cargstring, length, 6, cols.txt_std )
 
-      length = length + gfx.printDim( true, cargstring )
+      length = length + gfx.printfDim( font_bottom, cargstring )
    else
-      gfx.print( true, _("none"), length, 6, cols.txt_una )
-      length = length + gfx.printDim( true, _("none") ) + 6
+      gfx.printf( font_bottom, _("none"), length, 6, cols.txt_una )
+      length = length + gfx.printfDim( font_bottom, _("none") ) + 6
    end
-   gfx.print( true, cargofree, length, 6, cols.txt_std )
+   gfx.printf( font_bottom, cargofree, length, 6, cols.txt_std )
 
    lg.setShader( sh )
 end
