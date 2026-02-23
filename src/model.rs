@@ -3,7 +3,7 @@ use anyhow::Result;
 use encase::ShaderType;
 use glow::HasContext;
 use gltf::Gltf;
-use nalgebra::{Matrix3, Matrix4, Point3, Vector3, Vector4};
+use nalgebra::{Matrix3, Matrix4, Point3, Rotation3, Vector3, Vector4};
 use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_double, c_int, c_uint};
 use std::path::Path;
@@ -1309,11 +1309,11 @@ impl Model {
       }
       let invradius = 1.0 / radius;
       #[rustfmt::skip]
-        let transform_scale = Matrix4::<f32>::new(
-            invradius, 0.0, 0.0, 0.0,
-            0.0, invradius, 0.0, 0.0,
-            0.0, 0.0,-invradius, 0.0,
-            0.0, 0.0, 0.0, 1.0 );
+      let transform_scale = Matrix4::<f32>::new(
+         invradius, 0.0, 0.0, 0.0,
+         0.0, invradius, 0.0, 0.0,
+         0.0, 0.0,-invradius, 0.0,
+         0.0, 0.0,  0.0, 1.0 );
 
       // Store Trails and Mounts
       let mut trails: Vec<Trail> = vec![];
@@ -1372,6 +1372,86 @@ impl Model {
          )?;
       }
       Ok(())
+   }
+
+   pub fn spin_polygon(
+      &mut self,
+      ctx: &Context,
+      size: usize,
+   ) -> Result<collide::polygon::SpinPolygon> {
+      use collide::polygon::{Polygon, SpinPolygon};
+      let gl = &ctx.gl;
+
+      let fb = FramebufferBuilder::new(Some("spin_polygon_generator"))
+         .width(size)
+         .height(size)
+         .depth(true)
+         .build(&ctx)?;
+
+      const N: usize = 120;
+      let target = FramebufferTarget::Framebuffer(fb);
+      let mut polygons = Vec::new();
+      if let FramebufferTarget::Framebuffer(ref fb) = target {
+         for i in 0..N {
+            let dir = (i as f32) / (N as f32) * std::f32::consts::TAU;
+            let transform =
+               Rotation3::from_axis_angle(&Vector3::y_axis(), -std::f32::consts::FRAC_PI_2 - dir)
+                  * Rotation3::from_axis_angle(
+                     &Vector3::x_axis(),
+                     std::f32::consts::FRAC_PI_4 * 0.25,
+                  );
+            fb.bind(ctx);
+            unsafe {
+               gl.clear_color(0.0, 0.0, 0.0, 0.0);
+               gl.clear(glow::COLOR_BUFFER_BIT | glow::DEPTH_BUFFER_BIT);
+            }
+            // TODO disable lighting, but no lights is a good compromise for now
+            let lighting = LightingUniform {
+               nlights: 0,
+               ..Default::default()
+            };
+            self.render_scene(ctx, &target, 0, &lighting, &transform.into())?;
+            fb.bind(ctx);
+            let mut data: Vec<u8> = vec![0; (size * size * 4) as usize];
+            unsafe {
+               gl.viewport(0, 0, size as i32, size as i32);
+               gl.read_buffer(glow::COLOR_ATTACHMENT0);
+               gl.read_pixels(
+                  0,
+                  0,
+                  size as i32,
+                  size as i32,
+                  glow::RGBA,
+                  glow::UNSIGNED_BYTE,
+                  glow::PixelPackData::Slice(Some(&mut data)),
+               );
+            }
+            let img = match image::RgbaImage::from_vec(size as u32, size as u32, data) {
+               Some(img) => image::DynamicImage::ImageRgba8(img),
+               None => anyhow::bail!("failed to create ImageBuffer"),
+            };
+            let bimg = img.fast_blur(1.0);
+            let poly = Polygon::from_subimage(&bimg, 0, 0, size as u32, size as u32, dir.into());
+            polygons.push(poly);
+
+            let mut writer = std::fs::File::create(&format!("{:04}.png", i))?;
+            img.write_to(&mut writer, image::ImageFormat::Png)?;
+         }
+      }
+      Framebuffer::unbind(ctx);
+      unsafe {
+         let dims = ctx.dimensions.read().unwrap();
+         gl.viewport(0, 0, dims.pixels_width as i32, dims.pixels_height as i32);
+      }
+      let dir_inc = 1.0 / (N as f32) * std::f32::consts::TAU;
+      let dir_off = -dir_inc * 0.5;
+
+      //polygons.reverse();
+      Ok(SpinPolygon {
+         polygons,
+         dir_inc: dir_inc as f64,
+         dir_off: dir_off as f64,
+      })
    }
 
    pub fn into_ptr(self) -> *mut Model {
