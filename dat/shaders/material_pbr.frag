@@ -20,7 +20,9 @@ uniform sampler2D baseColour_tex; /**< Base colour. */
 uniform sampler2D metallic_tex; /**< Metallic texture. */
 uniform sampler2D emissive_tex; /**< Emission texture. */
 uniform sampler2D normal_tex; /**< Normal map. */
+#if HAS_AO
 uniform sampler2D occlusion_tex; /**< Ambient occlusion. */
+#endif /* HAS_AO */
 /* Shadow map textures. */
 uniform sampler2D shadowmap_tex[ MAX_LIGHTS ];
 

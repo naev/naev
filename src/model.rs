@@ -221,6 +221,7 @@ impl ModelShader {
          .sampler("metallic_tex", 1)
          .sampler("emissive_tex", 2)
          .sampler("normal_tex", 3)
+         //.sampler("occlusion_tex",4) // Set below
          .uniform_buffer("Lighting", Self::U_LIGHTING)
          .uniform_buffer("Material", Self::U_MATERIAL)
          .uniform_buffer("Primitive", Self::U_PRIMITIVE);
