@@ -3010,6 +3010,47 @@ msgstr ""
 msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
 msgstr ""
 
+#: dat/naevpedia/outfits/droid_repair_crew_mk2.md:2
+msgid "Droid Repair Crew MK2"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/droid_repair_crew_mk2.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/droid_repair_crew_mk2.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/droid_repair_crew_mk2.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/droid_repair_crew_mk2.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/droid_repair_crew_mk2.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/droid_repair_crew_mk2.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/droid_repair_crew_mk2.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/droid_repair_crew_mk2.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/droid_repair_crew_mk2.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
 #: dat/naevpedia/outfits/drone_bay.md:2
 msgid "Drone Bay"
 msgstr ""
@@ -3827,6 +3868,47 @@ msgid "<widget map />"
 msgstr ""
 
 #: dat/naevpedia/outfits/executor_shield_aura.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
+#: dat/naevpedia/outfits/fake_licence.md:2
+msgid "Fake Licence"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/fake_licence.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/fake_licence.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/fake_licence.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/fake_licence.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/fake_licence.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/fake_licence.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/fake_licence.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/fake_licence.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/fake_licence.md:26
 msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
 msgstr ""
 
@@ -6082,6 +6164,170 @@ msgid "<widget map />"
 msgstr ""
 
 #: dat/naevpedia/outfits/jump_scanner.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_ion_shotter.md:2
+msgid "Junker Ion Shotter"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/junker_ion_shotter.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_ion_shotter.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_ion_shotter.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_ion_shotter.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_ion_shotter.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_ion_shotter.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_ion_shotter.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_ion_shotter.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_ion_shotter.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_pack.md:2
+msgid "Junker Pack"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/junker_pack.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_pack.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_pack.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_pack.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_pack.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_pack.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_pack.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_pack.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_pack.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_plates.md:2
+msgid "Junker Plates"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/junker_plates.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_plates.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_plates.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_plates.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_plates.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_plates.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_plates.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_plates.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_plates.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_point_defence.md:2
+msgid "Junker Point Defence"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/junker_point_defence.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_point_defence.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_point_defence.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_point_defence.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_point_defence.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_point_defence.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_point_defence.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_point_defence.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/junker_point_defence.md:26
 msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
 msgstr ""
 
@@ -10182,6 +10428,47 @@ msgid "<widget map />"
 msgstr ""
 
 #: dat/naevpedia/outfits/particle_lance.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
+#: dat/naevpedia/outfits/patchigel_housing.md:2
+msgid "PatchiGel Housing"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/patchigel_housing.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/patchigel_housing.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/patchigel_housing.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/patchigel_housing.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/patchigel_housing.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/patchigel_housing.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/patchigel_housing.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/patchigel_housing.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/patchigel_housing.md:26
 msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
 msgstr ""
 
@@ -16581,6 +16868,47 @@ msgstr ""
 msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
 msgstr ""
 
+#: dat/naevpedia/outfits/zalek_predator_launcher.md:2
+msgid "Za'lek Predator Launcher"
+msgstr ""
+
+
+#: dat/naevpedia/outfits/zalek_predator_launcher.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/outfits/zalek_predator_launcher.md:10
+msgid "# <%= o:name() %>"
+msgstr ""
+
+#: dat/naevpedia/outfits/zalek_predator_launcher.md:12
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/outfits/zalek_predator_launcher.md:14
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/outfits/zalek_predator_launcher.md:16
+msgid "<widget wgtsummary />"
+msgstr ""
+
+#: dat/naevpedia/outfits/zalek_predator_launcher.md:18
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/outfits/zalek_predator_launcher.md:22
+msgid "Places where <%= o:name() %> are sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/outfits/zalek_predator_launcher.md:24
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/outfits/zalek_predator_launcher.md:26
+msgid "You are not aware of anywhere where <%= o:name() %> are available for purchase."
+msgstr ""
+
 #: dat/naevpedia/outfits/zalek_reaper_launcher.md:2
 msgid "Za'lek Reaper Launcher"
 msgstr ""
@@ -17836,6 +18164,87 @@ msgid "<widget map />"
 msgstr ""
 
 #: dat/naevpedia/ships/dvaered_ancestor.md:41
+msgid "You are not aware of anywhere where the <%= s:name() %> is available for purchase."
+msgstr ""
+
+#: dat/naevpedia/ships/dvaered_ancestor_calamity.md:2
+msgid "Dvaered Ancestor Calamity"
+msgstr ""
+
+
+#: dat/naevpedia/ships/dvaered_ancestor_calamity.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/ships/dvaered_ancestor_calamity.md:10
+msgid "<widget rightstats />"
+msgstr ""
+
+#: dat/naevpedia/ships/dvaered_ancestor_calamity.md:12
+msgid "# <%= s:name() %>"
+msgstr ""
+
+#: dat/naevpedia/ships/dvaered_ancestor_calamity.md:14
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/ships/dvaered_ancestor_calamity.md:16
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/ships/dvaered_ancestor_calamity.md:18
+msgid "* **[Class](ships/classes)**:   <%= _(s:classDisplay()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/dvaered_ancestor_calamity.md:19
+msgid "* **Fabricator**:   <%= _(s:fabricator()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/dvaered_ancestor_calamity.md:20
+msgid "* **[Crew](mechanics/boarding)**:   <%= fmt.number(s:crew()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/dvaered_ancestor_calamity.md:22
+msgid "* **[Fleet Capacity](mechanics/playerfleet)**:   <%= fmt.number(s:points()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/dvaered_ancestor_calamity.md:24
+msgid "* **[Mass](mechanics/movement)**:   <%= fmt.f(_(\"{mass} {unit}\"), {mass=fmt.number(s:mass()),unit=naev.unit('mass')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/dvaered_ancestor_calamity.md:25
+msgid "* **[Base Armour](mechanics/damage)**:   <%= fmt.f(_(\"{armour} {unit}\"), {armour=fmt.number(s:armour()), unit=naev.unit('energy')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/dvaered_ancestor_calamity.md:26
+msgid "* **[Cargo Space](mechanics/cargo)**:   <%= fmt.f(_(\"{cargo} {unit}\"), {cargo=fmt.number(s:cargo()), unit=naev.unit('mass')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/dvaered_ancestor_calamity.md:27
+msgid "* **[Fuel Consumption](mechanics/hyperspace)**:   <%= fmt.f(_(\"{fuel} {unit}\"), {fuel=fmt.number(s:fuelConsumption()), unit=naev.unit('unit')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/dvaered_ancestor_calamity.md:28
+msgid "* **[Price](mechanics/credits)**:   <%= fmt.credits(s:price()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/dvaered_ancestor_calamity.md:30
+msgid "* **License**:   <%= _(s:license()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/dvaered_ancestor_calamity.md:33
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/ships/dvaered_ancestor_calamity.md:37
+msgid "Places where the <%= s:name() %> is sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/ships/dvaered_ancestor_calamity.md:39
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/ships/dvaered_ancestor_calamity.md:41
 msgid "You are not aware of anywhere where the <%= s:name() %> is available for purchase."
 msgstr ""
 
@@ -23995,6 +24404,87 @@ msgstr ""
 msgid "You are not aware of anywhere where the <%= s:name() %> is available for purchase."
 msgstr ""
 
+#: dat/naevpedia/ships/sirius_starbridge.md:2
+msgid "Sirius Starbridge"
+msgstr ""
+
+
+#: dat/naevpedia/ships/sirius_starbridge.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/ships/sirius_starbridge.md:10
+msgid "<widget rightstats />"
+msgstr ""
+
+#: dat/naevpedia/ships/sirius_starbridge.md:12
+msgid "# <%= s:name() %>"
+msgstr ""
+
+#: dat/naevpedia/ships/sirius_starbridge.md:14
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/ships/sirius_starbridge.md:16
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/ships/sirius_starbridge.md:18
+msgid "* **[Class](ships/classes)**:   <%= _(s:classDisplay()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/sirius_starbridge.md:19
+msgid "* **Fabricator**:   <%= _(s:fabricator()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/sirius_starbridge.md:20
+msgid "* **[Crew](mechanics/boarding)**:   <%= fmt.number(s:crew()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/sirius_starbridge.md:22
+msgid "* **[Fleet Capacity](mechanics/playerfleet)**:   <%= fmt.number(s:points()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/sirius_starbridge.md:24
+msgid "* **[Mass](mechanics/movement)**:   <%= fmt.f(_(\"{mass} {unit}\"), {mass=fmt.number(s:mass()),unit=naev.unit('mass')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/sirius_starbridge.md:25
+msgid "* **[Base Armour](mechanics/damage)**:   <%= fmt.f(_(\"{armour} {unit}\"), {armour=fmt.number(s:armour()), unit=naev.unit('energy')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/sirius_starbridge.md:26
+msgid "* **[Cargo Space](mechanics/cargo)**:   <%= fmt.f(_(\"{cargo} {unit}\"), {cargo=fmt.number(s:cargo()), unit=naev.unit('mass')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/sirius_starbridge.md:27
+msgid "* **[Fuel Consumption](mechanics/hyperspace)**:   <%= fmt.f(_(\"{fuel} {unit}\"), {fuel=fmt.number(s:fuelConsumption()), unit=naev.unit('unit')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/sirius_starbridge.md:28
+msgid "* **[Price](mechanics/credits)**:   <%= fmt.credits(s:price()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/sirius_starbridge.md:30
+msgid "* **License**:   <%= _(s:license()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/sirius_starbridge.md:33
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/ships/sirius_starbridge.md:37
+msgid "Places where the <%= s:name() %> is sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/ships/sirius_starbridge.md:39
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/ships/sirius_starbridge.md:41
+msgid "You are not aware of anywhere where the <%= s:name() %> is available for purchase."
+msgstr ""
+
 #: dat/naevpedia/ships/soromid_arx.md:2
 msgid "Soromid Arx"
 msgstr ""
@@ -24478,6 +24968,87 @@ msgid "<widget map />"
 msgstr ""
 
 #: dat/naevpedia/ships/soromid_nyx.md:41
+msgid "You are not aware of anywhere where the <%= s:name() %> is available for purchase."
+msgstr ""
+
+#: dat/naevpedia/ships/soromid_nyx_symbiotic.md:2
+msgid "Soromid Nyx Symbiotic"
+msgstr ""
+
+
+#: dat/naevpedia/ships/soromid_nyx_symbiotic.md:8
+msgid "<widget mainimg />"
+msgstr ""
+
+#: dat/naevpedia/ships/soromid_nyx_symbiotic.md:10
+msgid "<widget rightstats />"
+msgstr ""
+
+#: dat/naevpedia/ships/soromid_nyx_symbiotic.md:12
+msgid "# <%= s:name() %>"
+msgstr ""
+
+#: dat/naevpedia/ships/soromid_nyx_symbiotic.md:14
+msgid "<widget wgtdescription />"
+msgstr ""
+
+#: dat/naevpedia/ships/soromid_nyx_symbiotic.md:16
+msgid "## Properties"
+msgstr ""
+
+#: dat/naevpedia/ships/soromid_nyx_symbiotic.md:18
+msgid "* **[Class](ships/classes)**:   <%= _(s:classDisplay()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/soromid_nyx_symbiotic.md:19
+msgid "* **Fabricator**:   <%= _(s:fabricator()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/soromid_nyx_symbiotic.md:20
+msgid "* **[Crew](mechanics/boarding)**:   <%= fmt.number(s:crew()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/soromid_nyx_symbiotic.md:22
+msgid "* **[Fleet Capacity](mechanics/playerfleet)**:   <%= fmt.number(s:points()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/soromid_nyx_symbiotic.md:24
+msgid "* **[Mass](mechanics/movement)**:   <%= fmt.f(_(\"{mass} {unit}\"), {mass=fmt.number(s:mass()),unit=naev.unit('mass')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/soromid_nyx_symbiotic.md:25
+msgid "* **[Base Armour](mechanics/damage)**:   <%= fmt.f(_(\"{armour} {unit}\"), {armour=fmt.number(s:armour()), unit=naev.unit('energy')}) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/soromid_nyx_symbiotic.md:26
+msgid "* **[Cargo Space](mechanics/cargo)**:   <%= fmt.f(_(\"{cargo} {unit}\"), {cargo=fmt.number(s:cargo()), unit=naev.unit('mass')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/soromid_nyx_symbiotic.md:27
+msgid "* **[Fuel Consumption](mechanics/hyperspace)**:   <%= fmt.f(_(\"{fuel} {unit}\"), {fuel=fmt.number(s:fuelConsumption()), unit=naev.unit('unit')})%>"
+msgstr ""
+
+#: dat/naevpedia/ships/soromid_nyx_symbiotic.md:28
+msgid "* **[Price](mechanics/credits)**:   <%= fmt.credits(s:price()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/soromid_nyx_symbiotic.md:30
+msgid "* **License**:   <%= _(s:license()) %>"
+msgstr ""
+
+#: dat/naevpedia/ships/soromid_nyx_symbiotic.md:33
+msgid "## Availability"
+msgstr ""
+
+#: dat/naevpedia/ships/soromid_nyx_symbiotic.md:37
+msgid "Places where the <%= s:name() %> is sold are shown in #ggreen#0."
+msgstr ""
+
+#: dat/naevpedia/ships/soromid_nyx_symbiotic.md:39
+msgid "<widget map />"
+msgstr ""
+
+#: dat/naevpedia/ships/soromid_nyx_symbiotic.md:41
 msgid "You are not aware of anywhere where the <%= s:name() %> is available for purchase."
 msgstr ""
 
@@ -27291,7 +27862,7 @@ msgid "# Fabricators"
 msgstr ""
 
 #: dat/naevpedia/lore/fabricators.md:6
-msgid "There is a diversity of fabricators that produce different ships and outfits."
+msgid "There are a variety of fabricators that produce different ships and outfits."
 msgstr ""
 
 #: dat/naevpedia/lore/fabricators.md:8
@@ -27392,7 +27963,7 @@ msgid "# Factions"
 msgstr ""
 
 #: dat/naevpedia/lore/factions.md:6
-msgid "There are a diversity of factions that vie for control of the universe."
+msgid "There are a variety of factions that vie for control of the universe."
 msgstr ""
 
 #: dat/naevpedia/lore/factions.md:8
@@ -27517,7 +28088,7 @@ msgid "Today, it is governed by the military and the armed forces dominate much 
 msgstr ""
 
 #: dat/naevpedia/lore/factions/dvaered.md:12
-msgid "Planets are governed by Warlords, former members of the Dvaered High Command, which makes all the most important decisions about the House."
+msgid "Planets are governed by Warlords, former members of the Dvaered High Command, who make all the most important decisions about the House."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/dvaered.md:13
@@ -27533,7 +28104,7 @@ msgid "## Organization"
 msgstr ""
 
 #: dat/naevpedia/lore/factions/dvaered.md:18
-msgid "* **Leader:** None"
+msgid "* **Leader:** Warlords of various lesser houses"
 msgstr ""
 
 #: dat/naevpedia/lore/factions/dvaered.md:19
@@ -27633,7 +28204,7 @@ msgid "When a General retires from High Command, they often take with them a sma
 msgstr ""
 
 #: dat/naevpedia/lore/factions/dvaered.md:52
-msgid "These are soldiers and sailors have sworn allegiance to the person, not the banner, and they will continue to serve until the bitter end."
+msgid "These soldiers and sailors have sworn allegiance to the person, not the banner, and they will continue to serve until the bitter end."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/dvaered.md:53
@@ -27661,7 +28232,7 @@ msgid "For those citizens that are unable to join the military, Dvaered society 
 msgstr ""
 
 #: dat/naevpedia/lore/factions/dvaered.md:61
-msgid "Nevertheless, there certainly is a Dvaered elite."
+msgid "Nevertheless, there certainly is a civilian elite."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/dvaered.md:62
@@ -27677,7 +28248,7 @@ msgid "While every Dvaered controlled world is governed by a Warlord at any give
 msgstr ""
 
 #: dat/naevpedia/lore/factions/dvaered.md:67
-msgid "Though Dvaered High Command is more military than government, it needs a steady stream of funds, manpower and materials to further its agenda."
+msgid "Though Dvaered High Command is more military than government, it needs a steady stream of funds, manpower, and materials to further its agenda."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/dvaered.md:68
@@ -28006,7 +28577,7 @@ msgid "# Galactic Space Pirates"
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:10
-msgid "The Galactic Space Pirates are split into two main groups, the clans and independent pirates."
+msgid "The Galactic Space Pirates are split into two main groups: the clans and independent pirates."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:11
@@ -28090,15 +28661,15 @@ msgid "The main event consists of the meeting of the Pirate Lords who will liste
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:41
-msgid "The assemblies tend to be a good opportunity for the Pirate Lords to calculate each other strengths, where they tend to bring significant ships from their fleet."
+msgid "The assemblies tend to be a good opportunity for the Pirate Lords to calculate each others' strengths, where they tend to bring significant ships from their fleet."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:42
-msgid "In many ways, the pirate assemblies tend to not only determine the future of the space pirates, but also tend to shape the future of the galaxy."
+msgid "In many ways, the pirate assemblies tend to not only determine the future of the space pirates, but also to shape the future of the galaxy."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:44
-msgid "The events tend to also attract the attention of other actors in the galaxy, with most Great Houses and [the Empire](lore/factions/empire) sending somewhat undercover agents to try to get a glimpse of what is going on and gain advantage over other Great Houses."
+msgid "The events also attract the attention of other actors in the galaxy, with most Great Houses and [the Empire](lore/factions/empire) sending somewhat undercover agents to try to get a glimpse of what is going on and gain advantage over other Great Houses."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:45
@@ -28198,7 +28769,7 @@ msgid "They inhabit the pocket of space between [House Za'lek](lore/factions/zal
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:84
-msgid "They also tend to run protection rackets, which are often favoured over the whimsical [Dvaered](lore/factions/dvaered) Warlords and can provide more stability to the area."
+msgid "They also run protection rackets, which are often favoured over the capricious [Dvaered](lore/factions/dvaered) Warlords and can provide more stability to the area."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:85
@@ -28226,7 +28797,7 @@ msgid "Although they rely heavily on piracy, most individuals pursue artistic ta
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:95
-msgid "They are also renowned for being a large hub of illicit substances, which their members use freely and some claim to get Sirius-like psychic powers from substance abuse."
+msgid "They are also renowned for being a large hub of illicit substances, which their members use freely and some claim to get Sirius-like psychic powers from."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:97
@@ -28712,7 +29283,7 @@ msgid "The population of House Sirius is divided in three \"echelons\"."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/sirius.md:30
-msgid "They are the Shaira, the Fyrra and the Serra."
+msgid "They are the Shaira, the Fyrra, and the Serra."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/sirius.md:31
@@ -28772,11 +29343,11 @@ msgid "Its clerks range from minor executive acolytes to high priests, who are r
 msgstr ""
 
 #: dat/naevpedia/lore/factions/sirius.md:47
-msgid "At the head of each government stands an Arch-Canter, a zealot who can be considered the head of state for his particular echelon."
+msgid "At the head of each government stands an Arch-Canter, a zealot who can be considered the head of state for that particular echelon."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/sirius.md:48
-msgid "The three Arch Canters combined form the political government of House Sirius, and it is they who deal with any outside influence, including the Empire."
+msgid "The three Arch-Canters combined form the political government of House Sirius, and it is they who deal with any outside influence, including the Empire."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/sirius.md:50
@@ -28804,7 +29375,7 @@ msgid "This man was originally an early-era colonist by the name of Richard Summ
 msgstr ""
 
 #: dat/naevpedia/lore/factions/sirius.md:58
-msgid "Since that time there have been many Sirichanas, but all are assumed to be reincarnations of the original Sirichana, and so distinction is never made other than in a historical context."
+msgid "Since that time there have been many Sirichanas, but all are assumed to be reincarnations of the original Sirichana, and no distinction is made other than in historical contexts."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/sirius.md:60
@@ -28836,7 +29407,7 @@ msgid "His followers spread through the galaxy, gaining root on many worlds arou
 msgstr ""
 
 #: dat/naevpedia/lore/factions/sirius.md:68
-msgid "So great was their conviction that planet after planet began to slip from the Emperor's grasp, its inhabitants preferring to follow their faith than the Emperor's will."
+msgid "So great was their conviction that planet after planet began to slip from the Emperor's grasp, its inhabitants preferring to follow their faith rather than the Emperor's will."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/sirius.md:69
@@ -28844,15 +29415,15 @@ msgid "Eventually, the situation became such that it forced the hand of the 7th 
 msgstr ""
 
 #: dat/naevpedia/lore/factions/sirius.md:70
-msgid "The Emperor knew that he was no longer in control of the worlds following Sirichana, but to re-assert authority through force of arms on that scale would set a precedent unheard of since the end of the Faction Wars."
+msgid "The Emperor knew that the worlds following Sirichana no longer obeyed the Empire, but to re-assert authority through force of arms on that scale would set a precedent unheard of since the end of the Faction Wars."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/sirius.md:71
-msgid "And so he chose to grant Sirichana a Great House of his own, House Sirius, on the conditions that Sirichana would not attempt to spread his religion beyond the worlds that would be rightfully his, and that Imperial Decrees would carry the force of law among his people."
+msgid "And so Sirichana was offered a Great House: House Sirius, on the condition that Sirichana would not attempt to spread the religion beyond the worlds of House Sirius, and that Imperial Decrees would carry the force of law among his people."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/sirius.md:72
-msgid "Sirichana agreed, knowing that refusal would give the Emperor the justification he needed to start an all out war."
+msgid "Sirichana agreed, knowing that refusal would give the Emperor the justification needed to start an all out war."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/sirius.md:73
@@ -28864,7 +29435,7 @@ msgid "One may wonder how Sirichana could inspire faith in so many souls, spread
 msgstr ""
 
 #: dat/naevpedia/lore/factions/sirius.md:76
-msgid "After all, it is difficult to believe in a man who resides on a planet far from one's home. In point of fact, there is a good reason why people believe as strongly as they do."
+msgid "After all, it is difficult to believe in one person who resides on a planet far from one's home. In point of fact, there is a good reason why people believe as strongly as they do."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/sirius.md:78
@@ -28928,7 +29499,7 @@ msgid "From the top of his Tower, Sirichana speaks to them."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/sirius.md:96
-msgid "All who live in Crater City leave whatever they're doing and stand in the streets to hear his words."
+msgid "All who live in Crater City leave whatever they're doing and stand in the streets to hear the words."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/sirius.md:97
@@ -28936,7 +29507,7 @@ msgid "There are no records of this event, so nobody knows how long it lasts or 
 msgstr ""
 
 #: dat/naevpedia/lore/factions/sirius.md:98
-msgid "But when he finishes speaking, his listeners are no longer the pilgrims they were before."
+msgid "But when the speech is finished, the listeners are no longer the pilgrims they were before."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/sirius.md:99
@@ -28944,7 +29515,7 @@ msgid "They are now the Touched, those who carry a fragment of Sirichana's will 
 msgstr ""
 
 #: dat/naevpedia/lore/factions/sirius.md:101
-msgid "The Touched then leave Crater City, abandoning it completely, leaving its houses, its tools, its resources behind for those pilgrims who will be coming."
+msgid "The Touched then leave Crater City, abandoning it completely, leaving its houses, its tools, and its resources behind for those pilgrims who will be coming after them."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/sirius.md:102
@@ -30062,11 +30633,11 @@ msgid "House Za'lek's momentum could no longer be stopped."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/zalek.md:44
-msgid "Before long, all [the Empire](lore/factions/empire) was getting out of its former Great Project was a yearly file of unintelligible reports, articles and theorems, many of which used forms of mathematics the Imperial engineers had never even heard of before."
+msgid "Before long, all [the Empire](lore/factions/empire) was getting out of its former Great Project was a yearly file of unintelligible reports, articles, and theorems, many of which used forms of mathematics the Imperial engineers had never even heard of before."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/zalek.md:45
-msgid "When asked to provide [the Empire](lore/factions/empire) with tangible results such as pre-produced weapons or ships, the Za'lek indignantly replied that things like manufacturing things that had been successfully prototyped were beneath them."
+msgid "When asked to provide [the Empire](lore/factions/empire) with tangible results such as mass-produced weapons or ships, the Za'lek indignantly replied that things like manufacturing things that had been successfully prototyped were beneath them."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/zalek.md:46
@@ -30082,7 +30653,7 @@ msgid "Over the years, House Za'lek built up an impressive technological lead."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/zalek.md:50
-msgid "At the same time, it became more isolated, its scientists choosing to devote their time to working on their myriad of projects rather than waste it on \"the simpletons elsewhere\"."
+msgid "At the same time, it became more isolated; its scientists choosing to devote their time to working on their myriad of projects rather than waste it on \"the simpletons elsewhere\"."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/zalek.md:51
@@ -30291,7 +30862,7 @@ msgid "While the eleven colonies painstakingly tried to develop themselves into 
 msgstr ""
 
 #: dat/naevpedia/lore/history.md:55
-msgid "Though no new colonization efforts were made after the first twenty, as this was deemed too costly, different avenues of deep space exploration were being invented, tested and discarded on a regular basis."
+msgid "Though no new colonization efforts were made after the first twenty, as this was deemed too costly, different avenues of deep space exploration were being invented, tested, and discarded on a regular basis."
 msgstr ""
 
 #: dat/naevpedia/lore/history.md:56
@@ -30359,7 +30930,7 @@ msgid "On paper, it looked good."
 msgstr ""
 
 #: dat/naevpedia/lore/history.md:78
-msgid "Over the course of many years, many new planets were settled, converted or exploited."
+msgid "Over the course of many years, many new planets were settled, converted, or exploited."
 msgstr ""
 
 #: dat/naevpedia/lore/history.md:79
@@ -31026,7 +31597,7 @@ msgid "## Absorption and Penetration"
 msgstr ""
 
 #: dat/naevpedia/mechanics/damage.md:16
-msgid "Absorption reduces the amount of damage taken by a ship by a percentage amount."
+msgid "Each point of absorption reduces the damage you would take by 1%."
 msgstr ""
 
 #: dat/naevpedia/mechanics/damage.md:17
@@ -31034,7 +31605,7 @@ msgid "However, this reduction can be nullified by penetration, which is directl
 msgstr ""
 
 #: dat/naevpedia/mechanics/damage.md:18
-msgid "Note that penetration can not increase the damage past 100%, and absorption can only reduce the damage to 0%."
+msgid "Note that penetration can not increase the damage past 100%."
 msgstr ""
 
 #: dat/naevpedia/mechanics/damage.md:20
@@ -31127,7 +31698,7 @@ msgid "Effects applied to your ship are visible at the top of the GUI with effec
 msgstr ""
 
 #: dat/naevpedia/mechanics/effects.md:9
-msgid "Some types of effects can stack multiple types, which will be indicated by a number on the icon indicating how many stacks there are, while others will get refreshed when reapplied."
+msgid "Some types of effects can stack multiple times, which will be indicated by a number on the icon indicating how many stacks there are, while others will get refreshed when reapplied."
 msgstr ""
 
 #: dat/naevpedia/mechanics/energy.md:2
@@ -31498,7 +32069,7 @@ msgid "System modifiers such as asteroid fields and interference can further aff
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:84
-msgid "In particular, being in an asteroid will affect the detection range, and consequently, signature range and stealth range depending on the density of asteroids."
+msgid "In particular, being in an asteroid field will affect the detection range, and consequently, signature range and stealth range depending on the density of asteroids."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:85
@@ -31629,7 +32200,7 @@ msgid "Jumping can only be done from systems connected to each other, and must b
 msgstr ""
 
 #: dat/naevpedia/mechanics/hyperspace.md:9
-msgid "The [universe map](mechanics/map) depicting which systems are connected."
+msgid "The [universe map](mechanics/map) depicts which systems are connected."
 msgstr ""
 
 #: dat/naevpedia/mechanics/landing.md:2
@@ -31662,7 +32233,7 @@ msgid "In most spaceports you can also buy a local map and refuel your ship."
 msgstr ""
 
 #: dat/naevpedia/mechanics/landing.md:13
-msgid "The services offered by the spaceport will vary significantly."
+msgid "The services offered vary significantly by location."
 msgstr ""
 
 #: dat/naevpedia/mechanics/landing.md:15
@@ -31690,7 +32261,7 @@ msgid "### Missions"
 msgstr ""
 
 #: dat/naevpedia/mechanics/landing.md:24
-msgid "The Mission Bullet Board System is where you can accept a diversity of different missions."
+msgid "The Mission Bulletin Board System is where you can accept a variety of different missions."
 msgstr ""
 
 #: dat/naevpedia/mechanics/landing.md:25
@@ -31718,7 +32289,7 @@ msgid "You can hold #bshift#0 and #bcontrol#0 to increase the amount of outfits 
 msgstr ""
 
 #: dat/naevpedia/mechanics/landing.md:34
-msgid "All the outfits you know and their availability can be accessed [here](outfits)."
+msgid "All the outfits you have encountered and their availability can be accessed under [outfits](outfits) in the Holo-Archives."
 msgstr ""
 
 #: dat/naevpedia/mechanics/landing.md:36
@@ -31738,7 +32309,7 @@ msgid "The new ship will be available at the equipment tab for use after purchas
 msgstr ""
 
 #: dat/naevpedia/mechanics/landing.md:42
-msgid "All the ships you know and their availability can be accessed [here](ships)."
+msgid "All the ships you have encountered and their availability can be accessed under [ships](ships) in the Holo-Archives."
 msgstr ""
 
 #: dat/naevpedia/mechanics/landing.md:44
@@ -31758,7 +32329,7 @@ msgid "By right-clicking on ships, or toggling the #bdeployed#0 checkbox, you ca
 msgstr ""
 
 #: dat/naevpedia/mechanics/landing.md:52
-msgid "You can click on the slots of the selecting ship to filter only the outfits that go in the slot."
+msgid "You can click on the slots of the selected ship to filter only the outfits that go in the slot."
 msgstr ""
 
 #: dat/naevpedia/mechanics/landing.md:53
@@ -31803,7 +32374,7 @@ msgid "Launcher weapons differ from bolt and beam weapons by needing ammunition 
 msgstr ""
 
 #: dat/naevpedia/mechanics/launchers.md:7
-msgid "They come in made different shapes and sizes, from slow and devastating seek torpedoes, to fast and agile dumbfire rockets."
+msgid "They come in many different shapes and sizes, from slow and devastating seek torpedoes, to fast and agile dumbfire rockets."
 msgstr ""
 
 #: dat/naevpedia/mechanics/launchers.md:8
@@ -31851,11 +32422,11 @@ msgid "An active cooldown can be performed by either double tapping the <%= \"#b
 msgstr ""
 
 #: dat/naevpedia/mechanics/launchers.md:24
-msgid "The downside is the ship will be immovable and unable to defend itself during this time."
+msgid "The downside is the ship will be immobile and unable to defend itself during this time."
 msgstr ""
 
 #: dat/naevpedia/mechanics/launchers.md:25
-msgid "The amount of time it takes to do an active cooldown depends on both the mass of the ship and the amount of excess heat."
+msgid "The amount of time it takes to do an active cooldown depends on <!--both -->the mass of the ship<!-- and the amount of excess heat-->."
 msgstr ""
 
 #: dat/naevpedia/mechanics/launchers.md:27
@@ -31976,7 +32547,7 @@ msgid "The bold green line indicates the next jump, bold yellow lines indicate s
 msgstr ""
 
 #: dat/naevpedia/mechanics/map.md:14
-msgid "By clicking the \"Autonav\" button at the bottom, you can directly start autonav and close the map."
+msgid "By clicking the \"Autonav\" button at the bottom or pressing #bA#0, you can directly start autonav and close the map."
 msgstr ""
 
 #: dat/naevpedia/mechanics/map.md:16
@@ -32040,7 +32611,7 @@ msgid "## Find"
 msgstr ""
 
 #: dat/naevpedia/mechanics/map.md:40
-msgid "The \"Find\" button at the button at the bottom can be used to find systems, space objects, outfits, or ships from text."
+msgid "The \"Find\" button at the bottom can be used to find systems, space objects, outfits, or ships from text."
 msgstr ""
 
 #: dat/naevpedia/mechanics/map.md:41
@@ -32301,15 +32872,15 @@ msgid "# Fleets"
 msgstr ""
 
 #: dat/naevpedia/mechanics/playerfleet.md:7
-msgid "Besides your own ship, it is possible to deploy and command a fleet of ships when out in space."
+msgid "Besides your own ship, it is possible to deploy and command a fleet of escort ships when out in space."
 msgstr ""
 
 #: dat/naevpedia/mechanics/playerfleet.md:8
-msgid "You can deploy any ship you own as a fleet member, as long as it is space worthy by right-clicking on them or toggling the deployed checkbox."
+msgid "You can deploy any spaceworthy ship you own as a fleet member by right-clicking on it or toggling the deployed checkbox on the [equipment tab](mechanics/equipment) while landed at a spaceport."
 msgstr ""
 
 #: dat/naevpedia/mechanics/playerfleet.md:9
-msgid "The amount of ships you can deploy deeps on your **fleet capacity**."
+msgid "The amount of ships you can deploy depends on your **fleet capacity**."
 msgstr ""
 
 #: dat/naevpedia/mechanics/playerfleet.md:10
@@ -32563,11 +33134,11 @@ msgid "Used like"
 msgstr ""
 
 #: stdin:6
-msgid "Seconds"
+msgid "Standard Time Unit"
 msgstr ""
 
 #: stdin:6
-msgid "\"s\""
+msgid "\"stu\""
 msgstr ""
 
 #: stdin:6
@@ -32578,8 +33149,12 @@ msgstr ""
 msgid "1 second"
 msgstr ""
 
+#: stdin:6
+msgid "Seconds"
+msgstr ""
+
 #: stdin:7
-msgid "Hectoeconds"
+msgid "Hectostu"
 msgstr ""
 
 #: stdin:7 stdin:9 stdin:10
@@ -32587,7 +33162,7 @@ msgid "N/A"
 msgstr ""
 
 #: stdin:7
-msgid "100 seconds"
+msgid "100 stu"
 msgstr ""
 
 #: stdin:7
@@ -32603,11 +33178,11 @@ msgid "Periods"
 msgstr ""
 
 #: stdin:8
-msgid "\"p\""
+msgid "\"p\" or \"stp\""
 msgstr ""
 
 #: stdin:8
-msgid "10,000 seconds"
+msgid "10,000 stu"
 msgstr ""
 
 #: stdin:8
@@ -32663,66 +33238,94 @@ msgid "## Explanation"
 msgstr ""
 
 #: dat/naevpedia/mechanics/time.md:10
-msgid "UST consists of three basic components describing different amounts of time: the second, which is equivalent to an Earth second; the period, which is equal to 10,000 seconds; and the cycle, which is equal to 5,000 periods (50,000,000 seconds). In colloquial usage, the terms \"decaperiod\" (equivalent to 10 periods) and \"hectosecond\" (equivalent to 100 seconds) are also common. UST dates are written in the form:"
+msgid "UST consists of three basic components describing different amounts of time: the standard time unit (stu), which is equivalent to an Earth second; the period, which is equal to 10,000 stu (or Earth seconds); and the cycle, which is equal to 5,000 periods (50,000,000 stu)."
+msgstr ""
+
+#: dat/naevpedia/mechanics/time.md:11
+msgid "In colloquial usage, the terms \"decaperiod\" (equivalent to 10 periods) and \"hectostu\" (equivalent to 100 stu ) are also common."
 msgstr ""
 
 #: dat/naevpedia/mechanics/time.md:12
-msgid "* UST C:PPPP.SSSS"
+msgid "UST dates are written in the form:"
 msgstr ""
 
 #: dat/naevpedia/mechanics/time.md:14
-msgid "Where \"C\" is the cycle, \"PPPP\" is the period (always displayed as four digits), and \"SSSS\" is the second (always displayed as four digits). So for example, the following hypothetical date indicates cycle 493, period 42, second 2089 (which is about 100 cycles prior to [the Incident](lore/history/incident)):"
+msgid "* UST C:PPPP.SSSS"
 msgstr ""
 
 #: dat/naevpedia/mechanics/time.md:16
+msgid "Where \"C\" is the cycle, \"PPPP\" is the period (always displayed as four digits), and \"SSSS\" is the stu (always displayed as four digits)."
+msgstr ""
+
+#: dat/naevpedia/mechanics/time.md:17
+msgid "So for example, the following hypothetical date indicates cycle 493, period 42, stu 2089 (which is about 100 cycles prior to [the Incident](lore/history/incident)):"
+msgstr ""
+
+#: dat/naevpedia/mechanics/time.md:19
 msgid "* UST 493:0042.2089"
 msgstr ""
 
-#: dat/naevpedia/mechanics/time.md:18
-msgid "When describing lengths of time, it is commonplace for computer systems to indicate a number of periods with a lowercase \"p\" or a number of seconds with a lowercase \"s\". This convention is not used for cycles, which are always spelled out in full as \"cycles\". This convention is also not adopted in spoken form since it's more natural to just say \"periods\" and \"seconds\" rather than a single-letter abbreviation. Additionally, due to the metric nature of the time system, periods and seconds can be written out as a single unit, although in spoken conversation people report the periods and cycles separately. Some examples:"
-msgstr ""
-
-#: dat/naevpedia/mechanics/time.md:20
-msgid "* 783 p (read as \"783 periods\")"
-msgstr ""
-
 #: dat/naevpedia/mechanics/time.md:21
-msgid "* 42 s (read as \"42 seconds\")"
+msgid "When describing lengths of time, it is commonplace for computer systems to indicate a number of periods with either \"p\" or \"stp\", and a number of standard time units with \"stu\"."
 msgstr ""
 
 #: dat/naevpedia/mechanics/time.md:22
-msgid "* 12.0456 p (read as \"12 periods and 456 seconds\")"
+msgid "This convention is not used for cycles, which are always spelled out in full as \"cycles\", but is also partially adopted in spoken form where periods are just referred as \"periods\", however, Earth seconds are referred to as \"stu\" (pronounced like stew)."
+msgstr ""
+
+#: dat/naevpedia/mechanics/time.md:23
+msgid "This also happens to solve the confusion between real-time seconds, and in-game Earth seconds or stu."
 msgstr ""
 
 #: dat/naevpedia/mechanics/time.md:24
-msgid "The following is a chart of all time units used in Naev along with the corresponding Earth time unit they are similar to in terms of where they are used."
+msgid "Additionally, due to the metric nature of the time system, periods and stu can be written out as a single unit, although in spoken conversation people report the periods and cycles separately."
+msgstr ""
+
+#: dat/naevpedia/mechanics/time.md:25
+msgid "Some examples:"
 msgstr ""
 
 #: dat/naevpedia/mechanics/time.md:27
-msgid "<widget tableust />"
+msgid "* 783 stp (read as \"783 periods\")"
+msgstr ""
+
+#: dat/naevpedia/mechanics/time.md:28
+msgid "* 42 stu (read as \"42 stu\")"
 msgstr ""
 
 #: dat/naevpedia/mechanics/time.md:29
-msgid "## Passaging of Time"
+msgid "* 12.0456 p (read as \"12 periods and 456 stu\")"
 msgstr ""
 
 #: dat/naevpedia/mechanics/time.md:31
-msgid "Following is a list of actions and how much time they take."
-msgstr ""
-
-#: dat/naevpedia/mechanics/time.md:33
-msgid "* [Flying in space](mechanics/movement): For ships with a time dilation rate of 100% (that is, most small ships), time passes at a rate of 30 seconds per real-world second, which is why the GUI's clock increases by 0.01p every 3⅓ seconds. For ships with higher time dilation the passage of time is faster, and for ships with lower time dilation the passage of time is slower."
+msgid "The following is a chart of all time units used in Naev along with the corresponding Earth time unit they are similar to in terms of where they are used."
 msgstr ""
 
 #: dat/naevpedia/mechanics/time.md:34
-msgid "* [Landed](mechanics/landing): Time does not pass while landed."
-msgstr ""
-
-#: dat/naevpedia/mechanics/time.md:35
-msgid "* [Takeoff](mechanics/landing): Taking off takes 1 period, which means that stopping to refuel during time-sensitive missions is generally a bad idea."
+msgid "<widget tableust />"
 msgstr ""
 
 #: dat/naevpedia/mechanics/time.md:36
+msgid "## Passaging of Time"
+msgstr ""
+
+#: dat/naevpedia/mechanics/time.md:38
+msgid "Following is a list of actions and how much time they take."
+msgstr ""
+
+#: dat/naevpedia/mechanics/time.md:40
+msgid "* [Flying in space](mechanics/movement): For ships with a time dilation rate of 100% (that is, most small ships), time passes at a rate of 30 stu per real-world second, which is why the GUI's clock increases by 0.01p every 3⅓ seconds. For ships with higher time dilation the passage of time is faster, and for ships with lower time dilation the passage of time is slower."
+msgstr ""
+
+#: dat/naevpedia/mechanics/time.md:41
+msgid "* [Landed](mechanics/landing): Time does not pass while landed."
+msgstr ""
+
+#: dat/naevpedia/mechanics/time.md:42
+msgid "* [Takeoff](mechanics/landing): Taking off takes 1 period, which means that stopping to refuel during time-sensitive missions is generally a bad idea."
+msgstr ""
+
+#: dat/naevpedia/mechanics/time.md:43
 msgid "* [Jumping](mechanics/hyperspace): Hyperspace jumps also take time, generally 1 period per jump, though some ships such as the [Quicksilver](ships/quicksilver) take less."
 msgstr ""
 
@@ -32793,7 +33396,7 @@ msgid "Primary weapons are fired by holding <%= \"#b\"..naev.keyGet(\"primary\")
 msgstr ""
 
 #: dat/naevpedia/mechanics/weaponsets.md:17
-msgid "Furthermore, the weapon set key bindings (such as <%= \"#b\"..naev.keyGet(\"weapset1\")..\"#0\" %> key for the first weapon set or the <%= \"#b\"..naev.keyGet(\"weapset2\")..\"#0\" %>) will activate the weapon set."
+msgid "Furthermore, the weapon set key bindings (such as <%= \"#b\"..naev.keyGet(\"weapset1\")..\"#0\" %> key for the first weapon set or the <%= \"#b\"..naev.keyGet(\"weapset2\")..\"#0\" %> for the second one) will activate the weapon set."
 msgstr ""
 
 #: dat/naevpedia/mechanics/weaponsets.md:18

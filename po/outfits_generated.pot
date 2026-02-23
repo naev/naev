@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-24 14:00+0900\n"
+"POT-Creation-Date: 2026-02-21 21:07+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -120,6 +120,8 @@ msgstr ""
 #: /home/ess/naev/build/dat/outfits/bioship/laeviter_gene_drive_i.xml:4
 #: /home/ess/naev/build/dat/outfits/bioship/mediocris_gene_drive_i.xml:4
 #: /home/ess/naev/build/dat/outfits/bioship/mediocris_gene_drive_ii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/supernus_gene_drive_ii.xml:4
+#: /home/ess/naev/build/dat/outfits/bioship/supernus_gene_drive_i.xml:4
 #: /home/ess/naev/build/dat/outfits/bioship/laeviter_gene_drive_ii.xml:4
 #: /home/ess/naev/build/dat/outfits/bioship/grandis_gene_drive_ii.xml:4
 #: /home/ess/naev/build/dat/outfits/bioship/largus_gene_drive_i.xml:4
@@ -146,6 +148,8 @@ msgstr ""
 #: /home/ess/naev/build/dat/outfits/bioship/laeviter_gene_drive_i.xml:9
 #: /home/ess/naev/build/dat/outfits/bioship/mediocris_gene_drive_i.xml:9
 #: /home/ess/naev/build/dat/outfits/bioship/mediocris_gene_drive_ii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/supernus_gene_drive_ii.xml:9
+#: /home/ess/naev/build/dat/outfits/bioship/supernus_gene_drive_i.xml:9
 #: /home/ess/naev/build/dat/outfits/bioship/laeviter_gene_drive_ii.xml:9
 #: /home/ess/naev/build/dat/outfits/bioship/grandis_gene_drive_ii.xml:9
 #: /home/ess/naev/build/dat/outfits/bioship/largus_gene_drive_i.xml:9
@@ -318,12 +322,20 @@ msgstr ""
 msgid "Perleve Cerebrum I"
 msgstr ""
 
+#: /home/ess/naev/build/dat/outfits/bioship/supernus_gene_drive_ii.xml:1
+msgid "Supernus Gene Drive II"
+msgstr ""
+
 #: /home/ess/naev/build/dat/outfits/bioship/ponderosus_cortex_iii.xml:1
 msgid "Ponderosus Cortex III"
 msgstr ""
 
 #: /home/ess/naev/build/dat/outfits/bioship/talon_organ_iv.xml:1
 msgid "Talon Organ IV"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/bioship/supernus_gene_drive_i.xml:1
+msgid "Supernus Gene Drive I"
 msgstr ""
 
 #: /home/ess/naev/build/dat/outfits/bioship/ponderosum_cerebrum_ii.xml:1
@@ -458,6 +470,23 @@ msgstr ""
 msgid "Talon Organ II"
 msgstr ""
 
+#: /home/ess/naev/build/dat/outfits/generated/junker_plates.xml:1
+msgid "Junker Plates"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/generated/junker_plates.xml:3
+#: /home/ess/naev/build/dat/outfits/generated/corsair_hull_plating.xml:3
+msgid "Core Systems (Hull)"
+msgstr ""
+
+#: /home/ess/naev/build/dat/outfits/generated/junker_plates.xml:8
+msgid ""
+"An assortment of different chunks of scavenged ship hulls linked together to "
+"form a surprisingly durable hull plating. It comes with a surprising amount "
+"of empty area to fit cargo, and the unorthodox design makes it a bit hard "
+"for weapon systems to lock onto."
+msgstr ""
+
 #: /home/ess/naev/build/dat/outfits/generated/reaver_cannon.xml:1
 msgid "Reaver Cannon"
 msgstr ""
@@ -519,10 +548,6 @@ msgstr ""
 
 #: /home/ess/naev/build/dat/outfits/generated/corsair_hull_plating.xml:1
 msgid "Corsair Hull Plating"
-msgstr ""
-
-#: /home/ess/naev/build/dat/outfits/generated/corsair_hull_plating.xml:3
-msgid "Core Systems (Hull)"
 msgstr ""
 
 #: /home/ess/naev/build/dat/outfits/generated/corsair_hull_plating.xml:7
