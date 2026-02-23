@@ -73,7 +73,7 @@ function accept ()
    vn.music( onion.loops.hacker )
    vn.transition("electric")
    vn.na(_([[You accept the incoming connection and a familiar hologram appears on-screen.]]))
-   l337(fmt.f(_([["Hey {player}, how's it going? Anyway, enough small chat. One of my relay backdoors seems to be down, and I need you to short the Empire-Dvaered connection for me in {sys}. You up for the task, right?"]]),
+   l337(fmt.f(_([["Hey {player}, how's it going? Anyway, enough small chat. One of my relay backdoors seems to be down, and I need you to short the Empire-Dvaered connection for me in {sys}. You're up for the task, right?"]]),
       {player=player.name(), sys=sys1}))
    vn.menu{
       {_([["What does that even mean?"]]), "01_meaning"},
