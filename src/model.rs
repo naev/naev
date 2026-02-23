@@ -1428,7 +1428,7 @@ impl Model {
             };
             self.render_scene(&lctx, &target, 0, &lighting, &transform.into())?;
             fb.bind(&lctx);
-            let mut data: Vec<u8> = vec![0; (size * size * 4)];
+            let mut data: Vec<u8> = vec![0; size * size * 4];
             unsafe {
                gl.viewport(0, 0, size as i32, size as i32);
                gl.read_buffer(glow::COLOR_ATTACHMENT0);
