@@ -505,7 +505,7 @@ You find yourself in a seemingly infinite field full of odd looking avatars. Is 
    underworlder(_([["Aaah, ah. There you go again. Get used to it already."]]))
    lonewolf4(_([["Tales of yore are naught but echoes in the digital void. The codes of legend are naught forgotten, but at hand are the new dragons of our time. We must cast aside the relics of the past and focus on the codes of the future."]]))
    dog(_([[While the others are talking, you notice that DOG seems to stare at you. Have they figured you out? Either way, they seem to be intent on keeping their thoughts to themselves.]]))
-   trixie(_([["lonewolf4 is right, we're not here to here ramblings. There seems to be some dark motion, dragons if you want to call them that, going on."]]))
+   trixie(_([["lonewolf4 is right, we're not here to hear ramblings. There seems to be some dark motion, dragons if you want to call them that, going on."]]))
    l337er(_([["Yes, the packets are behaving abnormally."]]))
    underworlder(_([["Are you sure this isn't just Nexus Shipyards new relay models? They seem to be running some weird firmware."]]))
    l337er(_([["Unlikely, but not impossible."]]))
@@ -586,7 +586,7 @@ They seem much lower resolution than before.]]))
    l337er(_([["All the core members were there today: DOG, notasockpuppet, lonewolf4, underworlder, Trixie, and me. Technomancers are always an odd bunch, have to be careful to not ruffle them the wrong way."]]))
    trixie(_([["DOG is one of the oldest members, I'm pretty sure they were a founding member, but it's hard to tell. They are usually quite reserved, but have some wild programs I've never seen before up their sleeves. Can't really tell what they're thinking of."]]))
    trixie(_([["notasockpuppet is also quite an old member, however, it's not really clear who they are. They have a giant puppet net, and usually come connect via multiple random puppets. Hard to tell if they are even the avatar most of the time. You do not want to mess with them though. They're quite frivolous, unpredictable, and dangerous."]]))
-   l337er(_([["Other than that, there's lonewolf4, who is, as you probably guessed, a bit dramatic and over the top. Still top-notch, but it's a bit hard to tell what they're saying. Last, underworlder is a bit brash, but quite skilled. Can't really well what they're thinking either. Although, that's quite common among technomancers."]]))
+   l337er(_([["Other than that, there's lonewolf4, who is, as you probably guessed, a bit dramatic and over the top. Still top-notch, but it's a bit hard to tell what they're saying. Last, underworlder is a bit brash, but quite skilled. Can't really tell what they're thinking either. Although, that's quite common among technomancers."]]))
    l337er(_([["And you already know Trixie and I. Trixie has been around much longer than I have, and has shown me a bit of the ropes here."]]))
    trixie(_([["Not that I really had to teach much, l337_b01 has got some skills!"]]))
    vn.jump("04_menu")
@@ -625,7 +625,7 @@ They seem much lower resolution than before.]]))
    vn.jump("05_cont")
 
    vn.label("05_cont")
-   l337er(fmt.f(_([["OK, here's what we'll do figure out the logistics a bit and get back to you, {player}. Then it's time to do justice!"]]),
+   l337er(fmt.f(_([["OK, here's what we'll do... We'll work out the logistics a bit and get back to you, {player}. Then it's time to do justice!"]]),
       {player=player.name()}))
    trixie(_([["We're going to make them cry!"]]))
 
