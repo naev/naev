@@ -44,7 +44,7 @@ local cHostile = colour.new_named("Hostile")
 local scan_icon, scandone_icon
 
 local time_global = 0
-local font_mono = font.new( _( "SourceCodePro-Semibold.ttf,D2CodingBold.ttf,IBMPlexSansJP-Medium.otf" ), 11 )
+local font_bottom = font.new( _( "Ubuntu-Regular.otf,NanumBarunGothicBold.ttf,SourceCodePro-Semibold.ttf,IBMPlexSansJP-Medium.otf"), 11 )
 function create()
    love.origin()
 
@@ -1211,16 +1211,16 @@ function render( dt, dt_mod )
          largeNumber( credits, 2 ), _("Nav:"), navstring, _("Fuel:"), fuelstring, _("Cargo:") }
    for k,v in ipairs(bartext) do
       if k % 2 == 1 then
-         gfx.printf( font_mono, v, length, 5, cols.txt_top )
-         length = length + gfx.printfDim( font_mono, v .. " " )
+         gfx.printf( font_bottom, v, length, 5, cols.txt_top )
+         length = length + gfx.printfDim( font_bottom, v .. " " )
       else
          if v == "none" then
             col = cols.txt_una
          else
             col = cols.txt_std
          end
-         gfx.printf( font_mono, v, length, 5, col )
-         length = length + gfx.printfDim( font_mono, v ) + 10
+         gfx.printf( font_bottom, v, length, 5, col )
+         length = length + gfx.printfDim( font_bottom, v ) + 10
       end
    end
 

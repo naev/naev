@@ -89,7 +89,7 @@
 #define FONT_PATH_PREFIX "fonts/"
 /* Default font path. */
 #define FONT_DEFAULT_PATH                                                      \
-   N_( "Cabin-SemiBold.otf,NanumBarunGothicBold.ttf,SourceCodePro-Semibold."   \
+   N_( "Ubuntu-Regular.otf,NanumBarunGothicBold.ttf,SourceCodePro-Semibold."   \
        "ttf,IBMPlexSansJP-Medium.otf" )
 /* Default monospace font path. */
 #define FONT_MONOSPACE_PATH                                                    \
