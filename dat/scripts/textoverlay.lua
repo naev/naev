@@ -9,7 +9,7 @@ local nw, nh
 local textcanvas, textshader, texttimer, text_fadein, text_fadeout, text_length
 local hookfg, hookupdate
 
-textoverlay.fontname = _("Audiowide-Regular.ttf,NanumBarunGothicBold.ttf,IBMPlexSansJP-Medium.otf,Ubuntu-Regular.ttf")
+textoverlay.fontname = _("Audiowide-Regular.ttf,NanumBarunGothicBold.ttf,IBMPlexSansJP-Medium.otf,Ubuntu-Regular.otf")
 
 function textoverlay.init( titletext, subtitletext, opts )
    opts = opts or {}
