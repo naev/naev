@@ -584,7 +584,7 @@ impl Mesh {
 
          // Render
          unsafe {
-            if m.double_sided {
+            if !m.double_sided {
                gl.disable(glow::CULL_FACE);
             }
             if m.blend {
@@ -593,7 +593,7 @@ impl Mesh {
 
             gl.draw_elements(p.topology, p.num_indices, p.element_type, 0);
 
-            if m.double_sided {
+            if !m.double_sided {
                gl.enable(glow::CULL_FACE);
             }
             if m.blend {
