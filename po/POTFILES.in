@@ -3923,7 +3923,6 @@ src/event.c
 src/event.h
 src/explosion.c
 src/explosion.h
-src/faction.c
 src/faction.h
 src/faction.rs
 src/font.c
@@ -4032,7 +4031,6 @@ src/nlua_bkg.c
 src/nlua_bkg.h
 src/nlua_camera.c
 src/nlua_camera.h
-src/nlua_canvas.c
 src/nlua_canvas.h
 src/nlua_cli.h
 src/nlua_colour.h
