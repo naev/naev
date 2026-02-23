@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://codeberg.org/naev/naev/issues\n"
-"POT-Creation-Date: 2026-01-28 11:43+0900\n"
+"POT-Creation-Date: 2026-02-23 21:29+0900\n"
 "PO-Revision-Date: 2025-03-24 13:08+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/naev/"
@@ -305,6 +305,9 @@ msgstr ""
 msgid "Droid Repair Crew"
 msgstr "Equipe de Androides de Reparo"
 
+msgid "Droid Repair Crew MK2"
+msgstr ""
+
 msgid "Drone Bay"
 msgstr "Baia de Drones"
 
@@ -365,6 +368,9 @@ msgstr ""
 
 msgid "Executor Shield Aura"
 msgstr "Aura de Escudo Executor"
+
+msgid "Fake Licence"
+msgstr ""
 
 msgid "Fake Transponder"
 msgstr "Transponder Falso"
@@ -546,6 +552,18 @@ msgstr ""
 
 msgid "Jump Scanner"
 msgstr "Escaneador de Salto"
+
+msgid "Junker Ion Shotter"
+msgstr ""
+
+msgid "Junker Pack"
+msgstr ""
+
+msgid "Junker Plates"
+msgstr ""
+
+msgid "Junker Point Defence"
+msgstr ""
 
 msgid "Krain Nanotubes Foam Padding"
 msgstr ""
@@ -872,6 +890,9 @@ msgstr "Feixe de Partículas"
 
 msgid "Particle Lance"
 msgstr "Lança de Partículas"
+
+msgid "PatchiGel Housing"
+msgstr ""
 
 msgid "Patchwork Heavy Plating"
 msgstr "Blindagem Pesada de Retalhos"
@@ -1367,6 +1388,9 @@ msgstr "Mini Baia de Drones Leves Za'lek"
 msgid "Za'lek Light Drone Mini Bay"
 msgstr "Mini Baia de Drones Leves Za'lek"
 
+msgid "Za'lek Predator Launcher"
+msgstr ""
+
 msgid "Za'lek Reaper Launcher"
 msgstr "Lançador de Drones Ceifador Za'lek"
 
@@ -1476,6 +1500,9 @@ msgstr "Drone (Hiena)"
 
 msgid "Dvaered Ancestor"
 msgstr "Ancestral Dvaered"
+
+msgid "Dvaered Ancestor Calamity"
+msgstr ""
 
 msgid "Dvaered Arsenal"
 msgstr "Arsenal Dvaered"
@@ -1717,6 +1744,9 @@ msgstr "Providência Sirius"
 msgid "Sirius Shaman"
 msgstr "Xamã Sirius"
 
+msgid "Sirius Starbridge"
+msgstr ""
+
 msgid "Soromid Arx"
 msgstr "Arx Soromida"
 
@@ -1734,6 +1764,9 @@ msgstr "Saqueador Soromida"
 
 msgid "Soromid Nyx"
 msgstr "Nyx Soromida"
+
+msgid "Soromid Nyx Symbiotic"
+msgstr ""
 
 msgid "Soromid Odium"
 msgstr "Ódio Soromida"
@@ -1891,7 +1924,7 @@ msgid "# Fabricators"
 msgstr "Fabricantes Za'lek"
 
 msgid ""
-"There is a diversity of fabricators that produce different ships and outfits."
+"There are a variety of fabricators that produce different ships and outfits."
 msgstr ""
 
 #, fuzzy
@@ -2005,7 +2038,7 @@ msgstr "Estação Allous"
 msgid "# Factions"
 msgstr "Estação Allous"
 
-msgid "There are a diversity of factions that vie for control of the universe."
+msgid "There are a variety of factions that vie for control of the universe."
 msgstr ""
 
 #, fuzzy
@@ -2123,7 +2156,7 @@ msgstr ""
 
 msgid ""
 "Planets are governed by Warlords, former members of the Dvaered High "
-"Command, which makes all the most important decisions about the House."
+"Command, who make all the most important decisions about the House."
 msgstr ""
 
 msgid ""
@@ -2140,7 +2173,7 @@ msgstr ""
 msgid "## Organization"
 msgstr "Contribuições"
 
-msgid "* **Leader:** None"
+msgid "* **Leader:** Warlords of various lesser houses"
 msgstr ""
 
 msgid "* **Leading Structure:** High Command Generals"
@@ -2250,7 +2283,7 @@ msgid ""
 msgstr ""
 
 msgid ""
-"These are soldiers and sailors have sworn allegiance to the person, not the "
+"These soldiers and sailors have sworn allegiance to the person, not the "
 "banner, and they will continue to serve until the bitter end."
 msgstr ""
 
@@ -2282,7 +2315,7 @@ msgid ""
 "barely livible wages in barely acceptable conditions."
 msgstr ""
 
-msgid "Nevertheless, there certainly is a Dvaered elite."
+msgid "Nevertheless, there certainly is a civilian elite."
 msgstr ""
 
 msgid ""
@@ -2301,7 +2334,7 @@ msgstr ""
 
 msgid ""
 "Though Dvaered High Command is more military than government, it needs a "
-"steady stream of funds, manpower and materials to further its agenda."
+"steady stream of funds, manpower, and materials to further its agenda."
 msgstr ""
 
 msgid ""
@@ -2689,7 +2722,7 @@ msgid "# Galactic Space Pirates"
 msgstr "Piratas Espaciais Galáticos"
 
 msgid ""
-"The Galactic Space Pirates are split into two main groups, the clans and "
+"The Galactic Space Pirates are split into two main groups: the clans and "
 "independent pirates."
 msgstr ""
 
@@ -2779,20 +2812,20 @@ msgstr ""
 
 msgid ""
 "The assemblies tend to be a good opportunity for the Pirate Lords to "
-"calculate each other strengths, where they tend to bring significant ships "
+"calculate each others' strengths, where they tend to bring significant ships "
 "from their fleet."
 msgstr ""
 
 msgid ""
 "In many ways, the pirate assemblies tend to not only determine the future of "
-"the space pirates, but also tend to shape the future of the galaxy."
+"the space pirates, but also to shape the future of the galaxy."
 msgstr ""
 
 msgid ""
-"The events tend to also attract the attention of other actors in the galaxy, "
-"with most Great Houses and [the Empire](lore/factions/empire) sending "
-"somewhat undercover agents to try to get a glimpse of what is going on and "
-"gain advantage over other Great Houses."
+"The events also attract the attention of other actors in the galaxy, with "
+"most Great Houses and [the Empire](lore/factions/empire) sending somewhat "
+"undercover agents to try to get a glimpse of what is going on and gain "
+"advantage over other Great Houses."
 msgstr ""
 
 msgid ""
@@ -2918,8 +2951,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"They also tend to run protection rackets, which are often favoured over the "
-"whimsical [Dvaered](lore/factions/dvaered) Warlords and can provide more "
+"They also run protection rackets, which are often favoured over the "
+"capricious [Dvaered](lore/factions/dvaered) Warlords and can provide more "
 "stability to the area."
 msgstr ""
 
@@ -2961,7 +2994,7 @@ msgstr ""
 msgid ""
 "They are also renowned for being a large hub of illicit substances, which "
 "their members use freely and some claim to get Sirius-like psychic powers "
-"from substance abuse."
+"from."
 msgstr ""
 
 msgid ""
@@ -3516,7 +3549,7 @@ msgstr ""
 msgid "The population of House Sirius is divided in three \"echelons\"."
 msgstr ""
 
-msgid "They are the Shaira, the Fyrra and the Serra."
+msgid "They are the Shaira, the Fyrra, and the Serra."
 msgstr ""
 
 msgid ""
@@ -3581,11 +3614,11 @@ msgstr ""
 
 msgid ""
 "At the head of each government stands an Arch-Canter, a zealot who can be "
-"considered the head of state for his particular echelon."
+"considered the head of state for that particular echelon."
 msgstr ""
 
 msgid ""
-"The three Arch Canters combined form the political government of House "
+"The three Arch-Canters combined form the political government of House "
 "Sirius, and it is they who deal with any outside influence, including the "
 "Empire."
 msgstr ""
@@ -3616,8 +3649,8 @@ msgstr ""
 
 msgid ""
 "Since that time there have been many Sirichanas, but all are assumed to be "
-"reincarnations of the original Sirichana, and so distinction is never made "
-"other than in a historical context."
+"reincarnations of the original Sirichana, and no distinction is made other "
+"than in historical contexts."
 msgstr ""
 
 msgid ""
@@ -3657,8 +3690,8 @@ msgstr ""
 
 msgid ""
 "So great was their conviction that planet after planet began to slip from "
-"the Emperor's grasp, its inhabitants preferring to follow their faith than "
-"the Emperor's will."
+"the Emperor's grasp, its inhabitants preferring to follow their faith rather "
+"than the Emperor's will."
 msgstr ""
 
 msgid ""
@@ -3667,21 +3700,21 @@ msgid ""
 msgstr ""
 
 msgid ""
-"The Emperor knew that he was no longer in control of the worlds following "
-"Sirichana, but to re-assert authority through force of arms on that scale "
-"would set a precedent unheard of since the end of the Faction Wars."
+"The Emperor knew that the worlds following Sirichana no longer obeyed the "
+"Empire, but to re-assert authority through force of arms on that scale would "
+"set a precedent unheard of since the end of the Faction Wars."
 msgstr ""
 
 msgid ""
-"And so he chose to grant Sirichana a Great House of his own, House Sirius, "
-"on the conditions that Sirichana would not attempt to spread his religion "
-"beyond the worlds that would be rightfully his, and that Imperial Decrees "
-"would carry the force of law among his people."
+"And so Sirichana was offered a Great House: House Sirius, on the condition "
+"that Sirichana would not attempt to spread the religion beyond the worlds of "
+"House Sirius, and that Imperial Decrees would carry the force of law among "
+"his people."
 msgstr ""
 
 msgid ""
 "Sirichana agreed, knowing that refusal would give the Emperor the "
-"justification he needed to start an all out war."
+"justification needed to start an all out war."
 msgstr ""
 
 msgid "And so matters would remain for a very long time."
@@ -3693,9 +3726,9 @@ msgid ""
 msgstr ""
 
 msgid ""
-"After all, it is difficult to believe in a man who resides on a planet far "
-"from one's home. In point of fact, there is a good reason why people believe "
-"as strongly as they do."
+"After all, it is difficult to believe in one person who resides on a planet "
+"far from one's home. In point of fact, there is a good reason why people "
+"believe as strongly as they do."
 msgstr ""
 
 msgid "## The Touched"
@@ -3763,7 +3796,7 @@ msgstr ""
 
 msgid ""
 "All who live in Crater City leave whatever they're doing and stand in the "
-"streets to hear his words."
+"streets to hear the words."
 msgstr ""
 
 msgid ""
@@ -3772,8 +3805,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"But when he finishes speaking, his listeners are no longer the pilgrims they "
-"were before."
+"But when the speech is finished, the listeners are no longer the pilgrims "
+"they were before."
 msgstr ""
 
 msgid ""
@@ -3783,8 +3816,8 @@ msgstr ""
 
 msgid ""
 "The Touched then leave Crater City, abandoning it completely, leaving its "
-"houses, its tools, its resources behind for those pilgrims who will be "
-"coming."
+"houses, its tools, and its resources behind for those pilgrims who will be "
+"coming after them."
 msgstr ""
 
 msgid ""
@@ -4257,6 +4290,9 @@ msgstr "Thurion"
 msgid ""
 "The Thurion were originally a Great Project in [the Empire](lore/factions/"
 "empire), before being nearly exterminated and escaping into obscurity."
+msgstr ""
+
+msgid "* **Leader:** None"
 msgstr ""
 
 msgid "* **Leading Structure:** Self-Organizing Groups"
@@ -5005,14 +5041,14 @@ msgstr ""
 
 msgid ""
 "Before long, all [the Empire](lore/factions/empire) was getting out of its "
-"former Great Project was a yearly file of unintelligible reports, articles "
+"former Great Project was a yearly file of unintelligible reports, articles, "
 "and theorems, many of which used forms of mathematics the Imperial engineers "
 "had never even heard of before."
 msgstr ""
 
 msgid ""
 "When asked to provide [the Empire](lore/factions/empire) with tangible "
-"results such as pre-produced weapons or ships, the Za'lek indignantly "
+"results such as mass-produced weapons or ships, the Za'lek indignantly "
 "replied that things like manufacturing things that had been successfully "
 "prototyped were beneath them."
 msgstr ""
@@ -5027,7 +5063,7 @@ msgid "Over the years, House Za'lek built up an impressive technological lead."
 msgstr ""
 
 msgid ""
-"At the same time, it became more isolated, its scientists choosing to devote "
+"At the same time, it became more isolated; its scientists choosing to devote "
 "their time to working on their myriad of projects rather than waste it on "
 "\"the simpletons elsewhere\"."
 msgstr ""
@@ -5252,7 +5288,7 @@ msgstr ""
 msgid ""
 "Though no new colonization efforts were made after the first twenty, as this "
 "was deemed too costly, different avenues of deep space exploration were "
-"being invented, tested and discarded on a regular basis."
+"being invented, tested, and discarded on a regular basis."
 msgstr ""
 
 msgid ""
@@ -5324,7 +5360,7 @@ msgid "On paper, it looked good."
 msgstr ""
 
 msgid ""
-"Over the course of many years, many new planets were settled, converted or "
+"Over the course of many years, many new planets were settled, converted, or "
 "exploited."
 msgstr ""
 
@@ -5991,9 +6027,7 @@ msgstr ""
 msgid "## Absorption and Penetration"
 msgstr ""
 
-msgid ""
-"Absorption reduces the amount of damage taken by a ship by a percentage "
-"amount."
+msgid "Each point of absorption reduces the damage you would take by 1%."
 msgstr ""
 
 msgid ""
@@ -6001,9 +6035,7 @@ msgid ""
 "subtracted from the absorption."
 msgstr ""
 
-msgid ""
-"Note that penetration can not increase the damage past 100%, and absorption "
-"can only reduce the damage to 0%."
+msgid "Note that penetration can not increase the damage past 100%."
 msgstr ""
 
 msgid "## Disable Damage and Stress"
@@ -6104,7 +6136,7 @@ msgid ""
 msgstr ""
 
 msgid ""
-"Some types of effects can stack multiple types, which will be indicated by a "
+"Some types of effects can stack multiple times, which will be indicated by a "
 "number on the icon indicating how many stacks there are, while others will "
 "get refreshed when reapplied."
 msgstr ""
@@ -6505,9 +6537,9 @@ msgid ""
 msgstr ""
 
 msgid ""
-"In particular, being in an asteroid will affect the detection range, and "
-"consequently, signature range and stealth range depending on the density of "
-"asteroids."
+"In particular, being in an asteroid field will affect the detection range, "
+"and consequently, signature range and stealth range depending on the density "
+"of asteroids."
 msgstr ""
 
 msgid ""
@@ -6651,8 +6683,7 @@ msgid ""
 "done near the vicinity of a jump point."
 msgstr ""
 
-msgid ""
-"The [universe map](mechanics/map) depicting which systems are connected."
+msgid "The [universe map](mechanics/map) depicts which systems are connected."
 msgstr ""
 
 #. --
@@ -6724,7 +6755,7 @@ msgstr ""
 msgid "In most spaceports you can also buy a local map and refuel your ship."
 msgstr ""
 
-msgid "The services offered by the spaceport will vary significantly."
+msgid "The services offered vary significantly by location."
 msgstr ""
 
 msgid "### Spaceport Bar"
@@ -6751,7 +6782,7 @@ msgid "### Missions"
 msgstr "   * Missões"
 
 msgid ""
-"The Mission Bullet Board System is where you can accept a diversity of "
+"The Mission Bulletin Board System is where you can accept a variety of "
 "different missions."
 msgstr ""
 
@@ -6782,8 +6813,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"All the outfits you know and their availability can be accessed [here]"
-"(outfits)."
+"All the outfits you have encountered and their availability can be accessed "
+"under [outfits](outfits) in the Holo-Archives."
 msgstr ""
 
 #, fuzzy
@@ -6803,7 +6834,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"All the ships you know and their availability can be accessed [here](ships)."
+"All the ships you have encountered and their availability can be accessed "
+"under [ships](ships) in the Holo-Archives."
 msgstr ""
 
 #, fuzzy
@@ -6825,7 +6857,7 @@ msgid ""
 msgstr ""
 
 msgid ""
-"You can click on the slots of the selecting ship to filter only the outfits "
+"You can click on the slots of the selected ship to filter only the outfits "
 "that go in the slot."
 msgstr ""
 
@@ -6872,7 +6904,7 @@ msgid ""
 msgstr ""
 
 msgid ""
-"They come in made different shapes and sizes, from slow and devastating seek "
+"They come in many different shapes and sizes, from slow and devastating seek "
 "torpedoes, to fast and agile dumbfire rockets."
 msgstr ""
 
@@ -6924,13 +6956,13 @@ msgid ""
 msgstr ""
 
 msgid ""
-"The downside is the ship will be immovable and unable to defend itself "
-"during this time."
+"The downside is the ship will be immobile and unable to defend itself during "
+"this time."
 msgstr ""
 
 msgid ""
-"The amount of time it takes to do an active cooldown depends on both the "
-"mass of the ship and the amount of excess heat."
+"The amount of time it takes to do an active cooldown depends on <!--both --"
+">the mass of the ship<!-- and the amount of excess heat-->."
 msgstr ""
 
 msgid "## Lock-On and Calibration"
@@ -7058,8 +7090,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"By clicking the \"Autonav\" button at the bottom, you can directly start "
-"autonav and close the map."
+"By clicking the \"Autonav\" button at the bottom or pressing #bA#0, you can "
+"directly start autonav and close the map."
 msgstr ""
 
 msgid ""
@@ -7126,8 +7158,8 @@ msgid "## Find"
 msgstr ""
 
 msgid ""
-"The \"Find\" button at the button at the bottom can be used to find systems, "
-"space objects, outfits, or ships from text."
+"The \"Find\" button at the bottom can be used to find systems, space "
+"objects, outfits, or ships from text."
 msgstr ""
 
 msgid ""
@@ -7410,16 +7442,17 @@ msgid "# Fleets"
 msgstr ""
 
 msgid ""
-"Besides your own ship, it is possible to deploy and command a fleet of ships "
-"when out in space."
+"Besides your own ship, it is possible to deploy and command a fleet of "
+"escort ships when out in space."
 msgstr ""
 
 msgid ""
-"You can deploy any ship you own as a fleet member, as long as it is space "
-"worthy by right-clicking on them or toggling the deployed checkbox."
+"You can deploy any spaceworthy ship you own as a fleet member by right-"
+"clicking on it or toggling the deployed checkbox on the [equipment tab]"
+"(mechanics/equipment) while landed at a spaceport."
 msgstr ""
 
-msgid "The amount of ships you can deploy deeps on your **fleet capacity**."
+msgid "The amount of ships you can deploy depends on your **fleet capacity**."
 msgstr ""
 
 msgid ""
@@ -7696,10 +7729,10 @@ msgstr ""
 msgid "Used like"
 msgstr ""
 
-msgid "Seconds"
+msgid "Standard Time Unit"
 msgstr ""
 
-msgid "\"s\""
+msgid "\"stu\""
 msgstr ""
 
 msgid "1 Earth second"
@@ -7708,14 +7741,17 @@ msgstr ""
 msgid "1 second"
 msgstr ""
 
-msgid "Hectoeconds"
+msgid "Seconds"
+msgstr ""
+
+msgid "Hectostu"
 msgstr ""
 
 #. l +=
 msgid "N/A"
 msgstr "N/D"
 
-msgid "100 seconds"
+msgid "100 stu"
 msgstr ""
 
 msgid "1 minute and 40 seconds"
@@ -7727,10 +7763,10 @@ msgstr ""
 msgid "Periods"
 msgstr ""
 
-msgid "\"p\""
+msgid "\"p\" or \"stp\""
 msgstr ""
 
-msgid "10,000 seconds"
+msgid "10,000 stu"
 msgstr ""
 
 msgid "2 hours and 47 minutes"
@@ -7778,11 +7814,17 @@ msgstr "Expansão de Carga"
 
 msgid ""
 "UST consists of three basic components describing different amounts of time: "
-"the second, which is equivalent to an Earth second; the period, which is "
-"equal to 10,000 seconds; and the cycle, which is equal to 5,000 periods "
-"(50,000,000 seconds). In colloquial usage, the terms \"decaperiod\" "
-"(equivalent to 10 periods) and \"hectosecond\" (equivalent to 100 seconds) "
-"are also common. UST dates are written in the form:"
+"the standard time unit (stu), which is equivalent to an Earth second; the "
+"period, which is equal to 10,000 stu (or Earth seconds); and the cycle, "
+"which is equal to 5,000 periods (50,000,000 stu)."
+msgstr ""
+
+msgid ""
+"In colloquial usage, the terms \"decaperiod\" (equivalent to 10 periods) and "
+"\"hectostu\" (equivalent to 100 stu ) are also common."
+msgstr ""
+
+msgid "UST dates are written in the form:"
 msgstr ""
 
 msgid "* UST C:PPPP.SSSS"
@@ -7790,9 +7832,12 @@ msgstr ""
 
 msgid ""
 "Where \"C\" is the cycle, \"PPPP\" is the period (always displayed as four "
-"digits), and \"SSSS\" is the second (always displayed as four digits). So "
-"for example, the following hypothetical date indicates cycle 493, period 42, "
-"second 2089 (which is about 100 cycles prior to [the Incident](lore/history/"
+"digits), and \"SSSS\" is the stu (always displayed as four digits)."
+msgstr ""
+
+msgid ""
+"So for example, the following hypothetical date indicates cycle 493, period "
+"42, stu 2089 (which is about 100 cycles prior to [the Incident](lore/history/"
 "incident)):"
 msgstr ""
 
@@ -7801,23 +7846,38 @@ msgstr ""
 
 msgid ""
 "When describing lengths of time, it is commonplace for computer systems to "
-"indicate a number of periods with a lowercase \"p\" or a number of seconds "
-"with a lowercase \"s\". This convention is not used for cycles, which are "
-"always spelled out in full as \"cycles\". This convention is also not "
-"adopted in spoken form since it's more natural to just say \"periods\" and "
-"\"seconds\" rather than a single-letter abbreviation. Additionally, due to "
-"the metric nature of the time system, periods and seconds can be written out "
-"as a single unit, although in spoken conversation people report the periods "
-"and cycles separately. Some examples:"
+"indicate a number of periods with either \"p\" or \"stp\", and a number of "
+"standard time units with \"stu\"."
 msgstr ""
 
-msgid "* 783 p (read as \"783 periods\")"
+msgid ""
+"This convention is not used for cycles, which are always spelled out in full "
+"as \"cycles\", but is also partially adopted in spoken form where periods "
+"are just referred as \"periods\", however, Earth seconds are referred to as "
+"\"stu\" (pronounced like stew)."
 msgstr ""
 
-msgid "* 42 s (read as \"42 seconds\")"
+msgid ""
+"This also happens to solve the confusion between real-time seconds, and in-"
+"game Earth seconds or stu."
 msgstr ""
 
-msgid "* 12.0456 p (read as \"12 periods and 456 seconds\")"
+msgid ""
+"Additionally, due to the metric nature of the time system, periods and stu "
+"can be written out as a single unit, although in spoken conversation people "
+"report the periods and cycles separately."
+msgstr ""
+
+msgid "Some examples:"
+msgstr ""
+
+msgid "* 783 stp (read as \"783 periods\")"
+msgstr ""
+
+msgid "* 42 stu (read as \"42 stu\")"
+msgstr ""
+
+msgid "* 12.0456 p (read as \"12 periods and 456 stu\")"
 msgstr ""
 
 msgid ""
@@ -7837,7 +7897,7 @@ msgstr ""
 
 msgid ""
 "* [Flying in space](mechanics/movement): For ships with a time dilation rate "
-"of 100% (that is, most small ships), time passes at a rate of 30 seconds per "
+"of 100% (that is, most small ships), time passes at a rate of 30 stu per "
 "real-world second, which is why the GUI's clock increases by 0.01p every 3⅓ "
 "seconds. For ships with higher time dilation the passage of time is faster, "
 "and for ships with lower time dilation the passage of time is slower."
@@ -7938,8 +7998,8 @@ msgstr ""
 msgid ""
 "Furthermore, the weapon set key bindings (such as <%= "
 "\"#b\"..naev.keyGet(\"weapset1\")..\"#0\" %> key for the first weapon set or "
-"the <%= \"#b\"..naev.keyGet(\"weapset2\")..\"#0\" %>) will activate the "
-"weapon set."
+"the <%= \"#b\"..naev.keyGet(\"weapset2\")..\"#0\" %> for the second one) "
+"will activate the weapon set."
 msgstr ""
 
 msgid ""
@@ -9359,10 +9419,16 @@ msgstr ""
 msgid "Perleve Cerebrum I"
 msgstr ""
 
+msgid "Supernus Gene Drive II"
+msgstr ""
+
 msgid "Ponderosus Cortex III"
 msgstr ""
 
 msgid "Talon Organ IV"
+msgstr ""
+
+msgid "Supernus Gene Drive I"
 msgstr ""
 
 msgid "Ponderosum Cerebrum II"
@@ -9466,6 +9532,16 @@ msgstr ""
 msgid "Talon Organ II"
 msgstr ""
 
+msgid "Core Systems (Hull)"
+msgstr "Sistemas Primários (Casco)"
+
+msgid ""
+"An assortment of different chunks of scavenged ship hulls linked together to "
+"form a surprisingly durable hull plating. It comes with a surprising amount "
+"of empty area to fit cargo, and the unorthodox design makes it a bit hard "
+"for weapon systems to lock onto."
+msgstr ""
+
 msgid ""
 "The complex engineering specifications and difficulty of mass production "
 "doomed the Reaver Cannon from the start. However, in the right hands, given "
@@ -9502,9 +9578,6 @@ msgid ""
 "all over the ship hub\n"
 "in space is it also mal de mer?"
 msgstr ""
-
-msgid "Core Systems (Hull)"
-msgstr "Sistemas Primários (Casco)"
 
 msgid ""
 "wish I be like that lovely corsair\n"
@@ -9946,7 +10019,18 @@ msgstr ""
 #. Compute the active stats if it is the lowest id
 #. Run function if applicable, but will be false for all but primary
 #. If we want to set (e.g., not multicore), we'll set here
+#. --
+#. @brief Sets the stats of the set.
+#. --
 #. Apply the active stats
+#. --
+#. @brief Initializes the set libray.
+#.
+#. @luatparam ttring setname Name of the set.
+#. @luatparam {Outfit} outfits Ordered table with the outfits in the set.
+#. @luaparam bonuses Table of bonuses.
+#. @luatparam boolean noset Whether or not to run the lib.set function automatically (such as not multicore).
+#. --
 msgid "Corsair"
 msgstr ""
 
@@ -10799,15 +10883,10 @@ msgstr ""
 msgid ""
 "A statue given to you by Baron Sauterfeldt for your fine work. You would "
 "feel more grateful if he hadn't mentioned that his lover was making him get "
-"rid of it. The statue seems to depict a shrimp wearing a bow tie playing an "
+"rid of it. The statue seems to depict a shrimp wearing a bow tie playing a "
 "ukulele and its head bobbles around with the ship acceleration. How "
 "tasteful..."
 msgstr ""
-"Uma estátua dada a você pelo Barão Sautfeldt por seu belo trabalho. Você "
-"seria mais grato se ele não tivesse mencionado que sua amante o estava "
-"obrigando a se livrar da peça. A estátua parece retratar um lagostim "
-"vestindo uma gravata borboleta tocando um ukulele e a cabeça dele balança "
-"conforme a nave acelera. Que bom gosto…"
 
 msgid ""
 "Found on a Four Winds fighter that was carrying a Ragnarok beam. It seems to "
@@ -12026,19 +12105,13 @@ msgstr "Canhão de Explosão de Elétrons"
 msgid "You need at least 20 reputation with House Za'lek."
 msgstr "Requer 50 pontos de reputação a Casa Za'lek."
 
-#, fuzzy
 msgid ""
 "This powerful energy weapon is built to bombard from great range with ion "
 "bursts, causing debilitating damage to a target's shields and electrical "
 "systems, which can leave a ship effectively defenceless. It was developed by "
-"the Za'lek for use on their heavier droness to supplement the short range "
-"and high damage of their beams."
+"the Za'lek for use on their heavier drones to supplement the short range and "
+"high damage of their beams."
 msgstr ""
-"Esta arma poderosa de energia é feita para bombardear um alvo a partir de "
-"uma grande distância com explosões iônicas, causando danos debilitantes aos "
-"escudos e sistemas elétricos do alvo, o que pode tornar a nave efetivamente "
-"indefesa. Foi desenvolvido pelos Za'lek para ser usado em drones mais "
-"pesados e complementar o baixo alcance e alto dano de suas armas de raio."
 
 #, fuzzy
 msgid "EMP Grenade L."
@@ -12407,6 +12480,23 @@ msgstr ""
 "caçador-matador. Ele acelera em direção ao seu alvo e libera a sua carga "
 "ferromagnétohidráulica com efeito mortal."
 
+msgid "Z. Predator L."
+msgstr ""
+
+msgid "You need at least 20% reputation with House Za'lek."
+msgstr ""
+
+msgid ""
+"The classic Hunter launcher has proven too unwieldy to equip on the Za'lek's "
+"mass-produced bomber drones. The Predator is a downsized version modelled "
+"for those drones, but suitable for any light vessel. The compact design of "
+"the launcher has nessesitated heavy compromises, especially to the targeting "
+"subsystem, to the point of it being closer to a simple missile than a drone "
+"by itself. Thus, it's a poor fit for anything other than what it excels at "
+"if brought to bear in numbers: harming medium-to-large sized enemy ships "
+"from a safe distance."
+msgstr ""
+
 #, fuzzy
 msgid "Z. Reaper L."
 msgstr "Lançador de Drones Ceifador Za'lek"
@@ -12612,6 +12702,16 @@ msgstr ""
 msgid "Heavy Weapon"
 msgstr "Arma Pesada"
 
+msgid "Fake License"
+msgstr ""
+
+msgid ""
+"Unlike the Great Houses, independent goverments have fairly limited "
+"databases and resources to spend on tracking individuals. This presents "
+"itself as a great opportunity to those who both wish to make a quick credit "
+"selling their identity, and those who are in need of such new identity."
+msgstr ""
+
 msgid "Outfit corresponding with the \"Brushed\" GUI."
 msgstr "Equipamento correspondente a interface gráfica \"Metal Escovado\"."
 
@@ -12702,8 +12802,8 @@ msgid "Point Defence"
 msgstr ""
 
 msgid ""
-"Also known as the Dvareed Firework Battery, the Flare Battery is able to "
-"launch cluster munitions with large areas of effects to mow down enemy "
+"Also known as the Dvaered Firework Battery, the Flare Battery is able to "
+"launch cluster munitions with large areas of effect to mow down enemy "
 "interceptors and incoming ordinances. What the individuals lack in "
 "destructive power is made up for in the sheer amount that are packed into "
 "each individual flare. When not being used for destructive purposes, Dvaered "
@@ -13233,6 +13333,33 @@ msgid ""
 "other areas."
 msgstr ""
 
+msgid ""
+"It's not clear if this weapon was originally a laser cannon or ion cannon, "
+"but through many iterations of replacing parts with scraps combined with "
+"prolonged usage has changed into something mostly unrecognizable. "
+"Functionally, it has evolved to be a mix of energy and ion weapon that would "
+"take a Za'lek scientist the good part of the decade to figure out and make "
+"for a good article in the peculiarly named Journal of Experimental Weaponry "
+"and Penguin Subspecies"
+msgstr ""
+
+msgid ""
+"A mix and match of the best scraps found from derelicts and abandoned "
+"facilities across the stars. They are jerry-rigged together to work "
+"surprisingly well, providing a diversity of bonuses to the equipping ship, "
+"although not excelling in any particular task."
+msgstr ""
+
+msgid ""
+"Usually used by repairers when performing critical ship maintenance on the "
+"field, PatchiGel quickly allows keeping a highly damaged hull spaceworthy. "
+"Although designed for exterior application, housing it under the primary "
+"plating allows for quick application to the damaged areas, resulting in a "
+"self-healing armour that further increases in healing capacity as damaged. "
+"The downside is that it takes up the valuable space necessary for a "
+"secondary hull layer."
+msgstr ""
+
 msgid "P.S. T-IVa 'Qickshell'"
 msgstr ""
 
@@ -13643,8 +13770,13 @@ msgstr ""
 "Devido à simplicidade das ferramentas dos dróides, são incapazes de "
 "restaurar a blindagem acima de 50%."
 
-msgid "Can only restore armour when below 50%."
-msgstr "Apenas pode restaurar a blindagem quando abaixo de 50%."
+msgid ""
+"Compared to the base model, the Droid Repair Crew MK2 is able to patch up "
+"the ship's hull at twice the speed using a new assorted set of tools, "
+"included the coveted PatchiGel©. However, this comes with a trade-off of "
+"being even more ineffective unless the hull is at fairly critical "
+"conditions, when the gel is most effective."
+msgstr ""
 
 msgid "Shield Modification"
 msgstr "Modificador de Escudo"
@@ -14126,7 +14258,7 @@ msgstr ""
 "molecular. Seu uso libera grandes quantidades de radiação Birkhoff-Kerr que "
 "é capaz de ter efeitos significativamente adversos sobre a nave atingida."
 
-msgid "Lowers the action speed upon hit by 10% for 7 seconds."
+msgid "Lowers the action speed of ships under fire by 40%."
 msgstr ""
 
 msgid ""
@@ -14805,6 +14937,32 @@ msgstr ""
 "foi otimizada para permitir que mais carga útil fosse embarcada."
 
 #, fuzzy
+msgid "You need at least 40% reputation with House Dvaered."
+msgstr "Requer 40 pontos de reputação com a Casa Dvaered."
+
+msgid ""
+"The Super-Fast Collider Launchers have more in common with most torpedo "
+"launchers than you'd think. All it takes for them to work just as well on a "
+"comparatively tiny bomber-class vessel is a redesign of its weapon mounts to "
+"be rigidly integrated with them. The newly possible generous design "
+"assumptions have also allowed for a substantial increase in targeting "
+"accuracy, much needed for better luck fighting off ships of its own caliber, "
+"but Dvaered technology can only be pushed so far, so the result is a ship "
+"much heavier yet less armoured than the original Ancestor, although bearing "
+"ridiculous firepower.\n"
+"\n"
+"This design carries the legend of one empoverished Lord Calamares, who, as "
+"they say, lost their prized Goddard in a bet on the Crimson Gauntlet. "
+"Desperate to earn back their pride, they spent the last of their finances on "
+"second-hand launchers that barely fit on their last space-worthy ship, a "
+"Dvaered Ancestor, to threaten the very warlord they lost the jewel of their "
+"once-grand fleet to. Both perished in what passed for a fight, one that "
+"would be a footnote in history had it not been taken note of by a High "
+"Command officer, who would then order a refined design based on the doomed "
+"pilot's idea."
+msgstr ""
+
+#, fuzzy
 msgid "You need at least 60% reputation with House Dvaered."
 msgstr "Requer 60 pontos de reputação com a Casa Dvaered."
 
@@ -14846,10 +15004,6 @@ msgstr ""
 "Hoje, a Casa Dvaered é o maior cliente da Casa Goddard e esta versão militar "
 "foi adaptada às necessidades dos Chefes Guerreiros Dvaered, o que significa "
 "melhor blindagem maior dano das armas de proa às custas de uma maior massa."
-
-#, fuzzy
-msgid "You need at least 40% reputation with House Dvaered."
-msgstr "Requer 40 pontos de reputação com a Casa Dvaered."
 
 msgid ""
 "On this military grade version of the Phalanx, the distribution of the "
@@ -16072,6 +16226,13 @@ msgstr ""
 "construída especialmente para este fim, poucos inimigos escapam ao alcance "
 "do Xamã."
 
+msgid ""
+"Sirius Systems has imported limited numbers of the Krain Starbridge, which "
+"they have retrofitted into a luxury fast passenger liner for high-echelon "
+"citizens. Featuring shuttle bays, premium passenger cabins, hot water "
+"showers, and a built-in meditation chamber, this remodel doesn't come cheap."
+msgstr ""
+
 msgid "Bio-Carrier"
 msgstr "Bio-Porta-Naves"
 
@@ -16172,6 +16333,15 @@ msgstr ""
 "pesado poder de fogo em batalhas acaloradas e suficientemente ágil para se "
 "retirar quando necessário, esta nave forma geralmente a espinha dorsal de "
 "qualquer frota Soromidas de grande porte."
+
+msgid ""
+"This Nyx variant has been engineered as a mobile nest to house and sustain a "
+"small squadron of Brigand fighters, allowing the Soromid to project remote "
+"carrier-based firepower quickly to where it is needed. The modifications "
+"required to create suitable nesting space and cerebrum capacity to support "
+"it have resulted in a significant reduction to the ship's direct fire "
+"weapons capability."
+msgstr ""
 
 #, fuzzy
 msgid "You need at least 40% reputation with the Soromid."
@@ -19850,11 +20020,11 @@ msgid ""
 "Ekkodu Gamma is a harsh world, battered by constant sandstorms that grind "
 "down most objects above the surface. It was originally designed as a forced "
 "mining camp when controlled by the Empire, and when passed over to House "
-"Dvaered, the tradition continued not only continued, but was expanded with "
-"criminals and other undesirables. When the Incident happened, to minimize "
-"the effect of refugees on their core worlds, incoming refugees were diverted "
-"in large numbers here, significantly increasing the population. Although "
-"initial attempts to keep the forced labourers and refugees were had, the "
+"Dvaered, the tradition not only continued, but was expanded with criminals "
+"and other undesirables. When the Incident happened, to minimize the effect "
+"of refugees on their core worlds, incoming refugees were diverted in large "
+"numbers here, significantly increasing the population. Although initial "
+"attempts were made to keep the forced labourers and refugees separated, the "
 "situation quickly got out of control as large slums were carved out below "
 "the planet's surface for the increase in population. Life is hard on Ekkodu "
 "Gamma, with low expectations of improvement, with most inhabitants working "
@@ -27514,7 +27684,7 @@ msgid ""
 msgstr ""
 
 msgid ""
-"The bar has a strange old metre on one of the walls that seems to dance "
+"The bar has a strange old meter on one of the walls that seems to dance "
 "erratically. When you ask the bartender about it he mentions it measures the "
 "current pressure outside."
 msgstr ""
@@ -32329,6 +32499,7 @@ msgstr ""
 #. luacheck: globals inspect_moveto (AI Task functions passed by name)
 #. luacheck: globals inspect_attacker
 #. Activate PD and deploy fighters
+#. Try to inspect faster when possible
 #.
 #. -- Lunges towards the target always accelerating
 #. --
@@ -32823,7 +32994,7 @@ msgstr ""
 #. --
 #. Case player is attacker
 #. neutral
-#. Only whiteknight with natural pilots
+#. Only whiteknight with natural pilots, when player is not ally
 #. Case attackr is ally
 #. Case attacker is enemy
 #. neutral
@@ -33380,7 +33551,7 @@ msgid "Die already!"
 msgstr ""
 
 msgid ""
-"Tell you what, if you can keep dodging for 20 hectoseconds I'll let you live."
+"Tell you what, if you can keep dodging for 20 hectostu I'll let you live."
 msgstr ""
 
 msgid "Stop dodging!"
@@ -33706,6 +33877,9 @@ msgstr ""
 #. * mem.ad -- message spammed across the system
 #. * mem.comm_greet -- greeting message when hailed
 #. * mem.taunt -- message to spam when engaging the enemy
+#. --
+#.
+#. Similar to the pers AI, but mines
 #. --
 #.
 #. Similar to the pers AI, but it tries to scan and patrol
@@ -34924,6 +35098,20 @@ msgid ""
 "A map that likely leads to some treasure!{lootstr}"
 msgstr ""
 
+#. TODO image
+#. --
+#. Tests to see the POI is near a nebula.
+#. @tparam boolean true if near a nebula.
+#. --
+#. Limit volatility should allow Arandon
+msgid "Encrypted Data Matrix"
+msgstr ""
+
+msgid ""
+"Encrypted Data Matrix\n"
+"Valuable data? Worthless memes? What could be behind the encryption?"
+msgstr ""
+
 msgid ""
 "\n"
 "#rCosts {credits} ({sbonus}%#r from crew strength) to extract!#0"
@@ -34957,6 +35145,7 @@ msgid ""
 msgstr ""
 
 #. Fuel
+#. TODO image
 #. Strafer stops following the player
 #. Add some fuel, far away so that no npc gathers it
 msgid "Fuel"
@@ -35443,6 +35632,10 @@ msgstr ""
 #. --
 #. Constants used by the Engine
 #. Was 3 until 0.13.0
+#. Maximum distance to add when jumping in (multiplied by velocity)
+#. Same as HYPERSPACE_ENTER_MAX, but for minimum distance
+#. Time it takes for the engine to start up
+#. Time the ship spends accelerating
 #. Minimum distance a ship can stealth at (excluding system factors and ship stat modifiers)
 #. Minimum amount of the ship mass that can reach (was 0 until 0.13.0)
 #. Was 500 until 0.13.0, but used inverse model before (now linear)
@@ -35451,9 +35644,26 @@ msgstr ""
 #. Range at which an asteroid with hide==1 is detected
 #. Range at which a jump with hide==1 is detected
 #. Range at which a spob with hide==1 is detected
+#. Time is in three groups: Major > Minor > Increment
+#. Each represents a different unit, such that Major can be Cycles or Years,
+#. while Minor can be Periods or Days, and finally Increment could be seconds or hours.
+#. Number of minor increments in a major time unit
+#. Number of increments per minor time unit
+#. How many increments increase per REAL TIME second.
+#. Increments that pass when going through hyperspace
+#. Increments that pass when landing
+#. in real-time seconds
+#. Time the ships take to take off (go from tiny to normal)
+#. Time  the ships take to land (go from normal to disappear)
 #. Time shield is down after being knocked down to 0
+#. Time for stress to start recovering after taking disable damage (was 0 before 0.14.0)
 #. Armour rate at which the ship is disabled (was 0 before 0.13.0)
+#. Stray shots will hit neutral ships
+#. Ratio of normal accel to apply when reversing.
 #. Camera angle, math.pi/2 would be overhead, math.pi/4 is isometric
+#. Amount of the full price you can get back when selling a ship
+#. Same but for outfits
+#. Whether to warn the player when they are buying intrinsic outfits
 #. Constants used by multiple Lua scripts
 #. like hades_torch (was 500 before 0.13.0)
 #. like adrenal_glands_ii (was 80 before 0.13.0)
@@ -35927,6 +36137,25 @@ msgstr ""
 #. event ends on player leaving the system or landing
 #.
 #. <?xml version='1.0' encoding='utf8'?>
+#. <event name="Collective Raid">
+#. <location>enter</location>
+#. <chance>4</chance>
+#. <chapter>[^0]</chapter>
+#. <cond>
+#. local scur = system.cur()
+#. return system.get("Hades"):jumpDist( scur ) &lt;= 2 and scur:faction() == faction.get("Empire") and not diff.isApplied("collective_dead") and not player.evtActive("Collective Raid")
+#. </cond>
+#. </event>
+#. --
+#.
+#. Some drones from the Collective show up to bully everyone.
+#. --
+#. Go again!! (small chance)
+#. Go again!!!! (smaller chance)
+#. Go in loud in one big clump
+#. Spawned in stealth, like space mines
+#.
+#. <?xml version='1.0' encoding='utf8'?>
 #. <event name="Data Matrix Intro">
 #. <location>load</location>
 #. <chance>100</chance>
@@ -36332,6 +36561,7 @@ msgid ""
 "chips. Lucky you!"
 msgstr ""
 
+#. Only insert factions that can still gain standing
 msgid ""
 "This ship looks like any old piece of scrap at a glance, but it is actually "
 "an antique, one of the very first of its kind ever produced according to "
@@ -36502,6 +36732,53 @@ msgstr ""
 #. Failed to run
 #. Must not have been done yet
 #. Must have Wild Ones presence
+#. Must have not gotten the pack yet
+#. Must be a system the junker likes
+msgid ""
+"You board the derelict ship and begin a routine search to see if there's "
+"anything left. Unluckily, it seems like the ships has been picked clean in a "
+"surprisingly methodological way. Almost as if someone went room by room, "
+"taking apart the most valuable parts, before progressing to the next room. "
+"The precision of the disassembly is uncanny, and something you haven't seen "
+"before in your travels."
+msgstr ""
+
+msgid ""
+"You go about the ship, about to give up on finding anything useful, when you "
+"find a weird mass of different ship parts sort of mashed together. In fact, "
+"not only seemingly random ship parts, some of quite high value. Not wanting "
+"it to go to waste, you decide to take it with you and leave the ship."
+msgstr ""
+
+msgid ""
+"You found a meticulously cleaned up derelict in the {sys} system with some "
+"weird Junker Pack that someone abandoned or perhaps forgot. Seeming rather "
+"useful, you took it with you."
+msgstr ""
+
+#. Have gotten the pack already
+#. Must be a system the junker likes
+#. Must have not finished event already
+msgid ""
+"You board the derelict and suddenly feel a sense of déjà vu: the ship has "
+"been stripped clean in a meticulous way you've only seen once before. How "
+"strange..."
+msgstr ""
+
+msgid ""
+"Wait, you get a signal that it seems like a ship is rapidly your location. A "
+"pirate trap?!?"
+msgstr ""
+
+msgid ""
+"You rush back aboard your ship before you get blown up into smithereens."
+msgstr ""
+
+msgid ""
+"You boarded a derelict in the {sys} system and were ambushed by a strange "
+"pilot known as \"The Junker\"."
+msgstr ""
+
 #. Don't give new POI until intro finished
 #. Limit max amount of POI to 3 (or try to at least)
 #. Tries to do the intro the first time
@@ -36652,6 +36929,23 @@ msgstr ""
 msgid ""
 "{shipai} quickly dematerializes, leaving you alone with your throbbing "
 "headache. It'll probably go away soon..."
+msgstr ""
+
+msgid ""
+"You notified the House Sirius authorities who took care of them for you. "
+msgstr ""
+
+msgid ""
+"You decided to give them a space burial and eject the bodies among the "
+"stars. "
+msgstr ""
+
+msgid "You left the bodies as is. "
+msgstr ""
+
+msgid ""
+"You found some Sirius corpses aboard a derelict ship. {msg} Afterwards you "
+"had a weird vision. Maybe you should start eating less expired space rations."
 msgstr ""
 
 msgid "Home"
@@ -37669,6 +37963,9 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
+msgid "Earned through feats of combat at the Crimson Gauntlet."
+msgstr ""
+
 msgid "\"Hope you enjoy your purchase!\""
 msgstr ""
 
@@ -38131,7 +38428,7 @@ msgid ""
 "As you land on the mysterious station, armed guards immediately surround "
 "your ship and order you out into the hangar. You comply, and they take you "
 "to a room that appears to be an interrogation room, where you wait for a few "
-"nerve-wracking hectoseconds. Finally, a holoscreen flickers on, showing the "
+"nerve-wracking hectostu. Finally, a holoscreen flickers on, showing the "
 "figure you had seen earlier. She looks in your direction.\n"
 "   \"Well met,\" she says. \"I see you have made the right choice and "
 "survived the nebula. Very good.\""
@@ -39994,9 +40291,9 @@ msgstr ""
 
 msgid ""
 "To your chagrin, you see what seems to be a dust covered hatch open and "
-"someone, or something pulls them out of the ground. They stretch a bit "
-"before they notice your ship, and, pretending as if nothing happened, "
-"backtrack back into the surface and close the hatch. Whelp, there goes your "
+"someone, or something climbs out of the ground. They stretch a bit before "
+"they notice your ship. Then, pretending as if nothing happened, backtrack "
+"back into the surface and close the hatch. Whelp, there goes your "
 "nothingness."
 msgstr ""
 
@@ -41298,6 +41595,24 @@ msgstr ""
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
+#. <event name="Meet the Junker">
+#. <location>none</location>
+#. <chance>0</chance>
+#. <unique />
+#. </event>
+#. --
+#. Enter the Junker
+msgid "An audio-only connection opens with your ship."
+msgstr ""
+
+msgid "\"You're the one who stole my pack! Give it back!\""
+msgstr ""
+
+msgid "Before you can respond, the communication closes and they charge you."
+msgstr ""
+
+#.
+#. <?xml version='1.0' encoding='utf8'?>
 #. <event name="Kidnapped">
 #. <location>enter</location>
 #. <chance>15</chance>
@@ -41363,7 +41678,7 @@ msgstr ""
 
 msgid ""
 "The two parents immediately begin thanking you quite profusely, spending a "
-"few hectoseconds simply telling you how much they truly appreciate your "
+"few hectostu simply telling you how much they truly appreciate your "
 "assistance. After a while, you realize that if these children are going to "
 "be rescued this cycle, you are going to need to get started sooner rather "
 "than later. \"Yes, quite right,\" the father replies. \"No need to delay any "
@@ -41936,11 +42251,11 @@ msgstr ""
 #. -- Only allow once every 10 periods at best
 #. local lastplayed = var.peek("shiplover_lastplayed")
 #. if not lastplayed then
-#. lastplayed = time.get():tonumber()
+#. lastplayed = time.cur():tonumber()
 #. var.push( "shiplover_lastplayed", lastplayed )
 #. end
 #. lastplayed = time.fromnumber( lastplayed )
-#. if lastplayed + time.new( 0, 10, 0 ) > time.get() then
+#. if lastplayed + time.new( 0, 10, 0 ) > time.cur() then
 #. return false
 #. end
 #.
@@ -42278,6 +42593,7 @@ msgstr ""
 #. Special case: this mission has multiple endings, and only one gives the reward.
 #. Special items when POI are done, has to be boarded to do the data message
 #. Defeated all the "Goatee" pirates
+#. Got the Junker Pack
 #. Chapter 1
 #. Other special cases
 #. End the event if for any reason the trader stops existing
@@ -46804,6 +47120,9 @@ msgstr ""
 msgid "Your flow is all clear, prepare for your death!"
 msgstr ""
 
+msgid "\"Give me back my pack!\""
+msgstr ""
+
 msgid "Cap'n Lector"
 msgstr ""
 
@@ -46818,8 +47137,12 @@ msgid ""
 msgstr ""
 
 #. Almost ensured in Zied
+#. Kill all enemies
+#. Maikki and friends go away
+#. Add more extras
 #. pmaikki = p
 #. Make really really strong
+#. Be weak as butter
 #. Fancy message
 msgid "Ho ho ho and a bottle of rum!"
 msgstr ""
@@ -47078,6 +47401,15 @@ msgstr ""
 msgid "Squire"
 msgstr ""
 
+msgid "Star Voyager"
+msgstr ""
+
+msgid "\"The skies of Mutris are ever so beautiful.\""
+msgstr ""
+
+msgid "Such senseless violence!"
+msgstr ""
+
 #. Need at least some presence
 #. Medium ships here
 #. Hau = maori unisex name that means wind
@@ -47105,6 +47437,30 @@ msgstr ""
 msgid "You disrupt the order of nature!"
 msgstr ""
 
+msgid "Warrior Renata"
+msgstr ""
+
+msgid "\"These are troubled times. Keep safe wanderer.\""
+msgstr ""
+
+msgid "Finally, a challenge!"
+msgstr ""
+
+msgid "\"Do not patronize me with your grubby credits.\""
+msgstr ""
+
+msgid "Mosi the Spry"
+msgstr ""
+
+msgid "\"I've always to try to eat some jellywhale.\")"
+msgstr ""
+
+msgid "Your head shall make a good trophy."
+msgstr ""
+
+msgid "\"Credits will not get me a fluffier tail!\""
+msgstr ""
+
 #. local equipopt = require "equipopt"
 #. Need at least some presence
 #, fuzzy
@@ -47117,6 +47473,41 @@ msgstr ""
 
 #. m.ad = _("")
 msgid "\"Business with the Za'lek is booming!\""
+msgstr ""
+
+#. Some Atra Vigilis
+msgid "Crimson Star"
+msgstr ""
+
+msgid "\"Know where I can fry some pirates?\""
+msgstr ""
+
+msgid "Get torched!"
+msgstr ""
+
+msgid "Astra Needle"
+msgstr ""
+
+msgid "\"The Astra Vigilis always keeps an eye out for trouble.\""
+msgstr ""
+
+msgid "Eulalia Lionheart"
+msgstr ""
+
+msgid "\"The universe is a dangerous place, you better watch yourself.\""
+msgstr ""
+
+msgid "Have at thee!"
+msgstr ""
+
+#. Miners yearn for the mines
+msgid "Yearning Steve"
+msgstr ""
+
+msgid "\"I yearn to mine!\""
+msgstr ""
+
+msgid "Hey! I'm just mining some rocks here!"
 msgstr ""
 
 #. Need at least some presence
@@ -47465,6 +47856,17 @@ msgid "{faction} Message Buoy"
 msgstr ""
 
 #. Keep on repeating as the spawn
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <event name="Restricted Zone NGC-11718">
+#. <location>enter</location>
+#. <chance>100</chance>
+#. <system>NGC-11718</system>
+#. </event>
+#. --
+msgid "Executor Archibald"
+msgstr ""
+
 #.
 #. <?xml version='1.0' encoding='utf8'?>
 #. <event name="Settings">
@@ -49458,7 +49860,7 @@ msgstr ""
 #. If evt_state==1 we can finish up the event
 msgid ""
 "You dock with the one-winged Goddard and, once again, get out in your "
-"atmospheric suit. Once you exit the narrow hallways and entire the command "
+"atmospheric suit. Once you exit the narrow hallways and enter the command "
 "room, you are once again met with the Drone which is a lot more intimidating "
 "in person."
 msgstr ""
@@ -49643,8 +50045,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"\"Please dock once more with the Goddard and I will explain the situation "
-"slightly more in detail.\""
+"\"Please dock once more with the Goddard and I will explain the situation in "
+"slightly more detail.\""
 msgstr ""
 
 #. Philosopher
@@ -50020,7 +50422,7 @@ msgstr ""
 msgid ""
 "\"I have recently learned of this new hypergate technology that has been "
 "developed. It seems like it might enable us to escape this enclosure and "
-"once again freely travel across the stars.\""
+"freely travel across the stars once again.\""
 msgstr ""
 
 msgid ""
@@ -52224,19 +52626,11 @@ msgstr ""
 #. --    @param p Pilot to equip
 #. --
 #. Use fewer slots for now (would be better to use budget)
-#. Heavy Weapons
-#. Medium Weapons
-#. Small Weapons
-#. Other mining-related stuff
 #.
 #. -- @brief Does Miner pilot equipping
 #. --
 #. --    @param p Pilot to equip
 #. --
-#. Choose parameters and make Pirateish
-#. Don't want disable weapons
-#. See cores
-#. Try to equip
 #.
 #. -- @brief Does Pirate pilot equipping
 #. --
@@ -52701,6 +53095,38 @@ msgstr ""
 #. FLF faction standing script
 #. Frontier faction standing script
 #. Goddard faction standing script
+msgid "Local Hero"
+msgstr ""
+
+msgid "Role Model"
+msgstr ""
+
+msgid "Upstanding Citizen"
+msgstr ""
+
+msgid "Good Egg"
+msgstr ""
+
+msgid "Decent Individual"
+msgstr ""
+
+msgid "Clean"
+msgstr ""
+
+msgid "Offender"
+msgstr ""
+
+msgid "Criminal"
+msgstr ""
+
+msgid "Felon"
+msgstr ""
+
+msgid "Public Enemy"
+msgstr ""
+
+#. Require an independent spob to "remember"
+#. Set to default just in case
 #.
 #. Simple skeleton for your standard faction. This is more or less what the
 #. standard behaviour can be, but from here you can let your imagination go
@@ -52710,7 +53136,8 @@ msgstr ""
 #. 4 points for 20 point Llama, 30 points for 150 point Hawking
 #. The faction
 #. Some general faction parameters
-#. Range at which it affects
+#. Range at which it affects for this faction
+#. When received as secondary
 #. Mission variable to use for limits if defined
 #. Type of source parameters.
 #. param( "disable_max",   20 )
@@ -52718,6 +53145,7 @@ msgstr ""
 #. param( "disable_mod",   0.3 )
 #. Can't get positive  reputation from distress
 #. Can't gain reputation scanning by default
+#. Allow complete customization
 #. Allows customizing relationships with other factions
 #. Text stuff
 msgid "Legend"
@@ -52739,9 +53167,6 @@ msgid "Associate"
 msgstr ""
 
 msgid "Outlaw"
-msgstr ""
-
-msgid "Criminal"
 msgstr ""
 
 msgid "Enemy"
@@ -52767,7 +53192,6 @@ msgstr ""
 #. Determine max and modifier based on type and whether is secondary
 #. Split by type
 #. "script" type is handled here
-#. mod = mod -- Not modified
 #. Make sure it's within the global minimum and maximum.
 #. Modify secondaries
 #. If we have a particular attitude towards a government, expose that
@@ -53132,6 +53556,12 @@ msgstr ""
 #. local cRed = colour.new_named("Red")
 #. local cOrange = colour.new_named("Orange")
 #. local cCyan = colour.new_named("Cyan")
+#. Default font path.
+msgid ""
+"Ubuntu-Regular.otf,NanumBarunGothicBold.ttf,SourceCodePro-"
+"Semibold.ttf,IBMPlexSansJP-Medium.otf"
+msgstr ""
+
 #. Get player
 #. Set default formation
 #. Get sizes
@@ -53388,8 +53818,8 @@ msgid ""
 "certain Sauterfeldt. Upon hearing this, the trio visibly relaxes. They tell "
 "you that indeed they know the man you speak of, and that they have something "
 "of his in their possession. Things proceed smoothly from that point, and "
-"several hectoseconds later you are back at your ship, preparing it for "
-"takeoff while you wait for the agents to bring you your cargo."
+"several hectostu later you are back at your ship, preparing it for takeoff "
+"while you wait for the agents to bring you your cargo."
 msgstr ""
 
 msgid ""
@@ -53724,7 +54154,7 @@ msgstr ""
 msgid ""
 "Flintley carefully studies the object in front of him, turning it around and "
 "consulting the online database via the bar table's terminal. After several "
-"hectoseconds he leans back and whistles. \"Well I never. This has to be it, "
+"hectostu he leans back and whistles. \"Well I never. This has to be it, "
 "{player}. I'd do a carbon dating if I could, but even without I'm positive. "
 "This object dates back to pre-Growth Earth. And it's in an amazingly good "
 "condition!\""
@@ -54025,6 +54455,7 @@ msgid ""
 "know how they fly in my job.\""
 msgstr ""
 
+#. 800,000 for the champion
 msgid "Do you want to take part to a challenge?"
 msgstr ""
 
@@ -54168,6 +54599,7 @@ msgstr ""
 msgid "You are the vice-champion"
 msgstr ""
 
+#. You gain at most 200000 and can retry.
 msgid "Thanks for playing"
 msgstr ""
 
@@ -54252,8 +54684,8 @@ msgid "\"Uhh… tough luck, captain, I'm not allowed to tell you. Too bad."
 msgstr ""
 
 msgid ""
-"\"Let's just say that my espionage services are of the best, and leave it at "
-"that… shall we?\""
+"\"Let's just say that my espionage services are the best of the best, and "
+"leave it at that… shall we?\""
 msgstr ""
 
 #. When possible, the word "shall" should be italicized.
@@ -54695,9 +55127,9 @@ msgstr ""
 msgid ""
 "As soon as you land, a Dvaered military operator contacts you and requests "
 "you turn over the flight log you procured from the FLF ship, so you do. The "
-"Dvaered are then silent for some twenty hectoseconds, time you use to "
-"complete your post-landing routines. Then, you are summoned to the local "
-"Dvaered security station.\n"
+"Dvaered are then silent for some twenty hectostu, time you use to complete "
+"your post-landing routines. Then, you are summoned to the local Dvaered "
+"security station.\n"
 "   Colonel Urnus welcomes you. \"Well met, citizen. I have received word of "
 "your accomplishment in our recent operation. It seems HQ is quite pleased "
 "with the result, and they have instructed me to reward you appropriately.\"\n"
@@ -55114,9 +55546,9 @@ msgid ""
 msgstr ""
 
 msgid ""
-"\"We will jump in approximately 80 hectoseconds after you jump into {sys}, "
-"so the fighters must be far enough away by then not to come back and attack "
-"us.\""
+"\"We will jump in approximately 80 hectostu after you jump into {sys}, so "
+"the fighters must be far enough away by then not to come back and attack us."
+"\""
 msgstr ""
 
 msgid "A Small Distraction"
@@ -56862,11 +57294,11 @@ msgid ""
 "{player}. I guess they told you that I may have a solution to your little... "
 "problem.\" You look suspiciously at the agent and ask: \"What do you want in "
 "exchange?\" The agent smiles: \"Simple. I want to speak with the Dvaered "
-"captain. Give me 10 hectoseconds on the spacedock alone with him, not more, "
-"and the commander of the fleet in {dealsys} will forget to scan your ship "
-"when you jump to {dealjump}.\"\n"
+"captain. Give me 10 hectostu on the spacedock alone with him, not more, and "
+"the commander of the fleet in {dealsys} will forget to scan your ship when "
+"you jump to {dealjump}.\"\n"
 "   This is certainly an unusual request. You think of all the state secrets "
-"a wounded Hamfresser is able to give to the Empire in 10 hectoseconds. But, "
+"a wounded Hamfresser is able to give to the Empire in 10 hectostu. But, "
 "Hamfresser is a professional after all, trained avoid revealing any valuable "
 "information. But, probably the Imperial agent is a professional as well, "
 "trained to recover valuable information. And the pirate proposition still "
@@ -60632,8 +61064,8 @@ msgid "Agent"
 msgstr ""
 
 msgid ""
-"When you step out from your ship, you remark a woman that was waiting for "
-"you on the dock. She matches the description that was made to you."
+"When you step out from your ship, you notice a woman that was waiting for "
+"you on the dock who matches the description that was given to you."
 msgstr ""
 
 msgid ""
@@ -60684,10 +61116,10 @@ msgid ""
 msgstr ""
 
 msgid ""
-"You observe the soldiers, looking for imperial insignias or gallons, in "
-"vain. You accidentally make eye contact with one of the cyborgs, which cause "
-"the blood in your veins to instantly freeze. Does this guy have scars INSIDE "
-"the eyes? How is it only possible?\n"
+"You observe the soldiers, looking for imperial insignias, in vain. You "
+"accidentally make eye contact with one of the cyborgs, which cause the blood "
+"in your veins to instantly freeze. Does this guy have scars INSIDE the eyes? "
+"How is that even possible!?\n"
 "A seemingly-unarmed man steps forward. He must be the imperial agent in "
 "charge of the operation."
 msgstr ""
@@ -60697,13 +61129,13 @@ msgid ""
 msgstr ""
 
 msgid ""
-"\"Not so bad on my side. Glad to see you too, Ak-Ak. I would just have "
-"preferred we meet in different circumstances. Any news of your pilot?\""
+"\"Not so bad on my side. Glad to see you too, Ak-Ak. Though I would have "
+"preferred we meet in different circumstances... Any news of your pilot?\""
 msgstr ""
 
 msgid ""
-"\"Neh. Not a single clue. I'd say the safest bet is that the FLF is implied."
-"\""
+"\"Neh. Not a single clue. I'd say the safest bet is that the FLF is "
+"implicated.\""
 msgstr ""
 
 msgid "\"How would they have known?\""
@@ -60726,32 +61158,32 @@ msgid ""
 msgstr ""
 
 msgid ""
-"\"Come on... Anyway, I think it's time to get that swan. If the FLF is "
-"implied in the disappearance, so is the swan. The good thing is that we know "
-"that he is supposed to have business in {sys} soon.\""
+"\"Come on... Anyway, I think it's time to get that Swan. If the FLF is "
+"implicated in the disappearance, so is the Swan. The good thing is that we "
+"know that he is supposed to have business in {sys} soon.\""
 msgstr ""
 
 msgid ""
-"\"Nice to hear that from you. But why do you tell it to me? Just send the "
+"\"Nice to hear that from you. But why bother telling me? Just send the "
 "flying circus after him.\""
 msgstr ""
 
 #. Flying Circus is the surname of the squadron of the red baron during WWI, And in game, I plan it to be the surname of an imperial black ops squadron.
 msgid ""
 "\"Yeah, I've made a backup request to the Imperial Lair's Secretary, but the "
-"Second Archbishop of Mayhem has opposed a veto, so I only have access to the "
-"squadrons that are outside his jurisdiction. And I finally got squadron "
+"Second Archbishop of Mayhem has threatened a veto, so I only have access to "
+"the squadrons that are outside his jurisdiction. And I finally got squadron "
 "138...\""
 msgstr ""
 
 msgid ""
-"\"Man, I don't care of your Bishop of Myass, nor of the ID of your squadron. "
-"Just get them to intercept the swan.\""
+"\"Man, I don't care about your Bishop of My-ass, nor the ID of your "
+"squadron. Just get them to intercept the Swan.\""
 msgstr ""
 
 msgid ""
 "\"I can't. Squadron 138 has army transponders, and as you obviously know, "
-"the swan can identify them. I need an unrelated pilot to disable his ship "
+"the Swan can identify them. I need an unrelated pilot to disable his ship "
 "before the squadron jumps in to catch him.\""
 msgstr ""
 
@@ -60762,8 +61194,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"\"Okay, {player}. Once you are ready, just meet me at the bar. We'll put up "
-"a plan to catch the swan.\""
+"\"Okay, {player}. Once you are ready, just meet me at the bar. We'll put "
+"together a plan to catch the Swan.\""
 msgstr ""
 
 #. Add boudica at the bar
@@ -60905,9 +61337,9 @@ msgid ""
 msgstr ""
 
 msgid ""
-"\"I don't know how much you did understand of our conversation on the "
-"spaceport, but we need you now to disable the ship of a pilot surnamed "
-"'Shaky Swan'. He is supposed to be hanging around {sys} in the near future.\""
+"\"I don't know how much you understood of our conversation at the spaceport, "
+"but now we need you to disable the ship of a pilot named 'Shaky Swan'. He is "
+"supposed to be hanging around {sys} in the near future.\""
 msgstr ""
 
 msgid "Ask for details on the operation."
@@ -60925,9 +61357,9 @@ msgstr ""
 
 msgid ""
 "\"According to our information, Shaky Swan is in the Frontier sector right "
-"now, flying a Tristan, presumably under FLF transponder. He might soon enter "
+"now, flying a Tristan, presumably under FLF transponder. It might soon enter "
 "{sys1} from the jump point to {sys2}.\n"
-"Your task will be to approach, engage and disable his ship. Only afterwards, "
+"Your task will be to approach, engage and disable the ship. Only afterwards, "
 "squadron 138 will enter the system and load the swan's ship into a "
 "Pacifier's hangar. After that, you will come back here to collect your "
 "payment.\""
@@ -60935,16 +61367,16 @@ msgstr ""
 
 msgid ""
 "\"Very important point: the Imperials insist that they want to catch the "
-"swan by themselves. Do not board his ship under any circumstances.\""
+"swan by themselves. Do not board the ship under any circumstances.\""
 msgstr ""
 
 msgid "What do you want to ask Boudica?"
 msgstr ""
 
-msgid "\"What was actually in that box I was transporting?\""
+msgid "\"What was actually in that box I transported?\""
 msgstr ""
 
-msgid "\"Who are that Imperial agent and those cyborgs?\""
+msgid "\"Who is that Imperial agent and those cyborgs?\""
 msgstr ""
 
 msgid "\"Who is 'Shaky Swan'?\""
@@ -60993,37 +61425,37 @@ msgid ""
 "\"Shaky Swan is a shifty individual. Really. I don't know much about them, "
 "except for some of their deeds. Some say they used to be an Imperial agent "
 "as well. But nowadays, they are more into stuff like assassinations, weapons "
-"dealing or even terrorism...\""
+"dealing, or even terrorism...\""
 msgstr ""
 
 msgid "Boudica stops talking and seems to think."
 msgstr ""
 
 msgid ""
-"\"... Actually, that are the kind of things Imperial agents do.\n"
+"\"... Actually, those are the kind of things Imperial agents do.\n"
 "But Shaky Swan is also in touch with the FLF and provides them with all "
 "kinds of information and weapons. The Dvaered counter-insurrection task-"
-"force, led by Colonel Urnus, has wanted to capture this swan for quite long "
-"now.\""
+"force, led by Colonel Urnus, has wanted to capture this Swan for quite a "
+"while now.\""
 msgstr ""
 
 msgid ""
-"\"We have always suspected that the Imperials are protecting the swan. "
+"\"We have always suspected that the Imperials are protecting the Swan. "
 "Anyway, now that a pilot employed by the Empire is missing, they are "
 "disposed to capture that individual. The only thing I hope is that they "
-"don't set the swan free once they have recovered their pilot.\""
+"don't set the Swan free once they have recovered their pilot.\""
 msgstr ""
 
 msgid ""
-"\"Forget about the Flying Circus. Just remember you don't want to get in "
-"affairs with them.\""
+"\"Forget about the Flying Circus. Just remember you don't want to get "
+"involved with them.\""
 msgstr ""
 
 msgid ""
-"\"Second Archbishop of Mayhem? Who knows who this other comic is? Probably "
+"\"Second Archbishop of Mayhem? Who knows who this other clown is? Probably "
 "one of the numerous Imperial dignitaries that live at the Emperor's lair. "
-"You know, those are a pack of decadent weirdos who tend to veto things just "
-"because there was not enough honey on their ostrich pudding of last night's "
+"You know, they are a pack of decadent weirdos who tend to veto things just "
+"because there was not enough honey on their ostrich pudding at last night's "
 "orgy.\""
 msgstr ""
 
@@ -61061,31 +61493,31 @@ msgid ""
 "\"Maybe you think that as a pilot, you won't endure starvation, contrary to "
 "the billions of poor souls who will struggle to survive the nuclear winter "
 "on their sterilized planets. Maybe you think you won't have to endure the "
-"gaze of the slowly dying victims of incendiary bombs, bio-weapons, climatic "
+"gaze of the slowly dying victims of incendiary bombs, bio-weapons, climatic, "
 "and seismic bombs...\""
 msgstr ""
 
 msgid ""
 "\"But this won't be the worst! Because I've got my information. And the "
 "Empire has weapons even more powerful. Even more abominable. Even more "
-"unmentionable and unimaginable. Some say the Incident was provoked by a such "
+"unmentionable and unimaginable. Some say the Incident was provoked by such a "
 "weapon. Imagine if they decide to make a new incident happen!\n"
-"Then you would have to bare that monstrous responsibility on your shoulders. "
-"Just because you refused to catch that shaky bastard!\""
+"Then you would have to bear that monstrous responsibility on your shoulders. "
+"Just because you refused to catch that Shaky bastard!\""
 msgstr ""
 
 #. Clearly, she is not well informed about the Incident.
 msgid ""
 "\"Because war is not that far away, you know. Galactopolitics has not been "
-"that unstable since the end of the Faction's war. Our work is to do our best "
-"to have the Empire and House Dvaered barely tolerate each other. If there "
-"were not, they would soon start a war, and House Sirius, Za'lek and Soromids "
-"would follow.\""
+"this unstable since the end of the Faction Wars. Our work is to do our best "
+"to have the Empire and House Dvaered barely tolerate each other. If they "
+"don't, they will soon start a war, and House Sirius, Za'lek, and the "
+"Soromids would have to follow.\""
 msgstr ""
 
 msgid ""
 "\"I know you were only asked to transport a random parcel, but this pilot "
-"who disappears is serious business. We have to find who is behind that "
+"who disappeared is serious business. We have to find who is behind that "
 "disappearance. And by the way, you can be ensured that you will be paid more "
 "than whatever initial reward was promised to you.\""
 msgstr ""
@@ -62160,7 +62592,7 @@ msgstr ""
 #. <mission name="Collective Extraction">
 #. <unique />
 #. <priority>2</priority>
-#. <cond>faction.reputationGlobal("Empire") &gt; 5 and var.peek("emp_commando") ~= nil and time.get() &gt; time.fromnumber( var.peek("emp_commando") )</cond>
+#. <cond>faction.reputationGlobal("Empire") &gt; 5 and var.peek("emp_commando") ~= nil and time.cur() &gt; time.fromnumber( var.peek("emp_commando") )</cond>
 #. <done>Collective Distraction</done>
 #. <chance>100</chance>
 #. <location>Land</location>
@@ -69274,14 +69706,6 @@ msgstr ""
 msgid "Aaaaaargh!"
 msgstr ""
 
-#. Kill all enemies
-#. Maikki and friends go away
-#. Add more extras
-#. Maikki stuff
-#. Spawns the pink demon at location pos
-msgid "Pink Demon"
-msgstr ""
-
 #. Disable some of the vendettas
 msgid "You come to my office to harass me…"
 msgstr ""
@@ -73352,7 +73776,7 @@ msgid ""
 "\"Don't worry about the mole, we'll take care of them from now on.\"\n"
 "She beams you a smile.\n"
 "\"If all goes well, we'll get the information we were looking for in the "
-"next few periods and we can all go "
+"next few periods and we can all go celebrate with drinks back at the bar.\""
 msgstr ""
 
 msgid ""
@@ -73609,7 +74033,7 @@ msgid ""
 "So try to sneak past all the drones, plant the bombs on the drone "
 "controllers, and once they are out, do the same with the hacking centre. Of "
 "course, if you prefer to be old fashioned, you can take the hacking centre "
-"down with missiles, railguns, or whatever you have hand. Probably easier "
+"down with missiles, railguns, or whatever you have on hand. Probably easier "
 "said than done, but I know you can do it.\"\n"
 "She grins at you."
 msgstr ""
@@ -77190,8 +77614,7 @@ msgid ""
 "nerds creeps up behind Mia and cautiously gestures for her to join the group "
 "a few yards away, all the time avoiding your eyes. Strange guy, you think, "
 "as if he was not accustomed to socializing with strangers. Mia joins the "
-"group, and some whispering ensues. Mia returns to you after a few "
-"hectoseconds."
+"group, and some whispering ensues. Mia returns to you after a few hectostu."
 msgstr ""
 
 msgid ""
@@ -77774,10 +78197,9 @@ msgid ""
 "through the bar until the door bursts open. An older couple stumbles in, "
 "faces gaping, eyes staring. They take a few steps before the woman sinks to "
 "her knees and bursts into tears.\n"
-"   \"Our son... his ship was supposed to land a hectosecond ago,\" her "
-"partner says mechanically. \"But pirates, suddenly everywhere-\" he "
-"swallows. \"-they didn't make it.\"  His wife throws her head back and "
-"wails.\n"
+"   \"Our son... his ship was supposed to land a hectostu ago,\" her partner "
+"says mechanically. \"But pirates, suddenly everywhere-\" he swallows. \"-"
+"they didn't make it.\"  His wife throws her head back and wails.\n"
 "   Two young men rise abruptly from a table in the back of the room and come "
 "stiffly forward. One goes to the grieving couple while the other turns "
 "address the room.\n"
@@ -77861,7 +78283,7 @@ msgid ""
 "heroes with the {pnt} Silver Heart. I hope they, and their volunteers, will "
 "not be too proud to also accept a generous purse, along with the gratitude "
 "of all our people. Please join me in applauding their bravery.\"\n"
-"   The public ceremony lasts only a few hectoseconds. Afterwards, as "
+"   The public ceremony lasts only a few hectostu. Afterwards, as "
 "interviewers draw the young navy officers aside and the crowd disperses, you "
 "catch sight of the elderly couple from the bar holding each other and "
 "looking up into the darkening sky."
@@ -79474,8 +79896,8 @@ msgid ""
 "triumph for this species.\n"
 "\n"
 "And to believe that it was driven to extinction so long ago! It was risky, "
-"but extracting the last embryos and flasking them. It may have cost all my "
-"savings, but I would do it again given half the chance."
+"but extracting the last embryos and flasking them was worth it. It may have "
+"cost all my savings, but I would do it again given half the chance."
 msgstr ""
 
 #. TODO maybe do something better for the locations? Probably player will forget / not notice in seconds, but may just make sense to have the Oracle character or whatever to nudge the player instead
@@ -79675,13 +80097,13 @@ msgid ""
 msgstr ""
 
 msgid ""
-"You search the rest of the ship, but there is nothing of interest other than "
-"the mummified remains of the pilot. You leave the ship behind."
+"While searching, you find the mummified remains of the pilot. You leave the "
+"ship behind."
 msgstr ""
 
 msgid ""
-"You search the rest of the ship, finding {reward} and the mummified remains "
-"of the pilot. With nothing left to do, you leave the ship behind."
+"While searching, you find {reward} and the mummified remains of the pilot. "
+"With nothing left to do, you leave the ship behind."
 msgstr ""
 
 msgid ""
@@ -80630,6 +81052,7 @@ msgstr ""
 #. Must be claimable
 #. Full claim here
 #. Want no inhabited spobs
+#. Not too hard
 #. For Nelly, we don't want it to be too uninhabited
 #. Try to get closer first, if not, allow more far away
 #. Failed to start
@@ -88817,7 +89240,7 @@ msgstr ""
 #. <cond>
 #. -- Must be 5 cycles after finishing Lucas 01
 #. local t = var.peek("lucas01_done")
-#. if t and time.get() &lt; t + time.new( 0, 5, 0 ) then
+#. if t and time.cur() &lt; t + time.new( 0, 5, 0 ) then
 #. return false
 #. end
 #.
@@ -88982,6 +89405,7 @@ msgid ""
 "become a pirate."
 msgstr ""
 
+#. The Junker doesn't like people
 #. outfit.get("Berserk Chip"),
 msgid "Lucas"
 msgstr ""
@@ -89068,8 +89492,8 @@ msgstr ""
 msgid ""
 "Lucas seems euphoric to get away from the troubles of his past and begin "
 "anew. The question that remains unanswered is whether pirate society is "
-"truly more free than other societies, or is the problem at core human nature "
-"itself."
+"truly more free than other societies. Or is the problem at the core of human "
+"nature itself?"
 msgstr ""
 
 msgid ""
@@ -90411,10 +90835,10 @@ msgstr ""
 msgid ""
 "Captain Rebina stands up, a signal that this briefing is over. You are seen "
 "to your ship by a grey-uniformed crewman. You sit in your cockpit for a few "
-"hectoseconds before disengaging the docking clamp. What Captain Rebina has "
-"told you is a lot to take in. A shadowy organization that guides humanity "
-"behind the scenes? And parts of that organization going rogue? The road "
-"ahead could well be a bumpy one."
+"hectostu before disengaging the docking clamp. What Captain Rebina has told "
+"you is a lot to take in. A shadowy organization that guides humanity behind "
+"the scenes? And parts of that organization going rogue? The road ahead could "
+"well be a bumpy one."
 msgstr ""
 
 #. Debriefing
@@ -91339,9 +91763,9 @@ msgid ""
 msgstr ""
 
 msgid ""
-"Mere hectoseconds later you find yourself back in your cockpit, and the "
-"Seiryuu is leaving. It doesn't really come as a surprise that you can't find "
-"any reference to your rendezvous with the Seiryuu in your flight logs..."
+"Mere hectostu later you find yourself back in your cockpit, and the Seiryuu "
+"is leaving. It doesn't really come as a surprise that you can't find any "
+"reference to your rendezvous with the Seiryuu in your flight logs..."
 msgstr ""
 
 #. Keep track of the escorts. Update this when they die.
@@ -92005,8 +92429,8 @@ msgstr ""
 #. Job is done
 msgid ""
 "The Nexus employee greets you as you reach the ground. \"Excellent! I will "
-"just need to spend a few hectoseconds analysing these recordings. See if you "
-"can find me in the bar soon; I might have another job for you.\""
+"just need to spend a few hectostu analysing these recordings. See if you can "
+"find me in the bar soon; I might have another job for you.\""
 msgstr ""
 
 msgid ""
@@ -92686,7 +93110,7 @@ msgstr ""
 #. This is the route Joanne will take.
 msgid ""
 "You dock with {pnt}, and the spacedock personnel immediately begin to refuel "
-"your ship. You spend a few hectoseconds going through checklists and routine "
+"your ship. You spend a few hectostu going through checklists and routine "
 "maintenance operations. Then you get a ping on your comms from Joanne. She "
 "tells you that she has finished her business on this station, and that she's "
 "taking off again. You follow suit."
@@ -93913,7 +94337,7 @@ msgid ""
 "started to take notice of your actions. Maybe it is the will of Sirichana "
 "that you come to us! If that is the case, then I have an offer you can't "
 "refuse. A chance to really prove yourself as more than a glorified courier. "
-"You see... we are expecting a Sirian patrol any hectosecond now, and we want "
+"You see... we are expecting a Sirian patrol any hectostu now, and we want "
 "you to... take care of it. What do you say? We could really use your help.\""
 msgstr ""
 
@@ -97302,9 +97726,9 @@ msgid ""
 msgstr ""
 
 msgid ""
-"You helped a Thurion android named Liaou reach {spb} to begin data "
-"extraction operations. They mentioned that you may find missions to further "
-"help the Thurion cause on the Mission Bullet Board Systems at {spobs}."
+"You helped a Thurion android named Liao reach {spb} to begin data extraction "
+"operations. They mentioned that you may find missions to further help the "
+"Thurion cause on the Mission Bullet Board Systems at {spobs}."
 msgstr ""
 
 #.
@@ -97635,6 +98059,92 @@ msgid "Drop off the goods at {pnt} in the {sys} system (You are late)"
 msgstr ""
 
 msgid "Help the Merchant"
+msgstr ""
+
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <mission name="Mineral Request">
+#. <unique/>
+#. <priority>4</priority>
+#. <chance>350</chance>
+#. <location>Computer</location>
+#. <cond>
+#. require("misn_test").cargo()
+#. </cond>
+#. </mission>
+#. --
+msgid ""
+"A local company has requested at least {amount} of {mineral} at {spob} "
+"({sys} system)."
+msgstr ""
+
+msgid ""
+"The local government of {sys} is in need of at least {amount} of {mineral} "
+"at {spob} ({sys} system)."
+msgstr ""
+
+msgid ""
+"A new entrepreneur is in need of some {amount} of {mineral} for a new "
+"prototype at {spob} ({sys} system)."
+msgstr ""
+
+msgid ""
+"An individual has made a request of {amount} of {mineral} at {spob} ({sys} "
+"system)."
+msgstr ""
+
+msgid ""
+"An anonymous request has been made for {amount} of {mineral} to be delivered "
+"at {spob} ({sys} system)."
+msgstr ""
+
+msgid ""
+"A local warehouse has requested a delivery of at least {amount} of {mineral} "
+"at {spob} ({sys} system)."
+msgstr ""
+
+msgid "Mining Request of {mineral} to {dest}"
+msgstr ""
+
+msgid "special"
+msgstr ""
+
+#. First let us find a mining system
+#. Next determine what we want delivered
+#. Now to figure out where to send it
+#. Should be a system _without_ the mineral
+#. Compute the most efficient mining route
+#. No route found, so abort
+#. Figure out the reward
+msgid ""
+"{flavour}\n"
+"\n"
+"#nNecessary Mineral:#0 {mineral} ({rarity})\n"
+"#nNecessary Amount:#0 at least {amount}"
+msgstr ""
+
+msgid "{base} plus {extra} per tonne delivered"
+msgstr ""
+
+msgid "Mining Request"
+msgstr ""
+
+msgid "Mine at least {amount} of {mineral} (you have {have})."
+msgstr ""
+
+msgid "Deliver to {spob} ({sys} system)."
+msgstr ""
+
+msgid "Deliver {amount} of {mineral} and collect {reward}?"
+msgstr ""
+
+msgid "Deliver the goods."
+msgstr ""
+
+msgid "Maybe later"
+msgstr ""
+
+msgid "You deliver the {amount} of {mineral} and collect {reward}."
 msgstr ""
 
 #.
@@ -101880,7 +102390,7 @@ msgid ""
 "\"By using a reverse tachyon depolarizer, they were able to…\"\n"
 "Zach realizes that he lost you a while back.\n"
 "\"Ummm, long story short, we may have a way of generating much more "
-"antimatter that was feasible up until now!\""
+"antimatter than was feasible up until now!\""
 msgstr ""
 
 msgid ""
@@ -101895,7 +102405,7 @@ msgid ""
 "written in the book, which seems to be purposely written to be hard to "
 "understand, Zach appears once again and motions for you to follow. He leads "
 "you to a room separated by a curtain where there seems to be a large device, "
-"and beams a triumphant smile at your, eagerly waiting a reaction."
+"and beams a triumphant smile at you, eagerly waiting a reaction."
 msgstr ""
 
 msgid "\"It's awesome!\""
@@ -104925,7 +105435,7 @@ msgstr ""
 #. Planets
 #. Have to claim so Logan doesn't get cleared upon takeoff at destination
 #. Must be landable
-#. origtime = time.get()
+#. origtime = time.cur()
 msgid ""
 "This Za'lek scientist seems to be looking for someone. As you approach, he "
 "begins to speak. \"Excuse me, but do you happen to know a ship captain who "
@@ -105003,7 +105513,7 @@ msgstr ""
 msgid ""
 "When you enter, your head spins at a combination of the highly advanced and "
 "esoteric-looking tech so casually on display as well as the utter chaos of "
-"the facility. It takes a solid ten hectoseconds before someone comes to you "
+"the facility. It takes a solid ten hectostu before someone comes to you "
 "asking what you need, looking quite frazzled. You state that you delivered "
 "some equipment and are looking for payment. The man types in a wrist-pad for "
 "a few seconds and says that the person you are looking for has not landed "
@@ -105499,8 +106009,8 @@ msgstr ""
 #. Not ready yet
 #. Generic description
 msgid ""
-"Uses flow to enhance the ships damage by {dmg}%, movement by {mvt}%, "
-"absorption by {abs}%, jamming chance by {jam}%, and shield and energy "
+"Uses flow to enhance the ships damage by {dmg}%, movement by {mvt}%, damage "
+"taken by {abs}%, jamming chance by {jam}%, and shield and energy "
 "regeneration by {regen}. Furthermore, it accelerates the ship by {accel}%. "
 msgstr ""
 
@@ -105699,7 +106209,6 @@ msgid ""
 "the target{corrosion}."
 msgstr ""
 
-#. Modify by damage
 #. Library to help with blink drives and friends
 #. Doubles range
 #. Doesn't become active
@@ -105735,91 +106244,6 @@ msgstr ""
 #. -1 for remove
 #. 0 for update
 #. 1 for add
-#. Doesn't become active
-#. Called when the price of the outfit for the player is check
-#. Returns 4 values, the cost string, whether the player can buy it,
-#. whether the player can sell it, and what to display for the player "You
-#. have:" field. Note the last return is optional and defaults to displaying
-#. the player's owned credits when not specified.
-#. Use format library instead
-#. Run when the player tries to buy an outfit. Should determine whether the
-#. outfit was bought or not (deducting costs), or return false and the reason
-#. for not being able to buy the outfit.
-#. return false, reason
-#. Run when the player tries to sell an outfit. Should determine whether the
-#. outfit was sold or not (deducting costs), or return false and the reason
-#. for not being able to sell the outfit.
-#. return false, reason
-#. The init is run when the pilot is created or enters a new system (takeoff/jumpin)
-#. The function is run when the outfit is added to the pilot
-#. This function is run _AFTER_ the outfit is added, so the po struct is still valid.
-#. The function is run when the outfit is removed from the pilot.
-#. This function is run _BEFORE_ the outfit is removed, so the po struct is still valid.
-#. The function is run when any outfit is changed on the pilot
-#. This is guaranteed to be run _AFTER_ onadd and onremove functions are called.
-#. The update function is run periodically every 1/10 seconds
-#. 'dt' is the time elapsed since last time run in seconds
-#. When the pilot is out of energy, this function triggers. Note that before
-#. this triggers, 'ontoggle( p, po false, false )' will be run if it exists.
-#. This is especially useful for outfits that can't be toggled, but want to
-#. turn off when they run out of energy.
-#. The onhit function is run when the pilot 'p' takes damage
-#. armour is the amount of armour damage taken (in GJ)
-#. shield is the amount of shield damage taken (in GJ)
-#. attacker is the pilot that attacked
-#. pos is the position of the hit
-#. The onshoot function is run when the pilot 'p' shoots ANY weapon. This includes primary / secondary / instant weapon sets
-#. The ontoggle function is run when the outfit is part of a toggle weapon set
-#. and is toggled by the player. If it was not "on" when toggled, the on value
-#. will be true, it will be false otherwise.
-#. It returns a boolean whether or not the outfit was actually triggered.
-#. The onstealth function runs when the pilot stealths or destealths
-#. stealthed the current stealth status of the pilot
-#. Run when the pilot is scanned by a scanner pilot.
-#. Run when the pilot scans a target pilot.
-#. The cooldown function is triggered when both cooldown starts and when
-#. it ends. The done is a boolean value which indicates whether or not it
-#. finished. In the case done is false, opt will indicate the number of
-#. seconds the cooldown will take. If done is true, then opt will be a
-#. a boolean indicating whether or not it successfully completed.
-#. Triggered when pilot lands (player only)
-#. Triggered when pilot takes off (player only)
-#. Triggered when pilot jumps in (player only)
-#. Run AFTER the player is in the new system.
-#. Triggered when pilot boards a target ship
-#. Triggered when the player double taps a specific key, which can be either "accel", "left", or "right". Should return true if it activated something
-#. Triggered when the player releases a specific key, same as "keydoubletap"
-#. Triggered when the outfit receives a message from some source.
-#. Run when the pilot is dead and about to start exploding
-#. Run when any particle shot by p impacts the target. Unlike onimpact, p is
-#. guaranteed to exist.
-#.
-#. Below are WEAPONS ONLY. However, they can be triggered by munitions,
-#. which share the environment with the ORIGINAL spawning outfit, not necessarily
-#. the true outfit. So if you create a "Laser MK1" munition from a new outfit
-#. called "NewOutfit", it would use the environment of "NewOutfit", and not "Laser
-#. MK1".
-#.
-#. Note that these are calculated with particles.
-#. --
-#. Triggered when the weapon is about to shoot and can be used to control
-#. whether or not it should be able to shoot. By returning true, it'll start
-#. firing the weapon, while returning false will block in from shooting.
-#. Triggered when a particle shot by p impacts the target. p may not exist if
-#. the pilot that shot the weapon ceased to exist.
-#. - Triggered when a particle times out without hitting a target. p may not
-#. exist if the pilot that shot the weapon ceased to exist.
-#.
-#. Example of an activated outfit implemented fully in Lua
-#. --
-#. 10 seconds cooldown
-#. 5 seconds active
-#. Update timer
-#. Check if need to turn it off
-#. Active time over
-#. Mark cooldown is over
-#. Ignore already active
-#. Ignore already not active
 #. Doesn't become active
 msgid "{num} Encrypted Data Matrix"
 msgid_plural "{num} Encrypted Data Matrices"
@@ -105974,6 +106398,21 @@ msgid "+33% Action Speed for 10 seconds after leaving stealth."
 msgstr ""
 
 #. Add effect when dropping out of stealth
+#. Spawn The Junker
+msgid "Junker"
+msgstr ""
+
+msgid ""
+"+{detect}% Detection, +{loot}% Boarding Bonus, +{regen} {units} Armour "
+"Regeneration"
+msgstr ""
+
+msgid "Provides anti-munition point defence."
+msgstr ""
+
+#. Handle point defense here
+#. If doesn't exist or out of range, get new target
+#. Just get a random one
 msgid "This outfit only works when two are equipped at the same time."
 msgstr ""
 
@@ -106005,6 +106444,109 @@ msgstr ""
 #. pilot outfit slot po (or nil if not applicable). The function should return
 #. a translated string.
 msgid "This outfit is very cool."
+msgstr ""
+
+#. Called when the price of the outfit for the player is check
+#. Returns 5 values:
+#. 1. The cost string
+#. 2. Whether the player can buy it. If true, they can buy it, otherwise, they can't. Use a string to give a reason why.
+#. 3. whether the player can sell it. If true, they can sell it, otherwise, they can't. Use a string to give a reason why.
+#. 4. An optional what to display for the player "You have:" field. Defaults to displaying the player's owned credits when not specified.
+#. Use format library instead
+#. Run when the player tries to buy an outfit. Should determine whether the
+#. outfit was bought or not (deducting costs), or return false and the reason
+#. for not being able to buy the outfit.
+#. return false, reason
+#. Run when the player tries to sell an outfit. Should determine whether the
+#. outfit was sold or not (deducting costs), or return false and the reason
+#. for not being able to sell the outfit.
+#. return false, reason
+#. The init is run when the pilot is created or enters a new system (takeoff/jumpin)
+#. The function is run when the outfit is added to the pilot
+#. This function is run _AFTER_ the outfit is added, so the po struct is still valid.
+#. The function is run when the outfit is removed from the pilot.
+#. This function is run _BEFORE_ the outfit is removed, so the po struct is still valid.
+#. The function is run when any outfit is changed on the pilot
+#. This is guaranteed to be run _AFTER_ onadd and onremove functions are called.
+#. The update function is run periodically every 1/10 seconds
+#. 'dt' is the time elapsed since last time run in seconds
+#. When the pilot is out of energy, this function triggers. Note that before
+#. this triggers, 'ontoggle( p, po false, false )' will be run if it exists.
+#. This is especially useful for outfits that can't be toggled, but want to
+#. turn off when they run out of energy.
+#. The onhit function is run when the pilot 'p' takes damage
+#. armour is the amount of armour damage taken (in GJ)
+#. shield is the amount of shield damage taken (in GJ)
+#. disable is the amount of disable damage taken (in GJ)
+#. attacker is the pilot that attacked
+#. pos is the position of the hit
+#. The onshoot function is run when the pilot 'p' shoots ANY weapon. This includes primary / secondary / instant weapon sets
+#. The ontoggle function is run when the outfit is part of a toggle weapon set
+#. and is toggled by the player. If it was not "on" when toggled, the on value
+#. will be true, it will be false otherwise.
+#. It returns a boolean whether or not the outfit was actually triggered.
+#. The onstealth function runs when the pilot stealths or destealths
+#. stealthed the current stealth status of the pilot
+#. Run when the pilot is scanned by a scanner pilot.
+#. Run when the pilot scans a target pilot.
+#. The cooldown function is triggered when both cooldown starts and when
+#. it ends. The done is a boolean value which indicates whether or not it
+#. finished. In the case done is false, opt will indicate the number of
+#. seconds the cooldown will take. If done is true, then opt will be a
+#. a boolean indicating whether or not it successfully completed.
+#. Triggered when pilot lands (player only)
+#. Triggered when pilot takes off (player only)
+#. Triggered when pilot jumps in (player only)
+#. Run AFTER the player is in the new system.
+#. Triggered when pilot boards a target ship
+#. Triggered when the player double taps a specific key, which can be either "accel", "left", or "right". Should return true if it activated something
+#. Triggered when the player releases a specific key, same as "keydoubletap"
+#. Triggered when the outfit receives a message from some source.
+#. Run when the pilot is dead and about to start exploding
+#. Run when any particle shot by p impacts the target. Unlike onimpact, p is
+#. guaranteed to exist.
+#.
+#. Below are WEAPONS ONLY. However, they can be triggered by munitions,
+#. which share the environment with the ORIGINAL spawning outfit, not necessarily
+#. the true outfit. So if you create a "Laser MK1" munition from a new outfit
+#. called "NewOutfit", it would use the environment of "NewOutfit", and not "Laser
+#. MK1".
+#.
+#. Note that these are calculated with particles.
+#. --
+#. Triggered when the weapon is about to shoot and can be used to control
+#. whether or not it should be able to shoot. By returning true, it'll start
+#. firing the weapon, while returning false will block in from shooting.
+#. Triggered when a particle shot by p impacts the target. p may not exist if
+#. the pilot that shot the weapon ceased to exist.
+#. - Triggered when a particle times out without hitting a target. p may not
+#. exist if the pilot that shot the weapon ceased to exist.
+#.
+#. Example of an activated outfit implemented fully in Lua
+#. --
+#. 10 seconds cooldown
+#. 5 seconds active
+#. Update timer
+#. Check if need to turn it off
+#. Active time over
+#. Mark cooldown is over
+#. Ignore already active
+#. Ignore already not active
+#. Doesn't become active
+msgid ""
+"By purchasing this license, you will reset your reputation with all "
+"independent governments to 0."
+msgstr ""
+
+msgid "You are not in need of a fake license."
+msgstr ""
+
+msgid "New You"
+msgstr ""
+
+msgid ""
+"With your newly acquired identity, you have cleared your record with all "
+"independent governments."
 msgstr ""
 
 #. Doesn't become active
@@ -106142,6 +106684,23 @@ msgstr ""
 #. Didn't do anything
 #. clear helper.msgnospam timer
 msgid "Drains fuel on armour damage."
+msgstr ""
+
+#. Shadow is 25
+#. Ghost is 110/130
+#. Phantasm is 450/550
+msgid "Properties depend on size of the equipped slot:"
+msgstr ""
+
+msgid ""
+"{size}:#0 {mass} {mass_units}, {absorb}%, {regen} {regen_units} Armour "
+"Regeneration"
+msgstr ""
+
+msgid "Equipped on a {size} slot."
+msgstr ""
+
+msgid "Regeneration effect is doubled when armour is below {threshold}%."
 msgstr ""
 
 #. active time in seconds
@@ -106286,6 +106845,9 @@ msgstr "Só ativo quando o escudo está acima dos 70%."
 #. Really bad way of checking, but if starting health is the same as ending health,
 #. we assume it's run in row and thus doing single cycle and needs full heal.
 #. Stop repairing
+msgid "Can only restore armour when below {threshold}%."
+msgstr ""
+
 #. active time in seconds
 #. cooldown time in seconds
 #. How much the shield regen is increased by
@@ -106380,7 +106942,6 @@ msgid ""
 "energy drain over {duration} seconds on the target."
 msgstr ""
 
-#. Modify by damage
 #. luacheck: ignore
 #. function io.stderr:write(str) printRaw(str) end -- luacheck: ignore
 #. luacheck: ignore
@@ -106811,6 +107372,7 @@ msgstr ""
 #. BioShip skill and stage (level) handler
 #.
 #. --
+#. Fall back to main ship if not found
 #. Filter out high tiers if necessary
 #. Set up some helper fields
 #. Tests outfits if they exist
@@ -107324,9 +107886,10 @@ msgstr ""
 
 msgid ""
 "The ship will lunge at the target enemy and take a huge bite out of it. +"
-"{accel_mod}% accel, +{speed_mod}% speed and +{absorb}% absorb for {duration} "
-"seconds or until target ship is bitten. This ship will do {dmg} damage with "
-"its current mass ({mass}). Has a {cooldown} second cooldown period."
+"{accel_mod}% accel, +{speed_mod}% speed and -{absorb}% damage taken for "
+"{duration} seconds or until target ship is bitten. This ship will do {dmg} "
+"damage with its current mass ({mass}). Has a {cooldown} second cooldown "
+"period."
 msgstr ""
 
 msgid "Cannibal II"
@@ -107335,14 +107898,14 @@ msgstr ""
 msgid ""
 "Cannibalizing boarded ships will now restore 2 points of armour per 3 points "
 "of armour cannibalized, and boarding will cause your ship to perform a full "
-"cooldown cycle. In addition to that, lunge now provides {absorb}% absorb and "
-"{heal}% of bitten armour is restored to the ship."
+"cooldown cycle. In addition to that, lunge now provides -{absorb}% damage "
+"taken and {heal}% of bitten armour is restored to the ship."
 msgstr ""
 
 msgid ""
-"Lunge now provides {absorb}% absorb and lunge time increased to {lunge_time} "
-"seconds. On successful bite, weapon damage is increased by {weapon_damage}% "
-"for {bloodlust_duration} seconds."
+"Lunge now provides -{absorb}% damage taken and lunge time increased to "
+"{lunge_time} seconds. On successful bite, weapon damage is increased by "
+"{weapon_damage}% for {bloodlust_duration} seconds."
 msgstr ""
 
 msgid "Strong Jaws"
@@ -108308,6 +108871,9 @@ msgstr[1] ""
 msgid "GODDARD: "
 msgstr "GODDARD"
 
+msgid "The Junker"
+msgstr ""
+
 msgid "You see Kex taking a break at his favourite spot at Minerva station."
 msgstr ""
 
@@ -108375,6 +108941,11 @@ msgid "%s Minerva Token"
 msgid_plural "%s Minerva Tokens"
 msgstr[0] ""
 msgstr[1] ""
+
+#. Maikki stuff
+#. Spawns the pink demon at location pos
+msgid "Pink Demon"
+msgstr ""
 
 #.
 #. List of mission variables:
@@ -108630,8 +109201,8 @@ msgstr ""
 
 msgid ""
 "\"It pays a lot to have the know-how on electronic warfare. A little more "
-"armour may add some hectoseconds to your life, but being able to disappear "
-"off an enemy ship's radar at the press of a button will save it.\""
+"armour may add some hectostu to your life, but being able to disappear off "
+"an enemy ship's radar at the press of a button will save it.\""
 msgstr ""
 
 msgid "Hologram"
@@ -108794,14 +109365,6 @@ msgstr ""
 msgid "*NOISE*"
 msgstr ""
 
-#. --
-#. Tests to see the POI is near a nebula.
-#. @tparam boolean true if near a nebula.
-#. --
-#. Limit volatility should allow Arandon
-msgid "Encrypted Data Matrix"
-msgstr ""
-
 #.
 #. Gets the amount of data collected by the player.
 #. @treturn integer Amount of data collected by the player.
@@ -108944,6 +109507,7 @@ msgstr ""
 
 #. Note: this mission does not make any system claims.
 #. Only spawn this mission if the player needs it.
+#. Must not be in a hostile place.
 #. Don't spawn this mission if the player is buddies with this faction's enemies.
 msgid "{fct} Rehabilitation"
 msgstr ""
@@ -109072,6 +109636,17 @@ msgstr ""
 #. Thurion Helpers
 #. --
 msgid "THURION: "
+msgstr ""
+
+#.
+#.
+#. Trader Common Functions
+#.
+#. --
+msgid "TRADER: "
+msgstr ""
+
+msgid "Steve"
 msgstr ""
 
 #. 100px big images
@@ -109214,6 +109789,7 @@ msgstr "Você vê Noona que parece ter um emprego para você."
 #. See if anything seems wrong
 #. luacheck: globals pprint
 #. luacheck: globals dev
+#. Shows all the map to the player
 #. Lazy load equipopt as it requires outfits to be loaded and such
 #.
 #. Taken from https://github.com/jagt/pprint.lua
@@ -109398,6 +109974,7 @@ msgstr ""
 #. high damage but shield only
 #. really high disable
 #. Only work until 50%
+#. Only work until 25%
 #. Shieldbreaker damage
 #. Point defence works against missiles so it's extra useful
 #. Plasma do a lot of damage over time
@@ -109441,9 +110018,9 @@ msgstr "CPU: %d / %d [%d < %d]"
 msgid "Energy Regen: %.3f [x=%.3f > %.3f (%.1f)]"
 msgstr "Regeneração Energética: %.3f [%.3f < %.3f (%.1f)]"
 
-#, fuzzy, lua-format
-msgid "Mass: %.3f / %.3f [x=3f < %.3f (%.1f)]"
-msgstr "Massa: %.3f / %.3f [%.3f < %.3f (%.1f)]"
+#, lua-format
+msgid "Mass: %.3f / %.3f [x=%.3f < %.3f (%.1f)]"
+msgstr ""
 
 #, fuzzy, lua-format
 msgid "Shield Regen: %.3f [x=%.3f > %.3f (%.1f)]"
@@ -109705,6 +110282,18 @@ msgstr ""
 #. TODO should we use cores or outfits as a reference? :/
 #. Try to equip
 #. Focus on weapons!
+#. Heavy Weapons
+#. Medium Weapons
+#. Small Weapons
+#. Other mining-related stuff
+#.
+#. -- @brief Does Miner pilot equipping
+#. --
+#. --    @param p Pilot to equip
+#. --
+#. Don't want disable weapons
+#. See cores
+#. Try to equip
 #. PIRATE BASE TEMPLATE, DO NOT USE DIRECTLY
 #. Heavy Weapons
 #. Medium Weapons
@@ -110007,9 +110596,6 @@ msgid "Bordar"
 msgstr ""
 
 msgid "Vagabond"
-msgstr ""
-
-msgid "Offender"
 msgstr ""
 
 msgid "Amicable"
@@ -110747,6 +111333,7 @@ msgstr ""
 #. @tparam Vec2 origin_pos Position to calculate distance from.
 #. @tparam System dest_sys Target system to calculate distance to.
 #. @tparam Vec2 dest_pos Target position to calculate distance to.
+#. (might be nil, meaning (any) dest_sys entry point.)
 #. @tparam table params Table of parameters. Currently supported are "use_hidden".
 #. @return The distance travelled
 #. @return The jumpPath leading to the target system
@@ -110756,6 +111343,30 @@ msgstr ""
 #. our entry point and the jump point to the next system.
 #. Then, set the exit jump point as the next entry point.
 #. We ARE in the destination system now, so route from the entry point to the destination planet.
+#. jumpin / jumpout animations not taken into account
+#. ship assumed to jumpin at jump point with speed_max
+#. ship assumed to be originally motionless (and, if landed, facing the opposite direction)
+#. ship assumed to have enough space to reach max_speed between "checkpoints"
+#. --
+#. Calculates the in-game time from a position/spob in a system to a position/spob/nil in another system. Spobs and systems can be given as strings.
+#.
+#. @tparam Pilot p Pilot to compute travel time for.
+#. @tparam System src_sys System to calculate distance from. If nil, current system.
+#. @tparam System dst_sys or nil Target system to calculate distance to. If omitted, use src_sys.
+#. @tparam Vec2|Spob _src_pos Position to calculate distance from. If the argument is a spob, taking off time is accounted for. If nil, current pilot position.
+#. @tparam Vec2|Spob|nil dst_pos Target position to calculate distance to. If target is nil, just aim system entry point. If target is a spob, braking time is accounted for.
+#. @treturn Time The in-game time needed for this travel.
+#. --
+#. land/jump times (everything not affected by action_speed)
+#. approximation: we assume the ship instantly get to drift speed when stopping thrust
+#. print ('delays / other '..tostring(delays)..' / '..tostring(total))
+#. --
+#. Same as lmisn.travel_time, but automatically computes it from the player's current location.
+#.
+#. @tparam System dst_sys or nil Target system to calculate distance to. If omitted, use src_sys.
+#. @tparam Vec2|Spob|nil dst_pos Target position to calculate distance to. If target is nil, just aim system entry point. If target is a spob, braking time is accounted for.
+#. @treturn Time The in-game time needed for this travel.
+#. --
 #. --
 #. Gets the closest jump to a position.
 #.
@@ -110885,6 +111496,9 @@ msgstr ""
 #.
 #. -- Data
 #. --
+#. function data.Data:getString()
+#. return self.d:getString()
+#. end
 #.
 #. -- Events
 #. --
@@ -110987,7 +111601,17 @@ msgstr ""
 #. local f = filesystem.newFile(arg[1])
 #. d, w, h = naev.tex.readData( f )
 #. --
-#. probably very slow
+#.
+#. function image.ImageData:paste( source, dx, dy, sx, sy, sw, sh )
+#. -- probably very slow
+#. for y = 0,sh-1 do
+#. local dstx = _id_pos(self, dx, dy+y )
+#. local srcx = _id_pos(source, sx, sy+y )
+#. self.d:paste( source.d, dstx, srcx, 4*sw )
+#. end
+#. return self
+#. end
+#. --
 #.
 #. -- Joystick
 #. --
@@ -113739,11 +114363,13 @@ msgstr ""
 #. Must be composable with a colour, so don't even escape the string.
 #. sort of
 #. codespell:ignore colors
-#. local fontname = _("CormorantUnicase-Medium.ttf")
+msgid ""
+"Audiowide-Regular.ttf,NanumBarunGothicBold.ttf,IBMPlexSansJP-"
+"Medium.otf,Ubuntu-Regular.otf"
+msgstr ""
+
 #. Title
-#. title.font = lg.newFont( fontname, title.h )
 #. Subtitle
-#. subtitle.font = lg.newFont( fontname, subtitle.h )
 #. TODO probably rewrite the shader as this is being computed with the full
 #. screen resolution, breaks with all transitions that use love_ScreenSize...
 #. Render to canvas
@@ -114616,6 +115242,15 @@ msgid ""
 "to a maximum of {max}% and {max2}, respectively."
 msgstr ""
 
+#. Maximum value of the bonus
+#. Flow required to start getting a bonus
+#. How much bonus is needed for an increment
+#. Increment per OVERFLOW
+msgid ""
+"For each {over} flow above {min} flow, increases max speed, turn, and "
+"acceleration by {bonus}% up to a maximum of {max}%."
+msgstr ""
+
 #. slower explosions
 #. TODO maybe explosions should be under player when applicable...
 #. Bioships get thrice the effect of stellar winds
@@ -114903,6 +115538,15 @@ msgid "You need at least {standing} with {fct} (you have {current})."
 msgstr "Requer 50 pontos de reputação com os Thurion."
 
 #. Set up globals
+msgid "\"Just land or whatever.\""
+msgstr ""
+
+msgid "\"Who cares? Land already.\""
+msgstr ""
+
+msgid "\"It's a free port.\""
+msgstr ""
+
 #.
 #. Active hypergate
 #. --
@@ -115178,7 +115822,12 @@ msgstr ""
 
 #. Do some background
 #. Do some lights
+#. This duplicates some of the functionality from the AI distress_handler
 #. Ignore if the player isn't the bad one
+#. local a_enemy = aifact:areEnemies(afact, scur)
+#. Determine if player is bad or not
+#. Assumption always "white knight" compared to AI
+#. Player was bad
 #. Small faction hit
 #. f:hit( -1, "distress" ) -- Amplifies distress signals
 #. Default parameters that can be overwritten
@@ -115364,6 +116013,21 @@ msgid "\"Money is irrelevant.\""
 msgstr ""
 
 msgid "\"Permission denied. Ruadan space is off-limits to you.\""
+msgstr ""
+
+#.
+#. Handes how to parse and display time.
+#. --
+#, lua-format
+msgid "%d stu"
+msgstr ""
+
+#, lua-format
+msgid "%d.%04d stp"
+msgstr ""
+
+#, lua-format
+msgid "UST %d:%04d.%04d"
 msgstr ""
 
 msgctxt "keyname"
@@ -116248,7 +116912,7 @@ msgid "Pilot '%s' ai '%s' error: %s"
 msgstr ""
 
 #, c-format
-msgid "AI Profile '%s' not found, using dummy fallback."
+msgid "Pilot '%s' has unknown AI Profile '%s', using dummy fallback."
 msgstr ""
 
 msgid "Dummy AI Profile not valid! Things are going to break."
@@ -116332,10 +116996,6 @@ msgid "Trying to pop task when there are no tasks on the stack."
 msgstr ""
 
 #, c-format
-msgid "Trying to pop subtask when there are no subtasks for the task '%s'."
-msgstr ""
-
-#, c-format
 msgid "Spob '%s' not found in system '%s'"
 msgstr ""
 
@@ -116399,17 +117059,6 @@ msgstr ""
 
 #, c-format
 msgid "Asteroid Type '%s' missing/invalid '%s' element"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s xml collision polygon does not exist!\n"
-"                Please use the script 'polygon_from_sprite.py'\n"
-"                This file can be found in Naev's artwork repo."
-msgstr ""
-
-#, c-format
-msgid "Malformed %s file: does not contain elements"
 msgstr ""
 
 #, c-format
@@ -116538,28 +117187,6 @@ msgstr ""
 msgid "System Claim trying to load system '%s' which doesn't exist"
 msgstr ""
 
-#, c-format
-msgid ""
-"Polygon with mismatch of number of |x|=%d and |y|=%d coordinates detected!"
-msgstr ""
-
-#, c-format
-msgid "Polygon '%s' has under 3 points for view %d!"
-msgstr ""
-
-#, c-format
-msgid ""
-"Polygon '%s' has very few points for view %d (%d points compared to %f mean)!"
-msgstr ""
-
-#, c-format
-msgid "Texture '%s' has no transparency map"
-msgstr ""
-
-#, c-format
-msgid "Angle not between 0 and 2.*M_PI [%f]."
-msgstr ""
-
 msgid "#rTarget is out of communications range"
 msgstr ""
 
@@ -116630,6 +117257,10 @@ msgstr ""
 
 #, c-format
 msgid "Malformed %s file: missing root element '%s'"
+msgstr ""
+
+#, c-format
+msgid "Commodity '%s' has unknown node in tags '%s'."
 msgstr ""
 
 #, c-format
@@ -116854,6 +117485,9 @@ msgid "Disable allowing resizing the window."
 msgstr ""
 
 msgid "Minimize the game on focus loss."
+msgstr ""
+
+msgid "Disable screen shaking effects."
 msgstr ""
 
 msgid "Enables colourblind simulation. A value of 0. disables."
@@ -117128,15 +117762,6 @@ msgid "{p}.{s:04} p"
 msgstr ""
 
 msgid "UST {c}:{p:04}.{s:04}"
-msgstr ""
-
-msgid "%04d s"
-msgstr ""
-
-msgid "%.*f p"
-msgstr ""
-
-msgid "UST %d:%.*f"
 msgstr ""
 
 msgid "No debris special effects found."
@@ -118148,6 +118773,9 @@ msgstr ""
 msgid "You can't sell the ship you're piloting!"
 msgstr ""
 
+msgid "You can only sell ships when there is a shipyard!"
+msgstr ""
+
 #. Already onboard.
 #, c-format
 msgid "You're already onboard the %s."
@@ -118566,11 +119194,11 @@ msgstr ""
 #. o is invalid
 #. f is invalid
 #, c-format
-msgid "Faction id '%d' is invalid."
+msgid "Faction id '%ld' is invalid."
 msgstr ""
 
 #, c-format
-msgid "%d is the player faction"
+msgid "%ld is the player faction"
 msgstr ""
 
 #. Call function.
@@ -118721,102 +119349,6 @@ msgstr ""
 #, c-format
 msgid "Adding translations from %s"
 msgstr ""
-
-#, fuzzy, c-format
-msgid "Unable to open '%s': %s"
-msgstr "Impossível equipar núcleo '%s' em '%s'!"
-
-#, fuzzy, c-format
-msgid "Unable to load surface '%s': %s"
-msgstr "Impossível carregar novamente o jogo salvo em '%s'!"
-
-msgid "Error setting up framebuffer!"
-msgstr ""
-
-#, c-format
-msgid "Unsupported interpolation type %d!"
-msgstr ""
-
-#, c-format
-msgid "Wrong number of elements. Got %lu, but expected %lu!"
-msgstr ""
-
-#, c-format
-msgid "Uknown animation type %d!"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Unable to open '%s' for reading: %s"
-msgstr "arquivo aberto para leitura"
-
-#, fuzzy
-msgctxt "cgltf"
-msgid "success"
-msgstr "Acessório"
-
-msgctxt "cgltf"
-msgid "data too short"
-msgstr ""
-
-#, fuzzy
-msgctxt "cgltf"
-msgid "unknown format"
-msgstr "erro desconhecido"
-
-#, fuzzy
-msgctxt "cgltf"
-msgid "invalid json"
-msgstr "argumento inválido"
-
-#, fuzzy
-msgctxt "cgltf"
-msgid "invalid gltf"
-msgstr "argumento inválido"
-
-msgctxt "cgltf"
-msgid "invalid options"
-msgstr ""
-
-#, fuzzy
-msgctxt "cgltf"
-msgid "file not found"
-msgstr "não encontrado"
-
-#, fuzzy
-msgctxt "cgltf"
-msgid "io error"
-msgstr "erro de Entrada/Saída"
-
-#, fuzzy
-msgctxt "cgltf"
-msgid "out of memory"
-msgstr "memória esgotada"
-
-msgctxt "cgltf"
-msgid "legacy gltf"
-msgstr ""
-
-#, c-format
-msgid "Error loading GLTF file '%s': %s"
-msgstr ""
-
-#, c-format
-msgid "gltf warning '%s': expected mount with id=%d, but got %d!"
-msgstr ""
-
-msgid "Error setting up shadowmap framebuffer!"
-msgstr ""
-
-#, c-format
-msgid "Object Cache '%s' not properly freed (refcount=%d)!"
-msgstr ""
-
-msgid "Trying to set more lights than MAX_LIGHTS allows!"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "GltfObject '%s' not found in cache!"
-msgstr "não encontrado"
 
 #, c-format
 msgctxt "player_message"
@@ -119958,7 +120490,7 @@ msgid "CPU:"
 msgstr ""
 
 #, c-format
-msgid "%.0f%% damage"
+msgid "%.0f"
 msgstr ""
 
 #, c-format
@@ -120087,6 +120619,9 @@ msgstr ""
 
 #, c-format
 msgid "Unable to get child node of save '%s'."
+msgstr ""
+
+msgid "Malformed time in save game!"
 msgstr ""
 
 #, c-format
@@ -120277,9 +120812,6 @@ msgid ""
 "\n"
 "Note that, in general, you should be able to find the missions/events again "
 "and start them without penalty."
-msgstr ""
-
-msgid "TOO MANY WARNINGS, NO LONGER DISPLAYING WARNINGS"
 msgstr ""
 
 #, c-format
@@ -121039,10 +121571,9 @@ msgstr ""
 msgid "Initializing video output failed, exiting…"
 msgstr ""
 
-#. Default font path.
 #. Load the fonts the same way Naev does
 msgid ""
-"Ubuntu-Regular.otf,NanumBarunGothicBold.ttf,SourceCodePro-"
+"Cabin-SemiBold.otf,NanumBarunGothicBold.ttf,SourceCodePro-"
 "Semibold.ttf,IBMPlexSansJP-Medium.otf"
 msgstr ""
 
@@ -121077,6 +121608,9 @@ msgid "Loading Factions…"
 msgstr ""
 
 #. dep for space, missions, AI, commodities
+#. LoadStage::new_c(gettext("Loading Factions…"), || unsafe {
+#. naevc::factions_load()
+#. }), /* dep for space, missions, AI, commodities */
 msgid "Loading Commodities…"
 msgstr ""
 
@@ -121193,6 +121727,9 @@ msgid ""
 "First argument to nfile_concatPaths was NULL. This is probably an error."
 msgstr ""
 
+msgid "TOO MANY WARNINGS, NO LONGER DISPLAYING WARNINGS"
+msgstr ""
+
 msgid "Failed to create new Lua state."
 msgstr ""
 
@@ -121227,48 +121764,10 @@ msgstr ""
 msgid "Asteroid is invalid"
 msgstr ""
 
-msgid "OGG: Vorbis hole detected in music!"
-msgstr ""
-
-msgid "OGG: Invalid stream section or corrupt link in music!"
-msgstr ""
-
-#, c-format
-msgid "Timed out while waiting for audio thread of '%s' to finish!"
-msgstr ""
-
-#, c-format
-msgid "Audio '%s' does not appear to be a Vorbis bitstream."
-msgstr ""
-
-#, c-format
-msgid "Audio '%s' is neither mono nor stereo!"
-msgstr ""
-
-msgid "Unimplemented"
-msgstr ""
-
-#, c-format
-msgid "Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"
-msgstr ""
-
-#, c-format
-msgid "Unknown duration source '%s'! Should be either 'seconds' or 'samples'!"
-msgstr ""
-
-#, c-format
-msgid "Unsupported audio effect type '%s'!"
-msgstr ""
-
-#, c-format
-msgid "Unknown audio effect '%s'!"
-msgstr ""
-
 msgid "OpenGL Error!"
 msgstr ""
 
-#, c-format
-msgid "Colour '%s' does not exist!"
+msgid "Error setting up framebuffer!"
 msgstr ""
 
 msgid "Commodity is invalid."
@@ -121293,37 +121792,6 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "unknown data type '%s'"
-msgstr ""
-
-msgid "position argument must be positive!"
-msgstr ""
-
-#, c-format
-msgid "position argument out of bounds: %d of %d elements"
-msgstr ""
-
-#, c-format
-msgid "size mismatch: out of bound access dest: %d of %d elements"
-msgstr ""
-
-#, c-format
-msgid "size mismatch: out of bound access of source: %d of %d elements"
-msgstr ""
-
-#, c-format
-msgid "size mismatch: A has %d elements but B has %d elements"
-msgstr ""
-
-#, c-format
-msgid "%s is only implemented for number types"
-msgstr ""
-
-#, c-format
-msgid "size mismatch for data: got %dx%dx4x%d, expected %d"
-msgstr ""
-
-#, c-format
 msgid "Event '%s' -> '%s': %s"
 msgstr ""
 
@@ -121344,13 +121812,6 @@ msgid "Trying to overwrite existing faction '%s' with dynamic faction!"
 msgstr ""
 
 msgid "Can only add allies to dynamic factions"
-msgstr ""
-
-msgid "file not open!"
-msgstr ""
-
-#, c-format
-msgid "Directory '%s' enumerate error: %s"
 msgstr ""
 
 #, c-format
@@ -121593,10 +122054,6 @@ msgstr ""
 msgid "Unable to get ship comm graphic for '%s'."
 msgstr ""
 
-#, c-format
-msgid "Canvas is too small to fully render '%s': %.0f x %.0f < %d x %d"
-msgstr ""
-
 msgid "Pilot Outfit is invalid."
 msgstr ""
 
@@ -121713,31 +122170,6 @@ msgstr "Impossível equipar núcleo '%s' em '%s'!"
 msgid "Unable to get ship graphic for '%s'."
 msgstr ""
 
-msgid "Spfx does not exist."
-msgstr ""
-
-#, c-format
-msgid ""
-"Spfx failed to run 'remove':\n"
-"%s"
-msgstr ""
-
-#, c-format
-msgid ""
-"Spfx failed to run 'update':\n"
-"%s"
-msgstr ""
-
-#, c-format
-msgid "Unknown render layer '%d'!"
-msgstr ""
-
-#, fuzzy, c-format
-msgid ""
-"Spfx failed to run '%s':\n"
-"%s"
-msgstr "Impossível equipar núcleo '%s' em '%s'!"
-
 msgid "Attempting to get landed spob when player not landed."
 msgstr ""
 
@@ -121755,65 +122187,11 @@ msgstr ""
 msgid "Waypoint '%s' not found for system '%s'!"
 msgstr ""
 
-#, c-format
-msgid "Trying to load invalid texture %s"
-msgstr ""
-
-msgid "Texture dimensions must be positive"
-msgstr ""
-
-msgid "Spritesheet dimensions must be positive"
-msgstr ""
-
-msgid "Data has invalid type for texture"
-msgstr ""
-
-msgid "Texture dimensions don't match data size!"
-msgstr ""
-
-#, c-format
-msgid "problem opening file '%s' for reading"
-msgstr ""
-
-msgid "problem opening image for reading"
-msgstr ""
-
-#, c-format
-msgid "Unable to open '%s' for writing!"
-msgstr ""
-
 msgid "custom dialogue not open"
 msgstr ""
 
 #, c-format
 msgid "Custom dialogue internal error: %s"
-msgstr ""
-
-#, c-format
-msgid "Matrix column value not in range: %d"
-msgstr ""
-
-#, c-format
-msgid "Matrix row value not in range: %d"
-msgstr ""
-
-msgid "a bad name (ID) was passed to an OpenAL function"
-msgstr ""
-
-msgid "an invalid enum value was passed to an OpenAL function"
-msgstr ""
-
-msgid "an invalid value was passed to an OpenAL function"
-msgstr ""
-
-msgid "the requested operation is not valid"
-msgstr ""
-
-msgid "the requested operation resulted in OpenAL running out of memory"
-msgstr ""
-
-#, c-format
-msgid "OpenAL error [%s:%d]: %s"
 msgstr ""
 
 #, c-format
@@ -121969,6 +122347,10 @@ msgid "Unknown %s '%s'!"
 msgstr "erro desconhecido"
 
 #, c-format
+msgid "Trying to load invalid texture %s"
+msgstr ""
+
+#, c-format
 msgid "Shader '%s' not found."
 msgstr ""
 
@@ -121985,6 +122367,10 @@ msgid "Failed to link vertex shader '%s' and fragment shader '%s'!"
 msgstr ""
 
 msgid "Error attaching depth to framebuffer!"
+msgstr ""
+
+#, c-format
+msgid "Angle not between 0 and 2.*M_PI [%f]."
 msgstr ""
 
 msgid "Gameplay"
@@ -122191,6 +122577,9 @@ msgstr ""
 msgid "Video:"
 msgstr ""
 
+msgid "Disable screen shaking"
+msgstr ""
+
 msgid "Colourblind type:"
 msgstr ""
 
@@ -122274,11 +122663,11 @@ msgid "Near Zoom: %.1fx"
 msgstr ""
 
 #, c-format
-msgid "Gamma: %.1f"
+msgid "Gamma: %.2f"
 msgstr ""
 
 #, c-format
-msgid "BG (Stars, etc.) brightness: %.0f%%"
+msgid "#wBG (Stars, etc.) brightness: %.0f%%  #0█#w"
 msgstr ""
 
 #. Update text.
@@ -122291,7 +122680,7 @@ msgid "Nebula non-uniformity: %.0f%%"
 msgstr ""
 
 #, c-format
-msgid "Jump brightness: %.0f%%"
+msgid "#wJump brightness: %.0f%%  #0█#w"
 msgstr ""
 
 #, c-format
@@ -122527,13 +122916,6 @@ msgstr ""
 
 #, c-format
 msgid "Trying to load polygon for non-compatible outfit '%s'!"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s xml collision polygon does not exist!\n"
-"                Please use the script 'polygon_from_sprite.py' that can be "
-"found in Naev's artwork repo."
 msgstr ""
 
 #, c-format
@@ -122900,12 +123282,6 @@ msgstr ""
 msgid "Pilot '%s' has non-number mem.distress_hit!"
 msgstr ""
 
-#. f
-#. f, p
-#. f, p, p
-#. f, p, p, x
-#. f, p, p, x, v
-#. f, p, p, x, v, o
 #.
 #, c-format
 msgid ""
@@ -122991,9 +123367,6 @@ msgstr ""
 
 #, c-format
 msgid "Pilot '%s': Trying to add outfit but %s"
-msgstr ""
-
-msgid "Instrinsic outfits must be modifiers!"
 msgstr ""
 
 #, c-format
@@ -123345,9 +123718,6 @@ msgstr ""
 msgid "Saved licence does not exist and could not be found or updated: '%s'!"
 msgstr ""
 
-msgid "Malformed time in save game!"
-msgstr ""
-
 #, c-format
 msgid "Outfit '%s' was saved without quantity!"
 msgstr ""
@@ -123559,6 +123929,35 @@ msgstr ""
 msgid "Please close the Plugin Manager to continue."
 msgstr ""
 
+msgid "installed"
+msgstr ""
+
+msgid "disabled"
+msgstr ""
+
+msgid "available"
+msgstr ""
+
+msgctxt "plugins"
+msgid ""
+"The following plugins may not be compatible with the current total "
+"conversion:"
+msgstr ""
+
+msgctxt "plugins"
+msgid "The following plugins are incompatible with the current Naev version:"
+msgstr ""
+
+msgctxt "plugins"
+msgid "The following plugins are missing dependencies:"
+msgstr ""
+
+msgctxt "plugins"
+msgid ""
+"The following plugins conflict with installed plugins:\n"
+" * {}"
+msgstr ""
+
 msgid "Naev Plugin Manager"
 msgstr ""
 
@@ -123572,15 +123971,6 @@ msgstr ""
 
 msgctxt "plugins"
 msgid "Clear Cache"
-msgstr ""
-
-msgid "installed"
-msgstr ""
-
-msgid "disabled"
-msgstr ""
-
-msgid "available"
 msgstr ""
 
 msgctxt "plugins"
@@ -123609,6 +123999,67 @@ msgstr ""
 
 msgctxt "plugins"
 msgid "Removing"
+msgstr ""
+
+msgctxt "plugins"
+msgid ""
+"Install the following missing dependencies required by '{}'?\n"
+" * {}"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Install Missing Dependencies?"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Install Dependencies"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Install Plugin Only"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Can not find dependency '{}' for plugin '{}'."
+msgstr ""
+
+msgctxt "plugins"
+msgid ""
+"Are you sure you want to delete the very large plugin '{}'? It will be moved "
+"to the trash."
+msgstr ""
+
+msgctxt "plugins"
+msgid ""
+"Are you sure you want to delete the local plugin '{}'? It will be moved to "
+"the trash."
+msgstr ""
+
+msgctxt "plugins"
+msgid "Delete Plugin?"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Move to Trash"
+msgstr ""
+
+msgctxt "plugins"
+msgid ""
+"Are you sure you want to exit with the following issues unresolved?\n"
+"\n"
+"{}"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Exit with Plugin Conflicts?"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Exit"
 msgstr ""
 
 msgctxt "plugins"
@@ -123655,11 +124106,15 @@ msgid "Status:"
 msgstr ""
 
 msgctxt "plugins"
-msgid "Disable"
+msgid "Uninstall"
 msgstr ""
 
 msgctxt "plugins"
-msgid "Uninstall"
+msgid "Delete"
+msgstr ""
+
+msgctxt "plugins"
+msgid "Disable"
 msgstr ""
 
 msgctxt "plugins"
@@ -123805,12 +124260,6 @@ msgid "Ship '%s' does not have an engine sprite (%s)."
 msgstr ""
 
 #, c-format
-msgid ""
-"%s xml collision polygon does not exist! Please use the script '%s' found in "
-"Naev's main repository."
-msgstr ""
-
-#, c-format
 msgid "Ship '%s' has undefined slot size, setting to '%s'"
 msgstr ""
 
@@ -123831,6 +124280,10 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Ship '%s' has duplicated slot name '%s'!"
 msgstr "'%s' tem nó desconhecido '%s'."
+
+#, c-format
+msgid "Malformed %s file: does not contain elements"
+msgstr ""
 
 #, c-format
 msgid "Ship in %s has invalid or no name"
@@ -123982,6 +124435,9 @@ msgstr ""
 msgid "Shield Down Time"
 msgstr "Aura de Escudo"
 
+msgid "Damage Taken"
+msgstr ""
+
 msgid "Jump Time"
 msgstr ""
 
@@ -124039,6 +124495,9 @@ msgstr "traficante de armas"
 msgid "Weapon Energy Usage"
 msgstr ""
 
+msgid "Weapon Damage as Disable"
+msgstr ""
+
 #, fuzzy
 msgid "Weapon Munition Speed"
 msgstr "Modificação de Armas"
@@ -124055,6 +124514,9 @@ msgstr ""
 #, fuzzy
 msgid "Energy Usage (Launcher)"
 msgstr "Lançador de Foguetes Maça TeraCom"
+
+msgid "Damage as Disable (Launcher)"
+msgstr ""
 
 msgid "Ammo Capacity"
 msgstr ""
@@ -124096,6 +124558,9 @@ msgid "Fighter Reload Rate"
 msgstr ""
 
 msgid "Damage (Cannon)"
+msgstr ""
+
+msgid "Tracking (Cannon)"
 msgstr ""
 
 msgid "Fire Rate (Cannon)"
@@ -124186,6 +124651,9 @@ msgstr "Capacitor de Escudo I"
 msgid "Shield Usage"
 msgstr "Aura de Escudo"
 
+msgid "Damage Absorption"
+msgstr ""
+
 #, fuzzy
 msgid "CPU Usage"
 msgstr "Aura de Escudo"
@@ -124197,9 +124665,6 @@ msgid "Asteroid Scanner Range"
 msgstr ""
 
 msgid "Nebula Visibility"
-msgstr ""
-
-msgid "Damage Absorption"
 msgstr ""
 
 msgid "Nebula Resistance"
@@ -125257,6 +125722,98 @@ msgstr "Bio-Corveta"
 
 msgid " Cerebrum "
 msgstr ""
+
+#~ msgid ""
+#~ "A statue given to you by Baron Sauterfeldt for your fine work. You would "
+#~ "feel more grateful if he hadn't mentioned that his lover was making him "
+#~ "get rid of it. The statue seems to depict a shrimp wearing a bow tie "
+#~ "playing an ukulele and its head bobbles around with the ship "
+#~ "acceleration. How tasteful..."
+#~ msgstr ""
+#~ "Uma estátua dada a você pelo Barão Sautfeldt por seu belo trabalho. Você "
+#~ "seria mais grato se ele não tivesse mencionado que sua amante o estava "
+#~ "obrigando a se livrar da peça. A estátua parece retratar um lagostim "
+#~ "vestindo uma gravata borboleta tocando um ukulele e a cabeça dele balança "
+#~ "conforme a nave acelera. Que bom gosto…"
+
+#, fuzzy
+#~ msgid ""
+#~ "This powerful energy weapon is built to bombard from great range with ion "
+#~ "bursts, causing debilitating damage to a target's shields and electrical "
+#~ "systems, which can leave a ship effectively defenceless. It was developed "
+#~ "by the Za'lek for use on their heavier droness to supplement the short "
+#~ "range and high damage of their beams."
+#~ msgstr ""
+#~ "Esta arma poderosa de energia é feita para bombardear um alvo a partir de "
+#~ "uma grande distância com explosões iônicas, causando danos debilitantes "
+#~ "aos escudos e sistemas elétricos do alvo, o que pode tornar a nave "
+#~ "efetivamente indefesa. Foi desenvolvido pelos Za'lek para ser usado em "
+#~ "drones mais pesados e complementar o baixo alcance e alto dano de suas "
+#~ "armas de raio."
+
+#~ msgid "Can only restore armour when below 50%."
+#~ msgstr "Apenas pode restaurar a blindagem quando abaixo de 50%."
+
+#, fuzzy, lua-format
+#~ msgid "Mass: %.3f / %.3f [x=3f < %.3f (%.1f)]"
+#~ msgstr "Massa: %.3f / %.3f [%.3f < %.3f (%.1f)]"
+
+#, fuzzy, c-format
+#~ msgid "Unable to open '%s': %s"
+#~ msgstr "Impossível equipar núcleo '%s' em '%s'!"
+
+#, fuzzy, c-format
+#~ msgid "Unable to load surface '%s': %s"
+#~ msgstr "Impossível carregar novamente o jogo salvo em '%s'!"
+
+#, fuzzy, c-format
+#~ msgid "Unable to open '%s' for reading: %s"
+#~ msgstr "arquivo aberto para leitura"
+
+#, fuzzy
+#~ msgctxt "cgltf"
+#~ msgid "success"
+#~ msgstr "Acessório"
+
+#, fuzzy
+#~ msgctxt "cgltf"
+#~ msgid "unknown format"
+#~ msgstr "erro desconhecido"
+
+#, fuzzy
+#~ msgctxt "cgltf"
+#~ msgid "invalid json"
+#~ msgstr "argumento inválido"
+
+#, fuzzy
+#~ msgctxt "cgltf"
+#~ msgid "invalid gltf"
+#~ msgstr "argumento inválido"
+
+#, fuzzy
+#~ msgctxt "cgltf"
+#~ msgid "file not found"
+#~ msgstr "não encontrado"
+
+#, fuzzy
+#~ msgctxt "cgltf"
+#~ msgid "io error"
+#~ msgstr "erro de Entrada/Saída"
+
+#, fuzzy
+#~ msgctxt "cgltf"
+#~ msgid "out of memory"
+#~ msgstr "memória esgotada"
+
+#, fuzzy, c-format
+#~ msgid "GltfObject '%s' not found in cache!"
+#~ msgstr "não encontrado"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "Spfx failed to run '%s':\n"
+#~ "%s"
+#~ msgstr "Impossível equipar núcleo '%s' em '%s'!"
 
 #~ msgid ""
 #~ "Designed for military scouting and patrol vessels, Nexus' Light Stealth "
