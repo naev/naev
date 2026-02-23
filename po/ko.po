@@ -121142,9 +121142,9 @@ msgstr "비디오 출력 초기화 실패, 종료 중…"
 #. Load the fonts the same way Naev does
 #, fuzzy
 msgid ""
-"Cabin-SemiBold.otf,NanumBarunGothicBold.ttf,SourceCodePro-"
+"Ubuntu-Regular.otf,NanumBarunGothicBold.ttf,SourceCodePro-"
 "Semibold.ttf,IBMPlexSansJP-Medium.otf"
-msgstr "Cabin-SemiBold.otf,NanumBarunGothicBold.ttf"
+msgstr "Ubuntu-Regular.otf,NanumBarunGothicBold.ttf"
 
 #. Default monospace font path.
 #, fuzzy

@@ -118852,7 +118852,7 @@ msgstr ""
 #. Default font path.
 #. Load the fonts the same way Naev does
 msgid ""
-"Cabin-SemiBold.otf,NanumBarunGothicBold.ttf,SourceCodePro-"
+"Ubuntu-Regular.otf,NanumBarunGothicBold.ttf,SourceCodePro-"
 "Semibold.ttf,IBMPlexSansJP-Medium.otf"
 msgstr ""
 
