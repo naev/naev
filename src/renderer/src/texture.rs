@@ -21,7 +21,11 @@ use std::boxed::Box;
 use std::ffi::{CStr, CString, c_char, c_double, c_float, c_int, c_uint};
 use std::io::{Read, Seek};
 use std::num::NonZero;
-use std::sync::{Arc, LazyLock, Mutex, MutexGuard, Weak, atomic::AtomicU32};
+use std::sync::{Arc, LazyLock, Weak, atomic::AtomicU32};
+#[cfg(not(debug_assertions))]
+use std::sync::{Mutex, MutexGuard};
+#[cfg(debug_assertions)]
+use tracing_mutex::stdsync::{Mutex, MutexGuard};
 
 /// All the shared texture data to look up
 pub(crate) static TEXTURE_DATA: LazyLock<Mutex<Vec<Weak<TextureData>>>> =

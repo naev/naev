@@ -1376,18 +1376,19 @@ impl Model {
 
    pub fn spin_polygon(
       &mut self,
-      ctx: &Context,
+      ctx: &ContextWrapper,
       size: usize,
    ) -> Result<collide::polygon::SpinPolygon> {
       use collide::polygon::{Polygon, SpinPolygon};
-      let gl = &ctx.gl;
 
       let fb = FramebufferBuilder::new(Some("spin_polygon_generator"))
          .width(size)
          .height(size)
          .depth(true)
-         .build(&ctx)?;
+         .build_wrap(&ctx)?;
 
+      let lctx = ctx.lock();
+      let gl = &lctx.gl;
       const N: usize = 120;
       let target = FramebufferTarget::Framebuffer(fb);
       let mut polygons = Vec::new();
@@ -1400,7 +1401,7 @@ impl Model {
                      &Vector3::x_axis(),
                      std::f32::consts::FRAC_PI_4 * 0.25,
                   );
-            fb.bind(ctx);
+            fb.bind(&lctx);
             unsafe {
                gl.clear_color(0.0, 0.0, 0.0, 0.0);
                gl.clear(glow::COLOR_BUFFER_BIT | glow::DEPTH_BUFFER_BIT);
@@ -1410,8 +1411,8 @@ impl Model {
                nlights: 0,
                ..Default::default()
             };
-            self.render_scene(ctx, &target, 0, &lighting, &transform.into())?;
-            fb.bind(ctx);
+            self.render_scene(&lctx, &target, 0, &lighting, &transform.into())?;
+            fb.bind(&lctx);
             let mut data: Vec<u8> = vec![0; (size * size * 4) as usize];
             unsafe {
                gl.viewport(0, 0, size as i32, size as i32);
@@ -1438,9 +1439,9 @@ impl Model {
             img.write_to(&mut writer, image::ImageFormat::Png)?;
          }
       }
-      Framebuffer::unbind(ctx);
+      Framebuffer::unbind(&lctx);
       unsafe {
-         let dims = ctx.dimensions.read().unwrap();
+         let dims = lctx.dimensions.read().unwrap();
          gl.viewport(0, 0, dims.pixels_width as i32, dims.pixels_height as i32);
       }
       let dir_inc = 1.0 / (N as f32) * std::f32::consts::TAU;

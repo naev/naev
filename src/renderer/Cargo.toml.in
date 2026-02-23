@@ -34,3 +34,4 @@ serde-seeded = { workspace = true }
 audio = { workspace = true }
 resvg = "0.47"
 naga = { version="28", features=["wgsl-in", "glsl-out"] }
+tracing-mutex = { workspace = true }

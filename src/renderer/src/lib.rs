@@ -10,7 +10,11 @@ use physics::vec2::Vec2;
 use sdl3 as sdl;
 use std::ffi::CStr;
 use std::ops::Deref;
-use std::sync::{Arc, Mutex, MutexGuard, OnceLock, RwLock, atomic::AtomicBool, atomic::Ordering};
+use std::sync::{Arc, OnceLock, atomic::AtomicBool, atomic::Ordering};
+#[cfg(not(debug_assertions))]
+use std::sync::{Mutex, MutexGuard, RwLock};
+#[cfg(debug_assertions)]
+use tracing_mutex::stdsync::{Mutex, MutexGuard, RwLock};
 
 pub mod buffer;
 pub mod camera;

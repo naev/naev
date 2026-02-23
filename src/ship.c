@@ -69,7 +69,6 @@ static double       ship_aa_scale       = -1.;
 /*
  * Prototypes
  */
-static int  ship_loadPLG( Ship *temp, const char *buf );
 static int  ship_parse( Ship *temp, const char *filename, int firstpass );
 static int  ship_parseThread( void *ptr );
 static void ship_freeSlot( ShipOutfitSlot *s );
@@ -665,8 +664,8 @@ int ship_gfxLoadPost3D( Ship *s )
    }
 
    /* Load the polygon. */
-   ship_loadPLG( s,
-                 ( s->polygon_path != NULL ) ? s->polygon_path : s->gfx_path );
+   // ship_loadPLG( s, ( s->polygon_path != NULL ) ? s->polygon_path :
+   // s->gfx_path );
    return 0;
 }
 
@@ -704,28 +703,6 @@ int ship_gfxLoad2D( Ship *s, const char *base, const char *ext )
 #endif /* DEBUGGING */
 #endif
 
-   return 0;
-}
-
-/**
- * @brief Loads the collision polygon for a ship.
- *
- *    @param temp Ship to load into.
- *    @param buf Name of the file.
- */
-static int ship_loadPLG( Ship *temp, const char *buf )
-{
-   char file[PATH_MAX];
-   if ( temp->gfx_3d != NULL )
-      snprintf( file, sizeof( file ), "%s%s.xml", SHIP_POLYGON_PATH3D, buf );
-   else
-      snprintf( file, sizeof( file ), "%s%s.xml", SHIP_POLYGON_PATH2D, buf );
-
-   temp->polygon = poly_load_xml( file );
-   if ( temp->polygon == NULL )
-      WARN( _( "%s xml collision polygon does not exist! Please use the "
-               "script '%s' found in Naev's main repository." ),
-            file, "utils/polygonize.py" );
    return 0;
 }
 
