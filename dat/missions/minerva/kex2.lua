@@ -159,8 +159,8 @@ He plugs in the program directly into a port under his wing and his eyes go blan
    vn.label("baroness")
    kex(fmt.f(_([["Glad you asked. It turns out she's apparently a big shot at {pnt} in the {sys} system. She deals in all sorts of trade between the Empire and the Za'lek, although there also seems to be some nasty rumours about her floating around."]]), {pnt=targetplanet, sys=targetsys}))
    kex(_([["Although it's not very clear what exactly happened, there was a fairly big incident that ended up in a large fight between mercenaries, Empire forces, and pirates in the system. It disrupted the trade routes of the area for quite a few periods."]]))
-   kex(_([["I was able to get more information from some other documents in the crate, as seems like they were fairly sloppy with some of the security details. I have managed to put together a small program that hopefully should be able to access their main database, however, I'm going to need you to upload it by hand."]]))
-   kex(fmt.f(_([["This time the job is probably going to be much trickier than the last. Even though the documents had some security issues, it is likely that things will be different once you get over to {pnt}. Still, I think you should be able to handle this easily. Would you be up for the challenge?"]]), {pnt=targetplanet} ))
+   kex(_([["I was able to get more information from some other documents in the crate, and it seems like they were fairly sloppy with some of the security details. I have managed to put together a small program that hopefully should be able to access their main database, however, I'm going to need you to upload it by hand."]]))
+   kex(fmt.f(_([["This job is probably going to be much trickier than the last. Even though the documents had some security issues, it is likely that things will be different once you get over to {pnt}. Still, I think you should be able to handle this easily. Would you be up for the challenge?"]]), {pnt=targetplanet} ))
    vn.menu( {
       { _("Accept"), "accept" },
       { _("Decline"), "decline" },
@@ -180,7 +180,7 @@ He plugs in the program directly into a port under his wing and his eyes go blan
 
    vn.label("job")
    kex(_([["So the idea is to try to hack into the Baroness Eve's database and see if we can get any dirt of the CEO of Minerva Station. Since we already know that they have dealings with each other, it seems like there has to be something there if we can access all the data."]]))
-   kex(fmt.f(_([["All you have to do is land on {pnt} and upload the program I gave you to any terminal that there should be around the docks. That should also make it easier for you to get out of there if things go sour."]]), {pnt=targetplanet}))
+   kex(fmt.f(_([["All you have to do is land on {pnt} and upload the program I gave you to any terminal, there should be plenty around the docks. That should also make it easier for you to get out of there if things go sour."]]), {pnt=targetplanet}))
    kex(_([["It's likely that there will be more security around this time, so make sure you take a ship that can deal with trouble. Although, I don't think that will be a problem for you."]]))
    vn.jump("menu_msg")
 
