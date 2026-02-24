@@ -1164,16 +1164,19 @@ impl Common {
       });
 
       // Blur Shaders
-      let lctx = ctx.lock();
-      let gl = &lctx.gl;
-      let shader_blur_x = ProgramBuilder::new(Some("Blur X Shader"))
-         .sampler("sampler", 0)
-         .vert_frag_file("blur.vert", "blurX.frag")
-         .build(gl)?;
-      let shader_blur_y = ProgramBuilder::new(Some("Blur Y Shader"))
-         .sampler("sampler", 0)
-         .vert_frag_file("blur.vert", "blurY.frag")
-         .build(gl)?;
+      let (shader_blur_x, shader_blur_y) = {
+         let lctx = ctx.lock();
+         let gl = &lctx.gl;
+         let shader_blur_x = ProgramBuilder::new(Some("Blur X Shader"))
+            .sampler("sampler", 0)
+            .vert_frag_file("blur.vert", "blurX.frag")
+            .build(gl)?;
+         let shader_blur_y = ProgramBuilder::new(Some("Blur Y Shader"))
+            .sampler("sampler", 0)
+            .vert_frag_file("blur.vert", "blurY.frag")
+            .build(gl)?;
+         (shader_blur_x, shader_blur_y)
+      };
 
       Ok(Common {
          shader,
@@ -1337,8 +1340,8 @@ impl Model {
       mounts.sort_by(|a, b| a.id.cmp(&b.id));
 
       // Have to restore the core after loading
-      let lctx = ctx.lock();
       unsafe {
+         let lctx = ctx.lock();
          lctx.gl.bind_vertex_array(Some(lctx.vao_core));
       }
 
@@ -1402,60 +1405,65 @@ impl Model {
          .depth(true)
          .build_wrap(ctx)?;
 
-      let lctx = ctx.lock();
-      let gl = &lctx.gl;
       const N: usize = 120;
-      let target = FramebufferTarget::Framebuffer(fb);
-      let mut polygons = Vec::new();
-      if let FramebufferTarget::Framebuffer(ref fb) = target {
-         for i in 0..N {
-            let dir = (i as f32) / (N as f32) * std::f32::consts::TAU;
-            let transform =
-               Rotation3::from_axis_angle(&Vector3::y_axis(), -std::f32::consts::FRAC_PI_2 - dir)
-                  * Rotation3::from_axis_angle(
-                     &Vector3::x_axis(),
-                     std::f32::consts::FRAC_PI_4 * 0.25,
-                  );
-            fb.bind(&lctx);
-            unsafe {
-               gl.clear_color(0.0, 0.0, 0.0, 0.0);
-               gl.clear(glow::COLOR_BUFFER_BIT | glow::DEPTH_BUFFER_BIT);
-            }
-            // TODO disable lighting, but no lights is a good compromise for now
-            let lighting = LightingUniform {
-               nlights: 0,
-               ..Default::default()
-            };
-            self.render_scene(&lctx, &target, 0, &lighting, &transform.into())?;
-            fb.bind(&lctx);
-            let mut data: Vec<u8> = vec![0; size * size * 4];
-            unsafe {
-               gl.viewport(0, 0, size as i32, size as i32);
-               gl.read_buffer(glow::COLOR_ATTACHMENT0);
-               gl.read_pixels(
-                  0,
-                  0,
-                  size as i32,
-                  size as i32,
-                  glow::RGBA,
-                  glow::UNSIGNED_BYTE,
-                  glow::PixelPackData::Slice(Some(&mut data)),
+      let polygons = {
+         let lctx = ctx.lock();
+         let gl = &lctx.gl;
+         let target = FramebufferTarget::Framebuffer(fb);
+         let mut polygons = Vec::new();
+         if let FramebufferTarget::Framebuffer(ref fb) = target {
+            for i in 0..N {
+               let dir = (i as f32) / (N as f32) * std::f32::consts::TAU;
+               let transform = Rotation3::from_axis_angle(
+                  &Vector3::y_axis(),
+                  -std::f32::consts::FRAC_PI_2 - dir,
+               ) * Rotation3::from_axis_angle(
+                  &Vector3::x_axis(),
+                  std::f32::consts::FRAC_PI_4 * 0.25,
                );
+               fb.bind(&lctx);
+               unsafe {
+                  gl.clear_color(0.0, 0.0, 0.0, 0.0);
+                  gl.clear(glow::COLOR_BUFFER_BIT | glow::DEPTH_BUFFER_BIT);
+               }
+               // TODO disable lighting, but no lights is a good compromise for now
+               let lighting = LightingUniform {
+                  nlights: 0,
+                  ..Default::default()
+               };
+               self.render_scene(&lctx, &target, 0, &lighting, &transform.into())?;
+               fb.bind(&lctx);
+               let mut data: Vec<u8> = vec![0; size * size * 4];
+               unsafe {
+                  gl.viewport(0, 0, size as i32, size as i32);
+                  gl.read_buffer(glow::COLOR_ATTACHMENT0);
+                  gl.read_pixels(
+                     0,
+                     0,
+                     size as i32,
+                     size as i32,
+                     glow::RGBA,
+                     glow::UNSIGNED_BYTE,
+                     glow::PixelPackData::Slice(Some(&mut data)),
+                  );
+               }
+               let img = match image::RgbaImage::from_vec(size as u32, size as u32, data) {
+                  Some(img) => image::DynamicImage::ImageRgba8(img),
+                  None => anyhow::bail!("failed to create ImageBuffer"),
+               };
+               let bimg = img.fast_blur(1.0);
+               let poly = Polygon::from_subimage(&bimg, 0, 0, size as u32, size as u32, dir.into());
+               polygons.push(poly);
             }
-            let img = match image::RgbaImage::from_vec(size as u32, size as u32, data) {
-               Some(img) => image::DynamicImage::ImageRgba8(img),
-               None => anyhow::bail!("failed to create ImageBuffer"),
-            };
-            let bimg = img.fast_blur(1.0);
-            let poly = Polygon::from_subimage(&bimg, 0, 0, size as u32, size as u32, dir.into());
-            polygons.push(poly);
          }
-      }
-      Framebuffer::unbind(&lctx);
-      unsafe {
-         let dims = lctx.dimensions.read().unwrap();
-         gl.viewport(0, 0, dims.pixels_width as i32, dims.pixels_height as i32);
-      }
+         Framebuffer::unbind(&lctx);
+         unsafe {
+            let dims = lctx.dimensions.read().unwrap();
+            gl.viewport(0, 0, dims.pixels_width as i32, dims.pixels_height as i32);
+         }
+         polygons
+         // Have to drop lctx before dropping the textures
+      };
       let dir_inc = 1.0 / (N as f32) * std::f32::consts::TAU;
       let dir_off = -dir_inc * 0.5;
 

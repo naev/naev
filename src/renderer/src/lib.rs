@@ -886,8 +886,11 @@ impl Context {
    }
 
    pub fn execute_messages(&self) {
-      let mut queue = MESSAGE_QUEUE.lock().unwrap();
-      for msg in queue.drain(..) {
+      let drain = {
+         let mut queue = MESSAGE_QUEUE.lock().unwrap();
+         queue.drain(..).collect::<Vec<_>>()
+      };
+      for msg in drain {
          msg.execute(self);
       }
    }
