@@ -138,7 +138,7 @@ You need at least {needed} standing with House Dvaered to do this mission (you h
    }
 
    vn.label("continue")
-   sol(_([[We identified a shareholder whose name is Agrippina Grosjean. She is an allied of Lord Richthofen, and she will be firmly against us buying a second battlecruiser. This is why I have elaborated a negotiation plan that consists in eliminating her. What do you think of that negotiation plan?]]))
+   sol(_([[We identified a shareholder whose name is Agrippina Grosjean. She is an ally of Lord Richthofen, and she will be firmly against us buying a second battlecruiser. This is why I have elaborated a negotiation plan that consists in eliminating her. What do you think of that negotiation plan?]]))
    vn.menu{
       {_("That is a very Dvaered kind of negotiation."), "congratulate"},
       {_("This plan is very subtle Indeed."), "congratulate"},
@@ -153,7 +153,7 @@ You need at least {needed} standing with House Dvaered to do this mission (you h
    vn.label("illegal")
    sol(_([[Actually, my plan is totally legal… Mwell, not totally. Let's say… mostly legal.]]))
    sol(fmt.f(_([[Let me explain: Grosjean has a very special hobby that consists in flying a Pirate Shark in {sys} and killing lone traders under the name 'Silent Death'. Dvaered patrols in the system are under the responsibility of her friend, the dishonourable Lord Richthofen. We have collected data on her habits, and we know she should be cruising in the system soon. So we need you to go there, pretend you are a harmless trader, wait for her to attack, and kill her.]]), {sys=mem.sharksys}))
-   sol(_([[The problem is that she tends to only attack Llamas as it is probably the less dangerous ship that exists. This means that you will have to fly such a ship for her to engage you. Now, you may wonder how you are supposed to catch her in a Llama if she decides to run away, and that is where the less legal part of the mission comes into play.]]))
+   sol(_([[The problem is that she tends to only attack Llamas as it is probably the least dangerous ship that exists. This means that you will have to fly such a ship for her to engage you. Now, you may wonder how you are supposed to catch her in a Llama if she decides to run away, and that is where the less legal part of the mission comes into play.]]))
    sol(fmt.f(_([[Before entering {sharksys}, we will have to sabotage her ship's engine. We know that she has purchased a new engine that will be delivered to her soon. This engine will transit in the main warehouse of Tricon on {enginpnt}. Your first task will be to shuttle a group of… hem… special… workers to that planet for them to infiltrate the warehouse and sabotage the engine. You will then deposit them back on {pnt}.]]),{sharksys=mem.sharksys, enginpnt=mem.enginpnt, pnt=mem.paypnt}))
    sol(_([[And only afterwards, you will go and encounter the target. Her engine will malfunction at the very moment you will hit her ship with whatever weapon, and she won't be able to run away any more. Moreover, as you know, the combat ability of an interceptor like the Shark is closely linked to its manoeuvrability, which means that this sabotage will make the target much less dangerous for your own safety. So, what do you say? Are you in?]]))
    vn.menu{
@@ -163,12 +163,12 @@ You need at least {needed} standing with House Dvaered to do this mission (you h
 
    vn.label("agree")
    sol(fmt.f(_([[Hehe. I knew you would accept. It's time for you to finally work for someone really important! The first part of your mission is really straightforward: my special team will fly in your ship to {pnt} in {sys} where they will take care of the engine. Let me guide you to them.]]), {sys=mem.enginsys, pnt=mem.enginpnt}))
-   vn.na(_([[Colonel Okran guides you through narrow gangways. You arrive into a large hall and cross a checkpoint guarded by spider-cyborgs and Okran tells you: "those are the soldiers of the 26th multi-terrain assault regiment (ground forces), they are deployed on this spaceport because our intelligence detected a high risk of FLF terrorist attack this sector in the close future. They look a bit odd with their biologically-grown and mechanically-enhanced pawns, but they are friendly… I mean mostly."]]))
-   vn.na(_([[You finally arrive in a tiny ill-enlightened room, where a strange group is waiting for you. Two of them are much higher than average, wear an intimidating amount of implants on their skin, and carry impressive guns while the two other seem unarmed. All of them wear an incoherent assortment of colourful civilian clothes.]]))
+   vn.na(_([[Colonel Okran guides you through narrow gangways. You arrive at a large hall and cross a checkpoint guarded by spider-cyborgs and Okran tells you: "those are the soldiers of the 26th multi-terrain assault regiment (ground forces), they are deployed on this spaceport because our intelligence detected a high risk of FLF terrorist attack in this sector in the near future. They look a bit odd with their biologically-grown and mechanically-enhanced pawns, but they are friendly… I mean mostly."]]))
+   vn.na(_([[You finally arrive in a tiny ill-lit room, where a strange group is waiting for you. Two of them are much taller than average, wear an intimidating amount of implants on their skin, and carry impressive guns while the two others seem unarmed. All of them wear an incoherent assortment of colourful civilian clothes.]]))
    sol(_([[Sergeant Krakadak! Why are you all wearing ridiculous outfits? What happened here?]]))
    cyb(_([[My Colonel! You ordered us to dress like civilians. Private Krokodok told us the brother of the neighbour of his sister-in-law is a civilian, but he does not really know how this guy dresses. So we let our imagination do the work.]]))
    vn.na(_([[Colonel Okran presents you the members of the team: Sergeant Krakadak and Private Krokodok are both gamma-class cyborgs, who were detached from Dvaered High Command's Space Infantry to the personnel multirole commando company of Lord Fatgun. The two others are light engine specialists from Lord Fatgun's interception squadrons, whose role will be to actually sabotage the target.]]))
-   vn.na(fmt.f(_([[Okran finally guides you to the spacedocks, where you find your ship back. The four soldiers enter it, carrying large backpacks. Before leaving, Okran tells you to meet him on {pnt} once the mission is completed. It is time to fly to {sys}.]]), {pnt=mem.paypnt, sys=mem.enginsys}))
+   vn.na(fmt.f(_([[Okran finally guides you to the spacedocks, where you find your ship. The four soldiers enter it, carrying large backpacks. Before leaving, Okran tells you to meet him on {pnt} once the mission is completed. It is time to fly to {sys}.]]), {pnt=mem.paypnt, sys=mem.enginsys}))
    vn.func( function () doaccept = true end )
    vn.done()
 
@@ -243,7 +243,7 @@ function land()
       vn.menu{
          {_([["Why don't you go to one of those other planets, then?"]]), "other"},
          {_([["Your strike will mostly handicap the clients of the docks, not Nexus docks itself."]]), "independent"},
-         {_([["Does the Imperial laws authorize strikes?"]]), "legal"},
+         {_([["Does the Imperial law authorize strikes?"]]), "legal"},
          {_([["Do you think Tricon main warehouse might be impacted by the strike?"]]), "tricon"},
          {_("Leave"), "leave"},
       }
@@ -253,11 +253,11 @@ function land()
       vn.jump("menu")
 
       vn.label("independent")
-      civ(_([["It is of the responsibility of Nexus docks to do all that is needed to satisfy their clients. And this includes providing us workers (who actually do the work) with suitable wages. Nowadays, with our current remuneration, we had to work about 5 periods per decaperiod, and at this rhythm, non-modified workers start having severe health issues at the age of 20 cycles, while cyborgs tend to fall apart even earlier. This is why Nexus docks is the only one to blame for this situation and we workers have not to be accused to defend our right to live longer than 25 cycles and to feed our children without having to force them to work."]]))
+      civ(_([["It is of the responsibility of Nexus docks to do all that is needed to satisfy their clients. And this includes providing us workers (who actually do the work) with suitable wages. Nowadays, with our current remuneration, we had to work about 5 periods per decaperiod, and at this rhythm, non-modified workers start having severe health issues at the age of 20 cycles, while cyborgs tend to fall apart even earlier. This is why Nexus docks is the only one to blame for this situation and we workers have no choice but to defend our right to live longer than 25 cycles and to feed our children without having to force them to work."]]))
       vn.jump("menu")
 
       vn.label("legal")
-      civ(_([["Actually, nowadays, only few people really care about Imperial laws. All I know is that Nexus sent their private police after us when we created our labour union. Then we did throw large bolts at the cops, and they never came back. So I suppose what we do is legal."]]))
+      civ(_([["Actually, nowadays, only few people really care about Imperial laws. All I know is that Nexus sent their private police after us when we created our labour union. Then we threw large bolts at the cops, and they never came back. So I suppose what we do is legal."]]))
       civ(_([["By the way, the General Inquisitor of Nexus private police on the planet was found dead in his bath at that same period. Some say that a foreign power sent agents to disorganize the repression against our union. I don't know if it is true, or if it is just another attempt at flagging the union as an 'agent of hostile foreign powers'."]]))
       vn.jump("menu")
 
@@ -267,7 +267,7 @@ function land()
 
       vn.label("leave")
       vn.na(_([[You leave the workers and head to the bar, where you were supposed to meet the saboteurs once they have completed their mission. You soon notice the two gamma-class cyborgs and approach them.]]))
-      cyb(fmt.f(_([["Unexpected event, {player}. Some lazy workers are on strike, and the engine in question was not delivered to the warehouse. We managed to contact Colonel Okran and he got the information that it was sent to a secondary warehouse in Mural to avoid the strike. It is too late to get it there, but it will soon be transferred again. Let us go back to the ship: we will intercept it in {sys}."]]), {player=player.name(),sys=mem.koalasys}))
+      cyb(fmt.f(_([["Unexpected event, {player}. Some lazy workers are on strike, and the engine in question was not delivered to the warehouse. We managed to contact Colonel Okran and he got the information that it was sent to a secondary warehouse in Mural to avoid the strike. It is too late to get to it there, but it will soon be transferred again. Let us go back to the ship: we will intercept it in {sys}."]]), {player=player.name(),sys=mem.koalasys}))
       cyb(_([["The new plan is the following: you will find and hail that transport ship, whose name is the 'Siren of Halir'. You will pretend you're in need of fuel and they will board you. Meanwhile, we are going to do a small spacewalk and infiltrate the ship. Once we have done what is planned, we will evacuate the 'Siren of Halir'."]]))
       cyb(_([["That is actually the tricky part: you are going to have to recover us in space (like when a miner gathers ore). In the Space Forces, the officers call that kind of stunt an "extra-vehicular recovery operation", but I prefer to refer to it as "one of the stupid stunts I would refuse to do if half my brain had not been amputated before birth in that damn embryo factory". So please, please don't miss us when we will be helplessly floating out there."]]))
 
@@ -375,11 +375,11 @@ function koalaEscaped()
    -- Only matters before commandos
    if mem.misn_state ~= 2 then return end
 
-   vntk.msg("",_([[It appears the Siren of Halir did leave the system. Your mission is a failure!]]))
+   vntk.msg("",_([[It appears the Siren of Halir left the system. Your mission is a failure!]]))
    misn.finish(false)
 end
 function koalaBoard()
-   vntk.msg("",_([[When the 'Siren of Halir' is close enough, the members of the team leave your ship by the airlock and you wish them to safely reach the target. Once fuel transfer is finished, it is time for you to follow the Siren, waiting for the team to jump out of the ship.]]))
+   vntk.msg("",_([[When the 'Siren of Halir' is close enough, the members of the team leave your ship by the airlock and you wish them safety reaching the target. Once fuel transfer is finished, it is time for you to follow the Siren, waiting for the team to jump out of the ship.]]))
    misn.cargoRm( mem.cid )
    hook.timer( 15, "spreadCommando" )
    misn.osdActive(3)
