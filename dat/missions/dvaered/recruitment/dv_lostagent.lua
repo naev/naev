@@ -266,15 +266,15 @@ A seemingly-unarmed man steps forward. He must be the imperial agent in charge o
       vn.transition()
       vn.na(_([[Bony Boudica was waiting for you at the dock.]]))
       agent(fmt.f(_([["Hi, {name}. Did you have fun out there with the Imperial pilots?
-Meanwhile, our boy Ak-Ak did make his investigation. He got his cyborgs to break a few knees, and now we know what happened to the lost pilot."]]),
+Meanwhile, our boy Ak-Ak did his investigation. He got his cyborgs to break a few knees, and now we know what happened to the lost pilot."]]),
          {name=player.name()}))
       agent(_([["Actually, Shaky Swan has nothing to do with that. Nor the FLF. The Empire pilot just accepted a random bounty hunt mission on their way to the rendezvous planet. And they miserably failed."]]))
-      agent(_([["And now, the Imperials want to avenge their pilot. They found track to the pirate pilot, who is called 'The Death Dealer'. He is a clanless pirate, wanted by the Imperial police, as well as a few other faction's authorities. But he never broke the law in Dvaered space, where he is a peaceful trader under his real name: Chilperic Duchmol."]]))
+      agent(_([["And now, the Imperials want to avenge their pilot. They tracked the pirate pilot, who is called 'The Death Dealer'. He is a clanless pirate, wanted by the Imperial police, as well as a few other faction's authorities. But he never broke the law in Dvaered space, where he is a peaceful trader under his real name: Chilperic Duchmol."]]))
       agent(fmt.f(_([["So, Duchmol is supposed to take off from {pnt} in {sys} with his Koala soon.
-Of course, the Imperials could send their squadron to obliterate him, but as you probably already guessed at this point, that would lead to unneeded tensions between the Empire and House Dvaered. On the other hand, requiring support by the Dvaered Space Forces would mean more risk that Duchmol gets warned and escapes."]]),
+Of course, the Imperials could send their squadron to obliterate him, but as you probably already guessed at this point, that would lead to unneeded tensions between the Empire and House Dvaered. On the other hand, requesting support from the Dvaered Space Forces would mean more risk that Duchmol gets warned and escapes."]]),
          {pnt=mem.duchpnt,sys=mem.duchsys}))
       agent(_([["In conclusion, once more, we need you to take care of this.
-And again, be ensured that your initial reward will be dramatically increased from its initial amount."]]))
+And again, be assured that your reward will be dramatically increased from its initial amount."]]))
       vn.done()
       vn.run()
       mem.misn_state = 6
@@ -301,7 +301,7 @@ And again, be ensured that your initial reward will be dramatically increased fr
          {name=player.name()}))
       vn.menu{
          {_([["Very well for someone who met a guy named 'The Death Dealer'."]]), "well"},
-         {_([["Well... Unless there is another bastard I need to fight before you accept to pay me."]]), "meh"},
+         {_([["Well... Unless there is yet another bastard I need to fight before you finally pay me."]]), "meh"},
          {_([["Am I going to get paid some day?"]]), "bad"},
       }
 
@@ -310,13 +310,13 @@ And again, be ensured that your initial reward will be dramatically increased fr
       vn.jump("well")
 
       vn.label("bad")
-      agent(_([["Of course. I know the mission did not go very well from your point of view, but sometimes unexpected things happen. And when you work for secret services of major powers, you have to fix unexpected things as soon as possible. Otherwise, the consequences might be catastrophic."]]))
+      agent(_([["Of course. I know the mission did not go very well from your point of view, but sometimes unexpected things happen. And when you work for secret services of major powers, you have to fix unexpected problems as soon as possible. Otherwise, the consequences might be catastrophic."]]))
       vn.jump("well")
 
       vn.label("well")
-      agent(fmt.f(_([["Now that Chilperic Duchmol aka The Death Dealer is no more, your mission is over and it is my utmost privilege to reward you the sum of {credits} in name of the Dvaered High Command."]]),
+      agent(fmt.f(_([["Now that Chilperic Duchmol aka 'The Death Dealer' is no more, your mission is over and it is my utmost privilege to reward you the sum of {credits} in name of the Dvaered High Command."]]),
          {credits="#g"..fmt.credits(reward).."#0"}))
-      agent(_([["The fact that this mission did not go as planned is actually a rather good thing for you, you know: now you have proven to the Dvaered High Command that you are a reliable pilot. I don't know if you intend to continue working for them, but I have information that suggest that they might offer you more work in the future."]]))
+      agent(_([["The fact that this mission did not go as planned is actually a rather good thing for you, you know: now you have proven to the Dvaered High Command that you are a reliable pilot. I don't know if you intend to continue working for them, but I have information that suggests that they might offer you more work in the future."]]))
 
       vn.sfxVictory()
       vn.func( function ()
