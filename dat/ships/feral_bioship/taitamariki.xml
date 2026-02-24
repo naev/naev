@@ -39,6 +39,7 @@
  </slots>
  <stats>
   <ew_hide>-10</ew_hide>
+  <armour_regen>6</armour_regen>
  </stats>
  <tags>
   <tag>noplayer</tag>

@@ -37,6 +37,7 @@
  </slots>
  <stats>
   <ew_hide>-10</ew_hide>
+  <armour_regen>3</armour_regen>
  </stats>
  <tags>
   <tag>feral</tag>
