@@ -355,7 +355,7 @@ void events_trigger( EventTrigger_t trigger )
          continue;
 
       /* Spob. */
-      if ( ( trigger == EVENT_TRIGGER_LAND || trigger == EVENT_TRIGGER_LOAD ) &&
+      if ( ( trigger == EVENT_TRIGGER_LAND ) &&
            ( ed->spob != NULL ) &&
            ( strcmp( ed->spob, land_spob->name ) != 0 ) )
          continue;
