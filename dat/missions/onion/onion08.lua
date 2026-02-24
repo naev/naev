@@ -647,7 +647,7 @@ function land ()
 
    local l337 = onion.vn_l337b01()
    vn.appear( l337, "electric" )
-   l337(_([["Here, let me adjust the tune the scanning frequencies to the natural harmonics."]]))
+   l337(_([["Here, let me tune the scanning frequencies to the natural harmonics."]]))
    vn.na(_([[As if by magic, your sensors begin to hazily pick up a large man-made structure that has had some unexpected percussive maintenance performed on it by the planet's surface.]]))
    l337(_([["There it is, we have to check it out!"]]))
 
@@ -663,7 +663,7 @@ function land ()
    }
 
    vn.label("01_goin")
-   l337(_([["I knew you'd not give up now! We're coming for you lonewolf4!"]]))
+   l337(_([["I knew you wouldn't give up now! We're coming for you lonewolf4!"]]))
    vn.jump("01_cont")
 
    vn.label("01_double")
@@ -761,7 +761,7 @@ l337_b01's avatar freezes. Seems like the storm is blocking out their connection
    sai(_([["Correction, at least 3 minor fractures now."]]))
    vn.na(fmt.f(_([[Ignoring {sai}'s complaints, you don an atmospheric suit and head outside.]]),
       {sai=tut.ainame()}))
-   vn.na(_([[As you exit the ship's lock, you quickly realize that the outside is actually inside, as your ship seems to have crashed directly into lonewolf4's carrier.]]))
+   vn.na(_([[As you exit the ship's airlock, you quickly realize that the outside is actually inside, as your ship seems to have crashed directly into lonewolf4's carrier.]]))
    vn.na(_([[Weapon in hand, you make your way through the wreck of the ship. It seems like there's not much of corridors, it's all maintenance tubes which force you to crawl through, forcing your way through debris on occasion. What the hell is up with this ship's design?]]))
    storm_strength( 0.2 )
    vn.na(_([[You push yourself through another tunnel and find yourself in a surprisingly wide room with some faint illumination. In the centre seems to be a damaged pod with someone in it. Wait, is that blood?]]))
@@ -889,7 +889,7 @@ You hear a gulp.
    vn.jump("07_menu")
 
    vn.label("07_l337")
-   l337(_([["Yes. They took me up as a disciple and taught be all the technomancery I know. If it wasn't for l337_b01, I probably would have gotten fried by gangs, pirates, or even bureaucrats a long time ago. I owe them my life."]]))
+   l337(_([["Yes. They took me up as a disciple and taught me all the technomancery I know. If it wasn't for l337_b01, I probably would have gotten fried by gangs, pirates, or even bureaucrats a long time ago. I owe them my life."]]))
    l337(_([["l337_b01 was the best technomancer there was. I've never been able to be half as good as they were."]]))
    vn.jump("07_menu")
 
@@ -921,7 +921,7 @@ You hear a gulp.
       {shipname=player.pilot():name()}))
    l337(_([["What's the projected survival chance?"]]))
    sai(_([["NaN%"]]))
-   l337(_([["Suboptimal, but I don't think we have much of a choice otherwise. Can the ship survive an atmospheric ascend?"]]))
+   l337(_([["Suboptimal, but I don't think we have much of a choice otherwise. Can the ship survive an atmospheric ascent?"]]))
    sai(_([["Negative."]]))
    l337(_([["Looks like we're going to have to trust lonewolf4's engineering. They were always an ace at this stuff, so it may work?"]]))
    l337(fmt.f(_([["{player}, I think I can handle this, you should head back to the ship."]]),
