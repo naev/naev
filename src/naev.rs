@@ -20,7 +20,6 @@ mod damagetype;
 mod faction;
 mod input;
 mod linebreak;
-mod model;
 mod nebula;
 mod nlua;
 mod outfit;

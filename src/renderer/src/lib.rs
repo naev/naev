@@ -16,6 +16,7 @@ use std::sync::{Mutex, MutexGuard, RwLock};
 #[cfg(debug_assertions)]
 use tracing_mutex::stdsync::{Mutex, MutexGuard, RwLock};
 
+pub mod model;
 pub mod buffer;
 pub mod camera;
 pub mod colour;
