@@ -1,8 +1,8 @@
-use crate::model::Model;
 use anyhow::Result;
 use collide::polygon::SpinPolygon;
 use nlog::{warn, warn_err};
 use rayon::prelude::*;
+use renderer::model::Model;
 use renderer::{Context, ContextWrapper, texture};
 use std::ffi::{CStr, CString, c_void};
 use std::path::Path;
