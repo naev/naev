@@ -84,55 +84,31 @@ pub struct SdfRenderer {
 }
 impl SdfRenderer {
    pub fn new(gl: &glow::Context) -> Result<Self> {
-      let program_rect_hollow = ProgramBuilder::new(Some("Rect Hollow Shader"))
-         .uniform_buffer("rectdata", 0)
-         .wgsl_file("rect_hollow.wgsl")
-         .build(gl)?;
-      let buffer_rect_hollow = BufferBuilder::new(Some("Rect Hollow Buffer"))
-         .target(BufferTarget::Uniform)
-         .usage(BufferUsage::Dynamic)
-         .data(&RectHollowUniform::default().buffer()?)
-         .build(gl)?;
+      macro_rules! sdf_shader {
+         ($label:expr, $uniform_name:expr, $file:expr, $uniform_type:ty) => {{
+            let shader = ProgramBuilder::new(Some($label))
+               .uniform_buffer($uniform_name, 0)
+               .wgsl_file($file)
+               .build(gl)?;
+            let buffer = BufferBuilder::new(Some(concat!($label, " Buffer")))
+               .target(BufferTarget::Uniform)
+               .usage(BufferUsage::Dynamic)
+               .data(&<$uniform_type>::default().buffer()?)
+               .build(gl)?;
+            (shader, buffer)
+         }};
+      }
 
-      let program_cross = ProgramBuilder::new(Some("Cross Shader"))
-         .uniform_buffer("crossdata", 0)
-         .wgsl_file("cross.wgsl")
-         .build(gl)?;
-      let buffer_cross = BufferBuilder::new(Some("Cross Buffer"))
-         .target(BufferTarget::Uniform)
-         .usage(BufferUsage::Dynamic)
-         .data(&CrossUniform::default().buffer()?)
-         .build(gl)?;
-
-      let program_circle = ProgramBuilder::new(Some("Circle Shader"))
-         .uniform_buffer("circledata", 0)
-         .wgsl_file("circle.wgsl")
-         .build(gl)?;
-      let buffer_circle = BufferBuilder::new(Some("Circle Buffer"))
-         .target(BufferTarget::Uniform)
-         .usage(BufferUsage::Dynamic)
-         .data(&CircleUniform::default().buffer()?)
-         .build(gl)?;
-
-      let program_circle_hollow = ProgramBuilder::new(Some("Circle Hollow Shader"))
-         .uniform_buffer("circledata", 0)
-         .wgsl_file("circle_hollow.wgsl")
-         .build(gl)?;
-      let buffer_circle_hollow = BufferBuilder::new(Some("Circle Hollow Buffer"))
-         .target(BufferTarget::Uniform)
-         .usage(BufferUsage::Dynamic)
-         .data(&CircleHollowUniform::default().buffer()?)
-         .build(gl)?;
-
-      let program_triangle_hollow = ProgramBuilder::new(Some("Triangle Hollow Shader"))
-         .uniform_buffer("triangledata", 0)
-         .wgsl_file("triangle_hollow.wgsl")
-         .build(gl)?;
-      let buffer_triangle_hollow = BufferBuilder::new(Some("Triangle Hollow Buffer"))
-         .target(BufferTarget::Uniform)
-         .usage(BufferUsage::Dynamic)
-         .data(&TriangleHollowUniform::default().buffer()?)
-         .build(gl)?;
+      let (program_rect_hollow, buffer_rect_hollow) =
+         sdf_shader!("Rect Hollow Shader", "rectdata", "rect_hollow.wgsl", RectHollowUniform);
+      let (program_cross, buffer_cross) =
+         sdf_shader!("Cross Shader", "crossdata", "cross.wgsl", CrossUniform);
+      let (program_circle, buffer_circle) =
+         sdf_shader!("Circle Shader", "circledata", "circle.wgsl", CircleUniform);
+      let (program_circle_hollow, buffer_circle_hollow) =
+         sdf_shader!("Circle Hollow Shader", "circledata", "circle_hollow.wgsl", CircleHollowUniform);
+      let (program_triangle_hollow, buffer_triangle_hollow) =
+         sdf_shader!("Triangle Hollow Shader", "triangledata", "triangle_hollow.wgsl", TriangleHollowUniform);
 
       Ok(Self {
          program_rect_hollow,

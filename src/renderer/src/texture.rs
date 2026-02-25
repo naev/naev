@@ -669,44 +669,6 @@ impl Texture {
    }
 }
 
-#[test]
-fn test_sprite_from_dir() {
-   use std::mem::MaybeUninit;
-   let mut tex = MaybeUninit::<Texture>::uninit();
-   let tex = {
-      let tex = unsafe { tex.assume_init_mut() };
-      tex.sx = 8;
-      tex.sy = 2;
-      tex
-   };
-   use std::f64::consts::PI;
-   for (key, val) in vec![
-      (0.0, (0, 0)),
-      (PI, (0, 1)),
-      (-PI, (0, 1)),
-      (PI * 2.0, (0, 0)),
-      (-PI * 2.0, (0, 0)),
-      (PI * 100.0, (0, 0)),
-      (-PI * 100.0, (0, 0)),
-      (PI * 0.5, (4, 0)),
-      (-PI * 0.5, (4, 1)),
-      (PI * 0.25, (2, 0)),
-      (-PI * 0.25, (6, 1)),
-      (PI * 0.75, (6, 0)),
-      (-PI * 0.75, (2, 1)),
-   ] {
-      for off in vec![0.0, -0.19, 0.19] {
-         assert_eq!(
-            tex.sprite_from_dir(key + off),
-            val,
-            "tex.sprite_from_dir( {}+{} )",
-            key,
-            off
-         );
-      }
-   }
-}
-
 #[derive(Clone, Copy)]
 pub enum AddressMode {
    ClampToEdge = 0,
@@ -2209,6 +2171,44 @@ impl Serialize for Texture {
          None => Err(serde::ser::Error::custom(
             "can't serialize texture without a path",
          )),
+      }
+   }
+}
+
+#[test]
+fn test_sprite_from_dir() {
+   use std::mem::MaybeUninit;
+   let mut tex = MaybeUninit::<Texture>::uninit();
+   let tex = {
+      let tex = unsafe { tex.assume_init_mut() };
+      tex.sx = 8;
+      tex.sy = 2;
+      tex
+   };
+   use std::f64::consts::PI;
+   for (key, val) in vec![
+      (0.0, (0, 0)),
+      (PI, (0, 1)),
+      (-PI, (0, 1)),
+      (PI * 2.0, (0, 0)),
+      (-PI * 2.0, (0, 0)),
+      (PI * 100.0, (0, 0)),
+      (-PI * 100.0, (0, 0)),
+      (PI * 0.5, (4, 0)),
+      (-PI * 0.5, (4, 1)),
+      (PI * 0.25, (2, 0)),
+      (-PI * 0.25, (6, 1)),
+      (PI * 0.75, (6, 0)),
+      (-PI * 0.75, (2, 1)),
+   ] {
+      for off in vec![0.0, -0.19, 0.19] {
+         assert_eq!(
+            tex.sprite_from_dir(key + off),
+            val,
+            "tex.sprite_from_dir( {}+{} )",
+            key,
+            off
+         );
       }
    }
 }
