@@ -440,7 +440,7 @@ They rub their eyes.
       trixie(_([["You never know with these stations. It could even just be some piece reused from somewhere else."]]))
       l337(fmt.f(_([["Only one way to find out! {player}, onwards to {spb}!"]]),
          {player=player.name(), spb=backdoorspb}))
-      trixie([["RáÚÆ Â£Ř§Ů—� ©????╟舐—â€š�Ř§Ů½  æØ¢Ã Ř§Ů© ráÚÆ ????½ æØ¢Ã"]])
+      trixie([["RáÚÆ Â£Ř§Ů—☎ ©????╟舐—â€š〠Ř§Ů½  æØ¢ÃŒ〆≒ Ř§Ů© ráÚÆ ♭┇‱????½ æØ¢Ãž¿ª"]])
       l337(_([["Looks like the Nexus relay is being flaky. Don't worry, they should be back the moment it stabilizes. We'll get back to you later!"]]))
       vn.na(_([[It seems the hackers might need your help again...]]))
 
@@ -602,7 +602,7 @@ Loud and furious typing intensifies in the background.]]))
    msg(_([[The audio seems to break up.
 "But not *CRACKLE* enough. *HISS* tracked *POP*-nal to *CRACKLE* *SCRATCH* lonewolf4 *HISS* *CRACKLE*"]]))
    msg(_([[The audio seems to recover.
-"*SCRITCH* my suspicious that this was a fellow technomancer, but I didn't think they'd be so brash."]]))
+"*SCRITCH* my suspicions that this was a fellow technomancer, but I didn't think they'd be so brash."]]))
    msg(_([["Oh shit, this looks like the end of the line for me."]]))
    msg(_([[The tone in the voice changes, almost nostalgic.
 "l337_b01, everything is in your hands now. Just like the old times... I'll be waiting with v3c70r and DEADBEEF..."]]))
