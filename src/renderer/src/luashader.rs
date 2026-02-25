@@ -2,7 +2,7 @@
 use crate::shader::{ProgramBuilder, Shader};
 use crate::texture::Texture;
 use glow::*;
-use mlua::{BorrowedStr, UserData, UserDataMethods, MetaMethod, UserDataRef};
+use mlua::{BorrowedStr, MetaMethod, UserData, UserDataMethods, UserDataRef};
 use nalgebra::{Matrix2, Matrix3, Vector4};
 use trie_rs::map::{Trie, TrieBuilder};
 
@@ -23,17 +23,17 @@ struct Uniform {
    name: String,
 }
 
-struct TextureSlot {
-   active: u32,
-   texid: u32,
-   uniform: glow::NativeUniformLocation,
-   value: i32,
+pub struct TextureSlot {
+   pub active: u32,
+   pub texid: u32,
+   pub uniform: glow::NativeUniformLocation,
+   pub value: i32,
 }
 
 pub struct LuaShader {
-   shader: Shader,
+   pub shader: Shader,
    uniforms: Trie<u8, Uniform>,
-   textures: Vec<TextureSlot>,
+   pub textures: Vec<TextureSlot>,
    pp_id: Option<u32>,
 }
 impl Drop for LuaShader {
@@ -47,7 +47,12 @@ impl Drop for LuaShader {
 impl LuaShader {
    const UNIFORM_BLOCK: u32 = 0;
 
-   fn send_uniform( &mut self, name: &str, args: mlua::MultiValue, ignore_missing: bool ) -> mlua::Result<()> {
+   fn send_uniform(
+      &mut self,
+      name: &str,
+      args: mlua::MultiValue,
+      ignore_missing: bool,
+   ) -> mlua::Result<()> {
       // Look up the uniform in the trie.
       let uniform = self.uniforms.exact_match(name.as_bytes());
       let Some(u) = uniform else {
@@ -114,13 +119,14 @@ impl LuaShader {
             })?;
             // Expect a Texture userdata value.
             let tex = match rest.first() {
-               Some(mlua::Value::UserData(ud)) => ud.borrow::<Texture>()
-                  .map_err(|_| mlua::Error::RuntimeError(
-                     format!("expected Texture for sampler '{name}'")
-                  ))?,
-               _ => return Err(mlua::Error::RuntimeError(
-                  format!("expected Texture for sampler '{name}'")
-               )),
+               Some(mlua::Value::UserData(ud)) => ud.borrow::<Texture>().map_err(|_| {
+                  mlua::Error::RuntimeError(format!("expected Texture for sampler '{name}'"))
+               })?,
+               _ => {
+                  return Err(mlua::Error::RuntimeError(format!(
+                     "expected Texture for sampler '{name}'"
+                  )));
+               }
             };
             // Store the GL texture id for later binding (matches C's ls->tex[u->tex].texid = ...).
             self.textures[slot_idx as usize].texid = tex.texture.texture.0.into();
@@ -186,7 +192,7 @@ impl UserData for LuaShader {
                   && let Some(loc) =
                      unsafe { ctx.gl.get_uniform_location(shader.program, &uniform.name) }
                {
-                  let tex = if uniform.utype == glow::SAMPLER_2D && uniform.name != "MainTex"{
+                  let tex = if uniform.utype == glow::SAMPLER_2D && uniform.name != "MainTex" {
                      ntex += 1;
                      let slot_idx = (ntex - 1) as usize;
                      textures.push(TextureSlot {
@@ -260,7 +266,7 @@ impl UserData for LuaShader {
        */
       methods.add_method(
          "hasUniform",
-         |_, this, name: BorrowedStr | -> mlua::Result<bool> {
+         |_, this, name: BorrowedStr| -> mlua::Result<bool> {
             Ok(this.uniforms.exact_match(&*name).is_some())
          },
       );
@@ -342,7 +348,7 @@ fn parse_floats(args: &[mlua::Value], n: usize) -> mlua::Result<[f32; 4]> {
                   return Err(mlua::Error::RuntimeError(format!(
                      "expected number at argument position {}",
                      i + 1
-                  )))
+                  )));
                }
             };
          }
@@ -368,7 +374,7 @@ fn parse_ints(args: &[mlua::Value], n: usize) -> mlua::Result<[i32; 4]> {
                   return Err(mlua::Error::RuntimeError(format!(
                      "expected integer at argument position {}",
                      i + 1
-                  )))
+                  )));
                }
             };
          }
