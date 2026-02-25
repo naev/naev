@@ -21,6 +21,7 @@ pub mod camera;
 pub mod colour;
 pub mod framebuffer;
 pub mod luagfx;
+pub mod luashader;
 pub mod sdf;
 pub mod shader;
 pub mod texture;
