@@ -3,16 +3,16 @@ use crate::shader::{ProgramBuilder, Shader};
 use crate::texture::Texture;
 use glow::*;
 use mlua::{BorrowedStr, MetaMethod, UserData, UserDataMethods, UserDataRef};
-use nalgebra::{Matrix2, Matrix3, Vector4};
+use nalgebra::{Matrix3, Vector4};
 use trie_rs::map::{Trie, TrieBuilder};
 
-struct UniformBlock {
-   view_space_from_local: Matrix3<f32>,
-   clip_space_from_view: Matrix3<f32>,
-   clip_space_from_local: Matrix3<f32>,
-   view_normal_from_local: Matrix2<f32>,
-   love_screensize: Vector4<f32>,
-   constant_colour: Vector4<f32>,
+pub struct UniformBlock {
+pub  view_space_from_local: Matrix3<f32>,
+//pub clip_space_from_view: Matrix3<f32>,
+pub  clip_space_from_local: Matrix3<f32>,
+//pub view_normal_from_local: Matrix2<f32>,
+pub  love_screensize: Vector4<f32>,
+pub  constant_colour: Vector4<f32>,
 }
 
 struct Uniform {
@@ -32,8 +32,10 @@ pub struct TextureSlot {
 
 pub struct LuaShader {
    pub shader: Shader,
+   pub buffer: Buffer,
    uniforms: Trie<u8, Uniform>,
    pub textures: Vec<TextureSlot>,
+   pub maintex: Option<glow::NativeUniformLocation>,
    pp_id: Option<u32>,
 }
 impl Drop for LuaShader {
@@ -219,11 +221,19 @@ impl UserData for LuaShader {
                }
             }
             let uniforms: Trie<u8, Uniform> = builder.build();
+            let maintex = unsafe {
+               let location = ctx.gl.get_uniform_location( shader.program, "MainTex" );
+               if let Some(location) = location {
+                  ctx.gl.uniform_1_i32( Some(&location), 0);
+               }
+               location
+            };
 
             Ok(LuaShader {
                shader,
                uniforms,
                textures,
+               maintex,
                pp_id: None,
             })
          },
@@ -294,6 +304,7 @@ impl UserData for LuaShader {
                }
             };
             if this.pp_id.is_none() {
+               // TODO fix this
                let raw: *mut LuaShader = this as *mut LuaShader;
                let pp_id = unsafe {
                   naevc::render_postprocessAdd(

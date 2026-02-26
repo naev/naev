@@ -2,13 +2,13 @@ use crate::TextureUniform;
 use crate::VertexArray;
 use crate::colour::Colour;
          use crate::framebuffer::{FramebufferBuilder, FramebufferWrap};
-use crate::luashader::LuaShader;
+use crate::luashader;
 use crate::sdf::{CircleHollowUniform, CircleUniform};
 use crate::texture::Texture;
 use crate::{Context, SolidUniform, Vec2, camera, colour};
 use glow::HasContext;
 use mlua::{BorrowedStr, UserData, UserDataMethods, UserDataRef, Variadic, MultiValue};
-use nalgebra::{Matrix3, Vector2};
+use nalgebra::{Matrix3, Vector4, Vector2};
 use physics::transform2::Transform2;
 
 /// Converts a blend-equation string to a GL constant.
@@ -285,7 +285,7 @@ impl UserData for LuaGfx {
          |_,
           (tex, shader, transform, col, transform_texture): (
             UserDataRef<Texture>,
-            UserDataRef<LuaShader>,
+            UserDataRef<luashader::LuaShader>,
             Transform2,
             Option<Colour>,
             Option<Transform2>,
@@ -293,75 +293,54 @@ impl UserData for LuaGfx {
           -> mlua::Result<()> {
             let ctx = Context::get();
             let gl = &ctx.gl;
-            let col = col.unwrap_or(colour::WHITE);
+            let colour = col.unwrap_or(colour::WHITE);
             let transform: Matrix3<f32> = transform.into();
             let transform_texture: Matrix3<f32> = transform_texture
                .unwrap_or(Transform2::new()).into();
 
             let shader = &*shader;
-            let program = shader.shader.program;
-            unsafe {
-               gl.use_program(Some(program));
+            let (w,h) = {
+               let dims = ctx.dimensions.read().unwrap();
+               (dims.view_width, dims.view_height)
+            };
 
-               // VertexPosition — always attrib 0 on the square VAO
-               gl.enable_vertex_attrib_array(0);
-               ctx.vao_square.bind(ctx);
+            let uniform = luashader::UniformBlock{
+               view_space_from_local: transform_texture.into(),
+               clip_space_from_local: transform.into(),
+               constant_colour: colour.into(),
+               love_screensize: Vector4::new( w, h, 1.0, 0.0 ),
+            };
 
-               // Optional tex-coord channel (VertexTexCoord — attrib 1)
-               // The C shader checks `shader->VertexTexCoord >= 0`.
-               // We always enable it if the VAO has a second attribute; the
-               // shader just ignores it if not used.
-               gl.enable_vertex_attrib_array(1);
+            shader.shader.use_program(gl);
+            ctx.vao_square.bind(ctx);
 
-               // Send the texture-space transform (ViewSpaceFromLocal in C).
-               // We pack the 3×3 as a mat3 uniform (9 floats).
-               let tm_loc = gl.get_uniform_location(program, "ViewSpaceFromLocal");
-               if let Some(loc) = tm_loc {
-                  gl.uniform_matrix_3_f32_slice(Some(&loc), false, transform_texture.as_slice());
-               }
+            shader.buffer_texture.bind_write_base( ctx, &uniform.buffer()?, luashader::LuaShader::UNIFORM_BLOCK )?;
 
-               // Bind MainTex at slot 0
-               tex.bind(ctx, 0);
-               let main_tex_loc = gl.get_uniform_location(program, "MainTex");
-               if let Some(loc) = main_tex_loc {
-                  gl.uniform_1_i32(Some(&loc), 0);
-               }
-
-               // Bind any extra textures the shader registered via `send`
-               for slot in &shader.textures {
-                  if slot.texid != 0 {
+            // Bind any extra textures the shader registered via `send`
+            for slot in &shader.textures {
+               if slot.texid != 0 {
+                  unsafe {
                      gl.active_texture(slot.active);
                      gl.bind_texture(
                         glow::TEXTURE_2D,
                         Some(glow::NativeTexture(
-                           std::num::NonZero::new(slot.texid).unwrap(),
+                              std::num::NonZero::new(slot.texid).unwrap(),
                         )),
                      );
                      gl.uniform_1_i32(Some(&slot.uniform), slot.value);
-                     // Mirror sampler from the main texture
                      gl.bind_sampler(slot.active - glow::TEXTURE0, Some(tex.sampler));
                   }
                }
-               gl.bind_sampler(0, Some(tex.sampler));
-               gl.active_texture(glow::TEXTURE0);
+            }
 
-               // ConstantColour
-               let col_loc = gl.get_uniform_location(program, "ConstantColour");
-               if let Some(loc) = col_loc {
-                  let c: nalgebra::Vector4<f32> = col.into();
-                  gl.uniform_4_f32(Some(&loc), c.x, c.y, c.z, c.w);
-               }
+            // MainTex is bound last
+            if let Some(maintex) = shader.maintex {
+               tex.bind(ctx, 0);
+            }
 
-               // ClipSpaceFromLocal — the main transform
-               let proj_loc = gl.get_uniform_location(program, "ClipSpaceFromLocal");
-               if let Some(loc) = proj_loc {
-                  gl.uniform_matrix_3_f32_slice(Some(&loc), false, transform.as_slice());
-               }
-
+            unsafe {
                gl.draw_arrays(glow::TRIANGLE_STRIP, 0, 4);
 
-               gl.disable_vertex_attrib_array(0);
-               gl.disable_vertex_attrib_array(1);
                VertexArray::unbind(ctx);
                gl.use_program(None);
             }
