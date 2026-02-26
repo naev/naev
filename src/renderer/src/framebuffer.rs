@@ -108,6 +108,8 @@ impl Framebuffer {
       let gl = &ctx.gl;
       self.bind(ctx);
       unsafe {
+        let scissored = gl.is_enabled(SCISSOR_TEST);
+        gl.disable(SCISSOR_TEST);
          gl.read_pixels(
             0,
             0,
@@ -117,6 +119,9 @@ impl Framebuffer {
             glow::UNSIGNED_BYTE,
             glow::PixelPackData::Slice(Some(&mut data)),
          );
+         if scissored {
+             gl.enable(SCISSOR_TEST);
+         }
       }
       Self::unbind(ctx);
       let img = match image::RgbImage::from_vec(self.w as u32, self.h as u32, data) {
@@ -290,7 +295,6 @@ fn reset() {
       let gl = &ctx.gl;
       unsafe {
          naevc::gl_screen.current_fbo = prev;
-         PREVIOUS_FBO.store(0, Ordering::Relaxed);
          if WAS_SCISSORED.load(Ordering::Relaxed) {
             gl.enable(SCISSOR_TEST);
             WAS_SCISSORED.store(false, Ordering::Relaxed);
@@ -302,6 +306,7 @@ fn reset() {
             gl.bind_framebuffer(FRAMEBUFFER, None);
          }
       }
+      PREVIOUS_FBO_SET.store(false, Ordering::Relaxed);
    }
 }
 
