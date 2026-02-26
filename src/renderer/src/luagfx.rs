@@ -1,14 +1,15 @@
 use crate::TextureUniform;
+use crate::Uniform as ContextUniform;
 use crate::VertexArray;
 use crate::colour::Colour;
-         use crate::framebuffer::{FramebufferBuilder, FramebufferWrap};
+use crate::framebuffer::{FramebufferBuilder, FramebufferWrap};
 use crate::luashader;
 use crate::sdf::{CircleHollowUniform, CircleUniform};
 use crate::texture::Texture;
 use crate::{Context, SolidUniform, Vec2, camera, colour};
 use glow::HasContext;
-use mlua::{BorrowedStr, UserData, UserDataMethods, UserDataRef, Variadic, MultiValue};
-use nalgebra::{Matrix3, Vector4, Vector2};
+use mlua::{BorrowedStr, MultiValue, UserData, UserDataMethods, UserDataRef, Variadic};
+use nalgebra::{Matrix3, Vector2, Vector4};
 use physics::transform2::Transform2;
 
 /// Converts a blend-equation string to a GL constant.
@@ -295,26 +296,30 @@ impl UserData for LuaGfx {
             let gl = &ctx.gl;
             let colour = col.unwrap_or(colour::WHITE);
             let transform: Matrix3<f32> = transform.into();
-            let transform_texture: Matrix3<f32> = transform_texture
-               .unwrap_or(Transform2::new()).into();
+            let transform_texture: Matrix3<f32> =
+               transform_texture.unwrap_or(Transform2::new()).into();
 
             let shader = &*shader;
-            let (w,h) = {
+            let (w, h) = {
                let dims = ctx.dimensions.read().unwrap();
                (dims.view_width, dims.view_height)
             };
 
-            let uniform = luashader::UniformBlock{
+            let uniform = luashader::UniformBlock {
                view_space_from_local: transform_texture.into(),
                clip_space_from_local: transform.into(),
                constant_colour: colour.into(),
-               love_screensize: Vector4::new( w, h, 1.0, 0.0 ),
+               love_screensize: Vector4::new(w, h, 1.0, 0.0),
             };
 
             shader.shader.use_program(gl);
             ctx.vao_square.bind(ctx);
 
-            shader.buffer_texture.bind_write_base( ctx, &uniform.buffer()?, luashader::LuaShader::UNIFORM_BLOCK )?;
+            shader.buffer.bind_write_base(
+               ctx,
+               &uniform.buffer()?,
+               luashader::LuaShader::UNIFORM_BLOCK,
+            )?;
 
             // Bind any extra textures the shader registered via `send`
             for slot in &shader.textures {
@@ -324,7 +329,7 @@ impl UserData for LuaGfx {
                      gl.bind_texture(
                         glow::TEXTURE_2D,
                         Some(glow::NativeTexture(
-                              std::num::NonZero::new(slot.texid).unwrap(),
+                           std::num::NonZero::new(slot.texid).unwrap(),
                         )),
                      );
                      gl.uniform_1_i32(Some(&slot.uniform), slot.value);
@@ -334,7 +339,7 @@ impl UserData for LuaGfx {
             }
 
             // MainTex is bound last
-            if let Some(maintex) = shader.maintex {
+            if let Some(_maintex) = shader.maintex {
                tex.bind(ctx, 0);
             }
 
@@ -442,7 +447,9 @@ impl UserData for LuaGfx {
        */
       methods.add_function(
          "renderCircleH",
-         |_, (transform, col, empty): (Transform2, Option<Colour>, Option<bool>)| -> mlua::Result<()> {
+         |_,
+          (transform, col, empty): (Transform2, Option<Colour>, Option<bool>)|
+          -> mlua::Result<()> {
             let ctx = Context::get();
             let col = col.unwrap_or(colour::WHITE);
             let transform: Matrix3<f32> = transform.into();
@@ -479,12 +486,9 @@ impl UserData for LuaGfx {
        *    @luatparam number|Vec2 ... Coordinates as x,y pairs or Vec2 values.
        * @luafunc renderLinesH
        */
-      methods.add_function(
-         "renderLinesH",
-         |_, ()| -> mlua::Result<()> {
-            Err(mlua::Error::RuntimeError("unimplemented".to_string()))
-         },
-      );
+      methods.add_function("renderLinesH", |_, ()| -> mlua::Result<()> {
+         Err(mlua::Error::RuntimeError("unimplemented".to_string()))
+      });
       /*@
        * @brief Clears the depth buffer.
        *
@@ -506,9 +510,9 @@ impl UserData for LuaGfx {
        */
       methods.add_function("fontSize", |_, small: Option<bool>| -> mlua::Result<f32> {
          if small.unwrap_or(false) {
-            Ok(unsafe { naevc::gl_smallFont.h as f32 } )
+            Ok(unsafe { naevc::gl_smallFont.h as f32 })
          } else {
-            Ok(unsafe { naevc::gl_defFont.h as f32 } )
+            Ok(unsafe { naevc::gl_defFont.h as f32 })
          }
       });
       /*@
@@ -569,7 +573,7 @@ impl UserData for LuaGfx {
        * @luafunc printRestoreClear
        */
       methods.add_function("printRestoreClear", |_, ()| -> mlua::Result<()> {
-             // TODO
+         // TODO
          Ok(())
       });
       /*@
@@ -577,7 +581,7 @@ impl UserData for LuaGfx {
        * @luafunc printRestoreLast
        */
       methods.add_function("printRestoreLast", |_, ()| -> mlua::Result<()> {
-             // TODO
+         // TODO
          Ok(())
       });
       /*@
@@ -605,7 +609,7 @@ impl UserData for LuaGfx {
             Option<bool>,
          )|
           -> mlua::Result<()> {
-             // TODO
+            // TODO
             Ok(())
          },
       );
@@ -630,7 +634,7 @@ impl UserData for LuaGfx {
             Option<f32>,
          )|
           -> mlua::Result<()> {
-             // TODO
+            // TODO
             Ok(())
          },
       );
@@ -675,7 +679,7 @@ impl UserData for LuaGfx {
             Option<bool>,
          )|
           -> mlua::Result<()> {
-             // TODO
+            // TODO
             Ok(())
          },
       );
@@ -706,7 +710,7 @@ impl UserData for LuaGfx {
             Option<f32>,
          )|
           -> mlua::Result<()> {
-             // TODO
+            // TODO
             Ok(())
          },
       );
@@ -825,7 +829,7 @@ impl UserData for LuaGfx {
                   gl.blend_equation(func_rgb);
                   gl.blend_func(src_rgb, dst_rgb);
                }
-            } else if len==6 {
+            } else if len == 6 {
                let func_rgb = blend_func_from_str(&args[0])?;
                let func_a = blend_func_from_str(&args[1])?;
                let src_rgb = blend_factor_from_str(&args[2])?;
@@ -841,7 +845,9 @@ impl UserData for LuaGfx {
                   "setBlendState: need 3 or 6 arguments".into(),
                ));
             }
-            unsafe { naevc::render_needsReset(); }
+            unsafe {
+               naevc::render_needsReset();
+            }
             Ok(())
          },
       );
@@ -856,49 +862,46 @@ impl UserData for LuaGfx {
        *    @luatparam number height Height of clipping rectangle.
        * @luafunc setScissor
        */
-      methods.add_function(
-         "setScissor",
-         |_, args: Variadic<f32>| -> mlua::Result<()> {
-            let ctx = Context::get();
-            let gl = &ctx.gl;
-            if args.is_empty() {
-               // Disable scissoring and reset to full screen
-               unsafe {
-                  gl.disable(glow::SCISSOR_TEST);
-                  let (rw, rh) = (naevc::gl_screen.rw, naevc::gl_screen.rh);
-                  gl.scissor(0, 0, rw, rh);
-               }
-            } else if args.len()==4 {
-               let x = args[0];
-               let y = args[1];
-               let w = args[2];
-               let h = args[3];
-               let (mxscale, myscale, rh) = unsafe {
-                  (
-                     naevc::gl_screen.mxscale as f32,
-                     naevc::gl_screen.myscale as f32,
-                     naevc::gl_screen.rh as f32,
-                  )
-               };
-               let rx = x / mxscale;
-               let ry = y / myscale;
-               let rw = w / mxscale;
-               let rheight = h / myscale;
-
-               unsafe {
-                  gl.scissor(
-                     rx as i32,
-                     (rh - rheight - ry) as i32,
-                     rw as i32,
-                     rheight as i32,
-                  );
-                  gl.enable(glow::SCISSOR_TEST);
-                  naevc::render_needsReset()
-               }
+      methods.add_function("setScissor", |_, args: Variadic<f32>| -> mlua::Result<()> {
+         let ctx = Context::get();
+         let gl = &ctx.gl;
+         if args.is_empty() {
+            // Disable scissoring and reset to full screen
+            unsafe {
+               gl.disable(glow::SCISSOR_TEST);
+               let (rw, rh) = (naevc::gl_screen.rw, naevc::gl_screen.rh);
+               gl.scissor(0, 0, rw, rh);
             }
-            Ok(())
-         },
-      );
+         } else if args.len() == 4 {
+            let x = args[0];
+            let y = args[1];
+            let w = args[2];
+            let h = args[3];
+            let (mxscale, myscale, rh) = unsafe {
+               (
+                  naevc::gl_screen.mxscale as f32,
+                  naevc::gl_screen.myscale as f32,
+                  naevc::gl_screen.rh as f32,
+               )
+            };
+            let rx = x / mxscale;
+            let ry = y / myscale;
+            let rw = w / mxscale;
+            let rheight = h / myscale;
+
+            unsafe {
+               gl.scissor(
+                  rx as i32,
+                  (rh - rheight - ry) as i32,
+                  rw as i32,
+                  rheight as i32,
+               );
+               gl.enable(glow::SCISSOR_TEST);
+               naevc::render_needsReset()
+            }
+         }
+         Ok(())
+      });
       /*@
        * @brief Takes the current rendered screen and returns it as a canvas.
        *
@@ -955,14 +958,11 @@ impl UserData for LuaGfx {
        * strength.
        * @luafunc lightAmbient
        */
-      methods.add_function(
-         "lightAmbient",
-         |_, args: MultiValue| -> mlua::Result<()> {
-            // TODO
-            let _ = args;
-            Ok(())
-         },
-      );
+      methods.add_function("lightAmbient", |_, args: MultiValue| -> mlua::Result<()> {
+         // TODO
+         let _ = args;
+         Ok(())
+      });
 
       // ── lightAmbientGet ─────────────────────────────────────────────────────
       /*@
@@ -976,7 +976,7 @@ impl UserData for LuaGfx {
       methods.add_function(
          "lightAmbientGet",
          |_, ()| -> mlua::Result<(f64, f64, f64)> {
-         // TODO
+            // TODO
             Ok((0.0, 0.0, 0.0))
          },
       );

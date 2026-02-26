@@ -1,18 +1,23 @@
 #![allow(dead_code)]
+use crate::Uniform as ContextUniform;
+use crate::buffer::{Buffer, BufferBuilder, BufferTarget, BufferUsage};
 use crate::shader::{ProgramBuilder, Shader};
 use crate::texture::Texture;
+use encase::ShaderType;
 use glow::*;
 use mlua::{BorrowedStr, MetaMethod, UserData, UserDataMethods, UserDataRef};
 use nalgebra::{Matrix3, Vector4};
 use trie_rs::map::{Trie, TrieBuilder};
 
+#[repr(C)]
+#[derive(Default, Debug, Copy, Clone, ShaderType)]
 pub struct UniformBlock {
-pub  view_space_from_local: Matrix3<f32>,
-//pub clip_space_from_view: Matrix3<f32>,
-pub  clip_space_from_local: Matrix3<f32>,
-//pub view_normal_from_local: Matrix2<f32>,
-pub  love_screensize: Vector4<f32>,
-pub  constant_colour: Vector4<f32>,
+   pub view_space_from_local: Matrix3<f32>,
+   pub clip_space_from_local: Matrix3<f32>,
+   pub love_screensize: Vector4<f32>,
+   pub constant_colour: Vector4<f32>,
+   //pub clip_space_from_view: Matrix3<f32>,
+   //pub view_normal_from_local: Matrix2<f32>,
 }
 
 struct Uniform {
@@ -47,7 +52,7 @@ impl Drop for LuaShader {
    }
 }
 impl LuaShader {
-   const UNIFORM_BLOCK: u32 = 0;
+   pub const UNIFORM_BLOCK: u32 = 0;
 
    fn send_uniform(
       &mut self,
@@ -181,6 +186,12 @@ impl UserData for LuaShader {
                .uniform_buffer("LoveUniform", Self::UNIFORM_BLOCK)
                .build(&ctx.gl)?;
 
+            let buffer = BufferBuilder::new(None)
+               .target(BufferTarget::Uniform)
+               .usage(BufferUsage::Dynamic)
+               .data(&UniformBlock::default().buffer()?)
+               .build(&ctx.gl)?;
+
             let n = unsafe {
                ctx.gl
                   .get_program_parameter_i32(shader.program, glow::ACTIVE_UNIFORMS)
@@ -222,15 +233,16 @@ impl UserData for LuaShader {
             }
             let uniforms: Trie<u8, Uniform> = builder.build();
             let maintex = unsafe {
-               let location = ctx.gl.get_uniform_location( shader.program, "MainTex" );
+               let location = ctx.gl.get_uniform_location(shader.program, "MainTex");
                if let Some(location) = location {
-                  ctx.gl.uniform_1_i32( Some(&location), 0);
+                  ctx.gl.uniform_1_i32(Some(&location), 0);
                }
                location
             };
 
             Ok(LuaShader {
                shader,
+               buffer,
                uniforms,
                textures,
                maintex,
