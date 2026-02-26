@@ -424,6 +424,8 @@ dat/outfits/structure/small_fuel_pod.xml
 dat/outfits/structure/small_shield_booster.xml
 dat/outfits/unique/bioship_pheromone_emitter.xml
 dat/outfits/unique/daphnes_leap.xml
+dat/outfits/unique/dragon_scale_plating.xml
+dat/outfits/unique/dragon_scales.xml
 dat/outfits/unique/executor_shield_aura.xml
 dat/outfits/unique/fake_transponder.xml
 dat/outfits/unique/fuel_recycler.xml

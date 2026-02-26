@@ -1,0 +1,28 @@
+<outfit name="Dragon Scale Plating">
+ <!-- Upgraded from Dragon Scales -->
+ <general>
+  <typename>Core Systems (Hull)</typename>
+  <slot prop_extra="hull_secondary" prop="hull">structure</slot>
+  <rarity>6</rarity>
+  <unique/>
+  <size>large</size>
+  <priority>7</priority>
+  <price>950000</price>
+  <description>TODO</description>
+  <gfx_store>placeholder</gfx_store>
+ </general>
+ <specific type="modification">
+  <lua_inline>
+   require('outfits.lib.multicore').init({
+      {'mass', 650, 700},
+      {'cargo', 40, 15},
+      {'absorb', 200, 70},
+      {'armour', 1100, 500},
+      {'armour_regen', 9},
+   })
+  </lua_inline>
+ </specific>
+ <tags>
+  <tag>core</tag>
+ </tags>
+</outfit>

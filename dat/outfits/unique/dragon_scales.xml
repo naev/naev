@@ -1,0 +1,28 @@
+<outfit name="Dragon Scales">
+ <!-- Upgrades to Dragon Scale Plating -->
+ <general>
+  <typename>Core Systems (Hull)</typename>
+  <slot prop="hull_secondary">structure</slot>
+  <rarity>6</rarity>
+  <unique/>
+  <size>large</size>
+  <priority>7</priority>
+  <price>950000</price>
+  <description>Scales from an ancient feral bioship that have been repurposed as a secondary hull layer. While they offer less overall armour, and barely any cargo space, the scales are harder and are seemingly able to regenerate from damage taken.</description>
+  <gfx_store>placeholder</gfx_store>
+ </general>
+ <specific type="modification">
+  <lua_inline>
+   require('outfits.lib.multicore').init({
+      {'mass', 750},
+      {'cargo', 5},
+      {'absorb', 70},
+      {'armour', 450},
+      {'armour_regen', 8},
+   })
+  </lua_inline>
+ </specific>
+ <tags>
+  <tag>core</tag>
+ </tags>
+</outfit>
