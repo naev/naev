@@ -8,8 +8,8 @@ use nalgebra::Vector4;
 use nlog::warn_err;
 use std::num::NonZero;
 use std::ops::Deref;
-use std::sync::Arc;
-use std::sync::atomic::{AtomicBool, AtomicU32, Ordering};
+use std::sync::atomic::{AtomicU32, Ordering};
+use std::sync::{Arc, LazyLock, Mutex};
 
 pub struct FramebufferC {
    fb: glow::NativeFramebuffer,
@@ -108,8 +108,8 @@ impl Framebuffer {
       let gl = &ctx.gl;
       self.bind(ctx);
       unsafe {
-        let scissored = gl.is_enabled(SCISSOR_TEST);
-        gl.disable(SCISSOR_TEST);
+         let scissored = gl.is_enabled(SCISSOR_TEST);
+         gl.disable(SCISSOR_TEST);
          gl.read_pixels(
             0,
             0,
@@ -120,7 +120,7 @@ impl Framebuffer {
             glow::PixelPackData::Slice(Some(&mut data)),
          );
          if scissored {
-             gl.enable(SCISSOR_TEST);
+            gl.enable(SCISSOR_TEST);
          }
       }
       Self::unbind(ctx);
@@ -285,29 +285,32 @@ impl FramebufferBuilder {
    }
 }
 
-static PREVIOUS_FBO_SET: AtomicBool = AtomicBool::new(false);
-static PREVIOUS_FBO: AtomicU32 = AtomicU32::new(0);
-static WAS_SCISSORED: AtomicBool = AtomicBool::new(false);
+#[derive(Default)]
+struct State {
+   fbo: Option<u32>,
+   scissored: bool,
+}
+static STATE: LazyLock<Mutex<State>> = LazyLock::new(|| Mutex::new(Default::default()));
 fn reset() {
-   if PREVIOUS_FBO_SET.load(Ordering::Relaxed) {
-      let prev = PREVIOUS_FBO.load(Ordering::Relaxed);
-      let ctx = Context::get();
-      let gl = &ctx.gl;
+   let mut state = STATE.lock().unwrap();
+   let ctx = Context::get();
+   let gl = &ctx.gl;
+   if let Some(fbo) = state.fbo {
       unsafe {
-         naevc::gl_screen.current_fbo = prev;
-         if WAS_SCISSORED.load(Ordering::Relaxed) {
-            gl.enable(SCISSOR_TEST);
-            WAS_SCISSORED.store(false, Ordering::Relaxed);
-         }
+         naevc::gl_screen.current_fbo = fbo;
          gl.viewport(0, 0, naevc::gl_screen.rw, naevc::gl_screen.rh);
-         if let Some(prev) = NonZero::new(prev) {
-            gl.bind_framebuffer(FRAMEBUFFER, Some(glow::NativeFramebuffer(prev)));
+         if let Some(fbo) = NonZero::new(fbo) {
+            gl.bind_framebuffer(FRAMEBUFFER, Some(glow::NativeFramebuffer(fbo)));
          } else {
             gl.bind_framebuffer(FRAMEBUFFER, None);
          }
       }
-      PREVIOUS_FBO_SET.store(false, Ordering::Relaxed);
    }
+   if state.scissored {
+      unsafe { gl.enable(SCISSOR_TEST) };
+   }
+   state.fbo = None;
+   state.scissored = false;
 }
 
 #[derive(Clone, Debug)]
@@ -389,11 +392,11 @@ impl UserData for FramebufferWrap {
             if let Some(canvas) = c {
                let ctx = Context::get();
                let gl = &ctx.gl;
-               if !PREVIOUS_FBO_SET.load(Ordering::Relaxed) {
-                  PREVIOUS_FBO.store(unsafe { naevc::gl_screen.current_fbo }, Ordering::Relaxed);
-                  PREVIOUS_FBO_SET.store(true, Ordering::Relaxed);
-                  WAS_SCISSORED.store(unsafe { gl.is_enabled(SCISSOR_TEST) }, Ordering::Relaxed);
+               let mut state = STATE.lock().unwrap();
+               if state.fbo.is_none() {
+                  state.fbo = Some(unsafe { naevc::gl_screen.current_fbo });
                }
+               state.scissored = unsafe { gl.is_enabled(SCISSOR_TEST) };
                unsafe {
                   naevc::gl_screen.current_fbo = canvas.framebuffer.0.into();
                   gl.disable(SCISSOR_TEST);
