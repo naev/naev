@@ -425,7 +425,7 @@ impl NLua {
       if let Some(prev_env) = prev_env {
          globals.raw_set(ENV, prev_env)?;
       }
-      Ok(ret?)
+      ret
    }
 
    /// Evaluates a chunk with the environment
@@ -712,7 +712,7 @@ pub extern "C-unwind" fn nlua_pcall(env: *const LuaEnv, nargs: c_int, nresults: 
             }
          }
          Err(e) => {
-            return Err(e.into());
+            return Err(e);
          }
       };
       unsafe {
@@ -722,7 +722,7 @@ pub extern "C-unwind" fn nlua_pcall(env: *const LuaEnv, nargs: c_int, nresults: 
             } else {
                nresults as usize
             };
-            for i in 0..nresults as usize {
+            for i in 0..nresults {
                if let Err(e) = match results.get(i) {
                   Some(r) => r.push_into_stack_multi(state),
                   None => mlua::Value::Nil.push_into_stack_multi(state),

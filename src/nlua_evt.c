@@ -152,7 +152,6 @@ int event_runFunc( unsigned int eventid, const char *func, int nargs )
       ret = 2;
       event_remove( ev->id );
    }
-
    return ret;
 }
 
