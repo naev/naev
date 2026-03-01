@@ -618,8 +618,8 @@ static int cust_update( double dt, void *data )
    if ( nlua_pcall( cf->env, 1, 0 ) ) {
       cf->done = 1;
       NLUA_WARN( L, _( "Custom dialogue internal error: %s" ),
-                 lua_tostring( L, -1 ) );
-      lua_pop( L, 1 );
+                 luaL_tolstring( L, -1, NULL ) );
+      lua_pop( L, 2 );
       return 1;
    }
    /* Check if done. */
@@ -642,8 +642,8 @@ static void cust_render( double x, double y, double w, double h, void *data )
    if ( nlua_pcall( cf->env, 4, 0 ) ) {
       cf->done = 1;
       NLUA_WARN( L, _( "Custom dialogue internal error: %s" ),
-                 lua_tostring( L, -1 ) );
-      lua_pop( L, 1 );
+                 luaL_tolstring( L, -1, NULL ) );
+      lua_pop( L, 2 );
    }
 }
 static int cust_event( unsigned int wid, SDL_Event *event, void *data )
@@ -703,8 +703,8 @@ static int cust_key( SDL_Keycode key, SDL_Keymod mod, int pressed, int isrepeat,
    if ( nlua_pcall( cf->env, 4, 1 ) ) {
       cf->done = 1;
       NLUA_WARN( L, _( "Custom dialogue internal error: %s" ),
-                 lua_tostring( L, -1 ) );
-      lua_pop( L, 1 );
+                 luaL_tolstring( L, -1, NULL ) );
+      lua_pop( L, 2 );
       return 0;
    }
    b = lua_toboolean( L, -1 );
@@ -720,8 +720,8 @@ static int cust_text( const char *str, custom_functions_t *cf )
    if ( nlua_pcall( cf->env, 1, 1 ) ) {
       cf->done = 1;
       NLUA_WARN( L, _( "Custom dialogue internal error: %s" ),
-                 lua_tostring( L, -1 ) );
-      lua_pop( L, 1 );
+                 luaL_tolstring( L, -1, NULL ) );
+      lua_pop( L, 2 );
       return 0;
    }
    b = lua_toboolean( L, -1 );
@@ -755,8 +755,8 @@ static int cust_mouse( int type, int button, double x, double y,
    if ( nlua_pcall( cf->env, nargs, 1 ) ) {
       cf->done = 1;
       NLUA_WARN( L, _( "Custom dialogue internal error: %s" ),
-                 lua_tostring( L, -1 ) );
-      lua_pop( L, 1 );
+                 luaL_tolstring( L, -1, NULL ) );
+      lua_pop( L, 2 );
       return 0;
    }
    b = lua_toboolean( L, -1 );
@@ -778,8 +778,8 @@ static int cust_event_window( Uint32 event, Sint32 w, Sint32 h,
    if ( nlua_pcall( cf->env, 2, 1 ) ) {
       cf->done = 1;
       NLUA_WARN( L, _( "Custom dialogue internal error: %s" ),
-                 lua_tostring( L, -1 ) );
-      lua_pop( L, 1 );
+                 luaL_tolstring( L, -1, NULL ) );
+      lua_pop( L, 2 );
       return 0;
    }
    b = lua_toboolean( L, -1 );
