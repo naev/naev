@@ -275,7 +275,7 @@ impl UserData for LuaShader {
       methods.add_method_mut(
          "sendRaw",
          |_, this, (name, args): (BorrowedStr, mlua::MultiValue)| -> mlua::Result<()> {
-            this.send_uniform(&*name, args, true)
+            this.send_uniform(&name, args, true)
          },
       );
       /*@

@@ -306,8 +306,8 @@ impl UserData for LuaGfx {
             };
 
             let uniform = luashader::UniformBlock {
-               view_space_from_local: transform_texture.into(),
-               clip_space_from_local: transform.into(),
+               view_space_from_local: transform_texture,
+               clip_space_from_local: transform,
                constant_colour: colour.into(),
                love_screensize: Vector4::new(w, h, 1.0, 0.0),
             };
@@ -1014,7 +1014,7 @@ impl UserData for LuaGfx {
             (
                naevc::gl_screen.major as i32,
                naevc::gl_screen.minor as i32,
-               naevc::gl_screen.glsl as i32,
+               naevc::gl_screen.glsl,
             )
          };
          Ok((major, minor, glsl))
