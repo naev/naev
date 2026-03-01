@@ -417,7 +417,7 @@ impl NLua {
       env: mlua::Table,
       func: &mlua::Function,
       args: impl IntoLuaMulti,
-   ) -> Result<R> {
+   ) -> mlua::Result<R> {
       let globals = self.lua.globals();
       let prev_env: Option<mlua::Table> = globals.raw_get(ENV)?;
       globals.raw_set(ENV, env)?;
@@ -506,7 +506,7 @@ impl LuaEnv {
       lua: &NLua,
       func: &mlua::Function,
       args: impl IntoLuaMulti,
-   ) -> Result<R> {
+   ) -> mlua::Result<R> {
       lua.environment_call(self.table.clone(), func, args)
    }
 
@@ -687,7 +687,7 @@ pub extern "C-unwind" fn nlua_loadStandard(env: *mut LuaEnv) -> c_int {
 // Note that nresults not supported from Rust to C
 #[unsafe(no_mangle)]
 pub extern "C-unwind" fn nlua_pcall(env: *const LuaEnv, nargs: c_int, nresults: c_int) -> c_int {
-   fn wrap(env: *const LuaEnv, nargs: c_int, nresults: c_int) -> mlua::Result<()> {
+   fn wrap(env: *const LuaEnv, nargs: c_int, nresults: c_int) -> mlua::Result<bool> {
       let env = unsafe { &*env };
       let lua = &NLUA;
       let mut args = unsafe {
@@ -701,7 +701,20 @@ pub extern "C-unwind" fn nlua_pcall(env: *const LuaEnv, nargs: c_int, nresults: 
       }?;
       let func = args.pop_front().context("no function passed")?;
       let func = func.as_function().context("not a function")?;
-      let results: mlua::MultiValue = env.call(lua, func, args)?;
+      let results: mlua::MultiValue = match env.call(lua, func, args) {
+         Ok(results) => results,
+         // TODO maybe use some other type of error in the future?
+         Err(mlua::Error::RuntimeError(s)) => {
+            if s.starts_with("__done__") {
+               return Ok(true);
+            } else {
+               return Err(mlua::Error::RuntimeError(s));
+            }
+         }
+         Err(e) => {
+            return Err(e.into());
+         }
+      };
       unsafe {
          lua.lua.exec_raw_lua(|state| {
             let nresults = if nresults < 0 {
@@ -719,7 +732,7 @@ pub extern "C-unwind" fn nlua_pcall(env: *const LuaEnv, nargs: c_int, nresults: 
             }
          });
       }
-      Ok(())
+      Ok(false)
    }
    if env.is_null() {
       warn!("null env");
@@ -731,7 +744,15 @@ pub extern "C-unwind" fn nlua_pcall(env: *const LuaEnv, nargs: c_int, nresults: 
       prev_env
    };
    let ret = match wrap(env, nargs, nresults) {
-      Ok(()) => 0,
+      Ok(false) => 0,
+      Ok(true) => {
+         unsafe {
+            NLUA.lua.exec_raw_lua(|state| {
+               mlua::ffi::lua_pushstring(state.state(), c"__done__".as_ptr());
+            });
+         }
+         1
+      }
       Err(e) => {
          unsafe {
             NLUA.lua.exec_raw_lua(|state| {

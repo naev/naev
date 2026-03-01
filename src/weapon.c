@@ -1790,8 +1790,8 @@ static void weapon_miss( Weapon *w )
       lua_pushoutfit( naevL, w->outfit );
       if ( nlua_pcall( outfit_luaEnv( w->outfit ), 4, 0 ) ) { /* */
          WARN( _( "Outfit '%s' -> '%s':\n%s" ), outfit_name( w->outfit ),
-               "onmiss", lua_tostring( naevL, -1 ) );
-         lua_pop( naevL, 1 );
+               "onmiss", luaL_tolstring( naevL, -1, NULL ) );
+         lua_pop( naevL, 2 );
       }
    }
 

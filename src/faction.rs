@@ -606,7 +606,7 @@ impl Faction {
    fn text_rank(&self, value: Option<f32>) -> Result<String> {
       if let Some(api) = &self.api {
          let value = value.unwrap_or(self.player());
-         api.lua_env.call::<String>(&NLUA, &api.text_rank, value)
+         Ok(api.lua_env.call::<String>(&NLUA, &api.text_rank, value)?)
       } else {
          Ok(String::from("???"))
       }

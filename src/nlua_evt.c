@@ -126,15 +126,14 @@ int event_runFunc( unsigned int eventid, const char *func, int nargs )
 
    ret = nlua_pcall( ev->env, nargs, 0 );
    if ( ret != 0 ) { /* error has occurred */
-      const char *err =
-         ( lua_isstring( naevL, -1 ) ) ? lua_tostring( naevL, -1 ) : NULL;
+      const char *err = luaL_tolstring( naevL, -1, NULL );
       if ( ( err == NULL ) || ( strcmp( err, NLUA_DONE ) != 0 ) ) {
          WARN( _( "Event '%s' -> '%s': %s" ), event_getData( ev->id ), func,
                ( err ) ? err : _( "unknown error" ) );
          ret = -1;
       } else
          ret = 1;
-      lua_pop( naevL, 1 );
+      lua_pop( naevL, 2 );
    }
 
    /* Time to remove the event. */
