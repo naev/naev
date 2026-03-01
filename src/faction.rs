@@ -1783,9 +1783,9 @@ impl UserData for FactionRef {
                      allies,
                      enemies,
                      // TODO more stuff
-                     f_static: base.f_static,
                      tags: base.tags.clone(),
                      f_dynamic: true,
+                     f_static: true,
                      ..Default::default()
                   },
                   fct.api.clone(),
