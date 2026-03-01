@@ -506,7 +506,7 @@ pub fn open_time(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub extern "C" fn lua_istime(L: *mut mlua::lua_State, idx: c_int) -> c_int {
+pub extern "C-unwind" fn lua_istime(L: *mut mlua::lua_State, idx: c_int) -> c_int {
    unsafe {
       let idx = ffi::lua_absindex(L, idx);
       ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"get_time".as_ptr());
@@ -519,7 +519,7 @@ pub extern "C" fn lua_istime(L: *mut mlua::lua_State, idx: c_int) -> c_int {
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub extern "C" fn lua_pushtime(L: *mut mlua::lua_State, nt: naevc::ntime_t) {
+pub extern "C-unwind" fn lua_pushtime(L: *mut mlua::lua_State, nt: naevc::ntime_t) {
    unsafe {
       ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"push_time".as_ptr());
       ffi::lua_pushinteger(L, nt);
@@ -529,7 +529,7 @@ pub extern "C" fn lua_pushtime(L: *mut mlua::lua_State, nt: naevc::ntime_t) {
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub extern "C" fn luaL_validtime(L: *mut mlua::lua_State, idx: c_int) -> naevc::ntime_t {
+pub extern "C-unwind" fn luaL_validtime(L: *mut mlua::lua_State, idx: c_int) -> naevc::ntime_t {
    unsafe {
       let idx = ffi::lua_absindex(L, idx);
       ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"get_time".as_ptr());

@@ -1211,7 +1211,7 @@ impl Flags {
 macro_rules! capi_tex {
    ($funcname: ident, $field: tt) => {
       #[unsafe(no_mangle)]
-      pub extern "C" fn $funcname(ctex: *mut Texture) -> c_double {
+      pub extern "C-unwind" fn $funcname(ctex: *mut Texture) -> c_double {
          if ctex.is_null() {
             warn!("Received NULL texture!");
             return 0.0;
@@ -1224,7 +1224,7 @@ macro_rules! capi_tex {
 macro_rules! capi {
    ($funcname: ident, $field: tt) => {
       #[unsafe(no_mangle)]
-      pub extern "C" fn $funcname(ctex: *mut Texture) -> c_double {
+      pub extern "C-unwind" fn $funcname(ctex: *mut Texture) -> c_double {
          if ctex.is_null() {
             warn!("Received NULL texture!");
             return 0.0;
@@ -1246,7 +1246,7 @@ capi!(tex_srh, srh);
 capi_tex!(tex_vmax, vmax);
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gl_texExistsPath(cpath: *const c_char) -> c_int {
+pub extern "C-unwind" fn gl_texExistsPath(cpath: *const c_char) -> c_int {
    let path = &*unsafe { CStr::from_ptr(cpath) }.to_string_lossy();
    if ndata::exists(path) {
       return 1;
@@ -1263,7 +1263,7 @@ pub extern "C" fn gl_texExistsPath(cpath: *const c_char) -> c_int {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gl_texExistsOrCreate(
+pub extern "C-unwind" fn gl_texExistsOrCreate(
    cpath: *const c_char,
    cflags: c_uint,
    sx: c_int,
@@ -1315,7 +1315,7 @@ pub extern "C" fn gl_texExistsOrCreate(
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gl_loadImageData(
+pub extern "C-unwind" fn gl_loadImageData(
    data: *const c_float,
    w: c_int,
    h: c_int,
@@ -1373,13 +1373,13 @@ pub extern "C" fn gl_loadImageData(
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gl_newImage(cpath: *const c_char, flags: c_uint) -> *mut Texture {
+pub extern "C-unwind" fn gl_newImage(cpath: *const c_char, flags: c_uint) -> *mut Texture {
    gl_newSprite(cpath, 1, 1, flags)
 }
 
 /// Like gl_tryNewImage, but ignores errors.
 #[unsafe(no_mangle)]
-pub extern "C" fn gl_tryNewImage(cpath: *const c_char, cflags: c_uint) -> *mut Texture {
+pub extern "C-unwind" fn gl_tryNewImage(cpath: *const c_char, cflags: c_uint) -> *mut Texture {
    let ctx = Context::get(); /* Lock early. */
    let path = unsafe { CStr::from_ptr(cpath) };
    let flags = Flags::from(cflags);
@@ -1407,7 +1407,7 @@ pub extern "C" fn gl_tryNewImage(cpath: *const c_char, cflags: c_uint) -> *mut T
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gl_newSprite(
+pub extern "C-unwind" fn gl_newSprite(
    cpath: *const c_char,
    sx: c_int,
    sy: c_int,
@@ -1446,7 +1446,7 @@ pub extern "C" fn gl_newSprite(
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gl_newSpriteRWops(
+pub extern "C-unwind" fn gl_newSpriteRWops(
    cpath: *const c_char,
    rw: *mut naevc::SDL_IOStream,
    sx: c_int,
@@ -1509,7 +1509,7 @@ pub extern "C" fn gl_newSpriteRWops(
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gl_dupTexture(ctex: *mut Texture) -> *mut Texture {
+pub extern "C-unwind" fn gl_dupTexture(ctex: *mut Texture) -> *mut Texture {
    if ctex.is_null() {
       return ctex;
    }
@@ -1525,7 +1525,7 @@ pub extern "C" fn gl_dupTexture(ctex: *mut Texture) -> *mut Texture {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gl_rawTexture(
+pub extern "C-unwind" fn gl_rawTexture(
    cpath: *mut c_char,
    tex: naevc::GLuint,
    w: c_double,
@@ -1576,7 +1576,7 @@ pub extern "C" fn gl_rawTexture(
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gl_freeTexture(ctex: *mut Texture) {
+pub extern "C-unwind" fn gl_freeTexture(ctex: *mut Texture) {
    if !ctex.is_null() {
       let _ = unsafe { Box::from_raw(ctex) };
    }
@@ -1584,19 +1584,19 @@ pub extern "C" fn gl_freeTexture(ctex: *mut Texture) {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn tex_tex(ctex: *mut Texture) -> naevc::GLuint {
+pub extern "C-unwind" fn tex_tex(ctex: *mut Texture) -> naevc::GLuint {
    let tex = unsafe { &*ctex };
    tex.texture.texture.0.into()
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn tex_sampler(ctex: *mut Texture) -> naevc::GLuint {
+pub extern "C-unwind" fn tex_sampler(ctex: *mut Texture) -> naevc::GLuint {
    let tex = unsafe { &*ctex };
    tex.sampler.0.into()
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn tex_name(ctex: *mut Texture) -> *const c_char {
+pub extern "C-unwind" fn tex_name(ctex: *mut Texture) -> *const c_char {
    let tex = unsafe { &*ctex };
    match &tex.name {
       Some(name) => name.as_ptr(),
@@ -1605,25 +1605,25 @@ pub extern "C" fn tex_name(ctex: *mut Texture) -> *const c_char {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn tex_isSDF(ctex: *mut Texture) -> c_int {
+pub extern "C-unwind" fn tex_isSDF(ctex: *mut Texture) -> c_int {
    let tex = unsafe { &*ctex };
    tex.texture.sdf as i32
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gl_isTrans(_ctex: *mut Texture, _x: c_int, _y: c_int) -> c_int {
+pub extern "C-unwind" fn gl_isTrans(_ctex: *mut Texture, _x: c_int, _y: c_int) -> c_int {
    // TODO
    0
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn tex_hasTrans(_ctex: *mut Texture) -> c_int {
+pub extern "C-unwind" fn tex_hasTrans(_ctex: *mut Texture) -> c_int {
    // TODO
    0
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn tex_setTex(ctex: *mut Texture, texture: naevc::GLuint) {
+pub extern "C-unwind" fn tex_setTex(ctex: *mut Texture, texture: naevc::GLuint) {
    if ctex.is_null() {
       return;
    }
@@ -1633,7 +1633,7 @@ pub extern "C" fn tex_setTex(ctex: *mut Texture, texture: naevc::GLuint) {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gl_renderTexture(
+pub extern "C-unwind" fn gl_renderTexture(
    ctex: *mut Texture,
    x: c_double,
    y: c_double,
@@ -1703,7 +1703,7 @@ pub extern "C" fn gl_renderTexture(
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gl_renderSDF(
+pub extern "C-unwind" fn gl_renderSDF(
    ctex: *mut Texture,
    x: c_double,
    y: c_double,
@@ -1763,7 +1763,7 @@ pub extern "C" fn gl_renderSDF(
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gl_renderScaleAspectMagic(
+pub extern "C-unwind" fn gl_renderScaleAspectMagic(
    ctex: *mut Texture,
    bx: c_double,
    by: c_double,
@@ -2085,7 +2085,7 @@ pub fn open_texture(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub extern "C" fn luaL_checktex(L: *mut mlua::lua_State, idx: c_int) -> *mut Texture {
+pub extern "C-unwind" fn luaL_checktex(L: *mut mlua::lua_State, idx: c_int) -> *mut Texture {
    unsafe {
       let tex = lua_totex(L, idx);
       if tex.is_null() {
@@ -2097,13 +2097,13 @@ pub extern "C" fn luaL_checktex(L: *mut mlua::lua_State, idx: c_int) -> *mut Tex
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub extern "C" fn lua_istex(L: *mut mlua::lua_State, idx: c_int) -> c_int {
+pub extern "C-unwind" fn lua_istex(L: *mut mlua::lua_State, idx: c_int) -> c_int {
    !lua_totex(L, idx).is_null() as c_int
 }
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub extern "C" fn lua_pushtex(L: *mut mlua::lua_State, tex: *mut Texture) {
+pub extern "C-unwind" fn lua_pushtex(L: *mut mlua::lua_State, tex: *mut Texture) {
    unsafe {
       ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"push_texture".as_ptr());
       ffi::lua_pushlightuserdata(L, tex as *mut c_void);
@@ -2113,7 +2113,7 @@ pub extern "C" fn lua_pushtex(L: *mut mlua::lua_State, tex: *mut Texture) {
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub extern "C" fn lua_totex(L: *mut mlua::lua_State, idx: c_int) -> *mut Texture {
+pub extern "C-unwind" fn lua_totex(L: *mut mlua::lua_State, idx: c_int) -> *mut Texture {
    unsafe {
       let idx = ffi::lua_absindex(L, idx);
       ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"get_texture".as_ptr());

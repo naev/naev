@@ -305,7 +305,10 @@ static_assertions::assert_eq_size!(Transform2, naevc::mat3);
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub extern "C" fn luaL_checktransform(L: *mut mlua::lua_State, idx: c_int) -> *mut Transform2 {
+pub extern "C-unwind" fn luaL_checktransform(
+   L: *mut mlua::lua_State,
+   idx: c_int,
+) -> *mut Transform2 {
    unsafe {
       let transform = lua_totransform(L, idx);
       if transform.is_null() {
@@ -317,13 +320,13 @@ pub extern "C" fn luaL_checktransform(L: *mut mlua::lua_State, idx: c_int) -> *m
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub extern "C" fn lua_istransform(L: *mut mlua::lua_State, idx: c_int) -> c_int {
+pub extern "C-unwind" fn lua_istransform(L: *mut mlua::lua_State, idx: c_int) -> c_int {
    !lua_totransform(L, idx).is_null() as c_int
 }
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub extern "C" fn lua_pushtransform(L: *mut mlua::lua_State, m: naevc::mat4) {
+pub extern "C-unwind" fn lua_pushtransform(L: *mut mlua::lua_State, m: naevc::mat4) {
    unsafe {
       ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"push_transform".as_ptr());
       for i in 0..6 {
@@ -335,7 +338,7 @@ pub extern "C" fn lua_pushtransform(L: *mut mlua::lua_State, m: naevc::mat4) {
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub extern "C" fn lua_totransform(L: *mut mlua::lua_State, idx: c_int) -> *mut Transform2 {
+pub extern "C-unwind" fn lua_totransform(L: *mut mlua::lua_State, idx: c_int) -> *mut Transform2 {
    unsafe {
       let idx = ffi::lua_absindex(L, idx);
       ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"get_transform".as_ptr());

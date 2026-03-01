@@ -1908,7 +1908,10 @@ pub fn open_faction(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub extern "C" fn luaL_checkfaction(L: *mut mlua::lua_State, idx: c_int) -> naevc::FactionRef {
+pub extern "C-unwind" fn luaL_checkfaction(
+   L: *mut mlua::lua_State,
+   idx: c_int,
+) -> naevc::FactionRef {
    unsafe {
       let fct = lua_tofaction(L, idx);
       if fct == FactionRef::null().as_ffi() {
@@ -1920,7 +1923,10 @@ pub extern "C" fn luaL_checkfaction(L: *mut mlua::lua_State, idx: c_int) -> naev
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub extern "C" fn luaL_validfaction(L: *mut mlua::lua_State, idx: c_int) -> naevc::FactionRef {
+pub extern "C-unwind" fn luaL_validfaction(
+   L: *mut mlua::lua_State,
+   idx: c_int,
+) -> naevc::FactionRef {
    unsafe {
       if ffi::lua_isstring(L, idx) != 0 {
          let ptr = ffi::lua_tostring(L, idx);
@@ -1943,13 +1949,13 @@ pub extern "C" fn luaL_validfaction(L: *mut mlua::lua_State, idx: c_int) -> naev
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub extern "C" fn lua_isfaction(L: *mut mlua::lua_State, idx: c_int) -> c_int {
+pub extern "C-unwind" fn lua_isfaction(L: *mut mlua::lua_State, idx: c_int) -> c_int {
    (lua_tofaction(L, idx) != FactionRef::null().as_ffi()) as c_int
 }
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub extern "C" fn lua_pushfaction(L: *mut mlua::lua_State, fct: naevc::FactionRef) {
+pub extern "C-unwind" fn lua_pushfaction(L: *mut mlua::lua_State, fct: naevc::FactionRef) {
    unsafe {
       ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"push_faction".as_ptr());
       ffi::lua_pushinteger(L, fct);
@@ -1959,7 +1965,7 @@ pub extern "C" fn lua_pushfaction(L: *mut mlua::lua_State, fct: naevc::FactionRe
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub extern "C" fn lua_tofaction(L: *mut mlua::lua_State, idx: c_int) -> naevc::FactionRef {
+pub extern "C-unwind" fn lua_tofaction(L: *mut mlua::lua_State, idx: c_int) -> naevc::FactionRef {
    unsafe {
       let idx = ffi::lua_absindex(L, idx);
       ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"get_faction".as_ptr());

@@ -505,7 +505,10 @@ pub fn open_canvas(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub extern "C" fn luaL_checkcanvas(L: *mut mlua::lua_State, idx: c_int) -> *mut FramebufferWrap {
+pub extern "C-unwind" fn luaL_checkcanvas(
+   L: *mut mlua::lua_State,
+   idx: c_int,
+) -> *mut FramebufferWrap {
    unsafe {
       let canvas = lua_tocanvas(L, idx);
       if canvas.is_null() {
@@ -517,13 +520,13 @@ pub extern "C" fn luaL_checkcanvas(L: *mut mlua::lua_State, idx: c_int) -> *mut 
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub extern "C" fn lua_iscanvas(L: *mut mlua::lua_State, idx: c_int) -> c_int {
+pub extern "C-unwind" fn lua_iscanvas(L: *mut mlua::lua_State, idx: c_int) -> c_int {
    !lua_tocanvas(L, idx).is_null() as c_int
 }
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub extern "C" fn lua_pushcanvas(L: *mut mlua::lua_State, canvas: *mut FramebufferWrap) {
+pub extern "C-unwind" fn lua_pushcanvas(L: *mut mlua::lua_State, canvas: *mut FramebufferWrap) {
    unsafe {
       ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"push_canvas".as_ptr());
       ffi::lua_pushlightuserdata(L, canvas as *mut c_void);
@@ -533,7 +536,7 @@ pub extern "C" fn lua_pushcanvas(L: *mut mlua::lua_State, canvas: *mut Framebuff
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub extern "C" fn lua_tocanvas(L: *mut mlua::lua_State, idx: c_int) -> *mut FramebufferWrap {
+pub extern "C-unwind" fn lua_tocanvas(L: *mut mlua::lua_State, idx: c_int) -> *mut FramebufferWrap {
    unsafe {
       let idx = ffi::lua_absindex(L, idx);
       ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"get_canvas".as_ptr());
@@ -549,7 +552,7 @@ pub extern "C" fn lua_tocanvas(L: *mut mlua::lua_State, idx: c_int) -> *mut Fram
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub extern "C" fn luaL_checkcanvasfbo(L: *mut mlua::lua_State, idx: c_int) -> i32 {
+pub extern "C-unwind" fn luaL_checkcanvasfbo(L: *mut mlua::lua_State, idx: c_int) -> i32 {
    unsafe {
       let idx = ffi::lua_absindex(L, idx);
       ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"get_canvas_fbo".as_ptr());
@@ -564,7 +567,7 @@ pub extern "C" fn luaL_checkcanvasfbo(L: *mut mlua::lua_State, idx: c_int) -> i3
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn canvas_new(w: c_int, h: c_int) -> *const Framebuffer {
+pub extern "C-unwind" fn canvas_new(w: c_int, h: c_int) -> *const Framebuffer {
    static CANVAS_ID: AtomicU32 = AtomicU32::new(1);
    let id = CANVAS_ID
       .fetch_update(Ordering::SeqCst, Ordering::SeqCst, |x| Some(x + 1))
@@ -584,13 +587,13 @@ pub extern "C" fn canvas_new(w: c_int, h: c_int) -> *const Framebuffer {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn canvas_fbo(fb: *const Framebuffer) -> naevc::GLuint {
+pub extern "C-unwind" fn canvas_fbo(fb: *const Framebuffer) -> naevc::GLuint {
    let fb = unsafe { &*fb };
    fb.framebuffer.0.into()
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn canvas_tex(fb: *const Framebuffer) -> *mut Texture {
+pub extern "C-unwind" fn canvas_tex(fb: *const Framebuffer) -> *mut Texture {
    let fb = unsafe { &*fb };
    if let Some(tex) = &fb.texture
       && let Ok(tex) = tex.try_clone()
@@ -602,6 +605,6 @@ pub extern "C" fn canvas_tex(fb: *const Framebuffer) -> *mut Texture {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn canvas_reset() {
+pub extern "C-unwind" fn canvas_reset() {
    reset();
 }
