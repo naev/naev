@@ -3002,6 +3002,9 @@ dat/events/neutral/kidnapped.lua
 dat/events/neutral/levo_pirates.lua
 dat/events/neutral/levo_pirates_epilogue.lua
 dat/events/neutral/majesteka_stowaways.lua
+dat/events/neutral/p1587_dragon_awake.lua
+dat/events/neutral/p1587_dragon_epilogue.lua
+dat/events/neutral/p1587_dragon_intro.lua
 dat/events/neutral/quai_pirates.lua
 dat/events/neutral/refuel.lua
 dat/events/neutral/shadow_comm.lua
