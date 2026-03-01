@@ -649,6 +649,10 @@ pub extern "C-unwind" fn nlua_freeEnv(env: *mut LuaEnv) {
 
 #[unsafe(no_mangle)]
 pub extern "C-unwind" fn nlua_pushenv(lua: *mut mlua::lua_State, env: *const LuaEnv) {
+   if env.is_null() {
+      warn!("null env");
+      return;
+   }
    let env = unsafe { &*env };
    unsafe {
       mlua::ffi::lua_rawgeti(lua, mlua::ffi::LUA_REGISTRYINDEX, env.rk.id().into());
@@ -687,8 +691,13 @@ pub extern "C-unwind" fn nlua_pcall(env: *const LuaEnv, nargs: c_int, nresults: 
       let env = unsafe { &*env };
       let lua = &NLUA;
       let mut args = unsafe {
-         lua.lua
-            .exec_raw_lua(|state| mlua::MultiValue::from_stack_multi(nargs + 1, state))
+         lua.lua.exec_raw_lua(|state| {
+            //dbg!("pre-args", nargs, mlua::ffi::lua_gettop( state.state() ) );
+            let args = mlua::MultiValue::from_stack_multi(nargs + 1, state);
+            mlua::ffi::lua_pop(state.state(), nargs + 1);
+            //dbg!("post-args", mlua::ffi::lua_gettop( state.state() ) );
+            args
+         })
       }?;
       let func = args.pop_front().context("no function passed")?;
       let func = func.as_function().context("not a function")?;
@@ -712,7 +721,16 @@ pub extern "C-unwind" fn nlua_pcall(env: *const LuaEnv, nargs: c_int, nresults: 
       }
       Ok(())
    }
-   match wrap(env, nargs, nresults) {
+   if env.is_null() {
+      warn!("null env");
+      return 0;
+   }
+   let prev_env = unsafe {
+      let prev_env = naevc::__NLUA_CURENV;
+      naevc::__NLUA_CURENV = env as *const naevc::nlua_env;
+      prev_env
+   };
+   let ret = match wrap(env, nargs, nresults) {
       Ok(()) => 0,
       Err(e) => {
          unsafe {
@@ -724,5 +742,9 @@ pub extern "C-unwind" fn nlua_pcall(env: *const LuaEnv, nargs: c_int, nresults: 
          }
          -1
       }
+   };
+   unsafe {
+      naevc::__NLUA_CURENV = prev_env;
    }
+   ret
 }
