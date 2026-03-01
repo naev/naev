@@ -1,4 +1,5 @@
 //use mlua::prelude::*;
+use anyhow::Context as AnyhowContext;
 use anyhow::Result;
 use constcat::concat;
 use mlua::{FromLua, FromLuaMulti, IntoLua, IntoLuaMulti};
@@ -605,7 +606,7 @@ use std::os::raw::{c_char, c_int};
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn luaL_tolstring(
+pub unsafe extern "C-unwind" fn luaL_tolstring(
    L: *mut mlua::lua_State,
    idx: c_int,
    len: *mut usize,
@@ -617,7 +618,7 @@ use std::ffi::CStr;
 
 // C API
 #[unsafe(no_mangle)]
-pub extern "C" fn nlua_newEnv(name: *const c_char) -> *mut LuaEnv {
+pub extern "C-unwind" fn nlua_newEnv(name: *const c_char) -> *mut LuaEnv {
    let ptr = unsafe { CStr::from_ptr(name) };
    let name = ptr.to_str().unwrap();
    let lua = &NLUA;
@@ -631,7 +632,7 @@ pub extern "C" fn nlua_newEnv(name: *const c_char) -> *mut LuaEnv {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn nlua_dupEnv(env: *const LuaEnv) -> *mut LuaEnv {
+pub extern "C-unwind" fn nlua_dupEnv(env: *const LuaEnv) -> *mut LuaEnv {
    if env.is_null() {
       return std::ptr::null_mut();
    }
@@ -640,14 +641,14 @@ pub extern "C" fn nlua_dupEnv(env: *const LuaEnv) -> *mut LuaEnv {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn nlua_freeEnv(env: *mut LuaEnv) {
+pub extern "C-unwind" fn nlua_freeEnv(env: *mut LuaEnv) {
    if !env.is_null() {
       let _ = unsafe { Box::from_raw(env) };
    }
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn nlua_pushenv(lua: *mut mlua::lua_State, env: *const LuaEnv) {
+pub extern "C-unwind" fn nlua_pushenv(lua: *mut mlua::lua_State, env: *const LuaEnv) {
    let env = unsafe { &*env };
    unsafe {
       mlua::ffi::lua_rawgeti(lua, mlua::ffi::LUA_REGISTRYINDEX, env.rk.id().into());
@@ -655,7 +656,7 @@ pub extern "C" fn nlua_pushenv(lua: *mut mlua::lua_State, env: *const LuaEnv) {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn nlua_resize() {
+pub extern "C-unwind" fn nlua_resize() {
    let lua = &NLUA;
    let (screen_w, screen_h) = unsafe { (naevc::gl_screen.w, naevc::gl_screen.h) };
    if let Err(e) = lua.resize(screen_w, screen_h) {
@@ -664,7 +665,7 @@ pub extern "C" fn nlua_resize() {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn nlua_loadStandard(env: *mut LuaEnv) -> c_int {
+pub extern "C-unwind" fn nlua_loadStandard(env: *mut LuaEnv) -> c_int {
    if env.is_null() {
       return -1;
    }
@@ -674,6 +675,51 @@ pub extern "C" fn nlua_loadStandard(env: *mut LuaEnv) -> c_int {
       Ok(()) => 0,
       Err(e) => {
          warn_err!(e);
+         -1
+      }
+   }
+}
+
+// Note that nresults not supported from Rust to C
+#[unsafe(no_mangle)]
+pub extern "C-unwind" fn nlua_pcall(env: *const LuaEnv, nargs: c_int, nresults: c_int) -> c_int {
+   fn wrap(env: *const LuaEnv, nargs: c_int, nresults: c_int) -> mlua::Result<()> {
+      let env = unsafe { &*env };
+      let lua = &NLUA;
+      let mut args = unsafe {
+         lua.lua
+            .exec_raw_lua(|state| mlua::MultiValue::from_stack_multi(nargs + 1, state))
+      }?;
+      let func = args.pop_front().context("no function passed")?;
+      let func = func.as_function().context("not a function")?;
+      let results: mlua::MultiValue = env.call(lua, func, args)?;
+      unsafe {
+         lua.lua.exec_raw_lua(|state| {
+            let nresults = if nresults < 0 {
+               results.len()
+            } else {
+               nresults as usize
+            };
+            for i in 0..nresults as usize {
+               if let Err(e) = match results.get(i) {
+                  Some(r) => r.push_into_stack_multi(state),
+                  None => mlua::Value::Nil.push_into_stack_multi(state),
+               } {
+                  warn_err!(e);
+               };
+            }
+         });
+      }
+      Ok(())
+   }
+   match wrap(env, nargs, nresults) {
+      Ok(()) => 0,
+      Err(e) => {
+         unsafe {
+            NLUA.lua.exec_raw_lua(|state| {
+               let _ = e.push_into_stack_multi(state);
+            });
+         }
          -1
       }
    }

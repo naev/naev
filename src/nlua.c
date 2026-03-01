@@ -416,6 +416,7 @@ static int nlua_errTraceInternal( lua_State *L, int idx )
    return 1;
 }
 
+#if 0
 /*
  * @brief Wrapper around `lua_pcall()` that handles errors and environments
  *
@@ -469,6 +470,7 @@ int nlua_pcall( const nlua_env *env, int nargs, int nresults )
 
    return ret;
 }
+#endif
 
 /**
  * @brief Gets the reference of a global in a Lua environment.

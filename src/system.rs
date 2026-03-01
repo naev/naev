@@ -61,6 +61,7 @@ unsafe extern "C-unwind" fn lua_system(lua: *mut mlua::ffi::lua_State) -> i32 {
    }
    1
 }
+
 pub fn to_lua(lua: &mlua::Lua, sys: *const naevc::StarSystem) -> mlua::Result<mlua::Value> {
    let f = match lua.named_registry_value::<mlua::Function>("lua_system") {
       Ok(f) => f,
