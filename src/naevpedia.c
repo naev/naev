@@ -40,8 +40,8 @@ int naevpedia_open( const char *path )
    status = nlua_dobufenv( naevpedia_env, buf, strlen( buf ), buf );
    if ( status ) {
       WARN( _( "Naevpedia '%s' Lua error:\n%s" ), path,
-            lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+            luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
    }
    return 0;
 }

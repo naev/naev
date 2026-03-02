@@ -144,7 +144,8 @@ int comm_openPilot( unsigned int pilot )
          WARN( _( "Error loading file: %s\n"
                   "%s\n"
                   "Most likely Lua file has improper syntax, please check" ),
-               COMM_PATH, lua_tostring( naevL, -1 ) );
+               COMM_PATH, luaL_tolstring( naevL, -1, NULL ) );
+         lua_pop( naevL, 2 );
          free( buf );
          ai_unsetPilot( oldmem );
          return -1;
@@ -158,8 +159,8 @@ int comm_openPilot( unsigned int pilot )
    nlua_getenv( naevL, comm_env, "comm" );
    lua_pushpilot( naevL, p->id );
    if ( nlua_pcall( comm_env, 1, 0 ) ) { /* error has occurred */
-      WARN( _( "Comm: '%s'" ), lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+      WARN( _( "Comm: '%s'" ), luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
    }
 
    ai_unsetPilot( oldmem );
@@ -199,8 +200,8 @@ int comm_openSpob( Spob *spob )
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, spob->lua_comm ); /* f */
       if ( nlua_pcall( spob->lua_env, 0, 1 ) ) {
          WARN( _( "Spob '%s' failed to run '%s':\n%s" ), spob->name, "comm",
-               lua_tostring( naevL, -1 ) );
-         lua_pop( naevL, 1 );
+               luaL_tolstring( naevL, -1, NULL ) );
+         lua_pop( naevL, 2 );
       } else {
          int commed = lua_toboolean( naevL, -1 );
          lua_pop( naevL, 1 );

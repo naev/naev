@@ -181,7 +181,8 @@ static int mission_init( Mission *mission, const MissionData *misn, int genid,
       WARN( _( "Error loading mission file: %s\n"
                "%s\n"
                "Most likely Lua file has improper syntax, please check" ),
-            misn->sourcefile, lua_tostring( naevL, -1 ) );
+            misn->sourcefile, luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
       return -1;
    }
 
@@ -1285,10 +1286,11 @@ static int mission_parseFile( const char *file, MissionData *temp )
    /* Load the chunk. */
    int ret =
       nlua_loadbuffer( naevL, temp->lua, strlen( temp->lua ), temp->name );
-   if ( ret == LUA_ERRSYNTAX )
+   if ( ret == LUA_ERRSYNTAX ) {
       WARN( _( "Mission Lua '%s' syntax error: %s" ), file,
-            lua_tostring( naevL, -1 ) );
-   else
+            luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
+   } else
       temp->chunk = luaL_ref( naevL, LUA_REGISTRYINDEX );
 
    /* Clean up. */

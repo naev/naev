@@ -1210,8 +1210,8 @@ static int playerL_land( lua_State *L )
       lua_pushpilot( naevL, player.p->id );
       if ( nlua_pcall( spob->lua_env, 2, 0 ) ) {
          NLUA_WARN( L, _( "Spob '%s' failed to run '%s':\n%s" ), spob->name,
-                    "land", lua_tostring( naevL, -1 ) );
-         lua_pop( naevL, 1 );
+                    "land", luaL_tolstring( naevL, -1, NULL ) );
+         lua_pop( naevL, 2 );
       }
 
       return 0;

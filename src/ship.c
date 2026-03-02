@@ -1653,8 +1653,8 @@ int ships_load( void )
       /* Run code. */
       if ( nlua_dobufenv( env, dat, sz, s->lua_file ) != 0 ) {
          WARN( _( "Ship '%s' Lua error:\n%s" ), s->name,
-               lua_tostring( naevL, -1 ) );
-         lua_pop( naevL, 1 );
+               luaL_tolstring( naevL, -1, NULL ) );
+         lua_pop( naevL, 2 );
          nlua_freeEnv( s->lua_env );
          free( dat );
          s->lua_env = NULL;

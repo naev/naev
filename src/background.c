@@ -266,8 +266,8 @@ void background_render( double dt )
       lua_pushnumber( naevL, dt ); /* Note that this is real_dt. */
       if ( nlua_pcall( bkg_cur_env, 1, 0 ) ) {
          WARN( _( "Background script 'renderbg' error:\n%s" ),
-               lua_tostring( naevL, -1 ) );
-         lua_pop( naevL, 1 );
+               luaL_tolstring( naevL, -1, NULL ) );
+         lua_pop( naevL, 2 );
       }
    }
 
@@ -278,8 +278,8 @@ void background_render( double dt )
       lua_pushnumber( naevL, dt ); /* Note that this is real_dt. */
       if ( nlua_pcall( bkg_cur_env, 1, 0 ) ) {
          WARN( _( "Background script 'rendermg' error:\n%s" ),
-               lua_tostring( naevL, -1 ) );
-         lua_pop( naevL, 1 );
+               luaL_tolstring( naevL, -1, NULL ) );
+         lua_pop( naevL, 2 );
       }
    }
 
@@ -291,8 +291,8 @@ void background_render( double dt )
       lua_pushnumber( naevL, dt ); /* Note that this is real_dt. */
       if ( nlua_pcall( bkg_cur_env, 1, 0 ) ) {
          WARN( _( "Background script 'renderfg' error:\n%s" ),
-               lua_tostring( naevL, -1 ) );
-         lua_pop( naevL, 1 );
+               luaL_tolstring( naevL, -1, NULL ) );
+         lua_pop( naevL, 2 );
       }
    }
 
@@ -311,8 +311,8 @@ void background_renderOverlay( double dt )
       lua_pushnumber( naevL, dt ); /* Note that this is real_dt. */
       if ( nlua_pcall( bkg_cur_env, 1, 0 ) ) {
          WARN( _( "Background script 'renderov' error:\n%s" ),
-               lua_tostring( naevL, -1 ) );
-         lua_pop( naevL, 1 );
+               luaL_tolstring( naevL, -1, NULL ) );
+         lua_pop( naevL, 2 );
       }
    }
 
@@ -503,7 +503,8 @@ static nlua_env *background_create( const char *name )
       WARN( _( "Error loading background file: %s\n"
                "%s\n"
                "Most likely Lua file has improper syntax, please check" ),
-            path, lua_tostring( naevL, -1 ) );
+            path, luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
       free( buf );
       nlua_freeEnv( env );
       return NULL;
@@ -554,11 +555,10 @@ int background_load( const char *name )
    nlua_getenv( naevL, env, "background" );
    ret = nlua_pcall( env, 0, 0 );
    if ( ret != 0 ) { /* error has occurred */
-      const char *err =
-         ( lua_isstring( naevL, -1 ) ) ? lua_tostring( naevL, -1 ) : NULL;
+      const char *err = luaL_tolstring( naevL, -1, NULL );
       WARN( _( "Background -> 'background' : %s" ),
             ( err ) ? err : _( "unknown error" ) );
-      lua_pop( naevL, 1 );
+      lua_pop( naevL, 2 );
    }
 
    /* See if there are render functions. */

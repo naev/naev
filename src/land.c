@@ -1948,7 +1948,8 @@ static void land_stranded( void )
          WARN( _( "Error loading file: %s\n"
                   "%s\n"
                   "Most likely Lua file has improper syntax, please check" ),
-               RESCUE_PATH, lua_tostring( naevL, -1 ) );
+               RESCUE_PATH, luaL_tolstring( naevL, -1, NULL ) );
+         lua_pop( naevL, 1 );
          free( buf );
          return;
       }
@@ -1960,7 +1961,7 @@ static void land_stranded( void )
    if ( nlua_pcall( rescue_env, 0, 0 ) ) { /* error has occurred */
       WARN( _( "Rescue: '%s' : '%s'" ), "rescue",
             luaL_tolstring( naevL, -1, NULL ) );
-      lua_pop( naevL, 1 );
+      lua_pop( naevL, 2 );
    }
 }
 

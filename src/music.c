@@ -78,8 +78,8 @@ void music_update( double dt )
    lua_pushnumber( naevL, dt );
    if ( nlua_pcall( music_env, 1, 0 ) ) { /* error has occurred */
       WARN( _( "Error while running music function '%s': %s" ), "update",
-            lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+            luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
    }
 
    NTracingZoneEnd( _ctx );
@@ -104,8 +104,8 @@ static int music_runLua( const char *situation )
       lua_pushnil( naevL );
    if ( nlua_pcall( music_env, 1, 0 ) ) { /* error has occurred */
       WARN( _( "Error while running music function '%s': %s" ), "choose",
-            lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+            luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
       return -1;
    }
 
@@ -209,8 +209,8 @@ int music_volume( double vol )
    lua_pushnumber( naevL, music_vol );
    if ( nlua_pcall( music_env, 1, 0 ) ) { /* error has occurred */
       WARN( _( "Error while running music function '%s': %s" ), "volume",
-            lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+            luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
       return -1;
    }
    return 0;
@@ -252,8 +252,8 @@ int music_play( const char *filename )
       lua_pushnil( naevL );
    if ( nlua_pcall( music_env, 1, 0 ) ) { /* error has occurred */
       WARN( _( "Error while running music function '%s': %s" ), "play",
-            lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+            luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
       return -1;
    }
    return 0;
@@ -275,8 +275,8 @@ int music_stop( int disable )
    lua_pushboolean( naevL, disable );
    if ( nlua_pcall( music_env, 1, 0 ) ) { /* error has occurred */
       WARN( _( "Error while running music function '%s': %s" ), "stop",
-            lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+            luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
       return -1;
    }
    return 0;
@@ -295,8 +295,8 @@ int music_pause( int disable )
    lua_pushboolean( naevL, disable );
    if ( nlua_pcall( music_env, 1, 0 ) ) { /* error has occurred */
       WARN( _( "Error while running music function '%s': %s" ), "pause",
-            lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+            luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
       return -1;
    }
    return 0;
@@ -314,8 +314,8 @@ int music_resume( void )
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, music_lua_resume );
    if ( nlua_pcall( music_env, 0, 0 ) ) { /* error has occurred */
       WARN( _( "Error while running music function '%s': %s" ), "resume",
-            lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+            luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
       return -1;
    }
    return 0;
@@ -336,8 +336,8 @@ MusicInfo_t *music_info( void )
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, music_lua_info );
    if ( nlua_pcall( music_env, 0, 3 ) ) { /* error has occurred */
       WARN( _( "Error while running music function '%s': %s" ), "info",
-            lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+            luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
       return NULL;
    }
 
@@ -380,7 +380,8 @@ static int music_luaInit( void )
       WARN( _( "Error loading music file: %s\n"
                "%s\n"
                "Most likely Lua file has improper syntax, please check" ),
-            MUSIC_LUA_PATH, lua_tostring( naevL, -1 ) );
+            MUSIC_LUA_PATH, luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 1 );
       return -1;
    }
    free( buf );
@@ -458,8 +459,8 @@ void music_reset( void )
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, music_lua_reset );
    if ( nlua_pcall( music_env, 0, 0 ) ) { /* error has occurred */
       WARN( _( "Error while running music function '%s': %s" ), "reset",
-            lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+            luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
       return;
    }
 }

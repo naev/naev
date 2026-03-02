@@ -1790,8 +1790,8 @@ int player_land( int loud )
       lua_pushpilot( naevL, player.p->id );
       if ( nlua_pcall( spob->lua_env, 2, 0 ) ) {
          WARN( _( "Spob '%s' failed to run '%s':\n%s" ), spob->name, "land",
-               lua_tostring( naevL, -1 ) );
-         lua_pop( naevL, 1 );
+               luaL_tolstring( naevL, -1, NULL ) );
+         lua_pop( naevL, 2 );
       }
 
       return PLAYER_LAND_OK;
@@ -2616,7 +2616,8 @@ void player_scan( void )
          WARN( _( "Error loading file: %s\n"
                   "%s\n"
                   "Most likely Lua file has improper syntax, please check" ),
-               SCAN_PATH, lua_tostring( naevL, -1 ) );
+               SCAN_PATH, luaL_tolstring( naevL, -1, NULL ) );
+         lua_pop( naevL, 2 );
          free( buf );
          return;
       }
@@ -2626,8 +2627,9 @@ void player_scan( void )
    /* Run Lua. */
    nlua_getenv( naevL, scan_env, "scan" );
    if ( nlua_pcall( scan_env, 0, 0 ) ) { /* error has occurred */
-      WARN( _( "Scan: '%s' : '%s'" ), "scan", lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+      WARN( _( "Scan: '%s' : '%s'" ), "scan",
+            luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
    }
 }
 
@@ -3853,8 +3855,9 @@ static void player_runUpdaterLoadIfNecessary( void )
          WARN( _( "Error loading file: %s\n"
                   "%s\n"
                   "Most likely Lua file has improper syntax, please check" ),
-               SAVE_UPDATER_PATH, lua_tostring( naevL, -1 ) );
+               SAVE_UPDATER_PATH, luaL_tolstring( naevL, -1, NULL ) );
          free( buf );
+         lua_pop( naevL, 2 );
          return;
       }
       free( buf );
@@ -3868,8 +3871,8 @@ static int player_runUpdaterStart( void )
    /* Run start. */
    nlua_getenv( naevL, player_updater_env, "start" );
    if ( nlua_pcall( player_updater_env, 0, 0 ) ) { /* error has occurred */
-      WARN( _( "save_updater: '%s'" ), lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+      WARN( _( "save_updater: '%s'" ), luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
       return -1;
    }
    return 0;
@@ -3896,8 +3899,8 @@ int player_runUpdaterScript( const char *type, const char *name, int q )
    lua_pushstring( naevL, name );
    lua_pushinteger( naevL, q );
    if ( nlua_pcall( player_updater_env, 2, 1 ) ) { /* error has occurred */
-      WARN( _( "save_updater: '%s'" ), lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+      WARN( _( "save_updater: '%s'" ), luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
       return 0;
    }
    if ( lua_type( naevL, -1 ) == LUA_TNUMBER ) {
@@ -3914,8 +3917,8 @@ static int player_runUpdaterFinish( void )
    /* Run start. */
    nlua_getenv( naevL, player_updater_env, "finish" );
    if ( nlua_pcall( player_updater_env, 0, 0 ) ) { /* error has occurred */
-      WARN( _( "save_updater: '%s'" ), lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+      WARN( _( "save_updater: '%s'" ), luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
       return -1;
    }
    return 0;
@@ -3936,9 +3939,10 @@ static const Outfit *player_tryGetOutfit( const char *name, int q )
    /* Try to find out equivalent. */
    if ( player_runUpdaterScript( "outfit", name, q ) == 0 )
       return NULL;
-   else if ( lua_type( naevL, -1 ) == LUA_TSTRING )
-      o = outfit_get( lua_tostring( naevL, -1 ) );
-   else if ( lua_isoutfit( naevL, -1 ) )
+   else if ( lua_type( naevL, -1 ) == LUA_TSTRING ) {
+      o = outfit_get( luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 1 );
+   } else if ( lua_isoutfit( naevL, -1 ) )
       o = lua_tooutfit( naevL, -1 );
    else
       WARN( _( "Outfit '%s' in player save not found!" ), name );
@@ -3963,9 +3967,10 @@ static const Ship *player_tryGetShip( const char *name )
    /* Try to find out equivalent. */
    if ( player_runUpdaterScript( "ship", name, 1 ) == 0 )
       return NULL;
-   else if ( lua_type( naevL, -1 ) == LUA_TSTRING )
-      s = ship_get( lua_tostring( naevL, -1 ) );
-   else if ( lua_isship( naevL, -1 ) )
+   else if ( lua_type( naevL, -1 ) == LUA_TSTRING ) {
+      s = ship_get( luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 1 );
+   } else if ( lua_isship( naevL, -1 ) )
       s = lua_toship( naevL, -1 );
    else
       WARN( _( "Ship '%s' in player save not found!" ), name );
@@ -3990,9 +3995,10 @@ static void player_tryAddLicense( const char *name )
    /* Try to find out equivalent. */
    if ( player_runUpdaterScript( "licence", name, 1 ) == 0 )
       return;
-   else if ( lua_type( naevL, -1 ) == LUA_TSTRING )
-      player_addLicense( lua_tostring( naevL, -1 ) );
-   else
+   else if ( lua_type( naevL, -1 ) == LUA_TSTRING ) {
+      player_addLicense( luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 1 );
+   } else
       WARN( _( "Saved licence does not exist and could not be found or "
                "updated: '%s'!" ),
             name );

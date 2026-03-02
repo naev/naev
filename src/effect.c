@@ -141,8 +141,8 @@ static int effect_parse( EffectData *efx, const char *file )
          nlua_loadStandard( env );
          if ( nlua_dobufenv( env, dat, sz, filename ) != 0 ) {
             WARN( _( "Effect '%s' Lua error:\n%s" ), efx->name,
-                  lua_tostring( naevL, -1 ) );
-            lua_pop( naevL, 1 );
+                  luaL_tolstring( naevL, -1, NULL ) );
+            lua_pop( naevL, 2 );
             nlua_freeEnv( env );
             free( dat );
             continue;
@@ -291,8 +291,8 @@ int effect_update( Effect **efxlist, double dt )
          lua_pushpilot( naevL, e->parent );
          if ( nlua_pcall( e->data->lua_env, 1, 0 ) ) {
             WARN( _( "Effect '%s' failed to run '%s':\n%s" ), e->data->name,
-                  "remove", lua_tostring( naevL, -1 ) );
-            lua_pop( naevL, 1 );
+                  "remove", luaL_tolstring( naevL, -1, NULL ) );
+            lua_pop( naevL, 2 );
          }
       }
 
@@ -356,8 +356,9 @@ int effect_add( Effect **efxlist, const EffectData *efx, double duration,
                   lua_pushpilot( naevL, e->parent );
                   if ( nlua_pcall( e->data->lua_env, 1, 0 ) ) {
                      WARN( _( "Effect '%s' failed to run '%s':\n%s" ),
-                           e->data->name, "remove", lua_tostring( naevL, -1 ) );
-                     lua_pop( naevL, 1 );
+                           e->data->name, "remove",
+                           luaL_tolstring( naevL, -1, NULL ) );
+                     lua_pop( naevL, 2 );
                   }
                }
             }
@@ -386,8 +387,8 @@ int effect_add( Effect **efxlist, const EffectData *efx, double duration,
          lua_pushpilot( naevL, e->parent );
          if ( nlua_pcall( e->data->lua_env, 1, 0 ) ) {
             WARN( _( "Effect '%s' failed to run '%s':\n%s" ), e->data->name,
-                  "extend", lua_tostring( naevL, -1 ) );
-            lua_pop( naevL, 1 );
+                  "extend", luaL_tolstring( naevL, -1, NULL ) );
+            lua_pop( naevL, 2 );
          }
       }
    } else {
@@ -396,8 +397,8 @@ int effect_add( Effect **efxlist, const EffectData *efx, double duration,
          lua_pushpilot( naevL, e->parent );
          if ( nlua_pcall( e->data->lua_env, 1, 0 ) ) {
             WARN( _( "Effect '%s' failed to run '%s':\n%s" ), e->data->name,
-                  "add", lua_tostring( naevL, -1 ) );
-            lua_pop( naevL, 1 );
+                  "add", luaL_tolstring( naevL, -1, NULL ) );
+            lua_pop( naevL, 2 );
          }
       }
    }
@@ -431,8 +432,8 @@ int effect_rm( Effect **efxlist, int idx )
       lua_pushpilot( naevL, e->parent );
       if ( nlua_pcall( e->data->lua_env, 1, 0 ) ) {
          WARN( _( "Effect '%s' failed to run '%s':\n%s" ), e->data->name,
-               "remove", lua_tostring( naevL, -1 ) );
-         lua_pop( naevL, 1 );
+               "remove", luaL_tolstring( naevL, -1, NULL ) );
+         lua_pop( naevL, );
       }
    }
    array_erase( efxlist, &e[0], &e[1] );
@@ -461,8 +462,8 @@ int effect_rmType( Effect **efxlist, const EffectData *efx, int all )
          lua_pushpilot( naevL, e->parent );
          if ( nlua_pcall( e->data->lua_env, 1, 0 ) ) {
             WARN( _( "Effect '%s' failed to run '%s':\n%s" ), e->data->name,
-                  "remove", lua_tostring( naevL, -1 ) );
-            lua_pop( naevL, 1 );
+                  "remove", luaL_tolstring( naevL, -1, NULL ) );
+            lua_pop( naevL, 2 );
          }
       }
       array_erase( efxlist, &e[0], &e[1] );
@@ -510,8 +511,8 @@ void effect_clearSpecific( Effect **efxlist, int debuffs, int buffs,
          lua_pushpilot( naevL, e->parent );
          if ( nlua_pcall( e->data->lua_env, 1, 0 ) ) {
             WARN( _( "Effect '%s' failed to run '%s':\n%s" ), e->data->name,
-                  "remove", lua_tostring( naevL, -1 ) );
-            lua_pop( naevL, 1 );
+                  "remove", luaL_tolstring( naevL, -1, NULL ) );
+            lua_pop( naevL, 2 );
          }
       }
 
@@ -538,8 +539,8 @@ void effect_clear( Effect **efxlist )
          lua_pushpilot( naevL, e->parent );
          if ( nlua_pcall( e->data->lua_env, 1, 0 ) ) {
             WARN( _( "Effect '%s' failed to run '%s':\n%s" ), e->data->name,
-                  "remove", lua_tostring( naevL, -1 ) );
-            lua_pop( naevL, 1 );
+                  "remove", luaL_tolstring( naevL, -1, NULL ) );
+            lua_pop( naevL, 2 );
          }
       }
    }

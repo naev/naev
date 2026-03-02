@@ -316,7 +316,8 @@ nlua_env *loadscreen_load( void )
       WARN( _( "Error loading file: %s\n"
                "%s\n"
                "Most likely Lua file has improper syntax, please check" ),
-            LOADSCREEN_DATA_PATH, lua_tostring( naevL, -1 ) );
+            LOADSCREEN_DATA_PATH, luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
       free( buf );
       return NULL;
    }
@@ -354,8 +355,9 @@ void naev_doRenderLoadscreen( void )
    /* Run Lua. */
    nlua_getenv( naevL, load_env, "render" );
    if ( nlua_pcall( load_env, 0, 0 ) ) { /* error has occurred */
-      WARN( _( "Loadscreen '%s': '%s'" ), "render", lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+      WARN( _( "Loadscreen '%s': '%s'" ), "render",
+            luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
    }
 
    /* Flip buffers. HACK: Also try to catch a late-breaking resize from the WM
@@ -390,8 +392,9 @@ void loadscreen_update( double done, const char *msg )
    lua_pushnumber( naevL, done );
    lua_pushstring( naevL, msg );
    if ( nlua_pcall( load_env, 2, 0 ) ) { /* error has occurred */
-      WARN( _( "Loadscreen '%s': '%s'" ), "update", lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+      WARN( _( "Loadscreen '%s': '%s'" ), "update",
+            luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
    }
 
    /* Force rerender. */

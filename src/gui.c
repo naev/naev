@@ -1737,11 +1737,9 @@ static int gui_runFunc( const char *func, int nargs, int nret )
    /* Run the function. */
    int ret = nlua_pcall( gui_env, nargs, nret );
    if ( ret != 0 ) { /* error has occurred */
-      const char *err =
-         ( lua_isstring( naevL, -1 ) ) ? lua_tostring( naevL, -1 ) : NULL;
-      WARN( _( "GUI '%s' Lua -> '%s': %s" ), gui_name, func,
-            ( err ) ? err : _( "unknown error" ) );
-      lua_pop( naevL, 1 );
+      const char *err = luaL_tolstring( naevL, -1, NULL );
+      WARN( _( "GUI '%s' Lua -> '%s': %s" ), gui_name, func, err );
+      lua_pop( naevL, 2 );
       return ret;
    }
 
@@ -1906,7 +1904,8 @@ int gui_load( const char *name )
       WARN( _( "Failed to load GUI Lua: %s\n"
                "%s\n"
                "Most likely Lua file has improper syntax, please check" ),
-            path, lua_tostring( naevL, -1 ) );
+            path, luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 1 );
       nlua_freeEnv( gui_env );
       gui_env = NULL;
       free( buf );

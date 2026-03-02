@@ -63,8 +63,9 @@ int player_autonavInit( void )
       WARN( _( "Error loading file: %s\n"
                "%s\n"
                "Most likely Lua file has improper syntax, please check" ),
-            AUTONAV_PATH, lua_tostring( naevL, -1 ) );
+            AUTONAV_PATH, luaL_tolstring( naevL, -1, NULL ) );
       free( buf );
+      lua_pop( naevL, 2 );
       return -1;
    }
    free( buf );
@@ -125,8 +126,8 @@ void player_autonavStart( void )
 
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_system );
    if ( nlua_pcall( autonav_env, 0, 0 ) ) {
-      WARN( "%s", lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+      WARN( "%s", luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
    }
    player.autonav = AUTONAV_JUMP;
 }
@@ -169,8 +170,8 @@ void player_autonavEnd( void )
    /* End it. */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_end );
    if ( nlua_pcall( autonav_env, 0, 0 ) ) {
-      WARN( "%s", lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+      WARN( "%s", luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
    }
 
    autonav_ending = 0;
@@ -201,8 +202,8 @@ void player_autonavPos( double x, double y )
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_pos );
    lua_pushvector( naevL, pos );
    if ( nlua_pcall( autonav_env, 1, 0 ) ) {
-      WARN( "%s", lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+      WARN( "%s", luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
    }
    player.autonav = AUTONAV_POS;
 }
@@ -223,8 +224,8 @@ void player_autonavSpob( const char *name, int tryland )
    lua_pushspob( naevL, spob_index( spb ) );
    lua_pushboolean( naevL, tryland );
    if ( nlua_pcall( autonav_env, 2, 0 ) ) {
-      WARN( "%s", lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+      WARN( "%s", luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
    }
    player.autonav = AUTONAV_SPOB;
 }
@@ -242,8 +243,8 @@ void player_autonavPil( unsigned int p )
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_pilot );
    lua_pushpilot( naevL, p );
    if ( nlua_pcall( autonav_env, 1, 0 ) ) {
-      WARN( "%s", lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+      WARN( "%s", luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
    }
    player.autonav = AUTONAV_PILOT;
 }
@@ -267,8 +268,8 @@ void player_autonavBoard( unsigned int p )
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_board );
    lua_pushpilot( naevL, p );
    if ( nlua_pcall( autonav_env, 1, 0 ) ) {
-      WARN( "%s", lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+      WARN( "%s", luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
    }
    player.autonav = AUTONAV_PILOT;
 }
@@ -300,8 +301,8 @@ void player_autonavAbort( const char *reason )
    else
       lua_pushnil( naevL );
    if ( nlua_pcall( autonav_env, 1, 0 ) ) {
-      WARN( "%s", lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+      WARN( "%s", luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
    }
 
    /* Break possible hyperspacing. */
@@ -321,8 +322,8 @@ void player_autonavReset( double s )
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_reset );
    lua_pushnumber( naevL, s );
    if ( nlua_pcall( autonav_env, 1, 0 ) ) {
-      WARN( "%s", lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+      WARN( "%s", luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
    }
 }
 
@@ -341,8 +342,8 @@ void player_thinkAutonav( Pilot *pplayer, double dt )
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_think );
    lua_pushnumber( naevL, dt );
    if ( nlua_pcall( autonav_env, 1, 0 ) ) {
-      WARN( "%s", lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+      WARN( "%s", luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
    }
    ai_unsetPilot( oldmem );
    ai_thinkApply( pplayer );
@@ -412,8 +413,8 @@ void player_updateAutonav( double dt )
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_update );
    lua_pushnumber( naevL, dt );
    if ( nlua_pcall( autonav_env, 1, 0 ) ) {
-      WARN( "%s", lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+      WARN( "%s", luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
    }
 
    NTracingZoneEnd( _ctx );
@@ -430,7 +431,7 @@ void player_autonavEnter( void )
 
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_enter );
    if ( nlua_pcall( autonav_env, 0, 0 ) ) {
-      WARN( "%s", lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+      WARN( "%s", luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
    }
 }

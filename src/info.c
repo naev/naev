@@ -268,8 +268,8 @@ static void info_buttonClick( unsigned int wid, const char *str )
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, btn->func );
       if ( nlua_pcall( btn->env, 0, 0 ) ) {
          WARN( _( "Failure to run info button with id '%d':\n%s" ), btn->id,
-               lua_tostring( naevL, -1 ) );
-         lua_pop( naevL, 1 );
+               luaL_tolstring( naevL, -1, NULL ) );
+         lua_pop( naevL, 2 );
       }
       land_needsTakeoff( 1 ); /* Script said so? */
       return;

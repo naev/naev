@@ -2687,9 +2687,10 @@ static void equipment_autoequipShip( unsigned int wid, const char *str )
       nlua_loadStandard( autoequip_env );
       nlua_loadTk( autoequip_env );
       if ( nlua_dobufenv( autoequip_env, buf, bufsize, file ) != 0 ) {
-         WARN( _( "Failed to run '%s': %s" ), file, lua_tostring( naevL, -1 ) );
+         WARN( _( "Failed to run '%s': %s" ), file,
+               luaL_tolstring( naevL, -1, NULL ) );
          free( buf );
-         lua_pop( naevL, 1 );
+         lua_pop( naevL, 2 );
          goto autoequip_cleanup;
       }
 
@@ -2707,8 +2708,8 @@ static void equipment_autoequipShip( unsigned int wid, const char *str )
    lua_pushpilot( naevL, player.p->id );
    if ( nlua_pcall( autoequip_env, 1, 0 ) ) {
       WARN( _( "'%s' failed to run required 'autoequip' function: %s" ), file,
-            lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+            luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
       goto autoequip_cleanup;
    }
 

@@ -536,8 +536,8 @@ glTexture *npc_getBackground( int i )
          lua_rawgeti( naevL, LUA_REGISTRYINDEX, land_spob->lua_barbg ); /* f */
          if ( nlua_pcall( land_spob->lua_env, 0, 1 ) ) {
             WARN( _( "Spob '%s' failed to run '%s':\n%s" ), land_spob->name,
-                  "barbg", lua_tostring( naevL, -1 ) );
-            lua_pop( naevL, 1 );
+                  "barbg", luaL_tolstring( naevL, -1, NULL ) );
+            lua_pop( naevL, 2 );
          }
 
          if ( lua_istex( naevL, -1 ) )

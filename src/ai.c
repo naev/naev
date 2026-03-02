@@ -476,8 +476,8 @@ static void ai_run( nlua_env *env, int nargs )
 {
    if ( nlua_pcall( env, nargs, 0 ) ) { /* error has occurred */
       WARN( _( "Pilot '%s' ai '%s' error: %s" ), cur_pilot->name,
-            cur_pilot->ai->name, lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+            cur_pilot->ai->name, luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
    }
 }
 

@@ -69,12 +69,14 @@ int cond_compile( const char *cond )
    switch ( ret ) {
    case LUA_ERRSYNTAX:
       snprintf( buf, sizeof( buf ), _( "Lua conditional syntax error: %s" ),
-                lua_tostring( naevL, -1 ) );
+                luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 1 );
       goto cond_err;
    case LUA_ERRMEM:
       snprintf( buf, sizeof( buf ),
                 _( "Lua Conditional ran out of memory: %s" ),
-                lua_tostring( naevL, -1 ) );
+                luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 1 );
       goto cond_err;
    default:
       break;
@@ -117,23 +119,27 @@ int cond_check( const char *cond )
    switch ( ret ) {
    case LUA_ERRSYNTAX:
       snprintf( buf, sizeof( buf ), _( "Lua conditional syntax error: %s" ),
-                lua_tostring( naevL, -1 ) );
+                luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 1 );
       goto cond_err;
    case LUA_ERRRUN:
       snprintf( buf, sizeof( buf ),
                 _( "Lua Conditional had a runtime error: %s" ),
-                lua_tostring( naevL, -1 ) );
+                luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 1 );
       goto cond_err;
    case LUA_ERRMEM:
       snprintf( buf, sizeof( buf ),
                 _( "Lua Conditional ran out of memory: %s" ),
-                lua_tostring( naevL, -1 ) );
+                luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 1 );
       goto cond_err;
    case LUA_ERRERR:
       snprintf(
          buf, sizeof( buf ),
          _( "Lua Conditional had an error while handling error function: %s" ),
-         lua_tostring( naevL, -1 ) );
+         luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 1 );
       goto cond_err;
    default:
       break;
@@ -177,18 +183,18 @@ int cond_checkChunk( int chunk, const char *cond )
    case LUA_ERRRUN:
       snprintf( buf, sizeof( buf ),
                 _( "Lua Conditional had a runtime error: %s" ),
-                lua_tostring( naevL, -1 ) );
+                luaL_tolstring( naevL, -1, NULL ) );
       goto cond_err;
    case LUA_ERRMEM:
       snprintf( buf, sizeof( buf ),
                 _( "Lua Conditional ran out of memory: %s" ),
-                lua_tostring( naevL, -1 ) );
+                luaL_tolstring( naevL, -1, NULL ) );
       goto cond_err;
    case LUA_ERRERR:
       snprintf(
          buf, sizeof( buf ),
          _( "Lua Conditional had an error while handling error function: %s" ),
-         lua_tostring( naevL, -1 ) );
+         luaL_tolstring( naevL, -1, NULL ) );
       goto cond_err;
    default:
       break;

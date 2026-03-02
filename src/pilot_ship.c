@@ -55,8 +55,8 @@ int pilot_shipLInit( Pilot *p )
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, p->ship->lua_init ); /* f */
    lua_pushpilot( naevL, p->id );                              /* f, p */
    if ( nlua_pcall( p->ship->lua_env, 1, 0 ) ) {               /* */
-      shipLRunWarning( p, p->ship, "init", lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+      shipLRunWarning( p, p->ship, "init", luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
       pilot_shipLunmem( p, oldmem );
       return -1;
    }
@@ -79,8 +79,9 @@ int pilot_shipLCleanup( Pilot *p )
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, p->ship->lua_cleanup ); /* f */
       lua_pushpilot( naevL, p->id );                                 /* f, p */
       if ( nlua_pcall( p->ship->lua_env, 1, 0 ) ) {                  /* */
-         shipLRunWarning( p, p->ship, "cleanup", lua_tostring( naevL, -1 ) );
-         lua_pop( naevL, 1 );
+         shipLRunWarning( p, p->ship, "cleanup",
+                          luaL_tolstring( naevL, -1, NULL ) );
+         lua_pop( naevL, 2 );
          pilot_shipLunmem( p, oldmem );
          return -1;
       }
@@ -123,8 +124,9 @@ int pilot_shipLUpdate( Pilot *p, double dt )
    lua_pushpilot( naevL, p->id );                                /* f, p */
    lua_pushnumber( naevL, p->ship->lua_dt );                     /* f, p, dt */
    if ( nlua_pcall( p->ship->lua_env, 2, 0 ) ) {                 /* */
-      shipLRunWarning( p, p->ship, "update", lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+      shipLRunWarning( p, p->ship, "update",
+                       luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
       pilot_shipLunmem( p, oldmem );
       return -1;
    }
@@ -149,8 +151,9 @@ int pilot_shipLExplodeInit( Pilot *p )
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, p->ship->lua_explode_init ); /* f */
    lua_pushpilot( naevL, p->id );                /* f, p */
    if ( nlua_pcall( p->ship->lua_env, 1, 0 ) ) { /* */
-      shipLRunWarning( p, p->ship, "explode_init", lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+      shipLRunWarning( p, p->ship, "explode_init",
+                       luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
       pilot_shipLunmem( p, oldmem );
       return -1;
    }
@@ -178,8 +181,8 @@ int pilot_shipLExplodeUpdate( Pilot *p, double dt )
    lua_pushnumber( naevL, dt );                  /* f, p, dt */
    if ( nlua_pcall( p->ship->lua_env, 2, 0 ) ) { /* */
       shipLRunWarning( p, p->ship, "explode_update",
-                       lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+                       luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
       pilot_shipLunmem( p, oldmem );
       return -1;
    }
@@ -204,8 +207,9 @@ int pilot_shipLOnshootany( Pilot *p )
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, p->ship->lua_onshootany ); /* f */
    lua_pushpilot( naevL, p->id );                                    /* f, p */
    if ( nlua_pcall( p->ship->lua_env, 1, 0 ) ) {                     /* */
-      shipLRunWarning( p, p->ship, "onshootany", lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+      shipLRunWarning( p, p->ship, "onshootany",
+                       luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
       pilot_shipLunmem( p, oldmem );
       return -1;
    }
@@ -229,8 +233,9 @@ int pilot_shipLCooldown( Pilot *p, int done, int success, double timer )
    else
       lua_pushnumber( naevL, timer );
    if ( nlua_pcall( p->ship->lua_env, 3, 0 ) ) { /* */
-      shipLRunWarning( p, p->ship, "cooldown", lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+      shipLRunWarning( p, p->ship, "cooldown",
+                       luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
       pilot_shipLunmem( p, oldmem );
       return -1;
    }

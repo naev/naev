@@ -1060,14 +1060,15 @@ static void outfits_buy( unsigned int wid, const char *str )
       lua_pushinteger( naevL, q );
       if ( nlua_pcall( outfit_luaEnv( outfit ), 1, 2 ) ) { /* */
          WARN( _( "Outfit '%s' failed to run '%s':\n%s" ),
-               outfit_name( outfit ), "price", lua_tostring( naevL, -1 ) );
-         lua_pop( naevL, 1 );
+               outfit_name( outfit ), "price",
+               luaL_tolstring( naevL, -1, NULL ) );
+         lua_pop( naevL, 2 );
       }
 
       int bought = lua_toboolean( naevL, -2 );
 
       if ( !bought ) {
-         dialogue_alert( "%s", lua_tostring( naevL, -1 ) );
+         dialogue_alert( "%s", luaL_tolstring( naevL, -1, NULL ) );
          lua_pop( naevL, 2 );
          return;
       }
@@ -1183,14 +1184,15 @@ static void outfits_sell( unsigned int wid, const char *str )
       lua_pushinteger( naevL, q );
       if ( nlua_pcall( outfit_luaEnv( outfit ), 1, 2 ) ) { /* */
          WARN( _( "Outfit '%s' failed to run '%s':\n%s" ),
-               outfit_name( outfit ), "price", lua_tostring( naevL, -1 ) );
-         lua_pop( naevL, 1 );
+               outfit_name( outfit ), "price",
+               luaL_tolstring( naevL, -1, NULL ) );
+         lua_pop( naevL, 2 );
       }
 
       int sold = lua_toboolean( naevL, -2 );
 
       if ( !sold ) {
-         dialogue_alert( "%s", lua_tostring( naevL, -1 ) );
+         dialogue_alert( "%s", luaL_tolstring( naevL, -1, NULL ) );
          lua_pop( naevL, 2 );
          return;
       }

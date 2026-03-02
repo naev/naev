@@ -249,7 +249,8 @@ static int event_create( int dataid, unsigned int *id )
       WARN( _( "Error loading event file: %s\n"
                "%s\n"
                "Most likely Lua file has improper syntax, please check" ),
-            data->sourcefile, lua_tostring( naevL, -1 ) );
+            data->sourcefile, luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 1 );
       return -1;
    }
 
@@ -354,8 +355,7 @@ void events_trigger( EventTrigger_t trigger )
          continue;
 
       /* Spob. */
-      if ( ( trigger == EVENT_TRIGGER_LAND ) &&
-           ( ed->spob != NULL ) &&
+      if ( ( trigger == EVENT_TRIGGER_LAND ) && ( ed->spob != NULL ) &&
            ( strcmp( ed->spob, land_spob->name ) != 0 ) )
          continue;
 
@@ -708,10 +708,11 @@ static int event_parseFile( const char *file, EventData *temp )
 
    /* Check to see if syntax is valid. */
    ret = nlua_loadbuffer( naevL, temp->lua, strlen( temp->lua ), temp->name );
-   if ( ret == LUA_ERRSYNTAX )
+   if ( ret == LUA_ERRSYNTAX ) {
       WARN( _( "Event Lua '%s' syntax error: %s" ), file,
-            lua_tostring( naevL, -1 ) );
-   else
+            luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 1 );
+   } else
       temp->chunk = luaL_ref( naevL, LUA_REGISTRYINDEX );
 
    /* Clean up. */

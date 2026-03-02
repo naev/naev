@@ -395,8 +395,8 @@ static void menu_main_credits( unsigned int wid, const char *str )
 
       if ( nlua_loadbuffer( naevL, dat, sz, filename ) ) {
          WARN( _( "Failed to run '%s':\n%s" ), filename,
-               lua_tostring( naevL, -1 ) );
-         lua_pop( naevL, 1 );
+               luaL_tolstring( naevL, -1, NULL ) );
+         lua_pop( naevL, 2 );
          nlua_freeEnv( env );
          env = NULL;
          free( dat );
@@ -408,8 +408,8 @@ static void menu_main_credits( unsigned int wid, const char *str )
 
    if ( nlua_dochunkenv( env, chunk, filename ) ) {
       WARN( _( "Failed to run '%s':\n%s" ), filename,
-            lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+            luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
       return;
    }
 

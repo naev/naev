@@ -1396,8 +1396,8 @@ static void system_scheduler( double dt, int init )
       /* Actually run the function. */
       if ( nlua_pcall( env, n + 1, 2 ) ) { /* error has occurred */
          WARN( _( "Lua Spawn script for faction '%s' : %s" ),
-               faction_name( p->faction ), lua_tostring( naevL, -1 ) );
-         lua_pop( naevL, 1 );
+               faction_name( p->faction ), luaL_tolstring( naevL, -1, NULL ) );
+         lua_pop( naevL, 2 );
          continue;
       }
 
@@ -2071,8 +2071,8 @@ void spob_updateLand( Spob *p )
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, p->lua_can_land ); /* f */
       if ( nlua_pcall( p->lua_env, 0, 2 ) ) {
          WARN( _( "Spob '%s' failed to run '%s':\n%s" ), p->name, "can_land",
-               lua_tostring( naevL, -1 ) );
-         lua_pop( naevL, 1 );
+               luaL_tolstring( naevL, -1, NULL ) );
+         lua_pop( naevL, 2 );
          NTracingZoneEnd( _ctx );
          return;
       }
@@ -2117,8 +2117,8 @@ void spob_distress( Spob *spb, const Pilot *p, const Pilot *attacker )
    lua_pushpilot( naevL, attacker->id );
    if ( nlua_pcall( spb->lua_env, 2, 0 ) ) {
       WARN( _( "Spob '%s' failed to run '%s':\n%s" ), spb->name, "distress",
-            lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+            luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
       return;
    }
 
@@ -2216,8 +2216,8 @@ int spob_luaInit( Spob *spob )
       lua_pushspob( naevL, spob_index( spob ) );
       if ( nlua_pcall( spob->lua_env, 1, 0 ) ) {
          WARN( _( "Spob '%s' failed to run '%s':\n%s" ), spob->name, "init",
-               lua_tostring( naevL, -1 ) );
-         lua_pop( naevL, 1 );
+               luaL_tolstring( naevL, -1, NULL ) );
+         lua_pop( naevL, 2 );
          return -1;
       }
    }
@@ -2235,8 +2235,8 @@ void spob_gfxLoad( Spob *spob )
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, spob->lua_load ); /* f */
       if ( nlua_pcall( spob->lua_env, 0, 2 ) ) {
          WARN( _( "Spob '%s' failed to run '%s':\n%s" ), spob->name, "load",
-               lua_tostring( naevL, -1 ) );
-         lua_pop( naevL, 1 );
+               luaL_tolstring( naevL, -1, NULL ) );
+         lua_pop( naevL, 2 );
          return;
       }
       if ( lua_istex( naevL, -2 ) ) {
@@ -2317,8 +2317,8 @@ void space_gfxUnload( StarSystem *sys )
          lua_rawgeti( naevL, LUA_REGISTRYINDEX, spob->lua_unload ); /* f */
          if ( nlua_pcall( spob->lua_env, 0, 0 ) ) {
             WARN( _( "Spob '%s' failed to run '%s':\n%s" ), spob->name,
-                  "unload", lua_tostring( naevL, -1 ) );
-            lua_pop( naevL, 1 );
+                  "unload", luaL_tolstring( naevL, -1, NULL ) );
+            lua_pop( naevL, 2 );
          }
       }
 
@@ -3830,8 +3830,8 @@ static void space_renderSpob( const Spob *p )
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, p->lua_render ); /* f */
       if ( nlua_pcall( p->lua_env, 0, 0 ) ) {
          WARN( _( "Spob '%s' failed to run '%s':\n%s" ), p->name, "render",
-               lua_tostring( naevL, -1 ) );
-         lua_pop( naevL, 1 );
+               luaL_tolstring( naevL, -1, NULL ) );
+         lua_pop( naevL, 2 );
       }
    } else if ( p->gfx_space3d ) {
       double s  = p->gfx_space3d_size;
@@ -3871,8 +3871,8 @@ static void space_updateSpob( const Spob *p, double dt, double real_dt )
    lua_pushnumber( naevL, real_dt );                       /* f, real_dt */
    if ( nlua_pcall( p->lua_env, 2, 0 ) ) {
       WARN( _( "Spob '%s' failed to run '%s':\n%s" ), p->name, "update",
-            lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+            luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
    }
 }
 
@@ -4764,8 +4764,8 @@ void system_rmCurrentPresence( StarSystem *sys, FactionRef faction,
    /* Actually run the function. */
    if ( nlua_pcall( env, 3, 1 ) ) { /* error has occurred */
       WARN( _( "Lua decrease script for faction '%s' : %s" ),
-            faction_name( faction ), lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+            faction_name( faction ), luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
       return;
    }
 
@@ -4805,8 +4805,8 @@ const char *space_className( const Spob *spb )
       lua_pushstring( naevL, spb->class );
       if ( nlua_pcall( spb->lua_env, 1, 1 ) ) {
          WARN( _( "Spob '%s' failed to run '%s':\n%s" ), spb->name, "classname",
-               lua_tostring( naevL, -1 ) );
-         lua_pop( naevL, 1 );
+               luaL_tolstring( naevL, -1, NULL ) );
+         lua_pop( naevL, 2 );
          return "";
       }
 
@@ -4838,8 +4838,8 @@ const char *space_populationStr( const Spob *spb )
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, spb->lua_population ); /* f */
       if ( nlua_pcall( spb->lua_env, 0, 1 ) ) {
          WARN( _( "Spob '%s' failed to run '%s':\n%s" ), spb->name,
-               "population", lua_tostring( naevL, -1 ) );
-         lua_pop( naevL, 1 );
+               "population", luaL_tolstring( naevL, -1, NULL ) );
+         lua_pop( naevL, 2 );
          return "";
       }
 
@@ -4970,8 +4970,8 @@ static nlua_env *spob_lua_get( int *mem, const char *filename )
    if ( nlua_dobufenv( env, dat, sz, filename ) != 0 ) {
       int n;
       WARN( _( "Lua Spob '%s' error:\n%s" ), filename,
-            lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+            luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
       spob_lua_free( lf );
       free( dat );
       n = array_size( spob_lua_stack );

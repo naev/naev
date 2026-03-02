@@ -637,7 +637,7 @@ const char *outfit_getPrice( const Outfit *outfit, unsigned int q,
    lua_pushinteger( naevL, q );
    if ( nlua_pcall( outfit->lua_env, 1, 4 ) ) { /* */
       WARN( _( "Outfit '%s' failed to run '%s':\n%s" ), outfit->name, "price",
-            lua_tostring( naevL, -1 ) );
+            luaL_tolstring( naevL, -1, NULL ) );
       *price   = 0;
       *canbuy  = 0;
       *cansell = 0;
@@ -647,7 +647,7 @@ const char *outfit_getPrice( const Outfit *outfit, unsigned int q,
          *reason_cantbuy = NULL;
       if ( reason_cantsell != NULL )
          *reason_cantsell = NULL;
-      lua_pop( naevL, 1 );
+      lua_pop( naevL, 2 );
       return pricestr;
    }
 
@@ -3613,8 +3613,8 @@ int outfit_load( void )
       /* Run code. */
       if ( nlua_dobufenv( env, dat, sz, o->lua_file ) != 0 ) {
          WARN( _( "Outfit '%s' Lua error:\n%s" ), o->name,
-               lua_tostring( naevL, -1 ) );
-         lua_pop( naevL, 1 );
+               luaL_tolstring( naevL, -1, NULL ) );
+         lua_pop( naevL, 2 );
          nlua_freeEnv( o->lua_env );
          free( dat );
          o->lua_env = NULL;
@@ -3802,8 +3802,8 @@ int outfit_loadPost( void )
             lua_pushoutfit( naevL, o );
             if ( nlua_pcall( o->lua_env, 1, 0 ) ) {
                WARN( _( "Outfit '%s' lua load error -> 'load':\n%s" ), o->name,
-                     lua_tostring( naevL, -1 ) );
-               lua_pop( naevL, 1 );
+                     luaL_tolstring( naevL, -1, NULL ) );
+               lua_pop( naevL, 2 );
             }
          }
       }

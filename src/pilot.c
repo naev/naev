@@ -1542,8 +1542,9 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
       lua_pushnumber( naevL, ddis );
       if ( nlua_pcall( outfit_luaEnv( outfit ), 8, 0 ) ) { /* */
          WARN( _( "Pilot '%s''s outfit '%s' -> '%s':\n%s" ), p->name,
-               outfit_name( outfit ), "onimpact", lua_tostring( naevL, -1 ) );
-         lua_pop( naevL, 1 );
+               outfit_name( outfit ), "onimpact",
+               luaL_tolstring( naevL, -1, NULL ) );
+         lua_pop( naevL, 2 );
       }
    }
 
