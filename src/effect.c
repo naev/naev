@@ -433,7 +433,7 @@ int effect_rm( Effect **efxlist, int idx )
       if ( nlua_pcall( e->data->lua_env, 1, 0 ) ) {
          WARN( _( "Effect '%s' failed to run '%s':\n%s" ), e->data->name,
                "remove", luaL_tolstring( naevL, -1, NULL ) );
-         lua_pop( naevL, );
+         lua_pop( naevL, 2 );
       }
    }
    array_erase( efxlist, &e[0], &e[1] );
