@@ -44,7 +44,7 @@
  *
  * An example would be:
  * @code
- * misn.setNPC( "Keer", "empire/unique/keer", _("You see here Commodore
+ * misn.setNPC( _("Keer"), "empire/unique/keer", _("You see here Commodore
  * Keer.") )
  * @endcode
  *
