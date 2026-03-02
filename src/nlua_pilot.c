@@ -6751,7 +6751,7 @@ static const CollPolyView *getCollPoly( const Pilot *p )
  */
 static int pilotL_collisionTest( lua_State *L )
 {
-   vec2         crash;
+   vec2         crash[2];
    const Pilot *p = luaL_validpilot( L, 1 );
 
    /* Asteroid treated separately. */
@@ -6759,11 +6759,11 @@ static int pilotL_collisionTest( lua_State *L )
       Asteroid     *a     = luaL_validasteroid( L, 2 );
       CollPolyView *rpoly = poly_rotate( a->polygon, (float)a->ang );
       int ret = collide_polygon_polygon( getCollPoly( p ), &p->solid.pos, rpoly,
-                                         &a->sol.pos, &crash );
+                                         &a->sol.pos, crash );
       poly_free_view( rpoly );
       if ( !ret )
          return 0;
-      lua_pushvector( L, crash );
+      lua_pushvector( L, crash[0] );
       return 1;
    }
 
@@ -6783,11 +6783,11 @@ static int pilotL_collisionTest( lua_State *L )
       return 0;
 
    int ret = collide_polygon_polygon( getCollPoly( p ), &p->solid.pos,
-                                      getCollPoly( t ), &t->solid.pos, &crash );
+                                      getCollPoly( t ), &t->solid.pos, crash );
    if ( !ret )
       return 0;
 
-   lua_pushvector( L, crash );
+   lua_pushvector( L, crash[0] );
    return 1;
 }
 
