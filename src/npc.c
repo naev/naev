@@ -548,8 +548,7 @@ glTexture *npc_getBackground( int i )
          lua_pop( naevL, 1 );
       }
       if ( npc->background == NULL )
-         npc->background =
-            gl_newImage( GFX_PATH "portraits/background.png", 0 );
+         npc->background = gl_newImage( GFX_PATH "portraits/background", 0 );
    }
 
    return npc->background;
