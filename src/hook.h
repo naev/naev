@@ -17,9 +17,11 @@
  * @brief The hook parameter types.
  */
 typedef enum HookParamType_e {
-   HOOK_PARAM_NIL,         /**< No hook parameter. */
-   HOOK_PARAM_NUMBER,      /**< Number parameter. */
-   HOOK_PARAM_STRING,      /**< String parameter. */
+   HOOK_PARAM_NIL,    /**< No hook parameter. */
+   HOOK_PARAM_NUMBER, /**< Number parameter. */
+   HOOK_PARAM_STRING, /**< String parameter. */
+   // Automatically frees the memory, TODO fix leaks outside of
+   // hooks_runParamDeferred
    HOOK_PARAM_STRING_FREE, /**< String parameter. */
    HOOK_PARAM_BOOL,        /**< Boolean parameter. */
    HOOK_PARAM_PILOT,       /**< Pilot hook parameter. */

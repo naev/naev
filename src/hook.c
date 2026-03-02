@@ -175,6 +175,11 @@ static int hq_add( HookQueue_t *hq )
  */
 static void hq_free( HookQueue_t *hq )
 {
+   for ( int i = 0; i < HOOK_MAX_PARAM; i++ ) {
+      if ( hq->hparam[i].type == HOOK_PARAM_STRING_FREE ) {
+         free( (char *)hq->hparam[i].u.str );
+      }
+   }
    free( hq->stack );
    free( hq );
 }
@@ -263,11 +268,8 @@ static int hook_parseParam( const HookParam *param )
          lua_pushnumber( naevL, param[n].u.num );
          break;
       case HOOK_PARAM_STRING:
-         lua_pushstring( naevL, param[n].u.str );
-         break;
       case HOOK_PARAM_STRING_FREE:
          lua_pushstring( naevL, param[n].u.str );
-         free( (char *)param[n].u.str );
          break;
       case HOOK_PARAM_BOOL:
          lua_pushboolean( naevL, param[n].u.b );
