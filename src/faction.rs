@@ -1798,6 +1798,7 @@ impl UserData for FactionRef {
                      displayname: display,
                      ai,
                      f_dynamic: true,
+                     f_static: true,
                      ..Default::default()
                   },
                   None,

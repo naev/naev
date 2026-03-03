@@ -124,11 +124,14 @@ function atk.think( target, si, noretarget )
       end
 
       -- Plasma Burst
+      print( mem._o.plasma_burst, p:outfitReady( mem._o.plasma_burst ) )
       if mem._o.plasma_burst and p:outfitReady( mem._o.plasma_burst ) then
-         if ai.dist( target ) < 300 then
+         print("plasma_burst_ready", ai.dist(target))
+         local RADIUS = 200
+         if ai.dist( target ) < RADIUS then
             p:outfitToggle( mem._o.plasma_burst, true )
          else
-            local e = p:getEnemies( 300 )
+            local e = p:getEnemies( RADIUS )
             if #e >= 2 then
                p:outfitToggle( mem._o.plasma_burst, true )
             end
