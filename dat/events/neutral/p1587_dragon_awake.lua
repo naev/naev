@@ -25,14 +25,13 @@ function spawn_dragon()
    local fct = ferals.faction()
    dragon = pilot.add( "Kauweke", fct, SPB )
    dragon:outfitAddSlot( outfit.get("Plasma Burst"), "plasma_burst", true)
+   pilotai.guard( dragon, vec2.newP( 200, rnd.angle() ) )
    ai_setup.setup( dragon ) -- So plasma burst gets used
    dragon:intrinsicSet( "armour_regen", 100 )
    dragon:intrinsicSet( "armour", 50 )
    dragon:setHostile(true)
    dragon:setNoDisable(true)
    hook.pilot( dragon, "death", "dragon_died" )
-
-   pilotai.guard( dragon, vec2.newP( 200, rnd.angle() ) )
 end
 
 function enter ()

@@ -3,6 +3,7 @@
    @module pilotai
 --]]
 local lanes = require "ai.core.misc.lanes"
+local ai_setup = require "ai.core.setup"
 local pilotai = {}
 
 --[[--
@@ -82,6 +83,8 @@ function pilotai.guard( plts, pos )
    pilotai.apply( plts, function( p )
       -- TODO try to figure out how to do this without having to change the AI. Probably a special task could handle it
       p:changeAI( "guard" )
+      -- Currently changing the AI resets the memory...
+      ai_setup.setup( p )
       if pos then
          local m = p:memory()
          m.guardpos = pos

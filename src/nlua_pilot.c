@@ -4606,6 +4606,8 @@ static int pilotL_changeAI( lua_State *L )
    /* Get rid of current AI. */
    ai_destroy( p );
 
+   // TODO don't reset memory
+
    /* Create the new AI. */
    ret = ai_pinit( p, str );
    lua_pushboolean( L, ret );
