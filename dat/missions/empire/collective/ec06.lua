@@ -232,6 +232,8 @@ local function addRefuelShip ()
    -- Create the pilot
    refship = pilot.add( "Empire Rainmaker", "Empire", mem.last_sys, _("Fuel Tanker"), {ai="empire_refuel", naked=true} )
    equipopt.empire( refship, {fuel=1000} ) -- max fuel!
+   refship:intrinsicSet( "fuel", 3000 )
+   refship:setFuel(true)
    refship:setFriendly()
    refship:setVisplayer()
    refship:setHilight()
