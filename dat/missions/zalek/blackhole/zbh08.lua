@@ -23,6 +23,7 @@ local fmt = require "format"
 local zbh = require "common.zalek_blackhole"
 local lmisn = require  "lmisn"
 local pilotai = require "pilotai"
+local luasfx = require "luaspfx.sfx"
 
 local reward = zbh.rewards.zbh08
 local cargo_name = _("Sensor Upgrades")
@@ -239,6 +240,6 @@ local sfx_spacewhale = {
 }
 function feral_hail ()
    local sfx = sfx_spacewhale[ rnd.rnd(1,#sfx_spacewhale) ]
-   sfx:play()
+   luasfx( false, nil, sfx )
    player.commClose()
 end

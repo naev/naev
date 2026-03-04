@@ -22,7 +22,7 @@ local vntk = require "vntk"
 local fmt = require "format"
 local zbh = require "common.zalek_blackhole"
 local lmisn = require "lmisn"
-
+local luasfx = require "luaspfx.sfx"
 
 local reward = zbh.rewards.zbh02
 local cargo_name = _("Repair Supplies")
@@ -206,7 +206,7 @@ function heartbeat ()
       feral:setInvisible(true)
       feral:control(true)
       feral:hyperspace( system.get("NGC-2601") )
-      zbh.sfx.spacewhale1:play()
+      luasfx( false, nil, zbh.sfx.spacewhale1 )
       camera.set( feral, false, 4000 )
 
       player.autonavAbort(_("You thought you saw something!"))

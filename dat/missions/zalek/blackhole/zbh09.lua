@@ -26,6 +26,7 @@ local fmt = require "format"
 local zbh = require "common.zalek_blackhole"
 local fleet = require "fleet"
 local cinema = require "cinema"
+local luasfx = require "luaspfx.sfx"
 
 local reward = zbh.rewards.zbh09
 
@@ -34,6 +35,13 @@ local outwormhole, outsys = spob.getS( "Wormhole NGC-1931" )
 local mainpnt, mainsys = spob.getS("Research Post Sigma-13")
 
 local title = _("Black Hole Mystery")
+
+local function sfx_whale1 ()
+   luasfx( false, nil, zbh.sfx.spacewhale1 )
+end
+local function sfx_whale2 ()
+   luasfx( false, nil, zbh.sfx.spacewhale2 )
+end
 
 function create ()
    if not misn.claim( {mainsys, insys, outsys} ) then
@@ -353,7 +361,7 @@ function heartbeat_ferals ()
       camera.set( (l:pos()+pp:pos())/2 )
       camera.setZoom( 3 )
 
-      zbh.sfx.spacewhale1:play()
+      sfx_whale1()
       l:taskClear()
       l:brake()
       l:face( pp )
@@ -379,7 +387,7 @@ function heartbeat_ferals ()
 
    elseif fstate == 8 then
       local pp = player.pilot()
-      zbh.sfx.spacewhale2:play()
+      sfx_whale2()
       if pp:ship():tags().bioship then
          l:broadcast(_("Son. Revenge. Imposter. Die."), true)
       else
@@ -432,7 +440,7 @@ function heartbeat_ferals ()
       end
 
    elseif fstate == 10 then
-      zbh.sfx.spacewhale1:play()
+      sfx_whale1()
       local pp = player.pilot()
 
       zach_say(_("Wait, is that Icarus? Run to him!"))
@@ -505,17 +513,17 @@ function heartbeat_ferals ()
       end
 
    elseif fstate == 13 then
-      zbh.sfx.spacewhale1:play()
+      sfx_whale1()
       fstate = 14
 
    elseif fstate == 14 then
       camera.set( l )
-      zbh.sfx.spacewhale2:play()
+      sfx_whale2()
       fstate = 15
 
    elseif fstate == 15 then
       camera.set( icarus )
-      zbh.sfx.spacewhale1:play()
+      sfx_whale1()
       fstate = 16
 
    elseif fstate == 16 then
@@ -554,6 +562,6 @@ local sfx_spacewhale = {
 }
 function feral_hail ()
    local sfx = sfx_spacewhale[ rnd.rnd(1,#sfx_spacewhale) ]
-   sfx:play()
+   luasfx( false, nil, sfx )
    player.commClose()
 end

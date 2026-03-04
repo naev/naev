@@ -24,6 +24,7 @@ local fleet = require "fleet"
 local love_shaders = require "love_shaders"
 local lmisn = require "lmisn"
 local equipopt = require "equipopt"
+local luasfx = require "luaspfx.sfx"
 
 local reward = zbh.rewards.zbh10
 local title = _("Sigma-13 Showdown")
@@ -336,7 +337,7 @@ local sfx_spacewhale = {
 }
 function feral_hail ()
    local sfx = sfx_spacewhale[ rnd.rnd(1,#sfx_spacewhale) ]
-   sfx:play()
+   luasfx( false, nil, sfx )
    player.commClose()
 end
 
