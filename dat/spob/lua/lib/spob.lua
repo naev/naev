@@ -243,7 +243,7 @@ function luaspob.can_land ()
       return true,nil -- Use default landing message
    end
    local std = mem.spob:reputation()
-   if mem.spob:getLandDeny() or std < 0 or mem.spob:hostile() then
+   if mem.spob:getLandDeny() or mem.spob:hostile() then
       return false, mem.msg_denied
    end
    if std < mem.std_land then
