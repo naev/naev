@@ -43,9 +43,9 @@ function create ()
    vn.scene()
    vn.transition()
    if firsttime then
-      vn.na(fmt.f(_([[As you perform a premilinary scan of {spb}'s surface, you notice that there seems to be a large anomality. Upon further inspection, it's a large pile of {goods}.]]),
+      vn.na(fmt.f(_([[As you perform a premilinary scan of {spb}, it seems as there's a large abnormality on the planet's surface. Upon further inspection, it's a large pile of {goods}.]]),
          {spb=SPB, goods=GOODS}))
-      vn.na(fmt.f(_([[A secondary scan confirms that your eyes aren't deceiving you, and there seems to be a lot of {goods} just abandoned on the surface. The amount is utterly ridiculous, and it seems it won't fit all in your ship, but you can try ta take as much as you want.
+      vn.na(fmt.f(_([[A secondary scan confirms that your eyes aren't deceiving you, and there seems to be a lot of {goods} just abandoned on the surface. The amount is utterly ridiculous, and it seems it won't fit all in your ship, but you can try to take as much as you want.
 
 What do you do?]]),
          {goods=GOODS}))
@@ -121,7 +121,7 @@ What do you want to do?]]),
    vn.label("01_awoke_takeoff")
    vn.na(fmt.f(_([[As you try to process the situation, there's an explosion of {goods}, which are now falling like rain. Seems like it's your call to get out of here.]]),
       {goods=GOODS}))
-   vn.na(fmt.f(_([[You slam down on your thrusters and quickly leave {spb} behind, only for your ship's sensors to indicate you are being followed. What the hell is that?.]]),
+   vn.na(fmt.f(_([[You slam down on your thrusters and quickly leave {spb} behind, only for your ship's sensors to indicate you are being followed. What the hell is that?]]),
       {spb=SPB}))
    vn.func( function ()
       naev.eventStart("P-1587 Dragon Awake")

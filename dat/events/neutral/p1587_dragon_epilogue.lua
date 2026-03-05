@@ -21,7 +21,7 @@ function create ()
 
    vn.na(fmt.f(_([[You return to where the pile of {goods} lays scattered and damaged over the planetary surface. Looks like you won't be able to recover any.]]),
       {goods=GOODS}))
-   vn.na(_([[You give the area one last scan before giving up, which, lo and behold,  seems to bring up something other than damaged goods. It has an odd shape, almost like an egg! Could this be?!]]))
+   vn.na(_([[You give the area one last scan before giving up, which, lo and behold, seems to bring up something other than damaged goods. It has an odd shape, almost like an egg! Could this be?!]]))
    vn.na(_([[You race to get a closer look at the object, however, it seems to be exfoliated scales from the feral bioship that inhabited the mountain of luxury goods. Taking a closer look at them, they seem like they could be useful as makeshift armour on your ships.]]))
 
    vn.sfxVictory()
