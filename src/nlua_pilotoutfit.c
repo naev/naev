@@ -410,6 +410,8 @@ static int poL_munition( lua_State *L )
    int              noaim = lua_toboolean( L, 8 );
    double           time  = weapon_targetFlyTime( o, p, &t );
    const Weapon    *w = weapon_add( po, o, dir, vp, vv, p, &t, time, !noaim );
+   if ( w == NULL )
+      NLUA_ERROR( L, "Failed to add weapon" );
    lua_pushmunition( L, w );
    return 1;
 }
