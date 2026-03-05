@@ -2738,8 +2738,10 @@ Weapon *weapon_add( PilotOutfitSlot *po, const Outfit *ref, double dir,
 
 #if DEBUGGING
    const Outfit *o = ( ref == NULL ) ? po->outfit : ref;
-   if ( !outfit_isBolt( o ) && !outfit_isLauncher( o ) ) {
-      WARN( _( "Trying to create a Weapon from a non-Weapon type Outfit" ) );
+   if ( !outfit_isBolt( o ) && !outfit_isLauncher( o ) &&
+        !outfit_isBeam( o ) ) {
+      WARN( "Trying to create a Weapon from a non-Weapon type Outfit '%s'",
+            o->name );
       return 0;
    }
 #endif /* DEBUGGING */
