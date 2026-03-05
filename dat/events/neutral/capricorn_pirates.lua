@@ -52,14 +52,15 @@ function enter ()
       local p = pilot.add( shipname, "Marauder", pos + vec2.newP( 100*rnd.rnd(), rnd.angle() ), nil, {ai="guard"} )
       p:setHostile(true)
       local m = p:memory()
+      m.capturable = true
       m.bribe_no = _([["You ain't payin' yer wait outta this one!"]])
       m.refuel_no = _([["Do I look like a fuel station?"]])
       if boss then
          p:setLeader( boss )
       end
-      hook.pilot( p, "exploded", "pir_gone" )
-      hook.pilot( p, "jump",     "pir_gone" )
-      hook.pilot( p, "land",     "pir_gone" )
+      hook.pilot( p, "death", "pir_gone" )
+      hook.pilot( p, "jump",  "pir_gone" )
+      hook.pilot( p, "land",  "pir_gone" )
       table.insert( baddies, p )
       return p
    end
