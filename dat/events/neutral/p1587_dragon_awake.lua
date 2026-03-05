@@ -25,7 +25,7 @@ local psize = player.pilot():ship():size()
 local dragon
 function spawn_dragon()
    local fct = ferals.faction()
-   dragon = pilot.add( "Kauweke", fct, SPB, "Wild One" )
+   dragon = pilot.add( "Kauweke", fct, SPB, _("Wild One") )
    dragon:outfitAddSlot( outfit.get("Plasma Burst"), "plasma_burst", true)
    dragon:outfitAddSlot( outfit.get("The Bite - Improved"), "the_bite", true)
    dragon:outfitAddIntrinsic("Corrosion I")
@@ -68,16 +68,15 @@ function dragon_health ()
       dragon:jamLockons()
       dragon:intrinsicSet( "armour_regen_mod", -97 ) -- Basically no more armour regen
       dragon:intrinsicSet( "absorb", 60, true ) -- But what remains of the armour will be putting up a fight
-      dragon:intrinsicSet( "weapon_firerate", 440, true ) -- Volley of hellfire be upon ye
+      dragon:intrinsicSet( "weapon_firerate", 467, true ) -- Volley of hellfire be upon ye
       dragon:intrinsicSet( "ew_track", -50 ) -- Dodging it is an option though!
       dragon:intrinsicSet( "jam_chance", 173, true ) -- ~3/4 chance for Imperators to be jammed
-      dragon:intrinsicSet( "shield_regen_mod", 400 ) 
-      dragon:intrinsicSet( "shielddown_mod", 110 ) -- So in a proper fight the shield regen boost won't do much, but if you're a stealth bomber, then uh oh
+      dragon:intrinsicSet( "shield_regen_mod", 425 ) 
+      dragon:intrinsicSet( "shielddown_mod", 100 ) -- So in a proper fight the shield regen boost won't do much, but if you're a stealth bomber, then uh oh
       dragon:intrinsicSet( "weapon_speed", 10, true )
       dragon:intrinsicSet( "weapon_energy", 70, true )
       dragon:intrinsicSet( "energy_regen_mod", 50, true )
-      dragon:intrinsicSet( "cooldown_mod", 0, true ) 
-      dragon:intrinsicSet( "action_speed", 5 ) 
+      dragon:intrinsicSet( "cooldown_mod", 50, true ) 
       return
    end
    hook.timer(0.1, "dragon_health" )
