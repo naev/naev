@@ -606,7 +606,7 @@ function board()
       misn.markerRm(mem.marker)
       misn.osdDestroy()
       meeting()
-   else
+   elseif mem.stage >= 4 then
       player.unboard()
       seiryuu:control()
       seiryuu:hyperspace()
@@ -660,6 +660,9 @@ function board_escort( pilot )
       player.unboard()
       pilot:setHealth(-1, -1) -- Make ship explode
       mem.boarded_escort = true
+   else
+      player.msg( _("You have an escort job to do."), true )
+      player.unboard()
    end
 end
 
