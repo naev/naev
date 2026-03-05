@@ -21,11 +21,10 @@ function create ()
    hook.enter("enter")
 end
 
-local psize = player.pilot():ship():size()
 local dragon
 function spawn_dragon()
    local fct = ferals.faction()
-   dragon = pilot.add( "Kauweke", fct, SPB, _("Wild One") )
+   dragon = pilot.add( "Kauweke", fct, SPB, _("Haze Leviathan") )
    dragon:outfitAddSlot( outfit.get("Plasma Burst"), "plasma_burst", true)
    dragon:outfitAddSlot( outfit.get("The Bite - Improved"), "the_bite", true)
    dragon:outfitAddIntrinsic("Corrosion I")
@@ -46,10 +45,10 @@ function spawn_dragon()
    dragon:intrinsicSet( "weapon_speed", -60 )
    dragon:intrinsicSet( "weapon_range", 15 )
    dragon:intrinsicSet( "weapon_energy", -50 )
-   dragon:intrinsicSet( "energy_mod", 900 ) 
-   dragon:intrinsicSet( "energy_regen_mod", 220 ) 
+   dragon:intrinsicSet( "energy_mod", 900 )
+   dragon:intrinsicSet( "energy_regen_mod", 220 )
    dragon:intrinsicSet( "ew_detect", 100 ) -- To make stealth bombing slightly harder
-   
+
    dragon:setEnergy( 6 ) -- The faster you take it down, the shorter the volley in phase 2 will be
    dragon:cargoAdd("Luxury Goods", dragon:cargoFree())
    dragon:setHostile(true)
@@ -60,9 +59,9 @@ function spawn_dragon()
 end
 
 function dragon_health ()
-   if not dragon:exists() then 
-      return 
-   elseif dragon:armour() < 29 or (dragon:armour() < 66 and psize < 4) then -- If player is in a small ship then something fishy is going on (stealth bomber?) and phase 2 is hardened against stealth bombers, so trigger it earlier)
+   if not dragon:exists() then
+      return
+   elseif dragon:armour() < 29 or (dragon:armour() < 66 and player.pilot():ship():size() < 4) then -- If player is in a small ship then something fishy is going on (stealth bomber?) and phase 2 is hardened against stealth bombers, so trigger it earlier)
       luaspfx.sfx( dragon:pos(), dragon:vel(), ferals.sfx.spacewhale2 )
       dragon:effectClear(false, true, true) -- Clear debuffs and jam lockons to live a bit longer
       dragon:jamLockons()
@@ -71,12 +70,12 @@ function dragon_health ()
       dragon:intrinsicSet( "weapon_firerate", 467, true ) -- Volley of hellfire be upon ye
       dragon:intrinsicSet( "ew_track", -50 ) -- Dodging it is an option though!
       dragon:intrinsicSet( "jam_chance", 173, true ) -- ~3/4 chance for Imperators to be jammed
-      dragon:intrinsicSet( "shield_regen_mod", 425 ) 
+      dragon:intrinsicSet( "shield_regen_mod", 425 )
       dragon:intrinsicSet( "shielddown_mod", 100 ) -- So in a proper fight the shield regen boost won't do much, but if you're a stealth bomber, then uh oh
       dragon:intrinsicSet( "weapon_speed", 10, true )
       dragon:intrinsicSet( "weapon_energy", 70, true )
       dragon:intrinsicSet( "energy_regen_mod", 50, true )
-      dragon:intrinsicSet( "cooldown_mod", 50, true ) 
+      dragon:intrinsicSet( "cooldown_mod", 50, true )
       return
    end
    hook.timer(0.1, "dragon_health" )
