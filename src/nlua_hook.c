@@ -1095,7 +1095,7 @@ static int hookL_pilot( lua_State *L )
    /* Parameters. */
    if ( lua_ispilot( L, 1 ) )
       p = luaL_checkpilot( L, 1 );
-   else if ( lua_isnil( L, 1 ) )
+   else if ( lua_isnoneornil( L, 1 ) )
       p = 0;
    else
       return NLUA_ERROR(

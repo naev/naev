@@ -33,7 +33,6 @@ static int pilot_hookCleanup = 0; /**< Are hooks being removed from a pilot? */
 int pilot_runHookParam( Pilot *p, int hook_type, const HookParam *param,
                         int nparam )
 {
-   int       run;
    HookParam hstaparam[5], *hdynparam, *hparam;
 
    /* Set up hook parameters. */
@@ -57,13 +56,12 @@ int pilot_runHookParam( Pilot *p, int hook_type, const HookParam *param,
    }
 
    /* Run pilot specific hooks. */
-   run = 0;
+   int run = 0;
    for ( int i = 0; i < array_size( p->hooks ); i++ ) {
-      int ret;
       if ( p->hooks[i].type != hook_type )
          continue;
 
-      ret = hook_runIDparam( p->hooks[i].id, hparam );
+      int ret = hook_runIDparam( p->hooks[i].id, hparam );
       if ( ret )
          WARN( _( "Pilot '%s' failed to run hook type %d" ), p->name,
                hook_type );
@@ -73,11 +71,10 @@ int pilot_runHookParam( Pilot *p, int hook_type, const HookParam *param,
 
    /* Run global hooks. */
    for ( int i = 0; i < array_size( pilot_globalHooks ); i++ ) {
-      int ret;
       if ( pilot_globalHooks[i].type != hook_type )
          continue;
 
-      ret = hook_runIDparam( pilot_globalHooks[i].id, hparam );
+      int ret = hook_runIDparam( pilot_globalHooks[i].id, hparam );
       if ( ret )
          WARN( _( "Pilot '%s' failed to run hook type %d" ), p->name,
                hook_type );
