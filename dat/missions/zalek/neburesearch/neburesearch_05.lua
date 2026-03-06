@@ -297,17 +297,6 @@ function endScan()
    vn.done()
    vn.run()
 
---   local peacemaker = pilot.add("Empire Peacemaker", "Empire", player.pos() + vec2.new(-500,-100))
---   peacemaker:setDir(180.0)
---   peacemaker:setFriendly(true)
---   peacemaker:follow(player.pilot())
---   peacemaker:setActiveBoard(true)
---   peacemaker:setVisplayer(true)
---   peacemaker:setHilight(true)
---   peacemaker:setInvincible(true)
---   peacemaker:hailPlayer()
---   hook.pilot(peacemaker, "board", "rescue")
-
    hook.timer(4.0, "peacemaker")
 end
 
@@ -330,6 +319,9 @@ function peacemaker()
    vn.na(_("You have no time to lose!"))
    vn.done()
    vn.run()
+
+   -- Don't let the player jump out or mission breaks
+   player.pilot():setNoJump(true)
 end
 
 function board(_pilot)
@@ -338,6 +330,7 @@ function board(_pilot)
 end
 
 function rescue()
+   player.pilot():setNoJump(false)
    player.teleport(dest_sys)
    local peacemaker = pilot.add("Empire Peacemaker", "Empire", player.pos())
    peacemaker:control()
