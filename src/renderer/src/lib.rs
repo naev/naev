@@ -16,13 +16,13 @@ use std::sync::{Mutex, MutexGuard, RwLock};
 #[cfg(debug_assertions)]
 use tracing_mutex::stdsync::{Mutex, MutexGuard, RwLock};
 
-pub mod model;
 pub mod buffer;
 pub mod camera;
 pub mod colour;
 pub mod framebuffer;
 pub mod luagfx;
 pub mod luashader;
+pub mod model;
 pub mod sdf;
 pub mod shader;
 pub mod texture;

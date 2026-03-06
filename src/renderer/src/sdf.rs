@@ -99,16 +99,28 @@ impl SdfRenderer {
          }};
       }
 
-      let (program_rect_hollow, buffer_rect_hollow) =
-         sdf_shader!("Rect Hollow Shader", "rectdata", "rect_hollow.wgsl", RectHollowUniform);
+      let (program_rect_hollow, buffer_rect_hollow) = sdf_shader!(
+         "Rect Hollow Shader",
+         "rectdata",
+         "rect_hollow.wgsl",
+         RectHollowUniform
+      );
       let (program_cross, buffer_cross) =
          sdf_shader!("Cross Shader", "crossdata", "cross.wgsl", CrossUniform);
       let (program_circle, buffer_circle) =
          sdf_shader!("Circle Shader", "circledata", "circle.wgsl", CircleUniform);
-      let (program_circle_hollow, buffer_circle_hollow) =
-         sdf_shader!("Circle Hollow Shader", "circledata", "circle_hollow.wgsl", CircleHollowUniform);
-      let (program_triangle_hollow, buffer_triangle_hollow) =
-         sdf_shader!("Triangle Hollow Shader", "triangledata", "triangle_hollow.wgsl", TriangleHollowUniform);
+      let (program_circle_hollow, buffer_circle_hollow) = sdf_shader!(
+         "Circle Hollow Shader",
+         "circledata",
+         "circle_hollow.wgsl",
+         CircleHollowUniform
+      );
+      let (program_triangle_hollow, buffer_triangle_hollow) = sdf_shader!(
+         "Triangle Hollow Shader",
+         "triangledata",
+         "triangle_hollow.wgsl",
+         TriangleHollowUniform
+      );
 
       Ok(Self {
          program_rect_hollow,
