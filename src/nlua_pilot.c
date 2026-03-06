@@ -5975,9 +5975,9 @@ static Task *pilotL_newtask( lua_State *L, Pilot *p, const char *task )
  *
  *    @luatparam Pilot p Pilot to tell to go to a position.
  *    @luatparam Vec2 v Vector target for the pilot.
- *    @luatparam[opt=1] boolean brake If true (or nil) brakes the pilot near
+ *    @luatparam[opt=true] boolean brake If true (or nil) brakes the pilot near
  * target position, otherwise pops the task when it is about to brake.
- *    @luatparam[opt=1] boolean compensate If true (or nil) compensates for
+ *    @luatparam[opt=true] boolean compensate If true (or nil) compensates for
  * velocity, otherwise it doesn't. It only affects if brake is not set.
  * @luasee control
  * @luafunc moveto
