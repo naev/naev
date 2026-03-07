@@ -1066,6 +1066,7 @@ static int naevL_supported_image_ext( lua_State *L )
    EXT( ".png" );
    EXT( ".jpg" );
    EXT( ".jpeg" );
+   EXT( ".svg" );
    return 1;
 }
 

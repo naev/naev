@@ -1258,6 +1258,11 @@ pub extern "C-unwind" fn gl_texExistsPath(cpath: *const c_char) -> c_int {
             return 1;
          }
       }
+      // svg gets tested separately
+      let path = &format!("{}.svg", path);
+      if ndata::exists(path) {
+         return 1;
+      }
    }
    0
 }
