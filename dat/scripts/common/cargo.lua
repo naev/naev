@@ -187,7 +187,7 @@ function car.getTransit( numjumps, traveldist )
    return arrivalt
 end
 
-local _hidden_fact = {
+local hidden_fact = {
    faction.get("FLF"),
    faction.get("Pirate"),
    faction.get("Marauder"),
@@ -205,7 +205,7 @@ function car.validDest( curplanet, targetplanet )
    local cfct = curplanet:faction()
    local tfct = targetplanet:faction()
    -- Factions which cannot be delivered to by factions other than themselves
-   for i, f in ipairs(_hidden_fact) do
+   for i, f in ipairs(hidden_fact) do
       if tfct==f and cfct~=f then
          return false
       end
