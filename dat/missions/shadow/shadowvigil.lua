@@ -602,12 +602,14 @@ end
 
 -- Function hooked to boarding. Only used on the Seiryuu.
 function board()
+   player.unboard()
+
    if mem.stage == 0 then
       misn.markerRm(mem.marker)
       misn.osdDestroy()
       meeting()
+
    elseif mem.stage >= 4 then
-      player.unboard()
       seiryuu:control()
       seiryuu:hyperspace()
       seiryuu:setActiveBoard(false)
@@ -634,6 +636,9 @@ function board()
 
       shadow.addLog( _([[Your attempt to escort a diplomat for the Four Winds was thwarted by traitors on the inside. Other Four Winds escorts opened fire on the diplomat, killing him. Captain Rebina has said that she may need your help again at a later date.]]) )
       misn.finish(true)
+   else
+      player.msg( _("You have an escort job to do."), true )
+
    end
 end
 
@@ -660,9 +665,6 @@ function board_escort( pilot )
       player.unboard()
       pilot:setHealth(-1, -1) -- Make ship explode
       mem.boarded_escort = true
-   else
-      player.msg( _("You have an escort job to do."), true )
-      player.unboard()
    end
 end
 
