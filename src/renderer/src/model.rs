@@ -1390,6 +1390,7 @@ impl Model {
       hasher.update(path.as_ref().as_os_str().as_encoded_bytes());
       hasher.update(&stats.modtime.to_ne_bytes());
       hasher.update(&size.to_ne_bytes());
+      //hasher.update( &naev_core::constants::CTS.camera_angle.to_ne_bytes() );
       let hash = hasher.finalize();
       let cache_path = ndata::cache_dir().join(format!("collisions/{hash}"));
       if let Ok(data) = fs::read(&cache_path)
