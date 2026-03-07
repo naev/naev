@@ -7,7 +7,10 @@
  <chance>350</chance>
  <location>Computer</location>
  <cond>
-   require("misn_test").cargo()
+   if not player.misnDone("Mining Vrata Intro") then
+      return false
+   end
+   return require("misn_test").cargo()
  </cond>
 </mission>
 --]]

@@ -3392,6 +3392,7 @@ dat/missions/thurion/data_extraction.lua
 dat/missions/thurion/intro_wildspace.lua
 dat/missions/trader/anxiousmerchant.lua
 dat/missions/trader/mineral_request.lua
+dat/missions/trader/mining_vrata_intro.lua
 dat/missions/trader/trader_escort.lua
 dat/missions/trader/trader_rehab.lua
 dat/missions/tutorial/nelly01.lua
