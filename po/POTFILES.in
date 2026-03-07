@@ -3631,6 +3631,7 @@ dat/scripts/factions/proteron.lua
 dat/scripts/factions/sirius.lua
 dat/scripts/factions/soromid.lua
 dat/scripts/factions/thurion.lua
+dat/scripts/factions/trader_society.lua
 dat/scripts/factions/yetmer.lua
 dat/scripts/factions/zalek.lua
 dat/scripts/fleet.lua
