@@ -94,7 +94,7 @@ function accept ()
    misn.accept()
 
    misn.osdCreate( TITLE, {
-      fmt.f(_("Mine at least {amount} of an uncommon on rare mineral"), {
+      fmt.f(_("Mine at least {amount} of an uncommon or rare mineral"), {
          amount = fmt.tonnes(NEEDED),
       } ),
       fmt.f( _("Deliver the cargo to a {faction} planet or station"), {
@@ -166,7 +166,7 @@ function land ()
    local present
    vn.menu( function ()
       local opts = { { _("Not yet."), "01_later" } }
-      for k,v in cargos do
+      for k,v in ipairs(cargos) do
          table.insert( opts, 1, { fmt.f(_([[Hand in {name} ({type}, you have {amount})]]), {
             name     = v.c,
             type     = v.t,
@@ -199,9 +199,9 @@ function land ()
    vn.transition()
 
    vn.na(_([[You are waiting for your reward when suddenly a big figure burst out of the Mining Vrata HQ.]]))
-   steve(fmt.f(_([["Hey, you must be {player}. My name's Steve, and I'm in charge of the Mining Vrata right now."
+   steve(fmt.f(_([["Ho ho! Hey, you must be {player}. My name's Steve, and I'm in charge of the Mining Vrata right now."
 He beams you a smile.
-"I try my best to meet all new members."]]), {
+"I try my best to meet all new members! Got to keep the place lively!"]]), {
       player = player.name(),
    }))
    vn.menu{
@@ -210,7 +210,7 @@ He beams you a smile.
    }
 
    vn.label("01_member")
-   steve(_([["What? You weren't told this delivery was the initiation rite for the Mining Vrata? Well, what's done is done. You're now a member, but don't worry, there are no fees or anything. Rather, this opens up more opportunities for you with the Space Trader's Society!"]]))
+   steve(_([["Wait, what? You weren't told this delivery was the initiation rite for the Mining Vrata? Well, what's done is done. You're now a member, but don't worry, there are no fees or anything. Rather, this opens up more opportunities for you with the Space Trader's Society!"]]))
    vn.jump("01_cont")
 
    vn.label("01_nice")
@@ -219,7 +219,7 @@ He beams you a smile.
 
    vn.label("01_cont")
    steve( function ()
-      local msg = _([["Here, let me get you with a reward hooked up for the minerals you brought in."]])
+      local msg = _([["Oh yeah, here, let me get you with a reward hooked up for the minerals you brought in. We take pride in rewarding our members."]])
       if present.rare then
          return fmt.f(_([[{msg}
 They take a quick look at their notes.
@@ -230,6 +230,7 @@ They take a quick look at their notes.
       end
       return msg
    end )
+   vn.sfxMoney()
    vn.na( function()
       local reward = REWARD
       if present.rare then
@@ -239,7 +240,9 @@ They take a quick look at their notes.
       return fmt.reward(reward)
    end )
 
-   steve(_([["Also, at the Mining Vrata we are looking for new resources and types of asteroid. If you ever find anything like that while mining, make sure to bring some over to any Trader's Society location!"]]))
+   steve(_([["As a member, you'll have access to mining requests from mission bulletins. They're a good way to make mining more lucrative, benefit society, and the Mining Vrata. Keep your eye out for such requests when you yearn to mine."]]))
+   steve(_([["Also, at the Mining Vrata we are looking for new resources and types of asteroid. If you ever find anything like that while mining, make sure to bring some over to any Trader's Society location! Will to drill!"]]))
+   vn.na(_([[With the Mining Vrata's 'Will to Drill' motto echoing throughout the Mining Vrata HQ, Steve turns heels and stomps away.]]))
 
    vn.run()
 
