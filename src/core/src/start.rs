@@ -54,10 +54,10 @@ macro_rules! nxml_attr_str {
       }
    };
 }
-macro_rules! nxml_attr_i32 {
+macro_rules! nxml_attr_i64 {
    ($node: expr, $name: expr) => {
       match $node.attribute($name) {
-         Some(val) => val.parse::<i32>(),
+         Some(val) => val.parse::<i64>(),
          None => {
             warn!(
                "xml node '{}' missing attribute '{}'",
@@ -153,9 +153,9 @@ impl StartData {
                }
             }
             "date" => {
-               let scu = nxml_attr_i32!(node, "scu")?;
-               let stp = nxml_attr_i32!(node, "stp")?;
-               let stu = nxml_attr_i32!(node, "stu")?;
+               let scu = nxml_attr_i64!(node, "scu")?;
+               let stp = nxml_attr_i64!(node, "stp")?;
+               let stu = nxml_attr_i64!(node, "stu")?;
                start.date = NTime::new(scu, stp, stu);
             }
             "spob_lua_default" => {

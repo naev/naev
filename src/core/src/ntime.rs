@@ -68,7 +68,7 @@ impl std::fmt::Display for NTime {
    }
 }
 impl NTime {
-   pub fn new(scu: i32, stp: i32, stu: i32) -> NTime {
+   pub fn new(scu: i64, stp: i64, stu: i64) -> NTime {
       let scu = scu as i64;
       let stp = stp as i64;
       let stu = stu as i64;
@@ -79,19 +79,19 @@ impl NTime {
                + stu),
       )
    }
-   pub fn cycles(self) -> i32 {
+   pub fn cycles(self) -> i64 {
       let t = self.0;
       (t / (CTS.timedate_minor_in_major * CTS.timedate_increment_in_minor * MULTIPLIER))
          .try_into()
          .unwrap_or(0)
    }
-   pub fn periods(self) -> i32 {
+   pub fn periods(self) -> i64 {
       let t = self.0;
       (t / (CTS.timedate_increment_in_minor * MULTIPLIER) % CTS.timedate_minor_in_major)
          .try_into()
          .unwrap_or(0)
    }
-   pub fn seconds(self) -> i32 {
+   pub fn seconds(self) -> i64 {
       let t = self.0;
       (t / MULTIPLIER % CTS.timedate_increment_in_minor)
          .try_into()
@@ -194,11 +194,11 @@ impl Converter {
          return Ok(NTime::new(
             cap[1].parse()?,
             match cap.get(2) {
-               Some(m) => m.as_str().parse::<i32>()?,
+               Some(m) => m.as_str().parse::<i64>()?,
                None => 0,
             },
             match cap.get(3) {
-               Some(m) => m.as_str().parse::<i32>()?,
+               Some(m) => m.as_str().parse::<i64>()?,
                None => 0,
             },
          ));
@@ -209,7 +209,7 @@ impl Converter {
             0,
             cap[1].parse()?,
             match cap.get(2) {
-               Some(m) => m.as_str().parse::<i32>()?,
+               Some(m) => m.as_str().parse::<i64>()?,
                None => 0,
             },
          ));
@@ -299,7 +299,7 @@ impl UserData for NTime {
        */
       methods.add_function(
          "new",
-         |_, (scu, stp, stu): (i32, i32, i32)| -> mlua::Result<Self> {
+         |_, (scu, stp, stu): (i64, i64, i64)| -> mlua::Result<Self> {
             Ok(NTime::new(scu, stp, stu))
          },
       );
@@ -313,7 +313,7 @@ impl UserData for NTime {
        *    @luatreturn integer Increment time component (seconds).
        * @luafunc split
        */
-      methods.add_method("split", |_, this, ()| -> mlua::Result<(i32, i32, i32)> {
+      methods.add_method("split", |_, this, ()| -> mlua::Result<(i64, i64, i64)> {
          Ok((this.cycles(), this.periods(), this.seconds()))
       });
       /*@
@@ -549,7 +549,7 @@ pub extern "C" fn ntime_update(dt: c_double) {
 }
 #[unsafe(no_mangle)]
 pub extern "C" fn ntime_create(scu: c_int, stp: c_int, stu: c_int) -> NTimeC {
-   NTime::new(scu, stp, stu).0
+   NTime::new(scu.into(), stp.into(), stu.into()).0
 }
 #[unsafe(no_mangle)]
 pub extern "C" fn ntime_get() -> NTimeC {
@@ -564,9 +564,9 @@ pub extern "C" fn ntime_split(
 ) {
    let nt = NTime(nt);
    unsafe {
-      *cycles = nt.cycles();
-      *periods = nt.periods();
-      *seconds = nt.seconds();
+      *cycles = nt.cycles() as c_int;
+      *periods = nt.periods() as c_int;
+      *seconds = nt.seconds() as c_int;
    }
 }
 #[unsafe(no_mangle)]
@@ -579,23 +579,23 @@ pub extern "C" fn ntime_getR(
    let nt = TIME.read().unwrap();
    let t = nt.time;
    unsafe {
-      *cycles = t.cycles();
-      *periods = t.periods();
-      *seconds = t.seconds();
+      *cycles = t.cycles() as c_int;
+      *periods = t.periods() as c_int;
+      *seconds = t.seconds() as c_int;
       *rem = nt.time.remainder() + nt.remainder;
    }
 }
 #[unsafe(no_mangle)]
 pub extern "C" fn ntime_getCycles(t: NTimeC) -> c_int {
-   NTime(t).cycles()
+   NTime(t).cycles() as c_int
 }
 #[unsafe(no_mangle)]
 pub extern "C" fn ntime_getPeriods(t: NTimeC) -> c_int {
-   NTime(t).periods()
+   NTime(t).periods() as c_int
 }
 #[unsafe(no_mangle)]
 pub extern "C" fn ntime_getSeconds(t: NTimeC) -> c_int {
-   NTime(t).seconds()
+   NTime(t).seconds() as c_int
 }
 #[unsafe(no_mangle)]
 pub extern "C" fn ntime_convertSeconds(t: NTimeC) -> c_double {
@@ -641,7 +641,10 @@ pub extern "C" fn ntime_set_remainder(t: NTimeC, rem: c_double) {
 }
 #[unsafe(no_mangle)]
 pub extern "C" fn ntime_setR(cycles: c_int, periods: c_int, seconds: c_int, rem: c_double) {
-   set_remainder(NTime::new(cycles, periods, seconds), rem);
+   set_remainder(
+      NTime::new(cycles.into(), periods.into(), seconds.into()),
+      rem,
+   );
 }
 #[unsafe(no_mangle)]
 pub extern "C" fn ntime_inc(tc: NTimeC) {
