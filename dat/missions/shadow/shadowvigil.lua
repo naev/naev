@@ -609,7 +609,7 @@ function board()
       misn.osdDestroy()
       meeting()
 
-   elseif mem.stage >= 4 then
+   elseif mem.missend then
       seiryuu:control()
       seiryuu:hyperspace()
       seiryuu:setActiveBoard(false)
