@@ -164,3 +164,7 @@ cargo-util = "0.2"
 
 # Probably useful
 #etagere = "0" # Texture Atlas generation
+
+
+#[dev-dependencies]
+#approx = "0.5"

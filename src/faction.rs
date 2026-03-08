@@ -131,6 +131,25 @@ pub static FACTIONS: LazyLock<RwLock<SlotMap<FactionRef, Faction>>> =
 pub static PLAYER: OnceLock<FactionRef> = OnceLock::new();
 const PLAYER_FACTION_NAME: &str = "Player";
 
+fn reputation_to_raw(rep: f32) -> f32 {
+   let arep = rep.abs();
+   (if arep < 10.0 {
+      arep
+   } else {
+      10.0 * 2.0f32.powf(arep / 10.0 - 1.0)
+   })
+   .copysign(rep)
+}
+fn raw_to_reputation(raw: f32) -> f32 {
+   let araw = raw.abs();
+   (if araw < 10.0 {
+      araw
+   } else {
+      10.0 * ((araw / 10.0).log2() + 1.0)
+   })
+   .copysign(raw)
+}
+
 slotmap::new_key_type! {
 pub struct FactionRef;
 }
@@ -2826,3 +2845,19 @@ pub extern "C" fn faction_generators(id: i64) -> *const naevc::FactionGenerator 
    *array = Array::new(&generators).unwrap();
    array.as_ptr() as *const naevc::FactionGenerator
 }
+
+/*
+#[test]
+fn test_reputation_raw () {
+   use approx::{abs_diff_ne, abs_diff_eq};
+   for rep in -100..=100 {
+      let rep = rep as f32;
+      let raw = reputation_to_raw( rep );
+      let _ = abs_diff_ne!( rep, raw );
+      let _ = abs_diff_eq!( rep, raw_to_reputation( raw ) );
+      let _ = abs_diff_eq!( -raw, reputation_to_raw( -rep ) );
+      let _ = abs_diff_eq!( -rep, raw_to_reputation( -raw ) );
+      let _ = abs_diff_eq!( rep, -raw_to_reputation( -raw ) );
+   }
+}
+*/
