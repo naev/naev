@@ -69,9 +69,6 @@ impl std::fmt::Display for NTime {
 }
 impl NTime {
    pub fn new(scu: i64, stp: i64, stu: i64) -> NTime {
-      let scu = scu as i64;
-      let stp = stp as i64;
-      let stu = stu as i64;
       NTime(
          MULTIPLIER
             * (scu * (CTS.timedate_minor_in_major * CTS.timedate_increment_in_minor)
@@ -81,21 +78,15 @@ impl NTime {
    }
    pub fn cycles(self) -> i64 {
       let t = self.0;
-      (t / (CTS.timedate_minor_in_major * CTS.timedate_increment_in_minor * MULTIPLIER))
-         .try_into()
-         .unwrap_or(0)
+      t / (CTS.timedate_minor_in_major * CTS.timedate_increment_in_minor * MULTIPLIER)
    }
    pub fn periods(self) -> i64 {
       let t = self.0;
-      (t / (CTS.timedate_increment_in_minor * MULTIPLIER) % CTS.timedate_minor_in_major)
-         .try_into()
-         .unwrap_or(0)
+      t / (CTS.timedate_increment_in_minor * MULTIPLIER) % CTS.timedate_minor_in_major
    }
    pub fn seconds(self) -> i64 {
       let t = self.0;
-      (t / MULTIPLIER % CTS.timedate_increment_in_minor)
-         .try_into()
-         .unwrap_or(0)
+      t / MULTIPLIER % CTS.timedate_increment_in_minor
    }
    pub fn remainder(self) -> f64 {
       (self.0 % MULTIPLIER) as f64
