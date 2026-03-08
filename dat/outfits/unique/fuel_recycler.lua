@@ -9,24 +9,23 @@ local cooldown = 15 -- cooldown time in seconds
 
 --local sfx = audio.newSoundData( 'snd/sounds/ping' )
 
-local recyclables = {
-   -- Rare
-   ["Kermite"]    = 50,
-   ["Therite"]    = 50,
-   ["Vixilium"]   = 50,
-   -- Uncommon
-   ["Gold"]       = 15,
-   ["Platinum"]   = 15,
-   ["Rhodium"]    = 15,
-   ["Yttrium"]    = 15,
-   -- Common
-   ["Clay"]       = 5,
-   ["Iron"]       = 5,
-   ["Nickel"]     = 5,
-   ["Silicate"]   = 5,
-   ["Olivine"]    = 5,
-   ["Water"]      = 5,
-}
+-- Figure out commodities
+local recyclables = {}
+for k,c in ipairs(commodity.get()) do
+   local t = c:tags()
+   if t.mining then
+      local name = c:nameRaw()
+      if t.common then
+         recyclables[name] = 5
+      elseif t.uncommon then
+         recyclables[name] = 15
+      elseif t.rare then
+         recyclables[name] = 50
+      elseif t.special then
+         recyclables[name] = 250
+      end
+   end
+end
 
 local function recycle_interface ()
    local recycled = 0
