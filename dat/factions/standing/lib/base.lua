@@ -7,9 +7,15 @@ local fmt = require "format"
 local sbase = {}
 friendly_at = 70 -- global
 
-local function rep_from_points( points )
+local function rep_from_points( p )
    -- 4 points for 20 point Llama, 30 points for 150 point Hawking
-   return points / 5
+   --return p / 5
+
+   -- Rough approximation to map our point values to some faction hit values
+   -- 80  -> 400 (Starbridge)
+   -- 130 -> 956 (Kestrel)
+   -- 200 -> 2000 (Goddard)
+   return 30*p*p / (p+400)
 end
 
 function sbase.init( args )
@@ -118,7 +124,7 @@ local function hit_local( sys, mod, min, max )
    local r = sys:reputation( sbase.fct )
    max = math.max( r, max ) -- Don't lower under the current value
    min = math.min( r, min ) -- Don't increase the current value
-   local f = clamp( r+mod, min, max )
+   local f = clamp( faction.rep_add(r,mod), min, max )
    sys:setReputation( sbase.fct, f )
    return f-r
 end
@@ -231,7 +237,7 @@ function hit( sys, mod, source, secondary, primary_fct )
             end
             local fmin = math.min( r, min )
             local fmax = math.max( r, max )
-            local f = clamp( r+mod, fmin, fmax )
+            local f = clamp( faction.rep_add(r,mod), fmin, fmax )
             if mod < 0 then
                changed = math.min( changed, f-r )
             else

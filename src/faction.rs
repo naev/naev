@@ -140,6 +140,7 @@ fn reputation_to_raw(rep: f32) -> f32 {
    })
    .copysign(rep)
 }
+
 fn raw_to_reputation(raw: f32) -> f32 {
    let araw = raw.abs();
    (if araw < 10.0 {
@@ -463,12 +464,25 @@ pub struct Faction {
    c: FactionC,
 }
 impl Faction {
+   pub fn player_raw(&self) -> f32 {
+      let standing = self.standing.read().unwrap();
+      let rep = match standing.p_override {
+         Some(std) => std,
+         None => standing.player,
+      };
+      reputation_to_raw(rep)
+   }
+
    pub fn player(&self) -> f32 {
       let standing = self.standing.read().unwrap();
       match standing.p_override {
          Some(std) => std,
          None => standing.player,
       }
+   }
+
+   pub fn set_player_raw(&self, raw: f32) {
+      self.set_player(raw_to_reputation(raw))
    }
 
    pub fn set_player(&self, std: f32) {
@@ -1201,6 +1215,26 @@ impl UserData for FactionRef {
           (this, other): (UserDataRef<FactionRef>, UserDataRef<FactionRef>)|
           -> mlua::Result<bool> { Ok(*this == *other) },
       );
+      /*@
+       * @brief Adds a raw value to a reputation resulting in a reputation value.
+       *
+       *    @luatparam number base Base reputation to add to.
+       *    @luatparam number term Raw term to add.
+       *    @luatreturn number The added value in reputation space.
+       * @luafunc rep_add
+       */
+      methods.add_function(
+         "rep_add",
+         |_, (base, term): (f32, f32)| -> mlua::Result<f32> {
+            Ok(raw_to_reputation(reputation_to_raw(base) + term))
+         },
+      );
+      methods.add_function("rep_to_raw", |_, rep: f32| -> mlua::Result<f32> {
+         Ok(reputation_to_raw(rep))
+      });
+      methods.add_function("raw_to_rep", |_, raw: f32| -> mlua::Result<f32> {
+         Ok(raw_to_reputation(raw))
+      });
       /*@
        * @brief Gets a faction if it exists.
        *

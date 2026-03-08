@@ -176,6 +176,7 @@ stds.faction = {
          fields = {
             __tostring = {},
             __eq = {},
+            rep_add = {},
             exists = {},
             get = {},
             getAll = {},
