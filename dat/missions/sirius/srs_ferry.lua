@@ -147,8 +147,8 @@ function create()
    mem.reward     = 1.4^(speed + mem.rank) * (mem.numjumps * jumpreward + mem.traveldist * distreward) * (1. + 0.05*rnd.twosigma()) / (2-mem.rank/2.0)
 
    -- Set some mission constants.
-   mem.distbonus_maxjumps = 12 -- This is the maximum distance for reputation bonus calculations. Distances beyond this don't add to the bonus.
-   mem.distbonus_minjumps = 5 -- This is the minimum distance needed to get a reputation bonus. Distances less than this don't incur a bonus.
+   mem.distbonus_maxjumps = 10 -- This is the maximum distance for reputation bonus calculations. Distances beyond this don't add to the bonus.
+   mem.distbonus_minjumps = 4 -- This is the minimum distance needed to get a reputation bonus. Distances less than this don't incur a bonus.
 
    mem.dest_marker = misn.markerAdd( mem.destplanet, "computer" )
    misn.setTitle( fmt.f(srs.prefix.._("{tier} pilgrimage transport for {rank}-class citizen"), {tier=ferrytime[mem.print_speed], rank=prank[mem.rank]}) )
