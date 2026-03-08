@@ -239,8 +239,17 @@ They take a quick look at their notes.
       player.pay( reward )
       return fmt.reward(reward)
    end )
+   steve(_([["Wait, I've got a better idea."
+He puts both his hands in his mouth and lets out a resounding whistle. An employee pops out the back to take a look, and Steve gives them a nod, before they go back.]]))
+   steve(_([["That settles it, we've been working on a prototype Fuel Recycler, it's able to convert materials into fuel out in space. Give it a spin and you can tell us what you think about it. We're hoping to make these standard for all Mining Vrata members."]]))
+   local reward = outfit.get("Fuel Recycler")
+   vn.sfxVictory()
+   vn.func( function()
+      player.outfitAdd( reward )
+   end )
+   vn.na( fmt.reward(reward) )
 
-   steve(_([["As a member, you'll have access to mining requests from mission bulletins. They're a good way to make mining more lucrative, benefit society, and the Mining Vrata. Keep your eye out for such requests when you yearn to mine."]]))
+   steve(_([["That reminds me, I almost forgot. As a member, you'll have access to mining requests from mission bulletins. They're a good way to make mining more lucrative, benefit society, and the Mining Vrata. Keep your eye out for such requests when you yearn to mine."]]))
    steve(_([["Also, at the Mining Vrata we are looking for new resources and types of asteroid. If you ever find anything like that while mining, make sure to bring some over to any Trader's Society location! Will to drill!"]]))
    vn.na(_([[With the Mining Vrata's 'Will to Drill' motto echoing throughout the Mining Vrata HQ, Steve turns heels and stomps away.]]))
 
