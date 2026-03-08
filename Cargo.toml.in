@@ -66,7 +66,7 @@ physics = { path="@BUILD@/src/physics" }
 pluginmgr = { path="@BUILD@/src/pluginmgr" }
 pluginmgr-gui = { path="@BUILD@/src/pluginmgr-gui" }
 formatx = "0.2"
-glow = "0.16"
+glow = "0.17"
 nalgebra = { version = "0.34", features = ["bytemuck", "encase", "serde-serialize"] }
 encase = { version = "0.12" } # Needed for shader voodoo
 bytemuck = { version = "1.25", features = ["derive"] } # Needed for shader voodoo
