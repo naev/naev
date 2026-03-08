@@ -1836,7 +1836,7 @@ impl UserData for FactionRef {
          "dynAlly",
          |_, this, (ally, remove): (FactionRef, Option<bool>)| -> mlua::Result<()> {
             let remove = remove.unwrap_or(false);
-            this.call_mut(|fct| {
+            let _ = this.call_mut(|fct| {
                if !fct.data.f_dynamic {
                   return Err(mlua::Error::RuntimeError(
                      "Can only add allies to dynamic factions".to_string(),
@@ -1848,7 +1848,17 @@ impl UserData for FactionRef {
                   fct.add_ally(ally);
                }
                Ok(())
-            })?
+            })?;
+            let data = match FACTIONS.try_write() {
+               Ok(d) => d,
+               Err(e) => {
+                  return Err(mlua::Error::RuntimeError(format!(
+                     "unable to modify dynamic faction: {e}"
+                  )));
+               }
+            };
+            GRID.write().unwrap().recompute(&data)?;
+            Ok(())
          },
       );
       /*@
@@ -1865,7 +1875,7 @@ impl UserData for FactionRef {
          "dynEnemy",
          |_, this, (enemy, remove): (FactionRef, Option<bool>)| -> mlua::Result<()> {
             let remove = remove.unwrap_or(false);
-            this.call_mut(|fct| {
+            let _ = this.call_mut(|fct| {
                if !fct.data.f_dynamic {
                   return Err(mlua::Error::RuntimeError(
                      "Can only add allies to dynamic factions".to_string(),
@@ -1877,7 +1887,17 @@ impl UserData for FactionRef {
                   fct.add_enemy(enemy);
                }
                Ok(())
-            })?
+            })?;
+            let data = match FACTIONS.try_write() {
+               Ok(d) => d,
+               Err(e) => {
+                  return Err(mlua::Error::RuntimeError(format!(
+                     "unable to modify dynamic faction: {e}"
+                  )));
+               }
+            };
+            GRID.write().unwrap().recompute(&data)?;
+            Ok(())
          },
       );
    }
