@@ -26,6 +26,7 @@
 /* Commodity metatable methods. */
 static int commodityL_eq( lua_State *L );
 static int commodityL_get( lua_State *L );
+static int commodityL_getAll( lua_State *L );
 static int commodityL_exists( lua_State *L );
 static int commodityL_getStandard( lua_State *L );
 static int commodityL_flags( lua_State *L );
@@ -47,6 +48,7 @@ static const luaL_Reg commodityL_methods[] = {
    { "__tostring", commodityL_name },
    { "__eq", commodityL_eq },
    { "get", commodityL_get },
+   { "getAll", commodityL_getAll },
    { "exists", commodityL_exists },
    { "getStandard", commodityL_getStandard },
    { "flags", commodityL_flags },
@@ -225,6 +227,25 @@ static int commodityL_get( lua_State *L )
 
    /* Push. */
    lua_pushcommodity( L, commodity );
+   return 1;
+}
+
+/**
+ * @brief Gets a table with all the commodities.
+ *
+ * @usage for k,v in ipairs( commodity.getAll() ) do ... end
+ *
+ *    @luatreturn {Commodity} Ordered list of commodities.
+ * @luafunc getAll
+ */
+static int commodityL_getAll( lua_State *L )
+{
+   Commodity *com = commodity_getAll();
+   lua_newtable( L );
+   for ( int i = 0; i < array_size( com ); i++ ) {
+      lua_pushcommodity( L, &com[i] );
+      lua_rawseti( L, -2, i + 1 );
+   }
    return 1;
 }
 
