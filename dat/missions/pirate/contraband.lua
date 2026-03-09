@@ -194,7 +194,7 @@ function land()
       var.push("ps_misn", n+1)
 
       -- increase faction
-      faction.hit( mem.reward_faction, rnd.rnd(2, 4), nil, nil, true )
+      faction.hit( mem.reward_faction, rnd.rnd(15, 20), nil, nil, true )
       misn.finish(true)
    end
 end

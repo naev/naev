@@ -305,7 +305,7 @@ function land()
 
       if mem.intime then
          local distbonus = math.max(math.min(mem.numjumps,mem.distbonus_maxjumps)-mem.distbonus_minjumps+1, 0) / 2  -- ranges from 0 (<mem.distbonus_minjumps jumps) to 4 (>=mem.distbonus_maxjumps jumps)
-         faction.hit("Sirius", rnd.rnd(distbonus, distbonus+mem.rank+1))
+         faction.hit("Sirius", 5+rnd.rnd(distbonus, distbonus+5*mem.rank+5))
 
          vntk.msg(_("Successful arrival!"), fmt.f( ferry_land_p2[mem.rank], {passenger=ferry_land_p1[mem.rank]} ) )
       elseif mem.overtime then
@@ -325,7 +325,7 @@ function land()
 
       if mem.change == 2 then
          -- A little bonus for doing something nice
-         faction.hit("Sirius", 1)
+         faction.hit("Sirius", 10)
          vntk.msg(_("Altering the deal"), _("Since you were unexpectedly able to procure a Sirian ship for the journey, you find a few extra credits tucked in with the fare!"))
          mem.reward = mem.reward * 1.25
       end

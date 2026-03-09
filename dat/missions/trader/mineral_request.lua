@@ -100,13 +100,13 @@ function create ()
    local t = mem.mineral:tags()
    if t.rare then
       mem.minimum = rnd.rnd( 5, 10 )
-      mem.tier = 2
+      mem.tier = 3
    elseif t.uncommon then
       mem.minimum = rnd.rnd( 10, 20 )
       mem.tier = 2
    else
       mem.minimum = rnd.rnd( 20, 30 )
-      mem.tier = 2
+      mem.tier = 1
    end
 
    -- Now to figure out where to send it
@@ -213,7 +213,7 @@ function land ()
    vn.func( function ()
       player.fleetCargoRm( mem.mineral, owned )
       player.pay( reward )
-      faction.hit("Traders Society", mem.tier+rnd.rnd(1,2) )
+      faction.hit("Traders Society", 5*mem.tier+rnd.rnd(0,10) )
       done = true
    end )
    vn.sfxMoney()

@@ -111,8 +111,10 @@ function land()
       vntk.msg( _("Mission Complete"), fmt.f(_([[You land and transmit a datapad to the local Dvaered liaison officer.
 {reward}]]),{reward=fmt.reward(mem.credits)}) )
       player.pay( mem.credits )
-      faction.hit("Dvaered", rnd.rnd(1, 2))
-      pir.reputationNormalMission(rnd.rnd(2,3))
+
+      local hit = rnd.rnd(10,20)
+      faction.hit("Dvaered", hit)
+      pir.reputationNormalMission(hit)
       misn.finish(true)
    end
 end

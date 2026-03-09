@@ -182,8 +182,9 @@ Your mission is a FAILURE!]]),{pnt=mem.pnt}) ) -- That's not realistic the playe
       elseif spob.cur():faction() == faction.get("Dvaered") then -- Pay the player
          vntk.msg( _("Reward"), fmt.f(_("For accomplishing a Warlord Propaganda Mission, you are rewarded {pay}."),{pay=fmt.credits( mem.pay )}) )
          player.pay( mem.pay )
-         faction.hit("Dvaered", rnd.rnd(2, 3))
-         pir.reputationNormalMission(rnd.rnd(2,3))
+         local hit = rnd.rnd(5,15)
+         faction.hit("Dvaered", hit)
+         pir.reputationNormalMission(hit)
          finish( true )
       end
    end

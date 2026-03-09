@@ -133,7 +133,7 @@ end
 
 function out_sys_failure() --feel like jumping out? AWOL! its easier this way. trust me.
    tk.msg(_("The Assault"),_([[You receive a scathing angry message from Draga chastising you for abandoning your mission. You put it behind you. There's no turning back now.]]))
-   faction.hit("Nasin",-50)
+   faction.hit("Nasin",-500)
    misn.finish(false)
 end
 

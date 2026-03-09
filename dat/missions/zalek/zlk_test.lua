@@ -167,7 +167,7 @@ function land()
       player.outfitRm("Za'lek Test Engine")
 
       -- increase faction
-      faction.hit("Za'lek", rnd.rnd(1, 2))
+      faction.hit("Za'lek", rnd.rnd(10, 20))
       rmTheOutfit()
       misn.finish(true)
    end

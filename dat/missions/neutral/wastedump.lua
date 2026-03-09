@@ -146,7 +146,7 @@ function abort ()
 
       -- Hit all the presences in the system
       for fct,val in pairs( system.cur():presences() ) do
-         local fcthit = math.max( (mem.quantity or 0)^0.503-14, 1 )
+         local fcthit = math.max( (mem.quantity or 0)^0.6-14, 1 )
          faction.hit( fct, -fcthit, system.cur(), nil, true )
       end
 
@@ -159,7 +159,7 @@ function abort ()
 
       -- Hit all the presences in the system
       for fct,val in pairs( system.cur():presences() ) do
-         local fcthit = math.max( (mem.quantity or 0)^0.503-9, 3 )
+         local fcthit = math.max( (mem.quantity or 0)^0.6-9, 3 )
          faction.hit( fct, -fcthit, system.cur(), nil, true )
       end
 

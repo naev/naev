@@ -336,10 +336,10 @@ function land()
 
       if mem.level == 5 then  --you are the champion
          tk.msg(_("You are the new champion"), fmt.f(_([[Congratulations! The staff pays you {credits}.]]), {credits="#g"..fmt.credits(mem.reward * 2^mem.level).."#0"}))
-         faction.hit("Dvaered", 3, nil, "script", true)
+         faction.hit("Dvaered", 150, nil, "script", true)
       elseif mem.level == 4 then
          tk.msg(_("You are the vice-champion"), fmt.f(_([[Congratulations! The staff pays you {credits}.]]), {credits="#g"..fmt.credits(mem.reward * 2^mem.level).."#0"}))
-         faction.hit("Dvaered", 1, nil, "script", true)
+         faction.hit("Dvaered", 30, nil, "script", true)
       else
          -- You gain at most 200000 and can retry.
          tk.msg(_("Thanks for playing"), fmt.f(_([[The staff pays you {credits}.]]), {credits="#g"..fmt.credits(mem.reward * 2^mem.level).."#0"}))

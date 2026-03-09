@@ -92,7 +92,7 @@ function land()
    end
 
    player.pay( emp.rewards.ldc4 )
-   faction.hit( "Empire",3 )
+   faction.hit( "Empire", 12 )
    lmisn.sfxVictory()
 
    -- More flavour text

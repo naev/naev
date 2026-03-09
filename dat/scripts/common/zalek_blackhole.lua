@@ -126,17 +126,17 @@ zbh.rewards = {
 }
 
 zbh.fctmod = {
-   zbh01 = 2,
-   zbh02 = 2,
-   zbh03 = 2,
-   zbh04 = 2,
-   zbh05 = 3,
-   zbh06 = 2,
+   zbh01 = 15,
+   zbh02 = 20,
+   zbh03 = 25,
+   zbh04 = 30,
+   zbh05 = 40,
+   zbh06 = 30,
    --zbh07 = 0, -- Just a cutscene
-   zbh08 = 2,
-   zbh09 = 3,
-   zbh10 = 3,
-   zbh11 = 2,
+   zbh08 = 25,
+   zbh09 = 30,
+   zbh10 = 50,
+   zbh11 = 20,
 }
 
 return zbh

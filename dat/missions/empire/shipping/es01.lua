@@ -161,7 +161,7 @@ function land ()
       vn.sfxVictory()
       vn.func( function ()
          player.pay( emp.rewards.es01 )
-         faction.hit( "Empire", 5 )
+         faction.hit( "Empire", 9 )
       end )
       vn.na( fmt.reward(emp.rewards.es01) )
 

@@ -129,7 +129,7 @@ function land()
    lmisn.sfxVictory()
    vntk.msg( _("Mission Accomplished"), _("Your mission was a complete success! The clan you just gave the packages have already paid you.").."\n\n"..fmt.reward(mem.reward) )
 
-   faction.hit( landed:faction(), 5 )
+   faction.hit( landed:faction(), 25 )
 
    local n = var.peek("ps_clancargo_misn") or 0
    var.push("ps_clancargo_misn", n + 1)

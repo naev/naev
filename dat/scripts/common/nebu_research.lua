@@ -47,10 +47,10 @@ nebu_research.rewards = {
 }
 
 nebu_research.fctmod = {
-   znr03_lab_coat = 1,
-   znr03_learned_speech = 1,
-   znr03_glasses = 1,
-   znr03_questions = 1,
+   znr03_lab_coat = 5,
+   znr03_learned_speech = 5,
+   znr03_glasses = 5,
+   znr03_questions = 5,
 }
 
 

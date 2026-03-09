@@ -62,7 +62,7 @@ return function ()
          vn.sfx( der.sfx.unboard )
          vn.na(_("You head back to your ship and notify the local Sirius authorities about the issue. They thank you for the information."))
          vn.func( function ()
-            faction.hit( "Sirius", 2 )
+            faction.hit( "Sirius", 15 )
             notify = true
          end )
          vn.jump("cont01")

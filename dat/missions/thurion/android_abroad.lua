@@ -144,7 +144,7 @@ function land ()
    vn.na( fmt.reward(reward) )
 
    diff.apply("thurion_espionage")
-   faction.hit( "Thurion", 3 )
+   faction.hit( "Thurion", 30 )
 
    vn.done( thurion.liao.transition )
    vn.run()

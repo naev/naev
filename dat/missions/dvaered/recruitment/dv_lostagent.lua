@@ -487,7 +487,7 @@ end
 function swanDisabled()
    mem.swan:setDisable() -- To be sure it won't recover.
    mem.swan:comm(_("What the? Damn!"))
-   faction.hit( faction.get("FLF"), -5 ) -- Faction loss with the FLF.
+   faction.hit( faction.get("FLF"), -15 ) -- Faction loss with the FLF.
    hook.rm(dhook)
    hook.timer(1.0,"spawnSquad")
    misn.osdActive(2)

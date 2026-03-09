@@ -43,12 +43,12 @@ zpp.rewards = {
 }
 
 zpp.fctmod = {
-   zpp01 = 2,
-   zpp02 = 2,
-   zpp03 = 3,
-   zpp04 = 2,
-   zpp05 = 1,
-   zpp06 = 3,
+   zpp01 = 15,
+   zpp02 = 20,
+   zpp03 = 30,
+   zpp04 = 20,
+   zpp05 = 10,
+   zpp06 = 30,
 }
 
 function zpp.shader_focal ()

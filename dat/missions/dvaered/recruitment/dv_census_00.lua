@@ -142,8 +142,9 @@ function land()
 
       player.pay( mem.credits )
       dv.addStandardLog( _([[You accomplished a patrol census mission for the Dvaered. They seem disposed to entrust you with more missions of that kind in the future.]]) )
-      faction.hit("Dvaered",3) -- Not so big reputation growth (Dvaered kill cap is high)
-      pir.reputationNormalMission(3)
+      local hit = 10
+      faction.hit("Dvaered",hit) -- Not so big reputation growth (Dvaered kill cap is high)
+      pir.reputationNormalMission(hit)
       misn.finish(true)
    end
 end

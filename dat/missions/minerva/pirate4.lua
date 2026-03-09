@@ -431,7 +431,7 @@ She gives you a tired grin.
    vn.func( function () -- Rewards
       player.pay( reward_amount )
       minerva.log.pirate(_("You helped defend an interrogation ship from Dvaered vessels.") )
-      faction.hit( "Wild Ones", 5, nil, nil, true )
+      faction.hit( "Wild Ones", 25, nil, nil, true )
    end )
    vn.sfxVictory()
    vn.done("electric")

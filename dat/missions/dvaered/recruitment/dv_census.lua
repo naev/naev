@@ -84,8 +84,9 @@ function land()
          var.push("dc_misn", 1)
       end
 
-      faction.hit("Dvaered", rnd.rnd(2, 3))
-      pir.reputationNormalMission(rnd.rnd(2,3))
+      local hit = rnd.rnd(5,10)
+      faction.hit("Dvaered", hit)
+      pir.reputationNormalMission(hit)
       misn.finish(true)
    end
 end

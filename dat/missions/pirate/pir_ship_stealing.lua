@@ -249,7 +249,7 @@ Enemy ships will probably be after you as soon as you leave the atmosphere, so y
       )
 
       -- Hey, stealing a ship isn't anything! (if you survive, that is)
-      faction.hit( mem.reward_faction, rnd.rnd(3,5) )
+      faction.hit( mem.reward_faction, rnd.rnd(30,50) )
 
       -- Let’s keep a counter. Just in case we want to know how many you
       -- stole in the future.
