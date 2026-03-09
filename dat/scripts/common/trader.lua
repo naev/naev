@@ -4,6 +4,7 @@
 
 --]]
 local vn = require "vn"
+local traderfct = require "factions.trader_society"
 
 local trader = {}
 
@@ -22,6 +23,10 @@ function trader.vn_vrata_steve( params )
             image=trader.vrata_steve.image,
             colour=trader.vrata_steve.colour,
          }, params) )
+end
+
+function trader.reputation_max ()
+   return var.peek( traderfct.rep_max_var ) or traderfct.rep_max
 end
 
 return trader

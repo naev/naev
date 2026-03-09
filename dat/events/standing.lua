@@ -49,6 +49,14 @@ local function recalculate( domsg )
          end
       end
    end
+   for k, m in ipairs(player.evtDoneList()) do
+      for t, b in pairs( m.tags ) do
+         local c = rep_max_tags_list[t]
+         if c then
+            table.insert( donetags, c )
+         end
+      end
+   end
 
    -- Sort based on max (lower goes first)
    table.sort( donetags, function(a, b) return a.max < b.max end )
