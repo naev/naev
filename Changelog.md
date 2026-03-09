@@ -12,6 +12,8 @@
 
  ### Gameplay
 
+   * Faction reputation is gained logarithmically, requiring more standing to
+     increase at higher ranks
    * Absorption values have been reworked so that penetration is more useful
    * Some skills have been reworked to use damage reduction instead of
      absorption
