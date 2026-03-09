@@ -12,10 +12,12 @@ local function rep_from_points( p )
    --return p / 5
 
    -- Rough approximation to map our point values to some faction hit values
-   -- 80  -> 400 (Starbridge)
-   -- 130 -> 956 (Kestrel)
-   -- 200 -> 2000 (Goddard)
-   return 30*p*p / (p+400)
+   -- 20  -> 2.25 (Llama)
+   -- 80  -> 24 (Starbridge)
+   -- 130 -> 59.3 (Kestrel)
+   -- 200 -> 135 (Goddard)
+   -- 300 -> 296 (Heph)
+   return p*math.abs(p)/320 + p/20
 end
 
 function sbase.init( args )
