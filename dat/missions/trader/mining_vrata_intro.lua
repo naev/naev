@@ -245,6 +245,7 @@ He puts both his hands in his mouth and lets out a resounding whistle. An employ
    local reward = outfit.get("Fuel Recycler")
    vn.sfxVictory()
    vn.func( function()
+      FACTION:hit(25)
       player.outfitAdd( reward )
    end )
    vn.na( fmt.reward(reward) )
