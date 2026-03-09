@@ -35,7 +35,7 @@
 
    * 2 new missions
    * 5 new events
-   * 6 new outfits
+   * 7 new outfits
    * 1 new ship variant
    * Many more unique pilots
    * Made NGC-11718 a bit more interesting
