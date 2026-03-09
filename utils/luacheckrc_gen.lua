@@ -315,6 +315,7 @@ stds.commodity = {
          fields = {
             __eq = {},
             get = {},
+            getAll = {},
             exists = {},
             getStandard = {},
             flags = {},

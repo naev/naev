@@ -11,7 +11,7 @@ local cooldown = 15 -- cooldown time in seconds
 
 -- Figure out commodities
 local recyclables = {}
-for k,c in ipairs(commodity.get()) do
+for k,c in ipairs(commodity.getAll()) do
    local t = c:tags()
    if t.mining then
       local name = c:nameRaw()
