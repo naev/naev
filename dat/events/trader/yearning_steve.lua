@@ -94,8 +94,10 @@ He taps on the crystals.
    vn.label("deliver_done")
    vn.na( function ()
       special = get_specials()
+      local fct = faction.get("Traders Society")
+      fct:hit( 50 )
       return fmt.f("#g".._([[{fct} maximum reputation limit increased to {amount}.]]).."#0", {
-         fct    = faction.get("Traders Society"),
+         fct    = fct,
          amount = trader.reputation_max(),
       })
    end )
