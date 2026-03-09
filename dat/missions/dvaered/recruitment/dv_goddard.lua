@@ -318,7 +318,7 @@ function land()
       vn.done()
       vn.run()
 
-      faction.get("Dvaered"):hit(5)
+      faction.get("Dvaered"):hit( 30 )
       if diff.isApplied( "heavy_weapons_licence" ) then
          dv.addStandardLog( _([[You performed a negotiation mission for Lord Fatgun, who needs to purchase a second Goddard battlecruiser. This mission consisted in killing a shareholder of Goddard who was opposed to this contract.]]) )
       else -- Player does not have the licence

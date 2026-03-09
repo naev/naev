@@ -37,7 +37,7 @@ function create ()
    mem.has_phalanx = false
    mem.has_kestrel = false
    mem.flfships = 0
-   mem.reputation = 1
+   mem.reputation = 15
 
    mem.credits = 1e6
 

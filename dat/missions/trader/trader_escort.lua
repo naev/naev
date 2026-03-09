@@ -151,17 +151,19 @@ function success ()
    local reward_orig = mem.reward
    mem.reward = mem.reward * alive_frac
 
+   local reputation = rnd.rnd( mem.convoysize*4, mem.convoysize*6 )
+
    if alive_frac >= 1 then
       vntk.msg( _("Success!"), fmt.f(_("You successfully escorted the trading convoy to the destination. There wasn't a single casualty, and you are rewarded the full amount of {credits}."), {credits="#g"..fmt.credits(mem.reward).."#0"}) )
-      faction.get("Traders Society"):hit(rnd.rnd(2,3))
+      faction.get("Traders Society"):hit(reputation*2)
    elseif alive_frac >= 0.6 then
       vntk.msg( _("Success with Casualties"), fmt.f(_("You've arrived with the trading convoy more or less intact. Your pay is docked slightly due to the loss of part of the convoy. You receive {credits} of the original promised reward of {reward}."), {credits="#g"..fmt.credits(mem.reward).."#0", reward=fmt.credits(reward_orig)}) )
-      faction.get("Traders Society"):hit(1)
+      faction.get("Traders Society"):hit(reputation)
    else
       vntk.msg( _("Success with Heavy Casualties"), fmt.f(_("You arrive with what's left of the convoy. It's not much, but it's better than nothing. You are paid a steeply discounted amount of {credits} from the {reward} originally promised."), {credits="#g"..fmt.credits(mem.reward).."#0", reward=fmt.credits(reward_orig)}) )
    end
    player.pay( mem.reward )
-   pir.reputationNormalMission(rnd.rnd(2,3))
+   pir.reputationNormalMission(reputation)
    misn.finish( true )
 end
 

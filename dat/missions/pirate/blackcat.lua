@@ -300,7 +300,7 @@ function owner_board ()
    player.outfitAdd( "Black Cat Doll" )
 
    der.addMiscLog(_([[You rescued a black cat from a derelict ship and safely delivered it to its owner, who was flying a Wild Ones pirate ship.]]))
-   faction.get("Wild Ones"):hit( 3, nil, nil, true )
+   faction.get("Wild Ones"):hit( 30, nil, nil, true )
 
    player.unboard()
    hook.safe("owner_gone")

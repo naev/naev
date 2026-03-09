@@ -185,7 +185,7 @@ function pilot_attacked_sindbad( _pilot, attacker, _arg )
    if attacker and attacker:withPlayer()
          and faction.get("FLF"):reputationGlobal() > -100 then
       -- Punish the player with a faction hit every time they attack
-      faction.get("FLF"):hit(-10)
+      faction.get("FLF"):hit(-100)
    end
 end
 

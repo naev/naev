@@ -326,7 +326,7 @@ And again, be ensured that your initial reward will be dramatically increased fr
 
       vn.run()
 
-      faction.get("Dvaered"):hit(5)
+      faction.get("Dvaered"):hit( 30 )
       dv.addStandardLog( _([[You performed a delivery mission for the Dvaered-Empire collaboration. This mission did however turn out oddly and you ended up helping the Empire capture a shady FLF-friendly agent surnamed "Shaky Swan" and killing a pirate.]]) )
       misn.finish(true)
    end

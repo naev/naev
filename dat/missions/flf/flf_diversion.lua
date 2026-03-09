@@ -51,7 +51,7 @@ function create ()
    mem.credits = 200 * (num_dvaereds + num_empire - num_flf)
    mem.credits = mem.credits * (system.cur():jumpDist( mem.missys, true )+1) / 3
    mem.credits = mem.credits * (1 + 0.2*rnd.sigma())
-   mem.reputation = math.max( (num_dvaereds + num_empire - num_flf) / 25, 1 )
+   mem.reputation = math.max( (num_dvaereds + num_empire - num_flf) / 5, 1 )
    if mem.credits < 10e3 then misn.finish( false ) end
 
    -- Set mission details

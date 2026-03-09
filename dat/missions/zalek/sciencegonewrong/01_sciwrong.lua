@@ -134,7 +134,7 @@ function targetDeath()
    local sor = faction.get("Soromid")
    hook.rm(mem.hexp)
    if mem.boarded then
-      sor:hit( -5, system.cur(), "board")
+      sor:hit( -15, system.cur(), "board")
       return
    end
    vntk.msg(_([[What have you done?]]),_([[The ship explodes before your eyes and you realize that you will never be able to get the secret tech now.]]))

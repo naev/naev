@@ -356,7 +356,7 @@ The man on your right answers: "Certainly not, your Lordship."]]),
       vn.na( fmt.reward(pay) )
       vn.run()
 
-      faction.get("Dvaered"):hit( 5 )
+      faction.get("Dvaered"):hit( 50 )
       dv.addStandardLog( _([[You stole a nozzle hubcap to the leader of a gang of Hyena bikers for the Baron Sauterfeldt to help Lord Fatgun getting a second Goddard battlecruiser.]]) )
       misn.finish(true)
    end

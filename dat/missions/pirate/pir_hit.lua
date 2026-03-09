@@ -617,7 +617,7 @@ function bounty_setup ()
       credits = 60e3 + rnd.sigma() * 5e3
       reputation = 0
    end
-   return pship, credits, reputation
+   return pship, credits, reputation*5
 end
 
 

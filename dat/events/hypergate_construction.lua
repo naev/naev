@@ -56,7 +56,7 @@ local boss_message_list = {
 
 local mineral_list = { "Therite", "Kermite", "Vixilium" } -- Only rares
 local MULTIPLIER_PRICE = 1.2 -- Multiplier for amount being paid
-local MULTIPLIER_STANDING = 0.025 -- Multiplier for standing increase
+local MULTIPLIER_STANDING = 0.05 -- Multiplier for standing increase
 
 local id, hypergate, boss, talked_check, traded_amount
 local traded_total = "hypconst_traded_total"

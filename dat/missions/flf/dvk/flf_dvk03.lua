@@ -58,7 +58,7 @@ function accept ()
       misn.setReward( _("A great victory against the Dvaereds") )
 
       mem.credits = 300e3
-      mem.reputation = 5
+      mem.reputation = 50
 
       mem.started = false
       mem.attacked_station = false

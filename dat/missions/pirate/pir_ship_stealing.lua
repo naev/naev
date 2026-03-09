@@ -123,7 +123,7 @@ end
 ]]
 
 local function damage_standing( size, fct )
-   local base = 2^(size-2)
+   local base = 5*2^(size-2)
    local modifier = 1
 
    -- “Oh dude, that guy is capable! He managed to steal one of our own ships!”

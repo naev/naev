@@ -78,8 +78,8 @@ function accept ()
 
       mem.ore_needed = 40
       mem.credits = 300e3
-      mem.reputation = 1
-      mem.pir_reputation = 10
+      mem.reputation = 20
+      mem.pir_reputation = 100
       mem.pir_starting_reputation = faction.get("Dreamer Clan"):reputationGlobal()
 
       hook.enter( "enter" )

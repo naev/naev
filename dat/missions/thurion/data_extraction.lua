@@ -56,7 +56,7 @@ function create ()
    mem.amount = rnd.rnd(8,24)
    mem.reward = 100e3 + 50e3 * dist + 3e3 * mem.amount
    mem.reward = mem.reward * (1 + 0.1*rnd.sigma())
-   mem.reputation = math.floor( 2 + dist/5 + mem.amount/24 + 0.5 )
+   mem.reputation = math.floor( 5 + dist/2 + mem.amount/8 + 0.5 )
 
    -- TODO more custom ridiculous message about types of documents and such
    local cargos = {

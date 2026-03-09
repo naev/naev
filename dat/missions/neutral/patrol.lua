@@ -151,7 +151,7 @@ function create ()
    end
    mem.credits = n_enemies * 2000
    mem.credits = mem.credits + rnd.sigma() * (mem.credits / 3)
-   mem.reputation = math.floor( n_enemies / 75 )
+   mem.reputation = math.floor( n_enemies / 15 )
 
    -- Faction prefix
    local prefix

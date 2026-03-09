@@ -39,7 +39,7 @@ function create ()
 
    mem.dv_attention_target = 20
    mem.credits = 250e3
-   mem.reputation = 2
+   mem.reputation = 30
 
    misn.setNPC( _("Benito"), "flf/unique/benito", _("Benito seems to want to speak with you.") )
 end

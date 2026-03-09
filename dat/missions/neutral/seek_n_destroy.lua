@@ -645,8 +645,9 @@ function land()
       lmisn.sfxVictory()
       vntk.msg( _("Good work, pilot!"), quotes.pay[rnd.rnd(1,#quotes.pay)].."\n\n"..fmt.reward(mem.credits) )
       player.pay( mem.credits )
-      mem.paying_faction:hit( rnd.rnd(3,4) )
-      pir.reputationNormalMission(rnd.rnd(3,4))
+      local hit = rnd.rnd(20,40)
+      mem.paying_faction:hit( hit )
+      pir.reputationNormalMission( hit )
       misn.finish( true )
    end
 end
