@@ -35,7 +35,7 @@ pub fn open() -> Result<()> {
    info!("{}", buf);
 
    // Load the fonts the same way Naev does
-   let fonts: Vec<_> = gettext("Cabin-SemiBold.otf,NanumBarunGothicBold.ttf,SourceCodePro-Semibold.ttf,IBMPlexSansJP-Medium.otf")
+   let fonts: Vec<_> = gettext("Ubuntu-Regular.otf,NanumBarunGothicBold.ttf,SourceCodePro-Semibold.ttf,IBMPlexSansJP-Medium.otf")
         .split(',')
         .filter_map(|f| {
             let path = format!("fonts/{f}");
