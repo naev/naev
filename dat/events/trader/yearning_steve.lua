@@ -103,6 +103,6 @@ He taps on the crystals.
    vn.jump("menu")
 
    vn.label("01_leave")
-   steve(_([["See ya around!"]]))
+   steve(_([["See ya around! Will to drill!"]]))
    vn.run()
 end
