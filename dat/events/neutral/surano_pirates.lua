@@ -119,6 +119,9 @@ end
 
 
 function pir_gone ()
+   hook.safe( "pir_count" )
+end
+function pir_count ()
    -- Check if done
    local left = 0
    for k,p in ipairs(baddies) do
