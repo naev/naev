@@ -753,6 +753,16 @@ pub extern "C-unwind" fn nlua_pcall(env: *const LuaEnv, nargs: c_int, nresults: 
          }
          1
       }
+      Err(mlua::Error::RuntimeError(s)) => {
+         unsafe {
+            NLUA.lua.exec_raw_lua(|state| {
+               if let Err(e) = s.push_into_stack_multi(state) {
+                  warn_err!(e);
+               }
+            });
+         }
+         -1
+      }
       Err(e) => {
          unsafe {
             NLUA.lua.exec_raw_lua(|state| {
