@@ -78,7 +78,7 @@ int board_hook( void *data )
          WARN( _( "Error loading file: %s\n"
                   "%s\n"
                   "Most likely Lua file has improper syntax, please check" ),
-               BOARD_PATH, lua_tostring( naevL, -1 ) );
+               BOARD_PATH, lua_tolstring( naevL, -1, NULL ) );
          board_boarded = 0;
          free( buf );
          return -1;
