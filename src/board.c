@@ -21,12 +21,6 @@
 #include "player.h"
 #include "space.h"
 
-#define BOARDING_WIDTH 380  /**< Boarding window width. */
-#define BOARDING_HEIGHT 200 /**< Boarding window height. */
-
-#define BUTTON_WIDTH 50  /**< Boarding button width. */
-#define BUTTON_HEIGHT 30 /**< Boarding button height. */
-
 static int board_stopboard = 0;    /**< Whether or not to unboard. */
 static int board_boarded   = 0;    /**< Whether or not the player is boarded. */
 static nlua_env *board_env = NULL; /**< Lua environment to do the boarding. */
@@ -96,8 +90,8 @@ int board_hook( void *data )
    nlua_getenv( naevL, board_env, "board" );
    lua_pushpilot( naevL, p->id );
    if ( nlua_pcall( board_env, 1, 0 ) ) { /* error has occurred */
-      WARN( _( "Board: '%s'" ), lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
+      WARN( _( "Board: '%s'" ), lua_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 2 );
    }
    board_boarded = 0;
    return 0;
@@ -108,8 +102,6 @@ int board_hook( void *data )
  */
 int player_canBoard( int noisy )
 {
-   Pilot *p;
-
    /* Not disabled. */
    if ( pilot_isDisabled( player.p ) )
       return PLAYER_BOARD_IMPOSSIBLE;
@@ -117,7 +109,7 @@ int player_canBoard( int noisy )
    /* Can't board if no pilot. */
    if ( player.p->target == PLAYER_ID )
       return PLAYER_BOARD_IMPOSSIBLE;
-   p = pilot_getTarget( player.p );
+   const Pilot *p = pilot_getTarget( player.p );
 
    /* More checks. */
    if ( pilot_isFlag( p, PILOT_NOBOARD ) ) {
