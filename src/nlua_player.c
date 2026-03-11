@@ -126,6 +126,7 @@ static int playerL_outfitNum( lua_State *L );
 static int playerL_outfitAdd( lua_State *L );
 static int playerL_outfitRm( lua_State *L );
 static int playerL_shipAdd( lua_State *L );
+static int playerL_shipRm( lua_State *L );
 static int playerL_shipSwap( lua_State *L );
 /* Mission/event management stuff. */
 static int playerL_missions( lua_State *L );
@@ -227,6 +228,7 @@ static const luaL_Reg playerL_methods[] = {
    { "outfitAdd", playerL_outfitAdd },
    { "outfitRm", playerL_outfitRm },
    { "shipAdd", playerL_shipAdd },
+   { "shipRm", playerL_shipRm },
    { "shipSwap", playerL_shipSwap },
    { "missions", playerL_missions },
    { "misnActive", playerL_misnActive },
@@ -1824,6 +1826,21 @@ static int playerL_shipAdd( lua_State *L )
    } while ( new_ship == NULL );
    /* Return the new name. */
    lua_pushstring( L, new_ship->p->name );
+   return 1;
+}
+
+/**
+ * @brief Removes a player's ship.
+ *
+ * Should be used sparingly.
+ *
+ *    @luatparam string ship Name of the ship to remove.
+ * @luafunc shipRm
+ */
+static int playerL_shipRm( lua_State *L )
+{
+   const char *name = luaL_checkstring( L, 1 );
+   player_rmShip( name );
    return 1;
 }
 

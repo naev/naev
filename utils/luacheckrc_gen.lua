@@ -991,6 +991,7 @@ stds.player = {
             outfitAdd = {},
             outfitRm = {},
             shipAdd = {},
+            shipRm = {},
             shipSwap = {},
             missions = {},
             misnActive = {},
