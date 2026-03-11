@@ -1566,19 +1566,21 @@ function luatk.msg( title, msg )
    end )
    return wdw
 end
-function luatk.yesno( title, msg, funcyes, funcno )
+function luatk.yesno( title, msg, funcyes, funcno, yeslabel, nolabel )
+   yeslabel = yeslabel or _("Yes")
+   nolabel = nolabel or _("No")
    local w, h = msgbox_size( title, msg )
    local wdw = luatk.newWindow( nil, nil, w, 110 + h )
    luatk.newText( wdw, 0, 10, w, 20, title, nil, "centre" )
    luatk.newText( wdw, 20, 40, w-40, h, msg )
    local bw = 120
-   luatk.newButton( wdw, (w-bw)/2, h+110-20-30, 50, 30, _("Yes"), function( wgt )
+   luatk.newButton( wdw, (w-bw)/2, h+110-20-30, 50, 30, yeslabel, function( wgt )
       wgt.parent:destroy()
       if funcyes then
          funcyes()
       end
    end )
-   luatk.newButton( wdw, (w-bw)/2+70, h+110-20-30, 50, 30, _("No"), function( wgt )
+   luatk.newButton( wdw, (w-bw)/2+70, h+110-20-30, 50, 30, nolabel, function( wgt )
       wgt.parent:destroy()
       if funcno then
          funcno()
