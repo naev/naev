@@ -805,7 +805,10 @@ void player_rmPlayerShip( PlayerShip_t *ps )
 {
    if ( ps->p != NULL ) {
       pilot_rmFlag( ps->p, PILOT_NOFREE );
-      pilot_free( ps->p );
+      if ( ps->p->id )
+         pilot_delete( ps->p );
+      else
+         pilot_free( ps->p );
    }
    ws_free( ps->weapon_sets );
    free( ps->acquired );
