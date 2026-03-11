@@ -1615,6 +1615,8 @@ static int playerL_shipMetadata( lua_State *L )
  *    @luatparam string shipname Name of the ship to set deployed status of.
  *    @luatparam[opt=false] boolean deploy Whether or not to set the deployed
  * status of the ship.
+ *    @luatparam[opt=false] boolean spawn Whether or not to try to spawn the
+ * ship (and return if spawned).
  * @luafunc shipDeploy
  */
 static int playerL_shipDeploy( lua_State *L )
@@ -1622,8 +1624,16 @@ static int playerL_shipDeploy( lua_State *L )
    PLAYER_CHECK();
    const char   *shipname = luaL_checkstring( L, 1 );
    int           deploy   = lua_toboolean( L, 2 );
+   int           spawn    = lua_toboolean( L, 3 );
    PlayerShip_t *ps       = player_getPlayerShip( shipname );
    ps->deployed           = deploy;
+   if ( spawn ) {
+      pfleet_deploy( ps );
+      if ( ps->p == NULL )
+         return 0;
+      lua_pushpilot( L, ps->p->id );
+      return 1;
+   }
    return 0;
 }
 
