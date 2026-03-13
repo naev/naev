@@ -178,17 +178,6 @@ fn naevmain() -> Result<()> {
    // Start logging stuff.
    setup_logging()?;
 
-   // Print the version
-   info!("{}", &*nlog::version::VERSION_HUMAN);
-   if cfg!(target_os = "linux") {
-      match env::ENV.is_appimage {
-         true => {
-            info!("AppImage detected. Running from: {}", &env::ENV.appdir)
-         }
-         false => debug!("AppImage not detected."),
-      }
-   }
-
    // Initialize SDL.
    let sdlctx = sdl::init()?;
    let starttime = sdl::timer::ticks();
@@ -212,6 +201,17 @@ fn naevmain() -> Result<()> {
    }
 
    let (conf_file_path, guard) = setup_conf_and_ndata()?;
+
+   // Print the version after logging is working
+   info!("{}", &*nlog::version::VERSION_HUMAN);
+   if cfg!(target_os = "linux") {
+      match env::ENV.is_appimage {
+         true => {
+            info!("AppImage detected. Running from: {}", &env::ENV.appdir)
+         }
+         false => debug!("AppImage not detected."),
+      }
+   }
 
    // Plugin initialization before checking the data for consistency
    plugin::mount()?;

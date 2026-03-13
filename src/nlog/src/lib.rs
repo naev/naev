@@ -23,146 +23,6 @@ pub use tracing::log::*;
 #[cfg(unix)]
 pub use nix;
 
-// TODO
-// * Maybe add colour for warning / whatever in console
-// * Maybe keep a copy of the last warning before moving over
-
-/*
-struct LogFile {
-   name: String,
-   file: File,
-}
-
-enum Output {
-   Buffer(String),
-   File(LogFile),
-}
-impl Output {
-   fn write(&mut self, msg: &str, level: logcore::Level) -> Result<()> {
-      if msg.is_empty() {
-         return Ok(());
-      }
-
-      // Write to buffer
-      if level <= logcore::Level::Warn {
-         eprintln!("{msg}");
-      } else {
-         println!("{msg}");
-      }
-      // Print on screen
-      match self {
-         Self::Buffer(b) => {
-            b.push('\n');
-            b.push_str(msg);
-         }
-         Self::File(lf) => {
-            lf.file.write_all(b"\n")?;
-            lf.file.write_all(msg.as_bytes())?;
-         }
-      }
-      Ok(())
-   }
-}
-
-struct Logger {
-   warn_num: AtomicU32,
-   output: Mutex<Output>,
-}
-impl logcore::Log for Logger {
-   fn enabled(&self, metadata: &logcore::Metadata) -> bool {
-      let level = metadata.level();
-      let target = metadata.target();
-      // TODO we should probably allow warnings from 3rd party libraries, but wgpu is really bad at
-      // this sort of thing...
-      if level >= logcore::Level::Warn && !WHITELIST.iter().any(|s| target.starts_with(s)) {
-         return false;
-      }
-      if cfg!(debug_assertions) {
-         level <= logcore::Level::Debug
-      } else {
-         level <= logcore::Level::Info
-      }
-   }
-
-   fn log(&self, record: &logcore::Record) {
-      if !self.enabled(record.metadata()) {
-         return;
-      }
-      let level = record.level();
-      let msg = match level {
-         logcore::Level::Error => {
-            // Mark it as having at least one warning on error
-            let _ = self
-               .warn_num
-               .compare_exchange(0, 1, Ordering::SeqCst, Ordering::Relaxed);
-            let bt = std::backtrace::Backtrace::force_capture();
-            format!("{}[E] {}", bt, record.args())
-         }
-         logcore::Level::Warn => {
-            let nw = self.warn_num.fetch_add(1, Ordering::SeqCst);
-            let msg = if nw < WARN_MAX {
-               let bt = std::backtrace::Backtrace::force_capture();
-               format!("{}[W] {}", bt, record.args())
-            } else if nw == WARN_MAX {
-               format!(
-                  "[w] {}",
-                  gettext::gettext("TOO MANY WARNINGS, NO LONGER DISPLAYING WARNINGS")
-               )
-            } else {
-               String::new()
-            };
-            #[cfg(unix)]
-            if naevc::config::DEBUG_PARANOID {
-               nix::sys::signal::raise(nix::sys::signal::Signal::SIGINT).unwrap();
-            }
-            msg
-         }
-         logcore::Level::Info => format!("[I] {}", record.args()),
-         logcore::Level::Debug => format!("[D] {}", record.args()),
-         logcore::Level::Trace => {
-            return;
-         }
-      };
-      let _ = self.output.lock().unwrap().write(&msg, level);
-   }
-
-   fn flush(&self) {
-      let mut o = self.output.lock().unwrap();
-      if let Output::File(lf) = &mut *o {
-         let _ = lf.file.flush();
-      }
-   }
-}
-impl Logger {
-   fn new() -> Self {
-      Self {
-         warn_num: AtomicU32::new(0),
-         output: Mutex::new(Output::Buffer(String::new())),
-      }
-   }
-
-   fn log_to_file(&self, path: &str) -> Result<()> {
-      let mut f = File::create(path)?;
-      let mut o = self.output.lock().unwrap();
-      match &*o {
-         Output::Buffer(b) => {
-            f.write_all(b.as_bytes())?;
-         }
-         Output::File(_) => {
-            anyhow::bail!("already logging to file");
-         }
-      }
-      *o = Output::File(LogFile {
-         name: String::from(path),
-         file: f,
-      });
-      Ok(())
-   }
-}
-
-static LOGGER: LazyLock<Logger> = LazyLock::new(Logger::new);
-*/
-
 struct TeeWarn<A, B>(Tee<A, B>);
 impl<'a, A, B> MakeWriter<'a> for TeeWarn<A, B>
 where
@@ -205,9 +65,10 @@ impl<A: Write, B: Write> Write for TeeWarn<A, B> {
 
 static LOGFILE: OnceLock<(String, non_blocking::NonBlocking)> = OnceLock::new();
 
-fn file_logger() -> OptionalWriter<non_blocking::NonBlocking> {
+// TODO not sure if it's faster to strip, or just use two layers instead
+fn file_logger() -> OptionalWriter<strip_ansi_escapes::Writer<non_blocking::NonBlocking>> {
    match LOGFILE.get() {
-      Some(f) => OptionalWriter::some(f.1.clone()),
+      Some(f) => OptionalWriter::some(strip_ansi_escapes::Writer::new(f.1.clone())),
       None => OptionalWriter::none(),
    }
 }
