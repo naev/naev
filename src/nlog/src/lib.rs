@@ -137,10 +137,12 @@ pub fn init() -> Result<()> {
    // initialisation work is visible in the profiler.
    #[cfg(feature = "tracy")]
    {
-      registry.with(tracing_tracy::TracyLayer::default());
+      registry.with(tracing_tracy::TracyLayer::default()).init();
    }
-
-   registry.init();
+   #[cfg(not(feature = "tracy"))]
+   {
+      registry.init();
+   }
 
    Ok(())
 }
