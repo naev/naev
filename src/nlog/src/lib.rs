@@ -177,6 +177,18 @@ pub fn init() -> Result<()> {
    } else {
       logcore::set_max_level(logcore::LevelFilter::Info);
    }
+
+   // Install the Tracy tracing subscriber when built with -Dtracy=true.
+   // This must happen before any spans are entered so that early
+   // initialisation work is visible in the profiler.
+   #[cfg(feature = "tracy")]
+   {
+      use tracing_subscriber::prelude::*;
+      let _ = tracing::subscriber::set_global_default(
+         tracing_subscriber::Registry::default().with(tracing_tracy::TracyLayer::default()),
+      );
+   }
+
    Ok(())
 }
 
