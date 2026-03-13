@@ -76,7 +76,7 @@ pub fn cache_dir() -> &'static Path {
 
 /// Initializes the ndata, has to be called first.
 /// Will only return an Err when it is not recoverable.
-pub fn setup() -> anyhow::Result<()> {
+pub fn setup() -> anyhow::Result<Option<nlog::WorkerGuard>> {
    match physfs::set_write_dir(pref_dir()) {
       Ok(_) => (),
       Err(e) => {
@@ -97,9 +97,13 @@ pub fn setup() -> anyhow::Result<()> {
          .to_string(),
    );
    infox!(gettext("Logging to {}"), logfile.to_string_lossy());
-   nlog::set_log_file(&logfile.to_string_lossy()).unwrap_or_else(|e| {
-      warn_err!(e);
-   });
+   let guard = match nlog::set_log_file(&logfile.to_string_lossy()) {
+      Ok(g) => Some(g),
+      Err(e) => {
+         warn_err!(e);
+         None
+      }
+   };
 
    // Load conf
    if unsafe { !naevc::conf.ndata.is_null() } {
@@ -181,7 +185,7 @@ pub fn setup() -> anyhow::Result<()> {
    physfs::mount(physfs::get_write_dir(), false).unwrap_or_else(|e| {
       warn_err!(e);
    });
-   Ok(())
+   Ok(guard)
 }
 
 /// Makes sure the ndata was loaded properly.

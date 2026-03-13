@@ -68,7 +68,7 @@ pub fn naev() -> Result<()> {
    // Hack for plugin manager mode
    if std::env::args().skip(1).any(|a| a == "--pluginmanager") {
       setup_logging()?;
-      nlog::set_max_level(nlog::LevelFilter::Info);
+      //nlog::set_max_level(nlog::LevelFilter::Info);
       let _ = setup_conf_and_ndata()?;
       unsafe {
          naevc::gettext_setLanguage(naevc::conf.language); /* now that we can find translations */
@@ -115,7 +115,7 @@ fn setup_logging() -> Result<()> {
    Ok(())
 }
 
-fn setup_conf_and_ndata() -> Result<PathBuf> {
+fn setup_conf_and_ndata() -> Result<(PathBuf, Option<nlog::WorkerGuard>)> {
    unsafe {
       naevc::conf_setDefaults(); /* set the default config values. */
       /*
@@ -155,13 +155,13 @@ fn setup_conf_and_ndata() -> Result<PathBuf> {
    }
 
    // Load the data and plugins.
-   ndata::setup()?;
+   let guard = ndata::setup()?;
    // Create some useful cache stuf once
    if let Err(e) = fs::create_dir_all(ndata::cache_dir().join("collisions/")) {
       warn_err!(e);
    }
 
-   Ok(conf_file_path)
+   Ok((conf_file_path, guard))
 }
 
 fn naevmain() -> Result<()> {
@@ -206,13 +206,12 @@ fn naevmain() -> Result<()> {
    }
 
    let sdlvid = sdlctx.video()?;
-
    unsafe {
       naevc::nxml_init(); /* We'll be parsing XML. */
       naevc::input_init(); /* input has to be initialized for config to work. */
    }
 
-   let conf_file_path = setup_conf_and_ndata()?;
+   let (conf_file_path, guard) = setup_conf_and_ndata()?;
 
    // Plugin initialization before checking the data for consistency
    plugin::mount()?;
@@ -426,7 +425,7 @@ fn naevmain() -> Result<()> {
       naevc::naev_main_cleanup();
    }
 
-   nlog::close_file();
+   nlog::close_file(guard);
 
    Ok(())
 }

@@ -79,7 +79,8 @@ slotmap = "1"
 static_assertions = "1.1"
 tracing = { version = "0.1", default-features = false, features = ["std", "attributes", "release_max_level_warn", "log"] }
 tracing-tracy = { version = "0.11.4", features = ["system-tracing"] }
-tracing-subscriber = { version = "0.3", default-features = false, features = ["registry"] }
+tracing-subscriber = { version = "0.3", features = ["registry","env-filter"] }
+tracing-appender = { version = "0.2" }
 tracing-mutex = "0.3"
 bitcode = { version = "0.6", features = ["serde"] }
 blake3 = "1"
