@@ -1,15 +1,15 @@
 use directories::ProjectDirs;
+use nlog::formatx::formatx;
+use nlog::gettext::gettext;
 use nlog::{debug, info, warn, warn_err};
+use nlog::{infox, semver, version};
 use sdl3 as sdl;
 use std::borrow::Cow;
 use std::ffi::{CStr, CString, c_char};
 use std::io::{Read, Result};
 use std::path::{Path, PathBuf};
 use std::sync::LazyLock;
-
-use nlog::formatx::formatx;
-use nlog::gettext::gettext;
-use nlog::{infox, semver, version};
+use tracing::instrument;
 
 pub mod cwrap;
 pub mod data;
@@ -76,6 +76,7 @@ pub fn cache_dir() -> &'static Path {
 
 /// Initializes the ndata, has to be called first.
 /// Will only return an Err when it is not recoverable.
+#[instrument]
 pub fn setup() -> anyhow::Result<Option<nlog::WorkerGuard>> {
    match physfs::set_write_dir(pref_dir()) {
       Ok(_) => (),

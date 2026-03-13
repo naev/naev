@@ -8,6 +8,7 @@ use renderer::camera;
 use renderer::colour::Colour;
 use std::sync::atomic::Ordering;
 use std::sync::{LazyLock, Mutex, RwLock};
+use tracing::instrument;
 
 enum Message {
    Insert(Box<LuaSpfx>),
@@ -17,6 +18,7 @@ enum Message {
 }
 static MESSAGES: Mutex<Vec<Message>> = Mutex::new(Vec::new());
 
+#[instrument(skip_all)]
 fn process_messages(
    luaspfx: &mut std::sync::RwLockWriteGuard<'_, slotmap::SlotMap<LuaSpfxRef, LuaSpfx>>,
 ) {
@@ -55,6 +57,7 @@ fn process_messages(
    }
 }
 
+#[derive(Debug)]
 struct LuaSpfx {
    /// Needs cleaning up
    cleanup: bool,
@@ -110,6 +113,7 @@ pub fn clear() {
    LUASPFX.write().unwrap().clear();
 }
 
+#[instrument]
 pub fn update(dt: f64) {
    let lua = &nlua::NLUA;
    {
@@ -159,11 +163,13 @@ pub fn update(dt: f64) {
    }
 }
 
+#[derive(Debug)]
 enum RenderLayer {
    Background,
    Middle,
    Foreground,
 }
+#[instrument]
 fn render(layer: RenderLayer, dt: f64) {
    let lua = &nlua::NLUA;
    let z = camera::CAMERA.read().unwrap().zoom;

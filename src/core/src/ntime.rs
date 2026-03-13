@@ -10,6 +10,7 @@ use std::collections::VecDeque;
 use std::ffi::CString;
 use std::os::raw::{c_char, c_double, c_int, c_ulong};
 use std::sync::{LazyLock, Mutex, RwLock};
+use tracing::instrument;
 
 // Internal multiplier used for everything
 pub(crate) const MULTIPLIER: i64 = 1_000;
@@ -124,6 +125,7 @@ impl Converter {
       }
    }
 
+   #[instrument]
    fn try_new() -> Result<Self> {
       let lua = mlua::Lua::new_with(mlua::StdLib::ALL_SAFE, Default::default())?;
       gettext::open_gettext(&lua)?;

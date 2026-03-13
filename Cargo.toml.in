@@ -77,9 +77,9 @@ roxmltree = "0.21"
 symphonia = { version = "=0.5.5", features = ["opt-simd", "aac", "mp3"] }
 slotmap = "1"
 static_assertions = "1.1"
-tracing = { version = "0.1", default-features = false, features = ["std", "attributes", "release_max_level_warn", "log"] }
+tracing = { version = "0.1", features = ["release_max_level_warn", "log"] }
 tracing-tracy = { version = "0.11.4", features = ["system-tracing"] }
-tracing-subscriber = { version = "0.3", features = ["registry","env-filter"] }
+tracing-subscriber = { version = "0.3", features = ["registry","env-filter","json"] }
 tracing-appender = { version = "0.2" }
 tracing-mutex = "0.3"
 bitcode = { version = "0.6", features = ["serde"] }
@@ -158,6 +158,7 @@ semver = { workspace = true }
 colored = "3"
 regex = { workspace = true }
 mint = "0.5"
+tracing = { workspace = true }
 tracing-mutex = { workspace = true }
 static_assertions = {workspace = true }
 # cargo-util usess cargo internals and says you shouldn't use it in external

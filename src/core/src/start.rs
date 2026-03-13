@@ -1,3 +1,6 @@
+use crate::ntime::{NTime, NTimeC};
+use crate::nxml;
+use crate::nxml_warn_node_unknown;
 use anyhow::Result;
 use gettext::gettext;
 use nalgebra::Vector2;
@@ -6,10 +9,7 @@ use serde::Deserialize;
 use std::ffi::CString;
 use std::os::raw::c_char;
 use std::path::Path;
-
-use crate::ntime::{NTime, NTimeC};
-use crate::nxml;
-use crate::nxml_warn_node_unknown;
+use tracing::instrument;
 
 // TODO get rid of CString and use String
 #[derive(Default, Debug, Deserialize)]
@@ -71,6 +71,7 @@ macro_rules! nxml_attr_i64 {
 }
 
 impl StartData {
+   #[instrument]
    fn load() -> Result<Self> {
       if ndata::exists("start.xml") {
          warn("start.xml is deprecated, please use start.toml!");

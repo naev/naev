@@ -6,6 +6,7 @@ use renderer::model::Model;
 use renderer::{Context, ContextWrapper, texture};
 use std::ffi::{CStr, CString, c_void};
 use std::path::Path;
+use tracing::instrument;
 
 struct ShipWrapper(naevc::Ship);
 //unsafe impl Sync for ShipWrapper {}
@@ -66,6 +67,7 @@ fn get_mut() -> &'static mut [ShipWrapper] {
    }
 }
 
+#[instrument]
 #[unsafe(no_mangle)]
 pub extern "C" fn ship_gfxLoadNeeded() {
    // Try to avoid messing with the context and just find what we have to update first

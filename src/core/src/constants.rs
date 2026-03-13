@@ -3,7 +3,9 @@ use crate::ntime;
 use anyhow::Result;
 use nlog::warn_err;
 use std::sync::LazyLock;
+use tracing::instrument;
 
+#[derive(Debug)]
 pub struct Constants {
    pub physics_speed_damp: f32,
    pub hyperspace_enter_max: f32,
@@ -36,6 +38,7 @@ pub struct Constants {
    pub warn_buy_intrinsics: bool,
 }
 impl Constants {
+   #[instrument]
    fn load() -> Result<Self> {
       let lua = mlua::Lua::new_with(mlua::StdLib::ALL_SAFE, Default::default())?;
       let globals = lua.globals();

@@ -20,6 +20,7 @@ use std::ffi::{CStr, CString, OsStr};
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, LazyLock, OnceLock};
 use std::sync::{Mutex, RwLock};
+use tracing::instrument;
 
 //static_assertions::const_assert_eq!( (1i64<<32) + ((1i64<<32)-1), FactionRef::null() );
 
@@ -222,6 +223,7 @@ impl FactionRef {
       }
    }
 
+   #[instrument(skip(self))]
    pub fn hit(&self, val: f32, system: &mlua::Value, source: &str, single: bool) -> Result<f32> {
       let factions = FACTIONS.read().unwrap();
       match factions.get(*self) {
@@ -485,6 +487,7 @@ impl Faction {
       self.set_player(raw_to_reputation(raw))
    }
 
+   #[instrument(skip(self))]
    pub fn set_player(&self, std: f32) {
       let mut standing = self.standing.write().unwrap();
       if standing.p_override.is_none() {
@@ -1015,6 +1018,7 @@ impl FactionData {
 }
 
 /// Loads all the Data
+#[tracing::instrument]
 pub fn load() -> Result<()> {
    // Since we hardcode this C side, we have to make sure it is in-fact correct.
    // Not static, so we have to do it runtime at the moment.

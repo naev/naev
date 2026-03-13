@@ -1,13 +1,13 @@
 use anyhow::{Context, Result};
+use helpers::{binary_search_by_key_ref, sort_by_key_ref};
+use naev_core::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
+use nlog::{warn, warn_err};
 use rayon::prelude::*;
 use serde::{Deserialize, Deserializer, de};
 use std::ffi::{CStr, CString, OsStr};
 use std::os::raw::{c_char, c_int};
 use std::path::{Path, PathBuf};
-
-use helpers::{binary_search_by_key_ref, sort_by_key_ref};
-use naev_core::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
-use nlog::{warn, warn_err};
+use tracing::instrument;
 
 #[derive(Debug, Clone, Copy)]
 struct Stat(usize);
@@ -146,6 +146,7 @@ impl Default for DamageType {
 use std::sync::LazyLock;
 static DAMAGE_TYPES: LazyLock<Vec<DamageType>> = LazyLock::new(|| load().unwrap());
 
+#[instrument]
 pub fn load() -> Result<Vec<DamageType>> {
    let base: PathBuf = "damagetype/".into();
    let mut dt_data: Vec<DamageType> = ndata::read_dir(&base)?

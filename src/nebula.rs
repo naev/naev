@@ -1,3 +1,4 @@
+use crate::rng;
 use anyhow::Result;
 use encase::ShaderType;
 use glow::*;
@@ -5,9 +6,6 @@ use nalgebra::{Vector2, Vector3};
 use palette::FromColor;
 use palette::Hsv;
 use palette::rgb::Srgb;
-use std::os::raw::c_double;
-
-use crate::rng;
 use renderer::Uniform;
 use renderer::buffer::{
    Buffer, BufferBuilder, BufferTarget, BufferUsage, VertexArray, VertexArrayBuffer,
@@ -15,6 +13,7 @@ use renderer::buffer::{
 };
 use renderer::framebuffer::{Framebuffer, FramebufferBuilder};
 use renderer::shader::{ProgramBuilder, Shader};
+use tracing::instrument;
 
 #[allow(dead_code)]
 pub const DEFAULT_HUE: f64 = 260.0;
@@ -172,6 +171,7 @@ struct NebulaData {
 }
 
 impl NebulaData {
+   #[instrument(skip_all)]
    fn new(ctx: &renderer::Context) -> Result<Self> {
       let gl = &ctx.gl;
       let (vw, vh, scale) = {
@@ -383,6 +383,7 @@ impl NebulaData {
       Ok(())
    }
 
+   #[instrument(skip(self, ctx))]
    pub fn setup(
       &mut self,
       ctx: &renderer::Context,

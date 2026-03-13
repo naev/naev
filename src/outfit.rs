@@ -3,6 +3,7 @@ use rayon::prelude::*;
 use renderer::Context;
 use renderer::texture::TextureBuilder;
 use std::ffi::{CStr, c_void};
+use tracing::instrument;
 
 struct OutfitWrapper(naevc::Outfit);
 //unsafe impl Sync for OutfitWrapper {}
@@ -25,6 +26,7 @@ fn get_mut() -> &'static mut [OutfitWrapper] {
    }
 }
 
+#[instrument]
 #[unsafe(no_mangle)]
 pub extern "C" fn outfit_gfxStoreLoadNeeded() {
    // Try to avoid messing with the context and just find what we have to update first

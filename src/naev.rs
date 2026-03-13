@@ -68,7 +68,6 @@ pub fn naev() -> Result<()> {
    // Hack for plugin manager mode
    if std::env::args().skip(1).any(|a| a == "--pluginmanager") {
       setup_logging()?;
-      //nlog::set_max_level(nlog::LevelFilter::Info);
       let _ = setup_conf_and_ndata()?;
       unsafe {
          naevc::gettext_setLanguage(naevc::conf.language); /* now that we can find translations */
@@ -459,6 +458,7 @@ impl LoadStage {
    }
 }
 
+#[tracing::instrument(skip_all)]
 fn load_all(sdlctx: &sdl::Sdl, env: &nlua::LuaEnv) -> Result<()> {
    unsafe {
       // Misc init stuff
@@ -548,6 +548,7 @@ fn load_all(sdlctx: &sdl::Sdl, env: &nlua::LuaEnv) -> Result<()> {
    Ok(())
 }
 
+#[tracing::instrument(skip(env))]
 fn loadscreen_update(env: &nlua::LuaEnv, done: f32, msg: &str) -> Result<()> {
    let lua = &nlua::NLUA;
    let update: mlua::Function = env.get("update")?;

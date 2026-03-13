@@ -12,6 +12,7 @@ use serde_seeded::DeserializeSeeded;
 use std::ffi::{CStr, CString, OsStr};
 use std::os::raw::{c_char, c_int};
 use std::path::{Path, PathBuf};
+use tracing::instrument;
 
 #[derive(Default, DeserializeSeeded, Debug)]
 #[seeded(de(seed(TextureDeserializer<'a>),params('a)))]
@@ -158,6 +159,7 @@ pub fn get(name: &str) -> Result<&'static SlotProperty> {
    }
 }
 
+#[instrument]
 pub fn load() -> Result<Vec<SlotProperty>> {
    fn sdf_texture(ctx: &ContextWrapper, path: &str) -> Result<texture::Texture> {
       let path = match path.starts_with('/') {

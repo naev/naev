@@ -1,13 +1,13 @@
 //use mlua::prelude::*;
+use crate::lua::ryaml;
 use anyhow::Context as AnyhowContext;
 use anyhow::Result;
 use constcat::concat;
-use mlua::{FromLua, FromLuaMulti, IntoLua, IntoLuaMulti};
-use std::sync::LazyLock;
-
-use crate::lua::ryaml;
 use gettext::gettext;
+use mlua::{FromLua, FromLuaMulti, IntoLua, IntoLuaMulti};
 use nlog::{info, warn, warn_err, warnx};
+use std::sync::LazyLock;
+use tracing::instrument;
 
 const NLUA_LOAD_TABLE: &str = "_LOADED"; // Table to use to store the status of required libraries.
 const LUA_INCLUDE_PATH: &str = "scripts/"; // Path for Lua includes.
@@ -109,6 +109,7 @@ fn require(lua: &mlua::Lua, filename: mlua::String) -> mlua::Result<mlua::Value>
 }
 
 impl NLua {
+   #[instrument]
    pub fn new() -> Result<NLua> {
       let lua = unsafe {
          // TODO get rid of the lua_init() and move entirely to mlua.
@@ -313,6 +314,7 @@ impl NLua {
       })
    }
 
+   #[instrument(skip(self))]
    pub fn environment_new(&self, name: &str) -> Result<LuaEnv> {
       let lua = &self.lua;
       let t = lua.create_table()?;

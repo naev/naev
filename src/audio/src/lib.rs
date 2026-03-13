@@ -47,6 +47,7 @@ use symphonia::core::conv::{FromSample, IntoSample};
 use symphonia::core::{
    codecs::Decoder, formats::FormatReader, io::MediaSourceStream, sample::Sample,
 };
+use tracing::instrument;
 #[cfg(debug_assertions)]
 use tracing_mutex::stdsync::{Mutex, RwLock};
 
@@ -399,7 +400,8 @@ impl Buffer {
       }
    }
 
-   fn from_path<P: AsRef<Path>>(path: P) -> Result<Self> {
+   #[instrument]
+   fn from_path<P: AsRef<Path> + std::fmt::Debug>(path: P) -> Result<Self> {
       let (name, stereo, replaygain, mut data, sample_rate) = {
          let data = BufferData::from_path(path)?;
          (
@@ -1242,6 +1244,7 @@ impl Audio {
          .parameter_f32(AL_AIR_ABSORPTION_FACTOR, value);
    }
 }
+#[derive(Debug)]
 pub struct AudioBuilder {
    pos: Option<Vector2<f32>>,
    vel: Option<Vector2<f32>>,
@@ -1350,6 +1353,7 @@ impl AudioBuilder {
       }
    }
 
+   #[instrument]
    pub fn build(self) -> Result<AudioRef> {
       if AUDIO.disabled || SILENT.load(Ordering::Relaxed) {
          return Ok(AudioRef::null());
@@ -1728,6 +1732,7 @@ pub struct System {
    attribs: Vec<ALCenum>,
 }
 impl System {
+   #[instrument]
    pub fn new() -> Result<Self> {
       let nosound = unsafe { naevc::conf.nosound != 0 };
       if nosound {
@@ -2073,6 +2078,7 @@ impl System {
       *AUDIO.listener_pos.write().unwrap() = pos;
    }
 
+   #[instrument(skip_all)]
    pub fn execute_messages(&self) {
       let mut messages = MESSAGES.lock().unwrap();
       if messages.is_empty() {
@@ -2200,6 +2206,7 @@ impl AudioRef {
    }
 }
 
+#[derive(Debug)]
 pub struct LuaAudioRef {
    pub audio: AudioRef,
    pub remove_on_drop: bool,
