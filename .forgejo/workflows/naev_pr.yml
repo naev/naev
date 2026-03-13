@@ -44,6 +44,11 @@ jobs:
 
       - name: Fetch and checkout LFS
         run: |
+          # Strip any Actions-injected credentials so LFS falls back to
+          # anonymous HTTPS (the assets repo is public).  Without this,
+          # fork-PR runners send an invalid token and Codeberg rejects it.
+          git -C source/assets config --unset-all "http.https://codeberg.org/.extraheader" || true
+          git -C source config --unset-all "http.https://codeberg.org/.extraheader" || true
           git -C source/assets lfs fetch --all
           git -C source/assets lfs checkout
 
