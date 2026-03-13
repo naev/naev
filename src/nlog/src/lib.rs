@@ -236,7 +236,15 @@ pub fn init() -> Result<()> {
       .with_thread_ids(true)
       .with_thread_names(true)
       .with_writer(TeeWarn(Tee::new(std::io::stderr, file_logger)))
-      .with_filter(tracing_subscriber::filter::LevelFilter::WARN);
+      //.with_filter(tracing_subscriber::filter::LevelFilter::WARN);
+      .with_filter(filter_fn(|meta| {
+         let level = *meta.level();
+         if let Some(path) = meta.module_path() {
+            WHITELIST.iter().any(|s| path.starts_with(s)) && level <= tracing::Level::WARN
+         } else {
+            false
+         }
+      }));
    let debug_layer = fmt::layer()
       .compact()
       .without_time()
