@@ -4,10 +4,10 @@ use std::sync::OnceLock;
 use std::sync::atomic::{AtomicU32, Ordering};
 use tracing_appender::non_blocking;
 pub use tracing_appender::non_blocking::WorkerGuard;
-use tracing_subscriber::fmt::writer::Tee;
+use tracing_subscriber::fmt::writer::{OptionalWriter, Tee};
 use tracing_subscriber::{
-   filter::filter_fn, fmt, fmt::MakeWriter, fmt::writer::OptionalWriter, layer::Layer,
-   layer::SubscriberExt, util::SubscriberInitExt,
+   filter::filter_fn, fmt, fmt::MakeWriter, layer::Layer, layer::SubscriberExt,
+   util::SubscriberInitExt,
 };
 
 const WARN_MAX: u32 = 1000;
@@ -124,11 +124,6 @@ pub fn init() -> Result<()> {
          }
       }));
 
-   //let (debug_layer, debug_handle) = reload::Layer::new(debug_layer);
-   //debug_handle.modify( |layer| {
-   //   *layer.inner_mut().writer_mut() = || std::sync::Arc::new(std::io::stderr()).with_max_level( tracing::Level::WARN );
-   //});
-
    let registry = tracing_subscriber::registry()
       .with(warn_layer)
       .with(debug_layer);
@@ -147,7 +142,7 @@ pub fn init() -> Result<()> {
    Ok(())
 }
 
-pub fn set_log_file(path: &str) -> Result<non_blocking::WorkerGuard> {
+pub fn set_log_file(path: &str) -> Result<WorkerGuard> {
    let file_appender = tracing_appender::rolling::never("", path);
    // TODO not sure if it's faster to strip, or just use two layers instead
    let (writer, guard) = non_blocking(strip_ansi_escapes::Writer::new(file_appender));
@@ -155,7 +150,7 @@ pub fn set_log_file(path: &str) -> Result<non_blocking::WorkerGuard> {
    Ok(guard)
 }
 
-pub fn close_file(guard: Option<non_blocking::WorkerGuard>) {
+pub fn close_file(guard: Option<WorkerGuard>) {
    drop(guard);
    let nw = WARNINGS.load(Ordering::Relaxed);
    if nw == 0 {
