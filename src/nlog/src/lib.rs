@@ -115,6 +115,9 @@ pub fn init() -> Result<()> {
       .with_writer(Tee::new(std::io::stdout, file_logger))
       .with_filter(filter_fn(|meta| {
          let level = *meta.level();
+         if meta.is_span() {
+            return false;
+         }
          if let Some(path) = meta.module_path() {
             WHITELIST.iter().any(|s| path.starts_with(s))
                && level > tracing::Level::WARN
