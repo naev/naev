@@ -64,11 +64,9 @@ impl<A: Write, B: Write> Write for TeeWarn<A, B> {
 }
 
 static LOGFILE: OnceLock<(String, non_blocking::NonBlocking)> = OnceLock::new();
-
-// TODO not sure if it's faster to strip, or just use two layers instead
-fn file_logger() -> OptionalWriter<strip_ansi_escapes::Writer<non_blocking::NonBlocking>> {
+fn file_logger() -> OptionalWriter<non_blocking::NonBlocking> {
    match LOGFILE.get() {
-      Some(f) => OptionalWriter::some(strip_ansi_escapes::Writer::new(f.1.clone())),
+      Some(f) => OptionalWriter::some(f.1.clone()),
       None => OptionalWriter::none(),
    }
 }
@@ -149,7 +147,8 @@ pub fn init() -> Result<()> {
 
 pub fn set_log_file(path: &str) -> Result<non_blocking::WorkerGuard> {
    let file_appender = tracing_appender::rolling::never("", path);
-   let (writer, guard) = non_blocking(file_appender);
+   // TODO not sure if it's faster to strip, or just use two layers instead
+   let (writer, guard) = non_blocking(strip_ansi_escapes::Writer::new(file_appender));
    let _ = LOGFILE.set((path.to_string(), writer));
    Ok(guard)
 }
