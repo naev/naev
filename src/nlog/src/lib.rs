@@ -1,9 +1,9 @@
 use anyhow::Result;
-use log as logcore;
 use std::fs::File;
 use std::io::Write;
 use std::sync::atomic::{AtomicU32, Ordering};
 use std::sync::{LazyLock, Mutex};
+use tracing::log as logcore;
 
 const WARN_MAX: u32 = 1000;
 
