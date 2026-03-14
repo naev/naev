@@ -122,7 +122,7 @@ colours![
 ];
 // Special with transparency (not accessible from names)
 colour!(TRANSPARENT, 0.0, 0.0, 0.0, 0.0);
-colour!(BLACKHILIGHT, 0.0, 0.0, 0.0, 0.4); // Highlight colour over black background
+colour!(BLACKHILIGHT, 0.0, 0.0, 0.0, 0.6); // Highlight colour over black background
 colour!(RADARVIEWPORT, 1.0, 1.0, 1.0, 0.5);
 
 /// softfloat doesn't have a native `powf` so we just approximate it

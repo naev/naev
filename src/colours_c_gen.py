@@ -76,7 +76,7 @@ COLOURS = [
    Colour( "Silver",      0.75, 0.75, 0.75 ),
    Colour( "Aqua",       0.00, 0.75, 1.00 ),
 
-   Colour( "BlackHilight", 0.0, 0.0, 0.0, 0.4 ), # Hilight colour over black background
+   Colour( "BlackHilight", 0.0, 0.0, 0.0, 0.6 ), # Hilight colour over black background
 
    # Outfit slot colours
    # Taken from https://cran.r-project.org/web/packages/khroma/vignettes/tol.html#muted

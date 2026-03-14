@@ -932,10 +932,9 @@ void gui_clearMessages( void )
  */
 static void gui_renderMessages( double dt )
 {
-   double         x, y, h, hs, vx, vy, dy;
-   int            v, o;
-   glColour       c    = { .r = 1., .g = 1., .b = 1. };
-   const glColour msgc = { .r = 0., .g = 0., .b = 0., .a = 0.6 };
+   double   x, y, h, hs, vx, vy, dy;
+   int      v, o;
+   glColour c = { .r = 1., .g = 1., .b = 1. };
 
    NTracingZone( _ctx, 1 );
 
@@ -993,12 +992,14 @@ static void gui_renderMessages( double dt )
             if ( str[0] == '\t' ) {
                gl_printRestore( &mesg_stack[m].restore );
                dy = gl_printHeightRaw( &gl_smallFont, gui_mesg_w, &str[1] ) + 6;
-               gl_renderRect( x - 4., y - 1., gui_mesg_w - 13., dy, &msgc );
+               gl_renderRect( x - 4., y - 1., gui_mesg_w - 13., dy,
+                              &cBlackHilight );
                gl_printMaxRaw( &gl_smallFont, gui_mesg_w - 45., x + 30, y + 3,
                                &fadedWhite, -1., &str[1] );
             } else {
                dy = gl_printHeightRaw( &gl_smallFont, gui_mesg_w, str ) + 6;
-               gl_renderRect( x - 4., y - 1., gui_mesg_w - 13., dy, &msgc );
+               gl_renderRect( x - 4., y - 1., gui_mesg_w - 13., dy,
+                              &cBlackHilight );
                gl_printMaxRaw( &gl_smallFont, gui_mesg_w - 15., x, y + 3,
                                &fadedWhite, -1., str );
             }
