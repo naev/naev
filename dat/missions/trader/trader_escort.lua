@@ -129,7 +129,7 @@ function accept()
    elseif mem.convoysize == 2 then
       convoy_ships = trepeat( {"Koala"}, 4 )
    else
-      convoy_ships = trepeat( {"Rhino", "Mule"}, mem.convoysize-1 )
+      convoy_ships = trepeat( {"Plowshare", "Mule"}, mem.convoysize-1 )
    end
    mem.num_ships = #convoy_ships
 
