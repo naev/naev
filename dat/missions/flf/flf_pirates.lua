@@ -115,7 +115,7 @@ function create ()
    local desc = setDescription()
 
    mem.late_arrival = rnd.rnd() < 0.05
-   mem.late_arrival_delay = rnd.uniform( 10.0, 120.0 )
+   mem.late_arrival_delay = rnd.rnd( 10, 120 )
 
    -- Set mission details
    misn.setTitle( fmt.f( misn_title[mem.level], {sys=mem.missys} ) )

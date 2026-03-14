@@ -31,7 +31,7 @@ function create()
       evt.finish()
    end
 
-   local delay = rnd.uniform(10, 40)
+   local delay = rnd.rnd(10, 40)
    hook.timer(delay, "startMission")
    hook.land("cleanup")
    hook.jumpout("cleanup")

@@ -1056,7 +1056,7 @@ function create_post ()
 
    -- Give a small delay... except for escorts?
    if mem.jumpedin and not mem.carried then
-      ai.settimer( 0, rnd.uniform(5, 6) )
+      ai.settimer( 0, rnd.rnd(5, 6) )
       ai.pushtask("jumpin_wait")
    end
 

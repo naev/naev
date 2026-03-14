@@ -267,7 +267,8 @@ impl UserData for Rnd {
             0.0013498985 + rng::<f64>() * (1. - 0.0013498985 * 2.),
          ))
       });
-      /*@
+      /* DEPRECATED IN 0.14.0, REMOVE IN 0.15.0
+       *
        * @brief Gets a random number in the given range, with a uniform distribution.
        *
        * @usage n = uniform() -- Real number in the interval [0,1).
@@ -282,7 +283,18 @@ impl UserData for Rnd {
        */
       methods.add_function(
          "uniform",
-         |_, (l, h): (f64, f64)| -> mlua::Result<mlua::Number> { Ok(range(l..h)) },
+         |lua, (l, h): (Option<i64>, Option<i64>)| -> mlua::Result<mlua::Number> {
+            naev_core::lua::deprecated(lua, "uniform", Some("rnd"))?;
+            if let Some(l) = l {
+               Ok(if let Some(h) = h {
+                  if h < l { range(h..l) } else { range(l..h) }
+               } else {
+                  range(0..l)
+               } as mlua::Number)
+            } else {
+               Ok(rng::<f64>())
+            }
+         },
       );
       /*@
        * @brief Gets a random angle, i.e., a random number from 0 to 2*pi.

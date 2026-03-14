@@ -1347,7 +1347,6 @@ stds.rnd = {
             sigma = {},
             twosigma = {},
             threesigma = {},
-            uniform = {},
             angle = {},
             permutation = {},
          }

@@ -202,7 +202,7 @@ function enter ()
          enemies( enter_vect )
       -- Enter after player
       else
-         hook.timer(rnd.uniform( 2.0, 5.0 ) , "enemies", enter_vect)
+         hook.timer(rnd.rnd( 2, 5 ) , "enemies", enter_vect)
       end
    end
 end

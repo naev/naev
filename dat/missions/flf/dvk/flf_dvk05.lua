@@ -42,7 +42,7 @@ function create ()
    mem.credits = 1e6
 
    mem.late_arrival = false
-   mem.late_arrival_delay = rnd.uniform( 10.0, 120.0 )
+   mem.late_arrival_delay = rnd.rnd( 10, 120 )
 
    misn.setNPC( _("Benito"), "flf/unique/benito", _("Benito is shuffling around papers and overall appearing a bit stressed. Perhaps you should see what is the matter.") )
 end

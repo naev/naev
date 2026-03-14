@@ -164,7 +164,7 @@ function enter ()
          invoke_enemies( enter_vect )
       -- Enter after player
       else
-         hook.timer(rnd.uniform( 2.0, 5.0 ), "invoke_enemies", enter_vect)
+         hook.timer(rnd.rnd( 2.0, 5.0 ), "invoke_enemies", enter_vect)
       end
    end
 end

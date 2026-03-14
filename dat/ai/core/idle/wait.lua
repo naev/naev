@@ -16,7 +16,7 @@ function idle ()
    end
 
    -- Just wait
-   ai.settimer( 0, rnd.uniform(3.0, 5.0) )
+   ai.settimer( 0, rnd.rnd(3, 5) )
    ai.pushtask("idle_wait")
 end
 

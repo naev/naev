@@ -6,7 +6,7 @@ function idle ()
       local planet = ai.landspob( mem.land_friendly )
       -- planet must exist
       if planet == nil then
-         ai.settimer(0, rnd.uniform(1.0, 3.0))
+         ai.settimer(0, rnd.rnd(1, 3))
          ai.pushtask("enterdelay")
       else
          ai.pushtask("hyperspace")

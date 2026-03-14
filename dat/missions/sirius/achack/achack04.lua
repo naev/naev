@@ -275,7 +275,7 @@ end
 function grumble()
    -- Randomville!!
    bhfleet[rnd.rnd(1, #bhfleet)]:broadcast(grumblings[rnd.rnd(1, #grumblings)])
-   mem.grumblehook = hook.timer(rnd.uniform(3, 8), "grumble")
+   mem.grumblehook = hook.timer(rnd.rnd(3, 8), "grumble")
 end
 
 -- Attacked hook for mercenaries.

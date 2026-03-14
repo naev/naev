@@ -141,7 +141,7 @@ function enter ( from_sys )
          if from_sys == nil then
             add_escorts( true )
          else -- Just jumped
-            hook.timer( rnd.uniform(2.0, 5.0), "add_escorts" )
+            hook.timer( rnd.rnd(2, 5), "add_escorts" )
          end
 
          -- Disable spawning and clear pilots -> makes it more epic
@@ -166,7 +166,7 @@ function enter ( from_sys )
          end
 
          mem.final_fight = 0
-         hook.timer(rnd.uniform(6.0, 8.0) , "final_talk") -- Escorts should be in system by now
+         hook.timer(rnd.rnd(6, 8) , "final_talk") -- Escorts should be in system by now
       end
 
    -- Player ran away from combat - big disgrace.
@@ -190,13 +190,13 @@ function final_talk ()
       talker:broadcast( _("ESS Trinity: Please turn off your engines and prepare to be boarded.") )
 
       mem.final_fight = 1
-      hook.timer(rnd.uniform( 3.0, 4.0 ), "final_talk")
+      hook.timer(rnd.rnd( 3, 4 ), "final_talk")
    elseif mem.final_fight == 1 then
       talker = trinity
       talker:broadcast( _("You will never take me alive!") )
 
       mem.final_fight = 2
-      hook.timer(rnd.uniform( 3.0, 4.0 ), "final_talk")
+      hook.timer(rnd.rnd( 3, 4 ), "final_talk")
    elseif mem.final_fight == 2 then
       -- Talk
       talker = paci
@@ -211,7 +211,7 @@ function final_talk ()
       end
 
       mem.final_fight = 3
-      hook.timer(rnd.uniform( 4.0, 5.0 ), "final_talk")
+      hook.timer(rnd.rnd( 4, 5 ), "final_talk")
    elseif mem.final_fight == 3 then
       mem.tri_flee  = false
       hook.timer( 3.0, "trinity_check" )

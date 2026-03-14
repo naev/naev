@@ -341,7 +341,7 @@ function drone_disableable()
       vn.transition()
       geller(_([["This is strange. The engines are starting to heat up... oh, shit, if they continue like this the drone will explode in about 20 seconds! You'd better hurry!"]]))
       vn.run()
-      hook.timer(18.0+rnd.uniform(0.001, 4.0), "drone_selfdestruct")
+      hook.timer(18+4*rnd.rnd(), "drone_selfdestruct")
    else
       player.msg(_([[Dr. Geller: "There you go! Get it!"]]),true)
    end
