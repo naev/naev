@@ -13,7 +13,7 @@ def get_number_commits_since(source_root: str, tag: str) -> Optional[str]:
    """Return the short git commit SHA, or None if unavailable."""
    try:
       proc = subprocess.run(
-         ["git", "-C", source_root, "rev-list", f"{tag}..HEAD", "--", "--count"],
+         ["git", "-C", source_root, "rev-list", f"{tag}..HEAD", "--count"],
          capture_output=True,
          text=True,
          check=True,
