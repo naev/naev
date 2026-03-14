@@ -287,11 +287,11 @@ fn naevmain() -> Result<()> {
       //Have to set up fonts before rendering anything.
       let font_prefix = naevc::FONT_PATH_PREFIX as *const u8 as *const c_char;
       let font_default_path = gettext(
-         "Cabin-SemiBold.otf,NanumBarunGothicBold.ttf,SourceCodePro-Semibold.ttf,IBMPlexSansJP-Medium.otf",
+         "Ubuntu-Regular.otf,NanumBarunGothicBold.ttf,SourceCodePro-Semibold.ttf,IBMPlexSansJP-Medium.otf",
       );
       let font_default_path_c = CString::new(font_default_path).unwrap();
       let font_small_path = gettext(
-         "Cabin-SemiBold.otf,NanumBarunGothicBold.ttf,SourceCodePro-Semibold.ttf,IBMPlexSansJP-Medium.otf",
+         "Ubuntu-Regular.otf,NanumBarunGothicBold.ttf,SourceCodePro-Semibold.ttf,IBMPlexSansJP-Medium.otf",
       );
       let font_small_path_c = CString::new(font_small_path).unwrap();
       let font_mono_path =
