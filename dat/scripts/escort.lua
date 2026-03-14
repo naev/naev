@@ -333,7 +333,7 @@ function _escort_e_land( p, landed_spob )
 
       if escorts_left() <= 1 then
          player.msg("#g"..fmt.f(_("All escorts have landed on {pnt}."), {pnt=landed_spob}).."#0")
-      else
+      elseif mem._escort.nofollowplayer then
          hook.safe("_escort_update_leader")
       end
    else
@@ -350,7 +350,7 @@ function _escort_e_jump( p, j )
 
       if escorts_left() <= 1 then
          player.msg("#g"..fmt.f(_("All escorts have jumped to {sys}. Follow them."), {sys=j:dest()}).."#0")
-      else
+      elseif mem._escort.nofollowplayer then
          hook.safe("_escort_update_leader")
       end
    else

@@ -5,6 +5,7 @@
    * Fixed faction hits being larger than expected in some cases
    * Propagate parameters to plugin manager when launched
    * Guard against some segfaults triggerable by plugins
+   * Fixed escorts sometimes buggering off during escort missions
    * shadowvigil: fixed being able to skip the mission by boarding again
    * Spelling and grammar fixes
    * Translation updates
