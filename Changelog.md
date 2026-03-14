@@ -24,7 +24,7 @@
    * The +1 reputation from derelict and Dvaered dogfight contest causes no
      longer causes reputation penalties with pirates
    * Added accessibility option to disable screen shaking
-   * Jump Luminosity made easier to configure; now defaults to darker
+   * Jump brightness made easier to configure; now defaults to darker
    * Gauntlet NPCs get their fighters disabled when they are disabled
    * Stress starts recovering 5 seconds after taking disable damage instead of
      immediately
@@ -48,6 +48,7 @@
    * Configuration values only save if they are not set to defaults
    * Plugin manager tries to detect potential plugin conflicts now
    * Default font changed to increase readability
+   * Can undisable escorts by boarding them
 
  ### Engine
 

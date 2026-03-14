@@ -177,6 +177,14 @@ int player_tryBoard( int noisy )
       return PLAYER_BOARD_OK;
    }
 
+   /* Restore escorts. */
+   if ( p->parent == PLAYER_ID ) {
+      player_message( _( "#oYou repair your %s escort." ), p->name );
+      p->stress = 0.;
+      pilot_updateDisable( p, 0 );
+      return PLAYER_BOARD_OK;
+   }
+
    /* Set speed to target's speed. */
    vec2_cset( &player.p->solid.vel, VX( p->solid.vel ), VY( p->solid.vel ) );
 
