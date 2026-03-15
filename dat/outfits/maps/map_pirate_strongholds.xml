@@ -10,8 +10,11 @@
   <sys name="New Haven">
    <spob>Green Eye</spob>
    <spob>New Haven</spob>
-   <spob>Old Man Jack</spob>
    <spob>Red Eye</spob>
+  </sys>
+  <sys name="Haven">
+   <spob>Old Man Jack</spob>
+   <spob>Haven</spob>
   </sys>
   <sys name="Kretogg">
    <spob>Kretogg I</spob>
