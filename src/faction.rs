@@ -1760,8 +1760,8 @@ impl UserData for FactionRef {
        * indicating whether or not the specified tag exists.
        * @luafunc tags
        */
-      methods.add_method("tags", |_, this, ()| -> mlua::Result<Vec<String>> {
-         Ok(this.call(|fct| fct.data.tags.clone())?)
+      methods.add_method("tags", |lua, this, ()| -> mlua::Result<mlua::Table> {
+         this.call(|fct| lua.create_table_from(fct.data.tags.iter().map(|s| (s.clone(), true))))?
       });
       /*@
        * @brief Adds a faction dynamically. Note that if the faction already exists as
