@@ -91,7 +91,7 @@ iced = { version = "0.14.0", default-features = false, features = ["wayland", "x
 tokio = { version = "1", features = ["sync"] }
 webbrowser = { version = "1" }
 itertools = "0.14"
-arrayvec = "0.7"
+tinyvec = "1"
 
 # Plugin Manager dependencies
 # Serialization / XML

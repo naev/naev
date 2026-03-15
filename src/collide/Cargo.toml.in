@@ -21,7 +21,7 @@ ndata = { workspace = true }
 physics = { workspace = true }
 quick-xml = { workspace = true }
 itertools = { workspace = true }
-arrayvec = { workspace = true }
+tinyvec = { workspace = true }
 fs-err = { workspace = true }
 bitcode = { workspace = true }
 blake3 = { workspace = true }

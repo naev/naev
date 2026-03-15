@@ -1,6 +1,6 @@
-use arrayvec::ArrayVec;
 use nalgebra::Vector2;
 use nlog::warn;
+use tinyvec::ArrayVec;
 
 pub mod polygon;
 
@@ -14,7 +14,7 @@ pub fn line_line(
    e1: Vector2<f64>,
    s2: Vector2<f64>,
    e2: Vector2<f64>,
-) -> ArrayVec<Vector2<f64>, 2> {
+) -> ArrayVec<[Vector2<f64>; 2]> {
    // Handle degenerate line cases
    if s1 == e1 || s2 == e2 {
       return ArrayVec::new();
@@ -102,7 +102,7 @@ pub fn line_circle(
    p2: Vector2<f64>,
    cc: Vector2<f64>,
    cr: f64,
-) -> ArrayVec<Vector2<f64>, 2> {
+) -> ArrayVec<[Vector2<f64>; 2]> {
    fn fx(A: f64, B: f64, C: f64, x: f64) -> f64 {
       -(A * x + C) / B
    }
@@ -197,7 +197,7 @@ pub fn circle_circle(
    r1: f64,
    p2: Vector2<f64>,
    r2: f64,
-) -> ArrayVec<Vector2<f64>, 2> {
+) -> ArrayVec<[Vector2<f64>; 2]> {
    let mut hit = ArrayVec::new();
    let d2 = (p2 - p1).norm_squared();
    if d2 > r1 * r1 + r2 * r2 {

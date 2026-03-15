@@ -1,6 +1,5 @@
 use crate::{line_circle, line_line};
 use anyhow::Result;
-use arrayvec::ArrayVec;
 use fs_err as fs;
 use image::GenericImageView;
 use itertools::Itertools;
@@ -9,6 +8,17 @@ use nlog::{warn, warn_err};
 use serde::{Deserialize, Serialize};
 use std::collections::VecDeque;
 use std::path::Path;
+use tinyvec::ArrayVec;
+
+// arrayvec::ArrayVec has is_full, but not tinyvec::ArrayVec
+trait ArrayVecExt {
+   fn is_full(&self) -> bool;
+}
+impl<T: tinyvec::Array> ArrayVecExt for tinyvec::ArrayVec<T> {
+   fn is_full(&self) -> bool {
+      self.len() == self.capacity()
+   }
+}
 
 const ALPHA_THRESHOLD: u8 = 50;
 
@@ -177,8 +187,8 @@ impl Polygon {
    }
 
    /// Intersection with a line segment.
-   pub fn intersect_line(&self, s: Vector2<f64>, e: Vector2<f64>) -> ArrayVec<Vector2<f64>, 2> {
-      let mut hit: ArrayVec<Vector2<f64>, 2> = ArrayVec::new();
+   pub fn intersect_line(&self, s: Vector2<f64>, e: Vector2<f64>) -> ArrayVec<[Vector2<f64>; 2]> {
+      let mut hit: ArrayVec<[Vector2<f64>; 2]> = ArrayVec::new();
 
       // Check end points
       if self.contains_point(s) {
@@ -237,7 +247,11 @@ impl Polygon {
       hit
    }
 
-   pub fn intersect_circle(&self, centre: Vector2<f64>, radius: f64) -> ArrayVec<Vector2<f64>, 2> {
+   pub fn intersect_circle(
+      &self,
+      centre: Vector2<f64>,
+      radius: f64,
+   ) -> ArrayVec<[Vector2<f64>; 2]> {
       let mut hit = ArrayVec::new();
 
       // AABB testing
@@ -281,7 +295,7 @@ impl Polygon {
       &self,
       other: &Polygon,
       rel: Vector2<f64>,
-   ) -> ArrayVec<Vector2<f64>, 2> {
+   ) -> ArrayVec<[Vector2<f64>; 2]> {
       // AABB test
       let oxmin = other.xmin + rel.x;
       let oxmax = other.xmax + rel.x;
@@ -910,7 +924,7 @@ mod tests {
       (a - b).norm() < crate::TOLERANCE
    }
 
-   fn v_contains(p: &ArrayVec<Vector2<f64>, 2>, q: Vector2<f64>) -> bool {
+   fn v_contains(p: &ArrayVec<[Vector2<f64>; 2]>, q: Vector2<f64>) -> bool {
       p.iter().any(|x| v_eq(*x, q))
    }
 
