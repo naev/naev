@@ -3509,6 +3509,7 @@ dat/outfits/utility/catalytic_energy_drill.lua
 dat/outfits/utility/cloaking_device.lua
 dat/outfits/utility/combat_hologram_projector.lua
 dat/outfits/utility/conduit/conduit.lua
+dat/outfits/utility/conduit/pipeline_conduit.lua
 dat/outfits/utility/cryogenic_repair_nanobots.lua
 dat/outfits/utility/droid_repair_crew.lua
 dat/outfits/utility/droid_repair_crew_mk2.lua
