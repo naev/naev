@@ -24,6 +24,7 @@ jobs:
           ssh-key: ${{ secrets.CODEBERG_SSH_KEY }}
           ssh-known-hosts: ${{ secrets.CODEBERG_SSH_KNOWN_HOSTS }}
           persist-credentials: true
+          fetch-tags: true
 
       - name: Check for new commits since last nightly
         id: check
