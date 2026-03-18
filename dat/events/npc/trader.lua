@@ -4,6 +4,7 @@ local desc_list = {
    _("A trader enjoying a drink."),
    _("A space trader relaxing at the bar."),
    _("The individual looks like they dabble in trade."),
+   _("A space trader's society member pounding some drinks."),
    -- A bit weird
    _("A hard-boiled space capitalist."),
 }
