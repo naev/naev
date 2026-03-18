@@ -53,7 +53,7 @@ local ads = {
       _("A Dvaered Success Story: Buy the outstanding autobiography by Lady Bitterfly. "),
       _("Kids show poor discipline? Lord Bigbonk's Military Academy can help!"),
       function () return dv_generate_insult(_("I hereby declare {butthead} is {badword}. -{sponsor}")) end,
-      function () return dv_generate_insult (_("Let it be known that {butthead} is {badword}. -{sponsor}")) end,
+      function () return dv_generate_insult(_("Let it be known that {butthead} is {badword}. -{sponsor}")) end,
    },
    ads_soromid = {
       _("Remember Sorom."),
@@ -64,6 +64,8 @@ local ads = {
       _("Worried about your bio-ship adenosine triphosphate output? Leave it to ATP Specialists!"),
       _("Preemptively treat your bio-ship for space fleas with Dr. Nastya's Ointment!"),
       _("Love life lacking? Ask your genetic specialist about Dr. Zoidberg's Sensorial Tentacles and Pheromones enhancements!"), -- Futurama
+      _("In need of integumentary care and grooming? Visit your local Krumkhenmikshi's Spa at a planet near you!"),
+      _("Scales looking dull? Hraja's Scale Shiner has got you covered!"),
    },
    ads_zalek = {
       _("Want to solve a large-dimensional stochastic PDE? The LMKSTD method is what you need!"),
@@ -71,6 +73,9 @@ local ads = {
       _("Keeping your drones in top shape. Prof. Imarisha's Robotic Laboratory."),
       _("Interested in Genetic Lifeforms research? Apply to Interstice Science!"), -- Reference to Aperture Science (synonyms) from Portal
       _("Want to learn about Anti-Mass Spectrometry? Join Ebony Plateau today!"), -- Reference to Black Mesa (synonyms) from Half-Life
+      _("Rogue AI on the lose? You should have used Prof. Mendonça specialized AI debugger!"),
+      _("Cooking drone broke down? Try Bachelor Chow. Now with flavour!"), -- Reference to Bachelor chow from Futurama
+      _("Pop’s Friendly Robot Company: We’re always here for you!"), -- Reference to Futurama's MomCorp, but it's DadCorp now
       function ()
          -- Player may not exist, so add fallback
          local pn = player.name() or _("$LASTNAME $FIRSTNAME")
