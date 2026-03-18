@@ -34,6 +34,7 @@ return function ()
                e:setLeader( p )
                e:setVel( vel )
             end
+            return p
          end
       }, {
          spawn = function ()
@@ -153,6 +154,7 @@ return function ()
             m.taunt = _("Prepare to pay your shareware registration fee!")
             m.bribe_no = _([["You can't pay your shareware registration fee with credits, only blood!"]])
             m.norun = true
+            return p
          end,
          w = 100, -- Almost ensured in Zied
       } )
