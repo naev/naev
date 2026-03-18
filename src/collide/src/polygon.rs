@@ -10,16 +10,6 @@ use std::collections::VecDeque;
 use std::path::Path;
 use tinyvec::ArrayVec;
 
-// arrayvec::ArrayVec has is_full, but not tinyvec::ArrayVec
-trait ArrayVecExt {
-   fn is_full(&self) -> bool;
-}
-impl<T: tinyvec::Array> ArrayVecExt for tinyvec::ArrayVec<T> {
-   fn is_full(&self) -> bool {
-      self.len() == self.capacity()
-   }
-}
-
 const ALPHA_THRESHOLD: u8 = 50;
 
 #[derive(Debug, PartialEq, Serialize, Deserialize, Clone)]
