@@ -22,6 +22,56 @@ return function ()
             m.taunt = _("Say hello to my little friends!")
             return p
          end
+      }, {
+         -- S.T.S. stands for Space Trader Society
+         spawn = function ()
+            local p = pilot.add("Starbridge Sigma", "Trader", nil, _("S.T.S. Sonne"), {naked=true, ai="pers"})
+            p:outfitAddIntrinsic("Escape Pod")
+            local c = equipopt.cores.get( p, { all="elite" } )
+            equipopt.empire( p, {cores=c, fighterbay=20} )
+            local m = p:memory()
+            m.capturable = true
+            m.comm_greet = _([["Ya win some, ya lose some."]])
+            m.taunt = _("Violence? How droll.")
+            return p
+         end
+      }, {
+         spawn = function ()
+            local p = pilot.add("Plowshare", "Trader", nil, _("S.T.S. Olivia"), {naked=true, ai="pers"})
+            p:outfitAddIntrinsic("Escape Pod")
+            local c = equipopt.cores.get( p, { all="elite" } )
+            equipopt.generic( p, {cores=c, fighterbay=20} )
+            p:cargoAdd( "Vixilium", p:cargoFree() )
+            local m = p:memory()
+            m.capturable = true
+            m.comm_greet = _([["Got business to make."]])
+            m.taunt = _("Wait? That's illegal!")
+            m.formation = "buffer"
+            local pos = p:pos()
+            local vel = p:vel()
+            for i=1,4 do
+               local e = pilot.add("Admonisher", "Trader", pos, nil, {naked=true})
+               equipopt.empire( e, "elite" )
+               local em = e:memory()
+               em.capturable = true
+               e:setLeader( p )
+               e:setVel( vel )
+            end
+            return p
+         end
+      }, {
+         spawn = function ()
+            local p = pilot.add("Zebra", "Trader", nil, _("S.T.S. Albatross"), {naked=true, ai="pers_runaway"})
+            p:outfitAddIntrinsic("Escape Pod")
+            local c = equipopt.cores.get( p, { all="elite" } )
+            equipopt.empire( p, {cores=c, fighterbay=20, pointdefence=10} )
+            p:cargoAdd( "Kermite", p:cargoFree() )
+            local m = p:memory()
+            m.capturable = true
+            m.comm_greet = _([["Gotta be in it for the long haul, know what I mean?"]])
+            m.taunt = _("C'mon! Not again!")
+            return p
+         end
       },
       -- Some Atra Vigilis
       {
