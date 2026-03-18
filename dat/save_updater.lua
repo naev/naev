@@ -104,6 +104,9 @@ end
    value indicating the amount of credits to refund the player.
 --]]
 local ship_list = {
+   -- 0.14.0
+   ["Sirius Starbridge"]   = "Starbridge Herald",
+   -- Older
    ["Proteron Derivative"] = "Proteron Dalton",
    ["Proteron Kahan"]      = "Proteron Gauss",
 }

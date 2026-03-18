@@ -1,4 +1,4 @@
-<ship name="Sirius Starbridge" inherits="Starbridge">
+<ship name="Starbridge Herald" inherits="Starbridge">
  <lua>sirius_starbridge.lua</lua>
  <gfx sy="10" sx="10" size="80">starbridge_sirius.gltf</gfx>
  <sound>engine_sirius</sound>
