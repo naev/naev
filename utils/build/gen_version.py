@@ -20,6 +20,10 @@ def get_number_commits_since(source_root: str, tag: str) -> Optional[str]:
       )
       return proc.stdout.strip()
    except Exception:
+      proc = subprocess.run(
+         ["git", "-C", source_root, "rev-list", f"{tag}", "--" ],
+      )
+      sys.exit(1)
       return None
 
 
@@ -81,7 +85,13 @@ def get_version(source_root: str, base_version: str) -> str:
 
    version = None
 
-   if os.path.isdir(os.path.join(source_root, ".git")):
+   try:
+      proc=subprocess.run(['git', '-C', source_root, 'rev-parse','--is-inside-work-tree'], capture_output=True, text=True, check=True)
+      in_tree = proc.stdout.strip()=='true'
+   except:
+      in_tree = False
+
+   if in_tree:
       if is_tagged_release(source_root) and not is_dirty(source_root):
          # Exact tag, clean repo
          version = base_version
