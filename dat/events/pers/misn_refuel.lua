@@ -1,7 +1,7 @@
 local ccomm = require  "common.comm"
 local fmt = require "format"
 
-local fct = faction.get("Independent")
+local FCT = faction.get("Independent")
 
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
@@ -22,7 +22,7 @@ local function spawn_needs_refuel ()
    end
    -- Must be near a place with independent presence
    for k,s in ipairs(scur:adjacentSystems()) do
-      if s:presence( fct ) > 0 then
+      if s:presence( FCT ) > 0 then
          return true
       end
    end
@@ -38,7 +38,7 @@ return function ()
    return {
       spawn = function ()
          local ship = choose_one{ "Llama", "Schroedinger", "Koala", "Mule" }
-         local plt = pilot.add(ship, "Independent", nil, nil, { ai="pers" } )
+         local plt = pilot.add(ship, FCT, nil, nil, { ai="pers" } )
 
          local mem = plt:memory()
          mem.capturable = true
