@@ -1951,6 +1951,31 @@ static int playerL_missions( lua_State *L )
          lua_pushboolean( L, 1 );
          lua_setfield( L, -2, "unique" );
       }
+      lua_newtable( L );
+      for ( int k = 0; k < array_size( pm->markers ); k++ ) {
+         const MissionMarker *m = &pm->markers[i];
+         switch ( m->type ) {
+         case SYSMARKER_COMPUTER:
+         case SYSMARKER_LOW:
+         case SYSMARKER_HIGH:
+         case SYSMARKER_PLOT:
+            lua_pushsystem( L, m->objid );
+            break;
+         case SPOBMARKER_COMPUTER:
+         case SPOBMARKER_LOW:
+         case SPOBMARKER_HIGH:
+         case SPOBMARKER_PLOT:
+            lua_pushspob( L, m->objid );
+            break;
+         default:
+            WARN( _( "Unknown marker type." ) );
+            lua_pushnil( L );
+            break;
+         }
+         lua_rawseti( L, -2, k + 1 );
+      }
+      lua_setfield( L, -2, "markers" );
+
       nlua_getenv( L, pm->env, "mem" );
       lua_setfield( L, -2, "memory" );
       /* Tags. */
