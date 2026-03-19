@@ -63,7 +63,7 @@ Initializes the library by setting all the necessary hooks.
 function escort.init( ships, params )
    -- Initializing from pilots
    if ships[1].ship then
-      if not params.nofollowplayer then
+      if params.nofollowplayer then
          error("escort.init with pilots only works nofollowplayer is not set")
       end
       local pilots = ships
@@ -77,6 +77,7 @@ function escort.init( ships, params )
          p:setFuel( math.max( p:fuel(), p:stats().fuel_consumption ) )
 
          -- Setup
+         p:taskClear()
          p:setLeader( player.pilot() )
          p:setInvincPlayer(true)
          p:setFriendly(true)
