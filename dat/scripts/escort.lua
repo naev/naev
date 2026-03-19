@@ -50,6 +50,8 @@ local aisetup = require "ai.core.setup"
 local DISTANCE_THRESHOLD2 = 2000^2
 local HEARTBEAT_TIMER = 1
 
+-- Only saved within the same session
+-- TODO maybe save globally?
 local escort_outfits
 
 --[[--
@@ -59,6 +61,32 @@ Initializes the library by setting all the necessary hooks.
    @tparam[opt] table params List of optional parameters.
 --]]
 function escort.init( ships, params )
+   -- Initializing from pilots
+   if ships[1].ship then
+      if not params.nofollowplayer then
+         error("escort.init with pilots only works nofollowplayer is not set")
+      end
+      local pilots = ships
+      ships = {}
+      escort_outfits = {}
+      for k,p in ipairs(pilots) do
+         ships[k] = p:ship()
+         escort_outfits[k] = p:outfits()
+
+         -- Ensure they have at least one jump of fuel
+         p:setFuel( math.max( p:fuel(), p:stats().fuel_consumption ) )
+
+         -- Setup
+         p:setLeader( player.pilot() )
+         p:setInvincPlayer(true)
+         p:setFriendly(true)
+         hook.pilot( p, "death", "_escort_e_death" )
+         hook.pilot( p, "attacked", "_escort_e_attacked" )
+         hook.pilot( p, "land", "_escort_e_land" )
+         hook.pilot( p, "jump", "_escort_e_jump" )
+      end
+   end
+
    params = params or {}
    mem._escort = {
       convoy = {},
@@ -403,9 +431,6 @@ function escort.spawn( pos )
             escort_outfits[k] = p:outfits()
          end
       end
-
-      -- Ensure they have at least one jump of fuel
-      p:setFuel( math.max( p:fuel(), p:stats().fuel_consumption ) )
    end
 
    -- See if we have a post-processing function
@@ -428,6 +453,9 @@ function escort.spawn( pos )
          fcreate( p )
          aisetup.setup( p )
       end
+
+      -- Ensure they have at least one jump of fuel
+      p:setFuel( math.max( p:fuel(), p:stats().fuel_consumption ) )
    end
 
    if mem._escort.destsys then
