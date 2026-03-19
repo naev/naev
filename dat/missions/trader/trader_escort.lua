@@ -182,13 +182,6 @@ local last_spammed = 0
 -- Handle the convoy getting attacked.
 -- luacheck: globals trader_attacked
 function trader_attacked( p, attacker )
-   --[[
-   unsafe = true
-   p:control( false )
-   p:setNoJump( true )
-   p:setNoLand( true )
-   --]]
-
    -- Attackers have to be marked as hostile
    attacker:setHostile()
 
@@ -198,16 +191,6 @@ function trader_attacked( p, attacker )
       p:comm( _("Convoy ships under attack! Requesting immediate assistance!") )
       last_spammed = t
    end
-end
-
-function trader_safe()
-   hook.timer( 3.0, "trader_safe" )
-   --[[
-   if unsafe then
-      unsafe = false
-      escort.reset_ai()
-   end
-   --]]
 end
 
 function spawn_ambush ()
@@ -239,6 +222,4 @@ function spawn_ambush ()
    for _,p in ipairs(ambush) do
       p:setHostile(true)
    end
-
-   hook.timer( 1.0, "trader_safe" )
 end
