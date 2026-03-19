@@ -8,6 +8,7 @@
 -- Escort a pers that hailed the player
 local pir = require "common.pirate"
 local fleet = require "fleet"
+local trader = require "common.trader"
 local lmisn = require "lmisn"
 local fmt = require "format"
 local vntk = require "vntk"
@@ -56,6 +57,12 @@ function success ()
    faction.get("Traders Society"):hit(reputation*2)
    player.pay( mem.reward )
    pir.reputationNormalMission(reputation)
+   trader.addMiscLog( fmt.f(_("You escorted {name} to {spb} in the {sys} system for {reward}."), {
+      name  = mem.name,
+      spb   = spob.cur(),
+      sys   = system.cur(),
+      reward= fmt.credits(mem.reward),
+   } ))
    misn.finish( true )
 end
 

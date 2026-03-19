@@ -224,6 +224,13 @@ function land ()
    vn.run()
 
    if done then
+      trader.addMiscLog( fmt.f(_("You delivered {amount} of {mineral} to {spb} ({sys} system) and got paid {reward}."), {
+         amount   = fmt.tonnes(owned),
+         mineral  = mem.mineral,
+         reward   = fmt.credits(reward),
+         spb      = spob.cur(),
+         sys      = system.cur(),
+      } ))
       misn.finish(true)
    end
 end

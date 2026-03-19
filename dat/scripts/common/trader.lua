@@ -29,4 +29,10 @@ function trader.reputation_max ()
    return var.peek( traderfct.rep_max_var ) or traderfct.rep_max
 end
 
+-- Function for adding log entries for miscellaneous one-off missions.
+function trader.addMiscLog( text )
+   shiplog.create( "trader_misc", _("Miscellaneous"), _("Trader") )
+   shiplog.append( "trader_misc", text )
+end
+
 return trader

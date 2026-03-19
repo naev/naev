@@ -24,24 +24,29 @@
 --Escort a convoy of traders to a destination--
 local pir = require "common.pirate"
 local fleet = require "fleet"
+local trader = require "common.trader"
 local lmisn = require "lmisn"
 local car = require "common.cargo"
 local fmt = require "format"
 local vntk = require "vntk"
 local escort = require "escort"
 
-local misn_title = {}
-misn_title[1] = _("Escort a tiny convoy to {pnt} in {sys}")
-misn_title[2] = _("Escort a small convoy to {pnt} in {sys}")
-misn_title[3] = _("Escort a medium convoy to {pnt} in {sys}")
-misn_title[4] = _("Escort a large convoy to {pnt} in {sys}")
-misn_title[5] = _("Escort a huge convoy to {pnt} in {sys}")
+local misn_title = _("Escort a {adj} convoy to {pnt} in {sys}")
 
 local piracyrisk = {}
 piracyrisk[1] = _("#nPiracy Risk:#0 None")
 piracyrisk[2] = _("#nPiracy Risk:#0 Low")
 piracyrisk[3] = _("#nPiracy Risk:#0 Medium")
 piracyrisk[4] = _("#nPiracy Risk:#0 High")
+
+local function adjective( size )
+   if size <= 1     then return _("tiny")
+   elseif size <= 2 then return _("small")
+   elseif size <= 3 then return _("medium")
+   elseif size <= 4 then return _("large")
+   else                  return _("huge")
+   end
+end
 
 function create()
    -- Try to cache the route to make it so that the same route doesn't appear over and over
@@ -98,7 +103,11 @@ function create()
    end
    mem.reward = 2.0 * (mem.avgrisk * mem.numjumps * mem.jumpreward + mem.traveldist * mem.distreward) * (1. + 0.05*rnd.twosigma())
 
-   misn.setTitle( fmt.f( misn_title[mem.convoysize], {pnt=mem.destspob, sys=mem.destsys} ) )
+   misn.setTitle( fmt.f( misn_title, {
+      adj=adjective(mem.convoysize),
+      pnt=mem.destspob,
+      sys=mem.destsys
+   } ) )
    car.setDesc( fmt.f(_("A convoy of traders needs protection while they go to {pnt} ({sys} system). You must stick with the convoy at all times, waiting to jump or land until the entire convoy has done so. You may only escort one group of traders at a time."), {pnt=mem.destspob, sys=mem.destsys} ), mem.cargo, nil, mem.destspob, nil, piracyrisk )
    misn.markerAdd(mem.destspob, "computer")
    misn.setReward(mem.reward)
@@ -165,6 +174,12 @@ function success ()
    end
    player.pay( mem.reward )
    pir.reputationNormalMission(reputation)
+   trader.addMiscLog( fmt.f(_("You escorted a {adj} convoy of traders to {spb} in the {sys} system for {reward}."), {
+      adj = adjective(mem.convoysize),
+      spb = spob.cur(),
+      sys = system.cur(),
+      reward = fmt.credits(mem.reward),
+   } ))
    misn.finish( true )
 end
 
