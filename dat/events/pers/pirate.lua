@@ -163,6 +163,48 @@ return function ()
                add_treasure_map( p )
                return p
             end,
+         }, {
+            spawn = function ()
+               local p = pilot.add("Pirate Kestrel", "Wild Ones", nil, _("Three-Eyed Tanith"), {naked=true, ai="pers_pirate"})
+               p:outfitAddIntrinsic("Escape Pod")
+               p:intrinsicSet( "shield_mod", 25 )
+               p:intrinsicSet( "energy_regen_mod", 50 )
+               p:intrinsicSet( "ew_detect", 80 )
+               equipopt.pirate( p, {
+                  fighterbay     = 0,
+                  pointdefence   = 10,
+                  bolt           = 10,
+               } )
+               local m = p:memory()
+               m.capturable = true
+               m.comm_greet = _([["I'm keeping an eye on you. Scratch that, I'm keeping all three on you!"]])
+               m.taunt = _("I was itchin' for some action!")
+               m.bribe_no = _([["Ya just gonna call it quits?"]])
+               add_treasure_map( p )
+               m.norun = true
+               local pos = p:pos()
+               local vel = p:vel()
+               local escorts = {}
+               for i=1,2 do
+                  local e =  pilot.add("Pirate Revenant", "Wild Ones", pos, nil, {ai="pers_pirate"})
+                  local em = e:memory()
+                  em.capturable = true
+                  em.comm_no = _([[No response.]])
+                  em.__packleader = p
+                  e:setLeader( p )
+                  e:setVel( vel )
+                  table.insert( escorts, e )
+               end
+               escorts[1]:rename(_("Left Eye"))
+               escorts[2]:rename(_("Right Eye"))
+               return p
+            end,
+            ondeathany = function ( _atacker, pt )
+               local packleader = pt.p:memory().__packleader
+               if packleader and packleader:exists() then
+                  packleader:intrinsicSet( "ew_detect", -50 )
+               end
+            end,
          }
       } do
          table.insert( pers, v )
