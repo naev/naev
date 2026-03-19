@@ -1953,7 +1953,7 @@ static int playerL_missions( lua_State *L )
       }
       lua_newtable( L );
       for ( int k = 0; k < array_size( pm->markers ); k++ ) {
-         const MissionMarker *m = &pm->markers[i];
+         const MissionMarker *m = &pm->markers[k];
          switch ( m->type ) {
          case SYSMARKER_COMPUTER:
          case SYSMARKER_LOW:
