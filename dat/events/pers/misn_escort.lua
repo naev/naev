@@ -31,6 +31,9 @@ local function spawn_escort ()
    if pir.systemPresence( scur ) <= 0 then
       return false
    end
+   if scur:presence( FCT ) <= 0 then
+      return false
+   end
    if player.outfitNum("Mercenary Licence") <= 0 then
       return false
    end
