@@ -49,7 +49,7 @@ return function ()
             end,
          }, {
             spawn = function ()
-               local p = pilot.add("Sirius Starbridge", "Sirius", nil, _("Star Voyager"), {naked=true, ai="pers"})
+               local p = pilot.add("Starbridge Herald", "Sirius", nil, _("Star Voyager"), {naked=true, ai="pers"})
                p:outfitAddIntrinsic("Escape Pod")
                equipopt.sirius( p, { flow_ability=outfit.get("Astral Projection") } )
                local m = p:memory()
