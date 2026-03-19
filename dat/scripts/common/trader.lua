@@ -34,5 +34,9 @@ function trader.addMiscLog( text )
    shiplog.create( "trader_misc", _("Miscellaneous"), _("Trader") )
    shiplog.append( "trader_misc", text )
 end
+function trader.addVrataLog( text )
+   shiplog.create( "trader_vrata", _("Mining Vrata"), _("Trader") )
+   shiplog.append( "trader_vrata", text )
+end
 
 return trader

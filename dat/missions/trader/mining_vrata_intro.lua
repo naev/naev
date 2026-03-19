@@ -259,5 +259,10 @@ He puts both his hands in his mouth and lets out a resounding whistle. An employ
    -- Player didn't hand anything in
    if not present then return end
 
+   trader.addVrataLog(fmt.f(_([[You delivered {amount} of {cargo} as an initiation test at the Mining Vrata, and were given a {reward} for your troubles. As a member of the Mining Vrata, you can now access Mining Request missions.]]), {
+      amount   = fmt.tonnes(NEEDED),
+      cargo    = present.c,
+      reward   = reward,
+   } ))
    misn.finish(true)
 end
