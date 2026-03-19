@@ -3057,6 +3057,7 @@ dat/events/pers/dvaered.lua
 dat/events/pers/empire.lua
 dat/events/pers/indep.lua
 dat/events/pers/minerva.lua
+dat/events/pers/misn_escort.lua
 dat/events/pers/misn_refuel.lua
 dat/events/pers/pirate.lua
 dat/events/pers/sirius.lua
@@ -3394,6 +3395,7 @@ dat/missions/thurion/android_abroad.lua
 dat/missions/thurion/data_extraction.lua
 dat/missions/thurion/intro_wildspace.lua
 dat/missions/trader/anxiousmerchant.lua
+dat/missions/trader/escort_pers.lua
 dat/missions/trader/mineral_request.lua
 dat/missions/trader/mining_vrata_intro.lua
 dat/missions/trader/trader_escort.lua
