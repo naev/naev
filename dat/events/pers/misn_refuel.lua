@@ -38,7 +38,7 @@ return function ()
    return {
       spawn = function ()
          local ship = choose_one{ "Llama", "Schroedinger", "Koala", "Mule" }
-         local plt = pilot.add(ship, FCT, nil, nil, { ai="pers" } )
+         local plt = pilot.add(ship, FCT, nil, nil, { ai="pers_runaway" } )
 
          local mem = plt:memory()
          mem.capturable = true
