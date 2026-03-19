@@ -153,6 +153,7 @@ function success ()
 
    local reputation = rnd.rnd( mem.convoysize*4, mem.convoysize*6 )
 
+   lmisn.sfxMoney()
    if alive_frac >= 1 then
       vntk.msg( _("Success!"), fmt.f(_("You successfully escorted the trading convoy to the destination. There wasn't a single casualty, and you are rewarded the full amount of {credits}."), {credits="#g"..fmt.credits(mem.reward).."#0"}) )
       faction.get("Traders Society"):hit(reputation*2)
