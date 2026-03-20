@@ -841,8 +841,9 @@ static int spobL_landDeny( lua_State *L )
 static int spobL_getLandAllow( lua_State *L )
 {
    const Spob *p = luaL_validspob( L, 1 );
-   lua_pushboolean( L, p->land_override > 0 );
-   if ( p->land_msg != NULL )
+   int         b = p->land_override > 0;
+   lua_pushboolean( L, b );
+   if ( b && ( p->land_msg != NULL ) )
       lua_pushstring( L, p->land_msg );
    else
       lua_pushnil( L );
@@ -862,8 +863,9 @@ static int spobL_getLandAllow( lua_State *L )
 static int spobL_getLandDeny( lua_State *L )
 {
    const Spob *p = luaL_validspob( L, 1 );
-   lua_pushboolean( L, p->land_override < 0 );
-   if ( p->land_msg != NULL )
+   int         b = p->land_override < 0;
+   lua_pushboolean( L, b );
+   if ( b && ( p->land_msg != NULL ) )
       lua_pushstring( L, p->land_msg );
    else
       lua_pushnil( L );
