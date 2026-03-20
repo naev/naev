@@ -834,14 +834,19 @@ static int spobL_landDeny( lua_State *L )
  *
  * @usage if p:getLandAllow() then -- Player can definitely land.
  *    @luatparam Spob p Spob to check.
- *    @luatreturn b Whether or not the player is always allowed to land.
+ *    @luatreturn boolean Whether or not the player is always allowed to land.
+ *    @luatreturn string The message (if set) to allow land with.
  * @luafunc getLandAllow
  */
 static int spobL_getLandAllow( lua_State *L )
 {
    const Spob *p = luaL_validspob( L, 1 );
    lua_pushboolean( L, p->land_override > 0 );
-   return 1;
+   if ( p->land_msg != NULL )
+      lua_pushstring( L, p->land_msg );
+   else
+      lua_pushnil( L );
+   return 2;
 }
 
 /**
@@ -849,14 +854,20 @@ static int spobL_getLandAllow( lua_State *L )
  *
  * @usage if p:getLandDeny() then -- Player can definitely not land
  *    @luatparam Spob p Spob to check.
- *    @luatreturn b Whether or not the player is always disallowed to land.
+ *    @luatreturn boolean Whether or not the player is always disallowed to
+ * land.
+ *    @luatreturn string The message (if set) to deny land with.
  * @luafunc getLandDeny
  */
 static int spobL_getLandDeny( lua_State *L )
 {
    const Spob *p = luaL_validspob( L, 1 );
    lua_pushboolean( L, p->land_override < 0 );
-   return 1;
+   if ( p->land_msg != NULL )
+      lua_pushstring( L, p->land_msg );
+   else
+      lua_pushnil( L );
+   return 2;
 }
 
 /**
