@@ -264,15 +264,27 @@ function luaspob.can_land ()
    if mem.spob:dominated() then
       return true, mem.msg_dominated
    end
-   if mem.bribed or mem.spob:getLandAllow() then
+   if mem.bribed then
       return true, mem.msg_granted
    end
-   local fct = mem.spob:faction()
+   local allow, allowmsg = mem.spob:getLandAllow()
+   if allow then
+      return true, allowmsg or mem.msg_granted
+   end
+   local deny, denymsg = mem.spob:getLandDeny()
+   local fct   = mem.spob:faction()
    if not fct then
-      return true,nil -- Use default landing message
+      if deny then
+         return false, denymsg or _("You are unable to land right now.")
+      else
+         return true,nil -- Use default landing message
+      end
    end
    local std = mem.spob:reputation()
-   if mem.spob:getLandDeny() or mem.spob:hostile() then
+   if deny then
+      return false, denymsg or mem.msg_denied
+   end
+   if mem.spob:hostile() then
       return false, mem.msg_denied
    end
    if std < mem.std_land then
