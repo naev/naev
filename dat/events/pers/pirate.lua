@@ -188,6 +188,7 @@ return function ()
                for i=1,2 do
                   local e =  pilot.add("Pirate Revenant", "Wild Ones", pos, nil, {ai="pers_pirate"})
                   local em = e:memory()
+                  add_treasure_map( e )
                   em.capturable = true
                   em.comm_no = _([[No response.]])
                   em.__packleader = p
@@ -218,14 +219,32 @@ return function ()
             spawn = function ()
                local p = pilot.add("Pirate Zebra", "Raven Clan", nil, _("Raven's Talon"), {naked=true, ai="pers_pirate"})
                p:outfitAddIntrinsic("Escape Pod")
-               equipopt.pirate( p, {fighterbay=5, bolt=0.1} )
                p:intrinsicSet( "fbay_reload", 100 )
                p:intrinsicSet( "fbay_rate", 50 )
                p:intrinsicSet( "fbay_movement", 25 )
+               equipopt.pirate( p, {fighterbay=5, bolt=0.1} )
                local m = p:memory()
                m.capturable = true
                m.comm_greet = _([["When I get sick of hauling cargo for the Raven Clan, nothing helps me unwind like some good old fashion piracy."]])
                m.taunt = _("Fighters, engage!")
+               add_treasure_map( p )
+               return p
+            end,
+         }, {
+            spawn = function ()
+               local p = pilot.add("Pirate Zebra", "Raven Clan", nil, _("Barrel 'o Joy"), {naked=true, ai="pers_pirate"})
+               p:outfitAddIntrinsic("Escape Pod")
+               p:intrinsicSet( "shield_mod", 50 )
+               p:intrinsicSet( "absorb", 10 )
+               p:intrinsicSet( "launch_lockon", -50 )
+               p:intrinsicSet( "ammo_capacity", 200 )
+               equipopt.pirate( p, {
+                  launcher=5,
+               } )
+               local m = p:memory()
+               m.capturable = true
+               m.comm_greet = _([["I packed this Zebra with all the explosives I could fit. Gonna have fireworks lighting up 'em skies!"]])
+               m.taunt = _("Let me show you what this barrel is made of!")
                add_treasure_map( p )
                return p
             end,
@@ -273,8 +292,8 @@ return function ()
             spawn = function ()
                local p = pilot.add("Pirate Shark", "Black Lotus", nil, _("Feldspar"), {naked=true, ai="pers_pirate"})
                p:outfitAddIntrinsic("Escape Pod")
-               equipopt.sirius( p, {noflow=true} )
                p:intrinsicSet( "shield_mod", 25 )
+               equipopt.sirius( p, {noflow=true} )
                local m = p:memory()
                m.capturable = true
                m.comm_greet = _([["I've been working overtime to get my rank up in the Black Lotus. I won't be the underdog forever!"]])
@@ -286,11 +305,11 @@ return function ()
             spawn = function ()
                local p = pilot.add("Pirate Starbridge", "Black Lotus", nil, _("Lapis Lazuli"), {naked=true, ai="pers_pirate"})
                p:outfitAddIntrinsic("Escape Pod")
+               p:intrinsicSet( "shield_mod", 25 )
                equipopt.pirate( p, {
                   launcher = 2,
                   ["Launcher"] = { max=4 },
                } )
-               p:intrinsicSet( "shield_mod", 25 )
                local m = p:memory()
                m.capturable = true
                m.comm_greet = _([["With so many careless merchants flying around, business has never been better. I always like to get my hands dirty."]])
@@ -335,8 +354,8 @@ return function ()
             spawn = function ()
                local p = pilot.add("Pirate Kestrel", "Black Lotus", nil, _("Topaz"), {naked=true, ai="pers_pirate"})
                p:outfitAddIntrinsic("Escape Pod")
-               equipopt.soromid( p, {fighterbay=5} )
                p:intrinsicSet( "shield_mod", 25 )
+               equipopt.soromid( p, {fighterbay=5} )
                local m = p:memory()
                m.capturable = true
                m.comm_greet = _("(ΦωΦ)")
@@ -355,8 +374,8 @@ return function ()
             spawn = function ()
                local p = pilot.add("Dealbreaker", "Black Lotus", nil, _("Diamond"), {naked=true, ai="pers_pirate"})
                p:outfitAddIntrinsic("Escape Pod")
-               equipopt.pirate( p, {fighterbay=5, beam=0.1} )
                p:intrinsicSet( "shield_mod", 25 )
+               equipopt.pirate( p, {fighterbay=5, beam=0.1} )
                local m = p:memory()
                m.capturable = true
                m.comm_greet = _([["It's nice being near the top of the pecking order. It's fun to give contradictory orders to your subordinates and see them run around in chaos."]])
