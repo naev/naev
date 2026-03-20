@@ -43,6 +43,30 @@ function luaspob.init( spb )
    luaspob.initBG( spb )
 end
 
+local function msg_dominated_def ()
+   local fct = mem.spob:faction()
+   if fct == f_zalek then
+      return {
+         _([["PRIVILEGED USER DETECTED. LANDING AUTHORIZED."]]),
+         _([["SUPERUSER AUTHENTICATED. LANDING AUTHORIZED."]]),
+      }
+   end
+   local name = player.name()
+   local msg_def
+   if name then
+      msg_def = {
+         fmt.f(_([["Welcome back, {player}."]]), {player=name}),
+         fmt.f(_([["Expected your return, {player}."]]), {player=name}),
+      }
+   else
+      msg_def = {
+         _([["Welcome back.]]),
+         _([["Expected your return.]]),
+      }
+   end
+   return msg_def
+end
+
 local function msg_bribed_def ()
    local msg_def = {
       _([["Make it quick."]]),
@@ -200,6 +224,7 @@ function luaspob.load ()
    mem.std_bribe = mem.params.std_bribe or -30
    mem.std_dangerous = mem.params.std_dangerous or -30
 
+   mem.msg_dominated = mem.params.msg_dominated or msg_dominated_def()
    mem.msg_bribed = mem.params.msg_bribed or msg_bribed_def()
    mem.msg_denied = mem.params.msg_denied or msg_denied_def()
    mem.msg_notyet = mem.params.msg_notyet or mem.msg_denied
@@ -216,6 +241,7 @@ function luaspob.load ()
       end
       return msg
    end
+   mem.msg_dominated  = choose( mem.msg_dominated )
    mem.msg_bribed     = choose( mem.msg_bribed )
    mem.msg_denied     = choose( mem.msg_denied )
    mem.msg_notyet     = choose( mem.msg_notyet )
@@ -234,6 +260,9 @@ function luaspob.can_land ()
    local s = mem.spob:services()
    if not s.land then
       return false,nil -- Use default landing message
+   end
+   if mem.spob:dominated() then
+      return true, mem.msg_dominated
    end
    if mem.bribed or mem.spob:getLandAllow() then
       return true, mem.msg_granted
@@ -273,7 +302,7 @@ function luaspob.comm ()
          { _("Close"), "leave" }
       }
       local std = mem.spob:reputation()
-      if (mem.spob:hostile() or std < mem.std_land) and not mem.bribed then
+      if (mem.spob:hostile() or std < mem.std_land) and not mem.bribed and not mem.spob:dominated() then
          table.insert( opts, 1, { _("Bribe"), "bribe" } )
       end
       return opts
@@ -599,7 +628,7 @@ end
 -- This duplicates some of the functionality from the AI distress_handler
 function luaspob.distress( pilot, attacker )
    -- Ignore if the player isn't the bad one
-   if not attacker:withPlayer() then return end
+   if not attacker:withPlayer() or mem.spob:dominated() then return end
 
    local pfact   = pilot:faction()
    local afact   = attacker:faction()

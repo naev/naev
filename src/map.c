@@ -226,7 +226,7 @@ static void map_setup( void )
 
       /* Check to see if system has landable spobs. */
       sys_rmFlag( sys, SYSTEM_HAS_LANDABLE | SYSTEM_HAS_KNOWN_SPOB |
-                          SYSTEM_HAS_KNOWN_FACTION_SPOB |
+                          SYSTEM_HAS_DOMINATED | SYSTEM_HAS_KNOWN_FACTION_SPOB |
                           SYSTEM_HAS_KNOWN_LANDABLE | SYSTEM_HAS_INHABITED );
       for ( int j = 0; j < array_size( sys->spobs ); j++ ) {
          Spob *p = sys->spobs[j];
@@ -243,6 +243,8 @@ static void map_setup( void )
             sys_setFlag( sys, SYSTEM_HAS_INHABITED );
             if ( p->can_land )
                sys_setFlag( sys, SYSTEM_HAS_LANDABLE );
+            if ( spob_isFlag( p, SPOB_DOMINATED ) )
+               sys_setFlag( sys, SYSTEM_HAS_DOMINATED );
          }
       }
 
@@ -820,7 +822,8 @@ static void map_update( unsigned int wid )
       if ( !spob_hasService( pnt, SPOB_SERVICE_INHABITED ) )
          services_u |= pnt->services;
       else if ( pnt->can_land ) {
-         if ( areAlliesSystem( pnt->presence.faction, FACTION_PLAYER, sys ) )
+         if ( spob_isFlag( pnt, SPOB_DOMINATED ) ||
+              areAlliesSystem( pnt->presence.faction, FACTION_PLAYER, sys ) )
             services_f |= pnt->services;
          else
             services |= pnt->services;
@@ -1466,6 +1469,8 @@ void map_renderSystems( double bx, double by, double x, double y, double zoom,
             col = &cNeutral;
          else if ( !sys_isFlag( sys, SYSTEM_HAS_INHABITED ) )
             col = &cInert;
+         else if ( sys_isFlag( sys, SYSTEM_HAS_DOMINATED ) )
+            col = &cFriend;
          else if ( areEnemiesSystem( FACTION_PLAYER, sys->faction, sys ) )
             col = &cHostile;
          else if ( !sys_isFlag( sys, SYSTEM_HAS_LANDABLE ) )

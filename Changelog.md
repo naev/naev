@@ -94,6 +94,7 @@
    * You can define scaling for map decorators
    * Support for making ships and outfits sell at discount prices
    * Added support for sounds to spfx
+   * Added some support for spob domination
 
  ### Fixes
 

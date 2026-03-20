@@ -53,7 +53,9 @@
 #define SPOB_RADIUS ( 1 << 10 )     /**< Spob has radius defined. */
 #define SPOB_NOCOMMODITIES                                                     \
    ( 1 << 11 ) /**< Spob doesn't have standard commodities. */
-#define SPOB_RESTRICTED ( 1 << 12 )                  /**< Spob is restricted. */
+#define SPOB_RESTRICTED ( 1 << 12 ) /**< Spob is restricted. */
+#define SPOB_DOMINATED                                                         \
+   ( 1 << 13 ) /**< Spob has been dominated by the player. */
 #define spob_isFlag( p, f ) ( ( p )->flags & ( f ) ) /**< Checks spob flag. */
 #define spob_setFlag( p, f )                                                   \
    ( ( p )->flags |= ( f ) ) /**< Sets a spob flag.                            \
@@ -216,7 +218,8 @@ typedef struct Spob_ {
                   rendering map. */
 #define SYSTEM_NEBULATRAIL ( 1 << 19 ) /**< System uses nebula trails. */
 #define SYSTEM_HIDENEBULADAMAGE                                                \
-   ( 1 << 20 ) /**< HIdes amount of nebula damage. */
+   ( 1 << 20 )                           /**< HIdes amount of nebula damage. */
+#define SYSTEM_HAS_DOMINATED ( 1 << 21 ) /**< System has a dominated spob. */
 #define sys_isFlag( s, f )                                                     \
    ( ( s )->flags & ( f ) ) /**< Checks system flag.                           \
                              */

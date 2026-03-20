@@ -1156,6 +1156,8 @@ stds.spob = {
             setKnown = {},
             hostile = {},
             setHostile = {},
+            dominated = {},
+            setDominated = {},
             recordCommodityPriceAtTime = {},
             tags = {},
          }

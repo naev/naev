@@ -1991,14 +1991,19 @@ char spob_getColourChar( const Spob *p )
    if ( !spob_hasService( p, SPOB_SERVICE_INHABITED ) )
       return 'I';
 
+   const StarSystem *sys = spob_getSystem( p );
+   if ( sys == NULL )
+      return 'I';
+
    if ( p->can_land ) {
-      if ( areAllies( FACTION_PLAYER, p->presence.faction ) )
+      if ( areAlliesSystem( FACTION_PLAYER, p->presence.faction, sys ) ||
+           spob_isFlag( p, SPOB_DOMINATED ) )
          return 'F';
       return 'N';
    }
 
    if ( spob_isFlag( p, SPOB_HOSTILE ) ||
-        areEnemies( FACTION_PLAYER, p->presence.faction ) )
+        areEnemiesSystem( FACTION_PLAYER, p->presence.faction, sys ) )
       return 'H';
    return 'R';
 }
@@ -2014,14 +2019,19 @@ const char *spob_getSymbol( const Spob *p )
       return "";
    }
 
+   const StarSystem *sys = spob_getSystem( p );
+   if ( sys == NULL )
+      return "";
+
    if ( p->can_land ) {
-      if ( areAllies( FACTION_PLAYER, p->presence.faction ) )
+      if ( areAlliesSystem( FACTION_PLAYER, p->presence.faction, sys ) ||
+           spob_isFlag( p, SPOB_DOMINATED ) )
          return "+ ";
       return "~ ";
    }
 
    if ( spob_isFlag( p, SPOB_HOSTILE ) ||
-        areEnemies( FACTION_PLAYER, p->presence.faction ) )
+        areEnemiesSystem( FACTION_PLAYER, p->presence.faction, sys ) )
       return "!! ";
    return "* ";
 }
@@ -2034,14 +2044,19 @@ const glColour *spob_getColour( const Spob *p )
    if ( !spob_hasService( p, SPOB_SERVICE_INHABITED ) )
       return &cInert;
 
+   const StarSystem *sys = spob_getSystem( p );
+   if ( sys == NULL )
+      return &cInert;
+
    if ( p->can_land ) {
-      if ( areAllies( FACTION_PLAYER, p->presence.faction ) )
+      if ( areAlliesSystem( FACTION_PLAYER, p->presence.faction, sys ) ||
+           spob_isFlag( p, SPOB_DOMINATED ) )
          return &cFriend;
       return &cNeutral;
    }
 
    if ( spob_isFlag( p, SPOB_HOSTILE ) ||
-        areEnemies( FACTION_PLAYER, p->presence.faction ) )
+        areEnemiesSystem( FACTION_PLAYER, p->presence.faction, sys ) )
       return &cHostile;
    return &cRestricted;
 }
@@ -4015,8 +4030,10 @@ void space_clearKnown( void )
       free( sys->note );
       sys->note = NULL;
    }
-   for ( int j = 0; j < array_size( spob_stack ); j++ )
+   for ( int j = 0; j < array_size( spob_stack ); j++ ) {
       spob_rmFlag( &spob_stack[j], SPOB_KNOWN );
+      spob_rmFlag( &spob_stack[j], SPOB_DOMINATED );
+   }
 }
 
 /**
@@ -4243,7 +4260,12 @@ int space_playerSave( xmlTextWriterPtr writer )
       for ( int j = 0; j < array_size( sys->spobs ); j++ ) {
          if ( !spob_isKnown( sys->spobs[j] ) )
             continue; /* not known */
-         xmlw_elem( writer, "spob", "%s", sys->spobs[j]->name );
+
+         xmlw_startElem( writer, "spob" );
+         if ( spob_isFlag( sys->spobs[j], SPOB_DOMINATED ) )
+            xmlw_attr( writer, "dominated", "%d", 1 );
+         xmlw_str( writer, "%s", sys->spobs[j]->name );
+         xmlw_endElem( writer );
       }
 
       /* Save known Jump points. */
@@ -4364,6 +4386,10 @@ static int space_parseSaveNodes( xmlNodePtr parent, StarSystem *sys )
          Spob *spob = spob_get( xml_get( node ) );
          if ( spob != NULL ) /* Must exist */
             spob_setKnown( spob );
+         int dominated = 0;
+         xmlr_attr_int_def( node, "dominated", dominated, 0 );
+         if ( dominated )
+            spob_setFlag( spob, SPOB_DOMINATED );
       } else if ( xml_isNode( node, "jump" ) ) {
          JumpPoint *jp = jump_get( xml_get( node ), sys );
          if ( jp != NULL ) /* Must exist */

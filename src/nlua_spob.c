@@ -16,6 +16,7 @@
 #include "nlua_spob.h"
 
 #include "array.h"
+#include "gui.h"
 #include "land.h"
 #include "land_outfits.h"
 #include "map_overlay.h"
@@ -70,6 +71,8 @@ static int spobL_isKnown( lua_State *L );
 static int spobL_setKnown( lua_State *L );
 static int spobL_isHostile( lua_State *L );
 static int spobL_setHostile( lua_State *L );
+static int spobL_isDominated( lua_State *L );
+static int spobL_setDominated( lua_State *L );
 static int spobL_recordCommodityPriceAtTime( lua_State *L );
 static int spobL_tags( lua_State *L );
 
@@ -113,6 +116,8 @@ static const luaL_Reg spob_methods[] = {
    { "setKnown", spobL_setKnown },
    { "hostile", spobL_isHostile },
    { "setHostile", spobL_setHostile },
+   { "dominated", spobL_isDominated },
+   { "setDominated", spobL_setDominated },
    { "recordCommodityPriceAtTime", spobL_recordCommodityPriceAtTime },
    { "tags", spobL_tags },
    { 0, 0 } }; /**< Spob metatable methods. */
@@ -1111,6 +1116,39 @@ static int spobL_setHostile( lua_State *L )
       spob_setFlag( p, SPOB_HOSTILE );
    else
       spob_rmFlag( p, SPOB_HOSTILE );
+   return 0;
+}
+
+/**
+ * @brief Checks to see if a spob currently has the dominated flag set.
+ *
+ *    @luatparam Spob spb Spob to check dominated flag status of.
+ *    @luatreturn boolean Whether or not the spob is dominated.
+ * @luafunc dominated
+ */
+static int spobL_isDominated( lua_State *L )
+{
+   const Spob *p = luaL_validspob( L, 1 );
+   lua_pushboolean( L, spob_isFlag( p, SPOB_DOMINATED ) );
+   return 1;
+}
+
+/**
+ * @brief Sets the dominated flag of a spob.
+ *
+ *    @luatparam Spob spb Spob to set dominated flag.
+ *    @luatreturn boolean Whether or not to set the dominated status.
+ * @luafunc setDominated
+ */
+static int spobL_setDominated( lua_State *L )
+{
+   Spob *p = luaL_validspob( L, 1 );
+   if ( lua_toboolean( L, 2 ) )
+      spob_setFlag( p, SPOB_DOMINATED );
+   else
+      spob_rmFlag( p, SPOB_DOMINATED );
+   // TODO only if necessary
+   gui_setNav();
    return 0;
 }
 
