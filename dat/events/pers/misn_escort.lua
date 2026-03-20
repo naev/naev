@@ -88,16 +88,16 @@ return function ()
 
    local difficulty  = rnd.rnd(1,5)
    local jumps       = dest:system():jumpDist()
-   local reward      = 50e3 + jumps * (7+difficulty) * mem.cargo:price() * (1+0.05*rnd.twosigma())
-   local cargo       = commodity.get( choose_one{
+   local cargo       = choose_one{
       commodity.get("Luxury Goods"),
       commodity.get("Medicine"),
       commodity.get("Gold"),
-      commodity.get("Neodynium"),
+      commodity.get("Neodymium"),
       commodity.get("Yttrium"),
       commodity.get("Rhodium"),
       commodity.get("Platinum"),
-   } )
+   }
+   local reward      = 50e3 + jumps * (7+difficulty) * cargo:price() * (1+0.05*rnd.twosigma())
    local name = choose_one{
       _("S.T.S. Yucatan"),
       _("S.T.S. Goldilocks"),
