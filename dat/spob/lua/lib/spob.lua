@@ -287,6 +287,9 @@ function luaspob.comm ()
       return false
    end
 
+   mem.params.hostile   = mem.spob:hostile()
+   mem.params.dominated = mem.spob:dominated()
+
    vn.clear()
    vn.scene()
    local spb = ccomm.newCharacterSpob( vn, mem.spob, {
