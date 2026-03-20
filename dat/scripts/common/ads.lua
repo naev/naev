@@ -87,7 +87,7 @@ local ads = {
       _("New flow focus courses at Firriot's Academy!"),
       _("Pilgrim ferry operators wanted! Inquire at your local mission BBS."),
       _("New call for Flow Resonator Calibrator Specialists. Inquire at your nearest Monastery now!"),
-      _("All Praise Sirichana! Paid for by the Sirichana Preacher Association."),
+      _("All Praise the Sirichana! Paid for by the Sirichana Preacher Association."),
    },
 
    -- Special ads that can be multi-faction
