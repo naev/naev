@@ -32,8 +32,9 @@ fn process_messages(
             if let Some(spfx) = luaspfx.get_mut(id) {
                spfx.cleanup = true;
                spfx.ttl = -1.0;
-            } else {
-               notfound(id);
+               // Probably alread removed
+               //} else {
+               //   notfound(id);
             }
          }
          Message::SetPos(id, pos) => {
