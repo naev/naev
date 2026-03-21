@@ -6,7 +6,8 @@
  <chance>5</chance>
  <location>Bar</location>
  <cond>
-   require("misn_test").cargo()
+   local misn_test = require("misn_test")
+   return misn_test.cargo(true) and misn_test.reweight_active()
  </cond>
  <tags>
   <tag>trader_cap_medium</tag>

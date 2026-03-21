@@ -1077,6 +1077,14 @@ double outfit_speed( const Outfit *o )
 {
    return pilot_outfitSpeed( NULL, o );
 }
+double outfit_accel( const Outfit *o )
+{
+   if ( outfit_isBolt( o ) )
+      return o->u.blt.accel;
+   else if ( outfit_isLauncher( o ) )
+      return o->u.lau.accel;
+   return 0.;
+}
 double outfit_turn( const Outfit *o )
 {
    if ( outfit_isBeam( o ) )
@@ -2076,6 +2084,7 @@ static void outfit_parseSBolt( Outfit *temp, const xmlNodePtr parent )
    do { /* load all the data */
       xml_onlyNodes( node );
       xmlr_float( node, "speed", temp->u.blt.speed );
+      xmlr_float( node, "speed", temp->u.blt.accel );
       xmlr_float( node, "delay", temp->u.blt.delay );
       xmlr_float( node, "energy", temp->u.blt.energy );
       xmlr_float( node, "trackmin", temp->u.blt.trackmin );

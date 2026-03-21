@@ -179,6 +179,7 @@ typedef struct Damage_ {
 typedef struct OutfitBoltData_ {
    double delay;   /**< Delay between shots */
    double speed;   /**< How fast it goes. */
+   double accel;   /**< How fast it accelerates. */
    double range;   /**< How far it goes. */
    double falloff; /**< Point at which damage falls off. */
    double energy;  /**< Energy usage */
@@ -604,6 +605,7 @@ double              outfit_cpu( const Outfit *o );
 double              outfit_rangeRaw( const Outfit *o );
 double              outfit_range( const Outfit *o );
 double              outfit_speed( const Outfit *o );
+double              outfit_accel( const Outfit *o );
 double              outfit_width( const Outfit *o );
 const glColour     *outfit_colour( const Outfit *o );
 double              outfit_falloff( const Outfit *o );

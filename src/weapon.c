@@ -2342,8 +2342,9 @@ static void weapon_createBolt( Weapon *w, const Outfit *outfit, double dir,
    w->timer   = outfit_range( outfit ) / speed * w->range_mod;
    w->falloff = w->timer - outfit_falloff( outfit ) / speed;
    solid_init( &w->solid, mass, rdir, pos, &v, SOLID_UPDATE_EULER );
-   w->voice = sound_playPos( outfit_sound( w->outfit ), w->solid.pos.x,
-                             w->solid.pos.y, w->solid.vel.x, w->solid.vel.y );
+   w->solid.accel = outfit_accel( outfit );
+   w->voice       = sound_playPos( outfit_sound( w->outfit ), w->solid.pos.x,
+                                   w->solid.pos.y, w->solid.vel.x, w->solid.vel.y );
 
    /* Set facing direction. */
    gfx = outfit_gfx( w->outfit );
