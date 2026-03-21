@@ -31,6 +31,7 @@
 #include "nlua_outfit.h"
 #include "nlua_pilot.h"
 #include "nlua_vec2.h"
+#include "nmath.h"
 #include "ntracing.h"
 #include "opengl.h"
 #include "pilot.h"
@@ -2339,11 +2340,23 @@ static void weapon_createBolt( Weapon *w, const Outfit *outfit, double dir,
    if ( speed_dispersion > 0. )
       m += RNG_1SIGMA() * speed_dispersion;
    vec2_cadd( &v, m * cos( rdir ), m * sin( rdir ) );
-   // TODO consider accel for timer and falloff
-   w->timer   = outfit_range( outfit ) / speed * w->range_mod;
-   w->falloff = w->timer - outfit_falloff( outfit ) / speed;
    solid_init( &w->solid, mass, rdir, pos, &v, SOLID_UPDATE_EULER );
-   weapon_setAccel( w, outfit_accel( outfit ) );
+   // TODO maybe change bolt outfits to use duration instead? simpler
+   double accel = outfit_accel( outfit );
+   if ( fabs( accel ) < DOUBLE_TOL ) {
+      w->timer   = outfit_range( outfit ) / speed * w->range_mod;
+      w->falloff = w->timer - outfit_falloff( outfit ) / speed;
+   } else {
+      double res[2];
+      nmath_solve2Eq( res, accel, speed,
+                      -outfit_range( outfit ) * w->range_mod );
+      w->timer = ( res[0] > res[1] ) ? res[0] : res[1];
+      nmath_solve2Eq( res, accel, speed,
+                      ( outfit_falloff( outfit ) - outfit_range( outfit ) ) *
+                         w->range_mod );
+      w->falloff = ( res[0] > res[1] ) ? res[0] : res[1];
+      weapon_setAccel( w, accel );
+   }
    w->voice = sound_playPos( outfit_sound( w->outfit ), w->solid.pos.x,
                              w->solid.pos.y, w->solid.vel.x, w->solid.vel.y );
 
