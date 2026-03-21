@@ -2352,9 +2352,8 @@ static void weapon_createBolt( Weapon *w, const Outfit *outfit, double dir,
                       -outfit_range( outfit ) * w->range_mod );
       w->timer = ( res[0] > res[1] ) ? res[0] : res[1];
       nmath_solve2Eq( res, accel, speed,
-                      ( outfit_falloff( outfit ) - outfit_range( outfit ) ) *
-                         w->range_mod );
-      w->falloff = ( res[0] > res[1] ) ? res[0] : res[1];
+                      -outfit_falloff( outfit ) * w->range_mod );
+      w->falloff = w->timer - ( ( res[0] > res[1] ) ? res[0] : res[1] );
       weapon_setAccel( w, accel );
    }
    w->voice = sound_playPos( outfit_sound( w->outfit ), w->solid.pos.x,
