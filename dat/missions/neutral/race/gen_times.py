@@ -8,6 +8,9 @@ sys.path.append(path.realpath(path.join(dat_dir, 'utils', 'outfits')))
 from outfit import outfit, naev_xml
 from getconst import PHYSICS_SPEED_DAMP
 
+# Global slack to make it easier to pull off by increasing the time given
+SLACK = 1.1
+
 if __name__ != '__main__':
    raise Exception('This is intended to be used as main')
 
@@ -157,7 +160,7 @@ for nj, j in enumerate(['Bronze', 'Silver', 'Gold']):
       info(s, '->', '\033[36m' + str(round(final)) + '\033[m')
       info(ra + ':','\033[36;1m' + fmt_tim(l/final) + '\033[m')
       out[i] = out.get(i, {})
-      out[i][j] = round(l/final, 1)
+      out[i][j] = round(SLACK * l/final, 1)
 info()
 
 with open(argv[1], 'wt') if argv[1] != '-' else sys.stdout as fp:
