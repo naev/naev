@@ -2084,7 +2084,7 @@ static void outfit_parseSBolt( Outfit *temp, const xmlNodePtr parent )
    do { /* load all the data */
       xml_onlyNodes( node );
       xmlr_float( node, "speed", temp->u.blt.speed );
-      xmlr_float( node, "speed", temp->u.blt.accel );
+      xmlr_float( node, "accel", temp->u.blt.accel );
       xmlr_float( node, "delay", temp->u.blt.delay );
       xmlr_float( node, "energy", temp->u.blt.energy );
       xmlr_float( node, "trackmin", temp->u.blt.trackmin );
