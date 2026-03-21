@@ -2441,6 +2441,7 @@ static void weapon_createBolt( Weapon *w, const Outfit *outfit, double dir,
    if ( speed_dispersion > 0. )
       m += RNG_1SIGMA() * speed_dispersion;
    vec2_cadd( &v, m * cos( rdir ), m * sin( rdir ) );
+   // TODO consider accel for timer and falloff
    w->timer   = outfit_range( outfit ) / speed * w->range_mod;
    w->falloff = w->timer - outfit_falloff( outfit ) / speed;
    solid_init( &w->solid, mass, rdir, pos, &v, SOLID_UPDATE_EULER );
