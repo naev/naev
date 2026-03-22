@@ -41,6 +41,8 @@
   <armour_mod>-20</armour_mod>
   <cargo_inertia>-20</cargo_inertia>
   <ew_hide>25</ew_hide>
+  <shield_mod>-25</shield_mod>
+  <cpu_mod>-50</cpu_mod>
  </stats>
  <tags>
   <tag>standard</tag>
