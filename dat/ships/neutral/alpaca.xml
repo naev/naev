@@ -1,5 +1,5 @@
 <ship name="Alpaca">
- <points>20</points>
+ <points>15</points>
  <base_type>Alpaca</base_type>
  <gfx size="47">alpaca.gltf</gfx>
  <sound>engine_melendez</sound>
