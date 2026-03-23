@@ -9,19 +9,19 @@ from typing import Optional
 # Configure logging to output to stderr
 logging.basicConfig(level=logging.INFO, stream=sys.stderr)
 
-def get_number_commits_since(source_root: str, tag: str) -> Optional[str]:
+def get_date(source_root: str) -> Optional[str]:
    """Return the short git commit SHA, or None if unavailable."""
    try:
       proc = subprocess.run(
-         ["git", "-C", source_root, "rev-list", f"{tag}..HEAD", "--count"],
+         ['git', '-C', source_root, 'log', '-1', '--date=format:%y-%m-%d-%H', '--format="%ad"'],
          capture_output=True,
          text=True,
          check=True,
       )
-      return proc.stdout.strip()
+      return proc.stdout.strip().strip('"')
    except Exception:
       proc = subprocess.run(
-         ["git", "-C", source_root, "rev-list", f"{tag}", "--" ],
+         ['git', '-C', source_root, 'log', '-1', '--date=format:"%y-%m-%d-%H"', '--format="%ad"'],
       )
       sys.exit(1)
       return None
@@ -98,7 +98,7 @@ def get_version(source_root: str, base_version: str) -> str:
       else:
          # Dev build: append sha and maybe dirty
          version = base_version
-         num = get_number_commits_since( source_root, "v"+base_version )
+         num = get_date(source_root)
          sha = get_commit_sha(source_root)
          if num and sha:
             version += f"+{num}.g{sha}"
