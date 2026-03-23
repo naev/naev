@@ -18,10 +18,10 @@
   <crew>2</crew>
   <mass>60</mass>
   <fuel_consumption>100</fuel_consumption>
-  <cargo>15</cargo>
+  <cargo>20</cargo>
  </characteristics>
  <health>
-  <armour>25</armour>
+  <armour>30</armour>
  </health>
  <slots>
   <weapon size="small" x="7" y="0" h="1"/>
@@ -38,13 +38,7 @@
   <structure size="small"/>
   <structure size="small"/>
  </slots>
- <stats>
-  <accel_mod>-10</accel_mod>
-  <turn_mod>-10</turn_mod>
-  <cargo_mod>20</cargo_mod>
-  <armour_mod>10</armour_mod>
-  <cargo_inertia>-20</cargo_inertia>
- </stats>
+ <stats/>
  <tags>
   <tag>standard</tag>
   <tag>transport</tag>

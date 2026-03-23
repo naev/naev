@@ -20,15 +20,14 @@
   <structure size="small"/>
  </slots>
  <stats>
-  <accel_mod>-10</accel_mod>
+  <accel_mod>-25</accel_mod>
   <turn_mod>-20</turn_mod>
   <speed_mod>-10</speed_mod>
   <cargo_mod>30</cargo_mod>
   <shield_mod>20</shield_mod>
   <armour_mod>80</armour_mod>
   <absorb>30</absorb>
-  <cargo_inertia>-20</cargo_inertia>
-  <ew_hide>25</ew_hide>
-  <ew_signature>-25</ew_signature>
+  <cargo_inertia>-10</cargo_inertia>
+  <ew_hide>15</ew_hide>
  </stats>
 </ship>
