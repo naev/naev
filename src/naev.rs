@@ -268,7 +268,7 @@ fn naevmain() -> Result<()> {
       };
       debugx!(gettext("SDL: {} [compiled: {}]"), &linked, &compiled);
       if linked > compiled {
-         warn!("{}", gettext("SDL is newer than compiled version"));
+         info!("{}", gettext("SDL is newer than compiled version"));
       } else if linked < compiled {
          warn!("{}", gettext("SDL is older than compiled version."));
       }
