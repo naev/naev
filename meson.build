@@ -73,8 +73,6 @@ subdir('utils')
 # Version Generation
 version_result = run_command(gen_version, meson.project_version(), check: true)
 version = version_result.stdout().strip()
-message('VERSION')
-message(version)
 meson.add_dist_script(add_to_package, meson.project_source_root() / 'dat/VERSION', 'dat/VERSION' )
 summary('tag', version)
 

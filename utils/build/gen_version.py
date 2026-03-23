@@ -20,12 +20,7 @@ def get_date(source_root: str) -> Optional[str]:
       )
       return proc.stdout.strip().strip('"')
    except Exception:
-      proc = subprocess.run(
-         ['git', '-C', source_root, 'log', '-1', '--date=format:"%y-%m-%d-%H"', '--format="%ad"'],
-      )
-      sys.exit(1)
       return None
-
 
 def get_commit_sha(source_root: str) -> Optional[str]:
    """Return the short git commit SHA, or None if unavailable."""
@@ -76,7 +71,7 @@ def get_version(source_root: str, base_version: str) -> str:
    Determine the project version:
       1. If HEAD is exactly at a tag and the repo is clean, use base_version.
          (Assumes base_version has been set to the tag by Meson.)
-      2. Otherwise, build a dev version: base_version + commit count + git SHA [+dirty] if .git exists.
+      2. Otherwise, build a dev version: base_version + date + git SHA [+dirty] if .git exists.
       3. If no .git, but dat/VERSION exists, read and reuse it.
       4. If nothing else works, fall back to base_version + "+dev".
       The resolved version is always written to dat/VERSION.
