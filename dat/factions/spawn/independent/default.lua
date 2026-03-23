@@ -1,6 +1,7 @@
 local scom = require "factions.spawn.lib.common"
 local var = require "shipvariants"
 
+local salpaca     = ship.get("Alpaca")
 local shyena      = ship.get("Hyena")
 local stristan    = ship.get("Tristan")
 local slancelot   = ship.get("Lancelot")
@@ -10,6 +11,7 @@ local svigilance  = ship.get("Vigilance")
 local sbedivere   = ship.get("Bedivere")
 local spacifier   = ship.get("Pacifier") -- codespell:ignore spacifier
 local shawking    = ship.get("Hawking")
+local sclydesdale = ship.get("Clydesdale")
 
 local frontier
 local fmercenary = faction.get("Independent Mercenary")
@@ -24,6 +26,7 @@ end
 local function spawn_advert ()
    local pilots = {}
    local civships = {
+      salpaca,
       var.schroedinger,
       var.llama,
       var.gawain,
@@ -37,7 +40,8 @@ end
 -- @brief Spawns a small patrol fleet.
 local function spawn_solitary_civilians ()
    return scom.doTable( {}, {
-      { w=0.25, var.llama },
+      { w=0.15, salpaca },
+      { w=0.3,  var.llama },
       { w=0.45, shyena },
       { w=0.6,  var.quicksilver },
       { w=0.75, var.koala },
@@ -86,6 +90,7 @@ local function spawn_bounty_hunter_lrg ()
       var.kestrel,
       shawking,
       var.goddard,
+      sclydesdale,
    }
 end
 

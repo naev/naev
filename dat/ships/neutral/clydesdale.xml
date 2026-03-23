@@ -1,0 +1,53 @@
+<ship name="Clydesdale">
+ <points>120</points>
+ <base_type>Clydesdale</base_type>
+ <gfx size="162">clydesdale.gltf</gfx>
+ <sound pitch="0.7">engine_melendez</sound>
+ <class display="Armoured Bulk Freighter">Bulk Freighter</class>
+ <price>4525000</price>
+ <time_mod>1.375</time_mod>
+ <fabricator>Melendez Corp.</fabricator>
+ <faction>Independent</faction>
+ <licence>Large Civilian Vessel</licence>
+ <description>When you need to move large amounts of cargo through dangerous, Melendez Corporation's Clydesdale has got you covered. Making few compromises on storage density, the Clydesdale also has the firepower to make sure it is not compromised. A favourite of security shipping firms, that also sees some usage by bounty hunters and captains that favour both cargo and firepower.</description>
+ <health>
+  <armour>1000</armour>
+ </health>
+ <characteristics>
+  <crew>25</crew>
+  <mass>1350</mass>
+  <fuel_consumption>400</fuel_consumption>
+  <cargo>220</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="large"/>
+  <weapon size="large"/>
+  <weapon prop="fighter_bay" size="large"/>
+  <weapon prop="fighter_bay" size="large"/>
+  <utility prop="systems" name="systems" size="large">Unicorp PT-440 Core System</utility>
+  <utility prop="systems_secondary" name="systems_secondary" size="large">Unicorp PT-440 Core System</utility>
+  <utility prop="accessory" name="accessory" size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="medium"/>
+  <structure prop="engines" name="engines" size="large">Unicorp Eagle 3000 Engine</structure>
+  <structure prop="engines_secondary" name="engines_secondary" size="large"/>
+  <structure prop="hull" name="hull" size="large">Unicorp D-58 Heavy Plating</structure>
+  <structure prop="hull_secondary" name="hull_secondary" size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="medium"/>
+ </slots>
+ <stats>
+  <cargo_mod>20</cargo_mod>
+  <cargo_inertia>-10</cargo_inertia>
+ </stats>
+ <tags>
+  <tag>standard</tag>
+  <tag>transport</tag>
+  <tag>civilian</tag>
+ </tags>
+</ship>

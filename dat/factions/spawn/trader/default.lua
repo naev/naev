@@ -1,12 +1,17 @@
 local scom = require "factions.spawn.lib.common"
 local var = require "shipvariants"
 
+local salpaca     = ship.get("Alpaca")
 local szebra      = ship.get("Zebra")
 local srhino      = ship.get("Rhino")
 local splowshare  = ship.get("Plowshare")
+local sclydesdale = ship.get("Clydesdale")
 
 local tradelane
 
+local function add_alpaca( pilots )
+   scom.addPilot( pilots, salpaca, {name=_("Trader Alpaca")})
+end
 local function add_llama( pilots )
    scom.addPilot( pilots, var.llama, {name=_("Trader Llama")})
 end
@@ -31,6 +36,9 @@ end
 local function add_plowshare( pilots )
    scom.addPilot( pilots, splowshare, {name=_("Trader Plowshare")})
 end
+local function add_clydesdale( pilots )
+   scom.addPilot( pilots, sclydesdale, {name=_("Trader Clydesdale")})
+end
 
 -- Doubles the credits of the pilot
 local function double_credits( p )
@@ -40,19 +48,24 @@ end
 -- @brief Spawns a small trade fleet.
 local function spawn_loner ()
    local pilots = {}
-   local r = rnd.rnd()
 
    -- Plowshare only appear in tradelanes
-   if r < 0.5 and tradelane then
+   if rnd.rnd() < 0.5 and tradelane then
       add_plowshare( pilots )
       return pilots
-   else
-      r = rnd.rnd() -- New random number
    end
 
    -- Regular loners
-   if r < 0.3 then
-      add_llama( pilots )
+   local r = rnd.rnd() -- New random number
+   if r < 0.25 then
+      -- Alpacas are more common on trade lanes
+      if rnd.rnd() < 0.75 then
+         add_alpaca( pilots )
+      else
+         add_llama( pilots )
+      end
+   elseif r < 0.3 then
+      add_alpaca( pilots )
    elseif r < 0.5 then
       add_koala( pilots )
    elseif r < 0.7 then
@@ -73,7 +86,9 @@ local function spawn_fleet_small ()
 
    for i=1,rnd.rnd(2,5) do
       local r = rnd.rnd()
-      if r < 0.5 then
+      if r < 0.2 then
+         add_alpaca( pilots )
+      elseif r < 0.5 then
          add_llama( pilots )
       elseif r < 0.8 then
          add_koala( pilots )
@@ -91,7 +106,9 @@ local function spawn_fleet_small_guarded ()
    -- Base Fleet
    for i=1,rnd.rnd(2,4) do
       local r = rnd.rnd()
-      if r < 0.5 then
+      if r < 0.2 then
+         add_alpaca( pilots )
+      elseif r < 0.5 then
          add_llama( pilots )
       elseif r < 0.8 then
          add_koala( pilots )
@@ -120,8 +137,11 @@ local function spawn_fleet_med ()
    -- Leader
    local big_leader = false
    local r = rnd.rnd()
-   if r < 0.2 then
+   if r < 0.15 then
       add_zebra( pilots )
+      big_leader = true
+   elseif r < 0.25 then
+      add_clydesdale( pilots )
       big_leader = true
    elseif r < 0.6 then
       add_mule( pilots )
@@ -134,7 +154,9 @@ local function spawn_fleet_med ()
    if rnd.rnd() < 0.5 then
       for i=2,4 do
          r = rnd.rnd()
-         if r < 0.3 then
+         if r < 0.15 then
+            add_alpaca( pilots )
+         elseif r < 0.3 then
             add_llama( pilots )
          elseif r < 0.8 then
             add_koala( pilots )
