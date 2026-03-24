@@ -19,11 +19,11 @@
  <licence>Large Civilian Vessel</licence>
  <description>The Zebra bulk freighter is the largest of all of the freighters produced by Melendez, and one of the most desired ships by all independent civilian traders. The Zebra offers an unmatched cargo density with reasonable protection.</description>
  <health>
-  <armour>600</armour>
+  <armour>800</armour>
  </health>
  <characteristics>
   <crew>20</crew>
-  <mass>1500</mass>
+  <mass>1880</mass>
   <fuel_consumption>400</fuel_consumption>
   <cargo>340</cargo>
  </characteristics>
@@ -39,9 +39,9 @@
   <utility size="medium"/>
   <utility size="medium"/>
   <structure prop="engines" name="engines" size="large">Unicorp Eagle 3000 Engine</structure>
-  <structure prop="engines_secondary" name="engines_secondary" size="large"/>
+  <structure prop="engines_secondary" name="engines_secondary" size="large">Unicorp Eagle 3000 Engine</structure>
   <structure prop="hull" name="hull" size="large">Unicorp D-58 Heavy Plating</structure>
-  <structure prop="hull_secondary" name="hull_secondary" size="large"/>
+  <structure prop="hull_secondary" name="hull_secondary" size="large">Unicorp D-58 Heavy Plating</structure>
   <structure size="large"/>
   <structure size="large"/>
   <structure size="large"/>

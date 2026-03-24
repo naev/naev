@@ -23,11 +23,11 @@
  <condstr>You need at least 60% reputation with House Za'lek.</condstr>
  <description>While House Za'lek relies on drones for most everything, their limited fuel make them inadequate for performing long-distance transportation. To overcome this limitation, the Mammon Bulk Freighter was developed. It has large amounts of storage space, able to fit entire mobile research centres inside. Like most House Za'lek ships, the armour plating is fairly weak, although it is partially made up for by the advanced shield technology. However, the standard strategy is to rely on drones for fighting while making a getaway.</description>
  <health>
-  <armour>400</armour>
+  <armour>520</armour>
  </health>
  <characteristics>
   <crew>22</crew>
-  <mass>1200</mass>
+  <mass>1770</mass>
   <fuel_consumption>400</fuel_consumption>
   <cargo>310</cargo>
  </characteristics>
@@ -46,9 +46,9 @@
   <utility size="large"/>
   <utility size="medium"/>
   <structure prop="engines" name="engines" size="large">Unicorp Eagle 3000 Engine</structure>
-  <structure prop="engines_secondary" name="engines_secondary" size="large"/>
+  <structure prop="engines_secondary" name="engines_secondary" size="large">Unicorp Eagle 3000 Engine</structure>
   <structure prop="hull" name="hull" size="large">Unicorp D-58 Heavy Plating</structure>
-  <structure prop="hull_secondary" name="hull_secondary" size="large"/>
+  <structure prop="hull_secondary" name="hull_secondary" size="large">Unicorp D-58 Heavy Plating</structure>
   <structure size="large"/>
   <structure size="large"/>
   <structure size="medium"/>
