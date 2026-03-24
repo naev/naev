@@ -379,17 +379,16 @@ void uniedit_saveError( void )
 static int uniedit_saveTestDirectory( const char *path )
 {
    char buf[PATH_MAX];
-   if ( nfile_dirExists( path ) )
-      return 0;
-   if ( !nfile_dirMakeExist( path ) )
+   if ( nfile_dirMakeExist( path ) )
       return -1;
    snprintf( buf, sizeof( buf ), "%s/.naevtestpath", path );
-   if ( !nfile_touch( path ) )
+   if ( nfile_touch( buf ) )
       return -1;
-   if ( !remove( buf ) )
+   // Have to remove the file
+   if ( remove( buf ) )
       return -1;
-   if ( !rmdir( path ) )
-      return -1;
+   // If we can't remove dir, it may just already exist
+   rmdir( path );
    return 0;
 }
 
