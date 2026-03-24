@@ -60,7 +60,6 @@
   <shield_regen_mod>20</shield_regen_mod>
   <cargo_mod>40</cargo_mod>
   <cargo_inertia>-30</cargo_inertia>
-  <ew_hide>10</ew_hide>
  </stats>
  <tags>
   <tag>empire</tag>

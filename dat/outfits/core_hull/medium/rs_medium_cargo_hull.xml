@@ -17,11 +17,10 @@
       {'cargo', 55, 25},
       {'absorb', 95, 35},
       {'armour', 170, 190},
-      {'cargo_inertia', -10, -4},
-      {'cargo_mod', 10, 4},
-      {'ew_detected', 25, 5},
-      {'ew_signature', -15, -9},
-      {'jam_chance', 38, 10},
+      {'cargo_inertia', -15, -6},
+      {'cargo_mod', 15, 6},
+      {'ew_signature', -16, -6},
+      {'jam_chance', 40, 10},
    })
   </lua_inline>
  </specific>
