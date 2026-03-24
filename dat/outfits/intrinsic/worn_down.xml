@@ -14,8 +14,8 @@
   <weapon_firerate>-30</weapon_firerate>
   <weapon_damage>-30</weapon_damage>
   <weapon_range>-25</weapon_range>
-  <ew_track>-30</ew_track>
-  <ew_detect>-30</ew_detect>
+  <ew_track>-11</ew_track>
+  <ew_detect>-20</ew_detect>
   <armour_mod>-30</armour_mod>
   <shield_mod>-30</shield_mod>
   <energy_mod>-30</energy_mod>

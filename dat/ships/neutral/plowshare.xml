@@ -40,7 +40,6 @@
   <turn_mod>-40</turn_mod>
   <cargo_mod>80</cargo_mod>
   <cargo_inertia>-20</cargo_inertia>
-  <ew_hide>25</ew_hide>
   <absorb>-20</absorb>
  </stats>
  <tags>
