@@ -409,13 +409,11 @@ char *nfile_readFile( size_t *filesize, const char *path )
  */
 int nfile_touch( const char *path )
 {
-   FILE *f;
-
    if ( path == NULL )
       return -1;
 
    /* Try to open the file, C89 compliant, but not as precise as stat. */
-   f = fopen( path, "a+b" );
+   FILE *f = fopen( path, "a+b" );
    if ( f == NULL ) {
       WARN( _( "Unable to touch file '%s': %s" ), path, strerror( errno ) );
       return -1;
