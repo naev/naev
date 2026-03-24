@@ -9,19 +9,18 @@ from typing import Optional
 # Configure logging to output to stderr
 logging.basicConfig(level=logging.INFO, stream=sys.stderr)
 
-def get_number_commits_since(source_root: str, tag: str) -> Optional[str]:
+def get_date(source_root: str) -> Optional[str]:
    """Return the short git commit SHA, or None if unavailable."""
    try:
       proc = subprocess.run(
-         ["git", "-C", source_root, "rev-list", f"{tag}..HEAD", "--count"],
+         ['git', '-C', source_root, 'log', '-1', '--date=format:%y-%m-%d-%H', '--format="%ad"'],
          capture_output=True,
          text=True,
          check=True,
       )
-      return proc.stdout.strip()
+      return proc.stdout.strip().strip('"')
    except Exception:
       return None
-
 
 def get_commit_sha(source_root: str) -> Optional[str]:
    """Return the short git commit SHA, or None if unavailable."""
@@ -72,7 +71,7 @@ def get_version(source_root: str, base_version: str) -> str:
    Determine the project version:
       1. If HEAD is exactly at a tag and the repo is clean, use base_version.
          (Assumes base_version has been set to the tag by Meson.)
-      2. Otherwise, build a dev version: base_version + commit count + git SHA [+dirty] if .git exists.
+      2. Otherwise, build a dev version: base_version + date + git SHA [+dirty] if .git exists.
       3. If no .git, but dat/VERSION exists, read and reuse it.
       4. If nothing else works, fall back to base_version + "+dev".
       The resolved version is always written to dat/VERSION.
@@ -81,14 +80,20 @@ def get_version(source_root: str, base_version: str) -> str:
 
    version = None
 
-   if os.path.isdir(os.path.join(source_root, ".git")):
+   try:
+      proc=subprocess.run(['git', '-C', source_root, 'rev-parse','--is-inside-work-tree'], capture_output=True, text=True, check=True)
+      in_tree = proc.stdout.strip()=='true'
+   except:
+      in_tree = False
+
+   if in_tree:
       if is_tagged_release(source_root) and not is_dirty(source_root):
          # Exact tag, clean repo
          version = base_version
       else:
          # Dev build: append sha and maybe dirty
          version = base_version
-         num = get_number_commits_since( source_root, "v"+base_version )
+         num = get_date(source_root)
          sha = get_commit_sha(source_root)
          if num and sha:
             version += f"+{num}.g{sha}"
