@@ -29,6 +29,7 @@ local neu = require 'common.neutral'
 local vn = require "vn"
 local vnimage  = require "vnimage"
 local ads = require "scripts.common.ads"
+local pilotai = require "pilotai"
 
 local mission = {
    name = _("Adblocker"),
@@ -98,7 +99,7 @@ function enter()
       local fct = faction.dynAdd("Independent", "adspammer", _("Independent"), { clear_enemies = true,
          clear_allies = true })
       spammer = pilot.add("Gawain", fct, location, _("Advertiser 108CK"))
-      spammer:control()
+      pilotai.guard( spammer, location )
       spammer:memory().aggressive = true
       spammer:setHilight(true)
       spammer:setVisplayer(true)
