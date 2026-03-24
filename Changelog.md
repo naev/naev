@@ -35,6 +35,7 @@
 
    * 3 new missions
    * 6 new events
+   * 2 new ships
    * 7 new outfits
    * 1 new ship variant
    * Many more unique pilots
