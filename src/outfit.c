@@ -2981,9 +2981,6 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
 
    node = parent->children;
 
-   temp->slot.type = OUTFIT_SLOT_NA;
-   temp->slot.size = OUTFIT_SLOT_SIZE_NA;
-
    temp->u.map->systems = array_create( StarSystem * );
    temp->u.map->spobs   = array_create( Spob * );
    temp->u.map->jumps   = array_create( JumpPoint * );
@@ -3033,6 +3030,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
                      cur->name );
          } while ( xml_nextNode( cur ) );
       } else if ( xml_isNode( node, "short_desc" ) ) {
+         free( temp->summary_raw );
          temp->summary_raw = calloc( OUTFIT_SHORTDESC_MAX, 1 );
          snprintf( temp->summary_raw, OUTFIT_SHORTDESC_MAX, "%s",
                    xml_get( node ) );
@@ -3054,13 +3052,6 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
    array_shrink( &temp->u.map->systems );
    array_shrink( &temp->u.map->spobs );
    array_shrink( &temp->u.map->jumps );
-
-   if ( temp->summary_raw == NULL ) {
-      /* Set short description based on type. */
-      temp->summary_raw = calloc( OUTFIT_SHORTDESC_MAX, 1 );
-      snprintf( temp->summary_raw, OUTFIT_SHORTDESC_MAX, "%s",
-                _( outfit_getType( temp ) ) );
-   }
 
 #define MELEMENT( o, s )                                                       \
    if ( o )                                                                    \
@@ -3436,6 +3427,12 @@ static int outfit_parse( Outfit *temp, const char *file )
                                                        the universe is loaded */
             temp->slot.type = OUTFIT_SLOT_NA;
             temp->slot.size = OUTFIT_SLOT_SIZE_NA;
+            if ( temp->summary_raw == NULL ) {
+               /* Set short description based on type. */
+               temp->summary_raw = calloc( OUTFIT_SHORTDESC_MAX, 1 );
+               snprintf( temp->summary_raw, OUTFIT_SHORTDESC_MAX, "%s",
+                         _( outfit_getType( temp ) ) );
+            }
          } else if ( outfit_isLocalMap( temp ) )
             outfit_parseSLocalMap( temp, node );
          else if ( outfit_isGUI( temp ) )
