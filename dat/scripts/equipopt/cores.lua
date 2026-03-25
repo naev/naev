@@ -11,12 +11,6 @@ local function choose_one_table( t )
    return choose_one( t )
 end
 
--- Compute classes that have a secondary slot
-local have_secondary={}
-for _i,x in ipairs{"Fighter","Bomber","Destroyer","Battleship","Carrier","Courier","Freighter","Armoured Transport","Bulk Freighter"} do
-   have_secondary[x]=true
-end
-
 --[[
       STANDARD CORES
 --]]
@@ -368,13 +362,34 @@ function cores.get( p, params )
       engines  = choose_one_table( params.engines )
    end
 
+   -- Lazy loading of slot info
+   local nc = naev.cache()
+   if nc.equipopt_slots == nil then
+      nc.equipopt_slots = {}
+   end
+   if nc.equipopt_slots[ shipname ] == nil then
+      local slots = s:getSlots()
+      local slotinfo = {}
+      for k,v in ipairs(slots) do
+         if v.property == "systems_secondary" then
+            slotinfo.systems_secondary = true
+         elseif v.property == "engines_secondary" then
+            slotinfo.engines_secondary = true
+         elseif v.property == "hull_secondary" then
+            slotinfo.hull_secondary = true
+         end
+      end
+      nc.equipopt_slots[ shipname ] = slotinfo
+   end
+   local slotinfo = nc.equipopt_slots[ shipname ]
+
    -- Get the cores if applicable
    local c = {}
    if systems then
       local ct = cores[ systems ].systems
       local co = ct[ shipname ] or ct[ shipclass ]
       c["systems"] = co()
-      if have_secondary[shipclass] then
+      if slotinfo.systems_secondary then
          c["systems_secondary"] = co()
       end
    end
@@ -382,7 +397,7 @@ function cores.get( p, params )
       local ct = cores[ hulls ].hulls
       local co = ct[ shipname ] or ct[ shipclass ]
       c["hull"] = co()
-      if have_secondary[shipclass] then
+      if slotinfo.hull_secondary then
          c["hull_secondary"] = co(true)
       end
    end
@@ -390,7 +405,7 @@ function cores.get( p, params )
       local ct = cores[ engines ].engines
       local co = ct[ shipname ] or ct[ shipclass ]
       c["engines"] = co()
-      if have_secondary[shipclass] then
+      if slotinfo.engines_secondary then
          c["engines_secondary"] = c["engines"]
       end
    end
