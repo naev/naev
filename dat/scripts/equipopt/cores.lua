@@ -366,20 +366,20 @@ function cores.get( p, params )
    local nc = naev.cache()
    if nc.equipopt_slots == nil then
       nc.equipopt_slots = {}
-   end
-   if nc.equipopt_slots[ shipname ] == nil then
-      local slots = s:getSlots()
-      local slotinfo = {}
-      for k,v in ipairs(slots) do
-         if v.property == "systems_secondary" then
-            slotinfo.systems_secondary = true
-         elseif v.property == "engines_secondary" then
-            slotinfo.engines_secondary = true
-         elseif v.property == "hull_secondary" then
-            slotinfo.hull_secondary = true
+      for k,ks in ipairs( ship.getAll() ) do
+         local slots = ks:getSlots()
+         local slotinfo = {}
+         for i,v in ipairs(slots) do
+            if v.property == "systems_secondary" then
+               slotinfo.systems_secondary = true
+            elseif v.property == "engines_secondary" then
+               slotinfo.engines_secondary = true
+            elseif v.property == "hull_secondary" then
+               slotinfo.hull_secondary = true
+            end
          end
+         nc.equipopt_slots[ ks:nameRaw() ] = slotinfo
       end
-      nc.equipopt_slots[ shipname ] = slotinfo
    end
    local slotinfo = nc.equipopt_slots[ shipname ]
 
