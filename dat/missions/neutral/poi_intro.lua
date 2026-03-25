@@ -357,6 +357,7 @@ function heartbeat ()
    elseif cutscene == 2 then
       if nelly:pos():dist( player.pos() ) < 1000 then
          nemesis = pilot.add( "Koala", fct_nemesis, pos + vec2.newP( 5000, rnd.angle() ), _("Nemesis") )
+         nemesis:outfitAddIntrinsic("Escape Pod")
          nelly:broadcast(_("Wait? We were followed?"))
          cutscene = 3
          broadcasted = 0
