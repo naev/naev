@@ -1,12 +1,22 @@
 local luaspfx = require "luaspfx"
 local audio = require "love.audio"
+local fmt = require "format"
 
 local damage = 100
-local penetration = 0.5
+local penetration = 100
 local radius = 200
 local cooldown = 20
 
 local sfx = audio.newSoundData( 'snd/sounds/plasma_burst' )
+
+function descextra()
+   return fmt.f(_("Deals {dmg} plasma damage with {pen} penetration to all hostile ships in {range} range and applies equal amount of plasma burn. Has a {cooldown} s cooldown."), {
+      dmg = damage,
+      pen = penetration,
+      range = radius,
+      cooldown = cooldown,
+   })
+end
 
 local function activate( p, po )
    -- Still on cooldown
@@ -18,13 +28,11 @@ local function activate( p, po )
    local dur = 10
    local pos = p:pos()
    for k,t in ipairs(p:getEnemies( radius )) do
-      local ts = t:stats()
-      local dmg = damage * (1 - math.min( 1, math.max( 0, ts.absorb - penetration ) )) * t:shipstat("damage_taken",true)
       local norm, angle = (t:pos() - pos):polar()
       local mod = 1 - norm / radius
       local mass = math.pow( damage / 15, 2 )
       -- Damage and knockback
-      t:damage( damage, 0, penetration, "plasma", p )
+      local dmg = t:damage( damage, 0, penetration, "plasma", p )
       t:knockback( mass, vec2.newP( mod*radius, angle ), pos, 1 )
       -- Nasty effects
       t:effectAdd( "Plasma Burn", dur, dmg, p )

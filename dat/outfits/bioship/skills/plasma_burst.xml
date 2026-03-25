@@ -7,7 +7,6 @@
   <price>0</price>
   <description>TODO</description>
   <gfx_store>/gfx/misc/icons/goo-skull</gfx_store>
-  <desc_extra>Deals 300 plasma damage to all hostile ships in 200 range.</desc_extra>
  </general>
  <specific type="modification">
   <lua>outfits/bioship/skills/plasma_burst.lua</lua>
