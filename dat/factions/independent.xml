@@ -3,7 +3,7 @@
  <invisible/>
  <known/>
  <player>3</player>
- <colour>blue</colour>
+ <colour>lightblue</colour>
  <spawn>independent</spawn>
  <standing>independent</standing>
  <generator weight="0.7">Trader</generator>
