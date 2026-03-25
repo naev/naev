@@ -44,8 +44,14 @@ local function nameboxUpdateInternal( obj, params )
    local facname = (fac:known() and fac:name()) or _("Unknown")
    local namebox_text = string.format("%s\n%s\n%s", facname, obj:name(), faction_str )
    local namebox_col = params.name_colour or fac:colour()
-   if namebox_col then namebox_col = {namebox_col:rgb()}
-   else namebox_col = {1,1,1}
+   if namebox_col then
+      local luma = namebox_col:luminance()
+      if luma < 0.5 then
+         namebox_col = namebox_col:lighten_fixed( 0.5-luma )
+      end
+      namebox_col = {namebox_col:rgb()}
+   else
+      namebox_col = {1,1,1}
    end
    local namebox_x = math.max( 1, nw/2-600 )
    local namebox_y = vn.namebox_y + vn.namebox_h -- Correct
