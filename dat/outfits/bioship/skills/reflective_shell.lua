@@ -8,10 +8,10 @@ local TRIGGER = 50
 
 function descextra()
    local s = THORN:specificstats()
-   return fmt.f(_([[Reduces damage taken by {reflect}%. Every {trigger} damage taken, a seeking thorn is launched at the attacker dealing {damage} damage with {penetration}% penetration.]]), {
+   return fmt.f(_([[Reduces damage taken by {reflect}%. Every {trigger} damage taken, a seeking thorn is launched at the attacker dealing {damage} damage with {penetration} penetration.]]), {
       reflect  = REFLECT*100,
       damage   = s.damage,
-      penetration = s.penetration*100,
+      penetration = s.penetration,
       trigger  = TRIGGER,
    })
 end
