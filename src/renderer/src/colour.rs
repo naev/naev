@@ -2,10 +2,11 @@ use encase::ShaderType;
 use mlua::{BorrowedStr, FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
 use nalgebra::{Vector3, Vector4};
 use palette::FromColor;
-use palette::{Hsv, LinSrgb, Srgb};
+use palette::{Darken, Hsv, IntoColor, Lighten, LinSrgb, Srgb, luma::LinLuma, rgb::Rgb, rgb::Rgba};
 use std::sync::LazyLock;
 use trie_rs::map::{Trie, TrieBuilder};
 
+/// Colour stored in linear colourspace
 #[derive(Debug, Copy, Clone, derive_more::From, derive_more::Into, PartialEq, ShaderType)]
 pub struct Colour {
    c: Vector4<f32>,
@@ -13,6 +14,25 @@ pub struct Colour {
 impl Default for Colour {
    fn default() -> Self {
       Vector4::<f32>::from([1.0, 1.0, 1.0, 1.0]).into()
+   }
+}
+impl Into<Rgba> for Colour {
+   fn into(self) -> Rgba {
+      Rgba {
+         color: Rgb::new(self.c.x, self.c.y, self.c.z),
+         alpha: self.c.w,
+      }
+   }
+}
+impl From<Rgba> for Colour {
+   fn from(rgba: Rgba) -> Self {
+      Vector4::new(
+         rgba.color.red,
+         rgba.color.green,
+         rgba.color.blue,
+         rgba.alpha,
+      )
+      .into()
    }
 }
 
@@ -642,6 +662,68 @@ impl UserData for Colour {
             .into_components();
          Ok(Colour::new_alpha(r, g, b, this.c.w))
       });
+      /*@
+       * @brief Gets the luminance of a colour.
+       *
+       *    @luatparam Colour col Colour to get the luminance of.
+       *    @luatreturn number Luminance of the colour.
+       * @luafunc luminance
+       */
+      methods.add_method("luminance", |_, this, ()| -> mlua::Result<f32> {
+         let col: Rgba = (*this).into();
+         let luma: LinLuma = col.color.into_color();
+         Ok(luma.luma)
+      });
+      /*@
+       * @brief Lightens a colour.
+       *
+       *    @luatparam Colour col Colour to lighten.
+       *    @luatparam number amount Amount to lighten.
+       * @luafunc lighten
+       */
+      methods.add_method("lighten", |_, this, amount: f32| -> mlua::Result<Colour> {
+         let col: Rgba = (*this).into();
+         Ok(col.lighten(amount).into())
+      });
+      /*@
+       * @brief Lightens a colour.
+       *
+       *    @luatparam Colour col Colour to lighten.
+       *    @luatparam number amount Amount to lighten.
+       * @luafunc lighten_fixed
+       */
+      methods.add_method(
+         "lighten_fixed",
+         |_, this, amount: f32| -> mlua::Result<Colour> {
+            let col: Rgba = (*this).into();
+            Ok(col.lighten_fixed(amount).into())
+         },
+      );
+      /*@
+       * @brief Darkens a colour.
+       *
+       *    @luatparam Colour col Colour to darken.
+       *    @luatparam number amount Amount to darken.
+       * @luafunc darken
+       */
+      methods.add_method("darken", |_, this, amount: f32| -> mlua::Result<Colour> {
+         let col: Rgba = (*this).into();
+         Ok(col.darken(amount).into())
+      });
+      /*@
+       * @brief Darkens a colour.
+       *
+       *    @luatparam Colour col Colour to darken.
+       *    @luatparam number amount Amount to darken.
+       * @luafunc darken_fixed
+       */
+      methods.add_method(
+         "darken_fixed",
+         |_, this, amount: f32| -> mlua::Result<Colour> {
+            let col: Rgba = (*this).into();
+            Ok(col.darken_fixed(amount).into())
+         },
+      );
    }
 }
 

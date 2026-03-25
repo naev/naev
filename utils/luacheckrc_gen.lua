@@ -1305,6 +1305,11 @@ stds.colour = {
             set_alpha = {},
             to_gamma = {},
             to_linear = {},
+            luminance = {},
+            lighten = {},
+            lighten_fixed = {},
+            darken = {},
+            darken_fixed = {},
          }
       }
    }
