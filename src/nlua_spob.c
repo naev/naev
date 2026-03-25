@@ -815,7 +815,7 @@ static int spobL_landAllow( lua_State *L )
  * @brief Disallows a player from landing on a spob. The override lasts until
  * the player jumps or lands.
  *
- * @usage p:landDeny( true ) -- Player can land on spob p now.
+ * @usage p:landDeny( true ) -- Player can not land on spob p now.
  *    @luatparam Spob p Spob to forcibly disallow the player to land on.
  *    @luatparam[opt=false] boolean b Whether or not the player should be
  * disallowed to land, true disables, false disables override.
