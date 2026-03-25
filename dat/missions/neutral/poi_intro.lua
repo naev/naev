@@ -169,7 +169,9 @@ end
 
 -- luacheck: globals nooutfit (used in POI framework)
 function nooutfit ()
-   hook.timer( 5, "nooutfit_timer" )
+   if mem.state==0 then
+      hook.timer( 5, "nooutfit_timer" )
+   end
 end
 function nooutfit_timer ()
    vn.clear()
