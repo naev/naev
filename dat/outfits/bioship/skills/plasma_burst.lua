@@ -6,15 +6,22 @@ local damage = 100
 local penetration = 100
 local radius = 200
 local cooldown = 20
+local duration = 10
+local move_malus = 25
+local firerate_malus = 20
 
 local sfx = audio.newSoundData( 'snd/sounds/plasma_burst' )
 
 function descextra()
-   return fmt.f(_("Deals {dmg} plasma damage with {pen} penetration to all hostile ships in {range} range and applies equal amount of plasma burn. Has a {cooldown} s cooldown."), {
+   return fmt.f(_("Creates an explosion of plasma affecting all ships around the pilot. Deals {dmg} damage with {pen} penetration to all hostiles ships within {range} {unit}. Deals an additional {dmg} damage over {duration} seconds while lowering speed, accel, and turn by {move_malus}% and fire rate by {firerate_malus}%. Has a {cooldown} second cooldown."), {
       dmg = damage,
       pen = penetration,
       range = radius,
+      unit = naev.unit("distance"),
       cooldown = cooldown,
+      duration = duration,
+      move_malus = move_malus,
+      firerate_malus = firerate_malus,
    })
 end
 
@@ -25,7 +32,6 @@ local function activate( p, po )
    end
 
    -- TODO would be great to delay the damage by 0.5 seconds to make it fit better with sound and effects
-   local dur = 10
    local pos = p:pos()
    for k,t in ipairs(p:getEnemies( radius )) do
       local norm, angle = (t:pos() - pos):polar()
@@ -35,9 +41,9 @@ local function activate( p, po )
       local dmg = t:damage( damage, 0, penetration, "plasma", p )
       t:knockback( mass, vec2.newP( mod*radius, angle ), pos, 1 )
       -- Nasty effects
-      t:effectAdd( "Plasma Burn", dur, dmg, p )
-      t:effectAdd( "Paralyzing Plasma", dur, nil, p )
-      t:effectAdd( "Crippling Plasma", dur, nil, p )
+      t:effectAdd( "Plasma Burn", duration, dmg, p )
+      t:effectAdd( "Paralyzing Plasma", duration, nil, p )
+      t:effectAdd( "Crippling Plasma", duration, nil, p )
    end
 
    if mem.isp then
