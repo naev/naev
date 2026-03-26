@@ -1,0 +1,19 @@
+<outfit name="AD-USB">
+ <general>
+  <unique/>
+  <typename>Accessory</typename>
+  <slot prop="accessory">utility</slot>
+  <size>small</size>
+  <priority>3</priority>
+  <mass>0</mass>
+  <price>1000000</price>
+  <description>A module once used to infect ship systems with sophisticated malware. Not something to keep anywhere near a computer.</description>
+  <gfx_store>placeholder</gfx_store>
+  <rarity>6</rarity>
+ </general>
+ <specific type="modification">
+  <cpu_mod>7</cpu_mod>
+  <shield_mod>5</shield_mod>
+  <jam_chance>11</jam_chance>
+ </specific>
+</outfit>
