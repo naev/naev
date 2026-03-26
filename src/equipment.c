@@ -1830,6 +1830,10 @@ static int equipment_filter( const Outfit *o )
       return 1;
 
    case 1: /* Fits any ship of the player. */
+      for ( int i = 0; i < array_size( player.p->outfits ); i++ ) {
+         if ( outfit_fitsSlot( o, &player.p->outfits[i]->sslot->slot ) )
+            return 1;
+      }
       ps = player_getShipStack();
       for ( int j = 0; j < array_size( ps ); j++ ) {
          const Pilot *pp = ps[j].p;
