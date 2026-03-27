@@ -460,7 +460,11 @@ static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close,
       /* Quick checks first. */
       if ( pilot_isDisabled( t ) )
          continue;
-      if ( !pilot_canTarget( t ) )
+      /* Must not be dead. */
+      if ( pilot_isFlag( p, PILOT_DELETE ) || pilot_isFlag( p, PILOT_DEAD ) )
+         continue;
+      /* Must not be hidden nor invisible. */
+      if ( pilot_isFlag( p, PILOT_HIDE ) )
          continue;
 
       /* Must not be landing nor taking off. */
