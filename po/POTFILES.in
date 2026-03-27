@@ -3964,6 +3964,7 @@ src/helpers/src/atomicfloat.rs
 src/helpers/src/lib.rs
 src/hook.c
 src/hook.h
+src/hook.rs
 src/info.c
 src/info.h
 src/input.c

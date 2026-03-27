@@ -45,6 +45,7 @@ typedef struct HookParam_s {
    union {
       double        num;       /**< Number parameter. */
       const char   *str;       /**< String parameter. */
+      char         *str_free;  /**< String parameter. */
       int           b;         /**< Boolean parameter. */
       LuaPilot      lp;        /**< Hook parameter pilot data. */
       const Ship   *ship;      /**< Hook parameter ship data. */

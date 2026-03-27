@@ -72,6 +72,7 @@ source_rust = files(
    'array.rs',
    'damagetype.rs',
    'faction.rs',
+   'hook.rs',
    'input.rs',
    'linebreak.rs',
    'naev.rs',

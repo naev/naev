@@ -18,6 +18,7 @@ unsafe extern "C" {
 mod array;
 mod damagetype;
 mod faction;
+mod hook;
 mod input;
 mod linebreak;
 mod nebula;
