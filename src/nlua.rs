@@ -22,6 +22,7 @@ type CFunctionMLua = unsafe extern "C-unwind" fn(*mut mlua::lua_State) -> i32;
 
 #[derive(Debug)]
 pub struct LuaEnv {
+   pub name: String,
    pub table: mlua::Table,
    rk: mlua::RegistryKey, // Needed for C API, remove later
 }
@@ -411,7 +412,11 @@ impl NLua {
       self.envs.raw_set(rk.id(), t.clone())?;
 
       // Environment is all set
-      Ok(LuaEnv { rk, table: t })
+      Ok(LuaEnv {
+         name: name.to_string(),
+         rk,
+         table: t,
+      })
    }
 
    /// Calls a function with the environment
@@ -472,7 +477,7 @@ impl NLua {
 
 impl LuaEnv {
    pub fn current(lua: &mlua::Lua) -> Option<Self> {
-      let tbl: mlua::Table = match lua.globals().raw_get(crate::nlua::ENV) {
+      let tbl: mlua::Table = match lua.globals().raw_get(ENV) {
          Ok(t) => t,
          Err(e) => {
             warn_err!(e);
@@ -491,7 +496,11 @@ impl LuaEnv {
    /// Sets up a Lua environment from a table. Assumes the table exists.
    fn from_table(lua: &mlua::Lua, table: mlua::Table) -> Result<Self> {
       let rk = lua.create_registry_value(table.clone())?;
-      Ok(LuaEnv { table, rk })
+      Ok(LuaEnv {
+         name: "???".to_string(),
+         table,
+         rk,
+      })
    }
 
    /// Gets a value from the environment
@@ -505,6 +514,7 @@ impl LuaEnv {
    }
 
    /// Calls a function with the environment
+   #[instrument(skip_all,fields(name = &self.name))]
    pub fn call<R: FromLuaMulti>(
       &self,
       lua: &NLua,
@@ -515,6 +525,7 @@ impl LuaEnv {
    }
 
    /// Calls a function with the environment
+   #[instrument(skip_all,fields(name = &self.name))]
    pub fn eval<R: FromLuaMulti>(&self, lua: &NLua, chunk: mlua::Chunk) -> Result<R> {
       lua.environment_eval(self.table.clone(), chunk)
    }
@@ -594,6 +605,7 @@ impl Clone for LuaEnv {
       let t = &self.table;
       let lua = &&NLUA;
       LuaEnv {
+         name: self.name.clone(),
          table: t.clone(),
          rk: lua.lua.create_registry_value(t).unwrap(),
       }
