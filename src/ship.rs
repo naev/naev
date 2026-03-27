@@ -5,6 +5,7 @@ use rayon::prelude::*;
 use renderer::model::Model;
 use renderer::{Context, ContextWrapper, texture};
 use std::ffi::{CStr, CString, c_void};
+use std::fmt::Debug;
 use std::path::Path;
 use tracing::instrument;
 
@@ -18,7 +19,8 @@ impl ShipWrapper {
       s.to_string()
    }
 
-   fn load_gfx_3d<P: AsRef<Path>>(&mut self, path: P, ctx: &ContextWrapper) -> Result<()> {
+   #[instrument(skip(self, ctx))]
+   fn load_gfx_3d<P: AsRef<Path> + Debug>(&mut self, path: P, ctx: &ContextWrapper) -> Result<()> {
       let mut m = Model::from_path(ctx, &path)?;
       let poly = m.spin_polygon(ctx, path, self.0.size.round() as usize);
       self.0.polygon = Box::into_raw(Box::new(poly)) as *mut naevc::CollPoly;
@@ -29,7 +31,8 @@ impl ShipWrapper {
       Ok(())
    }
 
-   fn load_gfx_2d<P: AsRef<Path>>(&mut self, path: P, ext: &str) -> Result<()> {
+   #[instrument(skip(self))]
+   fn load_gfx_2d<P: AsRef<Path> + Debug>(&mut self, path: P, ext: &str) -> Result<()> {
       use std::ops::Deref;
       let cpath = CString::new(path.as_ref().as_os_str().to_string_lossy().deref()).unwrap();
       let cext = CString::new(ext).unwrap();

@@ -448,6 +448,7 @@ impl NLua {
    }
 
    /// Handles resizing
+   #[instrument(skip(self))]
    pub fn resize(&self, width: i32, height: i32) -> Result<()> {
       for pair in self.envs.pairs::<i32, mlua::Table>() {
          let (_key, value) = pair?;
