@@ -156,12 +156,12 @@ pub fn set_log_file(path: &str) -> Result<WorkerGuard> {
 pub fn close_file(guard: Option<WorkerGuard>) {
    drop(guard);
    let nw = WARNINGS.load(Ordering::Relaxed);
-   if nw == 0 {
-      if let Some((path, _)) = LOGFILE.get() {
-         std::fs::remove_file(&*path).unwrap_or_else(|e| {
-            eprintln!("{}", e);
-         });
-      }
+   if nw == 0
+      && let Some((path, _)) = LOGFILE.get()
+   {
+      std::fs::remove_file(path).unwrap_or_else(|e| {
+         eprintln!("{}", e);
+      });
    }
 }
 

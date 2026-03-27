@@ -16,11 +16,11 @@ impl Default for Colour {
       Vector4::<f32>::from([1.0, 1.0, 1.0, 1.0]).into()
    }
 }
-impl Into<Rgba> for Colour {
-   fn into(self) -> Rgba {
+impl From<Colour> for Rgba {
+   fn from(val: Colour) -> Self {
       Rgba {
-         color: Rgb::new(self.c.x, self.c.y, self.c.z),
-         alpha: self.c.w,
+         color: Rgb::new(val.c.x, val.c.y, val.c.z),
+         alpha: val.c.w,
       }
    }
 }
