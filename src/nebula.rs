@@ -13,6 +13,7 @@ use renderer::buffer::{
 };
 use renderer::framebuffer::{Framebuffer, FramebufferBuilder};
 use renderer::shader::{ProgramBuilder, Shader};
+use std::ffi::c_double;
 use tracing::instrument;
 
 #[allow(dead_code)]
