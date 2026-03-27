@@ -213,7 +213,7 @@ local function info_msg( msg )
 end
 
 function equip ()
-   if mem.state > 0 then
+   if mem.misn_state > 0 then
       return
    end
 

@@ -14,6 +14,7 @@
    * Guard against some segfaults triggerable by plugins
    * Fixed warning from setting OSD Hide/Priority on a mission that hasn't set
      the OSD yet
+   * Fixed Nelly not pointing out equipment changes
    * Fixed escorts sometimes buggering off during escort missions
    * shadowvigil: fixed being able to skip the mission by boarding again
    * Spelling and grammar fixes
