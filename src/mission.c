@@ -522,7 +522,8 @@ const char **mission_loadFailed( void )
 void misn_osdSetHide( Mission *misn, int hide )
 {
    misn->osd_hide = hide;
-   osd_setHide( misn->osd, hide );
+   if ( misn->osd > 0 )
+      osd_setHide( misn->osd, hide );
 }
 
 int misn_osdGetHide( const Mission *misn )
@@ -532,7 +533,8 @@ int misn_osdGetHide( const Mission *misn )
 void misn_osdSetPriority( Mission *misn, int priority )
 {
    misn->osd_priority = priority;
-   osd_setPriority( misn->osd, priority );
+   if ( misn->osd > 0 )
+      osd_setPriority( misn->osd, priority );
 }
 int misn_osdGetPriority( const Mission *misn )
 {

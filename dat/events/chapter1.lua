@@ -366,7 +366,7 @@ local countdown, countdown_sfx
 function cutscene_main2 ()
    boss:broadcast( boss_broadcast )
    countdown = 5
-   countdown_sfx = audio.newSource( "snd/sounds/hypergate_turnon" )
+   countdown_sfx = audio.newSoundData( "snd/sounds/hypergate_turnon" )
    hook.timer( 4, "cutscene_main3" )
    hook.timer( 5+4-6.5, "cutscene_main_sfx" )
 end

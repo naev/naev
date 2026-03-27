@@ -107,11 +107,21 @@
 
 ## v0.13.4 (unreleased)
 
+   * "Show only outfits equippable on any of your ships" should include current
+     ship
+   * Changed som faction colours to be more readable
    * Fixed rare crash when NPCs jump out
    * Fixed online resizing on high dpi screens
    * Fixed faction hits being larger than expected in some cases
+   * Fixed the ship AI giving a message when not necessary
+   * Fixed derelict map using old name
+   * Fixed seek and destroy missions breaking in some cases
+   * Made races a bit easier
    * Propagate parameters to plugin manager when launched
    * Guard against some segfaults triggerable by plugins
+   * Fixed warning from setting OSD Hide/Priority on a mission that hasn't set
+     the OSD yet
+   * Fixed Nelly not pointing out equipment changes
    * Fixed escorts sometimes buggering off during escort missions
    * shadowvigil: fixed being able to skip the mission by boarding again
    * Spelling and grammar fixes
