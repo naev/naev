@@ -661,6 +661,14 @@ impl Context {
                   &[],
                   false,
                );
+               // Hide performance stuff
+               gl.debug_message_control(
+                  glow::DONT_CARE,
+                  glow::DEBUG_TYPE_PERFORMANCE,
+                  glow::DEBUG_SEVERITY_MEDIUM,
+                  &[],
+                  false,
+               );
                // NVIDIA warnings about recompiling shaders, don't think we can do much here
                gl.debug_message_control(
                   glow::DEBUG_SOURCE_API,
