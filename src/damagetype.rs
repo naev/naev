@@ -5,6 +5,7 @@ use nlog::{warn, warn_err};
 use rayon::prelude::*;
 use serde::{Deserialize, Deserializer, de};
 use std::ffi::{CStr, CString, OsStr};
+use std::fmt::Debug;
 use std::os::raw::{c_char, c_int};
 use std::path::{Path, PathBuf};
 use tracing::instrument;
@@ -105,7 +106,8 @@ impl DamageType {
       Ok(dt)
    }
 
-   fn load<P: AsRef<Path>>(filename: P) -> Option<Result<Self>> {
+   #[instrument]
+   fn load<P: AsRef<Path> + Debug>(filename: P) -> Option<Result<Self>> {
       let dt = {
          let ext = filename.as_ref().extension();
          if ext == Some(OsStr::new("toml")) {

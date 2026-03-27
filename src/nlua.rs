@@ -71,6 +71,7 @@ pub struct NLua {
    envs: mlua::Table,
 }
 
+#[instrument(skip_all, fields(filename = %filename.display()))]
 fn require(lua: &mlua::Lua, filename: mlua::String) -> mlua::Result<mlua::Value> {
    let globals = lua.globals();
 
@@ -517,6 +518,7 @@ impl LuaEnv {
       lua.environment_eval(self.table.clone(), chunk)
    }
 
+   #[instrument(skip_all)]
    pub fn load_standard(&mut self, lua: &NLua) -> Result<()> {
       // Load naev library first as it gets populated with additonal entries later
       match unsafe {

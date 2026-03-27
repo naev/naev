@@ -246,6 +246,7 @@ impl NebulaData {
       })
    }
 
+   #[instrument(skip_all)]
    pub fn resize(&mut self, ctx: &renderer::Context) {
       let (vw, vh, scale) = {
          let dims = ctx.dimensions.read().unwrap();
@@ -268,6 +269,7 @@ impl NebulaData {
       self.puff_uniform.screen = Vector2::new(vw + 2.0 * PUFF_BUFFER, vh + 2.0 * PUFF_BUFFER);
    }
 
+   #[instrument(skip_all)]
    pub fn render(&self, ctx: &renderer::Context) -> Result<()> {
       let gl = &ctx.gl;
 
@@ -310,6 +312,7 @@ impl NebulaData {
       self.puffs_bg.render(ctx, self)
    }
 
+   #[instrument(skip_all)]
    pub fn render_overlay(&self, ctx: &renderer::Context) -> Result<()> {
       let gl = &ctx.gl;
 

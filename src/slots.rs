@@ -10,6 +10,7 @@ use renderer::texture::TextureDeserializer;
 use renderer::{Context, ContextWrapper, texture};
 use serde_seeded::DeserializeSeeded;
 use std::ffi::{CStr, CString, OsStr};
+use std::fmt::Debug;
 use std::os::raw::{c_char, c_int};
 use std::path::{Path, PathBuf};
 use tracing::instrument;
@@ -42,7 +43,11 @@ pub struct SlotProperty {
 }
 
 impl SlotProperty {
-   fn load<P: AsRef<Path>>(texde: &TextureDeserializer, filename: P) -> Option<Result<Self>> {
+   #[instrument(skip(texde))]
+   fn load<P: AsRef<Path> + Debug>(
+      texde: &TextureDeserializer,
+      filename: P,
+   ) -> Option<Result<Self>> {
       let sp = {
          let ext = filename.as_ref().extension();
          if ext == Some(OsStr::new("toml")) {

@@ -170,6 +170,7 @@ impl FactionRef {
       Self(KeyData::from_ffi(value as u64))
    }
 
+   #[instrument]
    pub fn new(name: &str) -> Option<FactionRef> {
       let factions = FACTIONS.read().unwrap();
       for (id, fct) in factions.iter() {
