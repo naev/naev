@@ -874,7 +874,7 @@ static void map_system_array_update( unsigned int wid, const char *str )
       owned = pilot_cargoOwned( player.p, com );
 
       l = scnprintf( infobuf, sizeof( infobuf ) - l, "%s\n\n%s\n\n",
-                     _( com->name ), _( com->description ) );
+                     commodity_name( com ), commodity_description( com ) );
 
       if ( owned > 0 ) {
          credits2str( buf_buy_price, com->lastPurchasePrice, -1 );

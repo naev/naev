@@ -721,7 +721,7 @@ static int asttype_parse( AsteroidType *at, const char *file )
                if ( material.material == NULL )
                   WARN( "Asteroid Type '%s' has invalid Commodity '%s'",
                         at->name, str );
-               else if ( material.material->gfx_space == NULL )
+               else if ( commodity_gfxSpace( material.material ) == NULL )
                   WARN( _( "Asteroid Type '%s' has Commodity '%s' with no "
                            "'gfx_space'." ),
                         at->name, str );

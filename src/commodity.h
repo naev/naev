@@ -123,8 +123,11 @@ Commodity *commodity_getByIndex( const int indx );
 int        commodity_load( void );
 void       commodity_free( void );
 
-const char *commodity_name( const Commodity *com );
-int         commodity_checkIllegal( const Commodity *com, FactionRef faction );
+const char      *commodity_name( const Commodity *com );
+const char      *commodity_description( const Commodity *com );
+const glTexture *commodity_gfxStore( const Commodity *com );
+const glTexture *commodity_gfxSpace( const Commodity *com );
+int commodity_checkIllegal( const Commodity *com, FactionRef faction );
 
 /*
  * Temporary commodities.

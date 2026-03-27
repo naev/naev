@@ -445,6 +445,18 @@ const char *commodity_name( const Commodity *com )
       return _( com->display );
    return _( com->name );
 }
+const char *commodity_description( const Commodity *com )
+{
+   return com->description;
+}
+const glTexture *commodity_gfxSpace( const Commodity *com )
+{
+   return com->gfx_space;
+}
+const glTexture *commodity_gfxStore( const Commodity *com )
+{
+   return com->gfx_store;
+}
 
 /**
  * @brief Checks to see if a commodity is illegal to a faction.
