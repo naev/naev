@@ -326,7 +326,7 @@ function trigger_ambush()
       if not leader then
          leader = p
       else
-         p:setLeader(p)
+         p:setLeader(leader)
       end
 
       table.insert( ambush, p )
