@@ -96,21 +96,23 @@ static int nxml_saveData( xmlTextWriterPtr writer, const char *type,
 static int nxml_saveCommodity( xmlTextWriterPtr writer, const char *name,
                                size_t name_len, const Commodity *c, int keynum )
 {
-   int status = 0;
-   if ( c->name == NULL )
+   int         status = 0;
+   const char *cname  = commodity_name_raw( c );
+   if ( cname == NULL )
       return 1;
+   int istemp = commodity_isTemp( c );
 
    xmlw_startElem( writer, "data" );
 
    xmlw_attr( writer, "type", COMMODITY_METATABLE );
    nxml_saveNameAttribute( writer, name, name_len, keynum );
-   if ( c->istemp ) {
-      xmlw_attr( writer, "temp", "%d", c->istemp );
+   if ( istemp ) {
+      xmlw_attr( writer, "temp", "%d", istemp );
       xmlw_startElem( writer, "commodity" );
       status = missions_saveTempCommodity( writer, c );
       xmlw_endElem( writer ); /* "commodity" */
    } else
-      xmlw_str( writer, "%s", c->name );
+      xmlw_str( writer, "%s", cname );
    xmlw_endElem( writer ); /* "data" */
    return status;
 }

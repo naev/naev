@@ -39,7 +39,9 @@ int pilot_cargoOwned( const Pilot *pilot, const Commodity *cargo )
 {
    for ( int i = 0; i < array_size( pilot->commodities ); i++ )
       if ( !pilot->commodities[i].id &&
-           strcmp( cargo->name, pilot->commodities[i].commodity->name ) == 0 )
+           strcmp( commodity_name_raw( cargo ),
+                   commodity_name_raw( pilot->commodities[i].commodity ) ) ==
+              0 )
          return pilot->commodities[i].quantity;
    return 0;
 }

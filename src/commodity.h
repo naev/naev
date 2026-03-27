@@ -56,6 +56,7 @@ typedef struct CommodityModifier_ {
  *
  * @brief Represents a commodity.
  */
+#if 1
 typedef struct Commodity_ {
    char        *name;        /**< Name of the commodity. */
    char        *display;     /**< Display name of the commodity. */
@@ -88,6 +89,9 @@ typedef struct Commodity_ {
 
    char **tags; /**< Commodity tags. */
 } Commodity;
+#else
+typedef struct Commodity Commodity;
+#endif
 
 typedef struct CommodityPrice_ {
    double price;      /**< Average price of a commodity on a particular spob */
@@ -123,16 +127,21 @@ Commodity *commodity_getByIndex( const int indx );
 int        commodity_load( void );
 void       commodity_free( void );
 
-const char      *commodity_name( const Commodity *com );
-const char      *commodity_description( const Commodity *com );
-const glTexture *commodity_gfxStore( const Commodity *com );
-const glTexture *commodity_gfxSpace( const Commodity *com );
+const char       *commodity_name( const Commodity *com );
+const char       *commodity_name_raw( const Commodity *com );
+const char       *commodity_description( const Commodity *com );
+const glTexture  *commodity_gfxStore( const Commodity *com );
+const glTexture  *commodity_gfxSpace( const Commodity *com );
+const FactionRef *commodity_illegalTo( const Commodity *com );
+int               commodity_price_constant( const Commodity *com );
+int               commodity_isTemp( const Commodity *com );
+const char       *commodity_price_ref( const Commodity *com );
+credits_t         commodity_last_purchase_price( const Commodity *com );
 int commodity_checkIllegal( const Commodity *com, FactionRef faction );
 
 /*
  * Temporary commodities.
  */
-int        commodity_isTemp( const char *name );
 Commodity *commodity_newTemp( const char *name, const char *desc );
 int        commodity_tempIllegalto( Commodity *com, FactionRef faction );
 

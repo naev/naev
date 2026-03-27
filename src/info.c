@@ -1019,9 +1019,10 @@ static void cargo_genList( unsigned int wid )
       /* List the player fleet's cargo. */
       buf = malloc( sizeof( char * ) * array_size( pclist ) );
       for ( int i = 0; i < array_size( pclist ); i++ ) {
-         PilotCommodity *pc   = &pclist[i];
-         int             misn = ( pc->id != 0 );
-         int illegal          = ( array_size( pc->commodity->illegalto ) > 0 );
+         PilotCommodity   *pc        = &pclist[i];
+         int               misn      = ( pc->id != 0 );
+         const FactionRef *illegalto = commodity_illegalTo( pc->commodity );
+         int               illegal   = ( array_size( illegalto ) > 0 );
 
          if ( pc->quantity > 0 )
             SDL_asprintf( &buf[i], "%s %d%s%s", commodity_name( pc->commodity ),
@@ -1066,11 +1067,12 @@ static void cargo_update( unsigned int wid, const char *str )
    pos = toolkit_getListPos( wid, "lstCargo" );
    com = pclist[pos].commodity;
 
-   if ( !com->description )
+   const char *cdesc = commodity_description( com );
+   if ( !cdesc )
       l = scnprintf( desc, sizeof( desc ), "%s", commodity_name( com ) );
    else
       l = scnprintf( desc, sizeof( desc ), "%s\n\n%s", commodity_name( com ),
-                     _( com->description ) );
+                     _( cdesc ) );
 
    /* Only add fleet information with fleet capacity. */
    if ( pclist[pos].id > 0 ) {
@@ -1088,11 +1090,12 @@ static void cargo_update( unsigned int wid, const char *str )
    }
 
    /* Add message on illegal outfits. */
-   if ( array_size( com->illegalto ) > 0 ) {
+   const FactionRef *illegalto = commodity_illegalTo( com );
+   if ( array_size( illegalto ) > 0 ) {
       l += scnprintf( &desc[l], sizeof( desc ) - l, "\n\n%s",
                       _( "Illegalized by the following factions:\n" ) );
-      for ( int i = 0; i < array_size( com->illegalto ); i++ ) {
-         FactionRef f = com->illegalto[i];
+      for ( int i = 0; i < array_size( illegalto ); i++ ) {
+         FactionRef f = illegalto[i];
          if ( !faction_isKnown( f ) )
             continue;
 

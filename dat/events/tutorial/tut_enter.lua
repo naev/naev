@@ -86,7 +86,7 @@ function tut_illegal ()
       end
    end
    for k,v in ipairs(pp:cargoList()) do
-      local c = commodity.get(v.name)
+      local c = v.c
       if #c:illegality() > 0 then
          table.insert( badstuff, c )
       end

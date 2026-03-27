@@ -5328,14 +5328,13 @@ static int pilotL_cargoJet( lua_State *L )
  *
  * The list has the following members:<br />
  * <ul>
- * <li><b>name:</b> raw (untranslated) name of the cargo (equivalent to the
- * output of commodity.nameRaw()).</li> <li><b>c:</b> the cargo
+ * <li><b>c:</b> the cargo
  * commodity.</li> <li><b>q:</b> quantity of the cargo.</li> <li><b>m:</b>
  * true if cargo is for a mission.</li>
  * </ul>
  *
  * @usage for i, v in ipairs(pilot.cargoList(player.pilot())) do print(
- * string.format("%s: %d", v.name, v.q ) ) end
+ * string.format("%s: %d", v.c, v.q ) ) end
  *
  *    @luatparam Pilot p Pilot to list cargo of.
  *    @luatreturn table An ordered list with the names of the cargo the pilot
@@ -5351,10 +5350,6 @@ static int pilotL_cargoList( lua_State *L )
 
       /* Represents the cargo. */
       lua_newtable( L ); /* t, t */
-
-      lua_pushstring( L, "name" );              /* t, t, i */
-      lua_pushstring( L, pc->commodity->name ); /* t, t, i, s */
-      lua_rawset( L, -3 );                      /* t, t */
 
       lua_pushstring( L, "c" );                           /* t, t, i */
       lua_pushcommodity( L, (Commodity *)pc->commodity ); /* t, t, i, s */

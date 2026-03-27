@@ -84,15 +84,16 @@ void gatherable_cleanup( void )
 int gatherable_init( const Commodity *com, const vec2 *pos, const vec2 *vel,
                      double lifeleng, int qtt, unsigned int player_only )
 {
-   Gatherable *g = &array_grow( &gatherable_stack );
+   Gatherable      *g         = &array_grow( &gatherable_stack );
+   const glTexture *gfx_space = commodity_gfxSpace( com );
    memset( g, 0, sizeof( Gatherable ) );
    g->type        = com;
    g->pos         = *pos;
    g->vel         = *vel;
    g->timer       = 0.;
    g->quantity    = qtt;
-   g->sx          = RNG( 0, tex_sx( com->gfx_space ) - 1 );
-   g->sy          = RNG( 0, tex_sy( com->gfx_space ) - 1 );
+   g->sx          = RNG( 0, tex_sx( gfx_space ) - 1 );
+   g->sy          = RNG( 0, tex_sy( gfx_space ) - 1 );
    g->player_only = player_only;
 
    if ( lifeleng < 0. )
@@ -177,8 +178,8 @@ void gatherable_render( void )
 {
    for ( int i = 0; i < array_size( gatherable_stack ); i++ ) {
       const Gatherable *gat = &gatherable_stack[i];
-      gl_renderSprite( gat->type->gfx_space, gat->pos.x, gat->pos.y, gat->sx,
-                       gat->sy, NULL );
+      gl_renderSprite( commodity_gfxSpace( gat->type ), gat->pos.x, gat->pos.y,
+                       gat->sx, gat->sy, NULL );
    }
 }
 
@@ -261,7 +262,7 @@ static int gatherable_gather( Gatherable *gat, Pilot *p )
          HookParam hparam[3];
          player_message(
             n_( "%d ton of %s gathered", "%d tons of %s gathered", q ), q,
-            _( gat->type->name ) );
+            commodity_name( gat->type ) );
 
          /* Run hooks. */
          hparam[0].type        = HOOK_PARAM_COMMODITY;

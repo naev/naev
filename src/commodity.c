@@ -445,6 +445,10 @@ const char *commodity_name( const Commodity *com )
       return _( com->display );
    return _( com->name );
 }
+const char *commodity_name_raw( const Commodity *com )
+{
+   return com->name;
+}
 const char *commodity_description( const Commodity *com )
 {
    return com->description;
@@ -456,6 +460,31 @@ const glTexture *commodity_gfxSpace( const Commodity *com )
 const glTexture *commodity_gfxStore( const Commodity *com )
 {
    return com->gfx_store;
+}
+
+const FactionRef *commodity_illegalTo( const Commodity *com )
+{
+   return com->illegalto;
+}
+
+int commodity_price_constant( const Commodity *com )
+{
+   return commodity_isFlag( com, COMMODITY_FLAG_PRICE_CONSTANT );
+}
+
+int commodity_isTemp( const Commodity *com )
+{
+   return com->istemp;
+}
+
+const char *commodity_price_ref( const Commodity *com )
+{
+   return com->price_ref;
+}
+
+credits_t commodity_last_purchase_price( const Commodity *com )
+{
+   return com->lastPurchasePrice;
 }
 
 /**
@@ -471,25 +500,6 @@ int commodity_checkIllegal( const Commodity *com, FactionRef faction )
       if ( com->illegalto[i] == faction )
          return 1;
    }
-   return 0;
-}
-
-/**
- * @brief Checks to see if a commodity is temporary.
- *
- *    @brief Name of the commodity to check.
- *    @return 1 if temporary, 0 otherwise.
- */
-int commodity_isTemp( const char *name )
-{
-   for ( int i = 0; i < array_size( commodity_temp ); i++ )
-      if ( strcmp( commodity_temp[i]->name, name ) == 0 )
-         return 1;
-   for ( int i = 0; i < array_size( commodity_stack ); i++ )
-      if ( strcmp( commodity_stack[i].name, name ) == 0 )
-         return 0;
-
-   WARN( _( "Commodity '%s' not found in stack" ), name );
    return 0;
 }
 

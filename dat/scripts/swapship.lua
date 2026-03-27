@@ -59,7 +59,7 @@ function swapship.swap( template, acquired )
       local removals = {}
       for k,v in ipairs( cl ) do
          if not v.m then
-            v.p = commodity.get(v.name):price()
+            v.p = v.c:price()
          end
       end
       while space_needed > 0 do

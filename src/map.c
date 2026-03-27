@@ -630,12 +630,12 @@ static void map_update( unsigned int wid )
             _( "Showing %s prices relative to %s:\n"
                "Positive/blue indicate profit while negative/orange values "
                "indicate loss when sold at the corresponding system." ),
-            _( c->name ), system_nameKnown( sys ) );
+            commodity_name( c ), system_nameKnown( sys ) );
          map_update_status( wid, buf );
       } else {
          snprintf( buf, sizeof( buf ),
                    _( "Showing known %s prices.\nGalaxy-wide average: %.2f" ),
-                   _( c->name ), commod_av_gal_price );
+                   commodity_name( c ), commod_av_gal_price );
          map_update_status( wid, buf );
       }
    } else
@@ -2021,7 +2021,7 @@ static void map_renderCommodIgnorance( double x, double y, double zoom,
    col.a        = a;
 
    snprintf( buf, sizeof( buf ), _( "No price info for\n%s here" ),
-             _( c->name ) );
+             commodity_name( c ) );
    line2 = u8_strchr( buf, '\n', &charn );
    if ( line2 != NULL ) {
       *line2++ = '\0';
@@ -2282,13 +2282,13 @@ static void map_genModeList( void )
                continue;
 
             /* Should not have constant price. */
-            if ( commodity_isFlag( com, COMMODITY_FLAG_PRICE_CONSTANT ) )
+            if ( commodity_price_constant( com ) )
                continue;
 
-            if ( com->istemp )
+            if ( commodity_isTemp( com ) )
                continue;
 
-            if ( com->price_ref != NULL )
+            if ( commodity_price_ref( com ) != NULL )
                continue;
 
             int l;
@@ -2311,7 +2311,7 @@ static void map_genModeList( void )
    even_template = _( "%s: Cost" );
    odd_template  = _( "%s: Trade" );
    for ( int i = 0; i < totGot; i++ ) {
-      const char *commod_text = _( commod_known[i]->name );
+      const char *commod_text = commodity_name( commod_known[i] );
       SDL_asprintf( &array_grow( &map_modes ), even_template, commod_text );
       SDL_asprintf( &array_grow( &map_modes ), odd_template, commod_text );
    }

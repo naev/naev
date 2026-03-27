@@ -877,7 +877,7 @@ static void map_system_array_update( unsigned int wid, const char *str )
                      commodity_name( com ), commodity_description( com ) );
 
       if ( owned > 0 ) {
-         credits2str( buf_buy_price, com->lastPurchasePrice, -1 );
+         credits2str( buf_buy_price, commodity_last_purchase_price( com ), -1 );
          l += scnprintf( &infobuf[l], sizeof( infobuf ) - l,
                          n_( "#nYou have:#0 %d tonne, purchased at %s/t\n",
                              "#nYou have:#0 %d tonnes, purchased at %s/t\n",
@@ -1168,8 +1168,9 @@ static void map_system_genTradeList( unsigned int wid, float goodsSpace,
    cgoods = calloc( ngoods, sizeof( ImageArrayCell ) );
    for ( i = 0; i < ngoods; i++ ) {
       cgoods[i].image =
-         gl_dupTexture( cur_spobObj_sel->commodities[i]->gfx_store );
-      cgoods[i].caption = strdup( _( cur_spobObj_sel->commodities[i]->name ) );
+         gl_dupTexture( commodity_gfxStore( cur_spobObj_sel->commodities[i] ) );
+      cgoods[i].caption =
+         strdup( commodity_name( cur_spobObj_sel->commodities[i] ) );
    }
    /* set up the goods to buy/sell */
    xw   = ( w - nameWidth - pitch - 60 ) / 2;

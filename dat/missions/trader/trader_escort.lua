@@ -191,7 +191,7 @@ end
 -- luacheck: globals trader_create
 function trader_create( p )
    for j, c in ipairs( p:cargoList() ) do
-      p:cargoRm( c.name, c.q )
+      p:cargoRm( c.c, c.q )
    end
    p:cargoAdd( mem.cargo, p:cargoFree() )
    p:rename(_("Convoy ")..p:ship():name())
