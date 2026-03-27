@@ -193,6 +193,7 @@ function gen_outfits ()
       { "Terraforming Antlejos 10", "Commemorative Stein" },
       { "DIY Nerds",                "Homebrew Processing Unit" },
       { "Dvaered Shopping",         "Fancy Key Chain" },
+      { "Antivirus",                "AD-USB" },
    }
    local event_rewards = {
    }

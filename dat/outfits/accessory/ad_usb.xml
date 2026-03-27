@@ -12,6 +12,7 @@
   <rarity>6</rarity>
  </general>
  <specific type="modification">
+  <lua>outfits/unique/poi_data.lua</lua>
   <cpu_mod>7</cpu_mod>
   <shield_mod>5</shield_mod>
   <jam_chance>11</jam_chance>
