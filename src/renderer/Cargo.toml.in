@@ -38,7 +38,7 @@ bitcode = { workspace = true }
 bytemuck = { workspace = true }
 collide = { workspace = true }
 resvg = "0.47"
-naga = { version="28", features=["wgsl-in", "glsl-out"] }
+naga = { version="29", features=["wgsl-in", "glsl-out"] }
 tracing = { workspace = true }
 tracing-mutex = { workspace = true }
 # gltf-rs crate doesn't support WEBP in any release atm...
