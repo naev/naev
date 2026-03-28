@@ -137,7 +137,6 @@ function create ()
       end
    end
    mem.target_faction = fact[rnd.rnd(1,#fact)]
-
    if mem.target_faction == nil then
       misn.finish( false )
    end
@@ -297,14 +296,6 @@ function enter ()
          mem.pir_jump_hook = hook.pilot( target_ship, "jump", "target_flee" )
          mem.pir_land_hook = hook.pilot( target_ship, "land", "target_flee" )
          mem.jumpout = hook.jumpout( "player_flee" )
-
-         -- If the target is weaker, runaway
-         local pstat = player.pilot():stats()
-         local tstat = target_ship:stats()
-         if ( (1.1*(pstat.armour + pstat.shield)) > (tstat.armour + tstat.shield) ) then
-            target_ship:control()
-            target_ship:runaway(player.pilot())
-         end
       end
    end
    mem.last_sys = system.cur()
