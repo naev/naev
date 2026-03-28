@@ -7,7 +7,12 @@
 local scur = system.cur()
 local f = spob.cur():faction()
 local misn_test = require "misn_test"
-if system.get("Straight Row"):jumpDist( scur ) &lt;= 8 and player.misnDone("Adblocker") and spob.cur():faction():tags():generic() and misn_test.reweight_active() and misn_test.mercenary() then return true end
+local maxsize = 0
+for k,s in ipairs(player.ships()) do 
+   size = s:size()
+   if size &gt; maxsize then maxsize = size end
+end
+if system.get("Straight Row"):jumpDist( scur ) &lt;= 8 and player.misnDone("Adblocker") and spob.cur():faction():tags():generic() and misn_test.reweight_active() and misn_test.mercenary() and maxsize &gt;= 6 and player.chapter() ~= 0 then return true end
  </cond>
  <location>Bar</location>
 </mission>
