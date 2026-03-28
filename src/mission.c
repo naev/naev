@@ -27,7 +27,6 @@
 #include "nlua.h"
 #include "nlua_misn.h"
 #include "npc.h"
-#include "nstring.h"
 #include "ntracing.h"
 #include "nxml.h"
 #include "nxml_lua.h"
@@ -1355,7 +1354,7 @@ int missions_saveActive( xmlTextWriterPtr writer )
    xmlw_startElem( writer, "temporary_cargo" );
    for ( int i = 0; i < array_size( pcom ); i++ ) {
       const Commodity *c = pcom[i].commodity;
-      if ( !c->istemp )
+      if ( !commodity_isTemp( c ) )
          continue;
       xmlw_startElem( writer, "cargo" );
       missions_saveTempCommodity( writer, c );
@@ -1446,10 +1445,11 @@ int missions_saveActive( xmlTextWriterPtr writer )
  */
 int missions_saveTempCommodity( xmlTextWriterPtr writer, const Commodity *c )
 {
-   xmlw_attr( writer, "name", "%s", c->name );
-   xmlw_attr( writer, "description", "%s", c->description );
-   for ( int j = 0; j < array_size( c->illegalto ); j++ )
-      xmlw_elem( writer, "illegalto", "%s", faction_name( c->illegalto[j] ) );
+   xmlw_attr( writer, "name", "%s", commodity_name_raw( c ) );
+   xmlw_attr( writer, "description", "%s", commodity_description( c ) );
+   const FactionRef *illegalto = commodity_illegalTo( c );
+   for ( int j = 0; j < array_size( illegalto ); j++ )
+      xmlw_elem( writer, "illegalto", "%s", faction_name( illegalto[j] ) );
    return 0;
 }
 

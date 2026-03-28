@@ -471,6 +471,10 @@ int commodity_price_constant( const Commodity *com )
 {
    return commodity_isFlag( com, COMMODITY_FLAG_PRICE_CONSTANT );
 }
+int commodity_always_can_sell( const Commodity *com )
+{
+   return commodity_isFlag( com, COMMODITY_FLAG_ALWAYS_CAN_SELL );
+}
 
 int commodity_isTemp( const Commodity *com )
 {
@@ -481,10 +485,19 @@ const char *commodity_price_ref( const Commodity *com )
 {
    return com->price_ref;
 }
+double commodity_price_mod( const Commodity *com )
+{
+   return com->price_mod;
+}
 
 credits_t commodity_last_purchase_price( const Commodity *com )
 {
    return com->lastPurchasePrice;
+}
+
+void commodity_set_last_purchase_price( Commodity *com, credits_t amount )
+{
+   com->lastPurchasePrice = amount;
 }
 
 /**

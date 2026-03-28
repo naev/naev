@@ -133,10 +133,13 @@ const glTexture  *commodity_gfxStore( const Commodity *com );
 const glTexture  *commodity_gfxSpace( const Commodity *com );
 const FactionRef *commodity_illegalTo( const Commodity *com );
 int               commodity_price_constant( const Commodity *com );
+int               commodity_always_can_sell( const Commodity *com );
 int               commodity_isTemp( const Commodity *com );
 const char       *commodity_price_ref( const Commodity *com );
+double            commodity_price_mod( const Commodity *com );
 credits_t         commodity_last_purchase_price( const Commodity *com );
-int commodity_checkIllegal( const Commodity *com, FactionRef faction );
+void commodity_set_last_purchase_price( Commodity *com, credits_t amount );
+int  commodity_checkIllegal( const Commodity *com, FactionRef faction );
 
 /*
  * Temporary commodities.

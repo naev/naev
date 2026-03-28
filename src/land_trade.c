@@ -181,7 +181,7 @@ static void commodity_exchange_genList( unsigned int wid )
       PilotCommodity *pc = &pclist[i];
       if ( pc->id > 0 ) /* Ignore mission stuff. */
          continue;
-      if ( !commodity_isFlag( pc->commodity, COMMODITY_FLAG_ALWAYS_CAN_SELL ) )
+      if ( !commodity_always_can_sell( pc->commodity ) )
          continue;
       CommodityItem item = {
          .com       = (Commodity *)pc->commodity,
@@ -248,7 +248,7 @@ static void commodity_exchange_genList( unsigned int wid )
       cgoods = calloc( ngoods, sizeof( ImageArrayCell ) );
       for ( int i = 0; i < ngoods; i++ ) {
          const Commodity *com = commodity_list[i].com;
-         cgoods[i].image      = gl_dupTexture( com->gfx_store );
+         cgoods[i].image      = gl_dupTexture( commodity_gfxStore( com ) );
          cgoods[i].caption    = strdup( commodity_name( com ) );
          cgoods[i].quantity   = pfleet_cargoOwned( com );
       }
@@ -332,7 +332,7 @@ void commodity_update( unsigned int wid, const char *str )
    double price_mod = comi->price_mod;
 
    /* modify image */
-   window_modifyImage( wid, "imgStore", com->gfx_store, 192, 192 );
+   window_modifyImage( wid, "imgStore", commodity_gfxStore( com ), 192, 192 );
 
    spob_averageSpobPrice( land_spob, com, &mean, &std );
    credits2str( buf_mean, mean, -1 );
@@ -346,7 +346,8 @@ void commodity_update( unsigned int wid, const char *str )
    buf_purchase_price[0] = '\0';
    owned                 = pfleet_cargoOwned( com );
    if ( owned > 0 )
-      credits2str( buf_purchase_price, com->lastPurchasePrice, -1 );
+      credits2str( buf_purchase_price, commodity_last_purchase_price( com ),
+                   -1 );
    credits2str( buf_local_price,
                 price_mod * spob_commodityPrice( land_spob, com ), -1 );
    tonnes2str( buf_tonnes_owned, owned );
@@ -366,12 +367,14 @@ void commodity_update( unsigned int wid, const char *str )
    window_modifyText( wid, "txtDInfo", buf );
    window_modifyText( wid, "txtName", commodity_name( com ) );
    l = 0;
-   l += scnprintf( &buf[l], sizeof( buf ) - l, "%s", _( com->description ) );
-   if ( array_size( com->illegalto ) > 0 ) {
+   l += scnprintf( &buf[l], sizeof( buf ) - l, "%s",
+                   _( commodity_description( com ) ) );
+   const FactionRef *illegalto = commodity_illegalTo( com );
+   if ( array_size( illegalto ) > 0 ) {
       l += scnprintf( &buf[l], sizeof( buf ) - l, "\n\n%s",
                       _( "Illegalized by the following factions:\n" ) );
-      for ( int j = 0; j < array_size( com->illegalto ); j++ ) {
-         FactionRef f = com->illegalto[j];
+      for ( int j = 0; j < array_size( illegalto ); j++ ) {
+         FactionRef f = illegalto[j];
          if ( !faction_isKnown( f ) )
             continue;
 
@@ -383,19 +386,20 @@ void commodity_update( unsigned int wid, const char *str )
 
    /* Add relative price. */
    l = 0;
-   if ( commodity_isFlag( com, COMMODITY_FLAG_PRICE_CONSTANT ) ) {
+   if ( commodity_price_constant( com ) ) {
       l += scnprintf( &buf[l], sizeof( buf ) - l, _( "Price is constant." ) );
       window_modifyText( wid, "txtDRef", buf );
-   } else if ( com->price_ref != NULL ) {
-      char c = '0';
-      if ( com->price_mod > 1. )
+   } else if ( commodity_price_ref( com ) != NULL ) {
+      char   c    = '0';
+      double pmod = commodity_price_mod( com );
+      if ( pmod > 1. )
          c = 'g';
-      else if ( com->price_mod < 1. )
+      else if ( pmod < 1. )
          c = 'r';
       l += scnprintf(
          &buf[l], sizeof( buf ) - l,
          _( "Price is based on #%c%.0f%%#0 of the price of #o%s#0." ), c,
-         com->price_mod * 100., _( com->price_ref ) );
+         pmod * 100., _( commodity_price_ref( com ) ) );
       window_modifyText( wid, "txtDRef", buf );
    } else
       window_modifyText( wid, "txtDRef", NULL );
@@ -494,8 +498,7 @@ static void commodity_buy( unsigned int wid, const char *str )
    q = pfleet_cargoAdd( com, q );
    if ( comi->buyable < INT_MAX )
       comi->buyable -= q;
-   com->lastPurchasePrice =
-      price; /* To show the player how much they paid for it */
+   commodity_set_last_purchase_price( com, price );
    price *= q;
    player_modCredits( -price );
 
@@ -548,7 +551,7 @@ static void commodity_sell( unsigned int wid, const char *str )
    player_modCredits( price );
    if ( pfleet_cargoOwned( com ) == 0 ) /* None left, set purchase price to
                                            zero, in case missions add cargo. */
-      com->lastPurchasePrice = 0;
+      commodity_set_last_purchase_price( com, 0 );
 
    /* Run hooks. */
    hparam[0].type        = HOOK_PARAM_COMMODITY;
