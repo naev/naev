@@ -102,6 +102,7 @@ local targets = {
          [0.8] = {
             jump.get("Peter", "Felzen"),
             jump.get("Felzen", "Sagittarius Prime"),
+            jump.get("Penn", "Capella"),
          },
       },
    },
