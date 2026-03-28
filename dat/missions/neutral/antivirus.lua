@@ -3,16 +3,24 @@
 <mission name="Antivirus">
  <unique />
  <chance>10</chance>
+ <done>Adblocker</done>
+ <chapter>[^0]</chapter>
  <cond>
-local scur = system.cur()
-local f = spob.cur():faction()
-local misn_test = require "misn_test"
-local maxsize = player.pilot():ship():size()
-for k,s in ipairs(player.ships()) do
-   size = s:size()
-   if size &gt; maxsize then maxsize = size end
-end
-if system.get("Straight Row"):jumpDist( scur ) &lt;= 8 and player.misnDone("Adblocker") and spob.cur():faction():tags():generic() and misn_test.reweight_active() and misn_test.mercenary() and maxsize &gt;= 6 and player.chapter() ~= "0" then return true end
+   local scur = spob.cur()
+   if system.get("Straight Row"):jumpDist( system.cur() ) &gt; 8 then
+      return false
+   elseif not scur:faction():tags():generic() then
+      return false
+   end
+   local maxsize = player.pilot():ship():size()
+   for k,s in ipairs(player.ships()) do
+      maxsize = math.max( maxsize, s.ship:size() )
+   end
+   if maxsize &lt; 6 then
+      return false
+   end
+   local misn_test = require "misn_test"
+   return misn_test.mercenary() and misn_test.reweight_active()
  </cond>
  <location>Bar</location>
 </mission>
