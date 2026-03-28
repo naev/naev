@@ -7,7 +7,7 @@
 local scur = system.cur()
 local f = spob.cur():faction()
 local misn_test = require "misn_test"
-local maxsize = 0
+local maxsize = player.pilot():ship():size()
 for k,s in ipairs(player.ships()) do 
    size = s:size()
    if size &gt; maxsize then maxsize = size end
