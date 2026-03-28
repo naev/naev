@@ -45,6 +45,10 @@ function land ()
    if poi.done() < 1 then
       return
    end
+   
+   if (player.misnActive("Point of Interest") or 0) >= 3 then
+      return
+   end
 
    npc_poidata = poi.generate()
    if not npc_poidata then -- failed to generate
