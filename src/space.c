@@ -392,7 +392,7 @@ int spob_addCommodity( Spob *p, Commodity *c )
          return 0;
    }
    array_grow( &p->commodities )          = c;
-   array_grow( &p->commodityPrice ).price = c->price;
+   array_grow( &p->commodityPrice ).price = commodity_price( c );
    return 0;
 }
 

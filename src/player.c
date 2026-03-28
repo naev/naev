@@ -3679,12 +3679,13 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
 
          if ( !found ) {
             WARN( _( "Found mission cargo '%s' without associated mission." ),
-                  pc->commodity->name );
+                  commodity_name( pc->commodity ) );
             WARN( _( "Please reload save game to remove the dead cargo." ) );
             continue;
          }
       } else if ( pc->quantity == 0 ) {
-         WARN( _( "Found cargo '%s' with 0 quantity." ), pc->commodity->name );
+         WARN( _( "Found cargo '%s' with 0 quantity." ),
+               commodity_name( pc->commodity ) );
          WARN( _( "Please reload save game to remove the dead cargo." ) );
          continue;
       }
@@ -3694,7 +3695,7 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
       xmlw_attr( writer, "quantity", "%d", pc->quantity );
       if ( pc->id > 0 )
          xmlw_attr( writer, "id", "%d", pc->id );
-      xmlw_str( writer, "%s", pc->commodity->name );
+      xmlw_str( writer, "%s", commodity_name_raw( pc->commodity ) );
 
       xmlw_endElem( writer ); /* commodity */
    }
@@ -4783,7 +4784,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
                if ( ( quantity == 0 ) && ( cid == 0 ) )
                   WARN( _( "Adding cargo '%s' to ship '%s' that is not a "
                            "mission cargo with quantity=0!" ),
-                        com->name, ship->name );
+                        commodity_name( com ), ship->name );
                pilot_cargoAddRaw( ship, com, quantity, cid );
             }
          } while ( xml_nextNode( cur ) );

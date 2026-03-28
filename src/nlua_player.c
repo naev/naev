@@ -2345,11 +2345,10 @@ static int playerL_fleetCargoList( lua_State *L )
       lua_newtable( L );
       return 1;
    }
-   Commodity *call = commodity_getAll();
-   int        n    = 0;
+   int n = 0;
    lua_newtable( L ); /* t */
-   for ( int i = 0; i < array_size( call ); i++ ) {
-      Commodity *c = &call[i];
+   for ( int i = 0; i < commodity_getAmount(); i++ ) {
+      Commodity *c = commodity_getIndex( i );
       int        q = pfleet_cargoOwned( c );
       if ( q <= 0 )
          continue;

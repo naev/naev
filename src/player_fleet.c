@@ -206,7 +206,7 @@ static int pc_cmp( const void *pa, const void *pb )
    else if ( ( pca->id == 0 ) && ( pcb->id > 0 ) )
       return +1;
    /* Just do price at the end. */
-   return pcb->commodity->price - pca->commodity->price;
+   return commodity_price( pcb->commodity ) - commodity_price( pca->commodity );
 }
 
 /**
@@ -254,7 +254,7 @@ static void pfleet_cargoRedistributeInternal( PilotCommodity *pc_add )
       if ( q != pc->quantity )
          WARN( _( "Failure to add cargo '%s' to player fleet. Only %d of %d "
                   "added." ),
-               pc->commodity->name, q, pc->quantity );
+               commodity_name_raw( pc->commodity ), q, pc->quantity );
 #endif /* DEBUGGING */
       (void)q;
    }

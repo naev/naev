@@ -117,6 +117,8 @@ typedef struct CommodityPrice_ {
 /*
  * Commodity stuff.
  */
+int        commodity_getAmount( void );
+Commodity *commodity_getIndex( int i );
 Commodity *commodity_getAll( void );
 Commodity *commodity_get( const char *name );
 Commodity *commodity_getW( const char *name );
@@ -132,6 +134,7 @@ const char       *commodity_description( const Commodity *com );
 const glTexture  *commodity_gfxStore( const Commodity *com );
 const glTexture  *commodity_gfxSpace( const Commodity *com );
 const FactionRef *commodity_illegalTo( const Commodity *com );
+credits_t         commodity_price( const Commodity *com );
 int               commodity_price_constant( const Commodity *com );
 int               commodity_always_can_sell( const Commodity *com );
 int               commodity_isTemp( const Commodity *com );

@@ -244,7 +244,7 @@ static const char *tech_getItemName( tech_item_t *item )
    case TECH_TYPE_SHIP:
       return item->u.ship->name;
    case TECH_TYPE_COMMODITY:
-      return item->u.comm->name;
+      return commodity_name_raw( item->u.comm );
    case TECH_TYPE_GROUP:
       return tech_groups[item->u.grp].name;
    case TECH_TYPE_GROUP_POINTER:

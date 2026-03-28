@@ -134,6 +134,16 @@ void tonnes2str( char *str, int tonnes )
              tonnes );
 }
 
+int commodity_getAmount( void )
+{
+   return array_size( commodity_stack );
+}
+
+Commodity *commodity_getIndex( int i )
+{
+   return &commodity_stack[i];
+}
+
 /**
  * @brief Gets all the commodities.
  */
@@ -465,6 +475,11 @@ const glTexture *commodity_gfxStore( const Commodity *com )
 const FactionRef *commodity_illegalTo( const Commodity *com )
 {
    return com->illegalto;
+}
+
+credits_t commodity_price( const Commodity *com )
+{
+   return com->price;
 }
 
 int commodity_price_constant( const Commodity *com )
