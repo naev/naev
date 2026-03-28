@@ -477,9 +477,9 @@ function update_cargo()
    cargo = {}
    for k,v in ipairs(cargol) do
       if v.q == 0 then
-         cargo[k] = _(v.name)
+         cargo[k] = v.c:name()
       else
-         cargo[k] = fmt.tonnes_short(v.q) .. " " .. _(v.name)
+         cargo[k] = fmt.tonnes_short(v.q) .. " " .. v.c:name()
       end
       if v.m then
          cargo[k] = cargo[k] .. "*"
