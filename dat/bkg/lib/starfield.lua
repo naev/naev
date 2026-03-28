@@ -73,23 +73,24 @@ local function star_add( added, num_added )
    return num
 end
 
-local function add_local_stars ()
-   -- Chose number to generate
-   local n
-   local r = prng:random()
-   if r > 0.97 then
-      n = 3
-      gfx.lightIntensity( 0.18 ) -- sun gives 3*4*0.18 =  2.16
-   elseif r > 0.94 then
-      n = 2
-      gfx.lightIntensity( 0.25 ) -- sun gives 2*4*0.25 = 2
-   elseif r > 0.1 then
-      n = 1
-      gfx.lightIntensity( 0.5 ) -- sun gives 1*4*0.5 = 2
-      gfx.lightAmbient( 0.05 )
-   else
-      gfx.lightAmbient( 0.1 ) -- Default to some weak ambient light
+local function add_local_stars ( n )
+   if not n then
+      -- Chose number to generate
+      local r = prng:random()
+      if r > 0.996 then
+         n = 4
+      elseif r > 0.97 then
+         n = 3
+      elseif r > 0.94 then
+         n = 2
+      elseif r > 0.1 then
+         n = 1
+      else
+         n = 0
+      end
    end
+   gfx.lightIntensity( 0.5 / n )
+   gfx.lightAmbient( math.max(0, 0.1 - n * 0.05) )
 
    -- If there is an inhabited planet we'll need at least one star
    if not n then
@@ -162,7 +163,7 @@ function starfield.init( params )
    lg.setCanvas( oldcanvas )
 
    if not params.nolocalstars then
-      add_local_stars()
+      add_local_stars( params.num_stars )
    end
 end
 

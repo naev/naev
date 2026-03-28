@@ -20,6 +20,11 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="Capella">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Teller">
    <pos x="-1980.999692" y="9661.404488"/>
    <hide>0.400000</hide>

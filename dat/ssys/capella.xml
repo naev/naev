@@ -1,0 +1,66 @@
+<ssys name="Capella">
+ <general>
+  <background>capella</background>
+  <features>#yHaunted#0</features>
+  <radius>9400.000000</radius>
+  <spacedust>300</spacedust>
+  <interference>53.140000</interference>
+ </general>
+ <pos x="1070.000000" y="-127.000000"/>
+ <spobs>
+  <spob_virtual>Pirate All Unpresence</spob_virtual>
+ </spobs>
+ <jumps>
+  <jump target="NGC-15670">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Penn">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
+ </jumps>
+ <asteroids>
+  <asteroid>
+   <group>Vixilium</group>
+   <group>typeB-standard</group>
+   <radius>8960.000000</radius>
+   <pos x="0.000000" y="0.000000"/>
+   <density>1.880000</density>
+   <maxspeed>5.300000</maxspeed>
+  </asteroid>
+  <exclusion>
+   <radius>4750.000000</radius>
+   <pos x="-3205.777914" y="-9434.483570"/>
+  </exclusion>
+  <exclusion>
+   <radius>4580.000000</radius>
+   <pos x="9549.974710" y="2217.381122"/>
+  </exclusion>
+  <exclusion>
+   <radius>4330.000000</radius>
+   <pos x="-6454.543314" y="7092.056291"/>
+  </exclusion>
+  <exclusion>
+   <radius>4100.000000</radius>
+   <pos x="0.000000" y="0.000000"/>
+  </exclusion>
+  <exclusion>
+   <radius>8860.000000</radius>
+   <pos x="9930.358482" y="-10408.913964"/>
+  </exclusion>
+  <exclusion>
+   <radius>9270.000000</radius>
+   <pos x="-14546.001047" y="-2483.560840"/>
+  </exclusion>
+  <exclusion>
+   <radius>8600.000000</radius>
+   <pos x="3768.330488" y="13422.556018"/>
+  </exclusion>
+ </asteroids>
+ <tags>
+  <tag>noderelicts</tag>
+  <tag>spoiler</tag>
+ </tags>
+</ssys>
