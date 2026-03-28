@@ -12,7 +12,7 @@ for k,s in ipairs(player.ships()) do
    size = s:size()
    if size &gt; maxsize then maxsize = size end
 end
-if system.get("Straight Row"):jumpDist( scur ) &lt;= 8 and player.misnDone("Adblocker") and spob.cur():faction():tags():generic() and misn_test.reweight_active() and misn_test.mercenary() and maxsize &gt;= 6 and player.chapter() ~= 0 then return true end
+if system.get("Straight Row"):jumpDist( scur ) &lt;= 8 and player.misnDone("Adblocker") and spob.cur():faction():tags():generic() and misn_test.reweight_active() and misn_test.mercenary() and maxsize &gt;= 6 and player.chapter() ~= "0" then return true end
  </cond>
  <location>Bar</location>
 </mission>
