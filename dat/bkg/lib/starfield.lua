@@ -89,8 +89,12 @@ local function add_local_stars ( n )
          n = 0
       end
    end
-   gfx.lightIntensity( 0.5 / n )
-   gfx.lightAmbient( math.max(0, 0.1 - n * 0.05) )
+   if n ~= 0 then
+      gfx.lightIntensity( 0.5 / n )
+   else
+      gfx.lightIntensity( 0 )
+   end
+   gfx.lightAmbient( math.max(0, 0.15 - n * 0.05) )
 
    -- If there is an inhabited planet we'll need at least one star
    if not n then
