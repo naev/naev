@@ -449,7 +449,7 @@ function hail( target )
       vnp(fmt.f( quotes.cold[m._seekndestroy_cold], {plt=mmem.name}))
       lvn.func( function ()
          ccomm.customCommRemove( lbl )
-         misn.finish(false)
+         mmem._finish = true
       end )
       lvn.jump("menu")
 
@@ -485,7 +485,7 @@ function hail( target )
 
       lvn.label("seekndestroy_tells")
       lvn.func( function ()
-         var.push("seekndestroy_nextsys",true)
+         mmem._nextsys = true
          target:setHostile( false )
       end )
       vnp(fmt.f( quotes.clue[m._seekndestroy_clue],
@@ -525,7 +525,7 @@ function hail( target )
       vnp(_([["I know the pilot you're looking for."]]))
       vnp(fmt.f( quotes.clue[rnd.rnd(1,#quotes.clue)], {plt=mmem.name, sys=nextsys}))
       lvn.func( function ()
-         var.push("seekndestroy_nextsys",true)
+         mmem._nextsys = true
          target:setHostile( false )
          target:comm(comms.thank[rnd.rnd(1,#comms.thank)])
       end )
@@ -556,7 +556,7 @@ function hail( target )
       lvn.label("seekndestroy_scared")
       vnp(fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)], {plt=mmem.name, sys=nextsys}))
       lvn.func( function ()
-         var.push("seekndestroy_nextsys",true)
+         mmem._nextsys = true
          target:control()
          target:runaway(player.pilot())
          player.commClose()
@@ -571,7 +571,7 @@ function hail( target )
          if mmem.attack then
             hook.rm(mmem.attack)
          end
-         var.push("seekndestroy_set_attack_hook",true)
+         mmem._attack_hook = true
          player.commClose()
       end )
       lvn.done()
@@ -587,24 +587,27 @@ function hail( target )
       lvn.label( "seekndestroy_intimidating" )
       vnp( fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)], {plt=mmem.name, sys=nextsys} ) )
       lvn.func( function ()
-         var.push("seekndestroy_nextsys",true)
+         mmem._nextsys = true
          target:control()
          target:runaway(player.pilot())
       end )
-      vn.jump("menu")
+      lvn.jump("menu")
    end, lbl )
 
-   hook.timer(-1, "board_done", target)
+   hook.timer(0, "hail_done", target)
 end
 
-function board_done ( target )
-   if var.peek("seekndestroy_nextsys") then
-      next_sys()
-      var.pop("seekndestroy_nextsys")
+function hail_done ( target )
+   if mem._finish then
+      misn.finish(false)
    end
-   if var.peek("seekndestroy_set_attack_hook") then
+   if mem._nextsys then
+      next_sys()
+      mem._nextsys = nil
+   end
+   if mem._attack_hook then
       mem.attack = hook.pilot( target, "attacked", "clue_attacked" )
-      var.pop("seekndestroy_set_attack_hook")
+      mem._attack_hook = nil
    end
 end
 
