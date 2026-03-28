@@ -45,7 +45,7 @@ function land ()
    if poi.done() < 1 then
       return
    end
-   
+
    if (player.misnActive("Point of Interest") or 0) >= 3 then
       return
    end

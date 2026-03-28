@@ -135,6 +135,7 @@ dat/map_decorator/proteron.xml
 dat/map_decorator/sirius.xml
 dat/map_decorator/soromid.xml
 dat/map_decorator/zalek.xml
+dat/outfits/accessory/ad_usb.xml
 dat/outfits/accessory/air_freshener.xml
 dat/outfits/accessory/black_cat_doll.xml
 dat/outfits/accessory/broken_nebular_shielding_prototype.xml
@@ -3278,6 +3279,7 @@ dat/missions/minerva/pirate5.lua
 dat/missions/minerva/pirate6.lua
 dat/missions/neutral/adblocker.lua
 dat/missions/neutral/animaltransport.lua
+dat/missions/neutral/antivirus.lua
 dat/missions/neutral/antlejos/ant01.lua
 dat/missions/neutral/antlejos/ant02.lua
 dat/missions/neutral/antlejos/ant03.lua

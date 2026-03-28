@@ -8,7 +8,7 @@ local scur = system.cur()
 local f = spob.cur():faction()
 local misn_test = require "misn_test"
 local maxsize = player.pilot():ship():size()
-for k,s in ipairs(player.ships()) do 
+for k,s in ipairs(player.ships()) do
    size = s:size()
    if size &gt; maxsize then maxsize = size end
 end
@@ -63,7 +63,7 @@ function accept()
    local man = vn.newCharacter(mission.npc.name, { image = mem.npc_image } )
    vn.transition()
    man(fmt.f(_([["On behalf of the {spob} government, I have been investigating some of the advertiser ships in this sector of space. You see, sometimes they behave all too erratically, sending hundreds of advertisements a hectostu, and when we board one of them, the captain is none the wiser!"]]), { spob = spob.cur() }))
-   man(fmt.f(_([["Someone has beem planting malware on those ships to fulfill dozens of advertising contracts simultaneously and funnel all of the profits to themselves. Too bad for them - we have managed to track the head of the operation down to the {sys} system. Several of our own agent barely got out of there alive, so we need a more than capable pilot to take the bandit down. Pay is {creds}. Willing to give it a go?"]]), { sys = mem.fight_system, creds = fmt.credits(mission.reward) }))
+   man(fmt.f(_([["Someone has beem planting malware on those ships to fulfil dozens of advertising contracts simultaneously and funnel all of the profits to themselves. Too bad for them - we have managed to track the head of the operation down to the {sys} system. Several of our own agent barely got out of there alive, so we need a more than capable pilot to take the bandit down. Pay is {creds}. Willing to give it a go?"]]), { sys = mem.fight_system, creds = fmt.credits(mission.reward) }))
    vn.menu {
       { _([[Accept]]), "accept" },
       { _([[Refuse]]), "refuse" },
@@ -139,9 +139,9 @@ function enter()
             hull = "Red Star Large Cargo Hull",
             hull_secondary = "Red Star Large Cargo Hull",
          },
-      } 
+      }
       equipopt.zalek( boss, params )
-      
+
       mem.hk_advert_spam = hook.timer(1, "timer_advert_spam")
       mem.hk_ew_attack_start = hook.timer(60, "timer_ew_attack_start")
       hook.pilot(boss, "exploded", "on_target_stopped")
@@ -150,11 +150,9 @@ function enter()
 end
 
 -- Generate ads if not available
-local adlist
-if not adlist then
-      adlist = rnd.permutation( ads.system_ads(true) )
-end
+local adlist = rnd.permutation( ads.system_ads(true) )
 
+local minions
 local called_minions = false
 function timer_advert_spam()
    if not boss:exists() then return end
@@ -167,7 +165,7 @@ function timer_advert_spam()
       boss:broadcast(msg, true)
       for k,v in ipairs(boss:followers()) do
          if rnd.rnd() < 0.25 then v:rename(adlist[mem.ad]) end -- Rename all the drones too for the fun of it
-         if rnd.rnd() < 0.25 then 
+         if rnd.rnd() < 0.25 then
             local m = v:memory()
             m.comm_greet = msg
             m.bribe_no = msg
@@ -192,7 +190,7 @@ local victims = {}
 
 function timer_ew_attack_start()
    if not boss:exists() or boss:disabled() then return end
-   
+
    mem.hk_ew_attack_end = hook.timer(11, "timer_ew_attack_end")
    for k,v in ipairs(boss:getEnemies(nil, nil, nil, nil, true)) do
       v:intrinsicSet("ew_detect", -100, true)
@@ -207,7 +205,7 @@ function timer_ew_attack_end()
    if boss:exists() and not boss:disabled() then
       mem.hk_ew_attack_start = hook.timer(rnd.rnd(31, 34), "timer_ew_attack_start")
    end
-   
+
    for k,v in ipairs(victims) do
       if v:exists() then v:intrinsicSet("ew_detect", 0, true) end
    end
@@ -252,15 +250,15 @@ function board_puppet( pilot )
       vn.na(_([[You rush to investigate the interior. The first thing you see is a few partway-decomposed bodies scattered by the airlock. Was this the original crew of the ship? It seems as the airlock and life support systems have been nonfunctional for a considerable amount of time.]]))
       vn.appear( sai, tut.shipai.transition )
       sai(_([["I suppose you would be curious about this ship's logs, but I'm wary of connecting to the systems - most likely, it's under complete control of the malware that investigator was talking about, and who knows what it can do?"]]))
-      
+
       vn.menu {
       { _([[Try to connect]]), "uhoh" },
       { _([[Do not]]), "uhoh" },
       }
-      
+
       vn.label("uhoh")
       vn.disappear( sai, tut.shipai.transition )
-      vn.na(_([[As you're about to make a decision, the screens in the cockpit flash a warning - "SECURITY SELF-DESTRUCT INITIATED". Welp, that's your cue to get out of here. Better luck next time?]]))
+      vn.na(_([[As you're about to make a decision, the screens in the cockpit flash a warning - "SECURITY SELF-DESTRUCT INITIATED". Welp, that's your cue to get out of here. Better luck next time?]])) -- codespell:ignore welp
       vn.na(_([[Rushing out the compromised ship, you spot a strange device connected to one of the terminals, and curiosity gets the better of you. This must contain the malicious payload - could it be worth studying? You grab it as you run back to your ship.]]))
       vn.func( function ()
          player.outfitAdd( rwd )
