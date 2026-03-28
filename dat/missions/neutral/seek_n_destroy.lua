@@ -5,7 +5,7 @@
  <cond>
    require("misn_test").mercenary()
  </cond>
- <chance>475</chance>
+ <chance>435</chance>
  <location>Computer</location>
  <faction>Dvaered</faction>
  <faction>Empire</faction>
@@ -141,7 +141,7 @@ function create ()
       misn.finish( false )
    end
 
-   local systems = lmisn.getSysAtDistance( system.cur(), 1, 5,
+   local systems = lmisn.getSysAtDistance( system.cur(), 1, 4,
       function(s)
          local pres = s:presences()
          -- Target faction must have presence in system
@@ -151,6 +151,10 @@ function create ()
          end
          -- Need some independent standing so the player can ask for hints and such
          if (pres["Independent"] or 0) <= 0 then
+            return false
+         end
+         -- Try to get only claimable systems, so it doesn't fail later
+         if not naev.claimTest( s, true ) then
             return false
          end
          return true
@@ -165,21 +169,11 @@ function create ()
       -- Not enough systems
       misn.finish( false )
    end
-
-   mem.mysys[1] = systems[ rnd.rnd( 1, #systems ) ]
-
-   -- There will probably be lot of failure in this loop.
-   -- Just increase the mission probability to compensate.
-   for i = 2, mem.nbsys do
-      local thesys = systems[ rnd.rnd( 1, #systems ) ]
-      -- Don't reuse the previous system
-      if thesys == mem.mysys[i-1] then
-         misn.finish( false )
-      end
-      mem.mysys[i] = thesys
+   local rndsys = rnd.permutation( systems )
+   for i = 1, mem.nbsys do
+      table.insert( mem.mysys, rndsys[i] )
    end
-
-   if not misn.claim(mem.mysys) then
+   if not misn.claim( mem.mysys, true ) then
       misn.finish(false)
    end
 
