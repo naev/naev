@@ -5,7 +5,7 @@
  <cond>
    require("misn_test").mercenary()
  </cond>
- <chance>475</chance>
+ <chance>435</chance>
  <location>Computer</location>
  <faction>Dvaered</faction>
  <faction>Empire</faction>
@@ -137,12 +137,11 @@ function create ()
       end
    end
    mem.target_faction = fact[rnd.rnd(1,#fact)]
-
    if mem.target_faction == nil then
       misn.finish( false )
    end
 
-   local systems = lmisn.getSysAtDistance( system.cur(), 1, 5,
+   local systems = lmisn.getSysAtDistance( system.cur(), 1, 4,
       function(s)
          local pres = s:presences()
          -- Target faction must have presence in system
@@ -152,6 +151,10 @@ function create ()
          end
          -- Need some independent standing so the player can ask for hints and such
          if (pres["Independent"] or 0) <= 0 then
+            return false
+         end
+         -- Try to get only claimable systems, so it doesn't fail later
+         if not naev.claimTest( s, true ) then
             return false
          end
          return true
@@ -166,30 +169,20 @@ function create ()
       -- Not enough systems
       misn.finish( false )
    end
-
-   mem.mysys[1] = systems[ rnd.rnd( 1, #systems ) ]
-
-   -- There will probably be lot of failure in this loop.
-   -- Just increase the mission probability to compensate.
-   for i = 2, mem.nbsys do
-      local thesys = systems[ rnd.rnd( 1, #systems ) ]
-      -- Don't reuse the previous system
-      if thesys == mem.mysys[i-1] then
-         misn.finish( false )
-      end
-      mem.mysys[i] = thesys
+   local rndsys = rnd.permutation( systems )
+   for i = 1, mem.nbsys do
+      table.insert( mem.mysys, rndsys[i] )
    end
-
-   if not misn.claim(mem.mysys) then
+   if not misn.claim( mem.mysys, true ) then
       misn.finish(false)
    end
 
    local ships
    if mem.target_faction == faction.get("FLF") then
       mem.name = pilotname.generic()
-      ships = {"Lancelot", "Vendetta", "Pacifier"}
+      ships = {"Tristan", "Vendetta", "Pacifier", "Bedivere"}
       mem.aship = "Pacifier"
-      mem.bship = "Lancelot"
+      mem.bship = "Tristan"
    else -- default Pirate
       mem.name = pilotname.pirate()
       ships = {"Pirate Shark", "Pirate Vendetta", "Pirate Admonisher"}
@@ -244,6 +237,10 @@ function accept ()
    misn.osdCreate( _("Seek and Destroy"), mem.osd_msg )
 end
 
+local function dyn_faction ()
+   return faction.dynAdd( mem.target_faction, "seek_n_destroy_"..mem.target_faction:nameRaw(), mem.target_faction:name(), {clear_enemies = true, clear_allies = true, ai = "baddie" } )
+end
+
 function enter ()
    hailed = {}
 
@@ -286,7 +283,7 @@ function enter ()
          pilot.toggleSpawn( false )
          pilotai.clear()
 
-         target_ship = pilot.add( mem.tgtship, mem.target_faction, pos, mem.name )
+         target_ship = pilot.add( mem.tgtship, dyn_faction(), pos, mem.name )
          target_ship:setHilight( true )
          target_ship:setVisplayer()
          target_ship:setHostile()
@@ -297,14 +294,6 @@ function enter ()
          mem.pir_jump_hook = hook.pilot( target_ship, "jump", "target_flee" )
          mem.pir_land_hook = hook.pilot( target_ship, "land", "target_flee" )
          mem.jumpout = hook.jumpout( "player_flee" )
-
-         -- If the target is weaker, runaway
-         local pstat = player.pilot():stats()
-         local tstat = target_ship:stats()
-         if ( (1.1*(pstat.armour + pstat.shield)) > (tstat.armour + tstat.shield) ) then
-            target_ship:control()
-            target_ship:runaway(player.pilot())
-         end
       end
    end
    mem.last_sys = system.cur()
@@ -314,11 +303,12 @@ end
 function trigger_ambush()
    local jp = jump.get( system.cur(), mem.last_sys ):pos()
 
+   local fct = dyn_faction()
    local leader
    ambush = {}
    for k,s in ipairs{ mem.aship, mem.bship, mem.bship } do
       local pos = jp + vec2.newP( 2000+2000*rnd.rnd(), rnd.angle() )
-      local p = pilot.add( mem.aship, mem.target_faction, pos )
+      local p = pilot.add( mem.aship, fct, pos )
 
       p:setHostile(true)
       p:memory().capturable = true
@@ -449,7 +439,7 @@ function hail( target )
       vnp(fmt.f( quotes.cold[m._seekndestroy_cold], {plt=mmem.name}))
       lvn.func( function ()
          ccomm.customCommRemove( lbl )
-         misn.finish(false)
+         mmem._finish = true
       end )
       lvn.jump("menu")
 
@@ -485,7 +475,7 @@ function hail( target )
 
       lvn.label("seekndestroy_tells")
       lvn.func( function ()
-         var.push("seekndestroy_nextsys",true)
+         mmem._nextsys = true
          target:setHostile( false )
       end )
       vnp(fmt.f( quotes.clue[m._seekndestroy_clue],
@@ -525,7 +515,7 @@ function hail( target )
       vnp(_([["I know the pilot you're looking for."]]))
       vnp(fmt.f( quotes.clue[rnd.rnd(1,#quotes.clue)], {plt=mmem.name, sys=nextsys}))
       lvn.func( function ()
-         var.push("seekndestroy_nextsys",true)
+         mmem._nextsys = true
          target:setHostile( false )
          target:comm(comms.thank[rnd.rnd(1,#comms.thank)])
       end )
@@ -556,7 +546,7 @@ function hail( target )
       lvn.label("seekndestroy_scared")
       vnp(fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)], {plt=mmem.name, sys=nextsys}))
       lvn.func( function ()
-         var.push("seekndestroy_nextsys",true)
+         mmem._nextsys = true
          target:control()
          target:runaway(player.pilot())
          player.commClose()
@@ -571,7 +561,7 @@ function hail( target )
          if mmem.attack then
             hook.rm(mmem.attack)
          end
-         var.push("seekndestroy_set_attack_hook",true)
+         mmem._attack_hook = true
          player.commClose()
       end )
       lvn.done()
@@ -587,24 +577,27 @@ function hail( target )
       lvn.label( "seekndestroy_intimidating" )
       vnp( fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)], {plt=mmem.name, sys=nextsys} ) )
       lvn.func( function ()
-         var.push("seekndestroy_nextsys",true)
+         mmem._nextsys = true
          target:control()
          target:runaway(player.pilot())
       end )
-      vn.jump("menu")
+      lvn.jump("menu")
    end, lbl )
 
-   hook.timer(-1, "board_done", target)
+   hook.timer(0, "hail_done", target)
 end
 
-function board_done ( target )
-   if var.peek("seekndestroy_nextsys") then
-      next_sys()
-      var.pop("seekndestroy_nextsys")
+function hail_done ( target )
+   if mem._finish then
+      misn.finish(false)
    end
-   if var.peek("seekndestroy_set_attack_hook") then
+   if mem._nextsys then
+      next_sys()
+      mem._nextsys = nil
+   end
+   if mem._attack_hook then
       mem.attack = hook.pilot( target, "attacked", "clue_attacked" )
-      var.pop("seekndestroy_set_attack_hook")
+      mem._attack_hook = nil
    end
 end
 
@@ -614,7 +607,9 @@ function clue_attacked( p, attacker )
    if attacker and attacker:withPlayer() and p:health() < 100 then
       p:control()
       p:runaway(player.pilot())
-      vntk.msg( _("You're intimidating!"), fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]} ) )
+      vntk.msg( _("You're intimidating!"),
+         fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)],
+            {plt=mem.name, sys=mem.mysys[mem.cursys+1]} ) )
       next_sys()
       hook.rm(mem.attack)
    end

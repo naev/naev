@@ -54,7 +54,7 @@ local targets = {
    },
    {
       centre = system.get("Feye"),
-      var = "mapmaker_sirius",
+      var = "mapmaker_soromid",
       rewards = {
          [0.4] = {
             jump.get("Feye", "Uridhrion"),
