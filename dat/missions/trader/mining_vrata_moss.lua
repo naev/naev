@@ -159,7 +159,7 @@ function dropoff ()
    vn.na(fmt.f(_([[As you approach {dspb}, you're directed to an incineration pit and told to dump any excess moss inside. Upon landing, a team of Soromid researchers takes what remains to their facility, while your cargo holds are meticulously scrubbed clean of any remains of the bothersome green gunk. Finally, you're rid of the moss, and hopefully for good.]]),
       { dspb=dspb }))
    vn.func(function()
-      lmisn.sfxMoney()
+      lmisn.sfxVictory()
       player.pay(reward)
       player.pilot():cargoRm(mem.c, player.pilot():cargoHas(mem.c)) -- Why does it not default to removing all?
    end)
