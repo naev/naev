@@ -186,9 +186,9 @@ function create ()
    local ships
    if mem.target_faction == faction.get("FLF") then
       mem.name = pilotname.generic()
-      ships = {"Lancelot", "Vendetta", "Pacifier"}
+      ships = {"Tristan", "Vendetta", "Pacifier", "Bedivere"}
       mem.aship = "Pacifier"
-      mem.bship = "Lancelot"
+      mem.bship = "Tristan"
    else -- default Pirate
       mem.name = pilotname.pirate()
       ships = {"Pirate Shark", "Pirate Vendetta", "Pirate Admonisher"}
@@ -243,6 +243,10 @@ function accept ()
    misn.osdCreate( _("Seek and Destroy"), mem.osd_msg )
 end
 
+local function dyn_faction ()
+   return faction.dynAdd( mem.target_faction, "seek_n_destroy_"..mem.target_faction:nameRaw(), mem.target_faction:name(), {clear_enemies = true, clear_allies = true, ai = "baddie" } )
+end
+
 function enter ()
    hailed = {}
 
@@ -285,7 +289,7 @@ function enter ()
          pilot.toggleSpawn( false )
          pilotai.clear()
 
-         target_ship = pilot.add( mem.tgtship, mem.target_faction, pos, mem.name )
+         target_ship = pilot.add( mem.tgtship, dyn_faction(), pos, mem.name )
          target_ship:setHilight( true )
          target_ship:setVisplayer()
          target_ship:setHostile()
@@ -305,11 +309,12 @@ end
 function trigger_ambush()
    local jp = jump.get( system.cur(), mem.last_sys ):pos()
 
+   local fct = dyn_faction()
    local leader
    ambush = {}
    for k,s in ipairs{ mem.aship, mem.bship, mem.bship } do
       local pos = jp + vec2.newP( 2000+2000*rnd.rnd(), rnd.angle() )
-      local p = pilot.add( mem.aship, mem.target_faction, pos )
+      local p = pilot.add( mem.aship, fct, pos )
 
       p:setHostile(true)
       p:memory().capturable = true
