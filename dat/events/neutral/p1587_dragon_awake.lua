@@ -38,7 +38,7 @@ function spawn_dragon()
    dragon:intrinsicSet( "armour_mod", 30 )
    dragon:intrinsicSet( "shield_mod", 30 )
    dragon:intrinsicSet( "absorb", 20 ) -- The scales have 20 absorb over S&K war plating
-   dragon:intrinsicSet( "cooldown_mod", -100) -- Keep your distance if you wanna live
+   dragon:intrinsicSet( "cooldown_mod", -75) -- Keep your distance if you wanna live
    dragon:intrinsicSet( "mass_mod", 35)
    dragon:intrinsicSet( "jam_chance", 74 ) -- I assume some of the trinkets it's covered in have a scrambling/jamming effect
    dragon:intrinsicSet( "weapon_firerate", -60 ) -- To make up for the cooldown_mod
