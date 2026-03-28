@@ -1958,7 +1958,7 @@ function vn.run()
          end
       end
    end
-   love._vn = true
+   love._vn = vn
    love._vn_keyrepeat_check = true
    love.exec( 'scripts/vn' )
    love._vn = nil

@@ -614,7 +614,9 @@ function clue_attacked( p, attacker )
    if attacker and attacker:withPlayer() and p:health() < 100 then
       p:control()
       p:runaway(player.pilot())
-      vntk.msg( _("You're intimidating!"), fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]} ) )
+      vntk.msg( _("You're intimidating!"),
+         fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)],
+            {plt=mem.name, sys=mem.mysys[mem.cursys+1]} ) )
       next_sys()
       hook.rm(mem.attack)
    end
