@@ -718,7 +718,7 @@ static int asttype_parse( AsteroidType *at, const char *file )
             if ( xml_isNode( cur, "name" ) ) {
                const char *str   = xml_get( cur );
                material.material = commodity_get( str );
-               if ( material.material == NULL )
+               if ( material.material == COMMODITY_NULL )
                   WARN( "Asteroid Type '%s' has invalid Commodity '%s'",
                         at->name, str );
                else if ( commodity_gfxSpace( material.material ) == NULL )
@@ -955,7 +955,7 @@ static void asteroid_renderSingle( const Asteroid *a )
    /*
    for (int i=0; i<array_size(at->material); i++) {
       AsteroidReward *mat = &at->material[i];
-      Commodity *com = mat->material;
+      CommodityRef com = mat->material;
       if (com->gfx_space!=NULL)
          gl_renderSprite( com->gfx_space, a->pos.x, a->pos.y-10.*i, 0, 0, NULL
    ); snprintf(c, sizeof(c), "x%i", mat->quantity); gl_printRaw( &gl_smallFont,
@@ -1063,7 +1063,7 @@ void asteroids_free( void )
    gatherable_free();
 }
 
-int asteroids_hasCommodity( const AsteroidAnchor *ast, const Commodity *com )
+int asteroids_hasCommodity( const AsteroidAnchor *ast, CommodityRef com )
 {
    for ( int i = 0; i < array_size( ast->groups ); i++ ) {
       const AsteroidTypeGroup *g = ast->groups[i];

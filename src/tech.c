@@ -51,8 +51,8 @@ typedef struct tech_item_s {
       void         *ptr; /**< Pointer when needing to do indifferent voodoo. */
       const Outfit *outfit;       /**< Outfit pointer. */
       const Ship   *ship;         /**< Ship pointer. */
-      const Commodity    *comm;   /**< Commodity pointer. */
-      int                 grp;    /**< Identifier of another tech group. */
+      CommodityRef  comm;         /**< Commodity pointer. */
+      int           grp;          /**< Identifier of another tech group. */
       const tech_group_t *grpptr; /**< Pointer to another tech group. */
    } u;                           /**< Data union. */
 } tech_item_t;
@@ -458,11 +458,11 @@ static tech_item_t *tech_addItemShip( tech_group_t *grp, const char *name )
 static tech_item_t *tech_addItemCommodity( tech_group_t *grp, const char *name )
 {
    tech_item_t *item;
-   Commodity   *c;
+   CommodityRef c;
 
    /* Get the outfit. */
    c = commodity_getW( name );
-   if ( c == NULL )
+   if ( c == COMMODITY_NULL )
       return NULL;
 
    /* Load the new item. */
@@ -830,8 +830,7 @@ int tech_hasOutfit( const tech_group_t *tech, const Outfit *outfit, int search )
  *    @param search Whether or not this for searching.
  *    @return 1 if the commodity is contained, 0 otherwise.
  */
-int tech_hasCommodity( const tech_group_t *tech, const Commodity *comm,
-                       int search )
+int tech_hasCommodity( const tech_group_t *tech, CommodityRef comm, int search )
 {
    const tech_item_t item = {
       .type   = TECH_TYPE_COMMODITY,
@@ -995,8 +994,8 @@ Ship **tech_getShipArray( tech_group_t **tech, int num, int search )
  *    @param search Whether or not this for searching.
  *    @return Array (array.h): The commodities found.
  */
-Commodity **tech_getCommodity( const tech_group_t *tech, double **price,
-                               int search )
+CommodityRef *tech_getCommodity( const tech_group_t *tech, double **price,
+                                 int search )
 {
    if ( price != NULL )
       *price = NULL;
@@ -1006,7 +1005,7 @@ Commodity **tech_getCommodity( const tech_group_t *tech, double **price,
    double *pricelist = ( price == NULL ) ? NULL : array_create( double );
 
    /* Get the commodities. */
-   Commodity **c = (Commodity **)tech_addGroupItemPrice(
+   CommodityRef *c = (CommodityRef *)tech_addGroupItemPrice(
       NULL, ( price == NULL ) ? NULL : &pricelist, TECH_TYPE_COMMODITY, tech,
       search );
 
@@ -1014,7 +1013,8 @@ Commodity **tech_getCommodity( const tech_group_t *tech, double **price,
    if ( ( c != NULL ) &&
         ( price == NULL ) ) /* Don't sort when asking for price,
                                or pricelist desyncs... */
-      qsort( c, array_size( c ), sizeof( Commodity * ), commodity_compareTech );
+      qsort( c, array_size( c ), sizeof( CommodityRef ),
+             commodity_compareTech );
 
    if ( price != NULL )
       *price = pricelist;

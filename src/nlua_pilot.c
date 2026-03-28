@@ -5210,9 +5210,9 @@ static int pilotL_cargoFree( lua_State *L )
  */
 static int pilotL_cargoHas( lua_State *L )
 {
-   const Pilot     *p        = luaL_validpilot( L, 1 );
-   const Commodity *cargo    = luaL_validcommodity( L, 2 );
-   int              quantity = pilot_cargoOwned( p, cargo );
+   const Pilot *p        = luaL_validpilot( L, 1 );
+   CommodityRef cargo    = luaL_validcommodity( L, 2 );
+   int          quantity = pilot_cargoOwned( p, cargo );
    lua_pushnumber( L, quantity );
    return 1;
 }
@@ -5233,9 +5233,9 @@ static int pilotL_cargoHas( lua_State *L )
 static int pilotL_cargoAdd( lua_State *L )
 {
    /* Parse parameters. */
-   Pilot           *p        = luaL_validpilot( L, 1 );
-   const Commodity *cargo    = luaL_validcommodity( L, 2 );
-   int              quantity = luaL_checknumber( L, 3 );
+   Pilot       *p        = luaL_validpilot( L, 1 );
+   CommodityRef cargo    = luaL_validcommodity( L, 2 );
+   int          quantity = luaL_checknumber( L, 3 );
 
    if ( quantity < 0 )
       return NLUA_ERROR( L, _( "Quantity must be positive for pilot.cargoAdd "
@@ -5249,9 +5249,9 @@ static int pilotL_cargoAdd( lua_State *L )
 
 static int pilotL_cargoRmHelper( lua_State *L, int jet )
 {
-   Pilot     *p;
-   int        quantity;
-   Commodity *cargo = NULL;
+   Pilot       *p;
+   int          quantity;
+   CommodityRef cargo = COMMODITY_NULL;
 
    /* Parse parameters. */
    p = luaL_validpilot( L, 1 );
@@ -5351,9 +5351,9 @@ static int pilotL_cargoList( lua_State *L )
       /* Represents the cargo. */
       lua_newtable( L ); /* t, t */
 
-      lua_pushstring( L, "c" );                           /* t, t, i */
-      lua_pushcommodity( L, (Commodity *)pc->commodity ); /* t, t, i, s */
-      lua_rawset( L, -3 );                                /* t, t */
+      lua_pushstring( L, "c" );              /* t, t, i */
+      lua_pushcommodity( L, pc->commodity ); /* t, t, i, s */
+      lua_rawset( L, -3 );                   /* t, t */
 
       lua_pushstring( L, "q" );          /* t, t, i */
       lua_pushnumber( L, pc->quantity ); /* t, t, i, s */

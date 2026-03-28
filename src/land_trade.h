@@ -3,8 +3,6 @@
  */
 #pragma once
 
-#include "commodity.h"
-
 /*
  * Helper functions.
  */

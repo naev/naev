@@ -101,9 +101,9 @@ int nlua_loadCommodity( nlua_env *env )
  *    @param ind Index position to find the commodity.
  *    @return Commodity found at the index in the state.
  */
-Commodity *lua_tocommodity( lua_State *L, int ind )
+CommodityRef lua_tocommodity( lua_State *L, int ind )
 {
-   return *( (Commodity **)lua_touserdata( L, ind ) );
+   return *( (CommodityRef *)lua_touserdata( L, ind ) );
 }
 /**
  * @brief Gets commodity at index or raises error if there is no commodity at
@@ -113,7 +113,7 @@ Commodity *lua_tocommodity( lua_State *L, int ind )
  *    @param ind Index position to find commodity.
  *    @return Commodity found at the index in the state.
  */
-Commodity *luaL_checkcommodity( lua_State *L, int ind )
+CommodityRef luaL_checkcommodity( lua_State *L, int ind )
 {
    if ( lua_iscommodity( L, ind ) )
       return lua_tocommodity( L, ind );
@@ -127,9 +127,9 @@ Commodity *luaL_checkcommodity( lua_State *L, int ind )
  *    @param ind Index of the commodity to validate.
  *    @return The commodity (doesn't return if fails - raises Lua error ).
  */
-Commodity *luaL_validcommodity( lua_State *L, int ind )
+CommodityRef luaL_validcommodity( lua_State *L, int ind )
 {
-   Commodity *o;
+   CommodityRef o;
 
    if ( lua_iscommodity( L, ind ) )
       o = luaL_checkcommodity( L, ind );
@@ -152,10 +152,10 @@ Commodity *luaL_validcommodity( lua_State *L, int ind )
  *    @param commodity Commodity to push.
  *    @return Newly pushed commodity.
  */
-Commodity **lua_pushcommodity( lua_State *L, Commodity *commodity )
+CommodityRef *lua_pushcommodity( lua_State *L, Commodity *commodity )
 {
-   Commodity **o = (Commodity **)lua_newuserdata( L, sizeof( Commodity * ) );
-   *o            = commodity;
+   CommodityRef *o = (Commodity **)lua_newuserdata( L, sizeof( Commodity * ) );
+   *o              = commodity;
    luaL_getmetatable( L, COMMODITY_METATABLE );
    lua_setmetatable( L, -2 );
    return o;
@@ -195,7 +195,7 @@ int lua_iscommodity( lua_State *L, int ind )
  */
 static int commodityL_eq( lua_State *L )
 {
-   const Commodity *a, *b;
+   CommodityRef a, b;
    a = luaL_checkcommodity( L, 1 );
    b = luaL_checkcommodity( L, 2 );
    if ( a == b )
@@ -220,7 +220,7 @@ static int commodityL_get( lua_State *L )
    const char *name = luaL_checkstring( L, 1 );
 
    /* Get commodity. */
-   Commodity *commodity = commodity_get( name );
+   CommodityRef commodity = commodity_get( name );
    if ( commodity == NULL ) {
       return NLUA_ERROR( L, _( "Commodity '%s' not found!" ), name );
    }
@@ -240,7 +240,7 @@ static int commodityL_get( lua_State *L )
  */
 static int commodityL_getAll( lua_State *L )
 {
-   Commodity *com = commodity_getAll();
+   CommodityRef com = (CommodityRef)commodity_getAll();
    lua_newtable( L );
    for ( int i = 0; i < array_size( com ); i++ ) {
       lua_pushcommodity( L, &com[i] );
@@ -264,7 +264,7 @@ static int commodityL_exists( lua_State *L )
    const char *name = luaL_checkstring( L, 1 );
 
    /* Get commodity. */
-   Commodity *commodity = commodity_getW( name );
+   CommodityRef commodity = commodity_getW( name );
    if ( commodity == NULL )
       return 0;
 
@@ -283,7 +283,7 @@ static int commodityL_exists( lua_State *L )
 static int commodityL_getStandard( lua_State *L )
 {
    /* Get commodity. */
-   Commodity *const *standard = standard_commodities();
+   CommodityRef const *standard = standard_commodities();
    /* Push. */
    lua_newtable( L );
    for ( int i = 0; i < array_size( standard ); i++ ) {
@@ -302,7 +302,7 @@ static int commodityL_getStandard( lua_State *L )
  */
 static int commodityL_flags( lua_State *L )
 {
-   const Commodity *c = luaL_validcommodity( L, 1 );
+   CommodityRef c = luaL_validcommodity( L, 1 );
    lua_newtable( L );
 
    lua_pushboolean( L, commodity_isFlag( c, COMMODITY_FLAG_STANDARD ) );
@@ -332,7 +332,7 @@ static int commodityL_flags( lua_State *L )
  */
 static int commodityL_name( lua_State *L )
 {
-   const Commodity *c = luaL_validcommodity( L, 1 );
+   CommodityRef c = luaL_validcommodity( L, 1 );
    lua_pushstring( L, commodity_name( c ) );
    return 1;
 }
@@ -353,7 +353,7 @@ static int commodityL_name( lua_State *L )
  */
 static int commodityL_nameRaw( lua_State *L )
 {
-   const Commodity *c = luaL_validcommodity( L, 1 );
+   CommodityRef c = luaL_validcommodity( L, 1 );
    lua_pushstring( L, c->name );
    return 1;
 }
@@ -369,7 +369,7 @@ static int commodityL_nameRaw( lua_State *L )
  */
 static int commodityL_price( lua_State *L )
 {
-   const Commodity *c = luaL_validcommodity( L, 1 );
+   CommodityRef c = luaL_validcommodity( L, 1 );
    lua_pushnumber( L, c->price );
    return 1;
 }
@@ -387,7 +387,7 @@ static int commodityL_price( lua_State *L )
  */
 static int commodityL_priceAt( lua_State *L )
 {
-   const Commodity  *c;
+   CommodityRef      c;
    const Spob       *p;
    const StarSystem *sys;
    const char       *sysname;
@@ -421,7 +421,7 @@ static int commodityL_priceAt( lua_State *L )
  */
 static int commodityL_priceAtTime( lua_State *L )
 {
-   const Commodity  *c;
+   CommodityRef      c;
    const Spob       *p;
    const StarSystem *sys;
    const char       *sysname;
@@ -442,10 +442,10 @@ static int commodityL_priceAtTime( lua_State *L )
    return 1;
 }
 
-static int spob_hasCommodity( const Commodity *c, const Spob *s )
+static int spob_hasCommodity( CommodityRef c, const Spob *s )
 {
    for ( int i = 0; i < array_size( s->commodities ); i++ ) {
-      const Commodity *sc = s->commodities[i];
+      CommodityRef sc = s->commodities[i];
       if ( sc == c )
          return 1;
    }
@@ -466,7 +466,7 @@ static int spob_hasCommodity( const Commodity *c, const Spob *s )
  */
 static int commodityL_canSell( lua_State *L )
 {
-   const Commodity *c = luaL_validcommodity( L, 1 );
+   CommodityRef c = luaL_validcommodity( L, 1 );
 
    if ( commodity_isFlag( c, COMMODITY_FLAG_ALWAYS_CAN_SELL ) ) {
       lua_pushboolean( L, 1 );
@@ -504,7 +504,7 @@ static int commodityL_canSell( lua_State *L )
  */
 static int commodityL_canBuy( lua_State *L )
 {
-   const Commodity *c = luaL_validcommodity( L, 1 );
+   CommodityRef c = luaL_validcommodity( L, 1 );
 
    if ( lua_issystem( L, 2 ) ) {
       const StarSystem *s = luaL_validsystem( L, 2 );
@@ -534,7 +534,7 @@ static int commodityL_canBuy( lua_State *L )
  */
 static int commodityL_icon( lua_State *L )
 {
-   const Commodity *c = luaL_validcommodity( L, 1 );
+   CommodityRef c = luaL_validcommodity( L, 1 );
    if ( c->gfx_store == NULL )
       return 0;
    lua_pushtex( L, c->gfx_store );
@@ -551,7 +551,7 @@ static int commodityL_icon( lua_State *L )
  */
 static int commodityL_description( lua_State *L )
 {
-   const Commodity *c = luaL_validcommodity( L, 1 );
+   CommodityRef c = luaL_validcommodity( L, 1 );
    if ( c->description == NULL )
       return 0;
    lua_pushstring( L, c->description );
@@ -621,7 +621,7 @@ static int commodityL_new( lua_State *L )
  */
 static int commodityL_illegalto( lua_State *L )
 {
-   Commodity *c = luaL_validcommodity( L, 1 );
+   CommodityRef c = luaL_validcommodity( L, 1 );
    if ( lua_istable( L, 2 ) ) {
       lua_pushnil( L );                  /* nil */
       while ( lua_next( L, -2 ) != 0 ) { /* k, v */
@@ -644,7 +644,7 @@ static int commodityL_illegalto( lua_State *L )
  */
 static int commodityL_illegality( lua_State *L )
 {
-   const Commodity *c = luaL_validcommodity( L, 1 );
+   CommodityRef c = luaL_validcommodity( L, 1 );
    lua_newtable( L );
    for ( int i = 0; i < array_size( c->illegalto ); i++ ) {
       lua_pushfaction( L, c->illegalto[i] );
@@ -665,6 +665,6 @@ static int commodityL_illegality( lua_State *L )
  */
 static int commodityL_tags( lua_State *L )
 {
-   const Commodity *c = luaL_validcommodity( L, 1 );
+   CommodityRef c = luaL_validcommodity( L, 1 );
    return nlua_helperTags( L, 2, c->tags );
 }

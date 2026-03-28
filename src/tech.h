@@ -42,15 +42,14 @@ int tech_rmItem( const char *name, const char *value );
 int tech_hasItem( const tech_group_t *tech, const char *item, int search );
 int tech_hasShip( const tech_group_t *tech, const Ship *s, int search );
 int tech_hasOutfit( const tech_group_t *tech, const Outfit *o, int search );
-int tech_hasCommodity( const tech_group_t *tech, const Commodity *c,
-                       int search );
-Outfit    **tech_getOutfit( const tech_group_t *tech, int search );
-Outfit    **tech_getOutfitArray( tech_group_t **tech, int num, int search );
-Ship      **tech_getShip( const tech_group_t *tech, int search );
-Ship      **tech_getShipArray( tech_group_t **tech, int num, int search );
-Commodity **tech_getCommodity( const tech_group_t *tech, double **price,
-                               int search );
-// Commodity **tech_getCommodityArray( tech_group_t **tech, int num );
+int tech_hasCommodity( const tech_group_t *tech, CommodityRef c, int search );
+Outfit      **tech_getOutfit( const tech_group_t *tech, int search );
+Outfit      **tech_getOutfitArray( tech_group_t **tech, int num, int search );
+Ship        **tech_getShip( const tech_group_t *tech, int search );
+Ship        **tech_getShipArray( tech_group_t **tech, int num, int search );
+CommodityRef *tech_getCommodity( const tech_group_t *tech, double **price,
+                                 int search );
+// CommodityRef *tech_getCommodityArray( tech_group_t **tech, int num );
 
 // For editor usage
 int    tech_getItemCount( const tech_group_t *tech );

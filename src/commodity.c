@@ -32,8 +32,8 @@
      4 ) /* Maximum length of just credits2str text, no markup */
 
 /* commodity stack */
-Commodity         *commodity_stack = NULL; /**< Contains all the commodities. */
-static Commodity **commodity_temp =
+Commodity *commodity_stack = NULL; /**< Contains all the commodities. */
+static CommodityRef *commodity_temp =
    NULL; /**< Contains all the temporary commodities. */
 
 /* @TODO remove externs. */
@@ -53,14 +53,14 @@ typedef struct CommodityThreadData_ {
  */
 /* Commodity. */
 static int  commodity_parseThread( void *ptr );
-static void commodity_freeOne( Commodity *com );
-static int  commodity_parse( Commodity *temp, const char *filename );
+static void commodity_freeOne( CommodityRef com );
+static int  commodity_parse( CommodityRef temp, const char *filename );
 static int  commodity_cmp( const void *p1, const void *p2 );
 
 static int commodity_cmp( const void *p1, const void *p2 )
 {
-   const Commodity *c1 = p1;
-   const Commodity *c2 = p2;
+   CommodityRef c1 = (CommodityRef)p1;
+   CommodityRef c2 = (CommodityRef)p2;
    return strcmp( c1->name, c2->name );
 }
 
@@ -139,7 +139,7 @@ int commodity_getAmount( void )
    return array_size( commodity_stack );
 }
 
-Commodity *commodity_getIndex( int i )
+CommodityRef commodity_getIndex( int i )
 {
    return &commodity_stack[i];
 }
@@ -147,7 +147,8 @@ Commodity *commodity_getIndex( int i )
 /**
  * @brief Gets all the commodities.
  */
-Commodity *commodity_getAll( void )
+// const CommodityRef *commodity_getAll( void )
+const Commodity *commodity_getAll( void )
 {
    return commodity_stack;
 }
@@ -158,9 +159,9 @@ Commodity *commodity_getAll( void )
  *    @param name Name to match.
  *    @return Commodity matching name.
  */
-Commodity *commodity_get( const char *name )
+CommodityRef commodity_get( const char *name )
 {
-   Commodity *c = commodity_getW( name );
+   CommodityRef c = commodity_getW( name );
    if ( c != NULL )
       return c;
    WARN( _( "Commodity '%s' not found in stack" ), name );
@@ -173,11 +174,11 @@ Commodity *commodity_get( const char *name )
  *    @param name Name to match.
  *    @return Commodity matching name.
  */
-Commodity *commodity_getW( const char *name )
+CommodityRef commodity_getW( const char *name )
 {
    const Commodity q = { .name = (char *)name };
-   Commodity *r = bsearch( &q, commodity_stack, array_size( commodity_stack ),
-                           sizeof( Commodity ), commodity_cmp );
+   CommodityRef r = bsearch( &q, commodity_stack, array_size( commodity_stack ),
+                             sizeof( Commodity ), commodity_cmp );
    if ( r != NULL )
       return r;
    for ( int i = 0; i < array_size( commodity_temp ); i++ )
@@ -202,7 +203,7 @@ int commodity_getN( void )
  *    @param indx Index of the commodity.
  *    @return Commodity at that index or NULL.
  */
-Commodity *commodity_getByIndex( const int indx )
+CommodityRef commodity_getByIndex( const int indx )
 {
    if ( indx < 0 || indx >= array_size( econ_comm ) ) {
       WARN( _( "Commodity with index %d not found" ), indx );
@@ -216,7 +217,7 @@ Commodity *commodity_getByIndex( const int indx )
  *
  *    @param com Commodity to free.
  */
-static void commodity_freeOne( Commodity *com )
+static void commodity_freeOne( CommodityRef com )
 {
    CommodityModifier *this, *next;
    free( com->name );
@@ -258,11 +259,11 @@ static void commodity_freeOne( Commodity *com )
  */
 int commodity_compareTech( const void *commodity1, const void *commodity2 )
 {
-   const Commodity *c1, *c2;
+   CommodityRef c1, c2;
 
    /* Get commodities. */
-   c1 = *(const Commodity **)commodity1;
-   c2 = *(const Commodity **)commodity2;
+   c1 = *(CommodityRef *)commodity1;
+   c2 = *(CommodityRef *)commodity2;
 
    /* Compare price. */
    if ( c1->price < c2->price )
@@ -278,16 +279,16 @@ int commodity_compareTech( const void *commodity1, const void *commodity2 )
  * @brief Return an array (array.h) of standard commodities. Free with
  * array_free. (Don't free contents.)
  */
-Commodity *const *standard_commodities( void )
+CommodityRef const *standard_commodities( void )
 {
-   static Commodity **std_comm = NULL;
+   static CommodityRef *std_comm = NULL;
    if ( std_comm != NULL )
       return std_comm;
 
    int n    = array_size( commodity_stack );
-   std_comm = array_create_size( Commodity *, n );
+   std_comm = array_create_size( CommodityRef, n );
    for ( int i = 0; i < n; i++ ) {
-      Commodity *c = &commodity_stack[i];
+      CommodityRef c = &commodity_stack[i];
       if ( commodity_isFlag( c, COMMODITY_FLAG_STANDARD ) )
          array_push_back( &std_comm, c );
    }
@@ -301,7 +302,7 @@ Commodity *const *standard_commodities( void )
  *    @param filename File to parse.
  *    @return Commodity loaded from parent.
  */
-static int commodity_parse( Commodity *temp, const char *filename )
+static int commodity_parse( CommodityRef temp, const char *filename )
 {
    xmlNodePtr node, parent;
    xmlDocPtr  doc;
@@ -449,68 +450,68 @@ static int commodity_parse( Commodity *temp, const char *filename )
    return 0;
 }
 
-const char *commodity_name( const Commodity *com )
+const char *commodity_name( CommodityRef com )
 {
    if ( com->display != NULL )
       return _( com->display );
    return _( com->name );
 }
-const char *commodity_name_raw( const Commodity *com )
+const char *commodity_name_raw( CommodityRef com )
 {
    return com->name;
 }
-const char *commodity_description( const Commodity *com )
+const char *commodity_description( CommodityRef com )
 {
    return com->description;
 }
-const glTexture *commodity_gfxSpace( const Commodity *com )
+const glTexture *commodity_gfxSpace( CommodityRef com )
 {
    return com->gfx_space;
 }
-const glTexture *commodity_gfxStore( const Commodity *com )
+const glTexture *commodity_gfxStore( CommodityRef com )
 {
    return com->gfx_store;
 }
 
-const FactionRef *commodity_illegalTo( const Commodity *com )
+const FactionRef *commodity_illegalTo( CommodityRef com )
 {
    return com->illegalto;
 }
 
-credits_t commodity_price( const Commodity *com )
+credits_t commodity_price( CommodityRef com )
 {
    return com->price;
 }
 
-int commodity_price_constant( const Commodity *com )
+int commodity_price_constant( CommodityRef com )
 {
    return commodity_isFlag( com, COMMODITY_FLAG_PRICE_CONSTANT );
 }
-int commodity_always_can_sell( const Commodity *com )
+int commodity_always_can_sell( CommodityRef com )
 {
    return commodity_isFlag( com, COMMODITY_FLAG_ALWAYS_CAN_SELL );
 }
 
-int commodity_isTemp( const Commodity *com )
+int commodity_isTemp( CommodityRef com )
 {
    return com->istemp;
 }
 
-const char *commodity_price_ref( const Commodity *com )
+const char *commodity_price_ref( CommodityRef com )
 {
    return com->price_ref;
 }
-double commodity_price_mod( const Commodity *com )
+double commodity_price_mod( CommodityRef com )
 {
    return com->price_mod;
 }
 
-credits_t commodity_last_purchase_price( const Commodity *com )
+credits_t commodity_last_purchase_price( CommodityRef com )
 {
    return com->lastPurchasePrice;
 }
 
-void commodity_set_last_purchase_price( Commodity *com, credits_t amount )
+void commodity_set_last_purchase_price( CommodityRef com, credits_t amount )
 {
    com->lastPurchasePrice = amount;
 }
@@ -522,7 +523,7 @@ void commodity_set_last_purchase_price( Commodity *com, credits_t amount )
  *    @param faction Faction to check to see if it is illegal to.
  *    @return 1 if it is illegal, 0 otherwise.
  */
-int commodity_checkIllegal( const Commodity *com, FactionRef faction )
+int commodity_checkIllegal( CommodityRef com, FactionRef faction )
 {
    for ( int i = 0; i < array_size( com->illegalto ); i++ ) {
       if ( com->illegalto[i] == faction )
@@ -538,11 +539,11 @@ int commodity_checkIllegal( const Commodity *com, FactionRef faction )
  *    @param desc Description of the commodity to create.
  *    @return newly created commodity.
  */
-Commodity *commodity_newTemp( const char *name, const char *desc )
+CommodityRef commodity_newTemp( const char *name, const char *desc )
 {
-   Commodity **c;
+   CommodityRef *c;
    if ( commodity_temp == NULL )
-      commodity_temp = array_create( Commodity * );
+      commodity_temp = array_create( CommodityRef );
 
    c                   = &array_grow( &commodity_temp );
    *c                  = calloc( 1, sizeof( Commodity ) );
@@ -555,7 +556,7 @@ Commodity *commodity_newTemp( const char *name, const char *desc )
 /**
  * @brief Makes a temporary commodity illegal to something.
  */
-int commodity_tempIllegalto( Commodity *com, FactionRef faction )
+int commodity_tempIllegalto( CommodityRef com, FactionRef faction )
 {
    if ( !com->istemp ) {
       WARN( _( "Trying to modify temporary commodity '%s'!" ), com->name );
@@ -647,7 +648,7 @@ int commodity_load( void )
 
    /* Load into commodity stack. */
    for ( int i = 0; i < array_size( commodity_stack ); i++ ) {
-      const Commodity *com = &commodity_stack[i];
+      CommodityRef com = &commodity_stack[i];
       /* See if should get added to commodity list. */
       if ( com->price > 0. )
          array_push_back( &econ_comm, i );

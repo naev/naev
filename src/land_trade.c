@@ -27,9 +27,9 @@
 #include "toolkit.h"
 
 typedef struct CommodityItem {
-   Commodity *com;
-   double     price_mod;
-   int        buyable;
+   CommodityRef com;
+   double       price_mod;
+   int          buyable;
 } CommodityItem;
 
 /*
@@ -45,7 +45,7 @@ static void commodity_exchange_modifiers( unsigned int wid );
 static void commodity_buy( unsigned int wid, const char *str );
 static void commodity_sell( unsigned int wid, const char *str );
 static int  commodity_canBuy( const CommodityItem *com, double price_mod );
-static int  commodity_canSell( const Commodity *com );
+static int  commodity_canSell( CommodityRef com );
 static int  commodity_getMod( void );
 
 static void commodity_exchange_modifiers( unsigned int wid )
@@ -184,7 +184,7 @@ static void commodity_exchange_genList( unsigned int wid )
       if ( !commodity_always_can_sell( pc->commodity ) )
          continue;
       CommodityItem item = {
-         .com       = (Commodity *)pc->commodity,
+         .com       = (CommodityRef)pc->commodity,
          .price_mod = 1.,
          .buyable   = 0,
       };
@@ -193,7 +193,7 @@ static void commodity_exchange_genList( unsigned int wid )
 
    /* Add spob stuff. */
    for ( int i = 0; i < array_size( land_spob->commodities ); i++ ) {
-      Commodity *com = land_spob->commodities[i];
+      CommodityRef com = land_spob->commodities[i];
       /* Ignore if already in the list. */
       int found = -1;
       for ( int k = 0; k < array_size( commodity_list ); k++ ) {
@@ -215,10 +215,10 @@ static void commodity_exchange_genList( unsigned int wid )
    }
 
    /* Next add local specialities. */
-   double     *prices = NULL;
-   Commodity **tech   = tech_getCommodity( land_spob->tech, &prices, 0 );
+   double       *prices = NULL;
+   CommodityRef *tech   = tech_getCommodity( land_spob->tech, &prices, 0 );
    for ( int i = 0; i < array_size( tech ); i++ ) {
-      Commodity *com = tech[i];
+      CommodityRef com = tech[i];
       /* Ignore if already in the list. */
       int found = -1;
       for ( int k = 0; k < array_size( commodity_list ); k++ ) {
@@ -247,10 +247,10 @@ static void commodity_exchange_genList( unsigned int wid )
    if ( ngoods > 0 ) {
       cgoods = calloc( ngoods, sizeof( ImageArrayCell ) );
       for ( int i = 0; i < ngoods; i++ ) {
-         const Commodity *com = commodity_list[i].com;
-         cgoods[i].image      = gl_dupTexture( commodity_gfxStore( com ) );
-         cgoods[i].caption    = strdup( commodity_name( com ) );
-         cgoods[i].quantity   = pfleet_cargoOwned( com );
+         CommodityRef com   = commodity_list[i].com;
+         cgoods[i].image    = gl_dupTexture( commodity_gfxStore( com ) );
+         cgoods[i].caption  = strdup( commodity_name( com ) );
+         cgoods[i].quantity = pfleet_cargoOwned( com );
       }
    } else {
       ngoods            = 1;
@@ -300,7 +300,6 @@ void commodity_update( unsigned int wid, const char *str )
    char   buf_purchase_price[ECON_CRED_STRLEN], buf_credits[ECON_CRED_STRLEN];
    size_t l = 0;
    const CommodityItem *comi;
-   const Commodity     *com;
    credits_t            mean, globalmean;
    double               std, globalstd;
    char buf_mean[ECON_CRED_STRLEN], buf_globalmean[ECON_CRED_STRLEN];
@@ -327,9 +326,9 @@ void commodity_update( unsigned int wid, const char *str )
       window_disableButton( wid, "btnCommoditySell" );
       return;
    }
-   comi             = &commodity_list[i];
-   com              = comi->com;
-   double price_mod = comi->price_mod;
+   comi                   = &commodity_list[i];
+   CommodityRef com       = comi->com;
+   double       price_mod = comi->price_mod;
 
    /* modify image */
    window_modifyImage( wid, "imgStore", commodity_gfxStore( com ), 192, 192 );
@@ -452,7 +451,7 @@ static int commodity_canBuy( const CommodityItem *comi, double price_mod )
 /**
  * @brief Checks to see if a player can sell a commodity.
  */
-static int commodity_canSell( const Commodity *com )
+static int commodity_canSell( CommodityRef com )
 {
    int failure = 0;
    land_errClear();
@@ -473,7 +472,7 @@ static void commodity_buy( unsigned int wid, const char *str )
    (void)str;
    int            i;
    CommodityItem *comi;
-   Commodity     *com;
+   CommodityRef   com;
    unsigned int   q;
    credits_t      price;
    HookParam      hparam[3];
@@ -525,7 +524,7 @@ static void commodity_sell( unsigned int wid, const char *str )
    (void)str;
    int            i;
    CommodityItem *comi;
-   Commodity     *com;
+   CommodityRef   com;
    unsigned int   q;
    credits_t      price;
    HookParam      hparam[3];

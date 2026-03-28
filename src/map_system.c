@@ -852,15 +852,15 @@ static void map_system_array_update( unsigned int wid, const char *str )
       l += scnprintf( &infobuf[l], sizeof( infobuf ) - l, "\n%s",
                       ship->desc_stats );
    } else if ( ( strcmp( str, MAPSYS_TRADE ) == 0 ) ) {
-      Commodity *com;
-      credits_t  mean;
-      double     std;
-      credits_t  globalmean;
-      double     globalstd;
-      char       buf_mean[ECON_CRED_STRLEN], buf_globalmean[ECON_CRED_STRLEN];
-      char       buf_std[ECON_CRED_STRLEN], buf_globalstd[ECON_CRED_STRLEN];
-      char       buf_buy_price[ECON_CRED_STRLEN];
-      int        owned, priceok;
+      CommodityRef com;
+      credits_t    mean;
+      double       std;
+      credits_t    globalmean;
+      double       globalstd;
+      char         buf_mean[ECON_CRED_STRLEN], buf_globalmean[ECON_CRED_STRLEN];
+      char         buf_std[ECON_CRED_STRLEN], buf_globalstd[ECON_CRED_STRLEN];
+      char         buf_buy_price[ECON_CRED_STRLEN];
+      int          owned, priceok;
       com = cur_spobObj_sel->commodities[i];
       economy_getAveragePrice( com, &globalmean, &globalstd );
       priceok =

@@ -45,7 +45,7 @@
 extern StarSystem *systems_stack; /**< Star system stack. */
 
 /* @TODO get rid of these externs. */
-extern Commodity *commodity_stack;
+extern CommodityRef commodity_stack;
 
 /*
  * Nodal analysis simulation for dynamic economies.
@@ -77,7 +77,7 @@ int economy_sysLoad( xmlNodePtr parent );
  *    @param p Spob to get price of commodity.
  *    @return The price of the commodity.
  */
-credits_t economy_getPrice( const Commodity *com, const StarSystem *sys,
+credits_t economy_getPrice( CommodityRef com, const StarSystem *sys,
                             const Spob *p )
 {
    /* Get current time in periods. */
@@ -93,7 +93,7 @@ credits_t economy_getPrice( const Commodity *com, const StarSystem *sys,
  *    @param tme Time to get price at, e.g. as returned by `ntime_get()`
  *    @return The price of the commodity.
  */
-credits_t economy_getPriceAtTime( const Commodity *com, const StarSystem *sys,
+credits_t economy_getPriceAtTime( CommodityRef com, const StarSystem *sys,
                                   const Spob *p, ntime_t tme )
 {
    int             i, k;
@@ -103,7 +103,7 @@ credits_t economy_getPriceAtTime( const Commodity *com, const StarSystem *sys,
 
    /* If commodity is using a reference, just return that. */
    if ( com->price_ref != NULL ) {
-      const Commodity *ref = commodity_get( com->price_ref );
+      CommodityRef ref = commodity_get( com->price_ref );
       if ( ref == NULL )
          return 1e6; /* Just arbitrary large number so players notice. */
       price = economy_getPriceAtTime( ref, sys, p, tme ) * com->price_mod;
@@ -170,15 +170,15 @@ credits_t economy_getPriceAtTime( const Commodity *com, const StarSystem *sys,
  * formula).
  *    @return 0 on success.
  */
-int economy_getAverageSpobPrice( const Commodity *com, const Spob *p,
+int economy_getAverageSpobPrice( CommodityRef com, const Spob *p,
                                  credits_t *mean, double *std )
 {
    int             i, k;
    CommodityPrice *commPrice;
 
-   double      price_mod = 1.;
-   double     *prices    = NULL;
-   Commodity **tech      = tech_getCommodity( p->tech, &prices, 1 );
+   double        price_mod = 1.;
+   double       *prices    = NULL;
+   CommodityRef *tech      = tech_getCommodity( p->tech, &prices, 1 );
    for ( int j = 0; j < array_size( tech ); j++ ) {
       if ( tech[j] == com ) {
          price_mod = prices[j];
@@ -189,7 +189,7 @@ int economy_getAverageSpobPrice( const Commodity *com, const Spob *p,
    array_free( tech );
 
    if ( com->price_ref != NULL ) {
-      const Commodity *ref = commodity_get( com->price_ref );
+      CommodityRef ref = commodity_get( com->price_ref );
       if ( ref == NULL )
          return -1;
       int ret = economy_getAverageSpobPrice( ref, p, mean, std );
@@ -258,11 +258,10 @@ int economy_getAverageSpobPrice( const Commodity *com, const Spob *p,
  * formula).
  *    @return The average price of the commodity.
  */
-int economy_getAveragePrice( const Commodity *com, credits_t *mean,
-                             double *std )
+int economy_getAveragePrice( CommodityRef com, credits_t *mean, double *std )
 {
    if ( com->price_ref != NULL ) {
-      const Commodity *ref = commodity_get( com->price_ref );
+      CommodityRef ref = commodity_get( com->price_ref );
       if ( ref == NULL )
          return -1;
       int ret = economy_getAveragePrice( ref, mean, std );
@@ -622,7 +621,7 @@ void economy_destroy( void )
  *    @param[out] commodityPrice Where to write the commodity price to.
  *    @return 0 on success.
  */
-static int economy_calcPrice( Spob *spob, Commodity *commodity,
+static int economy_calcPrice( Spob *spob, CommodityRef commodity,
                               CommodityPrice *commodityPrice )
 {
    CommodityModifier *cm;
@@ -927,7 +926,7 @@ void economy_initialiseCommodityPrices( void )
    /* And now free temporary commodity information */
    for ( int i = 0; i < array_size( commodity_stack ); i++ ) {
       CommodityModifier *this, *next;
-      Commodity *com     = &commodity_stack[i];
+      CommodityRef com   = &commodity_stack[i];
       next               = com->spob_modifier;
       com->spob_modifier = NULL;
       while ( next != NULL ) {
@@ -1089,7 +1088,7 @@ int economy_sysLoad( xmlNodePtr parent )
             } else if ( xml_isNode( cur, "lastPurchase" ) ) {
                xmlr_attr_strd( cur, "name", str );
                if ( str ) {
-                  Commodity *c = commodity_get( str );
+                  CommodityRef c = commodity_get( str );
                   if ( c != NULL )
                      c->lastPurchasePrice = xml_getLong( cur );
                   free( str );

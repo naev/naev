@@ -1047,10 +1047,10 @@ static void cargo_genList( unsigned int wid )
 static void cargo_update( unsigned int wid, const char *str )
 {
    (void)str;
-   char             desc[STRMAX];
-   int              pos, l;
-   const Commodity *com;
-   PilotCommodity  *pclist = pfleet_cargoList();
+   char            desc[STRMAX];
+   int             pos, l;
+   CommodityRef    com;
+   PilotCommodity *pclist = pfleet_cargoList();
 
    if ( array_size( pclist ) <= 0 ) {
       window_modifyText( wid, "txtCargoDesc", NULL );
@@ -1194,7 +1194,7 @@ static void cargo_jettison( unsigned int wid, const char *str )
    /* Run hooks. */
    hparam[0].type = HOOK_PARAM_COMMODITY;
    hparam[0].u.commodity =
-      (Commodity *)pclist[pos].commodity; /* TODO not cast */
+      (CommodityRef)pclist[pos].commodity; /* TODO not cast */
    hparam[1].type  = HOOK_PARAM_NUMBER;
    hparam[1].u.num = pclist[pos].quantity;
    hparam[2].type  = HOOK_PARAM_SENTINEL;

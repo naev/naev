@@ -4688,7 +4688,7 @@ int pilot_hasIllegal( const Pilot *p, FactionRef faction )
 {
    /* Check commodities. */
    for ( int i = 0; i < array_size( p->commodities ); i++ ) {
-      const Commodity *c = p->commodities[i].commodity;
+      CommodityRef c = p->commodities[i].commodity;
       if ( commodity_checkIllegal( c, faction ) )
          return 1;
    }

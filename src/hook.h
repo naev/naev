@@ -50,7 +50,7 @@ typedef struct HookParam_s {
       LuaPilot      lp;        /**< Hook parameter pilot data. */
       const Ship   *ship;      /**< Hook parameter ship data. */
       const Outfit *outfit;    /**< Hook parameter outfit data. */
-      Commodity    *commodity; /**< Hook parameter commodity data. */
+      CommodityRef  commodity; /**< Hook parameter commodity data. */
       LuaFaction    lf;        /**< Hook parameter faction data. */
       LuaSystem     ls;        /**< Hook parameter system data. */
       LuaSpob       la;        /**< Hook parameter spob data. */

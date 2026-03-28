@@ -170,12 +170,12 @@ int mission_unlinkCargo( Mission *misn, unsigned int cargo_id );
 /*
  * load/quit
  */
-int        missions_load( void );
-int        missions_loadActive( xmlNodePtr parent );
-int        missions_loadCommodity( xmlNodePtr parent );
-Commodity *missions_loadTempCommodity( xmlNodePtr parent );
-int        missions_saveActive( xmlTextWriterPtr writer );
-int  missions_saveTempCommodity( xmlTextWriterPtr writer, const Commodity *c );
+int          missions_load( void );
+int          missions_loadActive( xmlNodePtr parent );
+int          missions_loadCommodity( xmlNodePtr parent );
+CommodityRef missions_loadTempCommodity( xmlNodePtr parent );
+int          missions_saveActive( xmlTextWriterPtr writer );
+int  missions_saveTempCommodity( xmlTextWriterPtr writer, CommodityRef c );
 void mission_cleanup( Mission *misn );
 void mission_shift( int pos );
 void missions_free( void );

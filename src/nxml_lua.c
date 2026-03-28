@@ -94,7 +94,7 @@ static int nxml_saveData( xmlTextWriterPtr writer, const char *type,
  *    @return 0 on success.
  */
 static int nxml_saveCommodity( xmlTextWriterPtr writer, const char *name,
-                               size_t name_len, const Commodity *c, int keynum )
+                               size_t name_len, CommodityRef c, int keynum )
 {
    int         status = 0;
    const char *cname  = commodity_name_raw( c );
@@ -120,17 +120,17 @@ static int nxml_saveCommodity( xmlTextWriterPtr writer, const char *name,
 /**
  * @brief Reverse of `nxml_saveCommodity`.
  */
-static Commodity *nxml_loadCommodity( xmlNodePtr node )
+static CommodityRef nxml_loadCommodity( xmlNodePtr node )
 {
-   Commodity *c;
-   int        istemp;
+   CommodityRef c;
+   int          istemp;
 
    xmlr_attr_int_def( node, "temp", istemp, 0 );
    if ( !istemp )
       c = commodity_get( xml_get( node ) );
    else {
       xmlNodePtr cur = node->xmlChildrenNode;
-      c              = NULL;
+      c              = COMMODITY_NULL;
       do {
          xml_onlyNodes( cur );
          if ( xml_isNode( cur, "commodity" ) )
@@ -322,7 +322,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer )
             nxml_saveJump( writer, name, name_len, ss->name, dest->name,
                            keynum );
       } else if ( lua_iscommodity( L, -1 ) ) {
-         Commodity *com = lua_tocommodity( L, -1 );
+         CommodityRef com = lua_tocommodity( L, -1 );
          if ( nxml_saveCommodity( writer, name, name_len, com, keynum ) != 0 )
             WARN( _( "Failed to save invalid commodity." ) );
          /* key, value */

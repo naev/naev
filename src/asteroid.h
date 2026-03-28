@@ -48,9 +48,9 @@ enum {
  * @brief Represents a potential reward from the asteroid.
  */
 typedef struct AsteroidReward_ {
-   Commodity *material; /**< Material dropped. */
-   int        quantity; /**< Maximum amount. */
-   int        rarity;   /**< Rarity. */
+   CommodityRef material; /**< Material dropped. */
+   int          quantity; /**< Maximum amount. */
+   int          rarity;   /**< Rarity. */
 } AsteroidReward;
 
 typedef struct AsteroidGfx {
@@ -167,7 +167,7 @@ AsteroidTypeGroup       *astgroup_getName( const char *name );
 
 /* Misc functions. */
 int  asteroids_inField( const vec2 *p );
-int  asteroids_hasCommodity( const AsteroidAnchor *ast, const Commodity *com );
+int  asteroids_hasCommodity( const AsteroidAnchor *ast, CommodityRef com );
 void asteroids_computeInternals( AsteroidAnchor *a );
 void asteroid_hit( Asteroid *a, const Damage *dmg, int max_rarity,
                    double mine_bonus );

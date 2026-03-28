@@ -28,15 +28,15 @@
  * @brief Represents stuff that can be gathered.
  */
 typedef struct Gatherable_ {
-   const Commodity *type;        /**< Type of commodity. */
-   vec2             pos;         /**< Position. */
-   vec2             vel;         /**< Velocity. */
-   double           timer;       /**< Timer to de-spawn the gatherable. */
-   double           lifeleng;    /**< nb of seconds before de-spawn. */
-   int              quantity;    /**< Quantity of material. */
-   int              sx;          /**< X sprite to use. */
-   int              sy;          /**< Y sprite to use. */
-   int              player_only; /**< Can only be gathered by player. */
+   CommodityRef type;        /**< Type of commodity. */
+   vec2         pos;         /**< Position. */
+   vec2         vel;         /**< Velocity. */
+   double       timer;       /**< Timer to de-spawn the gatherable. */
+   double       lifeleng;    /**< nb of seconds before de-spawn. */
+   int          quantity;    /**< Quantity of material. */
+   int          sx;          /**< X sprite to use. */
+   int          sy;          /**< Y sprite to use. */
+   int          player_only; /**< Can only be gathered by player. */
 } Gatherable;
 
 /* gatherables stack */
@@ -81,7 +81,7 @@ void gatherable_cleanup( void )
  *    @param player_only Whether the gatherable can only be gathered by the
  * player.
  */
-int gatherable_init( const Commodity *com, const vec2 *pos, const vec2 *vel,
+int gatherable_init( CommodityRef com, const vec2 *pos, const vec2 *vel,
                      double lifeleng, int qtt, unsigned int player_only )
 {
    Gatherable      *g         = &array_grow( &gatherable_stack );
@@ -266,7 +266,7 @@ static int gatherable_gather( Gatherable *gat, Pilot *p )
 
          /* Run hooks. */
          hparam[0].type        = HOOK_PARAM_COMMODITY;
-         hparam[0].u.commodity = (Commodity *)gat->type; /* TODO not cast. */
+         hparam[0].u.commodity = (CommodityRef)gat->type; /* TODO not cast. */
          hparam[1].type        = HOOK_PARAM_NUMBER;
          hparam[1].u.num       = q;
          hparam[2].type        = HOOK_PARAM_SENTINEL;

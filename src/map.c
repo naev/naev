@@ -94,10 +94,10 @@ static int     map_selected = -1; /**< What system is selected on the map. */
 static MapMode map_mode     = MAPMODE_TRAVEL; /**< Default map mode. */
 static StarSystem **map_path =
    NULL; /**< Array (array.h): The path to current selected system. */
-static int         cur_commod      = -1;   /**< Current commodity selected. */
-static int         cur_commod_mode = 0;    /**< 0 for cost, 1 for difference. */
-static Commodity **commod_known    = NULL; /**< index of known commodities */
-static char      **map_modes =
+static int           cur_commod      = -1; /**< Current commodity selected. */
+static int           cur_commod_mode = 0;  /**< 0 for cost, 1 for difference. */
+static CommodityRef *commod_known    = NULL; /**< index of known commodities */
+static char        **map_modes =
    NULL; /**< Array (array.h) of the map modes' names, e.g. "Gold: Cost". */
 static int listMapModeVisible =
    0; /**< Whether the map mode list widget is visible. */
@@ -137,8 +137,8 @@ static void map_renderCommod( double bx, double by, double x, double y,
                               double zoom, double w, double h, double r,
                               int editor, double a );
 static void map_renderCommodIgnorance( double x, double y, double zoom,
-                                       const StarSystem *sys,
-                                       const Commodity *c, double a );
+                                       const StarSystem *sys, CommodityRef c,
+                                       double a );
 static void map_drawMarker( double x, double y, double zoom, double r, double a,
                             int num, int cur, int type );
 /* Mouse. */
@@ -490,7 +490,7 @@ void map_open( void )
  */
 static void map_update_commod_av_price( void )
 {
-   Commodity *c;
+   CommodityRef c;
 
    if ( cur_commod == -1 || map_selected == -1 ) {
       commod_av_gal_price = 0;
@@ -623,7 +623,7 @@ static void map_update( unsigned int wid )
 
    /* Economy button */
    if ( map_mode == MAPMODE_TRADE ) {
-      const Commodity *c = commod_known[cur_commod];
+      CommodityRef c = commod_known[cur_commod];
       if ( cur_commod_mode == 1 ) {
          snprintf(
             buf, sizeof( buf ),
@@ -1784,8 +1784,8 @@ static void map_renderSysBlack( double bx, double by, double x, double y,
 void map_renderCommod( double bx, double by, double x, double y, double zoom,
                        double w, double h, double r, int editor, double a )
 {
-   Commodity *c;
-   glColour   ccol;
+   CommodityRef c;
+   glColour     ccol;
 
    /* If not plotting commodities, return */
    if ( ( cur_commod == -1 ) || ( map_selected == -1 ) ||
@@ -2011,8 +2011,8 @@ void map_renderCommod( double bx, double by, double x, double y, double zoom,
  * Renders the economy information.
  */
 static void map_renderCommodIgnorance( double x, double y, double zoom,
-                                       const StarSystem *sys,
-                                       const Commodity *c, double a )
+                                       const StarSystem *sys, CommodityRef c,
+                                       double a )
 {
    int      textw;
    char     buf[80], *line2;
@@ -2269,13 +2269,13 @@ static void map_genModeList( void )
    const char *odd_template, *even_template;
 
    map_onClose( 0, NULL ); /* so commod_known, map_modes are freed */
-   commod_known = calloc( commodity_getN(), sizeof( Commodity * ) );
+   commod_known = calloc( commodity_getN(), sizeof( CommodityRef ) );
    for ( int i = 0; i < array_size( systems_stack ); i++ ) {
       StarSystem *sys = system_getIndex( i );
       for ( int j = 0; j < array_size( sys->spobs ); j++ ) {
          Spob *p = sys->spobs[j];
          for ( int k = 0; k < array_size( p->commodities ); k++ ) {
-            Commodity *com = p->commodities[k];
+            CommodityRef com = p->commodities[k];
 
             /* Commodity should be known about */
             if ( p->commodityPrice[k].cnt <= 0 )

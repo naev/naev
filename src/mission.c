@@ -1353,7 +1353,7 @@ int missions_saveActive( xmlTextWriterPtr writer )
    PilotCommodity *pcom = pfleet_cargoList();
    xmlw_startElem( writer, "temporary_cargo" );
    for ( int i = 0; i < array_size( pcom ); i++ ) {
-      const Commodity *c = pcom[i].commodity;
+      CommodityRef c = pcom[i].commodity;
       if ( !commodity_isTemp( c ) )
          continue;
       xmlw_startElem( writer, "cargo" );
@@ -1443,7 +1443,7 @@ int missions_saveActive( xmlTextWriterPtr writer )
  *    @param c Commodity to save.
  *    @return 0 on success.
  */
-int missions_saveTempCommodity( xmlTextWriterPtr writer, const Commodity *c )
+int missions_saveTempCommodity( xmlTextWriterPtr writer, CommodityRef c )
 {
    xmlw_attr( writer, "name", "%s", commodity_name_raw( c ) );
    xmlw_attr( writer, "description", "%s", commodity_description( c ) );
@@ -1488,20 +1488,20 @@ int missions_loadCommodity( xmlNodePtr parent )
  *    @param cur Node defining the commodity.
  *    @return The temporary commodity, or NULL on failure.
  */
-Commodity *missions_loadTempCommodity( xmlNodePtr cur )
+CommodityRef missions_loadTempCommodity( xmlNodePtr cur )
 {
-   xmlNodePtr ccur;
-   char      *name, *desc;
-   Commodity *c;
+   xmlNodePtr   ccur;
+   char        *name, *desc;
+   CommodityRef c;
 
    xmlr_attr_strd( cur, "name", name );
    if ( name == NULL ) {
       WARN( _( "Mission cargo without name!" ) );
-      return NULL;
+      return COMMODITY_NULL;
    }
 
    c = commodity_getW( name );
-   if ( c != NULL ) {
+   if ( c != COMMODITY_NULL ) {
       free( name );
       return c;
    }
@@ -1510,7 +1510,7 @@ Commodity *missions_loadTempCommodity( xmlNodePtr cur )
    if ( desc == NULL ) {
       WARN( _( "Mission temporary cargo '%s' missing description!" ), name );
       free( name );
-      return NULL;
+      return COMMODITY_NULL;
    }
 
    c = commodity_newTemp( name, desc );

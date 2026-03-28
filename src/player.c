@@ -4597,7 +4597,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    const Ship  *ship_parsed;
    Pilot       *ship;
    xmlNodePtr   node;
-   Commodity   *com;
+   CommodityRef com;
    PilotFlags   flags;
    PlayerShip_t ps;
 
@@ -4773,7 +4773,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
 
                /* Get the commodity. */
                com = commodity_get( xml_get( cur ) );
-               if ( com == NULL ) {
+               if ( com == COMMODITY_NULL ) {
                   WARN( _( "Unknown commodity '%s' detected, removing." ),
                         xml_get( cur ) );
                   continue;

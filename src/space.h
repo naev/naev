@@ -133,10 +133,10 @@ typedef struct Spob_ {
    char *land_msg;    /**< Message on landing. */
 
    /* Landed details. */
-   char        *description;     /**< Spob description. */
-   char        *bar_description; /**< Spob spaceport bar description */
-   unsigned int services;        /**< What services they offer */
-   Commodity  **commodities;     /**< array: what commodities they sell */
+   char         *description;     /**< Spob description. */
+   char         *bar_description; /**< Spob spaceport bar description */
+   unsigned int  services;        /**< What services they offer */
+   CommodityRef *commodities;     /**< array: what commodities they sell */
    CommodityPrice
       *commodityPrice; /**< array: the base cost of a commodity on this spob */
    tech_group_t *tech; /**< Spob tech. */
@@ -416,15 +416,14 @@ char      **spob_searchFuzzyCase( const char *spobname, int *n );
 const char *spob_getServiceName( int service );
 int         spob_getService( const char *name );
 const char *spob_getClassName( const char *class );
-credits_t   spob_commodityPrice( const Spob *p, const Commodity *c );
-credits_t   spob_commodityPriceAtTime( const Spob *p, const Commodity *c,
-                                       ntime_t t );
-int  spob_averageSpobPrice( const Spob *p, const Commodity *c, credits_t *mean,
-                            double *std );
-void spob_averageSeenPricesAtTime( const Spob *p, const ntime_t tupdate );
+credits_t   spob_commodityPrice( const Spob *p, CommodityRef c );
+credits_t spob_commodityPriceAtTime( const Spob *p, CommodityRef c, ntime_t t );
+int       spob_averageSpobPrice( const Spob *p, CommodityRef c, credits_t *mean,
+                                 double *std );
+void      spob_averageSeenPricesAtTime( const Spob *p, const ntime_t tupdate );
 /* Misc modification. */
 int spob_setFaction( Spob *p, FactionRef faction );
-int spob_addCommodity( Spob *p, Commodity *c );
+int spob_addCommodity( Spob *p, CommodityRef c );
 int spob_addService( Spob *p, int service );
 int spob_rmService( Spob *p, int service );
 int spob_rename( Spob *p, char *newname );

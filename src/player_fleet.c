@@ -17,7 +17,7 @@
 #include "rng.h"
 
 /* Prototypes. */
-static int pfleet_cargoAddRaw( const Commodity *com, int q );
+static int pfleet_cargoAddRaw( CommodityRef com, int q );
 
 /**
  * @brief Updates the used fleet capacity of the player.
@@ -340,7 +340,7 @@ int pfleet_cargoMissionFree( void )
  *    @param com Commodity to add.
  *    @return Total amount of a cargo owned.
  */
-int pfleet_cargoOwned( const Commodity *com )
+int pfleet_cargoOwned( CommodityRef com )
 {
    if ( player.p == NULL )
       return 0;
@@ -359,7 +359,7 @@ int pfleet_cargoOwned( const Commodity *com )
    return amount;
 }
 
-static int pfleet_cargoAddRaw( const Commodity *com, int q )
+static int pfleet_cargoAddRaw( CommodityRef com, int q )
 {
    int added = pilot_cargoAdd( player.p, com, q, 0 );
    if ( ( player.fleet_capacity <= 0 ) || ( q - added <= 0 ) )
@@ -385,7 +385,7 @@ static int pfleet_cargoAddRaw( const Commodity *com, int q )
  *    @param q Quantity to add.
  *    @return Total amount of cargo added (less than q if it doesn't fit).
  */
-int pfleet_cargoAdd( const Commodity *com, int q )
+int pfleet_cargoAdd( CommodityRef com, int q )
 {
    if ( player.p == NULL )
       return 0;
@@ -405,7 +405,7 @@ int pfleet_cargoAdd( const Commodity *com, int q )
  *    @param q Quantity to add.
  *    @return ID of the added mission cargo.
  */
-unsigned int pfleet_cargoMissionAdd( const Commodity *com, int q )
+unsigned int pfleet_cargoMissionAdd( CommodityRef com, int q )
 {
    if ( player.p == NULL )
       return 0;
@@ -427,7 +427,7 @@ unsigned int pfleet_cargoMissionAdd( const Commodity *com, int q )
  *    @param jet Whether or not to jet into space.
  *    @return Total amount of cargo removed (can be less than q).
  */
-int pfleet_cargoRm( const Commodity *com, int q, int jet )
+int pfleet_cargoRm( CommodityRef com, int q, int jet )
 {
    int removed;
    if ( player.p == NULL )
@@ -491,7 +491,7 @@ PilotCommodity *pfleet_cargoList( void )
  *    @return An array of ships and the amount they have (array.h). Must be
  * freed with array_free.
  */
-PFleetCargo *pfleet_cargoListShips( const Commodity *com )
+PFleetCargo *pfleet_cargoListShips( CommodityRef com )
 {
    PFleetCargo *plist = array_create( PFleetCargo );
    int          q     = pilot_cargoOwned( player.p, com );

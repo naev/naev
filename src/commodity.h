@@ -88,8 +88,12 @@ typedef struct Commodity_ {
 
    char **tags; /**< Commodity tags. */
 } Commodity;
+#define COMMODITY_NULL NULL
+typedef Commodity *CommodityRef;
 #else
-typedef struct Commodity Commodity;
+#define COMMODITY_NULL ( ( 1l << 32l ) + ( 1l << 32l ) - 1l )
+// typedef struct Commodity Commodity;
+typedef uint64_t CommodityRef;
 #endif
 
 typedef struct CommodityPrice_ {
@@ -117,38 +121,37 @@ typedef struct CommodityPrice_ {
 /*
  * Commodity stuff.
  */
-int        commodity_getAmount( void );
-Commodity *commodity_getIndex( int i );
-Commodity *commodity_getAll( void );
-Commodity *commodity_get( const char *name );
-Commodity *commodity_getW( const char *name );
-int        commodity_getN( void );
+// const CommodityRef *commodity_getAll( void );
+const Commodity *commodity_getAll( void );
+CommodityRef     commodity_get( const char *name );
+CommodityRef     commodity_getW( const char *name );
+int              commodity_getN( void );
 
-Commodity *commodity_getByIndex( const int indx );
-int        commodity_load( void );
-void       commodity_free( void );
+CommodityRef commodity_getByIndex( const int indx );
+int          commodity_load( void );
+void         commodity_free( void );
 
-const char       *commodity_name( const Commodity *com );
-const char       *commodity_name_raw( const Commodity *com );
-const char       *commodity_description( const Commodity *com );
-const glTexture  *commodity_gfxStore( const Commodity *com );
-const glTexture  *commodity_gfxSpace( const Commodity *com );
-const FactionRef *commodity_illegalTo( const Commodity *com );
-credits_t         commodity_price( const Commodity *com );
-int               commodity_price_constant( const Commodity *com );
-int               commodity_always_can_sell( const Commodity *com );
-int               commodity_isTemp( const Commodity *com );
-const char       *commodity_price_ref( const Commodity *com );
-double            commodity_price_mod( const Commodity *com );
-credits_t         commodity_last_purchase_price( const Commodity *com );
-void commodity_set_last_purchase_price( Commodity *com, credits_t amount );
-int  commodity_checkIllegal( const Commodity *com, FactionRef faction );
+const char       *commodity_name( CommodityRef com );
+const char       *commodity_name_raw( CommodityRef com );
+const char       *commodity_description( CommodityRef com );
+const glTexture  *commodity_gfxStore( CommodityRef com );
+const glTexture  *commodity_gfxSpace( CommodityRef com );
+const FactionRef *commodity_illegalTo( CommodityRef com );
+credits_t         commodity_price( CommodityRef com );
+int               commodity_price_constant( CommodityRef com );
+int               commodity_always_can_sell( CommodityRef com );
+int               commodity_isTemp( CommodityRef com );
+const char       *commodity_price_ref( CommodityRef com );
+double            commodity_price_mod( CommodityRef com );
+credits_t         commodity_last_purchase_price( CommodityRef com );
+void commodity_set_last_purchase_price( CommodityRef com, credits_t amount );
+int  commodity_checkIllegal( CommodityRef com, FactionRef faction );
 
 /*
  * Temporary commodities.
  */
-Commodity *commodity_newTemp( const char *name, const char *desc );
-int        commodity_tempIllegalto( Commodity *com, FactionRef faction );
+CommodityRef commodity_newTemp( const char *name, const char *desc );
+int          commodity_tempIllegalto( CommodityRef com, FactionRef faction );
 
 /*
  * Misc stuff.
@@ -157,4 +160,4 @@ void credits2str( char *str, credits_t credits, int decimals );
 void price2str( char *str, credits_t price, credits_t credits, int decimals );
 void tonnes2str( char *str, int tonnes );
 int  commodity_compareTech( const void *commodity1, const void *commodity2 );
-Commodity *const *standard_commodities( void );
+CommodityRef const *standard_commodities( void );

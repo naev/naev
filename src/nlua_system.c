@@ -653,8 +653,8 @@ static int systemL_asteroidFields( lua_State *L )
       lua_setfield( L, -2, "radius" );
 
       lua_newtable( L );
-      Commodity *all = commodity_getAll();
-      int        nt  = 0;
+      CommodityRef all = (CommodityRef)commodity_getAll();
+      int          nt  = 0;
       for ( int c = 0; c < array_size( all ); c++ ) {
          if ( asteroids_hasCommodity( a, &all[c] ) ) {
             lua_pushcommodity( L, &all[c] );
@@ -688,7 +688,7 @@ static int systemL_addGatherable( lua_State *L )
 {
    int          nb;
    unsigned int player_only;
-   Commodity   *commodity;
+   CommodityRef commodity;
    vec2        *pos, *vel;
    vec2         zero = { .x = 0., .y = 0. };
    double       lifelength;

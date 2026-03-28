@@ -20,19 +20,18 @@ void economy_clearSingleSpob( Spob *p );
 /*
  * Price stuff.
  */
-int  economy_getAverageSpobPrice( const Commodity *com, const Spob *p,
+int  economy_getAverageSpobPrice( CommodityRef com, const Spob *p,
                                   credits_t *mean, double *std );
 void economy_averageSeenPrices( const Spob *p );
 void economy_averageSeenPricesAtTime( const Spob *p, const ntime_t tupdate );
-credits_t economy_getPrice( const Commodity *com, const StarSystem *sys,
+credits_t economy_getPrice( CommodityRef com, const StarSystem *sys,
                             const Spob *p );
-credits_t economy_getPriceAtTime( const Commodity *com, const StarSystem *sys,
+credits_t economy_getPriceAtTime( CommodityRef com, const StarSystem *sys,
                                   const Spob *p, ntime_t t );
 
 /*
  * Calculating the sinusoidal economy values
  */
 void economy_initialiseCommodityPrices( void );
-int  economy_getAveragePrice( const Commodity *com, credits_t *mean,
-                              double *std );
+int  economy_getAveragePrice( CommodityRef com, credits_t *mean, double *std );
 void economy_initialiseSingleSystem( StarSystem *sys, Spob *spob );

@@ -293,7 +293,7 @@ const char *spob_getClassName( const char *class )
  *    @param p Spob to get price at.
  *    @param c Commodity to get price of.
  */
-credits_t spob_commodityPrice( const Spob *p, const Commodity *c )
+credits_t spob_commodityPrice( const Spob *p, CommodityRef c )
 {
    const char       *sysname = spob_getSystemName( p->name );
    const StarSystem *sys     = system_get( sysname );
@@ -307,8 +307,7 @@ credits_t spob_commodityPrice( const Spob *p, const Commodity *c )
  *    @param c Commodity to get price of.
  *    @param t Time to get price at.
  */
-credits_t spob_commodityPriceAtTime( const Spob *p, const Commodity *c,
-                                     ntime_t t )
+credits_t spob_commodityPriceAtTime( const Spob *p, CommodityRef c, ntime_t t )
 {
    const char       *sysname = spob_getSystemName( p->name );
    const StarSystem *sys     = system_get( sysname );
@@ -336,7 +335,7 @@ void spob_averageSeenPricesAtTime( const Spob *p, const ntime_t tupdate )
  *    @param[out] std Sample standard deviation (via uncorrected population
  * formula).
  */
-int spob_averageSpobPrice( const Spob *p, const Commodity *c, credits_t *mean,
+int spob_averageSpobPrice( const Spob *p, CommodityRef c, credits_t *mean,
                            double *std )
 {
    return economy_getAverageSpobPrice( c, p, mean, std );
@@ -385,7 +384,7 @@ int spob_setFaction( Spob *p, FactionRef faction )
  *    @param c Commodity to add.
  *    @return 0 on success.
  */
-int spob_addCommodity( Spob *p, Commodity *c )
+int spob_addCommodity( Spob *p, CommodityRef c )
 {
    for ( int i = 0; i < array_size( p->commodities ); i++ ) {
       if ( p->commodities[i] == c )
@@ -2690,17 +2689,17 @@ static int spob_updateCommodities( Spob *spb )
    array_free( spb->commodityPrice );
    array_free( spb->commodities );
    spb->commodityPrice = array_create( CommodityPrice );
-   spb->commodities    = array_create( Commodity * );
+   spb->commodities    = array_create( CommodityRef );
 
    /* Unique local stuff goes first. */
-   Commodity **tech = tech_getCommodity( spb->tech, NULL, -1 );
+   CommodityRef *tech = tech_getCommodity( spb->tech, NULL, -1 );
    for ( int i = 0; i < array_size( tech ); i++ )
       spob_addCommodity( spb, tech[i] );
    array_free( tech );
 
    /* Generic crud afterwards. */
    if ( !spob_isFlag( spb, SPOB_NOCOMMODITIES ) ) {
-      Commodity *const *stdList = standard_commodities();
+      CommodityRef const *stdList = standard_commodities();
       for ( int i = 0; i < array_size( stdList ); i++ )
          spob_addCommodity( spb, stdList[i] );
    }

@@ -711,9 +711,9 @@ static int misn_finish( lua_State *L )
  */
 static int misn_cargoAdd( lua_State *L )
 {
-   Commodity *cargo;
-   int        quantity, ret;
-   Mission   *cur_mission;
+   CommodityRef cargo;
+   int          quantity, ret;
+   Mission     *cur_mission;
 
    /* Parameters. */
    cargo    = luaL_validcommodity( L, 1 );

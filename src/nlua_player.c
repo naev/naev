@@ -2264,7 +2264,7 @@ static int playerL_fleetCargoUsed( lua_State *L )
  */
 static int playerL_fleetCargoOwned( lua_State *L )
 {
-   const Commodity *c = luaL_validcommodity( L, 1 );
+   CommodityRef c = luaL_validcommodity( L, 1 );
    if ( player.p == NULL )
       lua_pushinteger( L, 0 );
    else
@@ -2282,8 +2282,8 @@ static int playerL_fleetCargoOwned( lua_State *L )
  */
 static int playerL_fleetCargoAdd( lua_State *L )
 {
-   const Commodity *c = luaL_validcommodity( L, 1 );
-   int              q = luaL_checkinteger( L, 2 );
+   CommodityRef c = luaL_validcommodity( L, 1 );
+   int          q = luaL_checkinteger( L, 2 );
    if ( player.p == NULL )
       lua_pushinteger( L, 0 );
    else
@@ -2301,8 +2301,8 @@ static int playerL_fleetCargoAdd( lua_State *L )
  */
 static int playerL_fleetCargoRm( lua_State *L )
 {
-   const Commodity *c = luaL_validcommodity( L, 1 );
-   int              q = luaL_checkinteger( L, 2 );
+   CommodityRef c = luaL_validcommodity( L, 1 );
+   int          q = luaL_checkinteger( L, 2 );
    if ( player.p == NULL )
       lua_pushinteger( L, 0 );
    else
@@ -2321,8 +2321,8 @@ static int playerL_fleetCargoRm( lua_State *L )
  */
 static int playerL_fleetCargoJet( lua_State *L )
 {
-   const Commodity *c = luaL_validcommodity( L, 1 );
-   int              q = luaL_checkinteger( L, 2 );
+   CommodityRef c = luaL_validcommodity( L, 1 );
+   int          q = luaL_checkinteger( L, 2 );
    if ( player.p == NULL )
       lua_pushinteger( L, 0 );
    else
@@ -2347,9 +2347,11 @@ static int playerL_fleetCargoList( lua_State *L )
    }
    int n = 0;
    lua_newtable( L ); /* t */
-   for ( int i = 0; i < commodity_getAmount(); i++ ) {
-      Commodity *c = commodity_getIndex( i );
-      int        q = pfleet_cargoOwned( c );
+   // const CommodityRef *call = commodity_getAll();
+   const Commodity *call = commodity_getAll();
+   for ( int i = 0; i < array_size( call ); i++ ) {
+      CommodityRef c = (CommodityRef)&call[i];
+      int          q = pfleet_cargoOwned( c );
       if ( q <= 0 )
          continue;
 
