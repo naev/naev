@@ -28,6 +28,7 @@ local neu = require 'common.neutral'
 local fmt = require "format"
 local vni = require "vnimage"
 local vntk = require "vntk"
+local lmisn = require "lmisn"
 
 local title    = _("Mossy Mess")
 local npcname  = _("Mining Vrata Researcher")
@@ -60,8 +61,8 @@ function accept ()
    vn.transition()
    
    r(_([["Hello there! Are you the one that handed in the sample of space moss from Fertile Crescent? We at the Mining Vrata have been analysing it and performing some experiments, and in a stroke of genius, we've been able to create a mutation that lets it grow very rapidly at practically no expense, so we don't have to ask anyone to go all the way to bring extra samples!"]]))
-   r(fmt.f(_([["Now we're ready to hand the research over to a dedicated lab over on {dspb}, and I'm on the search for a suitable courier. Before you respond, a warning: there's no way to stop the moss from growing outside of controlled environments, so you might need to dump some of it every now and again just in case. If you decide to help, {rwd} will be your reward. What do you say?"]]),
-      {dspb=dspb, sys=dsys, rwd=fmt.credits(reward)}))
+   r(fmt.f(_([["Now we're ready to hand the research over to a dedicated lab over on {dspb}, and I'm on the search for a suitable courier. Before you respond, a warning: there's no way to stop the moss from growing outside of controlled environments, so you might need to dump some of it every now and again as you fly to {dsys} just in case. If you decide to help, {rwd} will be your reward. What do you say?"]]),
+      {dspb=dspb, dsys=dsys, rwd=fmt.credits(reward)}))
    vn.menu{
       {_("Accept"), "accept"},
       {_("Decline"), "decline"},
@@ -158,6 +159,7 @@ function dropoff ()
    vn.na(fmt.f(_([[As you approach {dspb}, you're directed to an incineration pit and told to dump any excess moss inside. Upon landing, a team of Soromid researchers takes what remains to their facility, while your cargo holds are meticulously scrubbed clean of any remains of the bothersome green gunk. Finally, you're rid of the moss, and hopefully for good.]]),
       { dspb=dspb }))
    vn.func(function()
+      lmisn.sfxMoney()
       player.pay(reward)
       player.pilot():cargoRm(mem.c, player.pilot():cargoHas(mem.c)) -- Why does it not default to removing all?
    end)
