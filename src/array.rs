@@ -1,5 +1,6 @@
 use anyhow::Result;
 use std::ffi::CString;
+use std::fmt::Debug;
 use std::mem::ManuallyDrop;
 use std::os::raw::{c_char, c_void};
 use std::sync::atomic::AtomicPtr;
@@ -15,8 +16,9 @@ pub fn to_vec<T: Clone>(array: *mut T) -> Result<Vec<T>> {
 }
 
 /// Small wrapper for working with C arrays
-pub struct Array<T>(AtomicPtr<T>);
-impl<T: Sized> Array<T> {
+#[derive(Debug)]
+pub struct Array<T: Debug>(AtomicPtr<T>);
+impl<T: Sized + Debug> Array<T> {
    pub const fn default() -> Self {
       Array(AtomicPtr::new(std::ptr::null_mut()))
    }
@@ -40,7 +42,7 @@ impl<T: Sized> Array<T> {
       arr.as_ptr()
    }
 }
-impl<T> Drop for Array<T> {
+impl<T: Debug> Drop for Array<T> {
    fn drop(&mut self) {
       unsafe {
          naevc::_array_free_helper(self.as_ptr());

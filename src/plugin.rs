@@ -249,6 +249,7 @@ pub extern "C" fn plugin_dir() -> *const c_char {
 }
 
 #[allow(dead_code)]
+#[derive(Debug)]
 struct CPlugin(naevc::plugin_t);
 unsafe impl Sync for CPlugin {}
 unsafe impl Send for CPlugin {}

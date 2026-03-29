@@ -1,7 +1,9 @@
 #![allow(dead_code, unused)]
+use crate::array::{Array, ArrayCString};
 use crate::faction::FactionRef;
 use renderer::texture::{Texture, TextureBuilder};
 use slotmap::SlotMap;
+use std::collections::HashMap;
 use std::ffi::CString;
 use std::sync::atomic::AtomicI64;
 use std::sync::{LazyLock, RwLock};
@@ -16,6 +18,8 @@ struct PriceRef {
 struct EconomyModifiers {
    period: f64,
    population_modifier: f64,
+   spob_modifier: HashMap<String, f32>,
+   faction_modifier: HashMap<FactionRef, f32>,
 }
 
 #[derive(Debug)]
@@ -23,6 +27,8 @@ struct CommodityC {
    name: CString,
    display: Option<CString>,
    description: CString,
+   illegal_to: Array<FactionRef>,
+   ctags: ArrayCString,
 }
 
 #[derive(Debug)]
