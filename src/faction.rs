@@ -2021,9 +2021,7 @@ pub extern "C" fn faction_isFaction(f: i64) -> c_int {
 pub extern "C" fn faction_exists(name: *const c_char) -> i64 {
    let ptr = unsafe { CStr::from_ptr(name) };
    let name = ptr.to_str().unwrap();
-   FactionRef::new(name)
-      .unwrap_or(FactionRef::null().as_ffi())
-      .as_ffi()
+   FactionRef::new(name).unwrap_or(FactionRef::null()).as_ffi()
 }
 
 #[unsafe(no_mangle)]
