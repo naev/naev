@@ -3890,6 +3890,7 @@ src/comm.c
 src/comm.h
 src/commodity.c
 src/commodity.h
+src/commodity.rs
 src/cond.c
 src/cond.h
 src/conf.c

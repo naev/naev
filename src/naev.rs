@@ -16,6 +16,7 @@ unsafe extern "C" {
 }
 
 mod array;
+mod commodity;
 mod damagetype;
 mod faction;
 mod hook;
