@@ -27,6 +27,11 @@
    <hide>0.000000</hide>
    <pos x="-9630.465439" y="18345.913316" was_auto="true"/>
   </jump>
+  <jump target="Su'nir">
+   <exitonly/>
+   <hide>1</hide>
+   <autopos/>
+  </jump>
  </jumps>
  <tags>
   <tag>tradelane</tag>

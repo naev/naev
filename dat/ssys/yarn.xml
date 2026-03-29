@@ -17,6 +17,11 @@
    <hide>1.000000</hide>
    <pos x="4974.876552" y="8674.710559" was_auto="true"/>
   </jump>
+  <jump target="SW-7">
+   <exitonly/>
+   <hide>1</hide>
+   <autopos/>
+  </jump>
  </jumps>
  <asteroids>
   <asteroid>

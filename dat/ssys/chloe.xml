@@ -17,5 +17,10 @@
    <hide>1.000000</hide>
    <pos x="5214.253917" y="-12992.750135" was_auto="true"/>
   </jump>
+  <jump target="SW-3">
+   <exitonly/>
+   <hide>1</hide>
+   <autopos/>
+  </jump>
  </jumps>
 </ssys>

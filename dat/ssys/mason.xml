@@ -34,6 +34,11 @@
    <hide>1.000000</hide>
    <pos x="-327.481469" y="19997.318717" was_auto="true"/>
   </jump>
+  <jump target="C-59">
+   <hide>1</hide>
+   <hidden/>
+   <autopos/>
+  </jump>
  </jumps>
  <asteroids>
   <asteroid>

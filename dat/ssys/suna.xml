@@ -23,6 +23,11 @@
    <hide>1.000000</hide>
    <pos x="-9373.105023" y="-3484.953688" was_auto="true"/>
   </jump>
+  <jump target="Su'nir">
+   <exitonly/>
+   <hide>1</hide>
+   <autopos/>
+  </jump>
  </jumps>
  <asteroids>
   <asteroid>
