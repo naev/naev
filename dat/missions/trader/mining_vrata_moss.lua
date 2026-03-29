@@ -224,9 +224,14 @@ function jettison ( c, q )
    if c == mem.c and system.cur():faction() == faction.get('Soromid') then
       ambush( q )
       if ambushees then 
+         local ambushees_n = {}
          for _,p in ipairs(ambushees) do 
-            if p:exists() then pilotai.guard(p, ppp) else table.remove(ambushees, p) end
+            if p:exists() then 
+               pilotai.guard(p, ppp)
+               table.insert(ambushees_n, p) 
+            end
          end
+         ambushees = ambushees_n
       end
    end
    if player.pilot():cargoHas(mem.c) == 0 then
