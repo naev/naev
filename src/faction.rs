@@ -19,6 +19,7 @@ use renderer::{Context, ContextWrapper, colour, texture};
 use slotmap::{Key, KeyData, SecondaryMap, SlotMap};
 use std::collections::HashMap;
 use std::ffi::{CStr, CString, OsStr};
+use std::fmt::Debug;
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, LazyLock, OnceLock};
 use std::sync::{Mutex, RwLock};
@@ -763,7 +764,11 @@ pub struct FactionData {
 impl FactionData {
    /// Loads the elementary faction stuff, does not fill out information dependent on other
    /// factions
-   fn new<P: AsRef<Path>>(ctx: &ContextWrapper, filename: P) -> Result<(Self, FactionLoad)> {
+   #[instrument(skip(ctx))]
+   fn new<P: AsRef<Path> + Debug>(
+      ctx: &ContextWrapper,
+      filename: P,
+   ) -> Result<(Self, FactionLoad)> {
       let mut fctload = FactionLoad::default();
       let mut fct = FactionData {
          local_th: 10.0,
