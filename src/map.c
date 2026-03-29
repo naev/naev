@@ -2269,7 +2269,8 @@ static void map_genModeList( void )
    const char *odd_template, *even_template;
 
    map_onClose( 0, NULL ); /* so commod_known, map_modes are freed */
-   commod_known = calloc( commodity_getN(), sizeof( CommodityRef ) );
+   const Commodity *call = commodity_getAll();
+   commod_known          = calloc( array_size( call ), sizeof( CommodityRef ) );
    for ( int i = 0; i < array_size( systems_stack ); i++ ) {
       StarSystem *sys = system_getIndex( i );
       for ( int j = 0; j < array_size( sys->spobs ); j++ ) {

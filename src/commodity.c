@@ -134,16 +134,6 @@ void tonnes2str( char *str, int tonnes )
              tonnes );
 }
 
-int commodity_getAmount( void )
-{
-   return array_size( commodity_stack );
-}
-
-CommodityRef commodity_getIndex( int i )
-{
-   return &commodity_stack[i];
-}
-
 /**
  * @brief Gets all the commodities.
  */
@@ -185,31 +175,6 @@ CommodityRef commodity_getW( const char *name )
       if ( strcmp( commodity_temp[i]->name, name ) == 0 )
          return commodity_temp[i];
    return NULL;
-}
-
-/**
- * @brief Return the number of commodities globally.
- *
- *    @return Number of commodities globally.
- */
-int commodity_getN( void )
-{
-   return array_size( econ_comm );
-}
-
-/**
- * @brief Gets a commodity by index.
- *
- *    @param indx Index of the commodity.
- *    @return Commodity at that index or NULL.
- */
-CommodityRef commodity_getByIndex( const int indx )
-{
-   if ( indx < 0 || indx >= array_size( econ_comm ) ) {
-      WARN( _( "Commodity with index %d not found" ), indx );
-      return NULL;
-   }
-   return &commodity_stack[econ_comm[indx]];
 }
 
 /**

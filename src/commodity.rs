@@ -2,22 +2,33 @@
 use crate::faction::FactionRef;
 use renderer::texture::{Texture, TextureBuilder};
 use slotmap::SlotMap;
+use std::ffi::CString;
 use std::sync::atomic::AtomicI64;
 use std::sync::{LazyLock, RwLock};
 
+#[derive(Debug)]
 struct PriceRef {
    base: CommodityRef,
    modifier: f64,
 }
 
+#[derive(Debug)]
 struct EconomyModifiers {
    period: f64,
    population_modifier: f64,
 }
 
+#[derive(Debug)]
+struct CommodityC {
+   name: CString,
+   display: Option<CString>,
+   description: CString,
+}
+
+#[derive(Debug)]
 struct Commodity {
    name: String,
-   display: String,
+   display: Option<String>,
    description: String,
 
    temporary: bool,
@@ -37,6 +48,18 @@ struct Commodity {
 
    illegal_to: Vec<FactionRef>,
    tags: Vec<String>,
+
+   // C stuff, TODO remove when possible
+   c: CommodityC,
+}
+impl Commodity {
+   pub fn name(&self) -> &str {
+      if let Some(display) = &self.display {
+         &display
+      } else {
+         &self.name
+      }
+   }
 }
 
 slotmap::new_key_type! {

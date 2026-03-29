@@ -125,11 +125,9 @@ typedef struct CommodityPrice_ {
 const Commodity *commodity_getAll( void );
 CommodityRef     commodity_get( const char *name );
 CommodityRef     commodity_getW( const char *name );
-int              commodity_getN( void );
 
-CommodityRef commodity_getByIndex( const int indx );
-int          commodity_load( void );
-void         commodity_free( void );
+int  commodity_load( void );
+void commodity_free( void );
 
 const char       *commodity_name( CommodityRef com );
 const char       *commodity_name_raw( CommodityRef com );
