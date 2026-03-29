@@ -2278,9 +2278,9 @@ pub extern "C" fn faction_lane_base_cost(id: i64) -> c_double {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn faction_logo(id: i64) -> *const naevc::glTexture {
+pub extern "C" fn faction_logo(id: i64) -> *const texture::Texture {
    faction_c_call(id, |fct| match &fct.data.logo {
-      Some(logo) => logo as *const texture::Texture as *const naevc::glTexture,
+      Some(logo) => logo as *const texture::Texture,
       None => std::ptr::null(),
    })
    .unwrap_or_else(|err| {
