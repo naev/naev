@@ -80,6 +80,8 @@ static int bkgL_clear( lua_State *L )
  *    @luatparam[opt=nil] Colour col Colour to tint image.
  *    @luatparam[opt=false] boolean foreground Whether or not it should be
  * rendered above the space dust.
+ *    @luatparam[opt=nil] Colour radiosity Treat this as a light source with
+ * this much radiosity.
  *    @luatreturn number ID of the background.
  * @luafunc image
  */
