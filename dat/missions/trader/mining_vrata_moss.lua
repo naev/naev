@@ -32,9 +32,10 @@ local vntk = require "vntk"
 local lmisn = require "lmisn"
 local fleet = require "fleet"
 local ferals = require "common.ferals"
+local pilotai = require "pilotai"
 
 local title    = _("Mossy Mess")
-local npcname  = _("Mining Vrata Researcher")
+local npcname  = _("Researcher")
 local pspb = spob.get("Mining Vrata Guildhouse")
 local psys  = pspb:system()
 local dspb = spob.get("Wigheta")
@@ -65,6 +66,7 @@ function accept ()
    vn.transition()
    
    r(_([["Hello there! Are you the one that handed in the sample of space moss from Fertile Crescent? We at the Mining Vrata have been analysing it and performing some experiments, and in a stroke of genius, we've been able to create a mutation that lets it grow very rapidly at practically no expense, so we don't have to ask anyone to go all the way to bring extra samples!"]]))
+   r(_([["Overlooking the fact it grew enough to nearly destroy one of our labs after being left to its own devices for a few periods, this is quite fascinating, and we're certain it could be used as a cheap source of feed for some livestock as well as Soromid bioships."]]))
    r(fmt.f(_([["Now we're ready to hand the research over to a dedicated lab over on {dspb}, and I'm on the search for a suitable courier. Before you respond, a warning: there's no way to stop the moss from growing outside of controlled environments, so you might need to dump some of it every now and again as you fly to {dsys} just in case. If you decide to help, {rwd} will be your reward. What do you say?"]]),
       {dspb=dspb, dsys=dsys, rwd=fmt.credits(reward)}))
    vn.menu{
@@ -216,9 +218,16 @@ function grow ()
    hook.timer(rnd.rnd(3, 4), "grow")
 end
 
+local ambushees = {}
 function jettison ( c, q )
+   local ppp = player.pilot():pos()
    if c == mem.c and system.cur():faction() == faction.get('Soromid') then
       ambush( q )
+      if ambushees then 
+         for _,p in ipairs(ambushees) do 
+            if p:exists() then pilotai.guard(p, ppp) else table.remove(ambushees, p) end
+         end
+      end
    end
    if player.pilot():cargoHas(mem.c) == 0 then
       vntk.msg(_("Mission failure"), _([[You have jettisoned all of the moss out of your ship. You have nothing to deliver anymore.]]))
@@ -243,13 +252,23 @@ function ambush ( q )
          p:tryStealth()
          p:setHostile(true)
          p:intrinsicSet("accel", 150) -- high on moss
-         p:intrinsicSet("ew_detect", 40)
+         p:intrinsicSet("ew_detect", 25)
          p:intrinsicSet("cooldown_mod", -40) -- tasty moss!!! more biting!!!
+         table.insert(ambushees, p)
       end
       q = q - 800
    end
 end
 
 function abort ()
-   if mem.gotmoss then player.pilot():cargoRm(mem.c, player.pilot():cargoHas(mem.c)) end
+   local pp = player.pilot()
+   local pphc = pp:cargoHas(mem.c)
+   if mem.gotmoss then 
+      if player.isLanded() then
+         pp:cargoRm(mem.c, pphc)
+      else
+         pp:cargoJet(mem.c, pphc)
+         jettison(mem.c, pphc)
+      end
+   end
 end
