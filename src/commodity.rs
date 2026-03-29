@@ -24,7 +24,7 @@ struct EconomyModifiers {
    faction_modifier: HashMap<FactionRef, f32>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Default)]
 struct CommodityC {
    name: CString,
    display: Option<CString>,

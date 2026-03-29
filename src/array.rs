@@ -16,7 +16,7 @@ pub fn to_vec<T: Clone>(array: *mut T) -> Result<Vec<T>> {
 }
 
 /// Small wrapper for working with C arrays
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct Array<T: Debug>(AtomicPtr<T>);
 impl<T: Sized + Debug> Array<T> {
    pub const fn default() -> Self {
