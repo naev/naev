@@ -30,6 +30,8 @@ local fmt = require "format"
 local vni = require "vnimage"
 local vntk = require "vntk"
 local lmisn = require "lmisn"
+local fleet = require "fleet"
+local ferals = require "common.ferals"
 
 local title    = _("Mossy Mess")
 local npcname  = _("Mining Vrata Researcher")
@@ -38,7 +40,7 @@ local psys  = pspb:system()
 local dspb = spob.get("Wigheta")
 local dsys  = dspb:system()
 local faction = faction.get("Traders Society")
-local reward   = 400e3
+local reward   = 600e3
 local cargo_amount = 1
 local npcvn, npcpor = vni.generic()
 
@@ -213,10 +215,37 @@ function grow ()
    hook.timer(rnd.rnd(3, 4), "grow")
 end
 
-function jettison ()
+function jettison ( c, q )
+   if c == mem.c and system.cur():faction() == faction.get('Soromid') then
+      ambush( q )
+   end
    if player.pilot():cargoHas(mem.c) == 0 then
       vntk.msg(_("Mission failure"), _([[You have jettisoned all of the moss out of your ship. You have nothing to deliver anymore.]]))
       misn.finish(false)
+   end
+end
+
+function ambush ( q )
+   local j = system.cur():jumps()
+   local ambush
+   local ambushes = {
+         {"Nohinohi", "Nohinohi"},
+         {"Nohinohi", "Nohinohi", "Nohinohi", "Nohinohi"},
+         {"Taitamariki"},
+         {"Taitamariki", "Taitamariki"},
+         {"Taitamariki", "Nohinohi", "Nohinohi"},
+         {"Kauweke"},
+      }
+   while rnd.rnd() < math.min(1, q / 1000) do 
+      ambush = fleet.spawn( ambushes[rnd.rnd( #ambushes )], ferals.faction(), j[rnd.rnd( #j )] )
+      for _,p in ipairs(ambush) do
+         p:tryStealth()
+         p:setHostile(true)
+         p:intrinsicSet("accel", 150) -- high on moss
+         p:intrinsicSet("ew_detect", 40)
+         p:intrinsicSet("cooldown_mod", -40) -- tasty moss!!! more biting!!!
+      end
+      q = q - 800
    end
 end
 
