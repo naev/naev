@@ -242,7 +242,7 @@ pub fn load() -> Result<()> {
 
    // First pass, load primary data
    for f in files.into_iter() {
-      match Commodity::new(&ctx, &base.join(f)) {
+      match Commodity::new(&ctx, base.join(f)) {
          Ok((mut com, comload)) => {
             let id = data.insert_with_key(|k| {
                com.id = k;
@@ -281,7 +281,7 @@ pub fn load() -> Result<()> {
          );
       }
 
-      com.c = CommodityC::new(&com)?;
+      com.c = CommodityC::new(com)?;
 
       Ok(())
    }
@@ -289,7 +289,7 @@ pub fn load() -> Result<()> {
    // Second pass - set up references and C stuff
    for (id, com) in data.iter_mut() {
       let comload = load.get(id).unwrap();
-      if let Err(e) = update_commodity(com, &comload, &commap) {
+      if let Err(e) = update_commodity(com, comload, &commap) {
          warn_err!(e);
       }
    }
