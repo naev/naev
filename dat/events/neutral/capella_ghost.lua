@@ -30,7 +30,7 @@ function create ()
    ghost = pilot.add( "Astral Projection Greater", fct, vec2.new(), _("Starlighter"), {ai="baddiepos"} )
    ghost:effectAdd("Astral Projection")
    local m = ghost:memory()
-   m.comm_no = "No response."
+   m.comm_no = _("No response.")
    pilotai.guard( ghost, vec2.new() )
    ghost:setInvincible()
    ghost:setInvisible()
