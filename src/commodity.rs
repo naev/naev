@@ -3,9 +3,10 @@ use crate::array::{Array, ArrayCString};
 use crate::faction::FactionRef;
 use anyhow::Context as AnyhowContext;
 use anyhow::Result;
+use gettext::gettext;
 use helpers::ReferenceC;
 use naev_core::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
-use nlog::{warn, warn_err};
+use nlog::{warn, warn_err, warnx};
 use renderer::texture::TextureDeserializer;
 use renderer::{Context, ContextWrapper, texture};
 use slotmap::{Key, KeyData, SecondaryMap, SlotMap};
@@ -294,4 +295,28 @@ pub fn load() -> Result<()> {
    }
 
    Ok(())
+}
+
+use std::ffi::{CStr, c_char};
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _commodity_get(name: *const c_char) -> i64 {
+   let ptr = unsafe { CStr::from_ptr(name) };
+   let name = ptr.to_str().unwrap();
+   match CommodityRef::new(name) {
+      Some(c) => c.as_ffi(),
+      None => {
+         warnx!(gettext("Commodity '{}' not found in stack."), name);
+         CommodityRef::null().as_ffi()
+      }
+   }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _commodity_getW(name: *const c_char) -> i64 {
+   let ptr = unsafe { CStr::from_ptr(name) };
+   let name = ptr.to_str().unwrap();
+   CommodityRef::new(name)
+      .unwrap_or(CommodityRef::null())
+      .as_ffi()
 }
