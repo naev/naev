@@ -89,6 +89,11 @@ local function add_local_stars ( n )
          n = 0
       end
    end
+   -- Maximum lights allowed by engine
+   if n > 7 then
+      warn("Trying to use more than 7 lights!")
+   end
+   n = math.min( n, 7 )
    if n ~= 0 then
       gfx.lightIntensity( 0.5 / n )
    else
