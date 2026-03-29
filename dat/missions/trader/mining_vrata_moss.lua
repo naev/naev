@@ -8,7 +8,7 @@
  <cond>
    local misn_test = require("misn_test")
    local scur = spob.cur()
-   return player.evtDone("Mining Vrata Delivered Space Moss") and scur ~= spob.get("Mining Vrata Guildhouse") and scur:faction():tags():generic and misn_test.cargo(true) and misn_test.reweight_active()
+   return player.evtDone("Mining Vrata Delivered Space Moss") and scur ~= spob.get("Mining Vrata Guildhouse") and scur:faction():tags().generic and misn_test.cargo(true) and misn_test.reweight_active()
  </cond>
 </mission>
 --]]
