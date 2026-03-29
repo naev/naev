@@ -248,7 +248,7 @@ pub fn load() -> Result<()> {
 
    // First pass, load primary data
    for f in files.into_iter() {
-      match Commodity::new(&ctx, f) {
+      match Commodity::new(&ctx, &base.join(f)) {
          Ok((mut com, comload)) => {
             let id = data.insert_with_key(|k| {
                com.id = k;
@@ -263,9 +263,11 @@ pub fn load() -> Result<()> {
       }
    }
 
-   // Second pass - set up references and C stuff
-   for (id, com) in data.iter_mut() {
-      let comload = load.get(id).unwrap();
+   fn update_commodity(
+      com: &mut Commodity,
+      comload: &CommodityLoad,
+      commap: &HashMap<String, CommodityRef>,
+   ) -> Result<()> {
       if let Some(price_ref) = &comload.price_ref
          && let Some(com_mod) = comload.price_mod
       {
@@ -286,6 +288,16 @@ pub fn load() -> Result<()> {
       }
 
       com.c = CommodityC::new(&com)?;
+
+      Ok(())
+   }
+
+   // Second pass - set up references and C stuff
+   for (id, com) in data.iter_mut() {
+      let comload = load.get(id).unwrap();
+      if let Err(e) = update_commodity(com, &comload, &commap) {
+         warn_err!(e);
+      }
    }
 
    Ok(())
