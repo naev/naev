@@ -197,7 +197,7 @@ if [ -z "$NOPIC" ] ;                                                      then
 else pmsg "";                                                               fi |
 pmsg "finally"                                                                 |
 if [ -n "$FORCE" ] ;                                                      then
-   tee >("$DIR"/graph2ssysmap.py) >("$DIR"/decorators.py)
+   tee >("$DIR"/graph_scale.py 1.25 | tee >("$DIR"/graph2ssysmap.py) >("$DIR"/decorators.py))
 else cat ;                                                                  fi |
 if [ ! "$NOPIC" = "1" ] ; then
    pmsg "" |
