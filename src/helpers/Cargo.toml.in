@@ -12,3 +12,4 @@ workspace = true
 path = "@SOURCE@/src/helpers/src/lib.rs"
 
 [dependencies]
+slotmap = { workspace = true }

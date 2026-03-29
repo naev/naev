@@ -1,12 +1,14 @@
 #![allow(dead_code, unused)]
 use crate::array::{Array, ArrayCString};
 use crate::faction::FactionRef;
+use helpers::ReferenceC;
 use renderer::texture::{Texture, TextureBuilder};
-use slotmap::SlotMap;
+use slotmap::{KeyData, SlotMap};
 use std::collections::HashMap;
 use std::ffi::CString;
 use std::sync::atomic::AtomicI64;
 use std::sync::{LazyLock, RwLock};
+use tracing::instrument;
 
 #[derive(Debug)]
 struct PriceRef {
@@ -70,6 +72,22 @@ impl Commodity {
 
 slotmap::new_key_type! {
 pub struct CommodityRef;
+}
+impl CommodityRef {
+   pub fn from_ffi(value: i64) -> Self {
+      Self(KeyData::from_ffi(value as u64))
+   }
+
+   #[instrument]
+   pub fn new(name: &str) -> Option<Self> {
+      let commodities = COMMODITIES.read().unwrap();
+      for (id, com) in commodities.iter() {
+         if com.name == name {
+            return Some(id);
+         }
+      }
+      None
+   }
 }
 
 static COMMODITIES: LazyLock<RwLock<SlotMap<CommodityRef, Commodity>>> =

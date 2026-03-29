@@ -6,6 +6,7 @@ use crate::nlua::{NLUA, NLua};
 use anyhow::Context as AnyhowContext;
 use anyhow::Result;
 use gettext::gettext;
+use helpers::ReferenceC;
 use mlua::ErrorContext as MluaContext;
 use mlua::{
    BorrowedStr, Either, FromLua, Function, MetaMethod, UserData, UserDataMethods, UserDataRef,
@@ -158,15 +159,6 @@ pub struct FactionRef;
 }
 
 impl FactionRef {
-   pub fn slot(&self) -> usize {
-      // TODO this is not very safe and probably a bad idea
-      (self.data().as_ffi() & 0xffff_ffff) as usize - 1
-   }
-
-   pub fn as_ffi(self) -> i64 {
-      self.data().as_ffi() as i64
-   }
-
    pub fn from_ffi(value: i64) -> Self {
       Self(KeyData::from_ffi(value as u64))
    }

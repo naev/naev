@@ -41,3 +41,33 @@ impl AtomicF32 {
       f32::from_bits(as_u32)
    }
 }
+
+/// Slot map extension
+pub trait ReferenceC {
+   fn slot(&self) -> usize
+   where
+      Self: Sized;
+   fn as_ffi(self) -> i64
+   where
+      Self: Sized;
+}
+impl<T: slotmap::Key> ReferenceC for T {
+   fn slot(&self) -> usize
+   where
+      Self: Sized,
+   {
+      // TODO this is not very safe and probably a bad idea
+      (self.data().as_ffi() & 0xffff_ffff) as usize - 1
+   }
+
+   fn as_ffi(self) -> i64
+   where
+      Self: Sized,
+   {
+      self.data().as_ffi() as i64
+   }
+
+   //fn from_ffi(value: i64) -> Self where Self: Sized {
+   //   Self(KeyData::from_ffi(value as u64))
+   //}
+}

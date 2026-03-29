@@ -1,4 +1,5 @@
 use crate::faction::FactionRef;
+use helpers::ReferenceC;
 use std::ffi::{CStr, CString, c_char, c_int};
 
 #[allow(dead_code)]
