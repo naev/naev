@@ -8,7 +8,7 @@
  <cond>
    local misn_test = require("misn_test")
    local scur = spob.cur()
-   return player.evtDone("Mining Vrata Delivered Space Moss") and scur ~= spob.get("Mining Vrata Guildhouse") and scur:faction():tags():generic() and misn_test.cargo(true) and misn_test.reweight_active()
+   return player.evtDone("Mining Vrata Delivered Space Moss") and scur ~= spob.get("Mining Vrata Guildhouse") and scur:faction():tags():generic and misn_test.cargo(true) and misn_test.reweight_active()
  </cond>
 </mission>
 --]]
@@ -186,19 +186,20 @@ local overgrowth = 0
 function grow ()
    if not mem.gotmoss then return end
    
-   local hasc = player.pilot():cargoHas(mem.c)
+   local pp = player.pilot()
+   local hasc = pp:cargoHas(mem.c)
    
-   if player.pilot():cargoFree() <= 0 then 
-      local a = player.pilot():armour(true) - ((hasc + 10) ^ (1.015 + 0.02 * overgrowth) - hasc)
+   if pp:cargoFree() <= 0 then 
+      local a = pp:armour(true) - ((hasc + 10) ^ (1.015 + 0.02 * overgrowth) - hasc)
       if a <= 0 then 
          vntk.msg(_("Uh oh"), _([[Suddenly, a loud creaking noise comes from your cargo holds. That creak was your ship's hull giving way to the growing moss. As critical systems fail and life support goes out, you feel a hint of amusement at just how dumb of an end this is.]]))
          player.damageSPFX(1)
-         player.pilot():setEnergy(0) -- Otherwise ZD-15 Guardian Unit breaks this
-         player.pilot():setHealth(-1, -1)
+         pp:setEnergy(0) -- Otherwise ZD-15 Guardian Unit breaks this
+         pp:setHealth(-1, -1)
       else
          player.damageSPFX(0.4)
          player.autonavReset(4)
-         player.pilot():setHealthAbs( a )
+         pp:setHealthAbs( a )
          overgrowth = overgrowth + 1
          if overgrowth == 1 then player.msg(_([[Your cargo holds are overfilled with moss.]]), true)
          elseif overgrowth == 2 then player.msg(_([[The growing moss is making your hull creak dangerously.]]), true)
@@ -210,7 +211,7 @@ function grow ()
    overgrowth = 0
    end
 
-   player.pilot():cargoAdd(mem.c, ((hasc + 1) ^ 1.0035) - hasc)
+   pp:cargoAdd(mem.c, ((hasc + 1) ^ 1.0035) - hasc)
    
    hook.timer(rnd.rnd(3, 4), "grow")
 end
