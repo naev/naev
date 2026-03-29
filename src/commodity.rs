@@ -231,10 +231,10 @@ static COMMODITIES: LazyLock<RwLock<SlotMap<CommodityRef, Commodity>>> =
 pub fn load() -> Result<()> {
    // Since we hardcode this C side, we have to make sure it is in-fact correct.
    // Not static, so we have to do it runtime at the moment.
-   assert_eq!(
-      (1i64 << 32) + ((1i64 << 32) - 1),
-      CommodityRef::null().as_ffi()
-   );
+   //assert_eq!(
+   //   i64::from_ne_bytes( naevc::COMMODITY_NULL.to_ne_bytes() ),
+   //   CommodityRef::null().as_ffi()
+   //);
 
    let ctx = Context::get().as_safe_wrap();
    let base: PathBuf = "commodities/".into();

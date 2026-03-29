@@ -960,7 +960,7 @@ pub fn load() -> Result<()> {
    // Since we hardcode this C side, we have to make sure it is in-fact correct.
    // Not static, so we have to do it runtime at the moment.
    assert_eq!(
-      (1i64 << 32) + ((1i64 << 32) - 1),
+      i64::from_ne_bytes(naevc::FACTION_NULL.to_ne_bytes()),
       FactionRef::null().as_ffi()
    );
 
