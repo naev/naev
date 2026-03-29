@@ -955,7 +955,7 @@ impl FactionData {
 }
 
 /// Loads all the Data
-#[tracing::instrument]
+#[instrument]
 pub fn load() -> Result<()> {
    // Since we hardcode this C side, we have to make sure it is in-fact correct.
    // Not static, so we have to do it runtime at the moment.

@@ -5,20 +5,20 @@ use anyhow::Context as AnyhowContext;
 use anyhow::Result;
 use helpers::ReferenceC;
 use naev_core::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
+use nlog::{warn, warn_err};
 use renderer::texture::TextureDeserializer;
 use renderer::{Context, ContextWrapper, texture};
-use slotmap::{KeyData, SlotMap};
+use slotmap::{Key, KeyData, SecondaryMap, SlotMap};
 use std::collections::HashMap;
-use std::ffi::CString;
+use std::ffi::{CString, OsStr};
 use std::fmt::Debug;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::sync::atomic::AtomicI64;
 use std::sync::{LazyLock, RwLock};
 use tracing::instrument;
 
 #[derive(Default, Debug)]
 struct PriceRef {
-   name: String,
    base: CommodityRef,
    modifier: f64,
 }
@@ -39,9 +39,27 @@ struct CommodityC {
    illegal_to: Array<FactionRef>,
    ctags: ArrayCString,
 }
+impl CommodityC {
+   fn new(com: &Commodity) -> Result<Self> {
+      Ok(CommodityC {
+         name: CString::new(&*com.name)?,
+         display: com.display.clone().map(|d| CString::new(&*d)).transpose()?,
+         description: CString::new(&*com.description)?,
+         illegal_to: Array::new(&com.illegal_to)?,
+         ctags: ArrayCString::new(&com.tags)?,
+      })
+   }
+}
+
+#[derive(Default, Debug)]
+struct CommodityLoad {
+   price_ref: Option<String>,
+   price_mod: Option<f64>,
+}
 
 #[derive(Default, Debug)]
 struct Commodity {
+   id: CommodityRef,
    name: String,
    display: Option<String>,
    description: String,
@@ -69,8 +87,12 @@ struct Commodity {
 }
 impl Commodity {
    #[instrument(skip(ctx))]
-   fn new<P: AsRef<Path> + Debug>(ctx: &ContextWrapper, filename: P) -> Result<Self> {
+   fn new<P: AsRef<Path> + Debug>(
+      ctx: &ContextWrapper,
+      filename: P,
+   ) -> Result<(Self, CommodityLoad)> {
       let mut com = Self::default();
+      let mut load = CommodityLoad::default();
 
       let data = ndata::read(filename)?;
       let doc = roxmltree::Document::parse(std::str::from_utf8(&data)?)?;
@@ -91,26 +113,8 @@ impl Commodity {
             "display" => com.display = Some(nxml::node_string(node)?),
             "description" => com.description = nxml::node_string(node)?,
             "price" => com.price = nxml::node_str(node)?.parse()?,
-            "price_mod" => {
-               if let Some(price_ref) = &mut com.price_ref {
-                  price_ref.modifier = nxml::node_str(node)?.parse()?;
-               } else {
-                  com.price_ref = Some(PriceRef {
-                     modifier: nxml::node_str(node)?.parse()?,
-                     ..Default::default()
-                  })
-               }
-            }
-            "price_ref" => {
-               if let Some(price_ref) = &mut com.price_ref {
-                  price_ref.name = nxml::node_string(node)?;
-               } else {
-                  com.price_ref = Some(PriceRef {
-                     name: nxml::node_string(node)?,
-                     ..Default::default()
-                  })
-               }
-            }
+            "price_mod" => load.price_mod = Some(nxml::node_str(node)?.parse()?),
+            "price_ref" => load.price_ref = Some(nxml::node_string(node)?),
             "gfx_space" => {
                let gfxname = nxml::node_texturepath(node, "gfx/commodity/space/")?;
                com.gfx_space = Some(
@@ -188,7 +192,7 @@ impl Commodity {
             tag => nxml_warn_node_unknown!("Commodity", &com.name, tag),
          }
       }
-      Ok(com)
+      Ok((com, load))
    }
 
    pub fn name(&self) -> &str {
@@ -222,3 +226,67 @@ impl CommodityRef {
 
 static COMMODITIES: LazyLock<RwLock<SlotMap<CommodityRef, Commodity>>> =
    LazyLock::new(|| RwLock::new(SlotMap::with_key()));
+
+#[instrument]
+pub fn load() -> Result<()> {
+   // Since we hardcode this C side, we have to make sure it is in-fact correct.
+   // Not static, so we have to do it runtime at the moment.
+   assert_eq!(
+      (1i64 << 32) + ((1i64 << 32) - 1),
+      CommodityRef::null().as_ffi()
+   );
+
+   let ctx = Context::get().as_safe_wrap();
+   let base: PathBuf = "commodities/".into();
+   let files: Vec<_> = ndata::read_dir(&base)?
+      .into_iter()
+      .filter(|filename| filename.extension() == Some(OsStr::new("xml")))
+      .collect();
+   let mut data = COMMODITIES.write().unwrap();
+   let mut load = SecondaryMap::new();
+   let mut commap: HashMap<String, CommodityRef> = HashMap::new();
+
+   // First pass, load primary data
+   for f in files.into_iter() {
+      match Commodity::new(&ctx, f) {
+         Ok((mut com, comload)) => {
+            let id = data.insert_with_key(|k| {
+               com.id = k;
+               commap.insert(com.name.clone(), k);
+               com
+            });
+            load.insert(id, comload);
+         }
+         Err(e) => {
+            warn_err!(e);
+         }
+      }
+   }
+
+   // Second pass - set up references and C stuff
+   for (id, com) in data.iter_mut() {
+      let comload = load.get(id).unwrap();
+      if let Some(price_ref) = &comload.price_ref
+         && let Some(com_mod) = comload.price_mod
+      {
+         com.price_ref = Some(PriceRef {
+            base: *commap.get(price_ref).with_context(|| {
+               format!(
+                  "commodity '{}' has missing price_ref '{price_ref}'",
+                  &com.name
+               )
+            })?,
+            modifier: com_mod,
+         });
+      } else if comload.price_ref.is_some() || comload.price_mod.is_some() {
+         warn!(
+            "Commodity '{}' has either price_mod or price_ref set",
+            &com.name
+         );
+      }
+
+      com.c = CommodityC::new(&com)?;
+   }
+
+   Ok(())
+}
