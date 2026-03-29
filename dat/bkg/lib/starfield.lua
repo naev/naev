@@ -32,7 +32,7 @@ local starfield_frag = lf.read('bkg/shaders/starfield.frag')
 
 local cvs, texw, texh, sb
 
-local function star_add( added, num_added )
+function starfield.star_add( added, num_added, nolighting )
    -- Set up parameters
    local path  = "gfx/bkg/star/"
    -- Avoid repeating stars
@@ -63,7 +63,10 @@ local function star_add( added, num_added )
    -- Normalize the radiosity so all stars are same brightness for same value of rad and equivalent to white light
    local cr, cg, cb = data.r:rgb()
    local cn = math.sqrt( cr*cr + cg*cg + cb*cb )
-   local rad = colour.new( cr, cg, cb, data.r:alpha() / cn * math.sqrt(3) )
+   local rad = nil
+   if not nolighting then
+      rad = colour.new( cr, cg, cb, data.r:alpha() / cn * math.sqrt(3) )
+   end
    -- Now, none of this makes sense, the "star dust" should be rendered on top
    -- of the star because it moves faster the stars and should be closer,
    -- however, it seems like this is actually a bit jarring, even though it's
@@ -115,7 +118,7 @@ local function add_local_stars ( n )
    local i = 0
    local added = {}
    while n and i < n do
-      local num = star_add( added, i )
+      local num = starfield.star_add( added, i )
       added[ num ] = true
       i = i + 1
    end
