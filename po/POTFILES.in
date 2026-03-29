@@ -2136,6 +2136,7 @@ dat/ssys/c14.xml
 dat/ssys/c28.xml
 dat/ssys/c43.xml
 dat/ssys/c59.xml
+dat/ssys/capella.xml
 dat/ssys/capricorn.xml
 dat/ssys/carnis_major.xml
 dat/ssys/carnis_minor.xml
@@ -2904,6 +2905,7 @@ dat/ai/zalek.lua
 dat/autoequip.lua
 dat/autonav.lua
 dat/bkg/blackhole.lua
+dat/bkg/capella.lua
 dat/bkg/crimson_gauntlet.lua
 dat/bkg/default.lua
 dat/bkg/haze.lua
@@ -2997,6 +2999,7 @@ dat/events/neutral/baron_comm.lua
 dat/events/neutral/baron_flintley.lua
 dat/events/neutral/baron_prowl.lua
 dat/events/neutral/black_cat_gift.lua
+dat/events/neutral/capella_ghost.lua
 dat/events/neutral/capricorn_pirates.lua
 dat/events/neutral/capricorn_pirates_epilogue.lua
 dat/events/neutral/dendria_pirates.lua

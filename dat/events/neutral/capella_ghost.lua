@@ -8,16 +8,16 @@
 --]]
 --[[
    Hostile ghost in hidden system Capella (https://en.wikipedia.org/wiki/Capella)
-   
-   Pretty obviously of Sirius origin; my headcanon is a strong awakened got stranded in there 
+
+   Pretty obviously of Sirius origin; my headcanon is a strong awakened got stranded in there
    after the Incident and after their death left an echo that was further empowered by the Nebula.
-   
+
    Every cycle, it conjures another semi-illusory star to shine together with the four true ones.
-   
-   Could be expanded into a mini-campaign at some point; perhaps after the player's first visit, 
-   the ghost starts going on outings and blowing up ships in adjacent systems, which prompts action 
+
+   Could be expanded into a mini-campaign at some point; perhaps after the player's first visit,
+   the ghost starts going on outings and blowing up ships in adjacent systems, which prompts action
    from either the Sirius or the Dreamers to pacify it somehow.
-   
+
    As is, it's a neat secret and a gimmicky Vixilium mining spot to reward the player with.
 --]]
 local pilotai = require "pilotai"
@@ -46,7 +46,7 @@ function create ()
    ghost:setHostile()
    hook.update("update")
    hook.enter("enter")
-   hk_timer = hook.timer(4, "timer")
+   hook.timer(4, "timer")
 end
 local timer_done = false
 function timer()
@@ -56,14 +56,14 @@ function timer()
       vn.clear()
       vn.scene()
       vn.transition()
-      
+
       vn.na(_([[As you're getting your bearings after the hyperspace jump, an eerie feeling washes over you. There's something peculiar about this place, and the sensor feeds confirm it is anything but mundane.]]))
       vn.appear( sai, tut.shipai.transition )
       sai(_([["There are several abnormalities in the ambient radiation and gravitational readings. Also, a system with this many stars would not be statistically possible under ordinary physics."]]))
       sai(_([["Something almost like another ship is nearby, but I am unable to pinpoint the exact location, nor assess how much danger we could be in. I would suggest flying in stealth mode and exercising heavy caution as long as we are here.]]))
       vn.na(_([[You can feel a presence start to stir against your very being, as if you were being watched. It may not be wise to linger.]]))
       vn.disappear( sai, tut.shipai.transition )
-      
+
       vn.run()
       var.push("capella_visited", true)
    end
@@ -79,6 +79,5 @@ function update( dt )
    end
 end
 function enter ()
-   hook.rm(hk_timer)
    evt.finish()
 end
