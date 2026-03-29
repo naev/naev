@@ -33,7 +33,7 @@
 
  ### Content
 
-   * 3 new missions
+   * 4 new missions
    * 7 new events
    * 2 new ships
    * 7 new outfits
