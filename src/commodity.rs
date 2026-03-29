@@ -193,7 +193,7 @@ impl Commodity {
 
    pub fn name(&self) -> &str {
       if let Some(display) = &self.display {
-         &display
+         display
       } else {
          &self.name
       }

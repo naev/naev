@@ -47,7 +47,7 @@ pub trait ReferenceC {
    fn slot(&self) -> usize
    where
       Self: Sized;
-   fn as_ffi(self) -> i64
+   fn as_ffi(&self) -> i64
    where
       Self: Sized;
 }
@@ -60,7 +60,7 @@ impl<T: slotmap::Key> ReferenceC for T {
       (self.data().as_ffi() & 0xffff_ffff) as usize - 1
    }
 
-   fn as_ffi(self) -> i64
+   fn as_ffi(&self) -> i64
    where
       Self: Sized,
    {

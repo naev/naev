@@ -65,7 +65,7 @@ impl HookParam {
 }
 
 pub fn run_param_deferred(stack: &str, params: &[HookParam]) {
-   let mut params: Vec<_> = params.into_iter().map(|p| p.to_c()).collect();
+   let mut params: Vec<_> = params.iter().map(|p| p.to_c()).collect();
    params.push(HookParam::sentinal());
    let stack = CString::new(stack).unwrap();
    unsafe { naevc::hooks_runParamDeferred(stack.as_ptr(), params.as_ptr()) };
