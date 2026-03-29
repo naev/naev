@@ -2099,10 +2099,10 @@ void map_updateFactionPresence( const unsigned int wid, const char *name,
    l = 0;
    for ( int i = 0; i < array_size( presence ); i++ ) {
       char             col;
-      FactionPresence *p = &presence[i];
-      if ( faction_exists( p->name ) )
-         col =
-            faction_reputationColourCharSystem( faction_get( p->name ), sys );
+      FactionPresence *p   = &presence[i];
+      FactionRef       fct = faction_exists( p->name );
+      if ( fct != FACTION_NULL )
+         col = faction_reputationColourCharSystem( fct, sys );
       else
          col = 'N';
 

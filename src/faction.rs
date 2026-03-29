@@ -2021,25 +2021,22 @@ pub extern "C" fn faction_isFaction(f: i64) -> c_int {
 pub extern "C" fn faction_exists(name: *const c_char) -> i64 {
    let ptr = unsafe { CStr::from_ptr(name) };
    let name = ptr.to_str().unwrap();
-   for (id, val) in FACTIONS.read().unwrap().iter() {
-      if name == val.data.name {
-         return id.as_ffi();
-      }
-   }
-   0
+   FactionRef::new(name)
+      .unwrap_or(FactionRef::null().as_ffi())
+      .as_ffi()
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_get(name: *const c_char) -> i64 {
    let ptr = unsafe { CStr::from_ptr(name) };
    let name = ptr.to_str().unwrap();
-   for (id, val) in FACTIONS.read().unwrap().iter() {
-      if name == val.data.name {
-         return id.as_ffi();
+   match FactionRef::new(name) {
+      Some(f) => f.as_ffi(),
+      None => {
+         warnx!(gettext("Faction '{}' not found in stack."), name);
+         FactionRef::null().as_ffi()
       }
    }
-   warnx!(gettext("Faction '{}' not found in stack."), name);
-   0
 }
 
 #[unsafe(no_mangle)]

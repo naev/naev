@@ -4063,7 +4063,6 @@ src/nlua_diff.c
 src/nlua_diff.h
 src/nlua_evt.c
 src/nlua_evt.h
-src/nlua_faction.c
 src/nlua_faction.h
 src/nlua_file.h
 src/nlua_font.c
