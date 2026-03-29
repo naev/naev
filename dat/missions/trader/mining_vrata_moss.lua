@@ -7,7 +7,8 @@
  <location>Bar</location>
  <cond>
    local misn_test = require("misn_test")
-   return player.evtDone("Mining Vrata Delivered Space Moss") and spob.cur ~= spob.get("Mining Vrata Guildhouse") and misn_test.cargo(true) and misn_test.reweight_active()
+   local scur = spob.cur()
+   return player.evtDone("Mining Vrata Delivered Space Moss") and scur ~= spob.get("Mining Vrata Guildhouse") and scur:faction():tags():generic() and misn_test.cargo(true) and misn_test.reweight_active()
  </cond>
 </mission>
 --]]
@@ -36,6 +37,7 @@ local pspb = spob.get("Mining Vrata Guildhouse")
 local psys  = pspb:system()
 local dspb = spob.get("Wigheta")
 local dsys  = dspb:system()
+local faction = faction.get("Traders Society")
 local reward   = 400e3
 local cargo_amount = 1
 local npcvn, npcpor = vni.generic()
@@ -111,7 +113,7 @@ function pickup ()
       if player.fleetCargoMissionFree() < cargo_amount then
          vn.jump("nospace")
          return
-      elseif player.fleetCargoMissionFree() < 300 then
+      elseif player.fleetCargoMissionFree() < 200 then
          vn.jump("littlespace")
          return
       else
@@ -161,6 +163,7 @@ function dropoff ()
    vn.func(function()
       lmisn.sfxVictory()
       player.pay(reward)
+      faction:hit(25)
       player.pilot():cargoRm(mem.c, player.pilot():cargoHas(mem.c)) -- Why does it not default to removing all?
    end)
    vn.na(fmt.reward(reward))
@@ -177,12 +180,35 @@ function takeoff ()
    end
 end
 
+local overgrowth = 0
 function grow ()
-   if not mem.gotmoss then return
-   elseif player.pilot():cargoFree() <= 0 and rnd.rnd() > 0.85 then uhoh() end
+   if not mem.gotmoss then return end
    
    local hasc = player.pilot():cargoHas(mem.c)
-   player.pilot():cargoAdd(mem.c, ((hasc + 1) ^ 1.003) - hasc)
+   
+   if player.pilot():cargoFree() <= 0 then 
+      local a = player.pilot():armour(true) - ((hasc + 10) ^ (1.015 + 0.02 * overgrowth) - hasc)
+      if a <= 0 then 
+         vntk.msg(_("Uh oh"), _([[Suddenly, a loud creaking noise comes from your cargo holds. That creak was your ship's hull giving way to the growing moss. As critical systems fail and life support goes out, you feel a hint of amusement at just how dumb of an end this is.]]))
+         player.damageSPFX(1)
+         player.pilot():setEnergy(0) -- Otherwise ZD-15 Guardian Unit breaks this
+         player.pilot():setHealth(-1, -1)
+      else
+         player.damageSPFX(0.4)
+         player.autonavReset(4)
+         player.pilot():setHealthAbs( a )
+         overgrowth = overgrowth + 1
+         if overgrowth == 1 then player.msg(_([[Your cargo holds are overfilled with moss.]]), true)
+         elseif overgrowth == 2 then player.msg(_([[The growing moss is making your hull creak dangerously.]]), true)
+         elseif overgrowth == 3 then player.msg(_([[The moss is putting uncomfortable pressure on your ship's internals.]]), true)
+         elseif overgrowth >= 4 then player.msg(_([[Your ship's hull is starting to give way to the moss.]]), true)
+         end
+      end
+   else
+   overgrowth = 0
+   end
+
+   player.pilot():cargoAdd(mem.c, ((hasc + 1) ^ 1.0035) - hasc)
    
    hook.timer(rnd.rnd(3, 4), "grow")
 end
@@ -192,11 +218,6 @@ function jettison ()
       vntk.msg(_("Mission failure"), _([[You have jettisoned all of the moss out of your ship. You have nothing to deliver anymore.]]))
       misn.finish(false)
    end
-end
-
-function uhoh ()
-   vntk.msg(_("Uh oh"), _([[Suddenly, a loud creaking noise comes from your cargo holds. That creak was your ship's hull giving way to the growing moss. As critical systems fail and life support goes out, you feel a hint of amusement at just how dumb of an end this is.]]))
-   player.pilot():setHealth( -1, -1 )
 end
 
 function abort ()
