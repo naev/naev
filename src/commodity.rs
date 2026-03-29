@@ -97,13 +97,6 @@ impl Commodity {
       let data = ndata::read(filename)?;
       let doc = roxmltree::Document::parse(std::str::from_utf8(&data)?)?;
       let root = doc.root_element();
-      com.name = String::from(match root.attribute("name") {
-         Some(n) => n,
-         None => {
-            return nxml_err_attr_missing!("Damage Type", "name");
-         }
-      });
-
       for node in root.children() {
          if !node.is_element() {
             continue;
@@ -124,7 +117,7 @@ impl Commodity {
                );
             }
             "gfx_store" => {
-               let gfxname = nxml::node_texturepath(node, "gfx/commodity/store/")?;
+               let gfxname = nxml::node_texturepath(node, "gfx/commodity/")?;
                com.gfx_store = Some(
                   texture::TextureBuilder::new()
                      .path(&gfxname)
@@ -156,7 +149,7 @@ impl Commodity {
             }
             "period" => com.economy_modifiers.period = nxml::node_str(node)?.parse()?,
             "spob_modifier" => {
-               let name = String::from(match root.attribute("type") {
+               let name = String::from(match node.attribute("type") {
                   Some(n) => n,
                   None => {
                      return nxml_err_attr_missing!("Commodity/spob_modifier", "type");
@@ -166,7 +159,7 @@ impl Commodity {
                com.economy_modifiers.spob_modifier.insert(name, value);
             }
             "faction_modifier" => {
-               let name = match root.attribute("type") {
+               let name = match node.attribute("type") {
                   Some(n) => n,
                   None => {
                      return nxml_err_attr_missing!("Commodity/faction_modifier", "type");

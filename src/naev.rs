@@ -8,6 +8,7 @@ use sdl3 as sdl;
 use std::ffi::CString;
 use std::os::raw::{c_char, c_int, c_uint}; // Re-export for outter rust shenanigans
 use std::path::PathBuf;
+use tracing::instrument;
 
 #[link(name = "naev")]
 unsafe extern "C" {
@@ -460,7 +461,7 @@ impl LoadStage {
    }
 }
 
-#[tracing::instrument(skip_all)]
+#[instrument(skip_all)]
 fn load_all(sdlctx: &sdl::Sdl, env: &nlua::LuaEnv) -> Result<()> {
    unsafe {
       // Misc init stuff
@@ -482,9 +483,7 @@ fn load_all(sdlctx: &sdl::Sdl, env: &nlua::LuaEnv) -> Result<()> {
          naevc::effect_load()
       }), /* no dep */
       LoadStage::new(gettext("Loading Factions…"), faction::load), /* dep for space, missions, AI, commodities */
-      //LoadStage::new_c(gettext("Loading Factions…"), || unsafe {
-      //   naevc::factions_load()
-      //}), /* dep for space, missions, AI, commodities */
+      //LoadStage::new(gettext("Loading Commodities…"), commodity::load), /* dep for asteroids */
       LoadStage::new_c(gettext("Loading Commodities…"), || unsafe {
          naevc::commodity_load()
       }), /* no dep */
@@ -550,7 +549,7 @@ fn load_all(sdlctx: &sdl::Sdl, env: &nlua::LuaEnv) -> Result<()> {
    Ok(())
 }
 
-#[tracing::instrument(skip(env))]
+#[instrument(skip(env))]
 fn loadscreen_update(env: &nlua::LuaEnv, done: f32, msg: &str) -> Result<()> {
    let lua = &nlua::NLUA;
    let update: mlua::Function = env.get("update")?;
