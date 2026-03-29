@@ -28,12 +28,13 @@ local ghost
 function create ()
    local fct = faction.dynAdd("Dummy", "metaphysical", _("Metaphysical"))
    ghost = pilot.add( "Astral Projection Greater", fct, vec2.new(), _("Starlighter"), {ai="baddiepos"} )
+   ghost:effectAdd("Astral Projection")
    local m = ghost:memory()
    m.comm_no = "No response."
    pilotai.guard( ghost, vec2.new() )
    ghost:setInvincible()
    ghost:setInvisible()
-   ghost:setNoRender()
+   --ghost:setNoRender()
    ghost:intrinsicSet("weapon_energy", 99999) -- Pew pew is beneath us here
    ghost:intrinsicSet("action_speed", 300)
    ghost:intrinsicSet("cooldown_mod", -95)
