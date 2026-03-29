@@ -139,7 +139,7 @@ credits_t         commodity_price( CommodityRef com );
 int               commodity_price_constant( CommodityRef com );
 int               commodity_always_can_sell( CommodityRef com );
 int               commodity_isTemp( CommodityRef com );
-const char       *commodity_price_ref( CommodityRef com );
+CommodityRef      commodity_price_ref( CommodityRef com );
 double            commodity_price_mod( CommodityRef com );
 credits_t         commodity_last_purchase_price( CommodityRef com );
 void commodity_set_last_purchase_price( CommodityRef com, credits_t amount );

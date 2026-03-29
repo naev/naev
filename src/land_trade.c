@@ -384,11 +384,12 @@ void commodity_update( unsigned int wid, const char *str )
    window_modifyText( wid, "txtDesc", buf );
 
    /* Add relative price. */
-   l = 0;
+   l               = 0;
+   CommodityRef pr = commodity_price_ref( com );
    if ( commodity_price_constant( com ) ) {
       l += scnprintf( &buf[l], sizeof( buf ) - l, _( "Price is constant." ) );
       window_modifyText( wid, "txtDRef", buf );
-   } else if ( commodity_price_ref( com ) != NULL ) {
+   } else if ( pr != NULL ) {
       char   c    = '0';
       double pmod = commodity_price_mod( com );
       if ( pmod > 1. )
@@ -398,7 +399,7 @@ void commodity_update( unsigned int wid, const char *str )
       l += scnprintf(
          &buf[l], sizeof( buf ) - l,
          _( "Price is based on #%c%.0f%%#0 of the price of #o%s#0." ), c,
-         pmod * 100., _( commodity_price_ref( com ) ) );
+         pmod * 100., commodity_name( pr ) );
       window_modifyText( wid, "txtDRef", buf );
    } else
       window_modifyText( wid, "txtDRef", NULL );

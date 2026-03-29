@@ -14,7 +14,7 @@ use std::collections::HashMap;
 use std::ffi::{CString, OsStr};
 use std::fmt::Debug;
 use std::path::{Path, PathBuf};
-use std::sync::atomic::AtomicI64;
+use std::sync::atomic::{AtomicI64, Ordering};
 use std::sync::{LazyLock, RwLock};
 use tracing::instrument;
 
@@ -341,6 +341,16 @@ where
       None => anyhow::bail!("commodity not found"),
    }
 }
+fn faction_c_call_mut<F, R>(id: i64, f: F) -> Result<R>
+where
+   F: Fn(&mut Commodity) -> R,
+{
+   let mut commodities = COMMODITIES.write().unwrap();
+   match commodities.get_mut(CommodityRef::from_ffi(id)) {
+      Some(com) => Ok(f(com)),
+      None => anyhow::bail!("commodity not found"),
+   }
+}
 
 #[unsafe(no_mangle)]
 pub extern "C" fn _commodity_name(com: i64) -> *const c_char {
@@ -419,4 +429,126 @@ pub extern "C" fn _commodity_price_constant(com: i64) -> c_int {
       warn_err!(e);
       0
    })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _commodity_always_can_sell(com: i64) -> c_int {
+   faction_c_call(com, |c| c.always_can_sell as c_int).unwrap_or_else(|e| {
+      warn_err!(e);
+      0
+   })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _commodity_isTemp(com: i64) -> c_int {
+   faction_c_call(com, |c| c.temporary as c_int).unwrap_or_else(|e| {
+      warn_err!(e);
+      0
+   })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _commodity_price_ref(com: i64) -> i64 {
+   faction_c_call(com, |c| match &c.price_ref {
+      Some(pr) => pr.base.as_ffi(),
+      None => CommodityRef::null().as_ffi(),
+   })
+   .unwrap_or_else(|e| {
+      warn_err!(e);
+      CommodityRef::null().as_ffi()
+   })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _commodity_price_mod(com: i64) -> c_double {
+   faction_c_call(com, |c| match &c.price_ref {
+      Some(pr) => pr.modifier as c_double,
+      None => 1.0,
+   })
+   .unwrap_or_else(|e| {
+      warn_err!(e);
+      1.0
+   })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _commodity_last_purchase_price(com: i64) -> i64 {
+   faction_c_call(com, |c| c.last_purchased_price.load(Ordering::Relaxed)).unwrap_or_else(|e| {
+      warn_err!(e);
+      0
+   })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _commodity_set_last_purchase_price(com: i64, amount: i64) {
+   faction_c_call(com, |c| {
+      c.last_purchased_price.store(amount, Ordering::Relaxed)
+   })
+   .unwrap_or_else(|e| {
+      warn_err!(e);
+   })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _commodity_checkIllegal(com: i64, fct: i64) -> c_int {
+   faction_c_call(com, |c| {
+      c.illegal_to.contains(&FactionRef::from_ffi(fct)) as c_int
+   })
+   .unwrap_or_else(|e| {
+      warn_err!(e);
+      0
+   })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _commodity_newTemp(name: *const c_char, desc: *const c_char) -> i64 {
+   let ptr = unsafe { CStr::from_ptr(name) };
+   let name = ptr.to_str().unwrap().to_string();
+   let ptr = unsafe { CStr::from_ptr(desc) };
+   let desc = ptr.to_str().unwrap().to_string();
+   COMMODITIES
+      .write()
+      .unwrap()
+      .insert_with_key(|k| {
+         let mut com = Commodity {
+            id: k,
+            name,
+            description: desc,
+            ..Default::default()
+         };
+         if let Ok(c) = CommodityC::new(&com) {
+            com.c = c;
+         }
+         com
+      })
+      .as_ffi()
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _commodity_tempIllegalto(com: i64, fct: i64) -> c_int {
+   faction_c_call_mut(com, |c| {
+      c.illegal_to.push(FactionRef::from_ffi(fct));
+      if let Ok(a) = Array::new(&c.illegal_to) {
+         c.c.illegal_to = a;
+      }
+      0
+   })
+   .unwrap_or_else(|e| {
+      warn_err!(e);
+      -1
+   })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _standard_commodities() -> *const i64 {
+   static STANDARD_COMMODITIES: LazyLock<Array<i64>> = LazyLock::new(|| {
+      let std: Vec<_> = COMMODITIES
+         .read()
+         .unwrap()
+         .iter()
+         .filter_map(|(k, v)| if v.standard { Some(k.as_ffi()) } else { None })
+         .collect();
+      Array::new(&std).unwrap()
+   });
+   STANDARD_COMMODITIES.as_ptr() as *const i64
 }

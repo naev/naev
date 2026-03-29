@@ -231,13 +231,15 @@ int commodity_compareTech( const void *commodity1, const void *commodity2 )
    c2 = *(CommodityRef *)commodity2;
 
    /* Compare price. */
-   if ( c1->price < c2->price )
+   credits_t c1p = commodity_price( c1 );
+   credits_t c2p = commodity_price( c2 );
+   if ( c1p < c2p )
       return +1;
-   else if ( c1->price > c2->price )
+   else if ( c1p > c2p )
       return -1;
 
    /* It turns out they're the same. */
-   return strcmp( c1->name, c2->name );
+   return strcmp( commodity_name( c1 ), commodity_name( c2 ) );
 }
 
 /**
@@ -462,9 +464,11 @@ int commodity_isTemp( CommodityRef com )
    return com->istemp;
 }
 
-const char *commodity_price_ref( CommodityRef com )
+CommodityRef commodity_price_ref( CommodityRef com )
 {
-   return com->price_ref;
+   if ( com->price_ref == NULL )
+      return COMMODITY_NULL;
+   return commodity_get( com->price_ref );
 }
 double commodity_price_mod( CommodityRef com )
 {

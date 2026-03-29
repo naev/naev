@@ -2289,7 +2289,7 @@ static void map_genModeList( void )
             if ( commodity_isTemp( com ) )
                continue;
 
-            if ( commodity_price_ref( com ) != NULL )
+            if ( commodity_price_ref( com ) != COMMODITY_NULL )
                continue;
 
             int l;
