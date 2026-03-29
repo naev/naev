@@ -297,7 +297,16 @@ pub fn load() -> Result<()> {
    Ok(())
 }
 
-use std::ffi::{CStr, c_char};
+use std::ffi::{CStr, c_char, c_double, c_int};
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _commodity_getAll() -> *mut i64 {
+   let mut coms: Vec<i64> = vec![];
+   for (id, _) in COMMODITIES.read().unwrap().iter() {
+      coms.push(id.as_ffi());
+   }
+   Array::new(&coms).unwrap().into_ptr() as *mut i64
+}
 
 #[unsafe(no_mangle)]
 pub extern "C" fn _commodity_get(name: *const c_char) -> i64 {
@@ -319,4 +328,95 @@ pub extern "C" fn _commodity_getW(name: *const c_char) -> i64 {
    CommodityRef::new(name)
       .unwrap_or(CommodityRef::null())
       .as_ffi()
+}
+
+/// Helper function for the C-side
+fn faction_c_call<F, R>(id: i64, f: F) -> Result<R>
+where
+   F: Fn(&Commodity) -> R,
+{
+   let commodities = COMMODITIES.read().unwrap();
+   match commodities.get(CommodityRef::from_ffi(id)) {
+      Some(com) => Ok(f(com)),
+      None => anyhow::bail!("commodity not found"),
+   }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _commodity_name(com: i64) -> *const c_char {
+   faction_c_call(com, |c| unsafe {
+      naevc::gettext_rust(if let Some(display) = &c.c.display {
+         display.as_ptr()
+      } else {
+         c.c.name.as_ptr()
+      })
+   })
+   .unwrap_or_else(|e| {
+      warn_err!(e);
+      std::ptr::null()
+   })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _commodity_name_raw(com: i64) -> *const c_char {
+   faction_c_call(com, |c| c.c.name.as_ptr()).unwrap_or_else(|e| {
+      warn_err!(e);
+      std::ptr::null()
+   })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _commodity_description(com: i64) -> *const c_char {
+   faction_c_call(com, |c| c.c.description.as_ptr()).unwrap_or_else(|e| {
+      warn_err!(e);
+      std::ptr::null()
+   })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _commodity_gfxStore(com: i64) -> *const texture::Texture {
+   faction_c_call(com, |c| match &c.gfx_store {
+      Some(tex) => tex as *const texture::Texture,
+      None => std::ptr::null(),
+   })
+   .unwrap_or_else(|e| {
+      warn_err!(e);
+      std::ptr::null()
+   })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _commodity_gfxSpace(com: i64) -> *const texture::Texture {
+   faction_c_call(com, |c| match &c.gfx_space {
+      Some(tex) => tex as *const texture::Texture,
+      None => std::ptr::null(),
+   })
+   .unwrap_or_else(|e| {
+      warn_err!(e);
+      std::ptr::null()
+   })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _commodity_illegalTo(com: i64) -> *const FactionRef {
+   faction_c_call(com, |c| c.c.illegal_to.as_ptr() as *const FactionRef).unwrap_or_else(|e| {
+      warn_err!(e);
+      std::ptr::null()
+   })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _commodity_price(com: i64) -> i64 {
+   faction_c_call(com, |c| c.price).unwrap_or_else(|e| {
+      warn_err!(e);
+      0
+   })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _commodity_price_constant(com: i64) -> c_int {
+   faction_c_call(com, |c| c.price_constant as c_int).unwrap_or_else(|e| {
+      warn_err!(e);
+      0
+   })
 }
