@@ -45,10 +45,10 @@ extern StarSystem *systems_stack; /**< Star system stack. */
 /*
  * Nodal analysis simulation for dynamic economies.
  */
-static int econ_initialized = 0; /**< Is economy system initialized? */
-static int econ_queued      = 0; /**< Whether there are any queued updates. */
-static cs *econ_G           = NULL; /**< Admittance matrix. */
-int       *econ_comm        = NULL; /**< Commodities to calculate. */
+static int  econ_initialized = 0; /**< Is economy system initialized? */
+static int  econ_queued      = 0; /**< Whether there are any queued updates. */
+static cs  *econ_G           = NULL; /**< Admittance matrix. */
+static int *econ_comm        = NULL; /**< Commodities to calculate. */
 
 /*
  * Prototypes.
@@ -450,6 +450,17 @@ int economy_init( void )
    /* Must not be initialized. */
    if ( econ_initialized )
       return 0;
+
+   // Set up commodities
+   CommodityRef *call = commodity_getAll();
+   econ_comm          = array_create( int );
+   for ( int i = 0; i < array_size( call ); i++ ) {
+      CommodityRef com = call[i];
+      /* See if should get added to commodity list. */
+      if ( commodity_price( com ) > 0 )
+         array_push_back( &econ_comm, commodity_slot( com ) );
+   }
+   array_free( call );
 
    /* Allocate price space. */
    for ( int i = 0; i < array_size( systems_stack ); i++ ) {
