@@ -99,8 +99,6 @@ local function add_local_stars ( n )
    n = math.min( n, 7 )
    if n > 0 then
       gfx.lightIntensity( 0.5 / n )
-   else
-      gfx.lightIntensity( 0 )
    end
    gfx.lightAmbient( math.max(0, 0.15 - n * 0.05) )
 
