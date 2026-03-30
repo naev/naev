@@ -5,6 +5,9 @@ use anyhow::Context as AnyhowContext;
 use anyhow::Result;
 use gettext::gettext;
 use helpers::ReferenceC;
+use mlua::{
+   BorrowedStr, Either, FromLua, Function, MetaMethod, UserData, UserDataMethods, UserDataRef,
+};
 use naev_core::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
 use nlog::{warn, warn_err, warnx};
 use renderer::texture::TextureDeserializer;
@@ -19,13 +22,13 @@ use std::sync::{LazyLock, RwLock};
 use tracing::instrument;
 
 #[derive(Default, Debug)]
-struct PriceRef {
+pub struct PriceRef {
    base: CommodityRef,
    modifier: f64,
 }
 
 #[derive(Default, Debug)]
-struct EconomyModifiers {
+pub struct EconomyModifiers {
    period: f64,
    population_modifier: f64,
    spob_modifier: HashMap<String, f32>,
@@ -33,7 +36,7 @@ struct EconomyModifiers {
 }
 
 #[derive(Default, Debug)]
-struct CommodityC {
+pub struct CommodityC {
    name: CString,
    display: Option<CString>,
    description: CString,
@@ -59,32 +62,32 @@ struct CommodityLoad {
 }
 
 #[derive(Default, Debug)]
-struct Commodity {
-   id: CommodityRef,
-   name: String,
-   display: Option<String>,
-   description: String,
+pub struct Commodity {
+   pub id: CommodityRef,
+   pub name: String,
+   pub display: Option<String>,
+   pub description: String,
 
-   temporary: bool,
-   standard: bool,
-   always_can_sell: bool,
-   price_constant: bool,
+   pub temporary: bool,
+   pub standard: bool,
+   pub always_can_sell: bool,
+   pub price_constant: bool,
 
-   price: i64,
-   price_ref: Option<PriceRef>,
+   pub price: i64,
+   pub price_ref: Option<PriceRef>,
 
-   gfx_store: Option<texture::Texture>,
-   gfx_space: Option<texture::Texture>,
+   pub gfx_store: Option<texture::Texture>,
+   pub gfx_space: Option<texture::Texture>,
 
-   last_purchased_price: AtomicI64,
+   pub last_purchased_price: AtomicI64,
 
-   economy_modifiers: EconomyModifiers,
+   pub economy_modifiers: EconomyModifiers,
 
-   illegal_to: Vec<FactionRef>,
-   tags: Vec<String>,
+   pub illegal_to: Vec<FactionRef>,
+   pub tags: Vec<String>,
 
    // C stuff, TODO remove when possible
-   c: CommodityC,
+   pub c: CommodityC,
 }
 impl Commodity {
    #[instrument(skip(ctx))]
@@ -216,6 +219,17 @@ impl CommodityRef {
       }
       None
    }
+
+   pub fn call<F, R>(&self, f: F) -> Result<R>
+   where
+      F: Fn(&Commodity) -> R,
+   {
+      let commodities = COMMODITIES.read().unwrap();
+      match commodities.get(*self) {
+         Some(com) => Ok(f(com)),
+         None => anyhow::bail!("commodity not found"),
+      }
+   }
 }
 
 static COMMODITIES: LazyLock<RwLock<SlotMap<CommodityRef, Commodity>>> =
@@ -295,6 +309,178 @@ pub fn load() -> Result<()> {
    }
 
    Ok(())
+}
+
+impl FromLua for CommodityRef {
+   fn from_lua(value: mlua::Value, _: &mlua::Lua) -> mlua::Result<Self> {
+      match value {
+         mlua::Value::UserData(ud) => Ok(*ud.borrow::<Self>()?),
+         mlua::Value::String(name) => {
+            let name = &name.to_str()?;
+            Ok(CommodityRef::new(name).with_context(|| format!("commodity '{name}' not found"))?)
+         }
+         val => Err(mlua::Error::RuntimeError(format!(
+            "unable to convert {} to CommodityRef",
+            val.type_name()
+         ))),
+      }
+   }
+}
+
+/*@
+ * @brief Lua bindings to interact with commodities.
+ *
+ * This will allow you to create and manipulate commodities in-game.
+ *
+ * An example would be:
+ * @code
+ * c = commodity.get( "Food" ) -- Gets the commodity by name
+ * if c:price() > 500 then
+ *    -- Do something with high price
+ * end
+ * @endcode
+ *
+ * @lua_mod commodity
+ */
+impl UserData for CommodityRef {
+   /*@
+    * @brief Gets the translated name of the commodity.
+    *    @luatparam Commodity c Commodity to get the translated name of.
+    *    @luatreturn string The translated name of the commodity.
+    * @luafunc __tostring
+    * @see name
+    */
+   fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
+      methods.add_meta_function(MetaMethod::ToString, |_, this: Self| {
+         Ok(this.call(|com| com.name().to_string())?)
+      });
+      /*@
+       * @brief Checks to see if two commodities are the same.
+       *
+       * @usage if c1 == c2 then -- Checks to see if commodity c1 and c2 are the same
+       *
+       *    @luatparam Commodity c1 First commodity to compare.
+       *    @luatparam Commodity c2 Second commodity to compare.
+       *    @luatreturn boolean true if both commodities are the same.
+       * @luafunc __eq
+       */
+      methods.add_meta_function(
+         MetaMethod::Eq,
+         |_, (this, other): (Self, Self)| -> mlua::Result<bool> { Ok(this == other) },
+      );
+      /*@
+       * @brief Gets a commodity.
+       *
+       * @usage s = commodity.get( "Food" ) -- Gets the food commodity
+       *
+       *    @luatparam string s Raw (untranslated) name of the commodity to get.
+       *    @luatreturn Commodity|nil The commodity matching name or nil if error.
+       * @luafunc get
+       */
+      methods.add_function("get", |_, name: BorrowedStr| -> mlua::Result<Self> {
+         Ok(CommodityRef::new(&name).with_context(|| format!("Commodity '{name}' not found!"))?)
+      });
+      /*@
+       * @brief Gets a table with all the commodities.
+       *
+       * @usage for k,v in ipairs( commodity.getAll() ) do ... end
+       *
+       *    @luatreturn {Commodity} Ordered list of commodities.
+       * @luafunc getAll
+       */
+      methods.add_function("getAll", |_, ()| -> mlua::Result<Vec<Self>> {
+         Ok(COMMODITIES.read().unwrap().keys().collect())
+      });
+      /*@
+       * @brief Gets a commodity if it exists.
+       *
+       * @usage s = commodity.exists( "Food" ) -- Gets the food commodity
+       *
+       *    @luatparam string s Raw (untranslated) name of the commodity to get.
+       *    @luatreturn Commodity|nil The commodity matching name or nil if error.
+       * @luafunc exists
+       */
+      methods.add_function(
+         "exists",
+         |_, name: BorrowedStr| -> mlua::Result<Option<Self>> { Ok(CommodityRef::new(&name)) },
+      );
+      /*@
+       * @brief Gets the list of standard commodities.
+       *
+       *    @luatreturn table A table containing commodity objects, namely those which
+       * are standard (buyable/saleable anywhere).
+       * @luafunc getStandard
+       */
+      methods.add_function("getStandard", |_, ()| -> mlua::Result<Vec<Self>> {
+         Ok(COMMODITIES
+            .read()
+            .unwrap()
+            .iter()
+            .filter_map(|(k, v)| v.standard.then_some(k))
+            .collect())
+      });
+      /*@
+       * @brief Gets the translated name of the commodity.
+       *
+       * This translated name should be used for display purposes (e.g.
+       * messages). It cannot be used as an identifier for the commodity; for
+       * that, use commodity.nameRaw() instead.
+       *
+       * It is not necessarily equivalent to _(c:name()) if the commodity has a different display name.
+       *
+       * @usage commodityname = c:name()
+       *
+       *    @luatparam Commodity c Commodity to get the translated name of.
+       *    @luatreturn string The translated name of the commodity.
+       * @luafunc name
+       */
+      methods.add_method("name", |_, this, ()| -> mlua::Result<String> {
+         Ok(this.call(|com| com.name().to_string())?)
+      });
+      /*@
+       * @brief Gets the raw (untranslated) name of the commodity.
+       *
+       * This untranslated name should be used for identification purposes
+       * (e.g. can be passed to commodity.get()). It should not be used
+       * directly for display purposes without manually translating it with
+       * _().
+       *
+       * @usage commodityrawname = c:nameRaw()
+       *
+       *    @luatparam Commodity c Commodity to get the raw name of.
+       *    @luatreturn string The raw name of the commodity.
+       * @luafunc nameRaw
+       */
+      methods.add_method("name_raw", |_, this, ()| -> mlua::Result<String> {
+         Ok(this.call(|com| com.name.to_string())?)
+      });
+      /*@
+       * @brief Gets the base price of an commodity.
+       *
+       * @usage print( c:price() ) -- Prints the base price of the commodity
+       *
+       *    @luatparam Commodity c Commodity to get information of.
+       *    @luatreturn number The base price of the commodity.
+       * @luafunc price
+       */
+      methods.add_method("price", |_, this, ()| -> mlua::Result<i64> {
+         Ok(this.call(|com| com.price)?)
+      });
+      /*@
+       * @brief Gets the base price of an commodity on a certain spob.
+       *
+       * @usage if c:priceAt( spob.get("Polaris Prime") ) > 100 then -- Checks price
+       * of a commodity at Polaris Prime
+       *
+       *    @luatparam Commodity c Commodity to get information of.
+       *    @luatparam Spob p Spob to get price at.
+       *    @luatreturn number The price of the commodity at the spob.
+       * @luafunc priceAt
+       */
+      methods.add_method("priceAt", |_, this, ()| -> mlua::Result<i64> {
+         Ok(this.call(|com| com.price)?)
+      });
+   }
 }
 
 use std::ffi::{CStr, c_char, c_double, c_int};
