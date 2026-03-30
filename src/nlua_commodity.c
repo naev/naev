@@ -240,12 +240,13 @@ static int commodityL_get( lua_State *L )
  */
 static int commodityL_getAll( lua_State *L )
 {
-   CommodityRef com = (CommodityRef)commodity_getAll();
+   CommodityRef *com = commodity_getAll();
    lua_newtable( L );
    for ( int i = 0; i < array_size( com ); i++ ) {
-      lua_pushcommodity( L, &com[i] );
+      lua_pushcommodity( L, com[i] );
       lua_rawseti( L, -2, i + 1 );
    }
+   array_free( com );
    return 1;
 }
 

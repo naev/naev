@@ -400,7 +400,14 @@ impl UserData for CommodityRef {
        * @luafunc getAll
        */
       methods.add_function("getAll", |_, ()| -> mlua::Result<Vec<Self>> {
-         Ok(COMMODITIES.read().unwrap().keys().collect())
+         //Ok(COMMODITIES.read().unwrap().keys().collect())
+         // Original code doesn't return temporary commodities
+         Ok(COMMODITIES
+            .read()
+            .unwrap()
+            .iter()
+            .filter_map(|(k, v)| (!v.temporary).then_some(k))
+            .collect())
       });
       /*@
        * @brief Gets a commodity if it exists.
@@ -884,4 +891,9 @@ pub extern "C" fn _standard_commodities() -> *const i64 {
       Array::new(&std).unwrap()
    });
    STANDARD_COMMODITIES.as_ptr() as *const i64
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _commodity_slot(com: i64) -> c_int {
+   (com & 0xffff_ffff) as c_int
 }

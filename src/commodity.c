@@ -138,9 +138,13 @@ void tonnes2str( char *str, int tonnes )
  * @brief Gets all the commodities.
  */
 // const CommodityRef *commodity_getAll( void )
-const Commodity *commodity_getAll( void )
+CommodityRef *commodity_getAll( void )
 {
-   return commodity_stack;
+   CommodityRef *all =
+      array_create_size( CommodityRef, array_size( commodity_stack ) );
+   for ( int i = 0; i < array_size( commodity_stack ); i++ )
+      array_push_back( &all, &commodity_stack[i] );
+   return all;
 }
 
 /**
@@ -152,10 +156,10 @@ const Commodity *commodity_getAll( void )
 CommodityRef commodity_get( const char *name )
 {
    CommodityRef c = commodity_getW( name );
-   if ( c != NULL )
+   if ( c != COMMODITY_NULL )
       return c;
    WARN( _( "Commodity '%s' not found in stack" ), name );
-   return NULL;
+   return COMMODITY_NULL;
 }
 
 /**
@@ -184,29 +188,14 @@ CommodityRef commodity_getW( const char *name )
  */
 static void commodity_freeOne( CommodityRef com )
 {
-   CommodityModifier *this, *next;
    free( com->name );
    free( com->display );
    free( com->description );
    free( com->price_ref );
    gl_freeTexture( com->gfx_store );
    gl_freeTexture( com->gfx_space );
-   next               = com->spob_modifier;
-   com->spob_modifier = NULL;
-   while ( next != NULL ) {
-      this = next;
-      next = this->next;
-      free( this->name );
-      free( this );
-   }
-   next                  = com->faction_modifier;
-   com->faction_modifier = NULL;
-   while ( next != NULL ) {
-      this = next;
-      next = this->next;
-      free( this->name );
-      free( this );
-   }
+   array_free( com->spob_modifier );
+   array_free( com->faction_modifier );
    array_free( com->illegalto );
    for ( int i = 0; i < array_size( com->tags ); i++ )
       free( com->tags[i] );
@@ -340,19 +329,21 @@ static int commodity_parse( CommodityRef temp, const char *filename )
       xmlr_float( node, "population_modifier", temp->population_modifier );
       xmlr_float( node, "period", temp->period );
       if ( xml_isNode( node, "spob_modifier" ) ) {
-         CommodityModifier *newdict = malloc( sizeof( CommodityModifier ) );
-         newdict->next              = temp->spob_modifier;
-         xmlr_attr_strd( node, "type", newdict->name );
-         newdict->value      = xml_getFloat( node );
-         temp->spob_modifier = newdict;
+         if ( temp->spob_modifier == NULL )
+            temp->spob_modifier = array_create( CommodityModifier );
+         CommodityModifier newdict;
+         xmlr_attr_strd( node, "type", newdict.name );
+         newdict.value = xml_getFloat( node );
+         array_push_back( &temp->spob_modifier, newdict );
          continue;
       }
       if ( xml_isNode( node, "faction_modifier" ) ) {
-         CommodityModifier *newdict = malloc( sizeof( CommodityModifier ) );
-         newdict->next              = temp->faction_modifier;
-         xmlr_attr_strd( node, "type", newdict->name );
-         newdict->value         = xml_getFloat( node );
-         temp->faction_modifier = newdict;
+         if ( temp->faction_modifier == NULL )
+            temp->faction_modifier = array_create( CommodityModifier );
+         CommodityModifier newdict;
+         xmlr_attr_strd( node, "type", newdict.name );
+         newdict.value = xml_getFloat( node );
+         array_push_back( &temp->faction_modifier, newdict );
          continue;
       }
 
@@ -639,6 +630,11 @@ int commodity_load( void )
    return 0;
 }
 
+int commodity_slot( CommodityRef com )
+{
+   return com - commodity_stack;
+}
+
 /**
  * @brief Frees all the loaded commodities.
  */
@@ -661,4 +657,25 @@ void commodity_free( void )
    econ_comm = NULL;
 
    gatherable_cleanup();
+}
+
+double commodity_period( CommodityRef com )
+{
+   return com->period;
+}
+void commodity_set_period( CommodityRef com, double period )
+{
+   com->period = period;
+}
+double commodity_population_modifier( CommodityRef com )
+{
+   return com->population_modifier;
+}
+CommodityModifier *commodity_spob_modifiers( CommodityRef com )
+{
+   return com->spob_modifier;
+}
+CommodityModifier *commodity_faction_modifiers( CommodityRef com )
+{
+   return com->faction_modifier;
 }

@@ -46,9 +46,8 @@ typedef int64_t credits_t;
  * @brief Represents a dictionary of values used to modify a commodity.
  */
 typedef struct CommodityModifier_ {
-   char                      *name;
-   float                      value;
-   struct CommodityModifier_ *next;
+   char *name;
+   float value;
 } CommodityModifier;
 
 /**
@@ -108,7 +107,7 @@ typedef struct CommodityPrice_ {
                            spobVariation*sin(2pi t/spobPeriod) */
    int64_t updateTime; /**< used for averaging and to hold the time last average
                           was calculated. */
-   char *name;         /**< used for keeping tabs during averaging */
+   const char *name;   /**< used for keeping tabs during averaging */
    double
       sum; /**< used when averaging over jump points during setup, and then for
               capturing the moving average when the player visits a spob. */
@@ -122,9 +121,9 @@ typedef struct CommodityPrice_ {
  * Commodity stuff.
  */
 // const CommodityRef *commodity_getAll( void );
-const Commodity *commodity_getAll( void );
-CommodityRef     commodity_get( const char *name );
-CommodityRef     commodity_getW( const char *name );
+CommodityRef *commodity_getAll( void );
+CommodityRef  commodity_get( const char *name );
+CommodityRef  commodity_getW( const char *name );
 
 int  commodity_load( void );
 void commodity_free( void );
@@ -144,6 +143,13 @@ double            commodity_price_mod( CommodityRef com );
 credits_t         commodity_last_purchase_price( CommodityRef com );
 void commodity_set_last_purchase_price( CommodityRef com, credits_t amount );
 int  commodity_checkIllegal( CommodityRef com, FactionRef faction );
+int  commodity_slot( CommodityRef com );
+
+double             commodity_period( CommodityRef com );
+void               commodity_set_period( CommodityRef com, double period );
+double             commodity_population_modifier( CommodityRef com );
+CommodityModifier *commodity_spob_modifiers( CommodityRef com );
+CommodityModifier *commodity_faction_modifiers( CommodityRef com );
 
 /*
  * Temporary commodities.

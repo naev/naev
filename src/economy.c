@@ -11,8 +11,6 @@
  *  This is then solved with linear algebra after each time increment.
  */
 /** @cond */
-#include <stdio.h>
-
 #if HAVE_SUITESPARSE_CS_H
 #include <suitesparse/cs.h>
 #else /* HAVE_SUITESPARSE_CS_H */
@@ -43,9 +41,6 @@
 
 /* systems stack. */
 extern StarSystem *systems_stack; /**< Star system stack. */
-
-/* @TODO get rid of these externs. */
-extern CommodityRef commodity_stack;
 
 /*
  * Nodal analysis simulation for dynamic economies.
@@ -102,17 +97,16 @@ credits_t economy_getPriceAtTime( CommodityRef com, const StarSystem *sys,
    CommodityPrice *commPrice;
 
    /* If commodity is using a reference, just return that. */
-   if ( com->price_ref != NULL ) {
-      CommodityRef ref = commodity_get( com->price_ref );
-      if ( ref == NULL )
-         return 1e6; /* Just arbitrary large number so players notice. */
-      price = economy_getPriceAtTime( ref, sys, p, tme ) * com->price_mod;
+   CommodityRef ref = commodity_price_ref( com );
+   if ( ref != COMMODITY_NULL ) {
+      price = economy_getPriceAtTime( ref, sys, p, tme ) *
+              commodity_price_mod( com );
       return (credits_t)( price + 0.5 );
    }
 
    /* Constant price. */
-   if ( commodity_isFlag( com, COMMODITY_FLAG_PRICE_CONSTANT ) )
-      return com->price;
+   if ( commodity_price_constant( com ) )
+      return commodity_price( com );
 
    /* Get current time in periods.
     * Note, taking off and landing takes about 1e7 ntime, which is 1 period.
@@ -121,7 +115,7 @@ credits_t economy_getPriceAtTime( CommodityRef com, const StarSystem *sys,
    t = ntime_convertSeconds( tme ) / NT_PERIOD_SECONDS;
 
    /* Get position in stack. */
-   k = com - commodity_stack;
+   k = commodity_slot( com );
 
    /* Find what commodity that is. */
    for ( i = 0; i < array_size( econ_comm ); i++ )
@@ -130,13 +124,15 @@ credits_t economy_getPriceAtTime( CommodityRef com, const StarSystem *sys,
 
    /* Check if found. */
    if ( i >= array_size( econ_comm ) ) {
-      WARN( _( "Price for commodity '%s' not known." ), com->name );
+      WARN( _( "Price for commodity '%s' not known." ),
+            commodity_name_raw( com ) );
       return 0;
    }
 
    /* and get the index on this spob */
    for ( i = 0; i < array_size( p->commodities ); i++ ) {
-      if ( ( strcmp( p->commodities[i]->name, com->name ) == 0 ) )
+      if ( ( strcmp( commodity_name_raw( p->commodities[i] ),
+                     commodity_name_raw( com ) ) == 0 ) )
          break;
    }
    if ( i >= array_size( p->commodities ) ) {
@@ -144,7 +140,7 @@ credits_t economy_getPriceAtTime( CommodityRef com, const StarSystem *sys,
       double    std  = 0.;
       if ( economy_getAveragePrice( com, &mean, &std ) )
          WARN( _( "Price for commodity '%s' not known on this spob." ),
-               com->name );
+               commodity_name_raw( com ) );
       return mean;
    }
    commPrice = &p->commodityPrice[i];
@@ -188,27 +184,26 @@ int economy_getAverageSpobPrice( CommodityRef com, const Spob *p,
    array_free( prices );
    array_free( tech );
 
-   if ( com->price_ref != NULL ) {
-      CommodityRef ref = commodity_get( com->price_ref );
-      if ( ref == NULL )
-         return -1;
+   CommodityRef ref = commodity_price_ref( com );
+   if ( ref != COMMODITY_NULL ) {
       int ret = economy_getAverageSpobPrice( ref, p, mean, std );
       if ( !ret )
          return ret;
-      *mean = (credits_t)( (double)*mean * com->price_mod + 0.5 ) * price_mod;
-      *std  = ( *std * com->price_mod );
+      double cprice_mod = commodity_price_mod( com );
+      *mean = (credits_t)( (double)*mean * cprice_mod + 0.5 ) * price_mod;
+      *std  = ( *std * cprice_mod );
       return 0;
    }
 
    /* Constant price. */
-   if ( commodity_isFlag( com, COMMODITY_FLAG_PRICE_CONSTANT ) ) {
-      *mean = com->price * price_mod;
+   if ( commodity_price_constant( com ) ) {
+      *mean = (double)( commodity_price( com ) ) * price_mod;
       *std  = 0.;
       return 0;
    }
 
    /* Get position in stack */
-   k = com - commodity_stack;
+   k = commodity_slot( com );
 
    /* Find what commodity this is */
    for ( i = 0; i < array_size( econ_comm ); i++ )
@@ -217,7 +212,8 @@ int economy_getAverageSpobPrice( CommodityRef com, const Spob *p,
 
    /* Check if found */
    if ( i >= array_size( econ_comm ) ) {
-      WARN( _( "Average price for commodity '%s' not known." ), com->name );
+      WARN( _( "Average price for commodity '%s' not known." ),
+            commodity_name_raw( com ) );
       *mean = 0;
       *std  = 0;
       return -1;
@@ -225,12 +221,13 @@ int economy_getAverageSpobPrice( CommodityRef com, const Spob *p,
 
    /* and get the index on this spob */
    for ( i = 0; i < array_size( p->commodities ); i++ ) {
-      if ( ( strcmp( p->commodities[i]->name, com->name ) == 0 ) )
+      if ( ( strcmp( commodity_name_raw( p->commodities[i] ),
+                     commodity_name_raw( com ) ) == 0 ) )
          break;
    }
    if ( i >= array_size( p->commodities ) ) {
       WARN( _( "Price for commodity '%s' not known on this spob." ),
-            com->name );
+            commodity_name_raw( com ) );
       *mean = 0;
       *std  = 0;
       return -1;
@@ -260,21 +257,20 @@ int economy_getAverageSpobPrice( CommodityRef com, const Spob *p,
  */
 int economy_getAveragePrice( CommodityRef com, credits_t *mean, double *std )
 {
-   if ( com->price_ref != NULL ) {
-      CommodityRef ref = commodity_get( com->price_ref );
-      if ( ref == NULL )
-         return -1;
-      int ret = economy_getAveragePrice( ref, mean, std );
-      *mean   = (credits_t)round( (double)*mean * com->price_mod );
-      *std    = ( *std * com->price_mod );
-      return round( (double)ret * com->price_mod );
+   CommodityRef ref = commodity_price_ref( com );
+   if ( ref != COMMODITY_NULL ) {
+      int    ret       = economy_getAveragePrice( ref, mean, std );
+      double price_mod = commodity_price_mod( com );
+      *mean            = (credits_t)round( (double)*mean * price_mod );
+      *std             = ( *std * price_mod );
+      return round( (double)ret * price_mod );
    }
 
    /* Constant price. */
-   if ( commodity_isFlag( com, COMMODITY_FLAG_PRICE_CONSTANT ) ) {
-      *mean = com->price;
+   if ( commodity_price_constant( com ) ) {
+      *mean = commodity_price( com );
       *std  = 0.;
-      return com->price;
+      return commodity_price( com );
    }
 
    double av  = 0;
@@ -285,7 +281,8 @@ int economy_getAveragePrice( CommodityRef com, credits_t *mean, double *std )
       for ( int j = 0; j < array_size( sys->spobs ); j++ ) {
          const Spob *p = sys->spobs[j];
          for ( int k = 0; k < array_size( p->commodities ); k++ ) {
-            if ( ( strcmp( p->commodities[k]->name, com->name ) != 0 ) )
+            if ( ( strcmp( commodity_name_raw( p->commodities[k] ),
+                           commodity_name_raw( com ) ) != 0 ) )
                continue;
             const CommodityPrice *commPrice = &p->commodityPrice[k];
             if ( commPrice->cnt > 0 ) {
@@ -304,7 +301,8 @@ int economy_getAveragePrice( CommodityRef com, credits_t *mean, double *std )
       *mean = (credits_t)round( av );
       *std  = av2;
    } else {
-      WARN( _( "Average price for commodity '%s' not known." ), com->name );
+      WARN( _( "Average price for commodity '%s' not known." ),
+            commodity_name_raw( com ) );
       *mean = 0;
       *std  = 0;
    }
@@ -633,9 +631,10 @@ static int economy_calcPrice( Spob *spob, CommodityRef commodity,
       return 0;
 
    /* Constant price. */
-   if ( commodity_isFlag( commodity, COMMODITY_FLAG_PRICE_CONSTANT ) ) {
-      commodityPrice->price = commodity->price;
-      commodityPrice->sum   = commodity->price;
+   if ( commodity_price_constant( commodity ) ) {
+      credits_t price       = commodity_price( commodity );
+      commodityPrice->price = price;
+      commodityPrice->sum   = price;
       commodityPrice->sum2  = 0.;
       return 0;
    }
@@ -644,22 +643,21 @@ static int economy_calcPrice( Spob *spob, CommodityRef commodity,
    if ( spob->presence.faction == FACTION_NULL ) {
       WARN( _( "Spob '%s' appears to have commodity '%s' defined, but no "
                "faction." ),
-            spob->name, commodity->name );
+            spob->name, commodity_name_raw( commodity ) );
       return 1;
    }
 
    /* Reset price to the base commodity price. */
-   commodityPrice->price = commodity->price;
+   commodityPrice->price = commodity_price( commodity );
 
    /* Get the cost modifier suitable for spob type/class. */
-   cm    = commodity->spob_modifier;
+   cm    = commodity_spob_modifiers( commodity );
    scale = 1.;
-   while ( cm != NULL ) {
-      if ( ( strcmp( spob->class, cm->name ) == 0 ) ) {
-         scale = cm->value;
+   for ( int i = 0; i < array_size( cm ); i++ ) {
+      if ( ( strcmp( spob->class, cm[i].name ) == 0 ) ) {
+         scale = cm[i].value;
          break;
       }
-      cm = cm->next;
    }
    commodityPrice->price *= scale;
    commodityPrice->spobVariation = 0.5;
@@ -670,10 +668,11 @@ static int economy_calcPrice( Spob *spob, CommodityRef commodity,
    commodityPrice->updateTime = 0;*/
    /* Use filename to specify a variation period. */
    base = 100;
-   commodity->period =
+   commodity_set_period(
+      commodity,
       32 * ( spob->gfx_spaceName[strlen( SPOB_GFX_SPACE_PATH )] % 32 ) +
-      spob->gfx_spaceName[strlen( SPOB_GFX_SPACE_PATH ) + 1] % 32;
-   commodityPrice->spobPeriod = commodity->period + base;
+         spob->gfx_spaceName[strlen( SPOB_GFX_SPACE_PATH ) + 1] % 32 );
+   commodityPrice->spobPeriod = commodity_period( commodity ) + base;
 
    /* Use filename of exterior graphic to modify the variation period.
       No rhyme or reason, just gives some variability. */
@@ -690,7 +689,7 @@ static int economy_calcPrice( Spob *spob, CommodityRef commodity,
    factor = -1;
    if ( spob->population > 0 )
       factor = tanh( ( log( (double)spob->population ) - log( 1e8 ) ) * 0.5 );
-   base = commodity->population_modifier;
+   base = commodity_population_modifier( commodity );
    commodityPrice->price *= 1. + factor * base;
    commodityPrice->spobVariation *= 0.5 - factor * 0.25;
    commodityPrice->spobPeriod *= 1. + factor * 0.5;
@@ -698,16 +697,14 @@ static int economy_calcPrice( Spob *spob, CommodityRef commodity,
    /* Modify price based on faction (as defined in the xml).
       Some factions place a higher value on certain goods.
       Some factions are more stable than others.*/
-   scale = 1.;
-   cm    = commodity->spob_modifier;
-
+   scale       = 1.;
+   cm          = commodity_faction_modifiers( commodity );
    factionname = faction_name( spob->presence.faction );
-   while ( cm != NULL ) {
-      if ( strcmp( factionname, cm->name ) == 0 ) {
-         scale = cm->value;
+   for ( int i = 0; i < array_size( cm ); i++ ) {
+      if ( strcmp( factionname, cm[i].name ) == 0 ) {
+         scale = cm[i].value;
          break;
       }
-      cm = cm->next;
    }
    commodityPrice->price *= scale;
 
@@ -758,8 +755,8 @@ static void economy_modifySystemCommodityPrice( StarSystem *sys )
             2000. / (double)( array_size( sys->jumps ) + 1 );
 
          for ( k = 0; k < array_size( avprice ); k++ ) {
-            if ( ( strcmp( spob->commodities[j]->name, avprice[k].name ) ==
-                   0 ) ) {
+            if ( ( strcmp( commodity_name_raw( spob->commodities[j] ),
+                           avprice[k].name ) == 0 ) ) {
                avprice[k].updateTime++;
                avprice[k].price += spob->commodityPrice[j].price;
                avprice[k].spobPeriod += spob->commodityPrice[j].spobPeriod;
@@ -773,11 +770,11 @@ static void economy_modifySystemCommodityPrice( StarSystem *sys )
          if ( k == array_size( avprice ) ) { /* first visit of this commodity
                                                 for this system */
             (void)array_grow( &avprice );
-            avprice[k].name          = spob->commodities[j]->name;
-            avprice[k].updateTime    = 1;
-            avprice[k].price         = spob->commodityPrice[j].price;
-            avprice[k].spobPeriod    = spob->commodityPrice[j].spobPeriod;
-            avprice[k].sysPeriod     = spob->commodityPrice[j].sysPeriod;
+            avprice[k].name       = commodity_name_raw( spob->commodities[j] );
+            avprice[k].updateTime = 1;
+            avprice[k].price      = spob->commodityPrice[j].price;
+            avprice[k].spobPeriod = spob->commodityPrice[j].spobPeriod;
+            avprice[k].sysPeriod  = spob->commodityPrice[j].sysPeriod;
             avprice[k].spobVariation = spob->commodityPrice[j].spobVariation;
             avprice[k].sysVariation  = spob->commodityPrice[j].sysVariation;
          }
@@ -796,8 +793,8 @@ static void economy_modifySystemCommodityPrice( StarSystem *sys )
       Spob *spob = sys->spobs[i];
       for ( int j = 0; j < array_size( spob->commodities ); j++ ) {
          for ( k = 0; k < array_size( avprice ); k++ ) {
-            if ( ( strcmp( spob->commodities[j]->name, avprice[k].name ) ==
-                   0 ) ) {
+            if ( ( strcmp( commodity_name_raw( spob->commodities[j] ),
+                           avprice[k].name ) == 0 ) ) {
                spob->commodityPrice[j].price *= 0.25;
                spob->commodityPrice[j].price += 0.75 * avprice[k].price;
                spob->commodityPrice[j].sysVariation =
@@ -863,7 +860,8 @@ static void economy_calcUpdatedCommodityPrice( StarSystem *sys )
       Spob *spob = sys->spobs[i];
       for ( int j = 0; j < array_size( spob->commodities ); j++ ) {
          for ( int k = 0; k < array_size( avprice ); k++ ) {
-            if ( ( strcmp( avprice[k].name, spob->commodities[j]->name ) ==
+            if ( ( strcmp( avprice[k].name,
+                           commodity_name_raw( spob->commodities[j] ) ) ==
                    0 ) ) {
                spob->commodityPrice[j].price =
                   ( 0.25 * spob->commodityPrice[j].price +
@@ -923,27 +921,6 @@ void economy_initialiseCommodityPrices( void )
       StarSystem *sys = &systems_stack[i];
       economy_calcUpdatedCommodityPrice( sys );
    }
-   /* And now free temporary commodity information */
-   for ( int i = 0; i < array_size( commodity_stack ); i++ ) {
-      CommodityModifier *this, *next;
-      CommodityRef com   = &commodity_stack[i];
-      next               = com->spob_modifier;
-      com->spob_modifier = NULL;
-      while ( next != NULL ) {
-         this = next;
-         next = this->next;
-         free( this->name );
-         free( this );
-      }
-      next                  = com->faction_modifier;
-      com->faction_modifier = NULL;
-      while ( next != NULL ) {
-         this = next;
-         next = this->next;
-         free( this->name );
-         free( this );
-      }
-   }
 }
 
 /*
@@ -961,7 +938,7 @@ void economy_averageSeenPrices( const Spob *p )
 {
    ntime_t t = ntime_get();
    for ( int i = 0; i < array_size( p->commodities ); i++ ) {
-      Commodity      *c  = p->commodities[i];
+      CommodityRef    c  = p->commodities[i];
       CommodityPrice *cp = &p->commodityPrice[i];
       if ( cp->updateTime <
            t ) { /* has not yet been updated at present time. */
@@ -980,7 +957,7 @@ void economy_averageSeenPricesAtTime( const Spob *p, const ntime_t tupdate )
 {
    ntime_t t = ntime_get();
    for ( int i = 0; i < array_size( p->commodities ); i++ ) {
-      Commodity      *c  = p->commodities[i];
+      CommodityRef    c  = p->commodities[i];
       CommodityPrice *cp = &p->commodityPrice[i];
       if ( cp->updateTime <
            t ) { /* has not yet been updated at present time. */
@@ -1005,8 +982,10 @@ void economy_clearKnown( void )
          economy_clearSingleSpob( sys->spobs[j] );
       }
    }
-   for ( int i = 0; i < array_size( commodity_stack ); i++ )
-      commodity_stack[i].lastPurchasePrice = 0;
+   CommodityRef *commodities = commodity_getAll();
+   for ( int i = 0; i < array_size( commodities ); i++ )
+      commodity_set_last_purchase_price( commodities[i], 0 );
+   array_free( commodities );
 }
 
 /**
@@ -1065,8 +1044,8 @@ int economy_sysLoad( xmlNodePtr parent )
                            CommodityPrice *cp = NULL;
                            for ( int i = 0; i < array_size( spob->commodities );
                                  i++ ) {
-                              if ( ( strcmp( str,
-                                             spob->commodities[i]->name ) ==
+                              if ( ( strcmp( str, commodity_name_raw(
+                                                     spob->commodities[i] ) ) ==
                                      0 ) ) {
                                  cp = &spob->commodityPrice[i];
                                  break;
@@ -1089,8 +1068,8 @@ int economy_sysLoad( xmlNodePtr parent )
                xmlr_attr_strd( cur, "name", str );
                if ( str ) {
                   CommodityRef c = commodity_get( str );
-                  if ( c != NULL )
-                     c->lastPurchasePrice = xml_getLong( cur );
+                  if ( c != COMMODITY_NULL )
+                     commodity_set_last_purchase_price( c, xml_getLong( cur ) );
                   free( str );
                }
             }
@@ -1110,11 +1089,13 @@ int economy_sysSave( xmlTextWriterPtr writer )
 {
    /* Save what the player has seen of the economy at each spob */
    xmlw_startElem( writer, "economy" );
-   for ( int i = 0; i < array_size( commodity_stack ); i++ ) {
-      if ( commodity_stack[i].lastPurchasePrice > 0 ) {
+   CommodityRef *commodities = commodity_getAll();
+   for ( int i = 0; i < array_size( commodities ); i++ ) {
+      CommodityRef c = commodities[i];
+      if ( commodity_last_purchase_price( c ) > 0 ) {
          xmlw_startElem( writer, "lastPurchase" );
-         xmlw_attr( writer, "name", "%s", commodity_stack[i].name );
-         xmlw_str( writer, "%" PRIu64, commodity_stack[i].lastPurchasePrice );
+         xmlw_attr( writer, "name", "%s", commodity_name_raw( c ) );
+         xmlw_str( writer, "%" PRIu64, commodity_last_purchase_price( c ) );
          xmlw_endElem( writer );
       }
    }
@@ -1141,7 +1122,8 @@ int economy_sysSave( xmlTextWriterPtr writer )
                xmlw_attr( writer, "name", "%s", p->name );
             }
             xmlw_startElem( writer, "commodity" );
-            xmlw_attr( writer, "name", "%s", p->commodities[k]->name );
+            xmlw_attr( writer, "name", "%s",
+                       commodity_name_raw( p->commodities[k] ) );
             xmlw_attr( writer, "sum", "%f", cp->sum );
             xmlw_attr( writer, "sum2", "%f", cp->sum2 );
             xmlw_attr( writer, "cnt", "%d", cp->cnt );

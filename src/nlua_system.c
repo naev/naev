@@ -633,7 +633,8 @@ static int systemL_jumps( lua_State *L )
  */
 static int systemL_asteroidFields( lua_State *L )
 {
-   StarSystem *s = luaL_validsystem( L, 1 );
+   StarSystem   *s   = luaL_validsystem( L, 1 );
+   CommodityRef *all = commodity_getAll();
    /* Push all jumps. */
    lua_newtable( L );
    for ( int i = 0; i < array_size( s->asteroids ); i++ ) {
@@ -653,11 +654,10 @@ static int systemL_asteroidFields( lua_State *L )
       lua_setfield( L, -2, "radius" );
 
       lua_newtable( L );
-      CommodityRef all = (CommodityRef)commodity_getAll();
-      int          nt  = 0;
+      int nt = 0;
       for ( int c = 0; c < array_size( all ); c++ ) {
-         if ( asteroids_hasCommodity( a, &all[c] ) ) {
-            lua_pushcommodity( L, &all[c] );
+         if ( asteroids_hasCommodity( a, all[c] ) ) {
+            lua_pushcommodity( L, all[c] );
             lua_rawseti( L, -2, ++nt );
          }
       }
@@ -665,6 +665,7 @@ static int systemL_asteroidFields( lua_State *L )
 
       lua_rawseti( L, -2, i + 1 );
    }
+   array_free( all );
    return 1;
 }
 
