@@ -15,5 +15,9 @@
    <hide>1.000000</hide>
    <pos x="-22181.509398" y="3772.352158" was_auto="true"/>
   </jump>
+  <jump target="Mason">
+   <hide>1.000000</hide>
+   <autopos/>
+  </jump>
  </jumps>
 </ssys>
