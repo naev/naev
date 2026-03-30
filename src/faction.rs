@@ -2611,7 +2611,7 @@ pub extern "C" fn factions_clearDynamic() {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn faction_updateSingle(id: i64) -> f64 {
+pub extern "C" fn faction_updateSingle(id: i64) {
    let mut v = (0.0, 0.0);
    for sys in crate::system::get() {
       let p = sys.presence();
@@ -2623,7 +2623,13 @@ pub extern "C" fn faction_updateSingle(id: i64) -> f64 {
          }
       });
    }
-   (if v.1 > 0.0 { v.0 / v.1 } else { 0.0 }) as f64
+
+   // Propagate and update
+   if let Err(e) = FactionRef::from_ffi(id)
+      .call(|f| f.standing.write().unwrap().player = if v.1 > 0.0 { v.0 / v.1 } else { 0.0 })
+   {
+      warn_err!(e);
+   }
 }
 
 #[unsafe(no_mangle)]
