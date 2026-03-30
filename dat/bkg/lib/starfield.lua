@@ -97,7 +97,7 @@ local function add_local_stars ( n )
       warn("Trying to use more than 7 lights!")
    end
    n = math.min( n, 7 )
-   if n ~= 0 then
+   if n > 0 then
       gfx.lightIntensity( 0.5 / n )
    else
       gfx.lightIntensity( 0 )
