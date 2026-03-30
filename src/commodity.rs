@@ -5,6 +5,7 @@ use anyhow::Context as AnyhowContext;
 use anyhow::Result;
 use gettext::gettext;
 use helpers::ReferenceC;
+use itertools::Itertools;
 use mlua::{
    BorrowedStr, Either, FromLua, Function, MetaMethod, UserData, UserDataMethods, UserDataRef,
 };
@@ -386,6 +387,11 @@ pub fn load() -> Result<()> {
       if let Err(e) = update_commodity(com, comload, &commap) {
          warn_err!(e);
       }
+   }
+
+   // Check duplicates
+   for name in data.iter().map(|(_, f)| &f.name).duplicates().unique() {
+      warn!("Faction '{name}' is duplicated!");
    }
 
    // Some debug

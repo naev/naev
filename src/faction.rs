@@ -7,6 +7,7 @@ use anyhow::Context as AnyhowContext;
 use anyhow::Result;
 use gettext::gettext;
 use helpers::ReferenceC;
+use itertools::Itertools;
 use mlua::ErrorContext as MluaContext;
 use mlua::{
    BorrowedStr, Either, FromLua, Function, MetaMethod, UserData, UserDataMethods, UserDataRef,
@@ -1053,6 +1054,11 @@ pub fn load() -> Result<()> {
             fd.data.neutrals.push(*id);
          }
       }
+   }
+
+   // Check duplicates
+   for name in data.iter().map(|(_, f)| &f.data.name).duplicates().unique() {
+      warn!("Faction '{name}' is duplicated!");
    }
 
    // Compute grid
