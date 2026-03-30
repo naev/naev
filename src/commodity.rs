@@ -21,6 +21,19 @@ use std::sync::atomic::{AtomicI64, Ordering};
 use std::sync::{LazyLock, RwLock};
 use tracing::instrument;
 
+#[derive(Debug)]
+pub struct CommodityModifier(naevc::CommodityModifier);
+impl Default for CommodityModifier {
+   fn default() -> Self {
+      Self::new(std::ptr::null(), 0.0)
+   }
+}
+impl CommodityModifier {
+   fn new(name: *const c_char, value: f32) -> Self {
+      Self(naevc::CommodityModifier { name, value })
+   }
+}
+
 #[derive(Default, Debug)]
 pub struct PriceRef {
    base: CommodityRef,
@@ -37,20 +50,51 @@ pub struct EconomyModifiers {
 
 #[derive(Default, Debug)]
 pub struct CommodityC {
+   strings: Vec<CString>,
    name: CString,
    display: Option<CString>,
    description: CString,
    illegal_to: Array<FactionRef>,
    ctags: ArrayCString,
+   spob_modifier: Array<CommodityModifier>,
+   faction_modifier: Array<CommodityModifier>,
 }
 impl CommodityC {
    fn new(com: &Commodity) -> Result<Self> {
+      let mut strings = Vec::new();
+      let spob_modifier = Array::new(
+         &com
+            .economy_modifiers
+            .spob_modifier
+            .iter()
+            .map(|(k, v)| {
+               let s = CString::new(&**k).unwrap();
+               strings.push(s);
+               CommodityModifier::new(strings.last().unwrap().as_ptr(), *v)
+            })
+            .collect::<Vec<_>>(),
+      )?;
+      let faction_modifier = Array::new(
+         &com
+            .economy_modifiers
+            .faction_modifier
+            .iter()
+            .map(|(k, v)| {
+               let f = k.call(|f| f.c.cname.as_ptr()).unwrap();
+               CommodityModifier::new(f, *v)
+            })
+            .collect::<Vec<_>>(),
+      )?;
+
       Ok(CommodityC {
          name: CString::new(&*com.name)?,
          display: com.display.clone().map(|d| CString::new(&*d)).transpose()?,
          description: CString::new(&*com.description)?,
          illegal_to: Array::new(&com.illegal_to)?,
          ctags: ArrayCString::new(&com.tags)?,
+         spob_modifier,
+         faction_modifier,
+         strings,
       })
    }
 }
@@ -95,7 +139,13 @@ impl Commodity {
       ctx: &ContextWrapper,
       filename: P,
    ) -> Result<(Self, CommodityLoad)> {
-      let mut com = Self::default();
+      let mut com = Self {
+         economy_modifiers: EconomyModifiers {
+            period: 200.0,
+            ..Default::default()
+         },
+         ..Default::default()
+      };
       let mut load = CommodityLoad::default();
 
       let data = ndata::read(filename)?;
@@ -287,9 +337,8 @@ pub fn load() -> Result<()> {
       comload: &CommodityLoad,
       commap: &HashMap<String, CommodityRef>,
    ) -> Result<()> {
-      if let Some(price_ref) = &comload.price_ref
-         && let Some(com_mod) = comload.price_mod
-      {
+      let com_mod = comload.price_mod.unwrap_or(1.);
+      if let Some(price_ref) = &comload.price_ref {
          com.price_ref = Some(PriceRef {
             base: *commap.get(price_ref).with_context(|| {
                format!(
@@ -299,11 +348,6 @@ pub fn load() -> Result<()> {
             })?,
             modifier: com_mod,
          });
-      } else if comload.price_ref.is_some() || comload.price_mod.is_some() {
-         warn!(
-            "Commodity '{}' has either price_mod or price_ref set",
-            &com.name
-         );
       }
 
       com.c = CommodityC::new(com)?;
@@ -896,4 +940,48 @@ pub extern "C" fn _standard_commodities() -> *const i64 {
 #[unsafe(no_mangle)]
 pub extern "C" fn _commodity_slot(com: i64) -> c_int {
    (com & 0xffff_ffff) as c_int
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _commodity_period(com: i64) -> c_double {
+   faction_c_call(com, |c| c.economy_modifiers.period as c_double).unwrap_or_else(|e| {
+      warn_err!(e);
+      200.0
+   })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _commodity_set_period(com: i64, period: c_double) {
+   faction_c_call_mut(com, |c| {
+      c.economy_modifiers.period = period;
+   })
+   .unwrap_or_else(|e| {
+      warn_err!(e);
+   })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _commodity_population_modifier(com: i64) -> c_double {
+   faction_c_call(com, |c| c.economy_modifiers.population_modifier as c_double).unwrap_or_else(
+      |e| {
+         warn_err!(e);
+         0.0
+      },
+   )
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _commodity_spob_modifiers(com: i64) -> *const CommodityModifier {
+   faction_c_call(com, |c| c.c.spob_modifier.as_ptr()).unwrap_or_else(|e| {
+      warn_err!(e);
+      std::ptr::null_mut()
+   }) as *const CommodityModifier
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _commodity_faction_modifiers(com: i64) -> *const CommodityModifier {
+   faction_c_call(com, |c| c.c.faction_modifier.as_ptr()).unwrap_or_else(|e| {
+      warn_err!(e);
+      std::ptr::null_mut()
+   }) as *const CommodityModifier
 }

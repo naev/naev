@@ -622,9 +622,9 @@ void economy_destroy( void )
 static int economy_calcPrice( Spob *spob, CommodityRef commodity,
                               CommodityPrice *commodityPrice )
 {
-   CommodityModifier *cm;
-   double             base, scale, factor;
-   const char        *factionname;
+   const CommodityModifier *cm;
+   double                   base, scale, factor;
+   const char              *factionname;
 
    /* Ignore spobs with no commodity stuff. */
    if ( !spob_hasService( spob, SPOB_SERVICE_COMMODITY ) )

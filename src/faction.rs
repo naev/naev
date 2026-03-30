@@ -420,8 +420,8 @@ struct Standing {
 }
 
 #[derive(Debug)]
-struct FactionC {
-   cname: CString,
+pub struct FactionC {
+   pub cname: CString,
    clongname: Option<CString>,
    cdisplayname: Option<CString>,
    cmapname: Option<CString>,
@@ -458,7 +458,7 @@ pub struct Faction {
    data: FactionData,
 
    // C stuff, TODO remove when unnecessary
-   c: FactionC,
+   pub c: FactionC,
 }
 impl Faction {
    pub fn player_raw(&self) -> f32 {

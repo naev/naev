@@ -45,9 +45,9 @@ typedef int64_t credits_t;
  *
  * @brief Represents a dictionary of values used to modify a commodity.
  */
-typedef struct CommodityModifier_ {
-   char *name;
-   float value;
+typedef struct CommodityModifier {
+   const char *name;
+   float       value;
 } CommodityModifier;
 
 /**
@@ -145,11 +145,11 @@ void commodity_set_last_purchase_price( CommodityRef com, credits_t amount );
 int  commodity_checkIllegal( CommodityRef com, FactionRef faction );
 int  commodity_slot( CommodityRef com );
 
-double             commodity_period( CommodityRef com );
-void               commodity_set_period( CommodityRef com, double period );
-double             commodity_population_modifier( CommodityRef com );
-CommodityModifier *commodity_spob_modifiers( CommodityRef com );
-CommodityModifier *commodity_faction_modifiers( CommodityRef com );
+double commodity_period( CommodityRef com );
+void   commodity_set_period( CommodityRef com, double period );
+double commodity_population_modifier( CommodityRef com );
+const CommodityModifier *commodity_spob_modifiers( CommodityRef com );
+const CommodityModifier *commodity_faction_modifiers( CommodityRef com );
 
 /*
  * Temporary commodities.

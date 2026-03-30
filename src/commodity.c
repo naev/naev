@@ -671,11 +671,11 @@ double commodity_population_modifier( CommodityRef com )
 {
    return com->population_modifier;
 }
-CommodityModifier *commodity_spob_modifiers( CommodityRef com )
+const CommodityModifier *commodity_spob_modifiers( CommodityRef com )
 {
    return com->spob_modifier;
 }
-CommodityModifier *commodity_faction_modifiers( CommodityRef com )
+const CommodityModifier *commodity_faction_modifiers( CommodityRef com )
 {
    return com->faction_modifier;
 }
