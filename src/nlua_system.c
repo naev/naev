@@ -1062,10 +1062,15 @@ static int systemL_reputation( lua_State *L )
  */
 static int systemL_setReputation( lua_State *L )
 {
-   StarSystem     *sys = luaL_validsystem( L, 1 );
-   FactionRef      f   = luaL_validfaction( L, 2 );
-   double          m   = luaL_checknumber( L, 3 );
-   SystemPresence *sp  = system_getFactionPresence( sys, f );
+   StarSystem *sys = luaL_validsystem( L, 1 );
+   FactionRef  f   = luaL_validfaction( L, 2 );
+   double      m   = luaL_checknumber( L, 3 );
+   // Don't modify local standing if overriden
+   int set;
+   faction_reputationOverride( f, &set );
+   if ( set )
+      return 0;
+   SystemPresence *sp = system_getFactionPresence( sys, f );
    if ( sp != NULL )
       sp->local = m;
    faction_updateSingle( f ); /* Brute-force propagate to global. */
