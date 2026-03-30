@@ -168,7 +168,7 @@ source = files(
    'nlua_bkg.c',
    'nlua_camera.c',
    #'nlua_canvas.c',
-   'nlua_commodity.c',
+   #'nlua_commodity.c',
    'nlua_diff.c',
    'nlua_evt.c',
    #'nlua_faction.c',

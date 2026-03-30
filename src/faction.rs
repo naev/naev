@@ -22,8 +22,11 @@ use std::ffi::{CStr, CString, OsStr};
 use std::fmt::Debug;
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, LazyLock, OnceLock};
+//#[cfg(not(debug_assertions))]
 use std::sync::{Mutex, RwLock};
 use tracing::instrument;
+//#[cfg(debug_assertions)]
+//use tracing_mutex::stdsync::{Mutex, RwLock};
 
 //static_assertions::const_assert_eq!( (1i64<<32) + ((1i64<<32)-1), FactionRef::null() );
 

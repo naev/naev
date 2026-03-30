@@ -389,7 +389,7 @@ void commodity_update( unsigned int wid, const char *str )
    if ( commodity_price_constant( com ) ) {
       l += scnprintf( &buf[l], sizeof( buf ) - l, _( "Price is constant." ) );
       window_modifyText( wid, "txtDRef", buf );
-   } else if ( pr != NULL ) {
+   } else if ( pr != COMMODITY_NULL ) {
       char   c    = '0';
       double pmod = commodity_price_mod( com );
       if ( pmod > 1. )

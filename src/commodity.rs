@@ -17,9 +17,13 @@ use std::collections::HashMap;
 use std::ffi::{CString, OsStr};
 use std::fmt::Debug;
 use std::path::{Path, PathBuf};
+use std::sync::LazyLock;
+#[cfg(not(debug_assertions))]
+use std::sync::RwLock;
 use std::sync::atomic::{AtomicI64, Ordering};
-use std::sync::{LazyLock, RwLock};
 use tracing::instrument;
+#[cfg(debug_assertions)]
+use tracing_mutex::stdsync::RwLock;
 
 #[derive(Debug)]
 pub struct CommodityModifier(naevc::CommodityModifier);
@@ -239,6 +243,24 @@ impl Commodity {
             tag => nxml_warn_node_unknown!("Commodity", &com.name, tag),
          }
       }
+
+      // Default backups
+      // TODO probably put this in default() and try_clone()
+      if com.gfx_space.is_none() {
+         com.gfx_space = Some(
+            texture::TextureBuilder::new()
+               .path("gfx/commodity/space/_default")
+               .build_wrap(ctx)?,
+         );
+      }
+      if com.gfx_store.is_none() {
+         com.gfx_store = Some(
+            texture::TextureBuilder::new()
+               .path("gfx/commodity/_default")
+               .build_wrap(ctx)?,
+         );
+      }
+
       Ok((com, load))
    }
 
@@ -513,7 +535,7 @@ impl UserData for CommodityRef {
        *    @luatreturn string The raw name of the commodity.
        * @luafunc nameRaw
        */
-      methods.add_method("name_raw", |_, this, ()| -> mlua::Result<String> {
+      methods.add_method("nameRaw", |_, this, ()| -> mlua::Result<String> {
          Ok(this.call(|com| com.name.to_string())?)
       });
       /*@
@@ -525,7 +547,8 @@ impl UserData for CommodityRef {
        *    @luatreturn number The base price of the commodity.
        * @luafunc price
        */
-      methods.add_method("price", |_, this, ()| -> mlua::Result<i64> {
+      methods.add_function("price", |_, this: Self| -> mlua::Result<i64> {
+         // Using this as a function makes FromLua work here
          Ok(this.call(|com| com.price)?)
       });
       /*@
@@ -681,10 +704,118 @@ impl UserData for CommodityRef {
    }
 }
 
+use mlua::{Value, ffi};
+use std::ffi::c_void;
+pub fn open_commodity(lua: &mlua::Lua) -> anyhow::Result<mlua::AnyUserData> {
+   let proxy = lua.create_proxy::<CommodityRef>()?;
+
+   if let mlua::Value::Nil = lua.named_registry_value("push_commodity")? {
+      let push_commodity = lua.create_function(|lua, fct: i64| {
+         let fct = CommodityRef::from_ffi(fct);
+         lua.create_userdata(fct)
+      })?;
+      lua.set_named_registry_value("push_commodity", push_commodity)?;
+
+      let get_commodity =
+         lua.create_function(|_, mut ud: mlua::UserDataRefMut<CommodityRef>| {
+            let fct: *mut CommodityRef = &mut *ud;
+            Ok(Value::LightUserData(mlua::LightUserData(
+               fct as *mut c_void,
+            )))
+         })?;
+      lua.set_named_registry_value("get_commodity", get_commodity)?;
+   }
+
+   Ok(proxy)
+}
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub extern "C-unwind" fn luaL_checkcommodity(
+   L: *mut mlua::lua_State,
+   idx: c_int,
+) -> naevc::CommodityRef {
+   unsafe {
+      let fct = lua_tocommodity(L, idx);
+      if fct == CommodityRef::null().as_ffi() {
+         ffi::luaL_typerror(L, idx, c"commodity".as_ptr() as *const c_char);
+      }
+      fct
+   }
+}
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub extern "C-unwind" fn luaL_validcommodity(
+   L: *mut mlua::lua_State,
+   idx: c_int,
+) -> naevc::CommodityRef {
+   unsafe {
+      if ffi::lua_isstring(L, idx) != 0 {
+         let ptr = ffi::lua_tostring(L, idx);
+         let s = CStr::from_ptr(ptr);
+         return match CommodityRef::new(s.to_str().unwrap()) {
+            Some(f) => f.as_ffi(),
+            None => {
+               warn!("commodity not found");
+               CommodityRef::null().as_ffi()
+            }
+         };
+      }
+      let fct = lua_tocommodity(L, idx);
+      if fct == CommodityRef::null().as_ffi() {
+         ffi::luaL_typerror(L, idx, c"commodity".as_ptr() as *const c_char);
+      }
+      fct
+   }
+}
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub extern "C-unwind" fn lua_iscommodity(L: *mut mlua::lua_State, idx: c_int) -> c_int {
+   (lua_tocommodity(L, idx) != CommodityRef::null().as_ffi()) as c_int
+}
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub extern "C-unwind" fn lua_pushcommodity(L: *mut mlua::lua_State, fct: naevc::CommodityRef) {
+   unsafe {
+      ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"push_commodity".as_ptr());
+      ffi::lua_pushinteger(L, fct);
+      ffi::lua_call(L, 1, 1);
+   }
+}
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub extern "C-unwind" fn lua_tocommodity(
+   L: *mut mlua::lua_State,
+   idx: c_int,
+) -> naevc::CommodityRef {
+   unsafe {
+      let idx = ffi::lua_absindex(L, idx);
+      ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"get_commodity".as_ptr());
+      ffi::lua_pushvalue(L, idx);
+      let fct = match ffi::lua_pcall(L, 1, 1, 0) {
+         ffi::LUA_OK => {
+            let ptr = ffi::lua_touserdata(L, -1) as *mut CommodityRef;
+            if ptr.is_null() {
+               CommodityRef::null().as_ffi()
+            } else {
+               (*ptr).as_ffi()
+            }
+         }
+         _ => CommodityRef::null().as_ffi(),
+      };
+      ffi::lua_pop(L, 1);
+      fct
+   }
+}
+
 use std::ffi::{CStr, c_char, c_double, c_int};
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _commodity_getAll() -> *mut i64 {
+pub extern "C" fn commodity_getAll() -> *mut i64 {
    let mut coms: Vec<i64> = vec![];
    for (id, _) in COMMODITIES.read().unwrap().iter() {
       coms.push(id.as_ffi());
@@ -693,7 +824,7 @@ pub extern "C" fn _commodity_getAll() -> *mut i64 {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _commodity_get(name: *const c_char) -> i64 {
+pub extern "C" fn commodity_get(name: *const c_char) -> i64 {
    let ptr = unsafe { CStr::from_ptr(name) };
    let name = ptr.to_str().unwrap();
    match CommodityRef::new(name) {
@@ -706,7 +837,7 @@ pub extern "C" fn _commodity_get(name: *const c_char) -> i64 {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _commodity_getW(name: *const c_char) -> i64 {
+pub extern "C" fn commodity_getW(name: *const c_char) -> i64 {
    let ptr = unsafe { CStr::from_ptr(name) };
    let name = ptr.to_str().unwrap();
    CommodityRef::new(name)
@@ -737,7 +868,7 @@ where
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _commodity_name(com: i64) -> *const c_char {
+pub extern "C" fn commodity_name(com: i64) -> *const c_char {
    faction_c_call(com, |c| unsafe {
       naevc::gettext_rust(if let Some(display) = &c.c.display {
          display.as_ptr()
@@ -752,7 +883,7 @@ pub extern "C" fn _commodity_name(com: i64) -> *const c_char {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _commodity_name_raw(com: i64) -> *const c_char {
+pub extern "C" fn commodity_name_raw(com: i64) -> *const c_char {
    faction_c_call(com, |c| c.c.name.as_ptr()).unwrap_or_else(|e| {
       warn_err!(e);
       std::ptr::null()
@@ -760,7 +891,7 @@ pub extern "C" fn _commodity_name_raw(com: i64) -> *const c_char {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _commodity_description(com: i64) -> *const c_char {
+pub extern "C" fn commodity_description(com: i64) -> *const c_char {
    faction_c_call(com, |c| c.c.description.as_ptr()).unwrap_or_else(|e| {
       warn_err!(e);
       std::ptr::null()
@@ -768,7 +899,7 @@ pub extern "C" fn _commodity_description(com: i64) -> *const c_char {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _commodity_gfxStore(com: i64) -> *const texture::Texture {
+pub extern "C" fn commodity_gfxStore(com: i64) -> *const texture::Texture {
    faction_c_call(com, |c| match &c.gfx_store {
       Some(tex) => tex as *const texture::Texture,
       None => std::ptr::null(),
@@ -780,7 +911,7 @@ pub extern "C" fn _commodity_gfxStore(com: i64) -> *const texture::Texture {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _commodity_gfxSpace(com: i64) -> *const texture::Texture {
+pub extern "C" fn commodity_gfxSpace(com: i64) -> *const texture::Texture {
    faction_c_call(com, |c| match &c.gfx_space {
       Some(tex) => tex as *const texture::Texture,
       None => std::ptr::null(),
@@ -792,7 +923,7 @@ pub extern "C" fn _commodity_gfxSpace(com: i64) -> *const texture::Texture {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _commodity_illegalTo(com: i64) -> *const FactionRef {
+pub extern "C" fn commodity_illegalTo(com: i64) -> *const FactionRef {
    faction_c_call(com, |c| c.c.illegal_to.as_ptr() as *const FactionRef).unwrap_or_else(|e| {
       warn_err!(e);
       std::ptr::null()
@@ -800,7 +931,7 @@ pub extern "C" fn _commodity_illegalTo(com: i64) -> *const FactionRef {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _commodity_price(com: i64) -> i64 {
+pub extern "C" fn commodity_price(com: i64) -> i64 {
    faction_c_call(com, |c| c.price).unwrap_or_else(|e| {
       warn_err!(e);
       0
@@ -808,7 +939,7 @@ pub extern "C" fn _commodity_price(com: i64) -> i64 {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _commodity_price_constant(com: i64) -> c_int {
+pub extern "C" fn commodity_price_constant(com: i64) -> c_int {
    faction_c_call(com, |c| c.price_constant as c_int).unwrap_or_else(|e| {
       warn_err!(e);
       0
@@ -816,7 +947,7 @@ pub extern "C" fn _commodity_price_constant(com: i64) -> c_int {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _commodity_always_can_sell(com: i64) -> c_int {
+pub extern "C" fn commodity_always_can_sell(com: i64) -> c_int {
    faction_c_call(com, |c| c.always_can_sell as c_int).unwrap_or_else(|e| {
       warn_err!(e);
       0
@@ -824,7 +955,7 @@ pub extern "C" fn _commodity_always_can_sell(com: i64) -> c_int {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _commodity_isTemp(com: i64) -> c_int {
+pub extern "C" fn commodity_isTemp(com: i64) -> c_int {
    faction_c_call(com, |c| c.temporary as c_int).unwrap_or_else(|e| {
       warn_err!(e);
       0
@@ -832,7 +963,7 @@ pub extern "C" fn _commodity_isTemp(com: i64) -> c_int {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _commodity_price_ref(com: i64) -> i64 {
+pub extern "C" fn commodity_price_ref(com: i64) -> i64 {
    faction_c_call(com, |c| match &c.price_ref {
       Some(pr) => pr.base.as_ffi(),
       None => CommodityRef::null().as_ffi(),
@@ -844,7 +975,7 @@ pub extern "C" fn _commodity_price_ref(com: i64) -> i64 {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _commodity_price_mod(com: i64) -> c_double {
+pub extern "C" fn commodity_price_mod(com: i64) -> c_double {
    faction_c_call(com, |c| match &c.price_ref {
       Some(pr) => pr.modifier as c_double,
       None => 1.0,
@@ -856,7 +987,7 @@ pub extern "C" fn _commodity_price_mod(com: i64) -> c_double {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _commodity_last_purchase_price(com: i64) -> i64 {
+pub extern "C" fn commodity_last_purchase_price(com: i64) -> i64 {
    faction_c_call(com, |c| c.last_purchased_price.load(Ordering::Relaxed)).unwrap_or_else(|e| {
       warn_err!(e);
       0
@@ -864,7 +995,7 @@ pub extern "C" fn _commodity_last_purchase_price(com: i64) -> i64 {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _commodity_set_last_purchase_price(com: i64, amount: i64) {
+pub extern "C" fn commodity_set_last_purchase_price(com: i64, amount: i64) {
    faction_c_call(com, |c| {
       c.last_purchased_price.store(amount, Ordering::Relaxed)
    })
@@ -874,7 +1005,7 @@ pub extern "C" fn _commodity_set_last_purchase_price(com: i64, amount: i64) {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _commodity_checkIllegal(com: i64, fct: i64) -> c_int {
+pub extern "C" fn commodity_checkIllegal(com: i64, fct: i64) -> c_int {
    faction_c_call(com, |c| {
       c.illegal_to.contains(&FactionRef::from_ffi(fct)) as c_int
    })
@@ -885,7 +1016,7 @@ pub extern "C" fn _commodity_checkIllegal(com: i64, fct: i64) -> c_int {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _commodity_newTemp(name: *const c_char, desc: *const c_char) -> i64 {
+pub extern "C" fn commodity_newTemp(name: *const c_char, desc: *const c_char) -> i64 {
    let ptr = unsafe { CStr::from_ptr(name) };
    let name = ptr.to_str().unwrap().to_string();
    let ptr = unsafe { CStr::from_ptr(desc) };
@@ -909,7 +1040,7 @@ pub extern "C" fn _commodity_newTemp(name: *const c_char, desc: *const c_char) -
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _commodity_tempIllegalto(com: i64, fct: i64) -> c_int {
+pub extern "C" fn commodity_tempIllegalto(com: i64, fct: i64) -> c_int {
    faction_c_call_mut(com, |c| {
       c.illegal_to.push(FactionRef::from_ffi(fct));
       if let Ok(a) = Array::new(&c.illegal_to) {
@@ -924,7 +1055,7 @@ pub extern "C" fn _commodity_tempIllegalto(com: i64, fct: i64) -> c_int {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _standard_commodities() -> *const i64 {
+pub extern "C" fn standard_commodities() -> *const i64 {
    static STANDARD_COMMODITIES: LazyLock<Array<i64>> = LazyLock::new(|| {
       let std: Vec<_> = COMMODITIES
          .read()
@@ -938,12 +1069,12 @@ pub extern "C" fn _standard_commodities() -> *const i64 {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _commodity_slot(com: i64) -> c_int {
+pub extern "C" fn commodity_slot(com: i64) -> c_int {
    (com & 0xffff_ffff) as c_int
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _commodity_period(com: i64) -> c_double {
+pub extern "C" fn commodity_period(com: i64) -> c_double {
    faction_c_call(com, |c| c.economy_modifiers.period as c_double).unwrap_or_else(|e| {
       warn_err!(e);
       200.0
@@ -951,7 +1082,7 @@ pub extern "C" fn _commodity_period(com: i64) -> c_double {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _commodity_set_period(com: i64, period: c_double) {
+pub extern "C" fn commodity_set_period(com: i64, period: c_double) {
    faction_c_call_mut(com, |c| {
       c.economy_modifiers.period = period;
    })
@@ -961,7 +1092,7 @@ pub extern "C" fn _commodity_set_period(com: i64, period: c_double) {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _commodity_population_modifier(com: i64) -> c_double {
+pub extern "C" fn commodity_population_modifier(com: i64) -> c_double {
    faction_c_call(com, |c| c.economy_modifiers.population_modifier as c_double).unwrap_or_else(
       |e| {
          warn_err!(e);
@@ -971,7 +1102,7 @@ pub extern "C" fn _commodity_population_modifier(com: i64) -> c_double {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _commodity_spob_modifiers(com: i64) -> *const CommodityModifier {
+pub extern "C" fn commodity_spob_modifiers(com: i64) -> *const CommodityModifier {
    faction_c_call(com, |c| c.c.spob_modifier.as_ptr()).unwrap_or_else(|e| {
       warn_err!(e);
       std::ptr::null_mut()
@@ -979,7 +1110,7 @@ pub extern "C" fn _commodity_spob_modifiers(com: i64) -> *const CommodityModifie
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _commodity_faction_modifiers(com: i64) -> *const CommodityModifier {
+pub extern "C" fn commodity_faction_modifiers(com: i64) -> *const CommodityModifier {
    faction_c_call(com, |c| c.c.faction_modifier.as_ptr()).unwrap_or_else(|e| {
       warn_err!(e);
       std::ptr::null_mut()

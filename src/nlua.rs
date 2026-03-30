@@ -566,6 +566,7 @@ impl LuaEnv {
       //open_lib("gfx", renderer::open_gfx)?;
       open_lib("faction", crate::faction::open_faction)?;
       open_lib("canvas", renderer::framebuffer::open_canvas)?;
+      open_lib("commodity", crate::commodity::open_commodity)?;
 
       let ret = unsafe {
          let env = self as *mut LuaEnv as *mut naevc::nlua_env;
@@ -579,7 +580,7 @@ impl LuaEnv {
          r |= naevc::nlua_loadDiff(env);
          //r |= naevc::nlua_loadFaction(env);
          r |= naevc::nlua_loadOutfit(env);
-         r |= naevc::nlua_loadCommodity(env);
+         //r |= naevc::nlua_loadCommodity(env);
          r |= naevc::nlua_loadNews(env);
          r |= naevc::nlua_loadShiplog(env);
          //r |= naevc::nlua_loadData(env);

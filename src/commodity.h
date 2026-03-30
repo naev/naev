@@ -55,7 +55,7 @@ typedef struct CommodityModifier {
  *
  * @brief Represents a commodity.
  */
-#if 1
+#if 0
 typedef struct Commodity_ {
    char        *name;        /**< Name of the commodity. */
    char        *display;     /**< Display name of the commodity. */
@@ -92,7 +92,7 @@ typedef Commodity *CommodityRef;
 #else
 #define COMMODITY_NULL ( ( 1l << 32l ) + ( 1l << 32l ) - 1l )
 // typedef struct Commodity Commodity;
-typedef uint64_t CommodityRef;
+typedef int64_t CommodityRef;
 #endif
 
 typedef struct CommodityPrice_ {
@@ -124,9 +124,6 @@ typedef struct CommodityPrice_ {
 CommodityRef *commodity_getAll( void );
 CommodityRef  commodity_get( const char *name );
 CommodityRef  commodity_getW( const char *name );
-
-int  commodity_load( void );
-void commodity_free( void );
 
 const char       *commodity_name( CommodityRef com );
 const char       *commodity_name_raw( CommodityRef com );
