@@ -4231,6 +4231,7 @@ src/space_fdecl.h
 src/spfx.c
 src/spfx.h
 src/spfx.rs
+src/spob.rs
 src/start.h
 src/system.rs
 src/target.h
