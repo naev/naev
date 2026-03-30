@@ -9,7 +9,7 @@ use mlua::{
    BorrowedStr, Either, FromLua, Function, MetaMethod, UserData, UserDataMethods, UserDataRef,
 };
 use naev_core::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
-use nlog::{warn, warn_err, warnx};
+use nlog::{debugx, warn, warn_err, warnx};
 use renderer::texture::TextureDeserializer;
 use renderer::{Context, ContextWrapper, texture};
 use slotmap::{Key, KeyData, SecondaryMap, SlotMap};
@@ -322,10 +322,13 @@ static COMMODITIES: LazyLock<RwLock<SlotMap<CommodityRef, Commodity>>> =
 pub fn load() -> Result<()> {
    // Since we hardcode this C side, we have to make sure it is in-fact correct.
    // Not static, so we have to do it runtime at the moment.
-   //assert_eq!(
-   //   i64::from_ne_bytes( naevc::COMMODITY_NULL.to_ne_bytes() ),
-   //   CommodityRef::null().as_ffi()
-   //);
+   assert_eq!(
+      i64::from_ne_bytes(naevc::COMMODITY_NULL.to_ne_bytes()),
+      CommodityRef::null().as_ffi()
+   );
+
+   #[cfg(debug_assertions)]
+   let start = std::time::Instant::now();
 
    let ctx = Context::get().as_safe_wrap();
    let base: PathBuf = "commodities/".into();
@@ -383,6 +386,27 @@ pub fn load() -> Result<()> {
       if let Err(e) = update_commodity(com, comload, &commap) {
          warn_err!(e);
       }
+   }
+
+   // Some debug
+   if cfg!(debug_assertions) {
+      let n = data.len();
+      let duration = start.elapsed();
+      debugx!(
+         gettext::ngettext(
+            "Loaded {} Commodity in {:.3} s",
+            "Loaded {} Commodities in {:.3} s",
+            n as u64
+         ),
+         n,
+         duration.as_secs_f32()
+      );
+   } else {
+      let n = data.len();
+      debugx!(
+         gettext::ngettext("Loaded {} Commodity", "Loaded {} Commodities", n as u64),
+         n
+      );
    }
 
    Ok(())

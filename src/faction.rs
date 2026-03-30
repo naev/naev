@@ -12,8 +12,7 @@ use mlua::{
    BorrowedStr, Either, FromLua, Function, MetaMethod, UserData, UserDataMethods, UserDataRef,
 };
 use naev_core::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
-use nlog::warn_err;
-use nlog::{warn, warnx};
+use nlog::{debugx, warn, warn_err, warnx};
 use renderer::colour::Colour;
 use renderer::{Context, ContextWrapper, colour, texture};
 use slotmap::{Key, KeyData, SecondaryMap, SlotMap};
@@ -967,6 +966,9 @@ pub fn load() -> Result<()> {
       FactionRef::null().as_ffi()
    );
 
+   #[cfg(debug_assertions)]
+   let start = std::time::Instant::now();
+
    let ctx = Context::get().as_safe_wrap();
    let base: PathBuf = "factions/".into();
    let files: Vec<_> = ndata::read_dir(&base)?
@@ -1055,6 +1057,27 @@ pub fn load() -> Result<()> {
 
    // Compute grid
    GRID.write().unwrap().recompute(&data)?;
+
+   // Some debug
+   if cfg!(debug_assertions) {
+      let n = data.len();
+      let duration = start.elapsed();
+      debugx!(
+         gettext::ngettext(
+            "Loaded {} Faction in {:.3} s",
+            "Loaded {} Factions in {:.3} s",
+            n as u64
+         ),
+         n,
+         duration.as_secs_f32()
+      );
+   } else {
+      let n = data.len();
+      debugx!(
+         gettext::ngettext("Loaded {} Faction", "Loaded {} Factions", n as u64),
+         n
+      );
+   }
 
    // Save the data
    drop(data);
