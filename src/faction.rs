@@ -1067,7 +1067,6 @@ pub fn load() -> Result<()> {
    // Some debug
    if cfg!(debug_assertions) {
       let n = data.len();
-      let duration = start.elapsed();
       debugx!(
          gettext::ngettext(
             "Loaded {} Faction in {:.3} s",
@@ -1075,7 +1074,7 @@ pub fn load() -> Result<()> {
             n as u64
          ),
          n,
-         duration.as_secs_f32()
+         start.elapsed().as_secs_f32()
       );
    } else {
       let n = data.len();

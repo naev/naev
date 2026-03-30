@@ -183,7 +183,7 @@ fn naevmain() -> Result<()> {
 
    // Initialize SDL.
    let sdlctx = sdl::init()?;
-   let starttime = sdl::timer::ticks();
+   let start = std::time::Instant::now();
 
    unsafe {
       naevc::threadpool_init();
@@ -390,7 +390,7 @@ fn naevmain() -> Result<()> {
       if naevc::conf.devmode != 0 {
          infox!(
             gettext("Reached main menu in {:.3f} s"),
-            (sdl::timer::ticks() - starttime) as f32 / 1000.
+            start.elapsed().as_secs_f32()
          );
       } else {
          info!("{}", gettext("Reached main menu"));
