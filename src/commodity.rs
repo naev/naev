@@ -230,6 +230,17 @@ impl CommodityRef {
          None => anyhow::bail!("commodity not found"),
       }
    }
+
+   pub fn call_mut<F, R>(&self, f: F) -> Result<R>
+   where
+      F: Fn(&mut Commodity) -> R,
+   {
+      let mut commodities = COMMODITIES.write().unwrap();
+      match commodities.get_mut(*self) {
+         Some(com) => Ok(f(com)),
+         None => anyhow::bail!("commodity not found"),
+      }
+   }
 }
 
 static COMMODITIES: LazyLock<RwLock<SlotMap<CommodityRef, Commodity>>> =
@@ -479,6 +490,142 @@ impl UserData for CommodityRef {
        */
       methods.add_method("priceAt", |_, this, ()| -> mlua::Result<i64> {
          Ok(this.call(|com| com.price)?)
+      });
+      /*@
+       * @brief Gets the price of an commodity on a certain spob at a certain time.
+       *
+       * @usage if c:priceAtTime( spob.get("Polaris Prime"), time ) > 100 then --
+       * Checks price of a commodity at Polaris Prime
+       *
+       *    @luatparam Commodity c Commodity to get information of.
+       *    @luatparam Spob p Spob to get price at.
+       *    @luatparam Time t Time to get the price at.
+       *    @luatreturn number The price of the commodity at the spob.
+       * @luafunc priceAtTime
+       */
+      methods.add_method("priceAtTime", |_, this, ()| -> mlua::Result<i64> {
+         Ok(this.call(|com| com.price)?)
+      });
+      /*@
+       * @brief Gets the store icon of a commodity if it exists.
+       *
+       *    @luatparam Commodity c Commodity to get icon of.
+       *    @luatreturn Texture|nil Texture of the store icon if exists, otherwise
+       * nil.
+       * @luafunc icon
+       */
+      methods.add_method(
+         "logo",
+         |_, this, ()| -> mlua::Result<Option<texture::Texture>> {
+            Ok(this
+               .call(|fct| fct.gfx_store.as_ref().map(|t| t.try_clone()))?
+               .transpose()?)
+         },
+      );
+      /*@
+       * @brief Gets the description of a commodity if it exists.
+       *
+       *    @luatparam Commodity c Commodity to get description of
+       *    @luatreturn string|nil Description of the commodity if exists, otherwise
+       * nil.
+       * @luafunc description
+       */
+      methods.add_method("name", |_, this, ()| -> mlua::Result<String> {
+         Ok(this.call(|com| com.description.to_string())?)
+      });
+      /*@
+       * @brief Creates a new temporary commodity. If a temporary commodity with the
+       * same name exists, that gets returned instead. "Temporary" is a relative term.
+       * The commodity will be saved with the player while it is in the inventory of
+       * their fleet. However, when all instances are gone, it will no longer be saved
+       * and disappear.
+       *
+       * @usage commodity.new( N_("Cheesburgers"), N_("I can has cheezburger?") )
+       *
+       *    @luatparam string cargo Name of the cargo to add. This must not match a
+       * cargo name defined in commodity.xml.
+       *    @luatparam string decription Description of the cargo to add.
+       *    @luatparam[opt=nil] table params Table of named parameters. Currently
+       * supported is `"gfx_space"`.
+       *    @luatreturn Commodity The newly created commodity or an existing temporary
+       * commodity with the same name.
+       * @luafunc new
+       */
+      methods.add_function(
+         "new",
+         |_, (name, desc, params): (BorrowedStr, BorrowedStr, mlua::Table)| -> mlua::Result<Self> {
+            // Handle parameters
+            let gfx_space = params
+               .get::<Option<UserDataRef<texture::Texture>>>("gfx_space")?
+               .map(|t| t.try_clone())
+               .transpose()?;
+
+            // Add the commodity
+            Ok(COMMODITIES.write().unwrap().insert_with_key(|k| {
+               let mut com = Commodity {
+                  id: k,
+                  name: name.to_string(),
+                  description: desc.to_string(),
+                  gfx_space: gfx_space,
+                  temporary: true,
+                  ..Default::default()
+               };
+               if let Ok(c) = CommodityC::new(&com) {
+                  com.c = c;
+               }
+               com
+            }))
+         },
+      );
+      /*@
+       * @brief Makes a temporary commodity illegal to a faction.
+       *
+       *    @luatparam Commodity c Temporary commodity to make illegal to factions.
+       *    @luatparam Faction|table f Faction or table of factions to make illegal
+       * to.
+       * @luafunc illegalto
+       */
+      methods.add_method(
+         "illegalto",
+         |_, this, fct: Either<FactionRef, Vec<FactionRef>>| -> mlua::Result<()> {
+            this.call_mut(|com| {
+               if !com.temporary {
+                  return anyhow::bail!("Trying to modify non-temporary commodity '{}'", com.name);
+               }
+               match &fct {
+                  Either::Left(f) => com.illegal_to.push(*f),
+                  Either::Right(fcts) => com.illegal_to.extend(fcts),
+               }
+               Ok(())
+            })?;
+            Ok(())
+         },
+      );
+      /*@
+       * @brief Gets the factions to which the commodity is illegal to.
+       *
+       *    @luatparam c Commodity to get illegality status of.
+       *    @luatreturn table Table of all the factions the commodity is illegal to.
+       * @luafunc illegality
+       */
+      methods.add_method(
+         "illegality",
+         |_, this, ()| -> mlua::Result<Vec<FactionRef>> {
+            Ok(this.call(|com| com.illegal_to.clone())?)
+         },
+      );
+      /*@
+       * @brief Gets the commodity tags.
+       *
+       *    @luatparam c Commodity to get tags of.
+       *    @luatparam[opt=nil] string tag Tag to check if exists.
+       *    @luatreturn table|boolean Table of tags where the name is the key and true
+       * is the value or a boolean value if a string is passed as the second parameter
+       * indicating whether or not the specified tag exists.
+       * @luafunc tags
+       */
+      methods.add_method("tags", |lua, this, ()| -> mlua::Result<mlua::Table> {
+         this.call(|com| lua.create_table_from(com.tags.iter().map(|s| (s.clone(), true))))?
       });
    }
 }
