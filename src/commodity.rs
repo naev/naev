@@ -668,12 +668,18 @@ impl UserData for CommodityRef {
        */
       methods.add_function(
          "new",
-         |_, (name, description, params): (String, String, mlua::Table)| -> mlua::Result<Self> {
+         |_,
+          (name, description, params): (String, String, Option<mlua::Table>)|
+          -> mlua::Result<Self> {
             // Handle parameters
-            let gfx_space = params
-               .get::<Option<UserDataRef<texture::Texture>>>("gfx_space")?
-               .map(|t| t.try_clone())
-               .transpose()?;
+            let gfx_space = if let Some(params) = params {
+               params
+                  .get::<Option<UserDataRef<texture::Texture>>>("gfx_space")?
+                  .map(|t| t.try_clone())
+                  .transpose()?
+            } else {
+               None
+            };
 
             // Add the commodity
             Ok(COMMODITIES.write().unwrap().insert_with_key(|k| {

@@ -249,13 +249,15 @@ impl FactionRef {
                None => f32::INFINITY,
             })
             .unwrap_or(f32::INFINITY);
-         unsafe { naevc::system_getReputationOrGlobal(sys, self.as_ffi()) as f32 > threshold }
+         unsafe {
+            (naevc::system_getReputationOrGlobal(sys, self.as_ffi()) as f32).round() > threshold
+         }
       } else {
          self
             .call(|fct| {
                let std = fct.standing.read().unwrap();
                if let Some(api) = &fct.api {
-                  std.player >= api.friendly_at
+                  std.player.round() >= api.friendly_at
                } else {
                   false
                }
