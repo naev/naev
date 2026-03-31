@@ -40,6 +40,7 @@ typedef struct nsave_s {
    char    *spob;        /**< Spob player is at. */
    char    *spobdisplay; /**< Display string for the spob. */
    ntime_t  date;        /**< Date. */
+   char    *date_string; /**< Pretty date string. */
    uint64_t credits;     /**< Credits player has. */
    char    *chapter;     /**< Player's current chapter. */
    char    *difficulty;  /**< Difficulty setting of the player. */

@@ -27,7 +27,6 @@
 #include "menu.h"
 #include "mission.h"
 #include "music.h"
-#include "ndata.h"
 #include "nstring.h"
 #include "nxml.h"
 #include "player.h"
@@ -172,11 +171,13 @@ static int load_load( nsave_t *save )
             if ( xml_isNode( node, "time" ) ) {
                double rem = -1.;
                xmlr_attr_float_opt( node, "remainder", rem );
+               xmlr_attr_strd( node, "string", save->date_string );
                if ( rem >= 0. ) {
                   const char *val = xml_get( node );
                   if ( val != NULL ) {
                      ntime_t nt = atoll( val );
                      ntime_set_remainder( nt, rem );
+                     save->date = nt;
                   } else
                      WARN( _( "Malformed time in save game!" ) );
                } else {
@@ -194,6 +195,7 @@ static int load_load( nsave_t *save )
                        ( rem < 0. ) )
                      WARN( _( "Malformed time in save game!" ) );
                   ntime_setR( cycles, periods, seconds, rem );
+                  save->date = ntime_create( cycles, periods, seconds );
                }
                continue;
             }
@@ -940,7 +942,8 @@ static void display_save_info( unsigned int wid, const nsave_t *ns )
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n#n%s", _( "Difficulty:" ) );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n#0   %s", difficulty );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n#n%s", _( "Date:" ) );
-   l += scnprintf( &buf[l], sizeof( buf ) - l, "\n#0   %s", date );
+   l += scnprintf( &buf[l], sizeof( buf ) - l, "\n#0   %s",
+                   ( ns->date_string == NULL ) ? date : ns->date_string );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n#n%s", _( "Chapter:" ) );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n#0   %s", ns->chapter );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n#n%s", _( "Space Object:" ) );

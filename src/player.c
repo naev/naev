@@ -3478,6 +3478,9 @@ int player_save( xmlTextWriterPtr writer )
    ntime_t cur_time = ntime_get();
    ntime_getR( &cycles, &periods, &seconds, &rem );
    xmlw_attr( writer, "remainder", "%lf", rem );
+   char date[64];
+   ntime_prettyBuf( date, sizeof( date ), cur_time, 2 );
+   xmlw_attr( writer, "string", "%s", date );
    xmlw_str( writer, "%lld", (long long)cur_time );
    xmlw_endElem( writer ); /* "time" */
 
