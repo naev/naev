@@ -103,6 +103,9 @@
    * Fixed blacklisted files still reported as existing
    * Fixed issues around `PHYSICS_SPEED_DAMP==0` support
    * Fixed weapon sets not being initialized for new pilots
+   * The Junker is no longer bribeable
+   * Escort drones give drone-ish messages
+   * Fixed number of bribeable pilots changing
 
 
 ## v0.13.4 (unreleased)

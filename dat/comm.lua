@@ -143,8 +143,8 @@ local function bribe_msg( plt, group )
       str = fmt.f( str, {credits=cstr} )
       return fmt.f(n_(
          "{msg}\n\nThis action will bribe {n} {fct_list} pilot.\nYou have {credits}. Pay #r{price}#0?",
-         "{msg}\n\nThis action will bribe {n} {fct_list} pilots.\nYou have {credits}. Pay #r{price}#0?", #bribeable),
-            {msg=str, n=#bribeable, fct_list=bribe_msgFactions(group), credits=chave, price=cstr} ), cost
+         "{msg}\n\nThis action will bribe {n} {fct_list} pilots.\nYou have {credits}. Pay #r{price}#0?", #group),
+            {msg=str, n=#group, fct_list=bribe_msgFactions(group), credits=chave, price=cstr} ), cost
    else
       local cost = bribe_cost( plt )
       local str = mem.bribe_prompt
