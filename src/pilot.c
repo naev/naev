@@ -4149,7 +4149,8 @@ void pilots_clean( int persist )
    for ( int i = 0; i < array_size( pilot_stack ); i++ ) {
       Pilot *p = pilot_stack[i];
       if ( pilot_isPlayer( p ) ||
-           ( persist && pilot_isFlag( p, PILOT_PERSIST ) ) )
+           ( persist && pilot_isFlag( p, PILOT_PERSIST ) &&
+             !pilot_isFlag( p, PILOT_CARRIER_DIED ) ) )
          continue;
       /* Stop all outfits. */
       pilot_outfitOffAll( p );
