@@ -1,0 +1,55 @@
+<spob name="Caethia">
+ <pos x="695.706571" y="-803.798376"/>
+ <GFX>
+  <space>moon-M00</space>
+  <exterior>uninhabited-jungle</exterior>
+ </GFX>
+ <presence>
+  <faction>Independent</faction>
+  <base>130.000000</base>
+  <bonus>20.000000</bonus>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>8000</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <description>Caethia is a sparsely developed semi-agricultural world with plenty of jungle to go around. Some of the lifeforms here have evolved to harvest significant amounts of thermal energy as part of their natural lifecycles, keeping the planet cool enough for humans to thrive despite the planet's close proximity to the local star. The phoenomena has attracted some research efforts, but for obvious reasons any interference with the natural lifecycles of those species is strictly regulated.</description>
+  <bar>The main spaceport, and thus the bar, is located in one of the few urban areas on the planet, but the establishment makes a point of being one with nature, meaning the floors and walls are overgrown with vegetation that you are assured is only occasionally toxic.</bar>
+ </general>
+ <tech>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Outfits 1</item>
+  <item>Crappy Core Systems</item>
+  <item>Basic Trade Ships</item>
+  <item>Engines Cargo</item>
+  <item>Hulls Low</item>
+  <item>Yachts</item>
+  <item>Systems Low</item>
+  <item>Basic Outfits 2</item>
+  <item>Engines Low</item>
+  <item>Laser 1</item>
+  <item>Ion 1</item>
+  <item>Plasma 1</item>
+  <item>Beam 1</item>
+  <item>Kinetic 1</item>
+  <item>Mining 1</item>
+  <item>Mining Outfits</item>
+  <item>Unicorp Outfits</item>
+  <item>Star Maps</item>
+  <item>Systems Medium</item>
+ </tech>
+ <tags>
+  <tag>rural</tag>
+  <tag>agriculture</tag>
+ </tags>
+</spob>

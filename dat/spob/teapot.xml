@@ -1,0 +1,12 @@
+<spob name="Teapot">
+ <pos x="-3000.701103" y="10797.847140"/>
+ <GFX>
+  <space>I01</space>
+ </GFX>
+ <general>
+  <class>I</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>
