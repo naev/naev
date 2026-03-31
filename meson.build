@@ -1,5 +1,5 @@
 project('naev', ['c', 'rust'],
-   version : '0.14.0-alpha.3',
+   version : '0.14.0-alpha.4',
    default_options : [
       'optimization=g',
       'c_std=c11',
