@@ -673,7 +673,7 @@ impl UserData for CommodityRef {
                   id: k,
                   name,
                   description,
-                  gfx_space: gfx_space,
+                  gfx_space,
                   temporary: true,
                   ..Default::default()
                };
@@ -697,7 +697,7 @@ impl UserData for CommodityRef {
          |_, this, fct: Either<FactionRef, Vec<FactionRef>>| -> mlua::Result<()> {
             this.call_mut(|com| {
                if !com.temporary {
-                  return anyhow::bail!("Trying to modify non-temporary commodity '{}'", com.name);
+                  anyhow::bail!("Trying to modify non-temporary commodity '{}'", com.name);
                }
                match &fct {
                   Either::Left(f) => com.illegal_to.push(*f),
