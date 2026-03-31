@@ -1,4 +1,4 @@
-## v0.13.4 (unreleased)
+## v0.13.4
 
    * "Show only outfits equippable on any of your ships" should include current
      ship
