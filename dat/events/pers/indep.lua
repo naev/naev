@@ -127,8 +127,9 @@ return function ()
                p:setHostile( rnd.rnd()<0.5 )
             end
             local m = p:memory()
-            m.comm_greet = _([["Give me back my pack!"]])
-            m.taunt = m.comm_greet
+            m.taunt = _("Give me back my pack!")
+            m.comm_greet = _([["That's my pack! Give it back!"]])
+            m.bribe_no = _([["I want my pack back!"]])
             return p
          end
       } )
