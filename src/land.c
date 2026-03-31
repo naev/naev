@@ -1775,12 +1775,22 @@ void takeoff( int delay, int nosave )
             }
          }
          if ( badfleet ) {
-            if ( !dialogue_YesNo( _( "Fleet not fit for flight" ), "%s\n%s",
-                                  _( "The following ships in your fleet are "
-                                     "not space worthy, are you sure you want "
-                                     "to take off without them?" ),
-                                  badfleet_ships ) )
+            if ( !dialogue_YesNo(
+                    _( "Fleet not fit for flight" ), "%s\n%s",
+                    _( "Some ships in your fleet are not space worthy. Do you "
+                       "wish to undeploy the following ships to be able to "
+                       "take off?" ),
+                    badfleet_ships ) )
                return;
+
+            for ( int i = 0; i < array_size( pships ); i++ ) {
+               PlayerShip_t *pe = &pships[i];
+               if ( !pe->deployed )
+                  continue;
+               if ( pilot_isSpaceworthy( pe->p ) )
+                  continue;
+               pfleet_toggleDeploy( pe, 0 );
+            }
          }
       }
    }
