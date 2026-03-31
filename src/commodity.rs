@@ -450,7 +450,7 @@ impl FromLua for CommodityRef {
  * end
  * @endcode
  *
- * @lua_mod commodity
+ * @luamod commodity
  */
 impl UserData for CommodityRef {
    /*@

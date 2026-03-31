@@ -149,6 +149,31 @@ stds.audiodata = {
       }
    }
 }
+stds.commodity = {
+   read_globals = {
+      commodity = {
+         fields = {
+            __tostring = {},
+            __eq = {},
+            get = {},
+            getAll = {},
+            exists = {},
+            getStandard = {},
+            name = {},
+            nameRaw = {},
+            price = {},
+            priceAt = {},
+            priceAtTime = {},
+            icon = {},
+            description = {},
+            new = {},
+            illegalto = {},
+            illegality = {},
+            tags = {},
+         }
+      }
+   }
+}
 stds.time = {
    read_globals = {
       time = {
@@ -1354,6 +1379,7 @@ stds.spfx = {
 stds.naev.read_globals.naev.fields.ai = stds.ai.read_globals.ai
 stds.naev.read_globals.naev.fields.audio = stds.audio.read_globals.audio
 stds.naev.read_globals.naev.fields.audiodata = stds.audiodata.read_globals.audiodata
+stds.naev.read_globals.naev.fields.commodity = stds.commodity.read_globals.commodity
 stds.naev.read_globals.naev.fields.time = stds.time.read_globals.time
 stds.naev.read_globals.naev.fields.faction = stds.faction.read_globals.faction
 stds.naev.read_globals.naev.fields.collide = stds.collide.read_globals.collide
