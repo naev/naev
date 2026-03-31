@@ -1053,7 +1053,7 @@ pub extern "C" fn commodity_newTemp(name: *const c_char, desc: *const c_char) ->
    let ptr = unsafe { CStr::from_ptr(name) };
    let name = ptr.to_str().unwrap().to_string();
    let ptr = unsafe { CStr::from_ptr(desc) };
-   let desc = ptr.to_str().unwrap().to_string();
+   let description = ptr.to_str().unwrap().to_string();
    COMMODITIES
       .write()
       .unwrap()
@@ -1061,7 +1061,8 @@ pub extern "C" fn commodity_newTemp(name: *const c_char, desc: *const c_char) ->
          let mut com = Commodity {
             id: k,
             name,
-            description: desc,
+            description,
+            temporary: true,
             ..Default::default()
          };
          if let Ok(c) = CommodityC::new(&com) {
