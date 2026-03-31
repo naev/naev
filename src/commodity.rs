@@ -595,9 +595,13 @@ impl UserData for CommodityRef {
        *    @luatreturn number The price of the commodity at the spob.
        * @luafunc priceAt
        */
-      methods.add_method("priceAt", |_, this, ()| -> mlua::Result<i64> {
-         Ok(this.call(|com| com.price)?)
-      });
+      methods.add_method(
+         "priceAt",
+         |lua, this, spob: mlua::Value| -> mlua::Result<i64> {
+            let p = crate::spob::from_lua(lua, &spob)?;
+            Ok(unsafe { naevc::spob_commodityPrice(p, this.as_ffi()) })
+         },
+      );
       /*@
        * @brief Gets the price of an commodity on a certain spob at a certain time.
        *
@@ -610,9 +614,13 @@ impl UserData for CommodityRef {
        *    @luatreturn number The price of the commodity at the spob.
        * @luafunc priceAtTime
        */
-      methods.add_method("priceAtTime", |_, this, ()| -> mlua::Result<i64> {
-         Ok(this.call(|com| com.price)?)
-      });
+      methods.add_method(
+         "priceAtTime",
+         |lua, this, (spob, date): (mlua::Value, naev_core::ntime::NTime)| -> mlua::Result<i64> {
+            let p = crate::spob::from_lua(lua, &spob)?;
+            Ok(unsafe { naevc::spob_commodityPriceAtTime(p, this.as_ffi(), date.into()) })
+         },
+      );
       /*@
        * @brief Gets the store icon of a commodity if it exists.
        *
