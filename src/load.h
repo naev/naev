@@ -34,6 +34,7 @@ typedef struct nsave_s {
 
    /* Plugins. */
    char            **plugins;    /**< Plugins used in the game. */
+   char            **plugin_ids; /**< Plugin ids. */
    SaveCompatibility compatible; /**< Compatibility status. */
 
    /* Player info. */

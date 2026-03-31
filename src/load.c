@@ -104,7 +104,7 @@ static int  load_enumerateCallbackPlayer( void *data, const char *origdir,
                                           const char *fname );
 static int  load_compatibilityTest( const nsave_t *ns );
 static const char       *load_compatibilityString( const nsave_t *ns );
-static int               has_plugin( const char *plugin );
+static int               has_plugin( const char *id, const char *plugin );
 static SaveCompatibility load_compatibility( const nsave_t *ns );
 static int       load_sortComparePlayersName( const void *p1, const void *p2 );
 static int       load_sortComparePlayers( const void *p1, const void *p2 );
@@ -209,7 +209,8 @@ static int load_load( nsave_t *save )
          } while ( xml_nextNode( node ) );
          continue;
       } else if ( xml_isNode( parent, "plugins" ) ) {
-         save->plugins = array_create( char * );
+         save->plugins    = array_create( char * );
+         save->plugin_ids = array_create( char * );
          /* Parse rest. */
          xmlNodePtr node = parent->xmlChildrenNode;
          do {
@@ -217,9 +218,12 @@ static int load_load( nsave_t *save )
 
             if ( xml_isNode( node, "plugin" ) ) {
                const char *name = xml_get( node );
-               if ( name != NULL )
+               const char *id   = NULL;
+               xmlr_attr_strd( node, "id", id );
+               if ( name != NULL ) {
                   array_push_back( &save->plugins, strdup( name ) );
-               else
+                  array_push_back( &save->plugin_ids, (char *)id );
+               } else
                   WARN( _( "Save '%s' has unnamed plugin node!" ), save->path );
             }
          } while ( xml_nextNode( node ) );
@@ -476,20 +480,32 @@ static const char *load_compatibilityString( const nsave_t *ns )
 /**
  * @brief Checks to see if has a plugin.
  */
-static int has_plugin( const char *plugin )
+static int has_plugin( const char *id, const char *plugin )
 {
    const plugin_t *plugins = plugin_list();
-   for ( int j = 0; j < array_size( plugins ); j++ )
-      if ( strcmp( plugin, plugin_name( &plugins[j] ) ) == 0 )
-         return 1;
+   for ( int j = 0; j < array_size( plugins ); j++ ) {
+      if ( id != NULL ) {
+         if ( strcmp( id, plugins[j].id ) == 0 )
+            return 1;
+      } else {
+         if ( strcmp( plugin, plugin_name( &plugins[j] ) ) == 0 )
+            return 1;
+      }
+   }
    return 0;
 }
 
-static int save_has_plugin( const nsave_t *ns, const char *plugin )
+static int save_has_plugin( const nsave_t *ns, const char *id,
+                            const char *plugin )
 {
    for ( int i = 0; i < array_size( ns->plugins ); i++ ) {
-      if ( strcmp( plugin, ns->plugins[i] ) == 0 )
-         return 1;
+      if ( ns->plugin_ids[i] != NULL ) {
+         if ( strcmp( id, ns->plugin_ids[i] ) == 0 )
+            return 1;
+      } else {
+         if ( strcmp( plugin, ns->plugins[i] ) == 0 )
+            return 1;
+      }
    }
    return 0;
 }
@@ -505,12 +521,12 @@ static SaveCompatibility load_compatibility( const nsave_t *ns )
       return SAVE_COMPATIBILITY_NAEV_VERSION;
 
    for ( int i = 0; i < array_size( ns->plugins ); i++ ) {
-      if ( !has_plugin( ns->plugins[i] ) )
+      if ( !has_plugin( ns->plugin_ids[i], ns->plugins[i] ) )
          return SAVE_COMPATIBILITY_PLUGINS;
    }
    const plugin_t *plugins = plugin_list();
    for ( int j = 0; j < array_size( plugins ); j++ ) {
-      if ( !save_has_plugin( ns, plugin_name( &plugins[j] ) ) )
+      if ( !save_has_plugin( ns, plugins[j].id, plugin_name( &plugins[j] ) ) )
          return SAVE_COMPATIBILITY_PLUGINS;
    }
 
@@ -615,9 +631,12 @@ static int load_sortCompare( const void *p1, const void *p2 )
 
 static void load_freeSave( nsave_t *ns )
 {
-   for ( int k = 0; k < array_size( ns->plugins ); k++ )
+   for ( int k = 0; k < array_size( ns->plugins ); k++ ) {
       free( ns->plugins[k] );
+      free( ns->plugin_ids[k] );
+   }
    array_free( ns->plugins );
+   array_free( ns->plugin_ids );
    free( ns->save_name );
    free( ns->player_name );
    free( ns->path );
@@ -962,11 +981,13 @@ static void display_save_info( unsigned int wid, const nsave_t *ns )
       l += scnprintf( &buf[l], sizeof( buf ) - l, "\n#n%s", _( "Plugins:" ) );
       l +=
          scnprintf( &buf[l], sizeof( buf ) - l, "\n#0   #%c%s#0",
-                    has_plugin( ns->plugins[0] ) ? '0' : 'r', ns->plugins[0] );
+                    has_plugin( ns->plugin_ids[0], ns->plugins[0] ) ? '0' : 'r',
+                    ns->plugins[0] );
       for ( int i = 1; i < array_size( ns->plugins ); i++ ) {
          l += scnprintf(
             &buf[l], sizeof( buf ) - l, p_( "plugins list", ", #%c%s#0" ),
-            has_plugin( ns->plugins[i] ) ? '0' : 'r', ns->plugins[i] );
+            has_plugin( ns->plugin_ids[i], ns->plugins[i] ) ? '0' : 'r',
+            ns->plugins[i] );
       }
    }
    window_modifyText( wid, "txtPilot", buf );

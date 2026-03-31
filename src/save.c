@@ -143,8 +143,12 @@ int save_all_with_name( const char *name )
 
    /* Save plugins. */
    xmlw_startElem( writer, "plugins" );
-   for ( int i = 0; i < array_size( plugins ); i++ )
-      xmlw_elem( writer, "plugin", "%s", plugin_name( &plugins[i] ) );
+   for ( int i = 0; i < array_size( plugins ); i++ ) {
+      xmlw_startElem( writer, "plugin" );
+      xmlw_attr( writer, "id", "%s", plugins[i].id );
+      xmlw_str( writer, "%s", plugin_name( &plugins[i] ) );
+      xmlw_endElem( writer ); /* Plugin. */
+   }
    xmlw_endElem( writer ); /* "plugins" */
 
    /* Save the data. */

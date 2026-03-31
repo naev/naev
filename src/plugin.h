@@ -4,6 +4,7 @@
 #pragma once
 
 typedef struct plugin_t {
+   char *id;               /**< ID of the plugin. */
    char *name;             /**< Name of the plugin. */
    char *author;           /**< Author(s) of the plugin. */
    char *version;          /**< Version of the plugin. */

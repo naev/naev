@@ -264,6 +264,9 @@ static PLUGIN_LIST: LazyLock<Array<CPlugin>> = LazyLock::new(|| {
          std::ptr::null_mut()
       };
       out.push(CPlugin(naevc::plugin_t {
+         id: CString::new((*plugin.identifier).as_str())
+            .unwrap()
+            .into_raw(),
          name: CString::new(plugin.name.as_str()).unwrap().into_raw(),
          author: CString::new(plugin.author.as_str()).unwrap().into_raw(),
          version: CString::new(plugin.version.to_string()).unwrap().into_raw(),
