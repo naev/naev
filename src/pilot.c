@@ -4199,6 +4199,9 @@ void pilots_clean( int persist )
              !pilot_isFlag( p, PILOT_CARRIER_DIED ) ) )
          continue;
       ai_init( p );
+      // Clear stress so they don't jump in disabled
+      p->stress = 0.;
+      pilot_updateDisable( p, 0 );
    }
 
    /* Clear global hooks. */
