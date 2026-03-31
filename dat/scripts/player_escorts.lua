@@ -6,19 +6,23 @@ local luatk = require "luatk"
 local lib = {}
 
 function lib.command_menu( plt )
-   local function msg_escort( order, msg )
+   local function msg_escort( order, msg, msg_drone )
       return function ()
          player.pilot():msg( plt, order )
-         plt:comm( player.pilot(), msg )
+         if plt:memory().isdrone then
+            plt:comm( player.pilot(), msg_drone )
+         else
+            plt:comm( player.pilot(), msg )
+         end
       end
    end
    local COMMANDS = {
       {  caption = _("Hold Formation"),
-         order = msg_escort("e_hold", _("Holding formation.")), },
+         order = msg_escort("e_hold",   _("Holding formation."), _("FORMATION LOCKED.")), },
       {  caption = _("Return to Ship"),
-         order = msg_escort("e_return", _("Returning to ship.")), },
+         order = msg_escort("e_return", _("Returning to ship."), _("RETURNING TO MOTHERSHIP.")), },
       {  caption = _("Clear Orders"),
-         order = msg_escort("e_clear", _("Clearing orders.")), },
+         order = msg_escort("e_clear",  _("Clearing orders."),   _("ORDERS RESET.")), },
    }
 
    local bw = 150
