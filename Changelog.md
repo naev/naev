@@ -112,7 +112,7 @@
 
    * "Show only outfits equippable on any of your ships" should include current
      ship
-   * Changed som faction colours to be more readable
+   * Changed some faction colours to be more readable
    * Fixed rare crash when NPCs jump out
    * Fixed online resizing on high dpi screens
    * Fixed faction hits being larger than expected in some cases
@@ -120,7 +120,7 @@
    * Fixed derelict map using old name
    * Fixed seek and destroy missions breaking in some cases
    * Made races a bit easier
-   * Fixed mapmaker sirius and soromid areas having same variable
+   * Fixed mapmaker Sirius and Soromid areas having same variable
    * Propagate parameters to plugin manager when launched
    * Guard against some segfaults triggerable by plugins
    * Fixed warning from setting OSD Hide/Priority on a mission that hasn't set
