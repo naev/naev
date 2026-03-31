@@ -4163,7 +4163,8 @@ void pilots_clean( int persist )
       /* move player and persisted pilots to start */
       if ( !pilot_isFlag( pilot_stack[i], PILOT_DELETE ) &&
            ( pilot_isPlayer( pilot_stack[i] ) ||
-             ( persist && pilot_isFlag( pilot_stack[i], PILOT_PERSIST ) ) ) ) {
+             ( persist && pilot_isFlag( pilot_stack[i], PILOT_PERSIST ) &&
+               !pilot_isFlag( pilot_stack[i], PILOT_CARRIER_DIED ) ) ) ) {
          /* Have to swap the pilots so it gets properly freed. */
          Pilot *p                   = pilot_stack[persist_count];
          pilot_stack[persist_count] = pilot_stack[i];
@@ -4194,7 +4195,8 @@ void pilots_clean( int persist )
       ai_cleartasks( p );
       /* Don't reinit pilots that are persisting. */
       if ( pilot_isPlayer( p ) ||
-           ( persist && pilot_isFlag( p, PILOT_PERSIST ) ) )
+           ( persist && pilot_isFlag( p, PILOT_PERSIST ) &&
+             !pilot_isFlag( p, PILOT_CARRIER_DIED ) ) )
          continue;
       ai_init( p );
    }
