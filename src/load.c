@@ -161,8 +161,7 @@ static int load_load( nsave_t *save )
 
             /* Player info. */
             xmlr_strd( node, "location", save->spob );
-            if ( save->spobdisplay != NULL )
-               xmlr_strd( node, "location_display", save->spobdisplay );
+            xmlr_strd( node, "location_display", save->spobdisplay );
             xmlr_ulong( node, "credits", save->credits );
             xmlr_strd( node, "chapter", save->chapter );
             xmlr_strd( node, "difficulty", save->difficulty );
@@ -625,6 +624,7 @@ static void load_freeSave( nsave_t *ns )
    free( ns->version );
    free( ns->data );
    free( ns->spob );
+   free( ns->date_string );
    free( ns->spobdisplay );
    free( ns->chapter );
    free( ns->difficulty );
