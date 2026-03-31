@@ -55,6 +55,9 @@
     <category>RolePlaying</category>
   </categories>
   <releases>
+    <release version="0.13.4" type="stable" date="2026-03-31">
+      <url type="details">https://naev.org/blarg/2026-03-31_0.13.4/</url>
+    </release>
     <release version="0.13.3" type="stable" date="2026-01-21">
       <url type="details">https://naev.org/blarg/2026-01-21_0.13.3/</url>
     </release>
