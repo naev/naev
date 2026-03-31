@@ -580,7 +580,7 @@ impl UserData for CommodityRef {
        *    @luatreturn number The base price of the commodity.
        * @luafunc price
        */
-      methods.add_function("price", |_, this: Self| -> mlua::Result<i64> {
+      methods.add_method("price", |_, this, ()| -> mlua::Result<i64> {
          // Using this as a function makes FromLua work here
          Ok(this.call(|com| com.price)?)
       });
@@ -622,7 +622,7 @@ impl UserData for CommodityRef {
        * @luafunc icon
        */
       methods.add_method(
-         "logo",
+         "icon",
          |_, this, ()| -> mlua::Result<Option<texture::Texture>> {
             Ok(this
                .call(|fct| fct.gfx_store.as_ref().map(|t| t.try_clone()))?

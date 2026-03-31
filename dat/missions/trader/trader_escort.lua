@@ -85,21 +85,22 @@ function create()
 
    -- Choose mission reward.
    -- Reward depends on type of cargo hauled. Hauling expensive commodities gives a better deal.
+   local price = commodity.get( mem.cargo ):price()
    if mem.convoysize == 1 then
-      mem.jumpreward = 6*commodity.price(mem.cargo)
-      mem.distreward = math.log(500*commodity.price(mem.cargo))/100
+      mem.jumpreward = 6*price
+      mem.distreward = math.log(500*price)/100
    elseif mem.convoysize == 2 then
-      mem.jumpreward = 7*commodity.price(mem.cargo)
-      mem.distreward = math.log(700*commodity.price(mem.cargo))/100
+      mem.jumpreward = 7*price
+      mem.distreward = math.log(700*price)/100
    elseif mem.convoysize == 3 then
-      mem.jumpreward = 8*commodity.price(mem.cargo)
-      mem.distreward = math.log(800*commodity.price(mem.cargo))/100
+      mem.jumpreward = 8*price
+      mem.distreward = math.log(800*price)/100
    elseif mem.convoysize == 4 then
-      mem.jumpreward = 9*commodity.price(mem.cargo)
-      mem.distreward = math.log(900*commodity.price(mem.cargo))/100
+      mem.jumpreward = 9*price
+      mem.distreward = math.log(900*price)/100
    elseif mem.convoysize == 5 then
-      mem.jumpreward = 10*commodity.price(mem.cargo)
-      mem.distreward = math.log(1000*commodity.price(mem.cargo))/100
+      mem.jumpreward = 10*price
+      mem.distreward = math.log(1000*price)/100
    end
    mem.reward = 2.0 * (mem.avgrisk * mem.numjumps * mem.jumpreward + mem.traveldist * mem.distreward) * (1. + 0.05*rnd.twosigma())
 

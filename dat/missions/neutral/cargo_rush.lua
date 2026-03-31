@@ -104,8 +104,9 @@ function create()
    -- Choose amount of cargo and mission reward. This depends on the mission tier.
    -- Note: Pay is independent from amount by design! Not all deals are equally attractive!
    mem.amount     = rnd.rnd(10 + 5 * mem.tier, 20 + 6 * mem.tier) -- 45 max (quicksilver)
-   local jumpreward = commodity.price(mem.cargo)*1.8
-   local distreward = math.log(300*commodity.price(mem.cargo))/80
+   local price = commodity.get( mem.cargo ):price()
+   local jumpreward = price*1.8
+   local distreward = math.log(300*price)/80
    mem.reward     = 1.5^mem.tier * (mem.avgrisk*riskreward + mem.numjumps * jumpreward + mem.traveldist * distreward) * (1. + 0.05*rnd.twosigma())
 
    misn.setTitle( fmt.f( misn_title[mem.tier], {pnt=mem.destplanet, sys=mem.destsys, tonnes=fmt.tonnes_short(mem.amount)} ) )

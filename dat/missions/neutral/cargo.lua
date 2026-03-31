@@ -74,8 +74,9 @@ function create()
    -- Reward depends on type of cargo hauled. Hauling expensive commodities gives a better deal.
    -- Note: Pay is independent from amount by design! Not all deals are equally attractive!
    mem.amount = rnd.rnd(5 + 25 * mem.tier^1.9, 20 + 60 * mem.tier^2.15)
-   local jumpreward = commodity.price(mem.cargo)*1.5
-   local distreward = math.log(100*commodity.price(mem.cargo))/80
+   local price = commodity.get( mem.cargo ):price()
+   local jumpreward = price*1.5
+   local distreward = math.log(100*price)/80
    mem.reward = 1.5^mem.tier * (mem.avgrisk*riskreward + mem.numjumps * jumpreward + mem.traveldist * distreward) * (1 + 0.05*rnd.twosigma())
 
    misn.setTitle( fmt.f(_("Shipment to {pnt} in {sys} ({tonnes})"),
