@@ -2618,7 +2618,7 @@ pub extern "C" fn faction_updateSingle(id: i64) {
    for sys in crate::system::get() {
       let p = sys.presence();
       v = p.iter().fold(v, |val, sp| {
-         if sp.faction == id {
+         if sp.value > 0.0 && sp.faction == id {
             (val.0 + sp.local as f32, val.1 + 1.0)
          } else {
             val
