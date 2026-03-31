@@ -310,33 +310,6 @@ stds.camera = {
       }
    }
 }
-stds.commodity = {
-   read_globals = {
-      commodity = {
-         fields = {
-            __eq = {},
-            get = {},
-            getAll = {},
-            exists = {},
-            getStandard = {},
-            flags = {},
-            name = {},
-            nameRaw = {},
-            price = {},
-            priceAt = {},
-            priceAtTime = {},
-            canSell = {},
-            canBuy = {},
-            icon = {},
-            description = {},
-            new = {},
-            illegalto = {},
-            illegality = {},
-            tags = {},
-         }
-      }
-   }
-}
 stds.diff = {
    read_globals = {
       diff = {
@@ -1389,7 +1362,6 @@ stds.naev.read_globals.naev.fields.file = stds.file.read_globals.file
 stds.naev.read_globals.naev.fields.asteroid = stds.asteroid.read_globals.asteroid
 stds.naev.read_globals.naev.fields.bkg = stds.bkg.read_globals.bkg
 stds.naev.read_globals.naev.fields.camera = stds.camera.read_globals.camera
-stds.naev.read_globals.naev.fields.commodity = stds.commodity.read_globals.commodity
 stds.naev.read_globals.naev.fields.diff = stds.diff.read_globals.diff
 stds.naev.read_globals.naev.fields.evt = stds.evt.read_globals.evt
 stds.naev.read_globals.naev.fields.font = stds.font.read_globals.font
