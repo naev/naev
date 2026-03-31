@@ -166,8 +166,8 @@ static int cli_script( lua_State *L )
 
    /* Return the stuff. */
    if ( nlua_pcall( cli_env, 0, LUA_MULTRET ) != 0 ) {
-      WARN( _( "Error running 'script':\n%s" ), lua_tostring( L, -1 ) );
-      lua_pop( L, 1 );
+      WARN( _( "Error running 'script':\n%s" ), luaL_tolstring( L, -1, NULL ) );
+      lua_pop( L, 2 );
       return 0;
    }
    return lua_gettop( L ) - n;
