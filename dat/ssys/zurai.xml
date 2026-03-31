@@ -25,15 +25,15 @@
  <asteroids>
   <asteroid>
    <group>typeB-poor</group>
-   <group>typeB-rich</group>
+   <group>typeB-standard</group>
    <radius>6000.000000</radius>
    <pos x="-1489.407576" y="1230.101493"/>
    <density>0.470000</density>
    <maxspeed>15.000000</maxspeed>
   </asteroid>
   <asteroid>
-   <group>typeB-standard</group>
-   <group>Rhodium-Yttrium</group>
+   <group>typeB-poor</group>
+   <group>typeB-rich</group>
    <radius>2580.000000</radius>
    <pos x="3860.487466" y="7883.395373"/>
    <density>0.500000</density>
