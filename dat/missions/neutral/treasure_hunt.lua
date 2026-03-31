@@ -22,6 +22,7 @@ local function update_desc ()
    for k,v in ipairs(mem.maps) do
       desc = desc.."\n"..fmt.f(_(" * {mapname}"), {mapname=v.name})
    end
+   desc = desc.."\n".._("You can view the maps from the #bTreasure Maps#0 button in the main tab.")
    misn.setDesc( desc )
 end
 
