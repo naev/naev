@@ -45,6 +45,7 @@ pub struct PriceRef {
    modifier: f64,
 }
 
+/// Modifiers for the economy
 #[derive(Default, Debug)]
 pub struct EconomyModifiers {
    period: f64,
@@ -53,6 +54,7 @@ pub struct EconomyModifiers {
    faction_modifier: HashMap<FactionRef, f32>,
 }
 
+/// Temporary stuff we have to keep until C doesn't need it anymore
 #[derive(Default, Debug)]
 pub struct CommodityC {
    strings: Vec<CString>,
@@ -658,7 +660,7 @@ impl UserData for CommodityRef {
        */
       methods.add_function(
          "new",
-         |_, (name, desc, params): (BorrowedStr, BorrowedStr, mlua::Table)| -> mlua::Result<Self> {
+         |_, (name, description, params): (String, String, mlua::Table)| -> mlua::Result<Self> {
             // Handle parameters
             let gfx_space = params
                .get::<Option<UserDataRef<texture::Texture>>>("gfx_space")?
@@ -669,8 +671,8 @@ impl UserData for CommodityRef {
             Ok(COMMODITIES.write().unwrap().insert_with_key(|k| {
                let mut com = Commodity {
                   id: k,
-                  name: name.to_string(),
-                  description: desc.to_string(),
+                  name,
+                  description,
                   gfx_space: gfx_space,
                   temporary: true,
                   ..Default::default()
