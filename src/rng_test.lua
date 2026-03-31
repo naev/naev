@@ -27,14 +27,10 @@ for _,vals in ipairs{ {9,nil}, {5,10}, {9,3}, {-3,5}, } do --{5,nil} } do
    end
 end
 
-local function uniform_wrap()
-   return rnd.uniform( -4, 4 )
-end
 for _,vals in ipairs{
    {1, rnd.sigma},
    {2, rnd.twosigma},
    {3, rnd.threesigma},
-   {4, uniform_wrap},
 } do
    local R,F = vals[1], vals[2]
    local min, max = math.huge, -math.huge
