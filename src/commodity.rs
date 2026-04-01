@@ -318,7 +318,7 @@ impl CommodityRef {
    }
 }
 
-static COMMODITIES: LazyLock<RwLock<SlotMap<CommodityRef, Commodity>>> =
+pub static COMMODITIES: LazyLock<RwLock<SlotMap<CommodityRef, Commodity>>> =
    LazyLock::new(|| RwLock::new(SlotMap::with_key()));
 
 #[instrument]
@@ -645,7 +645,7 @@ impl UserData for CommodityRef {
        * nil.
        * @luafunc description
        */
-      methods.add_method("name", |_, this, ()| -> mlua::Result<String> {
+      methods.add_method("description", |_, this, ()| -> mlua::Result<String> {
          Ok(this.call(|com| com.description.to_string())?)
       });
       /*@
