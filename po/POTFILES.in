@@ -863,6 +863,7 @@ dat/spob/brooks.xml
 dat/spob/buritt.xml
 dat/spob/burnan.xml
 dat/spob/burnans_moon.xml
+dat/spob/caethia.xml
 dat/spob/caladan.xml
 dat/spob/calvin.xml
 dat/spob/cantina_centre.xml
@@ -1557,6 +1558,7 @@ dat/spob/pilatis_i.xml
 dat/spob/pilatis_ii.xml
 dat/spob/pilatis_iii.xml
 dat/spob/pirates_cove.xml
+dat/spob/pity.xml
 dat/spob/point_zero_0.xml
 dat/spob/point_zero_nidus.xml
 dat/spob/pokyos_cloister.xml
@@ -1818,6 +1820,9 @@ dat/spob/taxumi_i.xml
 dat/spob/taxumi_ii.xml
 dat/spob/taxumi_iii.xml
 dat/spob/taxumi_iiia.xml
+dat/spob/teapat.xml
+dat/spob/teapit.xml
+dat/spob/teapot.xml
 dat/spob/telika_ii.xml
 dat/spob/telika_iii.xml
 dat/spob/tenal-p.xml
@@ -2023,6 +2028,8 @@ dat/spob/zintar_iv.xml
 dat/spob/zintar_v.xml
 dat/spob/ziz.xml
 dat/spob/zuner.xml
+dat/spob/zurai_i.xml
+dat/spob/zurai_ib.xml
 dat/spob_virtual/dvaered_small.xml
 dat/spob_virtual/dvaered_unpresence.xml
 dat/spob_virtual/dvaered_unpresence_range_1.xml
@@ -2502,6 +2509,7 @@ dat/ssys/shikima.xml
 dat/ssys/shinnok.xml
 dat/ssys/sigur.xml
 dat/ssys/sikh.xml
+dat/ssys/sinensis.xml
 dat/ssys/sirou.xml
 dat/ssys/slaccid.xml
 dat/ssys/sleuth.xml
@@ -2609,6 +2617,7 @@ dat/ssys/zemur.xml
 dat/ssys/zerantix.xml
 dat/ssys/zied.xml
 dat/ssys/zintar.xml
+dat/ssys/zurai.xml
 dat/ssys/zylex.xml
 dat/tech/__collective_outfits.xml
 dat/tech/__collective_ships.xml
