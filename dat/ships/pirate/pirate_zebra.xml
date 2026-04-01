@@ -1,6 +1,6 @@
 <ship name="Pirate Zebra">
  <lua>pirate.lua</lua>
- <points>160</points>
+ <points>180</points>
  <base_type>Zebra</base_type>
  <gfx sy="12" sx="12" size="128">zebra_pirate.gltf</gfx>
  <rarity>2</rarity>
@@ -62,7 +62,7 @@
   <armour_mod>-10</armour_mod>
   <ew_hide>-10</ew_hide>
   <fbay_rate>160</fbay_rate>
-  <fbay_reload>-20</fbay_reload>
+  <fbay_reload>-45</fbay_reload>
   <fuel>400</fuel>
  </stats>
  <tags>

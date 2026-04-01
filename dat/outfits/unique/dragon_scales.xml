@@ -18,7 +18,8 @@
       {'cargo', 5},
       {'absorb', 70},
       {'armour', 450},
-      {'armour_regen', 8},
+      {'armour_regen', 7},
+      {'armour_regen_mod', 10},
    })
   </lua_inline>
  </specific>

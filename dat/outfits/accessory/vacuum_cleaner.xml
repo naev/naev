@@ -13,5 +13,7 @@
  </general>
  <specific type="modification">
   <engine_limit_rel>10</engine_limit_rel>
+  <cooldown_time>-10</cooldown_time>
+  <ew_stealth_timer>-5</ew_stealth_timer>
  </specific>
 </outfit>

@@ -14,5 +14,6 @@
  <specific type="modification">
   <cargo_inertia>-10</cargo_inertia>
   <land_delay>-10</land_delay>
+  <ew_stealth_min>-4</ew_stealth_min>
  </specific>
 </outfit>

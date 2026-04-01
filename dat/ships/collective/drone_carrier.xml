@@ -1,6 +1,6 @@
 <ship name="Drone Carrier">
  <lua>thurion.lua</lua>
- <points>160</points>
+ <points>190</points>
  <base_type path="Drone_Carrier">Drone Carrier</base_type>
  <gfx sy="12" sx="12" size="96">drone_carrier.gltf</gfx>
  <rarity>3</rarity>
@@ -52,7 +52,7 @@
  </slots>
  <stats>
   <accel_mod>10</accel_mod>
-  <armour_mod>-10</armour_mod>
+  <armour_mod>-15</armour_mod>
   <cargo_mod>-25</cargo_mod>
   <engine_limit_rel>15</engine_limit_rel>
  </stats>

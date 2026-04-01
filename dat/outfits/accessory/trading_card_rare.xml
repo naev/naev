@@ -12,10 +12,9 @@
   <rarity>6</rarity>
  </general>
  <specific type="modification">
-  <absorb>5</absorb>
-  <cooldown_time>-10</cooldown_time>
-  <loot_mod>10</loot_mod>
+  <absorb>7.5</absorb>
+  <cooldown_mod>-10</cooldown_mod>
   <stress_dissipation>15</stress_dissipation>
-  <ew_hide>-5</ew_hide>
+  <ew_signature>-10</ew_signature>
  </specific>
 </outfit>

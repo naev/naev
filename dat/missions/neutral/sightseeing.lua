@@ -44,7 +44,7 @@ local set_marks -- Forward-declared functions
 local pay_text = {
    _("The passengers disembark with a new appreciation for the wonders of the universe."),
    _("Going off-world has renewed your passengers sense of adventure."),
-   _("The passengers burst into cheers upon returning to the hanger. What a wonderful experience."),
+   _("The passengers burst into cheers upon returning to the hangar. What a wonderful experience."),
    _("The passengers enjoyed their time aboard your vessel."),
 }
 
