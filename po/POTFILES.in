@@ -3960,7 +3960,6 @@ src/faction.h
 src/faction.rs
 src/font.c
 src/font.h
-src/gatherable.c
 src/gatherable.h
 src/gatherable.rs
 src/gettext.c
