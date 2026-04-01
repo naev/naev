@@ -9,6 +9,7 @@ use std::fmt::Debug;
 use std::path::Path;
 use tracing::instrument;
 
+#[repr(transparent)]
 struct ShipWrapper(naevc::Ship);
 //unsafe impl Sync for ShipWrapper {}
 unsafe impl Send for ShipWrapper {}

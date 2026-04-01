@@ -131,7 +131,7 @@ source = files(
    'explosion.c',
    #'faction.c',
    'font.c',
-   'gatherable.c',
+   #'gatherable.c',
    'gettext.c',
    'glad.c',
    'gltf.c',

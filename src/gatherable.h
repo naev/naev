@@ -10,12 +10,6 @@ typedef int64_t GatherableRef;
 #define GATHERABLE_NULL ( ( 1l << 32l ) + ( 1l << 32l ) - 1l )
 
 /*
- * Init/cleanup.
- */
-int  gatherable_load( void );
-void gatherable_cleanup( void );
-
-/*
  * Gatherable objects
  */
 GatherableRef gatherable_init( CommodityRef com, const vec2 *pos,

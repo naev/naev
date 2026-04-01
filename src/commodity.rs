@@ -396,8 +396,6 @@ pub fn load() -> Result<()> {
       warn!("Faction '{name}' is duplicated!");
    }
 
-   unsafe { naevc::gatherable_load() };
-
    // Some debug
    if cfg!(debug_assertions) {
       let n = data.len();

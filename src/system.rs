@@ -1,5 +1,6 @@
 use std::ffi::c_void;
 
+#[repr(transparent)]
 pub struct SystemWrapper(naevc::StarSystem);
 unsafe impl Send for SystemWrapper {}
 

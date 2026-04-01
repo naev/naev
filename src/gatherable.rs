@@ -11,6 +11,7 @@ use nlog::{warn, warn_err};
 use slotmap::{Key, KeyData, SlotMap};
 use std::sync::atomic::Ordering;
 use std::sync::{LazyLock, Mutex};
+use tracing::instrument;
 
 const GATHER_DIST: f64 = 30.0;
 const GATHER_DIST2: f64 = GATHER_DIST * GATHER_DIST;
@@ -18,6 +19,7 @@ const NOSCOOP_DELAY: f64 = 2.0;
 
 static NOSCOOP_TIMER: AtomicF64 = AtomicF64::new(0.0);
 
+#[derive(Debug)]
 /// Represents somethnig floating in space that can be gathered
 pub struct Gatherable {
    /// Commodity that is picked up
@@ -58,7 +60,8 @@ impl Gatherable {
    }
 
    fn gather_pilot(&self, p: &mut pilot::PilotWrapper) -> bool {
-      let f = |f| p.0.flags[f as usize] != 0;
+      let p = unsafe { p.as_mut() };
+      let f = |f| p.flags[f as usize] != 0;
       // Must not be dead
       if f(naevc::PILOT_DEAD) || f(naevc::PILOT_DELETE) {
          return false;
@@ -74,7 +77,7 @@ impl Gatherable {
 
       let isplayer = f(naevc::PILOT_PLAYER);
 
-      let q = unsafe { naevc::pilot_cargoAdd(p.0, self.commodity.as_ffi(), self.quantity, 0) };
+      let q = unsafe { naevc::pilot_cargoAdd(p, self.commodity.as_ffi(), self.quantity, 0) };
       if q > 0 {
          let msg = self.commodity.call(|c| {
             formatx!(
@@ -103,7 +106,7 @@ impl Gatherable {
          ];
          crate::hook::run_param_deferred("gather", &hparam);
 
-         if unsafe { naevc::pilot_cargoFree(p.0) < 1 } && isplayer {
+         if unsafe { naevc::pilot_cargoFree(p) < 1 } && isplayer {
             player::message(gettext("Your ship's cargo is full."));
          }
          return true;
@@ -153,6 +156,7 @@ impl Manager {
 
 static GATHERABLES: LazyLock<Mutex<Manager>> = LazyLock::new(|| Mutex::new(Manager::new()));
 
+#[instrument]
 pub fn render() {
    let manager = GATHERABLES.lock().unwrap();
    let commodities = crate::commodity::COMMODITIES.read().unwrap();
@@ -181,6 +185,7 @@ pub fn render() {
    }
 }
 
+#[instrument]
 pub fn update(dt: f64) {
    // TODO fetch_add support, maybe use library?
    let val = NOSCOOP_TIMER.load(Ordering::SeqCst);
@@ -201,9 +206,9 @@ pub fn update(dt: f64) {
          if let Some(mut p) = pilot::player()
             && (p.pos() - g.pos).norm_squared() <= GATHER_DIST2
          {
-            return g.gather_pilot(&mut p);
+            return !g.gather_pilot(&mut p);
          }
-         return false;
+         return true;
       }
 
       let x = g.pos.x.round() as i32;
@@ -214,28 +219,29 @@ pub fn update(dt: f64) {
          naevc::il_size(query)
       };
       for i in 0..s {
-         let p = unsafe { &mut pilot_stack[naevc::il_get(query, i, 0) as usize] };
-         if p.0.flags[naevc::PILOT_CARRIED as usize] != 0 {
+         let ps = &mut pilot_stack[unsafe { naevc::il_get(query, i, 0) } as usize];
+         let p = unsafe { ps.as_mut() };
+         if p.flags[naevc::PILOT_CARRIED as usize] != 0 {
             continue;
          }
 
-         if (p.pos() - g.pos).norm_squared() > GATHER_DIST2 {
+         if (ps.pos() - g.pos).norm_squared() > GATHER_DIST2 {
             continue;
          }
 
-         if g.gather_pilot(p) {
-            return true;
+         if !g.gather_pilot(ps) {
+            return false;
          }
       }
 
-      false
+      true
    });
 }
 
 use std::ffi::{c_double, c_int};
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _gatherable_init(
+pub extern "C" fn gatherable_init(
    com: i64,
    pos: *const Vector2<f64>,
    vel: *const Vector2<f64>,
@@ -244,6 +250,11 @@ pub extern "C" fn _gatherable_init(
    player_only: c_int,
 ) -> i64 {
    let com = CommodityRef::from_ffi(com);
+   let lifeleng = if lifeleng < 0.0 {
+      crate::rng::rng::<f64>() * 10.0 + 50.0
+   } else {
+      lifeleng
+   };
    let g = Gatherable::new(
       com,
       unsafe { *pos },
@@ -256,7 +267,7 @@ pub extern "C" fn _gatherable_init(
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _gatherable_getClosest(pos: *const Vector2<f64>, rad: f64) -> i64 {
+pub extern "C" fn gatherable_getClosest(pos: *const Vector2<f64>, rad: f64) -> i64 {
    let pos = unsafe { *pos };
    let gclosest = GATHERABLES
       .lock()
@@ -276,7 +287,7 @@ pub extern "C" fn _gatherable_getClosest(pos: *const Vector2<f64>, rad: f64) -> 
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _gatherable_getPos(
+pub extern "C" fn gatherable_getPos(
    pos: *mut Vector2<f64>,
    vel: *mut Vector2<f64>,
    id: i64,
@@ -301,16 +312,16 @@ pub extern "C" fn _gatherable_getPos(
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _gatherable_render() {
+pub extern "C" fn gatherable_render() {
    render()
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _gatherable_update(dt: c_double) {
+pub extern "C" fn gatherable_update(dt: c_double) {
    update(dt)
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _gatherable_free() {
+pub extern "C" fn gatherable_free() {
    GATHERABLES.lock().unwrap().data.clear();
 }
