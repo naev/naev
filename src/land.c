@@ -1197,6 +1197,13 @@ static void land_setupTabs( void )
    /* Main. */
    land_windowsMap[LAND_WINDOW_MAIN] = j;
    names[j++]                        = _( "Landing Main" );
+   /* Equipment. */
+   if ( spob_hasService( land_spob, SPOB_SERVICE_REFUEL ) ||
+        spob_hasService( land_spob, SPOB_SERVICE_OUTFITS ) ||
+        spob_hasService( land_spob, SPOB_SERVICE_SHIPYARD ) ) {
+      land_windowsMap[LAND_WINDOW_EQUIPMENT] = j;
+      names[j++]                             = p_( "service", "Equipment" );
+   }
    /* Bar. */
    if ( spob_hasService( land_spob, SPOB_SERVICE_BAR ) ) {
       land_windowsMap[LAND_WINDOW_BAR] = j;
@@ -1216,13 +1223,6 @@ static void land_setupTabs( void )
    if ( spob_hasService( land_spob, SPOB_SERVICE_SHIPYARD ) ) {
       land_windowsMap[LAND_WINDOW_SHIPYARD] = j;
       names[j++]                            = _( "Shipyard" );
-   }
-   /* Equipment. */
-   if ( spob_hasService( land_spob, SPOB_SERVICE_REFUEL ) ||
-        spob_hasService( land_spob, SPOB_SERVICE_OUTFITS ) ||
-        spob_hasService( land_spob, SPOB_SERVICE_SHIPYARD ) ) {
-      land_windowsMap[LAND_WINDOW_EQUIPMENT] = j;
-      names[j++]                             = p_( "service", "Equipment" );
    }
    /* Commodity. */
    if ( spob_hasService( land_spob, SPOB_SERVICE_COMMODITY ) ) {
