@@ -12,7 +12,8 @@
   <rarity>6</rarity>
  </general>
  <specific type="modification">
-  <fwd_firerate>8</fwd_firerate>
-  <stress_dissipation>6</stress_dissipation>
+  <fwd_firerate>7.5</fwd_firerate>
+  <fwd_range>6</fwd_range>
+  <stress_dissipation>9</stress_dissipation>
  </specific>
 </outfit>

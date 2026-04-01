@@ -266,11 +266,12 @@ end
 
 function _bounty_board ()
    local b = mem._bounty
-
+   local pltc = commodity.new( b.targetname, _("A wanted individual captured alive.") )
    local t = fmt.f( b.msg_subdue[ rnd.rnd( 1, #b.msg_subdue ) ], {plt=b.targetname} )
    vntk.msg( _("Captured Alive"), t )
    _succeed()
    b.target_killed = false
+   misn.cargoAdd( pltc, 0 )
    target_ship:setHilight( false )
    target_ship:setDisable() -- Stop it from coming back
    hook.rm( b.death_hook )

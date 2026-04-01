@@ -14,5 +14,6 @@
  <specific type="modification">
   <fwd_damage>10</fwd_damage>
   <shield_mod>10</shield_mod>
+  <loot_mod>10</loot_mod>
  </specific>
 </outfit>

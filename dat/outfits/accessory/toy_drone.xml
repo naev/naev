@@ -14,7 +14,7 @@
  <specific type="modification">
   <shield_regen_mod>5</shield_regen_mod>
   <speed_mod>5</speed_mod>
-  <fwd_firerate>3</fwd_firerate>
-  <tur_firerate>3</tur_firerate>
+  <fbay_health>6.5</fbay_health>
+  <fbay_rate>13</fbay_rate>
  </specific>
 </outfit>
