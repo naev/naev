@@ -1,3 +1,4 @@
+use crate::commodity::CommodityRef;
 use crate::faction::FactionRef;
 use helpers::ReferenceC;
 use std::ffi::{CStr, CString, c_char, c_int};
@@ -13,7 +14,7 @@ pub enum HookParam {
    //Pilot(),
    //Ship(),
    //Outfit(),
-   //Commodity()
+   Commodity(CommodityRef),
    Faction(FactionRef),
    Ssys(i64),
    //Spob(),
@@ -51,6 +52,12 @@ impl HookParam {
          Self::Bool(b) => naevc::HookParam {
             type_: naevc::HookParamType_e_HOOK_PARAM_BOOL,
             u: naevc::HookParam_s__bindgen_ty_1 { b: *b as c_int },
+         },
+         Self::Commodity(c) => naevc::HookParam {
+            type_: naevc::HookParamType_e_HOOK_PARAM_COMMODITY,
+            u: naevc::HookParam_s__bindgen_ty_1 {
+               commodity: c.as_ffi(),
+            },
          },
          Self::Faction(f) => naevc::HookParam {
             type_: naevc::HookParamType_e_HOOK_PARAM_FACTION,

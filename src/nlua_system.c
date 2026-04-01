@@ -702,7 +702,7 @@ static int systemL_addGatherable( lua_State *L )
    lifelength = luaL_optnumber( L, 5, -1. ); /* -1. means random life length. */
    player_only = lua_toboolean( L, 6 );
 
-   lua_pushnumber(
+   lua_pushinteger(
       L, gatherable_init( commodity, pos, vel, lifelength, nb, player_only ) );
    return 1;
 }

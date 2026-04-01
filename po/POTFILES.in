@@ -3962,6 +3962,7 @@ src/font.c
 src/font.h
 src/gatherable.c
 src/gatherable.h
+src/gatherable.rs
 src/gettext.c
 src/gettext.h
 src/gettext/src/lib.rs
@@ -4168,6 +4169,7 @@ src/physics/src/transform2.rs
 src/physics/src/vec2.rs
 src/pilot.c
 src/pilot.h
+src/pilot.rs
 src/pilot_cargo.c
 src/pilot_cargo.h
 src/pilot_ew.c
@@ -4183,6 +4185,7 @@ src/pilot_weapon.c
 src/pilot_weapon.h
 src/player.c
 src/player.h
+src/player.rs
 src/player_autonav.c
 src/player_autonav.h
 src/player_fleet.c

@@ -1056,7 +1056,7 @@ function mine_shoot( ast )
 
    -- See if there's a gatherable; if so, pop this task and gather instead
    local gat = ai.getgatherable( wrange )
-   if gat ~= nil and ai.gatherablepos( gat ) ~= nil then
+   if gat ~= nil then
       ai.poptask()
       ai.pushtask("gather")
       return

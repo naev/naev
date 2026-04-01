@@ -81,8 +81,9 @@ void gatherable_cleanup( void )
  *    @param player_only Whether the gatherable can only be gathered by the
  * player.
  */
-int gatherable_init( CommodityRef com, const vec2 *pos, const vec2 *vel,
-                     double lifeleng, int qtt, unsigned int player_only )
+GatherableRef gatherable_init( CommodityRef com, const vec2 *pos,
+                               const vec2 *vel, double lifeleng, int qtt,
+                               unsigned int player_only )
 {
    Gatherable      *g         = &array_grow( &gatherable_stack );
    const glTexture *gfx_space = commodity_gfxSpace( com );
@@ -191,7 +192,7 @@ void gatherable_render( void )
  *    @param rad radius.
  *    @return The id of the closest gatherable, or -1 if none is found.
  */
-int gatherable_getClosest( const vec2 *pos, double rad )
+GatherableRef gatherable_getClosest( const vec2 *pos, double rad )
 {
    int    curg    = -1;
    double mindist = INFINITY;
@@ -215,7 +216,7 @@ int gatherable_getClosest( const vec2 *pos, double rad )
  *    @param id Id of the gatherable in the stack.
  *    @return flag 1->there exists a gatherable 0->elsewhere.
  */
-int gatherable_getPos( vec2 *pos, vec2 *vel, int id )
+int gatherable_getPos( vec2 *pos, vec2 *vel, GatherableRef id )
 {
    Gatherable *gat;
 
