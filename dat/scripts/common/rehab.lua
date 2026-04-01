@@ -31,10 +31,10 @@ function rehab.init( fct, params )
       if mem.rep >= 0 then
          misn.finish()
       end
-      
+
       -- Must not be too far away.
       local sys = system.cur()
-      systems = lmisn.getSysAtDistance( sys, 0, 4,
+      local systems = lmisn.getSysAtDistance( sys, 0, 4,
          function(s)
             if s:presence( fct ) ~= 0 then
                return true
@@ -42,7 +42,7 @@ function rehab.init( fct, params )
             return false
          end )
       if #systems < 3 then misn.finish() end
-      
+
       -- Must not be in a hostile place.
       local spb = spob.cur()
       if spb then
