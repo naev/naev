@@ -1,0 +1,47 @@
+<ssys name="Zurai">
+ <general>
+  <radius>12000.000000</radius>
+  <spacedust>400</spacedust>
+  <interference>0.000000</interference>
+ </general>
+ <pos x="-143.341796" y="-1005.791799"/>
+ <spobs>
+  <spob>Caethia</spob>
+  <spob>Pity</spob>
+  <spob>Zurai I</spob>
+  <spob>Zurai Ib</spob>
+  <spob_virtual>Miner Small</spob_virtual>
+ </spobs>
+ <jumps>
+  <jump target="Sinensis">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Westhaven">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+ </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeB-poor</group>
+   <group>typeB-standard</group>
+   <radius>6000.000000</radius>
+   <pos x="-1489.407576" y="1230.101493"/>
+   <density>0.470000</density>
+   <maxspeed>15.000000</maxspeed>
+  </asteroid>
+  <asteroid>
+   <group>typeB-poor</group>
+   <group>typeB-rich</group>
+   <radius>2580.000000</radius>
+   <pos x="3860.487466" y="7883.395373"/>
+   <density>0.500000</density>
+   <maxspeed>17.000000</maxspeed>
+  </asteroid>
+  <exclusion>
+   <radius>3222.000000</radius>
+   <pos x="-1136.117645" y="803.726033"/>
+  </exclusion>
+ </asteroids>
+</ssys>

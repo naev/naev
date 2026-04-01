@@ -1,0 +1,12 @@
+<spob name="Zurai I">
+ <pos x="86.326873" y="-543.993876"/>
+ <GFX>
+  <space>J05</space>
+ </GFX>
+ <general>
+  <class>J</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

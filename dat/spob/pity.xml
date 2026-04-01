@@ -1,0 +1,32 @@
+<spob name="Pity">
+ <pos x="6022.050081" y="9158.426648"/>
+ <GFX>
+  <space>O02</space>
+  <exterior>snow</exterior>
+ </GFX>
+ <presence>
+  <faction>Independent</faction>
+  <base>80.000000</base>
+  <bonus>0.000000</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>O</class>
+  <population>1400</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <description>As the name would suggest, Pity is not the most pleasant place to live. The fringe location does not prompt much development, and facilities are minimal, but those hardened souls who are willing to tolerate the thin air and cold winds can manage a decent living off of the largely untapped deposits of minerals under the surface.</description>
+  <bar>This bar is a homely place, close in spirit to the traditional bars of pre-Growth Earth. A place for people to find comfort in one another's company as they deal with the struggles of everyday life on a newly-colonised world.</bar>
+ </general>
+ <tags>
+  <tag>poor</tag>
+  <tag>mining</tag>
+  <tag>new</tag>
+ </tags>
+</spob>

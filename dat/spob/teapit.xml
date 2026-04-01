@@ -1,0 +1,12 @@
+<spob name="Teapit">
+ <pos x="4544.351549" y="5479.392595"/>
+ <GFX>
+  <space>I02</space>
+ </GFX>
+ <general>
+  <class>I</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>
