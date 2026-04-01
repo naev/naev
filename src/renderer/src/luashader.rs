@@ -354,6 +354,7 @@ impl UserData for LuaShader {
    }
 }
 
+#[allow(clippy::needless_range_loop)]
 fn parse_floats(args: &[mlua::Value], n: usize) -> mlua::Result<[f32; 4]> {
    let mut out = [0f32; 4];
    match args.first() {
@@ -380,6 +381,7 @@ fn parse_floats(args: &[mlua::Value], n: usize) -> mlua::Result<[f32; 4]> {
    Ok(out)
 }
 
+#[allow(clippy::needless_range_loop)]
 fn parse_ints(args: &[mlua::Value], n: usize) -> mlua::Result<[i32; 4]> {
    let mut out = [0i32; 4];
    match args.first() {
