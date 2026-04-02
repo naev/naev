@@ -2399,6 +2399,10 @@ static void map_buttonMarkSystem( unsigned int wid, const char *str )
       sys->note = dialogue_input( _( "Add System Note" ), 0, 60,
                                   _( "Write a note about the #o%s#0 system:" ),
                                   system_nameKnown( sys ) );
+      if ( ( sys->note != NULL ) && u8_strlen( sys->note ) <= 0 ) {
+         free( sys->note );
+         sys->note = NULL;
+      }
       if ( sys->note != NULL )
          sys_setFlag( sys, SYSTEM_PMARKED );
    }
