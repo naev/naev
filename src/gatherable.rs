@@ -83,8 +83,7 @@ impl Gatherable {
             formatx!(
                ngettext(
                   "{} tonne of {} gathered.",
-                  "{}
-                  tonnes of {} gathered.",
+                  "{} tonnes of {} gathered.",
                   q as u64
                ),
                q,
