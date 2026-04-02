@@ -1,5 +1,5 @@
 <spob name="Doranthex Secundus">
- <pos x="-4001.078070" y="-9490.026750"/>
+ <pos x="-4001.07807" y="-9490.02675"/>
  <GFX>
   <space>I03</space>
   <exterior>methane</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>I</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

@@ -7,14 +7,14 @@
  </GFX>
  <presence>
   <faction>Pirate</faction>
-  <base>200.000000</base>
-  <bonus>120.000000</bonus>
+  <base>200</base>
+  <bonus>120</bonus>
   <range>4</range>
  </presence>
  <general>
   <class>M</class>
   <population>100000</population>
-  <hide>0.200000</hide>
+  <hide>0.2</hide>
   <services>
    <land/>
    <refuel/>

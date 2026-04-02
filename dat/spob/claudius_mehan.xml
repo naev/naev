@@ -1,5 +1,5 @@
 <spob name="Claudius Mehan">
- <pos x="-1630.058723" y="-8635.562370"/>
+ <pos x="-1630.058723" y="-8635.56237"/>
  <GFX>
   <space>P01</space>
   <exterior>snow</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>P</class>
   <population>0</population>
-  <hide>3.000000</hide>
+  <hide>3</hide>
   <services/>
  </general>
 </spob>

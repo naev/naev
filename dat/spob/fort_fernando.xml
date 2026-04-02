@@ -1,20 +1,20 @@
 <spob name="Fort Fernando">
  <lua>dvaered_mil_restricted.lua</lua>
- <pos x="11011.328430" y="5684.342178"/>
+ <pos x="11011.32843" y="5684.342178"/>
  <GFX>
   <space>station-dvaered1</space>
   <exterior>station05</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>1</class>
   <population>2000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

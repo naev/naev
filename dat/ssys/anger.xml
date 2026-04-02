@@ -1,9 +1,9 @@
 <ssys name="Anger">
  <general>
-  <radius>10000.000000</radius>
+  <radius>10000</radius>
   <spacedust>400</spacedust>
-  <interference>33.075000</interference>
-  <nebula>400.000000</nebula>
+  <interference>33.075</interference>
+  <nebula>400</nebula>
   <nolanes/>
  </general>
  <pos x="1016.339353" y="-120.178328"/>
@@ -14,17 +14,17 @@
  </spobs>
  <jumps>
   <jump target="Ryder">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="9984.290128" y="560.312974" was_auto="true"/>
   </jump>
   <jump target="Sten">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="5652.403407" y="8249.262738" was_auto="true"/>
   </jump>
   <jump target="Tormulex">
    <pos x="-2052.533097" y="267.679081"/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
  </jumps>
  <tags>

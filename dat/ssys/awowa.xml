@@ -1,8 +1,8 @@
 <ssys name="Awowa">
  <general>
-  <radius>16586.400000</radius>
+  <radius>16586.4</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="590.96341" y="-567.010013"/>
  <spobs>
@@ -14,15 +14,15 @@
  </spobs>
  <jumps>
   <jump target="Beeklo">
-   <hide>0.000000</hide>
-   <pos x="-14417.742425" y="8199.839530" was_auto="true"/>
+   <hide>0</hide>
+   <pos x="-14417.742425" y="8199.83953" was_auto="true"/>
   </jump>
   <jump target="Ginger">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="11959.468431" y="11492.596738" was_auto="true"/>
   </jump>
   <jump target="Maus">
-   <hide>0.000000</hide>
+   <hide>0</hide>
    <pos x="15558.501965" y="-5748.189413" was_auto="true"/>
   </jump>
  </jumps>

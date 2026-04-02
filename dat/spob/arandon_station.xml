@@ -7,14 +7,14 @@
  </GFX>
  <presence>
   <faction>Derelict</faction>
-  <base>0.000000</base>
-  <bonus>0.000000</bonus>
+  <base>0</base>
+  <bonus>0</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>0</class>
   <population>0</population>
-  <hide>0.200000</hide>
+  <hide>0.2</hide>
   <services>
    <land/>
   </services>

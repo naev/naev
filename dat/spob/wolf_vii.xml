@@ -1,5 +1,5 @@
 <spob name="Wolf VII">
- <pos x="9327.705420" y="-8249.542592"/>
+ <pos x="9327.70542" y="-8249.542592"/>
  <GFX>
   <space>J02</space>
   <exterior>uninhabited-rocky-cyan-03</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>J</class>
   <population>0</population>
-  <hide>1.500000</hide>
+  <hide>1.5</hide>
   <services/>
  </general>
 </spob>

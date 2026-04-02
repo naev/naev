@@ -1,8 +1,8 @@
 <ssys name="Chloe">
  <general>
-  <radius>14000.000000</radius>
+  <radius>14000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="-135.70455" y="481.102051"/>
  <spobs>
@@ -10,11 +10,11 @@
  </spobs>
  <jumps>
   <jump target="Polack">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="13993.491835" y="-426.832797" was_auto="true"/>
   </jump>
   <jump target="Wolf">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="5214.253917" y="-12992.750135" was_auto="true"/>
   </jump>
   <jump target="SW-3">

@@ -1,8 +1,8 @@
 <ssys name="Rhu">
  <general>
-  <radius>28000.000000</radius>
+  <radius>28000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="1079.018612" y="-872.337798"/>
  <spobs>
@@ -17,20 +17,20 @@
  </spobs>
  <jumps>
   <jump target="Niger">
-   <hide>1.000000</hide>
-   <pos x="25757.538019" y="10979.491570" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="25757.538019" y="10979.49157" was_auto="true"/>
   </jump>
   <jump target="Ruttwi">
-   <hide>1.000000</hide>
-   <pos x="-26076.360740" y="10199.186758" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="-26076.36074" y="10199.186758" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-poor</group>
-   <radius>6000.000000</radius>
+   <radius>6000</radius>
    <pos x="-14106.313365" y="-13722.826522"/>
-   <density>0.800000</density>
+   <density>0.8</density>
   </asteroid>
  </asteroids>
 </ssys>

@@ -1,9 +1,9 @@
 <ssys name="Eisenhorn">
  <general>
-  <radius>10000.000000</radius>
+  <radius>10000</radius>
   <spacedust>400</spacedust>
-  <interference>35.550000</interference>
-  <nebula volatility="2.300000" hue="270.000000">300.000000</nebula>
+  <interference>35.55</interference>
+  <nebula volatility="2.3" hue="270">300</nebula>
   <nolanes/>
  </general>
  <pos x="715.276385" y="400.88858"/>
@@ -12,18 +12,18 @@
  </spobs>
  <jumps>
   <jump target="Alsafi">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-5391.791623" y="8421.910893" was_auto="true"/>
   </jump>
   <jump target="Qellan">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-9713.606686" y="-2376.098724" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-standard</group>
-   <radius>4000.000000</radius>
+   <radius>4000</radius>
    <pos x="0" y="0"/>
   </asteroid>
  </asteroids>

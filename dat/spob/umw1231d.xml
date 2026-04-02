@@ -1,5 +1,5 @@
 <spob name="UMW-1231d">
- <pos x="1608.902566" y="-1338.721430"/>
+ <pos x="1608.902566" y="-1338.72143"/>
  <GFX>
   <space>O02</space>
   <exterior>traderoom</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>O</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

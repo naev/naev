@@ -1,20 +1,20 @@
 <spob name="Hubfar Citadel">
  <lua>dvaered_mil_restricted.lua</lua>
- <pos x="-2185.904200" y="2055.279465"/>
+ <pos x="-2185.9042" y="2055.279465"/>
  <GFX>
   <space>station-fleetbase4</space>
   <exterior>station04</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>50.000000</base>
-  <bonus>25.000000</bonus>
+  <base>50</base>
+  <bonus>25</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>1</class>
   <population>27000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

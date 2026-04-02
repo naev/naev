@@ -1,19 +1,19 @@
 <ssys name="NGC-23">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
   <nolanes/>
  </general>
  <pos x="-701.341428" y="-474.411301"/>
  <spobs/>
  <jumps>
   <jump target="NGC-1001">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="13741.324392" y="-6014.649112" was_auto="true"/>
   </jump>
   <jump target="NGC-1562">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-2914.361293" y="14714.159787" was_auto="true"/>
   </jump>
  </jumps>
@@ -25,8 +25,8 @@
   <waypoint x="-7479.960684" y="5103.938494">zbh08_route1_2</waypoint>
   <waypoint x="-7730.033101" y="13162.316978">zbh08_route1_3</waypoint>
   <waypoint x="-85.899726" y="14764.573181">zbh08_route2_1</waypoint>
-  <waypoint x="6182.501129" y="-3282.785370">zbh08_route2_2</waypoint>
-  <waypoint x="-5439.910638" y="15342.990980">zbh08_route4_1</waypoint>
+  <waypoint x="6182.501129" y="-3282.78537">zbh08_route2_2</waypoint>
+  <waypoint x="-5439.910638" y="15342.99098">zbh08_route4_1</waypoint>
   <waypoint x="0" y="0">zbh08_route4_2</waypoint>
   <waypoint x="11974.305883" y="14021.982691">zbh08_route4_3</waypoint>
  </waypoints>

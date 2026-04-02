@@ -1,9 +1,9 @@
 <ssys name="Sorrow">
  <general>
-  <radius>10000.000000</radius>
+  <radius>10000</radius>
   <spacedust>400</spacedust>
-  <interference>9.675000</interference>
-  <nebula hue="240.000000">100.000000</nebula>
+  <interference>9.675</interference>
+  <nebula hue="240">100</nebula>
  </general>
  <pos x="1311.163682" y="-158.074292"/>
  <spobs>
@@ -12,17 +12,17 @@
  </spobs>
  <jumps>
   <jump target="Kraft">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-820.095925" y="-9966.315401" was_auto="true"/>
   </jump>
   <jump target="NGC-15670">
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="9835.321407" y="-1807.333066" was_auto="true"/>
   </jump>
   <jump target="Penn">
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-5576.983982" y="8300.436714" was_auto="true"/>
   </jump>
  </jumps>

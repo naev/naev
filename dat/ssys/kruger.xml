@@ -1,9 +1,9 @@
 <ssys name="Kruger">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>22.050000</interference>
-  <nebula hue="245.000000">100.000000</nebula>
+  <interference>22.05</interference>
+  <nebula hue="245">100</nebula>
   <nolanes/>
  </general>
  <pos x="531.419695" y="-41.479181"/>
@@ -14,19 +14,19 @@
  <jumps>
   <jump target="Arcanis">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Guntesh">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Kruger's Pocket">
    <autopos/>
-   <hide>0.300000</hide>
+   <hide>0.3</hide>
   </jump>
   <jump target="Van Maanen">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
  </jumps>
  <tags>

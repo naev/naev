@@ -1,19 +1,19 @@
 <ssys name="Zylex">
  <general>
-  <radius>14000.000000</radius>
+  <radius>14000</radius>
   <spacedust>400</spacedust>
   <interference>24.999999</interference>
-  <nebula volatility="1.000000">400.000000</nebula>
+  <nebula volatility="1">400</nebula>
  </general>
  <pos x="723.874006" y="-128.657092"/>
  <spobs/>
  <jumps>
   <jump target="Doeston">
-   <hide>1.000000</hide>
-   <pos x="11470.135760" y="8027.202852" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="11470.13576" y="8027.202852" was_auto="true"/>
   </jump>
   <jump target="Sonas">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-5273.458464" y="12968.833248" was_auto="true"/>
   </jump>
  </jumps>

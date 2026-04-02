@@ -1,20 +1,20 @@
 <ssys name="Percival">
  <general>
-  <radius>14000.000000</radius>
+  <radius>14000</radius>
   <spacedust>400</spacedust>
   <interference>24.999999</interference>
-  <nebula>400.000000</nebula>
+  <nebula>400</nebula>
  </general>
  <pos x="866.585801" y="851.825832"/>
  <spobs/>
  <jumps>
   <jump target="Basel">
-   <hide>1.000000</hide>
-   <pos x="-4.455270" y="-13999.999291" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="-4.45527" y="-13999.999291" was_auto="true"/>
   </jump>
   <jump target="Thirty Stars">
-   <hide>1.000000</hide>
-   <pos x="-13999.852990" y="64.157904" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="-13999.85299" y="64.157904" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

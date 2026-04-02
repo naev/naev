@@ -1,9 +1,9 @@
 <ssys name="Nasona">
  <general>
-  <radius>12000.000000</radius>
+  <radius>12000</radius>
   <spacedust>400</spacedust>
-  <interference>96.428500</interference>
-  <nebula volatility="51.400000" hue="290.000000">700.000000</nebula>
+  <interference>96.4285</interference>
+  <nebula volatility="51.4" hue="290">700</nebula>
   <nolanes/>
  </general>
  <pos x="904.187617" y="38.96048"/>
@@ -13,11 +13,11 @@
  </spobs>
  <jumps>
   <jump target="Arandon">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-2424.029139" y="-11752.620249" was_auto="true"/>
   </jump>
   <jump target="Polaris">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="8314.113149" y="8653.064344" was_auto="true"/>
   </jump>
  </jumps>

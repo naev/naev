@@ -1,8 +1,8 @@
 <ssys name="Cerberus">
  <general>
-  <radius>26250.000000</radius>
+  <radius>26250</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="500.141347" y="1146.527615"/>
  <spobs>
@@ -17,15 +17,15 @@
  </spobs>
  <jumps>
   <jump target="Feye">
-   <hide>0.000000</hide>
+   <hide>0</hide>
    <pos x="22487.506308" y="13541.586318" was_auto="true"/>
   </jump>
   <jump target="Jervis">
-   <hide>1.000000</hide>
-   <pos x="-19125.451070" y="17979.978347" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="-19125.45107" y="17979.978347" was_auto="true"/>
   </jump>
   <jump target="Sergio Vix">
-   <hide>0.000000</hide>
+   <hide>0</hide>
    <pos x="5874.035633" y="-25584.335156" was_auto="true"/>
   </jump>
  </jumps>

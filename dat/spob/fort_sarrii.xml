@@ -7,14 +7,14 @@
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>5</range>
  </presence>
  <general>
   <class>1</class>
   <population>1112</population>
-  <hide>3.000000</hide>
+  <hide>3</hide>
   <services>
    <land/>
    <refuel/>

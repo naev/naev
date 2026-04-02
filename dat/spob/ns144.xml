@@ -1,20 +1,20 @@
 <spob name="NS-144">
  <lua>thurion.lua</lua>
- <pos x="2415.890605" y="2629.617190"/>
+ <pos x="2415.890605" y="2629.61719"/>
  <GFX>
   <space>001</space>
   <exterior>station01</exterior>
  </GFX>
  <presence>
   <faction>Thurion</faction>
-  <base>250.000000</base>
-  <bonus>50.000000</bonus>
+  <base>250</base>
+  <bonus>50</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>0</class>
   <population>1000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

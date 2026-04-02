@@ -1,20 +1,20 @@
 <spob name="Inios Monastery">
  <lua>sirius_mil_restricted.lua</lua>
- <pos x="14043.526270" y="-8724.192946"/>
+ <pos x="14043.52627" y="-8724.192946"/>
  <GFX>
   <space>station-sphere</space>
   <exterior>station04</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>1</class>
   <population>12000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

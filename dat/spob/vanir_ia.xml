@@ -1,5 +1,5 @@
 <spob name="Vanir Ia">
- <pos x="-8755.210014" y="9518.289980"/>
+ <pos x="-8755.210014" y="9518.28998"/>
  <GFX>
   <space>moon-K00</space>
   <exterior>uninhabited-rocky-airless-00</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>K</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

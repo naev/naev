@@ -1,5 +1,5 @@
 <spob name="Secundus Beta">
- <pos x="-3299.724803" y="-9979.035330"/>
+ <pos x="-3299.724803" y="-9979.03533"/>
  <GFX>
   <space>moon-H01</space>
   <exterior>mining4</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

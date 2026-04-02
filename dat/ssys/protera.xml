@@ -1,8 +1,8 @@
 <ssys name="Protera">
  <general>
-  <radius>17500.000000</radius>
+  <radius>17500</radius>
   <spacedust>100</spacedust>
-  <interference>32.100000</interference>
+  <interference>32.1</interference>
   <nolanes/>
  </general>
  <pos x="1097.291973" y="734.126221"/>
@@ -12,15 +12,15 @@
  <jumps>
   <jump target="Baitas">
    <pos x="6555.335332" y="15069.111705"/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Tasopa">
    <pos x="-16529.483017" y="7509.150966"/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Urillian">
    <pos x="-4024.559401" y="-14019.201946"/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
  </jumps>
  <tags>

@@ -1,8 +1,8 @@
 <ssys name="Sirou">
  <general>
-  <radius>24806.200000</radius>
+  <radius>24806.2</radius>
   <spacedust>500</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="0.79045625" y="224.579916"/>
  <spobs>
@@ -16,11 +16,11 @@
  <jumps>
   <jump target="Gamma Polaris">
    <pos x="23612.041401" y="-23123.615843"/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Zemur">
-   <pos x="-23291.367150" y="22730.047394"/>
-   <hide>1.000000</hide>
+   <pos x="-23291.36715" y="22730.047394"/>
+   <hide>1</hide>
   </jump>
  </jumps>
 </ssys>

@@ -1,9 +1,9 @@
 <ssys name="Beeklo">
  <general>
   <background>nebu_dobayashi</background>
-  <radius>23100.000000</radius>
+  <radius>23100</radius>
   <spacedust>500</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="525.370906" y="-531.59783"/>
  <spobs>
@@ -16,19 +16,19 @@
  </spobs>
  <jumps>
   <jump target="Awowa">
-   <hide>0.000000</hide>
+   <hide>0</hide>
    <pos x="20465.409389" y="-10713.403684" was_auto="true"/>
   </jump>
   <jump target="Darkstone">
-   <hide>0.000000</hide>
-   <pos x="20310.003950" y="11005.168765" was_auto="true"/>
+   <hide>0</hide>
+   <pos x="20310.00395" y="11005.168765" was_auto="true"/>
   </jump>
   <jump target="Dvaer">
-   <hide>0.000000</hide>
+   <hide>0</hide>
    <pos x="-17555.278108" y="15014.067087" was_auto="true"/>
   </jump>
   <jump target="Vandal">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="11928.597602" y="-19781.773409" was_auto="true"/>
   </jump>
  </jumps>

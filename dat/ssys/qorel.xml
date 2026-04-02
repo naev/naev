@@ -1,8 +1,8 @@
 <ssys name="Qorel">
  <general>
-  <radius>24500.000000</radius>
+  <radius>24500</radius>
   <spacedust>200</spacedust>
-  <interference>22.000000</interference>
+  <interference>22</interference>
   <nolanes/>
  </general>
  <pos x="152.737411" y="9.008135"/>
@@ -12,33 +12,33 @@
  </spobs>
  <jumps>
   <jump target="Doowa">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-10449.743942" y="22159.712352" was_auto="true"/>
   </jump>
   <jump target="Eneguoz">
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-2624.826324" y="24358.987802" was_auto="true"/>
   </jump>
   <jump target="Trask">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-7020.790466" y="-23472.505218" was_auto="true"/>
   </jump>
   <jump target="Uhriabi">
    <hidden/>
-   <hide>1.000000</hide>
-   <pos x="-17034.166600" y="-17609.292098" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="-17034.1666" y="-17609.292098" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-standard</group>
-   <radius>14000.000000</radius>
+   <radius>14000</radius>
    <pos x="0" y="0"/>
-   <density>0.800000</density>
+   <density>0.8</density>
   </asteroid>
   <exclusion>
-   <radius>11000.000000</radius>
+   <radius>11000</radius>
    <pos x="239.076744" y="125.059144"/>
   </exclusion>
  </asteroids>

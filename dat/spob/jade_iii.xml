@@ -1,5 +1,5 @@
 <spob name="Jade III">
- <pos x="13817.796880" y="7241.213062"/>
+ <pos x="13817.79688" y="7241.213062"/>
  <GFX>
   <space>I05</space>
   <exterior>traderoom</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>I</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

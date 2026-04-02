@@ -3,9 +3,9 @@
   <background>haze</background>
   <map_shader>haze_map.frag</map_shader>
   <features>#rHaze (-50% Shield and Shield Regen)#0</features>
-  <radius>12000.000000</radius>
+  <radius>12000</radius>
   <spacedust>400</spacedust>
-  <interference>33.750000</interference>
+  <interference>33.75</interference>
   <nolanes/>
  </general>
  <pos x="311.832951" y="1634.707772"/>
@@ -16,27 +16,27 @@
   <jump target="Fertile Crescent">
    <pos x="-4131.831723" y="6643.525453"/>
    <hidden/>
-   <hide>0.500000</hide>
+   <hide>0.5</hide>
   </jump>
   <jump target="NGC-4131">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-11214.678833" y="-4269.775012" was_auto="true"/>
   </jump>
   <jump target="NGC-4771">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="11552.920456" y="-3245.000606" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeB-rich</group>
-   <radius>3500.000000</radius>
+   <radius>3500</radius>
    <pos x="-5371.594195" y="624.516361"/>
   </asteroid>
  </asteroids>
  <stats>
-  <shield_mod>-50.000000</shield_mod>
-  <shield_regen_mod>-50.000000</shield_regen_mod>
+  <shield_mod>-50</shield_mod>
+  <shield_regen_mod>-50</shield_regen_mod>
  </stats>
  <tags>
   <tag>haze</tag>

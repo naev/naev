@@ -1,8 +1,8 @@
 <ssys name="Hubfar">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="258.407246" y="-356.288143"/>
  <spobs>
@@ -11,26 +11,26 @@
  </spobs>
  <jumps>
   <jump target="Daravon">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="1046.085915" y="-14963.479015" was_auto="true"/>
   </jump>
   <jump target="Majesteka">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-7927.634374" y="12733.915863" was_auto="true"/>
   </jump>
   <jump target="Vadornla">
-   <hide>1.000000</hide>
-   <pos x="10949.392635" y="10252.355870" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="10949.392635" y="10252.35587" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-poor</group>
-   <radius>4000.000000</radius>
+   <radius>4000</radius>
    <pos x="-537.696764" y="1322.701078"/>
   </asteroid>
   <exclusion>
-   <radius>3000.000000</radius>
+   <radius>3000</radius>
    <pos x="53.246667" y="1251.296664"/>
   </exclusion>
  </asteroids>

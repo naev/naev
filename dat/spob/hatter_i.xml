@@ -1,5 +1,5 @@
 <spob name="Hatter I">
- <pos x="8295.813820" y="1508.531909"/>
+ <pos x="8295.81382" y="1508.531909"/>
  <GFX>
   <space>A00</space>
   <exterior>aquatic</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

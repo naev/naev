@@ -1,5 +1,5 @@
 <spob name="Paxsor">
- <pos x="9459.406848" y="-2286.386210"/>
+ <pos x="9459.406848" y="-2286.38621"/>
  <GFX>
   <space>G01</space>
   <exterior>mining6</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>G</class>
   <population>65000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

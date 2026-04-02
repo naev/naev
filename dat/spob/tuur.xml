@@ -1,5 +1,5 @@
 <spob name="Tuur">
- <pos x="11132.807663" y="9310.228650"/>
+ <pos x="11132.807663" y="9310.22865"/>
  <GFX>
   <space>moon-O00</space>
   <exterior>forest</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

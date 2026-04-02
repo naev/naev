@@ -3,42 +3,42 @@
   <background>stellarwind</background>
   <map_shader>stellarwind_map.frag</map_shader>
   <features>#bStellar Wind (1 fuel regen)#0</features>
-  <radius>10000.000000</radius>
+  <radius>10000</radius>
   <spacedust>400</spacedust>
-  <interference>30.000000</interference>
+  <interference>30</interference>
  </general>
  <pos x="500.532537" y="700.401328"/>
  <spobs/>
  <jumps>
   <jump target="Defa">
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="3333.969713" y="-9427.865397" was_auto="true"/>
   </jump>
   <jump target="Solene">
-   <hide>1.000000</hide>
-   <pos x="-2457.499890" y="9693.332465" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="-2457.49989" y="9693.332465" was_auto="true"/>
   </jump>
   <jump target="Titus">
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-9403.249197" y="3402.778943" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeB-rich</group>
-   <radius>8000.000000</radius>
+   <radius>8000</radius>
    <pos x="0" y="0"/>
-   <density>0.300000</density>
+   <density>0.3</density>
   </asteroid>
   <exclusion>
-   <radius>7000.000000</radius>
-   <pos x="0.000000" y="0.000000"/>
+   <radius>7000</radius>
+   <pos x="0" y="0"/>
   </exclusion>
  </asteroids>
  <stats>
-  <fuel_regen>1.000000</fuel_regen>
+  <fuel_regen>1</fuel_regen>
  </stats>
  <tags>
   <tag>northstellarwind</tag>

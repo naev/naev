@@ -1,6 +1,6 @@
 <ssys name="Eridani">
  <general>
-  <radius>17500.000000</radius>
+  <radius>17500</radius>
   <spacedust>500</spacedust>
   <interference>13.235294</interference>
  </general>
@@ -12,16 +12,16 @@
  </spobs>
  <jumps>
   <jump target="Alteris">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-17461.255226" y="1163.858203" was_auto="true"/>
   </jump>
   <jump target="Draconis">
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="16610.880623" y="-5507.144896" was_auto="true"/>
   </jump>
   <jump target="Dune">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-7557.952758" y="15783.768564" was_auto="true"/>
   </jump>
  </jumps>

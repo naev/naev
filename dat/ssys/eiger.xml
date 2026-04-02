@@ -1,8 +1,8 @@
 <ssys name="Eiger">
  <general>
-  <radius>15500.000000</radius>
+  <radius>15500</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="-431.068047" y="-621.757925"/>
  <spobs>
@@ -10,19 +10,19 @@
  </spobs>
  <jumps>
   <jump target="Armorhead">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="4447.475217" y="-14848.231012" was_auto="true"/>
   </jump>
   <jump target="Bedimann">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-12247.636404" y="9499.758023" was_auto="true"/>
   </jump>
   <jump target="Gorman">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-7772.756702" y="-13410.229425" was_auto="true"/>
   </jump>
   <jump target="Qulam">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="15442.136521" y="-1338.065636" was_auto="true"/>
   </jump>
  </jumps>

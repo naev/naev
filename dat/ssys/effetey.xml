@@ -1,8 +1,8 @@
 <ssys name="Effetey">
  <general>
-  <radius>24500.000000</radius>
+  <radius>24500</radius>
   <spacedust>200</spacedust>
-  <interference>22.000000</interference>
+  <interference>22</interference>
   <nolanes/>
  </general>
  <pos x="243.707923" y="-286.208387"/>
@@ -12,20 +12,20 @@
  <jumps>
   <jump target="Daan">
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-132.094494" y="-24499.643896" was_auto="true"/>
   </jump>
   <jump target="Frolina">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-15153.911937" y="19251.206533" was_auto="true"/>
   </jump>
   <jump target="Pas">
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-1728.088946" y="24438.979287" was_auto="true"/>
   </jump>
   <jump target="Trohem">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="21254.497876" y="-12185.906615" was_auto="true"/>
   </jump>
  </jumps>

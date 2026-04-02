@@ -1,20 +1,20 @@
 <spob name="Berkhere">
  <lua>lowclass.lua</lua>
- <pos x="1509.834050" y="17396.946974"/>
+ <pos x="1509.83405" y="17396.946974"/>
  <GFX>
   <space>H00</space>
   <exterior>desertic2</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>H</class>
   <population>2.7e+07</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

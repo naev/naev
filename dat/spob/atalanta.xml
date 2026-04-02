@@ -6,14 +6,14 @@
  </GFX>
  <presence>
   <faction>Frontier</faction>
-  <base>70.000000</base>
-  <bonus>30.000000</bonus>
+  <base>70</base>
+  <bonus>30</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>P</class>
   <population>2e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

@@ -1,5 +1,5 @@
 <spob name="Ruttwi I">
- <pos x="-10312.010243" y="17828.435860"/>
+ <pos x="-10312.010243" y="17828.43586"/>
  <GFX>
   <space>H00</space>
   <exterior>mining5</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

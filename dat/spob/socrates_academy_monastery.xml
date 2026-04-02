@@ -7,14 +7,14 @@
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>0</class>
   <population>10000</population>
-  <hide>0.800000</hide>
+  <hide>0.8</hide>
   <services>
    <land/>
    <refuel/>

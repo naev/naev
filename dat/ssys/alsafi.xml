@@ -1,9 +1,9 @@
 <ssys name="Alsafi">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>21.825000</interference>
-  <nebula hue="245.000000">150.000000</nebula>
+  <interference>21.825</interference>
+  <nebula hue="245">150</nebula>
  </general>
  <pos x="679.584263" y="478.18411"/>
  <spobs>
@@ -14,23 +14,23 @@
  </spobs>
  <jumps>
   <jump target="Eisenhorn">
-   <hide>1.000000</hide>
-   <pos x="5612.603270" y="-13910.380459" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="5612.60327" y="-13910.380459" was_auto="true"/>
   </jump>
   <jump target="Lalande">
-   <hide>1.000000</hide>
-   <pos x="-12342.213349" y="8524.656570" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="-12342.213349" y="8524.65657" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-rich</group>
-   <radius>2700.000000</radius>
+   <radius>2700</radius>
    <pos x="-394.907089" y="9316.226796"/>
-   <density>13.000000</density>
+   <density>13</density>
   </asteroid>
   <exclusion>
-   <radius>2000.000000</radius>
+   <radius>2000</radius>
    <pos x="-8998.933161" y="2088.575845"/>
   </exclusion>
  </asteroids>

@@ -1,19 +1,19 @@
 <spob name="Dunmer">
- <pos x="-2240.729010" y="-10511.213794"/>
+ <pos x="-2240.72901" y="-10511.213794"/>
  <GFX>
   <space>moon-M06</space>
   <exterior>oceanic2</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>100.000000</base>
-  <bonus>50.000000</bonus>
+  <base>100</base>
+  <bonus>50</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>M</class>
   <population>1.25e+06</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

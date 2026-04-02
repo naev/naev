@@ -2,10 +2,10 @@
  <general>
   <background>pso</background>
   <map_shader>pso_map.frag</map_shader>
-  <radius>14500.000000</radius>
+  <radius>14500</radius>
   <spacedust>0</spacedust>
-  <interference>57.000000</interference>
-  <nebula hue="310.000000" trails="1">0.000000</nebula>
+  <interference>57</interference>
+  <nebula hue="310" trails="1">0</nebula>
  </general>
  <pos x="447.50044" y="-887.389085"/>
  <spobs>
@@ -17,30 +17,30 @@
  <jumps>
   <jump target="Amaroq">
    <pos x="-25087.765219" y="-8160.372361"/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Faust">
    <pos x="22012.918787" y="-4296.291605"/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="NGC-2232">
    <pos x="5011.595295" y="-13578.596246"/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Oxuram">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-2186.891206" y="14334.137813" was_auto="true"/>
   </jump>
   <jump target="Sultan">
    <pos x="17759.666556" y="12174.497603"/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-rich</group>
-   <radius>4000.000000</radius>
+   <radius>4000</radius>
    <pos x="7464.820968" y="-1235.495003"/>
   </asteroid>
  </asteroids>

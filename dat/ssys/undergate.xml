@@ -3,9 +3,9 @@
   <background>plasmastorm</background>
   <map_shader>plasmastorm_map.frag</map_shader>
   <features>#pPlasma Storm (-50% energy and -50% stress dissipation)#0</features>
-  <radius>21500.000000</radius>
+  <radius>21500</radius>
   <spacedust>400</spacedust>
-  <interference>56.250000</interference>
+  <interference>56.25</interference>
  </general>
  <pos x="1653.971252" y="-540.567283"/>
  <spobs>
@@ -18,30 +18,30 @@
  </spobs>
  <jumps>
   <jump target="Toxin">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-2053.100848" y="-21401.747052" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-standard</group>
-   <radius>6500.000000</radius>
+   <radius>6500</radius>
    <pos x="7580.984302" y="9584.084931"/>
-   <density>0.200000</density>
+   <density>0.2</density>
   </asteroid>
   <asteroid>
    <group>typeC-poor</group>
-   <radius>3300.000000</radius>
+   <radius>3300</radius>
    <pos x="3719.353196" y="-9439.985941"/>
   </asteroid>
   <exclusion>
-   <radius>1000.000000</radius>
+   <radius>1000</radius>
    <pos x="9792.089754" y="-4255.232503"/>
   </exclusion>
  </asteroids>
  <stats>
-  <energy_mod>-50.000000</energy_mod>
-  <stress_dissipation>-50.000000</stress_dissipation>
+  <energy_mod>-50</energy_mod>
+  <stress_dissipation>-50</stress_dissipation>
  </stats>
  <tags>
   <tag>plasmastorm</tag>

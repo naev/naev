@@ -1,8 +1,8 @@
 <ssys name="Doranthex">
  <general>
-  <radius>26600.000000</radius>
+  <radius>26600</radius>
   <spacedust>500</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="709.748277" y="-295.291472"/>
  <spobs>
@@ -16,26 +16,26 @@
  </spobs>
  <jumps>
   <jump target="Dakron">
-   <hide>1.000000</hide>
-   <pos x="17718.866482" y="-19839.399450" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="17718.866482" y="-19839.39945" was_auto="true"/>
   </jump>
   <jump target="Raelid">
-   <hide>0.000000</hide>
-   <pos x="-4549.847710" y="26207.992784" was_auto="true"/>
+   <hide>0</hide>
+   <pos x="-4549.84771" y="26207.992784" was_auto="true"/>
   </jump>
   <jump target="Tarsus">
-   <hide>0.000000</hide>
+   <hide>0</hide>
    <pos x="-159.234821" y="-26599.523384" was_auto="true"/>
   </jump>
   <jump target="Torg">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-22513.448184" y="-14167.026888" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeB-standard</group>
-   <radius>6000.000000</radius>
+   <radius>6000</radius>
    <pos x="475.274563" y="5181.300746"/>
   </asteroid>
  </asteroids>

@@ -1,22 +1,22 @@
 <ssys name="NGC-1001">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="-617.316375" y="-514.814403"/>
  <spobs/>
  <jumps>
   <jump target="Bedimann">
-   <hide>1.000000</hide>
-   <pos x="11323.347872" y="-9837.773780" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="11323.347872" y="-9837.77378" was_auto="true"/>
   </jump>
   <jump target="NGC-23">
-   <hide>1.000000</hide>
-   <pos x="-7122.636073" y="13201.062660" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="-7122.636073" y="13201.06266" was_auto="true"/>
   </jump>
   <jump target="NGC-2954">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-7092.020519" y="-13217.535509" was_auto="true"/>
   </jump>
  </jumps>

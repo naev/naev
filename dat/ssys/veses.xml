@@ -1,9 +1,9 @@
 <ssys name="Veses">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>123.900000</interference>
-  <nebula volatility="12.100000" hue="285.000000">500.000000</nebula>
+  <interference>123.9</interference>
+  <nebula volatility="12.1" hue="285">500</nebula>
   <nolanes/>
  </general>
  <pos x="949.259001" y="659.639985"/>
@@ -13,11 +13,11 @@
  <jumps>
   <jump target="Alpha Centauri">
    <pos x="555.249264" y="-1997.288778"/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Scholz's Star">
    <pos x="14803.071502" y="-2902.208714"/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
  </jumps>
  <tags>

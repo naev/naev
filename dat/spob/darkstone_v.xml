@@ -1,5 +1,5 @@
 <spob name="Darkstone V">
- <pos x="19866.986239" y="24521.364140"/>
+ <pos x="19866.986239" y="24521.36414"/>
  <GFX>
   <space>moon-J00</space>
   <exterior>methane</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>J</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

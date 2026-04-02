@@ -1,8 +1,8 @@
 <ssys name="Overture">
  <general>
-  <radius>21000.000000</radius>
+  <radius>21000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="56.458332" y="-174.639381"/>
  <spobs>
@@ -13,36 +13,36 @@
  </spobs>
  <jumps>
   <jump target="Dohriabi">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-18760.733902" y="-9435.828709" was_auto="true"/>
   </jump>
   <jump target="Groombridge">
-   <hide>1.000000</hide>
-   <pos x="20346.798390" y="5196.902465" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="20346.79839" y="5196.902465" was_auto="true"/>
   </jump>
   <jump target="Nartur">
-   <hide>0.000000</hide>
-   <pos x="-9491.873412" y="18732.440820" was_auto="true"/>
+   <hide>0</hide>
+   <pos x="-9491.873412" y="18732.44082" was_auto="true"/>
   </jump>
   <jump target="Pas">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="20594.733522" y="-4105.721754" was_auto="true"/>
   </jump>
   <jump target="Uhriabi">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="8470.952953" y="19215.695565" was_auto="true"/>
   </jump>
   <jump target="Waterhole">
-   <hide>0.000000</hide>
+   <hide>0</hide>
    <pos x="10976.158877" y="-17903.182295" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-standard</group>
-   <radius>6000.000000</radius>
+   <radius>6000</radius>
    <pos x="2252.622441" y="58.606128"/>
-   <density>0.600000</density>
+   <density>0.6</density>
   </asteroid>
  </asteroids>
  <tags>

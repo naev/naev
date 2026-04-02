@@ -1,5 +1,5 @@
 <spob name="Porro III">
- <pos x="-11259.649996" y="-1685.869760"/>
+ <pos x="-11259.649996" y="-1685.86976"/>
  <GFX>
   <space>moon-C00</space>
   <exterior>desertic</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

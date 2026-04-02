@@ -1,8 +1,8 @@
 <ssys name="Brendon">
  <general>
-  <radius>15100.000000</radius>
+  <radius>15100</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="1539.769283" y="-606.267863"/>
  <spobs>
@@ -13,12 +13,12 @@
  </spobs>
  <jumps>
   <jump target="Gilligan's Tomb">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-11414.295873" y="9885.537401" was_auto="true"/>
   </jump>
   <jump target="Toxin">
-   <hide>1.000000</hide>
-   <pos x="15093.205821" y="452.921660" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="15093.205821" y="452.92166" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

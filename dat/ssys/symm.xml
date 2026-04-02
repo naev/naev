@@ -1,8 +1,8 @@
 <ssys name="Symm">
  <general>
-  <radius>18200.000000</radius>
+  <radius>18200</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="294.086738" y="1192.588358"/>
  <spobs>
@@ -17,19 +17,19 @@
  </spobs>
  <jumps>
   <jump target="Hadosh">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-3469.818555" y="17866.179199" was_auto="true"/>
   </jump>
   <jump target="Jervis">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="18005.925518" y="2650.782192" was_auto="true"/>
   </jump>
   <jump target="Moordra">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-15780.225932" y="-9067.770923" was_auto="true"/>
   </jump>
   <jump target="Tandar">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-17286.326909" y="5694.111165" was_auto="true"/>
   </jump>
  </jumps>

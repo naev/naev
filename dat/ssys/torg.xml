@@ -1,8 +1,8 @@
 <ssys name="Torg">
  <general>
-  <radius>21000.000000</radius>
+  <radius>21000</radius>
   <spacedust>100</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="617.799812" y="-289.548463"/>
  <spobs>
@@ -15,15 +15,15 @@
  </spobs>
  <jumps>
   <jump target="Doranthex">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="18378.945678" y="10159.446626" was_auto="true"/>
   </jump>
   <jump target="Ekkodu">
-   <hide>1.000000</hide>
-   <pos x="647.382789" y="-20990.018950" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="647.382789" y="-20990.01895" was_auto="true"/>
   </jump>
   <jump target="Ogat">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-20863.708563" y="2388.653379" was_auto="true"/>
   </jump>
  </jumps>

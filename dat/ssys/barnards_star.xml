@@ -1,9 +1,9 @@
 <ssys name="Barnard's Star">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>29.250000</interference>
-  <nebula volatility="0.700000" hue="275.000000">400.000000</nebula>
+  <interference>29.25</interference>
+  <nebula volatility="0.7" hue="275">400</nebula>
   <nolanes/>
  </general>
  <pos x="670.328993" y="138.11545"/>
@@ -15,11 +15,11 @@
  <jumps>
   <jump target="Carrza">
    <hidden/>
-   <hide>1.000000</hide>
-   <pos x="14220.110346" y="-4773.726190" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="14220.110346" y="-4773.72619" was_auto="true"/>
   </jump>
   <jump target="Tau Ceti">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-4560.015155" y="-14290.075639" was_auto="true"/>
   </jump>
  </jumps>

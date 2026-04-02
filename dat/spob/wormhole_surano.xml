@@ -3,12 +3,12 @@
  <feature>#bWormhole#0</feature>
  <lua>wormhole_surano.lua</lua>
  <marker>spobmarker_wormhole</marker>
- <pos x="-5178.769960" y="-11592.025175"/>
+ <pos x="-5178.76996" y="-11592.025175"/>
  <GFX/>
  <general>
   <class>Wormhole</class>
   <population>0</population>
-  <hide>0.150000</hide>
+  <hide>0.15</hide>
   <services>
    <uninhabited/>
   </services>

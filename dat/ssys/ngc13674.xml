@@ -1,9 +1,9 @@
 <ssys name="NGC-13674">
  <general>
   <background>blackhole</background>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
   <nolanes/>
  </general>
  <pos x="-620.100257" y="-420.143872"/>
@@ -13,11 +13,11 @@
  <jumps>
   <jump target="Copernicus">
    <hidden/>
-   <hide>1.000000</hide>
-   <pos x="13568.983674" y="6393.956680" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="13568.983674" y="6393.95668" was_auto="true"/>
   </jump>
   <jump target="NGC-1562">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-14700.553852" y="2982.233461" was_auto="true"/>
   </jump>
  </jumps>

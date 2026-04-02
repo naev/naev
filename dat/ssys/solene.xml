@@ -1,19 +1,19 @@
 <ssys name="Solene">
  <general>
-  <radius>24500.000000</radius>
+  <radius>24500</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="463.743865" y="821.211003"/>
  <spobs/>
  <jumps>
   <jump target="Diadem">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-20024.473927" y="14116.318355" was_auto="true"/>
   </jump>
   <jump target="Vedalus">
-   <hide>1.000000</hide>
-   <pos x="6895.566200" y="-23509.597333" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="6895.5662" y="-23509.597333" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

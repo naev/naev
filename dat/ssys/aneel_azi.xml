@@ -1,9 +1,9 @@
 <ssys name="Aneel Azi">
  <general>
-  <radius>12500.000000</radius>
+  <radius>12500</radius>
   <spacedust>400</spacedust>
-  <interference>16.425000</interference>
-  <nebula hue="240.000000">150.000000</nebula>
+  <interference>16.425</interference>
+  <nebula hue="240">150</nebula>
  </general>
  <pos x="963.440635" y="-256.989175"/>
  <spobs>
@@ -12,16 +12,16 @@
  </spobs>
  <jumps>
   <jump target="Brimstone">
-   <hide>1.000000</hide>
-   <pos x="-4525.126902" y="-11652.176900" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="-4525.126902" y="-11652.1769" was_auto="true"/>
   </jump>
   <jump target="Hephaestus">
-   <hide>1.000000</hide>
-   <pos x="11114.085480" y="5720.760782" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="11114.08548" y="5720.760782" was_auto="true"/>
   </jump>
   <jump target="Tormulex">
    <exitonly/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-6447.276932" y="10708.997159" was_auto="true"/>
   </jump>
  </jumps>

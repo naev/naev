@@ -1,5 +1,5 @@
 <spob name="Virginis Lambda">
- <pos x="-1983.875530" y="7888.236593"/>
+ <pos x="-1983.87553" y="7888.236593"/>
  <GFX>
   <space>J09</space>
   <exterior>station04</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>J</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

@@ -1,20 +1,20 @@
 <spob name="Eye of Night Station">
  <display>Ruined Station</display>
- <pos x="8314.000000" y="-21828.000000"/>
+ <pos x="8314" y="-21828"/>
  <GFX>
   <space>001</space>
   <exterior>station_scene</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>0.000000</base>
-  <bonus>0.000000</bonus>
+  <base>0</base>
+  <bonus>0</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>0</class>
   <population>0</population>
-  <hide>0.100000</hide>
+  <hide>0.1</hide>
   <services>
    <land/>
    <nomissionspawn/>

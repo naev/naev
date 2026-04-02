@@ -1,9 +1,9 @@
 <ssys name="Haven">
  <general>
-  <radius>14000.000000</radius>
+  <radius>14000</radius>
   <spacedust>300</spacedust>
-  <interference>60.000000</interference>
-  <nebula hue="180.000000">100.000000</nebula>
+  <interference>60</interference>
+  <nebula hue="180">100</nebula>
   <nolanes/>
  </general>
  <pos x="233.110342" y="691.206083"/>
@@ -14,38 +14,38 @@
  </spobs>
  <jumps>
   <jump target="Daled">
-   <hide>1.000000</hide>
-   <pos x="-9932.041520" y="9866.840995" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="-9932.04152" y="9866.840995" was_auto="true"/>
   </jump>
   <jump target="Gamel">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="12986.542027" y="-5229.696566" was_auto="true"/>
   </jump>
   <jump target="New Haven">
    <exitonly/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="37.883047" y="13999.948745" was_auto="true"/>
   </jump>
   <jump target="Rockbed">
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-8105.878094" y="-11414.672151" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-rich</group>
-   <radius>5000.000000</radius>
+   <radius>5000</radius>
    <pos x="5538.350271" y="6428.582757"/>
-   <density>0.500000</density>
+   <density>0.5</density>
   </asteroid>
   <exclusion>
-   <radius>1000.000000</radius>
+   <radius>1000</radius>
    <pos x="7348.039986" y="7401.286652"/>
   </exclusion>
  </asteroids>
  <waypoints>
   <waypoint x="519.302283" y="-6980.710933">haven_curse_spawn</waypoint>
-  <waypoint x="10598.758407" y="5802.268540">taiomi05_corpse</waypoint>
+  <waypoint x="10598.758407" y="5802.26854">taiomi05_corpse</waypoint>
  </waypoints>
 </ssys>

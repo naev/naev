@@ -13,7 +13,7 @@
  <general>
   <class>M</class>
   <population>20000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

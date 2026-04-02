@@ -1,8 +1,8 @@
 <ssys name="Halo">
  <general>
-  <radius>17500.000000</radius>
+  <radius>17500</radius>
   <spacedust>100</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="448.758303" y="580.096291"/>
  <spobs>
@@ -11,15 +11,15 @@
  <jumps>
   <jump target="Bastion">
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-12679.732388" y="12061.276324" was_auto="true"/>
   </jump>
   <jump target="Dune">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-13257.270974" y="-11423.430584" was_auto="true"/>
   </jump>
   <jump target="Pilatis">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="6836.704406" y="-16109.297714" was_auto="true"/>
   </jump>
  </jumps>

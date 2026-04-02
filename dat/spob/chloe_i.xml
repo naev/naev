@@ -1,5 +1,5 @@
 <spob name="Chloe I">
- <pos x="-5142.104670" y="-415.947180"/>
+ <pos x="-5142.10467" y="-415.94718"/>
  <GFX>
   <space>moon-L00</space>
   <exterior>uninhabited-jungle</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>L</class>
   <population>0</population>
-  <hide>0.400000</hide>
+  <hide>0.4</hide>
   <services>
    <land/>
   </services>

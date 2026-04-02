@@ -1,8 +1,8 @@
 <ssys name="Druid">
  <general>
-  <radius>10000.000000</radius>
+  <radius>10000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="897.834681" y="-815.889557"/>
  <spobs/>
@@ -10,27 +10,27 @@
   <jump target="Eye of Night">
    <pos x="8656.502507" y="-6627.977671"/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="NGC-13522">
    <pos x="9679.584273" y="-2619.583841"/>
    <nolanes/>
-   <hide>0.200000</hide>
+   <hide>0.2</hide>
   </jump>
   <jump target="Peter">
    <pos x="13126.366001" y="9679.359779"/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Valur Gem">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-7606.024581" y="6492.179146" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-standard</group>
-   <radius>4000.000000</radius>
+   <radius>4000</radius>
    <pos x="0" y="0"/>
   </asteroid>
  </asteroids>

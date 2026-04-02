@@ -6,14 +6,14 @@
  </GFX>
  <presence>
   <faction>Traders Society</faction>
-  <base>50.000000</base>
-  <bonus>20.000000</bonus>
+  <base>50</base>
+  <bonus>20</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>F</class>
   <population>5e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

@@ -1,8 +1,8 @@
 <ssys name="Trohem">
  <general>
-  <radius>24500.000000</radius>
+  <radius>24500</radius>
   <spacedust>200</spacedust>
-  <interference>22.000000</interference>
+  <interference>22</interference>
   <nolanes/>
  </general>
  <pos x="313.393636" y="-283.969873"/>
@@ -10,11 +10,11 @@
  <jumps>
   <jump target="Blacin">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Effetey">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
  </jumps>
  <tags>

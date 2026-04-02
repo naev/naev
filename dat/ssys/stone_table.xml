@@ -1,29 +1,29 @@
 <ssys name="Stone Table">
  <general>
-  <radius>10000.000000</radius>
+  <radius>10000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="-72.658453" y="-630.445665"/>
  <spobs/>
  <jumps>
   <jump target="Astana">
-   <hide>1.000000</hide>
-   <pos x="2917.147578" y="-9565.053580" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="2917.147578" y="-9565.05358" was_auto="true"/>
   </jump>
   <jump target="Seelie">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-9683.966202" y="2494.152878" was_auto="true"/>
   </jump>
   <jump target="Sollav">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="2650.637898" y="9642.308786" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-poor</group>
-   <radius>5000.000000</radius>
+   <radius>5000</radius>
    <pos x="-1772.695954" y="1712.302871"/>
   </asteroid>
  </asteroids>

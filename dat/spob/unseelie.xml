@@ -1,5 +1,5 @@
 <spob name="Unseelie">
- <pos x="3361.625904" y="2678.991500"/>
+ <pos x="3361.625904" y="2678.9915"/>
  <GFX>
   <space>I04</space>
   <exterior>traderoom</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>I</class>
   <population>0</population>
-  <hide>0.600000</hide>
+  <hide>0.6</hide>
   <services/>
  </general>
 </spob>

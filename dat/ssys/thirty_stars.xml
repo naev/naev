@@ -1,9 +1,9 @@
 <ssys name="Thirty Stars">
  <general>
-  <radius>15750.000000</radius>
+  <radius>15750</radius>
   <spacedust>400</spacedust>
   <interference>13.235288</interference>
-  <nebula hue="250.000000">150.000000</nebula>
+  <nebula hue="250">150</nebula>
  </general>
  <pos x="772.445192" y="851.731103"/>
  <spobs>
@@ -11,15 +11,15 @@
  </spobs>
  <jumps>
   <jump target="Octantis">
-   <hide>1.000000</hide>
-   <pos x="-13826.877008" y="-7541.881210" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="-13826.877008" y="-7541.88121" was_auto="true"/>
   </jump>
   <jump target="Percival">
-   <hide>1.000000</hide>
-   <pos x="15015.703880" y="4753.013462" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="15015.70388" y="4753.013462" was_auto="true"/>
   </jump>
   <jump target="Point Zero">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-15102.178966" y="4470.647656" was_auto="true"/>
   </jump>
  </jumps>

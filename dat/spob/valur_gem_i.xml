@@ -1,5 +1,5 @@
 <spob name="Valur Gem I">
- <pos x="-6486.210680" y="-3511.831367"/>
+ <pos x="-6486.21068" y="-3511.831367"/>
  <GFX>
   <space>moon-K00</space>
   <exterior>uninhabited-rocky-airless-02</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>K</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

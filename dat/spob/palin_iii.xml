@@ -1,5 +1,5 @@
 <spob name="Palin III">
- <pos x="10516.493960" y="10553.281477"/>
+ <pos x="10516.49396" y="10553.281477"/>
  <GFX>
   <space>K04</space>
   <exterior>gas</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>K</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

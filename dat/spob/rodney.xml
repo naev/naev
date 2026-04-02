@@ -1,5 +1,5 @@
 <spob name="Rodney">
- <pos x="404.020000" y="585.753217"/>
+ <pos x="404.02" y="585.753217"/>
  <GFX>
   <space>moon-H02</space>
   <exterior>mining2</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>J</class>
   <population>100000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

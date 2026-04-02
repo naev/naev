@@ -1,8 +1,8 @@
 <ssys name="Straight Row">
  <general>
-  <radius>20000.000000</radius>
+  <radius>20000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="-21.868352" y="-1002.553518"/>
  <spobs>
@@ -13,30 +13,30 @@
  </spobs>
  <jumps>
   <jump target="Nunavut">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="16702.918653" y="-11000.568551" was_auto="true"/>
   </jump>
   <jump target="Somard">
-   <hide>1.000000</hide>
-   <pos x="-15314.297714" y="-12863.603130" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="-15314.297714" y="-12863.60313" was_auto="true"/>
   </jump>
   <jump target="Tomas">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-17049.019889" y="10456.142731" was_auto="true"/>
   </jump>
   <jump target="Westhaven">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="130.734987" y="-19999.572704" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-standard</group>
-   <radius>10000.000000</radius>
-   <pos x="4265.066711" y="4029.569660"/>
+   <radius>10000</radius>
+   <pos x="4265.066711" y="4029.56966"/>
   </asteroid>
   <exclusion>
-   <radius>8000.000000</radius>
+   <radius>8000</radius>
    <pos x="5258.385206" y="2717.369083"/>
   </exclusion>
  </asteroids>

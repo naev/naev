@@ -1,8 +1,8 @@
 <ssys name="Druss">
  <general>
-  <radius>17500.000000</radius>
+  <radius>17500</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="1014.998216" y="-757.987486"/>
  <spobs>
@@ -16,19 +16,19 @@
  </spobs>
  <jumps>
   <jump target="Eye of Night">
-   <hide>0.000000</hide>
-   <pos x="-17012.545470" y="4101.621216" was_auto="true"/>
+   <hide>0</hide>
+   <pos x="-17012.54547" y="4101.621216" was_auto="true"/>
   </jump>
   <jump target="Kyo">
-   <hide>0.000000</hide>
+   <hide>0</hide>
    <pos x="17498.996427" y="-187.414097" was_auto="true"/>
   </jump>
   <jump target="Ruttwi">
-   <hide>1.000000</hide>
-   <pos x="-9097.673300" y="-14949.325754" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="-9097.6733" y="-14949.325754" was_auto="true"/>
   </jump>
   <jump target="Scarlet">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-948.064833" y="17474.300359" was_auto="true"/>
   </jump>
  </jumps>

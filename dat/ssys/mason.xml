@@ -3,9 +3,9 @@
   <background>stellarwind</background>
   <map_shader>stellarwind_map.frag</map_shader>
   <features>#bStellar Wind (1 fuel regen)#0</features>
-  <radius>20000.000000</radius>
+  <radius>20000</radius>
   <spacedust>400</spacedust>
-  <interference>30.000000</interference>
+  <interference>30</interference>
  </general>
  <pos x="51.549443" y="734.838523"/>
  <spobs>
@@ -19,19 +19,19 @@
   <jump target="C-28">
    <pos x="-4792.261773" y="-8402.149161"/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Capricorn">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="14992.635445" y="-13237.102492" was_auto="true"/>
   </jump>
   <jump target="Daled">
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="15711.706396" y="12375.066953" was_auto="true"/>
   </jump>
   <jump target="Andres">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-327.481469" y="19997.318717" was_auto="true"/>
   </jump>
   <jump target="C-59">
@@ -43,22 +43,22 @@
  <asteroids>
   <asteroid>
    <group>typeB-rich</group>
-   <radius>2800.000000</radius>
+   <radius>2800</radius>
    <pos x="20305.058526" y="-2811.608931"/>
-   <density>2.000000</density>
+   <density>2</density>
   </asteroid>
   <asteroid>
    <group>typeB-standard</group>
-   <radius>6000.000000</radius>
+   <radius>6000</radius>
    <pos x="-9307.504039" y="8013.359731"/>
   </asteroid>
   <exclusion>
-   <radius>2000.000000</radius>
+   <radius>2000</radius>
    <pos x="19488.279962" y="-6613.235987"/>
   </exclusion>
  </asteroids>
  <stats>
-  <fuel_regen>1.000000</fuel_regen>
+  <fuel_regen>1</fuel_regen>
  </stats>
  <tags>
   <tag>northstellarwind</tag>

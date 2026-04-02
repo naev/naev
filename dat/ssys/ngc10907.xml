@@ -1,8 +1,8 @@
 <ssys name="NGC-10907">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
   <nolanes/>
  </general>
  <pos x="-207.579376" y="-1290.624951"/>
@@ -11,11 +11,11 @@
  </spobs>
  <jumps>
   <jump target="NGC-1317">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="1954.453783" y="14872.125282" was_auto="true"/>
   </jump>
   <jump target="Sinensis">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="14218.519366" y="-4778.462831" was_auto="true"/>
   </jump>
  </jumps>

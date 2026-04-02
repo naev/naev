@@ -1,9 +1,9 @@
 <ssys name="Brumeria">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>108.225000</interference>
-  <nebula volatility="10.700000" hue="290.000000">500.000000</nebula>
+  <interference>108.225</interference>
+  <nebula volatility="10.7" hue="290">500</nebula>
   <nolanes/>
  </general>
  <pos x="1240.850982" y="66.318712"/>
@@ -11,7 +11,7 @@
  <jumps>
   <jump target="Teller">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
  </jumps>
  <tags>

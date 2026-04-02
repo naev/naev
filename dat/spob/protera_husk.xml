@@ -7,14 +7,14 @@
  </GFX>
  <presence>
   <faction>Lost</faction>
-  <base>500.000000</base>
-  <bonus>0.000000</bonus>
+  <base>500</base>
+  <bonus>0</bonus>
   <range>5</range>
  </presence>
  <general>
   <class>X</class>
   <population>5000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

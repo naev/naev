@@ -1,5 +1,5 @@
 <spob name="Symm IIIb">
- <pos x="3779.794822" y="2990.377130"/>
+ <pos x="3779.794822" y="2990.37713"/>
  <GFX>
   <space>moon-G00</space>
   <exterior>uninhabited-rocky-airless-01</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>G</class>
   <population>0</population>
-  <hide>0.500000</hide>
+  <hide>0.5</hide>
   <services>
    <land/>
   </services>

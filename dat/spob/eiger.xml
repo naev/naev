@@ -1,5 +1,5 @@
 <spob name="Eiger">
- <pos x="6373.407840" y="3233.501598"/>
+ <pos x="6373.40784" y="3233.501598"/>
  <GFX>
   <space>J04</space>
   <exterior>gas</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>J</class>
   <population>20000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

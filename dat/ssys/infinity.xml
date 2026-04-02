@@ -1,9 +1,9 @@
 <ssys name="Infinity">
  <general>
   <background>nebu_ic</background>
-  <radius>21581.400000</radius>
+  <radius>21581.4</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="701.605955" y="-680.717012"/>
  <spobs>
@@ -15,16 +15,16 @@
  </spobs>
  <jumps>
   <jump target="Gruz">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-776.866065" y="-21567.413036" was_auto="true"/>
   </jump>
   <jump target="Maus">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-12804.896633" y="17372.145755" was_auto="true"/>
   </jump>
   <jump target="Millstone">
-   <hide>1.000000</hide>
-   <pos x="11934.857376" y="17980.990110" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="11934.857376" y="17980.99011" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

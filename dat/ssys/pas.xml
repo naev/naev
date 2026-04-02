@@ -1,8 +1,8 @@
 <ssys name="Pas">
  <general>
-  <radius>14500.000000</radius>
+  <radius>14500</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="169.013646" y="-204.4501"/>
  <spobs>
@@ -12,22 +12,22 @@
  <jumps>
   <jump target="Effetey">
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="1011.305862" y="-14464.690126" was_auto="true"/>
   </jump>
   <jump target="Overture">
-   <hide>1.000000</hide>
-   <pos x="-14452.783540" y="-1169.208249" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="-14452.78354" y="-1169.208249" was_auto="true"/>
   </jump>
   <jump target="Poltergeist">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="13939.545954" y="3992.375055" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-rich</group>
-   <radius>4500.000000</radius>
+   <radius>4500</radius>
    <pos x="5371.460097" y="8511.107122"/>
   </asteroid>
  </asteroids>

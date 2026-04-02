@@ -1,8 +1,8 @@
 <ssys name="Vean">
  <general>
-  <radius>13000.000000</radius>
+  <radius>13000</radius>
   <spacedust>400</spacedust>
-  <interference>25.000000</interference>
+  <interference>25</interference>
   <nolanes/>
  </general>
  <pos x="855.866343" y="626.508263"/>
@@ -16,15 +16,15 @@
  </spobs>
  <jumps>
   <jump target="Aesria">
-   <hide>1.000000</hide>
-   <pos x="7210.340561" y="-10817.161780" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="7210.340561" y="-10817.16178" was_auto="true"/>
   </jump>
   <jump target="Flow">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-5863.897412" y="-11602.357826" was_auto="true"/>
   </jump>
   <jump target="Nava">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-12877.830712" y="1778.054029" was_auto="true"/>
   </jump>
  </jumps>

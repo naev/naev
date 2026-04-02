@@ -1,8 +1,8 @@
 <ssys name="Anarbalis">
  <general>
-  <radius>17500.000000</radius>
+  <radius>17500</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="1184.93408" y="-937.956177"/>
  <spobs>
@@ -15,16 +15,16 @@
  </spobs>
  <jumps>
   <jump target="Humdrum">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="14016.040382" y="10478.578719" was_auto="true"/>
   </jump>
   <jump target="Lapis">
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-15501.703532" y="-8120.787374" was_auto="true"/>
   </jump>
   <jump target="Niger">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-3547.701647" y="17136.621983" was_auto="true"/>
   </jump>
  </jumps>

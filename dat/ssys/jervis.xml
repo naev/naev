@@ -1,8 +1,8 @@
 <ssys name="Jervis">
  <general>
-  <radius>14950.000000</radius>
+  <radius>14950</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="404.612623" y="1189.1733"/>
  <spobs>
@@ -13,12 +13,12 @@
  </spobs>
  <jumps>
   <jump target="Cerberus">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="13651.461456" y="-6094.267806" was_auto="true"/>
   </jump>
   <jump target="Symm">
    <pos x="-8117.719796" y="-15496.006601"/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
  </jumps>
 </ssys>

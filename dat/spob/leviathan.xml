@@ -1,5 +1,5 @@
 <spob name="Leviathan">
- <pos x="-15960.289520" y="-2385.961190"/>
+ <pos x="-15960.28952" y="-2385.96119"/>
  <GFX>
   <space>M03</space>
   <exterior>oceanic2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

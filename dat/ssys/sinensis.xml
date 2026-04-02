@@ -1,8 +1,8 @@
 <ssys name="Sinensis">
  <general>
-  <radius>16000.000000</radius>
+  <radius>16000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="-90.476715" y="-1329.116028"/>
  <spobs>
@@ -12,33 +12,33 @@
  </spobs>
  <jumps>
   <jump target="NGC-10180">
-   <hide>1.000000</hide>
-   <pos x="11619.859191" y="10999.039610" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="11619.859191" y="10999.03961" was_auto="true"/>
   </jump>
   <jump target="NGC-10907">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-8914.525578" y="13286.505699" was_auto="true"/>
   </jump>
   <jump target="Zurai">
-   <pos x="9806.869540" y="-11659.677576"/>
-   <hide>1.000000</hide>
+   <pos x="9806.86954" y="-11659.677576"/>
+   <hide>1</hide>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-poor</group>
-   <radius>7200.000000</radius>
+   <radius>7200</radius>
    <pos x="0" y="0"/>
-   <density>1.050000</density>
-   <maxspeed>15.000000</maxspeed>
+   <density>1.05</density>
+   <maxspeed>15</maxspeed>
   </asteroid>
   <exclusion>
-   <radius>5250.000000</radius>
+   <radius>5250</radius>
    <pos x="-6803.900336" y="2246.229789"/>
   </exclusion>
   <exclusion>
-   <radius>5900.000000</radius>
-   <pos x="6856.466760" y="5560.655882"/>
+   <radius>5900</radius>
+   <pos x="6856.46676" y="5560.655882"/>
   </exclusion>
  </asteroids>
 </ssys>

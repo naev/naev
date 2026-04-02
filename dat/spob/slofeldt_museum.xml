@@ -1,20 +1,20 @@
 <spob name="Slofeldt Museum">
  <lua>highclass.lua</lua>
- <pos x="4834.767554" y="5316.209600"/>
+ <pos x="4834.767554" y="5316.2096"/>
  <GFX>
   <space>000</space>
   <exterior>station03</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>
-  <base>16.666700</base>
-  <bonus>8.333330</bonus>
+  <base>16.6667</base>
+  <bonus>8.33333</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>0</class>
   <population>9874</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

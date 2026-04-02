@@ -1,9 +1,9 @@
 <ssys name="Arcanis">
  <general>
-  <radius>14000.000000</radius>
+  <radius>14000</radius>
   <spacedust>500</spacedust>
-  <interference>25.000000</interference>
-  <nebula hue="250.000000">200.000000</nebula>
+  <interference>25</interference>
+  <nebula hue="250">200</nebula>
   <nolanes/>
  </general>
  <pos x="602.416215" y="-14.387453"/>
@@ -13,27 +13,27 @@
  </spobs>
  <jumps>
   <jump target="Kruger">
-   <hide>1.000000</hide>
-   <pos x="-7049.797940" y="12095.468118" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="-7049.79794" y="12095.468118" was_auto="true"/>
   </jump>
   <jump target="Sigur">
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="728.883272" y="13981.013166" was_auto="true"/>
   </jump>
   <jump target="Sonas">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="12736.460447" y="-5812.277976" was_auto="true"/>
   </jump>
   <jump target="Surano">
-   <hide>1.000000</hide>
-   <pos x="-9696.483230" y="-10098.426261" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="-9696.48323" y="-10098.426261" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeB-standard</group>
-   <radius>4000.000000</radius>
+   <radius>4000</radius>
    <pos x="4519.118645" y="5619.392019"/>
   </asteroid>
  </asteroids>

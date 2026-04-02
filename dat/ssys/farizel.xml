@@ -1,8 +1,8 @@
 <ssys name="Farizel">
  <general>
-  <radius>19870.000000</radius>
+  <radius>19870</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="501.553407" y="-679.727971"/>
  <spobs>
@@ -14,20 +14,20 @@
  </spobs>
  <jumps>
   <jump target="Castellan">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="19851.136061" y="865.619478" was_auto="true"/>
   </jump>
   <jump target="Ksher">
-   <pos x="-25620.297507" y="-11619.894950"/>
+   <pos x="-25620.297507" y="-11619.89495"/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Radix">
-   <hide>1.000000</hide>
-   <pos x="-16063.376370" y="11695.505102" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="-16063.37637" y="11695.505102" was_auto="true"/>
   </jump>
   <jump target="Sarrii">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="17727.226775" y="-8975.652112" was_auto="true"/>
   </jump>
  </jumps>

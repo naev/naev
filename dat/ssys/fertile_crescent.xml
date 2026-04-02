@@ -3,38 +3,38 @@
   <background>haze</background>
   <map_shader>haze_map.frag</map_shader>
   <features>#rHaze (-50% Shield and Shield Regen)#0</features>
-  <radius>10000.000000</radius>
+  <radius>10000</radius>
   <spacedust>400</spacedust>
-  <interference>33.750000</interference>
+  <interference>33.75</interference>
   <nolanes/>
  </general>
  <pos x="341.345242" y="1729.344278"/>
  <spobs/>
  <jumps>
   <jump target="NGC-13322">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="9998.234001" y="-187.927799" was_auto="true"/>
   </jump>
   <jump target="NGC-14479">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-2539.306335" y="-9672.224321" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>Mossy</group>
-   <radius>6000.000000</radius>
+   <radius>6000</radius>
    <pos x="-2643.716477" y="1180.452763"/>
-   <density>2.000000</density>
+   <density>2</density>
   </asteroid>
   <exclusion>
-   <radius>4000.000000</radius>
+   <radius>4000</radius>
    <pos x="1495.166397" y="-766.751998"/>
   </exclusion>
  </asteroids>
  <stats>
-  <shield_mod>-50.000000</shield_mod>
-  <shield_regen_mod>-50.000000</shield_regen_mod>
+  <shield_mod>-50</shield_mod>
+  <shield_regen_mod>-50</shield_regen_mod>
  </stats>
  <tags>
   <tag>haze</tag>

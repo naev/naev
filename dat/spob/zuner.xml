@@ -1,6 +1,6 @@
 <spob name="Zuner">
  <lua>lowclass.lua</lua>
- <pos x="14042.541130" y="2602.704086"/>
+ <pos x="14042.54113" y="2602.704086"/>
  <GFX>
   <space>M02</space>
   <exterior>agricultural</exterior>
@@ -14,7 +14,7 @@
  <general>
   <class>M</class>
   <population>5e+07</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

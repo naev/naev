@@ -1,18 +1,18 @@
 <ssys name="Reptile">
  <general>
-  <radius>10000.000000</radius>
+  <radius>10000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="-458.882372" y="-825.607848"/>
  <spobs/>
  <jumps>
   <jump target="Armorhead">
-   <hide>1.000000</hide>
-   <pos x="5827.871140" y="8126.248702" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="5827.87114" y="8126.248702" was_auto="true"/>
   </jump>
   <jump target="Newmarch">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="8211.080739" y="-5707.727488" was_auto="true"/>
   </jump>
  </jumps>

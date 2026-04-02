@@ -1,19 +1,19 @@
 <spob name="New Xantusia">
- <pos x="-337.148560" y="-4571.194233"/>
+ <pos x="-337.14856" y="-4571.194233"/>
  <GFX>
   <space>moon-P03</space>
   <exterior>snowy_cliffs</exterior>
  </GFX>
  <presence>
   <faction>Traders Society</faction>
-  <base>120.000000</base>
-  <bonus>60.000000</bonus>
+  <base>120</base>
+  <bonus>60</bonus>
   <range>3</range>
  </presence>
  <general>
   <class>P</class>
   <population>700000</population>
-  <hide>0.800000</hide>
+  <hide>0.8</hide>
   <services>
    <land/>
    <refuel/>

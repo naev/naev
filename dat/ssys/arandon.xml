@@ -1,9 +1,9 @@
 <ssys name="Arandon">
  <general>
-  <radius>14000.000000</radius>
+  <radius>14000</radius>
   <spacedust>500</spacedust>
-  <interference>74.999900</interference>
-  <nebula volatility="15.600000" hue="270.000000">600.000000</nebula>
+  <interference>74.9999</interference>
+  <nebula volatility="15.6" hue="270">600</nebula>
   <nolanes/>
  </general>
  <pos x="877.003882" y="-67.639568"/>
@@ -13,25 +13,25 @@
  </spobs>
  <jumps>
   <jump target="Doeston">
-   <hide>1.000000</hide>
-   <pos x="4279.662260" y="-13329.834617" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="4279.66226" y="-13329.834617" was_auto="true"/>
   </jump>
   <jump target="Nasona">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="8470.679296" y="11146.640401" was_auto="true"/>
   </jump>
   <jump target="Zerantix">
-   <hide>1.000000</hide>
-   <pos x="13999.350668" y="-134.836430" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="13999.350668" y="-134.83643" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>Nebula Crystal</group>
-   <radius>3000.000000</radius>
+   <radius>3000</radius>
    <pos x="-8218.517312" y="4149.650928"/>
-   <density>0.500000</density>
-   <maxspeed>40.000000</maxspeed>
+   <density>0.5</density>
+   <maxspeed>40</maxspeed>
   </asteroid>
  </asteroids>
  <tags>

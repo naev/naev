@@ -1,29 +1,29 @@
 <ssys name="Seifer">
  <general>
-  <radius>10000.000000</radius>
+  <radius>10000</radius>
   <spacedust>400</spacedust>
-  <interference>40.270000</interference>
-  <nebula>250.000000</nebula>
+  <interference>40.27</interference>
+  <nebula>250</nebula>
  </general>
  <pos x="1178.129186" y="-95.93265"/>
  <spobs/>
  <jumps>
   <jump target="Arietis">
-   <hide>0.500000</hide>
+   <hide>0.5</hide>
    <pos x="-8890.882541" y="4577.358149" was_auto="true"/>
   </jump>
   <jump target="Penn">
-   <hide>0.800000</hide>
+   <hide>0.8</hide>
    <pos x="8142.121711" y="5805.674295" was_auto="true"/>
   </jump>
   <jump target="Ryder">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-9219.180079" y="-3873.850625" was_auto="true"/>
   </jump>
   <jump target="Teller">
-   <pos x="-5309.092734" y="8164.201690"/>
+   <pos x="-5309.092734" y="8164.20169"/>
    <hidden/>
-   <hide>0.500000</hide>
+   <hide>0.5</hide>
   </jump>
  </jumps>
  <tags>

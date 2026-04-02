@@ -1,5 +1,5 @@
 <spob name="Shion">
- <pos x="-1079.680393" y="-8797.526310"/>
+ <pos x="-1079.680393" y="-8797.52631"/>
  <GFX>
   <space>moon-D01</space>
   <exterior>station00</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

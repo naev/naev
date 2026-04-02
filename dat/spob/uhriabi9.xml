@@ -1,5 +1,5 @@
 <spob name="Uhriabi-9">
- <pos x="-1986.483018" y="451.979220"/>
+ <pos x="-1986.483018" y="451.97922"/>
  <GFX>
   <space>A01</space>
   <exterior>station00</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>Z</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

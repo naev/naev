@@ -3,9 +3,9 @@
   <background>plasmastorm</background>
   <map_shader>plasmastorm_map.frag</map_shader>
   <features>#pPlasma Storm (-50% energy and -50% stress dissipation)#0</features>
-  <radius>22000.000000</radius>
+  <radius>22000</radius>
   <spacedust>400</spacedust>
-  <interference>56.250000</interference>
+  <interference>56.25</interference>
  </general>
  <pos x="1709.075262" y="-445.895845"/>
  <spobs>
@@ -18,17 +18,17 @@
  </spobs>
  <jumps>
   <jump target="NGC-10081">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="17279.780306" y="13616.504417" was_auto="true"/>
   </jump>
   <jump target="Ulysses">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-21053.102535" y="6384.894176" was_auto="true"/>
   </jump>
  </jumps>
  <stats>
-  <energy_mod>-50.000000</energy_mod>
-  <stress_dissipation>-50.000000</stress_dissipation>
+  <energy_mod>-50</energy_mod>
+  <stress_dissipation>-50</stress_dissipation>
  </stats>
  <tags>
   <tag>plasmastorm</tag>

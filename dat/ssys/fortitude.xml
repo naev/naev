@@ -1,9 +1,9 @@
 <ssys name="Fortitude">
  <general>
   <background>nebu_ngc_2440</background>
-  <radius>22750.000000</radius>
+  <radius>22750</radius>
   <spacedust>300</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="50.023797" y="523.488391"/>
  <spobs>
@@ -14,20 +14,20 @@
  </spobs>
  <jumps>
   <jump target="Acheron">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="10784.540009" y="-20031.380301" was_auto="true"/>
   </jump>
   <jump target="Hades">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-9858.261636" y="20503.101655" was_auto="true"/>
   </jump>
   <jump target="Polack">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-19608.861606" y="-11534.948915" was_auto="true"/>
   </jump>
   <jump target="Pontus">
-   <hide>1.000000</hide>
-   <pos x="5004.075332" y="22192.830600" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="5004.075332" y="22192.8306" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

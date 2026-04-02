@@ -1,19 +1,19 @@
 <ssys name="Cygni">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>6.300000</interference>
-  <nebula hue="240.000000">100.000000</nebula>
+  <interference>6.3</interference>
+  <nebula hue="240">100</nebula>
  </general>
  <pos x="669.767471" y="599.758972"/>
  <spobs/>
  <jumps>
   <jump target="Lalande">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-14913.267173" y="-1610.733439" was_auto="true"/>
   </jump>
   <jump target="Struve">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-6871.290451" y="13333.617945" was_auto="true"/>
   </jump>
  </jumps>

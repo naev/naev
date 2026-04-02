@@ -1,5 +1,5 @@
 <spob name="Corax">
- <pos x="-11086.627070" y="-941.153291"/>
+ <pos x="-11086.62707" y="-941.153291"/>
  <GFX>
   <space>C01</space>
   <exterior>mining5</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>C</class>
   <population>150000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

@@ -1,5 +1,5 @@
 <spob name="Castellan I">
- <pos x="2614.409346" y="3004.332660"/>
+ <pos x="2614.409346" y="3004.33266"/>
  <GFX>
   <space>D02</space>
   <exterior>desertic2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>D</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

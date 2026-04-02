@@ -1,5 +1,5 @@
 <spob name="Icarus">
- <pos x="-3924.483490" y="-823.244876"/>
+ <pos x="-3924.48349" y="-823.244876"/>
  <GFX>
   <space>A04</space>
   <exterior>lava</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>A</class>
   <population>1000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

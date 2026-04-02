@@ -1,8 +1,8 @@
 <ssys name="Herakin">
  <general>
-  <radius>20000.000000</radius>
+  <radius>20000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
   <nolanes/>
  </general>
  <pos x="1320.7754" y="-509.107958"/>
@@ -11,28 +11,28 @@
  </spobs>
  <jumps>
   <jump target="Anrique">
-   <hide>1.000000</hide>
-   <pos x="13858.899930" y="14419.809038" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="13858.89993" y="14419.809038" was_auto="true"/>
   </jump>
   <jump target="Eiderdown">
-   <hide>1.000000</hide>
-   <pos x="-2204.898385" y="-19878.089020" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="-2204.898385" y="-19878.08902" was_auto="true"/>
   </jump>
   <jump target="Suna">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-4792.255383" y="19417.370788" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-poor</group>
-   <radius>10000.000000</radius>
+   <radius>10000</radius>
    <pos x="0" y="0"/>
-   <density>0.400000</density>
+   <density>0.4</density>
   </asteroid>
   <exclusion>
-   <radius>8000.000000</radius>
-   <pos x="0.000000" y="0.000000"/>
+   <radius>8000</radius>
+   <pos x="0" y="0"/>
   </exclusion>
  </asteroids>
 </ssys>

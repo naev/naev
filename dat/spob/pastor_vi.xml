@@ -1,5 +1,5 @@
 <spob name="Pastor VI">
- <pos x="-6844.559177" y="-17657.092610"/>
+ <pos x="-6844.559177" y="-17657.09261"/>
  <GFX>
   <space>K00</space>
   <exterior>station01</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>C</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

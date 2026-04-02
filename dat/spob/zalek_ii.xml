@@ -1,5 +1,5 @@
 <spob name="Za'lek II">
- <pos x="-154.046201" y="-6944.918660"/>
+ <pos x="-154.046201" y="-6944.91866"/>
  <GFX>
   <space>Y00</space>
   <exterior>methane</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>Y</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

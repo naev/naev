@@ -1,5 +1,5 @@
 <spob name="Ember">
- <pos x="-3061.849390" y="-19210.731322"/>
+ <pos x="-3061.84939" y="-19210.731322"/>
  <GFX>
   <space>moon-A01</space>
   <exterior>traderoom</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>A</class>
   <population>3e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

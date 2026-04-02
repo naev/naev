@@ -1,8 +1,8 @@
 <ssys name="C-00">
  <general>
-  <radius>28000.000000</radius>
+  <radius>28000</radius>
   <spacedust>100</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
   <nolanes/>
  </general>
  <pos x="-130.094405" y="816.418015"/>
@@ -16,12 +16,12 @@
  </spobs>
  <jumps>
   <jump target="C-14">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-23729.493086" y="-14863.080361" was_auto="true"/>
   </jump>
   <jump target="C-28">
-   <hide>1.000000</hide>
-   <pos x="27996.935520" y="414.248058" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="27996.93552" y="414.248058" was_auto="true"/>
   </jump>
  </jumps>
  <waypoints>

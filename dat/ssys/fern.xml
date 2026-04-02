@@ -1,27 +1,27 @@
 <ssys name="Fern">
  <general>
-  <radius>10000.000000</radius>
+  <radius>10000</radius>
   <spacedust>400</spacedust>
-  <interference>32.175000</interference>
-  <nebula>300.000000</nebula>
+  <interference>32.175</interference>
+  <nebula>300</nebula>
   <nolanes/>
  </general>
  <pos x="1344.152831" y="-1.490698"/>
  <spobs/>
  <jumps>
   <jump target="NGC-9607">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="9515.295578" y="-3075.573125" was_auto="true"/>
   </jump>
   <jump target="Teller">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-9994.795947" y="322.573957" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-rich</group>
-   <radius>3000.000000</radius>
+   <radius>3000</radius>
    <pos x="0" y="0"/>
   </asteroid>
  </asteroids>

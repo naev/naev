@@ -1,5 +1,5 @@
 <spob name="Arrentil">
- <pos x="8200.222872" y="11311.779030"/>
+ <pos x="8200.222872" y="11311.77903"/>
  <GFX>
   <space>Y00</space>
   <exterior>gas</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>Y</class>
   <population>1.5e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

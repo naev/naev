@@ -1,5 +1,5 @@
 <spob name="Fried III">
- <pos x="12459.496041" y="2523.692810"/>
+ <pos x="12459.496041" y="2523.69281"/>
  <GFX>
   <space>I04</space>
   <exterior>gas</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>I</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

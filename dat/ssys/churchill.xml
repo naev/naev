@@ -1,8 +1,8 @@
 <ssys name="Churchill">
  <general>
-  <radius>24500.000000</radius>
+  <radius>24500</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="1371.601985" y="-692.297478"/>
  <spobs>
@@ -16,20 +16,20 @@
  </spobs>
  <jumps>
   <jump target="Eiderdown">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-8689.714478" y="22907.179273" was_auto="true"/>
   </jump>
   <jump target="Muirat">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="23700.694606" y="-6207.018218" was_auto="true"/>
   </jump>
   <jump target="Porro">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-24488.963293" y="-735.307277" was_auto="true"/>
   </jump>
   <jump target="Willow">
-   <hide>1.000000</hide>
-   <pos x="-17268.235940" y="-17379.816670" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="-17268.23594" y="-17379.81667" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

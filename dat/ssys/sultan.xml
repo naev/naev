@@ -2,10 +2,10 @@
  <general>
   <background>pso</background>
   <map_shader>pso_map.frag</map_shader>
-  <radius>20300.000000</radius>
+  <radius>20300</radius>
   <spacedust>0</spacedust>
-  <interference>65.000000</interference>
-  <nebula hue="310.000000" trails="1">0.000000</nebula>
+  <interference>65</interference>
+  <nebula hue="310" trails="1">0</nebula>
  </general>
  <pos x="498.425376" y="-958.096883"/>
  <spobs>
@@ -16,11 +16,11 @@
  </spobs>
  <jumps>
   <jump target="Faust">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="16387.952604" y="11980.192378" was_auto="true"/>
   </jump>
   <jump target="PSO">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-11940.246394" y="16417.080009" was_auto="true"/>
   </jump>
  </jumps>

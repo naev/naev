@@ -1,5 +1,5 @@
 <spob name="Sultan VI">
- <pos x="-14294.502260" y="-7184.973047"/>
+ <pos x="-14294.50226" y="-7184.973047"/>
  <GFX>
   <space>J00</space>
   <exterior>forest</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>I</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

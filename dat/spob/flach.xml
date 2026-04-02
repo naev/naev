@@ -1,19 +1,19 @@
 <spob name="Flach">
- <pos x="15734.702220" y="6032.150742"/>
+ <pos x="15734.70222" y="6032.150742"/>
  <GFX>
   <space>Y00</space>
   <exterior>lava</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.6667</base>
+  <bonus>33.3333</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>Y</class>
   <population>8.5e+07</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

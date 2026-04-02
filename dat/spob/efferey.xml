@@ -1,20 +1,20 @@
 <spob name="Efferey">
  <lua>pirate_clanworld.lua</lua>
- <pos x="356.842560" y="1614.321339"/>
+ <pos x="356.84256" y="1614.321339"/>
  <GFX>
   <space>station-ring1</space>
   <exterior>station00</exterior>
  </GFX>
  <presence>
   <faction>Raven Clan</faction>
-  <base>200.000000</base>
-  <bonus>50.000000</bonus>
+  <base>200</base>
+  <bonus>50</bonus>
   <range>4</range>
  </presence>
  <general>
   <class>2</class>
   <population>6500</population>
-  <hide>0.800000</hide>
+  <hide>0.8</hide>
   <services>
    <land/>
    <refuel/>

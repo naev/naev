@@ -1,6 +1,6 @@
 <spob name="Phosarrus">
  <lua>highclass.lua</lua>
- <pos x="-6519.685708" y="-3302.173880"/>
+ <pos x="-6519.685708" y="-3302.17388"/>
  <GFX>
   <space>M02</space>
   <exterior>station04</exterior>
@@ -14,7 +14,7 @@
  <general>
   <class>M</class>
   <population>1e+09</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

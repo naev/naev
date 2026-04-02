@@ -2,10 +2,10 @@
  <general>
   <background>pso</background>
   <map_shader>pso_map.frag</map_shader>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>0</spacedust>
-  <interference>83.000000</interference>
-  <nebula hue="310.000000" trails="1">0.000000</nebula>
+  <interference>83</interference>
+  <nebula hue="310" trails="1">0</nebula>
   <nolanes/>
  </general>
  <pos x="417.311858" y="-981.412658"/>
@@ -16,7 +16,7 @@
   <jump target="PSO">
    <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
  </jumps>
 </ssys>

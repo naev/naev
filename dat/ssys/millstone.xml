@@ -1,8 +1,8 @@
 <ssys name="Millstone">
  <general>
-  <radius>10000.000000</radius>
+  <radius>10000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="761.820157" y="-624.965017"/>
  <spobs>
@@ -13,19 +13,19 @@
  </spobs>
  <jumps>
   <jump target="Fidelis">
-   <hide>0.000000</hide>
-   <pos x="9433.919590" y="-3316.799835" was_auto="true"/>
+   <hide>0</hide>
+   <pos x="9433.91959" y="-3316.799835" was_auto="true"/>
   </jump>
   <jump target="Infinity">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-9617.100236" y="-2740.690247" was_auto="true"/>
   </jump>
   <jump target="Maus">
-   <hide>0.000000</hide>
+   <hide>0</hide>
    <pos x="-9307.648282" y="3656.184275" was_auto="true"/>
   </jump>
   <jump target="Slaccid">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="4675.158553" y="8839.846859" was_auto="true"/>
   </jump>
  </jumps>

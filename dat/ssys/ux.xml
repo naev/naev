@@ -1,8 +1,8 @@
 <ssys name="Ux">
  <general>
-  <radius>22200.000000</radius>
+  <radius>22200</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="-170.589488" y="-132.283055"/>
  <spobs>
@@ -15,11 +15,11 @@
  </spobs>
  <jumps>
   <jump target="Dendria">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-7164.022786" y="-21012.300624" was_auto="true"/>
   </jump>
   <jump target="Valerie">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="9881.913034" y="19879.330843" was_auto="true"/>
   </jump>
  </jumps>

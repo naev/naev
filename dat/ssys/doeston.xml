@@ -1,9 +1,9 @@
 <ssys name="Doeston">
  <general>
-  <radius>13750.000000</radius>
+  <radius>13750</radius>
   <spacedust>400</spacedust>
-  <interference>45.000000</interference>
-  <nebula volatility="2.800000">500.000000</nebula>
+  <interference>45</interference>
+  <nebula volatility="2.8">500</nebula>
  </general>
  <pos x="798.949186" y="-132.103642"/>
  <spobs>
@@ -13,23 +13,23 @@
  </spobs>
  <jumps>
   <jump target="Arandon">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="3552.392908" y="13283.185033" was_auto="true"/>
   </jump>
   <jump target="Behar">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-8174.975388" y="11055.870721" was_auto="true"/>
   </jump>
   <jump target="Myad">
-   <hide>1.000000</hide>
-   <pos x="5932.732390" y="-12404.240661" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="5932.73239" y="-12404.240661" was_auto="true"/>
   </jump>
   <jump target="Toros">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="12117.764929" y="-6497.866812" was_auto="true"/>
   </jump>
   <jump target="Zylex">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-13720.346952" y="902.540589" was_auto="true"/>
   </jump>
  </jumps>

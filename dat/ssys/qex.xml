@@ -1,8 +1,8 @@
 <ssys name="Qex">
  <general>
-  <radius>17500.000000</radius>
+  <radius>17500</radius>
   <spacedust>500</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="68.612772" y="42.005902"/>
  <spobs>
@@ -16,30 +16,30 @@
  </spobs>
  <jumps>
   <jump target="Eneguoz">
-   <pos x="12927.011740" y="-15114.150571"/>
-   <hide>1.000000</hide>
+   <pos x="12927.01174" y="-15114.150571"/>
+   <hide>1</hide>
   </jump>
   <jump target="Gamma Polaris">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-21.695287" y="17499.986551" was_auto="true"/>
   </jump>
   <jump target="Koralis">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-9852.042962" y="14463.307002" was_auto="true"/>
   </jump>
   <jump target="Uhriabi">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-2409.901064" y="-17333.273691" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-poor</group>
-   <radius>4000.000000</radius>
-   <pos x="-981.504320" y="-1269.413823"/>
+   <radius>4000</radius>
+   <pos x="-981.50432" y="-1269.413823"/>
   </asteroid>
   <exclusion>
-   <radius>3000.000000</radius>
+   <radius>3000</radius>
    <pos x="-1073.807776" y="-1189.175553"/>
   </exclusion>
  </asteroids>

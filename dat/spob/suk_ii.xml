@@ -1,5 +1,5 @@
 <spob name="Suk II">
- <pos x="-3989.339624" y="1014.900140"/>
+ <pos x="-3989.339624" y="1014.90014"/>
  <GFX>
   <space>D00</space>
   <exterior>desertic4</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

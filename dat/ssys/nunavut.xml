@@ -1,8 +1,8 @@
 <ssys name="Nunavut">
  <general>
-  <radius>10000.000000</radius>
+  <radius>10000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="74.42004" y="-1008.297902"/>
  <spobs>
@@ -10,20 +10,20 @@
  </spobs>
  <jumps>
   <jump target="Straight Row">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-9625.252253" y="-2711.921654" was_auto="true"/>
   </jump>
   <jump target="Unicorn">
    <hidden/>
-   <hide>1.000000</hide>
-   <pos x="7835.518328" y="-6213.264240" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="7835.518328" y="-6213.26424" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-rich</group>
-   <radius>2000.000000</radius>
-   <pos x="-803.891161" y="-3058.391570"/>
+   <radius>2000</radius>
+   <pos x="-803.891161" y="-3058.39157"/>
   </asteroid>
  </asteroids>
 </ssys>

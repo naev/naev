@@ -1,9 +1,9 @@
 <ssys name="Zerantix">
  <general>
-  <radius>17500.000000</radius>
+  <radius>17500</radius>
   <spacedust>500</spacedust>
-  <interference>61.363600</interference>
-  <nebula volatility="4.200000" hue="275.000000">500.000000</nebula>
+  <interference>61.3636</interference>
+  <nebula volatility="4.2" hue="275">500</nebula>
   <nolanes/>
  </general>
  <pos x="939.443512" y="-28.501637"/>
@@ -13,14 +13,14 @@
  </spobs>
  <jumps>
   <jump target="Arandon">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-14827.884744" y="-9294.290397" was_auto="true"/>
   </jump>
  </jumps>
  <waypoints>
-  <waypoint x="-12836.169190" y="-10318.563877">maikki1_1</waypoint>
+  <waypoint x="-12836.16919" y="-10318.563877">maikki1_1</waypoint>
   <waypoint x="-16564.579896" y="-3951.543098">maikki1_2</waypoint>
-  <waypoint x="-10307.615366" y="-4873.711670">maikki1_3</waypoint>
+  <waypoint x="-10307.615366" y="-4873.71167">maikki1_3</waypoint>
   <waypoint x="-13416.276083" y="59.464643">maikki1_4</waypoint>
  </waypoints>
  <tags>

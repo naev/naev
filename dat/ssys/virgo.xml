@@ -1,8 +1,8 @@
 <ssys name="Virgo">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="346.541487" y="-131.706562"/>
  <spobs>
@@ -15,15 +15,15 @@
  </spobs>
  <jumps>
   <jump target="Poltergeist">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-5849.066605" y="-13812.618138" was_auto="true"/>
   </jump>
   <jump target="Tepdania">
-   <hide>1.000000</hide>
-   <pos x="12738.867520" y="-7919.675138" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="12738.86752" y="-7919.675138" was_auto="true"/>
   </jump>
   <jump target="Wunomi">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-9942.634919" y="11231.385082" was_auto="true"/>
   </jump>
  </jumps>

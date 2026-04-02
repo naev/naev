@@ -1,5 +1,5 @@
 <spob name="Mayla III">
- <pos x="2708.241160" y="-9396.612330"/>
+ <pos x="2708.24116" y="-9396.61233"/>
  <GFX>
   <space>moon-D00</space>
   <exterior>uninhabited-rocky-yellow-02</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>B</class>
   <population>0</population>
-  <hide>0.200000</hide>
+  <hide>0.2</hide>
   <services>
    <land/>
   </services>

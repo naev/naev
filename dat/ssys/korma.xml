@@ -1,22 +1,22 @@
 <ssys name="Korma">
  <general>
-  <radius>10000.000000</radius>
+  <radius>10000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="1556.840515" y="-751.587913"/>
  <spobs/>
  <jumps>
   <jump target="Muirat">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-9652.032934" y="2615.006735" was_auto="true"/>
   </jump>
   <jump target="NGC-12108">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-2325.221648" y="-9725.910974" was_auto="true"/>
   </jump>
   <jump target="Narousse">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="9470.481535" y="3210.915678" was_auto="true"/>
   </jump>
  </jumps>

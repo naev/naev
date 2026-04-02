@@ -1,9 +1,9 @@
 <ssys name="Rauthia">
  <general>
-  <radius>13000.000000</radius>
+  <radius>13000</radius>
   <spacedust>400</spacedust>
-  <interference>45.000000</interference>
-  <nebula volatility="11.800000" hue="280.000000">600.000000</nebula>
+  <interference>45</interference>
+  <nebula volatility="11.8" hue="280">600</nebula>
   <nolanes/>
  </general>
  <pos x="1010.136055" y="253.712035"/>
@@ -16,11 +16,11 @@
  </spobs>
  <jumps>
   <jump target="Adran">
-   <hide>1.000000</hide>
-   <pos x="-10282.772402" y="-7953.904180" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="-10282.772402" y="-7953.90418" was_auto="true"/>
   </jump>
   <jump target="Antares">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="6686.362356" y="-11148.657247" was_auto="true"/>
   </jump>
  </jumps>

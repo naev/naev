@@ -14,7 +14,7 @@
  <general>
   <class>L</class>
   <population>1e+07</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

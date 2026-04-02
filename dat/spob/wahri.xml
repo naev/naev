@@ -1,19 +1,19 @@
 <spob name="Wahri">
- <pos x="-7287.426140" y="-1769.216066"/>
+ <pos x="-7287.42614" y="-1769.216066"/>
  <GFX>
   <space>moon-C00</space>
   <exterior>desertic</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>20.000000</base>
-  <bonus>10.000000</bonus>
+  <base>20</base>
+  <bonus>10</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>C</class>
   <population>30000</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

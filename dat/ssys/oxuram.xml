@@ -1,18 +1,18 @@
 <ssys name="Oxuram">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="433.969121" y="-798.695297"/>
  <spobs/>
  <jumps>
   <jump target="Ksher">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-4027.876974" y="14449.090181" was_auto="true"/>
   </jump>
   <jump target="PSO">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="742.821643" y="-14981.595909" was_auto="true"/>
   </jump>
  </jumps>

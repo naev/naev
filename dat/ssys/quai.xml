@@ -1,8 +1,8 @@
 <ssys name="Quai">
  <general>
-  <radius>16000.000000</radius>
+  <radius>16000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="1028.355902" y="-947.090951"/>
  <spobs>
@@ -13,16 +13,16 @@
  </spobs>
  <jumps>
   <jump target="Lapis">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="14446.765048" y="-6876.843726" was_auto="true"/>
   </jump>
   <jump target="NGC-4766">
    <nolanes/>
-   <hide>0.300000</hide>
-   <pos x="-1928.531911" y="-15883.348660" was_auto="true"/>
+   <hide>0.3</hide>
+   <pos x="-1928.531911" y="-15883.34866" was_auto="true"/>
   </jump>
   <jump target="Ruttwi">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-2266.841899" y="15838.605614" was_auto="true"/>
   </jump>
  </jumps>

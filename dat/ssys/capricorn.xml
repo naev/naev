@@ -1,8 +1,8 @@
 <ssys name="Capricorn">
  <general>
-  <radius>28000.000000</radius>
+  <radius>28000</radius>
   <spacedust>200</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="143.026901" y="667.469521"/>
  <spobs>
@@ -15,19 +15,19 @@
  <jumps>
   <jump target="Daled">
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="13409.727426" y="24580.057167" was_auto="true"/>
   </jump>
   <jump target="Mason">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-17746.776418" y="21657.606672" was_auto="true"/>
   </jump>
   <jump target="Pontus">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="7359.500261" y="-27015.509543" was_auto="true"/>
   </jump>
   <jump target="Rockbed">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="25588.664855" y="-11367.507682" was_auto="true"/>
   </jump>
  </jumps>

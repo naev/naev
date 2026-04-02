@@ -1,9 +1,9 @@
 <ssys name="Sonas">
  <general>
-  <radius>10000.000000</radius>
+  <radius>10000</radius>
   <spacedust>400</spacedust>
   <interference>13.235288</interference>
-  <nebula volatility="0.250000" hue="250.000000">300.000000</nebula>
+  <nebula volatility="0.25" hue="250">300</nebula>
  </general>
  <pos x="652.865057" y="-87.23241"/>
  <spobs>
@@ -11,15 +11,15 @@
  </spobs>
  <jumps>
   <jump target="Arcanis">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-4389.256715" y="8985.233747" was_auto="true"/>
   </jump>
   <jump target="Zacron">
-   <hide>1.000000</hide>
-   <pos x="-8161.861483" y="-5777.890370" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="-8161.861483" y="-5777.89037" was_auto="true"/>
   </jump>
   <jump target="Zylex">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="5480.605652" y="8364.386509" was_auto="true"/>
   </jump>
  </jumps>

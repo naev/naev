@@ -1,8 +1,8 @@
 <ssys name="Antlejos">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="-306.33352" y="235.555946"/>
  <spobs>
@@ -13,20 +13,20 @@
  </spobs>
  <jumps>
   <jump target="Delta Polaris">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="14925.003479" y="1498.089164" was_auto="true"/>
   </jump>
   <jump target="Klintus">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-8769.371441" y="-12169.557285" was_auto="true"/>
   </jump>
   <jump target="Knave">
-   <hide>1.000000</hide>
-   <pos x="6208.502580" y="13654.834151" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="6208.50258" y="13654.834151" was_auto="true"/>
   </jump>
   <jump target="NGC-4087">
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-7222.464839" y="13146.710677" was_auto="true"/>
   </jump>
  </jumps>

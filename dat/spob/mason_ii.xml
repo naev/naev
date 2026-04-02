@@ -1,5 +1,5 @@
 <spob name="Mason II">
- <pos x="20397.271050" y="-2839.415554"/>
+ <pos x="20397.27105" y="-2839.415554"/>
  <GFX>
   <space>S00</space>
   <exterior>snow</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

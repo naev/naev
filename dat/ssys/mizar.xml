@@ -2,10 +2,10 @@
  <general>
   <background>mizar</background>
   <map_shader>mizar_map.frag</map_shader>
-  <radius>22575.000000</radius>
+  <radius>22575</radius>
   <spacedust>0</spacedust>
-  <interference>47.000000</interference>
-  <nebula hue="80.000000" trails="1">0.000000</nebula>
+  <interference>47</interference>
+  <nebula hue="80" trails="1">0</nebula>
  </general>
  <pos x="602.895075" y="1100.257918"/>
  <spobs>
@@ -18,12 +18,12 @@
  <jumps>
   <jump target="Hatter">
    <pos x="-7497.160623" y="-20966.489252"/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Possum">
-   <pos x="36258.855420" y="13921.750314"/>
+   <pos x="36258.85542" y="13921.750314"/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
  </jumps>
 </ssys>

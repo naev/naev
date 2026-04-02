@@ -1,5 +1,5 @@
 <spob name="Scinfaxi">
- <pos x="592.779130" y="-7322.947821"/>
+ <pos x="592.77913" y="-7322.947821"/>
  <GFX>
   <space>moon-J01</space>
   <exterior>mining6</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

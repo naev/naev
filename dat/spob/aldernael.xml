@@ -13,7 +13,7 @@
  <general>
   <class>G</class>
   <population>1.2e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

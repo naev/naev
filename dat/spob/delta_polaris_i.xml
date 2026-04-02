@@ -1,5 +1,5 @@
 <spob name="Delta Polaris I">
- <pos x="3499.485423" y="-8258.054510"/>
+ <pos x="3499.485423" y="-8258.05451"/>
  <GFX>
   <space>Y00</space>
   <exterior>aquatic2</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>X</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

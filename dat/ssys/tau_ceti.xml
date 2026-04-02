@@ -1,9 +1,9 @@
 <ssys name="Tau Ceti">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>22.050000</interference>
-  <nebula hue="250.000000">200.000000</nebula>
+  <interference>22.05</interference>
+  <nebula hue="250">200</nebula>
  </general>
  <pos x="606.242323" y="95.285213"/>
  <spobs>
@@ -15,32 +15,32 @@
  </spobs>
  <jumps>
   <jump target="Barnard's Star">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="14874.298633" y="1937.844201" was_auto="true"/>
   </jump>
   <jump target="Carnis Major">
    <hidden/>
-   <hide>1.000000</hide>
-   <pos x="-12530.703825" y="-8245.087120" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="-12530.703825" y="-8245.08712" was_auto="true"/>
   </jump>
   <jump target="Ophiuchi">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="8174.973787" y="-12576.557699" was_auto="true"/>
   </jump>
   <jump target="Tepvin">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-13967.618747" y="5468.603708" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-rich</group>
-   <radius>8000.000000</radius>
+   <radius>8000</radius>
    <pos x="0" y="0"/>
   </asteroid>
   <exclusion>
-   <radius>6000.000000</radius>
-   <pos x="0.000000" y="0.000000"/>
+   <radius>6000</radius>
+   <pos x="0" y="0"/>
   </exclusion>
  </asteroids>
  <tags>

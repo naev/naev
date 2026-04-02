@@ -1,19 +1,19 @@
 <spob name="Mastodon Station">
- <pos x="22291.314550" y="3789.072222"/>
+ <pos x="22291.31455" y="3789.072222"/>
  <GFX>
   <space>station-powerplant</space>
   <exterior>station03</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>20.000000</base>
-  <bonus>10.000000</bonus>
+  <base>20</base>
+  <bonus>10</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>0</class>
   <population>700</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services>
    <land/>
    <refuel/>

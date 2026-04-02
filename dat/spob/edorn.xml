@@ -1,6 +1,6 @@
 <spob name="Edorn">
  <lua>lowclass.lua</lua>
- <pos x="-2363.031491" y="-6523.955980"/>
+ <pos x="-2363.031491" y="-6523.95598"/>
  <GFX>
   <space>M09</space>
   <exterior>mining</exterior>
@@ -14,7 +14,7 @@
  <general>
   <class>M</class>
   <population>5e+08</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

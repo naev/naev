@@ -1,8 +1,8 @@
 <ssys name="Gutter">
  <general>
-  <radius>18000.000000</radius>
+  <radius>18000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="1163.832637" y="-614.037805"/>
  <spobs>
@@ -14,11 +14,11 @@
  </spobs>
  <jumps>
   <jump target="Esker">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-17765.398344" y="2896.656977" was_auto="true"/>
   </jump>
   <jump target="Tartan">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="8465.576152" y="-15885.025036" was_auto="true"/>
   </jump>
  </jumps>

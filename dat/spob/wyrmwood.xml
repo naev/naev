@@ -1,19 +1,19 @@
 <spob name="Wyrmwood">
- <pos x="1127.430827" y="-2513.563610"/>
+ <pos x="1127.430827" y="-2513.56361"/>
  <GFX>
   <space>moon-P03</space>
   <exterior>methane</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>50.000000</base>
-  <bonus>25.000000</bonus>
+  <base>50</base>
+  <bonus>25</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>P</class>
   <population>795000</population>
-  <hide>0.200000</hide>
+  <hide>0.2</hide>
   <services>
    <land/>
    <refuel/>

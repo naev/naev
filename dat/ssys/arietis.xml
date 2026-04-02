@@ -1,9 +1,9 @@
 <ssys name="Arietis">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>48.900000</interference>
-  <nebula volatility="13.200000" hue="2815.000000">375.000000</nebula>
+  <interference>48.9</interference>
+  <nebula volatility="13.2" hue="2815">375</nebula>
  </general>
  <pos x="1097.012946" y="-78.068053"/>
  <spobs>
@@ -13,11 +13,11 @@
  </spobs>
  <jumps>
   <jump target="Ryder">
-   <hide>1.000000</hide>
-   <pos x="488.647932" y="-14992.038660" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="488.647932" y="-14992.03866" was_auto="true"/>
   </jump>
   <jump target="Seifer">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="14780.369953" y="-2557.472199" was_auto="true"/>
   </jump>
  </jumps>

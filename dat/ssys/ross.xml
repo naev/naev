@@ -1,8 +1,8 @@
 <ssys name="Ross">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="369.515123" y="107.596145"/>
  <spobs>
@@ -11,23 +11,23 @@
  </spobs>
  <jumps>
   <jump target="Cebus">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="14712.148725" y="-2924.496516" was_auto="true"/>
   </jump>
   <jump target="Hakoi">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-7544.345606" y="12964.676986" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-rich</group>
-   <radius>5000.000000</radius>
-   <pos x="-2447.949780" y="-1792.226130"/>
+   <radius>5000</radius>
+   <pos x="-2447.94978" y="-1792.22613"/>
   </asteroid>
   <exclusion>
-   <radius>1000.000000</radius>
-   <pos x="-3496.821003" y="-4463.360410"/>
+   <radius>1000</radius>
+   <pos x="-3496.821003" y="-4463.36041"/>
   </exclusion>
  </asteroids>
 </ssys>

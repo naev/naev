@@ -1,5 +1,5 @@
 <spob name="Sixbat Station">
- <pos x="717.568500" y="1277.514367"/>
+ <pos x="717.5685" y="1277.514367"/>
  <GFX>
   <space>station-fleetbase</space>
   <exterior>traderoom</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>M</class>
   <population>40000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

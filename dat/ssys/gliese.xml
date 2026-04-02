@@ -1,9 +1,9 @@
 <ssys name="Gliese">
  <general>
-  <radius>11000.000000</radius>
+  <radius>11000</radius>
   <spacedust>400</spacedust>
-  <interference>50.000000</interference>
-  <nebula volatility="3.100000">300.000000</nebula>
+  <interference>50</interference>
+  <nebula volatility="3.1">300</nebula>
   <nolanes/>
  </general>
  <pos x="817.891846" y="-21.261491"/>
@@ -20,11 +20,11 @@
  <jumps>
   <jump target="Behar">
    <exitonly/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-9545.570593" y="-5466.450589" was_auto="true"/>
   </jump>
   <jump target="Gliese Minor">
-   <hide>0.300000</hide>
+   <hide>0.3</hide>
    <pos x="8192.159899" y="7340.879796" was_auto="true"/>
   </jump>
  </jumps>

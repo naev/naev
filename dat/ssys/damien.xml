@@ -1,8 +1,8 @@
 <ssys name="Damien">
  <general>
-  <radius>25000.000000</radius>
+  <radius>25000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="-222.775937" y="-793.394546"/>
  <spobs>
@@ -14,15 +14,15 @@
  </spobs>
  <jumps>
   <jump target="Garten">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-8992.181915" y="-23326.822852" was_auto="true"/>
   </jump>
   <jump target="Ruadan">
-   <hide>0.000000</hide>
+   <hide>0</hide>
    <pos x="16549.811975" y="-18737.761968" was_auto="true"/>
   </jump>
   <jump target="Za'lek">
-   <hide>0.000000</hide>
+   <hide>0</hide>
    <pos x="-9378.431809" y="23174.231741" was_auto="true"/>
   </jump>
  </jumps>

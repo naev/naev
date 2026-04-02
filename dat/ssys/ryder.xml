@@ -1,9 +1,9 @@
 <ssys name="Ryder">
  <general>
-  <radius>10000.000000</radius>
+  <radius>10000</radius>
   <spacedust>400</spacedust>
-  <interference>40.720000</interference>
-  <nebula volatility="1.300000" hue="270.000000">400.000000</nebula>
+  <interference>40.72</interference>
+  <nebula volatility="1.3" hue="270">400</nebula>
  </general>
  <pos x="1103.631395" y="-162.731241"/>
  <spobs>
@@ -12,24 +12,24 @@
  </spobs>
  <jumps>
   <jump target="Anger">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-9012.586672" y="-4332.814497" was_auto="true"/>
   </jump>
   <jump target="Arietis">
-   <hide>0.500000</hide>
+   <hide>0.5</hide>
    <pos x="8075.354083" y="5898.190945" was_auto="true"/>
   </jump>
   <jump target="Atlantis">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="3038.967898" y="-9527.049601" was_auto="true"/>
   </jump>
   <jump target="Hephaestus">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-4047.648076" y="-9144.208278" was_auto="true"/>
   </jump>
   <jump target="Seifer">
-   <hide>1.000000</hide>
-   <pos x="9636.003540" y="-2673.468865" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="9636.00354" y="-2673.468865" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

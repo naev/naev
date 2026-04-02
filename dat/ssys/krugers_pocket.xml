@@ -1,31 +1,31 @@
 <ssys name="Kruger's Pocket">
  <general>
-  <radius>3375.000000</radius>
+  <radius>3375</radius>
   <spacedust>400</spacedust>
-  <interference>3.825000</interference>
-  <nebula hue="240.000000">50.000000</nebula>
+  <interference>3.825</interference>
+  <nebula hue="240">50</nebula>
   <nolanes/>
  </general>
  <pos x="507.155098" y="-8.683898"/>
  <spobs/>
  <jumps>
   <jump target="Cebus">
-   <hide>1.000000</hide>
-   <pos x="967.439792" y="3233.370570" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="967.439792" y="3233.37057" was_auto="true"/>
   </jump>
   <jump target="Kruger">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="2352.487331" y="-2420.005858" was_auto="true"/>
   </jump>
   <jump target="Scorpius">
-   <hide>1.000000</hide>
-   <pos x="-2141.007500" y="-2608.967589" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="-2141.0075" y="-2608.967589" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-standard</group>
-   <radius>4000.000000</radius>
+   <radius>4000</radius>
    <pos x="0" y="0"/>
   </asteroid>
  </asteroids>

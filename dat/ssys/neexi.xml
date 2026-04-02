@@ -3,9 +3,9 @@
   <background>haze</background>
   <map_shader>haze_map.frag</map_shader>
   <features>#rHaze (-50% Shield and Shield Regen)#0</features>
-  <radius>16000.000000</radius>
+  <radius>16000</radius>
   <spacedust>400</spacedust>
-  <interference>33.750000</interference>
+  <interference>33.75</interference>
  </general>
  <pos x="309.363935" y="1433.990337"/>
  <spobs>
@@ -14,24 +14,24 @@
  </spobs>
  <jumps>
   <jump target="Malebolge">
-   <hide>1.000000</hide>
-   <pos x="15754.986700" y="-2789.335775" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="15754.9867" y="-2789.335775" was_auto="true"/>
   </jump>
   <jump target="Sleuth">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-13097.253989" y="9190.317618" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeB-poor</group>
-   <radius>4500.000000</radius>
+   <radius>4500</radius>
    <pos x="7431.082351" y="3611.172252"/>
   </asteroid>
  </asteroids>
  <stats>
-  <shield_mod>-50.000000</shield_mod>
-  <shield_regen_mod>-50.000000</shield_regen_mod>
+  <shield_mod>-50</shield_mod>
+  <shield_regen_mod>-50</shield_regen_mod>
  </stats>
  <tags>
   <tag>haze</tag>

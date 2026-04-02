@@ -1,9 +1,9 @@
 <ssys name="Sol">
  <general>
-  <radius>35000.000000</radius>
+  <radius>35000</radius>
   <spacedust>500</spacedust>
-  <interference>122.143000</interference>
-  <nebula volatility="100.000000" hue="0.000000" hidenebuladamage="1">900.000000</nebula>
+  <interference>122.143</interference>
+  <nebula volatility="100" hue="0" hidenebuladamage="1">900</nebula>
   <nolanes/>
  </general>
  <pos x="903.006722" y="158.74771"/>
@@ -13,15 +13,15 @@
  <jumps>
   <jump target="Midoros">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Polaris">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Tide">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
  </jumps>
  <tags>

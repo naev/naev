@@ -1,6 +1,6 @@
 <ssys name="Ingot">
  <general>
-  <radius>21000.000000</radius>
+  <radius>21000</radius>
   <spacedust>500</spacedust>
   <interference>13.235288</interference>
  </general>
@@ -14,11 +14,11 @@
  <jumps>
   <jump target="Gilligan's Light">
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="20515.108075" y="4486.684817" was_auto="true"/>
   </jump>
   <jump target="Toaxis">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-5419.666229" y="20288.598225" was_auto="true"/>
   </jump>
  </jumps>

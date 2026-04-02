@@ -1,19 +1,19 @@
 <spob name="Sevlow">
- <pos x="-104.200520" y="584.099421"/>
+ <pos x="-104.20052" y="584.099421"/>
  <GFX>
   <space>O02</space>
   <exterior>oceanic2</exterior>
  </GFX>
  <presence>
   <faction>Thurion</faction>
-  <base>450.000000</base>
-  <bonus>50.000000</bonus>
+  <base>450</base>
+  <bonus>50</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>N</class>
   <population>1e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

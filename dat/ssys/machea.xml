@@ -1,9 +1,9 @@
 <ssys name="Machea">
  <general>
-  <radius>11000.000000</radius>
+  <radius>11000</radius>
   <spacedust>400</spacedust>
-  <interference>32.000000</interference>
-  <nebula>200.000000</nebula>
+  <interference>32</interference>
+  <nebula>200</nebula>
   <nolanes/>
  </general>
  <pos x="960.939311" y="463.786048"/>
@@ -11,7 +11,7 @@
  <jumps>
   <jump target="Maron">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
  </jumps>
  <tags>

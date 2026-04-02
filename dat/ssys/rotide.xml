@@ -1,9 +1,9 @@
 <ssys name="Rotide">
  <general>
-  <radius>12000.000000</radius>
+  <radius>12000</radius>
   <spacedust>400</spacedust>
-  <interference>61.363600</interference>
-  <nebula volatility="15.400000" hue="305.000000">500.000000</nebula>
+  <interference>61.3636</interference>
+  <nebula volatility="15.4" hue="305">500</nebula>
   <nolanes/>
  </general>
  <pos x="1075.026197" y="119.612531"/>
@@ -15,20 +15,20 @@
  </spobs>
  <jumps>
   <jump target="Antares">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-5267.374909" y="10782.150136" was_auto="true"/>
   </jump>
   <jump target="Tobanna">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="11174.731535" y="-4373.256808" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-standard</group>
-   <radius>4000.000000</radius>
-   <pos x="856.716590" y="6653.272629"/>
-   <density>0.250000</density>
+   <radius>4000</radius>
+   <pos x="856.71659" y="6653.272629"/>
+   <density>0.25</density>
   </asteroid>
  </asteroids>
  <tags>

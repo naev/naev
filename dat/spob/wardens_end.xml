@@ -7,14 +7,14 @@
  </GFX>
  <presence>
   <faction>Black Lotus</faction>
-  <base>400.000000</base>
-  <bonus>50.000000</bonus>
+  <base>400</base>
+  <bonus>50</bonus>
   <range>5</range>
  </presence>
  <general>
   <class>2</class>
   <population>4500</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

@@ -1,19 +1,19 @@
 <spob name="Protera Sigma">
- <pos x="7128.212511" y="-3141.456530"/>
+ <pos x="7128.212511" y="-3141.45653"/>
  <GFX>
   <space>M05</space>
   <exterior>oceanic2</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>
-  <base>1150.000000</base>
-  <bonus>50.000000</bonus>
+  <base>1150</base>
+  <bonus>50</bonus>
   <range>4</range>
  </presence>
  <general>
   <class>M</class>
   <population>1.2e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

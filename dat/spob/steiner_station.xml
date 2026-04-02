@@ -6,20 +6,20 @@
  </GFX>
  <presence>
   <faction>Independent</faction>
-  <base>16.666700</base>
-  <bonus>8.333330</bonus>
+  <base>16.6667</base>
+  <bonus>8.33333</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>0</class>
   <population>25000</population>
-  <hide>0.600000</hide>
+  <hide>0.6</hide>
   <services>
    <land/>
    <refuel/>
   </services>
   <description>Once a highly prosperous planet of the old Empire, Uhrabi-9 was tragically struck by a large asteroid; the subsequently unstable volcanic activity reduced the planet to a lifeless state.
-Steiner was originally one of the satellites previously used by the people of Uhrabi-9, but following the loss of the planet Steiner expanded large enough to be classified as a station. It is now a popular tourist spot due to its proximity to Uhrabi-9.</description>
+Steiner was originally one of the satellites previously used by the people of Uhrabi-9, but following the loss of the planet Steiner expanded large enough to be classified as a station. It is now a popular tourist spot due to its proximity to Uhrabi-9</description>
  </general>
  <tags>
   <tag>tourism</tag>

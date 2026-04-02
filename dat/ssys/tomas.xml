@@ -1,8 +1,8 @@
 <ssys name="Tomas">
  <general>
-  <radius>14000.000000</radius>
+  <radius>14000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="-121.181315" y="-943.65475"/>
  <spobs>
@@ -13,39 +13,39 @@
  </spobs>
  <jumps>
   <jump target="Garten">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-13864.205121" y="1945.203424" was_auto="true"/>
   </jump>
   <jump target="Ruadan">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-8988.695846" y="10733.282208" was_auto="true"/>
   </jump>
   <jump target="Severus">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="284.326496" y="13997.112503" was_auto="true"/>
   </jump>
   <jump target="Straight Row">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="4550.313847" y="-13239.888363" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-poor</group>
-   <radius>2500.000000</radius>
+   <radius>2500</radius>
    <pos x="5397.551868" y="600.278014"/>
   </asteroid>
   <asteroid>
    <group>typeC-standard</group>
-   <radius>3000.000000</radius>
-   <pos x="8877.047200" y="3281.501248"/>
+   <radius>3000</radius>
+   <pos x="8877.0472" y="3281.501248"/>
   </asteroid>
   <exclusion>
-   <radius>1800.000000</radius>
-   <pos x="4724.487980" y="2760.957987"/>
+   <radius>1800</radius>
+   <pos x="4724.48798" y="2760.957987"/>
   </exclusion>
   <exclusion>
-   <radius>2200.000000</radius>
+   <radius>2200</radius>
    <pos x="6887.633809" y="6828.411683"/>
   </exclusion>
  </asteroids>

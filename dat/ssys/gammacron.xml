@@ -1,8 +1,8 @@
 <ssys name="Gammacron">
  <general>
-  <radius>16800.000000</radius>
+  <radius>16800</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="104.217451" y="-438.344606"/>
  <spobs>
@@ -15,24 +15,24 @@
  </spobs>
  <jumps>
   <jump target="Daan">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="9089.778204" y="14128.550251" was_auto="true"/>
   </jump>
   <jump target="Limbo">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-16721.937138" y="-1617.658284" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-standard</group>
-   <radius>1500.000000</radius>
+   <radius>1500</radius>
    <pos x="41.674819" y="4206.576661"/>
-   <density>5.000000</density>
+   <density>5</density>
   </asteroid>
   <exclusion>
-   <radius>1000.000000</radius>
-   <pos x="1200.000000" y="4032.000000"/>
+   <radius>1000</radius>
+   <pos x="1200" y="4032"/>
   </exclusion>
  </asteroids>
  <waypoints>
@@ -47,8 +47,8 @@
   <waypoint x="-4798.404202" y="-8658.828853">pirate5_7_1</waypoint>
   <waypoint x="11952.263347" y="-1772.963866">pirate5_7_2</waypoint>
   <waypoint x="-1032.104702" y="1784.589556">pirate5_drone_control1</waypoint>
-  <waypoint x="15245.921767" y="13944.600010">pirate5_drone_control2</waypoint>
-  <waypoint x="7705.348380" y="-12354.254584">pirate5_guard</waypoint>
+  <waypoint x="15245.921767" y="13944.60001">pirate5_drone_control2</waypoint>
+  <waypoint x="7705.34838" y="-12354.254584">pirate5_guard</waypoint>
   <waypoint x="9493.813166" y="-14962.202764">pirate5_hacking_centre</waypoint>
   <waypoint x="-1607.293169" y="163.121632">shadowrun_seiryuu</waypoint>
  </waypoints>

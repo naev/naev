@@ -1,5 +1,5 @@
 <spob name="Corvus VI">
- <pos x="-18688.764821" y="20877.837110"/>
+ <pos x="-18688.764821" y="20877.83711"/>
  <GFX>
   <space>I07</space>
   <exterior>aquatic</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>I</class>
   <population>0</population>
-  <hide>0.600000</hide>
+  <hide>0.6</hide>
   <services/>
  </general>
 </spob>

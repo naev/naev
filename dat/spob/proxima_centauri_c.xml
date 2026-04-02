@@ -1,5 +1,5 @@
 <spob name="Proxima Centauri c">
- <pos x="7977.662160" y="5177.984607"/>
+ <pos x="7977.66216" y="5177.984607"/>
  <GFX>
   <space>I06</space>
   <exterior>station01</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>I</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>2</hide>
   <services/>
  </general>
 </spob>

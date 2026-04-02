@@ -1,5 +1,5 @@
 <spob name="Eenerim">
- <pos x="14796.303220" y="-2833.916292"/>
+ <pos x="14796.30322" y="-2833.916292"/>
  <GFX>
   <space>O01</space>
   <exterior>oceanic</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>O</class>
   <population>1.5e+07</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

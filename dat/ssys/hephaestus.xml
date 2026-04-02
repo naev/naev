@@ -1,26 +1,26 @@
 <ssys name="Hephaestus">
  <general>
-  <radius>10000.000000</radius>
+  <radius>10000</radius>
   <spacedust>400</spacedust>
-  <interference>9.675000</interference>
-  <nebula hue="240.000000">100.000000</nebula>
+  <interference>9.675</interference>
+  <nebula hue="240">100</nebula>
  </general>
  <pos x="1027.742395" y="-203.726592"/>
  <spobs/>
  <jumps>
   <jump target="Aneel Azi">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-5046.633688" y="-8633.162132" was_auto="true"/>
   </jump>
   <jump target="Ryder">
-   <hide>1.000000</hide>
-   <pos x="9894.681680" y="1447.506283" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="9894.68168" y="1447.506283" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-rich</group>
-   <radius>2000.000000</radius>
+   <radius>2000</radius>
    <pos x="-1111.744625" y="-2600.773709"/>
   </asteroid>
  </asteroids>

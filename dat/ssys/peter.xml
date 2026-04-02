@@ -1,24 +1,24 @@
 <ssys name="Peter">
  <general>
-  <radius>10000.000000</radius>
+  <radius>10000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="818.45177" y="-868.817207"/>
  <spobs/>
  <jumps>
   <jump target="Baf">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-9920.537949" y="-1258.144188" was_auto="true"/>
   </jump>
   <jump target="Druid">
-   <pos x="9687.455858" y="-6916.108770"/>
+   <pos x="9687.455858" y="-6916.10877"/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Felzen">
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-8767.572599" y="-4809.331629" was_auto="true"/>
   </jump>
  </jumps>

@@ -1,8 +1,8 @@
 <ssys name="Nougat">
  <general>
-  <radius>21000.000000</radius>
+  <radius>21000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="1037.357561" y="-544.016868"/>
  <spobs>
@@ -13,31 +13,31 @@
  <jumps>
   <jump target="Chraan">
    <pos x="-19679.995934" y="8332.481919"/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Esker">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="19537.219113" y="-7700.459033" was_auto="true"/>
   </jump>
   <jump target="Karman">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="13700.057782" y="15915.665765" was_auto="true"/>
   </jump>
   <jump target="Norpin">
-   <hide>1.000000</hide>
-   <pos x="-19461.976480" y="-7888.692634" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="-19461.97648" y="-7888.692634" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-standard</group>
-   <radius>800.000000</radius>
+   <radius>800</radius>
    <pos x="780.851263" y="10001.053509"/>
-   <density>5.000000</density>
+   <density>5</density>
   </asteroid>
   <exclusion>
-   <radius>500.000000</radius>
-   <pos x="-480.000000" y="10020.000000"/>
+   <radius>500</radius>
+   <pos x="-480" y="10020"/>
   </exclusion>
  </asteroids>
 </ssys>

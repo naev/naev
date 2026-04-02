@@ -1,5 +1,5 @@
 <spob name="Neurri">
- <pos x="25810.304140" y="5408.191222"/>
+ <pos x="25810.30414" y="5408.191222"/>
  <GFX>
   <space>O02</space>
   <exterior>mining2</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>O</class>
   <population>100000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

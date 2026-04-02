@@ -1,9 +1,9 @@
 <ssys name="Deneb">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>94.725000</interference>
-  <nebula volatility="21.300000" hue="310.000000">600.000000</nebula>
+  <interference>94.725</interference>
+  <nebula volatility="21.3" hue="310">600</nebula>
   <nolanes/>
  </general>
  <pos x="760.555238" y="259.62052"/>
@@ -14,24 +14,24 @@
  </spobs>
  <jumps>
   <jump target="Altair">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-11997.544797" y="9003.272672" was_auto="true"/>
   </jump>
   <jump target="Vega">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-11925.007961" y="-9099.131009" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>Nebula Crystal</group>
-   <radius>2500.000000</radius>
+   <radius>2500</radius>
    <pos x="-3660.369404" y="2954.011321"/>
-   <density>2.000000</density>
+   <density>2</density>
   </asteroid>
   <exclusion>
-   <radius>1000.000000</radius>
-   <pos x="-1390.911670" y="4466.966325"/>
+   <radius>1000</radius>
+   <pos x="-1390.91167" y="4466.966325"/>
   </exclusion>
  </asteroids>
  <tags>

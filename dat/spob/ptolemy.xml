@@ -1,5 +1,5 @@
 <spob name="Ptolemy">
- <pos x="-7308.555012" y="-1523.001200"/>
+ <pos x="-7308.555012" y="-1523.0012"/>
  <GFX>
   <space>H02</space>
   <exterior>desertic3</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>C</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

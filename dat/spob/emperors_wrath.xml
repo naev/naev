@@ -1,21 +1,21 @@
 <spob name="Emperor's Wrath">
  <feature>#pEmpire Homeworld#0</feature>
  <lua>empire_mil_emperors_wrath.lua</lua>
- <pos x="15763.939480" y="1469.368092"/>
+ <pos x="15763.93948" y="1469.368092"/>
  <GFX>
   <space>wrath</space>
   <exterior>station03</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
-  <base>150.000000</base>
-  <bonus>50.000000</bonus>
+  <base>150</base>
+  <bonus>50</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>1</class>
   <population>5000</population>
-  <hide>1.600000</hide>
+  <hide>1.6</hide>
   <services>
    <land/>
    <refuel/>

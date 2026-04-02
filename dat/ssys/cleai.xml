@@ -1,9 +1,9 @@
 <ssys name="Cleai">
  <general>
-  <radius>12500.000000</radius>
+  <radius>12500</radius>
   <spacedust>400</spacedust>
-  <interference>63.000000</interference>
-  <nebula>200.000000</nebula>
+  <interference>63</interference>
+  <nebula>200</nebula>
   <nolanes/>
  </general>
  <pos x="1120.062371" y="401.287028"/>
@@ -13,11 +13,11 @@
  <jumps>
   <jump target="Haered">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
   <jump target="Maron">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
  </jumps>
  <tags>

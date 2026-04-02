@@ -1,8 +1,8 @@
 <ssys name="Procyon">
  <general>
-  <radius>20000.000000</radius>
+  <radius>20000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="-365.937185" y="-336.34122"/>
  <spobs>
@@ -14,20 +14,20 @@
  </spobs>
  <jumps>
   <jump target="Copernicus">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-14230.625592" y="14053.088459" was_auto="true"/>
   </jump>
   <jump target="Corinth">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-5708.710605" y="-19167.958243" was_auto="true"/>
   </jump>
   <jump target="Octavian">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-1553.762091" y="19939.554241" was_auto="true"/>
   </jump>
   <jump target="Vost">
-   <hide>1.000000</hide>
-   <pos x="19879.512780" y="-2192.024548" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="19879.51278" y="-2192.024548" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

@@ -1,5 +1,5 @@
 <spob name="Em 1">
- <pos x="-1034.014145" y="-19257.736490"/>
+ <pos x="-1034.014145" y="-19257.73649"/>
  <GFX>
   <space>M01</space>
   <exterior>oceanic</exterior>
@@ -13,7 +13,7 @@
  <general>
   <class>M</class>
   <population>4e+08</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

@@ -1,9 +1,9 @@
 <ssys name="Midoros">
  <general>
-  <radius>13000.000000</radius>
+  <radius>13000</radius>
   <spacedust>400</spacedust>
-  <interference>105.000000</interference>
-  <nebula volatility="25.800000" hue="320.000000">700.000000</nebula>
+  <interference>105</interference>
+  <nebula volatility="25.8" hue="320">700</nebula>
   <nolanes/>
  </general>
  <pos x="824.538532" y="186.983375"/>
@@ -15,19 +15,19 @@
  <jumps>
   <jump target="Carrza">
    <hidden/>
-   <hide>1.000000</hide>
-   <pos x="-12906.524010" y="-1556.161288" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="-12906.52401" y="-1556.161288" was_auto="true"/>
   </jump>
   <jump target="Metsys">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="1574.073337" y="12904.351712" was_auto="true"/>
   </jump>
   <jump target="Oriantis">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-686.171377" y="-12981.878478" was_auto="true"/>
   </jump>
   <jump target="Sol">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="11302.449745" y="-6422.976704" was_auto="true"/>
   </jump>
  </jumps>

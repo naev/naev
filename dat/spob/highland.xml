@@ -6,14 +6,14 @@
  </GFX>
  <presence>
   <faction>O'rez</faction>
-  <base>200.000000</base>
-  <bonus>100.000000</bonus>
+  <base>200</base>
+  <bonus>100</bonus>
   <range>1</range>
  </presence>
  <general>
   <class>G</class>
   <population>2.78e+06</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

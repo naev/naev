@@ -3,9 +3,9 @@
   <background>stellarwind</background>
   <map_shader>stellarwind_map.frag</map_shader>
   <features>#bStellar Wind (1 fuel regen)#0</features>
-  <radius>12250.000000</radius>
+  <radius>12250</radius>
   <spacedust>400</spacedust>
-  <interference>30.000000</interference>
+  <interference>30</interference>
  </general>
  <pos x="552.663155" y="602.53029"/>
  <spobs>
@@ -13,33 +13,33 @@
  </spobs>
  <jumps>
   <jump target="Oberon">
-   <hide>0.000000</hide>
+   <hide>0</hide>
    <pos x="6130.669227" y="10605.536045" was_auto="true"/>
   </jump>
   <jump target="Pilatis">
-   <hide>0.000000</hide>
+   <hide>0</hide>
    <pos x="-5029.671585" y="-11169.821114" was_auto="true"/>
   </jump>
   <jump target="Vedalus">
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-6929.022562" y="10102.036741" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeB-standard</group>
-   <radius>5000.000000</radius>
+   <radius>5000</radius>
    <pos x="0" y="0"/>
-   <density>0.800000</density>
+   <density>0.8</density>
   </asteroid>
   <exclusion>
-   <radius>3000.000000</radius>
-   <pos x="0.000000" y="0.000000"/>
+   <radius>3000</radius>
+   <pos x="0" y="0"/>
   </exclusion>
  </asteroids>
  <stats>
-  <fuel_regen>1.000000</fuel_regen>
+  <fuel_regen>1</fuel_regen>
  </stats>
  <tags>
   <tag>northstellarwind</tag>

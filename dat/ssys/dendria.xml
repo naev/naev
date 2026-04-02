@@ -1,6 +1,6 @@
 <ssys name="Dendria">
  <general>
-  <radius>17500.000000</radius>
+  <radius>17500</radius>
   <spacedust>400</spacedust>
   <interference>13.235294</interference>
  </general>
@@ -11,12 +11,12 @@
  </spobs>
  <jumps>
   <jump target="Attaria">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="17326.666596" y="-2456.954345" was_auto="true"/>
   </jump>
   <jump target="Ux">
-   <hide>1.000000</hide>
-   <pos x="8850.505447" y="15096.971660" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="8850.505447" y="15096.97166" was_auto="true"/>
   </jump>
  </jumps>
  <waypoints>

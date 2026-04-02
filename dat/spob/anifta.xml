@@ -1,5 +1,5 @@
 <spob name="Anifta">
- <pos x="4669.536613" y="3658.997160"/>
+ <pos x="4669.536613" y="3658.99716"/>
  <GFX>
   <space>G02</space>
   <exterior>station00</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>G</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

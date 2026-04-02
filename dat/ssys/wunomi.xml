@@ -1,8 +1,8 @@
 <ssys name="Wunomi">
  <general>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="282.641777" y="-85.7377"/>
  <spobs>
@@ -13,19 +13,19 @@
  </spobs>
  <jumps>
   <jump target="Groombridge">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-10809.918359" y="-10399.310797" was_auto="true"/>
   </jump>
   <jump target="Scorpius">
-   <hide>1.000000</hide>
-   <pos x="13799.917947" y="5878.967990" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="13799.917947" y="5878.96799" was_auto="true"/>
   </jump>
   <jump target="Teegarden">
-   <hide>1.000000</hide>
-   <pos x="5670.484600" y="13886.886058" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="5670.4846" y="13886.886058" was_auto="true"/>
   </jump>
   <jump target="Virgo">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="11081.677322" y="-10109.224882" was_auto="true"/>
   </jump>
  </jumps>

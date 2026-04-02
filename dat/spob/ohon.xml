@@ -1,19 +1,19 @@
 <spob name="Ohon">
- <pos x="-5081.990030" y="-7712.524430"/>
+ <pos x="-5081.99003" y="-7712.52443"/>
  <GFX>
   <space>M07</space>
   <exterior>oceanic_landing_pads</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.660000</base>
-  <bonus>33.330000</bonus>
+  <base>66.66</base>
+  <bonus>33.33</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>M</class>
   <population>3e+09</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

@@ -1,5 +1,5 @@
 <spob name="Kyo III">
- <pos x="9658.103546" y="4738.608170"/>
+ <pos x="9658.103546" y="4738.60817"/>
  <GFX>
   <space>I05</space>
   <exterior>snow</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

@@ -1,33 +1,33 @@
 <ssys name="Penn">
  <general>
-  <radius>10000.000000</radius>
+  <radius>10000</radius>
   <spacedust>400</spacedust>
-  <interference>28.575000</interference>
-  <nebula>200.000000</nebula>
+  <interference>28.575</interference>
+  <nebula>200</nebula>
  </general>
  <pos x="1260.502773" y="-96.162785"/>
  <spobs/>
  <jumps>
   <jump target="Rei">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-6855.008509" y="-7280.718256" was_auto="true"/>
   </jump>
   <jump target="Seifer">
-   <hide>0.800000</hide>
-   <pos x="-9859.475917" y="-1670.549200" was_auto="true"/>
+   <hide>0.8</hide>
+   <pos x="-9859.475917" y="-1670.5492" was_auto="true"/>
   </jump>
   <jump target="Sorrow">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="6926.869086" y="-7212.384117" was_auto="true"/>
   </jump>
   <jump target="Capella">
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="9999.826039" y="58.984534" was_auto="true"/>
   </jump>
   <jump target="Teller">
    <pos x="2285.001422" y="9594.053625"/>
-   <hide>0.400000</hide>
+   <hide>0.4</hide>
   </jump>
  </jumps>
  <tags>

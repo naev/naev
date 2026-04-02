@@ -1,5 +1,5 @@
 <spob name="Tenebros">
- <pos x="-10589.331457" y="1224.662260"/>
+ <pos x="-10589.331457" y="1224.66226"/>
  <GFX>
   <space>moon-P00</space>
   <exterior>snow</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>P</class>
   <population>0</population>
-  <hide>0.300000</hide>
+  <hide>0.3</hide>
   <services>
    <land/>
   </services>

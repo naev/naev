@@ -1,5 +1,5 @@
 <spob name="Churchill II">
- <pos x="-22115.888102" y="-9509.989140"/>
+ <pos x="-22115.888102" y="-9509.98914"/>
  <GFX>
   <space>J05</space>
   <exterior>methane</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>J</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

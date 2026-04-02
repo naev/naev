@@ -3,9 +3,9 @@
   <background>haze</background>
   <map_shader>haze_map.frag</map_shader>
   <features>#rHaze (-50% Shield and Shield Regen)#0</features>
-  <radius>22000.000000</radius>
+  <radius>22000</radius>
   <spacedust>400</spacedust>
-  <interference>33.750000</interference>
+  <interference>33.75</interference>
  </general>
  <pos x="160.433402" y="1134.160496"/>
  <spobs>
@@ -19,21 +19,21 @@
  <jumps>
   <jump target="Moordra">
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="21356.559695" y="-5281.794956" was_auto="true"/>
   </jump>
   <jump target="NGC-3371">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-19383.937469" y="10404.949216" was_auto="true"/>
   </jump>
   <jump target="Tandar">
-   <hide>1.000000</hide>
-   <pos x="16112.737264" y="14979.308990" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="16112.737264" y="14979.30899" was_auto="true"/>
   </jump>
  </jumps>
  <stats>
-  <shield_mod>-50.000000</shield_mod>
-  <shield_regen_mod>-50.000000</shield_regen_mod>
+  <shield_mod>-50</shield_mod>
+  <shield_regen_mod>-50</shield_regen_mod>
  </stats>
  <tags>
   <tag>haze</tag>

@@ -1,5 +1,5 @@
 <spob name="UX IIX">
- <pos x="20513.624400" y="-3665.500700"/>
+ <pos x="20513.6244" y="-3665.5007"/>
  <GFX>
   <space>I02</space>
   <exterior>uninhabited-rocky-green-03</exterior>
@@ -7,7 +7,7 @@
  <general>
   <class>I</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services/>
  </general>
 </spob>

@@ -1,6 +1,6 @@
 <spob name="Yetmer-O'rez">
  <lua>yetmer_orez.lua</lua>
- <pos x="2437.704715" y="3090.608330"/>
+ <pos x="2437.704715" y="3090.60833"/>
  <GFX>
   <space>Y00</space>
   <exterior>uninhabited-rocky-red-02</exterior>
@@ -8,7 +8,7 @@
  <general>
   <class>K</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
   </services>

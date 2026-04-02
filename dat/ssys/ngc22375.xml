@@ -3,21 +3,21 @@
   <background>plasmastorm</background>
   <map_shader>plasmastorm_map.frag</map_shader>
   <features>#pPlasma Storm (-50% energy and -50% stress dissipation)#0</features>
-  <radius>15000.000000</radius>
+  <radius>15000</radius>
   <spacedust>400</spacedust>
-  <interference>56.250000</interference>
+  <interference>56.25</interference>
  </general>
  <pos x="1759.623412" y="-627.573891"/>
  <spobs/>
  <jumps>
   <jump target="Toxin">
-   <hide>1.000000</hide>
-   <pos x="-14988.550531" y="-585.963280" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="-14988.550531" y="-585.96328" was_auto="true"/>
   </jump>
  </jumps>
  <stats>
-  <energy_mod>-50.000000</energy_mod>
-  <stress_dissipation>-50.000000</stress_dissipation>
+  <energy_mod>-50</energy_mod>
+  <stress_dissipation>-50</stress_dissipation>
  </stats>
  <tags>
   <tag>plasmastorm</tag>

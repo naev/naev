@@ -1,8 +1,8 @@
 <ssys name="Starlight End">
  <general>
-  <radius>20000.000000</radius>
+  <radius>20000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="753.420636" y="1333.643458"/>
  <spobs>
@@ -13,12 +13,12 @@
  </spobs>
  <jumps>
   <jump target="Taxumi">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="16771.715195" y="-10895.392117" was_auto="true"/>
   </jump>
   <jump target="Treacle">
-   <hide>1.000000</hide>
-   <pos x="-19703.441750" y="-3431.382108" was_auto="true"/>
+   <hide>1</hide>
+   <pos x="-19703.44175" y="-3431.382108" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

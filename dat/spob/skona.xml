@@ -6,14 +6,14 @@
  </GFX>
  <presence>
   <faction>Proteron</faction>
-  <base>400.000000</base>
-  <bonus>50.000000</bonus>
+  <base>400</base>
+  <bonus>50</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>K</class>
   <population>400000</population>
-  <hide>1.000000</hide>
+  <hide>1</hide>
   <services>
    <land/>
    <refuel/>

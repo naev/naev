@@ -1,8 +1,8 @@
 <ssys name="Shikima">
  <general>
-  <radius>14000.000000</radius>
+  <radius>14000</radius>
   <spacedust>400</spacedust>
-  <interference>0.000000</interference>
+  <interference>0</interference>
  </general>
  <pos x="607.303826" y="781.18859"/>
  <spobs>
@@ -15,14 +15,14 @@
  <jumps>
   <jump target="Father's Pride">
    <pos x="-2378.638355" y="-19973.752235"/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
   </jump>
   <jump target="Oberon">
    <pos x="2421.577098" y="19672.769671"/>
-   <hide>0.000000</hide>
+   <hide>0</hide>
   </jump>
   <jump target="Thorndyke">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="12339.794637" y="6612.826044" was_auto="true"/>
   </jump>
  </jumps>

@@ -1,9 +1,9 @@
 <ssys name="Iris">
  <general>
-  <radius>14000.000000</radius>
+  <radius>14000</radius>
   <spacedust>400</spacedust>
-  <interference>35.526400</interference>
-  <nebula volatility="3.200000" hue="270.000000">400.000000</nebula>
+  <interference>35.5264</interference>
+  <nebula volatility="3.2" hue="270">400</nebula>
   <nolanes/>
  </general>
  <pos x="760.930547" y="30.687608"/>
@@ -17,17 +17,17 @@
  <jumps>
   <jump target="Behar">
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-5189.706902" y="-13002.574447" was_auto="true"/>
   </jump>
   <jump target="Ophiuchi">
-   <hide>1.000000</hide>
+   <hide>1</hide>
    <pos x="-13834.957133" y="2143.352772" was_auto="true"/>
   </jump>
   <jump target="Oriantis">
-   <pos x="11528.980570" y="7159.101214"/>
+   <pos x="11528.98057" y="7159.101214"/>
    <hidden/>
-   <hide>1.000000</hide>
+   <hide>1</hide>
   </jump>
  </jumps>
  <tags>
