@@ -34,7 +34,9 @@ directions[3] = _([["The sky! Have you LOOKED at it?"
 
 local function choose_stop ()
    local fct = faction.get("Independent")
-   mem.destplanet, mem.destsys = lmisn.getRandomSpobAtDistance( nil, 1, 3, fct )
+   mem.destplanet, mem.destsys = lmisn.getRandomSpobAtDistance( nil, 1, 3, fct, false, function(s)
+      if not s:tags()["station"] then return true end
+   end )
    if not mem.destplanet then
       -- In case no systems were found.
       mem.destsys = system.get("Apez")
@@ -120,7 +122,7 @@ end
 
 function enter()
    if mem.harrassmsg then
-      hook.timer(3.0, "harrassme")
+      hook.timer(5.0, "harrassme")
       mem.harrassmsg = false
    end
 end

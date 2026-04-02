@@ -37,7 +37,7 @@ local msg_lore = {
 local msg_lore_common = {
    _([["Greetings, traveller. May the Sirichana's wisdom guide you as it guides me."]]),
    _([["House Sirius is officially part of the Empire, but everyone knows that's only true on paper. The Emperor has nothing to say in these systems. We follow the Sirichana, and no-one else."]]),
-   _([["You can easily tell the different echelons apart. Every Sirian citizen and soldier wears clothing appropriate to his or her echelon."]]),
+   _([["You can easily tell the different echelons apart. Every Sirian citizen and soldier wears clothing appropriate to their echelon."]]),
 }
 for k,v in pairs(msg_lore) do
    for i,m in ipairs(msg_lore_common) do
