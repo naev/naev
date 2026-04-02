@@ -12,23 +12,23 @@
  <specific type="turret launcher" secondary="1">
   <delay>2</delay>
   <reload_time>50</reload_time>
-  <amount>8</amount>
+  <amount>14</amount>
   <trackmin>2000</trackmin>
-  <trackmax>8000</trackmax>
+  <trackmax>7000</trackmax>
   <ammo_mass>0.5</ammo_mass>
   <gfx spin="0.3" col_size="15">empgrenade_blue</gfx>
   <sound>grenadefire</sound>
   <sound_hit>empexplode</sound_hit>
   <spfx_shield>EmpBlast-M</spfx_shield>
   <spfx_armour>EmpBlast-M</spfx_armour>
-  <duration blowup="shield">1.3</duration>
+  <duration blowup="shield">1.8</duration>
   <accel>0</accel>
   <speed>500</speed>
   <damage>
    <type>emp</type>
    <penetrate>76</penetrate>
-   <physical>34</physical>
-   <disable>89</disable>
+   <physical>35</physical>
+   <disable>91</disable>
   </damage>
   <radius friendlyfire="1">90</radius>
   <ai>unguided</ai>

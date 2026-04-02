@@ -10,7 +10,7 @@
  </general>
  <specific type="modification">
   <armour>350</armour>
-  <absorb>3</absorb>
+  <absorb>5</absorb>
   <energy_regen_mod>-10</energy_regen_mod>
   <energy_regen_malus>2</energy_regen_malus>
  </specific>

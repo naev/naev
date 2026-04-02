@@ -41,87 +41,111 @@ local ccomm = require "common.comm"
 local pilotai = require "pilotai"
 
 local trigger_ambush, spawn_advisor, next_sys, clear_target_hook -- Forward-declared functions
-local adm_factions, advisor, ambush, target_ship -- Non-persistent state
+local adm_factions, advisor, target_ship -- Non-persistent state
 
 local hailed = {}
+local ambush = {}
 local quotes = {}
 local comms = {}
 
-quotes.clue    = {}
-quotes.clue[1] = _("You ask for information about {plt} and the pilot tells you that this outlaw is supposed to have business in {sys} soon.")
-quotes.clue[2] = _([["{plt}? Yes, I know that scum. I've heard they like to hang around in {sys}. Good luck!"]])
-quotes.clue[3] = _([["{plt} has owed me 500K credits for dozens of cycles and never paid me back! You can probably catch that thief in {sys}."]])
-quotes.clue[4] = _([["If you're looking for {plt}, I would suggest going to {sys} and taking a look there; that's where that outlaw was last time I heard."]])
-quotes.clue[5] = _([["If I was looking for {plt}, I would look in the {sys} system. That's probably a good bet."]])
+quotes.clue = {
+   _("You ask for information about {plt} and the pilot tells you that this outlaw is supposed to have business in {sys} soon."),
+   _([["{plt}? Yes, I know that scum. I've heard they like to hang around in {sys}. Good luck!"]]),
+   _([["{plt} has owed me 500K credits for dozens of cycles and never paid me back! You can probably catch that thief in {sys}."]]),
+   _([["If you're looking for {plt}, I would suggest going to {sys} and taking a look there; that's where that outlaw was last time I heard."]]),
+   _([["If I was looking for {plt}, I would look in the {sys} system. That's probably a good bet."]]),
+}
 
-quotes.dono    = {}
-quotes.dono[1] = _("This person has never heard of {plt}. It seems you will have to ask someone else.")
-quotes.dono[2] = _("This person is also looking for {plt}, but doesn't seem to know anything more than you.")
-quotes.dono[3] = _([["{plt}? Nope, I haven't seen that person in many cycles at this point."]])
-quotes.dono[4] = _([["Sorry, I have no idea where {plt} is."]])
-quotes.dono[5] = _([["Oh, hell no, I stay as far away from {plt} as I possibly can."]])
-quotes.dono[6] = _([["I haven't a clue where {plt} is."]])
-quotes.dono[7] = _([["I don't give a damn about {plt}. Go away."]])
-quotes.dono[8] = _([["{plt}? Don't know, don't care."]])
-quotes.dono[9] = _("When you ask about {plt}, you are promptly told to get lost.")
-quotes.dono[10] = _([["I'd love to get back at {plt} for last cycle, but I haven't seen them in quite some time now."]])
-quotes.dono[11] = _([["I've not seen {plt}, but good luck in your search!"]])
-quotes.dono[12] = _([["Wouldn't revenge be nice? Unfortunately I haven't a clue where {plt} is, though. Sorry!"]])
-quotes.dono[13] = _([["I used to work with {plt}. We haven't seen each other since they stole my favourite ship, though."]])
+quotes.dono = {
+   _("This person has never heard of {plt}. It seems you will have to ask someone else."),
+   _("This person is also looking for {plt}, but doesn't seem to know anything more than you."),
+   _([["{plt}? Nope, I haven't seen that person in many cycles at this point."]]),
+   _([["Sorry, I have no idea where {plt} is."]]),
+   _([["Oh, hell no, I stay as far away from {plt} as I possibly can."]]),
+   _([["I haven't a clue where {plt} is."]]),
+   _([["I don't give a damn about {plt}. Go away."]]),
+   _([["{plt}? Don't know, don't care."]]),
+   _("When you ask about {plt}, you are promptly told to get lost."),
+   _([["I'd love to get back at {plt} for last cycle, but I haven't seen them in quite some time now."]]),
+   _([["I've not seen {plt}, but good luck in your search!"]]),
+   _([["Wouldn't revenge be nice? Unfortunately I haven't a clue where {plt} is, though. Sorry!"]]),
+   _([["I used to work with {plt}. We haven't seen each other since they stole my favourite ship, though."]]),
+}
 
-quotes.money    = {}
-quotes.money[1] = _([["{plt}, you say? Well, I don't offer my services for free. Pay me {credits} and I'll tell you where to look; how does that sound?"]])
-quotes.money[2] = _([["Ah, yes, I know where probably {plt} is. I'll tell you for just {credits}. What do you say?"]])
-quotes.money[3] = _([["{plt}? Of course, I know this pilot. I can tell you where they were last heading, but it'll cost you. {credits}. Deal?"]])
-quotes.money[4] = _([["Ha ha ha! Yes, I've seen {plt} around! Will I tell you where? Heck no! Not unless you pay me, of course... {credits} should be sufficient."]])
-quotes.money[5] = _([["You're looking for {plt}? I tell you what: give me {credits} and I'll tell you. Otherwise, get lost!"]])
+quotes.money = {
+   _([["{plt}, you say? Well, I don't offer my services for free. Pay me {credits} and I'll tell you where to look; how does that sound?"]]),
+   _([["Ah, yes, I know where probably {plt} is. I'll tell you for just {credits}. What do you say?"]]),
+   _([["{plt}? Of course, I know this pilot. I can tell you where they were last heading, but it'll cost you. {credits}. Deal?"]]),
+   _([["Ha ha ha! Yes, I've seen {plt} around! Will I tell you where? Heck no! Not unless you pay me, of course... {credits} should be sufficient."]]),
+   _([["You're looking for {plt}? I tell you what: give me {credits} and I'll tell you. Otherwise, get lost!"]]),
+}
 
-quotes.not_scared    = {}
-quotes.not_scared[1] = _([["As if the likes of you would ever try to fight me!"]])
-quotes.not_scared[2] = _("The pilot simply sighs and cuts the connection.")
-quotes.not_scared[3] = _([["What a lousy attempt to scare me."]])
+quotes.not_scared = {
+   _([["As if the likes of you would ever try to fight me!"]]),
+   _("The pilot simply sighs and cuts the connection."),
+   _([["What a lousy attempt to scare me."]]),
+}
 
-quotes.scared    = {}
-quotes.scared[1] = _("As it becomes clear that you have no problem with blasting a ship to smithereens, the pilot tells you that {plt} is supposed to have business in {sys} soon.")
-quotes.scared[2] = _([["OK, OK, I'll tell you! You can find {plt} in the {sys} system! Leave me alone!"]])
+quotes.scared = {
+   _("As it becomes clear that you have no problem with blasting a ship to smithereens, the pilot tells you that {plt} is supposed to have business in {sys} soon."),
+   _([["OK, OK, I'll tell you! You can find {plt} in the {sys} system! Leave me alone!"]]),
+}
 
-quotes.cold    = {}
-quotes.cold[1] = _("When you ask for information about {plt}, they tell you that this outlaw has already been killed by someone else.")
-quotes.cold[2] = _([["Didn't you hear? That outlaw's dead. Got blown up in an asteroid field is what I heard."]])
-quotes.cold[3] = _([["Ha ha, you're still looking for that outlaw? You're wasting your time; they've already been taken care of."]])
-quotes.cold[4] = _([["Ah, sorry, that target's already dead. Blown to smithereens by a mercenary. I saw the scene, though! It was glorious."]])
+quotes.cold = {
+   _("When you ask for information about {plt}, they tell you that this outlaw has already been killed by someone else."),
+   _([["Didn't you hear? That outlaw's dead. Got blown up in an asteroid field is what I heard."]]),
+   _([["Ha ha, you're still looking for that outlaw? You're wasting your time; they've already been taken care of."]]),
+   _([["Ah, sorry, that target's already dead. Blown to smithereens by a mercenary. I saw the scene, though! It was glorious."]]),
+}
 
-quotes.noinfo    = {}
-quotes.noinfo[1] = _("The pilot asks you to give them one good reason to give you that information.")
-quotes.noinfo[2] = _([["What if I know where your target is and I don't want to tell you, eh?"]])
-quotes.noinfo[3] = _([["Piss off! I won't tell anything to the likes of you!"]])
-quotes.noinfo[4] = _([["And why exactly should I give you that information?"]])
-quotes.noinfo[5] = _([["And why should I help you, eh? Get lost!"]])
+quotes.noinfo = {
+   _("The pilot asks you to give them one good reason to give you that information."),
+   _([["What if I know where your target is and I don't want to tell you, eh?"]]),
+   _([["Piss off! I won't tell anything to the likes of you!"]]),
+   _([["And why exactly should I give you that information?"]]),
+   _([["And why should I help you, eh? Get lost!"]]),
+}
 
-comms.thank    = {}
-comms.thank[1] = _("Hehe, pleasure to deal with you!")
-comms.thank[2] = _("Thank you and goodbye!")
-comms.thank[3] = _("See ya later!")
-comms.thank[4] = _("Haha, good luck!")
+comms.thank = {
+   _("Hehe, pleasure to deal with you!"),
+   _("Thank you and goodbye!"),
+   _("See ya later!"),
+   _("Haha, good luck!"),
+}
 
-comms.not_scared    = {}
-comms.not_scared[1] = _("Mommy, I'm so scared! Har har har!")
-comms.not_scared[2] = _("Haw haw haw! You're ridiculous!")
-comms.not_scared[3] = _("Just come at me if you dare!")
-comms.not_scared[4] = _("You're so pitiful!")
+comms.not_scared = {
+   _("Mommy, I'm so scared! Har har har!"),
+   _("Haw haw haw! You're ridiculous!"),
+   _("Just come at me if you dare!"),
+   _("You're so pitiful!"),
+}
 
-comms.ambush    = {}
-comms.ambush[1] = _("You want to meet {plt}? Well he doesn't want to meet you!")
-comms.ambush[2] = _("Stop asking questions about {plt}!")
-comms.ambush[3] = _("Why are you following {plt}?")
-comms.ambush[4] = _("Quit following {plt}!")
-comms.ambush[5] = _("Your quest for {plt} ends here!")
-comms.ambush[6] = _("You ask too many questions about {plt}!")
-comms.ambush[7] = _("You were not supposed to pick up the trail of {plt}!")
+comms.ambush = {
+   _("You want to meet {plt}? Well they don't want to meet you!"),
+   _("Stop asking questions about {plt}!"),
+   _("Why are you following {plt}?"),
+   _("Quit following {plt}!"),
+   _("Your quest for {plt} ends here!"),
+   _("You ask too many questions about {plt}!"),
+   _("You were not supposed to pick up the trail of {plt}!"),
+}
 
-quotes.pay    = {}
-quotes.pay[1] = _("An officer hands you your pay.")
-quotes.pay[2] = _("No one will miss this outlaw pilot! The bounty has been deposited into your account.")
+quotes.paydead = {
+   _("An officer hands you your well-earned #g{credits}#0."),
+   _("No one will miss this outlaw pilot! The bounty of #g{credits}#0 has been deposited into your account."),
+   _("After verifying that you killed {plt}, an officer hands you your pay of #g{credits}#0."),
+   _("After verifying that {plt} is indeed dead, the tired-looking officer smiles and hands you your pay of #g{credits}#0."),
+   _("The officer seems pleased that {plt} is finally dead. They thank you and promptly hand you your pay of #g{credits}#0."),
+   _("The officer verifies the death of {plt}, goes through the necessary paperwork, and hands you your pay of #g{credits}#0, looking bored the entire time."),
+}
+
+quotes.payalive = {
+   _("An officer takes {plt} into custody and hands you your pay of #g{credits}#0."),
+   _("The officer seems to think your decision to capture {plt} alive was foolish. They carefully take the pirate off your hands, taking precautions you think are completely unnecessary, and then hand you your pay of #g{credits}#0."),
+   _("The officer you deal with seems to especially dislike {plt}. The pirate is taken off your hands and you are handed your pay of #g{credits}#0 without a word."),
+   _("A fearful-looking officer rushes {plt} into a secure hold, pays you the appropriate bounty of #g{credits}#0, and then hurries off."),
+   _("The officer you greet gives you a puzzled look when you say that you captured {plt} alive. Nonetheless, they politely take the pirate off of your hands and hand you your pay of #g{credits}#0."),
+}
 
 mem.osd_msg    = {}  -- 3-part OSD: Search a system, do the deed, get paid.
 
@@ -203,12 +227,12 @@ function create ()
 
    -- Set mission details
    misn.setTitle(prefix..fmt.f( _("Seek And Destroy Mission, starting in {sys}"), {sys=mem.mysys[1]} ) )
-   local desc = fmt.f(_([[The {target_faction} pilot known as {plt} is wanted dead or alive by {paying_faction} authorities. They were last seen in the {sys} system.
+   local desc = fmt.f(_([[The {target_faction} pilot known as {plt} is wanted by the authorities, dead or alive. Any citizen who can find and neutralize {plt} by any means necessary will be given {credits} as a reward. {paying_faction} authorities have lost track of this pilot in the {sys} system. It is very likely that the target is no longer there, but that system may be a good place to start an investigation.
 
 #nTarget:#0 {plt} ({shipclass}-class ship)
 #nWanted:#0 Dead or Alive
 #nLast Seen:#0 {sys} system]]),
-         {target_faction=mem.target_faction, plt=mem.name, paying_faction=mem.paying_faction, sys=mem.mysys[1], shipclass=_(ship.get(mem.tgtship):classDisplay())} )
+         {target_faction=mem.target_faction, plt=mem.name, credits=fmt.credits(mem.credits), paying_faction=mem.paying_faction, sys=mem.mysys[1], shipclass=_(ship.get(mem.tgtship):classDisplay())} )
    if not mem.paying_faction:static() then
       desc = desc.."\n"..fmt.f(_([[#nReputation Gained:#0 {fct}]]),
          {fct=mem.paying_faction})
@@ -225,8 +249,6 @@ function accept ()
    mem.increment = false
    mem.last_sys = system.cur()
 
-   vntk.msg( _("Find and Kill a pilot"), fmt.f( _("{plt} is a notorious {target_faction} pilot who is wanted by the authorities, dead or alive. Any citizen who can find and neutralize {plt} by any means necessary will be given {credits} as a reward. {paying_faction} authorities have lost track of this pilot in the {sys} system. It is very likely that the target is no longer there, but this system may be a good place to start an investigation."),
-      {plt=mem.name, target_faction=mem.target_faction, credits=fmt.credits(mem.credits), paying_faction=mem.paying_faction, sys=mem.mysys[1]} ) )
    mem.jumphook = hook.jumpin( "enter" )
    mem.hailhook = hook.hail( "hail" )
    mem.landhook = hook.land( "land" )
@@ -420,7 +442,7 @@ function hail( target )
    local mmem = mem -- have to use auxiliary variable here to set the upvalue
    local nextsys = mmem.mysys[mmem.cursys+1]
    ccomm.customComm( target, function ()
-      if mmem.stage ~= 0 or system.cur() ~= mmem.mysys[mmem.cursys] or inlist( hailed, target )then
+      if mmem.stage ~= 0 or system.cur() ~= mmem.mysys[mmem.cursys] or inlist( hailed, target ) or inlist( ambush, target ) then
          return nil -- Past first stage
       end
       return fmt.f(_("Ask about {plt} (#bSeek And Destroy#0)"),
@@ -637,8 +659,12 @@ function land()
 
    -- Player wants to be paid
    elseif spob.cur():faction() == mem.paying_faction and mem.stage == 4 then
-      lmisn.sfxVictory()
-      vntk.msg( _("Good work, pilot!"), quotes.pay[rnd.rnd(1,#quotes.pay)].."\n\n"..fmt.reward(mem.credits) )
+      lmisn.sfxMoney()
+      if mem.alive then
+         vntk.msg( _("Mission Completed"), fmt.f(quotes.payalive[rnd.rnd( #quotes.payalive )], { credits=fmt.credits(mem.credits), plt=mem.name } ) )
+      else
+         vntk.msg( _("Mission Completed"), fmt.f(quotes.paydead[rnd.rnd( #quotes.paydead )], { credits=fmt.credits(mem.credits), plt=mem.name } ) )
+      end
       player.pay( mem.credits )
       local hit = rnd.rnd(20,40)
       mem.paying_faction:hit( hit )
@@ -747,7 +773,8 @@ function target_board( p )
 
    vntk.msg( _("Target captured"), _("You board the ship and, after a short but intense firefight, are able to take the wanted outlaw alive. Time to hand them in to the authorities.") )
    p:setDisable() -- Permanently disable
-   local c = commodity.new( N_("Wanted Outlaw"), N_("A wanted outlaw you captured.") )
+   mem.alive = true
+   local c = commodity.new( mem.name, N_("A wanted outlaw you captured.") )
    misn.cargoAdd( c, 0 )
 
    misn.osdActive( 3 )
