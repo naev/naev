@@ -190,6 +190,7 @@ grep -v ' virtual$'                                                            |
 pmsg "stellarwind road"                                                        |
 "$DIR"/graphmod_stellarwind_road.py                                            |
 "$DIR"/reposition -e -q -w0 "yarn" "griffin" "ngc8338"                         |
+"$DIR"/graphmod_sinensis.py                                                |
 if [ -z "$NOPIC" ] ;                                                      then
    pmsg "" |
    tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_swr')
