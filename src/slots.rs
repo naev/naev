@@ -35,6 +35,8 @@ pub struct SlotProperty {
    pub tags: Vec<String>,
    // C stuff to remove in the future
    #[seeded(skip, default)]
+   cname: CString,
+   #[seeded(skip, default)]
    cdisplay: CString,
    #[seeded(skip, default)]
    cdescription: CString,
@@ -72,6 +74,7 @@ impl SlotProperty {
       let mut sp: SlotProperty =
          SlotProperty::deserialize_seeded(texde, toml::de::Deserializer::parse(&data)?)?;
       // Have to post-process the C stuff for now
+      sp.cname = CString::new(sp.name.as_str())?;
       sp.cdisplay = CString::new(sp.display.as_str())?;
       sp.cdescription = CString::new(sp.description.as_str())?;
       sp.ctags = ArrayCString::new(&sp.tags)?;
@@ -215,6 +218,14 @@ pub extern "C" fn sp_get(name: *const c_char) -> c_int {
             0
          }
       }
+   }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sp_name(sp: c_int) -> *const c_char {
+   match get_c(sp) {
+      Some(prop) => prop.cname.as_ptr(),
+      None => std::ptr::null(),
    }
 }
 
