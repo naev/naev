@@ -318,6 +318,7 @@ impl CommodityRef {
    }
 }
 
+//pub static COMMODITIES: LazyLock<Mutex<Vec<
 pub static COMMODITIES: LazyLock<RwLock<SlotMap<CommodityRef, Commodity>>> =
    LazyLock::new(|| RwLock::new(SlotMap::with_key()));
 
