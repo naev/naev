@@ -79,35 +79,38 @@ impl Gatherable {
 
       let q = unsafe { naevc::pilot_cargoAdd(p, self.commodity.as_ffi(), self.quantity, 0) };
       if q > 0 {
-         let msg = self.commodity.call(|c| {
-            formatx!(
-               ngettext(
-                  "{} tonne of {} gathered.",
-                  "{} tonnes of {} gathered.",
-                  q as u64
-               ),
-               q,
-               c.name()
-            )
-            .unwrap_or_else(|e| {
-               warn_err!(e);
-               "broken  message".to_string()
-            })
-         });
-         match msg {
-            Ok(msg) => player::message(&msg),
-            Err(e) => warn_err!(e),
-         };
+         if isplayer {
+            let msg = self.commodity.call(|c| {
+               formatx!(
+                  ngettext(
+                     "{} tonne of {} gathered.",
+                     "{} tonnes of {} gathered.",
+                     q as u64
+                  ),
+                  q,
+                  c.name()
+               )
+               .unwrap_or_else(|e| {
+                  warn_err!(e);
+                  "broken  message".to_string()
+               })
+            });
+            match msg {
+               Ok(msg) => player::message(&msg),
+               Err(e) => warn_err!(e),
+            };
 
-         let hparam = [
-            HookParam::Commodity(self.commodity),
-            HookParam::Number(q as f64),
-         ];
-         crate::hook::run_param_deferred("gather", &hparam);
+            let hparam = [
+               HookParam::Commodity(self.commodity),
+               HookParam::Number(q as f64),
+            ];
+            crate::hook::run_param_deferred("gather", &hparam);
 
-         if unsafe { naevc::pilot_cargoFree(p) < 1 } && isplayer {
-            player::message(gettext("Your ship's cargo is full."));
+            if unsafe { naevc::pilot_cargoFree(p) < 1 } {
+               player::message(gettext("Your ship's cargo is full."));
+            }
          }
+
          return true;
       } else if isplayer && NOSCOOP_TIMER.load(Ordering::Relaxed) > NOSCOOP_DELAY {
          NOSCOOP_TIMER.store(0.0, Ordering::Relaxed);
