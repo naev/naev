@@ -122,7 +122,7 @@ end
 
 function enter()
    if mem.harrassmsg then
-      hook.timer(5.0, "harrassme")
+      hook.timer(3.0, "harrassme")
       mem.harrassmsg = false
    end
 end

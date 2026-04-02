@@ -78,12 +78,12 @@ function create ()
 end
 
 function broadcast ()
-   -- Ship broadcasts an SOS every 10 seconds, until boarded or destroyed.
+   -- Ship broadcasts an SOS every 15 seconds, until boarded or destroyed.
    if not derelict:exists() then
       return
    end
    derelict:broadcast( fmt.f(_("SOS. This is {plt}. We are shipwrecked. Please #bboard#0 us by #bdouble-clicking#0 on our ship."), {plt=shipname}), true )
-   timer_delay = timer_delay or 10
+   timer_delay = timer_delay or 15
    timer_delay = timer_delay + 5
    bctimer = hook.timer(timer_delay, "broadcast")
 end
