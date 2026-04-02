@@ -186,7 +186,7 @@ end
 
 local cb_land = {
    _("A shifty, hasty bunch of dockworkers unload the {cargo} from your ship. One of them hands you a credit stick worth #g{credits}#0 as they make their leave."),
-   _("You drop off the containers of {cargo} at an agreed-upon location and await your payment. After some time, you recieve an anonymous transfer of #g{credits}#0."),
+   _("You drop off the containers of {cargo} at an agreed-upon location and await your payment. After some time, you receive an anonymous transfer of #g{credits}#0."),
    _("The {cargo} packages are mixed in with legitimate deliveries to be handled by a local agency. The overseer hands you #g{credits}#0 of their bribe."),
 }
 
