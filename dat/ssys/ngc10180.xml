@@ -12,7 +12,7 @@
   <spob_virtual>Pirate All Unpresence (Range 1)</spob_virtual>
  </spobs>
  <jumps>
-  <jump target="NGC-2836">
+  <jump target="Sinensis">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

@@ -11,6 +11,10 @@
   <spob>Teapot</spob>
  </spobs>
  <jumps>
+  <jump target="NGC-10180">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="NGC-10907">
    <autopos/>
    <hide>1.000000</hide>
