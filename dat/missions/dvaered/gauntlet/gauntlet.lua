@@ -169,30 +169,30 @@ end
 --[[
    Common functions
 --]]
-local function enemy_out( p )
-   local idx = nil
+local function enemy_out( _p )
+   local n_enemies = {}
    for k,v in ipairs(enemies) do
-      if v==p then
-         idx=k
-         break
+      if v:exists() and not v:disabled() then
+         table.insert( n_enemies, v )
       end
    end
-   if idx then
-      table.remove( enemies, idx )
-   end
+   enemies = n_enemies
+
    if mem.wave_started and #enemies==0 and not player_lost_round then
       mem.wave_started = false
       mem.all_enemies_dead()
    end
 end
 function p_disabled( p )
-   p:setDisable() -- don't let them come back
+   p:setDisable( false ) -- don't let them come back
    p:setInvisible( true ) -- can't target
    p:setInvincible( true ) -- just stays there
-   enemy_out( p )
    for k,e in ipairs(p:followers()) do
-      e:setDisable()
+      if e:mothership() then
+         e:setDisable()
+      end
    end
+   enemy_out( p )
 end
 function p_death( p )
    enemy_out( p )
