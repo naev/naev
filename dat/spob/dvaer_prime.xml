@@ -1,6 +1,6 @@
 <spob name="Dvaer Prime">
  <lua>highclass.lua</lua>
- <pos x="-16120.928515" y="-12212.790161"/>
+ <pos x="-13105.427728" y="-15404.036605"/>
  <GFX>
   <space>L00</space>
   <exterior>mining2</exterior>

@@ -6,19 +6,19 @@
   <nebula volatility="10.000000" hue="240.000000">400.000000</nebula>
   <nolanes/>
  </general>
- <pos x="1013.038352" y="347.593066"/>
+ <pos x="1170.054641" y="486.303268"/>
  <spobs/>
  <jumps>
   <jump target="Cleai">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-18470.193458" y="-9992.594938" was_auto="true"/>
   </jump>
   <jump target="Leporis">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="20757.082080" y="3184.893011" was_auto="true"/>
   </jump>
   <jump target="Scholz's Star">
-   <pos x="-17733.361636" y="2221.374552"/>
+   <pos x="-14549.803803" y="10378.334600"/>
    <hidden/>
    <hide>1.000000</hide>
   </jump>

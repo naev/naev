@@ -1,6 +1,6 @@
 <spob name="Sander">
  <lua>lowclass.lua</lua>
- <pos x="-3259.936744" y="-2660.712975"/>
+ <pos x="-3687.186282" y="-2027.618905"/>
  <GFX>
   <space>O01</space>
   <exterior>oceanic</exterior>

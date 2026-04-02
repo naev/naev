@@ -1,6 +1,6 @@
 <spob name="Warden's End">
  <lua>pirate_clanworld.lua</lua>
- <pos x="19365.865907" y="7882.413669"/>
+ <pos x="15847.661042" y="13638.945966"/>
  <GFX>
   <space>station-round3</space>
   <exterior>scrapped_station</exterior>

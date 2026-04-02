@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="983.843750" y="-330.960503"/>
+ <pos x="1191.208143" y="-250.077472"/>
  <spobs>
   <spob>Coral Cloister</spob>
   <spob>Ohon</spob>
@@ -12,17 +12,17 @@
  </spobs>
  <jumps>
   <jump target="Atlantis">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-13435.695605" y="10415.473277" was_auto="true"/>
   </jump>
   <jump target="Neon">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="15267.642301" y="-7476.569972" was_auto="true"/>
   </jump>
   <jump target="Rei">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="4561.799089" y="16376.507230" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

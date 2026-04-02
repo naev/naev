@@ -4,7 +4,7 @@
   <spacedust>500</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="191.277745" y="248.354670"/>
+ <pos x="402.430046" y="386.967423"/>
  <spobs>
   <spob>Caladan</spob>
   <spob>Delta Pavonis I</spob>
@@ -17,15 +17,15 @@
  </spobs>
  <jumps>
   <jump target="Alteris">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-14416.076640" y="12756.928873" was_auto="true"/>
   </jump>
   <jump target="Cygnus">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-18392.477366" y="-5681.485397" was_auto="true"/>
   </jump>
   <jump target="Holly">
-   <pos x="-15689.613962" y="-21174.412562"/>
+   <pos x="-19769.799504" y="-17426.266415"/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

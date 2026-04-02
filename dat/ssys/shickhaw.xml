@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="876.009118" y="-426.557604"/>
+ <pos x="1034.489278" y="-311.531447"/>
  <spobs>
   <spob>Avoss</spob>
   <spob>Kotori</spob>
@@ -15,16 +15,16 @@
  </spobs>
  <jumps>
   <jump target="Atlantis">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="19152.177883" y="25008.880069" was_auto="true"/>
   </jump>
   <jump target="Brimstone">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-31277.501256" y="-3737.367406" was_auto="true"/>
   </jump>
   <jump target="Gyrios">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="13703.898003" y="-28362.883836" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

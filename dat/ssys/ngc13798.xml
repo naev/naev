@@ -8,31 +8,31 @@
   <interference>33.750000</interference>
   <nolanes/>
  </general>
- <pos x="-8.938030" y="922.775840"/>
+ <pos x="25.603795" y="1324.56002"/>
  <spobs>
   <spob>P-1587</spob>
  </spobs>
  <jumps>
   <jump target="NGC-3371">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="7417.003603" y="-13037.946830" was_auto="true"/>
   </jump>
   <jump target="NGC-9654">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="696.474160" y="14983.822067" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeB-standard</group>
    <radius>6000.000000</radius>
-   <pos x="2716.142279" y="-5167.295068"/>
+   <pos x="3787.978805" y="-4441.799608"/>
    <density>0.700000</density>
   </asteroid>
   <asteroid>
    <group>typeB-rich</group>
    <radius>4000.000000</radius>
-   <pos x="66.247373" y="2782.389652"/>
+   <pos x="-548.470333" y="2728.600590"/>
   </asteroid>
  </asteroids>
  <stats>

@@ -1,6 +1,6 @@
 <spob name="Trevis Cloister">
  <lua>sirius_mil_restricted.lua</lua>
- <pos x="3123.114204" y="2440.546171"/>
+ <pos x="3806.782333" y="1103.864217"/>
  <GFX>
   <space>station-fleetbase2</space>
   <exterior>station05</exterior>

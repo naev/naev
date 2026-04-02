@@ -1,6 +1,6 @@
 <spob name="Wagenni">
  <lua>lowclass.lua</lua>
- <pos x="-5791.124494" y="-1722.738390"/>
+ <pos x="-5438.810839" y="2631.404020"/>
  <GFX>
   <space>moon-G00</space>
   <exterior>uninhabited-rocky-airless-01</exterior>

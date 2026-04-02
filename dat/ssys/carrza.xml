@@ -6,25 +6,25 @@
   <nebula volatility="3.500000" hue="290.000000">500.000000</nebula>
   <nolanes/>
  </general>
- <pos x="472.914817" y="7.335556"/>
+ <pos x="745.100298" y="165.314125"/>
  <spobs>
   <spob>Wormhole Carrza</spob>
   <spob_virtual>Traders Society Unpresence</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Barnard's Star">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="-4326.113233" y="-14362.616206" was_auto="true"/>
   </jump>
   <jump target="Midoros">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="14678.381807" y="-3089.515739" was_auto="true"/>
   </jump>
   <jump target="Vega">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-7407.085730" y="13043.583900" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

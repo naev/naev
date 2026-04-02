@@ -1,6 +1,6 @@
 <spob name="Saraab">
  <lua>lowclass.lua</lua>
- <pos x="12706.429531" y="4420.183280"/>
+ <pos x="13279.525807" y="-2155.357507"/>
  <GFX>
   <space>moon-G01</space>
   <exterior>mining_shaft</exterior>

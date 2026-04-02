@@ -5,22 +5,22 @@
   <interference>13.235288</interference>
   <nebula hue="250.000000">150.000000</nebula>
  </general>
- <pos x="600.339923" y="441.950048"/>
+ <pos x="772.445192" y="851.731103"/>
  <spobs>
   <spob>Charred</spob>
  </spobs>
  <jumps>
   <jump target="Octantis">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-13826.877008" y="-7541.881210" was_auto="true"/>
   </jump>
   <jump target="Percival">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="15015.703880" y="4753.013462" was_auto="true"/>
   </jump>
   <jump target="Point Zero">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-15102.178966" y="4470.647656" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

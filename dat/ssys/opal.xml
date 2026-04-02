@@ -7,7 +7,7 @@
   <spacedust>400</spacedust>
   <interference>34.000000</interference>
  </general>
- <pos x="193.309093" y="930.886819"/>
+ <pos x="223.883235" y="1373.835415"/>
  <spobs>
   <spob>Edorn</spob>
   <spob>Opal I</spob>
@@ -15,12 +15,12 @@
  </spobs>
  <jumps>
   <jump target="Hadosh">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="12476.561887" y="-6351.015940" was_auto="true"/>
   </jump>
   <jump target="Sleuth">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-1166.706604" y="13951.300860" was_auto="true"/>
   </jump>
  </jumps>
  <stats>

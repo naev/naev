@@ -7,7 +7,7 @@
   <spacedust>400</spacedust>
   <interference>22.500000</interference>
  </general>
- <pos x="1431.223046" y="-200.745584"/>
+ <pos x="1664.074201" y="-353.88153"/>
  <spobs>
   <spob>Gorgate</spob>
   <spob>Mirror I</spob>
@@ -21,12 +21,12 @@
  </spobs>
  <jumps>
   <jump target="NGC-12261">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="3748.608043" y="26738.510387" was_auto="true"/>
   </jump>
   <jump target="Ulysses">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-15181.649362" y="-22327.505965" was_auto="true"/>
   </jump>
  </jumps>
  <stats>

@@ -4,27 +4,27 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="1101.458916" y="414.424765"/>
+ <pos x="1287.839571" y="437.740822"/>
  <spobs>
   <spob>Castrum Sigma</spob>
   <spob>Protera Sigma</spob>
  </spobs>
  <jumps>
   <jump target="Apik">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="9451.089789" y="-11648.042830" was_auto="true"/>
   </jump>
   <jump target="Haered">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-12810.298752" y="7803.604671" was_auto="true"/>
   </jump>
   <jump target="Hystera">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="14730.582848" y="2830.181784" was_auto="true"/>
   </jump>
   <jump target="Telika">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-7494.761812" y="-12993.403917" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

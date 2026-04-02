@@ -1,6 +1,6 @@
 <spob name="Wigheta">
  <lua>soromid_mil_restricted.lua</lua>
- <pos x="997.580582" y="15496.946610"/>
+ <pos x="2375.927209" y="15346.188163"/>
  <GFX>
   <space>O00</space>
   <exterior>aquatic</exterior>

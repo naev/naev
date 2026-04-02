@@ -6,7 +6,7 @@
   <nebula volatility="16.200000" hue="280.000000">600.000000</nebula>
   <nolanes/>
  </general>
- <pos x="869.721121" y="6.515483"/>
+ <pos x="1156.32182" y="235.446836"/>
  <spobs>
   <spob>Coran</spob>
   <spob>HS-224</spob>
@@ -14,12 +14,12 @@
  </spobs>
  <jumps>
   <jump target="Aet">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-6815.369545" y="11070.263680" was_auto="true"/>
   </jump>
   <jump target="Antares">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-11468.665453" y="-6121.250910" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

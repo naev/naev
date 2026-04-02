@@ -8,7 +8,7 @@
   <interference>33.750000</interference>
   <nolanes/>
  </general>
- <pos x="141.941291" y="1157.030269"/>
+ <pos x="21.586522" y="1713.090972"/>
  <spobs>
   <spob>P-9832</spob>
   <spob_virtual>Independent All Unpresence</spob_virtual>
@@ -17,8 +17,8 @@
  </spobs>
  <jumps>
   <jump target="NGC-8468">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="9585.702832" y="-11537.517116" was_auto="true"/>
   </jump>
  </jumps>
  <stats>

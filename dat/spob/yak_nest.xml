@@ -1,6 +1,6 @@
 <spob name="Yak Nest">
  <lua>soromid_mil_restricted.lua</lua>
- <pos x="4560.027486" y="-14530.257072"/>
+ <pos x="12186.353978" y="-9133.181152"/>
  <GFX>
   <space>station-fleetbase2</space>
   <exterior>station01</exterior>

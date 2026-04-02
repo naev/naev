@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="-535.683491" y="-513.460093"/>
+ <pos x="-428.996595" y="-429.007506"/>
  <spobs>
   <spob>Corinth 1</spob>
   <spob>Corinth 2</spob>
@@ -12,17 +12,17 @@
  </spobs>
  <jumps>
   <jump target="Kohler">
-   <pos x="-14862.362492" y="-13375.225347"/>
+   <pos x="-9057.286396" y="-17825.600552"/>
    <hidden/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Orion">
-   <pos x="4.897009" y="19024.301455"/>
+   <pos x="-6837.715129" y="17753.020070"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Procyon">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="11251.900068" y="16534.652849" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

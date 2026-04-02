@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="940.017093" y="-463.401905"/>
+ <pos x="1080.037641" y="-391.850957"/>
  <spobs>
   <spob>Gyrios II</spob>
   <spob>Gyrios IV</spob>
@@ -15,17 +15,17 @@
  </spobs>
  <jumps>
   <jump target="Fulcrum">
-   <pos x="29692.320869" y="-16918.303096"/>
+   <pos x="25656.315050" y="-22574.684854"/>
    <hidden/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Karman">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-5086.487229" y="-20632.259877" was_auto="true"/>
   </jump>
   <jump target="Shickhaw">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-15891.733989" y="14107.277937" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

@@ -7,7 +7,7 @@
   <spacedust>400</spacedust>
   <interference>33.750000</interference>
  </general>
- <pos x="115.020532" y="890.025090"/>
+ <pos x="129.111061" y="1324.077197"/>
  <spobs>
   <spob>Ariadus II</spob>
   <spob>Ariadus IV</spob>
@@ -21,12 +21,12 @@
  </spobs>
  <jumps>
   <jump target="Amatiri">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="4024.972849" y="19590.803800" was_auto="true"/>
   </jump>
   <jump target="Tandar">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="14325.020774" y="-13956.854223" was_auto="true"/>
   </jump>
  </jumps>
  <stats>

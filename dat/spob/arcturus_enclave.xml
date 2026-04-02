@@ -1,6 +1,6 @@
 <spob name="Arcturus Enclave">
  <lua>empire_mil_restricted.lua</lua>
- <pos x="11296.801928" y="6891.698934"/>
+ <pos x="13031.651563" y="2299.849023"/>
  <GFX>
   <space>station-fleetbase2</space>
   <exterior>station03</exterior>

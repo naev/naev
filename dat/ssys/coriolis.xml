@@ -4,25 +4,25 @@
   <spacedust>300</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="60.577156" y="376.841468"/>
+ <pos x="299.740662" y="545.18115"/>
  <spobs/>
  <jumps>
   <jump target="Alteris">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="2835.859422" y="-13709.773934" was_auto="true"/>
   </jump>
   <jump target="Dune">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="13870.116833" y="-1902.592707" was_auto="true"/>
   </jump>
   <jump target="Gamel">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="8048.311832" y="11455.333982" was_auto="true"/>
   </jump>
   <jump target="Rockbed">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-13400.067214" y="4054.404846" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

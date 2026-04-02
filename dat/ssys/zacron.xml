@@ -5,26 +5,26 @@
   <interference>18.000000</interference>
   <nebula hue="240.000000">100.000000</nebula>
  </general>
- <pos x="470.179478" y="-444.237464"/>
+ <pos x="657.150112" y="-161.963985"/>
  <spobs>
   <spob_virtual>Pirate Small</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Raelid">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-1895.188969" y="-17397.076155" was_auto="true"/>
   </jump>
   <jump target="Sonas">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-112.272601" y="17499.639849" was_auto="true"/>
   </jump>
   <jump target="Toaxis">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="17002.193115" y="-4144.324946" was_auto="true"/>
   </jump>
   <jump target="Tuoladis">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-14551.373688" y="-9721.498021" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

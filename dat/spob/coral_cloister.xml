@@ -1,6 +1,6 @@
 <spob name="Coral Cloister">
  <lua>sirius_mil_restricted.lua</lua>
- <pos x="-10376.000424" y="3007.726705"/>
+ <pos x="-6063.906541" y="8940.740583"/>
  <GFX>
   <space>station-fleetbase</space>
   <exterior>station03</exterior>

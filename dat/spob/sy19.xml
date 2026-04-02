@@ -1,6 +1,6 @@
 <spob name="SY-19">
  <lua>thurion.lua</lua>
- <pos x="3730.809247" y="-5567.515338"/>
+ <pos x="589.298526" y="6675.993703"/>
  <GFX>
   <space>003</space>
   <exterior>station03</exterior>

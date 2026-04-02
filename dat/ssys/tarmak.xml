@@ -4,22 +4,22 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="1332.462859" y="-775.057787"/>
+ <pos x="1351.171025" y="-871.813397"/>
  <spobs>
   <spob_virtual>Pirate Small</spob_virtual>
  </spobs>
  <jumps>
   <jump target="An'ku">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-4263.900232" y="-13334.884881" was_auto="true"/>
   </jump>
   <jump target="Gilligan's Memory">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="12986.685276" y="5229.340830" was_auto="true"/>
   </jump>
   <jump target="Modus Manis">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-12567.437613" y="6169.239162" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

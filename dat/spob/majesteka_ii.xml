@@ -1,6 +1,6 @@
 <spob name="Majesteka II">
  <lua>lowclass.lua</lua>
- <pos x="-5823.896952" y="1664.414834"/>
+ <pos x="-5992.911972" y="-879.237474"/>
  <GFX>
   <space>K05</space>
   <exterior>mining_shaft</exterior>

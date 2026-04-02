@@ -7,7 +7,7 @@
   <spacedust>400</spacedust>
   <interference>33.750000</interference>
  </general>
- <pos x="324.251053" y="1051.556400"/>
+ <pos x="372.043998" y="1510.63263"/>
  <spobs>
   <spob>Abacus</spob>
   <spob>Adius</spob>
@@ -20,8 +20,8 @@
  </spobs>
  <jumps>
   <jump target="Malebolge">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="11268.383142" y="-20050.524715" was_auto="true"/>
   </jump>
  </jumps>
  <stats>

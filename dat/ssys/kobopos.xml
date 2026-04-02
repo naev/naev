@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="-315.679652" y="-21.029299"/>
+ <pos x="-300.05337" y="127.441841"/>
  <spobs>
   <spob>Dun Hill</spob>
   <spob>Kayel</spob>
@@ -14,30 +14,30 @@
  </spobs>
  <jumps>
   <jump target="Jade">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="13751.529930" y="14522.238965" was_auto="true"/>
   </jump>
   <jump target="Klintus">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-11065.126130" y="16660.221598" was_auto="true"/>
   </jump>
   <jump target="Logania">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="13041.977883" y="-15162.678288" was_auto="true"/>
   </jump>
   <jump target="Senara">
-   <autopos/>
    <hide>0.500000</hide>
+   <pos x="-18981.880008" y="6299.859629" was_auto="true"/>
   </jump>
  </jumps>
  <waypoints>
-  <waypoint x="1000.000000" y="1600.000000">finale1_B</waypoint>
-  <waypoint x="5000.000000" y="2000.000000">finale1_C1</waypoint>
-  <waypoint x="12000.000000" y="3000.000000">finale1_C2</waypoint>
-  <waypoint x="10000.000000" y="11000.000000">finale1_C3</waypoint>
-  <waypoint x="3000.000000" y="8000.000000">finale1_C4</waypoint>
-  <waypoint x="3000.000000" y="2600.000000">finale1_D1</waypoint>
-  <waypoint x="-7500.000000" y="14000.000000">finale1_D2</waypoint>
-  <waypoint x="18000.000000" y="6000.000000">finale1_E</waypoint>
+  <waypoint x="1082.439913" y="1545.420277">finale1_B</waypoint>
+  <waypoint x="5097.901392" y="1735.338985">finale1_C1</waypoint>
+  <waypoint x="12140.673888" y="2367.284845">finale1_C2</waypoint>
+  <waypoint x="10562.483991" y="10461.067437">finale1_C3</waypoint>
+  <waypoint x="3414.945436" y="7831.867444">finale1_C4</waypoint>
+  <waypoint x="3132.077076" y="2439.281284">finale1_D1</waypoint>
+  <waypoint x="-6756.340586" y="14373.651654">finale1_D2</waypoint>
+  <waypoint x="18289.585376" y="5048.867868">finale1_E</waypoint>
  </waypoints>
 </ssys>

@@ -1,7 +1,7 @@
 <spob name="Hypergate Dvaer">
  <display>Construction</display>
  <marker>spobmarker_triangle</marker>
- <pos x="-11138.452932" y="-1797.573385"/>
+ <pos x="-10488.051936" y="-4158.986699"/>
  <GFX>
   <space>hypergate_early_construction_stage</space>
  </GFX>

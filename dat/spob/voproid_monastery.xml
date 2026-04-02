@@ -1,6 +1,6 @@
 <spob name="Voproid Monastery">
  <lua>sirius_mil_restricted.lua</lua>
- <pos x="8721.803983" y="-1214.023998"/>
+ <pos x="7569.932327" y="-4498.871362"/>
  <GFX>
   <space>station-battlestation</space>
   <exterior>station04</exterior>

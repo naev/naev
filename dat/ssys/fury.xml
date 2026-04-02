@@ -5,26 +5,26 @@
   <interference>25.000000</interference>
   <nolanes/>
  </general>
- <pos x="91.638645" y="533.481155"/>
+ <pos x="316.277626" y="707.252788"/>
  <spobs>
   <spob>Fury I</spob>
  </spobs>
  <jumps>
   <jump target="Bastion">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="13414.357964" y="-11238.549746" was_auto="true"/>
   </jump>
   <jump target="New Haven">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="-12213.299654" y="12533.367925" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeB-rich</group>
    <radius>2500.000000</radius>
-   <pos x="-6433.972210" y="554.652777"/>
+   <pos x="126.441103" y="6456.597459"/>
    <density>1.500000</density>
   </asteroid>
   <exclusion>

@@ -4,20 +4,20 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="-748.620288" y="-666.007216"/>
+ <pos x="-697.132065" y="-736.511086"/>
  <spobs/>
  <jumps>
   <jump target="NGC-5838">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-13937.051510" y="-5546.043202" was_auto="true"/>
   </jump>
   <jump target="Stained Soul">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="14673.457492" y="-3112.819495" was_auto="true"/>
   </jump>
   <jump target="Urdads">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="13503.032695" y="6532.082977" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

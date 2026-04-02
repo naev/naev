@@ -1,6 +1,6 @@
 <spob name="Tanulwa">
  <lua>soromid_mil_restricted.lua</lua>
- <pos x="-3444.863379" y="-1987.421180"/>
+ <pos x="-3211.463574" y="-2345.938694"/>
  <GFX>
   <space>moon-L00</space>
   <exterior>mining6</exterior>

@@ -1,6 +1,6 @@
 <spob name="Waldar">
  <lua>highclass.lua</lua>
- <pos x="6726.246120" y="1637.860561"/>
+ <pos x="-781.038024" y="6878.586605"/>
  <GFX>
   <space>M02</space>
   <exterior>forest2</exterior>

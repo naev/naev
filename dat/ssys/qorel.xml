@@ -5,36 +5,36 @@
   <interference>22.000000</interference>
   <nolanes/>
  </general>
- <pos x="92.154006" y="-191.091895"/>
+ <pos x="152.737411" y="9.008135"/>
  <spobs>
   <spob>Qorel I</spob>
   <spob>Qorellia</spob>
  </spobs>
  <jumps>
   <jump target="Doowa">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-10449.743942" y="22159.712352" was_auto="true"/>
   </jump>
   <jump target="Eneguoz">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="-2624.826324" y="24358.987802" was_auto="true"/>
   </jump>
   <jump target="Trask">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-7020.790466" y="-23472.505218" was_auto="true"/>
   </jump>
   <jump target="Uhriabi">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="-17034.166600" y="-17609.292098" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-standard</group>
    <radius>14000.000000</radius>
-   <pos x="0.000000" y="0.000000"/>
+   <pos x="0" y="0"/>
    <density>0.800000</density>
   </asteroid>
   <exclusion>

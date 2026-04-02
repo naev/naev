@@ -1,6 +1,6 @@
 <spob name="Tori">
  <lua>highclass.lua</lua>
- <pos x="24881.073332" y="32050.673926"/>
+ <pos x="38612.615962" y="12465.127266"/>
  <GFX>
   <space>M05</space>
   <exterior>forest</exterior>

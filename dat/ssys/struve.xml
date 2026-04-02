@@ -4,20 +4,20 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="472.164815" y="466.685756"/>
+ <pos x="692.202575" y="693.280845"/>
  <spobs/>
  <jumps>
   <jump target="Cygni">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="5618.811717" y="-13907.873844" was_auto="true"/>
   </jump>
   <jump target="Oberon">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-14951.498403" y="1205.278177" was_auto="true"/>
   </jump>
   <jump target="Octantis">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="14576.555908" y="3538.928914" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

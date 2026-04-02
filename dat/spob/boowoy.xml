@@ -1,6 +1,6 @@
 <spob name="Boowoy">
  <lua>lowclass.lua</lua>
- <pos x="-2854.157639" y="6002.748046"/>
+ <pos x="-2227.968089" y="6262.216710"/>
  <GFX>
   <space>H03</space>
   <exterior>desertic2</exterior>

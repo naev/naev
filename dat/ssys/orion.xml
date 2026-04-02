@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="-599.331900" y="-439.447856"/>
+ <pos x="-504.723647" y="-494.591495"/>
  <spobs>
   <spob>HZMM-01</spob>
   <spob>HZNSS-1</spob>
@@ -14,12 +14,12 @@
  </spobs>
  <jumps>
   <jump target="Bedimann">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="9058.528658" y="-17830.957869" was_auto="true"/>
   </jump>
   <jump target="Corinth">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="19925.112571" y="-1729.129555" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

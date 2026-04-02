@@ -4,7 +4,7 @@
   <spacedust>500</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="478.561922" y="-765.002348"/>
+ <pos x="652.499996" y="-511.860695"/>
  <spobs>
   <spob>Buritt</spob>
   <spob>Ginger II</spob>
@@ -13,12 +13,12 @@
  </spobs>
  <jumps>
   <jump target="Awowa">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-21155.716695" y="-13692.174812" was_auto="true"/>
   </jump>
   <jump target="Verex">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-8793.474997" y="23615.986057" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

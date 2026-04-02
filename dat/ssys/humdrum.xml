@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="1247.042084" y="-837.389822"/>
+ <pos x="1271.723265" y="-911.578566"/>
  <spobs>
   <spob>Humdrum I</spob>
   <spob>Humdrum II</spob>
@@ -12,23 +12,23 @@
  </spobs>
  <jumps>
   <jump target="An'ku">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="18968.917190" y="-9010.004473" was_auto="true"/>
   </jump>
   <jump target="Anarbalis">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-17316.577825" y="-11880.072912" was_auto="true"/>
   </jump>
   <jump target="Modus Manis">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="8895.295223" y="19022.978812" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-rich</group>
    <radius>8000.000000</radius>
-   <pos x="5734.920718" y="-4079.711769"/>
+   <pos x="2827.254173" y="-6445.153031"/>
    <density>0.600000</density>
   </asteroid>
   <exclusion>
@@ -37,6 +37,6 @@
   </exclusion>
  </asteroids>
  <waypoints>
-  <waypoint x="2230.000000" y="-13000.000000">achack02_ambush</waypoint>
+  <waypoint x="-4759.841108" y="-12301.089895">achack02_ambush</waypoint>
  </waypoints>
 </ssys>

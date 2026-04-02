@@ -6,7 +6,7 @@
   <nebula volatility="21.300000" hue="310.000000">600.000000</nebula>
   <nolanes/>
  </general>
- <pos x="536.609182" y="67.782022"/>
+ <pos x="760.555238" y="259.62052"/>
  <spobs>
   <spob>Deneb III</spob>
   <spob>Deneb III-a</spob>
@@ -14,19 +14,19 @@
  </spobs>
  <jumps>
   <jump target="Altair">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-11997.544797" y="9003.272672" was_auto="true"/>
   </jump>
   <jump target="Vega">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-11925.007961" y="-9099.131009" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>Nebula Crystal</group>
    <radius>2500.000000</radius>
-   <pos x="-1349.013461" y="4506.068103"/>
+   <pos x="-3660.369404" y="2954.011321"/>
    <density>2.000000</density>
   </asteroid>
   <exclusion>

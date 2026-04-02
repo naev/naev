@@ -1,6 +1,6 @@
 <spob name="Werlen">
  <lua>soromid_mil_restricted.lua</lua>
- <pos x="1553.027775" y="1774.888885"/>
+ <pos x="1042.049037" y="2115.717284"/>
  <GFX>
   <space>moon-D02</space>
   <exterior>mining5</exterior>

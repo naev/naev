@@ -1,6 +1,6 @@
 <spob name="Lanze">
  <lua>highclass.lua</lua>
- <pos x="9650.958314" y="5346.852767"/>
+ <pos x="10622.703745" y="2981.274228"/>
  <GFX>
   <space>M01</space>
   <exterior>forest</exterior>

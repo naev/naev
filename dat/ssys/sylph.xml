@@ -7,7 +7,7 @@
   <spacedust>400</spacedust>
   <interference>33.750000</interference>
  </general>
- <pos x="517.991932" y="996.945526"/>
+ <pos x="646.749896" y="1487.398013"/>
  <spobs>
   <spob>Salsax Nest</spob>
   <spob>Sylph II</spob>
@@ -18,12 +18,12 @@
  </spobs>
  <jumps>
   <jump target="Bonanza">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-22182.915210" y="-9160.691717" was_auto="true"/>
   </jump>
   <jump target="Kansas">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="3546.056972" y="23736.585262" was_auto="true"/>
   </jump>
  </jumps>
  <stats>

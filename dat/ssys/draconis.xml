@@ -4,7 +4,7 @@
   <spacedust>600</spacedust>
   <interference>10.000000</interference>
  </general>
- <pos x="258.135376" y="267.315686"/>
+ <pos x="503.857418" y="443.830493"/>
  <spobs>
   <spob>Draconis Alpha</spob>
   <spob>Draconis Beta</spob>
@@ -17,17 +17,17 @@
  </spobs>
  <jumps>
   <jump target="Eridani">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="-28216.567835" y="14002.689013" was_auto="true"/>
   </jump>
   <jump target="Pilatis">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="6651.866074" y="30789.652120" was_auto="true"/>
   </jump>
   <jump target="Tau Prime">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="-59.960225" y="-31499.942932" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

@@ -1,6 +1,6 @@
 <spob name="Aldous">
  <lua>lowclass.lua</lua>
- <pos x="3801.811993" y="-6006.223988"/>
+ <pos x="6152.098919" y="-3560.924024"/>
  <GFX>
   <space>S00</space>
   <exterior>aquatic2</exterior>

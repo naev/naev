@@ -6,27 +6,27 @@
   <nebula hue="240.000000">50.000000</nebula>
   <nolanes/>
  </general>
- <pos x="292.230903" y="-190.093557"/>
+ <pos x="507.155098" y="-8.683898"/>
  <spobs/>
  <jumps>
   <jump target="Cebus">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="967.439792" y="3233.370570" was_auto="true"/>
   </jump>
   <jump target="Kruger">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="2352.487331" y="-2420.005858" was_auto="true"/>
   </jump>
   <jump target="Scorpius">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-2141.007500" y="-2608.967589" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-standard</group>
    <radius>4000.000000</radius>
-   <pos x="0.000000" y="0.000000"/>
+   <pos x="0" y="0"/>
   </asteroid>
  </asteroids>
  <tags>

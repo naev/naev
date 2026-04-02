@@ -1,6 +1,6 @@
 <spob name="Fort Shariff">
  <lua>sirius_mil_restricted.lua</lua>
- <pos x="8176.922812" y="-3831.949938"/>
+ <pos x="7849.803399" y="-4463.910123"/>
  <GFX>
   <space>station-fleetbase</space>
   <exterior>station03</exterior>

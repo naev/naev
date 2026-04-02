@@ -7,7 +7,7 @@
   <spacedust>400</spacedust>
   <interference>33.750000</interference>
  </general>
- <pos x="412.597860" y="927.844172"/>
+ <pos x="548.814303" y="1351.151103"/>
  <spobs>
   <spob>Calvin</spob>
   <spob>Mendez</spob>
@@ -16,20 +16,20 @@
  </spobs>
  <jumps>
   <jump target="Bonanza">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="3447.782122" y="14039.859238" was_auto="true"/>
   </jump>
   <jump target="Malebolge">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-10762.838332" y="9652.261912" was_auto="true"/>
   </jump>
   <jump target="Pisces Prime">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="10335.169550" y="-10108.863405" was_auto="true"/>
   </jump>
   <jump target="Ram">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-12550.310774" y="-7175.970210" was_auto="true"/>
   </jump>
  </jumps>
  <stats>

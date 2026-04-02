@@ -1,6 +1,6 @@
 <spob name="Phosarrus">
  <lua>highclass.lua</lua>
- <pos x="-7220.963621" y="1126.205335"/>
+ <pos x="-6519.685708" y="-3302.173880"/>
  <GFX>
   <space>M02</space>
   <exterior>station04</exterior>

@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="-143.933257" y="-697.374041"/>
+ <pos x="-77.667238" y="-727.380143"/>
  <spobs>
   <spob>Akrikos</spob>
   <spob>Astana IIV</spob>
@@ -12,16 +12,16 @@
  </spobs>
  <jumps>
   <jump target="Auger">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="13145.033042" y="-15073.423842" was_auto="true"/>
   </jump>
   <jump target="Severus">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-13324.053048" y="-14915.415192" was_auto="true"/>
   </jump>
   <jump target="Stone Table">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-19669.471956" y="3621.032029" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

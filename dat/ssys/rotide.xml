@@ -6,7 +6,7 @@
   <nebula volatility="15.400000" hue="305.000000">500.000000</nebula>
   <nolanes/>
  </general>
- <pos x="814.505891" y="-78.676152"/>
+ <pos x="1075.026197" y="119.612531"/>
  <spobs>
   <spob>Rotide I</spob>
   <spob>Rotide II</spob>
@@ -15,19 +15,19 @@
  </spobs>
  <jumps>
   <jump target="Antares">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-5267.374909" y="10782.150136" was_auto="true"/>
   </jump>
   <jump target="Tobanna">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="11174.731535" y="-4373.256808" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-standard</group>
    <radius>4000.000000</radius>
-   <pos x="-6000.000000" y="3000.000000"/>
+   <pos x="856.716590" y="6653.272629"/>
    <density>0.250000</density>
   </asteroid>
  </asteroids>

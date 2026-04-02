@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="1217.485158" y="-901.768129"/>
+ <pos x="1184.93408" y="-937.956177"/>
  <spobs>
   <spob>Anarbalis II</spob>
   <spob>Anarbalis III</spob>
@@ -15,17 +15,17 @@
  </spobs>
  <jumps>
   <jump target="Humdrum">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="14016.040382" y="10478.578719" was_auto="true"/>
   </jump>
   <jump target="Lapis">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="-15501.703532" y="-8120.787374" was_auto="true"/>
   </jump>
   <jump target="Niger">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-3547.701647" y="17136.621983" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

@@ -5,22 +5,22 @@
   <interference>5.625000</interference>
   <nebula hue="240.000000">100.000000</nebula>
  </general>
- <pos x="881.096871" y="-334.377841"/>
+ <pos x="1104.286336" y="-251.330227"/>
  <spobs>
   <spob>Atlantis I</spob>
  </spobs>
  <jumps>
   <jump target="Pike">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="12231.633631" y="-7786.985212" was_auto="true"/>
   </jump>
   <jump target="Ryder">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-5128.554510" y="13562.740454" was_auto="true"/>
   </jump>
   <jump target="Shickhaw">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-8836.279818" y="-11496.528126" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

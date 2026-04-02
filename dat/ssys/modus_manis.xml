@@ -4,28 +4,28 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="1238.253131" y="-751.256158"/>
+ <pos x="1250.09797" y="-804.696156"/>
  <spobs>
   <spob>Manis</spob>
   <spob>Modus</spob>
  </spobs>
  <jumps>
   <jump target="Humdrum">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-1435.521170" y="-20950.877761" was_auto="true"/>
   </jump>
   <jump target="Tarmak">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="19195.663924" y="-8516.248381" was_auto="true"/>
   </jump>
   <jump target="Tartan">
-   <pos x="7695.981028" y="20113.548757"/>
+   <pos x="10989.715938" y="18520.505154"/>
    <hidden/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Willow">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="6654.145173" y="19917.890250" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

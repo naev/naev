@@ -6,20 +6,20 @@
   <nebula volatility="11.800000" hue="300.000000">500.000000</nebula>
   <nolanes/>
  </general>
- <pos x="820.423656" y="632.418811"/>
+ <pos x="1222.192758" y="849.822633"/>
  <spobs>
   <spob>Hypergate Protera</spob>
   <spob_virtual>Pirate All Unpresence (Range 1)</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Sagittarius">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-714.716174" y="-14982.963017" was_auto="true"/>
   </jump>
   <jump target="Syndania">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="-9411.049274" y="11680.417439" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

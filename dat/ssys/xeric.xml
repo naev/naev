@@ -5,7 +5,7 @@
   <spacedust>400</spacedust>
   <interference>40.000000</interference>
  </general>
- <pos x="-579.995183" y="-989.244748"/>
+ <pos x="-434.590835" y="-1095.716247"/>
  <spobs>
   <spob>Tesla Station</spob>
   <spob>Vaal</spob>
@@ -14,15 +14,15 @@
  </spobs>
  <jumps>
   <jump target="Poller">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="3713.671260" y="9284.861106" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-rich</group>
    <radius>3200.000000</radius>
-   <pos x="-4991.073825" y="-1851.991784"/>
+   <pos x="-3721.782621" y="-3806.445272"/>
   </asteroid>
  </asteroids>
  <tags>

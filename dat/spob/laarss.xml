@@ -1,6 +1,6 @@
 <spob name="Laarss">
  <lua>highclass.lua</lua>
- <pos x="14354.175136" y="-15731.478785"/>
+ <pos x="17410.914874" y="-12263.026210"/>
  <GFX>
   <space>G02</space>
   <exterior>mining6</exterior>

@@ -7,12 +7,12 @@
   <spacedust>400</spacedust>
   <interference>56.250000</interference>
  </general>
- <pos x="1565.232166" y="-370.887338"/>
+ <pos x="1759.623412" y="-627.573891"/>
  <spobs/>
  <jumps>
   <jump target="Toxin">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-14988.550531" y="-585.963280" was_auto="true"/>
   </jump>
  </jumps>
  <stats>

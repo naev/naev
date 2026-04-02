@@ -4,24 +4,24 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="1392.130099" y="-625.683728"/>
+ <pos x="1456.596611" y="-762.042018"/>
  <spobs/>
  <jumps>
   <jump target="Churchill">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-17930.926456" y="16695.265089" was_auto="true"/>
   </jump>
   <jump target="Gilligan's Memory">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-9894.341865" y="-22413.210368" was_auto="true"/>
   </jump>
   <jump target="Korma">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="23836.559048" y="5662.901440" was_auto="true"/>
   </jump>
   <jump target="NGC-12108">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="18956.018258" y="-15521.577619" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

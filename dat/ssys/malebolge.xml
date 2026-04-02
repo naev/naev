@@ -7,7 +7,7 @@
   <spacedust>400</spacedust>
   <interference>33.750000</interference>
  </general>
- <pos x="345.377681" y="986.237644"/>
+ <pos x="435.35306" y="1397.982577"/>
  <spobs>
   <spob>Malebolge III</spob>
   <spob>Malebolge IV</spob>
@@ -17,21 +17,21 @@
  </spobs>
  <jumps>
   <jump target="NGC-1931">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="9626.261019" y="17530.975409" was_auto="true"/>
   </jump>
   <jump target="Neexi">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-19960.542175" y="1255.689474" was_auto="true"/>
   </jump>
   <jump target="Norn">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="18173.446520" y="-8350.200091" was_auto="true"/>
   </jump>
   <jump target="Zintar">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-11249.245040" y="16536.459295" was_auto="true"/>
   </jump>
  </jumps>
  <stats>

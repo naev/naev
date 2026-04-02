@@ -7,29 +7,29 @@
   <spacedust>400</spacedust>
   <interference>30.000000</interference>
  </general>
- <pos x="313.473924" y="521.521385"/>
+ <pos x="500.532537" y="700.401328"/>
  <spobs/>
  <jumps>
   <jump target="Defa">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="3333.969713" y="-9427.865397" was_auto="true"/>
   </jump>
   <jump target="Solene">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-2457.499890" y="9693.332465" was_auto="true"/>
   </jump>
   <jump target="Titus">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="-9403.249197" y="3402.778943" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeB-rich</group>
    <radius>8000.000000</radius>
-   <pos x="0.000000" y="0.000000"/>
+   <pos x="0" y="0"/>
    <density>0.300000</density>
   </asteroid>
   <exclusion>

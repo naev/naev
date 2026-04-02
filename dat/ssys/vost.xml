@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="-405.893247" y="-495.177061"/>
+ <pos x="-316.337681" y="-427.421432"/>
  <spobs>
   <spob>Andors</spob>
   <spob>Andors Refining</spob>
@@ -14,16 +14,16 @@
  </spobs>
  <jumps>
   <jump target="Olympus">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="7446.199337" y="16266.721102" was_auto="true"/>
   </jump>
   <jump target="Procyon">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-13069.348099" y="12216.555989" was_auto="true"/>
   </jump>
   <jump target="Regas">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="6249.547351" y="-16762.913168" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

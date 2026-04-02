@@ -1,6 +1,6 @@
 <spob name="Eist Shipyard">
  <lua>dvaered_mil_restricted.lua</lua>
- <pos x="-4735.935159" y="13099.426837"/>
+ <pos x="-7451.302777" y="11768.693733"/>
  <GFX>
   <space>station-shipyard</space>
   <exterior>station04</exterior>

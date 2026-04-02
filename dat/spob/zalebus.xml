@@ -1,6 +1,6 @@
 <spob name="Zalebus">
  <lua>highclass.lua</lua>
- <pos x="20717.445102" y="-2844.812770"/>
+ <pos x="-11372.908163" y="17548.858970"/>
  <GFX>
   <space>O03</space>
   <exterior>aquatic2</exterior>

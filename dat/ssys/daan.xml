@@ -4,31 +4,31 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="-67.157469" y="-490.755301"/>
+ <pos x="172.516568" y="-377.202535"/>
  <spobs>
   <spob_virtual>Trade Lane (Za'lek)</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Daravon">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="13263.636056" y="-7005.423511" was_auto="true"/>
   </jump>
   <jump target="Effetey">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="6364.272481" y="13582.931781" was_auto="true"/>
   </jump>
   <jump target="Gammacron">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-7908.514683" y="-12745.799131" was_auto="true"/>
   </jump>
   <jump target="Goddard">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="-8205.401696" y="12556.726603" was_auto="true"/>
   </jump>
  </jumps>
  <waypoints>
-  <waypoint x="0.000000" y="7500.000000">neburesearch_01_ambush</waypoint>
+  <waypoint x="-2185.691665" y="7174.451334">neburesearch_01_ambush</waypoint>
  </waypoints>
  <tags>
   <tag>tradelane</tag>

@@ -1,6 +1,6 @@
 <spob name="Berkhere">
  <lua>lowclass.lua</lua>
- <pos x="-9197.292455" y="14843.960873"/>
+ <pos x="1509.834050" y="17396.946974"/>
  <GFX>
   <space>H00</space>
   <exterior>desertic2</exterior>

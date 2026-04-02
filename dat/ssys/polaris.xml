@@ -6,22 +6,22 @@
   <nebula volatility="82.200000" hue="320.000000">800.000000</nebula>
   <nolanes/>
  </general>
- <pos x="658.400595" y="-143.441799"/>
+ <pos x="953.956372" y="95.803576"/>
  <spobs>
   <spob>Hypergate Polaris</spob>
  </spobs>
  <jumps>
   <jump target="Nasona">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-5898.893397" y="-11020.574244" was_auto="true"/>
   </jump>
   <jump target="Proxima Centauri">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="10358.730573" y="-6996.191886" was_auto="true"/>
   </jump>
   <jump target="Sol">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-4403.760528" y="11698.585094" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

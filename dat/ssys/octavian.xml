@@ -5,7 +5,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="-375.507813" y="-346.287594"/>
+ <pos x="-425.379143" y="-236.493396"/>
  <spobs>
   <spob>August</spob>
   <spob>Olario</spob>
@@ -15,17 +15,17 @@
  </spobs>
  <jumps>
   <jump target="Copernicus">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-2673.213680" y="-12210.811955" was_auto="true"/>
   </jump>
   <jump target="NGC-7533">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="-5377.739186" y="11284.056063" was_auto="true"/>
   </jump>
   <jump target="Procyon">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="1639.805493" y="-12391.974739" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

@@ -4,7 +4,7 @@
   <spacedust>500</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="1161.432230" y="338.905980"/>
+ <pos x="1252.564257" y="339.167965"/>
  <spobs>
   <spob>Castellum Telika</spob>
   <spob>Petra</spob>
@@ -14,12 +14,12 @@
  </spobs>
  <jumps>
   <jump target="Ekta">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="7505.960008" y="-14130.129664" was_auto="true"/>
   </jump>
   <jump target="Leporis">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="5791.585664" y="14915.010408" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

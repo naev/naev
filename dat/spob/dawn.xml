@@ -1,6 +1,6 @@
 <spob name="Dawn">
  <lua>highclass.lua</lua>
- <pos x="-3764.344765" y="9623.930431"/>
+ <pos x="-1244.595403" y="10258.718766"/>
  <GFX>
   <space>O01</space>
   <exterior>oceanic2</exterior>

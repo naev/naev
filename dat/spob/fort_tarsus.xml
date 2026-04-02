@@ -1,6 +1,6 @@
 <spob name="Fort Tarsus">
  <lua>dvaered_mil_restricted.lua</lua>
- <pos x="-8814.746224" y="-7876.111106"/>
+ <pos x="-8811.064086" y="-7880.230123"/>
  <GFX>
   <space>000</space>
   <exterior>station03</exterior>

@@ -1,6 +1,6 @@
 <spob name="Passir">
  <lua>lowclass.lua</lua>
- <pos x="-1258.751198" y="13565.120773"/>
+ <pos x="5420.607248" y="12498.558845"/>
  <GFX>
   <space>M05</space>
   <exterior>aquatic3</exterior>

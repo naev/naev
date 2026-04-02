@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="186.693311" y="-457.688706"/>
+ <pos x="405.572568" y="-249.562173"/>
  <spobs>
   <spob>Ianella I</spob>
   <spob>Ianella I-a</spob>
@@ -15,19 +15,19 @@
  </spobs>
  <jumps>
   <jump target="Tepdania">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="2037.046907" y="14861.037645" was_auto="true"/>
   </jump>
   <jump target="Wochii">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="4649.422207" y="-14261.236732" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-poor</group>
    <radius>4000.000000</radius>
-   <pos x="-7949.152921" y="-1508.295897"/>
+   <pos x="-6176.589724" y="-5226.253729"/>
    <density>3.000000</density>
   </asteroid>
   <exclusion>

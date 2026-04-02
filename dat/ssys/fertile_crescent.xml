@@ -8,23 +8,23 @@
   <interference>33.750000</interference>
   <nolanes/>
  </general>
- <pos x="328.938584" y="1160.818663"/>
+ <pos x="341.345242" y="1729.344278"/>
  <spobs/>
  <jumps>
   <jump target="NGC-13322">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="9998.234001" y="-187.927799" was_auto="true"/>
   </jump>
   <jump target="NGC-14479">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-2539.306335" y="-9672.224321" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>Mossy</group>
    <radius>6000.000000</radius>
-   <pos x="-2382.538740" y="1645.057657"/>
+   <pos x="-2643.716477" y="1180.452763"/>
    <density>2.000000</density>
   </asteroid>
   <exclusion>

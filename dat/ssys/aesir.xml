@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="1365.552511" y="-228.476075"/>
+ <pos x="1563.957825" y="-337.44606"/>
  <spobs>
   <spob>Aesir IV</spob>
   <spob>Gayathi</spob>
@@ -17,8 +17,8 @@
  </spobs>
  <jumps>
   <jump target="Vanir">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="-18961.107208" y="-17643.310727" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

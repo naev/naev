@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="736.739966" y="761.276604"/>
+ <pos x="834.876012" y="1159.584107"/>
  <spobs>
   <spob>Kaulas</spob>
   <spob>Moor I</spob>
@@ -15,20 +15,20 @@
  </spobs>
  <jumps>
   <jump target="Longbow">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="18244.953080" y="8192.782622" was_auto="true"/>
   </jump>
   <jump target="Possum">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-19974.444732" y="1010.721339" was_auto="true"/>
   </jump>
   <jump target="Stint">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="1083.432184" y="-19970.632806" was_auto="true"/>
   </jump>
   <jump target="Taxumi">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-9275.248489" y="17719.192009" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

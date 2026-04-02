@@ -6,19 +6,19 @@
   <spacedust>300</spacedust>
   <interference>53.140000</interference>
  </general>
- <pos x="1070.000000" y="-127.000000"/>
+ <pos x="1347.495198" y="-91.06827"/>
  <spobs>
   <spob_virtual>Pirate All Unpresence</spob_virtual>
  </spobs>
  <jumps>
   <jump target="NGC-15670">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="6161.807897" y="-7098.740975" was_auto="true"/>
   </jump>
   <jump target="Penn">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="-9399.685284" y="76.919121" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
@@ -26,7 +26,7 @@
    <group>Vixilium</group>
    <group>typeB-standard</group>
    <radius>8960.000000</radius>
-   <pos x="0.000000" y="0.000000"/>
+   <pos x="0" y="0"/>
    <density>1.880000</density>
    <maxspeed>5.300000</maxspeed>
   </asteroid>

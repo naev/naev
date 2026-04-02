@@ -7,41 +7,41 @@
   <spacedust>400</spacedust>
   <interference>40.000000</interference>
  </general>
- <pos x="52.490278" y="-959.002315"/>
+ <pos x="167.489378" y="-1040.823897"/>
  <spobs>
   <spob>Unicorn I</spob>
   <spob>Unicorn II</spob>
  </spobs>
  <jumps>
   <jump target="Kretogg">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-283.633873" y="-17497.701329" was_auto="true"/>
   </jump>
   <jump target="Marat">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="17499.997804" y="-8.765728" was_auto="true"/>
   </jump>
   <jump target="Nunavut">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="-16205.785709" y="-6604.733872" was_auto="true"/>
   </jump>
   <jump target="Volus">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-4983.494007" y="16775.422125" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-rich</group>
    <radius>3000.000000</radius>
-   <pos x="-8918.816649" y="-1730.516663"/>
+   <pos x="-8028.919944" y="-4251.637668"/>
    <density>0.200000</density>
   </asteroid>
   <asteroid>
    <group>typeC-poor</group>
    <radius>6000.000000</radius>
-   <pos x="15127.836154" y="89.510112"/>
+   <pos x="14446.746142" y="4488.982586"/>
    <density>0.500000</density>
   </asteroid>
   <exclusion>

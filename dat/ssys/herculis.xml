@@ -5,12 +5,12 @@
   <interference>37.575000</interference>
   <nebula hue="250.000000">200.000000</nebula>
  </general>
- <pos x="828.565887" y="715.311575"/>
+ <pos x="1061.395012" y="1157.447205"/>
  <spobs/>
  <jumps>
   <jump target="Longbow">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-14109.219020" y="5092.144797" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

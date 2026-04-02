@@ -4,17 +4,17 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="-243.833618" y="239.468285"/>
+ <pos x="-352.33749" y="340.685308"/>
  <spobs/>
  <jumps>
   <jump target="Knave">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="7239.031684" y="-13137.595680" was_auto="true"/>
   </jump>
   <jump target="NGC-7786">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="-13692.851995" y="-6124.198251" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

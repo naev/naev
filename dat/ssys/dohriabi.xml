@@ -4,22 +4,22 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="-147.386639" y="-284.033331"/>
+ <pos x="-46.526956" y="-191.62424"/>
  <spobs>
   <spob>Dohriabi Prime</spob>
   <spob>Niflheim Enclave</spob>
  </spobs>
  <jumps>
   <jump target="Attaria">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-5965.160968" y="-8640.998473" was_auto="true"/>
   </jump>
   <jump target="Overture">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="10388.443580" y="1526.512356" was_auto="true"/>
   </jump>
  </jumps>
  <waypoints>
-  <waypoint x="9000.000000" y="3500.000000">kex2_bloc</waypoint>
+  <waypoint x="8469.898117" y="4637.976484">kex2_bloc</waypoint>
  </waypoints>
 </ssys>

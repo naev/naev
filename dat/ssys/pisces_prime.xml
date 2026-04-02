@@ -7,7 +7,7 @@
   <spacedust>400</spacedust>
   <interference>22.000000</interference>
  </general>
- <pos x="498.760621" y="846.192720"/>
+ <pos x="577.686143" y="1268.644861"/>
  <spobs>
   <spob>Aldernael</spob>
   <spob>Doro</spob>
@@ -17,16 +17,16 @@
  </spobs>
  <jumps>
   <jump target="Feye">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="-8855.207911" y="-14102.755709" was_auto="true"/>
   </jump>
   <jump target="Norn">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="-10113.780433" y="13229.280823" was_auto="true"/>
   </jump>
   <jump target="Treacle">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="14126.887214" y="8816.659423" was_auto="true"/>
   </jump>
  </jumps>
  <stats>

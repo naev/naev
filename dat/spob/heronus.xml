@@ -1,6 +1,6 @@
 <spob name="Heronus">
  <lua>soromid_mil_restricted.lua</lua>
- <pos x="-13175.246585" y="17327.640126"/>
+ <pos x="-21620.176610" y="2530.256555"/>
  <GFX>
   <space>moon-M04</space>
   <exterior>aquatic3</exterior>

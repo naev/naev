@@ -1,6 +1,6 @@
 <spob name="Sirius Ordnance">
  <lua>sirius_mil_restricted.lua</lua>
- <pos x="5966.666667" y="19366.197274"/>
+ <pos x="9134.793244" y="18088.843532"/>
  <GFX>
   <space>station-fleetbase3</space>
   <exterior>station05</exterior>

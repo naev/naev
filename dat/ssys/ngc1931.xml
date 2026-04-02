@@ -8,19 +8,19 @@
   <interference>33.750000</interference>
   <nolanes/>
  </general>
- <pos x="400.872469" y="1041.588846"/>
+ <pos x="464.07123" y="1515.725632"/>
  <spobs>
   <spob>Wormhole NGC-1931</spob>
  </spobs>
  <jumps>
   <jump target="Malebolge">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="-8866.049128" y="-12099.304643" was_auto="true"/>
   </jump>
   <jump target="NGC-4771">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-10420.017818" y="10789.959622" was_auto="true"/>
   </jump>
  </jumps>
  <stats>
@@ -28,7 +28,7 @@
   <shield_regen_mod>-50.000000</shield_regen_mod>
  </stats>
  <waypoints>
-  <waypoint x="-6000.000000" y="3000.000000">zbh09_feral</waypoint>
+  <waypoint x="-6389.799623" y="2042.170603">zbh09_feral</waypoint>
  </waypoints>
  <tags>
   <tag>haze</tag>

@@ -1,6 +1,6 @@
 <spob name="Slofeldt Museum">
  <lua>highclass.lua</lua>
- <pos x="4984.101694" y="5176.465216"/>
+ <pos x="4834.767554" y="5316.209600"/>
  <GFX>
   <space>000</space>
   <exterior>station03</exterior>

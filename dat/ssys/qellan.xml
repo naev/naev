@@ -5,20 +5,20 @@
   <interference>17.550000</interference>
   <nebula hue="250.000000">150.000000</nebula>
  </general>
- <pos x="427.395776" y="166.173590"/>
+ <pos x="638.882165" y="370.661321"/>
  <spobs/>
  <jumps>
   <jump target="Altair">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="8811.207479" y="-4728.913484" was_auto="true"/>
   </jump>
   <jump target="Eisenhorn">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="8348.770019" y="5504.365463" was_auto="true"/>
   </jump>
   <jump target="Kenvis">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-8605.922193" y="5092.946416" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

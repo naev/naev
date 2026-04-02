@@ -1,6 +1,6 @@
 <spob name="Fort Sarrii">
  <lua>dvaered_mil_restricted.lua</lua>
- <pos x="-2675.964475" y="-6088.010868"/>
+ <pos x="-2451.142709" y="-6181.954514"/>
  <GFX>
   <space>station-fleetbase2</space>
   <exterior>snow</exterior>

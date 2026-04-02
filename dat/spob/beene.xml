@@ -1,6 +1,6 @@
 <spob name="Beene">
  <lua>lowclass.lua</lua>
- <pos x="9360.000000" y="-6320.000000"/>
+ <pos x="-7329.763926" y="-8592.238403"/>
  <GFX>
   <space>G01</space>
   <exterior>mining5</exterior>

@@ -5,15 +5,15 @@
   <interference>0.000000</interference>
   <nolanes/>
  </general>
- <pos x="579.012195" y="-157.111922"/>
+ <pos x="841.154175" y="2.955237"/>
  <spobs>
   <spob>Protera Nova</spob>
   <spob_virtual>Proteron Unpresence</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Gliese">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-3117.392958" y="-3245.282906" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

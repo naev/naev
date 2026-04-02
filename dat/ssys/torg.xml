@@ -4,7 +4,7 @@
   <spacedust>100</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="349.758959" y="-589.853457"/>
+ <pos x="617.799812" y="-289.548463"/>
  <spobs>
   <spob>Godtra</spob>
   <spob>Jorcan</spob>
@@ -15,16 +15,16 @@
  </spobs>
  <jumps>
   <jump target="Doranthex">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="18378.945678" y="10159.446626" was_auto="true"/>
   </jump>
   <jump target="Ekkodu">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="647.382789" y="-20990.018950" was_auto="true"/>
   </jump>
   <jump target="Ogat">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-20863.708563" y="2388.653379" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

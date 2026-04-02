@@ -1,6 +1,6 @@
 <spob name="HS-232">
  <lua>thurion.lua</lua>
- <pos x="6432.707086" y="3748.710360"/>
+ <pos x="-5359.447897" y="5168.062311"/>
  <GFX>
   <space>000</space>
   <exterior>station00</exterior>

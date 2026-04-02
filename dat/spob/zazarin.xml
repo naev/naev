@@ -1,6 +1,6 @@
 <spob name="Zazarin">
  <lua>lowclass.lua</lua>
- <pos x="7738.764025" y="-1440.447283"/>
+ <pos x="6773.666832" y="-4010.086614"/>
  <GFX>
   <space>G01</space>
   <exterior>mining</exterior>

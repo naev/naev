@@ -5,23 +5,23 @@
   <interference>14.175000</interference>
   <nebula hue="240.000000">125.000000</nebula>
  </general>
- <pos x="315.367396" y="-150.632289"/>
+ <pos x="444.146101" y="58.900228"/>
  <spobs>
   <spob>Cebus Prime</spob>
  </spobs>
  <jumps>
   <jump target="Carnis Minor">
-   <autopos/>
    <hide>0.300000</hide>
+   <pos x="5674.542911" y="13885.228221" was_auto="true"/>
   </jump>
   <jump target="Kruger's Pocket">
-   <autopos/>
    <hidden/>
    <hide>0.300000</hide>
+   <pos x="-13060.654984" y="-7376.943226" was_auto="true"/>
   </jump>
   <jump target="Ross">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-13206.512732" y="7112.525672" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

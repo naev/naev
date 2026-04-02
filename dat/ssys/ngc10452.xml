@@ -7,19 +7,19 @@
   <spacedust>400</spacedust>
   <interference>33.750000</interference>
  </general>
- <pos x="-74.313010" y="799.332806"/>
+ <pos x="-31.841918" y="1221.012878"/>
  <spobs/>
  <jumps>
   <jump target="NGC-3371">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="14915.969064" y="-1585.517853" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-rich</group>
    <radius>5000.000000</radius>
-   <pos x="0.000000" y="-463.731609"/>
+   <pos x="-183.495426" y="-425.883122"/>
   </asteroid>
  </asteroids>
  <stats>

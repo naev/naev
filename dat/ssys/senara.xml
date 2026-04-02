@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="-408.238233" y="4.392060"/>
+ <pos x="-407.752592" y="96.840267"/>
  <spobs>
   <spob>Bilgewater</spob>
   <spob>Senara I</spob>
@@ -12,27 +12,27 @@
  </spobs>
  <jumps>
   <jump target="Klintus">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="6595.477710" y="13472.181477" was_auto="true"/>
   </jump>
   <jump target="Kobopos">
-   <autopos/>
    <hide>0.500000</hide>
+   <pos x="13600.622510" y="-6326.378690" was_auto="true"/>
   </jump>
   <jump target="NGC-1292">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="6644.298721" y="-13448.170674" was_auto="true"/>
   </jump>
   <jump target="NGC-1872">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-14329.944771" y="4433.134653" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-standard</group>
    <radius>6000.000000</radius>
-   <pos x="-3974.842360" y="4902.305578"/>
+   <pos x="-3102.781022" y="5495.882249"/>
   </asteroid>
  </asteroids>
 </ssys>

@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="96.306483" y="-708.423503"/>
+ <pos x="352.734411" y="-567.475661"/>
  <spobs>
   <spob>Onyx Shipyard</spob>
   <spob>Trincea</spob>
@@ -14,15 +14,15 @@
  </spobs>
  <jumps>
   <jump target="Dvaer">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="17338.804010" y="4833.826173" was_auto="true"/>
   </jump>
   <jump target="Perhelion">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-17982.980956" y="-782.557285" was_auto="true"/>
   </jump>
  </jumps>
  <waypoints>
-  <waypoint x="17000.000000" y="1000.000000">kex3_thugs</waypoint>
+  <waypoint x="14696.843485" y="8602.487521">kex3_thugs</waypoint>
  </waypoints>
 </ssys>

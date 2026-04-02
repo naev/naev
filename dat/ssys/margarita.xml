@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="1376.426786" y="-537.554696"/>
+ <pos x="1426.360778" y="-643.444366"/>
  <spobs>
   <spob>Gorchenchev Shipyards</spob>
   <spob>Lanze</spob>
@@ -14,8 +14,8 @@
  </spobs>
  <jumps>
   <jump target="Eiderdown">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-19384.315330" y="10404.245247" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

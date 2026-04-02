@@ -7,7 +7,7 @@
   <interference>57.000000</interference>
   <nebula hue="310.000000" trails="1">0.000000</nebula>
  </general>
- <pos x="235.552868" y="-1009.095355"/>
+ <pos x="447.50044" y="-887.389085"/>
  <spobs>
   <spob>PSO 1251</spob>
   <spob>PSO 1324</spob>
@@ -16,24 +16,24 @@
  </spobs>
  <jumps>
   <jump target="Amaroq">
-   <pos x="-21607.690780" y="-15135.895743"/>
+   <pos x="-25087.765219" y="-8160.372361"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Faust">
-   <pos x="22307.480886" y="2324.437919"/>
+   <pos x="22012.918787" y="-4296.291605"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="NGC-2232">
-   <pos x="8761.084891" y="-11521.187220"/>
+   <pos x="5011.595295" y="-13578.596246"/>
    <hidden/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Oxuram">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-2186.891206" y="14334.137813" was_auto="true"/>
   </jump>
   <jump target="Sultan">
-   <pos x="13426.403116" y="16833.176987"/>
+   <pos x="17759.666556" y="12174.497603"/>
    <hide>1.000000</hide>
   </jump>
  </jumps>
@@ -41,10 +41,10 @@
   <asteroid>
    <group>typeC-rich</group>
    <radius>4000.000000</radius>
-   <pos x="7500.000000" y="1000.000000"/>
+   <pos x="7464.820968" y="-1235.495003"/>
   </asteroid>
  </asteroids>
  <waypoints>
-  <waypoint x="3500.000000" y="-1500.000000">lonewolf4_spawn</waypoint>
+  <waypoint x="2908.834369" y="-2457.373111">lonewolf4_spawn</waypoint>
  </waypoints>
 </ssys>

@@ -7,24 +7,24 @@
   <interference>0.000000</interference>
   <nolanes/>
  </general>
- <pos x="197.990230" y="503.277955"/>
+ <pos x="440.499858" y="654.573287"/>
  <spobs>
   <spob>One-Wing Goddard</spob>
   <spob_virtual>Pirate All Unpresence</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Bastion">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="-5962.664454" y="668.305770" was_auto="true"/>
   </jump>
  </jumps>
  <waypoints>
-  <waypoint x="-1000.000000" y="0.000000">curious_drone1</waypoint>
-  <waypoint x="-1200.000000" y="300.000000">curious_drone2</waypoint>
-  <waypoint x="-500.000000" y="-300.000000">elder_drone</waypoint>
-  <waypoint x="1000.000000" y="-500.000000">philosopher_drone</waypoint>
-  <waypoint x="500.000000" y="200.000000">scavenger_drone</waypoint>
+  <waypoint x="-883.321208" y="468.768218">curious_drone1</waypoint>
+  <waypoint x="-919.354984" y="827.518224">curious_drone2</waypoint>
+  <waypoint x="-582.291069" y="-30.612253">elder_drone</waypoint>
+  <waypoint x="648.937099" y="-910.428822">philosopher_drone</waypoint>
+  <waypoint x="535.414247" y="-57.719867">scavenger_drone</waypoint>
  </waypoints>
  <tags>
   <tag>spoiler</tag>

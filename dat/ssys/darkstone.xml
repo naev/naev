@@ -4,7 +4,7 @@
   <spacedust>500</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="355.144051" y="-736.044125"/>
+ <pos x="572.611288" y="-481.094095"/>
  <spobs>
   <spob>Darkstone IV</spob>
   <spob>Darkstone V</spob>
@@ -16,12 +16,12 @@
  </spobs>
  <jumps>
   <jump target="Beeklo">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="-16565.019151" y="-18051.319633" was_auto="true"/>
   </jump>
   <jump target="Verex">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="19417.823802" y="14939.816557" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

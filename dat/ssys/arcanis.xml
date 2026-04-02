@@ -6,35 +6,35 @@
   <nebula hue="250.000000">200.000000</nebula>
   <nolanes/>
  </general>
- <pos x="394.290137" y="-340.685870"/>
+ <pos x="602.416215" y="-14.387453"/>
  <spobs>
   <spob>Arcania</spob>
   <spob_virtual>Miner Small</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Kruger">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-7049.797940" y="12095.468118" was_auto="true"/>
   </jump>
   <jump target="Sigur">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="728.883272" y="13981.013166" was_auto="true"/>
   </jump>
   <jump target="Sonas">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="12736.460447" y="-5812.277976" was_auto="true"/>
   </jump>
   <jump target="Surano">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-9696.483230" y="-10098.426261" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeB-standard</group>
    <radius>4000.000000</radius>
-   <pos x="4000.000000" y="6000.000000"/>
+   <pos x="4519.118645" y="5619.392019"/>
   </asteroid>
  </asteroids>
  <tags>

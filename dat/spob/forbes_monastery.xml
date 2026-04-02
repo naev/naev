@@ -1,6 +1,6 @@
 <spob name="Forbes Monastery">
  <lua>sirius_mil_restricted.lua</lua>
- <pos x="-941.430646" y="1707.591015"/>
+ <pos x="-775.606921" y="1789.020021"/>
  <GFX>
   <space>station-fleetbase</space>
   <exterior>station04</exterior>

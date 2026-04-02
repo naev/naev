@@ -8,15 +8,15 @@
   <interference>56.250000</interference>
   <nolanes/>
  </general>
- <pos x="1124.798064" y="43.580947"/>
+ <pos x="1528.168182" y="9.837752"/>
  <spobs>
   <spob>P-15919</spob>
   <spob_virtual>Pirate All Unpresence</spob_virtual>
  </spobs>
  <jumps>
   <jump target="NGC-9607">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-12249.358423" y="-8657.552669" was_auto="true"/>
   </jump>
  </jumps>
  <stats>

@@ -7,7 +7,7 @@
   <spacedust>400</spacedust>
   <interference>56.250000</interference>
  </general>
- <pos x="1491.168310" y="-302.492843"/>
+ <pos x="1709.075262" y="-445.895845"/>
  <spobs>
   <spob>Boowoy</spob>
   <spob>Peogas II</spob>
@@ -18,12 +18,12 @@
  </spobs>
  <jumps>
   <jump target="NGC-10081">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="17279.780306" y="13616.504417" was_auto="true"/>
   </jump>
   <jump target="Ulysses">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-21053.102535" y="6384.894176" was_auto="true"/>
   </jump>
  </jumps>
  <stats>

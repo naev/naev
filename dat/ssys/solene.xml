@@ -4,16 +4,16 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="305.152308" y="598.975107"/>
+ <pos x="463.743865" y="821.211003"/>
  <spobs/>
  <jumps>
   <jump target="Diadem">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-20024.473927" y="14116.318355" was_auto="true"/>
   </jump>
   <jump target="Vedalus">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="6895.566200" y="-23509.597333" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

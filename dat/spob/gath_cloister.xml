@@ -1,6 +1,6 @@
 <spob name="Gath Cloister">
  <lua>sirius_mil_restricted.lua</lua>
- <pos x="-4187.579162" y="-3678.679076"/>
+ <pos x="-5564.142327" y="-329.877456"/>
  <GFX>
   <space>station-battlestation</space>
   <exterior>station03</exterior>

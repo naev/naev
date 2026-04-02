@@ -7,7 +7,7 @@
   <spacedust>400</spacedust>
   <interference>33.750000</interference>
  </general>
- <pos x="262.616261" y="886.726747"/>
+ <pos x="321.221586" y="1306.385926"/>
  <spobs>
   <spob>Daahrax</spob>
   <spob>Hadosh II</spob>
@@ -19,16 +19,16 @@
  </spobs>
  <jumps>
   <jump target="Opal">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-21427.395947" y="20996.826019" was_auto="true"/>
   </jump>
   <jump target="Ram">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="29430.024208" y="-5820.109543" was_auto="true"/>
   </jump>
   <jump target="Symm">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="2193.793054" y="-29919.680346" was_auto="true"/>
   </jump>
  </jumps>
  <stats>

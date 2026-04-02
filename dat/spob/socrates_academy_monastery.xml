@@ -1,6 +1,6 @@
 <spob name="Socrates Academy Monastery">
  <lua>sirius_mil_restricted.lua</lua>
- <pos x="2760.307195" y="-7182.319320"/>
+ <pos x="1213.781495" y="-7598.140634"/>
  <GFX>
   <space>000</space>
   <exterior>station00</exterior>

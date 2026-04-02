@@ -1,6 +1,6 @@
 <spob name="Fort Maus">
  <lua>dvaered_mil_restricted.lua</lua>
- <pos x="-12143.540902" y="-7680.624142"/>
+ <pos x="-12650.474413" y="-6813.447729"/>
  <GFX>
   <space>station-dvaered1</space>
   <exterior>station03</exterior>

@@ -6,28 +6,28 @@
   <nebula volatility="3.100000">250.000000</nebula>
   <nolanes/>
  </general>
- <pos x="471.335013" y="-204.056462"/>
+ <pos x="746.038207" y="-55.549317"/>
  <spobs>
   <spob>Behar Prime</spob>
   <spob>Behar Station</spob>
  </spobs>
  <jumps>
   <jump target="Doeston">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="6442.032150" y="-12429.811815" was_auto="true"/>
   </jump>
   <jump target="Gliese">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="13420.611955" y="3985.871891" was_auto="true"/>
   </jump>
   <jump target="Iris">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="2712.411125" y="13734.730644" was_auto="true"/>
   </jump>
   <jump target="Sigur">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-13684.853588" y="2953.774239" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

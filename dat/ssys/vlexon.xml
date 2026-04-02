@@ -4,7 +4,7 @@
   <spacedust>500</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="214.407635" y="-629.899823"/>
+ <pos x="471.683147" y="-417.742067"/>
  <spobs>
   <spob>Phee</spob>
   <spob>Ruid</spob>
@@ -14,12 +14,12 @@
  </spobs>
  <jumps>
   <jump target="Gremlin">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-23562.755102" y="-15126.023005" was_auto="true"/>
   </jump>
   <jump target="Ogat">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="17209.828739" y="22086.688180" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

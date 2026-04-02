@@ -1,6 +1,6 @@
 <spob name="Amphion">
  <lua>lowclass.lua</lua>
- <pos x="6123.453755" y="2327.102217"/>
+ <pos x="6469.563272" y="1028.028056"/>
  <GFX>
   <space>P01</space>
   <exterior>aquatic3</exterior>

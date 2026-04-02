@@ -1,6 +1,6 @@
 <spob name="Sabe">
  <lua>thurion.lua</lua>
- <pos x="5941.192400" y="-4685.152481"/>
+ <pos x="-2755.052136" y="7046.850972"/>
  <GFX>
   <space>M08</space>
   <exterior>forest</exterior>

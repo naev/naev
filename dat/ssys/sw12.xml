@@ -1,0 +1,29 @@
+<ssys name="SW-12">
+ <general>
+  <radius>6666.666666</radius>
+  <spacedust>300</spacedust>
+  <interference>0</interference>
+  <background>stellarwind</background>
+  <map_shader>stellarwind_map.frag</map_shader>
+  <features>#bStellar Wind (1 fuel regen)#0</features>
+ </general>
+ <pos x="-304.743275" y="-343.58646"/>
+ <spobs/>
+ <jumps>
+  <jump target="SW-11">
+   <autopos/>
+   <hide>1</hide>
+   <tags/>
+  </jump>
+  <jump target="SW-13">
+   <autopos/>
+   <hide>1</hide>
+   <tags/>
+  </jump>
+ </jumps>
+ <asteroids/>
+ <tags>
+  <tag>stellarwind</tag>
+  <tag>spoiler</tag>
+ </tags>
+</ssys>

@@ -5,7 +5,7 @@
   <interference>25.000000</interference>
   <nolanes/>
  </general>
- <pos x="799.229169" y="357.341141"/>
+ <pos x="808.896538" y="545.531512"/>
  <spobs>
   <spob>HS-54</spob>
   <spob>Kaira</spob>
@@ -15,12 +15,12 @@
  </spobs>
  <jumps>
   <jump target="Aesria">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="12958.766528" y="-1034.586903" was_auto="true"/>
   </jump>
   <jump target="Vean">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="4693.128630" y="12123.305805" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

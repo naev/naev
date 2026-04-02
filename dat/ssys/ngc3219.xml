@@ -5,23 +5,23 @@
   <interference>0.000000</interference>
   <nolanes/>
  </general>
- <pos x="-418.971083" y="170.485269"/>
+ <pos x="-495.351022" y="212.762145"/>
  <spobs>
   <spob>P-6608</spob>
   <spob>P-8318</spob>
  </spobs>
  <jumps>
   <jump target="Klintus">
-   <autopos/>
    <hide>0.500000</hide>
+   <pos x="10297.065214" y="-10907.357515" was_auto="true"/>
   </jump>
   <jump target="NGC-728">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-7733.960736" y="-12852.464795" was_auto="true"/>
   </jump>
   <jump target="NGC-902">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-3424.422824" y="14603.880590" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

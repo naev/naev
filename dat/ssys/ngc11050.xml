@@ -7,18 +7,18 @@
   <spacedust>400</spacedust>
   <interference>56.250000</interference>
  </general>
- <pos x="1704.535496" y="-265.631081"/>
+ <pos x="1854.437615" y="-525.822131"/>
  <spobs>
   <spob>P-9922</spob>
  </spobs>
  <jumps>
   <jump target="NGC-10081">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-12107.525126" y="8854.819891" was_auto="true"/>
   </jump>
   <jump target="NGC-14337">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-6578.409324" y="-13480.524127" was_auto="true"/>
   </jump>
  </jumps>
  <stats>

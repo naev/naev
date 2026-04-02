@@ -8,21 +8,21 @@
   <interference>33.750000</interference>
   <nolanes/>
  </general>
- <pos x="403.430917" y="1145.474551"/>
+ <pos x="434.390406" y="1731.834636"/>
  <spobs/>
  <jumps>
   <jump target="Fertile Crescent">
-   <pos x="-7117.394040" y="248.413058"/>
+   <pos x="-6583.878276" y="-2715.060553"/>
    <hidden/>
    <hide>0.500000</hide>
   </jump>
   <jump target="NGC-12882">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="11424.733078" y="3670.895544" was_auto="true"/>
   </jump>
   <jump target="NGC-4771">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-4281.079578" y="-11210.368309" was_auto="true"/>
   </jump>
  </jumps>
  <stats>

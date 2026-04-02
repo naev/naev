@@ -6,25 +6,25 @@
   <nebula hue="240.000000">100.000000</nebula>
   <nolanes/>
  </general>
- <pos x="321.046972" y="-313.690047"/>
+ <pos x="455.949077" y="-70.804165"/>
  <spobs>
   <spob>Guntesh's Rock</spob>
  </spobs>
  <jumps>
   <jump target="Kruger">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="8963.251629" y="12027.473559" was_auto="true"/>
   </jump>
   <jump target="Scorpius">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-5336.704494" y="14018.544330" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>Nebula Crystal</group>
    <radius>6000.000000</radius>
-   <pos x="-1656.184317" y="-8943.395310"/>
+   <pos x="-7071.936045" y="-5719.701629"/>
    <density>0.500000</density>
   </asteroid>
   <exclusion>

@@ -6,22 +6,22 @@
   <nebula volatility="4.200000" hue="275.000000">500.000000</nebula>
   <nolanes/>
  </general>
- <pos x="647.889589" y="-271.148229"/>
+ <pos x="939.443512" y="-28.501637"/>
  <spobs>
   <spob_virtual>Empire Unpresence</spob_virtual>
   <spob_virtual>Independent All Unpresence (Range 1)</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Arandon">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-14827.884744" y="-9294.290397" was_auto="true"/>
   </jump>
  </jumps>
  <waypoints>
-  <waypoint x="-15000.000000" y="6800.000000">maikki1_1</waypoint>
-  <waypoint x="-11000.000000" y="13000.000000">maikki1_2</waypoint>
-  <waypoint x="-9000.000000" y="7000.000000">maikki1_3</waypoint>
-  <waypoint x="-6000.000000" y="12000.000000">maikki1_4</waypoint>
+  <waypoint x="-12836.169190" y="-10318.563877">maikki1_1</waypoint>
+  <waypoint x="-16564.579896" y="-3951.543098">maikki1_2</waypoint>
+  <waypoint x="-10307.615366" y="-4873.711670">maikki1_3</waypoint>
+  <waypoint x="-13416.276083" y="59.464643">maikki1_4</waypoint>
  </waypoints>
  <tags>
   <tag>thenebula</tag>

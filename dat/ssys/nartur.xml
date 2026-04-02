@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="-64.974616" y="-217.900574"/>
+ <pos x="6.722628" y="-99.633726"/>
  <spobs>
   <spob>INSS-2</spob>
   <spob>Ian</spob>
@@ -19,12 +19,12 @@
  </spobs>
  <jumps>
   <jump target="Overture">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="14363.293380" y="-19848.067998" was_auto="true"/>
   </jump>
   <jump target="Shinnok">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="-10882.501325" y="21950.425164" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

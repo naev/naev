@@ -1,7 +1,7 @@
 <spob name="Hypergate NGC-14549">
  <display>Construction</display>
  <marker>spobmarker_triangle</marker>
- <pos x="56.012607" y="80.021407"/>
+ <pos x="-58.394152" y="78.300451"/>
  <GFX>
   <space>hypergate_early_construction_stage</space>
  </GFX>

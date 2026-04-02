@@ -1,6 +1,6 @@
 <spob name="Majesteka Prime">
  <lua>dvaered_mil_restricted.lua</lua>
- <pos x="6862.430386" y="-3603.734393"/>
+ <pos x="7737.397188" y="-461.017492"/>
  <GFX>
   <space>M25</space>
   <exterior>citadel</exterior>

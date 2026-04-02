@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="464.702835" y="-1057.280990"/>
+ <pos x="634.562533" y="-840.093087"/>
  <spobs>
   <spob>Allous Citadel</spob>
   <spob>Allous GG-3</spob>
@@ -14,16 +14,16 @@
  </spobs>
  <jumps>
   <jump target="Faust">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-8056.416759" y="-5924.031482" was_auto="true"/>
   </jump>
   <jump target="Palin">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="2365.230040" y="9716.258891" was_auto="true"/>
   </jump>
   <jump target="Suk">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-9960.182946" y="891.490698" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

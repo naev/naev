@@ -1,6 +1,6 @@
 <spob name="Soromid Databank">
  <lua>soromid_mil_restricted.lua</lua>
- <pos x="10950.997946" y="12105.389613"/>
+ <pos x="6010.330730" y="15176.980536"/>
  <GFX>
   <space>station-sphere</space>
   <exterior>traderoom</exterior>

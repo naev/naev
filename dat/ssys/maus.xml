@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="611.047728" y="-829.435703"/>
+ <pos x="672.328972" y="-595.901948"/>
  <spobs>
   <spob>Fort Maus</spob>
   <spob>Maus I</spob>
@@ -15,21 +15,21 @@
  </spobs>
  <jumps>
   <jump target="Awowa">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="-19665.116627" y="3048.473066" was_auto="true"/>
   </jump>
   <jump target="Castellan">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="-18589.145269" y="-7103.075259" was_auto="true"/>
   </jump>
   <jump target="Infinity">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="4359.684133" y="-19416.569065" was_auto="true"/>
   </jump>
   <jump target="Millstone">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="19834.074650" y="-1618.481619" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

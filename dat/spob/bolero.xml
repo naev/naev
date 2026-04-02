@@ -1,6 +1,6 @@
 <spob name="Bolero">
  <lua>lowclass.lua</lua>
- <pos x="-11735.014766" y="-3466.579854"/>
+ <pos x="-8835.760188" y="-8465.051053"/>
  <GFX>
   <space>M00</space>
   <exterior>oceanic</exterior>

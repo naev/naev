@@ -1,6 +1,6 @@
 <spob name="Priscus">
  <lua>soromid_mil_restricted.lua</lua>
- <pos x="2390.165223" y="9970.939191"/>
+ <pos x="3944.005252" y="9464.530665"/>
  <GFX>
   <space>A04</space>
   <exterior>mining</exterior>

@@ -7,22 +7,22 @@
   <spacedust>400</spacedust>
   <interference>30.000000</interference>
  </general>
- <pos x="8.007649" y="-795.708932"/>
+ <pos x="176.472112" y="-781.857392"/>
  <spobs>
   <spob_virtual>Yetmer-O'rez Unpresence</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Amlet">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-1711.943640" y="13894.936090" was_auto="true"/>
   </jump>
   <jump target="Volus">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="1611.099069" y="-13906.989601" was_auto="true"/>
   </jump>
   <jump target="Xavier">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-13905.158985" y="1626.823155" was_auto="true"/>
   </jump>
  </jumps>
  <stats>

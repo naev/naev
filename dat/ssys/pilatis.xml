@@ -7,7 +7,7 @@
   <spacedust>300</spacedust>
   <interference>30.000000</interference>
  </general>
- <pos x="274.445957" y="364.877424"/>
+ <pos x="516.872613" y="515.511595"/>
  <spobs>
   <spob>Pilatis I</spob>
   <spob>Pilatis II</spob>
@@ -17,29 +17,29 @@
  </spobs>
  <jumps>
   <jump target="Defa">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="9889.056104" y="11805.361890" was_auto="true"/>
   </jump>
   <jump target="Draconis">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="-574.089100" y="-15389.295685" was_auto="true"/>
   </jump>
   <jump target="Dune">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="-15324.628366" y="-1521.763921" was_auto="true"/>
   </jump>
   <jump target="Halo">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-11422.356136" y="10329.074513" was_auto="true"/>
   </jump>
   <jump target="Lalande">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="15219.112973" y="2353.423104" was_auto="true"/>
   </jump>
   <jump target="Levo">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="10975.861447" y="-10802.336112" was_auto="true"/>
   </jump>
  </jumps>
  <stats>

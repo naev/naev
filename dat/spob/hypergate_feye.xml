@@ -1,7 +1,7 @@
 <spob name="Hypergate Feye">
  <display>Construction</display>
  <marker>spobmarker_triangle</marker>
- <pos x="8141.500227" y="-4027.415982"/>
+ <pos x="9050.876959" y="-765.331102"/>
  <GFX>
   <space>hypergate_early_construction_stage</space>
  </GFX>

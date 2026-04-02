@@ -7,7 +7,7 @@
   <spacedust>400</spacedust>
   <interference>30.000000</interference>
  </general>
- <pos x="-167.376472" y="503.609190"/>
+ <pos x="51.549443" y="734.838523"/>
  <spobs>
   <spob>Mason I</spob>
   <spob>Mason II</spob>
@@ -17,35 +17,35 @@
  </spobs>
  <jumps>
   <jump target="C-28">
-   <pos x="-6275.245619" y="-7360.922215"/>
+   <pos x="-4792.261773" y="-8402.149161"/>
    <hidden/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Capricorn">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="14992.635445" y="-13237.102492" was_auto="true"/>
   </jump>
   <jump target="Daled">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="15711.706396" y="12375.066953" was_auto="true"/>
   </jump>
   <jump target="Kelvos">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-327.481469" y="19997.318717" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeB-rich</group>
    <radius>2800.000000</radius>
-   <pos x="19424.383962" y="-6549.339987"/>
+   <pos x="20305.058526" y="-2811.608931"/>
    <density>2.000000</density>
   </asteroid>
   <asteroid>
    <group>typeB-standard</group>
    <radius>6000.000000</radius>
-   <pos x="-7649.629105" y="9608.680461"/>
+   <pos x="-9307.504039" y="8013.359731"/>
   </asteroid>
   <exclusion>
    <radius>2000.000000</radius>

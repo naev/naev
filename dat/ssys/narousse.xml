@@ -7,7 +7,7 @@
   <spacedust>400</spacedust>
   <interference>56.250000</interference>
  </general>
- <pos x="1467.789953" y="-510.108332"/>
+ <pos x="1664.668576" y="-734.239508"/>
  <spobs>
   <spob>Monsoon Cloister</spob>
   <spob>Narousse I</spob>
@@ -18,16 +18,16 @@
  </spobs>
  <jumps>
   <jump target="Euler">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="14498.907173" y="178.019044" was_auto="true"/>
   </jump>
   <jump target="Korma">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-7076.225980" y="-12656.106267" was_auto="true"/>
   </jump>
   <jump target="Toxin">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="8191.127609" y="11964.757769" was_auto="true"/>
   </jump>
  </jumps>
  <stats>

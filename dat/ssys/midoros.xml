@@ -6,7 +6,7 @@
   <nebula volatility="25.800000" hue="320.000000">700.000000</nebula>
   <nolanes/>
  </general>
- <pos x="568.777853" y="-1.023230"/>
+ <pos x="824.538532" y="186.983375"/>
  <spobs>
   <spob>Lirith</spob>
   <spob_virtual>Empire Unpresence</spob_virtual>
@@ -14,21 +14,21 @@
  </spobs>
  <jumps>
   <jump target="Carrza">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="-12906.524010" y="-1556.161288" was_auto="true"/>
   </jump>
   <jump target="Metsys">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="1574.073337" y="12904.351712" was_auto="true"/>
   </jump>
   <jump target="Oriantis">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-686.171377" y="-12981.878478" was_auto="true"/>
   </jump>
   <jump target="Sol">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="11302.449745" y="-6422.976704" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

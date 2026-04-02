@@ -7,20 +7,20 @@
   <spacedust>400</spacedust>
   <interference>33.750000</interference>
  </general>
- <pos x="19.710635" y="828.512892"/>
+ <pos x="73.59241" y="1209.805308"/>
  <spobs/>
  <jumps>
   <jump target="Corvus">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="11948.186069" y="-9068.674084" was_auto="true"/>
   </jump>
   <jump target="NGC-10452">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-14903.920333" y="-1695.039438" was_auto="true"/>
   </jump>
   <jump target="NGC-13798">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-1607.500542" y="14913.615993" was_auto="true"/>
   </jump>
  </jumps>
  <stats>

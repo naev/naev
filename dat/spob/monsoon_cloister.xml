@@ -1,6 +1,6 @@
 <spob name="Monsoon Cloister">
  <lua>sirius_mil_restricted.lua</lua>
- <pos x="3975.396126" y="-907.323198"/>
+ <pos x="3670.428641" y="-1776.221644"/>
  <GFX>
   <space>station-fleetbase2</space>
   <exterior>station03</exterior>

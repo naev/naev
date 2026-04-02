@@ -5,24 +5,24 @@
   <interference>16.425000</interference>
   <nebula hue="240.000000">150.000000</nebula>
  </general>
- <pos x="755.660455" y="-460.271667"/>
+ <pos x="963.440635" y="-256.989175"/>
  <spobs>
   <spob>Edergast</spob>
   <spob_virtual>Miner Small</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Brimstone">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-4525.126902" y="-11652.176900" was_auto="true"/>
   </jump>
   <jump target="Hephaestus">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="11114.085480" y="5720.760782" was_auto="true"/>
   </jump>
   <jump target="Tormulex">
-   <autopos/>
    <exitonly/>
    <hide>1.000000</hide>
+   <pos x="-6447.276932" y="10708.997159" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

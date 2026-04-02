@@ -1,6 +1,6 @@
 <spob name="Vertigo">
  <lua>lowclass.lua</lua>
- <pos x="-1176.579442" y="26162.619259"/>
+ <pos x="-14793.577256" y="21610.577447"/>
  <GFX>
   <space>moon-D01</space>
   <exterior>silo</exterior>

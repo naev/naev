@@ -5,27 +5,27 @@
   <interference>0.000000</interference>
   <nolanes/>
  </general>
- <pos x="-330.146791" y="277.459967"/>
+ <pos x="-457.902266" y="373.971992"/>
  <spobs/>
  <jumps>
   <jump target="Brumerebus">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="9872.147360" y="-1593.959374" was_auto="true"/>
   </jump>
   <jump target="NGC-4087">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="2000.953263" y="-9797.764338" was_auto="true"/>
   </jump>
   <jump target="NGC-902">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-8419.058475" y="-5396.244470" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-rich</group>
    <radius>9000.000001</radius>
-   <pos x="0.000000" y="0.000000"/>
+   <pos x="0" y="0"/>
    <density>0.200000</density>
   </asteroid>
  </asteroids>

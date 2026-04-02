@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="-153.317009" y="-423.525617"/>
+ <pos x="22.684982" y="-387.722116"/>
  <spobs>
   <spob>Provectus Nova I</spob>
   <spob>Provectus Nova Ia</spob>
@@ -12,34 +12,34 @@
  </spobs>
  <jumps>
   <jump target="Goddard">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="13439.395980" y="3922.070330" was_auto="true"/>
   </jump>
   <jump target="Limbo">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="101.483524" y="-13999.632177" was_auto="true"/>
   </jump>
   <jump target="Pultatis">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="-11527.634067" y="-7944.410161" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-standard</group>
    <radius>4000.000000</radius>
-   <pos x="1820.126112" y="-8754.295875"/>
+   <pos x="5078.414544" y="-7359.365533"/>
    <density>0.500000</density>
   </asteroid>
   <asteroid>
    <group>typeA-standard</group>
    <radius>6000.000000</radius>
-   <pos x="1192.452708" y="7817.189975"/>
+   <pos x="-1938.421073" y="7666.350259"/>
    <density>0.300000</density>
   </asteroid>
  </asteroids>
  <waypoints>
-  <waypoint x="0.000000" y="7500.000000">neburesearch_01_ambush</waypoint>
+  <waypoint x="-2913.954442" y="6910.779225">neburesearch_01_ambush</waypoint>
  </waypoints>
  <tags>
   <tag>tradelane</tag>

@@ -4,7 +4,7 @@
   <spacedust>500</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="21.590040" y="-210.035984"/>
+ <pos x="84.412516" y="-65.089728"/>
  <spobs>
   <spob>Mugen</spob>
   <spob>Steiner Station</spob>
@@ -13,21 +13,21 @@
  </spobs>
  <jumps>
   <jump target="Groombridge">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="10434.208741" y="-9334.199909" was_auto="true"/>
   </jump>
   <jump target="Overture">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-3814.611813" y="-13470.290891" was_auto="true"/>
   </jump>
   <jump target="Qex">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-5431.966737" y="12903.245226" was_auto="true"/>
   </jump>
   <jump target="Qorel">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="9221.528464" y="10533.917257" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

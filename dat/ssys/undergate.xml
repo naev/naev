@@ -7,7 +7,7 @@
   <spacedust>400</spacedust>
   <interference>56.250000</interference>
  </general>
- <pos x="1451.458740" y="-370.262589"/>
+ <pos x="1653.971252" y="-540.567283"/>
  <spobs>
   <spob>Cornwal Ordnance</spob>
   <spob>Sollebor</spob>
@@ -18,21 +18,21 @@
  </spobs>
  <jumps>
   <jump target="Toxin">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-2053.100848" y="-21401.747052" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-standard</group>
    <radius>6500.000000</radius>
-   <pos x="-861.215845" y="12189.516571"/>
+   <pos x="7580.984302" y="9584.084931"/>
    <density>0.200000</density>
   </asteroid>
   <asteroid>
    <group>typeC-poor</group>
    <radius>3300.000000</radius>
-   <pos x="9110.832346" y="-4465.384277"/>
+   <pos x="3719.353196" y="-9439.985941"/>
   </asteroid>
   <exclusion>
    <radius>1000.000000</radius>

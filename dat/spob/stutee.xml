@@ -1,6 +1,6 @@
 <spob name="Stutee">
  <lua>lowclass.lua</lua>
- <pos x="-11970.000000" y="-8400.000000"/>
+ <pos x="-7602.934880" y="-12491.448322"/>
  <GFX>
   <space>moon-M06</space>
   <exterior>aquatic2</exterior>

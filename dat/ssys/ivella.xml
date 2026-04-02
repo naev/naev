@@ -5,14 +5,14 @@
   <interference>38.925000</interference>
   <nebula volatility="0.600000" hue="250.000000">150.000000</nebula>
  </general>
- <pos x="669.692960" y="516.229045"/>
+ <pos x="791.024982" y="937.320937"/>
  <spobs>
   <spob>Wormhole Ivella</spob>
  </spobs>
  <jumps>
   <jump target="Point Zero">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-14994.296954" y="413.592618" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

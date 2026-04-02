@@ -3,7 +3,7 @@
  <feature>#bWormhole#0</feature>
  <lua>wormhole_ngc1931.lua</lua>
  <marker>spobmarker_wormhole</marker>
- <pos x="3128.348154" y="-5152.573430"/>
+ <pos x="3883.113342" y="-4610.532062"/>
  <GFX/>
  <general>
   <class>Wormhole</class>

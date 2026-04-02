@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="1200.664284" y="445.679849"/>
+ <pos x="1344.127133" y="351.933685"/>
  <spobs>
   <spob>Apik I</spob>
   <spob>Apik II</spob>
@@ -13,12 +13,12 @@
  </spobs>
  <jumps>
   <jump target="Leporis">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-17777.580045" y="12959.847518" was_auto="true"/>
   </jump>
   <jump target="Mida">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="1083.884334" y="-21973.283658" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

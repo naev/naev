@@ -4,22 +4,22 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="1362.201253" y="-342.353350"/>
+ <pos x="1503.03175" y="-490.819425"/>
  <spobs>
   <spob_virtual>Trade Lane (Sirius)</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Gilligan's Tomb">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="-10499.653469" y="-14000.259891" was_auto="true"/>
   </jump>
   <jump target="Ulysses">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="16557.493853" y="5665.632999" was_auto="true"/>
   </jump>
   <jump target="Vanir">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="-1619.489876" y="17424.903229" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

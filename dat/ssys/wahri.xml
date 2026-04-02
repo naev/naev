@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="178.752470" y="710.934337"/>
+ <pos x="291.037895" y="977.307768"/>
  <spobs>
   <spob>Dono</spob>
   <spob>Raptor Nest</spob>
@@ -14,16 +14,16 @@
  </spobs>
  <jumps>
   <jump target="Diadem">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="18788.248104" y="-2828.733490" was_auto="true"/>
   </jump>
   <jump target="Moordra">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-636.667371" y="18989.330021" was_auto="true"/>
   </jump>
   <jump target="Muran">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-10305.623756" y="-15962.271736" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

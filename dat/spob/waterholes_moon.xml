@@ -1,6 +1,6 @@
 <spob name="Waterhole's Moon">
  <lua>lowclass.lua</lua>
- <pos x="-5089.422980" y="-1733.131108"/>
+ <pos x="-4382.546882" y="-3114.362298"/>
  <GFX>
   <space>moon-G00</space>
   <exterior>desertic3</exterior>

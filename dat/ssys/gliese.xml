@@ -6,7 +6,7 @@
   <nebula volatility="3.100000">300.000000</nebula>
   <nolanes/>
  </general>
- <pos x="538.539598" y="-168.551712"/>
+ <pos x="817.891846" y="-21.261491"/>
  <spobs>
   <spob>Gliese I</spob>
   <spob>Gliese II</spob>
@@ -19,13 +19,13 @@
  </spobs>
  <jumps>
   <jump target="Behar">
-   <autopos/>
    <exitonly/>
    <hide>1.000000</hide>
+   <pos x="-9545.570593" y="-5466.450589" was_auto="true"/>
   </jump>
   <jump target="Gliese Minor">
-   <autopos/>
    <hide>0.300000</hide>
+   <pos x="8192.159899" y="7340.879796" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

@@ -6,23 +6,23 @@
   <nebula volatility="16.700000" hue="285.000000">600.000000</nebula>
   <nolanes/>
  </general>
- <pos x="722.428542" y="-283.396978"/>
+ <pos x="1023.885027" y="-37.56831"/>
  <spobs/>
  <jumps>
   <jump target="Anger">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-2516.800447" y="-9678.104954" was_auto="true"/>
   </jump>
   <jump target="Proxima Centauri">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-2443.442521" y="9696.885512" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>Nebula Crystal</group>
    <radius>2500.000000</radius>
-   <pos x="-7220.247986" y="543.115999"/>
+   <pos x="6988.063961" y="1895.763179"/>
   </asteroid>
  </asteroids>
  <tags>

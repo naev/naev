@@ -4,12 +4,12 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="-503.231680" y="-1071.756165"/>
+ <pos x="-448.508491" y="-1216.727828"/>
  <spobs/>
  <jumps>
   <jump target="NGC-10789">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="12141.763909" y="8807.812961" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

@@ -6,30 +6,30 @@
   <nebula volatility="15.600000" hue="270.000000">600.000000</nebula>
   <nolanes/>
  </general>
- <pos x="563.365011" y="-220.157659"/>
+ <pos x="877.003882" y="-67.639568"/>
  <spobs>
   <spob>Arandon Station</spob>
   <spob_virtual>Empire Unpresence</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Doeston">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="4279.662260" y="-13329.834617" was_auto="true"/>
   </jump>
   <jump target="Nasona">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="8470.679296" y="11146.640401" was_auto="true"/>
   </jump>
   <jump target="Zerantix">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="13999.350668" y="-134.836430" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>Nebula Crystal</group>
    <radius>3000.000000</radius>
-   <pos x="-4968.552950" y="7750.942602"/>
+   <pos x="-8218.517312" y="4149.650928"/>
    <density>0.500000</density>
    <maxspeed>40.000000</maxspeed>
   </asteroid>

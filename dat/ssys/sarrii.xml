@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="465.856258" y="-952.085791"/>
+ <pos x="569.07842" y="-740.290355"/>
  <spobs>
   <spob>Fort Sarrii</spob>
   <spob>Wayline</spob>
@@ -13,16 +13,16 @@
  </spobs>
  <jumps>
   <jump target="Castellan">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="6281.330224" y="20038.585045" was_auto="true"/>
   </jump>
   <jump target="Farizel">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-19213.926731" y="8474.964280" was_auto="true"/>
   </jump>
   <jump target="Palin">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="18602.388523" y="-9744.287620" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

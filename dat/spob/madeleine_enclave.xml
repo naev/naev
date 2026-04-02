@@ -1,6 +1,6 @@
 <spob name="Madeleine Enclave">
  <lua>empire_mil_restricted.lua</lua>
- <pos x="14794.876439" y="-4639.755662"/>
+ <pos x="15503.761856" y="-221.516915"/>
  <GFX>
   <space>station-fleetbase3</space>
   <exterior>station03</exterior>

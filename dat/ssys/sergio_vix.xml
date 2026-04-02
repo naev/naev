@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="388.563045" y="687.801534"/>
+ <pos x="484.204691" y="1067.786981"/>
  <spobs>
   <spob>Larling</spob>
   <spob>Sergio Vix I</spob>
@@ -15,15 +15,15 @@
  </spobs>
  <jumps>
   <jump target="Cerberus">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="-437.535659" y="13993.161277" was_auto="true"/>
   </jump>
   <jump target="Elza">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-12511.412539" y="6282.082160" was_auto="true"/>
   </jump>
   <jump target="Hatter">
-   <pos x="19754.322856" y="-13904.725724"/>
+   <pos x="21758.150881" y="-10495.596179"/>
    <hide>0.000000</hide>
   </jump>
  </jumps>

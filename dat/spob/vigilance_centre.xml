@@ -1,6 +1,6 @@
 <spob name="Vigilance Centre">
  <lua>zalek_mil_restricted.lua</lua>
- <pos x="2944.327674" y="3312.368633"/>
+ <pos x="224.499199" y="4426.110202"/>
  <GFX>
   <space>zalek_station2</space>
   <exterior>zalek_station2</exterior>

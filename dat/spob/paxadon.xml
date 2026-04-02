@@ -1,6 +1,6 @@
 <spob name="Paxadon">
  <lua>highclass.lua</lua>
- <pos x="-5698.032282" y="-2837.408368"/>
+ <pos x="-6265.803674" y="-1121.678408"/>
  <GFX>
   <space>G03</space>
   <exterior>forest2</exterior>

@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="862.529875" y="-519.236387"/>
+ <pos x="999.470215" y="-393.708305"/>
  <spobs>
   <spob>Andee II</spob>
   <spob>Andee III</spob>
@@ -15,8 +15,8 @@
  </spobs>
  <jumps>
   <jump target="Brimstone">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-17267.349682" y="17380.697194" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="-206.511924" y="96.373034"/>
+ <pos x="-185.265405" y="239.716146"/>
  <spobs>
   <spob>Benteen</spob>
   <spob>Bolero</spob>
@@ -15,27 +15,27 @@
  </spobs>
  <jumps>
   <jump target="Antlejos">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-19398.375585" y="-4868.575216" was_auto="true"/>
   </jump>
   <jump target="Jade">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-5936.686949" y="-19098.579739" was_auto="true"/>
   </jump>
   <jump target="Knave">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-17443.456684" y="9783.957220" was_auto="true"/>
   </jump>
   <jump target="Zemur">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="19167.882109" y="5708.966233" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-poor</group>
    <radius>1000.000000</radius>
-   <pos x="-821.337464" y="10960.983874"/>
+   <pos x="-5759.572738" y="9361.895352"/>
   </asteroid>
   <exclusion>
    <radius>500.000000</radius>
@@ -43,6 +43,6 @@
   </exclusion>
  </asteroids>
  <waypoints>
-  <waypoint x="-18000.000000" y="7000.000000">ant08_PUAAA_protesters</waypoint>
+  <waypoint x="-19205.119933" y="-2040.433375">ant08_PUAAA_protesters</waypoint>
  </waypoints>
 </ssys>

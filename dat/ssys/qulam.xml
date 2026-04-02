@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="-474.162853" y="-626.097534"/>
+ <pos x="-329.756682" y="-609.042508"/>
  <spobs>
   <spob>Cantina Centre</spob>
   <spob>Katar</spob>
@@ -13,16 +13,16 @@
  </spobs>
  <jumps>
   <jump target="Eiger">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-14992.161820" y="-484.854577" was_auto="true"/>
   </jump>
   <jump target="Kohler">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-4750.490393" y="14227.889548" was_auto="true"/>
   </jump>
   <jump target="Za'lek">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="12880.960717" y="-7686.406897" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

@@ -5,7 +5,7 @@
   <interference>35.526375</interference>
   <nebula volatility="4.000000" hue="270.000000">300.000000</nebula>
  </general>
- <pos x="602.876985" y="304.755139"/>
+ <pos x="866.0358" y="758.743667"/>
  <spobs>
   <spob>Basel I</spob>
   <spob>Sorom</spob>
@@ -14,8 +14,8 @@
  </spobs>
  <jumps>
   <jump target="Percival">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="59.088401" y="9999.825426" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

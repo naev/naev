@@ -6,20 +6,20 @@
   <nebula hue="270.000000">400.000000</nebula>
   <nolanes/>
  </general>
- <pos x="666.739717" y="249.416406"/>
+ <pos x="797.186408" y="411.192353"/>
  <spobs>
   <spob>Katami I</spob>
   <spob_virtual>Thurion Local</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Booster">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="206.926556" y="-10998.053527" was_auto="true"/>
   </jump>
   <jump target="Tempus">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="4109.939287" y="10203.352343" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="218.795352" y="-804.161505"/>
+ <pos x="413.631956" y="-623.887863"/>
  <spobs>
   <spob>Fort Myuirr</spob>
   <spob>Radix I</spob>
@@ -15,20 +15,20 @@
  </spobs>
  <jumps>
   <jump target="Dvaer">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-11852.063801" y="21442.448173" was_auto="true"/>
   </jump>
   <jump target="Farizel">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="24008.922037" y="-4880.744060" was_auto="true"/>
   </jump>
   <jump target="K'tos">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-24395.463402" y="2260.832897" was_auto="true"/>
   </jump>
   <jump target="Ksher">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-10442.118051" y="-22163.306851" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

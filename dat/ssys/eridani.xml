@@ -4,7 +4,7 @@
   <spacedust>500</spacedust>
   <interference>13.235294</interference>
  </general>
- <pos x="200.441921" y="292.633380"/>
+ <pos x="396.845623" y="462.847773"/>
  <spobs>
   <spob>Eridani II</spob>
   <spob>Eridani III</spob>
@@ -12,17 +12,17 @@
  </spobs>
  <jumps>
   <jump target="Alteris">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-17461.255226" y="1163.858203" was_auto="true"/>
   </jump>
   <jump target="Draconis">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="16610.880623" y="-5507.144896" was_auto="true"/>
   </jump>
   <jump target="Dune">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-7557.952758" y="15783.768564" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

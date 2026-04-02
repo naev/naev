@@ -6,7 +6,7 @@
   <nebula hue="180.000000">100.000000</nebula>
   <nolanes/>
  </general>
- <pos x="33.937578" y="468.570007"/>
+ <pos x="233.110342" y="691.206083"/>
  <spobs>
   <spob>Haven</spob>
   <spob>Old Man Jack</spob>
@@ -14,29 +14,29 @@
  </spobs>
  <jumps>
   <jump target="Daled">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-9932.041520" y="9866.840995" was_auto="true"/>
   </jump>
   <jump target="Gamel">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="12986.542027" y="-5229.696566" was_auto="true"/>
   </jump>
   <jump target="New Haven">
-   <autopos/>
    <exitonly/>
    <hide>1.000000</hide>
+   <pos x="37.883047" y="13999.948745" was_auto="true"/>
   </jump>
   <jump target="Rockbed">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="-8105.878094" y="-11414.672151" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-rich</group>
    <radius>5000.000000</radius>
-   <pos x="6000.000000" y="6000.000000"/>
+   <pos x="5538.350271" y="6428.582757"/>
    <density>0.500000</density>
   </asteroid>
   <exclusion>
@@ -45,7 +45,7 @@
   </exclusion>
  </asteroids>
  <waypoints>
-  <waypoint x="0.000000" y="-7000.000000">haven_curse_spawn</waypoint>
-  <waypoint x="11000.000000" y="5000.000000">taiomi05_corpse</waypoint>
+  <waypoint x="519.302283" y="-6980.710933">haven_curse_spawn</waypoint>
+  <waypoint x="10598.758407" y="5802.268540">taiomi05_corpse</waypoint>
  </waypoints>
 </ssys>

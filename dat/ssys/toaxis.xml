@@ -5,16 +5,16 @@
   <interference>24.999975</interference>
   <nebula hue="240.000000">150.000000</nebula>
  </general>
- <pos x="557.387569" y="-483.466877"/>
+ <pos x="740.06916" y="-207.374406"/>
  <spobs/>
  <jumps>
   <jump target="Ingot">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="6907.087346" y="-16079.245765" was_auto="true"/>
   </jump>
   <jump target="Zacron">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-17499.286295" y="-158.047979" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

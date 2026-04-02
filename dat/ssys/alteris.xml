@@ -5,7 +5,7 @@
   <spacedust>400</spacedust>
   <interference>7.000000</interference>
  </general>
- <pos x="77.742629" y="312.428026"/>
+ <pos x="307.328807" y="457.663241"/>
  <spobs>
   <spob>Alteris I</spob>
   <spob>Alteris IV</spob>
@@ -19,27 +19,27 @@
  </spobs>
  <jumps>
   <jump target="Coriolis">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-1747.486814" y="21428.865808" was_auto="true"/>
   </jump>
   <jump target="Delta Pavonis">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="16542.570838" y="-13732.929405" was_auto="true"/>
   </jump>
   <jump target="Eridani">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="20276.266021" y="-7150.037499" was_auto="true"/>
   </jump>
   <jump target="Sikh">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-21499.103688" y="-196.317568" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-standard</group>
    <radius>5000.000000</radius>
-   <pos x="0.000000" y="0.000000"/>
+   <pos x="0" y="0"/>
    <density>0.250000</density>
   </asteroid>
  </asteroids>

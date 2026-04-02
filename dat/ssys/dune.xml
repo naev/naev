@@ -4,7 +4,7 @@
   <spacedust>300</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="172.707170" y="367.867947"/>
+ <pos x="383.239581" y="539.611822"/>
  <spobs>
   <spob>Arrakis</spob>
   <spob>Nixa</spob>
@@ -12,26 +12,26 @@
  </spobs>
  <jumps>
   <jump target="Coriolis">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="-13679.177907" y="2979.948283" was_auto="true"/>
   </jump>
   <jump target="Eridani">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="3035.396138" y="-13666.981022" was_auto="true"/>
   </jump>
   <jump target="Gamel">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-8901.341707" y="10805.837117" was_auto="true"/>
   </jump>
   <jump target="Halo">
-   <pos x="3965.097264" y="15285.574336"/>
+   <pos x="5981.002215" y="14615.005699"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Pilatis">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="13812.098302" y="-2286.031603" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

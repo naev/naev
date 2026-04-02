@@ -4,22 +4,22 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="-720.378276" y="-859.466876"/>
+ <pos x="-591.485207" y="-946.070151"/>
  <spobs>
   <spob>P-9172</spob>
  </spobs>
  <jumps>
   <jump target="NGC-11231">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="14929.463127" y="-1452.973062" was_auto="true"/>
   </jump>
   <jump target="NGC-11444">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-5228.238085" y="-14059.357258" was_auto="true"/>
   </jump>
   <jump target="NGC-5362">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="4115.356805" y="14424.418129" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

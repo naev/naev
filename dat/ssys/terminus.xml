@@ -5,19 +5,19 @@
   <interference>22.000000</interference>
   <nolanes/>
  </general>
- <pos x="145.986751" y="172.057493"/>
+ <pos x="73.953066" y="399.460951"/>
  <spobs>
   <spob>Foundation Station</spob>
  </spobs>
  <jumps>
   <jump target="Acheron">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="22093.198768" y="10589.644383" was_auto="true"/>
   </jump>
   <jump target="Flok">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="4003.705009" y="-24170.650512" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

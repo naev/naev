@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="718.354960" y="673.723677"/>
+ <pos x="952.975283" y="1092.924582"/>
  <spobs>
   <spob>Harnaar</spob>
   <spob>Jeronon</spob>
@@ -12,12 +12,12 @@
  </spobs>
  <jumps>
   <jump target="Jommel">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="3009.857657" y="-15714.348757" was_auto="true"/>
   </jump>
   <jump target="Moor">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-8856.166871" y="13325.475914" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

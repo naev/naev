@@ -7,16 +7,16 @@
   <spacedust>400</spacedust>
   <interference>33.750000</interference>
  </general>
- <pos x="345.019617" y="887.774032"/>
+ <pos x="442.459297" y="1298.999898"/>
  <spobs/>
  <jumps>
   <jump target="Hadosh">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-14969.552000" y="955.255410" was_auto="true"/>
   </jump>
   <jump target="Norn">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="13448.901627" y="6642.819055" was_auto="true"/>
   </jump>
  </jumps>
  <stats>

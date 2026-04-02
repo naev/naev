@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="-105.792455" y="128.805593"/>
+ <pos x="-117.599732" y="390.065332"/>
  <spobs>
   <spob>Koga</spob>
   <spob>Mokoshotar Enclave</spob>
@@ -14,12 +14,12 @@
  </spobs>
  <jumps>
   <jump target="Chloe">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="1874.170398" y="21418.157841" was_auto="true"/>
   </jump>
   <jump target="Zemur">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="12715.289206" y="-17336.995714" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

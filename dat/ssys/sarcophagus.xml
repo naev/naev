@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="651.017118" y="702.191371"/>
+ <pos x="864.492477" y="1061.134643"/>
  <spobs>
   <spob>Ebenezer</spob>
   <spob>Sarcophagus I</spob>
@@ -16,8 +16,8 @@
  </spobs>
  <jumps>
   <jump target="Gewirn">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-20817.193138" y="-9176.435572" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

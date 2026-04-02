@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="-423.556569" y="-840.742048"/>
+ <pos x="-349.057195" y="-816.297656"/>
  <spobs>
   <spob>Amhurst</spob>
   <spob>HZNSS-3</spob>
@@ -13,12 +13,12 @@
  </spobs>
  <jumps>
   <jump target="Hideyoshi's Star">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-6845.462961" y="11286.258761" was_auto="true"/>
   </jump>
   <jump target="Newmarch">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-12639.340124" y="-3806.189854" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

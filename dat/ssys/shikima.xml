@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="413.825954" y="523.921121"/>
+ <pos x="607.303826" y="781.18859"/>
  <spobs>
   <spob>Arrentil</spob>
   <spob>Beene</spob>
@@ -14,16 +14,16 @@
  </spobs>
  <jumps>
   <jump target="Father's Pride">
-   <pos x="20114.506612" y="-123.784296"/>
+   <pos x="-2378.638355" y="-19973.752235"/>
    <hide>0.000000</hide>
   </jump>
   <jump target="Oberon">
-   <pos x="-19820.237648" y="200.204296"/>
+   <pos x="2421.577098" y="19672.769671"/>
    <hide>0.000000</hide>
   </jump>
   <jump target="Thorndyke">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="12339.794637" y="6612.826044" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

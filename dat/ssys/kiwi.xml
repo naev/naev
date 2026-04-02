@@ -4,23 +4,23 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="1158.760351" y="-325.556276"/>
+ <pos x="1310.201472" y="-311.167331"/>
  <spobs>
   <spob>Forbes Monastery</spob>
   <spob>Hypergate Kiwi</spob>
  </spobs>
  <jumps>
   <jump target="Monogram">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="7066.996785" y="12085.427441" was_auto="true"/>
   </jump>
   <jump target="Neon">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-13676.761882" y="2991.017287" was_auto="true"/>
   </jump>
   <jump target="Pellmell">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-10432.525454" y="-9336.081225" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

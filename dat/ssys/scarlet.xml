@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="966.190747" y="-722.964168"/>
+ <pos x="1035.34989" y="-681.836811"/>
  <spobs>
   <spob>Burnan</spob>
   <spob>Burnan's moon</spob>
@@ -15,12 +15,12 @@
  </spobs>
  <jumps>
   <jump target="Druss">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="505.638996" y="-16992.478606" was_auto="true"/>
   </jump>
   <jump target="Esker">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="12934.797147" y="11031.365407" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

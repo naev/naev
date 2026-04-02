@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="572.274543" y="622.536961"/>
+ <pos x="785.850745" y="1026.468643"/>
  <spobs>
   <spob>Charcoal</spob>
   <spob>Gewirn IV</spob>
@@ -12,20 +12,20 @@
  </spobs>
  <jumps>
   <jump target="Jommel">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="12981.673234" y="-5241.770695" was_auto="true"/>
   </jump>
   <jump target="Point Zero">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-689.889484" y="-13982.991543" was_auto="true"/>
   </jump>
   <jump target="Sarcophagus">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="11774.028614" y="7574.447186" was_auto="true"/>
   </jump>
   <jump target="Uridhrion">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="3200.689407" y="13629.218147" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

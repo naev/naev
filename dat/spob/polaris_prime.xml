@@ -1,6 +1,6 @@
 <spob name="Polaris Prime">
  <lua>highclass.lua</lua>
- <pos x="14060.037687" y="4973.423281"/>
+ <pos x="14784.457880" y="1959.439735"/>
  <GFX>
   <space>station-fleetbase4</space>
   <exterior>traderoom</exterior>

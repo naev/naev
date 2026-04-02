@@ -7,31 +7,31 @@
   <spacedust>400</spacedust>
   <interference>33.750000</interference>
  </general>
- <pos x="159.963477" y="1072.691520"/>
+ <pos x="112.071815" y="1604.181353"/>
  <spobs/>
  <jumps>
   <jump target="NGC-2175">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-13165.769289" y="-7187.664363" was_auto="true"/>
   </jump>
   <jump target="NGC-4131">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="14154.795371" y="4964.047541" was_auto="true"/>
   </jump>
   <jump target="NGC-5240">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-7231.352145" y="13141.824307" was_auto="true"/>
   </jump>
   <jump target="Sleuth">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="10462.203052" y="-10749.060762" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeB-standard</group>
    <radius>12500.000000</radius>
-   <pos x="0.000000" y="0.000000"/>
+   <pos x="0" y="0"/>
   </asteroid>
   <exclusion>
    <radius>10000.000000</radius>

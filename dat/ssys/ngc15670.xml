@@ -5,30 +5,30 @@
   <interference>0.000000</interference>
   <nolanes/>
  </general>
- <pos x="1150.877070" y="-161.748881"/>
+ <pos x="1397.387781" y="-156.946757"/>
  <spobs>
   <spob>Wormhole NGC-15670</spob>
   <spob_virtual>Pirate All Unpresence</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Monogram">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="-413.082299" y="-14994.311021" was_auto="true"/>
   </jump>
   <jump target="NGC-9607">
-   <autopos/>
    <hide>0.400000</hide>
+   <pos x="4467.783283" y="14319.179883" was_auto="true"/>
   </jump>
   <jump target="Sorrow">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="-14906.787277" y="1669.638599" was_auto="true"/>
   </jump>
   <jump target="Capella">
-   <autopos/>
    <exitonly/>
    <hide>1.000000</hide>
+   <pos x="-8782.969342" y="12159.747099" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

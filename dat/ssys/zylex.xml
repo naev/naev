@@ -5,16 +5,16 @@
   <interference>24.999999</interference>
   <nebula volatility="1.000000">400.000000</nebula>
  </general>
- <pos x="467.722956" y="-295.064703"/>
+ <pos x="723.874006" y="-128.657092"/>
  <spobs/>
  <jumps>
   <jump target="Doeston">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="11470.135760" y="8027.202852" was_auto="true"/>
   </jump>
   <jump target="Sonas">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-5273.458464" y="12968.833248" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

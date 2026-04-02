@@ -4,19 +4,19 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="134.535737" y="-1067.500373"/>
+ <pos x="256.443835" y="-1013.373681"/>
  <spobs/>
  <jumps>
   <jump target="Marat">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-1689.720280" y="14904.524325" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-rich</group>
    <radius>6000.000000</radius>
-   <pos x="-198.742118" y="-132.494745"/>
+   <pos x="-128.652713" y="-201.250505"/>
    <density>0.500000</density>
   </asteroid>
  </asteroids>

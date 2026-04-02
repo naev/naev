@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="-541.502515" y="-835.437395"/>
+ <pos x="-397.772497" y="-898.782511"/>
  <spobs>
   <spob>Newmarch A-1</spob>
   <spob>Newmarch D-3</spob>
@@ -12,16 +12,16 @@
  </spobs>
  <jumps>
   <jump target="Poller">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="11483.694226" y="-9650.117455" was_auto="true"/>
   </jump>
   <jump target="Reptile">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-9006.489206" y="11995.130352" was_auto="true"/>
   </jump>
   <jump target="Vauban">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="14481.940338" y="3908.120268" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

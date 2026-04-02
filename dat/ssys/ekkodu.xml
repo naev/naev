@@ -4,15 +4,15 @@
   <spacedust>200</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="342.971876" y="-639.109895"/>
+ <pos x="626.993522" y="-361.522292"/>
  <spobs>
   <spob>Ekkodu Alpha</spob>
   <spob>Ekkodu Gamma</spob>
  </spobs>
  <jumps>
   <jump target="Torg">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-3104.308709" y="24302.536234" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

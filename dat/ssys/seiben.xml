@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="-385.054271" y="-637.052565"/>
+ <pos x="-252.115781" y="-560.580143"/>
  <spobs>
   <spob>Arcadia</spob>
   <spob>Gastan</spob>
@@ -14,12 +14,12 @@
  </spobs>
  <jumps>
   <jump target="Regas">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="3946.085471" y="12910.399275" was_auto="true"/>
   </jump>
   <jump target="Za'lek">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="473.826368" y="-13491.682199" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

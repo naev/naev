@@ -5,27 +5,27 @@
   <interference>0.000000</interference>
   <nolanes/>
  </general>
- <pos x="1168.121760" y="-1073.001760"/>
+ <pos x="1118.277435" y="-1177.375565"/>
  <spobs>
   <spob>P-8493</spob>
   <spob>Pirate's Cove</spob>
  </spobs>
  <jumps>
   <jump target="Lazuli">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="10278.822876" y="10924.550346" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-standard</group>
    <radius>7000.000000</radius>
-   <pos x="920.102398" y="3297.033594"/>
+   <pos x="889.421242" y="3305.442299"/>
   </asteroid>
   <asteroid>
    <group>typeC-rich</group>
    <radius>4000.000000</radius>
-   <pos x="-1265.140798" y="-3642.071993"/>
+   <pos x="-1231.238081" y="-3653.672457"/>
   </asteroid>
   <exclusion>
    <radius>3000.000000</radius>

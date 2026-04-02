@@ -7,7 +7,7 @@
   <spacedust>400</spacedust>
   <interference>56.250000</interference>
  </general>
- <pos x="1409.220955" y="-286.525501"/>
+ <pos x="1599.399046" y="-443.340877"/>
  <spobs>
   <spob>Kal Atok Obelisk</spob>
   <spob>Socrates Academy Monastery</spob>
@@ -18,16 +18,16 @@
  </spobs>
  <jumps>
   <jump target="Adraia">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-14194.163871" y="-11069.133299" was_auto="true"/>
   </jump>
   <jump target="Mirror">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="7984.443072" y="16132.224546" was_auto="true"/>
   </jump>
   <jump target="Peogas">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="16572.465584" y="-7025.196400" was_auto="true"/>
   </jump>
  </jumps>
  <stats>

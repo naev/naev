@@ -5,22 +5,22 @@
   <interference>13.235288</interference>
   <nebula volatility="0.250000" hue="250.000000">300.000000</nebula>
  </general>
- <pos x="483.118285" y="-371.990496"/>
+ <pos x="652.865057" y="-87.23241"/>
  <spobs>
   <spob>Cole Outpost</spob>
  </spobs>
  <jumps>
   <jump target="Arcanis">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-4389.256715" y="8985.233747" was_auto="true"/>
   </jump>
   <jump target="Zacron">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-8161.861483" y="-5777.890370" was_auto="true"/>
   </jump>
   <jump target="Zylex">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="5480.605652" y="8364.386509" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

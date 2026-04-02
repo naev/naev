@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="1169.964655" y="-845.641886"/>
+ <pos x="1165.641617" y="-847.445415"/>
  <spobs>
   <spob>Brandt Cloister</spob>
   <spob>Niger I</spob>
@@ -13,12 +13,12 @@
  </spobs>
  <jumps>
   <jump target="Anarbalis">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="13115.686111" y="-16400.572485" was_auto="true"/>
   </jump>
   <jump target="Rhu">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-20642.721324" y="3857.208359" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

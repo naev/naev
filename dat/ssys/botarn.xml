@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="1264.238648" y="-246.658909"/>
+ <pos x="1470.832146" y="-303.485892"/>
  <spobs>
   <spob>Arashu</spob>
   <spob>Botarn I</spob>
@@ -14,16 +14,16 @@
  </spobs>
  <jumps>
   <jump target="Monogram">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="-10756.008146" y="5966.430150" was_auto="true"/>
   </jump>
   <jump target="Vanir">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="5896.766763" y="-10794.356939" was_auto="true"/>
   </jump>
   <jump target="Voproid">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="6722.507912" y="10300.382874" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

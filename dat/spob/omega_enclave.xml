@@ -1,6 +1,6 @@
 <spob name="Omega Enclave">
  <lua>empire_mil_omega_station.lua</lua>
- <pos x="-10032.106791" y="7530.403357"/>
+ <pos x="-2047.032812" y="12375.774644"/>
  <GFX>
   <space>station-battlestation</space>
   <exterior>station05</exterior>

@@ -1,6 +1,6 @@
 <spob name="Simoen">
  <lua>lowclass.lua</lua>
- <pos x="4705.190678" y="-10883.354542"/>
+ <pos x="720.540223" y="-11834.992487"/>
  <GFX>
   <space>G03</space>
   <exterior>desertic4</exterior>

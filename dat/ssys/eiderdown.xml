@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="1290.198607" y="-514.589556"/>
+ <pos x="1351.748041" y="-603.397155"/>
  <spobs>
   <spob>Adrian</spob>
   <spob>Eiderdown I</spob>
@@ -15,24 +15,24 @@
  </spobs>
  <jumps>
   <jump target="Churchill">
-   <pos x="-9902.466534" y="-15405.908775"/>
+   <pos x="-13166.889278" y="-12729.253527"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Gilligan's Tomb">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="13914.206545" y="10613.428107" was_auto="true"/>
   </jump>
   <jump target="Herakin">
-   <pos x="17781.185034" y="-14440.658736"/>
+   <pos x="14002.314796" y="-18128.385098"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Margarita">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="15430.040552" y="-8256.140050" was_auto="true"/>
   </jump>
   <jump target="Palovi">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="-17254.648088" y="-2920.123171" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

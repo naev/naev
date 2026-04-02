@@ -8,7 +8,7 @@
   <interference>50.000000</interference>
   <nolanes/>
  </general>
- <pos x="28.337310" y="-1034.000358"/>
+ <pos x="182.489411" y="-1142.457568"/>
  <spobs>
   <spob>Kretogg I</spob>
   <spob>Kretogg II</spob>
@@ -20,17 +20,17 @@
  </spobs>
  <jumps>
   <jump target="NGC-1098">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-9714.025878" y="-14556.362912" was_auto="true"/>
   </jump>
   <jump target="NGC-14549">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="15373.397710" y="-8361.138847" was_auto="true"/>
   </jump>
   <jump target="Unicorn">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-219.161114" y="17498.627614" was_auto="true"/>
   </jump>
  </jumps>
  <stats>

@@ -1,7 +1,7 @@
 <spob name="Mutris">
  <feature>#pSirius Homeworld#0</feature>
  <lua>sirius_mil_mutris.lua</lua>
- <pos x="26196.025870" y="16073.556994"/>
+ <pos x="28523.685722" y="11445.101947"/>
  <GFX>
   <space>L00</space>
   <exterior>mining4</exterior>

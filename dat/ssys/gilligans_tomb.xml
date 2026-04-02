@@ -4,23 +4,23 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="1352.265692" y="-439.103097"/>
+ <pos x="1444.186665" y="-560.809146"/>
  <spobs>
   <spob>Gilligan's Tomb</spob>
   <spob_virtual>Trade Lane (Sirius)</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Adraia">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="8070.058019" y="15528.173220" was_auto="true"/>
   </jump>
   <jump target="Brendon">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="12920.804757" y="-11802.660904" was_auto="true"/>
   </jump>
   <jump target="Eiderdown">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="-15309.656256" y="-8477.288795" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

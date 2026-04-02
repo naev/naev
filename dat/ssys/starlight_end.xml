@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="654.404790" y="898.669159"/>
+ <pos x="753.420636" y="1333.643458"/>
  <spobs>
   <spob>Starlight End I</spob>
   <spob>Starlight End II</spob>
@@ -13,12 +13,12 @@
  </spobs>
  <jumps>
   <jump target="Taxumi">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="16771.715195" y="-10895.392117" was_auto="true"/>
   </jump>
   <jump target="Treacle">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-19703.441750" y="-3431.382108" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

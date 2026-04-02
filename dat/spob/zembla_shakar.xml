@@ -1,6 +1,6 @@
 <spob name="Zembla Shakar">
  <lua>highclass.lua</lua>
- <pos x="-5765.480628" y="3573.203240"/>
+ <pos x="-2508.063899" y="6302.234821"/>
  <GFX>
   <space>moon-M06</space>
   <exterior>forest</exterior>

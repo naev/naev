@@ -7,30 +7,30 @@
   <spacedust>400</spacedust>
   <interference>30.000000</interference>
  </general>
- <pos x="-82.659570" y="-652.655947"/>
+ <pos x="113.384587" y="-594.401575"/>
  <spobs>
   <spob_virtual>Yetmer-O'rez Unpresence</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Amlet">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="18195.377904" y="-8302.302265" was_auto="true"/>
   </jump>
   <jump target="Fried">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-12040.428890" y="15969.598370" was_auto="true"/>
   </jump>
   <jump target="Perhelion">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="19127.184201" y="5843.870679" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeA-standard</group>
    <radius>4000.000000</radius>
-   <pos x="46.005120" y="92.010240"/>
+   <pos x="-6.106087" y="102.689196"/>
   </asteroid>
  </asteroids>
  <stats>

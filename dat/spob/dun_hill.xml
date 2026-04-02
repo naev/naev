@@ -1,6 +1,6 @@
 <spob name="Dun Hill">
  <lua>lowclass.lua</lua>
- <pos x="2810.240735" y="10261.076369"/>
+ <pos x="3343.888728" y="10099.779671"/>
  <GFX>
   <space>H02</space>
   <exterior>desertic4</exterior>

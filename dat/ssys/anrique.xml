@@ -5,27 +5,27 @@
   <interference>0.000000</interference>
   <nolanes/>
  </general>
- <pos x="1262.642740" y="-354.918290"/>
+ <pos x="1398.52417" y="-460.824165"/>
  <spobs>
   <spob>Kal Niut Obelisk</spob>
  </spobs>
  <jumps>
   <jump target="Herakin">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-14866.457332" y="-9232.466972" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-rich</group>
    <radius>6000.000000</radius>
-   <pos x="8413.416329" y="-6425.995149"/>
+   <pos x="873.647930" y="-10550.626866"/>
    <density>0.800000</density>
   </asteroid>
   <asteroid>
    <group>typeC-poor</group>
    <radius>4000.000000</radius>
-   <pos x="397.484236" y="-8280.921584"/>
+   <pos x="-5877.204001" y="-5847.232603"/>
    <density>0.800000</density>
   </asteroid>
  </asteroids>

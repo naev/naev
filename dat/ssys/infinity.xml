@@ -5,7 +5,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="634.685371" y="-908.418292"/>
+ <pos x="701.605955" y="-680.717012"/>
  <spobs>
   <spob>Infinity III</spob>
   <spob>Infinity IV</spob>
@@ -15,16 +15,16 @@
  </spobs>
  <jumps>
   <jump target="Gruz">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-776.866065" y="-21567.413036" was_auto="true"/>
   </jump>
   <jump target="Maus">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-12804.896633" y="17372.145755" was_auto="true"/>
   </jump>
   <jump target="Millstone">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="11934.857376" y="17980.990110" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

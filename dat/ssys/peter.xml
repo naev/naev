@@ -4,22 +4,22 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="678.526954" y="-1050.094480"/>
+ <pos x="818.45177" y="-868.817207"/>
  <spobs/>
  <jumps>
   <jump target="Baf">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-9920.537949" y="-1258.144188" was_auto="true"/>
   </jump>
   <jump target="Druid">
-   <pos x="8880.810551" y="-7925.311697"/>
+   <pos x="9687.455858" y="-6916.108770"/>
    <hidden/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Felzen">
-   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+   <pos x="-8767.572599" y="-4809.331629" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

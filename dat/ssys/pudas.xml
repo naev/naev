@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="-36.235573" y="-596.032993"/>
+ <pos x="191.925487" y="-476.167106"/>
  <spobs>
   <spob>Ambre</spob>
   <spob>Pudas I</spob>
@@ -13,8 +13,8 @@
  </spobs>
  <jumps>
   <jump target="Daravon">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="12117.362783" y="7012.098058" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

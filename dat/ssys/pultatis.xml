@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="-246.653086" y="-442.872008"/>
+ <pos x="-62.42435" y="-425.211728"/>
  <spobs>
   <spob>Bastion Centre</spob>
   <spob>Pultatis I</spob>
@@ -14,16 +14,16 @@
  </spobs>
  <jumps>
   <jump target="Hargen">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="-14031.992861" y="-10457.206908" was_auto="true"/>
   </jump>
   <jump target="Provectus Nova">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="17291.297228" y="2694.631730" was_auto="true"/>
   </jump>
   <jump target="Sollav">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-2721.580819" y="-17287.076035" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

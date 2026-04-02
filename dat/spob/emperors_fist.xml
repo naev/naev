@@ -1,6 +1,6 @@
 <spob name="Emperor's Fist">
  <lua>highclass.lua</lua>
- <pos x="14437.024197" y="4251.607749"/>
+ <pos x="15004.084258" y="1175.283663"/>
  <GFX>
   <space>C00</space>
   <exterior>mining5</exterior>

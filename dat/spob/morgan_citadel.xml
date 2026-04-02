@@ -1,6 +1,6 @@
 <spob name="Morgan Citadel">
  <lua>dvaered_mil_restricted.lua</lua>
- <pos x="2318.658043" y="2318.658043"/>
+ <pos x="2356.904292" y="2279.770250"/>
  <GFX>
   <space>station-dvaered1</space>
   <exterior>station04</exterior>

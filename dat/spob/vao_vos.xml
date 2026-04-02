@@ -1,6 +1,6 @@
 <spob name="Vao Vos">
  <lua>lowclass.lua</lua>
- <pos x="-2875.319994" y="3105.345594"/>
+ <pos x="-2170.236760" y="3633.277959"/>
  <GFX>
   <space>A04</space>
   <exterior>lava</exterior>

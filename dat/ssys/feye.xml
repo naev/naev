@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="469.513172" y="777.233063"/>
+ <pos x="571.029926" y="1197.816303"/>
  <spobs>
   <spob>Feye I</spob>
   <spob>Feye IV</spob>
@@ -16,15 +16,15 @@
  </spobs>
  <jumps>
   <jump target="Cerberus">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="-22046.005419" y="-13783.092724" was_auto="true"/>
   </jump>
   <jump target="Pisces Prime">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="678.682176" y="25991.140615" was_auto="true"/>
   </jump>
   <jump target="Uridhrion">
-   <pos x="19004.130603" y="7934.284741"/>
+   <pos x="14777.057252" y="14343.933675"/>
    <hidden/>
    <hide>1.000000</hide>
   </jump>

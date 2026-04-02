@@ -4,22 +4,22 @@
   <spacedust>400</spacedust>
   <interference>13.235294</interference>
  </general>
- <pos x="-286.764052" y="-295.569978"/>
+ <pos x="-178.11718" y="-221.777362"/>
  <spobs>
   <spob>Dendria Alpha</spob>
   <spob>Dendria Alpha-a</spob>
  </spobs>
  <jumps>
   <jump target="Attaria">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="17326.666596" y="-2456.954345" was_auto="true"/>
   </jump>
   <jump target="Ux">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="8850.505447" y="15096.971660" was_auto="true"/>
   </jump>
  </jumps>
  <waypoints>
-  <waypoint x="14000.000000" y="3000.000000">dendria_pirate_mainpos</waypoint>
+  <waypoint x="12608.232873" y="6784.722825">dendria_pirate_mainpos</waypoint>
  </waypoints>
 </ssys>

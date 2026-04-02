@@ -1,6 +1,6 @@
 <spob name="Vorca">
  <lua>pirate_clanworld.lua</lua>
- <pos x="-12000.000000" y="-22000.000000"/>
+ <pos x="-4369.635257" y="-24676.026578"/>
  <GFX>
   <space>Y00</space>
   <exterior>gas</exterior>

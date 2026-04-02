@@ -7,24 +7,24 @@
   <spacedust>400</spacedust>
   <interference>56.250000</interference>
  </general>
- <pos x="1498.231452" y="-432.545416"/>
+ <pos x="1645.195648" y="-632.047317"/>
  <spobs/>
  <jumps>
   <jump target="Brendon">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-9995.902606" y="286.236067" was_auto="true"/>
   </jump>
   <jump target="NGC-22375">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="9444.849401" y="3285.547105" was_auto="true"/>
   </jump>
   <jump target="Narousse">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-7054.982334" y="-7087.116780" was_auto="true"/>
   </jump>
   <jump target="Undergate">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-2328.429652" y="9725.143461" was_auto="true"/>
   </jump>
  </jumps>
  <stats>

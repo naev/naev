@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="-55.463399" y="-365.549008"/>
+ <pos x="80.649006" y="-261.336966"/>
  <spobs>
   <spob>Madeleine Enclave</spob>
   <spob>Waterhole</spob>
@@ -13,20 +13,20 @@
  </spobs>
  <jumps>
   <jump target="Goddard">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="-2378.407649" y="-19102.504470" was_auto="true"/>
   </jump>
   <jump target="Majesteka">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="18775.035889" y="-4249.767918" was_auto="true"/>
   </jump>
   <jump target="Overture">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="-7307.660830" y="17809.003149" was_auto="true"/>
   </jump>
   <jump target="Regulus">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-18370.594867" y="-5751.847026" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

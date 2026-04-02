@@ -1,6 +1,6 @@
 <spob name="Eclipse Citadel">
  <lua>dvaered_mil_restricted.lua</lua>
- <pos x="-9543.149055" y="-11138.579005"/>
+ <pos x="-7670.872499" y="-12501.893905"/>
  <GFX>
   <space>000</space>
   <exterior>station00</exterior>

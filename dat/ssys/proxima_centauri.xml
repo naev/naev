@@ -6,7 +6,7 @@
   <nebula volatility="47.200000" hue="295.000000">700.000000</nebula>
   <nolanes/>
  </general>
- <pos x="726.959858" y="-204.004838"/>
+ <pos x="1017.01952" y="44.450371"/>
  <spobs>
   <spob>Proxima Centauri c</spob>
   <spob>Tuomi's Orb</spob>
@@ -14,12 +14,12 @@
  </spobs>
  <jumps>
   <jump target="Polaris">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-12091.907191" y="8876.135446" was_auto="true"/>
   </jump>
   <jump target="Sten">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="499.674972" y="-14991.675187" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

@@ -1,6 +1,6 @@
 <spob name="Qorellia">
  <lua>pirate_clanworld.lua</lua>
- <pos x="1500.000000" y="1500.000000"/>
+ <pos x="515.944323" y="2057.620337"/>
  <GFX>
   <space>moon-G01</space>
   <exterior>mining2</exterior>

@@ -6,7 +6,7 @@
   <nebula volatility="4.800000" hue="270.000000">500.000000</nebula>
   <nolanes/>
  </general>
- <pos x="845.733655" y="104.306958"/>
+ <pos x="1101.136748" y="302.764085"/>
  <spobs>
   <spob>Meya</spob>
   <spob>New Konnor</spob>
@@ -15,12 +15,12 @@
  </spobs>
  <jumps>
   <jump target="Seport">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="7448.588121" y="-6672.221143" was_auto="true"/>
   </jump>
   <jump target="South Bell">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-8586.610648" y="5125.438281" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

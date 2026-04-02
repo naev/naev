@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="242.527801" y="662.472612"/>
+ <pos x="365.37085" y="892.08539"/>
  <spobs>
   <spob>Diadem I</spob>
   <spob>Diadem II</spob>
@@ -13,55 +13,55 @@
  </spobs>
  <jumps>
   <jump target="Babylon">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="9309.695790" y="9001.781173" was_auto="true"/>
   </jump>
   <jump target="Khaas">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="12898.020261" y="1159.126108" was_auto="true"/>
   </jump>
   <jump target="Muran">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-12468.432182" y="-3498.671019" was_auto="true"/>
   </jump>
   <jump target="Solene">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="11698.881605" y="-5553.257529" was_auto="true"/>
   </jump>
   <jump target="Wahri">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-12369.059065" y="3835.215487" was_auto="true"/>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-poor</group>
    <radius>1000.000000</radius>
-   <pos x="-2308.140431" y="-3102.713477"/>
+   <pos x="-1107.512743" y="-3705.099012"/>
    <density>0.500000</density>
   </asteroid>
   <asteroid>
    <group>typeB-standard</group>
    <radius>1000.000000</radius>
-   <pos x="-1000.000000" y="-2500.000000"/>
+   <pos x="-84.468456" y="-2691.257156"/>
    <density>0.500000</density>
   </asteroid>
   <asteroid>
    <group>typeB-poor</group>
    <radius>1500.000000</radius>
-   <pos x="0.000000" y="-1000.000000"/>
+   <pos x="342.080829" y="-939.670530"/>
    <density>0.500000</density>
   </asteroid>
   <asteroid>
    <group>typeB-poor</group>
    <radius>1000.000000</radius>
-   <pos x="795.301247" y="795.301247"/>
+   <pos x="475.263834" y="1019.378455"/>
    <density>0.500000</density>
   </asteroid>
   <asteroid>
    <group>typeB-rich</group>
    <radius>500.000000</radius>
-   <pos x="1400.000000" y="-2000.000000"/>
+   <pos x="1999.700401" y="-1400.427899"/>
    <density>0.750000</density>
   </asteroid>
  </asteroids>

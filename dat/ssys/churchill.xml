@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="1321.239759" y="-604.750029"/>
+ <pos x="1371.601985" y="-692.297478"/>
  <spobs>
   <spob>Churchill I</spob>
   <spob>Churchill II</spob>
@@ -16,20 +16,20 @@
  </spobs>
  <jumps>
   <jump target="Eiderdown">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-8689.714478" y="22907.179273" was_auto="true"/>
   </jump>
   <jump target="Muirat">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="23700.694606" y="-6207.018218" was_auto="true"/>
   </jump>
   <jump target="Porro">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-24488.963293" y="-735.307277" was_auto="true"/>
   </jump>
   <jump target="Willow">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-17268.235940" y="-17379.816670" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

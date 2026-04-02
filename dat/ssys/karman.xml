@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="935.822001" y="-573.667563"/>
+ <pos x="1087.472372" y="-476.866021"/>
  <spobs>
   <spob>Atalanta</spob>
   <spob>Karman I</spob>
@@ -13,16 +13,16 @@
  </spobs>
  <jumps>
   <jump target="Chraan">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-22743.772707" y="532.262160" was_auto="true"/>
   </jump>
   <jump target="Gyrios">
-   <pos x="20450.192730" y="22311.207588"/>
+   <pos x="22915.235409" y="19770.997771"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Nougat">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-14690.009843" y="-17371.416487" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

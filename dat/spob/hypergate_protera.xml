@@ -1,7 +1,7 @@
 <spob name="Hypergate Protera">
  <display>Ruined Hypergate</display>
  <marker>spobmarker_triangle</marker>
- <pos x="-7853.883318" y="6096.743322"/>
+ <pos x="6740.837937" y="7308.547476"/>
  <GFX>
   <space>hypergate_debris</space>
   <exterior>station04</exterior>

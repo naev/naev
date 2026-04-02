@@ -5,7 +5,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="944.599766" y="-836.490214"/>
+ <pos x="926.770611" y="-724.690435"/>
  <spobs>
   <spob>Eye of Night I</spob>
   <spob>Eye of Night II</spob>
@@ -16,21 +16,21 @@
  </spobs>
  <jumps>
   <jump target="Druid">
-   <pos x="-13734.045985" y="-22773.521987"/>
+   <pos x="-24282.445763" y="-10845.282409"/>
    <hidden/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Druss">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="24090.566708" y="-4460.335826" was_auto="true"/>
   </jump>
   <jump target="Fidelis">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="-18672.814811" y="15861.147090" was_auto="true"/>
   </jump>
   <jump target="Lynx">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-3794.558608" y="24204.365824" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

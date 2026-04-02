@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="-380.230135" y="-571.908926"/>
+ <pos x="-225.811776" y="-476.728056"/>
  <spobs>
   <spob>Jorla</spob>
   <spob>Lugun</spob>
@@ -12,16 +12,16 @@
  </spobs>
  <jumps>
   <jump target="Hargen">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="11540.154407" y="14306.851409" was_auto="true"/>
   </jump>
   <jump target="Seiben">
-   <autopos/>
    <hide>0.000000</hide>
+   <pos x="-1072.388278" y="-18349.690579" was_auto="true"/>
   </jump>
   <jump target="Vost">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="-6100.365335" y="17339.166755" was_auto="true"/>
   </jump>
  </jumps>
  <tags>

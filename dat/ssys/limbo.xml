@@ -4,7 +4,7 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="-188.320077" y="-508.249736"/>
+ <pos x="16.533663" y="-471.888936"/>
  <spobs>
   <spob>Jugreny</spob>
   <spob>Limbo I</spob>
@@ -15,19 +15,19 @@
  </spobs>
  <jumps>
   <jump target="Fried">
-   <pos x="-21000.000000" y="-22000.000000"/>
+   <pos x="-6454.185801" y="-29721.094960"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Gammacron">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="16344.774772" y="6252.866354" was_auto="true"/>
   </jump>
   <jump target="Provectus Nova">
-   <pos x="-15000.000000" y="9000.000000"/>
+   <pos x="-17492.311376" y="-137.995328"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Sollav">
-   <pos x="-23500.000000" y="-5500.000000"/>
+   <pos x="-17188.234380" y="-16942.980814"/>
    <hide>1.000000</hide>
   </jump>
  </jumps>
@@ -35,7 +35,7 @@
   <asteroid>
    <group>typeC-standard</group>
    <radius>2500.000000</radius>
-   <pos x="7751.999537" y="8337.110969"/>
+   <pos x="2269.944061" y="11155.638488"/>
   </asteroid>
   <exclusion>
    <radius>2000.000000</radius>
@@ -43,10 +43,10 @@
   </exclusion>
  </asteroids>
  <waypoints>
-  <waypoint x="-12000.000000" y="-12000.000000">pirate1_drone</waypoint>
-  <waypoint x="6000.000000" y="-4000.000000">pirate1_thug</waypoint>
-  <waypoint x="-2000.000000" y="-15000.000000">pirate2_drone1</waypoint>
-  <waypoint x="-10000.000000" y="0.000000">pirate2_drone2</waypoint>
-  <waypoint x="-17500.000000" y="2500.000000">pirate6_meet</waypoint>
+  <waypoint x="-3985.960014" y="-16495.821372">pirate1_drone</waypoint>
+  <waypoint x="7205.422239" y="-286.164891">pirate1_thug</waypoint>
+  <waypoint x="6111.848233" y="-13843.601813">pirate2_drone1</waypoint>
+  <waypoint x="-8534.075577" y="-5212.442232">pirate2_drone2</waypoint>
+  <waypoint x="-16237.742819" y="-6988.255012">pirate6_meet</waypoint>
  </waypoints>
 </ssys>

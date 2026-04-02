@@ -5,18 +5,18 @@
   <interference>0.000000</interference>
   <nolanes/>
  </general>
- <pos x="-149.832676" y="-1112.979686"/>
+ <pos x="-207.579376" y="-1290.624951"/>
  <spobs>
   <spob>P-3030</spob>
  </spobs>
  <jumps>
   <jump target="NGC-1317">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="1954.453783" y="14872.125282" was_auto="true"/>
   </jump>
   <jump target="Sinensis">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="14218.519366" y="-4778.462831" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

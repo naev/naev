@@ -4,24 +4,24 @@
   <spacedust>400</spacedust>
   <interference>0.000000</interference>
  </general>
- <pos x="1042.936214" y="-486.398788"/>
+ <pos x="1159.66146" y="-445.58008"/>
  <spobs>
   <spob>Ferrungir</spob>
   <spob>Fulcrum I</spob>
  </spobs>
  <jumps>
   <jump target="Duros">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="9246.512063" y="-17734.204652" was_auto="true"/>
   </jump>
   <jump target="Gyrios">
-   <autopos/>
    <exitonly/>
    <hide>1.000000</hide>
+   <pos x="-15786.639071" y="12279.333321" was_auto="true"/>
   </jump>
   <jump target="Jackson">
-   <autopos/>
    <hide>1.000000</hide>
+   <pos x="19935.239947" y="-1608.169222" was_auto="true"/>
   </jump>
  </jumps>
 </ssys>

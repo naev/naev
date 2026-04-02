@@ -1,6 +1,6 @@
 <spob name="Anya">
  <lua>thurion.lua</lua>
- <pos x="3922.724703" y="-6378.612668"/>
+ <pos x="-157.244032" y="7486.637628"/>
  <GFX>
   <space>C01</space>
   <exterior>snow</exterior>

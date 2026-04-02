@@ -1,6 +1,6 @@
 <spob name="Tesla Station">
  <lua>zalek_mil_restricted.lua</lua>
- <pos x="860.225371" y="1014.295587"/>
+ <pos x="344.552300" y="1284.549313"/>
  <GFX>
   <space>zalek_station1</space>
   <exterior>zalek_station1</exterior>
