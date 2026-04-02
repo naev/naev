@@ -8,7 +8,7 @@
  <time_mod>1</time_mod>
  <fabricator>Melendez Corp.</fabricator>
  <faction>Independent</faction>
- <description>Designed to be piloted by a single person, the Alpaca is a minimalistic ship designed for cargo transport, and not much more. The lack of advanced thrusters results in low mobility, which, along with very little space devoted to anything other than cargo, gives the ship no flexibility to perform anything than hauling jobs. However, the low cost and wide availability make the ship popular among novice pilots.</description>
+ <description>Designed to be piloted by a single person, the Alpaca is a minimalistic ship designed for cargo transport, and not much more. The lack of advanced thrusters results in low mobility, which, along with very little space devoted to anything other than cargo, gives the ship no flexibility to perform anything other than hauling jobs. However, the low cost and wide availability make the ship popular among novice pilots.</description>
  <characteristics>
   <crew>1</crew>
   <mass>40</mass>
