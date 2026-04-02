@@ -3,7 +3,7 @@
 use std::ops::{Deref, DerefMut};
 use std::sync::{Arc, RwLock, RwLockReadGuard, RwLockWriteGuard, Weak};
 
-pub struct CowArc<T> {
+pub struct MlArc<T> {
    inner: Inner<T>,
 }
 enum Inner<T> {
@@ -11,40 +11,40 @@ enum Inner<T> {
    Locked(Arc<RwLock<T>>),
 }
 
-impl<T> CowArc<T> {
+impl<T> MlArc<T> {
    pub fn shared(arc: T) -> Self {
-      CowArc {
+      MlArc {
          inner: Inner::Shared(Arc::new(arc)),
       }
    }
 
    pub fn locked(lock: T) -> Self {
-      CowArc {
+      MlArc {
          inner: Inner::Locked(Arc::new(RwLock::new(lock))),
       }
    }
 
-   pub fn borrow(&self) -> CowRef<'_, T> {
+   pub fn borrow(&self) -> MlArcRef<'_, T> {
       let inner = match &self.inner {
-         Inner::Shared(v) => CowRefInner::Shared(&**v),
-         Inner::Locked(lock) => CowRefInner::Locked(lock.read().unwrap()),
+         Inner::Shared(v) => MlArcRefInner::Shared(&**v),
+         Inner::Locked(lock) => MlArcRefInner::Locked(lock.read().unwrap()),
       };
-      CowRef { inner }
+      MlArcRef { inner }
    }
 
-   pub fn borrow_mut(&self) -> Option<CowMut<'_, T>> {
+   pub fn borrow_mut(&self) -> Option<MlArcMut<'_, T>> {
       match &self.inner {
          Inner::Shared(_) => None,
-         Inner::Locked(lock) => Some(CowMut(lock.write().unwrap())),
+         Inner::Locked(lock) => Some(MlArcMut(lock.write().unwrap())),
       }
    }
 
-   pub fn downgrade(&self) -> CowWeak<T> {
+   pub fn downgrade(&self) -> MlArcWeak<T> {
       let inner = match &self.inner {
-         Inner::Shared(v) => CowWeakInner::Shared(Arc::downgrade(v)),
-         Inner::Locked(lock) => CowWeakInner::Locked(Arc::downgrade(lock)),
+         Inner::Shared(v) => MlArcWeakInner::Shared(Arc::downgrade(v)),
+         Inner::Locked(lock) => MlArcWeakInner::Locked(Arc::downgrade(lock)),
       };
-      CowWeak { inner }
+      MlArcWeak { inner }
    }
 
    pub fn into_raw(self) -> *mut Self {
@@ -56,26 +56,26 @@ impl<T> CowArc<T> {
    }
 }
 
-pub struct CowWeak<T> {
-   inner: CowWeakInner<T>,
+pub struct MlArcWeak<T> {
+   inner: MlArcWeakInner<T>,
 }
-pub enum CowWeakInner<T> {
+pub enum MlArcWeakInner<T> {
    Shared(Weak<T>),
    Locked(Weak<RwLock<T>>),
 }
-impl<T> CowWeak<T> {
-   pub fn upgrade(&self) -> Option<CowArc<T>> {
+impl<T> MlArcWeak<T> {
+   pub fn upgrade(&self) -> Option<MlArc<T>> {
       match &self.inner {
-         CowWeakInner::Shared(v) => match v.upgrade() {
+         MlArcWeakInner::Shared(v) => match v.upgrade() {
             Some(v) => Some(Inner::Shared(v)),
             None => None,
          },
-         CowWeakInner::Locked(lock) => match lock.upgrade() {
+         MlArcWeakInner::Locked(lock) => match lock.upgrade() {
             Some(v) => Some(Inner::Locked(v)),
             None => None,
          },
       }
-      .map(|inner| CowArc { inner })
+      .map(|inner| MlArc { inner })
    }
 
    pub fn into_raw(self) -> *mut Self {
@@ -87,32 +87,42 @@ impl<T> CowWeak<T> {
    }
 }
 
-pub struct CowRef<'a, T> {
-   inner: CowRefInner<'a, T>,
+pub struct MlArcRef<'a, T> {
+   inner: MlArcRefInner<'a, T>,
 }
-enum CowRefInner<'a, T> {
+enum MlArcRefInner<'a, T> {
    Shared(&'a T),
    Locked(RwLockReadGuard<'a, T>),
 }
-impl<'a, T> Deref for CowRef<'a, T> {
+impl<'a, T> Deref for MlArcRef<'a, T> {
    type Target = T;
    fn deref(&self) -> &T {
       match &self.inner {
-         CowRefInner::Shared(v) => v,
-         CowRefInner::Locked(g) => &*g,
+         MlArcRefInner::Shared(v) => v,
+         MlArcRefInner::Locked(g) => &*g,
       }
    }
 }
+impl<'a, T> AsRef<T> for MlArcRef<'a, T> {
+   fn as_ref(&self) -> &T {
+      self.deref()
+   }
+}
 
-pub struct CowMut<'a, T>(RwLockWriteGuard<'a, T>);
-impl<'a, T> Deref for CowMut<'a, T> {
+pub struct MlArcMut<'a, T>(RwLockWriteGuard<'a, T>);
+impl<'a, T> Deref for MlArcMut<'a, T> {
    type Target = T;
    fn deref(&self) -> &T {
       &*self.0
    }
 }
-impl<'a, T> DerefMut for CowMut<'a, T> {
+impl<'a, T> DerefMut for MlArcMut<'a, T> {
    fn deref_mut(&mut self) -> &mut T {
       &mut *self.0
+   }
+}
+impl<'a, T> AsMut<T> for MlArcMut<'a, T> {
+   fn as_mut(&mut self) -> &mut T {
+      self.deref_mut()
    }
 }
