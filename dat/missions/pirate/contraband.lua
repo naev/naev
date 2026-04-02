@@ -184,11 +184,27 @@ function accept()
    tick() -- set OSD
 end
 
+local cb_land = {
+   _("A shifty, hasty bunch of dockworkers unload the {cargo} from your ship. One of them hands you a credit stick worth #g{credits}#0 as they make their leave."),
+   _("You drop off the containers of {cargo} at an agreed-upon location and await your payment. After some time, you recieve an anonymous transfer of #g{credits}#0."),
+   _("The {cargo} packages are mixed in with legitimate deliveries to be handled by a local agency. The overseer hands you #g{credits}#0 of their bribe."),
+}
+
+local cb_land_c = {
+   _("The {cargo} is unloaded at the docks by a drunken bunch of pirates. #g{credits}#0 is left in your ship as they finish up."),
+   _("The {cargo} is taken off your hands and away for further distribution, not before you are given your payment of #g{credits}#0."),
+   _("As you land, a group comes over to your ship right away to take care of the {cargo}. After it's unloaded, you're paid your fair share of #g{credits}#0."),
+}
+
 -- Land hook
 function land()
    if spob.cur() == mem.destplanet then
-         vntk.msg( _("Successful Delivery"), fmt.f(
-            _("The containers of {cargo} are unloaded at the docks."), {cargo=_(mem.cargo)} ) )
+      lmisn.sfxMoney()
+      if spob.cur():tags()["criminal"] then
+         vntk.msg( _("Delivery success!"), fmt.f(cb_land[rnd.rnd(1, #cb_land_c)], {cargo=_(mem.cargo), credits=fmt.credits(mem.reward)}) )
+      else
+         vntk.msg( _("Delivery success!"), fmt.f(cb_land[rnd.rnd(1, #cb_land)], {cargo=_(mem.cargo), credits=fmt.credits(mem.reward)}) )
+      end
       player.pay(mem.reward)
       local n = var.peek("ps_misn") or 0
       var.push("ps_misn", n+1)
