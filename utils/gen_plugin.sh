@@ -151,7 +151,7 @@ if [ -n "${ADDED_FILES[*]}" ] ; then
    cp --parents "${ADDED_FILES[@]}" "$fname/"
 fi
 
-readarray -t REMOVED_FILES <<< "$(sed "s/^D\t//; t; d" "$CHANGES")"
+readarray -t REMOVED_FILES <<< "$(sed "s/^D\tdat\/\(.*\)/\"\1\"/; t; d" "$CHANGES")"
 if [ -n "${REMOVED_FILES[*]}" ] ; then
    REM_LST="$(IFS=","; echo "[${REMOVED_FILES[*]}]")"
    echo "blacklist = ${REM_LST//,/, }" >> "$fname/plugin.toml"
