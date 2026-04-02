@@ -627,8 +627,8 @@ static int shipL_getSlots( lua_State *L )
          lua_pushstring( L, slotSize( slot->size ) );
          lua_setfield( L, -2, "size" ); /* table[key] = value */
 
-         lua_pushstring( L, sp_display( slot->spid ) ); /* value */
-         lua_setfield( L, -2, "property" );             /* table[key] = value */
+         lua_pushstring( L, sp_name( slot->spid ) ); /* value */
+         lua_setfield( L, -2, "property" );          /* table[key] = value */
 
          lua_pushboolean( L, sslot->required ); /* value */
          lua_setfield( L, -2, "required" );     /* table[key] = value */
