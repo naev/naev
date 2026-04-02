@@ -117,7 +117,7 @@ Some important notes.
 
 * We use `fmt.f` to format the strings. In this case, the `{spb}` will be replaced by the `spb` field in the table, which corresponds to the name of the `mem.dest` spob. This is further explained in [Formatting Text](./basics/format.md).
 * Variables don't get saved unless they are in the `mem` table. This table gets populated again every time the save game gets loaded. More details in [Memory Model](./basics/memory.md)
-* You have to pass function names as strings to the family of `hook.*` functions. More details on hooks in [Hooks](./baiscs/hooks.md).
+* You have to pass function names as strings to the family of `hook.*` functions. More details on hooks in [Hooks](./basics/hooks.md).
 
 Now this gives us almost the entirety of the mission, but a last crucial component is missing: we need to reward the player when they deliver the cargo to **Caladan**.
 We do this by exploiting the `hook.land` that makes it so our defined `land` function gets called whenever the player lands.
