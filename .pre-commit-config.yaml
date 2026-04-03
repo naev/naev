@@ -41,26 +41,41 @@ repos:
 - repo: local
   hooks:
     - id: smd
-      # -s -i -P -a -w 5
       name: markdown linter
       entry: utils/shlinters/smd/smd.sh
-      args: ["-i", "-s"]
-      files: '^Readme.md'
+      args: ["-i", "-s", "-P"]
+      files: '^Readme\.md'
       types: [markdown]
       language: script
       require_serial: true
-    - id: smd-w
-      name: markdown linter (wider)
+    - id: smd-d
+      name: markdown linter (doc)
       entry: utils/shlinters/smd/smd.sh
-      args: ["-i", "-s", "-f", "-w", "5"]
-      files: '^Changelog.md'
+      args: ["-i", "-s", "-P", "-a", "-w", "5"]
+      files: '^docs/manual/src/ships/graphics/'
+      types: [markdown]
+      language: script
+      require_serial: true
+    - id: smd-dw
+      name: markdown linter (doc, wide)
+      entry: utils/shlinters/smd/smd.sh
+      args: ["-i", "-s", "-P", "-a", "-w", "15"]
+      files: '^docs/manual/src/spobs/data\.md'
+      types: [markdown]
+      language: script
+      require_serial: true
+    - id: smd-log
+      name: markdown linter (Changelog)
+      entry: utils/shlinters/smd/smd.sh
+      args: ["-i", "-s", "-P", "-f", "-w", "5"]
+      files: '^Changelog\.md'
       types: [markdown]
       language: script
       require_serial: true
     - id: luafunc_dup
       name: duplicate @luafunc entry detector
       entry: utils/luafunc_dup.sh
-      files: '^src/nlua_*.c'
+      files: '^src/nlua_'
       types: [c]
       language: script
     - id: rem_xml_head
