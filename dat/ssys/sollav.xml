@@ -7,7 +7,7 @@
   <map_shader>stellarwind_map.frag</map_shader>
   <features>#bStellar Wind (1 fuel regen)#0</features>
  </general>
- <pos x="-58.127286" y="-527.963983"/>
+ <pos x="-611.029393" y="-747.831202"/>
  <spobs>
   <spob>Sollav II</spob>
   <spob>Sollav VI</spob>

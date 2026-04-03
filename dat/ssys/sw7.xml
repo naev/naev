@@ -7,7 +7,7 @@
   <map_shader>stellarwind_map.frag</map_shader>
   <features>#bStellar Wind (1 fuel regen)#0</features>
  </general>
- <pos x="-117.811995" y="131.202725"/>
+ <pos x="-670.714102" y="-88.664494"/>
  <spobs/>
  <jumps>
   <jump target="SW-6">
