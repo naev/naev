@@ -50,7 +50,8 @@
                 this tag will not generate an Autosave (and will warn the player of this)
                 to mitigate the chances of a "soft lock" where the player becomes trapped
                 in a region of systems with no fuel sources and no autosaves prior to
-                entering said region.
+                entering said region. Also grants access to the Equipment tab (see
+                below).
               - `<bar>`: Includes the Bar tab, allowing the player to converse with
                 generic or mission-relevant NPCs and view a news feed. Certain spob tags
                 may alter the availability of NPCs and the news.
@@ -58,13 +59,16 @@
                 accept generic missions.
               - `<commodity>`: Includes the Commodities Exchange tab, where the player
                 can buy and sell trade goods.
+              - `<equipment>`: Grants access to the Equipment tab where the player can
+                swap outfits to and from their active ship.
+                This is implied by `refuel`, `outfits`, and `shipyard`, so it is usually
+                useless to explicitly specify it.
               - `<outfits>`: Includes the Outfitter tab, allowing the player to buy and
-                sell ship outfits. Also grants access to the Equipment tab where the
-                player can swap outfits to and from their active ship.
+                sell ship outfits. Also grants access to the Equipment tab as above.
               - `<shipyard>`: Includes the Shipyard tab, allowing the player to purchase
-                new ships. Grants access to the Equipment tab as above; also allows the
-                player to swap their active and fleet ships and change the outfits on all
-                player-owned ships.
+                new ships. Also grants access to the Equipment tab as above; also allows
+                the player to swap their active and fleet ships and change the outfits on
+                all player-owned ships.
           * `<commodities>`: Declares the spob as having ready access to commodities,
             independent of the Commodities Exchange service.
           * `<description>`: Text string presented to the player on the Landing Main tab.
