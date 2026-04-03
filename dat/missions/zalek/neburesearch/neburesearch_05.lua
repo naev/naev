@@ -77,7 +77,7 @@ function accept()
       mensing(_([["I'm glad to hear that you're in. First of all, - since our motto is "safety first"… Wait, why are you rolling your eyes? Anyway, since your current ship is very small, it's not a good idea to send you into the Sol nebula. Please return with a larger ship. I'd say at least a Corvette class ship. It will increase your chances to survive. Just in case, you know? I don't actually expect that something goes wrong."]]))
       vn.done()
    else
-      mensing(_([["I'm glad to hear that you're in. First of all, - since our motto is "safety first"… Wait, why are you rolling your eyes? Anyway, you'll require at least a corvette class ship or preferably something larger and please equip some additional shield boosters and shield capacitors. Just in case that there will be a problem with the prototype."]]))
+      mensing(_([["I'm glad to hear that you're in. First of all, - since our motto is "safety first"… Wait, why are you rolling your eyes? Anyway, you'll require at least a corvette class ship or preferably something larger and please equip some additional shield boosters and shield capacitors. Just in case there is a problem with the prototype."]]))
       vn.func( function () accepted = true end )
    end
    mensing(fmt.f(_([["My team will bring the shielding prototype onboard your ship. Don't forget to install it before departing! Your first destination will be {pnt} in the {sys} system. Robert will be waiting there since he demanded to be involved in this project."]]), {pnt=dest_planet, sys=dest_sys}))
@@ -341,7 +341,7 @@ function rescue()
    vn.transition()
    vn.na(_("After docking to the Peacemaker its captain invited you on her ship. It turned out that she is as curious about your rescue as you are. Unfortunately, you are not able to answer any of her questions satisfactorily."))
    vn.na(_("She tells you that her crew received a distress signal and followed it to your position. With the heavy interference of the nebula this should be impossible, or at least extremely unlikely."))
-   captain(_([["It is nearly impossible that a signal passes through the nebula out here. So either there's something you're hiding or you had incredible luck. And just what were you doing out there? I did saw those Za'lek doing even more ridiculous stuff, though."]]))
+   captain(_([["It is nearly impossible that a signal passes through the nebula out here. So either there's something you're hiding or you had incredible luck. And just what were you doing out there? I saw those Za'lek doing even more ridiculous stuff, though."]]))
    vn.menu( {
       { _("Ask for the logs related to the distress signal"), "signal" },
       { _("Apologize"), "apologize" },

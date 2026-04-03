@@ -15,7 +15,7 @@ Other files, such as this one, will be ignored.
 
 Processing of files is done in a few stages:
 1. First the YAML header is extracted.
-1. Then lines are individually extracted and translated, excluding pure Lua lines. Make sure to write one sentence per line to minimize translation efforts!.
+1. Then lines are individually extracted and translated, excluding pure Lua lines. Make sure to write one sentence per line to minimize translation efforts!
 1. Afterwards, the text is run through a Lua Parser, which allows conditional expressions or dynamic markdown generation.
 1. Finally, the resulting text from the Lua Parser stage is treated as markdown and processed to create the Naevpedia page.
 
@@ -30,7 +30,7 @@ title: "Example Title"
 and gets appended to the meta-data of the file. Currently used tags are:
 
 1. **title**: represents the title of the file as shown in the naevpedia.
-1. **priority**: affects the order in which it appears. Defaults to 5 and lower means higher up along the list. If tied priority, the tilte is used for sorting.
+1. **priority**: affects the order in which it appears. Defaults to 5 and lower means higher up along the list. If multiple pages are tied for the same priority, the title will be used for sorting.
 1. **cond**: contains a conditional Lua statement indicating when the page should be visible. By default pages will be visible unless cond is specified and evaluates to `false`.
 
 An example would be

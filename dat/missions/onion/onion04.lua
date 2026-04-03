@@ -317,7 +317,7 @@ function land ()
       vn.transition()
       vn.appear( staff, "electric" )
       vn.na(_([[The station lights flicker on and an angrier than ever spacedock command appears promptly on your holoscreen.]]))
-      staff(_([["You! You have something to do with this. When I add this to your list of crimes, you'll be lucky to even breath oxygen again!"]]))
+      staff(_([["You! You have something to do with this. When I add this to your list of crimes, you'll be lucky to even breathe oxygen again!"]]))
       staff(fmt.f(_([["Security! Seize the {shipname}!"]]),
          {shipname=player.pilot():name()}))
       staff(_([["Wait, what are you doing? Criminal fraud? I haven't done anything."]]))
@@ -343,7 +343,7 @@ function land ()
       l337(_([["You should watch out for your blood sugar."]]))
       trixie(_([[You hear a muffled eating sound.]]))
       l337(fmt.f(_([["Ah well. I should get some cake too."
-The pause a second.
+They pause a second.
 "Before I forget, {player}, on to {spb}!"]]),
          {player=player.name(), spb=targetspb}))
       vn.na(_([[Maybe you should get some cake too.]]))
@@ -400,11 +400,11 @@ You hear Trixie muttering to themselves.]]))
       trixie(_([["This has to be related to the weird patterns we're seeing on the Nexus!"]]))
       l337(_([["Correlation doesn't imply causation!"]]))
       trixie(_([["Indeed it does not, but coincidences are not very good omens."]]))
-      l337(_([["Superstitions! However, you tend to have good hunches, so let me see if I can scrap some bandwidth to launch some monitoring spells."]]))
+      l337(_([["Superstitions! However, you tend to have good hunches, so let me see if I can scrape some bandwidth together to launch some monitoring spells."]]))
       trixie(_([["Never can be too careful. There is too much at stake here to mess up."
 You hear a beep.
 "Ah, diagnostics finished, let's see..."]]))
-      trixie(fmt.f(_([["Cargo looks OK! Seems to be lots of encrypted documents, but there also is a nice one-time pad. Exactly what we need. l337_b01, if you can spare the resources, try to decrypt some of the documents. {player}, head to {swapspb} in the {swapsys}. We proceed with the plan!"]]),
+      trixie(fmt.f(_([["Cargo looks OK! Seems to be lots of encrypted documents, but there also is a nice one-time pad. Exactly what we need. l337_b01, if you can spare the resources, try to decrypt some of the documents. {player}, head to {swapspb} in the {swapsys} system. We proceed with the plan!"]]),
          {player=player.name(), swapspb=swapspb, swapsys=swapsys}))
       l337(_([["Aye aye captain!"]]))
       trixie(fmt.f(_([["Stop mocking me, the captain here is {player}!"]]),
@@ -534,7 +534,7 @@ function breakin ()
    vn.jump("end")
 
    vn.label("mg_success")
-   trixie(_([["Got it? Great! Let me access try to access the data."]]))
+   trixie(_([["Got it? Great! Let me try to access the data."]]))
    vn.music( 'snd/sounds/loops/alarm' )
    trixie(_([["Shit, I'll try to get what I can, but you have to get out of there now!"]]))
    vn.jump("end")
