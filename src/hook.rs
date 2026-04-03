@@ -3,13 +3,13 @@ use crate::faction::FactionRef;
 use helpers::ReferenceC;
 use std::ffi::{CStr, CString, c_char, c_int};
 
-#[allow(dead_code)]
 pub enum HookParam {
    Nil,
    Number(f64),
    String(&'static CStr),
    StringFree(*mut c_char),
    //StringFree,
+   #[allow(dead_code)]
    Bool(bool),
    //Pilot(),
    //Ship(),

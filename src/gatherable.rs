@@ -1,4 +1,3 @@
-#![allow(dead_code)]
 use crate::commodity::CommodityRef;
 use crate::hook::HookParam;
 use crate::pilot;

@@ -1,4 +1,3 @@
-#![allow(dead_code)]
 use crate::nlua;
 use crate::nlua::LuaEnv;
 use mlua::{Either, Function, UserData, UserDataMethods, UserDataRef};
@@ -241,7 +240,7 @@ impl UserData for LuaSpfxRef {
        *    @luatparam[opt] audio sfx Sound effect associated with the spfx.
        *    @luatparam[opt] number radius Radius to use to determine if should render.
        *    @luatparam[opt] Function|nil remove Function to run when removing the
-       * outfit.
+       * spfx.
        *    @luatreturn spfx New spfx corresponding to the data or nil if called from a spfx
        *    callback function.
        * @luafunc new

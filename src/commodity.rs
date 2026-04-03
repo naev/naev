@@ -1,17 +1,13 @@
-#![allow(dead_code, unused)]
-use crate::array::{Array, ArrayCString};
+use crate::array::Array;
 use crate::faction::FactionRef;
 use anyhow::Context as AnyhowContext;
 use anyhow::Result;
 use gettext::gettext;
 use helpers::ReferenceC;
 use itertools::Itertools;
-use mlua::{
-   BorrowedStr, Either, FromLua, Function, MetaMethod, UserData, UserDataMethods, UserDataRef,
-};
+use mlua::{BorrowedStr, Either, FromLua, MetaMethod, UserData, UserDataMethods, UserDataRef};
 use naev_core::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
 use nlog::{debugx, warn, warn_err, warnx};
-use renderer::texture::TextureDeserializer;
 use renderer::{Context, ContextWrapper, texture};
 use slotmap::{Key, KeyData, SecondaryMap, SlotMap};
 use std::collections::HashMap;
@@ -26,6 +22,7 @@ use tracing::instrument;
 #[cfg(debug_assertions)]
 use tracing_mutex::stdsync::RwLock;
 
+#[allow(dead_code)]
 #[derive(Debug)]
 pub struct CommodityModifier(naevc::CommodityModifier);
 impl Default for CommodityModifier {
@@ -57,12 +54,13 @@ pub struct EconomyModifiers {
 /// Temporary stuff we have to keep until C doesn't need it anymore
 #[derive(Default, Debug)]
 pub struct CommodityC {
+   #[allow(dead_code)]
    strings: Vec<CString>,
    name: CString,
    display: Option<CString>,
    description: CString,
    illegal_to: Array<FactionRef>,
-   ctags: ArrayCString,
+   //ctags: ArrayCString,
    spob_modifier: Array<CommodityModifier>,
    faction_modifier: Array<CommodityModifier>,
 }
@@ -98,7 +96,7 @@ impl CommodityC {
          display: com.display.clone().map(|d| CString::new(&*d)).transpose()?,
          description: CString::new(&*com.description)?,
          illegal_to: Array::new(&com.illegal_to)?,
-         ctags: ArrayCString::new(&com.tags)?,
+         //ctags: ArrayCString::new(&com.tags)?,
          spob_modifier,
          faction_modifier,
          strings,
@@ -708,17 +706,16 @@ impl UserData for CommodityRef {
       methods.add_method(
          "illegalto",
          |_, this, fct: Either<FactionRef, Vec<FactionRef>>| -> mlua::Result<()> {
-            this.with_mut(|com| {
+            Ok(this.with_mut(|com| {
                if !com.temporary {
                   anyhow::bail!("Trying to modify non-temporary commodity '{}'", com.name);
                }
                match &fct {
                   Either::Left(f) => com.illegal_to.push(*f),
                   Either::Right(fcts) => com.illegal_to.extend(fcts),
-               }
+               };
                Ok(())
-            })?;
-            Ok(())
+            })??)
          },
       );
       /*@

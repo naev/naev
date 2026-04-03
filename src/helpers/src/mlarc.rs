@@ -1,8 +1,9 @@
-///! A small wrapper for both Arc<T> and Arc<RwLock<T>> so they can be used interchangeably.
-///Meant to be used when loading data where one part is static while another is dynamic.
+//! A small wrapper for both Arc<T> and Arc<RwLock<T>> so they can be used interchangeably.
+//! Meant to be used when loading data where one part is static while another is dynamic.
 use std::ops::{Deref, DerefMut};
 use std::sync::{Arc, RwLock, RwLockReadGuard, RwLockWriteGuard, Weak};
 
+/// MaybeLockedArc
 pub struct MlArc<T> {
    inner: Inner<T>,
 }
@@ -51,6 +52,9 @@ impl<T> MlArc<T> {
       Box::into_raw(Box::new(self))
    }
 
+   /// # Safety
+   ///
+   /// has to be used on a pointer created with MlArc::into_raw()
    pub unsafe fn from_raw(ptr: *mut Self) -> Self {
       unsafe { *Box::from_raw(ptr) }
    }
@@ -66,14 +70,8 @@ pub enum MlArcWeakInner<T> {
 impl<T> MlArcWeak<T> {
    pub fn upgrade(&self) -> Option<MlArc<T>> {
       match &self.inner {
-         MlArcWeakInner::Shared(v) => match v.upgrade() {
-            Some(v) => Some(Inner::Shared(v)),
-            None => None,
-         },
-         MlArcWeakInner::Locked(lock) => match lock.upgrade() {
-            Some(v) => Some(Inner::Locked(v)),
-            None => None,
-         },
+         MlArcWeakInner::Shared(v) => v.upgrade().map(Inner::Shared),
+         MlArcWeakInner::Locked(lock) => lock.upgrade().map(Inner::Locked),
       }
       .map(|inner| MlArc { inner })
    }
@@ -82,6 +80,9 @@ impl<T> MlArcWeak<T> {
       Box::into_raw(Box::new(self))
    }
 
+   /// # Safety
+   ///
+   /// has to be used on a pointer created with MlArcWeak::into_raw()
    pub unsafe fn from_raw(ptr: *mut Self) -> Self {
       unsafe { *Box::from_raw(ptr) }
    }
@@ -99,7 +100,7 @@ impl<'a, T> Deref for MlArcRef<'a, T> {
    fn deref(&self) -> &T {
       match &self.inner {
          MlArcRefInner::Shared(v) => v,
-         MlArcRefInner::Locked(g) => &*g,
+         MlArcRefInner::Locked(g) => g,
       }
    }
 }
@@ -113,12 +114,12 @@ pub struct MlArcMut<'a, T>(RwLockWriteGuard<'a, T>);
 impl<'a, T> Deref for MlArcMut<'a, T> {
    type Target = T;
    fn deref(&self) -> &T {
-      &*self.0
+      &self.0
    }
 }
 impl<'a, T> DerefMut for MlArcMut<'a, T> {
    fn deref_mut(&mut self) -> &mut T {
-      &mut *self.0
+      &mut self.0
    }
 }
 impl<'a, T> AsMut<T> for MlArcMut<'a, T> {

@@ -1,4 +1,3 @@
-//#![allow(dead_code, unused_imports)]
 mod debug;
 mod efx;
 pub mod lua_audiodata;
