@@ -252,6 +252,7 @@ function land ()
 
    if mem.job_done and okspob then
       local txt = pay_text[ rnd.rnd( 1, #pay_text ) ]
+      lmisn.sfxMoney()
       vntk.msg( _("Mission Completed"), txt )
       player.pay( mem.credits )
       if not pir.factionIsPirate( mem.paying_faction ) then
