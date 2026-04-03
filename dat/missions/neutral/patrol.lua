@@ -149,7 +149,7 @@ function create ()
    if n_enemies == 0 then
       misn.finish( false )
    end
-   mem.credits = n_enemies * 2000
+   mem.credits = n_enemies * 1400
    mem.credits = mem.credits + rnd.sigma() * (mem.credits / 3)
    mem.reputation = math.floor( n_enemies / 15 )
 

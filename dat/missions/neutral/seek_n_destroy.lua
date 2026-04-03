@@ -215,7 +215,7 @@ function create ()
    end
 
    mem.tgtship = ships[rnd.rnd(1,#ships)]
-   mem.credits = 1e6 + rnd.rnd()*500e3
+   mem.credits = 36e4 + ship.get( mem.tgtship ):size() * 15e4 + rnd.rnd() * 2e5
    mem.cursys = 1
    -- Faction prefix
    local prefix

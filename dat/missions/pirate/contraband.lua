@@ -137,9 +137,9 @@ function create()
 
    -- Choose amount of cargo and mission reward. This depends on the mission tier.
    mem.amount    = rnd.rnd(10 + 3 * mem.tier, 20 + 4 * mem.tier)
-   local jumpreward = 3000
-   local distreward = 0.50
-   mem.reward    = 1.5^mem.tier * (mem.numjumps * jumpreward + mem.traveldist * distreward + math.max(1,mem.amount/20)) * (1 + 0.05*rnd.twosigma())
+   local jumpreward = 8000
+   local distreward = 0.80
+   mem.reward    = 1.2^mem.tier * (mem.numjumps * jumpreward + mem.traveldist * distreward + math.max(1,mem.amount/20)) * (1 + 0.05*rnd.twosigma())
 
    misn.setTitle( fmt.f(
       pir.prefix(mem.reward_faction).._("Smuggle {tonnes} of {cargo}"),

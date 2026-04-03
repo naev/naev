@@ -263,6 +263,7 @@ local function bounty_setup ()
       credits = 1e6 + rnd.sigma() * 100e3
       reputation = 3.5
    end
+   local credits = credits * 0.75 -- Lazy fine tuning multiplier
    return pship, credits, reputation
 end
 
@@ -304,7 +305,7 @@ function create ()
    local osd_objective
    local alive_only = (rnd.rnd() > 0.5)
    if alive_only then
-      reward = reward * 1.5
+      reward = reward * 1.4
       reputation = reputation * 1.5
       title = misn_title_alive
       desc = misn_desc_alive

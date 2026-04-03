@@ -9,7 +9,7 @@
    local scur = spob.cur()
    if system.get("Straight Row"):jumpDist( system.cur() ) &gt; 8 then
       return false
-   elseif not scur:faction():tags():generic() then
+   elseif not scur:faction():tags().generic then
       return false
    end
    local maxsize = player.pilot():ship():size()

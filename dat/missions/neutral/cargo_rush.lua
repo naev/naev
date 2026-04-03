@@ -72,15 +72,16 @@ function create()
 
    -- Calculate time limit. Depends on tier and distance.
    -- The second time limit is for the reduced reward.
-   local stuperpx   = 0.2 - 0.025 * mem.tier
-   local stuperjump = 10300 - 300 * mem.tier
-   local stupertakeoff = 10300 - 75 * mem.tier
-   local allowance  = mem.traveldist * stuperpx + mem.numjumps * stuperjump + stupertakeoff + 240 * mem.numjumps
+   local stuperpx   = 0.22 - 0.035 * mem.tier
+   local stuperjump = 10540 - 500 * mem.tier
+   local stupertakeoff = 10300 - 125 * mem.tier
+   local allowance  = mem.traveldist * stuperpx + mem.numjumps * stuperjump + stupertakeoff
 
    -- Allow extra time for refuelling stops.
-   local jumpsperstop = 3 + math.min(mem.tier, 3)
+   local jumpsperstop = 4 + math.min(mem.tier, 3)
+   local stops = math.floor((mem.numjumps-1) / jumpsperstop)
    if mem.numjumps > jumpsperstop then
-      allowance = allowance + math.floor((mem.numjumps-1) / jumpsperstop) * stuperjump
+      allowance = allowance + stops * stupertakeoff + stops * stuperpx * 1000
    end
 
    mem.timelimit  = time.cur() + time.new(0, 0, allowance)
@@ -103,11 +104,11 @@ function create()
 
    -- Choose amount of cargo and mission reward. This depends on the mission tier.
    -- Note: Pay is independent from amount by design! Not all deals are equally attractive!
-   mem.amount     = rnd.rnd(10 + 5 * mem.tier, 20 + 6 * mem.tier) -- 45 max (quicksilver)
+   mem.amount     = rnd.rnd(10, 90 - 9 * mem.tier)
    local price = commodity.get( mem.cargo ):price()
    local jumpreward = price*1.8
    local distreward = math.log(300*price)/80
-   mem.reward     = 1.5^mem.tier * (mem.avgrisk*riskreward + mem.numjumps * jumpreward + mem.traveldist * distreward) * (1. + 0.05*rnd.twosigma())
+   mem.reward     = 1.51^mem.tier * (mem.avgrisk*riskreward + mem.numjumps * jumpreward + mem.traveldist * distreward) * (1.3 + 0.08*rnd.twosigma())
 
    misn.setTitle( fmt.f( misn_title[mem.tier], {pnt=mem.destplanet, sys=mem.destsys, tonnes=fmt.tonnes_short(mem.amount)} ) )
    misn.markerAdd(mem.destplanet, "computer")
