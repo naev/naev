@@ -2157,8 +2157,8 @@ impl AudioRef {
       Ok(voices.insert(audio))
    }
 
-   /// Like call, but allows specifying a default value.
-   pub fn call_or<S, R>(&self, f: S, d: R) -> anyhow::Result<R>
+   /// Like with, but allows specifying a default value.
+   pub fn with_or<S, R>(&self, f: S, d: R) -> anyhow::Result<R>
    where
       S: Fn(&Audio) -> R,
    {
@@ -2172,17 +2172,17 @@ impl AudioRef {
       }
    }
 
-   /// Tries to call a function on a voice, returning default value if not available.
-   pub fn call<S, R>(&self, f: S) -> anyhow::Result<R>
+   /// Tries to with a function on a voice, returning default value if not available.
+   pub fn with<S, R>(&self, f: S) -> anyhow::Result<R>
    where
       S: Fn(&Audio) -> R,
       R: std::default::Default,
    {
-      self.call_or(f, Default::default())
+      self.with_or(f, Default::default())
    }
 
-   /// Same as call but allows mutable access.
-   pub fn call_mut<S, R>(&self, f: S) -> anyhow::Result<R>
+   /// Same as with but allows mutable access.
+   pub fn with_mut<S, R>(&self, f: S) -> anyhow::Result<R>
    where
       S: Fn(&mut Audio) -> R,
       R: std::default::Default,
@@ -2227,30 +2227,30 @@ impl LuaAudioRef {
       })
    }
 
-   /// Like call, but allows specifying a default value.
-   pub fn call_or<S, R>(&self, f: S, d: R) -> anyhow::Result<R>
+   /// Like with, but allows specifying a default value.
+   pub fn with_or<S, R>(&self, f: S, d: R) -> anyhow::Result<R>
    where
       S: Fn(&Audio) -> R,
    {
-      self.audio.call_or(f, d)
+      self.audio.with_or(f, d)
    }
 
-   /// Tries to call a function on a voice, returning default value if not available.
-   pub fn call<S, R>(&self, f: S) -> anyhow::Result<R>
+   /// Tries to with a function on a voice, returning default value if not available.
+   pub fn with<S, R>(&self, f: S) -> anyhow::Result<R>
    where
       S: Fn(&Audio) -> R,
       R: std::default::Default,
    {
-      self.audio.call(f)
+      self.audio.with(f)
    }
 
-   /// Same as call but allows mutable access.
-   pub fn call_mut<S, R>(&self, f: S) -> anyhow::Result<R>
+   /// Same as with but allows mutable access.
+   pub fn with_mut<S, R>(&self, f: S) -> anyhow::Result<R>
    where
       S: Fn(&mut Audio) -> R,
       R: std::default::Default,
    {
-      self.audio.call_mut(f)
+      self.audio.with_mut(f)
    }
 }
 
@@ -2269,7 +2269,7 @@ impl UserData for LuaAudioRef {
        * @luafunc __tostring
        */
       methods.add_meta_method(MetaMethod::ToString, |_, this: &Self, ()| {
-         Ok(this.call(|this| match this {
+         Ok(this.with(|this| match this {
             Audio::Static(this) | Audio::LuaStatic(this) => {
                let path = match &this.data {
                   Some(AudioData::Buffer(buffer)) => &buffer.name,
@@ -2335,7 +2335,7 @@ impl UserData for LuaAudioRef {
        * @luafunc play
        */
       methods.add_method("play", |_, this, ()| -> mlua::Result<()> {
-         this.call_mut(|this| {
+         this.with_mut(|this| {
             this.play();
          })?;
          Ok(())
@@ -2348,7 +2348,7 @@ impl UserData for LuaAudioRef {
        * @luafunc isPlaying
        */
       methods.add_method("isPlaying", |_, this, ()| -> mlua::Result<bool> {
-         Ok(this.call(|this| this.is_playing())?)
+         Ok(this.with(|this| this.is_playing())?)
       });
       /*@
        * @brief Pauses a source.
@@ -2357,7 +2357,7 @@ impl UserData for LuaAudioRef {
        * @luafunc pause
        */
       methods.add_method("pause", |_, this, ()| -> mlua::Result<()> {
-         this.call(|this| {
+         this.with(|this| {
             this.pause();
          })?;
          Ok(())
@@ -2370,7 +2370,7 @@ impl UserData for LuaAudioRef {
        * @luafunc isPaused
        */
       methods.add_method("isPaused", |_, this, ()| -> mlua::Result<bool> {
-         Ok(this.call(|this| this.is_paused())?)
+         Ok(this.with(|this| this.is_paused())?)
       });
       /*@
        * @brief Stops a source.
@@ -2379,7 +2379,7 @@ impl UserData for LuaAudioRef {
        * @luafunc stop
        */
       methods.add_method("stop", |_, this, ()| -> mlua::Result<()> {
-         this.call(|this| {
+         this.with(|this| {
             this.stop();
          })?;
          Ok(())
@@ -2392,7 +2392,7 @@ impl UserData for LuaAudioRef {
        * @luafunc isStopped
        */
       methods.add_method("isStopped", |_, this, ()| -> mlua::Result<bool> {
-         Ok(this.call(|this| this.is_stopped())?)
+         Ok(this.with(|this| this.is_stopped())?)
       });
       /*@
        * @brief Rewinds a source.
@@ -2401,7 +2401,7 @@ impl UserData for LuaAudioRef {
        * @luafunc rewind
        */
       methods.add_method("rewind", |_, this, ()| -> mlua::Result<()> {
-         this.call(|this| {
+         this.with(|this| {
             this.rewind();
          })?;
          Ok(())
@@ -2417,7 +2417,7 @@ impl UserData for LuaAudioRef {
       methods.add_method(
          "seek",
          |_, this, (offset, samples): (f32, bool)| -> mlua::Result<()> {
-            this.call(|this| {
+            this.with(|this| {
                this.seek(
                   offset,
                   match samples {
@@ -2439,7 +2439,7 @@ impl UserData for LuaAudioRef {
        * @luafunc tell
        */
       methods.add_method("tell", |_, this, samples: bool| -> mlua::Result<f32> {
-         Ok(this.call(|this| {
+         Ok(this.with(|this| {
             this.tell(match samples {
                true => AudioSeek::Samples,
                false => AudioSeek::Seconds,
@@ -2458,7 +2458,7 @@ impl UserData for LuaAudioRef {
       methods.add_method(
          "getDuration",
          |_, this, samples: bool| -> mlua::Result<Option<f32>> {
-            Ok(this.call(|this| match this {
+            Ok(this.with(|this| match this {
                Audio::Static(this) | Audio::LuaStatic(this) => {
                   this.data.as_ref().map(|AudioData::Buffer(buffer)| {
                      buffer.duration(match samples {
@@ -2484,7 +2484,7 @@ impl UserData for LuaAudioRef {
       methods.add_method(
          "setVolume",
          |_, this, (volume, ignoremaster): (f32, bool)| -> mlua::Result<()> {
-            this.call_mut(|this| {
+            this.with_mut(|this| {
                if ignoremaster {
                   this.set_volume_raw(volume)
                } else {
@@ -2502,7 +2502,7 @@ impl UserData for LuaAudioRef {
        * @luafunc getVolume
        */
       methods.add_method("getVolume", |_, this, ()| -> mlua::Result<f32> {
-         Ok(this.call(|this| this.volume())?)
+         Ok(this.with(|this| this.volume())?)
       });
       /*@
        * @brief Sets whether a source is relative or not.
@@ -2514,7 +2514,7 @@ impl UserData for LuaAudioRef {
       methods.add_method(
          "setRelative",
          |_, this, relative: bool| -> mlua::Result<()> {
-            this.call_mut(|this| {
+            this.with_mut(|this| {
                this.set_relative(relative);
             })?;
             Ok(())
@@ -2527,7 +2527,7 @@ impl UserData for LuaAudioRef {
        * @luafunc isRelative
        */
       methods.add_method("isRelative", |_, this, ()| -> mlua::Result<bool> {
-         Ok(this.call(|this| this.relative())?)
+         Ok(this.with(|this| this.relative())?)
       });
       /*@
        * @brief Sets the position of a source.
@@ -2542,7 +2542,7 @@ impl UserData for LuaAudioRef {
          "setPosition",
          |_, this, (x, y): (f32, f32)| -> mlua::Result<()> {
             let vec: Vector2<f32> = Vector2::new(x, y);
-            this.call_mut(|this| {
+            this.with_mut(|this| {
                this.set_position(vec);
                this.set_ingame();
             })?;
@@ -2559,7 +2559,7 @@ impl UserData for LuaAudioRef {
        * @luafunc getPosition
        */
       methods.add_method("getPosition", |_, this, ()| -> mlua::Result<(f32, f32)> {
-         let pos = this.call(|this| this.position())?;
+         let pos = this.with(|this| this.position())?;
          Ok((pos.x, pos.y))
       });
       /*@
@@ -2574,7 +2574,7 @@ impl UserData for LuaAudioRef {
          "setVelocity",
          |_, this, (x, y): (f32, f32)| -> mlua::Result<()> {
             let vec = Vector2::new(x, y);
-            this.call_mut(|this| {
+            this.with_mut(|this| {
                this.set_velocity(vec);
                this.set_ingame();
             })?;
@@ -2590,7 +2590,7 @@ impl UserData for LuaAudioRef {
        * @luafunc getVelocity
        */
       methods.add_method("getVelocity", |_, this, ()| -> mlua::Result<(f32, f32)> {
-         let vel = this.call(|this| this.velocity())?;
+         let vel = this.with(|this| this.velocity())?;
          Ok((vel.x, vel.y))
       });
       /*@
@@ -2603,7 +2603,7 @@ impl UserData for LuaAudioRef {
        * @luafunc setLooping
        */
       methods.add_method("setIngame", |_, this, ()| -> mlua::Result<()> {
-         this.call_mut(|this| {
+         this.with_mut(|this| {
             this.set_ingame();
          })?;
          Ok(())
@@ -2617,7 +2617,7 @@ impl UserData for LuaAudioRef {
        * @luafunc setLooping
        */
       methods.add_method("setLooping", |_, this, looping: bool| -> mlua::Result<()> {
-         this.call_mut(|this| {
+         this.with_mut(|this| {
             this.set_looping(looping);
          })?;
          Ok(())
@@ -2630,7 +2630,7 @@ impl UserData for LuaAudioRef {
        * @luafunc isLooping
        */
       methods.add_method("isLooping", |_, this, ()| -> mlua::Result<bool> {
-         Ok(this.call(|this| this.looping())?)
+         Ok(this.with(|this| this.looping())?)
       });
       /*@
        * @brief Sets the pitch of a source.
@@ -2640,7 +2640,7 @@ impl UserData for LuaAudioRef {
        * @luafunc setPitch
        */
       methods.add_method("setPitch", |_, this, pitch: f32| -> mlua::Result<()> {
-         this.call_mut(|this| {
+         this.with_mut(|this| {
             this.set_pitch(pitch);
          })?;
          Ok(())
@@ -2653,7 +2653,7 @@ impl UserData for LuaAudioRef {
        * @luafunc getPitch
        */
       methods.add_method("getPitch", |_, this, ()| -> mlua::Result<f32> {
-         Ok(this.call(|this| this.pitch())?)
+         Ok(this.with(|this| this.pitch())?)
       });
       /*@
        * @brief Sets the attenuation distances for the audio source.
@@ -2665,7 +2665,7 @@ impl UserData for LuaAudioRef {
       methods.add_method(
          "setAttenuationDistances",
          |_, this, (reference, max): (f32, f32)| -> mlua::Result<()> {
-            this.call_mut(|this| {
+            this.with_mut(|this| {
                this.set_attenuation_distances(reference, max);
             })?;
             Ok(())
@@ -2682,7 +2682,7 @@ impl UserData for LuaAudioRef {
       methods.add_method(
          "getAttenuationDistances",
          |_, this, ()| -> mlua::Result<(f32, f32)> {
-            Ok(this.call(|this| this.attenuation_distances())?)
+            Ok(this.with(|this| this.attenuation_distances())?)
          },
       );
       /*@
@@ -2692,7 +2692,7 @@ impl UserData for LuaAudioRef {
        * @luafunc setRolloff
        */
       methods.add_method("setRolloff", |_, this, rolloff: f32| -> mlua::Result<()> {
-         this.call_mut(|this| {
+         this.with_mut(|this| {
             this.set_rolloff(rolloff);
          })?;
          Ok(())
@@ -2704,7 +2704,7 @@ impl UserData for LuaAudioRef {
        * @luafunc getRolloff
        */
       methods.add_method("getRolloff", |_, this, ()| -> mlua::Result<f32> {
-         Ok(this.call(|this| this.rolloff())?)
+         Ok(this.with(|this| this.rolloff())?)
       });
       /*@
        * @brief Sets effects on a source.
@@ -2719,7 +2719,7 @@ impl UserData for LuaAudioRef {
       methods.add_method(
          "setEffect",
          |_, this, (name, enable): (BorrowedStr, bool)| -> mlua::Result<bool> {
-            this.call_or(
+            this.with_or(
                |this| {
                   if EFX.get().is_none() {
                      return Ok(false);
@@ -3117,7 +3117,7 @@ macro_rules! get_voice {
 #[unsafe(no_mangle)]
 pub extern "C" fn sound_stop(voice: *const c_void) {
    let index = get_voice!(voice);
-   let _ = index.call(|voice| voice.stop());
+   let _ = index.with(|voice| voice.stop());
 }
 
 #[unsafe(no_mangle)]
@@ -3131,7 +3131,7 @@ pub extern "C" fn sound_updatePos(
    let index = get_voice!(voice);
    let pos = Vector2::new(px as f32, py as f32);
    *AUDIO.listener_pos.write().unwrap() = pos;
-   let _ = index.call(|voice| {
+   let _ = index.with(|voice| {
       voice.set_position(pos);
       voice.set_velocity(Vector2::new(vx as f32, vy as f32));
    });

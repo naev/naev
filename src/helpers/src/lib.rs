@@ -68,6 +68,7 @@ impl<T: slotmap::Key> ReferenceC for T {
       self.data().as_ffi() as i64
    }
 
+   // Has to be done in the types implementing the traits.
    //fn from_ffi(value: i64) -> Self where Self: Sized {
    //   Self(KeyData::from_ffi(value as u64))
    //}

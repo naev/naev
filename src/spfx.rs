@@ -80,7 +80,7 @@ slotmap::new_key_type! {
    struct LuaSpfxRef;
 }
 impl LuaSpfxRef {
-   pub fn call<S, R>(&self, f: S) -> anyhow::Result<R>
+   pub fn with<S, R>(&self, f: S) -> anyhow::Result<R>
    where
       S: Fn(&LuaSpfx) -> R,
    {
@@ -91,9 +91,9 @@ impl LuaSpfxRef {
       }
    }
 
-   // Can't have call_mut or we'll get a mutex deadlock. Use messages instead.
+   // Can't have with_mut or we'll get a mutex deadlock. Use messages instead.
    /*
-   pub fn call_mut<S, R>(&self, f: S) -> anyhow::Result<R>
+   pub fn with_mut<S, R>(&self, f: S) -> anyhow::Result<R>
    where
        S: Fn(&mut LuaSpfx) -> R,
    {
@@ -124,7 +124,7 @@ pub fn update(dt: f64) {
          if spfx.ttl <= 0. || spfx.cleanup {
             // Stop the sound if necessary
             if let Some(sfx) = &spfx.sfx {
-               let _ = sfx.call(|sfx| {
+               let _ = sfx.with(|sfx| {
                   sfx.stop();
                });
             }
@@ -138,7 +138,7 @@ pub fn update(dt: f64) {
                // TODO move Audio ownership to LuaSpfx
                let pos = pos.into_vector2();
                if sfx
-                  .call(|sfx| {
+                  .with(|sfx| {
                      sfx.set_position(pos.cast::<f32>());
                   })
                   .is_err()
@@ -353,7 +353,7 @@ impl UserData for LuaSpfxRef {
        * @luafunc pos( s )
        */
       methods.add_method("pos", |_, this, ()| -> mlua::Result<Option<Vec2>> {
-         Ok(this.call(|this| this.pos)?)
+         Ok(this.with(|this| this.pos)?)
       });
       /*@
        * @brief Sets the velocity of a spfx.
@@ -363,7 +363,7 @@ impl UserData for LuaSpfxRef {
        * @luafunc setVel
        */
       methods.add_method("vel", |_, this, ()| -> mlua::Result<Option<Vec2>> {
-         Ok(this.call(|this| this.vel)?)
+         Ok(this.with(|this| this.vel)?)
       });
       /*@
        * @brief Sets the position of a spfx.
@@ -373,7 +373,7 @@ impl UserData for LuaSpfxRef {
        * @luafunc setPos
        */
       methods.add_method_mut("setPos", |_, this, pos: Vec2| -> mlua::Result<()> {
-         if this.call(|this| this.pos)?.is_none() {
+         if this.with(|this| this.pos)?.is_none() {
             return Err(mlua::Error::RuntimeError(
                "can't set position of a LuaSpfx with None position".to_string(),
             ));
@@ -389,7 +389,7 @@ impl UserData for LuaSpfxRef {
        * @luafunc setVel
        */
       methods.add_method_mut("setVel", |_, this, vel: Vec2| -> mlua::Result<()> {
-         if this.call(|this| this.vel)?.is_none() {
+         if this.with(|this| this.vel)?.is_none() {
             return Err(mlua::Error::RuntimeError(
                "can't set velocity of a LuaSpfx with None velocity".to_string(),
             ));
@@ -410,7 +410,7 @@ impl UserData for LuaSpfxRef {
             if audio::SILENT.load(Ordering::Relaxed) {
                return Ok(None);
             }
-            Ok(this.call(|this| {
+            Ok(this.with(|this| {
                this.sfx.as_ref().map(|sfx| audio::LuaAudioRef {
                   audio: sfx.audio,
                   remove_on_drop: false,
@@ -428,7 +428,7 @@ impl UserData for LuaSpfxRef {
        * @luafunc data
        */
       methods.add_method("data", |_, this, ()| -> mlua::Result<mlua::Table> {
-         Ok(this.call(|this| this.data.clone())?)
+         Ok(this.with(|this| this.data.clone())?)
       });
       /*@
        * @brief Creates a cloud of debris.

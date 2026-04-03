@@ -80,7 +80,7 @@ impl Gatherable {
       let q = unsafe { naevc::pilot_cargoAdd(p, self.commodity.as_ffi(), self.quantity, 0) };
       if q > 0 {
          if isplayer {
-            let msg = self.commodity.call(|c| {
+            let msg = self.commodity.with(|c| {
                formatx!(
                   ngettext(
                      "{} tonne of {} gathered.",

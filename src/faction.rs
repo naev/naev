@@ -178,7 +178,7 @@ impl FactionRef {
       None
    }
 
-   pub fn call<F, R>(&self, f: F) -> Result<R>
+   pub fn with<F, R>(&self, f: F) -> Result<R>
    where
       F: Fn(&Faction) -> R,
    {
@@ -189,7 +189,7 @@ impl FactionRef {
       }
    }
 
-   pub fn call2<F, R>(&self, other: &Self, f: F) -> Result<R>
+   pub fn with2<F, R>(&self, other: &Self, f: F) -> Result<R>
    where
       F: Fn(&Faction, &Faction) -> R,
    {
@@ -203,7 +203,7 @@ impl FactionRef {
       }
    }
 
-   pub fn call_mut<F, R>(&self, f: F) -> Result<R>
+   pub fn with_mut<F, R>(&self, f: F) -> Result<R>
    where
       F: Fn(&mut Faction) -> R,
    {
@@ -244,7 +244,7 @@ impl FactionRef {
    fn player_ally(&self, sys: Option<&naevc::StarSystem>) -> bool {
       if let Some(sys) = sys {
          let threshold = self
-            .call(|fct| match &fct.api {
+            .with(|fct| match &fct.api {
                Some(api) => api.friendly_at,
                None => f32::INFINITY,
             })
@@ -254,7 +254,7 @@ impl FactionRef {
          }
       } else {
          self
-            .call(|fct| {
+            .with(|fct| {
                let std = fct.standing.read().unwrap();
                if let Some(api) = &fct.api {
                   std.player.round() >= api.friendly_at
@@ -290,7 +290,7 @@ impl FactionRef {
          unsafe { naevc::system_getReputationOrGlobal(sys, self.as_ffi()) < 0.0 }
       } else {
          self
-            .call(|fct| fct.standing.read().unwrap().player < 0.)
+            .with(|fct| fct.standing.read().unwrap().player < 0.)
             .unwrap_or_else(|err| {
                warn_err!(err);
                false
@@ -1169,7 +1169,7 @@ impl UserData for FactionRef {
        * @luafunc __tostring
        */
       methods.add_meta_function(MetaMethod::ToString, |_, this: Self| {
-         Ok(this.call(|fct| fct.data.shortname().to_string())?)
+         Ok(this.with(|fct| fct.data.shortname().to_string())?)
       });
       /*@
        * @brief equality (`__eq()`) metamethod for factions.
@@ -1291,7 +1291,7 @@ impl UserData for FactionRef {
        * @luafunc name
        */
       methods.add_method("name", |_, this, ()| -> mlua::Result<String> {
-         Ok(this.call(|fct| fct.data.shortname().to_string())?)
+         Ok(this.with(|fct| fct.data.shortname().to_string())?)
       });
       /*@
        * @brief Gets the faction's raw / "real" (untranslated, internal) name.
@@ -1308,7 +1308,7 @@ impl UserData for FactionRef {
        * @luafunc nameRaw
        */
       methods.add_method("nameRaw", |_, this, ()| -> mlua::Result<String> {
-         Ok(this.call(|fct| fct.data.name.clone())?)
+         Ok(this.with(|fct| fct.data.name.clone())?)
       });
       /*@
        * @brief Gets the faction's translated long name.
@@ -1324,7 +1324,7 @@ impl UserData for FactionRef {
        * @luafunc longname
        */
       methods.add_method("longname", |_, this, ()| -> mlua::Result<String> {
-         Ok(this.call(|fct| fct.data.longname().to_string())?)
+         Ok(this.with(|fct| fct.data.longname().to_string())?)
       });
       /*@
        * @brief Checks to see if two factions are truly neutral with respect to each
@@ -1338,7 +1338,7 @@ impl UserData for FactionRef {
       methods.add_function(
          "areNeutral",
          |_, (this, other): (FactionRef, FactionRef)| -> mlua::Result<bool> {
-            Ok(this.call2(&other, |fct1, fct2| fct1.data.are_neutrals(&fct2.data))?)
+            Ok(this.with2(&other, |fct1, fct2| fct1.data.are_neutrals(&fct2.data))?)
          },
       );
       /*@
@@ -1453,7 +1453,7 @@ impl UserData for FactionRef {
           -> mlua::Result<f32> {
             let reason = reason.as_ref().map_or("script", |v| v);
             let ignore_others = true;
-            Ok(this.call(|fct| fct.hit_test_lua(modifier, &extent, reason, ignore_others))??)
+            Ok(this.with(|fct| fct.hit_test_lua(modifier, &extent, reason, ignore_others))??)
          },
       );
       /*@
@@ -1467,7 +1467,7 @@ impl UserData for FactionRef {
        */
       methods.add_function(
          "reputationGlobal",
-         |_, this: FactionRef| -> mlua::Result<f32> { Ok(this.call(|fct| fct.player())?) },
+         |_, this: FactionRef| -> mlua::Result<f32> { Ok(this.with(|fct| fct.player())?) },
       );
       /*@
        * @brief Gets the human readable standing text corresponding (translated).
@@ -1481,7 +1481,7 @@ impl UserData for FactionRef {
       methods.add_function(
          "reputationText",
          |_, (this, value): (FactionRef, Option<f32>)| -> mlua::Result<String> {
-            Ok(this.call(|fct| fct.text_rank(value))??)
+            Ok(this.with(|fct| fct.text_rank(value))??)
          },
       );
       /*@
@@ -1492,7 +1492,7 @@ impl UserData for FactionRef {
        * @luafunc reputationDefault
        */
       methods.add_method("reputationDefault", |_, this, ()| -> mlua::Result<f32> {
-         Ok(this.call(|fct| fct.data.player_def)?)
+         Ok(this.with(|fct| fct.data.player_def)?)
       });
       /*@
        * @brief Overrides the player's faction global standing with a faction. Use
@@ -1504,7 +1504,7 @@ impl UserData for FactionRef {
        */
       methods.add_method(
          "setReputationGlobal",
-         |_, this, value: f32| -> mlua::Result<()> { Ok(this.call(|fct| fct.set_player(value))?) },
+         |_, this, value: f32| -> mlua::Result<()> { Ok(this.with(|fct| fct.set_player(value))?) },
       );
       /*@
        * @brief Enforces the local threshold of a faction starting at a particular
@@ -1523,7 +1523,7 @@ impl UserData for FactionRef {
             let sysid = crate::system::from_lua_index(lua, &sys)? as usize;
             let sys = unsafe { naevc::system_getIndex(sysid as i32) };
             let (th, usehidden) =
-               this.call(|fct| (fct.data.local_th as f64, fct.data.f_useshiddenjumps))?;
+               this.with(|fct| (fct.data.local_th as f64, fct.data.f_useshiddenjumps))?;
             let fid = this.as_ffi();
 
             let srep = unsafe { naevc::system_getFactionPresence(sys, fid) };
@@ -1586,7 +1586,7 @@ impl UserData for FactionRef {
        * @luafunc enemies
        */
       methods.add_method("enemies", |_, this, ()| -> mlua::Result<Vec<Self>> {
-         Ok(this.call(|fct| fct.data.enemies.clone())?)
+         Ok(this.with(|fct| fct.data.enemies.clone())?)
       });
       /*@
        * @brief Gets the allies of the faction.
@@ -1598,7 +1598,7 @@ impl UserData for FactionRef {
        * @luafunc allies
        */
       methods.add_method("allies", |_, this, ()| -> mlua::Result<Vec<Self>> {
-         Ok(this.call(|fct| fct.data.allies.clone())?)
+         Ok(this.with(|fct| fct.data.allies.clone())?)
       });
       /*@
        * @brief Gets whether or not a faction uses hidden jumps.
@@ -1609,7 +1609,7 @@ impl UserData for FactionRef {
        * @luafunc usesHiddenJumps
        */
       methods.add_method("usesHiddenJumps", |_, this, ()| -> mlua::Result<bool> {
-         Ok(this.call(|fct| fct.data.f_useshiddenjumps)?)
+         Ok(this.with(|fct| fct.data.f_useshiddenjumps)?)
       });
       /*@
        * @brief Gets the faction logo.
@@ -1622,7 +1622,7 @@ impl UserData for FactionRef {
          "logo",
          |_, this, ()| -> mlua::Result<Option<texture::Texture>> {
             Ok(this
-               .call(|fct| fct.data.logo.as_ref().map(|t| t.try_clone()))?
+               .with(|fct| fct.data.logo.as_ref().map(|t| t.try_clone()))?
                .transpose()?)
          },
       );
@@ -1634,7 +1634,7 @@ impl UserData for FactionRef {
        * @luafunc colour
        */
       methods.add_method("colour", |_, this, ()| -> mlua::Result<Colour> {
-         Ok(this.call(|fct| fct.data.colour)?)
+         Ok(this.with(|fct| fct.data.colour)?)
       });
       /*@
        * @brief Checks to see if a faction is known by the player.
@@ -1646,7 +1646,7 @@ impl UserData for FactionRef {
        * @luafunc known
        */
       methods.add_method("known", |_, this, ()| -> mlua::Result<bool> {
-         Ok(this.call(|fct| fct.known())?)
+         Ok(this.with(|fct| fct.known())?)
       });
       /*@
        * @brief Sets a faction's known state.
@@ -1657,7 +1657,7 @@ impl UserData for FactionRef {
        * @luafunc setKnown
        */
       methods.add_method_mut("setKnown", |_, this, known: bool| -> mlua::Result<()> {
-         Ok(this.call(|fct| fct.set_known(known))?)
+         Ok(this.with(|fct| fct.set_known(known))?)
       });
       /*@
        * @brief Checks to see if a faction is invisible the player.
@@ -1669,7 +1669,7 @@ impl UserData for FactionRef {
        * @luafunc invisible
        */
       methods.add_method("invisible", |_, this, ()| -> mlua::Result<bool> {
-         Ok(this.call(|fct| fct.invisible())?)
+         Ok(this.with(|fct| fct.invisible())?)
       });
       /*@
        * @brief Checks to see if a faction has a static standing with the player.
@@ -1682,7 +1682,7 @@ impl UserData for FactionRef {
        * @luafunc static
        */
       methods.add_method("static", |_, this, ()| -> mlua::Result<bool> {
-         Ok(this.call(|fct| fct.fixed())?)
+         Ok(this.with(|fct| fct.fixed())?)
       });
       /*@
        * @brief Gets the default AI of the faction.
@@ -1692,7 +1692,7 @@ impl UserData for FactionRef {
        * @luafunc default_ai
        */
       methods.add_method("default_ai", |_, this, ()| -> mlua::Result<String> {
-         Ok(this.call(|fct| fct.data.ai.clone())?)
+         Ok(this.with(|fct| fct.data.ai.clone())?)
       });
       /*@
        * @brief Gets the overridden reputation value of a faction.
@@ -1705,7 +1705,7 @@ impl UserData for FactionRef {
        */
       methods.add_method(
          "reputationOverride",
-         |_, this, ()| -> mlua::Result<Option<f32>> { Ok(this.call(|fct| fct.r#override())?) },
+         |_, this, ()| -> mlua::Result<Option<f32>> { Ok(this.with(|fct| fct.r#override())?) },
       );
       /*@
        * @brief Sets the overridden reputation value of a faction.
@@ -1718,7 +1718,7 @@ impl UserData for FactionRef {
       methods.add_method(
          "setReputationOverride",
          |_, this, value: Option<f32>| -> mlua::Result<()> {
-            Ok(this.call(|fct| fct.set_override(value))?)
+            Ok(this.with(|fct| fct.set_override(value))?)
          },
       );
       /*@
@@ -1735,7 +1735,7 @@ impl UserData for FactionRef {
        * @luafunc tags
        */
       methods.add_method("tags", |lua, this, ()| -> mlua::Result<mlua::Table> {
-         this.call(|fct| lua.create_table_from(fct.data.tags.iter().map(|s| (s.clone(), true))))?
+         this.with(|fct| lua.create_table_from(fct.data.tags.iter().map(|s| (s.clone(), true))))?
       });
       /*@
        * @brief Adds a faction dynamically. Note that if the faction already exists as
@@ -1863,7 +1863,7 @@ impl UserData for FactionRef {
          "dynAlly",
          |_, this, (ally, remove): (FactionRef, Option<bool>)| -> mlua::Result<()> {
             let remove = remove.unwrap_or(false);
-            let _ = this.call_mut(|fct| {
+            let _ = this.with_mut(|fct| {
                if !fct.data.f_dynamic {
                   return Err(mlua::Error::RuntimeError(
                      "Can only add allies to dynamic factions".to_string(),
@@ -1902,7 +1902,7 @@ impl UserData for FactionRef {
          "dynEnemy",
          |_, this, (enemy, remove): (FactionRef, Option<bool>)| -> mlua::Result<()> {
             let remove = remove.unwrap_or(false);
-            let _ = this.call_mut(|fct| {
+            let _ = this.with_mut(|fct| {
                if !fct.data.f_dynamic {
                   return Err(mlua::Error::RuntimeError(
                      "Can only add allies to dynamic factions".to_string(),
@@ -2109,7 +2109,7 @@ pub extern "C" fn faction_clearKnown() {
 }
 
 /// Helper function for the C-side
-fn faction_c_call<F, R>(id: i64, f: F) -> Result<R>
+fn faction_c_with<F, R>(id: i64, f: F) -> Result<R>
 where
    F: Fn(&Faction) -> R,
 {
@@ -2119,7 +2119,7 @@ where
       None => anyhow::bail!("faction not found"),
    }
 }
-fn faction_c_call_mut<F, R>(id: i64, f: F) -> Result<R>
+fn faction_c_with_mut<F, R>(id: i64, f: F) -> Result<R>
 where
    F: Fn(&mut Faction) -> R,
 {
@@ -2138,7 +2138,7 @@ where
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_isStatic(id: i64) -> i64 {
-   faction_c_call(id, |fct| match fct.fixed() {
+   faction_c_with(id, |fct| match fct.fixed() {
       true => 1,
       false => 0,
    })
@@ -2150,7 +2150,7 @@ pub extern "C" fn faction_isStatic(id: i64) -> i64 {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_isInvisible(id: i64) -> i64 {
-   faction_c_call(id, |fct| match fct.invisible() {
+   faction_c_with(id, |fct| match fct.invisible() {
       true => 1,
       false => 0,
    })
@@ -2162,7 +2162,7 @@ pub extern "C" fn faction_isInvisible(id: i64) -> i64 {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_setInvisible(id: i64, state: i64) -> c_int {
-   faction_c_call(id, |fct| {
+   faction_c_with(id, |fct| {
       fct.set_invisible(!matches!(state, 0));
       0
    })
@@ -2174,7 +2174,7 @@ pub extern "C" fn faction_setInvisible(id: i64, state: i64) -> c_int {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_isKnown(id: i64) -> i64 {
-   faction_c_call(id, |fct| match fct.known() {
+   faction_c_with(id, |fct| match fct.known() {
       true => 1,
       false => 0,
    })
@@ -2186,7 +2186,7 @@ pub extern "C" fn faction_isKnown(id: i64) -> i64 {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_isDynamic(id: i64) -> i64 {
-   faction_c_call(id, |fct| match fct.dynamic() {
+   faction_c_with(id, |fct| match fct.dynamic() {
       true => 1,
       false => 0,
    })
@@ -2198,7 +2198,7 @@ pub extern "C" fn faction_isDynamic(id: i64) -> i64 {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_name(id: i64) -> *const c_char {
-   faction_c_call(id, |fct| {
+   faction_c_with(id, |fct| {
       // Not translated on purpose
       fct.c.cname.as_ptr()
    })
@@ -2210,7 +2210,7 @@ pub extern "C" fn faction_name(id: i64) -> *const c_char {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_shortname(id: i64) -> *const c_char {
-   faction_c_call(id, |fct| {
+   faction_c_with(id, |fct| {
       let ptr = match &fct.c.cdisplayname {
          Some(name) => name.as_ptr(),
          None => fct.c.cname.as_ptr(),
@@ -2225,7 +2225,7 @@ pub extern "C" fn faction_shortname(id: i64) -> *const c_char {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_longname(id: i64) -> *const c_char {
-   faction_c_call(id, |fct| {
+   faction_c_with(id, |fct| {
       let ptr = match &fct.c.clongname {
          Some(name) => name.as_ptr(),
          None => match &fct.c.cdisplayname {
@@ -2243,7 +2243,7 @@ pub extern "C" fn faction_longname(id: i64) -> *const c_char {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_mapname(id: i64) -> *const c_char {
-   faction_c_call(id, |fct| {
+   faction_c_with(id, |fct| {
       let ptr = match &fct.c.cmapname {
          Some(name) => name.as_ptr(),
          None => match &fct.c.cdisplayname {
@@ -2261,7 +2261,7 @@ pub extern "C" fn faction_mapname(id: i64) -> *const c_char {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_description(id: i64) -> *const c_char {
-   faction_c_call(id, |fct| {
+   faction_c_with(id, |fct| {
       let ptr = fct.c.cdescription.as_ptr();
       unsafe { naevc::gettext_rust(ptr) }
    })
@@ -2273,7 +2273,7 @@ pub extern "C" fn faction_description(id: i64) -> *const c_char {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_default_ai(id: i64) -> *const c_char {
-   faction_c_call(id, |fct| {
+   faction_c_with(id, |fct| {
       if fct.data.ai.is_empty() {
          std::ptr::null()
       } else {
@@ -2288,7 +2288,7 @@ pub extern "C" fn faction_default_ai(id: i64) -> *const c_char {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_tags(id: i64) -> *mut *const c_char {
-   faction_c_call(id, |fct| fct.c.ctags.as_ptr()).unwrap_or_else(|err| {
+   faction_c_with(id, |fct| fct.c.ctags.as_ptr()).unwrap_or_else(|err| {
       warn_err!(err);
       std::ptr::null_mut()
    })
@@ -2296,7 +2296,7 @@ pub extern "C" fn faction_tags(id: i64) -> *mut *const c_char {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_lane_length_per_presence(id: i64) -> c_double {
-   faction_c_call(id, |fct| fct.data.lane_length_per_presence as c_double).unwrap_or_else(|err| {
+   faction_c_with(id, |fct| fct.data.lane_length_per_presence as c_double).unwrap_or_else(|err| {
       warn_err!(err);
       0.0
    })
@@ -2304,7 +2304,7 @@ pub extern "C" fn faction_lane_length_per_presence(id: i64) -> c_double {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_lane_base_cost(id: i64) -> c_double {
-   faction_c_call(id, |fct| fct.data.lane_base_cost as c_double).unwrap_or_else(|err| {
+   faction_c_with(id, |fct| fct.data.lane_base_cost as c_double).unwrap_or_else(|err| {
       warn_err!(err);
       0.0
    })
@@ -2312,7 +2312,7 @@ pub extern "C" fn faction_lane_base_cost(id: i64) -> c_double {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_logo(id: i64) -> *const texture::Texture {
-   faction_c_call(id, |fct| match &fct.data.logo {
+   faction_c_with(id, |fct| match &fct.data.logo {
       Some(logo) => logo as *const texture::Texture,
       None => std::ptr::null(),
    })
@@ -2324,7 +2324,7 @@ pub extern "C" fn faction_logo(id: i64) -> *const texture::Texture {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_colour(id: i64) -> *const naevc::glColour {
-   faction_c_call(id, |fct| {
+   faction_c_with(id, |fct| {
       &fct.data.colour as *const Colour as *const naevc::glColour
    })
    .unwrap_or_else(|err| {
@@ -2335,7 +2335,7 @@ pub extern "C" fn faction_colour(id: i64) -> *const naevc::glColour {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_setKnown(id: i64, state: i64) -> c_int {
-   faction_c_call(id, |fct| {
+   faction_c_with(id, |fct| {
       fct.set_known(!matches!(state, 0));
       0
    })
@@ -2347,7 +2347,7 @@ pub extern "C" fn faction_setKnown(id: i64, state: i64) -> c_int {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_reputation(id: i64) -> c_double {
-   faction_c_call(id, |fct| fct.player()).unwrap_or_else(|err| {
+   faction_c_with(id, |fct| fct.player()).unwrap_or_else(|err| {
       warn_err!(err);
       0.0
    }) as c_double
@@ -2355,14 +2355,14 @@ pub extern "C" fn faction_reputation(id: i64) -> c_double {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_setReputation(id: i64, value: c_double) {
-   faction_c_call(id, |fct| fct.set_player(value as f32)).unwrap_or_else(|err| {
+   faction_c_with(id, |fct| fct.set_player(value as f32)).unwrap_or_else(|err| {
       warn_err!(err);
    })
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_reputationOverride(id: i64, set: *mut c_int) -> c_double {
-   faction_c_call(id, |fct| match fct.r#override() {
+   faction_c_with(id, |fct| match fct.r#override() {
       Some(v) => {
          unsafe {
             *set = 1;
@@ -2387,7 +2387,7 @@ pub extern "C" fn faction_reputationOverride(id: i64, set: *mut c_int) -> c_doub
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_setReputationOverride(id: i64, set: c_int, value: c_double) {
-   faction_c_call_mut(id, |fct| {
+   faction_c_with_mut(id, |fct| {
       fct.set_override(if set == 0 { None } else { Some(value as f32) });
    })
    .unwrap_or_else(|err| {
@@ -2474,7 +2474,7 @@ pub extern "C" fn faction_getStandingText(id: i64) -> *const c_char {
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_getStandingTextAtValue(id: i64, value: c_double) -> *const c_char {
    static STANDING: Mutex<Option<CString>> = Mutex::new(None);
-   let rank = match faction_c_call(id, |fct| fct.text_rank(Some(value as f32))).flatten() {
+   let rank = match faction_c_with(id, |fct| fct.text_rank(Some(value as f32))).flatten() {
       Ok(r) => r,
       Err(e) => {
          warn_err!(e);
@@ -2488,7 +2488,7 @@ pub extern "C" fn faction_getStandingTextAtValue(id: i64, value: c_double) -> *c
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_reputationMax(id: i64) -> c_double {
-   faction_c_call(id, |fct| fct.reputation_max())
+   faction_c_with(id, |fct| fct.reputation_max())
       .flatten()
       .unwrap_or_else(|err| {
          warn_err!(err);
@@ -2499,7 +2499,7 @@ pub extern "C" fn faction_reputationMax(id: i64) -> c_double {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_usesHiddenJumps(id: i64) -> c_int {
-   (faction_c_call(id, |fct| fct.data.f_useshiddenjumps).unwrap_or(false)) as c_int
+   (faction_c_with(id, |fct| fct.data.f_useshiddenjumps).unwrap_or(false)) as c_int
 }
 
 #[unsafe(no_mangle)]
@@ -2523,14 +2523,14 @@ pub extern "C" fn faction_hit(
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_addEnemy(id: i64, other: i64) {
-   faction_c_call_mut(id, |fct| fct.add_enemy(FactionRef::from_ffi(other))).unwrap_or_else(|err| {
+   faction_c_with_mut(id, |fct| fct.add_enemy(FactionRef::from_ffi(other))).unwrap_or_else(|err| {
       warn_err!(err);
    })
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_rmEnemy(id: i64, other: i64) {
-   faction_c_call_mut(id, |fct| fct.remove_enemy(FactionRef::from_ffi(other))).unwrap_or_else(
+   faction_c_with_mut(id, |fct| fct.remove_enemy(FactionRef::from_ffi(other))).unwrap_or_else(
       |err| {
          warn_err!(err);
       },
@@ -2539,14 +2539,14 @@ pub extern "C" fn faction_rmEnemy(id: i64, other: i64) {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_addAlly(id: i64, other: i64) {
-   faction_c_call_mut(id, |fct| fct.add_ally(FactionRef::from_ffi(other))).unwrap_or_else(|err| {
+   faction_c_with_mut(id, |fct| fct.add_ally(FactionRef::from_ffi(other))).unwrap_or_else(|err| {
       warn_err!(err);
    })
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_rmAlly(id: i64, other: i64) {
-   faction_c_call_mut(id, |fct| fct.remove_ally(FactionRef::from_ffi(other))).unwrap_or_else(
+   faction_c_with_mut(id, |fct| fct.remove_ally(FactionRef::from_ffi(other))).unwrap_or_else(
       |err| {
          warn_err!(err);
       },
@@ -2555,7 +2555,7 @@ pub extern "C" fn faction_rmAlly(id: i64, other: i64) {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_addNeutral(id: i64, other: i64) {
-   faction_c_call_mut(id, |fct| fct.add_neutral(FactionRef::from_ffi(other))).unwrap_or_else(
+   faction_c_with_mut(id, |fct| fct.add_neutral(FactionRef::from_ffi(other))).unwrap_or_else(
       |err| {
          warn_err!(err);
       },
@@ -2564,7 +2564,7 @@ pub extern "C" fn faction_addNeutral(id: i64, other: i64) {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_rmNeutral(id: i64, other: i64) {
-   faction_c_call_mut(id, |fct| fct.remove_neutral(FactionRef::from_ffi(other))).unwrap_or_else(
+   faction_c_with_mut(id, |fct| fct.remove_neutral(FactionRef::from_ffi(other))).unwrap_or_else(
       |err| {
          warn_err!(err);
       },
@@ -2573,7 +2573,7 @@ pub extern "C" fn faction_rmNeutral(id: i64, other: i64) {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_getEquipper(id: i64) -> *const naevc::nlua_env {
-   faction_c_call(id, |fct| {
+   faction_c_with(id, |fct| {
       if let Some(api) = &fct.api
          && let Some(env) = &api.equip_env
       {
@@ -2590,7 +2590,7 @@ pub extern "C" fn faction_getEquipper(id: i64) -> *const naevc::nlua_env {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_getScheduler(id: i64) -> *const naevc::nlua_env {
-   faction_c_call(id, |fct| {
+   faction_c_with(id, |fct| {
       if let Some(api) = &fct.api
          && let Some(env) = &api.sched_env
       {
@@ -2628,7 +2628,7 @@ pub extern "C" fn faction_updateSingle(id: i64) {
 
    // Propagate and update
    if let Err(e) = FactionRef::from_ffi(id)
-      .call(|f| f.standing.write().unwrap().player = if v.1 > 0.0 { v.0 / v.1 } else { 0.0 })
+      .with(|f| f.standing.write().unwrap().player = if v.1 > 0.0 { v.0 / v.1 } else { 0.0 })
    {
       warn_err!(e);
    }
@@ -2714,7 +2714,7 @@ pub extern "C" fn faction_getEnemies(id: i64) -> *const i64 {
          })
          .collect::<Vec<_>>()
    } else {
-      faction_c_call(id, |fct| {
+      faction_c_with(id, |fct| {
          fct.data
             .enemies
             .iter()
@@ -2752,7 +2752,7 @@ pub extern "C" fn faction_getAllies(id: i64) -> *const i64 {
          })
          .collect::<Vec<_>>()
    } else {
-      faction_c_call(id, |fct| {
+      faction_c_with(id, |fct| {
          fct.data
             .allies
             .iter()
@@ -2834,7 +2834,7 @@ pub extern "C" fn faction_getGroup(which: c_int, sys: *const naevc::StarSystem) 
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_generators(id: i64) -> *const naevc::FactionGenerator {
-   let generators = faction_c_call(id, |fct| {
+   let generators = faction_c_with(id, |fct| {
       fct.data
          .generators
          .iter()
