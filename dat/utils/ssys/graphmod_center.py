@@ -18,5 +18,16 @@ if argv[1:]:
 from geometry import bb, vec, segment, symmetry
 from graphmod import ssys_pos as pos, ssys_jmp as E
 
-pos['fertile_crescent'] += 0.3 * (pos['fertile_crescent'] - pos['ngc4771'])
-pos['ngc7061'] += 0.4 * (pos['kansas']-pos['sylph'])
+box = bb()
+for _k, v in pos.items():
+   box += v
+
+center = (box.mini() + box.maxi()) / 2.0
+
+stderr.write('center: '+str(center)+'\n')
+
+L = list(pos.items())
+
+for (k, v) in L:
+   pos[k] -= center
+

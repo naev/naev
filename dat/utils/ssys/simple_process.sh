@@ -13,6 +13,6 @@ grep -v '^$'                  |
 sort -d                       |
 # shellcheck disable=SC2002
 tee >("$DIR"/graph2pov.py "${POVF[@]}" -d "$POVO"'map_ini') |
-"$DIR"/graphmod_fertile.py |
-tee >("$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_fin') |
+"$DIR"/graphmod_center.py |
+tee >("$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_fin') >("$DIR"/decorators.py) |
 "$DIR"/graph2ssysmap.py
