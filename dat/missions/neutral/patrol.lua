@@ -149,7 +149,7 @@ function create ()
    if n_enemies == 0 then
       misn.finish( false )
    end
-   mem.credits = n_enemies * 2000
+   mem.credits = n_enemies * 1400
    mem.credits = mem.credits + rnd.sigma() * (mem.credits / 3)
    mem.reputation = math.floor( n_enemies / 15 )
 
@@ -252,6 +252,7 @@ function land ()
 
    if mem.job_done and okspob then
       local txt = pay_text[ rnd.rnd( 1, #pay_text ) ]
+      lmisn.sfxMoney()
       vntk.msg( _("Mission Completed"), txt )
       player.pay( mem.credits )
       if not pir.factionIsPirate( mem.paying_faction ) then

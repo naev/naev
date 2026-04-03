@@ -29,6 +29,7 @@
 local pir = require "common.pirate"
 local fmt = require "format"
 local vntk = require "vntk"
+local lmisn = require "lmisn"
 
 -- luacheck: globals cargo_land commchoices (shared with derived missions flf.commodity_run, pirate.pirate_commodity_run)
 -- luacheck: globals enter land (Hook functions passed by name)
@@ -136,6 +137,7 @@ function land ()
       local reward = amount * mem.price
       local txt = fmt.f(cargo_land[rnd.rnd(1, #cargo_land)],
             {cargo=_(mem.chosen_comm), credits="#g"..fmt.credits(reward).."#0"} )
+      lmisn.sfxMoney()
       vntk.msg(_("Delivery success!"), txt)
       player.pay(reward)
       if not pir.factionIsPirate( mem.paying_faction ) then

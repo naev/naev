@@ -239,6 +239,7 @@ function _bounty_land ()
    else
       pay_text = b.msg_captured[ rnd.rnd( 1, #b.msg_captured ) ]
    end
+   lmisn.sfxMoney()
    vntk.msg( _("Mission Completed"), fmt.f( pay_text, {plt=b.targetname, credits=fmt.credits(b.reward)} ) )
    player.pay( b.reward )
    if b.reputation then

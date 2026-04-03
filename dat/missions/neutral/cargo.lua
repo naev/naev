@@ -77,7 +77,7 @@ function create()
    local price = commodity.get( mem.cargo ):price()
    local jumpreward = price*1.5
    local distreward = math.log(100*price)/80
-   mem.reward = 1.5^mem.tier * (mem.avgrisk*riskreward + mem.numjumps * jumpreward + mem.traveldist * distreward) * (1 + 0.05*rnd.twosigma())
+   mem.reward = 1.55^mem.tier * (mem.avgrisk*riskreward + mem.numjumps * jumpreward + mem.traveldist * distreward) * (1.2 + 0.07*rnd.twosigma())
 
    misn.setTitle( fmt.f(_("Shipment to {pnt} in {sys} ({tonnes})"),
          {pnt=mem.destplanet, sys=mem.destsys, tonnes=fmt.tonnes_short(mem.amount)} ) )
