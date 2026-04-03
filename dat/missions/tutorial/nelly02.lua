@@ -145,8 +145,7 @@ function accept ()
    end
    local outfit_tobuy = outfit.get("Ion Cannon")
    local function pntfilter( p )
-      -- Sells Outfits
-      if p:services().outfits == nil then
+      if not p:services().inhabited then
          return false
       end
       -- Sells a particular outfit
@@ -171,6 +170,9 @@ function accept ()
       end
    elseif has_dis_owned then
       nel(fmt.f(_([["It looks like you own some disabling weapons but don't have them equipped. Why don't you try to equip #o{outfitname}#0 before we head out? We want to disable my ship, not destroy it!"]]),{outfitname=owned[rnd.rnd(1,#owned)]}))
+      local s = spob.cur():services()
+      if not s.refuel then
+         nel(fmt.f(_([["It looks like this place doesn't have the facilities required to change your equipment. Try to head off to a somewhere nearby that does such as #o{nearplanet}#0."]]),{nearplanet=nearplanet}))
    else
       nel(fmt.f(_([["It looks like you don't have any disabling weapons. Remember, you have to disable my ship and not destroy it! I think the nearby #o{nearplanet}#0 should have #o{outfitname}#0 for sale. You should buy and equip one before trying to disable my ship!"]]),{nearplanet=nearplanet, outfitname=outfit_tobuy}))
    end
