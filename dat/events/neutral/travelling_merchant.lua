@@ -300,7 +300,7 @@ function gen_outfits ()
    local c = 1 / #outfits_mundane
    for _,o in ipairs(outfits_mundane) do 
       local rnd = rnd.rnd()
-      if player.outfitNum( o ) == 0 and rnd < c * 9.5 / #outfits_mundane_filtered or rnd < c * 1.5 / #outfits_mundane_filtered then -- Much lower chance if player already has it
+      if ((player.outfitNum( o ) == 0 and rnd < c * 9.5 / #outfits_mundane_filtered) or rnd < c * 1.5 / #outfits_mundane_filtered) and #outfits_mundane_filtered < 5 then -- Much lower chance if player already has it
          table.insert(outfits_mundane_filtered, o)
       end
    end
