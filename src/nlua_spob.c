@@ -708,6 +708,7 @@ static int spobL_classLong( lua_State *L )
  *  - `outfits`<br />
  *  - `shipyard`<br />
  *  - `blackmarket`<br />
+ *  - `equipment`<br />
  *
  * @usage if p:services()["refuel"] then -- Spob has refuel service.
  * @usage if p:services()["shipyard"] then -- Spob has shipyard service.

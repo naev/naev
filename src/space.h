@@ -33,8 +33,9 @@
 #define SPOB_SERVICE_SHIPYARD ( 1 << 5 )  /**< Can trade ships. */
 #define SPOB_SERVICE_COMMODITY ( 1 << 6 ) /**< Can trade commodities. */
 #define SPOB_SERVICE_INHABITED ( 1 << 7 ) /**< Spob is inhabited. */
+#define SPOB_SERVICE_EQUIPMENT ( 1 << 8 ) /**< Player can change equipment. */
 #define SPOB_SERVICE_BLACKMARKET                                               \
-   ( 1 << 8 ) /**< Disables licence restrictions on goods. */
+   ( 1 << 9 ) /**< Disables licence restrictions on goods. */
 #define SPOB_SERVICES_MAX ( SPOB_SERVICE_BLACKMARKET << 1 )
 #define spob_hasService( p, s )                                                \
    ( ( p )->services & s ) /**< Checks if spob has a service. */

@@ -190,6 +190,8 @@ const char *spob_getServiceName( int service )
       return N_( "Shipyard" );
    case SPOB_SERVICE_BLACKMARKET:
       return N_( "Blackmarket" );
+   case SPOB_SERVICE_EQUIPMENT:
+      return N_( "Equipment" );
    }
    return NULL;
 }
@@ -217,6 +219,8 @@ int spob_getService( const char *name )
       return SPOB_SERVICE_SHIPYARD;
    else if ( SDL_strcasecmp( name, "Blackmarket" ) == 0 )
       return SPOB_SERVICE_BLACKMARKET;
+   else if ( SDL_strcasecmp( name, "Equipment" ) == 0 )
+      return SPOB_SERVICE_EQUIPMENT;
    return -1;
 }
 
@@ -2603,6 +2607,12 @@ static int spob_parse( Spob *spob, const char *filename )
    /* Allow forcing to be uninhabited. */
    if ( spob_isFlag( spob, SPOB_UNINHABITED ) )
       spob->services &= ~SPOB_SERVICE_INHABITED;
+   /* We allow the player to change equipment at most places.
+    * TODO allow disabling equiping in the future. */
+   if ( spob_hasService( spob, SPOB_SERVICE_REFUEL ) ||
+        spob_hasService( spob, SPOB_SERVICE_OUTFITS ) ||
+        spob_hasService( spob, SPOB_SERVICE_SHIPYARD ) )
+      spob->services |= SPOB_SERVICE_EQUIPMENT;
 
    if ( spob->radius > 0. )
       spob_setFlag( spob, SPOB_RADIUS );
