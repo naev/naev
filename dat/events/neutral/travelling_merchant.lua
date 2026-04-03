@@ -52,7 +52,7 @@ local broadcastmsg = {
 }
 
 local misi_outfits
-local etc_outfits
+local all_outfits
 function create ()
    local scur = system.cur()
 
@@ -114,7 +114,7 @@ function create ()
    p:brake()
 
    -- Get outfits
-   misi_outfits, etc_outfits = gen_outfits()
+   misi_outfits, all_outfits = gen_outfits()
 
    -- Set up hooks
    broadcast_first = false
@@ -305,7 +305,7 @@ function gen_outfits ()
       end
    end
    
-   return outfits, outfits_mundane_filtered -- Not merging them together yet so as not to bug the player with "new wares" hails unnessesarily
+   return outfits, rnd.permutation( tmergei( tcopy( outfits ), outfits_mundane_filtered ) )
 end
 
 local newoutfits = false
@@ -480,16 +480,8 @@ They get uncomfortably close
          var.push("misi_o_"..o,true)
       end
       newoutfits = false
-      -- Combine the unique and random outfits here
-      outfits = {}
-      for _,o in ipairs(misi_outfits) do
-         table.insert( outfits, o )
-      end
-      for _,o in ipairs(etc_outfits) do
-         table.insert( outfits, o )
-      end
       -- Open store
-      tk.merchantOutfit( store_name, rnd.permutation(outfits) )
+      tk.merchantOutfit( store_name, all_outfits )
    end )
    vn.jump("menu")
 
