@@ -59,6 +59,9 @@ local zalek_params = {
          type_range = {
             ["Launcher"] = { max = 8 },
          },
+         prefer = {
+            ["Weapons Ionizer"] = 0, -- does not affect launchers
+         },
       } end,
 }
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
