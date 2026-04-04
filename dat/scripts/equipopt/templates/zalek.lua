@@ -52,6 +52,14 @@ local zalek_params = {
             ["Launcher"] = { max = rnd.rnd(0,2) },
          },
       } end,
+   ["Za'lek Hephaestus RAT"] = function () return {
+         energy = 0.5,
+         fighterbay = 0.5,
+         launcher = 10,
+         type_range = {
+            ["Launcher"] = { max = 8 },
+         },
+      } end,
 }
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 local zalek_cores = {

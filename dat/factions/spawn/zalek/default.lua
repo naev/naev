@@ -48,8 +48,20 @@ local function spawn_capship ()
    } )
 end
 
+-- @brief Spawns a supercapital.
+local function spawn_supercapital ()
+   return scom.doTable( {}, {
+      { w=0.15, var.zalek_hephaestus, var.zalek_sting, var.zalek_sting, var.zalek_sting, sdroneheavy, sdroneheavy, sdroneheavy },
+      { w=0.3, var.zalek_hephaestus, var.zalek_demon, var.zalek_demon, sdroneheavy, sdroneheavy, sdronebomber, sdronebomber },
+      { w=0.55, var.zalek_hephaestus, sdiablo, sdiablo },
+      { w=0.80, var.zalek_hephaestus, var.zalek_mephisto, var.zalek_mephisto },
+      { var.zalek_hephaestus },
+   } )
+end
+
 return function ( t, max )
-   t.patrol  = { f = spawn_patrol,  w = 300 }
-   t.squad   = { f = spawn_squad,   w = math.max(1, -80 + 0.80 * max) }
-   t.capship = { f = spawn_capship, w = math.max(1, -500 + 1.70 * max) }
+   t.patrol       = { f = spawn_patrol,       w = 300 }
+   t.squad        = { f = spawn_squad,        w = math.max(1, -80 + 0.80 * max) }
+   t.capship      = { f = spawn_capship,      w = math.max(1, -500 + 1.70 * max) }
+   t.supercapital = { f = spawn_supercapital, w = math.max(1, -900 + 1.70 * max) }
 end, 10
