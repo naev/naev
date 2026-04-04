@@ -38,6 +38,7 @@
    <physical>300</physical>
    <disable>600</disable>
   </damage>
+  <radius friendlyfire="1">70</radius>
   <armour>100</armour>
   <absorb>50</absorb>
   <ai>smart</ai>

@@ -37,6 +37,7 @@
    <penetrate>180</penetrate>
    <physical>700</physical>
   </damage>
+  <radius friendlyfire="1">45</radius>
   <armour>80</armour>
   <absorb>50</absorb>
   <ai>smart</ai>
