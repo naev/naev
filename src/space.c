@@ -733,15 +733,15 @@ const char *space_getRndSpob( int landable, unsigned int services,
  *    @param x X position to get closest from.
  *    @param y Y position to get closest from.
  */
-double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast,
-                          int *fie, double x, double y )
+double system_getClosest( const StarSystem *sys, int *pnt, int *jp,
+                          AsteroidRef *ast, int *fie, double x, double y )
 {
    double d = HUGE_VAL;
 
    /* Default output. */
    *pnt = -1;
    *jp  = -1;
-   *ast = -1;
+   *ast = ASTEROID_NULL;
    *fie = -1;
 
    /* Spobs. */
@@ -759,26 +759,10 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast,
 
    /* Asteroids. */
    for ( int i = 0; i < array_size( sys->asteroids ); i++ ) {
-      AsteroidAnchor *f = &sys->asteroids[i];
-      for ( int k = 0; k < array_size( f->asteroids ); k++ ) {
-         const Asteroid *as = ast_get( f, k );
-
-         /* Skip non-interactive asteroids. */
-         if ( ast_state( as ) != ASTEROID_FG )
-            continue;
-
-         /* Skip out of range asteroids */
-         if ( !pilot_inRangeAsteroid( player.p, k, i ) )
-            continue;
-
-         const Solid *s  = ast_solid( as );
-         double       td = pow2( x - s->pos.x ) + pow2( y - s->pos.y );
-         if ( td < d ) {
-            *pnt = -1; /* We must clear spob target as asteroid is closer. */
-            *ast = k;
-            *fie = i;
-            d    = td;
-         }
+      *ast = asteroid_closestPilot( &sys->asteroids[i], x, y, &d );
+      if ( *ast != ASTEROID_NULL ) {
+         *pnt = -1;
+         *fie = i;
       }
    }
 
@@ -791,86 +775,13 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast,
       td = pow2( x - j->pos.x ) + pow2( y - j->pos.y );
       if ( td < d ) {
          *pnt = -1; /* We must clear spob target as jump point is closer. */
-         *ast = -1;
+         *ast = ASTEROID_NULL;
          *fie = -1;
          *jp  = i;
          d    = td;
       }
    }
    return d;
-}
-
-/**
- * @brief Gets the feature nearest to directly ahead of a position in the
- * system.
- *
- *    @param sys System to get closest feature from a position.
- *    @param[out] pnt ID of closest spob or -1 if something else is closer (or
- * none is close).
- *    @param[out] jp ID of closest jump point or -1 if something else is closer
- * (or none is close).
- *    @param[out] ast ID of closest asteroid or -1 if something else is closer
- * (or none is close).
- *    @param[out] fie ID of the asteroid anchor the asteroid belongs to.
- *    @param x X position to get closest from.
- *    @param y Y position to get closest from.
- *    @param ang Reference angle.
- *    @return The angle to the the feature most ahead.
- */
-double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast,
-                             int *fie, double x, double y, double ang )
-{
-   double a;
-
-   /* Default output. */
-   *pnt = -1;
-   *jp  = -1;
-   a    = ang + M_PI;
-
-   /* Spobs. */
-   for ( int i = 0; i < array_size( sys->spobs ); i++ ) {
-      Spob  *p  = sys->spobs[i];
-      double ta = atan2( y - p->pos.y, x - p->pos.x );
-      if ( ABS( angle_diff( ang, ta ) ) < ABS( angle_diff( ang, a ) ) ) {
-         *pnt = i;
-         a    = ta;
-      }
-   }
-
-   /* Asteroids. */
-   for ( int i = 0; i < array_size( sys->asteroids ); i++ ) {
-      AsteroidAnchor *f = &sys->asteroids[i];
-      for ( int k = 0; k < array_size( f->asteroids ); k++ ) {
-         const Asteroid *as = ast_get( f, k );
-
-         /* Skip non-interactive asteroids. */
-         if ( ast_state( as ) != ASTEROID_FG )
-            continue;
-
-         const Solid *s  = ast_solid( as );
-         double       ta = atan2( y - s->pos.y, x - s->pos.x );
-         if ( ABS( angle_diff( ang, ta ) ) < ABS( angle_diff( ang, a ) ) ) {
-            *pnt = -1; /* We must clear spob target as asteroid is closer. */
-            *ast = k;
-            *fie = i;
-            a    = ta;
-         }
-      }
-   }
-
-   /* Jump points. */
-   for ( int i = 0; i < array_size( sys->jumps ); i++ ) {
-      JumpPoint *j  = &sys->jumps[i];
-      double     ta = atan2( y - j->pos.y, x - j->pos.x );
-      if ( ABS( angle_diff( ang, ta ) ) < ABS( angle_diff( ang, a ) ) ) {
-         *ast = -1;
-         *fie = -1;
-         *pnt = -1; /* We must clear the rest as jump point is closer. */
-         *jp  = i;
-         a    = ta;
-      }
-   }
-   return a;
 }
 
 /**

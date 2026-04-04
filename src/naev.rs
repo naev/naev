@@ -17,6 +17,7 @@ unsafe extern "C" {
 }
 
 mod array;
+mod asteroid;
 mod commodity;
 mod damagetype;
 mod faction;

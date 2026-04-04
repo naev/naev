@@ -522,10 +522,8 @@ int         space_sysReachableFromSys( const StarSystem *target,
 char      **space_getFactionSpob( const FactionRef *factions, int landable );
 const char *space_getRndSpob( int landable, unsigned int services,
                               int ( *filter )( Spob *p ) );
-double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast,
-                          int *fie, double x, double y );
-double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast,
-                             int *fie, double x, double y, double ang );
+double      system_getClosest( const StarSystem *sys, int *pnt, int *jp,
+                               AsteroidRef *ast, int *fie, double x, double y );
 
 /*
  * Markers.

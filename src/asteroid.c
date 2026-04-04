@@ -1330,3 +1330,28 @@ const char *astgroup_name( const AsteroidTypeGroup *ast )
 {
    return ast->name;
 }
+
+AsteroidRef asteroid_closestPilot( const AsteroidAnchor *anc, double x,
+                                   double y, double *d )
+{
+   AsteroidRef ast = ASTEROID_NULL;
+   for ( int k = 0; k < array_size( anc->asteroids ); k++ ) {
+      const Asteroid *as = ast_get( anc, k );
+
+      /* Skip non-interactive asteroids. */
+      if ( ast_state( as ) != ASTEROID_FG )
+         continue;
+
+      /* Skip out of range asteroids */
+      if ( !pilot_inRangeAsteroid( player.p, k, as->parent ) )
+         continue;
+
+      const Solid *s  = ast_solid( as );
+      double       td = pow2( x - s->pos.x ) + pow2( y - s->pos.y );
+      if ( td < *d ) {
+         ast = k;
+         *d  = td;
+      }
+   }
+   return ast;
+}

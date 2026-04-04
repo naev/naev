@@ -47,6 +47,10 @@ typedef enum {
 typedef struct AsteroidType      AsteroidType;
 typedef struct AsteroidTypeGroup AsteroidTypeGroup;
 typedef struct Asteroid          Asteroid;
+// typedef struct Asteroid*       AsteroidRef;
+// #define ASTEROID_NULL   NULL
+typedef int AsteroidRef;
+#define ASTEROID_NULL -1
 
 /**
  * @brief Represents an asteroid field anchor.
@@ -106,7 +110,7 @@ AsteroidTypeGroup  *astgroup_getName( const char *name );
 const char         *astgroup_name( const AsteroidTypeGroup *ast );
 
 /* Getters. */
-const Asteroid  *ast_get( const AsteroidAnchor *anc, int i );
+const Asteroid  *ast_get( const AsteroidAnchor *anc, AsteroidRef id );
 int              ast_id( const Asteroid *ast );
 int              ast_parent( const Asteroid *ast );
 AsteroidState    ast_state( const Asteroid *ast );
@@ -117,6 +121,8 @@ int              ast_test_collide( const Asteroid *ast, const CollPolyView *at,
 int              ast_scanned( const Asteroid *ast );
 void             ast_set_scanned( const Asteroid *ast, int set );
 CollPolyView    *ast_poly( const Asteroid *ast );
+AsteroidRef      asteroid_closestPilot( const AsteroidAnchor *anc, double x,
+                                        double y, double *d );
 
 /* Misc functions. */
 int  asteroids_inField( const vec2 *p );

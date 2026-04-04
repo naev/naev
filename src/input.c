@@ -1551,7 +1551,8 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom,
 {
    unsigned int pid;
    double       dp;
-   int          pntid, jpid, astid, fieid;
+   int          pntid, jpid, fieid;
+   AsteroidRef  astid;
 
    /* Don't allow selecting a new target with the right mouse button
     * (prevents pilots from getting in the way of autonav). */
