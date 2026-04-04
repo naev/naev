@@ -279,7 +279,7 @@ function heartbeat ()
    elseif hb_state==3 then
       local pp = player.pilot()
       local a = asteroid.get( pp )
-      if a and a:pos():dist( pp:pos() ) < 50 and a:vel():dist( pp:vel() ) < 15 then
+      if a and a:pos():dist( pp:pos() ) < 100 and a:vel():dist( pp:vel() ) < 25 then
          system.markerClear()
          drilltime()
          a:setTimer( -1 ) -- Get rid of the asteroid
