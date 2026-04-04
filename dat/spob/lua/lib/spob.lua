@@ -40,6 +40,7 @@ end
 function luaspob.init( spb )
    mem.spob = spb
    mem.std_land = mem.params.std_land or 0 -- Needed for can_land
+   mem.std_notyet = mem.params.std_notyet or 0
    luaspob.initBG( spb )
 end
 
@@ -284,7 +285,7 @@ function luaspob.can_land ()
    if deny then
       return false, denymsg or mem.msg_denied
    end
-   if mem.spob:hostile() then
+   if mem.spob:hostile() or std < mem.std_notyet then
       return false, mem.msg_denied
    end
    if std < mem.std_land then

@@ -7,6 +7,7 @@ mem.params = {
       return math.max( (mem.std_land - std) * 100 * player.pilot():ship():size() + 10e3, 10e3 )
    end,
    std_land = 20,
+   std_notyet = 0,
    std_bribe = -100,
    std_dangerous = -math.huge,
    msg_granted = {
