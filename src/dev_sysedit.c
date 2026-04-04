@@ -2063,9 +2063,8 @@ static void sysedit_genAsteroidsList( unsigned int wid )
    int                   x, y, w, h;
    const AsteroidAnchor *ast =
       &sysedit_sys->asteroids[sysedit_select[0].u.asteroid];
-   const AsteroidTypeGroup *astgroups;
-   char                   **have, **available;
-   int                      wx, wy, ww, wh;
+   char **have, **available;
+   int    wx, wy, ww, wh;
 
    window_posWidget( wid, "txtAsteroidsHave", &wx, &wy );
    window_dimWidget( wid, "txtAsteroidsHave", &ww, &wh );
@@ -2090,7 +2089,7 @@ static void sysedit_genAsteroidsList( unsigned int wid )
    if ( nhave > 0 ) {
       have = malloc( sizeof( char * ) * nhave );
       for ( int i = 0; i < nhave; i++ )
-         have[i] = strdup( ast->groups[i]->name );
+         have[i] = strdup( astgroup_name( ast->groups[i] ) );
       window_enableButton( wid, "btnRmAsteroid" );
    } else {
       have = NULL;
@@ -2101,18 +2100,19 @@ static void sysedit_genAsteroidsList( unsigned int wid )
    x += w + 15;
 
    /* Load all asteroid types. */
-   astgroups = astgroup_getAll();
-   navail    = array_size( astgroups );
+   AsteroidTypeGroup **astgroups = astgroup_getAll();
+   navail                        = array_size( astgroups );
    if ( navail > 0 ) {
       available = malloc( sizeof( char * ) * navail );
       for ( int i = 0; i < navail; i++ )
-         available[i] = strdup( astgroups[i].name );
+         available[i] = strdup( astgroup_name( astgroups[i] ) );
       qsort( available, navail, sizeof( char * ), strsort );
       window_enableButton( wid, "btnAddAsteroid" );
    } else {
       available = NULL;
       window_disableButton( wid, "btnAddAsteroid" );
    }
+   array_free( astgroups );
    window_addList( wid, x, y, w, h, "lstAsteroidsAvailable", available, navail,
                    0, NULL, sysedit_btnAddAsteroid );
 
@@ -2144,7 +2144,7 @@ static void sysedit_btnRmAsteroid( unsigned int wid, const char *unused )
       }
       uniedit_diffCreateSysStrAttr(
          sysedit_sys, HUNK_TYPE_SSYS_ASTEROIDS_REMOVE_TYPE,
-         ast->groups[pos]->name, sysedit_asteroidsAttr( ast ) );
+         astgroup_name( ast->groups[pos] ), sysedit_asteroidsAttr( ast ) );
    } else {
       if ( array_size( ast->groups ) > 0 )
          array_erase( &ast->groups, &ast->groups[pos], &ast->groups[pos + 1] );
@@ -2170,9 +2170,9 @@ static void sysedit_btnAddAsteroid( unsigned int wid, const char *unused )
                "have labels. Please set a label via the property editor." ) );
          return;
       }
-      uniedit_diffCreateSysStrAttr( sysedit_sys,
-                                    HUNK_TYPE_SSYS_ASTEROIDS_ADD_TYPE,
-                                    grp->name, sysedit_asteroidsAttr( ast ) );
+      uniedit_diffCreateSysStrAttr(
+         sysedit_sys, HUNK_TYPE_SSYS_ASTEROIDS_ADD_TYPE, astgroup_name( grp ),
+         sysedit_asteroidsAttr( ast ) );
    } else {
       array_push_back( &ast->groups, grp );
    }

@@ -1216,7 +1216,8 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh,
             AsteroidAnchor *ast = &sys->asteroids[i];
             for ( int j = 0; j < array_size( ast->groups ); j++ )
                l += scnprintf( &buf[l], sizeof( buf ) - l, "%s%s",
-                               ( l > 0 ) ? "\n" : "", ast->groups[j]->name );
+                               ( l > 0 ) ? "\n" : "",
+                               astgroup_name( ast->groups[j] ) );
          }
          toolkit_drawAltText( x, y, buf );
       }
@@ -2989,12 +2990,12 @@ void uniedit_diffCreateSysNone( const StarSystem *sys, UniHunkType_t type )
 }
 
 void uniedit_diffCreateSysStr( const StarSystem *sys, UniHunkType_t type,
-                               char *str )
+                               const char *str )
 {
    uniedit_diffCreateSysStrAttr( sys, type, str, NULL );
 }
 void uniedit_diffCreateSysStrAttr( const StarSystem *sys, UniHunkType_t type,
-                                   char *str, UniAttribute_t *attr )
+                                   const char *str, UniAttribute_t *attr )
 {
    UniHunk_t hunk;
    memset( &hunk, 0, sizeof( hunk ) );
@@ -3002,7 +3003,7 @@ void uniedit_diffCreateSysStrAttr( const StarSystem *sys, UniHunkType_t type,
    hunk.target.u.name = strdup( sys->name );
    hunk.type          = type;
    hunk.dtype         = HUNK_DATA_STRING;
-   hunk.u.name        = str;
+   hunk.u.name        = (char *)str;
    hunk.attr          = attr;
    uniedit_diffAdd( &hunk );
 }

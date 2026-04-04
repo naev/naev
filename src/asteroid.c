@@ -1138,9 +1138,12 @@ AsteroidType *asttype_getName( const char *name )
  *
  *    @return An array (array.h) containing all the asteroid type groups.
  */
-const AsteroidTypeGroup *astgroup_getAll( void )
+AsteroidTypeGroup **astgroup_getAll( void )
 {
-   return asteroid_groups;
+   AsteroidTypeGroup **a = array_create( AsteroidTypeGroup * );
+   for ( int i = 0; i < array_size( asteroid_groups ); i++ )
+      array_push_back( &a, &asteroid_groups[i] );
+   return a;
 }
 
 /**
@@ -1311,7 +1314,19 @@ int ast_test_collide( const Asteroid *ast, const CollPolyView *at,
    poly_free_view( rpoly );
    return ret;
 }
+int ast_scanned( const Asteroid *ast )
+{
+   return ast->scanned;
+}
+void ast_set_scanned( const Asteroid *ast, int set )
+{
+   ( (Asteroid *)ast )->scanned = set;
+}
 CollPolyView *ast_poly( const Asteroid *ast )
 {
    return poly_rotate( ast->polygon, (float)ast->ang );
+}
+const char *astgroup_name( const AsteroidTypeGroup *ast )
+{
+   return ast->name;
 }

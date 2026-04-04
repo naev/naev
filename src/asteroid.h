@@ -44,49 +44,9 @@ typedef enum {
    ASTEROID_STATE_MAX, /**< Max amount of states. */
 } AsteroidState;
 
-/**
- * @brief Represents a potential reward from the asteroid.
- */
-typedef struct AsteroidReward_ {
-   CommodityRef material; /**< Material dropped. */
-   int          quantity; /**< Maximum amount. */
-   int          rarity;   /**< Rarity. */
-} AsteroidReward;
-
-typedef struct AsteroidGfx {
-   glTexture *gfx;
-   CollPoly  *polygon;
-} AsteroidGfx;
-
-/**
- * @brief Represents a type of asteroid.
- */
-typedef struct AsteroidType_ {
-   char           *name;        /**< Name of the asteroid type. */
-   char           *scanned_msg; /**< Scanned message. */
-   AsteroidGfx    *gfxs;
-   AsteroidReward *material;    /**< Materials contained in the asteroid. */
-   double          armour_min;  /**< Minimum "armour" of the asteroid. */
-   double          armour_max;  /**< Maximum "armour" of the asteroid. */
-   double          absorb;      /**< Absorption of the asteroid. */
-   double          damage;      /**< Damage on explosion. */
-   double          disable;     /**< Disable on explosion. */
-   double          penetration; /**< Penetration of the explosion. */
-   double          exp_radius;  /**< Explosion radius. */
-   double          alert_range; /**< Range to alert other ships. */
-} AsteroidType;
-
-/**
- * @brief Represents a group of asteroids.
- */
-typedef struct AsteroidTypeGroup_ {
-   char          *name;    /**< Name of the type group. */
-   AsteroidType **types;   /**< Types of asteroids in the group. */
-   double        *weights; /**< Weights of each element in the group. */
-   double         wtotal;  /**< Sum of weights in the group. */
-} AsteroidTypeGroup;
-
-typedef struct Asteroid Asteroid;
+typedef struct AsteroidType      AsteroidType;
+typedef struct AsteroidTypeGroup AsteroidTypeGroup;
+typedef struct Asteroid          Asteroid;
 
 /**
  * @brief Represents an asteroid field anchor.
@@ -141,8 +101,9 @@ const AsteroidType *asttype_getAll( void );
 AsteroidType       *asttype_getName( const char *name );
 
 /* Asteroid type groups. */
-const AsteroidTypeGroup *astgroup_getAll( void );
-AsteroidTypeGroup       *astgroup_getName( const char *name );
+AsteroidTypeGroup **astgroup_getAll( void );
+AsteroidTypeGroup  *astgroup_getName( const char *name );
+const char         *astgroup_name( const AsteroidTypeGroup *ast );
 
 /* Getters. */
 const Asteroid  *ast_get( const AsteroidAnchor *anc, int i );

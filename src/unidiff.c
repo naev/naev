@@ -1470,10 +1470,11 @@ int diff_patchHunk( UniHunk_t *hunk )
          if ( grp == NULL )
             return -1;
          for ( int i = 0; i < array_size( ast->groups ); i++ ) {
-            if ( strcmp( grp->name, ast->groups[i]->name ) == 0 ) {
+            if ( strcmp( hunk->u.name, astgroup_name( ast->groups[i] ) ) ==
+                 0 ) {
                WARN( _( "Unidiff '%s' trying to add already existing asteroid "
                         "type '%s'." ),
-                     diff_hunkName( hunk->type ), grp->name );
+                     diff_hunkName( hunk->type ), hunk->u.name );
                return -1;
             }
          }
@@ -1489,7 +1490,8 @@ int diff_patchHunk( UniHunk_t *hunk )
          if ( grp == NULL )
             return -1;
          for ( int i = 0; i < array_size( ast->groups ); i++ ) {
-            if ( strcmp( grp->name, ast->groups[i]->name ) == 0 ) {
+            if ( strcmp( hunk->u.name, astgroup_name( ast->groups[i] ) ) ==
+                 0 ) {
                array_erase( &ast->groups, &ast->groups[i],
                             &ast->groups[i + 1] );
                return 0;
@@ -1497,7 +1499,7 @@ int diff_patchHunk( UniHunk_t *hunk )
          }
          WARN(
             _( "Unidiff '%s' trying to remove inexistent asteroid type '%s'." ),
-            diff_hunkName( hunk->type ), grp->name );
+            diff_hunkName( hunk->type ), hunk->u.name );
       }
    }
       return -1;

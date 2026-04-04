@@ -231,7 +231,7 @@ int dsys_saveSystem( StarSystem *sys )
 
          /* Type Groups */
          for ( int j = 0; j < array_size( ast->groups ); j++ )
-            xmlw_elem( writer, "group", "%s", ast->groups[j]->name );
+            xmlw_elem( writer, "group", "%s", astgroup_name( ast->groups[j] ) );
 
          /* Radius */
          xmlw_elem( writer, "radius", "%f", ast->radius );
