@@ -28,7 +28,7 @@
             area. */
 
 /* Asteroid status enum. Order is based on how asteroids are generated. */
-enum {
+typedef enum {
    ASTEROID_XX,       /**< Asteroid is not visible nor "exists". */
    ASTEROID_XX_TO_BG, /**< Asteroid is appearing into the background. */
    ASTEROID_XB, /**< Asteroid is in the background, coming from nothing and
@@ -42,7 +42,7 @@ enum {
                    going to nothing next. */
    ASTEROID_BG_TO_XX,  /**< Asteroid is disappearing from the background. */
    ASTEROID_STATE_MAX, /**< Max amount of states. */
-};
+} AsteroidState;
 
 /**
  * @brief Represents a potential reward from the asteroid.
@@ -86,28 +86,7 @@ typedef struct AsteroidTypeGroup_ {
    double         wtotal;  /**< Sum of weights in the group. */
 } AsteroidTypeGroup;
 
-/**
- * @brief Represents a single asteroid.
- */
-typedef struct Asteroid_ {
-   /* Intrinsics. */
-   int                 id;      /**< ID of the asteroid, for targeting. */
-   int                 parent;  /**< ID of the anchor parent. */
-   int                 state;   /**< State of the asteroid. */
-   const AsteroidType *type;    /**< Type of the asteroid. */
-   const glTexture    *gfx;     /**< Graphic of the asteroid. */
-   CollPoly           *polygon; /**< Collision polygon associated to gfx. */
-   double              armour;  /**< Current "armour" of the asteroid. */
-   /* Movement. */
-   Solid  sol;  /**< Solid. */
-   double ang;  /**< Angle. */
-   double spin; /**< Spin. */
-   /* Stats. */
-   double timer;      /**< Internal timer for animations. */
-   double timer_max;  /**< Internal timer initial value. */
-   double scan_alpha; /**< Alpha value for scanning stuff. */
-   int    scanned;    /**< Wether the player already scanned this asteroid. */
-} Asteroid;
+typedef struct Asteroid Asteroid;
 
 /**
  * @brief Represents an asteroid field anchor.
@@ -164,6 +143,19 @@ AsteroidType       *asttype_getName( const char *name );
 /* Asteroid type groups. */
 const AsteroidTypeGroup *astgroup_getAll( void );
 AsteroidTypeGroup       *astgroup_getName( const char *name );
+
+/* Getters. */
+const Asteroid  *ast_get( const AsteroidAnchor *anc, int i );
+int              ast_id( const Asteroid *ast );
+int              ast_parent( const Asteroid *ast );
+AsteroidState    ast_state( const Asteroid *ast );
+const Solid     *ast_solid( const Asteroid *ast );
+const glTexture *ast_gfx( const Asteroid *ast );
+int              ast_test_collide( const Asteroid *ast, const CollPolyView *at,
+                                   const vec2 *ap, vec2 *crash );
+int              ast_scanned( const Asteroid *ast );
+void             ast_set_scanned( const Asteroid *ast, int set );
+CollPolyView    *ast_poly( const Asteroid *ast );
 
 /* Misc functions. */
 int  asteroids_inField( const vec2 *p );

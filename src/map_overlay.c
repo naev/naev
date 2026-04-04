@@ -867,7 +867,7 @@ void ovr_render( double dt )
       asteroid_collideQueryIL( ast, &ovr_qtquery, ax - r, ay - r, ax + r,
                                ay + r );
       for ( int j = 0; j < il_size( &ovr_qtquery ); j++ ) {
-         Asteroid *a = &ast->asteroids[il_get( &ovr_qtquery, j, 0 )];
+         const Asteroid *a = ast_get( ast, il_get( &ovr_qtquery, j, 0 ) );
          gui_renderAsteroid( a, w, h, res, INFINITY, 1 );
       }
    }

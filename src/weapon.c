@@ -544,9 +544,9 @@ static void think_beam( Weapon *w, double dt )
    case TARGET_ASTEROID: {
       const AsteroidAnchor *field =
          &cur_system->asteroids[w->target.u.ast.anchor];
-      const Asteroid *ast = &field->asteroids[w->target.u.ast.asteroid];
-      if ( ast->state == ASTEROID_FG )
-         tpos = &ast->sol.pos;
+      const Asteroid *ast = ast_get( field, w->target.u.ast.asteroid );
+      if ( ast_state( ast ) == ASTEROID_FG )
+         tpos = &ast_solid( ast )->pos;
    } break;
    case TARGET_WEAPON: {
       const Weapon *wtarget = weapon_getID( w->target.u.id );
@@ -1274,19 +1274,17 @@ static void weapon_updateCollide( Weapon *w, double dt )
          /* Quadtree collisions. */
          asteroid_collideQueryIL( ast, &weapon_qtquery, x1, y1, x2, y2 );
          for ( int j = 0; j < il_size( &weapon_qtquery ); j++ ) {
-            Asteroid *a = &ast->asteroids[il_get( &weapon_qtquery, j, 0 )];
-            int       coll;
-            WeaponHit hit;
+            const Asteroid *a = ast_get( ast, il_get( &weapon_qtquery, j, 0 ) );
+            int             coll;
+            WeaponHit       hit;
 
-            if ( a->state != ASTEROID_FG )
+            if ( ast_state( a ) != ASTEROID_FG )
                continue;
 
-            if ( a->polygon != NULL ) {
-               CollPolyView *rpoly = poly_rotate( a->polygon, (float)a->ang );
-               coll = weapon_testCollision( &wc, &a->sol, rpoly, 0., crash );
-               poly_free_view( rpoly );
-            } else
-               coll = weapon_testCollision( &wc, &a->sol, NULL, 0., crash );
+            CollPolyView *rpoly = ast_poly( a );
+            coll =
+               weapon_testCollision( &wc, ast_solid( a ), rpoly, 0., crash );
+            poly_free_view( rpoly );
 
             /* Missed. */
             if ( !coll )
@@ -1294,7 +1292,7 @@ static void weapon_updateCollide( Weapon *w, double dt )
 
             /* Handle the hit. */
             hit.type  = TARGET_ASTEROID;
-            hit.u.ast = a;
+            hit.u.ast = (Asteroid *)a;
             hit.pos   = crash;
             if ( wc.beam )
                weapon_hitBeam( w, &hit, dt );
@@ -1589,27 +1587,25 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius,
          /* Quadtree collisions. */
          asteroid_collideQueryIL( ast, &weapon_qtquery, x1, y1, x2, y2 );
          for ( int j = 0; j < il_size( &weapon_qtquery ); j++ ) {
-            Asteroid *a = &ast->asteroids[il_get( &weapon_qtquery, j, 0 )];
-            vec2      crash[2];
-            int       coll;
-            if ( a->state != ASTEROID_FG )
+            const Asteroid *a = ast_get( ast, il_get( &weapon_qtquery, j, 0 ) );
+            vec2            crash[2];
+            int             coll;
+            if ( ast_state( a ) != ASTEROID_FG )
                continue;
 
-            if ( a->polygon != NULL ) {
-               CollPolyView *rpoly = poly_rotate( a->polygon, (float)a->ang );
-               coll = weapon_testCollision( &wc, &a->sol, rpoly, 0., crash );
-               poly_free_view( rpoly );
-            } else
-               coll = weapon_testCollision( &wc, &a->sol, NULL, 0., crash );
+            const Solid  *s     = ast_solid( a );
+            CollPolyView *rpoly = ast_poly( a );
+            coll = weapon_testCollision( &wc, s, rpoly, 0., crash );
+            poly_free_view( rpoly );
 
             /* Missed. */
             if ( !coll )
                continue;
 
-            asteroid_hit( a, dmg, mining_rarity, mining_bonus );
+            vx += s->vel.x;
+            vy += s->vel.y;
+            asteroid_hit( (Asteroid *)a, dmg, mining_rarity, mining_bonus );
 
-            vx += a->sol.vel.x;
-            vy += a->sol.vel.y;
             nvel++;
          }
       }
@@ -1728,9 +1724,10 @@ static void weapon_hit( Weapon *w, const WeaponHit *hit )
       Pilot    *parent = pilot_get( w->parent );
       double    mining_bonus =
          ( parent != NULL ) ? parent->stats.mining_bonus : 1.;
-      int spfx = outfit_spfxArmour( w->outfit );
-      spfx_add( spfx, hit->pos->x, hit->pos->y, VX( ast->sol.vel ),
-                VY( ast->sol.vel ), SPFX_LAYER_BACK );
+      int          spfx = outfit_spfxArmour( w->outfit );
+      const Solid *sol  = ast_solid( ast );
+      spfx_add( spfx, hit->pos->x, hit->pos->y, VX( sol->vel ), VY( sol->vel ),
+                SPFX_LAYER_BACK );
       asteroid_hit( ast, &dmg, outfit_miningRarity( w->outfit ), mining_bonus );
    } else if ( hit->type == TARGET_WEAPON ) {
       Weapon *wpn  = hit->u.wpn;
@@ -1934,10 +1931,11 @@ static void weapon_hitBeam( Weapon *w, const WeaponHit *hit, double dt )
          int spfx = outfit_spfxArmour( w->outfit );
 
          /* Add graphic. */
-         spfx_add( spfx, hit->pos[0].x, hit->pos[0].y, VX( a->sol.vel ),
-                   VY( a->sol.vel ), SPFX_LAYER_MIDDLE );
-         spfx_add( spfx, hit->pos[1].x, hit->pos[1].y, VX( a->sol.vel ),
-                   VY( a->sol.vel ), SPFX_LAYER_MIDDLE );
+         const Solid *sol = ast_solid( a );
+         spfx_add( spfx, hit->pos[0].x, hit->pos[0].y, VX( sol->vel ),
+                   VY( sol->vel ), SPFX_LAYER_MIDDLE );
+         spfx_add( spfx, hit->pos[1].x, hit->pos[1].y, VX( sol->vel ),
+                   VY( sol->vel ), SPFX_LAYER_MIDDLE );
          w->timer2 = -2.;
       }
    } else if ( hit->type == TARGET_WEAPON ) {
@@ -1995,8 +1993,9 @@ int weapon_inArc( const Outfit *o, const Pilot *parent, const Target *target,
       case TARGET_ASTEROID: {
          const AsteroidAnchor *field =
             &cur_system->asteroids[target->u.ast.anchor];
-         const Asteroid *ast = &field->asteroids[target->u.ast.asteroid];
-         target_pos          = &ast->sol.pos;
+         const Asteroid *ast = ast_get( field, target->u.ast.asteroid );
+         const Solid    *sol = ast_solid( ast );
+         target_pos          = &sol->pos;
       } break;
 
       case TARGET_WEAPON: {
@@ -2051,9 +2050,10 @@ static double weapon_aimTurretAngle( const Outfit *outfit, const Pilot *parent,
    case TARGET_ASTEROID: {
       const AsteroidAnchor *field =
          &cur_system->asteroids[target->u.ast.anchor];
-      const Asteroid *ast = &field->asteroids[target->u.ast.asteroid];
-      target_pos          = &ast->sol.pos;
-      target_vel          = &ast->sol.vel;
+      const Asteroid *ast = ast_get( field, target->u.ast.asteroid );
+      const Solid    *sol = ast_solid( ast );
+      target_pos          = &sol->pos;
+      target_vel          = &sol->vel;
    } break;
 
    case TARGET_WEAPON: {
@@ -2560,7 +2560,7 @@ static int weapon_create( Weapon *w, PilotOutfitSlot *po, const Outfit *ref,
          if ( aim ||
               outfit_isProp( w->outfit, OUTFIT_PROP_WEAP_POINTDEFENSE ) ) {
             AsteroidAnchor *field;
-            Asteroid       *ast;
+            const Asteroid *ast;
             Weapon         *wtarget;
             weapon_setFlag( w, WEAPON_FLAG_AIM );
             switch ( w->target.type ) {
@@ -2576,8 +2576,8 @@ static int weapon_create( Weapon *w, PilotOutfitSlot *po, const Outfit *ref,
 
             case TARGET_ASTEROID:
                field = &cur_system->asteroids[w->target.u.ast.anchor];
-               ast   = &field->asteroids[w->target.u.ast.asteroid];
-               rdir  = vec2_angle( pos, &ast->sol.pos );
+               ast   = ast_get( field, w->target.u.ast.asteroid );
+               rdir  = vec2_angle( pos, &ast_solid( ast )->pos );
                break;
 
             case TARGET_WEAPON:
@@ -2693,8 +2693,9 @@ double weapon_targetFlyTime( const Outfit *o, const Pilot *p, const Target *t )
    } break;
    case TARGET_ASTEROID: {
       const AsteroidAnchor *field = &cur_system->asteroids[t->u.ast.anchor];
-      const Asteroid       *ast   = &field->asteroids[t->u.ast.asteroid];
-      return pilot_weapFlyTime( o, p, &ast->sol.pos, &ast->sol.vel );
+      const Asteroid       *ast   = ast_get( field, t->u.ast.asteroid );
+      const Solid          *sol   = ast_solid( ast );
+      return pilot_weapFlyTime( o, p, &sol->pos, &sol->vel );
    } break;
    }
    return -1.;

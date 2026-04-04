@@ -25,7 +25,6 @@
 #include "gui_omsg.h"
 #include "gui_osd.h"
 #include "input.h"
-#include "land.h"
 #include "log.h"
 #include "map_overlay.h"
 #include "menu.h"
@@ -43,7 +42,6 @@
 #include "render.h"
 #include "space.h"
 #include "start.h"
-#include "toolkit.h"
 
 #define XML_GUI_ID "GUIs" /**< XML section identifier for GUI document. */
 #define XML_GUI_TAG "gui" /**<  XML Section identifier for GUI tags. */
@@ -428,12 +426,13 @@ static void gui_renderSpobTarget( void )
    if ( player.p->nav_asteroid >= 0 ) {
       const AsteroidAnchor *field =
          &cur_system->asteroids[player.p->nav_anchor];
-      const Asteroid *ast = &field->asteroids[player.p->nav_asteroid];
+      const Asteroid *ast = ast_get( field, player.p->nav_asteroid );
       c                   = &cWhite;
 
-      x = ast->sol.pos.x;
-      y = ast->sol.pos.y;
-      r = tex_sw( ast->gfx ) * 0.5;
+      const Solid *s = ast_solid( ast );
+      x              = s->pos.x;
+      y              = s->pos.y;
+      r              = tex_sw( ast_gfx( ast ) ) * 0.5;
       gui_renderTargetReticles( &shaders.targetship, x, y, r, 0., c );
    }
 }
@@ -883,7 +882,7 @@ void gui_radarRender( double x, double y )
       asteroid_collideQueryIL( ast, &gui_qtquery, ax - r, ay - r, ax + r,
                                ay + r );
       for ( int j = 0; j < il_size( &gui_qtquery ); j++ ) {
-         const Asteroid *a = &ast->asteroids[il_get( &gui_qtquery, j, 0 )];
+         const Asteroid *a = ast_get( ast, il_get( &gui_qtquery, j, 0 ) );
          gui_renderAsteroid( a, radar->w, radar->h, radar->res, render_limit,
                              0 );
       }
@@ -1180,24 +1179,25 @@ void gui_renderAsteroid( const Asteroid *a, double w, double h, double res,
    const glColour *col;
 
    /* Skip invisible asteroids */
-   if ( a->state != ASTEROID_FG )
+   if ( ast_state( a ) != ASTEROID_FG )
       return;
 
    /* Recover the asteroid and field IDs. */
-   i = a->id;
-   j = a->parent;
+   i = ast_id( a );
+   j = ast_parent( a );
 
    /* Make sure is in range. */
    if ( !pilot_inRangeAsteroid( player.p, i, j ) )
       return;
 
    /* Get position. */
+   const Solid *s = ast_solid( a );
    if ( overlay ) {
-      x = ( a->sol.pos.x / res );
-      y = ( a->sol.pos.y / res );
+      x = ( s->pos.x / res );
+      y = ( s->pos.y / res );
    } else {
-      x = a->sol.pos.x - player.p->solid.pos.x;
-      y = a->sol.pos.y - player.p->solid.pos.y;
+      x = s->pos.x - player.p->solid.pos.x;
+      y = s->pos.y - player.p->solid.pos.y;
       gui_logradar( &x, &y, res );
    }
 

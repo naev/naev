@@ -1324,10 +1324,11 @@ void player_think( Pilot *pplayer, const double dt )
       }
       /* Try to face asteroid. */
       else if ( player.p->nav_asteroid != -1 ) {
-         AsteroidAnchor *field = &cur_system->asteroids[player.p->nav_anchor];
-         Asteroid       *ast   = &field->asteroids[player.p->nav_asteroid];
-         pilot_face( pplayer, vec2_angle( &player.p->solid.pos, &ast->sol.pos ),
-                     dt );
+         const AsteroidAnchor *field =
+            &cur_system->asteroids[player.p->nav_anchor];
+         const Asteroid *ast = ast_get( field, player.p->nav_asteroid );
+         const Solid    *s   = ast_solid( ast );
+         pilot_face( pplayer, vec2_angle( &player.p->solid.pos, &s->pos ), dt );
          /* Disable turning. */
          facing = 1;
       }
@@ -1482,21 +1483,22 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
 
          r2 = pow2( range );
          for ( int j = 0; j < array_size( ast->asteroids ); j++ ) {
-            HookParam hparam[2];
-            Asteroid *a = &ast->asteroids[j];
+            HookParam       hparam[2];
+            const Asteroid *a = ast_get( ast, j );
 
-            if ( a->scanned ) /* Ignore scanned outfits. */
+            if ( ast_scanned( a ) )
                continue;
 
-            if ( vec2_dist2( &a->sol.pos, &player.p->solid.pos ) > r2 )
+            const Solid *s = ast_solid( a );
+            if ( vec2_dist2( &s->pos, &player.p->solid.pos ) > r2 )
                continue;
 
-            a->scanned = 1;
+            ast_set_scanned( a, 1 );
 
             /* Run the hook. */
             hparam[0].type         = HOOK_PARAM_ASTEROID;
             hparam[0].u.ast.parent = ast->id;
-            hparam[0].u.ast.id     = a->id;
+            hparam[0].u.ast.id     = ast_id( a );
             hparam[1].type         = HOOK_PARAM_SENTINEL;
             hooks_runParamDeferred( "asteroid_scan", hparam );
          }

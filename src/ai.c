@@ -2040,7 +2040,8 @@ static int aiL_aim( lua_State *L )
 
    if ( lua_isasteroid( L, 1 ) ) {
       const Asteroid *a = luaL_validasteroid( L, 1 );
-      angle             = pilot_aimAngle( cur_pilot, &a->sol.pos, &a->sol.vel );
+      const Solid    *s = ast_solid( a );
+      angle             = pilot_aimAngle( cur_pilot, &s->pos, &s->vel );
    } else {
       const Pilot *p = luaL_validpilot( L, 1 );
       angle = pilot_aimAngle( cur_pilot, &p->solid.pos, &p->solid.vel );
@@ -2079,7 +2080,7 @@ static int aiL_iface( lua_State *L )
    } else if ( lua_isasteroid( L, 1 ) ) {
       const Asteroid *a = luaL_validasteroid( L, 1 );
       if ( a != NULL )
-         s = &a->sol;
+         s = ast_solid( a );
    } else if ( lua_isvector( L, 1 ) )
       vec = lua_tovector( L, 1 );
    else

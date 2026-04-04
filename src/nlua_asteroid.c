@@ -22,6 +22,8 @@
 #include "rng.h"
 #include "space.h"
 
+#include "asteroid_internal.h"
+
 /* Asteroid methods. */
 static int asteroidL_eq( lua_State *L );
 static int asteroidL_tostring( lua_State *L );
@@ -421,6 +423,8 @@ static int asteroidL_state( lua_State *L )
    case ASTEROID_XX:
       state = "XX";
       break;
+   case ASTEROID_STATE_MAX:
+      return 0;
    }
    lua_pushstring( L, state );
    return 1;

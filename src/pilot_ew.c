@@ -329,24 +329,20 @@ int pilot_inRangeSpob( const Pilot *p, int target )
  */
 int pilot_inRangeAsteroid( const Pilot *p, int ast, int fie )
 {
-   double          d;
-   Asteroid       *as;
-   AsteroidAnchor *f;
-   double          sense;
-
    /* pilot must exist */
    if ( p == NULL )
       return 0;
 
    /* Get the asteroid. */
-   f  = &cur_system->asteroids[fie];
-   as = &f->asteroids[ast];
+   const AsteroidAnchor *f  = &cur_system->asteroids[fie];
+   const Asteroid       *as = ast_get( f, ast );
 
    /* TODO something better than this. */
-   sense = CTS.EW_ASTEROID_DIST;
+   double sense = CTS.EW_ASTEROID_DIST;
 
    /* Get distance. */
-   d = vec2_dist2( &p->solid.pos, &as->sol.pos );
+   const Solid *s = ast_solid( as );
+   double       d = vec2_dist2( &p->solid.pos, &s->pos );
 
    /* By default, asteroid's hide score is 1. It could be made changeable via
     * xml.*/

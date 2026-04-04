@@ -1581,11 +1581,13 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom,
    }
    if ( astid >= 0 ) {
       const AsteroidAnchor *field = &cur_system->asteroids[fieid];
-      const Asteroid       *ast   = &field->asteroids[astid];
+      const Asteroid       *ast   = ast_get( field, astid );
       /* Recover the right gfx */
-      double rast = MAX( MAX( tex_sw( ast->gfx ) * zoom, minr ),
-                         tex_sh( ast->gfx ) * zoom );
-      double dast = hypotf( ast->sol.pos.x - x, ast->sol.pos.y - y );
+      const glTexture *gfx = ast_gfx( ast );
+      double           rast =
+         MAX( MAX( tex_sw( gfx ) * zoom, minr ), tex_sh( gfx ) * zoom );
+      const Solid *s    = ast_solid( ast );
+      double       dast = hypotf( s->pos.x - x, s->pos.y - y );
       if ( dast > rast )
          astid = -1;
    }

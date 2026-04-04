@@ -277,6 +277,7 @@ headers = files(
    'ai.h',
    'array.h',
    'asteroid.h',
+   'asteroid_internal.h',
    'background.h',
    'base64.h',
    'board.h',

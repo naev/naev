@@ -6753,11 +6753,8 @@ static int pilotL_collisionTest( lua_State *L )
 
    /* Asteroid treated separately. */
    if ( lua_isasteroid( L, 2 ) ) {
-      Asteroid     *a     = luaL_validasteroid( L, 2 );
-      CollPolyView *rpoly = poly_rotate( a->polygon, (float)a->ang );
-      int ret = collide_polygon_polygon( getCollPoly( p ), &p->solid.pos, rpoly,
-                                         &a->sol.pos, crash );
-      poly_free_view( rpoly );
+      Asteroid *a = luaL_validasteroid( L, 2 );
+      int ret = ast_test_collide( a, getCollPoly( p ), &p->solid.pos, crash );
       if ( !ret )
          return 0;
       lua_pushvector( L, crash[0] );

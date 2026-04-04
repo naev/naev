@@ -26,10 +26,13 @@
 #include "ntracing.h"
 #include "nxml.h"
 #include "opengl.h"
+#include "physics.h"
 #include "player.h"
 #include "rng.h"
 #include "sound.h"
 #include "space.h"
+
+#include "asteroid_internal.h"
 
 /**
  * @brief Represents a small asteroid debris rendered in the player frame.
@@ -177,6 +180,7 @@ static int asteroid_updateSingle( Asteroid *a )
          break;
 
       case ASTEROID_XX:
+      case ASTEROID_STATE_MAX:
          /* Do nothing. */
          break;
       }
@@ -1273,4 +1277,41 @@ void asteroid_collideQueryIL( AsteroidAnchor *anc, IntList *il, int x1, int y1,
                               int x2, int y2 )
 {
    qt_query( &anc->qt, il, x1, y1, x2, y2 );
+}
+
+const Asteroid *ast_get( const AsteroidAnchor *anc, int i )
+{
+   return &anc->asteroids[i];
+}
+int ast_id( const Asteroid *ast )
+{
+   return ast->id;
+}
+int ast_parent( const Asteroid *ast )
+{
+   return ast->parent;
+}
+AsteroidState ast_state( const Asteroid *ast )
+{
+   return ast->state;
+}
+const Solid *ast_solid( const Asteroid *ast )
+{
+   return &ast->sol;
+}
+const glTexture *ast_gfx( const Asteroid *ast )
+{
+   return ast->gfx;
+}
+int ast_test_collide( const Asteroid *ast, const CollPolyView *at,
+                      const vec2 *ap, vec2 *crash )
+{
+   CollPolyView *rpoly = poly_rotate( ast->polygon, (float)ast->ang );
+   int ret = collide_polygon_polygon( at, ap, rpoly, &ast->sol.pos, crash );
+   poly_free_view( rpoly );
+   return ret;
+}
+CollPolyView *ast_poly( const Asteroid *ast )
+{
+   return poly_rotate( ast->polygon, (float)ast->ang );
 }

@@ -761,18 +761,18 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast,
    for ( int i = 0; i < array_size( sys->asteroids ); i++ ) {
       AsteroidAnchor *f = &sys->asteroids[i];
       for ( int k = 0; k < array_size( f->asteroids ); k++ ) {
-         double    td;
-         Asteroid *as = &f->asteroids[k];
+         const Asteroid *as = ast_get( f, k );
 
          /* Skip non-interactive asteroids. */
-         if ( as->state != ASTEROID_FG )
+         if ( ast_state( as ) != ASTEROID_FG )
             continue;
 
          /* Skip out of range asteroids */
          if ( !pilot_inRangeAsteroid( player.p, k, i ) )
             continue;
 
-         td = pow2( x - as->sol.pos.x ) + pow2( y - as->sol.pos.y );
+         const Solid *s  = ast_solid( as );
+         double       td = pow2( x - s->pos.x ) + pow2( y - s->pos.y );
          if ( td < d ) {
             *pnt = -1; /* We must clear spob target as asteroid is closer. */
             *ast = k;
@@ -841,14 +841,14 @@ double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast,
    for ( int i = 0; i < array_size( sys->asteroids ); i++ ) {
       AsteroidAnchor *f = &sys->asteroids[i];
       for ( int k = 0; k < array_size( f->asteroids ); k++ ) {
-         double    ta;
-         Asteroid *as = &f->asteroids[k];
+         const Asteroid *as = ast_get( f, k );
 
          /* Skip non-interactive asteroids. */
-         if ( as->state != ASTEROID_FG )
+         if ( ast_state( as ) != ASTEROID_FG )
             continue;
 
-         ta = atan2( y - as->sol.pos.y, x - as->sol.pos.x );
+         const Solid *s  = ast_solid( as );
+         double       ta = atan2( y - s->pos.y, x - s->pos.x );
          if ( ABS( angle_diff( ang, ta ) ) < ABS( angle_diff( ang, a ) ) ) {
             *pnt = -1; /* We must clear spob target as asteroid is closer. */
             *ast = k;
