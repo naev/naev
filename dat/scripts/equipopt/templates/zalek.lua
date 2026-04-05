@@ -52,13 +52,13 @@ local zalek_params = {
             ["Launcher"] = { max = rnd.rnd(0,2) },
          },
       } end,
-   ["Za'lek Hephaestus RAT"] = function () return {
+   ["Za'lek Diablo RAT"] = function () return {
          energy = 0.8,
          fighterbay = 0.5,
          pointdefence = 2,
          launcher = 5,
          type_range = {
-            ["Launcher"] = { max = rnd.rnd(6,8) },
+            ["Launcher"] = { max = rnd.rnd(4,6) },
          },
          prefer = {
             ["Weapons Ionizer"] = 0, -- does not affect launchers
