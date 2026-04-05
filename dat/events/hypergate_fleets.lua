@@ -29,7 +29,7 @@ end
 
 local fleets_list = {
    ["Za'lek"]  = {
-      var.zalek_hephaestus(),
+      "Za'lek Hephaestus",
    },
    ["Dvaered"] = {
       "Dvaered Goddard",

@@ -2,11 +2,11 @@ local scom = require "factions.spawn.lib.common"
 local var = require "shipvariants"
 
 --local sdronescout = ship.get("Za'lek Scout Drone")
-local sdronelight = ship.get("Za'lek Light Drone")
-local sdronebomber= ship.get("Za'lek Bomber Drone")
-local sdroneheavy = ship.get("Za'lek Heavy Drone")
-local sdiablo     = ship.get("Za'lek Diablo")
-local smammon     = ship.get("Za'lek Mammon")
+local sdronelight     = ship.get("Za'lek Light Drone")
+local sdronebomber    = ship.get("Za'lek Bomber Drone")
+local sdroneheavy     = ship.get("Za'lek Heavy Drone")
+local smammon         = ship.get("Za'lek Mammon")
+local shephaestus     = ship.get("Za'lek Hephaestus")
 
 -- @brief Spawns a small patrol fleet.
 local function spawn_patrol( pilots )
@@ -37,7 +37,7 @@ local function spawn_capship ()
    local pilots = scom.doTable( {}, {
       { w=0.1, smammon },
       { w=0.55, var.zalek_mephisto },
-      { sdiablo },
+      { var.zalek_diablo },
    } )
 
    -- Generate the escorts
@@ -51,11 +51,9 @@ end
 -- @brief Spawns a supercapital.
 local function spawn_supercapital ()
    return scom.doTable( {}, {
-      { w=0.15, var.zalek_hephaestus, var.zalek_sting, var.zalek_sting, var.zalek_sting, sdroneheavy, sdroneheavy, sdroneheavy },
-      { w=0.3, var.zalek_hephaestus, var.zalek_demon, var.zalek_demon, sdroneheavy, sdroneheavy, sdronebomber, sdronebomber },
-      { w=0.55, var.zalek_hephaestus, sdiablo, sdiablo },
-      { w=0.80, var.zalek_hephaestus, var.zalek_mephisto, var.zalek_mephisto },
-      { var.zalek_hephaestus },
+      { w=0.25, shephaestus, var.zalek_sting, var.zalek_sting, var.zalek_sting, sdroneheavy, sdroneheavy, sdroneheavy },
+      { w=0.55, shephaestus, var.zalek_demon, var.zalek_sting, sdroneheavy, sdroneheavy, sdronebomber, sdronebomber },
+      { shephaestus },
    } )
 end
 
@@ -63,5 +61,5 @@ return function ( t, max )
    t.patrol       = { f = spawn_patrol,       w = 300 }
    t.squad        = { f = spawn_squad,        w = math.max(1, -80 + 0.80 * max) }
    t.capship      = { f = spawn_capship,      w = math.max(1, -500 + 1.70 * max) }
-   t.supercapital = { f = spawn_supercapital, w = math.max(1, -900 + 1.70 * max) }
+   t.supercapital = { f = spawn_supercapital, w = math.max(1, -910 + 1.70 * max) }
 end, 10
