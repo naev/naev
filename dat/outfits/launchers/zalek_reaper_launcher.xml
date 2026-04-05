@@ -33,12 +33,13 @@
   <accel>200</accel>
   <turn>60</turn>
   <speed_max>220</speed_max>
-  <resist>100</resist>
+  <resist>108</resist>
   <damage>
    <type>kinetic</type>
-   <penetrate>180</penetrate>
+   <penetrate>185</penetrate>
    <physical>800</physical>
   </damage>
+  <radius friendlyfire="1">35</radius>
   <armour>80</armour>
   <absorb>40</absorb>
   <ai>smart</ai>

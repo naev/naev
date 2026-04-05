@@ -210,6 +210,9 @@ function car.validDest( curplanet, targetplanet )
          return false
       end
    end
+   if tfct:areEnemies( cfct ) then
+      return false
+   end
 
    return true
 end

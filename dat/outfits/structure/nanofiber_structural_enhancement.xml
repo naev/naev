@@ -8,7 +8,7 @@
   <gfx_store>nanofiber_structural_enhancement</gfx_store>
  </general>
  <specific type="modification">
-  <absorb>-3</absorb>
+  <absorb>-5</absorb>
   <armour_mod>-10</armour_mod>
   <mass_mod>-5</mass_mod>
   <cargo_inertia>-10</cargo_inertia>

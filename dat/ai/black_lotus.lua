@@ -10,7 +10,7 @@ local taunt_list = {
    _("The Black Lotus clan takes what it desires."),
    _("Your ship will join the ranks of our conquered vessels."),
    _("We're here to collect our dues."),
-   _("We'll show you the true meaning of futility"),
+   _("We'll show you the true meaning of futility!"),
    _("Consider this a stroke of unfortunate luck, for you not us!"),
    _("The Black Lotus always gets what it wants, one way or another."),
    _("Kneel before the might of the Black Lotus!"),
