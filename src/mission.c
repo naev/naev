@@ -1328,17 +1328,22 @@ void missions_free( void )
  */
 void missions_cleanup( void )
 {
-   for ( int i = 0; i < array_size( player_missions ); i++ ) {
-      mission_cleanup( player_missions[i] );
-      free( player_missions[i] );
+   if ( player_missions != NULL ) {
+      for ( int i = 0; i < array_size( player_missions ); i++ ) {
+         mission_cleanup( player_missions[i] );
+         free( player_missions[i] );
+      }
+      array_erase( &player_missions, array_begin( player_missions ),
+                   array_end( player_missions ) );
    }
-   array_erase( &player_missions, array_begin( player_missions ),
-                array_end( player_missions ) );
 
-   for ( int i = 0; i < array_size( player_missions_failed ); i++ )
-      free( player_missions_failed[i] );
-   array_erase( &player_missions_failed, array_begin( player_missions_failed ),
-                array_end( player_missions_failed ) );
+   if ( player_missions_failed != NULL ) {
+      for ( int i = 0; i < array_size( player_missions_failed ); i++ )
+         free( player_missions_failed[i] );
+      array_erase( &player_missions_failed,
+                   array_begin( player_missions_failed ),
+                   array_end( player_missions_failed ) );
+   }
 }
 
 /**

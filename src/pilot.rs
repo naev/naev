@@ -1,6 +1,6 @@
 #![allow(dead_code)]
+use crate::array;
 use nalgebra::Vector2;
-use std::ffi::c_void;
 use std::ptr::NonNull;
 
 #[repr(transparent)]
@@ -30,16 +30,14 @@ pub fn player() -> Option<PilotWrapper> {
 
 pub fn get() -> &'static [PilotWrapper] {
    unsafe {
-      let pilots = naevc::ship_getAll();
-      let n = naevc::array_size_rust(pilots as *const c_void) as usize;
-      std::slice::from_raw_parts(pilots as *const PilotWrapper, n)
+      let pilots = naevc::pilot_getAll();
+      array::array_as_slice(pilots as *mut PilotWrapper)
    }
 }
 
 pub fn get_mut() -> &'static mut [PilotWrapper] {
    unsafe {
       let pilots = naevc::pilot_getAll();
-      let n = naevc::array_size_rust(pilots as *const c_void) as usize;
-      std::slice::from_raw_parts_mut(pilots as *mut PilotWrapper, n)
+      array::array_as_slice_mut(pilots as *mut PilotWrapper)
    }
 }

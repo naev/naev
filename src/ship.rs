@@ -1,10 +1,11 @@
+use crate::array;
 use anyhow::Result;
 use collide::polygon::SpinPolygon;
 use nlog::{warn, warn_err};
 use rayon::prelude::*;
 use renderer::model::Model;
 use renderer::{Context, ContextWrapper, texture};
-use std::ffi::{CStr, CString, c_void};
+use std::ffi::{CStr, CString};
 use std::fmt::Debug;
 use std::path::Path;
 use tracing::instrument;
@@ -58,16 +59,14 @@ impl ShipWrapper {
 fn get() -> &'static [ShipWrapper] {
    unsafe {
       let ships = naevc::ship_getAll();
-      let n = naevc::array_size_rust(ships as *const c_void) as usize;
-      std::slice::from_raw_parts(ships as *const ShipWrapper, n)
+      array::array_as_slice(ships as *mut ShipWrapper)
    }
 }
 
 fn get_mut() -> &'static mut [ShipWrapper] {
    unsafe {
       let ships = naevc::ship_getAll();
-      let n = naevc::array_size_rust(ships as *const c_void) as usize;
-      std::slice::from_raw_parts_mut(ships as *mut ShipWrapper, n)
+      array::array_as_slice_mut(ships as *mut ShipWrapper)
    }
 }
 

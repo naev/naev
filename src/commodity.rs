@@ -68,8 +68,7 @@ impl CommodityC {
    fn new(com: &Commodity) -> Result<Self> {
       let mut strings = Vec::new();
       let spob_modifier = Array::new(
-         &com
-            .economy_modifiers
+         com.economy_modifiers
             .spob_modifier
             .iter()
             .map(|(k, v)| {
@@ -78,10 +77,9 @@ impl CommodityC {
                CommodityModifier::new(strings.last().unwrap().as_ptr(), *v)
             })
             .collect::<Vec<_>>(),
-      )?;
+      );
       let faction_modifier = Array::new(
-         &com
-            .economy_modifiers
+         com.economy_modifiers
             .faction_modifier
             .iter()
             .map(|(k, v)| {
@@ -89,13 +87,13 @@ impl CommodityC {
                CommodityModifier::new(f, *v)
             })
             .collect::<Vec<_>>(),
-      )?;
+      );
 
       Ok(CommodityC {
          name: CString::new(&*com.name)?,
          display: com.display.clone().map(|d| CString::new(&*d)).transpose()?,
          description: CString::new(&*com.description)?,
-         illegal_to: Array::new(&com.illegal_to)?,
+         illegal_to: Array::new(com.illegal_to.clone()),
          //ctags: ArrayCString::new(&com.tags)?,
          spob_modifier,
          faction_modifier,
@@ -863,7 +861,7 @@ pub extern "C" fn commodity_getAll() -> *mut i64 {
    for (id, _) in COMMODITIES.read().unwrap().iter() {
       coms.push(id.as_ffi());
    }
-   Array::new(&coms).unwrap().into_ptr() as *mut i64
+   Array::new(coms).into_ptr() as *mut i64
 }
 
 #[unsafe(no_mangle)]
@@ -1087,9 +1085,7 @@ pub extern "C" fn commodity_newTemp(name: *const c_char, desc: *const c_char) ->
 pub extern "C" fn commodity_tempIllegalto(com: i64, fct: i64) -> c_int {
    faction_c_with_mut(com, |c| {
       c.illegal_to.push(FactionRef::from_ffi(fct));
-      if let Ok(a) = Array::new(&c.illegal_to) {
-         c.c.illegal_to = a;
-      }
+      c.c.illegal_to = Array::new(c.illegal_to.clone());
       0
    })
    .unwrap_or_else(|e| {
@@ -1107,7 +1103,7 @@ pub extern "C" fn standard_commodities() -> *const i64 {
          .iter()
          .filter_map(|(k, v)| if v.standard { Some(k.as_ffi()) } else { None })
          .collect();
-      Array::new(&std).unwrap()
+      Array::new(std)
    });
    STANDARD_COMMODITIES.as_ptr() as *const i64
 }

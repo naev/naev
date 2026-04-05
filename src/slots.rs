@@ -77,7 +77,7 @@ impl SlotProperty {
       sp.cname = CString::new(sp.name.as_str())?;
       sp.cdisplay = CString::new(sp.display.as_str())?;
       sp.cdescription = CString::new(sp.description.as_str())?;
-      sp.ctags = ArrayCString::new(&sp.tags)?;
+      sp.ctags = ArrayCString::new(&sp.tags);
       Ok(sp)
    }
 
@@ -131,7 +131,7 @@ impl SlotProperty {
                   }
                }
                // Remove when not needed for C interface
-               sp.ctags = ArrayCString::new(&sp.tags)?;
+               sp.ctags = ArrayCString::new(&sp.tags);
             }
             tag => nxml_warn_node_unknown!("Slot Property", &sp.name, tag),
          }

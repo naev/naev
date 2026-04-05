@@ -99,7 +99,7 @@ source_rust = files(
 ####
 source = files(
    'ai.c',
-   'array.c',
+   #'array.c',
    'asteroid.c',
    'background.c',
    'base64.c',

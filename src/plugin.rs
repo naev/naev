@@ -284,7 +284,7 @@ static PLUGIN_LIST: LazyLock<Array<CPlugin>> = LazyLock::new(|| {
          priority: plugin.priority as c_int,
       }))
    }
-   Array::new(&out).unwrap()
+   Array::new(out)
 });
 #[unsafe(no_mangle)]
 pub extern "C" fn plugin_list() -> *const naevc::plugin_t {

@@ -1,8 +1,9 @@
+use crate::array;
 use nlog::warn_err;
 use rayon::prelude::*;
 use renderer::Context;
 use renderer::texture::TextureBuilder;
-use std::ffi::{CStr, c_void};
+use std::ffi::CStr;
 use tracing::instrument;
 
 struct OutfitWrapper(naevc::Outfit);
@@ -13,16 +14,14 @@ unsafe impl Send for OutfitWrapper {}
 fn get() -> &'static [OutfitWrapper] {
    unsafe {
       let outfits = naevc::outfit_getAll_rust();
-      let n = naevc::array_size_rust(outfits as *const c_void) as usize;
-      std::slice::from_raw_parts(outfits as *const OutfitWrapper, n)
+      array::array_as_slice(outfits as *mut OutfitWrapper)
    }
 }
 
 fn get_mut() -> &'static mut [OutfitWrapper] {
    unsafe {
       let outfits = naevc::outfit_getAll_rust();
-      let n = naevc::array_size_rust(outfits as *const c_void) as usize;
-      std::slice::from_raw_parts_mut(outfits as *mut OutfitWrapper, n)
+      array::array_as_slice_mut(outfits as *mut OutfitWrapper)
    }
 }
 

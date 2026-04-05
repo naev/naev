@@ -443,7 +443,7 @@ impl FactionC {
       let cmapname = fd.mapname.as_ref().map(|s| cs(s));
       let cdescription = cs(&fd.description);
       let cai = cs(&fd.ai);
-      let ctags = ArrayCString::new(&fd.tags).unwrap();
+      let ctags = ArrayCString::new(&fd.tags);
       FactionC {
          cname,
          clongname,
@@ -2076,7 +2076,7 @@ pub extern "C" fn faction_getAll() -> *mut i64 {
    for (id, _) in FACTIONS.read().unwrap().iter() {
       fcts.push(id.as_ffi());
    }
-   Array::new(&fcts).unwrap().into_ptr() as *mut i64
+   Array::new(fcts).into_ptr() as *mut i64
 }
 
 #[unsafe(no_mangle)]
@@ -2087,7 +2087,7 @@ pub extern "C" fn faction_getAllVisible() -> *mut i64 {
          fcts.push(id.as_ffi());
       }
    }
-   Array::new(&fcts).unwrap().into_ptr() as *mut i64
+   Array::new(fcts).into_ptr() as *mut i64
 }
 
 #[unsafe(no_mangle)]
@@ -2098,7 +2098,7 @@ pub extern "C" fn faction_getKnown() -> *mut i64 {
          fcts.push(id.as_ffi());
       }
    }
-   Array::new(&fcts).unwrap().into_ptr() as *mut i64
+   Array::new(fcts).into_ptr() as *mut i64
 }
 
 #[unsafe(no_mangle)]
@@ -2699,7 +2699,7 @@ pub extern "C" fn faction_reputationColourCharSystem(
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_getEnemies(id: i64) -> *const i64 {
-   static ENEMY_ARRAY: Mutex<Array<i64>> = Mutex::new(Array::default());
+   static ENEMY_ARRAY: LazyLock<Mutex<Array<i64>>> = LazyLock::new(|| Mutex::new(Array::default()));
    let data = if FactionRef::from_ffi(id) == *PLAYER.get().unwrap() {
       FACTIONS
          .read()
@@ -2727,13 +2727,13 @@ pub extern "C" fn faction_getEnemies(id: i64) -> *const i64 {
       })
    };
    let mut array = ENEMY_ARRAY.lock().unwrap();
-   *array = Array::new(&data).unwrap();
+   *array = Array::new(data);
    array.as_ptr() as *const i64
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_getAllies(id: i64) -> *const i64 {
-   static ALLY_ARRAY: Mutex<Array<i64>> = Mutex::new(Array::default());
+   static ALLY_ARRAY: LazyLock<Mutex<Array<i64>>> = LazyLock::new(|| Mutex::new(Array::default()));
    let data = if FactionRef::from_ffi(id) == *PLAYER.get().unwrap() {
       FACTIONS
          .read()
@@ -2765,7 +2765,7 @@ pub extern "C" fn faction_getAllies(id: i64) -> *const i64 {
       })
    };
    let mut array = ALLY_ARRAY.lock().unwrap();
-   *array = Array::new(&data).unwrap();
+   *array = Array::new(data);
    array.as_ptr() as *const i64
 }
 
@@ -2829,7 +2829,7 @@ pub extern "C" fn faction_getGroup(which: c_int, sys: *const naevc::StarSystem) 
    } else {
       return std::ptr::null_mut();
    };
-   Array::new(&fcts).unwrap().into_ptr() as *mut i64
+   Array::new(fcts).into_ptr() as *mut i64
 }
 
 #[unsafe(no_mangle)]
@@ -2849,9 +2849,10 @@ pub extern "C" fn faction_generators(id: i64) -> *const naevc::FactionGenerator 
       vec![]
    });
 
-   static GENERATOR_ARRAY: Mutex<Array<naevc::FactionGenerator>> = Mutex::new(Array::default());
+   static GENERATOR_ARRAY: LazyLock<Mutex<Array<naevc::FactionGenerator>>> =
+      LazyLock::new(|| Mutex::new(Array::default()));
    let mut array = GENERATOR_ARRAY.lock().unwrap();
-   *array = Array::new(&generators).unwrap();
+   *array = Array::new(generators);
    array.as_ptr() as *const naevc::FactionGenerator
 }
 

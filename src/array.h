@@ -41,29 +41,29 @@
 #include <stddef.h>
 /** @endcond */
 
-#include "attributes.h"
-
-#define ARRAY_SENTINEL 0x15bada55 /**< Badass sentinel. */
-
 /**
  * @brief Private container type for the arrays.
  */
+#if 0
 typedef struct {
 #if DEBUG_ARRAYS
    int _sentinel;                        /**< Sentinel for when debugging. */
-#endif                                   /* DEBUG_ARRAYS */
+#endif /* DEBUG_ARRAYS */
    size_t _reserved;                     /**< Number of elements reserved */
    size_t _size;                         /**< Number of elements in the array */
    char alignas( max_align_t ) _array[]; /**< Begin of the array */
 } _private_container;
+#endif
 
 void *_array_create_helper( size_t e_size, size_t initial_size );
-void *_array_grow_helper( void **a, size_t e_size );
-void  _array_resize_helper( void **a, size_t e_size, size_t new_size );
-void  _array_erase_helper( void **a, size_t e_size, void *first, void *last );
-void  _array_shrink_helper( void **a, size_t e_size );
+void *_array_grow_helper( void **a );
+void  _array_resize_helper( void **a, size_t new_size );
+void  _array_erase_helper( void **a, void *first, void *last );
+// void  _array_shrink_helper( void **a, size_t e_size );
 void  _array_free_helper( void *a );
-void *_array_copy_helper( size_t e_size, void *a );
+void *_array_copy_helper( void *a );
+int   _array_size_helper( void *a );
+int   _array_reserved_helper( void *a );
 
 /**
  * @brief Gets the container of an array.
@@ -71,6 +71,7 @@ void *_array_copy_helper( size_t e_size, void *a );
  *    @param a Array to get container of.
  *    @return The container of the array a.
  */
+#if 0
 static inline _private_container *_array_private_container( void *a )
 {
    assert( "NULL array!" && ( a != NULL ) );
@@ -84,6 +85,7 @@ static inline _private_container *_array_private_container( void *a )
 
    return c;
 }
+#endif
 
 /**
  * @brief Creates a new dynamic array of type `basic_type`
@@ -112,8 +114,7 @@ static inline _private_container *_array_private_container( void *a )
  *    @param new_size New size to grow to (in number of elements).
  */
 #define array_resize( ptr_array, new_size )                                    \
-   ( _array_resize_helper( (void **)( ptr_array ),                             \
-                           sizeof( ( ptr_array )[0][0] ), new_size ) )
+   ( _array_resize_helper( (void **)( ptr_array ), new_size ) )
 // NOLINTEND(bugprone-sizeof-expression)
 /**
  * @brief Increases the number of elements by one and returns the last element.
@@ -122,8 +123,7 @@ static inline _private_container *_array_private_container( void *a )
  */
 #define array_grow( ptr_array )                                                \
    ( *(__typeof__( ( ptr_array )[0] ))_array_grow_helper(                      \
-      (void **)( ptr_array ),                                                  \
-      sizeof( ( ptr_array )[0][0] ) ) ) // NOLINT (bugprone-sizeof-expression)
+      (void **)( ptr_array ) ) )
 /**
  * @brief Adds a new element at the end of the array.
  *
@@ -147,8 +147,7 @@ static inline _private_container *_array_private_container( void *a )
  *    @param last Last iterator in erase section but is not erased.
  */
 #define array_erase( ptr_array, first, last )                                  \
-   ( _array_erase_helper( (void **)( ptr_array ),                              \
-                          sizeof( ( ptr_array )[0][0] ), (void *)( first ),    \
+   ( _array_erase_helper( (void **)( ptr_array ), (void *)( first ),           \
                           (void *)( last ) ) )
 // NOLINTEND(bugprone-sizeof-expression)
 /**
@@ -159,8 +158,9 @@ static inline _private_container *_array_private_container( void *a )
  *    @param ptr_array Array being manipulated.
  */
 #define array_shrink( ptr_array )                                              \
-   ( _array_shrink_helper( (void **)( ptr_array ),                             \
-                           sizeof( ( ptr_array )[0][0] ) ) ) // NOLINT
+   do {                                                                        \
+   } while ( 0 )
+//   _array_resize_helper( (void **)( ptr_array ), array_size( *ptr_array ) )
 /**
  * @brief Frees memory allocated and sets array to NULL.
  *
@@ -177,6 +177,8 @@ static inline _private_container *_array_private_container( void *a )
  *    @param array Array being manipulated.
  *    @return The size of the array (number of elements).
  */
+#define array_size( array ) _array_size_helper( (void *)( array ) )
+#if 0
 ALWAYS_INLINE static inline int array_size( const void *array )
 {
    const _private_container *c1 = array;
@@ -191,13 +193,16 @@ ALWAYS_INLINE static inline int array_size( const void *array )
 
    return c1[-1]._size;
 }
+#endif
 /**
  * @brief Returns number of elements reserved.
  *
  *    @param array Array being manipulated.
  *    @return The size of the array (memory usage).
  */
-#define array_reserved( array ) ( _array_private_container( array )->_reserved )
+#define array_reserved( array ) ( _array_reserved_helper( array ) )
+// #define array_reserved( array ) ( _array_private_container( array
+// )->_reserved )
 /**
  * @brief Returns a pointer to the beginning of the reserved memory space.
  *
@@ -229,9 +234,8 @@ ALWAYS_INLINE static inline int array_size( const void *array )
 #define array_back( ptr_array ) ( *( array_end( ptr_array ) - 1 ) )
 /** @brief Returns a shallow copy of the input array.  */
 #define array_copy( basic_type, ptr_array )                                    \
-   ( (basic_type *)( _array_copy_helper( sizeof( basic_type ),                 \
-                                         (void *)( ptr_array ) ) ) )
+   ( (basic_type *)( _array_copy_helper( (void *)( ptr_array ) ) ) )
 
 /* Helpers for rust */
-int   array_size_rust( const void *array );
-void *array_from_vec( const void *data, size_t size, size_t len );
+// int   array_size_rust( const void *array );
+// void *array_from_vec( const void *data, size_t size, size_t len );
