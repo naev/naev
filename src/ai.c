@@ -735,7 +735,8 @@ static int ai_loadProfile( AI_Profile *prof, const char *filename )
       WARN( _( "Error loading AI file: %s\n"
                "%s\n"
                "Most likely Lua file has improper syntax, please check" ),
-            filename, lua_tostring( naevL, -1 ) );
+            filename, luaL_tolstring( naevL, -1, NULL ) );
+      lua_pop( naevL, 1 );
       free( prof->name );
       nlua_freeEnv( env );
       free( buf );
