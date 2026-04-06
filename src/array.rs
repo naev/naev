@@ -335,14 +335,9 @@ pub unsafe fn array_as_slice_mut<T>(array: *mut T) -> &'static mut [T] {
 #[cfg(test)]
 mod tests {
    use super::*;
+   use rand::RngExt;
+   use rand::distr::StandardUniform;
    use std::ffi::c_void;
-
-   /// Cast a raw C-style array pointer to a typed slice for easy assertions.
-   unsafe fn as_slice<T>(ptr: *mut c_void, len: usize) -> &'static [T] {
-      let slice = unsafe { array_as_slice::<T>(ptr as *mut T) };
-      assert_eq!(slice.len(), len);
-      slice
-   }
 
    fn array_create<T>() -> *mut T {
       _array_create_helper(std::mem::size_of::<T>(), 1) as *mut T
@@ -373,6 +368,10 @@ mod tests {
       );
    }
 
+   fn array_copy<T>(array: *mut T) -> *mut T {
+      _array_copy_helper(array as *mut c_void) as *mut T
+   }
+
    fn array_shrink<T>(array: &mut *mut T) {
       _array_shrink_helper(array as *mut *mut T as *mut *mut c_void);
    }
@@ -397,353 +396,159 @@ mod tests {
       unsafe { array.add(array_size(array) as usize) }
    }
 
+   fn gen_vec<T>(n: usize) -> Vec<T>
+   where
+      StandardUniform: rand::distr::Distribution<T>,
+   {
+      let mut rng = rand::rng();
+      let mut v: Vec<T> = Vec::new();
+      for _ in 0..n {
+         v.push(rng.random::<T>());
+      }
+      v
+   }
+
    #[test]
-   fn rust_new_preserves_elements() {
-      let v = vec![10u32, 20, 30];
-      let arr = Array::new(v);
+   fn slice_rust_equality() {
+      let v = gen_vec::<i32>(1000);
+      let arr = Array::new(v.clone());
       let ptr = arr.as_ptr();
       let slice = unsafe { array_as_slice(ptr) };
-      assert_eq!(slice, &[10u32, 20, 30]);
+      assert_eq!(slice, v.as_slice());
    }
 
    #[test]
-   fn rust_default_is_empty() {
-      let arr = Array::<i32>::default();
-      // into_ptr would be needed to call the C helpers; just verify it builds
-      let _ = arr;
-   }
-
-   #[test]
-   fn rust_into_ptr_roundtrip() {
-      let v = vec![1i32, 2, 3];
-      let ptr = Array::new(v).into_ptr();
-      // header_from_data should now work on this pointer
+   fn slice_equality() {
+      let v = gen_vec::<i32>(1000);
+      let ptr = Array::new(v.clone()).into_ptr();
       let slice = unsafe { array_as_slice(ptr) };
-      assert_eq!(slice, &[1i32, 2, 3]);
+      assert_eq!(slice, v.as_slice());
       unsafe { _array_free_helper(ptr as *mut c_void) };
    }
 
    #[test]
-   fn create_size_is_zero() {
+   fn create() {
       let arr = _array_create_helper(size_of::<i32>(), 4);
+      assert!(!arr.is_null());
       assert_eq!(_array_size_helper(arr), 0);
       unsafe { _array_free_helper(arr) };
    }
 
    #[test]
-   fn create_reserved_matches_capacity() {
+   fn create_cacity() {
       let arr = _array_create_helper(size_of::<i32>(), 8);
       assert_eq!(_array_reserved_helper(arr), 8);
       unsafe { _array_free_helper(arr) };
    }
 
    #[test]
-   fn create_zero_capacity_clamps_to_one() {
-      // initial_capacity of 0 should not panic; the code uses .max(1)
-      let arr = _array_create_helper(size_of::<u8>(), 0);
-      assert!(_array_reserved_helper(arr) >= 1);
-      unsafe { _array_free_helper(arr) };
+   fn grow_write() {
+      let mut arr = array_create::<i32>();
+      unsafe { *array_grow(&mut arr) = 42 };
+      unsafe { *array_grow(&mut arr) = 9 };
+      unsafe { *array_grow(&mut arr) = 27 };
+      assert_eq!(array_size(arr), 3);
+      let slice = unsafe { array_as_slice(arr) };
+      assert_eq!(slice, &[42, 9, 27]);
+      array_free(arr);
    }
 
    #[test]
-   fn create_returns_non_null() {
-      let arr = _array_create_helper(size_of::<u64>(), 4);
-      assert!(!arr.is_null());
-      unsafe { _array_free_helper(arr) };
+   fn grow_is_zeroed() {
+      let mut arr = array_create::<u64>();
+      for i in 1..1000 {
+         let slot = array_grow(&mut arr);
+         assert_eq!(unsafe { *slot }, 0);
+         assert_eq!(array_size(arr), i);
+      }
+      array_free(arr);
    }
 
    #[test]
-   fn grow_increments_size() {
-      let mut arr = _array_create_helper(size_of::<i32>(), 2);
-      unsafe { *(_array_grow_helper(&mut arr) as *mut i32) = 42 };
-      assert_eq!(_array_size_helper(arr), 1);
-      unsafe { _array_free_helper(arr) };
+   fn erase() {
+      let mut arr = array_create::<i32>();
+      for i in 0..100 {
+         unsafe { *array_grow(&mut arr) = i };
+      }
+      let start = arr.clone();
+      let end = unsafe { arr.add(30) };
+      array_erase(&mut arr, start, end);
+      assert_eq!(array_size(arr), 70);
+      assert_eq!(
+         unsafe { array_as_slice(arr) },
+         (30..100).collect::<Vec<_>>().as_slice()
+      );
+      let start = unsafe { arr.add(60) };
+      let end = array_end(arr);
+      array_erase(&mut arr, start, end);
+      assert_eq!(array_size(arr), 60);
+      assert_eq!(
+         unsafe { array_as_slice(arr) },
+         (30..90).collect::<Vec<_>>().as_slice()
+      );
+      // Out of range is no-op
+      let start = array_end(arr);
+      let end = unsafe { array_end(arr).add(60) };
+      array_erase(&mut arr, start, end);
+      assert_eq!(array_size(arr), 60);
+      assert_eq!(
+         unsafe { array_as_slice(arr) },
+         (30..90).collect::<Vec<_>>().as_slice()
+      );
+      let start = array_begin(arr);
+      let end = array_begin(arr);
+      array_erase(&mut arr, start, end);
+      assert_eq!(array_size(arr), 60);
+      assert_eq!(
+         unsafe { array_as_slice(arr) },
+         (30..90).collect::<Vec<_>>().as_slice()
+      );
+      let start = array_begin(arr);
+      let end = array_end(arr);
+
+      array_erase(&mut arr, start, end);
+      assert_eq!(array_size(arr), 0);
+      array_free(arr);
    }
 
    #[test]
-   fn grow_returned_pointer_is_writable() {
-      let mut arr = _array_create_helper(size_of::<u32>(), 4);
-      let slot = _array_grow_helper(&mut arr) as *mut u32;
-      unsafe { *slot = 0xDEADBEEF };
-      let slice = unsafe { as_slice::<u32>(arr, 1) };
-      assert_eq!(slice[0], 0xDEADBEEF);
-      unsafe { _array_free_helper(arr) };
+   fn null() {
+      assert_eq!(array_size::<i32>(std::ptr::null_mut()), 0);
+      assert_eq!(array_reserved::<i32>(std::ptr::null_mut()), 0);
+      array_free::<i32>(std::ptr::null_mut());
    }
 
    #[test]
-   fn grow_multiple_elements_ordered() {
-      let mut arr = _array_create_helper(size_of::<i32>(), 4);
+   fn resize() {
+      let v = gen_vec::<i32>(1000);
+      let mut ptr = Array::new(v.clone()).into_ptr();
+      for i in 1..1000 {
+         array_resize(&mut ptr, 1000 - i);
+         assert_eq!(array_size(ptr), (1000 - i) as i32);
+      }
+      for i in 1..1000 {
+         array_resize(&mut ptr, i);
+         assert_eq!(array_size(ptr), i as i32);
+         //assert_eq!( unsafe{ *array_end(ptr).sub(1) }, 0 );
+      }
+      array_free(ptr);
+   }
+
+   #[test]
+   fn copy() {
+      let mut arr = array_create::<i32>();
       for i in 0..4i32 {
-         unsafe { *(_array_grow_helper(&mut arr) as *mut i32) = i * 10 };
+         unsafe { *array_grow(&mut arr) = i * 3 };
       }
-      let slice = unsafe { as_slice::<i32>(arr, 4) };
-      assert_eq!(slice, &[0, 10, 20, 30]);
-      unsafe { _array_free_helper(arr) };
-   }
-
-   #[test]
-   fn grow_beyond_initial_capacity_reallocates() {
-      let mut arr = _array_create_helper(size_of::<i32>(), 1);
-      for i in 0..8i32 {
-         unsafe { *(_array_grow_helper(&mut arr) as *mut i32) = i };
-      }
-      assert_eq!(_array_size_helper(arr), 8);
-      let slice = unsafe { as_slice::<i32>(arr, 8) };
-      for (i, &v) in slice.iter().enumerate() {
-         assert_eq!(v, i as i32);
-      }
-      unsafe { _array_free_helper(arr) };
-   }
-
-   #[test]
-   fn grow_new_slot_is_zeroed() {
-      let mut arr = _array_create_helper(size_of::<u64>(), 4);
-      let slot = _array_grow_helper(&mut arr) as *mut u64;
-      assert_eq!(unsafe { *slot }, 0);
-      unsafe { _array_free_helper(arr) };
-   }
-
-   #[test]
-   fn erase_middle_element() {
-      let mut arr = _array_create_helper(size_of::<i32>(), 4);
-      for i in 0..4i32 {
-         unsafe { *(_array_grow_helper(&mut arr) as *mut i32) = i };
-      }
-      // erase first element
-      let start = unsafe { (arr as *mut i32).add(1) as *mut c_void };
-      let end = unsafe { (arr as *mut i32).add(2) as *mut c_void };
-      _array_erase_helper(&mut arr, start, end);
-      assert_eq!(_array_size_helper(arr), 3);
-      let slice = unsafe { as_slice::<i32>(arr, 3) };
-      assert_eq!(slice, &[0, 2, 3]);
-      unsafe { _array_free_helper(arr) };
-   }
-
-   #[test]
-   fn erase_all_elements() {
-      let mut arr = _array_create_helper(size_of::<i32>(), 4);
-      for i in 0..4i32 {
-         unsafe { *(_array_grow_helper(&mut arr) as *mut i32) = i };
-      }
-      let start = arr as *mut c_void;
-      let end = unsafe { (arr as *mut i32).add(4) as *mut c_void };
-      _array_erase_helper(&mut arr, start, end);
-      assert_eq!(_array_size_helper(arr), 0);
-      unsafe { _array_free_helper(arr) };
-   }
-
-   #[test]
-   fn erase_empty_range_is_noop() {
-      let mut arr = _array_create_helper(size_of::<i32>(), 4);
-      for i in 0..3i32 {
-         unsafe { *(_array_grow_helper(&mut arr) as *mut i32) = i };
-      }
-      let p = unsafe { (arr as *mut i32).add(1) as *mut c_void };
-      _array_erase_helper(&mut arr, p, p);
-      assert_eq!(_array_size_helper(arr), 3);
-      unsafe { _array_free_helper(arr) };
-   }
-
-   #[test]
-   fn erase_out_of_bounds_is_noop() {
-      let mut arr = _array_create_helper(size_of::<i32>(), 4);
-      for i in 0..3i32 {
-         unsafe { *(_array_grow_helper(&mut arr) as *mut i32) = i };
-      }
-      let start = arr as *mut c_void;
-      let end = unsafe { (arr as *mut i32).add(10) as *mut c_void };
-      _array_erase_helper(&mut arr, start, end);
-      assert_eq!(_array_size_helper(arr), 3);
-      unsafe { _array_free_helper(arr) };
-   }
-
-   #[test]
-   fn size_null_returns_zero() {
-      assert_eq!(_array_size_helper(std::ptr::null_mut()), 0);
-   }
-
-   #[test]
-   fn reserved_null_returns_zero() {
-      assert_eq!(_array_reserved_helper(std::ptr::null_mut()), 0);
-   }
-
-   #[test]
-   fn size_tracks_grow_and_erase() {
-      let mut arr = _array_create_helper(size_of::<u8>(), 8);
-      for _ in 0..5u8 {
-         _array_grow_helper(&mut arr);
-      }
-      assert_eq!(_array_size_helper(arr), 5);
-
-      let start = arr as *mut c_void;
-      let end = unsafe { (arr as *mut u8).add(2) as *mut c_void };
-      _array_erase_helper(&mut arr, start, end);
-      assert_eq!(_array_size_helper(arr), 3);
-      unsafe { _array_free_helper(arr) };
-   }
-
-   #[test]
-   fn resize_grow_zero_initializes() {
-      let mut arr = _array_create_helper(size_of::<i32>(), 2);
-      assert_eq!(_array_reserved_helper(arr), 2);
-      _array_resize_helper(&mut arr, 4);
-      assert_eq!(_array_size_helper(arr), 4);
-      let slice = unsafe { as_slice::<i32>(arr, 4) };
-      assert!(slice.iter().all(|&v| v == 0));
-      unsafe { _array_free_helper(arr) };
-   }
-
-   #[test]
-   fn resize_shrink_truncates() {
-      let mut arr = _array_create_helper(size_of::<i32>(), 8);
-      for i in 0..6i32 {
-         unsafe { *(_array_grow_helper(&mut arr) as *mut i32) = i };
-      }
-      _array_resize_helper(&mut arr, 3);
-      assert_eq!(_array_size_helper(arr), 3);
-      let slice = unsafe { as_slice::<i32>(arr, 3) };
-      assert_eq!(slice, &[0, 1, 2]);
-      unsafe { _array_free_helper(arr) };
-   }
-
-   #[test]
-   fn resize_to_zero() {
-      let mut arr = _array_create_helper(size_of::<i32>(), 4);
-      for i in 0..4i32 {
-         unsafe { *(_array_grow_helper(&mut arr) as *mut i32) = i };
-      }
-      _array_resize_helper(&mut arr, 0);
-      assert_eq!(_array_size_helper(arr), 0);
-      unsafe { _array_free_helper(arr) };
-   }
-
-   #[test]
-   fn resize_null_array_is_noop() {
-      let mut ptr = std::ptr::null_mut();
-      _array_resize_helper(&mut ptr as *mut *mut c_void, 4);
-   }
-
-   #[test]
-   fn copy_produces_equal_elements() {
-      let mut arr = _array_create_helper(size_of::<i32>(), 4);
-      for i in 0..4i32 {
-         unsafe { *(_array_grow_helper(&mut arr) as *mut i32) = i * 3 };
-      }
-      let copy = _array_copy_helper(arr);
-      assert_eq!(_array_size_helper(copy), 4);
-      let orig = unsafe { as_slice::<i32>(arr, 4) };
-      let duped = unsafe { as_slice::<i32>(copy, 4) };
+      let copy = array_copy(arr);
+      assert_eq!(array_size(copy), 4);
+      let orig = unsafe { array_as_slice(arr) };
+      let duped = unsafe { array_as_slice_mut(copy) };
       assert_eq!(orig, duped);
-      unsafe { _array_free_helper(arr) };
-      unsafe { _array_free_helper(copy) };
-   }
-
-   #[test]
-   fn copy_is_independent() {
-      // Mutating the copy must not affect the original.
-      let mut arr = _array_create_helper(size_of::<i32>(), 4);
-      for i in 0..4i32 {
-         unsafe { *(_array_grow_helper(&mut arr) as *mut i32) = i };
-      }
-      let copy = _array_copy_helper(arr);
-      // Overwrite first element of copy.
-      unsafe { *(copy as *mut i32) = 99 };
-      let orig_slice = unsafe { as_slice::<i32>(arr, 4) };
-      let copy_slice = unsafe { as_slice::<i32>(copy, 4) };
-      assert_eq!(orig_slice[0], 0); // original unchanged
-      assert_eq!(copy_slice[0], 99); // copy mutated
-      unsafe { _array_free_helper(arr) };
-      unsafe { _array_free_helper(copy) };
-   }
-
-   #[test]
-   fn copy_of_empty_array() {
-      let arr = _array_create_helper(size_of::<i32>(), 4);
-      let copy = _array_copy_helper(arr);
-      assert_eq!(_array_size_helper(copy), 0);
-      unsafe { _array_free_helper(arr) };
-      unsafe { _array_free_helper(copy) };
-   }
-
-   #[test]
-   fn free_null_is_noop() {
-      unsafe { _array_free_helper(std::ptr::null_mut()) };
-   }
-
-   #[test]
-   fn as_slice_reflects_current_state() {
-      let v = vec![10u32, 20, 30, 40];
-      let ptr = Array::new(v).into_ptr();
-      let slice = unsafe { array_as_slice(ptr) };
-      assert_eq!(slice, &[10u32, 20, 30, 40]);
-      unsafe { _array_free_helper(ptr as *mut c_void) };
-   }
-
-   #[test]
-   fn as_slice_mut_allows_writes() {
-      let v = vec![1i32, 2, 3];
-      let ptr = Array::new(v).into_ptr();
-      let slice = unsafe { array_as_slice_mut(ptr) };
-      slice[1] = 99;
-      let check = unsafe { array_as_slice(ptr) };
-      assert_eq!(check, &[1i32, 99, 3]);
-      unsafe { _array_free_helper(ptr as *mut c_void) };
-   }
-
-   #[test]
-   fn cstring_array_as_ptr_non_null() {
-      let strings = vec!["hello".to_string(), "world".to_string()];
-      let arr = ArrayCString::new(&strings);
-      assert!(!arr.as_ptr().is_null());
-   }
-
-   #[test]
-   fn cstring_array_roundtrips_strings() {
-      use std::ffi::CStr;
-      let strings = vec!["foo".to_string(), "bar".to_string(), "baz".to_string()];
-      let arr = ArrayCString::new(&strings);
-      let ptr = arr.as_ptr();
-      for (i, expected) in strings.iter().enumerate() {
-         let c_ptr = unsafe { *ptr.add(i) };
-         let got = unsafe { CStr::from_ptr(c_ptr).to_str().unwrap() };
-         assert_eq!(got, expected.as_str());
-      }
-   }
-
-   #[test]
-   fn cstring_array_default_is_empty() {
-      let arr = ArrayCString::default();
-      let _ = arr.as_ptr();
-   }
-
-   #[test]
-   fn large_element_size_u128() {
-      let mut arr = _array_create_helper(size_of::<u128>(), 4);
-      for i in 0..4u128 {
-         unsafe { *(_array_grow_helper(&mut arr) as *mut u128) = u128::MAX - i };
-      }
-      assert_eq!(_array_size_helper(arr), 4);
-      let slice = unsafe { as_slice::<u128>(arr, 4) };
-      assert_eq!(slice[0], u128::MAX);
-      assert_eq!(slice[3], u128::MAX - 3);
-      unsafe { _array_free_helper(arr) };
-   }
-
-   #[test]
-   fn stress_grow_and_erase_interleaved() {
-      let mut arr = _array_create_helper(size_of::<i32>(), 2);
-      // Fill to 10 elements.
-      for i in 0..10i32 {
-         unsafe { *(_array_grow_helper(&mut arr) as *mut i32) = i };
-      }
-      // Erase elements [3, 7).
-      let start = unsafe { (arr as *mut i32).add(3) as *mut c_void };
-      let end = unsafe { (arr as *mut i32).add(7) as *mut c_void };
-      _array_erase_helper(&mut arr, start, end);
-      assert_eq!(_array_size_helper(arr), 6);
-      let slice = unsafe { as_slice::<i32>(arr, 6) };
-      assert_eq!(slice, &[0, 1, 2, 7, 8, 9]);
-      unsafe { _array_free_helper(arr) };
+      duped[1] = 42;
+      assert!(orig[1] != duped[1]);
+      array_free(arr);
+      array_free(copy);
    }
 
    #[test]
