@@ -34,9 +34,10 @@
   <shield_mod>30</shield_mod>
   <shield_regen_mod>20</shield_regen_mod>
   <stress_dissipation>10</stress_dissipation>
-  <launch_lockon>-40</launch_lockon>
-  <launch_range>20</launch_range>
-  <fbay_movement>-10</fbay_movement>
-  <fbay_reload>-10</fbay_reload>
+  <launch_lockon>-20</launch_lockon>
+  <launch_range>40</launch_range>
+  <launch_speed>15</launch_speed>
+  <fbay_movement>-12.5</fbay_movement>
+  <fbay_reload>-12.5</fbay_reload>
  </stats>
 </ship>
