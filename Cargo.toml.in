@@ -114,7 +114,8 @@ fs-err = "3"
 toml = "1.1"
 trash = "5"
 # Git operations
-git2 = "0.20"
+# Disable ssh2 because it gives compilation issues
+git2 = { version = "0.20", default-features = false, features = ["https"] }
 # Async runtime and byte buffer types
 #tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
 bytes = "1"
