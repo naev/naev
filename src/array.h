@@ -59,7 +59,7 @@ void *_array_create_helper( size_t e_size, size_t initial_size );
 void *_array_grow_helper( void **a );
 void  _array_resize_helper( void **a, size_t new_size );
 void  _array_erase_helper( void **a, void *first, void *last );
-// void  _array_shrink_helper( void **a, size_t e_size );
+void  _array_shrink_helper( void **a );
 void  _array_free_helper( void *a );
 void *_array_copy_helper( void *a );
 int   _array_size_helper( void *a );
@@ -157,9 +157,7 @@ static inline _private_container *_array_private_container( void *a )
  *
  *    @param ptr_array Array being manipulated.
  */
-#define array_shrink( ptr_array )                                              \
-   do {                                                                        \
-   } while ( 0 )
+#define array_shrink( ptr_array ) _array_shrink_helper( (void **)( ptr_array ) )
 //   _array_resize_helper( (void **)( ptr_array ), array_size( *ptr_array ) )
 /**
  * @brief Frees memory allocated and sets array to NULL.

@@ -279,6 +279,25 @@ pub extern "C" fn _array_resize_helper(array: *mut *mut c_void, new_size: usize)
 }
 
 #[unsafe(no_mangle)]
+pub extern "C" fn _array_shrink_helper(array: *mut *mut c_void) {
+   let data = unsafe { *array as *mut u8 };
+   if data.is_null() {
+      return;
+   }
+   let mut header = unsafe { header_from_data_mut(data) }.clone();
+   // Rebuild Vec<u8>
+   let mut vec = unsafe { header.rebuild_vec() };
+   vec.shrink_to_fit();
+   header.store_vec(vec);
+
+   // Update pointer for C side
+   unsafe {
+      header.write_header();
+      *array = header.as_ptr() as *mut c_void;
+   }
+}
+
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn _array_free_helper(array: *mut c_void) {
    if array.is_null() {
       return;
@@ -354,8 +373,7 @@ mod tests {
    }
 
    fn array_shrink<T>(array: &mut *mut T) {
-      let len = array_size(*array) as usize;
-      _array_resize_helper(array as *mut *mut T as *mut *mut c_void, len);
+      _array_shrink_helper(array as *mut *mut T as *mut *mut c_void);
    }
 
    fn array_free<T>(array: *mut T) {
@@ -600,7 +618,8 @@ mod tests {
 
    #[test]
    fn resize_null_array_is_noop() {
-      _array_resize_helper(std::ptr::null_mut(), 4);
+      let mut ptr = std::ptr::null_mut();
+      _array_resize_helper(&mut ptr as *mut *mut c_void, 4);
    }
 
    #[test]
@@ -758,7 +777,7 @@ mod tests {
 
       /* shrinks */
       array_shrink(&mut array);
-      //assert_eq!(array_size(array), array_reserved(array));
+      assert_eq!(array_size(array), array_reserved(array));
 
       /* pushes back second half */
       for i in (SIZE / 2)..SIZE {
@@ -791,7 +810,7 @@ mod tests {
 
       /* shrinks */
       array_shrink(&mut array);
-      //assert_eq!(array_size(array), array_reserved(array));
+      assert_eq!(array_size(array), array_reserved(array));
 
       /* erases one element */
       let begin = array;
@@ -837,6 +856,6 @@ mod tests {
       /* shrinks */
       array_shrink(&mut array);
       assert_eq!(array_size(array), 0);
-      //assert_eq!(array_reserved(array), 1);
+      assert_eq!(array_reserved(array), 0);
    }
 }
