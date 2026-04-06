@@ -4,6 +4,10 @@ function init( p )
    update( p )
 end
 
+function descextra( _p, _s )
+   return "#b".._("Converts all fighter-related stat bonuses into launcher counterparts.").."#0"
+end
+
 function update( p )
    p:shippropReset()
    

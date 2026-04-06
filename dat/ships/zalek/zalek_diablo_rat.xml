@@ -5,7 +5,6 @@
  <price>9000000</price>
  <condstr>You need at least 70% reputation with House Za'lek.</condstr>
  <description>The Range Artillery Terminal, not-so-lovingly dubbed "Rat" by some, is the likely result of someone looking at the design on the Diablo and thinking, "how many Reapers could we fill this thing up with"? The special-made weapons system applies the Za'lek's expertise in controlling drones and then some to the many missiles and torpedoes the weapon mounts can be stuffed full of. Where a normal bomber would have to rely on stealth or agility to survive as long as it takes to wear down an opponent, this jumbo-sized counterpart can just as well rely on the enemy being blown to smithereens before being able to do much about it.</description>
- <desc_extra>#bConverts all fighter-related stat bonuses into launcher counterparts.#0</desc_extra>
  <health>
   <armour>1050</armour>
  </health>
