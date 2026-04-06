@@ -25,7 +25,7 @@ strip-ansi-escapes = "0.2"
 nu-ansi-term = "0.50"
 
 [target.'cfg(unix)'.dependencies]
-nix = { version="0.30", features=["signal"] }
+nix = { version="0.31", features=["signal"] }
 
 [features]
 tracy = ["dep:tracing-tracy"]
