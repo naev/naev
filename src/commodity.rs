@@ -25,6 +25,8 @@ use tracing_mutex::stdsync::RwLock;
 #[allow(dead_code)]
 #[derive(Debug)]
 pub struct CommodityModifier(naevc::CommodityModifier);
+unsafe impl Send for CommodityModifier {}
+unsafe impl Sync for CommodityModifier {}
 impl Default for CommodityModifier {
    fn default() -> Self {
       Self::new(std::ptr::null(), 0.0)

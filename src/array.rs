@@ -16,9 +16,8 @@ pub struct Array<T> {
    data: *mut u8,   // Vec buffer
    _marker: PhantomData<T>,
 }
-// TODO this should be conditioned on T being Send or Sync
-unsafe impl<T> Send for Array<T> {}
-unsafe impl<T> Sync for Array<T> {}
+unsafe impl<T: Send> Send for Array<T> {}
+unsafe impl<T: Sync> Sync for Array<T> {}
 
 impl<T> Default for Array<T> {
    fn default() -> Self {
@@ -34,6 +33,8 @@ type ArrayC = Array<Dummy>;
 /// Wrapper to make it easier to deal with CString arrays
 #[derive(Default, Debug)]
 pub struct ArrayCString(Array<*mut i8>);
+unsafe impl Send for ArrayCString {}
+unsafe impl Sync for ArrayCString {}
 impl ArrayCString {
    pub fn new(vec: &[String]) -> Self {
       let data: Vec<_> = vec
