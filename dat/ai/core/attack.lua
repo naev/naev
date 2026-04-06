@@ -137,7 +137,7 @@ function atk.think( target, si, noretarget )
       end
 
       -- Check to see if we want to do flow stuff
-      if mem._o.flow then
+      if flow.has(p) then
          local f = flow.get( p )
          local fm = flow.max( p )
          local s = flow.size( p )

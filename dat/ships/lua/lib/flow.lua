@@ -151,7 +151,8 @@ function flow.recalculate( p )
    local has_amplifier = false
    local fm, fb, fr
 
-   if srs.playerIsPsychic() then
+   local wplayer = p:withPlayer()
+   if (not wplayer) or (wplayer and srs.playerIsPsychic()) then
       local sn = p:ship():nameRaw()
       fm = flow_mod[ sn ] or 1
       fb = flow_base[ sn ] or 0
