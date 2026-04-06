@@ -34,6 +34,7 @@
 #include "nstring.h"
 #include "ntime.h"
 #include "pilot_outfit.h"
+#include "pilot_ship.h"
 #include "player.h"
 #include "player_fleet.h"
 #include "shipstats.h"
@@ -1406,8 +1407,12 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p,
          pilot_addOutfitRaw( eq_wgt.selected->p, o, slot );
 
          /* Recalculate stats. */
+         effect_clear( &eq_wgt.selected->p->effects );
+         pilot_outfitOffAll( eq_wgt.selected->p );
          pilot_outfitLInitAll( eq_wgt.selected->p );
-         pilot_outfitLUpdate( player.p, 0. );
+         pilot_outfitLUpdate( eq_wgt.selected->p, 0. );
+         pilot_shipLInit( eq_wgt.selected->p );
+         pilot_shipLUpdate( eq_wgt.selected->p, 0 );
          pilot_calcStats( eq_wgt.selected->p ); /* TODO avoid running twice. */
       }
 
@@ -2069,7 +2074,9 @@ void equipment_updateShips( unsigned int wid, const char *str )
    effect_clear( &ship->effects );
    pilot_outfitOffAll( ship );
    pilot_outfitLInitAll( ship );
-   pilot_outfitLUpdate( player.p, 0. );
+   pilot_outfitLUpdate( ship, 0. );
+   pilot_shipLInit( ship );
+   pilot_shipLUpdate( ship, 0. );
    pilot_calcStats( ship );
 
    /* Select. */
