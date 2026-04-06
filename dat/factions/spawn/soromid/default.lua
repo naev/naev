@@ -8,7 +8,6 @@ local sodium      = ship.get("Soromid Odium")
 local sarx        = ship.get("Soromid Arx")
 local sira        = ship.get("Soromid Ira")
 local scopia      = ship.get("Soromid Copia")
-local svox        = ship.get("Soromid Vox")
 
 -- @brief Spawns a small patrol fleet.
 local function spawn_patrol ()
@@ -45,19 +44,8 @@ local function spawn_capship ()
    } )
 end
 
--- @brief Spawns a supercapital.
-local function spawn_supercapital ()
-   return scom.doTable( {}, {
-      { w=0.3, svox, sodium, smarauder, smarauder },
-      { w=0.6, svox, var.soromid_nyx, sodium, smarauder },
-      { w=0.9, svox, var.soromid_nyx, var.soromid_nyx },
-      { svox },
-   } )
-end
-
 return function ( t, max )
    t.patrol       = { f = spawn_patrol,       w = 300 }
    t.squad        = { f = spawn_squad,        w = math.max(1, -80 + 0.80 * max) }
    t.capship      = { f = spawn_capship,      w = math.max(1, -500 + 1.70 * max) }
-   t.supercapital = { f = spawn_supercapital, w = math.max(1, -900 + 1.70 * max) }
 end, 10
