@@ -11,7 +11,7 @@ Instead of standard shield arrays, the ship design uses special flash capacitors
  <stats>
   <shield_mod>210</shield_mod>
   <shield_regen_mod>10</shield_regen_mod>
-  <shielddown_mod>10000</shielddown_mod>
+  <shielddown_mod>INF</shielddown_mod>
   <fuel>200</fuel>
  </stats>
 </ship>

@@ -865,6 +865,13 @@ static int ss_printD( char *buf, int len, int newline, double d,
    if ( FABS( d ) < DOUBLE_TOL )
       return 0;
 
+   if ( isinf( d ) ) {
+      return scnprintf( buf, len, p_( "shipstats_double", "%s#%s%s: %s %s#0" ),
+                        ( newline ) ? "\n" : "", ss_printD_colour( d, sl ),
+                        _( sl->display ), ( d > 0. ) ? "+∞" : "-∞",
+                        ( sl->unit != NULL ) ? _( sl->unit ) : "" );
+   }
+
    return scnprintf( buf, len, p_( "shipstats_double", "%s#%s%s: %+g %s#0" ),
                      ( newline ) ? "\n" : "", ss_printD_colour( d, sl ),
                      _( sl->display ), d * 100.,
