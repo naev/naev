@@ -3865,6 +3865,7 @@ src/array.h
 src/array.rs
 src/asteroid.c
 src/asteroid.h
+src/asteroid.rs
 src/asteroid_internal.h
 src/attributes.h
 src/audio/src/buffer_length_query.rs
