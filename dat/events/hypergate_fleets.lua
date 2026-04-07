@@ -11,7 +11,7 @@
    Hypergate guard fleets.
 --]]
 local fleet = require "fleet"
-
+local var = require "shipvariants"
 
 local hypergates_list = {
    "Hypergate Dvaer", -- Dvaered
@@ -29,22 +29,22 @@ end
 
 local fleets_list = {
    ["Za'lek"]  = {
-      "Za'lek Hephaestus"
+      "Za'lek Hephaestus",
    },
    ["Dvaered"] = {
       "Dvaered Goddard",
       "Dvaered Vigilance",
       "Dvaered Vigilance",
-      "Dvaered Ancestor",
-      "Dvaered Ancestor",
+      var.dvaered_ancestor(),
+      var.dvaered_ancestor(),
       "Dvaered Vendetta",
       "Dvaered Vendetta",
       "Dvaered Vendetta",
    },
    ["Soromid"] = {
       "Soromid Vox",
-      "Soromid Nyx",
-      "Soromid Nyx",
+      var.soromid_nyx(),
+      var.soromid_nyx(),
       "Soromid Marauder",
       "Soromid Marauder",
    },
@@ -57,8 +57,8 @@ local fleets_list = {
       "Empire Peacemaker",
       "Empire Hawking",
       "Empire Hawking",
-      "Empire Pacifier",
-      "Empire Pacifier",
+      var.empire_pacifier(),
+      var.empire_pacifier(),
    },
 }
 

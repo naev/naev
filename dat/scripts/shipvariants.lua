@@ -133,5 +133,10 @@ var.zalek_mephisto = _v{
    { w=1,    s=ship.exists("Za'lek Mephisto") },
    { w=0.05, s=ship.exists("Za'lek Mephisto Type V") },
 }
+-- Carrier
+var.zalek_diablo = _v{
+   { w=1,    s=ship.exists("Za'lek Diablo") },
+   { w=0.05, s=ship.exists("Za'lek Diablo RAT") },
+}
 
 return var

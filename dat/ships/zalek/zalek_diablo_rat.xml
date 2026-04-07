@@ -1,0 +1,56 @@
+<ship name="Za'lek Diablo RAT" inherits="Za'lek Diablo">
+ <lua>zalek_diablo_rat.lua</lua>
+ <rarity>3</rarity>
+ <class>Battleship</class>
+ <price>9000000</price>
+ <condstr>You need at least 70% reputation with House Za'lek.</condstr>
+ <description>The Range Artillery Terminal, not-so-lovingly dubbed "Rat" by some, is the likely result of someone looking at the design on the Diablo and thinking, "how many Reapers could we fill this thing up with"? The special-made weapons system applies the Za'lek's expertise in controlling drones and then some to the many missiles and torpedoes the weapon mounts can be stuffed full of. Where a normal bomber would have to rely on stealth or agility to survive as long as it takes to wear down an opponent, this jumbo-sized counterpart can just as well rely on the enemy being blown to smithereens before being able to do much about it.</description>
+ <health>
+  <armour>1050</armour>
+ </health>
+ <characteristics>
+  <crew>32</crew>
+  <mass>1870</mass>
+  <cargo>60</cargo>
+  <fuel_consumption>400</fuel_consumption>
+ </characteristics>
+ <slots>
+  <weapon x="40" y="0" h="2" size="large"/>
+  <weapon x="25" y="0" h="2" size="large"/>
+  <weapon x="12" y="-6" h="0" size="medium" />
+  <weapon x="12" y="6" h="0" size="medium" />
+  <weapon x="-15" y="0" h="7" size="medium"/>
+  <weapon x="-33" y="0" h="7" size="medium"/>
+  <utility prop="systems" name="systems" size="large">Unicorp PT-440 Core System</utility>
+  <utility prop="systems_secondary" name="systems_secondary" size="large">Unicorp PT-440 Core System</utility>
+  <utility prop="accessory" name="accessory" size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <structure prop="engines" name="engines" size="large">Unicorp Eagle 3000 Engine</structure>
+  <structure prop="engines_secondary" name="engines_secondary" size="large">Unicorp Eagle 3000 Engine</structure>
+  <structure prop="hull" name="hull" size="large">Unicorp D-58 Heavy Plating</structure>
+  <structure prop="hull_secondary" name="hull_secondary" size="large">Unicorp D-58 Heavy Plating</structure>
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="medium"/>
+ </slots>
+ <stats>
+  <armour_mod>-40</armour_mod>
+  <shield_mod>40</shield_mod>
+  <shield_regen_mod>10</shield_regen_mod>
+  <stress_dissipation>10</stress_dissipation>
+  <cpu_mod>-65</cpu_mod>
+  <ammo_capacity>100</ammo_capacity>
+  <launch_rate>70</launch_rate>
+  <launch_accel>17.5</launch_accel>
+  <launch_turn>17.5</launch_turn>
+ </stats>
+ <tags>
+  <tag>zalek</tag>
+ </tags>
+</ship>

@@ -1,13 +1,13 @@
 local scom = require "factions.spawn.lib.common"
 local var = require "shipvariants"
 
-local sbrigand    = ship.get("Soromid Brigand")
-local sreaver     = ship.get("Soromid Reaver")
-local smarauder   = ship.get("Soromid Marauder")
-local sodium      = ship.get("Soromid Odium")
-local sarx        = ship.get("Soromid Arx")
-local sira        = ship.get("Soromid Ira")
-local scopia      = ship.get("Soromid Copia")
+local sbrigand  = ship.get("Soromid Brigand")
+local sreaver   = ship.get("Soromid Reaver")
+local smarauder = ship.get("Soromid Marauder")
+local sodium    = ship.get("Soromid Odium")
+local sarx      = ship.get("Soromid Arx")
+local sira      = ship.get("Soromid Ira")
+local scopia    = ship.get("Soromid Copia")
 
 -- @brief Spawns a small patrol fleet.
 local function spawn_patrol ()

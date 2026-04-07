@@ -2,11 +2,10 @@ local scom = require "factions.spawn.lib.common"
 local var = require "shipvariants"
 
 --local sdronescout = ship.get("Za'lek Scout Drone")
-local sdronelight = ship.get("Za'lek Light Drone")
-local sdronebomber= ship.get("Za'lek Bomber Drone")
-local sdroneheavy = ship.get("Za'lek Heavy Drone")
-local sdiablo     = ship.get("Za'lek Diablo")
-local smammon     = ship.get("Za'lek Mammon")
+local sdronelight  = ship.get("Za'lek Light Drone")
+local sdronebomber = ship.get("Za'lek Bomber Drone")
+local sdroneheavy  = ship.get("Za'lek Heavy Drone")
+local smammon      = ship.get("Za'lek Mammon")
 
 -- @brief Spawns a small patrol fleet.
 local function spawn_patrol( pilots )
@@ -37,7 +36,7 @@ local function spawn_capship ()
    local pilots = scom.doTable( {}, {
       { w=0.1, smammon },
       { w=0.55, var.zalek_mephisto },
-      { sdiablo },
+      { var.zalek_diablo },
    } )
 
    -- Generate the escorts
