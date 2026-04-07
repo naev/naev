@@ -169,7 +169,7 @@ local reason_list = {
       _([[ for insulting biological modifications]]),
       _([[ for denouncing the theory of evolution]]),
       _([[ for interfering with freedom of form]]),
-      _([[ for practicing conversion therapy]]),
+      _([[ for practising conversion therapy]]),
       _([[ for disrespecting the sacrifices of the Soromid tribes]]),
       _([[ for spreading misinformation about the Soromid]]),
       _([[ for attempting to misuse genetic data]]),
