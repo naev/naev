@@ -384,25 +384,27 @@ void commodity_update( unsigned int wid, const char *str )
    window_modifyText( wid, "txtDesc", buf );
 
    /* Add relative price. */
-   l               = 0;
-   CommodityRef pr = commodity_price_ref( com );
+   l = 0;
    if ( commodity_price_constant( com ) ) {
       l += scnprintf( &buf[l], sizeof( buf ) - l, _( "Price is constant." ) );
       window_modifyText( wid, "txtDRef", buf );
-   } else if ( pr != COMMODITY_NULL ) {
-      char   c    = '0';
-      double pmod = commodity_price_mod( com );
-      if ( pmod > 1. )
-         c = 'g';
-      else if ( pmod < 1. )
-         c = 'r';
-      l += scnprintf(
-         &buf[l], sizeof( buf ) - l,
-         _( "Price is based on #%c%.0f%%#0 of the price of #o%s#0." ), c,
-         pmod * 100., commodity_name( pr ) );
-      window_modifyText( wid, "txtDRef", buf );
-   } else
-      window_modifyText( wid, "txtDRef", NULL );
+   } else {
+      CommodityRef pr = commodity_price_ref( com );
+      if ( pr != COMMODITY_NULL ) {
+         char   c    = '0';
+         double pmod = commodity_price_mod( com );
+         if ( pmod > 1. )
+            c = 'g';
+         else if ( pmod < 1. )
+            c = 'r';
+         l += scnprintf(
+            &buf[l], sizeof( buf ) - l,
+            _( "Price is based on #%c%.0f%%#0 of the price of #o%s#0." ), c,
+            pmod * 100., commodity_name( pr ) );
+         window_modifyText( wid, "txtDRef", buf );
+      } else
+         window_modifyText( wid, "txtDRef", NULL );
+   }
 
    /* Button enabling/disabling */
    if ( commodity_canBuy( comi, price_mod ) )
