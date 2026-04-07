@@ -238,9 +238,9 @@ void ovr_refresh( void )
    /* Calculate max size. */
    items = 0;
    n     = array_size( cur_system->jumps ) + array_size( cur_system->spobs ) +
-       array_size( ovr_markers ) + autonav_pos;
-   pos = calloc( n, sizeof( vec2 * ) );
-   mo  = calloc( n, sizeof( MapOverlayPos * ) );
+           array_size( ovr_markers ) + autonav_pos;
+   pos   = calloc( n, sizeof( vec2 * ) );
+   mo    = calloc( n, sizeof( MapOverlayPos * ) );
    if ( ( player.p != NULL ) && !pilot_isFlag( player.p, PILOT_HYP_END ) ) {
       max_x = ABS( player.p->solid.pos.x );
       max_y = ABS( player.p->solid.pos.y );
@@ -857,10 +857,10 @@ void ovr_render( double dt )
 
    /* Render the asteroids */
    for ( int i = 0; i < array_size( cur_system->asteroids ); i++ ) {
-      AsteroidAnchor *ast   = &cur_system->asteroids[i];
-      double          range = CTS.EW_ASTEROID_DIST *
+      AsteroidAnchor *ast = &cur_system->asteroids[i];
+      double range = CTS.EW_ASTEROID_DIST *
                      player.p->stats.ew_detect; /* TODO don't hardcode. */
-      int ax, ay, r;
+      int    ax, ay, r;
       ax = round( player.p->solid.pos.x );
       ay = round( player.p->solid.pos.y );
       r  = ceil( range );

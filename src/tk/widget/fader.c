@@ -90,8 +90,8 @@ static void fad_render( Widget *fad, double bx, double by )
    int    horizontal;
 
    /* Some values. */
-   pos = ( fad->dat.fad.value - fad->dat.fad.min ) /
-         ( fad->dat.fad.max - fad->dat.fad.min );
+   pos        = ( fad->dat.fad.value - fad->dat.fad.min ) /
+                ( fad->dat.fad.max - fad->dat.fad.min );
    w          = fad->w;
    h          = fad->h;
    horizontal = w > h;

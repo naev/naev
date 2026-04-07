@@ -872,10 +872,10 @@ void gui_radarRender( double x, double y )
    const double render_limit =
       radar->shape == RADAR_CIRCLE ? radar->w : INFINITY;
    for ( int i = 0; i < array_size( cur_system->asteroids ); i++ ) {
-      AsteroidAnchor *ast   = &cur_system->asteroids[i];
-      double          range = CTS.EW_ASTEROID_DIST *
+      AsteroidAnchor *ast = &cur_system->asteroids[i];
+      double range = CTS.EW_ASTEROID_DIST *
                      player.p->stats.ew_detect; /* TODO don't hardcode. */
-      int ax, ay, r;
+      int    ax, ay, r;
       ax = round( player.p->solid.pos.x );
       ay = round( player.p->solid.pos.y );
       r  = ceil( range );

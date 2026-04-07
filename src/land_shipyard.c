@@ -238,7 +238,7 @@ void shipyard_update( unsigned int wid, const char *str )
    char  lbl[STRMAX], buf[STRMAX], buf_price[ECON_CRED_STRLEN],
       buf_credits[ECON_CRED_STRLEN];
    size_t k = 0, l = 0;
-   int    blackmarket = ( ( land_spob != NULL ) &&
+   int blackmarket = ( ( land_spob != NULL ) &&
                        spob_hasService( land_spob, SPOB_SERVICE_BLACKMARKET ) );
 
    i = toolkit_getImageArrayPos( wid, "iarShipyard" );

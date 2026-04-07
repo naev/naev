@@ -132,7 +132,7 @@ extern Mission **player_missions; /**< Player's active missions. */
 Mission *missions_genList( FactionRef faction, const Spob *pnt,
                            const StarSystem *sys, MissionAvailability loc );
 int      mission_accept(
-        Mission *mission ); /* player accepted mission for computer/bar */
+   Mission *mission ); /* player accepted mission for computer/bar */
 void missions_run( MissionAvailability loc, FactionRef faction, const Spob *pnt,
                    const StarSystem *sys );
 int  mission_start( const char *name, unsigned int *id );

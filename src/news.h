@@ -42,7 +42,7 @@ void news_widget( unsigned int wid, int x, int y, int w, int h );
 /*
  * News interactions
  */
-int     news_add( const char *title, const char *content, const char *faction,
-                  const char *tag, ntime_t date, ntime_t date_to_rm, int priority );
+int news_add( const char *title, const char *content, const char *faction,
+              const char *tag, ntime_t date, ntime_t date_to_rm, int priority );
 news_t *news_get( int id );
 void    news_rm( int id );

@@ -44,8 +44,8 @@ void window_addCust(
 void  window_custSetClipping( unsigned int wid, const char *name, int clip );
 void  window_custSetOverlay( unsigned int wid, const char *name,
                              void ( *renderOverlay )( double bx, double by,
-                                                     double bw, double bh,
-                                                     void *data ) );
+                                                      double bw, double bh,
+                                                      void *data ) );
 void *window_custGetData( unsigned int wid, const char *name );
 void  window_custFreeDataFunc( unsigned int wid, const char *name,
                                void ( *func )( void *ptr ) );

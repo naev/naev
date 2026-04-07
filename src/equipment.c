@@ -2812,9 +2812,9 @@ static void equipment_renameShip( unsigned int wid, const char *str )
    (void)str;
    const char *shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
    Pilot      *ship     = player_getShip( shipname );
-   char       *newname  = dialogue_input( _( "Ship Name" ), 1, 60,
-                                          _( "Please enter a new name for your %s:" ),
-                                          ship_name( ship->ship ) );
+   char *newname = dialogue_input( _( "Ship Name" ), 1, 60,
+                                   _( "Please enter a new name for your %s:" ),
+                                   ship_name( ship->ship ) );
 
    /* Player cancelled the dialogue. */
    if ( newname == NULL )

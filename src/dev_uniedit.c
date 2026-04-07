@@ -88,7 +88,7 @@ extern StarSystem *systems_stack;
 int                  uniedit_diffMode  = 0;
 int                  uniedit_diffSaved = 0;
 static UniDiffData_t uniedit_diff      = {
-        .name = NULL, .filename = NULL, .hunks = NULL };
+   .name = NULL, .filename = NULL, .hunks = NULL };
 static UniEditMode     uniedit_mode = UNIEDIT_DEFAULT; /**< Editor mode. */
 static UniEditViewMode uniedit_viewmode =
    UNIEDIT_VIEW_DEFAULT; /**< Editor view mode. */

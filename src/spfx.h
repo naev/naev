@@ -131,10 +131,10 @@ void        spfx_update( const double dt, const double real_dt );
 void        spfx_render( int layer, double dt );
 void        spfx_clear( void );
 Trail_spfx *spfx_trail_create( const TrailSpec *spec );
-void        spfx_trail_sample( Trail_spfx *trail, double x, double y, double z,
-                               double dx, double dy, TrailMode mode, int force );
-void        spfx_trail_remove( Trail_spfx *trail );
-void        spfx_trail_draw( const Trail_spfx *trail );
+void spfx_trail_sample( Trail_spfx *trail, double x, double y, double z,
+                        double dx, double dy, TrailMode mode, int force );
+void spfx_trail_remove( Trail_spfx *trail );
+void spfx_trail_draw( const Trail_spfx *trail );
 
 /*
  * Misc effects.

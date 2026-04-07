@@ -10,7 +10,7 @@ end
 
 function update( p )
    p:shippropReset()
-   
+
    local fbay_damage = p:shipstat("fbay_damage", true)
    p:shippropSet( "launch_damage", fbay_damage * 100 - 100 )
    p:shippropSet( "fbay_damage", 100 / fbay_damage - 100 )
@@ -24,15 +24,15 @@ function update( p )
    p:shippropSet( "launch_accel", fbay_movement * 100 - 100 )
    p:shippropSet( "launch_turn", fbay_movement * 100 - 100)
    p:shippropSet( "fbay_movement", 100 / fbay_movement - 100 )
-   
+
    local fbay_capacity = p:shipstat("fbay_capacity", true)
    p:shippropSet( "ammo_capacity", fbay_capacity * 100 - 100 )
    p:shippropSet( "fbay_capacity", 100 / fbay_capacity - 100 )
-   
+
    local fbay_rate = p:shipstat("fbay_rate", true)
    p:shippropSet( "launch_rate", fbay_rate * 100 - 100 )
    p:shippropSet( "fbay_rate", 100 / fbay_rate - 100 )
-   
+
    local fbay_reload = p:shipstat("fbay_reload", true)
    p:shippropSet( "launch_reload", fbay_reload * 100 - 100 )
    p:shippropSet( "fbay_reload", 100 / fbay_reload - 100 )

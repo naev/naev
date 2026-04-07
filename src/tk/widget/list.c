@@ -333,7 +333,7 @@ static int lst_focus( Widget *lst, double bx, double by )
       /* Get bar position (centre). */
       double scroll_pos = (double)( lst->dat.lst.pos * CELLHEIGHT ) /
                           ( lst->dat.lst.height - lst->h + 2 );
-      double y = ( lst->h - 30. ) * ( 1. - scroll_pos ) + 15.;
+      double y          = ( lst->h - 30. ) * ( 1. - scroll_pos ) + 15.;
 
       /* Click below the bar. */
       if ( by < y - 15. )

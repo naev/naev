@@ -100,8 +100,8 @@ Weapon *weapon_add( PilotOutfitSlot *po, const Outfit *ref, double dir,
                     const Target *target, double time, int aim );
 
 /* Targetting. */
-int    weapon_inArc( const Outfit *o, const Pilot *parent, const Target *target,
-                     const vec2 *pos, const vec2 *vel, double dir, double time );
+int weapon_inArc( const Outfit *o, const Pilot *parent, const Target *target,
+                  const vec2 *pos, const vec2 *vel, double dir, double time );
 double weapon_targetFlyTime( const Outfit *o, const Pilot *p, const Target *t );
 
 /* Beam weapons. */

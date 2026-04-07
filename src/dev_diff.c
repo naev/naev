@@ -18,7 +18,7 @@ int ddiff_save( const UniDiffData_t *diff )
    xmlTextWriterPtr writer;
    int              ret    = 0;
    UniHunkTarget_t  target = {
-       .type = HUNK_TARGET_NONE,
+      .type = HUNK_TARGET_NONE,
    };
 
    /* Create the writer. */

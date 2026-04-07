@@ -571,12 +571,12 @@ int gl_printLineIteratorNext( glPrintLineIterator *iter )
       glFontGlyph *glyph = gl_fontGetGlyph( stsh, pos.ch );
       GLfloat      glyph_w =
          glyph == NULL ? 0
-                            : gl_fontKernGlyph( stsh, pos.ch, glyph ) + glyph->adv_x;
+                       : gl_fontKernGlyph( stsh, pos.ch, glyph ) + glyph->adv_x;
       _linepos_t nextpos = { .i = char_end, .w = pos.w + glyph_w };
       nextpos.ch         = font_nextChar( iter->text, &char_end );
       brk                = lb_process_next_char( &lbc, nextpos.ch );
-      can_break = ( brk == LINEBREAK_ALLOWBREAK && !iter->no_soft_breaks ) ||
-                  brk == LINEBREAK_MUSTBREAK;
+      can_break    = ( brk == LINEBREAK_ALLOWBREAK && !iter->no_soft_breaks ) ||
+                     brk == LINEBREAK_MUSTBREAK;
       can_fit      = ( iter->width >= (int)round( nextpos.w ) );
       any_word_fit = ( iter->l_end != iter->l_begin );
       /* Emergency situations: */
@@ -1308,10 +1308,10 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
       } else {
          GLubyte *buffer;
          /* Create a larger image using an extra border and centre glyph. */
-         b = 1 + ( ( MAX_EFFECT_RADIUS + 1 ) * FONT_DISTANCE_FIELD_SIZE - 1 ) /
-                    stsh->h;
-         rw     = w + b * 2;
-         rh     = h + b * 2;
+         b  = 1 + ( ( MAX_EFFECT_RADIUS + 1 ) * FONT_DISTANCE_FIELD_SIZE - 1 ) /
+                     stsh->h;
+         rw = w + b * 2;
+         rh = h + b * 2;
          buffer = calloc( rw * rh, sizeof( GLubyte ) );
          for ( int v = 0; v < h; v++ )
             for ( int u = 0; u < w; u++ )

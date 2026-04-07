@@ -242,8 +242,8 @@ static int asteroidL_getAll( lua_State *L )
       for ( int j = 0; j < array_size( ast->asteroids ); j++ ) {
          const Asteroid *a  = &ast->asteroids[j];
          LuaAsteroid_t   la = {
-              .parent = a->parent,
-              .id     = a->id,
+            .parent = a->parent,
+            .id     = a->id,
          };
 
          lua_pushasteroid( L, la );

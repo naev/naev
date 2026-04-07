@@ -634,9 +634,9 @@ static void safelanes_initStiff( void )
    double max_conductivity;
 
    cholmod_free_triplet( &stiff, &C );
-   v   = array_size( vertex_stack );
-   nnz = 3 * ( array_size( edge_stack ) + array_size( tmp_jump_edges ) ) +
-         array_size( tmp_anchor_vertices );
+   v     = array_size( vertex_stack );
+   nnz   = 3 * ( array_size( edge_stack ) + array_size( tmp_jump_edges ) ) +
+           array_size( tmp_anchor_vertices );
    stiff = cholmod_allocate_triplet(
       v, v, nnz, STORAGE_MODE_UPPER_TRIANGULAR_PART, CHOLMOD_REAL, &C );
    /* Populate triplets: internal edges (ii ij jj), implicit jump connections
@@ -709,10 +709,10 @@ static void safelanes_initQtQ( void )
    cholmod_free_sparse( &QtQ, &C );
    /* Form Q, the edge-vertex projection where (Dirac notation) Q |edge> =
     * |edge[0]> - |edge[1]>. It has a +1 and -1 per column. */
-   Q                  = cholmod_allocate_sparse( array_size( vertex_stack ),
-                                                 array_size( edge_stack ),
-                                                 2 * array_size( edge_stack ), SORTED, PACKED,
-                                                 STORAGE_MODE_UNSYMMETRIC, CHOLMOD_REAL, &C );
+   Q = cholmod_allocate_sparse( array_size( vertex_stack ),
+                                array_size( edge_stack ),
+                                2 * array_size( edge_stack ), SORTED, PACKED,
+                                STORAGE_MODE_UNSYMMETRIC, CHOLMOD_REAL, &C );
    ( (int *)Q->p )[0] = 0;
    for ( int i = 0; i < array_size( edge_stack ); i++ ) {
       ( (int *)Q->p )[i + 1]        = 2 * ( i + 1 );
@@ -865,11 +865,11 @@ static int safelanes_activateByGradient( const cholmod_dense *Lambda_tilde,
          array_resize( &edgeind_opts, 0 );
          for ( int ei = sys_to_first_edge[si]; ei < sys_to_first_edge[1 + si];
                ei++ ) {
-            int sis           = edge_stack[ei][0];
-            int sjs           = edge_stack[ei][1];
-            int disconnecting = iters_done &&
-                                !( vertex_fmask[sis] & ( MASK_1 << fi ) ) &&
-                                !( vertex_fmask[sjs] & ( MASK_1 << fi ) );
+            int    sis           = edge_stack[ei][0];
+            int    sjs           = edge_stack[ei][1];
+            int    disconnecting = iters_done &&
+                                   !( vertex_fmask[sis] & ( MASK_1 << fi ) ) &&
+                                   !( vertex_fmask[sjs] & ( MASK_1 << fi ) );
             double cost = 1. / safelanes_initialConductivity( ei ) /
                              faction_stack[fi].lane_length_per_presence +
                           faction_stack[fi].lane_base_cost;
@@ -888,10 +888,10 @@ static int safelanes_activateByGradient( const cholmod_dense *Lambda_tilde,
             continue;
          }
 
-         ei_best   = edgeind_opts[0];
-         cost_best = 1. / safelanes_initialConductivity( ei_best ) /
-                        faction_stack[fi].lane_length_per_presence +
-                     faction_stack[fi].lane_base_cost;
+         ei_best             = edgeind_opts[0];
+         cost_best           = 1. / safelanes_initialConductivity( ei_best ) /
+                                  faction_stack[fi].lane_length_per_presence +
+                               faction_stack[fi].lane_base_cost;
          cost_cheapest_other = +HUGE_VAL;
          if ( array_size( edgeind_opts ) > 0 ) {
             /* There's an actual choice. Search for the best option. Lower is
@@ -1000,11 +1000,11 @@ static int safelanes_triangleTooFlat( const vec2 *m, const vec2 *n,
    double       lnp        = vec2_dist( n, p );
    double       lmp        = vec2_dist( m, p );
    double       dpn        = ( ( n->x - m->x ) * ( n->x - p->x ) +
-                  ( n->y - m->y ) * ( n->y - p->y ) ) /
-                ( lmn * lnp );
-   double dpm = ( ( m->x - n->x ) * ( m->x - p->x ) +
-                  ( m->y - n->y ) * ( m->y - p->y ) ) /
-                ( lmn * lmp );
+                               ( n->y - m->y ) * ( n->y - p->y ) ) /
+                             ( lmn * lnp );
+   double       dpm        = ( ( m->x - n->x ) * ( m->x - p->x ) +
+                               ( m->y - n->y ) * ( m->y - p->y ) ) /
+                             ( lmn * lmp );
    return ( dpn > MAX_COSINE && lnp < lmn ) ||
           ( dpm > MAX_COSINE && lmp < lmn );
 }

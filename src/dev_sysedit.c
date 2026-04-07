@@ -936,8 +936,8 @@ static void sysedit_render( double bx, double by, double w, double h,
       const glColour *c;
       JumpPoint      *jp  = &sys->jumps[i];
       const Select_t  sel = {
-          .type   = SELECT_JUMPPOINT,
-          .u.jump = i,
+         .type   = SELECT_JUMPPOINT,
+         .u.jump = i,
       };
       int selected = sysedit_isSelected( &sel );
 
@@ -953,8 +953,8 @@ static void sysedit_render( double bx, double by, double w, double h,
    for ( int i = 0; i < array_size( sys->asteroids ); i++ ) {
       const AsteroidAnchor *ast = &sys->asteroids[i];
       const Select_t        sel = {
-                .type       = SELECT_ASTEROID,
-                .u.asteroid = i,
+         .type       = SELECT_ASTEROID,
+         .u.asteroid = i,
       };
       int selected = sysedit_isSelected( &sel );
       sysedit_renderAsteroidsField( x, y, ast, selected );
@@ -964,8 +964,8 @@ static void sysedit_render( double bx, double by, double w, double h,
    for ( int i = 0; i < array_size( sys->astexclude ); i++ ) {
       const AsteroidExclusion *aexcl = &sys->astexclude[i];
       const Select_t           sel   = {
-                     .type         = SELECT_ASTEXCLUDE,
-                     .u.astexclude = i,
+         .type         = SELECT_ASTEXCLUDE,
+         .u.astexclude = i,
       };
       int selected = sysedit_isSelected( &sel );
       sysedit_renderAsteroidExclusion( x, y, aexcl, selected );
@@ -1308,8 +1308,8 @@ static int sysedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
       for ( int i = 0; i < array_size( sys->astexclude ); i++ ) {
          AsteroidExclusion *exc = &sys->astexclude[i];
          const Select_t     sel = {
-                .type         = SELECT_ASTEXCLUDE,
-                .u.astexclude = i,
+            .type         = SELECT_ASTEXCLUDE,
+            .u.astexclude = i,
          };
          double t = pow2( exc->radius * sysedit_zoom );
 
@@ -1323,8 +1323,8 @@ static int sysedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
       for ( int i = 0; i < array_size( sys->asteroids ); i++ ) {
          AsteroidAnchor *ast = &sys->asteroids[i];
          const Select_t  sel = {
-             .type       = SELECT_ASTEROID,
-             .u.asteroid = i,
+            .type       = SELECT_ASTEROID,
+            .u.asteroid = i,
          };
          double t = pow2( ast->radius * sysedit_zoom );
 
@@ -2293,9 +2293,9 @@ static void sysedit_editExclusion( void )
       &sysedit_sys->astexclude[sysedit_select[0].u.astexclude];
 
    /* Create the window. */
-   wid             = window_create( "wdwExclusionEditor",
-                                    _( "Asteroid Exclusion Zone Editor" ), -1, -1,
-                                    SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
+   wid = window_create( "wdwExclusionEditor",
+                        _( "Asteroid Exclusion Zone Editor" ), -1, -1,
+                        SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    sysedit_widEdit = wid;
    window_setCancel( wid, sysedit_editExclusionClose );
 
@@ -2406,13 +2406,13 @@ static void sysedit_spobDesc( unsigned int wid, const char *unused )
                         SYSEDIT_EDIT_HEIGHT );
    window_setCancel( wid, window_close );
 
-   x = 20;
-   y = -40;
-   w = SYSEDIT_EDIT_WIDTH - 40;
-   h = ( SYSEDIT_EDIT_HEIGHT - gl_defFont.h * 2 - 30 - 60 - BUTTON_HEIGHT -
-         10 ) /
-       2.;
-   desc    = p->description ? p->description : _( "None" );
+   x    = 20;
+   y    = -40;
+   w    = SYSEDIT_EDIT_WIDTH - 40;
+   h    = ( SYSEDIT_EDIT_HEIGHT - gl_defFont.h * 2 - 30 - 60 - BUTTON_HEIGHT -
+            10 ) /
+          2.;
+   desc = p->description ? p->description : _( "None" );
    bardesc = p->bar_description ? p->bar_description : _( "None" );
    bw      = ( SYSEDIT_EDIT_WIDTH - 40 - 15 * 3 ) / 4.;
 

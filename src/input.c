@@ -62,10 +62,10 @@ static const char *keybind_info[KST_END][3] = {
                      N_( "Makes your ship face the direction you're moving "
                          "from. Useful for braking." ),
                      "reverse" },
-   [KST_FACE]    = { N_( "Face Target" ),
-                     N_( "Faces the targeted ship if one is targeted, otherwise "
-                            "faces targeted spob, or jump point." ),
-                     "face" },
+   [KST_FACE] = { N_( "Face Target" ),
+                  N_( "Faces the targeted ship if one is targeted, otherwise "
+                      "faces targeted spob, or jump point." ),
+                  "face" },
 
    /* Gameplay modifiers */
    [KST_STEALTH]    = { N_( "Stealth" ), N_( "Tries to enter stealth mode." ),
@@ -106,13 +106,13 @@ static const char *keybind_info[KST_END][3] = {
                           N_( "Cycles through jump points." ), "thyperspace" },
 
    /* Hostile targets */
-   [KST_HTARGET_NEXT]  = { N_( "Target Next Hostile" ),
-                           N_( "Cycles through hostile ship targets." ),
-                           "target_nextHostile" },
-   [KST_HTARGET_PREV]  = { N_( "Target Previous Hostile" ),
-                           N_(
+   [KST_HTARGET_NEXT] = { N_( "Target Next Hostile" ),
+                          N_( "Cycles through hostile ship targets." ),
+                          "target_nextHostile" },
+   [KST_HTARGET_PREV] = { N_( "Target Previous Hostile" ),
+                          N_(
                              "Cycles backwards through hostile ship targets." ),
-                           "target_prevHostile" },
+                          "target_prevHostile" },
    [KST_HTARGET_CLOSE] = { N_( "Target Nearest Hostile" ),
                            N_( "Targets the nearest hostile ship." ),
                            "target_hostile" },
@@ -167,11 +167,11 @@ static const char *keybind_info[KST_END][3] = {
                         "console" },
 
    /* Escorts */
-   [KST_ESCORT_NEXT]   = { N_( "Target Next Escort" ),
-                           N_( "Cycles through your escorts." ), "e_targetNext" },
-   [KST_ESCORT_PREV]   = { N_( "Target Previous Escort" ),
-                           N_( "Cycles backwards through your escorts." ),
-                           "e_targetPrev" },
+   [KST_ESCORT_NEXT] = { N_( "Target Next Escort" ),
+                         N_( "Cycles through your escorts." ), "e_targetNext" },
+   [KST_ESCORT_PREV] = { N_( "Target Previous Escort" ),
+                         N_( "Cycles backwards through your escorts." ),
+                         "e_targetPrev" },
    [KST_ESCORT_ATTACK] = { N_( "Escort Attack Command" ),
                            N_( "Orders escorts to attack your target." ),
                            "e_attack" },

@@ -17,8 +17,8 @@
  <slots>
   <weapon x="40" y="0" h="2" size="large"/>
   <weapon x="25" y="0" h="2" size="large"/>
-  <weapon x="12" y="-6" h="0" size="medium" />
-  <weapon x="12" y="6" h="0" size="medium" />
+  <weapon x="12" y="-6" h="0" size="medium"/>
+  <weapon x="12" y="6" h="0" size="medium"/>
   <weapon x="-15" y="0" h="7" size="medium"/>
   <weapon x="-33" y="0" h="7" size="medium"/>
   <utility prop="systems" name="systems" size="large">Unicorp PT-440 Core System</utility>

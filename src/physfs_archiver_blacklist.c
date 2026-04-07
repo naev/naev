@@ -199,8 +199,8 @@ static int blk_enumerateCallback( void *data, const char *origdir,
          int    *added = data;
          int     f     = -1;
          BlkFile bf    = {
-               .filename = strdup( fname ),
-               .dirname  = strdup( origdir ),
+            .filename = strdup( fname ),
+            .dirname  = strdup( origdir ),
          };
          array_push_back( &blk_fs, bf );
          array_push_back( &blk_blacklists, path );

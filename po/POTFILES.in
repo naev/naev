@@ -673,6 +673,7 @@ dat/ships/zalek/zalek_bomber_drone.xml
 dat/ships/zalek/zalek_demon.xml
 dat/ships/zalek/zalek_demon_type_iv.xml
 dat/ships/zalek/zalek_diablo.xml
+dat/ships/zalek/zalek_diablo_rat.xml
 dat/ships/zalek/zalek_heavy_drone.xml
 dat/ships/zalek/zalek_hephaestus.xml
 dat/ships/zalek/zalek_light_drone.xml
@@ -3802,6 +3803,7 @@ dat/ships/lua/soromid.lua
 dat/ships/lua/thurion.lua
 dat/ships/lua/vendetta_whiplash.lua
 dat/ships/lua/zalek.lua
+dat/ships/lua/zalek_diablo_rat.lua
 dat/ships/lua/zalek_mephisto_type_v.lua
 dat/snd/music.lua
 dat/snd/music/default.lua
