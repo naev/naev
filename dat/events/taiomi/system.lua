@@ -372,7 +372,7 @@ function hail_scavenger ()
 
          vn.label("02_yes")
          d(_([["Appreciations. I have marked systems that are known for having convoys on your map. I would like to warn you that this may decrease your goodwill with the dominant factions of the systems. I hope this does not cause you too much inconvenience."]]))
-         d(_([["You will have to disable the convoys before you can board them to access the data. It is unlikely that a single convoy will contain all the information we seek, so you will most likely have to board several. My analysis of your flying capabilities estimates over 80% chance of success. Gluckliche Reise."]]))
+         d(_([["You will have to disable the convoys before you can board them to access the data. It is unlikely that a single convoy will contain all the information we seek, so you will most likely have to board several. My analysis of your flying capabilities estimates over 80% chance of success. Safe travels."]]))
          vn.func( function ()
             naev.missionStart("Taiomi 2")
          end )
