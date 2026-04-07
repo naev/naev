@@ -18,7 +18,7 @@ pub mod version;
 pub use formatx;
 pub use gettext;
 pub use semver;
-pub use tracing::log::*;
+pub use tracing::log::{Level, debug, info, log};
 
 #[cfg(unix)]
 pub use nix;
@@ -49,8 +49,7 @@ impl<A: Write, B: Write> Write for TeeWarn<A, B> {
          let b = gettext::gettext("TOO MANY WARNINGS, NO LONGER DISPLAYING WARNINGS").as_bytes();
          self.0.write(b)?
       } else {
-         let bt = std::backtrace::Backtrace::force_capture();
-         self.0.write(format!("{}", bt).as_bytes())? + self.0.write(buf)?
+         self.0.write(buf)?
       };
       #[cfg(unix)]
       if naevc::config::DEBUG_PARANOID {
@@ -142,7 +141,6 @@ pub fn init() -> Result<()> {
    {
       registry.init();
    }
-
    Ok(())
 }
 
@@ -175,7 +173,18 @@ pub fn debug(msg: &str) {
 }
 
 pub fn warn(msg: &str) {
-   warn!("{msg}");
+   let bt = std::backtrace::Backtrace::force_capture();
+   warn!("{bt}\n{msg}");
+}
+
+#[macro_export]
+macro_rules! warn {
+    // error!("a {} event", "log")
+    ($($arg:tt)+) => ({
+      let bt = std::backtrace::Backtrace::force_capture();
+       $crate::log!($crate::Level::Warn, "{bt}");
+       $crate::log!($crate::Level::Warn, $($arg)+)
+    })
 }
 
 #[macro_export]
@@ -202,7 +211,7 @@ macro_rules! warnx {
 #[macro_export]
 macro_rules! warn_err {
    ($err:expr) => {
-      $crate::warn!("{:?}", $err);
+      $crate::warn!("{:?}", $err)
    };
 }
 
@@ -219,4 +228,10 @@ macro_rules! log_c {
 }
 log_c!(debug_rust, debug);
 log_c!(info_rust, info);
-log_c!(warn_rust, warn);
+//log_c!(warn_rust, warn);
+
+#[unsafe(no_mangle)]
+pub extern "C" fn warn_rust(msg: *const c_char) {
+   let msg = unsafe { CStr::from_ptr(msg) };
+   warn!("{}", msg.to_string_lossy());
+}
