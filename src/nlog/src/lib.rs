@@ -49,7 +49,8 @@ impl<A: Write, B: Write> Write for TeeWarn<A, B> {
          let b = gettext::gettext("TOO MANY WARNINGS, NO LONGER DISPLAYING WARNINGS").as_bytes();
          self.0.write(b)?
       } else {
-         self.0.write(buf)?
+         let bt = std::backtrace::Backtrace::force_capture();
+         self.0.write(format!("{}", bt).as_bytes())? + self.0.write(buf)?
       };
       #[cfg(unix)]
       if naevc::config::DEBUG_PARANOID {
