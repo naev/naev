@@ -49,8 +49,15 @@ impl ArrayCString {
    }
 }
 
+fn vec_into_raw_parts<T>(vec: Vec<T>) -> (*mut T, usize, usize) {
+   // TODO just use into_raw_parts when we can use Rust 1.93 or later
+   let mut me = std::mem::ManuallyDrop::new(vec);
+   (me.as_mut_ptr(), me.len(), me.capacity())
+}
+
 fn vec_to_bytes<T>(vec: Vec<T>) -> Vec<u8> {
-   let (ptr, len, cap) = Vec::into_raw_parts(vec);
+   let (ptr, len, cap) = vec_into_raw_parts(vec);
+   //let (ptr, len, cap) = Vec::into_raw_parts(vec);
    let len_bytes = len * std::mem::size_of::<T>();
    let cap_bytes = cap * std::mem::size_of::<T>();
    unsafe { Vec::from_raw_parts(ptr as *mut u8, len_bytes, cap_bytes) }
@@ -70,7 +77,8 @@ impl<T> Array<T> {
          vec.set_len(PREFIX + length);
       }
 
-      let (ptr, len, capacity) = vec.into_raw_parts();
+      let (ptr, len, capacity) = vec_into_raw_parts(vec);
+      //let (ptr, len, capacity) = vec.into_raw_parts();
       let mut arr = Array {
          element_size,
          len,
@@ -109,7 +117,8 @@ impl<T> Array<T> {
 
    // Store Vec back into header
    fn store_vec(&mut self, vec: Vec<u8>) {
-      (self.data, self.len, self.capacity) = vec.into_raw_parts();
+      (self.data, self.len, self.capacity) = vec_into_raw_parts(vec);
+      //(self.data, self.len, self.capacity) = vec.into_raw_parts();
    }
 
    // Stamp the header if, say, it's from a different data source like owned by Rust
@@ -240,7 +249,8 @@ pub extern "C" fn _array_copy_helper(array: *mut c_void) -> *mut c_void {
    let header = unsafe { header_from_data_mut(array as *mut u8) };
    let src = unsafe { std::slice::from_raw_parts(header.data, header.len) };
 
-   let (data, len, capacity) = src.to_vec().into_raw_parts();
+   let (data, len, capacity) = vec_into_raw_parts(src.to_vec());
+   //let (data, len, capacity) = src.to_vec().into_raw_parts();
    let mut new = ArrayC {
       element_size: header.element_size,
       len,
