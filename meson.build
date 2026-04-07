@@ -15,7 +15,8 @@ project('naev', ['c', 'rust'],
 # 1.87 nalgebra 0.34
 # 1.88 iced 0.14.0
 # 1.89 symphonia-adapter-libopus
-rust_version = '1.89' # version for Cargo.toml's 'rust-version' field
+# 1.93 vec::into_raw_parts
+rust_version = '1.93' # version for Cargo.toml's 'rust-version' field
 rustc_needed_version = '>=@0@.0'.format( rust_version )
 bindgen_needed_version = '>=0.72.0'
 cargo_needed_version = '>=1.77.2'
