@@ -90,7 +90,7 @@ typedef struct Commodity_ {
 #define COMMODITY_NULL NULL
 typedef Commodity *CommodityRef;
 #else
-#define COMMODITY_NULL ( ( 1l << 32l ) + ( 1l << 32l ) - 1l )
+#define COMMODITY_NULL ( ( 1ll << 32ll ) + ( 1ll << 32ll ) - 1ll )
 // typedef struct Commodity Commodity;
 typedef int64_t CommodityRef;
 #endif

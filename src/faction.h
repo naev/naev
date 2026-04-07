@@ -14,7 +14,7 @@
 typedef int64_t FactionRef;
 
 // #define FACTION_NULL ( ( FactionRef ) - 1 )
-#define FACTION_NULL ( ( 1l << 32l ) + ( 1l << 32l ) - 1l )
+#define FACTION_NULL ( ( 1ll << 32ll ) + ( 1ll << 32ll ) - 1ll )
 
 FactionRef faction_player( void );
 

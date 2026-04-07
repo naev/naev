@@ -7,7 +7,7 @@
 #include "vec2.h"
 
 typedef int64_t GatherableRef;
-#define GATHERABLE_NULL ( ( 1l << 32l ) + ( 1l << 32l ) - 1l )
+#define GATHERABLE_NULL ( ( 1ll << 32ll ) + ( 1ll << 32ll ) - 1ll )
 
 /*
  * Gatherable objects
