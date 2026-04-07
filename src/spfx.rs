@@ -18,9 +18,7 @@ enum Message {
 static MESSAGES: Mutex<Vec<Message>> = Mutex::new(Vec::new());
 
 #[instrument(skip_all)]
-fn process_messages(
-   luaspfx: &mut std::sync::RwLockWriteGuard<'_, slotmap::SlotMap<LuaSpfxRef, LuaSpfx>>,
-) {
+fn process_messages(luaspfx: &mut slotmap::SlotMap<LuaSpfxRef, LuaSpfx>) {
    pub fn notfound(id: LuaSpfxRef) {
       warn!("LuaSpfx '{:?}' not found", id);
    }
@@ -118,18 +116,17 @@ pub fn update(dt: f64) {
    {
       let mut luaspfx = LUASPFX.write().unwrap();
       process_messages(&mut luaspfx);
-      luaspfx.retain(|_, spfx| {
+      let mut removed = false;
+      let mut removed_lua = false;
+      for (_, spfx) in luaspfx.iter_mut() {
          spfx.ttl -= dt;
          if spfx.ttl <= 0. || spfx.cleanup {
-            // Stop the sound if necessary
-            if let Some(sfx) = &spfx.sfx {
-               let _ = sfx.with(|sfx| {
-                  sfx.stop();
-               });
+            spfx.cleanup = true;
+            if spfx.remove.is_some() {
+               removed_lua = true;
             }
-            return false;
-         }
-         if let Some(pos) = &mut spfx.pos
+            removed = true;
+         } else if let Some(pos) = &mut spfx.pos
             && let Some(vel) = spfx.vel
          {
             *pos += vel * dt;
@@ -147,8 +144,29 @@ pub fn update(dt: f64) {
                }
             }
          }
-         true
-      });
+      }
+      if removed_lua {
+         // Have to drop the mutex to run the remove scripts
+         drop(luaspfx);
+         {
+            // We have to claim this as read so we can run UserData stuff
+            let luaspfx = LUASPFX.read().unwrap();
+            for (id, spfx) in luaspfx.iter() {
+               if spfx.cleanup
+                  && let Some(remove) = &spfx.remove
+               {
+                  spfx.env.call::<()>(lua, remove, id).unwrap_or_else(|e| {
+                     warn_err!(e);
+                  });
+               }
+            }
+         }
+         // Have to clean up as mutable again
+         let mut luaspfx = LUASPFX.write().unwrap();
+         luaspfx.retain(|_, spfx| !spfx.cleanup);
+      } else if removed {
+         luaspfx.retain(|_, spfx| !spfx.cleanup);
+      }
    }
    for (id, spfx) in LUASPFX.read().unwrap().iter() {
       if let Some(update) = &spfx.update {
