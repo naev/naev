@@ -161,7 +161,8 @@ pub extern "C" fn _array_create_helper(
    unsafe {
       vec.set_len(PREFIX);
    }
-   let (data, len, capacity) = vec.into_raw_parts();
+   let (data, len, capacity) = vec_into_raw_parts(vec);
+   //let (data, len, capacity) = vec.into_raw_parts();
    let mut arr = Array {
       element_size,
       len,
