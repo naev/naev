@@ -249,7 +249,7 @@ function gen_outfits ()
    if player.outfitNum(rr) <= 0 and ((var.peek("poi_red_rackham") or 0)>=3) then
       table.insert( outfits, rr )
    end
-   
+
    -- Add a few of the more normal trinkets to spice things up
    local outfits_mundane = rnd.permutation({
       "Milspec Aegis 2201 Core System", -- Some high quality small cores
@@ -262,7 +262,7 @@ function gen_outfits ()
       "Red Star Small Cargo Hull",
       "S&K Small Cargo Hull",
       "S&K Skirmish Plating",
-      
+
       "Cryogenic Repair Nanobots", -- Utilities
       "Droid Repair Crew",
       "Droid Repair Crew MK2",
@@ -284,27 +284,27 @@ function gen_outfits ()
       "Milspec Impacto-Plastic Coating",
       "Nexus Concealment Coating",
       "Photo-Voltaic Nanobot Coating",
-      
+
       "Active Plating", -- Structuralsies
       "Engine Reroute",
       "Improved Stabilizer",
       "Compact Lightsail",
-      
+
       "Map: Pirate Strongholds", -- Interesting maps
       "Map: New Haven's Secrets",
       "Map: Qorel Tunnel",
       "Map: Kretogg's Hypergate",
       "Map: Kretogg's Secrets",
    })
-   local outfits_mundane_filtered = {} 
+   local outfits_mundane_filtered = {}
    local c = 1 / #outfits_mundane
-   for _,o in ipairs(outfits_mundane) do 
+   for _,o in ipairs(outfits_mundane) do
       local rnd = rnd.rnd()
       if ((player.outfitNum( o ) == 0 and rnd < c * 9.5 / #outfits_mundane_filtered) or rnd < c * 1.5 / #outfits_mundane_filtered) and #outfits_mundane_filtered < 5 then -- Much lower chance if player already has it
          table.insert(outfits_mundane_filtered, o)
       end
    end
-   
+
    return outfits, rnd.permutation( tmergei( tcopy( outfits ), outfits_mundane_filtered ) )
 end
 
