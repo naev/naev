@@ -293,6 +293,11 @@ impl CommodityRef {
       None
    }
 
+   #[instrument]
+   pub fn new_r(name: &str) -> Result<Self> {
+      CommodityRef::new(name).with_context(|| format!("Commodity '{name}' not found"))
+   }
+
    pub fn with<F, R>(&self, f: F) -> Result<R>
    where
       F: Fn(&Commodity) -> R,
