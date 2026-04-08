@@ -50,6 +50,14 @@ pub struct Type {
 }
 
 impl Type {
+   fn get(name: &str) -> Option<Arc<Self>> {
+      TYPES.iter().find(|&at| at.name == name).cloned()
+   }
+
+   fn get_r(name: &str) -> Result<Arc<Self>> {
+      Type::get(name).with_context(|| format!("Asteroid Type '{name}' not found"))
+   }
+
    fn load_xml<P: AsRef<Path>>(ctx: &ContextWrapper, filename: P) -> Result<Self> {
       let data = ndata::read(filename)?;
       let doc = roxmltree::Document::parse(std::str::from_utf8(&data)?)?;
@@ -148,10 +156,68 @@ impl Type {
    }
 }
 
+#[derive(Debug, Default)]
 pub struct TypeGroup {
    name: String,
    types: Vec<(Arc<Type>, f64)>,
    wtotal: f64,
+}
+
+impl TypeGroup {
+   fn load_xml<P: AsRef<Path>>(filename: P) -> Result<Self> {
+      let data = ndata::read(filename)?;
+      let doc = roxmltree::Document::parse(std::str::from_utf8(&data)?)?;
+      let root = doc.root_element();
+      let name = String::from(match root.attribute("name") {
+         Some(n) => n,
+         None => {
+            return nxml_err_attr_missing!("Asteroid Group", "name");
+         }
+      });
+      let mut group = TypeGroup {
+         name,
+         ..Default::default()
+      };
+      for node in root.children() {
+         if !node.is_element() {
+            continue;
+         }
+         match node.tag_name().name().to_lowercase().as_str() {
+            "type" => {
+               let atype = Type::get_r(nxml::node_str(node)?)?;
+               let weight = match node.attribute("weight") {
+                  Some(w) => w.parse::<f64>()?,
+                  None => 1.0,
+               };
+               group.types.push((atype, weight));
+            }
+            tag => nxml_warn_node_unknown!("Asteroid Group", &group.name, tag),
+         }
+      }
+      for (_, weight) in &group.types {
+         group.wtotal += weight;
+      }
+      Ok(group)
+   }
+
+   #[instrument]
+   fn load<P: AsRef<Path> + std::fmt::Debug>(filename: P) -> Option<Result<Self>> {
+      let at = {
+         let ext = filename.as_ref().extension();
+         if ext == Some(OsStr::new("xml")) {
+            Self::load_xml(&filename)
+         } else {
+            return None;
+         }
+      }
+      .with_context(|| {
+         format!(
+            "unable to load Asteroid Group '{}'",
+            filename.as_ref().display()
+         )
+      });
+      Some(at)
+   }
 }
 
 enum State {
@@ -212,19 +278,47 @@ pub struct Asteroid {
    scanned: bool,
 }
 
-static TYPES: LazyLock<Vec<Type>> = LazyLock::new(load_types);
+static TYPES: LazyLock<Vec<Arc<Type>>> = LazyLock::new(load_types);
 static GROUPS: LazyLock<Vec<TypeGroup>> = LazyLock::new(load_groups);
 
-fn load_types() -> Vec<Type> {
+fn load_types() -> Vec<Arc<Type>> {
    let ctx = Context::get().as_safe_wrap();
    let base: PathBuf = "asteroids/types".into();
-   let mut data: Vec<Type> = ndata::read_dir(&base)
+   let mut data: Vec<Arc<Type>> = ndata::read_dir(&base)
       .unwrap_or_else(|e| {
          warn_err!(e);
          Vec::new()
       })
       .par_iter()
       .filter_map(|filename| match Type::load(&ctx, base.join(filename)) {
+         Some(Ok(at)) => Some(Arc::new(at)),
+         Some(Err(e)) => {
+            warn_err!(e);
+            None
+         }
+         None => None,
+      })
+      .collect();
+   /*
+   sort_by_key_ref(&mut data, |at: &Type| &at.name);
+   data.windows(2).for_each(|w| {
+      if w[0].name == w[1].name {
+         warn!("Asteroid Type '{}' loaded twice!", w[0].name);
+      }
+   });
+   */
+   data
+}
+
+fn load_groups() -> Vec<TypeGroup> {
+   let base: PathBuf = "asteroids/groups".into();
+   let mut data: Vec<TypeGroup> = ndata::read_dir(&base)
+      .unwrap_or_else(|e| {
+         warn_err!(e);
+         Vec::new()
+      })
+      .par_iter()
+      .filter_map(|filename| match TypeGroup::load(base.join(filename)) {
          Some(Ok(at)) => Some(at),
          Some(Err(e)) => {
             warn_err!(e);
@@ -233,18 +327,15 @@ fn load_types() -> Vec<Type> {
          None => None,
       })
       .collect();
+   /*
    sort_by_key_ref(&mut data, |at: &Type| &at.name);
    data.windows(2).for_each(|w| {
       if w[0].name == w[1].name {
-         warn!("Asteroid type '{}' loaded twice!", w[0].name);
+         warn!("Asteroid Group '{}' loaded twice!", w[0].name);
       }
    });
+   */
    data
-}
-
-fn load_groups() -> Vec<TypeGroup> {
-   let base: PathBuf = "asteroids/groups".into();
-   todo!()
 }
 
 pub fn load() {
