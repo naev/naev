@@ -98,33 +98,33 @@ impl Type {
                at.gfx.push(GfxType::Single(gfx))
             }
             "commodity" => {
+               let mut material = None;
+               let mut quantity = None;
+               let mut rarity = 0;
                for node in node.children() {
                   if !node.is_element() {
                      continue;
                   }
-                  let mut material = None;
-                  let mut quantity = None;
-                  let mut rarity = 0;
                   match node.tag_name().name().to_lowercase().as_str() {
                      "name" => material = Some(CommodityRef::new_r(nxml::node_str(node)?)?),
                      "quantity" => quantity = Some(nxml::node_str(node)?.parse()?),
                      "rarity" => rarity = nxml::node_str(node)?.parse()?,
                      tag => nxml_warn_node_unknown!("Asteroid Type Commodity", &at.name, tag),
                   }
-                  if let Some(material) = material
-                     && let Some(quantity) = quantity
-                  {
-                     at.material.push(Material {
-                        material,
-                        quantity,
-                        rarity,
-                     });
-                  } else {
-                     warn!(
-                        "Asteroid Type '{}' has not fully defined commodity.",
-                        at.name
-                     );
-                  }
+               }
+               if let Some(material) = material
+                  && let Some(quantity) = quantity
+               {
+                  at.material.push(Material {
+                     material,
+                     quantity,
+                     rarity,
+                  });
+               } else {
+                  warn!(
+                     "Asteroid Type '{}' has not fully defined commodity.",
+                     at.name
+                  );
                }
             }
             tag => nxml_warn_node_unknown!("Asteroid Type", &at.name, tag),
@@ -338,7 +338,8 @@ fn load_groups() -> Vec<TypeGroup> {
    data
 }
 
-pub fn load() {
+pub fn load() -> Result<()> {
    let _ = LazyLock::force(&TYPES);
    let _ = LazyLock::force(&GROUPS);
+   Ok(())
 }
