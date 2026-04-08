@@ -1306,6 +1306,10 @@ const glTexture *ast_gfx( const Asteroid *ast )
 {
    return ast->gfx;
 }
+double ast_gfx_width( const Asteroid *ast )
+{
+   return tex_sw( ast->gfx );
+}
 int ast_test_collide( const Asteroid *ast, const CollPolyView *at,
                       const vec2 *ap, vec2 *crash )
 {

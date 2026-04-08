@@ -432,7 +432,7 @@ static void gui_renderSpobTarget( void )
       const Solid *s = ast_solid( ast );
       x              = s->pos.x;
       y              = s->pos.y;
-      r              = tex_sw( ast_gfx( ast ) ) * 0.5;
+      r              = ast_gfx_width( ast ) * 0.5;
       gui_renderTargetReticles( &shaders.targetship, x, y, r, 0., c );
    }
 }

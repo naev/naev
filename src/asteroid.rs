@@ -46,35 +46,35 @@ enum State {
    Bx,
    BgToXx,
 }
-/*
+
 impl State {
    fn from_c(c: naevc::AsteroidState) -> Self {
       match c {
-         AsteroidState_ASTEROID_XX => State::Xx,
-         AsteroidState_ASTEROID_XX_TO_BG => State::XxToBg,
-         AsteroidState_ASTEROID_XB => State::Xb,
-         AsteroidState_ASTEROID_BG_TO_FG => State::BgToFg,
-         AsteroidState_ASTEROID_FG => State::Fg,
-         AsteroidState_ASTEROID_FG_TO_BG => State::FgToBg,
-         AsteroidState_ASTEROID_BX => State::Bx,
-         AsteroidState_ASTEROID_BG_TO_XX => State::BgToXx,
+         naevc::AsteroidState_ASTEROID_XX => State::Xx,
+         naevc::AsteroidState_ASTEROID_XX_TO_BG => State::XxToBg,
+         naevc::AsteroidState_ASTEROID_XB => State::Xb,
+         naevc::AsteroidState_ASTEROID_BG_TO_FG => State::BgToFg,
+         naevc::AsteroidState_ASTEROID_FG => State::Fg,
+         naevc::AsteroidState_ASTEROID_FG_TO_BG => State::FgToBg,
+         naevc::AsteroidState_ASTEROID_BX => State::Bx,
+         naevc::AsteroidState_ASTEROID_BG_TO_XX => State::BgToXx,
+         _ => State::Xx,
       }
    }
 
    fn to_c(&self) -> naevc::AsteroidState {
       match self {
-         State::Xx => AsteroidState_ASTEROID_XX,
-         State::XxToBg => AsteroidState_ASTEROID_XX,
-         State::Xb => AsteroidState_ASTEROID_XX,
-         State::BgToFg => AsteroidState_ASTEROID_XX,
-         State::Fg => AsteroidState_ASTEROID_XX,
-         State::FgToBg => AsteroidState_ASTEROID_XX,
-         State::Bx => AsteroidState_ASTEROID_XX,
-         State::BgToXx => AsteroidState_ASTEROID_XX,
+         State::Xx => naevc::AsteroidState_ASTEROID_XX,
+         State::XxToBg => naevc::AsteroidState_ASTEROID_XX,
+         State::Xb => naevc::AsteroidState_ASTEROID_XX,
+         State::BgToFg => naevc::AsteroidState_ASTEROID_XX,
+         State::Fg => naevc::AsteroidState_ASTEROID_XX,
+         State::FgToBg => naevc::AsteroidState_ASTEROID_XX,
+         State::Bx => naevc::AsteroidState_ASTEROID_XX,
+         State::BgToXx => naevc::AsteroidState_ASTEROID_XX,
       }
    }
 }
-*/
 
 pub struct Asteroid {
    id: i32,

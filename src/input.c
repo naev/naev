@@ -1584,9 +1584,7 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom,
       const AsteroidAnchor *field = &cur_system->asteroids[fieid];
       const Asteroid       *ast   = ast_get( field, astid );
       /* Recover the right gfx */
-      const glTexture *gfx = ast_gfx( ast );
-      double           rast =
-         MAX( MAX( tex_sw( gfx ) * zoom, minr ), tex_sh( gfx ) * zoom );
+      double       rast = MAX( ast_gfx_width( ast ) * zoom, minr );
       const Solid *s    = ast_solid( ast );
       double       dast = hypotf( s->pos.x - x, s->pos.y - y );
       if ( dast > rast )

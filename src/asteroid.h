@@ -47,6 +47,7 @@ typedef enum {
 typedef struct AsteroidType      AsteroidType;
 typedef struct AsteroidTypeGroup AsteroidTypeGroup;
 typedef struct Asteroid          Asteroid;
+typedef struct Asteroid          AsteroidVec;
 // typedef struct Asteroid*       AsteroidRef;
 // #define ASTEROID_NULL   NULL
 typedef int AsteroidRef;
@@ -60,7 +61,7 @@ typedef struct AsteroidAnchor_ {
    int                 id;        /**< ID of the anchor, for targeting. */
    vec2                pos;       /**< Position in the system (from centre). */
    double              density;   /**< Density of the field. */
-   Asteroid           *asteroids; /**< Asteroids belonging to the field. */
+   AsteroidVec        *asteroids; /**< Asteroids belonging to the field. */
    int                 nmax;      /**< Maximum number of asteroids. */
    double              radius;    /**< Radius of the anchor. */
    double              area;      /**< Field's area. */
@@ -116,6 +117,7 @@ int              ast_parent( const Asteroid *ast );
 AsteroidState    ast_state( const Asteroid *ast );
 const Solid     *ast_solid( const Asteroid *ast );
 const glTexture *ast_gfx( const Asteroid *ast );
+double           ast_gfx_width( const Asteroid *ast );
 int              ast_test_collide( const Asteroid *ast, const CollPolyView *at,
                                    const vec2 *ap, vec2 *crash );
 int              ast_scanned( const Asteroid *ast );
