@@ -90,7 +90,7 @@ local function is_primary_or_secondary( o )
       return true, true
    end
    local _slot_name, _slot_size, slot_prop = o:slot()
-   if slot_prop:match" %(Secondary%)$" then
+   if slot_prop:match("secondary$") then
       return false, true
    else
       return true, false
