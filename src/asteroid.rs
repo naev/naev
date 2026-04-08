@@ -9,6 +9,7 @@ use nlog::{warn, warn_err};
 use rayon::prelude::*;
 use renderer::texture::{Texture, TextureBuilder};
 use renderer::{Context, ContextWrapper};
+use std::collections::HashMap;
 use std::ffi::OsStr;
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, LazyLock};
@@ -51,7 +52,7 @@ pub struct Type {
 
 impl Type {
    fn get(name: &str) -> Option<Arc<Self>> {
-      TYPES.iter().find(|&at| at.name == name).cloned()
+      TYPES.get(name).cloned()
    }
 
    fn get_r(name: &str) -> Result<Arc<Self>> {
@@ -278,20 +279,20 @@ pub struct Asteroid {
    scanned: bool,
 }
 
-static TYPES: LazyLock<Vec<Arc<Type>>> = LazyLock::new(load_types);
-static GROUPS: LazyLock<Vec<TypeGroup>> = LazyLock::new(load_groups);
+static TYPES: LazyLock<HashMap<String, Arc<Type>>> = LazyLock::new(load_types);
+static GROUPS: LazyLock<HashMap<String, TypeGroup>> = LazyLock::new(load_groups);
 
-fn load_types() -> Vec<Arc<Type>> {
+fn load_types() -> HashMap<String, Arc<Type>> {
    let ctx = Context::get().as_safe_wrap();
    let base: PathBuf = "asteroids/types".into();
-   let mut data: Vec<Arc<Type>> = ndata::read_dir(&base)
+   let mut data: HashMap<_, _> = ndata::read_dir(&base)
       .unwrap_or_else(|e| {
          warn_err!(e);
          Vec::new()
       })
       .par_iter()
       .filter_map(|filename| match Type::load(&ctx, base.join(filename)) {
-         Some(Ok(at)) => Some(Arc::new(at)),
+         Some(Ok(at)) => Some((at.name.clone(), Arc::new(at))),
          Some(Err(e)) => {
             warn_err!(e);
             None
@@ -310,16 +311,16 @@ fn load_types() -> Vec<Arc<Type>> {
    data
 }
 
-fn load_groups() -> Vec<TypeGroup> {
+fn load_groups() -> HashMap<String, TypeGroup> {
    let base: PathBuf = "asteroids/groups".into();
-   let mut data: Vec<TypeGroup> = ndata::read_dir(&base)
+   let mut data: HashMap<_, _> = ndata::read_dir(&base)
       .unwrap_or_else(|e| {
          warn_err!(e);
          Vec::new()
       })
       .par_iter()
       .filter_map(|filename| match TypeGroup::load(base.join(filename)) {
-         Some(Ok(at)) => Some(at),
+         Some(Ok(group)) => Some((group.name.clone(), group)),
          Some(Err(e)) => {
             warn_err!(e);
             None
