@@ -221,6 +221,7 @@ impl TypeGroup {
    }
 }
 
+#[derive(Debug)]
 enum State {
    Xx,
    XxToBg,
@@ -261,6 +262,7 @@ impl State {
    }
 }
 
+#[derive(Debug)]
 pub struct Asteroid {
    id: i32,
    parent: i32,
