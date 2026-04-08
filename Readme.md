@@ -220,9 +220,6 @@ the submitter may be blocked from this repository without warning.
 
 #### Terminology
 
-This does not necessarily reflect the official or commonly used
-terminology.
-
 Software and services that heavily rely on large language model or
 diffusion model technology to generate their outcomes are referred to as
 Artificial Intelligence (AI) or **Generative AI**. Some examples would be
