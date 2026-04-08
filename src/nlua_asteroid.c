@@ -133,7 +133,7 @@ Asteroid *luaL_validasteroid( lua_State *L, int ind )
          return NULL;
       }
 #endif /* DEBUGGING */
-      a = &field->asteroids[la->id];
+      a = &field->asteroids[la->id].a;
    } else {
       luaL_typerror( L, ind, ASTEROID_METATABLE );
       return NULL;
@@ -240,7 +240,7 @@ static int asteroidL_getAll( lua_State *L )
    for ( int i = 0; i < array_size( cur_system->asteroids ); i++ ) {
       const AsteroidAnchor *ast = &cur_system->asteroids[i];
       for ( int j = 0; j < array_size( ast->asteroids ); j++ ) {
-         const Asteroid *a  = &ast->asteroids[j];
+         const Asteroid *a  = &ast->asteroids[j].a;
          LuaAsteroid_t   la = {
             .parent = a->parent,
             .id     = a->id,
@@ -298,7 +298,7 @@ static int asteroidL_get( lua_State *L )
          return 0;
       int       ast          = RNG( 0, nast - 1 );
       int       bad_asteroid = 0;
-      Asteroid *a            = &cur_system->asteroids[field].asteroids[ast];
+      Asteroid *a            = &cur_system->asteroids[field].asteroids[ast].a;
 
       if ( a->state != ASTEROID_FG ) {
          int n = array_size( cur_system->asteroids[field].asteroids );
@@ -307,7 +307,7 @@ static int asteroidL_get( lua_State *L )
          bad_asteroid = 1;
          for ( int i = 0; i < n; i++ ) {
             ast = ( ast + 1 ) % n;
-            a   = &cur_system->asteroids[field].asteroids[ast];
+            a   = &cur_system->asteroids[field].asteroids[ast].a;
             if ( a->state == ASTEROID_FG ) {
                bad_asteroid = 0;
                break;
@@ -331,7 +331,7 @@ static int asteroidL_get( lua_State *L )
       AsteroidAnchor *ast = &cur_system->asteroids[i];
       for ( int j = 0; j < array_size( ast->asteroids ); j++ ) {
          double    d2;
-         Asteroid *a = &ast->asteroids[j];
+         Asteroid *a = &ast->asteroids[j].a;
 
          if ( a->state != ASTEROID_FG )
             continue;
@@ -381,7 +381,7 @@ static int asteroidL_exists( lua_State *L )
       return 1;
    }
 
-   const Asteroid *a = &field->asteroids[la->id];
+   const Asteroid *a = &field->asteroids[la->id].a;
    lua_pushboolean( L, ( a->state == ASTEROID_FG ) );
    return 1;
 }

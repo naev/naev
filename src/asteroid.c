@@ -225,7 +225,7 @@ void asteroids_update( double dt )
       /* Now just thread it and zoom. */
       asteroid_dt = dt;
       for ( int j = 0; j < array_size( ast->asteroids ); j++ ) {
-         Asteroid *a = &ast->asteroids[j];
+         Asteroid *a = &ast->asteroids[j].a;
          /* Skip inexistent asteroids. */
          if ( a->state == ASTEROID_XX ) {
             a->timer -= dt;
@@ -241,7 +241,7 @@ void asteroids_update( double dt )
       /* Do quadtree stuff. Can't be threaded. */
       qt_clear( &ast->qt );
       for ( int j = 0; j < array_size( ast->asteroids ); j++ ) {
-         const Asteroid *a = &ast->asteroids[j];
+         const Asteroid *a = &ast->asteroids[j].a;
          /* Add to quadtree if in foreground. */
          if ( a->state == ASTEROID_FG ) {
             int x, y, w2, h2, px, py;
@@ -358,7 +358,8 @@ void asteroids_init( void )
             a.timer = a.timer_max = 30. * RNGF();
             a.ang                 = RNGF() * M_PI * 2.;
             /* Push into array. */
-            array_push_back( &ast->asteroids, a );
+            AsteroidVecStorage as = { .a = a };
+            array_push_back( &ast->asteroids, as );
          }
       } else {
          if ( ast->label != NULL )
@@ -516,7 +517,7 @@ void asteroids_computeInternals( AsteroidAnchor *a )
    /* Compute number of asteroids */
    a->nmax = floor( a->area / ASTEROID_REF_AREA * a->density );
    if ( a->asteroids == NULL )
-      a->asteroids = array_create_size( Asteroid, a->nmax );
+      a->asteroids = array_create_size( AsteroidVecStorage, a->nmax );
 
    /* Computed from your standard physics equations (with a bit of margin). */
    a->margin = pow2( a->maxspeed ) / ( 4. * a->accel ) + 50.;
@@ -884,7 +885,7 @@ void asteroids_render( void )
 
       /* Render all asteroids. */
       for ( int j = 0; j < array_size( ast->asteroids ); j++ )
-         asteroid_renderSingle( &ast->asteroids[j] );
+         asteroid_renderSingle( &ast->asteroids[j].a );
    }
 
    /* Render the debris. */
@@ -955,7 +956,8 @@ static void asteroid_renderSingle( const Asteroid *a )
    col.a = a->scan_alpha;
    gl_gameToScreenCoords( &nx, &ny, a->sol.pos.x, a->sol.pos.y );
    gl_printRaw( &gl_smallFont, nx + tex_sw( a->gfx ) / 2,
-                ny - gl_smallFont.h / 2, &col, -1., _( at->scanned_msg ) );
+                ny - (double)gl_smallFont.h / 2, &col, -1.,
+                _( at->scanned_msg ) );
    /*
    for (int i=0; i<array_size(at->material); i++) {
       AsteroidReward *mat = &at->material[i];
@@ -1284,7 +1286,7 @@ void asteroid_collideQueryIL( AsteroidAnchor *anc, IntList *il, int x1, int y1,
 
 const Asteroid *ast_get( const AsteroidAnchor *anc, int i )
 {
-   return &anc->asteroids[i];
+   return &anc->asteroids[i].a;
 }
 int ast_id( const Asteroid *ast )
 {

@@ -64,3 +64,7 @@ typedef struct Asteroid {
    double scan_alpha; /**< Alpha value for scanning stuff. */
    int    scanned;    /**< Wether the player already scanned this asteroid. */
 } Asteroid;
+
+typedef struct AsteroidVecStorage {
+   Asteroid a;
+} AsteroidVecStorage;

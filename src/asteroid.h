@@ -44,10 +44,11 @@ typedef enum {
    ASTEROID_STATE_MAX, /**< Max amount of states. */
 } AsteroidState;
 
-typedef struct AsteroidType      AsteroidType;
-typedef struct AsteroidTypeGroup AsteroidTypeGroup;
-typedef struct Asteroid          Asteroid;
-typedef struct Asteroid          AsteroidVec;
+typedef struct AsteroidType        AsteroidType;
+typedef struct AsteroidTypeGroup   AsteroidTypeGroup;
+typedef struct Asteroid            Asteroid;
+typedef struct AsteroidVecStorage  AsteroidVecStorage;
+typedef struct AsteroidVecStorage *AsteroidVec;
 // typedef struct Asteroid*       AsteroidRef;
 // #define ASTEROID_NULL   NULL
 typedef int AsteroidRef;
@@ -61,7 +62,7 @@ typedef struct AsteroidAnchor_ {
    int                 id;        /**< ID of the anchor, for targeting. */
    vec2                pos;       /**< Position in the system (from centre). */
    double              density;   /**< Density of the field. */
-   AsteroidVec        *asteroids; /**< Asteroids belonging to the field. */
+   AsteroidVec         asteroids; /**< Asteroids belonging to the field. */
    int                 nmax;      /**< Maximum number of asteroids. */
    double              radius;    /**< Radius of the anchor. */
    double              area;      /**< Field's area. */
