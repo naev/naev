@@ -9,7 +9,7 @@ use helpers::ReferenceC;
 use helpers::{binary_search_by_key_ref, sort_by_key_ref};
 use naev_core::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
 use nalgebra::Vector2;
-use nlog::{warn, warn_err};
+use nlog::{debugx, warn, warn_err};
 use rayon::prelude::*;
 use renderer::texture::{Texture, TextureBuilder};
 use renderer::{Context, ContextWrapper};
@@ -410,8 +410,32 @@ fn load_groups() -> HashMap<String, TypeGroup> {
 }
 
 pub fn load() -> Result<()> {
+   #[cfg(debug_assertions)]
+   let start = std::time::Instant::now();
+
    let _ = LazyLock::force(&TYPES);
    let _ = LazyLock::force(&GROUPS);
+
+   // Some debug
+   if cfg!(debug_assertions) {
+      let n = TYPES.len();
+      debugx!(
+         gettext::ngettext(
+            "Loaded {} Asteroid in {:.3} s",
+            "Loaded {} Asteroids in {:.3} s",
+            n as u64
+         ),
+         n,
+         start.elapsed().as_secs_f32()
+      );
+   } else {
+      let n = TYPES.len();
+      debugx!(
+         gettext::ngettext("Loaded {} Asteroid", "Loaded {} Asteroids", n as u64),
+         n
+      );
+   }
+
    Ok(())
 }
 
