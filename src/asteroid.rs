@@ -1,14 +1,19 @@
 #![allow(dead_code, unused)]
+use crate::array;
 use crate::commodity::CommodityRef;
+use crate::rng::rng;
 use anyhow::Context as AnyhowContext;
 use anyhow::Result;
 use collide::polygon::SpinPolygon;
+use helpers::ReferenceC;
 use helpers::{binary_search_by_key_ref, sort_by_key_ref};
 use naev_core::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
+use nalgebra::Vector2;
 use nlog::{warn, warn_err};
 use rayon::prelude::*;
 use renderer::texture::{Texture, TextureBuilder};
 use renderer::{Context, ContextWrapper};
+use slotmap::SlotMap;
 use std::collections::HashMap;
 use std::ffi::OsStr;
 use std::path::{Path, PathBuf};
@@ -221,8 +226,9 @@ impl TypeGroup {
    }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Default)]
 enum State {
+   #[default]
    Xx,
    XxToBg,
    Xb,
@@ -264,7 +270,7 @@ impl State {
 
 #[derive(Debug)]
 pub struct Asteroid {
-   id: i32,
+   id: AsteroidRef,
    parent: i32,
    state: State,
    atype: Arc<Type>,
@@ -279,6 +285,68 @@ pub struct Asteroid {
    timer_max: f64,
    scan_alpha: f64,
    scanned: bool,
+}
+
+fn infield(p: Vector2<f64>) -> Option<usize> {
+   if let Some(cur_system) = crate::system::cur() {
+      for e in cur_system.astexclude() {
+         if (p - Vector2::new(e.pos.x, e.pos.y)).norm_squared() <= e.radius * e.radius {
+            return None;
+         }
+      }
+      for (i, a) in cur_system.asteroids().iter().enumerate() {
+         if (p - Vector2::new(a.pos.x, a.pos.y)).norm_squared() <= a.radius * a.radius {
+            return Some(i);
+         }
+      }
+   }
+   None
+}
+
+impl Asteroid {
+   fn try_new(field: &naevc::AsteroidAnchor, creating: bool) -> Option<Self> {
+      let n = field.radius * rng::<f64>().sqrt();
+      let a = std::f64::consts::TAU * rng::<f64>();
+
+      // Try to find position
+      let mut pos = Vector2::new(field.pos.x, field.pos.y);
+      for i in 0..1000 {
+         pos = Vector2::new(field.pos.x + n * a.cos(), field.pos.y + n * a.sin());
+         let outfield = infield(pos).is_none();
+         if creating && outfield {
+            return None;
+         } else if !outfield {
+            break;
+         }
+      }
+
+      let r = field.groupswtotal * rng::<f64>();
+      let mut wmax = 0.0;
+      let groups = unsafe { array::array_as_slice(field.groups) };
+      let groupsw = unsafe { array::array_as_slice(field.groupsw) };
+      for (g, w) in groups.iter().zip(groupsw.iter()) {
+         let g = unsafe { &**g };
+         wmax += w;
+         if r > wmax {
+            continue;
+         }
+
+         let wi = 0.0;
+         let r = g.wtotal * rng::<f64>();
+      }
+
+      /*
+      Self {
+         parent: field.id,
+         state:
+      }
+      */
+      todo!();
+   }
+}
+
+slotmap::new_key_type! {
+pub struct AsteroidRef;
 }
 
 static TYPES: LazyLock<HashMap<String, Arc<Type>>> = LazyLock::new(load_types);
@@ -345,4 +413,46 @@ pub fn load() -> Result<()> {
    let _ = LazyLock::force(&TYPES);
    let _ = LazyLock::force(&GROUPS);
    Ok(())
+}
+
+#[instrument]
+pub fn update(dt: f64) {
+   if let Some(cur_system) = crate::system::cur() {}
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _asteroids_update(dt: f64) {
+   update(dt)
+}
+
+#[instrument]
+#[unsafe(no_mangle)]
+pub extern "C" fn _asteroids_init() {
+   if let Some(cur_system) = crate::system::cur_mut() {
+      let mut density_max = 0.0;
+      for ast in cur_system.asteroids_mut() {
+         // TODO add graphics to debris
+
+         // Build quadtree
+         if ast.qt_init != 0 {
+            unsafe {
+               naevc::qt_destroy(&mut ast.qt);
+            }
+         }
+         let qx = ast.pos.x.round() as i32;
+         let qy = ast.pos.y.round() as i32;
+         let qr = ast.radius.ceil() as i32;
+         unsafe {
+            naevc::qt_create(&mut ast.qt, qx - qr, qy - qr, qx + qr, qy + qr, 2, 5);
+         }
+         ast.qt_init = 1;
+
+         // Add asteroids to the anchor
+         let asteroids = unsafe { &mut *(ast.asteroids as *mut SlotMap<AsteroidRef, Asteroid>) };
+         asteroids.clear();
+         for i in 0..ast.nmax {}
+
+         density_max = ast.density.max(density_max);
+      }
+   }
 }

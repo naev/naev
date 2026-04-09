@@ -4,27 +4,56 @@ use crate::array;
 pub struct SystemWrapper(naevc::StarSystem);
 unsafe impl Send for SystemWrapper {}
 
+/// Small wrapper for systems until it gets moved to Rust
 impl SystemWrapper {
    pub fn as_ptr_mut(&mut self) -> *mut naevc::StarSystem {
       &mut self.0 as *mut naevc::StarSystem
    }
 
    pub fn presence(&self) -> &[naevc::SystemPresence] {
-      let presences = self.0.presence;
-      unsafe { array::array_as_slice::<naevc::SystemPresence>(presences) }
+      unsafe { array::array_as_slice(self.0.presence) }
    }
 
    pub fn presence_mut(&mut self) -> &mut [naevc::SystemPresence] {
-      let presences = self.0.presence;
-      unsafe { array::array_as_slice_mut(presences) }
+      unsafe { array::array_as_slice_mut(self.0.presence) }
    }
 
    pub fn jumps(&self) -> &[naevc::JumpPoint] {
-      let jumps = self.0.jumps;
-      unsafe { array::array_as_slice(jumps) }
+      unsafe { array::array_as_slice(self.0.jumps) }
+   }
+
+   pub fn astexclude(&self) -> &[naevc::AsteroidExclusion] {
+      unsafe { array::array_as_slice(self.0.astexclude) }
+   }
+
+   pub fn asteroids(&self) -> &[naevc::AsteroidAnchor] {
+      unsafe { array::array_as_slice(self.0.asteroids) }
+   }
+
+   pub fn asteroids_mut(&mut self) -> &mut [naevc::AsteroidAnchor] {
+      unsafe { array::array_as_slice_mut(self.0.asteroids) }
    }
 }
 
+/// Gets the current system if applicable
+pub fn cur() -> Option<&'static SystemWrapper> {
+   if unsafe { naevc::cur_system.is_null() } {
+      None
+   } else {
+      Some(unsafe { &*(naevc::cur_system as *const SystemWrapper) })
+   }
+}
+
+/// Gets the current system mutably if applicable
+pub fn cur_mut() -> Option<&'static mut SystemWrapper> {
+   if unsafe { naevc::cur_system.is_null() } {
+      None
+   } else {
+      Some(unsafe { &mut *(naevc::cur_system as *mut SystemWrapper) })
+   }
+}
+
+/// Gets all the systems
 pub fn get() -> &'static [SystemWrapper] {
    unsafe {
       let systems = naevc::system_getAll();
@@ -32,6 +61,7 @@ pub fn get() -> &'static [SystemWrapper] {
    }
 }
 
+/// Gets all the systems mutably
 pub fn get_mut() -> &'static mut [SystemWrapper] {
    unsafe {
       let systems = naevc::system_getAll();
