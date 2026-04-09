@@ -4169,6 +4169,7 @@ src/physfs_archiver_blacklist.h
 src/physics.c
 src/physics.h
 src/physics/src/lib.rs
+src/physics/src/solid.rs
 src/physics/src/transform2.rs
 src/physics/src/vec2.rs
 src/pilot.c

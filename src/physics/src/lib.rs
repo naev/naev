@@ -1,5 +1,6 @@
 use std::f64::consts::{PI, TAU};
 
+pub mod solid;
 pub mod transform2;
 pub mod vec2;
 

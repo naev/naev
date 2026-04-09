@@ -62,6 +62,7 @@ source_rust = files(
    'physics/src/lib.rs',
    'physics/src/vec2.rs',
    'physics/src/transform2.rs',
+   'physics/src/solid.rs',
    'collide/src/lib.rs',
    'collide/src/polygon.rs',
    'pluginmgr/src/lib.rs',

@@ -6,7 +6,6 @@ use anyhow::Context as AnyhowContext;
 use anyhow::Result;
 use collide::polygon::SpinPolygon;
 use helpers::ReferenceC;
-use helpers::{binary_search_by_key_ref, sort_by_key_ref};
 use naev_core::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
 use nalgebra::Vector2;
 use nlog::{debugx, warn, warn_err};
@@ -270,7 +269,6 @@ impl State {
 
 #[derive(Debug)]
 pub struct Asteroid {
-   id: AsteroidRef,
    parent: i32,
    state: State,
    atype: Arc<Type>,
@@ -320,28 +318,56 @@ impl Asteroid {
          }
       }
 
+      // Choose asteroid type
       let r = field.groupswtotal * rng::<f64>();
       let mut wmax = 0.0;
       let groups = unsafe { array::array_as_slice(field.groups) };
       let groupsw = unsafe { array::array_as_slice(field.groupsw) };
-      for (g, w) in groups.iter().zip(groupsw.iter()) {
-         let g = unsafe { &**g };
+      let mut atype = None;
+      'outter: for (g, w) in groups.iter().zip(groupsw.iter()) {
+         let g = unsafe { &*(*g as *mut TypeGroup) };
          wmax += w;
          if r > wmax {
             continue;
          }
 
-         let wi = 0.0;
+         let mut wi = 0.0;
          let r = g.wtotal * rng::<f64>();
+         for (t, w) in g.types.iter() {
+            wi += w;
+            if r > wi {
+               continue;
+            }
+            atype = Some(t);
+            break 'outter;
+         }
       }
 
-      /*
-      Self {
-         parent: field.id,
-         state:
+      if let Some(atype) = atype {
+         /*
+         let armour = atype.armour_min..=atype.armour_max;
+
+         Self {
+            parent: field.id,
+            state: State::Xx,
+            atype,
+            gfx: 0,
+            armour,
+
+            solid,
+
+            ang: 0.0,
+            spin: 0.0,
+            timer: 0.0,
+            timer_max: 0.0,
+            scan_alpha: 0.0,
+            scanned: false,
+         }
+         */
+         todo!()
+      } else {
+         None
       }
-      */
-      todo!();
    }
 }
 
@@ -370,14 +396,6 @@ fn load_types() -> HashMap<String, Arc<Type>> {
          None => None,
       })
       .collect();
-   /*
-   sort_by_key_ref(&mut data, |at: &Type| &at.name);
-   data.windows(2).for_each(|w| {
-      if w[0].name == w[1].name {
-         warn!("Asteroid Type '{}' loaded twice!", w[0].name);
-      }
-   });
-   */
    data
 }
 
@@ -398,14 +416,6 @@ fn load_groups() -> HashMap<String, TypeGroup> {
          None => None,
       })
       .collect();
-   /*
-   sort_by_key_ref(&mut data, |at: &Type| &at.name);
-   data.windows(2).for_each(|w| {
-      if w[0].name == w[1].name {
-         warn!("Asteroid Group '{}' loaded twice!", w[0].name);
-      }
-   });
-   */
    data
 }
 
