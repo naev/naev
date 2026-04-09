@@ -102,10 +102,6 @@ void asteroids_update( double dt );
 void asteroids_render( void );
 void asteroids_renderOverlay( void );
 
-/* Asteroid types. */
-const AsteroidType *asttype_getAll( void );
-AsteroidType       *asttype_getName( const char *name );
-
 /* Asteroid type groups. */
 AsteroidTypeGroup **astgroup_getAll( void );
 AsteroidTypeGroup  *astgroup_getName( const char *name );

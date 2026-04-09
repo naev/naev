@@ -489,6 +489,7 @@ fn load_all(sdlctx: &sdl::Sdl, env: &nlua::LuaEnv) -> Result<()> {
       }), /* no dep */
       LoadStage::new(gettext("Loading Factions…"), faction::load), /* dep for space, missions, AI, commodities */
       LoadStage::new(gettext("Loading Commodities…"), commodity::load), /* dep for asteroids */
+      //LoadStage::new(gettext("Loading Asteroids…"), asteroid::load), /* dep for systems */
       //LoadStage::new_c(gettext("Loading Commodities…"), || unsafe {
       //   naevc::commodity_load()
       //}), /* no dep */

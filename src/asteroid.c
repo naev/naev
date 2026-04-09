@@ -75,6 +75,7 @@ static int asttype_parse( AsteroidType *at, const char *file );
 static int astgroup_cmp( const void *p1, const void *p2 );
 static int astgroup_parse( AsteroidTypeGroup *ag, const char *file );
 static int asttype_load( void );
+static const AsteroidType *asttype_getName( const char *name );
 
 static int  asteroid_updateSingle( Asteroid *a );
 static void asteroid_renderSingle( const Asteroid *a );
@@ -817,8 +818,8 @@ static int astgroup_parse( AsteroidTypeGroup *ag, const char *file )
       if ( xml_isNode( node, "type" ) ) {
          double w;
          xmlr_attr_float_def( node, "weight", w, 1. );
-         AsteroidType *at = asttype_getName( xml_get( node ) );
-         array_push_back( &ag->types, at );
+         const AsteroidType *at = asttype_getName( xml_get( node ) );
+         array_push_back( &ag->types, (AsteroidType *)at );
          array_push_back( &ag->weights, w );
          ag->wtotal += w;
          continue;
@@ -1110,22 +1111,12 @@ int asteroids_inField( const vec2 *p )
 }
 
 /**
- * @brief Gets all the asteroid types.
- *
- *    @return All the asteroid types (array.h).
- */
-const AsteroidType *asttype_getAll( void )
-{
-   return asteroid_types;
-}
-
-/**
  * @brief Gets the ID of an asteroid type by name.
  *
  *    @param name Name of the asteroid type to get.
  *    @return Matching asteroid type.
  */
-AsteroidType *asttype_getName( const char *name )
+static const AsteroidType *asttype_getName( const char *name )
 {
    const AsteroidType q = { .name = (char *)name };
    AsteroidType *at = bsearch( &q, asteroid_types, array_size( asteroid_types ),

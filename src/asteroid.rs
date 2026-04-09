@@ -1,7 +1,7 @@
 #![allow(dead_code, unused)]
 use crate::array;
 use crate::commodity::CommodityRef;
-use crate::rng::rng;
+use crate::rng::{range, rng};
 use anyhow::Context as AnyhowContext;
 use anyhow::Result;
 use collide::polygon::SpinPolygon;
@@ -14,7 +14,8 @@ use renderer::texture::{Texture, TextureBuilder};
 use renderer::{Context, ContextWrapper};
 use slotmap::SlotMap;
 use std::collections::HashMap;
-use std::ffi::OsStr;
+use std::ffi::{CStr, OsStr, c_char};
+use std::mem::MaybeUninit;
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, LazyLock};
 use tracing::instrument;
@@ -42,7 +43,7 @@ enum GfxType {
 pub struct Type {
    name: String,
    scanned_msg: String,
-   gfx: Vec<GfxType>,
+   gfx: Vec<Arc<GfxType>>,
    material: Vec<Material>,
    armour_min: f64,
    armour_max: f64,
@@ -100,7 +101,7 @@ impl Type {
                let texture = TextureBuilder::new().path(&path).build_wrap(ctx)?;
                let poly = SpinPolygon::from_image_path(&path, 1, 1)?;
                let gfx = Gfx2d { texture, poly };
-               at.gfx.push(GfxType::Single(gfx))
+               at.gfx.push(GfxType::Single(gfx).into())
             }
             "commodity" => {
                let mut material = None;
@@ -272,10 +273,10 @@ pub struct Asteroid {
    parent: i32,
    state: State,
    atype: Arc<Type>,
-   gfx: usize,
+   gfx: Arc<GfxType>,
    armour: f64,
 
-   sol: naevc::Solid,
+   solid: naevc::Solid,
    ang: f64,
    spin: f64,
 
@@ -344,27 +345,43 @@ impl Asteroid {
       }
 
       if let Some(atype) = atype {
-         /*
-         let armour = atype.armour_min..=atype.armour_max;
+         let armour = range(atype.armour_min..=atype.armour_max);
+         let theta = std::f64::consts::TAU * rng::<f64>();
+         let vmod = field.maxspeed * rng::<f64>();
+         let vel = Vector2::new(vmod * theta.cos(), vmod * theta.sin());
+         let solid = {
+            let mut solid = MaybeUninit::<naevc::Solid>::uninit();
+            unsafe {
+               naevc::solid_init(
+                  solid.as_mut_ptr(),
+                  0.0,
+                  0.0,
+                  pos.as_ptr() as *const naevc::vec2,
+                  vel.as_ptr() as *const naevc::vec2,
+                  naevc::SOLID_UPDATE_EULER as i32,
+               );
+            }
+            unsafe { solid.assume_init() }
+         };
+         let spin = (1.0 - 2.0 * rng::<f64>()) * field.maxspin;
+         let gfx = atype.gfx[range(0..atype.gfx.len())].clone();
 
-         Self {
+         Some(Self {
             parent: field.id,
             state: State::Xx,
-            atype,
-            gfx: 0,
+            atype: atype.clone(),
+            gfx,
             armour,
 
             solid,
 
-            ang: 0.0,
-            spin: 0.0,
-            timer: 0.0,
-            timer_max: 0.0,
+            ang: std::f64::consts::TAU * rng::<f64>(),
+            spin,
+            timer: -1.0,
+            timer_max: -1.0,
             scan_alpha: 0.0,
             scanned: false,
-         }
-         */
-         todo!()
+         })
       } else {
          None
       }
@@ -454,11 +471,6 @@ pub fn update(dt: f64) {
    if let Some(cur_system) = crate::system::cur() {}
 }
 
-#[unsafe(no_mangle)]
-pub extern "C" fn _asteroids_update(dt: f64) {
-   update(dt)
-}
-
 #[instrument]
 #[unsafe(no_mangle)]
 pub extern "C" fn _asteroids_init() {
@@ -484,9 +496,57 @@ pub extern "C" fn _asteroids_init() {
          // Add asteroids to the anchor
          let asteroids = unsafe { &mut *(ast.asteroids as *mut SlotMap<AsteroidRef, Asteroid>) };
          asteroids.clear();
-         for i in 0..ast.nmax {}
+         for i in 0..ast.nmax {
+            if let Some(mut a) = Asteroid::try_new(ast, true) {
+               let r = rng::<f32>();
+               if r > 0.6 {
+                  a.state = State::Fg;
+               } else if r > 0.8 {
+                  a.state = State::Xb;
+               } else if r > 0.9 {
+                  a.state = State::Bx;
+               } else {
+                  a.state = State::Xx;
+               }
+               a.timer_max = 30.0 * rng::<f64>();
+               a.timer = a.timer_max;
+               asteroids.insert(a);
+            }
+         }
 
          density_max = ast.density.max(density_max);
       }
    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _asteroids_update(dt: f64) {
+   update(dt)
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _asteroids_render() {}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _asteroids_renderOverlay() {}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _astgroup_getAll() -> *const *const TypeGroup {
+   let vec: Vec<*const TypeGroup> = GROUPS.iter().map(|(k, v)| v as *const TypeGroup).collect();
+   array::Array::new(vec).into_ptr()
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _astgroup_getName(name: *const c_char) -> *const TypeGroup {
+   let name = unsafe { CStr::from_ptr(name) };
+   match GROUPS.get(&*name.to_string_lossy()) {
+      Some(at) => &*at,
+      None => std::ptr::null(),
+   }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _astgroup_name(at: *const TypeGroup) -> *const c_char {
+   let at = unsafe { &*at };
+   std::ptr::null()
 }
