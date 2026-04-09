@@ -207,7 +207,12 @@ function approach_guide ()
       elseif t.type == "intrinsic" then
          tradein_item.description = t.outfit:summary()
       elseif t.type == "ship" then
-         tradein_item.description = t.ship:description()
+         tradein_item.description = fmt.f(_("{name} ({class}-class ship)\n{stats}\n{desc}"), {
+            name = t.ship:name(),
+            class = _(t.ship:classDisplay()),
+            stats = t.ship:shipstatDesc(),
+            desc = t.ship:description(),
+         })
       else
          error(_("unknown tradein type"))
       end
