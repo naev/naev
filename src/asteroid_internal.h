@@ -47,7 +47,7 @@ typedef struct AsteroidTypeGroup {
  */
 typedef struct Asteroid {
    /* Intrinsics. */
-   int                 id;      /**< ID of the asteroid, for targeting. */
+   AsteroidRef         id;      /**< ID of the asteroid, for targeting. */
    int                 parent;  /**< ID of the anchor parent. */
    AsteroidState       state;   /**< State of the asteroid. */
    const AsteroidType *type;    /**< Type of the asteroid. */

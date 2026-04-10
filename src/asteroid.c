@@ -1279,7 +1279,7 @@ const Asteroid *ast_get( const AsteroidAnchor *anc, int i )
 {
    return &anc->asteroids[i].a;
 }
-int ast_id( const Asteroid *ast )
+AsteroidRef ast_id( const Asteroid *ast )
 {
    return ast->id;
 }
@@ -1294,10 +1294,6 @@ AsteroidState ast_state( const Asteroid *ast )
 const Solid *ast_solid( const Asteroid *ast )
 {
    return &ast->sol;
-}
-const glTexture *ast_gfx( const Asteroid *ast )
-{
-   return ast->gfx;
 }
 double ast_gfx_width( const Asteroid *ast )
 {

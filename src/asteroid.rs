@@ -4,6 +4,7 @@ use crate::commodity::CommodityRef;
 use crate::rng::{range, rng};
 use anyhow::Context as AnyhowContext;
 use anyhow::Result;
+use collide::polygon::Polygon;
 use collide::polygon::SpinPolygon;
 use helpers::ReferenceC;
 use naev_core::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
@@ -12,9 +13,9 @@ use nlog::{debugx, warn, warn_err};
 use rayon::prelude::*;
 use renderer::texture::{Texture, TextureBuilder};
 use renderer::{Context, ContextWrapper};
-use slotmap::SlotMap;
+use slotmap::{Key, KeyData, SlotMap};
 use std::collections::HashMap;
-use std::ffi::{CStr, OsStr, c_char};
+use std::ffi::{CStr, CString, OsStr, c_char, c_int};
 use std::mem::MaybeUninit;
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, LazyLock};
@@ -167,6 +168,8 @@ pub struct TypeGroup {
    name: String,
    types: Vec<(Arc<Type>, f64)>,
    wtotal: f64,
+   // C stuff, remove when we can.
+   cname: CString,
 }
 
 impl TypeGroup {
@@ -181,6 +184,7 @@ impl TypeGroup {
          }
       });
       let mut group = TypeGroup {
+         cname: CString::new(&*name)?,
          name,
          ..Default::default()
       };
@@ -240,7 +244,7 @@ enum State {
 }
 
 impl State {
-   fn from_c(c: naevc::AsteroidState) -> Self {
+   fn from_ffi(c: naevc::AsteroidState) -> Self {
       match c {
          naevc::AsteroidState_ASTEROID_XX => State::Xx,
          naevc::AsteroidState_ASTEROID_XX_TO_BG => State::XxToBg,
@@ -254,7 +258,7 @@ impl State {
       }
    }
 
-   fn to_c(&self) -> naevc::AsteroidState {
+   fn to_ffi(&self) -> naevc::AsteroidState {
       match self {
          State::Xx => naevc::AsteroidState_ASTEROID_XX,
          State::XxToBg => naevc::AsteroidState_ASTEROID_XX,
@@ -390,6 +394,11 @@ impl Asteroid {
 
 slotmap::new_key_type! {
 pub struct AsteroidRef;
+}
+impl AsteroidRef {
+   fn from_ffi(value: i64) -> Self {
+      Self(KeyData::from_ffi(value as u64))
+   }
 }
 
 static TYPES: LazyLock<HashMap<String, Arc<Type>>> = LazyLock::new(load_types);
@@ -548,5 +557,160 @@ pub extern "C" fn _astgroup_getName(name: *const c_char) -> *const TypeGroup {
 #[unsafe(no_mangle)]
 pub extern "C" fn _astgroup_name(at: *const TypeGroup) -> *const c_char {
    let at = unsafe { &*at };
-   std::ptr::null()
+   at.cname.as_ptr()
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _ast_get(ast: *const naevc::AsteroidAnchor, id: i64) -> *const Asteroid {
+   let ast = unsafe { &*ast };
+   let asteroids = unsafe { &mut *(ast.asteroids as *mut SlotMap<AsteroidRef, Asteroid>) };
+   match asteroids.get(AsteroidRef::from_ffi(id)) {
+      Some(ast) => ast,
+      None => std::ptr::null(),
+   }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _ast_id(ast: *const Asteroid) -> *const Asteroid {
+   todo!()
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _ast_parent(ast: *const Asteroid) -> i32 {
+   let ast = unsafe { &*ast };
+   ast.parent
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _ast_state(ast: *const Asteroid) -> naevc::AsteroidState {
+   let ast = unsafe { &*ast };
+   ast.state.to_ffi()
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _ast_solid(ast: *const Asteroid) -> *const naevc::Solid {
+   let ast = unsafe { &*ast };
+   &ast.solid
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _ast_gfx_width(ast: *const Asteroid) -> f64 {
+   let ast = unsafe { &*ast };
+   match &*ast.gfx {
+      GfxType::Single(gfx) => gfx.texture.sw as f64,
+      GfxType::Sprite(gfx) => gfx.texture.sw as f64,
+   }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _ast_test_collide(
+   ast: *const Asteroid,
+   at: *const Polygon,
+   ap: *const Vector2<f64>,
+   crash: *mut Vector2<f64>,
+) -> i32 {
+   let ast = unsafe { &*ast };
+   let at = unsafe { &*at };
+   let ap = unsafe { *ap };
+   let crash: &mut [Vector2<f64>] = unsafe { std::slice::from_raw_parts_mut(crash, 2) };
+   let bp = Vector2::new(ast.solid.pos.x, ast.solid.pos.y);
+   let bt = match &*ast.gfx {
+      // TODO have to handle polygon rotation
+      GfxType::Single(gfx) => gfx.poly.view(ast.ang),
+      GfxType::Sprite(gfx) => gfx.poly.view(ast.ang),
+   };
+   let hit = bt.intersect_polygon(at, ap - bp);
+   for (k, h) in hit.iter().enumerate() {
+      crash[k] = *h + bp;
+   }
+   hit.len() as c_int
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _ast_scanned(ast: *const Asteroid) -> c_int {
+   let ast = unsafe { &*ast };
+   ast.scanned as c_int
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _ast_set_scanned(ast: *mut Asteroid, set: c_int) {
+   let ast = unsafe { &mut *ast };
+   ast.scanned = set != 0;
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _ast_poly(ast: *const Asteroid) -> *const Polygon {
+   let ast = unsafe { &*ast };
+   match &*ast.gfx {
+      // TODO have to handle polygon rotation
+      GfxType::Single(gfx) => gfx.poly.view(ast.ang),
+      GfxType::Sprite(gfx) => gfx.poly.view(ast.ang),
+   }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _asteroid_closestPilot(
+   ast: *const naevc::AsteroidAnchor,
+   x: f64,
+   y: f64,
+   d: *mut f64,
+) -> i64 {
+   let ast = unsafe { &*ast };
+   let asteroids = unsafe { &*(ast.asteroids as *mut SlotMap<AsteroidRef, Asteroid>) };
+   let pos = Vector2::new(x, y);
+   match asteroids
+      .iter()
+      .map(|(k, a)| {
+         let ap = Vector2::new(a.solid.pos.x, a.solid.pos.y);
+         (k, (ap - pos).norm_squared())
+      })
+      .min_by(|(_, a), (_, b)| a.partial_cmp(b).unwrap_or(std::cmp::Ordering::Equal))
+   {
+      Some((k, a)) => k.as_ffi(),
+      None => AsteroidRef::null().as_ffi(),
+   }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _asteroid_inField(p: *const Vector2<f64>) -> c_int {
+   let p = unsafe { *p };
+   match infield(p) {
+      Some(v) => v as c_int,
+      None => -1,
+   }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _asteroids_hasCommodity(field: *const naevc::AsteroidAnchor, com: i64) -> c_int {
+   let com = CommodityRef::from_ffi(com);
+   let field = unsafe { &*field };
+   let groups = unsafe { array::array_as_slice(field.groups) };
+   for g in groups {
+      let g = unsafe { &*(*g as *mut TypeGroup) };
+      for (t, _) in g.types.iter() {
+         for m in t.material.iter() {
+            if m.material == com {
+               return true as c_int;
+            }
+         }
+      }
+   }
+   false as c_int
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _asteroids_computeInternals(a: *mut naevc::AsteroidAnchor) {
+   let a = unsafe { &mut *a };
+   a.area = std::f64::consts::PI * a.radius * a.radius;
+   a.nmax = (a.area / naevc::ASTEROID_REF_AREA * a.density).round() as i32;
+   a.margin = a.maxspeed * a.maxspeed / (4.0 * a.accel) + 50.0;
+   a.groupswtotal = 0.0;
+   let groupsw = unsafe { array::array_as_slice(a.groupsw) };
+   for w in groupsw {
+      a.groupswtotal += w;
+   }
+   if a.asteroids.is_null() {
+      let map: SlotMap<AsteroidRef, Asteroid> = SlotMap::with_key();
+      a.asteroids = Box::into_raw(Box::new(map)) as *mut naevc::AsteroidVecStorage;
+   }
 }
