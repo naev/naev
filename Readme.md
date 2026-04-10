@@ -34,6 +34,23 @@ you don't feel up to the task of compiling it yourself, please see the
 [Naev website](https://naev.org/downloads/) for different ways to get
 started playing Naev!
 
+### 1.1  System Specifications
+
+Naev runs on the following systems:
+
+|     | Linux / BSD                    | Windows            | MacOS                  |
+| --- | ------------------------------ | ------------------ | ---------------------- |
+| OS  | 64-bit distro with glibc 2.30+ | Windows 7 or newer | macOS 10.13 or newer   |
+| CPU | Any 64-bit CPU                 | Any 64-bit CPU     | Apply M1 or Intel Core |
+
+Adidtionally, the minimum and recommended specs are:
+
+|        | Minimum      | Recommended |
+| ------ | ------------ | ----------- |
+| Memory | 2 GiB        | 4 GiB       |
+| OpenGL | 3.3+         | 4.0+        |
+| HDD    | 512 MiB free | 1 GiB free  |
+
 
 ## 2 -  Plugins
 
