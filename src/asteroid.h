@@ -7,7 +7,6 @@
 
 #include "collision.h"
 #include "commodity.h"
-#include "opengl.h"
 #include "outfit.h"
 #include "physics.h"
 #include "quadtree.h"
@@ -130,5 +129,5 @@ void asteroids_computeInternals( AsteroidAnchor *a );
 void asteroid_hit( Asteroid *a, const Damage *dmg, int max_rarity,
                    double mine_bonus );
 void asteroid_explode( Asteroid *a, int max_rarity, double mine_bonus );
-void asteroid_collideQueryIL( AsteroidAnchor *anc, IntList *il, int x1, int y1,
-                              int x2, int y2 );
+const AsteroidRef *asteroid_collideQueryIL( AsteroidAnchor *anc, int x1, int y1,
+                                            int x2, int y2 );

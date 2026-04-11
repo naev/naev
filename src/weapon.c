@@ -1272,9 +1272,10 @@ static void weapon_updateCollide( Weapon *w, double dt )
             continue;
 
          /* Quadtree collisions. */
-         asteroid_collideQueryIL( ast, &weapon_qtquery, x1, y1, x2, y2 );
-         for ( int j = 0; j < il_size( &weapon_qtquery ); j++ ) {
-            const Asteroid *a = ast_get( ast, il_get( &weapon_qtquery, j, 0 ) );
+         const AsteroidRef *hits =
+            asteroid_collideQueryIL( ast, x1, y1, x2, y2 );
+         for ( int j = 0; j < array_size( hits ); j++ ) {
+            const Asteroid *a = ast_get( ast, hits[j] );
             int             coll;
             WeaponHit       hit;
 
@@ -1585,9 +1586,10 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius,
             continue;
 
          /* Quadtree collisions. */
-         asteroid_collideQueryIL( ast, &weapon_qtquery, x1, y1, x2, y2 );
-         for ( int j = 0; j < il_size( &weapon_qtquery ); j++ ) {
-            const Asteroid *a = ast_get( ast, il_get( &weapon_qtquery, j, 0 ) );
+         const AsteroidRef *hits =
+            asteroid_collideQueryIL( ast, x1, y1, x2, y2 );
+         for ( int j = 0; j < array_size( hits ); j++ ) {
+            const Asteroid *a = ast_get( ast, hits[j] );
             vec2            crash[2];
             int             coll;
             if ( ast_state( a ) != ASTEROID_FG )

@@ -1269,10 +1269,23 @@ void asteroid_explode( Asteroid *a, int max_rarity, double mining_bonus )
    a->timer_max = a->timer = 0.5;
 }
 
-void asteroid_collideQueryIL( AsteroidAnchor *anc, IntList *il, int x1, int y1,
-                              int x2, int y2 )
+const AsteroidRef *asteroid_collideQueryIL( AsteroidAnchor *anc, int x1, int y1,
+                                            int x2, int y2 )
 {
-   qt_query( &anc->qt, il, x1, y1, x2, y2 );
+   static AsteroidRef *astlist = NULL;
+   static IntList      astintlist;
+   if ( astlist == NULL ) {
+      astlist = array_create( AsteroidRef );
+      il_create( &astintlist, 1 );
+   }
+   array_erase( &astlist, array_begin( astlist ), array_end( astlist ) );
+
+   qt_query( &anc->qt, &astintlist, x1, y1, x2, y2 );
+   for ( int i = 0; i < il_size( &astintlist ); i++ ) {
+      AsteroidRef a = il_get( &astintlist, i, 0 );
+      array_push_back( &astlist, a );
+   }
+   return astlist;
 }
 
 const Asteroid *ast_get( const AsteroidAnchor *anc, int64_t i )

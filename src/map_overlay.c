@@ -864,10 +864,10 @@ void ovr_render( double dt )
       ax = round( player.p->solid.pos.x );
       ay = round( player.p->solid.pos.y );
       r  = ceil( range );
-      asteroid_collideQueryIL( ast, &ovr_qtquery, ax - r, ay - r, ax + r,
-                               ay + r );
-      for ( int j = 0; j < il_size( &ovr_qtquery ); j++ ) {
-         const Asteroid *a = ast_get( ast, il_get( &ovr_qtquery, j, 0 ) );
+      const AsteroidRef *hits =
+         asteroid_collideQueryIL( ast, ax - r, ay - r, ax + r, ay + r );
+      for ( int j = 0; j < array_size( hits ); j++ ) {
+         const Asteroid *a = ast_get( ast, hits[j] );
          gui_renderAsteroid( a, w, h, res, INFINITY, 1 );
       }
    }

@@ -866,14 +866,15 @@ pub extern "C" fn _asteroid_explode(a: *mut Asteroid, max_rarity: i32, mine_bonu
 #[unsafe(no_mangle)]
 pub extern "C" fn _asteroid_collideQueryIL(
    anc: *mut naevc::AsteroidAnchor,
-   il: *mut naevc::IntList,
    x1: c_int,
    y1: c_int,
    x2: c_int,
    y2: c_int,
-) {
+) -> *const AsteroidRef {
+   // TODO
    let anc = unsafe { &mut *anc };
    unsafe {
-      naevc::qt_query(&mut anc.qt, il, x1, y1, x2, y2);
+      //naevc::qt_query(&mut anc.qt, il, x1, y1, x2, y2);
    }
+   std::ptr::null()
 }
