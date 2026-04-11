@@ -1,9 +1,11 @@
 #![allow(dead_code, unused)]
 use crate::array;
 use crate::commodity::CommodityRef;
+use crate::pilot;
 use crate::rng::{range, rng};
 use anyhow::Context as AnyhowContext;
 use anyhow::Result;
+use audio::{AudioBuilder, AudioType};
 use collide::polygon::Polygon;
 use collide::polygon::SpinPolygon;
 use helpers::ReferenceC;
@@ -274,6 +276,7 @@ impl State {
 
 #[derive(Debug)]
 pub struct Asteroid {
+   id: AsteroidRef,
    parent: i32,
    state: State,
    atype: Arc<Type>,
@@ -371,6 +374,7 @@ impl Asteroid {
          let gfx = atype.gfx[range(0..atype.gfx.len())].clone();
 
          Some(Self {
+            id: AsteroidRef::null(),
             parent: field.id,
             state: State::Xx,
             atype: atype.clone(),
@@ -389,6 +393,14 @@ impl Asteroid {
       } else {
          None
       }
+   }
+
+   fn pos(&self) -> Vector2<f64> {
+      Vector2::new(self.solid.pos.x, self.solid.pos.y)
+   }
+
+   fn vel(&self) -> Vector2<f64> {
+      Vector2::new(self.solid.vel.x, self.solid.vel.y)
    }
 }
 
@@ -519,7 +531,10 @@ pub extern "C" fn _asteroids_init() {
                }
                a.timer_max = 30.0 * rng::<f64>();
                a.timer = a.timer_max;
-               asteroids.insert(a);
+               asteroids.insert_with_key(|k| {
+                  a.id = k;
+                  a
+               });
             }
          }
 
@@ -613,7 +628,7 @@ pub extern "C" fn _ast_test_collide(
    let at = unsafe { &*at };
    let ap = unsafe { *ap };
    let crash: &mut [Vector2<f64>] = unsafe { std::slice::from_raw_parts_mut(crash, 2) };
-   let bp = Vector2::new(ast.solid.pos.x, ast.solid.pos.y);
+   let bp = ast.pos();
    let bt = match &*ast.gfx {
       // TODO have to handle polygon rotation
       GfxType::Single(gfx) => gfx.poly.view(ast.ang),
@@ -661,7 +676,7 @@ pub extern "C" fn _asteroid_closestPilot(
    match asteroids
       .iter()
       .map(|(k, a)| {
-         let ap = Vector2::new(a.solid.pos.x, a.solid.pos.y);
+         let ap = a.pos();
          (k, (ap - pos).norm_squared())
       })
       .min_by(|(_, a), (_, b)| a.partial_cmp(b).unwrap_or(std::cmp::Ordering::Equal))
@@ -712,5 +727,149 @@ pub extern "C" fn _asteroids_computeInternals(a: *mut naevc::AsteroidAnchor) {
    if a.asteroids.is_null() {
       let map: SlotMap<AsteroidRef, Asteroid> = SlotMap::with_key();
       a.asteroids = Box::into_raw(Box::new(map)) as *mut naevc::AsteroidVecStorage;
+   }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _asteroid_hit(
+   a: *mut Asteroid,
+   dmg: *const naevc::Damage,
+   max_rarity: i32,
+   mine_bonus: f64,
+) {
+   let a = unsafe { &mut *a };
+   let dmg = unsafe { &*dmg };
+   let absorb = 0.99f64.powf(a.atype.absorb - dmg.penetration);
+   let mut darmour = 0.0f64;
+   crate::damagetype::dtype_calcDamage(
+      std::ptr::null_mut(),
+      &mut darmour,
+      absorb,
+      std::ptr::null_mut(),
+      dmg,
+      std::ptr::null(),
+   );
+   a.armour -= darmour;
+   if a.armour <= 0.0 {
+      _asteroid_explode(a, max_rarity, mine_bonus);
+   }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _asteroid_explode(a: *mut Asteroid, max_rarity: i32, mine_bonus: f64) {
+   let a = unsafe { &mut *a };
+   let at = &a.atype;
+
+   let dmg = naevc::Damage {
+      type_: crate::damagetype::dtype_get(c"explosion_splash".as_ptr()),
+      damage: at.damage,
+      penetration: at.penetration,
+      disable: at.disable,
+   };
+   unsafe {
+      naevc::expl_explode(
+         a.solid.pos.x,
+         a.solid.pos.y,
+         a.solid.vel.x,
+         a.solid.vel.y,
+         at.exp_radius,
+         &dmg,
+         std::ptr::null(),
+         naevc::EXPL_MODE_SHIP as i32,
+      );
+   }
+
+   // Explosion sound. TODO not hardcode
+   match audio::Buffer::get_or_try_load(format!("snd/sounds/explosion{}", range(0..=2))) {
+      Ok(sound) => {
+         AudioBuilder::new(AudioType::Static)
+            .buffer(sound.clone())
+            .position(Some(a.pos().cast()))
+            .velocity(Some(a.pos().cast()))
+            .play(true)
+            .build();
+      }
+      Err(e) => warn_err!(e),
+   }
+
+   let rad2 = at.alert_range * at.alert_range;
+   let la = naevc::LuaAsteroid_t {
+      parent: a.parent,
+      id: 0, // TODO a.id,
+   };
+   unsafe {
+      naevc::lua_pushasteroid(naevc::naevL, la);
+   }
+   for p in pilot::get() {
+      if (a.pos() - p.pos()).norm_squared() <= rad2 {
+         unsafe {
+            naevc::pilot_msg(std::ptr::null(), p.0.as_ptr(), c"asteroid".as_ptr(), -1);
+         }
+      }
+   }
+   //unsafe{ naevc::lua_pop(naevc::naevL, 1 ); }
+   unsafe {
+      naevc::lua_settop(naevc::naevL, -(1) - 1);
+   } // #define of lua_pop
+
+   // Do the drop
+   if max_rarity >= 0 {
+      let mut ndrops = 0;
+      for m in at.material.iter() {
+         if m.rarity <= max_rarity {
+            ndrops += 1;
+         }
+      }
+      if ndrops > 0 {
+         let r = rng::<f32>();
+         let prob = 1.0 / ndrops as f32;
+         let mut accum = 0.0;
+         for m in at.material.iter() {
+            if m.rarity > max_rarity {
+               continue;
+            }
+            accum += prob;
+            if r > accum {
+               continue;
+            }
+
+            let nb = range(0..(m.quantity as f64 * mine_bonus).round() as usize) / 3;
+            for i in 0..nb {
+               let pos =
+                  a.pos() + Vector2::new(30.0 * rng::<f64>() - 15.0, 30.0 * rng::<f64>() - 15.0);
+               let vel =
+                  a.vel() + Vector2::new(20.0 * rng::<f64>() - 10.0, 20.0 * rng::<f64>() - 10.0);
+               let ttl = 50.0 + rng::<f64>() * 10.0;
+               let quantity = range(1..=4);
+               crate::gatherable::Gatherable::add(m.material, pos, vel, ttl, quantity, false);
+            }
+            break;
+         }
+      }
+   }
+
+   // Remove target
+   unsafe {
+      naevc::pilot_untargetAsteroid(a.parent, a.id);
+   }
+
+   // Make it respawns
+   a.state = State::BgToXx;
+   a.timer = 0.0;
+   a.timer_max = 0.0;
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _asteroid_collideQueryIL(
+   anc: *mut naevc::AsteroidAnchor,
+   il: *mut naevc::IntList,
+   x1: c_int,
+   y1: c_int,
+   x2: c_int,
+   y2: c_int,
+) {
+   let anc = unsafe { &mut *anc };
+   unsafe {
+      naevc::qt_query(&mut anc.qt, il, x1, y1, x2, y2);
    }
 }

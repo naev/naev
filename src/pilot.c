@@ -3318,7 +3318,7 @@ ntime_t pilot_hyperspaceDelay( const Pilot *p )
  *    @param anchor Asteroid anchor the asteroid belongs to.
  *    @param asteroid Asteroid.
  */
-void pilot_untargetAsteroid( int anchor, int asteroid )
+void pilot_untargetAsteroid( int anchor, AsteroidRef asteroid )
 {
    for ( int i = 0; i < array_size( pilot_stack ); i++ ) {
       Pilot *p = pilot_stack[i];

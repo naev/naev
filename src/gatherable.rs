@@ -38,6 +38,18 @@ pub struct Gatherable {
    sy: i32,
 }
 impl Gatherable {
+   pub fn add(
+      commodity: CommodityRef,
+      pos: Vector2<f64>,
+      vel: Vector2<f64>,
+      ttl: f64,
+      quantity: i32,
+      player_only: bool,
+   ) -> GatherableRef {
+      let g = Gatherable::new(commodity, pos, vel, ttl, quantity, player_only);
+      GATHERABLES.lock().unwrap().data.insert(g)
+   }
+
    fn new(
       commodity: CommodityRef,
       pos: Vector2<f64>,

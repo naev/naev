@@ -51,6 +51,16 @@ pub struct DamageType {
 }
 
 impl DamageType {
+   pub fn get(name: &str) -> Option<&'static Self> {
+      match binary_search_by_key_ref(&DAMAGE_TYPES, name, |dt: &DamageType| &dt.name) {
+         Ok(i) => Some(&DAMAGE_TYPES[i]),
+         Err(_) => {
+            warn!("damage type '{name}' not found");
+            None
+         }
+      }
+   }
+
    fn load_xml<P: AsRef<Path>>(filename: P) -> Result<Self> {
       let data = ndata::read(filename)?;
       let doc = roxmltree::Document::parse(std::str::from_utf8(&data)?)?;

@@ -9,8 +9,8 @@
 #define ASTEROID_METATABLE "asteroid" /**< Asteroid metatable identifier. */
 
 typedef struct LuaAsteroid_s {
-   int parent;
-   int id;
+   int         parent;
+   AsteroidRef id;
 } LuaAsteroid_t;
 
 /*
