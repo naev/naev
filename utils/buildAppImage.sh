@@ -119,7 +119,7 @@ build_appdir() {
       --force-fallback-for=glpk,SuiteSparse \
       -Dsteamruntime=true \
       -Dprefix="/usr" \
-      -Db_lto=true \
+      -Db_lto=false \
       -Dauto_features=enabled \
       -Ddocs_c=disabled \
       -Ddocs_lua=disabled
