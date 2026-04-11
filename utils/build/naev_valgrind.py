@@ -14,7 +14,7 @@
 #   VG_TRACE_CHILDREN=true  Enable --trace-children=yes in Valgrind.
 #   VG_LOGFILE=filename     Specify a log file for Valgrind output (default: build_root/naev_valgrind.log).
 #   WITHDEBUGGER=true       Enable Valgrind server mode (vgdb) for GDB attachment.
-#   VG_SUPPRESSIONS=file    Path to a Valgrind suppression (.supp) file (default: @naev_supp@).
+#   VG_SUPPRESSIONS=file    Path to a Valgrind suppression (.supp) file (default: utils/build/naev.supp).
 #   VG_ARGS="--flags"       Additional raw arguments to pass to Valgrind.
 #
 # Automated Settings (Applied by script):
