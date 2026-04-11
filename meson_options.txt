@@ -13,3 +13,4 @@ option('docs_lore'      , type: 'feature', value: 'disabled' , description: 'Ena
 option('luajit'         , type: 'feature', value: 'auto'     , description: 'Enable LuaJIT rather than standard Lua.')
 option('ndata_path'     , type: 'string' , value: ''         , description: 'Set the path ndata will be installed to (relative to the install prefix).')
 option('tracy'          , type: 'boolean', value: false      , description: 'Enable tracy profiler.')
+option('linker_plugin_lto', type: 'combo', choices: ['auto', 'enabled', 'disabled'], value: 'auto', description: 'Control linker-plugin-LTO for Rust objects. "auto" enables it when b_lto is on, the C compiler is clang, and rustc/clang LLVM versions are compatible; "enabled" forces it on (user is responsible for toolchain compatibility); "disabled" keeps it off even when b_lto is set.')
