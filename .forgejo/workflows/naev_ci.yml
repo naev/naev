@@ -116,9 +116,8 @@ jobs:
               --force-fallback-for=sdl2_image,glpk,SuiteSparse \
               -Dsteamruntime=false \
               -Dprefix="/usr" \
-              -Db_lto=true \
               -Dinstaller=false \
-              -Db_lto=true \
+              -Db_lto=false \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
               -Ddocs_lua=disabled

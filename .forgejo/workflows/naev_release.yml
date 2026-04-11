@@ -171,7 +171,7 @@ jobs:
               -Dsteamruntime=true \
               -Dprefix="/usr" \
               -Dinstaller=true \
-              -Db_lto=true \
+              -Db_lto=false \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
               -Ddocs_lua=disabled
@@ -523,7 +523,7 @@ jobs:
               -Dsteamruntime=true \
               -Dprefix="/usr" \
               -Dinstaller=true \
-              -Db_lto=true \
+              -Db_lto=false \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
               -Ddocs_lua=disabled
