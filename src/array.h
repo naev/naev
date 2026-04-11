@@ -41,10 +41,10 @@
 #include <stddef.h>
 /** @endcond */
 
+#if 0
 /**
  * @brief Private container type for the arrays.
  */
-#if 0
 typedef struct {
 #if DEBUG_ARRAYS
    int _sentinel;                        /**< Sentinel for when debugging. */
@@ -65,13 +65,13 @@ void *_array_copy_helper( void *a );
 int   _array_size_helper( void *a );
 int   _array_reserved_helper( void *a );
 
+#if 0
 /**
  * @brief Gets the container of an array.
  *
  *    @param a Array to get container of.
  *    @return The container of the array a.
  */
-#if 0
 static inline _private_container *_array_private_container( void *a )
 {
    assert( "NULL array!" && ( a != NULL ) );
