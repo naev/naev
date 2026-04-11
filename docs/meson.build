@@ -8,12 +8,18 @@ if genCDoc.disabled() == false
    if doxygen.found()
       doxy_output = 'c'
       doxy_in = files('c/Doxyfile.in')
+      # Feed doxygen the exact file lists meson builds from so dead files
+      # sitting in src/ (e.g. array.c) do not end up in the generated docs
+      doxy_input_paths = []
+      foreach f : source + mac_source + sdf_source + headers
+         doxy_input_paths += f.full_path()
+      endforeach
       doxy_conf = configuration_data({
          'HAVE_DOT'           : dot.found() ? 'YES' : 'NO',
          'PROJECT_NAME'       : meson.project_name(),
          'PROJECT_NUMBER'     : meson.project_version(),
          'PROJECT_LOGO'       : meson.project_source_root() / 'extras/logos/logo32.png',
-         'INPUT'              : meson.project_source_root() / 'src',
+         'INPUT'              : ' '.join(doxy_input_paths),
          'OUTPUT_DIRECTORY'   : meson.current_build_dir() / doxy_output
       })
 
