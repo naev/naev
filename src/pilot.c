@@ -1335,7 +1335,7 @@ void pilot_setTarget( Pilot *p, unsigned int id )
 
    /* Untarget asteroid (if any). */
    p->nav_anchor   = -1;
-   p->nav_asteroid = -1;
+   p->nav_asteroid = ASTEROID_NULL;
 }
 
 /**
@@ -3323,7 +3323,7 @@ void pilot_untargetAsteroid( int anchor, AsteroidRef asteroid )
    for ( int i = 0; i < array_size( pilot_stack ); i++ ) {
       Pilot *p = pilot_stack[i];
       if ( ( p->nav_asteroid == asteroid ) && ( p->nav_anchor == anchor ) ) {
-         p->nav_asteroid = -1;
+         p->nav_asteroid = ASTEROID_NULL;
          p->nav_anchor   = -1;
       }
    }
@@ -3551,7 +3551,7 @@ static void pilot_init( Pilot *pilot, const Ship *ship, const char *name,
    pilot->nav_spob        = -1;
    pilot->nav_hyperspace  = -1;
    pilot->nav_anchor      = -1;
-   pilot->nav_asteroid    = -1;
+   pilot->nav_asteroid    = ASTEROID_NULL;
    pilot->shoot_indicator = 0;
 
    /* Check takeoff. */
@@ -3598,7 +3598,7 @@ void pilot_reset( Pilot *pilot )
    pilot->nav_spob       = -1;
    pilot->nav_hyperspace = -1;
    pilot->nav_anchor     = -1;
-   pilot->nav_asteroid   = -1;
+   pilot->nav_asteroid   = ASTEROID_NULL;
 
    /* AI */
    pilot->shoot_indicator = 0;

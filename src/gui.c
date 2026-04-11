@@ -1173,7 +1173,7 @@ void gui_renderPilot( const Pilot *p, RadarShape shape, double w, double h,
 void gui_renderAsteroid( const Asteroid *a, double w, double h, double res,
                          double render_radius, int overlay )
 {
-   int             i, j, targeted;
+   int             j, targeted;
    double          x, y, r, sx, sy;
    double          px, py;
    const glColour *col;
@@ -1183,8 +1183,8 @@ void gui_renderAsteroid( const Asteroid *a, double w, double h, double res,
       return;
 
    /* Recover the asteroid and field IDs. */
-   i = ast_id( a );
-   j = ast_parent( a );
+   AsteroidRef i = ast_id( a );
+   j             = ast_parent( a );
 
    /* Make sure is in range. */
    if ( !pilot_inRangeAsteroid( player.p, i, j ) )

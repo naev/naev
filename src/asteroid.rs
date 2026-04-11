@@ -586,8 +586,9 @@ pub extern "C" fn _ast_get(ast: *const naevc::AsteroidAnchor, id: i64) -> *const
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn _ast_id(ast: *const Asteroid) -> *const Asteroid {
-   todo!()
+pub extern "C" fn _ast_id(ast: *const Asteroid) -> i64 {
+   let ast = unsafe { &*ast };
+   ast.id.as_ffi()
 }
 
 #[unsafe(no_mangle)]
@@ -850,7 +851,7 @@ pub extern "C" fn _asteroid_explode(a: *mut Asteroid, max_rarity: i32, mine_bonu
 
    // Remove target
    unsafe {
-      naevc::pilot_untargetAsteroid(a.parent, a.id);
+      naevc::pilot_untargetAsteroid(a.parent, a.id.as_ffi());
    }
 
    // Make it respawns

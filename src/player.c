@@ -1323,7 +1323,7 @@ void player_think( Pilot *pplayer, const double dt )
          }
       }
       /* Try to face asteroid. */
-      else if ( player.p->nav_asteroid != -1 ) {
+      else if ( player.p->nav_asteroid != ASTEROID_NULL ) {
          const AsteroidAnchor *field =
             &cur_system->asteroids[player.p->nav_anchor];
          const Asteroid *ast = ast_get( field, player.p->nav_asteroid );
@@ -1618,14 +1618,12 @@ void player_targetSpobSet( int id )
  *    @param field Index of the parent field of the asteroid.
  *    @param id Target spob or -1 if none should be selected.
  */
-void player_targetAsteroidSet( int field, int id )
+void player_targetAsteroidSet( int field, AsteroidRef id )
 {
-   int old;
-
    if ( ( player.p == NULL ) || pilot_isFlag( player.p, PILOT_LANDING ) )
       return;
 
-   old                    = player.p->nav_asteroid;
+   AsteroidRef old        = player.p->nav_asteroid;
    player.p->nav_asteroid = id;
    if ( old != id ) {
       if ( id >= 0 ) {
@@ -2269,7 +2267,7 @@ void player_targetSet( unsigned int id )
    gui_setTarget();
 
    /* Clear the asteroid target. */
-   player.p->nav_asteroid = -1;
+   player.p->nav_asteroid = ASTEROID_NULL;
    player.p->nav_anchor   = -1;
 
    /* The player should not continue following if the target pilot has been
@@ -2347,8 +2345,8 @@ void player_targetClear( void )
    gui_forceBlink();
    if ( player.p->target != PLAYER_ID )
       player_targetSet( PLAYER_ID );
-   else if ( player.p->nav_asteroid >= 0 )
-      player_targetAsteroidSet( -1, -1 );
+   else if ( player.p->nav_asteroid != ASTEROID_NULL )
+      player_targetAsteroidSet( -1, ASTEROID_NULL );
    else if ( player.p->nav_spob >= 0 )
       player_targetSpobSet( -1 );
    else if ( ( preemption == 1 || player.p->nav_spob == -1 ) &&

@@ -292,7 +292,7 @@ void player_targetClearAll( void );
 void player_targetSpobSet( int id );
 void player_targetSpob( void );
 /* Asteroids. */
-void player_targetAsteroidSet( int id_field, int id );
+void player_targetAsteroidSet( int id_field, AsteroidRef id );
 /* Hyperspace. */
 void player_targetHyperspaceSet( int id, int autonavcont );
 void player_targetHyperspace( void );

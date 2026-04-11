@@ -3,6 +3,8 @@
  */
 #pragma once
 
+#include "asteroid.h"
+
 /**
  * @brief Used to generalize what the weapon is targetting.
  */
@@ -21,8 +23,8 @@ typedef struct Target_ {
    union {
       unsigned int id; /* For pilot/weapons. */
       struct {
-         int anchor;
-         int asteroid;
+         int         anchor;
+         AsteroidRef asteroid;
       } ast; /* For asteroids. */
    } u;
 } Target;

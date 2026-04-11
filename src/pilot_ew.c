@@ -327,7 +327,7 @@ int pilot_inRangeSpob( const Pilot *p, int target )
  *    @param fie Field the Asteroid belongs to to see if is in sensor range.
  *    @return 1 if they are in range, 0 if they aren't.
  */
-int pilot_inRangeAsteroid( const Pilot *p, int ast, int fie )
+int pilot_inRangeAsteroid( const Pilot *p, AsteroidRef ast, int fie )
 {
    /* pilot must exist */
    if ( p == NULL )

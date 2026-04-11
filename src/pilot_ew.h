@@ -14,7 +14,7 @@ double pilot_sensorRange( void );
 int    pilot_inRange( const Pilot *p, double x, double y );
 int    pilot_inRangePilot( const Pilot *p, const Pilot *target, double *dist2 );
 int    pilot_inRangeSpob( const Pilot *p, int target );
-int    pilot_inRangeAsteroid( const Pilot *p, int ast, int fie );
+int    pilot_inRangeAsteroid( const Pilot *p, AsteroidRef ast, int fie );
 int    pilot_inRangeJump( const Pilot *p, int target );
 
 /*

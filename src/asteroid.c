@@ -1275,8 +1275,10 @@ void asteroid_collideQueryIL( AsteroidAnchor *anc, IntList *il, int x1, int y1,
    qt_query( &anc->qt, il, x1, y1, x2, y2 );
 }
 
-const Asteroid *ast_get( const AsteroidAnchor *anc, int i )
+const Asteroid *ast_get( const AsteroidAnchor *anc, int64_t i )
 {
+   if ( i < 0 )
+      return NULL;
    return &anc->asteroids[i].a;
 }
 AsteroidRef ast_id( const Asteroid *ast )

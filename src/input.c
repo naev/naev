@@ -264,7 +264,7 @@ static int  input_doubleClickTest( unsigned int *time, const void **last,
                                    const void *clicked );
 static int  input_clickedJump( int jump, int autonav );
 static int  input_clickedSpob( int spob, int autonav, int priority );
-static int  input_clickedAsteroid( int field, int asteroid );
+static int  input_clickedAsteroid( int field, AsteroidRef asteroid );
 static int  input_clickedPilot( unsigned int pilot, int autonav );
 
 /**
@@ -1588,7 +1588,7 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom,
       const Solid *s    = ast_solid( ast );
       double       dast = hypotf( s->pos.x - x, s->pos.y - y );
       if ( dast > rast )
-         astid = -1;
+         astid = ASTEROID_NULL;
    }
    if ( pid != PLAYER_ID ) {
       const Pilot *p = pilot_get( pid );
@@ -1735,7 +1735,7 @@ static int input_clickedSpob( int spob, int autonav, int priority )
  *    @param asteroid Index of the asteroid in the field.
  *    @return Whether the click was used.
  */
-static int input_clickedAsteroid( int field, int asteroid )
+static int input_clickedAsteroid( int field, AsteroidRef asteroid )
 {
    // const AsteroidAnchor *anchor = &cur_system->asteroids[field];
    // const Asteroid       *ast    = &anchor->asteroids[asteroid];

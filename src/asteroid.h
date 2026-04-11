@@ -50,8 +50,9 @@ typedef struct Asteroid            Asteroid;
 typedef struct AsteroidVecStorage  AsteroidVecStorage;
 typedef struct AsteroidVecStorage *AsteroidVec;
 // typedef struct Asteroid*       AsteroidRef;
+// typedef void* AsteroidRef;
 // #define ASTEROID_NULL   NULL
-typedef int AsteroidRef;
+typedef int64_t AsteroidRef;
 #define ASTEROID_NULL -1
 
 /**
