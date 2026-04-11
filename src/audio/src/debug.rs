@@ -4,7 +4,6 @@ use crate::openal::al_types::*;
 use crate::openal::*;
 use anyhow::Result;
 use nlog::{debug, warn, warn_err};
-use std::ffi::CString;
 use std::sync::OnceLock;
 
 pub mod consts {
@@ -219,9 +218,11 @@ impl Debug {
    }
 }
 
+#[allow(unused)]
 pub fn object_label(identifier: ALenum, name: ALuint, label: &str) {
    #[cfg(debug_assertions)]
    if let Some(dbg) = DEBUG.get() {
+      use std::ffi::CString;
       let clabel = CString::new(label).unwrap();
       let bytes = clabel.as_bytes_with_nul();
       unsafe {
