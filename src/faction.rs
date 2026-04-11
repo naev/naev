@@ -1067,7 +1067,8 @@ pub fn load() -> Result<()> {
    GRID.write().unwrap().recompute(&data)?;
 
    // Some debug
-   if cfg!(debug_assertions) {
+   #[cfg(debug_assertions)]
+   {
       let n = data.len();
       debugx!(
          gettext::ngettext(
@@ -1078,7 +1079,9 @@ pub fn load() -> Result<()> {
          n,
          start.elapsed().as_secs_f32()
       );
-   } else {
+   }
+   #[cfg(not(debug_assertions))]
+   {
       let n = data.len();
       debugx!(
          gettext::ngettext("Loaded {} Faction", "Loaded {} Factions", n as u64),

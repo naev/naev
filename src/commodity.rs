@@ -401,7 +401,8 @@ pub fn load() -> Result<()> {
    }
 
    // Some debug
-   if cfg!(debug_assertions) {
+   #[cfg(debug_assertions)]
+   {
       let n = data.len();
       debugx!(
          gettext::ngettext(
@@ -412,7 +413,9 @@ pub fn load() -> Result<()> {
          n,
          start.elapsed().as_secs_f32()
       );
-   } else {
+   }
+   #[cfg(not(debug_assertions))]
+   {
       let n = data.len();
       debugx!(
          gettext::ngettext("Loaded {} Commodity", "Loaded {} Commodities", n as u64),

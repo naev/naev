@@ -465,7 +465,8 @@ pub fn load() -> Result<()> {
    let _ = LazyLock::force(&GROUPS);
 
    // Some debug
-   if cfg!(debug_assertions) {
+   #[cfg(debug_assertions)]
+   {
       let n = TYPES.len();
       debugx!(
          gettext::ngettext(
@@ -476,7 +477,9 @@ pub fn load() -> Result<()> {
          n,
          start.elapsed().as_secs_f32()
       );
-   } else {
+   }
+   #[cfg(not(debug_assertions))]
+   {
       let n = TYPES.len();
       debugx!(
          gettext::ngettext("Loaded {} Asteroid", "Loaded {} Asteroids", n as u64),
