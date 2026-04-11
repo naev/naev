@@ -6,6 +6,10 @@ project('naev', ['c', 'rust'],
       'werror=false',
       'warning_level=3',
       'rust_std=2024',
+      # Default to thin LTO when b_lto is enabled
+      # Fat LTO takes quite a while and can appear to look deadlocked
+      # Users who specifically want fat can still pass -Db_lto_mode=default
+      'b_lto_mode=thin',
    ],
    # Requires meson 1.7.0 for rust_std=2024
    meson_version: '>=1.7.0')
@@ -458,9 +462,51 @@ if buildExec.disabled() == false
    buildrs = configure_file( input: 'build.rs.in', output: 'build.rs', configuration: cargo_data )
    cargo_env = environment()
    cargo_env.set( 'CARGO_HOME', meson.project_build_root() / 'cargo-home' )
+
+   # Decide whether to enable linker-plugin-LTO for Rust objects. When
+   # b_lto is on, the final link is done with LTO, which means every object
+   # file fed to the linker (including those inside libnaev.rlib) must carry
+   # bitcode the linker plugin understands. For clang/lld that is LLVM
+   # bitcode in a .llvmbc section, which rustc only emits under
+   # -Clinker-plugin-lto. That flag additionally requires rustc's LLVM and
+   # clang's LLVM to be approximately the same major version, otherwise
+   # the final link fails with "Can't find section .llvmbc" or bitcode
+   # version mismatch errors.
    # See https://doc.rust-lang.org/rustc/linker-plugin-lto.html
-   # Should be working, but takes forever and errors out. Dunno
-   #cargo_env.set( 'RUSTFLAGS', '-Clinker-plugin-lto' )
+   linker_plugin_lto_opt = get_option('linker_plugin_lto')
+   use_rust_lto = false
+   if linker_plugin_lto_opt == 'enabled'
+      use_rust_lto = true
+      message('linker_plugin_lto forced on; skipping toolchain compatibility check')
+   elif linker_plugin_lto_opt == 'auto' and get_option('b_lto')
+      cc_id = meson.get_compiler('c').get_id()
+      if cc_id != 'clang'
+         error('b_lto is enabled but the C compiler is "@0@", not clang. Mixed-language LTO across rustc and @0@ is not supported. Re-run with -Db_lto=false or switch to a clang toolchain.'.format(cc_id))
+      endif
+      clang_llvm = meson.get_compiler('c').version().split('.')[0].to_int()
+      rustc_verbose = run_command(rustc, '--version', '--verbose', check: true)
+      rustc_llvm = 0
+      foreach line : rustc_verbose.stdout().split('\n')
+         if line.startswith('LLVM version:')
+            rustc_llvm = line.split(':')[1].strip().split('.')[0].to_int()
+         endif
+      endforeach
+      if rustc_llvm == 0
+         error('b_lto is enabled but could not parse rustc\'s LLVM version. Re-run with -Db_lto=false or -Dlinker_plugin_lto=disabled.')
+      endif
+      llvm_skew = rustc_llvm - clang_llvm
+      if llvm_skew < 0
+         llvm_skew = -llvm_skew
+      endif
+      if llvm_skew > 1
+         error('b_lto is enabled but rustc\'s LLVM (@0@) and clang\'s LLVM (@1@) differ by more than one major version, so linker-plugin-LTO cannot be used. Re-run with -Db_lto=false, install a matching toolchain, or pass -Dlinker_plugin_lto=enabled to override this check at your own risk.'.format(rustc_llvm, clang_llvm))
+      endif
+      use_rust_lto = true
+      message('linker-plugin-LTO enabled (clang LLVM @0@ / rustc LLVM @1@)'.format(clang_llvm, rustc_llvm))
+   endif
+   if use_rust_lto
+      cargo_env.set('RUSTFLAGS', '-Clinker-plugin-lto')
+   endif
    cargo_options = [ '--manifest-path', cargo_toml ]
    cargo_options += [ '--profile', rust_target ]
    cargo_options += [ '--target-dir', meson.project_build_root() / 'src' ]
