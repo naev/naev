@@ -519,6 +519,8 @@ void asteroids_computeInternals( AsteroidAnchor *a )
 
    /* Compute number of asteroids */
    a->nmax = floor( a->area / ASTEROID_REF_AREA * a->density );
+   if ( a->inner == NULL )
+      a->inner = calloc( sizeof( AsteroidInner ), 1 );
    if ( a->inner->asteroids == NULL )
       a->inner->asteroids = array_create_size( Asteroid, a->nmax );
 
