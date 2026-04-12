@@ -1,5 +1,7 @@
 #include "asteroid.h"
 
+#include "quadtree.h"
+
 /**
  * @brief Represents a potential reward from the asteroid.
  */
@@ -65,6 +67,9 @@ typedef struct Asteroid {
    int    scanned;    /**< Wether the player already scanned this asteroid. */
 } Asteroid;
 
-typedef struct AsteroidVecStorage {
-   Asteroid a;
-} AsteroidVecStorage;
+typedef struct AsteroidInner {
+   Asteroid *asteroids; /**< Asteroids belonging to the field. */
+   Quadtree  qt;        /**< Handles collisions. */
+   int       qt_init; /**< Whether or not the quadtree has been initialized. */
+   int       has_exclusion; /**< Used for updating. */
+} AsteroidInner;

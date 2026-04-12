@@ -100,7 +100,7 @@ static int asteroid_updateSingle( Asteroid *a )
       a->sol.vel.x += ast->accel * dt * offx / d;
       a->sol.vel.y += ast->accel * dt * offy / d;
       setvel = 1;
-   } else if ( ast->has_exclusion ) {
+   } else if ( ast->inner->has_exclusion ) {
       /* Push away from exclusion areas. */
       for ( int k = 0; k < array_size( cur_system->astexclude ); k++ ) {
          AsteroidExclusion *exc = &cur_system->astexclude[k];
@@ -210,23 +210,23 @@ void asteroids_update( double dt )
 
    /* Asteroids/Debris update */
    for ( int i = 0; i < array_size( cur_system->asteroids ); i++ ) {
-      AsteroidAnchor *ast = &cur_system->asteroids[i];
-      ast->has_exclusion  = 0;
+      AsteroidAnchor *ast       = &cur_system->asteroids[i];
+      ast->inner->has_exclusion = 0;
 
       for ( int k = 0; k < array_size( cur_system->astexclude ); k++ ) {
          AsteroidExclusion *exc = &cur_system->astexclude[k];
          if ( vec2_dist2( &ast->pos, &exc->pos ) <
               pow2( ast->radius + exc->radius ) ) {
-            exc->affects       = 1;
-            ast->has_exclusion = 1;
+            exc->affects              = 1;
+            ast->inner->has_exclusion = 1;
          } else
             exc->affects = 0;
       }
 
       /* Now just thread it and zoom. */
       asteroid_dt = dt;
-      for ( int j = 0; j < array_size( ast->asteroids ); j++ ) {
-         Asteroid *a = &ast->asteroids[j].a;
+      for ( int j = 0; j < array_size( ast->inner->asteroids ); j++ ) {
+         Asteroid *a = &ast->inner->asteroids[j];
          /* Skip inexistent asteroids. */
          if ( a->state == ASTEROID_XX ) {
             a->timer -= dt;
@@ -240,9 +240,9 @@ void asteroids_update( double dt )
       }
 
       /* Do quadtree stuff. Can't be threaded. */
-      qt_clear( &ast->qt );
-      for ( int j = 0; j < array_size( ast->asteroids ); j++ ) {
-         const Asteroid *a = &ast->asteroids[j].a;
+      qt_clear( &ast->inner->qt );
+      for ( int j = 0; j < array_size( ast->inner->asteroids ); j++ ) {
+         const Asteroid *a = &ast->inner->asteroids[j];
          /* Add to quadtree if in foreground. */
          if ( a->state == ASTEROID_FG ) {
             int x, y, w2, h2, px, py;
@@ -252,7 +252,7 @@ void asteroids_update( double dt )
             py = round( a->sol.pre.y );
             w2 = ceil( tex_sw( a->gfx ) * 0.5 );
             h2 = ceil( tex_sh( a->gfx ) * 0.5 );
-            qt_insert( &ast->qt, j, MIN( x, px ) - w2, MIN( y, py ) - h2,
+            qt_insert( &ast->inner->qt, j, MIN( x, px ) - w2, MIN( y, py ) - h2,
                        MAX( x, px ) + w2, MAX( y, py ) + h2 );
          }
       }
@@ -318,6 +318,9 @@ void asteroids_init( void )
       int             qx, qy, qr;
       ast->id = i;
 
+      if ( ast->inner == NULL )
+         ast->inner = calloc( sizeof( AsteroidInner ), 1 );
+
       /* Add graphics to debris. */
       for ( int j = 0; j < array_size( ast->groups ); j++ ) {
          AsteroidTypeGroup *ag = ast->groups[j];
@@ -329,17 +332,17 @@ void asteroids_init( void )
       }
 
       /* Build quadtree. */
-      if ( ast->qt_init )
-         qt_destroy( &ast->qt );
+      if ( ast->inner->qt_init )
+         qt_destroy( &ast->inner->qt );
       qx = round( ast->pos.x );
       qy = round( ast->pos.y );
       qr = ceil( ast->radius );
-      qt_create( &ast->qt, qx - qr, qy - qr, qx + qr, qy + qr, 2, 5 );
-      ast->qt_init = 1;
+      qt_create( &ast->inner->qt, qx - qr, qy - qr, qx + qr, qy + qr, 2, 5 );
+      ast->inner->qt_init = 1;
 
       /* Add the asteroids to the anchor */
-      array_erase( &ast->asteroids, array_begin( ast->asteroids ),
-                   array_end( ast->asteroids ) );
+      array_erase( &ast->inner->asteroids, array_begin( ast->inner->asteroids ),
+                   array_end( ast->inner->asteroids ) );
       if ( array_size( ast->groups ) > 0 ) {
          for ( int j = 0; j < ast->nmax; j++ ) {
             double   r = RNGF();
@@ -347,7 +350,7 @@ void asteroids_init( void )
             if ( asteroid_init( &a, ast ) ) {
                continue;
             }
-            a.id = array_size( ast->asteroids );
+            a.id = array_size( ast->inner->asteroids );
             if ( r > 0.6 )
                a.state = ASTEROID_FG;
             else if ( r > 0.8 )
@@ -359,8 +362,7 @@ void asteroids_init( void )
             a.timer = a.timer_max = 30. * RNGF();
             a.ang                 = RNGF() * M_PI * 2.;
             /* Push into array. */
-            AsteroidVecStorage as = { .a = a };
-            array_push_back( &ast->asteroids, as );
+            array_push_back( &ast->inner->asteroids, a );
          }
       } else {
          if ( ast->label != NULL )
@@ -517,8 +519,8 @@ void asteroids_computeInternals( AsteroidAnchor *a )
 
    /* Compute number of asteroids */
    a->nmax = floor( a->area / ASTEROID_REF_AREA * a->density );
-   if ( a->asteroids == NULL )
-      a->asteroids = array_create_size( AsteroidVecStorage, a->nmax );
+   if ( a->inner->asteroids == NULL )
+      a->inner->asteroids = array_create_size( Asteroid, a->nmax );
 
    /* Computed from your standard physics equations (with a bit of margin). */
    a->margin = pow2( a->maxspeed ) / ( 4. * a->accel ) + 50.;
@@ -885,8 +887,8 @@ void asteroids_render( void )
          continue;
 
       /* Render all asteroids. */
-      for ( int j = 0; j < array_size( ast->asteroids ); j++ )
-         asteroid_renderSingle( &ast->asteroids[j].a );
+      for ( int j = 0; j < array_size( ast->inner->asteroids ); j++ )
+         asteroid_renderSingle( &ast->inner->asteroids[j] );
    }
 
    /* Render the debris. */
@@ -1008,12 +1010,13 @@ void asteroid_initAnchor( AsteroidAnchor *ast )
  */
 void asteroid_freeAnchor( AsteroidAnchor *ast )
 {
-   if ( ast->qt_init )
-      qt_destroy( &ast->qt );
+   if ( ast->inner->qt_init )
+      qt_destroy( &ast->inner->qt );
    free( ast->label );
-   array_free( ast->asteroids );
+   array_free( ast->inner->asteroids );
    array_free( ast->groups );
    array_free( ast->groupsw );
+   free( ast->inner );
 }
 
 /**
@@ -1280,7 +1283,7 @@ const AsteroidRef *asteroid_collideQueryIL( AsteroidAnchor *anc, int x1, int y1,
    }
    array_erase( &astlist, array_begin( astlist ), array_end( astlist ) );
 
-   qt_query( &anc->qt, &astintlist, x1, y1, x2, y2 );
+   qt_query( &anc->inner->qt, &astintlist, x1, y1, x2, y2 );
    for ( int i = 0; i < il_size( &astintlist ); i++ ) {
       AsteroidRef a = il_get( &astintlist, i, 0 );
       array_push_back( &astlist, a );
@@ -1292,7 +1295,7 @@ const Asteroid *ast_get( const AsteroidAnchor *anc, int64_t i )
 {
    if ( i < 0 )
       return NULL;
-   return &anc->asteroids[i].a;
+   return &anc->inner->asteroids[i];
 }
 AsteroidRef ast_id( const Asteroid *ast )
 {
@@ -1343,7 +1346,7 @@ AsteroidRef asteroid_closestPilot( const AsteroidAnchor *anc, double x,
                                    double y, double *d )
 {
    AsteroidRef ast = ASTEROID_NULL;
-   for ( int k = 0; k < array_size( anc->asteroids ); k++ ) {
+   for ( int k = 0; k < array_size( anc->inner->asteroids ); k++ ) {
       const Asteroid *as = ast_get( anc, k );
 
       /* Skip non-interactive asteroids. */

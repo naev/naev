@@ -1473,7 +1473,6 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
    if ( player.p->stats.asteroid_scan > 0. ) {
       double range = player.p->stats.asteroid_scan;
       for ( int i = 0; i < array_size( cur_system->asteroids ); i++ ) {
-         double          r2;
          AsteroidAnchor *ast = &cur_system->asteroids[i];
 
          /* Field out of range. */
@@ -1481,10 +1480,14 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
               pow2( range + ast->radius + ast->margin ) )
             continue;
 
-         r2 = pow2( range );
-         for ( int j = 0; j < array_size( ast->asteroids ); j++ ) {
+         int                ax   = round( player.p->solid.pos.x );
+         int                ay   = round( player.p->solid.pos.y );
+         double             r2   = pow2( range );
+         const AsteroidRef *hits = asteroid_collideQueryIL(
+            ast, ax - range, ay - range, ax + range, ay + range );
+         for ( int j = 0; j < array_size( hits ); j++ ) {
             HookParam       hparam[2];
-            const Asteroid *a = ast_get( ast, j );
+            const Asteroid *a = ast_get( ast, hits[j] );
 
             if ( ast_scanned( a ) )
                continue;

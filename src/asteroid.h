@@ -9,7 +9,6 @@
 #include "commodity.h"
 #include "outfit.h"
 #include "physics.h"
-#include "quadtree.h"
 
 #define ASTEROID_DEFAULT_RADIUS                                                \
    2500. /**< Default radius of an asteroid field. */
@@ -43,11 +42,10 @@ typedef enum {
    ASTEROID_STATE_MAX, /**< Max amount of states. */
 } AsteroidState;
 
-typedef struct AsteroidType        AsteroidType;
-typedef struct AsteroidTypeGroup   AsteroidTypeGroup;
-typedef struct Asteroid            Asteroid;
-typedef struct AsteroidVecStorage  AsteroidVecStorage;
-typedef struct AsteroidVecStorage *AsteroidVec;
+typedef struct AsteroidInner     AsteroidInner;
+typedef struct AsteroidType      AsteroidType;
+typedef struct AsteroidTypeGroup AsteroidTypeGroup;
+typedef struct Asteroid          Asteroid;
 // typedef struct Asteroid*       AsteroidRef;
 // typedef void* AsteroidRef;
 // #define ASTEROID_NULL   NULL
@@ -58,25 +56,21 @@ typedef int64_t AsteroidRef;
  * @brief Represents an asteroid field anchor.
  */
 typedef struct AsteroidAnchor_ {
-   char               *label;     /**< Label used for unidiffs. */
-   int                 id;        /**< ID of the anchor, for targeting. */
-   vec2                pos;       /**< Position in the system (from centre). */
-   double              density;   /**< Density of the field. */
-   AsteroidVec         asteroids; /**< Asteroids belonging to the field. */
-   int                 nmax;      /**< Maximum number of asteroids. */
-   double              radius;    /**< Radius of the anchor. */
-   double              area;      /**< Field's area. */
-   AsteroidTypeGroup **groups;    /**< Groups of asteroids. */
-   double             *groupsw;   /**< Weight of the groups of asteroids. */
+   char               *label;   /**< Label used for unidiffs. */
+   int                 id;      /**< ID of the anchor, for targeting. */
+   vec2                pos;     /**< Position in the system (from centre). */
+   double              density; /**< Density of the field. */
+   int                 nmax;    /**< Maximum number of asteroids. */
+   double              radius;  /**< Radius of the anchor. */
+   double              area;    /**< Field's area. */
+   AsteroidTypeGroup **groups;  /**< Groups of asteroids. */
+   double             *groupsw; /**< Weight of the groups of asteroids. */
    double              groupswtotal; /**< Sum of the weights of the groups. */
    double maxspeed; /**< Maxmimum speed the asteroids can have in the field. */
    double maxspin;  /**< Maxmimum spin the asteroids can have in the field. */
    double accel;    /**< Accel applied when out of radius towards centre. */
    double margin; /**< Extra margin to use when doing distance computations. */
-   /* Collision stuff. */
-   Quadtree qt;      /**< Handles collisions. */
-   int      qt_init; /**< Whether or not the quadtree has been initialized. */
-   int      has_exclusion; /**< Used for updating. */
+   AsteroidInner *inner;
 } AsteroidAnchor;
 
 /**

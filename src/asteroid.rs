@@ -495,31 +495,29 @@ pub fn update(dt: f64) {
    if let Some(cur_system) = crate::system::cur() {}
 }
 
+struct AnchorInner {
+   asteroids: SlotMap<AsteroidRef, Asteroid>,
+   has_exclusion: bool,
+}
+
 #[instrument]
 #[unsafe(no_mangle)]
 pub extern "C" fn _asteroids_init() {
    if let Some(cur_system) = crate::system::cur_mut() {
       let mut density_max = 0.0;
       for ast in cur_system.asteroids_mut() {
+         if ast.inner.is_null() {
+            ast.inner = Box::into_raw(Box::new(AnchorInner {
+               asteroids: SlotMap::with_key(),
+               has_exclusion: false,
+            })) as *mut naevc::AsteroidInner;
+         }
+         let inner = unsafe { &mut *(ast.inner as *mut AnchorInner) };
+
          // TODO add graphics to debris
 
-         // Build quadtree
-         if ast.qt_init != 0 {
-            unsafe {
-               naevc::qt_destroy(&mut ast.qt);
-            }
-         }
-         let qx = ast.pos.x.round() as i32;
-         let qy = ast.pos.y.round() as i32;
-         let qr = ast.radius.ceil() as i32;
-         unsafe {
-            naevc::qt_create(&mut ast.qt, qx - qr, qy - qr, qx + qr, qy + qr, 2, 5);
-         }
-         ast.qt_init = 1;
-
          // Add asteroids to the anchor
-         let asteroids = unsafe { &mut *(ast.asteroids as *mut SlotMap<AsteroidRef, Asteroid>) };
-         asteroids.clear();
+         inner.asteroids.clear();
          for i in 0..ast.nmax {
             if let Some(mut a) = Asteroid::try_new(ast, true) {
                let r = rng::<f32>();
@@ -534,7 +532,7 @@ pub extern "C" fn _asteroids_init() {
                }
                a.timer_max = 30.0 * rng::<f64>();
                a.timer = a.timer_max;
-               asteroids.insert_with_key(|k| {
+               inner.asteroids.insert_with_key(|k| {
                   a.id = k;
                   a
                });
@@ -581,8 +579,8 @@ pub extern "C" fn _astgroup_name(at: *const TypeGroup) -> *const c_char {
 #[unsafe(no_mangle)]
 pub extern "C" fn _ast_get(ast: *const naevc::AsteroidAnchor, id: i64) -> *const Asteroid {
    let ast = unsafe { &*ast };
-   let asteroids = unsafe { &mut *(ast.asteroids as *mut SlotMap<AsteroidRef, Asteroid>) };
-   match asteroids.get(AsteroidRef::from_ffi(id)) {
+   let inner = unsafe { &*(ast.inner as *const AnchorInner) };
+   match inner.asteroids.get(AsteroidRef::from_ffi(id)) {
       Some(ast) => ast,
       None => std::ptr::null(),
    }
@@ -675,9 +673,10 @@ pub extern "C" fn _asteroid_closestPilot(
    d: *mut f64,
 ) -> i64 {
    let ast = unsafe { &*ast };
-   let asteroids = unsafe { &*(ast.asteroids as *mut SlotMap<AsteroidRef, Asteroid>) };
+   let inner = unsafe { &*(ast.inner as *const AnchorInner) };
    let pos = Vector2::new(x, y);
-   match asteroids
+   match inner
+      .asteroids
       .iter()
       .map(|(k, a)| {
          let ap = a.pos();
@@ -727,10 +726,6 @@ pub extern "C" fn _asteroids_computeInternals(a: *mut naevc::AsteroidAnchor) {
    let groupsw = unsafe { array::array_as_slice(a.groupsw) };
    for w in groupsw {
       a.groupswtotal += w;
-   }
-   if a.asteroids.is_null() {
-      let map: SlotMap<AsteroidRef, Asteroid> = SlotMap::with_key();
-      a.asteroids = Box::into_raw(Box::new(map)) as *mut naevc::AsteroidVecStorage;
    }
 }
 
