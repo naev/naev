@@ -19,6 +19,9 @@
 typedef struct Quadtree Quadtree;
 
 struct Quadtree {
+   // Has been initialized
+   int init;
+
    // Stores all the nodes in the quadtree. The first node in this
    // sequence is always the root.
    IntList nodes;
@@ -79,3 +82,5 @@ void qt_query( Quadtree *qt, IntList *out, int x1, int y1, int x2, int y2 );
 // 'leaf' for leaf nodes.
 void qt_traverse( Quadtree *qt, void *user_data, QtNodeFunc *branch,
                   QtNodeFunc *leaf );
+
+int qt_isinit( const Quadtree *qt );

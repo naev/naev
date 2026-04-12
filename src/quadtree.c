@@ -225,6 +225,7 @@ static void node_insert( Quadtree *qt, int index, int depth, int mx, int my,
 void qt_create( Quadtree *qt, int x1, int y1, int x2, int y2, int max_elements,
                 int max_depth )
 {
+   qt->init         = 1;
    qt->max_elements = max_elements;
    qt->max_depth    = max_depth;
    qt->temp         = NULL;
@@ -262,6 +263,7 @@ void qt_clear( Quadtree *qt )
 
 void qt_destroy( Quadtree *qt )
 {
+   qt->init = 0;
    il_destroy( &qt->nodes );
    il_destroy( &qt->elts );
    il_destroy( &qt->enodes );
@@ -471,4 +473,9 @@ void qt_traverse( Quadtree *qt, void *user_data, QtNodeFunc *branch,
          leaf( qt, user_data, nd_index, nd_depth, nd_mx, nd_my, nd_sx, nd_sy );
    }
    il_destroy( &to_process );
+}
+
+int qt_isinit( const Quadtree *qt )
+{
+   return qt->init == 1;
 }
