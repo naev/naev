@@ -104,6 +104,8 @@ typedef struct Ship {
                        ships are related. */
    char *base_path; /**< Ship's base type path, used for finding graphics and
                        such. */
+   int priority;    /**< For sorting ships. Takes preference over other sorting
+                       systems. */
    ShipClass class; /**< Ship class. */
    char *
       class_display; /**< Custom ship class, overrides class when displaying. */

@@ -145,6 +145,12 @@ int ship_compareTech( const void *arg1, const void *arg2 )
    s1 = *(const Ship **)arg1;
    s2 = *(const Ship **)arg2;
 
+   /* Sort priority. */
+   if ( s1->priority > s2->priority )
+      return +1;
+   else if ( s1->priority > s2->priority )
+      return -1;
+
    /* Compare rarity. */
    if ( s1->rarity < s2->rarity )
       return +1;
@@ -981,6 +987,7 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
       xml_onlyNodes( node );
 
       xmlr_strd_free( node, "display", temp->display );
+      xmlr_int( node, "priority", temp->priority );
       if ( xml_isNode( node, "class" ) ) {
          xmlr_attr_strd_free( node, "display", temp->class_display );
          temp->class = ship_classFromString( xml_get( node ) );
