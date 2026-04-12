@@ -249,6 +249,9 @@ impl FactionRef {
                None => f32::INFINITY,
             })
             .unwrap_or(f32::INFINITY);
+         if threshold == f32::INFINITY {
+            return false;
+         }
          unsafe {
             (naevc::system_getReputationOrGlobal(sys, self.as_ffi()) as f32).round() > threshold
          }
@@ -2379,10 +2382,10 @@ pub extern "C" fn faction_reputationOverride(id: i64, set: *mut c_int) -> c_doub
          0.0
       }
    })
-   .unwrap_or_else(|err| {
-      warn_err!(err);
+   .unwrap_or_else(|_err| {
+      //warn_err!(err);
       unsafe {
-         *set = -1;
+         *set = 0;
       }
       0.0
    }) as c_double
@@ -2479,8 +2482,8 @@ pub extern "C" fn faction_getStandingTextAtValue(id: i64, value: c_double) -> *c
    static STANDING: Mutex<Option<CString>> = Mutex::new(None);
    let rank = match faction_c_with(id, |fct| fct.text_rank(Some(value as f32))).flatten() {
       Ok(r) => r,
-      Err(e) => {
-         warn_err!(e);
+      Err(_e) => {
+         //warn_err!(e);
          return std::ptr::null();
       }
    };
@@ -2493,8 +2496,8 @@ pub extern "C" fn faction_getStandingTextAtValue(id: i64, value: c_double) -> *c
 pub extern "C" fn faction_reputationMax(id: i64) -> c_double {
    faction_c_with(id, |fct| fct.reputation_max())
       .flatten()
-      .unwrap_or_else(|err| {
-         warn_err!(err);
+      .unwrap_or_else(|_err| {
+         //warn_err!(err);
          0.0
       })
       .into()
