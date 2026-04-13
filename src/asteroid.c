@@ -318,9 +318,6 @@ void asteroids_init( void )
       int             qx, qy, qr;
       ast->id = i;
 
-      if ( ast->inner == NULL )
-         ast->inner = calloc( sizeof( AsteroidInner ), 1 );
-
       /* Add graphics to debris. */
       for ( int j = 0; j < array_size( ast->groups ); j++ ) {
          AsteroidTypeGroup *ag = ast->groups[j];
@@ -519,8 +516,6 @@ void asteroids_computeInternals( AsteroidAnchor *a )
 
    /* Compute number of asteroids */
    a->nmax = floor( a->area / ASTEROID_REF_AREA * a->density );
-   if ( a->inner == NULL )
-      a->inner = calloc( sizeof( AsteroidInner ), 1 );
    if ( a->inner->asteroids == NULL )
       a->inner->asteroids = array_create_size( Asteroid, a->nmax );
 
@@ -1003,6 +998,7 @@ void asteroid_initAnchor( AsteroidAnchor *ast )
    ast->maxspeed = ASTEROID_DEFAULT_MAXSPEED;
    ast->maxspin  = ASTEROID_DEFAULT_MAXSPIN;
    ast->accel    = ASTEROID_DEFAULT_ACCEL;
+   ast->inner    = calloc( sizeof( AsteroidInner ), 1 );
 }
 
 /**
