@@ -466,9 +466,10 @@ impl UserData for CommodityRef {
     * @see name
     */
    fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
-      methods.add_meta_function(MetaMethod::ToString, |_, this: Self| {
-         Ok(this.with(|com| com.name().to_string())?)
-      });
+      methods.add_meta_function(
+         MetaMethod::ToString,
+         |_, this: Self| -> mlua::Result<String> { Ok(this.with(|com| com.name().to_string())?) },
+      );
       /*@
        * @brief Checks to see if two commodities are the same.
        *
