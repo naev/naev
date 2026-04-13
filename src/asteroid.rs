@@ -9,9 +9,11 @@ use audio::{AudioBuilder, AudioType};
 use collide::polygon::Polygon;
 use collide::polygon::SpinPolygon;
 use helpers::ReferenceC;
+use mlua::{BorrowedStr, Either, FromLua, MetaMethod, UserData, UserDataMethods, UserDataRef};
 use naev_core::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
 use nalgebra::Vector2;
 use nlog::{debugx, warn, warn_err};
+use physics::vec2::Vec2;
 use rayon::prelude::*;
 use renderer::texture::{Texture, TextureBuilder};
 use renderer::{Context, ContextWrapper};
@@ -493,6 +495,144 @@ pub fn load() -> Result<()> {
 #[instrument]
 pub fn update(dt: f64) {
    if let Some(cur_system) = crate::system::cur() {}
+}
+
+#[derive(Debug, PartialEq, Copy, Clone)]
+struct LuaAsteroid {
+   parent: usize,
+   id: AsteroidRef,
+}
+
+impl LuaAsteroid {
+   pub fn with<F, R>(&self, f: F) -> Result<R>
+   where
+      F: Fn(&Asteroid) -> R,
+   {
+      if let Some(cur_system) = crate::system::cur()
+         && let Some(field) = cur_system.asteroids().get(self.parent)
+      {
+         let inner = unsafe { &*(field.inner as *const AnchorInner) };
+         if let Some(ast) = inner.asteroids.get(self.id) {
+            Ok(f(ast))
+         } else {
+            anyhow::bail!("asteroid not found")
+         }
+      } else {
+         anyhow::bail!("asteroid not found")
+      }
+   }
+}
+
+impl FromLua for LuaAsteroid {
+   fn from_lua(value: mlua::Value, _: &mlua::Lua) -> mlua::Result<Self> {
+      match value {
+         mlua::Value::UserData(ud) => Ok(*ud.borrow::<Self>()?),
+         val => Err(mlua::Error::RuntimeError(format!(
+            "unable to convert {} to LuaAsteroid",
+            val.type_name()
+         ))),
+      }
+   }
+}
+
+/*@
+ * @brief Lua bindings to interact with asteroid.
+ *
+ *
+ * @lua_mod asteroid
+ */
+impl UserData for LuaAsteroid {
+   fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
+      /*@
+       * @brief Compares two asteroids to see if they are the same.
+       *
+       *    @luatparam Asteroid a1 Asteroid 1 to compare.
+       *    @luatparam Asteroid a2 Asteroid 2 to compare.
+       *    @luatreturn boolean true if both asteroids are the same.
+       * @luafunc __eq
+       */
+      methods.add_meta_function(
+         MetaMethod::Eq,
+         |_, (this, other): (Self, Self)| -> mlua::Result<bool> { Ok(this == other) },
+      );
+      /*@
+       * @brief Gets the asteroid's current (translated) name or notes it is
+       * non-existent.
+       *
+       * @usage tostring(a)
+       *
+       *    @luatparam Asteroid a Asteroid to convert to string.
+       *    @luatreturn string A string representation of the asteroid.
+       * if not existent.
+       * @luafunc __tostring
+       */
+      methods.add_meta_function(
+         MetaMethod::ToString,
+         |_, this: Self| -> mlua::Result<String> {
+            Ok(format!("Asteroid( {}, {:?} )", this.parent, this.id))
+         },
+      );
+      /*@
+       * @brief Gets all the asteroids in the system.
+       *
+       *    @luatreturn table t A list of all asteroids in the system.
+       * @luafunc getAll
+       */
+      methods.add_function("getAll", |_, ()| -> mlua::Result<Vec<Self>> {
+         let mut asteroids = Vec::new();
+         if let Some(cur_system) = crate::system::cur() {
+            for (parent, ast) in cur_system.asteroids().iter().enumerate() {
+               let inner = unsafe { &*(ast.inner as *const AnchorInner) };
+               for (id, asteroid) in inner.asteroids.iter() {
+                  asteroids.push(LuaAsteroid { parent, id })
+               }
+            }
+         }
+         Ok(asteroids)
+      });
+      /*@
+       * @brief Gets an asteroid in the system.
+       *
+       *    @luatparam nil|number|Vector|Pilot If not supplied, gets a random
+       * asteroid, if not it tries to get the asteroid closest to the Vector or Pilot.
+       * In the case of a number, it tries to get a random asteroid from the asteroid
+       * field with the number as an id.
+       *    @luatreturn Asteroid The closest asteroid or nil if not found.
+       * @luafunc get
+       */
+      methods.add_function(
+         "get",
+         |lua,
+          param: Option<Either<usize, Either<Vec2, mlua::Value>>>|
+          -> mlua::Result<Option<Self>> {
+            fn get_from_field(field: usize) -> Option<LuaAsteroid> {
+               todo!()
+            }
+            fn get_from_pos(pos: Vector2<f64>) -> Option<LuaAsteroid> {
+               todo!()
+            }
+            if let Some(param) = param {
+               match param {
+                  Either::Left(parent) => Ok(get_from_field(parent)),
+                  Either::Right(param) => match param {
+                     Either::Left(v) => Ok(get_from_pos(v.into())),
+                     Either::Right(ud) => match crate::pilot::from_lua(lua, &ud) {
+                        Ok(plt) => Ok(get_from_pos(plt.pos())),
+                        Err(_) => Ok(None),
+                     },
+                  },
+               }
+            } else {
+               if let Some(cur_system) = crate::system::cur_mut() {
+                  let parent = range(0..cur_system.asteroids().len());
+                  Ok(get_from_field(parent))
+               } else {
+                  Ok(None)
+               }
+            }
+         },
+      );
+   }
 }
 
 struct AnchorInner {
