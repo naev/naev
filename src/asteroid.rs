@@ -234,7 +234,7 @@ impl TypeGroup {
    }
 }
 
-#[derive(Debug, Default)]
+#[derive(Debug, Default, PartialEq)]
 enum State {
    #[default]
    Xx,
@@ -632,6 +632,38 @@ impl UserData for LuaAsteroid {
             }
          },
       );
+      /*@
+       * @brief Checks to see if an asteroid exists.
+       *
+       *    @luatparam Asteroid a Asteroid to check to see if exists.
+       *    @luatreturn boolean true if the asteroid exists, false otherwise.
+       * @luafunc exists
+       */
+      methods.add_method("exists", |_, this, ()| -> mlua::Result<bool> {
+         Ok(this.with(|a| a.state == State::Fg).unwrap_or(false))
+      });
+      /*@
+       * @brief Gets the state of an asteroid.
+       *
+       *    @luatparam Asteroid a Asteroid to check state of.
+       *    @luatreturn string State of the asteroid. Can be one of `FG`, `XB`, `BX`,
+       * `XX_TO_BG`, `FG_TO_BG`, `BG_TO_FG`, `BG_TO_XX`, or `XX`.
+       * @luafunc state
+       */
+      methods.add_method("state", |_, this, ()| -> mlua::Result<&str> {
+         Ok(this
+            .with(|a| match a.state {
+               State::Fg => "FG",
+               State::Xb => "XB",
+               State::Bx => "BX",
+               State::XxToBg => "XX_TO_BG",
+               State::FgToBg => "FG_TO_BG",
+               State::BgToFg => "BG_TO_FG",
+               State::BgToXx => "BG_TO_XX",
+               State::Xx => "XX",
+            })
+            .unwrap_or("XX"))
+      });
    }
 }
 
