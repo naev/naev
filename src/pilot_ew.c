@@ -463,9 +463,10 @@ static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close,
       if ( pilot_isFlag( p, PILOT_HIDE ) )
          continue;
 
-      /* Must not be landing nor taking off. */
+      /* Must not be landing nor taking off, nor jumping. */
       if ( pilot_isFlag( t, PILOT_LANDING ) ||
-           pilot_isFlag( t, PILOT_TAKEOFF ) )
+           pilot_isFlag( t, PILOT_TAKEOFF ) ||
+           pilot_isFlag( t, PILOT_HYPERSPACE ) )
          continue;
 
       /* Allies are ignored. */
