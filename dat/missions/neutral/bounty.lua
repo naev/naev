@@ -33,6 +33,7 @@ local fmt = require "format"
 local pilotname = require "pilotname"
 local lmisn = require "lmisn"
 local bounty = require "common.bounty"
+local var = require "shipvariants"
 
 -- Case target can be dead or alive
 local misn_title = {
@@ -230,7 +231,7 @@ local function bounty_setup ()
          pship = "Pirate Hyena"
          credits = 80e3 + rnd.sigma() * 15e3
       else
-         pship = "Pirate Shark"
+         pship = var.pirate_shark()
          credits = 100e3 + rnd.sigma() * 30e3
       end
       reputation = 0.5
@@ -259,7 +260,7 @@ local function bounty_setup ()
       credits = 700e3 + rnd.sigma() * 90e3
       reputation = 2.8
    elseif mem.level == 5 then
-      pship = "Pirate Kestrel"
+      pship = var.pirate_kestrel()
       credits = 1e6 + rnd.sigma() * 100e3
       reputation = 3.5
    end

@@ -97,6 +97,7 @@ function accept ()
    })
    misn.markerAdd( pspb )
    hook.land( "land" )
+   hook.enter( "enter" )
 end
 
 local function pickup ()
@@ -175,6 +176,10 @@ function land ()
    elseif cspb == pspb and not mem.gotmoss then
       pickup()
    end
+end
+
+function enter ()
+   if system.cur() == dsys then dspb:landAllow(true) end
 end
 
 function takeoff ()

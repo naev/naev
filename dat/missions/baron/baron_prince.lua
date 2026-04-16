@@ -61,7 +61,7 @@ function accept()
 
    vn.clear()
    vn.scene()
-   local unf = vn.newCharacter( _("An unfamiliar man"), {img=imgunfamiliar} )
+   local unf = vn.newCharacter( _("An unfamiliar man"), {image=imgunfamiliar} )
    vn.transition()
    vn.na(_([[As you approach the stranger, he extends his hand in greeting. He introduces himself as an associate of Baron Sauterfeldt, the man you helped to "acquire" a holopainting not too long ago.]]))
    unf(_([["The Baron was quite pleased with your performance in that matter," he confides. "He has asked me to try to find you again for another job not unlike the last one. The Baron is a collector, you see, and his hunger for new possessions is a hard one to satiate." He makes a face. "Of course, his methods aren't always completely respectable, as you've experienced for yourself. But I assure you that the Baron is not a bad man, he is simply very enthusiastic."]]))
