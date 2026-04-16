@@ -100,7 +100,7 @@ local zalek_cores = {
       } end,
    ["Za'lek Hephaestus"] = function (_p) return {
          systems = choose_one{ "Milspec Aegis 8501 Core System", "Milspec Thalos 8502 Core System" },
-         systems_secondary = choose_one{ "Milspec Aegis 8501 Core System", "Milspec Thalos 8502 Core System" },
+         systems_secondary = "Milspec Thalos 8502 Core System",
          hull = choose_one{ "Unicorp D-58 Heavy Plating", "S&K War Plating" }, -- Ideally, should chose twice the same
          hull_secondary = choose_one{ "Unicorp D-58 Heavy Plating", "S&K War Plating" },
          engines = "Melendez Mammoth Engine",
