@@ -606,10 +606,41 @@ impl UserData for LuaAsteroid {
           param: Option<Either<usize, Either<Vec2, mlua::Value>>>|
           -> mlua::Result<Option<Self>> {
             fn get_from_field(field: usize) -> Option<LuaAsteroid> {
-               todo!()
+               if let Some(cur_system) = crate::system::cur() {
+                  let fields = cur_system.asteroids();
+                  let parent = range(0..fields.len());
+                  let field = fields[parent];
+                  let inner = unsafe { &*(field.inner as *const AnchorInner) };
+                  let ast: Vec<_> = inner
+                     .asteroids
+                     .iter()
+                     .filter_map(|(k, a)| (a.state == State::Fg).then_some(k))
+                     .collect();
+                  let id = ast[range(0..ast.len())];
+                  Some(LuaAsteroid { parent, id })
+               } else {
+                  None
+               }
             }
             fn get_from_pos(pos: Vector2<f64>) -> Option<LuaAsteroid> {
-               todo!()
+               if let Some(cur_system) = crate::system::cur() {
+                  let fields = cur_system.asteroids();
+                  let parent = range(0..fields.len());
+                  let field = fields[parent];
+                  let inner = unsafe { &*(field.inner as *const AnchorInner) };
+                  let id = inner
+                     .asteroids
+                     .iter()
+                     .filter_map(|(k, a)| {
+                        (a.state == State::Fg).then(|| (k, (a.pos() - pos).norm_squared()))
+                     })
+                     .min_by(|(_, a), (_, b)| {
+                        a.partial_cmp(b).unwrap_or(std::cmp::Ordering::Equal)
+                     });
+                  id.map(|id| LuaAsteroid { parent, id: id.0 })
+               } else {
+                  None
+               }
             }
             if let Some(param) = param {
                match param {
