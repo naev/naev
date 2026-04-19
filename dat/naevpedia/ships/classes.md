@@ -41,7 +41,7 @@ While they are not meant for combat, they can still be outfitted to fight.
 
 ### Large Ships
 
-* **[Bulk Freighter](ships/classes/bulk_freighter)**: Designed to haul large amounts of goods across space, they usually sport fighter bays for of defence.
+* **[Bulk Freighter](ships/classes/bulk_freighter)**: Designed to haul large amounts of goods across space, they usually sport fighter bays for defence.
 
 ### Medium Ships
 
