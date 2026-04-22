@@ -140,6 +140,7 @@ local neutral_m = {
    {"neutral/male3n_v2"},
    -- Image generators
    gen( "neutral/male01" ),
+   gen( "neutral/male02" ),
 }
 local neutral_f = {
    "neutral/female1",
@@ -410,6 +411,7 @@ local sirius_serra_f = {
    "sirius/sirius_serra_f2",
    "sirius/sirius_serra_f3",
    "sirius/sirius_serra_f4",
+   gen( "sirius/sirius_serra_f1" ),
 }
 vni.sirius = {}
 vni.sirius.shairaMale = get_list( sirius_shaira_m )
