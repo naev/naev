@@ -108,7 +108,7 @@ url = { version = "2.5", features = ["serde"] }
 zip = { version = "8", default-features = false, features = ["deflate"] }
 # Utilities and filesystem
 walkdir = "2"
-rayon = "1.11" # parallel computation
+rayon = "1.12" # parallel computation
 directories = "6"
 fs-err = "3"
 toml = "1.1"
