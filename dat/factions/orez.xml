@@ -1,6 +1,7 @@
 <faction name="O'rez">
  <longname>House O'rez</longname>
  <ai>orez</ai>
+ <logo>orez</logo>
  <colour>aquablue</colour>
  <player>1</player>
  <spawn>orez</spawn>

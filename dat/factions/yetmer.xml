@@ -1,6 +1,7 @@
 <faction name="Yetmer">
  <longname>House Yetmer</longname>
  <ai>yetmer</ai>
+ <logo>yetmer</logo>
  <colour>gold</colour>
  <player>1</player>
  <spawn>yetmer</spawn>
