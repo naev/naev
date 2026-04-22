@@ -998,7 +998,7 @@ void asteroid_initAnchor( AsteroidAnchor *ast )
    ast->maxspeed = ASTEROID_DEFAULT_MAXSPEED;
    ast->maxspin  = ASTEROID_DEFAULT_MAXSPIN;
    ast->accel    = ASTEROID_DEFAULT_ACCEL;
-   ast->inner    = calloc( sizeof( AsteroidInner ), 1 );
+   ast->inner    = calloc( 1, sizeof( AsteroidInner ) );
 }
 
 /**
