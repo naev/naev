@@ -30,6 +30,7 @@
      immediately
    * Independent systems have their own standing and memory
    * Can only sell ships when a shipyard is available
+   * Bounties can feature multiple enemy ships
 
  ### Content
 

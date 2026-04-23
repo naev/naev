@@ -33,7 +33,7 @@ local fmt = require "format"
 local pilotname = require "pilotname"
 local lmisn = require "lmisn"
 local bounty = require "common.bounty"
-local var = require "shipvariants"
+--local var = require "shipvariants"
 
 -- Case target can be dead or alive
 local misn_title = {
@@ -217,11 +217,113 @@ local reason_list = {
    },
 }
 
+local function fleet_points( fleet )
+   local points = 0
+   for k,s in ipairs(fleet) do
+      points = points + s:points()
+   end
+   return points
+end
+
+-- Tries to find a set of ships given a number of points
+local function choose_ships_from_points( shiplist, points )
+   -- Candidate ships
+   local maybeship = {}
+   local maybecap = {}
+   for k,v in ipairs(shiplist) do
+      local p = v:points()
+      if p < points then
+         table.insert( maybeship, v )
+         if p > points*0.5 then
+            table.insert( maybecap, v )
+         end
+      end
+   end
+   if #maybeship <= 0 then
+      table.sort( shiplist, function( a, b ) return a:points() < b:points() end )
+      return {shiplist[1]}
+   end
+   table.sort( maybeship, function( a, b ) return a:points() > b:points() end )
+
+   -- Force top three ships to be considered capitals
+   if #maybecap <= 0 then
+      maybecap = { maybeship[1], maybeship[2], maybeship[3] }
+   end
+
+   -- Choose capship
+   local cap = maybecap[ rnd.rnd(#maybecap) ]
+   points = points - cap:points()
+   local smallest = maybeship[ #maybeship ]:points()
+   if points < smallest then return {cap} end
+
+   -- Must be smaller than capship
+   local cappoints = cap:points()
+   local newships = {}
+   for k,s in ipairs(maybeship) do
+      if s:points() < cappoints then
+         table.insert( newships, s )
+      end
+   end
+   maybeship = newships
+
+   -- Other ships have to be smaller
+   local ships = {cap}
+   while points >= smallest do
+      local candidates = rnd.permutation( maybeship )
+      local s
+      local id = 1
+      repeat
+         s = candidates[id]
+         if not s then return ships end
+         id = id+1
+      until s:points() < points
+      table.insert( ships, s )
+      points = points - s:points()
+   end
+
+   return ships
+end
+
 -- Set up the ship, credits, and reputation based on the level.
-local function bounty_setup_pirate( payingfaction, _points )
+local function bounty_setup_pirate( payingfaction, points )
+   local PIRATE_SHIPS = {
+      ship.get("Pirate Hyena"),
+      ship.get("Pirate Shark"),
+      ship.get("Pirate Vendetta"),
+      ship.get("Pirate Ancestor"),
+      ship.get("Pirate Admonisher"),
+      ship.get("Pirate Revenant"),
+      ship.get("Pirate Phalanx"),
+      ship.get("Pirate Starbridge"),
+      ship.get("Pirate Rhino"),
+      ship.get("Pirate Kestrel"),
+      ship.get("Pirate Zebra"),
+      ship.get("Dealbreaker"),
+   }
+   local fpir = faction.get("Pirate")
+
+   local ships = choose_ships_from_points( PIRATE_SHIPS, points )
+   points = fleet_points( ships ) -- Update points
+   -- TODO swap variants in there
+
    local systems = lmisn.getSysAtDistance( system.cur(), 1, 3,
       function(s)
-         return pir.systemPresence( s ) > 0
+         -- Must be claimable
+         if not naev.claimTest( s, true ) then
+            return false
+         end
+         -- More likely to only appear in empty systems with high points
+         if rnd.rnd() < points/200 then
+            for k,spb in ipairs(s:spobs()) do
+               if spb:services().inhabited then
+                  local f = spb:faction()
+                  if not pir.factionIsPirate(f) and fpir:areEnemies(payingfaction) then
+                     return false
+                  end
+               end
+            end
+         end
+         return pir.systemPresence( s ) > points
       end )
 
    if #systems == 0 then
@@ -230,62 +332,23 @@ local function bounty_setup_pirate( payingfaction, _points )
    end
 
    local missys = systems[ rnd.rnd( 1, #systems ) ]
-   if not misn.claim( missys, true ) then return end
 
    local level
    local num_pirates = pir.systemPresence( missys )
-   if num_pirates <= 50 then
+   if points <= 50 then
       level = 1
-   elseif num_pirates <= 100 then
-      level = rnd.rnd( 1, 2 )
+   elseif points <= 100 then
+      level = 2
    elseif num_pirates <= 200 then
-      level = rnd.rnd( 2, 3 )
+      level = 3
    elseif num_pirates <= 300 then
-      level = rnd.rnd( 3, 4 )
+      level = 4
    else
-      level = rnd.rnd( 4, 5 )
+      level = 5
    end
 
-   local pship, credits, reputation
-   if level == 1 then
-      if rnd.rnd() < 0.5 then
-         pship = "Pirate Hyena"
-         credits = 80e3 + rnd.sigma() * 15e3
-      else
-         pship = var.pirate_shark()
-         credits = 100e3 + rnd.sigma() * 30e3
-      end
-      reputation = 0.5
-   elseif level == 2 then
-      if rnd.rnd() < 0.5 then
-         pship = "Pirate Vendetta"
-      else
-         pship = "Pirate Ancestor"
-      end
-      credits = 300e3 + rnd.sigma() * 50e3
-      reputation = 1
-   elseif level == 3 then
-      if rnd.rnd() < 0.5 then
-         pship = "Pirate Admonisher"
-      else
-         pship = "Pirate Phalanx"
-      end
-      credits = 500e3 + rnd.sigma() * 80e3
-      reputation = 2
-   elseif level == 4 then
-      if rnd.rnd() < 0.5 then
-         pship = "Pirate Starbridge"
-      else
-         pship = "Pirate Rhino"
-      end
-      credits = 700e3 + rnd.sigma() * 90e3
-      reputation = 2.8
-   elseif level == 5 then
-      pship = var.pirate_kestrel()
-      credits = 1e6 + rnd.sigma() * 100e3
-      reputation = 3.5
-   end
-   credits = credits * 0.75 -- Lazy fine tuning multiplier
+   local credits     = 1e6 * points / 200 * (0.9 + 0.2 * rnd.rnd())
+   local reputation  = 30  * points / 200
 
    -- Reason for the bounty
    local reason = ""
@@ -298,7 +361,7 @@ local function bounty_setup_pirate( payingfaction, _points )
       level       = level,
       system      = missys,
       name        = pilotname.pirate(),
-      ships       = {pship},
+      ships       = ships,
       reward      = credits,
       reputation  = reputation,
       faction     = faction.get("Pirate"),
@@ -316,7 +379,10 @@ local function bounty_setup( payingfaction, points )
    -- Comput escorts
    local escorts = ""
    if #target.ships > 1 then
-      escorts = fmt.f(_(", with {num} escorts", #target.ships-1))
+      local num = #target.ships-1
+      escorts = fmt.f(n_(", with {num} escort", ", with {num} escorts", num), {
+         num = num
+      })
    end
 
    local title
@@ -368,6 +434,7 @@ function create ()
       -- Unable to find a target
       misn.finish(false)
    end
+   if not misn.claim( target.system, true ) then return end
 
    mem.missys = target.system
    mem.deadline = time.cur() + target.deadline
