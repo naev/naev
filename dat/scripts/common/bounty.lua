@@ -76,6 +76,9 @@ function bounty.init( system, targetname, targetship, reward, params )
    b.system          = system
    b.targetname      = targetname
    b.targetship      = targetship
+   if type(b.targetship) ~= "table" then
+      b.targetship   = {b.targetship}
+   end
    b.reward          = reward
    b.reputation      = params.reputation
    -- Other important stuff
@@ -384,13 +387,21 @@ function spawn_bounty( params )
    end
 
    -- If using a spawn function
+   target_ship = nil
    if b.spawnfunc then
       target_ship = _G[b.spawnfunc]( b, params )
    else
-      target_ship = pilot.add( b.targetship, _get_faction(), params, b.targetname )
-      local aimem = target_ship:memory()
-      aimem.loiter = math.huge -- Should make them loiter forever
-      aimem.capturable = true
+      for k,s in ipairs(b.targetship) do
+         local p = pilot.add( s, _get_faction(), params, b.targetname )
+         local aimem = p:memory()
+         aimem.loiter = math.huge -- Should make them loiter forever
+         aimem.capturable = true
+         if not target_ship then
+            target_ship = p
+         else
+            p:setLeader( target_ship )
+         end
+      end
    end
 
    misn.osdActive( 2 )

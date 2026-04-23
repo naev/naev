@@ -43,9 +43,9 @@ local misn_title = {
    _("High Dead or Alive Bounty in {sys}"),
    _("Dangerous Dead or Alive Bounty in {sys}"),
 }
-local misn_desc = _([[The pirate known as {pirname} was recently seen in the {sys} system. {fct} authorities want this pirate dead or alive{reason}. {pirname} is believed to be flying a {shipclass}-class ship. The pirate may disappear if you take too long to reach the {sys} system.
+local misn_desc = _([[The {pilotnoun} known as {pilotname} was recently seen in the {sys} system. {fct} authorities want {pilotname} {deadoralive}{reason}. {pilotname} is believed to be flying a {shipclass}-class ship. {pilotname} may disappear if you take too long to reach the {sys} system.
 
-#nTarget:#0 {pirname} ({shipclass}-class ship)
+#nTarget:#0 {pilotname} ({shipclass}-class ship){escorts}
 #nWanted:#0 Dead or Alive
 #nLast seen:#0 {sys} system
 #nTime limit:#0 {deadline}]])
@@ -58,12 +58,6 @@ local misn_title_alive = {
    _("High Alive Bounty in {sys}"),
    _("Dangerous Alive Bounty in {sys}"),
 }
-local misn_desc_alive = _([[The pirate known as {pirname} was recently seen in the {sys} system. {fct} authorities want this pirate alive{reason}. {pirname} is believed to be flying a {shipclass}-class ship. The pirate may disappear if you take too long to reach the {sys} system.
-
-#nTarget:#0 {pirname} ({shipclass}-class ship)
-#nWanted:#0 Alive
-#nLast seen:#0 {sys} system
-#nTime limit:#0 {deadline}]])
 
 local reason_list = {
    ["Independent"] = {
@@ -224,9 +218,36 @@ local reason_list = {
 }
 
 -- Set up the ship, credits, and reputation based on the level.
-local function bounty_setup ()
+local function bounty_setup_pirate( payingfaction, _points )
+   local systems = lmisn.getSysAtDistance( system.cur(), 1, 3,
+      function(s)
+         return pir.systemPresence( s ) > 0
+      end )
+
+   if #systems == 0 then
+      -- No pirates nearby
+      return
+   end
+
+   local missys = systems[ rnd.rnd( 1, #systems ) ]
+   if not misn.claim( missys, true ) then return end
+
+   local level
+   local num_pirates = pir.systemPresence( missys )
+   if num_pirates <= 50 then
+      level = 1
+   elseif num_pirates <= 100 then
+      level = rnd.rnd( 1, 2 )
+   elseif num_pirates <= 200 then
+      level = rnd.rnd( 2, 3 )
+   elseif num_pirates <= 300 then
+      level = rnd.rnd( 3, 4 )
+   else
+      level = rnd.rnd( 4, 5 )
+   end
+
    local pship, credits, reputation
-   if mem.level == 1 then
+   if level == 1 then
       if rnd.rnd() < 0.5 then
          pship = "Pirate Hyena"
          credits = 80e3 + rnd.sigma() * 15e3
@@ -235,7 +256,7 @@ local function bounty_setup ()
          credits = 100e3 + rnd.sigma() * 30e3
       end
       reputation = 0.5
-   elseif mem.level == 2 then
+   elseif level == 2 then
       if rnd.rnd() < 0.5 then
          pship = "Pirate Vendetta"
       else
@@ -243,7 +264,7 @@ local function bounty_setup ()
       end
       credits = 300e3 + rnd.sigma() * 50e3
       reputation = 1
-   elseif mem.level == 3 then
+   elseif level == 3 then
       if rnd.rnd() < 0.5 then
          pship = "Pirate Admonisher"
       else
@@ -251,7 +272,7 @@ local function bounty_setup ()
       end
       credits = 500e3 + rnd.sigma() * 80e3
       reputation = 2
-   elseif mem.level == 4 then
+   elseif level == 4 then
       if rnd.rnd() < 0.5 then
          pship = "Pirate Starbridge"
       else
@@ -259,59 +280,13 @@ local function bounty_setup ()
       end
       credits = 700e3 + rnd.sigma() * 90e3
       reputation = 2.8
-   elseif mem.level == 5 then
+   elseif level == 5 then
       pship = var.pirate_kestrel()
       credits = 1e6 + rnd.sigma() * 100e3
       reputation = 3.5
    end
+   local ships = {pship}
    credits = credits * 0.75 -- Lazy fine tuning multiplier
-   return pship, credits, reputation
-end
-
-function create ()
-   local payingfaction = spob.cur():faction()
-
-   local systems = lmisn.getSysAtDistance( system.cur(), 1, 3,
-      function(s)
-         return pir.systemPresence( s ) > 0
-      end )
-
-   if #systems == 0 then
-      -- No pirates nearby
-      misn.finish( false )
-   end
-
-   local missys = systems[ rnd.rnd( 1, #systems ) ]
-   if not misn.claim( missys, true ) then misn.finish( false ) end
-
-   local num_pirates = pir.systemPresence( missys )
-   if num_pirates <= 50 then
-      mem.level = 1
-   elseif num_pirates <= 100 then
-      mem.level = rnd.rnd( 1, 2 )
-   elseif num_pirates <= 200 then
-      mem.level = rnd.rnd( 2, 3 )
-   elseif num_pirates <= 300 then
-      mem.level = rnd.rnd( 3, 4 )
-   else
-      mem.level = rnd.rnd( 4, 5 )
-   end
-
-   -- Pirate details
-   local pname = pilotname.pirate()
-   local pship, reward, reputation = bounty_setup()
-
-   -- See if alive only
-   local title, desc = misn_title, misn_desc
-   local osd_objective
-   local alive_only = (rnd.rnd() > 0.5)
-   if alive_only then
-      reward = reward * 1.4
-      reputation = reputation * 1.5
-      title = misn_title_alive
-      desc = misn_desc_alive
-      osd_objective = _("Capture {plt}")
-   end
 
    -- Reason for the bounty
    local reason = ""
@@ -320,34 +295,88 @@ function create ()
       reason = fmt.f( reasons[ rnd.rnd(1,#reasons) ], {spb=spob.cur()} )
    end
 
+   local alive_only = rnd.rnd() > 0.5
+   local osd_objective
+   local title, mdesc = misn_title, misn_desc
+   if alive_only then
+      credits    = 1.4 * credits
+      reputation = 1.5 * reputation
+      title      = misn_title_alive
+      osd_objective = _("Capture {plt}")
+   end
+
    -- Faction prefix
    local prefix = ""
    if not payingfaction:static() then
       prefix = require("common.prefix").prefix(payingfaction)
    end
 
-   mem.missys = missys
-   mem.deadline = time.cur() + time.new( 0, 2 * system.cur():jumpDist(mem.missys, true), rnd.rnd( 100e3, 150e3 ) )
+   -- Comput escorts
+   local escorts = ""
+   if #ships > 1 then
+      escorts = fmt.f(_(" (with {num} escorts)", #ships-1))
+   end
+
+   local deadline = time.cur() + time.new( 0, 2 * system.cur():jumpDist(mem.missys, true), rnd.rnd( 100e3, 150e3 ) )
 
    -- Set mission details
-   misn.setTitle( prefix..fmt.f(title[mem.level], {sys=missys}) )
-   local mdesc = fmt.f( desc,
-      {pirname=pname, sys=missys, fct=payingfaction, shipclass=_(ship.get(pship):classDisplay()), reason=reason, deadline=(mem.deadline-time.cur()) })
+   local name = pilotname.pirate()
+   local desc = fmt.f( mdesc, {
+      pilotname= name,
+      sys      = missys,
+      fct      = payingfaction,
+      shipclass=_(ship.get(ships[1]):classDisplay()),
+      escorts  = escorts,
+      reason   = reason,
+      deadline = (deadline-time.cur()),
+      deadoralive = (alive_only and _("alive")) or _("dead or alive"),
+      pilotnoun = _("pirate"),
+   })
    if not payingfaction:static() then
-      mdesc = mdesc.."\n"..fmt.f(_([[#nReputation Gained:#0 {fct}]]),
+      desc = desc.."\n"..fmt.f(_([[#nReputation Gained:#0 {fct}]]),
          {fct=payingfaction})
    end
-   misn.setDesc( mdesc )
-   misn.setReward( reward )
-   misn.setDistance( lmisn.calculateDistance( system.cur(), spob.cur():pos(), missys) )
 
-   bounty.init( missys, pname, pship, reward, {
+   return {
+      title       = prefix..fmt.f( title[level], {sys=missys} ),
+      desc        = desc,
+      system      = missys,
+      name        = name,
+      ships       = {pship},
+      reward      = credits,
+      reputation  = reputation,
+      faction     = faction.get("Pirate"),
+      alive_only  = alive_only,
+      osd_objective = osd_objective,
+      deadline    = deadline,
+   }
+end
+
+function create ()
+   local payingfaction = spob.cur():faction()
+
+   -- Pirate details
+   local target = bounty_setup_pirate( payingfaction, 30 + 300 * math.sqrt(rnd.rnd()) )
+   if not target then
+      -- Unable to find a target
+      misn.finish(false)
+   end
+
+   mem.missys = target.system
+   mem.deadline = target.deadline
+
+   misn.setTitle( target.title )
+   misn.setDesc( target.desc )
+   misn.setReward( target.reward )
+   misn.setDistance( lmisn.calculateDistance( system.cur(), spob.cur():pos(), mem.missys) )
+
+   bounty.init( mem.missys, target.name, target.ships, target.reward, {
       payingfaction     = payingfaction,
-      reputation        = reputation,
-      targetfaction     = "Pirate",
+      reputation        = target.reputation,
+      targetfaction     = target.faction,
       dynamicfaction    = true,
-      alive_only        = alive_only,
-      osd_objective     = osd_objective,
+      alive_only        = target.alive_only,
+      osd_objective     = target.osd_objective,
       deadline          = mem.deadline,
    } )
 
