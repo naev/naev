@@ -45,8 +45,8 @@ local misn_title = {
 }
 local misn_desc = _([[The {pilotnoun} known as {pilotname} was recently seen in the {sys} system. {fct} authorities want {pilotname} {deadoralive}{reason}. {pilotname} is believed to be flying a {shipclass}-class ship. {pilotname} may disappear if you take too long to reach the {sys} system.
 
-#nTarget:#0 {pilotname} ({shipclass}-class ship){escorts}
-#nWanted:#0 Dead or Alive
+#nTarget:#0 {pilotname} ({shipclass}-class ship{escorts})
+#nWanted:#0 {wanted}
 #nLast seen:#0 {sys} system
 #nTime limit:#0 {deadline}]])
 
@@ -285,7 +285,6 @@ local function bounty_setup_pirate( payingfaction, _points )
       credits = 1e6 + rnd.sigma() * 100e3
       reputation = 3.5
    end
-   local ships = {pship}
    credits = credits * 0.75 -- Lazy fine tuning multiplier
 
    -- Reason for the bounty
@@ -295,75 +294,83 @@ local function bounty_setup_pirate( payingfaction, _points )
       reason = fmt.f( reasons[ rnd.rnd(1,#reasons) ], {spb=spob.cur()} )
    end
 
-   local alive_only = rnd.rnd() > 0.5
-   local osd_objective
-   local title, mdesc = misn_title, misn_desc
-   if alive_only then
-      credits    = 1.4 * credits
-      reputation = 1.5 * reputation
-      title      = misn_title_alive
-      osd_objective = _("Capture {plt}")
-   end
-
-   -- Faction prefix
-   local prefix = ""
-   if not payingfaction:static() then
-      prefix = require("common.prefix").prefix(payingfaction)
-   end
-
-   -- Comput escorts
-   local escorts = ""
-   if #ships > 1 then
-      escorts = fmt.f(_(" (with {num} escorts)", #ships-1))
-   end
-
-   local deadline = time.cur() + time.new( 0, 2 * system.cur():jumpDist(mem.missys, true), rnd.rnd( 100e3, 150e3 ) )
-
-   -- Set mission details
-   local name = pilotname.pirate()
-   local desc = fmt.f( mdesc, {
-      pilotname= name,
-      sys      = missys,
-      fct      = payingfaction,
-      shipclass=_(ship.get(ships[1]):classDisplay()),
-      escorts  = escorts,
-      reason   = reason,
-      deadline = (deadline-time.cur()),
-      deadoralive = (alive_only and _("alive")) or _("dead or alive"),
-      pilotnoun = _("pirate"),
-   })
-   if not payingfaction:static() then
-      desc = desc.."\n"..fmt.f(_([[#nReputation Gained:#0 {fct}]]),
-         {fct=payingfaction})
-   end
-
    return {
-      title       = prefix..fmt.f( title[level], {sys=missys} ),
-      desc        = desc,
+      level       = level,
       system      = missys,
-      name        = name,
+      name        = pilotname.pirate(),
       ships       = {pship},
       reward      = credits,
       reputation  = reputation,
       faction     = faction.get("Pirate"),
-      alive_only  = alive_only,
-      osd_objective = osd_objective,
-      deadline    = deadline,
+      alive_only  = rnd.rnd() > 0.5,
+      reason      = reason,
    }
+end
+
+local function bounty_setup( payingfaction, points )
+   local target =  bounty_setup_pirate( payingfaction, points )
+   if not target then
+      return
+   end
+
+   -- Comput escorts
+   local escorts = ""
+   if #target.ships > 1 then
+      escorts = fmt.f(_(", with {num} escorts", #target.ships-1))
+   end
+
+   local title
+   if target.alive_only then
+      target.reward        = 1.4 * target.reward
+      target.reputation    = 1.5 * target.reputation
+      target.osd_objective = _("Capture {plt}")
+      title = misn_title_alive
+   else
+      title = misn_title
+   end
+   target.title = fmt.f( title[target.level], {sys=target.system} )
+
+   -- Faction prefix
+   if not payingfaction:static() then
+      local prefix = require("common.prefix").prefix(payingfaction)
+      target.title = prefix..target.title
+   end
+
+   -- Some common stuff
+   target.deadline = time.new( 0, 2 * system.cur():jumpDist(target.system, true), rnd.rnd( 100e3, 150e3 ) )
+   target.desc = fmt.f( misn_desc, {
+      pilotname= target.name,
+      sys      = target.system,
+      fct      = payingfaction,
+      shipclass=_(ship.get(target.ships[1]):classDisplay()),
+      escorts  = escorts,
+      reason   = target.reason,
+      deadoralive = (target.alive_only and _("alive")) or _("dead or alive"),
+      wanted   = (target.alive_only and _("Alive")) or _("Dead or Alive"),
+      pilotnoun= _("pirate"),
+      deadline = target.deadline
+   })
+   if (target.reputation or 0) > 0 and not payingfaction:static() then
+      target.desc = target.desc.."\n"..fmt.f(_([[#nReputation Gained:#0 {fct}]]),
+         {fct=payingfaction})
+   end
+
+   -- Return value
+   return target
 end
 
 function create ()
    local payingfaction = spob.cur():faction()
 
    -- Pirate details
-   local target = bounty_setup_pirate( payingfaction, 30 + 300 * math.sqrt(rnd.rnd()) )
+   local target = bounty_setup( payingfaction, 30 + 300 * math.sqrt(rnd.rnd()) )
    if not target then
       -- Unable to find a target
       misn.finish(false)
    end
 
    mem.missys = target.system
-   mem.deadline = target.deadline
+   mem.deadline = time.cur() + target.deadline
 
    misn.setTitle( target.title )
    misn.setDesc( target.desc )
