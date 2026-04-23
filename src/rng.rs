@@ -304,7 +304,7 @@ impl UserData for Rnd {
        * @luafunc angle
        */
       methods.add_function("angle", |_, ()| -> mlua::Result<mlua::Number> {
-         Ok(range(0. ..2. * std::f64::consts::PI))
+         Ok(range(0. ..std::f64::consts::TAU))
       });
       /*@
        * @brief Creates a random permutation
