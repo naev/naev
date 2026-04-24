@@ -59,8 +59,13 @@ function create ()
    misn.setNPC( lcs.lucas.name, lcs.lucas.portrait, _([[Lucas looks more worn out than before.]]) )
 end
 
+-- Have to handle the case not only the spob is known (from clansworld map), but also the route!
+local function know_last_sys()
+   return (last_spob:known() and system.cur():jumpPath(last_sys,true,true))
+end
+
 function discover_spob ()
-   if last_spob:known() then
+   if know_last_sys() then
       misn.osdCreate(title, {
          fmt.f(_([[Take Lucas to {spob} ({sys} system})]]),
             {spob=last_spob, sys=last_sys}),
@@ -144,7 +149,7 @@ They lean in and whisper to you.
       {spob=last_spob}))
    vn.func( function ()
       accepted = true
-      if last_spob:known() then
+      if know_last_sys() then
          mem.spob_known = true
          vn.jump("pirate_known")
       end
@@ -175,7 +180,7 @@ They lean in and whisper to you.
    mem.cargo = misn.cargoAdd( c, 0 )
 
    -- If known we skip most of the mission
-   if last_spob:known() then
+   if know_last_sys() then
       mem.stage = 2
       discover_spob()
       return
