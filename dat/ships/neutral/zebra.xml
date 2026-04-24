@@ -1,5 +1,5 @@
 <ship name="Zebra">
- <points>110</points>
+ <points>120</points>
  <base_type>Zebra</base_type>
  <gfx sy="12" sx="12" size="120">zebra.gltf</gfx>
  <sound pitch="0.7">engine_melendez</sound>

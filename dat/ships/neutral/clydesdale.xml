@@ -1,5 +1,5 @@
 <ship name="Clydesdale">
- <points>120</points>
+ <points>110</points>
  <base_type>Clydesdale</base_type>
  <gfx size="162">clydesdale.gltf</gfx>
  <sound pitch="0.7">engine_melendez</sound>
