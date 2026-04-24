@@ -507,6 +507,7 @@ static int systemL_jumpdistance( lua_State *L )
  *    @luatparam nil|string|system goal Goal system parameter, see description.
  *    @luatparam[opt=false] boolean hidden Whether or not to consider hidden
  * jumps.
+ *    @luatparam[opt=false] boolean known Whether or not to consider only jumps
  *    @luatreturn {Jump,...} Table of jumps.
  * @luafunc jumpPath
  */
@@ -515,16 +516,17 @@ static int systemL_jumpPath( lua_State *L )
    LuaJump      lj;
    StarSystem  *sys, *sysp;
    StarSystem **s;
-   int          sid, pushed, h;
+   int          sid, pushed;
 
-   h = lua_toboolean( L, 3 );
+   int h = lua_toboolean( L, 3 );
+   int k = lua_toboolean( L, 4 );
 
    /* Foo to Bar */
    sys  = luaL_validsystem( L, 1 );
    sid  = sys->id;
    sysp = luaL_validsystem( L, 2 );
 
-   s = map_getJumpPath( sys, NULL, sysp, 1, h, NULL, NULL );
+   s = map_getJumpPath( sys, NULL, sysp, !k, h, NULL, NULL );
    if ( s == NULL )
       return 0;
 
