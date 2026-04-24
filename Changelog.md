@@ -51,6 +51,8 @@
    * Plugin manager tries to detect potential plugin conflicts now
    * Default font changed to increase readability
    * Can undisable escorts by boarding them
+   * Pilot for the baron no longer hassles the player in space, but instead can
+     be found at the bar
 
  ### Engine
 
