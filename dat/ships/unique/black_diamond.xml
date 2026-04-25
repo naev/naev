@@ -5,7 +5,7 @@
  <rarity>6</rarity>
  <points>40</points>
  <base_type>Black_Diamond</base_type>
- <gfx size="48">black_diamond.gltf</gfx>
+ <gfx size="58">black_diamond.gltf</gfx>
  <sound>engine_nexus</sound>
  <class>Fighter</class>
  <price>450000</price>

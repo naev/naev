@@ -3621,6 +3621,7 @@ dat/scripts/equipopt.lua
 dat/scripts/equipopt/cargo.lua
 dat/scripts/equipopt/cores.lua
 dat/scripts/equipopt/fighterbays.lua
+dat/scripts/equipopt/fighterbays/black_diamond.lua
 dat/scripts/equipopt/fighterbays/empire_lancelot.lua
 dat/scripts/equipopt/fighterbays/hyena.lua
 dat/scripts/equipopt/fighterbays/lancelot.lua
