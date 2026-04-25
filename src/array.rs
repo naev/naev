@@ -158,6 +158,7 @@ pub extern "C" fn _array_create_helper(
 ) -> *mut c_void {
    let cap = initial_capacity.max(1) * element_size;
    let mut vec = Vec::<u8>::with_capacity(PREFIX + cap);
+   #[allow(clippy::uninit_vec)]
    unsafe {
       vec.set_len(PREFIX);
    }
@@ -171,7 +172,7 @@ pub extern "C" fn _array_create_helper(
       _marker: PhantomData,
    };
    unsafe { arr.write_header() };
-   arr.into_ptr() as *mut c_void
+   arr.into_ptr()
 }
 
 #[unsafe(no_mangle)]
@@ -339,7 +340,7 @@ pub unsafe fn array_as_slice_mut<T>(array: *mut T) -> &'static mut [T] {
    }
    unsafe {
       let header = header_from_data_mut(array as *mut u8);
-      std::slice::from_raw_parts_mut(array as *mut T, (header.len - PREFIX) / header.element_size)
+      std::slice::from_raw_parts_mut(array, (header.len - PREFIX) / header.element_size)
    }
 }
 

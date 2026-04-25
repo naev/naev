@@ -872,7 +872,7 @@ pub extern "C" fn commodity_getAll() -> *mut i64 {
    for (id, _) in COMMODITIES.read().unwrap().iter() {
       coms.push(id.as_ffi());
    }
-   Array::new(coms).into_ptr() as *mut i64
+   Array::new(coms).into_ptr()
 }
 
 #[unsafe(no_mangle)]

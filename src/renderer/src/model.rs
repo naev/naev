@@ -1279,7 +1279,7 @@ impl Model {
                   Primitive::from_gltf(ctx, &prim, &buffer_data, &materials, &material_default)
                })
                .collect::<Result<Vec<_>, _>>()?;
-            primitives.sort_by(|a, b| a.material.blend.cmp(&b.material.blend));
+            primitives.sort_by_key(|a| a.material.blend);
             Ok(Rc::new(Mesh::new(ctx, primitives)))
          })
          .collect::<Result<Vec<_>, anyhow::Error>>()?;
@@ -1336,7 +1336,7 @@ impl Model {
          }
       }
       trails.sort_by(|a, b| a.position.y.total_cmp(&b.position.y));
-      mounts.sort_by(|a, b| a.id.cmp(&b.id));
+      mounts.sort_by_key(|a| a.id);
 
       // Have to restore the core after loading
       unsafe {

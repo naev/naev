@@ -631,9 +631,8 @@ impl UserData for LuaAsteroid {
                   let id = inner
                      .asteroids
                      .iter()
-                     .filter_map(|(k, a)| {
-                        (a.state == State::Fg).then(|| (k, (a.pos() - pos).norm_squared()))
-                     })
+                     .filter(|&(k, a)| (a.state == State::Fg))
+                     .map(|(k, a)| (k, (a.pos() - pos).norm_squared()))
                      .min_by(|(_, a), (_, b)| {
                         a.partial_cmp(b).unwrap_or(std::cmp::Ordering::Equal)
                      });
@@ -768,7 +767,7 @@ pub extern "C" fn _astgroup_getAll() -> *const *const TypeGroup {
 pub extern "C" fn _astgroup_getName(name: *const c_char) -> *const TypeGroup {
    let name = unsafe { CStr::from_ptr(name) };
    match GROUPS.get(&*name.to_string_lossy()) {
-      Some(at) => &*at,
+      Some(at) => at,
       None => std::ptr::null(),
    }
 }
@@ -817,8 +816,8 @@ pub extern "C" fn _ast_solid(ast: *const Asteroid) -> *const naevc::Solid {
 pub extern "C" fn _ast_gfx_width(ast: *const Asteroid) -> f64 {
    let ast = unsafe { &*ast };
    match &*ast.gfx {
-      GfxType::Single(gfx) => gfx.texture.sw as f64,
-      GfxType::Sprite(gfx) => gfx.texture.sw as f64,
+      GfxType::Single(gfx) => gfx.texture.sw,
+      GfxType::Sprite(gfx) => gfx.texture.sw,
    }
 }
 

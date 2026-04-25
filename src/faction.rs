@@ -2082,7 +2082,7 @@ pub extern "C" fn faction_getAll() -> *mut i64 {
    for (id, _) in FACTIONS.read().unwrap().iter() {
       fcts.push(id.as_ffi());
    }
-   Array::new(fcts).into_ptr() as *mut i64
+   Array::new(fcts).into_ptr()
 }
 
 #[unsafe(no_mangle)]
@@ -2093,7 +2093,7 @@ pub extern "C" fn faction_getAllVisible() -> *mut i64 {
          fcts.push(id.as_ffi());
       }
    }
-   Array::new(fcts).into_ptr() as *mut i64
+   Array::new(fcts).into_ptr()
 }
 
 #[unsafe(no_mangle)]
@@ -2104,7 +2104,7 @@ pub extern "C" fn faction_getKnown() -> *mut i64 {
          fcts.push(id.as_ffi());
       }
    }
-   Array::new(fcts).into_ptr() as *mut i64
+   Array::new(fcts).into_ptr()
 }
 
 #[unsafe(no_mangle)]
@@ -2148,7 +2148,7 @@ pub extern "C" fn faction_isStatic(id: i64) -> i64 {
       true => 1,
       false => 0,
    })
-   .unwrap_or_else(|_err| {
+   .unwrap_or({
       //warn_err!(err);
       0
    })
@@ -2160,7 +2160,7 @@ pub extern "C" fn faction_isInvisible(id: i64) -> i64 {
       true => 1,
       false => 0,
    })
-   .unwrap_or_else(|_err| {
+   .unwrap_or({
       //warn_err!(err);
       0
    })
@@ -2184,7 +2184,7 @@ pub extern "C" fn faction_isKnown(id: i64) -> i64 {
       true => 1,
       false => 0,
    })
-   .unwrap_or_else(|_err| {
+   .unwrap_or({
       //warn_err!(err);
       0
    })
@@ -2196,7 +2196,7 @@ pub extern "C" fn faction_isDynamic(id: i64) -> i64 {
       true => 1,
       false => 0,
    })
-   .unwrap_or_else(|_err| {
+   .unwrap_or({
       //warn_err!(err);
       1
    })
@@ -2208,7 +2208,7 @@ pub extern "C" fn faction_name(id: i64) -> *const c_char {
       // Not translated on purpose
       fct.c.cname.as_ptr()
    })
-   .unwrap_or_else(|_err| {
+   .unwrap_or({
       //warn_err!(err);
       std::ptr::null()
    })
@@ -2223,7 +2223,7 @@ pub extern "C" fn faction_shortname(id: i64) -> *const c_char {
       };
       unsafe { naevc::gettext_rust(ptr) }
    })
-   .unwrap_or_else(|_err| {
+   .unwrap_or({
       //warn_err!(err);
       std::ptr::null()
    })
@@ -2241,7 +2241,7 @@ pub extern "C" fn faction_longname(id: i64) -> *const c_char {
       };
       unsafe { naevc::gettext_rust(ptr) }
    })
-   .unwrap_or_else(|_err| {
+   .unwrap_or({
       //warn_err!(err);
       std::ptr::null()
    })
@@ -2271,7 +2271,7 @@ pub extern "C" fn faction_description(id: i64) -> *const c_char {
       let ptr = fct.c.cdescription.as_ptr();
       unsafe { naevc::gettext_rust(ptr) }
    })
-   .unwrap_or_else(|_err| {
+   .unwrap_or({
       //warn_err!(err);
       std::ptr::null()
    })
@@ -2286,7 +2286,7 @@ pub extern "C" fn faction_default_ai(id: i64) -> *const c_char {
          fct.c.cai.as_ptr()
       }
    })
-   .unwrap_or_else(|_err| {
+   .unwrap_or({
       //warn_err!(err);
       std::ptr::null()
    })
@@ -2294,7 +2294,7 @@ pub extern "C" fn faction_default_ai(id: i64) -> *const c_char {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_tags(id: i64) -> *mut *const c_char {
-   faction_c_with(id, |fct| fct.c.ctags.as_ptr()).unwrap_or_else(|_err| {
+   faction_c_with(id, |fct| fct.c.ctags.as_ptr()).unwrap_or({
       //warn_err!(err);
       std::ptr::null_mut()
    })
@@ -2322,7 +2322,7 @@ pub extern "C" fn faction_logo(id: i64) -> *const texture::Texture {
       Some(logo) => logo as *const texture::Texture,
       None => std::ptr::null(),
    })
-   .unwrap_or_else(|_err| {
+   .unwrap_or({
       //warn_err!(err);
       std::ptr::null()
    })
@@ -2333,7 +2333,7 @@ pub extern "C" fn faction_colour(id: i64) -> *const naevc::glColour {
    faction_c_with(id, |fct| {
       &fct.data.colour as *const Colour as *const naevc::glColour
    })
-   .unwrap_or_else(|_err| {
+   .unwrap_or({
       //warn_err!(err);
       std::ptr::null()
    })
@@ -2353,7 +2353,7 @@ pub extern "C" fn faction_setKnown(id: i64, state: i64) -> c_int {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_reputation(id: i64) -> c_double {
-   faction_c_with(id, |fct| fct.player()).unwrap_or_else(|_err| {
+   faction_c_with(id, |fct| fct.player()).unwrap_or({
       //warn_err!(err);
       0.0
    }) as c_double
@@ -2496,7 +2496,7 @@ pub extern "C" fn faction_getStandingTextAtValue(id: i64, value: c_double) -> *c
 pub extern "C" fn faction_reputationMax(id: i64) -> c_double {
    faction_c_with(id, |fct| fct.reputation_max())
       .flatten()
-      .unwrap_or_else(|_err| {
+      .unwrap_or({
          //warn_err!(err);
          0.0
       })
@@ -2835,7 +2835,7 @@ pub extern "C" fn faction_getGroup(which: c_int, sys: *const naevc::StarSystem) 
    } else {
       return std::ptr::null_mut();
    };
-   Array::new(fcts).into_ptr() as *mut i64
+   Array::new(fcts).into_ptr()
 }
 
 #[unsafe(no_mangle)]

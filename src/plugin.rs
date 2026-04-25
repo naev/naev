@@ -25,7 +25,7 @@ static PLUGINS: LazyLock<Vec<Plugin>> = LazyLock::new(|| {
          Vec::new()
       }
    };
-   plugins.sort_by(|a, b| a.priority.cmp(&b.priority));
+   plugins.sort_by_key(|a| a.priority);
    plugins
 });
 
