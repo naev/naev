@@ -1163,7 +1163,9 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target,
          return 0;
 
       /* Check if enough energy to last a second. */
-      if ( outfit_energy( w->outfit ) * energy_mod > p->energy )
+      if ( outfit_energy( w->outfit ) * energy_mod *
+              MIN( 1.0, outfit_duration( w->outfit ) ) >
+           p->energy )
          return 0;
 
       /* Lua test. */

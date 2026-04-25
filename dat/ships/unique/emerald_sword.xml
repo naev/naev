@@ -6,7 +6,6 @@
  <points>200</points>
  <base_type>Emerald_Sword</base_type>
  <gfx size="130">emerald_sword.gltf</gfx>
- <rarity>1</rarity>
  <sound pitch="0.5">engine_thurion</sound>
  <class>Battleship</class>
  <price>9500000</price>
@@ -24,7 +23,7 @@
   <cargo>90</cargo>
  </characteristics>
  <slots>
-  <weapon prop="builtin" size="large"/>
+  <weapon prop="builtin" size="large">Dragonflame Cannon</weapon>
   <weapon exclusive="1" prop="fighter_bay" size="large">Black Diamond Bay</weapon>
   <weapon size="large"/>
   <weapon size="large"/>
