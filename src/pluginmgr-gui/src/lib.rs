@@ -402,8 +402,8 @@ impl App {
             data.retain(|_, wrap| wrap.local.is_some() || wrap.remote.is_some());
 
             let images: Vec<(PathBuf, reqwest::Url)> = data
-               .iter()
-               .filter_map(|(_, wrap)| wrap.missing_image(&c.conf.catalog_cache))
+               .values()
+               .filter_map(|wrap| wrap.missing_image(&c.conf.catalog_cache))
                .collect();
             images
          };

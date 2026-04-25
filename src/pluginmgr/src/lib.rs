@@ -95,7 +95,7 @@ pub fn discover_remote_plugins<T: reqwest::IntoUrl>(
       let inc = 0.8 / (repo.len() as f32);
       let progress = Arc::new(Mutex::new(0.2));
 
-      Ok(futures::stream::iter(repo.into_iter())
+      Ok(futures::stream::iter(repo)
          .map(|stub| {
             let prog = progress.clone();
             let send = sender.clone();
