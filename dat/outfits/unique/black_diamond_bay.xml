@@ -1,0 +1,18 @@
+<outfit name="Black Diamond Bay">
+ <general>
+  <slot prop="fighter_bay">weapon</slot>
+  <size>large</size>
+  <mass>145</mass>
+  <price>1530000</price>
+  <gfx_store>placeholder</gfx_store>
+  <description>TODO</description>
+  <cpu>-555</cpu>
+ </general>
+ <specific type="fighter bay">
+  <delay>6</delay>
+  <reload_time>240</reload_time>
+  <amount>3</amount>
+  <ship>Black Diamond</ship>
+  <ship_mass>25</ship_mass>
+ </specific>
+</outfit>

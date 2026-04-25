@@ -424,6 +424,7 @@ dat/outfits/structure/small_cargo_pod.xml
 dat/outfits/structure/small_fuel_pod.xml
 dat/outfits/structure/small_shield_booster.xml
 dat/outfits/unique/bioship_pheromone_emitter.xml
+dat/outfits/unique/black_diamond_bay.xml
 dat/outfits/unique/daphnes_leap.xml
 dat/outfits/unique/dragon_scale_plating.xml
 dat/outfits/unique/dragon_scales.xml
@@ -669,6 +670,8 @@ dat/ships/thurion/thurion_perspicacity_beta.xml
 dat/ships/thurion/thurion_scintillation.xml
 dat/ships/thurion/thurion_taciturnity.xml
 dat/ships/thurion/thurion_virtuosity.xml
+dat/ships/unique/black_diamond.xml
+dat/ships/unique/emerald_sword.xml
 dat/ships/zalek/zalek_bomber_drone.xml
 dat/ships/zalek/zalek_demon.xml
 dat/ships/zalek/zalek_demon_type_iv.xml

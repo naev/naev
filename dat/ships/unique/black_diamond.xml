@@ -1,0 +1,49 @@
+<ship name="Black Diamond">
+ <flags>
+  <unique/>
+ </flags>
+ <rarity>6</rarity>
+ <points>40</points>
+ <base_type>Black_Diamond</base_type>
+ <gfx size="48">black_diamond.gltf</gfx>
+ <sound>engine_nexus</sound>
+ <class>Fighter</class>
+ <price>450000</price>
+ <time_mod>0.9</time_mod>
+ <fabricator>Unknown</fabricator>
+ <faction>Independent</faction>
+ <description>TODO</description>
+ <health>
+  <armour>60</armour>
+ </health>
+ <characteristics>
+  <crew>4</crew>
+  <mass>80</mass>
+  <fuel_consumption>100</fuel_consumption>
+  <cargo>15</cargo>
+ </characteristics>
+ <slots>
+  <weapon y="0" h="-2" size="medium" x="-3"/>
+  <weapon y="3" h="5" size="small" x="-3"/>
+  <weapon y="0" h="5" size="small" x="-5"/>
+  <utility prop="systems" name="systems" size="small">Unicorp PT-16 Core System</utility>
+  <utility prop="systems_secondary" name="systems_secondary" size="small">Unicorp PT-16 Core System</utility>
+  <utility prop="accessory" name="accessory" size="small"/>
+  <utility size="small"/>
+  <utility size="small"/>
+  <utility size="small"/>
+  <structure prop="engines" name="engines" size="small">Unicorp Hawk 160 Engine</structure>
+  <structure prop="engines_secondary" name="engines_secondary" size="small">Unicorp Hawk 160 Engine</structure>
+  <structure prop="hull" name="hull" size="small">Unicorp D-2 Light Plating</structure>
+  <structure prop="hull_secondary" name="hull_secondary" size="small">Unicorp D-2 Light Plating</structure>
+  <structure size="small"/>
+  <structure size="small"/>
+  <structure size="small"/>
+  <structure size="small"/>
+ </slots>
+ <stats>
+  <shield_mod>10</shield_mod>
+  <shield_regen_mod>15</shield_regen_mod>
+ </stats>
+ <tags/>
+</ship>
