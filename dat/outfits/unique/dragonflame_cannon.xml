@@ -7,7 +7,7 @@
   <mass>0</mass>
   <price>1510000</price>
   <description>TODO</description>
-  <gfx_store>placeholder</gfx_store>
+  <gfx_store>dragonflame_cannon</gfx_store>
   <cpu>0</cpu>
  </general>
  <specific type="beam">
