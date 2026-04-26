@@ -27,7 +27,7 @@ local REWARD   = 100e3
 local NPCNAME  = _("Mining Vrata Employee")
 local npcvn, npcpor = vni.generic()
 function create ()
-   misn.setNPC( NPCNAME, npcpor, _("Ther eseems to be a Mining Vrata employee looking for pilots willing to work.") )
+   misn.setNPC( NPCNAME, npcpor, _("There seems to be a Mining Vrata employee looking for pilots willing to work.") )
    misn.setTitle( TITLE )
    misn.setReward( REWARD )
    misn.setDesc(fmt.f(_([[You have been asked to obtain {amount} of uncommon or rare minerals from mining asteroid fields, and deliver them to a {faction} planet or station.]]), {
