@@ -3,7 +3,7 @@
 # AppDir BUILD SCRIPT FOR NAEV
 #
 # For more information, see http://appimage.org/
-# Pass in [-d] (set this for debug builds) [-n] (set this for nightly builds) [-i] (set this to build an appimage from source) [-p] (set this to package an appimage from an AppDir) -a <APPDIRPATH> Sets location of AppDir for packaging -s <SOURCEPATH> (Sets location of source) -b <BUILDPATH> (Sets location of build directory)
+# Pass in [-d] (set this for debug builds) [-n] (set this for nightly builds) [-i] (set this to build an appimage from source) [-p] (set this to package an appimage from an AppDir) -a <APPDIRPATH> Sets location of AppDir for packaging -s <SOURCEPATH> (Sets location of source) -b <BUILDPATH> (Sets location of build directory) [-c] (set this to skip slow compression)
 
 # Output destination is ${WORKPATH}/dist
 
@@ -18,7 +18,7 @@ PACKAGE="false"
 NIGHTLY="false"
 
 # Parse arguments
-while getopts dnipa:s:b: OPTION "$@"; do
+while getopts dnipa:s:b:c OPTION "$@"; do
    case $OPTION in
    d)
       set -x
@@ -42,6 +42,9 @@ while getopts dnipa:s:b: OPTION "$@"; do
       ;;
    b)
       BUILDPATH="${OPTARG}"
+      ;;
+   c)
+      NO_COMPRESSION="true"
       ;;
    *)
       ;;
@@ -161,8 +164,14 @@ build_appimage() {
    OUTPUT="$WORKPATH/dist/naev-$SUFFIX.AppImage"
    UPDATE_INFORMATION="zsync|https://codeberg.org/naev/naev/releases/download/$TAG/naev-*.AppImage.zsync"
 
+   if [[ "$NO_COMPRESSION" =~ "true" ]]; then
+      COMP_ARGS=(--mksquashfs-opt -no-compression)
+   else
+      COMP_ARGS=(--comp zstd --mksquashfs-opt -Xcompression-level --mksquashfs-opt 20)
+   fi
+
    pushd "$WORKPATH/dist"
-   "$appimagetool" --comp zstd --no-appstream --mksquashfs-opt -Xcompression-level --mksquashfs-opt 20 -v -u "$UPDATE_INFORMATION" "$APPDIRPATH" "$OUTPUT"
+   "$appimagetool" "${COMP_ARGS[@]}" --no-appstream -v -u "$UPDATE_INFORMATION" "$APPDIRPATH" "$OUTPUT"
    popd
    echo "Completed."
 }
