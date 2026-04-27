@@ -157,10 +157,12 @@ jobs:
           path: |
             build/cargo-home
             build/src
-          key: cargo-v2-${{ matrix.image }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          key: cargo-v2-prerelease-${{ matrix.image }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
           restore-keys: |
+            cargo-v2-prerelease-${{ matrix.image }}-${{ matrix.target }}-
             cargo-v2-${{ matrix.image }}-${{ matrix.target }}-
             cargo-${{ matrix.image }}-${{ matrix.target }}-
+            cargo-v2-prerelease-${{ matrix.image }}-
             cargo-v2-${{ matrix.image }}-
             cargo-${{ matrix.image }}-
 
@@ -202,10 +204,12 @@ jobs:
           path: |
             build/builddir/cargo-home
             build/builddir/src
-          key: cargo-v2-appimage-${{ matrix.image }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          key: cargo-v2-prerelease-appimage-${{ matrix.image }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
           restore-keys: |
+            cargo-v2-prerelease-appimage-${{ matrix.image }}-${{ matrix.target }}-
             cargo-v2-appimage-${{ matrix.image }}-${{ matrix.target }}-
             cargo-appimage-${{ matrix.image }}-${{ matrix.target }}-
+            cargo-v2-prerelease-appimage-${{ matrix.image }}-
             cargo-v2-appimage-${{ matrix.image }}-
             cargo-appimage-${{ matrix.image }}-
 
@@ -314,10 +318,12 @@ jobs:
           path: |
             build/cargo-home
             build/src
-          key: cargo-v2-${{ matrix.image }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          key: cargo-v2-prerelease-${{ matrix.image }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
           restore-keys: |
+            cargo-v2-prerelease-${{ matrix.image }}-${{ matrix.target }}-
             cargo-v2-${{ matrix.image }}-${{ matrix.target }}-
             cargo-${{ matrix.image }}-${{ matrix.target }}-
+            cargo-v2-prerelease-${{ matrix.image }}-
             cargo-v2-${{ matrix.image }}-
             cargo-${{ matrix.image }}-
 
@@ -407,10 +413,12 @@ jobs:
           path: |
             build/cargo-home
             build/src
-          key: cargo-v2-${{ matrix.image }}-${{ matrix.arch }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          key: cargo-v2-prerelease-${{ matrix.image }}-${{ matrix.arch }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
           restore-keys: |
+            cargo-v2-prerelease-${{ matrix.image }}-${{ matrix.arch }}-
             cargo-v2-${{ matrix.image }}-${{ matrix.arch }}-
             cargo-${{ matrix.image }}-${{ matrix.arch }}-
+            cargo-v2-prerelease-${{ matrix.image }}-
             cargo-v2-${{ matrix.image }}-
             cargo-${{ matrix.image }}-
 
