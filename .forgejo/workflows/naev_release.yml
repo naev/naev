@@ -155,10 +155,14 @@ jobs:
       - name: Cache Cargo home
         uses: actions/cache@v5
         with:
-          path: build/cargo-home
-          key: cargo-${{ matrix.image }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          path: |
+            build/cargo-home
+            build/src
+          key: cargo-v2-${{ matrix.image }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
           restore-keys: |
+            cargo-v2-${{ matrix.image }}-${{ matrix.target }}-
             cargo-${{ matrix.image }}-${{ matrix.target }}-
+            cargo-v2-${{ matrix.image }}-
             cargo-${{ matrix.image }}-
 
       - name: Meson Setup
@@ -196,10 +200,14 @@ jobs:
       - name: Cache Cargo home
         uses: actions/cache@v5
         with:
-          path: build/builddir/cargo-home
-          key: cargo-appimage-${{ matrix.image }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          path: |
+            build/builddir/cargo-home
+            build/builddir/src
+          key: cargo-v2-appimage-${{ matrix.image }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
           restore-keys: |
+            cargo-v2-appimage-${{ matrix.image }}-${{ matrix.target }}-
             cargo-appimage-${{ matrix.image }}-${{ matrix.target }}-
+            cargo-v2-appimage-${{ matrix.image }}-
             cargo-appimage-${{ matrix.image }}-
 
       - name: Compile AppImage
@@ -304,10 +312,14 @@ jobs:
       - name: Cache Cargo home
         uses: actions/cache@v5
         with:
-          path: build/cargo-home
-          key: cargo-${{ matrix.image }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          path: |
+            build/cargo-home
+            build/src
+          key: cargo-v2-${{ matrix.image }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
           restore-keys: |
+            cargo-v2-${{ matrix.image }}-${{ matrix.target }}-
             cargo-${{ matrix.image }}-${{ matrix.target }}-
+            cargo-v2-${{ matrix.image }}-
             cargo-${{ matrix.image }}-
 
       - name: Meson Setup
@@ -392,10 +404,14 @@ jobs:
       - name: Cache Cargo home
         uses: actions/cache@v5
         with:
-          path: build/cargo-home
-          key: cargo-${{ matrix.image }}-${{ matrix.arch }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          path: |
+            build/cargo-home
+            build/src
+          key: cargo-v2-${{ matrix.image }}-${{ matrix.arch }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
           restore-keys: |
+            cargo-v2-${{ matrix.image }}-${{ matrix.arch }}-
             cargo-${{ matrix.image }}-${{ matrix.arch }}-
+            cargo-v2-${{ matrix.image }}-
             cargo-${{ matrix.image }}-
 
       - name: Meson Setup
@@ -507,10 +523,14 @@ jobs:
       - name: Cache Cargo home
         uses: actions/cache@v5
         with:
-          path: build/cargo-home
-          key: cargo-${{ matrix.image }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
+          path: |
+            build/cargo-home
+            build/src
+          key: cargo-v2-${{ matrix.image }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
           restore-keys: |
+            cargo-v2-${{ matrix.image }}-${{ matrix.target }}-
             cargo-${{ matrix.image }}-${{ matrix.target }}-
+            cargo-v2-${{ matrix.image }}-
             cargo-${{ matrix.image }}-
 
       - name: Meson Setup
