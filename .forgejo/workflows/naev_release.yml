@@ -28,7 +28,7 @@ jobs:
           persist-credentials: true
 
       - name: Cache Meson wrap downloads
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: source/subprojects/packagecache
           key: wrap-${{ runner.os }}-${{ hashFiles('source/subprojects/*.wrap') }}
@@ -48,7 +48,7 @@ jobs:
         run: echo "rev=$(git -C source submodule status assets | awk '{print $1}')" >> "$GITHUB_OUTPUT"
 
       - name: Restore LFS cache
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: |
             source/.git/lfs/objects
@@ -146,14 +146,14 @@ jobs:
           tar -xf source.tar.xz -C source --strip 1
 
       - name: Cache Meson wrap downloads
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: source/subprojects/packagecache
           key: wrap-${{ matrix.image }}-${{ hashFiles('source/subprojects/*.wrap') }}
           restore-keys: wrap-${{ matrix.image }}-
 
       - name: Cache Cargo home
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: build/cargo-home
           key: cargo-${{ matrix.image }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
@@ -194,7 +194,7 @@ jobs:
           DESTDIR: ${{ github.workspace }}/staging
 
       - name: Cache Cargo home
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: build/builddir/cargo-home
           key: cargo-appimage-${{ matrix.image }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
@@ -295,14 +295,14 @@ jobs:
           tar -xf source.tar.xz -C source --strip 1
 
       - name: Cache Meson wrap downloads
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: source/subprojects/packagecache
           key: wrap-${{ matrix.image }}-${{ hashFiles('source/subprojects/*.wrap') }}
           restore-keys: wrap-${{ matrix.image }}-
 
       - name: Cache Cargo home
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: build/cargo-home
           key: cargo-${{ matrix.image }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
@@ -383,14 +383,14 @@ jobs:
           tar -xf source.tar.xz -C source --strip 1
 
       - name: Cache Meson wrap downloads
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: source/subprojects/packagecache
           key: wrap-${{ matrix.image }}-${{ hashFiles('source/subprojects/*.wrap') }}
           restore-keys: wrap-${{ matrix.image }}-
 
       - name: Cache Cargo home
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: build/cargo-home
           key: cargo-${{ matrix.image }}-${{ matrix.arch }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
@@ -498,14 +498,14 @@ jobs:
           tar -xf source.tar.xz -C source --strip 1
 
       - name: Cache Meson wrap downloads
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: source/subprojects/packagecache
           key: wrap-${{ matrix.image }}-${{ hashFiles('source/subprojects/*.wrap') }}
           restore-keys: wrap-${{ matrix.image }}-
 
       - name: Cache Cargo home
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: build/cargo-home
           key: cargo-${{ matrix.image }}-${{ matrix.target }}-${{ hashFiles('source/Cargo.toml.in', 'source/meson.build') }}
