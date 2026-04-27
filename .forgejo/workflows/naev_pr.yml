@@ -172,7 +172,7 @@ jobs:
       - name: Compile AppImage
         id: appimageCompile
         run: |
-          ./source/utils/buildAppImage.sh -d -i -s source -b appImageBuild | tee appImageBuildLog.txt
+          ./source/utils/buildAppImage.sh -c -d -i -s source -b appImageBuild | tee appImageBuildLog.txt
 
       - name: Upload AppImage Compile Log
         uses: actions/upload-artifact@v3
