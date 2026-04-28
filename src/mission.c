@@ -1499,23 +1499,17 @@ CommodityRef missions_loadTempCommodity( xmlNodePtr cur )
    char        *name, *desc;
    CommodityRef c;
 
-   DEBUG( "LOAD TEMP COMMODITY" );
-
    xmlr_attr_strd( cur, "name", name );
    if ( name == NULL ) {
       WARN( _( "Mission cargo without name!" ) );
       return COMMODITY_NULL;
    }
 
-   DEBUG( "NAME" );
-
    c = commodity_getW( name );
    if ( c != COMMODITY_NULL ) {
       free( name );
       return c;
    }
-
-   DEBUG( "NOT FOUND" );
 
    xmlr_attr_strd( cur, "description", desc );
    if ( desc == NULL ) {
@@ -1524,11 +1518,7 @@ CommodityRef missions_loadTempCommodity( xmlNodePtr cur )
       return COMMODITY_NULL;
    }
 
-   DEBUG( "DESCIRPTION" );
-
    c = commodity_newTemp( name, desc );
-
-   DEBUG( "ADDED COMMODITY" );
 
    ccur = cur->xmlChildrenNode;
    do {
