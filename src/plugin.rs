@@ -113,7 +113,7 @@ pub fn mount() -> Result<()> {
          .rev()
          .filter_map(|plugin| match load_plugin(plugin) {
             Ok(mp) => {
-               debug!(" * {} v{}", &plugin.name, plugin.version);
+               debug!(" * {} [v{}]", &plugin.name, plugin.version);
                Some(mp)
             }
             Err(e) => {
