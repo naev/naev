@@ -1,7 +1,9 @@
 update_dt = 1
 
 function init( p )
-   update( p )
+   if p then
+      update( p )
+   end
 end
 
 function descextra( _p, _s )

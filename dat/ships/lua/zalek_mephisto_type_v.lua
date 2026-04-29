@@ -21,6 +21,8 @@ function descextra( _p )
 end
 
 function init( p )
+   if not p then return end
+
    local ok = true
    for k,o in ipairs(p:outfitsList("weapon")) do
       local t = o:type()
