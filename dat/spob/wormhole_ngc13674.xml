@@ -1,7 +1,7 @@
 <spob name="Wormhole NGC-13674">
  <display>#bWormhole#0</display>
  <feature>#bWormhole#0</feature>
- <lua>wormhole_ngc13674lua</lua>
+ <lua>wormhole_ngc13674.lua</lua>
  <marker>spobmarker_wormhole</marker>
  <pos x="-2090.744294" y="10335.055025"/>
  <GFX/>
