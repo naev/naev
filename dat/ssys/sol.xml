@@ -6,7 +6,7 @@
   <nebula volatility="100" hue="0" hidenebuladamage="1">900</nebula>
   <nolanes/>
  </general>
- <pos x="350.104614" y="-61.119509"/>
+ <pos x="0" y="0"/>
  <spobs>
   <spob_virtual>Pirate All Unpresence (Range 2)</spob_virtual>
  </spobs>
