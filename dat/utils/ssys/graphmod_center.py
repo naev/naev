@@ -22,7 +22,9 @@ box = bb()
 for _k, v in pos.items():
    box += v
 
-center = (box.mini() + box.maxi()) / 2.0
+box_center = (box.mini() + box.maxi()) / 2.0
+sol_center = pos['sol']
+center = sol_center
 
 stderr.write('center: '+str(center)+'\n')
 
