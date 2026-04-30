@@ -1807,7 +1807,7 @@ impl UserData for FactionRef {
                (
                   FactionData {
                      id: FactionRef::null(),
-                     name,
+                     name: name.clone(),
                      displayname: display,
                      ai,
                      logo: base.logo.as_ref().map(|l| l.try_clone()).transpose()?,
@@ -1827,7 +1827,7 @@ impl UserData for FactionRef {
                let ai: String = params.get("ai").unwrap_or(String::new());
                (
                   FactionData {
-                     name,
+                     name: name.clone(),
                      displayname: display,
                      ai,
                      f_dynamic: true,
@@ -1837,16 +1837,33 @@ impl UserData for FactionRef {
                   None,
                )
             };
+
+            let standing = RwLock::new(Standing {
+               player: fd.player_def,
+               p_override: None,
+               f_known: fd.f_known,
+               f_invisible: fd.f_invisible,
+            });
+
+            // We have to first see if it exists, and if so, we just update that
+            for (k, d) in data.iter_mut() {
+               if &d.data.name == &name {
+                  fd.id = k;
+                  *d = Faction {
+                     api,
+                     c: FactionC::new(&fd),
+                     standing,
+                     data: fd,
+                  };
+                  return Ok(k);
+               }
+            }
+            // Not found so we have to create a new one.
             let id = data.insert_with_key(|k| {
                fd.id = k;
                Faction {
                   api,
-                  standing: RwLock::new(Standing {
-                     player: fd.player_def,
-                     p_override: None,
-                     f_known: fd.f_known,
-                     f_invisible: fd.f_invisible,
-                  }),
+                  standing,
                   c: FactionC::new(&fd),
                   data: fd,
                }
