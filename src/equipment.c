@@ -143,6 +143,21 @@ static int ( *tabfilters[] )( const Outfit *o ) = {
    equipment_filterStructure, equipment_filterCore,
 };
 
+static void equipment_refreshShip( Pilot *ship )
+{
+   /* Just in case, turn off outfits and reset stats. */
+   effect_clear( &ship->effects );
+   if ( ship->id != 0 ) {
+      pilot_outfitOffAll( ship );
+      pilot_outfitLInitAll( ship );
+      pilot_outfitLUpdate( ship, 0. );
+      pilot_shipLInit( ship );
+      pilot_shipLUpdate( ship, 0. );
+   }
+   /* TODO avoid running twice. */
+   pilot_calcStats( ship );
+}
+
 /**
  * @brief Handles right-click on unequipped outfit.
  *    @param wid Window to update.
@@ -1405,15 +1420,8 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p,
       ret = equipment_playerRmOutfit( o, 1 );
       if ( ret == 1 ) {
          pilot_addOutfitRaw( eq_wgt.selected->p, o, slot );
-
          /* Recalculate stats. */
-         effect_clear( &eq_wgt.selected->p->effects );
-         pilot_outfitOffAll( eq_wgt.selected->p );
-         pilot_outfitLInitAll( eq_wgt.selected->p );
-         pilot_outfitLUpdate( eq_wgt.selected->p, 0. );
-         pilot_shipLInit( eq_wgt.selected->p );
-         pilot_shipLUpdate( eq_wgt.selected->p, 0 );
-         pilot_calcStats( eq_wgt.selected->p ); /* TODO avoid running twice. */
+         equipment_refreshShip( eq_wgt.selected->p );
       }
 
       equipment_addAmmo();
@@ -2071,13 +2079,7 @@ void equipment_updateShips( unsigned int wid, const char *str )
    prevship  = eq_wgt.selected;
 
    /* Just in case, turn off outfits and reset stats. */
-   effect_clear( &ship->effects );
-   pilot_outfitOffAll( ship );
-   pilot_outfitLInitAll( ship );
-   pilot_outfitLUpdate( ship, 0. );
-   pilot_shipLInit( ship );
-   pilot_shipLUpdate( ship, 0. );
-   pilot_calcStats( ship );
+   equipment_refreshShip( ship );
 
    /* Select. */
    equipment_slotSelect( &eq_wgt, ps );
