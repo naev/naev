@@ -335,6 +335,7 @@ local soromid = {
    {"soromid/soromid_dark_01_v3", "dark"},
    -- Image Generators
    {gen("soromid/soromid_dark_01"), "dark"},
+   {gen("soromid/soromid_aquatic_01"), "aquatic"},
 }
 local soromid_mil = {
    {"soromid/soromid_heavy_military_3", "heavy"},
