@@ -51,7 +51,7 @@ return function ()
             local vel = p:vel()
             for i=1,4 do
                local e = pilot.add("Admonisher", "Trader", pos, nil, {naked=true})
-               equipopt.empire( e, "elite" )
+               equipopt.empire( e )
                local em = e:memory()
                em.capturable = true
                e:setLeader( p )
