@@ -1678,7 +1678,6 @@ int gl_fontInit( glFont *font, const char *fname, const unsigned int h,
    size_t       len, plen;
    glFontStash *stsh, *reusable_stsh_slot;
    int          ch;
-   char         fullname[PATH_MAX];
 
    /* Initialize FreeType. */
    if ( font_library == NULL ) {
@@ -1742,6 +1741,7 @@ int gl_fontInit( glFont *font, const char *fname, const unsigned int h,
    plen     = strlen( prefix );
    for ( size_t i = 0; i <= len; i++ ) {
       if ( ( fname[i] == '\0' ) || ( fname[i] == ',' ) ) {
+         char fullname[PATH_MAX] = { 0 };
          strncpy( fullname, &fname[ch],
                   MIN( sizeof( fullname ) - 1 - plen, i - ch ) );
          if ( !ndata_exists( fullname ) ) {
