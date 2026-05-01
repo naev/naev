@@ -88,6 +88,7 @@ function bounty.init( system, targetname, targetship, reward, params )
    b.deadline        = params.deadline
    b.alive_only      = params.alive_only
    b.spawnfunc       = params.spawnfunc
+   b.completefunc    = params.completefunc
    b.dynamicfaction  = params.dynamicfaction
    -- Custom messages (can be tables of messages from which one will be chosen)
    b.msg_subdue      = params.msg_subdue or msg_subdue_def
@@ -158,7 +159,7 @@ function _bounty_date ()
 end
 
 -- Adjust pirate faction (used for "alive" bounties)
-local function _get_faction()
+function bounty.get_faction()
    local b = mem._bounty
    if b.targetfactionfunc then
       return _G[b.targetfactionfunc]()
@@ -170,18 +171,11 @@ local function _get_faction()
    return b.targetfaction
 end
 
-local spawn_bounty
-function _bounty_jumpin ()
+function bounty.choose_spawn_pos()
    local b = mem._bounty
-
-   -- Nothing to do.
-   if system.cur() ~= b.system then
-      return
-   end
-
    -- Try to find a good location
    local jmp = jump.get( system.cur(), b.last_sys )
-   local L = lanes.get( _get_faction(), "non-friendly")
+   local L = lanes.get( bounty.get_faction(), "non-friendly")
    local m = 3e3 -- margin
    local pos
    if jmp then
@@ -198,7 +192,17 @@ function _bounty_jumpin ()
       local r = system.cur():radius() * 0.8
       pos = vec2.newP( rnd.rnd() * r, rnd.angle() )
    end
-   spawn_bounty( pos )
+   return pos
+end
+
+local spawn_bounty
+function _bounty_jumpin ()
+   local b = mem._bounty
+   -- Nothing to do.
+   if system.cur() ~= b.system then
+      return
+   end
+   spawn_bounty( bounty.choose_spawn_pos() )
 end
 
 function _bounty_jumpout ()
@@ -215,7 +219,13 @@ end
 
 function _bounty_land ()
    local b = mem._bounty
-   if not b.job_done then return end
+   if not b.job_done or b.finished then return end
+   b.finished = true
+
+   -- Allow custom functions
+   if b.completefunc then
+      return _G[b.completefunc]()
+   end
 
    local fct = b.payingfaction
    local spbfct = spob.cur():faction()
@@ -392,7 +402,7 @@ function spawn_bounty( params )
       target_ship = _G[b.spawnfunc]( b, params )
    else
       for k,s in ipairs(b.targetship) do
-         local p = pilot.add( s, _get_faction(), params, b.targetname )
+         local p = pilot.add( s, bounty.get_faction(), params, b.targetname )
          local aimem = p:memory()
          aimem.loiter = math.huge -- Should make them loiter forever
          aimem.capturable = true
