@@ -6,6 +6,24 @@
 --]]
 local misn_test = {}
 
+--[[
+   @brief Test for generic missions.
+--]]
+function misn_test.generic()
+   local sc = spob.cur()
+   if sc:tags().restricted then
+      return false -- Restricted places don't offer these missions currently
+   end
+   local f = sc:faction()
+   if f then
+      local ft = f:tags()
+      if ft.generic then
+         return true
+      end
+   end
+   return false
+end
+
 --[[--
    @brief Test for cargo missions.
 --]]

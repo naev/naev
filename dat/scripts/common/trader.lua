@@ -17,11 +17,30 @@ trader.vrata_steve = {
    colour = nil,
    description = _("TODO"),
 }
+
+-- Anais Winslow
+trader.astra_anais = {
+   portrait = "", -- TODO
+   image = "", -- TODO
+   name = _("Anais"),
+   colour = nil,
+   description = _("TODO"),
+}
+
 function trader.vn_vrata_steve( params )
    return vn.Character.new( trader.vrata_steve.name,
          tmerge( {
             image=trader.vrata_steve.image,
             colour=trader.vrata_steve.colour,
+         }, params) )
+end
+
+-- Anais Winslow
+function trader.vn_vrata_anais( params )
+   return vn.Character.new( trader.vrata_anais.name,
+         tmerge( {
+            image=trader.vrata_anais.image,
+            colour=trader.vrata_anais.colour,
          }, params) )
 end
 
@@ -37,6 +56,10 @@ end
 function trader.addVrataLog( text )
    shiplog.create( "trader_vrata", _("Mining Vrata"), _("Trader") )
    shiplog.append( "trader_vrata", text )
+end
+function trader.addAstraVigilisLog( text )
+   shiplog.create( "trader_astra_vigilis", _("Astra Vigilis"), _("Trader") )
+   shiplog.append( "trader_astra_vigilis", text )
 end
 
 return trader

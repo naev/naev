@@ -58,6 +58,7 @@ local msg_leftsystem_def = _("You have left the {sys} system.")
 
 local osd_title_def  = _("Bounty Hunt")
 local osd_goto_def   = _("Fly to the {sys} system before {time_limit} ({time} remaining)")
+local osd_goto_nodeadline_def   = _("Fly to the {sys} system")
 local osd_objective_def = _("Kill or capture {plt}")
 local osd_reward_def = _("Land in {fct} territory to collect your bounty")
 local osd_reward_static_def = _("Land to collect your bounty")
@@ -100,7 +101,14 @@ function bounty.init( system, targetname, targetship, reward, params )
    b.msg_leftsystem  = params.msg_leftsystem or msg_leftsystem_def
    -- OSD stuff
    b.osd_title       = params.osd_title or osd_title_def
-   b.osd_goto        = params.osd_goto or osd_goto_def
+   b.osd_goto        = params.osd_goto
+   if b.osd_goto==nil then
+      if b.deadline then
+         b.osd_goto = osd_goto_def
+      else
+         b.osd_goto = osd_goto_nodeadline_def
+      end
+   end
    b.osd_objective   = params.osd_objective or osd_objective_def
    b.osd_reward      = params.osd_reward or ((b.payingfaction:static() and osd_reward_static_def) or osd_reward_def)
 
