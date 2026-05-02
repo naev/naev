@@ -1187,14 +1187,12 @@ static int getFriendOrFoeTest( const Pilot *p, const Pilot *plt, int friend,
  */
 static int pilotL_getFriendOrFoe( lua_State *L, int friend )
 {
-   int           k;
-   double        dd;
-   const Pilot  *p;
-   double        dist;
-   int           inrange, dis, fighters;
-   const vec2   *v;
-   Pilot *const *pilot_stack;
-   LuaFaction    lf;
+   double       dd;
+   const Pilot *p;
+   double       dist;
+   int          inrange, dis, fighters;
+   const vec2  *v;
+   LuaFaction   lf;
 
    /* Check if using faction. */
    lf = FACTION_NULL;
@@ -1227,9 +1225,9 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
       dd = -1.;
 
    /* Now put all the matching pilots in a table. */
-   pilot_stack = pilot_getAll();
+   Pilot *const *pilot_stack = pilot_getAll();
    lua_newtable( L );
-   k = 1;
+   int k = 1;
    if ( dist >= 0. && dist < INFINITY ) {
       int x, y, r;
       x                 = round( v->x );
