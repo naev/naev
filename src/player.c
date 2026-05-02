@@ -4254,9 +4254,10 @@ static Spob *player_parse( xmlNodePtr parent )
    player.p->solid.dir = 2. * M_PI * RNGF();
 
    /* Initialize outfits. */
-   pilot_shipLInit( player.p );
    pilot_outfitLInitAll( player.p );
    pilot_outfitLUpdate( player.p, 0. );
+   pilot_shipLInit( player.p );
+   pilot_shipLUpdate( player.p, 0. );
 
    /* initialize the system */
    space_init( sys->name, 0 );
