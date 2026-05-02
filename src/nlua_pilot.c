@@ -1231,15 +1231,13 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
    lua_newtable( L );
    k = 1;
    if ( dist >= 0. && dist < INFINITY ) {
-      int            x, y, r;
-      const IntList *qt;
-      x  = round( v->x );
-      y  = round( v->y );
-      r  = ceil( dist );
-      qt = pilot_collideQuery( x - r, y - r, x + r, y + r );
+      int x, y, r;
+      x                 = round( v->x );
+      y                 = round( v->y );
+      r                 = ceil( dist );
+      const IntList *qt = pilot_collideQuery( x - r, y - r, x + r, y + r );
       for ( int i = 0; i < il_size( qt ); i++ ) {
          const Pilot *plt = pilot_stack[il_get( qt, i, 0 )];
-
          if ( getFriendOrFoeTest( p, plt, friend, dd, inrange, dis, fighters, v,
                                   lf ) ) {
             lua_pushpilot( L, plt->id ); /* value */
@@ -1249,7 +1247,6 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
    } else {
       for ( int i = 0; i < array_size( pilot_stack ); i++ ) {
          const Pilot *plt = pilot_stack[i];
-
          if ( getFriendOrFoeTest( p, plt, friend, dd, inrange, dis, fighters, v,
                                   lf ) ) {
             lua_pushpilot( L, plt->id ); /* value */
@@ -1371,21 +1368,20 @@ static int pilotL_getVisible( lua_State *L )
  */
 static int pilotL_getInrange( lua_State *L )
 {
-   int            k;
-   const vec2    *v   = luaL_checkvector( L, 1 );
-   double         d   = luaL_checknumber( L, 2 );
-   int            dis = lua_toboolean( L, 3 );
-   int            x, y, r;
-   const IntList *qt;
-   Pilot *const  *pilot_stack = pilot_getAll();
+   int           k;
+   const vec2   *v   = luaL_checkvector( L, 1 );
+   double        d   = luaL_checknumber( L, 2 );
+   int           dis = lua_toboolean( L, 3 );
+   int           x, y, r;
+   Pilot *const *pilot_stack = pilot_getAll();
 
    d = pow2( d ); /* Square it. */
 
    /* Now put all the matching pilots in a table. */
-   x  = round( v->x );
-   y  = round( v->y );
-   r  = ceil( d );
-   qt = pilot_collideQuery( x - r, y - r, x + r, y + r );
+   x                 = round( v->x );
+   y                 = round( v->y );
+   r                 = ceil( d );
+   const IntList *qt = pilot_collideQuery( x - r, y - r, x + r, y + r );
    lua_newtable( L );
    k = 1;
    for ( int i = 0; i < il_size( qt ); i++ ) {
