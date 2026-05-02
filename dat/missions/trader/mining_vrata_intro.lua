@@ -3,9 +3,12 @@
 <mission name="Mining Vrata Intro">
  <unique/>
  <priority>4</priority>
- <chance>5</chance>
+ <chance>50</chance>
  <location>Bar</location>
  <cond>
+   if spob.cur():faction() ~= faction.get("Traders Society") and rnd.rnd() > 0.1 then
+      return false
+   end
    local misn_test = require("misn_test")
    return misn_test.cargo(true) and misn_test.reweight_active()
  </cond>
