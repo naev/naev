@@ -217,6 +217,14 @@ local reason_list = {
    },
 }
 
+local DIFFICULTIES = {
+   Easy        = function () return 30  + 100 * rnd.rnd() end,
+   Medium      = function () return 100 + 100 * rnd.rnd() end,
+   Hard        = function () return 200 + 200 * rnd.rnd() end,
+   Challenging = function () return 300 + 300 * rnd.rnd() end,
+   Extreme     = function () return 400 + 400 * rnd.rnd() end,
+}
+
 local function fleet_points( fleet )
    local points = 0
    for k,s in ipairs(fleet) do
@@ -367,6 +375,7 @@ local function bounty_setup_pirate( payingfaction, points )
       faction     = faction.get("Pirate"),
       alive_only  = rnd.rnd() > 0.5,
       reason      = reason,
+      points      = points,
    }
 end
 
@@ -427,7 +436,8 @@ end
 
 function create ()
    local payingfaction = spob.cur():faction()
-   local points = 30 + 300 * math.sqrt(rnd.rnd())
+   local difficulty = var.peek( "bounty_difficulty" ) or "Easy"
+   local points = DIFFICULTIES[difficulty]()
 
    -- Pirate details
    local target = bounty_setup( payingfaction, points )
@@ -446,7 +456,7 @@ function create ()
    misn.setDistance( lmisn.calculateDistance( system.cur(), spob.cur():pos(), mem.missys) )
 
    bounty.init( mem.missys, target.name, target.ships, target.reward, {
-      trackingvar       = { "astra_vigilis_points", points },
+      trackingvar       = { "astra_vigilis_points", target.points },
       payingfaction     = payingfaction,
       reputation        = target.reputation,
       targetfaction     = target.faction,
