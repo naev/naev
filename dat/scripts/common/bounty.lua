@@ -73,6 +73,7 @@ function bounty.init( system, targetname, targetship, reward, params )
 
    mem._bounty = {}
    local b = mem._bounty
+   b.trackingvar     = params.trackingvar
    b.curspb          = spob.cur()
    b.system          = system
    b.targetname      = targetname
@@ -267,10 +268,11 @@ function _bounty_land ()
       b.payingfaction:hit( b.reputation )
       pir.reputationNormalMission( b.reputation )
    end
+   if b.trackingvar then
+      local v = var.peek( b.trackingvar[1] ) or 0
+      var.push( b.trackingvar[1], v+b.trackingvar[2] )
+   end
    misn.finish( true )
-end
-
-function _bounty_disable ()
 end
 
 -- Succeed the mission, make the player head to a planet for pay
@@ -427,7 +429,6 @@ function spawn_bounty( params )
    misn.osdActive( 2 )
    target_ship:setHilight( true )
    target_ship:setHostile( true )
-   hook.pilot( target_ship, "disable", "_bounty_disable" )
    hook.pilot( target_ship, "board", "_bounty_board" )
    hook.pilot( target_ship, "attacked", "_bounty_attacked" )
    b.death_hook = hook.pilot( target_ship, "death", "_bounty_death" )

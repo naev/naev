@@ -427,9 +427,10 @@ end
 
 function create ()
    local payingfaction = spob.cur():faction()
+   local points = 30 + 300 * math.sqrt(rnd.rnd())
 
    -- Pirate details
-   local target = bounty_setup( payingfaction, 30 + 300 * math.sqrt(rnd.rnd()) )
+   local target = bounty_setup( payingfaction, points )
    if not target then
       -- Unable to find a target
       misn.finish(false)
@@ -445,6 +446,7 @@ function create ()
    misn.setDistance( lmisn.calculateDistance( system.cur(), spob.cur():pos(), mem.missys) )
 
    bounty.init( mem.missys, target.name, target.ships, target.reward, {
+      trackingvar       = { "astra_vigilis_points", points },
       payingfaction     = payingfaction,
       reputation        = target.reputation,
       targetfaction     = target.faction,
