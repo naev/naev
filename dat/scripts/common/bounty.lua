@@ -416,6 +416,8 @@ function spawn_bounty( params )
          aimem.capturable = true
          if not target_ship then
             target_ship = p
+            -- Make esaier to spot but not fight
+            p:intrinsicSet( "ew_detected", 50 )
          else
             p:setLeader( target_ship )
          end
