@@ -157,8 +157,9 @@ function land_done ()
    vn.na(fmt.f(_([[You land on {spb}, and make your way to register the bounty as completed, and fill out the necessary paperwork to join the Astra Vigilis. After being somewhat used to Imperial paperwork, you find the process to be much more simple and straight forward. Bounty hunters don't like to put up with too much bullshit, and you are grateful for that.]]), {
       spb = spob.cur(),
    }))
-   vn.na(fmt.f(_([[With the paperwork over, you are promptly handed a {reward} that marks you as a full fledged member of the Astra Vigilis. You will now have access to bounty missions.]]), {
-      reward = REWARD,
+   vn.na(fmt.f(_([[With the paperwork over, you are promptly handed a {reward} that marks you as a full fledged member of the Astra Vigilis. You will now have access to bounty missions, and the Astra Vigilis terminal on {faction} stations and planets that can customize your bounty hunting experience.]]), {
+      faction  = FACTION,
+      reward   = REWARD,
    }))
 
    vn.func( function ()

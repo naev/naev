@@ -3112,6 +3112,7 @@ dat/events/taiomi/find.lua
 dat/events/taiomi/intro.lua
 dat/events/taiomi/system.lua
 dat/events/thurion/intro_wildspace.lua
+dat/events/trader/astra_vigilis_terminal.lua
 dat/events/trader/mining_vrata_delivered_nebula_crystals.lua
 dat/events/trader/mining_vrata_delivered_space_moss.lua
 dat/events/trader/yearning_steve.lua
