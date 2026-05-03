@@ -1,6 +1,6 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<mission name="Astra Vigilis Intro">
+<mission name="Join Astra Vigilis">
  <unique/>
  <priority>4</priority>
  <chance>50</chance>
