@@ -3417,7 +3417,6 @@ dat/missions/thurion/android_abroad.lua
 dat/missions/thurion/data_extraction.lua
 dat/missions/thurion/intro_wildspace.lua
 dat/missions/trader/anxiousmerchant.lua
-dat/missions/trader/astra_vigilis_intro.lua
 dat/missions/trader/astra_vigilis_join.lua
 dat/missions/trader/escort_pers.lua
 dat/missions/trader/mineral_request.lua

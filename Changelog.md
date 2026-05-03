@@ -31,10 +31,11 @@
    * Independent systems have their own standing and memory
    * Can only sell ships when a shipyard is available
    * Bounties can feature multiple enemy ships
+   * Mercenary licence now obtained from a mission
 
  ### Content
 
-   * 5 new missions
+   * 6 new missions
    * 7 new events
    * 2 new ships
    * 7 new outfits
