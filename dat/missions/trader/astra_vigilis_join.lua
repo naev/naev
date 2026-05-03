@@ -162,6 +162,9 @@ function land_done ()
       reward   = REWARD,
    }))
 
+   -- Start with easy bounties
+   var.push( "bounty_difficulty", N_("Easy") )
+
    vn.func( function ()
       FACTION:hit(25)
       player.outfitAdd( REWARD )
