@@ -162,6 +162,16 @@ static int       spob_lua_cmp( const void *a, const void *b );
 static nlua_env *spob_lua_get( int *mem, const char *filename );
 static void      spob_lua_free( spob_lua_file *lf );
 
+static void spob_updateServices( Spob *spob )
+{
+   if ( spob_hasService( spob, SPOB_SERVICE_REFUEL ) ||
+        spob_hasService( spob, SPOB_SERVICE_OUTFITS ) ||
+        spob_hasService( spob, SPOB_SERVICE_SHIPYARD ) )
+      spob->services |= SPOB_SERVICE_EQUIPMENT;
+   else
+      spob->services &= ~SPOB_SERVICE_EQUIPMENT;
+}
+
 /**
  * @brief Gets the (English) name for a service code.
  *
@@ -431,6 +441,8 @@ int spob_addService( Spob *p, int service )
       economy_initialiseSingleSystem( sys, p );
    }
 
+   // Update equipment.
+   spob_updateServices( p );
    return 0;
 }
 
@@ -444,6 +456,7 @@ int spob_addService( Spob *p, int service )
 int spob_rmService( Spob *p, int service )
 {
    p->services &= ~service;
+   spob_updateServices( p );
    return 0;
 }
 
@@ -2520,10 +2533,7 @@ static int spob_parse( Spob *spob, const char *filename )
       spob->services &= ~SPOB_SERVICE_INHABITED;
    /* We allow the player to change equipment at most places.
     * TODO allow disabling equiping in the future. */
-   if ( spob_hasService( spob, SPOB_SERVICE_REFUEL ) ||
-        spob_hasService( spob, SPOB_SERVICE_OUTFITS ) ||
-        spob_hasService( spob, SPOB_SERVICE_SHIPYARD ) )
-      spob->services |= SPOB_SERVICE_EQUIPMENT;
+   spob_updateServices( spob );
 
    if ( spob->radius > 0. )
       spob_setFlag( spob, SPOB_RADIUS );
