@@ -2065,7 +2065,8 @@ void equipment_updateShips( unsigned int wid, const char *str )
 
    /* Get the ship. */
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
-   if ( strcmp( shipname, player.p->name ) == 0 ) { /* no ships */
+   if ( ( shipname != NULL ) &&
+        strcmp( shipname, player.p->name ) == 0 ) { /* no ships */
       ps       = &player.ps;
       onboard  = 1;
       deployed = 1;
