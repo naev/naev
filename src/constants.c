@@ -30,6 +30,7 @@ constants CTS = {
    .PILOT_REVERSE_THRUST           = 0.4,
    .CAMERA_ANGLE                   = M_PI_4,
    .WARN_BUY_INTRINSICS            = 1,
+   .RADAR_RES_DEFAULT              = 100.,
    // Meta constant calculated from CAMERA_ANGLE
    .CAMERA_VIEW     = 1.0,
    .CAMERA_VIEW_INV = 1.0,

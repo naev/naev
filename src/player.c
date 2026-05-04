@@ -92,11 +92,6 @@ extern int       save_loaded;     /**< From save.c */
 static char **player_licenses = NULL; /**< Licenses player has. */
 
 /*
- * Default radar resolution.
- */
-#define RADAR_RES_DEFAULT 100. /**< Default resolution. */
-
-/*
  * player sounds.
  */
 static const Group *player_engine_group =
@@ -231,7 +226,7 @@ static void player_newSetup()
    player_cleanup();
 
    /* Set up GUI. */
-   player.radar_res = RADAR_RES_DEFAULT;
+   player.radar_res = CTS.RADAR_RES_DEFAULT;
    gui_setDefaults();
 
    /* Sane time defaults. */
@@ -4036,7 +4031,7 @@ static Spob *player_parse( xmlNodePtr parent )
    player_ran_updater = 0;
    player_payback     = 0;
 
-   player.radar_res = RADAR_RES_DEFAULT;
+   player.radar_res = CTS.RADAR_RES_DEFAULT;
 
    /* Must get spob first. */
    xmlNodePtr node = parent->xmlChildrenNode;

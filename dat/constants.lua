@@ -37,6 +37,7 @@ local constants = {
    SELL_SHIP_MODIFIER   = 1, -- Amount of the full price you can get back when selling a ship
    SELL_OUTFIT_MODIFIER = 1, -- Same but for outfits
    WARN_BUY_INTRINSICS  = true, -- Whether to warn the player when they are buying intrinsic outfits
+   RADAR_RES_DEFAULT    = 100, -- Default resolution of the GUI radar.
 
    -- Constants used by multiple Lua scripts
    BITE_ACCEL_MOD = 390, -- like hades_torch (was 500 before 0.13.0)

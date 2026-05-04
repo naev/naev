@@ -33,6 +33,7 @@ typedef struct constants {
    double SELL_SHIP_MODIFIER;
    double SELL_OUTFIT_MODIFIER;
    int    WARN_BUY_INTRINSICS;
+   double RADAR_RES_DEFAULT;
 } constants;
 
 extern constants CTS;
